@@ -1,0 +1,246 @@
+@import '../../variables.scss';
+
+$animation1Height: 200px;
+$animation2Height: 375px;
+$animation3Height: 248px;
+$animation4Height: 570px;
+$animation5Height: 460px;
+
+@keyframes fallingStar1 {
+  0% {
+      transform: translate3d(0, -100%, 0);
+      opacity: 1;
+  }
+
+  100% {
+      transform: translate3d(0, $animation1Height, 0);
+      opacity: 0;
+  }
+}
+
+@keyframes fallingStar2 {
+  0% {
+      transform: translate3d(0, -100%, 0);
+      opacity: 1;
+  }
+
+  100% {
+      transform: translate3d(0, $animation2Height, 0);
+      opacity: 0;
+  }
+}
+
+@keyframes fallingStar3 {
+  0% {
+      transform: translate3d(0, -100%, 0);
+      opacity: 1;
+  }
+
+  100% {
+      transform: translate3d(0, $animation3Height, 0);
+      opacity: 0;
+  }
+}
+
+@keyframes fallingStar4 {
+  0% {
+      transform: translate3d(0, -100%, 0);
+      opacity: 1;
+  }
+
+  100% {
+      transform: translate3d(0, $animation4Height, 0);
+      opacity: 0;
+  }
+}
+
+@keyframes fallingStar5 {
+  0% {
+      transform: translate3d(0, -100%, 0);
+      opacity: 1;
+  }
+
+  100% {
+      transform: translate3d(0, $animation5Height ,0);
+      opacity: 0;
+  }
+}
+
+.home-page {
+  .top-section {
+    position: relative;
+    height: 720px;
+    background: $brandColor;
+    .animation {
+      position: absolute;
+      top: 0;
+      border-right: 1px solid rgba(255, 255, 255, 0.3);
+      transform: scaleX(0.5);
+      &::before {
+        content: '';
+        height: 16px;
+        opacity: 1;
+        border-right: 4px solid #fff;
+        position: absolute;
+        left: -2px;
+        transform: translate3d(0,-100%,0);
+      }
+      &1 {
+        left: 15%;
+        height: $animation1Height;
+        &::before {
+          animation: fallingStar1 1.3s infinite ease-in-out;
+        }
+      }
+      &2 {
+        left: 35%;
+        height: $animation2Height;
+        &::before {
+          animation: fallingStar2 1.5s infinite ease-in-out;
+        }
+      }
+      &3 {
+        left: 52%;
+        height: $animation3Height;
+        &::before {
+          animation: fallingStar3 2s infinite ease-in-out;
+        }
+      }
+      &4 {
+        left: 65%;
+        height: $animation4Height;
+        &::before {
+          animation: fallingStar4 1.5s infinite ease-in-out;
+        }
+      }
+      &5 {
+        left: 85%;
+        height: $animation5Height;
+        &::before {
+          animation: fallingStar5 1.3s infinite ease-in-out;
+        }
+      }
+    }
+    .vertical-middle {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+    }
+    .product-logo {
+      display: block;
+      width: 224px;
+      height: 75px;
+      margin: 0 auto;
+    }
+    .product-desc {
+      opacity: 0.8;
+      font-family: Avenir-Medium;
+      font-size: 24px;
+      color: #FFF;
+      max-width: 730px;
+      margin: 12px auto 30px;
+      text-align: center;
+    }
+    .button-area {
+      text-align: center;
+      .button {
+        margin-right: 20px;
+      }
+    }
+    .version-note {
+      text-align: center;
+      margin: 22px 0 10px;
+      a {
+        text-decoration: none;
+        display: inline-block;
+        font-family: Avenir-Heavy;
+        font-size: 14px;
+        color: #FFF;
+        text-align: center;
+        background: #46484B;
+        border-radius: 2px;
+        line-height: 24px;
+        padding: 0 6px;
+        margin-right: 10px;
+      }
+    }
+    .release-date {
+      font-family: Avenir-Medium;
+      font-size: 12px;
+      color: #999;
+      text-align: center;
+    }
+  }
+  .feature-section {
+    background: $brandColor;
+    .feature-section-body {
+      max-width: $contentWidth;
+      margin: 0 auto;
+      position: relative;
+      padding: 80px 40px;
+      color: #fff;
+      h3 {
+        font-family: Avenir-Heavy;
+        font-size: 36px;
+        text-align: center;
+        margin: 0;
+      }
+      .bone {
+        margin: 0 auto 45px;
+      }
+      .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        .feature-list-item {
+          vertical-align: top;
+          display: inline-block;
+          margin-bottom: 48px;
+          width: 50%;
+          ul {
+            list-style: disc;
+            padding-left: 14px;
+            li {
+              font-family: Avenir-Medium;
+              font-size: 14px;
+              color: #999;
+            }
+          }
+          img {
+            vertical-align: top;
+            width: 34px;
+            margin-right: 20px;
+          }
+          div {
+            display: inline-block;
+            width: 80%;
+            h4 {
+              font-family: Avenir-Heavy;
+              font-size: 20px;
+              margin-top: 10px;
+            }
+            p {
+              font-family: Avenir-Medium;
+              font-size: 14px;
+              line-height: 20px;
+              color: #999;
+            }
+          }
+        }
+        @media screen and (max-width: 768px){
+          .feature-list-item {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  @media screen and (max-width: $mobileWidth) {
+    .feature-section-body {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+}
