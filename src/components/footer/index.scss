@@ -5,6 +5,7 @@
   .footer-body {
     max-width: $contentWidth;
     margin: 0 auto;
+    box-sizing: border-box;
     padding: 40px 40px 0;
     @media screen and (max-width: $mobileWidth) {
       padding-left: 20px;
@@ -86,11 +87,13 @@
 
 @media screen and (max-width: $mobileWidth) {
   .footer-container {
-    .cols-container {
-      .col {
-        width: 100%;
-        text-align: center;
-        padding: 0;
+    .footer-body {
+      .cols-container {
+        .col {
+          width: 100%;
+          text-align: center;
+          padding: 0;
+        }
       }
     }
   }

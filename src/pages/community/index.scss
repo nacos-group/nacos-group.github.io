@@ -5,6 +5,8 @@
     .events-body {
       max-width: $contentWidth;
       margin: 0 auto;
+      box-sizing: border-box;
+      padding: 0 40px;
       h3 {
         font-family: Avenir-Heavy;
         font-size: 36px;
