@@ -4,7 +4,8 @@ import Header from '../../components/header';
 import Button from '../../components/button';
 import Footer from '../../components/footer';
 import Bone from '../../components/bone';
-import Item from './featureItem';
+import FunctionItem from './functionItem';
+import FeatureItem from './featureItem';
 import siteConfig from '../../../site_config/site';
 import homeConfig from '../../../site_config/home';
 import './index.scss';
@@ -66,6 +67,15 @@ class Home extends React.Component {
           <div className="animation animation5" />
         </section>
         <section className="function-section">
+          <h3>{dataSource.functions.title}</h3>
+          <Bone type="dark" />
+          <div>
+          {
+            dataSource.functions.list.map((func, i) => (
+              <FunctionItem func={func} key={i} imgFirst={i % 2 === 0} />
+            ))
+          }
+          </div>
         </section>
         <section className="feature-section">
           <div className="feature-section-body">
@@ -74,7 +84,7 @@ class Home extends React.Component {
             <ul className="feature-list">
             {
               dataSource.features.list.map((feature, i) => (
-                <Item feature={feature} key={i} />
+                <FeatureItem feature={feature} key={i} />
               ))
             }
             </ul>

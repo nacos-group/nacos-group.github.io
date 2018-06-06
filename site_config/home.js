@@ -28,17 +28,17 @@ export default {
       title: 'Function',
       list: [
         {
-          img: '',
+          img: './img/dynamic_configuration.png',
           title: 'Dynamic Configuration Service',
           content: 'Dynamic Configuration Service allows you to manage application or service configuration in a centralized and dynamic style across all environments. Dynamic configuration eliminates the need to redeploy applications when configuration is updated. You can implement stateless services and achieve on-demand scaling more easily.',
         },
         {
-          img: '',
+          img: './img/service_discovery.png',
           title: 'Service Discovery',
           content: 'Dynamic Service Discovery is essential to service-centric (i.e. microservice or cloud-native) architectures. Nacos supports both DNS-based and RPC-based (Dubbo, gRPC) service discovery, and provides service health checks for you to prevent routing requests from unhealthy hosts. You can also implement circuit breakers for your services.',
         },
         {
-          img: '',
+          img: './img/dynamic_DNS.png',
           title: 'Dynamic DNS Service',
           content: 'Dynamic DNS Service which supports weighted routing makes it easier for you to implement mid-tier load balancing, routing, flow control and DNS resolution services in the production environment within your data center.',
         },
