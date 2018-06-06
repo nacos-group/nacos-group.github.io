@@ -13,7 +13,7 @@ export default class Item extends React.Component {
 
   @autobind
   onItemClick(e) {
-    window.scrollTo && window.scrollTo(0, 0);
+    this.props.toggleMenuBody();
     e.stopPropagation();
   }
 

@@ -70,7 +70,8 @@ $animation5Height: 460px;
   .top-section {
     position: relative;
     height: 720px;
-    background: $brandColor;
+    background: url('/img/black_dot.png') repeat;
+    background-size: 14px 14px;
     .animation {
       position: absolute;
       top: 0;
@@ -145,7 +146,7 @@ $animation5Height: 460px;
     }
     .button-area {
       text-align: center;
-      .button {
+      .button:first-child {
         margin-right: 20px;
       }
     }
@@ -172,6 +173,10 @@ $animation5Height: 460px;
       color: #999;
       text-align: center;
     }
+  }
+  .function-section {
+    max-width: 832px;
+    margin: 0 auto;
   }
   .feature-section {
     background: $brandColor;
@@ -219,7 +224,7 @@ $animation5Height: 460px;
             h4 {
               font-family: Avenir-Heavy;
               font-size: 20px;
-              margin-top: 10px;
+              margin-top: 5px;
             }
             p {
               font-family: Avenir-Medium;

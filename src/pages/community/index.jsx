@@ -1,5 +1,4 @@
 import React from 'react';
-import cookie from 'js-cookie';
 import Header from '../../components/header';
 import Bar from '../../components/bar';
 import Slider from '../../components/slider';
@@ -16,11 +15,11 @@ import './index.scss';
 class Community extends React.Component {
 
   render() {
-    const language = cookie.get('docsite_language') || siteConfig.defaultLanguage;
+    const language = siteConfig.defaultLanguage;
     const dataSource = communityConfig[language];
     return (
       <div className="community-page">
-        <Header type="normal" logo="./img/dubbo_colorful.png" />
+        <Header type="normal" logo="./img/nacos_colorful.png" />
         <Bar img="./img/community.png" text={dataSource.barText} />
         <section className="events-section">
           <div className="events-body">
@@ -68,7 +67,7 @@ class Community extends React.Component {
             </div>
           </div>
         </section>
-        <Footer logo="./img/dubbo_gray.png" />
+        <Footer logo="./img/nacos_gray.png" />
       </div>
     );
   }

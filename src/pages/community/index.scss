@@ -7,6 +7,9 @@
       margin: 0 auto;
       box-sizing: border-box;
       padding: 0 40px;
+      @media screen and (max-width: $mobileWidth) {
+        padding: 0;
+      }
       h3 {
         font-family: Avenir-Heavy;
         font-size: 36px;
@@ -20,6 +23,13 @@
         img {
           width: 373px;
           height: 209px;
+        }
+        @media screen and (max-width: $mobileWidth / 2) {
+          width: 320px;
+          img {
+            width: 320px;
+            height: 179px;
+          }
         }
         .event-introduction {
           padding: 20px;

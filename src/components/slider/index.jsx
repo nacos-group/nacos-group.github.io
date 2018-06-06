@@ -44,7 +44,8 @@ class Slider extends React.Component {
     if (containerWidth && childWidth) {
       result = Math.floor(containerWidth / childWidth);
     }
-    return result;
+    // 有可能result为0，下面的除法就会出现分母为0，从而导致得出inifity，无限循环导致浏览器崩溃
+    return result || 1;
   }
 
   @autobind

@@ -1,6 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import cookie from 'js-cookie';
 import { getScrollTop } from '../../../utils';
 import Header from '../../components/header';
 import Button from '../../components/button';
@@ -36,10 +34,10 @@ class Home extends React.Component {
   }
 
   render() {
-    const language = cookie.get('docsite_language') || siteConfig.defaultLanguage;
+    const language = siteConfig.defaultLanguage;
     const dataSource = homeConfig[language];
     const { headerType } = this.state;
-    const headerLogo = headerType === 'primary' ? './img/dubbo_white.png' : './img/dubbo_colorful.png';
+    const headerLogo = headerType === 'primary' ? './img/nacos_white.png' : './img/nacos_colorful.png';
     return (
       <div className="home-page">
         <section className="top-section">
@@ -67,6 +65,8 @@ class Home extends React.Component {
           <div className="animation animation4" />
           <div className="animation animation5" />
         </section>
+        <section className="function-section">
+        </section>
         <section className="feature-section">
           <div className="feature-section-body">
             <h3>{dataSource.features.title}</h3>
@@ -80,7 +80,7 @@ class Home extends React.Component {
             </ul>
           </div>
         </section>
-        <Footer logo="./img/dubbo_gray.png" />
+        <Footer logo="./img/nacos_gray.png" />
       </div>
     );
   }

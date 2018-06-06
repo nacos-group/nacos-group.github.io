@@ -44,7 +44,7 @@ export default class SideMenu extends React.Component {
                   {data.title}
                   </span>
                   <ul>
-                    {data.children.map((item, j) => <Item item={item} key={j} />)}
+                    {data.children.map((item, j) => <Item item={item} key={j} toggleMenuBody={this.toggleMenuBody} />)}
                   </ul>
                 </li>
               );

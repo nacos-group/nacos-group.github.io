@@ -1,5 +1,4 @@
 import React from 'react';
-import cookie from 'js-cookie';
 import { scroller } from 'react-scroll';
 import path from 'path';
 import Header from '../../components/header';
@@ -22,7 +21,7 @@ class Documentation extends React.Component {
     const filename = this.props.match.url.split('/').slice(2).join('/');
     // 获取当前文档所在的部分的相对路径，除去文件名
     const relativePath = filename.split('/').slice(0, -1).join('/');
-    const language = cookie.get('docsite_language') || siteConfig.defaultLanguage;
+    const language = siteConfig.defaultLanguage;
     const imgs = Array.from(this.markdownContainer.querySelectorAll('img'));
     const alinks = Array.from(this.markdownContainer.querySelectorAll('a'));
     imgs.forEach((img) => {
@@ -56,14 +55,14 @@ class Documentation extends React.Component {
   }
 
   render() {
-    const language = cookie.get('docsite_language') || siteConfig.defaultLanguage;
+    const language = siteConfig.defaultLanguage;
     const dataSource = docsConfig[language];
     const filename = this.props.match.url.split('/').slice(2).join('/');
     const md = docsData[language].find(doc => doc.filename === filename);
     const __html = md && md.__html ? md.__html : '';
     return (
       <div className="documentation-page">
-        <Header type="normal" logo="./img/dubbo_colorful.png" />
+        <Header type="normal" logo="./img/nacos_colorful.png" />
         <Bar img="./img/docs.png" text={dataSource.barText} />
         <section className="content-section">
           <div className="content-body">
@@ -75,7 +74,7 @@ class Documentation extends React.Component {
             />
           </div>
         </section>
-        <Footer logo="./img/dubbo_gray.png" />
+        <Footer logo="./img/nacos_gray.png" />
       </div>
     );
   }
