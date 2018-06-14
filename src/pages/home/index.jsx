@@ -1,5 +1,9 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
+import cookie from 'js-cookie';
+import qs from 'querystring';
 import { getScrollTop } from '../../../utils';
+import Language from '../../components/language';
 import Header from '../../components/header';
 import Button from '../../components/button';
 import Footer from '../../components/footer';
@@ -10,7 +14,7 @@ import siteConfig from '../../../site_config/site';
 import homeConfig from '../../../site_config/home';
 import './index.scss';
 
-class Home extends React.Component {
+class Home extends Language {
 
   constructor(props) {
     super(props);
@@ -22,7 +26,7 @@ class Home extends React.Component {
   componentDidMount() {
     window.addEventListener('scroll', () => {
       const scrollTop = getScrollTop();
-      if (scrollTop) {
+      if (scrollTop > 66) {
         this.setState({
           headerType: 'normal',
         });
@@ -35,7 +39,16 @@ class Home extends React.Component {
   }
 
   render() {
-    const language = siteConfig.defaultLanguage;
+    const hashSearch = window.location.hash.split('?');
+    const search = qs.parse(hashSearch[1] || '');
+    const language = search.lang || cookie.get('docsite_language') || siteConfig.defaultLanguage;
+    // 同步cookie和search上的语言版本
+    if (language !== cookie.get('docsite_language')) {
+      cookie.set('docsite_language', language, { expires: 365, path: '' });
+    }
+    if (!search.lang) {
+      return <Redirect to={`${this.props.match.url}?lang=${language}`} />;
+    }
     const dataSource = homeConfig[language];
     const { headerType } = this.state;
     const headerLogo = headerType === 'primary' ? './img/nacos_white.png' : './img/nacos_colorful.png';
@@ -45,6 +58,8 @@ class Home extends React.Component {
           <Header
             type={headerType}
             logo={headerLogo}
+            language={language}
+            onLanguageChange={this.onLanguageChange}
           />
           <div className="vertical-middle">
             <img className="product-logo" src="./img/nacos.png" />

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import cookie from 'js-cookie';
 import siteConfig from '../../../site_config/site';
 import './index.scss';
 
 const Footer = (props) => {
-  const language = siteConfig.defaultLanguage;
+  const language = cookie.get('docsite_language') || siteConfig.defaultLanguage;
   const dataSource = siteConfig[language];
   return (
     <footer className="footer-container">
