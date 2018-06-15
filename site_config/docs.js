@@ -2,27 +2,86 @@ export default {
   'en-us': {
     sidemenu: [
       {
-        title: '类别标题1',
+        title: 'Nacos',
         children: [
           {
-            title: '快速启动',
-            link: '/docs/quick-start.md',
-          },
-          {
-            title: '标题2',
-            link: '/docs/demo2.md',
-          },
-          {
-            title: '标题3',
+            title: 'what is Nacos',
             opened: true,
             children: [
               {
-                title: '子标题3-1',
-                link: '/docs/demo3.md',
+                title: 'what is nacos',
+                link: '/docs/quick-start.md',
               },
               {
-                title: '子标题3-2',
-                link: '/docs/demo4.md',
+                title: 'Concepts',
+                link: '/docs/concepts.md',
+              },
+              {
+                title: 'Architecure',
+                link: '/docs/architecure.md',
+              },
+            ],
+          },
+          {
+            title: 'user guide',
+            opened: true,
+            children: [
+              {
+                title: 'quickstart',
+                link: '/docs/quickstart.md',
+              },
+              {
+                title: 'SDK',
+                link: '/docs/sdk.md',
+              },
+              {
+                title: 'open-API',
+                link: '/docs/open-API.md',
+              }
+            ],
+          },
+          {
+            title: 'OPS/admin guide',
+            children: [
+              {
+                title: 'simple OPS',
+                link: '/docs/simple-ops.md',
+              },
+              {
+                title: 'cluster management',
+                link: '/docs/cluster-management.md',
+              }
+            ],
+          },
+          {
+            title: 'contributor/developer guide',
+            children: [
+              {
+                title: 'Contributing to Nacos',
+                link: '/docs/contributing.md',
+              },
+              {
+                title: 'request template',
+                link: '/docs/request_template.md',
+              }
+            ],
+          },
+          {
+            title: 'community',
+            link: '/docs/community.md',
+            children: [
+              {
+                title: 'community',
+                link: '/docs/community.md',
+              }
+            ],
+          },
+          {
+            title: 'roadMap',
+            children: [
+              {
+                title: 'roadMap',
+                link: '/docs/roadMap.md',
               }
             ],
           }
@@ -30,5 +89,96 @@ export default {
       },
     ],
     barText: 'Documentation',
+  },
+  'zh-cn': {
+    sidemenu: [
+      {
+        title: 'Nacos',
+        children: [
+          {
+            title: 'Nacos是什么',
+            opened: true,
+            children: [
+              {
+                title: 'nacos是什么',
+                link: '/docs/quick-start.md',
+              },
+              {
+                title: '概念',
+                link: '/docs/concepts.md',
+              },
+              {
+                title: '架构',
+                link: '/docs/architecure.md',
+              },
+            ],
+          },
+          {
+            title: '用户指南',
+            opened: true,
+            children: [
+              {
+                title: '快速开始',
+                link: '/docs/quickstart.md',
+              },
+              {
+                title: 'SDK',
+                link: '/docs/sdk.md',
+              },
+              {
+                title: 'open-API',
+                link: '/docs/open-API.md',
+              }
+            ],
+          },
+          {
+            title: 'OPS/admin guide',
+            children: [
+              {
+                title: 'simple OPS',
+                link: '/docs/simple-ops.md',
+              },
+              {
+                title: 'cluster management',
+                link: '/docs/cluster-management.md',
+              }
+            ],
+          },
+          {
+            title: 'contributor/developer guide',
+            children: [
+              {
+                title: 'Contributing to Nacos',
+                link: '/docs/contributing.md',
+              },
+              {
+                title: 'request template',
+                link: '/docs/request_template.md',
+              }
+            ],
+          },
+          {
+            title: 'community',
+            link: '/docs/community.md',
+            children: [
+              {
+                title: 'community',
+                link: '/docs/community.md',
+              }
+            ],
+          },
+          {
+            title: 'roadMap',
+            children: [
+              {
+                title: 'roadMap',
+                link: '/docs/roadMap.md',
+              }
+            ],
+          }
+        ],
+      },
+    ],
+    barText: '文档',
   },
 };

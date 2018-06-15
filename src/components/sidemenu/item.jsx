@@ -6,8 +6,19 @@ import classnames from 'classnames';
 export default class Item extends React.Component {
   constructor(props) {
     super(props);
+    const { item } = props;
+    const hasChildren = item.children && item.children.length;
+    let opened = props.item.opened;
+    if (hasChildren) {
+      if (opened === undefined) {
+        // 未配置展开，则是否展开由是否选中决定
+        opened = item.children.find(child => child.link === window.location.hash.split('?')[0].slice(1));
+      }
+    } else {
+      opened = false;
+    }
     this.state = {
-      opened: props.item.opened,
+      opened,
     };
   }
 
@@ -34,7 +45,7 @@ export default class Item extends React.Component {
             className={classnames({
               'menu-item': true,
               'menu-item-level-3': true,
-              'menu-item-selected': item.link === window.location.hash.slice(1),
+              'menu-item-selected': item.link === window.location.hash.split('?')[0].slice(1),
             })}
             key={index}
             onClick={this.onItemClick}
@@ -54,11 +65,10 @@ export default class Item extends React.Component {
     const cls = classnames({
       'menu-item': true,
       'menu-item-level-2': true,
-      'menu-item-selected': item.link === window.location.hash.slice(1),
-      'menu-item-opened': hasChildren && (opened || item.children.find(child => child.link === window.location.hash.slice(1))),
+      'menu-item-selected': item.link === window.location.hash.split('?')[0].slice(1),
     });
     const style = {
-      height: hasChildren && opened ? (36 * item.children.length) + 48 : 48,
+      height: opened ? 36 * (item.children.length + 1) : 36,
       overflow: 'hidden',
     };
     if (hasChildren) {

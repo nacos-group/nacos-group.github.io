@@ -1,4 +1,8 @@
 import React from 'react';
+import cookie from 'js-cookie';
+import qs from 'querystring';
+import { Redirect } from 'react-router-dom';
+import Language from '../../components/language';
 import Header from '../../components/header';
 import Bar from '../../components/bar';
 import Slider from '../../components/slider';
@@ -12,14 +16,23 @@ import communityConfig from '../../../site_config/community.jsx';
 
 import './index.scss';
 
-class Community extends React.Component {
+class Community extends Language {
 
   render() {
-    const language = siteConfig.defaultLanguage;
+    const hashSearch = window.location.hash.split('?');
+    const search = qs.parse(hashSearch[1] || '');
+    const language = search.lang || cookie.get('docsite_language') || siteConfig.defaultLanguage;
+    // 同步cookie和search上的语言版本
+    if (language !== cookie.get('docsite_language')) {
+      cookie.set('docsite_language', language, { expires: 365, path: '' });
+    }
+    if (!search.lang) {
+      return <Redirect to={`${this.props.match.url}?lang=${language}`} />;
+    }
     const dataSource = communityConfig[language];
     return (
       <div className="community-page">
-        <Header type="normal" logo="./img/nacos_colorful.png" />
+        <Header type="normal" logo="./img/nacos_colorful.png" language={language} onLanguageChange={this.onLanguageChange} />
         <Bar img="./img/community.png" text={dataSource.barText} />
         <section className="events-section">
           <div className="events-body">

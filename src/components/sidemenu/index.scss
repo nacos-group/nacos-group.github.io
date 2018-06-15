@@ -60,8 +60,8 @@
       font-size: 18px;
       color: #333;
       padding-left: 20px;
-      height: 48px;
-      line-height: 48px;
+      height: 40px;
+      line-height: 40px;
     }
   }
 
@@ -89,13 +89,13 @@
   .menu-item-level-2 {
     & > span, & > a {
       padding-left: 40px;
-      height: 48px;
-      line-height: 48px;
+      height: 36px;
+      line-height: 36px;
       img.menu-toggle {
         float: right;
         width: 13px;
         height: 8px;
-        margin: 20px 20px 20px 0;
+        margin: 14px 20px 14px 0;
       }
     }
   }
