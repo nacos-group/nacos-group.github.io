@@ -110,7 +110,7 @@ class Header extends React.Component {
                   className={classnames({
                     'menu-item': true,
                     [`menu-item-${type}`]: true,
-                    [`menu-item-${type}-active`]: window.location.hash.slice(1).split('/')[1] === item.link.split('/')[1],
+                    [`menu-item-${type}-active`]: window.location.hash.split('?')[0].slice(1).split('/')[1] === item.link.split('/')[1],
                   })}
                 >
                   <Link to={item.link}>{item.text}</Link>
