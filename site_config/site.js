@@ -11,6 +11,10 @@ export default {
         link: '/docs/quick-start.md',
       },
       {
+        text: 'BLOG',
+        link: '/blog',
+      },
+      {
         text: 'COMMUNITY',
         link: '/community',
       },
@@ -56,6 +60,10 @@ export default {
       {
         text: '文档',
         link: '/docs/quick-start.md',
+      },
+      {
+        text: '博客',
+        link: '/blog',
       },
       {
         text: '社区',
