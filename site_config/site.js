@@ -49,7 +49,7 @@ export default {
         },
       ],
     },
-    copyright: '@ 2018 The DNCS Authors | a alibaba middleware project',
+    copyright: '@ 2018 The Nacos Authors | a alibaba middleware project',
   },
   'zh-cn': {
     pageMenu: [
@@ -100,6 +100,6 @@ export default {
         },
       ],
     },
-    copyright: '@ 2018 The DNCS Authors | a alibaba middleware project',
+    copyright: '@ 2018 The Nacos Authors | a alibaba middleware project',
   },
 };

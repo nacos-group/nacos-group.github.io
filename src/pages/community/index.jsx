@@ -27,7 +27,7 @@ class Community extends Language {
       cookie.set('docsite_language', language, { expires: 365, path: '' });
     }
     if (!search.lang) {
-      return <Redirect to={`${this.props.match.url}?lang=${language}`} />;
+      return <Redirect to={`${this.props.match.url}?lang=${siteConfig.defaultLanguage}`} />;
     }
     const dataSource = communityConfig[language];
     return (
