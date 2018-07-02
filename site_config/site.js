@@ -49,7 +49,7 @@ export default {
         },
       ],
     },
-    copyright: '@ 2018 The DNCS Authors | a alibaba middleware project',
+    copyright: '@ 2018 The Nacos Authors | a alibaba middleware project',
   },
   'zh-cn': {
     pageMenu: [
@@ -71,8 +71,8 @@ export default {
       },
     ],
     disclaimer: {
-      title: '免责声明',
-      content: 'Apache Dubbo is an effort undergoing incubation at The Apache Software Foundation (ASF), sponsored by the Incubator. Incubation is required of all newly accepted projects until a further review indicates that the infrastructure, communications, and decision making process have stabilized in a manner consistent with other successful ASF projects. While incubation status is not necessarily a reflection of the completeness or stability of the code, it does indicate that the project has yet to be fully endorsed by the ASF.',
+      title: '愿景',
+      content: 'Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。',
     },
     documentation: {
       title: '文档',
@@ -100,6 +100,6 @@ export default {
         },
       ],
     },
-    copyright: '@ 2018 The DNCS Authors | a alibaba middleware project',
+    copyright: '@ 2018 The Nacos Authors | a alibaba middleware project',
   },
 };

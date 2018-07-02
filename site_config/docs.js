@@ -2,7 +2,7 @@ export default {
   'en-us': {
     sidemenu: [
       {
-        title: 'Nacos',
+        title: 'Nacos ',
         children: [
           {
             title: 'what is Nacos',
@@ -10,7 +10,7 @@ export default {
             children: [
               {
                 title: 'what is nacos',
-                link: '/docs/quick-start.md',
+                link: '/docs/nacos.md',
               },
               {
                 title: 'Concepts',
@@ -28,7 +28,7 @@ export default {
             children: [
               {
                 title: 'quickstart',
-                link: '/docs/quickstart.md',
+                link: '/docs/quick-start.md',
               },
               {
                 title: 'SDK',
@@ -41,20 +41,28 @@ export default {
             ],
           },
           {
-            title: 'OPS/admin guide',
+            title: 'admin guide',
             children: [
               {
-                title: 'simple OPS',
+                title: 'deployment',
                 link: '/docs/simple-ops.md',
+              },
+              {
+                title: 'operations',
+                link: '/docs/cluster-management.md',
               },
               {
                 title: 'cluster management',
                 link: '/docs/cluster-management.md',
+              },
+              {
+                title: 'open-API',
+                link: '/docs/open-API.md',
               }
             ],
           },
           {
-            title: 'contributor/developer guide',
+            title: 'contributor guide',
             children: [
               {
                 title: 'Contributing to Nacos',
@@ -62,6 +70,10 @@ export default {
               },
               {
                 title: 'request template',
+                link: '/docs/request_template.md',
+              },
+              {
+                title: 'roadMap',
                 link: '/docs/request_template.md',
               }
             ],
@@ -76,109 +88,9 @@ export default {
               }
             ],
           },
-          {
-            title: 'roadMap',
-            children: [
-              {
-                title: 'roadMap',
-                link: '/docs/roadMap.md',
-              }
-            ],
-          }
         ],
       },
     ],
     barText: 'Documentation',
-  },
-  'zh-cn': {
-    sidemenu: [
-      {
-        title: 'Nacos',
-        children: [
-          {
-            title: 'Nacos是什么',
-            opened: true,
-            children: [
-              {
-                title: 'nacos是什么',
-                link: '/docs/quick-start.md',
-              },
-              {
-                title: '概念',
-                link: '/docs/concepts.md',
-              },
-              {
-                title: '架构',
-                link: '/docs/architecure.md',
-              },
-            ],
-          },
-          {
-            title: '用户指南',
-            opened: true,
-            children: [
-              {
-                title: '快速开始',
-                link: '/docs/quickstart.md',
-              },
-              {
-                title: 'SDK',
-                link: '/docs/sdk.md',
-              },
-              {
-                title: 'open-API',
-                link: '/docs/open-API.md',
-              }
-            ],
-          },
-          {
-            title: 'OPS/admin guide',
-            children: [
-              {
-                title: 'simple OPS',
-                link: '/docs/simple-ops.md',
-              },
-              {
-                title: 'cluster management',
-                link: '/docs/cluster-management.md',
-              }
-            ],
-          },
-          {
-            title: 'contributor/developer guide',
-            children: [
-              {
-                title: 'Contributing to Nacos',
-                link: '/docs/contributing.md',
-              },
-              {
-                title: 'request template',
-                link: '/docs/request_template.md',
-              }
-            ],
-          },
-          {
-            title: 'community',
-            link: '/docs/community.md',
-            children: [
-              {
-                title: 'community',
-                link: '/docs/community.md',
-              }
-            ],
-          },
-          {
-            title: 'roadMap',
-            children: [
-              {
-                title: 'roadMap',
-                link: '/docs/roadMap.md',
-              }
-            ],
-          }
-        ],
-      },
-    ],
-    barText: '文档',
   },
 };

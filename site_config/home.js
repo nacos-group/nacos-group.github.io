@@ -1,7 +1,7 @@
 export default {
   'en-us': {
     brand: {
-      briefIntroduction: 'Simplified dynamic service discovery and configuration management for cloud-native applications',
+      briefIntroduction: 'an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native applications',
       buttons: [
         {
           text: 'View on Github',
@@ -15,7 +15,7 @@ export default {
         },
       ],
       version: {
-        text: 'V1.1.1',
+        text: 'V0.1.1',
         link: '',
       },
       note: {
@@ -34,7 +34,7 @@ export default {
         },
         {
           img: './img/service_discovery.png',
-          title: 'Service Discovery',
+          title: 'Service Discovery and Management',
           content: 'Dynamic Service Discovery is essential to service-centric (i.e. microservice or cloud-native) architectures. Nacos supports both DNS-based and RPC-based (Dubbo, gRPC) service discovery, and provides service health checks for you to prevent routing requests from unhealthy hosts. You can also implement circuit breakers for your services.',
         },
         {
@@ -88,7 +88,7 @@ export default {
   },
   'zh-cn': {
     brand: {
-      briefIntroduction: 'Simplified dynamic service discovery and configuration management for cloud-native applications',
+      briefIntroduction: 'an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native applications',
       buttons: [
         {
           text: 'View on Github',
@@ -102,7 +102,7 @@ export default {
         },
       ],
       version: {
-        text: 'V1.1.1',
+        text: 'V0.1.1',
         link: '',
       },
       note: {

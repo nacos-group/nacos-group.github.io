@@ -69,7 +69,10 @@ class Documentation extends Language {
   render() {
     const hashSearch = window.location.hash.split('?');
     const search = qs.parse(hashSearch[1] || '');
-    const language = search.lang || cookie.get('docsite_language') || siteConfig.defaultLanguage;
+    let language = search.lang || cookie.get('docsite_language') || siteConfig.defaultLanguage;
+    if(language !== "zh-cn" && language !== "en-us") {
+      language = siteConfig.defaultLanguage;
+    }
     // 同步cookie和search上的语言版本
     if (language !== cookie.get('docsite_language')) {
       cookie.set('docsite_language', language, { expires: 365, path: '' });
