@@ -73,7 +73,8 @@ export default {
                 link: '/docs/request_template.md',
               },
               {
-              title: 'roadMap',
+                title: 'roadMap',
+                link: '/docs/request_template.md',
               }
             ],
           },
