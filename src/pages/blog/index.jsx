@@ -17,7 +17,6 @@ class Blog extends Language {
   render() {
     const hashSearch = window.location.hash.split('?');
     const search = qs.parse(hashSearch[1] || '');
-    const language = search.lang || cookie.get('docsite_language') || siteConfig.defaultLanguage;
     let language = search.lang || cookie.get('docsite_language') || siteConfig.defaultLanguage;
     if(language !== "zh-cn" && language !== "en-us") {
       language = siteConfig.defaultLanguage;
