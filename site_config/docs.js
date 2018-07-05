@@ -10,7 +10,7 @@ export default {
             children: [
               {
                 title: 'what is nacos',
-                link: '/docs/nacos.md',
+                link: '/docs/what-is-nacos.md',
               },
               {
                 title: 'Concepts',
@@ -84,6 +84,100 @@ export default {
             children: [
               {
                 title: 'community',
+                link: '/docs/community.md',
+              }
+            ],
+          },
+        ],
+      },
+    ],
+    barText: 'Documentation',
+  },
+  'zh-cn': {
+    sidemenu: [
+      {
+        title: 'Nacos ',
+        children: [
+          {
+            title: 'Nacos是什么?',
+            opened: true,
+            children: [
+              {
+                title: 'Nacos简介',
+                link: '/docs/what-is-nacos.md',
+              },
+              {
+                title: '概念',
+                link: '/docs/concepts.md',
+              },
+              {
+                title: '架构',
+                link: '/docs/architecure.md',
+              },
+            ],
+          },
+          {
+            title: '用户指南',
+            opened: true,
+            children: [
+              {
+                title: '快速入门',
+                link: '/docs/quick-start.md',
+              },
+              {
+                title: 'SDK指南',
+                link: '/docs/sdk.md',
+              },
+              {
+                title: 'open-API指南',
+                link: '/docs/open-API.md',
+              }
+            ],
+          },
+          {
+            title: '运维指南',
+            children: [
+              {
+                title: '部署',
+                link: '/docs/simple-ops.md',
+              },
+              {
+                title: '运维',
+                link: '/docs/cluster-management.md',
+              },
+              {
+                title: '集群管理',
+                link: '/docs/cluster-management.md',
+              },
+              {
+                title: 'open-API',
+                link: '/docs/open-API.md',
+              }
+            ],
+          },
+          {
+            title: '开源共建',
+            children: [
+              {
+                title: '贡献源码',
+                link: '/docs/contributing.md',
+              },
+              {
+                title: '请求模板',
+                link: '/docs/request_template.md',
+              },
+              {
+                title: '规划',
+                link: '/docs/request_template.md',
+              }
+            ],
+          },
+          {
+            title: '社区',
+            link: '/docs/community.md',
+            children: [
+              {
+                title: '社区',
                 link: '/docs/community.md',
               }
             ],
