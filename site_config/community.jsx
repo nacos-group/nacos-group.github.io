@@ -87,7 +87,7 @@ export default {
       ],
     },
     ecos: {
-      title: 'Open Source Ecology corelated',
+      title: 'Open Source Ecology Corelated',
       list: [
         {
           title: 'Dubbo and Dubbo Mesh',
