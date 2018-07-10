@@ -8,10 +8,10 @@ The following softwares are assumed installed:
 
 ## 2.Download & Build from Release
 
-  > unzip nacos-source.zip
-  > cd nacos/
-  > mvn -Prelease-all -DskipTests clean install -U
-  > cd distribution/target/nacos-all/nacos
+1. unzip nacos-source.zip
+2. cd nacos/
+3. mvn -Prelease-all -DskipTests clean install -U
+4. cd distribution/target/nacos-all/nacos
 
 ## 3.Start Server
 ### Linux/Unix/Mac

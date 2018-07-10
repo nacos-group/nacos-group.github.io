@@ -9,10 +9,10 @@
 
 ## 2.下载源码&或者下载安装包
 
-  > unzip nacos-source.zip
-  > cd nacos/
-  > mvn -Prelease-all -DskipTests clean install -U
-  > cd distribution/target/nacos-all/nacos
+1. unzip nacos-source.zip
+2. cd nacos/
+3. mvn -Prelease-all -DskipTests clean install -U
+4. cd distribution/target/nacos-all/nacos
 
 ## 3.启动服务器
 ### Linux/Unix/Mac 
