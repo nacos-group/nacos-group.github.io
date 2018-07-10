@@ -3,9 +3,9 @@
 ## 1.预备环境准备
 请确保是在环境中安装使用:
 
-1.64bit OS, Linux/Unix/Mac is recommended;
-2.64bit JDK 1.8+;
-3.Maven 3.2.x;
+1. 64bit OS, Linux/Unix/Mac is recommended;
+2. 64bit JDK 1.8+;
+3. Maven 3.2.x;
 
 ## 2.下载源码&或者下载安装包
 
@@ -16,7 +16,7 @@
 
 ## 3.启动服务器
 ### Linux/Unix/Mac 
-启动命令(standalone代表着单机模式运行，非集群模式):
+#### 启动命令(standalone代表着单机模式运行，非集群模式): 
 sh startup.sh standalone
 
 ### Windows
