@@ -5,7 +5,7 @@ export default {
       buttons: [
         {
           text: 'View on Github',
-          link: '',
+          link: 'https://github.com/alibaba/nacos',
           type: 'primary',
         },
         {
@@ -15,7 +15,7 @@ export default {
         },
       ],
       version: {
-        text: 'V0.1.1',
+        text: 'V0.1.0',
         link: '',
       },
       note: {
@@ -102,7 +102,7 @@ export default {
         },
       ],
       version: {
-        text: 'V0.1.1',
+        text: 'V0.1.0',
         link: '',
       },
       note: {
