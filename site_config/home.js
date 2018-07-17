@@ -67,7 +67,7 @@ export default {
         },
         {
           img: './img/feature_production_grade.png',
-          title: 'Production Grade',
+          title: 'Production grade',
           content: [
             'Born out of 10 years\' production verification within Alibaba Group',
             'Supports large-scale scenarios with millions of services',
@@ -92,7 +92,7 @@ export default {
       buttons: [
         {
           text: '前往 Github',
-          link: '',
+          link: 'https://github.com/alibaba/nacos',
           type: 'primary',
         },
         {
@@ -136,38 +136,38 @@ export default {
       list: [
         {
           img: './img/feature_easy_to_use.png',
-          title: 'Easy to use',
+          title: '易于使用',
           content: [
-            'One-stop solution for dynamic configuration management, service discovery, and dynamic',
-            'More than 20+ out-of-the-box features for service-centric architecture',
-            'Light-weighted but production-ready console',
+            '动态配置管理，服务发现和动态的一站式解决方案',
+            '超过20多种开箱即用的以服务为中心的架构特性',
+            '轻量级并且可投入生产的控制台',
           ],
         },
         {
           img: './img/feature_adaptable.png',
-          title: 'More adaptable to cloud architecture',
+          title: '更适应云架构',
           content: [
-            'seamlessly support to kubernetes and spring cloud',
-            'Easy to deploy and run on mainstream public cloud (i.e AliCloud、AWS）',
-            'multi-tenants and multi-environments support',
+            '无缝支持kubernetes和spring cloud',
+            '在主流公共云上更容易部署和运行（如AliCloud，AWS）',
+            '多租户和多环境支持',
           ],
         },
         {
           img: './img/feature_production_grade.png',
-          title: 'Production Grade',
+          title: '生产等级',
           content: [
-            'Born out of 10 years\' production verification within Alibaba Group',
-            'Supports large-scale scenarios with millions of services',
-            'Provides Enterprise-level SLA',
+            '脱身于阿里巴巴集团在10年的生产验证',
+            '支持具有数百万服务的大规模场景',
+            '提供企业级SLA',
           ],
         },
         {
           img: './img/feature_rich.png',
-          title: 'Rich application scenarios affinity',
+          title: '丰富的应用场景',
           content: [
-            'Rate limiting and throttling, big promotion plan, multi-region active-active architecture',
-            'Easy to expand and support common Internet application scenarios as follows',
-            'Traffic scheduling & Service governance',
+            '支持限流，大促销预案，异地多活',
+            '支持易于扩展和支持常见的Internet应用场景',
+            '流量调度和服务治理',
           ],
         },
       ],
