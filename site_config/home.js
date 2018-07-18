@@ -35,12 +35,12 @@ export default {
         {
           img: './img/service_discovery.png',
           title: 'Service Discovery and Management',
-          content: 'Dynamic Service Discovery is essential to service-centric (i.e. microservice or cloud-native) architectures. Nacos supports both DNS-based and RPC-based (Dubbo, gRPC) service discovery, and provides service health checks for you to prevent routing requests from unhealthy hosts. You can also implement circuit breakers for your services `more easier`.',
+          content: 'Dynamic Service Discovery is essential to service-centric (i.e. microservice or cloud-native) architectures. Nacos supports both DNS-based and RPC-based (Dubbo, gRPC) service discovery, and provides service health checks for you to prevent routing requests from unhealthy hosts. You can also implement circuit breakers for your services more easier.',
         },
         {
           img: './img/dynamic_DNS.png',
           title: 'Dynamic DNS Service',
-          content: 'Dynamic DNS Service which supports weighted routing makes it easier for you to implement mid-tier load balancing, `more flexible intelligent routing`, flow control and DNS resolution services in the production environment within your data center.`Dynamic DNS Service also help you to implement DNS-based service discovery more easilier and prevent applications from coupling to vendor-specific service discovery APIs`.',
+          content: 'Dynamic DNS Service which supports weighted routing makes it easier for you to implement mid-tier load balancing, `more flexible intelligent routing`, flow control and DNS resolution services in the production environment within your data center.Dynamic DNS Service also help you to implement DNS-based service discovery more easilier and prevent applications from coupling to vendor-specific service discovery APIs.',
         },
       ],
     },
@@ -140,7 +140,7 @@ export default {
           content: [
             '动态配置管理，服务发现和动态的一站式解决方案',
             '超过20多种开箱即用的以服务为中心的架构特性',
-            '轻量级并且可投入生产的控制台',
+            '轻量级但基本符合生产要求的易用的控制台',
           ],
         },
         {
@@ -156,9 +156,9 @@ export default {
           img: './img/feature_production_grade.png',
           title: '生产等级',
           content: [
-            '脱身于阿里巴巴集团在10年的生产验证',
+            '脱胎于阿里10年生产验证的内部产品',
             '支持具有数百万服务的大规模场景',
-            '提供企业级SLA',
+            '虽然是开源产品，但能做到企业级的 SLA 保障/水准',
           ],
         },
         {
@@ -166,7 +166,7 @@ export default {
           title: '丰富的应用场景',
           content: [
             '支持限流，大促销预案，异地多活',
-            '支持易于扩展和支持常见的Internet应用场景',
+            '很容易支持或者稍作扩展就能支持大量的有用的互联网应用场景',
             '流量调度和服务治理',
           ],
         },
