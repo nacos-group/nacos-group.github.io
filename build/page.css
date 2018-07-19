@@ -186,6 +186,7 @@
       .footer-container .footer-body .cols-container dd a:hover {
         color: #2E3034; }
     .footer-container .footer-body .copyright {
+      margin-top: 44px;
       border-top: 1px solid #ccc;
       min-height: 60px;
       line-height: 20px;
@@ -358,7 +359,8 @@
         color: #999;
         margin: 0; }
     .home-page .function-section .func-item .img {
-      display: inline-block; }
+      display: inline-block;
+      text-align: center; }
     @media screen and (max-width: 830px) {
       .home-page .function-section .func-item {
         text-align: center; }
@@ -413,7 +415,7 @@
           .home-page .feature-section .feature-section-body .feature-list .feature-list-item div h4 {
             font-family: Avenir-Heavy;
             font-size: 20px;
-            margin-top: 5px; }
+            margin: 5px 0 20px 0; }
           .home-page .feature-section .feature-section-body .feature-list .feature-list-item div p {
             font-family: Avenir-Medium;
             font-size: 14px;
@@ -718,7 +720,8 @@
     font-family: Avenir-Heavy;
     font-size: 36px;
     color: #333;
-    text-align: center; }
+    text-align: center;
+    margin: 0 0 20px; }
   .community-page .eco-section .eco-item {
     margin-bottom: 30px; }
     .community-page .eco-section .eco-item h4 {
