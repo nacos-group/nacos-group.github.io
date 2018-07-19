@@ -10,14 +10,14 @@ export default {
         {
           img: '',
           title: 'Nacos',
-          content: 'Apache Dubbo(incubating) is a high-performance,java based,open source RPC framework open-sourced by Alibaba.As in many ',
+          content: 'Nacos is an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native application.',
           dateStr: 'March 06，2018',
           link: '/blog',
         },
         {
           img: '',
-          title: 'Transpart & interface based RPC',
-          content: 'Apache Dubbo(incubating) is a high-performance,java based,open source RPC framework open-sourced by Alibaba.As in many ',
+          title: 'Nacos',
+          content: 'Nacos is an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native application.',
           dateStr: 'March 06，2018',
           link: '/blog',
         },
@@ -25,57 +25,57 @@ export default {
     },
     contacts: {
       title: 'Talk To Us',
-      desc: 'Apache Dubbo(incubating) is a high-performance,java based,open source RPC framework open-sourced by Alibaba.As in many',
+      desc: 'Nacos is an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native application.',
       list: [
         {
           img: './img/weibo.png',
           imgHover: './img/weibo_hover.png',
           title: '@Nacos',
-          link: '',
+          link: 'https://weibo.com/u/6574374908',
         },
         {
           img: './img/alibaba.png',
           imgHover: './img/alibaba_hover.png',
-          title: '#alibaba/dubbo',
-          link: '',
+          title: '#alibaba/Nacos',
+          link: 'https://gitter.im/alibaba/nacos',
         },
         {
           img: './img/segmentfault.png',
           imgHover: './img/segmentfault_hover.png',
           title: 'Segment Fault',
-          link: ''
+          link: 'https://segmentfault.com/t/nacos',
         },
         {
           img: './img/mailinglist.png',
           imgHover: './img/mailinglist_hover.png',
           title: 'Mailing List',
-          link: ''
+          link: 'mailto:nacos_dev@linux.alibaba.com',
         },
       ],
     },
     contributorGuide: {
       title: 'Contributor Guide',
-      desc: 'Apache Dubbo(incubating) is a high-performance,java based,open source RPC framework open-sourced by Alibaba.As in many',
+      desc: 'Want to contribute to Nacos?',
       list: [
         {
           img: './img/mailinglist.png',
           title: 'Mailing List',
-          content: <span>Be sure to follow our <Link to="">our community addition guidelines</Link></span>,
+          content: <span>Be sure to follow our <Link to="mailto:nacos_dev@linux.alibaba.com">our community addition guidelines</Link></span>,
         },
         {
           img: './img/issue.png',
           title: 'Issue',
-          content: 'gRPC has an active community of developers who are using, ',
+          content: <span>Reporting issues via <Link to="https://github.com/alibaba/nacos/issues">Github issues.</Link></span>,
         },
         {
           img: './img/documents.png',
           title: 'Documents',
-          content: 'enhancing and building valuable integrations with other software projects.',
+          content: <span>Improve the <Link to="https://github.com/xuechaos/nacos.io/tree/master/docs">documentation.</Link></span>,
         },
         {
           img: './img/pullrequest.png',
           title: 'Pull Request',
-          content: <span>Be sure to follow our <Link to="">our community addition guidelines</Link></span>,
+          content: <span>Send your awesome enhancement via <Link to="https://github.com/alibaba/nacos/pulls">Pull requests.</Link></span>,
         },
       ],
     },
@@ -155,23 +155,23 @@ export default {
       list: [
         {
           img: '',
-          title: 'Transpart & interface based RPC',
-          content: 'Apache Dubbo(incubating) is a high-performance,java based,open source RPC framework open-sourced by Alibaba.As in many ',
-          dateStr: 'March 06，2018',
+          title: 'Nacos 发布啦',
+          content: 'Nacos 是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。',
+          dateStr: 'july 20，2018',
           link: '/blog',
         },
         {
           img: '',
-          title: 'Transpart & interface based RPC',
-          content: 'Apache Dubbo(incubating) is a high-performance,java based,open source RPC framework open-sourced by Alibaba.As in many ',
-          dateStr: 'March 06，2018',
+          title: 'Nacos 发布啦',
+          content: 'Nacos 是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。',
+          dateStr: 'july 20，2018',
           link: '/blog',
         },
         {
           img: '',
-          title: 'Transpart & interface based RPC',
-          content: 'Apache Dubbo(incubating) is a high-performance,java based,open source RPC framework open-sourced by Alibaba.As in many ',
-          dateStr: 'March 06，2018',
+          title: 'Nacos 发布啦',
+          content: 'Nacos 是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。',
+          dateStr: 'july 20，2018',
           link: '/blog',
         },
       ]
@@ -184,7 +184,7 @@ export default {
                   img: './img/mailinglist.png',
                   imgHover: './img/mailinglist_hover.png',
                   title: '邮件列表',
-                  link: 'https://github.com/apache/incubator-dubbo/wiki/New-contributor-guide'
+                  link: 'mailto:nacos_dev@linux.alibaba.com'
               },
               {
                   img: './img/alibaba.png',
@@ -200,9 +200,9 @@ export default {
               },
               {
                   img: './img/weibo.png',
-                  imgHover: './img/twitter_hover.png',
+                  imgHover: './img/weibo_hover.png',
                   title: '@Nacos',
-                  link: 'https://twitter.com/ApacheDubbo',
+                  link: 'https://weibo.com/u/6574374908',
               },
           ],
       },

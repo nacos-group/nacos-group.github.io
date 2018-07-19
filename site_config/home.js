@@ -10,7 +10,7 @@ export default {
         },
         {
           text: 'Manual',
-          link: '',
+          link: 'http://nacos.io/#/docs/what-is-nacos.md',
           type: 'normal',
         },
       ],
@@ -80,7 +80,7 @@ export default {
           content: [
             'Rate limiting and throttling, big promotion plan, multi-region active-active architecture',
             'Easy to expand and support common internet application scenarios as follows',
-            'Traffic scheduling & Service governance',
+            'Traffic scheduling & service governance',
           ],
         },
       ],
@@ -88,7 +88,7 @@ export default {
   },
   'zh-cn': {
     brand: {
-      briefIntroduction: '一个更易于构建云原生应用的动态服务发现、配置管理\t和服务管理平台。',
+      briefIntroduction: '一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。',
       buttons: [
         {
           text: '前往 Github',
@@ -97,7 +97,7 @@ export default {
         },
         {
           text: '手册',
-          link: '',
+          link: 'http://nacos.io/#/docs/what-is-nacos.md',
           type: 'normal',
         },
       ],
