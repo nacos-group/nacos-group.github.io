@@ -9,14 +9,7 @@ export default {
       list: [
         {
           img: '',
-          title: 'Transpart & interface based RPC',
-          content: 'Apache Dubbo(incubating) is a high-performance,java based,open source RPC framework open-sourced by Alibaba.As in many ',
-          dateStr: 'March 06，2018',
-          link: '/blog',
-        },
-        {
-          img: '',
-          title: 'Transpart & interface based RPC',
+          title: 'Nacos',
           content: 'Apache Dubbo(incubating) is a high-performance,java based,open source RPC framework open-sourced by Alibaba.As in many ',
           dateStr: 'March 06，2018',
           link: '/blog',
