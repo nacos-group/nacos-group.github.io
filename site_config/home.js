@@ -1,7 +1,7 @@
 export default {
   'en-us': {
     brand: {
-      briefIntroduction: 'an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native applicationsbu',
+      briefIntroduction: 'an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native application.',
       buttons: [
         {
           text: 'View on Github',
@@ -22,7 +22,7 @@ export default {
         text: 'Release notes.',
         link: '',
       },
-      releaseDate: 'released March 25, 2018',
+      releaseDate: 'released July 20, 2018',
     },
     functions: {
       title: 'Function',
@@ -51,7 +51,7 @@ export default {
           img: './img/feature_easy_to_use.png',
           title: 'Easy to use',
           content: [
-            'One-stop solution for dynamic configuration management, service discovery, and dynamic',
+            'One-stop solution for dynamic service discovery, configuration management and dynamic DNS service',
             'More than 20+ out-of-the-box features for service-centric architecture',
             'Light-weighted but production-ready console',
           ],
@@ -60,9 +60,9 @@ export default {
           img: './img/feature_adaptable.png',
           title: 'More adaptable to cloud architecture',
           content: [
-            'seamlessly support to kubernetes and spring cloud',
+            'Seamlessly support kubernetes and spring cloud',
             'Easy to deploy and run on mainstream public cloud (i.e AliCloud、AWS）',
-            'multi-tenants and multi-environments support',
+            'Support multi-tenants and multi-environments',
           ],
         },
         {
@@ -71,15 +71,15 @@ export default {
           content: [
             'Born out of 10 years\' production verification within Alibaba Group',
             'Supports large-scale scenarios with millions of services',
-            'Provides Enterprise-level SLA',
+            'Provides enterprise-level SLA',
           ],
         },
         {
           img: './img/feature_rich.png',
-          title: 'Rich application scenarios affinity',
+          title: 'Rich internet application scenarios affinity',
           content: [
             'Rate limiting and throttling, big promotion plan, multi-region active-active architecture',
-            'Easy to expand and support common Internet application scenarios as follows',
+            'Easy to expand and support common internet application scenarios as follows',
             'Traffic scheduling & Service governance',
           ],
         },
@@ -88,7 +88,7 @@ export default {
   },
   'zh-cn': {
     brand: {
-      briefIntroduction: '一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台',
+      briefIntroduction: '一个更易于构建云原生应用的动态服务发现、配置管理\t和服务管理平台。',
       buttons: [
         {
           text: '前往 Github',
@@ -109,7 +109,7 @@ export default {
         text: 'Release notes.',
         link: '',
       },
-      releaseDate: 'released March 25, 2018',
+      releaseDate: 'released July 20, 2018',
     },
     functions: {
       title: '功能',
