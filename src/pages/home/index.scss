@@ -148,6 +148,7 @@ $animationDuration: 2s;
       }
       .img {
         display: inline-block;
+        text-align: center;
       }
       @media screen and (max-width: 830px) {
         & {
@@ -213,7 +214,7 @@ $animationDuration: 2s;
             h4 {
               font-family: Avenir-Heavy;
               font-size: 20px;
-              margin-top: 5px;
+              margin: 5px 0 20px 0;
             }
             p {
               font-family: Avenir-Medium;
