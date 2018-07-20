@@ -223,7 +223,7 @@ export default {
               {
                   img: './img/documents.png',
                   title: '文档',
-                  content: <span>优化Dubbo <a href="http://nacos.io/#/docs/what-is-nacos.md"> 文档</a>。</span>,
+                  content: <span>优化Nacos <a href="http://nacos.io/#/docs/what-is-nacos.md"> 文档</a>。</span>,
               },
               {
                   img: './img/pullrequest.png',
