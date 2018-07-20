@@ -1,0 +1,44 @@
+.bone {
+  width: 24px;
+  height: 2px;
+  position: relative;
+  &::before {
+    position: absolute;
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    left: 0;
+    top: -2px;
+  }
+  &::after {
+    position: absolute;
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    right: 0;
+    top: -2px;
+  }
+  &-dark {
+    background-color: #1161F6;
+    &::before {
+      background-color: #1161F6;
+    }
+    &::after {
+      background-color: #1161F6;
+    }
+  }
+  &-light {
+    background-color: #fff;
+    opacity: 0.8;
+    &::before {
+      background-color: #fff;
+      opacity: 0.8;
+    }
+    &::after {
+      background-color: #fff;
+      opacity: 0.8;
+    }
+  }
+}
