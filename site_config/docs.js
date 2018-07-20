@@ -81,6 +81,22 @@ export default {
                 title: 'Nacos RoadMap',
                 link: '/docs/roadmap.md',
               },
+                {
+                    title: 'Nacos with SpringCloud',
+                    link: '/docs/use-nacos-with-springcloud.md',
+                },
+                {
+                    title: 'Nacos with Dubbo',
+                    link: '/docs/use-nacos-with-dubbo.md',
+                },
+                {
+                    title: 'Nacos with K8s',
+                    link: '/docs/use-nacos-with-kubernetes.md',
+                },
+                {
+                    title: 'Nacos with Istio',
+                    link: '/docs/use-nacos-with-istio.md',
+                },
             ],
           },
           {
@@ -178,6 +194,22 @@ export default {
                 title: 'Nacos规划',
                 link: '/docs/roadmap.md',
               },
+                {
+                    title: 'Nacos支持SpringCloud生态',
+                    link: '/docs/use-nacos-with-springcloud.md',
+                },
+                {
+                    title: 'nacos支持dubbo生态',
+                    link: '/docs/use-nacos-with-dubbo.md',
+                },
+                {
+                    title: 'Nacos支持k8s',
+                    link: '/docs/use-nacos-with-kubernetes.md',
+                },
+                {
+                    title: 'nacos支持istio',
+                    link: '/docs/use-nacos-with-istio.md',
+                },
             ],
           },
           {
