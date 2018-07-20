@@ -3,13 +3,13 @@ export default {
     barText: 'Blog',
     postsTitle: 'All posts',
     list: [
-      {
-        title: 'The first Dubbo meetup has been held in Beijing',
-        author: 'Huxing Zhang',
-        dateStr: 'May 12nd，2018',
-        desc: 'The first Dubbo meetup has successfully been held in Beijing, over 400+ people were present. What a great event! ',
-        link: '/blog/dubbo-meetup-beijing-may-12th-2018.md',
-      }
+        {
+            title: 'Nacos - 阿里巴巴注册中心和配置中心开源计划',
+            author: '@Penn(PingGuo)',
+            dateStr: 'June 1st, 2018',
+            desc: '阿里巴巴计划在7月份开启一个名叫Nacos的新开源项目, 在活动演讲中，坤宇介绍了这个开源项目的初衷，他表示 “将通过Nacos项目将阿里巴巴在建设共享服务体系中使用的服务发现、配置及服务管理平台贡献给开源社区"。',
+            link: '/blog/Nacos-is-Coming.md',
+        },
     ]
   },
   'zh-cn': {
@@ -17,32 +17,25 @@ export default {
     postsTitle: '所有文章',
     list: [
       {
-        title: '基于DNS的服务发现 TODO 正己',
-        author: '@beiwei30',
+        title: '微服务架构中基于DNS的服务发现',
+        author: '@zhengji',
         dateStr: 'June 2nd, 2018',
-        desc: '现代的分布式服务框架的基本概念与 RMI 是类似的，同样是使用 Java 的 Interface 作为服务契约，通过注册中心来完成服务的注册和发现，远程通讯的细节也是通过代理类来屏蔽。',
-        link: '/blog/dubbo-101.md',
+        desc: '当前，微服务架构已经成为企业尤其是互联网企业技术选型的一个重要参考。微服务架构中涉及到很多模块，本文将重点介绍微服务架构的服务注册与发现以及如何基于DNS做服务发现。',
+        link: '/blog/DNS-SD.md',
       },
       {
-        title: 'Nacos - 阿里巴巴注册中心和配置中心开源计划 TODO 坤宇',
-        author: '@cvictory',
+        title: 'Nacos - 阿里巴巴注册中心和配置中心开源计划',
+        author: '@Penn(PingGuo)',
         dateStr: 'June 1st, 2018',
-        desc: '主要讲述如何配置dubbo，按照配置方式上分，可以分为：XML配置，properties方式配置，注解方式配置，API调用方式配置。',
-        link: '/blog/dubbo-basic-usage-dubbo-provider-configuration.md',
+        desc: '阿里巴巴计划在7月份开启一个名叫Nacos的新开源项目, 在活动演讲中，坤宇介绍了这个开源项目的初衷，他表示 “将通过Nacos项目将阿里巴巴在建设共享服务体系中使用的服务发现、配置及服务管理平台贡献给开源社区"。',
+        link: '/blog/Nacos-is-Coming.md',
       },
       {
-        title: '注册中心实战 TODO 亦盏',
-        author: 'Huxing Zhang',
-        dateStr: 'May 28th, 2018',
-        desc: 'dubbo-spring-boot-project致力于简化 Dubbo RPC 框架在Spring Boot应用场景的开发，同时也整合了Spring Boot特性。',
-        link: '/blog/spring-boot-dubbo-start-stop-analysis.md',
-      },
-      {
-        title: 'Nacos开源 TODO 慕义',
-        author: '@hengyunabc',
+        title: '阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾',
+        author: '@muyi',
         dateStr: 'May 20th, 2018',
-        desc: '要提高代码执行效率，一个重要的原则就是尽量避免CPU把流水线清空，那么提高分支预测的成功率就非常重要。那么对于代码里，如果某个switch分支概率很高，是否可以考虑代码层面帮CPU把判断提前，来提高代码执行效率呢？',
-        link: '/blog/optimization-branch-prediction.md',
+        desc: "本文简单描述了Eureka1.0存在的架构问题，Eureka2.0设想的架构。详细回顾了阿里巴巴的服务注册中心ConfigServer产品从2008年建设元年至今经历的关键架构演进。通过这个文章你会对基于AP模式的注册中心在技术发展过程中将会碰到的问题有所感知。\n",
+        link: '/blog/alibaba-configserver.md',
       },
     ]
   },
