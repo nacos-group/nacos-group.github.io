@@ -67,22 +67,22 @@ export default {
         {
           img: './img/mailinglist.png',
           title: 'Mailing List',
-          content: <span>Be sure to follow our <Link to="mailto:nacos_dev@linux.alibaba.com">our community addition guidelines</Link></span>,
+          content: <span>Be sure to follow our <a href="mailto:nacos_dev@linux.alibaba.com" target="__blank">our community addition guidelines</a></span>,
         },
         {
           img: './img/issue.png',
           title: 'Issue',
-          content: <span>Reporting issues via <Link to="https://github.com/alibaba/nacos/issues">Github issues.</Link></span>,
+          content: <span>Reporting issues via <a href="https://github.com/alibaba/nacos/issues" target="__blank">Github issues.</a></span>,
         },
         {
           img: './img/documents.png',
           title: 'Documents',
-          content: <span>Improve the <Link to="https://github.com/xuechaos/nacos.io/tree/master/docs">documentation.</Link></span>,
+          content: <span>Improve the <a href="https://github.com/xuechaos/nacos.io/tree/master/docs" target="__blank">documentation.</a></span>,
         },
         {
           img: './img/pullrequest.png',
           title: 'Pull Request',
-          content: <span>Send your awesome enhancement via <Link to="https://github.com/alibaba/nacos/pulls">Pull requests.</Link></span>,
+          content: <span>Send your awesome enhancement via <a href="https://github.com/alibaba/nacos/pulls" target="__blank">Pull requests.</a></span>,
         },
       ],
     },
@@ -205,22 +205,22 @@ export default {
               {
                   img: './img/mailinglist.png',
                   title: '邮件列表',
-                  content: <span>发送 <a href="mailto:nacos_dev@linux.alibaba.com">邮件列表 </a>参与讨论。</span>,
+                  content: <span>发送 <a href="mailto:nacos_dev@linux.alibaba.com" target="__blank">邮件列表 </a>参与讨论。</span>,
               },
               {
                   img: './img/issue.png',
                   title: '报告缺陷',
-                  content: <span>通过<a href="https://github.com/alibaba/nacos/issues"> Github issues </a>报告缺陷。</span>,
+                  content: <span>通过<a href="https://github.com/alibaba/nacos/issues" target="__blank"> Github issues </a>报告缺陷。</span>,
               },
               {
                   img: './img/documents.png',
                   title: '文档',
-                  content: <span>优化Nacos <a href="http://nacos.io/#/docs/what-is-nacos.md"> 文档</a>。</span>,
+                  content: <span>优化Nacos <a href="http://nacos.io/#/docs/what-is-nacos.md" target="__blank"> 文档</a>。</span>,
               },
               {
                   img: './img/pullrequest.png',
                   title: 'Pull Request',
-                  content: <span>提交 <a href="https://github.com/alibaba/nacos/pulls"> Pull requests </a>来修复问题。</span>,
+                  content: <span>提交 <a href="https://github.com/alibaba/nacos/pulls" target="__blank"> Pull requests </a>来修复问题。</span>,
               },
           ],
       },
