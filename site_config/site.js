@@ -18,10 +18,10 @@ export default {
         text: 'COMMUNITY',
         link: '/community',
       },
-      {
-        text: 'ALI-SUPPORT',
-        href: 'https://developer.aliyun.com/opensource/project/nacos',
-      },
+      // {
+      //   text: 'ALI-SUPPORT',
+      //   href: 'https://developer.aliyun.com/opensource/project/nacos',
+      // },
     ],
     disclaimer: {
       title: 'Vision',
@@ -73,10 +73,10 @@ export default {
         text: '社区',
         link: '/community',
       },
-      {
-        text: '阿里开发者中心',
-        href: 'https://developer.aliyun.com/opensource/project/nacos',
-      },
+      // {
+      //   text: '阿里开发者中心',
+      //   href: 'https://developer.aliyun.com/opensource/project/nacos',
+      // },
     ],
     disclaimer: {
       title: '愿景',

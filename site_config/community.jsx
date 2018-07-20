@@ -7,20 +7,27 @@ export default {
     events: {
       title: 'Events & News',
       list: [
+          {
+              img: 'https://cdn.yuque.com/lark/0/2018/png/15914/1530083408486-b4698533-8e69-4e0a-9f3a-fdb1cdfbd290.png',
+              title: '阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾',
+              content: '本文详细回顾了阿里巴巴的服务注册中心ConfigServer产品从2008年建设元年至今经历的关键架构演进。通过这个文章你会对基于AP模式的注册中心在技术发展过程中将会碰到的问题有所感知。',
+              dateStr: 'March 06，2018',
+              link: '/blog/alibaba-configserver.md',
+          },
         {
-          img: '',
-          title: 'Nacos',
-          content: 'Nacos is an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native application.',
+          img: '/img/kunyu.JPG',
+          title: 'Nacos - 阿里巴巴注册中心和配置中心开源计划',
+          content: '阿里巴巴计划开启一个名叫Nacos的新开源项目,坤宇介绍了这个开源项目的初衷，他表示 “将通过Nacos项目将阿里巴巴在建设共享服务体系中使用的服务发现、配置及服务管理平台贡献给开源社区"。',
           dateStr: 'March 06，2018',
-          link: '/blog',
+          link: '/blog/Nacos-is-Coming.md',
         },
-        {
-          img: '',
-          title: 'Nacos',
-          content: 'Nacos is an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native application.',
-          dateStr: 'March 06，2018',
-          link: '/blog',
-        },
+          {
+              img: 'https://cdn.yuque.com/lark/0/2018/png/7601/1525185700084-16f2c073-0c2b-49c0-b85b-ce2ca1163326.png',
+              title: '微服务架构中基于DNS的服务注册与发现',
+              content: '当前，微服务架构已经成为企业尤其是互联网企业技术选型的一个重要参考。微服务架构中涉及到很多模块，本文将重点介绍微服务架构的服务注册与发现以及如何基于DNS做服务发现。',
+              dateStr: 'March 06，2018',
+              link: '/blog/DNS-SD.md',
+          },
       ]
     },
     contacts: {
@@ -86,63 +93,48 @@ export default {
           title: 'Dubbo and Dubbo Mesh',
           content: <span>Dubbo and Nacos are the classic combination from production practice of Aibaba's large-scale micro-service. Compared to traditional registry centers such as ZooKeeper and configuration center solutions, when building a microservice application platform by using cloud native and Service Mesh paradigm, with the use of Nacos in Dubbo, all the power of Dubbo in the large-scale microservice management, traffic management, service integration and sharing can be fully released.</span>,
           tags: [
-            {
-              text: 'gRPC',
-              link: '',
-              bgColor: '#7A63FC',
-            },
-            {
-              text: 'HTTP',
-              link: '',
-              bgColor: '#00D0D9',
-            },
-            {
-              text: 'JsonRPC',
-              link: '',
-              bgColor: '#00D0D9',
-            },
+              {
+                  text: 'Dubbo',
+                  link: 'http://dubbo.io/',
+                  bgColor: '#7A63FC',
+              },
+              {
+                  text: 'Dubbo Mesh',
+                  link: 'http://dubbo.io/',
+                  bgColor: '#00D0D9',
+              },
           ]
         },
         {
           title: 'Kubernetes and CNCF',
           content: <span>Nacos supports service discovery and dynamic configuration management required by Kubernetes and CNCF. Nacos can replace completely and seamlessly Kubernetes’ primary DNS-based Service Discovery solutions. Nacos is featured with providing more service governance, which includes management of service domain, service health and life cycle management, traffic management and intelligent routing strategy management and etc. Nacos also enhances the management of ConfigMap, including version configuration and gated launch and etc.</span>,
           tags: [
-            {
-              text: 'gRPC',
-              link: '',
-              bgColor: '#7A63FC',
-            },
-            {
-              text: 'HTTP',
-              link: '',
-              bgColor: '#00D0D9',
-            },
-            {
-              text: 'JsonRPC',
-              link: '',
-              bgColor: '#00D0D9',
-            },
+              {
+                  text: 'Kubernetes',
+                  link: 'https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/',
+                  bgColor: '#7A63FC',
+              },
+              {
+                  text: 'CNCF',
+                  link: 'https://www.cncf.io/',
+                  bgColor: '#00D0D9',
+              },
           ]
         },
         {
           title: 'Spring Cloud',
           content: <span>Nacos is fully compatible and seamlessly supports the relevant API and main related functions of Spring Cloud. You can use Nacos as a configuration service for Spring Cloud Config Server or a better alternative for product of service discovery such as Eureka/Consul/ZooKeeper and etc. Nacos brings many feature enhancements required by the production and micro-service governance in configuration management and service management.</span>,
           tags: [
-            {
-              text: 'gRPC',
-              link: '',
-              bgColor: '#7A63FC',
-            },
-            {
-              text: 'HTTP',
-              link: '',
-              bgColor: '#00D0D9',
-            },
-            {
-              text: 'JsonRPC',
-              link: '',
-              bgColor: '#00D0D9',
-            },
+              {
+                  text: 'Spring Cloud',
+                  link: 'http://projects.spring.io/spring-cloud/',
+                  bgColor: '#7A63FC',
+              },
+              {
+                  text: 'Microservice',
+                  link: 'http://microservices.io/',
+                  bgColor: '#00D0D9',
+              },
           ],
         },
       ],
@@ -153,27 +145,27 @@ export default {
     events: {
       title: '事件 & 新闻',
       list: [
-        {
-          img: '',
-          title: 'Nacos 发布啦',
-          content: 'Nacos 是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。',
-          dateStr: 'july 20，2018',
-          link: '/blog',
-        },
-        {
-          img: '',
-          title: 'Nacos 发布啦',
-          content: 'Nacos 是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。',
-          dateStr: 'july 20，2018',
-          link: '/blog',
-        },
-        {
-          img: '',
-          title: 'Nacos 发布啦',
-          content: 'Nacos 是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。',
-          dateStr: 'july 20，2018',
-          link: '/blog',
-        },
+          {
+              img: 'https://cdn.yuque.com/lark/0/2018/png/15914/1530083408486-b4698533-8e69-4e0a-9f3a-fdb1cdfbd290.png',
+              title: '阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾',
+              content: '本文详细回顾了阿里巴巴的服务注册中心ConfigServer产品从2008年建设元年至今经历的关键架构演进。通过这个文章你会对基于AP模式的注册中心在技术发展过程中将会碰到的问题有所感知。',
+              dateStr: 'March 06，2018',
+              link: '/blog/alibaba-configserver.md',
+          },
+          {
+              img: '/img/kunyu.JPG',
+              title: 'Nacos - 阿里巴巴注册中心和配置中心开源计划',
+              content: '阿里巴巴计划开启一个名叫Nacos的新开源项目,坤宇介绍了这个开源项目的初衷，他表示 “将通过Nacos项目将阿里巴巴在建设共享服务体系中使用的服务发现、配置及服务管理平台贡献给开源社区"。',
+              dateStr: 'March 06，2018',
+              link: '/blog/Nacos-is-Coming.md',
+          },
+          {
+              img: 'https://cdn.yuque.com/lark/0/2018/png/7601/1525185700084-16f2c073-0c2b-49c0-b85b-ce2ca1163326.png',
+              title: '微服务架构中基于DNS的服务注册与发现',
+              content: '当前，微服务架构已经成为企业尤其是互联网企业技术选型的一个重要参考。微服务架构中涉及到很多模块，本文将重点介绍微服务架构的服务注册与发现以及如何基于DNS做服务发现。',
+              dateStr: 'March 06，2018',
+              link: '/blog/DNS-SD.md',
+          },
       ]
     },
       contacts: {
@@ -241,12 +233,12 @@ export default {
           tags: [
             {
               text: 'Dubbo',
-              link: '',
+              link: 'http://dubbo.io/',
               bgColor: '#7A63FC',
             },
             {
               text: 'Dubbo Mesh',
-              link: '',
+              link: 'http://dubbo.io/',
               bgColor: '#00D0D9',
             },
           ]
@@ -257,12 +249,12 @@ export default {
           tags: [
             {
               text: 'Kubernetes',
-              link: '',
+              link: 'https://kubernetes.io/docs/concepts/overview/what-is-kubernetes/',
               bgColor: '#7A63FC',
             },
             {
               text: 'CNCF',
-              link: '',
+              link: 'https://www.cncf.io/',
               bgColor: '#00D0D9',
             },
           ]
@@ -273,12 +265,12 @@ export default {
           tags: [
             {
               text: 'Spring Cloud',
-              link: '',
+              link: 'http://projects.spring.io/spring-cloud/',
               bgColor: '#7A63FC',
             },
             {
               text: 'Microservice',
-              link: '',
+              link: 'http://microservices.io/',
               bgColor: '#00D0D9',
             },
           ],
