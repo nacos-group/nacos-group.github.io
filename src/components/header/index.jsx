@@ -105,16 +105,32 @@ class Header extends React.Component {
               src={type === 'primary' ? './img/menu_white.png' : './img/menu_gray.png'}
             />
             <ul>
-              {siteConfig[language].pageMenu.map(item => (
-                <li
-                  className={classnames({
-                    'menu-item': true,
-                    [`menu-item-${type}`]: true,
-                    [`menu-item-${type}-active`]: window.location.hash.split('?')[0].slice(1).split('/')[1] === item.link.split('/')[1],
-                  })}
-                >
-                  <Link to={item.link}>{item.text}</Link>
-                </li>))}
+              {siteConfig[language].pageMenu.map((item) => {
+                if (item.link) {
+                  return (
+                    <li
+                      className={classnames({
+                        'menu-item': true,
+                        [`menu-item-${type}`]: true,
+                        [`menu-item-${type}-active`]: window.location.hash.split('?')[0].slice(1).split('/')[1] === item.link.split('/')[1],
+                      })}
+                    >
+                      <Link to={item.link}>{item.text}</Link>
+                    </li>
+                  );
+                } else if (item.href) {
+                  return (
+                    <li
+                      className={classnames({
+                        'menu-item': true,
+                        [`menu-item-${type}`]: true,
+                      })}
+                    >
+                      <a href={item.href} target="__blank">{item.text}</a>
+                    </li>
+                  );
+                }
+              })}
             </ul>
           </div>
         </div>

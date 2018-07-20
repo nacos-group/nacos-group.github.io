@@ -20,7 +20,7 @@ export default {
       },
       {
         text: 'ALI-SUPPORT',
-        link: 'https://developer.aliyun.com/opensource/project/nacos',
+        href: 'https://developer.aliyun.com/opensource/project/nacos',
       },
     ],
     disclaimer: {
@@ -75,7 +75,7 @@ export default {
       },
       {
         text: '阿里开发者中心',
-        link: 'https://developer.aliyun.com/opensource/project/nacos',
+        href: 'https://developer.aliyun.com/opensource/project/nacos',
       },
     ],
     disclaimer: {
