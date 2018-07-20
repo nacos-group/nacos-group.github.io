@@ -1,83 +1,68 @@
-# What is Nacos
+# 什么是Nacos
+
+## 概览
+
+欢迎来到 Nacos 的世界！
+
+Nacos 致力于帮助您发现、配置和管理微服务。Nacos 提供了一组简单易用的特性集，帮助您实现动态服务发现、服务配置管理、服务及流量管理。
+
+Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 Nacos 是构建以“服务”为中心的现代应用架构(例如微服务范式、云原生范式)的服务基础设施。
+
+## 什么是 Nacos？
+服务（Service）是 Nacos 世界的一等公民。Nacos 支持几乎所有主流类型的服务的发现、配置和管理：
+
+[Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/)
+[gRPC](https://grpc.io/docs/guides/concepts.html#service-definition) & [Dubbo RPC Service](https://dubbo.incubator.apache.org/#/?lang=en-us) 
+[Spring Cloud RESTful Service](https://spring.io/understanding/REST)
+
+Nacos 的关键特性包括:
+
+* **服务发现和服务健康监测**
+	
+	Nacos 支持基于 DNS 和基于 RPC 的服务发现。服务提供者使用 [原生SDK TODO](xx)、[OpenAPI TODO](xx)、或一个[独立的Agent TODO](xx)注册 Service 后，服务消费者可以使用[DNS TODO](xx) 或[HTTP&API TODO](xx)查找和发现服务。
+    
+	Nacos 提供实时健康检查，阻止服务向不健康的主机或服务实例发送请求。Nacos 支持传输层(ping 或 TCP)和应用层(如 http、redis、MySQL、用户自定义）的健康检查。 对于复杂的云环境和网络拓扑环境（如 VPC、边缘服务等）的健康检查，Nacos 提供 agent 模式和服务端模式。Nacos 还提供统一的健康检查仪表盘，帮助您管理服务可用性及流量。
+                 
+* **动态配置服务**
+
+    动态配置服务可以让您以中心化、外部化和动态化的方式管理所有环境的应用配置和服务配置。
+    
+    动态配置消除了配置变更时重新部署应用和服务的需要，让配置变得更加高效和敏捷。
+    
+    配置中心化管理让无状态服务实现变得更简单，让服务按需弹性扩展变得更容易。
+	
+	Nacos 提供了一个 [简单易用的UI TODO](xx) 帮助您管理所有的服务和应用的配置。Nacos 还提供包括配置版本跟踪、金丝雀发布、回滚配置以及客户进程配置更新状态跟踪在内的一系列开箱即用的配置管理特性，帮助您更安全地管理配置变更和控制配置变更的风险。
+	
+* **动态 DNS 服务**
+
+    动态 DNS 服务支持权重路由，让您更容易地实现中间层负载均衡、更灵活的路由策略、流量控制以及数据中心内网的简单DNS解析服务。动态DNS服务帮助您更容易地实现以 DNS 协议为基础的服务发现。
+
+    Nacos 提供了一些简单的 [DNS APIs TODO](xx) 帮助您管理服务的关联域名和可用的 IP:Port 列表.
+	
+* **服务及其元数据管理**
+
+    Nacos 能让您从微服务平台建设的视角管理数据中心的所有服务及元数据，包括管理服务的描述、生命周期、服务的静态依赖分析、服务的健康状态、服务的流量管理、路由及安全策略、服务的 SLA 以及最首要的 Metrics 统计数据。
+* [更多的特性列表 TODO ...](xx)
+
+## Nacos 全景图
+
+![nacos_landscape.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530514380550-31251a79-02bb-4155-bc4f-5a9f436551a2.png) 
+
+如 Nacos 全景图所示，Nacos 无缝支持开源生态，例如[Dubbo and Dubbo Mesh](xx)、[Spring Cloud](xx)、[Kubernetes and CNCF](xx)。
+
+使用 Nacos 简化服务发现、配置管理、服务治理及管理的解决方案，让开源生态微服务管理更加容易。
+
+关于如何在这些生态中使用 Nacos，请参考以下文档：
+
+[Nacos与Spring Cloud一起使用 TODO](xx)
+[Nacos与Dubbo一起使用 TODO](xx)
+[Nacos与Kubernetes一起使用 TODO](xx)
+[Nacos与gRPC一起使用 TODO](xx)
+[Nacos与lstio一起使用 TODO](xx)
 
 
-## Overview
+## 下一步
 
-Welcome to Nacos! 
-
-Nacos is all things about discovery, config and manage your micro-services. Nacos provides users with an easy-to-use feature set for dynamic service discovery, service configuration management, service provisioning and management. 
-
-Nacos help users to build, deliver and manage their micro-services platform more agile and easier.
-
-Nacos is an infrastructure when build modern service centric application by using micro-services or cloud-native approaches.
-
-## What is Nacos?
-
-Service is a first-class citizen in Nacos. Nacos support almost all type of services, for example: Kubernetes service, gRPC/Dubbo service or RESTFul service.
-
-The key features of Consul are:
-
-* **Service Discovery And Service Health Check**
-
-Nacos supports both DNS-based and RPC-based (eg Dubbo/gRPC) service discovery, producer can register a service with [native sdk]() or [openAPI]() or with [a dedicated agent](), consumer can discovery this service with either DNS or HTTP.
-
-Nacos also provide real-time health checks of services to prevent sending requests to unhealthy hosts, Nacos support multi-level health check, for example, 4-layer (tcp) or 7-layer(http, redis, mysql), with complex network topology, Nacos support both agent mode or server mode health check. Nacos also provide a unity service health dashboard when use with Kubernetes or spring cloud.
-
-* **Dynamic Configuration Management**
+继续阅读 [快速开始 TODO](xxx) 以快速上手 Nacos。
 
 
-Dynamic Configuration Service allows you to manage the configuration of all applications or services in a centralized and dynamic manner in all environments. 
-
-Dynamic configuration eliminates the need to redeploy applications and services when configuring updates. 
-
-It can be more convenient to help you achieve stateless services and more easily achieve on-demand elastic expansion of service instances.
-
-Naocs provide an easy-to-use UI to help you management all of your configurations and provide 
-some out-of-box features such as config version track, gray release and rollback, client push status tracking etc.
-
-* **Dynamic DNS Service**
-
-Dynamic DNS services that support weighted routing make it easier for you to implement mid-tier load balancing, flexible routing policies, flow control, and simple DNS resolution services in your production environment within your data center, helping you to more easily implement DNS-based Service discovery.
-
-
-* **Service and MetaData Management**
-
-Service management support manages all services and their metadata from the perspective of the microservices platform. This includes the service description file, life cycle, static data center topology, service health status, traffic, routing and security rules, SLA, and first line Metrics et al.
-
-
-you can more Nacos features with [features list]()
-
-
-## Nacos and Other Open Sources ecology
-
-[ͼƬ]
-
-
-As the above Nacos landscape shows, Nacos seamless support many open source platform,
-such as Dubbo, Spring Cloud, kubernetes and service mesh.
-
-With Nacos, you can take advantage of various aspects of Nacos' capabilities to simplify solutions in service discovery, configuration management more easilier to manage microservices on these platforms.
-
-for more information, you can check with following:
-
-* [use Nacos with Kubernetes]()
-* [use Nacos with Dubbo]()
-* [use Nacos with Spring Cloud]()
-* [using Nacos with service mesh]()
-
-
-## Basic Architecture and Concepts
-
-
-
-* **Naming Service/Service Registry**
-* **Configuration**  define aa
-* **Service MetaData**  define aa
-* **Producer**  define aa
-* **Consumer**   define aa
-* ...
-
-
-## What's next
-
-Continue onwards with [the getting started guide] () to get Consul up and running.

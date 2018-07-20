@@ -1,85 +1,70 @@
-## 公共概念
-### 区域（Region）
+## 地域 （Region）
+<span data-type="color" style="color:rgb(51, 51, 51)"><span data-type="background" style="background-color:rgb(255, 255, 255)">物理的数据中心，资源创建成功后不能更换。</span></span>
 
-物理集群部署的最大单位，从地理上看，可以是一个城市或者多个城市，不同区域的集群之间不感知。
+## 可用区（Available Zone）
+同一<span data-type="color" style="color:rgb(51, 51, 51)"><span data-type="background" style="background-color:rgb(255, 255, 255)">地域内，电力和网络互相独立的物理区域。同一可用区内，实例的网络延迟较低。</span></span>
 
-### 接入点（Endpoint）
+## 接入点（Endpoint）
+地域的某个服务的入口域名。
 
-### 命名空间
-用于进行租户粒度的配置隔离。不同的命名空间下，可以存在相同的 Group，Data ID 的配置。Namespace 的常用场景之一是不同环境的配置的区分隔离，如开发测试环境和生产环境的配置隔离等。
+## 命名空间（Namespace）
+用于进行租户粒度的配置隔离。不同的命名空间下，可以存在相同的 Group 或 Data ID 的配置。Namespace 的常用场景之一是不同环境的配置的区分隔离，例如开发测试环境和生产环境的资源（如配置、服务）隔离等。
 
-### 可用区（Available Zone）
+## 配置 (Configuration)
+在系统开发过程中，开发者通常会将一些需要变更的参数、变量等从代码中分离出来独立管理，以独立的配置文件的形式存在。目的是让静态的系统工件或者交付物（如 WAR，JAR 包等）更好地和实际的物理运行环境进行适配。配置管理一般包含在系统部署的过程中，由系统管理员或者运维人员完成。配置变更是调整系统运行时的行为的有效手段。
 
-一个区域下面可以分出多个可用区，用户默认访问当前可用区，一个区域下不同可用区的数据需要实时同步。
+## 配置管理 (Configuration Management)
+系统配置的编辑、存储、分发、变更管理、历史版本管理、变更审计等所有与配置相关的活动。
 
+## 配置项 (Configuration Item)
+一个具体的可配置的参数与其值域，通常以 param-key=param-value 的形式存在。例如我们常配置系统的日志输出级别（logLevel=INFO|WARN|ERROR） 就是一个配置项。
 
-## 配置管理
-### 配置
+## 配置集 (Configuration Set)
+一组相关或者不相关的配置项的集合称为配置集。在系统中，一个配置文件通常就是一个配置集，包含了系统各个方面的配置。例如，一个配置集可能包含了数据源、线程池、日志级别等配置项。
 
-在系统开发过程中通常会将一些需要变更的参数、变量等从代码中分离出来独立管理，以独立的配置文件的形式存在。目的是让静态的系统工件或者交付物（如 WAR，JAR 包等）更好地和实际的物理运行环境进行适配。配置管理一般包含在系统部署的过程中，由系统管理员或者运维人员完成这个步骤。配置变更是调整系统运行时的行为的有效手段之一。
+## 配置集 ID（Data ID）
+Nacos 中的某个配置集的 ID。配置集 ID 是组织划分配置的维度之一。Data ID 通常用于组织划分系统的配置集。一个系统或者应用可以包含多个配置集，每个配置集都可以被一个有意义的名称标识。Data ID 通常采用类 Java 包（如 com.taobao.tc.refund.log.level）的命名规则保证全局唯一性。此命名规则非强制。
 
-### 配置管理
-在数据中心中，系统中所有配置的编辑、存储、分发、变更管理、历史版本管理、变更审计等所有与配置相关的活动统称为配置管理。
+## 配置分组（Group）
+Nacos 中的一组配置集，是组织配置的维度之一。通过一个有意义的字符串（如 Buy 或 Trade ）对配置集进行分组，从而区分 Data ID 相同的配置集。当您在 Nacos 上创建一个配置时，如果未填写配置分组的名称，则配置分组的名称默认采用 DEFAULT\_GROUP 。配置分组的常见场景：不同的应用或组件使用了相同的配置类型，如 database\_url 配置和 MQ\_topic 配置。
 
-### 配置项
+## 配置快照 (Configuration Snapshot)
+Nacos 的客户端 SDK 会在本地生成配置的快照。当客户端无法连接到 Nacos Server 时，可以使用配置快照显示系统的整体容灾能力。配置快照类似于 Git 中的本地 commit，也类似于缓存，会在适当的时机更新，但是并没有缓存过期（expiration）的概念。
 
-是指一个具体的可配置的参数与其值域，通常是 param-key=param-value 的形式存在。例如我们常配置系统的日志输出级别（logLevel=INFO|WARN|ERROR） 就是一个配置项。
+## 服务（Service）
+通过预定义接口网络访问的提供给客户端的软件功能。
 
-### 配置集
+## 服务名（Service Name）
+服务提供的标识，通过该标识可以唯一确定其指代的服务。
 
-一组相关或者不相关的配置项的集合称为配置集。通常系统中的一个配置文件就是一个配置集，其内包含了系统各个方面配置。例如一个配置集可能包含了系统如数据源、线程池、日志级别等配置项。
+## 服务注册中心（Service Registry）
+存储服务实例和服务负载均衡策略的数据库。
 
-### 配置集 ID（Data ID）
+## 服务发现（Service Discovery）
+在计算机网络上，（通常使用服务名）对服务下的实例的地址和元数据进行探测，并以预先定义的接口提供给客户端进行查询。
 
-在 ACM 中代表配置集的 ID, 是配置组织的维度之一。一般通过 Data ID 来组织划分系统的配置集。一个系统或者应用可以包含多个配置集，每个配置集可以用有意义的名称来标识这个配置集。Data ID 通常采用类 Java 包命名方式（如com.taobao.tc.refund.log.level）的命名规则保证全局唯一性，此命名规则非强制。
+## 元信息（Metadata）
+<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">自定义配置信息，如容灾策略、负载均衡策略、鉴权配置、各种标记对，从作用范围来看，分为服务级别的元信息、虚拟集群的元信息及实例的元信息。</span></span>
 
-### 配置分组（Group）
+## 应用（Application）
+用于标识服务提供方的服务的属性。
 
-ACM 中配置集的分组，是配置组织的维度之一。通常使用一个有意义的字符串来分组配置集，例如 Buy，Trade 等，用以区分相同 Data ID 的配置集。ACM 创建配置时，如果用户未填 Group 名字，则默认用 DEFAULT\_GROUP 代替。Group 的常用场景是同一个配置类型用于不同应用或者组件，如 database\_url 配置，MQ\_topic 配置等。
-
-### 配置快照
-
-ACM 客户端 SDK 会在本地生成配置的快照。当客户端无法连接到 ACM Server 时，可以利用快照提示系统的整体容灾能力。配置快照类似于 Git 中的本地 commit 的概念，也类似缓存，会在适当的时机更新，但是没有缓存过期（expire）的概念。
-
-
-## 服务发现
-### 服务元信息（Service Metadata）
-<strong><span data-type="background" style="background-color:rgb(255, 255, 255)"><span data-type="color" style="color:rgb(245, 34, 45)">服务</span></span></strong><span data-type="background" style="background-color:rgb(255, 255, 255)">级别的</span>自定义配置<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">信息，如容灾策略、负载均衡策略、鉴权配置、各种tag。</span></span>
-
-### 应用（Application）
-不同的__<span data-type="color" style="color:rgb(245, 34, 45)">服务</span>__可以根据服务的提供方进行分类，这种分类的其中一个单位是<span data-type="color" style="color:rgb(245, 34, 45)"><strong>应用</strong></span>。
-
-### 分组（Service Group）
+## 分组（Service Group）
 不同的服务可以归类到同一分组。
 
-### 虚拟集群（Virtual Cluster）
-同一个<span data-type="color" style="color:rgb(245, 34, 45)"><strong>服务</strong></span>下的服务实例可以再进行分类，这个分类的一个可能单位是<span data-type="color" style="color:rgb(245, 34, 45)"><strong>分组</strong></span>。
+## 虚拟集群（Virtual Cluster）
+同一个服务下的服务实例可以被进一步分类，分类单位可以是虚拟集群。
 
-### 虚拟集群元信息（Virtual Cluster Metadata）
-__<span data-type="color" style="color:rgb(245, 34, 45)">分组</span>__级别的自定义配置，这个配置对同一个分组下的实例生效。
+## 实例（Instance）
+提供一个或多个服务的具有可访问网络地址（IP:Port）的进程。
 
-### 默认端口（Default Port）
-虚拟集群配置之一，表示注册到该虚拟集群下的实例，如果不指定端口，则使用该默认端口提供服务。
+## 权重（Weight）
+实例级别的配置。权重为浮点数。权重越大，分配给该实例的流量越大。
 
-### 使用实例端口进行健康检查（Use Port of IP for Health Check）
-虚拟集群配置之一，表示是否使用实例注册的端口进行健康检查。
+## 健康检查（Health Check）
+以指定方式检查服务下挂载 IP 的健康度，从而确认该 IP 是否能提供服务。根据检查结果，IP 会被判断为健康或不健康。对服务发起解析请求时，不健康的 IP 不会返回给客户端。
 
-### 默认检查端口（Default Check Port）
-虚拟集群配置之一，表示对该虚拟集群下的实例进行健康检查的默认端口，当指定不使用实例注册的端口进行健康检查时，则使用该端口进行健康检查。
-
-### 实例（Instance）
-提供一个或多个__<span data-type="color" style="color:rgb(245, 34, 45)">服务</span>__的具有可访问网络地址（IP:Port）的进程。
-
-### 实例元信息（Instance Metadata）
-__<span data-type="color" style="color:rgb(245, 34, 45)">实例</span>__级别的自定义配置。
-
-### 权重（Weight）
-实例级别的配置，权重是一个浮点型数。权重越大，表示该实例期望被分配的流量越大。
-
-### 健康检查（Health Check）
-以指定方式检查服务下挂载IP的健康度，确认该IP能否提供服务。根据检查结果，IP会被判断为健康或不健康。对服务发起解析请求时，不健康的IP不会返回给客户端。
-
-### 健康保护阈值（Protect Threshold）
-为了防止因部分IP不健康导致流量全部流向健康IP，继而造成流量压力把健康IP压垮并形成雪崩效应，健康保护阈值应定义一个0到1之间的浮点数。当域名健康IP占总IP的比例小于该值时，无论IP是否健康，都会将这个IP返回给客户端。这样做虽然损失了一部分流量，但是保证了剩余健康IP能正常工作。
+## 健康保护阈值（Protect Threshold）
+为了防止因部分 IP 不健康导致流量全部流向健康IP，继而造成流量压力把健康 IP 压垮并形成雪崩效应，应将健康保护阈值定义为一个 0 到 1 之间的浮点数。当域名健康 IP 占总 IP 的比例小于该值时，无论IP是否健康，都会将这个IP返回给客户端。这样做虽然损失了一部分流量，但是保证了剩余健康IP能正常工作。
 
 

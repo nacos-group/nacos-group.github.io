@@ -8,7 +8,7 @@
 GET
 
 ### 请求URL
-/nacos/config.co
+/nacos/v1/cs/configs
 
 ### 请求参数
 
@@ -32,20 +32,20 @@ GET
 | :--- | :--- | :--- |
 | 400 | Bad Request | 客户端请求中的语法错误 |
 | 403 | Forbidden | 没有权限 |
-| 404 | Not Found | 客户端错误，未找到 |
+| 404 | Not Found | 无法找到资源 |
 | 500 | Internal Server Error | 服务器内部错误 |
 | 200 | OK | 正常 |
 
 
 ### 示例
 * 请求示例
-
-    ```
-    http:serverIp:8080/nacos/config.co?dataId=dataIdparam&group=groupParam&tenant=tenantParam
-
+    
+    ```plain
+    http:serverIp:8080/nacos/v1/cs/configs?dataId=dataIdparam&group=groupParam&tenant=tenantParam
+    
     ```
 * 返回示例
-
+    
     ```
     contentTest
     ```
@@ -62,7 +62,7 @@ GET
 POST
 
 ### 请求URL
-/nacos/config.co
+/nacos/v1/cs/configs/listener
 
 ### 请求参数
 
@@ -70,9 +70,9 @@ POST
   <table>
     <colgroup>
       <col width="auto" />
-      <col width="auto" />
-      <col width="auto" />
-      <col width="auto" />
+      <col width="118px" />
+      <col width="115px" />
+      <col width="325px" />
     </colgroup>
     <tbody>
       <tr>
@@ -91,7 +91,7 @@ POST
       </tr>
       <tr>
         <td rowspan="1" colSpan="1">
-          <div data-type="p">Probe-Modify-Request</div>
+          <div data-type="p">Listening-Configs</div>
         </td>
         <td rowspan="1" colSpan="1">
           <div data-type="p">string</div>
@@ -126,7 +126,7 @@ POST
 
 | 名称 | 类型 | 是否必须 | 描述 |
 | :--- | :--- | :--- | :--- |
-| longPullingTimeout | string | 是 | 长轮训等待 30s，此处填写 30000。 |
+| Long-Pulling-Timeout | string | 是 | 长轮训等待 30s，此处填写 30000。 |
 
 
 ### 参数说明
@@ -147,7 +147,7 @@ POST
 | :--- | :--- | :--- |
 | 400 | Bad Request | 客户端请求中的语法错误 |
 | 403 | Forbidden | 没有权限 |
-| 404 | Not Found | 客户端错误，未找到 |
+| 404 | Not Found | 无法找到资源 |
 | 500 | Internal Server Error | 服务器内部错误 |
 | 200 | OK | 正常 |
 
@@ -156,12 +156,11 @@ POST
 * 请求示例
 
 ```
-http://serverIp:8080/nacos/config.co
+http://serverIp:8080/nacos/v1/cs/configs/listener
 
 POST 请求体数据内容：
 
-Probe-Modify-Request=dataId^2group^2contentMD5^2tenant^1
-
+Listening-Configs=dataId^2group^2contentMD5^2tenant^1
 ```
 
 * 返回示例
@@ -184,8 +183,7 @@ dataId^2group^2tenant^1
 POST
 
 ### 请求 URL
-
-/nacos/basestone.do
+/nacos/v1/cs/configs
 
 ### 请求参数
 
@@ -210,7 +208,7 @@ POST
 | :--- | :--- | :--- |
 | 400 | Bad Request | 客户端请求中的语法错误 |
 | 403 | Forbidden | 没有权限 |
-| 404 | Not Found | 客户端错误，未找到 |
+| 404 | Not Found | 无法找到资源 |
 | 500 | Internal Server Error | 服务器内部错误 |
 | 200 | OK | 正常 |
 
@@ -219,7 +217,7 @@ POST
 * 请求示例
 
 ```
-http:serverIp:8080/nacos/basestone.do?method=syncUpdateAll
+http:serverIp:8080/nacos/v1/cs/configs
 
 http body：
 dataId=dataIdparam&group=groupParam&tenant=tenantParam&content=contentParam
@@ -237,10 +235,10 @@ true
 删除 Nacos 上的配置。
 
 ### 请求类型
-POST
+DELETE
 
 ### 请求 URL
-/nacos/datum.do
+/nacos/v1/cs/configs
 
 ### 请求参数
 
@@ -264,7 +262,7 @@ POST
 | :--- | :--- | :--- |
 | 400 | Bad Request | 客户端请求中的语法错误 |
 | 403 | Forbidden | 没有权限 |
-| 404 | Not Found | 客户端错误，未找到 |
+| 404 | Not Found | 无法找到资源 |
 | 500 | Internal Server Error | 服务器内部错误 |
 | 200 | OK | 正常 |
 
@@ -273,10 +271,7 @@ POST
 * 请求示例
 
 ```
-http:serverIp:8080/nacos/datum.do?method=deleteAllDatums
-
-http body：
-dataId=dataIdparam&group=groupParam
+http:serverIp:8080/nacos/v1/cs/configs?dataId=dataIdparam&group=groupParam
 
 ```
 
@@ -296,14 +291,14 @@ PUT
 
 ### 请求路径
 ```plain
-/nacos/naming/instance
+/nacos/v1/ns/instance
 ```
 
 ### 请求参数
 
 | 名称 | 类型 | 是否必选 | 描述 |
 | :--- | :--- | :--- | --- |
-| ip | 字符串 | 是 | 服务实例ip |
+| ip | 字符串 | 是 | 服务实例IP |
 | port | int | 是 | 服务实例port |
 | tenant | 字符串 | 否 | 租户ID |
 | weight | double | 否 | 权重 |
@@ -321,8 +316,7 @@ service参数格式：
 | app | int | 否 | 应用名 |
 | group | 字符串 | 否 | 服务分组 |
 | protectThreshold | double | 否 | 保护阈值 |
-| enableHealthCheck | boolean | 否 | 是否打开心跳检查 |
-| enableClientBeat | boolean | 否 | 是否打开客户端心跳 |
+| healthCheckMode | String | 否 | 健康检查模式：server，client或者none |
 | metadata | JSON | 否 | 扩展信息 |
 
 cluster参数格式：
@@ -352,20 +346,20 @@ HTTP类型：
 | type=HTTP | 字符串 | 是 | 检查类型 |
 | curlPath | 字符串 | 是 | 检查路径 |
 | curlHost | 字符串 | 否 | 检查host，存放HTTP Header |
-| checkCode | int | 否，默认200 | 预期返回码 |
+| expectedResponseCode | int | 否，默认200 | 预期返回码 |
 
 MYSQL类型：
 
 | 名称 | 类型 | 是否必选 | 描述 |
 | :--- | :--- | :--- | --- |
 | type=MYSQL | 字符串 | 是 | 检查类型 |
-| user | 字符串 | 是 | mysql用户 |
-| pwd | 字符串 | 是 | mysql密码 |
+| user | 字符串 | 是 | MySQL用户 |
+| pwd | 字符串 | 是 | MySQL密码 |
 | cmd | 字符串 | 是 | 执行命令 |
 
 ### 示例请求
 ```plain
-curl -X PUT 'http://127.0.0.1:8080/nacos/naming/instance?cluster=%7b%22metadata%22%3a%7b%7d%2c%22defaultCheckPort%22%3a80%2c%22defaultPort%22%3a80%2c%22healthChecker%22%3a%7b%22type%22%3a%22TCP%22%7d%2c%22name%22%3a%22%22%2c%22useIPPort4Check%22%3atrue%7d&port=8080&healthy=true&ip=11.11.11.11&weight=1.0&serviceName=nacos.test.3&encoding=GBK&tenant=n1''
+curl -X PUT 'http://127.0.0.1:8080/nacos/v1/ns/instance?cluster=%7b%22metadata%22%3a%7b%7d%2c%22defaultCheckPort%22%3a80%2c%22defaultPort%22%3a80%2c%22healthChecker%22%3a%7b%22type%22%3a%22TCP%22%7d%2c%22name%22%3a%22%22%2c%22useIPPort4Check%22%3atrue%7d&port=8080&healthy=true&ip=11.11.11.11&weight=1.0&serviceName=nacos.test.3&encoding=GBK&tenant=n1''
 ```
 ### 示例返回
 ok
@@ -379,7 +373,7 @@ DELETE
 
 ### 请求路径
 ```plain
-/nacos/naming/instance
+/nacos/v1/ns/instance
 ```
 
 ### 请求参数
@@ -387,14 +381,14 @@ DELETE
 | 名称 | 类型 | 是否必选 | 描述 |
 | :--- | :--- | :--- | --- |
 | serviceName | 字符串 | 是 | 服务名 |
-| ip | 字符串 | 是 | 服务实例ip |
+| ip | 字符串 | 是 | 服务实例IP |
 | port | int | 是 | 服务实例port |
 | cluster | 字符串 | 是 | 集群名称 |
 | tenant | 字符串 | 否 | 租户ID |
 
 ### 示例请求
 ```plain
-curl -X DELETE 127.0.0.1:8080/nacos/naming/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&cluster=TEST1
+curl -X DELETE 127.0.0.1:8080/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&cluster=TEST1
 ```
 ### 示例返回
 ok
@@ -407,7 +401,7 @@ POST
 
 ### 请求路径
 ```plain
-/nacos/naming/instance
+/nacos/v1/ns/instance
 ```
 
 ### 请求参数
@@ -415,7 +409,7 @@ POST
 | 名称 | 类型 | 是否必选 | 描述 |
 | :--- | :--- | :--- | --- |
 | serviceName | 字符串 | 是 | 服务名 |
-| ip | 字符串 | 是 | 服务实例ip |
+| ip | 字符串 | 是 | 服务实例IP |
 | port | int | 是 | 服务实例port |
 | cluster | 字符串 | 是 | 集群名称 |
 | tenant | 字符串 | 否 | 租户ID |
@@ -424,7 +418,7 @@ POST
 
 ### 示例请求
 ```plain
-curl -X POST 127.0.0.1:8080/nacos/naming/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&cluster=TEST1&weight=8&metadata={}
+curl -X POST 127.0.0.1:8080/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&cluster=TEST1&weight=8&metadata={}
 ```
 ### 示例返回
 ok
@@ -438,7 +432,7 @@ GET
 
 ### 请求路径
 ```plain
-/nacos/naming/instances
+/nacos/v1/ns/instances
 ```
 
 ### 请求参数
@@ -446,13 +440,13 @@ GET
 | 名称 | 类型 | 是否必选 | 描述 |
 | :--- | :--- | :--- | --- |
 | serviceName | 字符串 | 是 | 服务名 |
-| tenant | 字符串 | 否 | 租户Id |
+| tenant | 字符串 | 否 | 租户ID |
 | clusters | 字符串，多个集群用逗号分隔 | 否 | 集群名称 |
 | healthyOnly | boolean | 否，默认为false | 是否只返回健康实例 |
 
 ### 示例请求
 ```plain
-curl -X GET 127.0.0.1:8080/nacos/naming/instances?serviceName=nacos.test.1
+curl -X GET 127.0.0.1:8080/nacos/v1/ns/instances?serviceName=nacos.test.1
 ```
 ### 示例返回
 ```json
@@ -484,7 +478,7 @@ GET
 
 ### 请求路径
 ```plain
-/nacos/naming/instance
+/nacos/v1/ns/instance
 ```
 
 ### 请求参数
@@ -494,13 +488,13 @@ GET
 | serviceName | 字符串 | 是 | 服务名 |
 | ip | 字符串 | 是 | 实例IP |
 | port | 字符串 | 是 | 实例端口 |
-| tenant | 字符串 | 否 | 租户Id |
+| tenant | 字符串 | 否 | 租户ID |
 | clusters | 字符串，多个集群用逗号分隔 | 否 | 集群名称 |
 | healthyOnly | boolean | 否，默认为false | 是否只返回健康实例 |
 
 ### 示例请求
 ```plain
-curl -X GET '127.0.0.1:8080/nacos/naming/instance?serviceName=nacos.test.2&ip=10.10.10.10&port=8888&cluster=DEFAULT'
+curl -X GET '127.0.0.1:8080/nacos/v1/ns/instance?serviceName=nacos.test.2&ip=10.10.10.10&port=8888&cluster=DEFAULT'
 ```
 ### 示例返回
 ```json

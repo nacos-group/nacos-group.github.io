@@ -5,11 +5,11 @@ export default {
         title: 'Nacos ',
         children: [
           {
-            title: 'what is Nacos',
+            title: 'What is Nacos',
             opened: true,
             children: [
               {
-                title: 'what is nacos',
+                title: 'What is Nacos',
                 link: '/docs/what-is-nacos.md',
               },
               {
@@ -23,69 +23,73 @@ export default {
             ],
           },
           {
-            title: 'user guide',
+            title: 'User Guide',
             opened: true,
             children: [
               {
-                title: 'quickstart',
+                title: 'Quick Start',
                 link: '/docs/quick-start.md',
               },
+
               {
-                title: 'SDK',
-                link: '/docs/sdk.md',
+                 title: 'Java SDK',
+                 link: '/docs/sdk.md',
               },
               {
-                title: 'open-API',
+                  title: 'Other Language',
+                  link: '/docs/other-language.md',
+               },
+              {
+                title: 'Open-API',
                 link: '/docs/open-API.md',
-              }
+              },
             ],
           },
           {
-            title: 'admin guide',
+            title: 'Admin Guide',
             children: [
               {
-                title: 'deployment',
-                link: '/docs/simple-ops.md',
+                title: 'Deployment Guide',
+                link: '/docs/deployment.md',
               },
               {
-                title: 'operations',
-                link: '/docs/cluster-management.md',
+                title: 'Management OpenAPI',
+                link: '/docs/managementAPI.md',
               },
               {
-                title: 'cluster management',
-                link: '/docs/cluster-management.md',
+                title: 'Nacos Operator CLI Guide',
+                link: '/docs/CLI-guide.md',
               },
               {
-                title: 'open-API',
-                link: '/docs/open-API.md',
-              }
+                title: 'Admin Console Guide',
+                link: '/docs/console-guide.md',
+              },
             ],
           },
           {
-            title: 'contributor guide',
+            title: 'Contributor Guide',
             children: [
               {
-                title: 'Contributing to Nacos',
+                title: 'Contribute to Nacos',
                 link: '/docs/contributing.md',
               },
               {
-                title: 'request template',
-                link: '/docs/request_template.md',
+                title: 'Pull Request Template',
+                link: '/docs/pull-request.md',
               },
               {
-                title: 'roadMap',
-                link: '/docs/request_template.md',
-              }
+                title: 'Nacos RoadMap',
+                link: '/docs/roadmap.md',
+              },
             ],
           },
           {
-            title: 'community',
-            link: '/docs/community.md',
+            title: 'Community',
             children: [
               {
-                title: 'community',
+                title: 'Community',
                 link: '/docs/community.md',
-              }
+              },
             ],
           },
         ],
@@ -125,33 +129,37 @@ export default {
                 link: '/docs/quick-start.md',
               },
               {
-                title: 'SDK指南',
-                link: '/docs/sdk.md',
+                 title: 'Java的SDK',
+                  link: '/docs/sdk.md',
               },
               {
-                title: 'open-API指南',
-                link: '/docs/open-API.md',
-              }
+                  title: '其他语言的SDK',
+                  link: '/docs/other-language.md',
+              },
+              {
+                  title: 'Open-API指南',
+                  link: '/docs/open-API.md',
+              },
             ],
           },
           {
             title: '运维指南',
             children: [
               {
-                title: '部署',
-                link: '/docs/simple-ops.md',
+                title: '部署手册',
+                link: '/docs/deployment.md',
               },
               {
-                title: '运维',
-                link: '/docs/cluster-management.md',
+                title: '运维API',
+                link: '/docs/managementAPI.md',
               },
               {
-                title: '集群管理',
-                link: '/docs/cluster-management.md',
+                title: '命令行手册',
+                link: '/docs/CLI-guide.md',
               },
               {
-                title: 'open-API',
-                link: '/docs/open-API.md',
+                title: '控制台手册',
+                link: '/docs/console-guide.md',
               }
             ],
           },
@@ -163,18 +171,17 @@ export default {
                 link: '/docs/contributing.md',
               },
               {
-                title: '请求模板',
-                link: '/docs/request_template.md',
+                title: 'pull request模板',
+                link: '/docs/pull-request.md',
               },
               {
-                title: '规划',
-                link: '/docs/request_template.md',
-              }
+                title: 'Nacos规划',
+                link: '/docs/roadmap.md',
+              },
             ],
           },
           {
             title: '社区',
-            link: '/docs/community.md',
             children: [
               {
                 title: '社区',
@@ -185,6 +192,6 @@ export default {
         ],
       },
     ],
-    barText: 'Documentation',
+    barText: 'Nacos 文档',
   },
 };

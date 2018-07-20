@@ -1,59 +1,19 @@
+## Maven
+```
+<groupId>com.alibaba.nacos</groupId>
+<artifactId>nacos-client</artifactId>
+<version>0.1.0</version>
+```
 
-# Configration Management
+
+# Configuration Management
 ## Get configuration
-
 ### Description
 
-Used to get the configuration from ACM when the service starts.
+Get configuration from Nacos when a service starts.
 
-```
-public static String getConfig(String dataId, String group, long timeoutMs) throws NacosException
-
-```
-
-### Request parameters
-
-| Parameter name | Parameter type | Description |
-| :--- | :--- | :--- |
-| dataId | String | Configuration ID. Use a naming rule like package.class (for example, com.taobao.tc.refund.log.level) to ensure global uniqueness. It is recommended to indicate business meaning of the configuration in the "class" section. Use lower case for all characters. Use alphabetical letters and these four special characters (".", ":", "-", "\_") only. Up to 256 characters are allowed. |
-| group | String | Configuration group. To ensure uniqueness, format such as __product name: module name __(for example, ACM:Test) is preferred. Use alphabetical letters and these four special characters (".", ":", "-", "\_") only. Up to 128 characters are allowed. |
-| timeout | string | Length of configuration read time-out (in ms). Recommended value: 3000. |
-
-
-### Return values
-
-| Parameter type | Description |
-| :--- | :--- |
-| String | Configuration value |
-
-
-### Request example
-
-```
-try {
-    // Initialize the configuration service, and the console automatically obtains the following parameters through the sample code.
-    ConfigService.init("${endpoint}", "${namespace}", "${accessKey}", "${secretKey}");
-    // Actively get the configuration.
-	String content = ConfigService.getConfig("${dataId}", "${group}", 3000);
-	System.out.println(content);
-} catch (ConfigException e) {
-    // TODO Auto-generated catch block
-    e.printStackTrace();
-}
-```
-
-### Exception specification
-
-A ConfigException exception is thrown in case of a configuration read time-out or a network error.
-
-## Listen for configurations
-### Description
-
-Use the ACM dynamic configuration listening API to enable ACM to send configuration change notifications.
-
-```
-public static void addListener(String dataId, ConfigChangeListenerAdapter listener)
-
+```java
+public String getConfig(String dataId, String group, long timeoutMs) throws NacosException
 ```
 
 ### Request parameters
@@ -68,10 +28,10 @@ public static void addListener(String dataId, ConfigChangeListenerAdapter listen
     <tbody>
       <tr>
         <td rowspan="1" colSpan="1">
-          <div data-type="p">Parameter name</div>
+          <div data-type="p">Name</div>
         </td>
         <td rowspan="1" colSpan="1">
-          <div data-type="p">Parameter type</div>
+          <div data-type="p">Type</div>
         </td>
         <td rowspan="1" colSpan="1">
           <div data-type="p">Description</div>
@@ -82,11 +42,12 @@ public static void addListener(String dataId, ConfigChangeListenerAdapter listen
           <div data-type="p">dataId</div>
         </td>
         <td rowspan="1" colSpan="1">
-          <div data-type="p">String</div>
+          <div data-type="p">string</div>
+          <div data-type="p"></div>
         </td>
         <td rowspan="1" colSpan="1">
-          <div data-type="p">Configuration ID. Use a naming rule like package.class (for example, com.taobao.tc.refund.log.level) to ensure global uniqueness. It is recommended to indicate business meaning of the configuration in the &quot;class&quot; section. Use lower
-            case for all characters. Use alphabetical letters and these four special characters (&quot;.&quot;, &quot;:&quot;, &quot;-&quot;, &quot;_&quot;) only. Up to 256 characters are allowed.</div>
+          <div data-type="p">Configuration ID. Use a naming rule similar to package.class (for example, com.taobao.tc.refund.log.level) to ensure global uniqueness. It is recommended to indicate business meaning of the configuration in the &quot;class&quot; section. Use
+            lower case for all characters. Use alphabetical letters and these four special characters (&quot;.&quot;, &quot;:&quot;, &quot;-&quot;, &quot;_&quot;) only. Up to 256 characters are allowed.</div>
         </td>
       </tr>
       <tr>
@@ -94,11 +55,112 @@ public static void addListener(String dataId, ConfigChangeListenerAdapter listen
           <div data-type="p">group</div>
         </td>
         <td rowspan="1" colSpan="1">
-          <div data-type="p">String</div>
+          <div data-type="p">string</div>
         </td>
         <td rowspan="1" colSpan="1">
-          <div data-type="p">Configuration group. To ensure uniqueness, format such as **product name: module name **(for example, ACM:Test) is preferred. Use alphabetical letters and these four special characters (&quot;.&quot;, &quot;:&quot;, &quot;-&quot;, &quot;_&quot;)
-            only. Up to 128 characters are allowed.</div>
+          <div data-type="p">Configuration group. To ensure uniqueness, format such as <strong>product name: module name </strong>(for example, Nacos:Test) is preferred. Use alphabetical letters and these four special characters (&quot;.&quot;, &quot;:&quot;, &quot;-&quot;,
+            &quot;_&quot;) only. Up to 128 characters are allowed.</div>
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">timeout</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">long</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">Length of configuration read time-out (in ms). Recommended value: 3000.</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+### Return values
+
+| Type | Description |
+| :--- | :--- |
+| string | configuration value |
+
+
+### Request example
+
+```java
+try {
+    // Initialize the configuration service, and the console automatically obtains the following parameters through the sample code.
+	String serverAddr = "{serverAddr}";
+	String dataId = "{dataId}";
+	String group = "{group}";
+	Properties properties = new Properties();
+	properties.put("serverAddr", serverAddr);
+	ConfigService configService = NacosFactory.createConfigService(properties);
+    // Actively get the configuration.
+	String content = configService.getConfig(dataId, group, 5000);
+	System.out.println(content);
+} catch (NacosException e) {
+    // TODO Auto-generated catch block
+    e.printStackTrace();
+}
+```
+
+### Exception specification
+
+A ConfigException is thrown in case of a configuration read time-out or a network error.
+
+## Listen configuration
+### Description
+
+Use dynamic configuration listening API to enable Nacos to send configuration change notifications.
+
+```java
+public void addListener(String dataId, ConfigChangeListenerAdapter listener)
+```
+
+### Request parameters
+
+<div class="bi-table">
+  <table>
+    <colgroup>
+      <col width="auto" />
+      <col width="auto" />
+      <col width="auto" />
+    </colgroup>
+    <tbody>
+      <tr>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">Name</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">Type</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">Description</div>
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">dataId</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">string</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">Configuration ID. Use a naming rule similar to package.class (for example, com.taobao.tc.refund.log.level) to ensure global uniqueness. It is recommended to indicate business meaning of the configuration in the &quot;class&quot; section. Use
+            lower case for all characters. Use alphabetical letters and these four special characters (&quot;.&quot;, &quot;:&quot;, &quot;-&quot;, &quot;_&quot;) only. Up to 256 characters are allowed.</div>
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">group</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">string</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">Configuration group. To ensure uniqueness, format such as <strong>product name: module name </strong> (for example, Nacos:Test) is preferred. Use alphabetical letters and these four special characters (&quot;.&quot;, &quot;:&quot;, &quot;-&quot;,
+            &quot;_&quot;) only. Up to 128 characters are allowed.</div>
         </td>
       </tr>
       <tr>
@@ -116,27 +178,36 @@ public static void addListener(String dataId, ConfigChangeListenerAdapter listen
   </table>
 </div>
 
-
 ### Return values
 
-| Parameter type | Description |
+| Type | Description |
 | :--- | :--- |
-| String | Configuration value. This value is returned through the callback function during initialization or configuration modification. |
-
+| string | Configuration value. This value is returned through the callback function during initialization or configuration modification. |
 
 ### Request example
 
-```
+```java
 
 // Initialize the configuration service, and the console automatically obtains the following parameters through the sample code.
-ConfigService.init("${endpoint}", "${namespace}", "${accessKey}", "${secretKey}");
-// Add listeners to the configuration during initialization, which calls back a notification of configuration changes.
-ConfigService.addListener("${dataId}", "${group}", new ConfigChangeListener() {
-    public void receiveConfigInfo(String configInfo) {
-        // After the configuration is updated, the latest value is returned to the user by this callback function.
-        System.out.println(configInfo);
-    }
+String serverAddr = "{serverAddr}";
+String dataId = "{dataId}";
+String group = "{group}";
+Properties properties = new Properties();
+properties.put("serverAddr", serverAddr);
+ConfigService configService = NacosFactory.createConfigService(properties);
+String content = configService.getConfig(dataId, group, 5000);
+System.out.println(content);
+configService.addListener(dataId, group, new Listener() {
+	@Override
+	public void receiveConfigInfo(String configInfo) {
+		System.out.println("receive1:" + configInfo);
+	}
+	@Override
+	public Executor getExecutor() {
+		return null;
+	}
 });
+
 // Keep the main thread alive throughout the test, because the configuration subscription runs in a daemon thread, which exits once the main thread exits. The following code is not required in a real environment.
 while (true) {
     try {
@@ -147,44 +218,116 @@ while (true) {
 }
 ```
 
-## Publish configuration
+## Delete Listening
 ### Description
 
-It publishes ACM configurations automatically with program to reduce operation and maintenance costs with automation.
+Cancel listen configuration. No more notification after cancellation.
 
-__Note:__ It uses the same publishing interface to create or modify a configuration. If the specified configuration doesn’t exist, then it creates a configuration. If the specified configuration exists, then it updates the configuration.
-
+```java
+public void removeListener(String dataId, String group, Listener listener)
 ```
-public static boolean publishConfig(String dataId, String group, String content) throws ConfigException
-
-```
-
 
 ### Request parameters
 
-| Parameter name | Parameter type | Description |
+<div class="bi-table">
+  <table>
+    <colgroup>
+      <col width="auto" />
+      <col width="auto" />
+      <col width="auto" />
+    </colgroup>
+    <tbody>
+      <tr>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">Name</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">Type</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">Description</div>
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">dataId</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">string</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">Configuration ID. Use a naming rule similar to package.class (for example, com.taobao.tc.refund.log.level) to ensure global uniqueness. It is recommended to indicate business meaning of the configuration in the &quot;class&quot; section. Use
+            lower case for all characters. Use alphabetical letters and these four special characters (&quot;.&quot;, &quot;:&quot;, &quot;-&quot;, &quot;_&quot;) only. Up to 256 characters are allowed.</div>
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">listener</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">ConfigChangeListenerAdapter</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">Listener. Configuration changes go into the callback function of the listener.</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### Request example
+
+```java
+String serverAddr = "{serverAddr}";
+String dataId = "{dataId}";
+String group = "{group}";
+Properties properties = new Properties();
+properties.put("serverAddr", serverAddr);
+ConfigService configService = NacosFactory.createConfigService(properties);
+configService.removeListener(dataId, group, yourListener);
+```
+
+## Publish configuration
+### Description
+
+Publish Nacos configurations automatically to reduce the operation and maintenance cost.
+
+__Note:__ It uses the same publishing interface to create or modify a configuration. If the specified configuration doesn’t exist, it will create a configuration. If the specified configuration exists, it will update the configuration.
+
+```java
+public boolean publishConfig(String dataId, String group, String content) throws NacosException
+
+```
+
+### Request parameters
+
+| Name | Type | Description |
 | :--- | :--- | :--- |
-| dataId | String | Configuration ID. Naming convention similar to package.class (for example com.taobao.tc.refund.log.level) is used for ensuring the global uniqueness We recommended that you define the class part based on business meaning. All characters must be in lower case. Only English characters and four special characters (“. ”, “: ”, “-”, “\_”) are allowed. It must not exceed 256 bytes. |
-| group | String | Configuration group. We recommend that you use product name: module name (for example ACM:Test) to ensure the uniqueness. Only English characters and four special characters (“. ”, “: ”, “-”, “\_”) are allowed. It must not exceed 128 bytes. |
-| content | string | Configuration content. It must not exceed 100K bytes. |
+| dataId | string | Configuration ID. Naming rule is similar to package.class (com.taobao.tc.refund.log.level) is used to ensure the global uniqueness We recommend that you define class by business meaning. All characters must be in lower case. Use alphabetical letters and these four special characters (".", ":", "-", "\_") only. Up to 256 characters are allowed. |
+| group | string | Configuration group. We recommend that you use product name: module name (for example Nacos:Test) to ensure the uniqueness. Use alphabetical letters and these four special characters (".", ":", "-", "\_") only. Up to 128 characters are allowed. |
+| content | string | Configuration content. No more than 100K bytes. |
 
 ### Response parameters
 
-| Parameter type | Description |
+| Type | Description |
 | :--- | :--- |
 | boolean | If the publishing is successful |
 
 
 ### Request example
 
-```
+```java
 try {
     // Initialize the configuration service. Retrieves the following parameters in console with sample code
-    ConfigService.init("${endpoint}", "${namespace}", "${accessKey}", "${secretKey}");
-    // Actively retrieves configuration
-	boolean isPublishOk = ConfigService.publishConfig("${dataId}", "${group}", "${content}");
+	String serverAddr = "{serverAddr}";
+	String dataId = "{dataId}";
+	String group = "{group}";
+	Properties properties = new Properties();
+	properties.put("serverAddr", serverAddr);
+    ConfigService configService = NacosFactory.createConfigService(properties);
+	boolean isPublishOk = configService.publishConfig(dataId, group, "content");
 	System.out.println(isPublishOk);
-} catch (ConfigException e) {
+} catch (NacosException e) {
     // TODO Auto-generated catch block
     e.printStackTrace();
 }
@@ -198,12 +341,12 @@ In case of reading configuration timeout or network issues, ConfigException exce
 ## Delete configuration
 ### Description
 
-It deletes ACM configurations automatically with program to reduce operation and maintenance costs with automation.
+It deletes Nacos configurations automatically with program to reduce operation and maintenance costs with automation.
 
 __Note:__ If the specified configuration exists, then it deletes the configuration. If the specified configuration doesn’t exist, then it returns a successful message.
 
-```
-public static boolean removeConfig(String dataId, String group) throws ConfigException
+```java
+public boolean removeConfig(String dataId, String group) throws NacosException
 
 ```
 
@@ -226,14 +369,19 @@ public static boolean removeConfig(String dataId, String group) throws ConfigExc
 
 ### Request example
 
-```
+```java
 try {
     // Initialize the configuration service. Retrieves the following parameters in console with sample code
-    ConfigService.init("${endpoint}", "${namespace}", "${accessKey}", "${secretKey}");
-    // Actively retrieves configuration
-	boolean isRemoveOk = ConfigService.removeConfig("${dataId}", "${group}");
+	String serverAddr = "{serverAddr}";
+	String dataId = "{dataId}";
+	String group = "{group}";
+	Properties properties = new Properties();
+	properties.put("serverAddr", serverAddr);
+
+	ConfigService configService = NacosFactory.createConfigService(properties);
+	boolean isRemoveOk = configService.removeConfig(dataId, group);
 	System.out.println(isRemoveOk);
-} catch (ConfigException e) {
+} catch (NacosException e) {
     // TODO Auto-generated catch block
     e.printStackTrace();
 }
@@ -248,35 +396,11 @@ In case of reading configuration timeout or network issues, ConfigException exce
 ### Description
 Register an instance to service.
 ```java
-    /**
-     * Register a instance to service
-     *
-     * @param serviceName name of service
-     * @param ip          instance ip
-     * @param port        instance port
-     * @throws NacosException
-     */
-    void registerInstance(String serviceName, String ip, int port) throws NacosException;
+void registerInstance(String serviceName, String ip, int port) throws NacosException;
 
-    /**
-     * Register a instance to service with specified cluster name
-     *
-     * @param serviceName name of service
-     * @param ip          instance ip
-     * @param port        instance port
-     * @param clusterName instance cluster name
-     * @throws NacosException
-     */
-    void registerInstance(String serviceName, String ip, int port, String clusterName) throws NacosException;
+void registerInstance(String serviceName, String ip, int port, String clusterName) throws NacosException;
 
-    /**
-     * Register a instance to service with specified instance properties
-     *
-     * @param serviceName name of service
-     * @param instance    instance to register
-     * @throws NacosException
-     */
-    void registerInstance(String serviceName, Instance instance) throws NacosException;
+void registerInstance(String serviceName, Instance instance) throws NacosException;
 ```
 
 ### Request Parameters
@@ -307,8 +431,7 @@ instance.setMetadata(instanceMeta);
 
 Service service = new Service("nacos.test.4");
 service.setApp("nacos-naming");
-service.setEnableClientBeat(true);
-service.setEnableHealthCheck(true);
+service.setHealthCheckMode("server");
 service.setProtectThreshold(0.8F);
 service.setGroup("CNCF");
 Map<String, String> serviceMeta = new HashMap<>();
@@ -319,7 +442,7 @@ instance.setService(service);
 Cluster cluster = new Cluster();
 cluster.setName("TEST5");
 AbstractHealthChecker.Http healthChecker = new AbstractHealthChecker.Http();
-healthChecker.setCheckCode(400);
+healthChecker.setExpectedResponseCode(400);
 healthChecker.setCurlHost("USer-Agent|Nacos");
 healthChecker.setCurlPath("/xxx.html");
 cluster.setHealthChecker(healthChecker);
@@ -336,26 +459,9 @@ naming.registerInstance("nacos.test.4", instance);
 ### Description
 Remove instance from service.
 ```java
-    /**
-     * Deregister instance from a service
-     *
-     * @param serviceName name of service
-     * @param ip          instance ip
-     * @param port        instance port
-     * @throws NacosException
-     */
-    void deregisterInstance(String serviceName, String ip, int port) throws NacosException;
+void deregisterInstance(String serviceName, String ip, int port) throws NacosException;
 
-    /**
-     * Deregister instance with specified cluster name from a service
-     *
-     * @param serviceName name of service
-     * @param ip          instance ip
-     * @param port        instance port
-     * @param clusterName     instance cluster name
-     * @throws NacosException
-     */
-    void deregisterInstance(String serviceName, String ip, int port, String clusterName) throws NacosException;
+void deregisterInstance(String serviceName, String ip, int port, String clusterName) throws NacosException;
 ```
 
 ### Request Parameters
@@ -368,7 +474,7 @@ Remove instance from service.
 | clusterName | String | cluster name |
 
 ### Response
-无
+None
 ### Request Example
 ```java
 NamingService naming = NamingFactory.createNaming(System.getProperty("serveAddr"));
@@ -378,24 +484,9 @@ naming.deregisterInstance("nacos.test.3", "11.11.11.11", 8888, "DEFAULT");
 ### Description
 Get all instances of service.
 ```java
-    /**
-     * Get all instances of a service
-     *
-     * @param serviceName name of service
-     * @return A list of instance
-     * @throws NacosException
-     */
-    List<Instance> getAllInstances(String serviceName) throws NacosException;
+List<Instance> getAllInstances(String serviceName) throws NacosException;
 
-    /**
-     * Get all instances within specified clusters of a service
-     *
-     * @param serviceName name of service
-     * @param clusters    list of cluster
-     * @return A list of qualified instance
-     * @throws NacosException
-     */
-    List<Instance> getAllInstances(String serviceName, List<String> clusters) throws NacosException;
+List<Instance> getAllInstances(String serviceName, List<String> clusters) throws NacosException;
 ```
 
 ### Request Parameters
@@ -417,26 +508,9 @@ System.out.println(naming.getAllInstances("nacos.test.3"));
 ### Description
 Get healthy or unhealthy instances of service.
 ```java
-    /**
-     * Get qualified instances of service
-     *
-     * @param serviceName name of service
-     * @param healthy     a flag to indicate returning healthy or unhealthy instances
-     * @return A qualified list of instance
-     * @throws NacosException
-     */
-    List<Instance> selectInstances(String serviceName, boolean healthy) throws NacosException;
+List<Instance> selectInstances(String serviceName, boolean healthy) throws NacosException;
 
-    /**
-     * Get qualified instances within specified clusters of service
-     *
-     * @param serviceName name of service
-     * @param clusters    list of cluster
-     * @param healthy     a flag to indicate returning healthy or unhealthy instances
-     * @return A qualified list of instance
-     * @throws NacosException
-     */
-    List<Instance> selectInstances(String serviceName, List<String> clusters, boolean healthy) throws NacosException;
+List<Instance> selectInstances(String serviceName, List<String> clusters, boolean healthy) throws NacosException;
 ```
 
 ### Request Parameters
@@ -445,7 +519,7 @@ Get healthy or unhealthy instances of service.
 | :--- | :--- | --- |
 | serviceName | String | service name |
 | clusters | List | cluster list |
-| healthy | boolean | healty or not |
+| healthy | boolean | healthy or not |
 
 ### Response
 List<Instance> instance list.
@@ -459,24 +533,9 @@ System.out.println(naming.selectInstances("nacos.test.3", true));
 ### Description
 Get one healthy instance selected by load-balance strategy.
 ```java
-    /**
-     * Select one healthy instance of service using predefined load balance strategy
-     *
-     * @param serviceName name of service
-     * @return qualified instance
-     * @throws NacosException
-     */
-    Instance selectOneHealthyInstance(String serviceName) throws NacosException;
+Instance selectOneHealthyInstance(String serviceName) throws NacosException;
 
-    /**
-     * Select one healthy instance of service using predefined load balance strategy
-     *
-     * @param serviceName name of service
-     * @param clusters    a list of clusters should the instance belongs to
-     * @return qualified instance
-     * @throws NacosException
-     */
-    Instance selectOneHealthyInstance(String serviceName, List<String> clusters) throws NacosException;
+Instance selectOneHealthyInstance(String serviceName, List<String> clusters) throws NacosException;
 ```
 
 ### Request Parameters
@@ -499,24 +558,9 @@ System.out.println(naming.selectOneHealthyInstance("nacos.test.3"));
 ### Description
 Listen for changes of instances under a service.
 ```java
-    /**
-     * Subscribe service to receive events of instances alteration
-     *
-     * @param serviceName name of service
-     * @param listener    event listener
-     * @throws NacosException
-     */
-    void subscribe(String serviceName, EventListener listener) throws NacosException;
+void subscribe(String serviceName, EventListener listener) throws NacosException;
 
-    /**
-     * Subscribe service to receive events of instances alteration
-     *
-     * @param serviceName name of service
-     * @param clusters    list of cluster
-     * @param listener    event listener
-     * @throws NacosException
-     */
-    void subscribe(String serviceName, List<String> clusters, EventListener listener) throws NacosException;
+void subscribe(String serviceName, List<String> clusters, EventListener listener) throws NacosException;
 ```
 
 ### Request Parameters
@@ -545,24 +589,9 @@ naming.subscribe("nacos.test.3", event -> {
 ### Description
 Cancel listening service.
 ```java
-    /**
-     * Unsubscribe event listener of service
-     *
-     * @param serviceName name of service
-     * @param listener    event listener
-     * @throws NacosException
-     */
-    void unsubscribe(String serviceName, EventListener listener) throws NacosException;
+void unsubscribe(String serviceName, EventListener listener) throws NacosException;
 
-    /**
-     * Unsubscribe event listener of service
-     *
-     * @param serviceName name of service
-     * @param clusters    list of cluster
-     * @param listener    event listener
-     * @throws NacosException
-     */
-    void unsubscribe(String serviceName, List<String> clusters, EventListener listener) throws NacosException;
+void unsubscribe(String serviceName, List<String> clusters, EventListener listener) throws NacosException;
 ```
 
 ### Request Parameters
