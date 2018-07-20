@@ -1,33 +1,27 @@
-Nacos supports three types of deployment modes:
+# Nacos支持三种部署模式
 
-* Standalone Mode - used in DEV or TEST environment.
-* Cluster Mode - used in production environment to ensure high-availability.
-* Multi-Cluster Mode - in complicated production mode, you may want to deploy multi-cluster mode to support different business units.
+* 单机模式 - 用于测试和单机试用。
+* 集群模式 - 用于生产环境，确保高可用。
+* 多集群模式 - 用于多数据中心场景。
 
 
-## Running Nacos in Standalone Mode
+## 单机模式下运行Nacos
 ### Linux/Unix/Mac
 * Standalone means it is non-cluster Mode. * 
-sh startup.sh standalone
+sh startup.sh -m standalone
 
 ### Windows
-* standalone means it is non-cluster Mode. * 
-cmd startup.cmd standalone
 
+cmd startup.cmd 
+或者双击 startup.cmd 文件
 
-## Running Nacos in Multi-Node Cluster Mode
+## 集群模式下运行Nacos
 
 ### Linux/Unix/Mac
 sh startup.sh
 
-### Windows
-cmd startup.cmd
-
-
 ## Deploy Nacos in Multi-Cluster Mode
 
-Nacos support a NameServer route request mode�� by which you can design a useful mapping rule to control the request forward to the corresponding cluster, in the mapping rule you can sharding the request by namespace or by tenant etc...
+Nacos支持NameServer路由请求模式，通过它您可以设计一个有用的映射规则来控制请求转发到相应的集群，在映射规则中您可以按命名空间或租户等分片请求...
 
-to setup a NameServer:
-
-* TODO
+### TODO
