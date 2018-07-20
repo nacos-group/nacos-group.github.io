@@ -208,27 +208,27 @@ export default {
       },
       contributorGuide: {
           title: '贡献指南',
-          desc: 'Dubbo社区欢迎任何形式的贡献。',
+          desc: 'Nacos社区欢迎任何形式的贡献。',
           list: [
               {
                   img: './img/mailinglist.png',
                   title: '邮件列表',
-                  content: <span>加入 <a href="https://github.com/apache/incubator-dubbo/wiki/New-contributor-guide">邮件列表 </a>参与讨论。</span>,
+                  content: <span>发送 <a href="mailto:nacos_dev@linux.alibaba.com">邮件列表 </a>参与讨论。</span>,
               },
               {
                   img: './img/issue.png',
                   title: '报告缺陷',
-                  content: <span>通过<a href="https://github.com/apache/incubator-dubbo/issues"> Github issues </a>报告缺陷。</span>,
+                  content: <span>通过<a href="https://github.com/alibaba/nacos/issues"> Github issues </a>报告缺陷。</span>,
               },
               {
                   img: './img/documents.png',
                   title: '文档',
-                  content: <span>优化Dubbo <a href="http://dubbo.apache.org/#/docs/"> 文档</a>。</span>,
+                  content: <span>优化Dubbo <a href="http://nacos.io/#/docs/what-is-nacos.md"> 文档</a>。</span>,
               },
               {
                   img: './img/pullrequest.png',
                   title: 'Pull Request',
-                  content: <span>提交 <a href="https://github.com/apache/incubator-dubbo/pulls"> Pull requests </a>来修复问题。</span>,
+                  content: <span>提交 <a href="https://github.com/alibaba/nacos/pulls"> Pull requests </a>来修复问题。</span>,
               },
           ],
       },

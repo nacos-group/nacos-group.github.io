@@ -32,15 +32,15 @@ export default {
       list: [
         {
           text: 'Overview',
-          link: '/docs/demo.md',
+          link: '/docs/what-is-nacos.md',
         },
         {
           text: 'Quick start',
-          link: '/docs/demo.md',
+          link: '/docs/quick-start.md',
         },
         {
           text: 'Developer guide',
-          link: '/docs/demo.md',
+          link: '/docs/contributing.md',
         },
       ],
     },
@@ -63,7 +63,7 @@ export default {
       },
       {
         text: '文档',
-        link: '/docs/quick-start.md',
+        link: '/docs/what-is-nacos.md',
       },
       {
         text: '博客',
@@ -87,15 +87,15 @@ export default {
       list: [
         {
           text: '概览',
-          link: '/docs/demo.md',
+          link: '/docs/what-is-nacos.md',
         },
         {
           text: '快速开始',
-          link: '/docs/demo.md',
+          link: '/docs/quick-start.md',
         },
         {
           text: '开发者指南',
-          link: '/docs/demo.md',
+          link: '/docs/contributing.md',
         },
       ],
     },
