@@ -17,7 +17,9 @@
   > cd distribution/target/nacos-all/nacos
   
 ### 下载运行包方式
-下载地址 http://nacos.oss-cn-hangzhou-zmf.aliyuncs.com/nacos-server-0.1.0.zip
+下载地址 
+[zip包](http://nacos.oss-cn-hangzhou-zmf.aliyuncs.com/nacos-server-0.1.0.zip)
+[tar.gz包](http://nacos.oss-cn-hangzhou-zmf.aliyuncs.com/nacos-server-0.1.0.tar.gz)
   > unzip nacos-all.zip
   > cd nacos/bin
   

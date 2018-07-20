@@ -18,7 +18,8 @@ There are two ways to get Nacos.
   > cd distribution/target/nacos-all/nacos/bin
   
 ### 2)Download run package 
-[Download](http://nacos.oss-cn-hangzhou-zmf.aliyuncs.com/nacos-server-0.1.0.zip)
+[zip package Download](http://nacos.oss-cn-hangzhou-zmf.aliyuncs.com/nacos-server-0.1.0.zip)
+[tar.gz package Download](http://nacos.oss-cn-hangzhou-zmf.aliyuncs.com/nacos-server-0.1.0.tar.gz)
   > unzip nacos-all.zip 
   > cd nacos/bin
 
