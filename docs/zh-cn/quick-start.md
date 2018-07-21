@@ -11,18 +11,25 @@
 你可以通过两种方式来获取 Nacos。
 
 ### 从 Github 上下载源码方式
-  > unzip nacos-all.zip
-  > cd nacos/
-  > mvn -Prelease-nacos clean install -U  
-  > cd distribution/target/nacos-all/nacos
+
+```
+unzip nacos-source.zip
+cd nacos/
+mvn -Prelease-nacos clean install -U  
+cd distribution/target/nacos-all/nacos/bin
+```
   
-### 下载运行包方式
+### 下载编译后压缩包方式
 下载地址 
 [zip包](http://nacos.oss-cn-hangzhou-zmf.aliyuncs.com/nacos-server-0.1.0.zip)
+
 [tar.gz包](http://nacos.oss-cn-hangzhou-zmf.aliyuncs.com/nacos-server-0.1.0.tar.gz)
-  > unzip nacos-all.zip
-  > cd nacos/bin
-  
+
+```
+  unzip nacos-all.zip
+  cd nacos/bin
+```  
+
 ## 3.启动服务器
 ### Linux/Unix/Mac 
 启动命令(standalone代表着单机模式运行，非集群模式):
@@ -52,3 +59,4 @@
 
 ### Windows
 `cmd shutdown.cmd`
+或者双击shutdown.cmd运行文件。

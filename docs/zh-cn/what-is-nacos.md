@@ -21,7 +21,7 @@ Nacos 的关键特性包括:
 
 * **服务发现和服务健康监测**
 	
-	Nacos 支持基于 DNS 和基于 RPC 的服务发现。服务提供者使用 [原生SDK TODO](xx)、[OpenAPI TODO](xx)、或一个[独立的Agent TODO](xx)注册 Service 后，服务消费者可以使用[DNS TODO](xx) 或[HTTP&API TODO](xx)查找和发现服务。
+	Nacos 支持基于 DNS 和基于 RPC 的服务发现。服务提供者使用 [原生SDK TODO](https://nacos.io/#/docs/sdk.md)、[OpenAPI TODO](https://nacos.io/#/docs/open-API.md)、或一个[独立的Agent TODO](https://nacos.io/#/docs/other-language.md)注册 Service 后，服务消费者可以使用[DNS TODO](xx) 或[HTTP&API TODO](xx)查找和发现服务。
     
 	Nacos 提供实时健康检查，阻止服务向不健康的主机或服务实例发送请求。Nacos 支持传输层(ping 或 TCP)和应用层(如 http、redis、MySQL、用户自定义）的健康检查。 对于复杂的云环境和网络拓扑环境（如 VPC、边缘服务等）的健康检查，Nacos 提供 agent 模式和服务端模式。Nacos 还提供统一的健康检查仪表盘，帮助您管理服务可用性及流量。
                  
@@ -44,7 +44,7 @@ Nacos 的关键特性包括:
 * **服务及其元数据管理**
 
     Nacos 能让您从微服务平台建设的视角管理数据中心的所有服务及元数据，包括管理服务的描述、生命周期、服务的静态依赖分析、服务的健康状态、服务的流量管理、路由及安全策略、服务的 SLA 以及最首要的 Metrics 统计数据。
-* [更多的特性列表 TODO ...](xx)
+* [更多的特性列表 ...](https://nacos.io/#/docs/roadmap.md)
 
 ## Nacos 全景图
 
@@ -56,15 +56,19 @@ Nacos 的关键特性包括:
 
 关于如何在这些生态中使用 Nacos，请参考以下文档：
 
-[Nacos与Spring Cloud一起使用 TODO](xx)
-[Nacos与Dubbo一起使用 TODO](xx)
-[Nacos与Kubernetes一起使用 TODO](xx)
-[Nacos与gRPC一起使用 TODO](xx)
-[Nacos与lstio一起使用 TODO](xx)
+[Nacos与Kubernetes一起使用](https://nacos.io/#/docs/use-nacos-with-kubernetes.md)
+
+[Nacos与Dubbo一起使用](https://nacos.io/#/docs/use-nacos-with-dubbo.md)
+
+[Nacos与gRPC一起使用](https://nacos.io/#/docs/roadmap.md)
+
+[Nacos与Spring Cloud一起使用](https://nacos.io/#/docs/use-nacos-with-springcloud.md)
+
+[Nacos与lstio一起使用](https://nacos.io/#/docs/use-nacos-with-istio.md)
 
 
 ## 下一步
 
-继续阅读 [快速开始 TODO](xxx) 以快速上手 Nacos。
+继续阅读 [快速开始](https://nacos.io/#/docs/quick-start.md) 以快速上手 Nacos。
 
 
