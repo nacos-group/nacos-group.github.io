@@ -11,17 +11,21 @@
 你可以通过两种方式来获取 Nacos。
 
 ### 从 Github 上下载源码方式
-  > unzip nacos-all.zip
-  > cd nacos/
-  > mvn -Prelease-nacos clean install -U  
-  > cd distribution/target/nacos-all/nacos
+```bash
+  unzip nacos-all.zip
+  cd nacos/
+  mvn -Prelease-nacos clean install -U  
+  cd distribution/target/nacos-all/nacos
+```
   
 ### 下载运行包方式
 下载地址 
 [zip包](http://nacos.oss-cn-hangzhou-zmf.aliyuncs.com/nacos-server-0.1.0.zip)
 [tar.gz包](http://nacos.oss-cn-hangzhou-zmf.aliyuncs.com/nacos-server-0.1.0.tar.gz)
-  > unzip nacos-all.zip
-  > cd nacos/bin
+```bash
+  unzip nacos-all.zip
+  cd nacos/bin
+```
   
 ## 3.启动服务器
 ### Linux/Unix/Mac 
