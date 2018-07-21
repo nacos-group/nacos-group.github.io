@@ -12,7 +12,9 @@ Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 N
 服务（Service）是 Nacos 世界的一等公民。Nacos 支持几乎所有主流类型的服务的发现、配置和管理：
 
 [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/)
-[gRPC](https://grpc.io/docs/guides/concepts.html#service-definition) & [Dubbo RPC Service](https://dubbo.incubator.apache.org/#/?lang=en-us) 
+
+[gRPC](https://grpc.io/docs/guides/concepts.html#service-definition) & [Dubbo RPC Service](https://dubbo.incubator.apache.org/#/?lang=en-us)
+ 
 [Spring Cloud RESTful Service](https://spring.io/understanding/REST)
 
 Nacos 的关键特性包括:
