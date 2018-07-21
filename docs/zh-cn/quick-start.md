@@ -16,7 +16,7 @@
 unzip nacos-source.zip
 cd nacos/
 mvn -Prelease-nacos clean install -U  
-cd distribution/target/nacos-all/nacos/bin
+cd nacos/distribution/target/nacos-server-0.1.0/nacos/bin
 ```
   
 ### 下载编译后压缩包方式
@@ -26,7 +26,7 @@ cd distribution/target/nacos-all/nacos/bin
 [tar.gz包](http://nacos.oss-cn-hangzhou-zmf.aliyuncs.com/nacos-server-0.1.0.tar.gz)
 
 ```
-  unzip nacos-all.zip
+  unzip nacos-server-0.1.0.zip
   cd nacos/bin
 ```  
 

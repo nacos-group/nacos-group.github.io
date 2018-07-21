@@ -16,7 +16,7 @@ There are two ways to get Nacos.
 unzip nacos-source.zip
 cd nacos/
 mvn -Prelease-nacos clean install -U  
-cd distribution/target/nacos-all/nacos/bin
+cd nacos/distribution/target/nacos-server-0.1.0/nacos/bin
 ```
   
 ### 2)Download run package 
@@ -26,9 +26,9 @@ cd distribution/target/nacos-all/nacos/bin
 [tar.gz package Download](http://nacos.oss-cn-hangzhou-zmf.aliyuncs.com/nacos-server-0.1.0.tar.gz)
 
 ```
-unzip nacos-all.zip 
-cd nacos/bin
-```
+  unzip nacos-server-0.1.0.zip
+  cd nacos/bin
+```  
 
 ## 3.Start Server
 ### Linux/Unix/Mac
