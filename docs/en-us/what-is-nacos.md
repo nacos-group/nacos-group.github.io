@@ -13,7 +13,9 @@ Nacos makes it easier and faster to construct, deliver and manage your microserv
 Service is a first-class citizen in Nacos. Nacos supports discovering, configuring, and managing almost all types of services:
 
 [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/)
+
 [gRPC](https://grpc.io/docs/guides/concepts.html#service-definition) & [Dubbo RPC Service](https://dubbo.incubator.apache.org/#/?lang=en-us)
+
 [Spring Cloud RESTful Service](https://spring.io/understanding/REST)
 
 Key features of Nacos:
