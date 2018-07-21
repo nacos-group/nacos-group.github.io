@@ -18,7 +18,7 @@ export default {
               },
               {
                 title: 'Architecure',
-                link: '/docs/architecure.md',
+                link: '/docs/architecture.md',
               },
             ],
           },
@@ -132,7 +132,7 @@ export default {
               },
               {
                 title: '架构',
-                link: '/docs/architecure.md',
+                link: '/docs/architecture.md',
               },
             ],
           },

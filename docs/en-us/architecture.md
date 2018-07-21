@@ -1,6 +1,6 @@
 ## Basic Architecture and Concepts 
 
-![nacos_arch.jpg](https://cdn.yuque.com/lark/0/2018/jpeg/15914/1530514514515-405eb206-4115-4773-9902-d549fe2c38c5.jpeg) 
+![nacos_arch.jpg](/img/nacos-Arch.jpg) 
 
 * **Service**
 
@@ -42,7 +42,7 @@
 	
 	Providing dynamic configuration, service metadata and configuration management for other services or application.
 
-* **[More concepts TODO...](xx)**
+* **[More concepts...](https://nacos.io/#/docs/concepts.md?lang=zh-cn)**
 
 ## Artifacts, Deployment, and Start Mode
 
