@@ -21,9 +21,9 @@ cd nacos/distribution/target/nacos-server-0.1.0/nacos/bin
   
 ### 下载编译后压缩包方式
 下载地址 
-[zip包](http://nacos.oss-cn-hangzhou-zmf.aliyuncs.com/nacos-server-0.1.0.zip)
+[zip包](https://nacos-pub.oss-cn-hangzhou.aliyuncs.com/nacos-server-0.1.0.zip)
 
-[tar.gz包](http://nacos.oss-cn-hangzhou-zmf.aliyuncs.com/nacos-server-0.1.0.tar.gz)
+[tar.gz包](https://nacos-pub.oss-cn-hangzhou.aliyuncs.com/nacos-server-0.1.0.tar.gz)
 
 ```
   unzip nacos-server-0.1.0.zip
