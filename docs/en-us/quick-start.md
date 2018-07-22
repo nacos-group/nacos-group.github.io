@@ -21,12 +21,12 @@ cd nacos/distribution/target/nacos-server-0.1.0/nacos/bin
   
 ### 2)Download run package 
 
-[zip package Download](https://nacos-pub.oss-cn-hangzhou.aliyuncs.com/nacos-server-0.1.0.zip)
+[zip package Download](https://pan.baidu.com/s/1HJIJrbuOz2TpvSQFEIv6aw)
 
-[tar.gz package Download](https://nacos-pub.oss-cn-hangzhou.aliyuncs.com/nacos-server-0.1.0.tar.gz)
+[tar.gz package Download](https://pan.baidu.com/s/1612GZZcp84ponzhc_dz5QA)
 
 ```
-  unzip nacos-server-0.1.0.zip
+  unzip nacos-server-0.1.0.zip  OR tar -xvf nacos-server-0.1.0.tar.gz
   cd nacos/bin
 ```  
 
