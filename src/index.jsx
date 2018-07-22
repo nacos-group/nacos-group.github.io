@@ -1,25 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
-import Home from './pages/home';
-import Blog from './pages/blog';
-import BlogDetail from './pages/blogDetail';
-import Community from './pages/community';
-import Documentation from './pages/documentation';
+import asyncComponent from './components/asyncComponent';
+
 import './index.scss';
 
+const Home = asyncComponent(() => import('./pages/home'));
+const Community = asyncComponent(() => import('./pages/community'));
+const Blog = asyncComponent(() => import('./pages/blog'));
+const BlogDetail = asyncComponent(() => import('./pages/blogDetail'));
+const Documentation = asyncComponent(() => import('./pages/documentation'));
+
 class App extends React.Component {
+
   render() {
-    // 最后未用模板参数的原因是路径深度不一定
+    // 最后两个未用模板参数的原因是路径深度不一定
     return (
       <HashRouter>
         <Switch>
-          <Redirect exact from="/docs" to="/docs/quick-start.md" />
-          <Redirect exact from="/docs/" to="/docs/quick-start.md" />
+          <Redirect exact from="/docs" to="/docs/user/quick-start.md" />
+          <Redirect exact from="/docs/" to="/docs/user/quick-start.md" />
           <Route exact path="/" component={Home} />
+          <Route exact path="/community" component={Community} />
           <Route exact path="/blog" component={Blog} />
           <Route path="/blog/*" component={BlogDetail} />
-          <Route exact path="/community" component={Community} />
           <Route path="/docs/*" component={Documentation} />
         </Switch>
       </HashRouter>
