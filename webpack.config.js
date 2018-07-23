@@ -1,4 +1,4 @@
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
 
@@ -29,12 +29,12 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: ['raw-loader', 'sass-loader'] }),
+        use: ['style-loader', 'raw-loader', 'sass-loader'],
       },
       {
         test: /\.css$/,
         // exclude: /node_modules/,
-        loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'raw-loader' }),
+        use: ['style-loader', 'raw-loader', 'sass-loader'],
       },
       {
         test: /\.json?$/,
@@ -49,6 +49,6 @@ module.exports = {
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new ExtractTextPlugin('[name].css')
+    // new ExtractTextPlugin('[name].css')
   ]
 };

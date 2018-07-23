@@ -1,7 +1,7 @@
 export default {
   'en-us': {
     brand: {
-      briefIntroduction: 'an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native application.',
+      briefIntroduction: 'an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native applications',
       buttons: [
         {
           text: 'View on Github',
@@ -19,7 +19,7 @@ export default {
         link: '',
       },
       note: {
-        text: 'Release notes.',
+        text: 'Release Note',
         link: '',
       },
       releaseDate: 'released July 20, 2018',
