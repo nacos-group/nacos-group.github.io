@@ -21,7 +21,7 @@ Nacos 的关键特性包括:
 
 * **服务发现和服务健康监测**
 	
-    Nacos 支持基于 DNS 和基于 RPC 的服务发现。服务提供者使用 [原生SDK TODO](https://nacos.io/#/docs/sdk.md)、[OpenAPI TODO](https://nacos.io/#/docs/open-API.md)、或一个[独立的Agent TODO](https://nacos.io/#/docs/other-language.md)注册 Service 后，服务消费者可以使用[DNS TODO](xx) 或[HTTP&API TODO](xx)查找和发现服务。
+    Nacos 支持基于 DNS 和基于 RPC 的服务发现。服务提供者使用 [原生SDK](https://nacos.io/#/docs/sdk.md)、[OpenAPI](https://nacos.io/#/docs/open-API.md)、或一个[独立的Agent TODO](https://nacos.io/#/docs/other-language.md)注册 Service 后，服务消费者可以使用[DNS TODO](xx) 或[HTTP&API TODO](xx)查找和发现服务。
     
     Nacos 提供实时健康检查，阻止服务向不健康的主机或服务实例发送请求。Nacos 支持传输层(PING 或 TCP)和应用层(如 HTTP、Redis、MySQL、用户自定义）的健康检查。 对于复杂的云环境和网络拓扑环境中（如 VPC、边缘服务等）服务的健康检查，Nacos 提供了 agent 模式和服务端2种健康检查模式。Nacos 还提供统一的健康检查仪表盘，帮助您管理服务可用性及流量。
                  

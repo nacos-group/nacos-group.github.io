@@ -6,8 +6,10 @@
 
 	A software function or a set of software functions (such as the retrieval of specified information or the execution of a set of operations) with the purpose that different clients can be reused for different purposes (for example, through a cross-process network call). Nacos supports almost all types of services:
 [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/)
+
 [gRPC](https://grpc.io/docs/guides/concepts.html#service-definition)
 [ | Dubbo RPC Service](https://dubbo.incubator.apache.org/#/?lang=en-us)
+
 [Spring Cloud RESTful Service](https://spring.io/understanding/REST)
 
 * **Service Registry** 
