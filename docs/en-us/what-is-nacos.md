@@ -50,8 +50,8 @@ Key features of Nacos:
 
 ## Nacos landscape
 
-![nacos_landscape.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530514380550-31251a79-02bb-4155-bc4f-5a9f436551a2.png) 
-
+![nacos_landscape.png](https://cdn.nlark.com/lark/0/2018/png/11189/1533045871534-e64b8031-008c-4dfc-b6e8-12a597a003fb.png)
+ 
 As the figure above shows, Nacos seamlessly supports open source ecologies including [Dubbo and Dubbo Mesh](https://nacos.io/#/docs/use-nacos-with-dubbo.md), [Spring Cloud](https://nacos.io/#/docs/use-nacos-with-springcloud.md), and [Kubernetes and CNCF](https://nacos.io/#/docs/use-nacos-with-kubernetes.md).
 
 Use Nacos to simplify your solutions in service discovery, configuration management, and service governance and management. With Nacos, microservices management in open source system is easy.

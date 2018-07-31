@@ -50,7 +50,7 @@ Nacos 的关键特性包括:
 
 ## Nacos 全景图
 
-![nacos_landscape.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530514380550-31251a79-02bb-4155-bc4f-5a9f436551a2.png) 
+![nacos_landscape.png](https://cdn.nlark.com/lark/0/2018/png/11189/1533045871534-e64b8031-008c-4dfc-b6e8-12a597a003fb.png) 
 
 如 Nacos 全景图所示，Nacos 无缝支持一些主流的开源生态，例如 [Dubbo and Dubbo Mesh TODO](xx)、[Spring Cloud TODO](xx)、[Kubernetes and CNCF TODO](xx)。
 
