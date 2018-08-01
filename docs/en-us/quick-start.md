@@ -12,7 +12,7 @@ There are two ways to get Nacos.
 
 ### 1)Download source code from Github
   
-```
+```bash
 unzip nacos-source.zip
 cd nacos/
 mvn -Prelease-nacos clean install -U  
@@ -25,10 +25,11 @@ cd nacos/distribution/target/nacos-server-0.1.0/nacos/bin
 
 [tar.gz package Download](https://pan.baidu.com/s/1612GZZcp84ponzhc_dz5QA)
 
-```
+```bash
   unzip nacos-server-0.1.0.zip  OR tar -xvf nacos-server-0.1.0.tar.gz
   cd nacos/bin
 ```  
+
 
 ## 3.Start Server
 ### Linux/Unix/Mac
