@@ -13,14 +13,16 @@ Nacos makes it easier and faster to construct, deliver and manage your microserv
 Service is a first-class citizen in Nacos. Nacos supports discovering, configuring, and managing almost all types of services:
 
 [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/)
+
 [gRPC](https://grpc.io/docs/guides/concepts.html#service-definition) & [Dubbo RPC Service](https://dubbo.incubator.apache.org/#/?lang=en-us)
+
 [Spring Cloud RESTful Service](https://spring.io/understanding/REST)
 
 Key features of Nacos:
 
 * **Service Discovery And Service Health Check**
 
-    Nacos supports both DNS-based and RPC-based (Dubbo/gRPC) service discovery. After a service provider registers a service with [native SDK TODO](xx), [OpenAPI TODO](xx), or [a dedicated agent TODO](xx), a consumer can discover the service with either [DNS TODO](xx) or [HTTP TODO](xx).
+    Nacos supports both DNS-based and RPC-based (Dubbo/gRPC) service discovery. After a service provider registers a service with [native](https://nacos.io/#/docs/sdk.md), [OpenAPI](https://nacos.io/#/docs/open-API.md), or [a dedicated agent](https://nacos.io/#/docs/other-language.md), a consumer can discover the service with either [DNS](https://nacos.io/#/docs/other-language.md) or [HTTP](https://nacos.io/#/docs/other-language.md).
     
     Nacos provides real-time health check to prevent services from sending requests to unhealthy hosts or service instances. Nacos supports both transport layer (PING or TCP) health check and application layer (such as HTTP, Redis, MySQL, and user-defined protocol) health check. For the health check of complex clouds and network topologies(such as VPC, Edge Service etc), Nacos provides both agent mode and server mode health check. Nacos also provide a unity service health dashboard to help you manage the availability and traffic of services.    
     
@@ -48,21 +50,25 @@ Key features of Nacos:
 
 ## Nacos landscape
 
-![nacos_landscape.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530514380550-31251a79-02bb-4155-bc4f-5a9f436551a2.png) 
-
-As the figure above shows, Nacos seamlessly supports open source ecologies including [Dubbo and Dubbo Mesh](xx), [Spring Cloud](xx), and [Kubernetes and CNCF](xx).
+![nacos_landscape.png](https://cdn.nlark.com/lark/0/2018/png/11189/1533045871534-e64b8031-008c-4dfc-b6e8-12a597a003fb.png)
+ 
+As the figure above shows, Nacos seamlessly supports open source ecologies including [Dubbo and Dubbo Mesh](https://nacos.io/#/docs/use-nacos-with-dubbo.md), [Spring Cloud](https://nacos.io/#/docs/use-nacos-with-springcloud.md), and [Kubernetes and CNCF](https://nacos.io/#/docs/use-nacos-with-kubernetes.md).
 
 Use Nacos to simplify your solutions in service discovery, configuration management, and service governance and management. With Nacos, microservices management in open source system is easy.
 
 For more information about how to use Nacos with other open source projects, see the following:
 
-[Use Nacos with Kubernetes](xx)
-[Use Nacos with Dubbo](xx)
-[Use Nacos with gRPC](xx)
-[Use Nacos with Spring Cloud](xx)
-[Use Nacos with Istio](xx)
+[Use Nacos with Kubernetes](https://nacos.io/#/docs/use-nacos-with-kubernetes.md)
+
+[Use Nacos with Dubbo](https://nacos.io/#/docs/use-nacos-with-dubbo.md)
+
+[Use Nacos with gRPC](https://nacos.io/#/docs/roadmap.md)
+
+[Use Nacos with Spring Cloud](https://nacos.io/#/docs/use-nacos-with-springcloud.md)
+
+[Use Nacos with Istio](https://nacos.io/#/docs/use-nacos-with-istio.md)
 
 
 ## What’s next
 
-Continue with [quick start](xxx) to get started with Nacos.
+Continue with [quick start](https://nacos.io/#/docs/quick-start.md) to get started with Nacos.

@@ -13,49 +13,61 @@ There are two ways to get Nacos.
 ### 1)Download source code from Github
   
 ```bash
-  unzip nacos-source.zip
-  cd nacos/
-  mvn -Prelease-nacos clean install -U  
-  cd distribution/target/nacos-all/nacos/bin
+unzip nacos-source.zip
+cd nacos/
+mvn -Prelease-nacos clean install -U  
+cd nacos/distribution/target/nacos-server-0.1.0/nacos/bin
 ```
   
 ### 2)Download run package 
-[zip package Download](http://nacos.oss-cn-hangzhou-zmf.aliyuncs.com/nacos-server-0.1.0.zip)
-[tar.gz package Download](http://nacos.oss-cn-hangzhou-zmf.aliyuncs.com/nacos-server-0.1.0.tar.gz)
+
+[zip package Download](https://pan.baidu.com/s/1HJIJrbuOz2TpvSQFEIv6aw)
+
+[tar.gz package Download](https://pan.baidu.com/s/1612GZZcp84ponzhc_dz5QA)
+
 ```bash
-  unzip nacos-all.zip 
+  unzip nacos-server-0.1.0.zip  OR tar -xvf nacos-server-0.1.0.tar.gz
   cd nacos/bin
-```
+```  
+
 
 ## 3.Start Server
 ### Linux/Unix/Mac
-Run the following command to sart(standalone means non-cluster mode): 
+Run the following command to sart(standalone means non-cluster mode):
+ 
 `sh startup.sh -m standalone`
 
 ### Windows
 
 Run the following command to start:
+
 `cmd startup.cmd`
 
 Or double-click the startup.cmd run file.
 
 ## 4.Service & Configuration Management
 ### Service registration
+
 `curl -X PUT 'http://127.0.0.1:8080/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'`
 
 ### Service discovery
+
 `curl -X GET http://127.0.0.1:8080/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'`
 
 ### Publish config
+
 `curl -X POST "http://127.0.0.1:8080/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test&content=helloWorld"`
 
 ### Get config
+
 `curl -X GET "http://127.0.0.1:8080/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test"    `
 
 
 ## 5.Shutdown Servers
 ### Linux/Unix/Mac
+
 `sh shutdown.sh`
 
 ### Windows
+
 `cmd shutdown.cmd`

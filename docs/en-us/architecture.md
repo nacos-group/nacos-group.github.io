@@ -1,13 +1,15 @@
 ## Basic Architecture and Concepts 
 
-![nacos_arch.jpg](https://cdn.yuque.com/lark/0/2018/jpeg/15914/1530514514515-405eb206-4115-4773-9902-d549fe2c38c5.jpeg) 
+![nacos_arch.jpg](/img/nacos-Arch.jpg) 
 
 * **Service**
 
 	A software function or a set of software functions (such as the retrieval of specified information or the execution of a set of operations) with the purpose that different clients can be reused for different purposes (for example, through a cross-process network call). Nacos supports almost all types of services:
 [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/)
+
 [gRPC](https://grpc.io/docs/guides/concepts.html#service-definition)
 [ | Dubbo RPC Service](https://dubbo.incubator.apache.org/#/?lang=en-us)
+
 [Spring Cloud RESTful Service](https://spring.io/understanding/REST)
 
 * **Service Registry** 
@@ -42,7 +44,7 @@
 	
 	Providing dynamic configuration, service metadata and configuration management for other services or application.
 
-* **[More concepts TODO...](xx)**
+* **[More concepts...](https://nacos.io/#/docs/concepts.md?lang=zh-cn)**
 
 ## Artifacts, Deployment, and Start Mode
 

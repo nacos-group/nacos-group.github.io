@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 const gutil = require('gulp-util');
 const webpack = require('webpack');
+const opn = require('opn');
 const WebpackDevServer = require('webpack-dev-server');
 const webpackConfig = require('./webpack.config.js');
 
@@ -67,7 +68,7 @@ gulp.task('webpack-dev-server', () => {
   myConfig.plugins.push(new webpack.HotModuleReplacementPlugin({}));
   // Start a webpack-dev-server
   new WebpackDevServer(webpack(myConfig), {
-    publicPath: myConfig.output.publicPath,
+    publicPath: '//localhost:8080/build/',
     hot: true,
     inline: true,
     stats: {
@@ -75,6 +76,7 @@ gulp.task('webpack-dev-server', () => {
     }
   }).listen(8080, 'localhost', (err) => {
     if (err) throw new gutil.PluginError('webpack-dev-server', err);
+    opn('http://localhost:8080/');
     gutil.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/index.html');
   });
 });

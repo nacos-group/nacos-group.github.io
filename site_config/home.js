@@ -1,7 +1,7 @@
 export default {
   'en-us': {
     brand: {
-      briefIntroduction: 'an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native application.',
+      briefIntroduction: 'an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native applications',
       buttons: [
         {
           text: 'View on Github',
@@ -19,7 +19,7 @@ export default {
         link: '',
       },
       note: {
-        text: 'Release notes.',
+        text: 'Release Note',
         link: '',
       },
       releaseDate: 'released July 20, 2018',
@@ -40,7 +40,7 @@ export default {
         {
           img: './img/dynamic_DNS.png',
           title: 'Dynamic DNS Service',
-          content: 'Dynamic DNS Service which supports weighted routing makes it easier for you to implement mid-tier load balancing, `more flexible intelligent routing`, flow control and DNS resolution services in the production environment within your data center.Dynamic DNS Service also help you to implement DNS-based service discovery more easilier and prevent applications from coupling to vendor-specific service discovery APIs.',
+          content: 'Dynamic DNS Service which supports weighted routing makes it easier for you to implement mid-tier load balancing, more flexible intelligent routing, flow control and DNS resolution services in the production environment within your data center.Dynamic DNS Service also help you to implement DNS-based service discovery more easilier and prevent applications from coupling to vendor-specific service discovery APIs.',
         },
       ],
     },
