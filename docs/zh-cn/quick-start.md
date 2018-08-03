@@ -12,7 +12,7 @@
 
 ### 从 Github 上下载源码方式
 
-```
+```bash
 unzip nacos-source.zip
 cd nacos/
 mvn -Prelease-nacos clean install -U  
@@ -21,11 +21,12 @@ cd nacos/distribution/target/nacos-server-0.1.0/nacos/bin
   
 ### 下载编译后压缩包方式
 下载地址 
+
 [zip包](https://pan.baidu.com/s/1HJIJrbuOz2TpvSQFEIv6aw)
 
 [tar.gz包](https://pan.baidu.com/s/1612GZZcp84ponzhc_dz5QA)
 
-```
+```bash
   unzip nacos-server-0.1.0.zip 或者 tar -xvf nacos-server-0.1.0.tar.gz
   cd nacos/bin
 ```  
