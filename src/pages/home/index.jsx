@@ -42,7 +42,7 @@ class Home extends Language {
     const headerLogo = headerType === 'primary' ? getLink('/img/nacos_white.png') : getLink('/img/nacos_colorful.png');
     return (
       <div className="home-page">
-        <section className="top-section" style={{ background: `url(${getLink('/img/black_dot.png')}) repeat;` }}>
+        <section className="top-section" style={{ background: `url(${getLink('/img/black_dot.png')}) repeat` }}>
           <Header
             currentKey="home"
             type={headerType}
