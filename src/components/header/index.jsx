@@ -106,6 +106,7 @@ class Header extends React.Component {
             <ul>
               {siteConfig[language].pageMenu.map((item) => (
                   <li
+                    key={item.link}
                     className={classnames({
                       'menu-item': true,
                       [`menu-item-${type}`]: true,

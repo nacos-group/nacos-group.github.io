@@ -928,8 +928,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .home-page .top-section {
   position: relative;
-  height: 720px;
-  background-size: 14px 14px; }
+  height: 720px; }
   .home-page .top-section .animation {
     position: absolute;
     width: 6px;

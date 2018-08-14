@@ -9,7 +9,7 @@ const Item = (props) => {
       <div>
         <h4>{feature.title}</h4>
         <ul>
-        {feature.content.map(c => <li>{c}</li>)}
+        {feature.content.map((c, i) => <li key={i}>{c}</li>)}
         </ul>
       </div>
     </li>
