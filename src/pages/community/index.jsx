@@ -1,7 +1,5 @@
 import React from 'react';
-import cookie from 'js-cookie';
-import qs from 'querystring';
-import { Redirect } from 'react-router-dom';
+import ReactDOM from 'react-dom';
 import Language from '../../components/language';
 import Header from '../../components/header';
 import Bar from '../../components/bar';
@@ -11,32 +9,26 @@ import ContactItem from './contactItem';
 import ContributorItem from './contributorItem';
 import EcoItem from './ecoItem';
 import Footer from '../../components/footer';
-import siteConfig from '../../../site_config/site';
 import communityConfig from '../../../site_config/community.jsx';
+import { getLink } from '../../../utils';
 
 import './index.scss';
 
 class Community extends Language {
 
   render() {
-    const hashSearch = window.location.hash.split('?');
-    const search = qs.parse(hashSearch[1] || '');
-    let language = search.lang || cookie.get('docsite_language') || siteConfig.defaultLanguage;
-    if(language !== "zh-cn" && language !== "en-us") {
-        language = siteConfig.defaultLanguage;
-    }
-    // 同步cookie和search上的语言版本
-    if (language !== cookie.get('docsite_language')) {
-      cookie.set('docsite_language', language, { expires: 365, path: '' });
-    }
-    if (!search.lang) {
-      return <Redirect to={`${this.props.match.url}?lang=${language}`} />;
-    }
+    const language = this.getLanguage();
     const dataSource = communityConfig[language];
     return (
       <div className="community-page">
-        <Header type="normal" logo="./img/nacos_colorful.png" language={language} onLanguageChange={this.onLanguageChange} />
-        <Bar img="./img/community.png" text={dataSource.barText} />
+        <Header
+          currentKey="community"
+          type="normal"
+          logo={getLink('/img/nacos_colorful.png')}
+          language={language}
+          onLanguageChange={this.onLanguageChange}
+        />
+        <Bar img={getLink('/img/community.png')} text={dataSource.barText} />
         <section className="events-section">
           <div className="events-body">
             <h3>{dataSource.events.title}</h3>
@@ -83,10 +75,12 @@ class Community extends Language {
             </div>
           </div>
         </section>
-        <Footer logo="./img/nacos_gray.png" />
+        <Footer logo={getLink('/img/nacos_gray.png')} language={language} />
       </div>
     );
   }
 }
+
+document.getElementById('root') && ReactDOM.render(<Community />, document.getElementById('root'));
 
 export default Community;

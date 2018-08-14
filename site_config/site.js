@@ -1,22 +1,28 @@
 export default {
+  rootPath: '', // 发布到服务器的根目录，需以/开头但不能有尾/，如果只有/，请填写空字符串
+  port: 8080, // 本地开发服务器的启动端口
   defaultLanguage: 'en-us',
   'en-us': {
     pageMenu: [
       {
+        key: 'home', // 用作顶部菜单的选中
         text: 'HOME',
-        link: '/',
+        link: '/en-us/index.html',
       },
       {
+        key: 'docs',
         text: 'DOCS',
-        link: '/docs/quick-start.md',
+        link: '/en-us/docs/quick-start.html',
       },
       {
+        key: 'blog',
         text: 'BLOG',
-        link: '/blog',
+        link: '/en-us/blog',
       },
       {
+        key: 'community',
         text: 'COMMUNITY',
-        link: '/community',
+        link: '/en-us/community',
       },
       // {
       //   text: 'ALI-SUPPORT',
@@ -32,15 +38,15 @@ export default {
       list: [
         {
           text: 'Overview',
-          link: '/docs/what-is-nacos.md',
+          link: '/en-us/docs/what-is-nacos.html',
         },
         {
           text: 'Quick start',
-          link: '/docs/quick-start.md',
+          link: '/en-us/docs/quick-start.html',
         },
         {
           text: 'Developer guide',
-          link: '/docs/contributing.md',
+          link: '/en-us/docs/contributing.html',
         },
       ],
     },
@@ -49,7 +55,7 @@ export default {
       list: [
         {
           text: 'Community',
-          link: '/community',
+          link: '/en-us/community/index.html',
         },
       ],
     },
@@ -58,20 +64,24 @@ export default {
   'zh-cn': {
     pageMenu: [
       {
+        key: 'home',
         text: '首页',
-        link: '/',
+        link: '/zh-cn/index.html',
       },
       {
+        key: 'docs',
         text: '文档',
-        link: '/docs/what-is-nacos.md',
+        link: '/zh-cn/docs/what-is-nacos.html',
       },
       {
+        key: 'blog',
         text: '博客',
-        link: '/blog',
+        link: '/zh-cn/blog/index.html',
       },
       {
+        key: 'community',
         text: '社区',
-        link: '/community',
+        link: '/zh-cn/community/index.html',
       },
       // {
       //   text: '阿里开发者中心',
@@ -87,15 +97,15 @@ export default {
       list: [
         {
           text: '概览',
-          link: '/docs/what-is-nacos.md',
+          link: '/zh-cn/docs/what-is-nacos.html',
         },
         {
           text: '快速开始',
-          link: '/docs/quick-start.md',
+          link: '/zh-cn/docs/quick-start.html',
         },
         {
           text: '开发者指南',
-          link: '/docs/contributing.md',
+          link: '/zh-cn/docs/contributing.html',
         },
       ],
     },
@@ -104,7 +114,7 @@ export default {
       list: [
         {
           text: '社区',
-          link: '/community',
+          link: '/zh-cn/community/index.html',
         },
       ],
     },

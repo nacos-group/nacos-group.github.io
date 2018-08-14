@@ -10,7 +10,7 @@ export default {
         },
         {
           text: 'Manual',
-          link: 'http://nacos.io/#/docs/what-is-nacos.md',
+          link: '/en-us/docs/what-is-nacos.html',
           type: 'normal',
         },
       ],
@@ -28,17 +28,17 @@ export default {
       title: 'Function',
       list: [
         {
-          img: './img/dynamic_configuration.png',
+          img: '/img/dynamic_configuration.png',
           title: 'Dynamic Configuration Service',
           content: 'Dynamic Configuration Service allows you to manage application or service configuration in a centralized and dynamic style across all environments. Dynamic configuration eliminates the need to redeploy applications when configuration is updated. You can implement stateless services and achieve on-demand scaling more easily.',
         },
         {
-          img: './img/service_discovery.png',
+          img: '/img/service_discovery.png',
           title: 'Service Discovery and Management',
           content: 'Dynamic Service Discovery is essential to service-centric (i.e. microservice or cloud-native) architectures. Nacos supports both DNS-based and RPC-based (Dubbo, gRPC) service discovery, and provides service health checks for you to prevent routing requests from unhealthy hosts. You can also implement circuit breakers for your services more easier.',
         },
         {
-          img: './img/dynamic_DNS.png',
+          img: '/img/dynamic_DNS.png',
           title: 'Dynamic DNS Service',
           content: 'Dynamic DNS Service which supports weighted routing makes it easier for you to implement mid-tier load balancing, more flexible intelligent routing, flow control and DNS resolution services in the production environment within your data center.Dynamic DNS Service also help you to implement DNS-based service discovery more easilier and prevent applications from coupling to vendor-specific service discovery APIs.',
         },
@@ -48,7 +48,7 @@ export default {
       title: 'Feature List',
       list: [
         {
-          img: './img/feature_easy_to_use.png',
+          img: '/img/feature_easy_to_use.png',
           title: 'Easy to use',
           content: [
             'One-stop solution for dynamic service discovery, configuration management and dynamic DNS service',
@@ -57,7 +57,7 @@ export default {
           ],
         },
         {
-          img: './img/feature_adaptable.png',
+          img: '/img/feature_adaptable.png',
           title: 'More adaptable to cloud architecture',
           content: [
             'Seamlessly support kubernetes and spring cloud',
@@ -66,7 +66,7 @@ export default {
           ],
         },
         {
-          img: './img/feature_production_grade.png',
+          img: '/img/feature_production_grade.png',
           title: 'Production grade',
           content: [
             'Born out of 10 years\' production verification within Alibaba Group',
@@ -75,7 +75,7 @@ export default {
           ],
         },
         {
-          img: './img/feature_rich.png',
+          img: '/img/feature_rich.png',
           title: 'Rich internet application scenarios affinity',
           content: [
             'Rate limiting and throttling, big promotion plan, multi-region active-active architecture',
@@ -97,7 +97,7 @@ export default {
         },
         {
           text: '手册',
-          link: 'http://nacos.io/#/docs/what-is-nacos.md',
+          link: 'http://nacos.io/zh-cn/docs/what-is-nacos.html',
           type: 'normal',
         },
       ],
@@ -115,17 +115,17 @@ export default {
       title: '功能',
       list: [
         {
-          img: './img/dynamic_configuration.png',
+          img: '/img/dynamic_configuration.png',
           title: '动态配置服务',
           content: '动态配置服务让用户可以以中心化、外部化和动态化的方式管理所有环境的配置。动态配置消除了配置变更时重新部署应用和服务的需要。通过配置中心化管理，让实现无状态服务更简单，也让服务的按需弹性扩展变的更容易。',
         },
         {
-          img: './img/service_discovery.png',
+          img: '/img/service_discovery.png',
           title: '服务发现及管理',
           content: '动态服务发现对以服务为中心（如微服务及云原生）的应用架构方式非常关键。Nacos支持DNS-based 和 RPC-based(Dubbo, gRPC) 模式的服务发现。Nacos也提供实时的健康检查以便组织将请求发向不健康的主机或服务实例。基于Nacos你可以更容易的为你的服务实现断路器。',
         },
         {
-          img: './img/dynamic_DNS.png',
+          img: '/img/dynamic_DNS.png',
           title: '动态DNS服务',
           content: '动态DNS服务通过支持权重路由让你更容易实现中间层负载均衡、更灵活的路由策略、流量控制以及简单的数据中心内网的简单DNS解析服务。动态DNS服务也帮你更容易的实现以DNS协议为基础的服务发现，以消除耦合到厂商私有服务发现API上的风险。',
         },
@@ -135,7 +135,7 @@ export default {
       title: '特性一览',
       list: [
         {
-          img: './img/feature_easy_to_use.png',
+          img: '/img/feature_easy_to_use.png',
           title: '易于使用',
           content: [
             '动态配置管理，服务发现和动态DNS服务的一站式解决方案',
@@ -144,7 +144,7 @@ export default {
           ],
         },
         {
-          img: './img/feature_adaptable.png',
+          img: '/img/feature_adaptable.png',
           title: '更适应云架构',
           content: [
             '无缝支持kubernetes和spring cloud',
@@ -153,7 +153,7 @@ export default {
           ],
         },
         {
-          img: './img/feature_production_grade.png',
+          img: '/img/feature_production_grade.png',
           title: '生产等级',
           content: [
             '脱胎于阿里10年生产验证的内部产品',
@@ -162,7 +162,7 @@ export default {
           ],
         },
         {
-          img: './img/feature_rich.png',
+          img: '/img/feature_rich.png',
           title: '丰富的应用场景',
           content: [
             '支持限流，大促销预案，异地多活',

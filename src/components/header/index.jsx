@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import { autobind } from 'core-decorators';
 import siteConfig from '../../../site_config/site';
+import { getLink } from '../../../utils';
 import './index.scss';
 
 const languageSwitch = [
@@ -23,6 +23,7 @@ const defaultProps = {
   onLanguageChange: noop,
 };
 
+@autobind
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -32,14 +33,12 @@ class Header extends React.Component {
     };
   }
 
-  @autobind
   toggleMenu() {
     this.setState({
       menuBodyVisible: !this.state.menuBodyVisible,
     });
   }
 
-  @autobind
   switchLang() {
     let language;
     if (this.state.language === 'zh-cn') {
@@ -60,7 +59,7 @@ class Header extends React.Component {
   }
 
   render() {
-    const { type, logo, onLanguageChange } = this.props;
+    const { type, logo, onLanguageChange, currentKey } = this.props;
     const { menuBodyVisible, language } = this.state;
     return (
       <header
@@ -72,9 +71,9 @@ class Header extends React.Component {
         }
       >
         <div className="header-body">
-          <Link to="/">
+          <a href={getLink(`/${language}/index.html`)}>
             <img className="logo" alt={siteConfig.name} title={siteConfig.name} src={logo} />
-          </Link>
+          </a>
           {
             onLanguageChange !== noop ?
             (<span
@@ -102,35 +101,20 @@ class Header extends React.Component {
             <img
               className="header-menu-toggle"
               onClick={this.toggleMenu}
-              src={type === 'primary' ? './img/menu_white.png' : './img/menu_gray.png'}
+              src={type === 'primary' ? getLink('/img/menu_white.png') : getLink('/img/menu_gray.png')}
             />
             <ul>
-              {siteConfig[language].pageMenu.map((item) => {
-                if (item.link) {
-                  return (
-                    <li
-                      className={classnames({
-                        'menu-item': true,
-                        [`menu-item-${type}`]: true,
-                        [`menu-item-${type}-active`]: window.location.hash.split('?')[0].slice(1).split('/')[1] === item.link.split('/')[1],
-                      })}
-                    >
-                      <Link to={item.link}>{item.text}</Link>
-                    </li>
-                  );
-                } else if (item.href) {
-                  return (
-                    <li
-                      className={classnames({
-                        'menu-item': true,
-                        [`menu-item-${type}`]: true,
-                      })}
-                    >
-                      <a href={item.href} target="__blank">{item.text}</a>
-                    </li>
-                  );
-                }
-              })}
+              {siteConfig[language].pageMenu.map((item) => (
+                  <li
+                    className={classnames({
+                      'menu-item': true,
+                      [`menu-item-${type}`]: true,
+                      [`menu-item-${type}-active`]: currentKey === item.key,
+                    })}
+                  >
+                    <a href={getLink(item.link)}>{item.text}</a>
+                  </li>
+              ))}
             </ul>
           </div>
         </div>

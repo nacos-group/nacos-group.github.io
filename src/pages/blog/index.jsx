@@ -1,7 +1,5 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import cookie from 'js-cookie';
-import qs from 'querystring';
+import ReactDOM from 'react-dom';
 import Language from '../../components/language';
 import Header from '../../components/header';
 import Bar from '../../components/bar';
@@ -9,31 +7,25 @@ import PageSlider from '../../components/pageSlider';
 import BlogItem from './blogItem';
 import Footer from '../../components/footer';
 import blogConfig from '../../../site_config/blog';
-import siteConfig from '../../../site_config/site';
+import { getLink } from '../../../utils';
 import './index.scss';
 
 class Blog extends Language {
 
   render() {
-    const hashSearch = window.location.hash.split('?');
-    const search = qs.parse(hashSearch[1] || '');
-    let language = search.lang || cookie.get('docsite_language') || siteConfig.defaultLanguage;
-    if(language !== "zh-cn" && language !== "en-us") {
-      language = siteConfig.defaultLanguage;
-    }
-    // 同步cookie和search上的语言版本
-    if (language !== cookie.get('docsite_language')) {
-      cookie.set('docsite_language', language, { expires: 365, path: '' });
-    }
-    if (!search.lang) {
-      return <Redirect to={`${this.props.match.url}?lang=${language}`} />;
-    }
+    const language = this.getLanguage();
     const dataSource = blogConfig[language];
     const blogs = dataSource.list;
     return (
       <div className="blog-list-page">
-        <Header type="normal" logo="./img/nacos_colorful.png" language={language} onLanguageChange={this.onLanguageChange} />
-        <Bar img="./img/blog.png" text={dataSource.barText} />
+        <Header
+          currentKey="blog"
+          type="normal"
+          logo={getLink('/img/nacos_colorful.png')}
+          language={language}
+          onLanguageChange={this.onLanguageChange}
+        />
+        <Bar img={getLink('/img/blog.png')} text={dataSource.barText} />
         <section className="blog-container">
           <div className="col col-18 left-part">
             <PageSlider pageSize={5}>
@@ -49,16 +41,18 @@ class Blog extends Language {
             <ul>
             {
               blogs.map((blog, i) => (
-                <li key={i}><Link to={blog.link}><span>{blog.dateStr}&nbsp;&nbsp;</span><span>{blog.title}</span></Link></li>
+                <li key={i}><a href={getLink(blog.link)} target={blog.target || '_self'}><span>{blog.dateStr}&nbsp;&nbsp;</span><span>{blog.title}</span></a></li>
               ))
             }
             </ul>
           </div>
         </section>
-        <Footer logo="./img/nacos_gray.png" />
+        <Footer logo={getLink('/img/nacos_gray.png')} language={language} />
       </div>
     );
   }
 }
+
+document.getElementById('root') && ReactDOM.render(<Blog />, document.getElementById('root'));
 
 export default Blog;

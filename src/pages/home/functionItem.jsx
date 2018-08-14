@@ -1,4 +1,5 @@
 import React from 'react';
+import { getLink } from '../../../utils';
 
 const Item = (props) => {
   const { func, imgFirst } = props;
@@ -6,7 +7,7 @@ const Item = (props) => {
     return (
       <div className="func-item">
         <div className="col img">
-          <img src={func.img} />
+          <img src={getLink(func.img)} />
         </div>
         <div className="col">
           <div className="vertical-middle">
@@ -26,7 +27,7 @@ const Item = (props) => {
         </div>
       </div>
       <div className="col img">
-        <img src={func.img} />
+        <img src={getLink(func.img)} />
       </div>
     </div>
   );

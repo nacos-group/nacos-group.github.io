@@ -1,8 +1,6 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-import cookie from 'js-cookie';
-import qs from 'querystring';
-import { getScrollTop } from '../../../utils';
+import ReactDOM from 'react-dom';
+import { getScrollTop, getLink } from '../../../utils';
 import Language from '../../components/language';
 import Header from '../../components/header';
 import Button from '../../components/button';
@@ -10,7 +8,6 @@ import Footer from '../../components/footer';
 import Bone from '../../components/bone';
 import FunctionItem from './functionItem';
 import FeatureItem from './featureItem';
-import siteConfig from '../../../site_config/site';
 import homeConfig from '../../../site_config/home';
 import './index.scss';
 
@@ -39,42 +36,31 @@ class Home extends Language {
   }
 
   render() {
-    const hashSearch = window.location.hash.split('?');
-    const search = qs.parse(hashSearch[1] || '');
-    let language = search.lang || cookie.get('docsite_language') || siteConfig.defaultLanguage;
-    if(language !== "zh-cn" && language !== "en-us") {
-        language = siteConfig.defaultLanguage;
-    }
-    // 同步cookie和search上的语言版本
-    if (language !== cookie.get('docsite_language')) {
-      cookie.set('docsite_language', language, { expires: 365, path: '' });
-    }
-    if (!search.lang) {
-      return <Redirect to={`${this.props.match.url}?lang=${language}`} />;
-    }
+    const language = this.getLanguage();
     const dataSource = homeConfig[language];
     const { headerType } = this.state;
-    const headerLogo = headerType === 'primary' ? './img/nacos_white.png' : './img/nacos_colorful.png';
+    const headerLogo = headerType === 'primary' ? getLink('/img/nacos_white.png') : getLink('/img/nacos_colorful.png');
     return (
       <div className="home-page">
-        <section className="top-section">
+        <section className="top-section" style={{ background: `url(${getLink('/img/black_dot.png')}) repeat;` }}>
           <Header
+            currentKey="home"
             type={headerType}
             logo={headerLogo}
             language={language}
             onLanguageChange={this.onLanguageChange}
           />
           <div className="vertical-middle">
-            <img className="product-logo" src="./img/nacos.png" />
+            <img className="product-logo" src={getLink('/img/nacos.png')} />
             <p className="product-desc">{dataSource.brand.briefIntroduction}</p>
             <div className="button-area">
               {
-                dataSource.brand.buttons.map(b => <Button type={b.type} link={b.link}>{b.text}</Button>)
+                dataSource.brand.buttons.map(b => <Button type={b.type} key={b.type} link={b.link}>{b.text}</Button>)
               }
             </div>
             <div className="version-note">
-              <a target="__blank" href={dataSource.brand.version.link}>{dataSource.brand.version.text}</a>
-              <a target="__blank" href={dataSource.brand.note.link}>{dataSource.brand.note.text}</a>
+              <a target="_blank" rel="noopener noreferrer" href={getLink(dataSource.brand.version.link)}>{dataSource.brand.version.text}</a>
+              <a target="_blank" rel="noopener noreferrer" href={getLink(dataSource.brand.note.link)}>{dataSource.brand.note.text}</a>
             </div>
             <div className="release-date">{dataSource.brand.releaseDate}</div>
           </div>
@@ -108,11 +94,12 @@ class Home extends Language {
             </ul>
           </div>
         </section>
-        <Footer logo="./img/nacos_gray.png" />
+        <Footer logo={getLink('/img/nacos_gray.png')} language={language} />
       </div>
     );
   }
 }
 
+document.getElementById('root') && ReactDOM.render(<Home />, document.getElementById('root'));
 
 export default Home;

@@ -1,19 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { getLink } from '../../../utils';
 
 class EventCard extends React.Component {
   render() {
     const { event } = this.props;
     return (
       <div className="event-card">
-        <img src={event.img} />
+        <a href={getLink(event.link)} target={event.target || '_self'}>
+          <img src={getLink(event.img)} />
+        </a>
         <div className="event-introduction">
           <h4>{event.title}</h4>
           <p>{event.content}</p>
-          <Link to={event.link}>
+          <a href={event.link} target={event.target || '_self'}>
             {event.dateStr}
-            <img className="arrow" src="./img/arrow_right.png" />
-          </Link>
+            <img className="arrow" src={getLink('/img/arrow_right.png')} />
+          </a>
         </div>
       </div>
     );
