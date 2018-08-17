@@ -1,4 +1,5 @@
 @import '../../variables.scss';
+@import '../../reset.scss';
 
 .community-page {
   .events-section {
@@ -175,6 +176,7 @@
         font-size: 14px;
         color: #666;
         text-align: justify;
+        margin: 12px 0;
       }
       .tags {
         a {

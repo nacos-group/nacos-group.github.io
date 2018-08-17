@@ -4,7 +4,8 @@ import { autobind } from 'core-decorators';
 import Item from './item.jsx';
 import './index.scss';
 
-export default class SideMenu extends React.Component {
+@autobind
+class SideMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,7 +13,6 @@ export default class SideMenu extends React.Component {
     };
   }
 
-  @autobind
   toggleMenuBody() {
     this.setState({
       menuBodyVisible: !this.state.menuBodyVisible,
@@ -55,3 +55,5 @@ export default class SideMenu extends React.Component {
     );
   }
 }
+
+export default SideMenu;

@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="sdk" />
+	<meta name="description" content="sdk" />
+	<!-- 网页标签标题 -->
+	<title>sdk</title>
+	<link rel="shortcut icon" href="/img/nacos.ico"/>
+	<link rel="stylesheet" href="/build/documentation.css" />
+</head>
+<body>
+	<div id="root"><div class="documentation-page" data-reactroot="" data-reactid="1" data-react-checksum="-882669009"><header class="header-container header-container-normal" data-reactid="2"><div class="header-body" data-reactid="3"><a href="/zh-cn/index.html" data-reactid="4"><img class="logo" src="/img/nacos_colorful.png" data-reactid="5"/></a><span class="language-switch language-switch-normal" data-reactid="6">En</span><div class="header-menu" data-reactid="7"><img class="header-menu-toggle" src="/img/menu_gray.png" data-reactid="8"/><ul data-reactid="9"><li class="menu-item menu-item-normal" data-reactid="10"><a href="/zh-cn/index.html" data-reactid="11">首页</a></li><li class="menu-item menu-item-normal menu-item-normal-active" data-reactid="12"><a href="/zh-cn/docs/what-is-nacos.html" data-reactid="13">文档</a></li><li class="menu-item menu-item-normal" data-reactid="14"><a href="/zh-cn/blog/index.html" data-reactid="15">博客</a></li><li class="menu-item menu-item-normal" data-reactid="16"><a href="/zh-cn/community/index.html" data-reactid="17">社区</a></li></ul></div></div></header><div class="bar" data-reactid="18"><div class="bar-body" data-reactid="19"><img src="/img/docs.png" class="front-img" data-reactid="20"/><div class="bar-title" data-reactid="21"><span data-reactid="22">Nacos 文档</span><div class="bone bone-light" data-reactid="23"></div></div><img src="/img/docs.png" class="back-img" data-reactid="24"/></div></div><section class="content-section" data-reactid="25"><div class="content-body" data-reactid="26"><div class="sidemenu" data-reactid="27"><div class="sidemenu-toggle" data-reactid="28"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png" data-reactid="29"/></div><ul data-reactid="30"><li class="menu-item menu-item-level-1" data-reactid="31"><span data-reactid="32">Nacos </span><ul data-reactid="33"><li style="height:144px;overflow:hidden;" class="menu-item menu-item-level-2" data-reactid="34"><span data-reactid="35"><!-- react-text: 36 -->Nacos是什么?<!-- /react-text --><img style="transform:rotate(0deg);" class="menu-toggle" src="/img/arrow_down.png" data-reactid="37"/></span><ul data-reactid="38"><li class="menu-item menu-item-level-3" data-reactid="39"><a href="/zh-cn/docs/what-is-nacos.html" target="_self" data-reactid="40">Nacos简介</a></li><li class="menu-item menu-item-level-3" data-reactid="41"><a href="/zh-cn/docs/concepts.html" target="_self" data-reactid="42">概念</a></li><li class="menu-item menu-item-level-3" data-reactid="43"><a href="/zh-cn/docs/architecture.html" target="_self" data-reactid="44">架构</a></li></ul></li><li style="height:180px;overflow:hidden;" class="menu-item menu-item-level-2" data-reactid="45"><span data-reactid="46"><!-- react-text: 47 -->用户指南<!-- /react-text --><img style="transform:rotate(0deg);" class="menu-toggle" src="/img/arrow_down.png" data-reactid="48"/></span><ul data-reactid="49"><li class="menu-item menu-item-level-3" data-reactid="50"><a href="/zh-cn/docs/quick-start.html" target="_self" data-reactid="51">快速入门</a></li><li class="menu-item menu-item-level-3" data-reactid="52"><a href="/zh-cn/docs/sdk.html" target="_self" data-reactid="53">Java的SDK</a></li><li class="menu-item menu-item-level-3" data-reactid="54"><a href="/zh-cn/docs/other-language.html" target="_self" data-reactid="55">其他语言的SDK</a></li><li class="menu-item menu-item-level-3" data-reactid="56"><a href="/zh-cn/docs/open-API.html" target="_self" data-reactid="57">Open-API指南</a></li></ul></li><li style="height:36px;overflow:hidden;" class="menu-item menu-item-level-2" data-reactid="58"><span data-reactid="59"><!-- react-text: 60 -->运维指南<!-- /react-text --><img style="transform:rotate(-90deg);" class="menu-toggle" src="/img/arrow_down.png" data-reactid="61"/></span><ul data-reactid="62"><li class="menu-item menu-item-level-3" data-reactid="63"><a href="/zh-cn/docs/deployment.html" target="_self" data-reactid="64">部署手册</a></li><li class="menu-item menu-item-level-3" data-reactid="65"><a href="/zh-cn/docs/managementAPI.html" target="_self" data-reactid="66">运维API</a></li><li class="menu-item menu-item-level-3" data-reactid="67"><a href="/zh-cn/docs/CLI-guide.html" target="_self" data-reactid="68">命令行手册</a></li><li class="menu-item menu-item-level-3" data-reactid="69"><a href="/zh-cn/docs/console-guide.html" target="_self" data-reactid="70">控制台手册</a></li></ul></li><li style="height:36px;overflow:hidden;" class="menu-item menu-item-level-2" data-reactid="71"><span data-reactid="72"><!-- react-text: 73 -->开源共建<!-- /react-text --><img style="transform:rotate(-90deg);" class="menu-toggle" src="/img/arrow_down.png" data-reactid="74"/></span><ul data-reactid="75"><li class="menu-item menu-item-level-3" data-reactid="76"><a href="/zh-cn/docs/contributing.html" target="_self" data-reactid="77">贡献源码</a></li><li class="menu-item menu-item-level-3" data-reactid="78"><a href="/zh-cn/docs/pull-request.html" target="_self" data-reactid="79">pull request模板</a></li><li class="menu-item menu-item-level-3" data-reactid="80"><a href="/zh-cn/docs/roadmap.html" target="_self" data-reactid="81">Nacos规划</a></li><li class="menu-item menu-item-level-3" data-reactid="82"><a href="/zh-cn/docs/use-nacos-with-springcloud.html" target="_self" data-reactid="83">Nacos支持SpringCloud生态</a></li><li class="menu-item menu-item-level-3" data-reactid="84"><a href="/zh-cn/docs/use-nacos-with-dubbo.html" target="_self" data-reactid="85">nacos支持dubbo生态</a></li><li class="menu-item menu-item-level-3" data-reactid="86"><a href="/zh-cn/docs/use-nacos-with-kubernetes.html" target="_self" data-reactid="87">Nacos支持k8s</a></li><li class="menu-item menu-item-level-3" data-reactid="88"><a href="/zh-cn/docs/use-nacos-with-istio.html" target="_self" data-reactid="89">nacos支持istio</a></li></ul></li><li style="height:36px;overflow:hidden;" class="menu-item menu-item-level-2" data-reactid="90"><span data-reactid="91"><!-- react-text: 92 -->社区<!-- /react-text --><img style="transform:rotate(-90deg);" class="menu-toggle" src="/img/arrow_down.png" data-reactid="93"/></span><ul data-reactid="94"><li class="menu-item menu-item-level-3" data-reactid="95"><a href="/zh-cn/docs/community.html" target="_self" data-reactid="96">社区</a></li></ul></li></ul></li></ul></div><div class="doc-content markdown-body" data-reactid="97"><h2>概述部分</h2>
+<p>maven坐标</p>
+<pre><code>&lt;groupId&gt;com.alibaba.nacos&lt;/groupId&gt;
+&lt;artifactId&gt;nacos-client&lt;/artifactId&gt;
+&lt;version&gt;0.1.0&lt;/version&gt;
+</code></pre>
+<h1>配置管理</h1>
+<h2>获取配置</h2>
+<h3>描述</h3>
+<p>用于服务启动的时候从 Nacos 获取配置。</p>
+<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getConfig</span><span class="hljs-params">(String dataId, String group, <span class="hljs-keyword">long</span> timeoutMs)</span> <span class="hljs-keyword">throws</span> NacosException
+</span></code></pre>
+<h3>请求参数</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数名</th>
+<th style="text-align:left">参数类型</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">dataId</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">配置 ID，采用类似 package.class（如com.taobao.tc.refund.log.level）的命名规则保证全局唯一性，class 部分建议是配置的业务含义。全部字符小写。只允许英文字符和 4 种特殊字符（&quot;.&quot;、&quot;:&quot;、&quot;-&quot;、&quot;_&quot;），不超过 256 字节。</td>
+</tr>
+<tr>
+<td style="text-align:left">group</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">配置分组，建议填写产品名:模块名（Nacos:Test）保证唯一性，只允许英文字符和4种特殊字符（&quot;.&quot;、&quot;:&quot;、&quot;-&quot;、&quot;_&quot;），不超过128字节。</td>
+</tr>
+<tr>
+<td style="text-align:left">timeout</td>
+<td style="text-align:left">long</td>
+<td style="text-align:left">读取配置超时时间，单位 ms，推荐值 3000。</td>
+</tr>
+</tbody>
+</table>
+<h3>返回值</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数类型</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">string</td>
+<td style="text-align:left">配置值</td>
+</tr>
+</tbody>
+</table>
+<h3>请求示例</h3>
+<pre><code class="language-java"><span class="hljs-keyword">try</span> {
+	String serverAddr = <span class="hljs-string">"{serverAddr}"</span>;
+	String dataId = <span class="hljs-string">"{dataId}"</span>;
+	String group = <span class="hljs-string">"{group}"</span>;
+	Properties properties = <span class="hljs-keyword">new</span> Properties();
+	properties.put(<span class="hljs-string">"serverAddr"</span>, serverAddr);
+	ConfigService configService = NacosFactory.createConfigService(properties);
+	String content = configService.getConfig(dataId, group, <span class="hljs-number">5000</span>);
+	System.out.println(content);
+} <span class="hljs-keyword">catch</span> (NacosException e) {
+    <span class="hljs-comment">// TODO Auto-generated catch block</span>
+    e.printStackTrace();
+}
+</code></pre>
+<h3>异常说明</h3>
+<p>读取配置超时或网络异常，抛出 NacosException 异常。</p>
+<h2>监听配置</h2>
+<h3>描述</h3>
+<p>如果希望 Nacos 推送配置变更，可以使用 Nacos 动态监听配置接口来实现。</p>
+<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addListener</span><span class="hljs-params">(String dataId, String group, Listener listener)</span> 
+</span></code></pre>
+<h3>请求参数</h3>
+<div class="bi-table">
+  <table>
+    <colgroup>
+      <col width="auto" />
+      <col width="auto" />
+      <col width="auto" />
+    </colgroup>
+    <tbody>
+      <tr>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">参数名</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">参数类型</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">描述</div>
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">dataId</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">string</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">配置 ID，采用类似 package.class（如com.taobao.tc.refund.log.level）的命名规则保证全局唯一性，class 部分建议是配置的业务含义。 全部字符小写。只允许英文字符和 4 种特殊字符（&quot;.&quot;、&quot;:&quot;、&quot;-&quot;、&quot;_&quot;）。不超过 256 字节。</div>
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">group</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">string</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">配置分组，建议填写<strong>产品名：模块名</strong>（如 Nacos:Test）保证唯一性。 只允许英文字符和4种特殊字符（&quot;.&quot;、&quot;:&quot;、&quot;-&quot;、&quot;_&quot;），不超过128字节。
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">listener</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">Listener</div>
+        </td>
+        <td rowspan="1" colSpan="1">
+          <div data-type="p">监听器，配置变更进入监听器的回调函数。</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<h3>返回值</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数类型</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">string</td>
+<td style="text-align:left">配置值，初始化或者配置变更的时候通过回调函数返回该值。</td>
+</tr>
+</tbody>
+</table>
+<h3>请求示例</h3>
+<pre><code class="language-java">String serverAddr = <span class="hljs-string">"{serverAddr}"</span>;
+String dataId = <span class="hljs-string">"{dataId}"</span>;
+String group = <span class="hljs-string">"{group}"</span>;
+Properties properties = <span class="hljs-keyword">new</span> Properties();
+properties.put(<span class="hljs-string">"serverAddr"</span>, serverAddr);
+ConfigService configService = NacosFactory.createConfigService(properties);
+String content = configService.getConfig(dataId, group, <span class="hljs-number">5000</span>);
+System.out.println(content);
+configService.addListener(dataId, group, <span class="hljs-keyword">new</span> Listener() {
+	<span class="hljs-meta">@Override</span>
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">receiveConfigInfo</span><span class="hljs-params">(String configInfo)</span> </span>{
+		System.out.println(<span class="hljs-string">"recieve1:"</span> + configInfo);
+	}
+	<span class="hljs-meta">@Override</span>
+	<span class="hljs-function"><span class="hljs-keyword">public</span> Executor <span class="hljs-title">getExecutor</span><span class="hljs-params">()</span> </span>{
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+	}
+});
+
+<span class="hljs-comment">// 测试让主线程不退出，因为订阅配置是守护线程，主线程退出守护线程就会退出。 正式代码中无需下面代码</span>
+<span class="hljs-keyword">while</span> (<span class="hljs-keyword">true</span>) {
+    <span class="hljs-keyword">try</span> {
+        Thread.sleep(<span class="hljs-number">1000</span>);
+    } <span class="hljs-keyword">catch</span> (InterruptedException e) {
+        e.printStackTrace();
+    }
+}
+</code></pre>
+<h2>删除监听</h2>
+<h3>描述</h3>
+<p>取消监听配置，取消监听后配置不会再推送。</p>
+<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">removeListener</span><span class="hljs-params">(String dataId, String group, Listener listener)</span>
+</span></code></pre>
+<h3>请求参数</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数名</th>
+<th style="text-align:left">参数类型</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">dataId</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">配置 ID，采用类似 package.class（如com.taobao.tc.refund.log.level）的命名规则保证全局唯一性，class 部分建议是配置的业务含义。全部字符小写。只允许英文字符和 4 种特殊字符（&quot;.&quot;、&quot;:&quot;、&quot;-&quot;、&quot;_&quot;），不超过 256 字节。</td>
+</tr>
+<tr>
+<td style="text-align:left">listener</td>
+<td style="text-align:left">ConfigChangeListenerAdapter</td>
+<td style="text-align:left">监听器，配置变更进入监听器的回调函数。</td>
+</tr>
+</tbody>
+</table>
+<h3>使用示例</h3>
+<pre><code class="language-java">String serverAddr = <span class="hljs-string">"{serverAddr}"</span>;
+String dataId = <span class="hljs-string">"{dataId}"</span>;
+String group = <span class="hljs-string">"{group}"</span>;
+Properties properties = <span class="hljs-keyword">new</span> Properties();
+properties.put(<span class="hljs-string">"serverAddr"</span>, serverAddr);
+ConfigService configService = NacosFactory.createConfigService(properties);
+configService.removeListener(dataId, group, yourListener);
+</code></pre>
+<h2>发布配置</h2>
+<h3>描述</h3>
+<p>用于通过程序自动发布 Nacos 配置，以便通过自动化手段降低运维成本。</p>
+<p>__注意：__创建和修改配置时使用的同一个发布接口，当配置不存在时会创建配置，当配置已存在时会更新配置。</p>
+<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">publishConfig</span><span class="hljs-params">(String dataId, String group, String content)</span> <span class="hljs-keyword">throws</span> NacosException
+
+</span></code></pre>
+<h3>请求参数</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数名</th>
+<th style="text-align:left">参数类型</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">dataId</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">配置 ID，采用类似 <code>package.class</code>（如 <code>com.taobao.tc.refund.log.level</code>）的命名规则保证全局唯一性。建议根据配置的业务含义来定义 class 部分。全部字符均为小写。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“_”），不超过 256 字节。</td>
+</tr>
+<tr>
+<td style="text-align:left">group</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">配置分组，建议填写<code>产品名:模块名</code>（如 Nacos<code>:Test</code>）来保证唯一性。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“_”），不超过 128 字节。</td>
+</tr>
+<tr>
+<td style="text-align:left">content</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">配置内容，不超过 100K 字节。</td>
+</tr>
+</tbody>
+</table>
+<h3>返回参数</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数类型</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">boolean</td>
+<td style="text-align:left">是否发布成功</td>
+</tr>
+</tbody>
+</table>
+<h3>请求示例</h3>
+<pre><code class="language-java"><span class="hljs-keyword">try</span> {
+    <span class="hljs-comment">// 初始化配置服务，控制台通过示例代码自动获取下面参数</span>
+	String serverAddr = <span class="hljs-string">"{serverAddr}"</span>;
+	String dataId = <span class="hljs-string">"{dataId}"</span>;
+	String group = <span class="hljs-string">"{group}"</span>;
+	Properties properties = <span class="hljs-keyword">new</span> Properties();
+	properties.put(<span class="hljs-string">"serverAddr"</span>, serverAddr);
+    ConfigService configService = NacosFactory.createConfigService(properties);
+	<span class="hljs-keyword">boolean</span> isPublishOk = configService.publishConfig(dataId, group, <span class="hljs-string">"content"</span>);
+	System.out.println(isPublishOk);
+} <span class="hljs-keyword">catch</span> (NacosException e) {
+    <span class="hljs-comment">// TODO Auto-generated catch block</span>
+    e.printStackTrace();
+}
+</code></pre>
+<h3>异常说明</h3>
+<p>读取配置超时或网络异常，抛出 NacosException 异常。</p>
+<h2>删除配置</h2>
+<h3>描述</h3>
+<p>用于通过程序自动删除 Nacos 配置，以便通过自动化手段降低运维成本。</p>
+<p><strong>注意：</strong> 当配置已存在时会删除该配置，当配置不存在时会直接返回成功消息。</p>
+<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">removeConfig</span><span class="hljs-params">(String dataId, String group)</span> <span class="hljs-keyword">throws</span> NacosException
+
+</span></code></pre>
+<h3>请求参数</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数名</th>
+<th style="text-align:left">参数类型</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">dataId</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">配置 ID</td>
+</tr>
+<tr>
+<td style="text-align:left">group</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">配置分组</td>
+</tr>
+</tbody>
+</table>
+<h3>返回参数</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数类型</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">boolean</td>
+<td style="text-align:left">是否删除成功</td>
+</tr>
+</tbody>
+</table>
+<h3>请求示例</h3>
+<pre><code class="language-java"><span class="hljs-keyword">try</span> {
+    <span class="hljs-comment">// 初始化配置服务，控制台通过示例代码自动获取下面参数</span>
+	String serverAddr = <span class="hljs-string">"{serverAddr}"</span>;
+	String dataId = <span class="hljs-string">"{dataId}"</span>;
+	String group = <span class="hljs-string">"{group}"</span>;
+	Properties properties = <span class="hljs-keyword">new</span> Properties();
+	properties.put(<span class="hljs-string">"serverAddr"</span>, serverAddr);
+
+	ConfigService configService = NacosFactory.createConfigService(properties);
+	<span class="hljs-keyword">boolean</span> isRemoveOk = configService.removeConfig(dataId, group);
+	System.out.println(isRemoveOk);
+} <span class="hljs-keyword">catch</span> (NacosException e) {
+    <span class="hljs-comment">// TODO Auto-generated catch block</span>
+    e.printStackTrace();
+}
+</code></pre>
+<h3>异常说明</h3>
+<p>读取配置超时或网络异常，抛出 NacosException 异常。</p>
+<h1>服务发现SDK</h1>
+<h2>注册实例</h2>
+<h3>描述注册一个实例到服务。</h3>
+<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">registerInstance</span><span class="hljs-params">(String serviceName, String ip, <span class="hljs-keyword">int</span> port)</span> <span class="hljs-keyword">throws</span> NacosException</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">registerInstance</span><span class="hljs-params">(String serviceName, String ip, <span class="hljs-keyword">int</span> port, String clusterName)</span> <span class="hljs-keyword">throws</span> NacosException</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">registerInstance</span><span class="hljs-params">(String serviceName, Instance instance)</span> <span class="hljs-keyword">throws</span> NacosException</span>;
+</code></pre>
+<h3>请求参数</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">serviceName</td>
+<td style="text-align:left">字符串</td>
+<td>服务名</td>
+</tr>
+<tr>
+<td style="text-align:left">ip</td>
+<td style="text-align:left">字符串</td>
+<td>服务实例IP</td>
+</tr>
+<tr>
+<td style="text-align:left">port</td>
+<td style="text-align:left">int</td>
+<td>服务实例port</td>
+</tr>
+<tr>
+<td style="text-align:left">clusterName</td>
+<td style="text-align:left">字符串</td>
+<td>集群名</td>
+</tr>
+<tr>
+<td style="text-align:left">instance</td>
+<td style="text-align:left">参见代码注释</td>
+<td>实例属性</td>
+</tr>
+</tbody>
+</table>
+<h3>返回参数</h3>
+<p>无</p>
+<h3>请求示例</h3>
+<pre><code class="language-java">NamingService naming = NamingFactory.createNaming(System.getProperty(<span class="hljs-string">"serveAddr"</span>));
+naming.registerInstance(<span class="hljs-string">"nacos.test.3"</span>, <span class="hljs-string">"11.11.11.11"</span>, <span class="hljs-number">8888</span>, <span class="hljs-string">"TEST1"</span>);
+
+Instance instance = <span class="hljs-keyword">new</span> Instance();
+instance.setIp(<span class="hljs-string">"55.55.55.55"</span>);
+instance.setPort(<span class="hljs-number">9999</span>);
+instance.setHealthy(<span class="hljs-keyword">false</span>);
+instance.setWeight(<span class="hljs-number">2.0</span>);
+Map&lt;String, String&gt; instanceMeta = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+instanceMeta.put(<span class="hljs-string">"site"</span>, <span class="hljs-string">"et2"</span>);
+instance.setMetadata(instanceMeta);
+
+Service service = <span class="hljs-keyword">new</span> Service(<span class="hljs-string">"nacos.test.4"</span>);
+service.setApp(<span class="hljs-string">"nacos-naming"</span>);
+service.sethealthCheckMode(<span class="hljs-string">"server"</span>);
+service.setEnableHealthCheck(<span class="hljs-keyword">true</span>);
+service.setProtectThreshold(<span class="hljs-number">0.8F</span>);
+service.setGroup(<span class="hljs-string">"CNCF"</span>);
+Map&lt;String, String&gt; serviceMeta = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+serviceMeta.put(<span class="hljs-string">"symmetricCall"</span>, <span class="hljs-string">"true"</span>);
+service.setMetadata(serviceMeta);
+instance.setService(service);
+
+Cluster cluster = <span class="hljs-keyword">new</span> Cluster();
+cluster.setName(<span class="hljs-string">"TEST5"</span>);
+AbstractHealthChecker.Http healthChecker = <span class="hljs-keyword">new</span> AbstractHealthChecker.Http();
+healthChecker.setExpectedResponseCode(<span class="hljs-number">400</span>);
+healthChecker.setCurlHost(<span class="hljs-string">"USer-Agent|Nacos"</span>);
+healthChecker.setCurlPath(<span class="hljs-string">"/xxx.html"</span>);
+cluster.setHealthChecker(healthChecker);
+Map&lt;String, String&gt; clusterMeta = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+clusterMeta.put(<span class="hljs-string">"xxx"</span>, <span class="hljs-string">"yyyy"</span>);
+cluster.setMetadata(clusterMeta);
+
+instance.setCluster(cluster);
+
+naming.registerInstance(<span class="hljs-string">"nacos.test.4"</span>, instance);
+</code></pre>
+<h2>注销实例</h2>
+<h3>描述</h3>
+<p>删除服务下的一个实例。</p>
+<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">deregisterInstance</span><span class="hljs-params">(String serviceName, String ip, <span class="hljs-keyword">int</span> port)</span> <span class="hljs-keyword">throws</span> NacosException</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">deregisterInstance</span><span class="hljs-params">(String serviceName, String ip, <span class="hljs-keyword">int</span> port, String clusterName)</span> <span class="hljs-keyword">throws</span> NacosException</span>;
+</code></pre>
+<h3>请求参数</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">serviceName</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">服务名</td>
+</tr>
+<tr>
+<td style="text-align:left">ip</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">服务实例IP</td>
+</tr>
+<tr>
+<td style="text-align:left">port</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">服务实例port</td>
+</tr>
+<tr>
+<td style="text-align:left">clusterName</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">集群名</td>
+</tr>
+</tbody>
+</table>
+<h3>返回参数</h3>
+<p>无</p>
+<h3>请求示例</h3>
+<pre><code class="language-java">NamingService naming = NamingFactory.createNaming(System.getProperty(<span class="hljs-string">"serveAddr"</span>));
+naming.deregisterInstance(<span class="hljs-string">"nacos.test.3"</span>, <span class="hljs-string">"11.11.11.11"</span>, <span class="hljs-number">8888</span>, <span class="hljs-string">"DEFAULT"</span>);
+</code></pre>
+<h2>获取全部实例</h2>
+<h3>描述</h3>
+<p>获取服务下的所有实例。</p>
+<pre><code class="language-java"><span class="hljs-function">List&lt;Instance&gt; <span class="hljs-title">getAllInstances</span><span class="hljs-params">(String serviceName)</span> <span class="hljs-keyword">throws</span> NacosException</span>;
+
+<span class="hljs-function">List&lt;Instance&gt; <span class="hljs-title">getAllInstances</span><span class="hljs-params">(String serviceName, List&lt;String&gt; clusters)</span> <span class="hljs-keyword">throws</span> NacosException</span>;
+</code></pre>
+<h3>请求参数</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">serviceName</td>
+<td style="text-align:left">字符串</td>
+<td>服务名</td>
+</tr>
+<tr>
+<td style="text-align:left">clusters</td>
+<td style="text-align:left">List</td>
+<td>集群列表</td>
+</tr>
+</tbody>
+</table>
+<h3>返回参数</h3>
+<p>List<Instance> 实例列表。</p>
+<h3>请求示例</h3>
+<pre><code class="language-java">NamingService naming = NamingFactory.createNaming(System.getProperty(<span class="hljs-string">"serveAddr"</span>));
+System.out.println(naming.getAllInstances(<span class="hljs-string">"nacos.test.3"</span>));
+</code></pre>
+<h2>获取健康或不健康实例列表</h2>
+<h3>描述</h3>
+<p>根据条件获取过滤后的实例列表。</p>
+<pre><code class="language-java"><span class="hljs-function">List&lt;Instance&gt; <span class="hljs-title">selectInstances</span><span class="hljs-params">(String serviceName, <span class="hljs-keyword">boolean</span> healthy)</span> <span class="hljs-keyword">throws</span> NacosException</span>;
+
+<span class="hljs-function">List&lt;Instance&gt; <span class="hljs-title">selectInstances</span><span class="hljs-params">(String serviceName, List&lt;String&gt; clusters, <span class="hljs-keyword">boolean</span> healthy)</span> <span class="hljs-keyword">throws</span> NacosException</span>;
+</code></pre>
+<h3>请求参数</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">serviceName</td>
+<td style="text-align:left">字符串</td>
+<td>服务名</td>
+</tr>
+<tr>
+<td style="text-align:left">clusters</td>
+<td style="text-align:left">List</td>
+<td>集群列表</td>
+</tr>
+<tr>
+<td style="text-align:left">healthy</td>
+<td style="text-align:left">boolean</td>
+<td>是否健康</td>
+</tr>
+</tbody>
+</table>
+<h3>返回参数</h3>
+<p>List<Instance> 实例列表。</p>
+<h3>请求示例</h3>
+<pre><code class="language-java">NamingService naming = NamingFactory.createNaming(System.getProperty(<span class="hljs-string">"serveAddr"</span>));
+System.out.println(naming.selectInstances(<span class="hljs-string">"nacos.test.3"</span>, <span class="hljs-keyword">true</span>));
+</code></pre>
+<h2>获取一个健康实例</h2>
+<h3>描述</h3>
+<p>根据负载均衡算法随机获取一个健康实例。</p>
+<pre><code class="language-java"><span class="hljs-function">Instance <span class="hljs-title">selectOneHealthyInstance</span><span class="hljs-params">(String serviceName)</span> <span class="hljs-keyword">throws</span> NacosException</span>;
+
+<span class="hljs-function">Instance <span class="hljs-title">selectOneHealthyInstance</span><span class="hljs-params">(String serviceName, List&lt;String&gt; clusters)</span> <span class="hljs-keyword">throws</span> NacosException</span>;
+</code></pre>
+<h3>请求参数</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">serviceName</td>
+<td style="text-align:left">字符串</td>
+<td>服务名</td>
+</tr>
+<tr>
+<td style="text-align:left">clusters</td>
+<td style="text-align:left">List</td>
+<td>集群列表</td>
+</tr>
+</tbody>
+</table>
+<h3>返回参数</h3>
+<p>Instance 实例。</p>
+<h3>请求示例</h3>
+<pre><code class="language-java">NamingService naming = NamingFactory.createNaming(System.getProperty(<span class="hljs-string">"serveAddr"</span>));
+System.out.println(naming.selectOneHealthyInstance(<span class="hljs-string">"nacos.test.3"</span>));
+</code></pre>
+<h2>监听服务</h2>
+<h3>描述</h3>
+<p>监听服务下的实例列表变化。</p>
+<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">subscribe</span><span class="hljs-params">(String serviceName, EventListener listener)</span> <span class="hljs-keyword">throws</span> NacosException</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">subscribe</span><span class="hljs-params">(String serviceName, List&lt;String&gt; clusters, EventListener listener)</span> <span class="hljs-keyword">throws</span> NacosException</span>;
+</code></pre>
+<h3>请求参数</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">serviceName</td>
+<td style="text-align:left">字符串</td>
+<td>服务名</td>
+</tr>
+<tr>
+<td style="text-align:left">clusters</td>
+<td style="text-align:left">List</td>
+<td>集群列表</td>
+</tr>
+<tr>
+<td style="text-align:left">listener</td>
+<td style="text-align:left">EventListener</td>
+<td>回调listener</td>
+</tr>
+</tbody>
+</table>
+<h3>返回参数</h3>
+<p>无</p>
+<h3>请求示例</h3>
+<pre><code class="language-java">NamingService naming = NamingFactory.createNaming(System.getProperty(<span class="hljs-string">"serveAddr"</span>));
+naming.subscribe(<span class="hljs-string">"nacos.test.3"</span>, event -&gt; {
+    <span class="hljs-keyword">if</span> (event <span class="hljs-keyword">instanceof</span> NamingEvent) {
+        System.out.println(((NamingEvent) event).getServceName());
+        System.out.println(((NamingEvent) event).getInstances());
+    }
+});
+</code></pre>
+<h2>取消监听服务</h2>
+<h3>描述</h3>
+<p>取消监听服务下的实例列表变化。</p>
+<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">unsubscribe</span><span class="hljs-params">(String serviceName, EventListener listener)</span> <span class="hljs-keyword">throws</span> NacosException</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">unsubscribe</span><span class="hljs-params">(String serviceName, List&lt;String&gt; clusters, EventListener listener)</span> <span class="hljs-keyword">throws</span> NacosException</span>;
+</code></pre>
+<h3>请求参数</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">serviceName</td>
+<td style="text-align:left">字符串</td>
+<td>服务名</td>
+</tr>
+<tr>
+<td style="text-align:left">clusters</td>
+<td style="text-align:left">List</td>
+<td>集群列表</td>
+</tr>
+<tr>
+<td style="text-align:left">listener</td>
+<td style="text-align:left">EventListener</td>
+<td>回调listener</td>
+</tr>
+</tbody>
+</table>
+<h3>返回参数</h3>
+<p>无</p>
+<h3>请求示例</h3>
+<pre><code class="language-java">
+NamingService naming = NamingFactory.createNaming(System.getProperty(<span class="hljs-string">"serveAddr"</span>));
+naming.unsubscribe(<span class="hljs-string">"nacos.test.3"</span>, event -&gt; {});
+
+</code></pre>
+</div></div></section><footer class="footer-container" data-reactid="98"><div class="footer-body" data-reactid="99"><img src="/img/nacos_gray.png" data-reactid="100"/><div class="cols-container" data-reactid="101"><div class="col col-12" data-reactid="102"><h3 data-reactid="103">愿景</h3><p data-reactid="104">Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6" data-reactid="105"><dl data-reactid="106"><dt data-reactid="107">文档</dt><dd data-reactid="108"><a href="/zh-cn/docs/what-is-nacos.html" target="_self" data-reactid="109">概览</a></dd><dd data-reactid="110"><a href="/zh-cn/docs/quick-start.html" target="_self" data-reactid="111">快速开始</a></dd><dd data-reactid="112"><a href="/zh-cn/docs/contributing.html" target="_self" data-reactid="113">开发者指南</a></dd></dl></div><div class="col col-6" data-reactid="114"><dl data-reactid="115"><dt data-reactid="116">资源</dt><dd data-reactid="117"><a href="/zh-cn/community/index.html" target="_self" data-reactid="118">社区</a></dd></dl></div></div><div class="copyright" data-reactid="119"><span data-reactid="120">@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/documentation.js"></script>
+</body>
+</html>

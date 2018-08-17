@@ -1,38 +1,49 @@
 import React from 'react';
 import { autobind } from 'core-decorators';
-import cookie from 'js-cookie';
-import qs from 'querystring';
 import ReactGA from 'react-ga';
+import cookie from 'js-cookie';
+import siteConfig from '../../../site_config/site';
 
-export default class Language extends React.Component {
-  constructor() {
-    super();
-      ReactGA.initialize('UA-121449408-1');
-      // ReactGA.initialize('UA-121449408-1', { debug: true });
+@autobind
+class Language extends React.Component {
+
+  constructor(props) {
+    super(props);
+    ReactGA.initialize('UA-121449408-1');
+    ReactGA.pageview(window.location.pathname + window.location.search);
   }
 
-  componentWillReceiveProps() {
-    const path = window.location.pathname + window.location.hash;
-    if (path.includes('/#/docs/')) {
-      if (path.includes('?lang=')) {
-        ReactGA.pageview(path);
-      }
-    } else {
-      ReactGA.pageview(path);
-    }
-  }
-
-  @autobind
   onLanguageChange(language) {
-    const { location } = this.props;
-    cookie.set('docsite_language', language, { expires: 365, path: '' });
-    // 语言版本在hash上也存一份，方便分享链接时能够获取语言版本，不放在window.location的search上是因为会导致页面刷新
-    const hashSearch = window.location.hash.split('?');
-    if (hashSearch && hashSearch.length) {
-      const search = qs.parse(hashSearch[1] || '');
-      search.lang = language;
-      window.location.hash = `${hashSearch[0] || ''}?${qs.stringify(search)}`;
+    const pathname = window.location.pathname;
+    let oldLang;
+    if (language === 'zh-cn') {
+      oldLang = 'en-us';
+    } else {
+      oldLang = 'zh-cn';
     }
-    this.forceUpdate();
+    const newPathname = pathname.replace(`${window.rootPath}/${oldLang}`, `${window.rootPath}/${language}`);
+    cookie.set('docsite_language', language, { expires: 365, path: '' });
+    window.location = newPathname;
+  }
+
+  getLanguage() {
+    let urlLang;
+    if (window.rootPath) {
+      urlLang = window.location.pathname.split('/')[2];
+    } else {
+      urlLang = window.location.pathname.split('/')[1];
+    }
+    let language = this.props.lang || urlLang || cookie.get('docsite_language') || siteConfig.defaultLanguage;
+    // 防止链接被更改导致错误的cookie存储
+    if (language !== 'en-us' && language !== 'zh-cn') {
+      language = siteConfig.defaultLanguage;
+    }
+    // 同步cookie语言版本
+    if (language !== cookie.get('docsite_language')) {
+      cookie.set('docsite_language', language, { expires: 365, path: '' });
+    }
+    return language;
   }
 }
+
+export default Language;

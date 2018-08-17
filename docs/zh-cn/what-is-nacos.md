@@ -13,7 +13,7 @@ Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 N
 
 [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/)
 
-[gRPC](https://grpc.io/docs/guides/concepts.html#service-definition) & [Dubbo RPC Service](https://dubbo.incubator.apache.org/#/?lang=en-us)
+[gRPC](https://grpc.io/docs/guides/concepts.html#service-definition) & [Dubbo RPC Service](https://dubbo.incubator.apache.org)
  
 [Spring Cloud RESTful Service](https://spring.io/understanding/REST)
 
@@ -21,7 +21,7 @@ Nacos 的关键特性包括:
 
 * **服务发现和服务健康监测**
 	
-    Nacos 支持基于 DNS 和基于 RPC 的服务发现。服务提供者使用 [原生SDK](https://nacos.io/#/docs/sdk.md)、[OpenAPI](https://nacos.io/#/docs/open-API.md)、或一个[独立的Agent TODO](https://nacos.io/#/docs/other-language.md)注册 Service 后，服务消费者可以使用[DNS TODO](xx) 或[HTTP&API TODO](xx)查找和发现服务。
+    Nacos 支持基于 DNS 和基于 RPC 的服务发现。服务提供者使用 [原生SDK](./sdk.md)、[OpenAPI](./open-API.md)、或一个[独立的Agent TODO](./other-language.md)注册 Service 后，服务消费者可以使用[DNS TODO](xx) 或[HTTP&API TODO](xx)查找和发现服务。
     
     Nacos 提供实时健康检查，阻止服务向不健康的主机或服务实例发送请求。Nacos 支持传输层(PING 或 TCP)和应用层(如 HTTP、Redis、MySQL、用户自定义）的健康检查。 对于复杂的云环境和网络拓扑环境中（如 VPC、边缘服务等）服务的健康检查，Nacos 提供了 agent 模式和服务端2种健康检查模式。Nacos 还提供统一的健康检查仪表盘，帮助您管理服务可用性及流量。
                  
@@ -46,7 +46,7 @@ Nacos 的关键特性包括:
 
     Nacos 能让您从微服务平台建设的视角管理数据中心的所有服务及元数据，包括管理服务的描述、生命周期、服务的静态依赖分析、服务的健康状态、服务的流量管理、路由及安全策略、服务的 SLA 以及最首要的 Metrics 统计数据。
 
-* [更多的特性列表 ...](https://nacos.io/#/docs/roadmap.md)
+* [更多的特性列表 ...](./roadmap.md)
 
 ## Nacos 全景图
 
@@ -58,20 +58,20 @@ Nacos 的关键特性包括:
 
 关于如何在这些生态中使用 Nacos，请参考以下文档：
 
-[Nacos与Kubernetes一起使用](https://nacos.io/#/docs/use-nacos-with-kubernetes.md)
+[Nacos与Kubernetes一起使用](./use-nacos-with-kubernetes.md)
 
-[Nacos与Dubbo一起使用](https://nacos.io/#/docs/use-nacos-with-dubbo.md)
+[Nacos与Dubbo一起使用](./use-nacos-with-dubbo.md)
 
-[Nacos与gRPC一起使用](https://nacos.io/#/docs/roadmap.md)
+[Nacos与gRPC一起使用](./roadmap.md)
 
-[Nacos与Spring Cloud一起使用](https://nacos.io/#/docs/use-nacos-with-springcloud.md)
+[Nacos与Spring Cloud一起使用](./use-nacos-with-springcloud.md)
 
-[Nacos与Istio一起使用](https://nacos.io/#/docs/use-nacos-with-istio.md)
+[Nacos与Istio一起使用](./use-nacos-with-istio.md)
 
 
 ## 下一步
 
-继续阅读 [快速开始](https://nacos.io/#/docs/quick-start.md) 以快速上手 Nacos。
+继续阅读 [快速开始](./quick-start.md) 以快速上手 Nacos。
 
 
 

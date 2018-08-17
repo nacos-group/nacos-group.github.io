@@ -1,6 +1,8 @@
 import React from 'react';
 import { autobind } from 'core-decorators';
+import { getLink } from '../../../utils';
 
+@autobind
 class ContactItem extends React.Component {
   constructor(props) {
     super(props);
@@ -9,14 +11,12 @@ class ContactItem extends React.Component {
     };
   }
 
-  @autobind
   onMouseOver() {
     this.setState({
       img: this.props.contact.imgHover,
     });
   }
 
-  @autobind
   onMouseOut() {
     this.setState({
       img: this.props.contact.img,
@@ -30,11 +30,11 @@ class ContactItem extends React.Component {
       <a
         className="contact-item"
         href={contact.link}
-        target="__blank"
+        target={contact.target || '_self'}
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
       >
-        <img src={img} />
+        <img src={getLink(img)} />
         <div>{contact.title}</div>
       </a>
     );

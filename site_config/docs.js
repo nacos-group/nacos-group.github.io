@@ -10,15 +10,15 @@ export default {
             children: [
               {
                 title: 'What is Nacos',
-                link: '/docs/what-is-nacos.md',
+                link: '/en-us/docs/what-is-nacos.html',
               },
               {
                 title: 'Concepts',
-                link: '/docs/concepts.md',
+                link: '/en-us/docs/concepts.html',
               },
               {
                 title: 'Architecure',
-                link: '/docs/architecture.md',
+                link: '/en-us/docs/architecture.html',
               },
             ],
           },
@@ -28,20 +28,20 @@ export default {
             children: [
               {
                 title: 'Quick Start',
-                link: '/docs/quick-start.md',
+                link: '/en-us/docs/quick-start.html',
               },
 
               {
                  title: 'Java SDK',
-                 link: '/docs/sdk.md',
+                 link: '/en-us/docs/sdk.html',
               },
               {
                   title: 'Other Language',
-                  link: '/docs/other-language.md',
+                  link: '/en-us/docs/other-language.html',
                },
               {
                 title: 'Open-API',
-                link: '/docs/open-API.md',
+                link: '/en-us/docs/open-API.html',
               },
             ],
           },
@@ -50,19 +50,19 @@ export default {
             children: [
               {
                 title: 'Deployment Guide',
-                link: '/docs/deployment.md',
+                link: '/en-us/docs/deployment.html',
               },
               {
                 title: 'Management OpenAPI',
-                link: '/docs/managementAPI.md',
+                link: '/en-us/docs/managementAPI.html',
               },
               {
                 title: 'Nacos Operator CLI Guide',
-                link: '/docs/CLI-guide.md',
+                link: '/en-us/docs/CLI-guide.html',
               },
               {
                 title: 'Admin Console Guide',
-                link: '/docs/console-guide.md',
+                link: '/en-us/docs/console-guide.html',
               },
             ],
           },
@@ -71,31 +71,31 @@ export default {
             children: [
               {
                 title: 'Contribute to Nacos',
-                link: '/docs/contributing.md',
+                link: '/en-us/docs/contributing.html',
               },
               {
                 title: 'Pull Request Template',
-                link: '/docs/pull-request.md',
+                link: '/en-us/docs/pull-request.html',
               },
               {
                 title: 'Nacos RoadMap',
-                link: '/docs/roadmap.md',
+                link: '/en-us/docs/roadmap.html',
               },
                 {
                     title: 'Nacos with SpringCloud',
-                    link: '/docs/use-nacos-with-springcloud.md',
+                    link: '/en-us/docs/use-nacos-with-springcloud.html',
                 },
                 {
                     title: 'Nacos with Dubbo',
-                    link: '/docs/use-nacos-with-dubbo.md',
+                    link: '/en-us/docs/use-nacos-with-dubbo.html',
                 },
                 {
                     title: 'Nacos with K8s',
-                    link: '/docs/use-nacos-with-kubernetes.md',
+                    link: '/en-us/docs/use-nacos-with-kubernetes.html',
                 },
                 {
                     title: 'Nacos with Istio',
-                    link: '/docs/use-nacos-with-istio.md',
+                    link: '/en-us/docs/use-nacos-with-istio.html',
                 },
             ],
           },
@@ -104,7 +104,7 @@ export default {
             children: [
               {
                 title: 'Community',
-                link: '/docs/community.md',
+                link: '/en-us/docs/community.html',
               },
             ],
           },
@@ -124,15 +124,15 @@ export default {
             children: [
               {
                 title: 'Nacos简介',
-                link: '/docs/what-is-nacos.md',
+                link: '/zh-cn/docs/what-is-nacos.html',
               },
               {
                 title: '概念',
-                link: '/docs/concepts.md',
+                link: '/zh-cn/docs/concepts.html',
               },
               {
                 title: '架构',
-                link: '/docs/architecture.md',
+                link: '/zh-cn/docs/architecture.html',
               },
             ],
           },
@@ -142,19 +142,19 @@ export default {
             children: [
               {
                 title: '快速入门',
-                link: '/docs/quick-start.md',
+                link: '/zh-cn/docs/quick-start.html',
               },
               {
                  title: 'Java的SDK',
-                  link: '/docs/sdk.md',
+                  link: '/zh-cn/docs/sdk.html',
               },
               {
                   title: '其他语言的SDK',
-                  link: '/docs/other-language.md',
+                  link: '/zh-cn/docs/other-language.html',
               },
               {
                   title: 'Open-API指南',
-                  link: '/docs/open-API.md',
+                  link: '/zh-cn/docs/open-API.html',
               },
             ],
           },
@@ -163,19 +163,19 @@ export default {
             children: [
               {
                 title: '部署手册',
-                link: '/docs/deployment.md',
+                link: '/zh-cn/docs/deployment.html',
               },
               {
                 title: '运维API',
-                link: '/docs/managementAPI.md',
+                link: '/zh-cn/docs/managementAPI.html',
               },
               {
                 title: '命令行手册',
-                link: '/docs/CLI-guide.md',
+                link: '/zh-cn/docs/CLI-guide.html',
               },
               {
                 title: '控制台手册',
-                link: '/docs/console-guide.md',
+                link: '/zh-cn/docs/console-guide.html',
               }
             ],
           },
@@ -184,31 +184,31 @@ export default {
             children: [
               {
                 title: '贡献源码',
-                link: '/docs/contributing.md',
+                link: '/zh-cn/docs/contributing.html',
               },
               {
                 title: 'pull request模板',
-                link: '/docs/pull-request.md',
+                link: '/zh-cn/docs/pull-request.html',
               },
               {
                 title: 'Nacos规划',
-                link: '/docs/roadmap.md',
+                link: '/zh-cn/docs/roadmap.html',
               },
                 {
                     title: 'Nacos支持SpringCloud生态',
-                    link: '/docs/use-nacos-with-springcloud.md',
+                    link: '/zh-cn/docs/use-nacos-with-springcloud.html',
                 },
                 {
                     title: 'nacos支持dubbo生态',
-                    link: '/docs/use-nacos-with-dubbo.md',
+                    link: '/zh-cn/docs/use-nacos-with-dubbo.html',
                 },
                 {
                     title: 'Nacos支持k8s',
-                    link: '/docs/use-nacos-with-kubernetes.md',
+                    link: '/zh-cn/docs/use-nacos-with-kubernetes.html',
                 },
                 {
                     title: 'nacos支持istio',
-                    link: '/docs/use-nacos-with-istio.md',
+                    link: '/zh-cn/docs/use-nacos-with-istio.html',
                 },
             ],
           },
@@ -217,7 +217,7 @@ export default {
             children: [
               {
                 title: '社区',
-                link: '/docs/community.md',
+                link: '/zh-cn/docs/community.html',
               }
             ],
           },

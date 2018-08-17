@@ -10,17 +10,17 @@ export default {
         },
         {
           text: 'Manual',
-          link: 'http://nacos.io/#/docs/what-is-nacos.md',
+          link: '/en-us/docs/what-is-nacos.html',
           type: 'normal',
         },
       ],
       version: {
         text: 'V0.1.0',
-        link: '',
+        link: 'https://github.com/alibaba/nacos/releases',
       },
       note: {
         text: 'Release Note',
-        link: '',
+        link: 'https://github.com/alibaba/nacos/releases',
       },
       releaseDate: 'Released on July 20, 2018',
     },
@@ -28,17 +28,17 @@ export default {
       title: 'Features',
       list: [
         {
-          img: './img/dynamic_configuration.png',
+          img: '/img/dynamic_configuration.png',
           title: 'Dynamic Configuration Service',
           content: 'Dynamic Configuration Service allows you to manage configurations in all environments in a centralized, externalized, and dynamic approach. Dynamic configuration saves you from redeploying your applications and services when configuration is updated. You can implement stateless services and achieve on-demand scaling effortlessly.',
         },
         {
-          img: './img/service_discovery.png',
+          img: '/img/service_discovery.png',
           title: 'Service Discovery and Management',
           content: 'Dynamic Service Discovery is key to service-centric (for example microservice or cloud-native) architectures. Nacos supports both DNS-based and RPC-based (Dubbo, gRPC) service discovery, and provides real-time service health checks to prevent routing requests from being sent to unhealthy hosts or service instances. With Nacos, you can also implement circuit breakers for your services with ease.',
         },
         {
-          img: './img/dynamic_DNS.png',
+          img: '/img/dynamic_DNS.png',
           title: 'Dynamic DNS Service',
           content: 'By supporting weighted routing, Dynamic DNS Service helps you implement mid-tier load balancing, more flexible routing, traffic control and DNS resolution services in the production environment within your data center. Dynamic DNS Service also makes it easier for you to implement DNS-based service discovery, which minimizes the risk of coupling to vendor-specific service discovery APIs.',
         },
@@ -48,7 +48,7 @@ export default {
       title: 'Why Nacos',
       list: [
         {
-          img: './img/feature_easy_to_use.png',
+          img: '/img/feature_easy_to_use.png',
           title: 'Easy to use',
           content: [
             'One-stop solution for dynamic service discovery, configuration management and dynamic DNS service',
@@ -57,7 +57,7 @@ export default {
           ],
         },
         {
-          img: './img/feature_adaptable.png',
+          img: '/img/feature_adaptable.png',
           title: 'More adaptive to cloud architectures',
           content: [
             'Seamlessly support kubernetes and spring cloud',
@@ -66,7 +66,7 @@ export default {
           ],
         },
         {
-          img: './img/feature_production_grade.png',
+          img: '/img/feature_production_grade.png',
           title: 'Production grade',
           content: [
             'Originated from time-tested internal products from Alibaba Group',
@@ -75,7 +75,7 @@ export default {
           ],
         },
         {
-          img: './img/feature_rich.png',
+          img: '/img/feature_rich.png',
           title: 'Rich internet application scenarios affinity',
           content: [
             'Supports rate throttling, big promotion plans, and multi-region active-active architectures',
@@ -97,17 +97,17 @@ export default {
         },
         {
           text: '手册',
-          link: 'http://nacos.io/#/docs/what-is-nacos.md',
+          link: '/zh-cn/docs/what-is-nacos.html',
           type: 'normal',
         },
       ],
       version: {
         text: 'V0.1.0',
-        link: '',
+        link: 'https://github.com/alibaba/nacos/releases',
       },
       note: {
         text: '版本说明',
-        link: '',
+        link: 'https://github.com/alibaba/nacos/releases',
       },
       releaseDate: '2018年7月20日发布',
     },
@@ -115,17 +115,17 @@ export default {
       title: '功能',
       list: [
         {
-          img: './img/dynamic_configuration.png',
+          img: '/img/dynamic_configuration.png',
           title: '动态配置服务',
           content: '动态配置服务让您能够以中心化、外部化和动态化的方式管理所有环境的配置。动态配置消除了配置变更时重新部署应用和服务的需要。配置中心化管理让实现无状态服务更简单，也让按需弹性扩展服务更容易。',
         },
         {
-          img: './img/service_discovery.png',
+          img: '/img/service_discovery.png',
           title: '服务发现及管理',
           content: '动态服务发现对以服务为中心的（例如微服务和云原生）应用架构方式非常关键。Nacos支持DNS-Based和RPC-Based（Dubbo、gRPC）模式的服务发现。Nacos也提供实时健康检查，以防止将请求发往不健康的主机或服务实例。借助Nacos，您可以更容易地为您的服务实现断路器。',
         },
         {
-          img: './img/dynamic_DNS.png',
+          img: '/img/dynamic_DNS.png',
           title: '动态DNS服务',
           content: '通过支持权重路由，动态DNS服务能让您轻松实现中间层负载均衡、更灵活的路由策略、流量控制以及简单数据中心内网的简单DNS解析服务。动态DNS服务还能让您更容易地实现以DNS协议为基础的服务发现，以消除耦合到厂商私有服务发现API上的风险。',
         },
@@ -135,7 +135,7 @@ export default {
       title: '特性一览',
       list: [
         {
-          img: './img/feature_easy_to_use.png',
+          img: '/img/feature_easy_to_use.png',
           title: '易于使用',
           content: [
             '动态配置管理、服务发现和动态的一站式解决方案',
@@ -144,7 +144,7 @@ export default {
           ],
         },
         {
-          img: './img/feature_adaptable.png',
+          img: '/img/feature_adaptable.png',
           title: '更适应云架构',
           content: [
             '无缝支持Kubernetes和Spring Cloud',
@@ -153,7 +153,7 @@ export default {
           ],
         },
         {
-          img: './img/feature_production_grade.png',
+          img: '/img/feature_production_grade.png',
           title: '生产等级',
           content: [
             '脱胎于历经阿里巴巴10年生产验证的内部产品',
@@ -162,7 +162,7 @@ export default {
           ],
         },
         {
-          img: './img/feature_rich.png',
+          img: '/img/feature_rich.png',
           title: '丰富的应用场景',
           content: [
             '支持限流、大促销预案和异地多活',

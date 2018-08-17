@@ -1,7 +1,7 @@
 import React from 'react';
 import { autobind } from 'core-decorators';
 import classnames from 'classnames';
-import { throttle } from '../../../utils';
+import { throttle, getLink } from '../../../utils';
 
 import './index.scss';
 
@@ -9,6 +9,7 @@ const defaultProps = {
   pageSize: 5,
 };
 
+@autobind
 class pageSlider extends React.Component {
   constructor(props) {
     super(props);
@@ -43,7 +44,6 @@ class pageSlider extends React.Component {
     });
   }
 
-  @autobind
   renderSliderList() {
     const { children, pageSize } = this.props;
     const { page, pageWidth } = this.state;
@@ -89,7 +89,6 @@ class pageSlider extends React.Component {
     );
   }
 
-  @autobind
   renderControl() {
     const { children, pageSize } = this.props;
     const { page } = this.state;
@@ -105,7 +104,7 @@ class pageSlider extends React.Component {
               'slider-control-prev-hidden': page === 0,
             })
           }
-          src="./img/prev.png"
+          src={getLink('/img/prev.png')}
           onClick={this.changePage.bind(this, page - 1)}
         />
         <img
@@ -115,7 +114,7 @@ class pageSlider extends React.Component {
               'slider-control-next-hidden': page === splitNum - 1,
             })
           }
-          src="./img/next.png"
+          src={getLink('/img/next.png')}
           onClick={this.changePage.bind(this, page + 1)}
         />
       </div>

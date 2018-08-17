@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import React from 'react';
 
 export default {
@@ -12,21 +11,21 @@ export default {
               title: '阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾',
               content: '本文详细回顾了阿里巴巴的服务注册中心ConfigServer产品从2008年建设元年至今经历的关键架构演进。通过这个文章你会对基于AP模式的注册中心在技术发展过程中将会碰到的问题有所感知。',
               dateStr: 'March 06，2018',
-              link: '/blog/alibaba-configserver.md',
+              link: '/en-us/blog/alibaba-configserver.html',
           },
         {
           img: '/img/kunyu.JPG',
           title: 'Nacos - 阿里巴巴注册中心和配置中心开源计划',
           content: '阿里巴巴计划开启一个名叫Nacos的新开源项目,坤宇介绍了这个开源项目的初衷，他表示 “将通过Nacos项目将阿里巴巴在建设共享服务体系中使用的服务发现、配置及服务管理平台贡献给开源社区"。',
           dateStr: 'March 06，2018',
-          link: '/blog/Nacos-is-Coming.md',
+          link: '/en-us/blog/Nacos-is-Coming.html',
         },
           {
               img: 'https://cdn.yuque.com/lark/0/2018/png/7601/1525185700084-16f2c073-0c2b-49c0-b85b-ce2ca1163326.png',
               title: '微服务架构中基于DNS的服务注册与发现',
               content: '当前，微服务架构已经成为企业尤其是互联网企业技术选型的一个重要参考。微服务架构中涉及到很多模块，本文将重点介绍微服务架构的服务注册与发现以及如何基于DNS做服务发现。',
               dateStr: 'March 06，2018',
-              link: '/blog/DNS-SD.md',
+              link: '/en-us/blog/DNS-SD.html',
           },
       ]
     },
@@ -35,26 +34,26 @@ export default {
       desc: 'Nacos is an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native application.',
       list: [
         {
-          img: './img/weibo.png',
-          imgHover: './img/weibo_hover.png',
+          img: '/img/weibo.png',
+          imgHover: '/img/weibo_hover.png',
           title: '@Nacos',
           link: 'https://weibo.com/u/6574374908',
         },
         {
-          img: './img/alibaba.png',
-          imgHover: './img/alibaba_hover.png',
+          img: '/img/alibaba.png',
+          imgHover: '/img/alibaba_hover.png',
           title: '#alibaba/Nacos',
           link: 'https://gitter.im/alibaba/nacos',
         },
         {
-          img: './img/segmentfault.png',
-          imgHover: './img/segmentfault_hover.png',
+          img: '/img/segmentfault.png',
+          imgHover: '/img/segmentfault_hover.png',
           title: 'Segment Fault',
           link: 'https://segmentfault.com/t/nacos',
         },
         {
-          img: './img/mailinglist.png',
-          imgHover: './img/mailinglist_hover.png',
+          img: '/img/mailinglist.png',
+          imgHover: '/img/mailinglist_hover.png',
           title: 'Mailing List',
           link: 'mailto:nacos_dev@linux.alibaba.com',
         },
@@ -65,24 +64,24 @@ export default {
       desc: 'Want to contribute to Nacos?',
       list: [
         {
-          img: './img/mailinglist.png',
+          img: '/img/mailinglist.png',
           title: 'Mailing List',
-          content: <span>Be sure to follow our <Link to="mailto:nacos_dev@linux.alibaba.com">our community addition guidelines</Link></span>,
+          content: <span>Be sure to follow our <a href="mailto:nacos_dev@linux.alibaba.com">our community addition guidelines</a></span>,
         },
         {
-          img: './img/issue.png',
+          img: '/img/issue.png',
           title: 'Issue',
-          content: <span>Reporting issues via <Link to="https://github.com/alibaba/nacos/issues">Github issues.</Link></span>,
+          content: <span>Reporting issues via <a href="https://github.com/alibaba/nacos/issues">Github issues.</a></span>,
         },
         {
-          img: './img/documents.png',
+          img: '/img/documents.png',
           title: 'Documents',
-          content: <span>Improve the <Link to="https://github.com/xuechaos/nacos.io/tree/master/docs">documentation.</Link></span>,
+          content: <span>Improve the <a href="https://github.com/xuechaos/nacos.io/tree/master/docs">documentation.</a></span>,
         },
         {
-          img: './img/pullrequest.png',
+          img: '/img/pullrequest.png',
           title: 'Pull Request',
-          content: <span>Send your awesome enhancement via <Link to="https://github.com/alibaba/nacos/pulls">Pull requests.</Link></span>,
+          content: <span>Send your awesome enhancement via <a href="https://github.com/alibaba/nacos/pulls">Pull requests.</a></span>,
         },
       ],
     },
@@ -150,21 +149,21 @@ export default {
               title: '阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾',
               content: '本文详细回顾了阿里巴巴的服务注册中心ConfigServer产品从2008年建设元年至今经历的关键架构演进。通过这个文章你会对基于AP模式的注册中心在技术发展过程中将会碰到的问题有所感知。',
               dateStr: 'March 06，2018',
-              link: '/blog/alibaba-configserver.md',
+              link: '/zh-cn/blog/alibaba-configserver.html',
           },
           {
               img: '/img/kunyu.JPG',
               title: 'Nacos - 阿里巴巴注册中心和配置中心开源计划',
               content: '阿里巴巴计划开启一个名叫Nacos的新开源项目,坤宇介绍了这个开源项目的初衷，他表示 “将通过Nacos项目将阿里巴巴在建设共享服务体系中使用的服务发现、配置及服务管理平台贡献给开源社区"。',
               dateStr: 'March 06，2018',
-              link: '/blog/Nacos-is-Coming.md',
+              link: '/zh-cn/blog/Nacos-is-Coming.html',
           },
           {
               img: 'https://cdn.yuque.com/lark/0/2018/png/7601/1525185700084-16f2c073-0c2b-49c0-b85b-ce2ca1163326.png',
               title: '微服务架构中基于DNS的服务注册与发现',
               content: '当前，微服务架构已经成为企业尤其是互联网企业技术选型的一个重要参考。微服务架构中涉及到很多模块，本文将重点介绍微服务架构的服务注册与发现以及如何基于DNS做服务发现。',
               dateStr: 'March 06，2018',
-              link: '/blog/DNS-SD.md',
+              link: '/zh-cn/blog/DNS-SD.html',
           },
       ]
     },
@@ -173,26 +172,26 @@ export default {
           desc: '有问题需要反馈？请通过一下方式联系我们。',
           list: [
               {
-                  img: './img/mailinglist.png',
-                  imgHover: './img/mailinglist_hover.png',
+                  img: '/img/mailinglist.png',
+                  imgHover: '/img/mailinglist_hover.png',
                   title: '邮件列表',
                   link: 'mailto:nacos_dev@linux.alibaba.com'
               },
               {
-                  img: './img/alibaba.png',
-                  imgHover: './img/alibaba_hover.png',
+                  img: '/img/alibaba.png',
+                  imgHover: '/img/alibaba_hover.png',
                   title: 'Gitter',
                   link: 'https://gitter.im/alibaba/nacos',
               },
               {
-                  img: './img/segmentfault.png',
-                  imgHover: './img/segmentfault_hover.png',
+                  img: '/img/segmentfault.png',
+                  imgHover: '/img/segmentfault_hover.png',
                   title: 'Segment Fault',
                   link: 'https://segmentfault.com/t/nacos'
               },
               {
-                  img: './img/weibo.png',
-                  imgHover: './img/weibo_hover.png',
+                  img: '/img/weibo.png',
+                  imgHover: '/img/weibo_hover.png',
                   title: '@Nacos',
                   link: 'https://weibo.com/u/6574374908',
               },
@@ -203,22 +202,22 @@ export default {
           desc: 'Nacos社区欢迎任何形式的贡献。',
           list: [
               {
-                  img: './img/mailinglist.png',
+                  img: '/img/mailinglist.png',
                   title: '邮件列表',
                   content: <span>发送 <a href="mailto:nacos_dev@linux.alibaba.com">邮件列表 </a>参与讨论。</span>,
               },
               {
-                  img: './img/issue.png',
+                  img: '/img/issue.png',
                   title: '报告缺陷',
                   content: <span>通过<a href="https://github.com/alibaba/nacos/issues"> Github issues </a>报告缺陷。</span>,
               },
               {
-                  img: './img/documents.png',
+                  img: '/img/documents.png',
                   title: '文档',
-                  content: <span>优化Nacos <a href="http://nacos.io/#/docs/what-is-nacos.md"> 文档</a>。</span>,
+                  content: <span>优化Nacos <a href="http://nacos.io/zh-cn/docs/what-is-nacos.html"> 文档</a>。</span>,
               },
               {
-                  img: './img/pullrequest.png',
+                  img: '/img/pullrequest.png',
                   title: 'Pull Request',
                   content: <span>提交 <a href="https://github.com/alibaba/nacos/pulls"> Pull requests </a>来修复问题。</span>,
               },

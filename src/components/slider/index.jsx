@@ -6,6 +6,7 @@ import { throttle } from '../../../utils';
 
 import './index.scss';
 
+@autobind
 class Slider extends React.Component {
   constructor(props) {
     super(props);
@@ -34,7 +35,6 @@ class Slider extends React.Component {
     window.removeEventListener('resize', this.throttleAdjust);
   }
 
-  @autobind
   getVisibleNum() {
     // 比较粗略的计算，假定一屏的子节点外边距之和不会超过一个子节点的宽度
     /* eslint-disable react/no-find-dom-node */
@@ -48,7 +48,6 @@ class Slider extends React.Component {
     return result || 1;
   }
 
-  @autobind
   getListWidth() {
     let width = 0;
     const { children } = this.props;
@@ -73,7 +72,6 @@ class Slider extends React.Component {
     }
   }
 
-  @autobind
   renderSliderList() {
     const { children } = this.props;
     const { screenIndex, visibleNum } = this.state;
@@ -124,7 +122,6 @@ class Slider extends React.Component {
     );
   }
 
-  @autobind
   renderControl() {
     const { children } = this.props;
     const { screenIndex, visibleNum } = this.state;
