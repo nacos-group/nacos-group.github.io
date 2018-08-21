@@ -52,7 +52,7 @@ Or double-click the startup.cmd run file.
 
 ### Service discovery
 
-`curl -X GET http://127.0.0.1:8080/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'`
+`curl -X GET 'http://127.0.0.1:8080/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'`
 
 ### Publish config
 
