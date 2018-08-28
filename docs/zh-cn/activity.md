@@ -1,41 +1,41 @@
 
-## I. ������б�
+## I. 活动任务列表
 
-* �Ķ������İ����ҹ���bug, ���С�Ӣ�Ĺ����Ὠ���Խ���
-* �Ķ���Ӣ�ĵ������ĵ�bug, ���С�Ӣ�ĵ������Ὠ�飨�����ǹ�עӢ�ķ��벻�õĵط�����ΪӢ�Ķ������ǳ���Ա�Լ�ߣ�ģ�
-* �����´��� ->������ -> ����Nacos server -> ֹͣNacos server���̣�����Ľ����
-* ���������Լ�������ڵ� Nacos ��Ⱥģʽ������Ľ����
-* ����ʹ��Nacos Java SDK, ��Java SDK��Ľ�����
-* ����ʹ��Nacos Open API����OpenAPI��Ľ�����
-* ���Ը��ݡ���ι���Nacos�ĵ�����һ�� �������̣��������������Ὠ��
-* ��Nacos�����󡢷�չ�ƻ����뷨��Ҫ���
+* 阅读官网文案，找官网bug, 给中、英文官网提建设性建议
+* 阅读中英文档，找文档bug, 给中、英文档改善提建议（尤其是关注英文翻译不好的地方，因为英文都是我们程序员自己撸的）
+* 尝试下代码 ->编译打包 -> 启动Nacos server -> 停止Nacos server流程，提出改进意见
+* 尝试配置以及启动多节点 Nacos 集群模式任务，提改进意见
+* 尝试使用Nacos Java SDK, 给Java SDK提改进建议
+* 尝试使用Nacos Open API，给OpenAPI提改进建议
+* 尝试根据《如何贡献Nacos文档》试一下 贡献流程，给贡献者流程提建议
+* 给Nacos提需求、发展计划、想法和要求等
 
-## II. ����뷽ʽ
+## II. 活动参与方式
 
-* ɨ�� �����硱 ΢��2΢�룬�ó���������� ��Nacos��������Ⱥ��
+* 扫描 “超哥” 微信2微码，让超哥帮助加入 “Nacos社区交流群”
     
-![΢�Ŷ�ά�� | left](https://cdn.yuque.com/lark/0/2018/png/11189/1532004866850-5e03b901-6d76-4380-b7bf-66e227808bdc.png "")
+![微信二维码 | left](https://cdn.yuque.com/lark/0/2018/png/11189/1532004866850-5e03b901-6d76-4380-b7bf-66e227808bdc.png "")
 
-* ѡ�� (I) �е�һ�����߶����������
-* �����������BUG֮�󣬰���(III)�еġ�����Report��ʽ������һ����Ӧ�� github issue, ��ָ�ɸ� @ github�˺�[xuechaos](https://github.com/xuechaos)
+* 选择 (I) 中的一个或者多个体验任务
+* 发现问题或者BUG之后，按照(III)中的《问题Report方式》，发一个相应的 github issue, 并指派给 @ github账号[xuechaos](https://github.com/xuechaos)
 
-## III. ����Report��ʽ
+## III. 问题Report方式
 
-* ����issuesģ�壬��github��nacos�ֿ⣬���ύ���⡣
-* ����ֿ����⣬�ύpull request�޸���ͨ��review�󣬺ϲ��������ɣ��ͳ�Ϊ��Contributor��
+* 根据issues模板，在github的nacos仓库，中提交问题。
+* 代码仓库问题，提交pull request修复，通过review后，合并进入主干，就成为了Contributor。
 * 
 * [https://github.com/alibaba/nacos](https://github.com/alibaba/nacos)
 * [https://github.com/nacos-group/nacos-group.github.io](https://github.com/nacos-group/nacos-group.github.io)
 
-## IV. ������
+## IV. 任务奖励
 
-* ��������Ϊ���벢����ͻ�����׵�С��鶨��һЩ����Nacos Logo��С��Ʒ���ῼ�ǿ�ݸ���������ͻ�����׵�С��顣
-* �������ᣬ��ϣ���ܱ�������ǵİ����ĸм�֮�����һ��
-* ���ʽ����ޣ�����Ŀǰֻ���ṩ40����Ʒ����������������Ʊ�����������Ϊ40�ˣ��ȵ��ȵá�
-* �����Ը�⣬ϣ���յ������С����ܷ�һ��������ĺ�Ӱ�����������沿�������ǣ���Ϊ�����������������Ƭ�زġ�
+* 我们正在为参与并作出突出贡献的小伙伴定制一些带有Nacos Logo的小礼品，会考虑快递给过程中有突出贡献的小伙伴。
+* 礼物虽轻，但希望能表达对你们的帮助的感激之情的万一。
+* 因资金有限，我们目前只能提供40份礼品，所以我们这次限制报名参与人数为40人，先到先得。
+* 如果你愿意，希望收到礼物的小伙伴能发一张与礼物的合影（可以隐藏面部）给我们，作为后续我们社区活动的照片素材。
 
-## V. ����˵��
+## V. 其它说明
 
-* ���ǲ�ȷ��ÿ��������󶼻ᱻ���ã��������Ǿ�����˵�����ǻ��ں��ֿ��ǣ����Ľ����������û�в��á�
-* ����ͨ���ʼ��б�����report issue�ķ�ʽ����������΢��Ⱥ��report���⣬�Ա㽫���ǵĹ�ͨ�����ĵ����͸����׳�����
+* 我们不确定每个建议最后都会被采用，但是我们尽量会说明我们基于何种考虑，您的建议我们最后没有采用。
+* 尽量通过邮件列表或者report issue的方式，而不是在微信群里report问题，以便将我们的沟通过程文档化和更容易沉淀。
 

@@ -73,6 +73,10 @@ export default {
                 title: 'Contribute to Nacos',
                 link: '/en-us/docs/contributing.html',
               },
+                {
+                    title: 'Nacos Activity',
+                    link: '/zh-cn/docs/activity.html',
+                },
               {
                 title: 'Pull Request Template',
                 link: '/en-us/docs/pull-request.html',

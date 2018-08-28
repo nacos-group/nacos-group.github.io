@@ -11,7 +11,7 @@
 
 ## II. Activity participation method
 
-* Scan "³¬¸ç" WeChat 2 microcode, let "³¬¸ç"" help join "Nacos community exchange group"
+* Scan "è¶…å“¥" WeChat 2 microcode, let "è¶…å“¥"" help join "Nacos community exchange group"
 
 
 
