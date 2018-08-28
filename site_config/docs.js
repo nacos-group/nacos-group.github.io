@@ -187,6 +187,10 @@ export default {
                 link: '/zh-cn/docs/contributing.html',
               },
               {
+                title: 'Nacos有奖活动介绍',
+                link: '/zh-cn/docs/activity.html',
+               },
+              {
                 title: 'pull request模板',
                 link: '/zh-cn/docs/pull-request.html',
               },
