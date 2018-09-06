@@ -1,6 +1,6 @@
 # 如何提交问题报告
 
-如果Nacos项目的任何部分存在问题或文档问题，请通过[opening an issue][Nacos-issue]告诉我们。我们非常认真地对待错误和错误，在产品面前没有不重要的问题。不过在创建错误报告之前，请检查是否存在报告相同问题的issues。
+如果Nacos项目的任何部分存在问题或文档问题，请通过[opening an issue](https://github.com/alibaba/nacos/issues/new)告诉我们。我们非常认真地对待错误和错误，在产品面前没有不重要的问题。不过在创建错误报告之前，请检查是否存在报告相同问题的issues。
 
 为了使错误报告准确且易于理解，请尝试创建以下错误报告：
 
@@ -10,16 +10,14 @@
 
 - 不重复。不要复制现有的错误报告。
 
-在创建错误报告之前，最好阅读下[Elika Etemad关于提交好错误报告的文章] [归档好错误]，相信 会给你启发。
+在创建错误报告之前，最好阅读下[Elika Etemad关于提交好错误报告的文章](http://fantasai.inkedblade.net/style/talks/filing-good-bugs/)，相信 会给你启发。
 
 我们可能会要求您提供更多信息以查找错误。将关闭重复的错误报告。
 
-[etcd-issue]：https：//github.com/etcd-io/etcd/issues/new
-[filing-good-bugs]：http：//fantasai.inkedblade.net/style/talks/filing-good-bugs/
 
-# How to Reporting bugs
+# Reporting bugs
 
-If any part of the Nacos project has bugs or documentation mistakes, please let us know by [opening an issue][Nacos-issue]. We treat bugs and mistakes very seriously and believe no issue is too small, anyOne is implement. Before creating a bug report, please check that an issue reporting the same problem does not already exist.
+If any part of the Nacos project has bugs or documentation mistakes, please let us know by [opening an issue](https://github.com/alibaba/nacos/issues/new). We treat bugs and mistakes very seriously and believe no issue is too small, anyOne is implement. Before creating a bug report, please check that an issue reporting the same problem does not already exist.
 
 To make the bug report accurate and easy to understand, please try to create bug reports that are:
 
@@ -30,11 +28,13 @@ To make the bug report accurate and easy to understand, please try to create bug
 - Unique. Do not duplicate existing bug report.
 
 
-It may be worthwhile to read [Elika Etemad’s article on filing good bug reports][filing-good-bugs] before creating a bug report.
+It may be worthwhile to read [Elika Etemad’s article on filing good bug reports](http://fantasai.inkedblade.net/style/talks/filing-good-bugs/) before creating a bug report.
 
 We might ask for further information to locate a bug. A duplicated bug report will be closed.
 
-[etcd-issue]: https://github.com/etcd-io/etcd/issues/new
-[filing-good-bugs]: http://fantasai.inkedblade.net/style/talks/filing-good-bugs/
 
 
+
+
+[etcd-issue](https://github.com/alibaba/nacos/issues/new)
+[filing-good-bugs](http://fantasai.inkedblade.net/style/talks/filing-good-bugs/)
