@@ -204,7 +204,7 @@ export default {
               },
               {
                 title: '如何提交问题报告',
-                link: '/en-us/docs/how-to-reporting-bugs.html',
+                link: '/zh-cn/docs/how-to-reporting-bugs.html',
               },
               {
                 title: 'Nacos规划',
