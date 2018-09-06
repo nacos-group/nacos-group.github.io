@@ -11,7 +11,7 @@ To make the bug report accurate and easy to understand, please try to create bug
 - Unique. Do not duplicate existing bug report.
 
 
-It may be worthwhile to read [Elika Etemad¡¯s article on filing good bug reports][filing-good-bugs] before creating a bug report.
+It may be worthwhile to read [Elika Etemadâ€™s article on filing good bug reports][filing-good-bugs] before creating a bug report.
 
 We might ask for further information to locate a bug. A duplicated bug report will be closed.
 
@@ -19,21 +19,21 @@ We might ask for further information to locate a bug. A duplicated bug report wi
 [filing-good-bugs]: http://fantasai.inkedblade.net/style/talks/filing-good-bugs/
 
 
-# ÈçºÎÌá½»ÎÊÌâ±¨¸æ
+# å¦‚ä½•æäº¤é—®é¢˜æŠ¥å‘Š
 
-Èç¹ûNacosÏîÄ¿µÄÈÎºÎ²¿·Ö´æÔÚÎÊÌâ»òÎÄµµÎÊÌâ£¬ÇëÍ¨¹ı[opening an issue][Nacos-issue]¸æËßÎÒÃÇ¡£ÎÒÃÇ·Ç³£ÈÏÕæµØ¶Ô´ı´íÎóºÍ´íÎó£¬ÔÚ²úÆ·ÃæÇ°Ã»ÓĞ²»ÖØÒªµÄÎÊÌâ¡£²»¹ıÔÚ´´½¨´íÎó±¨¸æÖ®Ç°£¬Çë¼ì²éÊÇ·ñ´æÔÚ±¨¸æÏàÍ¬ÎÊÌâµÄissues¡£
+å¦‚æœNacosé¡¹ç›®çš„ä»»ä½•éƒ¨åˆ†å­˜åœ¨é—®é¢˜æˆ–æ–‡æ¡£é—®é¢˜ï¼Œè¯·é€šè¿‡[opening an issue][Nacos-issue]å‘Šè¯‰æˆ‘ä»¬ã€‚æˆ‘ä»¬éå¸¸è®¤çœŸåœ°å¯¹å¾…é”™è¯¯å’Œé”™è¯¯ï¼Œåœ¨äº§å“é¢å‰æ²¡æœ‰ä¸é‡è¦çš„é—®é¢˜ã€‚ä¸è¿‡åœ¨åˆ›å»ºé”™è¯¯æŠ¥å‘Šä¹‹å‰ï¼Œè¯·æ£€æŸ¥æ˜¯å¦å­˜åœ¨æŠ¥å‘Šç›¸åŒé—®é¢˜çš„issuesã€‚
 
-ÎªÁËÊ¹´íÎó±¨¸æ×¼È·ÇÒÒ×ÓÚÀí½â£¬Çë³¢ÊÔ´´½¨ÒÔÏÂ´íÎó±¨¸æ£º
+ä¸ºäº†ä½¿é”™è¯¯æŠ¥å‘Šå‡†ç¡®ä¸”æ˜“äºç†è§£ï¼Œè¯·å°è¯•åˆ›å»ºä»¥ä¸‹é”™è¯¯æŠ¥å‘Šï¼š
 
-- ¾ßÌåµ½Ï¸½Ú¡£°üÀ¨¾¡¿ÉÄÜ¶àµÄÏ¸½Ú£ºÄÄ¸ö°æ±¾£¬Ê²Ã´»·¾³£¬Ê²Ã´ÅäÖÃµÈ¡£Èç¹û´íÎóÓëÔËĞĞNacos·şÎñÆ÷ÓĞ¹Ø£¬Çë¸½¼ÓNacosÈÕÖ¾£¨¾ßÓĞNacosÅäÖÃµÄÆğÊ¼ÈÕÖ¾ÓÈÎªÖØÒª£©¡£
+- å…·ä½“åˆ°ç»†èŠ‚ã€‚åŒ…æ‹¬å°½å¯èƒ½å¤šçš„ç»†èŠ‚ï¼šå“ªä¸ªç‰ˆæœ¬ï¼Œä»€ä¹ˆç¯å¢ƒï¼Œä»€ä¹ˆé…ç½®ç­‰ã€‚å¦‚æœé”™è¯¯ä¸è¿è¡ŒNacosæœåŠ¡å™¨æœ‰å…³ï¼Œè¯·é™„åŠ Nacosæ—¥å¿—ï¼ˆå…·æœ‰Nacosé…ç½®çš„èµ·å§‹æ—¥å¿—å°¤ä¸ºé‡è¦ï¼‰ã€‚
 
-- ¿É¸´ÏÖ¡£°üÀ¨ÖØÏÖÎÊÌâµÄ²½Öè¡£ÎÒÃÇÀí½âÄ³Ğ©ÎÊÌâ¿ÉÄÜÄÑÒÔÖØÏÖ£¬Çë°üÀ¨¿ÉÄÜµ¼ÖÂÎÊÌâµÄ²½Öè¡£Èç¹û¿ÉÄÜ£¬Çë½«ÊÜÓ°ÏìµÄNacosÊı¾İÄ¿Â¼ºÍ¶ÑÕ»strace¸½¼Óµ½´íÎó±¨¸æÖĞ¡£
+- å¯å¤ç°ã€‚åŒ…æ‹¬é‡ç°é—®é¢˜çš„æ­¥éª¤ã€‚æˆ‘ä»¬ç†è§£æŸäº›é—®é¢˜å¯èƒ½éš¾ä»¥é‡ç°ï¼Œè¯·åŒ…æ‹¬å¯èƒ½å¯¼è‡´é—®é¢˜çš„æ­¥éª¤ã€‚å¦‚æœå¯èƒ½ï¼Œè¯·å°†å—å½±å“çš„Nacosæ•°æ®ç›®å½•å’Œå †æ ˆstraceé™„åŠ åˆ°é”™è¯¯æŠ¥å‘Šä¸­ã€‚
 
-- ²»ÖØ¸´¡£²»Òª¸´ÖÆÏÖÓĞµÄ´íÎó±¨¸æ¡£
+- ä¸é‡å¤ã€‚ä¸è¦å¤åˆ¶ç°æœ‰çš„é”™è¯¯æŠ¥å‘Šã€‚
 
-ÔÚ´´½¨´íÎó±¨¸æÖ®Ç°£¬×îºÃÔÄ¶ÁÏÂ[Elika Etemad¹ØÓÚÌá½»ºÃ´íÎó±¨¸æµÄÎÄÕÂ] [¹éµµºÃ´íÎó]£¬ÏàĞÅ »á¸øÄãÆô·¢¡£
+åœ¨åˆ›å»ºé”™è¯¯æŠ¥å‘Šä¹‹å‰ï¼Œæœ€å¥½é˜…è¯»ä¸‹[Elika Etemadå…³äºæäº¤å¥½é”™è¯¯æŠ¥å‘Šçš„æ–‡ç« ] [å½’æ¡£å¥½é”™è¯¯]ï¼Œç›¸ä¿¡ ä¼šç»™ä½ å¯å‘ã€‚
 
-ÎÒÃÇ¿ÉÄÜ»áÒªÇóÄúÌá¹©¸ü¶àĞÅÏ¢ÒÔ²éÕÒ´íÎó¡£½«¹Ø±ÕÖØ¸´µÄ´íÎó±¨¸æ¡£
+æˆ‘ä»¬å¯èƒ½ä¼šè¦æ±‚æ‚¨æä¾›æ›´å¤šä¿¡æ¯ä»¥æŸ¥æ‰¾é”™è¯¯ã€‚å°†å…³é—­é‡å¤çš„é”™è¯¯æŠ¥å‘Šã€‚
 
-[etcd-issue]£ºhttps£º//github.com/etcd-io/etcd/issues/new
-[filing-good-bugs]£ºhttp£º//fantasai.inkedblade.net/style/talks/filing-good-bugs/
+[etcd-issue]ï¼šhttpsï¼š//github.com/etcd-io/etcd/issues/new
+[filing-good-bugs]ï¼šhttpï¼š//fantasai.inkedblade.net/style/talks/filing-good-bugs/
