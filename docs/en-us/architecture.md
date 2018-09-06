@@ -14,7 +14,7 @@
 
 * **Service Registry** 
 
-	The database of services, instances and metadata. Service instances are registered with the service registry on startup and deregistered on shutdown. Clients of the service and/or routers query the service registry to find the available instances of a service. A service registry might invoke a service instance��s health check API to verify that it is able to handle requests.
+	The database of services, instances and metadata. Service instances are registered with the service registry on startup and deregistered on shutdown. Clients of the service and/or routers query the service registry to find the available instances of a service. A service registry might invoke a service instances health check API to verify that it is able to handle requests.
 	
 * **Service Metadata** 
 	
