@@ -73,34 +73,38 @@ export default {
                 title: 'Contribute to Nacos',
                 link: '/en-us/docs/contributing.html',
               },
-                {
-                    title: 'Nacos Activity',
-                    link: '/zh-cn/docs/activity.html',
-                },
+              {
+                title: 'Nacos Activity',
+                link: '/zh-cn/docs/activity.html',
+              },
               {
                 title: 'Pull Request Template',
                 link: '/en-us/docs/pull-request.html',
               },
               {
+                title: 'How to reporting bugs',
+                link: '/en-us/docs/how-to-reporting-bugs.html',
+              },
+              {
                 title: 'Nacos RoadMap',
                 link: '/en-us/docs/roadmap.html',
               },
-                {
-                    title: 'Nacos with SpringCloud',
-                    link: '/en-us/docs/use-nacos-with-springcloud.html',
-                },
-                {
-                    title: 'Nacos with Dubbo',
-                    link: '/en-us/docs/use-nacos-with-dubbo.html',
-                },
-                {
-                    title: 'Nacos with K8s',
-                    link: '/en-us/docs/use-nacos-with-kubernetes.html',
-                },
-                {
-                    title: 'Nacos with Istio',
-                    link: '/en-us/docs/use-nacos-with-istio.html',
-                },
+              {
+                title: 'Nacos with SpringCloud',
+                link: '/en-us/docs/use-nacos-with-springcloud.html',
+              },
+              {
+                title: 'Nacos with Dubbo',
+                link: '/en-us/docs/use-nacos-with-dubbo.html',
+              },
+              {
+                title: 'Nacos with K8s',
+                link: '/en-us/docs/use-nacos-with-kubernetes.html',
+              },
+              {
+                title: 'Nacos with Istio',
+                link: '/en-us/docs/use-nacos-with-istio.html',
+              },
             ],
           },
           {
@@ -199,25 +203,29 @@ export default {
                 link: '/zh-cn/docs/pull-request.html',
               },
               {
+                title: '如何提交问题报告',
+                link: '/en-us/docs/how-to-reporting-bugs.html',
+              },
+              {
                 title: 'Nacos规划',
                 link: '/zh-cn/docs/roadmap.html',
               },
-                {
-                    title: 'Nacos支持SpringCloud生态',
-                    link: '/zh-cn/docs/use-nacos-with-springcloud.html',
-                },
-                {
-                    title: 'nacos支持dubbo生态',
-                    link: '/zh-cn/docs/use-nacos-with-dubbo.html',
-                },
-                {
-                    title: 'Nacos支持k8s',
-                    link: '/zh-cn/docs/use-nacos-with-kubernetes.html',
-                },
-                {
-                    title: 'nacos支持istio',
-                    link: '/zh-cn/docs/use-nacos-with-istio.html',
-                },
+              {
+                  title: 'Nacos支持SpringCloud生态',
+                  link: '/zh-cn/docs/use-nacos-with-springcloud.html',
+              },
+              {
+                  title: 'nacos支持dubbo生态',
+                  link: '/zh-cn/docs/use-nacos-with-dubbo.html',
+              },
+              {
+                  title: 'Nacos支持k8s',
+                  link: '/zh-cn/docs/use-nacos-with-kubernetes.html',
+              },
+              {
+                  title: 'nacos支持istio',
+                  link: '/zh-cn/docs/use-nacos-with-istio.html',
+              },
             ],
           },
           {
