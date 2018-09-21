@@ -32,15 +32,15 @@ export default {
               },
                 {
                     title: 'Quick Start Spring',
-                    link: '/en-us/docs/quick-start-spring.md',
+                    link: '/en-us/docs/quick-start-spring.html',
                 },
                 {
                     title: 'Quick Start Spring Boot',
-                    link: '/en-us/docs/quick-start-spring-boot.md',
+                    link: '/en-us/docs/quick-start-spring-boot.html',
                 },
                 {
                     title: 'Quick Start Spring Cloud',
-                    link: '/en-us/docs/quick-start-spring-cloud.md',
+                    link: '/en-us/docs/quick-start-spring-cloud.html',
                 },
             ],
           },
@@ -171,15 +171,15 @@ export default {
                     },
             {
                 title: 'Nacos与Spring快速入门',
-                link: '/zh-cn/docs/quick-start-spring.md',
+                link: '/zh-cn/docs/quick-start-spring.html',
             },
             {
                 title: 'Nacos与Spring Boot快速入门',
-                link: '/zh-cn/docs/quick-start-spring-boot.md',
+                link: '/zh-cn/docs/quick-start-spring-boot.html',
             },
             {
                 title: 'Nacos与Spring Cloud快速入门',
-                link: '/zh-cn/docs/quick-start-spring-cloud.md',
+                link: '/zh-cn/docs/quick-start-spring-cloud.html',
             },
             ]
             },
