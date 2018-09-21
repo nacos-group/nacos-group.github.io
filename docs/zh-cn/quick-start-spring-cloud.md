@@ -4,7 +4,7 @@
 
 # 配置管理
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">完整示例代码</span></span>：[nacos-spring-cloud-config-example](https://github.com/nacos-group/nacos-demo/nacos-spring-cloud-config-demo)
+<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">完整示例代码</span></span>：[nacos-spring-cloud-config-example](https://github.com/nacos-group/nacos-example/nacos-spring-cloud-config-example)
 
 ## 依赖
 
@@ -80,7 +80,7 @@ curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example.propertie
 
 # 服务发现
 
-完整示例代码：[nacos-spring-cloud-discovery-example](https://github.com/nacos-group/nacos-demo/nacos-spring-cloud-discovery-demo)
+完整示例代码：[nacos-spring-cloud-discovery-example](https://github.com/nacos-group/nacos-example/nacos-spring-cloud-discovery-example)
 
 ## 依赖
 

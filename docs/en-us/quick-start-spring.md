@@ -4,7 +4,7 @@
 
 # 配置管理
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">完整示例代码：</span></span>[nacos-spring-config-example](https://github.com/nacos-group/nacos-demo/nacos-spring-config-demo)
+<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">完整示例代码：</span></span>[nacos-spring-config-example](https://github.com/nacos-group/nacos-example/nacos-spring-config-example)
 
 ## 依赖
 
@@ -65,7 +65,7 @@ curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example&group=DEF
 
 # 服务发现
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">完整示例代码：</span></span>[nacos-spring-discovery-example](https://github.com/nacos-group/nacos-demo/nacos-spring-discovery-demo)
+<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">完整示例代码：</span></span>[nacos-spring-discovery-example](https://github.com/nacos-group/nacos-example/nacos-spring-discovery-example)
 
 ## 依赖
 
@@ -122,7 +122,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=1
 ```
 [
   {
-    "instanceId": "127.0.0.1-8080-DEFAULT-example",
+    "instanceId": "127.0.0.1#8080#DEFAULT#example",
     "ip": "127.0.0.1",
     "port": 8080,
     "weight": 1.0,

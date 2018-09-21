@@ -4,7 +4,7 @@
 
 # 配置管理
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">完整示例代码：</span></span>[nacos-spring-boot-config-example](https://github.com/nacos-group/nacos-demo/nacos-spring-boot-config-demo)
+<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">完整示例代码：</span></span>[nacos-spring-boot-config-example](https://github.com/nacos-group/nacos-example/nacos-spring-boot-config-example)
 
 ## 依赖
 
@@ -73,7 +73,7 @@ curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example&group=DEF
 
 # 服务发现
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">完整示例代码：</span></span>[nacos-spring-boot-discovery-example](https://github.com/nacos-group/nacos-demo/nacos-spring-boot-discovery-demo)
+<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">完整示例代码：</span></span>[nacos-spring-boot-discovery-example](https://github.com/nacos-group/nacos-example/nacos-spring-boot-discovery-example)
 
 ## 依赖
 
