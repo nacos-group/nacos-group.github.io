@@ -23,14 +23,31 @@ export default {
             ],
           },
           {
-            title: 'User Guide',
+            title: 'Quick Start',
             opened: true,
             children: [
               {
-                title: 'Quick Start',
+                title: 'Nacos Quick Start',
                 link: '/en-us/docs/quick-start.html',
               },
-
+                {
+                    title: 'Quick Start Spring',
+                    link: '/en-us/docs/quick-start-spring.md',
+                },
+                {
+                    title: 'Quick Start Spring Boot',
+                    link: '/en-us/docs/quick-start-spring-boot.md',
+                },
+                {
+                    title: 'Quick Start Spring Cloud',
+                    link: '/en-us/docs/quick-start-spring-cloud.md',
+                },
+            ],
+          },
+          {
+            title: 'User Guide',
+            opened: true,
+            children: [
               {
                  title: 'Java SDK',
                  link: '/en-us/docs/sdk.html',
