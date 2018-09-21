@@ -161,14 +161,32 @@ export default {
               },
             ],
           },
+            {
+                title: '快速入门',
+                opened: true,
+                children: [
+                    {
+                        title: '快速入门',
+                        link: '/zh-cn/docs/quick-start.html',
+                    },
+            {
+                title: 'Nacos与Spring快速入门',
+                link: '/zh-cn/docs/quick-start-spring.md',
+            },
+            {
+                title: 'Nacos与Spring Boot快速入门',
+                link: '/zh-cn/docs/quick-start-spring-boot.md',
+            },
+            {
+                title: 'Nacos与Spring Cloud快速入门',
+                link: '/zh-cn/docs/quick-start-spring-cloud.md',
+            },
+            ]
+            },
           {
             title: '用户指南',
             opened: true,
             children: [
-              {
-                title: '快速入门',
-                link: '/zh-cn/docs/quick-start.html',
-              },
               {
                  title: 'Java的SDK',
                   link: '/zh-cn/docs/sdk.html',
