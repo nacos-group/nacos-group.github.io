@@ -69,6 +69,10 @@ export default {
                 title: 'Deployment Guide',
                 link: '/en-us/docs/deployment.html',
               },
+                {
+                    title: 'Cluster Mode Deployment',
+                    link: '/en-us/docs/cluster-mode-quick-start.html',
+                },
               {
                 title: 'Management OpenAPI',
                 link: '/en-us/docs/managementAPI.html',
@@ -191,6 +195,7 @@ export default {
                  title: 'Java的SDK',
                   link: '/zh-cn/docs/sdk.html',
               },
+
               {
                   title: '其他语言的SDK',
                   link: '/zh-cn/docs/other-language.html',
@@ -208,7 +213,11 @@ export default {
                 title: '部署手册',
                 link: '/zh-cn/docs/deployment.html',
               },
-              {
+                {
+                    title: '集群部署说明',
+                    link: '/zh-cn/docs/cluster-mode-quick-start.html',
+                },
+                {
                 title: '运维API',
                 link: '/zh-cn/docs/managementAPI.html',
               },
