@@ -6,20 +6,28 @@ export default {
     events: {
       title: 'Events & News',
       list: [
+
+          {
+              img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1537795153259-cc2c60c2-d7cb-431a-8858-cbd71b1c89e9.png',
+              title: 'Nacos 计划发布v0.2版本，进一步融合Dubbo和SpringCloud生态',
+              content: '在近期的Aliware Open Source 成都站的活动上，阿里巴巴高级工程师邢学超（于怀）分享了Nacos v0.2的规划和进度，并对Nacos v0.3的控制台进行了预览。Nacos v0.2将进一步融入Duboo和Spring Cloud生态，帮助开发者更好的在微服务场景下使用服务发现和动态配置管理。',
+              dateStr: 'Sept 06，2018',
+              link: '/en-us/blog/cengdu-dubbo.html',
+          },
           {
               img: 'https://cdn.yuque.com/lark/0/2018/png/15914/1530083408486-b4698533-8e69-4e0a-9f3a-fdb1cdfbd290.png',
-              title: '阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾',
-              content: '本文详细回顾了阿里巴巴的服务注册中心ConfigServer产品从2008年建设元年至今经历的关键架构演进。通过这个文章你会对基于AP模式的注册中心在技术发展过程中将会碰到的问题有所感知。',
-              dateStr: 'March 06，2018',
-              link: '/en-us/blog/alibaba-configserver.html',
+              title: 'Consul与kubernetes整合公告[翻译]',
+              dateStr: 'Sept 2nd, 2018',
+              content: '本文翻译了Consul对于Kubernetes的整合所发布的公告文章（[原文地址](https://www.hashicorp.com/blog/consul-plus-kubernetes)）。Consul通过支持Service Mesh，并提供对Kubernetes的无缝支持，与目前最受社区热捧的产品进行绑定，并通过功能预告的形式，来达到对产品宣传效果的最大化。',
+              link: '/en-us/blog/consul-k8s.html',
           },
-        {
-          img: '/img/kunyu.JPG',
-          title: 'Nacos - 阿里巴巴注册中心和配置中心开源计划',
-          content: '阿里巴巴计划开启一个名叫Nacos的新开源项目,坤宇介绍了这个开源项目的初衷，他表示 “将通过Nacos项目将阿里巴巴在建设共享服务体系中使用的服务发现、配置及服务管理平台贡献给开源社区"。',
-          dateStr: 'March 06，2018',
-          link: '/en-us/blog/Nacos-is-Coming.html',
-        },
+        // {
+        //   img: '/img/kunyu.JPG',
+        //   title: 'Nacos - 阿里巴巴注册中心和配置中心开源计划',
+        //   content: '阿里巴巴计划开启一个名叫Nacos的新开源项目,坤宇介绍了这个开源项目的初衷，他表示 “将通过Nacos项目将阿里巴巴在建设共享服务体系中使用的服务发现、配置及服务管理平台贡献给开源社区"。',
+        //   dateStr: 'March 06，2018',
+        //   link: '/en-us/blog/Nacos-is-Coming.html',
+        // },
           {
               img: 'https://cdn.yuque.com/lark/0/2018/png/7601/1525185700084-16f2c073-0c2b-49c0-b85b-ce2ca1163326.png',
               title: '微服务架构中基于DNS的服务注册与发现',
@@ -145,19 +153,33 @@ export default {
       title: '事件 & 新闻',
       list: [
           {
-              img: 'https://cdn.yuque.com/lark/0/2018/png/15914/1530083408486-b4698533-8e69-4e0a-9f3a-fdb1cdfbd290.png',
-              title: '阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾',
-              content: '本文详细回顾了阿里巴巴的服务注册中心ConfigServer产品从2008年建设元年至今经历的关键架构演进。通过这个文章你会对基于AP模式的注册中心在技术发展过程中将会碰到的问题有所感知。',
-              dateStr: 'March 06，2018',
-              link: '/zh-cn/blog/alibaba-configserver.html',
+              img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1537795153259-cc2c60c2-d7cb-431a-8858-cbd71b1c89e9.png',
+              title: 'Nacos 计划发布v0.2版本，进一步融合Dubbo和SpringCloud生态',
+              content: '在近期的Aliware Open Source 成都站的活动上，阿里巴巴高级工程师邢学超（于怀）分享了Nacos v0.2的规划和进度，并对Nacos v0.3的控制台进行了预览。Nacos v0.2将进一步融入Duboo和Spring Cloud生态，帮助开发者更好的在微服务场景下使用服务发现和动态配置管理。',
+              dateStr: 'Sept 06，2018',
+              link: '/en-us/blog/cengdu-dubbo.html',
           },
           {
-              img: '/img/kunyu.JPG',
-              title: 'Nacos - 阿里巴巴注册中心和配置中心开源计划',
-              content: '阿里巴巴计划开启一个名叫Nacos的新开源项目,坤宇介绍了这个开源项目的初衷，他表示 “将通过Nacos项目将阿里巴巴在建设共享服务体系中使用的服务发现、配置及服务管理平台贡献给开源社区"。',
-              dateStr: 'March 06，2018',
-              link: '/zh-cn/blog/Nacos-is-Coming.html',
+              img: 'https://cdn.yuque.com/lark/0/2018/png/15914/1530083408486-b4698533-8e69-4e0a-9f3a-fdb1cdfbd290.png',
+              title: 'Consul与kubernetes整合公告[翻译]',
+              dateStr: 'Sept 2nd, 2018',
+              content: '本文翻译了Consul对于Kubernetes的整合所发布的公告文章（[原文地址](https://www.hashicorp.com/blog/consul-plus-kubernetes)）。Consul通过支持Service Mesh，并提供对Kubernetes的无缝支持，与目前最受社区热捧的产品进行绑定，并通过功能预告的形式，来达到对产品宣传效果的最大化。',
+              link: '/en-us/blog/consul-k8s.html',
           },
+          // {
+          //     img: 'https://cdn.yuque.com/lark/0/2018/png/15914/1530083408486-b4698533-8e69-4e0a-9f3a-fdb1cdfbd290.png',
+          //     title: '阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾',
+          //     content: '本文详细回顾了阿里巴巴的服务注册中心ConfigServer产品从2008年建设元年至今经历的关键架构演进。通过这个文章你会对基于AP模式的注册中心在技术发展过程中将会碰到的问题有所感知。',
+          //     dateStr: 'March 06，2018',
+          //     link: '/zh-cn/blog/alibaba-configserver.html',
+          // },
+          // {
+          //     img: '/img/kunyu.JPG',
+          //     title: 'Nacos - 阿里巴巴注册中心和配置中心开源计划',
+          //     content: '阿里巴巴计划开启一个名叫Nacos的新开源项目,坤宇介绍了这个开源项目的初衷，他表示 “将通过Nacos项目将阿里巴巴在建设共享服务体系中使用的服务发现、配置及服务管理平台贡献给开源社区"。',
+          //     dateStr: 'March 06，2018',
+          //     link: '/zh-cn/blog/Nacos-is-Coming.html',
+          // },
           {
               img: 'https://cdn.yuque.com/lark/0/2018/png/7601/1525185700084-16f2c073-0c2b-49c0-b85b-ce2ca1163326.png',
               title: '微服务架构中基于DNS的服务注册与发现',
