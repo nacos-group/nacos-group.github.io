@@ -21,9 +21,10 @@ cd nacos/distribution/target/nacos-server-0.2.1/nacos/bin
   
 ### 2)Download run package 
 
-[zip package Download](https://github.com/alibaba/nacos/releases/download/v0.2.1/nacos-server-0.2.1.zip)
+[zip package Download](https://github.com/alibaba/nacos/releases/download/0.2.1/nacos-server-0.2.1.zip)
 
-[tar.gz package Download](https://github.com/alibaba/nacos/releases/download/v0.2.1/nacos-server-0.2.1.tar.gz)
+[tar.gz package Download](https://github.com/alibaba/nacos/releases/download/0.2.1/nacos-server-0.2.1.tar.gz)
+
 
 ```bash
   unzip nacos-server-0.2.1.zip  OR tar -xvf nacos-server-0.2.1.tar.gz
