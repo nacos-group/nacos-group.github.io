@@ -1,12 +1,17 @@
-# 前提条件
+本文主要面向 Spring 的使用者，通过两个示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现。
 
-请先参看 [Nacos 快速入门](https://nacos.io/zh-cn/docs/quick-start.html)，下载 Nacos Server 并启动服务。
+* 通过 Nacos server 和 Nacos Spring 配置管理模块，实现配置的动态变更；
+* 通过 Nacos server 和 Nacos Spring 服务发现模块，实现服务的注册与发现。
 
-# 配置管理
+## __前提条件__
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">完整示例代码：</span></span>[nacos-spring-config-example](https://github.com/nacos-group/nacos-example/nacos-spring-config-example)
+您需要先下载 Nacos 并启动 Nacos server。操作步骤参见 [Nacos 快速入门](https://nacos.io/zh-cn/docs/quick-start.html)。
 
-## 依赖
+## 启动配置管理
+
+启动了 Nacos server 后，您就可以参考以下示例代码，为您的 Spring 应用启动 Nacos 配置管理服务了<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">。完整示例代码请参考：</span></span>[nacos-spring-config-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-example/nacos-spring-config-example)
+
+1. 添加依赖。
 
 ```
 <dependency>
@@ -16,9 +21,7 @@
 </dependency>
 ```
 
-## 示例
-
-通过 `@EnableConfigNacos` 开启 Nacos Spring 的配置管理功能，使用 `@NacosPropertySource` 加载 `dataId` 为 `example` 的配置源，并开启自动更新：
+2. 添加 `@EnableNacosConfig` 注解启用 Nacos Spring 的配置管理服务。以下示例中，我们使用 `@NacosPropertySource` 加载了 `dataId` 为 `example` 的配置源，并开启自动更新：
 
 ```
 @Configuration
@@ -29,7 +32,9 @@ public class NacosConfiguration {
 }
 ```
 
-通过 Spring 的 `@Value` 注解设置属性值，注意，需要同时有 `Setter`方法才能在配置变更的时候自动更新：
+3. 通过 Spring 的 `@Value` 注解设置属性值。
+
+__注意：__需要同时有 `Setter`方法才能在配置变更的时候自动更新。
 
 ```
 @Controller
@@ -51,23 +56,21 @@ public class ConfigController {
 }
 ```
 
-## 运行
+4. 启动 Tomcat，调用 `curl http://localhost:8080/config/get`尝试获取配置信息。由于此时还未发布过配置，所以返回内容是 `false`。
 
-启动 Tomcat，调用 `curl http://localhost:8080/config/get`，返回内容是 `false`。
-
-通过调用 [Nacos Open API](https://nacos.io/zh-cn/docs/open-API.html) 向 Nacos Server 发布配置：dataId 为`example`，内容为`useLocalCache=true`
+5. 通过调用 [Nacos Open API](https://nacos.io/zh-cn/docs/open-API.html) 向 Nacos Server 发布配置：dataId 为`example`，内容为`useLocalCache=true`
 
 ```
 curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example&group=DEFAULT_GROUP&content=useLocalCache=true"
 ```
 
-再次访问 `http://localhost:8080/config/get`，此时返回内容为`true`，说明程序中的`useLocalCache`值已经被动态更新了。
+6. 再次访问 `http://localhost:8080/config/get`，此时返回内容为`true`，说明程序中的`useLocalCache`值已经被动态更新了。
 
-# 服务发现
+## 启动服务发现
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">完整示例代码：</span></span>[nacos-spring-discovery-example](https://github.com/nacos-group/nacos-example/nacos-spring-discovery-example)
+本节演示如何在您的 Spring 项目中启动 Nacos 的服务发现功能。完整示例代码请参考：[nacos-spring-discovery-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-example/nacos-spring-discovery-example)
 
-## 依赖
+1. 添加依赖。
 
 ```
 <dependency>
@@ -77,9 +80,7 @@ curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example&group=DEF
 </dependency>
 ```
 
-## 示例
-
-通过 `@EnableNacosDiscovery` 开启 Nacos Spring 的服务发现功能：
+2. 通过添加 `@EnableNacosDiscovery` 注解开启 Nacos Spring 的服务发现功能：
 
 ```
 @Configuration
@@ -89,7 +90,7 @@ public class NacosConfiguration {
 }
 ```
 
-使用 `@NacosInjected` 注入  Nacos 的 `NamingService` 实例：
+3. 使用 `@NacosInjected` 注入  Nacos 的 `NamingService` 实例：
 
 ```
 @Controller
@@ -107,17 +108,15 @@ public class DiscoveryController {
 }
 ```
 
-## 运行
+4. 启动 Tomcat，调用 `curl http://localhost:8080/discovery/get?serviceName=example`，此时返回为空 JSON 数组`[]`。
 
-启动 Tomcat，调用 `curl http://localhost:8080/discovery/get?serviceName=example`，此时返回为空 JSON 数组`[]`。
-
-通过调用 [Nacos Open API](https://nacos.io/zh-cn/docs/open-API.html) 向  Nacos Server 注册一个名称为 `example` 服务
+5. 通过调用 [Nacos Open API](https://nacos.io/zh-cn/docs/open-API.html) 向  Nacos server 注册一个名称为 `example` 服务。
 
 ```
 curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=127.0.0.1&port=8080'
 ```
 
-再次访问 `curl http://localhost:8080/discovery/get?serviceName=example`，此时返回内容为：
+6. 再次访问 `curl http://localhost:8080/discovery/get?serviceName=example`，此时返回内容为：
 
 ```
 [
@@ -144,7 +143,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=1
 ]
 ```
 
-# 参看
+## 相关项目
 
 * [Nacos](https://github.com/alibaba/nacos)
 * [Nacos Spring](https://github.com/nacos-group/nacos-spring-project)

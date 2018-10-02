@@ -1,12 +1,17 @@
-# 前提条件
+本文主要面向 Spring Boot 的使用者，通过两个示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现。
 
-请先参看 [Nacos 快速入门](https://nacos.io/zh-cn/docs/quick-start.html)，下载 Nacos Server 并启动服务。
+* 通过 Nacos Server 和 nacos-config-spring-boot-starter 实现配置的动态变更；
+* 通过 Nacos Server 和 nacos-discovery-spring-boot-starter 实现服务的注册与发现。
 
-# 配置管理
+## 前提条件
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">完整示例代码：</span></span>[nacos-spring-boot-config-example](https://github.com/nacos-group/nacos-example/nacos-spring-boot-config-example)
+<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">您需要先下载 Nacos 并启动 Nacos server。操作步骤参见</span></span> [Nacos 快速入门](https://nacos.io/zh-cn/docs/quick-start.html)。
 
-## 依赖
+## 启动配置管理
+
+<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">启动了 Nacos server 后，您就可以参考以下示例代码，为您的 Spring Boot 应用启动 Nacos 配置管理服务了。完整示例代码请参考：</span></span>[nacos-spring-boot-config-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-boot-example/nacos-spring-boot-config-example)
+
+1. 添加依赖。
 
 ```
 <dependency>
@@ -16,15 +21,13 @@
 </dependency>
 ```
 
-## 示例
-
-在 `application.properties` 中配置 Nacos Server 的地址：
+2. 在 `application.properties` 中配置 Nacos server 的地址：
 
 ```
 nacos.config.server-addr=127.0.0.1:8848
 ```
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">使用 </span></span>`@NacosPropertySource`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> 加载 </span></span>`dataId`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> 为 </span></span>`example`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> 的配置源，并开启自动更新：</span></span>
+3. <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">使用 </span></span>`@NacosPropertySource`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> 加载 </span></span>`dataId`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> 为 </span></span>`example`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> 的配置源，并开启自动更新：</span></span>
 
 ```plain
 @SpringBootApplication
@@ -37,7 +40,9 @@ public class NacosConfigApplication {
 }
 ```
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">通过 Spring 的 </span></span>`@Value`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> 注解设置属性值，注意，需要同时有 </span></span>`Setter`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">方法才能在配置变更的时候自动更新：</span></span>
+4. <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">通过 Spring 的 </span></span>`@Value`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> 注解设置属性值。</span></span>
+
+<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"><strong>注意：</strong></span></span><span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">需要同时有 </span></span>`Setter`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">方法才能在配置变更的时候自动更新。</span></span>
 
 ```
 @Controller
@@ -59,23 +64,21 @@ public class ConfigController {
 }
 ```
 
-## 运行
+5. 启动 `NacosConfigApplication`，调用 `curl http://localhost:8080/config/get`，返回内容是 `false`。
 
-启动 `NacosConfigApplication`，调用 `curl http://localhost:8080/config/get`，返回内容是 `false`。
-
-通过调用 [Nacos Open API](https://nacos.io/zh-cn/docs/open-API.html) 向 Nacos Server 发布配置：dataId 为`example`，内容为`useLocalCache=true`
+6. 通过调用 [Nacos Open API](https://nacos.io/zh-cn/docs/open-API.html) 向 Nacos server 发布配置：dataId 为`example`，内容为`useLocalCache=true`
 
 ```
 curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example&group=DEFAULT_GROUP&content=useLocalCache=true"
 ```
 
-再次访问 `http://localhost:8080/config/get`，此时返回内容为`true`，说明程序中的`useLocalCache`值已经被动态更新了。
+7. 再次访问 `http://localhost:8080/config/get`，此时返回内容为`true`，说明程序中的`useLocalCache`值已经被动态更新了。
 
-# 服务发现
+## 启动服务发现
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">完整示例代码：</span></span>[nacos-spring-boot-discovery-example](https://github.com/nacos-group/nacos-example/nacos-spring-boot-discovery-example)
+<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">本节演示如何在您的 Spring Boot 项目中启动 Nacos 的服务发现功能。完整示例代码请参考：</span></span>[nacos-spring-boot-discovery-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-boot-example/nacos-spring-boot-discovery-example)
 
-## 依赖
+1. 添加依赖。
 
 ```
 <dependency>
@@ -85,15 +88,13 @@ curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example&group=DEF
 </dependency>
 ```
 
-## 示例
-
-在 `application.properties` 中配置 Nacos Server 的地址：
+2. 在 `application.properties` 中配置 Nacos server 的地址：
 
 ```
 nacos.discovery.server-addr=127.0.0.1:8848
 ```
 
-使用 `@NacosInjected` 注入  Nacos 的 `NamingService` 实例：
+3. 使用 `@NacosInjected` 注入 Nacos 的 `NamingService` 实例：
 
 ```
 @Controller
@@ -119,17 +120,16 @@ public class NacosDiscoveryApplication {
 }
 ```
 
-## 运行
 
-启动 `NacosDiscoveryApplication`，调用 `curl http://localhost:8080/discovery/get?serviceName=example`，此时返回为空 JSON 数组`[]`。
+4. 启动 `NacosDiscoveryApplication`，调用 `curl http://localhost:8080/discovery/get?serviceName=example`，此时返回为空 JSON 数组`[]`。
 
-通过调用 [Nacos Open API](https://nacos.io/zh-cn/docs/open-API.html) 向  Nacos Server 注册一个名称为 `example` 服务
+5. 通过调用 [Nacos Open API](https://nacos.io/zh-cn/docs/open-API.html) 向  Nacos server 注册一个名称为 `example` 服务
 
 ```
 curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=127.0.0.1&port=8080'
 ```
 
-再次访问 `curl http://localhost:8080/discovery/get?serviceName=example`，此时返回内容为：
+6. 再次访问 `curl http://localhost:8080/discovery/get?serviceName=example`，此时返回内容为：
 
 ```
 [
@@ -156,7 +156,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=1
 ]
 ```
 
-# 参看
+## 相关项目
 * [Nacos](https://github.com/alibaba/nacos)
 * [Nacos Spring](https://github.com/nacos-group/nacos-spring-project)
 * [Nacos Spring Boot](https://github.com/nacos-group/nacos-spring-boot-project)
