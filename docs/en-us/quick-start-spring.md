@@ -1,17 +1,22 @@
-本文主要面向 Spring 的使用者，通过两个示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现。
+# Quick Start for Nacos Spring Projects
 
-* 通过 Nacos server 和 Nacos Spring 配置管理模块，实现配置的动态变更；
-* 通过 Nacos server 和 Nacos Spring 服务发现模块，实现服务的注册与发现。
+This quick start introduces how to enable Nacos configuration management and service discovery features for your Spring project.
 
-## __前提条件__
+The quick start includes two samples:
+* How to enable Nacos server and Nacos Spring configuration modules to implement dynamic configuration management;
+* How to enable Nacos server and Nacos Spring service discovery modules to implement service registration and discovery.
 
-您需要先下载 Nacos 并启动 Nacos server。操作步骤参见 [Nacos 快速入门](https://nacos.io/zh-cn/docs/quick-start.html)。
+## Prerequisite
 
-## 启动配置管理
+Follow instructions in [Nacos Quick Start](https://nacos.io/zh-cn/docs/quick-start.html) to download Nacos and start the Nacos server.
 
-启动了 Nacos server 后，您就可以参考以下示例代码，为您的 Spring 应用启动 Nacos 配置管理服务了<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">。完整示例代码请参考：</span></span>[nacos-spring-config-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-example/nacos-spring-config-example)
+## Enable Configuration Service
 
-1. 添加依赖。
+Once you start the Nacos server, you can follow the steps below to enable the Nacos configuration management service for your Spring project. 
+
+Sample project<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">: </span></span>[nacos-spring-config-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-example/nacos-spring-config-example)
+
+1. Add the Nacos Spring dependency.
 
 ```
 <dependency>
@@ -21,7 +26,7 @@
 </dependency>
 ```
 
-2. 添加 `@EnableNacosConfig` 注解启用 Nacos Spring 的配置管理服务。以下示例中，我们使用 `@NacosPropertySource` 加载了 `dataId` 为 `example` 的配置源，并开启自动更新：
+2. Add the `@EnableNacosConfig` annotation to enable the configuration service. In the code below, `@NacosPropertySource` is used to load the configuration source whose  `dataId` is `example` , and autorefresh is also enabled:
 
 ```
 @Configuration
@@ -32,9 +37,9 @@ public class NacosConfiguration {
 }
 ```
 
-3. 通过 Spring 的 `@Value` 注解设置属性值。
+3. Specify the property value for the `@Value` annotation of Spring.
 
-__注意：__需要同时有 `Setter`方法才能在配置变更的时候自动更新。
+__Note: __You need to use the  `Setter` method to enable autorefresh of configuration updates. 
 
 ```
 @Controller
@@ -56,21 +61,23 @@ public class ConfigController {
 }
 ```
 
-4. 启动 Tomcat，调用 `curl http://localhost:8080/config/get`尝试获取配置信息。由于此时还未发布过配置，所以返回内容是 `false`。
+4. Start Tomcat and call  `curl http://localhost:8080/config/get` to get configuration information. Because no configuration has been published, a `false`message is returned.
 
-5. 通过调用 [Nacos Open API](https://nacos.io/zh-cn/docs/open-API.html) 向 Nacos Server 发布配置：dataId 为`example`，内容为`useLocalCache=true`
+5. Now you can call [Nacos Open API](https://nacos.io/zh-cn/docs/open-API.html) to publish a configruation to the Nacos server. Assume the dataId is `example`, and content is `useLocalCache=true`.
 
 ```
 curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example&group=DEFAULT_GROUP&content=useLocalCache=true"
 ```
 
-6. 再次访问 `http://localhost:8080/config/get`，此时返回内容为`true`，说明程序中的`useLocalCache`值已经被动态更新了。
+6. Access `http://localhost:8080/config/get`again, and you get a return message of `true`, indicating that the value of `useLocalCache`in your application has been updated.
 
-## 启动服务发现
+## Enable Service Discovery
 
-本节演示如何在您的 Spring 项目中启动 Nacos 的服务发现功能。完整示例代码请参考：[nacos-spring-discovery-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-example/nacos-spring-discovery-example)
+Now you would like to enable the service dicovery function of Nacos in your Spring project. 
 
-1. 添加依赖。
+Sampe project: [nacos-spring-discovery-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-example/nacos-spring-discovery-example)
+
+1. Add the Nacos Spring dependency.
 
 ```
 <dependency>
@@ -80,7 +87,7 @@ curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example&group=DEF
 </dependency>
 ```
 
-2. 通过添加 `@EnableNacosDiscovery` 注解开启 Nacos Spring 的服务发现功能：
+2. Add the `@EnableNacosDiscovery` annotation to enable the service discovery function of Nacos:
 
 ```
 @Configuration
@@ -90,7 +97,7 @@ public class NacosConfiguration {
 }
 ```
 
-3. 使用 `@NacosInjected` 注入  Nacos 的 `NamingService` 实例：
+3. Use `@NacosInjected` to inject a Nacos `NamingService` instance:
 
 ```
 @Controller
@@ -108,15 +115,15 @@ public class DiscoveryController {
 }
 ```
 
-4. 启动 Tomcat，调用 `curl http://localhost:8080/discovery/get?serviceName=example`，此时返回为空 JSON 数组`[]`。
+4. Start Tomcat and call `curl http://localhost:8080/discovery/get?serviceName=example`, and the return value is an empty JSON array `[]`.
 
-5. 通过调用 [Nacos Open API](https://nacos.io/zh-cn/docs/open-API.html) 向  Nacos server 注册一个名称为 `example` 服务。
+5. Call [Nacos Open API](https://nacos.io/zh-cn/docs/open-API.html) to register a service called `example`to the Nacos Server.
 
 ```
 curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=127.0.0.1&port=8080'
 ```
 
-6. 再次访问 `curl http://localhost:8080/discovery/get?serviceName=example`，此时返回内容为：
+6. Access `curl http://localhost:8080/discovery/get?serviceName=example`again, and you will get the following return:
 
 ```
 [
@@ -143,7 +150,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=1
 ]
 ```
 
-## 相关项目
+## Related Projects
 
 * [Nacos](https://github.com/alibaba/nacos)
 * [Nacos Spring](https://github.com/nacos-group/nacos-spring-project)

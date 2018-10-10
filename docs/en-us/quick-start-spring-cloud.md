@@ -1,17 +1,23 @@
-本文主要面向 Spring Cloud 的使用者，通过两个示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现。
+# Quick Start for Nacos Spring Cloud Projects
 
-* 通过 Nacos Server 和 spring-cloud-starter-alibaba-nacos-config 实现配置的动态变更；
-* 通过 Nacos Server 和 spring-cloud-starter-alibaba-nacos-discovery 实现服务的注册与发现。
+<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">This quick start introduces how to enable Nacos configuration management and service discovery features for your Spring Cloud project.</span></span>
 
-## 前提条件
+<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">The quick start includes two samples:</span></span>
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">您需要先下载 Nacos 并启动 Nacos server。操作步骤参见</span></span> [Nacos 快速入门](https://nacos.io/zh-cn/docs/quick-start.html)<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">。</span></span>
+* How to enable dynamic configuration updates with Nacos server and spring-cloud-starter-alibaba-nacos-config;
+* How to enable <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">service registration and discovery with </span></span>Nacos server and spring-cloud-starter-alibaba-nacos-discovery.
 
-## 启动配置管理
+## Prerequisite
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">启动了 Nacos server 后，您就可以参考以下示例代码，为您的 Spring Cloud 应用启动 Nacos 配置管理服务了。完整示例代码请参考</span></span>：[nacos-spring-cloud-config-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-cloud-example/nacos-spring-cloud-config-example)
+<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Follow instructions in </span></span>[Nacos Quick Start](https://nacos.io/zh-cn/docs/quick-start.html)<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> to download Nacos and start the Nacos server.</span></span>
 
-1. 添加依赖：
+## Enable Configuration Service
+
+<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Once you start the Nacos server, you can follow the steps below to enable the Nacos configuration management service for your Spring Cloud project. </span></span>
+
+Sample project: [nacos-spring-cloud-config-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-cloud-example/nacos-spring-cloud-config-example)
+
+1. <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Add the Nacos Spring Cloud dependency.</span></span>
 
 ```
 <dependency>
@@ -22,32 +28,32 @@
 ```
 
 
-2. <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">在 </span></span>`bootstrap.properties`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> 中配置 Nacos server 的地址：</span></span>
+2. <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Configure the Nacos Server address in </span></span>`bootstrap.properties`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> </span></span>:
 
 ```
 spring.cloud.nacos.config.server-addr=127.0.0.1:8848
 ```
 
-3. 在 `application.properties` 配置应用名：
+3. Specify the application name in `application.properties` :
 
 ```
 spring.application.name=example
 ```
 
-__说明__：之所以需要配置 `spring.application.name` ，是因为它是构成 Nacos 配置管理 `dataId` 字段的一部分。
+__Note: __The value of__ __`spring.application.name` will be used to construct part of the dataId in Nacos configuration management.
 
-在 Nacos Spring Cloud 中，`dataId` 的完整格式如下：
+In Nacos Spring Cloud, the format of `dataId` is as follows:
 
 ```plain
 ${prefix}-${spring.profile.active}.${file-extension}
 ```
 
-* `prefix` 默认为 `spring.application.name` 的值，也可以通过配置项 `spring.cloud.nacos.config.prefix`来配置。
-* `spring.profile.active` 即为当前环境对应的 profile，详情可以参考 [Spring Boot文档](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html#boot-features-profiles)。
-    __注意：当 __`spring.profile.active`<strong> 为空时，对应的连接符 </strong><strong><code>-</code></strong><strong> 也将不存在，dataId 的拼接格式变成 </strong><strong><code>${prefix}</code></strong><strong>.</strong><strong><code>${file-extension}</code></strong>
-* `file-exetension` 为配置内容的数据格式，可以通过配置项 `spring.cloud.nacos.config.file-extension` 来配置。目前只支持 `properties` 类型。
+* The value of `prefix` is the value of `spring.application.name` by default. You can also configure this value in `spring.cloud.nacos.config.prefix`.
+* `spring.profile.active` is the profile of the current environment. For more details, refer to [Spring Boot Document](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html#boot-features-profiles).
+    __Note: When the value of __`spring.profile.active`<strong> is empty, the corresponding hyphen </strong><strong><code>-</code></strong><strong> will be deleted, and the format of dataId becomes: </strong><strong><code>${prefix}</code></strong><strong>.</strong><strong><code>${file-extension}</code></strong>
+* `file-exetension` is the data format of the configuration content, and can be configured in `spring.cloud.nacos.config.file-extension` . Currently only the `properties` type is supported.
 
-4. 通过 Spring Cloud 原生注解 `@RefreshScope` 实现配置自动更新：
+4. Add the native `@RefreshScope` annotation of Spring Cloud to enable autorefresh of configuration updates:
 
 ```
 @RestController
@@ -66,27 +72,29 @@ public class ConfigController {
 ```
 
 
-5. 首先通过调用 [Nacos Open API](https://nacos.io/zh-cn/docs/open-API.html) 向 Nacos Server 发布配置：dataId 为`example.properties`，内容为`useLocalCache=true`
+5. Call [Nacos Open API](https://nacos.io/zh-cn/docs/open-API.html) to publish a configuration to the Nacos server. Assume the dataId is `example.properties`，and the content is `useLocalCache=true`.
 
 ```
 curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example.properties&group=DEFAULT_GROUP&content=useLocalCache=true"
 ```
 
-6. 运行 `NacosConfigApplication`，调用 `curl http://localhost:8080/config/get`，返回内容是 `true`。
+6. Run `NacosConfigApplication`and call  `curl http://localhost:8080/config/get`，You will get a returned value of `true`.
 
-7. 再次调用 [Nacos Open API](https://nacos.io/zh-cn/docs/open-API.html) 向 Nacos server 发布配置：dataId 为`example.properties`，内容为`useLocalCache=false`
+7. Call [Nacos Open API](https://nacos.io/zh-cn/docs/open-API.html) again to publish an updated configuration to the Nacos server. Assume the dataId is`example.properties`，and the content is `useLocalCache=false`.
 
 ```
 curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example.properties&group=DEFAULT_GROUP&content=useLocalCache=false"
 ```
 
-8. 再次访问 `http://localhost:8080/config/get`，此时返回内容为`false`，说明程序中的`useLocalCache`值已经被动态更新了。
+8. Access `http://localhost:8080/config/get`again and the returned value became `false`，indicating that the value of `useLocalCache`in your application has been updated.
 
-## 启动服务发现
+## Enable Service Discovery
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">本节演示如何在您的 Spring Cloud 项目中启动 Nacos 的服务发现功能。完整示例代码请参考</span></span>：[nacos-spring-cloud-discovery-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-cloud-example/nacos-spring-cloud-discovery-example)
+<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Now you would also like to enable the service discovery feature of Nacos in your Spring Cloud project. </span></span>
 
-1. 添加依赖：
+Sample project: [nacos-spring-cloud-discovery-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-cloud-example/nacos-spring-cloud-discovery-example)
+
+1. <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Add the Nacos Spring Cloud dependency.</span></span>
 
 ```
 <dependency>
@@ -96,9 +104,9 @@ curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example.propertie
 </dependency>
 ```
 
-2. 配置服务提供者，从而<span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)">服务提供者可以通过 Nacos 的服务注册发现功能将其服务注册到 Nacos server 上。</span></span>
+2. Configure the service provider, so that it can register its services to the Nacos server.
 
- i. 在 `application.properties` 中配置 Nacos server 的地址：
+ i. Add the Nacos server address in `application.properties` :
 
 ```
 server.port=8070
@@ -107,7 +115,7 @@ spring.application.name=service-provider
 spring.cloud.nacos.discovery.server-addr=127.0.0.1:8848
 ```
 
-ii. 通过 Spring Cloud 原生注解 `@EnableDiscoveryClient` 开启服务注册发现功能：
+ii. Enable service discovery by adding the Spring Cloud native annotation of `@EnableDiscoveryClient`:
 
 ```
 @SpringBootApplication
@@ -129,9 +137,9 @@ public class NacosProviderApplication {
 ```
 
 
-3. 配置服务消费者，从而<span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)">服务消费者可以通过 Nacos 的服务注册发现功能从 Nacos server 上获取到它要调用的服务</span></span>。
+3. Configure the service consumer so that it can discover the services that it would like to call on the Nacos server.
 
-i. 在 `application.properties` 中配置 Nacos server 的地址：
+i. Configure the Nacos server address in `application.properties` :
 
 ```
 server.port=8080
@@ -140,7 +148,7 @@ spring.application.name=service-consumer
 spring.cloud.nacos.discovery.server-addr=127.0.0.1:8848
 ```
 
-ii. 通过 Spring Cloud 原生注解 `@EnableDiscoveryClient`  开启服务注册发现功能。给 [RestTemplate](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-resttemplate.html) 实例添加  `@LoadBalanced` 注解，开启 `@LoadBalanced` 与 [Ribbon](https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-ribbon.html) 的集成：
+ii. Add the Spring Cloud native annotation of `@EnableDiscoveryClient`  to enable service dicovery. Add the `@LoadBalanced` annotation for the [RestTemplate](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-resttemplate.html) instance,  and enable the integration of `@LoadBalanced` and [Ribbon](https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-ribbon.html):
 
 ```
 @SpringBootApplication
@@ -174,9 +182,9 @@ public class NacosConsumerApplication {
 ```
 
 
-4. 启动 `ProviderApplication` 和 `ConsumerApplication` ，调用 `http://localhost:8080/echo/2018`，返回内容为 `Hello Nacos Discovery 2018`。
+4. Start `ProviderApplication` and `ConsumerApplication` , and call `http://localhost:8080/echo/2018`. You will get a returned message of `Hello Nacos Discovery 2018`.
 
-## 相关项目
+## Related Projects
 
 * [Nacos](https://github.com/alibaba/nacos)
 * [Nacos Spring](https://github.com/nacos-group/nacos-spring-project)
