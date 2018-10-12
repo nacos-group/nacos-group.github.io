@@ -12,30 +12,30 @@
 	<link rel="stylesheet" href="/build/blogDetail.css" />
 </head>
 <body>
-	<div id="root"><div class="blog-detail-page" data-reactroot="" data-reactid="1" data-react-checksum="-65914711"><header class="header-container header-container-normal" data-reactid="2"><div class="header-body" data-reactid="3"><a href="/zh-cn/index.html" data-reactid="4"><img class="logo" src="/img/nacos_colorful.png" data-reactid="5"/></a><span class="language-switch language-switch-normal" data-reactid="6">En</span><div class="header-menu" data-reactid="7"><img class="header-menu-toggle" src="/img/menu_gray.png" data-reactid="8"/><ul data-reactid="9"><li class="menu-item menu-item-normal" data-reactid="10"><a href="/zh-cn/index.html" data-reactid="11">首页</a></li><li class="menu-item menu-item-normal" data-reactid="12"><a href="/zh-cn/docs/what-is-nacos.html" data-reactid="13">文档</a></li><li class="menu-item menu-item-normal menu-item-normal-active" data-reactid="14"><a href="/zh-cn/blog/index.html" data-reactid="15">博客</a></li><li class="menu-item menu-item-normal" data-reactid="16"><a href="/zh-cn/community/index.html" data-reactid="17">社区</a></li></ul></div></div></header><section class="blog-content markdown-body" data-reactid="18"><h1>Nacos�����ֿ���̨Ԥ��</h1>
-<p>Nacos�ǰ���Ͱ��м�����������Դ��һ�����ڷ����ֺ����ù���Ĳ�Ʒ���ڼ�0.1�汾�����������ܺ�0.2�汾������Spring��̬��ϵĹ��ܺ�0.3�汾���ͷ�ȫ�µĿ���̨���档���ù�������صĿ���̨�������ɰ�������ҵ��ƷACM����̨����������������ֵĿ���̨���棬�����״�¶�����̬�����Ÿ���Դ���������ľͽ������ֿ���̨��صĽ���UI������ƹ�������ӭ��Ҳ������ۣ�ϣ��ͨ����ҵ������ͽ��飬�������ֿ���̨���Ĺ��ܺͽ��棬��Ƶĸ������ۺ����á�</p>
-<p>�����ֿ���̨����Ҫ�����Ƿ����б��չʾ���������Լ��������á���Ⱥ���á�ʵ�����õĲ�ѯ�͸��¡���0.3�汾�У���Ҫ��������ҳ�棺�����б�ͷ������顣</p>
-<h1>�����б�</h1>
-<p>�����б�ҳ����Ҫչʾ�Ѿ���Nacosע��ķ����б��Լ�����Ļ�����Ϣ������Ļ�����Ϣ�У���������ơ������¼�Ⱥ����Ŀ��������ʵ������Ŀ������Ľ����̶��Լ������������İ�ť��ͬʱ���Ͻǻ���һ��֧�ָ��ݷ���������������������������ť��</p>
+	<div id="root"><div class="blog-detail-page" data-reactroot="" data-reactid="1" data-react-checksum="1958544132"><header class="header-container header-container-normal" data-reactid="2"><div class="header-body" data-reactid="3"><a href="/zh-cn/index.html" data-reactid="4"><img class="logo" src="/img/nacos_colorful.png" data-reactid="5"/></a><span class="language-switch language-switch-normal" data-reactid="6">En</span><div class="header-menu" data-reactid="7"><img class="header-menu-toggle" src="/img/menu_gray.png" data-reactid="8"/><ul data-reactid="9"><li class="menu-item menu-item-normal" data-reactid="10"><a href="/zh-cn/index.html" data-reactid="11">首页</a></li><li class="menu-item menu-item-normal" data-reactid="12"><a href="/zh-cn/docs/what-is-nacos.html" data-reactid="13">文档</a></li><li class="menu-item menu-item-normal menu-item-normal-active" data-reactid="14"><a href="/zh-cn/blog/index.html" data-reactid="15">博客</a></li><li class="menu-item menu-item-normal" data-reactid="16"><a href="/zh-cn/community/index.html" data-reactid="17">社区</a></li></ul></div></div></header><section class="blog-content markdown-body" data-reactid="18"><h1>Nacos服务发现控制台预览</h1>
+<p>Nacos是阿里巴巴中间件部门最近开源的一款用于服务发现和配置管理的产品。在既0.1版本发布基本功能和0.2版本发布与Spring生态结合的功能后，0.3版本将释放全新的控制台界面。配置管理功能相关的控制台，将会由阿里云商业产品ACM控制台改造而来，而服务发现的控制台界面，则将以首次露面的姿态，开放给开源社区。本文就将服务发现控制台相关的界面UI初版设计公布，欢迎大家参与讨论，希望通过大家的批评和建议，将服务发现控制台这块的功能和界面，设计的更加美观和易用。</p>
+<p>服务发现控制台的主要功能是服务列表的展示和搜索，以及服务配置、集群配置、实例配置的查询和更新。在0.3版本中，主要会有两个页面：服务列表和服务详情。</p>
+<h1>服务列表</h1>
+<p>服务列表页面主要展示已经在Nacos注册的服务列表，以及服务的基本信息，服务的基本信息有：服务的名称、服务下集群的数目、服务下实例的数目、服务的健康程度以及进入服务详情的按钮。同时右上角还有一个支持根据服务名搜索服务的搜索框和搜索按钮。</p>
 <p><img src="https://cdn.nlark.com/lark/0/2018/png/15356/1538701093629-9880a456-8a37-4663-bd88-853441dab3f4.png" alt="image.png | center | 572x299"></p>
 <div data-type="alignment" data-value="center" style="text-align:center">
-  <div data-type="p">ͼ1 �����б�ҳ��</div>
+  <div data-type="p">图1 服务列表页面</div>
 </div>
-<h1>��������</h1>
-<p>�ڷ����б�ҳ������detail����ť���ͻ�����������ҳ�档��������ҳ��չʾ����һ����������йؼ���Ϣ��������������ú�Ԫ���ݡ���Ⱥ�б��ʾ���б��Լ�һЩ�����İ�ť��</p>
+<h1>服务详情</h1>
+<p>在服务列表页面点击“detail”按钮，就会进入服务详情页面。服务详情页面展示的是一个服务的所有关键信息，包括服务的配置和元数据、集群列表和示例列表，以及一些操作的按钮。</p>
 <p><img src="https://cdn.nlark.com/lark/0/2018/png/15356/1538701116839-4753cafa-f5f6-4866-a19d-f1293489053d.png" alt="image.png | center | 607x481"></p>
 <div data-type="alignment" data-value="center" style="text-align:center">
-  <div data-type="p">ͼ2 ��������ҳ��</div>
+  <div data-type="p">图2 服务详情页面</div>
 </div>
-<p>�ڸ�ҳ����Ϸ����Ƿ�������ú�Ԫ��Ϣ��Ŀǰ������������������ֵ���������ģʽ�Լ�Ԫ����metadata�����Ϸ��Ǳ༭����ť���������жԻ��򵯳������ԶԷ�������ý��б༭��</p>
+<p>在该页面的上方，是服务的配置和元信息，目前包含服务名、保护阈值、健康检查模式以及元数据metadata。右上方是编辑服务按钮，点击后会有对话框弹出，可以对服务的配置进行编辑。</p>
 <p><img src="https://cdn.nlark.com/lark/0/2018/png/15356/1538701150783-fa6d58cf-01f4-430c-a5d0-6278c9590404.png" alt="image.png | center | 369x331"></p>
 <div data-type="alignment" data-value="center" style="text-align:center">
-  <div data-type="p">ͼ3 ���·���Ի���</div>
+  <div data-type="p">图3 更新服务对话框</div>
 </div>
-<p>����������·����Ǽ�Ⱥ�б�ͼ�Ⱥ�µ�ʵ���б�ÿ����Ⱥ����ʾһ����Ⱥ��������Ӧ�Ĳ鿴&amp;���¼�Ⱥ���鰴ť������ð�ť�󣬻���һ�����¼�Ⱥ�ĶԻ���</p>
+<p>服务详情的下方，是集群列表和集群下的实例列表。每个集群会显示一个集群名，和相应的查看&amp;更新集群详情按钮。点击该按钮后，会是一个更新集群的对话框。</p>
 <p><img src="https://cdn.nlark.com/lark/0/2018/png/15356/1538701200952-f9dcb51e-100e-4501-a3db-d665dfaf7188.png" alt="image.png | center | 369x330"></p>
 <div data-type="alignment" data-value="center" style="text-align:center">
-  <div data-type="p">ͼ4 ���¼�Ⱥ��TCP������飩</div>
+  <div data-type="p">图4 更新集群（TCP健康检查）</div>
 </div>
 <div data-type="alignment" data-value="center" style="text-align:center">
   <div data-type="p">
@@ -43,16 +43,16 @@
       <img src="https://cdn.nlark.com/lark/0/2018/png/15356/1538701223427-284aaf1c-1cd3-412e-9f22-d5baae2cee25.png" width="362" />
     </div>
   </div>
-  <div data-type="p">ͼ5 ���¼�Ⱥ��HTTP������飩</div>
+  <div data-type="p">图5 更新集群（HTTP健康检查）</div>
 </div>
-<p>ͼ4��ͼ5�ֱ�չʾ�˶Լ�Ⱥ���µ����ֶԻ���չʾ�����ߵ�������ѡ���˲�ͬ�Ľ�����鷽ʽ��TCP������鷽ʽ�������ü��Ķ˿ڣ�HTTP������鷽ʽ�������ü��Ķ˿ڡ�����·����HTTPͷ����Ϣ��ͬʱ�����������Ƿ����ʵ���Ķ˿ڽ��н�����飬�������Ϊtrue���򽡿���齫ʹ��ʵ��ע��Ķ˿ڽ���ͨ�š��öԻ��򻹿��Ա༭��Ⱥ��Ԫ��Ϣ��</p>
-<p>ÿ����Ⱥ���涼����ʵ���б�ʵ���б����ҳչʾ�ü�Ⱥ��ע�������ʵ����չʾ����Ϣ��IP���˿ڡ�Ȩ�ء��Ƿ񽡿���Ԫ��Ϣ�Ͷ�Ӧ�ı༭�����߰�ť�����߰�ť����󣬸�ʵ�������᷵�ظ����Ķˣ����۸�ʵ���Ƿ񽡿��������ߡ��ı���ĳɡ����ߡ������ڶ�Ӧ��ʵ�����߲���������༭��ť��������༭ʵ���Ի���</p>
+<p>图4和图5分别展示了对集群更新的两种对话框展示，两者的区别是选择了不同的健康检查方式。TCP健康检查方式可以配置检查的端口；HTTP健康检查方式可以配置检查的端口、检查的路径和HTTP头部信息。同时还可以配置是否采用实例的端口进行健康检查，如果配置为true，则健康检查将使用实例注册的端口进行通信。该对话框还可以编辑集群的元信息。</p>
+<p>每个集群下面都会有实例列表，实例列表将会分页展示该集群下注册的所有实例，展示的信息有IP、端口、权重、是否健康、元信息和对应的编辑及下线按钮。下线按钮点击后，该实例将不会返回给订阅端，无论该实例是否健康。“下线”文本会改成“上线”，用于对应的实例上线操作。点击编辑按钮，则会进入编辑实例对话框。</p>
 <p><img src="https://cdn.nlark.com/lark/0/2018/png/15356/1538701250740-ffb38cd0-a15d-4425-a2ca-48c5d0d2698e.png" alt="image.png | center | 365x346"></p>
 <div data-type="alignment" data-value="center" style="text-align:center">
-  <div data-type="p">ͼ6 �༭ʵ���Ի���</div>
+  <div data-type="p">图6 编辑实例对话框</div>
 </div>
-<p>�༭ʵ���Ի��򣬿��Ա༭����Ϣ��ʵ����Ȩ�ء��Ƿ������ߺ�Ԫ��Ϣ��</p>
-<p>0.3�汾�ķ�����ҳ�棬����������������ӭ��ҵķ���������ע��ͻ���Ҳ���Ա༭���񡢼�Ⱥ��ʵ��Ԫ��Ϣ����Щ���ܻ�Ϳ���̨�ı༭���ͻ��Ŀǰ�Ļ����ǣ������ǿ���̨���ºͿͻ��˸��£�������Nacos����������ܣ����Ҳ��ӭ��Ҹ����Լ��Ŀ��������ҲԤף��ҹ���ż���죡</p>
+<p>编辑实例对话框，可以编辑的信息有实例的权重、是否上下线和元信息。</p>
+<p>0.3版本的服务发现页面，基本就是这样，欢迎大家的反馈。服务注册客户端也可以编辑服务、集群、实例元信息，这些可能会和控制台的编辑相冲突，目前的机制是，不管是控制台更新和客户端更新，都将被Nacos服务端所接受，这点也欢迎大家给出自己的看法。最后也预祝大家国庆放假愉快！</p>
 </section><footer class="footer-container" data-reactid="19"><div class="footer-body" data-reactid="20"><img src="/img/nacos_gray.png" data-reactid="21"/><div class="cols-container" data-reactid="22"><div class="col col-12" data-reactid="23"><h3 data-reactid="24">愿景</h3><p data-reactid="25">Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6" data-reactid="26"><dl data-reactid="27"><dt data-reactid="28">文档</dt><dd data-reactid="29"><a href="/zh-cn/docs/what-is-nacos.html" target="_self" data-reactid="30">概览</a></dd><dd data-reactid="31"><a href="/zh-cn/docs/quick-start.html" target="_self" data-reactid="32">快速开始</a></dd><dd data-reactid="33"><a href="/zh-cn/docs/contributing.html" target="_self" data-reactid="34">开发者指南</a></dd></dl></div><div class="col col-6" data-reactid="35"><dl data-reactid="36"><dt data-reactid="37">资源</dt><dd data-reactid="38"><a href="/zh-cn/community/index.html" target="_self" data-reactid="39">社区</a></dd></dl></div></div><div class="copyright" data-reactid="40"><span data-reactid="41">@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
 	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
 	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
