@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: 'Nacos服务发现控制台预览',
+            author: '@dungu',
+            dateStr: 'Oct 2nd, 2018',
+            desc: '服务发现控制台的主要功能是服务列表的展示和搜索，以及服务配置、集群配置、实例配置的查询和更新。在0.3版本中，主要会有两个页面：服务列表和服务详情。',
+            link: '/en-us/blog/discovery-console.html',
+        },
+        {
             title: 'Consul与kubernetes整合公告[翻译]',
             author: '@dungu',
             dateStr: 'Sept 2nd, 2018',
@@ -44,6 +51,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: 'Nacos服务发现控制台预览',
+            author: '@dungu',
+            dateStr: 'Oct 2nd, 2018',
+            desc: '服务发现控制台的主要功能是服务列表的展示和搜索，以及服务配置、集群配置、实例配置的查询和更新。在0.3版本中，主要会有两个页面：服务列表和服务详情。',
+            link: '/en-us/blog/discovery-console.html',
+        },
         {
             title: 'Consul与kubernetes整合公告[翻译]',
             author: '@dungu',
