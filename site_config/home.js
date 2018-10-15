@@ -15,7 +15,7 @@ export default {
         },
       ],
       version: {
-        text: 'V0.2.1-RC1',
+        text: 'V0.2.1',
         link: 'https://github.com/alibaba/nacos/releases',
       },
       note: {
@@ -102,7 +102,7 @@ export default {
         },
       ],
       version: {
-        text: 'V0.2.1-RC1',
+        text: 'V0.2.1',
         link: 'https://github.com/alibaba/nacos/releases',
       },
       note: {
