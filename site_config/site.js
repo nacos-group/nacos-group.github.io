@@ -26,7 +26,7 @@ export default {
       },
       {
         text: 'DEMO-CONSOLE',
-        href: 'http://console.nacos.io/nacos/index.html',
+          link: 'http://console.nacos.io/nacos/index.html',
       },
     ],
     disclaimer: {
@@ -85,7 +85,7 @@ export default {
       },
       {
         text: '控制台样例',
-        href: 'http://console.nacos.io/nacos/index.html',
+          link: 'http://console.nacos.io/nacos/index.html',
       },
     ],
     disclaimer: {
