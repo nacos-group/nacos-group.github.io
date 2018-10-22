@@ -25,7 +25,7 @@ export default {
         link: '/en-us/community',
       },
       {
-        text: 'demo console',
+        text: 'DEMO-CONSOLE',
         href: 'http://console.nacos.io/nacos/index.html',
       },
     ],
