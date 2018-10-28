@@ -29,11 +29,11 @@ export default {
         //   link: '/en-us/blog/Nacos-is-Coming.html',
         // },
           {
-              img: 'https://cdn.yuque.com/lark/0/2018/png/7601/1525185700084-16f2c073-0c2b-49c0-b85b-ce2ca1163326.png',
-              title: '微服务架构中基于DNS的服务注册与发现',
-              content: '当前，微服务架构已经成为企业尤其是互联网企业技术选型的一个重要参考。微服务架构中涉及到很多模块，本文将重点介绍微服务架构的服务注册与发现以及如何基于DNS做服务发现。',
-              dateStr: 'March 06，2018',
-              link: '/en-us/blog/DNS-SD.html',
+              img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1540738282849-61e2022a-46a9-4d81-ae16-6d6f0515450b.png',
+              title: 'Nacos 进入CNCF landscape',
+              content: 'Nacos 被CNCF 纳入landscape大图。',
+              dateStr: 'Oct 28，2018',
+              link: '/en-us/blog/cncf.html',
           },
       ]
     },
@@ -181,11 +181,11 @@ export default {
           //     link: '/zh-cn/blog/Nacos-is-Coming.html',
           // },
           {
-              img: 'https://cdn.yuque.com/lark/0/2018/png/7601/1525185700084-16f2c073-0c2b-49c0-b85b-ce2ca1163326.png',
-              title: '微服务架构中基于DNS的服务注册与发现',
-              content: '当前，微服务架构已经成为企业尤其是互联网企业技术选型的一个重要参考。微服务架构中涉及到很多模块，本文将重点介绍微服务架构的服务注册与发现以及如何基于DNS做服务发现。',
-              dateStr: 'March 06，2018',
-              link: '/zh-cn/blog/DNS-SD.html',
+              img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1540738282849-61e2022a-46a9-4d81-ae16-6d6f0515450b.png',
+              title: 'Nacos 进入CNCF landscape',
+              content: 'Nacos 被CNCF 纳入landscape大图。',
+              dateStr: 'Oct 28，2018',
+              link: '/en-us/blog/cncf.html',
           },
       ]
     },

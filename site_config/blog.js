@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: 'Nacos 进入CNCF landscape',
+            author: '@xingxuechao',
+            dateStr: 'Oct 28, 2018',
+            desc: 'Nacos 被CNCF 纳入landscape大图',
+            link: '/en-us/blog/cncf.html',
+        },
+        {
             title: 'Nacos服务发现控制台预览',
             author: '@dungu',
             dateStr: 'Oct 2nd, 2018',
@@ -51,6 +58,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: 'Nacos 进入CNCF landscape',
+            author: '@xingxuechao',
+            dateStr: 'Oct 28, 2018',
+            desc: 'Nacos 被CNCF 纳入landscape大图',
+            link: '/en-us/blog/cncf.html',
+        },
         {
             title: 'Nacos服务发现控制台预览',
             author: '@dungu',
