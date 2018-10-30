@@ -16,18 +16,18 @@ There are two ways to get Nacos.
 unzip nacos-source.zip
 cd nacos/
 mvn -Prelease-nacos clean install -U  
-cd nacos/distribution/target/nacos-server-0.2.1/nacos/bin
+cd nacos/distribution/target/nacos-server-0.3.0/nacos/bin
 ```
   
 ### 2)Download run package 
 
-[zip package Download](https://github.com/alibaba/nacos/releases/download/0.2.1/nacos-server-0.2.1.zip)
+[zip package Download](https://github.com/alibaba/nacos/releases/download/0.3.0/nacos-server-0.3.0.zip)
 
-[tar.gz package Download](https://github.com/alibaba/nacos/releases/download/0.2.1/nacos-server-0.2.1.tar.gz)
+[tar.gz package Download](https://github.com/alibaba/nacos/releases/download/0.3.0/nacos-server-0.3.0.tar.gz)
 
 
 ```bash
-  unzip nacos-server-0.2.1.zip  OR tar -xvf nacos-server-0.2.1.tar.gz
+  unzip nacos-server-0.3.0.zip  OR tar -xvf nacos-server-0.3.0.tar.gz
   cd nacos/bin
 ```  
 
