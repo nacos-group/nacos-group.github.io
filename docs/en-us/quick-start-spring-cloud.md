@@ -1,5 +1,3 @@
-# Quick Start for Nacos Spring Cloud Projects
-
 <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">This quick start introduces how to enable Nacos configuration management and service discovery features for your Spring Cloud project.</span></span>
 
 <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">The quick start includes two samples:</span></span>
@@ -27,16 +25,11 @@ Sample project: [nacos-spring-cloud-config-example](https://github.com/nacos-gro
 </dependency>
 ```
 
-
-2. <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Configure the Nacos Server address in </span></span>`bootstrap.properties`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> </span></span>:
+2. <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Configure the Nacos Server address and </span></span>Specify the application name <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">in </span></span>`bootstrap.properties`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> </span></span>:
 
 ```
 spring.cloud.nacos.config.server-addr=127.0.0.1:8848
-```
 
-3. Specify the application name in `application.properties` :
-
-```
 spring.application.name=example
 ```
 

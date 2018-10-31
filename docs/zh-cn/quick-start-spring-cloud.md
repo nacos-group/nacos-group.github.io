@@ -21,16 +21,11 @@
 </dependency>
 ```
 
-
-2. <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">在 </span></span>`bootstrap.properties`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> 中配置 Nacos server 的地址：</span></span>
+2. <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">在 </span></span>`bootstrap.properties`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> 中配置 Nacos server 的地址和</span></span>应用名<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">：</span></span>
 
 ```
 spring.cloud.nacos.config.server-addr=127.0.0.1:8848
-```
 
-3. 在 `application.properties` 配置应用名：
-
-```
 spring.application.name=example
 ```
 
