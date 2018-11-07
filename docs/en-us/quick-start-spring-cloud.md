@@ -44,7 +44,7 @@ ${prefix}-${spring.profile.active}.${file-extension}
 * The value of `prefix` is the value of `spring.application.name` by default. You can also configure this value in `spring.cloud.nacos.config.prefix`.
 * `spring.profile.active` is the profile of the current environment. For more details, refer to [Spring Boot Document](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html#boot-features-profiles).
     __Note: When the value of __`spring.profile.active`<strong> is empty, the corresponding hyphen </strong><strong><code>-</code></strong><strong> will be deleted, and the format of dataId becomes: </strong><strong><code>${prefix}</code></strong><strong>.</strong><strong><code>${file-extension}</code></strong>
-* `file-exetension` is the data format of the configuration content, and can be configured in `spring.cloud.nacos.config.file-extension` . Currently only the `properties` type is supported.
+* `file-exetension` is the data format of the configuration content, and can be configured in `spring.cloud.nacos.config.file-extension` . Currently only the `properties` and `yaml` type is supported.
 
 4. Add the native `@RefreshScope` annotation of Spring Cloud to enable autorefresh of configuration updates:
 
