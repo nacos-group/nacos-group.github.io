@@ -29,7 +29,7 @@ spring.cloud.nacos.config.server-addr=127.0.0.1:8848
 spring.application.name=example
 ```
 
-__说明__：之所以需要配置 `spring.application.name` ，是因为它是构成 Nacos 配置管理 [`dataId`](./concepts.md#concepts_dataid) 字段的一部分。
+__说明__：之所以需要配置 `spring.application.name` ，是因为它是构成 Nacos 配置管理 `dataId`字段的一部分。
 
 在 Nacos Spring Cloud 中，`dataId` 的完整格式如下：
 
