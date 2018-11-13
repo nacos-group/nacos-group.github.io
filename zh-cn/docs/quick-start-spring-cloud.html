@@ -31,6 +31,7 @@
     &lt;version&gt;${latest.version}&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
+<p><strong>注意</strong>：版本 <a href="https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-alibaba-nacos-config">0.2.x.RELEASE</a> 对应的是 Spring Boot 2.x 版本，版本 <a href="https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-alibaba-nacos-config">0.1.x.RELEASE</a> 对应的是 Spring Boot 1.x 版本。</p>
 <ol start="2">
 <li>在 <code>bootstrap.properties</code> 中配置 Nacos server 的地址和应用名</li>
 </ol>
@@ -94,6 +95,7 @@ public class ConfigController {
     &lt;version&gt;${latest.version}&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
+<p><strong>注意</strong>：版本 <a href="https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-alibaba-nacos-discovery">0.2.x.RELEASE</a> 对应的是 Spring Boot 2.x 版本，版本 <a href="https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-alibaba-nacos-discovery">0.1.x.RELEASE</a> 对应的是 Spring Boot 1.x 版本。</p>
 <ol start="2">
 <li>配置服务提供者，从而服务提供者可以通过 Nacos 的服务注册发现功能将其服务注册到 Nacos server 上。</li>
 </ol>

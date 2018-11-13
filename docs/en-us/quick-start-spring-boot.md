@@ -25,6 +25,8 @@ Sample project: [nacos-spring-boot-config-example](https://github.com/nacos-grou
 </dependency>
 ```
 
+**Note**: Version [0.2.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.boot/nacos-config-spring-boot-starter) is compatible with the Spring Boot 2.0.x line. Version [0.1.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.boot/nacos-config-spring-boot-starter) is compatible with the Spring Boot 1.x line.
+
 2. Configure the Nacos server address in `application.properties` :
 
 ```
@@ -93,6 +95,8 @@ Sample project: [nacos-spring-boot-discovery-example](https://github.com/nacos-g
     <version>${latest.version}</version>
 </dependency>
 ```
+
+**Note**: Version [0.2.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.boot/nacos-discovery-spring-boot-starter) is compatible with the Spring Boot 2.0.x line. Version [0.1.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.boot/nacos-discovery-spring-boot-starter) is compatible with the Spring Boot 1.x line.
 
 2. Configure the Nacos server address in `application.properties` :
 

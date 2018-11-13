@@ -21,6 +21,8 @@
 </dependency>
 ```
 
+**注意**：版本 [0.2.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.boot/nacos-config-spring-boot-starter) 对应的是 Spring Boot 2.x 版本，版本 [0.1.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.boot/nacos-config-spring-boot-starter) 对应的是 Spring Boot 1.x 版本。
+
 2. 在 `application.properties` 中配置 Nacos server 的地址：
 
 ```
@@ -87,6 +89,8 @@ curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example&group=DEF
     <version>${latest.version}</version>
 </dependency>
 ```
+
+**注意**：版本 [0.2.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.boot/nacos-discovery-spring-boot-starter) 对应的是 Spring Boot 2.x 版本，版本 [0.1.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.boot/nacos-discovery-spring-boot-starter) 对应的是 Spring Boot 1.x 版本。
 
 2. 在 `application.properties` 中配置 Nacos server 的地址：
 

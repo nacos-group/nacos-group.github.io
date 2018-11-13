@@ -46,8 +46,8 @@ cd nacos/distribution/target/nacos-server-0.2.1/nacos/bin
 <span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)">生产使用建议至少主备模式，或者采用高可用数据库。</span></span>
 ### 初始化mysql数据库
 [sql语句源文件](https://github.com/alibaba/nacos/blob/master/distribution/conf/nacos-mysql.sql)
-### <span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)">jdbc.properties配置</span></span>
-[jdbc.properties配置文件](https://github.com/alibaba/nacos/blob/master/distribution/conf/nacos-mysql.sql)
+### application.properties 配置
+[application.properties配置文件](https://github.com/alibaba/nacos/blob/master/distribution/conf/application.properties)
 
 ## 5.启动服务器
 ### Linux/Unix/Mac
