@@ -1,0 +1,91 @@
+{
+  "en-us": [
+    {
+      "filename": "DNS-SD.md",
+      "link": "/en-us/blog/DNS-SD.html",
+      "meta": {}
+    },
+    {
+      "filename": "Nacos-is-Coming.md",
+      "link": "/en-us/blog/Nacos-is-Coming.html",
+      "meta": {}
+    },
+    {
+      "filename": "alibaba-configserver.md",
+      "link": "/en-us/blog/alibaba-configserver.html",
+      "meta": {}
+    },
+    {
+      "filename": "cengdu-dubbo.md",
+      "link": "/en-us/blog/cengdu-dubbo.html",
+      "meta": {}
+    },
+    {
+      "filename": "cncf.md",
+      "link": "/en-us/blog/cncf.html",
+      "meta": {}
+    },
+    {
+      "filename": "consul-k8s.md",
+      "link": "/en-us/blog/consul-k8s.html",
+      "meta": {}
+    },
+    {
+      "filename": "discovery-console.md",
+      "link": "/en-us/blog/discovery-console.html",
+      "meta": {}
+    },
+    {
+      "filename": "nacos.md",
+      "link": "/en-us/blog/nacos.html",
+      "meta": {}
+    }
+  ],
+  "zh-cn": [
+    {
+      "filename": "DNS-SD.md",
+      "link": "/zh-cn/blog/DNS-SD.html",
+      "meta": {}
+    },
+    {
+      "filename": "Eureka2.md",
+      "link": "/zh-cn/blog/Eureka2.html",
+      "meta": {}
+    },
+    {
+      "filename": "Nacos-is-Coming.md",
+      "link": "/zh-cn/blog/Nacos-is-Coming.html",
+      "meta": {}
+    },
+    {
+      "filename": "alibaba-configserver.md",
+      "link": "/zh-cn/blog/alibaba-configserver.html",
+      "meta": {}
+    },
+    {
+      "filename": "cengdu-dubbo.md",
+      "link": "/zh-cn/blog/cengdu-dubbo.html",
+      "meta": {}
+    },
+    {
+      "filename": "cncf.md",
+      "link": "/zh-cn/blog/cncf.html",
+      "meta": {}
+    },
+    {
+      "filename": "consul-k8s.md",
+      "link": "/zh-cn/blog/consul-k8s.html",
+      "meta": {}
+    },
+    {
+      "filename": "discovery-console.md",
+      "link": "/zh-cn/blog/discovery-console.html",
+      "meta": {}
+    },
+    {
+      "filename": "nacos.md",
+      "link": "/zh-cn/blog/nacos.html",
+      "meta": {}
+    }
+  ]
+}

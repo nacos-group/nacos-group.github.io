@@ -39,7 +39,7 @@ public class NacosConfiguration {
 
 3. Specify the property value for the `@Value` annotation of Spring.
 
-__Note: __You need to use the  `Setter` method to enable autorefresh of configuration updates. 
+Note: You need to use the  `Setter` method to enable autorefresh of configuration updates. 
 
 ```
 @Controller
@@ -155,5 +155,5 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=1
 * [Nacos](https://github.com/alibaba/nacos)
 * [Nacos Spring](https://github.com/nacos-group/nacos-spring-project)
 * [Nacos Spring Boot](https://github.com/nacos-group/nacos-spring-boot-project)
-* [Spring Cloud](https://github.com/spring-cloud-incubator/spring-cloud-alibaba) [Alibaba](https://github.com/spring-cloud-incubator/spring-cloud-alibaba)
+* [Spring Cloud Alibaba](https://github.com/spring-cloud-incubator/spring-cloud-alibaba)
 

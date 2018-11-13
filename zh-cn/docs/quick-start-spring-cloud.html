@@ -37,8 +37,24 @@
     
 spring.application.name=example
 </code></pre>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
 <blockquote>
-<p><strong>说明</strong>：之所以需要配置 <code>spring.application.name</code> ，是因为它是构成 Nacos 配置管理 <code>dataId</code>字段的一部分。在 Nacos Spring Cloud 中，<code>dataId</code> 的完整格式如下：<code>${prefix}-${spring.profile.active}.${file-extension}</code>, 其中</p>
+<p><strong>说明</strong>：之所以需要配置 <code>spring.application.name</code> ，是因为它是构成 Nacos 配置管理 <code>dataId</code>字段的一部分。在 Nacos Spring Cloud 中，<code>dataId</code> 的完整格式如下：<code>${prefix}-${spring.profile.active}.${file-extension}</code>, 其中
+=======
+说明：之所以需要配置 <code>spring.application.name</code> ，是因为它是构成 Nacos 配置管理 <code>dataId</code>字段的一部分。</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>21b767b6852e7f5a265103a4dc5f575b66852de6</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 </blockquote>
 <blockquote>
 <ul>
@@ -47,9 +63,34 @@ spring.application.name=example
 <li><code>file-exetension</code> 为配置内容的数据格式，可以通过配置项 <code>spring.cloud.nacos.config.file-extension</code> 来配置。目前只支持 <code>.properties</code> 和 <code>.yaml</code> 两种类型。</li>
 </ul>
 </blockquote>
-<ol start="3">
+<h1>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+3. 通过 Spring Cloud 原生注解 <code>@RefreshScope</code> 实现配置自动更新：</h1>
+<pre><code class="language-plain">${prefix}-${spring.profile.active}.${file-extension}
+</code></pre>
+<ul>
+<li><code>prefix</code> 默认为 <code>spring.application.name</code> 的值，也可以通过配置项 <code>spring.cloud.nacos.config.prefix</code>来配置。</li>
+<li><code>spring.profile.active</code> 即为当前环境对应的 profile，详情可以参考 <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html#boot-features-profiles">Spring Boot文档</a>。
+注意：当 <code>spring.profile.active</code> 为空时，对应的连接符 <code>-</code> 也将不存在，dataId 的拼接格式变成 <code>${prefix}.${file-extension}</code></li>
+<li><code>file-exetension</code> 为配置内容的数据格式，可以通过配置项 <code>spring.cloud.nacos.config.file-extension</code> 来配置。目前只支持 <code>properties</code> 和 <code>yaml</code> 类型。</li>
+</ul>
+<ol start="4">
 <li>通过 Spring Cloud 原生注解 <code>@RefreshScope</code> 实现配置自动更新：</li>
 </ol>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>21b767b6852e7f5a265103a4dc5f575b66852de6</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 <pre><code>@RestController
 @RequestMapping(&quot;/config&quot;)
 @RefreshScope
@@ -167,7 +208,7 @@ public class NacosConsumerApplication {
 <li><a href="https://github.com/alibaba/nacos">Nacos</a></li>
 <li><a href="https://github.com/nacos-group/nacos-spring-project">Nacos Spring</a></li>
 <li><a href="https://github.com/nacos-group/nacos-spring-boot-project">Nacos Spring Boot</a></li>
-<li><a href="https://github.com/spring-cloud-incubator/spring-cloud-alibaba">Spring Cloud</a> <a href="https://github.com/spring-cloud-incubator/spring-cloud-alibaba">Alibaba</a></li>
+<li><a href="https://github.com/spring-cloud-incubator/spring-cloud-alibaba">Spring Cloud Alibaba</a></li>
 </ul>
 </div></div></section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>愿景</h3><p>Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/what-is-nacos.html" target="_self">概览</a></dd><dd><a href="/zh-cn/docs/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/contributing.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd></dl></div></div><div class="copyright"><span>@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
 	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>

@@ -1,0 +1,256 @@
+{
+  "en-us": [
+    {
+      "filename": "CLI-guide.md",
+      "link": "/en-us/docs/CLI-guide.html",
+      "meta": {}
+    },
+    {
+      "filename": "activity.md",
+      "link": "/en-us/docs/activity.html",
+      "meta": {}
+    },
+    {
+      "filename": "architecture.md",
+      "link": "/en-us/docs/architecture.html",
+      "meta": {}
+    },
+    {
+      "filename": "cluster-mode-quick-start.md",
+      "link": "/en-us/docs/cluster-mode-quick-start.html",
+      "meta": {}
+    },
+    {
+      "filename": "community.md",
+      "link": "/en-us/docs/community.html",
+      "meta": {}
+    },
+    {
+      "filename": "concepts.md",
+      "link": "/en-us/docs/concepts.html",
+      "meta": {}
+    },
+    {
+      "filename": "console-guide.md",
+      "link": "/en-us/docs/console-guide.html",
+      "meta": {}
+    },
+    {
+      "filename": "contributing.md",
+      "link": "/en-us/docs/contributing.html",
+      "meta": {}
+    },
+    {
+      "filename": "deployment.md",
+      "link": "/en-us/docs/deployment.html",
+      "meta": {}
+    },
+    {
+      "filename": "how-to-reporting-bugs.md",
+      "link": "/en-us/docs/how-to-reporting-bugs.html",
+      "meta": {}
+    },
+    {
+      "filename": "managementAPI.md",
+      "link": "/en-us/docs/managementAPI.html",
+      "meta": {}
+    },
+    {
+      "filename": "open-API.md",
+      "link": "/en-us/docs/open-API.html",
+      "meta": {}
+    },
+    {
+      "filename": "other-language.md",
+      "link": "/en-us/docs/other-language.html",
+      "meta": {}
+    },
+    {
+      "filename": "pull-request.md",
+      "link": "/en-us/docs/pull-request.html",
+      "meta": {}
+    },
+    {
+      "filename": "quick-start-spring-boot.md",
+      "link": "/en-us/docs/quick-start-spring-boot.html",
+      "meta": {}
+    },
+    {
+      "filename": "quick-start-spring-cloud.md",
+      "link": "/en-us/docs/quick-start-spring-cloud.html",
+      "meta": {}
+    },
+    {
+      "filename": "quick-start-spring.md",
+      "link": "/en-us/docs/quick-start-spring.html",
+      "meta": {}
+    },
+    {
+      "filename": "quick-start.md",
+      "link": "/en-us/docs/quick-start.html",
+      "meta": {}
+    },
+    {
+      "filename": "roadmap.md",
+      "link": "/en-us/docs/roadmap.html",
+      "meta": {}
+    },
+    {
+      "filename": "sdk-properties.md",
+      "link": "/en-us/docs/sdk-properties.html",
+      "meta": {}
+    },
+    {
+      "filename": "sdk.md",
+      "link": "/en-us/docs/sdk.html",
+      "meta": {}
+    },
+    {
+      "filename": "use-nacos-with-dubbo.md",
+      "link": "/en-us/docs/use-nacos-with-dubbo.html",
+      "meta": {}
+    },
+    {
+      "filename": "use-nacos-with-istio.md",
+      "link": "/en-us/docs/use-nacos-with-istio.html",
+      "meta": {}
+    },
+    {
+      "filename": "use-nacos-with-kubernetes.md",
+      "link": "/en-us/docs/use-nacos-with-kubernetes.html",
+      "meta": {}
+    },
+    {
+      "filename": "use-nacos-with-springcloud.md",
+      "link": "/en-us/docs/use-nacos-with-springcloud.html",
+      "meta": {}
+    },
+    {
+      "filename": "what-is-nacos.md",
+      "link": "/en-us/docs/what-is-nacos.html",
+      "meta": {}
+    }
+  ],
+  "zh-cn": [
+    {
+      "filename": "CLI-guide.md",
+      "link": "/zh-cn/docs/CLI-guide.html",
+      "meta": {}
+    },
+    {
+      "filename": "activity.md",
+      "link": "/zh-cn/docs/activity.html",
+      "meta": {}
+    },
+    {
+      "filename": "architecture.md",
+      "link": "/zh-cn/docs/architecture.html",
+      "meta": {}
+    },
+    {
+      "filename": "cluster-mode-quick-start.md",
+      "link": "/zh-cn/docs/cluster-mode-quick-start.html",
+      "meta": {}
+    },
+    {
+      "filename": "community.md",
+      "link": "/zh-cn/docs/community.html",
+      "meta": {}
+    },
+    {
+      "filename": "concepts.md",
+      "link": "/zh-cn/docs/concepts.html",
+      "meta": {}
+    },
+    {
+      "filename": "console-guide.md",
+      "link": "/zh-cn/docs/console-guide.html",
+      "meta": {}
+    },
+    {
+      "filename": "contributing.md",
+      "link": "/zh-cn/docs/contributing.html",
+      "meta": {}
+    },
+    {
+      "filename": "deployment.md",
+      "link": "/zh-cn/docs/deployment.html",
+      "meta": {}
+    },
+    {
+      "filename": "how-to-reporting-bugs.md",
+      "link": "/zh-cn/docs/how-to-reporting-bugs.html",
+      "meta": {}
+    },
+    {
+      "filename": "managementAPI.md",
+      "link": "/zh-cn/docs/managementAPI.html",
+      "meta": {}
+    },
+    {
+      "filename": "open-API.md",
+      "link": "/zh-cn/docs/open-API.html",
+      "meta": {}
+    },
+    {
+      "filename": "other-language.md",
+      "link": "/zh-cn/docs/other-language.html",
+      "meta": {}
+    },
+    {
+      "filename": "pull-request.md",
+      "link": "/zh-cn/docs/pull-request.html",
+      "meta": {}
+    },
+    {
+      "filename": "quick-start-spring-boot.md",
+      "link": "/zh-cn/docs/quick-start-spring-boot.html",
+      "meta": {}
+    },
+    {
+      "filename": "quick-start-spring.md",
+      "link": "/zh-cn/docs/quick-start-spring.html",
+      "meta": {}
+    },
+    {
+      "filename": "quick-start.md",
+      "link": "/zh-cn/docs/quick-start.html",
+      "meta": {}
+    },
+    {
+      "filename": "roadmap.md",
+      "link": "/zh-cn/docs/roadmap.html",
+      "meta": {}
+    },
+    {
+      "filename": "sdk.md",
+      "link": "/zh-cn/docs/sdk.html",
+      "meta": {}
+    },
+    {
+      "filename": "use-nacos-with-dubbo.md",
+      "link": "/zh-cn/docs/use-nacos-with-dubbo.html",
+      "meta": {}
+    },
+    {
+      "filename": "use-nacos-with-istio.md",
+      "link": "/zh-cn/docs/use-nacos-with-istio.html",
+      "meta": {}
+    },
+    {
+      "filename": "use-nacos-with-kubernetes.md",
+      "link": "/zh-cn/docs/use-nacos-with-kubernetes.html",
+      "meta": {}
+    },
+    {
+      "filename": "use-nacos-with-springcloud.md",
+      "link": "/zh-cn/docs/use-nacos-with-springcloud.html",
+      "meta": {}
+    },
+    {
+      "filename": "what-is-nacos.md",
+      "link": "/zh-cn/docs/what-is-nacos.html",
+      "meta": {}
+    }
+  ]
+}

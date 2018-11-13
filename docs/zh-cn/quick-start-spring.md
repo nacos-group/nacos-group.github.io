@@ -3,7 +3,7 @@
 * 通过 Nacos server 和 Nacos Spring 配置管理模块，实现配置的动态变更；
 * 通过 Nacos server 和 Nacos Spring 服务发现模块，实现服务的注册与发现。
 
-## __前提条件__
+## 前提条件
 
 您需要先下载 Nacos 并启动 Nacos server。操作步骤参见 [Nacos 快速入门](https://nacos.io/zh-cn/docs/quick-start.html)。
 
@@ -34,7 +34,7 @@ public class NacosConfiguration {
 
 3. 通过 Spring 的 `@Value` 注解设置属性值。
 
-__注意：__需要同时有 `Setter`方法才能在配置变更的时候自动更新。
+注意：需要同时有 `Setter`方法才能在配置变更的时候自动更新。
 
 ```
 @Controller
@@ -148,5 +148,5 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=1
 * [Nacos](https://github.com/alibaba/nacos)
 * [Nacos Spring](https://github.com/nacos-group/nacos-spring-project)
 * [Nacos Spring Boot](https://github.com/nacos-group/nacos-spring-boot-project)
-* [Spring Cloud](https://github.com/spring-cloud-incubator/spring-cloud-alibaba) [Alibaba](https://github.com/spring-cloud-incubator/spring-cloud-alibaba)
+* [Spring Cloud Alibaba](https://github.com/spring-cloud-incubator/spring-cloud-alibaba)
 
