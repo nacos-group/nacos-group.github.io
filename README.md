@@ -19,13 +19,14 @@ docsite --version
 4. Run `docsite build` to build source code.
 5. Verify your change locally: `python -m SimpleHTTPServer 8000`
 
-## How to send a PR
+## How to Contribute
 
-1. Do not use `git add .` to commit all the changes.
-2. Just push your changed files, such as:
+1. Create an issue first to description the issue
+2. Do not use `git add .` to commit all the changes.
+3. Just push your changed files, such as:
     * *.md
     * blog.js or docs.js or site.js
-3. Send a PR to `develop` branch.
+4. Send a PR to `develop` branch.
 
 ## SEO
 
