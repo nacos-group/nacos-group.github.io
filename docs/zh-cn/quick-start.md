@@ -9,9 +9,7 @@ Nacos 依赖 [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_j
 3. Maven 3.2.x+；[下载](https://maven.apache.org/download.cgi) & [配置](https://maven.apache.org/settings.html)。
 
 ## 2.下载源码或者安装包
-你可以通过两种方式来获取 Nacos。
-
-可以在这里找到 [最新稳定版本](https://github.com/alibaba/nacos/releases)。
+你可以通过源码和发行包两种方式来获取 Nacos。
 
 ### 从 Github 上下载源码方式
 
