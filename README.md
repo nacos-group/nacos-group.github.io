@@ -5,17 +5,28 @@ This project keeps all sources used for building up [Nacos](https://github.com/a
 
 ## Attention
 
-If your version of [docsite](https://github.com/txd-team/docsite) is less then `1.0.0`, please upgrade to `1.0.0`. you can check version with 
+If your version of [docsite](https://github.com/txd-team/docsite) is less then `1.0.0`, please upgrade to `1.0.0`. 
 
-```java
-docsite --version
-```
+> **NOTE**: `docsite` can not support the latest `node@11`, you need to install older version of `node`, for example, you can use following commands to do this on **MacOS** with `brew`
+> 
+> ```
+> brew search node
+> brew install node@8
+> 
+> install `npm` with specific node version `node@8`
+> ``` 
+> 
+> we tested successfully with 
+> 
+> `node 8.9.4 | npm 5.6.0 | docsite 1.3.2`
+> 
 
-## Build instruction
+
+## Build WebSite Locally
 
 1. Run `npm install docsite -g` to install the docsite dev tool.
-2. Run `npm i` in the root directory to install the dependencies.
-3. Run `docsite start` in the root directory to start a local server, you will see the website in 'http://127.0.0.1:8080'.
+2. Run `npm i` in the project's root directory to install the dependencies.
+3. Run `docsite start` in the project's root directory to start a local server, you will see the website in 'http://127.0.0.1:8080'.
 4. Run `docsite build` to build source code.
 5. Verify your change locally: `python -m SimpleHTTPServer 8000`
 
