@@ -1,6 +1,6 @@
-本文主要面向 Spring Cloud 的使用者，通过两个示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现。
+本文主要面向 [Spring Cloud](https://spring.io/projects/spring-cloud) 的使用者，通过两个示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务注册发现。
 
-* 通过 Nacos Server 和 spring-cloud-starter-alibaba-nacos-config 实现配置的动态变更；
+* 通过 Nacos Server 和 spring-cloud-starter-alibaba-nacos-config 实现配置的动态变更。
 * 通过 Nacos Server 和 spring-cloud-starter-alibaba-nacos-discovery 实现服务的注册与发现。
 
 ## 前提条件
@@ -29,7 +29,7 @@ spring.cloud.nacos.config.server-addr=127.0.0.1:8848
 spring.application.name=example
 ```
 
-__说明__：之所以需要配置 `spring.application.name` ，是因为它是构成 Nacos 配置管理 `dataId` 字段的一部分。
+__说明__：之所以需要配置 `spring.application.name` ，是因为它是构成 Nacos 配置管理 [`dataId`](./concepts.md#concepts_dataid) 字段的一部分。
 
 在 Nacos Spring Cloud 中，`dataId` 的完整格式如下：
 
