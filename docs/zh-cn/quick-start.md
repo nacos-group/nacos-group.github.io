@@ -40,53 +40,42 @@ cd distribution/target/nacos-server-$version/nacos/bin
 ### Linux/Unix/Mac 
 启动命令(standalone代表着单机模式运行，非集群模式):
 
-```bash
-sh startup.sh -m standalone
-```
+`sh startup.sh -m standalone`
 
 ### Windows
 启动命令：
 
-```bash
-cmd startup.cmd
-```
+`cmd startup.cmd`
+
 或者双击startup.cmd运行文件。
 
 ## 4.服务注册&发现和配置管理
 ### 服务注册
 
-```bash
-curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'
-```
+`curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'`
 
 ### 服务发现
 
-```bash
-curl -X GET 'http://127.0.0.1:8848/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'
-```
+`curl -X GET 'http://127.0.0.1:8848/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'`
+
 ### 发布配置
 
-```bash
-curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test&content=HelloWorld"
-```
+`curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test&content=HelloWorld"`
 
 ### 获取配置
 
-```bash
-curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test"
-```
+`curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test"`
 
 ## 5.关闭服务器
 ### Linux/Unix/Mac 
 
-```bash
-sh shutdown.sh`
-```
+
+`sh shutdown.sh`
+
 ### Windows
 
-```bash
-cmd shutdown.cmd
-```
+`cmd shutdown.cmd`
+
 或者双击shutdown.cmd运行文件。
 
 
