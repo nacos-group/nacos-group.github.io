@@ -14,7 +14,7 @@ Follow instructions in [Nacos Quick Start](https://nacos.io/zh-cn/docs/quick-sta
 
 Once you start the Nacos server, you can follow the steps below to enable the Nacos configuration management service for your Spring project. 
 
-Sample project<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">: </span></span>[nacos-spring-config-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-example/nacos-spring-config-example)
+Sample project: [nacos-spring-config-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-example/nacos-spring-config-example)
 
 1. Add the Nacos Spring dependency.
 

@@ -18,9 +18,9 @@
 <li>通过 Nacos Server 和 nacos-discovery-spring-boot-starter 实现服务的注册与发现。</li>
 </ul>
 <h2>前提条件</h2>
-<p><span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">您需要先下载 Nacos 并启动 Nacos server。操作步骤参见</span></span> <a href="https://nacos.io/zh-cn/docs/quick-start.html">Nacos 快速入门</a>。</p>
+<p>您需要先下载 Nacos 并启动 Nacos server。操作步骤参见 <a href="https://nacos.io/zh-cn/docs/quick-start.html">Nacos 快速入门</a>。</p>
 <h2>启动配置管理</h2>
-<p><span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">启动了 Nacos server 后，您就可以参考以下示例代码，为您的 Spring Boot 应用启动 Nacos 配置管理服务了。完整示例代码请参考：</span></span><a href="https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-boot-example/nacos-spring-boot-config-example">nacos-spring-boot-config-example</a></p>
+<p>启动了 Nacos server 后，您就可以参考以下示例代码，为您的 Spring Boot 应用启动 Nacos 配置管理服务了。完整示例代码请参考：<a href="https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-boot-example/nacos-spring-boot-config-example">nacos-spring-boot-config-example</a></p>
 <ol>
 <li>添加依赖。</li>
 </ol>
@@ -36,7 +36,7 @@
 <pre><code>nacos.config.server-addr=127.0.0.1:8848
 </code></pre>
 <ol start="3">
-<li><span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">使用 </span></span><code>@NacosPropertySource</code><span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> 加载 </span></span><code>dataId</code><span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> 为 </span></span><code>example</code><span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> 的配置源，并开启自动更新：</span></span></li>
+<li>使用 <code>@NacosPropertySource</code> 加载 <code>dataId</code> 为 <code>example</code> 的配置源，并开启自动更新：</li>
 </ol>
 <pre><code class="language-plain">@SpringBootApplication
 @NacosPropertySource(dataId = &quot;example&quot;, autoRefreshed = true)
@@ -48,9 +48,9 @@ public class NacosConfigApplication {
 }
 </code></pre>
 <ol start="4">
-<li><span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">通过 Spring 的 </span></span><code>@Value</code><span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> 注解设置属性值。</span></span></li>
+<li>通过 Spring 的 <code>@Value</code> 注解设置属性值。</li>
 </ol>
-<p><span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"><strong>注意：</strong></span></span><span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">需要同时有 </span></span><code>Setter</code><span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">方法才能在配置变更的时候自动更新。</span></span></p>
+<p><strong>注意</strong>：需要同时有 <code>Setter</code> 方法才能在配置变更的时候自动更新。</p>
 <pre><code>@Controller
 @RequestMapping(&quot;config&quot;)
 public class ConfigController {
@@ -83,7 +83,7 @@ public class ConfigController {
 <li>再次访问 <code>http://localhost:8080/config/get</code>，此时返回内容为<code>true</code>，说明程序中的<code>useLocalCache</code>值已经被动态更新了。</li>
 </ol>
 <h2>启动服务发现</h2>
-<p><span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">本节演示如何在您的 Spring Boot 项目中启动 Nacos 的服务发现功能。完整示例代码请参考：</span></span><a href="https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-boot-example/nacos-spring-boot-discovery-example">nacos-spring-boot-discovery-example</a></p>
+<p>本节演示如何在您的 Spring Boot 项目中启动 Nacos 的服务发现功能。完整示例代码请参考：<a href="https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-boot-example/nacos-spring-boot-discovery-example">nacos-spring-boot-discovery-example</a></p>
 <ol>
 <li>添加依赖。</li>
 </ol>

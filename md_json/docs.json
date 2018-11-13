@@ -208,6 +208,11 @@
       "meta": {}
     },
     {
+      "filename": "quick-start-spring-cloud.md",
+      "link": "/zh-cn/docs/quick-start-spring-cloud.html",
+      "meta": {}
+    },
+    {
       "filename": "quick-start-spring.md",
       "link": "/zh-cn/docs/quick-start-spring.html",
       "meta": {}

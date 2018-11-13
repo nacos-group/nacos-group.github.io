@@ -1,21 +1,24 @@
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">This quick start introduces how to enable Nacos configuration management and service discovery features for your Spring Cloud project.</span></span>
+# Quick Start for Nacos Spring Cloud Projects
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">The quick start includes two samples:</span></span>
+This quick start introduces how to enable Nacos configuration management and service discovery features for your Spring Cloud project.
+For more details: [Nacos Config Example](https://github.com/spring-cloud-incubator/spring-cloud-alibaba/blob/master/spring-cloud-alibaba-examples/nacos-example/nacos-config-example/readme.md) and [Nacos Discovery Example](https://github.com/spring-cloud-incubator/spring-cloud-alibaba/blob/master/spring-cloud-alibaba-examples/nacos-example/nacos-discovery-example/readme.md).
+
+The quick start includes two samples:
 
 * How to enable dynamic configuration updates with Nacos server and spring-cloud-starter-alibaba-nacos-config;
-* How to enable <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">service registration and discovery with </span></span>Nacos server and spring-cloud-starter-alibaba-nacos-discovery.
+* How to enable service registration and discovery with Nacos server and spring-cloud-starter-alibaba-nacos-discovery.
 
 ## Prerequisite
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Follow instructions in </span></span>[Nacos Quick Start](https://nacos.io/zh-cn/docs/quick-start.html)<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> to download Nacos and start the Nacos server.</span></span>
+Follow instructions in [Nacos Quick Start](https://nacos.io/zh-cn/docs/quick-start.html) to download Nacos and start the Nacos server.
 
 ## Enable Configuration Service
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Once you start the Nacos server, you can follow the steps below to enable the Nacos configuration management service for your Spring Cloud project. </span></span>
+Once you start the Nacos server, you can follow the steps below to enable the Nacos configuration management service for your Spring Cloud project. 
 
 Sample project: [nacos-spring-cloud-config-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-cloud-example/nacos-spring-cloud-config-example)
 
-1. <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Add the Nacos Spring Cloud dependency.</span></span>
+1. Add the Nacos Spring Cloud dependency.
 
 ```
 <dependency>
@@ -25,7 +28,7 @@ Sample project: [nacos-spring-cloud-config-example](https://github.com/nacos-gro
 </dependency>
 ```
 
-2. <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Configure the Nacos Server address and </span></span>Specify the application name <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">in </span></span>`bootstrap.properties`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> </span></span>:
+2. Configure the Nacos Server address and Specify the application name in `bootstrap.properties` :
 
 ```
 spring.cloud.nacos.config.server-addr=127.0.0.1:8848
@@ -33,7 +36,7 @@ spring.cloud.nacos.config.server-addr=127.0.0.1:8848
 spring.application.name=example
 ```
 
-Note: The value of `spring.application.name` will be used to construct part of the dataId in Nacos configuration management.
+**Note**: The value of `spring.application.name` will be used to construct part of the dataId in Nacos configuration management.
 
 In Nacos Spring Cloud, the format of `dataId` is as follows:
 
@@ -43,7 +46,7 @@ ${prefix}-${spring.profile.active}.${file-extension}
 
 * The value of `prefix` is the value of `spring.application.name` by default. You can also configure this value in `spring.cloud.nacos.config.prefix`.
 * `spring.profile.active` is the profile of the current environment. For more details, refer to [Spring Boot Document](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html#boot-features-profiles).
-    Note: When the value of `spring.profile.active` is empty, the corresponding hyphen `-` will be deleted, and the format of dataId becomes: `${prefix}.${file-extension}`
+    **Note: When the value of `spring.profile.active` is empty, the corresponding hyphen `-` will be deleted, and the format of dataId becomes: `${prefix}.${file-extension}`**
 * `file-exetension` is the data format of the configuration content, and can be configured in `spring.cloud.nacos.config.file-extension` . Currently only the `properties` and `yaml` type is supported.
 
 4. Add the native `@RefreshScope` annotation of Spring Cloud to enable autorefresh of configuration updates:
@@ -83,11 +86,11 @@ curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example.propertie
 
 ## Enable Service Discovery
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Now you would also like to enable the service discovery feature of Nacos in your Spring Cloud project. </span></span>
+Now you would also like to enable the service discovery feature of Nacos in your Spring Cloud project. 
 
 Sample project: [nacos-spring-cloud-discovery-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-cloud-example/nacos-spring-cloud-discovery-example)
 
-1. <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Add the Nacos Spring Cloud dependency.</span></span>
+1. Add the Nacos Spring Cloud dependency.
 
 ```
 <dependency>
