@@ -33,7 +33,7 @@ spring.cloud.nacos.config.server-addr=127.0.0.1:8848
 spring.application.name=example
 ```
 
-__Note: __The value of__ __`spring.application.name` will be used to construct part of the dataId in Nacos configuration management.
+Note: The value of `spring.application.name` will be used to construct part of the dataId in Nacos configuration management.
 
 In Nacos Spring Cloud, the format of `dataId` is as follows:
 
@@ -43,7 +43,7 @@ ${prefix}-${spring.profile.active}.${file-extension}
 
 * The value of `prefix` is the value of `spring.application.name` by default. You can also configure this value in `spring.cloud.nacos.config.prefix`.
 * `spring.profile.active` is the profile of the current environment. For more details, refer to [Spring Boot Document](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html#boot-features-profiles).
-    __Note: When the value of __`spring.profile.active`<strong> is empty, the corresponding hyphen </strong><strong><code>-</code></strong><strong> will be deleted, and the format of dataId becomes: </strong><strong><code>${prefix}</code></strong><strong>.</strong><strong><code>${file-extension}</code></strong>
+    Note: When the value of `spring.profile.active` is empty, the corresponding hyphen `-` will be deleted, and the format of dataId becomes: `${prefix}.${file-extension}`
 * `file-exetension` is the data format of the configuration content, and can be configured in `spring.cloud.nacos.config.file-extension` . Currently only the `properties` and `yaml` type is supported.
 
 4. Add the native `@RefreshScope` annotation of Spring Cloud to enable autorefresh of configuration updates:
@@ -182,5 +182,5 @@ public class NacosConsumerApplication {
 * [Nacos](https://github.com/alibaba/nacos)
 * [Nacos Spring](https://github.com/nacos-group/nacos-spring-project)
 * [Nacos Spring Boot](https://github.com/nacos-group/nacos-spring-boot-project)
-* [Spring Cloud](https://github.com/spring-cloud-incubator/spring-cloud-alibaba) [Alibaba](https://github.com/spring-cloud-incubator/spring-cloud-alibaba)
+* [Spring Cloud Alibaba](https://github.com/spring-cloud-incubator/spring-cloud-alibaba)
 

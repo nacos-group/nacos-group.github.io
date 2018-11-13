@@ -17,7 +17,7 @@
 <li>通过 Nacos server 和 Nacos Spring 配置管理模块，实现配置的动态变更；</li>
 <li>通过 Nacos server 和 Nacos Spring 服务发现模块，实现服务的注册与发现。</li>
 </ul>
-<h2><strong>前提条件</strong></h2>
+<h2>前提条件</h2>
 <p>您需要先下载 Nacos 并启动 Nacos server。操作步骤参见 <a href="https://nacos.io/zh-cn/docs/quick-start.html">Nacos 快速入门</a>。</p>
 <h2>启动配置管理</h2>
 <p>启动了 Nacos server 后，您就可以参考以下示例代码，为您的 Spring 应用启动 Nacos 配置管理服务了<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">。完整示例代码请参考：</span></span><a href="https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-example/nacos-spring-config-example">nacos-spring-config-example</a></p>
@@ -43,7 +43,7 @@ public class NacosConfiguration {
 <ol start="3">
 <li>通过 Spring 的 <code>@Value</code> 注解设置属性值。</li>
 </ol>
-<p>__注意：__需要同时有 <code>Setter</code>方法才能在配置变更的时候自动更新。</p>
+<p>注意：需要同时有 <code>Setter</code>方法才能在配置变更的时候自动更新。</p>
 <pre><code>@Controller
 @RequestMapping(&quot;config&quot;)
 public class ConfigController {
@@ -153,7 +153,7 @@ public class DiscoveryController {
 <li><a href="https://github.com/alibaba/nacos">Nacos</a></li>
 <li><a href="https://github.com/nacos-group/nacos-spring-project">Nacos Spring</a></li>
 <li><a href="https://github.com/nacos-group/nacos-spring-boot-project">Nacos Spring Boot</a></li>
-<li><a href="https://github.com/spring-cloud-incubator/spring-cloud-alibaba">Spring Cloud</a> <a href="https://github.com/spring-cloud-incubator/spring-cloud-alibaba">Alibaba</a></li>
+<li><a href="https://github.com/spring-cloud-incubator/spring-cloud-alibaba">Spring Cloud Alibaba</a></li>
 </ul>
 </div></div></section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>愿景</h3><p>Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/what-is-nacos.html" target="_self">概览</a></dd><dd><a href="/zh-cn/docs/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/contributing.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd></dl></div></div><div class="copyright"><span>@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
 	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
