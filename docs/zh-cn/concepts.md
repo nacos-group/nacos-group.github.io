@@ -1,3 +1,8 @@
+# Nacos 概念 (Concepts)
+
+> NOTE: Nacos 引入了一些基本的概念，系统性的了解一下这些概念可以帮助您更好的理解和正确的使用Nacos 产品。
+
+
 ## 地域 （Region）
 <span data-type="color" style="color:rgb(51, 51, 51)"><span data-type="background" style="background-color:rgb(255, 255, 255)">物理的数据中心，资源创建成功后不能更换。</span></span>
 
@@ -44,16 +49,16 @@ Nacos 的客户端 SDK 会在本地生成配置的快照。当客户端无法连
 在计算机网络上，（通常使用服务名）对服务下的实例的地址和元数据进行探测，并以预先定义的接口提供给客户端进行查询。
 
 ## 元信息（Metadata）
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">自定义配置信息，如容灾策略、负载均衡策略、鉴权配置、各种标记对，从作用范围来看，分为服务级别的元信息、虚拟集群的元信息及实例的元信息。</span></span>
+<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Nacos数据（如配置和服务）描述信息，如服务版本、权重、容灾策略、负载均衡策略、鉴权配置、各种自定义标签 (label)，从作用范围来看，分为服务级别的元信息、集群的元信息及实例的元信息。</span></span>
 
 ## 应用（Application）
 用于标识服务提供方的服务的属性。
 
-## 分组（Service Group）
+## 服务分组（Service Group）
 不同的服务可以归类到同一分组。
 
 ## 虚拟集群（Virtual Cluster）
-同一个服务下的服务实例可以被进一步分类，分类单位可以是虚拟集群。
+同一个服务下的所有服务实例组成一个默认集群, 集群可以被进一步按需求划分，划分的单位可以是虚拟集群。
 
 ## 实例（Instance）
 提供一个或多个服务的具有可访问网络地址（IP:Port）的进程。
@@ -62,9 +67,9 @@ Nacos 的客户端 SDK 会在本地生成配置的快照。当客户端无法连
 实例级别的配置。权重为浮点数。权重越大，分配给该实例的流量越大。
 
 ## 健康检查（Health Check）
-以指定方式检查服务下挂载 IP 的健康度，从而确认该 IP 是否能提供服务。根据检查结果，IP 会被判断为健康或不健康。对服务发起解析请求时，不健康的 IP 不会返回给客户端。
+以指定方式检查服务下挂载的实例 (Instance) 的健康度，从而确认该实例 (Instance) 是否能提供服务。根据检查结果，实例 (Instance) 会被判断为健康或不健康。对服务发起解析请求时，不健康的实例 (Instance) 不会返回给客户端。
 
 ## 健康保护阈值（Protect Threshold）
-为了防止因部分 IP 不健康导致流量全部流向健康IP，继而造成流量压力把健康 IP 压垮并形成雪崩效应，应将健康保护阈值定义为一个 0 到 1 之间的浮点数。当域名健康 IP 占总 IP 的比例小于该值时，无论IP是否健康，都会将这个IP返回给客户端。这样做虽然损失了一部分流量，但是保证了剩余健康IP能正常工作。
+为了防止因过多实例 (Instance) 不健康导致流量全部流向健康实例 (Instance) ，继而造成流量压力把健康 健康实例 (Instance) 压垮并形成雪崩效应，应将健康保护阈值定义为一个 0 到 1 之间的浮点数。当域名健康实例 (Instance) 占总服务实例 (Instance) 的比例小于该值时，无论实例 (Instance) 是否健康，都会将这个实例 (Instance) 返回给客户端。这样做虽然损失了一部分流量，但是保证了集群的剩余健康实例 (Instance) 能正常工作。
 
 
