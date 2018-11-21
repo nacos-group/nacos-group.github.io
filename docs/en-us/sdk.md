@@ -419,7 +419,7 @@ void registerInstance(String serviceName, Instance instance) throws NacosExcepti
 void
 ### Request Example
 ```java
-NamingService naming = NamingFactory.createNaming(System.getProperty("serveAddr"));
+NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 naming.registerInstance("nacos.test.3", "11.11.11.11", 8888, "TEST1");
 
 Instance instance = new Instance();
@@ -479,7 +479,7 @@ void deregisterInstance(String serviceName, String ip, int port, String clusterN
 None
 ### Request Example
 ```java
-NamingService naming = NamingFactory.createNaming(System.getProperty("serveAddr"));
+NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 naming.deregisterInstance("nacos.test.3", "11.11.11.11", 8888, "DEFAULT");
 ```
 ## Get all instances of service
@@ -502,7 +502,7 @@ List<Instance> getAllInstances(String serviceName, List<String> clusters) throws
 List<Instance> instance list。
 ### Request Example
 ```java
-NamingService naming = NamingFactory.createNaming(System.getProperty("serveAddr"));
+NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 System.out.println(naming.getAllInstances("nacos.test.3"));
 ```
 
@@ -527,7 +527,7 @@ List<Instance> selectInstances(String serviceName, List<String> clusters, boolea
 List<Instance> instance list.
 ### Request Example
 ```java
-NamingService naming = NamingFactory.createNaming(System.getProperty("serveAddr"));
+NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 System.out.println(naming.selectInstances("nacos.test.3", true));
 ```
 
@@ -552,7 +552,7 @@ Instance
 
 ### Request Example
 ```java
-NamingService naming = NamingFactory.createNaming(System.getProperty("serveAddr"));
+NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 System.out.println(naming.selectOneHealthyInstance("nacos.test.3"));
 ```
 
@@ -578,7 +578,7 @@ void
 
 ### Request Example
 ```java
-NamingService naming = NamingFactory.createNaming(System.getProperty("serveAddr"));
+NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 naming.subscribe("nacos.test.3", event -> {
     if (event instanceof NamingEvent) {
         System.out.println(((NamingEvent) event).getServceName());
@@ -609,7 +609,7 @@ void
 
 ### Request Example
 ```java
-NamingService naming = NamingFactory.createNaming(System.getProperty("serveAddr"));
+NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 naming.unsubscribe("nacos.test.3", event -> {});
 ```
 

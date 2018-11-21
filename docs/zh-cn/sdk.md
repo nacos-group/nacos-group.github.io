@@ -326,7 +326,7 @@ void registerInstance(String serviceName, Instance instance) throws NacosExcepti
 无
 ### 请求示例
 ```java
-NamingService naming = NamingFactory.createNaming(System.getProperty("serveAddr"));
+NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 naming.registerInstance("nacos.test.3", "11.11.11.11", 8888, "TEST1");
 
 Instance instance = new Instance();
@@ -387,7 +387,7 @@ void deregisterInstance(String serviceName, String ip, int port, String clusterN
 无
 ### 请求示例
 ```java
-NamingService naming = NamingFactory.createNaming(System.getProperty("serveAddr"));
+NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 naming.deregisterInstance("nacos.test.3", "11.11.11.11", 8888, "DEFAULT");
 ```
 ## 获取全部实例
@@ -410,7 +410,7 @@ List<Instance> getAllInstances(String serviceName, List<String> clusters) throws
 List<Instance> 实例列表。
 ### 请求示例
 ```java
-NamingService naming = NamingFactory.createNaming(System.getProperty("serveAddr"));
+NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 System.out.println(naming.getAllInstances("nacos.test.3"));
 ```
 
@@ -435,7 +435,7 @@ List<Instance> selectInstances(String serviceName, List<String> clusters, boolea
 List<Instance> 实例列表。
 ### 请求示例
 ```java
-NamingService naming = NamingFactory.createNaming(System.getProperty("serveAddr"));
+NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 System.out.println(naming.selectInstances("nacos.test.3", true));
 ```
 
@@ -460,7 +460,7 @@ Instance 实例。
 
 ### 请求示例
 ```java
-NamingService naming = NamingFactory.createNaming(System.getProperty("serveAddr"));
+NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 System.out.println(naming.selectOneHealthyInstance("nacos.test.3"));
 ```
 
@@ -486,7 +486,7 @@ void subscribe(String serviceName, List<String> clusters, EventListener listener
 
 ### 请求示例
 ```java
-NamingService naming = NamingFactory.createNaming(System.getProperty("serveAddr"));
+NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 naming.subscribe("nacos.test.3", event -> {
     if (event instanceof NamingEvent) {
         System.out.println(((NamingEvent) event).getServceName());
@@ -518,7 +518,7 @@ void unsubscribe(String serviceName, List<String> clusters, EventListener listen
 ### 请求示例
 ```java
 
-NamingService naming = NamingFactory.createNaming(System.getProperty("serveAddr"));
+NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 naming.unsubscribe("nacos.test.3", event -> {});
 
 ```
