@@ -302,64 +302,15 @@ PUT
 | port | int | 是 | 服务实例port |
 | tenant | 字符串 | 否 | 租户ID |
 | weight | double | 否 | 权重 |
+| enable | boolean | 否 | 是否上线 |
 | healthy | boolean | 否 | 是否健康 |
 | metadata | 字符串 | 否 | 扩展信息 |
-| cluster | JSON格式字符串 | 否 | 集群信息 |
-| service | JSON格式字符串 | 否，不存在则serviceName必须存在。 | 服务信息 |
-| serviceName | 字符串 | 如果service参数存在，则不必选，否则必选。 | 服务名 |
-
-service参数格式：
-
-| 名称 | 类型 | 是否必选 | 描述 |
-| :--- | :--- | :--- | --- |
-| name | 字符串 | 是 | 服务名 |
-| app | int | 否 | 应用名 |
-| group | 字符串 | 否 | 服务分组 |
-| protectThreshold | double | 否 | 保护阈值 |
-| healthCheckMode | String | 否 | 健康检查模式：server，client或者none |
-| metadata | JSON | 否 | 扩展信息 |
-
-cluster参数格式：
-
-| 名称 | 类型 | 是否必选 | 描述 |
-| :--- | :--- | :--- | --- |
-| name | 字符串 | 是 | 集群名 |
-| serviceName | 字符串 | 是 | 集群归属的服务名 |
-| healthChecker | JSON | 否 | 健康检查方式 |
-| defaultPort | int | 否 | 默认实例端口 |
-| defaultCheckPort | int | 否 | 默认健康检查端口 |
-| userIPPort4Check | boolean | 否 | 是否用实例端口做健康检查 |
-| metadata | JSON | 否 | 扩展信息 |
-
-healthChecker目前支持三种：TCP、HTTP和MYSQL。
-根据type的类型，需要传递的参数各有区别。
-TCP类型：
-
-| 名称 | 类型 | 是否必选 | 描述 |
-| :--- | :--- | :--- | --- |
-| type=TCP | 字符串 | 是 | 检查类型 |
-
-HTTP类型：
-
-| 名称 | 类型 | 是否必选 | 描述 |
-| :--- | :--- | :--- | --- |
-| type=HTTP | 字符串 | 是 | 检查类型 |
-| curlPath | 字符串 | 是 | 检查路径 |
-| curlHost | 字符串 | 否 | 检查host，存放HTTP Header |
-| expectedResponseCode | int | 否，默认200 | 预期返回码 |
-
-MYSQL类型：
-
-| 名称 | 类型 | 是否必选 | 描述 |
-| :--- | :--- | :--- | --- |
-| type=MYSQL | 字符串 | 是 | 检查类型 |
-| user | 字符串 | 是 | MySQL用户 |
-| pwd | 字符串 | 是 | MySQL密码 |
-| cmd | 字符串 | 是 | 执行命令 |
+| clusterName | 字符串 | 否 | 集群名 |
+| serviceName | 字符串 | 是 | 服务名 |
 
 ### 示例请求
 ```plain
-curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?cluster=%7b%22metadata%22%3a%7b%7d%2c%22defaultCheckPort%22%3a80%2c%22defaultPort%22%3a80%2c%22healthChecker%22%3a%7b%22type%22%3a%22TCP%22%7d%2c%22name%22%3a%22%22%2c%22useIPPort4Check%22%3atrue%7d&port=8848&healthy=true&ip=11.11.11.11&weight=1.0&serviceName=nacos.test.3&encoding=GBK&tenant=n1''
+curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?port=8848&healthy=true&ip=11.11.11.11&weight=1.0&serviceName=nacos.test.3&encoding=GBK&tenant=n1''
 ```
 ### 示例返回
 ok
@@ -432,7 +383,7 @@ GET
 
 ### 请求路径
 ```plain
-/nacos/v1/ns/instances
+/nacos/v1/ns/instance/list
 ```
 
 ### 请求参数
@@ -446,7 +397,7 @@ GET
 
 ### 示例请求
 ```plain
-curl -X GET 127.0.0.1:8848/nacos/v1/ns/instances?serviceName=nacos.test.1
+curl -X GET 127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.test.1
 ```
 ### 示例返回
 ```json

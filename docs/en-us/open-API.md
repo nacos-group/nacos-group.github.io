@@ -381,65 +381,16 @@ PUT
 | port | int | yes | Port of instance |
 | tenant | String | no | ID of tenant |
 | weight | double | no | Weight |
-| healthy | boolean | no | Healthy or not |
-| metadata | String | no | Extended information |
-| cluster | JSON String | no | Cluster information |
-| service | JSON String | yes if servicName does not exist | Service information |
-| serviceName | String | yes if service does not exist | Service name |
+| enable | boolean | no | enabled or not |
+| healthy | boolean | no | healthy or not |
+| metadata | String | no | extended information |
+| clusterName | String | no | cluster name |
+| serviceName | String | yes | service name |
 
-Service parameter format：
-
-| Name | Type | Required | Description |
-| :--- | :--- | :--- | --- |
-| name | String | yes | Service name |
-| app | int | no | Application name |
-| group | String | no | Service group |
-| protectThreshold | double | no | Protect threshold |
-| healthCheckMode | String | no | Health check mode: server/client/none |
-| metadata | JSON String | no | Extended information |
-
-Cluster parameter format：
-
-| Name | Type | Required | Description |
-| :--- | :--- | :--- | --- |
-| name | String | yes | Virtual cluster name |
-| serviceName | String | yes | Service name of virtual cluster |
-| healthChecker | JSON String | yes | Health check type |
-| defaultPort | int | no | Default port of instance |
-| defaultCheckPort | int | no | Default health check port of instance |
-| userIPPort4Check | boolean | no | If instance port used for health check |
-| metadata | JSON String | no | Extended information |
-
-The healthChecker currently supports three types: TCP, HTTP and MYSQL.
-Depending on the type of type, there are differences in the parameters that need to be passed.
-
-TCP type：
-
-| Name | Type | Required | Description |
-| :--- | :--- | :--- | --- |
-| type=TCP | String | yes | Check type |
-
-HTTP type：
-
-| Name | Type | Required | Description |
-| :--- | :--- | :--- | --- |
-| type=HTTP | String | yes | Check type |
-| curlPath | String | yes | Check path |
-| curlHost | String | no | HTTP Header |
-| expectedResponseCode | int | no, default value is 200 | Expected return code |
-
-MySQL type：
-
-| Name | Type | Required | Description |
-| :--- | :--- | :--- | --- |
-| type=MYSQL | String | yes | check type |
-| user | String | yes | MySQL user name |
-| pwd | String | yes | MySQL password |
-| cmd | String | yes | SQL to be executed |
 
 ### Request Example
 ```plain
-curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?cluster=%7b%22metadata%22%3a%7b%7d%2c%22defaultCheckPort%22%3a80%2c%22defaultPort%22%3a80%2c%22healthChecker%22%3a%7b%22type%22%3a%22TCP%22%7d%2c%22name%22%3a%22%22%2c%22useIPPort4Check%22%3atrue%7d&port=8848&healthy=true&ip=11.11.11.11&weight=1.0&serviceName=nacos.test.3&encoding=GBK&tenant=n1''
+curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?port=8848&healthy=true&ip=11.11.11.11&weight=1.0&serviceName=nacos.test.3&encoding=GBK&tenant=n1''
 ```
 
 ### Response Example
@@ -513,7 +464,7 @@ GET
 
 ### Request Path
 ```plain
-/nacos/v1/ns/instances
+/nacos/v1/ns/instance/list
 ```
 
 ### Request Parameters
@@ -527,7 +478,7 @@ GET
 
 ### Request Example
 ```plain
-curl -X GET 127.0.0.1:8848/nacos/v1/ns/instances?serviceName=nacos.test.1
+curl -X GET 127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.test.1
 ```
 ### Response Example
 ```json
