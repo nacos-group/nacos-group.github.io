@@ -1,3 +1,8 @@
+---
+title: Nacos0.5发布，支持DNS-based Service Discovery，JAVA 11
+keywords: nacos0.5,DNS-based Service Discovery,JAVA 11
+description: Nacos0.5发布，支持DNS-based Service Discovery，JAVA 11
+---
 > Authors: 坤宇，敦谷
 
 
