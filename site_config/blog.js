@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: 'Nacos 计划发布v0.5版本，支持DNS-SD',
+            author: '@kunyu @dungu',
+            dateStr: 'Nov 25, 2018',
+            desc: '阿里巴巴微服务开源项目[Dubbo Nacos](https://github.com/alibaba/nacos)于本周发布 v0.5.0 版本，该版本主要在 DNS-based Service Discovery，支持 TTL，支持 Java 11，优化Nacos产品用户体验，与Spring Cloud Gateway的集成等方面做了演进。',
+            link: '/en-us/blog/nacos0.5.html',
+        },
+        {
             title: 'Nacos 进入CNCF landscape',
             author: '@xingxuechao',
             dateStr: 'Oct 28, 2018',
@@ -58,6 +65,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: 'Nacos 计划发布v0.5版本，支持DNS-SD',
+            author: '@kunyu @dungu',
+            dateStr: 'Nov 25, 2018',
+            desc: '阿里巴巴微服务开源项目[Dubbo Nacos](https://github.com/alibaba/nacos)于本周发布 v0.5.0 版本，该版本主要在 DNS-based Service Discovery，支持 TTL，支持 Java 11，优化Nacos产品用户体验，与Spring Cloud Gateway的集成等方面做了演进。',
+            link: '/en-us/blog/nacos0.5.html',
+        },
         {
             title: 'Nacos 进入CNCF landscape',
             author: '@xingxuechao',
