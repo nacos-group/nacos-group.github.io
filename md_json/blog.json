@@ -8,22 +8,38 @@
     {
       "filename": "Nacos-is-Coming.md",
       "link": "/en-us/blog/Nacos-is-Coming.html",
-      "meta": {}
+      "meta": {
+        "title": "支持Dubbo生态发展，阿里巴巴启动新的开源项目 Nacos",
+        "keywords": "nacos,alibaba,dubbo",
+        "description": "支持Dubbo生态发展，阿里巴巴启动新的开源项目 Nacos"
+      }
     },
     {
       "filename": "alibaba-configserver.md",
       "link": "/en-us/blog/alibaba-configserver.html",
-      "meta": {}
+      "meta": {
+        "title": "阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾",
+        "keywords": "nacos,configserver,alibaba",
+        "description": "阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾"
+      }
     },
     {
       "filename": "cengdu-dubbo.md",
       "link": "/en-us/blog/cengdu-dubbo.html",
-      "meta": {}
+      "meta": {
+        "title": "Nacos 计划发布v0.2版本，进一步融合Dubbo和SpringCloud生态",
+        "keywords": "nacos,nacos0.2,alibaba,邢学超,Aliware Open Source,spring cloud",
+        "description": "Nacos 计划发布v0.2版本，进一步融合Dubbo和SpringCloud生态"
+      }
     },
     {
       "filename": "cncf.md",
       "link": "/en-us/blog/cncf.html",
-      "meta": {}
+      "meta": {
+        "title": "Nacos 进入CNCF landscape",
+        "keywords": "nacos,cncf,alibaba,landscape",
+        "description": "Nacos 进入CNCF landscape"
+      }
     },
     {
       "filename": "consul-k8s.md",
@@ -39,6 +55,15 @@
       "filename": "nacos.md",
       "link": "/en-us/blog/nacos.html",
       "meta": {}
+    },
+    {
+      "filename": "nacos0.5.md",
+      "link": "/en-us/blog/nacos0.5.html",
+      "meta": {
+        "title": "Nacos0.5发布，支持DNS-based Service Discovery，JAVA 11",
+        "keywords": "nacos0.5,DNS-based Service Discovery,JAVA 11",
+        "description": "Nacos0.5发布，支持DNS-based Service Discovery，JAVA 11"
+      }
     }
   ],
   "zh-cn": [
@@ -55,22 +80,38 @@
     {
       "filename": "Nacos-is-Coming.md",
       "link": "/zh-cn/blog/Nacos-is-Coming.html",
-      "meta": {}
+      "meta": {
+        "title": "支持Dubbo生态发展，阿里巴巴启动新的开源项目 Nacos",
+        "keywords": "nacos,alibaba,dubbo",
+        "description": "支持Dubbo生态发展，阿里巴巴启动新的开源项目 Nacos"
+      }
     },
     {
       "filename": "alibaba-configserver.md",
       "link": "/zh-cn/blog/alibaba-configserver.html",
-      "meta": {}
+      "meta": {
+        "title": "阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾",
+        "keywords": "nacos,configserver,alibaba",
+        "description": "阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾"
+      }
     },
     {
       "filename": "cengdu-dubbo.md",
       "link": "/zh-cn/blog/cengdu-dubbo.html",
-      "meta": {}
+      "meta": {
+        "title": "Nacos 计划发布v0.2版本，进一步融合Dubbo和SpringCloud生态",
+        "keywords": "nacos,nacos0.2,alibaba,邢学超,Aliware Open Source,spring cloud",
+        "description": "Nacos 计划发布v0.2版本，进一步融合Dubbo和SpringCloud生态"
+      }
     },
     {
       "filename": "cncf.md",
       "link": "/zh-cn/blog/cncf.html",
-      "meta": {}
+      "meta": {
+        "title": "Nacos 进入CNCF landscape",
+        "keywords": "nacos,cncf,alibaba,landscape",
+        "description": "Nacos 进入CNCF landscape"
+      }
     },
     {
       "filename": "consul-k8s.md",
@@ -86,6 +127,15 @@
       "filename": "nacos.md",
       "link": "/zh-cn/blog/nacos.html",
       "meta": {}
+    },
+    {
+      "filename": "nacos0.5.md",
+      "link": "/zh-cn/blog/nacos0.5.html",
+      "meta": {
+        "title": "Nacos0.5发布，支持DNS-based Service Discovery，JAVA 11",
+        "keywords": "nacos0.5,DNS-based Service Discovery,JAVA 11",
+        "description": "Nacos0.5发布，支持DNS-based Service Discovery，JAVA 11"
+      }
     }
   ]
 }

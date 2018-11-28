@@ -352,7 +352,7 @@ POST
 
 ### 请求路径
 ```plain
-/nacos/v1/ns/instance
+/nacos/v1/ns/instance/update
 ```
 
 ### 请求参数
@@ -369,7 +369,7 @@ POST
 
 ### 示例请求
 ```plain
-curl -X POST 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&cluster=TEST1&weight=8&metadata={}
+curl -X POST 127.0.0.1:8848/nacos/v1/ns/instance/update?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&cluster=TEST1&weight=8&metadata={}
 ```
 ### 示例返回
 ok
