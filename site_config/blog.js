@@ -3,6 +3,13 @@ export default {
     barText: 'Blog',
     postsTitle: 'All posts',
     list: [
+	{
+            title: '使用Nacos实现Spring Cloud Zuul的动态路由',	
+            author: '@叶志远',
+            dateStr: 'Nov 29, 2018',
+            desc: '本文介绍了如何基于阿里巴巴的微服务开源项目[Dubbo Nacos](https://github.com/alibaba/nacos) 实现Spring Cloud 中基于zuul的动态路由能力',
+            link: '/en-us/blog/dynamic-route-zuul-nacos.html',
+        },
         {
             title: 'Nacos 计划发布v0.5版本，支持DNS-SD',
             author: '@kunyu @dungu',
@@ -65,6 +72,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: '使用Nacos实现Spring Cloud Zuul的动态路由',
+            author: '@叶志远',
+            dateStr: 'Nov 29, 2018',
+            desc: '本文介绍了如何基于阿里巴巴的微服务开源项目[Dubbo Nacos](https://github.com/alibaba/nacos) 实现Spring Cloud 中基于zuul的动态路由能力',
+            link: '/zh-cn/blog/dynamic-route-zuul-nacos.html',
+        },
         {
             title: 'Nacos 计划发布v0.5版本，支持DNS-SD',
             author: '@kunyu @dungu',

@@ -52,6 +52,11 @@
       "meta": {}
     },
     {
+      "filename": "dynamic-route-zuul-nacos.md",
+      "link": "/en-us/blog/dynamic-route-zuul-nacos.html",
+      "meta": {}
+    },
+    {
       "filename": "nacos.md",
       "link": "/en-us/blog/nacos.html",
       "meta": {}
@@ -121,6 +126,11 @@
     {
       "filename": "discovery-console.md",
       "link": "/zh-cn/blog/discovery-console.html",
+      "meta": {}
+    },
+    {
+      "filename": "dynamic-route-zuul-nacos.md",
+      "link": "/zh-cn/blog/dynamic-route-zuul-nacos.html",
       "meta": {}
     },
     {
