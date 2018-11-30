@@ -1,6 +1,4 @@
 {
   "filename": "deployment.md",
-  "__html": "<h1>Nacos支持三种部署模式</h1>\n<ul>\n<li>单机模式 - 用于测试和单机试用。</li>\n<li>集群模式 - 用于生产环境，确保高可用。</li>\n<li>多集群模式 - 用于多数据中心场景。</li>\n</ul>\n<h2>单机模式下运行Nacos</h2>\n<h3>Linux/Unix/Mac</h3>\n<ul>\n<li>Standalone means it is non-cluster Mode. *\nsh <a href=\"http://startup.sh\">startup.sh</a> -m standalone</li>\n</ul>\n<h3>Windows</h3>\n<p>cmd startup.cmd\n或者双击 startup.cmd 文件</p>\n<h2>集群模式下运行Nacos</h2>\n<h3>Linux/Unix/Mac</h3>\n<p>sh <a href=\"http://startup.sh\">startup.sh</a></p>\n<h2>Deploy Nacos in Multi-Cluster Mode</h2>\n<p>Nacos支持NameServer路由请求模式，通过它您可以设计一个有用的映射规则来控制请求转发到相应的集群，在映射规则中您可以按命名空间或租户等分片请求...</p>\n<h3>TODO</h3>\n",
-  "link": "/zh-cn/docs/deployment.html",
-  "meta": {}
+  "__html": "<h1>Nacos支持三种部署模式</h1>\n<ul>\n<li>单机模式 - 用于测试和单机试用。</li>\n<li>集群模式 - 用于生产环境，确保高可用。</li>\n<li>多集群模式 - 用于多数据中心场景。</li>\n</ul>\n<h2>单机模式下运行Nacos</h2>\n<h3>Linux/Unix/Mac</h3>\n<ul>\n<li>Standalone means it is non-cluster Mode. *\nsh <a href=\"http://startup.sh\">startup.sh</a> -m standalone</li>\n</ul>\n<h3>Windows</h3>\n<p>cmd startup.cmd\n或者双击 startup.cmd 文件</p>\n<h2>集群模式下运行Nacos</h2>\n<h3>Linux/Unix/Mac</h3>\n<p>sh <a href=\"http://startup.sh\">startup.sh</a></p>\n<h2>Deploy Nacos in Multi-Cluster Mode</h2>\n<p>Nacos支持NameServer路由请求模式，通过它您可以设计一个有用的映射规则来控制请求转发到相应的集群，在映射规则中您可以按命名空间或租户等分片请求...</p>\n<h3>TODO</h3>\n"
 }
