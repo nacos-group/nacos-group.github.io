@@ -34,7 +34,7 @@ public class NacosConfiguration {
 }
 ```
 
-3. 通过 Spring 的 `@NacosValue` 注解设置属性值。
+3. 通过 Nacos 的 `@NacosValue` 注解设置属性值。
 
 ```
 @Controller

@@ -42,21 +42,15 @@ public class NacosConfigApplication {
 }
 ```
 
-4. 通过 Spring 的 `@Value` 注解设置属性值。
-
-**注意**：需要同时有 `Setter` 方法才能在配置变更的时候自动更新。
+4. 通过 Nacos 的 `@NacosValue` 注解设置属性值。
 
 ```
 @Controller
 @RequestMapping("config")
 public class ConfigController {
 
-    @Value("${useLocalCache:false}")
+    @NacosValue("${useLocalCache:false}", autoRefreshed = true)
     private boolean useLocalCache;
-
-    public void setUseLocalCache(boolean useLocalCache) {
-        this.useLocalCache = useLocalCache;
-    }
 
     @RequestMapping(value = "/get", method = GET)
     @ResponseBody

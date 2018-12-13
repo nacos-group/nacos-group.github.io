@@ -39,7 +39,7 @@ public class NacosConfiguration {
 }
 ```
 
-3. Specify the property value for the `@NacosValue` annotation of Spring. 
+3. Specify the property value for the `@NacosValue` annotation of Nacos. 
 
 ```
 @Controller

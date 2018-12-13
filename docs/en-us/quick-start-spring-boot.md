@@ -46,21 +46,15 @@ public class NacosConfigApplication {
 }
 ```
 
-4. Specify the property value of the `@Value` annotation of Spring.
-
-**Note**: You need to use the `Setter` method to enable autorefresh of configuration updates. 
+4. Specify the property value of the `@NacosValue` annotation of Nacos.
 
 ```
 @Controller
 @RequestMapping("config")
 public class ConfigController {
 
-    @Value("${useLocalCache:false}")
+    @NacosValue("${useLocalCache:false}", autoRefreshed = true))
     private boolean useLocalCache;
-
-    public void setUseLocalCache(boolean useLocalCache) {
-        this.useLocalCache = useLocalCache;
-    }
 
     @RequestMapping(value = "/get", method = GET)
     @ResponseBody

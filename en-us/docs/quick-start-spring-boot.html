@@ -52,19 +52,14 @@ public class NacosConfigApplication {
 }
 </code></pre>
 <ol start="4">
-<li>Specify the property value of the <code>@Value</code> annotation of Spring.</li>
+<li>Specify the property value of the <code>@NacosValue</code> annotation of Nacos.</li>
 </ol>
-<p><strong>Note</strong>: You need to use the <code>Setter</code> method to enable autorefresh of configuration updates.</p>
 <pre><code>@Controller
 @RequestMapping(&quot;config&quot;)
 public class ConfigController {
 
-    @Value(&quot;${useLocalCache:false}&quot;)
+    @NacosValue(&quot;${useLocalCache:false}&quot;, autoRefreshed = true))
     private boolean useLocalCache;
-
-    public void setUseLocalCache(boolean useLocalCache) {
-        this.useLocalCache = useLocalCache;
-    }
 
     @RequestMapping(value = &quot;/get&quot;, method = GET)
     @ResponseBody
