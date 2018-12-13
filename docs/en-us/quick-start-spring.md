@@ -26,6 +26,8 @@ Sample project: [nacos-spring-config-example](https://github.com/nacos-group/nac
 </dependency>
 ```
 
+The the latest version can be available in maven repositories such as "[mvnrepository.com](https://mvnrepository.com/artifact/com.alibaba.nacos/nacos-spring-context)".
+
 2. Add the `@EnableNacosConfig` annotation to enable the configuration service. In the code below, `@NacosPropertySource` is used to load the configuration source whose  `dataId` is `example` , and autorefresh is also enabled:
 
 ```
@@ -37,21 +39,15 @@ public class NacosConfiguration {
 }
 ```
 
-3. Specify the property value for the `@Value` annotation of Spring.
-
-Note: You need to use the  `Setter` method to enable autorefresh of configuration updates. 
+3. Specify the property value for the `@NacosValue` annotation of Spring. 
 
 ```
 @Controller
 @RequestMapping("config")
 public class ConfigController {
 
-    @Value("${useLocalCache:false}")
+    @NacosValue("${useLocalCache:false}", autoRefreshed = true)
     private boolean useLocalCache;
-
-    public void setUseLocalCache(boolean useLocalCache) {
-        this.useLocalCache = useLocalCache;
-    }
 
     @RequestMapping(value = "/get", method = GET)
     @ResponseBody
@@ -86,6 +82,8 @@ Sampe project: [nacos-spring-discovery-example](https://github.com/nacos-group/n
     <version>${latest.version}</version>
 </dependency>
 ```
+
+The the latest version can be available in maven repositories such as "[mvnrepository.com](https://mvnrepository.com/artifact/com.alibaba.nacos/nacos-spring-context)".
 
 2. Add the `@EnableNacosDiscovery` annotation to enable the service discovery function of Nacos:
 

@@ -21,6 +21,8 @@
 </dependency>
 ```
 
+最新版本可以在 maven 仓库，如 "[mvnrepository.com](https://mvnrepository.com/artifact/com.alibaba.nacos/nacos-spring-context)" 中获取。
+
 2. 添加 `@EnableNacosConfig` 注解启用 Nacos Spring 的配置管理服务。以下示例中，我们使用 `@NacosPropertySource` 加载了 `dataId` 为 `example` 的配置源，并开启自动更新：
 
 ```
@@ -32,21 +34,15 @@ public class NacosConfiguration {
 }
 ```
 
-3. 通过 Spring 的 `@Value` 注解设置属性值。
-
-注意：需要同时有 `Setter`方法才能在配置变更的时候自动更新。
+3. 通过 Spring 的 `@NacosValue` 注解设置属性值。
 
 ```
 @Controller
 @RequestMapping("config")
 public class ConfigController {
 
-    @Value("${useLocalCache:false}")
+    @NacosValue("${useLocalCache:false}", autoRefreshed = true)
     private boolean useLocalCache;
-
-    public void setUseLocalCache(boolean useLocalCache) {
-        this.useLocalCache = useLocalCache;
-    }
 
     @RequestMapping(value = "/get", method = GET)
     @ResponseBody
@@ -79,6 +75,8 @@ curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example&group=DEF
     <version>${latest.version}</version>
 </dependency>
 ```
+
+最新版本可以在 maven 仓库，如 "[mvnrepository.com](https://mvnrepository.com/artifact/com.alibaba.nacos/nacos-spring-context)" 中获取。
 
 2. 通过添加 `@EnableNacosDiscovery` 注解开启 Nacos Spring 的服务发现功能：
 
