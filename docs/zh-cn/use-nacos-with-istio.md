@@ -1,1 +1,1 @@
-**IN PLAN** with Nacos 0.6.0 
+**IN PLAN** with Nacos 0.9.0 

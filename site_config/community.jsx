@@ -15,11 +15,11 @@ export default {
               link: '/en-us/blog/nacos0.5.html',
           },
           {
-              img: 'https://cdn.yuque.com/lark/0/2018/png/15914/1530083408486-b4698533-8e69-4e0a-9f3a-fdb1cdfbd290.png',
-              title: 'Consul与kubernetes整合公告[翻译]',
-              dateStr: 'Sept 2nd, 2018',
-              content: '本文翻译了Consul对于Kubernetes的整合所发布的公告文章（[原文地址](https://www.hashicorp.com/blog/consul-plus-kubernetes)）。Consul通过支持Service Mesh，并提供对Kubernetes的无缝支持，与目前最受社区热捧的产品进行绑定，并通过功能预告的形式，来达到对产品宣传效果的最大化。',
-              link: '/en-us/blog/consul-k8s.html',
+              img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1544689744102-fd00fec6-ca80-4c0c-9b0d-538f17279963.png',
+              title: 'Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署',
+              dateStr: 'Dec 14, 2018',
+              content: '本文介绍了阿里巴巴的微服务开源项目[Dubbo Nacos](https://github.com/alibaba/nacos) v0.6 版本，该版本主要在支持了Dubbo生态和Docker部署。',
+              link: '/en-us/blog/nacos0.6.html',
           },
           {
               img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1540738282849-61e2022a-46a9-4d81-ae16-6d6f0515450b.png',
@@ -153,11 +153,11 @@ export default {
               link: '/en-us/blog/nacos0.5.html',
           },
           {
-              img: 'https://cdn.yuque.com/lark/0/2018/png/15914/1530083408486-b4698533-8e69-4e0a-9f3a-fdb1cdfbd290.png',
-              title: 'Consul与kubernetes整合公告[翻译]',
-              dateStr: 'Sept 2nd, 2018',
-              content: '本文翻译了Consul对于Kubernetes的整合所发布的公告文章（[原文地址](https://www.hashicorp.com/blog/consul-plus-kubernetes)）。Consul通过支持Service Mesh，并提供对Kubernetes的无缝支持，与目前最受社区热捧的产品进行绑定，并通过功能预告的形式，来达到对产品宣传效果的最大化。',
-              link: '/en-us/blog/consul-k8s.html',
+              img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1544689744102-fd00fec6-ca80-4c0c-9b0d-538f17279963.png',
+              title: 'Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署',
+              dateStr: 'Dec 14, 2018',
+              content: '本文介绍了阿里巴巴的微服务开源项目[Dubbo Nacos](https://github.com/alibaba/nacos) v0.6 版本，该版本主要在支持了Dubbo生态和Docker部署。',
+              link: '/en-us/blog/nacos0.6.html',
           },
           // {
           //     img: 'https://cdn.yuque.com/lark/0/2018/png/15914/1530083408486-b4698533-8e69-4e0a-9f3a-fdb1cdfbd290.png',

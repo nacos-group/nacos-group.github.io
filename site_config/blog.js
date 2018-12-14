@@ -3,7 +3,14 @@ export default {
     barText: 'Blog',
     postsTitle: 'All posts',
     list: [
-	{
+        {
+            title: 'Nacos 发布 0.6 版本，支持Dubbo生态并且支持Docker部署',
+            author: '@马昕曦、@张龙、@邢学超',
+            dateStr: 'Nov 29, 2018',
+            desc: '本文介绍了阿里巴巴的微服务开源项目[Dubbo Nacos](https://github.com/alibaba/nacos) v0.6 版本，该版本主要在支持了Dubbo生态和Docker部署',
+            link: '/en-us/blog/nacos0.6.html',
+        },
+	    {
             title: '使用Nacos实现Spring Cloud Zuul的动态路由',	
             author: '@叶志远',
             dateStr: 'Nov 29, 2018',
@@ -72,6 +79,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: 'Nacos 发布 0.6 版本，支持Dubbo生态并且支持Docker部署',
+            author: '@马昕曦、@张龙、@邢学超',
+            dateStr: 'Nov 29, 2018',
+            desc: '本文介绍了阿里巴巴的微服务开源项目[Dubbo Nacos](https://github.com/alibaba/nacos) v0.6 版本，该版本主要在支持了Dubbo生态和Docker部署',
+            link: '/zh-cn/blog/nacos0.6.html',
+        },
         {
             title: '使用Nacos实现Spring Cloud Zuul的动态路由',
             author: '@叶志远',
