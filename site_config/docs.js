@@ -27,20 +27,24 @@ export default {
             opened: true,
             children: [
               {
-                title: 'Nacos Quick Start',
+                title: 'Nacos',
                 link: '/en-us/docs/quick-start.html',
               },
                 {
-                    title: 'Quick Start Spring',
+                    title: 'Nacos Spring',
                     link: '/en-us/docs/quick-start-spring.html',
                 },
                 {
-                    title: 'Quick Start Spring Boot',
+                    title: 'Nacos Spring Boot',
                     link: '/en-us/docs/quick-start-spring-boot.html',
                 },
                 {
-                    title: 'Quick Start Spring Cloud',
+                    title: 'Nacos Spring Cloud',
                     link: '/en-us/docs/quick-start-spring-cloud.html',
+                },
+                {
+                    title: 'Nacos Docker',
+                    link: '/en-us/docs/quick-start-docker.html',
                 },
             ],
           },
@@ -55,10 +59,14 @@ export default {
               {
                   title: 'Other Language',
                   link: '/en-us/docs/other-language.html',
-               },
+              },
               {
                 title: 'Open-API',
                 link: '/en-us/docs/open-API.html',
+              },
+              {
+                  title: 'Nacos Spring',
+                  link: '/en-us/docs/nacos-spring.html',
               },
             ],
           },
@@ -166,24 +174,28 @@ export default {
             ],
           },
             {
-                title: '快速入门',
+                title: '快速开始',
                 opened: true,
                 children: [
                     {
-                        title: '快速入门',
+                        title: '快速开始',
                         link: '/zh-cn/docs/quick-start.html',
                     },
             {
-                title: 'Nacos与Spring快速入门',
+                title: 'Nacos Spring',
                 link: '/zh-cn/docs/quick-start-spring.html',
             },
             {
-                title: 'Nacos与Spring Boot快速入门',
+                title: 'Nacos Spring Boot',
                 link: '/zh-cn/docs/quick-start-spring-boot.html',
             },
             {
-                title: 'Nacos与Spring Cloud快速入门',
+                title: 'Nacos Spring Cloud',
                 link: '/zh-cn/docs/quick-start-spring-cloud.html',
+            },
+            {
+                title: 'Nacos Docker',
+                link: '/zh-cn/docs/quick-start-docker.html',
             },
             ]
             },
@@ -195,7 +207,6 @@ export default {
                  title: 'Java的SDK',
                   link: '/zh-cn/docs/sdk.html',
               },
-
               {
                   title: '其他语言的SDK',
                   link: '/zh-cn/docs/other-language.html',
@@ -203,6 +214,10 @@ export default {
               {
                   title: 'Open-API指南',
                   link: '/zh-cn/docs/open-API.html',
+              },
+              {
+                  title: 'Nacos Spring',
+                  link: '/zh-cn/docs/nacos-spring.html',
               },
             ],
           },

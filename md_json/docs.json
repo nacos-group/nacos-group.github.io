@@ -56,6 +56,11 @@
       "meta": {}
     },
     {
+      "filename": "nacos-spring.md",
+      "link": "/en-us/docs/nacos-spring.html",
+      "meta": {}
+    },
+    {
       "filename": "open-API.md",
       "link": "/en-us/docs/open-API.html",
       "meta": {}
@@ -68,6 +73,11 @@
     {
       "filename": "pull-request.md",
       "link": "/en-us/docs/pull-request.html",
+      "meta": {}
+    },
+    {
+      "filename": "quick-start-docker.md",
+      "link": "/en-us/docs/quick-start-docker.html",
       "meta": {}
     },
     {
@@ -188,6 +198,11 @@
       "meta": {}
     },
     {
+      "filename": "nacos-spring.md",
+      "link": "/zh-cn/docs/nacos-spring.html",
+      "meta": {}
+    },
+    {
       "filename": "open-API.md",
       "link": "/zh-cn/docs/open-API.html",
       "meta": {}
@@ -200,6 +215,11 @@
     {
       "filename": "pull-request.md",
       "link": "/zh-cn/docs/pull-request.html",
+      "meta": {}
+    },
+    {
+      "filename": "quick-start-docker.md",
+      "link": "/zh-cn/docs/quick-start-docker.html",
       "meta": {}
     },
     {

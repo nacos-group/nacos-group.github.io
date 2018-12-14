@@ -69,6 +69,15 @@
         "keywords": "nacos0.5,DNS-based Service Discovery,JAVA 11",
         "description": "Nacos0.5发布，支持DNS-based Service Discovery，JAVA 11"
       }
+    },
+    {
+      "filename": "nacos0.6.md",
+      "link": "/en-us/blog/nacos0.6.html",
+      "meta": {
+        "title": "Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署",
+        "keywords": "nacos0.6,dubbo,docker",
+        "description": "Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署"
+      }
     }
   ],
   "zh-cn": [
@@ -145,6 +154,15 @@
         "title": "Nacos0.5发布，支持DNS-based Service Discovery，JAVA 11",
         "keywords": "nacos0.5,DNS-based Service Discovery,JAVA 11",
         "description": "Nacos0.5发布，支持DNS-based Service Discovery，JAVA 11"
+      }
+    },
+    {
+      "filename": "nacos0.6.md",
+      "link": "/zh-cn/blog/nacos0.6.html",
+      "meta": {
+        "title": "Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署",
+        "keywords": "nacos0.6,dubbo,docker",
+        "description": "Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署"
       }
     }
   ]
