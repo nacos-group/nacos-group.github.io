@@ -4,176 +4,175 @@ keywords: nacos0.6,dubbo,docker
 description: Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署
 ---
 
-# Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署
+# Nacos Released version 0.6, supports Dubbo and Docker
 > Authors: 马昕曦、张龙、邢学超
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">阿里巴巴微服务开源项目</span></span>[Dubbo Nacos](https://github.com/alibaba/nacos)<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">于本周发布 </span></span>__v0.6__<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> </span></span>版本，该版本主要在支持了 Dubbo的服务注册与发现和配置管理、支持docker 部署提供了官方的docker镜像、优化Nacos 控制台的国际化框架并且Nacos的集成测试效率也大大优化。
+<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> Alibaba Microservices Open Source Project</span></span>[Dubbo Nacos](https://github.com/alibaba/nacos)<span data-type="color" style="color:rgb(38, 38 , 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">released this week </span></span>__v0.6__<span data- Type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> </span> </span> version, which mainly supports Dubbo's service registration and discovery and configuration management, supports docker deployment, provides an official docker image, optimizes the international framework of Nacos console, and optimizes Nacos's integration testing efficiency.
 
 
 
 ![image.png | left | 747x290](https://cdn.nlark.com/lark/0/2018/png/11189/1544689744102-fd00fec6-ca80-4c0c-9b0d-538f17279963.png "")
 
 
-## 千呼万唤始出来，Dubbo的注册中心和配置中心
+## Thousands of calls come out, Dubbo's registration center and configuration center
 
-__Nacos__ 从 __v0.6__ 版本开始，支持 __Dubbo__ 注册中心和配置中心，同样作为阿里巴巴开源的重量级别产品，两个产品在阿里巴巴集团的内部内部实现就有千丝万缕的联系。
-### Dubbo服务框架
-作为rpc服务框架，一方面注重的是极其短的时延rt，保证整体的调用高效，并且另一方面保证良好的用户体验，保证用户使用舒适并且有良好的扩展性。Dubbo在这两方面做的都非常的优秀，也因为良好的拓展性，被业内广泛使用。Dubbo的普及度以及欢迎程度之高，通过2w+的github仓库star关注度就可见一斑。
-### Nacos 和 Dubbo 一脉相承的基因
-但阿里巴巴技术体系下有如此高效的rpc服务框架，但到底是什么支撑了阿里巴巴庞大的服务集群呢。众所周知阿里巴巴集团有着恐怖的集群规模，每年阿里巴巴集团的天猫双11全球购物狂欢节都会有人瞎掉下巴的交易规模，2018年的双11当天承载了2135亿的销售额。但作为技术人员，最关心的是峰值。如果细心的从业者应该看到了一个指标，2018年天猫承载了交易创建峰值达49.1万笔/秒。举个例子，北京鸟巢体育馆最大承载用户量9万1千人，49.1w交易每秒交易，意味着5个鸟巢体育馆的满座的观众推着购物车，同时在一秒冲过天猫淘宝的结算台，这种压力可想而知。但背后的承载这么大规模的服务集群的，和阿里巴巴Dubbo的内部使用框架HSF，对应的ConfigServer，而这正是Nacos的前身之一。Nacos 发布的0.6版本正是宣布和Dubbo完美集成，也就宣布阿里巴巴在大规模集群的经验将随着Nacos、Dubbo、Sentinel等分享出来，贡献给开源社区。
+__Nacos__ Starting with the __v0.6__ version, the __Dubbo__ registration center and configuration center are supported. Also, as Alibaba's open source weight-level product, the two products are inextricably linked within the internal Alibaba Group.
+### Dubbo Service Framework
+As the rpc service framework, on the one hand, it pays attention to the extremely short delay rt, which ensures that the overall call is efficient, and on the other hand, guarantees a good user experience, ensuring user comfort and good scalability. Dubbo is very good in both aspects, and is widely used in the industry because of its good expansion. The popularity and popularity of Dubbo is evident through the 2w+ github warehouse star attention.
+### Nacos and Dubbo are the same genes
+But there is such an efficient rpc service framework under Alibaba's technology system, but what is supporting Alibaba's huge service cluster? It is well known that Alibaba Group has a terrible cluster size. Every year, Alibaba Group's Tmall Double 11 Global Shopping Carnival will have a rid of the chin trading scale. In 2018, the Double 11 will carry 213.5 billion in sales. But as a technician, the biggest concern is the peak. If careful practitioners should see an indicator, in 2018 Tmall carried a peak of transaction creation of 491,000 pens per second. For example, Beijing Bird's Nest Stadium has a maximum carrying capacity of 91,000 people, and 49.1w transactions per second, which means that the full audience of the five Bird's Nest stadiums pushes the shopping cart and simultaneously clears the settlement of Tmall Taobao in one second. Taiwan, this pressure can be imagined. But behind the hosting of such a large-scale service cluster, and Alibaba Dubbo's internal use framework HSF, corresponding to ConfigServer, and this is one of Nacos' predecessors. The 0.6 version released by Nacos is the perfect integration with Dubbo. It also announces that Alibaba's experience in large-scale clusters will be shared with Nacos, Dubbo, Sentinel and other contributions to the open source community.
 
 
 
 ![image.png | left | 747x413](https://cdn.nlark.com/lark/0/2018/png/11189/1544696219150-b786e8fe-af7d-4e29-9c32-03b051c6db3d.png "")
 
 
-### Dubbo融合Nacos
-Nacos 作为 Dubbo 生态系统中重要的注册中心基础设施，其中 [dubbo-registry-nacos](https://github.com/dubbo/dubbo-registry-nacos) 是 Dubbo 融合 Nacos 注册中心的桥梁，它基于 Dubbo 强大的[注册中心 SPI ](http://dubbo.apache.org/zh-cn/docs/dev/impls/registry.html) 以及 Nacos Naming 服务，提供实时的服务注册和发现。目前 [dubbo-registry-nacos](https://github.com/dubbo/dubbo-registry-nacos)  处于 preview 阶段，最新的发布版本为 `0.0.2`，已测试最新的 Dubbo 以及 Dubbo OPS，推荐开发人员使用最新的 Dubbo `2.6.5` 以及 Nacos `0.6.1` ，确保享受最佳体验。如果您现在正在使用 Zookeeper 或者 Redis 作为注册中心的话，迁移到 Nacos 的部分也非常简单，以 Zookeeper 为例：
+### Dubbo Fusion Nacos
+Nacos is an important registry infrastructure in the Dubbo ecosystem, with [dubbo-registry-nacos](https://github.com/dubbo/dubbo-registry-nacos) being the bridge for Dubbo's Fusion Nacos registry, based on Dubbo Powerful [Registry SPI](http://dubbo.apache.org/en-us/docs/dev/impls/registry.html) and Nacos Naming services provide real-time service registration and discovery. Currently [dubbo-registry-nacos](https://github.com/dubbo/dubbo-registry-nacos) is in the preview stage, the latest release is `0.0.2`, the latest Dubbo and Dubbo OPS have been tested, recommended Developers use the latest Dubbo `2.6.5` and Nacos `0.6.1` to ensure the best experience. If you are currently using ZooKeeper or Redis as your registry, the migration to Nacos is also very simple, with Zookeeper as an example:
 
-* 场景一：外部化配置
+* Scene 1: Externalization configuration
 
-调整前的配置：
+Pre-adjustment configuration:
 
 ```properties
 ## Zookeeper registry address
-dubbo.registry.address = zookeeper://127.0.0.1:2181
+Dubbo.registry.address = zookeeper://127.0.0.1:2181
 ```
 
-调整后的配置：
+Adjusted configuration:
 
 ```properties
 ## Nacos registry address
-dubbo.registry.address = nacos://127.0.0.1:8848
+Dubbo.registry.address = nacos://127.0.0.1:8848
 ```
 
-* 场景二：XML 配置驱动
+* Scenario 2: XML configuration driver
 
-调整前的配置：
+Pre-adjustment configuration:
 
 ```xml
-<!-- 使用 Zookeeper 注册中心 -->
+<!-- Use Zookeeper Registration Center -->
 <dubbo:registry address="zookeeper://127.0.0.1:2181" />
 ```
 
-调整后的配置：
+Adjusted configuration:
 
 ```xml
-<!-- 使用 Nacos 注册中心 -->
+<!-- Use Nacos Registration Center -->
 <dubbo:registry address="nacos://127.0.0.1:8848" />
 ```
 
-调整完毕后，先确保 Nacos Server 已启动，再重启您的 Dubbo 应用，随后您在 Nacos 控制台 “服务列表” 中就能看到注册信息：
+Once the adjustment is complete, make sure the Nacos Server is up and restart your Dubbo app, then you will see the registration information in the Nacos console Service List:
 
 
-![image-20181213174408269-4694248.png | left | 747x132](https://cdn.nlark.com/lark/0/2018/png/11189/1544694815618-d316c463-701a-4095-a7d4-30bb0ec941b6.png "")
+[image-20181213174408269-4694248.png | left | 747x132](https://cdn.nlark.com/lark/0/2018/png/11189/1544694815618-d316c463-701a-4095-a7d4-30bb0ec941b6.png "" )
 
 
-如果您对 Dubbo 与 Nacos 整合敢兴趣，不妨访问项目主页了解更多详情，地址为：
+If you are interested in integrating Dubbo and Nacos, you may wish to visit the project homepage for more details at:
 
-* Dubbo Nacos Registry：[https://github.com/dubbo/dubbo-registry-nacos](https://github.com/dubbo/dubbo-registry-nacos)
-* Apache Dubbo：[https://github.com/apache/incubator-dubbo](https://github.com/apache/incubator-dubbo)
+* Dubbo Nacos Registry: [https://github.com/dubbo/dubbo-registry-nacos](https://github.com/dubbo/dubbo-registry-nacos)
+* Apache Dubbo: [https://github.com/apache/incubator-dubbo](https://github.com/apache/incubator-dubbo)
 
-如果您在使用的过程中遇到了任何问题和有任何建言，请将在 [https://github.com/dubbo/dubbo-registry-nacos/issues](https://github.com/dubbo/dubbo-registry-nacos/issues) 中进行讨论。
+If you encounter any problems and have any suggestions during the process, please visit [https://github.com/dubbo/dubbo-registry-nacos/issues](https://github.com/dubbo/dubbo -registry-nacos/issues) for discussion.
 
-## 容器大行其道，Nacos 支持 Docker 容器化
-在容器大行其道的今天，支持容器化已经成为必然，Docker作为容器化大多数人的选择，Nacos 在v0.6 版本宣布
-支持Docker化部署，并且提供出官方镜像，并且会在预计在下几个版本中支持k8s部署。
+## Containers are popular, Nacos supports Docker containerization
+Today, when containers are popular, support for containerization has become a necessity, and Docker has chosen as the container for most people. Nacos announced in v0.6.
+Support for Docker deployments, and provide an official image, and will support k8s deployment in the next few releases.
 
 
 ![image.png | left | 747x285](https://cdn.nlark.com/lark/0/2018/png/11189/1544696801216-88a41d17-d101-4546-acfd-0aba38c6fa81.png "")
 
-### 如何通过Docker部署
-本地需要确定已经按照了Docker，如果没有安装，请参考 [https://docs.docker.com/install/](https://docs.docker.com/install/)。安装之后这时就可以快速的从远程拉去镜像，拽起一个单机版本的Nacos，体验一下。
-简单粗暴，运行以下命令：
+### How to deploy via Docker
+Local needs to make sure that Docker has been followed. If it is not installed, please refer to [https://docs.docker.com/install/](https://docs.docker.com/install/). After installation, you can quickly pull the image from the remote and pick up a stand-alone version of Nacos to experience it.
+Simple and rude, run the following command:
 ```plain
-docker run --name nacos-standalone -e MODE=standalone -p 8848:8848 nacos/nacos-server:latest
+Docker run --name nacos-standalone -e MODE=standalone -p 8848:8848 nacos/nacos-server:latest
 ```
 
-操作试例如下：
+The operation test is as follows:
 
 
 ![Peek 2018-12-13 11-43.gif | left | 747x407](https://cdn.nlark.com/lark/0/2018/gif/11189/1544701054438-de9785c4-b9ab-46dc-a162-d22e1419a172.gif "")
 
 
-另一种应用方式，[docker-compose](https://docs.docker.com/compose/)编排方式，可以参照以下命令：
-1. git clone 项目 并且进入项目根目录
+Another application, [docker-compose](https://docs.docker.com/compose/) orchestration, you can refer to the following command:
+1. git clone the project and go to the project root directory
 
 ```powershell
-git clone https://github.com/nacos-group/nacos-docker.git
-cd nacos-docker
+Git clone https://github.com/nacos-group/nacos-docker.git
+Cd nacos-docker
 ```
 
-2. 启动
+2. Start
 
-* 单机启动
+* Stand-alone start
 
 ```powershell
-docker-compose -f example/standalone.yaml up
+Docker-compose -f example/standalone.yaml up
 ```
 
-* 集群启动
+* Cluster boot
 
 ```powershell
-docker-compose -f example/cluster-hostname.yaml up 
+Docker-compose -f example/cluster-hostname.yaml up
 ```
 
-这时你的Nacos就已经启动起来，你就可以访问[http://localhost:8848/nacos/index.html](http://localhost:8848/nacos/index.html)体验Nacos的功能了。
-#### 配置管理功能体验
+At this point your Nacos is up and you can experience the Nacos feature by visiting [http://localhost:8848/nacos/index.html](http://localhost:8848/nacos/index.html).
+#### Configuration Management Function Experience
 
 
 ![Peek 2018-12-11 10-11.gif | left | 747x351](https://cdn.nlark.com/lark/0/2018/gif/11189/1544496461571-69f38431-6452-4ddd-8211-c2da28f2ebcf.gif "")
 
 
-#### 服务发现功能体验
+#### Service Discovery Feature Experience
 
 
 ![Peek 2018-12-11 11-11.gif | left | 747x351](https://cdn.nlark.com/lark/0/2018/gif/11189/1544521437636-674de542-1873-426b-a2dd-da8265bc267f.gif "")
 
 
-
-## 蓬勃发展的 Nacos 社区
+## The booming Nacos community
 
 > DISS is cheap, show me your hand
-> 比吐槽更重要的是搭把手，参与社区一起发展Nacos
+> More important than the spit is to take the handle and participate in the community to develop Nacos
 
-* 作为用户关注和加入 Nacos 社区
+* Follow the user as a user and join the Nacos community
 
-Nacos 社区正在蓬勃发展，截止到发文为止，Nacos 短短几个月已经有5个微信群，其中4个已满员，1个QQ群，1个钉钉群，关注 Nacos 的社区人数已经近3000人，在 Nacos 群里跟 “道（基）友” 切磋技术，交流经验，招聘交友，抢抢红包...不亦乐乎。
+The Nacos community is booming. As of the date of publication, Nacos has five WeChat groups in just a few months, four of which are full, one QQ group, one nail group, and nearly 3,000 people who care about Nacos. In the Nacos group, we will learn from the "Tao (base) friends", exchange experiences, recruit friends, grab red envelopes... and enjoy it.
 
-要加入 Nacos 微信社区，你可以通过扫下面的__“超哥”__的微信二维码，让__“超哥”__ 帮你拉入 “Nacos社区微信交流群”
+To join the Nacos WeChat community, you can use the WeChat QR code of __“超哥”__ below to let __“超哥”__ help you pull in “Nacos Community WeChat Exchange Group”
 
 
 
 ![Screen Shot 2018-06-27 at 13.39.09.png | left](https://cdn.yuque.com/lark/0/2018/png/15914/1530077965587-8f4e3100-bdd4-469a-9ea0-7af7061bc9ef.png "")
 
+* Join the Nacos community as a code contributor
 
-* 作为代码贡献者加入 Nacos 社区
-
-从Nacos用户发展而成贡献者顺理成章，而Nacos开发团队也确实在日趋壮大，从开始的只有4个代码contributor发展到目前的24个，随着__阿里巴巴__其他团队成员如 __@小马哥__ 等人，__虎牙直播__的 __@张波__ __@周健__ 团队等人，[nacos-docker-k8s](https://github.com/nacos-group/nacos-docker) 贡献者 __@张龙__，前端的主要贡献者饿了么 __@王彦民__，Spring Cloud中文社区创立者 __@许进__ 等的陆续加入，相信未来Nacos社区的力量未来会越来越强大。
-
+From the development of Nacos users to contributors, and the Nacos development team is indeed growing, from the beginning of only four code contributions to the current 24, with __Alibaba__ other team members such as __@小马哥__, __虎牙直播____@张波__ __@周健__ Team et al, [nacos-docker-k8s](https://github.com/nacos-group /nacos-docker) Contributors __@张龙__, the main contributors to the front end are hungry __@王彦民__, the founder of Spring Cloud Chinese community __@许进__ etc. The power of the Nacos community will grow stronger in the future.
 
 
 
-而社区也正在计划在合适的时机上，将在Nacos官网 [nacos.io](http://nacos.io) 中添加团队介绍页，将大家正式公布于众，欢迎大家加入Nacos社区，贡献社区。用Apache的话说，__“社区高于代码”!__
+
+The community is also planning to add a team introduction page to Nacos's official website [nacos.io](http://nacos.io) at the right time, and everyone will be officially announced. Welcome everyone to join the Nacos community and contribute to the community. . In the words of Apache, __"Community is higher than the code"!__
 
 
 
 ![屏幕快照 2018-11-20 17.04.45.png | left](https://cdn.nlark.com/lark/0/2018/png/15914/1542704700864-a9d54856-9bf6-4176-b449-c13fa02c5800.png "")
 
 
-## 新人时刻 - "什么是Nacos？"
-> 还不知道什么是Nacos? 没关系，在github上star一下跟程序猿兄弟打个招呼吧!!
+## Newcomer Moments - "What is Nacos?"
+> I don't know what Nacos is? It doesn't matter, star on the github and say hello to the program brothers!!
 
-[Nacos](https://github.com/alibaba/nacos) 是阿里巴巴于7月份新开源的项目，Nacos的主要愿景是期望通过提供易用的 `动态服务发现`、`服务配置管理`、`服务共享与管理` 的基础设施，帮助用户在云原生时代更好的构建、交付、管理自己的微服务平台。
+[Nacos](https://github.com/alibaba/nacos) is Alibaba's new open source project in July. Nacos's main vision is to provide easy-to-use `Dynamic Service Discovery`, `Service Configuration Management`, The infrastructure of "Service Sharing and Management" helps users better build, deliver and manage their own microservices platforms in the cloud's native era.
+
 
 
 
 ![Screen Shot 2018-07-24 at 19.27.28.png | left](https://cdn.nlark.com/lark/0/2018/png/15914/1532436633419-08a42307-7fb7-4d51-9062-fecc3868613b.png "")
 
 
-github项目地址在 [这里](https://github.com/alibaba/nacos)
+Github project address is [here](https://github.com/alibaba/nacos)
 
-## 更多与 Nacos 相关的开源项目信息
+## More open source project information related to Nacos
 
 * [Nacos](https://github.com/alibaba/nacos)
 * [Dubbo Registry Nacos](https://github.com/dubbo/dubbo-registry-nacos)
