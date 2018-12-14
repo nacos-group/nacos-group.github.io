@@ -3,6 +3,12 @@ export default {
     barText: 'Blog',
     postsTitle: 'All posts',
     list: [
+        {   title: 'Nacos 有哪些典型的应用场景？—— 配置管理篇',
+            author: '@何煦',
+            dateStr: 'Dec 06, 2018',
+            desc: '本文将围绕“Where”，讲述 Nacos 配置管理的三个典型的应用场景：数据库连接信息、限流阈值和降级开关、流量的动态调度',
+            link: '/en-us/blog/5w1h-where.html',
+        },
         {
             title: 'Nacos 发布 0.6 版本，支持Dubbo生态并且支持Docker部署',
             author: '@马昕曦、@张龙、@邢学超',
@@ -30,6 +36,12 @@ export default {
             dateStr: 'Oct 28, 2018',
             desc: 'Nacos 被CNCF 纳入landscape大图',
             link: '/en-us/blog/cncf.html',
+        },
+        {   title: 'Nacos 帮我们解决什么问题？—— 配置管理篇',
+            author: '@何煦',
+            dateStr: 'Oct 17, 2018',
+            desc: 'Nacos 是阿里巴巴今年7月份开源的项目，如其名， Naming and Configuration Service ，专注于服务发现和配置管理领域。本系列文章，将从 5W1H（What、Where、When、Who、Why、How）全面剖析 Nacos，希望对开发者们在服务发现和配置管理开源方案选型的时候，有所帮助。',
+            link: '/en-us/blog/5w1h-what.html',
         },
         {
             title: 'Nacos服务发现控制台预览',
@@ -79,6 +91,12 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {   title: 'Nacos 有哪些典型的应用场景？—— 配置管理篇',
+            author: '@何煦',
+            dateStr: 'Dec 06, 2018',
+            desc: '本文将围绕“Where”，讲述 Nacos 配置管理的三个典型的应用场景：数据库连接信息、限流阈值和降级开关、流量的动态调度',
+            link: '/zh-cn/blog/5w1h-where.html',
+        },
         {
             title: 'Nacos 发布 0.6 版本，支持Dubbo生态并且支持Docker部署',
             author: '@马昕曦、@张龙、@邢学超',
@@ -106,6 +124,12 @@ export default {
             dateStr: 'Oct 28, 2018',
             desc: 'Nacos 被CNCF 纳入landscape大图',
             link: '/en-us/blog/cncf.html',
+        },
+        {   title: 'Nacos 帮我们解决什么问题？—— 配置管理篇',
+            author: '@何煦',
+            dateStr: 'Oct 17, 2018',
+            desc: 'Nacos 是阿里巴巴今年7月份开源的项目，如其名， Naming and Configuration Service ，专注于服务发现和配置管理领域。本系列文章，将从 5W1H（What、Where、When、Who、Why、How）全面剖析 Nacos，希望对开发者们在服务发现和配置管理开源方案选型的时候，有所帮助。',
+            link: '/zh-cn/blog/5w1h-what.html',
         },
         {
             title: 'Nacos服务发现控制台预览',

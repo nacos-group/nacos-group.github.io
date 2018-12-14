@@ -1,6 +1,24 @@
 {
   "en-us": [
     {
+      "filename": "5w1h-what.md",
+      "link": "/en-us/blog/5w1h-what.html",
+      "meta": {
+        "title": "Nacos 帮我们解决什么问题？—— 配置管理篇",
+        "keywords": "nacos",
+        "description": "Nacos 配置管理帮我们解决什么问题？"
+      }
+    },
+    {
+      "filename": "5w1h-where.md",
+      "link": "/en-us/blog/5w1h-where.html",
+      "meta": {
+        "title": "Nacos 有哪些典型的应用场景？—— 配置管理篇",
+        "keywords": "nacos",
+        "description": "Nacos 配置管理有哪些典型的应用场景？"
+      }
+    },
+    {
       "filename": "DNS-SD.md",
       "link": "/en-us/blog/DNS-SD.html",
       "meta": {}
@@ -81,6 +99,24 @@
     }
   ],
   "zh-cn": [
+    {
+      "filename": "5w1h-what.md",
+      "link": "/zh-cn/blog/5w1h-what.html",
+      "meta": {
+        "title": "Nacos 帮我们解决什么问题？—— 配置管理篇",
+        "keywords": "nacos",
+        "description": "Nacos 配置管理帮我们解决什么问题？"
+      }
+    },
+    {
+      "filename": "5w1h-where.md",
+      "link": "/zh-cn/blog/5w1h-where.html",
+      "meta": {
+        "title": "Nacos 有哪些典型的应用场景？—— 配置管理篇",
+        "keywords": "nacos",
+        "description": "Nacos 配置管理有哪些典型的应用场景？"
+      }
+    },
     {
       "filename": "DNS-SD.md",
       "link": "/zh-cn/blog/DNS-SD.html",
