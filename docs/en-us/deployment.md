@@ -14,17 +14,7 @@ sh startup.sh standalone
 * standalone means it is non-cluster Mode. * 
 cmd startup.cmd standalone
 
-
-## Running Nacos in Multi-Node Cluster Mode
-
-### Linux/Unix/Mac
-sh startup.sh
-
-### Windows
-cmd startup.cmd
-
-### Running Nacos with mysql in Multi-Node Cluster Mode
-
+### Running Nacos with mysql in Standalone Mode
 #### Initialize MySQL database
 
 [sql statement source file](https://github.com/alibaba/nacos/blob/master/distribution/conf/nacos-mysql.sql)
@@ -44,6 +34,14 @@ db.url.1=jdbc:mysql://11.163.152.9:3306/nacos_devtest?characterEncoding=utf8&con
 db.user=nacos_devtest
 db.password=youdontknow
 ```
+
+## Running Nacos in Multi-Node Cluster Mode
+
+### Linux/Unix/Mac
+sh startup.sh
+
+### Windows
+cmd startup.cmd
 
 ## Deploy Nacos in Multi-Cluster Mode
 
