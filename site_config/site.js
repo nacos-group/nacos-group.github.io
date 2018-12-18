@@ -57,8 +57,17 @@ export default {
           text: 'Community',
           link: '/en-us/community/index.html',
         },
+          {
+              text: 'Cloud Service ACM',
+              link: 'https://www.aliyun.com/product/acm',
+          },
+          {
+              text: 'Cloud Service EDAS',
+              link: 'https://www.aliyun.com/product/edas',
+          },
       ],
     },
+
     copyright: '@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project',
   },
   'zh-cn': {
@@ -116,6 +125,14 @@ export default {
           text: '社区',
           link: '/zh-cn/community/index.html',
         },
+          {
+              text: '云服务 ACM',
+              link: 'https://www.aliyun.com/product/acm',
+          },
+          {
+              text: '云服务 EDAS',
+              link: 'https://www.aliyun.com/product/edas',
+          },
       ],
     },
     copyright: '@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project',
