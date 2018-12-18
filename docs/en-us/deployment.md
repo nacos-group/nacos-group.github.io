@@ -28,9 +28,8 @@ add mysql datasource and configure url, user and password
 ```
 spring.datasource.platform=mysql
 
-db.num=2
+db.num=1
 db.url.0=jdbc:mysql://11.162.196.16:3306/nacos_devtest?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
-db.url.1=jdbc:mysql://11.163.152.9:3306/nacos_devtest?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
 db.user=nacos_devtest
 db.password=youdontknow
 ```
