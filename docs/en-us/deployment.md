@@ -14,6 +14,25 @@ sh startup.sh standalone
 * standalone means it is non-cluster Mode. * 
 cmd startup.cmd standalone
 
+### Running Nacos with mysql in Standalone Mode
+#### Initialize MySQL database
+
+[sql statement source file](https://github.com/alibaba/nacos/blob/master/distribution/conf/nacos-mysql.sql)
+
+#### application.properties configuration
+
+[application.properties configuration file](https://github.com/alibaba/nacos/blob/master/distribution/conf/application.properties)
+
+add mysql datasource and configure url, user and password 
+
+```
+spring.datasource.platform=mysql
+
+db.num=1
+db.url.0=jdbc:mysql://11.162.196.16:3306/nacos_devtest?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
+db.user=nacos_devtest
+db.password=youdontknow
+```
 
 ## Running Nacos in Multi-Node Cluster Mode
 
@@ -22,7 +41,6 @@ sh startup.sh
 
 ### Windows
 cmd startup.cmd
-
 
 ## Deploy Nacos in Multi-Cluster Mode
 
