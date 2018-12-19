@@ -59,11 +59,11 @@ export default {
         },
           {
               text: 'Cloud Service ACM',
-              link: 'https://www.aliyun.com/product/acm',
+              link: 'https://www.aliyun.com/product/acm?source_type=nacos_pc_20181219',
           },
           {
               text: 'Cloud Service EDAS',
-              link: 'https://www.aliyun.com/product/edas',
+              link: 'https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219',
           },
       ],
     },
@@ -127,11 +127,11 @@ export default {
         },
           {
               text: '云服务 ACM',
-              link: 'https://www.aliyun.com/product/acm',
+              link: 'https://www.aliyun.com/product/acm?source_type=nacos_pc_20181219',
           },
           {
               text: '云服务 EDAS',
-              link: 'https://www.aliyun.com/product/edas',
+              link: 'https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219',
           },
       ],
     },
