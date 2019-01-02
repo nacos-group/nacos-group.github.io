@@ -1,7 +1,8 @@
 # Quick Start for Nacos Spring Cloud Projects
 
 This quick start introduces how to enable Nacos configuration management and service discovery features for your Spring Cloud project.
-For more details: [Nacos Config Example](https://github.com/spring-cloud-incubator/spring-cloud-alibaba/blob/master/spring-cloud-alibaba-examples/nacos-example/nacos-config-example/readme.md) and [Nacos Discovery Example](https://github.com/spring-cloud-incubator/spring-cloud-alibaba/blob/master/spring-cloud-alibaba-examples/nacos-example/nacos-discovery-example/readme.md).
+
+For more details about Nacos Spring Cloud: [Nacos Config](https://github.com/spring-cloud-incubator/spring-cloud-alibaba/blob/master/spring-cloud-alibaba-docs/src/main/asciidoc/nacos-config.adoc) and [Nacos Discovery](https://github.com/spring-cloud-incubator/spring-cloud-alibaba/blob/master/spring-cloud-alibaba-docs/src/main/asciidoc/nacos-discovery.adoc).
 
 The quick start includes two samples:
 
