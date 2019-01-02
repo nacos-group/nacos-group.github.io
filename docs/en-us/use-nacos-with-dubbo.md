@@ -96,13 +96,13 @@ dubbo.registry.address = nacos://10.20.153.10:8848
 
 随后，重启您的 Dubbo 应用，Dubbo 的服务提供和消费信息在 Nacos 控制台中可以显示：
 
-![image-20181213103845976](assets/image-20181213103845976-4668726.png)
+![image-20181213103845976-4668726.png | left | 747x284](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/11189/1546398372769-082d9210-0599-4c69-bd8f-2a92d249ccf9.png "")
 
 
 
 如图所示，服务名前缀为 `providers:` 的信息为服务提供者的元信息，`consumers:` 则代表服务消费者的元信息。点击“**详情**”可查看服务状态详情：
 
-![image-20181213104145998](assets/image-20181213104145998-4668906.png)
+![image-20181213104145998-4668906.png | left | 747x437](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/11189/1546398396233-0513dfa4-ecc6-4421-8852-36e006f8e8b9.png "")
 
 
 
@@ -154,7 +154,8 @@ dubbo.registry.address = nacos://10.20.153.10:8848
 
 重启 Dubbo 应用后，您同样也能发现服务提供方和消费方的注册元信息呈现在 Nacos 控制台中：
 
-![image-20181213113049185](assets/image-20181213113049185-4671849.png)
+![image-20181213113049185-4671849.png | left | 747x274](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/11189/1546398572633-90257d8d-06d5-4f47-9a78-3d4dce892cfc.png "")
+
 
 
 
@@ -370,7 +371,7 @@ public class DemoServiceConsumerBootstrap {
 
 在本地启动两次 `DemoServiceProviderBootstrap`，注册中心将出现两个健康服务：
 
-![image-20181213123909636](assets/image-20181213123909636-4675949.png)
+![image-20181213123909636-4675949.png | left | 747x38](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/11189/1546398465062-c4f237f7-d2e5-4777-8fb9-765c55f876f3.png "")
 
 再运行 `DemoServiceConsumerBootstrap`，运行结果如下：
 
@@ -518,7 +519,7 @@ public class DemoServiceConsumerXmlBootstrap {
 
 同样地，先启动两个 `DemoServiceProviderXmlBootstrap` 引导类，观察 Nacos 注册中心服务提供者变化：
 
-![image-20181213125527201](assets/image-20181213125527201-4676927.png)
+![image-20181213125527201-4676927.png | left | 747x33](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/11189/1546398497437-93d40db8-10bf-455c-acfd-0fcf11c36f0e.png "")
 
 XML 配置驱动的服务版本为 `2.0.0`，因此注册服务无误。
 
