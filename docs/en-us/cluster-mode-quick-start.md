@@ -8,6 +8,7 @@ Make sure that it is installed and used in the environment:
 1. 64 bit OS Linux/Unix/Mac, recommended Linux system.
 2. 64 bit JDK 1.8+; [Download](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html). [Configuration](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javome_t/).
 3. Maven 3.2.x+; [Download](https://maven.apache.org/download.cgi). [Configuration](https://maven.apache.org/settings.html).
+4. 3 or more Nacos Nodes;
 
 
 
@@ -35,7 +36,7 @@ Download address
 
 
 ```bash
-  unzip nacos-server-0.7.0.zip 或者 tar -xvf nacos-server-0.7.0.tar.gz
+  unzip nacos-server-0.7.0.zip or tar -xvf nacos-server-0.7.0.tar.gz
   cd nacos/bin
 ```
 

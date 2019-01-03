@@ -8,6 +8,7 @@
 1. 64 bit OS  Linux/Unix/Mac，推荐使用Linux系统。
 2. 64 bit JDK 1.8+；[下载](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).[配置](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/)。
 3. Maven 3.2.x+；[下载](https://maven.apache.org/download.cgi).[配置](https://maven.apache.org/settings.html)。
+4. 3个或3个以上Nacos节点才能构成集群。
 
 ## 2.下载源码或者安装包
 你可以通过两种方式来获取 Nacos。
@@ -34,7 +35,7 @@ cd nacos/distribution/target/nacos-server-0.7.0/nacos/bin
 ```
 
 ## 3.配置集群配置文件
-在nacos的解压目录nacos/的conf目录下，有配置文件cluster.conf，请每行配置成ip:port。
+在nacos的解压目录nacos/的conf目录下，有配置文件cluster.conf，请每行配置成ip:port。（请配置3个或3个以上节点）
 ```plain
 # ip:port
 200.8.9.16:8848
