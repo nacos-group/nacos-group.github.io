@@ -149,7 +149,7 @@ spring.application.name=service-consumer
 spring.cloud.nacos.discovery.server-addr=127.0.0.1:8848
 ```
 
-ii. Add the Spring Cloud native annotation of `@EnableDiscoveryClient`  to enable service dicovery. Add the `@LoadBalanced` annotation for the [RestTemplate](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-resttemplate.html) instance,  and enable the integration of `@LoadBalanced` and [Ribbon](https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-ribbon.html):
+ii. Add the Spring Cloud native annotation of `@EnableDiscoveryClient`  to enable service discovery. Add the `@LoadBalanced` annotation for the [RestTemplate](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-resttemplate.html) instance,  and enable the integration of `@LoadBalanced` and [Ribbon](https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-ribbon.html):
 
 ```
 @SpringBootApplication

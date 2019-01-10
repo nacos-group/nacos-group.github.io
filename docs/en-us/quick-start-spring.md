@@ -69,7 +69,7 @@ curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example&group=DEF
 
 ## Enable Service Discovery
 
-Now you would like to enable the service dicovery function of Nacos in your Spring project. 
+Now you would like to enable the service discovery function of Nacos in your Spring project. 
 
 Sampe project: [nacos-spring-discovery-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-example/nacos-spring-discovery-example)
 
