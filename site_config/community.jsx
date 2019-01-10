@@ -15,19 +15,26 @@ export default {
               link: '/en-us/blog/nacos0.5.html',
           },
           {
+              img: 'https://img.alicdn.com/tfs/TB1i4ugBjDpK1RjSZFrXXa78VXa-1522-584.png',
+              title: '虎牙直播参与共建Nacos生态',
+              content: '虎牙中间件团队也深入参与了Nacos生态的构建，核心成员张波、周建、李志鹏参与构建了包括Nacos的核心同步组件Nacos-sync、Nacos的DNS-F模块，把虎牙的业务模型和生产部署经验也共建到Nacos生态中。',
+              dateStr: 'Jan 10，2019',
+              link: '/en-us/blog/huya-nacos.html',
+          },
+          {
               img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1544689744102-fd00fec6-ca80-4c0c-9b0d-538f17279963.png',
               title: 'Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署',
               dateStr: 'Dec 14, 2018',
               content: '本文介绍了阿里巴巴的微服务开源项目[Dubbo Nacos](https://github.com/alibaba/nacos) v0.6 版本，该版本主要在支持了Dubbo生态和Docker部署。',
               link: '/en-us/blog/nacos0.6.html',
           },
-          {
-              img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1540738282849-61e2022a-46a9-4d81-ae16-6d6f0515450b.png',
-              title: 'Nacos 进入CNCF landscape',
-              content: 'Nacos 被CNCF 纳入landscape大图。',
-              dateStr: 'Oct 28，2018',
-              link: '/en-us/blog/cncf.html',
-          },
+          // {
+          //     img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1540738282849-61e2022a-46a9-4d81-ae16-6d6f0515450b.png',
+          //     title: 'Nacos 进入CNCF landscape',
+          //     content: 'Nacos 被CNCF 纳入landscape大图。',
+          //     dateStr: 'Oct 28，2018',
+          //     link: '/en-us/blog/cncf.html',
+          // },
       ]
     },
     contacts: {
@@ -153,32 +160,18 @@ export default {
               link: '/en-us/blog/nacos0.5.html',
           },
           {
+              img: 'https://img.alicdn.com/tfs/TB1i4ugBjDpK1RjSZFrXXa78VXa-1522-584.png',
+              title: '虎牙直播参与共建Nacos生态',
+              content: '虎牙中间件团队也深入参与了Nacos生态的构建，核心成员张波、周建、李志鹏参与构建了包括Nacos的核心同步组件Nacos-sync、Nacos的DNS-F模块，把虎牙的业务模型和生产部署经验也共建到Nacos生态中。',
+              dateStr: 'Jan 10，2019',
+              link: '/en-us/blog/huya-nacos.html',
+          },
+          {
               img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1544689744102-fd00fec6-ca80-4c0c-9b0d-538f17279963.png',
               title: 'Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署',
               dateStr: 'Dec 14, 2018',
               content: '本文介绍了阿里巴巴的微服务开源项目[Dubbo Nacos](https://github.com/alibaba/nacos) v0.6 版本，该版本主要在支持了Dubbo生态和Docker部署。',
               link: '/en-us/blog/nacos0.6.html',
-          },
-          // {
-          //     img: 'https://cdn.yuque.com/lark/0/2018/png/15914/1530083408486-b4698533-8e69-4e0a-9f3a-fdb1cdfbd290.png',
-          //     title: '阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾',
-          //     content: '本文详细回顾了阿里巴巴的服务注册中心ConfigServer产品从2008年建设元年至今经历的关键架构演进。通过这个文章你会对基于AP模式的注册中心在技术发展过程中将会碰到的问题有所感知。',
-          //     dateStr: 'March 06，2018',
-          //     link: '/zh-cn/blog/alibaba-configserver.html',
-          // },
-          // {
-          //     img: '/img/kunyu.JPG',
-          //     title: 'Nacos - 阿里巴巴注册中心和配置中心开源计划',
-          //     content: '阿里巴巴计划开启一个名叫Nacos的新开源项目,坤宇介绍了这个开源项目的初衷，他表示 “将通过Nacos项目将阿里巴巴在建设共享服务体系中使用的服务发现、配置及服务管理平台贡献给开源社区"。',
-          //     dateStr: 'March 06，2018',
-          //     link: '/zh-cn/blog/Nacos-is-Coming.html',
-          // },
-          {
-              img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1540738282849-61e2022a-46a9-4d81-ae16-6d6f0515450b.png',
-              title: 'Nacos 进入CNCF landscape',
-              content: 'Nacos 被CNCF 纳入landscape大图。',
-              dateStr: 'Oct 28，2018',
-              link: '/en-us/blog/cncf.html',
           },
       ]
     },
