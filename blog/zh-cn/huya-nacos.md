@@ -21,4 +21,4 @@ nacos通过支持spi扩展的方式， 支持虎牙将cmdb的数据导入到naco
 虎牙后续会继续在nacos上持续投入，今后的内部service mesh，容器服务注册场景发力。
 
 ## 虎牙中间件团队深入共建Nacos
-虎牙中间件团队也深入参与了Nacos生态的构建，核心成员张波、周建、李志鹏参与构建了包括Nacos的核心同步组件Nacos-sync、Nacos的DNS-F模块，把虎牙的业务模型和生产部署经验也共建到Nacos生态中。
+虎牙中间件团队也深入参与了Nacos生态的构建，核心成员张波、周建、李志鹏参与构建了包括Nacos的核心同步组件Nacos-sync、Nacos的DNS-F模块，把虎牙的业务模型和生产部署经验也共建到Nacos生态中,在过程当中，张波、周建、李志鹏成为了Nacos的核心Committer,是Nacos重要的社区成员。
