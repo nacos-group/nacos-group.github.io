@@ -53,7 +53,7 @@ public class NacosConfigApplication {
 @RequestMapping("config")
 public class ConfigController {
 
-    @NacosValue("${useLocalCache:false}", autoRefreshed = true))
+    @NacosValue(value = "${useLocalCache:false}", autoRefreshed = true)
     private boolean useLocalCache;
 
     @RequestMapping(value = "/get", method = GET)

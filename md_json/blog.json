@@ -75,6 +75,11 @@
       "meta": {}
     },
     {
+      "filename": "huya-nacos.md",
+      "link": "/en-us/blog/huya-nacos.html",
+      "meta": {}
+    },
+    {
       "filename": "nacos.md",
       "link": "/en-us/blog/nacos.html",
       "meta": {}
@@ -176,6 +181,11 @@
     {
       "filename": "dynamic-route-zuul-nacos.md",
       "link": "/zh-cn/blog/dynamic-route-zuul-nacos.html",
+      "meta": {}
+    },
+    {
+      "filename": "huya-nacos.md",
+      "link": "/zh-cn/blog/huya-nacos.html",
       "meta": {}
     },
     {
