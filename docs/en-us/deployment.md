@@ -36,11 +36,8 @@ db.password=youdontknow
 
 ## Running Nacos in Multi-Node Cluster Mode
 
-### Linux/Unix/Mac
-sh startup.sh
+[Nacos in Multi-Node Cluster Mode](https://nacos.io/en-us/docs/cluster-mode-quick-start.html)
 
-### Windows
-cmd startup.cmd
 
 ## Deploy Nacos in Multi-Cluster Mode
 

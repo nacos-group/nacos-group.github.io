@@ -34,12 +34,9 @@ db.password=youdontknow
 再以单机模式启动nacos，nacos所有写嵌入式数据库的数据都写到了mysql
 
 ## 集群模式下运行Nacos
+[集群模式下运行Nacos](https://nacos.io/zh-cn/docs/cluster-mode-quick-start.html)
 
-### Linux/Unix/Mac
-sh startup.sh
-
-## Deploy Nacos in Multi-Cluster Mode
+## 多集群模式
 
 Nacos支持NameServer路由请求模式，通过它您可以设计一个有用的映射规则来控制请求转发到相应的集群，在映射规则中您可以按命名空间或租户等分片请求...
 
-### TODO

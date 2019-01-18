@@ -46,6 +46,14 @@ export default {
                     title: 'Nacos Docker',
                     link: '/en-us/docs/quick-start-docker.html',
                 },
+                {
+                    title: 'Nacos with Dubbo',
+                    link: '/en-us/docs/use-nacos-with-dubbo.html',
+                },
+                {
+                    title: 'Nacos with K8s',
+                    link: '/en-us/docs/use-nacos-with-kubernetes.html',
+                },
             ],
           },
           {
@@ -123,18 +131,6 @@ export default {
                 link: '/en-us/docs/roadmap.html',
               },
               {
-                title: 'Nacos with SpringCloud',
-                link: '/en-us/docs/use-nacos-with-springcloud.html',
-              },
-              {
-                title: 'Nacos with Dubbo',
-                link: '/en-us/docs/use-nacos-with-dubbo.html',
-              },
-              {
-                title: 'Nacos with K8s',
-                link: '/en-us/docs/use-nacos-with-kubernetes.html',
-              },
-              {
                 title: 'Nacos with Istio',
                 link: '/en-us/docs/use-nacos-with-istio.html',
               },
@@ -177,32 +173,40 @@ export default {
               },
             ],
           },
-            {
-                title: '快速开始',
-                opened: true,
-                children: [
-                    {
-                        title: '快速开始',
-                        link: '/zh-cn/docs/quick-start.html',
-                    },
-            {
-                title: 'Nacos Spring',
-                link: '/zh-cn/docs/quick-start-spring.html',
-            },
-            {
-                title: 'Nacos Spring Boot',
-                link: '/zh-cn/docs/quick-start-spring-boot.html',
-            },
-            {
-                title: 'Nacos Spring Cloud',
-                link: '/zh-cn/docs/quick-start-spring-cloud.html',
-            },
-            {
-                title: 'Nacos Docker',
-                link: '/zh-cn/docs/quick-start-docker.html',
-            },
-            ]
-            },
+          {
+            title: '快速开始',
+            opened: true,
+            children: [
+              {
+                  title: '快速开始',
+                  link: '/zh-cn/docs/quick-start.html',
+              },
+              {
+                  title: 'Nacos Spring',
+                  link: '/zh-cn/docs/quick-start-spring.html',
+              },
+              {
+                  title: 'Nacos Spring Boot',
+                  link: '/zh-cn/docs/quick-start-spring-boot.html',
+              },
+              {
+                  title: 'Nacos Spring Cloud',
+                  link: '/zh-cn/docs/quick-start-spring-cloud.html',
+              },
+              {
+                  title: 'Nacos Docker',
+                  link: '/zh-cn/docs/quick-start-docker.html',
+              },
+              {
+                  title: 'Nacos Dubbo',
+                  link: '/zh-cn/docs/use-nacos-with-dubbo.html',
+              },
+              {
+                  title: 'Nacos k8s',
+                  link: '/zh-cn/docs/use-nacos-with-kubernetes.html',
+              },
+          ]
+          },
           {
             title: '用户指南',
             opened: true,
@@ -232,11 +236,11 @@ export default {
                 title: '部署手册',
                 link: '/zh-cn/docs/deployment.html',
               },
-                {
-                    title: '集群部署说明',
-                    link: '/zh-cn/docs/cluster-mode-quick-start.html',
-                },
-                {
+              {
+                title: '集群部署说明',
+                link: '/zh-cn/docs/cluster-mode-quick-start.html',
+              },
+              {
                 title: '运维API',
                 link: '/zh-cn/docs/managementAPI.html',
               },
@@ -278,20 +282,8 @@ export default {
                 link: '/zh-cn/docs/roadmap.html',
               },
               {
-                  title: 'Nacos支持SpringCloud生态',
-                  link: '/zh-cn/docs/use-nacos-with-springcloud.html',
-              },
-              {
-                  title: 'nacos支持dubbo生态',
-                  link: '/zh-cn/docs/use-nacos-with-dubbo.html',
-              },
-              {
-                  title: 'Nacos支持k8s',
-                  link: '/zh-cn/docs/use-nacos-with-kubernetes.html',
-              },
-              {
-                  title: 'nacos支持istio',
-                  link: '/zh-cn/docs/use-nacos-with-istio.html',
+                title: 'nacos支持istio',
+                link: '/zh-cn/docs/use-nacos-with-istio.html',
               },
             ],
           },

@@ -547,6 +547,6 @@ Service [name :null , port : 20883] sayName("小马哥（mercyblitz）") : Hello
 如果您关注或喜爱 Dubbo 以及 Nacos 等开源工程，不妨为它们点 “star”，加油打气链接：
 
 - Apache Dubbo：https://github.com/apache/incubator-dubbo
-- DUbbo Nacos Registry：https://github.com/dubbo/dubbo-registry-nacos
+- Dubbo Nacos Registry：https://github.com/dubbo/dubbo-registry-nacos
 - Alibaba Nacos：https://github.com/alibaba/nacos
 
