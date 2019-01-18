@@ -56,6 +56,11 @@
       "meta": {}
     },
     {
+      "filename": "monitor-guide.md",
+      "link": "/en-us/docs/monitor-guide.html",
+      "meta": {}
+    },
+    {
       "filename": "nacos-spring.md",
       "link": "/en-us/docs/nacos-spring.html",
       "meta": {}
@@ -195,6 +200,11 @@
     {
       "filename": "managementAPI.md",
       "link": "/zh-cn/docs/managementAPI.html",
+      "meta": {}
+    },
+    {
+      "filename": "monitor-guide.md",
+      "link": "/zh-cn/docs/monitor-guide.html",
       "meta": {}
     },
     {
