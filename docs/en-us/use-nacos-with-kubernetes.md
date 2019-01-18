@@ -1,13 +1,13 @@
 # Kubernetes Nacos
 
 
-±¾ÏîÄ¿°üº¬Ò»¸ö¿É¹¹½¨µÄNacos Docker Image,Ö¼ÔÚÀûÓÃStatefulSetsÔÚ[Kubernetes](https://kubernetes.io/)ÉÏ²¿Êğ[Nacos](https://nacos.io)
+æœ¬é¡¹ç›®åŒ…å«ä¸€ä¸ªå¯æ„å»ºçš„Nacos Docker Image,æ—¨åœ¨åˆ©ç”¨StatefulSetsåœ¨[Kubernetes](https://kubernetes.io/)ä¸Šéƒ¨ç½²[Nacos](https://nacos.io)
 
 [English Document](https://github.com/nacos-group/nacos-k8s/blob/master/README.md)
 
-# ¿ìËÙ¿ªÊ¼
+# å¿«é€Ÿå¼€å§‹
 
-* **Clone ÏîÄ¿**
+* **Clone é¡¹ç›®**
 
 
 ```shell
@@ -16,9 +16,9 @@ git clone https://github.com/nacos-group/nacos-k8s.git
 
 
 
-* **¼òµ¥Àı×Ó**
+* **ç®€å•ä¾‹å­**
 
-> Èç¹ûÄãÊ¹ÓÃ¼òµ¥·½Ê½¿ìËÙÆô¶¯,Çë×¢ÒâÕâÊÇÃ»ÓĞÊ¹ÓÃ³Ö¾Ã»¯¾íµÄ,¿ÉÄÜ´æÔÚÊı¾İ¶ªÊ§·çÏÕ:
+> å¦‚æœä½ ä½¿ç”¨ç®€å•æ–¹å¼å¿«é€Ÿå¯åŠ¨,è¯·æ³¨æ„è¿™æ˜¯æ²¡æœ‰ä½¿ç”¨æŒä¹…åŒ–å·çš„,å¯èƒ½å­˜åœ¨æ•°æ®ä¸¢å¤±é£é™©:
 
 ```shell
 cd nacos-k8s
@@ -28,9 +28,9 @@ chmod +x quick-startup.sh
 
 
 
-* **²âÊÔ**
+* **æµ‹è¯•**
 
-  * **·şÎñ×¢²á**
+  * **æœåŠ¡æ³¨å†Œ**
 
   ```bash
   curl -X PUT 'http://cluster-ip:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'
@@ -38,7 +38,7 @@ chmod +x quick-startup.sh
 
 
 
-  * **·şÎñ·¢ÏÖ**
+  * **æœåŠ¡å‘ç°**
 
   ```bash
   curl -X GET 'http://cluster-ip:8848/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'
@@ -46,7 +46,7 @@ chmod +x quick-startup.sh
 
 
 
-  * **·¢²¼ÅäÖÃ**
+  * **å‘å¸ƒé…ç½®**
 
   ```bash
   curl -X POST "http://cluster-ip:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test&content=helloWorld"
@@ -54,7 +54,7 @@ chmod +x quick-startup.sh
 
 
 
-  * **»ñÈ¡ÅäÖÃ**
+  * **è·å–é…ç½®**
 
   ```bash
   curl -X GET "http://cluster-ip:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test"
@@ -62,22 +62,22 @@ chmod +x quick-startup.sh
 
 
 
-# ¸ß¼¶Ê¹ÓÃ
+# é«˜çº§ä½¿ç”¨
 
-> ÔÚ¸ß¼¶Ê¹ÓÃÖĞ,NacosÔÚK8SÓµÓĞ×Ô¶¯À©ÈİËõÈİºÍÊı¾İ³Ö¾ÃÌØĞÔ,Çë×¢ÒâÈç¹ûĞèÒªÊ¹ÓÃÕâ²¿·Ö¹¦ÄÜÇëÊ¹ÓÃPVC³Ö¾Ã¾í,NacosµÄ×Ô¶¯À©ÈİËõÈİĞèÒªÒÀÀµ³Ö¾Ã¾í,ÒÔ¼°Êı¾İ³Ö¾Ã»¯Ò²ÊÇÒ»Ñù,±¾ÀıÖĞÊ¹ÓÃµÄÊÇNFSÀ´Ê¹ÓÃPVC.
+> åœ¨é«˜çº§ä½¿ç”¨ä¸­,Nacosåœ¨K8Sæ‹¥æœ‰è‡ªåŠ¨æ‰©å®¹ç¼©å®¹å’Œæ•°æ®æŒä¹…ç‰¹æ€§,è¯·æ³¨æ„å¦‚æœéœ€è¦ä½¿ç”¨è¿™éƒ¨åˆ†åŠŸèƒ½è¯·ä½¿ç”¨PVCæŒä¹…å·,Nacosçš„è‡ªåŠ¨æ‰©å®¹ç¼©å®¹éœ€è¦ä¾èµ–æŒä¹…å·,ä»¥åŠæ•°æ®æŒä¹…åŒ–ä¹Ÿæ˜¯ä¸€æ ·,æœ¬ä¾‹ä¸­ä½¿ç”¨çš„æ˜¯NFSæ¥ä½¿ç”¨PVC.
 >
 
 
 
-## ²¿Êğ NFS
+## éƒ¨ç½² NFS
 
-* ´´½¨½ÇÉ« 
+* åˆ›å»ºè§’è‰² 
 
 ```shell
 kubectl create -f deploy/nfs/rbac.yaml
 ```
 
-> Èç¹ûµÄK8SÃüÃû¿Õ¼ä²»ÊÇ**default**,ÇëÔÚ²¿ÊğRBACÖ®Ç°Ö´ĞĞÒÔÏÂ½Å±¾:
+> å¦‚æœçš„K8Så‘½åç©ºé—´ä¸æ˜¯**default**,è¯·åœ¨éƒ¨ç½²RBACä¹‹å‰æ‰§è¡Œä»¥ä¸‹è„šæœ¬:
 
 
 ```shell
@@ -90,7 +90,7 @@ $ sed -i'' "s/namespace:.*/namespace: $NAMESPACE/g" ./deploy/nfs/rbac.yaml
 
 
 
-* ´´½¨ `ServiceAccount` ºÍ²¿Êğ `NFS-Client Provisioner`
+* åˆ›å»º `ServiceAccount` å’Œéƒ¨ç½² `NFS-Client Provisioner`
 
 ```shell
 kubectl create -f deploy/nfs/deployment.yaml
@@ -98,7 +98,7 @@ kubectl create -f deploy/nfs/deployment.yaml
 
 
 
-* ´´½¨ NFS StorageClass
+* åˆ›å»º NFS StorageClass
 
 ```shell
 kubectl create -f deploy/nfs/class.yaml
@@ -106,7 +106,7 @@ kubectl create -f deploy/nfs/class.yaml
 
 
 
-* ÑéÖ¤NFS²¿Êğ³É¹¦
+* éªŒè¯NFSéƒ¨ç½²æˆåŠŸ
 
 ```shell
 kubectl get pod -l app=nfs-client-provisioner
@@ -114,10 +114,10 @@ kubectl get pod -l app=nfs-client-provisioner
 
 
 
-## ²¿ÊğÊı¾İ¿â
+## éƒ¨ç½²æ•°æ®åº“
 
 
-* ²¿ÊğÖ÷¿â
+* éƒ¨ç½²ä¸»åº“
 
 ```shell
 
@@ -128,7 +128,7 @@ kubectl create -f deploy/mysql/mysql-master-nfs.yaml
 
 
 
-* ²¿Êğ´Ó¿â
+* éƒ¨ç½²ä»åº“
 
 ```shell
 
@@ -139,7 +139,7 @@ kubectl create -f deploy/mysql/mysql-slave-nfs.yaml
 
 
 
-* ÑéÖ¤Êı¾İ¿âÊÇ·ñÕı³£¹¤×÷
+* éªŒè¯æ•°æ®åº“æ˜¯å¦æ­£å¸¸å·¥ä½œ
 
 ```shell
 # master
@@ -154,24 +154,24 @@ mysql-slave-kf9cb                         1/1     Running   0          110m
 
 
 
-## ²¿ÊğNacos
+## éƒ¨ç½²Nacos
 
 
 
-* ĞŞ¸Ä  **depoly/nacos/nacos-pvc-nfs.yaml**
+* ä¿®æ”¹  **depoly/nacos/nacos-pvc-nfs.yaml**
 
 ```yaml
 data:
-  mysql.master.db.name: "Ö÷¿âÃû³Æ"
-  mysql.master.port: "Ö÷¿â¶Ë¿Ú"
-  mysql.slave.port: "´Ó¿â¶Ë¿Ú"
-  mysql.master.user: "Ö÷¿âÓÃ»§Ãû"
-  mysql.master.password: "Ö÷¿âÃÜÂë"
+  mysql.master.db.name: "ä¸»åº“åç§°"
+  mysql.master.port: "ä¸»åº“ç«¯å£"
+  mysql.slave.port: "ä»åº“ç«¯å£"
+  mysql.master.user: "ä¸»åº“ç”¨æˆ·å"
+  mysql.master.password: "ä¸»åº“å¯†ç "
 ```
 
 
 
-* ´´½¨ Nacos
+* åˆ›å»º Nacos
 
 ``` shell
 kubectl create -f nacos-k8s/deploy/nacos/nacos-pvc-nfs.yaml
@@ -179,7 +179,7 @@ kubectl create -f nacos-k8s/deploy/nacos/nacos-pvc-nfs.yaml
 
 
 
-* ÑéÖ¤Nacos½ÚµãÆô¶¯³É¹¦
+* éªŒè¯NacosèŠ‚ç‚¹å¯åŠ¨æˆåŠŸ
 
 ```shell
 kubectl get pod -l app=nacos
@@ -195,15 +195,15 @@ nacos-2   1/1     Running   0          19h
 
 
 
-## À©Èİ²âÊÔ
+## æ‰©å®¹æµ‹è¯•
 
-* ÔÚÀ©ÈİÇ°,Ê¹ÓÃ [`kubectl exec`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec)»ñÈ¡ÔÚpodÖĞµÄNacos¼¯ÈºÅäÖÃÎÄ¼şĞÅÏ¢
+* åœ¨æ‰©å®¹å‰,ä½¿ç”¨ [`kubectl exec`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec)è·å–åœ¨podä¸­çš„Nacosé›†ç¾¤é…ç½®æ–‡ä»¶ä¿¡æ¯
 
 ```powershell
 for i in 0 1; do echo nacos-$i; kubectl exec nacos-$i cat conf/cluster.conf; done
 ```
 
-StatefulSet¿ØÖÆÆ÷¸ù¾İÆäĞòÊıË÷ÒıÎªÃ¿¸öPodÌá¹©Î¨Ò»µÄÖ÷»úÃû¡£ Ö÷»úÃû²ÉÓÃ<statefulset name>  -  <ordinal index>µÄĞÎÊ½¡£ ÒòÎªnacos StatefulSetµÄ¸±±¾×Ö¶ÎÉèÖÃÎª2£¬ËùÒÔµ±Ç°¼¯ÈºÎÄ¼şÖĞÖ»ÓĞÁ½¸öNacos½ÚµãµØÖ·
+StatefulSetæ§åˆ¶å™¨æ ¹æ®å…¶åºæ•°ç´¢å¼•ä¸ºæ¯ä¸ªPodæä¾›å”¯ä¸€çš„ä¸»æœºåã€‚ ä¸»æœºåé‡‡ç”¨<statefulset name>  -  <ordinal index>çš„å½¢å¼ã€‚ å› ä¸ºnacos StatefulSetçš„å‰¯æœ¬å­—æ®µè®¾ç½®ä¸º2ï¼Œæ‰€ä»¥å½“å‰é›†ç¾¤æ–‡ä»¶ä¸­åªæœ‰ä¸¤ä¸ªNacosèŠ‚ç‚¹åœ°å€
 
 
 
@@ -211,7 +211,7 @@ StatefulSet¿ØÖÆÆ÷¸ù¾İÆäĞòÊıË÷ÒıÎªÃ¿¸öPodÌá¹©Î¨Ò»µÄÖ÷»úÃû¡£ Ö÷»úÃû²ÉÓÃ<statefulse
 
 
 
-* Ê¹ÓÃkubectl scale ¶ÔNacos¶¯Ì¬À©Èİ
+* ä½¿ç”¨kubectl scale å¯¹NacosåŠ¨æ€æ‰©å®¹
 
 ```bash
 kubectl scale sts nacos --replicas=3
@@ -221,7 +221,7 @@ kubectl scale sts nacos --replicas=3
 
 
 
-* ÔÚÀ©Èİºó,Ê¹ÓÃ [`kubectl exec`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec)»ñÈ¡ÔÚpodÖĞµÄNacos¼¯ÈºÅäÖÃÎÄ¼şĞÅÏ¢
+* åœ¨æ‰©å®¹å,ä½¿ç”¨ [`kubectl exec`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec)è·å–åœ¨podä¸­çš„Nacosé›†ç¾¤é…ç½®æ–‡ä»¶ä¿¡æ¯
 
 ```bash
 for i in 0 1 2; do echo nacos-$i; kubectl exec nacos-$i cat conf/cluster.conf; done
@@ -231,87 +231,87 @@ for i in 0 1 2; do echo nacos-$i; kubectl exec nacos-$i cat conf/cluster.conf; d
 
 
 
-* Ê¹ÓÃ [`kubectl exec`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec)Ö´ĞĞNacos API ÔÚÃ¿Ì¨½ÚµãÉÏ»ñÈ¡µ±Ç°**Leader**ÊÇ·ñÒ»ÖÂ
+* ä½¿ç”¨ [`kubectl exec`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec)æ‰§è¡ŒNacos API åœ¨æ¯å°èŠ‚ç‚¹ä¸Šè·å–å½“å‰**Leader**æ˜¯å¦ä¸€è‡´
 
 ```bash
 for i in 0 1 2; do echo nacos-$i; kubectl exec nacos-$i curl GET "http://localhost:8848/nacos/v1/ns/raft/state"; done
 ```
 
-µ½ÕâÀïÄã¿ÉÒÔ·¢ÏÖĞÂ½ÚµãÒÑ¾­Õı³£¼ÓÈëNacos¼¯Èºµ±ÖĞ
+åˆ°è¿™é‡Œä½ å¯ä»¥å‘ç°æ–°èŠ‚ç‚¹å·²ç»æ­£å¸¸åŠ å…¥Nacosé›†ç¾¤å½“ä¸­
 
-# Àı×Ó²¿Êğ»·¾³
+# ä¾‹å­éƒ¨ç½²ç¯å¢ƒ
 
-- »úÆ÷ÅäÖÃ
+- æœºå™¨é…ç½®
 
-| ÄÚÍøIP      | Ö÷»úÃû     | ÅäÖÃ                                                         |
+| å†…ç½‘IP      | ä¸»æœºå     | é…ç½®                                                         |
 | ----------- | ---------- | ------------------------------------------------------------ |
 | 172.17.79.3 | k8s-master | CentOS Linux release 7.4.1708 (Core) Single-core processor Mem 4G Cloud disk 40G |
 | 172.17.79.4 | node01     | CentOS Linux release 7.4.1708 (Core) Single-core processor Mem 4G Cloud disk 40G |
 | 172.17.79.5 | node02     | CentOS Linux release 7.4.1708 (Core) Single-core processor Mem 4G Cloud disk 40G |
 
-- Kubernetes °æ±¾£º**1.12.2** £¨Èç¹ûÄãºÍÎÒÒ»ÑùÖ»Ê¹ÓÃÁËÈıÌ¨»úÆ÷,ÄÇÃ´¼ÇµÃ¿ªÆômaster½ÚµãµÄ²¿Êğ¹¦ÄÜ£©
-- NFS °æ±¾£º**4.1** ÔÚk8s-master½øĞĞ°²×°Server¶Ë,²¢ÇÒÖ¸¶¨¹²ÏíÄ¿Â¼,±¾ÏîÄ¿Ö¸¶¨µÄ**/data/nfs-share**
+- Kubernetes ç‰ˆæœ¬ï¼š**1.12.2** ï¼ˆå¦‚æœä½ å’Œæˆ‘ä¸€æ ·åªä½¿ç”¨äº†ä¸‰å°æœºå™¨,é‚£ä¹ˆè®°å¾—å¼€å¯masterèŠ‚ç‚¹çš„éƒ¨ç½²åŠŸèƒ½ï¼‰
+- NFS ç‰ˆæœ¬ï¼š**4.1** åœ¨k8s-masterè¿›è¡Œå®‰è£…Serverç«¯,å¹¶ä¸”æŒ‡å®šå…±äº«ç›®å½•,æœ¬é¡¹ç›®æŒ‡å®šçš„**/data/nfs-share**
 - Git
 
 
 
-# ÏŞÖÆ
+# é™åˆ¶
 
-* ±ØĞëÒªÊ¹ÓÃ³Ö¾Ã¾í,·ñÔò»á³öÏÖÊı¾İ¶ªÊ§µÄÇé¿ö
-
-
+* å¿…é¡»è¦ä½¿ç”¨æŒä¹…å·,å¦åˆ™ä¼šå‡ºç°æ•°æ®ä¸¢å¤±çš„æƒ…å†µ
 
 
 
-# ÏîÄ¿Ä¿Â¼
 
-| Ä¿Â¼ | ÃèÊö                                |
+
+# é¡¹ç›®ç›®å½•
+
+| ç›®å½• | æè¿°                                |
 | ------ | ----------------------------------- |
-| plugin | °ïÖúNacos¼¯Èº½øĞĞ¶¯Ì¬À©ÈİµÄ²å¼şDocker¾µÏñÔ´Âë |
-| deploy | K8s ²¿ÊğÎÄ¼ş              |
+| plugin | å¸®åŠ©Nacosé›†ç¾¤è¿›è¡ŒåŠ¨æ€æ‰©å®¹çš„æ’ä»¶Dockeré•œåƒæºç  |
+| deploy | K8s éƒ¨ç½²æ–‡ä»¶              |
 
 
 
-# ÅäÖÃÊôĞÔ
+# é…ç½®å±æ€§
 
 * nacos-pvc-nfs.yaml or nacos-quick-start.yaml 
 
-| Ãû³Æ                  | ±ØÒª | ÃèÊö                                    |
+| åç§°                  | å¿…è¦ | æè¿°                                    |
 | --------------------- | -------- | --------------------------------------- |
-| mysql.master.db.name  | Y       | Ö÷¿âÃû³Æ                      |
-| mysql.master.port     | N       | Ö÷¿â¶Ë¿Ú                        |
-| mysql.slave.port      | N       | ´Ó¿â¶Ë¿Ú                       |
-| mysql.master.user     | Y       | Ö÷¿âÓÃ»§Ãû                     |
-| mysql.master.password | Y       | Ö÷¿âÃÜÂë                     |
-| NACOS_REPLICAS        | N      | È·¶¨Ö´ĞĞNacosÆô¶¯½ÚµãÊıÁ¿,Èç¹û²»ÊÊÓÃ¶¯Ì¬À©Èİ²å¼ş,¾Í±ØĞëÅäÖÃÕâ¸öÊôĞÔ£¬·ñÔòÊ¹ÓÃÀ©Èİ²å¼şºó²»»áÉúĞ§ |
-| NACOS_SERVER_PORT     | N       | Nacos ¶Ë¿Ú             |
-| PREFER_HOST_MODE      | Y       | Æô¶¯Nacos¼¯Èº°´ÓòÃû½âÎö |
+| mysql.master.db.name  | Y       | ä¸»åº“åç§°                      |
+| mysql.master.port     | N       | ä¸»åº“ç«¯å£                        |
+| mysql.slave.port      | N       | ä»åº“ç«¯å£                       |
+| mysql.master.user     | Y       | ä¸»åº“ç”¨æˆ·å                     |
+| mysql.master.password | Y       | ä¸»åº“å¯†ç                      |
+| NACOS_REPLICAS        | N      | ç¡®å®šæ‰§è¡ŒNacoså¯åŠ¨èŠ‚ç‚¹æ•°é‡,å¦‚æœä¸é€‚ç”¨åŠ¨æ€æ‰©å®¹æ’ä»¶,å°±å¿…é¡»é…ç½®è¿™ä¸ªå±æ€§ï¼Œå¦åˆ™ä½¿ç”¨æ‰©å®¹æ’ä»¶åä¸ä¼šç”Ÿæ•ˆ |
+| NACOS_SERVER_PORT     | N       | Nacos ç«¯å£             |
+| PREFER_HOST_MODE      | Y       | å¯åŠ¨Nacosé›†ç¾¤æŒ‰åŸŸåè§£æ |
 
 
 
 * **nfs** deployment.yaml 
 
-| Ãû³Æ       | ±ØÒª | ÃèÊö                     |
+| åç§°       | å¿…è¦ | æè¿°                     |
 | ---------- | -------- | ------------------------ |
-| NFS_SERVER | Y       | NFS ·şÎñ¶ËµØÖ·         |
-| NFS_PATH   | Y       | NFS ¹²ÏíÄ¿Â¼ |
-| server     | Y       | NFS ·şÎñ¶ËµØÖ·  |
-| path       | Y       | NFS ¹²ÏíÄ¿Â¼ |
+| NFS_SERVER | Y       | NFS æœåŠ¡ç«¯åœ°å€         |
+| NFS_PATH   | Y       | NFS å…±äº«ç›®å½• |
+| server     | Y       | NFS æœåŠ¡ç«¯åœ°å€  |
+| path       | Y       | NFS å…±äº«ç›®å½• |
 
 
 
 * mysql 
 
-| Ãû³Æ                     | ±ØÒª | ÃèÊö                                                      |
+| åç§°                     | å¿…è¦ | æè¿°                                                      |
 | -------------------------- | -------- | ----------------------------------------------------------- |
-| MYSQL_ROOT_PASSWORD        | N       | ROOT ÃÜÂë                                                    |
-| MYSQL_DATABASE             | Y       | Êı¾İ¿âÃû³Æ                                   |
-| MYSQL_USER                 | Y       | Êı¾İ¿âÓÃ»§Ãû                                  |
-| MYSQL_PASSWORD             | Y       | Êı¾İ¿âÃÜÂë                              |
-| MYSQL_REPLICATION_USER     | Y       | Êı¾İ¿â¸´ÖÆÓÃ»§            |
-| MYSQL_REPLICATION_PASSWORD | Y       | Êı¾İ¿â¸´ÖÆÓÃ»§ÃÜÂë      |
-| Nfs:server                 | N      | NFS ·şÎñ¶ËµØÖ·£¬Èç¹ûÊ¹ÓÃ±¾µØ²¿Êğ²»ĞèÒªÅäÖÃ |
-| Nfs:path                   | N     | NFS ¹²ÏíÄ¿Â¼£¬Èç¹ûÊ¹ÓÃ±¾µØ²¿Êğ²»ĞèÒªÅäÖÃ |
+| MYSQL_ROOT_PASSWORD        | N       | ROOT å¯†ç                                                     |
+| MYSQL_DATABASE             | Y       | æ•°æ®åº“åç§°                                   |
+| MYSQL_USER                 | Y       | æ•°æ®åº“ç”¨æˆ·å                                  |
+| MYSQL_PASSWORD             | Y       | æ•°æ®åº“å¯†ç                               |
+| MYSQL_REPLICATION_USER     | Y       | æ•°æ®åº“å¤åˆ¶ç”¨æˆ·            |
+| MYSQL_REPLICATION_PASSWORD | Y       | æ•°æ®åº“å¤åˆ¶ç”¨æˆ·å¯†ç       |
+| Nfs:server                 | N      | NFS æœåŠ¡ç«¯åœ°å€ï¼Œå¦‚æœä½¿ç”¨æœ¬åœ°éƒ¨ç½²ä¸éœ€è¦é…ç½® |
+| Nfs:path                   | N     | NFS å…±äº«ç›®å½•ï¼Œå¦‚æœä½¿ç”¨æœ¬åœ°éƒ¨ç½²ä¸éœ€è¦é…ç½® |
 
 
 
