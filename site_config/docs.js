@@ -93,6 +93,10 @@ export default {
                 title: 'Admin Console Guide',
                 link: '/en-us/docs/console-guide.html',
               },
+              {
+                title: 'Nacos Monitor Guide',
+                link: '/en-us/docs/monitor-guide.html',
+              }
             ],
           },
           {
@@ -243,6 +247,10 @@ export default {
               {
                 title: '控制台手册',
                 link: '/zh-cn/docs/console-guide.html',
+              },
+              {
+                title: '监控手册',
+                link: '/zh-cn/docs/monitor-guide.html',
               }
             ],
           },
