@@ -15,6 +15,11 @@ export default {
         link: '/en-us/docs/quick-start.html',
       },
       {
+        key: 'developers',
+        text: 'DEVELOPERS',
+        link: '/en-us/docs/nacos-dev.html',
+      },
+      {
         key: 'blog',
         text: 'BLOG',
         link: '/en-us/blog',
@@ -23,6 +28,11 @@ export default {
         key: 'community',
         text: 'COMMUNITY',
         link: '/en-us/community',
+      },
+      {
+        key: 'download',
+        text: 'DOWNLOAD',
+        link: '/en-us/blog/download.html',
       },
       {
         text: 'DEMO-CONSOLE',
@@ -83,6 +93,11 @@ export default {
         link: '/zh-cn/docs/what-is-nacos.html',
       },
       {
+        key: 'developers',
+        text: '开发者',
+        link: '/zh-cn/docs/nacos-dev.html',
+      },
+      {
         key: 'blog',
         text: '博客',
         link: '/zh-cn/blog/index.html',
@@ -91,6 +106,11 @@ export default {
         key: 'community',
         text: '社区',
         link: '/zh-cn/community/index.html',
+      },
+      {
+        key: 'download',
+        text: '下载',
+        link: '/zh-cn/blog/download.html',
       },
       {
         text: '控制台样例',

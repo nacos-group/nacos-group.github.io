@@ -61,6 +61,15 @@
       "meta": {}
     },
     {
+      "filename": "nacos-dev.md",
+      "link": "/en-us/docs/nacos-dev.html",
+      "meta": {
+        "title": "developers",
+        "keywords": "nacos, developers",
+        "description": "nacos developers page"
+      }
+    },
+    {
       "filename": "nacos-spring.md",
       "link": "/en-us/docs/nacos-spring.html",
       "meta": {}
@@ -206,6 +215,15 @@
       "filename": "monitor-guide.md",
       "link": "/zh-cn/docs/monitor-guide.html",
       "meta": {}
+    },
+    {
+      "filename": "nacos-dev.md",
+      "link": "/zh-cn/docs/nacos-dev.html",
+      "meta": {
+        "title": "开发者",
+        "keywords": "nacos，开发者",
+        "description": "nacos开发者页"
+      }
     },
     {
       "filename": "nacos-spring.md",

@@ -70,6 +70,15 @@
       "meta": {}
     },
     {
+      "filename": "download.md",
+      "link": "/en-us/blog/download.html",
+      "meta": {
+        "title": "download page",
+        "keywords": "nacos, download",
+        "description": "download page"
+      }
+    },
+    {
       "filename": "dynamic-route-zuul-nacos.md",
       "link": "/en-us/blog/dynamic-route-zuul-nacos.html",
       "meta": {}
@@ -177,6 +186,15 @@
       "filename": "discovery-console.md",
       "link": "/zh-cn/blog/discovery-console.html",
       "meta": {}
+    },
+    {
+      "filename": "download.md",
+      "link": "/zh-cn/blog/download.html",
+      "meta": {
+        "title": "下载页",
+        "keywords": "nacos, 下载",
+        "description": "下载页"
+      }
     },
     {
       "filename": "dynamic-route-zuul-nacos.md",
