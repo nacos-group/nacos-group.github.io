@@ -1,0 +1,10 @@
+{
+  "filename": "nacos-dev.md",
+  "__html": "<h2>Nacos开发者页</h2>\n<p>开发者页面的md文件名需以<code>-dev</code>结尾标识</p>\n",
+  "link": "/zh-cn/docs/nacos-dev.html",
+  "meta": {
+    "title": "开发者",
+    "keywords": "nacos，开发者",
+    "description": "nacos开发者页"
+  }
+}
