@@ -1,6 +1,8 @@
 # Quick Start for Nacos Spring Boot Projects
 This quick start introduces how to enable Nacos configuration management and service discovery features for your Spring Boot project.
 
+For more details about Nacos Spring Boot: [nacos-spring-boot-project](https://github.com/nacos-group/nacos-spring-boot-project).
+
 The quick start includes two samples:
 * How to enable dynamic configuration updates with Nacos server and nacos-config-spring-boot-starter;
 * How to enable service registration and discovery with Nacos Server and nacos-discovery-spring-boot-starter.
