@@ -67,7 +67,7 @@ brew services start grafana
 
 ### linux
 ```
-sudo yum install https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-4.4.3-1.x86_64.rpm
+sudo yum install https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.2.4-1.x86_64.rpm
 sudo service grafana-server start
 ```
 
