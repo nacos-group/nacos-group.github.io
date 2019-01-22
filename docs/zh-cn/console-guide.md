@@ -13,6 +13,7 @@
     * 推送状态查询
     * 配置版本及一键回滚
 * 命名空间
+* 登录管理
 
 ## 特性详解
 
@@ -132,6 +133,50 @@ Nacos 基于Namespace 帮助用户逻辑隔离多个命名空间，这可以帮�
 
 
 ![image.png | left | 747x206](https://cdn.nlark.com/lark/0/2018/png/9687/1540519427066-effd5153-02c9-4e21-ae9f-1a2e9ae7713e.png "")
+
+## 登录管理
+Nacos0.8版本支持简单登录功能，默认用户名/密码为 nacos/nacos。
+
+![login](/img/login.jpg)
+
+### 修改默认用户名/密码方法
+
+1. 生成加密密码， 在com.alibaba.nacos.console.utils.PasswordEncoderUtil.main函数中，将nacos改成你要改成的密码，运行即可得到加密有算法。注意盐值是随机的，所以生成密码每次可能不一样，请不要担心。
+
+```
+public class PasswordEncoderUtil {
+
+    public static void main(String[] args) {
+        System.out.println(new BCryptPasswordEncoder().encode("nacos"));
+    }
+}
+```
+
+2. 创建用户名或者密码的时候，用指定用户名密码即可
+```
+INSERT INTO users (username, password, enabled) VALUES ('nacos', '$2a$10$EuWPZHzz32dJN7jexM34MOeYirDdFAZm2kuWj7VEOJhhZkDrxfvUu', TRUE);
+INSERT INTO roles (username, role) VALUES ('nacos', 'ROLE_ADMIN');
+```
+
+### 关闭登录功能
+
+由于部分公司自己开发控制台，不希望被nacos的安全filter拦截。因此nacos支持定制关闭登录功能
+找到配置文件 ${nacoshome}/conf/application.properties， 替换以下内容即可。
+
+```
+## spring security config
+### turn off security
+spring.security.enabled=false
+management.security=false
+security.basic.enabled=false
+nacos.security.ignore.urls=/**
+
+#nacos.security.ignore.urls=/,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-fe/public/**,/v1/auth/login,/v1/console/health,/v1/cs/**,/v1/ns/**,/v1/cmdb/**,/actuator/**
+
+```
+
+### 会话时间
+默认会话保持时间为30分钟。30分钟后需要重新登录认证。 暂时不支持修改该默认时间。
 
 
 ## 社区参与的前端共建
