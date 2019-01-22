@@ -287,7 +287,7 @@ true
 注册一个实例到服务。
 
 ### 请求类型
-PUT
+POST
 
 ### 请求路径
 ```plain
@@ -310,7 +310,7 @@ PUT
 
 ### 示例请求
 ```plain
-curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?port=8848&healthy=true&ip=11.11.11.11&weight=1.0&serviceName=nacos.test.3&encoding=GBK&tenant=n1''
+curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?port=8848&healthy=true&ip=11.11.11.11&weight=1.0&serviceName=nacos.test.3&encoding=GBK&tenant=n1''
 ```
 ### 示例返回
 ok
@@ -348,11 +348,11 @@ ok
 修改服务下的一个实例。
 
 ### 请求类型
-POST
+PUT
 
 ### 请求路径
 ```plain
-/nacos/v1/ns/instance/update
+/nacos/v1/ns/instance
 ```
 
 ### 请求参数
@@ -369,7 +369,7 @@ POST
 
 ### 示例请求
 ```plain
-curl -X POST 127.0.0.1:8848/nacos/v1/ns/instance/update?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&cluster=TEST1&weight=8&metadata={}
+curl -X PUT 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&cluster=TEST1&weight=8&metadata={}
 ```
 ### 示例返回
 ok
@@ -459,5 +459,33 @@ curl -X GET '127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.2&ip=10.
 	"clusterName": "DEFAULT",
 	"weight": 1.0
 }
+```
+
+## 发送实例心跳
+### 描述
+发送某个实例的心跳
+
+### 请求类型
+PUT
+
+### 请求路径
+```plain
+/nacos/v1/ns/instance/beat
+```
+
+### 请求参数
+
+| 名称 | 类型 | 是否必选 | 描述 |
+| :--- | :--- | :--- | --- |
+| serviceName | 字符串 | 是 | 服务名 |
+| beat | JSON格式字符串 | 是 | 实例心跳内容 |
+
+### 示例请求
+```plain
+curl -X PUT '127.0.0.1:8848/nacos/v1/ns/instance/beat?serviceName=nacos.test.2&beat=%7b%22cluster%22%3a%22c1%22%2c%22ip%22%3a%22127.0.0.1%22%2c%22metadata%22%3a%7b%7d%2c%22port%22%3a8080%2c%22scheduled%22%3atrue%2c%22serviceName%22%3a%22jinhan0Fx4s.173TL.net%22%2c%22weight%22%3a1%7d'
+```
+### 示例返回
+```
+ok
 ```
 
