@@ -56,7 +56,7 @@ Nacos版本|0.8.0
 具体我们看下3节点服务集群发布配置能力。  
 以下为各个并发数 (施压机台数*并发数) 时，发布配置的TPS，平均RT。
 ![IMAGE](https://img.alicdn.com/tfs/TB1OjzIDpzqK1RjSZFoXXbfcXXa-693-400.png)
-![IMAGE](https://img.alicdn.com/tfs/TB1hWzLDCzqK1RjSZFLXXcn2XXa-500-235.png)
+![IMAGE](https://img.alicdn.com/tfs/TB1s.EfDxjaK1RjSZKzXXXVwXXa-693-325.png)
 
 
 ###2. 获取配置
