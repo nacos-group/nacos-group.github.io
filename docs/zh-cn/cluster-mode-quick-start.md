@@ -9,7 +9,7 @@ http://ip1:port/openAPI  直连ip模式，机器挂则需要修改ip才可以使
 
 http://VIP:port/openAPI  挂载VIP模式，直连vip即可，下面挂server真实ip，可读性不好。
 
-http://nacos.com:port/openAPI  域名+VIP模式，可读性好，而且换ip方便，推荐模式
+http://nacos.com:port/openAPI  域名 + VIP模式，可读性好，而且换ip方便，推荐模式
 
 ![deployDnsVipMode.jpg](/img/deployDnsVipMode.jpg) 
 
@@ -30,18 +30,18 @@ http://nacos.com:port/openAPI  域名+VIP模式，可读性好，而且换ip方�
 unzip nacos-source.zip
 cd nacos/
 mvn -Prelease-nacos clean install -U  
-cd nacos/distribution/target/nacos-server-0.7.0/nacos/bin
+cd nacos/distribution/target/nacos-server-0.8.0/nacos/bin
 ```
 
 ### 下载编译后压缩包方式
 下载地址
 
-[zip包](https://github.com/alibaba/nacos/releases/download/0.7.0/nacos-server-0.7.0.zip)
+[zip包](https://github.com/alibaba/nacos/releases/download/0.8.0/nacos-server-0.8.0.zip)
 
-[tar.gz包](https://github.com/alibaba/nacos/releases/download/0.7.0/nacos-server-0.7.0.tar.gz)
+[tar.gz包](https://github.com/alibaba/nacos/releases/download/0.8.0/nacos-server-0.8.0.tar.gz)
 
 ```bash
-  unzip nacos-server-0.7.0.zip 或者 tar -xvf nacos-server-0.7.0.tar.gz
+  unzip nacos-server-0.8.0.zip 或者 tar -xvf nacos-server-0.8.0.tar.gz
   cd nacos/bin
 ```
 

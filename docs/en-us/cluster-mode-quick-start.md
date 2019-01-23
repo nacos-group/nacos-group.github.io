@@ -2,6 +2,18 @@
 
 This Quick Start Manual is to help you quickly download, install and use Nacos on your computer to deploy the cluster mode for production use.
 
+### Cluster Deployment Architecture
+Therefore, when it is open source, it is recommended that users put all server lists under a vip and then hang under a domain name.
+
+Http://ip1:port/openAPI Directly connected to ip mode, the machine needs to be modified to use ip.
+
+Http://VIP:port/openAPI Mount the VIP mode, directly connect to vip, the following server ip real ip, readability is not good.
+
+Http://nacos.com:port/openAPI Domain name + VIP mode, good readability, and easy to change ip, recommended mode
+
+![deployDnsVipMode.jpg](/img/deployDnsVipMode.jpg) 
+
+
 ## 1. Preparing for the Environment
 
 Make sure that it is installed and used in the environment:
@@ -24,19 +36,19 @@ You can get Nacos in two ways.
 unzip nacos-source.zip
 cd nacos/
 mvn -Prelease-nacos clean install -U  
-cd nacos/distribution/target/nacos-server-0.7.0/nacos/bin
+cd nacos/distribution/target/nacos-server-0.8.0/nacos/bin
 ```
 
 ### Download Compressed Packet after Compilation
 Download address
 
-[zip package](https://github.com/alibaba/nacos/releases/download/0.7.0/nacos-server-0.7.0.zip)
+[zip package](https://github.com/alibaba/nacos/releases/download/0.8.0/nacos-server-0.8.0.zip)
 
-[tar.gz package](https://github.com/alibaba/nacos/releases/download/0.7.0/nacos-server-0.7.0.tar.gz)
+[tar.gz package](https://github.com/alibaba/nacos/releases/download/0.8.0/nacos-server-0.8.0.tar.gz)
 
 
 ```bash
-  unzip nacos-server-0.7.0.zip or tar -xvf nacos-server-0.7.0.tar.gz
+  unzip nacos-server-0.8.0.zip or tar -xvf nacos-server-0.8.0.tar.gz
   cd nacos/bin
 ```
 

@@ -1,1 +1,1 @@
-**IN PLAN** with Nacos 0.7.0 
+**IN PLAN** with Nacos 1.x.x
