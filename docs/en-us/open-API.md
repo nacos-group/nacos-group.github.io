@@ -379,7 +379,7 @@ POST
 | :--- | :--- | :--- | --- |
 | ip | String | yes | IP of instance |
 | port | int | yes | Port of instance |
-| tenant | String | no | ID of tenant |
+| namespaceId | String | no | ID of namespace |
 | weight | double | no | Weight |
 | enable | boolean | no | enabled or not |
 | healthy | boolean | no | healthy or not |
@@ -390,7 +390,7 @@ POST
 
 ### Request Example
 ```plain
-curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?port=8848&healthy=true&ip=11.11.11.11&weight=1.0&serviceName=nacos.test.3&encoding=GBK&tenant=n1''
+curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?port=8848&healthy=true&ip=11.11.11.11&weight=1.0&serviceName=nacos.test.3&encoding=GBK&namespaceId=n1''
 ```
 
 ### Response Example
@@ -416,7 +416,7 @@ DELETE
 | ip | String | yes | IP of instance |
 | port | int | yes | Port of instance |
 | cluster | String | yes | Cluster name |
-| tenant | String | no | ID of tenant |
+| namespaceId | String | no | ID of namespace |
 
 ### Request Example
 ```plain
@@ -444,7 +444,7 @@ PUT
 | ip | String | yes | IP of instance |
 | port | int | yes | Port of instance |
 | cluster | String | yes | Cluster name |
-| tenant | String | no | ID of tenant |
+| namespaceId | String | no | ID of namespace |
 | weight | double | no | Weight |
 | metadata | JSON | no | Extended information |
 
@@ -472,7 +472,7 @@ GET
 | Name | Type | Required | Description |
 | :--- | :--- | :--- | --- |
 | serviceName | String | yes | Service name |
-| tenant | String | no | ID of tenant |
+| namespaceId | String | no | ID of namespace |
 | clusters | String, splited by comma | no | Cluster name |
 | healthyOnly | boolean | no, default value is false | Return healthy instance or not |
 
@@ -521,7 +521,7 @@ GET
 | serviceName | String | yes | Service name |
 | ip | String | yes | IP of instance |
 | port | String | yes | Port of instance |
-| tenant | String | no | ID of tenant |
+| namespaceId | String | no | ID of namespace |
 | clusters | String, splited by comma | no | Cluster name |
 
 ### Request Example
