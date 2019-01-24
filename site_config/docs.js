@@ -30,30 +30,30 @@ export default {
                 title: 'Nacos',
                 link: '/en-us/docs/quick-start.html',
               },
-                {
-                    title: 'Nacos Spring',
-                    link: '/en-us/docs/quick-start-spring.html',
-                },
-                {
-                    title: 'Nacos Spring Boot',
-                    link: '/en-us/docs/quick-start-spring-boot.html',
-                },
-                {
-                    title: 'Nacos Spring Cloud',
-                    link: '/en-us/docs/quick-start-spring-cloud.html',
-                },
-                {
-                    title: 'Nacos Docker',
-                    link: '/en-us/docs/quick-start-docker.html',
-                },
-                {
-                    title: 'Nacos with Dubbo',
-                    link: '/en-us/docs/use-nacos-with-dubbo.html',
-                },
-                {
-                    title: 'Nacos with K8s',
-                    link: '/en-us/docs/use-nacos-with-kubernetes.html',
-                },
+              {
+                  title: 'Nacos Spring',
+                  link: '/en-us/docs/quick-start-spring.html',
+              },
+              {
+                  title: 'Nacos Spring Boot',
+                  link: '/en-us/docs/quick-start-spring-boot.html',
+              },
+              {
+                  title: 'Nacos Spring Cloud',
+                  link: '/en-us/docs/quick-start-spring-cloud.html',
+              },
+              {
+                  title: 'Nacos Docker',
+                  link: '/en-us/docs/quick-start-docker.html',
+              },
+              {
+                  title: 'Nacos with Dubbo',
+                  link: '/en-us/docs/use-nacos-with-dubbo.html',
+              },
+              {
+                  title: 'Nacos with K8s',
+                  link: '/en-us/docs/use-nacos-with-kubernetes.html',
+              },
             ],
           },
           {
@@ -85,10 +85,10 @@ export default {
                 title: 'Deployment Guide',
                 link: '/en-us/docs/deployment.html',
               },
-                {
-                    title: 'Cluster Mode Deployment',
-                    link: '/en-us/docs/cluster-mode-quick-start.html',
-                },
+              {
+                  title: 'Cluster Mode Deployment',
+                  link: '/en-us/docs/cluster-mode-quick-start.html',
+              },
               {
                 title: 'Management OpenAPI',
                 link: '/en-us/docs/managementAPI.html',
@@ -104,7 +104,11 @@ export default {
               {
                 title: 'Nacos Monitor Guide',
                 link: '/en-us/docs/monitor-guide.html',
-              }
+              },
+              {
+                title: 'Nacos Config Benchmark',
+                link: '/en-us/docs/nacos-config-benchmark.html',
+              },
             ],
           },
           {
@@ -245,17 +249,17 @@ export default {
                 link: '/zh-cn/docs/managementAPI.html',
               },
               {
-                title: '命令行手册',
-                link: '/zh-cn/docs/CLI-guide.html',
-              },
-              {
                 title: '控制台手册',
                 link: '/zh-cn/docs/console-guide.html',
               },
               {
                 title: '监控手册',
                 link: '/zh-cn/docs/monitor-guide.html',
-              }
+              },
+              {
+                title: '配置模块压测模型',
+                link: '/en-us/docs/nacos-config-benchmark.html',
+              },
             ],
           },
           {
