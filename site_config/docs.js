@@ -94,10 +94,6 @@ export default {
                 link: '/en-us/docs/managementAPI.html',
               },
               {
-                title: 'Nacos Operator CLI Guide',
-                link: '/en-us/docs/CLI-guide.html',
-              },
-              {
                 title: 'Admin Console Guide',
                 link: '/en-us/docs/console-guide.html',
               },
