@@ -415,12 +415,12 @@ DELETE
 | serviceName | String | yes | Service name |
 | ip | String | yes | IP of instance |
 | port | int | yes | Port of instance |
-| cluster | String | yes | Cluster name |
+| clusterName | String | no | Cluster name |
 | namespaceId | String | no | ID of namespace |
 
 ### Request Example
 ```plain
-curl -X DELETE 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&cluster=TEST1
+curl -X DELETE 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&clusterName=TEST1
 ```
 ### Response Example
 ok
@@ -443,14 +443,14 @@ PUT
 | serviceName | String | yes | Service name |
 | ip | String | yes | IP of instance |
 | port | int | yes | Port of instance |
-| cluster | String | yes | Cluster name |
+| clusterName | String | no | Cluster name |
 | namespaceId | String | no | ID of namespace |
 | weight | double | no | Weight |
 | metadata | JSON | no | Extended information |
 
 ### Request Example
 ```plain
-curl -X PUT 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&cluster=TEST1&weight=8&metadata={}
+curl -X PUT 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&clusterName=TEST1&weight=8&metadata={}
 ```
 ### Response Example
 ok
@@ -522,7 +522,7 @@ GET
 | ip | String | yes | IP of instance |
 | port | String | yes | Port of instance |
 | namespaceId | String | no | ID of namespace |
-| clusters | String, splited by comma | no | Cluster name |
+| cluster | String | no | Cluster name |
 
 ### Request Example
 ```plain

@@ -334,12 +334,12 @@ DELETE
 | serviceName | 字符串 | 是 | 服务名 |
 | ip | 字符串 | 是 | 服务实例IP |
 | port | int | 是 | 服务实例port |
-| cluster | 字符串 | 是 | 集群名称 |
+| clusterName | 字符串 | 否 | 集群名称 |
 | namespaceId | 字符串 | 否 | 命名空间ID |
 
 ### 示例请求
 ```plain
-curl -X DELETE 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&cluster=TEST1
+curl -X DELETE 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&clusterName=TEST1
 ```
 ### 示例返回
 ok
@@ -362,14 +362,14 @@ PUT
 | serviceName | 字符串 | 是 | 服务名 |
 | ip | 字符串 | 是 | 服务实例IP |
 | port | int | 是 | 服务实例port |
-| cluster | 字符串 | 是 | 集群名称 |
+| clusterName | 字符串 | 否 | 集群名称 |
 | namespaceId | 字符串 | 否 | 命名空间ID |
 | weight | double | 否 | 权重 |
 | metadata | JSON | 否 | 扩展信息 |
 
 ### 示例请求
 ```plain
-curl -X PUT 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&cluster=TEST1&weight=8&metadata={}
+curl -X PUT 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&clusterName=TEST1&weight=8&metadata={}
 ```
 ### 示例返回
 ok
@@ -440,7 +440,7 @@ GET
 | ip | 字符串 | 是 | 实例IP |
 | port | 字符串 | 是 | 实例端口 |
 | namespaceId | 字符串 | 否 | 命名空间ID |
-| clusters | 字符串，多个集群用逗号分隔 | 否 | 集群名称 |
+| cluster | 字符串 | 否 | 集群名称 |
 | healthyOnly | boolean | 否，默认为false | 是否只返回健康实例 |
 
 ### 示例请求
