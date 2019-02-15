@@ -20,6 +20,10 @@ export default {
                 title: 'Architecure',
                 link: '/en-us/docs/architecture.html',
               },
+              {
+                title: 'FAQ',
+                link: '/en-us/docs/FAQ.html',
+              },
             ],
           },
           {
@@ -170,6 +174,10 @@ export default {
               {
                 title: '架构',
                 link: '/zh-cn/docs/architecture.html',
+              },
+              {
+                title: 'FAQ',
+                link: '/zh-cn/docs/FAQ.html',
               },
             ],
           },

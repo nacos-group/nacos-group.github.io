@@ -6,6 +6,11 @@
       "meta": {}
     },
     {
+      "filename": "FAQ.md",
+      "link": "/en-us/docs/FAQ.html",
+      "meta": {}
+    },
+    {
       "filename": "activity.md",
       "link": "/en-us/docs/activity.html",
       "meta": {}
@@ -155,6 +160,11 @@
     {
       "filename": "CLI-guide.md",
       "link": "/zh-cn/docs/CLI-guide.html",
+      "meta": {}
+    },
+    {
+      "filename": "FAQ.md",
+      "link": "/zh-cn/docs/FAQ.html",
       "meta": {}
     },
     {
