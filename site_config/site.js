@@ -29,11 +29,11 @@ export default {
         text: 'COMMUNITY',
         link: '/en-us/community',
       },
-      {
-        key: 'download',
-        text: 'DOWNLOAD',
-        link: '/en-us/blog/download.html',
-      },
+      // {
+      //   key: 'download',
+      //   text: 'DOWNLOAD',
+      //   link: '/en-us/blog/download.html',
+      // },
       {
         text: 'DEMO-CONSOLE',
           link: 'http://console.nacos.io/nacos/index.html',
