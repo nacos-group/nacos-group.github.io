@@ -3,8 +3,9 @@
   - [Nacos如何支持多环境](#1.2)
   - [Nacos是否生产可用](#1.3)
   - [Nacos版本计划](#1.4)
-  - [Nacos有什么依赖](#1.5)
-  - [Nacos使用什么开源协议](#1.6)
+  - [Nacos客户端版本兼容问题](#1.5)
+  - [Nacos有什么依赖](#1.6)
+  - [Nacos使用什么开源协议](#1.7)
 
 - Nacos运维问题
   - [Nacos如何单机部署](#2.1)
@@ -21,6 +22,7 @@
   - [Nacos支持Spring体系](#3.4)
   - [不使用Nacos SDK如何访问Nacos](#3.5)
   - [Nacos对多语言的支持](#3.6)
+  - [服务端报错java.lang.IllegalStateException: unable to find local peer: 127.0.0.1:8848](#3.7)
 
 - Nacos原理问题
 
@@ -41,6 +43,10 @@ Nacos在2019.1发布了Pre-GA版本，支持了安全隔离、监控和服务迁
 <h4 id="1.4">Nacos版本计划</h4>
 
 Nacos 0.8.0 开始支持生产可用，1.0版本达到大规模生产可用，2.0版本计划与K8s、Spring Cloud、Service Mesh、Serverless进一步融合，具体的详情参考[Nacos规划](https://nacos.io/zh-cn/docs/roadmap.html)
+
+<h4 id="1.4">Nacos客户端版本兼容问题</h4>
+
+请尽量使用与服务端版本一致的客户端版本,目前客户端0.3.0及以下版本不兼容服务端0.8.0及以上版本.
 
 <h4 id="1.5">Nacos有什么依赖</h4>
 
@@ -99,5 +105,8 @@ Nacos的网络交互都是基于Http协议实现的，提供了[Open-API](https:
 
 <h4 id="3.6">Nacos对多语言的支持</h4>
 Nacos目前只支持Java，对于其他语言的支持还正在开发中，需要大家大力支持一起共建
+
+<h4 id="3.6">服务端报错java.lang.IllegalStateException: unable to find local peer: 127.0.0.1:8848</h4>
+这个问题是因为Nacos获取本机IP时,没有获取到正确的外部IP.需要保证InetAddress.getLocalHost().getHostAddress()或者hostname -i的结果是与cluster.conf里配置的IP是一致的.
 
 ## Nacos原理问题
