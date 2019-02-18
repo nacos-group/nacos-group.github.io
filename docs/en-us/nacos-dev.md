@@ -6,32 +6,31 @@ description: nacos developers page
 
 ## Developers
 
-This page shows Nacos developers and continues to expand.
+This page shows Nacos developers and continues to expand. The list is not prioritized.
 
 ### Committers
 
-| GITHUB ID    | 姓名		| 组织    	| 角色    | 时区 |
-| ------------ | ---------- | --------- | --------- | ------|
-| loadchange   | 王彦民      | 饿了么     | Committer  | +8   |
-| zhangjimmy   | 张波        | 虎牙直播   | Committer  | +8   |
-| nanamikon    | 周健        | 虎牙直播   | Committer  | +8   |
-| lzp0412      | 李志鹏      | 虎牙直播   | Committer  | +8   |
-| paderlol     | 张龙        | 蜜獾      | Committer  | +8   |
-| pguo65535    | 郭平        | 阿里巴巴   | Committer  | +8   |
-| xuechaos     | 邢学超      | 阿里巴巴   | Committer  | +8   |
-| yanlinly     | 李艳林      | 阿里巴巴   | Committer  | +8   |
-| nkorange     | 朱鹏飞      | 阿里巴巴   | Committer  | +8   |
-| hxy1991      | 黄晓禹      | 阿里巴巴   | Committer  | +8   |
-| mingyixu     | 徐小春      | 阿里巴巴   | Committer  | +8   |
-| JianweiWang  | 王建伟      | 阿里巴巴   | Committer  | +8   |
-| wyp12        | 吴援飘      | 阿里巴巴   | Committer  | +8   |
-| TsingLiang   | 卿亮        | 阿里巴巴   | Committer  | +8   |
-| yangyshdan   | 杨奕        | 阿里巴巴   | Committer  | +8   |
-| flystar32    | 肖京        | 阿里巴巴   | Committer  | +8   |
-| jameslcj     | 李晨        | 阿里巴巴   | Committer  | +8   |
-| mercyblitz   | 马昕曦      | 阿里巴巴   | Committer  | +8   |
-| fangjian0423 | 方剑        | 阿里巴巴   | Committer  | +8   |
-
+| Github ID                                       | Name         | Organization | Role      | Mail                                                         |
+| ----------------------------------------------- | -----------  | ----------   | --------- | ------------------------------------------------------------ |
+| [loadchange](https://github.com/loadchange)     | Yanmin Wang  | ele          | Committer | wym177771@alibaba-inc.com                                    |
+| [zhangjimmy](https://github.com/zhangjimmy)     | Bo Zhang     | Huya         | Committer | zhangjimmy@foxmail.com                                       |
+| [nanamikon](https://github.com/nanamikon)       | Jian Zhou    | Huya         | Committer | nanamikon@gmail.com                                          |
+| [lzp0412](https://github.com/lzp0412)           | Zhipeng Li   | Huya         | Committer | 641785844@qq.com                                             |
+| [paderlol](https://github.com/paderlol)         | Pader Zhang  | Shareworks   | Committer | huangbbbaihao@gmail.com                                     |
+| [pguo65535](https://github.com/pguo65535)       | Ping Guo     | Alibaba      | Committer | guoping.gp@alibaba-inc.com                                   |
+| [xuechaos](https://github.com/xuechaos)         | Xuechao Xing | Alibaba      | Committer | xingxuechao@alibaba-inc.com                                  |
+| [yanlinly](https://github.com/yanlinly)         | Yanlin Li    | Alibaba      | Committer | water.lyl@alibaba-inc.com                                    |
+| [nkorange](https://github.com/nkorange)         | Pengfei Zhu  | Alibaba      | Committer | dungu.zpf@alibaba-inc.com                                    |
+| [hxy1991](https://github.com/hxy1991)           | Xiaoyu Huang | Alibaba      | Committer | huangxiaoyu1018@gmail.com                                    |
+| [yangyshdan](https://github.com/yangyshdan)     | Yi Yang      | Alibaba      | Committer | fuyi.yy@alibaba-inc.com                                      |
+| [mingyixu](https://github.com/mingyixu)         | Xiaochun Xu  | Alibaba      | Committer | xiaochun.xxc@alibaba-inc.com                                 |
+| [JianweiWang](https://github.com/JianweiWang)   | Jianwei Wang | Alibaba      | Committer | jianwei.wjw@alibaba-inc.com                                  |
+| [jameslcj](https://github.com/jameslcj)         | Chen li      | Alibaba      | Committer | zhichen.lc@alibaba-inc.com                                   |
+| [flystar32](https://github.com/flystar32)       | Jing Xiao    | Alibaba      | Committer | yizhan.xj@alibaba-inc.com                                    |
+| [mercyblitz](https://github.com/mercyblitz)     | Mercy Ma     | Alibaba      | Committer | taogu.mxx@alibaba-inc.com                                    |
+| [fangjian0423](https://github.com/fangjian0423) | Jian Fang    | Alibaba      | Committer | fangjian.fj@alibaba-inc.com                                  |
+| [wyp12](https://github.com/wyp12)               | Yuanpiao Wu  | Alibaba      | Committer | caogu.wyp@antfin.com                                         |
+| [TsingLiang](https://github.com/TsingLiang)     | Liang ji     | Alibaba      | Committer | qingliang.ql@alibaba-inc.com                                 | 
 
 
 
