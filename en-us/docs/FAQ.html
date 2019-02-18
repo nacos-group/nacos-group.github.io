@@ -76,7 +76,7 @@
 <h4 id="2.5">如何在k8s中部署Nacos</h4>
 <p>在生产环境部署Nacos集群，如果要对Nacos进行扩容操作，需要手动更改集群ip文件，启动新的Nacos服务。为了能进行自动化运维，Nacos和k8s结合利用StatefulSets提供了自动运维方案，能对Nacos进行动态扩缩容，具体详情参考<a href="https://github.com/nacos-group/nacos-k8s/blob/master/README-CN.md">Kubernetes Nacos</a></p>
 <h4 id="2.6">如何监控Nacos</h4>
-<p>Nacos0.8版本提供了Metrics数据暴露能力，能通过Metrics数据的内容对Nacos的运行状态进行监控，详情参考<a href="http://127.0.0.1:8080/zh-cn/docs/monitor-guide.html">Nacos监控</a></p>
+<p>Nacos0.8版本提供了Metrics数据暴露能力，能通过Metrics数据的内容对Nacos的运行状态进行监控，详情参考<a href="https://nacos.io/zh-cn/docs/monitor-guide.html">Nacos监控</a></p>
 <h2>Nacos使用问题</h2>
 <h4 id="3.1">Zookeeper上的服务可以迁移到Nacos上吗?</h4>
 <p>可以通过Nacos-Sync把Zookeeper服务迁移到Nacos，也可以从Nacos迁移到Zookeeper，具体可以参考<a href="https://github.com/paderlol/nacos-sync-example">Nacos Sync 使用</a></p>

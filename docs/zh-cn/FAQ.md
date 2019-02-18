@@ -73,7 +73,7 @@ Nacos单机模式默认使用内嵌的数据库作为存储引擎，如果想换
 
 <h4 id="2.6">如何监控Nacos</h4>
 
-Nacos0.8版本提供了Metrics数据暴露能力，能通过Metrics数据的内容对Nacos的运行状态进行监控，详情参考[Nacos监控](http://127.0.0.1:8080/zh-cn/docs/monitor-guide.html)
+Nacos0.8版本提供了Metrics数据暴露能力，能通过Metrics数据的内容对Nacos的运行状态进行监控，详情参考[Nacos监控](https://nacos.io/zh-cn/docs/monitor-guide.html)
 
 ## Nacos使用问题
 <h4 id="3.1">Zookeeper上的服务可以迁移到Nacos上吗?</h4>
