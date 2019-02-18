@@ -15,11 +15,11 @@ export default {
               link: '/en-us/blog/nacos0.5.html',
           },
           {
-              img: 'https://img.alicdn.com/tfs/TB1i4ugBjDpK1RjSZFrXXa78VXa-1522-584.png',
-              title: '虎牙直播参与共建Nacos生态',
-              content: '虎牙中间件团队也深入参与了Nacos生态的构建，核心成员张波、周建、李志鹏参与构建了包括Nacos的核心同步组件Nacos-sync、Nacos的DNS-F模块，把虎牙的业务模型和生产部署经验也共建到Nacos生态中。',
-              dateStr: 'Jan 10，2019',
-              link: '/en-us/blog/huya-nacos.html',
+              img: 'https://yqfile.alicdn.com/6b6cebffb9b590ebc195815bac5ab2f7529a48b6.png',
+              title: '虎牙直播在微服务改造方面的实践和总结',
+              content: '文章整理自虎牙基础保障部中间件团队负责人张波（社区ID：zhangjimmy）在Dubbo Meetup 广州站沙龙上的分享，介绍虎牙在DNS、服务注册、CMDB和服务配置中心等方面的实践。',
+              dateStr: 'Feb 10，2019',
+              link: '/en-us/blog/huya-practice.html',
           },
           {
               img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1544689744102-fd00fec6-ca80-4c0c-9b0d-538f17279963.png',
@@ -160,11 +160,11 @@ export default {
               link: '/en-us/blog/nacos0.5.html',
           },
           {
-              img: 'https://img.alicdn.com/tfs/TB1i4ugBjDpK1RjSZFrXXa78VXa-1522-584.png',
-              title: '虎牙直播参与共建Nacos生态',
-              content: '虎牙中间件团队也深入参与了Nacos生态的构建，核心成员张波、周建、李志鹏参与构建了包括Nacos的核心同步组件Nacos-sync、Nacos的DNS-F模块，把虎牙的业务模型和生产部署经验也共建到Nacos生态中。',
-              dateStr: 'Jan 10，2019',
-              link: '/en-us/blog/huya-nacos.html',
+              img: 'https://yqfile.alicdn.com/6b6cebffb9b590ebc195815bac5ab2f7529a48b6.png',
+              title: '虎牙直播在微服务改造方面的实践和总结',
+              content: '文章整理自虎牙基础保障部中间件团队负责人张波（社区ID：zhangjimmy）在Dubbo Meetup 广州站沙龙上的分享，介绍虎牙在DNS、服务注册、CMDB和服务配置中心等方面的实践。',
+              dateStr: 'Feb 10，2019',
+              link: '/en-us/blog/huya-practice.html',
           },
           {
               img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1544689744102-fd00fec6-ca80-4c0c-9b0d-538f17279963.png',
