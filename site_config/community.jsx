@@ -8,11 +8,11 @@ export default {
       list: [
 
           {
-              img: 'https://cdn.nlark.com/lark/0/2018/png/15914/1542705469700-1e4ffc48-9632-4495-a8dd-c3dc8647b345.png',
-              title: 'Nacos 计划发布v0.5版本，支持DNS-SD',
+              img: 'https://07imgmini.eastday.com/mobile/20190125/20190125113742_a85399def3ae44c6f4669a4bb458f178_1.jpeg',
+              title: 'Dubbo Nacos 发布 v0.8.0 PRE-GA版本，安全稳定上生产',
               content: '阿里巴巴微服务开源项目[Dubbo Nacos](https://github.com/alibaba/nacos)于本周发布 v0.5.0 版本，该版本主要在 DNS-based Service Discovery，支持 TTL，支持 Java 11，优化Nacos产品用户体验，与Spring Cloud Gateway的集成等方面做了演进。',
-              dateStr: 'Nov 25，2018',
-              link: '/en-us/blog/nacos0.5.html',
+              dateStr: 'Jan 20，2019',
+              link: '/en-us/blog/nacos0.8.html',
           },
           {
               img: 'https://yqfile.alicdn.com/6b6cebffb9b590ebc195815bac5ab2f7529a48b6.png',
@@ -21,20 +21,20 @@ export default {
               dateStr: 'Feb 10，2019',
               link: '/en-us/blog/huya-practice.html',
           },
-          {
-              img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1544689744102-fd00fec6-ca80-4c0c-9b0d-538f17279963.png',
-              title: 'Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署',
-              dateStr: 'Dec 14, 2018',
-              content: '本文介绍了阿里巴巴的微服务开源项目[Dubbo Nacos](https://github.com/alibaba/nacos) v0.6 版本，该版本主要在支持了Dubbo生态和Docker部署。',
-              link: '/en-us/blog/nacos0.6.html',
-          },
           // {
-          //     img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1540738282849-61e2022a-46a9-4d81-ae16-6d6f0515450b.png',
-          //     title: 'Nacos 进入CNCF landscape',
-          //     content: 'Nacos 被CNCF 纳入landscape大图。',
-          //     dateStr: 'Oct 28，2018',
-          //     link: '/en-us/blog/cncf.html',
+          //     img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1544689744102-fd00fec6-ca80-4c0c-9b0d-538f17279963.png',
+          //     title: 'Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署',
+          //     dateStr: 'Dec 14, 2018',
+          //     content: '本文介绍了阿里巴巴的微服务开源项目[Dubbo Nacos](https://github.com/alibaba/nacos) v0.6 版本，该版本主要在支持了Dubbo生态和Docker部署。',
+          //     link: '/en-us/blog/nacos0.6.html',
           // },
+          {
+              img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1540738282849-61e2022a-46a9-4d81-ae16-6d6f0515450b.png',
+              title: 'Nacos 进入CNCF landscape',
+              content: 'Nacos 被CNCF 纳入landscape大图。',
+              dateStr: 'Oct 28，2018',
+              link: '/en-us/blog/cncf.html',
+          },
       ]
     },
     contacts: {
@@ -152,12 +152,13 @@ export default {
     events: {
       title: '事件 & 新闻',
       list: [
+
           {
-              img: 'https://cdn.nlark.com/lark/0/2018/png/15914/1542705469700-1e4ffc48-9632-4495-a8dd-c3dc8647b345.png',
-              title: 'Nacos 计划发布v0.5版本，支持DNS-SD',
+              img: 'https://07imgmini.eastday.com/mobile/20190125/20190125113742_a85399def3ae44c6f4669a4bb458f178_1.jpeg',
+              title: 'Dubbo Nacos 发布 v0.8.0 PRE-GA版本，安全稳定上生产',
               content: '阿里巴巴微服务开源项目[Dubbo Nacos](https://github.com/alibaba/nacos)于本周发布 v0.5.0 版本，该版本主要在 DNS-based Service Discovery，支持 TTL，支持 Java 11，优化Nacos产品用户体验，与Spring Cloud Gateway的集成等方面做了演进。',
-              dateStr: 'Nov 25，2018',
-              link: '/en-us/blog/nacos0.5.html',
+              dateStr: 'Jan 20，2019',
+              link: '/en-us/blog/nacos0.8.html',
           },
           {
               img: 'https://yqfile.alicdn.com/6b6cebffb9b590ebc195815bac5ab2f7529a48b6.png',
@@ -167,11 +168,11 @@ export default {
               link: '/en-us/blog/huya-practice.html',
           },
           {
-              img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1544689744102-fd00fec6-ca80-4c0c-9b0d-538f17279963.png',
-              title: 'Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署',
-              dateStr: 'Dec 14, 2018',
-              content: '本文介绍了阿里巴巴的微服务开源项目[Dubbo Nacos](https://github.com/alibaba/nacos) v0.6 版本，该版本主要在支持了Dubbo生态和Docker部署。',
-              link: '/en-us/blog/nacos0.6.html',
+              img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1540738282849-61e2022a-46a9-4d81-ae16-6d6f0515450b.png',
+              title: 'Nacos 进入CNCF landscape',
+              content: 'Nacos 被CNCF 纳入landscape大图。',
+              dateStr: 'Oct 28，2018',
+              link: '/en-us/blog/cncf.html',
           },
       ]
     },
