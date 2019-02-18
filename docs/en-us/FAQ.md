@@ -21,6 +21,7 @@
   - [Nacos支持Spring体系](#3.4)
   - [不使用Nacos SDK如何访问Nacos](#3.5)
   - [Nacos对多语言的支持](#3.6)
+  - [Nacos0.8版本登陆失败](#3.7)
 
 - Nacos原理问题
 
@@ -98,6 +99,12 @@ Nacos完善支持了Sping技术栈，具体可以参考[Nacos Spring](https://na
 Nacos的网络交互都是基于Http协议实现的，提供了[Open-API](https://nacos.io/zh-cn/docs/open-API.html)可以很容易实现Nacos的访问
 
 <h4 id="3.6">Nacos对多语言的支持</h4>
+
 Nacos目前只支持Java，对于其他语言的支持还正在开发中，需要大家大力支持一起共建
+
+<h4 id="3.7">Nacos0.8版本登陆失败</h4>
+
+Nacos 0.8版本当使用openjdk并且没有JAVA_HOME的环境变量时，nacos可以启动成功，是因为yum install安装的openjdk 会把java命令注册一份到/bin目录下面,所以会引发SignatureException异常。这个问题已经修复，0.9版本会发版，具体详情可以参考[issue](https://github.com/alibaba/nacos/issues/711)
+
 
 ## Nacos原理问题
