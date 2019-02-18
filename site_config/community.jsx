@@ -31,7 +31,7 @@ export default {
           {
               img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1540738282849-61e2022a-46a9-4d81-ae16-6d6f0515450b.png',
               title: 'Nacos 进入CNCF landscape',
-              content: 'Nacos 被CNCF 纳入landscape大图。',
+              content: 'Nacos 被CNCF 纳入landscape大图.CNCF（Cloud Native Compute Foundation） 是 Linux 基金会旗下的一个组织，旨在推动以容器为中心的云原生系统。从 2016 年 11 月，CNCF 开始维护了一个 Cloud Native Landscape 的 repo。',
               dateStr: 'Oct 28，2018',
               link: '/en-us/blog/cncf.html',
           },
@@ -170,7 +170,7 @@ export default {
           {
               img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1540738282849-61e2022a-46a9-4d81-ae16-6d6f0515450b.png',
               title: 'Nacos 进入CNCF landscape',
-              content: 'Nacos 被CNCF 纳入landscape大图。',
+              content: 'Nacos 被CNCF 纳入landscape大图.CNCF（Cloud Native Compute Foundation） 是 Linux 基金会旗下的一个组织，旨在推动以容器为中心的云原生系统。从 2016 年 11 月，CNCF 开始维护了一个 Cloud Native Landscape 的 repo。',
               dateStr: 'Oct 28，2018',
               link: '/en-us/blog/cncf.html',
           },
