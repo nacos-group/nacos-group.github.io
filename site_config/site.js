@@ -15,8 +15,8 @@ export default {
         link: '/en-us/docs/quick-start.html',
       },
       {
-        key: 'developers',
-        text: 'DEVELOPERS',
+        key: 'Nacos TEAM',
+        text: 'TEAM',
         link: '/en-us/docs/nacos-dev.html',
       },
       {
@@ -93,8 +93,8 @@ export default {
         link: '/zh-cn/docs/what-is-nacos.html',
       },
       {
-        key: 'developers',
-        text: '开发者',
+        key: 'Nacos TEAM',
+        text: '开发者团队',
         link: '/zh-cn/docs/nacos-dev.html',
       },
       {

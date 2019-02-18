@@ -6,17 +6,17 @@ export default {
                 title: 'Committer Guide',
                 children: [
                     {
-                        title: 'How to contribute',
+                        title: 'How to Contribute',
                         link: '/en-us/docs/contributing-dev.html', // 开发者文档均以_dev结尾作为文件名，md文件放在docs目录下
                     },
                     {
-                        title: 'Developers',
+                        title: 'Nacos Team',
                         link: '/en-us/docs/nacos-dev.html',
                     },
                 ],
             }
         ],
-        barText: 'Developers',
+        barText: 'Nacos Team',
     },
     'zh-cn':
         {
@@ -36,7 +36,7 @@ export default {
                 }
             ],
             barText:
-                '开发者',
+                'Nacos 团队',
         }
 }
 ;

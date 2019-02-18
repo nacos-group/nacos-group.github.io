@@ -4,7 +4,7 @@ keywords: nacos,developers,committer,pmc,nacos team
 description: nacos developers page
 ---
 
-## Developers
+## Nacos Team
 
 This page shows Nacos developers and continues to expand. The list is not prioritized.
 

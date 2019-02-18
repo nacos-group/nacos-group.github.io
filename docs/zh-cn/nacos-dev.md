@@ -4,7 +4,7 @@ keywords: nacos,开发者,committer
 description: nacos开发者页
 ---
 
-## 开发人员
+## 开发团队
 
 本页面展示了Nacos的开发团队，并且还在持续扩充中。注：排名不分先后
 
