@@ -20,8 +20,9 @@
 <li><a href="#1.2">Nacos如何支持多环境</a></li>
 <li><a href="#1.3">Nacos是否生产可用</a></li>
 <li><a href="#1.4">Nacos版本计划</a></li>
-<li><a href="#1.5">Nacos有什么依赖</a></li>
-<li><a href="#1.6">Nacos使用什么开源协议</a></li>
+<li><a href="#1.5">Nacos客户端版本兼容问题</a></li>
+<li><a href="#1.6">Nacos有什么依赖</a></li>
+<li><a href="#1.7">Nacos使用什么开源协议</a></li>
 </ul>
 </li>
 <li>
@@ -44,6 +45,7 @@
 <li><a href="#3.4">Nacos支持Spring体系</a></li>
 <li><a href="#3.5">不使用Nacos SDK如何访问Nacos</a></li>
 <li><a href="#3.6">Nacos对多语言的支持</a></li>
+<li><a href="#3.7">服务端报错java.lang.IllegalStateException: unable to find local peer: 127.0.0.1:8848</a></li>
 </ul>
 </li>
 <li>
@@ -60,6 +62,8 @@
 </a></p>
 <h4 id="1.4">Nacos版本计划</h4>
 <p>Nacos 0.8.0 开始支持生产可用，1.0版本达到大规模生产可用，2.0版本计划与K8s、Spring Cloud、Service Mesh、Serverless进一步融合，具体的详情参考<a href="https://nacos.io/zh-cn/docs/roadmap.html">Nacos规划</a></p>
+<h4 id="1.4">Nacos客户端版本兼容问题</h4>
+<p>请尽量使用与服务端版本一致的客户端版本,目前客户端0.3.0及以下版本不兼容服务端0.8.0及以上版本.</p>
 <h4 id="1.5">Nacos有什么依赖</h4>
 <p>在单机模式下，Nacos没有任何依赖，在集群模式下，Nacos依赖Mysql做存储，详情可以参考<a href="https://nacos.io/zh-cn/docs/deployment.html">Nacos部署</a></p>
 <h4 id="1.6">Nacos使用什么开源协议</h4>
@@ -91,6 +95,8 @@
 <p>Nacos的网络交互都是基于Http协议实现的，提供了<a href="https://nacos.io/zh-cn/docs/open-API.html">Open-API</a>可以很容易实现Nacos的访问</p>
 <h4 id="3.6">Nacos对多语言的支持</h4>
 Nacos目前只支持Java，对于其他语言的支持还正在开发中，需要大家大力支持一起共建
+<h4 id="3.6">服务端报错java.lang.IllegalStateException: unable to find local peer: 127.0.0.1:8848</h4>
+这个问题是因为Nacos获取本机IP时,没有获取到正确的外部IP.需要保证InetAddress.getLocalHost().getHostAddress()或者hostname -i的结果是与cluster.conf里配置的IP是一致的.
 <h2>Nacos原理问题</h2>
 </div></div></section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>愿景</h3><p>Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/what-is-nacos.html" target="_self">概览</a></dd><dd><a href="/zh-cn/docs/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/contributing.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://www.aliyun.com/product/acm?source_type=nacos_pc_20181219" target="_self">云服务 ACM</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">云服务 EDAS</a></dd></dl></div></div><div class="copyright"><span>@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
 	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
