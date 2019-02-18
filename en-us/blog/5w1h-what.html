@@ -8,7 +8,7 @@
 	<meta name="description" content="Nacos 配置管理帮我们解决什么问题？" />
 	<!-- 网页标签标题 -->
 	<title>Nacos 帮我们解决什么问题？—— 配置管理篇</title>
-	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB12DhvCwHqK1RjSZFEXXcGMXXa-64-64.png"/>
+	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
 	<link rel="stylesheet" href="/build/blogDetail.css" />
 </head>
 <body>
@@ -65,8 +65,8 @@ connectTimeoutInMills=5000
   <span class="hljs-string">`id`</span> <span class="hljs-built_in">bigint</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> AUTO_INCREMENT,
   <span class="hljs-string">`key`</span> <span class="hljs-built_in">varchar</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-string">''</span> <span class="hljs-keyword">COMMENT</span> <span class="hljs-string">'配置项'</span>,
   <span class="hljs-string">`value`</span> <span class="hljs-built_in">varchar</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-string">''</span> <span class="hljs-keyword">COMMENT</span> <span class="hljs-string">'配置内容'</span>,
-  <span class="hljs-string">`updated_time`</span> <span class="hljs-built_in">timestamp</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CURRENT_TIMESTAMP</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-keyword">CURRENT_TIMESTAMP</span>,
-  <span class="hljs-string">`created_time`</span> <span class="hljs-built_in">timestamp</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CURRENT_TIMESTAMP</span>,
+  <span class="hljs-string">`updated_time`</span> <span class="hljs-keyword">timestamp</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CURRENT_TIMESTAMP</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> <span class="hljs-keyword">CURRENT_TIMESTAMP</span>,
+  <span class="hljs-string">`created_time`</span> <span class="hljs-keyword">timestamp</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CURRENT_TIMESTAMP</span>,
   PRIMARY <span class="hljs-keyword">KEY</span> (<span class="hljs-string">`id`</span>),
   <span class="hljs-keyword">UNIQUE</span> <span class="hljs-keyword">KEY</span> <span class="hljs-string">`idx_key`</span> (<span class="hljs-string">`key`</span>)
 ) <span class="hljs-keyword">ENGINE</span>=<span class="hljs-keyword">InnoDB</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CHARSET</span>=utf8 <span class="hljs-keyword">COMMENT</span>=<span class="hljs-string">'配置信息'</span>;

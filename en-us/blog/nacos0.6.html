@@ -8,7 +8,7 @@
 	<meta name="description" content="Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署" />
 	<!-- 网页标签标题 -->
 	<title>Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署</title>
-	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB12DhvCwHqK1RjSZFEXXcGMXXa-64-64.png"/>
+	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
 	<link rel="stylesheet" href="/build/blogDetail.css" />
 </head>
 <body>
@@ -31,12 +31,12 @@
 <li>Scene 1: Externalization configuration</li>
 </ul>
 <p>Pre-adjustment configuration:</p>
-<pre><code class="language-properties"><span class="hljs-comment">## Zookeeper registry address</span>
-<span class="hljs-meta">Dubbo.registry.address</span> = <span class="hljs-string">zookeeper://127.0.0.1:2181</span>
+<pre><code class="language-properties">## Zookeeper registry address
+Dubbo.registry.address = zookeeper://127.0.0.1:2181
 </code></pre>
 <p>Adjusted configuration:</p>
-<pre><code class="language-properties"><span class="hljs-comment">## Nacos registry address</span>
-<span class="hljs-meta">Dubbo.registry.address</span> = <span class="hljs-string">nacos://127.0.0.1:8848</span>
+<pre><code class="language-properties">## Nacos registry address
+Dubbo.registry.address = nacos://127.0.0.1:8848
 </code></pre>
 <ul>
 <li>Scenario 2: XML configuration driver</li>
