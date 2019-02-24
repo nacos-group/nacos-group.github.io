@@ -1,6 +1,6 @@
 ---
 title: Dubbo Nacos 发布 v0.8.0 PRE-GA版本，安全稳定上生产
-keywords: Dubbo、Nacos
+keywords: Dubbo,Nacos
 description: Dubbo Nacos 发布 v0.8.0 PRE-GA版本，安全稳定上生产
 ---
 
