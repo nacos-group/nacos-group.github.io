@@ -1,3 +1,9 @@
+---
+title: Nacos支持三种部署模式
+keywords: Nacos,部署模式
+description: Nacos支持三种部署模式
+---
+
 # Nacos支持三种部署模式
 
 * 单机模式 - 用于测试和单机试用。
