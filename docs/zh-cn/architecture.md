@@ -1,3 +1,11 @@
+---
+title: Nacos 架构
+keywords: Nacos,架构
+description: Nacos 架构
+---
+
+# Nacos 架构
+
 ## I. 基本架构及概念
 
 ![nacos_arch.jpg](/img/nacos-Arch.jpg) 
