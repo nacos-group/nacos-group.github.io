@@ -1,7 +1,7 @@
 ---
 title: 控制台手册
 keywords: 控制台,手册
-description:控制台手册
+description: 控制台手册
 ---
 
 # 控制台手册
