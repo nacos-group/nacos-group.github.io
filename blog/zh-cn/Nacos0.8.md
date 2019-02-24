@@ -1,13 +1,19 @@
-# Dubbo Nacos ·¢²¼ v0.8.0 PRE-GA°æ±¾£¬°²È«ÎÈ¶¨ÉÏÉú²ú
+---
+title: Dubbo Nacos å‘å¸ƒ v0.8.0 PRE-GAç‰ˆæœ¬ï¼Œå®‰å…¨ç¨³å®šä¸Šç”Ÿäº§
+keywords: Dubboã€Nacos
+description: Dubbo Nacos å‘å¸ƒ v0.8.0 PRE-GAç‰ˆæœ¬ï¼Œå®‰å…¨ç¨³å®šä¸Šç”Ÿäº§
+---
 
-°¢Àï°Í°ÍÎ¢·şÎñ¿ªÔ´ÏîÄ¿?[Dubbo Nacos](https://github.com/alibaba/nacos)? ÓÚ±¾ÖÜ·¢²¼?**v0.8.0**?**PRE-GA**°æ±¾£¬ÖÕÓÚ³õ²½Íê³ÉÁËRoad MapÒ»¸öÖØÒªµÄÀï³Ì±®°æ±¾£¨µÚÒ»¸ö¿É°²È«ÉÏÉú²úµÄ°æ±¾£¬ÌØ±ğ¸ĞĞ»ÔÚÇ°ÆÚÓÂÓÚÔÚÉú²úÉÏ³¢ÊÔNacosµÄ¿Í»§£¬ÉçÇø»á¾¡¿ì¼Ä³öĞ¡ÀñÆ·£¬±í´ï¶Ô´ó¼ÒµÄ¸Ğ¼¤Ö®Çé£©£¬V0.8.0 °æ±¾Ö÷ÒªÔÚÖ§³ÖÁËµÇÂ¼¡¢ÃüÃû¿Õ¼ä¡¢Metrics¼à¿Ø£¨¶Ô½ÓPrometheus£©¡¢Í¨¹ıNacos-Sync ×é¼şÖ§³Ö´Ó´«Í³µÄ×¢²áÖĞĞÄÆ½»¬µÄÍùNacos·şÎñÊı¾İÇ¨ÒÆµÈÌØĞÔ£¬ÒÔ¸üÎÈ¶¨ºÍ¸ü¸ß¿ÉÓÃµÄ×ËÌ¬ÈÃÓÃ»§ÔÚÉú²ú»·¾³ÖĞÖ§³Å´ó¼ÒµÄÎ¢·şÎñÆ½Ì¨¡£
+# Dubbo Nacos å‘å¸ƒ v0.8.0 PRE-GAç‰ˆæœ¬ï¼Œå®‰å…¨ç¨³å®šä¸Šç”Ÿäº§
 
-### Nacos µÇÂ¼
-Nacos¿ØÖÆÌ¨Ö§³ÖµÇÂ¼¡¢µÇ³öÌØĞÔ£¬ÒÔ±ã¸ü°²È«µÄÉÏÉú²úÊ¹ÓÃ¡£<br />![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/9687/1548047848570-c92c232f-13eb-41e3-a8af-0660e3a58912.png#align=left&display=inline&height=894&linkTarget=_blank&name=image.png&originHeight=1430&originWidth=2876&size=195009&width=1797)
+é˜¿é‡Œå·´å·´å¾®æœåŠ¡å¼€æºé¡¹ç›®?[Dubbo Nacos](https://github.com/alibaba/nacos)? äºæœ¬å‘¨å‘å¸ƒ?**v0.8.0**?**PRE-GA**ç‰ˆæœ¬ï¼Œç»ˆäºåˆæ­¥å®Œæˆäº†Road Mapä¸€ä¸ªé‡è¦çš„é‡Œç¨‹ç¢‘ç‰ˆæœ¬ï¼ˆç¬¬ä¸€ä¸ªå¯å®‰å…¨ä¸Šç”Ÿäº§çš„ç‰ˆæœ¬ï¼Œç‰¹åˆ«æ„Ÿè°¢åœ¨å‰æœŸå‹‡äºåœ¨ç”Ÿäº§ä¸Šå°è¯•Nacosçš„å®¢æˆ·ï¼Œç¤¾åŒºä¼šå°½å¿«å¯„å‡ºå°ç¤¼å“ï¼Œè¡¨è¾¾å¯¹å¤§å®¶çš„æ„Ÿæ¿€ä¹‹æƒ…ï¼‰ï¼ŒV0.8.0 ç‰ˆæœ¬ä¸»è¦åœ¨æ”¯æŒäº†ç™»å½•ã€å‘½åç©ºé—´ã€Metricsç›‘æ§ï¼ˆå¯¹æ¥Prometheusï¼‰ã€é€šè¿‡Nacos-Sync ç»„ä»¶æ”¯æŒä»ä¼ ç»Ÿçš„æ³¨å†Œä¸­å¿ƒå¹³æ»‘çš„å¾€NacosæœåŠ¡æ•°æ®è¿ç§»ç­‰ç‰¹æ€§ï¼Œä»¥æ›´ç¨³å®šå’Œæ›´é«˜å¯ç”¨çš„å§¿æ€è®©ç”¨æˆ·åœ¨ç”Ÿäº§ç¯å¢ƒä¸­æ”¯æ’‘å¤§å®¶çš„å¾®æœåŠ¡å¹³å°ã€‚
+
+### Nacos ç™»å½•
+Nacosæ§åˆ¶å°æ”¯æŒç™»å½•ã€ç™»å‡ºç‰¹æ€§ï¼Œä»¥ä¾¿æ›´å®‰å…¨çš„ä¸Šç”Ÿäº§ä½¿ç”¨ã€‚<br />![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/9687/1548047848570-c92c232f-13eb-41e3-a8af-0660e3a58912.png#align=left&display=inline&height=894&linkTarget=_blank&name=image.png&originHeight=1430&originWidth=2876&size=195009&width=1797)
 
 
-### ÃüÃû¿Õ¼ä
-Nacos×Ô0.5.0°æ±¾Ö§³ÖÃüÃû¿Õ¼äÒÔÀ´£¬ÅäÖÃ·şÎñÏÈÖ§³ÖÁËÃüÃû¿Õ¼ä£¬·şÎñ·¢ÏÖÄ£¿éÔòÔÚÕâ¸ö0.8.0°æ±¾Ö§³ÖÁË¶àÃüÃû¿Õ¼ä£¬Ê¹ÓÃ·şÎñ·¢ÏÖµÄÃüÃû¿Õ¼ä¿ÉÒÔÊµÏÖ·şÎñÊı¾İµÄÂß¼­¸ôÀë¡£Ê¹ÓÃ·şÎñ·¢ÏÖÄ£¿éµÄ¶àÃüÃû¿Õ¼äÓëÅäÖÃÄ£¿é»ù±¾ÏàÍ¬£¬ÔÚNacos¿ØÖÆÌ¨ÉÏ²é¿´ÏëÒªÊ¹ÓÃµÄÃüÃû¿Õ¼äID£¬ÔÚ¿Í»§¹¹ÔìÊ±´«Èë¸ÃÃüÃû¿Õ¼äID£º
+### å‘½åç©ºé—´
+Nacosè‡ª0.5.0ç‰ˆæœ¬æ”¯æŒå‘½åç©ºé—´ä»¥æ¥ï¼Œé…ç½®æœåŠ¡å…ˆæ”¯æŒäº†å‘½åç©ºé—´ï¼ŒæœåŠ¡å‘ç°æ¨¡å—åˆ™åœ¨è¿™ä¸ª0.8.0ç‰ˆæœ¬æ”¯æŒäº†å¤šå‘½åç©ºé—´ï¼Œä½¿ç”¨æœåŠ¡å‘ç°çš„å‘½åç©ºé—´å¯ä»¥å®ç°æœåŠ¡æ•°æ®çš„é€»è¾‘éš”ç¦»ã€‚ä½¿ç”¨æœåŠ¡å‘ç°æ¨¡å—çš„å¤šå‘½åç©ºé—´ä¸é…ç½®æ¨¡å—åŸºæœ¬ç›¸åŒï¼Œåœ¨Nacosæ§åˆ¶å°ä¸ŠæŸ¥çœ‹æƒ³è¦ä½¿ç”¨çš„å‘½åç©ºé—´IDï¼Œåœ¨å®¢æˆ·æ„é€ æ—¶ä¼ å…¥è¯¥å‘½åç©ºé—´IDï¼š
 
 ```java
 Properties properties = new Properties();
@@ -19,87 +25,87 @@ properties.put(PropertyKeyConst.SERVER_ADDR, "127.0.0.1:8848");
 NamingService naming = NamingFactory.createNamingService(properties);
 ```
 
-ÕâÑùÍ¨¹ıÕâ¸öNamingServiceÊµÀı¶ÁĞ´µÄ¾Í¶¼ÊÇÃüÃû¿Õ¼ä74a3dbb9-36cb-43f5-8d31-006acfd61caaÏÂµÄÊı¾İÁË¡£µ±È»ÄúÒ²¿ÉÒÔ²»Ö¸¶¨ÃüÃû¿Õ¼äID£¬ÕâÑù½«»áÄ¬ÈÏ·ÖÅäµ½publicÃüÃû¿Õ¼ä¡£·¢²¼Íê·şÎñ¿ÉÒÔµ½Nacos¿ØÖÆÌ¨ÉÏ²éÑ¯·şÎñĞÅÏ¢£º<br />![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/9687/1548312345294-d4bd95df-7e6d-4a36-8827-6a7ac0a00985.png#align=left&display=inline&height=553&linkTarget=_blank&name=image.png&originHeight=830&originWidth=1904&size=131287&width=1269)
+è¿™æ ·é€šè¿‡è¿™ä¸ªNamingServiceå®ä¾‹è¯»å†™çš„å°±éƒ½æ˜¯å‘½åç©ºé—´74a3dbb9-36cb-43f5-8d31-006acfd61caaä¸‹çš„æ•°æ®äº†ã€‚å½“ç„¶æ‚¨ä¹Ÿå¯ä»¥ä¸æŒ‡å®šå‘½åç©ºé—´IDï¼Œè¿™æ ·å°†ä¼šé»˜è®¤åˆ†é…åˆ°publicå‘½åç©ºé—´ã€‚å‘å¸ƒå®ŒæœåŠ¡å¯ä»¥åˆ°Nacosæ§åˆ¶å°ä¸ŠæŸ¥è¯¢æœåŠ¡ä¿¡æ¯ï¼š<br />![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/9687/1548312345294-d4bd95df-7e6d-4a36-8827-6a7ac0a00985.png#align=left&display=inline&height=553&linkTarget=_blank&name=image.png&originHeight=830&originWidth=1904&size=131287&width=1269)
 
-### Metrics¼à¿Ø
-Í¨¹ıMetricsĞÅÏ¢±©Â¶£¬¶Ô½ÓPrometheus¼ÓÇ¿NacosÊµÊ±¼à¿Ø£¬ÒÔ±ãÈÃÓÃ»§¶Ô²úÆ·¸üÓĞ¿ØÖÆÁ¦¡£
+### Metricsç›‘æ§
+é€šè¿‡Metricsä¿¡æ¯æš´éœ²ï¼Œå¯¹æ¥PrometheusåŠ å¼ºNacoså®æ—¶ç›‘æ§ï¼Œä»¥ä¾¿è®©ç”¨æˆ·å¯¹äº§å“æ›´æœ‰æ§åˆ¶åŠ›ã€‚
 
-Nacos Í¨¹ımicrometerÍ³¼ÆÁËÔËĞĞÊ±µÄºËĞÄÖ¸±ê£º
-* ÏµÍ³Ö¸±ê°üÀ¨cpu load jvmµÈ
-* ÒµÎñÖ¸±ê°üÀ¨ÅäÖÃÊı£¬ÓòÃûÊı£¬³¤Á¬½Ó£¬QPS£¬RTµÈ
-* Òì³£Ö¸±ê¼ÇÂ¼ÁËNacosÔËĞĞµÄÄÚ²¿Òì³£micrometerÌá¹©ÁË×ª»¯Æ÷ÄÜ×ª»¯³É¶àÖÖmetrics¸ñÊ½£¬NacosÄ¿Ç°Ö§³Ö³£ÓÃµÄprometheus¡¢elastic searchºÍinfluxdb£¬ºóĞø¿ÉÒÔ¸ù¾İ¾ßÌåÇé¿ö½øĞĞµ÷Õû¡£
+Nacos é€šè¿‡micrometerç»Ÿè®¡äº†è¿è¡Œæ—¶çš„æ ¸å¿ƒæŒ‡æ ‡ï¼š
+* ç³»ç»ŸæŒ‡æ ‡åŒ…æ‹¬cpu load jvmç­‰
+* ä¸šåŠ¡æŒ‡æ ‡åŒ…æ‹¬é…ç½®æ•°ï¼ŒåŸŸåæ•°ï¼Œé•¿è¿æ¥ï¼ŒQPSï¼ŒRTç­‰
+* å¼‚å¸¸æŒ‡æ ‡è®°å½•äº†Nacosè¿è¡Œçš„å†…éƒ¨å¼‚å¸¸micrometeræä¾›äº†è½¬åŒ–å™¨èƒ½è½¬åŒ–æˆå¤šç§metricsæ ¼å¼ï¼ŒNacosç›®å‰æ”¯æŒå¸¸ç”¨çš„prometheusã€elastic searchå’Œinfluxdbï¼Œåç»­å¯ä»¥æ ¹æ®å…·ä½“æƒ…å†µè¿›è¡Œè°ƒæ•´ã€‚
 
-<br /><br />grafana¾ß±¸Ç¿´óµÄµÄÊı¾İ¿ÉÊÓ»¯ÄÜÁ¦£¬ÄÜ½«²É¼¯µÄÊı¾İÕ¹Ê¾³öÀ´£¬Ö§³Ö¶àÖÖÊı¾İÔ´¡£Í¬Ê±¿É¶ÔÖØÒªÖ¸±êÅäÖÃ¸æ¾¯¹æÔò£¬Êı¾İ´ïµ½ãĞÖµÊ±¿ÉÒÔÍ¨ÖªÏà¹Ø¸ºÔğÈË¡£<br />Nacos¹ÙÍøÌá¹©ÁË½áºÏprometheusºÍgrafanaÊµÏÖmetrics¼à¿Ø<br /><br /><br />![](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/53357/1548122164953-6011a9ee-a521-447c-a871-7ebcf10c2ce4.png#align=left&display=inline&height=417&linkTarget=_blank&originHeight=1584&originWidth=2832&size=0&width=746)
+<br /><br />grafanaå…·å¤‡å¼ºå¤§çš„çš„æ•°æ®å¯è§†åŒ–èƒ½åŠ›ï¼Œèƒ½å°†é‡‡é›†çš„æ•°æ®å±•ç¤ºå‡ºæ¥ï¼Œæ”¯æŒå¤šç§æ•°æ®æºã€‚åŒæ—¶å¯å¯¹é‡è¦æŒ‡æ ‡é…ç½®å‘Šè­¦è§„åˆ™ï¼Œæ•°æ®è¾¾åˆ°é˜ˆå€¼æ—¶å¯ä»¥é€šçŸ¥ç›¸å…³è´Ÿè´£äººã€‚<br />Nacoså®˜ç½‘æä¾›äº†ç»“åˆprometheuså’Œgrafanaå®ç°metricsç›‘æ§<br /><br /><br />![](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/53357/1548122164953-6011a9ee-a521-447c-a871-7ebcf10c2ce4.png#align=left&display=inline&height=417&linkTarget=_blank&originHeight=1584&originWidth=2832&size=0&width=746)
 
-¾ßÌåµÄÏêÇé¿ÉÒÔ²Î¿¼¹ÙÍø[¼à¿ØÎÄµµ](https://nacos.io/zh-cn/docs/monitor-guide.html)¡£
+å…·ä½“çš„è¯¦æƒ…å¯ä»¥å‚è€ƒå®˜ç½‘[ç›‘æ§æ–‡æ¡£](https://nacos.io/zh-cn/docs/monitor-guide.html)ã€‚
 ### 
-### Nacos-Sync Ö§³Ö·şÎñÆ½»¬Ç¨ÒÆ
+### Nacos-Sync æ”¯æŒæœåŠ¡å¹³æ»‘è¿ç§»
 
-Ìá¹©Nacos-SyncÍ¬²½¹¤¾ßÖ§³ÖÓÃ»§×ö·şÎñÊı¾İµÄÆ½»¬Ç¨ÒÆÇ¨ÒÆ£¬Ö§³ÖÓÃ»§´ÓÆäËû×¢²áÖĞĞÄÆ½»¬Ç¨ÒÆµ½NacosÉÏÀ´£¬Í¬Ê±Ö§³Ö¶à¸öRegion¶ÀÁ¢Nacos·şÎñÍ¬²½£¬Ä¿Ç°Nacos-SyncÖ§³ÖµÄÔ´×¢²áÖĞĞÄÖ÷Òª°üÀ¨ZooKeeper,EurekaµÈ¡£
+æä¾›Nacos-SyncåŒæ­¥å·¥å…·æ”¯æŒç”¨æˆ·åšæœåŠ¡æ•°æ®çš„å¹³æ»‘è¿ç§»è¿ç§»ï¼Œæ”¯æŒç”¨æˆ·ä»å…¶ä»–æ³¨å†Œä¸­å¿ƒå¹³æ»‘è¿ç§»åˆ°Nacosä¸Šæ¥ï¼ŒåŒæ—¶æ”¯æŒå¤šä¸ªRegionç‹¬ç«‹NacosæœåŠ¡åŒæ­¥ï¼Œç›®å‰Nacos-Syncæ”¯æŒçš„æºæ³¨å†Œä¸­å¿ƒä¸»è¦åŒ…æ‹¬ZooKeeper,Eurekaç­‰ã€‚
 
-#### Ê¹ÓÃ³¡¾°
-* Ë«ÏòÍ¬²½¹¦ÄÜ,Ö§³ÖDubbo+Zookeeper·şÎñÆ½»¬Ç¨ÒÆµ½Dubbo+Naocs,ÏíÊÜNacos¸ü¼ÓÓÅÖÊµÄ·şÎñ
+#### ä½¿ç”¨åœºæ™¯
+* åŒå‘åŒæ­¥åŠŸèƒ½,æ”¯æŒDubbo+ZookeeperæœåŠ¡å¹³æ»‘è¿ç§»åˆ°Dubbo+Naocs,äº«å—Nacosæ›´åŠ ä¼˜è´¨çš„æœåŠ¡
 
 ![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/4232/1548136490076-13655b30-b0e4-4363-95dc-72b79a080fc0.png#align=left&display=inline&height=246&linkTarget=_blank&name=image.png&originHeight=838&originWidth=1728&size=171454&width=508)
 
-* ¶à¸öÍøÂç»¥Í¨µÄRegionÖ®¼ä·şÎñ¹²Ïí,´òÆÆRegionÖ®¼äµÄ·şÎñµ÷ÓÃÏŞÖÆ
+* å¤šä¸ªç½‘ç»œäº’é€šçš„Regionä¹‹é—´æœåŠ¡å…±äº«,æ‰“ç ´Regionä¹‹é—´çš„æœåŠ¡è°ƒç”¨é™åˆ¶
 
 ![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/4232/1548136895122-ba2be529-d959-4c9d-9fa4-74059bce1d18.png#align=left&display=inline&height=399&linkTarget=_blank&name=image.png&originHeight=798&originWidth=1136&size=64731&width=568)
 
-#### Ö§³ÖµÄ·¶Î§
-Nacos-SyncÖ§³ÖÓÃ»§À©Õ¹²»Í¬×¢²áÖĞĞÄ·şÎñÍ¬²½£¬Ä¿Ç°ÒÑÖ§³ÖµÄÍ¬²½ÀàĞÍÈçÏÂ:
-* NacosÊı¾İÍ¬²½µ½Nacos
-* ZookeeperÊı¾İÍ¬²½µ½Nacos
-* NacosÊı¾İÍ¬²½µ½Zookeeper
-* EurekaÊı¾İÍ¬²½µ½Nacos
-* ConsulÊı¾İÍ¬²½µ½Nacos
+#### æ”¯æŒçš„èŒƒå›´
+Nacos-Syncæ”¯æŒç”¨æˆ·æ‰©å±•ä¸åŒæ³¨å†Œä¸­å¿ƒæœåŠ¡åŒæ­¥ï¼Œç›®å‰å·²æ”¯æŒçš„åŒæ­¥ç±»å‹å¦‚ä¸‹:
+* Nacosæ•°æ®åŒæ­¥åˆ°Nacos
+* Zookeeperæ•°æ®åŒæ­¥åˆ°Nacos
+* Nacosæ•°æ®åŒæ­¥åˆ°Zookeeper
+* Eurekaæ•°æ®åŒæ­¥åˆ°Nacos
+* Consulæ•°æ®åŒæ­¥åˆ°Nacos
 
-#### ÅäÖÃÍ¬²½·şÎñ
-Nacos-SyncÌá¹©ÁË¿ØÖÆÌ¨·½±ãÄãÅäÖÃÍ¬²½µÄ·şÎñÊı¾İ:
-* Í¬²½ÈÎÎñ¹ÜÀíÒ³Ãæ
+#### é…ç½®åŒæ­¥æœåŠ¡
+Nacos-Syncæä¾›äº†æ§åˆ¶å°æ–¹ä¾¿ä½ é…ç½®åŒæ­¥çš„æœåŠ¡æ•°æ®:
+* åŒæ­¥ä»»åŠ¡ç®¡ç†é¡µé¢
 
 ![](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/4232/1548129423366-e1a37af4-3eb6-48f0-af76-84ec1f310ee2.png#align=left&display=inline&height=277&linkTarget=_blank&originHeight=1064&originWidth=2866&width=746)
-* ×¢²áÖĞĞÄ¹ÜÀíÒ³Ãæ
+* æ³¨å†Œä¸­å¿ƒç®¡ç†é¡µé¢
 ## ![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/4232/1548129453620-f480a696-931b-4db4-b4c7-298ae7da029e.png#align=left&display=inline&height=562&linkTarget=_blank&name=image.png&originHeight=1124&originWidth=2876&size=190668&width=1438)
 
-¾ßÌåÏîÄ¿ĞÅÏ¢Çë²Î¿¼[Nacos-Sync²úÆ·Ò³](https://github.com/nacos-group/nacos-sync)
+å…·ä½“é¡¹ç›®ä¿¡æ¯è¯·å‚è€ƒ[Nacos-Syncäº§å“é¡µ](https://github.com/nacos-group/nacos-sync)
 
-## Åî²ª·¢Õ¹µÄ Nacos ÉçÇø
+## è“¬å‹ƒå‘å±•çš„ Nacos ç¤¾åŒº
 
 > DISS is cheap, show me your hand
-±ÈÍÂ²Û¸üÖØÒªµÄÊÇ´î°ÑÊÖ£¬²ÎÓëÉçÇøÒ»Æğ·¢Õ¹Nacos
+æ¯”åæ§½æ›´é‡è¦çš„æ˜¯æ­æŠŠæ‰‹ï¼Œå‚ä¸ç¤¾åŒºä¸€èµ·å‘å±•Nacos
 
 
-* ×÷ÎªÓÃ»§¹Ø×¢ºÍ¼ÓÈë Nacos ÉçÇø
+* ä½œä¸ºç”¨æˆ·å…³æ³¨å’ŒåŠ å…¥ Nacos ç¤¾åŒº
 
-Nacos ÉçÇøÕıÔÚÅî²ª·¢Õ¹£¬½ØÖ¹µ½·¢ÎÄÎªÖ¹£¬Nacos ¶Ì¶Ì¼¸¸öÔÂÒÑ¾­ÓĞ 9 ¸öÎ¢ĞÅÈº£¬ÆäÖĞ 7 ¸öÒÑÂúÔ±£¬1¸öQQÈº£¬1¸ö¶¤¶¤Èº£¬¹Ø×¢ Nacos µÄÉçÇøÈËÊıÒÑ¾­½ü5000ÈË£¬ÔÚ Nacos ÈºÀï¸ú ¡°µÀ£¨»ù£©ÓÑ¡± ÇĞ´è¼¼Êõ£¬½»Á÷¾­Ñé£¬ÕĞÆ¸½»ÓÑ£¬ÇÀÇÀºì°ü...²»ÒàÀÖºõ¡£
+Nacos ç¤¾åŒºæ­£åœ¨è“¬å‹ƒå‘å±•ï¼Œæˆªæ­¢åˆ°å‘æ–‡ä¸ºæ­¢ï¼ŒNacos çŸ­çŸ­å‡ ä¸ªæœˆå·²ç»æœ‰ 9 ä¸ªå¾®ä¿¡ç¾¤ï¼Œå…¶ä¸­ 7 ä¸ªå·²æ»¡å‘˜ï¼Œ1ä¸ªQQç¾¤ï¼Œ1ä¸ªé’‰é’‰ç¾¤ï¼Œå…³æ³¨ Nacos çš„ç¤¾åŒºäººæ•°å·²ç»è¿‘5000äººï¼Œåœ¨ Nacos ç¾¤é‡Œè·Ÿ â€œé“ï¼ˆåŸºï¼‰å‹â€ åˆ‡ç£‹æŠ€æœ¯ï¼Œäº¤æµç»éªŒï¼Œæ‹›è˜äº¤å‹ï¼ŒæŠ¢æŠ¢çº¢åŒ…...ä¸äº¦ä¹ä¹ã€‚
 
-Òª¼ÓÈë Nacos Î¢ĞÅÉçÇø£¬Äã¿ÉÒÔÍ¨¹ıÉ¨ÏÂÃæµÄ**¡°³¬¸ç¡±**¡°³¬¸ç¡±** °ïÄãÀ­Èë ¡°NacosÉçÇøÎ¢ĞÅ½»Á÷Èº¡±
+è¦åŠ å…¥ Nacos å¾®ä¿¡ç¤¾åŒºï¼Œä½ å¯ä»¥é€šè¿‡æ‰«ä¸‹é¢çš„**â€œè¶…å“¥â€**â€œè¶…å“¥â€** å¸®ä½ æ‹‰å…¥ â€œNacosç¤¾åŒºå¾®ä¿¡äº¤æµç¾¤â€
 
 
 ![](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/9687/1548047927520-89c34af8-899a-41b6-887c-9319461db519.png#align=left&display=inline&height=424&linkTarget=_blank&originHeight=1124&originWidth=1984&size=0&width=748)
 
-* ×÷Îª´úÂë¹±Ï×Õß¼ÓÈë Nacos ÉçÇø
+* ä½œä¸ºä»£ç è´¡çŒ®è€…åŠ å…¥ Nacos ç¤¾åŒº
 
-´ÓNacosÓÃ»§·¢Õ¹¶ø³É¹±Ï×ÕßË³Àí³ÉÕÂ£¬¶øNacos¿ª·¢ÍÅ¶ÓÒ²È·ÊµÔÚÈÕÇ÷×³´ó£¬´Ó¿ªÊ¼µÄÖ»ÓĞ4¸ö´úÂëcontributor·¢Õ¹µ½Ä¿Ç°µÄ34¸ö£¬ÔÚ0.8.0 °æ±¾µÄ¿ª·¢ÖĞ£¬ÉçÇøÍ¬Ñ§¹±Ï×ÁËºÜ´óµÄÁ¦Á¿£¬ÔÚ´ËÌØ±ğ¸ĞĞ»ÆİÔÂÍ¬Ñ§Éè¼ÆµÇÂ¼UI£¬»ÆÇåê»Í¬Ñ§¹±Ï×µÇÂ¼´úÂë£¬ÍõÑåÃñÍ¬Ñ§¹±Ï×ÃüÃû¿Õ¼ä´úÂë£¬ÕÅÁúÍ¬Ñ§¹±Ï×nacos-sync´úÂë£¬Àî³¿Í¬Ñ§¹±Ï×ÅäÖÃ¹ÜÀí´úÂë£¬Ã÷ÒàÍ¬Ñ§±£Ö¤Õâ¸ö¹Ø¼ü°æ±¾µÄ²âÊÔÖÊÁ¿£¬ÏàĞÅºóĞøÓĞ¸ú¶àÍ¬Ñ§²ÎÓëµ½NacosÉçÇøµÄ¹²½¨ÖĞ¡£
+ä»Nacosç”¨æˆ·å‘å±•è€Œæˆè´¡çŒ®è€…é¡ºç†æˆç« ï¼Œè€ŒNacoså¼€å‘å›¢é˜Ÿä¹Ÿç¡®å®åœ¨æ—¥è¶‹å£®å¤§ï¼Œä»å¼€å§‹çš„åªæœ‰4ä¸ªä»£ç contributorå‘å±•åˆ°ç›®å‰çš„34ä¸ªï¼Œåœ¨0.8.0 ç‰ˆæœ¬çš„å¼€å‘ä¸­ï¼Œç¤¾åŒºåŒå­¦è´¡çŒ®äº†å¾ˆå¤§çš„åŠ›é‡ï¼Œåœ¨æ­¤ç‰¹åˆ«æ„Ÿè°¢æˆšæœˆåŒå­¦è®¾è®¡ç™»å½•UIï¼Œé»„æ¸…æ˜ŠåŒå­¦è´¡çŒ®ç™»å½•ä»£ç ï¼Œç‹å½¦æ°‘åŒå­¦è´¡çŒ®å‘½åç©ºé—´ä»£ç ï¼Œå¼ é¾™åŒå­¦è´¡çŒ®nacos-syncä»£ç ï¼Œææ™¨åŒå­¦è´¡çŒ®é…ç½®ç®¡ç†ä»£ç ï¼Œæ˜äº¦åŒå­¦ä¿è¯è¿™ä¸ªå…³é”®ç‰ˆæœ¬çš„æµ‹è¯•è´¨é‡ï¼Œç›¸ä¿¡åç»­æœ‰è·Ÿå¤šåŒå­¦å‚ä¸åˆ°Nacosç¤¾åŒºçš„å…±å»ºä¸­ã€‚
 
-¶øÉçÇøÒ²ÕıÔÚ¼Æ»®ÔÚºÏÊÊµÄÊ±»úÉÏ£¬½«ÔÚNacos¹ÙÍø [nacos.io](http://nacos.io/) ÖĞÌí¼ÓÍÅ¶Ó½éÉÜÒ³£¬½«´ó¼ÒÕıÊ½¹«²¼ÓÚÖÚ£¬»¶Ó­´ó¼Ò¼ÓÈëNacosÉçÇø£¬¹±Ï×ÉçÇø¡£ÓÃApacheµÄ»°Ëµ£¬**¡°ÉçÇø¸ßÓÚ´úÂë¡±!**
+è€Œç¤¾åŒºä¹Ÿæ­£åœ¨è®¡åˆ’åœ¨åˆé€‚çš„æ—¶æœºä¸Šï¼Œå°†åœ¨Nacoså®˜ç½‘ [nacos.io](http://nacos.io/) ä¸­æ·»åŠ å›¢é˜Ÿä»‹ç»é¡µï¼Œå°†å¤§å®¶æ­£å¼å…¬å¸ƒäºä¼—ï¼Œæ¬¢è¿å¤§å®¶åŠ å…¥Nacosç¤¾åŒºï¼Œè´¡çŒ®ç¤¾åŒºã€‚ç”¨Apacheçš„è¯è¯´ï¼Œ**â€œç¤¾åŒºé«˜äºä»£ç â€!**
 
 
 ![](https://cdn.nlark.com/lark/0/2018/png/15914/1542704700864-a9d54856-9bf6-4176-b449-c13fa02c5800.png#align=left&display=inline&height=387&linkTarget=_blank&originHeight=888&originWidth=1716&width=748)
 
-## [](https://yuque.alibaba-inc.com/nacos/opensource/dawygn#6gw6hq)ĞÂÈËÊ±¿Ì - "Ê²Ã´ÊÇNacos£¿"
-> »¹²»ÖªµÀÊ²Ã´ÊÇNacos? Ã»¹ØÏµ£¬ÔÚgithubÉÏstarÒ»ÏÂ¸ú³ÌĞòÔ³ĞÖµÜ´ò¸öÕĞºô°É!!
+## [](https://yuque.alibaba-inc.com/nacos/opensource/dawygn#6gw6hq)æ–°äººæ—¶åˆ» - "ä»€ä¹ˆæ˜¯Nacosï¼Ÿ"
+> è¿˜ä¸çŸ¥é“ä»€ä¹ˆæ˜¯Nacos? æ²¡å…³ç³»ï¼Œåœ¨githubä¸Šstarä¸€ä¸‹è·Ÿç¨‹åºçŒ¿å…„å¼Ÿæ‰“ä¸ªæ‹›å‘¼å§!!
 
 
-[Nacos](https://github.com/alibaba/nacos) ÊÇ°¢Àï°Í°ÍÓÚ7ÔÂ·İĞÂ¿ªÔ´µÄÏîÄ¿£¬NacosµÄÖ÷ÒªÔ¸¾°ÊÇÆÚÍûÍ¨¹ıÌá¹©Ò×ÓÃµÄ `¶¯Ì¬·şÎñ·¢ÏÖ`¡¢`·şÎñÅäÖÃ¹ÜÀí`¡¢`·şÎñ¹²ÏíÓë¹ÜÀí` µÄ»ù´¡ÉèÊ©£¬°ïÖúÓÃ»§ÔÚÔÆÔ­ÉúÊ±´ú¸üºÃµÄ¹¹½¨¡¢½»¸¶¡¢¹ÜÀí×Ô¼ºµÄÎ¢·şÎñÆ½Ì¨¡£
+[Nacos](https://github.com/alibaba/nacos) æ˜¯é˜¿é‡Œå·´å·´äº7æœˆä»½æ–°å¼€æºçš„é¡¹ç›®ï¼ŒNacosçš„ä¸»è¦æ„¿æ™¯æ˜¯æœŸæœ›é€šè¿‡æä¾›æ˜“ç”¨çš„ `åŠ¨æ€æœåŠ¡å‘ç°`ã€`æœåŠ¡é…ç½®ç®¡ç†`ã€`æœåŠ¡å…±äº«ä¸ç®¡ç†` çš„åŸºç¡€è®¾æ–½ï¼Œå¸®åŠ©ç”¨æˆ·åœ¨äº‘åŸç”Ÿæ—¶ä»£æ›´å¥½çš„æ„å»ºã€äº¤ä»˜ã€ç®¡ç†è‡ªå·±çš„å¾®æœåŠ¡å¹³å°ã€‚
 
 
 ![](https://cdn.nlark.com/lark/0/2018/png/15914/1532436633419-08a42307-7fb7-4d51-9062-fecc3868613b.png#align=left&display=inline&height=355&linkTarget=_blank&originHeight=1014&originWidth=2138&width=748)
 
-githubÏîÄ¿µØÖ·ÔÚ [ÕâÀï](https://github.com/alibaba/nacos)
+githubé¡¹ç›®åœ°å€åœ¨ [è¿™é‡Œ](https://github.com/alibaba/nacos)
 
-## [](https://yuque.alibaba-inc.com/nacos/opensource/dawygn#kn9iog)¸ü¶àÓë Nacos Ïà¹ØµÄ¿ªÔ´ÏîÄ¿ĞÅÏ¢
+## [](https://yuque.alibaba-inc.com/nacos/opensource/dawygn#kn9iog)æ›´å¤šä¸ Nacos ç›¸å…³çš„å¼€æºé¡¹ç›®ä¿¡æ¯
 
 * [Nacos](https://github.com/alibaba/nacos)
 * [Dubbo Registry Nacos](https://github.com/dubbo/dubbo-registry-nacos)
