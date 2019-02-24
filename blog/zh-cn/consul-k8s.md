@@ -1,3 +1,9 @@
+---
+title: Consul与kubernetes整合公告[翻译]
+keywords: Consul,kubernetes
+description: Consul与kubernetes整合公告[翻译]
+---
+
 # Consul与kubernetes整合公告[翻译]
 ## 导读
 > Consul是目前业界比较火的服务发现与配置产品，它率先将服务发现和配置管理等分布式服务当中使用到的基础服务进行整合，对外提供分布式及高可用的服务。Consul目前有开源版本和商业化版本同时演进，这也是国内可以借鉴的一种开源策略。同时，Consul对于新技术趋势的跟进和整合，也是值得我们学习和参考的。
