@@ -1,3 +1,9 @@
+---
+title: 虎牙直播共建Nacos生态
+keywords: 虎牙直播,nacos
+description: 虎牙直播共建Nacos生态
+---
+
 # 虎牙直播共建Nacos生态
 ![huya](https://img.alicdn.com/tfs/TB1i4ugBjDpK1RjSZFrXXa78VXa-1522-584.png)
 ## 虎牙直播平台(https://www.huya.com/)
