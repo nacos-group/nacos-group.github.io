@@ -1,15 +1,15 @@
-## Contact
+## 联系我们
 ### Nacos Gitter-[https://gitter.im/alibaba/nacos](https://gitter.im/alibaba/nacos)
-### Nacos weibo-[https://weibo.com/u/6574374908](https://weibo.com/u/6574374908)
+### Nacos 微博-[https://weibo.com/u/6574374908](https://weibo.com/u/6574374908)
 ### Nacos segmentfault-[https://segmentfault.com/t/nacos](https://segmentfault.com/t/nacos)
 
-### Mailing list
+### 邮件列表
 
-Mailing list is recommended for discussing almost anything related to Nacos. Please refer to this?[guide](https://github.com/apache/incubator-dubbo/wiki/Mailing-list-subscription-guide)?for detailed documentation on how to subscribe to our mailing lists.
+邮件列表建议讨论任何与Nacos有关的事情。具体请看[参考手册](https://github.com/apache/incubator-dubbo/wiki/Mailing-list-subscription-guide)s描述如何订阅我们的邮件列表。
 
-* [dev-nacos@googlegroups.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1): The develop mailing list. You can ask questions here if you encounter any problem when using or developing Nacos.
-* [commits-nacos@googlegroups.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1): All commits will be sent to this mailing list. You can subscribe to it if you are interested in Nacos' development.
-* [users-nacos@googlegroups.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1): All Github?[issue](https://github.com/alibaba/nacos/issues)?updates and?[pull request](https://github.com/alibaba/nacos/pulls)?updates will be sent to this mailing list.
+* [dev-nacos@googlegroups.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1): 开发邮件列表。如果你在使用或开发Nacos中遇到任何问题,可以在这里提问题。
+* [commits-nacos@googlegroups.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1): 所有提交将被发送到这个邮件列表。如果你有兴趣Nacos的发展，你可以订阅它。
+* [users-nacos@googlegroups.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1): 在Github中[提问题](https://github.com/alibaba/nacos/issues)、更新和[提交需求](https://github.com/alibaba/nacos/pulls)将被发送到这个邮件列表。
 * [nacos\_dev@linux.alibaba.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1).
 
 
