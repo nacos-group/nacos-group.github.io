@@ -1,4 +1,4 @@
-Please do not create a Pull Request without creating an issue first.
+> 请先创建问题再拉请求。
 
 ## What is the purpose of the change
 
