@@ -1,124 +1,119 @@
-# Contributing to Nacos
+# 为Nacos做贡献
 
-Welcome to Nacos! This document is a guideline about how to contribute to Nacos.
+欢迎来到Nacos！本文档是关于如何为Nacos做出贡献的指南。
 
-If you find something incorrect or missing, please leave comments / suggestions.
+如果您发现不正确或遗失的内容，请留下意见/建议。
 
-## Before you get started
+## 开始之前
 
-### Code of Conduct
+### 行为守则
 
-Please make sure to read and observe our [Code of Conduct](./CODE_OF_CONDUCT.md).
+请务必阅读并遵守我们的[行为准则](https://github.com/alibaba/nacos/blob/master/CODE_OF_CONDUCT.md)。
 
-## Contributing
+## 贡献和Nacos社区构成
 
-Nacos welcome new participants of any role, including user, contributor, committer and PMC.
+Nacos欢迎任何角色的新参与者，包括用户，贡献者，提交者和PMC。
 
 ![](http://acm-public.oss-cn-hangzhou.aliyuncs.com/contributor_definition.png)
 
 
-We encourage new comers actively join in Nacos projects and involving from user role to committer role, and even PMC role. In order to accomplish this, new comers needs to actively contribute in Nacos project. The following paragraph introduce how to contribute in Nacos way.
+我们鼓励新来者积极参与Nacos社区，社区有一套机制可以使您，从用户角色到提交者角色，甚至是PMC角色。为了实现这一目标，新来者需要积极参与Nacos社区。以下段落介绍了如何为Nacos做出贡献并且晋升社区角色。
 
-#### Open / pickup an issue for preparation
+#### 打开/提取准备问题
 
-If you find a typo in document, find a bug in code, or want new features, or want to give suggestions, you can [open an issue on GitHub](https://github.com/alibaba/Nacos/issues/new) to report it.
+如果您在文档中发现拼写错误，在代码中发现错误，或想要新功能或想要提供建议，您可以[在GitHub上打开一个问题](https://github.com/alibaba/Nacos/issues/new)报告。
 
-If you just want to contribute directly you can choose the issue below.
+如果您想开始着手，可以选择github仓库中有以下标签的issues。
+    
 
--   [Contribution Welcome](https://github.com/alibaba/nacos/labels/contribution%20welcome): Heavily needed issue, but currently short of hand.
-    
--   [good first issue](https://github.com/alibaba/nacos/labels/good%20first%20issue): Good for newcomers, new comer can pickup one for warm-up.
-    
+ -  [good first issue](https://github.com/alibaba/nacos/labels/good%20first%20issue)：对于新手来说是非常好的入门issues。
+ 
+ -  [contribution welcome](https://github.com/alibaba/nacos/labels/contribution%20欢迎)：非常需要解决的问题和非常重要的模块，但目前缺少贡献者，欢迎贡献者来贡献。
 
-We strongly value documentation and integration with other projects such as Spring Cloud, Kubernetes, Dubbo, etc. We are very glad to work on any issue for these aspects.
+    
 
-Please note that any PR must be associated with a valid issue. Otherwise the PR will be rejected.
+我们非常重视文档以及与Spring Cloud，Kubernetes，Dubbo等其他项目的集成。我们很希望能够就这些方面的任何问题进行研究。
 
-#### Begin your contribute
+请注意，任何PR（Pull Request）必须与有效issues相关联。否则PR将被打回。
 
-Now if you want to contribute, please create a new pull request.
+#### 开始你的贡献
 
-We use the `develop` branch as the development branch, which indicates that this is a unstable branch.
+现在，如果您想贡献，请创建一个新的拉取请求。
 
-Further more, our branching model complies to [https://nvie.com/posts/a-successful-git-branching-model/](https://nvie.com/posts/a-successful-git-branching-model/). We strongly suggest new comers walk through the above article before creating PR.
+我们使用`develop`分支作为开发分支，这表明这是一个不稳定的分支。
 
-Now, if you are ready to create PR, here is the workflow for contributors:
+此外，我们的分支模型符合[https://nvie.com/posts/a-successful-git-branching-model/](https://nvie.com/posts/a-successful-git-branching-model)。我们强烈建议新成员在创建PR之前完成上述文章。
 
-1.  Fork to your own
-    
-2.  Clone fork to local repository
-    
-3.  Create a new branch and work on it
-    
-4.  Keep your branch in sync
-    
-5.  Commit your changes (make sure your commit message concise)
-    
-6.  Push your commits to your forked repository
-    
-7.  Create a pull request to **develop** branch.
-    
+现在，如果您准备创建PR，这里是贡献者的工作流程：
 
-When creating pull request:
+1. fork Nacos仓库到你的github仓库
+    
+2. 克隆fork到本地仓库
+    
+3. 创建一个新分支并进行处理
+    
+4. 保持分支同步
+    
+5. 提交您的更改（确保您的提交消息简明扼要）
+    
+6. 将提交推送到你的github远程仓库
+    
+7. 创建一个指向**开发**分支的Pull Request
+    
 
-1.  Please follow [the pull request template](./.github/PULL_REQUEST_TEMPLATE.md).
-    
-2.  Please create the request to **develop** branch.
-    
-3.  Please make sure the PR has a corresponding issue.
-    
-4.  If your PR contains large changes, e.g. component refactor or new components, please write detailed documents about its design and usage.
-    
-5.  Note that a single PR should not be too large. If heavy changes are required, it's better to separate the changes to a few individual PRs.
-    
-6.  After creating a PR, one or more reviewers will be assigned to the pull request.
-    
-7.  Before merging a PR, squash any fix review feedback, typo, merged, and rebased sorts of commits. The final commit message should be clear and concise.
-    
+创建Pull Request时：
 
-If your PR contains large changes, e.g. component refactor or new components, please write detailed documents about its design and usage.
+1. 请遵循[拉取请求模板](https://github.com/alibaba/nacos/blob/master/.github/PULL_REQUEST_TEMPLATE.md)。
+    
+2. 请创建**开发**分支的请求。
+    
+3. 请确保PR有相应的问题。
+    
+4. 如果您的PR包含大量更改，例如组件重构或新组件，请写下有关其设计和使用的详细文档。
+    
+5. 请注意，单个PR不应该太大。如果需要进行大量更改，最好将更改分成几个单独的PR。
+    
+6. 创建PR后，将为拉取请求分配一个或多个审阅者。
+    
+7. 在合并PR之前，请注意合并提交节点（git commit），包括修复审核反馈，拼写错误，合并。最终提交消息应该清晰简洁。
+    
 
-### Code review guidance
+如果您的PR包含大量更改，例如组件重构或新组件，请写下有关其设计和使用的详细文档。
 
-Committers will rotate reviewing the code to make sure all the PR will be reviewed timely and by at least one committer before merge. If we aren't doing our job (sometimes we drop things). And as always, we welcome volunteers for code review.
+### 代码审查指南
 
-Some principles:
+提交者将轮流审查代码，以确保在合并之前及时审核所有PR以及至少一个提交者。如果我们不做我们的工作（有时我们放弃的东西）。和往常一样，我们欢迎志愿者进行代码审查。
 
--   Readability - Important code should be well-documented. API should have Javadoc. Code style should be complied with the existing one.
-    
--   Elegance: New functions, classes or components should be well designed.
-    
--   Testability - 80% of the new code should be covered by unit test cases.
-    
--   Maintainability - Comply with our [PMD spec](style/codeStyle.xml), and 3-month-frequency update should be maintained at least.
-    
+一些原则：
 
-### Now how about try become a committer?
+ - 可读性 - 重要的代码应该有详细记录。 API应该有Javadoc。代码样式应符合现有代码样式。
+    
+ - 优雅：新功能，类或组件应精心设计。
+    
+ - 可测试性 - 单元测试用例应涵盖80％的新代码。
+    
+ - 可维护性 - 遵守我们的[PMD规范](https://github.com/alibaba/nacos/blob/master/style/codeStyle.md)，至少应保持3个月的频率更新。
+    
 
-Generally speaking, contribute 8 non-trivial patches and get at least three different people to review them (you'll need three people to support you). Then ask someone to nominate you. You're demonstrating your:
+### 现在尝试成为一个Committer怎么样？
 
--   at least 8 PR and the associated issues to the project,
-    
--   ability to collaborate with the team,
-    
--   understanding of the projects' code base and coding style, and
-    
--   ability to write good code (last but certainly not least)
-    
+一般来说，贡献8个非平凡的补丁并让至少三个不同的人来审查它们（你需要三个人来支持你）。然后请别人提名你。你正在展示你的：
 
-A current committer nominates you by slacking the team on the Nacos issue with label "nomination"
+ - 至少8个PR以及与项目相关的问题，
+    
+ - 与团队协作的能力，
+    
+ - 了解项目的代码库和编码风格，以及
+    
+ - 编写优秀代码的能力（并非最不重要）
+    
 
--   your first and last name
-    
--   a link to your Git profile
-    
--   an explanation of why you should be a committer,
-    
--   Elaborate the top 3 PR and the associated issues the nominator has worked with you that can demonstrate your ability.
-    
+当前的提交者通过标签“提名”在Nacos issues里边，让社区了解
 
-Two other committer need to second your nomination. If no one objects in 5 working days (China), you're a committer. If anyone objects or wants more information, the committers discuss and usually come to a consensus (within the 5 working days). If issues cannot be resolved, there's a vote among current committers.
-
-![](http://acm-public.oss-cn-hangzhou.aliyuncs.com/nomination_process.png)
-
-In the worst case, this can drag out for two weeks. Keep contributing! Even in the rare cases where a nomination fails, the objection is usually something easy to address like "more patches" or "not enough people are familiar with this person's work."
+ - 你的名字和姓氏
+    
+ - 指向您的Git个人资料的链接
+    
+ - 解释为什么你应该成为一名提交者，
+    
+ - 详细说明您提交的前三的PR和相关issues
