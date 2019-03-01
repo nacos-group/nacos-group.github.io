@@ -1,11 +1,11 @@
 ---
-title: Nacos 0.9.0°æ±¾½øĞĞ·¢²¼
-keywords: nacos0.9,nacos0.9.0,nacos ·¢²¼
-description: Nacos 0.9.0°æ±¾½øĞĞ·¢²¼
+title: Nacos 0.9.0ç‰ˆæœ¬è¿›è¡Œå‘å¸ƒ
+keywords: nacos0.9,nacos0.9.0,nacos å‘å¸ƒ
+description: Nacos 0.9.0ç‰ˆæœ¬è¿›è¡Œå‘å¸ƒ
 ---
-# Nacos 0.9.0°æ±¾½øĞĞ·¢²¼
+# Nacos 0.9.0ç‰ˆæœ¬è¿›è¡Œå‘å¸ƒ
 
-Nacos ·¢²¼ 0.9.0 °æ±¾£¬¸Ã°æ±¾¼ÓÇ¿ÁË Nacos-Sync ÎÈ¶¨ĞÔ£¬Ôö¼ÓÁË¼à¿ØÌåÏµ£¬ÍêÉÆÁË²âÊÔÓÃÀı£¬²¢ÇÒÖ§³Ö Naming ºÍ Config µÄ·ÖÄ£¿éÆô¶¯£¬´ËÍâ»¹ĞŞ¸´ÁËÉçÇøÌá³öµÄÒ»Ğ© issues£º
+Nacos å‘å¸ƒ 0.9.0 ç‰ˆæœ¬ï¼Œè¯¥ç‰ˆæœ¬åŠ å¼ºäº† Nacos-Sync ç¨³å®šæ€§ï¼Œå¢åŠ äº†ç›‘æ§ä½“ç³»ï¼Œå®Œå–„äº†æµ‹è¯•ç”¨ä¾‹ï¼Œå¹¶ä¸”æ”¯æŒ Naming å’Œ Config çš„åˆ†æ¨¡å—å¯åŠ¨ï¼Œæ­¤å¤–è¿˜ä¿®å¤äº†ç¤¾åŒºæå‡ºçš„ä¸€äº› issuesï¼š
 
 [#412] Nacos can support Dubbo service registration discovery and configuration management
 [#388] Cluster name should be provided in the Instance
@@ -15,16 +15,16 @@ Nacos ·¢²¼ 0.9.0 °æ±¾£¬¸Ã°æ±¾¼ÓÇ¿ÁË Nacos-Sync ÎÈ¶¨ĞÔ£¬Ôö¼ÓÁË¼à¿ØÌåÏµ£¬ÍêÉÆÁË²âÊ
 [#362] The metadata will lost when online or offline instance through web ui
 [#352] Refactoring internationalization Nacos console
 [#278] Nacos docker img
-[#243] Optimize the efficiency of integration testing, it¡¯s taking too long now
+[#243] Optimize the efficiency of integration testing, itâ€™s taking too long now
 
-¸ĞĞ»ÒÔÏÂ Contributors ¶Ô Nacos 0.9.0°æ±¾µÄ¹±Ï×£¬ËûÃÇÊÇ£º
+æ„Ÿè°¢ä»¥ä¸‹ Contributors å¯¹ Nacos 0.9.0ç‰ˆæœ¬çš„è´¡çŒ®ï¼Œä»–ä»¬æ˜¯ï¼š
 
-@paderlol¡¢@jifengnan¡¢@loadchange¡¢@nkorange¡¢@hxy1991¡¢@huangyunbin¡¢@darkness463¡¢@luoxn28¡¢@TsingLiang¡¢@xuechaos¡¢@nanamikon¡¢@systp¡¢@jameslcj¡¢@pader.zhang
+@paderlolã€@jifengnanã€@loadchangeã€@nkorangeã€@hxy1991ã€@huangyunbinã€@darkness463ã€@luoxn28ã€@TsingLiangã€@xuechaosã€@nanamikonã€@systpã€@jameslcjã€@pader.zhang
 
  
 
-ÏêÇé²Î¿¼£ºhttps://github.com/alibaba/nacos/releases/tag/0.9.0
+è¯¦æƒ…å‚è€ƒï¼šhttps://github.com/alibaba/nacos/releases/tag/0.9.0
 
-Nacos team ½éÉÜ £ºhttps://nacos.io/en-us/docs/nacos-dev.html £¨³ÖĞøÀ©Õ¹ÖĞ£¬»¶Ó­¼ÓÈë£©
+Nacos team ä»‹ç» ï¼šhttps://nacos.io/en-us/docs/nacos-dev.html ï¼ˆæŒç»­æ‰©å±•ä¸­ï¼Œæ¬¢è¿åŠ å…¥ï¼‰
 
-ÈçºÎ¼ÓÈë Nacos team£ºhttps://nacos.io/en-us/docs/contributing-dev.html
+å¦‚ä½•åŠ å…¥ Nacos teamï¼šhttps://nacos.io/en-us/docs/contributing-dev.html
