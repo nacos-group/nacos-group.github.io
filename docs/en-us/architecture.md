@@ -46,6 +46,40 @@
 
 * **[More concepts...](./concepts.md)**
 
+## Introduction to logical architecture and its components
+
+![nacos-logic.jpg](/img/nacos-logic.png) 
+ 
+- Service Management: Implement services CRUD, domain name CRUD, service health check, service weight management, etc.
+- Configuration Management: Implement configuration CRUD, version management, grayscale management, monitoring management, push trajectory, aggregate data, etc.
+- Metadata Management: Provides metadata CURD and marking capabilities
+- Plug-in mechanism: implements three modules to share the ability to implement the extended point SPI mechanism
+- Event mechanism: implement asynchronous event notification, sdk data change asynchronous notification and other logic
+- Log module: Manage log classification, log level, log portability (especially to avoid conflicts), log format, exception code + help documentation
+- Callback mechanism: sdk informs the data and calls back user processing through a unified mode. Interface and data structures need to be scalable
+- Addressing mode: solve various addressing modes such as ip, domain name, nameserver, broadcast, etc., need to be expandable
+- Push channel: solve the push performance problem between server and storage, server, server and sdk
+- Capacity management: manage each tenant, the capacity under the group, prevent the storage from being blasted, affecting service availability
+- Traffic management: control the request frequency, the number of long links, the size of the message, and request flow control according to multiple dimensions such as tenant and group.
+- Caching mechanism: disaster recovery directory, local cache, server cache mechanism. Disaster recovery catalogue requires tools
+- Startup mode: Start different programs + UI according to stand-alone mode, configuration mode, service mode, dns mode, or all mode
+- Consistency Protocol: Resolve different data, different consistency requirements, different consistency mechanisms
+- Storage module: solve data persistence, non-persistent storage, solve data fragmentation problem
+- Nameserver: Resolve the routing problem from namespace to clusterid, solve the mapping problem between user environment and nacos physical environment
+- CMDB: Solve the metadata storage, docking problems with the three-party cmdb system, solving applications, people, resource relationships
+- Metrics: Exposes standard metrics data for easy access to three-way monitoring systems
+- Trace: Exposure standard trace, easy to open with SLA system, log whitening, push trajectory, etc., and can be connected with metering and billing system
+- Access management: equivalent to Ali cloud service, assign identity, capacity, authority process
+- User Management: Resolve issues such as user management, login, sso, etc.
+- Rights Management: Resolve issues such as identity, access control, role management, etc.
+- Audit system: extended interface facilitates access to different company audit systems
+- Notification system: Core data changes, or operations, facilitated through the SMS system, notify the corresponding person data changes
+- OpenAPI: exposes the standard Rest style HTTP interface, easy to use, and easy for multi-language integration
+- Console: easy to use console, do service management, configuration management, etc.
+- SDK: Multilingual sdk
+- Agent: dns-f similar mode, or integration with mesh and other programs
+- CLI: Lightweight management of the product on the command line, as easy as git
+
 ## Artifacts, Deployment, and Start Mode
 
 ![undefined](https://cdn.yuque.com/lark/0/2018/png/15914/1531730742844-e8325932-258b-49b2-9473-8d1199efe20d.png) 

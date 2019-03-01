@@ -33,6 +33,11 @@
       }
     },
     {
+      "filename": "Nacos0.8.md",
+      "link": "/en-us/blog/Nacos0.8.html",
+      "meta": {}
+    },
+    {
       "filename": "alibaba-configserver.md",
       "link": "/en-us/blog/alibaba-configserver.html",
       "meta": {
@@ -86,6 +91,11 @@
     {
       "filename": "huya-nacos.md",
       "link": "/en-us/blog/huya-nacos.html",
+      "meta": {}
+    },
+    {
+      "filename": "huya-practice.md",
+      "link": "/en-us/blog/huya-practice.html",
       "meta": {}
     },
     {
@@ -151,6 +161,11 @@
       }
     },
     {
+      "filename": "Nacos0.8.md",
+      "link": "/zh-cn/blog/Nacos0.8.html",
+      "meta": {}
+    },
+    {
       "filename": "alibaba-configserver.md",
       "link": "/zh-cn/blog/alibaba-configserver.html",
       "meta": {
@@ -204,6 +219,11 @@
     {
       "filename": "huya-nacos.md",
       "link": "/zh-cn/blog/huya-nacos.html",
+      "meta": {}
+    },
+    {
+      "filename": "huya-practice.md",
+      "link": "/zh-cn/blog/huya-practice.html",
       "meta": {}
     },
     {

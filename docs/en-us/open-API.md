@@ -366,7 +366,7 @@ true
 Register an instance to service.
 
 ### Request Type
-PUT
+POST
 
 ### Request Path
 ```plain
@@ -379,7 +379,7 @@ PUT
 | :--- | :--- | :--- | --- |
 | ip | String | yes | IP of instance |
 | port | int | yes | Port of instance |
-| tenant | String | no | ID of tenant |
+| namespaceId | String | no | ID of namespace |
 | weight | double | no | Weight |
 | enable | boolean | no | enabled or not |
 | healthy | boolean | no | healthy or not |
@@ -390,7 +390,7 @@ PUT
 
 ### Request Example
 ```plain
-curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?port=8848&healthy=true&ip=11.11.11.11&weight=1.0&serviceName=nacos.test.3&encoding=GBK&tenant=n1''
+curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?port=8848&healthy=true&ip=11.11.11.11&weight=1.0&serviceName=nacos.test.3&encoding=GBK&namespaceId=n1''
 ```
 
 ### Response Example
@@ -415,12 +415,12 @@ DELETE
 | serviceName | String | yes | Service name |
 | ip | String | yes | IP of instance |
 | port | int | yes | Port of instance |
-| cluster | String | yes | Cluster name |
-| tenant | String | no | ID of tenant |
+| clusterName | String | no | Cluster name |
+| namespaceId | String | no | ID of namespace |
 
 ### Request Example
 ```plain
-curl -X DELETE 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&cluster=TEST1
+curl -X DELETE 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&clusterName=TEST1
 ```
 ### Response Example
 ok
@@ -429,11 +429,11 @@ ok
 Modify an instance of service.
 
 ### Request Type
-POST
+PUT
 
 ### Request Path
 ```plain
-/nacos/v1/ns/instance/update
+/nacos/v1/ns/instance
 ```
 
 ### Request Parameters
@@ -443,14 +443,14 @@ POST
 | serviceName | String | yes | Service name |
 | ip | String | yes | IP of instance |
 | port | int | yes | Port of instance |
-| cluster | String | yes | Cluster name |
-| tenant | String | no | ID of tenant |
+| clusterName | String | no | Cluster name |
+| namespaceId | String | no | ID of namespace |
 | weight | double | no | Weight |
 | metadata | JSON | no | Extended information |
 
 ### Request Example
 ```plain
-curl -X POST 127.0.0.1:8848/nacos/v1/ns/instance/update?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&cluster=TEST1&weight=8&metadata={}
+curl -X PUT 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&clusterName=TEST1&weight=8&metadata={}
 ```
 ### Response Example
 ok
@@ -472,7 +472,7 @@ GET
 | Name | Type | Required | Description |
 | :--- | :--- | :--- | --- |
 | serviceName | String | yes | Service name |
-| tenant | String | no | ID of tenant |
+| namespaceId | String | no | ID of namespace |
 | clusters | String, splited by comma | no | Cluster name |
 | healthyOnly | boolean | no, default value is false | Return healthy instance or not |
 
@@ -521,8 +521,8 @@ GET
 | serviceName | String | yes | Service name |
 | ip | String | yes | IP of instance |
 | port | String | yes | Port of instance |
-| tenant | String | no | ID of tenant |
-| clusters | String, splited by comma | no | Cluster name |
+| namespaceId | String | no | ID of namespace |
+| cluster | String | no | Cluster name |
 
 ### Request Example
 ```plain
@@ -541,5 +541,33 @@ curl -X GET '127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.2&ip=10.
 	"clusterName": "DEFAULT",
 	"weight": 1.0
 }
+```
+
+## Send instance beat
+### Description
+Send instance beat
+
+### Request Type
+PUT
+
+### Request Path
+```plain
+/nacos/v1/ns/instance/beat
+```
+
+### Request Parameters
+
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | --- |
+| serviceName | String | yes | service name |
+| beat | String | yes | beat content |
+
+### Request Example
+```plain
+curl -X PUT '127.0.0.1:8848/nacos/v1/ns/instance/beat?serviceName=nacos.test.2&beat=%7b%22cluster%22%3a%22c1%22%2c%22ip%22%3a%22127.0.0.1%22%2c%22metadata%22%3a%7b%7d%2c%22port%22%3a8080%2c%22scheduled%22%3atrue%2c%22serviceName%22%3a%22jinhan0Fx4s.173TL.net%22%2c%22weight%22%3a1%7d'
+```
+### Response Example
+```
+ok
 ```
 

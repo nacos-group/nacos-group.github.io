@@ -1,4 +1,6 @@
-Nacos 0.8.0版本完善了监控系统，支持通过暴露metrics数据接入第三方监控系统监控Nacos运行状态，目前支持prometheus、elastic search和influxdb，下面结合prometheus和grafana如何监控Nacos，与elastic search和influxdb结合可自己查找相关资料
+Nacos 0.8.0版本完善了监控系统，支持通过暴露metrics数据接入第三方监控系统监控Nacos运行状态，目前支持prometheus、elastic search和influxdb，下面结合prometheus和grafana如何监控Nacos，官网[grafana监控页面](http://monitor.nacos.io)。与elastic search和influxdb结合可自己查找相关资料
+
+
 
 ## 搭建Nacos集群暴露metrics数据
 按照[部署文档](https://nacos.io/zh-cn/docs/deployment.html)搭建好Nacos集群
@@ -65,7 +67,7 @@ brew services start grafana
 
 ### linux
 ```
-sudo yum install https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-4.4.3-1.x86_64.rpm
+sudo yum install https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.2.4-1.x86_64.rpm
 sudo service grafana-server start
 ```
 

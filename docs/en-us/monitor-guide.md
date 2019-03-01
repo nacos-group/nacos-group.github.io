@@ -1,4 +1,5 @@
-Nacos 0.8.0 improves the monitoring system, supporting Nacos operation status monitoring through exposing metrics data access to third-party monitoring system. Currently, prometheus, elastic search and influxdb are supported. The docs introduce how prometheus and grafana monitor Nacos. You can find out for yourself how to use elastic search and influxdb.
+Nacos 0.8.0 improves the monitoring system, supporting Nacos operation status monitoring through exposing metrics data access to third-party monitoring system. Currently, prometheus, elastic search and influxdb are supported. The docs introduce how prometheus and grafana monitor Nacos.
+Here is Nacos [grafana monitoring page](http://monitor.nacos.io). You can find out for yourself how to use elastic search and influxdb.
 
 ## Deploy Nacos cluster to expose metrics data
 
@@ -65,7 +66,7 @@ brew services start grafana
 
 ### linux
 ```
-sudo yum install https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-4.4.3-1.x86_64.rpm
+sudo yum install https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-5.2.4-1.x86_64.rpm
 sudo service grafana-server start
 ```
 

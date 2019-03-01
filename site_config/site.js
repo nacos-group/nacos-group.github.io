@@ -75,6 +75,10 @@ export default {
               text: 'Cloud Service EDAS',
               link: 'https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219',
           },
+          {
+              text: 'Cloud Service AHAS',
+              link: 'https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225',
+          },
       ],
     },
 
@@ -152,6 +156,10 @@ export default {
           {
               text: '云服务 EDAS',
               link: 'https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219',
+          },
+          {
+              text: '云服务 AHAS',
+              link: 'https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225',
           },
       ],
     },
