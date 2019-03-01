@@ -1,3 +1,9 @@
+---
+title: Nacos 0.8.0版本进行发布
+keywords: nacos0.8,nacos0.8.0,nacos 发布
+description: Nacos 0.8.0版本进行发布
+---
+
 # Dubbo Nacos 发布 v0.8.0 PRE-GA版本，安全稳定上生产
 
 阿里巴巴微服务开源项目?[Dubbo Nacos](https://github.com/alibaba/nacos)? 于本周发布?**v0.8.0**?**PRE-GA**版本，终于初步完成了Road Map一个重要的里程碑版本（第一个可安全上生产的版本，特别感谢在前期勇于在生产上尝试Nacos的客户，社区会尽快寄出小礼品，表达对大家的感激之情），V0.8.0 版本主要在支持了登录、命名空间、Metrics监控（对接Prometheus）、通过Nacos-Sync 组件支持从传统的注册中心平滑的往Nacos服务数据迁移等特性，以更稳定和更高可用的姿态让用户在生产环境中支撑大家的微服务平台。

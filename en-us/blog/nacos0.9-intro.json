@@ -1,0 +1,7 @@
+{
+  "filename": "nacos0.9-intro.md",
+  "__html": "<h1>Nacos 0.9.0�汾������</h1>\n<p>Nacos ���� 0.9.0 �汾���ð汾��ǿ�� Nacos-Sync �ȶ��ԣ������˼����ϵ�������˲�������������֧�� Naming �� Config �ķ�ģ��������⻹�޸������������һЩ issues��</p>\n<p>[#412] Nacos can support Dubbo service registration discovery and configuration management\n[#388] Cluster name should be provided in the Instance\n[#377] Clean up messy code in Naming module\n[#369] Support instance list persisted on disk\n[#366] Findbugs-maven-plugin version\n[#362] The metadata will lost when online or offline instance through web ui\n[#352] Refactoring internationalization Nacos console\n[#278] Nacos docker img\n[#243] Optimize the efficiency of integration testing, it��s taking too long now</p>\n<p>��л���� Contributors �� Nacos 0.9.0�汾�Ĺ��ף������ǣ�</p>\n<p>@paderlol��@jifengnan��@loadchange��@nkorange��@hxy1991��@huangyunbin��@darkness463��@luoxn28��@TsingLiang��@xuechaos��@nanamikon��@systp��@jameslcj��@pader.zhang</p>\n<p>����ο���https://github.com/alibaba/nacos/releases/tag/0.9.0</p>\n<p>Nacos team ���� ��https://nacos.io/en-us/docs/nacos-dev.html ��������չ�У���ӭ���룩</p>\n<p>��μ��� Nacos team��https://nacos.io/en-us/docs/contributing-dev.html</p>\n",
+  "title": "Nacos 0.9.0�汾���з���",
+  "keywords": "nacos0.9,nacos0.9.0,nacos ����",
+  "description": "Nacos 0.9.0�汾���з���"
+}
