@@ -101,7 +101,7 @@ Generally speaking, contribute 8 non-trivial patches and get at least three diff
     
 -   ability to collaborate with the team,
     
--   understanding of the projects' code base and coding style, and
+-   understanding of the projects' code base and coding style,
     
 -   ability to write good code (last but certainly not least)
     
