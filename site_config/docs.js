@@ -58,6 +58,10 @@ export default {
                   title: 'Nacos with K8s',
                   link: '/en-us/docs/use-nacos-with-kubernetes.html',
               },
+              {
+                  title: 'Nacos Sync',
+                  link: '/en-us/docs/nacos-sync.html',
+              },
             ],
           },
           {
@@ -108,6 +112,10 @@ export default {
               {
                 title: 'Nacos Config Benchmark',
                 link: '/en-us/docs/nacos-config-benchmark.html',
+              },
+              {
+                  title: 'Data Migration to Nacos',
+                  link: '/en-us/docs/nacos-sync-use.html',
               },
             ],
           },
@@ -213,6 +221,10 @@ export default {
                   title: 'Nacos k8s',
                   link: '/zh-cn/docs/use-nacos-with-kubernetes.html',
               },
+              {
+                  title: 'Nacos Sync',
+                  link: '/zh-cn/docs/nacos-sync.html',
+              },
           ]
           },
           {
@@ -261,8 +273,12 @@ export default {
                 link: '/zh-cn/docs/monitor-guide.html',
               },
               {
-                title: '配置模块压测模型',
-                link: '/en-us/docs/nacos-config-benchmark.html',
+                  title: '配置模块压测模型',
+                  link: '/en-us/docs/nacos-config-benchmark.html',
+              },
+              {
+                  title: '其他环境迁移到Nacos',
+                  link: '/en-us/docs/nacos-sync-use.html',
               },
             ],
           },
