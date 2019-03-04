@@ -40,3 +40,33 @@ db.password=youdontknow
 
 Nacos支持NameServer路由请求模式，通过它您可以设计一个有用的映射规则来控制请求转发到相应的集群，在映射规则中您可以按命名空间或租户等分片请求...
 
+## 多网卡IP选择
+
+当本地环境比较复杂的时候，Nacos服务在启动的时候需要选择运行时使用的IP或者网卡。Nacos从多网卡获取IP参考Spring Cloud设计，通过nacos.inetutils参数，可以指定Nacos使用的网卡和IP地址。目前支持的配置参数有:
+
+- ip-address参数可以直接设置nacos的ip
+
+```
+nacos.inetutils.ip-address=10.11.105.155
+```
+
+- use-only-site-local-interfaces参数可以让nacos使用局域网ip，这个在nacos部署的机器有多网卡时很有用，可以让nacos选择局域网网卡
+
+```
+nacos.inetutils.use-only-site-local-interfaces=true
+```
+
+- ignored-interfaces支持网卡数组，可以让nacos忽略多个网卡
+
+```
+nacos.inetutils.ignored-interfaces[0]=eth0
+nacos.inetutils.ignored-interfaces[1]=eth1
+```
+
+- preferred-networks参数可以让nacos优先选择匹配的ip，支持正则匹配和前缀匹配
+
+```
+nacos.inetutils.preferred-networks[0]=30.5.124.
+nacos.inetutils.preferred-networks[0]=30.5.124.(25[0-5]|2[0-4]\\d|((1d{2})|([1-9]?\\d))),30.5.124.(25[0-5]|2[0-4]\\d|((1d{2})|([1-9]?\\d)))
+```
+
