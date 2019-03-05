@@ -187,3 +187,42 @@ nacos_monitor{name='pubServiceCount'}|发布的服务数
 nacos_monitor{name='configListenSize'}|监听的配置数
 nacos_client_request_seconds_count|请求的次数，包括多种(url,方法,code)
 nacos_client_request_seconds_sum|请求的总耗时，包括多种(url,方法,code)
+
+## Nacos-Sync监控
+
+随着Nacos 0.9版本发布，Nacos-Sync 0.3版本支持了metrics监控，能通过metrics数据观察Nacos-Sync服务的运行状态，提升了Nacos-Sync的在生产环境的监控能力。
+整体的监控体系的搭建参考[Nacos监控手册](https://nacos.io/zh-cn/docs/monitor-guide.html)
+
+## grafana监控Nacos-Sync
+和Nacos监控一样，Nacos-Sync也提供了监控模版，导入监控[模版](https://github.com/nacos-group/nacos-template/blob/master/nacos-sync-grafana)
+
+Nacos-Sync监控同样也分为三个模块:
+- nacos-sync monitor展示核心监控项 
+![monitor](https://img.alicdn.com/tfs/TB1GeNWKmzqK1RjSZFHXXb3CpXa-2834-1588.png)
+- nacos-sync detail和alert展示监控曲线和告警
+![detail](https://img.alicdn.com/tfs/TB1kP8UKbvpK1RjSZPiXXbmwXXa-2834-1570.png)
+
+## Nacos-Sync metrics含义
+Nacos-Sync的metrics分为jvm层和应用层
+### jvm metrics
+
+指标|含义
+---|---
+system_cpu_usage|CPU使用率
+system_load_average_1m|load
+jvm_memory_used_bytes|内存使用字节，包含各种内存区
+jvm_memory_max_bytes|内存最大字节，包含各种内存区
+jvm_gc_pause_seconds_count|gc次数，包含各种gc
+jvm_gc_pause_seconds_sum|gc耗时，包含各种gc
+jvm_threads_daemon|线程数
+
+## 应用层 metrics
+
+指标|含义
+---|---
+nacosSync_task_size|同步任务数
+nacosSync_cluster_size|集群数
+nacosSync_add_task_rt|同步任务执行耗时
+nacosSync_delete_task_rt|删除任务耗时
+nacosSync_dispatcher_task|从数据库中分发任务
+nacosSync_sync_task_error|所有同步执行时的异常
