@@ -12,11 +12,12 @@
 * Maven 3.2.x+: [downloads](https://maven.apache.org/download.cgi), [settings](https://maven.apache.org/settings.html).
 * MySql 5.6.+
 <a name="0aaf7364"></a>
+
 ## 获取安装包
 有2种方式可以获得NacosSync的安装包:
-* 直接下载NacosSync的二进制安装包
+* 直接下载NacosSync的二进制安装包（下载最新的版本 https://github.com/nacos-group/nacos-sync/releases）
 
-[nacosSync.0.2.0.zip](https://github.com/nacos-group/nacos-sync/releases/download/0.2.0/nacosSync.0.2.0.zip)
+[nacosSync.${version}.zip](https://github.com/nacos-group/nacos-sync/releases)
 * 从GitHub上下载NacosSync的源码进行构建
 
 Package:
@@ -27,7 +28,7 @@ mvn clean package -U
 
 目标文件的路径:
 ```basic
-nacos-sync/nacossync-distribution/target/nacosSync.0.1.0.zip
+nacos-sync/nacossync-distribution/target/nacosSync.${version}.zip
 ```
 
 解压安装包之后,工程的文件目录结构:
@@ -43,7 +44,7 @@ nacosSync
 │   ├── application.properties
 │   └── logback-spring.xml
 ├── logs
-└── nacosSync-server.0.1.0.jar
+└── nacosSync-server.${version}.jar
 ```
 <a name="d41d8cd9"></a>
 ### 
