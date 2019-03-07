@@ -15,6 +15,13 @@ export default {
               link: '/en-us/blog/nacos0.8.html',
           },
           {
+              img: 'https://img.alicdn.com/tfs/TB1qqkLKxnaK1RjSZFBXXcW7VXa-1830-982.png',
+              title: 'Nacos 0.9.0 发布，稳定的快速迭代',
+              dateStr: 'Mar 7, 2019',
+              content: 'Nacos一直秉承着稳定性和快速迭代，Nacos 0.9.0版本于上周正式发布release，功能围绕着，Nacos-Sync的稳定性、Server功能拆分部署、Nacos python语言体系的支持。',
+              link: '/en-us/blog/nacos0.9.0.html',
+          },
+          {
               img: 'https://yqfile.alicdn.com/6b6cebffb9b590ebc195815bac5ab2f7529a48b6.png',
               title: '虎牙直播在微服务改造方面的实践和总结',
               content: '文章整理自虎牙基础保障部中间件团队负责人张波（社区ID：zhangjimmy）在Dubbo Meetup 广州站沙龙上的分享，介绍虎牙在DNS、服务注册、CMDB和服务配置中心等方面的实践。',
@@ -23,18 +30,18 @@ export default {
           },
           // {
           //     img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1544689744102-fd00fec6-ca80-4c0c-9b0d-538f17279963.png',
-          //     title: 'Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署',
-          //     dateStr: 'Dec 14, 2018',
+          //     title: 'Nacos 0.9.0 发布，稳定的快速迭代',
+          //     dateStr: 'Mar 7, 2019',
           //     content: '本文介绍了阿里巴巴的微服务开源项目[Dubbo Nacos](https://github.com/alibaba/nacos) v0.6 版本，该版本主要在支持了Dubbo生态和Docker部署。',
           //     link: '/en-us/blog/nacos0.6.html',
           // },
-          {
-              img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1540738282849-61e2022a-46a9-4d81-ae16-6d6f0515450b.png',
-              title: 'Nacos 进入CNCF landscape',
-              content: 'Nacos 被CNCF 纳入landscape大图.CNCF（Cloud Native Compute Foundation） 是 Linux 基金会旗下的一个组织，旨在推动以容器为中心的云原生系统。从 2016 年 11 月，CNCF 开始维护了一个 Cloud Native Landscape 的 repo。',
-              dateStr: 'Oct 28，2018',
-              link: '/en-us/blog/cncf.html',
-          },
+          // {
+          //     img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1540738282849-61e2022a-46a9-4d81-ae16-6d6f0515450b.png',
+          //     title: 'Nacos 进入CNCF landscape',
+          //     content: 'Nacos 被CNCF 纳入landscape大图.CNCF（Cloud Native Compute Foundation） 是 Linux 基金会旗下的一个组织，旨在推动以容器为中心的云原生系统。从 2016 年 11 月，CNCF 开始维护了一个 Cloud Native Landscape 的 repo。',
+          //     dateStr: 'Oct 28，2018',
+          //     link: '/en-us/blog/cncf.html',
+          // },
       ]
     },
     contacts: {
@@ -161,19 +168,26 @@ export default {
               link: '/en-us/blog/nacos0.8.html',
           },
           {
+              img: 'https://img.alicdn.com/tfs/TB1qqkLKxnaK1RjSZFBXXcW7VXa-1830-982.png',
+              title: 'Nacos 0.9.0 发布，稳定的快速迭代',
+              dateStr: 'Mar 7, 2019',
+              content: 'Nacos一直秉承着稳定性和快速迭代，Nacos 0.9.0版本于上周正式发布release，功能围绕着，Nacos-Sync的稳定性、Server功能拆分部署、Nacos python语言体系的支持。',
+              link: '/en-us/blog/nacos0.9.0.html',
+          },
+          {
               img: 'https://yqfile.alicdn.com/6b6cebffb9b590ebc195815bac5ab2f7529a48b6.png',
               title: '虎牙直播在微服务改造方面的实践和总结',
               content: '文章整理自虎牙基础保障部中间件团队负责人张波（社区ID：zhangjimmy）在Dubbo Meetup 广州站沙龙上的分享，介绍虎牙在DNS、服务注册、CMDB和服务配置中心等方面的实践。',
               dateStr: 'Feb 10，2019',
               link: '/en-us/blog/huya-practice.html',
           },
-          {
-              img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1540738282849-61e2022a-46a9-4d81-ae16-6d6f0515450b.png',
-              title: 'Nacos 进入CNCF landscape',
-              content: 'Nacos 被CNCF 纳入landscape大图.CNCF（Cloud Native Compute Foundation） 是 Linux 基金会旗下的一个组织，旨在推动以容器为中心的云原生系统。从 2016 年 11 月，CNCF 开始维护了一个 Cloud Native Landscape 的 repo。',
-              dateStr: 'Oct 28，2018',
-              link: '/en-us/blog/cncf.html',
-          },
+          // {
+          //     img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1540738282849-61e2022a-46a9-4d81-ae16-6d6f0515450b.png',
+          //     title: 'Nacos 进入CNCF landscape',
+          //     content: 'Nacos 被CNCF 纳入landscape大图.CNCF（Cloud Native Compute Foundation） 是 Linux 基金会旗下的一个组织，旨在推动以容器为中心的云原生系统。从 2016 年 11 月，CNCF 开始维护了一个 Cloud Native Landscape 的 repo。',
+          //     dateStr: 'Oct 28，2018',
+          //     link: '/en-us/blog/cncf.html',
+          // },
       ]
     },
       contacts: {
