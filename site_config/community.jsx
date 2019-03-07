@@ -22,7 +22,7 @@ export default {
               link: '/en-us/blog/nacos0.9.0.html',
           },
           {
-              img: 'https://yqfile.alicdn.com/6b6cebffb9b590ebc195815bac5ab2f7529a48b6.png',
+              img: 'https://img.alicdn.com/tfs/TB1i4ugBjDpK1RjSZFrXXa78VXa-1522-584.png',
               title: '虎牙直播在微服务改造方面的实践和总结',
               content: '文章整理自虎牙基础保障部中间件团队负责人张波（社区ID：zhangjimmy）在Dubbo Meetup 广州站沙龙上的分享，介绍虎牙在DNS、服务注册、CMDB和服务配置中心等方面的实践。',
               dateStr: 'Feb 10，2019',
@@ -175,7 +175,7 @@ export default {
               link: '/en-us/blog/nacos0.9.0.html',
           },
           {
-              img: 'https://yqfile.alicdn.com/6b6cebffb9b590ebc195815bac5ab2f7529a48b6.png',
+              img: 'https://img.alicdn.com/tfs/TB1i4ugBjDpK1RjSZFrXXa78VXa-1522-584.png',
               title: '虎牙直播在微服务改造方面的实践和总结',
               content: '文章整理自虎牙基础保障部中间件团队负责人张波（社区ID：zhangjimmy）在Dubbo Meetup 广州站沙龙上的分享，介绍虎牙在DNS、服务注册、CMDB和服务配置中心等方面的实践。',
               dateStr: 'Feb 10，2019',
