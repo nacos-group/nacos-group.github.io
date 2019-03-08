@@ -111,11 +111,11 @@ export default {
         text: '社区',
         link: '/zh-cn/community/index.html',
       },
-      {
-        key: 'download',
-        text: '下载',
-        link: '/zh-cn/blog/download.html',
-      },
+      // {
+      //   key: 'download',
+      //   text: '下载',
+      //   link: '/zh-cn/blog/download.html',
+      // },
       {
         text: '控制台样例',
           link: 'http://console.nacos.io/nacos/index.html',
