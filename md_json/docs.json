@@ -41,6 +41,11 @@
       "meta": {}
     },
     {
+      "filename": "contributing-dev.md",
+      "link": "/en-us/docs/contributing-dev.html",
+      "meta": {}
+    },
+    {
       "filename": "contributing.md",
       "link": "/en-us/docs/contributing.html",
       "meta": {}
@@ -71,8 +76,27 @@
       "meta": {}
     },
     {
+      "filename": "nacos-dev.md",
+      "link": "/en-us/docs/nacos-dev.html",
+      "meta": {
+        "title": "developers",
+        "keywords": "nacos,developers,committer,pmc,nacos team",
+        "description": "nacos developers page"
+      }
+    },
+    {
       "filename": "nacos-spring.md",
       "link": "/en-us/docs/nacos-spring.html",
+      "meta": {}
+    },
+    {
+      "filename": "nacos-sync-use.md",
+      "link": "/en-us/docs/nacos-sync-use.html",
+      "meta": {}
+    },
+    {
+      "filename": "nacos-sync.md",
+      "link": "/en-us/docs/nacos-sync.html",
       "meta": {}
     },
     {
@@ -198,6 +222,11 @@
       "meta": {}
     },
     {
+      "filename": "contributing-dev.md",
+      "link": "/zh-cn/docs/contributing-dev.html",
+      "meta": {}
+    },
+    {
       "filename": "contributing.md",
       "link": "/zh-cn/docs/contributing.html",
       "meta": {}
@@ -228,8 +257,27 @@
       "meta": {}
     },
     {
+      "filename": "nacos-dev.md",
+      "link": "/zh-cn/docs/nacos-dev.html",
+      "meta": {
+        "title": "开发者",
+        "keywords": "nacos,开发者,committer",
+        "description": "nacos开发者页"
+      }
+    },
+    {
       "filename": "nacos-spring.md",
       "link": "/zh-cn/docs/nacos-spring.html",
+      "meta": {}
+    },
+    {
+      "filename": "nacos-sync-use.md",
+      "link": "/zh-cn/docs/nacos-sync-use.html",
+      "meta": {}
+    },
+    {
+      "filename": "nacos-sync.md",
+      "link": "/zh-cn/docs/nacos-sync.html",
       "meta": {}
     },
     {

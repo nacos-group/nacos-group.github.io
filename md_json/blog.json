@@ -35,7 +35,11 @@
     {
       "filename": "Nacos0.8.md",
       "link": "/en-us/blog/Nacos0.8.html",
-      "meta": {}
+      "meta": {
+        "title": "Nacos 0.6�汾������֧��Dubbo��̬����֧��Docker����",
+        "keywords": "nacos0.6,dubbo,docker",
+        "description": "Nacos 0.6�汾������֧��Dubbo��̬����֧��Docker����"
+      }
     },
     {
       "filename": "alibaba-configserver.md",
@@ -120,6 +124,24 @@
         "keywords": "nacos0.6,dubbo,docker",
         "description": "Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署"
       }
+    },
+    {
+      "filename": "nacos0.9-intro.md",
+      "link": "/en-us/blog/nacos0.9-intro.html",
+      "meta": {
+        "title": "Nacos 0.9.0版本进行发布",
+        "keywords": "nacos0.9,nacos0.9.0,nacos 发布",
+        "description": "Nacos 0.9.0版本进行发布"
+      }
+    },
+    {
+      "filename": "nacos0.9.0.md",
+      "link": "/en-us/blog/nacos0.9.0.html",
+      "meta": {
+        "title": "Nacos 0.9.0版本进行发布",
+        "keywords": "nacos0.9，nacos0.9.0，nacos",
+        "description": "Nacos 0.9.0版本进行发布"
+      }
     }
   ],
   "zh-cn": [
@@ -163,7 +185,11 @@
     {
       "filename": "Nacos0.8.md",
       "link": "/zh-cn/blog/Nacos0.8.html",
-      "meta": {}
+      "meta": {
+        "title": "Nacos 0.8.0�汾���з���",
+        "keywords": "nacos0.8,nacos0.8.0,nacos ����",
+        "description": "Nacos 0.8.0�汾���з���"
+      }
     },
     {
       "filename": "alibaba-configserver.md",
@@ -247,6 +273,24 @@
         "title": "Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署",
         "keywords": "nacos0.6,dubbo,docker",
         "description": "Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署"
+      }
+    },
+    {
+      "filename": "nacos0.9-intro.md",
+      "link": "/zh-cn/blog/nacos0.9-intro.html",
+      "meta": {
+        "title": "Nacos 0.9.0版本进行发布",
+        "keywords": "nacos0.9,nacos0.9.0,nacos 发布",
+        "description": "Nacos 0.9.0版本进行发布"
+      }
+    },
+    {
+      "filename": "nacos0.9.0.md",
+      "link": "/zh-cn/blog/nacos0.9.0.html",
+      "meta": {
+        "title": "Nacos 0.9.0版本进行发布",
+        "keywords": "nacos0.9，nacos0.9.0，nacos",
+        "description": "Nacos 0.9.0版本进行发布"
       }
     }
   ]

@@ -19,12 +19,12 @@ description: nacos开发者页
 | [paderlol](https://github.com/paderlol)         | 张龙   | 蜜獾    | Committer | huangbbbaihao@gmail.com                                     |
 | [pguo65535](https://github.com/pguo65535)       | 郭平   | 阿里巴巴 | Committer | guoping.gp@alibaba-inc.com                                   |
 | [xuechaos](https://github.com/xuechaos)         | 邢学超 | 阿里巴巴 | Committer | xingxuechao@alibaba-inc.com                                  |
-| [yanlinly](https://github.com/yanlinly)         | 李艳林 | 阿里巴巴 | Committer | water.lyl@alibaba-inc.com                                    |
-| [nkorange](https://github.com/nkorange)         | 朱鹏飞 | 阿里巴巴 | Committer | dungu.zpf@alibaba-inc.com                                    |
+| [yanlinly](https://github.com/yanlinly)         | 李艳林 | 阿里巴巴 | Committer | yan.lin2009@163.com                                    |
+| [nkorange](https://github.com/nkorange)         | 朱鹏飞 | 阿里巴巴 | Committer | zpf.073@gmail.com                                    |
 | [hxy1991](https://github.com/hxy1991)           | 黄晓禹 | 阿里巴巴 | Committer | huangxiaoyu1018@gmail.com                                    |
 | [yangyshdan](https://github.com/yangyshdan)     | 杨奕   | 阿里巴巴 | Committer | fuyi.yy@alibaba-inc.com                                      |
 | [mingyixu](https://github.com/mingyixu)         | 徐小春 | 阿里巴巴 | Committer | xiaochun.xxc@alibaba-inc.com                                 |
-| [JianweiWang](https://github.com/JianweiWang)   | 王建伟 | 阿里巴巴 | Committer | jianwei.wjw@alibaba-inc.com                                  |
+| [JianweiWang](https://github.com/JianweiWang)   | 王建伟 | 阿里巴巴 | Committer | wangjianwei.nwpu@gmail.com                                  |
 | [jameslcj](https://github.com/jameslcj)         | 李晨   | 阿里巴巴 | Committer | zhichen.lc@alibaba-inc.com                                   |
 | [flystar32](https://github.com/flystar32)       | 肖京   | 阿里巴巴 | Committer | yizhan.xj@alibaba-inc.com                                    |
 | [mercyblitz](https://github.com/mercyblitz)     | 马昕曦 | 阿里巴巴 | Committer | taogu.mxx@alibaba-inc.com                                    |
