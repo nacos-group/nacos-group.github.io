@@ -186,3 +186,42 @@ nacos_monitor{name='pubServiceCount'}|published services count
 nacos_monitor{name='configListenSize'}|listened configuration file count
 nacos_client_request_seconds_count|request count
 nacos_client_request_seconds_sum|request time
+
+## Nacos-Sync monitor
+
+With the release of Nacos 0.9, Nacos-Sync 0.3 supports metrics monitoring. It can observe the running status of Nacos-Sync service through metrics data, and improve the monitoring capability of Nacos-Sync in production environment.
+Reference for the Construction of the Overall Monitoring System [Nacos Monitoring Manual](https://nacos.io/en-us/docs/monitor-guide.html)
+
+## grafana monitor Nacos-Sync
+The same as Nacos monitoring, Nacos-Sync also provides monitoring templates to import monitoring [Nacos-Sync templates](https://github.com/nacos-group/nacos-template/blob/master/nacos-sync-grafana)
+
+Nacos-Sync monitoring is also divided into three modules:
+- nacos-sync monitor shows core monitoring items
+![monitor](https://img.alicdn.com/tfs/TB1GeNWKmzqK1RjSZFHXXb3CpXa-2834-1588.png)
+- nacos-sync detail and alert shows monitoring curves and alarms.
+![detail](https://img.alicdn.com/tfs/TB1kP8UKbvpK1RjSZPiXXbmwXXa-2834-1570.png)
+
+## Nacos-Sync metrics meaning
+Nacos-Sync metrics is divided into JVM layer and application layer
+### jvm metrics
+
+item|meaning
+---|---
+system_cpu_usage|cpu usage
+system_load_average_1m|load
+jvm_memory_used_bytes|jvm memory used(bytes)
+jvm_memory_max_bytes|jvm memory max(bytes)
+jvm_gc_pause_seconds_count|gc count
+jvm_gc_pause_seconds_sum|gc time
+jvm_threads_daemon|jvm threads count
+
+## application metrics
+
+item|meaning
+---|---
+nacosSync_task_size|sync task count
+nacosSync_cluster_size|cluster count
+nacosSync_add_task_rt|add task time
+nacosSync_delete_task_rt|delete task time
+nacosSync_dispatcher_task|dispatcher task time
+nacosSync_sync_task_error|sync task error count

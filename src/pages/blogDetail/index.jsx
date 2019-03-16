@@ -85,11 +85,13 @@ class BlogDetail extends Language {
   render() {
     const language = this.getLanguage();
     const __html = this.props.__html || this.state.__html;
+    // 下载页借助博客页载体
+    const isDownload = window.location.pathname.split('/').pop() === 'download.html';
     return (
       <div className="blog-detail-page">
         <Header
           type="normal"
-          currentKey="blog"
+          currentKey={isDownload ? 'download' : 'blog'}
           logo={getLink('/img/nacos_colorful.png')}
           language={language}
           onLanguageChange={this.onLanguageChange}
