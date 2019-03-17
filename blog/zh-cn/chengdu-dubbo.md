@@ -4,6 +4,8 @@ keywords: nacos,nacos0.2,alibaba,邢学超,Aliware Open Source,spring cloud
 description: Nacos 计划发布v0.2版本，进一步融合Dubbo和SpringCloud生态
 ---
 
+# Nacos 计划发布v0.2版本，进一步融合Dubbo和SpringCloud生态
+
 在近期的Aliware Open Source 成都站的活动上，阿里巴巴高级工程师邢学超（于怀）分享了Nacos v0.2的规划和进度，并对Nacos v0.3的控制台进行了预览。Nacos v0.2将进一步融入Duboo和Spring Cloud生态，帮助开发者更好的在微服务场景下使用服务发现和动态配置管理。
 
 ![undefined](https://cdn.nlark.com/lark/0/2018/png/11189/1537795153259-cc2c60c2-d7cb-431a-8858-cbd71b1c89e9.png) 
