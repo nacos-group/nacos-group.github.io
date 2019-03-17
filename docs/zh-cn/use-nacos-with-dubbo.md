@@ -1,3 +1,9 @@
+---
+title: Dubbo 融合 Nacos 成为注册中心
+keywords: Dubbo,Nacos
+description: Dubbo 融合 Nacos 成为注册中心
+---
+
 # Dubbo 融合 Nacos 成为注册中心
 
 Nacos 作为 Dubbo 生态系统中重要的注册中心实现，其中 [`dubbo-registry-nacos`](https://github.com/dubbo/dubbo-registry-nacos) 则是 Dubbo 融合 Nacos 注册中心的实现。

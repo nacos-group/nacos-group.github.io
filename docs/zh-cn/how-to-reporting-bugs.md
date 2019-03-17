@@ -1,3 +1,9 @@
+---
+title: 如何提交问题报告
+keywords: 提交,问题报告
+description: 如何提交问题报告
+---
+
 # 如何提交问题报告
 
 如果Nacos项目的任何部分存在问题或文档问题，请通过[opening an issue](https://github.com/alibaba/nacos/issues/new)告诉我们。我们非常认真地对待错误和错误，在产品面前没有不重要的问题。不过在创建错误报告之前，请检查是否存在报告相同问题的issues。
