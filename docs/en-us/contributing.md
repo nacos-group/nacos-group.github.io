@@ -17,8 +17,8 @@ https://gitter.im/alibaba/nacos
 
 Mailing list is recommended for discussing almost anything related to Nacos. Please refer to this [guide](https://github.com/apache/incubator-dubbo/wiki/Mailing-list-subscription-guide) for detailed documentation on how to subscribe to mailing lists.
 
-- <a href="mailto:dev-nacos@googlegroups.com">dev-nacos@googlegroups.com</a>: The develop mailing list. You can ask questions here if you encounter any problem when using or developing Nacos.
-- <a href="mailto:commits-nacos@googlegroups.com">commits-nacos@googlegroups.com</a>: All commits will be sent to this mailing list. You can subscribe to it if you are interested in Nacos's development.
+- <a href="mailto:dev-nacos+subcribe@googlegroups.com">dev-nacos@googlegroups.com</a>: The develop mailing list. You can ask questions here if you encounter any problem when using or developing Nacos.
+- <a href="mailto:commits-nacos+subcribe@googlegroups.com">commits-nacos@googlegroups.com</a>: All commits will be sent to this mailing list. You can subscribe to it if you are interested in Nacos's development.
 - <a href="mailto:users-nacos@googlegroups.com">users-nacos@googlegroups.com</a>: All  Github [issues](https://github.com/alibaba/nacos/issues) updates and [pull request](https://github.com/alibaba/nacos/pulls) updates will be sent to this mailing list.
 
 - If you have any questions, please contact <a href="mailto:nacos_dev@linux.alibaba.com">nacos_dev@linux.alibaba.com</a>.
