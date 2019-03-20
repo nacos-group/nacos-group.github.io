@@ -94,6 +94,19 @@
 <li>Agent: dns-f similar mode, or integration with mesh and other programs</li>
 <li>CLI: Lightweight management of the product on the command line, as easy as git</li>
 </ul>
+<h2>Domain Model</h2>
+<h3>Data Model</h3>
+<p>The Nacos data model Key is uniquely determined by the triplet. The Namespace defaults to an empty string, the public namespace (public), and the group defaults to DEFAULT_GROUP.</p>
+<p><img src="/img/nacos_data_model.jpg" alt="nacos_data_model"></p>
+<h3>Service Entity Relationship Model</h3>
+<p><img src="/img/nacos_naming_data_model.jpg" alt="nacos_naming_data_model"></p>
+<h3>Config Entity Relationship Model</h3>
+<p>Around the configuration, there are mainly two associated entities, one is the configuration change history, and the other is the service tag (used for marking classification, convenient for indexing), which is associated by ID.</p>
+<p><img src="/img/nacos_config_er.jpg" alt="nacos_config_er"></p>
+<h2>Class view</h2>
+<h3>Nacos-SDK Class view</h3>
+<p>// TODO Service part to be continued</p>
+<p><img src="/img/nacos_sdk_class_relation.jpg" alt="nacos_sdk_class_relation"></p>
 <h2>Artifacts, Deployment, and Start Mode</h2>
 <p><img src="https://cdn.yuque.com/lark/0/2018/png/15914/1531730742844-e8325932-258b-49b2-9473-8d1199efe20d.png" alt="undefined"></p>
 <ul>

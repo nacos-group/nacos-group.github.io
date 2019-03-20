@@ -166,12 +166,20 @@
     {
       "filename": "DNS-SD.md",
       "link": "/zh-cn/blog/DNS-SD.html",
-      "meta": {}
+      "meta": {
+        "title": "微服务架构中基于DNS的服务注册与发现",
+        "keywords": "微服务,DNS",
+        "description": "微服务架构中基于DNS的服务注册与发现"
+      }
     },
     {
       "filename": "Eureka2.md",
       "link": "/zh-cn/blog/Eureka2.html",
-      "meta": {}
+      "meta": {
+        "title": "Eureka 2.0 开源工作宣告停止？别担心，ANS 即将 C位强势出道！",
+        "keywords": "Eureka 2.0",
+        "description": "Eureka 2.0 开源工作宣告停止？别担心，ANS 即将 C位强势出道！"
+      }
     },
     {
       "filename": "Nacos-is-Coming.md",
@@ -186,9 +194,9 @@
       "filename": "Nacos0.8.md",
       "link": "/zh-cn/blog/Nacos0.8.html",
       "meta": {
-        "title": "Nacos 0.8.0�汾���з���",
-        "keywords": "nacos0.8,nacos0.8.0,nacos ����",
-        "description": "Nacos 0.8.0�汾���з���"
+        "title": "Nacos 0.8.0版本进行发布",
+        "keywords": "nacos0.8,nacos0.8.0,nacos 发布",
+        "description": "Nacos 0.8.0版本进行发布"
       }
     },
     {
@@ -201,8 +209,8 @@
       }
     },
     {
-      "filename": "cengdu-dubbo.md",
-      "link": "/zh-cn/blog/cengdu-dubbo.html",
+      "filename": "chengdu-dubbo.md",
+      "link": "/zh-cn/blog/chengdu-dubbo.html",
       "meta": {
         "title": "Nacos 计划发布v0.2版本，进一步融合Dubbo和SpringCloud生态",
         "keywords": "nacos,nacos0.2,alibaba,邢学超,Aliware Open Source,spring cloud",
@@ -221,12 +229,20 @@
     {
       "filename": "consul-k8s.md",
       "link": "/zh-cn/blog/consul-k8s.html",
-      "meta": {}
+      "meta": {
+        "title": "Consul与kubernetes整合公告[翻译]",
+        "keywords": "Consul,kubernetes",
+        "description": "Consul与kubernetes整合公告[翻译]"
+      }
     },
     {
       "filename": "discovery-console.md",
       "link": "/zh-cn/blog/discovery-console.html",
-      "meta": {}
+      "meta": {
+        "title": "Nacos服务发现控制台预览",
+        "keywords": "nacos",
+        "description": "Nacos服务发现控制台预览"
+      }
     },
     {
       "filename": "download.md",
@@ -240,22 +256,38 @@
     {
       "filename": "dynamic-route-zuul-nacos.md",
       "link": "/zh-cn/blog/dynamic-route-zuul-nacos.html",
-      "meta": {}
+      "meta": {
+        "title": "使用Nacos实现Spring Cloud Zuul的动态路由",
+        "keywords": "nacos",
+        "description": "使用Nacos实现Spring Cloud Zuul的动态路由"
+      }
     },
     {
       "filename": "huya-nacos.md",
       "link": "/zh-cn/blog/huya-nacos.html",
-      "meta": {}
+      "meta": {
+        "title": "虎牙直播共建Nacos生态",
+        "keywords": "虎牙直播,nacos",
+        "description": "虎牙直播共建Nacos生态"
+      }
     },
     {
       "filename": "huya-practice.md",
       "link": "/zh-cn/blog/huya-practice.html",
-      "meta": {}
+      "meta": {
+        "title": "虎牙直播在微服务改造方面的实践和总结",
+        "keywords": "nacos,虎牙直播",
+        "description": "虎牙直播在微服务改造方面的实践和总结"
+      }
     },
     {
       "filename": "nacos.md",
       "link": "/zh-cn/blog/nacos.html",
-      "meta": {}
+      "meta": {
+        "title": "Nacos 0.1.0 版本Review 活动设计",
+        "keywords": "nacos 0.1.0",
+        "description": "Nacos 0.1.0 版本Review 活动设计"
+      }
     },
     {
       "filename": "nacos0.5.md",

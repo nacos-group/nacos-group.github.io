@@ -23,6 +23,8 @@
   - [Nacos对多语言的支持](#3.6)
   - [Nacos0.8版本登陆失败](#3.7)
   - [服务端报错java.lang.IllegalStateException: unable to find local peer: 127.0.0.1:8848](#3.8)
+  - [Nacos如何对配置进行加密](#3.9)
+  - [Nacos报401错误](#3.10)
 
 - Nacos原理问题
 
@@ -110,5 +112,13 @@ Nacos 0.8版本当使用openjdk并且没有JAVA_HOME的环境变量时，nacos�
 <h4 id="3.8">服务端报错java.lang.IllegalStateException: unable to find local peer: 127.0.0.1:8848</h4>
 
 这个问题是因为Nacos获取本机IP时,没有获取到正确的外部IP.需要保证InetAddress.getLocalHost().getHostAddress()或者hostname -i的结果是与cluster.conf里配置的IP是一致的.
+
+<h4 id="3.9">Nacos如何对配置进行加密</h4>
+
+Nacos计划在1.X版本提供加密的能力，目前还不支持加密，只能靠sdk做好了加密再存到nacos中
+
+<h4 id="3.10">Nacos报401错误</h4>
+
+Nacos服务端报错了，可以检查服务端日志，参考[issue](https://github.com/alibaba/nacos/issues/816)
 
 ## Nacos原理问题
