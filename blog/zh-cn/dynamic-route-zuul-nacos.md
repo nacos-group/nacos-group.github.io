@@ -1,4 +1,11 @@
->authors:叶志远
+---
+title: 使用Nacos实现Spring Cloud Zuul的动态路由
+keywords: nacos
+description: 使用Nacos实现Spring Cloud Zuul的动态路由
+---
+
+# 使用Nacos实现Spring Cloud Zuul的动态路由
+> authors: 叶志远
 
 ### 一.前言
 Nacos是阿里巴巴开源的致力于服务发现与管理、动态配置管理，以及动态DNS服务的中间件，目前已发布至0.5.0版本，除了与Spring Cloud更加紧密结合以外，还丧心病狂地支持JDK11。如果您目前的项目碍于Eureka的性能，而又缺乏成本引进Consul，那么Nacos是您最好的选择。好了，回到正题，在上周许进搞了一个[使用Nacos实现Spring Cloud Gateway的动态路由](http://xujin.org/sc/gw/gw10/)，让我们直观地感受到了Nacos的无缝接入如丝般顺滑，作为Spring Cloud中网关的始祖Zuul，自然也需要这一贴心赋能。

@@ -48,6 +48,21 @@ Key features of Nacos:
 
 * [Check more features ...](xx)
 
+## Nacos Map
+A picture to understand Nacos, the following structure will be described in detail.
+
+// TODO this picture need to translate.
+
+![nacos_map](/img/nacosMap.jpg) 
+
+- Large picture of characteristics: To introduce the characteristics of the problem domain we want to solve from the functional characteristics and non-functional characteristics.
+- Larger architecture: Get a quick entry into the Nacos world with a clear architecture
+- Business picture: Business scenarios that can be supported with current features, and best practices
+- Big picture of the ecology: systematically sorting out the relationship between Nacos and mainstream technology ecology
+- Big picture of advantage: showcase Nacos core competitiveness
+- Strategic picture: Nacos's macro advantage from strategic to tactical level
+
+
 ## Nacos landscape
 
 ![nacos_landscape.png](https://cdn.nlark.com/lark/0/2018/png/11189/1533045871534-e64b8031-008c-4dfc-b6e8-12a597a003fb.png)

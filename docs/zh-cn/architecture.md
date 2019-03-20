@@ -1,4 +1,12 @@
-## I. 基本架构及概念
+---
+title: Nacos 架构
+keywords: Nacos,架构
+description: Nacos 架构
+---
+
+# Nacos 架构
+
+## 基本架构及概念
 
 ![nacos_arch.jpg](/img/nacos-Arch.jpg) 
 
@@ -41,7 +49,7 @@
 * **[更多概念...](./concepts.md)**
 
 
-## II. 逻辑架构及其组件介绍
+## 逻辑架构及其组件介绍
 
 ![nacos-logic.jpg](/img/nacos-logic.png) 
  
@@ -75,7 +83,35 @@
 - Agent：dns-f类似模式，或者与mesh等方案集成
 - CLI：命令行对产品进行轻量化管理，像git一样好用
 
-## III. 构建物、部署及启动模式
+## 领域模型
+
+### 数据模型
+
+Nacos 数据模型 Key 由三元组唯一确定, Namespace默认是空串，公共命名空间（public），分组默认是 DEFAULT_GROUP。 
+
+![nacos_data_model](/img/nacos_data_model.jpg) 
+
+### 服务领域模型
+
+![nacos_naming_data_model](/img/nacos_naming_data_model.jpg) 
+
+### 配置领域模型
+
+围绕配置，主要有两个关联的实体，一个是配置变更历史，一个是服务标签（用于打标分类，方便索引），由 ID 关联。
+
+![nacos_config_er](/img/nacos_config_er.jpg) 
+
+
+## 类视图
+
+### Nacos-SDK 类视图
+
+服务部分待续
+
+![nacos_sdk_class_relation](/img/nacos_sdk_class_relation.jpg) 
+
+
+## 构建物、部署及启动模式
 
 ![undefined](https://cdn.yuque.com/lark/0/2018/png/15914/1531730742844-e8325932-258b-49b2-9473-8d1199efe20d.png) 
 
