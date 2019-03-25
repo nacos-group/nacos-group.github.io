@@ -1,83 +1,83 @@
 {
   "en-us": [
     {
-      "filename": "activity.md",
-      "link": "\\en-us\\docs\\activity.html",
-      "meta": {}
-    },
-    {
-      "filename": "architecture.md",
-      "link": "\\en-us\\docs\\architecture.html",
-      "meta": {}
-    },
-    {
       "filename": "CLI-guide.md",
-      "link": "\\en-us\\docs\\CLI-guide.html",
-      "meta": {}
-    },
-    {
-      "filename": "cluster-mode-quick-start.md",
-      "link": "\\en-us\\docs\\cluster-mode-quick-start.html",
-      "meta": {}
-    },
-    {
-      "filename": "community.md",
-      "link": "\\en-us\\docs\\community.html",
-      "meta": {}
-    },
-    {
-      "filename": "concepts.md",
-      "link": "\\en-us\\docs\\concepts.html",
-      "meta": {}
-    },
-    {
-      "filename": "console-guide.md",
-      "link": "\\en-us\\docs\\console-guide.html",
-      "meta": {}
-    },
-    {
-      "filename": "contributing-dev.md",
-      "link": "\\en-us\\docs\\contributing-dev.html",
-      "meta": {}
-    },
-    {
-      "filename": "contributing.md",
-      "link": "\\en-us\\docs\\contributing.html",
-      "meta": {}
-    },
-    {
-      "filename": "deployment.md",
-      "link": "\\en-us\\docs\\deployment.html",
+      "link": "/en-us/docs/CLI-guide.html",
       "meta": {}
     },
     {
       "filename": "FAQ.md",
-      "link": "\\en-us\\docs\\FAQ.html",
+      "link": "/en-us/docs/FAQ.html",
+      "meta": {}
+    },
+    {
+      "filename": "activity.md",
+      "link": "/en-us/docs/activity.html",
+      "meta": {}
+    },
+    {
+      "filename": "architecture.md",
+      "link": "/en-us/docs/architecture.html",
+      "meta": {}
+    },
+    {
+      "filename": "cluster-mode-quick-start.md",
+      "link": "/en-us/docs/cluster-mode-quick-start.html",
+      "meta": {}
+    },
+    {
+      "filename": "community.md",
+      "link": "/en-us/docs/community.html",
+      "meta": {}
+    },
+    {
+      "filename": "concepts.md",
+      "link": "/en-us/docs/concepts.html",
+      "meta": {}
+    },
+    {
+      "filename": "console-guide.md",
+      "link": "/en-us/docs/console-guide.html",
+      "meta": {}
+    },
+    {
+      "filename": "contributing-dev.md",
+      "link": "/en-us/docs/contributing-dev.html",
+      "meta": {}
+    },
+    {
+      "filename": "contributing.md",
+      "link": "/en-us/docs/contributing.html",
+      "meta": {}
+    },
+    {
+      "filename": "deployment.md",
+      "link": "/en-us/docs/deployment.html",
       "meta": {}
     },
     {
       "filename": "how-to-reporting-bugs.md",
-      "link": "\\en-us\\docs\\how-to-reporting-bugs.html",
+      "link": "/en-us/docs/how-to-reporting-bugs.html",
       "meta": {}
     },
     {
       "filename": "managementAPI.md",
-      "link": "\\en-us\\docs\\managementAPI.html",
+      "link": "/en-us/docs/managementAPI.html",
       "meta": {}
     },
     {
       "filename": "monitor-guide.md",
-      "link": "\\en-us\\docs\\monitor-guide.html",
+      "link": "/en-us/docs/monitor-guide.html",
       "meta": {}
     },
     {
       "filename": "nacos-config-benchmark.md",
-      "link": "\\en-us\\docs\\nacos-config-benchmark.html",
+      "link": "/en-us/docs/nacos-config-benchmark.html",
       "meta": {}
     },
     {
       "filename": "nacos-dev.md",
-      "link": "\\en-us\\docs\\nacos-dev.html",
+      "link": "/en-us/docs/nacos-dev.html",
       "meta": {
         "title": "developers",
         "keywords": "nacos,developers,committer,pmc,nacos team",
@@ -86,104 +86,114 @@
     },
     {
       "filename": "nacos-spring.md",
-      "link": "\\en-us\\docs\\nacos-spring.html",
+      "link": "/en-us/docs/nacos-spring.html",
       "meta": {}
     },
     {
       "filename": "nacos-sync-use.md",
-      "link": "\\en-us\\docs\\nacos-sync-use.html",
+      "link": "/en-us/docs/nacos-sync-use.html",
       "meta": {}
     },
     {
       "filename": "nacos-sync.md",
-      "link": "\\en-us\\docs\\nacos-sync.html",
+      "link": "/en-us/docs/nacos-sync.html",
       "meta": {}
     },
     {
       "filename": "open-API.md",
-      "link": "\\en-us\\docs\\open-API.html",
+      "link": "/en-us/docs/open-API.html",
       "meta": {}
     },
     {
       "filename": "other-language.md",
-      "link": "\\en-us\\docs\\other-language.html",
+      "link": "/en-us/docs/other-language.html",
       "meta": {}
     },
     {
       "filename": "pull-request.md",
-      "link": "\\en-us\\docs\\pull-request.html",
+      "link": "/en-us/docs/pull-request.html",
       "meta": {}
     },
     {
       "filename": "quick-start-docker.md",
-      "link": "\\en-us\\docs\\quick-start-docker.html",
+      "link": "/en-us/docs/quick-start-docker.html",
       "meta": {}
     },
     {
       "filename": "quick-start-spring-boot.md",
-      "link": "\\en-us\\docs\\quick-start-spring-boot.html",
+      "link": "/en-us/docs/quick-start-spring-boot.html",
       "meta": {}
     },
     {
       "filename": "quick-start-spring-cloud.md",
-      "link": "\\en-us\\docs\\quick-start-spring-cloud.html",
+      "link": "/en-us/docs/quick-start-spring-cloud.html",
       "meta": {}
     },
     {
       "filename": "quick-start-spring.md",
-      "link": "\\en-us\\docs\\quick-start-spring.html",
+      "link": "/en-us/docs/quick-start-spring.html",
       "meta": {}
     },
     {
       "filename": "quick-start.md",
-      "link": "\\en-us\\docs\\quick-start.html",
+      "link": "/en-us/docs/quick-start.html",
       "meta": {}
     },
     {
       "filename": "roadmap.md",
-      "link": "\\en-us\\docs\\roadmap.html",
+      "link": "/en-us/docs/roadmap.html",
       "meta": {}
     },
     {
       "filename": "sdk-properties.md",
-      "link": "\\en-us\\docs\\sdk-properties.html",
+      "link": "/en-us/docs/sdk-properties.html",
       "meta": {}
     },
     {
       "filename": "sdk.md",
-      "link": "\\en-us\\docs\\sdk.html",
+      "link": "/en-us/docs/sdk.html",
       "meta": {}
     },
     {
       "filename": "use-nacos-with-dubbo.md",
-      "link": "\\en-us\\docs\\use-nacos-with-dubbo.html",
+      "link": "/en-us/docs/use-nacos-with-dubbo.html",
       "meta": {}
     },
     {
       "filename": "use-nacos-with-istio.md",
-      "link": "\\en-us\\docs\\use-nacos-with-istio.html",
+      "link": "/en-us/docs/use-nacos-with-istio.html",
       "meta": {}
     },
     {
       "filename": "use-nacos-with-kubernetes.md",
-      "link": "\\en-us\\docs\\use-nacos-with-kubernetes.html",
+      "link": "/en-us/docs/use-nacos-with-kubernetes.html",
       "meta": {}
     },
     {
       "filename": "use-nacos-with-springcloud.md",
-      "link": "\\en-us\\docs\\use-nacos-with-springcloud.html",
+      "link": "/en-us/docs/use-nacos-with-springcloud.html",
       "meta": {}
     },
     {
       "filename": "what-is-nacos.md",
-      "link": "\\en-us\\docs\\what-is-nacos.html",
+      "link": "/en-us/docs/what-is-nacos.html",
       "meta": {}
     }
   ],
   "zh-cn": [
     {
+      "filename": "CLI-guide.md",
+      "link": "/zh-cn/docs/CLI-guide.html",
+      "meta": {}
+    },
+    {
+      "filename": "FAQ.md",
+      "link": "/zh-cn/docs/FAQ.html",
+      "meta": {}
+    },
+    {
       "filename": "activity.md",
-      "link": "\\zh-cn\\docs\\activity.html",
+      "link": "/zh-cn/docs/activity.html",
       "meta": {
         "title": "Nacos 有奖活动介绍",
         "keywords": "Nacos,活动",
@@ -192,7 +202,7 @@
     },
     {
       "filename": "architecture.md",
-      "link": "\\zh-cn\\docs\\architecture.html",
+      "link": "/zh-cn/docs/architecture.html",
       "meta": {
         "title": "Nacos 架构",
         "keywords": "Nacos,架构",
@@ -200,13 +210,8 @@
       }
     },
     {
-      "filename": "CLI-guide.md",
-      "link": "\\zh-cn\\docs\\CLI-guide.html",
-      "meta": {}
-    },
-    {
       "filename": "cluster-mode-quick-start.md",
-      "link": "\\zh-cn\\docs\\cluster-mode-quick-start.html",
+      "link": "/zh-cn/docs/cluster-mode-quick-start.html",
       "meta": {
         "title": "集群部署说明",
         "keywords": "集群,部署",
@@ -215,7 +220,7 @@
     },
     {
       "filename": "community.md",
-      "link": "\\zh-cn\\docs\\community.html",
+      "link": "/zh-cn/docs/community.html",
       "meta": {
         "title": "社区",
         "keywords": "社区,联系方式",
@@ -224,7 +229,7 @@
     },
     {
       "filename": "concepts.md",
-      "link": "\\zh-cn\\docs\\concepts.html",
+      "link": "/zh-cn/docs/concepts.html",
       "meta": {
         "title": "Nacos 概念 (Concepts)",
         "keywords": "Nacos 概念,Concepts",
@@ -233,7 +238,7 @@
     },
     {
       "filename": "console-guide.md",
-      "link": "\\zh-cn\\docs\\console-guide.html",
+      "link": "/zh-cn/docs/console-guide.html",
       "meta": {
         "title": "控制台手册",
         "keywords": "控制台,手册",
@@ -242,12 +247,12 @@
     },
     {
       "filename": "contributing-dev.md",
-      "link": "\\zh-cn\\docs\\contributing-dev.html",
+      "link": "/zh-cn/docs/contributing-dev.html",
       "meta": {}
     },
     {
       "filename": "contributing.md",
-      "link": "\\zh-cn\\docs\\contributing.html",
+      "link": "/zh-cn/docs/contributing.html",
       "meta": {
         "title": "如何贡献",
         "keywords": "贡献,源码",
@@ -256,7 +261,7 @@
     },
     {
       "filename": "deployment.md",
-      "link": "\\zh-cn\\docs\\deployment.html",
+      "link": "/zh-cn/docs/deployment.html",
       "meta": {
         "title": "Nacos支持三种部署模式",
         "keywords": "Nacos,部署模式",
@@ -264,13 +269,8 @@
       }
     },
     {
-      "filename": "FAQ.md",
-      "link": "\\zh-cn\\docs\\FAQ.html",
-      "meta": {}
-    },
-    {
       "filename": "how-to-reporting-bugs.md",
-      "link": "\\zh-cn\\docs\\how-to-reporting-bugs.html",
+      "link": "/zh-cn/docs/how-to-reporting-bugs.html",
       "meta": {
         "title": "如何提交问题报告",
         "keywords": "提交,问题报告",
@@ -279,12 +279,12 @@
     },
     {
       "filename": "managementAPI.md",
-      "link": "\\zh-cn\\docs\\managementAPI.html",
+      "link": "/zh-cn/docs/managementAPI.html",
       "meta": {}
     },
     {
       "filename": "monitor-guide.md",
-      "link": "\\zh-cn\\docs\\monitor-guide.html",
+      "link": "/zh-cn/docs/monitor-guide.html",
       "meta": {
         "title": "Nacos 监控手册",
         "keywords": "Nacos,监控手册",
@@ -293,7 +293,7 @@
     },
     {
       "filename": "nacos-config-benchmark.md",
-      "link": "\\zh-cn\\docs\\nacos-config-benchmark.html",
+      "link": "/zh-cn/docs/nacos-config-benchmark.html",
       "meta": {
         "title": "Nacos服务配置性能测试报告",
         "keywords": "Nacos,服务,配置,性能",
@@ -302,7 +302,7 @@
     },
     {
       "filename": "nacos-dev.md",
-      "link": "\\zh-cn\\docs\\nacos-dev.html",
+      "link": "/zh-cn/docs/nacos-dev.html",
       "meta": {
         "title": "开发者",
         "keywords": "nacos,开发者,committer",
@@ -311,7 +311,7 @@
     },
     {
       "filename": "nacos-spring.md",
-      "link": "\\zh-cn\\docs\\nacos-spring.html",
+      "link": "/zh-cn/docs/nacos-spring.html",
       "meta": {
         "title": "Nacos Spring",
         "keywords": "Nacos,Spring",
@@ -320,17 +320,17 @@
     },
     {
       "filename": "nacos-sync-use.md",
-      "link": "\\zh-cn\\docs\\nacos-sync-use.html",
+      "link": "/zh-cn/docs/nacos-sync-use.html",
       "meta": {}
     },
     {
       "filename": "nacos-sync.md",
-      "link": "\\zh-cn\\docs\\nacos-sync.html",
+      "link": "/zh-cn/docs/nacos-sync.html",
       "meta": {}
     },
     {
       "filename": "open-API.md",
-      "link": "\\zh-cn\\docs\\open-API.html",
+      "link": "/zh-cn/docs/open-API.html",
       "meta": {
         "title": "Open API 指南",
         "keywords": "Open API",
@@ -339,7 +339,7 @@
     },
     {
       "filename": "other-language.md",
-      "link": "\\zh-cn\\docs\\other-language.html",
+      "link": "/zh-cn/docs/other-language.html",
       "meta": {
         "title": "其他语言的SDK",
         "keywords": "SDK",
@@ -348,7 +348,7 @@
     },
     {
       "filename": "pull-request.md",
-      "link": "\\zh-cn\\docs\\pull-request.html",
+      "link": "/zh-cn/docs/pull-request.html",
       "meta": {
         "title": "提交需求模板",
         "keywords": "pull request",
@@ -357,7 +357,7 @@
     },
     {
       "filename": "quick-start-docker.md",
-      "link": "\\zh-cn\\docs\\quick-start-docker.html",
+      "link": "/zh-cn/docs/quick-start-docker.html",
       "meta": {
         "title": "Nacos Docker 快速开始",
         "keywords": "Nacos,Docker",
@@ -366,7 +366,7 @@
     },
     {
       "filename": "quick-start-spring-boot.md",
-      "link": "\\zh-cn\\docs\\quick-start-spring-boot.html",
+      "link": "/zh-cn/docs/quick-start-spring-boot.html",
       "meta": {
         "title": "Nacos Spring Boot 快速开始",
         "keywords": "Nacos,Spring Boot",
@@ -375,7 +375,7 @@
     },
     {
       "filename": "quick-start-spring-cloud.md",
-      "link": "\\zh-cn\\docs\\quick-start-spring-cloud.html",
+      "link": "/zh-cn/docs/quick-start-spring-cloud.html",
       "meta": {
         "title": "Nacos Spring Cloud 快速开始",
         "keywords": "Nacos,Spring Cloud",
@@ -384,7 +384,7 @@
     },
     {
       "filename": "quick-start-spring.md",
-      "link": "\\zh-cn\\docs\\quick-start-spring.html",
+      "link": "/zh-cn/docs/quick-start-spring.html",
       "meta": {
         "title": "Nacos Spring 快速开始",
         "keywords": "Nacos,Spring",
@@ -393,7 +393,7 @@
     },
     {
       "filename": "quick-start.md",
-      "link": "\\zh-cn\\docs\\quick-start.html",
+      "link": "/zh-cn/docs/quick-start.html",
       "meta": {
         "title": "快速开始",
         "keywords": "Nacos",
@@ -402,7 +402,7 @@
     },
     {
       "filename": "roadmap.md",
-      "link": "\\zh-cn\\docs\\roadmap.html",
+      "link": "/zh-cn/docs/roadmap.html",
       "meta": {
         "title": "Nacos 规划",
         "keywords": "Nacos,规划",
@@ -411,7 +411,7 @@
     },
     {
       "filename": "sdk.md",
-      "link": "\\zh-cn\\docs\\sdk.html",
+      "link": "/zh-cn/docs/sdk.html",
       "meta": {
         "title": "Java的sdk",
         "keywords": "Java,sdk",
@@ -420,7 +420,7 @@
     },
     {
       "filename": "use-nacos-with-dubbo.md",
-      "link": "\\zh-cn\\docs\\use-nacos-with-dubbo.html",
+      "link": "/zh-cn/docs/use-nacos-with-dubbo.html",
       "meta": {
         "title": "Dubbo 融合 Nacos 成为注册中心",
         "keywords": "Dubbo,Nacos",
@@ -429,12 +429,12 @@
     },
     {
       "filename": "use-nacos-with-istio.md",
-      "link": "\\zh-cn\\docs\\use-nacos-with-istio.html",
+      "link": "/zh-cn/docs/use-nacos-with-istio.html",
       "meta": {}
     },
     {
       "filename": "use-nacos-with-kubernetes.md",
-      "link": "\\zh-cn\\docs\\use-nacos-with-kubernetes.html",
+      "link": "/zh-cn/docs/use-nacos-with-kubernetes.html",
       "meta": {
         "title": "Kubernetes Nacos",
         "keywords": "nacos,Kubernetes",
@@ -443,7 +443,7 @@
     },
     {
       "filename": "use-nacos-with-springcloud.md",
-      "link": "\\zh-cn\\docs\\use-nacos-with-springcloud.html",
+      "link": "/zh-cn/docs/use-nacos-with-springcloud.html",
       "meta": {
         "title": "Nacos Spring Cloud",
         "keywords": "nacos,Spring Cloud",
@@ -452,7 +452,7 @@
     },
     {
       "filename": "what-is-nacos.md",
-      "link": "\\zh-cn\\docs\\what-is-nacos.html",
+      "link": "/zh-cn/docs/what-is-nacos.html",
       "meta": {
         "title": "什么是 Nacos",
         "keywords": "nacos",

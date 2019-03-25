@@ -58,7 +58,7 @@ cd distribution/target/nacos-server-$version/nacos/bin
 ## 4.服务注册&发现和配置管理
 ### 服务注册
 
-`curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'`
+`curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'`
 
 ### 服务发现
 

@@ -44,7 +44,7 @@ mvn -Prelease-nacos clean install -U
 <p>Or double-click the startup.cmd run file.</p>
 <h2>4.Service &amp; Configuration Management</h2>
 <h3>Service registration</h3>
-<p><code>curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&amp;ip=20.18.7.10&amp;port=8080'</code></p>
+<p><code>curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&amp;ip=20.18.7.10&amp;port=8080'</code></p>
 <h3>Service discovery</h3>
 <p><code>curl -X GET 'http://127.0.0.1:8848/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'</code></p>
 <h3>Publish config</h3>

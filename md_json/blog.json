@@ -2,7 +2,7 @@
   "en-us": [
     {
       "filename": "5w1h-what.md",
-      "link": "\\en-us\\blog\\5w1h-what.html",
+      "link": "/en-us/blog/5w1h-what.html",
       "meta": {
         "title": "Nacos 帮我们解决什么问题？—— 配置管理篇",
         "keywords": "nacos",
@@ -11,7 +11,7 @@
     },
     {
       "filename": "5w1h-where.md",
-      "link": "\\en-us\\blog\\5w1h-where.html",
+      "link": "/en-us/blog/5w1h-where.html",
       "meta": {
         "title": "Nacos 有哪些典型的应用场景？—— 配置管理篇",
         "keywords": "nacos",
@@ -19,8 +19,31 @@
       }
     },
     {
+      "filename": "DNS-SD.md",
+      "link": "/en-us/blog/DNS-SD.html",
+      "meta": {}
+    },
+    {
+      "filename": "Nacos-is-Coming.md",
+      "link": "/en-us/blog/Nacos-is-Coming.html",
+      "meta": {
+        "title": "支持Dubbo生态发展，阿里巴巴启动新的开源项目 Nacos",
+        "keywords": "nacos,alibaba,dubbo",
+        "description": "支持Dubbo生态发展，阿里巴巴启动新的开源项目 Nacos"
+      }
+    },
+    {
+      "filename": "Nacos0.8.md",
+      "link": "/en-us/blog/Nacos0.8.html",
+      "meta": {
+        "title": "Nacos 0.6�汾������֧��Dubbo��̬����֧��Docker����",
+        "keywords": "nacos0.6,dubbo,docker",
+        "description": "Nacos 0.6�汾������֧��Dubbo��̬����֧��Docker����"
+      }
+    },
+    {
       "filename": "alibaba-configserver.md",
-      "link": "\\en-us\\blog\\alibaba-configserver.html",
+      "link": "/en-us/blog/alibaba-configserver.html",
       "meta": {
         "title": "阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾",
         "keywords": "nacos,configserver,alibaba",
@@ -29,7 +52,7 @@
     },
     {
       "filename": "cengdu-dubbo.md",
-      "link": "\\en-us\\blog\\cengdu-dubbo.html",
+      "link": "/en-us/blog/cengdu-dubbo.html",
       "meta": {
         "title": "Nacos 计划发布v0.2版本，进一步融合Dubbo和SpringCloud生态",
         "keywords": "nacos,nacos0.2,alibaba,邢学超,Aliware Open Source,spring cloud",
@@ -38,7 +61,7 @@
     },
     {
       "filename": "cncf.md",
-      "link": "\\en-us\\blog\\cncf.html",
+      "link": "/en-us/blog/cncf.html",
       "meta": {
         "title": "Nacos 进入CNCF landscape",
         "keywords": "nacos,cncf,alibaba,landscape",
@@ -47,22 +70,17 @@
     },
     {
       "filename": "consul-k8s.md",
-      "link": "\\en-us\\blog\\consul-k8s.html",
+      "link": "/en-us/blog/consul-k8s.html",
       "meta": {}
     },
     {
       "filename": "discovery-console.md",
-      "link": "\\en-us\\blog\\discovery-console.html",
-      "meta": {}
-    },
-    {
-      "filename": "DNS-SD.md",
-      "link": "\\en-us\\blog\\DNS-SD.html",
+      "link": "/en-us/blog/discovery-console.html",
       "meta": {}
     },
     {
       "filename": "download.md",
-      "link": "\\en-us\\blog\\download.html",
+      "link": "/en-us/blog/download.html",
       "meta": {
         "title": "download page",
         "keywords": "nacos, download",
@@ -71,36 +89,27 @@
     },
     {
       "filename": "dynamic-route-zuul-nacos.md",
-      "link": "\\en-us\\blog\\dynamic-route-zuul-nacos.html",
+      "link": "/en-us/blog/dynamic-route-zuul-nacos.html",
       "meta": {}
     },
     {
       "filename": "huya-nacos.md",
-      "link": "\\en-us\\blog\\huya-nacos.html",
+      "link": "/en-us/blog/huya-nacos.html",
       "meta": {}
     },
     {
       "filename": "huya-practice.md",
-      "link": "\\en-us\\blog\\huya-practice.html",
+      "link": "/en-us/blog/huya-practice.html",
       "meta": {}
     },
     {
-      "filename": "Nacos-is-Coming.md",
-      "link": "\\en-us\\blog\\Nacos-is-Coming.html",
-      "meta": {
-        "title": "支持Dubbo生态发展，阿里巴巴启动新的开源项目 Nacos",
-        "keywords": "nacos,alibaba,dubbo",
-        "description": "支持Dubbo生态发展，阿里巴巴启动新的开源项目 Nacos"
-      }
-    },
-    {
       "filename": "nacos.md",
-      "link": "\\en-us\\blog\\nacos.html",
+      "link": "/en-us/blog/nacos.html",
       "meta": {}
     },
     {
       "filename": "nacos0.5.md",
-      "link": "\\en-us\\blog\\nacos0.5.html",
+      "link": "/en-us/blog/nacos0.5.html",
       "meta": {
         "title": "Nacos0.5发布，支持DNS-based Service Discovery，JAVA 11",
         "keywords": "nacos0.5,DNS-based Service Discovery,JAVA 11",
@@ -109,7 +118,7 @@
     },
     {
       "filename": "nacos0.6.md",
-      "link": "\\en-us\\blog\\nacos0.6.html",
+      "link": "/en-us/blog/nacos0.6.html",
       "meta": {
         "title": "Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署",
         "keywords": "nacos0.6,dubbo,docker",
@@ -117,17 +126,8 @@
       }
     },
     {
-      "filename": "Nacos0.8.md",
-      "link": "\\en-us\\blog\\Nacos0.8.html",
-      "meta": {
-        "title": "Nacos 0.6�汾������֧��Dubbo��̬����֧��Docker����",
-        "keywords": "nacos0.6,dubbo,docker",
-        "description": "Nacos 0.6�汾������֧��Dubbo��̬����֧��Docker����"
-      }
-    },
-    {
       "filename": "nacos0.9-intro.md",
-      "link": "\\en-us\\blog\\nacos0.9-intro.html",
+      "link": "/en-us/blog/nacos0.9-intro.html",
       "meta": {
         "title": "Nacos 0.9.0版本进行发布",
         "keywords": "nacos0.9,nacos0.9.0,nacos 发布",
@@ -136,7 +136,7 @@
     },
     {
       "filename": "nacos0.9.0.md",
-      "link": "\\en-us\\blog\\nacos0.9.0.html",
+      "link": "/en-us/blog/nacos0.9.0.html",
       "meta": {
         "title": "Nacos 0.9.0版本进行发布",
         "keywords": "nacos0.9，nacos0.9.0，nacos",
@@ -147,7 +147,7 @@
   "zh-cn": [
     {
       "filename": "5w1h-what.md",
-      "link": "\\zh-cn\\blog\\5w1h-what.html",
+      "link": "/zh-cn/blog/5w1h-what.html",
       "meta": {
         "title": "Nacos 帮我们解决什么问题？—— 配置管理篇",
         "keywords": "nacos",
@@ -156,7 +156,7 @@
     },
     {
       "filename": "5w1h-where.md",
-      "link": "\\zh-cn\\blog\\5w1h-where.html",
+      "link": "/zh-cn/blog/5w1h-where.html",
       "meta": {
         "title": "Nacos 有哪些典型的应用场景？—— 配置管理篇",
         "keywords": "nacos",
@@ -164,8 +164,44 @@
       }
     },
     {
+      "filename": "DNS-SD.md",
+      "link": "/zh-cn/blog/DNS-SD.html",
+      "meta": {
+        "title": "微服务架构中基于DNS的服务注册与发现",
+        "keywords": "微服务,DNS",
+        "description": "微服务架构中基于DNS的服务注册与发现"
+      }
+    },
+    {
+      "filename": "Eureka2.md",
+      "link": "/zh-cn/blog/Eureka2.html",
+      "meta": {
+        "title": "Eureka 2.0 开源工作宣告停止？别担心，ANS 即将 C位强势出道！",
+        "keywords": "Eureka 2.0",
+        "description": "Eureka 2.0 开源工作宣告停止？别担心，ANS 即将 C位强势出道！"
+      }
+    },
+    {
+      "filename": "Nacos-is-Coming.md",
+      "link": "/zh-cn/blog/Nacos-is-Coming.html",
+      "meta": {
+        "title": "支持Dubbo生态发展，阿里巴巴启动新的开源项目 Nacos",
+        "keywords": "nacos,alibaba,dubbo",
+        "description": "支持Dubbo生态发展，阿里巴巴启动新的开源项目 Nacos"
+      }
+    },
+    {
+      "filename": "Nacos0.8.md",
+      "link": "/zh-cn/blog/Nacos0.8.html",
+      "meta": {
+        "title": "Nacos 0.8.0版本进行发布",
+        "keywords": "nacos0.8,nacos0.8.0,nacos 发布",
+        "description": "Nacos 0.8.0版本进行发布"
+      }
+    },
+    {
       "filename": "alibaba-configserver.md",
-      "link": "\\zh-cn\\blog\\alibaba-configserver.html",
+      "link": "/zh-cn/blog/alibaba-configserver.html",
       "meta": {
         "title": "阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾",
         "keywords": "nacos,configserver,alibaba",
@@ -174,7 +210,7 @@
     },
     {
       "filename": "chengdu-dubbo.md",
-      "link": "\\zh-cn\\blog\\chengdu-dubbo.html",
+      "link": "/zh-cn/blog/chengdu-dubbo.html",
       "meta": {
         "title": "Nacos 计划发布v0.2版本，进一步融合Dubbo和SpringCloud生态",
         "keywords": "nacos,nacos0.2,alibaba,邢学超,Aliware Open Source,spring cloud",
@@ -183,7 +219,7 @@
     },
     {
       "filename": "cncf.md",
-      "link": "\\zh-cn\\blog\\cncf.html",
+      "link": "/zh-cn/blog/cncf.html",
       "meta": {
         "title": "Nacos 进入CNCF landscape",
         "keywords": "nacos,cncf,alibaba,landscape",
@@ -192,7 +228,7 @@
     },
     {
       "filename": "consul-k8s.md",
-      "link": "\\zh-cn\\blog\\consul-k8s.html",
+      "link": "/zh-cn/blog/consul-k8s.html",
       "meta": {
         "title": "Consul与kubernetes整合公告[翻译]",
         "keywords": "Consul,kubernetes",
@@ -201,7 +237,7 @@
     },
     {
       "filename": "discovery-console.md",
-      "link": "\\zh-cn\\blog\\discovery-console.html",
+      "link": "/zh-cn/blog/discovery-console.html",
       "meta": {
         "title": "Nacos服务发现控制台预览",
         "keywords": "nacos",
@@ -209,17 +245,8 @@
       }
     },
     {
-      "filename": "DNS-SD.md",
-      "link": "\\zh-cn\\blog\\DNS-SD.html",
-      "meta": {
-        "title": "微服务架构中基于DNS的服务注册与发现",
-        "keywords": "微服务,DNS",
-        "description": "微服务架构中基于DNS的服务注册与发现"
-      }
-    },
-    {
       "filename": "download.md",
-      "link": "\\zh-cn\\blog\\download.html",
+      "link": "/zh-cn/blog/download.html",
       "meta": {
         "title": "下载页",
         "keywords": "nacos, 下载",
@@ -228,7 +255,7 @@
     },
     {
       "filename": "dynamic-route-zuul-nacos.md",
-      "link": "\\zh-cn\\blog\\dynamic-route-zuul-nacos.html",
+      "link": "/zh-cn/blog/dynamic-route-zuul-nacos.html",
       "meta": {
         "title": "使用Nacos实现Spring Cloud Zuul的动态路由",
         "keywords": "nacos",
@@ -236,17 +263,8 @@
       }
     },
     {
-      "filename": "Eureka2.md",
-      "link": "\\zh-cn\\blog\\Eureka2.html",
-      "meta": {
-        "title": "Eureka 2.0 开源工作宣告停止？别担心，ANS 即将 C位强势出道！",
-        "keywords": "Eureka 2.0",
-        "description": "Eureka 2.0 开源工作宣告停止？别担心，ANS 即将 C位强势出道！"
-      }
-    },
-    {
       "filename": "huya-nacos.md",
-      "link": "\\zh-cn\\blog\\huya-nacos.html",
+      "link": "/zh-cn/blog/huya-nacos.html",
       "meta": {
         "title": "虎牙直播共建Nacos生态",
         "keywords": "虎牙直播,nacos",
@@ -255,7 +273,7 @@
     },
     {
       "filename": "huya-practice.md",
-      "link": "\\zh-cn\\blog\\huya-practice.html",
+      "link": "/zh-cn/blog/huya-practice.html",
       "meta": {
         "title": "虎牙直播在微服务改造方面的实践和总结",
         "keywords": "nacos,虎牙直播",
@@ -263,17 +281,8 @@
       }
     },
     {
-      "filename": "Nacos-is-Coming.md",
-      "link": "\\zh-cn\\blog\\Nacos-is-Coming.html",
-      "meta": {
-        "title": "支持Dubbo生态发展，阿里巴巴启动新的开源项目 Nacos",
-        "keywords": "nacos,alibaba,dubbo",
-        "description": "支持Dubbo生态发展，阿里巴巴启动新的开源项目 Nacos"
-      }
-    },
-    {
       "filename": "nacos.md",
-      "link": "\\zh-cn\\blog\\nacos.html",
+      "link": "/zh-cn/blog/nacos.html",
       "meta": {
         "title": "Nacos 0.1.0 版本Review 活动设计",
         "keywords": "nacos 0.1.0",
@@ -282,7 +291,7 @@
     },
     {
       "filename": "nacos0.5.md",
-      "link": "\\zh-cn\\blog\\nacos0.5.html",
+      "link": "/zh-cn/blog/nacos0.5.html",
       "meta": {
         "title": "Nacos0.5发布，支持DNS-based Service Discovery，JAVA 11",
         "keywords": "nacos0.5,DNS-based Service Discovery,JAVA 11",
@@ -291,7 +300,7 @@
     },
     {
       "filename": "nacos0.6.md",
-      "link": "\\zh-cn\\blog\\nacos0.6.html",
+      "link": "/zh-cn/blog/nacos0.6.html",
       "meta": {
         "title": "Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署",
         "keywords": "nacos0.6,dubbo,docker",
@@ -299,17 +308,8 @@
       }
     },
     {
-      "filename": "Nacos0.8.md",
-      "link": "\\zh-cn\\blog\\Nacos0.8.html",
-      "meta": {
-        "title": "Nacos 0.8.0版本进行发布",
-        "keywords": "nacos0.8,nacos0.8.0,nacos 发布",
-        "description": "Nacos 0.8.0版本进行发布"
-      }
-    },
-    {
       "filename": "nacos0.9-intro.md",
-      "link": "\\zh-cn\\blog\\nacos0.9-intro.html",
+      "link": "/zh-cn/blog/nacos0.9-intro.html",
       "meta": {
         "title": "Nacos 0.9.0版本进行发布",
         "keywords": "nacos0.9,nacos0.9.0,nacos 发布",
@@ -318,7 +318,7 @@
     },
     {
       "filename": "nacos0.9.0.md",
-      "link": "\\zh-cn\\blog\\nacos0.9.0.html",
+      "link": "/zh-cn/blog/nacos0.9.0.html",
       "meta": {
         "title": "Nacos 0.9.0版本进行发布",
         "keywords": "nacos0.9，nacos0.9.0，nacos",
