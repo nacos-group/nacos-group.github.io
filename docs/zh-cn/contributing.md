@@ -18,9 +18,9 @@ gitter https://gitter.im/alibaba/nacos
 
 邮件列表是讨论与Dubbo相关的几乎所有内容的推荐方式。有关如何订阅的详细文档，请参阅此[指南](https://github.com/apache/incubator-dubbo/wiki/Mailing-list-subscription-guide)。
 
-- <a href="mailto:dev-nacos+subscribe@googlegroups.comg">dev-nacos@googlegroups.com</a>：开发邮件列表，如果您在使用或开发Nacos时遇到任何问题，可以在此处提问。
-- <a href="mailto:commits+nacos-subscribe@googlegroups.com">commits-nacos@googlegroups.com</a>：所有提交都将发送到此邮件列表。如果您对Nacos的开发感兴趣，可以订阅它。
-- <a href="mailto:users-nacos+subscribe@googlegroups.com">users-nacos@googlegroups.com</a>：所有Github [issues](https://github.com/alibaba/nacos/issues)更新和[pull request]（https://github.com/alibaba/nacos/pulls)更新将发送到此邮件列表。
+- <a href="mailto:dev-nacos%2Bsubscribe@googlegroups.com">dev-nacos@googlegroups.com</a>：开发邮件列表，如果您在使用或开发Nacos时遇到任何问题，可以在此处提问。
+- <a href="mailto:commits-nacos%2Bsubscribe@googlegroups.com">commits-nacos@googlegroups.com</a>：所有提交都将发送到此邮件列表。如果您对Nacos的开发感兴趣，可以订阅它。
+- <a href="mailto:users-nacos%2Bsubscribe@googlegroups.com">users-nacos@googlegroups.com</a>：所有Github [issues](https://github.com/alibaba/nacos/issues)更新和[pull request]（https://github.com/alibaba/nacos/pulls)更新将发送到此邮件列表。
 
 - 有任何问题可以联系<a href="mailto:nacos_dev@linux.alibaba.com">nacos_dev@linux.alibaba.com</a>。
 #### 贡献流程
