@@ -34,6 +34,11 @@ export default {
       //   text: 'DOWNLOAD',
       //   link: '/en-us/blog/download.html',
       // },
+        {
+          key: 'campus',
+          text: 'CAMPUS',
+          link: 'https://mp.weixin.qq.com/s/KH0dEC6cNckoq1M-siiCmg',
+        },
       {
         text: 'DEMO-CONSOLE',
           link: 'http://console.nacos.io/nacos/index.html',
@@ -111,6 +116,11 @@ export default {
         text: '社区',
         link: '/zh-cn/community/index.html',
       },
+        {
+            key: 'campus',
+            text: '阿里中间件-校园招聘',
+            link: 'https://mp.weixin.qq.com/s/KH0dEC6cNckoq1M-siiCmg',
+        },
       // {
       //   key: 'download',
       //   text: '下载',
