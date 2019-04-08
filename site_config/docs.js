@@ -114,6 +114,10 @@ export default {
                 link: '/en-us/docs/nacos-config-benchmark.html',
               },
               {
+                title: 'Nacos Naming Benchmark',
+                link: '/en-us/docs/nacos-naming-benchmark.html',
+              },
+              {
                   title: 'Data Migration to Nacos',
                   link: '/en-us/docs/nacos-sync-use.html',
               },
@@ -275,6 +279,10 @@ export default {
               {
                   title: '配置模块压测模型',
                   link: '/en-us/docs/nacos-config-benchmark.html',
+              },
+              {
+                title: '服务发现模块压测报告',
+                link: '/zh-cn/docs/nacos-naming-benchmark.html',
               },
               {
                   title: '其他环境迁移到Nacos',

@@ -85,6 +85,15 @@
       }
     },
     {
+      "filename": "nacos-naming-benchmark.md",
+      "link": "/en-us/docs/nacos-naming-benchmark.html",
+      "meta": {
+        "title": "Nacos服务发现性能测试报告",
+        "keywords": "Nacos,服务,发现,性能",
+        "description": "Nacos服务发现性能测试报告"
+      }
+    },
+    {
       "filename": "nacos-spring.md",
       "link": "/en-us/docs/nacos-spring.html",
       "meta": {}
@@ -307,6 +316,15 @@
         "title": "开发者",
         "keywords": "nacos,开发者,committer",
         "description": "nacos开发者页"
+      }
+    },
+    {
+      "filename": "nacos-naming-benchmark.md",
+      "link": "/zh-cn/docs/nacos-naming-benchmark.html",
+      "meta": {
+        "title": "Nacos服务发现性能测试报告",
+        "keywords": "Nacos,服务,发现,性能",
+        "description": "Nacos服务发现性能测试报告"
       }
     },
     {
