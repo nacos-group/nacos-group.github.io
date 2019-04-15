@@ -22,7 +22,7 @@ export default {
         text: 'Release Note',
         link: 'https://github.com/alibaba/nacos/releases',
       },
-      releaseDate: 'Released on Feb 28, 2019',
+      releaseDate: 'Released on Apr 10, 2019',
     },
     functions: {
       title: 'Features',
@@ -109,7 +109,7 @@ export default {
         text: '版本说明',
         link: 'https://github.com/alibaba/nacos/releases',
       },
-      releaseDate: '2019年02月28日发布',
+      releaseDate: '2019年04月10日发布',
     },
     functions: {
       title: '功能',
