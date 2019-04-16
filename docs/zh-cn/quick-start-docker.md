@@ -16,10 +16,16 @@ description: Nacos Docker 快速开始
   ```
 
 
-* 单机模式
+* 单机模式 - Derby
 
   ```powershell
-  docker-compose -f example/standalone.yaml up
+  docker-compose -f example/standalone-derby.yaml up
+  ```
+
+* 单机模式 - Mysql
+
+  ```powershell
+  docker-compose -f example/standalone-mysql.yaml up
   ```
 
 * 集群模式
