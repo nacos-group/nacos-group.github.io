@@ -142,6 +142,11 @@
         "keywords": "nacos0.9，nacos0.9.0，nacos",
         "description": "Nacos 0.9.0版本进行发布"
       }
+    },
+    {
+      "filename": "nacos1.0.0.md",
+      "link": "/en-us/blog/nacos1.0.0.html",
+      "meta": {}
     }
   ],
   "zh-cn": [
@@ -324,6 +329,11 @@
         "keywords": "nacos0.9，nacos0.9.0，nacos",
         "description": "Nacos 0.9.0版本进行发布"
       }
+    },
+    {
+      "filename": "nacos1.0.0.md",
+      "link": "/zh-cn/blog/nacos1.0.0.html",
+      "meta": {}
     }
   ]
 }
