@@ -1,3 +1,11 @@
+---
+title: 快速开始
+keywords: Nacos
+description: 快速开始
+---
+
+#快速开始
+
 这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。
 
 ## 1.预备环境准备
@@ -50,7 +58,7 @@ cd distribution/target/nacos-server-$version/nacos/bin
 ## 4.服务注册&发现和配置管理
 ### 服务注册
 
-`curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'`
+`curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'`
 
 ### 服务发现
 

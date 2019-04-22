@@ -15,6 +15,11 @@ export default {
         link: '/en-us/docs/quick-start.html',
       },
       {
+        key: 'Nacos TEAM',
+        text: 'TEAM',
+        link: '/en-us/docs/nacos-dev.html',
+      },
+      {
         key: 'blog',
         text: 'BLOG',
         link: '/en-us/blog',
@@ -24,6 +29,16 @@ export default {
         text: 'COMMUNITY',
         link: '/en-us/community',
       },
+      // {
+      //   key: 'download',
+      //   text: 'DOWNLOAD',
+      //   link: '/en-us/blog/download.html',
+      // },
+        {
+          key: 'campus',
+          text: 'CAMPUS',
+          link: 'https://mp.weixin.qq.com/s/KH0dEC6cNckoq1M-siiCmg',
+        },
       {
         text: 'DEMO-CONSOLE',
           link: 'http://console.nacos.io/nacos/index.html',
@@ -65,6 +80,10 @@ export default {
               text: 'Cloud Service EDAS',
               link: 'https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219',
           },
+          {
+              text: 'Cloud Service AHAS',
+              link: 'https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225',
+          },
       ],
     },
 
@@ -83,6 +102,11 @@ export default {
         link: '/zh-cn/docs/what-is-nacos.html',
       },
       {
+        key: 'Nacos TEAM',
+        text: '开发者团队',
+        link: '/zh-cn/docs/nacos-dev.html',
+      },
+      {
         key: 'blog',
         text: '博客',
         link: '/zh-cn/blog/index.html',
@@ -92,6 +116,16 @@ export default {
         text: '社区',
         link: '/zh-cn/community/index.html',
       },
+        {
+            key: 'campus',
+            text: '阿里中间件-校园招聘',
+            link: 'https://mp.weixin.qq.com/s/KH0dEC6cNckoq1M-siiCmg',
+        },
+      // {
+      //   key: 'download',
+      //   text: '下载',
+      //   link: '/zh-cn/blog/download.html',
+      // },
       {
         text: '控制台样例',
           link: 'http://console.nacos.io/nacos/index.html',
@@ -132,6 +166,10 @@ export default {
           {
               text: '云服务 EDAS',
               link: 'https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219',
+          },
+          {
+              text: '云服务 AHAS',
+              link: 'https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225',
           },
       ],
     },

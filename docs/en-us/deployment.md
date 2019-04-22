@@ -45,4 +45,32 @@ Nacos support a NameServer route request mode， by which you can design a usefu
 
 to setup a NameServer:
 
-* TODO
+## IP Selection of Multiple Network Cards
+
+When the local environment is complex, the Nacos service needs to choose IP or network card to use at runtime when it starts up. Nacos Gets IP Reference Spring Cloud Design from Multiple Network Cards. With the nacos.inetutils parameter, you can specify the network card and IP address used by Nacos. The configuration parameters currently supported are:
+
+- ip-address parameter can set Nacos IP directly
+
+```
+nacos.inetutils.ip-address=10.11.105.155
+```
+
+- use-only-site-local-interfaces parameter allows Nacos to use LAN ip, which is useful when Nacos deploys a machine with multiple network cards
+
+```
+nacos.inetutils.use-only-site-local-interfaces=true
+```
+
+- ignored-interfaces parameter support network card arrays, allowing Nacos to ignore multiple network cards
+
+```
+nacos.inetutils.ignored-interfaces[0]=eth0
+nacos.inetutils.ignored-interfaces[1]=eth1
+```
+
+- preferred-networks parameter allow Nacos to select the matching IP preferentially and support regular matching and prefix matching
+
+```
+nacos.inetutils.preferred-networks[0]=30.5.124.
+nacos.inetutils.preferred-networks[0]=30.5.124.(25[0-5]|2[0-4]\\d|((1d{2})|([1-9]?\\d))),30.5.124.(25[0-5]|2[0-4]\\d|((1d{2})|([1-9]?\\d)))
+```

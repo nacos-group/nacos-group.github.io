@@ -16,18 +16,18 @@ There are two ways to get Nacos.
 unzip nacos-source.zip
 cd nacos/
 mvn -Prelease-nacos clean install -U  
-cd nacos/distribution/target/nacos-server-0.3.0/nacos/bin
+cd nacos/distribution/target/nacos-server-0.8.0/nacos/bin
 ```
   
 ### 2)Download run package 
 
-[zip package Download](https://github.com/alibaba/nacos/releases/download/0.3.0/nacos-server-0.3.0.zip)
+[zip package Download](https://github.com/alibaba/nacos/releases/download/0.9.0/nacos-server-0.9.0.zip)
 
-[tar.gz package Download](https://github.com/alibaba/nacos/releases/download/0.3.0/nacos-server-0.3.0.tar.gz)
+[tar.gz package Download](https://github.com/alibaba/nacos/releases/download/0.9.0/nacos-server-0.9.0.tar.gz)
 
 
 ```bash
-  unzip nacos-server-0.3.0.zip  OR tar -xvf nacos-server-0.3.0.tar.gz
+  unzip nacos-server-0.9.0.zip  OR tar -xvf nacos-server-0.9.0.tar.gz
   cd nacos/bin
 ```  
 
@@ -49,7 +49,7 @@ Or double-click the startup.cmd run file.
 ## 4.Service & Configuration Management
 ### Service registration
 
-`curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'`
+`curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'`
 
 ### Service discovery
 

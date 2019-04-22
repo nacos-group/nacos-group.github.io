@@ -1,3 +1,9 @@
+---
+title: Nacos Spring 快速开始
+keywords: Nacos,Spring
+description: Nacos Spring 快速开始
+---
+
 # Nacos Spring 快速开始
 
 本文主要面向 Spring 的使用者，通过两个示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现。

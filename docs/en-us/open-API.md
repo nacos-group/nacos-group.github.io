@@ -1,5 +1,35 @@
+- Configuration Management
+  - [Get configurations](#1.1)
+  - [Listen for configurations](#1.2)
+  - [Publish configuration](#1.3)
+  - [Delete configuration](#1.4)
+
+
+- Service Discovery
+  - [Register instance](#2.1)
+  - [Deregister instance](#2.2)
+  - [Modify instance](#2.3)
+  - [Query instances](#2.4)
+  - [Query instance detail](#2.5)
+  - [Send instance beat](#2.6)
+  - [Create service](#2.7)
+  - [Delete service](#2.8)
+  - [Update service](#2.9)
+  - [Query service](#2.10)
+  - [Query service list](#2.11)
+  - [Query system switches](#2.12)
+  - [Update system switch](#2.13)
+  - [Query system metrics](#2.14)
+  - [Query server list](#2.15)
+  - [Query the leader of current cluster](#2.16)
+  - [Update instance health status](#2.17)
+
+
+
 # Configuration Management
-## Get configurations
+
+<h2 id="1.1">Get configurations</h2>
+
 ### Description
 
 This API is used to get configurations in Nacos.
@@ -38,19 +68,20 @@ GET
 
 ### Example
 * Request example
-    
+
     ```
     http:serverIp:8848/nacos/v1/cs/configs?dataId=dataIdparam&group=groupParam&tenant=tenantParam
-    
+
     ```
 * Return example
-    
+
     ```
     contentTest
     ```
 
 
-## Listen for configurations
+<h2 id="1.2">Listen for configurations</h2>
+
 ### Description
 
 This API is used to listen for configurations in Nacos to capture configuration changes. In case of any configuration changes, you can use the [Get Configurations](~~64131~~) API to obtain the latest value of the configuration and dynamically refresh the local cache.
@@ -246,7 +277,8 @@ Otherwise, an empty string is returned.
 ```
 
 
-## Publish configuration
+<h2 id="1.3">Publish configuration</h2>
+
 ### Description
 
 It publishes configurations in Nacos.
@@ -305,7 +337,8 @@ true
 ```
 
 
-## Delete configuration
+<h2 id="1.4">Delete configuration</h2>
+
 ### Description
 
 It deletes configurations in Nacos.
@@ -360,8 +393,10 @@ http:serverIp:8848/nacos/cs/configs?dataId=dataIdparam&group=groupParam
 true
 ```
 
-# Service Discovery API
-## Register Instance
+# Service Discovery
+
+<h2 id="2.1">Register instance</h2>
+
 ### Description
 Register an instance to service.
 
@@ -386,7 +421,8 @@ POST
 | metadata | String | no | extended information |
 | clusterName | String | no | cluster name |
 | serviceName | String | yes | service name |
-
+| groupName | String | no | group name |
+| ephemeral | boolean | no | if instance is ephemeral |
 
 ### Request Example
 ```plain
@@ -396,7 +432,8 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?port=8848&healthy=true&
 ### Response Example
 ok
 
-## Deregister Instance
+<h2 id="2.2">Deregister instance</h2>
+
 ### Description
 Delete instance from service.
 
@@ -413,6 +450,8 @@ DELETE
 | Name | Type | Required | Description |
 | :--- | :--- | :--- | --- |
 | serviceName | String | yes | Service name |
+| groupName | String | no | group name |
+| ephemeral | boolean | no | if instance is ephemeral |
 | ip | String | yes | IP of instance |
 | port | int | yes | Port of instance |
 | clusterName | String | no | Cluster name |
@@ -424,7 +463,9 @@ curl -X DELETE 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1
 ```
 ### Response Example
 ok
-## Modify Instance
+
+<h2 id="2.3">Modify instance</h2>
+
 ### Description
 Modify an instance of service.
 
@@ -441,6 +482,8 @@ PUT
 | Name | Type | Required | Description |
 | :--- | :--- | :--- | --- |
 | serviceName | String | yes | Service name |
+| groupName | String | no | group name |
+| ephemeral | boolean | no | if instance is ephemeral |
 | ip | String | yes | IP of instance |
 | port | int | yes | Port of instance |
 | clusterName | String | no | Cluster name |
@@ -455,7 +498,8 @@ curl -X PUT 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.
 ### Response Example
 ok
 
-## Query Instances
+<h2 id="2.4">Query instances</h2>
+
 ### Description
 Query instance list of service.
 
@@ -472,6 +516,7 @@ GET
 | Name | Type | Required | Description |
 | :--- | :--- | :--- | --- |
 | serviceName | String | yes | Service name |
+| groupName | String | no | group name |
 | namespaceId | String | no | ID of namespace |
 | clusters | String, splited by comma | no | Cluster name |
 | healthyOnly | boolean | no, default value is false | Return healthy instance or not |
@@ -501,7 +546,8 @@ curl -X GET 127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.test.1
 	"clusters": ""
 }
 ```
-## Query Instance Detail
+
+<h2 id="2.5">Query instance detail</h2>
 
 ### Description
 Query instance details of service.
@@ -518,10 +564,12 @@ GET
 
 | Name | Type | Required | Description |
 | :--- | :--- | :--- | --- |
+| namespaceId | String | no | ID of namespace |
 | serviceName | String | yes | Service name |
+| groupName | String | no | group name |
+| ephemeral | boolean | no | if instance is ephemeral |
 | ip | String | yes | IP of instance |
 | port | String | yes | Port of instance |
-| namespaceId | String | no | ID of namespace |
 | cluster | String | no | Cluster name |
 
 ### Request Example
@@ -543,7 +591,8 @@ curl -X GET '127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.2&ip=10.
 }
 ```
 
-## Send instance beat
+<h2 id="2.6">Send instance beat</h2>
+
 ### Description
 Send instance beat
 
@@ -559,7 +608,9 @@ PUT
 
 | Name | Type | Required | Description |
 | :--- | :--- | :--- | --- |
+| namespaceId | String | no | ID of namespace |
 | serviceName | String | yes | service name |
+| groupName | String | no | group name |
 | beat | String | yes | beat content |
 
 ### Request Example
@@ -571,3 +622,451 @@ curl -X PUT '127.0.0.1:8848/nacos/v1/ns/instance/beat?serviceName=nacos.test.2&b
 ok
 ```
 
+
+<h2 id="2.7">Create service</h2>
+
+### Description
+Create service
+
+### Request Type
+POST
+
+### Request Path
+```plain
+/nacos/v1/ns/service
+```
+
+### Request Parameters
+
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | --- |
+| serviceName | String | yes | service name |
+| groupName | String | no | group name |
+| namespaceId | String | no | namespace id |
+| protectThreshold | float | no | set value from 0 to 1, default 0 |
+| metadata | String | no | metadata of service |
+| selector | JSON | no | visit strategy |
+
+### Request Example
+```plain
+curl -X POST '127.0.0.1:8848/nacos/v1/ns/service?serviceName=nacos.test.2&metadata=k1%3dv1'
+```
+### Response Example
+```
+ok
+```
+
+
+<h2 id="2.8">Delete service</h2>
+
+### Description
+Delete a service, only permitted when instance count is 0.
+
+### Request Type
+DELETE
+
+### Request Path
+```plain
+/nacos/v1/ns/service
+```
+
+### Request Parameters
+
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | --- |
+| serviceName | String | yes | service name |
+| groupName | String | no | group name |
+| namespaceId | String | no | namespace id |
+
+
+### Request Example
+```plain
+curl -X DELETE '127.0.0.1:8848/nacos/v1/ns/service?serviceName=nacos.test.2'
+```
+### Response Example
+```
+ok
+```
+
+<h2 id="2.9">Update service</h2>
+
+### Description
+Update a service
+
+### Request Type
+PUT
+
+### Request Path
+```plain
+/nacos/v1/ns/service
+```
+
+### Request Parameters
+
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | --- |
+| serviceName | String | yes | service name |
+| groupName | String | no | group name |
+| namespaceId | String | no | namespace id |
+| protectThreshold | float | no | set value from 0 to 1, default 0 |
+| metadata | String | no | metadata of service |
+| selector | JSON | no | visit strategy |
+
+### Request Example
+```plain
+curl -X PUT '127.0.0.1:8848/nacos/v1/ns/service?serviceName=nacos.test.2&metadata=k1%3dv1'
+```
+### Response Example
+```
+ok
+```
+
+
+<h2 id="2.10">Query service</h2>
+
+### Description
+Query a service
+
+### Request Type
+GET
+
+### Request Path
+```plain
+/nacos/v1/ns/service
+```
+
+### Request Parameters
+
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | --- |
+| serviceName | String | yes | service name |
+| groupName | String | no | group name |
+| namespaceId | String | no | namespace id |
+
+
+### Request Example
+```plain
+curl -X GET '127.0.0.1:8848/nacos/v1/ns/service?serviceName=nacos.test.2'
+```
+### Response Example
+```
+{
+    metadata: { },
+    groupName: "DEFAULT_GROUP",
+    namespaceId: "public",
+    name: "nacos.test.2",
+    selector: {
+        type: "none"
+    },
+    protectThreshold: 0,
+    clusters: [
+        {
+            healthChecker: {
+                type: "TCP"
+            },
+            metadata: { },
+            name: "c1"
+        }
+    ]
+}
+```
+
+
+<h2 id="2.11">Query service list</h2>
+
+### Description
+Query service list
+
+### Request Type
+GET
+
+### Request Path
+```plain
+/nacos/v1/ns/service/list
+```
+
+### Request Parameters
+
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | --- |
+| pageNo | int | yes | current page number |
+| pageSize | int | yes | page size |
+| groupName | String | no | group name |
+| namespaceId | String | no | namespace id |
+
+
+### Request Example
+```plain
+curl -X GET '127.0.0.1:8848/nacos/v1/ns/service/list?pageNo=1&pageSize=2'
+```
+### Response Example
+```
+{
+    "count":148,
+    "doms": [
+        "nacos.test.1",
+        "nacos.test.2"
+    ]
+}
+```
+
+<h2 id="2.12">Query system switches</h2>
+
+### Description
+Query system switches
+
+### Request Type
+GET
+
+### Request Path
+```plain
+/nacos/v1/ns/operator/switches
+```
+
+### Request Parameters
+
+
+### Request Example
+```plain
+curl -X GET '127.0.0.1:8848/nacos/v1/ns/operator/switches'
+```
+### Response Example
+```
+{
+    name: "00-00---000-NACOS_SWITCH_DOMAIN-000---00-00",
+    masters: null,
+    adWeightMap: { },
+    defaultPushCacheMillis: 10000,
+    clientBeatInterval: 5000,
+    defaultCacheMillis: 3000,
+    distroThreshold: 0.7,
+    healthCheckEnabled: true,
+    distroEnabled: true,
+    enableStandalone: true,
+    pushEnabled: true,
+    checkTimes: 3,
+    httpHealthParams: {
+        max: 5000,
+        min: 500,
+        factor: 0.85
+    },
+    tcpHealthParams: {
+        max: 5000,
+        min: 1000,
+        factor: 0.75
+    },
+    mysqlHealthParams: {
+        max: 3000,
+        min: 2000,
+        factor: 0.65
+    },
+    incrementalList: [ ],
+    serverStatusSynchronizationPeriodMillis: 15000,
+    serviceStatusSynchronizationPeriodMillis: 5000,
+    disableAddIP: false,
+    sendBeatOnly: false,
+    limitedUrlMap: { },
+    distroServerExpiredMillis: 30000,
+    pushGoVersion: "0.1.0",
+    pushJavaVersion: "0.1.0",
+    pushPythonVersion: "0.4.3",
+    pushCVersion: "1.0.12",
+    enableAuthentication: false,
+    overriddenServerStatus: "UP",
+    defaultInstanceEphemeral: true,
+    healthCheckWhiteList: [ ],
+    checksum: null
+}
+```
+
+<h2 id="2.13">Update system switch</h2>
+
+### Description
+Update system switch
+
+### Request Type
+PUT
+
+### Request Path
+```plain
+/nacos/v1/ns/operator/switches
+```
+
+### Request Parameters
+
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | --- |
+| entry | String | yes | switch name |
+| value | String | yes | switch value |
+| debug | boolean | no | if affect the local server, true means yes, false means no, default true |
+
+
+### Request Example
+```plain
+curl -X PUT '127.0.0.1:8848/nacos/v1/ns/operator/switches?entry=pushEnabled&value=false&debug=true'
+```
+### Response Example
+```
+ok
+```
+
+<h2 id="2.14">Query system metrics</h2>
+
+### Description
+Query system metrics
+
+### Request Type
+GET
+
+### Request Path
+```plain
+/nacos/v1/ns/operator/metrics
+```
+
+### Request Parameters
+
+
+### Request Example
+```plain
+curl -X GET '127.0.0.1:8848/nacos/v1/ns/operator/metrics'
+```
+### Response Example
+```
+{
+    serviceCount: 336,
+    load: 0.09,
+    mem: 0.46210432,
+    responsibleServiceCount: 98,
+    instanceCount: 4,
+    cpu: 0.010242796,
+    status: "UP",
+    responsibleInstanceCount: 0
+}
+```
+
+<h2 id="2.15">Query server list</h2>
+
+### Description
+Query server list
+
+### Request Type
+GET
+
+### Request Path
+```plain
+/nacos/v1/ns/operator/servers
+```
+
+### Request Parameters
+
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | --- |
+| healthy | boolean | no | if return healthy servers only |
+
+### Request Example
+```plain
+curl -X GET '127.0.0.1:8848/nacos/v1/ns/operator/servers'
+```
+
+### Response Example
+```
+{
+    servers: [
+        {
+            ip: "1.1.1.1",
+            servePort: 8848,
+            site: "unknown",
+            weight: 1,
+            adWeight: 0,
+            alive: false,
+            lastRefTime: 0,
+            lastRefTimeStr: null,
+            key: "1.1.1.1:8848"
+        },
+        {
+            ip: "1.1.1.2",
+            servePort: 8848,
+            site: "unknown",
+            weight: 1,
+            adWeight: 0,
+            alive: false,
+            lastRefTime: 0,
+            lastRefTimeStr: null,
+            key: "1.1.1.2:8848"
+        },
+        {
+            ip: "1.1.1.3",
+            servePort: 8848,
+            site: "unknown",
+            weight: 1,
+            adWeight: 0,
+            alive: false,
+            lastRefTime: 0,
+            lastRefTimeStr: null,
+            key: "1.1.1.3:8848"
+        }
+    ]
+}
+```
+
+
+<h2 id="2.16">Query the leader of current cluster</h2>
+
+### Description
+Query the leader of current cluster
+
+### Request Type
+GET
+
+### Request Path
+```plain
+/nacos/v1/ns/raft/leader
+```
+
+### Request Parameters
+
+
+### Request Example
+```plain
+curl -X GET '127.0.0.1:8848/nacos/v1/ns/raft/leader'
+```
+### Response Example
+```
+{
+    leader: "{"heartbeatDueMs":2500,"ip":"1.1.1.1:8848","leaderDueMs":12853,"state":"LEADER","term":54202,"voteFor":"1.1.1.1:8848"}"
+}
+```
+
+<h2 id="2.17">Update instance health status</h2>
+
+### Description
+Update instance health status, only works when the cluster health checker is set to NONE.
+
+### Request Type
+PUT
+
+### Request Path
+```plain
+/nacos/v1/ns/health/instance
+```
+
+### Request Parameters
+
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | --- |
+| serviceName | String | yes | service name |
+| groupName | String | no | group name |
+| namespaceId | String | no | namespace id |
+| clusterName | String | no | cluster name |
+| ip | String | yes | ip of instance |
+| port | int | yes | port of instance |
+| healthy | boolean | yes | if healthy |
+
+
+
+### Request Example
+```plain
+curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/health/instance?port=8848&healthy=true&ip=11.11.11.11&serviceName=nacos.test.3&namespaceId=n1''
+```
+### Response Example
+ok
