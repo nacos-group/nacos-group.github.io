@@ -4,9 +4,37 @@ keywords: Open API
 description: Open API 指南
 ---
 
+- 配置管理
+  - [获取配置](#1.1)
+  - [监听配置](#1.2)
+  - [发布配置](#1.3)
+  - [删除配置](#1.4)
+
+
+- 服务发现
+  - [注册实例](#2.1)
+  - [注销实例](#2.2)
+  - [修改实例](#2.3)
+  - [查询实例列表](#2.4)
+  - [查询实例详情](#2.5)
+  - [发送实例心跳](#2.6)
+  - [创建服务](#2.7)
+  - [删除服务](#2.8)
+  - [修改服务](#2.9)
+  - [查询服务](#2.10)
+  - [查询服务列表](#2.11)
+  - [查询系统开关](#2.12)
+  - [修改系统开关](#2.13)
+  - [查看系统当前数据指标](#2.14)
+  - [查看当前集群Server列表](#2.15)
+  - [查看当前集群leader](#2.16)
+  - [更新实例的健康状态](#2.17)
+
 # Open API 指南
 # 配置管理
-## 获取配置
+
+<h2 id="1.1">获取配置</h2>
+
 ### 描述
 
 获取Nacos上的配置。
@@ -46,19 +74,20 @@ GET
 
 ### 示例
 * 请求示例
-    
+
     ```plain
     http:serverIp:8848/nacos/v1/cs/configs?dataId=dataIdparam&group=groupParam&tenant=tenantParam
-    
+
     ```
 * 返回示例
-    
+
     ```
     contentTest
     ```
 
 
-## 监听配置
+<h2 id="1.2">监听配置</h2>
+
 ### 描述
 
 监听 Nacos 上的配置，以便实时感知配置变更。如果配置变更，则用[获取配置](~~64131~~)接口获取配置的最新值，动态刷新本地缓存。
@@ -180,7 +209,8 @@ dataId^2group^2tenant^1
 如果配置无变化：会返回空串
 ```
 
-## 发布配置
+<h2 id="1.3">发布配置</h2>
+
 ### 描述
 
 发布 Nacos 上的配置。
@@ -236,7 +266,8 @@ dataId=dataIdparam&group=groupParam&tenant=tenantParam&content=contentParam
 true
 ```
 
-## 删除配置
+<h2 id="1.4">删除配置</h2>
+
 ### 描述
 
 删除 Nacos 上的配置。
@@ -288,8 +319,10 @@ http:serverIp:8848/nacos/v1/cs/configs?dataId=dataIdparam&group=groupParam
 true
 ```
 
-# 服务发现API
-## 注册实例
+# 服务发现
+
+<h2 id="2.1">注册实例</h2>
+
 ### 描述
 注册一个实例到服务。
 
@@ -314,6 +347,8 @@ POST
 | metadata | 字符串 | 否 | 扩展信息 |
 | clusterName | 字符串 | 否 | 集群名 |
 | serviceName | 字符串 | 是 | 服务名 |
+| groupName | 字符串 | 否 | 分组名 |
+| ephemeral | boolean | 否 | 是否临时实例 |
 
 ### 示例请求
 ```plain
@@ -322,7 +357,8 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?port=8848&healthy=true&
 ### 示例返回
 ok
 
-## 删除实例
+<h2 id="2.2">注销实例</h2>
+
 ### 描述
 删除服务下的一个实例。
 
@@ -339,10 +375,12 @@ DELETE
 | 名称 | 类型 | 是否必选 | 描述 |
 | :--- | :--- | :--- | --- |
 | serviceName | 字符串 | 是 | 服务名 |
+| groupName | 字符串 | 否 | 分组名 |
 | ip | 字符串 | 是 | 服务实例IP |
 | port | int | 是 | 服务实例port |
 | clusterName | 字符串 | 否 | 集群名称 |
 | namespaceId | 字符串 | 否 | 命名空间ID |
+| ephemeral | boolean | 否 | 是否临时实例 |
 
 ### 示例请求
 ```plain
@@ -350,7 +388,9 @@ curl -X DELETE 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1
 ```
 ### 示例返回
 ok
-## 修改实例
+
+<h2 id="2.3">修改实例</h2>
+
 ### 描述
 修改服务下的一个实例。
 
@@ -367,12 +407,14 @@ PUT
 | 名称 | 类型 | 是否必选 | 描述 |
 | :--- | :--- | :--- | --- |
 | serviceName | 字符串 | 是 | 服务名 |
+| groupName | 字符串 | 否 | 分组名 |
 | ip | 字符串 | 是 | 服务实例IP |
 | port | int | 是 | 服务实例port |
 | clusterName | 字符串 | 否 | 集群名称 |
 | namespaceId | 字符串 | 否 | 命名空间ID |
 | weight | double | 否 | 权重 |
 | metadata | JSON | 否 | 扩展信息 |
+| ephemeral | boolean | 否 | 是否临时实例 |
 
 ### 示例请求
 ```plain
@@ -381,7 +423,8 @@ curl -X PUT 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.
 ### 示例返回
 ok
 
-## 查询实例列表
+<h2 id="2.4">查询实例列表</h2>
+
 ### 描述
 查询服务下的实例列表
 
@@ -398,6 +441,7 @@ GET
 | 名称 | 类型 | 是否必选 | 描述 |
 | :--- | :--- | :--- | --- |
 | serviceName | 字符串 | 是 | 服务名 |
+| groupName | 字符串 | 否 | 分组名 |
 | namespaceId | 字符串 | 否 | 命名空间ID |
 | clusters | 字符串，多个集群用逗号分隔 | 否 | 集群名称 |
 | healthyOnly | boolean | 否，默认为false | 是否只返回健康实例 |
@@ -427,7 +471,8 @@ curl -X GET 127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.test.1
 	"clusters": ""
 }
 ```
-## 查询实例详情
+<h2 id="2.5">查询实例详情</h2>
+
 ### 描述
 查询一个服务下个某个实例详情。
 
@@ -444,11 +489,13 @@ GET
 | 名称 | 类型 | 是否必选 | 描述 |
 | :--- | :--- | :--- | --- |
 | serviceName | 字符串 | 是 | 服务名 |
+| groupName | 字符串 | 否 | 分组名 |
 | ip | 字符串 | 是 | 实例IP |
 | port | 字符串 | 是 | 实例端口 |
 | namespaceId | 字符串 | 否 | 命名空间ID |
 | cluster | 字符串 | 否 | 集群名称 |
 | healthyOnly | boolean | 否，默认为false | 是否只返回健康实例 |
+| ephemeral | boolean | 否 | 是否临时实例 |
 
 ### 示例请求
 ```plain
@@ -468,7 +515,8 @@ curl -X GET '127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.2&ip=10.
 }
 ```
 
-## 发送实例心跳
+<h2 id="2.6">发送实例心跳</h2>
+
 ### 描述
 发送某个实例的心跳
 
@@ -485,6 +533,8 @@ PUT
 | 名称 | 类型 | 是否必选 | 描述 |
 | :--- | :--- | :--- | --- |
 | serviceName | 字符串 | 是 | 服务名 |
+| groupName | 字符串 | 否 | 分组名 |
+| ephemeral | boolean | 否 | 是否临时实例 |
 | beat | JSON格式字符串 | 是 | 实例心跳内容 |
 
 ### 示例请求
@@ -496,3 +546,451 @@ curl -X PUT '127.0.0.1:8848/nacos/v1/ns/instance/beat?serviceName=nacos.test.2&b
 ok
 ```
 
+
+<h2 id="2.7">创建服务</h2>
+
+### 描述
+创建一个服务
+
+### 请求类型
+POST
+
+### 请求路径
+```plain
+/nacos/v1/ns/service
+```
+
+### 请求参数
+
+| 名称 | 类型 | 是否必选 | 描述 |
+| :--- | :--- | :--- | --- |
+| serviceName | 字符串 | 是 | 服务名 |
+| groupName | 字符串 | 否 | 分组名 |
+| namespaceId | 字符串 | 否 | 命名空间ID |
+| protectThreshold | 浮点数 | 否 | 保护阈值,取值0到1,默认0 |
+| metadata | 字符串 | 否 | 元数据 |
+| selector | JSON格式字符串 | 否 | 访问策略 |
+
+### 示例请求
+```plain
+curl -X POST '127.0.0.1:8848/nacos/v1/ns/service?serviceName=nacos.test.2&metadata=k1%3dv1'
+```
+### 示例返回
+```
+ok
+```
+
+
+<h2 id="2.8">删除服务</h2>
+
+### 描述
+删除一个服务,只有当服务下实例数为0时允许删除
+
+### 请求类型
+DELETE
+
+### 请求路径
+```plain
+/nacos/v1/ns/service
+```
+
+### 请求参数
+
+| 名称 | 类型 | 是否必选 | 描述 |
+| :--- | :--- | :--- | --- |
+| serviceName | 字符串 | 是 | 服务名 |
+| groupName | 字符串 | 否 | 分组名 |
+| namespaceId | 字符串 | 否 | 命名空间ID |
+
+
+### 示例请求
+```plain
+curl -X DELETE '127.0.0.1:8848/nacos/v1/ns/service?serviceName=nacos.test.2'
+```
+### 示例返回
+```
+ok
+```
+
+<h2 id="2.9">修改服务</h2>
+
+### 描述
+更新一个服务
+
+### 请求类型
+PUT
+
+### 请求路径
+```plain
+/nacos/v1/ns/service
+```
+
+### 请求参数
+
+| 名称 | 类型 | 是否必选 | 描述 |
+| :--- | :--- | :--- | --- |
+| serviceName | 字符串 | 是 | 服务名 |
+| groupName | 字符串 | 否 | 分组名 |
+| namespaceId | 字符串 | 否 | 命名空间ID |
+| protectThreshold | 浮点数 | 否 | 保护阈值,取值0到1,默认0 |
+| metadata | 字符串 | 否 | 元数据 |
+| selector | JSON格式字符串 | 否 | 访问策略 |
+
+### 示例请求
+```plain
+curl -X PUT '127.0.0.1:8848/nacos/v1/ns/service?serviceName=nacos.test.2&metadata=k1%3dv1'
+```
+### 示例返回
+```
+ok
+```
+
+
+<h2 id="2.10">查询服务</h2>
+
+### 描述
+查询一个服务
+
+### 请求类型
+GET
+
+### 请求路径
+```plain
+/nacos/v1/ns/service
+```
+
+### 请求参数
+
+| 名称 | 类型 | 是否必选 | 描述 |
+| :--- | :--- | :--- | --- |
+| serviceName | 字符串 | 是 | 服务名 |
+| groupName | 字符串 | 否 | 分组名 |
+| namespaceId | 字符串 | 否 | 命名空间ID |
+
+
+### 示例请求
+```plain
+curl -X GET '127.0.0.1:8848/nacos/v1/ns/service?serviceName=nacos.test.2'
+```
+### 示例返回
+```
+{
+    metadata: { },
+    groupName: "DEFAULT_GROUP",
+    namespaceId: "public",
+    name: "nacos.test.2",
+    selector: {
+        type: "none"
+    },
+    protectThreshold: 0,
+    clusters: [
+        {
+            healthChecker: {
+                type: "TCP"
+            },
+            metadata: { },
+            name: "c1"
+        }
+    ]
+}
+```
+
+
+<h2 id="2.11">查询服务列表</h2>
+
+### 描述
+查询服务列表
+
+### 请求类型
+GET
+
+### 请求路径
+```plain
+/nacos/v1/ns/service/list
+```
+
+### 请求参数
+
+| 名称 | 类型 | 是否必选 | 描述 |
+| :--- | :--- | :--- | --- |
+| pageNo | int | 是 | 当前页码 |
+| pageSize | int | 是 | 分页大小 |
+| groupName | 字符串 | 否 | 分组名 |
+| namespaceId | 字符串 | 否 | 命名空间ID |
+
+
+### 示例请求
+```plain
+curl -X GET '127.0.0.1:8848/nacos/v1/ns/service/list?pageNo=1&pageSize=2'
+```
+### 示例返回
+```
+{
+    "count":148,
+    "doms": [
+        "nacos.test.1",
+        "nacos.test.2"
+    ]
+}
+```
+
+<h2 id="2.12">查询系统开关</h2>
+
+### 描述
+查询系统开关
+
+### 请求类型
+GET
+
+### 请求路径
+```plain
+/nacos/v1/ns/operator/switches
+```
+
+### 请求参数
+
+
+### 示例请求
+```plain
+curl -X GET '127.0.0.1:8848/nacos/v1/ns/operator/switches'
+```
+### 示例返回
+```
+{
+    name: "00-00---000-NACOS_SWITCH_DOMAIN-000---00-00",
+    masters: null,
+    adWeightMap: { },
+    defaultPushCacheMillis: 10000,
+    clientBeatInterval: 5000,
+    defaultCacheMillis: 3000,
+    distroThreshold: 0.7,
+    healthCheckEnabled: true,
+    distroEnabled: true,
+    enableStandalone: true,
+    pushEnabled: true,
+    checkTimes: 3,
+    httpHealthParams: {
+        max: 5000,
+        min: 500,
+        factor: 0.85
+    },
+    tcpHealthParams: {
+        max: 5000,
+        min: 1000,
+        factor: 0.75
+    },
+    mysqlHealthParams: {
+        max: 3000,
+        min: 2000,
+        factor: 0.65
+    },
+    incrementalList: [ ],
+    serverStatusSynchronizationPeriodMillis: 15000,
+    serviceStatusSynchronizationPeriodMillis: 5000,
+    disableAddIP: false,
+    sendBeatOnly: false,
+    limitedUrlMap: { },
+    distroServerExpiredMillis: 30000,
+    pushGoVersion: "0.1.0",
+    pushJavaVersion: "0.1.0",
+    pushPythonVersion: "0.4.3",
+    pushCVersion: "1.0.12",
+    enableAuthentication: false,
+    overriddenServerStatus: "UP",
+    defaultInstanceEphemeral: true,
+    healthCheckWhiteList: [ ],
+    checksum: null
+}
+```
+
+<h2 id="2.13">修改系统开关</h2>
+
+### 描述
+修改系统开关
+
+### 请求类型
+PUT
+
+### 请求路径
+```plain
+/nacos/v1/ns/operator/switches
+```
+
+### 请求参数
+
+| 名称 | 类型 | 是否必选 | 描述 |
+| :--- | :--- | :--- | --- |
+| entry | 字符串 | 是 | 开关名 |
+| value | 字符串 | 是 | 开关值 |
+| debug | boolean | 否 | 是否只在本机生效,true表示本机生效,false表示集群生效 |
+
+
+### 示例请求
+```plain
+curl -X PUT '127.0.0.1:8848/nacos/v1/ns/operator/switches?entry=pushEnabled&value=false&debug=true'
+```
+### 示例返回
+```
+ok
+```
+
+<h2 id="2.14">查看系统当前数据指标</h2>
+
+### 描述
+查看系统当前数据指标
+
+### 请求类型
+GET
+
+### 请求路径
+```plain
+/nacos/v1/ns/operator/metrics
+```
+
+### 请求参数
+
+
+### 示例请求
+```plain
+curl -X GET '127.0.0.1:8848/nacos/v1/ns/operator/metrics'
+```
+### 示例返回
+```
+{
+    serviceCount: 336,
+    load: 0.09,
+    mem: 0.46210432,
+    responsibleServiceCount: 98,
+    instanceCount: 4,
+    cpu: 0.010242796,
+    status: "UP",
+    responsibleInstanceCount: 0
+}
+```
+
+<h2 id="2.15">查看当前集群Server列表</h2>
+
+### 描述
+查看当前集群Server列表
+
+### 请求类型
+GET
+
+### 请求路径
+```plain
+/nacos/v1/ns/operator/servers
+```
+
+### 请求参数
+
+| 名称 | 类型 | 是否必选 | 描述 |
+| :--- | :--- | :--- | --- |
+| healthy | boolean | 否 | 是否只返回健康Server节点 |
+
+### 示例请求
+```plain
+curl -X GET '127.0.0.1:8848/nacos/v1/ns/operator/servers'
+```
+
+### 示例返回
+```
+{
+    servers: [
+        {
+            ip: "1.1.1.1",
+            servePort: 8848,
+            site: "unknown",
+            weight: 1,
+            adWeight: 0,
+            alive: false,
+            lastRefTime: 0,
+            lastRefTimeStr: null,
+            key: "1.1.1.1:8848"
+        },
+        {
+            ip: "1.1.1.2",
+            servePort: 8848,
+            site: "unknown",
+            weight: 1,
+            adWeight: 0,
+            alive: false,
+            lastRefTime: 0,
+            lastRefTimeStr: null,
+            key: "1.1.1.2:8848"
+        },
+        {
+            ip: "1.1.1.3",
+            servePort: 8848,
+            site: "unknown",
+            weight: 1,
+            adWeight: 0,
+            alive: false,
+            lastRefTime: 0,
+            lastRefTimeStr: null,
+            key: "1.1.1.3:8848"
+        }
+    ]
+}
+```
+
+
+<h2 id="2.16">查看当前集群leader</h2>
+
+### 描述
+查看当前集群leader
+
+### 请求类型
+GET
+
+### 请求路径
+```plain
+/nacos/v1/ns/raft/leader
+```
+
+### 请求参数
+
+
+### 示例请求
+```plain
+curl -X GET '127.0.0.1:8848/nacos/v1/ns/raft/leader'
+```
+### 示例返回
+```
+{
+    leader: "{"heartbeatDueMs":2500,"ip":"1.1.1.1:8848","leaderDueMs":12853,"state":"LEADER","term":54202,"voteFor":"1.1.1.1:8848"}"
+}
+```
+
+<h2 id="2.17">更新实例的健康状态</h2>
+
+### 描述
+更新实例的健康状态,仅在集群的健康检查关闭时才生效,当集群配置了健康检查时,该接口会返回错误
+
+### 请求类型
+PUT
+
+### 请求路径
+```plain
+/nacos/v1/ns/health/instance
+```
+
+### 请求参数
+
+| 名称 | 类型 | 是否必选 | 描述 |
+| :--- | :--- | :--- | --- |
+| namespaceId | 字符串 | 否 | 命名空间ID |
+| serviceName | 字符串 | 是 | 服务名 |
+| groupName | 字符串 | 否 | 分组名 |
+| clusterName | 字符串 | 否 | 集群名 |
+| ip | 字符串 | 是 | 服务实例IP |
+| port | int | 是 | 服务实例port |
+| healthy | boolean | 是 | 是否健康 |
+
+
+
+### 示例请求
+```plain
+curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/health/instance?port=8848&healthy=true&ip=11.11.11.11&serviceName=nacos.test.3&namespaceId=n1''
+```
+### 示例返回
+ok

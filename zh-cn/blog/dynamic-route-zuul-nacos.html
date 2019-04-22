@@ -4,16 +4,17 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<meta name="keywords" content="dynamic-route-zuul-nacos" />
-	<meta name="description" content="dynamic-route-zuul-nacos" />
+	<meta name="keywords" content="nacos" />
+	<meta name="description" content="使用Nacos实现Spring Cloud Zuul的动态路由" />
 	<!-- 网页标签标题 -->
-	<title>dynamic-route-zuul-nacos</title>
+	<title>使用Nacos实现Spring Cloud Zuul的动态路由</title>
 	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
 	<link rel="stylesheet" href="/build/blogDetail.css" />
 </head>
 <body>
-	<div id="root"><div class="blog-detail-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/zh-cn/index.html">首页</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/docs/what-is-nacos.html">文档</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/docs/nacos-dev.html">开发者团队</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/blog/index.html">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html">社区</a></li><li class="menu-item menu-item-normal"><a href="http://console.nacos.io/nacos/index.html">控制台样例</a></li></ul></div></div></header><section class="blog-content markdown-body"><blockquote>
-<p>authors:叶志远</p>
+	<div id="root"><div class="blog-detail-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/zh-cn/index.html">首页</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/docs/what-is-nacos.html">文档</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/docs/nacos-dev.html">开发者团队</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/blog/index.html">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html">社区</a></li><li class="menu-item menu-item-normal"><a href="https://mp.weixin.qq.com/s/KH0dEC6cNckoq1M-siiCmg">阿里中间件-校园招聘</a></li><li class="menu-item menu-item-normal"><a href="http://console.nacos.io/nacos/index.html">控制台样例</a></li></ul></div></div></header><section class="blog-content markdown-body"><h1>使用Nacos实现Spring Cloud Zuul的动态路由</h1>
+<blockquote>
+<p>authors: 叶志远</p>
 </blockquote>
 <h3>一.前言</h3>
 <p>Nacos是阿里巴巴开源的致力于服务发现与管理、动态配置管理，以及动态DNS服务的中间件，目前已发布至0.5.0版本，除了与Spring Cloud更加紧密结合以外，还丧心病狂地支持JDK11。如果您目前的项目碍于Eureka的性能，而又缺乏成本引进Consul，那么Nacos是您最好的选择。好了，回到正题，在上周许进搞了一个<a href="http://xujin.org/sc/gw/gw10/">使用Nacos实现Spring Cloud Gateway的动态路由</a>，让我们直观地感受到了Nacos的无缝接入如丝般顺滑，作为Spring Cloud中网关的始祖Zuul，自然也需要这一贴心赋能。</p>

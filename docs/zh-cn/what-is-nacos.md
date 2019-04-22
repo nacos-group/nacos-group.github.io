@@ -54,7 +54,17 @@ Nacos 的关键特性包括:
 
 * [更多的特性列表 ...](./roadmap.md)
 
-## Nacos 全景图
+## Nacos 地图
+一图看懂 Nacos，下面架构部分会详细介绍。
+![nacos_map](/img/nacosMap.jpg) 
+- 特性大图：要从功能特性，非功能特性，全面介绍我们要解的问题域的特性诉求
+- 架构大图：通过清晰架构，让您快速进入 Nacos 世界
+- 业务大图：利用当前特性可以支持的业务场景，及其最佳实践
+- 生态大图：系统梳理 Nacos 和主流技术生态的关系
+- 优势大图：展示 Nacos 核心竞争力
+- 战略大图：要从战略到战术层面讲 Nacos 的宏观优势
+
+## Nacos 生态图
 
 ![nacos_landscape.png](https://cdn.nlark.com/lark/0/2018/png/11189/1533045871534-e64b8031-008c-4dfc-b6e8-12a597a003fb.png) 
 

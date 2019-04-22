@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="Nacos,服务,发现,性能" />
+	<meta name="description" content="Nacos服务发现性能测试报告" />
+	<!-- 网页标签标题 -->
+	<title>Nacos服务发现性能测试报告</title>
+	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
+	<link rel="stylesheet" href="/build/documentation.css" />
+</head>
+<body>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/zh-cn/index.html">首页</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/docs/what-is-nacos.html">文档</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/docs/nacos-dev.html">开发者团队</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/index.html">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html">社区</a></li><li class="menu-item menu-item-normal"><a href="https://mp.weixin.qq.com/s/KH0dEC6cNckoq1M-siiCmg">阿里中间件-校园招聘</a></li><li class="menu-item menu-item-normal"><a href="http://console.nacos.io/nacos/index.html">控制台样例</a></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/docs.png" class="front-img"/><div class="bar-title"><span>Nacos 文档</span><div class="bone bone-light"></div></div><img src="/img/docs.png" class="back-img"/></div></div><section class="content-section"><div class="content-body"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>Nacos </span><ul><li style="height:180px;overflow:hidden" class="menu-item menu-item-level-2"><span>Nacos是什么?<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/what-is-nacos.html" target="_self">Nacos简介</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/concepts.html" target="_self">概念</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/architecture.html" target="_self">架构</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/FAQ.html" target="_self">FAQ</a></li></ul></li><li style="height:324px;overflow:hidden" class="menu-item menu-item-level-2"><span>快速开始<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start.html" target="_self">快速开始</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-spring-boot.html" target="_self">Nacos Spring Boot</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-spring-cloud.html" target="_self">Nacos Spring Cloud</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-docker.html" target="_self">Nacos Docker</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/use-nacos-with-dubbo.html" target="_self">Nacos Dubbo</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/use-nacos-with-kubernetes.html" target="_self">Nacos k8s</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-sync.html" target="_self">Nacos Sync</a></li></ul></li><li style="height:180px;overflow:hidden" class="menu-item menu-item-level-2"><span>用户指南<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/sdk.html" target="_self">Java的SDK</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/other-language.html" target="_self">其他语言的SDK</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/open-API.html" target="_self">Open-API指南</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-spring.html" target="_self">Nacos Spring</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>运维指南<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/deployment.html" target="_self">部署手册</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/cluster-mode-quick-start.html" target="_self">集群部署说明</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/managementAPI.html" target="_self">运维API</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/console-guide.html" target="_self">控制台手册</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/monitor-guide.html" target="_self">监控手册</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-config-benchmark.html" target="_self">配置模块压测模型</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-naming-benchmark.html" target="_self">服务发现模块压测报告</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-sync-use.html" target="_self">其他环境迁移到Nacos</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>开源共建<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/contributing.html" target="_self">贡献源码</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/activity.html" target="_self">Nacos有奖活动介绍</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/pull-request.html" target="_self">pull request模板</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/how-to-reporting-bugs.html" target="_self">如何提交问题报告</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/roadmap.html" target="_self">Nacos规划</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/use-nacos-with-istio.html" target="_self">nacos支持istio</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>社区<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/community.html" target="_self">社区</a></li></ul></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>Nacos服务发现性能测试报告</h1>
+<h2>测试目的</h2>
+<p>主要了解Nacos的服务发现性能负载和容量，协助我们更好的管理Nacos性能质量，帮助用户更快的运用评估Nacos系统负荷。</p>
+<h2>测试工具</h2>
+<p>我们使用自研的PAS性能评估服务平台进行压测，其原理是基于利用JMeter引擎，使用PAS自动生成的JMeter脚本，进行智能压测。</p>
+<p><img src="https://img.alicdn.com/tfs/TB1xCfDDpzqK1RjSZFvXXcB7VXa-692-297.png" alt="IMAGE"></p>
+<h2>测试环境</h2>
+<h3>1.环境</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>机器</td>
+<td>CPU 16核，内存32G</td>
+</tr>
+<tr>
+<td>集群规模</td>
+<td>3节点</td>
+</tr>
+<tr>
+<td>Nacos版本</td>
+<td>1.0.0</td>
+</tr>
+</tbody>
+</table>
+<h3>2.设置启动参数</h3>
+<pre><code>/opt/taobao/java/bin/java	 -server
+-Xms20g
+-Xmx20g
+-Xmn10g	 -XX:MetaspaceSize=128m
+-XX:MaxMetaspaceSize=320m
+-XX:-OmitStackTraceInFastThrow
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:HeapDumpPath=/home/admin/nacos/logs/java_heapdump.hprof
+-XX:-UseLargePages
+-Djava.ext.dirs=/opt/taobao/java/jre/lib/ext:/opt/taobao/java/lib/ext:/home/admin/nacos/plugi
+ns/cmdb:/home/admin/nacos/plugins/mysql	 -Xloggc:/home/admin/nacos/logs/nacos_gc.log
+-verbose:gc	 -XX:+PrintGCDetails	 -XX:+PrintGCDateStamps	 -XX:+PrintGCTimeStamps
+-XX:+UseGCLogFileRotation
+-XX:NumberOfGCLogFiles=10	 -XX:GCLogFileSize=100M	 -Xdebug
+-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000
+-Dnacos.home=/home/admin/nacos	 -jar	 /home/admin/nacos/target/nacos-server.jar
+--spring.config.location=classpath:/,classpath:/config/,file:./,file:./config/,file:/home/admin/naco
+s/conf/	--logging.config=/home/admin/nacos/conf/nacos-logback.xml	nacos.nacos
+</code></pre>
+<h2>测试场景</h2>
+<p>以下测试场景都是服务发现重要接口：</p>
+<ul>
+<li>验证Nacos服务发现注册实例的能力</li>
+<li>验证Nacos服务发现查询实例的能力</li>
+<li>验证Nacos服务发现注销实例的能力</li>
+</ul>
+<h2>测试数据</h2>
+<h3>1. 注册实例</h3>
+<p>Nacos服务发现注册实例接口的性能，调用HTTP接口测试。
+实测3节点集群不同压力下的性能表现：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">机器*并发数</th>
+<th style="text-align:center">服务数</th>
+<th style="text-align:center">注册实例数</th>
+<th style="text-align:center">TPS</th>
+<th style="text-align:center">RT(ms)</th>
+<th style="text-align:center">最小RT(ms)</th>
+<th style="text-align:center">最大RT(ms)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1*100</td>
+<td style="text-align:center">80301</td>
+<td style="text-align:center">84965</td>
+<td style="text-align:center">1793.41</td>
+<td style="text-align:center">54.63</td>
+<td style="text-align:center">0.8</td>
+<td style="text-align:center">1200.86</td>
+</tr>
+<tr>
+<td style="text-align:center">3*50</td>
+<td style="text-align:center">529321</td>
+<td style="text-align:center">819226</td>
+<td style="text-align:center">12574.8</td>
+<td style="text-align:center">15.8</td>
+<td style="text-align:center">0.45</td>
+<td style="text-align:center">3499.59</td>
+</tr>
+<tr>
+<td style="text-align:center">4*50</td>
+<td style="text-align:center">609726</td>
+<td style="text-align:center">836870</td>
+<td style="text-align:center">13000</td>
+<td style="text-align:center">18.54</td>
+<td style="text-align:center">0.46</td>
+<td style="text-align:center">3038.48</td>
+</tr>
+<tr>
+<td style="text-align:center">4*100</td>
+<td style="text-align:center">777262</td>
+<td style="text-align:center">927169</td>
+<td style="text-align:center">13257</td>
+<td style="text-align:center">35.65</td>
+<td style="text-align:center">0.48</td>
+<td style="text-align:center">3231.2</td>
+</tr>
+</tbody>
+</table>
+<h3>2. 查询实例</h3>
+<p>Nacos服务发现查询实例接口的性能，调用HTTP接口测试。
+实测3节点集群不同压力下的性能表现：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">机器*并发数</th>
+<th style="text-align:center">服务数</th>
+<th style="text-align:center">注册实例数</th>
+<th style="text-align:center">TPS</th>
+<th style="text-align:center">RT(ms)</th>
+<th style="text-align:center">最小RT(ms)</th>
+<th style="text-align:center">最大RT(ms)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1*100</td>
+<td style="text-align:center">80301</td>
+<td style="text-align:center">84965</td>
+<td style="text-align:center">3092.16</td>
+<td style="text-align:center">30.86</td>
+<td style="text-align:center">0.81</td>
+<td style="text-align:center">509.4</td>
+</tr>
+<tr>
+<td style="text-align:center">3*50</td>
+<td style="text-align:center">529321</td>
+<td style="text-align:center">819226</td>
+<td style="text-align:center">12574.8</td>
+<td style="text-align:center">15.8</td>
+<td style="text-align:center">0.45</td>
+<td style="text-align:center">3499.59</td>
+</tr>
+<tr>
+<td style="text-align:center">4*50</td>
+<td style="text-align:center">609726</td>
+<td style="text-align:center">836870</td>
+<td style="text-align:center">15603</td>
+<td style="text-align:center">16.41</td>
+<td style="text-align:center">0.42</td>
+<td style="text-align:center">3042.17</td>
+</tr>
+<tr>
+<td style="text-align:center">4*100</td>
+<td style="text-align:center">777262</td>
+<td style="text-align:center">927169</td>
+<td style="text-align:center">13604</td>
+<td style="text-align:center">34.19</td>
+<td style="text-align:center">0.43</td>
+<td style="text-align:center">3434.1</td>
+</tr>
+</tbody>
+</table>
+<h3>3. 注销实例</h3>
+<p>Nacos服务发现注销实例接口的性能，调用HTTP接口测试。
+实测3节点集群不同压力下的性能表现：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">机器*并发数</th>
+<th style="text-align:center">服务数</th>
+<th style="text-align:center">注册实例数</th>
+<th style="text-align:center">TPS</th>
+<th style="text-align:center">RT(ms)</th>
+<th style="text-align:center">最小RT(ms)</th>
+<th style="text-align:center">最大RT(ms)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1*100</td>
+<td style="text-align:center">80301</td>
+<td style="text-align:center">84965</td>
+<td style="text-align:center">1118.95</td>
+<td style="text-align:center">14.08</td>
+<td style="text-align:center">0.7</td>
+<td style="text-align:center">597.43</td>
+</tr>
+<tr>
+<td style="text-align:center">3*50</td>
+<td style="text-align:center">529321</td>
+<td style="text-align:center">819226</td>
+<td style="text-align:center">14508.53</td>
+<td style="text-align:center">11.23</td>
+<td style="text-align:center">0.4</td>
+<td style="text-align:center">3274.49</td>
+</tr>
+<tr>
+<td style="text-align:center">4*50</td>
+<td style="text-align:center">609726</td>
+<td style="text-align:center">836870</td>
+<td style="text-align:center">15476.93</td>
+<td style="text-align:center">16.02</td>
+<td style="text-align:center">0.38</td>
+<td style="text-align:center">3106.23</td>
+</tr>
+<tr>
+<td style="text-align:center">4*100</td>
+<td style="text-align:center">777262</td>
+<td style="text-align:center">927169</td>
+<td style="text-align:center">11940.9</td>
+<td style="text-align:center">40.33</td>
+<td style="text-align:center">0.42</td>
+<td style="text-align:center">51052.46</td>
+</tr>
+</tbody>
+</table>
+<h2>测试结论</h2>
+<p>Nacos服务发现性能测试都是针对重点功能，通过对3节点规模集群进行压测，可以看到接口性能负载和容量。</p>
+<ol>
+<li>压测容量服务数可达60W，实例注册数达110W，集群运行持续稳定，达到预期；</li>
+<li>注册/查询实例TPS达到 13000 以上，接口达到预期；</li>
+</ol>
+<p>本次只测试临时实例注册/查询/注销，未涉及持久实例(后续输出)；</p>
+<p>本测试供给大家作为参考，如有不足或偏差，请指正!
+如果对性能有其他需求，可以给我们提issue。</p>
+</div></div></section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>愿景</h3><p>Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/what-is-nacos.html" target="_self">概览</a></dd><dd><a href="/zh-cn/docs/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/contributing.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://www.aliyun.com/product/acm?source_type=nacos_pc_20181219" target="_self">云服务 ACM</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">云服务 EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">云服务 AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/documentation.js"></script>
+</body>
+</html>
