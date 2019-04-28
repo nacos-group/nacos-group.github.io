@@ -25,6 +25,8 @@
   - [服务端报错java.lang.IllegalStateException: unable to find local peer: 127.0.0.1:8848](#3.8)
   - [Nacos如何对配置进行加密](#3.9)
   - [Nacos报401错误](#3.10)
+  - [Nacos权重不生效](#3.11)
+  - [Nacos如何扩缩容](#3.12)
 
 - Nacos原理问题
 
@@ -120,5 +122,13 @@ Nacos计划在1.X版本提供加密的能力，目前还不支持加密，只能
 <h4 id="3.10">Nacos报401错误</h4>
 
 Nacos服务端报错了，可以检查服务端日志，参考[issue](https://github.com/alibaba/nacos/issues/816)
+
+<h4 id="3.11">Nacos权重不生效</h4>
+
+Nacos控制台上编辑权重, 目前从SpringCloud客户端和Dubbo客户端都没有打通, 所以不能生效. 对于SpringCloud客户端, 应用可以实现Ribbon的负载均衡器来进行权重过滤.
+
+<h4 id="3.12">Nacos如何扩缩容</h4>
+
+目前支持修改cluster.conf文件的方式进行扩缩容, 改完后无需重启, Server会自动刷新到文件新内容.
 
 ## Nacos原理问题
