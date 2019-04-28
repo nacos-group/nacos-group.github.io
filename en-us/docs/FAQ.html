@@ -48,6 +48,7 @@
 <li><a href="#3.8">服务端报错java.lang.IllegalStateException: unable to find local peer: 127.0.0.1:8848</a></li>
 <li><a href="#3.9">Nacos如何对配置进行加密</a></li>
 <li><a href="#3.10">Nacos报401错误</a></li>
+<li><a href="#3.11">Nacos权重不生效</a></li>
 </ul>
 </li>
 <li>
@@ -103,6 +104,8 @@
 <p>Nacos计划在1.X版本提供加密的能力，目前还不支持加密，只能靠sdk做好了加密再存到nacos中</p>
 <h4 id="3.10">Nacos报401错误</h4>
 <p>Nacos服务端报错了，可以检查服务端日志，参考<a href="https://github.com/alibaba/nacos/issues/816">issue</a></p>
+<h4 id="3.11">Nacos权重不生效</h4>
+<p>Nacos控制台上编辑权重, 目前从SpringCloud客户端和Dubbo客户端都没有打通, 所以不能生效. 对于SpringCloud客户端, 应用可以实现Ribbon的负载均衡器来进行权重过滤.</p>
 <h2>Nacos原理问题</h2>
 </div></div></section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>Vision</h3><p>By providing an easy-to-use service infrastructure such as dynamic service discovery, service configuration, service sharing and management and etc., Nacos help users better construct, deliver and manage their own service platform, reuse and composite business service faster and deliver value of business innovation more quickly so as to win market for users in the era of cloud native and in all cloud environments, such as private, mixed, or public clouds.</p></div><div class="col col-6"><dl><dt>Documentation</dt><dd><a href="/en-us/docs/what-is-nacos.html" target="_self">Overview</a></dd><dd><a href="/en-us/docs/quick-start.html" target="_self">Quick start</a></dd><dd><a href="/en-us/docs/contributing.html" target="_self">Developer guide</a></dd></dl></div><div class="col col-6"><dl><dt>Resources</dt><dd><a href="/en-us/community/index.html" target="_self">Community</a></dd><dd><a href="https://www.aliyun.com/product/acm?source_type=nacos_pc_20181219" target="_self">Cloud Service ACM</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">Cloud Service EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">Cloud Service AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
 	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
