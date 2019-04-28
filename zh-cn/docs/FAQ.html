@@ -49,6 +49,7 @@
 <li><a href="#3.9">Nacos如何对配置进行加密</a></li>
 <li><a href="#3.10">Nacos报401错误</a></li>
 <li><a href="#3.11">Nacos权重不生效</a></li>
+<li><a href="#3.12">Nacos如何扩缩容</a></li>
 </ul>
 </li>
 <li>
@@ -106,6 +107,8 @@
 <p>Nacos服务端报错了，可以检查服务端日志，参考<a href="https://github.com/alibaba/nacos/issues/816">issue</a></p>
 <h4 id="3.11">Nacos权重不生效</h4>
 <p>Nacos控制台上编辑权重, 目前从SpringCloud客户端和Dubbo客户端都没有打通, 所以不能生效. 对于SpringCloud客户端, 应用可以实现Ribbon的负载均衡器来进行权重过滤.</p>
+<h4 id="3.12">Nacos如何扩缩容</h4>
+<p>目前支持修改cluster.conf文件的方式进行扩缩容, 改完后无需重启, Server会自动刷新到文件新内容.</p>
 <h2>Nacos原理问题</h2>
 </div></div></section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>愿景</h3><p>Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/what-is-nacos.html" target="_self">概览</a></dd><dd><a href="/zh-cn/docs/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/contributing.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://www.aliyun.com/product/acm?source_type=nacos_pc_20181219" target="_self">云服务 ACM</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">云服务 EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">云服务 AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
 	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>

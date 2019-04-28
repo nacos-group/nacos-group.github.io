@@ -26,6 +26,7 @@
   - [Nacos如何对配置进行加密](#3.9)
   - [Nacos报401错误](#3.10)
   - [Nacos权重不生效](#3.11)
+  - [Nacos如何扩缩容](#3.12)
 
 - Nacos原理问题
 
@@ -125,5 +126,9 @@ Nacos服务端报错了，可以检查服务端日志，参考[issue](https://gi
 <h4 id="3.11">Nacos权重不生效</h4>
 
 Nacos控制台上编辑权重, 目前从SpringCloud客户端和Dubbo客户端都没有打通, 所以不能生效. 对于SpringCloud客户端, 应用可以实现Ribbon的负载均衡器来进行权重过滤.
+
+<h4 id="3.12">Nacos如何扩缩容</h4>
+
+目前支持修改cluster.conf文件的方式进行扩缩容, 改完后无需重启, Server会自动刷新到文件新内容.
 
 ## Nacos原理问题
