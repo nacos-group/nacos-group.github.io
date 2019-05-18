@@ -84,6 +84,10 @@ export default {
                   title: 'Nacos Spring',
                   link: '/en-us/docs/nacos-spring.html',
               },
+              {
+                title: 'namespace, endpoint 最佳实践',
+                link: '/en-us/docs/namespace-endpoint-best-practices.html',
+              },
             ],
           },
           {
@@ -250,6 +254,10 @@ export default {
               {
                   title: 'Nacos Spring',
                   link: '/zh-cn/docs/nacos-spring.html',
+              },
+              {
+                title: 'namespace, endpoint 最佳实践',
+                link: '/zh-cn/docs/namespace-endpoint-best-practices.html',
               },
             ],
           },

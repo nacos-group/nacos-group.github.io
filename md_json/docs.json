@@ -109,6 +109,11 @@
       "meta": {}
     },
     {
+      "filename": "namespace-endpoint-best-practices.md",
+      "link": "/en-us/docs/namespace-endpoint-best-practices.html",
+      "meta": {}
+    },
+    {
       "filename": "open-API.md",
       "link": "/en-us/docs/open-API.html",
       "meta": {}
@@ -344,6 +349,11 @@
     {
       "filename": "nacos-sync.md",
       "link": "/zh-cn/docs/nacos-sync.html",
+      "meta": {}
+    },
+    {
+      "filename": "namespace-endpoint-best-practices.md",
+      "link": "/zh-cn/docs/namespace-endpoint-best-practices.html",
       "meta": {}
     },
     {
