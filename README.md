@@ -28,6 +28,7 @@ Nacos website is powered by [docsite](https://github.com/txd-team/docsite). If y
 2. Run `npm i` in the project's root directory to install the dependencies.
 3. Run `docsite start` in the project's root directory to start a local server, you will see the website in 'http://127.0.0.1:8080'.
 4. Run `docsite build` to build source code.
+5. Verify your change locally: `python -m SimpleHTTPServer 8000`, when your python version is 3 use :`python3 -m http.server 8000` instead.
 
 ## How to Contribute
 
