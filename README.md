@@ -3,40 +3,33 @@
 This project keeps all sources used for building up [Nacos](https://github.com/alibaba/nacos) official website which's served at http://nacos.io.
 
 
-## Attention
+## Prerequisite
 
-Nacos website is powered by [docsite](https://github.com/txd-team/docsite). If your version of docsite is less then 1.3.3, please upgrade to 1.3.3. Please also make sure your node version is 8.x, versions higher than 8.x is not supported by docsite yet.
+Nacos website is powered by [docsite](https://github.com/txd-team/docsite). If your version of docsite is less then `1.3.3`, please upgrade to `1.3.3`. Please also make sure your node version is 8.x, versions higher than 8.x is not supported by docsite yet.
 
-> **NOTE**: `docsite` can not support the latest `node@11`, you need to install older version of `node`, for example, you can use following commands to do this on **MacOS** with `brew`
-> 
-> ```
-> brew search node
-> brew install node@8
-> 
-> install `npm` with specific node version `node@8`
-> ``` 
-> 
-> we tested successfully with 
-> 
-> `node 8.9.4 | npm 5.6.0 | docsite 1.3.2`
-> 
+## Build instruction
 
-
-## Build WebSite Locally
-
-1. Run `npm install docsite -g` to install the docsite dev tool.
-2. Run `npm i` in the project's root directory to install the dependencies.
-3. Run `docsite start` in the project's root directory to start a local server, you will see the website in 'http://127.0.0.1:8080'.
+1. Run `npm install docsite -g` to install the dev tool.
+2. Run `npm i` in the root directory to install the dependencies.
+3. Run `docsite start` in the root directory to start a local server, you will see the website in 'http://127.0.0.1:8080'.
 4. Run `docsite build` to build source code.
+5. Verify your change locally: `python -m SimpleHTTPServer 8000`, when your python version is 3 use :`python3 -m http.server 8000` instead.
+
+If you have higher version of node installed, you may consider `nvm` to allow different versions of `node` coexisting on your machine.
+
+1. Follow the [instructions](http://nvm.sh) to install nvm
+2. Run `nvm install v8.16.0` to install node v8
+3. Run `nvm use v8.16.0` to switch the working environment to node v8
+4. Run `npm install docsite -g`
 
 ## How to Contribute
 
 1. Create an issue first to description the issue
 2. Do not use `git add .` to commit all the changes.
 3. Just push your changed files, such as:
-    * *.md
+    * `*.md`
     * blog.js or docs.js or site.js
-4. Send a PR to `develop` branch.
+4. Send a PR to `master` branch.
 
 ## SEO
 
@@ -49,6 +42,9 @@ keywords: keywords1,keywords2,keywords3
 description: some description
 ---
 ```
+
+Refer to [this blog](/blog/zh-cn/nacos.md)
+
 
 ## Guide for adding new document
 
