@@ -2,7 +2,6 @@
 
 This project keeps all sources used for building up [Nacos](https://github.com/alibaba/nacos) official website which's served at http://nacos.io.
 
-
 ## Prerequisite
 
 Nacos website is powered by [docsite](https://github.com/txd-team/docsite). If your version of docsite is less then `1.3.3`, please upgrade to `1.3.3`. Please also make sure your node version is 8.x, versions higher than 8.x is not supported by docsite yet.
@@ -45,7 +44,6 @@ description: some description
 
 Refer to [this blog](/blog/zh-cn/nacos.md)
 
-
 ## Guide for adding new document
 
 ### Add a new blog
@@ -54,7 +52,6 @@ Refer to [this blog](/blog/zh-cn/nacos.md)
 2. Update site_config/blog.js, add a new entry to the blog in either en-us or zh-cn.
 3. Run docsite start locally to verify the blog can be displayed correctly.
 4. Send the pull request contains the .md and blog.js only.
-
 
 ### Add a new article for developers
 

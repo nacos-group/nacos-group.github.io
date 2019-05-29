@@ -27,6 +27,7 @@
   - [Nacos报401错误](#3.10)
   - [Nacos权重不生效](#3.11)
   - [Nacos如何扩缩容](#3.12)
+  - [Nacos客户端修改日志级别](#3.13)
 
 - Nacos原理问题
 
@@ -130,5 +131,11 @@ Nacos控制台上编辑权重, 目前从SpringCloud客户端和Dubbo客户端都
 <h4 id="3.12">Nacos如何扩缩容</h4>
 
 目前支持修改cluster.conf文件的方式进行扩缩容, 改完后无需重启, Server会自动刷新到文件新内容.
+
+<h4 id="3.13">Nacos客户端修改日志级别</h4>
+
+配置-D参数com.alibaba.nacos.naming.log.level设置naming客户端的日志级别，例如设置为error：
+`-Dcom.alibaba.nacos.naming.log.level=error`
+同样的，-D参数com.alibaba.nacos.config.log.level用来设置config客户端的日志级别。
 
 ## Nacos原理问题
