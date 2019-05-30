@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default {
   'en-us': {
     brand: {
@@ -85,6 +87,27 @@ export default {
         },
       ],
     },
+      users: {
+          title: 'Who is using Nacos',
+          desc: <span>Providing your info on <a rel="noopener noreferrer" target="_blank" href="https://github.com/alibaba/nacos/issues/273">Wanted: who&#39;s using nacos</a> to help improving nacos better</span>,
+          list: [
+              '/img/users_alibaba.png',
+              '/img/users_huya.png',
+              '/img/users_icbc.png',
+              '/img/users_aiqiyi.png',
+              '/img/users_pingan.png',
+              '/img/users_huaxia.png',
+              '/img/users_youke.png',
+              '/img/users_beike.png',
+              '/img/users_mecial.png',
+              '/img/users_fengchao.png',
+              '/img/users_baishi.png',
+              '/img/users_qichezhijia.png',
+              '/img/users_sifa.png',
+              '/img/users_haojing.png',
+              '/img/users_zhishi.png'
+          ],
+      },
   },
   'zh-cn': {
     brand: {
@@ -172,5 +195,26 @@ export default {
         },
       ],
     },
+      users: {
+          title: '谁在使用Nacos',
+          desc: <span>请在 <a rel="noopener noreferrer" target="_blank" href="https://github.com/alibaba/nacos/issues/273">Wanted: who&#39;s using dubbo</a> 上提供信息来帮助Nacos做的更好。</span>,
+          list: [
+              '/img/users_alibaba.png',
+              '/img/users_huya.png',
+              '/img/users_icbc.png',
+              '/img/users_aiqiyi.png',
+              '/img/users_pingan.png',
+              '/img/users_huaxia.png',
+              '/img/users_youke.png',
+              '/img/users_beike.png',
+              '/img/users_mecial.png',
+              '/img/users_fengchao.png',
+              '/img/users_baishi.png',
+              '/img/users_qichezhijia.png',
+              '/img/users_sifa.png',
+              '/img/users_haojing.png',
+              '/img/users_zhishi.png'
+          ],
+      },
   },
 };
