@@ -71,7 +71,7 @@ class Home extends Language {
                             }
                         </div>
                         <div className="github-buttons">
-                            <a href="https://github.com/alibaba/nacos/star" target="_blank" rel="noopener noreferrer">
+                            <a href="https://github.com/alibaba/nacos" target="_blank" rel="noopener noreferrer">
                                 <div className="star">
                                     <img src="https://img.alicdn.com/tfs/TB1FlB1JwHqK1RjSZFPXXcwapXa-32-32.png" />
                                     <span className="count">{starCount}</span>
