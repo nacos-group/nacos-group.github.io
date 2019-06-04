@@ -88,8 +88,8 @@ export default {
             ],
         },
         users: {
-            title: '谁在使用Nacos',
-            desc: <span>请在 <a rel="noopener noreferrer" target="_blank" href="https://github.com/alibaba/nacos/issues/273">Wanted: who&#39;s using nacos</a> 上提供信息来帮助Nacos做的更好。</span>,
+            title: 'Who is using Nacos',
+            desc: <span>Providing your info on <a rel="noopener noreferrer" target="_blank" href="https://github.com/alibaba/nacos/issues/273">Wanted: who&#39;s using nacos</a> to help improving nacos better.</span>,
             list: [
                 '/img/users_alibaba.png',
                 '/img/users_aiqiyi.png',
