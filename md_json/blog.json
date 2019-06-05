@@ -42,6 +42,11 @@
       }
     },
     {
+      "filename": "address-server.md",
+      "link": "/en-us/blog/address-server.html",
+      "meta": {}
+    },
+    {
       "filename": "alibaba-configserver.md",
       "link": "/en-us/blog/alibaba-configserver.html",
       "meta": {
@@ -203,6 +208,11 @@
         "keywords": "nacos0.8,nacos0.8.0,nacos 发布",
         "description": "Nacos 0.8.0版本进行发布"
       }
+    },
+    {
+      "filename": "address-server.md",
+      "link": "/zh-cn/blog/address-server.html",
+      "meta": {}
     },
     {
       "filename": "alibaba-configserver.md",
