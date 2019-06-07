@@ -42,6 +42,11 @@
       }
     },
     {
+      "filename": "address-server.md",
+      "link": "/en-us/blog/address-server.html",
+      "meta": {}
+    },
+    {
       "filename": "alibaba-configserver.md",
       "link": "/en-us/blog/alibaba-configserver.html",
       "meta": {
@@ -58,6 +63,11 @@
         "keywords": "nacos,nacos0.2,alibaba,邢学超,Aliware Open Source,spring cloud",
         "description": "Nacos 计划发布v0.2版本，进一步融合Dubbo和SpringCloud生态"
       }
+    },
+    {
+      "filename": "cmdb.md",
+      "link": "/en-us/blog/cmdb.html",
+      "meta": {}
     },
     {
       "filename": "cncf.md",
@@ -205,6 +215,11 @@
       }
     },
     {
+      "filename": "address-server.md",
+      "link": "/zh-cn/blog/address-server.html",
+      "meta": {}
+    },
+    {
       "filename": "alibaba-configserver.md",
       "link": "/zh-cn/blog/alibaba-configserver.html",
       "meta": {
@@ -221,6 +236,11 @@
         "keywords": "nacos,nacos0.2,alibaba,邢学超,Aliware Open Source,spring cloud",
         "description": "Nacos 计划发布v0.2版本，进一步融合Dubbo和SpringCloud生态"
       }
+    },
+    {
+      "filename": "cmdb.md",
+      "link": "/zh-cn/blog/cmdb.html",
+      "meta": {}
     },
     {
       "filename": "cncf.md",
