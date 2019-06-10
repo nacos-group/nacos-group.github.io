@@ -12,7 +12,7 @@ Nacos开发者包含Maintainer、Committer、Contributor三种角色，每种角
 
 Maintainer是对Nacos项目（包括nacos-group下的项目）的演进和发展做出显著贡献的个人。具体包含以下的标准：
 
-* 完成多个关键模块或者工程的设计与开发，是项目不可缺少的核心开发人员；
+* 完成多个关键模块或者工程的设计与开发，是项目的核心开发人员；
 * 持续的投入和激情，能够积极参与社区、官网、issue、PR等项目相关事项的维护；
 * 在社区中具有有目共睹的影响力，能够代表Nacos参加重要的社区会议和活动；
 * 具有培养Committer和Contributor的意识和能力；
@@ -29,7 +29,7 @@ Committer是具有Nacos仓库写权限的个人，包含以下的标准：
 
 Contributor是对Nacos项目有贡献的个人，标准为：
 
-* 提交过issue或者PR；
+* 提交过PR并被合并；
 
 
 ### Nacos开发者权利及义务

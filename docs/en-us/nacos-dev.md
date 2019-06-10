@@ -13,7 +13,7 @@ Nacos developers include three roles: Maintainer, Committer, and Contributor. Th
 
 Maintainer is an individual who has made a significant contribution to the evolution and development of the Nacos project, including projects under the nacos-group. Specifically includes the following criteria:
 
-* Completing the design and development of multiple key modules or projects, is an indispensable core developer of the project
+* Completing the design and development of multiple key modules or projects, is an core developer of the project
 * Continuous investment and passion, can actively participate in the maintenance of related matters such as community, official website, issue, PR, etc.
 * Has a visible influence in the community and is able to represent Nacos in important community meetings and events
 * Has a visible influence in the community and is able to represent Nacos in important community meetings and events;
@@ -30,7 +30,7 @@ Committer is an individual with write access to the Nacos repository and include
 
 Contributor is an individual who contributes to the Nacos project. The standard is:
 
-* Submitted an issue or PR;
+* Submitted a PR that is merged;
 
 
 ### Nacos Developer Rights and Obligations
