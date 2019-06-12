@@ -15,14 +15,14 @@ export default {
         },
       ],
       version: {
-        text: 'V1.0.0',
+        text: 'V1.0.1',
         link: 'https://github.com/alibaba/nacos/releases',
       },
       note: {
         text: 'Release Note',
         link: 'https://github.com/alibaba/nacos/releases',
       },
-      releaseDate: 'Released on Apr 10, 2019',
+      releaseDate: 'Released on Jun 12, 2019',
     },
     functions: {
       title: 'Features',
@@ -102,14 +102,14 @@ export default {
         },
       ],
       version: {
-        text: 'V1.0.0',
+        text: 'V1.0.1',
         link: 'https://github.com/alibaba/nacos/releases',
       },
       note: {
         text: '版本说明',
         link: 'https://github.com/alibaba/nacos/releases',
       },
-      releaseDate: '2019年04月10日发布',
+      releaseDate: '2019年06月12日发布',
     },
     functions: {
       title: '功能',
