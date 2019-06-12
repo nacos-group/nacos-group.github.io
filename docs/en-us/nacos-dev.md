@@ -55,17 +55,20 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [paderlol](https://github.com/paderlol)         | Pader Zhang  | Shareworks   | Committer | huangbbbaihao@gmail.com                                     |
 | [pguo65535](https://github.com/pguo65535)       | Ping Guo     | Alibaba      | Committer | guoping.gp@alibaba-inc.com                                   |
 | [hxy1991](https://github.com/hxy1991)           | Xiaoyu Huang | Alibaba      | Committer | huangxiaoyu1018@gmail.com                                    |
-| [yangyshdan](https://github.com/yangyshdan)     | Yi Yang      | Alibaba      | Committer | fuyi.yy@alibaba-inc.com                                      |
 | [mingyixu](https://github.com/mingyixu)         | Xiaochun Xu  | Alibaba      | Committer | xiaochun.xxc@alibaba-inc.com                                 |
 | [JianweiWang](https://github.com/JianweiWang)   | Jianwei Wang | Alibaba      | Committer | wangjianwei.nwpu@gmail.com                                  |
 | [jameslcj](https://github.com/jameslcj)         | Chen li      | Alibaba      | Committer | zhichen.lc@alibaba-inc.com                                   |
-| [flystar32](https://github.com/flystar32)       | Jing Xiao    | Alibaba      | Committer | yizhan.xj@alibaba-inc.com                                    |
 | [mercyblitz](https://github.com/mercyblitz)     | Mercy Ma     | Alibaba      | Committer | taogu.mxx@alibaba-inc.com                                    |
 | [fangjian0423](https://github.com/fangjian0423) | Jian Fang    | Alibaba      | Committer | fangjian.fj@alibaba-inc.com                                  |
 | [wyp12](https://github.com/wyp12)               | Yuanpiao Wu  | Alibaba      | Committer | caogu.wyp@antfin.com                                         |
 | [TsingLiang](https://github.com/TsingLiang)     | Liang ji     | Alibaba      | Committer | qingliang.ql@alibaba-inc.com                                 | 
 
 
+### Contributors
 
+| github ID                                     | Name   | Company | Mail                               |
+| ------------------------------------------------| -------| -------| ---------------------------------- |
+| [chuntaojun](https://github.com/chuntaojun)     | Chuntao Liao  |  Hangzhou Dianzi University  | liaochuntao@live.com     |
+| [caojiele](https://github.com/caojiele)         | Jiele Cao  |        | caojiele1225@126.com               |
 
 
