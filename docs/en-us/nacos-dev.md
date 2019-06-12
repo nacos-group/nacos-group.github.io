@@ -45,9 +45,9 @@ This page shows Nacos developers and continues to expand. The list is not priori
 
 | Github ID                                       | Name         | Organization | Role      | Mail                                                         |
 | ----------------------------------------------- | -----------  | ----------   | --------- | ------------------------------------------------------------ |
-| [yanlinly](https://github.com/yanlinly)         | Yanlin Li    | Alibaba      | Maintainer | yan.lin2009@163.com                                    |
 | [nkorange](https://github.com/nkorange)         | Pengfei Zhu  | Alibaba      | Maintainer | zpf.073@gmail.com                                    |
 | [xuechaos](https://github.com/xuechaos)         | Xuechao Xing | Alibaba      | Maintainer | xingxuechao@alibaba-inc.com                                  |
+| [yanlinly](https://github.com/yanlinly)         | Yanlin Li    | Alibaba      | Maintainer | yan.lin2009@163.com                                    |
 | [loadchange](https://github.com/loadchange)     | Yanmin Wang  | ele          | Committer | wym177771@alibaba-inc.com                                    |
 | [zhangjimmy](https://github.com/zhangjimmy)     | Bo Zhang     | Huya         | Committer | zhangjimmy@foxmail.com                                       |
 | [nanamikon](https://github.com/nanamikon)       | Jian Zhou    | Huya         | Committer | nanamikon@gmail.com                                          |

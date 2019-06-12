@@ -46,9 +46,9 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 
 | github账号                                       | 名字   | 所属公司 | 角色      | 邮箱  |
 | ----------------------------------------------- | ------ | -------- | --------- | ------------------------------------------------------------ |
-| [yanlinly](https://github.com/yanlinly)         | 李艳林 | 阿里巴巴 | Maintainer | yan.lin2009@163.com |
 | [nkorange](https://github.com/nkorange)         | 朱鹏飞 | 阿里巴巴 | Maintainer | zpf.073@gmail.com   |
 | [xuechaos](https://github.com/xuechaos)         | 邢学超 | 阿里巴巴 | Maintainer |xingxuechao@alibaba-inc.com |
+| [yanlinly](https://github.com/yanlinly)         | 李艳林 | 阿里巴巴 | Maintainer | yan.lin2009@163.com |
 | [loadchange](https://github.com/loadchange)     | 王彦民 | 饿了么   | Committer | wym177771@alibaba-inc.com |
 | [zhangjimmy](https://github.com/zhangjimmy)     | 张波   | 虎牙直播 | Committer | zhangjimmy@foxmail.com  |
 | [nanamikon](https://github.com/nanamikon)       | 周健   | 虎牙直播 | Committer | nanamikon@gmail.com |
