@@ -44,31 +44,32 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 
 ### 
 
-| github账号                                       | 名字   | 所属公司 | 角色      | 邮箱  |
-| ----------------------------------------------- | ------ | -------- | --------- | ------------------------------------------------------------ |
-| [nkorange](https://github.com/nkorange)         | 朱鹏飞 | 阿里巴巴 | Maintainer | zpf.073@gmail.com   |
-| [xuechaos](https://github.com/xuechaos)         | 邢学超 | 阿里巴巴 | Maintainer |xingxuechao@alibaba-inc.com |
-| [yanlinly](https://github.com/yanlinly)         | 李艳林 | 阿里巴巴 | Maintainer | yan.lin2009@163.com |
-| [loadchange](https://github.com/loadchange)     | 王彦民 | 饿了么   | Committer | wym177771@alibaba-inc.com |
-| [zhangjimmy](https://github.com/zhangjimmy)     | 张波   | 虎牙直播 | Committer | zhangjimmy@foxmail.com  |
-| [nanamikon](https://github.com/nanamikon)       | 周健   | 虎牙直播 | Committer | nanamikon@gmail.com |
-| [lzp0412](https://github.com/lzp0412)           | 李志鹏 | 虎牙直播 | Committer | 641785844@qq.com      |
-| [paderlol](https://github.com/paderlol)         | 张龙   | 蜜獾    | Committer | huangbbbaihao@gmail.com |
-| [pguo65535](https://github.com/pguo65535)       | 郭平   | 阿里巴巴 | Committer | guoping.gp@alibaba-inc.com |
-| [hxy1991](https://github.com/hxy1991)           | 黄晓禹 | 阿里巴巴 | Committer | huangxiaoyu1018@gmail.com |
-| [mingyixu](https://github.com/mingyixu)         | 徐小春 | 阿里巴巴 | Committer | xiaochun.xxc@alibaba-inc.com |
-| [jameslcj](https://github.com/jameslcj)         | 李晨   | 阿里巴巴 | Committer | zhichen.lc@alibaba-inc.com |
-| [mercyblitz](https://github.com/mercyblitz)     | 马昕曦 | 阿里巴巴 | Committer | taogu.mxx@alibaba-inc.com |
-| [fangjian0423](https://github.com/fangjian0423) | 方剑   | 阿里巴巴 | Committer | fangjian.fj@alibaba-inc.com |
-| [wyp12](https://github.com/wyp12)               | 吴援飘 | 阿里巴巴 | Committer | caogu.wyp@antfin.com |
-| [TsingLiang](https://github.com/TsingLiang)     | 卿亮   | 阿里巴巴 | Committer | qingliang.ql@alibaba-inc.com  |
-| [JianweiWang](https://github.com/JianweiWang)   | 王建伟  | 阿里巴巴 | Committer | wangjianwei.nwpu@gmail.com   |
+|头像                                               | Github 账号                                     | 名字    | 组织     | 角色       | 邮箱                                                         |
+|--------------------------------------------------| ----------------------------------------------- | ------ | --------| --------- | ------------------------------------------------------------ |
+|![nkorange](/img/developers/nkorange.jpg)         | [nkorange](https://github.com/nkorange)         | 朱鹏飞 | 阿里巴巴 | Maintainer | zpf.073@gmail.com   |
+|![xuechaos](/img/developers/xuechaos.jpg)         | [xuechaos](https://github.com/xuechaos)         | 邢学超 | 阿里巴巴 | Maintainer |xingxuechao@alibaba-inc.com |
+|![yanlinly](/img/developers/yanlinly.jpg)         | [yanlinly](https://github.com/yanlinly)         | 李艳林 | 阿里巴巴 | Maintainer | yan.lin2009@163.com |
+|![loadchange](/img/developers/loadchange.jpg)     | [loadchange](https://github.com/loadchange)     | 王彦民 | 饿了么   | Committer | wym177771@alibaba-inc.com |
+|![zhangjimmy](/img/developers/zhangjimmy.jpg)     | [zhangjimmy](https://github.com/zhangjimmy)     | 张波   | 虎牙直播 | Committer | zhangjimmy@foxmail.com  |
+|![nanamikon](/img/developers/nanamikon.jpg)       | [nanamikon](https://github.com/nanamikon)       | 周健   | 虎牙直播 | Committer | nanamikon@gmail.com |
+|![lzp0412](/img/developers/lzp0412.jpg)           | [lzp0412](https://github.com/lzp0412)           | 李志鹏 | 虎牙直播 | Committer | 641785844@qq.com      |
+|![paderlol](/img/developers/paderlol.jpg)         | [paderlol](https://github.com/paderlol)         | 张龙   | 蜜獾    | Committer | huangbbbaihao@gmail.com |
+|![pguo65535](/img/developers/pguo65535.jpg)       | [pguo65535](https://github.com/pguo65535)       | 郭平   | 阿里巴巴 | Committer | guoping.gp@alibaba-inc.com |
+|![hxy1991](/img/developers/hxy1991.jpg)           | [hxy1991](https://github.com/hxy1991)           | 黄晓禹 | 阿里巴巴 | Committer | huangxiaoyu1018@gmail.com |
+|![mingyixu](/img/developers/mingyixu.jpg)         | [mingyixu](https://github.com/mingyixu)         | 徐小春 | 阿里巴巴 | Committer | xiaochun.xxc@alibaba-inc.com |
+|![JianweiWang](/img/developers/JianweiWang.jpg)   | [JianweiWang](https://github.com/JianweiWang)   | 王建伟  | 阿里巴巴 | Committer | wangjianwei.nwpu@gmail.com   |
+|![jameslcj](/img/developers/jameslcj.jpg)         | [jameslcj](https://github.com/jameslcj)         | 李晨   | 阿里巴巴 | Committer | zhichen.lc@alibaba-inc.com |
+|![mercyblitz](/img/developers/mercyblitz.jpg)     | [mercyblitz](https://github.com/mercyblitz)     | 马昕曦 | 阿里巴巴 | Committer | taogu.mxx@alibaba-inc.com |
+|![fangjian0423](/img/developers/fangjian0423.jpg) | [fangjian0423](https://github.com/fangjian0423) | 方剑   | 阿里巴巴 | Committer | fangjian.fj@alibaba-inc.com |
+|![wyp12](/img/developers/wyp12.jpg)               | [wyp12](https://github.com/wyp12)               | 吴援飘 | 阿里巴巴 | Committer | caogu.wyp@antfin.com |
+|![TsingLiang](/img/developers/TsingLiang.jpg)     | [TsingLiang](https://github.com/TsingLiang)     | 卿亮   | 阿里巴巴 | Committer | qingliang.ql@alibaba-inc.com  |
+
 
 
 
 ### 活跃贡献者
 
-| github 账号                                      | 名字   | 所属公司 | 邮箱                               |
-| ------------------------------------------------| -------| -------| ---------------------------------- |
-| [chuntaojun](https://github.com/chuntaojun)     | 廖春涛  |  杭州电子科技大学  | liaochuntao@live.com     |
-| [caojiele](https://github.com/caojiele)         | 曹杰乐  |        | caojiele1225@126.com               |
+|头像                                           | Github 账号                                      | 名字       | 组织             |角色        |邮箱                                 |
+|----------------------------------------------| ------------------------------------------------|------------| ----------------| -----------|------------------------------------|
+|![chuntaojun](/img/developers/chuntaojun.jpg) | [chuntaojun](https://github.com/chuntaojun)     | 廖春涛      |  杭州电子科技大学  | Contributor| liaochuntao@live.com               |
+|![caojiele](/img/developers/caojiele.jpg)     | [caojiele](https://github.com/caojiele)         | 曹杰乐      |                 | Contributor| caojiele1225@126.com               |
