@@ -1,4 +1,4 @@
-Nacos 客户端初始化说明:
+Nacos 客户端初始化说明
 
 ```
 	public final static String ENDPOINT = "endpoint";
