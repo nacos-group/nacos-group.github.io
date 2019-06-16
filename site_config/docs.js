@@ -22,7 +22,7 @@ export default {
               },
               {
                 title: 'FAQ',
-                link: '/en-us/docs/FAQ.html',
+                link: '/en-us/docs/faq.html',
               },
             ],
           },
@@ -78,7 +78,7 @@ export default {
               },
               {
                 title: 'Open-API',
-                link: '/en-us/docs/open-API.html',
+                link: '/en-us/docs/open-api.html',
               },
               {
                   title: 'Nacos Spring',
@@ -103,7 +103,7 @@ export default {
               },
               {
                 title: 'Management OpenAPI',
-                link: '/en-us/docs/managementAPI.html',
+                link: '/en-us/docs/management-api.html',
               },
               {
                 title: 'Admin Console Guide',
@@ -193,7 +193,7 @@ export default {
               },
               {
                 title: 'FAQ',
-                link: '/zh-cn/docs/FAQ.html',
+                link: '/zh-cn/docs/faq.html',
               },
             ],
           },
@@ -249,7 +249,7 @@ export default {
               },
               {
                   title: 'Open-API指南',
-                  link: '/zh-cn/docs/open-API.html',
+                  link: '/zh-cn/docs/open-api.html',
               },
               {
                   title: 'Nacos Spring',
@@ -274,7 +274,7 @@ export default {
               },
               {
                 title: '运维API',
-                link: '/zh-cn/docs/managementAPI.html',
+                link: '/zh-cn/docs/management-api.html',
               },
               {
                 title: '控制台手册',

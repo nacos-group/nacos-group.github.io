@@ -1,4 +1,4 @@
-Nacos �ͻ��˳�ʼ��˵��
+Nacos 客户端初始化说明:
 
 ```
 	public final static String ENDPOINT = "endpoint";
@@ -11,34 +11,34 @@ Nacos �ͻ��˳�ʼ��˵��
 	public final static String ENCODE = "encode";
 
 ```
-һ���ͻ��˿���ͨ�����ַ�ʽ��ʼ������ѡһ���ش���
+一、客户端可以通过两种方式初始化（二选一，必传）
 
-1. ͨ��ֱ�Ӵ���Nacos server����Ϣ��ip:port��������������ʽ
+1. 通过直接传入Nacos server端信息（ip:port，或者域名）方式
 
 	``
-	SERVER_ADDR server��ַ����ʽΪ��ip1:port,ip2.port��
+	SERVER_ADDR server地址，格式为“ip1:port,ip2.port”
 	``
-2. ͨ���������н����ȡ������Ϣ
+2. 通过接入点进行接入获取环境信息
 
 	```
-	ENDPOINT ����� 
-	CLUSTER_NAME ��Ⱥ����
+	ENDPOINT 接入点 
+	CLUSTER_NAME 集群名字
 	```
 	
-�������ӵ�server��·�����Ǳش���
+二、链接的server的路径（非必传）
 
 ```
-CONTEXT_PATH server��·�� ��Ĭ��ֵ nacos��
+CONTEXT_PATH server根路径 （默认值 nacos）
 ```
-����������루�Ǳش���
+三、区域隔离（非必传）
 
 ```
-NAMESPACE ��������
+NAMESPACE 名称区域
 ```
 
-�ġ���Ȩ�������Ǳش���
+四、鉴权参数（非必传）
 
 ```
-ACCESS_KEY ��Կ
-SECRET_KEY ˽Կ
+ACCESS_KEY 公钥
+SECRET_KEY 私钥
 ```
