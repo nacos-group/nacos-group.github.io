@@ -88,6 +88,10 @@ export default {
                 title: 'namespace, endpoint 最佳实践',
                 link: '/en-us/docs/namespace-endpoint-best-practices.html',
               },
+              {
+                title: 'Nacos System Configurations',
+                link: '/en-us/docs/system-configurations.html',
+              },
             ],
           },
           {
@@ -258,6 +262,10 @@ export default {
               {
                 title: 'namespace, endpoint 最佳实践',
                 link: '/zh-cn/docs/namespace-endpoint-best-practices.html',
+              },
+              {
+                title: 'Nacos系统参数介绍',
+                link: '/zh-cn/docs/system-configurations.html',
               },
             ],
           },
