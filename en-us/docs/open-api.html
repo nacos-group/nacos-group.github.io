@@ -424,6 +424,12 @@ Otherwise, an empty string is returned.
 <td style="text-align:left">Yes</td>
 <td style="text-align:left">Configuration content</td>
 </tr>
+<tr>
+<td style="text-align:left">type</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">Configuration type</td>
+</tr>
 </tbody>
 </table>
 <h3>Response parameters</h3>
@@ -483,7 +489,7 @@ Otherwise, an empty string is returned.
 <pre><code>http:serverIp:8848/nacos/v1/cs/configs
 
 http body：
-dataId=dataIdparam&amp;group=groupParam&amp;tenant=tenantParam&amp;content=contentParam
+dataId=dataIdparam&amp;group=groupParam&amp;tenant=tenantParam&amp;content=contentParam&amp;type=typeParam
 
 </code></pre>
 <h4>Response example</h4>

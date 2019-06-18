@@ -230,6 +230,7 @@ POST
 | dataId | string | 是 | 配置 ID |
 | group | string | 是 | 配置分组 |
 | content | string | 是 | 配置内容 |
+| type | String | 否 | 配置类型 |
 
 
 ### 返回参数
@@ -257,7 +258,7 @@ POST
 http:serverIp:8848/nacos/v1/cs/configs
 
 http body：
-dataId=dataIdparam&group=groupParam&tenant=tenantParam&content=contentParam
+dataId=dataIdparam&group=groupParam&tenant=tenantParam&content=contentParam&type=typeParam
 
 ```
 * 返回示例

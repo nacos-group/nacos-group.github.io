@@ -300,6 +300,7 @@ POST
 | dataId | String | Yes | Configuration ID |
 | group | String | Yes | Configuration group |
 | content | String | Yes | Configuration content |
+| type | String | No | Configuration type |
 
 ### Response parameters
 
@@ -326,7 +327,7 @@ POST
 http:serverIp:8848/nacos/v1/cs/configs
 
 http body：
-dataId=dataIdparam&group=groupParam&tenant=tenantParam&content=contentParam
+dataId=dataIdparam&group=groupParam&tenant=tenantParam&content=contentParam&type=typeParam
 
 ```
 
