@@ -65,6 +65,7 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |nacos.logging.path(-D)| 客户端日志的目录 | 目录路径 | 用户根目录 | >= 0.1.0 |
 |com.alibaba.nacos.config.log.level(-D)| Naming客户端的日志级别 | info,error,warn等 | info | >= 1.0.0 |
 |com.alibaba.nacos.naming.log.level(-D)| Config客户端的日志级别 | info,error,warn等 | info | >= 1.0.0 |
+|com.alibaba.nacos.client.naming.tls.enable(-D)| 是否打开HTTPS | true/false | false | >= 1.0.0 | 
 
 ### Naming客户端
 
