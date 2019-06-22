@@ -4,7 +4,7 @@ keywords: Nacos
 description: 快速开始
 ---
 
-#快速开始
+# 快速开始
 
 这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。
 
@@ -83,5 +83,3 @@ cd distribution/target/nacos-server-$version/nacos/bin
 `cmd shutdown.cmd`
 
 或者双击shutdown.cmd运行文件。
-
-
