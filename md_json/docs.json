@@ -169,6 +169,11 @@
       "meta": {}
     },
     {
+      "filename": "system-configurations.md",
+      "link": "/en-us/docs/system-configurations.html",
+      "meta": {}
+    },
+    {
       "filename": "use-nacos-with-dubbo.md",
       "link": "/en-us/docs/use-nacos-with-dubbo.html",
       "meta": {}
@@ -450,6 +455,11 @@
         "keywords": "Java,sdk",
         "description": "Java的sdk"
       }
+    },
+    {
+      "filename": "system-configurations.md",
+      "link": "/zh-cn/docs/system-configurations.html",
+      "meta": {}
     },
     {
       "filename": "use-nacos-with-dubbo.md",
