@@ -1,3 +1,10 @@
+---
+title: Quick start
+keywords: Nacos
+description: Quick start
+---
+
+# Quick start
 This topic is about how to set up and use Nacos.
 
 ## 1.Prerequisites
