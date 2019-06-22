@@ -1,33 +1,31 @@
-# NacosSync介绍
+# NacosSync introduce
 
-## 介绍
-* NacosSync是一个支持多种注册中心的同步组件,基于Spring boot开发框架,数据层采用Spring Data JPA,遵循了标准的JPA访问规范,支持多种数据源存储,默认使用Hibernate实现,更加方便的支持表的自动创建更新
-* 使用了高效的事件异步驱动模型, 支持多种自定义事件,使得同步任务处理的延时控制在3s,8C16G的单机能够支持6K的同步任务
-* NacosSync除了单机部署,也提供了高可用的集群部署模式,NacosSync是无状态设计,将任务等状态数据迁移到了数据库,使得集群扩展非常方便
-* 抽象出了Sync组件核心接口,通过注解对同步类型进行区分,使得开发者可以很容易的根据自己需求,去扩展不同注册中心,目前已支持的同步类型:
-  * Nacos数据同步到Nacos
-  * Zookeeper数据同步到Nacos
-  * Nacos数据同步到Zookeeper
-  * Eureka数据同步到Nacos
-  * Consul数据同步到Nacos
+## Introduce
+* NacosSync is a support for a variety of registry of synchronous components,based on the Spring boot development framework,Data layer uses the Spring Data JPA,follow the standard JPA access codes,support for multiple data storage,Default to Hibernate implementation, support table created automatically update more conveniently.
+* Using efficient event driven asynchronous model, support a variety of custom events, make the synchronization task processing time delay control in 3s, 8C16G stand-alone can support 6 k synchronization tasks.
+* NacosSync in addition to the standalone deployment, but also provides high availability cluster deployment patterns, NacosSync is stateless design, such as task status data migration to the database, the cluster expansion is very convenient.
+* Abstraction is out of Sync core component interface, through annotations to distinguish synchronous type, allowing developers to easily according to their own needs, different registry to expand, has now supports synchronous type:
+  * Nacos to Nacos data synchronization
+  * Zookeeper to Nacos data synchronization
+  * Nacos to the Zookeeper data synchronization 
+  * Eureka to Nacos data synchronization
+  * Consul to Nacos data synchronization
 <a name="d384971e"></a>
-## 系统模块架构:
-![image.png](https://img.alicdn.com/tfs/TB12VPaJVzqK1RjSZSgXXcpAVXa-886-752.png)<br />控制台<br />提供了精简Web操作控制台,支持国际化:<br />
+## System module architecture:
+![image.png](https://img.alicdn.com/tfs/TB12VPaJVzqK1RjSZSgXXcpAVXa-886-752.png)<br />The console<br />Provides concise Web console operation, support for internationalization.<br />
 <a name="b3408d06"></a>
-### 同步任务管理页面
+### Synchronization task management page
 ![](https://img.alicdn.com/tfs/TB1eSYyJ5LaK1RjSZFxXXamPFXa-2866-1064.png)
 <a name="091bc34b"></a>
-### 注册中心管理页面
+### Registry management page
 <a name="53fdb015"></a>
 ## ![image.png](https://img.alicdn.com/tfs/TB1e_rdJ7voK1RjSZFNXXcxMVXa-2876-1124.png)
 <a name="f6a633db"></a>
-## 使用场景:
-* 多个网络互通的Region之间服务共享,打破Region之间的服务调用限制
+## Usage scenarios:
+* Multiple network communication between the Region of Shared services, break the service call restriction of the Region.
 
 ![image.png](https://img.alicdn.com/tfs/TB1Mo6yJ4jaK1RjSZKzXXXVwXXa-1136-798.png)
 
-
-
-* 双向同步功能,支持Dubbo+Zookeeper服务平滑迁移到Dubbo+Naocs,享受Nacos更加优质的服务
+* Two-way synchronization function, support Dubbo + Zookeeper service smooth migration to Dubbo + Naocs, enjoy Nacos more high quality service.
 
 ![image.png](https://img.alicdn.com/tfs/TB1Dza8J9zqK1RjSZPxXXc4tVXa-1728-838.png)
