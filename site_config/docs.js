@@ -85,7 +85,7 @@ export default {
                   link: '/en-us/docs/nacos-spring.html',
               },
               {
-                title: 'namespace, endpoint 最佳实践',
+                title: 'namespace, endpoint best practices',
                 link: '/en-us/docs/namespace-endpoint-best-practices.html',
               },
               {
