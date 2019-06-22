@@ -48,14 +48,14 @@ Refer to [this blog](/blog/zh-cn/nacos.md)
 
 ### Add a new blog
 
-1. Add new .md file under blog/en-us or blog/zh-cn.
-2. Update site_config/blog.js, add a new entry to the blog in either en-us or zh-cn.
+1. Add new .md file under `blog/en-us` or `blog/zh-cn`.
+2. Update `site_config/blog.js`, add a new entry to the blog in either en-us or zh-cn.
 3. Run docsite start locally to verify the blog can be displayed correctly.
 4. Send the pull request contains the .md and blog.js only.
 
 ### Add a new article for developers
 
-1. Add new .md file under docs/en-us/developers or docs/zh-cn/developers, the file name should end up with _dev.md. Note that the suffix _dev is necessary.
-2. Update site_config/develop.js, add a new entry in either en-us or zh-cn.
+1. Add new .md file under `docs/en-us/developers` or `docs/zh-cn/developers`, the file name should end up with _dev.md. Note that the suffix _dev is necessary.
+2. Update `site_config/develop.js`, add a new entry in either en-us or zh-cn.
 3. Run docsite start locally to verify the article can be displayed correctly.
 4. Send the pull request contains the *_dev.md and develop.js only.
