@@ -206,7 +206,7 @@ export default {
             opened: true,
             children: [
               {
-                  title: '快速开始',
+                  title: 'Nacos',
                   link: '/zh-cn/docs/quick-start.html',
               },
               {
