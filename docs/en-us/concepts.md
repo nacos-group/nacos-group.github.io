@@ -1,8 +1,18 @@
+---
+title: Nacos Concepts
+keywords: Nacos,Concepts
+description: Nacos Concepts
+---
+
+# Nacos Concepts
+
+> NOTE: Nacos introduces some basic concepts and systematic understanding of these concepts can help you better understand and correct use Nacos products.
+
 ## Region
-<span data-type="color" style="color:rgb(51, 51, 51)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Physical data centers, unalterable after resources are created.</span></span>
+Physical data centers, unalterable after resources are created.
 
 ## Available Zone
-<span data-type="color" style="color:rgb(51, 51, 51)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Physical areas with independent power grids and networks in one region. The network latency for instances in the same zone is lower.</span></span>
+Physical areas with independent power grids and networks in one region. The network latency for instances in the same zone is lower.
 
 ## Endpoint
 The entry domain name of a service in each region.
@@ -63,5 +73,6 @@ Instance-level configuration. Weight is a floating-point number. The greater the
 
 ## Health Check
 Health check of the instances under a service in a specified manner to ensure that the instances can work properly. Instances are judged to be healthy or unhealthy according to the inspection results. Unhealthy instances are not returned to the client when initiating a resolution request to the service.
+
 ## Protect Threshold
 To prevent traffic from flowing to healthy instances because of some unhealthy instances, which causes traffic pressure, healthy instance collapse, and finally an avalanche, the health protection threshold should be defined as a floating point number between 0 and 1. When the proportion of the domain name healthy instance to the total instance is smaller than this value, the instance is returned to the client regardless of the health of the instance. Although this can result in a loss of some of the traffic, we ensure that the remaining healthy instances can work normally.
