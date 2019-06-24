@@ -1,7 +1,7 @@
 ---
 title: Nacos Spring 快速开始
-keywords: Nacos,Spring
-description: Nacos Spring 快速开始
+keywords: Nacos,Spring,快速开始
+description: 本文主要面向 Spring 的使用者，通过两个示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现。
 ---
 
 # Nacos Spring 快速开始
@@ -155,4 +155,3 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=1
 * [Nacos Spring](https://github.com/nacos-group/nacos-spring-project)
 * [Nacos Spring Boot](https://github.com/nacos-group/nacos-spring-boot-project)
 * [Spring Cloud Alibaba](https://github.com/spring-cloud-incubator/spring-cloud-alibaba)
-

@@ -1,3 +1,9 @@
+---
+title: Quick Start for Nacos Spring Projects
+keywords: Nacos,Spring,quick start
+description: This quick start introduces how to enable Nacos configuration management and service discovery features for your Spring project.
+---
+
 # Quick Start for Nacos Spring Projects
 
 This quick start introduces how to enable Nacos configuration management and service discovery features for your Spring project.
@@ -154,4 +160,3 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=1
 * [Nacos Spring](https://github.com/nacos-group/nacos-spring-project)
 * [Nacos Spring Boot](https://github.com/nacos-group/nacos-spring-boot-project)
 * [Spring Cloud Alibaba](https://github.com/spring-cloud-incubator/spring-cloud-alibaba)
-

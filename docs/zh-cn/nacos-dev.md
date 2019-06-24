@@ -1,8 +1,10 @@
 ---
 title: 开发者
 keywords: nacos,开发者,committer
-description: nacos开发者页
+description: Nacos 开发者页
 ---
+
+# 开发者
 
 ## Nacos开发者角色
 
@@ -31,12 +33,9 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 
 * 提交过PR并被合并；
 
-
 ### Nacos开发者权利及义务
 
 ![image.png](https://cdn.nlark.com/yuque/0/2019/png/333810/1560151750546-03c55f48-c9c5-41cc-8634-88d62c98c5e4.png#align=left&display=inline&height=524&name=image.png&originHeight=704&originWidth=1002&size=181619&status=done&width=746)
-
-
 
 ## 开发团队
 
@@ -65,11 +64,9 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 |![TsingLiang](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560412009587-d41b4256-3882-4ac5-ab26-b5eeed8f09c0.jpeg)  | [TsingLiang](https://github.com/TsingLiang)     | 卿亮   | 阿里巴巴 | Committer | qingliang.ql@alibaba-inc.com  |
 
 
-
-
 ### 活跃贡献者
 
 |头像                                                                                                                   | Github 账号                                      | 名字       | 组织             |角色        |邮箱                                 |
 |----------------------------------------------------------------------------------------------------------------------| ------------------------------------------------|------------| ----------------| -----------|------------------------------------|
 |![chuntaojun](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560410616261-700a37a2-853a-4021-a965-c30d8d194013.jpeg) | [chuntaojun](https://github.com/chuntaojun)     | 廖春涛      |  杭州电子科技大学  | Contributor| liaochuntao@live.com               |
-|![caojiele](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560411820285-bd5b9ff6-5f94-4cc3-9d9b-cae59ce24805.jpeg)   | [caojiele](https://github.com/caojiele)         | 曹杰乐      |                 | Contributor| caojiele1225@126.com               |
+|![caojiele](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561301766676-89a49cd0-ad67-4b3b-a6f2-895f93804b69.jpeg)   | [caojiele](https://github.com/caojiele)         | 曹杰乐      |                 | Contributor| caojiele1225@126.com               |

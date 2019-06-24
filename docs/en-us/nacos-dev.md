@@ -1,9 +1,10 @@
 ---
-title: developers
+title: Developers
 keywords: nacos,developers,committer,pmc,nacos team
-description: nacos developers page
+description: Nacos developers page
 ---
 
+# Developers
 
 ## Nacos Developer Roles
 
@@ -69,4 +70,4 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | Image                                                                                                                | Github ID                                 | Name        | Organization                 | Roles      |Mail                 |
 |----------------------------------------------------------------------------------------------------------------------|-------------------------------------------|-------------|------------------------------|------------|---------------------|
 |![chuntaojun](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560410616261-700a37a2-853a-4021-a965-c30d8d194013.jpeg) |[chuntaojun](https://github.com/chuntaojun)| Chuntao Liao|  Hangzhou Dianzi University  |Contributor |liaochuntao@live.com |
-|![caojiele](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560411820285-bd5b9ff6-5f94-4cc3-9d9b-cae59ce24805.jpeg)   |[caojiele](https://github.com/caojiele)    | Jiele Cao   |                              |Contributor |caojiele1225@126.com |
+|![caojiele](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561301766676-89a49cd0-ad67-4b3b-a6f2-895f93804b69.jpeg)   |[caojiele](https://github.com/caojiele)    | Jiele Cao   |                              |Contributor |caojiele1225@126.com |

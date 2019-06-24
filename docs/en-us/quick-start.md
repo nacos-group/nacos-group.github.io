@@ -1,6 +1,15 @@
+---
+title: Quick Start for Nacos
+keywords: Nacos,Quick start
+description: This topic is about how to set up and use Nacos.
+---
+
+# Quick Start for Nacos
+
 This topic is about how to set up and use Nacos.
 
 ## 1.Prerequisites
+
 Before you begin, install the following:
 
 1. 64bit OS: Linux/Unix/Mac/Windows supported, Linux/Unix/Mac recommended.
@@ -8,6 +17,7 @@ Before you begin, install the following:
 3. Maven 3.2.x+: [downloads](https://maven.apache.org/download.cgi), [settings](https://maven.apache.org/settings.html).
 
 ## 2.Download & Build from Release
+
 There are two ways to get Nacos. 
 
 ### 1)Download source code from Github
@@ -31,9 +41,10 @@ cd nacos/distribution/target/nacos-server-0.8.0/nacos/bin
   cd nacos/bin
 ```  
 
-
 ## 3.Start Server
+
 ### Linux/Unix/Mac
+
 Run the following command to sart(standalone means non-cluster mode):
  
 `sh startup.sh -m standalone`
@@ -47,6 +58,7 @@ Run the following command to start:
 Or double-click the startup.cmd run file.
 
 ## 4.Service & Configuration Management
+
 ### Service registration
 
 `curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'`
@@ -63,8 +75,8 @@ Or double-click the startup.cmd run file.
 
 `curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test"    `
 
-
 ## 5.Shutdown Servers
+
 ### Linux/Unix/Mac
 
 `sh shutdown.sh`
@@ -72,3 +84,5 @@ Or double-click the startup.cmd run file.
 ### Windows
 
 `cmd shutdown.cmd`
+
+Or click the `shutdown.cmd` file operation.

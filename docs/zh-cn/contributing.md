@@ -1,29 +1,32 @@
 ---
 title: 如何贡献
 keywords: 贡献,源码
-description: 如何贡献
+description: 我们非常欢迎您的贡献和加入，无论是微不足道的清理或大的新功能。
 ---
 
-## 如何贡献
+# 如何贡献
 
 我们非常欢迎您的贡献和加入，无论是微不足道的清理或大的新功能。我们希望为每个编程语言提供高质量、有良好文档的代码。
 
 这也不是代码是唯一有贡献项目的方式。我们非常重视文档、与其他项目的集成，并欣然接受这些方面的改进。
 
-联系
-gitter https://gitter.im/alibaba/nacos
+## 联系我们
 
+#### Nacos Gitter-[https://gitter.im/alibaba/nacos](https://gitter.im/alibaba/nacos)
+#### Nacos 微博-[https://weibo.com/u/6574374908](https://weibo.com/u/6574374908)
+#### Nacos segmentfault-[https://segmentfault.com/t/nacos](https://segmentfault.com/t/nacos)
 
 #### 邮件列表
 
-邮件列表是讨论与Dubbo相关的几乎所有内容的推荐方式。有关如何订阅的详细文档，请参阅此[指南](https://github.com/apache/incubator-dubbo/wiki/Mailing-list-subscription-guide)。
+邮件列表建议讨论任何与Nacos有关的事情。具体请看[参考手册](https://github.com/apache/incubator-dubbo/wiki/Mailing-list-subscription-guide)描述如何订阅我们的邮件列表。
 
-- <a href="mailto:dev-nacos%2Bsubscribe@googlegroups.com">dev-nacos@googlegroups.com</a>：开发邮件列表，如果您在使用或开发Nacos时遇到任何问题，可以在此处提问。
-- <a href="mailto:commits-nacos%2Bsubscribe@googlegroups.com">commits-nacos@googlegroups.com</a>：所有提交都将发送到此邮件列表。如果您对Nacos的开发感兴趣，可以订阅它。
-- <a href="mailto:users-nacos%2Bsubscribe@googlegroups.com">users-nacos@googlegroups.com</a>：所有Github [issues](https://github.com/alibaba/nacos/issues)更新和[pull request]（https://github.com/alibaba/nacos/pulls)更新将发送到此邮件列表。
+* [dev-nacos@googlegroups.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1): 开发邮件列表。如果你在使用或开发Nacos中遇到任何问题,可以在这里提问题。
+* [commits-nacos@googlegroups.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1): 所有提交将被发送到这个邮件列表。如果你有兴趣Nacos的发展，你可以订阅它。
+* [users-nacos@googlegroups.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1): 在Github中[提问题](https://github.com/alibaba/nacos/issues)、更新和[提交需求](https://github.com/alibaba/nacos/pulls)将被发送到这个邮件列表。
+* [nacos\_dev@linux.alibaba.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1).
 
-- 有任何问题可以联系<a href="mailto:nacos_dev@linux.alibaba.com">nacos_dev@linux.alibaba.com</a>。
-#### 贡献流程
+## 贡献流程
+
 这是贡献者的工作流程的大致轮廓：
 
 fork当前存储github库。
@@ -52,8 +55,6 @@ git push origin your_awesome_patch
 
 #### 我们的工作是及时跟进补丁。如果我们没有及时跟进，请无情的催促我们。
 
-
-
 ## 成为贡献者
 
 We are always interested in adding new contributors. What we look for are series of contributions, good taste and ongoing interest in the project. If you are interested in becoming a committer, please let one of the existing committers know and they can help you walk through the process.
@@ -68,14 +69,15 @@ Nowadays,we have several important contribution points:
 #### Nacos Console
 #### Nacos SDK(C++\.Net\Php\Python\Go\Node.js)
 
-##### 前提
+#### 前提
+
 如果你想贡献以上的项，请你必须遵守我们的一些先决条件：
 
-###### 可读性，一个API必须具有JavaDoc，一些非常重要的方法也必须有JavaDoc。
+##### 可读性，一个API必须具有JavaDoc，一些非常重要的方法也必须有JavaDoc。
 
-###### 可测性，关于测试过程的单元测试覆盖率（80%）
+##### 可测性，关于测试过程的单元测试覆盖率（80%）
 
-###### 可维护性，可满足我们的[PMD spec](style/codeStyle.xml)，以及至少3个月的更新频率
+##### 可维护性，可满足我们的[PMD spec](style/codeStyle.xml)，以及至少3个月的更新频率
 
-###### 可部署性，我们可以鼓励您部署到[maven repository](http://search.maven.org/)
+##### 可部署性，我们可以鼓励您部署到[maven repository](http://search.maven.org/)
  

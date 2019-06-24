@@ -206,7 +206,7 @@ export default {
             opened: true,
             children: [
               {
-                  title: '快速开始',
+                  title: 'Nacos',
                   link: '/zh-cn/docs/quick-start.html',
               },
               {
@@ -293,7 +293,7 @@ export default {
                 link: '/zh-cn/docs/monitor-guide.html',
               },
               {
-                  title: '配置模块压测模型',
+                  title: '服务配置模块压测报告',
                   link: '/en-us/docs/nacos-config-benchmark.html',
               },
               {

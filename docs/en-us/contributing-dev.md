@@ -1,3 +1,9 @@
+---
+title: Contributing to Nacos
+keywords: Nacos,contribute
+description: Welcome to Nacos! This document is a guideline about how to contribute to Nacos.
+---
+
 # Contributing to Nacos
 
 Welcome to Nacos! This document is a guideline about how to contribute to Nacos.
