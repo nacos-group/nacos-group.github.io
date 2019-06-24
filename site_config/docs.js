@@ -22,7 +22,7 @@ export default {
               },
               {
                 title: 'FAQ',
-                link: '/en-us/docs/FAQ.html',
+                link: '/en-us/docs/faq.html',
               },
             ],
           },
@@ -78,15 +78,19 @@ export default {
               },
               {
                 title: 'Open-API',
-                link: '/en-us/docs/open-API.html',
+                link: '/en-us/docs/open-api.html',
               },
               {
                   title: 'Nacos Spring',
                   link: '/en-us/docs/nacos-spring.html',
               },
               {
-                title: 'namespace, endpoint 最佳实践',
+                title: 'namespace, endpoint best practices',
                 link: '/en-us/docs/namespace-endpoint-best-practices.html',
+              },
+              {
+                title: 'Nacos System Configurations',
+                link: '/en-us/docs/system-configurations.html',
               },
             ],
           },
@@ -103,7 +107,7 @@ export default {
               },
               {
                 title: 'Management OpenAPI',
-                link: '/en-us/docs/managementAPI.html',
+                link: '/en-us/docs/management-api.html',
               },
               {
                 title: 'Admin Console Guide',
@@ -193,7 +197,7 @@ export default {
               },
               {
                 title: 'FAQ',
-                link: '/zh-cn/docs/FAQ.html',
+                link: '/zh-cn/docs/faq.html',
               },
             ],
           },
@@ -202,7 +206,7 @@ export default {
             opened: true,
             children: [
               {
-                  title: '快速开始',
+                  title: 'Nacos',
                   link: '/zh-cn/docs/quick-start.html',
               },
               {
@@ -249,7 +253,7 @@ export default {
               },
               {
                   title: 'Open-API指南',
-                  link: '/zh-cn/docs/open-API.html',
+                  link: '/zh-cn/docs/open-api.html',
               },
               {
                   title: 'Nacos Spring',
@@ -258,6 +262,10 @@ export default {
               {
                 title: 'namespace, endpoint 最佳实践',
                 link: '/zh-cn/docs/namespace-endpoint-best-practices.html',
+              },
+              {
+                title: 'Nacos系统参数介绍',
+                link: '/zh-cn/docs/system-configurations.html',
               },
             ],
           },
@@ -274,7 +282,7 @@ export default {
               },
               {
                 title: '运维API',
-                link: '/zh-cn/docs/managementAPI.html',
+                link: '/zh-cn/docs/management-api.html',
               },
               {
                 title: '控制台手册',
@@ -285,7 +293,7 @@ export default {
                 link: '/zh-cn/docs/monitor-guide.html',
               },
               {
-                  title: '配置模块压测模型',
+                  title: '服务配置模块压测报告',
                   link: '/en-us/docs/nacos-config-benchmark.html',
               },
               {

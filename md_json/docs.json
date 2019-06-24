@@ -1,16 +1,6 @@
 {
   "en-us": [
     {
-      "filename": "CLI-guide.md",
-      "link": "/en-us/docs/CLI-guide.html",
-      "meta": {}
-    },
-    {
-      "filename": "FAQ.md",
-      "link": "/en-us/docs/FAQ.html",
-      "meta": {}
-    },
-    {
       "filename": "activity.md",
       "link": "/en-us/docs/activity.html",
       "meta": {}
@@ -18,6 +8,11 @@
     {
       "filename": "architecture.md",
       "link": "/en-us/docs/architecture.html",
+      "meta": {}
+    },
+    {
+      "filename": "cli-guide.md",
+      "link": "/en-us/docs/cli-guide.html",
       "meta": {}
     },
     {
@@ -56,13 +51,18 @@
       "meta": {}
     },
     {
+      "filename": "faq.md",
+      "link": "/en-us/docs/faq.html",
+      "meta": {}
+    },
+    {
       "filename": "how-to-reporting-bugs.md",
       "link": "/en-us/docs/how-to-reporting-bugs.html",
       "meta": {}
     },
     {
-      "filename": "managementAPI.md",
-      "link": "/en-us/docs/managementAPI.html",
+      "filename": "management-api.md",
+      "link": "/en-us/docs/management-api.html",
       "meta": {}
     },
     {
@@ -114,8 +114,8 @@
       "meta": {}
     },
     {
-      "filename": "open-API.md",
-      "link": "/en-us/docs/open-API.html",
+      "filename": "open-api.md",
+      "link": "/en-us/docs/open-api.html",
       "meta": {}
     },
     {
@@ -169,6 +169,11 @@
       "meta": {}
     },
     {
+      "filename": "system-configurations.md",
+      "link": "/en-us/docs/system-configurations.html",
+      "meta": {}
+    },
+    {
       "filename": "use-nacos-with-dubbo.md",
       "link": "/en-us/docs/use-nacos-with-dubbo.html",
       "meta": {}
@@ -196,16 +201,6 @@
   ],
   "zh-cn": [
     {
-      "filename": "CLI-guide.md",
-      "link": "/zh-cn/docs/CLI-guide.html",
-      "meta": {}
-    },
-    {
-      "filename": "FAQ.md",
-      "link": "/zh-cn/docs/FAQ.html",
-      "meta": {}
-    },
-    {
       "filename": "activity.md",
       "link": "/zh-cn/docs/activity.html",
       "meta": {
@@ -222,6 +217,11 @@
         "keywords": "Nacos,架构",
         "description": "Nacos 架构"
       }
+    },
+    {
+      "filename": "cli-guide.md",
+      "link": "/zh-cn/docs/cli-guide.html",
+      "meta": {}
     },
     {
       "filename": "cluster-mode-quick-start.md",
@@ -283,6 +283,11 @@
       }
     },
     {
+      "filename": "faq.md",
+      "link": "/zh-cn/docs/faq.html",
+      "meta": {}
+    },
+    {
       "filename": "how-to-reporting-bugs.md",
       "link": "/zh-cn/docs/how-to-reporting-bugs.html",
       "meta": {
@@ -292,8 +297,8 @@
       }
     },
     {
-      "filename": "managementAPI.md",
-      "link": "/zh-cn/docs/managementAPI.html",
+      "filename": "management-api.md",
+      "link": "/zh-cn/docs/management-api.html",
       "meta": {}
     },
     {
@@ -357,8 +362,8 @@
       "meta": {}
     },
     {
-      "filename": "open-API.md",
-      "link": "/zh-cn/docs/open-API.html",
+      "filename": "open-api.md",
+      "link": "/zh-cn/docs/open-api.html",
       "meta": {
         "title": "Open API 指南",
         "keywords": "Open API",
@@ -438,6 +443,11 @@
       }
     },
     {
+      "filename": "sdk-properties.md",
+      "link": "/zh-cn/docs/sdk-properties.html",
+      "meta": {}
+    },
+    {
       "filename": "sdk.md",
       "link": "/zh-cn/docs/sdk.html",
       "meta": {
@@ -445,6 +455,11 @@
         "keywords": "Java,sdk",
         "description": "Java的sdk"
       }
+    },
+    {
+      "filename": "system-configurations.md",
+      "link": "/zh-cn/docs/system-configurations.html",
+      "meta": {}
     },
     {
       "filename": "use-nacos-with-dubbo.md",

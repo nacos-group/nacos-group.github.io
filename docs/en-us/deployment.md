@@ -1,20 +1,29 @@
-Nacos supports three types of deployment modes:
+---
+title: Nacos supports three types of deployment modes
+keywords: Nacos,deployment modes
+description: Nacos supports three types of deployment modes
+---
+
+# Nacos supports three types of deployment modes
 
 * Standalone Mode - used in DEV or TEST environment.
 * Cluster Mode - used in production environment to ensure high-availability.
 * Multi-Cluster Mode - in complicated production mode, you may want to deploy multi-cluster mode to support different business units.
 
-
 ## Running Nacos in Standalone Mode
+
 ### Linux/Unix/Mac
+
 * Standalone means it is non-cluster Mode. * 
 sh startup.sh standalone
 
 ### Windows
+
 * standalone means it is non-cluster Mode. * 
 cmd startup.cmd standalone
 
 ### Running Nacos with mysql in Standalone Mode
+
 #### Initialize MySQL database
 
 [sql statement source file](https://github.com/alibaba/nacos/blob/master/distribution/conf/nacos-mysql.sql)

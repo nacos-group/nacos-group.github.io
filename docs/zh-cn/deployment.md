@@ -10,9 +10,10 @@ description: Nacos支持三种部署模式
 * 集群模式 - 用于生产环境，确保高可用。
 * 多集群模式 - 用于多数据中心场景。
 
-
 ## 单机模式下运行Nacos
+
 ### Linux/Unix/Mac
+
 * Standalone means it is non-cluster Mode. * 
 sh startup.sh -m standalone
 
@@ -22,6 +23,7 @@ cmd startup.cmd
 或者双击 startup.cmd 文件
 
 ### 单机模式支持mysql
+
 在0.7版本之前，在单机模式时nacos使用嵌入式数据库实现数据的存储，不方便观察数据存储的基本情况。0.7版本增加了支持mysql数据源能力，具体的操作步骤：
 
 - 1.安装数据库，版本要求：5.6.5+
@@ -40,6 +42,7 @@ db.password=youdontknow
 再以单机模式启动nacos，nacos所有写嵌入式数据库的数据都写到了mysql
 
 ## 集群模式下运行Nacos
+
 [集群模式下运行Nacos](https://nacos.io/zh-cn/docs/cluster-mode-quick-start.html)
 
 ## 多集群模式
@@ -75,4 +78,3 @@ nacos.inetutils.ignored-interfaces[1]=eth1
 nacos.inetutils.preferred-networks[0]=30.5.124.
 nacos.inetutils.preferred-networks[0]=30.5.124.(25[0-5]|2[0-4]\\d|((1d{2})|([1-9]?\\d))),30.5.124.(25[0-5]|2[0-4]\\d|((1d{2})|([1-9]?\\d)))
 ```
-
