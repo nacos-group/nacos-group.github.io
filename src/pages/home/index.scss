@@ -5,11 +5,11 @@ $animationDuration: 2s;
 
 @keyframes slashStar {
   0% {
-      opacity: 1;
+    opacity: 1;
   }
 
   100% {
-      opacity: 0;
+    opacity: 0;
   }
 }
 
@@ -73,8 +73,45 @@ $animationDuration: 2s;
     }
     .button-area {
       text-align: center;
-      .button:first-child {
-        margin-right: 20px;
+      margin-top: 40px;
+      .button {
+        margin-right: 12px;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+    .github-buttons {
+      margin-top: 20px;
+      text-align: center;
+      a {
+        margin-right: 12px;
+        &:last-child {
+          margin-right: 0;
+        }
+        div {
+          border-radius: 2px;
+          display: inline-block;
+          height: 24px;
+          line-height: 24px;
+          font-size: 12px;
+          padding: 0 8px;
+          color: #fff;
+          background: rgba(255, 255, 255, 0.2);
+          img {
+            width: 16px;
+            height: 16px;
+            vertical-align: middle;
+            margin-top: -6px;
+          }
+          .count {
+            font-family: TXD_D_Medium;
+            font-size: 16px;
+            padding-left: 4px;
+            display: inline-block;
+            height: 100%;
+          }
+        }
       }
     }
     .version-note {
