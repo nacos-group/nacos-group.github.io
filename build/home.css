@@ -975,9 +975,39 @@ h1, h2, h3, h4, h5, h6 {
     margin: 12px auto 30px;
     text-align: center; }
   .home-page .top-section .button-area {
+    text-align: center;
+    margin-top: 40px; }
+    .home-page .top-section .button-area .button {
+      margin-right: 12px; }
+      .home-page .top-section .button-area .button:last-child {
+        margin-right: 0; }
+  .home-page .top-section .github-buttons {
+    margin-top: 20px;
     text-align: center; }
-    .home-page .top-section .button-area .button:first-child {
-      margin-right: 20px; }
+    .home-page .top-section .github-buttons a {
+      margin-right: 12px; }
+      .home-page .top-section .github-buttons a:last-child {
+        margin-right: 0; }
+      .home-page .top-section .github-buttons a div {
+        border-radius: 2px;
+        display: inline-block;
+        height: 24px;
+        line-height: 24px;
+        font-size: 12px;
+        padding: 0 8px;
+        color: #fff;
+        background: rgba(255, 255, 255, 0.2); }
+        .home-page .top-section .github-buttons a div img {
+          width: 16px;
+          height: 16px;
+          vertical-align: middle;
+          margin-top: -6px; }
+        .home-page .top-section .github-buttons a div .count {
+          font-family: TXD_D_Medium;
+          font-size: 16px;
+          padding-left: 4px;
+          display: inline-block;
+          height: 100%; }
   .home-page .top-section .version-note {
     text-align: center;
     margin: 22px 0 10px; }

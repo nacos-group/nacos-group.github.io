@@ -1,4 +1,10 @@
-## How to Contribute
+---
+title: How to Contribute
+keywords: contribute,code
+description: We are always very happy to have contributions, whether for trivial cleanups or big new features.
+---
+
+# How to Contribute
 
 Nacos is released under the non-restrictive Apache 2.0 license, and follows a very standard Github development process, using Github tracker for issues and merging pull requests into master. If you want to contribute even something trivial, please do not hesitate, but follow the guidelines below.
 
@@ -7,21 +13,20 @@ We want to have high quality, well documented codes for each programming languag
 
 Nor is code the only way to contribute to the project. We strongly value documentation, integration with other project, and gladly accept improvements for these aspects.
 
-### Contact
+## Contact us
 
-#### Gitter
-https://gitter.im/alibaba/nacos
-
+##### Nacos Gitter- [https://gitter.im/alibaba/nacos](https://gitter.im/alibaba/nacos)
+##### Nacos weibo- [https://weibo.com/u/6574374908](https://weibo.com/u/6574374908)
+##### Nacos segmentfault- [https://segmentfault.com/t/nacos](https://segmentfault.com/t/nacos)
 
 #### Mailing list
 
-Mailing list is recommended for discussing almost anything related to Nacos. Please refer to this [guide](https://github.com/apache/incubator-dubbo/wiki/Mailing-list-subscription-guide) for detailed documentation on how to subscribe to mailing lists.
+Mailing list is recommended for discussing almost anything related to Nacos. Please refer to this?[guide](https://github.com/apache/incubator-dubbo/wiki/Mailing-list-subscription-guide)?for detailed documentation on how to subscribe to our mailing lists.
 
-- <a href="mailto:dev-nacos%2Bsubcribe@googlegroups.com">dev-nacos@googlegroups.com</a>: The develop mailing list. You can ask questions here if you encounter any problem when using or developing Nacos.
-- <a href="mailto:commits-nacos%2Bsubcribe@googlegroups.com">commits-nacos@googlegroups.com</a>: All commits will be sent to this mailing list. You can subscribe to it if you are interested in Nacos's development.
-- <a href="mailto:users-nacos%2Bsubcribe@googlegroups.com">users-nacos@googlegroups.com</a>: All  Github [issues](https://github.com/alibaba/nacos/issues) updates and [pull request](https://github.com/alibaba/nacos/pulls) updates will be sent to this mailing list.
-
-- If you have any questions, please contact <a href="mailto:nacos_dev@linux.alibaba.com">nacos_dev@linux.alibaba.com</a>.
+* [dev-nacos@googlegroups.com](mailto:dev-nacos%2Bsubscribe@googlegroups.com): The develop mailing list. You can ask questions here if you encounter any problem when using or developing Nacos.
+* [commits-nacos@googlegroups.com](mailto:commits-nacos%2Bsubscribe@googlegroups.com): All commits will be sent to this mailing list. You can subscribe to it if you are interested in Nacos' development.
+* [users-nacos@googlegroups.com](mailto:users-nacos%2Bsubscribe@googlegroups.com): All Github?[issue](https://github.com/alibaba/nacos/issues)?updates and?[pull request](https://github.com/alibaba/nacos/pulls)?updates will be sent to this mailing list.
+* [nacos_dev@linux.alibaba.com](mailto:nacos_dev@linux.alibaba.com).
 
 ## Contribution flow
 
@@ -63,10 +68,14 @@ Nowadays, we have several important contribution points:
 #### Nacos Console
 #### Nacos SDK(C++\.Net\PHP\Python\Go\Node.js)
 
-##### Prerequisites
-If you want to contribute to the above listing points, you must abide by the prerequisites listed below.
+#### Prerequisites
 
-###### Readability - APIs as well as important methods must have Javadoc.
-###### Testability - Ensure over 80% unit test coverage for main processes.
-###### Maintainability - Comply with our [PMD spec](style/codeStyle.xml), with an update frequency at least once every 3 months.
-###### Deployability - We encourage you to deploy into [maven repository](http://search.maven.org/).
+If you want to contribute to the above listing points, you must abide by the prerequisites listed below:
+
+##### Readability - APIs as well as important methods must have Javadoc.
+
+##### Testability - Ensure over 80% unit test coverage for main processes.
+
+##### Maintainability - Comply with our [PMD spec](style/codeStyle.xml), with an update frequency at least once every 3 months.
+
+##### Deployability - We encourage you to deploy into [maven repository](http://search.maven.org/).

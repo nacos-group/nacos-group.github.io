@@ -1,29 +1,29 @@
 ---
-title: Nacos服务发现性能测试报告
-keywords: Nacos,服务,发现,性能
-description: Nacos服务发现性能测试报告
+title: Nacos service discovery performance test report
+keywords: Nacos,service,discovery,performance
+description: Nacos service discovery performance test report
 ---
 
-# Nacos服务发现性能测试报告
+# Nacos service discovery performance test report
 
-## 测试目的
-主要了解Nacos的服务发现性能负载和容量，协助我们更好的管理Nacos性能质量，帮助用户更快的运用评估Nacos系统负荷。
+## Test purposes
+Main understanding Nacos service discovery performance load and capacity, to help us better manage Nacos performance quality, help users use of assessment Nacos system load faster.
 
-## 测试工具
-我们使用自研的PAS性能评估服务平台进行压测，其原理是基于利用JMeter引擎，使用PAS自动生成的JMeter脚本，进行智能压测。
+## Testing tools
+We use the research of PAS performance evaluation service platform for pressure measurement, the principle is based on the use of JMeter engine, the use of PAS to automatically generate the JMeter scripts, intelligent pressure measurement.
 
 ![IMAGE](https://img.alicdn.com/tfs/TB1xCfDDpzqK1RjSZFvXXcB7VXa-692-297.png)
 
-## 测试环境
-### 1.环境
+## Test environment
+### 1.environment
 
-指标|参数
+indicators|parameter
 ---|---
-机器|CPU 16核，内存32G
-集群规模|3节点
-Nacos版本|1.0.0
+machine|CPU 16 nuclear, 32G memory
+cluster size|3 nodes
+Nacos version|1.0.0
 
-### 2.设置启动参数
+### 2.Set the launch parameters
 ```
 /opt/taobao/java/bin/java	 -server
 -Xms20g
@@ -45,52 +45,52 @@ ns/cmdb:/home/admin/nacos/plugins/mysql	 -Xloggc:/home/admin/nacos/logs/nacos_gc
 s/conf/	--logging.config=/home/admin/nacos/conf/nacos-logback.xml	nacos.nacos
 ```
 
-## 测试场景
-以下测试场景都是服务发现重要接口：
-* 验证Nacos服务发现注册实例的能力
-* 验证Nacos服务发现查询实例的能力
-* 验证Nacos服务发现注销实例的能力
+## Test scenarios
+The following test scenarios are service discovery interface:
+* Verify Nacos service discovery that the ability to register instance
+* Verify Nacos service discovery that the ability to query instance
+* Verify Nacos service discovery that the ability to delete instance
 
-## 测试数据
-### 1. 注册实例
-Nacos服务发现注册实例接口的性能，调用HTTP接口测试。
-实测3节点集群不同压力下的性能表现：
+## Test data
+### 1. register instance
+Nacos service discovery registry instance the performance of the interface, call the HTTP interface test.
+The measured 3 nodes cluster performance under different pressure:
 
-机器*并发数|服务数|注册实例数|TPS|RT(ms)|最小RT(ms)|最大RT(ms)
+machine*concurrency num|service num|register instance num|TPS|RT(ms)|MIN RT(ms)|MAX RT(ms)
 :---:|:---:|:---:|:---:|:---:|:---:|:---:
 1*100|80301|84965|1793.41|54.63|0.8|1200.86
 3*50|529321|819226|12574.8|15.8|0.45|3499.59
 4*50|609726|836870|13000|18.54|0.46|3038.48
 4*100|777262|927169|13257|35.65|0.48|3231.2
 
-### 2. 查询实例
-Nacos服务发现查询实例接口的性能，调用HTTP接口测试。
-实测3节点集群不同压力下的性能表现：
+### 2. query instance
+Nacos service discovery query instance of the performance of the interface, call the HTTP interface test.
+The measured 3 nodes cluster performance under different pressure:
 
-机器*并发数|服务数|注册实例数|TPS|RT(ms)|最小RT(ms)|最大RT(ms)
+machine*concurrency num|service num|register instance num|TPS|RT(ms)|MIN RT(ms)|MAX RT(ms)
 :---:|:---:|:---:|:---:|:---:|:---:|:---:
 1*100|80301|84965|3092.16|30.86|0.81|509.4
 3*50|529321|819226|12574.8|15.8|0.45|3499.59
 4*50|609726|836870|15603|16.41|0.42|3042.17
 4*100|777262|927169|13604|34.19|0.43|3434.1
 
-### 3. 注销实例
-Nacos服务发现注销实例接口的性能，调用HTTP接口测试。
-实测3节点集群不同压力下的性能表现：
+### 3. delete instance
+Nacos service discovery delete instance is given to the performance of the interface, call the HTTP interface test.
+The measured 3 nodes cluster performance under different pressure:
 
-机器*并发数|服务数|注册实例数|TPS|RT(ms)|最小RT(ms)|最大RT(ms)
+machine*concurrency num|service num|register instance num|TPS|RT(ms)|MIN RT(ms)|MAX RT(ms)
 :---:|:---:|:---:|:---:|:---:|:---:|:---:
 1*100|80301|84965|1118.95|14.08|0.7|597.43
 3*50|529321|819226|14508.53|11.23|0.4|3274.49
 4*50|609726|836870|15476.93|16.02|0.38|3106.23
 4*100|777262|927169|11940.9|40.33|0.42|51052.46
 
-## 测试结论
-Nacos服务发现性能测试都是针对重点功能，通过对3节点规模集群进行压测，可以看到接口性能负载和容量。
-1. 压测容量服务数可达60W，实例注册数达110W，集群运行持续稳定，达到预期;(注: 由于本次注册实例使用的是HTTP接口, 并没有将心跳上报的TPS包括在内, 如果要支持百万实例的心跳上报, 需要集群水平扩容, 并调优tomcat和内核参数)
-2. 注册/查询实例TPS达到 13000 以上，接口达到预期；
+## Test results
+Nacos service discovery performance test is aimed at a key function, through the pressure test was carried out on the 3 nodes cluster, can see the interface performance load and capacity.
+1. Service for up to 60w pressure measuring capacity, instance registered number up to 110w, cluster running steadily, the desired;(note: due to the registered instance using the HTTP interface, did not report to the heart of the TPS is included, if you want to support millions of instances of heartbeat report, need expansion and cluster level, and tuning tomcat and kernel parameters)
+2. Register the TPS/query instance above 13000, interface to achieve expected;
 
-本次只测试临时实例注册/查询/注销，未涉及持久实例(后续输出)；
+The tests only temporary instance/query/cancellation of registration, no persistent instance (subsequent);
 
-本测试供给大家作为参考，如有不足或偏差，请指正!
-如果对性能有其他需求，可以给我们提issue。
+This test provides you as reference, if there are any deficiency or deviation, please correct me!
+If you have any other requirements on the performance, can you give us the issue.

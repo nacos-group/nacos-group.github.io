@@ -1,4 +1,13 @@
-## Contact
+---
+title: Community
+keywords: community,contact
+description: Community
+---
+
+# Community
+
+## Contact us
+
 ### Nacos Gitter-[https://gitter.im/alibaba/nacos](https://gitter.im/alibaba/nacos)
 ### Nacos weibo-[https://weibo.com/u/6574374908](https://weibo.com/u/6574374908)
 ### Nacos segmentfault-[https://segmentfault.com/t/nacos](https://segmentfault.com/t/nacos)
@@ -11,5 +20,3 @@ Mailing list is recommended for discussing almost anything related to Nacos. Ple
 * [commits-nacos@googlegroups.com](mailto:commits-nacos%2Bsubscribe@googlegroups.com): All commits will be sent to this mailing list. You can subscribe to it if you are interested in Nacos' development.
 * [users-nacos@googlegroups.com](mailto:users-nacos%2Bsubscribe@googlegroups.com): All Github?[issue](https://github.com/alibaba/nacos/issues)?updates and?[pull request](https://github.com/alibaba/nacos/pulls)?updates will be sent to this mailing list.
 * [nacos_dev@linux.alibaba.com](mailto:nacos_dev@linux.alibaba.com).
-
-
