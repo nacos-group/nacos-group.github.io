@@ -37,7 +37,7 @@ This is a rough outline of what a contributor's workflow looks like:
 * Make commits of logical units.
 * Make sure commit messages are in the proper format (see below).
 * Push changes in a topic branch to your forked repository.
-* Follow the checklist in the [pull request template](https://lark.alipay.com/nacos/nacosdocs/askodu)
+* Follow the checklist in the [pull request template](https://nacos.io/en-us/docs/pull-request.html).
 * Before you send the pull request, please sync your forked repository with remote repository. This will make your pull request simple and clear. See guide below:
 ```
 git remote add upstream git@github.com:alibaba/nacos.git
@@ -64,6 +64,7 @@ To submit a change for inclusion, please do the following:
 We are always interested in adding new contributors. What we look for are series of contributions, good taste and ongoing interest in the project. If you are interested in becoming a committer, please let one of the existing committers know and they can help you walk through the process.
 
 Nowadays, we have several important contribution points:
+
 #### Wiki & JavaDoc
 #### Nacos Console
 #### Nacos SDK(C++\.Net\PHP\Python\Go\Node.js)
