@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default {
   'en-us': {
     brand: {
@@ -45,47 +47,69 @@ export default {
       ],
     },
     features: {
-      title: 'Why Nacos',
-      list: [
-        {
-          img: '/img/feature_easy_to_use.png',
-          title: 'Easy to use',
-          content: [
-            'One-stop solution for dynamic service discovery, configuration management and dynamic DNS service',
-            '20+ out-of-the-box features for service-centric architectures',
-            'Light-weight production-ready console',
-          ],
-        },
-        {
-          img: '/img/feature_adaptable.png',
-          title: 'More adaptive to cloud architectures',
-          content: [
-            'Seamlessly support kubernetes and spring cloud',
-            'Easier to deploy and run on popular public cloud (for example AliCloud and AWS)',
-            'Support multi-tenants and multi-environments',
-          ],
-        },
-        {
-          img: '/img/feature_production_grade.png',
-          title: 'Production grade',
-          content: [
-            'Originated from time-tested internal products from Alibaba Group',
-            'Supports large-scale scenarios with millions of services',
-            'Open-source product with enterprise-level SLA',
-          ],
-        },
-        {
-          img: '/img/feature_rich.png',
-          title: 'Rich internet application scenarios affinity',
-          content: [
-            'Supports rate throttling, big promotion plans, and multi-region active-active architectures',
-            'Supports a variety of relevant internet-based use cases directly or with slight extension',
-            'Traffic scheduling & service governance',
-          ],
-        },
-      ],
+        title: 'Why Nacos',
+        list: [
+            {
+                img: '/img/feature_easy_to_use.png',
+                title: 'Easy to use',
+                content: [
+                    'One-stop solution for dynamic service discovery, configuration management and dynamic DNS service',
+                    '20+ out-of-the-box features for service-centric architectures',
+                    'Light-weight production-ready console',
+                ],
+            },
+            {
+                img: '/img/feature_adaptable.png',
+                title: 'More adaptive to cloud architectures',
+                content: [
+                    'Seamlessly support kubernetes and spring cloud',
+                    'Easier to deploy and run on popular public cloud (for example AliCloud and AWS)',
+                    'Support multi-tenants and multi-environments',
+                ],
+            },
+            {
+                img: '/img/feature_production_grade.png',
+                title: 'Production grade',
+                content: [
+                    'Originated from time-tested internal products from Alibaba Group',
+                    'Supports large-scale scenarios with millions of services',
+                    'Open-source product with enterprise-level SLA',
+                ],
+            },
+            {
+                img: '/img/feature_rich.png',
+                title: 'Rich internet application scenarios affinity',
+                content: [
+                    'Supports rate throttling, big promotion plans, and multi-region active-active architectures',
+                    'Supports a variety of relevant internet-based use cases directly or with slight extension',
+                    'Traffic scheduling & service governance',
+                ],
+            },
+        ],
     },
-  },
+          users: {
+            title: 'Who is using Nacos',
+            desc: <span>Providing your info on <a rel="noopener noreferrer" target="_blank" href="https://github.com/alibaba/nacos/issues/273">Wanted: who&#39;s using nacos</a> to help improving nacos better.</span>,
+            list: [
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563438-a13d7097-fcfd-400f-b066-82564ff31647.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563510-a937249b-4e1d-4b40-97d8-06eb02dad25d.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563538-cd2549b5-5ad7-4e34-938e-aa1fda5b46bd.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563567-0ef6adfd-849a-4780-b2aa-441ccfdd90f4.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563443-be4d11fe-8c60-4a0d-8df1-d8e0ddda5bc4.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563480-bef2f19b-def8-41e9-869a-90d6604ab100.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563558-17779399-fe49-481d-94cf-97a2a54cc5ed.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563552-c7af541b-57e3-4a1d-8084-f1db9a4f3951.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563550-5731d6df-a061-4da0-96bc-97bb57bf5149.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563482-2d17db65-bbbc-428e-999b-247fcf290592.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563506-70ccec4e-c9ce-4997-8ca4-ac342a0af8f7.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563559-40f4bf4a-bc4c-45cf-9cf9-09280a34f0cc.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563550-c02c3ffc-75fc-41ae-898c-20b5e60d0e64.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563512-e640635e-a180-4c4d-b004-6ed91863782d.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563568-d2a64341-bebe-47e9-9de1-efb2c1f6a9fd.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563467-2fc7ba94-f003-465e-ab62-df52aeb457d7.jpeg'
+            ],
+         },
+      },
   'zh-cn': {
     brand: {
       briefIntroduction: '一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。',
@@ -172,5 +196,27 @@ export default {
         },
       ],
     },
-  },
-};
+      users: {
+          title: '谁在使用Nacos',
+          desc: <span>请在 <a rel="noopener noreferrer" target="_blank" href="https://github.com/alibaba/nacos/issues/273">Wanted: who&#39;s using nacos</a> 上提供信息来帮助Nacos做的更好。</span>,
+          list: [
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563438-a13d7097-fcfd-400f-b066-82564ff31647.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563510-a937249b-4e1d-4b40-97d8-06eb02dad25d.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563538-cd2549b5-5ad7-4e34-938e-aa1fda5b46bd.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563567-0ef6adfd-849a-4780-b2aa-441ccfdd90f4.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563443-be4d11fe-8c60-4a0d-8df1-d8e0ddda5bc4.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563480-bef2f19b-def8-41e9-869a-90d6604ab100.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563558-17779399-fe49-481d-94cf-97a2a54cc5ed.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563552-c7af541b-57e3-4a1d-8084-f1db9a4f3951.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563550-5731d6df-a061-4da0-96bc-97bb57bf5149.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563482-2d17db65-bbbc-428e-999b-247fcf290592.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563506-70ccec4e-c9ce-4997-8ca4-ac342a0af8f7.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563559-40f4bf4a-bc4c-45cf-9cf9-09280a34f0cc.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563550-c02c3ffc-75fc-41ae-898c-20b5e60d0e64.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563512-e640635e-a180-4c4d-b004-6ed91863782d.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563568-d2a64341-bebe-47e9-9de1-efb2c1f6a9fd.jpeg',
+              'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563467-2fc7ba94-f003-465e-ab62-df52aeb457d7.jpeg'
+          ],
+       },
+    },
+ };
