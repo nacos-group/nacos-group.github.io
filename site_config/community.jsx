@@ -46,7 +46,7 @@ export default {
     },
     contacts: {
       title: 'Talk To Us',
-      desc: 'Nacos is an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native application.',
+      desc: 'Feel free to contact us via the following channel.',
       list: [
           {
               img: '/img/mailinglist.png',
