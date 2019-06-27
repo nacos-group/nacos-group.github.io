@@ -1133,7 +1133,38 @@ h1, h2, h3, h4, h5, h6 {
         .home-page .feature-section .feature-section-body .feature-list .feature-list-item {
           width: 100%; } }
 
+.home-page .users-section {
+  box-sizing: border-box;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 80px 40px 40px;
+  position: relative; }
+  .home-page .users-section .bone {
+    margin: 0 auto 40px; }
+  .home-page .users-section h3 {
+    font-family: Avenir-Heavy;
+    font-size: 36px;
+    color: #333;
+    text-align: center; }
+  .home-page .users-section p {
+    font-family: Avenir-Medium;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    margin: 0 0 40px; }
+    .home-page .users-section p a {
+      color: #1e6bb8;
+      text-decoration: none; }
+  .home-page .users-section .users {
+    display: inline-block;
+    text-align: center; }
+    .home-page .users-section .users img {
+      margin-right: 10px;
+      width: 140px;
+      height: 80px;
+      margin-bottom: 40px; }
+
 @media screen and (max-width: 640px) {
-  .home-page .feature-section-body {
+  .home-page .feature-section-body, .home-page .users-section {
     padding-left: 20px;
     padding-right: 20px; } }

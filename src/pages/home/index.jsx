@@ -122,6 +122,7 @@ class Home extends Language {
                 </section>
                 <section className="users-section">
                     <h3>{dataSource.users.title}</h3>
+                    <Bone type="dark" />
                     <p>{dataSource.users.desc}</p>
                     <div className="users">
                         {
