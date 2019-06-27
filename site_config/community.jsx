@@ -81,7 +81,7 @@ export default {
         {
           img: '/img/mailinglist.png',
           title: 'Mailing List',
-          content: <span>Be sure to follow our <a href="mailto:nacos_dev@linux.alibaba.com">our community addition guidelines</a></span>,
+          content: <span>Join the <a href="mailto:nacos_dev@linux.alibaba.com">mailing list </a>and discussion your ideas with us.</span>,
         },
         {
           img: '/img/issue.png',
@@ -91,7 +91,7 @@ export default {
         {
           img: '/img/documents.png',
           title: 'Documents',
-          content: <span>Improve the <a href="https://github.com/xuechaos/nacos.io/tree/master/docs">documentation.</a></span>,
+          content: <span>Improve the <a href="http://nacos.io/zh-cn/docs/what-is-nacos.html">documentation.</a></span>,
         },
         {
           img: '/img/pullrequest.png',
