@@ -48,30 +48,30 @@ export default {
       title: 'Talk To Us',
       desc: 'Nacos is an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native application.',
       list: [
-        {
-          img: '/img/weibo.png',
-          imgHover: '/img/weibo_hover.png',
-          title: '@Nacos',
-          link: 'https://weibo.com/u/6574374908',
-        },
-        {
-          img: '/img/alibaba.png',
-          imgHover: '/img/alibaba_hover.png',
-          title: '#alibaba/Nacos',
-          link: 'https://gitter.im/alibaba/nacos',
-        },
-        {
-          img: '/img/segmentfault.png',
-          imgHover: '/img/segmentfault_hover.png',
-          title: 'Segment Fault',
-          link: 'https://segmentfault.com/t/nacos',
-        },
-        {
-          img: '/img/mailinglist.png',
-          imgHover: '/img/mailinglist_hover.png',
-          title: 'Mailing List',
-          link: 'mailto:nacos_dev@linux.alibaba.com',
-        },
+          {
+              img: '/img/mailinglist.png',
+              imgHover: '/img/mailinglist_hover.png',
+              title: 'Mailing List',
+              link: 'mailto:nacos_dev@linux.alibaba.com',
+          },
+          {
+              img: '/img/alibaba.png',
+              imgHover: '/img/alibaba_hover.png',
+              title: '#alibaba/Nacos',
+              link: 'https://gitter.im/alibaba/nacos',
+          },
+          {
+              img: '/img/segmentfault.png',
+              imgHover: '/img/segmentfault_hover.png',
+              title: 'Segment Fault',
+              link: 'https://segmentfault.com/t/nacos',
+          },
+          {
+              img: '/img/weibo.png',
+              imgHover: '/img/weibo_hover.png',
+              title: '@Nacos',
+              link: 'https://weibo.com/u/6574374908',
+          },
       ],
     },
     contributorGuide: {
