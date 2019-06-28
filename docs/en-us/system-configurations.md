@@ -79,5 +79,7 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 
 |参数名	|含义	 |     可选值	 |     默认值| 支持版本 |
 |------|------|-----------|-----------------|-------|
-|config.long-poll.timeout| 长轮询的超时时间，单位为毫秒 | 正整数 | 30000 | >= 1.0.1 |
-|config.retry.time| 长轮询的重试次数 | 正整数 | 3 | >= 1.0.1 |
+|configLongPollTimeout(config.long-poll.timeout 1.0.1版本)| 长轮询的超时时间，单位为毫秒 | 正整数 | 30000 | >= 1.0.2 |
+|configRetryTime(config.retry.time 1.0.1版本)| 长轮询任务重试时间，单位为毫秒 | 正整数 | 2000 | >= 1.0.2 |
+|maxRetry| 长轮询的重试次数 | 正整数 | 3 | >= 1.0.2 |
+|enableRemoteSyncConfig| 监听器首次添加时拉去远端配置 | 布尔值 | false | >= 1.0.2 |
