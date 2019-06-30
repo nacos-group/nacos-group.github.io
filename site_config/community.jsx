@@ -55,7 +55,7 @@ export default {
           {
               img: '/img/segmentfault.png',
               imgHover: '/img/segmentfault_hover.png',
-              title: 'Segment Fault',
+              title: 'segmentfault',
               link: 'https://segmentfault.com/t/nacos',
           },
           {
@@ -200,7 +200,7 @@ export default {
               {
                   img: '/img/segmentfault.png',
                   imgHover: '/img/segmentfault_hover.png',
-                  title: 'Segment Fault',
+                  title: 'segmentfault',
                   link: 'https://segmentfault.com/t/nacos'
               },
               {
