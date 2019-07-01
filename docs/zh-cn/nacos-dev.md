@@ -62,11 +62,11 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 |![fangjian0423](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560411885169-29eb1248-da8d-490c-8801-57561d5c9b0e.jpeg)| [fangjian0423](https://github.com/fangjian0423) | 方剑   | 阿里巴巴 | Committer | fangjian.fj@alibaba-inc.com |
 |![wyp12](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560412009658-18e26745-c59d-4147-a69b-0786e5e6218e.jpeg)       | [wyp12](https://github.com/wyp12)               | 吴援飘 | 阿里巴巴 | Committer | caogu.wyp@antfin.com |
 |![TsingLiang](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560412009587-d41b4256-3882-4ac5-ab26-b5eeed8f09c0.jpeg)  | [TsingLiang](https://github.com/TsingLiang)     | 卿亮   | 阿里巴巴 | Committer | qingliang.ql@alibaba-inc.com  |
+|![chuntaojun](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560410616261-700a37a2-853a-4021-a965-c30d8d194013.jpeg) | [chuntaojun](https://github.com/chuntaojun)     | 廖春涛      |  杭州电子科技大学  | Committer| liaochuntao@live.com               |
 
 
 ### 活跃贡献者
 
 |头像                                                                                                                   | Github 账号                                      | 名字       | 组织             |角色        |邮箱                                 |
 |----------------------------------------------------------------------------------------------------------------------| ------------------------------------------------|------------| ----------------| -----------|------------------------------------|
-|![chuntaojun](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560410616261-700a37a2-853a-4021-a965-c30d8d194013.jpeg) | [chuntaojun](https://github.com/chuntaojun)     | 廖春涛      |  杭州电子科技大学  | Contributor| liaochuntao@live.com               |
 |![caojiele](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561301766676-89a49cd0-ad67-4b3b-a6f2-895f93804b69.jpeg)   | [caojiele](https://github.com/caojiele)         | 曹杰乐      |                 | Contributor| caojiele1225@126.com               |
