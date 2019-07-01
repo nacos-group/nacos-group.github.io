@@ -343,7 +343,7 @@ POST
 | port | int | 是 | 服务实例port |
 | namespaceId | 字符串 | 否 | 命名空间ID |
 | weight | double | 否 | 权重 |
-| enable | boolean | 否 | 是否上线 |
+| enabled | boolean | 否 | 是否上线 |
 | healthy | boolean | 否 | 是否健康 |
 | metadata | 字符串 | 否 | 扩展信息 |
 | clusterName | 字符串 | 否 | 集群名 |
@@ -415,6 +415,7 @@ PUT
 | namespaceId | 字符串 | 否 | 命名空间ID |
 | weight | double | 否 | 权重 |
 | metadata | JSON | 否 | 扩展信息 |
+| enabled | boolean | 否 | 是否打开流量 |
 | ephemeral | boolean | 否 | 是否临时实例 |
 
 ### 示例请求

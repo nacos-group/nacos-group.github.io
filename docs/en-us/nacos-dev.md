@@ -63,11 +63,10 @@ This page shows Nacos developers and continues to expand. The list is not priori
 |![fangjian0423](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560411885169-29eb1248-da8d-490c-8801-57561d5c9b0e.jpeg)| [fangjian0423](https://github.com/fangjian0423) | Jian Fang    | Alibaba      | Committer  | fangjian.fj@alibaba-inc.com                                  |
 |![wyp12](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560412009658-18e26745-c59d-4147-a69b-0786e5e6218e.jpeg)       | [wyp12](https://github.com/wyp12)               | Yuanpiao Wu  | Alibaba      | Committer  | caogu.wyp@antfin.com                                         |
 |![TsingLiang](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560412009587-d41b4256-3882-4ac5-ab26-b5eeed8f09c0.jpeg)  | [TsingLiang](https://github.com/TsingLiang)     | Liang ji     | Alibaba      | Committer  | qingliang.ql@alibaba-inc.com                                 | 
-
+|![chuntaojun](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560410616261-700a37a2-853a-4021-a965-c30d8d194013.jpeg) |[chuntaojun](https://github.com/chuntaojun)| Chuntao Liao|  Hangzhou Dianzi University  |Committer |liaochuntao@live.com |
 
 ### Contributors
 
 | Image                                                                                                                | Github ID                                 | Name        | Organization                 | Roles      |Mail                 |
 |----------------------------------------------------------------------------------------------------------------------|-------------------------------------------|-------------|------------------------------|------------|---------------------|
-|![chuntaojun](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560410616261-700a37a2-853a-4021-a965-c30d8d194013.jpeg) |[chuntaojun](https://github.com/chuntaojun)| Chuntao Liao|  Hangzhou Dianzi University  |Contributor |liaochuntao@live.com |
 |![caojiele](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561301766676-89a49cd0-ad67-4b3b-a6f2-895f93804b69.jpeg)   |[caojiele](https://github.com/caojiele)    | Jiele Cao   |                              |Contributor |caojiele1225@126.com |
