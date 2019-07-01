@@ -417,7 +417,7 @@ POST
 | port | int | yes | Port of instance |
 | namespaceId | String | no | ID of namespace |
 | weight | double | no | Weight |
-| enable | boolean | no | enabled or not |
+| enabled | boolean | no | enabled or not |
 | healthy | boolean | no | healthy or not |
 | metadata | String | no | extended information |
 | clusterName | String | no | cluster name |
@@ -490,6 +490,7 @@ PUT
 | clusterName | String | no | Cluster name |
 | namespaceId | String | no | ID of namespace |
 | weight | double | no | Weight |
+| enabled | boolean | no | If enabled |
 | metadata | JSON | no | Extended information |
 
 ### Request Example
