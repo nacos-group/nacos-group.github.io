@@ -28,6 +28,7 @@
   - [Nacos权重不生效](#3.11)
   - [Nacos如何扩缩容](#3.12)
   - [Nacos客户端修改日志级别](#3.13)
+  - [Nacos与Zipkin 整合出现 Service not found 问题](#3.14)
 
 - Nacos原理问题
 
@@ -137,5 +138,15 @@ Nacos控制台上编辑权重, 目前从SpringCloud客户端和Dubbo客户端都
 配置-D参数com.alibaba.nacos.naming.log.level设置naming客户端的日志级别，例如设置为error：
 `-Dcom.alibaba.nacos.naming.log.level=error`
 同样的，-D参数com.alibaba.nacos.config.log.level用来设置config客户端的日志级别。
+
+<h4 id="3.14">Nacos与Zipkin 整合出现 Service not found 问题</h4>
+
+配置spring-cloud-seluth参数：spring.zipkin.discovery-client-enabled=false 。
+
+如果仍然存在`Service not found`错误，则建议先使用open-api将Zipkin-server注册为永久实例服务：
+
+`curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?port=9411&healthy=true&ip=127.0.0.1&weight=1.0&serviceName=zipkin-server&ephemeral=false&namespaceId=public'`
+
+然后，前往nacos控制台，找到服务名为`zipkin-server`的服务，找到集群配置，设置健康检查模式为`TCP`，端口号为`9411`(即zipkin-server的端口)。
 
 ## Nacos原理问题
