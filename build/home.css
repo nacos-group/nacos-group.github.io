@@ -1023,6 +1023,8 @@ h1, h2, h3, h4, h5, h6 {
       line-height: 24px;
       padding: 0 6px;
       margin-right: 10px; }
+      .home-page .top-section .version-note a:last-child {
+        margin-right: 0; }
   .home-page .top-section .release-date {
     font-family: Avenir-Medium;
     font-size: 12px;
