@@ -129,6 +129,9 @@ $animationDuration: 2s;
         line-height: 24px;
         padding: 0 6px;
         margin-right: 10px;
+        &:last-child {
+          margin-right: 0;
+        }
       }
     }
     .release-date {
