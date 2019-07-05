@@ -1,4 +1,10 @@
-# 为Nacos做贡献
+---
+title: 为 Nacos 做贡献
+keywords: Nacos,贡献
+description: 欢迎来到Nacos！本文档是关于如何为Nacos做出贡献的指南。
+---
+
+# 为 Nacos 做贡献
 
 欢迎来到Nacos！本文档是关于如何为Nacos做出贡献的指南。
 
@@ -117,3 +123,5 @@ Nacos欢迎任何角色的新参与者，包括用户，贡献者，提交者和
  - 解释为什么你应该成为一名提交者，
     
  - 详细说明您提交的前三的PR和相关issues
+
+![](http://acm-public.oss-cn-hangzhou.aliyuncs.com/nomination_process.png)

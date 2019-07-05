@@ -6,7 +6,6 @@ export default {
     events: {
       title: 'Events & News',
       list: [
-
           {
               img: 'https://07imgmini.eastday.com/mobile/20190125/20190125113742_a85399def3ae44c6f4669a4bb458f178_1.jpeg',
               title: 'Dubbo Nacos 发布 v0.8.0 PRE-GA版本，安全稳定上生产',
@@ -29,13 +28,6 @@ export default {
               link: '/en-us/blog/huya-practice.html',
           },
           // {
-          //     img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1544689744102-fd00fec6-ca80-4c0c-9b0d-538f17279963.png',
-          //     title: 'Nacos 0.9.0 发布，稳定的快速迭代',
-          //     dateStr: 'Mar 7, 2019',
-          //     content: '本文介绍了阿里巴巴的微服务开源项目[Dubbo Nacos](https://github.com/alibaba/nacos) v0.6 版本，该版本主要在支持了Dubbo生态和Docker部署。',
-          //     link: '/en-us/blog/nacos0.6.html',
-          // },
-          // {
           //     img: 'https://cdn.nlark.com/lark/0/2018/png/11189/1540738282849-61e2022a-46a9-4d81-ae16-6d6f0515450b.png',
           //     title: 'Nacos 进入CNCF landscape',
           //     content: 'Nacos 被CNCF 纳入landscape大图.CNCF（Cloud Native Compute Foundation） 是 Linux 基金会旗下的一个组织，旨在推动以容器为中心的云原生系统。从 2016 年 11 月，CNCF 开始维护了一个 Cloud Native Landscape 的 repo。',
@@ -46,32 +38,32 @@ export default {
     },
     contacts: {
       title: 'Talk To Us',
-      desc: 'Nacos is an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native application.',
+      desc: 'Feel free to contact us via the following channel.',
       list: [
-        {
-          img: '/img/weibo.png',
-          imgHover: '/img/weibo_hover.png',
-          title: '@Nacos',
-          link: 'https://weibo.com/u/6574374908',
-        },
-        {
-          img: '/img/alibaba.png',
-          imgHover: '/img/alibaba_hover.png',
-          title: '#alibaba/Nacos',
-          link: 'https://gitter.im/alibaba/nacos',
-        },
-        {
-          img: '/img/segmentfault.png',
-          imgHover: '/img/segmentfault_hover.png',
-          title: 'Segment Fault',
-          link: 'https://segmentfault.com/t/nacos',
-        },
-        {
-          img: '/img/mailinglist.png',
-          imgHover: '/img/mailinglist_hover.png',
-          title: 'Mailing List',
-          link: 'mailto:nacos_dev@linux.alibaba.com',
-        },
+          {
+              img: '/img/mailinglist.png',
+              imgHover: '/img/mailinglist_hover.png',
+              title: 'Mailing List',
+              link: 'mailto:nacos_dev@linux.alibaba.com',
+          },
+          {
+              img: '/img/alibaba.png',
+              imgHover: '/img/alibaba_hover.png',
+              title: '#alibaba/Nacos',
+              link: 'https://gitter.im/alibaba/nacos',
+          },
+          {
+              img: '/img/segmentfault.png',
+              imgHover: '/img/segmentfault_hover.png',
+              title: 'segmentfault',
+              link: 'https://segmentfault.com/t/nacos',
+          },
+          {
+              img: '/img/weibo.png',
+              imgHover: '/img/weibo_hover.png',
+              title: '@Nacos',
+              link: 'https://weibo.com/u/6574374908',
+          },
       ],
     },
     contributorGuide: {
@@ -81,7 +73,7 @@ export default {
         {
           img: '/img/mailinglist.png',
           title: 'Mailing List',
-          content: <span>Be sure to follow our <a href="mailto:nacos_dev@linux.alibaba.com">our community addition guidelines</a></span>,
+          content: <span>Join the <a href="mailto:nacos_dev@linux.alibaba.com">mailing list </a>and discussion your ideas with us.</span>,
         },
         {
           img: '/img/issue.png',
@@ -91,7 +83,7 @@ export default {
         {
           img: '/img/documents.png',
           title: 'Documents',
-          content: <span>Improve the <a href="https://github.com/xuechaos/nacos.io/tree/master/docs">documentation.</a></span>,
+          content: <span>Improve the <a href="https://nacos.io/en-us/docs/what-is-nacos.html">documentation.</a></span>,
         },
         {
           img: '/img/pullrequest.png',
@@ -105,7 +97,7 @@ export default {
       list: [
         {
           title: 'Dubbo and Dubbo Mesh',
-          content: <span>Dubbo and Nacos are the classic combination from production practice of Aibaba's large-scale micro-service. Compared to traditional registry centers such as ZooKeeper and configuration center solutions, when building a microservice application platform by using cloud native and Service Mesh paradigm, with the use of Nacos in Dubbo, all the power of Dubbo in the large-scale microservice management, traffic management, service integration and sharing can be fully released.</span>,
+          content: <span>Dubbo and Nacos are the classic combination from production practice of Alibaba's large-scale micro-service. Compared to traditional registry centers such as ZooKeeper and configuration center solutions, when building a microservice application platform by using cloud native and Service Mesh paradigm, with the use of Nacos in Dubbo, all the power of Dubbo in the large-scale microservice management, traffic management, service integration and sharing can be fully released.</span>,
           tags: [
               {
                   text: 'Dubbo',
@@ -159,7 +151,6 @@ export default {
     events: {
       title: '事件 & 新闻',
       list: [
-
           {
               img: 'https://07imgmini.eastday.com/mobile/20190125/20190125113742_a85399def3ae44c6f4669a4bb458f178_1.jpeg',
               title: 'Dubbo Nacos 发布 v0.8.0 PRE-GA版本，安全稳定上生产',
@@ -209,7 +200,7 @@ export default {
               {
                   img: '/img/segmentfault.png',
                   imgHover: '/img/segmentfault_hover.png',
-                  title: 'Segment Fault',
+                  title: 'segmentfault',
                   link: 'https://segmentfault.com/t/nacos'
               },
               {

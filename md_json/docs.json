@@ -1,58 +1,94 @@
 {
   "en-us": [
     {
-      "filename": "CLI-guide.md",
-      "link": "/en-us/docs/CLI-guide.html",
-      "meta": {}
-    },
-    {
-      "filename": "FAQ.md",
-      "link": "/en-us/docs/FAQ.html",
-      "meta": {}
-    },
-    {
       "filename": "activity.md",
       "link": "/en-us/docs/activity.html",
-      "meta": {}
+      "meta": {
+        "title": "Nacos activity",
+        "keywords": "Nacos,activity",
+        "description": "Nacos award activity"
+      }
     },
     {
       "filename": "architecture.md",
       "link": "/en-us/docs/architecture.html",
+      "meta": {
+        "title": "Nacos architecture",
+        "keywords": "Nacos,architecture",
+        "description": "Nacos architecture"
+      }
+    },
+    {
+      "filename": "cli-guide.md",
+      "link": "/en-us/docs/cli-guide.html",
       "meta": {}
     },
     {
       "filename": "cluster-mode-quick-start.md",
       "link": "/en-us/docs/cluster-mode-quick-start.html",
-      "meta": {}
+      "meta": {
+        "title": "Cluster deployment instructions",
+        "keywords": "Cluster,deployment",
+        "description": "Cluster deployment instructions"
+      }
     },
     {
       "filename": "community.md",
       "link": "/en-us/docs/community.html",
-      "meta": {}
+      "meta": {
+        "title": "Community",
+        "keywords": "community,contact",
+        "description": "Community"
+      }
     },
     {
       "filename": "concepts.md",
       "link": "/en-us/docs/concepts.html",
-      "meta": {}
+      "meta": {
+        "title": "Nacos Concepts",
+        "keywords": "Nacos,Concepts",
+        "description": "Nacos Concepts"
+      }
     },
     {
       "filename": "console-guide.md",
       "link": "/en-us/docs/console-guide.html",
-      "meta": {}
+      "meta": {
+        "title": "Console Guide",
+        "keywords": "console,guide",
+        "description": "Nacos console aims to enhance the console for service list, health management, service management, a distributed configuration management control ability."
+      }
     },
     {
       "filename": "contributing-dev.md",
       "link": "/en-us/docs/contributing-dev.html",
-      "meta": {}
+      "meta": {
+        "title": "Contributing to Nacos",
+        "keywords": "Nacos,contribute",
+        "description": "Welcome to Nacos! This document is a guideline about how to contribute to Nacos."
+      }
     },
     {
       "filename": "contributing.md",
       "link": "/en-us/docs/contributing.html",
-      "meta": {}
+      "meta": {
+        "title": "How to Contribute",
+        "keywords": "contribute,code",
+        "description": "We are always very happy to have contributions, whether for trivial cleanups or big new features."
+      }
     },
     {
       "filename": "deployment.md",
       "link": "/en-us/docs/deployment.html",
+      "meta": {
+        "title": "Nacos supports three types of deployment modes",
+        "keywords": "Nacos,deployment modes",
+        "description": "Nacos supports three types of deployment modes"
+      }
+    },
+    {
+      "filename": "faq.md",
+      "link": "/en-us/docs/faq.html",
       "meta": {}
     },
     {
@@ -61,8 +97,8 @@
       "meta": {}
     },
     {
-      "filename": "managementAPI.md",
-      "link": "/en-us/docs/managementAPI.html",
+      "filename": "management-api.md",
+      "link": "/en-us/docs/management-api.html",
       "meta": {}
     },
     {
@@ -79,18 +115,18 @@
       "filename": "nacos-dev.md",
       "link": "/en-us/docs/nacos-dev.html",
       "meta": {
-        "title": "developers",
+        "title": "Developers",
         "keywords": "nacos,developers,committer,pmc,nacos team",
-        "description": "nacos developers page"
+        "description": "Nacos developers page"
       }
     },
     {
       "filename": "nacos-naming-benchmark.md",
       "link": "/en-us/docs/nacos-naming-benchmark.html",
       "meta": {
-        "title": "Nacos服务发现性能测试报告",
-        "keywords": "Nacos,服务,发现,性能",
-        "description": "Nacos服务发现性能测试报告"
+        "title": "Nacos service discovery performance test report",
+        "keywords": "Nacos,service,discovery,performance",
+        "description": "Nacos service discovery performance test report"
       }
     },
     {
@@ -114,8 +150,8 @@
       "meta": {}
     },
     {
-      "filename": "open-API.md",
-      "link": "/en-us/docs/open-API.html",
+      "filename": "open-api.md",
+      "link": "/en-us/docs/open-api.html",
       "meta": {}
     },
     {
@@ -146,12 +182,20 @@
     {
       "filename": "quick-start-spring.md",
       "link": "/en-us/docs/quick-start-spring.html",
-      "meta": {}
+      "meta": {
+        "title": "Quick Start for Nacos Spring Projects",
+        "keywords": "Nacos,Spring,quick start",
+        "description": "This quick start introduces how to enable Nacos configuration management and service discovery features for your Spring project."
+      }
     },
     {
       "filename": "quick-start.md",
       "link": "/en-us/docs/quick-start.html",
-      "meta": {}
+      "meta": {
+        "title": "Quick Start for Nacos",
+        "keywords": "Nacos,Quick start",
+        "description": "This topic is about how to set up and use Nacos."
+      }
     },
     {
       "filename": "roadmap.md",
@@ -166,6 +210,11 @@
     {
       "filename": "sdk.md",
       "link": "/en-us/docs/sdk.html",
+      "meta": {}
+    },
+    {
+      "filename": "system-configurations.md",
+      "link": "/en-us/docs/system-configurations.html",
       "meta": {}
     },
     {
@@ -196,16 +245,6 @@
   ],
   "zh-cn": [
     {
-      "filename": "CLI-guide.md",
-      "link": "/zh-cn/docs/CLI-guide.html",
-      "meta": {}
-    },
-    {
-      "filename": "FAQ.md",
-      "link": "/zh-cn/docs/FAQ.html",
-      "meta": {}
-    },
-    {
       "filename": "activity.md",
       "link": "/zh-cn/docs/activity.html",
       "meta": {
@@ -222,6 +261,11 @@
         "keywords": "Nacos,架构",
         "description": "Nacos 架构"
       }
+    },
+    {
+      "filename": "cli-guide.md",
+      "link": "/zh-cn/docs/cli-guide.html",
+      "meta": {}
     },
     {
       "filename": "cluster-mode-quick-start.md",
@@ -245,9 +289,9 @@
       "filename": "concepts.md",
       "link": "/zh-cn/docs/concepts.html",
       "meta": {
-        "title": "Nacos 概念 (Concepts)",
-        "keywords": "Nacos 概念,Concepts",
-        "description": "Nacos 概念 (Concepts)"
+        "title": "Nacos 概念",
+        "keywords": "Nacos,概念",
+        "description": "Nacos 概念"
       }
     },
     {
@@ -256,13 +300,17 @@
       "meta": {
         "title": "控制台手册",
         "keywords": "控制台,手册",
-        "description": "控制台手册"
+        "description": "Nacos 控制台主要旨在于增强对于服务列表，健康状态管理，服务治理，分布式配置管理等方面的管控能力。"
       }
     },
     {
       "filename": "contributing-dev.md",
       "link": "/zh-cn/docs/contributing-dev.html",
-      "meta": {}
+      "meta": {
+        "title": "为 Nacos 做贡献",
+        "keywords": "Nacos,贡献",
+        "description": "欢迎来到Nacos！本文档是关于如何为Nacos做出贡献的指南。"
+      }
     },
     {
       "filename": "contributing.md",
@@ -270,7 +318,7 @@
       "meta": {
         "title": "如何贡献",
         "keywords": "贡献,源码",
-        "description": "如何贡献"
+        "description": "我们非常欢迎您的贡献和加入，无论是微不足道的清理或大的新功能。"
       }
     },
     {
@@ -283,6 +331,11 @@
       }
     },
     {
+      "filename": "faq.md",
+      "link": "/zh-cn/docs/faq.html",
+      "meta": {}
+    },
+    {
       "filename": "how-to-reporting-bugs.md",
       "link": "/zh-cn/docs/how-to-reporting-bugs.html",
       "meta": {
@@ -292,8 +345,8 @@
       }
     },
     {
-      "filename": "managementAPI.md",
-      "link": "/zh-cn/docs/managementAPI.html",
+      "filename": "management-api.md",
+      "link": "/zh-cn/docs/management-api.html",
       "meta": {}
     },
     {
@@ -320,7 +373,7 @@
       "meta": {
         "title": "开发者",
         "keywords": "nacos,开发者,committer",
-        "description": "nacos开发者页"
+        "description": "Nacos 开发者页"
       }
     },
     {
@@ -357,8 +410,8 @@
       "meta": {}
     },
     {
-      "filename": "open-API.md",
-      "link": "/zh-cn/docs/open-API.html",
+      "filename": "open-api.md",
+      "link": "/zh-cn/docs/open-api.html",
       "meta": {
         "title": "Open API 指南",
         "keywords": "Open API",
@@ -415,17 +468,17 @@
       "link": "/zh-cn/docs/quick-start-spring.html",
       "meta": {
         "title": "Nacos Spring 快速开始",
-        "keywords": "Nacos,Spring",
-        "description": "Nacos Spring 快速开始"
+        "keywords": "Nacos,Spring,快速开始",
+        "description": "本文主要面向 Spring 的使用者，通过两个示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现。"
       }
     },
     {
       "filename": "quick-start.md",
       "link": "/zh-cn/docs/quick-start.html",
       "meta": {
-        "title": "快速开始",
-        "keywords": "Nacos",
-        "description": "快速开始"
+        "title": "Nacos 快速开始",
+        "keywords": "Nacos,快速开始",
+        "description": "这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。"
       }
     },
     {
@@ -438,6 +491,11 @@
       }
     },
     {
+      "filename": "sdk-properties.md",
+      "link": "/zh-cn/docs/sdk-properties.html",
+      "meta": {}
+    },
+    {
       "filename": "sdk.md",
       "link": "/zh-cn/docs/sdk.html",
       "meta": {
@@ -445,6 +503,11 @@
         "keywords": "Java,sdk",
         "description": "Java的sdk"
       }
+    },
+    {
+      "filename": "system-configurations.md",
+      "link": "/zh-cn/docs/system-configurations.html",
+      "meta": {}
     },
     {
       "filename": "use-nacos-with-dubbo.md",

@@ -1,10 +1,10 @@
 ---
-title: 快速开始
-keywords: Nacos
-description: 快速开始
+title: Nacos 快速开始
+keywords: Nacos,快速开始
+description: 这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。
 ---
 
-#快速开始
+# Nacos 快速开始
 
 这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。
 
@@ -17,6 +17,7 @@ Nacos 依赖 [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_j
 3. Maven 3.2.x+；[下载](https://maven.apache.org/download.cgi) & [配置](https://maven.apache.org/settings.html)。
 
 ## 2.下载源码或者安装包
+
 你可以通过源码和发行包两种方式来获取 Nacos。
 
 ### 从 Github 上下载源码方式
@@ -43,12 +44,15 @@ cd distribution/target/nacos-server-$version/nacos/bin
 ```  
 
 ## 3.启动服务器
+
 ### Linux/Unix/Mac 
+
 启动命令(standalone代表着单机模式运行，非集群模式):
 
 `sh startup.sh -m standalone`
 
 ### Windows
+
 启动命令：
 
 `cmd startup.cmd`
@@ -56,6 +60,7 @@ cd distribution/target/nacos-server-$version/nacos/bin
 或者双击startup.cmd运行文件。
 
 ## 4.服务注册&发现和配置管理
+
 ### 服务注册
 
 `curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'`
@@ -73,8 +78,8 @@ cd distribution/target/nacos-server-$version/nacos/bin
 `curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test"`
 
 ## 5.关闭服务器
-### Linux/Unix/Mac 
 
+### Linux/Unix/Mac 
 
 `sh shutdown.sh`
 
@@ -83,5 +88,3 @@ cd distribution/target/nacos-server-$version/nacos/bin
 `cmd shutdown.cmd`
 
 或者双击shutdown.cmd运行文件。
-
-

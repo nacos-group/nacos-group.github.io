@@ -5,11 +5,11 @@ $animationDuration: 2s;
 
 @keyframes slashStar {
   0% {
-      opacity: 1;
+    opacity: 1;
   }
 
   100% {
-      opacity: 0;
+    opacity: 0;
   }
 }
 
@@ -73,8 +73,45 @@ $animationDuration: 2s;
     }
     .button-area {
       text-align: center;
-      .button:first-child {
-        margin-right: 20px;
+      margin-top: 40px;
+      .button {
+        margin-right: 12px;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+    .github-buttons {
+      margin-top: 20px;
+      text-align: center;
+      a {
+        margin-right: 12px;
+        &:last-child {
+          margin-right: 0;
+        }
+        div {
+          border-radius: 2px;
+          display: inline-block;
+          height: 24px;
+          line-height: 24px;
+          font-size: 12px;
+          padding: 0 8px;
+          color: #fff;
+          background: rgba(255, 255, 255, 0.2);
+          img {
+            width: 16px;
+            height: 16px;
+            vertical-align: middle;
+            margin-top: -6px;
+          }
+          .count {
+            font-family: TXD_D_Medium;
+            font-size: 16px;
+            padding-left: 4px;
+            display: inline-block;
+            height: 100%;
+          }
+        }
       }
     }
     .version-note {
@@ -92,6 +129,9 @@ $animationDuration: 2s;
         line-height: 24px;
         padding: 0 6px;
         margin-right: 10px;
+        &:last-child {
+          margin-right: 0;
+        }
       }
     }
     .release-date {
@@ -230,8 +270,48 @@ $animationDuration: 2s;
       }
     }
   }
+  .users-section {
+    box-sizing: border-box;
+    max-width: $contentWidth;
+    margin: 0 auto;
+    padding: 80px 40px 40px;
+    position: relative;
+    .bone {
+      margin: 0 auto 40px;
+    }
+    h3 {
+      font-family: Avenir-Heavy;
+      font-size: 36px;
+      color: #333;
+      text-align: center;
+    }
+    p {
+      font-family: Avenir-Medium;
+      font-size: 14px;
+      color: #666;
+      text-align: center;
+      margin: 0 0 40px;
+      a {
+        color: #1e6bb8;
+        text-decoration: none;
+      }
+    }
+    .users {
+      // display: flex;
+      // flex-wrap: wrap;
+      // justify-content: space-between;
+      display: inline-block;
+      text-align: center;
+      img {
+        margin-right: 10px;
+        width: 140px;
+        height: 80px;
+        margin-bottom: 40px;
+      }
+    }
+  }
   @media screen and (max-width: $mobileWidth) {
-    .feature-section-body {
+    .feature-section-body, .users-section {
       padding-left: 20px;
       padding-right: 20px;
     }
