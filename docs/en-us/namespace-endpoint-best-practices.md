@@ -1,7 +1,7 @@
 ---
 title: Namespace,endpoint best practices
 keywords: namespace,endpoint,best practices
-description: With using Nacos enterprises more and more, the two most frequently encountered problem is: how to use in my production environment right namespace and the endpoint.
+description: With using Nacos enterprises more and more,the two most frequently encountered problem is:how to use in my production environment right namespace and the endpoint.
 ---
 
 # Namespace, endpoint best practices
