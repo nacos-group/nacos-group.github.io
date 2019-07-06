@@ -1,24 +1,31 @@
-# Nacos服务配置性能测试报告
+---
+title: Nacos service configuration performance test report
+keywords: Nacos,service,configuration,performance
+description: Nacos service configuration performance test report
+---
 
-## 测试目的
-主要让大家了解Nacos的性能负载和容量，协助我们更好的管理Nacos性能质量，帮助用户更快的运用评估Nacos系统负荷。
+# Nacos service configuration performance test report
 
-## 测试工具
-我们使用自研的PAS性能评估服务平台进行压测，其原理是基于利用JMeter引擎，使用PAS自动生成的JMeter脚本，进行智能压测。
+## Test purposes
+Let everybody understand the Nacos main performance load and capacity, to help us better manage Nacos performance quality, help users use of assessment Nacos system load faster.
+
+## Test tools
+We use the research of PAS performance evaluation service platform for pressure measurement, the principle is based on the use of JMeter engine, the use of PAS to automatically generate the JMeter scripts, intelligent pressure measurement.
 
 ![IMAGE](https://img.alicdn.com/tfs/TB1xCfDDpzqK1RjSZFvXXcB7VXa-692-297.png)
 
-## 测试环境
-### 1.环境
+## Test environment
 
-指标|参数
+### 1.environment
+
+indicators|parameter
 ---|---
-机器|CPU 8核，内存16G
-集群规模|单机，3节点，10节点，100节点
-Nacos版本|0.8.0
-数据库|32C128G
+machine|CPU 8 nuclear, 16G memory
+cluster size|stand-alone, 3 nodes, 10 nodes, 100 nodes
+Nacos version|0.8.0
+database|32C128G
 
-### 2.设置启动参数
+### 2.Set the launch parameters
 ```
 /opt/taobao/java/bin/java -server -Xms4g -Xmx4g -Xmn2g 
 -XX:MetaspaceSize=128m 
@@ -37,46 +44,45 @@ Nacos版本|0.8.0
 --spring.config.location=classpath:/,classpath:/config/,file:./,file:./config/,file:/home/admin/nacos/conf/
 ```
 
-## 测试场景
-以下测试场景都是服务配置重要接口：
-* 验证Nacos服务发布配置的能力
-* 验证Nacos服务获取配置的能力
-* 验证Nacos服务监听配置的能力
-* 验证Nacos服务长连接容量能力
+## Test scenarios
+The following test scenarios are service discovery interface:
+* Verify Nacos service ability to release configuration
+* Verify Nacos service access configuration
+* Verify Nacos service listening configuration
+* Verify Nacos service long connection capacity ability
 
-## 测试数据
-### 1. 发布配置
-发布配置主要测试Nacos publishConfig接口的性能。  
-在各规模集群的性能表现：
+## Test data
 
-单机|3节点|10节点|100节点
+### 1. Release configuration
+The performance of the main test launch configuration Nacos publishConfig interface.  
+In the performance of each scale clusters:
+
+stand-alone|3 nodes|10 nodes|100 nodes
 :---:|:---:|:---:|:---:
 1400|4214|6863|8626
 
-具体我们看下3节点服务集群发布配置能力。  
-以下为各个并发数 (施压机台数*并发数) 时，发布配置的TPS，平均RT。
+We look at three nodes specific services cluster configuration ability.  
+The following for each concurrency (press the machine number * concurrency), the configuration of the TPS, the average RT.
 ![IMAGE](https://img.alicdn.com/tfs/TB1OjzIDpzqK1RjSZFoXXbfcXXa-693-400.png)
 ![IMAGE](https://img.alicdn.com/tfs/TB1s.EfDxjaK1RjSZKzXXXVwXXa-693-325.png)
 
+### 2. Access configuration
+Access to configuration for Nacos getConfig interface for testing.  
+The measured performance in each cluster size:
 
-### 2. 获取配置
-获取配置对Nacos getConfig接口进行测试。  
-实测在各个规模集群的性能表现：
-
-单机|3节点|10节点|100节点
+stand-alone|3 nodes|10 nodes|100 nodes
 :---:|:---:|:---:|:---:
 15000|23013|45000|161099
 
-具体我们也看下3节点服务集群获取配置能力，  
-以下为各个并发数 (施压机台数*并发数) 时，获取配置的TPS，平均RT。
+We also look at the three nodes specific services cluster acquire configuration, the following for each concurrency (pressure machine is used for * concurrency), access to configuration of TPS, the average RT.
 ![IMAGE](https://img.alicdn.com/tfs/TB1UjzDDr2pK1RjSZFsXXaNlXXa-691-365.png)
 ![IMAGE](https://img.alicdn.com/tfs/TB1kcfADwTqK1RjSZPhXXXfOFXa-691-380.png)
 
-### 3. 监听配置
-执行Nacos addListeners的接口的性能， 监听配置主要采用增加多个配置监听，并多次发布配置的方法，统计发布时间与监听接收到配置时间间隔。  
-我们选取了几个点，列举了发布与监听时间差，在100ms内基本都能监听到配置的更改。
+### 3. Listening configuration
+Perform Nacos addListeners the performance of the interface to monitor configuration mainly adopts increase more configuration monitoring, and issued several configuration method, statistics released time and listening to receive configuration time interval.  
+We pick a few points, and lists the publish and listening time, the basic within 100 ms can listen to the configuration changes.
 
-次数|发布与监听时间差(ms)|
+times|publish and listening time (ms)|
 :---:|:---:
 1|63
 2|53
@@ -88,16 +94,16 @@ Nacos版本|0.8.0
 8|183
 9|104
 
-### 4. 长连接容量测试
-Nacos监听配置与客户端建立长连接，长连接会消耗服务内存，从而集群load增高。建立长连接容量的能力，主要考查配置监听的瓶颈。  
-测试方法逐渐增加集群的连接，单机连接达到9000时，CPU: 13.9% 内存：18.8%，load：4.7，都处于正常状态，连接数量增加后，load会成倍数级增加。  
-在各规模集群测试基本上符合验证。
+### 4. Long connection capacity test
+Nacos listener configuration with the client to establish long connection, long service connection consumes memory, thereby cluster increased load.Build up capability of the capacity of long connection, mainly examines configuration monitor bottlenecks.  
+Cluster connectivity test methods are increasing stand-alone connection to reach 9000, CPU: 13.9% memory: 18.8%, load: 4.7, are in normal state, the number of connections increases, the load will increase exponentially number level.  
+In each cluster scale test basically conform to test and verify.
 
-单机|3节点|10节点|100节点
+stand-alone|3 nodes|10 nodes|100 nodes
 :---:|:---:|:---:|:---:
 9000|27000|90000|910000
 
-## 测试结论
-Nacos性能测试都是针对重点功能，通过对各规模集群进行压测，可以看到各个集群的接口容量。  
-本测试供给大家作为参考，如有不足或偏差，请指正！  
-如果对性能有其他需求，可以给我们提issue。
+## Test results
+Nacos performance test is aimed at a key function, through the study of the pressure measurement of the cluster size, you can see the interface of each cluster capacity.  
+This test provides you as reference, if there are any deficiency or deviation, please correct me!  
+If you have any other requirements on the performance, can you give us the issue.
