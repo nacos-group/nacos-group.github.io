@@ -15,6 +15,7 @@ description: Nacos服务配置性能测试报告
 ![IMAGE](https://img.alicdn.com/tfs/TB1xCfDDpzqK1RjSZFvXXcB7VXa-692-297.png)
 
 ## 测试环境
+
 ### 1.环境
 
 指标|参数
@@ -51,6 +52,7 @@ Nacos版本|0.8.0
 * 验证Nacos服务长连接容量能力
 
 ## 测试数据
+
 ### 1. 发布配置
 发布配置主要测试Nacos publishConfig接口的性能。  
 在各规模集群的性能表现：
@@ -73,8 +75,7 @@ Nacos版本|0.8.0
 :---:|:---:|:---:|:---:
 15000|23013|45000|161099
 
-具体我们也看下3节点服务集群获取配置能力，  
-以下为各个并发数 (施压机台数*并发数) 时，获取配置的TPS，平均RT。
+具体我们也看下3节点服务集群获取配置能力，以下为各个并发数 (施压机台数*并发数) 时，获取配置的TPS，平均RT。
 ![IMAGE](https://img.alicdn.com/tfs/TB1UjzDDr2pK1RjSZFsXXaNlXXa-691-365.png)
 ![IMAGE](https://img.alicdn.com/tfs/TB1kcfADwTqK1RjSZPhXXXfOFXa-691-380.png)
 
