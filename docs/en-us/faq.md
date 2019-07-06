@@ -1,152 +1,156 @@
-- Nacos常规问题
-  - [Nacos是什么](#1.1)
-  - [Nacos如何支持多环境](#1.2)
-  - [Nacos是否生产可用](#1.3)
-  - [Nacos版本计划](#1.4)
-  - [Nacos有什么依赖](#1.5)
-  - [Nacos使用什么开源协议](#1.6)
+---
+title: FAQ
+keywords: Nacos,FAQ
+description: Nacos of FAQ
+---
 
-- Nacos运维问题
-  - [Nacos如何单机部署](#2.1)
-  - [Nacos单机部署如何使用Mysql](#2.2)
-  - [生产环境如何部署Nacos](#2.3)
-  - [Nacos如何Docker部署](#2.4)
-  - [如何在k8s中部署Nacos](#2.5)
-  - [如何监控Nacos](#2.6)
+# FAQ
 
-- Nacos使用问题
-  - [Zookeeper服务可以迁移到Nacos上吗](#3.1)
-  - [Nacos支持多配置文件](#3.2)
-  - [Nacos支持Dubbo](#3.3)
-  - [Nacos支持Spring体系](#3.4)
-  - [不使用Nacos SDK如何访问Nacos](#3.5)
-  - [Nacos对多语言的支持](#3.6)
-  - [Nacos0.8版本登陆失败](#3.7)
-  - [服务端报错java.lang.IllegalStateException: unable to find local peer: 127.0.0.1:8848](#3.8)
-  - [Nacos如何对配置进行加密](#3.9)
-  - [Nacos报401错误](#3.10)
-  - [Nacos权重不生效](#3.11)
-  - [Nacos如何扩缩容](#3.12)
-  - [Nacos客户端修改日志级别](#3.13)
-  - [Nacos与Zipkin 整合出现 Service not found 问题](#3.14)
+- Nacos standard questions
+  - [What is Nacos](#1.1)
+  - [Nacos how to support more than the environment](#1.2)
+  - [Nacos whether production is available](#1.3)
+  - [Nacos version plan](#1.4)
+  - [Nacos dependent](#1.5)
+  - [Nacos using open source licenses](#1.6)
 
-- Nacos原理问题
+- Nacos operational questions
+  - [Nacos standalone deployment](#2.1)
+  - [Nacos standalone deployment using Mysql](#2.2)
+  - [Nacos production deployment](#2.3)
+  - [Nacos Docker deployment](#2.4)
+  - [How to deploy in k8s Nacos](#2.5)
+  - [How to monitor Nacos](#2.6)
 
-## Nacos常规问题
-<h4 id="1.1">Nacos是什么</h4>
+- Nacos used questions
+  - [Zookeeper service can be migrated to Nacos?](#3.1)
+  - [Nacos support multiple configuration files](#3.2)
+  - [Nacos support Dubbo](#3.3)
+  - [Nacos support Spring system](#3.4)
+  - [Don't use Nacos SDK how to access the Nacos](#3.5)
+  - [Nacos support for multiple languages](#3.6)
+  - [Nacos 0.8 version logon failure](#3.7)
+  - [Server error `java.lang.IllegalStateException: unable to find local peer: 127.0.0.1:8848`](#3.8)
+  - [Nacos configuration for encryption](#3.9)
+  - [Nacos at 401 error](#3.10)
+  - [Nacos weight not to take effect](#3.11)
+  - [Nacos how to enlarge shrinks capacity](#3.12)
+  - [Nacos client modify the log level](#3.13)
+  - [Nacos and Zipkin integration `Service not found` error](#3.14)
 
-Nacos 致力于帮助您发现、配置和管理微服务。Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。详情可以参考[Nacos官网介绍](https://nacos.io/zh-cn/docs/what-is-nacos.html)
+- Nacos principle questions
 
-<h4 id="1.2">Nacos如何支持多环境</h4>
+## Nacos standard questions
+<h4 id="1.1">What is Nacos</h4>
 
-在日常使用中常常需要不同的环境，比如日常，预发，线上环境，如果是逻辑隔离可以使用命名空间，Nacos支持命名空间来支持多环境隔离，可以在Nacos控制台创建多个命名空间。如果需要物理隔离需要部署多套Nacos环境
+Nacos dedicated to help you find, micro configuration and management services. Nacos provides a set of simple and easy to use feature set, help you quickly realize dynamic service discovery, service configuration, service metadata, and traffic management. Details you can refer to [Nacos website](https://nacos.io/en-us/docs/what-is-nacos.html).
 
-<h4 id="1.3">Nacos是否生产可用</h4>
+<h4 id="1.2">Nacos how to support more than the environment</h4>
 
-Nacos在2019.1发布了Pre-GA版本，支持了安全隔离、监控和服务迁移等上生产的最后一公里，以更稳定的支撑用户的生产环境。具体详情[Nacos 发布 v0.8.0 Pre-GA 版本，安全稳定上生产
-](https://www.oschina.net/news/104019/nacos-0-8-0-pre-ga)
+In daily use are often need different environment, such as daily, pretest, online environment, if it is a logical isolation, can use the namespace Nacos support namespace to support more environmental isolation, can create multiple namespaces in Nacos console. If you need physical isolation, will deploy more sets of Nacos environment.
 
-<h4 id="1.4">Nacos版本计划</h4>
+<h4 id="1.3">Nacos whether production is available</h4>
 
-Nacos 0.8.0 开始支持生产可用，1.0版本达到大规模生产可用，2.0版本计划与K8s、Spring Cloud、Service Mesh、Serverless进一步融合，具体的详情参考[Nacos规划](https://nacos.io/zh-cn/docs/roadmap.html)
+Nacos in January 2019 issued a Pre - GA version, to support the security isolation, monitoring and service migration on the last mile of production, in a more stable support the user's production environment. Details you can refer to [Nacos release v0.8.0 Pre - GA version, the safe and stable production](https://www.oschina.net/news/104019/nacos-0-8-0-pre-ga).
 
-<h4 id="1.5">Nacos有什么依赖</h4>
+<h4 id="1.4">Nacos version plan</h4>
 
-在单机模式下，Nacos没有任何依赖，在集群模式下，Nacos依赖Mysql做存储，详情可以参考[Nacos部署](https://nacos.io/zh-cn/docs/deployment.html)
+Nacos 0.8.0 to support production available, version 1.0 to mass production is available, version 2.0 plan and K8s, Spring Cloud, and further integration Service Mesh, Serverless, details you can refer to [Nacos roadmap](https://nacos.io/en-us/docs/roadmap.html).
 
-<h4 id="1.6">Nacos使用什么开源协议</h4>
+<h4 id="1.5">Nacos dependent</h4>
 
-Nacos使用 [Apache 2.0](https://github.com/alibaba/nacos/blob/master/LICENSE)
+In stand-alone mode, Nacos without any rely on, in cluster mode, Nacos rely on Mysql storage, details you can refer to [Nacos deployment](https://nacos.io/en-us/docs/deployment.html).
 
-## Nacos运维问题
-<h4 id="2.1">Nacos如何单机部署</h4>
+<h4 id="1.6">Nacos using open source licenses</h4>
 
-可以参考Nacos官网部署手册 [quick start](https://nacos.io/zh-cn/docs/quick-start.html)
+Nacos using [Apache 2.0](https://github.com/alibaba/nacos/blob/master/LICENSE).
 
-<h4 id="2.2">Nacos单机部署如何使用mysql</h4>
+## Nacos operational questions
+<h4 id="2.1">Nacos standalone deployment</h4>
 
-Nacos单机模式默认使用内嵌的数据库作为存储引擎，如果想换成自己安装的mysql，可以按照 [官网文档](https://nacos.io/zh-cn/docs/deployment.html)
+You can refer to the manual Nacos website deployment [quick start](https://nacos.io/en-us/docs/quick-start.html).
 
-<h4 id="2.3">生产环境如何部署Nacos</h4>
+<h4 id="2.2">Nacos standalone deployment using Mysql</h4>
 
-生产环境使用Nacos为了达到高可用不能使用单机模式，需要搭建nacos集群，具体详情可以参考 [集群部署手册](https://nacos.io/zh-cn/docs/cluster-mode-quick-start.html)
+Nacos stand-alone mode defaults to using the embedded database as the storage engine, if you want to change your mysql installation, you can refer to [website document](https://nacos.io/en-us/docs/deployment.html).
 
-<h4 id="2.4">Nacos如何Docker部署</h4>
+<h4 id="2.3">Nacos production deployment</h4>
 
-除了使用压缩包部署Nacos，Nacos也提供了相应的Docker镜像，当Nacos发布新的版本的时候，Nacos会发布对应的镜像版本支持Docker部署。具体详情可以参考[Nacos Docker](https://nacos.io/zh-cn/docs/quick-start-docker.html)
+Production environment using Nacos in order to achieve high availability cannot use stand-alone mode, need to build Nacos cluster, specific details can refer to [the manual cluster deployment](https://nacos.io/en-us/docs/cluster-mode-quick-start.html).
 
-<h4 id="2.5">如何在k8s中部署Nacos</h4>
+<h4 id="2.4">Nacos Docker deployment</h4>
 
-在生产环境部署Nacos集群，如果要对Nacos进行扩容操作，需要手动更改集群ip文件，启动新的Nacos服务。为了能进行自动化运维，Nacos和k8s结合利用StatefulSets提供了自动运维方案，能对Nacos进行动态扩缩容，具体详情参考[Kubernetes Nacos](https://github.com/nacos-group/nacos-k8s/blob/master/README-CN.md)
+In addition to using compressed package deployment Nacos, Nacos also provides a corresponding Docker image, when Nacos release new versions, Nacos will release the corresponding image version supports Docker deployment.Specific details you can refer to [Nacos Docker](https://nacos.io/en-us/docs/quick-start-docker.html).
 
-<h4 id="2.6">如何监控Nacos</h4>
+<h4 id="2.5">How to deploy in k8s Nacos</h4>
 
-Nacos0.8版本提供了Metrics数据暴露能力，能通过Metrics数据的内容对Nacos的运行状态进行监控，详情参考[Nacos监控](https://nacos.io/zh-cn/docs/monitor-guide.html)
+In production deployment Nacos cluster, if for Nacos expansion operation, need to manually change the cluster IP file, start a new Nacos service.In order to automate operations, k8s Nacos and combined use of StatefulSets provides automatic operations plan, to dynamic scalability Nacos capacity, specific details reference [Kubernetes Nacos](https://github.com/nacos-group/nacos-k8s/blob/master/README.md).
 
-## Nacos使用问题
-<h4 id="3.1">Zookeeper上的服务可以迁移到Nacos上吗?</h4>
+<h4 id="2.6">How to monitor Nacos</h4>
 
-可以通过Nacos-Sync把Zookeeper服务迁移到Nacos，也可以从Nacos迁移到Zookeeper，具体可以参考[Nacos Sync 使用](https://github.com/paderlol/nacos-sync-example)
+Nacos0.8 version provides the Metrics data exposed ability, can pass the Metrics data to monitor the running status of Nacos, the content of the details you can refer to [Nacos monitor](https://nacos.io/en-us/docs/monitor-guide.html).
 
-<h4 id="3.2">Nacos支持多配置文件</h4>
+## Nacos used questions
+<h4 id="3.1">Zookeeper service can be migrated to Nacos?</h4>
 
-Nacos通过Spring Cloud Alibaba Nacos Config支持了多配置文件，可以将配置存储在多个独立的配置文件中。关联的[issue](https://github.com/alibaba/nacos/issues/320)，详情参考文档[Spring Cloud Alibaba Nacos Config](https://github.com/spring-cloud-incubator/spring-cloud-alibaba/wiki/Nacos-config)
+Can through the Nacos - Sync moved the Zookeeper service and Nacos, can also be migrated from Nacos Zookeeper, specific details can be used as [Nacos Sync reference](https://github.com/paderlol/nacos-sync-example).
 
-<h4 id="3.3">Nacos支持Dubbo</h4>
+<h4 id="3.2">Nacos support multiple configuration files</h4>
 
-Nacos 0.6版本和Dubbo集成，支持使用Nacos作为注册中心，关联[issue](https://github.com/alibaba/nacos/issues/390),具体文档参考[Dubbo 融合 Nacos 成为注册中心
-](https://nacos.io/zh-cn/docs/use-nacos-with-dubbo.html)
+Nacos through Spring Cloud Alibaba Nacos Config support multiple configuration files, configuration can be stored in a separate configuration file.The associated [issue](https://github.com/alibaba/nacos/issues/320), details refer to the document [Spring Cloud Alibaba Nacos Config](https://github.com/spring-cloud-incubator/spring-cloud-alibaba/wiki/Nacos-config).
 
-<h4 id="3.4">Nacos支持Spring体系</h4>
+<h4 id="3.3">Nacos support Dubbo</h4>
 
-Nacos完善支持了Sping技术栈，具体可以参考[Nacos Spring](https://nacos.io/zh-cn/docs/quick-start-spring.html)、[Nacos Spring Boot](https://nacos.io/zh-cn/docs/quick-start-spring-boot.html)、[Spring Cloud](https://nacos.io/zh-cn/docs/quick-start-spring-cloud.html)
+Nacos version 0.6 and Dubbo integration, support the use of Nacos as registry, related [issue](https://github.com/alibaba/nacos/issues/390), details refer to the document [Nacos and Dubbo fusion become registry](https://nacos.io/en-us/docs/use-nacos-with-dubbo.html).
 
-<h4 id="3.5">不使用Nacos SDK如何访问Nacos</h4>
+<h4 id="3.4">Nacos support Spring system</h4>
 
-Nacos的网络交互都是基于Http协议实现的，提供了[Open-API](https://nacos.io/zh-cn/docs/open-API.html)可以很容易实现Nacos的访问
+Nacos perfect supports the Sping technology stack, details refer to the document [Nacos Spring](https://nacos.io/en-us/docs/quick-start-spring.html)、[Nacos Spring Boot](https://nacos.io/en-us/docs/quick-start-spring-boot.html)、[Spring Cloud](https://nacos.io/en-us/docs/quick-start-spring-cloud.html).
 
-<h4 id="3.6">Nacos对多语言的支持</h4>
+<h4 id="3.5">Don't use Nacos SDK how to access the Nacos</h4>
 
-Nacos目前只支持Java，对于其他语言的支持还正在开发中，需要大家大力支持一起共建
+Nacos network interaction is implemented based on Http protocol, provides the [Open-API]((https://nacos.io/en-us/docs/open-api.html)) can easily achieve Nacos access.
 
-<h4 id="3.7">Nacos0.8版本登陆失败</h4>
+<h4 id="3.6">Nacos support for multiple languages</h4>
 
-Nacos 0.8版本当使用openjdk并且没有JAVA_HOME的环境变量时，nacos可以启动成功，是因为yum install安装的openjdk 会把java命令注册一份到/bin目录下面,所以会引发SignatureException异常。这个问题已经修复，0.9版本会发版，具体详情可以参考[issue](https://github.com/alibaba/nacos/issues/711)
+Nacos currently only supports Java, support for other languages are being developed, also need your support to build together.
 
-<h4 id="3.8">服务端报错java.lang.IllegalStateException: unable to find local peer: 127.0.0.1:8848</h4>
+<h4 id="3.7">Nacos 0.8 version logon failure</h4>
 
-这个问题是因为Nacos获取本机IP时,没有获取到正确的外部IP.需要保证InetAddress.getLocalHost().getHostAddress()或者hostname -i的结果是与cluster.conf里配置的IP是一致的.
+Nacos version 0.8 when using its and no `JAVA_HOME` environment variable, Nacos can launch successful, because `yum install` installed its the Java command to register a beneath `/bin` directory, and so can cause abnormal `SignatureException`.This problem has been repair, version 0.9 release, the specific details can refer to the [issue](https://github.com/alibaba/nacos/issues/711).
 
-<h4 id="3.9">Nacos如何对配置进行加密</h4>
+<h4 id="3.8">Server error java.lang.IllegalStateException: unable to find local peer: 127.0.0.1:8848</h4>
 
-Nacos计划在1.X版本提供加密的能力，目前还不支持加密，只能靠sdk做好了加密再存到nacos中
+This problem because Nacos get native IP, don't get to the correct external IP. The need to guarantee the `InetAddress.getLocalHost().getHostAddress()` or the result of the `hostname -i` was with the cluster. The conf configuration of IP is the same.
 
-<h4 id="3.10">Nacos报401错误</h4>
+<h4 id="3.9">Nacos configuration for encryption</h4>
 
-Nacos服务端报错了，可以检查服务端日志，参考[issue](https://github.com/alibaba/nacos/issues/816)
+Nacos plan in 1.X version's ability to provide encryption, currently does not support encryption, can only rely on the SDK prepared encryption endures Nacos again.
 
-<h4 id="3.11">Nacos权重不生效</h4>
+<h4 id="3.10">Nacos at 401 error</h4>
 
-Nacos控制台上编辑权重, 目前从SpringCloud客户端和Dubbo客户端都没有打通, 所以不能生效. 对于SpringCloud客户端, 应用可以实现Ribbon的负载均衡器来进行权重过滤.
+Nacos server error, check the server logs, refer to the [issue](https://github.com/alibaba/nacos/issues/816).
 
-<h4 id="3.12">Nacos如何扩缩容</h4>
+<h4 id="3.11">Nacos weight not to take effect</h4>
 
-目前支持修改cluster.conf文件的方式进行扩缩容, 改完后无需重启, Server会自动刷新到文件新内容.
+Nacos console editors weights, at present from SpringCloud client and Dubbo client didn't get through, so can't take effect. For SpringCloud client application can realize the load balancer Ribbon for weighting filter.
 
-<h4 id="3.13">Nacos客户端修改日志级别</h4>
+<h4 id="3.12">Nacos how to enlarge shrinks capacity</h4>
 
-配置-D参数com.alibaba.nacos.naming.log.level设置naming客户端的日志级别，例如设置为error：
-`-Dcom.alibaba.nacos.naming.log.level=error`
-同样的，-D参数com.alibaba.nacos.config.log.level用来设置config客户端的日志级别。
+Currently supported modify the `cluster.conf` file in a way that expanding capacity, after the change without restart, the Server will automatically refresh the new content to the file.
 
-<h4 id="3.14">Nacos与Zipkin 整合出现 Service not found 问题</h4>
+<h4 id="3.13">Nacos client modify the log level</h4>
 
-配置spring-cloud-seluth参数：spring.zipkin.discovery-client-enabled=false 。
+Configuration - D parameters `com.alibaba.nacos.naming.log.level` set naming the client log level, such as setting for the error:`-Dcom.alibaba.nacos.naming.log.level=error` Similarly, - D parameters `com.alibaba.nacos.config.log.level` is used to set the config client log level.
 
-如果仍然存在`Service not found`错误，则建议先使用open-api将Zipkin-server注册为永久实例服务：
+<h4 id="3.14">Nacos and Zipkin integration Service not found error</h4>
+
+Configuration `spring-cloud-seluth` parameters: `spring.zipkin.discovery-client-enabled=false`.
+
+If there is still a `Service not found` error, is recommended to use the open-api will Zipkin-server instance is registered as a permanent Service:
 
 `curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?port=9411&healthy=true&ip=127.0.0.1&weight=1.0&serviceName=zipkin-server&ephemeral=false&namespaceId=public'`
 
-然后，前往nacos控制台，找到服务名为`zipkin-server`的服务，找到集群配置，设置健康检查模式为`TCP`，端口号为`9411`(即zipkin-server的端口)。
+Then, went to nacos console, find a service called `zipkin-server` service, find the cluster configuration, set the health examination mode to `TCP`, port number of `9411` (zipkin-server port).
 
-## Nacos原理问题
+## Nacos principle questions
