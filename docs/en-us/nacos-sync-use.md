@@ -1,24 +1,26 @@
-# NacosSync迁移用户手册
+---
+title: NacosSync migration user guide
+keywords: NacosSync,migration,user guide
+description: NacosSync migration user manual
+---
 
-<a name="4a481d2c"></a>
-## 手册目标
-* 启动NacosSync服务
-* 通过一个简单的例子,演示如何将注册到Zookeeper的Dubbo客户端迁移到Nacos
-<a name="8dff94cf"></a>
-## 系统需要
-启动服务之前,你需要安装下面的服务:
+# NacosSync migration user guide
+
+## Guide purposes
+* Start NacosSync service
+* By a simple example, demonstrates how to register to the Zookeeper Dubbo client migrated to Nacos.
+
+## Preparatory work
+Before you start the service, you need to install the following services:
 * 64bit OS: Linux/Unix/Mac/Windows supported, Linux/Unix/Mac recommended.
 * 64bit JDK 1.8+: [downloads](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html), [JAVA_HOME settings](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/).
 * Maven 3.2.x+: [downloads](https://maven.apache.org/download.cgi), [settings](https://maven.apache.org/settings.html).
 * MySql 5.6.+
-<a name="0aaf7364"></a>
 
-## 获取安装包
-有2种方式可以获得NacosSync的安装包:
-* 直接下载NacosSync的二进制安装包（下载最新的版本 https://github.com/nacos-group/nacos-sync/releases）
-
-[nacosSync.${version}.zip](https://github.com/nacos-group/nacos-sync/releases)
-* 从GitHub上下载NacosSync的源码进行构建
+## Get the installation package
+There are two ways to obtain NacosSync installation package:
+* Direct download NacosSync binary installation package:[nacosSync.${version}.zip](https://github.com/nacos-group/nacos-sync/releases)
+* Download NacosSync source to build from the Github
 
 Package:
 ```basic
@@ -26,12 +28,12 @@ cd nacosSync/
 mvn clean package -U
 ```
 
-目标文件的路径:
+The path of the target file:
 ```basic
 nacos-sync/nacossync-distribution/target/nacosSync.${version}.zip
 ```
 
-解压安装包之后,工程的文件目录结构:
+Unpack the installation package, project file directory structure:
 ```basic
 nacosSync
 ├── LICENSE
@@ -46,106 +48,99 @@ nacosSync
 ├── logs
 └── nacosSync-server.${version}.jar
 ```
-<a name="d41d8cd9"></a>
-### 
-<a name="2e8b6989"></a>
-## 初始化DB
 
-系统默认配置的数据库是MySql,也能支持其他的关系型数据库
-1. 建库,缺省的数据库名字为“nacos_Sync”
-1. 数据库表不需要单独创建,默认使用了hibernate的自动建表功能
-1. 如果你的环境不支持自动建表,可以使用系统自带的sql脚本建表,脚本放在bin目录下
+## Initialize the database
 
-<a name="fad227bc"></a>
-## DB配置
+The system default configuration database is Mysql, can also support other relational database.
+1.The database construction, the default database name for "nacos_Sync".
+2.The database table don't need to create separately, using the hibernate automatically by default build table function.
+3.If you do not support automatic table, you can use the system's own build table SQL script, the script in the bin directory.
 
-DB的配置文件放在conf/application.properties中:
+## Database configuration
+
+Database configuration file on `conf/application.properties`:
 ```basic
 spring.datasource.url=jdbc:mysql://127.0.0.1:3306/nacos_sync?characterEncoding=utf8
 spring.datasource.username=root
 spring.datasource.password=root
 ```
 
-<a name="8b7a5bf9"></a>
-## 启动服务器
+## Start server
 
 ```bash
 $ nacosSync/bin:
 sh startup.sh  restart
 ```
 
-<a name="24d69918"></a>
-## 检查系统状态
+## Check system status
 
-1.系统日志检查<br />日志的路径在 nacosSync/logs/nacosSync.log,检查是否有异常信息<br />2.检查系统端口(缺省的系统端口是8081,你可以自己定义在application.properties中)
+1.Check system log
+
+The path of the log in `nacosSync/logs/nacosSync.log`, check whether there are abnormal information.
+
+2.Check system port
+
+Port is the default system `8081`, you can define your own `application.properties`.
+
 ```bash
 $netstat -ano|grep 8081
 tcp        0      0 0.0.0.0:8081                0.0.0.0:*                   LISTEN      off (0.00/0/0)
 ```
 
-<a name="b5c37706"></a>
-## 控制台
-访问路径:
+## Console
+
+Access path:
 ```
 http://127.0.0.1:8081/#/serviceSync
 ```
-
-
 ![image.png](https://img.alicdn.com/tfs/TB1EKbkJ3HqK1RjSZFEXXcGMXXa-2866-606.png)
 
-如果检查没有问题,NacosSync已经正常启动了,NacosSync的部署结构:<br />![image.png](https://img.alicdn.com/tfs/TB107nfJ9zqK1RjSZFjXXblCFXa-1412-342.png)
+If there is no problem, check NacosSync has begun, normal NacosSync deployment structure:![image.png](https://img.alicdn.com/tfs/TB107nfJ9zqK1RjSZFjXXblCFXa-1412-342.png)
 
-<a name="a9686100"></a>
-## 开始迁移
+## Starting migration
 
-<a name="f7389286"></a>
-### 迁移信息
+### Migration information
 
-Dubbo服务的部署信息:<br />![image.png](https://img.alicdn.com/tfs/TB1Ci_eJ4TpK1RjSZR0XXbEwXXa-938-700.png)
+Dubbo service deployment information:![image.png](https://img.alicdn.com/tfs/TB1Ci_eJ4TpK1RjSZR0XXbEwXXa-938-700.png)
 
-迁移的服务:
+The migration of services:
 
 | Service Name | Version | Group Name |
 | --- | --- | --- |
 | com.alibaba.nacos.api.DemoService | 1.0.0 | zk |
 
+### Add the registry cluster information
 
-<a name="30f7edcb"></a>
-### 添加注册中心集群信息
-
-1.点击左侧导航栏中的“集群配置”按钮,新增加一个集群,先增加一个Zookeeper集群,选择集群类型为ZK<br />
+1.Click on the "cluster configuration" button in the left navigation bar, a new cluster, first add a Zookeeper cluster, select the cluster type for ZK.
 ![image.png](https://img.alicdn.com/tfs/TB1oJDnJ7voK1RjSZFwXXciCFXa-2870-1130.png)
 
-> 注意:集群名字可以自定义,但是一旦确认,不能被修改,否则基于此集群增加的任务,在NacosSync重启后,将不会恢复成功
+> Note: the cluster name can customize, but once confirmed, cannot be modified, otherwise increase task based on the cluster, after NacosSync restart, success will not resume.
 
-
-2.同样的步骤,增加NacosSync集群<br />
+2.The same steps, increase NacosSync cluster.
 ![image.png](https://img.alicdn.com/tfs/TB1HQPhJVzqK1RjSZFCXXbbxVXa-2846-1042.png)
 
-添加完成后,可以在列表中查询到<br />
+3.After the completion of the add, can inquire on the list:
 ![image.png](https://img.alicdn.com/tfs/TB1AX6fJVYqK1RjSZLeXXbXppXa-2864-824.png)
 
+### Add the synchronization task
 
-<a name="da01623b"></a>
-### 添加同步任务
-
-1.增加一个同步任务,从Zookeeper集群同步到Nacos集群,同步的粒度是服务,Zookeeper集群则称为源集群,Nacos集群称为目标集群<br />
+1. Add a sync task, from Zookeeper cluster synchronization to Nacos cluster, synchronous granularity is service, it is called a Zookeeper cluster source cluster, Nacos cluster called target cluster.
 ![imagesd.png](https://img.alicdn.com/tfs/TB1tF_fJVYqK1RjSZLeXXbXppXa-2838-1138.png)
 
-添加完成之后,可以在服务同步列表中,查看已添加的同步任务:<br />
+Add finished, can be in service sync list, view has add synchronization task:
 ![image.png](https://img.alicdn.com/tfs/TB1l6uJJ9zqK1RjSZPcXXbTepXa-2824-570.png)
 
-2.同步完成之后,检查下数据是否同步成功到Nacos集群,可以通过Nacos的控制台进行查询<br />
+2. The synchronization is completed, check whether the data synchronization to success Nacos cluster, can query through the Nacos console.
 ![image.png](https://img.alicdn.com/tfs/TB1tPneJ4TpK1RjSZR0XXbEwXXa-2872-828.png)
 
-此刻,数据已经成功从Zookeeper集群同步到了Nacos集群,部署结构如下:
-
+3. At the moment, the data has been successfully from Zookeeper cluster synchronization to Nacos cluster, the deployment structure is as follows:
 ![image.png](https://img.alicdn.com/tfs/TB14kriJ6TpK1RjSZKPXXa3UpXa-1724-772.png)
-<a name="a881af49"></a>
-### 让Dubbo客户端连接到Nacos注册中心
-<a name="ebc99b4c"></a>
-#### Dubbo Consumer客户端迁移
-Dubbo 已经支持Nacos注册中心,支持的版本为2.5+,需要增加一个Nacos注册中心的Dubbo扩展插件依赖:
+
+### Dubbo clients to connect to Nacos registry
+
+#### Dubbo Consumer client migration
+
+Dubbo has supported Nacos registry, support version 2.5 +, need to add a Nacos registry of Dubbo extensions depends on:
 ```basic
 <dependency>
       <groupId>com.alibaba</groupId>
@@ -153,7 +148,8 @@ Dubbo 已经支持Nacos注册中心,支持的版本为2.5+,需要增加一个Nac
 			<version>0.0.2</version>
 </dependency>
 ```
-<br /><br />增加Nacos客户端的依赖:
+
+Increase Nacos client depends on:
 ```basic
 <dependency>
         <groupId>com.alibaba.nacos</groupId>
@@ -162,7 +158,7 @@ Dubbo 已经支持Nacos注册中心,支持的版本为2.5+,需要增加一个Nac
 </dependency>
 ```
 
-配置Dubbo Consumer的Dubbo配置文件,让客户端能够找到Nacos集群<br />consumer.yaml
+Configuration Dubbo Consumer Dubbo profile `Consumer. The yaml`, let the client can find Nacos cluster.
 ```basic
 spring:
   application:
@@ -176,43 +172,35 @@ dubbo:
     address: nacos://127.0.0.1:8848
 ```
 
-不需要修改代码,配置更新完毕之后 ,你就可以重启你的应用,使之生效了.
+Don't need to modify the code, configuration after the update, you can restart your application into law.
 
-Consumer发布完成之后,目前的部署结构如下:<br />
+Consumer release is completed, the deployment of the structure is as follows:
 ![image.png](https://img.alicdn.com/tfs/TB181fkJ3HqK1RjSZFEXXcGMXXa-1734-878.png)
-<a name="dbe2c2d1"></a>
-#### Dubbo Provider迁移
 
-在升级Provider之前,你需要确保该Provider发布的服务,都已经配置在NacosSync中,同步的方式为从Nacos同步到Zookeeper,因为Provider升级连接到Nacos之后,需要确保老的Dubbo Consumer客户端能够在Zookeeper上订阅到该Provider的地址,现在,我们增加一个同步任务:<br />
+#### Dubbo Provider migration
+
+Before you upgrade the Provider, you need to ensure that the Provider of services, are already configured in NacosSync, synchronous way from Nacos synchronization to Zookeeper, because the Provider connected to Nacos upgrade, you need to make sure that the old Dubbo Consumer client can subscribe to the Provider's address in the Zookeeper, now, we add a sync task:
 ![image.png](https://img.alicdn.com/tfs/TB1pdDnJ7voK1RjSZFwXXciCFXa-2872-1060.png)
-<br />
+
 ![image.png](https://img.alicdn.com/tfs/TB19Ey_J6DpK1RjSZFrXXa78VXa-2842-660.png)
 
-> 注意:Nacos服务同步到Zookeeper,不需要填写版本号,你在选择源集群的时候,版本号的输入框会自动隐藏掉
+> Note: Nacos synchronization to the Zookeeper service, do not need to fill in the version number, you in choosing the source cluster, the version number of the input box automatically hidden.
 
+Sync task is completed, you can upgrade the Provider, upgrade the Provider method, reference to upgrade the Consumer steps.
 
-同步任务完成后,你就可以升级Provider了,升级Provider的方法,参考升级Consumer的步骤.
-<a name="35707fdc"></a>
-### 新的部署结构
-* 在升级的过程中,会有新老版本的客户端同时存在,部署结构如下:
+### New deployment structure
+* In the process of upgrading, there will be new and old versions of the client at the same time, the deployment structure is as follows:
 
 ![image.png](https://img.alicdn.com/tfs/TB14Y_iJ3HqK1RjSZFPXXcwapXa-1728-838.png)
-* 在所有的客户端迁移完成之后,部署结构如下:
+
+* All client migration is completed, the deployment structure is as follows:
 
 ![image.png](https://img.alicdn.com/tfs/TB1Cg2dJYvpK1RjSZPiXXbmwXXa-1466-864.png)
 
-现在,Zookeeper集群,NacosSync集群就可以下线了.
+Now, the Zookeeper cluster, NacosSync cluster can get offline.
 
-<a name="1bbbb204"></a>
-### 注意事项
-* 同步任务添加之后,需要确保下服务是否成功同步到目标集群,可以通过目标集群的控制台进行查询
-* NacosSync支持高可用集群模式部署,你只需要把数据库配置成同一个即可
-* 如果梳理不清楚订阅和发布的服务,建议可以把服务都做双向同步
-* Dubbo客户端目前不支持Nacos的权重功能,如果你用到了权重功能,需要重新考虑一下方案是否合适
-
-
-
-
-
-
-
+### Attention
+* Synchronization task after adding, you need to ensure that the service is successful sync to the target cluster, can through the console the target cluster.
+* NacosSync support high availability cluster pattern deployment, you only need to put the database can be configured to the same.
+* Comb if not clear subscription and published service, suggested can do services are two-way synchronous.
+* Dubbo client currently does not support Nacos weighting function, if you are using the weight function, need to reconsider the plan.
