@@ -1,137 +1,119 @@
-# namespace, endpoint 最佳实践
+---
+title: Namespace,endpoint best practices
+keywords: namespace,endpoint,best practices
+description: With using Nacos enterprises more and more, the two most frequently encountered problem is: how to use in my production environment right namespace and the endpoint.
+---
 
+# Namespace, endpoint best practices
 
-随着使用 Nacos 的企业越来越多，遇到的最频繁的两个问题就是：如何在我的生产环境正确的来使用 namespace 以及 endpoint。这篇文章主要就是针对这两个问题来聊聊使用 nacos 过程中关于这两个参数配置的最佳实践方式。
-
+With using Nacos enterprises more and more, the two most frequently encountered problem is: how to use in my production environment right namespace and the endpoint.
 
 ## namespce
 
-关于 namespace ，以下主要从 **namespace 的设计背景** 和 **namespace 的最佳实践** 两个方面来讨论。
+Regarding the namespace, the following main from **namespace design background** and **namespace best practice** two aspects to discuss.
 
-### namespace 的设计背景
+### namespace design background
 
-namespace 的设计是 nacos 基于此做多环境以及多租户数据(**配置和服务**)隔离的。即：
+Namespace design is made more nacos based on this environment and multi-tenant data (**configuration and service**) of isolation.That is:
 
-* 从一个租户(用户)的角度来看，如果有多套不同的环境，那么这个时候可以根据指定的环境来创建不同的 namespce，以此来实现多环境的隔离。例如，你可能有日常，预发和生产三个不同的环境，那么使用一套 nacos 集群可以分别建以下三个不同的 namespace。如下图所示:
+* From the point of view of a tenant (user), if there are many different environment, so this time can be specified according to the environment to create different namespce, in order to realize the environment isolation.For example, you might be everyday, pretest and the production of three different environment, then use a nacos cluster can build the following three different namespace. As shown in the figure below:
 
-  <div align=center>
-     <img width=630 height=380 src="http://edas.oss-cn-hangzhou.aliyuncs.com/deshao/pictures/nacos_ingle_tenant_namespace.jpg" >
-  </div>
+![](http://edas.oss-cn-hangzhou.aliyuncs.com/deshao/pictures/nacos_ingle_tenant_namespace.jpg)
 
+* from the point of view of multiple tenants (user), each tenant (user) may have its own namespace, each tenant configuration data (user) and registered service data belonging to its own namespace, so as to achieve the multi-tenant isolation between the data.For example the supervisor assigned three tenants, San Zhang, Si Li and Wu Wang respectively.Distribution of good, after all the tenants on their own account name and password after logging in, create your own namespace. As shown in the figure below:
 
-* 从多个租户(用户)的角度来看，每个租户(用户)可能会有自己的 namespace,每个租户(用户)的配置数据以及注册的服务数据都会归属到自己的 namespace 下，以此来实现多租户间的数据隔离。例如超级管理员分配了三个租户，分别为张三、李四和王五。分配好了之后，各租户用自己的账户名和密码登录后，创建自己的命名空间。如下图所示。
+![](http://edas.oss-cn-hangzhou.aliyuncs.com/deshao/pictures/nacos_multi_tenant_namespace.jpg)
 
-  <div align=center>
-		<img width=630 height=380 src="http://edas.oss-cn-hangzhou.aliyuncs.com/deshao/pictures/nacos_multi_tenant_namespace.jpg" >
-  </div>
-
-  **注意:** 该功能还在规划中。
+  **Note:** This feature is still in planning.
   
-## namespace 的最佳实践
+### namespace best practices
 
+Best practices on the namespace, this part mainly consists of two actions:
 
-关于 namespace 的最佳实践 ，这部分主要包含有两个 Action：
+* How to obtain the value of the namespace
+* The namespace parameters initialization method
 
-* 如何来获取 namespace 的值
-* namespace 参数初始化方式
+### How to obtain the value of the namespace 
 
-### 如何来获取 namespace 的值 
+Whether you are based on Spring Cloud or Dubbo to use nacos, involve namespace parameter input, so when the value of the namespace from where can I get?
 
+1. If you are using is not aware to this parameter in the process of input, then nacos unified will use a default namespace as input, nacos naming will use **public** as the default parameters to initialize, nacos config will use an **empty string** as the default parameters to initialize.
 
-无论您是基于 Spring Cloud 或者 Dubbo 来使用 nacos，都会涉及到 namespace 的参数输入，那么这个时候 namespace 的值从哪里可以获取呢？
+2. If you need to customize your own namespace, then the value how to produce?
 
-1. 如果您在使用过程中没有感知到这个参数的输入，那么 nacos 统一会使用一个默认的 namespace 作为输入，nacos naming 会使用 **public** 作为默认的参数来初始化，nacos config 会使用一个**空字符串**作为默认的参数来初始化。。
+   Can see on the console function of the left side of the nacos has the function of a **namespace**, click on the **new namespace** can see button, so this time you can create your own namespace.Create success, generates a **namespace ID**, is mainly used to avoid **namespace name** namesake, is likely to happen. So when you need to configure the specified namespace in the application, **fill in it is the namespace ID**.The important things three times:
 
-1. 如果您需要自定义自己的 namespace，那么这个值该怎么来产生？
+	1. When you need to configure the specified namespace in the application, **fill in it isthe namespace ID**.
+	2. When you need to configure the specified namespace in the application, **fill in it isthe namespace ID**.
+	3. When you need to configure the specified namespace in the application, **fill in it isthe namespace ID**.
 
-   可以在 nacos 的控制台左边功能侧看到有一个 **命名空间** 的功能，点击就可以看到 **新建命名空间** 的按钮，那么这个时候就可以创建自己的命名空间了。创建成功之后，会生成一个**命名空间ID**，主要是用来避免**命名空间名称**有可能会出现重名的情况。因此当您在应用中需要配置指定的 namespace 时，**填入的是命名空间ID**。重要的事情说三遍，
+Namesace for **public** is nacos a retain control, if you need to create your own namespace, it is best not to **public** and name repetition, to an actual business scenarios have specific semantic named after, lest bring literally a namespace which is not easy to distinguish himself.
 
-	1. 当您在应用中需要配置指定的 namespace 时，**填入的是命名空间 ID**
-	2. 当您在应用中需要配置指定的 namespace 时，**填入的是命名空间 ID**
-	3. 当您在应用中需要配置指定的 namespace 时，**填入的是命名空间 ID**
+### namespace parameters initialization method
 
+Nacos client for namespace initialization process as shown in the figure below:
 
-说明: namesace 为 **public** 是 nacos 的一个保留控件，如果您需要创建自己的 namespace，最好不要和 **public** 重名，以一个实际业务场景有具体语义的名字来命名，以免带来字面上不容易区分自己是哪一个 namespace。
+![](http://edas.oss-cn-hangzhou.aliyuncs.com/deshao/pictures/nacos_init_namespace_plus.jpg)
 
+Nacos client initialization of the namespace contains two main parts:
 
-### namespace 参数初始化方式
+* User mode by nacos client through the properties in the instance structure parameters was introduced into the namespace.
 
+* In a cloud environment (**Alibaba cloud of EDAS**) of the namespace argument parsing.
 
-nacos client 对 namespace 的初始化流程如下图所示:
+  By **-Duse.cloud.namespace.parsing=true/false** whether you need to control in a cloud environment automatic parsing namespace parameter, the default value is **true**, is automatically parsed, its purpose is convenient when the user on the cloud can be smooth on the cloud in the form of zero cost.If the user on the cloud under the need to use the self-built nacos namespace, that this time you only need to **-Duse.cloud.namespace.parsing=false**.
 
+## endpoint
 
-<div align=center>
-	<img width=700 height=370 src="http://edas.oss-cn-hangzhou.aliyuncs.com/deshao/pictures/nacos_init_namespace_plus.jpg" >
-</div>
+On the endpoint, and mainly from the **the design background of endpoint** and **the endpoint parameters initialization** two aspects to discuss.
 
+### The design background of endpoint
 
-nacos client 对 namespace 的初始化，主要包含两部分，
+When nacos server cluster needs to enlarge shrinks, let a client needs to have a kind of ability can timely change perception to the cluster. In a timely manner to perceive the change of the cluster is realized through the endpoint.That the client will be timed to the endpoint sends a request to update the client list in memory clusters.
 
-* 用户态通过 nacos client 构造实例时通过 properties 参数传入的 namespace
+### The endpoint of the initialization parameter
 
-* 在云环境下(**阿里云下的 EDAS**)的 namespace 参数解析。
-
-  可通过 **-Duse.cloud.namespace.parsing=true/false** 来控制是否需要在云环境自动解析 namespace 参数，默认为 **true**，是会自动解析，其目的就是方便用户上云时可以以零成本的方式平滑上云。如果用户在云上需要用自建的 nacos 下的 namespace，那这个时候只需将 **-Duse.cloud.namespace.parsing=false** 即可。
-
-  
-# endpoint
-
-关于 endpoint ，也主要从 **endpoint 的设计背景** 和 **endpoint 的参数初始化** 两个方面来讨论。
-
-## endpoint 的设计背景
-
-当 nacos server 集群需要扩缩容时，客户端需要有一种能力能够及时感知到集群发生变化。及时感知到集群的变化是通过 endpoint 来实现的。也即客户端会定时的向 endpoint 发送请求来更新客户端内存中的集群列表。
-
-## endpoint 的参数初始化
-
-
-Nacos Client 提供一种可以对传入的 endpoint 参数规则解析的能力。即当通过构造函数的 **properties** 来初始化 endpoint 时，指定的 endpoint 值可以是一个具体的值，也可以是一个占位符的形式，如下所示: 
+Nacos Client provides an endpoint of the incoming parameter rules make sense of it.When through the constructor to initialize the **properties** the endpoint, the specified endpoint value can be a specific value, also can be in the form of a placeholder, as shown below:
 
 > **\${endpoint.options:defaultValue}**。
 
+Description: 
 
-说明: 
+1. **endpoint.options** is a specific variable.Support from the system property, reads the system environment variables.
+2. **defaultValue** is given a default value.When is not properly initialized from the specific variables, the given default value is used to initialize.
 
-1. **endpoint.options** 是一个具体的变量。支持从系统属性，系统环境变量中读取。
-2. **defaultValue** 是给出的一个默认值。当从具体的变量中没有被正确初始化时，会使用给出的默认值来初始化。
+The endpoint of the parsing rules is more complex, the overall flow chart of a parse is as follows:
 
-整个 endpoint 的解析规则比较复杂，整体的一个解析流程图如下所示:
+![](http://edas.oss-cn-hangzhou.aliyuncs.com/deshao/pictures/nacos_init_endpoint.jpg)
 
-   <div align=center>
-		<img width=800 height=700 src="http://edas.oss-cn-hangzhou.aliyuncs.com/deshao/pictures/nacos_init_endpoint.jpg" >
-	</div>	
+**Description:** Blue special distinction is to support a cloud environment (Alibaba cloud EDAS) automatically from the system environment variables to read in the endpoint value, in order to achieve the user local development or moving applications to the cloud with zero cost on the way to achieve a smooth of cloud.
 
+Description:
 
-**注意:** 蓝色特别区分的是支持云环境下(阿里云上的 EDAS)自动从系统环境变量中来读取 endpoint 值，以此来达到用户本地开发或者将应用往云上迁移的时候以零成本的改造方式实现平滑上云。
+* Open the endpoint parameters parsing rules
 
-说明：
+  1. If the initialization Nacos Client, not through the properties to specify the endpoint, this time from the system environment variables in called **ALIBABA\_ALIWARE\_ENDPOINT\_URL** to initialize the specified value, if the system environment variable is not set, so this time will return an empty string.
 
-* 开启 endpoint 参数规则解析
-
-  1. 如果在初始化 Nacos Client 的时候，没有通过 properties 来指定 endpoint，这个时候会从系统环境变量中变量名为 **ALIBABA\_ALIWARE\_ENDPOINT\_URL** 指定的值来初始化，如果系统环境变量也没有设置，那么这个时候将会返回一个空字符串。
-
-  2. 如果设置了 endpoint，
+  2. If set the endpoint,
   
-	  1. 设置的 endpoint 是一个指定具体的值。
+	  1. Set the endpoint is a specific value specified.
 
-	     这时会先从系统环境变量中变量名为 **ALIBABA\_ALIWARE\_ENDPOINT\_URL** 指定的值来初始化，如果系统环境变量没有设置，那么这个时候用用户态传入的具体值来初始化 endpoint。
+	     At this time will be from the system environment variables in the variables called **ALIBABA\_ALIWARE\_ENDPOINT\_URL** to initialize the specified value, if the system environment variables not set, so this time use user mode was introduced into the specific value to initialize the endpoint.
 	
-	  1. 以占位符的形式输入。
+	  2. Input in the form of a placeholder.
 	  
-	     这时会解析出具体占位符的值，然后:
+	     Then parses the concrete placeholder value, then:
 		
-	 	 1. 依次从系统属性和环境变量中来取值。
+	 	 1. In order to value from the system properties and environment variables.
 	 	 
-	 	 	 例如，您输入的是 **${nacos.endpoint:defaultValue}**，那么解析出来的            占位符是 **nacos.endpoint**。解析出来后，会先读取系统属性中(**即 System.getProperty("nacos.endpoint")**)是否设置了 **nacos.endpoint** 变量值，如果没有，则会从系统环境变量中变量名为 **nacos.endpoint** 指定的值来初始化。
+	 	 	 For example,You input is **${nacos.endpoint:defaultValue}**, then parse out a placeholder is **nacos.endpoint**. Parsing comes out, can read first in the System properties (**System.getProperty("nacos.endpoint")**) is set up **nacos endpoint** variable values, if not, will be called from the System environment variables in the variables specified **nacos.endpoint** value to initialize.
 	 	 
-	 	 2. 如果通过解析出来的占位符还没有正确初始化 endpoint，则会从系统环境变量中变量名为 **ALIBABA\_ALIWARE\_ENDPOINT\_URL** 指定的值来初始化。
+	 	 2. If by parsing out a placeholder is not properly initialized the endpoint, is from the system environment variables in called **ALIBABA\_ALIWARE\_ENDPOINT\_URL** to initialize the specified value.
 	 	 
-	 	 3. 如果经过以上两步还没有被初始化，这时如果您设置了默认值，这个时候就会使用默认值来初始化 endpoint，否则的话以解析出来的占位符返回。	
+	 	 3. If after the above two steps have not been initialized, then if you set the default value, this time will use the default value to initialize the endpoint, otherwise returned to parse out a placeholder.
 		
-* 关闭 endpoint 参数规则解析
+* Close the endpoint parameter parsing rules
 
-  当关闭了 endpoint 参数规则解析的时候，这个时候就以用户态在构造 Nacos Client 时通过 properties 参数输入的 endpoint 值为主。
+  When closed the endpoint parameter parsing rules, this time is in user mode in constructing Nacos Client through the properties parameter input values of the endpoint.
   
-  
-  
-默认情况下， Nacos Client 是开启 endpoint 参数规则解析的能力。如果你想关闭该能力，可在 Nacos Client 初始化的时候在传入的 properties 实例中指定 key 为 **isUseEndpointParsingRule**，值为 **false** 即可关闭。  
+By default, Nacos Client is the ability to open the endpoint parameter parsing rules. If you want to close the ability, can be in Nacos Client initialization when the incoming instances of the properties specified in the key to **isUseEndpointParsingRule**, **false** value is can be closed.
