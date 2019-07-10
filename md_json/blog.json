@@ -100,6 +100,11 @@
       "meta": {}
     },
     {
+      "filename": "nacos 1.1.0.md",
+      "link": "/en-us/blog/nacos 1.1.0.html",
+      "meta": {}
+    },
+    {
       "filename": "nacos-is-coming.md",
       "link": "/en-us/blog/nacos-is-coming.html",
       "meta": {
@@ -300,6 +305,11 @@
         "keywords": "nacos,虎牙直播",
         "description": "虎牙直播在微服务改造方面的实践和总结"
       }
+    },
+    {
+      "filename": "nacos 1.1.0.md",
+      "link": "/zh-cn/blog/nacos 1.1.0.html",
+      "meta": {}
     },
     {
       "filename": "nacos-is-coming.md",
