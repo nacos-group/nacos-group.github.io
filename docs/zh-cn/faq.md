@@ -37,6 +37,7 @@ description: Nacos 的 FAQ
   - [Nacos如何扩缩容](#3.12)
   - [Nacos客户端修改日志级别](#3.13)
   - [Nacos与Zipkin 整合出现`Service not found`问题](#3.14)
+  - [为什么服务注册成功，控制台看不到](#3.15)
 
 - Nacos原理问题
 
@@ -154,5 +155,9 @@ Nacos控制台上编辑权重, 目前从SpringCloud客户端和Dubbo客户端都
 `curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?port=9411&healthy=true&ip=127.0.0.1&weight=1.0&serviceName=zipkin-server&ephemeral=false&namespaceId=public'`
 
 然后，前往nacos控制台，找到服务名为`zipkin-server`的服务，找到集群配置，设置健康检查模式为`TCP`，端口号为`9411`(即zipkin-server的端口)。
+
+<h4 id="3.15">为什么服务注册成功，控制台看不到</h4>
+
+此问题多出现在集群模式下，在使用nacos集群模式时，确保所有的机器时间是一致的，否则会出现数据无法同步的问题。
 
 ## Nacos原理问题
