@@ -4,8 +4,8 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<meta name="keywords" content="nacos,Kubernetes" />
-	<meta name="description" content="Kubernetes Nacos" />
+	<meta name="keywords" content="nacos,kubernetes" />
+	<meta name="description" content="本项目包含一个可构建的Nacos Docker Image，旨在利用 StatefulSets 在 Kubernetes上部署 Nacos。" />
 	<!-- 网页标签标题 -->
 	<title>Kubernetes Nacos</title>
 	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
@@ -13,8 +13,7 @@
 </head>
 <body>
 	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/zh-cn/index.html">首页</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/docs/what-is-nacos.html">文档</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/docs/nacos-dev.html">开发者团队</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/blog/index.html">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html">社区</a></li><li class="menu-item menu-item-normal"><a href="https://mp.weixin.qq.com/s/KH0dEC6cNckoq1M-siiCmg">阿里中间件-校园招聘</a></li><li class="menu-item menu-item-normal"><a href="http://console.nacos.io/nacos/index.html">控制台样例</a></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/docs.png" class="front-img"/><div class="bar-title"><span>Nacos 文档</span><div class="bone bone-light"></div></div><img src="/img/docs.png" class="back-img"/></div></div><section class="content-section"><div class="content-body"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>Nacos </span><ul><li style="height:180px;overflow:hidden" class="menu-item menu-item-level-2"><span>Nacos是什么?<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/what-is-nacos.html" target="_self">Nacos简介</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/concepts.html" target="_self">概念</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/architecture.html" target="_self">架构</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/faq.html" target="_self">FAQ</a></li></ul></li><li style="height:324px;overflow:hidden" class="menu-item menu-item-level-2"><span>快速开始<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start.html" target="_self">Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-spring-boot.html" target="_self">Nacos Spring Boot</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-spring-cloud.html" target="_self">Nacos Spring Cloud</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-docker.html" target="_self">Nacos Docker</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/use-nacos-with-dubbo.html" target="_self">Nacos Dubbo</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/use-nacos-with-kubernetes.html" target="_self">Nacos k8s</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-sync.html" target="_self">Nacos Sync</a></li></ul></li><li style="height:252px;overflow:hidden" class="menu-item menu-item-level-2"><span>用户指南<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/sdk.html" target="_self">Java的SDK</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/other-language.html" target="_self">其他语言的SDK</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/open-api.html" target="_self">Open-API指南</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/namespace-endpoint-best-practices.html" target="_self">namespace, endpoint 最佳实践</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/system-configurations.html" target="_self">Nacos系统参数介绍</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>运维指南<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/deployment.html" target="_self">部署手册</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/cluster-mode-quick-start.html" target="_self">集群部署说明</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/management-api.html" target="_self">运维API</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/console-guide.html" target="_self">控制台手册</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/monitor-guide.html" target="_self">监控手册</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-config-benchmark.html" target="_self">服务配置模块压测报告</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-naming-benchmark.html" target="_self">服务发现模块压测报告</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-sync-use.html" target="_self">其他环境迁移到Nacos</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>开源共建<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/contributing.html" target="_self">贡献源码</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/activity.html" target="_self">Nacos有奖活动介绍</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/pull-request.html" target="_self">pull request模板</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/how-to-reporting-bugs.html" target="_self">如何提交问题报告</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/roadmap.html" target="_self">Nacos规划</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/use-nacos-with-istio.html" target="_self">nacos支持istio</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>社区<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/community.html" target="_self">社区</a></li></ul></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>Kubernetes Nacos</h1>
-<p>本项目包含一个可构建的Nacos Docker Image,旨在利用StatefulSets在<a href="https://kubernetes.io/">Kubernetes</a>上部署<a href="https://nacos.io">Nacos</a></p>
-<p><a href="https://github.com/nacos-group/nacos-k8s/blob/master/README.md">English Document</a></p>
+<p>本项目包含一个可构建的Nacos Docker Image，旨在利用StatefulSets在<a href="https://kubernetes.io/">Kubernetes</a>上部署<a href="https://nacos.io">Nacos</a></p>
 <h1>快速开始</h1>
 <ul>
 <li><strong>Clone 项目</strong></li>
@@ -67,7 +66,7 @@ chmod +x quick-startup.sh
 <pre><code class="language-shell">kubectl create -f deploy/nfs/rbac.yaml
 </code></pre>
 <blockquote>
-<p>如果的K8S命名空间不是<strong>default</strong>,请在部署RBAC之前执行以下脚本:</p>
+<p>如果的K8S命名空间不是<strong>default</strong>，请在部署RBAC之前执行以下脚本:</p>
 </blockquote>
 <pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash"> Set the subject of the RBAC objects to the current namespace <span class="hljs-built_in">where</span> the provisioner is being deployed</span>
 <span class="hljs-meta">$</span><span class="bash"> NS=$(kubectl config get-contexts|grep -e <span class="hljs-string">"^\*"</span> |awk <span class="hljs-string">'{print $5}'</span>)</span>
@@ -148,24 +147,24 @@ nacos-2   1/1     Running   0          19h
 </code></pre>
 <h2>扩容测试</h2>
 <ul>
-<li>在扩容前,使用 <a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec"><code>kubectl exec</code></a>获取在pod中的Nacos集群配置文件信息</li>
+<li>在扩容前，使用 <a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec"><code>kubectl exec</code></a>获取在pod中的Nacos集群配置文件信息</li>
 </ul>
 <pre><code class="language-powershell"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">0</span> <span class="hljs-number">1</span>; <span class="hljs-keyword">do</span> echo nacos-<span class="hljs-variable">$i</span>; kubectl exec nacos-<span class="hljs-variable">$i</span> cat conf/cluster.conf; done
 </code></pre>
 <p>StatefulSet控制器根据其序数索引为每个Pod提供唯一的主机名。 主机名采用<statefulset name>  -  <ordinal index>的形式。 因为nacos StatefulSet的副本字段设置为2，所以当前集群文件中只有两个Nacos节点地址</p>
-<p><img src="/images/k8s.gif" alt="k8s"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/gif/338441/1562846123635-e361d2b5-4bbe-4347-acad-8f11f75e6d38.gif" alt="k8s"></p>
 <ul>
 <li>使用kubectl scale 对Nacos动态扩容</li>
 </ul>
 <pre><code class="language-bash">kubectl scale sts nacos --replicas=3
 </code></pre>
-<p><img src="/images/scale.gif" alt="scale"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/gif/338441/1562846139093-7a79b709-9afa-448a-b7d6-f57571d3a902.gif" alt="scale"></p>
 <ul>
-<li>在扩容后,使用 <a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec"><code>kubectl exec</code></a>获取在pod中的Nacos集群配置文件信息</li>
+<li>在扩容后，使用 <a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec"><code>kubectl exec</code></a>获取在pod中的Nacos集群配置文件信息</li>
 </ul>
 <pre><code class="language-bash"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> 0 1 2; <span class="hljs-keyword">do</span> <span class="hljs-built_in">echo</span> nacos-<span class="hljs-variable">$i</span>; kubectl <span class="hljs-built_in">exec</span> nacos-<span class="hljs-variable">$i</span> cat conf/cluster.conf; <span class="hljs-keyword">done</span>
 </code></pre>
-<p><img src="/images/get_cluster_after.gif" alt="get_cluster_after"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/gif/338441/1562846177553-c1c7f379-1b41-4026-9f0b-23e15dde02a8.gif" alt="get_cluster_after"></p>
 <ul>
 <li>使用 <a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec"><code>kubectl exec</code></a>执行Nacos API 在每台节点上获取当前<strong>Leader</strong>是否一致</li>
 </ul>
@@ -203,13 +202,13 @@ nacos-2   1/1     Running   0          19h
 </tbody>
 </table>
 <ul>
-<li>Kubernetes 版本：<strong>1.12.2</strong> （如果你和我一样只使用了三台机器,那么记得开启master节点的部署功能）</li>
-<li>NFS 版本：<strong>4.1</strong> 在k8s-master进行安装Server端,并且指定共享目录,本项目指定的**/data/nfs-share**</li>
+<li>Kubernetes 版本：<strong>1.12.2</strong> （如果你和我一样只使用了三台机器，那么记得开启master节点的部署功能）</li>
+<li>NFS 版本：<strong>4.1</strong> 在k8s-master进行安装Server端，并且指定共享目录，本项目指定的**/data/nfs-share**</li>
 <li>Git</li>
 </ul>
 <h1>限制</h1>
 <ul>
-<li>必须要使用持久卷,否则会出现数据丢失的情况</li>
+<li>必须要使用持久卷，否则会出现数据丢失的情况</li>
 </ul>
 <h1>项目目录</h1>
 <table>
@@ -221,11 +220,11 @@ nacos-2   1/1     Running   0          19h
 </thead>
 <tbody>
 <tr>
-<td>plugin</td>
+<td><code>plugin</code></td>
 <td>帮助Nacos集群进行动态扩容的插件Docker镜像源码</td>
 </tr>
 <tr>
-<td>deploy</td>
+<td><code>deploy</code></td>
 <td>K8s 部署文件</td>
 </tr>
 </tbody>
@@ -244,42 +243,42 @@ nacos-2   1/1     Running   0          19h
 </thead>
 <tbody>
 <tr>
-<td><a href="http://mysql.master.db.name">mysql.master.db.name</a></td>
+<td><code>mysql.master.db.name</code></td>
 <td>Y</td>
 <td>主库名称</td>
 </tr>
 <tr>
-<td>mysql.master.port</td>
+<td><code>mysql.master.port</code></td>
 <td>N</td>
 <td>主库端口</td>
 </tr>
 <tr>
-<td>mysql.slave.port</td>
+<td><code>mysql.slave.port</code></td>
 <td>N</td>
 <td>从库端口</td>
 </tr>
 <tr>
-<td>mysql.master.user</td>
+<td><code>mysql.master.user</code></td>
 <td>Y</td>
 <td>主库用户名</td>
 </tr>
 <tr>
-<td>mysql.master.password</td>
+<td><code>mysql.master.password</code></td>
 <td>Y</td>
 <td>主库密码</td>
 </tr>
 <tr>
-<td>NACOS_REPLICAS</td>
+<td><code>NACOS_REPLICAS</code></td>
 <td>N</td>
 <td>确定执行Nacos启动节点数量,如果不适用动态扩容插件,就必须配置这个属性，否则使用扩容插件后不会生效</td>
 </tr>
 <tr>
-<td>NACOS_SERVER_PORT</td>
+<td><code>NACOS_SERVER_PORT</code></td>
 <td>N</td>
 <td>Nacos 端口</td>
 </tr>
 <tr>
-<td>PREFER_HOST_MODE</td>
+<td><code>PREFER_HOST_MODE</code></td>
 <td>Y</td>
 <td>启动Nacos集群按域名解析</td>
 </tr>
@@ -298,22 +297,22 @@ nacos-2   1/1     Running   0          19h
 </thead>
 <tbody>
 <tr>
-<td>NFS_SERVER</td>
+<td><code>NFS_SERVER</code></td>
 <td>Y</td>
 <td>NFS 服务端地址</td>
 </tr>
 <tr>
-<td>NFS_PATH</td>
+<td><code>NFS_PATH</code></td>
 <td>Y</td>
 <td>NFS 共享目录</td>
 </tr>
 <tr>
-<td>server</td>
+<td><code>server</code></td>
 <td>Y</td>
 <td>NFS 服务端地址</td>
 </tr>
 <tr>
-<td>path</td>
+<td><code>path</code></td>
 <td>Y</td>
 <td>NFS 共享目录</td>
 </tr>
@@ -332,42 +331,42 @@ nacos-2   1/1     Running   0          19h
 </thead>
 <tbody>
 <tr>
-<td>MYSQL_ROOT_PASSWORD</td>
+<td><code>MYSQL_ROOT_PASSWORD</code></td>
 <td>N</td>
 <td>ROOT 密码</td>
 </tr>
 <tr>
-<td>MYSQL_DATABASE</td>
+<td><code>MYSQL_DATABASE</code></td>
 <td>Y</td>
 <td>数据库名称</td>
 </tr>
 <tr>
-<td>MYSQL_USER</td>
+<td><code>MYSQL_USER</code></td>
 <td>Y</td>
 <td>数据库用户名</td>
 </tr>
 <tr>
-<td>MYSQL_PASSWORD</td>
+<td><code>MYSQL_PASSWORD</code></td>
 <td>Y</td>
 <td>数据库密码</td>
 </tr>
 <tr>
-<td>MYSQL_REPLICATION_USER</td>
+<td><code>MYSQL_REPLICATION_USER</code></td>
 <td>Y</td>
 <td>数据库复制用户</td>
 </tr>
 <tr>
-<td>MYSQL_REPLICATION_PASSWORD</td>
+<td><code>MYSQL_REPLICATION_PASSWORD</code></td>
 <td>Y</td>
 <td>数据库复制用户密码</td>
 </tr>
 <tr>
-<td>Nfs:server</td>
+<td><code>Nfs:server</code></td>
 <td>N</td>
 <td>NFS 服务端地址，如果使用本地部署不需要配置</td>
 </tr>
 <tr>
-<td>Nfs:path</td>
+<td><code>Nfs:path</code></td>
 <td>N</td>
 <td>NFS 共享目录，如果使用本地部署不需要配置</td>
 </tr>
