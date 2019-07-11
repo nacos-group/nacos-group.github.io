@@ -53,6 +53,7 @@
 <li><a href="#3.12">Nacos如何扩缩容</a></li>
 <li><a href="#3.13">Nacos客户端修改日志级别</a></li>
 <li><a href="#3.14">Nacos与Zipkin 整合出现<code>Service not found</code>问题</a></li>
+<li><a href="#3.15">为什么服务注册成功，控制台看不到</a></li>
 </ul>
 </li>
 <li>
@@ -119,6 +120,8 @@
 <p>如果仍然存在<code>Service not found</code>错误，则建议先使用open-api将Zipkin-server注册为永久实例服务：</p>
 <p><code>curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?port=9411&amp;healthy=true&amp;ip=127.0.0.1&amp;weight=1.0&amp;serviceName=zipkin-server&amp;ephemeral=false&amp;namespaceId=public'</code></p>
 <p>然后，前往nacos控制台，找到服务名为<code>zipkin-server</code>的服务，找到集群配置，设置健康检查模式为<code>TCP</code>，端口号为<code>9411</code>(即zipkin-server的端口)。</p>
+<h4 id="3.15">为什么服务注册成功，控制台看不到</h4>
+<p>此问题多出现在集群模式下，在使用nacos集群模式时，确保所有的机器时间是一致的，否则会出现数据无法同步的问题。</p>
 <h2>Nacos原理问题</h2>
 </div></div></section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>愿景</h3><p>Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/what-is-nacos.html" target="_self">概览</a></dd><dd><a href="/zh-cn/docs/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/contributing.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://www.aliyun.com/product/acm?source_type=nacos_pc_20181219" target="_self">云服务 ACM</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">云服务 EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">云服务 AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
 	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
