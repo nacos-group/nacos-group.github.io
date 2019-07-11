@@ -4,28 +4,27 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<meta name="keywords" content="use-nacos-with-kubernetes" />
-	<meta name="description" content="use-nacos-with-kubernetes" />
+	<meta name="keywords" content="nacos,kubernetes" />
+	<meta name="description" content="This project contains a Nacos Docker image meant to facilitate the deployment of Nacos on Kubernetes via StatefulSets." />
 	<!-- 网页标签标题 -->
-	<title>use-nacos-with-kubernetes</title>
+	<title>Kubernetes Nacos</title>
 	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
 	<link rel="stylesheet" href="/build/documentation.css" />
 </head>
 <body>
 	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/en-us/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><span class="language-switch language-switch-normal">中</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/en-us/index.html">HOME</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/en-us/docs/quick-start.html">DOCS</a></li><li class="menu-item menu-item-normal"><a href="/en-us/docs/nacos-dev.html">TEAM</a></li><li class="menu-item menu-item-normal"><a href="/en-us/blog">BLOG</a></li><li class="menu-item menu-item-normal"><a href="/en-us/community">COMMUNITY</a></li><li class="menu-item menu-item-normal"><a href="https://mp.weixin.qq.com/s/KH0dEC6cNckoq1M-siiCmg">CAMPUS</a></li><li class="menu-item menu-item-normal"><a href="http://console.nacos.io/nacos/index.html">DEMO-CONSOLE</a></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/docs.png" class="front-img"/><div class="bar-title"><span>Documentation</span><div class="bone bone-light"></div></div><img src="/img/docs.png" class="back-img"/></div></div><section class="content-section"><div class="content-body"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>Nacos </span><ul><li style="height:180px;overflow:hidden" class="menu-item menu-item-level-2"><span>What is Nacos<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/what-is-nacos.html" target="_self">What is Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/concepts.html" target="_self">Concepts</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/architecture.html" target="_self">Architecure</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/faq.html" target="_self">FAQ</a></li></ul></li><li style="height:324px;overflow:hidden" class="menu-item menu-item-level-2"><span>Quick Start<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start.html" target="_self">Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring-boot.html" target="_self">Nacos Spring Boot</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring-cloud.html" target="_self">Nacos Spring Cloud</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-docker.html" target="_self">Nacos Docker</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/use-nacos-with-dubbo.html" target="_self">Nacos with Dubbo</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/use-nacos-with-kubernetes.html" target="_self">Nacos with K8s</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-sync.html" target="_self">Nacos Sync</a></li></ul></li><li style="height:252px;overflow:hidden" class="menu-item menu-item-level-2"><span>User Guide<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/sdk.html" target="_self">Java SDK</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/other-language.html" target="_self">Other Language</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/open-api.html" target="_self">Open-API</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/namespace-endpoint-best-practices.html" target="_self">namespace, endpoint best practices</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/system-configurations.html" target="_self">Nacos System Configurations</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Admin Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/deployment.html" target="_self">Deployment Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/cluster-mode-quick-start.html" target="_self">Cluster Mode Deployment</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/management-api.html" target="_self">Management OpenAPI</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/console-guide.html" target="_self">Admin Console Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/monitor-guide.html" target="_self">Nacos Monitor Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-config-benchmark.html" target="_self">Nacos Config Benchmark</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-naming-benchmark.html" target="_self">Nacos Naming Benchmark</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-sync-use.html" target="_self">Data Migration to Nacos</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Contributor Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/contributing.html" target="_self">Contribute to Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/activity.html" target="_self">Nacos Activity</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/pull-request.html" target="_self">Pull Request Template</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/how-to-reporting-bugs.html" target="_self">How to reporting bugs</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/roadmap.html" target="_self">Nacos RoadMap</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/use-nacos-with-istio.html" target="_self">Nacos with Istio</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Community<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/community.html" target="_self">Community</a></li></ul></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>Kubernetes Nacos</h1>
-<p>本项目包含一个可构建的Nacos Docker Image,旨在利用StatefulSets在<a href="https://kubernetes.io/">Kubernetes</a>上部署<a href="https://nacos.io">Nacos</a></p>
-<p><a href="https://github.com/nacos-group/nacos-k8s/blob/master/README.md">English Document</a></p>
-<h1>快速开始</h1>
+<p>This project contains a Nacos Docker image meant to facilitate the deployment of <a href="https://nacos.io">Nacos</a> on <a href="https://kubernetes.io/">Kubernetes</a> via StatefulSets.</p>
+<h1>Quick Start</h1>
 <ul>
-<li><strong>Clone 项目</strong></li>
+<li><strong>Clone Project</strong></li>
 </ul>
 <pre><code class="language-shell">git clone https://github.com/nacos-group/nacos-k8s.git
 </code></pre>
 <ul>
-<li><strong>简单例子</strong></li>
+<li><strong>Simple Start</strong></li>
 </ul>
 <blockquote>
-<p>如果你使用简单方式快速启动,请注意这是没有使用持久化卷的,可能存在数据丢失风险:</p>
+<p>If you want to start Nacos without NFS, but <strong>emptyDirs will possibly result in a loss of data</strong>. as follows:</p>
 </blockquote>
 <pre><code class="language-shell">cd nacos-k8s
 chmod +x quick-startup.sh
@@ -33,41 +32,41 @@ chmod +x quick-startup.sh
 </code></pre>
 <ul>
 <li>
-<p><strong>测试</strong></p>
+<p><strong>Testing</strong></p>
 <ul>
-<li><strong>服务注册</strong></li>
+<li><strong>Service registration</strong></li>
 </ul>
-<pre><code class="language-bash">curl -X PUT <span class="hljs-string">'http://cluster-ip:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&amp;ip=20.18.7.10&amp;port=8080'</span>
+<pre><code class="language-powershell">curl -X PUT <span class="hljs-string">'http://cluster-ip:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&amp;ip=20.18.7.10&amp;port=8080'</span>
 </code></pre>
 <ul>
-<li><strong>服务发现</strong></li>
+<li><strong>Service discovery</strong></li>
 </ul>
-<pre><code class="language-bash">curl -X GET <span class="hljs-string">'http://cluster-ip:8848/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'</span>
+<pre><code class="language-powershell">curl -X GET <span class="hljs-string">'http://cluster-ip:8848/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'</span>
 </code></pre>
 <ul>
-<li><strong>发布配置</strong></li>
+<li><strong>Publish config</strong></li>
 </ul>
-<pre><code class="language-bash">curl -X POST <span class="hljs-string">"http://cluster-ip:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&amp;content=helloWorld"</span>
+<pre><code class="language-powershell">curl -X POST <span class="hljs-string">"http://cluster-ip:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&amp;content=helloWorld"</span>
 </code></pre>
 <ul>
-<li><strong>获取配置</strong></li>
+<li><strong>Get config</strong></li>
 </ul>
-<pre><code class="language-bash">curl -X GET <span class="hljs-string">"http://cluster-ip:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test"</span>
+<pre><code class="language-powershell">curl -X GET <span class="hljs-string">"http://cluster-ip:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test"</span>
 </code></pre>
 </li>
 </ul>
-<h1>高级使用</h1>
+<h1>Advanced</h1>
 <blockquote>
-<p>在高级使用中,Nacos在K8S拥有自动扩容缩容和数据持久特性,请注意如果需要使用这部分功能请使用PVC持久卷,Nacos的自动扩容缩容需要依赖持久卷,以及数据持久化也是一样,本例中使用的是NFS来使用PVC.</p>
+<p>In advanced use, the cluster is automatically scaled and data is persisted, but <a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims">PersistentVolumeClaims</a> must be deployed. In this example, NFS is used.</p>
 </blockquote>
-<h2>部署 NFS</h2>
+<h2>Deploy NFS</h2>
 <ul>
-<li>创建角色</li>
+<li>Create Role</li>
 </ul>
 <pre><code class="language-shell">kubectl create -f deploy/nfs/rbac.yaml
 </code></pre>
 <blockquote>
-<p>如果的K8S命名空间不是<strong>default</strong>,请在部署RBAC之前执行以下脚本:</p>
+<p>If your K8S namespace is not default, execute the following script before creating RBAC</p>
 </blockquote>
 <pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash"> Set the subject of the RBAC objects to the current namespace <span class="hljs-built_in">where</span> the provisioner is being deployed</span>
 <span class="hljs-meta">$</span><span class="bash"> NS=$(kubectl config get-contexts|grep -e <span class="hljs-string">"^\*"</span> |awk <span class="hljs-string">'{print $5}'</span>)</span>
@@ -76,23 +75,23 @@ chmod +x quick-startup.sh
 
 </code></pre>
 <ul>
-<li>创建 <code>ServiceAccount</code> 和部署 <code>NFS-Client Provisioner</code></li>
+<li>Create <code>ServiceAccount</code> And deploy <code>NFS-Client Provisioner</code></li>
 </ul>
 <pre><code class="language-shell">kubectl create -f deploy/nfs/deployment.yaml
 </code></pre>
 <ul>
-<li>创建 NFS StorageClass</li>
+<li>Create NFS StorageClass</li>
 </ul>
 <pre><code class="language-shell">kubectl create -f deploy/nfs/class.yaml
 </code></pre>
 <ul>
-<li>验证NFS部署成功</li>
+<li>Verify that NFS is working</li>
 </ul>
 <pre><code class="language-shell">kubectl get pod -l app=nfs-client-provisioner
 </code></pre>
-<h2>部署数据库</h2>
+<h2>Deploy database</h2>
 <ul>
-<li>部署主库</li>
+<li>Deploy master</li>
 </ul>
 <pre><code class="language-shell">
 cd nacos-k8s
@@ -100,7 +99,7 @@ cd nacos-k8s
 kubectl create -f deploy/mysql/mysql-master-nfs.yaml
 </code></pre>
 <ul>
-<li>部署从库</li>
+<li>Deploy slave</li>
 </ul>
 <pre><code class="language-shell">
 cd nacos-k8s 
@@ -108,7 +107,7 @@ cd nacos-k8s
 kubectl create -f deploy/mysql/mysql-slave-nfs.yaml
 </code></pre>
 <ul>
-<li>验证数据库是否正常工作</li>
+<li>Verify that Database is working</li>
 </ul>
 <pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash"> master</span>
 kubectl get pod 
@@ -119,24 +118,24 @@ mysql-master-gf2vd                        1/1     Running   0          111m
 kubectl get pod 
 mysql-slave-kf9cb                         1/1     Running   0          110m
 </code></pre>
-<h2>部署Nacos</h2>
+<h2>Deploy Nacos</h2>
 <ul>
-<li>修改  <strong>depoly/nacos/nacos-pvc-nfs.yaml</strong></li>
+<li>Modify  <strong>depoly/nacos/nacos-pvc-nfs.yaml</strong></li>
 </ul>
 <pre><code class="language-yaml"><span class="hljs-attr">data:</span>
-  <span class="hljs-string">mysql.master.db.name:</span> <span class="hljs-string">"主库名称"</span>
-  <span class="hljs-string">mysql.master.port:</span> <span class="hljs-string">"主库端口"</span>
-  <span class="hljs-string">mysql.slave.port:</span> <span class="hljs-string">"从库端口"</span>
-  <span class="hljs-string">mysql.master.user:</span> <span class="hljs-string">"主库用户名"</span>
-  <span class="hljs-string">mysql.master.password:</span> <span class="hljs-string">"主库密码"</span>
+  <span class="hljs-string">mysql.master.db.name:</span> <span class="hljs-string">"db name"</span>
+  <span class="hljs-string">mysql.master.port:</span> <span class="hljs-string">"master db port"</span>
+  <span class="hljs-string">mysql.slave.port:</span> <span class="hljs-string">"slave db port"</span>
+  <span class="hljs-string">mysql.master.user:</span> <span class="hljs-string">"master db username"</span>
+  <span class="hljs-string">mysql.master.password:</span> <span class="hljs-string">"master db password"</span>
 </code></pre>
 <ul>
-<li>创建 Nacos</li>
+<li>Create Nacos</li>
 </ul>
 <pre><code class="language-shell">kubectl create -f nacos-k8s/deploy/nacos/nacos-pvc-nfs.yaml
 </code></pre>
 <ul>
-<li>验证Nacos节点启动成功</li>
+<li>Verify that Nacos is working</li>
 </ul>
 <pre><code class="language-shell">kubectl get pod -l app=nacos
 
@@ -146,42 +145,42 @@ nacos-0   1/1     Running   0          19h
 nacos-1   1/1     Running   0          19h
 nacos-2   1/1     Running   0          19h
 </code></pre>
-<h2>扩容测试</h2>
+<h2>Scale Testing</h2>
 <ul>
-<li>在扩容前,使用 <a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec"><code>kubectl exec</code></a>获取在pod中的Nacos集群配置文件信息</li>
+<li>Use <a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec"><code>kubectl exec</code></a> to get the cluster config of the Pods in the <code>nacos</code> StatefulSet.</li>
 </ul>
 <pre><code class="language-powershell"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">0</span> <span class="hljs-number">1</span>; <span class="hljs-keyword">do</span> echo nacos-<span class="hljs-variable">$i</span>; kubectl exec nacos-<span class="hljs-variable">$i</span> cat conf/cluster.conf; done
 </code></pre>
-<p>StatefulSet控制器根据其序数索引为每个Pod提供唯一的主机名。 主机名采用<statefulset name>  -  <ordinal index>的形式。 因为nacos StatefulSet的副本字段设置为2，所以当前集群文件中只有两个Nacos节点地址</p>
-<p><img src="/images/k8s.gif" alt="k8s"></p>
+<p>The StatefulSet controller provides each Pod with a unique hostname based on its ordinal index. The hostnames take the form of <code>&lt;statefulset name&gt;-&lt;ordinal index&gt;</code>. Because the <code>replicas</code> field of the <code>nacos</code> StatefulSet is set to <code>2</code>, In the cluster file only two nacos address</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/gif/338441/1562846123635-e361d2b5-4bbe-4347-acad-8f11f75e6d38.gif" alt="k8s"></p>
 <ul>
-<li>使用kubectl scale 对Nacos动态扩容</li>
+<li>Use kubectl to scale StatefulSets</li>
 </ul>
 <pre><code class="language-bash">kubectl scale sts nacos --replicas=3
 </code></pre>
-<p><img src="/images/scale.gif" alt="scale"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/gif/338441/1562846139093-7a79b709-9afa-448a-b7d6-f57571d3a902.gif" alt="scale"></p>
 <ul>
-<li>在扩容后,使用 <a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec"><code>kubectl exec</code></a>获取在pod中的Nacos集群配置文件信息</li>
+<li>Use <a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec"><code>kubectl exec</code></a> to get the cluster config of the Pods in the <code>nacos</code> StatefulSet after scale StatefulSets</li>
 </ul>
 <pre><code class="language-bash"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> 0 1 2; <span class="hljs-keyword">do</span> <span class="hljs-built_in">echo</span> nacos-<span class="hljs-variable">$i</span>; kubectl <span class="hljs-built_in">exec</span> nacos-<span class="hljs-variable">$i</span> cat conf/cluster.conf; <span class="hljs-keyword">done</span>
 </code></pre>
-<p><img src="/images/get_cluster_after.gif" alt="get_cluster_after"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/gif/338441/1562846177553-c1c7f379-1b41-4026-9f0b-23e15dde02a8.gif" alt="get_cluster_after"></p>
 <ul>
-<li>使用 <a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec"><code>kubectl exec</code></a>执行Nacos API 在每台节点上获取当前<strong>Leader</strong>是否一致</li>
+<li>Use <a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec"><code>kubectl exec</code></a> to get the <strong>state</strong> of the Pods in the <code>nacos</code> StatefulSet after scale StatefulSets</li>
 </ul>
 <pre><code class="language-bash"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> 0 1 2; <span class="hljs-keyword">do</span> <span class="hljs-built_in">echo</span> nacos-<span class="hljs-variable">$i</span>; kubectl <span class="hljs-built_in">exec</span> nacos-<span class="hljs-variable">$i</span> curl GET <span class="hljs-string">"http://localhost:8848/nacos/v1/ns/raft/state"</span>; <span class="hljs-keyword">done</span>
 </code></pre>
-<p>到这里你可以发现新节点已经正常加入Nacos集群当中</p>
-<h1>例子部署环境</h1>
+<p>You can find that the new node has joined the cluster</p>
+<h1>Prerequisites</h1>
 <ul>
-<li>机器配置</li>
+<li>Kubernetes Node configuration(for reference only)</li>
 </ul>
 <table>
 <thead>
 <tr>
-<th>内网IP</th>
-<th>主机名</th>
-<th>配置</th>
+<th>Network IP</th>
+<th>Hostname</th>
+<th>Configuration</th>
 </tr>
 </thead>
 <tbody>
@@ -203,85 +202,84 @@ nacos-2   1/1     Running   0          19h
 </tbody>
 </table>
 <ul>
-<li>Kubernetes 版本：<strong>1.12.2</strong> （如果你和我一样只使用了三台机器,那么记得开启master节点的部署功能）</li>
-<li>NFS 版本：<strong>4.1</strong> 在k8s-master进行安装Server端,并且指定共享目录,本项目指定的**/data/nfs-share**</li>
-<li>Git</li>
+<li>Kubernetes version：<strong>1.12.2+</strong></li>
+<li>NFS version：<strong>4.1+</strong></li>
 </ul>
-<h1>限制</h1>
+<h1>Limitations</h1>
 <ul>
-<li>必须要使用持久卷,否则会出现数据丢失的情况</li>
+<li>Persistent Volumes must be used. emptyDirs will possibly result in a loss of data</li>
 </ul>
-<h1>项目目录</h1>
+<h1>Project directory</h1>
 <table>
 <thead>
 <tr>
-<th>目录</th>
-<th>描述</th>
+<th>Directory Name</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>plugin</td>
-<td>帮助Nacos集群进行动态扩容的插件Docker镜像源码</td>
+<td><code>plugin</code></td>
+<td>Help Nacos cluster achieve automatic scaling in K8s</td>
 </tr>
 <tr>
-<td>deploy</td>
-<td>K8s 部署文件</td>
+<td><code>deploy</code></td>
+<td>Deploy the required files</td>
 </tr>
 </tbody>
 </table>
-<h1>配置属性</h1>
+<h1>Configuration properties</h1>
 <ul>
 <li>nacos-pvc-nfs.yaml or nacos-quick-start.yaml</li>
 </ul>
 <table>
 <thead>
 <tr>
-<th>名称</th>
-<th>必要</th>
-<th>描述</th>
+<th>Name</th>
+<th>Required</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="http://mysql.master.db.name">mysql.master.db.name</a></td>
+<td><code>mysql.master.db.name</code></td>
 <td>Y</td>
-<td>主库名称</td>
+<td>Master database name</td>
 </tr>
 <tr>
-<td>mysql.master.port</td>
+<td><code>mysql.master.port</code></td>
 <td>N</td>
-<td>主库端口</td>
+<td>Master database port</td>
 </tr>
 <tr>
-<td>mysql.slave.port</td>
+<td><code>mysql.slave.port</code></td>
 <td>N</td>
-<td>从库端口</td>
+<td>Slave database port</td>
 </tr>
 <tr>
-<td>mysql.master.user</td>
+<td><code>mysql.master.user</code></td>
 <td>Y</td>
-<td>主库用户名</td>
+<td>Master database username</td>
 </tr>
 <tr>
-<td>mysql.master.password</td>
+<td><code>mysql.master.password</code></td>
 <td>Y</td>
-<td>主库密码</td>
+<td>Master database password</td>
 </tr>
 <tr>
-<td>NACOS_REPLICAS</td>
-<td>N</td>
-<td>确定执行Nacos启动节点数量,如果不适用动态扩容插件,就必须配置这个属性，否则使用扩容插件后不会生效</td>
-</tr>
-<tr>
-<td>NACOS_SERVER_PORT</td>
-<td>N</td>
-<td>Nacos 端口</td>
-</tr>
-<tr>
-<td>PREFER_HOST_MODE</td>
+<td><code>NACOS_REPLICAS</code></td>
 <td>Y</td>
-<td>启动Nacos集群按域名解析</td>
+<td>The number of clusters must be consistent with the value of the replicas attribute</td>
+</tr>
+<tr>
+<td><code>NACOS_SERVER_PORT</code></td>
+<td>N</td>
+<td>Nacos port,default:8848</td>
+</tr>
+<tr>
+<td><code>PREFER_HOST_MODE</code></td>
+<td>Y</td>
+<td>Enable Nacos cluster node domain name support</td>
 </tr>
 </tbody>
 </table>
@@ -291,85 +289,85 @@ nacos-2   1/1     Running   0          19h
 <table>
 <thead>
 <tr>
-<th>名称</th>
-<th>必要</th>
-<th>描述</th>
+<th>Name</th>
+<th>Required</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>NFS_SERVER</td>
+<td><code>NFS_SERVER</code></td>
 <td>Y</td>
-<td>NFS 服务端地址</td>
+<td>NFS server address</td>
 </tr>
 <tr>
-<td>NFS_PATH</td>
+<td><code>NFS_PATH</code></td>
 <td>Y</td>
-<td>NFS 共享目录</td>
+<td>NFS server shared directory</td>
 </tr>
 <tr>
-<td>server</td>
+<td><code>server</code></td>
 <td>Y</td>
-<td>NFS 服务端地址</td>
+<td>NFS server address</td>
 </tr>
 <tr>
-<td>path</td>
+<td><code>path</code></td>
 <td>Y</td>
-<td>NFS 共享目录</td>
+<td>NFS server shared directory</td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li>mysql</li>
+<li>mysql yaml</li>
 </ul>
 <table>
 <thead>
 <tr>
-<th>名称</th>
-<th>必要</th>
-<th>描述</th>
+<th>Name</th>
+<th>Required</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>MYSQL_ROOT_PASSWORD</td>
+<td><code>MYSQL_ROOT_PASSWORD</code></td>
 <td>N</td>
-<td>ROOT 密码</td>
+<td>Root password</td>
 </tr>
 <tr>
-<td>MYSQL_DATABASE</td>
+<td><code>MYSQL_DATABASE</code></td>
 <td>Y</td>
-<td>数据库名称</td>
+<td>Database Name</td>
 </tr>
 <tr>
-<td>MYSQL_USER</td>
+<td><code>MYSQL_USER</code></td>
 <td>Y</td>
-<td>数据库用户名</td>
+<td>Database Username</td>
 </tr>
 <tr>
-<td>MYSQL_PASSWORD</td>
+<td><code>MYSQL_PASSWORD</code></td>
 <td>Y</td>
-<td>数据库密码</td>
+<td>Database Password</td>
 </tr>
 <tr>
-<td>MYSQL_REPLICATION_USER</td>
+<td><code>MYSQL_REPLICATION_USER</code></td>
 <td>Y</td>
-<td>数据库复制用户</td>
+<td>Master-slave replication username</td>
 </tr>
 <tr>
-<td>MYSQL_REPLICATION_PASSWORD</td>
+<td><code>MYSQL_REPLICATION_PASSWORD</code></td>
 <td>Y</td>
-<td>数据库复制用户密码</td>
+<td>Master-slave replication password</td>
 </tr>
 <tr>
-<td>Nfs:server</td>
-<td>N</td>
-<td>NFS 服务端地址，如果使用本地部署不需要配置</td>
+<td><code>Nfs:server</code></td>
+<td>Y</td>
+<td>NFS server address</td>
 </tr>
 <tr>
-<td>Nfs:path</td>
-<td>N</td>
-<td>NFS 共享目录，如果使用本地部署不需要配置</td>
+<td><code>Nfs:path</code></td>
+<td>Y</td>
+<td>NFS server shared path</td>
 </tr>
 </tbody>
 </table>
