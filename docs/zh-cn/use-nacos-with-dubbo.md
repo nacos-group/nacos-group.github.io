@@ -1,6 +1,6 @@
 ---
 title: Dubbo 融合 Nacos 成为注册中心
-keywords: Dubbo,Nacos
+keywords: Dubbo,Nacos,注册中心
 description: Dubbo 融合 Nacos 成为注册中心
 ---
 
@@ -8,23 +8,17 @@ description: Dubbo 融合 Nacos 成为注册中心
 
 Nacos 作为 Dubbo 生态系统中重要的注册中心实现，其中 [`dubbo-registry-nacos`](https://github.com/dubbo/dubbo-registry-nacos) 则是 Dubbo 融合 Nacos 注册中心的实现。
 
-
-
 ## 预备工作
 
-当您将 [`dubbo-registry-nacos`](https://github.com/dubbo/dubbo-registry-nacos) 整合到您的 Dubbo 工程之前，请确保后台已经启动 Nacos 服务。如果您尚且不熟悉 Nacos 的基本使用的话，可先行参考 [Nacos 快速入门](https://nacos.io/en-us/docs/quick-start.html)：https://nacos.io/en-us/docs/quick-start.html 
-
-
+当您将 [`dubbo-registry-nacos`](https://github.com/apache/dubbo/tree/master/dubbo-registry/dubbo-registry-nacos) 整合到您的 Dubbo 工程之前，请确保后台已经启动 Nacos 服务。如果您尚且不熟悉 Nacos 的基本使用的话，可先行参考 [Nacos 快速入门](https://nacos.io/en-us/docs/quick-start.html)。 
 
 ## 快速上手
 
 Dubbo 融合 Nacos 成为注册中心的操作步骤非常简单，大致步骤可分为“增加 Maven 依赖”以及“配置注册中心“。
 
-
-
 ### 增加 Maven 依赖
 
-首先，您需要 `dubbo-registry-nacos` 的 Maven 依赖添加到您的项目中 `pom.xml` 文件中，并且强烈地推荐您使用 Dubbo `2.6.5`：
+首先，您需要`dubbo-registry-nacos`的 Maven 依赖添加到您项目的 `pom.xml` 文件中，并且强烈地推荐您使用 Dubbo `2.6.5`：
 
 ```xml
 <dependencies>
@@ -57,19 +51,13 @@ Dubbo 融合 Nacos 成为注册中心的操作步骤非常简单，大致步骤�
 </dependencies>
 ```
 
-
-
-当项目中添加  `dubbo-registry-nacos` 后，您无需显示地编程实现服务发现和注册逻辑，实际实现由该三方包提供，接下来配置 Naocs 注册中心。
-
-
+当项目中添加`dubbo-registry-nacos`后，您无需显示地编程实现服务发现和注册逻辑，实际实现由该三方包提供，接下来配置 Naocs 注册中心。
 
 ### 配置注册中心
 
-假设您 Dubbo 应用使用 Spring Framework 装配，将有两种配置方法可选，分别为：[Dubbo Spring 外部化配置](https://mercyblitz.github.io/2018/01/18/Dubbo-%E5%A4%96%E9%83%A8%E5%8C%96%E9%85%8D%E7%BD%AE/)以及 Spring XML 配置文件以及 ，笔者强烈推荐前者。
+假设您 Dubbo 应用使用 Spring Framework 装配，将有两种配置方法可选，分别为：[Dubbo Spring 外部化配置](https://mercyblitz.github.io/2018/01/18/Dubbo-%E5%A4%96%E9%83%A8%E5%8C%96%E9%85%8D%E7%BD%AE/)以及 Spring XML 配置文件以及，笔者强烈推荐前者。
 
-
-
-### [Dubbo Spring 外部化配置](https://mercyblitz.github.io/2018/01/18/Dubbo-%E5%A4%96%E9%83%A8%E5%8C%96%E9%85%8D%E7%BD%AE/)
+### Dubbo Spring 外部化配置
 
 Dubbo Spring 外部化配置是由 Dubbo `2.5.8` 引入的新特性，可通过 Spring `Environment` 属性自动地生成并绑定 Dubbo 配置 Bean，实现配置简化，并且降低微服务开发门槛。
 
@@ -84,10 +72,7 @@ dubbo.registry.address = zookeeper://10.20.153.10:2181
 ...
 ```
 
-
-
 假设您的 Nacos Server 同样运行在服务器 `10.20.153.10` 上，并使用默认 Nacos 服务端口 `8848`，您只需将 `dubbo.registry.address` 属性调整如下：
-
 
 
 ```properties
@@ -97,24 +82,15 @@ dubbo.registry.address = zookeeper://10.20.153.10:2181
 dubbo.registry.address = nacos://10.20.153.10:8848
 ...
 ```
-
-
-
 随后，重启您的 Dubbo 应用，Dubbo 的服务提供和消费信息在 Nacos 控制台中可以显示：
 
 ![image-20181213103845976-4668726.png | left | 747x284](https://img.alicdn.com/tfs/TB1n6m7zMTqK1RjSZPhXXXfOFXa-2784-1058.png "")
-
-
 
 如图所示，服务名前缀为 `providers:` 的信息为服务提供者的元信息，`consumers:` 则代表服务消费者的元信息。点击“**详情**”可查看服务状态详情：
 
 ![image-20181213104145998-4668906.png | left | 747x437](https://img.alicdn.com/tfs/TB1vZzfzQzoK1RjSZFlXXai4VXa-2714-1588.png "")
 
-
-
 如果您正在使用 Spring XML 配置文件装配 Dubbo 注册中心的话，请参考下一节。
-
-
 
 ### Spring XML 配置文件
 
@@ -136,8 +112,6 @@ dubbo.registry.address = nacos://10.20.153.10:8848
 </beans>
 ```
 
-
-
 与 [Dubbo Spring 外部化配置](https://mercyblitz.github.io/2018/01/18/Dubbo-%E5%A4%96%E9%83%A8%E5%8C%96%E9%85%8D%E7%BD%AE/) 配置类似，只需要调整 `address` 属性配置即可：
 
 ```xml
@@ -156,28 +130,17 @@ dubbo.registry.address = nacos://10.20.153.10:8848
 </beans>
 ```
 
-
-
 重启 Dubbo 应用后，您同样也能发现服务提供方和消费方的注册元信息呈现在 Nacos 控制台中：
 
 ![image-20181213113049185-4671849.png | left | 747x274](https://img.alicdn.com/tfs/TB1zl2dzQPoK1RjSZKbXXX1IXXa-2784-1022.png "")
 
-
-
-
 您是否绝对配置或切换 Nacos 注册中心超级 Easy 呢？如果您仍旧意犹未尽或者不甚明白的话，可参考以下完整的示例。
-
-
 
 ## 完整示例
 
 以上图片中的元数据源于 Dubbo Spring 注解驱动示例以及 Dubbo Spring XML 配置驱动示例，下面将分别介绍两者，您可以选择自己偏好的编程模型。在正式讨论之前，先来介绍两者的预备工作，因为它们皆依赖 Java 服务接口和实现。同时，**请确保本地（`127.0.0.1`）环境已启动 Nacos 服务**。
 
-
-
 ### 示例接口与实现
-
-
 
 首先定义示例接口，如下所示：
 
@@ -195,8 +158,6 @@ public interface DemoService {
 
 }
 ```
-
-
 
 提供以上接口的实现类：
 
@@ -231,17 +192,11 @@ public class DefaultService implements DemoService {
 }
 ```
 
-
-
 接口与实现准备妥当后，下面将采用注解驱动和 XML 配置驱动各自实现。
-
-
 
 ### Spring 注解驱动示例
 
- Dubbo `2.5.7` 重构了 Spring 注解驱动的编程模型。
-
-
+Dubbo `2.5.7` 重构了 Spring 注解驱动的编程模型。
 
 #### 服务提供方注解驱动实现
 
@@ -461,7 +416,6 @@ public class DemoServiceProviderXmlBootstrap {
 ```
 
 
-
 #### 服务消费方 XML 配置驱动
 
 - 定义服务消费方 XML 上下文配置文件 - `/META-INF/spring/dubbo-consumer-context.xml`
@@ -484,8 +438,6 @@ public class DemoServiceProviderXmlBootstrap {
 
 </beans>
 ```
-
-
 
 - 实现服务消费方引导类 - `DemoServiceConsumerXmlBootstrap`
 
@@ -517,10 +469,6 @@ public class DemoServiceConsumerXmlBootstrap {
 }
 ```
 
-
-
-
-
 #### 运行 XML 配置驱动示例
 
 同样地，先启动两个 `DemoServiceProviderXmlBootstrap` 引导类，观察 Nacos 注册中心服务提供者变化：
@@ -528,8 +476,6 @@ public class DemoServiceConsumerXmlBootstrap {
 ![image-20181213125527201-4676927.png | left | 747x33](https://img.alicdn.com/tfs/TB1HCfbzMHqK1RjSZFgXXa7JXXa-2388-106.png "")
 
 XML 配置驱动的服务版本为 `2.0.0`，因此注册服务无误。
-
-
 
 再运行服务消费者引导类 `DemoServiceConsumerXmlBootstrap`，观察控制台输出内容：
 
@@ -548,11 +494,8 @@ Service [name :null , port : 20883] sayName("小马哥（mercyblitz）") : Hello
 
 结果同样运行和负载均衡正常，不过由于当前示例尚未添加属性 `demo.service.name` 的缘故，因此，“name”部分信息输出为 `null`。
 
-
-
 如果您关注或喜爱 Dubbo 以及 Nacos 等开源工程，不妨为它们点 “star”，加油打气链接：
 
-- Apache Dubbo：https://github.com/apache/incubator-dubbo
-- Dubbo Nacos Registry：https://github.com/apache/incubator-dubbo/tree/master/dubbo-registry/dubbo-registry-nacos
+- Apache Dubbo：https://github.com/apache/dubbo
+- Dubbo Nacos Registry：https://github.com/apache/dubbo/tree/master/dubbo-registry/dubbo-registry-nacos
 - Alibaba Nacos：https://github.com/alibaba/nacos
-
