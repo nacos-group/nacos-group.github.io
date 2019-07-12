@@ -140,7 +140,7 @@ export default {
               },
               {
                 title: 'Nacos Activity',
-                link: '/zh-cn/docs/activity.html',
+                link: '/en-us/docs/activity.html',
               },
               {
                 title: 'Pull Request Template',
@@ -294,7 +294,7 @@ export default {
               },
               {
                   title: '服务配置模块压测报告',
-                  link: '/en-us/docs/nacos-config-benchmark.html',
+                  link: '/zh-cn/docs/nacos-config-benchmark.html',
               },
               {
                 title: '服务发现模块压测报告',
@@ -302,7 +302,7 @@ export default {
               },
               {
                   title: '其他环境迁移到Nacos',
-                  link: '/en-us/docs/nacos-sync-use.html',
+                  link: '/zh-cn/docs/nacos-sync-use.html',
               },
             ],
           },

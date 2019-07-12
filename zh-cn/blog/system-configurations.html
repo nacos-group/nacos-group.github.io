@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="system-configurations" />
+	<meta name="description" content="system-configurations" />
+	<!-- 网页标签标题 -->
+	<title>system-configurations</title>
+	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
+	<link rel="stylesheet" href="/build/blogDetail.css" />
+</head>
+<body>
+	<div id="root"><div class="blog-detail-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/zh-cn/index.html">首页</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/docs/what-is-nacos.html">文档</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/docs/nacos-dev.html">开发者团队</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/blog/index.html">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html">社区</a></li><li class="menu-item menu-item-normal"><a href="https://mp.weixin.qq.com/s/KH0dEC6cNckoq1M-siiCmg">阿里中间件-校园招聘</a></li><li class="menu-item menu-item-normal"><a href="http://console.nacos.io/nacos/index.html">控制台样例</a></li></ul></div></div></header><section class="blog-content markdown-body"><h1>Nacos系统参数介绍</h1>
+<h2>Nacos Server</h2>
+<p>对于Server端来说，一般是设置在{nacos.home}/conf/application.properties里，如果参数名后标注了(-D)的，则表示是JVM的参数，需要在{nacos.home}/bin/startup.sh里进行相应的设置。例如像设置nacos.home的值，可以在{nacos.home}/bin/startup.sh进行如下设置：</p>
+<pre><code>JAVA_OPT=&quot;${JAVA_OPT} -Dnacos.home=${BASE_DIR}&quot;
+</code></pre>
+<h3>全局参数</h3>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>含义</th>
+<th>可选值</th>
+<th>默认值</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nacos.home(-D)</td>
+<td>Nacos的根目录</td>
+<td>目录路径</td>
+<td>Nacos安装的目录</td>
+<td>&gt;= 0.1.0</td>
+</tr>
+<tr>
+<td>nacos.standalone(-D)</td>
+<td>是否在单机模式</td>
+<td>true/false</td>
+<td>false</td>
+<td>&gt;= 0.1.0</td>
+</tr>
+<tr>
+<td>nacos.functionMode(-D)</td>
+<td>启动模式，支持只启动某一个模块，不设置时所有模块都会启动</td>
+<td>config/naming/空</td>
+<td>空</td>
+<td>&gt;= 0.9.0</td>
+</tr>
+<tr>
+<td>nacos.inetutils.prefer-hostname-over-ip</td>
+<td>cluster.conf里是否应该填hostname</td>
+<td>true/false</td>
+<td>false</td>
+<td>&gt;= 0.3.0</td>
+</tr>
+<tr>
+<td>nacos.inetutils.ip-address</td>
+<td>本机IP，该参数设置后，将会使用这个IP去cluster.conf里进行匹配，请确保这个IP的值在cluster.conf里是存在的</td>
+<td>本机IP</td>
+<td>null</td>
+<td>&gt;= 0.3.0</td>
+</tr>
+<tr>
+<td>nacos.security.ignore.urls</td>
+<td>控制台鉴权跳过的接口</td>
+<td>需要跳过控制台鉴权的接口列表</td>
+<td>空</td>
+<td>&gt;= 0.9.0</td>
+</tr>
+</tbody>
+</table>
+<h3>Naming模块</h3>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>含义</th>
+<th>可选值</th>
+<th>默认值</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nacos.naming.data.warmup</td>
+<td>是否在Server启动时进行数据预热</td>
+<td>true/false</td>
+<td>false</td>
+<td>&gt;= 1.0.2</td>
+</tr>
+<tr>
+<td>nacos.naming.expireInstance</td>
+<td>是否自动摘除临时实例</td>
+<td>true/false</td>
+<td>true</td>
+<td>&gt;= 1.0.2</td>
+</tr>
+<tr>
+<td>nacos.naming.distro.taskDispatchPeriod</td>
+<td>同步任务生成的周期，单位为毫秒</td>
+<td>正整数</td>
+<td>200</td>
+<td>&gt;= 1.0.2</td>
+</tr>
+<tr>
+<td>nacos.naming.distro.batchSyncKeyCount</td>
+<td>同步任务每批的key的数目</td>
+<td>正整数</td>
+<td>1000</td>
+<td>&gt;= 1.0.2</td>
+</tr>
+<tr>
+<td>nacos.naming.distro.syncRetryDelay</td>
+<td>同步任务失败的重试间隔，单位为毫秒</td>
+<td>正整数</td>
+<td>5000</td>
+<td>&gt;= 1.0.2</td>
+</tr>
+</tbody>
+</table>
+<p>除了上面列到的在application.properties里配置的属性，还有一些可以在运行时调用接口来进行调节，这些参数都<a href="https://nacos.io/zh-cn/docs/open-api.html">open API</a>里的<code>查看系统当前数据指标</code>这个API里有声明。</p>
+<h3>Config模块</h3>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>含义</th>
+<th>可选值</th>
+<th>默认值</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>db.num</td>
+<td>数据库数目</td>
+<td>正整数</td>
+<td>0</td>
+<td>&gt;= 0.1.0</td>
+</tr>
+<tr>
+<td>db.url.0</td>
+<td>第一个数据库的URL</td>
+<td>字符串</td>
+<td>空</td>
+<td>&gt;= 0.1.0</td>
+</tr>
+<tr>
+<td>db.url.1</td>
+<td>第二个数据库的URL</td>
+<td>字符串</td>
+<td>空</td>
+<td>&gt;= 0.1.0</td>
+</tr>
+<tr>
+<td>db.user</td>
+<td>数据库连接的用户名</td>
+<td>字符串</td>
+<td>空</td>
+<td>&gt;= 0.1.0</td>
+</tr>
+<tr>
+<td>db.password</td>
+<td>数据库连接的密码</td>
+<td>字符串</td>
+<td>空</td>
+<td>&gt;= 0.1.0</td>
+</tr>
+</tbody>
+</table>
+<h3>CMDB模块</h3>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>含义</th>
+<th>可选值</th>
+<th>默认值</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nacos.cmdb.loadDataAtStart</td>
+<td>是否打开CMDB</td>
+<td>true/false</td>
+<td>false</td>
+<td>&gt;= 0.7.0</td>
+</tr>
+<tr>
+<td>nacos.cmdb.dumpTaskInterval</td>
+<td>全量dump的间隔，单位为秒</td>
+<td>正整数</td>
+<td>3600</td>
+<td>&gt;= 0.7.0</td>
+</tr>
+<tr>
+<td>nacos.cmdb.eventTaskInterval</td>
+<td>变更事件的拉取间隔，单位为秒</td>
+<td>正整数</td>
+<td>10</td>
+<td>&gt;= 0.7.0</td>
+</tr>
+<tr>
+<td>nacos.cmdb.labelTaskInterval</td>
+<td>标签集合的拉取间隔，单位为秒</td>
+<td>正整数</td>
+<td>300</td>
+<td>&gt;= 0.7.0</td>
+</tr>
+</tbody>
+</table>
+<h2>Nacos Java Client</h2>
+<p>客户端的参数分为两种，一种是通过-D参数进行指定的配置，一种是构造客户端时，通过Properties对象指定的配置，以下没有带-D标注的都是通过Properties注入的配置。</p>
+<h3>通用参数</h3>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>含义</th>
+<th>可选值</th>
+<th>默认值</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>endpoint</td>
+<td>连接Nacos Server指定的连接点，可以参考<a href="https://nacos.io/zh-cn/blog/address-server.html">文档</a></td>
+<td>域名</td>
+<td>空</td>
+<td>&gt;= 0.1.0</td>
+</tr>
+<tr>
+<td>endpoint</td>
+<td>连接Nacos Server指定的连接点端口，可以参考<a href="https://nacos.io/zh-cn/blog/address-server.html">文档</a></td>
+<td>合法端口号</td>
+<td>空</td>
+<td>&gt;= 0.1.0</td>
+</tr>
+<tr>
+<td>namespace</td>
+<td>命名空间的ID</td>
+<td>命名空间的ID</td>
+<td>config模块为空，naming模块为public</td>
+<td>&gt;= 0.8.0</td>
+</tr>
+<tr>
+<td>serverAddr</td>
+<td>Nacos Server的地址列表，这个值的优先级比endpoint高</td>
+<td>ip:port,ip:port,...</td>
+<td>空</td>
+<td>&gt;= 0.1.0</td>
+</tr>
+<tr>
+<td>nacos.logging.path(-D)</td>
+<td>客户端日志的目录</td>
+<td>目录路径</td>
+<td>用户根目录</td>
+<td>&gt;= 0.1.0</td>
+</tr>
+<tr>
+<td>com.alibaba.nacos.config.log.level(-D)</td>
+<td>Naming客户端的日志级别</td>
+<td>info,error,warn等</td>
+<td>info</td>
+<td>&gt;= 1.0.0</td>
+</tr>
+<tr>
+<td>com.alibaba.nacos.naming.log.level(-D)</td>
+<td>Config客户端的日志级别</td>
+<td>info,error,warn等</td>
+<td>info</td>
+<td>&gt;= 1.0.0</td>
+</tr>
+</tbody>
+</table>
+<h3>Naming客户端</h3>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>含义</th>
+<th>可选值</th>
+<th>默认值</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>namingLoadCacheAtStart</td>
+<td>启动时是否优先读取本地缓存</td>
+<td>true/false</td>
+<td>false</td>
+<td>&gt;= 1.0.0</td>
+</tr>
+<tr>
+<td>namingClientBeatThreadCount</td>
+<td>客户端心跳的线程池大小</td>
+<td>正整数</td>
+<td>机器的CPU数的一半</td>
+<td>&gt;= 1.0.0</td>
+</tr>
+<tr>
+<td>namingPollingThreadCount</td>
+<td>客户端定时轮询数据更新的线程池大小</td>
+<td>正整数</td>
+<td>机器的CPU数的一半</td>
+<td>&gt;= 1.0.0</td>
+</tr>
+</tbody>
+</table>
+<h3>Config客户端</h3>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>含义</th>
+<th>可选值</th>
+<th>默认值</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>config.long-poll.timeout</td>
+<td>长轮询的超时时间，单位为毫秒</td>
+<td>正整数</td>
+<td>30000</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+<tr>
+<td>config.retry.time</td>
+<td>长轮询的重试次数</td>
+<td>正整数</td>
+<td>3</td>
+<td>&gt;= 1.0.1</td>
+</tr>
+</tbody>
+</table>
+</section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>愿景</h3><p>Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/what-is-nacos.html" target="_self">概览</a></dd><dd><a href="/zh-cn/docs/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/contributing.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://www.aliyun.com/product/acm?source_type=nacos_pc_20181219" target="_self">云服务 ACM</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">云服务 EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">云服务 AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/blogDetail.js"></script>
+</body>
+</html>

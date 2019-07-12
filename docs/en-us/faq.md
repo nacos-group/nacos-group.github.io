@@ -37,6 +37,7 @@ description: Nacos of FAQ
   - [Nacos how to enlarge shrinks capacity](#3.12)
   - [Nacos client modify the log level](#3.13)
   - [Nacos and Zipkin integration `Service not found` error](#3.14)
+  - [Why service registration is successful, the console can't see](#3.15)
 
 - Nacos principle questions
 
@@ -152,5 +153,9 @@ If there is still a `Service not found` error, is recommended to use the open-ap
 `curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?port=9411&healthy=true&ip=127.0.0.1&weight=1.0&serviceName=zipkin-server&ephemeral=false&namespaceId=public'`
 
 Then, went to nacos console, find a service called `zipkin-server` service, find the cluster configuration, set the health examination mode to `TCP`, port number of `9411` (zipkin-server port).
+
+<h4 id="3.15">Why service registration is successful, the console can't see</h4>
+
+This problem appeared in cluster mode, in the use of nacos cluster pattern, ensure that all of the machine time is consistent, can appear otherwise unable to synchronize data.
 
 ## Nacos principle questions
