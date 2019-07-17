@@ -1,6 +1,6 @@
 ---
 title: 其他语言的SDK
-keywords: SDK
+keywords: 其他语言,SDK
 description: 其他语言的SDK
 ---
 

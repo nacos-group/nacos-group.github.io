@@ -1,7 +1,7 @@
 ---
 title: FAQ
 keywords: Nacos,FAQ
-description: Nacos of FAQ
+description: Nacos FAQ
 ---
 
 # FAQ

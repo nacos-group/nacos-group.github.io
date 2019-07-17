@@ -1,7 +1,7 @@
 ---
 title: FAQ
 keywords: Nacos,FAQ
-description: Nacos 的 FAQ
+description: Nacos FAQ
 ---
 
 # FAQ

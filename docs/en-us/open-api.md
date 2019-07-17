@@ -1,9 +1,16 @@
+---
+title: Open API Guide
+keywords: Open API,Guide
+description: Open API Guide
+---
+
+# Open API Guide
+
 - Configuration Management
   - [Get configurations](#1.1)
   - [Listen for configurations](#1.2)
   - [Publish configuration](#1.3)
   - [Delete configuration](#1.4)
-
 
 - Service Discovery
   - [Register instance](#2.1)
@@ -24,9 +31,7 @@
   - [Query the leader of current cluster](#2.16)
   - [Update instance health status](#2.17)
 
-
-
-# Configuration Management
+## Configuration Management
 
 <h2 id="1.1">Get configurations</h2>
 
@@ -394,7 +399,7 @@ http:serverIp:8848/nacos/cs/configs?dataId=dataIdparam&group=groupParam
 true
 ```
 
-# Service Discovery
+## Service Discovery
 
 <h2 id="2.1">Register instance</h2>
 
@@ -1063,8 +1068,6 @@ PUT
 | ip | String | yes | ip of instance |
 | port | int | yes | port of instance |
 | healthy | boolean | yes | if healthy |
-
-
 
 ### Request Example
 ```plain

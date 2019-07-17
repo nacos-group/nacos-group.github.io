@@ -85,7 +85,7 @@ export default {
                   link: '/en-us/docs/nacos-spring.html',
               },
               {
-                title: 'namespace, endpoint best practices',
+                title: 'Namespace, endpoint best practices',
                 link: '/en-us/docs/namespace-endpoint-best-practices.html',
               },
               {
@@ -260,7 +260,7 @@ export default {
                   link: '/zh-cn/docs/nacos-spring.html',
               },
               {
-                title: 'namespace, endpoint 最佳实践',
+                title: 'Namespace, endpoint 最佳实践',
                 link: '/zh-cn/docs/namespace-endpoint-best-practices.html',
               },
               {

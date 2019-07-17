@@ -1,4 +1,10 @@
-# NacosSync介绍
+---
+title: NacosSync 介绍
+keywords: NacosSync,介绍
+description: NacosSync 介绍
+---
+
+# NacosSync 介绍
 
 ## 介绍
 * NacosSync是一个支持多种注册中心的同步组件,基于Spring boot开发框架,数据层采用Spring Data JPA,遵循了标准的JPA访问规范,支持多种数据源存储,默认使用Hibernate实现,更加方便的支持表的自动创建更新
@@ -25,8 +31,6 @@
 * 多个网络互通的Region之间服务共享,打破Region之间的服务调用限制
 
 ![image.png](https://img.alicdn.com/tfs/TB1Mo6yJ4jaK1RjSZKzXXXVwXXa-1136-798.png)
-
-
 
 * 双向同步功能,支持Dubbo+Zookeeper服务平滑迁移到Dubbo+Naocs,享受Nacos更加优质的服务
 

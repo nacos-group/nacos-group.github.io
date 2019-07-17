@@ -1,10 +1,10 @@
 ---
-title: Nacos system parameters is introduced
+title: Nacos system parameters introduce
 keywords: Nacos,System parameters
-description: Nacos system parameters is introduced
+description: Nacos system parameters introduce
 ---
 
-# Nacos system parameters is introduced
+# Nacos system parameters introduce
 
 ## Nacos Server
 
@@ -21,7 +21,7 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |nacos.home(-D)| Nacos root directory | Directory path| Nacos installation directory | >= 0.1.0 |
 |nacos.standalone(-D)| Whether in stand-alone mode | true/false | false | >= 0.1.0 |
 |nacos.functionMode(-D)| Boot mode, support only start one module, do not set all modules will start | config/naming/null | null | >= 0.9.0 |
-|nacos.inetutils.prefer-hostname-over-ip| cluster.conf里是否应该填hostname | true/false| false | >= 0.3.0 |
+|nacos.inetutils.prefer-hostname-over-ip| if you should fill in `hostname` in `cluster.conf` | true/false| false | >= 0.3.0 |
 |nacos.inetutils.ip-address | Native IP, set this parameter, will use this IP to`cluster.conf`matching, please make sure that the IP value exists in the `cluster.conf` | Native IP| null | >= 0.3.0 |
 |nacos.security.ignore.urls | Control over the interface console authentication | List of interfaces need to skip console authentication| null | >= 0.9.0 |
 

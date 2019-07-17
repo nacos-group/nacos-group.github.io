@@ -1,3 +1,9 @@
+---
+title: How to report bugs
+keywords: nacos,submit,reporting bugs
+description: How to report bugs
+---
+
 # Reporting bugs
 
 If any part of the Nacos project has bugs or documentation mistakes, please let us know by [opening an issue](https://github.com/alibaba/nacos/issues/new). We treat bugs and mistakes very seriously and believe no issue is too small, anyOne is implement. Before creating a bug report, please check that an issue reporting the same problem does not already exist.

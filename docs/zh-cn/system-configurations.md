@@ -4,7 +4,7 @@ keywords: Nacos,系统参数
 description: Nacos系统参数介绍
 ---
 
-# Nacos系统参数介绍
+# Nacos 系统参数介绍
 
 ## Nacos Server
 
@@ -21,7 +21,7 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |nacos.home(-D)| Nacos的根目录 | 目录路径| Nacos安装的目录 | >= 0.1.0 |
 |nacos.standalone(-D)| 是否在单机模式 | true/false | false | >= 0.1.0 |
 |nacos.functionMode(-D)| 启动模式，支持只启动某一个模块，不设置时所有模块都会启动 | config/naming/空 | 空 | >= 0.9.0 |
-|nacos.inetutils.prefer-hostname-over-ip| cluster.conf里是否应该填hostname | true/false| false | >= 0.3.0 |
+|nacos.inetutils.prefer-hostname-over-ip| `cluster.conf`里是否应该填`hostname`| true/false| false | >= 0.3.0 |
 |nacos.inetutils.ip-address | 本机IP，该参数设置后，将会使用这个IP去`cluster.conf`里进行匹配，请确保这个IP的值在`cluster.conf`里是存在的 | 本机IP| null | >= 0.3.0 |
 |nacos.security.ignore.urls | 控制台鉴权跳过的接口 | 需要跳过控制台鉴权的接口列表| 空 | >= 0.9.0 |
 
