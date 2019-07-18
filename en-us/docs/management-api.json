@@ -2,5 +2,9 @@
   "filename": "management-api.md",
   "__html": "<p><strong>IN PLAN</strong> with Nacos 1.x.x</p>\n",
   "link": "/en-us/docs/management-api.html",
-  "meta": {}
+  "meta": {
+    "title": "Management API",
+    "keywords": "Management,API",
+    "description": "In plan with Nacos 1.x.x"
+  }
 }

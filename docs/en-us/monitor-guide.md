@@ -1,3 +1,11 @@
+---
+title: Nacos monitor guide
+keywords: Nacos,monitor guide
+description: Nacos monitor guide
+---
+
+# Nacos monitor guide
+
 Nacos 0.8.0 improves the monitoring system, supporting Nacos operation status monitoring through exposing metrics data access to third-party monitoring system. Currently, prometheus, elastic search and influxdb are supported. The docs introduce how prometheus and grafana monitor Nacos.
 Here is Nacos [grafana monitoring page](http://monitor.nacos.io). You can find out for yourself how to use elastic search and influxdb.
 

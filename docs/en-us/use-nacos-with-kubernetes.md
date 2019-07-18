@@ -1,24 +1,24 @@
+---
+title: Kubernetes Nacos
+keywords: nacos,kubernetes
+description: This project contains a Nacos Docker image meant to facilitate the deployment of Nacos on Kubernetes via StatefulSets.
+---
+
 # Kubernetes Nacos
 
+This project contains a Nacos Docker image meant to facilitate the deployment of [Nacos](https://nacos.io) on [Kubernetes](https://kubernetes.io/) via StatefulSets.
 
-本项目包含一个可构建的Nacos Docker Image,旨在利用StatefulSets在[Kubernetes](https://kubernetes.io/)上部署[Nacos](https://nacos.io)
+# Quick Start
 
-[English Document](https://github.com/nacos-group/nacos-k8s/blob/master/README.md)
-
-# 快速开始
-
-* **Clone 项目**
-
+* **Clone Project**
 
 ```shell
 git clone https://github.com/nacos-group/nacos-k8s.git
 ```
 
+* **Simple Start**
 
-
-* **简单例子**
-
-> 如果你使用简单方式快速启动,请注意这是没有使用持久化卷的,可能存在数据丢失风险:
+> If you want to start Nacos without NFS, but **emptyDirs will possibly result in a loss of data**. as follows:
 
 ```shell
 cd nacos-k8s
@@ -26,58 +26,46 @@ chmod +x quick-startup.sh
 ./quick-startup.sh
 ```
 
+* **Testing**
 
+  * **Service registration**
 
-* **测试**
-
-  * **服务注册**
-
-  ```bash
+  ```powershell
   curl -X PUT 'http://cluster-ip:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'
   ```
 
+  * **Service discovery**
 
-
-  * **服务发现**
-
-  ```bash
+  ```powershell
   curl -X GET 'http://cluster-ip:8848/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'
   ```
+  
+  * **Publish config**
 
-
-
-  * **发布配置**
-
-  ```bash
+  ```powershell
   curl -X POST "http://cluster-ip:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test&content=helloWorld"
   ```
 
+  * **Get config**
 
-
-  * **获取配置**
-
-  ```bash
+  ```powershell
   curl -X GET "http://cluster-ip:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test"
   ```
 
+# Advanced
 
-
-# 高级使用
-
-> 在高级使用中,Nacos在K8S拥有自动扩容缩容和数据持久特性,请注意如果需要使用这部分功能请使用PVC持久卷,Nacos的自动扩容缩容需要依赖持久卷,以及数据持久化也是一样,本例中使用的是NFS来使用PVC.
+> In advanced use, the cluster is automatically scaled and data is persisted, but [PersistentVolumeClaims](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims) must be deployed. In this example, NFS is used.
 >
 
+## Deploy NFS
 
-
-## 部署 NFS
-
-* 创建角色 
+* Create Role 
 
 ```shell
 kubectl create -f deploy/nfs/rbac.yaml
 ```
 
-> 如果的K8S命名空间不是**default**,请在部署RBAC之前执行以下脚本:
+> If your K8S namespace is not default, execute the following script before creating RBAC
 
 
 ```shell
@@ -88,36 +76,27 @@ $ sed -i'' "s/namespace:.*/namespace: $NAMESPACE/g" ./deploy/nfs/rbac.yaml
 
 ```
 
-
-
-* 创建 `ServiceAccount` 和部署 `NFS-Client Provisioner`
+* Create `ServiceAccount` And deploy `NFS-Client Provisioner`
 
 ```shell
 kubectl create -f deploy/nfs/deployment.yaml
 ```
 
-
-
-* 创建 NFS StorageClass
+* Create NFS StorageClass
 
 ```shell
 kubectl create -f deploy/nfs/class.yaml
 ```
 
-
-
-* 验证NFS部署成功
+* Verify that NFS is working
 
 ```shell
 kubectl get pod -l app=nfs-client-provisioner
 ```
 
+## Deploy database
 
-
-## 部署数据库
-
-
-* 部署主库
+* Deploy master
 
 ```shell
 
@@ -126,9 +105,7 @@ cd nacos-k8s
 kubectl create -f deploy/mysql/mysql-master-nfs.yaml
 ```
 
-
-
-* 部署从库
+* Deploy slave
 
 ```shell
 
@@ -137,9 +114,7 @@ cd nacos-k8s
 kubectl create -f deploy/mysql/mysql-slave-nfs.yaml
 ```
 
-
-
-* 验证数据库是否正常工作
+* Verify that Database is working
 
 ```shell
 # master
@@ -152,34 +127,26 @@ kubectl get pod
 mysql-slave-kf9cb                         1/1     Running   0          110m
 ```
 
+## Deploy Nacos 
 
-
-## 部署Nacos
-
-
-
-* 修改  **depoly/nacos/nacos-pvc-nfs.yaml**
+* Modify  **depoly/nacos/nacos-pvc-nfs.yaml**
 
 ```yaml
 data:
-  mysql.master.db.name: "主库名称"
-  mysql.master.port: "主库端口"
-  mysql.slave.port: "从库端口"
-  mysql.master.user: "主库用户名"
-  mysql.master.password: "主库密码"
+  mysql.master.db.name: "db name"
+  mysql.master.port: "master db port"
+  mysql.slave.port: "slave db port"
+  mysql.master.user: "master db username"
+  mysql.master.password: "master db password"
 ```
 
-
-
-* 创建 Nacos
+* Create Nacos
 
 ``` shell
 kubectl create -f nacos-k8s/deploy/nacos/nacos-pvc-nfs.yaml
 ```
 
-
-
-* 验证Nacos节点启动成功
+* Verify that Nacos is working
 
 ```shell
 kubectl get pod -l app=nacos
@@ -191,129 +158,102 @@ nacos-1   1/1     Running   0          19h
 nacos-2   1/1     Running   0          19h
 ```
 
+## Scale Testing
 
-
-
-
-## 扩容测试
-
-* 在扩容前,使用 [`kubectl exec`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec)获取在pod中的Nacos集群配置文件信息
+* Use [`kubectl exec`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec) to get the cluster config of the Pods in the `nacos` StatefulSet.
 
 ```powershell
 for i in 0 1; do echo nacos-$i; kubectl exec nacos-$i cat conf/cluster.conf; done
 ```
 
-StatefulSet控制器根据其序数索引为每个Pod提供唯一的主机名。 主机名采用<statefulset name>  -  <ordinal index>的形式。 因为nacos StatefulSet的副本字段设置为2，所以当前集群文件中只有两个Nacos节点地址
+The StatefulSet controller provides each Pod with a unique hostname based on its ordinal index. The hostnames take the form of `<statefulset name>-<ordinal index>`. Because the `replicas` field of the `nacos` StatefulSet is set to `2`, In the cluster file only two nacos address
 
+![k8s](https://cdn.nlark.com/yuque/0/2019/gif/338441/1562846123635-e361d2b5-4bbe-4347-acad-8f11f75e6d38.gif)
 
-
-![k8s](/images/k8s.gif)
-
-
-
-* 使用kubectl scale 对Nacos动态扩容
+* Use kubectl to scale StatefulSets
 
 ```bash
 kubectl scale sts nacos --replicas=3
 ```
 
-![scale](/images/scale.gif)
+![scale](https://cdn.nlark.com/yuque/0/2019/gif/338441/1562846139093-7a79b709-9afa-448a-b7d6-f57571d3a902.gif)
 
 
-
-* 在扩容后,使用 [`kubectl exec`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec)获取在pod中的Nacos集群配置文件信息
+* Use [`kubectl exec`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec) to get the cluster config of the Pods in the `nacos` StatefulSet after scale StatefulSets
 
 ```bash
 for i in 0 1 2; do echo nacos-$i; kubectl exec nacos-$i cat conf/cluster.conf; done
 ```
 
-![get_cluster_after](/images/get_cluster_after.gif)
+![get_cluster_after](https://cdn.nlark.com/yuque/0/2019/gif/338441/1562846177553-c1c7f379-1b41-4026-9f0b-23e15dde02a8.gif)
 
-
-
-* 使用 [`kubectl exec`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec)执行Nacos API 在每台节点上获取当前**Leader**是否一致
+* Use [`kubectl exec`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec) to get the **state** of the Pods in the `nacos` StatefulSet after scale StatefulSets
 
 ```bash
 for i in 0 1 2; do echo nacos-$i; kubectl exec nacos-$i curl GET "http://localhost:8848/nacos/v1/ns/raft/state"; done
 ```
 
-到这里你可以发现新节点已经正常加入Nacos集群当中
+You can find that the new node has joined the cluster
 
-# 例子部署环境
+# Prerequisites
 
-- 机器配置
+- Kubernetes Node configuration(for reference only)
 
-| 内网IP      | 主机名     | 配置                                                         |
-| ----------- | ---------- | ------------------------------------------------------------ |
-| 172.17.79.3 | k8s-master | CentOS Linux release 7.4.1708 (Core) Single-core processor Mem 4G Cloud disk 40G |
-| 172.17.79.4 | node01     | CentOS Linux release 7.4.1708 (Core) Single-core processor Mem 4G Cloud disk 40G |
-| 172.17.79.5 | node02     | CentOS Linux release 7.4.1708 (Core) Single-core processor Mem 4G Cloud disk 40G |
+| Network IP | Hostname   | Configuration                                                                    |
+| ---------- | ---------- | -------------------------------------------------------------------------------- |                    
+| 172.17.79.3| k8s-master | CentOS Linux release 7.4.1708 (Core) Single-core processor Mem 4G Cloud disk 40G |
+| 172.17.79.4| node01     | CentOS Linux release 7.4.1708 (Core) Single-core processor Mem 4G Cloud disk 40G |
+| 172.17.79.5| node02     | CentOS Linux release 7.4.1708 (Core) Single-core processor Mem 4G Cloud disk 40G |
 
-- Kubernetes 版本：**1.12.2** （如果你和我一样只使用了三台机器,那么记得开启master节点的部署功能）
-- NFS 版本：**4.1** 在k8s-master进行安装Server端,并且指定共享目录,本项目指定的**/data/nfs-share**
-- Git
+- Kubernetes version：**1.12.2+** 
+- NFS version：**4.1+** 
 
+# Limitations
 
+* Persistent Volumes must be used. emptyDirs will possibly result in a loss of data
 
-# 限制
+# Project directory
 
-* 必须要使用持久卷,否则会出现数据丢失的情况
+| Directory Name   | Description                                |
+| -------- | ----------------------------------- |
+| `plugin` | Help Nacos cluster achieve automatic scaling in K8s |
+| `deploy` | Deploy the required files                     |
 
-
-
-
-
-# 项目目录
-
-| 目录 | 描述                                |
-| ------ | ----------------------------------- |
-| plugin | 帮助Nacos集群进行动态扩容的插件Docker镜像源码 |
-| deploy | K8s 部署文件              |
-
-
-
-# 配置属性
+# Configuration properties
 
 * nacos-pvc-nfs.yaml or nacos-quick-start.yaml 
 
-| 名称                  | 必要 | 描述                                    |
-| --------------------- | -------- | --------------------------------------- |
-| mysql.master.db.name  | Y       | 主库名称                      |
-| mysql.master.port     | N       | 主库端口                        |
-| mysql.slave.port      | N       | 从库端口                       |
-| mysql.master.user     | Y       | 主库用户名                     |
-| mysql.master.password | Y       | 主库密码                     |
-| NACOS_REPLICAS        | N      | 确定执行Nacos启动节点数量,如果不适用动态扩容插件,就必须配置这个属性，否则使用扩容插件后不会生效 |
-| NACOS_SERVER_PORT     | N       | Nacos 端口             |
-| PREFER_HOST_MODE      | Y       | 启动Nacos集群按域名解析 |
-
+| Name                    | Required | Description                                    |
+| ----------------------- | -------- | --------------------------------------- |
+| `mysql.master.db.name`  | Y       | Master database name                          |
+| `mysql.master.port`     | N       | Master database port                          |
+| `mysql.slave.port`      | N       | Slave database port                         |
+| `mysql.master.user`     | Y       | Master database username                        |
+| `mysql.master.password` | Y       | Master database password                       |
+| `NACOS_REPLICAS`        | Y       | The number of clusters must be consistent with the value of the replicas attribute |
+| `NACOS_SERVER_PORT`     | N       | Nacos port,default:8848                |
+| `PREFER_HOST_MODE`      | Y       | Enable Nacos cluster node domain name support               |
 
 
 * **nfs** deployment.yaml 
 
-| 名称       | 必要 | 描述                     |
-| ---------- | -------- | ------------------------ |
-| NFS_SERVER | Y       | NFS 服务端地址         |
-| NFS_PATH   | Y       | NFS 共享目录 |
-| server     | Y       | NFS 服务端地址  |
-| path       | Y       | NFS 共享目录 |
+| Name         | Required | Description                     |
+| ------------ | -------- | ------------------------ |
+| `NFS_SERVER` | Y       | NFS server address           |
+| `NFS_PATH`   | Y       | NFS server shared directory |
+| `server`     | Y       | NFS server address           |
+| `path`       | Y       | NFS server shared directory |
 
 
+* mysql yaml 
 
-* mysql 
-
-| 名称                     | 必要 | 描述                                                      |
-| -------------------------- | -------- | ----------------------------------------------------------- |
-| MYSQL_ROOT_PASSWORD        | N       | ROOT 密码                                                    |
-| MYSQL_DATABASE             | Y       | 数据库名称                                   |
-| MYSQL_USER                 | Y       | 数据库用户名                                  |
-| MYSQL_PASSWORD             | Y       | 数据库密码                              |
-| MYSQL_REPLICATION_USER     | Y       | 数据库复制用户            |
-| MYSQL_REPLICATION_PASSWORD | Y       | 数据库复制用户密码      |
-| Nfs:server                 | N      | NFS 服务端地址，如果使用本地部署不需要配置 |
-| Nfs:path                   | N     | NFS 共享目录，如果使用本地部署不需要配置 |
-
-
-
-
-
+| Name                         | Required | Description                                                        |
+| ---------------------------- | -------- | ----------------------------------------------------------- |
+| `MYSQL_ROOT_PASSWORD`        | N       | Root password                                                    |
+| `MYSQL_DATABASE`             | Y       | Database Name                                     |
+| `MYSQL_USER`                 | Y       | Database Username                                     |
+| `MYSQL_PASSWORD`             | Y       | Database Password                                |
+| `MYSQL_REPLICATION_USER`     | Y       | Master-slave replication username                |
+| `MYSQL_REPLICATION_PASSWORD` | Y       | Master-slave replication password                 |
+| `Nfs:server`                 | Y       | NFS server address |
+| `Nfs:path`                   | Y       | NFS server shared path |

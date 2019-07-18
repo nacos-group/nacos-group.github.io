@@ -1,8 +1,15 @@
-# Nacos系统参数介绍
+---
+title: Nacos系统参数介绍
+keywords: Nacos,系统参数
+description: Nacos系统参数介绍
+---
+
+# Nacos 系统参数介绍
 
 ## Nacos Server
 
-对于Server端来说，一般是设置在{nacos.home}/conf/application.properties里，如果参数名后标注了(-D)的，则表示是JVM的参数，需要在{nacos.home}/bin/startup.sh里进行相应的设置。例如像设置nacos.home的值，可以在{nacos.home}/bin/startup.sh进行如下设置：
+对于Server端来说，一般是设置在`{nacos.home}/conf/application.properties`里，如果参数名后标注了(-D)的，则表示是 JVM 的参数，需要在`{nacos.home}/bin/startup.sh`里进行相应的设置。例如像设置 nacos.home 的值，可以在`{nacos.home}/bin/startup.sh`进行如下设置：
+
 ```
 JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 ```
@@ -14,8 +21,8 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |nacos.home(-D)| Nacos的根目录 | 目录路径| Nacos安装的目录 | >= 0.1.0 |
 |nacos.standalone(-D)| 是否在单机模式 | true/false | false | >= 0.1.0 |
 |nacos.functionMode(-D)| 启动模式，支持只启动某一个模块，不设置时所有模块都会启动 | config/naming/空 | 空 | >= 0.9.0 |
-|nacos.inetutils.prefer-hostname-over-ip| cluster.conf里是否应该填hostname | true/false| false | >= 0.3.0 |
-|nacos.inetutils.ip-address | 本机IP，该参数设置后，将会使用这个IP去cluster.conf里进行匹配，请确保这个IP的值在cluster.conf里是存在的 | 本机IP| null | >= 0.3.0 |
+|nacos.inetutils.prefer-hostname-over-ip| `cluster.conf`里是否应该填`hostname`| true/false| false | >= 0.3.0 |
+|nacos.inetutils.ip-address | 本机IP，该参数设置后，将会使用这个IP去`cluster.conf`里进行匹配，请确保这个IP的值在`cluster.conf`里是存在的 | 本机IP| null | >= 0.3.0 |
 |nacos.security.ignore.urls | 控制台鉴权跳过的接口 | 需要跳过控制台鉴权的接口列表| 空 | >= 0.9.0 |
 
 
@@ -29,7 +36,7 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |nacos.naming.distro.batchSyncKeyCount| 同步任务每批的key的数目 | 正整数 | 1000 | >= 1.0.2 |
 |nacos.naming.distro.syncRetryDelay| 同步任务失败的重试间隔，单位为毫秒 | 正整数 | 5000 | >= 1.0.2 |
 
-除了上面列到的在application.properties里配置的属性，还有一些可以在运行时调用接口来进行调节，这些参数都[open API](https://nacos.io/zh-cn/docs/open-api.html)里的```查看系统当前数据指标```这个API里有声明。
+除了上面列到的在`application.properties`里配置的属性，还有一些可以在运行时调用接口来进行调节，这些参数都在[Open API](https://nacos.io/zh-cn/docs/open-api.html)里的```查看系统当前数据指标```这个API里有声明。
 
 ### Config模块
 
@@ -52,7 +59,7 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 
 ## Nacos Java Client
 
-客户端的参数分为两种，一种是通过-D参数进行指定的配置，一种是构造客户端时，通过Properties对象指定的配置，以下没有带-D标注的都是通过Properties注入的配置。
+客户端的参数分为两种，一种是通过-D参数进行指定的配置，一种是构造客户端时，通过`Properties`对象指定的配置，以下没有带-D标注的都是通过`Properties`注入的配置。
 
 ### 通用参数
 

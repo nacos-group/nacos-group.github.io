@@ -100,6 +100,11 @@
       "meta": {}
     },
     {
+      "filename": "nacos 1.1.0.md",
+      "link": "/en-us/blog/nacos 1.1.0.html",
+      "meta": {}
+    },
+    {
       "filename": "nacos-is-coming.md",
       "link": "/en-us/blog/nacos-is-coming.html",
       "meta": {
@@ -107,6 +112,11 @@
         "keywords": "nacos,alibaba,dubbo",
         "description": "支持Dubbo生态发展，阿里巴巴启动新的开源项目 Nacos"
       }
+    },
+    {
+      "filename": "nacos-roadmap.md",
+      "link": "/en-us/blog/nacos-roadmap.html",
+      "meta": {}
     },
     {
       "filename": "nacos.md",
@@ -297,6 +307,11 @@
       }
     },
     {
+      "filename": "nacos 1.1.0.md",
+      "link": "/zh-cn/blog/nacos 1.1.0.html",
+      "meta": {}
+    },
+    {
       "filename": "nacos-is-coming.md",
       "link": "/zh-cn/blog/nacos-is-coming.html",
       "meta": {
@@ -304,6 +319,11 @@
         "keywords": "nacos,alibaba,dubbo",
         "description": "支持Dubbo生态发展，阿里巴巴启动新的开源项目 Nacos"
       }
+    },
+    {
+      "filename": "nacos-roadmap.md",
+      "link": "/zh-cn/blog/nacos-roadmap.html",
+      "meta": {}
     },
     {
       "filename": "nacos.md",

@@ -15,7 +15,7 @@ description: Nacos 规划
 主要目标有两个：
 
 * 构建简单易用的，服务相关的工具集，包括服务发现、配置管理、服务元数据存储、推送、一致性及元数据管理等；
-* 与包括[Spring Cloud](xx)、[Kubernetes](xx)、[Dubbo](xx)等开源生态做无缝的融合与支持，同时给这些生态带来很多面向生产时需要的优秀特性。
+* 与包括[Spring Cloud](https://github.com/alibaba/spring-cloud-alibaba)、[Kubernetes](https://github.com/kubernetes/kubernetes)、[Dubbo](https://github.com/apache/dubbo)等开源生态做无缝的融合与支持，同时给这些生态带来很多面向生产时需要的优秀特性。
 
 以下是大致的计划：
 
@@ -36,8 +36,6 @@ description: Nacos 规划
 
 ![Screen Shot 2018-07-11 at 22.32.17.png](https://cdn.yuque.com/lark/0/2018/png/15914/1531319724777-d19b0304-535c-4af9-bee1-f358b6e55d91.png) 
 
-
 * Kubernetes + Spring Cloud 统一服务管理
-
 
 ![Screen Shot 2018-07-11 at 22.35.30.png](https://cdn.yuque.com/lark/0/2018/png/15914/1531319755930-0040e67e-ca05-47b9-9cd0-07ffd7452eae.png) 

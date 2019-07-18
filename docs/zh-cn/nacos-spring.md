@@ -283,8 +283,6 @@ public void testInjection() {
 - 请参看：[Auto-Refreshed Sample of `@NacosConfigurationProperties`](https://github.com/nacos-group/nacos-spring-project/blob/master/nacos-spring-samples/nacos-spring-webmvc-sample/src/main/java/com/alibaba/nacos/samples/spring/properties/NacosConfigurationPropertiesConfiguration.java)
 - 请参看：[Sample of `@NacosPropertySources` and `@NacosPropertySource`](https://github.com/nacos-group/nacos-spring-project/blob/master/nacos-spring-samples/nacos-spring-webmvc-sample/src/main/java/com/alibaba/nacos/samples/spring/env/NacosPropertySourceConfiguration.java)
 
-
-
 ## 4. 事件驱动
 
 Nacos 事件驱动 基于标准的 Spring Event / Listener 机制。 Spring 的 `ApplicationEvent` 是所有 Nacos Spring 事件的抽象超类：
@@ -301,12 +299,9 @@ Nacos 事件驱动 基于标准的 Spring Event / Listener 机制。 Spring 的 
 
 - 请参看：[Event/Listener Sample](https://github.com/nacos-group/nacos-spring-project/blob/master/nacos-spring-samples/nacos-spring-webmvc-sample/src/main/java/com/alibaba/nacos/samples/spring/event/NacosEventListenerConfiguration.java)
 
-
-
 ## 相关项目
 
 * [Nacos](https://github.com/alibaba/nacos)
 * [Nacos Spring](https://github.com/nacos-group/nacos-spring-project)
 * [Nacos Spring Boot](https://github.com/nacos-group/nacos-spring-boot-project)
 * [Spring Cloud Alibaba](https://github.com/spring-cloud-incubator/spring-cloud-alibaba)
-

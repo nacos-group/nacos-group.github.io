@@ -198,5 +198,4 @@ public class NacosConsumerApplication {
 * [Nacos](https://github.com/alibaba/nacos)
 * [Nacos Spring](https://github.com/nacos-group/nacos-spring-project)
 * [Nacos Spring Boot](https://github.com/nacos-group/nacos-spring-boot-project)
-* [Spring Cloud Alibaba](https://github.com/spring-cloud-incubator/spring-cloud-alibaba)
-
+* [Spring Cloud Alibaba](https://github.com/alibaba/spring-cloud-alibaba)

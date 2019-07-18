@@ -1,15 +1,16 @@
 ---
 title: Open API 指南
-keywords: Open API
+keywords: Open API,指南
 description: Open API 指南
 ---
+
+# Open API 指南
 
 - 配置管理
   - [获取配置](#1.1)
   - [监听配置](#1.2)
   - [发布配置](#1.3)
   - [删除配置](#1.4)
-
 
 - 服务发现
   - [注册实例](#2.1)
@@ -30,8 +31,7 @@ description: Open API 指南
   - [查看当前集群leader](#2.16)
   - [更新实例的健康状态](#2.17)
 
-# Open API 指南
-# 配置管理
+## 配置管理
 
 <h2 id="1.1">获取配置</h2>
 
@@ -320,7 +320,7 @@ http:serverIp:8848/nacos/v1/cs/configs?dataId=dataIdparam&group=groupParam
 true
 ```
 
-# 服务发现
+## 服务发现
 
 <h2 id="2.1">注册实例</h2>
 
@@ -951,7 +951,6 @@ GET
 
 ### 请求参数
 
-
 ### 示例请求
 ```plain
 curl -X GET '127.0.0.1:8848/nacos/v1/ns/raft/leader'
@@ -987,8 +986,6 @@ PUT
 | ip | 字符串 | 是 | 服务实例IP |
 | port | int | 是 | 服务实例port |
 | healthy | boolean | 是 | 是否健康 |
-
-
 
 ### 示例请求
 ```plain

@@ -1,3 +1,11 @@
+---
+title: Pull request template
+keywords: pull request,template
+description: Pull request template
+---
+
+# Pull request template
+
 Please do not create a Pull Request without creating an issue first.
 
 ## What is the purpose of the change
@@ -20,4 +28,3 @@ Follow this checklist to help us incorporate your contribution quickly and easil
 * [ ] Write necessary unit-test to verify your logic correction, more mock a little better when cross module dependency exist. If the new feature or significant change is committed, please remember to add integration-test in [test module](https://github.com/apache/rocketmq/tree/master/test).
 * [ ] Run `mvn -B clean apache-rat:check findbugs:findbugs` to make sure basic checks pass. Run `mvn clean install -DskipITs` to make sure unit-test pass. Run `mvn clean test-compile failsafe:integration-test`  to make sure integration-test pass.
 * [ ] If this contribution is large, please file an [Apache Individual Contributor License Agreement](http://www.apache.org/licenses/#clas).
-
