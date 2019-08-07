@@ -8,6 +8,8 @@ description: This quick start introduces how to enable Nacos configuration manag
 
 This quick start introduces how to enable Nacos configuration management and service discovery features for your Spring project.
 
+For more details about Nacos Spring Boot: [nacos-spring-project](https://github.com/nacos-group/nacos-spring-project/wiki/Nacos-Spring-Project-0.3.1-%E6%96%B0%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C).
+
 The quick start includes two samples:
 * How to enable Nacos server and Nacos Spring configuration modules to implement dynamic configuration management;
 * How to enable Nacos server and Nacos Spring service discovery modules to implement service registration and discovery.

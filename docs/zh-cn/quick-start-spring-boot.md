@@ -8,7 +8,7 @@ description: Nacos Spring Boot 快速开始
 
 本文主要面向 Spring Boot 的使用者，通过两个示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现。
 
-关于 Nacos Spring Boot 的详细文档请参看：[nacos-spring-boot-project](https://github.com/nacos-group/nacos-spring-boot-project)。
+关于 Nacos Spring Boot 的详细文档请参看：[nacos-spring-boot-project](https://github.com/nacos-group/nacos-spring-boot-project/wiki/spring-boot-0.2.2-%E4%BB%A5%E5%8F%8A-0.1.2%E7%89%88%E6%9C%AC%E6%96%B0%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C)。
 
 * 通过 Nacos Server 和 nacos-config-spring-boot-starter 实现配置的动态变更；
 * 通过 Nacos Server 和 nacos-discovery-spring-boot-starter 实现服务的注册与发现。

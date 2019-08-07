@@ -8,6 +8,8 @@ description: 本文主要面向 Spring 的使用者，通过两个示例来介�
 
 本文主要面向 Spring 的使用者，通过两个示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现。
 
+关于 Nacos Spring 的详细文档请参看：[nacos-spring-project](https://github.com/nacos-group/nacos-spring-project/wiki/Nacos-Spring-Project-0.3.1-%E6%96%B0%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C)。
+
 * 通过 Nacos server 和 Nacos Spring 配置管理模块，实现配置的动态变更；
 * 通过 Nacos server 和 Nacos Spring 服务发现模块，实现服务的注册与发现。
 
