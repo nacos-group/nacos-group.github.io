@@ -69,4 +69,4 @@ This page shows Nacos developers and continues to expand. The list is not priori
 
 | Image                                                                                                                | Github ID                                 | Name        | Organization                 | Roles      |Mail                 |
 |----------------------------------------------------------------------------------------------------------------------|-------------------------------------------|-------------|------------------------------|------------|---------------------|
-|![caojiele](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561301766676-89a49cd0-ad67-4b3b-a6f2-895f93804b69.jpeg)   |[caojiele](https://github.com/caojiele)    | Jiele Cao   |                              |Contributor |caojiele1225@126.com |
+|![caojiele](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561301766676-89a49cd0-ad67-4b3b-a6f2-895f93804b69.jpeg)   |[caojiele](https://github.com/caojiele)    | Jiele Cao   | Sinocare                     |Contributor |caojiele1225@126.com |

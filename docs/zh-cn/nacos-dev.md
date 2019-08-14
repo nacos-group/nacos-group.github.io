@@ -69,4 +69,4 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 
 |头像                                                                                                                   | Github 账号                                      | 名字       | 组织             |角色        |邮箱                                 |
 |----------------------------------------------------------------------------------------------------------------------| ------------------------------------------------|------------| ----------------| -----------|------------------------------------|
-|![caojiele](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561301766676-89a49cd0-ad67-4b3b-a6f2-895f93804b69.jpeg)   | [caojiele](https://github.com/caojiele)         | 曹杰乐      |                 | Contributor| caojiele1225@126.com               |
+|![caojiele](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561301766676-89a49cd0-ad67-4b3b-a6f2-895f93804b69.jpeg)   | [caojiele](https://github.com/caojiele)         | 曹杰乐      | 三诺生物          | Contributor| caojiele1225@126.com               |
