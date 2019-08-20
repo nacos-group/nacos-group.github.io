@@ -17,11 +17,16 @@ Run the following command：
   cd nacos-docker
   ```
 
+* Standalone Derby
 
-* Stand-alone
+```powershell
+docker-compose -f example/standalone-derby.yaml up
+```
+
+* Standalone Mysql
 
   ```powershell
-  docker-compose -f example/standalone.yaml up
+  docker-compose -f example/standalone-mysql.yaml up
   ```
 
 * Cluster
