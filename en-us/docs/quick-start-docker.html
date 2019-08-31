@@ -23,8 +23,13 @@ cd nacos-docker
 </code></pre>
 </li>
 <li>
-<p>Stand-alone</p>
-<pre><code class="language-powershell">docker-compose -f example/standalone.yaml up
+<p>Stand-alone Derby</p>
+<pre><code class="language-powershell">docker-compose -f example/standalone-derby.yaml up
+</code></pre>
+</li>
+<li>
+<p>Stand-alone Mysql</p>
+<pre><code class="language-powershell">docker-compose -f example/standalone-mysql.yaml up
 </code></pre>
 </li>
 <li>
@@ -57,6 +62,126 @@ cd nacos-docker
 <p>link：<a href="http://127.0.0.1:8848/nacos/">http://127.0.0.1:8848/nacos/</a></p>
 </li>
 </ul>
+<h2>Common property configuration</h2>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>description</th>
+<th>option</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MODE</td>
+<td>cluster/standalone</td>
+<td>cluster/standalone default <strong>cluster</strong></td>
+</tr>
+<tr>
+<td>NACOS_SERVERS</td>
+<td>nacos cluster address</td>
+<td>eg. ip1,ip2,ip3</td>
+</tr>
+<tr>
+<td>PREFER_HOST_MODE</td>
+<td>Whether hostname are supported</td>
+<td>hostname/ip default <strong>ip</strong></td>
+</tr>
+<tr>
+<td>NACOS_SERVER_PORT</td>
+<td>nacos server port</td>
+<td>default <strong>8848</strong></td>
+</tr>
+<tr>
+<td>NACOS_SERVER_IP</td>
+<td>custom nacos server ip when network was mutil-network</td>
+<td></td>
+</tr>
+<tr>
+<td>SPRING_DATASOURCE_PLATFORM</td>
+<td>standalone support mysql</td>
+<td>mysql / empty default empty</td>
+</tr>
+<tr>
+<td>MYSQL_MASTER_SERVICE_HOST</td>
+<td>mysql master host</td>
+<td></td>
+</tr>
+<tr>
+<td>MYSQL_MASTER_SERVICE_PORT</td>
+<td>mysql master database port</td>
+<td>default : <strong>3306</strong></td>
+</tr>
+<tr>
+<td>MYSQL_MASTER_SERVICE_DB_NAME</td>
+<td>mysql master database name</td>
+<td></td>
+</tr>
+<tr>
+<td>MYSQL_MASTER_SERVICE_USER</td>
+<td>username of master database</td>
+<td></td>
+</tr>
+<tr>
+<td>MYSQL_MASTER_SERVICE_PASSWORD</td>
+<td>password of master database</td>
+<td></td>
+</tr>
+<tr>
+<td>MYSQL_SLAVE_SERVICE_HOST</td>
+<td>mysql slave host</td>
+<td></td>
+</tr>
+<tr>
+<td>MYSQL_SLAVE_SERVICE_PORT</td>
+<td>mysql slave database port</td>
+<td>default :3306</td>
+</tr>
+<tr>
+<td>MYSQL_DATABASE_NUM</td>
+<td>It indicates the number of database</td>
+<td>default :2</td>
+</tr>
+<tr>
+<td>JVM_XMS</td>
+<td>-Xms</td>
+<td>default :2g</td>
+</tr>
+<tr>
+<td>JVM_XMX</td>
+<td>-Xmx</td>
+<td>default :2g</td>
+</tr>
+<tr>
+<td>JVM_XMN</td>
+<td>-Xmn</td>
+<td>default :1g</td>
+</tr>
+<tr>
+<td>JVM_MS</td>
+<td>-XX:MetaspaceSize</td>
+<td>default :128m</td>
+</tr>
+<tr>
+<td>JVM_MMS</td>
+<td>-XX:MaxMetaspaceSize</td>
+<td>default :320m</td>
+</tr>
+<tr>
+<td>NACOS_DEBUG</td>
+<td>enable remote debug</td>
+<td>y/n default :n</td>
+</tr>
+<tr>
+<td>TOMCAT_ACCESSLOG_ENABLED</td>
+<td>server.tomcat.accesslog.enabled</td>
+<td>default :false</td>
+</tr>
+</tbody>
+</table>
+<h2>Nacos + Grafana + Prometheus</h2>
+<p>Usage reference：<a href="https://nacos.io/zh-cn/docs/monitor-guide.html">Nacos monitor-guide</a></p>
+<p><strong>Note</strong>:  When Grafana creates a new data source, the data source address must be <strong><a href="http://prometheus:9090">http://prometheus:9090</a></strong></p>
 <h2>Related Projects</h2>
 <ul>
 <li><a href="https://github.com/alibaba/nacos">Nacos</a></li>
