@@ -190,7 +190,7 @@ for i in 0 1 2; do echo nacos-$i; kubectl exec nacos-$i cat conf/cluster.conf; d
 * Use [`kubectl exec`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec) to get the **state** of the Pods in the `nacos` StatefulSet after scale StatefulSets
 
 ```bash
-for i in 0 1 2; do echo nacos-$i; kubectl exec nacos-$i curl GET "http://localhost:8848/nacos/v1/ns/raft/state"; done
+for i in 0 1 2; do echo nacos-$i; kubectl exec nacos-$i curl -X GET "http://localhost:8848/nacos/v1/ns/raft/state"; done
 ```
 
 You can find that the new node has joined the cluster

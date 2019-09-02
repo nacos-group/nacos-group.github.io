@@ -168,7 +168,7 @@ nacos-2   1/1     Running   0          19h
 <ul>
 <li>使用 <a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec"><code>kubectl exec</code></a>执行Nacos API 在每台节点上获取当前<strong>Leader</strong>是否一致</li>
 </ul>
-<pre><code class="language-bash"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> 0 1 2; <span class="hljs-keyword">do</span> <span class="hljs-built_in">echo</span> nacos-<span class="hljs-variable">$i</span>; kubectl <span class="hljs-built_in">exec</span> nacos-<span class="hljs-variable">$i</span> curl GET <span class="hljs-string">"http://localhost:8848/nacos/v1/ns/raft/state"</span>; <span class="hljs-keyword">done</span>
+<pre><code class="language-bash"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> 0 1 2; <span class="hljs-keyword">do</span> <span class="hljs-built_in">echo</span> nacos-<span class="hljs-variable">$i</span>; kubectl <span class="hljs-built_in">exec</span> nacos-<span class="hljs-variable">$i</span> curl -X GET <span class="hljs-string">"http://localhost:8848/nacos/v1/ns/raft/state"</span>; <span class="hljs-keyword">done</span>
 </code></pre>
 <p>到这里你可以发现新节点已经正常加入Nacos集群当中</p>
 <h1>例子部署环境</h1>
