@@ -105,6 +105,11 @@
       "meta": {}
     },
     {
+      "filename": "nacos-confd.md",
+      "link": "/en-us/blog/nacos-confd.html",
+      "meta": {}
+    },
+    {
       "filename": "nacos-is-coming.md",
       "link": "/en-us/blog/nacos-is-coming.html",
       "meta": {
@@ -309,6 +314,11 @@
     {
       "filename": "nacos 1.1.0.md",
       "link": "/zh-cn/blog/nacos 1.1.0.html",
+      "meta": {}
+    },
+    {
+      "filename": "nacos-confd.md",
+      "link": "/zh-cn/blog/nacos-confd.html",
       "meta": {}
     },
     {
