@@ -49,6 +49,10 @@ Run the following command to sart(standalone means non-cluster mode):
  
 `sh startup.sh -m standalone`
 
+If you are using a ubuntu system, or encounter this error message [[symbol not found, try running as follows:
+
+`bash startup.sh -m standalone`
+
 ### Windows
 
 Run the following command to start:
