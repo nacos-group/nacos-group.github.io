@@ -106,7 +106,7 @@ curl -X PUT '$NACOS_SERVER:8848/nacos/v1/ns/operator/switches?entry=pushEnabled&
 
 
 ### 支持 MySQL 8.0
-Nacos 1.0.0 支持了 MySQL 8.0 驱动。
+Nacos 1.0.0 支持了 MySQL 8.0 驱动。您只需要将8.0版本的驱动jar包放置在{nacos.home}/plugins/mysql/下即可，不需要其他改动。
 
 ## Nacos 1.0.0 实现大规模生产可用
 
