@@ -118,4 +118,9 @@ Nacos Client 提供一种可以对传入的 endpoint 参数规则解析的能力
 
   当关闭了 endpoint 参数规则解析的时候，这个时候就以用户态在构造 Nacos Client 时通过 properties 参数输入的 endpoint 值为主。
   
-默认情况下， Nacos Client 是开启 endpoint 参数规则解析的能力。如果你想关闭该能力，可在 Nacos Client 初始化的时候在传入的 properties 实例中指定 key 为 **isUseEndpointParsingRule**，值为 **false** 即可关闭。  
+默认情况下， Nacos Client 是开启 endpoint 参数规则解析的能力。如果你想关闭该能力，有两种方式可以帮您来实现。
+
+1. 可在 Nacos Client 初始化的时候在传入的 properties 实例中指定 key 为 **isUseEndpointParsingRule**，值为 **false** 即可关闭。
+2. 如果您的应用是 Java 程序的应用，也可以通过 **-Dnacos.use.endpoint.parsing.rule=false** 来关闭。 
+
+**注意**：其中第一种方式的优先级高于第二种方式。
