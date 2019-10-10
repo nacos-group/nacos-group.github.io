@@ -70,9 +70,6 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |namespace| 命名空间的ID | 命名空间的ID | config模块为空，naming模块为public | >= 0.8.0 |
 |serverAddr| Nacos Server的地址列表，这个值的优先级比endpoint高 | ip:port,ip:port,... | 空 | >= 0.1.0 |
 |nacos.logging.path(-D)| 客户端日志的目录 | 目录路径 | 用户根目录 | >= 0.1.0 |
-|com.alibaba.nacos.config.log.level(-D)| Naming客户端的日志级别 | info,error,warn等 | info | >= 1.0.0 |
-|com.alibaba.nacos.naming.log.level(-D)| Config客户端的日志级别 | info,error,warn等 | info | >= 1.0.0 |
-|com.alibaba.nacos.client.naming.tls.enable(-D)| 是否打开HTTPS | true/false | false | >= 1.0.0 | 
 
 ### Naming客户端
 
@@ -81,6 +78,9 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |namingLoadCacheAtStart| 启动时是否优先读取本地缓存 | true/false | false | >= 1.0.0 |
 |namingClientBeatThreadCount| 客户端心跳的线程池大小 | 正整数 | 机器的CPU数的一半 | >= 1.0.0 |
 |namingPollingThreadCount| 客户端定时轮询数据更新的线程池大小 | 正整数 | 机器的CPU数的一半 | >= 1.0.0 |
+|com.alibaba.nacos.naming.cache.dir(-D)| 客户端缓存目录 | 目录路径 | {user.home}/nacos/naming | >= 1.0.0 |
+|com.alibaba.nacos.naming.log.level(-D)| Naming客户端的日志级别 | info,error,warn等 | info | >= 1.0.0 |
+|com.alibaba.nacos.client.naming.tls.enable(-D)| 是否打开HTTPS | true/false | false | >= 1.0.0 | 
 
 ### Config客户端
 
@@ -90,3 +90,5 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |configRetryTime(config.retry.time 1.0.1版本)| 长轮询任务重试时间，单位为毫秒 | 正整数 | 2000 | >= 1.0.2 |
 |maxRetry| 长轮询的重试次数 | 正整数 | 3 | >= 1.0.2 |
 |enableRemoteSyncConfig| 监听器首次添加时拉取远端配置 | 布尔值 | false | >= 1.0.2 |
+|com.alibaba.nacos.config.log.level(-D)| Config客户端的日志级别 | info,error,warn等 | info | >= 1.0.0 |
+|JM.SNAPSHOT.PATH(-D)| 客户端缓存目录 | 目录路径 | {user.home}/nacos/config | >= 1.0.0 |

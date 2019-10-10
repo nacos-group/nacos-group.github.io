@@ -263,27 +263,6 @@
 <td>用户根目录</td>
 <td>&gt;= 0.1.0</td>
 </tr>
-<tr>
-<td>com.alibaba.nacos.config.log.level(-D)</td>
-<td>Naming客户端的日志级别</td>
-<td>info,error,warn等</td>
-<td>info</td>
-<td>&gt;= 1.0.0</td>
-</tr>
-<tr>
-<td>com.alibaba.nacos.naming.log.level(-D)</td>
-<td>Config客户端的日志级别</td>
-<td>info,error,warn等</td>
-<td>info</td>
-<td>&gt;= 1.0.0</td>
-</tr>
-<tr>
-<td>com.alibaba.nacos.client.naming.tls.enable(-D)</td>
-<td>是否打开HTTPS</td>
-<td>true/false</td>
-<td>false</td>
-<td>&gt;= 1.0.0</td>
-</tr>
 </tbody>
 </table>
 <h3>Naming客户端</h3>
@@ -317,6 +296,27 @@
 <td>客户端定时轮询数据更新的线程池大小</td>
 <td>正整数</td>
 <td>机器的CPU数的一半</td>
+<td>&gt;= 1.0.0</td>
+</tr>
+<tr>
+<td>com.alibaba.nacos.naming.cache.dir(-D)</td>
+<td>客户端缓存目录</td>
+<td>目录路径</td>
+<td>{user.home}/nacos/naming</td>
+<td>&gt;= 1.0.0</td>
+</tr>
+<tr>
+<td>com.alibaba.nacos.naming.log.level(-D)</td>
+<td>Naming客户端的日志级别</td>
+<td>info,error,warn等</td>
+<td>info</td>
+<td>&gt;= 1.0.0</td>
+</tr>
+<tr>
+<td>com.alibaba.nacos.client.naming.tls.enable(-D)</td>
+<td>是否打开HTTPS</td>
+<td>true/false</td>
+<td>false</td>
 <td>&gt;= 1.0.0</td>
 </tr>
 </tbody>
@@ -360,6 +360,20 @@
 <td>布尔值</td>
 <td>false</td>
 <td>&gt;= 1.0.2</td>
+</tr>
+<tr>
+<td>com.alibaba.nacos.config.log.level(-D)</td>
+<td>Config客户端的日志级别</td>
+<td>info,error,warn等</td>
+<td>info</td>
+<td>&gt;= 1.0.0</td>
+</tr>
+<tr>
+<td>JM.SNAPSHOT.PATH(-D)</td>
+<td>客户端缓存目录</td>
+<td>目录路径</td>
+<td>{user.home}/nacos/config</td>
+<td>&gt;= 1.0.0</td>
 </tr>
 </tbody>
 </table>
