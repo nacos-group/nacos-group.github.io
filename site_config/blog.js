@@ -157,6 +157,12 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+	{   title: 'Nacos 配置MySQL8数据库',
+            author: '@杨泽锋',
+            dateStr: 'Oct 13, 2019',
+            desc: 'Nacos 添加部署配置MySQL8数据库',
+            link: '/zh-cn/blog/nacos-deploy-mysql8.html',
+        },
         {   title: 'Nacos整合Confd，支持nginx配置管理',
             author: '@风卿',
             dateStr: 'Sep 6, 2019',
