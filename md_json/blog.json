@@ -322,6 +322,15 @@
       "meta": {}
     },
     {
+      "filename": "nacos-deploy-mysql8.md",
+      "link": "/zh-cn/blog/nacos-deploy-mysql8.html",
+      "meta": {
+        "title": "Nacos 配置MySQL8数据库",
+        "keywords": "mysql8,nacos",
+        "description": "Nacos 配置MySQL8数据库"
+      }
+    },
+    {
       "filename": "nacos-is-coming.md",
       "link": "/zh-cn/blog/nacos-is-coming.html",
       "meta": {
