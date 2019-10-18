@@ -272,6 +272,17 @@ public void removeListener(String dataId, String group, Listener listener)
             lower case for all characters. Use alphabetical letters and these four special characters (&quot;.&quot;, &quot;:&quot;, &quot;-&quot;, &quot;_&quot;) only. Up to 256 characters are allowed.</div>
         </td>
       </tr>
+            <tr>
+              <td rowspan="1" colSpan="1">
+                <div data-type="p">group</div>
+              </td>
+              <td rowspan="1" colSpan="1">
+                <div data-type="p">string</div>
+              </td>
+              <td rowspan="1" colSpan="1">
+                <div data-type="p">Configuration group
+                </td>
+            </tr>
       <tr>
         <td rowspan="1" colSpan="1">
           <div data-type="p">listener</div>

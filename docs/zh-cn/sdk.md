@@ -186,6 +186,7 @@ public void removeListener(String dataId, String group, Listener listener)
 | 参数名 | 参数类型 | 描述 |
 | :--- | :--- | :--- |
 | dataId | string | 配置 ID，采用类似 package.class（如com.taobao.tc.refund.log.level）的命名规则保证全局唯一性，class 部分建议是配置的业务含义。全部字符小写。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
+| group | string | 配置分组 |
 | listener | ConfigChangeListenerAdapter | 监听器，配置变更进入监听器的回调函数。 |
 
 
