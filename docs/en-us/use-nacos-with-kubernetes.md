@@ -129,7 +129,7 @@ mysql-slave-kf9cb                         1/1     Running   0          110m
 
 ## Deploy Nacos 
 
-* Modify  **depoly/nacos/nacos-pvc-nfs.yaml**
+* Modify  **deploy/nacos/nacos-pvc-nfs.yaml**
 
 ```yaml
 data:
