@@ -36,11 +36,12 @@ export default {
       //   text: 'DOWNLOAD',
       //   link: '/en-us/blog/download.html',
       // },
-        {
-          key: 'campus',
-          text: 'CAMPUS',
-          link: 'https://mp.weixin.qq.com/s/KH0dEC6cNckoq1M-siiCmg',
-        },
+        // {
+        //   key: 'Nacos in Cloud',
+        //   text: 'NACOS IN CLOUD',
+        //   link: 'https://www.aliyun.com/product/mse?spm=nacos-website.topbar.0.0.0',
+        //   imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+        // },
       {
         text: 'DEMO-CONSOLE',
           link: 'http://console.nacos.io/nacos/index.html',
@@ -118,11 +119,12 @@ export default {
         text: '社区',
         link: '/zh-cn/community/index.html',
       },
-        {
-            key: 'campus',
-            text: '阿里中间件-校园招聘',
-            link: 'https://mp.weixin.qq.com/s/KH0dEC6cNckoq1M-siiCmg',
-        },
+        // {
+        //     key: 'Nacos in Cloud',
+        //       text: '商业版Nacos',
+        //     link: 'https://www.aliyun.com/product/mse?spm=nacos-website.topbar.0.0.0',
+        //     imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+        // },
       // {
       //   key: 'download',
       //   text: '下载',

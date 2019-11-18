@@ -183,7 +183,7 @@ class Header extends React.Component {
                       [`menu-item-${type}-active`]: currentKey === item.key,
                     })}
                   >
-                    <a href={getLink(item.link)}>{item.text}</a>
+                    <a href={getLink(item.link)}>{item.text}</a>{item.imgUrl ? <img className={"menu-img"} src={item.imgUrl} /> : null}
                   </li>
               ))}
             </ul>

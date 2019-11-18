@@ -54,7 +54,7 @@ namespace 的设计是 nacos 基于此做多环境以及多租户数据(**配置
 
 nacos client 对 namespace 的初始化流程如下图所示:
 
-![](http://edas.oss-cn-hangzhou.aliyuncs.com/deshao/pictures/nacos_init_namespace_plus.jpg)
+![](http://edas.oss-cn-hangzhou.aliyuncs.com/deshao/nacos/nacos_namespace.jpg)
 
 nacos client 对 namespace 的初始化，主要包含两部分：
 
@@ -62,7 +62,7 @@ nacos client 对 namespace 的初始化，主要包含两部分：
 
 * 在云环境下(**阿里云下的 EDAS**)的 namespace 参数解析。
 
-  可通过 **-Duse.cloud.namespace.parsing=true/false** 来控制是否需要在云环境自动解析 namespace 参数，默认为 **true**，是会自动解析，其目的就是方便用户上云时可以以零成本的方式平滑上云。如果用户在云上需要用自建的 nacos 下的 namespace，那这个时候只需将 **-Duse.cloud.namespace.parsing=false** 即可。
+  可通过 **-Dnacos.use.cloud.namespace.parsing=true/false** 来控制是否需要在云环境自动解析 namespace 参数，默认为 **true**，是会自动解析，其目的就是方便用户上云时可以以零成本的方式平滑上云。如果用户在云上需要用自建的 nacos 下的 namespace，那这个时候只需将 **-Dnacos.use.cloud.namespace.parsing=false** 即可。
 
   
 ## endpoint
@@ -86,7 +86,7 @@ Nacos Client 提供一种可以对传入的 endpoint 参数规则解析的能力
 
 整个 endpoint 的解析规则比较复杂，整体的一个解析流程图如下所示:
 
-![](http://edas.oss-cn-hangzhou.aliyuncs.com/deshao/pictures/nacos_init_endpoint.jpg)	
+![](http://edas.oss-cn-hangzhou.aliyuncs.com/deshao/nacos/nacos_endpoint.jpg)	
 
 **注意：** 蓝色特别区分的是支持云环境下(阿里云上的 EDAS)自动从系统环境变量中来读取 endpoint 值，以此来达到用户本地开发或者将应用往云上迁移的时候以零成本的改造方式实现平滑上云。
 

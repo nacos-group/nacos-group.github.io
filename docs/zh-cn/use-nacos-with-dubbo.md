@@ -6,11 +6,11 @@ description: Dubbo 融合 Nacos 成为注册中心
 
 # Dubbo 融合 Nacos 成为注册中心
 
-Nacos 作为 Dubbo 生态系统中重要的注册中心实现，其中 [`dubbo-registry-nacos`](https://github.com/dubbo/dubbo-registry-nacos) 则是 Dubbo 融合 Nacos 注册中心的实现。
+Nacos 作为 Dubbo 生态系统中重要的注册中心实现，本文将会介绍如何进行 Dubbo 对接 Nacos 注册中心的工作。
 
 ## 预备工作
 
-当您将 [`dubbo-registry-nacos`](https://github.com/apache/dubbo/tree/master/dubbo-registry/dubbo-registry-nacos) 整合到您的 Dubbo 工程之前，请确保后台已经启动 Nacos 服务。如果您尚且不熟悉 Nacos 的基本使用的话，可先行参考 [Nacos 快速入门](https://nacos.io/en-us/docs/quick-start.html)。 
+请确保后台已经启动 Nacos 服务，可先行参考 [Nacos 快速入门](https://nacos.io/en-us/docs/quick-start.html)。 
 
 ## 快速上手
 
@@ -18,40 +18,31 @@ Dubbo 融合 Nacos 成为注册中心的操作步骤非常简单，大致步骤�
 
 ### 增加 Maven 依赖
 
-首先，您需要`dubbo-registry-nacos`的 Maven 依赖添加到您项目的 `pom.xml` 文件中，并且强烈地推荐您使用 Dubbo `2.6.5`：
+只需要依赖Dubbo客户端即可，关于推荐的使用版本，请参考Dubbo官方文档或者咨询Dubbo开发人员：
 
 ```xml
 <dependencies>
 
     ...
-        
-    <!-- Dubbo Nacos registry dependency -->
-    <dependency>
-        <groupId>com.alibaba</groupId>
-        <artifactId>dubbo-registry-nacos</artifactId>
-        <version>0.0.1</version>
-    </dependency>   
-    
+
     <!-- Dubbo dependency -->
     <dependency>
         <groupId>com.alibaba</groupId>
         <artifactId>dubbo</artifactId>
-        <version>2.6.5</version>
+        <version>[latest version]</version>
     </dependency>
     
-    <!-- Alibaba Spring Context extension -->
+    <!-- 使用Spring装配方式时可选: -->
     <dependency>
         <groupId>com.alibaba.spring</groupId>
         <artifactId>spring-context-support</artifactId>
-        <version>1.0.2</version>
+        <version>[latest version]</version>
     </dependency>
 
     ...
     
 </dependencies>
 ```
-
-当项目中添加`dubbo-registry-nacos`后，您无需显示地编程实现服务发现和注册逻辑，实际实现由该三方包提供，接下来配置 Naocs 注册中心。
 
 ### 配置注册中心
 

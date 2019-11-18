@@ -45,6 +45,14 @@
     .menu-item {
       font-family: Avenir-Heavy;
       font-size: 14px;
+      position: relative;
+      .menu-img {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        right: -18px;
+        top: 12px;
+      }
     }
     .menu-item-primary {
       a {

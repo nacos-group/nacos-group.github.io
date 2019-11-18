@@ -35,7 +35,14 @@
       margin-right: 40px; }
     .header-container .header-body .menu-item {
       font-family: Avenir-Heavy;
-      font-size: 14px; }
+      font-size: 14px;
+      position: relative; }
+      .header-container .header-body .menu-item .menu-img {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        right: -18px;
+        top: 12px; }
     .header-container .header-body .menu-item-primary a {
       color: #fff;
       opacity: 0.6;
