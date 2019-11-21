@@ -186,6 +186,11 @@
       "filename": "nacos1.0.0.md",
       "link": "/en-us/blog/nacos1.0.0.html",
       "meta": {}
+    },
+    {
+      "filename": "pilot mcp.md",
+      "link": "/en-us/blog/pilot mcp.html",
+      "meta": {}
     }
   ],
   "zh-cn": [
@@ -402,6 +407,11 @@
     {
       "filename": "nacos1.0.0.md",
       "link": "/zh-cn/blog/nacos1.0.0.html",
+      "meta": {}
+    },
+    {
+      "filename": "pilot mcp.md",
+      "link": "/zh-cn/blog/pilot mcp.html",
       "meta": {}
     }
   ]
