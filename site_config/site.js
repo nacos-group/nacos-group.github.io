@@ -121,7 +121,7 @@ export default {
       },
         {
             key: 'Nacos in Cloud',
-              text: '商业版Nacos',
+              text: '企业版Nacos',
             link: 'https://www.aliyun.com/product/mse?spm=nacos-website.topbar.0.0.0',
             imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
         },
