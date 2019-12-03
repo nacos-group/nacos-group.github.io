@@ -23,21 +23,21 @@ There are two ways to get Nacos.
 ### 1)Download source code from Github
   
 ```bash
-unzip nacos-source.zip
+git clone https://github.com/alibaba/nacos.git
 cd nacos/
 mvn -Prelease-nacos clean install -U  
-cd nacos/distribution/target/nacos-server-0.8.0/nacos/bin
+ls -al distribution/target/
+
+// change the $version to your actual path
+cd distribution/target/nacos-server-$version/nacos/bi
 ```
   
 ### 2)Download run package 
 
-[zip package Download](https://github.com/alibaba/nacos/releases/download/0.9.0/nacos-server-0.9.0.zip)
-
-[tar.gz package Download](https://github.com/alibaba/nacos/releases/download/0.9.0/nacos-server-0.9.0.tar.gz)
-
+Select the latest stable version from https://github.com/alibaba/nacos/releases
 
 ```bash
-  unzip nacos-server-0.9.0.zip  OR tar -xvf nacos-server-0.9.0.tar.gz
+  unzip nacos-server-$version.zip  OR tar -xvf nacos-server-$version.tar.gz
   cd nacos/bin
 ```  
 
