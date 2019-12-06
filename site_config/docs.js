@@ -21,8 +21,8 @@ export default {
                 link: '/en-us/docs/architecture.html',
               },
               {
-                title: 'FAQ',
-                link: '/en-us/docs/faq.html',
+                title: 'Feature list',
+                link: '/en-us/docs/feature-list.html',
               },
             ],
           },
@@ -85,12 +85,12 @@ export default {
                   link: '/en-us/docs/nacos-spring.html',
               },
               {
-                title: 'Namespace, endpoint best practices',
-                link: '/en-us/docs/namespace-endpoint-best-practices.html',
-              },
-              {
                 title: 'Nacos System Configurations',
                 link: '/en-us/docs/system-configurations.html',
+              },
+              {
+                title: 'FAQ',
+                link: '/en-us/docs/faq.html',
               },
             ],
           },
@@ -139,24 +139,12 @@ export default {
                 link: '/en-us/docs/contributing.html',
               },
               {
-                title: 'Nacos Activity',
-                link: '/en-us/docs/activity.html',
-              },
-              {
                 title: 'Pull Request Template',
                 link: '/en-us/docs/pull-request.html',
               },
               {
-                title: 'How to reporting bugs',
+                title: 'How to report bugs',
                 link: '/en-us/docs/how-to-reporting-bugs.html',
-              },
-              {
-                title: 'Nacos RoadMap',
-                link: '/en-us/docs/roadmap.html',
-              },
-              {
-                title: 'Nacos with Istio',
-                link: '/en-us/docs/use-nacos-with-istio.html',
               },
             ],
           },
@@ -166,6 +154,10 @@ export default {
               {
                 title: 'Community',
                 link: '/en-us/docs/community.html',
+              },
+              {
+                title: 'Develop Team',
+                link: '/en-us/docs/nacos-dev.html',
               },
             ],
           },
@@ -196,8 +188,9 @@ export default {
                 link: '/zh-cn/docs/architecture.html',
               },
               {
-                title: 'FAQ',
-                link: '/zh-cn/docs/faq.html',
+                title: '功能和需求列表',
+                link: '/zh-cn/docs/feature-list.html',
+                imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
               },
             ],
           },
@@ -260,12 +253,12 @@ export default {
                   link: '/zh-cn/docs/nacos-spring.html',
               },
               {
-                title: 'Namespace, endpoint 最佳实践',
-                link: '/zh-cn/docs/namespace-endpoint-best-practices.html',
-              },
-              {
                 title: 'Nacos系统参数介绍',
                 link: '/zh-cn/docs/system-configurations.html',
+              },
+              {
+                title: 'FAQ',
+                link: '/zh-cn/docs/faq.html',
               },
             ],
           },
@@ -314,24 +307,12 @@ export default {
                 link: '/zh-cn/docs/contributing.html',
               },
               {
-                title: 'Nacos有奖活动介绍',
-                link: '/zh-cn/docs/activity.html',
-               },
-              {
                 title: 'pull request模板',
                 link: '/zh-cn/docs/pull-request.html',
               },
               {
                 title: '如何提交问题报告',
                 link: '/zh-cn/docs/how-to-reporting-bugs.html',
-              },
-              {
-                title: 'Nacos规划',
-                link: '/zh-cn/docs/roadmap.html',
-              },
-              {
-                title: 'nacos支持istio',
-                link: '/zh-cn/docs/use-nacos-with-istio.html',
               },
             ],
           },
@@ -341,7 +322,11 @@ export default {
               {
                 title: '社区',
                 link: '/zh-cn/docs/community.html',
-              }
+              },
+              {
+                title: '开发团队',
+                link: '/zh-cn/docs/nacos-dev.html',
+              },
             ],
           },
         ],

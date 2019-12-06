@@ -17,11 +17,6 @@ export default {
         link: '/en-us/docs/quick-start.html',
       },
       {
-        key: 'Nacos TEAM',
-        text: 'TEAM',
-        link: '/en-us/docs/nacos-dev.html',
-      },
-      {
         key: 'blog',
         text: 'BLOG',
         link: '/en-us/blog',
@@ -103,11 +98,6 @@ export default {
         key: 'docs',
         text: '文档',
         link: '/zh-cn/docs/what-is-nacos.html',
-      },
-      {
-        key: 'Nacos TEAM',
-        text: '开发者团队',
-        link: '/zh-cn/docs/nacos-dev.html',
       },
       {
         key: 'blog',

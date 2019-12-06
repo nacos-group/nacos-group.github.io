@@ -100,6 +100,11 @@
       }
     },
     {
+      "filename": "feature-list.md",
+      "link": "/en-us/docs/feature-list.html",
+      "meta": {}
+    },
+    {
       "filename": "how-to-reporting-bugs.md",
       "link": "/en-us/docs/how-to-reporting-bugs.html",
       "meta": {
@@ -178,15 +183,6 @@
         "title": "NacosSync introduce",
         "keywords": "NacosSync,introduce",
         "description": "NacosSync introduce"
-      }
-    },
-    {
-      "filename": "namespace-endpoint-best-practices.md",
-      "link": "/en-us/docs/namespace-endpoint-best-practices.html",
-      "meta": {
-        "title": "Namespace,endpoint best practices",
-        "keywords": "namespace,endpoint,best practices",
-        "description": "With using Nacos enterprises more and more,the two most frequently encountered problem is:how to use in my production environment right namespace and the endpoint."
       }
     },
     {
@@ -440,6 +436,11 @@
       }
     },
     {
+      "filename": "feature-list.md",
+      "link": "/zh-cn/docs/feature-list.html",
+      "meta": {}
+    },
+    {
       "filename": "how-to-reporting-bugs.md",
       "link": "/zh-cn/docs/how-to-reporting-bugs.html",
       "meta": {
@@ -518,15 +519,6 @@
         "title": "NacosSync 介绍",
         "keywords": "NacosSync,介绍",
         "description": "NacosSync 介绍"
-      }
-    },
-    {
-      "filename": "namespace-endpoint-best-practices.md",
-      "link": "/zh-cn/docs/namespace-endpoint-best-practices.html",
-      "meta": {
-        "title": "Namespace,endpoint 最佳实践",
-        "keywords": "namespace,endpoint,最佳实践",
-        "description": "随着使用 Nacos 的企业越来越多，遇到的最频繁的两个问题就是：如何在我的生产环境正确的来使用 namespace 以及 endpoint。"
       }
     },
     {
