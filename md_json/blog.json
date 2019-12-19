@@ -19,6 +19,11 @@
       }
     },
     {
+      "filename": "access control design.md",
+      "link": "/en-us/blog/access control design.html",
+      "meta": {}
+    },
+    {
       "filename": "address-server.md",
       "link": "/en-us/blog/address-server.html",
       "meta": {}
@@ -220,6 +225,11 @@
         "keywords": "nacos",
         "description": "Nacos 配置管理有哪些典型的应用场景？"
       }
+    },
+    {
+      "filename": "access control design.md",
+      "link": "/zh-cn/blog/access control design.html",
+      "meta": {}
     },
     {
       "filename": "address-server.md",
