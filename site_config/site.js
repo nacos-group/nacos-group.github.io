@@ -37,6 +37,12 @@ export default {
           link: 'https://www.aliyun.com/product/mse?spm=nacos-website.topbar.0.0.0',
           imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
         },
+        {
+          key: 'We are hiring',
+          text: 'HIRING',
+          link: 'https://job.alibaba.com/zhaopin/position_detail.htm?trace=qrcode_share&positionCode=GP574861',
+          imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
       {
         text: 'DEMO-CONSOLE',
           link: 'http://console.nacos.io/nacos/index.html',
@@ -115,11 +121,12 @@ export default {
             link: 'https://www.aliyun.com/product/mse?spm=nacos-website.topbar.0.0.0',
             imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
         },
-      // {
-      //   key: 'download',
-      //   text: '下载',
-      //   link: '/zh-cn/blog/download.html',
-      // },
+      {
+          key: 'We are hiring',
+          text: '招贤纳士',
+          link: 'https://job.alibaba.com/zhaopin/position_detail.htm?trace=qrcode_share&positionCode=GP574861',
+          imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
       {
         text: '控制台样例',
           link: 'http://console.nacos.io/nacos/index.html',
