@@ -17,7 +17,7 @@ Maintainer is an individual who has made a significant contribution to the evolu
 * Completing the design and development of multiple key modules or projects, is an core developer of the project
 * Continuous investment and passion, can actively participate in the maintenance of related matters such as community, official website, issue, PR, etc.
 * Has a visible influence in the community and is able to represent Nacos in important community meetings and events
-* Has a visible influence in the community and is able to represent Nacos in important community meetings and events;
+* Have the consciousness and ability to cultivate Committer and Contributor
 
 ### Committer
 
