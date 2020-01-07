@@ -29,13 +29,13 @@ Sample project: [nacos-spring-cloud-config-example](https://github.com/nacos-gro
 
 ```
 <dependency>
-    <groupId>org.springframework.cloud</groupId>
+    <groupId>com.alibaba.cloud</groupId>
     <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
     <version>${latest.version}</version>
 </dependency>
 ```
 
-**Note**: Version [0.2.x.RELEASE](https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-alibaba-nacos-config) is compatible with the Spring Boot 2.0.x line. Version [0.1.x.RELEASE](https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-alibaba-nacos-config) is compatible with the Spring Boot 1.x line.
+**Note**: Version [2.1.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-config) is compatible with the Spring Boot 2.1.x line. Version [2.0.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-config) is compatible with the Spring Boot 2.0.x line. Version [1.5.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-config) is compatible with the Spring Boot 1.5.x line.
 
 2. Configure the Nacos Server address and Specify the application name in `bootstrap.properties` :
 
@@ -103,13 +103,13 @@ Sample project: [nacos-spring-cloud-discovery-example](https://github.com/nacos-
 
 ```
 <dependency>
-    <groupId>org.springframework.cloud</groupId>
+    <groupId>com.alibaba.cloud</groupId>
     <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
     <version>${latest.version}</version>
 </dependency>
 ```
 
-**Note**: Version [0.2.x.RELEASE](https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-alibaba-nacos-discovery) is compatible with the Spring Boot 2.0.x line. Version [0.1.x.RELEASE](https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-alibaba-nacos-discovery) is compatible with the Spring Boot 1.x line.
+**Note**: Version [2.1.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-discovery) is compatible with the Spring Boot 2.1.x line. Version [2.0.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-discovery) is compatible with the Spring Boot 2.0.x line. Version [1.5.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-discovery) is compatible with the Spring Boot 1.5.x line.
 
 2. Configure the service provider, so that it can register its services to the Nacos server.
 
