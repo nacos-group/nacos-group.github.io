@@ -29,7 +29,7 @@ Sample project: [nacos-spring-cloud-config-example](https://github.com/nacos-gro
 
 ```
 <dependency>
-    <groupId>org.springframework.cloud</groupId>
+    <groupId>com.alibaba.cloud</groupId>
     <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
     <version>${latest.version}</version>
 </dependency>
@@ -103,7 +103,7 @@ Sample project: [nacos-spring-cloud-discovery-example](https://github.com/nacos-
 
 ```
 <dependency>
-    <groupId>org.springframework.cloud</groupId>
+    <groupId>com.alibaba.cloud</groupId>
     <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
     <version>${latest.version}</version>
 </dependency>

@@ -25,7 +25,7 @@ description: Nacos Spring Cloud 快速开始
 
 ```
 <dependency>
-    <groupId>org.springframework.cloud</groupId>
+    <groupId>com.alibaba.cloud</groupId>
     <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
     <version>${latest.version}</version>
 </dependency>
@@ -103,7 +103,7 @@ curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example.propertie
 
 ```
 <dependency>
-    <groupId>org.springframework.cloud</groupId>
+    <groupId>com.alibaba.cloud</groupId>
     <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
     <version>${latest.version}</version>
 </dependency>
