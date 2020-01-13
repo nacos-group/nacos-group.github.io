@@ -71,6 +71,9 @@ dubbo.registry.address = zookeeper://10.20.153.10:2181
 
 ## Nacos registry address
 dubbo.registry.address = nacos://10.20.153.10:8848
+##如果要使用自己创建的命名空间可以使用下面2种方式
+#dubbo.registry.address = nacos://10.20.153.10:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932
+#dubbo.registry.parameters.namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932
 ...
 ```
 随后，重启您的 Dubbo 应用，Dubbo 的服务提供和消费信息在 Nacos 控制台中可以显示：
@@ -117,6 +120,8 @@ dubbo.registry.address = nacos://10.20.153.10:8848
  
     <!-- 使用 Nacos 注册中心 -->
     <dubbo:registry address="nacos://10.20.153.10:8848" />
+    <!-- 如果要使用自己创建的命名空间可以使用下面配置 -->
+    <!-- <dubbo:registry address="nacos://10.20.153.10:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932" /> -->
  	...
 </beans>
 ```
@@ -199,6 +204,9 @@ dubbo.application.name = dubbo-provider-demo
 
 ## Nacos registry address
 dubbo.registry.address = nacos://127.0.0.1:8848
+##如果要使用自己创建的命名空间可以使用下面2种方式
+#dubbo.registry.address = nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932
+#dubbo.registry.parameters.namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932
 
 ## Dubbo Protocol
 dubbo.protocol.name = dubbo
@@ -258,6 +266,9 @@ dubbo.application.name = dubbo-consumer-demo
 
 ## Nacos registry address
 dubbo.registry.address = nacos://127.0.0.1:8848
+##如果要使用自己创建的命名空间可以使用下面2种方式
+#dubbo.registry.address = nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932
+#dubbo.registry.parameters.namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932
 
 # @Reference version
 demo.service.version= 1.0.0
@@ -366,6 +377,8 @@ Spring XML 配置驱动是传统 Spring 装配组件的编程模型。
 
     <!-- 使用 Nacos 注册中心 -->
     <dubbo:registry address="nacos://127.0.0.1:8848"/>
+    <!-- 如果要使用自己创建的命名空间可以使用下面配置 -->
+    <!-- <dubbo:registry address="nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932" /> -->
 
     <!-- 用dubbo协议在随机端口暴露服务 -->
     <dubbo:protocol name="dubbo" port="-1"/>
@@ -423,6 +436,8 @@ public class DemoServiceProviderXmlBootstrap {
 
     <!-- 使用 Nacos 注册中心 -->
     <dubbo:registry address="nacos://127.0.0.1:8848"/>
+    <!-- 如果要使用自己创建的命名空间可以使用下面配置 -->
+    <!-- <dubbo:registry address="nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932" /> -->
 
     <!-- 引用服务接口 -->
     <dubbo:reference id="demoService" interface="com.alibaba.dubbo.demo.service.DemoService" version="2.0.0"/>
