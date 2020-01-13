@@ -28,7 +28,7 @@ There are two ways to get Nacos.
 ```bash
 git clone https://github.com/alibaba/nacos.git
 cd nacos/
-mvn -Prelease-nacos clean install -U  
+mvn -Prelease-nacos -Dmaven.test.skip=true clean install -U 
 ls -al distribution/target/
 
 // change the $version to your actual path

@@ -28,7 +28,7 @@
 <h3>1)Download source code from Github</h3>
 <pre><code class="language-bash">git <span class="hljs-built_in">clone</span> https://github.com/alibaba/nacos.git
 <span class="hljs-built_in">cd</span> nacos/
-mvn -Prelease-nacos clean install -U  
+mvn -Prelease-nacos -Dmaven.test.skip=<span class="hljs-literal">true</span> clean install -U 
 ls -al distribution/target/
 
 // change the <span class="hljs-variable">$version</span> to your actual path

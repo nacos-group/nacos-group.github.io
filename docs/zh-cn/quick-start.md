@@ -28,7 +28,7 @@ Nacos 依赖 [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_j
 ```bash
 git clone https://github.com/alibaba/nacos.git
 cd nacos/
-mvn -Prelease-nacos clean install -U  
+mvn -Prelease-nacos -Dmaven.test.skip=true clean install -U  
 ls -al distribution/target/
 
 // change the $version to your actual path

@@ -27,12 +27,12 @@
 <li>添加依赖：</li>
 </ol>
 <pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
     &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-config&lt;/artifactId&gt;
     &lt;version&gt;${latest.version}&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
-<p><strong>注意</strong>：版本 <a href="https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-alibaba-nacos-config">0.2.x.RELEASE</a> 对应的是 Spring Boot 2.x 版本，版本 <a href="https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-alibaba-nacos-config">0.1.x.RELEASE</a> 对应的是 Spring Boot 1.x 版本。</p>
+<p><strong>注意</strong>：版本 <a href="https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-config">2.1.x.RELEASE</a> 对应的是 Spring Boot 2.1.x 版本。版本 <a href="https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-config">2.0.x.RELEASE</a> 对应的是 Spring Boot 2.0.x 版本，版本 <a href="https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-config">1.5.x.RELEASE</a> 对应的是 Spring Boot 1.5.x 版本。</p>
 <p>更多版本对应关系参考：<a href="https://github.com/spring-cloud-incubator/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E">版本说明 Wiki</a></p>
 <ol start="2">
 <li>在 <code>bootstrap.properties</code> 中配置 Nacos server 的地址和应用名</li>
@@ -94,12 +94,12 @@ public class ConfigController {
 <li>添加依赖：</li>
 </ol>
 <pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
     &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;/artifactId&gt;
     &lt;version&gt;${latest.version}&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
-<p><strong>注意</strong>：版本 <a href="https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-alibaba-nacos-discovery">0.2.x.RELEASE</a> 对应的是 Spring Boot 2.x 版本，版本 <a href="https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-alibaba-nacos-discovery">0.1.x.RELEASE</a> 对应的是 Spring Boot 1.x 版本。</p>
+<p><strong>注意</strong>：版本 <a href="https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-discovery">2.1.x.RELEASE</a> 对应的是 Spring Boot 2.1.x 版本。版本 <a href="https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-discovery">2.0.x.RELEASE</a> 对应的是 Spring Boot 2.0.x 版本，版本 <a href="https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-discovery">1.5.x.RELEASE</a> 对应的是 Spring Boot 1.5.x 版本。</p>
 <p>更多版本对应关系参考：<a href="https://github.com/spring-cloud-incubator/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E">版本说明 Wiki</a></p>
 <ol start="2">
 <li>配置服务提供者，从而服务提供者可以通过 Nacos 的服务注册发现功能将其服务注册到 Nacos server 上。</li>
