@@ -49,7 +49,7 @@ GET
 
 | Name | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| tenant | string | No | Tenant information. It corresponds to the Namespace field in Nacos. |
+| tenant | string | No | Tenant information. It corresponds to the Namespace ID field in Nacos. |
 | dataId | string | Yes | Configuration ID |
 | group | string | Yes | Configuration group |
 
@@ -301,7 +301,7 @@ POST
 
 | Name | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| tenant | String | No | The tenant, corresponding to the namespace field of Nacos |
+| tenant | String | No | The tenant, corresponding to the namespace ID field of Nacos |
 | dataId | String | Yes | Configuration ID |
 | group | String | Yes | Configuration group |
 | content | String | Yes | Configuration content |
@@ -361,7 +361,7 @@ DELETE
 
 | Name | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| tenant | String | No | The tenant, corresponding to the namespace field of Nacos |
+| tenant | String | No | The tenant, corresponding to the namespace ID field of Nacos |
 | dataId | String | Yes | Configuration ID |
 | group | String | Yes | Configuration group |
 

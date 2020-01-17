@@ -49,7 +49,7 @@ GET
 
 | 名称 | 类型 | 是否必须 | 描述 |
 | :--- | :--- | :--- | :--- |
-| tenant | string | 否 | 租户信息，对应 Nacos 的命名空间字段。 |
+| tenant | string | 否 | 租户信息，对应 Nacos 的命名空间ID字段。 |
 | dataId | string | 是 | 配置 ID。 |
 | group | string | 是 | 配置分组。 |
 
@@ -226,7 +226,7 @@ POST
 
 | 名称 | 类型 | 是否必须 | 描述 |
 | :--- | :--- | :--- | :--- |
-| tenant | string | 否 | 租户信息，对应 Nacos 的命名空间字段 |
+| tenant | string | 否 | 租户信息，对应 Nacos 的命名空间ID字段 |
 | dataId | string | 是 | 配置 ID |
 | group | string | 是 | 配置分组 |
 | content | string | 是 | 配置内容 |
@@ -283,7 +283,7 @@ DELETE
 
 | 名称 | 类型 | 是否必须 | 描述 |
 | :--- | :--- | :--- | :--- |
-| tenant | string | 否 | 租户信息，对应 Naocs 的命名空间字段 |
+| tenant | string | 否 | 租户信息，对应 Naocs 的命名空间ID字段 |
 | dataId | string | 是 | 配置 ID |
 | group | string | 是 | 配置分组 |
 
