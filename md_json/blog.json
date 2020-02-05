@@ -115,6 +115,11 @@
       "meta": {}
     },
     {
+      "filename": "nacos 1.2.0-beta.0.md",
+      "link": "/en-us/blog/nacos 1.2.0-beta.0.html",
+      "meta": {}
+    },
+    {
       "filename": "nacos-confd.md",
       "link": "/en-us/blog/nacos-confd.html",
       "meta": {}
@@ -348,6 +353,11 @@
     {
       "filename": "nacos 1.1.4.md",
       "link": "/zh-cn/blog/nacos 1.1.4.html",
+      "meta": {}
+    },
+    {
+      "filename": "nacos 1.2.0-beta.0.md",
+      "link": "/zh-cn/blog/nacos 1.2.0-beta.0.html",
       "meta": {}
     },
     {

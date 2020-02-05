@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="nacos 1.2.0-beta.0" />
+	<meta name="description" content="nacos 1.2.0-beta.0" />
+	<!-- 网页标签标题 -->
+	<title>nacos 1.2.0-beta.0</title>
+	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
+	<link rel="stylesheet" href="/build/blogDetail.css" />
+</head>
+<body>
+	<div id="root"><div class="blog-detail-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/zh-cn/index.html">首页</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/docs/what-is-nacos.html">文档</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/zh-cn/blog/index.html">博客</a></li><li class="menu-item menu-item-normal"><a href="/zh-cn/community/index.html">社区</a></li><li class="menu-item menu-item-normal"><a href="https://www.aliyun.com/product/mse?spm=nacos-website.topbar.0.0.0">企业版Nacos</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></li><li class="menu-item menu-item-normal"><a href="https://job.alibaba.com/zhaopin/position_detail.htm?trace=qrcode_share&amp;positionCode=GP574861">招贤纳士</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></li><li class="menu-item menu-item-normal"><a href="http://console.nacos.io/nacos/index.html">控制台样例</a></li></ul></div></div></header><section class="blog-content markdown-body"><h1>Nacos 1.2.0-beta.0</h1>
+<p>（注：目前发布的是1.2.0 beta版本，本文目的在于告诉大家如何使用最新功能，但是不推荐替换到生产环境）</p>
+<p>Nacos是阿里巴巴开源的服务发现与配置管理项目，本次发布的1.2.0-beta.0版本，主要带来的是权限控制。本文将介绍包括这个功能在内的新版本发布的功能。</p>
+<p><a name="GdnN0"></a></p>
+<h2>升级指南</h2>
+<p><a name="SXacG"></a></p>
+<h4>服务端</h4>
+<p>0.8.0及以上版本：</p>
+<ol>
+<li>解压安装包后替换{nacos.home}/target/nacos-server.jar</li>
+<li>逐台重启Nacos Server即可</li>
+</ol>
+<p>0.8.0以下版本，先升级到1.0.0版本。
+<a name="CNPhB"></a></p>
+<h4>客户端</h4>
+<p>替换pom依赖即可。</p>
+<p><a name="qFsYS"></a></p>
+<h2>权限控制</h2>
+<p>这个版本的最大更新，是支持了命名空间粒度的权限控制。管理员可以针对不同的用户角色，授权某个命名空间的读写权限，来达到数据隔离的目的，关于权限控制的设计方案可以参考<a href="https://nacos.io/zh-cn/blog/access%20control%20design.html">https://nacos.io/zh-cn/blog/access%20control%20design.html</a>。这里介绍下权限控制功能的使用方式：</p>
+<ol>
+<li>Server端打开权限控制开关。修改con/application.properties内容：</li>
+</ol>
+<pre><code class="language-json">nacos.core.auth.enabled=true
+</code></pre>
+<p>这个开关采用了热加载模式，无需重启Server即可生效。因此当权限控制功能使用有异常时，可以直接回滚到不鉴权的模式。</p>
+<ol start="2">
+<li>使用管理员账号登录Nacos控制台：</li>
+</ol>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/333810/1580890674563-4d235fd9-983c-4b03-b45c-b1e164152ac7.png#align=left&amp;display=inline&amp;height=470&amp;name=image.png&amp;originHeight=940&amp;originWidth=2870&amp;size=274455&amp;status=done&amp;style=none&amp;width=1435" alt="image.png"><br />
+<br />可以看到，左侧边栏增加了一个父菜单和三个子菜单，分别用于权限控制里的用户创建、角色创建以及权限管         理。这个菜单栏只会在管理员登录的时候显示，也就意味着只有管理员才能进行权限的管理和分配。</p>
+<ol start="3">
+<li>管理用户。点击“用户列表”，进入用户管理页面，可以进行用户的创建、修改和删除：</li>
+</ol>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/333810/1580890674569-a729854e-a72d-4b3b-bc4c-53f9df831f3e.png#align=left&amp;display=inline&amp;height=573&amp;name=image.png&amp;originHeight=1146&amp;originWidth=2872&amp;size=349203&amp;status=done&amp;style=none&amp;width=1436" alt="image.png"></p>
+<ol start="4">
+<li>管理角色。因为Nacos的自带的权限是基于角色来进行分配的，因此需要给创建好的用户绑定一些角色：</li>
+</ol>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/333810/1580890674603-f69520a1-f53e-4eb7-9186-f2963e7b3d65.png#align=left&amp;display=inline&amp;height=545&amp;name=image.png&amp;originHeight=1090&amp;originWidth=2874&amp;size=346611&amp;status=done&amp;style=none&amp;width=1437" alt="image.png"></p>
+<ol start="5">
+<li>管理权限。角色创建好以后，就可以给这个角色赋予特定的权限了：</li>
+</ol>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/333810/1580890674580-e22945e1-be3a-46bd-b8f3-11b38eee0786.png#align=left&amp;display=inline&amp;height=581&amp;name=image.png&amp;originHeight=1162&amp;originWidth=2876&amp;size=368264&amp;status=done&amp;style=none&amp;width=1438" alt="image.png"></p>
+<p>在“添加资源”对话框里，可以选择绑定的角色，命名空间资源以及对应的动作类型，例如在上图中，我们给角色role1绑定命名空间test的读写权限。然后又因为刚刚我们是将user1绑定到了role1上，那么user1这个用户就可以对test这个命名空间的资源进行读写操作了。<br /></p>
+<ol start="6">
+<li>使用user1登录控制台。点击控制台右上角，退出admin账号，然后用刚才创建的user1进行登录：</li>
+</ol>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/333810/1580890674574-ca6eee1f-b749-4275-897d-ab9fba0ebf80.png#align=left&amp;display=inline&amp;height=449&amp;name=image.png&amp;originHeight=898&amp;originWidth=2874&amp;size=340563&amp;status=done&amp;style=none&amp;width=1437" alt="image.png"></p>
+<p>如上图所示，首先是左侧的权限管理菜单消失了，因为当前用户不是管理员。其次是会弹出一个鉴权失败的提示框。不用担心，这个提示框意思是user1没有public命名空间的读权限，所以会弹出，但是不影响我们将命名空间切换到test：<br /><img src="https://cdn.nlark.com/yuque/0/2020/png/333810/1580890674621-bc16b2ad-4a9e-4ebc-83e8-fa41f4a0cba4.png#align=left&amp;display=inline&amp;height=536&amp;name=image.png&amp;originHeight=1072&amp;originWidth=2876&amp;size=554716&amp;status=done&amp;style=none&amp;width=1438" alt="image.png"></p>
+<p>如上图所示，我们可以看到test命名空间的配置数据了，下面我们再来介绍客户端的使用。</p>
+<ol start="7">
+<li>首先依赖最新的nacos 1.2.0客户端，然后在初始化时添加如下代码：</li>
+</ol>
+<pre><code class="language-java">Properties properties = <span class="hljs-keyword">new</span> Properties();
+properties.put(PropertyKeyConst.NAMESPACE, <span class="hljs-string">"99a791cf-41c4-4535-9e93-b0141652bad0"</span>);
+properties.put(PropertyKeyConst.SERVER_ADDR, <span class="hljs-string">"127.0.0.1:8848"</span>);
+<span class="hljs-comment">// 配置用户名：</span>
+properties.put(PropertyKeyConst.USERNAME, <span class="hljs-string">"user1"</span>);
+<span class="hljs-comment">// 配置密码：</span>
+properties.put(PropertyKeyConst.PASSWORD, <span class="hljs-string">"pwd1"</span>);
+ConfigService iconfig = NacosFactory.createConfigService(properties);
+</code></pre>
+<ol start="8">
+<li>使用客户端进行正常的读写配置操作。</li>
+</ol>
+</section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>愿景</h3><p>Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/what-is-nacos.html" target="_self">概览</a></dd><dd><a href="/zh-cn/docs/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/contributing.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://www.aliyun.com/product/acm?source_type=nacos_pc_20181219" target="_self">云服务 ACM</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">云服务 EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">云服务 AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/blogDetail.js"></script>
+</body>
+</html>
