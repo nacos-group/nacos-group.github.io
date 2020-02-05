@@ -22,6 +22,8 @@ Nacos是阿里巴巴开源的服务发现与配置管理项目，本次发布的
 ## 权限控制
 这个版本的最大更新，是支持了命名空间粒度的权限控制。管理员可以针对不同的用户角色，授权某个命名空间的读写权限，来达到数据隔离的目的，关于权限控制的设计方案可以参考[https://nacos.io/zh-cn/blog/access%20control%20design.html](https://nacos.io/zh-cn/blog/access%20control%20design.html)。这里介绍下权限控制功能的使用方式：
 
+0. 使用distribution/nacos-mysql.sql进行数据库初始化，主要是新增了users, roles, permissions三张表。
+
 1. Server端打开权限控制开关。修改con/application.properties内容：
 
 ```json

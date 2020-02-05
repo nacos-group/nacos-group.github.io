@@ -31,8 +31,13 @@
 <p><a name="qFsYS"></a></p>
 <h2>权限控制</h2>
 <p>这个版本的最大更新，是支持了命名空间粒度的权限控制。管理员可以针对不同的用户角色，授权某个命名空间的读写权限，来达到数据隔离的目的，关于权限控制的设计方案可以参考<a href="https://nacos.io/zh-cn/blog/access%20control%20design.html">https://nacos.io/zh-cn/blog/access%20control%20design.html</a>。这里介绍下权限控制功能的使用方式：</p>
-<ol>
-<li>Server端打开权限控制开关。修改con/application.properties内容：</li>
+<ol start="0">
+<li>
+<p>使用distribution/nacos-mysql.sql进行数据库初始化，主要是新增了users, roles, permissions三张表。</p>
+</li>
+<li>
+<p>Server端打开权限控制开关。修改con/application.properties内容：</p>
+</li>
 </ol>
 <pre><code class="language-json">nacos.core.auth.enabled=true
 </code></pre>
