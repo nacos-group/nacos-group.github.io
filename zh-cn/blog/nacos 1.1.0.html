@@ -136,13 +136,13 @@ instance.setIp(<span class="hljs-string">"1.1.1.1"</span>);
 instance.setPort(<span class="hljs-number">9999</span>);
 Map&lt;String, String&gt; metadata = <span class="hljs-keyword">new</span> HashMap&lt;String, String&gt;();
 <span class="hljs-comment">// 设置心跳的周期，单位为秒，这里将心跳间隔设置为3秒：</span>
-metadata.put(PreservedMetadataKeys.HEART_BEAT_INTERVAL, <span class="hljs-string">"3"</span>);
+metadata.put(PreservedMetadataKeys.HEART_BEAT_INTERVAL, <span class="hljs-string">"3000"</span>);
 <span class="hljs-comment">// 设置心跳超时时间，单位为秒，这里将心跳超时时间设为6秒，</span>
 <span class="hljs-comment">// 即服务端6秒收不到客户端心跳，会将该客户端注册的实例设为不健康：</span>
-metadata.put(PreservedMetadataKeys.HEART_BEAT_TIMEOUT, <span class="hljs-string">"6"</span>);
+metadata.put(PreservedMetadataKeys.HEART_BEAT_TIMEOUT, <span class="hljs-string">"6000"</span>);
 <span class="hljs-comment">// 设置实例删除的超时时间，单位为秒，这里将实例删除超时时间设为9秒，</span>
 <span class="hljs-comment">// 即服务端9秒收不到客户端心跳，会将该客户端注册的实例删除：</span>
-metadata.put(PreservedMetadataKeys.IP_DELETE_TIMEOUT, <span class="hljs-string">"9"</span>);
+metadata.put(PreservedMetadataKeys.IP_DELETE_TIMEOUT, <span class="hljs-string">"9000"</span>);
 instance.setMetadata(metadata);
 
 naming.registerInstance(serviceName, instance);

@@ -147,13 +147,13 @@ instance.setIp("1.1.1.1");
 instance.setPort(9999);
 Map<String, String> metadata = new HashMap<String, String>();
 // 设置心跳的周期，单位为秒，这里将心跳间隔设置为3秒：
-metadata.put(PreservedMetadataKeys.HEART_BEAT_INTERVAL, "3");
+metadata.put(PreservedMetadataKeys.HEART_BEAT_INTERVAL, "3000");
 // 设置心跳超时时间，单位为秒，这里将心跳超时时间设为6秒，
 // 即服务端6秒收不到客户端心跳，会将该客户端注册的实例设为不健康：
-metadata.put(PreservedMetadataKeys.HEART_BEAT_TIMEOUT, "6");
+metadata.put(PreservedMetadataKeys.HEART_BEAT_TIMEOUT, "6000");
 // 设置实例删除的超时时间，单位为秒，这里将实例删除超时时间设为9秒，
 // 即服务端9秒收不到客户端心跳，会将该客户端注册的实例删除：
-metadata.put(PreservedMetadataKeys.IP_DELETE_TIMEOUT, "9");
+metadata.put(PreservedMetadataKeys.IP_DELETE_TIMEOUT, "9000");
 instance.setMetadata(metadata);
 
 naming.registerInstance(serviceName, instance);
