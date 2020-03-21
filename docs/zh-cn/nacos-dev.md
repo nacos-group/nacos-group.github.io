@@ -63,7 +63,7 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 |![fangjian0423](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560411885169-29eb1248-da8d-490c-8801-57561d5c9b0e.jpeg)| [fangjian0423](https://github.com/fangjian0423) | 方剑   | 阿里巴巴 | Committer | fangjian.fj@alibaba-inc.com |
 |![wyp12](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560412009658-18e26745-c59d-4147-a69b-0786e5e6218e.jpeg)       | [wyp12](https://github.com/wyp12)               | 吴援飘 | 阿里巴巴 | Committer | caogu.wyp@antfin.com |
 |![TsingLiang](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560412009587-d41b4256-3882-4ac5-ab26-b5eeed8f09c0.jpeg)  | [TsingLiang](https://github.com/TsingLiang)     | 卿亮   | 阿里巴巴 | Committer | qingliang.ql@alibaba-inc.com  |
-|![KeRan213539](https://cdn.nlark.com/yuque/0/2020/png/333810/1583914387964-d3da7f1b-2288-42b9-9441-f934d57a15f4.png)  | [KeRan213539](https://github.com/KeRan213539)     | 邪影   | 云南盛达实业集团有限公司 | Committer | qingliang.ql@alibaba-inc.com  |
+|![KeRan213539](https://cdn.nlark.com/yuque/0/2020/png/333810/1583914387964-d3da7f1b-2288-42b9-9441-f934d57a15f4.png)  | [KeRan213539](https://github.com/KeRan213539)     | 邪影   | 云南盛达实业集团有限公司 | Committer | 213539@qq.com  |
 
 ### 活跃贡献者
 
