@@ -63,7 +63,7 @@ This page shows Nacos developers and continues to expand. The list is not priori
 |![mercyblitz](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560412009537-f3359ef1-4b19-43e2-8b7f-9cbdf50d56ac.jpeg)  | [mercyblitz](https://github.com/mercyblitz)     | Mercy Ma     | Alibaba      | Committer  | taogu.mxx@alibaba-inc.com                                    |
 |![fangjian0423](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560411885169-29eb1248-da8d-490c-8801-57561d5c9b0e.jpeg)| [fangjian0423](https://github.com/fangjian0423) | Jian Fang    | Alibaba      | Committer  | fangjian.fj@alibaba-inc.com                                  |
 |![wyp12](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560412009658-18e26745-c59d-4147-a69b-0786e5e6218e.jpeg)       | [wyp12](https://github.com/wyp12)               | Yuanpiao Wu  | Alibaba      | Committer  | caogu.wyp@antfin.com                                         |
-|![TsingLiang](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560412009587-d41b4256-3882-4ac5-ab26-b5eeed8f09c0.jpeg)  | [TsingLiang](https://github.com/TsingLiang)     | Liang ji     | Alibaba      | Committer  | qingliang.ql@alibaba-inc.com                                 | 
+|![TsingLiang](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560412009587-d41b4256-3882-4ac5-ab26-b5eeed8f09c0.jpeg)  | [TsingLiang](https://github.com/TsingLiang)     | Liang qing   | Alibaba      | Committer  | qingliang.ql@alibaba-inc.com                                 | 
 |![KeRan213539](https://cdn.nlark.com/yuque/0/2020/jpeg/338441/1586617349921-78622adf-7cd1-43ad-87d5-ebd133f50f48.jpeg) | [KeRan213539](https://github.com/KeRan213539)   | Ying Xie     | ShengDa      | Committer  | 213539@qq.com  |
 
 ### Contributors
