@@ -49,7 +49,7 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 |![xuechaos](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560412009610-94637463-8b76-4486-85ca-d24e9f2bcbc2.jpeg)    | [xuechaos](https://github.com/xuechaos)         | 邢学超 | 阿里巴巴 | Maintainer |xingxuechao@alibaba-inc.com |
 |![yanlinly](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560412009624-86bc7970-b56b-4eb9-9711-63b301ebcc29.jpeg)    | [yanlinly](https://github.com/yanlinly)         | 李艳林 | 阿里巴巴 | Maintainer | yan.lin2009@163.com |
 |![loadchange](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560412009497-63da8d74-eee3-402a-ab8d-d0e0b8686b51.jpeg)  | [loadchange](https://github.com/loadchange)     | 王彦民 | 饿了么   | Maintainer | wym177771@alibaba-inc.com |
-|![chuntaojun](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560410616261-700a37a2-853a-4021-a965-c30d8d194013.jpeg) | [chuntaojun](https://github.com/chuntaojun)     | 廖春涛      |  杭州电子科技大学  | Maintainer| liaochuntao@live.com               |
+|![chuntaojun](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560410616261-700a37a2-853a-4021-a965-c30d8d194013.jpeg) | [chuntaojun](https://github.com/chuntaojun)      | 廖春涛 |  杭州电子科技大学  | Maintainer| liaochuntao@live.com               |
 |![paderlol](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560412009569-86d3ce2a-c051-409f-b27c-cdabdecfb42d.jpeg)    | [paderlol](https://github.com/paderlol)         | 张龙   | 蜜獾    | Maintainer | huangbbbaihao@gmail.com |
 |![zhangjimmy](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560412009632-49e3d964-7714-4795-8bf9-a8d7309bdad5.jpeg)  | [zhangjimmy](https://github.com/zhangjimmy)     | 张波   | 虎牙直播 | Committer | zhangjimmy@foxmail.com  |
 |![nanamikon](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560412009542-2dcf4abd-328a-4744-b0d3-bd12383e36d2.jpeg)   | [nanamikon](https://github.com/nanamikon)       | 周健   | 虎牙直播 | Committer | nanamikon@gmail.com |
@@ -63,11 +63,11 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 |![fangjian0423](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560411885169-29eb1248-da8d-490c-8801-57561d5c9b0e.jpeg)| [fangjian0423](https://github.com/fangjian0423) | 方剑   | 阿里巴巴 | Committer | fangjian.fj@alibaba-inc.com |
 |![wyp12](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560412009658-18e26745-c59d-4147-a69b-0786e5e6218e.jpeg)       | [wyp12](https://github.com/wyp12)               | 吴援飘 | 阿里巴巴 | Committer | caogu.wyp@antfin.com |
 |![TsingLiang](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1560412009587-d41b4256-3882-4ac5-ab26-b5eeed8f09c0.jpeg)  | [TsingLiang](https://github.com/TsingLiang)     | 卿亮   | 阿里巴巴 | Committer | qingliang.ql@alibaba-inc.com  |
-|![KeRan213539](https://cdn.nlark.com/yuque/0/2020/png/333810/1583914387964-d3da7f1b-2288-42b9-9441-f934d57a15f4.png)  | [KeRan213539](https://github.com/KeRan213539)     | 邪影   | 云南盛达实业集团有限公司 | Committer | 213539@qq.com  |
+|![KeRan213539](https://cdn.nlark.com/yuque/0/2020/jpeg/338441/1586617349921-78622adf-7cd1-43ad-87d5-ebd133f50f48.jpeg) | [KeRan213539](https://github.com/KeRan213539)   | 邪影   | 云南盛达实业集团有限公司 | Committer | 213539@qq.com  |
 
 ### 活跃贡献者
 
 |头像                                                                                                                   | Github 账号                                      | 名字       | 组织             |角色        |邮箱                                 |
 |----------------------------------------------------------------------------------------------------------------------| ------------------------------------------------|------------| ----------------| -----------|------------------------------------|
 |![caojiele](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561301766676-89a49cd0-ad67-4b3b-a6f2-895f93804b69.jpeg)   | [caojiele](https://github.com/caojiele)         | 曹杰乐      | 三诺生物          | Contributor| caojiele1225@126.com               |
-|![wfnuser](https://cdn.nlark.com/yuque/0/2020/png/333810/1577956165938-7e456a26-2fef-4d80-b809-5e50558612a4.png)   | [wfnuser](https://github.com/wfnuser)         | 黄清昊      | 阿里巴巴          | Contributor| wfnuser@hotmail.com               |
+|![wfnuser](https://cdn.nlark.com/yuque/0/2020/png/333810/1577956165938-7e456a26-2fef-4d80-b809-5e50558612a4.png)      | [wfnuser](https://github.com/wfnuser)           | 黄清昊      | 阿里巴巴          | Contributor| wfnuser@hotmail.com               |
