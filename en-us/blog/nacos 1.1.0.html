@@ -101,16 +101,16 @@
 <li>在地址服务器上配置Nacos集群的地址列表：</li>
 </ol>
 <pre><code class="language-powershell"><span class="hljs-comment"># Add IP to nacos cluster:</span>
-curl -X POST <span class="hljs-string">'$ADDRESS_SERVER:8080/nacos/v1/as/nodes?ips=1.1.1.1:8848,2.2.2.2:8848,3.3.3.3:8848'</span>
+curl <span class="hljs-literal">-X</span> POST <span class="hljs-string">'$ADDRESS_SERVER:8080/nacos/v1/as/nodes?ips=1.1.1.1:8848,2.2.2.2:8848,3.3.3.3:8848'</span>
 
 <span class="hljs-comment"># Remove IP from nacos cluster:</span>
-curl -X DELETE <span class="hljs-string">'$ADDRESS_SERVER:8080/nacos/v1/as/nodes?ips=1.1.1.1:8848,2.2.2.2:8848,3.3.3.3:8848'</span>
+curl <span class="hljs-literal">-X</span> DELETE <span class="hljs-string">'$ADDRESS_SERVER:8080/nacos/v1/as/nodes?ips=1.1.1.1:8848,2.2.2.2:8848,3.3.3.3:8848'</span>
 </code></pre>
 <ol start="4">
 <li>客户端配置endpoint为该地址服务器集群域名：在构造Nacos客户端时，除了可以通过指定serverAddr来访问Nacos集群外，还可以配置endpoint属性，<a href="http://xn--address-q33kue17sqm3bh4a637a9j0f5s6ckzn.nacos.com">将这个属性的值设为address.nacos.com</a>，这样就可以达到和配置serverAddr相同的效果。</li>
 <li>通过源码构建地址服务器安装包，在Nacos工程根目录下执行：</li>
 </ol>
-<pre><code class="language-powershell">mvn -Prelease-address clean install -Dmaven.test.skip=true
+<pre><code class="language-powershell">mvn <span class="hljs-literal">-Prelease</span><span class="hljs-literal">-address</span> clean install <span class="hljs-literal">-Dmaven</span>.test.skip=true
 </code></pre>
 <p>安装包会生成在distribution/target目录下。</p>
 <p><a name="6COIS"></a></p>

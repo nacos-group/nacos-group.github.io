@@ -10,9 +10,10 @@ confd的安装可以通过源码安装方式，confd基于Go语言编写，其�
 创建confd目录，下载confd源码，编译生成可执行文件
 ```
 mkdir -p $GOPATH/src/github.com/kelseyhightower
-wget https://github.com/nacos-group/confd/archive/v0.18.0.tar.gz
-tar -xvf v0.18.0.tar.gz
-mv confd-0.18.0 confd
+cd $GOPATH/src/github.com/kelseyhightower
+wget https://github.com/nacos-group/nacos-confd/archive/v0.19.1.tar.gz
+tar -xvf v0.19.1.tar.gz
+mv nacos-confd-0.19.1 confd
 cd confd
 make
 ```

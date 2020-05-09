@@ -18,43 +18,43 @@
 <ul>
 <li>
 <p>Clone project</p>
-<pre><code class="language-powershell">git clone https://github.com/nacos-group/nacos-docker.git
-cd nacos-docker
+<pre><code class="language-powershell">git clone https://github.com/nacos<span class="hljs-literal">-group</span>/nacos<span class="hljs-literal">-docker</span>.git
+cd nacos<span class="hljs-literal">-docker</span>
 </code></pre>
 </li>
 <li>
 <p>Stand-alone Derby</p>
-<pre><code class="language-powershell">docker-compose -f example/standalone-derby.yaml up
+<pre><code class="language-powershell">docker<span class="hljs-literal">-compose</span> <span class="hljs-operator">-f</span> example/standalone<span class="hljs-literal">-derby</span>.yaml up
 </code></pre>
 </li>
 <li>
 <p>Stand-alone Mysql</p>
-<pre><code class="language-powershell">docker-compose -f example/standalone-mysql.yaml up
+<pre><code class="language-powershell">docker<span class="hljs-literal">-compose</span> <span class="hljs-operator">-f</span> example/standalone<span class="hljs-literal">-mysql</span>.yaml up
 </code></pre>
 </li>
 <li>
 <p>Cluster</p>
-<pre><code class="language-powershell">docker-compose -f example/cluster-hostname.yaml up 
+<pre><code class="language-powershell">docker<span class="hljs-literal">-compose</span> <span class="hljs-operator">-f</span> example/cluster<span class="hljs-literal">-hostname</span>.yaml up 
 </code></pre>
 </li>
 <li>
 <p>Service registration</p>
-<pre><code class="language-powershell">curl -X POST <span class="hljs-string">'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&amp;ip=20.18.7.10&amp;port=8080'</span>
+<pre><code class="language-powershell">curl <span class="hljs-literal">-X</span> POST <span class="hljs-string">'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&amp;ip=20.18.7.10&amp;port=8080'</span>
 </code></pre>
 </li>
 <li>
 <p>Service discovery</p>
-<pre><code class="language-powershell">curl -X GET <span class="hljs-string">'http://127.0.0.1:8848/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'</span>
+<pre><code class="language-powershell">curl <span class="hljs-literal">-X</span> GET <span class="hljs-string">'http://127.0.0.1:8848/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'</span>
 </code></pre>
 </li>
 <li>
 <p>Publish config</p>
-<pre><code class="language-powershell">curl -X POST <span class="hljs-string">"http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&amp;content=helloWorld"</span>
+<pre><code class="language-powershell">curl <span class="hljs-literal">-X</span> POST <span class="hljs-string">"http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&amp;content=helloWorld"</span>
 </code></pre>
 </li>
 <li>
 <p>Get config</p>
-<pre><code class="language-powershell">  curl -X GET <span class="hljs-string">"http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test"</span>
+<pre><code class="language-powershell">  curl <span class="hljs-literal">-X</span> GET <span class="hljs-string">"http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test"</span>
 </code></pre>
 </li>
 <li>

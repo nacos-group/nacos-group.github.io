@@ -123,11 +123,11 @@ mysql-slave-kf9cb                         1/1     Running   0          110m
 <li>修改  <strong>deploy/nacos/nacos-pvc-nfs.yaml</strong></li>
 </ul>
 <pre><code class="language-yaml"><span class="hljs-attr">data:</span>
-  <span class="hljs-string">mysql.master.db.name:</span> <span class="hljs-string">"主库名称"</span>
-  <span class="hljs-string">mysql.master.port:</span> <span class="hljs-string">"主库端口"</span>
-  <span class="hljs-string">mysql.slave.port:</span> <span class="hljs-string">"从库端口"</span>
-  <span class="hljs-string">mysql.master.user:</span> <span class="hljs-string">"主库用户名"</span>
-  <span class="hljs-string">mysql.master.password:</span> <span class="hljs-string">"主库密码"</span>
+  <span class="hljs-attr">mysql.master.db.name:</span> <span class="hljs-string">"主库名称"</span>
+  <span class="hljs-attr">mysql.master.port:</span> <span class="hljs-string">"主库端口"</span>
+  <span class="hljs-attr">mysql.slave.port:</span> <span class="hljs-string">"从库端口"</span>
+  <span class="hljs-attr">mysql.master.user:</span> <span class="hljs-string">"主库用户名"</span>
+  <span class="hljs-attr">mysql.master.password:</span> <span class="hljs-string">"主库密码"</span>
 </code></pre>
 <ul>
 <li>创建 Nacos</li>

@@ -73,14 +73,14 @@ $ addauth digest root:pa55wdsetAcl /xxx/yyy auth:root:cdrwa
 <h3>Eureka</h3>
 <p>Eureka使用的鉴权是基于Spring Security实现的，支持用户名和密码的访问控制，一个简单的例子如下：<br /></p>
 <pre><code class="language-yaml"><span class="hljs-attr">spring:</span> 
-<span class="hljs-attr">  security:</span> 
+  <span class="hljs-attr">security:</span> 
   <span class="hljs-comment"># 开启认证，Spring Cloud2.0后添加jar会自动集成并开启</span>
   <span class="hljs-comment">#</span>
-<span class="hljs-string">basic.enabled:</span> <span class="hljs-literal">true</span> 
+<span class="hljs-attr">basic.enabled:</span> <span class="hljs-literal">true</span> 
   <span class="hljs-comment"># 用户名密码</span>
-<span class="hljs-attr">  user:</span> 
-<span class="hljs-attr">  name:</span> <span class="hljs-string">test</span> 
-<span class="hljs-attr">  password:</span> <span class="hljs-string">test</span>
+  <span class="hljs-attr">user:</span> 
+  <span class="hljs-attr">name:</span> <span class="hljs-string">test</span> 
+  <span class="hljs-attr">password:</span> <span class="hljs-string">test</span>
 </code></pre>
 <p><a name="qrC17"></a></p>
 <h3>Apollo</h3>
@@ -155,8 +155,8 @@ $ addauth digest root:pa55wdsetAcl /xxx/yyy auth:root:cdrwa
 <ol start="2">
 <li>在每个需要鉴权的方法上添加一个注解，来指定这个方法对应的资源名，动作及资源解析器：</li>
 </ol>
-<pre><code class="language-java"><span class="hljs-meta">@Secured</span>(resource=“service1”,action=“read”, parser=NamingParser.class)
-<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">registerInstance</span><span class="hljs-params">()</span> </span>{…}
+<pre><code class="language-java"><span class="hljs-meta">@Secured</span>(resource=“service1”,action=“read”, parser=NamingParser<span class="hljs-class">.<span class="hljs-keyword">class</span>)
+<span class="hljs-title">public</span> <span class="hljs-title">void</span> <span class="hljs-title">registerInstance</span>() </span>{…}
 </code></pre>
 <p>这个注解的介绍如下：</p>
 <pre><code class="language-java"><span class="hljs-meta">@Retention</span>(RetentionPolicy.RUNTIME)
@@ -166,15 +166,15 @@ $ addauth digest root:pa55wdsetAcl /xxx/yyy auth:root:cdrwa
     <span class="hljs-comment">// 资源名，可以显示指定资源名，如不指定，将由资源解析器解析出资源名</span>
     <span class="hljs-function">String <span class="hljs-title">resource</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> ""</span>;
     <span class="hljs-comment">// 资源解析器，解析资源名，优先级比name()低</span>
-    Class&lt;? extends ResourceParser&gt; parser() <span class="hljs-keyword">default</span> DefaultResourceParser.class;
+    Class&lt;? extends ResourceParser&gt; parser() <span class="hljs-keyword">default</span> DefaultResourceParser<span class="hljs-class">.<span class="hljs-keyword">class</span></span>;
 }
 </code></pre>
 <ol start="3">
 <li>在一个filter里进行登录和鉴权的逻辑，通过获取注解上的信息来拿到资源和动作，从request里获取到用户信息，然后进行鉴权。</li>
 </ol>
 <pre><code class="language-java"><span class="hljs-comment">// 判断是否需要鉴权：</span>
-<span class="hljs-keyword">if</span> (method.isAnnotationPresent(Secured.class) &amp;&amp; authConfigs.isAuthEnabled()) {
-	Secured secured = method.getAnnotation(Secured.class);
+<span class="hljs-keyword">if</span> (method.isAnnotationPresent(Secured<span class="hljs-class">.<span class="hljs-keyword">class</span>) &amp;&amp; <span class="hljs-title">authConfigs</span>.<span class="hljs-title">isAuthEnabled</span>()) </span>{
+	Secured secured = method.getAnnotation(Secured<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
 	<span class="hljs-comment">// 获取注解里配置的动作类型和资源名：</span>
 	String action = secured.action().toString();
 	String resource = secured.resource();

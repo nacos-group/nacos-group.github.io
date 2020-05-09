@@ -72,8 +72,8 @@
 <ol>
 <li>git clone 项目 并且进入项目根目录</li>
 </ol>
-<pre><code class="language-powershell">git clone https://github.com/nacos-group/nacos-docker.git
-cd nacos-docker
+<pre><code class="language-powershell">git clone https://github.com/nacos<span class="hljs-literal">-group</span>/nacos<span class="hljs-literal">-docker</span>.git
+cd nacos<span class="hljs-literal">-docker</span>
 </code></pre>
 <ol start="2">
 <li>启动</li>
@@ -81,12 +81,12 @@ cd nacos-docker
 <ul>
 <li>单机启动</li>
 </ul>
-<pre><code class="language-powershell">docker-compose -f example/standalone.yaml up
+<pre><code class="language-powershell">docker<span class="hljs-literal">-compose</span> <span class="hljs-operator">-f</span> example/standalone.yaml up
 </code></pre>
 <ul>
 <li>集群启动</li>
 </ul>
-<pre><code class="language-powershell">docker-compose -f example/cluster-hostname.yaml up 
+<pre><code class="language-powershell">docker<span class="hljs-literal">-compose</span> <span class="hljs-operator">-f</span> example/cluster<span class="hljs-literal">-hostname</span>.yaml up 
 </code></pre>
 <p>这时你的Nacos就已经启动起来，你就可以访问<a href="http://localhost:8848/nacos/index.html">http://localhost:8848/nacos/index.html</a>体验Nacos的功能了。</p>
 <h4>配置管理功能体验</h4>

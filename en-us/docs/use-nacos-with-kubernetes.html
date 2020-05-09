@@ -36,22 +36,22 @@ chmod +x quick-startup.sh
 <ul>
 <li><strong>Service registration</strong></li>
 </ul>
-<pre><code class="language-powershell">curl -X PUT <span class="hljs-string">'http://cluster-ip:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&amp;ip=20.18.7.10&amp;port=8080'</span>
+<pre><code class="language-powershell">curl <span class="hljs-literal">-X</span> PUT <span class="hljs-string">'http://cluster-ip:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&amp;ip=20.18.7.10&amp;port=8080'</span>
 </code></pre>
 <ul>
 <li><strong>Service discovery</strong></li>
 </ul>
-<pre><code class="language-powershell">curl -X GET <span class="hljs-string">'http://cluster-ip:8848/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'</span>
+<pre><code class="language-powershell">curl <span class="hljs-literal">-X</span> GET <span class="hljs-string">'http://cluster-ip:8848/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'</span>
 </code></pre>
 <ul>
 <li><strong>Publish config</strong></li>
 </ul>
-<pre><code class="language-powershell">curl -X POST <span class="hljs-string">"http://cluster-ip:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&amp;content=helloWorld"</span>
+<pre><code class="language-powershell">curl <span class="hljs-literal">-X</span> POST <span class="hljs-string">"http://cluster-ip:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&amp;content=helloWorld"</span>
 </code></pre>
 <ul>
 <li><strong>Get config</strong></li>
 </ul>
-<pre><code class="language-powershell">curl -X GET <span class="hljs-string">"http://cluster-ip:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test"</span>
+<pre><code class="language-powershell">curl <span class="hljs-literal">-X</span> GET <span class="hljs-string">"http://cluster-ip:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test"</span>
 </code></pre>
 </li>
 </ul>
@@ -123,11 +123,11 @@ mysql-slave-kf9cb                         1/1     Running   0          110m
 <li>Modify  <strong>deploy/nacos/nacos-pvc-nfs.yaml</strong></li>
 </ul>
 <pre><code class="language-yaml"><span class="hljs-attr">data:</span>
-  <span class="hljs-string">mysql.master.db.name:</span> <span class="hljs-string">"db name"</span>
-  <span class="hljs-string">mysql.master.port:</span> <span class="hljs-string">"master db port"</span>
-  <span class="hljs-string">mysql.slave.port:</span> <span class="hljs-string">"slave db port"</span>
-  <span class="hljs-string">mysql.master.user:</span> <span class="hljs-string">"master db username"</span>
-  <span class="hljs-string">mysql.master.password:</span> <span class="hljs-string">"master db password"</span>
+  <span class="hljs-attr">mysql.master.db.name:</span> <span class="hljs-string">"db name"</span>
+  <span class="hljs-attr">mysql.master.port:</span> <span class="hljs-string">"master db port"</span>
+  <span class="hljs-attr">mysql.slave.port:</span> <span class="hljs-string">"slave db port"</span>
+  <span class="hljs-attr">mysql.master.user:</span> <span class="hljs-string">"master db username"</span>
+  <span class="hljs-attr">mysql.master.password:</span> <span class="hljs-string">"master db password"</span>
 </code></pre>
 <ul>
 <li>Create Nacos</li>

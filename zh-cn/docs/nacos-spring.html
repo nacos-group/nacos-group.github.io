@@ -74,7 +74,7 @@
 
     <span class="hljs-meta">@Override</span>
     <span class="hljs-function"><span class="hljs-keyword">public</span> User <span class="hljs-title">convert</span><span class="hljs-params">(String source)</span> </span>{
-        <span class="hljs-keyword">return</span> JSON.parseObject(source, User.class);
+        <span class="hljs-keyword">return</span> JSON.parseObject(source, User<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
     }
 }
 </code></pre>
@@ -87,8 +87,8 @@
     configService.publishConfig(<span class="hljs-string">"user"</span>, DEFAULT_GROUP, <span class="hljs-string">"{\"id\":1,\"name\":\"mercyblitz\"}"</span>);
 }
 
-<span class="hljs-meta">@NacosConfigListener</span>(dataId = <span class="hljs-string">"user"</span>, converter = UserNacosConfigConverter.class)
-<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onUser</span><span class="hljs-params">(User user)</span> </span>{
+<span class="hljs-meta">@NacosConfigListener</span>(dataId = <span class="hljs-string">"user"</span>, converter = UserNacosConfigConverter<span class="hljs-class">.<span class="hljs-keyword">class</span>)
+<span class="hljs-title">public</span> <span class="hljs-title">void</span> <span class="hljs-title">onUser</span>(<span class="hljs-title">User</span> <span class="hljs-title">user</span>) </span>{
     assertEquals(Long.valueOf(<span class="hljs-number">1L</span>), user.getId()); 
     assertEquals(<span class="hljs-string">"mercyblitz"</span>, user.getName());
 }

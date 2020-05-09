@@ -198,7 +198,7 @@
 
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException </span>{
         AnnotationConfigApplicationContext context = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext();
-        context.register(DemoServiceProviderBootstrap.class);
+        context.register(DemoServiceProviderBootstrap<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
         context.refresh();
         System.out.println(<span class="hljs-string">"DemoService provider is starting..."</span>);
         System.in.read();
@@ -259,7 +259,7 @@
 
     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> IOException </span>{
         AnnotationConfigApplicationContext context = <span class="hljs-keyword">new</span> AnnotationConfigApplicationContext();
-        context.register(DemoServiceConsumerBootstrap.class);
+        context.register(DemoServiceConsumerBootstrap<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
         context.refresh();
         context.close();
     }
@@ -384,7 +384,7 @@ public class DemoServiceProviderXmlBootstrap {
         context.setConfigLocation(<span class="hljs-string">"/META-INF/spring/dubbo-consumer-context.xml"</span>);
         context.refresh();
         System.out.println(<span class="hljs-string">"DemoService consumer (XML) is starting..."</span>);
-        DemoService demoService = context.getBean(<span class="hljs-string">"demoService"</span>, DemoService.class);
+        DemoService demoService = context.getBean(<span class="hljs-string">"demoService"</span>, DemoService<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
         <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) {
             System.out.println(demoService.sayName(<span class="hljs-string">"小马哥（mercyblitz）"</span>));
         }
