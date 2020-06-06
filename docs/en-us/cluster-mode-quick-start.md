@@ -41,19 +41,19 @@ You can get Nacos in two ways.
 unzip nacos-source.zip
 cd nacos/
 mvn -Prelease-nacos clean install -U  
-cd nacos/distribution/target/nacos-server-0.8.0/nacos/bin
+cd nacos/distribution/target/nacos-server-1.3.0/nacos/bin
 ```
 
 ### Download Compressed Packet after Compilation
 
 Download address
 
-[zip package](https://github.com/alibaba/nacos/releases/download/0.8.0/nacos-server-0.8.0.zip)
+[zip package](https://github.com/alibaba/nacos/releases/download/1.3.0/nacos-server-1.3.0.zip)
 
-[tar.gz package](https://github.com/alibaba/nacos/releases/download/0.8.0/nacos-server-0.8.0.tar.gz)
+[tar.gz package](https://github.com/alibaba/nacos/releases/download/1.3.0/nacos-server-1.3.0.tar.gz)
 
 ```bash
-  unzip nacos-server-0.8.0.zip or tar -xvf nacos-server-0.8.0.tar.gz
+  unzip nacos-server-1.3.0.zip or tar -xvf nacos-server-1.3.0.tar.gz
   cd nacos/bin
 ```
 
@@ -68,11 +68,17 @@ In the Nacos decompression directory Nacos / conf directory, there is a configur
 200.8.9.18:8848
 ```
 
-## 4. Configure MySQL database
+## 4. Determine The DataSource
+
+### Using built-in data sources
+
+No configuration is required
+
+### Use an external data source
 
 <span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)">production and use recommendations at least backup mode, or high availability database. </span></span>
 
-### Initialize MySQL database
+#### Initializes the MySQL database
 
 [sql statement source file](https://github.com/alibaba/nacos/blob/master/distribution/conf/nacos-mysql.sql)
 
@@ -84,9 +90,25 @@ In the Nacos decompression directory Nacos / conf directory, there is a configur
 
 ### Linux/Unix/Mac
 
-Start commands (cluster mode in parametric mode):
+#### Standalone mode
 
-`sh startup.sh`
+```bash
+sh startup.sh -m standalone
+```
+
+#### Cluster mode
+
+> Using built-in data sources
+
+```bash
+sh startup.sh -p embedded
+```
+
+> Use an external data source
+
+```bash
+sh startup.sh
+```
 
 ## 6. Service Registration & Discovery and Configuration Management
 
@@ -110,4 +132,6 @@ Start commands (cluster mode in parametric mode):
 
 ### Linux/Unix/Mac
 
-`sh shutdown.sh`
+```bash
+sh shutdown.sh
+```
