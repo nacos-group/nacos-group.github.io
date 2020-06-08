@@ -41,19 +41,19 @@ http://nacos.com:port/openAPI  域名 + VIP模式，可读性好，而且换ip�
 unzip nacos-source.zip
 cd nacos/
 mvn -Prelease-nacos clean install -U  
-cd nacos/distribution/target/nacos-server-0.8.0/nacos/bin
+cd nacos/distribution/target/nacos-server-1.3.0/nacos/bin
 ```
 
 ### 下载编译后压缩包方式
 
 下载地址
 
-[zip包](https://github.com/alibaba/nacos/releases/download/0.8.0/nacos-server-0.8.0.zip)
+[zip包](https://github.com/alibaba/nacos/releases/download/1.3.0/nacos-server-1.3.0.zip)
 
-[tar.gz包](https://github.com/alibaba/nacos/releases/download/0.8.0/nacos-server-0.8.0.tar.gz)
+[tar.gz包](https://github.com/alibaba/nacos/releases/download/1.3.0/nacos-server-1.3.0.tar.gz)
 
 ```bash
-  unzip nacos-server-0.8.0.zip 或者 tar -xvf nacos-server-0.8.0.tar.gz
+  unzip nacos-server-1.3.0.zip 或者 tar -xvf nacos-server-1.3.0.tar.gz
   cd nacos/bin
 ```
 
@@ -67,15 +67,21 @@ cd nacos/distribution/target/nacos-server-0.8.0/nacos/bin
 200.8.9.18:8848
 ```
 
-## 4. 配置 MySQL 数据库
+## 4. 确定数据源
+
+### 使用内置数据源
+
+无需进行任何配置
+
+### 使用外置数据源
 
 <span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)">生产使用建议至少主备模式，或者采用高可用数据库。</span></span>
 
-### 初始化 MySQL 数据库
+#### 初始化 MySQL 数据库
 
 [sql语句源文件](https://github.com/alibaba/nacos/blob/master/distribution/conf/nacos-mysql.sql)
 
-### application.properties 配置
+#### application.properties 配置
 
 [application.properties配置文件](https://github.com/alibaba/nacos/blob/master/distribution/conf/application.properties)
 
@@ -83,9 +89,25 @@ cd nacos/distribution/target/nacos-server-0.8.0/nacos/bin
 
 ### Linux/Unix/Mac
 
-启动命令(在没有参数模式，是集群模式):
+#### Stand-alone mode
 
-`sh startup.sh`
+```bash
+sh startup.sh -m standalone
+```
+
+#### 集群模式
+
+> 使用内置数据源
+
+```bash
+sh startup.sh -p embedded
+```
+
+> 使用外置数据源
+
+```bash
+sh startup.sh
+```
 
 ## 6. 服务注册&发现和配置管理
  
@@ -109,4 +131,6 @@ cd nacos/distribution/target/nacos-server-0.8.0/nacos/bin
 
 ### Linux/Unix/Mac
 
-`sh shutdown.sh`
+```bash
+sh shutdown.sh
+```
