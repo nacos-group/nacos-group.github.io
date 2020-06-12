@@ -38,7 +38,7 @@ export default {
     },
     contacts: {
       title: 'Talk To Us',
-      desc: 'Feel free to contact us via the following channel.',
+      desc: 'Feel free to contact us  through the DingTalk group (1 group is full, 2 group number: 30438813), or via the following channel.',
       list: [
           {
               img: '/img/mailinglist.png',
@@ -183,7 +183,7 @@ export default {
     },
       contacts: {
           title: '联系我们',
-          desc: '有问题需要反馈？请通过一下方式联系我们。',
+          desc: '有问题需要反馈？可以优先通过钉钉群(1群已满，2群群号:30438813)联系我们，或者通过以下方式参与我们一起互动。',
           list: [
               {
                   img: '/img/mailinglist.png',
