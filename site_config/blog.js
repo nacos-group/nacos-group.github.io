@@ -3,6 +3,13 @@ export default {
     barText: 'Blog',
     postsTitle: 'All posts',
     list: [
+        {
+            title: 'Nacos 1.3.0 new kernel construction process',
+            author: '@春少',
+            dateStr: 'Fri 12th, 2020',
+            desc: 'This 1.3.0 is implanted to a great extent, involving the modification of two large modules and the addition of a core module',
+            link: '/en-us/blog/nacos-1.3.0-design.html',
+        },
         {   title: 'Nacos 1.2.0权限控制介绍和使用',
             author: '@敦谷',
             dateStr: 'Mar 10th, 2020',
@@ -181,6 +188,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: 'Nacos 1.3.0 全新内核构建过程',
+            author: '@春少',
+            dateStr: 'Fri 12th, 2020',
+            desc: '本次1.3.0的改动程度很大，涉及两大模块的修改以及新增一个核心模块',
+            link: '/zh-cn/blog/nacos-1.3.0-design.html',
+        },
         {   title: 'Nacos 1.2.0权限控制介绍和使用',
             author: '@敦谷',
             dateStr: 'Mar 10th, 2020',
