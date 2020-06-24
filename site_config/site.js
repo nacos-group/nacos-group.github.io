@@ -34,7 +34,7 @@ export default {
         {
           key: 'Nacos in Cloud',
           text: 'NACOS IN CLOUD',
-          link: 'https://www.aliyun.com/product/mse?spm=nacos-website.topbar.0.0.0',
+          link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
           imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
         },
         {

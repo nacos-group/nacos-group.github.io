@@ -73,6 +73,15 @@
       }
     },
     {
+      "filename": "contributing-flow.md",
+      "link": "/en-us/docs/contributing-flow.html",
+      "meta": {
+        "title": "Contributing Flow",
+        "keywords": "Contributing,Source Code",
+        "description": "This contribution flow is applicable to all Nacos community content, including but not limited to Nacos, Nacos wiki/doc, Nacos SDK."
+      }
+    },
+    {
       "filename": "contributing.md",
       "link": "/en-us/docs/contributing.html",
       "meta": {
@@ -406,6 +415,15 @@
         "title": "为 Nacos 做贡献",
         "keywords": "Nacos,贡献",
         "description": "欢迎来到Nacos！本文档是关于如何为Nacos做出贡献的指南。"
+      }
+    },
+    {
+      "filename": "contributing-flow.md",
+      "link": "/zh-cn/docs/contributing-flow.html",
+      "meta": {
+        "title": "贡献流程",
+        "keywords": "贡献,源码",
+        "description": "此贡献流程适用于所有的Nacos社区内容，包括但不限于`Nacos`、`Nacos wiki/doc`、`Nacos SDK`。"
       }
     },
     {

@@ -25,12 +25,24 @@ description: 我们非常欢迎您的贡献和加入，无论是微不足道的�
 * [users-nacos@googlegroups.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1): 在Github中[提问题](https://github.com/alibaba/nacos/issues)、更新和[提交需求](https://github.com/alibaba/nacos/pulls)将被发送到这个邮件列表。
 * [nacos\_dev@linux.alibaba.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1).
 
-## 贡献流程
+## 贡献代码
+
+### 贡献代码须知
+
+请贡献代码时候，请先确认和检查以下内容：
+
+#### 阅读Nacos[代码规约](https://github.com/alibaba/nacos/blob/develop/style/codeStyle.md) ，并根据指引设置IDE的codeStyle及校验插件。
+
+#### 如果变化不大，请编写一些覆盖新功能的单元测试。
+
+#### 如果你正在引入一个全新的特性或API，那么首先启动wiki并在基本设计上达成共识，再开始投入。
+
+### 贡献流程
 
 这是贡献者的大致工作流程：
 
 * fork当前存储github库。
-* 创建一个分支，作为贡献的基础，这通常是master分支。
+* 创建一个分支，作为贡献的基础，这通常是develop分支。
 * 做出一些变更提交。
 * 确保提交消息的格式正确（见下文）。
 * 推送变更到你的fork仓库中。
@@ -46,17 +58,25 @@ git push origin your_awesome_patch
 ```
 * 提交pull request 到 alibaba/nacos，等待回复。如果回复的慢，请无情的催促。
 
-## 贡献代码
+* 详细的贡献流程可参考[贡献流程](contributing-flow.html)
 
-请提交代码时候，检查以下内容：
+## 贡献文档
 
-#### 如果变化不大，请编写一些覆盖新功能的单元测试。
+### 贡献文档须知
 
-#### 如果你正在引入一个全新的特性或API，那么首先启动wiki并在基本设计上达成共识，再开始投入。
+请贡献文档时候，请先确认和检查以下内容：
 
-#### 我们的工作是及时跟进补丁。如果我们没有及时跟进，请无情的催促我们。
+#### 已确认过文档确实有误或存在缺失。
 
-## 成为贡献者
+#### 熟悉[Markdown](https://www.markdownguide.org/getting-started) 。
+
+#### 熟悉[docsite](https://github.com/txd-team/docsite) ，至少能够根据[官方文档README.md](https://github.com/nacos-group/nacos-group.github.io) 的引导完成本地调试
+
+### 贡献流程
+
+可参考[贡献流程](contributing-flow.html)
+
+## 成为提交者
 
 我们会积极纳入新的贡献者。我们更关注的是一系列的持续贡献，良好的品味和对项目维护的持续兴趣。如果你想成为一个提交者（Committer），请让一个现有的提交者(Committer)知道，他们会帮助你通过贡献加入我们。
 
@@ -74,6 +94,6 @@ git push origin your_awesome_patch
 
 ##### 可测性，关于测试过程的单元测试覆盖率（80%）
 
-##### 可维护性，可满足我们的[PMD spec](style/codeStyle.xml)，以及至少3个月的更新频率
+##### 可维护性，可满足我们的[代码规约](https://github.com/alibaba/nacos/blob/develop/style/codeStyle.md) ，以及至少3个月的更新频率
 
 ##### 可部署性，我们可以鼓励您部署到[maven repository](http://search.maven.org/)
