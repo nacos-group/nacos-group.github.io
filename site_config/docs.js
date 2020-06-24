@@ -139,6 +139,10 @@ export default {
                 link: '/en-us/docs/contributing.html',
               },
               {
+                title: 'Contributing Flow',
+                link: '/en-us/docs/contributing-flow.html',
+              },
+              {
                 title: 'Pull Request Template',
                 link: '/en-us/docs/pull-request.html',
               },
@@ -305,6 +309,10 @@ export default {
               {
                 title: '贡献源码',
                 link: '/zh-cn/docs/contributing.html',
+              },
+              {
+                title: '贡献流程',
+                link: '/zh-cn/docs/contributing-flow.html',
               },
               {
                 title: 'pull request模板',

@@ -120,6 +120,15 @@
       "meta": {}
     },
     {
+      "filename": "nacos-1.3.0-design.md",
+      "link": "/en-us/blog/nacos-1.3.0-design.html",
+      "meta": {
+        "title": "Nacos 1.3.0 new kernel construction process",
+        "keywords": "nacos1.3.0,kernel",
+        "description": "Nacos 1.3.0 new kernel construction process"
+      }
+    },
+    {
       "filename": "nacos-confd.md",
       "link": "/en-us/blog/nacos-confd.html",
       "meta": {}
@@ -359,6 +368,15 @@
       "filename": "nacos 1.2.0 guide.md",
       "link": "/zh-cn/blog/nacos 1.2.0 guide.html",
       "meta": {}
+    },
+    {
+      "filename": "nacos-1.3.0-design.md",
+      "link": "/zh-cn/blog/nacos-1.3.0-design.html",
+      "meta": {
+        "title": "Nacos 1.3.0 全新内核构建过程",
+        "keywords": "nacos1.3.0,内核",
+        "description": "Nacos 1.3.0 全新内核构建过程"
+      }
     },
     {
       "filename": "nacos-confd.md",
