@@ -28,7 +28,19 @@ Mailing list is recommended for discussing almost anything related to Nacos. Ple
 * [users-nacos@googlegroups.com](mailto:users-nacos%2Bsubscribe@googlegroups.com): All Github?[issue](https://github.com/alibaba/nacos/issues)?updates and?[pull request](https://github.com/alibaba/nacos/pulls)?updates will be sent to this mailing list.
 * [nacos_dev@linux.alibaba.com](mailto:nacos_dev@linux.alibaba.com).
 
-## Contribution flow
+## Contributing Code
+
+### Notice
+
+To submit a change for inclusion, please do the following:
+
+#### Read Nacos [Code of Conduct](https://github.com/alibaba/nacos/blob/develop/style/codeStyle.md), and make sure your IDE has set code style and install plugin.
+
+#### If the change is non-trivial, please include unit tests that cover the new functionality.
+
+#### If you are introducing a completely new feature or API, it is a good idea to start a wiki and get consensus on the basic design first.
+
+### Contribution flow
 
 This is a rough outline of what a contributor's workflow looks like:
 
@@ -49,15 +61,21 @@ git push origin your_awesome_patch
 ```
 * Submit a pull request to alibaba/nacos and wait for reply.
 
+* Detail contribution flow see [Contribution Flow](contributing-flow.html)
+
 Thanks for contributing!
 
-## Contributing Code
+## Contributing Document
 
-To submit a change for inclusion, please do the following:
+### Notice
 
-#### If the change is non-trivial, please include unit tests that cover the new functionality.
-#### If you are introducing a completely new feature or API, it is a good idea to start a wiki and get consensus on the basic design first.
-#### It is our job to follow up on patches in a timely fashion. Nag us if we aren't doing our job (sometimes we drop things).
+When contributing documents, please confirm and check the following:
+
+#### Has been confirmed that the document is indeed wrong or missing.
+
+#### Familiar with [Markdown](https://www.markdownguide.org/getting-started)
+
+#### Familiar with [docsite](https://github.com/txd-team/docsite), at least be able to complete local debugging according to the [document README.md](https://github.com/nacos-group/nacos-group.github.io).
 
 ## Becoming a Committer
 
@@ -77,6 +95,6 @@ If you want to contribute to the above listing points, you must abide by the pre
 
 ##### Testability - Ensure over 80% unit test coverage for main processes.
 
-##### Maintainability - Comply with our [PMD spec](style/codeStyle.xml), with an update frequency at least once every 3 months.
+##### Maintainability - Comply with our [Code of Conduct](https://github.com/alibaba/nacos/blob/develop/style/codeStyle.md), with an update frequency at least once every 3 months.
 
 ##### Deployability - We encourage you to deploy into [maven repository](http://search.maven.org/).
