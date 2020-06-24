@@ -98,7 +98,7 @@ Nacos欢迎任何角色的新参与者，包括用户，贡献者，提交者和
     
  - 可测试性 - 单元测试用例应涵盖80％的新代码。
     
- - 可维护性 - 遵守我们的[PMD规范](https://github.com/alibaba/nacos/blob/master/style/codeStyle.md)，至少应保持3个月的频率更新。
+ - 可维护性 - 遵守我们的[代码规约](https://github.com/alibaba/nacos/blob/master/style/codeStyle.md) ，至少应保持3个月的频率更新。
     
 
 ### 现在尝试成为一个Committer怎么样？
