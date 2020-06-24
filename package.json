@@ -20,7 +20,7 @@
     "babel-preset-stage-0": "6.22.0",
     "babel-register": "^6.26.0",
     "css-loader": "0.6.12",
-    "eslint": "^3.6.0",
+    "eslint": "^4.18.2",
     "eslint-config-ali": "^1.0.0",
     "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-react": "^6.10.3",
