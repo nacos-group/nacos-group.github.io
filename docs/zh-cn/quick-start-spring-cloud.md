@@ -48,7 +48,7 @@ spring.application.name=example
 在 Nacos Spring Cloud 中，`dataId` 的完整格式如下：
 
 ```plain
-${prefix}-${spring.profile.active}.${file-extension}
+${prefix}-${spring.profiles.active}.${file-extension}
 ```
 
 * `prefix` 默认为 `spring.application.name` 的值，也可以通过配置项 `spring.cloud.nacos.config.prefix`来配置。
