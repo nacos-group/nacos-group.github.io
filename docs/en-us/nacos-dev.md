@@ -70,5 +70,5 @@ This page shows Nacos developers and continues to expand. The list is not priori
 
 | Image                                                                                                                | Github ID                                 | Name               | Organization                 | Roles      |Mail                       |
 |----------------------------------------------------------------------------------------------------------------------|-------------------------------------------|--------------------|------------------------------|------------|---------------------------|
-|![caojiele](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561301766676-89a49cd0-ad67-4b3b-a6f2-895f93804b69.jpeg)   | [caojiele](https://github.com/caojiele)   | Jiele Cao          | Sinocare                     |Contributor |caojiele1225@126.com       |
+|![caojiele](https://cdn.nlark.com/yuque/0/2020/jpeg/338441/1594580949642-a469e51b-40f0-4e3a-88e7-92a6bf8ba479.jpeg)   | [caojiele](https://github.com/caojiele)   | Jiele Cao          | Sinocare                     |Contributor |caojiele1225@126.com       |
 |![wfnuser](https://cdn.nlark.com/yuque/0/2020/png/333810/1577956165938-7e456a26-2fef-4d80-b809-5e50558612a4.png)      | [wfnuser](https://github.com/wfnuser)     | Qinghao Huang      | Alibaba                      | Contributor| wfnuser@hotmail.com       |
