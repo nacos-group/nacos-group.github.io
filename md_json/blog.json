@@ -95,6 +95,15 @@
       "meta": {}
     },
     {
+      "filename": "feeling-of-ASoC-2019.md",
+      "link": "/en-us/blog/feeling-of-ASoC-2019.html",
+      "meta": {
+        "title": "参与开源，Offer拿到手软 -- 来自一名2019阿里巴巴编程之夏同学的亲述",
+        "keywords": "开源,ASoC",
+        "description": "来自一名2019阿里巴巴编程之夏同学的亲述"
+      }
+    },
+    {
       "filename": "huya-nacos.md",
       "link": "/en-us/blog/huya-nacos.html",
       "meta": {}
@@ -334,6 +343,15 @@
         "title": "Eureka 2.0 开源工作宣告停止？别担心，ANS 即将 C位强势出道！",
         "keywords": "Eureka 2.0",
         "description": "Eureka 2.0 开源工作宣告停止？别担心，ANS 即将 C位强势出道！"
+      }
+    },
+    {
+      "filename": "feeling-of-ASoC-2019.md",
+      "link": "/zh-cn/blog/feeling-of-ASoC-2019.html",
+      "meta": {
+        "title": "参与开源，Offer拿到手软 -- 来自一名2019阿里巴巴编程之夏同学的亲述",
+        "keywords": "开源,ASoC",
+        "description": "来自一名2019阿里巴巴编程之夏同学的亲述"
       }
     },
     {
