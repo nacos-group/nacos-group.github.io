@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: 'More participation, More offers',
+            author: '@春少',
+            dateStr: 'July 14th, 2020',
+            desc: 'A feeling description from a classmate of ASoC-2019',
+            link: '/en-us/blog/feeling-of-ASoC-2019.html',
+        },
+        {
             title: 'Nacos 1.3.0 new kernel construction process',
             author: '@春少',
             dateStr: 'Fri 12th, 2020',
@@ -188,6 +195,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: '参与开源，Offer拿到手软',
+            author: '@春少',
+            dateStr: 'July 14th, 2020',
+            desc: '来自一名2019阿里巴巴编程之夏同学的亲述',
+            link: '/zh-cn/blog/feeling-of-ASoC-2019.html',
+        },
         {
             title: 'Nacos 1.3.0 全新内核构建过程',
             author: '@春少',
