@@ -1222,13 +1222,20 @@ h1, h2, h3, h4, h5, h6 {
       color: #1e6bb8;
       text-decoration: none; }
   .home-page .users-section .users {
-    display: inline-block;
-    text-align: center; }
-    .home-page .users-section .users img {
-      margin-right: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; }
+    .home-page .users-section .users .user-item {
+      display: flex;
       width: 140px;
       height: 80px;
-      margin-bottom: 40px; }
+      margin: 10px;
+      padding: 4px;
+      border: 1px solid #eee;
+      justify-content: center;
+      align-items: center; }
+      .home-page .users-section .users .user-item img {
+        width: 100%; }
 
 @media screen and (max-width: 640px) {
   .home-page .feature-section-body, .home-page .users-section {
