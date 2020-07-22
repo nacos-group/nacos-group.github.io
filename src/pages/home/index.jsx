@@ -126,7 +126,9 @@ class Home extends Language {
                     <div className="users">
                         {
                             dataSource.users.list.map((user, i) => (
-                                <img src={`${window.rootPath}${user}`} key={i} />
+                              <div className="user-item" key={i}>
+                                  <img src={user} />
+                              </div>
                             ))
                         }
                     </div>
