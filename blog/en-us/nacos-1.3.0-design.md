@@ -22,12 +22,16 @@ This 1.3.0 is implanted to a great extent, involving the modification of two lar
    1. Unified abstraction for AP protocol and CP protocol
 
 <br />
-<a name="rnkDY"></a>
-## 系统参数变化
-<a name="1Gmg9"></a>
-### 新增
 
-| **core模块** | nacos.watch-file.max-dirs | JVM parameter | Maximum number of monitored directories |
+<a name="rnkDY"></a>
+
+## System parameters changes
+
+<a name="1Gmg9"></a>
+
+### Updates
+
+| **core** | nacos.watch-file.max-dirs | JVM parameter | Maximum number of monitored directories |
 | :----: | ---- | ---- | ---- |
 |  | nacos.core.notify.ring-buffer-size | JVM parameter | Quick notification of the maximum length of the queue |
 |  | nacos.core.notify.share-buffer-size | JVM parameter | The maximum length of the slow notification queue |
@@ -35,10 +39,15 @@ This 1.3.0 is implanted to a great extent, involving the modification of two lar
 |  | nacos.core.address-server.retry | JVM parameter、application.properties | Address server addressing mode, first start request retry times |
 
 <br />
+
 <a name="kxo8O"></a>
+
 ## The future overall logical architecture of Nacos and its components
+
 ![1561217775318-6e408805-18bb-4242-b4e9-83c5b929b469.png](https://cdn.nlark.com/yuque/0/2020/png/333972/1587129046320-5a286f38-8db4-4e76-9b42-8bd859f51a60.png#align=left&display=inline&height=1184&margin=%5Bobject%20Object%5D&name=1561217775318-6e408805-18bb-4242-b4e9-83c5b929b469.png&originHeight=1184&originWidth=1608&size=279074&status=done&style=none&width=1608)
+
 <a name="Hyc6u"></a>
+
 ## Nacos cluster member node addressing mode
 
 <br />Before 1.3.0, nacos' naming module and config module had their own member list management tasks. In order to unify the replacement mode of nacos assigning the next member list, the implementation of merge management is replaced from the named module and the config module, unified to the addressing module of the core module, and the command line parameters are added at the same time -Dnacos.member.list **To set the list listed by nacos, this parameter can be called an alternative to the cluster.conf file. The current nacos addressing mode categories are as follows
@@ -169,9 +178,13 @@ From the overall architecture of nacos in the future, it can be seen that the co
 
 According to the consensus protocol and the above functional requirements, this time an abstract consensus protocol layer and related interfaces were made
 <a name="3w8xM"></a>
+
 ### Consensus agreement abstraction
+
 <a name="p7zRo"></a>
+
 #### ConsistencyProtocol
+
 The so-called consistency is the characteristic of whether multiple copies can maintain consistency, and the essence of the copy is data, and the operation of the data is either acquisition or modification. At the same time, the consensus protocol is actually for distributed situations, and this necessarily involves multiple nodes. Therefore, there is a need for a corresponding interface to be able to adjust the coordination protocol of the collaborative work node. What if we want to observe the operation of the consistency agreement? For example, the Raft protocol, we want to know who is the leader in the current cluster, the term of office, and who are the member nodes in the current cluster? Therefore, it is also necessary to provide a consistent protocol metadata acquisition. <br />In summary, the general design of ConsistencyProtcol can come out
 ```java
 public interface ConsistencyProtocol<T extends Config, P extends LogProcessor> extends CommandOperations {
