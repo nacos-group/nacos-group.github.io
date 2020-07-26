@@ -22,9 +22,13 @@ description: Nacos 1.3.0 全新内核构建过程
    1. 对于AP协议以及CP协议的统一抽象
 
 <br />
+
 <a name="rnkDY"></a>
+
 ## 系统参数变化
+
 <a name="1Gmg9"></a>
+
 ### 新增
 
 | **core模块** | nacos.watch-file.max-dirs | JVM参数 | 最大可监听目录数量 |
@@ -35,10 +39,15 @@ description: Nacos 1.3.0 全新内核构建过程
 |  | nacos.core.address-server.retry | JVM参数、application.properties配置 | 地址服务器寻址模式，首次启动请求重试次数 |
 
 <br />
+
 <a name="kxo8O"></a>
+
 ## Nacos的未来整体逻辑架构及其组件
+
 ![1561217775318-6e408805-18bb-4242-b4e9-83c5b929b469.png](https://cdn.nlark.com/yuque/0/2020/png/333972/1587129046320-5a286f38-8db4-4e76-9b42-8bd859f51a60.png#align=left&display=inline&height=1184&margin=%5Bobject%20Object%5D&name=1561217775318-6e408805-18bb-4242-b4e9-83c5b929b469.png&originHeight=1184&originWidth=1608&size=279074&status=done&style=none&width=1608)
+
 <a name="Hyc6u"></a>
+
 ## Nacos集群成员节点寻址模式
 
 <br />在1.3.0之前，nacos的naming模块以及config模块存在各自的集群成员节点列表管理任务。为了统一nacos集群下成员列表的寻址模式，将集群节点管理的实现从naming模块以及config模块剥离出来，统一下沉到了core模块的寻址模，同时新增命令行参数 **-Dnacos.member.list **进行设置nacos集群节点列表，该参数可以看作是cluster.conf文件的一个替代。目前nacos的寻址模式类别如下
