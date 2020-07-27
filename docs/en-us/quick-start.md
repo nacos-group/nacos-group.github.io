@@ -32,7 +32,7 @@ mvn -Prelease-nacos -Dmaven.test.skip=true clean install -U
 ls -al distribution/target/
 
 // change the $version to your actual path
-cd distribution/target/nacos-server-$version/nacos/bi
+cd distribution/target/nacos-server-$version/nacos/bin
 ```
   
 ### 2)Download run package 
