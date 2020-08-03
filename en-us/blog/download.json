@@ -1,7 +1,10 @@
 {
   "filename": "download.md",
   "__html": "<h2>download page</h2>\n",
-  "title": "download page",
-  "keywords": "nacos, download",
-  "description": "download page"
+  "link": "/en-us/blog/download.html",
+  "meta": {
+    "title": "download page",
+    "keywords": "nacos, download",
+    "description": "download page"
+  }
 }
