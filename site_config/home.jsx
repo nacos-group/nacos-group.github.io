@@ -17,10 +17,10 @@ export default {
                 },
             ],
             versionNote: {
-                text: 'Release Note of V1.3.1',
-                link: 'https://github.com/alibaba/nacos/releases/tag/1.3.1',
+                text: 'Release Note of V1.3.2',
+                link: 'https://github.com/alibaba/nacos/releases/tag/1.3.2',
             },
-            releaseDate: 'Released on July 10, 2020',
+            releaseDate: 'Released on August 4, 2020',
         },
         functions: {
             title: 'Features',
@@ -128,10 +128,10 @@ export default {
                 },
             ],
             versionNote: {
-                text: 'V1.3.1 版本说明',
-                link: 'https://github.com/alibaba/nacos/releases/tag/1.3.1',
+                text: 'V1.3.2 版本说明',
+                link: 'https://github.com/alibaba/nacos/releases/tag/1.3.2',
             },
-            releaseDate: '2020年07月10日发布',
+            releaseDate: '2020年08月04日发布',
         },
         functions: {
             title: '功能',
