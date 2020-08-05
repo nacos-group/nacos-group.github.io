@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: 'Nacos 2nd anniversary, Nacos 1.3.2 + Go SDK 1.0.0 released',
+            author: '@席翁',
+            dateStr: 'Aug 5th, 2020',
+            desc: 'Nacos 2nd anniversary, Nacos 1.3.2 + Go SDK 1.0.0 released',
+            link: '/en-us/blog/nacos-2nd-anniversary.html',
+        },
+        {
             title: 'More participation, More offers',
             author: '@春少',
             dateStr: 'July 14th, 2020',
@@ -195,6 +202,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: 'Nacos 两周年献礼，Nacos 1.3.2 + Go SDK 1.0.0发布',
+            author: '@席翁',
+            dateStr: 'Aug 5th, 2020',
+            desc: 'Nacos 两周年献礼，Nacos 1.3.2 + Go SDK 1.0.0发布',
+            link: '/zh-cn/blog/nacos-2nd-anniversary.html',
+        },
         {
             title: '参与开源，Offer拿到手软',
             author: '@春少',
