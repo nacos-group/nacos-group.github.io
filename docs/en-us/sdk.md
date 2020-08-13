@@ -96,18 +96,6 @@ public String getConfig(String dataId, String group, long timeoutMs) throws Naco
 | :--- | :--- |
 | string | configuration value |
 
-#### Added login authentication configuration
-
-By default, no login is required to start following the official document configuration, which can expose the configuration center directly to the outside world.
-```java
-### If turn on auth system:
-nacos.core.auth.enabled=false
-```
-Therefore, to enable authentication, use nacos by configuring the user name and password
-```java
-### If turn on auth system:
-nacos.core.auth.enabled=true
-```
 
 #### Request example
 
@@ -119,11 +107,6 @@ try {
 	String group = "{group}";
 	Properties properties = new Properties();
 	properties.put("serverAddr", serverAddr);
-
-        // if need username and password to login
-        properties.put("username","nacos");
-        properties.put("password","nacos");
-
 	ConfigService configService = NacosFactory.createConfigService(properties);
     // Actively get the configuration.
 	String content = configService.getConfig(dataId, group, 5000);
@@ -223,11 +206,6 @@ String dataId = "{dataId}";
 String group = "{group}";
 Properties properties = new Properties();
 properties.put("serverAddr", serverAddr);
-
-// if need username and password to login
-properties.put("username","nacos");
-properties.put("password","nacos");
-
 ConfigService configService = NacosFactory.createConfigService(properties);
 String content = configService.getConfig(dataId, group, 5000);
 System.out.println(content);
@@ -328,11 +306,6 @@ String dataId = "{dataId}";
 String group = "{group}";
 Properties properties = new Properties();
 properties.put("serverAddr", serverAddr);
-
-// if need username and password to login
-properties.put("username","nacos");
-properties.put("password","nacos");
-
 ConfigService configService = NacosFactory.createConfigService(properties);
 configService.removeListener(dataId, group, yourListener);
 ```
@@ -374,11 +347,6 @@ try {
 	String group = "{group}";
 	Properties properties = new Properties();
 	properties.put("serverAddr", serverAddr);
-
-        // if need username and password to login
-        properties.put("username","nacos");
-        properties.put("password","nacos");
-
     ConfigService configService = NacosFactory.createConfigService(properties);
 	boolean isPublishOk = configService.publishConfig(dataId, group, "content");
 	System.out.println(isPublishOk);
@@ -432,10 +400,6 @@ try {
 	String group = "{group}";
 	Properties properties = new Properties();
 	properties.put("serverAddr", serverAddr);
-
-        // if need username and password to login
-        properties.put("username","nacos");
-        properties.put("password","nacos");
 
 	ConfigService configService = NacosFactory.createConfigService(properties);
 	boolean isRemoveOk = configService.removeConfig(dataId, group);
@@ -668,4 +632,35 @@ void
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 naming.unsubscribe("nacos.test.3", event -> {});
+```
+
+### Use Authentication Configuration
+#### Description
+By default, no login is required to start following the official document configuration, which can expose the configuration center directly to the outside world.
+```java
+### If turn on auth system:
+nacos.core.auth.enabled=false
+```
+Therefore, to enable authentication, use nacos by configuring the user name and password.
+```java
+### If turn on auth system:
+nacos.core.auth.enabled=true
+```
+#### Example Code
+```java
+try {
+    // Initialize the configuration service, and the console automatically obtains the following parameters through the sample code.
+	String serverAddr = "{serverAddr}";
+	Properties properties = new Properties();
+	properties.put("serverAddr", serverAddr);
+
+    // if need username and password to login
+        properties.put("username","nacos");
+        properties.put("password","nacos");
+
+	ConfigService configService = NacosFactory.createConfigService(properties);
+} catch (NacosException e) {
+    // TODO Auto-generated catch block
+    e.printStackTrace();
+}
 ```
