@@ -36,7 +36,7 @@
 <h3>为什么要拆分部署</h3>
 <p>一般公司随着业务规模的不断膨胀，我们建议业务对注册中心和配置中心进行拆分部署，在Nacos 0.9.0版本以后，支持注册中心模块和配置中心模块的拆分部署，在启动命令进行加入参数，来指定启动指定Nacos 功能模块，默认全部功能启用，目前支持指定配置中心模块和注册中心模块。</p>
 <h3>使用方法</h3>
-<p>启动Nacos server时候，增加<code>-f</code>参数，意思是function mode，和对应模块标示来进行启动，如果不穿，或者传入有误，都将启动全部功能。
+<p>启动Nacos server时候，增加<code>-f</code>参数，意思是function mode，和对应模块标示来进行启动，如果不传，或者传入有误，都将启动全部功能。
 配置中心参数对应<code>config</code>，注册中心参数对应<code>naming</code>。</p>
 <h4>启动命令</h4>
 <pre><code>sh startup.sh -m standalone -f naming
