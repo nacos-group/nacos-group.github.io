@@ -66,6 +66,15 @@
       "meta": {}
     },
     {
+      "filename": "csharp-0.5.0.md",
+      "link": "/en-us/blog/csharp-0.5.0.html",
+      "meta": {
+        "title": "v0.5.0 of Nacos-sdk-csharp was released! Capabilities aligned with Java SDK！",
+        "keywords": "csharp, sdk",
+        "description": "v0.5.0 of Nacos-sdk-csharp was released! Capabilities aligned with Java SDK!"
+      }
+    },
+    {
       "filename": "discovery-console.md",
       "link": "/en-us/blog/discovery-console.html",
       "meta": {}
@@ -307,6 +316,15 @@
         "title": "Consul与kubernetes整合公告[翻译]",
         "keywords": "Consul,kubernetes",
         "description": "Consul与kubernetes整合公告[翻译]"
+      }
+    },
+    {
+      "filename": "csharp-0.5.0.md",
+      "link": "/zh-cn/blog/csharp-0.5.0.html",
+      "meta": {
+        "title": "Nacos-sdk-csharp 0.5.0正式发布，功能与Java版本对齐！",
+        "keywords": "csharp, sdk",
+        "description": "Nacos-sdk-csharp 0.5.0正式发布，功能与Java版本对齐！"
       }
     },
     {
