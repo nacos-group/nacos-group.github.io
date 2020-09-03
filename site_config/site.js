@@ -37,18 +37,12 @@ export default {
         link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
-      {
-        key: 'We are hiring',
-        text: 'HIRING',
-        link: 'https://job.alibaba.com/zhaopin/position_detail.htm?trace=qrcode_share&positionCode=GP633620',
-        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-      },
-      {
-        key: 'microservices2020',
-        text: 'MICROSERVICES SUMMIT',
-        link: 'https://developer.aliyun.com/topic/microservices2020#/',
-        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-      },
+      // {
+      //   key: 'We are hiring',
+      //   text: 'HIRING',
+      //   link: 'https://job.alibaba.com/zhaopin/position_detail.htm?trace=qrcode_share&positionCode=GP633620',
+      //   imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      // },
       {
         text: 'DEMO-CONSOLE',
           link: 'http://console.nacos.io/nacos/index.html',
@@ -127,18 +121,12 @@ export default {
             link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
             imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
         },
-      {
-          key: 'We are hiring',
-          text: '招贤纳士',
-          link: 'https://job.alibaba.com/zhaopin/position_detail.htm?trace=qrcode_share&positionCode=GP633620',
-          imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-      },
-      {
-        key: 'microservices2020',
-        text: '云原生微服务大会',
-        link: 'https://developer.aliyun.com/topic/microservices2020#/',
-        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-      },
+      // {
+      //     key: 'We are hiring',
+      //     text: '招贤纳士',
+      //     link: 'https://job.alibaba.com/zhaopin/position_detail.htm?trace=qrcode_share&positionCode=GP633620',
+      //     imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      // },
       {
         text: '控制台样例',
           link: 'http://console.nacos.io/nacos/index.html',
