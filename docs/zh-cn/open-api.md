@@ -16,20 +16,22 @@ description: Open API 指南
   - [注册实例](#2.1)
   - [注销实例](#2.2)
   - [修改实例](#2.3)
-  - [查询实例列表](#2.4)
-  - [查询实例详情](#2.5)
-  - [发送实例心跳](#2.6)
-  - [创建服务](#2.7)
-  - [删除服务](#2.8)
-  - [修改服务](#2.9)
-  - [查询服务](#2.10)
-  - [查询服务列表](#2.11)
-  - [查询系统开关](#2.12)
-  - [修改系统开关](#2.13)
-  - [查看系统当前数据指标](#2.14)
-  - [查看当前集群Server列表](#2.15)
-  - [查看当前集群leader](#2.16)
-  - [更新实例的健康状态](#2.17)
+  - [批量更新实例元数据](#2.4)
+  - [批量删除实例元数据](#2.5)
+  - [查询实例列表](#2.6)
+  - [查询实例详情](#2.7)
+  - [发送实例心跳](#2.8)
+  - [创建服务](#2.9)
+  - [删除服务](#2.10)
+  - [修改服务](#2.11)
+  - [查询服务](#2.12)
+  - [查询服务列表](#2.13)
+  - [查询系统开关](#2.14)
+  - [修改系统开关](#2.15)
+  - [查看系统当前数据指标](#2.16)
+  - [查看当前集群Server列表](#2.17)
+  - [查看当前集群leader](#2.18)
+  - [更新实例的健康状态](#2.19)
 
 ## 配置管理
 
@@ -425,7 +427,83 @@ curl -X PUT 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.
 ### 示例返回
 ok
 
-<h2 id="2.4">查询实例列表</h2>
+<h2 id="2.4">批量更新实例元数据</h2>
+
+### 描述
+批量更新实例元数据
+
+### 请求类型
+PUT
+
+### 请求路径
+```plain
+/nacos/v1/ns/instance/metadata/batch
+```
+
+### 请求参数
+
+| 名称 | 类型 | 是否必选 | 描述 |
+| :--- | :--- | :--- | --- |
+| namespaceId | 字符串 | 是 | 命名空间ID |
+| serviceName | 字符串 | 是 | 服务名(group@@serviceName) |
+| consistencyType | 字符串 | 否 | 实例的类型(ephemeral/persist) |
+| instances | JSON格式字符串 | 否 | 需要更新的实例 |
+| metadata | JSON格式字符串 | 是 | 元数据信息 |
+
+### 参数说明
+* consistencyType: 优先级高于instances参数，如果进行配置，则忽略instances参数的值。当值为'ephemeral'，则对serviceName下的所有非持久化实例进行更新。当值为'persist'，则对serviceName下的所有持久化实例进行更新。当为其他值，没有实例进行更新。
+* instances: json数组。通过ip+port+ephemeral+cluster定位到某一实例。
+
+### 示例请求
+```plain
+curl -X PUT 'http://localhost:8848/nacos/v1/ns/instance/metadata/batch' -d 'namespaceId=public&serviceName=xxxx@@xxxx&instances=[{"ip":"3.3.3.3","port": "8080","ephemeral":"true","clusterName":"xxxx-cluster"},{"ip":"2.2.2.2","port":"8080","ephemeral":"true","clusterName":"xxxx-cluster"}]&metadata={"age":"20","name":"cocolan"}' 
+or
+curl -X PUT 'http://localhost:8848/nacos/v1/ns/instance/metadata/batch' -d 'namespaceId=public&serviceName=xxxx@@xxxx&consistencyType=ephemeral&metadata={"age":"20","name":"cocolan"}'
+```
+### 示例返回
+```
+{"updated":["2.2.2.2:8080:unknown:xxxx-cluster:ephemeral","3.3.3.3:8080:unknown:xxxx-cluster:ephemeral"]}
+```
+
+<h2 id="2.5">批量删除实例元数据</h2>
+
+### 描述
+批量删除实例元数据
+
+### 请求类型
+DELETE
+
+### 请求路径
+```plain
+/nacos/v1/ns/instance/metadata/batch
+```
+
+### 请求参数
+
+| 名称 | 类型 | 是否必选 | 描述 |
+| :--- | :--- | :--- | --- |
+| namespaceId | 字符串 | 是 | 命名空间ID |
+| serviceName | 字符串 | 是 | 服务名(group@@serviceName) |
+| consistencyType | 字符串 | 否 | 实例的类型(ephemeral/persist) |
+| instances | JSON格式字符串 | 否 | 需要更新的实例 |
+| metadata | JSON格式字符串 | 是 | 元数据信息 |
+
+### 参数说明
+* consistencyType: 优先级高于instances参数，如果进行配置，则忽略instances参数的值。当值为ephemeral，则对serviceName下的所有非持久化实例进行更新。当值为persist，则对serviceName下的所有持久化实例进行更新。当为其他值，没有实例进行更新。
+* instances: json数组。通过ip+port+ephemeral+cluster定位到某一实例。
+
+### 示例请求
+```plain
+curl -X DELETE 'http://localhost:8848/nacos/v1/ns/instance/metadata/batch' -d 'namespaceId=public&serviceName=xxxx@@xxxx&instances=[{"ip":"3.3.3.3","port": "8080","ephemeral":"true","clusterName":"xxxx-cluster"},{"ip":"2.2.2.2","port":"8080","ephemeral":"true","clusterName":"xxxx-cluster"}]&metadata={"age":"20","name":"cocolan"}' 
+or
+curl -X DELETE 'http://localhost:8848/nacos/v1/ns/instance/metadata/batch' -d 'namespaceId=public&serviceName=xxxx@@xxxx&consistencyType=ephemeral&metadata={"age":"20","name":"cocolan"}'
+```
+### 示例返回
+```
+{"updated":["2.2.2.2:8080:unknown:xxxx-cluster:ephemeral","3.3.3.3:8080:unknown:xxxx-cluster:ephemeral"]}
+```
+
+<h2 id="2.6">查询实例列表</h2>
 
 ### 描述
 查询服务下的实例列表
@@ -473,7 +551,7 @@ curl -X GET 127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.test.1
 	"clusters": ""
 }
 ```
-<h2 id="2.5">查询实例详情</h2>
+<h2 id="2.7">查询实例详情</h2>
 
 ### 描述
 查询一个服务下个某个实例详情。
@@ -517,7 +595,7 @@ curl -X GET '127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.2&ip=10.
 }
 ```
 
-<h2 id="2.6">发送实例心跳</h2>
+<h2 id="2.8">发送实例心跳</h2>
 
 ### 描述
 发送某个实例的心跳
@@ -549,7 +627,7 @@ ok
 ```
 
 
-<h2 id="2.7">创建服务</h2>
+<h2 id="2.9">创建服务</h2>
 
 ### 描述
 创建一个服务
@@ -583,7 +661,7 @@ ok
 ```
 
 
-<h2 id="2.8">删除服务</h2>
+<h2 id="2.10">删除服务</h2>
 
 ### 描述
 删除一个服务,只有当服务下实例数为0时允许删除
@@ -614,7 +692,7 @@ curl -X DELETE '127.0.0.1:8848/nacos/v1/ns/service?serviceName=nacos.test.2'
 ok
 ```
 
-<h2 id="2.9">修改服务</h2>
+<h2 id="2.11">修改服务</h2>
 
 ### 描述
 更新一个服务
@@ -648,7 +726,7 @@ ok
 ```
 
 
-<h2 id="2.10">查询服务</h2>
+<h2 id="2.12">查询服务</h2>
 
 ### 描述
 查询一个服务
@@ -698,7 +776,7 @@ curl -X GET '127.0.0.1:8848/nacos/v1/ns/service?serviceName=nacos.test.2'
 ```
 
 
-<h2 id="2.11">查询服务列表</h2>
+<h2 id="2.13">查询服务列表</h2>
 
 ### 描述
 查询服务列表
@@ -736,7 +814,7 @@ curl -X GET '127.0.0.1:8848/nacos/v1/ns/service/list?pageNo=1&pageSize=2'
 }
 ```
 
-<h2 id="2.12">查询系统开关</h2>
+<h2 id="2.14">查询系统开关</h2>
 
 ### 描述
 查询系统开关
@@ -805,7 +883,7 @@ curl -X GET '127.0.0.1:8848/nacos/v1/ns/operator/switches'
 }
 ```
 
-<h2 id="2.13">修改系统开关</h2>
+<h2 id="2.15">修改系统开关</h2>
 
 ### 描述
 修改系统开关
@@ -836,7 +914,7 @@ curl -X PUT '127.0.0.1:8848/nacos/v1/ns/operator/switches?entry=pushEnabled&valu
 ok
 ```
 
-<h2 id="2.14">查看系统当前数据指标</h2>
+<h2 id="2.16">查看系统当前数据指标</h2>
 
 ### 描述
 查看系统当前数据指标
@@ -870,7 +948,7 @@ curl -X GET '127.0.0.1:8848/nacos/v1/ns/operator/metrics'
 }
 ```
 
-<h2 id="2.15">查看当前集群Server列表</h2>
+<h2 id="2.17">查看当前集群Server列表</h2>
 
 ### 描述
 查看当前集群Server列表
@@ -936,7 +1014,7 @@ curl -X GET '127.0.0.1:8848/nacos/v1/ns/operator/servers'
 ```
 
 
-<h2 id="2.16">查看当前集群leader</h2>
+<h2 id="2.18">查看当前集群leader</h2>
 
 ### 描述
 查看当前集群leader
@@ -962,7 +1040,7 @@ curl -X GET '127.0.0.1:8848/nacos/v1/ns/raft/leader'
 }
 ```
 
-<h2 id="2.17">更新实例的健康状态</h2>
+<h2 id="2.19">更新实例的健康状态</h2>
 
 ### 描述
 更新实例的健康状态,仅在集群的健康检查关闭时才生效,当集群配置了健康检查时,该接口会返回错误
@@ -993,3 +1071,4 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/health/instance?port=8848&healthy
 ```
 ### 示例返回
 ok
+
