@@ -28,7 +28,7 @@ Key features of Nacos:
 
 * **Service Discovery And Service Health Check**
 
-    Nacos supports both DNS-based and RPC-based (Dubbo/gRPC) service discovery. After a service provider registers a service with [native](./sdk.md), [OpenAPI](./open-API.md), or [a dedicated agent](./other-language.md), a consumer can discover the service with either [DNS](./other-language.md) or [HTTP](./other-language.md).
+    Nacos supports both DNS-based and RPC-based (Dubbo/gRPC) service discovery. After a service provider registers a service with [native](./sdk.md), [OpenAPI](./open-api.md), or [a dedicated agent](./other-language.md), a consumer can discover the service with either [DNS](./other-language.md) or [HTTP](./open-api.md).
     
     Nacos provides real-time health check to prevent services from sending requests to unhealthy hosts or service instances. Nacos supports both transport layer (PING or TCP) health check and application layer (such as HTTP, Redis, MySQL, and user-defined protocol) health check. For the health check of complex clouds and network topologies(such as VPC, Edge Service etc), Nacos provides both agent mode and server mode health check. Nacos also provide a unity service health dashboard to help you manage the availability and traffic of services.    
     
@@ -40,7 +40,7 @@ Key features of Nacos:
 
     Centralized management of configuration makes it more convenient for you to achieve stateless services and elastic expansion of service instances on-demand.
 
-    Nacos provides an [easy-to-use UI TODO](xx) to help you manage all of your application or services's configurations. It provides some out-of-box features including configuration version tracking, canary/beta release, configuration rollback, and client configuration update status tracking to ensure the safety and control the risk of configuration change. 
+    Nacos provides an [easy-to-use UI](http://console.nacos.io/nacos/index.html) to help you manage all of your application or services's configurations. It provides some out-of-box features including configuration version tracking, canary/beta release, configuration rollback, and client configuration update status tracking to ensure the safety and control the risk of configuration change. 
 
 * **Dynamic DNS service**
 
@@ -52,7 +52,7 @@ Key features of Nacos:
 
     Nacos allows you to manage all of your services and metadata from the perspective of a microservices platform builder. This includes managing service description, life cycle, service static dependencies analysis, service health status, service traffic management，routing and security rules, service SLA, and first line metrics.
 
-* [Check more features ...](xx)
+* [Check more features ...](./roadmap.md)
 
 ## Nacos Map
 A picture to understand Nacos, the following structure will be described in detail.
@@ -73,7 +73,7 @@ A picture to understand Nacos, the following structure will be described in deta
 
 ![nacos_landscape.png](https://cdn.nlark.com/lark/0/2018/png/11189/1533045871534-e64b8031-008c-4dfc-b6e8-12a597a003fb.png)
  
-As the figure above shows, Nacos seamlessly supports open source ecologies including [Dubbo and Dubbo Mesh](./docs/use-nacos-with-dubbo.md), [Spring Cloud](./use-nacos-with-springcloud.md), and [Kubernetes and CNCF](./use-nacos-with-kubernetes.md).
+As the figure above shows, Nacos seamlessly supports open source ecologies including [Dubbo and Dubbo Mesh](./use-nacos-with-dubbo.md), [Spring Cloud](./use-nacos-with-springcloud.md), and [Kubernetes and CNCF](./use-nacos-with-kubernetes.md).
 
 Use Nacos to simplify your solutions in service discovery, configuration management, and service governance and management. With Nacos, microservices management in open source system is easy.
 
@@ -87,7 +87,7 @@ For more information about how to use Nacos with other open source projects, see
 
 [Use Nacos with Spring Cloud](./use-nacos-with-springcloud.md)
 
-[Use Nacos with Istio](./docs/use-nacos-with-istio.md)
+[Use Nacos with Istio](./use-nacos-with-istio.md)
 
 
 ## What’s next

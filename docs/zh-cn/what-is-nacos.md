@@ -27,7 +27,7 @@ Nacos 的关键特性包括:
 
 * **服务发现和服务健康监测**
 	
-    Nacos 支持基于 DNS 和基于 RPC 的服务发现。服务提供者使用 [原生SDK](./sdk.md)、[OpenAPI](./open-API.md)、或一个[独立的Agent TODO](./other-language.md)注册 Service 后，服务消费者可以使用[DNS TODO](xx) 或[HTTP&API](./open-API.md)查找和发现服务。
+    Nacos 支持基于 DNS 和基于 RPC 的服务发现。服务提供者使用 [原生SDK](./sdk.md)、[OpenAPI](./open-api.md)、或一个[独立的Agent TODO](./other-language.md)注册 Service 后，服务消费者可以使用[DNS TODO](xx) 或[HTTP&API](./open-api.md)查找和发现服务。
     
     Nacos 提供对服务的实时的健康检查，阻止向不健康的主机或服务实例发送请求。Nacos 支持传输层 (PING 或 TCP)和应用层 (如 HTTP、MySQL、用户自定义）的健康检查。 对于复杂的云环境和网络拓扑环境中（如 VPC、边缘网络等）服务的健康检查，Nacos 提供了 agent 上报模式和服务端主动检测2种健康检查模式。Nacos 还提供了统一的健康检查仪表盘，帮助您根据健康状态管理服务的可用性及流量。
                  
@@ -71,8 +71,8 @@ Nacos 的关键特性包括:
 如 Nacos 全景图所示，Nacos 无缝支持一些主流的开源生态，例如 
 
 * [Spring Cloud](https://nacos.io/en-us/docs/quick-start-spring-cloud.html)
-* [Apache Dubbo and Dubbo Mesh TODO](xx)
-* [Kubernetes and CNCF TODO](xx)。
+* [Apache Dubbo and Dubbo Mesh](./use-nacos-with-dubbo.md)
+* [Kubernetes and CNCF](./use-nacos-with-kubernetes.md)。
 
 使用 Nacos 简化服务发现、配置管理、服务治理及管理的解决方案，让微服务的发现、管理、共享、组合更加容易。
 
