@@ -30,6 +30,8 @@ description: Open API Guide
   - [Query server list](#2.15)
   - [Query the leader of current cluster](#2.16)
   - [Update instance health status](#2.17)
+  - [Batch update instance metadata(Beta)](#2.18)
+  - [Batch delete instance metadata(Beta)](#2.19)
 
 ## Configuration Management
 
@@ -1075,3 +1077,80 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/health/instance?port=8848&healthy
 ```
 ### Response Example
 ok
+
+
+<h2 id="2.18">Batch update instance metadata(Beta)</h2>
+
+### Description
+Batch update instance metadata(Since 1.4)
+
+### Request Type
+PUT
+
+### Request Path
+```plain
+/nacos/v1/ns/instance/metadata/batch
+```
+
+### Request Parameters
+
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | --- |
+| namespaceId | String | yes | ID of namespace |
+| serviceName | String | yes | Service name(group@@serviceName) |
+| consistencyType | String | no | instance type (ephemeral/persist) |
+| instances | JSON | no | The instances which need to update |
+| metadata | JSON | yes | Metadata |
+
+### Parameter description
+* consistencyType: The priority higher than param instances, if config it, the param instances will be ignored. When when value equals 'ephemeral', all the ephemeral instances in serviceName will be updated. When when value equals 'persist', all the persist instances in serviceName will be updated. When other value, no instances will be updated.
+* instances: json array. To locate particular instances by (ip + port + ephemeral + cluster).
+
+### Request Example
+```plain
+curl -X PUT 'http://localhost:8848/nacos/v1/ns/instance/metadata/batch' -d 'namespaceId=public&serviceName=xxxx@@xxxx&instances=[{"ip":"3.3.3.3","port": "8080","ephemeral":"true","clusterName":"xxxx-cluster"},{"ip":"2.2.2.2","port":"8080","ephemeral":"true","clusterName":"xxxx-cluster"}]&metadata={"age":"20","name":"cocolan"}' 
+or
+curl -X PUT 'http://localhost:8848/nacos/v1/ns/instance/metadata/batch' -d 'namespaceId=public&serviceName=xxxx@@xxxx&consistencyType=ephemeral&metadata={"age":"20","name":"cocolan"}'
+```
+### Response Example
+```
+{"updated":["2.2.2.2:8080:unknown:xxxx-cluster:ephemeral","3.3.3.3:8080:unknown:xxxx-cluster:ephemeral"]}
+```
+
+<h2 id="2.19">Batch delete instance metadata(Beta)</h2>
+
+### Description
+Batch delete instance metadata(Since 1.4)
+
+### Request Type
+DELETE
+
+### Request Path
+```plain
+/nacos/v1/ns/instance/metadata/batch
+```
+
+### Request Parameters
+
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | --- |
+| namespaceId | String | yes | ID of namespace |
+| serviceName | String | yes | Service name(group@@serviceName) |
+| consistencyType | String | no | instance type (ephemeral/persist) |
+| instances | JSON | no | The instances which need to update |
+| metadata | JSON | yes | Metadata |
+
+### Parameter description
+* consistencyType: The priority higher than param instances, if config it, the param instances will be ignored. When when value equals 'ephemeral', all the ephemeral instances in serviceName will be updated. When when value equals 'persist', all the persist instances in serviceName will be updated. When other value, no instances will be updated.
+* instances: json array. To locate particular instances by (ip + port + ephemeral + cluster).
+
+### Request Example
+```plain
+curl -X DELETE 'http://localhost:8848/nacos/v1/ns/instance/metadata/batch' -d 'namespaceId=public&serviceName=xxxx@@xxxx&instances=[{"ip":"3.3.3.3","port": "8080","ephemeral":"true","clusterName":"xxxx-cluster"},{"ip":"2.2.2.2","port":"8080","ephemeral":"true","clusterName":"xxxx-cluster"}]&metadata={"age":"20","name":"cocolan"}' 
+or
+curl -X DELETE 'http://localhost:8848/nacos/v1/ns/instance/metadata/batch' -d 'namespaceId=public&serviceName=xxxx@@xxxx&consistencyType=ephemeral&metadata={"age":"20","name":"cocolan"}'
+```
+### Response Example
+```
+{"updated":["2.2.2.2:8080:unknown:xxxx-cluster:ephemeral","3.3.3.3:8080:unknown:xxxx-cluster:ephemeral"]}
+```
