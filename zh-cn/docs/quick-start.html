@@ -28,7 +28,7 @@
 <h3>从 Github 上下载源码方式</h3>
 <pre><code class="language-bash">git <span class="hljs-built_in">clone</span> https://github.com/alibaba/nacos.git
 <span class="hljs-built_in">cd</span> nacos/
-mvn -Prelease-nacos -Dmaven.test.skip=<span class="hljs-literal">true</span> clean install -U  
+mvn -Prelease-nacos -Dmaven.test.skip=<span class="hljs-literal">true</span> clean install -U
 ls -al distribution/target/
 
 // change the <span class="hljs-variable">$version</span> to your actual path
@@ -47,9 +47,8 @@ ls -al distribution/target/
 <p>如果您使用的是ubuntu系统，或者运行脚本报错提示[[符号找不到，可尝试如下运行：</p>
 <p><code>bash startup.sh -m standalone</code></p>
 <h3>Windows</h3>
-<p>启动命令：</p>
-<p><code>cmd startup.cmd</code></p>
-<p>或者双击startup.cmd运行文件。</p>
+<p>启动命令(standalone代表着单机模式运行，非集群模式):</p>
+<p><code>cmd startup.cmd -m standalone</code></p>
 <h2>4.服务注册&amp;发现和配置管理</h2>
 <h3>服务注册</h3>
 <p><code>curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&amp;ip=20.18.7.10&amp;port=8080'</code></p>

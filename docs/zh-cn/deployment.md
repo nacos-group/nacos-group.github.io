@@ -19,8 +19,8 @@ sh startup.sh -m standalone
 
 ### Windows
 
-cmd startup.cmd 
-或者双击 startup.cmd 文件
+* Standalone means it is non-cluster Mode. * 
+cmd startup.cmd -m standalone
 
 ### 单机模式支持mysql
 

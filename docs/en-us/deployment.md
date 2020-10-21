@@ -15,12 +15,12 @@ description: Nacos supports three types of deployment modes
 ### Linux/Unix/Mac
 
 * Standalone means it is non-cluster Mode. * 
-sh startup.sh standalone
+sh startup.sh -m standalone
 
 ### Windows
 
 * standalone means it is non-cluster Mode. * 
-cmd startup.cmd standalone
+cmd startup.cmd -m standalone
 
 ### Running Nacos with mysql in Standalone Mode
 

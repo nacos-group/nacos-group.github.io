@@ -48,7 +48,7 @@ Select the latest stable version from https://github.com/alibaba/nacos/releases
 
 ### Linux/Unix/Mac
 
-Run the following command to sart(standalone means non-cluster mode):
+Run the following command to start(standalone means non-cluster mode):
  
 `sh startup.sh -m standalone`
 
@@ -58,11 +58,9 @@ If you are using a ubuntu system, or encounter this error message [[symbol not f
 
 ### Windows
 
-Run the following command to start:
+Run the following command to start(standalone means non-cluster mode):
 
-`cmd startup.cmd`
-
-Or double-click the startup.cmd run file.
+`cmd startup.cmd -m standalone`
 
 ## 4.Service & Configuration Management
 
