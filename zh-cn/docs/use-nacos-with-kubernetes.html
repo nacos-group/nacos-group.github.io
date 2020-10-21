@@ -41,7 +41,7 @@ chmod +x quick-startup.sh
 <ul>
 <li><strong>服务发现</strong></li>
 </ul>
-<pre><code class="language-bash">curl -X GET <span class="hljs-string">'http://cluster-ip:8848/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'</span>
+<pre><code class="language-bash">curl -X GET <span class="hljs-string">'http://cluster-ip:8848/nacos/v1/ns/instance/list?serviceName=nacos.naming.serviceName'</span>
 </code></pre>
 <ul>
 <li><strong>发布配置</strong></li>
@@ -102,7 +102,7 @@ kubectl create -f deploy/mysql/mysql-master-nfs.yaml
 <li>部署从库</li>
 </ul>
 <pre><code class="language-shell">
-cd nacos-k8s 
+cd nacos-k8s
 
 kubectl create -f deploy/mysql/mysql-slave-nfs.yaml
 </code></pre>
@@ -110,12 +110,12 @@ kubectl create -f deploy/mysql/mysql-slave-nfs.yaml
 <li>验证数据库是否正常工作</li>
 </ul>
 <pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash"> master</span>
-kubectl get pod 
+kubectl get pod
 NAME                         READY   STATUS    RESTARTS   AGE
 mysql-master-gf2vd                        1/1     Running   0          111m
 <span class="hljs-meta">
 #</span><span class="bash"> slave</span>
-kubectl get pod 
+kubectl get pod
 mysql-slave-kf9cb                         1/1     Running   0          110m
 </code></pre>
 <h2>部署Nacos</h2>
