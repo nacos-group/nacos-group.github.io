@@ -19,7 +19,7 @@ sh startup.sh -m standalone
 
 ### Windows
 
-* standalone means it is non-cluster Mode. * 
+* Standalone means it is non-cluster Mode. * 
 cmd startup.cmd -m standalone
 
 ### Running Nacos with mysql in Standalone Mode
