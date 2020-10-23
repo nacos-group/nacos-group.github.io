@@ -102,7 +102,7 @@ kubectl create -f deploy/mysql/mysql-master-nfs.yaml
 <li>Deploy slave</li>
 </ul>
 <pre><code class="language-shell">
-cd nacos-k8s
+cd nacos-k8s 
 
 kubectl create -f deploy/mysql/mysql-slave-nfs.yaml
 </code></pre>
@@ -110,12 +110,12 @@ kubectl create -f deploy/mysql/mysql-slave-nfs.yaml
 <li>Verify that Database is working</li>
 </ul>
 <pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash"> master</span>
-kubectl get pod
+kubectl get pod 
 NAME                         READY   STATUS    RESTARTS   AGE
 mysql-master-gf2vd                        1/1     Running   0          111m
 <span class="hljs-meta">
 #</span><span class="bash"> slave</span>
-kubectl get pod
+kubectl get pod 
 mysql-slave-kf9cb                         1/1     Running   0          110m
 </code></pre>
 <h2>Deploy Nacos</h2>
