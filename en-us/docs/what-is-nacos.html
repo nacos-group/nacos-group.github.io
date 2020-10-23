@@ -26,7 +26,7 @@
 <ul>
 <li>
 <p><strong>Service Discovery And Service Health Check</strong></p>
-<p>Nacos supports both DNS-based and RPC-based (Dubbo/gRPC) service discovery. After a service provider registers a service with <a href="./sdk.md">native</a>, <a href="./open-API.md">OpenAPI</a>, or <a href="./other-language.md">a dedicated agent</a>, a consumer can discover the service with either <a href="./other-language.md">DNS</a> or <a href="./other-language.md">HTTP</a>.</p>
+<p>Nacos supports both DNS-based and RPC-based (Dubbo/gRPC) service discovery. After a service provider registers a service with <a href="./sdk.md">native</a>, <a href="./open-api.md">OpenAPI</a>, or <a href="./other-language.md">a dedicated agent</a>, a consumer can discover the service with either <a href="./other-language.md">DNS</a> or <a href="./open-api.md">HTTP</a>.</p>
 <p>Nacos provides real-time health check to prevent services from sending requests to unhealthy hosts or service instances. Nacos supports both transport layer (PING or TCP) health check and application layer (such as HTTP, Redis, MySQL, and user-defined protocol) health check. For the health check of complex clouds and network topologies(such as VPC, Edge Service etc), Nacos provides both agent mode and server mode health check. Nacos also provide a unity service health dashboard to help you manage the availability and traffic of services.</p>
 </li>
 <li>
@@ -34,7 +34,7 @@
 <p>Dynamic configuration service allows you to manage the configuration of all applications and services in a centralized, externalized and dynamic manner across all environments.</p>
 <p>Dynamic configuration eliminates the need to redeploy applications and services when configurations are updated.</p>
 <p>Centralized management of configuration makes it more convenient for you to achieve stateless services and elastic expansion of service instances on-demand.</p>
-<p>Nacos provides an <a href="xx">easy-to-use UI TODO</a> to help you manage all of your application or services's configurations. It provides some out-of-box features including configuration version tracking, canary/beta release, configuration rollback, and client configuration update status tracking to ensure the safety and control the risk of configuration change.</p>
+<p>Nacos provides an easy-to-use UI (<a href="http://console.nacos.io/nacos/index.html">DEMO</a>) to help you manage all of your application or services's configurations. It provides some out-of-box features including configuration version tracking, canary/beta release, configuration rollback, and client configuration update status tracking to ensure the safety and control the risk of configuration change.</p>
 </li>
 <li>
 <p><strong>Dynamic DNS service</strong></p>
@@ -46,7 +46,7 @@
 <p>Nacos allows you to manage all of your services and metadata from the perspective of a microservices platform builder. This includes managing service description, life cycle, service static dependencies analysis, service health status, service traffic management，routing and security rules, service SLA, and first line metrics.</p>
 </li>
 <li>
-<p><a href="xx">Check more features ...</a></p>
+<p><a href="./roadmap.md">Check more features ...</a></p>
 </li>
 </ul>
 <h2>Nacos Map</h2>
@@ -63,14 +63,14 @@
 </ul>
 <h2>Nacos landscape</h2>
 <p><img src="https://cdn.nlark.com/lark/0/2018/png/11189/1533045871534-e64b8031-008c-4dfc-b6e8-12a597a003fb.png" alt="nacos_landscape.png"></p>
-<p>As the figure above shows, Nacos seamlessly supports open source ecologies including <a href="./docs/use-nacos-with-dubbo.md">Dubbo and Dubbo Mesh</a>, <a href="./use-nacos-with-springcloud.md">Spring Cloud</a>, and <a href="./use-nacos-with-kubernetes.md">Kubernetes and CNCF</a>.</p>
+<p>As the figure above shows, Nacos seamlessly supports open source ecologies including <a href="./use-nacos-with-dubbo.md">Dubbo and Dubbo Mesh</a>, <a href="./use-nacos-with-springcloud.md">Spring Cloud</a>, and <a href="./use-nacos-with-kubernetes.md">Kubernetes and CNCF</a>.</p>
 <p>Use Nacos to simplify your solutions in service discovery, configuration management, and service governance and management. With Nacos, microservices management in open source system is easy.</p>
 <p>For more information about how to use Nacos with other open source projects, see the following:</p>
 <p><a href="./use-nacos-with-kubernetes.md">Use Nacos with Kubernetes</a></p>
 <p><a href="./use-nacos-with-dubbo.md">Use Nacos with Dubbo</a></p>
 <p><a href="./roadmap.md">Use Nacos with gRPC</a></p>
 <p><a href="./use-nacos-with-springcloud.md">Use Nacos with Spring Cloud</a></p>
-<p><a href="./docs/use-nacos-with-istio.md">Use Nacos with Istio</a></p>
+<p><a href="./use-nacos-with-istio.md">Use Nacos with Istio</a></p>
 <h2>What’s next</h2>
 <p>Continue with <a href="./quick-start.md">quick start</a> to get started with Nacos.</p>
 </div></div></section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>Vision</h3><p>By providing an easy-to-use service infrastructure such as dynamic service discovery, service configuration, service sharing and management and etc., Nacos help users better construct, deliver and manage their own service platform, reuse and composite business service faster and deliver value of business innovation more quickly so as to win market for users in the era of cloud native and in all cloud environments, such as private, mixed, or public clouds.</p></div><div class="col col-6"><dl><dt>Documentation</dt><dd><a href="/en-us/docs/what-is-nacos.html" target="_self">Overview</a></dd><dd><a href="/en-us/docs/quick-start.html" target="_self">Quick start</a></dd><dd><a href="/en-us/docs/contributing.html" target="_self">Developer guide</a></dd></dl></div><div class="col col-6"><dl><dt>Resources</dt><dd><a href="/en-us/community/index.html" target="_self">Community</a></dd><dd><a href="https://www.aliyun.com/product/acm?source_type=nacos_pc_20181219" target="_self">Cloud Service ACM</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">Cloud Service EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">Cloud Service AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
