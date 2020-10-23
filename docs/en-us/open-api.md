@@ -1084,6 +1084,8 @@ ok
 ### Description
 Batch update instance metadata(Since 1.4)
 
+> Note: This API is a Beta API, later versions maybe modify or even delete. Please use it with caution.
+
 ### Request Type
 PUT
 
@@ -1121,6 +1123,8 @@ curl -X PUT 'http://localhost:8848/nacos/v1/ns/instance/metadata/batch' -d 'name
 
 ### Description
 Batch delete instance metadata(Since 1.4)
+
+> Note: This API is a Beta API, later versions maybe modify or even delete. Please use it with caution.
 
 ### Request Type
 DELETE
