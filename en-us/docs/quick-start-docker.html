@@ -34,7 +34,7 @@ cd nacos<span class="hljs-literal">-docker</span>
 </li>
 <li>
 <p>Cluster</p>
-<pre><code class="language-powershell">docker<span class="hljs-literal">-compose</span> <span class="hljs-operator">-f</span> example/cluster<span class="hljs-literal">-hostname</span>.yaml up 
+<pre><code class="language-powershell">docker<span class="hljs-literal">-compose</span> <span class="hljs-operator">-f</span> example/cluster<span class="hljs-literal">-hostname</span>.yaml up
 </code></pre>
 </li>
 <li>
@@ -44,7 +44,7 @@ cd nacos<span class="hljs-literal">-docker</span>
 </li>
 <li>
 <p>Service discovery</p>
-<pre><code class="language-powershell">curl <span class="hljs-literal">-X</span> GET <span class="hljs-string">'http://127.0.0.1:8848/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'</span>
+<pre><code class="language-powershell">curl <span class="hljs-literal">-X</span> GET <span class="hljs-string">'http://127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.naming.serviceName'</span>
 </code></pre>
 </li>
 <li>

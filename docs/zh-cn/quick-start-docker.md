@@ -43,7 +43,7 @@ description: Nacos Docker 快速开始
 * 服务发现
 
     ```powershell
-    curl -X GET 'http://127.0.0.1:8848/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'
+    curl -X GET 'http://127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.naming.serviceName'
     ```
     
 * 发布配置
