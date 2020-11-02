@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: 'Nacos 1.4.0 + Go SDK 1.0.1 Release!',
+            author: '@席翁',
+            dateStr: 'Nov 2nd, 2020',
+            desc: 'Nacos 1.4.0 + Go SDK 1.0.1 Release!',
+            link: '/en-us/blog/1.4.0-release.html',
+        },
+        {
             title: 'v0.5.0 of Nacos-sdk-csharp was released! Capabilities aligned with Java SDK！',
             author: '@席翁',
             dateStr: 'Sep 3rd, 2020',
@@ -209,6 +216,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: '双十一购物节，Nacos 1.4.0 + Go SDK 1.0.1发布！',
+            author: '@席翁',
+            dateStr: 'Nov 2nd, 2020',
+            desc: '双十一购物节，Nacos 1.4.0 + Go SDK 1.0.1发布！',
+            link: '/en-us/blog/1.4.0-release.html',
+        },
         {
             title: 'Nacos-sdk-csharp 0.5.0正式发布，功能与Java版本对齐！',
             author: '@席翁',
