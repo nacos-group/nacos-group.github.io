@@ -1,6 +1,15 @@
 {
   "en-us": [
     {
+      "filename": "1.4.0-release.md",
+      "link": "/en-us/blog/1.4.0-release.html",
+      "meta": {
+        "title": "Nacos 1.4.0 + Go SDK 1.0.1 Release",
+        "keywords": "1.4.0,Go 1.0.1",
+        "description": "Nacos 1.4.0 + Go SDK 1.0.1 Release"
+      }
+    },
+    {
       "filename": "5w1h-what.md",
       "link": "/en-us/blog/5w1h-what.html",
       "meta": {
@@ -249,6 +258,15 @@
     }
   ],
   "zh-cn": [
+    {
+      "filename": "1.4.0-release.md",
+      "link": "/zh-cn/blog/1.4.0-release.html",
+      "meta": {
+        "title": "双十一购物节，Nacos 1.4.0 + Go SDK 1.0.1发布",
+        "keywords": "开源,1.4.0,Go 1.0.1",
+        "description": "双十一购物节，Nacos 1.4.0 + Go SDK 1.0.1发布"
+      }
+    },
     {
       "filename": "5w1h-what.md",
       "link": "/zh-cn/blog/5w1h-what.html",
