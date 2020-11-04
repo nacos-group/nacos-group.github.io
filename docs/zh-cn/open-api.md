@@ -30,6 +30,8 @@ description: Open API 指南
   - [查看当前集群Server列表](#2.15)
   - [查看当前集群leader](#2.16)
   - [更新实例的健康状态](#2.17)
+  - [批量更新实例元数据(Beta)](#2.18)
+  - [批量删除实例元数据(Beta)](#2.19)
 
 ## 配置管理
 
@@ -548,7 +550,6 @@ curl -X PUT '127.0.0.1:8848/nacos/v1/ns/instance/beat?serviceName=nacos.test.2&b
 ok
 ```
 
-
 <h2 id="2.7">创建服务</h2>
 
 ### 描述
@@ -581,7 +582,6 @@ curl -X POST '127.0.0.1:8848/nacos/v1/ns/service?serviceName=nacos.test.2&metada
 ```
 ok
 ```
-
 
 <h2 id="2.8">删除服务</h2>
 
@@ -993,3 +993,83 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/health/instance?port=8848&healthy
 ```
 ### 示例返回
 ok
+
+<h2 id="2.18">批量更新实例元数据(Beta)</h2>
+
+### 描述
+批量更新实例元数据(1.4起)
+
+> 注意：该接口为Beta接口，后续版本可能有所修改，甚至删除，请谨慎使用。
+
+### 请求类型
+PUT
+
+### 请求路径
+```plain
+/nacos/v1/ns/instance/metadata/batch
+```
+
+### 请求参数
+
+| 名称 | 类型 | 是否必选 | 描述 |
+| :--- | :--- | :--- | --- |
+| namespaceId | 字符串 | 是 | 命名空间ID |
+| serviceName | 字符串 | 是 | 服务名(group@@serviceName) |
+| consistencyType | 字符串 | 否 | 实例的类型(ephemeral/persist) |
+| instances | JSON格式字符串 | 否 | 需要更新的实例 |
+| metadata | JSON格式字符串 | 是 | 元数据信息 |
+
+### 参数说明
+* consistencyType: 优先级高于instances参数，如果进行配置，则忽略instances参数的值。当值为'ephemeral'，则对serviceName下的所有非持久化实例进行更新。当值为'persist'，则对serviceName下的所有持久化实例进行更新。当为其他值，没有实例进行更新。
+* instances: json数组。通过ip+port+ephemeral+cluster定位到某一实例。
+
+### 示例请求
+```plain
+curl -X PUT 'http://localhost:8848/nacos/v1/ns/instance/metadata/batch' -d 'namespaceId=public&serviceName=xxxx@@xxxx&instances=[{"ip":"3.3.3.3","port": "8080","ephemeral":"true","clusterName":"xxxx-cluster"},{"ip":"2.2.2.2","port":"8080","ephemeral":"true","clusterName":"xxxx-cluster"}]&metadata={"age":"20","name":"cocolan"}' 
+or
+curl -X PUT 'http://localhost:8848/nacos/v1/ns/instance/metadata/batch' -d 'namespaceId=public&serviceName=xxxx@@xxxx&consistencyType=ephemeral&metadata={"age":"20","name":"cocolan"}'
+```
+### 示例返回
+```
+{"updated":["2.2.2.2:8080:unknown:xxxx-cluster:ephemeral","3.3.3.3:8080:unknown:xxxx-cluster:ephemeral"]}
+```
+
+<h2 id="2.19">批量删除实例元数据(Beta)</h2>
+
+### 描述
+批量删除实例元数据(1.4起)
+
+> 注意：该接口为Beta接口，后续版本可能有所修改，甚至删除，请谨慎使用。
+
+### 请求类型
+DELETE
+
+### 请求路径
+```plain
+/nacos/v1/ns/instance/metadata/batch
+```
+
+### 请求参数
+
+| 名称 | 类型 | 是否必选 | 描述 |
+| :--- | :--- | :--- | --- |
+| namespaceId | 字符串 | 是 | 命名空间ID |
+| serviceName | 字符串 | 是 | 服务名(group@@serviceName) |
+| consistencyType | 字符串 | 否 | 实例的类型(ephemeral/persist) |
+| instances | JSON格式字符串 | 否 | 需要更新的实例 |
+| metadata | JSON格式字符串 | 是 | 元数据信息 |
+
+### 参数说明
+* consistencyType: 优先级高于instances参数，如果进行配置，则忽略instances参数的值。当值为ephemeral，则对serviceName下的所有非持久化实例进行更新。当值为persist，则对serviceName下的所有持久化实例进行更新。当为其他值，没有实例进行更新。
+* instances: json数组。通过ip+port+ephemeral+cluster定位到某一实例。
+
+### 示例请求
+```plain
+curl -X DELETE 'http://localhost:8848/nacos/v1/ns/instance/metadata/batch' -d 'namespaceId=public&serviceName=xxxx@@xxxx&instances=[{"ip":"3.3.3.3","port": "8080","ephemeral":"true","clusterName":"xxxx-cluster"},{"ip":"2.2.2.2","port":"8080","ephemeral":"true","clusterName":"xxxx-cluster"}]&metadata={"age":"20","name":"cocolan"}' 
+or
+curl -X DELETE 'http://localhost:8848/nacos/v1/ns/instance/metadata/batch' -d 'namespaceId=public&serviceName=xxxx@@xxxx&consistencyType=ephemeral&metadata={"age":"20","name":"cocolan"}'
+```
+### 示例返回
+```
+{"updated":["2.2.2.2:8080:unknown:xxxx-cluster:ephemeral","3.3.3.3:8080:unknown:xxxx-cluster:ephemeral"]}
+```

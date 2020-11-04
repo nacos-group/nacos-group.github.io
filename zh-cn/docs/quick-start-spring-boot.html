@@ -72,7 +72,7 @@ public class ConfigController {
 <p>启动 <code>NacosConfigApplication</code>，调用 <code>curl http://localhost:8080/config/get</code>，返回内容是 <code>false</code>。</p>
 </li>
 <li>
-<p>通过调用 <a href="https://nacos.io/zh-cn/docs/open-API.html">Nacos Open API</a> 向 Nacos server 发布配置：dataId 为<code>example</code>，内容为<code>useLocalCache=true</code></p>
+<p>通过调用 <a href="https://nacos.io/zh-cn/docs/open-api.html">Nacos Open API</a> 向 Nacos server 发布配置：dataId 为<code>example</code>，内容为<code>useLocalCache=true</code></p>
 </li>
 </ol>
 <pre><code>curl -X POST &quot;http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example&amp;group=DEFAULT_GROUP&amp;content=useLocalCache=true&quot;
@@ -127,7 +127,7 @@ public class NacosDiscoveryApplication {
 <p>启动 <code>NacosDiscoveryApplication</code>，调用 <code>curl http://localhost:8080/discovery/get?serviceName=example</code>，此时返回为空 JSON 数组<code>[]</code>。</p>
 </li>
 <li>
-<p>通过调用 <a href="https://nacos.io/zh-cn/docs/open-API.html">Nacos Open API</a> 向  Nacos server 注册一个名称为 <code>example</code> 服务</p>
+<p>通过调用 <a href="https://nacos.io/zh-cn/docs/open-api.html">Nacos Open API</a> 向  Nacos server 注册一个名称为 <code>example</code> 服务</p>
 </li>
 </ol>
 <pre><code>curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&amp;ip=127.0.0.1&amp;port=8080'

@@ -74,7 +74,7 @@ public class ConfigController {
 <p>Start <code>NacosConfigApplication</code>and call <code>curl http://localhost:8080/config/get</code>. You will get a return message of <code>false</code>, as no configuration has been published so far.</p>
 </li>
 <li>
-<p>Call <a href="https://nacos.io/zh-cn/docs/open-API.html">Nacos Open API</a> to publish a configuration to the Nacos server. Assume the dataId is <code>example</code>, and the content is <code>useLocalCache=true</code>.</p>
+<p>Call <a href="https://nacos.io/zh-cn/docs/open-api.html">Nacos Open API</a> to publish a configuration to the Nacos server. Assume the dataId is <code>example</code>, and the content is <code>useLocalCache=true</code>.</p>
 </li>
 </ol>
 <pre><code>curl -X POST &quot;http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example&amp;group=DEFAULT_GROUP&amp;content=useLocalCache=true&quot;
@@ -130,7 +130,7 @@ public class NacosDiscoveryApplication {
 <p>Start <code>NacosDiscoveryApplication</code>and call <code>curl http://localhost:8080/discovery/get?serviceName=example</code>，you will get a return value of an empty JSON array <code>[]</code>.</p>
 </li>
 <li>
-<p>Call <a href="https://nacos.io/zh-cn/docs/open-API.html">Nacos Open API</a> to register a service called <code>example</code> to the Nacos server.</p>
+<p>Call <a href="https://nacos.io/zh-cn/docs/open-api.html">Nacos Open API</a> to register a service called <code>example</code> to the Nacos server.</p>
 </li>
 </ol>
 <pre><code>curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&amp;ip=127.0.0.1&amp;port=8080'

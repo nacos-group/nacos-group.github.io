@@ -118,7 +118,7 @@ sh startup.sh
 
 ### Service discovery
 
-`curl -X GET 'http://127.0.0.1:8848/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'`
+`curl -X GET 'http://127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.naming.serviceName'`
 
 ### Publish configuration
 

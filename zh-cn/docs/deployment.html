@@ -25,8 +25,10 @@
 sh <a href="http://startup.sh">startup.sh</a> -m standalone</li>
 </ul>
 <h3>Windows</h3>
-<p>cmd startup.cmd
-或者双击 startup.cmd 文件</p>
+<ul>
+<li>Standalone means it is non-cluster Mode. *
+cmd startup.cmd -m standalone</li>
+</ul>
 <h3>单机模式支持mysql</h3>
 <p>在0.7版本之前，在单机模式时nacos使用嵌入式数据库实现数据的存储，不方便观察数据存储的基本情况。0.7版本增加了支持mysql数据源能力，具体的操作步骤：</p>
 <ul>

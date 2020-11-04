@@ -41,7 +41,7 @@ chmod +x quick-startup.sh
 <ul>
 <li><strong>服务发现</strong></li>
 </ul>
-<pre><code class="language-bash">curl -X GET <span class="hljs-string">'http://cluster-ip:8848/nacos/v1/ns/instances?serviceName=nacos.naming.serviceName'</span>
+<pre><code class="language-bash">curl -X GET <span class="hljs-string">'http://cluster-ip:8848/nacos/v1/ns/instance/list?serviceName=nacos.naming.serviceName'</span>
 </code></pre>
 <ul>
 <li><strong>发布配置</strong></li>

@@ -41,14 +41,13 @@ ls -al distribution/target/
 </code></pre>
 <h2>3.Start Server</h2>
 <h3>Linux/Unix/Mac</h3>
-<p>Run the following command to sart(standalone means non-cluster mode):</p>
+<p>Run the following command to start(standalone means non-cluster mode):</p>
 <p><code>sh startup.sh -m standalone</code></p>
 <p>If you are using a ubuntu system, or encounter this error message [[symbol not found, try running as follows:</p>
 <p><code>bash startup.sh -m standalone</code></p>
 <h3>Windows</h3>
-<p>Run the following command to start:</p>
-<p><code>cmd startup.cmd</code></p>
-<p>Or double-click the startup.cmd run file.</p>
+<p>Run the following command to start(standalone means non-cluster mode):</p>
+<p><code>cmd startup.cmd -m standalone</code></p>
 <h2>4.Service &amp; Configuration Management</h2>
 <h3>Service registration</h3>
 <p><code>curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&amp;ip=20.18.7.10&amp;port=8080'</code></p>
