@@ -304,9 +304,10 @@ configService.removeListener(dataId, group, yourListener);
 <h4>Description</h4>
 <p>Publish Nacos configurations automatically to reduce the operation and maintenance cost.</p>
 <p><strong>Note:</strong> It uses the same publishing interface to create or modify a configuration. If the specified configuration doesn’t exist, it will create a configuration. If the specified configuration exists, it will update the configuration.</p>
-<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">publishConfig</span><span class="hljs-params">(String dataId, String group, String content)</span> <span class="hljs-keyword">throws</span> NacosException
+<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">publishConfig</span><span class="hljs-params">(String dataId, String group, String content)</span> <span class="hljs-keyword">throws</span> NacosException</span>;
 
-</span></code></pre>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">publishConfig</span><span class="hljs-params">(String dataId, String group, String content, String type)</span> <span class="hljs-keyword">throws</span> NacosException</span>;
+</code></pre>
 <h4>Request parameters</h4>
 <table>
 <thead>
@@ -331,6 +332,11 @@ configService.removeListener(dataId, group, yourListener);
 <td style="text-align:left">content</td>
 <td style="text-align:left">string</td>
 <td style="text-align:left">Configuration content. No more than 100K bytes.</td>
+</tr>
+<tr>
+<td style="text-align:left">type</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">Configuration type. See com.alibaba.nacos.api.config.ConfigType, default as TEXT.</td>
 </tr>
 </tbody>
 </table>

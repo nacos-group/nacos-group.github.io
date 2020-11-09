@@ -210,7 +210,9 @@ configService.removeListener(dataId, group, yourListener);
 __注意：__创建和修改配置时使用的同一个发布接口，当配置不存在时会创建配置，当配置已存在时会更新配置。
 
 ```java
-public boolean publishConfig(String dataId, String group, String content) throws NacosException
+public boolean publishConfig(String dataId, String group, String content) throws NacosException;
+
+public boolean publishConfig(String dataId, String group, String content, String type) throws NacosException;
 
 ```
 
@@ -221,6 +223,7 @@ public boolean publishConfig(String dataId, String group, String content) throws
 | dataId | string | 配置 ID，采用类似 `package.class`（如 `com.taobao.tc.refund.log.level`）的命名规则保证全局唯一性。建议根据配置的业务含义来定义 class 部分。全部字符均为小写。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 256 字节。 |
 | group | string | 配置分组，建议填写`产品名:模块名`（如 Nacos`:Test`）来保证唯一性。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 128 字节。 |
 | content | string | 配置内容，不超过 100K 字节。 |
+| type | string | 配置类型，见 `com.alibaba.nacos.api.config.ConfigType`，默认为TEXT |
 
 
 #### 返回参数

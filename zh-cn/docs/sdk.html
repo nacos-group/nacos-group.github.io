@@ -89,7 +89,7 @@
 <h3>监听配置</h3>
 <h4>描述</h4>
 <p>如果希望 Nacos 推送配置变更，可以使用 Nacos 动态监听配置接口来实现。</p>
-<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addListener</span><span class="hljs-params">(String dataId, String group, Listener listener)</span> 
+<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addListener</span><span class="hljs-params">(String dataId, String group, Listener listener)</span>
 </span></code></pre>
 <h4>请求参数</h4>
 <div class="bi-table">
@@ -237,9 +237,10 @@ configService.removeListener(dataId, group, yourListener);
 <h4>描述</h4>
 <p>用于通过程序自动发布 Nacos 配置，以便通过自动化手段降低运维成本。</p>
 <p>__注意：__创建和修改配置时使用的同一个发布接口，当配置不存在时会创建配置，当配置已存在时会更新配置。</p>
-<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">publishConfig</span><span class="hljs-params">(String dataId, String group, String content)</span> <span class="hljs-keyword">throws</span> NacosException
+<pre><code class="language-java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">publishConfig</span><span class="hljs-params">(String dataId, String group, String content)</span> <span class="hljs-keyword">throws</span> NacosException</span>;
 
-</span></code></pre>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">publishConfig</span><span class="hljs-params">(String dataId, String group, String content, String type)</span> <span class="hljs-keyword">throws</span> NacosException</span>;
+</code></pre>
 <h4>请求参数</h4>
 <table>
 <thead>
@@ -264,6 +265,11 @@ configService.removeListener(dataId, group, yourListener);
 <td style="text-align:left">content</td>
 <td style="text-align:left">string</td>
 <td style="text-align:left">配置内容，不超过 100K 字节。</td>
+</tr>
+<tr>
+<td style="text-align:left">type</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">配置类型，见<code>com.alibaba.nacos.api.config.ConfigType</code>，默认为TEXT</td>
 </tr>
 </tbody>
 </table>
@@ -509,7 +515,7 @@ naming.deregisterInstance(<span class="hljs-string">"nacos.test.3"</span>, <span
 <th style="text-align:left">名称</th>
 <th style="text-align:left">类型</th>
 <th>描述</th>
-</tr>
+</tr>s
 </thead>
 <tbody>
 <tr>
