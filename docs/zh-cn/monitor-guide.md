@@ -33,7 +33,7 @@ cd prometheus-*
 ```
     metrics_path: '/nacos/actuator/prometheus'
     static_configs:
-      - targets:['{ip1}:8848','{ip2}:8848','{ip3}:8848']
+      - targets: ['{ip1}:8848','{ip2}:8848','{ip3}:8848']
 ```
 
 启动prometheus服务
@@ -49,7 +49,7 @@ cd prometheus-*
 ```
     metrics_path: '/nacos/actuator/prometheus'
     static_configs:
-      - targets:['{ip1}:8848','{ip2}:8848','{ip3}:8848']
+      - targets: ['{ip1}:8848','{ip2}:8848','{ip3}:8848']
 ```
 
 启动prometheus服务
