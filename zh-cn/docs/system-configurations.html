@@ -172,6 +172,7 @@
 </tr>
 </tbody>
 </table>
+<p>当前数据库配置支持多数据源。通过db.num来指定数据源个数，db.url.index为对应的数据库的链接。db.user以及db.password没有设置index时,所有的链接都以db.user和db.password用作认证。如果不同数据源的用户名称或者用户密码不一样时，可以通过符号','来进行切割，或者指定db.user.index,db.user.password来设置对应数据库链接的用户或者密码。需要注意的是，当db.user和db.password没有指定下标时，因为当前机制会根据','进行切割。所以当用户名或者密码存在','时，会把','切割后前面的值当成最后的值进行认证，会导致认证失败。</p>
 <h3>CMDB模块</h3>
 <table>
 <thead>
