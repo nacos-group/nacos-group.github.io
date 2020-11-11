@@ -48,6 +48,8 @@ In addition to the above listed to in `application.properties`configuration prop
 |db.user| User name of the database connection | string | null | >= 0.1.0 |
 |db.password| Database connection password | string | null | >= 0.1.0 |
 
+Now the db config support multi data source. It can set data source num by `db.num`, and `db.url.index` as the corresponding connection's url. When `db.user` and `db.password` are set without `index`, all db connection use `db.user` and `db.password` to auth. If the username or password is different with different data source, can split by symbol `,`, or use `db.user.index`,`db.user.password` to set corresponding db connection's username or password. It is important to note that, when `db.user` or `db.password` are set without index, and the mechanism which split `db.user`,`db.password` by `,` exist, so if username or password contains `,`, it will split the value by `,`, and use split[0] to auth, failed to auth finally.      
+
 ### CMDB module
 
 |Parameter names	|Meaning	 |     Optional value	 | Default value| Support version |
