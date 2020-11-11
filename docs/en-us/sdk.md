@@ -318,7 +318,10 @@ Publish Nacos configurations automatically to reduce the operation and maintenan
 __Note:__ It uses the same publishing interface to create or modify a configuration. If the specified configuration doesn’t exist, it will create a configuration. If the specified configuration exists, it will update the configuration.
 
 ```java
-public boolean publishConfig(String dataId, String group, String content) throws NacosException
+public boolean publishConfig(String dataId, String group, String content) throws NacosException;
+
+@Since 1.4.1
+public boolean publishConfig(String dataId, String group, String content, String type) throws NacosException;
 
 ```
 
@@ -329,6 +332,7 @@ public boolean publishConfig(String dataId, String group, String content) throws
 | dataId | string | Configuration ID. Naming rule is similar to package.class (com.taobao.tc.refund.log.level) is used to ensure the global uniqueness We recommend that you define class by business meaning. All characters must be in lower case. Use alphabetical letters and these four special characters (".", ":", "-", "\_") only. Up to 256 characters are allowed. |
 | group | string | Configuration group. We recommend that you use product name: module name (for example Nacos:Test) to ensure the uniqueness. Use alphabetical letters and these four special characters (".", ":", "-", "\_") only. Up to 128 characters are allowed. |
 | content | string | Configuration content. No more than 100K bytes. |
+| type | string | @Since 1.4.1. Configuration type. See com.alibaba.nacos.api.config.ConfigType, default as TEXT. |
 
 #### Response parameters
 
