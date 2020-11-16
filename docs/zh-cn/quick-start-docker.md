@@ -22,10 +22,18 @@ description: Nacos Docker 快速开始
   docker-compose -f example/standalone-derby.yaml up
   ```
 
-* 单机模式 Mysql
+* 单机模式 MySQL
+
+ 如果希望使用MySQL5.7
 
   ```powershell
-  docker-compose -f example/standalone-mysql.yaml up
+  docker-compose -f example/standalone-mysql-5.7.yaml up
+  ```
+
+ 如果希望使用MySQL8
+
+  ```powershell
+  docker-compose -f example/standalone-mysql-8.yaml up
   ```
 
 * 集群模式

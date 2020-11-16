@@ -24,10 +24,18 @@ Run the following command：
   docker-compose -f example/standalone-derby.yaml up
   ```
 
-* Stand-alone Mysql
+* Stand-alone MySQL
+
+ To use MySQL 5.7, run
 
   ```powershell
-  docker-compose -f example/standalone-mysql.yaml up
+  docker-compose -f example/standalone-mysql-5.7.yaml up
+  ```
+
+ To use MySQL 8, run
+
+  ```powershell
+  docker-compose -f example/standalone-mysql-8.yaml up
   ```
 
 * Cluster
