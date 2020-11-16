@@ -78,7 +78,7 @@ GET
 * 请求示例
 
     ```plain
-    http:serverIp:8848/nacos/v1/cs/configs?dataId=dataIdparam&group=groupParam&tenant=tenantParam
+    curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.example&group=com.alibaba.nacos'
 
     ```
 * 返回示例
@@ -257,10 +257,7 @@ POST
 * 请求示例
 
 ```
-http:serverIp:8848/nacos/v1/cs/configs
-
-http body：
-dataId=dataIdparam&group=groupParam&tenant=tenantParam&content=contentParam&type=typeParam
+curl -X POST 'http://127.0.0.1:8848/nacos/v1/cs/configs' -d 'dataId=nacos.example&group=com.alibaba.nacos&content=contentTest'
 
 ```
 * 返回示例
@@ -312,7 +309,7 @@ DELETE
 * 请求示例
 
 ```
-http:serverIp:8848/nacos/v1/cs/configs?dataId=dataIdparam&group=groupParam
+curl -X DELETE 'http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.example&group=com.alibaba.nacos'
 
 ```
 
@@ -355,7 +352,7 @@ POST
 
 ### 示例请求
 ```plain
-curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?port=8848&healthy=true&ip=11.11.11.11&weight=1.0&serviceName=nacos.test.3&encoding=GBK&namespaceId=n1''
+curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?port=8848&healthy=true&ip=11.11.11.11&weight=1.0&serviceName=nacos.test.3&encoding=GBK&namespaceId=n1'
 ```
 ### 示例返回
 ok
@@ -387,7 +384,7 @@ DELETE
 
 ### 示例请求
 ```plain
-curl -X DELETE 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&clusterName=TEST1
+curl -X DELETE '127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&clusterName=TEST1'
 ```
 ### 示例返回
 ok
@@ -422,7 +419,7 @@ PUT
 
 ### 示例请求
 ```plain
-curl -X PUT 127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&clusterName=TEST1&weight=8&metadata={}
+curl -X PUT '127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&clusterName=TEST1&weight=8&metadata={}'
 ```
 ### 示例返回
 ok
@@ -452,7 +449,7 @@ GET
 
 ### 示例请求
 ```plain
-curl -X GET 127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.test.1
+curl -X GET '127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.test.1'
 ```
 ### 示例返回
 ```json
@@ -989,7 +986,7 @@ PUT
 
 ### 示例请求
 ```plain
-curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/health/instance?port=8848&healthy=true&ip=11.11.11.11&serviceName=nacos.test.3&namespaceId=n1''
+curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/health/instance?port=8848&healthy=true&ip=11.11.11.11&serviceName=nacos.test.3&namespaceId=n1'
 ```
 ### 示例返回
 ok
