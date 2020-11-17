@@ -89,6 +89,10 @@ export default {
                 link: '/en-us/docs/system-configurations.html',
               },
               {
+                title: 'Authentication',
+                link: '/en-us/docs/auth.html',
+              },
+              {
                 title: 'FAQ',
                 link: '/en-us/docs/faq.html',
               },
@@ -259,6 +263,10 @@ export default {
               {
                 title: 'Nacos系统参数介绍',
                 link: '/zh-cn/docs/system-configurations.html',
+              },
+              {
+                title: '权限认证',
+                link: '/zh-cn/docs/auth.html',
               },
               {
                 title: 'FAQ',
