@@ -350,6 +350,16 @@ POST
 | groupName | 字符串 | 否 | 分组名 |
 | ephemeral | boolean | 否 | 是否临时实例 |
 
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
+
 ### 示例请求
 ```plain
 curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?port=8848&healthy=true&ip=11.11.11.11&weight=1.0&serviceName=nacos.test.3&encoding=GBK&namespaceId=n1'
@@ -381,6 +391,16 @@ DELETE
 | clusterName | 字符串 | 否 | 集群名称 |
 | namespaceId | 字符串 | 否 | 命名空间ID |
 | ephemeral | boolean | 否 | 是否临时实例 |
+
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
 
 ### 示例请求
 ```plain
@@ -417,6 +437,16 @@ PUT
 | enabled | boolean | 否 | 是否打开流量 |
 | ephemeral | boolean | 否 | 是否临时实例 |
 
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
+
 ### 示例请求
 ```plain
 curl -X PUT '127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=1.1.1.1&port=8888&clusterName=TEST1&weight=8&metadata={}'
@@ -446,6 +476,16 @@ GET
 | namespaceId | 字符串 | 否 | 命名空间ID |
 | clusters | 字符串，多个集群用逗号分隔 | 否 | 集群名称 |
 | healthyOnly | boolean | 否，默认为false | 是否只返回健康实例 |
+
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
 
 ### 示例请求
 ```plain
@@ -498,6 +538,16 @@ GET
 | healthyOnly | boolean | 否，默认为false | 是否只返回健康实例 |
 | ephemeral | boolean | 否 | 是否临时实例 |
 
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
+
 ### 示例请求
 ```plain
 curl -X GET '127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.2&ip=10.10.10.10&port=8888&cluster=DEFAULT'
@@ -538,6 +588,16 @@ PUT
 | ephemeral | boolean | 否 | 是否临时实例 |
 | beat | JSON格式字符串 | 是 | 实例心跳内容 |
 
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
+
 ### 示例请求
 ```plain
 curl -X PUT '127.0.0.1:8848/nacos/v1/ns/instance/beat?serviceName=nacos.test.2&beat=%7b%22cluster%22%3a%22c1%22%2c%22ip%22%3a%22127.0.0.1%22%2c%22metadata%22%3a%7b%7d%2c%22port%22%3a8080%2c%22scheduled%22%3atrue%2c%22serviceName%22%3a%22jinhan0Fx4s.173TL.net%22%2c%22weight%22%3a1%7d'
@@ -571,6 +631,16 @@ POST
 | metadata | 字符串 | 否 | 元数据 |
 | selector | JSON格式字符串 | 否 | 访问策略 |
 
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
+
 ### 示例请求
 ```plain
 curl -X POST '127.0.0.1:8848/nacos/v1/ns/service?serviceName=nacos.test.2&metadata=k1%3dv1'
@@ -601,6 +671,15 @@ DELETE
 | groupName | 字符串 | 否 | 分组名 |
 | namespaceId | 字符串 | 否 | 命名空间ID |
 
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
 
 ### 示例请求
 ```plain
@@ -635,6 +714,16 @@ PUT
 | metadata | 字符串 | 否 | 元数据 |
 | selector | JSON格式字符串 | 否 | 访问策略 |
 
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
+
 ### 示例请求
 ```plain
 curl -X PUT '127.0.0.1:8848/nacos/v1/ns/service?serviceName=nacos.test.2&metadata=k1%3dv1'
@@ -666,6 +755,15 @@ GET
 | groupName | 字符串 | 否 | 分组名 |
 | namespaceId | 字符串 | 否 | 命名空间ID |
 
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
 
 ### 示例请求
 ```plain
@@ -717,6 +815,15 @@ GET
 | groupName | 字符串 | 否 | 分组名 |
 | namespaceId | 字符串 | 否 | 命名空间ID |
 
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
 
 ### 示例请求
 ```plain
@@ -748,6 +855,15 @@ GET
 
 ### 请求参数
 
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
 
 ### 示例请求
 ```plain
@@ -823,6 +939,15 @@ PUT
 | value | 字符串 | 是 | 开关值 |
 | debug | boolean | 否 | 是否只在本机生效,true表示本机生效,false表示集群生效 |
 
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
 
 ### 示例请求
 ```plain
@@ -848,6 +973,15 @@ GET
 
 ### 请求参数
 
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
 
 ### 示例请求
 ```plain
@@ -885,6 +1019,16 @@ GET
 | 名称 | 类型 | 是否必选 | 描述 |
 | :--- | :--- | :--- | --- |
 | healthy | boolean | 否 | 是否只返回健康Server节点 |
+
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
 
 ### 示例请求
 ```plain
@@ -948,6 +1092,16 @@ GET
 
 ### 请求参数
 
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
+
 ### 示例请求
 ```plain
 curl -X GET '127.0.0.1:8848/nacos/v1/ns/raft/leader'
@@ -984,6 +1138,16 @@ PUT
 | port | int | 是 | 服务实例port |
 | healthy | boolean | 是 | 是否健康 |
 
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
+
 ### 示例请求
 ```plain
 curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/health/instance?port=8848&healthy=true&ip=11.11.11.11&serviceName=nacos.test.3&namespaceId=n1'
@@ -1015,6 +1179,16 @@ PUT
 | consistencyType | 字符串 | 否 | 实例的类型(ephemeral/persist) |
 | instances | JSON格式字符串 | 否 | 需要更新的实例 |
 | metadata | JSON格式字符串 | 是 | 元数据信息 |
+
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
 
 ### 参数说明
 * consistencyType: 优先级高于instances参数，如果进行配置，则忽略instances参数的值。当值为'ephemeral'，则对serviceName下的所有非持久化实例进行更新。当值为'persist'，则对serviceName下的所有持久化实例进行更新。当为其他值，没有实例进行更新。
@@ -1055,6 +1229,16 @@ DELETE
 | consistencyType | 字符串 | 否 | 实例的类型(ephemeral/persist) |
 | instances | JSON格式字符串 | 否 | 需要更新的实例 |
 | metadata | JSON格式字符串 | 是 | 元数据信息 |
+
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
 
 ### 参数说明
 * consistencyType: 优先级高于instances参数，如果进行配置，则忽略instances参数的值。当值为ephemeral，则对serviceName下的所有非持久化实例进行更新。当值为persist，则对serviceName下的所有持久化实例进行更新。当为其他值，没有实例进行更新。
