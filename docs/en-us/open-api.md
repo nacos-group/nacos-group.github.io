@@ -33,6 +33,12 @@ description: Open API Guide
   - [Batch update instance metadata(Beta)](#2.18)
   - [Batch delete instance metadata(Beta)](#2.19)
 
+- Namespace
+  - [Get namespace](#3.1)
+  - [Create namespace](#3.2)
+  - [Update namespace](#3.3)
+  - [Delete namespace](#3.4)
+
 ## Configuration Management
 
 <h2 id="1.1">Get configurations</h2>
@@ -1337,4 +1343,159 @@ curl -X DELETE 'http://localhost:8848/nacos/v1/ns/instance/metadata/batch' -d 'n
 ### Response Example
 ```
 {"updated":["2.2.2.2:8080:unknown:xxxx-cluster:ephemeral","3.3.3.3:8080:unknown:xxxx-cluster:ephemeral"]}
+```
+
+## Namespace
+
+<h2 id="3.1">Get namespace</h2>
+
+### Description
+This API is used to get namespaces in Nacos.
+
+### Request Type
+GET
+
+### Request Path
+```plain
+/nacos/v1/ns/instance
+```
+
+### Request Parameters
+None
+
+### error Codes
+
+| Error code | Description | Meaning |
+| :--- | :--- | :--- |
+| 400 | Bad Request | Syntax error in the client request |
+| 403 | Forbidden | No permission |
+| 404 | Not Found | Not found resource |
+| 500 | Internal Server Error | Internal server error |
+| 200 | OK | Normal |
+
+### Request Example
+```plain
+curl -X GET 'http://localhost:8848/nacos/v1/console/namespaces'
+```
+### Response Example
+```
+{"code":200,"message":null,"data":[{"namespace":"","namespaceShowName":"public","quota":200,"configCount":0,"type":0}]}
+```
+
+<h2 id="3.2">Create namespace</h2>
+
+### Description
+Create namespace
+
+### Request Type
+POST
+
+### Request Path
+```plain
+/nacos/v1/console/namespaces
+```
+
+### Request Parameters
+
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | --- |
+| customNamespaceId | String | yes | ID of namespace |
+| namespaceName | String | yes | Namespace name |
+| namespaceDesc | String | no | Namespace description |
+
+### error Codes
+
+| Error code | Description | Meaning |
+| :--- | :--- | :--- |
+| 400 | Bad Request | Syntax error in the client request |
+| 403 | Forbidden | No permission |
+| 404 | Not Found | Not found resource |
+| 500 | Internal Server Error | Internal server error |
+| 200 | OK | Normal |
+
+### Request Example
+```plain
+curl -X POST 'http://localhost:8848/nacos/v1/console/namespaces' -d 'customNamespaceId=&namespaceName=dev&namespaceDesc='
+```
+### Response Example
+```
+true
+```
+
+<h2 id="3.3">Modify namespace</h2>
+
+### Description
+Update namespace
+
+### Request Type
+PUT
+
+### Request Path
+```plain
+/nacos/v1/console/namespaces
+```
+
+### Request Parameters
+
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | --- |
+| namespaceId | String | yes | ID of namespace |
+| namespaceName | String | yes | Namespace name |
+| namespaceDesc | String | yes | Namespace description |
+
+### error Codes
+
+| Error code | Description | Meaning |
+| :--- | :--- | :--- |
+| 400 | Bad Request | Syntax error in the client request |
+| 403 | Forbidden | No permission |
+| 404 | Not Found | Not found resource |
+| 500 | Internal Server Error | Internal server error |
+| 200 | OK | Normal |
+
+### Request Example
+```plain
+curl -X PUT 'http://localhost:8848/nacos/v1/console/namespaces' -d 'namespace=dev&namespaceShowName=开发环境2&namespaceDesc=只用于开发2'
+```
+### Response Example
+```
+true
+```
+
+<h2 id="3.4">Delete namespace</h2>
+
+### Description
+It deletes namespace in Nacos.
+
+### Request Type
+DELETE
+
+### Request Path
+```plain
+/nacos/v1/console/namespaces
+```
+
+### Request Parameters
+
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | --- |
+| namespaceId | String | yes | ID of namespace |
+
+### error Codes
+
+| Error code | Description | Meaning |
+| :--- | :--- | :--- |
+| 400 | Bad Request | Syntax error in the client request |
+| 403 | Forbidden | No permission |
+| 404 | Not Found | Not found resource |
+| 500 | Internal Server Error | Internal server error |
+| 200 | OK | Normal |
+
+### Request Example
+```plain
+curl -X DELETE 'http://localhost:8848/nacos/v1/console/namespaces' -d 'namespaceId=dev'
+```
+### Response Example
+```
+true
 ```
