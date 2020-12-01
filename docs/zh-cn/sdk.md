@@ -532,35 +532,3 @@ NamingService naming = NamingFactory.createNamingService(System.getProperty("ser
 naming.unsubscribe("nacos.test.3", event -> {});
 
 ```
-
-### 使用验证配置
-
-#### 描述
-按照官方文档配置启动,默认是不需要登录的，这样会导致配置中心对外直接暴露。
-```java
-### If turn on auth system:
-nacos.core.auth.enabled=false
-```
-因此要启用鉴权，通过配置用户名和密码的方式来使用nacos
-```java
-### If turn on auth system:
-nacos.core.auth.enabled=true
-```
-#### 示例代码
-```java
-try {
-    // Initialize the configuration service, and the console automatically obtains the following parameters through the sample code.
-	String serverAddr = "{serverAddr}";
-	Properties properties = new Properties();
-	properties.put("serverAddr", serverAddr);
-
-    // if need username and password to login
-        properties.put("username","nacos");
-        properties.put("password","nacos");
-
-	ConfigService configService = NacosFactory.createConfigService(properties);
-} catch (NacosException e) {
-    // TODO Auto-generated catch block
-    e.printStackTrace();
-}
-```
