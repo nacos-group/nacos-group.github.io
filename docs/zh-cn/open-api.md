@@ -33,6 +33,12 @@ description: Open API 指南
   - [批量更新实例元数据(Beta)](#2.18)
   - [批量删除实例元数据(Beta)](#2.19)
 
+- 命名空间
+  - [查询命名空间列表](#3.1)
+  - [创建命名空间](#3.2)
+  - [修改命名空间](#3.3)
+  - [删除命名空间](#3.4)
+
 ## 配置管理
 
 <h2 id="1.1">获取配置</h2>
@@ -1253,4 +1259,147 @@ curl -X DELETE 'http://localhost:8848/nacos/v1/ns/instance/metadata/batch' -d 'n
 ### 示例返回
 ```
 {"updated":["2.2.2.2:8080:unknown:xxxx-cluster:ephemeral","3.3.3.3:8080:unknown:xxxx-cluster:ephemeral"]}
+```
+
+## 命名空间
+
+<h2 id="3.1">查询命名空间列表</h2>
+
+### 请求类型
+GET
+
+### 请求路径
+```plain
+/nacos/v1/console/namespaces
+```
+
+### 请求参数
+无
+
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
+
+### 示例请求
+```plain
+curl -X GET 'http://localhost:8848/nacos/v1/console/namespaces'
+```
+### 示例返回
+```
+{"code":200,"message":null,"data":[{"namespace":"","namespaceShowName":"public","quota":200,"configCount":0,"type":0}]}
+```
+
+<h2 id="3.2">创建命名空间</h2>
+
+### 请求类型
+POST
+
+### 请求路径
+```plain
+/nacos/v1/console/namespaces
+```
+
+### 请求参数
+
+| 名称 | 类型 | 是否必选 | 描述 |
+| :--- | :--- | :--- | --- |
+| customNamespaceId | 字符串 | 是 | 命名空间ID |
+| namespaceName | 字符串 | 是 | 命名空间名 |
+| namespaceDesc | 字符串 | 否 | 命名空间描述 |
+
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
+
+### 示例请求
+```plain
+curl -X POST 'http://localhost:8848/nacos/v1/console/namespaces' -d 'customNamespaceId=&namespaceName=dev&namespaceDesc='
+```
+### 示例返回
+```
+true
+```
+
+<h2 id="3.3">修改命名空间</h2>
+
+### 请求类型
+PUT
+
+### 请求路径
+```plain
+/nacos/v1/console/namespaces
+```
+
+### 请求参数
+
+| 名称 | 类型 | 是否必选 | 描述 |
+| :--- | :--- | :--- | --- |
+| namespaceId | 字符串 | 是 | 命名空间ID |
+| namespaceName | 字符串 | 是 | 命名空间名 |
+| namespaceDesc | 字符串 | 是 | 命名空间描述 |
+
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
+
+### 示例请求
+```plain
+curl -X PUT 'http://localhost:8848/nacos/v1/console/namespaces' -d 'namespace=dev&namespaceShowName=开发环境2&namespaceDesc=只用于开发2'
+```
+### 示例返回
+```
+true
+```
+
+<h2 id="3.4">删除命名空间</h2>
+
+### 请求类型
+DELETE
+
+### 请求路径
+```plain
+/nacos/v1/console/namespaces
+```
+
+### 请求参数
+
+| 名称 | 类型 | 是否必选 | 描述 |
+| :--- | :--- | :--- | --- |
+| namespaceId | 字符串 | 是 | 命名空间ID |
+
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
+
+### 示例请求
+```plain
+curl -X DELETE 'http://localhost:8848/nacos/v1/console/namespaces' -d 'namespaceId=dev'
+```
+### 示例返回
+```
+true
 ```
