@@ -86,6 +86,7 @@ class Home extends Language {
                         </div>
                         <div className="version-note">
                             <a target="_blank" rel="noopener noreferrer" href={getLink(dataSource.brand.versionNote.link)}>{dataSource.brand.versionNote.text}</a>
+                            <a target="_blank" rel="noopener noreferrer" href={getLink(dataSource.brand.versionNote2.link)}>{dataSource.brand.versionNote2.text}</a>
                         </div>
                         <div className="release-date">{dataSource.brand.releaseDate}</div>
                     </div>
