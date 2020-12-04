@@ -136,6 +136,10 @@ export default {
             ],
           },
           {
+            title: 'Nacos 2.0',
+            link: '/en-us/docs/2.0.0-alpha.html'
+          },
+          {
             title: 'Contributor Guide',
             children: [
               {
@@ -310,6 +314,10 @@ export default {
                   link: '/zh-cn/docs/nacos-sync-use.html',
               },
             ],
+          },
+          {
+            title: 'Nacos 2.0',
+            link: '/zh-cn/docs/2.0.0-alpha.html'
           },
           {
             title: '开源共建',
