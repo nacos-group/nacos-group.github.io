@@ -1,6 +1,15 @@
 {
   "en-us": [
     {
+      "filename": "2.0.0-alpha.md",
+      "link": "/en-us/docs/2.0.0-alpha.html",
+      "meta": {
+        "title": "Nacos 2.0.0-ALPHA",
+        "keywords": "Nacos,2.0.0",
+        "description": "Nacos 2.0.0-ALPHA"
+      }
+    },
+    {
       "filename": "activity.md",
       "link": "/en-us/docs/activity.html",
       "meta": {
@@ -16,6 +25,15 @@
         "title": "Nacos architecture",
         "keywords": "Nacos,architecture",
         "description": "Nacos architecture"
+      }
+    },
+    {
+      "filename": "auth.md",
+      "link": "/en-us/docs/auth.html",
+      "meta": {
+        "title": "Authentication",
+        "keywords": "Authentication",
+        "description": "Authentication"
       }
     },
     {
@@ -346,6 +364,15 @@
   ],
   "zh-cn": [
     {
+      "filename": "2.0.0-alpha.md",
+      "link": "/zh-cn/docs/2.0.0-alpha.html",
+      "meta": {
+        "title": "Nacos 2.0.0-ALPHA 文档",
+        "keywords": "Nacos,2.0.0",
+        "description": "Nacos 2.0.0-ALPHA 文档"
+      }
+    },
+    {
       "filename": "activity.md",
       "link": "/zh-cn/docs/activity.html",
       "meta": {
@@ -361,6 +388,15 @@
         "title": "Nacos 架构",
         "keywords": "Nacos,架构",
         "description": "Nacos 架构"
+      }
+    },
+    {
+      "filename": "auth.md",
+      "link": "/zh-cn/docs/auth.html",
+      "meta": {
+        "title": "Authorization",
+        "keywords": "Authorization",
+        "description": "Authorization"
       }
     },
     {
