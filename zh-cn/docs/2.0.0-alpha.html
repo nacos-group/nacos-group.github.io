@@ -165,6 +165,8 @@
 <p>Nacos在1.4版本后使用Jraft替换了自研的Raft实现，Jraft的选主比原先自研的Raft更加严格，会记录之前启动时的ip或host。因此重启时如果ip变动了，有可能造成选主失败，从而导致nacos无法正确提供服务。
 解决方式为删除nacos目录下的data，再启动。</p>
 <p>或者使用<code>-Dnacos.server.ip=${domain}</code>,然后将nacos/conf的cluster.conf配置domain列表，避免重启时ip变动导致的raft选主问题。</p>
+<h3>找不到符号<code>com.alibaba.nacos.consistency.entity</code></h3>
+<p>这个包目录是由<code>protobuf</code>在编译时自动生成，您可以通过<code>mvn compile</code>来自动生成他们。如果您使用的是IDEA，也可以使用IDEA的protobuf插件。</p>
 <h3>待补充...</h3>
 </div></div></section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>愿景</h3><p>Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/what-is-nacos.html" target="_self">概览</a></dd><dd><a href="/zh-cn/docs/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/contributing.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_self">云服务 MSE</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">云服务 EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">云服务 AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
 	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
