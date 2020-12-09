@@ -11,6 +11,9 @@ description: Open API 指南
   - [监听配置](#1.2)
   - [发布配置](#1.3)
   - [删除配置](#1.4)
+  - [查询历史版本](#1.5)
+  - [查询历史版本详情](#1.6)
+  - [查询配置上一版本信息](#1.7)
 
 - 服务发现
   - [注册实例](#2.1)
@@ -323,6 +326,185 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.example&g
 
 ```
 true
+```
+
+<h2 id="1.5">查询历史版本</h2>
+
+### 描述
+
+查询配置项历史版本。
+
+### 请求类型
+GET
+
+### 请求 URL
+/nacos/v1/cs/history?search=accurate
+
+### 请求参数
+
+| 名称 | 类型 | 是否必须 | 描述 |
+| :--- | :--- | :--- | :--- |
+| tenant | string | 否 | 租户信息，对应 Naocs 的命名空间ID字段 |
+| dataId | string | 是 | 配置 ID |
+| group | string | 是 | 配置分组 |
+| pageNo | integer | 否 | 当前页码 |
+| pageSize | integer | 否 | 分页条数(默认100条,最大为500) |
+
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
+
+
+### 示例
+* 请求示例
+
+```
+curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history?search=accurate&dataId=nacos.example&group=com.alibaba.nacos'
+```
+
+* 返回示例
+
+```
+{
+  "totalCount": 1,
+  "pageNumber": 1,
+  "pagesAvailable": 1,
+  "pageItems": [
+    {
+      "id": "203",
+      "lastId": -1,
+      "dataId": "nacos.example",
+      "group": "com.alibaba.nacos",
+      "tenant": "",
+      "appName": "",
+      "md5": null,
+      "content": null,
+      "srcIp": "0:0:0:0:0:0:0:1",
+      "srcUser": null,
+      "opType": "I         ",
+      "createdTime": "2010-05-04T16:00:00.000+0000",
+      "lastModifiedTime": "2020-12-05T01:48:03.380+0000"
+    }
+  ]
+}
+```
+
+<h2 id="1.6">查询历史版本详情</h2>
+
+### 描述
+
+查询配置项历史版本详情
+
+### 请求类型
+GET
+
+### 请求 URL
+/nacos/v1/cs/history
+
+### 请求参数
+
+| 名称 | 类型 | 是否必须 | 描述 |
+| :--- | :--- | :--- | :--- |
+| nid | Integer | 是 | 配置项历史版本ID |
+
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
+
+
+### 示例
+* 请求示例
+
+```
+curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history?nid=203'
+```
+
+* 返回示例
+
+```
+{
+  "id": "203",
+  "lastId": -1,
+  "dataId": "nacos.example",
+  "group": "com.alibaba.nacos",
+  "tenant": "",
+  "appName": "",
+  "md5": "9f67e6977b100e00cab385a75597db58",
+  "content": "contentTest",
+  "srcIp": "0:0:0:0:0:0:0:1",
+  "srcUser": null,
+  "opType": "I         ",
+  "createdTime": "2010-05-04T16:00:00.000+0000",
+  "lastModifiedTime": "2020-12-05T01:48:03.380+0000"
+}
+```
+
+<h2 id="1.7">查询配置上一版本信息</h2>
+
+### 描述
+
+查询配置上一版本信息(1.4起)
+
+### 请求类型
+GET
+
+### 请求 URL
+/nacos/v1/cs/history/previous
+
+### 请求参数
+
+| 名称 | 类型 | 是否必须 | 描述 |
+| :--- | :--- | :--- | :--- |
+| id | Integer | 是 | 配置ID |
+
+### 错误编码
+
+| 错误代码 | 描述 | 语义 |
+| :--- | :--- | :--- |
+| 400 | Bad Request | 客户端请求中的语法错误 |
+| 403 | Forbidden | 没有权限 |
+| 404 | Not Found | 无法找到资源 |
+| 500 | Internal Server Error | 服务器内部错误 |
+| 200 | OK | 正常 |
+
+
+### 示例
+* 请求示例
+
+```
+curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history/previous?id=309135486247505920'
+```
+
+* 返回示例
+
+```
+{
+  "id": "203",
+  "lastId": -1,
+  "dataId": "nacos.example",
+  "group": "com.alibaba.nacos",
+  "tenant": "",
+  "appName": "",
+  "md5": "9f67e6977b100e00cab385a75597db58",
+  "content": "contentTest",
+  "srcIp": "0:0:0:0:0:0:0:1",
+  "srcUser": null,
+  "opType": "I         ",
+  "createdTime": "2010-05-04T16:00:00.000+0000",
+  "lastModifiedTime": "2020-12-05T01:48:03.380+0000"
+}
 ```
 
 ## 服务发现

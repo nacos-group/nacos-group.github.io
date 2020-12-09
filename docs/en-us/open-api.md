@@ -11,6 +11,9 @@ description: Open API Guide
   - [Listen for configurations](#1.2)
   - [Publish configuration](#1.3)
   - [Delete configuration](#1.4)
+  - [Query list of history configuration](#1.5)
+  - [Query the history details of the configuration](#1.6)
+  - [Query the previous version of the configuration](#1.7)
 
 - Service Discovery
   - [Register instance](#2.1)
@@ -402,6 +405,190 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.example&g
 
 ```
 true
+```
+
+<h2 id="1.5">Query list of history configuration</h2>
+
+### Description
+
+Query list of history configuration.
+
+### Request Type
+GET
+
+### Request URL
+
+```
+/nacos/v1/cs/history?search=accurate
+```
+
+### Request parameters
+
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| tenant | string | No | Tenant information. It corresponds to the Namespace ID field in Nacos. |
+| dataId | string | Yes | Configuration ID |
+| group | string | Yes | Configuration group |
+| pageNo | integer | no | page number |
+| pageSize | integer | no | page size (default:100, max:500) |
+
+### Error code
+
+| Error code | Description | Meaning |
+| :--- | :--- | :--- |
+| 400 | Bad Request | Syntax error in client request |
+| 403 | Forbidden | No permission |
+| 404 | Not Found | Not found resource |
+| 500 | Internal Server Error | Internal server error |
+| 200 | OK | Normal |
+
+
+### Example
+#### Request example
+
+```
+curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history?search=accurate&dataId=nacos.example&group=com.alibaba.nacos'
+```
+
+#### Response example
+
+```
+{
+  "totalCount": 1,
+  "pageNumber": 1,
+  "pagesAvailable": 1,
+  "pageItems": [
+    {
+      "id": "203",
+      "lastId": -1,
+      "dataId": "nacos.example",
+      "group": "com.alibaba.nacos",
+      "tenant": "",
+      "appName": "",
+      "md5": null,
+      "content": null,
+      "srcIp": "0:0:0:0:0:0:0:1",
+      "srcUser": null,
+      "opType": "I         ",
+      "createdTime": "2010-05-04T16:00:00.000+0000",
+      "lastModifiedTime": "2020-12-05T01:48:03.380+0000"
+    }
+  ]
+}
+```
+
+<h2 id="1.6">Query the history details of the configuration</h2>
+
+### Description
+
+Query the history details of the configuration
+
+### Request Type
+GET
+
+### Request URL
+
+```
+/nacos/v1/cs/history
+```
+
+### Request Parameters
+
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| nid | Integer | Yes | history config info ID |
+
+### Error Code
+
+| Error code | Description | Meaning |
+| :--- | :--- | :--- |
+| 400 | Bad Request | Syntax error in client request |
+| 403 | Forbidden | No permission |
+| 404 | Not Found | Not found resource |
+| 500 | Internal Server Error | Internal server error |
+| 200 | OK | Normal |
+
+
+### Example
+#### Request example
+
+```
+curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history?nid=203'
+```
+
+#### Response example
+
+```
+{
+  "id": "203",
+  "lastId": -1,
+  "dataId": "nacos.example",
+  "group": "com.alibaba.nacos",
+  "tenant": "",
+  "appName": "",
+  "md5": "9f67e6977b100e00cab385a75597db58",
+  "content": "contentTest",
+  "srcIp": "0:0:0:0:0:0:0:1",
+  "srcUser": null,
+  "opType": "I         ",
+  "createdTime": "2010-05-04T16:00:00.000+0000",
+  "lastModifiedTime": "2020-12-05T01:48:03.380+0000"
+}
+```
+
+<h2 id="1.7">Query the previous version of the configuration</h2>
+
+### Description
+
+Query the previous version of the configuration.(Since 1.4.0)
+
+### Request Type
+GET
+
+### Request URL
+/nacos/v1/cs/history/previous
+
+### Request Paramters
+
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| id | Integer | Yes | configuration unique id |
+
+### Error Code
+
+| Error code | Description | Meaning |
+| :--- | :--- | :--- |
+| 400 | Bad Request | Syntax error in client request |
+| 403 | Forbidden | No permission |
+| 404 | Not Found | Not found resource |
+| 500 | Internal Server Error | Internal server error |
+| 200 | OK | Normal |
+
+
+### Example
+#### Request example
+```
+curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history/previous?id=309135486247505920'
+```
+
+#### Response example
+
+```
+{
+  "id": "203",
+  "lastId": -1,
+  "dataId": "nacos.example",
+  "group": "com.alibaba.nacos",
+  "tenant": "",
+  "appName": "",
+  "md5": "9f67e6977b100e00cab385a75597db58",
+  "content": "contentTest",
+  "srcIp": "0:0:0:0:0:0:0:1",
+  "srcUser": null,
+  "opType": "I         ",
+  "createdTime": "2010-05-04T16:00:00.000+0000",
+  "lastModifiedTime": "2020-12-05T01:48:03.380+0000"
+}
 ```
 
 ## Service Discovery
