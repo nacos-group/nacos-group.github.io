@@ -536,11 +536,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history?nid=203'
 }
 ```
 
-<h2 id="1.7">Query previous config history information</h2>
+<h2 id="1.7">Query the previous version of the configuration</h2>
 
 ### Description
 
-Query previous config history information.(Since 1.4.0)
+Query the previous version of the configuration.(Since 1.4.0)
 
 ### Request Type
 GET
