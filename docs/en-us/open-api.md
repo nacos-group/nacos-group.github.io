@@ -11,9 +11,9 @@ description: Open API Guide
   - [Listen for configurations](#1.2)
   - [Publish configuration](#1.3)
   - [Delete configuration](#1.4)
-  - [Query the list history configuration](#1.5)
-  - [Query the detailed configuration history infomation](#1.6)
-  - [Query previous config history information](#1.7)
+  - [Query list of history configuration](#1.5)
+  - [Query the history details of the configuration](#1.6)
+  - [Query the previous version of the configuration](#1.7)
 
 - Service Discovery
   - [Register instance](#2.1)
@@ -407,11 +407,11 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.example&g
 true
 ```
 
-<h2 id="1.5">Query the list history configuration</h2>
+<h2 id="1.5">Query list of history configuration</h2>
 
 ### Description
 
-Query the list history configuration.
+Query list of history configuration.
 
 ### Request Type
 GET
@@ -477,11 +477,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history?search=accurate&dataId=na
 }
 ```
 
-<h2 id="1.6">Query the detailed configuration history infomation</h2>
+<h2 id="1.6">Query the history details of the configuration</h2>
 
 ### Description
 
-Query the detailed configuration history infomation
+Query the history details of the configuration
 
 ### Request Type
 GET
