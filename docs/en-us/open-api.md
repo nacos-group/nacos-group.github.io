@@ -1088,7 +1088,7 @@ GET
 | :--- | :--- | :--- | --- |
 | pageNo | int | yes | current page number |
 | pageSize | int | yes | page size |
-| groupName | String | no | group name |
+| groupName | String | no | group name(* means get all services) |
 | namespaceId | String | no | namespace id |
 
 ### Error Codes

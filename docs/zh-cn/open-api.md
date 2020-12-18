@@ -1000,7 +1000,7 @@ GET
 | :--- | :--- | :--- | --- |
 | pageNo | int | 是 | 当前页码 |
 | pageSize | int | 是 | 分页大小 |
-| groupName | 字符串 | 否 | 分组名 |
+| groupName | 字符串 | 否 | 分组名(* 意味着查询所有服务) |
 | namespaceId | 字符串 | 否 | 命名空间ID |
 
 ### 错误编码
