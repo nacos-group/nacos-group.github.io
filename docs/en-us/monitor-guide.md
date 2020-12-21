@@ -34,7 +34,7 @@ Modify configuration file prometheus.yml to collect Nacos metrics data
 ```
     metrics_path: '/nacos/actuator/prometheus'
     static_configs:
-      - targets:['{ip1}:8848','{ip2}:8848','{ip3}:8848']
+      - targets: ['{ip1}:8848','{ip2}:8848','{ip3}:8848']
 ```
 
 Start prometheus service
