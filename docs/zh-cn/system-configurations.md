@@ -47,8 +47,14 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |db.url.1| 第二个数据库的URL | 字符串 | 空 | >= 0.1.0 |
 |db.user| 数据库连接的用户名 | 字符串 | 空 | >= 0.1.0 |
 |db.password| 数据库连接的密码 | 字符串 | 空 | >= 0.1.0 |
+|spring.datasource.platform｜数据库类型｜字符串｜mysql｜>=1.3.0|
+|db.pool.config.xxx| 数据库连接池参数，使用的是hikari连接池，参数与hikari连接池相同，如`db.pool.config.connectionTimeout`或`db.pool.config.maximumPoolSize`|字符串|同hikariCp对应默认配置|>=1.4.1|
 
 当前数据库配置支持多数据源。通过`db.num`来指定数据源个数，`db.url.index`为对应的数据库的链接。`db.user`以及`db.password`没有设置`index`时,所有的链接都以`db.user`和`db.password`用作认证。如果不同数据源的用户名称或者用户密码不一样时，可以通过符号`,`来进行切割，或者指定`db.user.index`,`db.user.password`来设置对应数据库链接的用户或者密码。需要注意的是，当`db.user`和`db.password`没有指定下标时，因为当前机制会根据`,`进行切割。所以当用户名或者密码存在`,`时，会把`,`切割后前面的值当成最后的值进行认证，会导致认证失败。
+
+Nacos从1.3版本开始使用HikariCP连接池，但在1.4.1版本前，连接池配置由系统默认值定义，无法自定义配置。在1.4.1后，提供了一个方法能够配置HikariCP连接池。
+`db.pool.config`为配置前缀，`xxx`为实际的hikariCP配置，如`db.pool.config.connectionTimeout`或`db.pool.config.maximumPoolSize`等。更多hikariCP的配置请查看[HikariCP](https://github.com/brettwooldridge/HikariCP) 
+需要注意的是，url,user,password会由`db.url.n`,`db.user`,`db.password`覆盖，driverClassName则是默认的MySQL8 driver（该版本mysql driver支持mysql5.x)
 
 ### CMDB模块
 
