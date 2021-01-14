@@ -213,6 +213,24 @@
       }
     },
     {
+      "filename": "nacos2-config-benchmark.md",
+      "link": "/en-us/docs/nacos2-config-benchmark.html",
+      "meta": {
+        "title": "Nacos2.0服务配置性能测试报告",
+        "keywords": "Nacos,服务,配置,性能",
+        "description": "Nacos2.0服务配置性能测试报告"
+      }
+    },
+    {
+      "filename": "nacos2-naming-benchmark.md",
+      "link": "/en-us/docs/nacos2-naming-benchmark.html",
+      "meta": {
+        "title": "Nacos2.0服务发现性能测试报告",
+        "keywords": "Nacos,服务,发现,性能",
+        "description": "Nacos2.0服务发现性能测试报告"
+      }
+    },
+    {
       "filename": "open-api.md",
       "link": "/en-us/docs/open-api.html",
       "meta": {
@@ -573,6 +591,24 @@
         "title": "NacosSync 介绍",
         "keywords": "NacosSync,介绍",
         "description": "NacosSync 介绍"
+      }
+    },
+    {
+      "filename": "nacos2-config-benchmark.md",
+      "link": "/zh-cn/docs/nacos2-config-benchmark.html",
+      "meta": {
+        "title": "Nacos2.0服务配置性能测试报告",
+        "keywords": "Nacos,服务,配置,性能",
+        "description": "Nacos2.0服务配置性能测试报告"
+      }
+    },
+    {
+      "filename": "nacos2-naming-benchmark.md",
+      "link": "/zh-cn/docs/nacos2-naming-benchmark.html",
+      "meta": {
+        "title": "Nacos2.0服务发现性能测试报告",
+        "keywords": "Nacos,服务,发现,性能",
+        "description": "Nacos2.0服务发现性能测试报告"
       }
     },
     {

@@ -47,7 +47,7 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |db.url.1| 第二个数据库的URL | 字符串 | 空 | >= 0.1.0 |
 |db.user| 数据库连接的用户名 | 字符串 | 空 | >= 0.1.0 |
 |db.password| 数据库连接的密码 | 字符串 | 空 | >= 0.1.0 |
-|spring.datasource.platform｜数据库类型｜字符串｜mysql｜>=1.3.0|
+|spring.datasource.platform|数据库类型|字符串|mysql|>=1.3.0|
 |db.pool.config.xxx| 数据库连接池参数，使用的是hikari连接池，参数与hikari连接池相同，如`db.pool.config.connectionTimeout`或`db.pool.config.maximumPoolSize`|字符串|同hikariCp对应默认配置|>=1.4.1|
 
 当前数据库配置支持多数据源。通过`db.num`来指定数据源个数，`db.url.index`为对应的数据库的链接。`db.user`以及`db.password`没有设置`index`时,所有的链接都以`db.user`和`db.password`用作认证。如果不同数据源的用户名称或者用户密码不一样时，可以通过符号`,`来进行切割，或者指定`db.user.index`,`db.user.password`来设置对应数据库链接的用户或者密码。需要注意的是，当`db.user`和`db.password`没有指定下标时，因为当前机制会根据`,`进行切割。所以当用户名或者密码存在`,`时，会把`,`切割后前面的值当成最后的值进行认证，会导致认证失败。
