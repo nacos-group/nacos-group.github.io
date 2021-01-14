@@ -126,8 +126,16 @@ export default {
                 link: '/en-us/docs/nacos-config-benchmark.html',
               },
               {
+                title: 'Nacos2.0 Config Benchmark',
+                link: '/en-us/docs/nacos2-config-benchmark.html',
+              },
+              {
                 title: 'Nacos Naming Benchmark',
                 link: '/en-us/docs/nacos-naming-benchmark.html',
+              },
+              {
+                title: 'Nacos2.0 Naming Benchmark',
+                link: '/en-us/docs/nacos2-naming-benchmark.html',
               },
               {
                   title: 'Data Migration to Nacos',
@@ -302,12 +310,20 @@ export default {
                 link: '/zh-cn/docs/monitor-guide.html',
               },
               {
-                  title: '服务配置模块压测报告',
+                  title: 'Nacos配置模块压测报告',
                   link: '/zh-cn/docs/nacos-config-benchmark.html',
               },
               {
-                title: '服务发现模块压测报告',
+                title: 'Nacos2.0配置模块压测报告',
+                link: '/zh-cn/docs/nacos2-config-benchmark.html',
+              },
+              {
+                title: 'Nacos服务发现模块压测报告',
                 link: '/zh-cn/docs/nacos-naming-benchmark.html',
+              },
+              {
+                title: 'Nacos2.0服务发现模块压测报告',
+                link: '/zh-cn/docs/nacos2-naming-benchmark.html',
               },
               {
                   title: '其他环境迁移到Nacos',
