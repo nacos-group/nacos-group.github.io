@@ -41,6 +41,8 @@ description: Nacos FAQ
   - [客户端CPU高，或者内存耗尽的问题](#3.16)
   - [日志打印频繁的问题](#3.17)
   - [集群管理页面，raft term显示不一致问题](#3.18)
+  - [找不到符号`com.alibaba.nacos.consistency.entity`](#3.19)
+  
   
 
 - Nacos原理问题
@@ -281,5 +283,8 @@ curl '127.0.0.1:8848/nacos/v1/ns/raft/state'
 
 然后在返回信息中查找本节点的集群任期。因为每个节点返回的集群任期中，只有当前节点的信息是准确的，返回的其他节点的信息都是不准确的。
 
+<h4 id="3.19">找不到符号`com.alibaba.nacos.consistency.entity`</h4>
+
+这个包目录是由`protobuf`在编译时自动生成，您可以通过`mvn compile`来自动生成他们。如果您使用的是IDEA，也可以使用IDEA的protobuf插件。
 
 ## Nacos原理问题

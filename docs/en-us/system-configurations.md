@@ -47,8 +47,14 @@ In addition to the above listed to in `application.properties`configuration prop
 |db.url.1| The second database URL | string | null | >= 0.1.0 |
 |db.user| User name of the database connection | string | null | >= 0.1.0 |
 |db.password| Database connection password | string | null | >= 0.1.0 |
+|spring.datasource.platform｜Database type｜string｜mysql｜>=1.3.0|
+|db.pool.config.xxx| Database connection pool parameters, using hikari connection pool, the parameters are the same as hikari connection pool, such as `db.pool.config.connectionTimeout` or `db.pool.config.maximumPoolSize` |string| same as hikariCp |>=1.4.1|
 
 Now the db config support multi data source. It can set data source num by `db.num`, and `db.url.index` as the corresponding connection's url. When `db.user` and `db.password` are set without `index`, all db connection use `db.user` and `db.password` to auth. If the username or password is different with different data source, can split by symbol `,`, or use `db.user.index`,`db.user.password` to set corresponding db connection's username or password. It is important to note that, when `db.user` or `db.password` are set without index, and the mechanism which split `db.user`,`db.password` by `,` exist, so if username or password contains `,`, it will split the value by `,`, and use split[0] to auth, failed to auth finally.      
+
+Nacos started to use HikariCP connection pool from version 1.3, but before version 1.4.1, the connection pool configuration is system default value, and the configuration could not be customized. After 1.4.1, Nacos provide a method to configure the HikariCP connection pool.
+`db.pool.config` is the configuration prefix, `xxx` is the actual hikariCP configuration, such as `db.pool.config.connectionTimeout` or `db.pool.config.maximumPoolSize` and so on. For more configuration of hikariCP, please check [HikariCP](https://github.com/brettwooldridge/HikariCP)
+It should be noted that `url`, `user`, `password` will be rewrite by `db.url.n`, `db.user`, `db.password`, and driverClassName is the default MySQL8 driver which supports mysql5.x.
 
 ### CMDB module
 
