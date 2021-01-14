@@ -6,6 +6,13 @@ description: Authorization
 
 # 鉴权
 
+** 注意 ** 
+
+1. Nacos定义为一个IDC内部应用组件，并非面向公网环境的产品，建议大家不要暴露在公网环境。
+2. Nacos开源社区提供的简单鉴权实现仅为抛砖引玉，初衷为防止业务错用影响他人的弱鉴权体系，不是防止恶意攻击的强鉴权体系。Nacos默认收到的请求都是在您的可信网络环境中运行。
+3. Nacos鉴权作为非核心能力，后续将逐渐优化抽象拓展，方便有强鉴权需求的公司在自己的安全体系下拓展，Nacos的默认鉴权实现可以看作一个简单的鉴权demo，仅供参考。
+4. 欢迎社区安全高手贡献鉴权及安全部分的内容。
+
 ## 服务端如何开启鉴权
 
 ### 非Docker环境
@@ -123,3 +130,28 @@ curl -X GET '127.0.0.1:8848/nacos/v1/cs/configs?accessToken=eyJhbGciOiJIUzI1NiJ9
 curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?accessToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuYWNvcyIsImV4cCI6MTYwNTYyMzkyM30.O-s2yWfDSUZ7Svd3Vs7jy9tsfDNHs1SuebJB4KlNY8Q&port=8848&healthy=true&ip=11.11.11.11&weight=1.0&serviceName=nacos.test.3&encoding=GBK&namespaceId=n1'
 ```
 
+## 开启服务身份识别功能
+
+开启鉴权功能后，服务端之间的请求也会通过鉴权系统的影响。考虑到服务端之间的通信应该是可信的，因此在1.2~1.4.0版本期间，通过User-Agent中是否包含Nacos-Server来进行判断请求是否来自其他服务端。
+
+但这种实现由于过于简单且固定，导致可能存在安全问题。因此从1.4.1版本开始，Nacos添加服务身份识别功能，用户可以自行配置服务端的Identity，不再使用User-Agent作为服务端请求的判断标准。
+
+开启方式:
+
+```
+### 开启鉴权
+nacos.core.auth.enabled=true
+
+### 关闭使用user-agent判断服务端请求并放行鉴权的功能
+nacos.core.auth.enable.userAgentAuthWhite=false
+
+### 配置自定义身份识别的key（不可为空）和value（不可为空）
+nacos.core.auth.server.identity.key=example
+nacos.core.auth.server.identity.value=example
+```
+
+** 注意 ** 所有集群均需要配置相同的`server.identity`信息，否则可能导致服务端之间数据不一致或无法删除实例等问题。
+
+### 旧版本升级
+
+考虑到旧版本用户需要升级，可以在升级期间，开启`nacos.core.auth.enable.userAgentAuthWhite=true`功能，待集群整体升级到1.4.1并稳定运行后，再关闭此功能。

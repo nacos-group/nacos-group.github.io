@@ -6,6 +6,13 @@ description: Authentication
 
 # Authentication
 
+** Attention ** 
+
+1. Nacos is defined as an IDC internal application component, not a product for the public network environment. It is not recommended expose it to the public network environment directly.
+2. The simple authentication implementation provided by the Nacos community is just to start a discussion. The original intention is a weak authentication system to prevent affects others by misuse, not a strong authentication system to prevent malicious attacks. The requests that Nacos receives by default are all running in your trusted network environment.
+3. As a non-core features, Nacos authentication will optimize the expansion in the future to facilitate companies with strong authentication needs to expand under their own security system. Nacos' community authentication implementation can be regarded as a simple authentication demo. Only for reference.
+4. Welcome community security experts to contribute to the authentication and security content.
+
 ### Use Authentication in Servers
 
 ### Without Docker
@@ -117,3 +124,28 @@ curl -X GET '127.0.0.1:8848/nacos/v1/cs/configs?accessToken=eyJhbGciOiJIUzI1NiJ9
 curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?accessToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuYWNvcyIsImV4cCI6MTYwNTYyMzkyM30.O-s2yWfDSUZ7Svd3Vs7jy9tsfDNHs1SuebJB4KlNY8Q&port=8848&healthy=true&ip=11.11.11.11&weight=1.0&serviceName=nacos.test.3&encoding=GBK&namespaceId=n1'
 ```
 
+## Open feature for server identity
+
+After the authentication feature is enabled, requests between servers will also be affected by the authentication system. Considering that the communication between the servers should be credible, during the 1.2~1.4.0 version, Nacos server use whether the User-Agent includes Nacos-Server to determine whether the request comes from other servers.
+
+However, this implementation is too simple and fixed, leading to possible security issues. Therefore, since version 1.4.1, Nacos has added the server identification feature. Users can configure the identity of the server by themselves, and no longer use User-Agent as the judgment standard for server requests.
+
+Way to open server identity
+
+```
+### Open authentication
+nacos.core.auth.enabled=true
+
+### Shutdown user-agent judgement for server request
+nacos.core.auth.enable.userAgentAuthWhite=false
+
+### Config the server identity key(not empty) and value(not empty)
+nacos.core.auth.server.identity.key=example
+nacos.core.auth.server.identity.value=example
+```
+
+** Attention ** All servers in cluster need to be configured with the same `server.identity` information, otherwise it may cause data inconsistency between servers or failure to delete instances.
+
+### Upgrade from old version
+
+Considering that users of the old version need to upgrade, users can turn on the `nacos.core.auth.enable.userAgentAuthWhite=true` during upgrading, and turn off it after the cluster is upgraded to 1.4.1 completely and runs stably.
