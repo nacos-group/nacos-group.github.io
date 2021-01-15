@@ -20,7 +20,9 @@ description: 如何提交问题报告
 
 我们可能会要求您提供更多信息以查找错误。将关闭重复的错误报告。
 
-
-
 [nacos-issue](https://github.com/alibaba/nacos/issues/new)
 [filing-good-bugs](http://fantasai.inkedblade.net/style/talks/filing-good-bugs/)
+
+# 如何提交安全问题
+
+如果您发现Nacos项目中存在安全问题，请通过[ASRC（Alibaba Security Response Center阿里安全响应中心）]( https://security.alibaba.com) 告知我们。

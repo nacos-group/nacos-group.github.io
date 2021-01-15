@@ -4,6 +4,12 @@ keywords: Nacos,deployment modes
 description: Nacos supports three types of deployment modes
 ---
 
+# Nacos deployment environment
+
+Nacos is defined as an IDC internal application component, not a product for the public network environment. It is not recommended expose it to the public network environment directly.
+
+All network related concepts such as VIP and network interface mentioned in the following documents are in the **internal network environment**.
+
 # Nacos supports three types of deployment modes
 
 * Standalone Mode - used in DEV or TEST environment.

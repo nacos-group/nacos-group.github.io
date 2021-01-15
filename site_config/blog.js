@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: 'Suggestions for fixing Nacos authentication vulnerability',
+            author: '@席翁',
+            dateStr: 'Jan 15, 2021',
+            desc: 'Suggestions for fixing Nacos authentication vulnerability',
+            link: '/en-us/blog/nacos-security-problem-note.html',
+        },
+        {
             title: 'Nacos 1.4.0 + Go SDK 1.0.1 Release!',
             author: '@席翁',
             dateStr: 'Nov 2nd, 2020',
@@ -216,6 +223,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: '关于Nacos身份验证漏洞修复建议',
+            author: '@席翁',
+            dateStr: 'Jan 15, 2021',
+            desc: '关于Nacos身份验证漏洞修复建议及部署说明',
+            link: '/en-us/blog/nacos-security-problem-note.html',
+        },
         {
             title: '双十一购物节，Nacos 1.4.0 + Go SDK 1.0.1发布！',
             author: '@席翁',

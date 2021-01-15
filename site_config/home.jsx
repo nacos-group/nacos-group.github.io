@@ -24,7 +24,7 @@ export default {
                 text: 'V2.0.0-ALPHA.2',
                 link: '/en-us/docs/2.0.0-alpha.html',
             },
-            releaseDate: 'Released on January 14, 2021',
+            releaseDate: 'Released on January 15, 2021',
 
         },
         functions: {
@@ -140,7 +140,7 @@ export default {
                 text: 'V2.0.0-ALPHA.2',
                 link: '/zh-cn/docs/2.0.0-alpha.html',
             },
-            releaseDate: '2021年01月14日发布',
+            releaseDate: '2021年01月15日发布',
         },
         functions: {
             title: '功能',
