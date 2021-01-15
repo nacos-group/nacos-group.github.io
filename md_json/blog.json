@@ -184,6 +184,15 @@
       "meta": {}
     },
     {
+      "filename": "nacos-security-problem-note.md",
+      "link": "/en-us/blog/nacos-security-problem-note.html",
+      "meta": {
+        "title": "关于Nacos身份验证漏洞修复建议",
+        "keywords": "身份验证, 漏洞",
+        "description": "关于Nacos身份验证漏洞修复建议及部署说明"
+      }
+    },
+    {
       "filename": "nacos.md",
       "link": "/en-us/blog/nacos.html",
       "meta": {

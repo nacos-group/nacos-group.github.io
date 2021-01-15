@@ -21,8 +21,10 @@ It may be worthwhile to read [Elika Etemad’s article on filing good bug report
 
 We might ask for further information to locate a bug. A duplicated bug report will be closed.
 
-
-
 [nacos-issue](https://github.com/alibaba/nacos/issues/new)
 
 [filing-good-bugs](http://fantasai.inkedblade.net/style/talks/filing-good-bugs/)
+
+# Reporting security bugs
+
+If you find any security problem in the Nacos project, please let us know through [ASRC (Alibaba Security Response Center)](https://security.alibaba.com).
