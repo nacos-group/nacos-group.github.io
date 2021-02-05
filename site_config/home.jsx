@@ -21,7 +21,7 @@ export default {
                 link: 'https://github.com/alibaba/nacos/releases/tag/1.4.1',
             },
             versionNote2: {
-                text: 'V2.0.0-ALPHA.2',
+                text: 'V2.0.0-BETA',
                 link: '/en-us/docs/2.0.0-alpha.html',
             },
             releaseDate: 'Released on January 15, 2021',
@@ -137,7 +137,7 @@ export default {
                 link: 'https://github.com/alibaba/nacos/releases/tag/1.4.1',
             },
             versionNote2: {
-                text: 'V2.0.0-ALPHA.2',
+                text: 'V2.0.0-BETA',
                 link: '/zh-cn/docs/2.0.0-alpha.html',
             },
             releaseDate: '2021年01月15日发布',
