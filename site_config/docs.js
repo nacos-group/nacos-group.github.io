@@ -35,32 +35,32 @@ export default {
                 link: '/en-us/docs/quick-start.html',
               },
               {
-                  title: 'Nacos Spring',
-                  link: '/en-us/docs/quick-start-spring.html',
+                title: 'Nacos Spring',
+                link: '/en-us/docs/quick-start-spring.html',
               },
               {
-                  title: 'Nacos Spring Boot',
-                  link: '/en-us/docs/quick-start-spring-boot.html',
+                title: 'Nacos Spring Boot',
+                link: '/en-us/docs/quick-start-spring-boot.html',
               },
               {
-                  title: 'Nacos Spring Cloud',
-                  link: '/en-us/docs/quick-start-spring-cloud.html',
+                title: 'Nacos Spring Cloud',
+                link: '/en-us/docs/quick-start-spring-cloud.html',
               },
               {
-                  title: 'Nacos Docker',
-                  link: '/en-us/docs/quick-start-docker.html',
+                title: 'Nacos Docker',
+                link: '/en-us/docs/quick-start-docker.html',
               },
               {
-                  title: 'Nacos with Dubbo',
-                  link: '/en-us/docs/use-nacos-with-dubbo.html',
+                title: 'Nacos with Dubbo',
+                link: '/en-us/docs/use-nacos-with-dubbo.html',
               },
               {
-                  title: 'Nacos with K8s',
-                  link: '/en-us/docs/use-nacos-with-kubernetes.html',
+                title: 'Nacos with K8s',
+                link: '/en-us/docs/use-nacos-with-kubernetes.html',
               },
               {
-                  title: 'Nacos Sync',
-                  link: '/en-us/docs/nacos-sync.html',
+                title: 'Nacos Sync',
+                link: '/en-us/docs/nacos-sync.html',
               },
             ],
           },
@@ -69,20 +69,20 @@ export default {
             opened: true,
             children: [
               {
-                 title: 'Java SDK',
-                 link: '/en-us/docs/sdk.html',
+                title: 'Java SDK',
+                link: '/en-us/docs/sdk.html',
               },
               {
-                  title: 'Other Language',
-                  link: '/en-us/docs/other-language.html',
+                title: 'Other Language',
+                link: '/en-us/docs/other-language.html',
               },
               {
                 title: 'Open-API',
                 link: '/en-us/docs/open-api.html',
               },
               {
-                  title: 'Nacos Spring',
-                  link: '/en-us/docs/nacos-spring.html',
+                title: 'Nacos Spring',
+                link: '/en-us/docs/nacos-spring.html',
               },
               {
                 title: 'Nacos System Configurations',
@@ -106,8 +106,8 @@ export default {
                 link: '/en-us/docs/deployment.html',
               },
               {
-                  title: 'Cluster Mode Deployment',
-                  link: '/en-us/docs/cluster-mode-quick-start.html',
+                title: 'Cluster Mode Deployment',
+                link: '/en-us/docs/cluster-mode-quick-start.html',
               },
               {
                 title: 'Management OpenAPI',
@@ -138,14 +138,23 @@ export default {
                 link: '/en-us/docs/nacos2-naming-benchmark.html',
               },
               {
-                  title: 'Data Migration to Nacos',
-                  link: '/en-us/docs/nacos-sync-use.html',
+                title: 'Data Migration to Nacos',
+                link: '/en-us/docs/nacos-sync-use.html',
               },
             ],
           },
           {
             title: 'Nacos 2.0',
-            link: '/en-us/docs/2.0.0-alpha.html'
+            children: [
+              {
+                title: '2.0-BETA',
+                link: '/en-us/docs/2.0.0-alpha.html',
+              },
+              {
+                title: 'Upgrading',
+                link: '/en-us/docs/2.0.0-upgrading.html',
+              },
+            ],
           },
           {
             title: 'Contributor Guide',
@@ -219,58 +228,58 @@ export default {
             opened: true,
             children: [
               {
-                  title: 'Nacos',
-                  link: '/zh-cn/docs/quick-start.html',
+                title: 'Nacos',
+                link: '/zh-cn/docs/quick-start.html',
               },
               {
-                  title: 'Nacos Spring',
-                  link: '/zh-cn/docs/quick-start-spring.html',
+                title: 'Nacos Spring',
+                link: '/zh-cn/docs/quick-start-spring.html',
               },
               {
-                  title: 'Nacos Spring Boot',
-                  link: '/zh-cn/docs/quick-start-spring-boot.html',
+                title: 'Nacos Spring Boot',
+                link: '/zh-cn/docs/quick-start-spring-boot.html',
               },
               {
-                  title: 'Nacos Spring Cloud',
-                  link: '/zh-cn/docs/quick-start-spring-cloud.html',
+                title: 'Nacos Spring Cloud',
+                link: '/zh-cn/docs/quick-start-spring-cloud.html',
               },
               {
-                  title: 'Nacos Docker',
-                  link: '/zh-cn/docs/quick-start-docker.html',
+                title: 'Nacos Docker',
+                link: '/zh-cn/docs/quick-start-docker.html',
               },
               {
-                  title: 'Nacos Dubbo',
-                  link: '/zh-cn/docs/use-nacos-with-dubbo.html',
+                title: 'Nacos Dubbo',
+                link: '/zh-cn/docs/use-nacos-with-dubbo.html',
               },
               {
-                  title: 'Nacos k8s',
-                  link: '/zh-cn/docs/use-nacos-with-kubernetes.html',
+                title: 'Nacos k8s',
+                link: '/zh-cn/docs/use-nacos-with-kubernetes.html',
               },
               {
-                  title: 'Nacos Sync',
-                  link: '/zh-cn/docs/nacos-sync.html',
+                title: 'Nacos Sync',
+                link: '/zh-cn/docs/nacos-sync.html',
               },
-          ]
+            ]
           },
           {
             title: '用户指南',
             opened: true,
             children: [
               {
-                 title: 'Java的SDK',
-                  link: '/zh-cn/docs/sdk.html',
+                title: 'Java的SDK',
+                link: '/zh-cn/docs/sdk.html',
               },
               {
-                  title: '其他语言的SDK',
-                  link: '/zh-cn/docs/other-language.html',
+                title: '其他语言的SDK',
+                link: '/zh-cn/docs/other-language.html',
               },
               {
-                  title: 'Open-API指南',
-                  link: '/zh-cn/docs/open-api.html',
+                title: 'Open-API指南',
+                link: '/zh-cn/docs/open-api.html',
               },
               {
-                  title: 'Nacos Spring',
-                  link: '/zh-cn/docs/nacos-spring.html',
+                title: 'Nacos Spring',
+                link: '/zh-cn/docs/nacos-spring.html',
               },
               {
                 title: 'Nacos系统参数介绍',
@@ -310,8 +319,8 @@ export default {
                 link: '/zh-cn/docs/monitor-guide.html',
               },
               {
-                  title: 'Nacos配置模块压测报告',
-                  link: '/zh-cn/docs/nacos-config-benchmark.html',
+                title: 'Nacos配置模块压测报告',
+                link: '/zh-cn/docs/nacos-config-benchmark.html',
               },
               {
                 title: 'Nacos2.0配置模块压测报告',
@@ -326,14 +335,23 @@ export default {
                 link: '/zh-cn/docs/nacos2-naming-benchmark.html',
               },
               {
-                  title: '其他环境迁移到Nacos',
-                  link: '/zh-cn/docs/nacos-sync-use.html',
+                title: '其他环境迁移到Nacos',
+                link: '/zh-cn/docs/nacos-sync-use.html',
               },
             ],
           },
           {
             title: 'Nacos 2.0',
-            link: '/zh-cn/docs/2.0.0-alpha.html'
+            children: [
+              {
+                title: '2.0-BETA',
+                link: '/zh-cn/docs/2.0.0-alpha.html',
+              },
+              {
+                title: '升级文档',
+                link: '/zh-cn/docs/2.0.0-upgrading.html',
+              },
+            ],
           },
           {
             title: '开源共建',
