@@ -16,7 +16,7 @@ Therefore, when it is open source, it is recommended that users put all server l
 
 Http://ip1:port/openAPI Directly connected to ip mode, the machine needs to be modified to use ip.
 
-Http://VIP:port/openAPI Mount the SLB mode(Intranet, do not expose internet to avoid security risks), directly connect to SLB, the following server ip real ip, readability is not good.
+Http://SLB:port/openAPI Mount the SLB mode(Intranet, do not expose internet to avoid security risks), directly connect to SLB, the following server ip real ip, readability is not good.
 
 Http://nacos.com:port/openAPI Domain name + SLB mode(Intranet, do not expose internet to avoid security risks), good readability, and easy to change ip, recommended mode
 
