@@ -20,7 +20,7 @@ http://VIP:port/openAPI  挂载SLB模式(内网SLB，不可暴露到公网，以
 
 http://nacos.com:port/openAPI  域名 + SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，可读性好，而且换ip方便，推荐模式
 
-![deployDnsVipMode.jpg](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561258986171-4ddec33c-a632-4ec3-bfff-7ef4ffc33fb9.jpeg) 
+![deployDnsVipMode.jpg](/img/deployDnsVipMode.jpg) 
 
 ## 1. 预备环境准备
 
