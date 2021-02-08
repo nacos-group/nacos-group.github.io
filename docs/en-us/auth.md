@@ -4,14 +4,13 @@ keywords: Authentication
 description: Authentication
 ---
 
+> Attention
+> - Nacos is an internal micro service component, which needs to run in a trusted internal network. It can not be exposed to the public network environment to prevent security risks.
+> - Nacos provides a simple authentication implementation. It is a weak authentication system to prevent business misuse, not a strong authentication system to prevent malicious attacks.
+> - If you are running in an untrusted network environment or have strong authentication demands, please refer to the official simple implementation for replacement and enhancement.
+
+
 # Authentication
-
-## Attention
-
-1. Nacos is defined as an IDC internal application component, not a product for the public network environment. It is not recommended expose it to the public network environment directly.
-2. The simple authentication implementation provided by the Nacos community is just to start a discussion. The original intention is a weak authentication system to prevent affects others by misuse, not a strong authentication system to prevent malicious attacks. The requests that Nacos receives by default are all running in your trusted network environment.
-3. As a non-core features, Nacos authentication will optimize the expansion in the future to facilitate companies with strong authentication needs to expand under their own security system. Nacos' community authentication implementation can be regarded as a simple authentication demo. Only for reference.
-4. Welcome community security experts to contribute to the authentication and security content.
 
 ## Use Authentication in Servers
 
