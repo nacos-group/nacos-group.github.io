@@ -16,9 +16,9 @@ description: 集群部署说明
 
 http://ip1:port/openAPI  直连ip模式，机器挂则需要修改ip才可以使用。
 
-http://VIP:port/openAPI  挂载VIP模式，直连vip即可，下面挂server真实ip，可读性不好。
+http://VIP:port/openAPI  挂载SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，直连SLB即可，下面挂server真实ip，可读性不好。
 
-http://nacos.com:port/openAPI  域名 + VIP模式，可读性好，而且换ip方便，推荐模式
+http://nacos.com:port/openAPI  域名 + SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，可读性好，而且换ip方便，推荐模式
 
 ![deployDnsVipMode.jpg](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561258986171-4ddec33c-a632-4ec3-bfff-7ef4ffc33fb9.jpeg) 
 
