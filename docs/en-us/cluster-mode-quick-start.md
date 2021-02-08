@@ -20,7 +20,7 @@ Http://VIP:port/openAPI Mount the SLB mode(Intranet, do not expose internet to a
 
 Http://nacos.com:port/openAPI Domain name + SLB mode(Intranet, do not expose internet to avoid security risks), good readability, and easy to change ip, recommended mode
 
-![deployDnsVipMode.jpg](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561258986171-4ddec33c-a632-4ec3-bfff-7ef4ffc33fb9.jpeg) 
+![deployDnsVipMode.jpg](/img/deployDnsVipMode.jpg) 
 
 ## 1. Preparing for the Environment
 
