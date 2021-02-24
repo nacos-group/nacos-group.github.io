@@ -18,9 +18,9 @@
 <h3>集群部署架构图</h3>
 <p>因此开源的时候推荐用户把所有服务列表放到一个vip下面，然后挂到一个域名下面</p>
 <p><a href="http://ip1">http://ip1</a>:port/openAPI  直连ip模式，机器挂则需要修改ip才可以使用。</p>
-<p><a href="http://VIP">http://VIP</a>:port/openAPI  挂载VIP模式，直连vip即可，下面挂server真实ip，可读性不好。</p>
-<p><a href="http://nacos.com">http://nacos.com</a>:port/openAPI  域名 + VIP模式，可读性好，而且换ip方便，推荐模式</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561258986171-4ddec33c-a632-4ec3-bfff-7ef4ffc33fb9.jpeg" alt="deployDnsVipMode.jpg"></p>
+<p><a href="http://SLB">http://SLB</a>:port/openAPI  挂载SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，直连SLB即可，下面挂server真实ip，可读性不好。</p>
+<p><a href="http://nacos.com">http://nacos.com</a>:port/openAPI  域名 + SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，可读性好，而且换ip方便，推荐模式</p>
+<p><img src="/img/deployDnsVipMode.jpg" alt="deployDnsVipMode.jpg"></p>
 <h2>1. 预备环境准备</h2>
 <p>请确保是在环境中安装使用:</p>
 <ol>

@@ -76,18 +76,18 @@ export default {
           text: 'Community',
           link: '/en-us/community/index.html',
         },
-          {
-              text: 'Cloud Service MSE',
-              link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
-          },
-          {
-              text: 'Cloud Service EDAS',
-              link: 'https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219',
-          },
-          {
-              text: 'Cloud Service AHAS',
-              link: 'https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225',
-          },
+        {
+          text: 'Cloud Service MSE',
+          link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
+        },
+        {
+          text: 'Cloud Service EDAS',
+          link: 'https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219',
+        },
+        {
+          text: 'Cloud Service AHAS',
+          link: 'https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225',
+        },
       ],
     },
 
@@ -115,17 +115,17 @@ export default {
         text: '社区',
         link: '/zh-cn/community/index.html',
       },
-        {
-            key: 'Nacos in Cloud',
-              text: '企业版Nacos',
-            link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
-            imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-        },
       {
-          key: 'We are hiring',
-          text: '招贤纳士',
-          link: 'https://job.alibaba.com/zhaopin/position_detail.htm?trace=qrcode_share&positionCode=GP708029',
-          imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+        key: 'Nacos in Cloud',
+        text: '企业版Nacos',
+        link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
+      {
+        key: 'We are hiring',
+        text: '招贤纳士',
+        link: 'https://job.alibaba.com/zhaopin/position_detail.htm?trace=qrcode_share&positionCode=GP708029',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
       {
         text: '控制台样例',
@@ -160,18 +160,18 @@ export default {
           text: '社区',
           link: '/zh-cn/community/index.html',
         },
-          {
-              text: '云服务 MSE',
-              link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
-          },
-          {
-              text: '云服务 EDAS',
-              link: 'https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219',
-          },
-          {
-              text: '云服务 AHAS',
-              link: 'https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225',
-          },
+        {
+          text: '云服务 MSE',
+          link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
+        },
+        {
+          text: '云服务 EDAS',
+          link: 'https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219',
+        },
+        {
+          text: '云服务 AHAS',
+          link: 'https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225',
+        },
       ],
     },
     copyright: '@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project',
