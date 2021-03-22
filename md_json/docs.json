@@ -1,12 +1,12 @@
 {
   "en-us": [
     {
-      "filename": "2.0.0-alpha.md",
-      "link": "/en-us/docs/2.0.0-alpha.html",
+      "filename": "2.0.0-compatibility.md",
+      "link": "/en-us/docs/2.0.0-compatibility.html",
       "meta": {
-        "title": "Nacos 2.0.0-BETA",
+        "title": "Nacos 2.0.0 compatibility",
         "keywords": "Nacos,2.0.0",
-        "description": "Nacos 2.0.0-BETA"
+        "description": "Nacos 2.0.0 compatibility"
       }
     },
     {
@@ -391,12 +391,12 @@
   ],
   "zh-cn": [
     {
-      "filename": "2.0.0-alpha.md",
-      "link": "/zh-cn/docs/2.0.0-alpha.html",
+      "filename": "2.0.0-compatibility.md",
+      "link": "/zh-cn/docs/2.0.0-compatibility.html",
       "meta": {
-        "title": "Nacos 2.0.0-BETA 文档",
+        "title": "Nacos 2.0.0 兼容性文档",
         "keywords": "Nacos,2.0.0",
-        "description": "Nacos 2.0.0-BETA 文档"
+        "description": "Nacos 2.0.0 兼容性文档"
       }
     },
     {

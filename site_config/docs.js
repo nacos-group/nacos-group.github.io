@@ -147,8 +147,8 @@ export default {
             title: 'Nacos 2.0',
             children: [
               {
-                title: '2.0-BETA',
-                link: '/en-us/docs/2.0.0-alpha.html',
+                title: 'Compatibility&Usage',
+                link: '/en-us/docs/2.0.0-compatibility.html',
               },
               {
                 title: 'Upgrading',
@@ -344,8 +344,8 @@ export default {
             title: 'Nacos 2.0',
             children: [
               {
-                title: '2.0-BETA',
-                link: '/zh-cn/docs/2.0.0-alpha.html',
+                title: '兼容性及使用',
+                link: '/zh-cn/docs/2.0.0-compatibility.html',
               },
               {
                 title: '升级文档',
