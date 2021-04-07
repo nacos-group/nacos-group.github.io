@@ -35,7 +35,7 @@ ls -al distribution/target/
 cd distribution/target/nacos-server-$version/nacos/bin
 
 ```
-  
+
 ### 下载编译后压缩包方式
 
 您可以从 [最新稳定版本](https://github.com/alibaba/nacos/releases) 下载 `nacos-server-$version.zip` 包。
@@ -44,7 +44,7 @@ cd distribution/target/nacos-server-$version/nacos/bin
 ```bash
   unzip nacos-server-$version.zip 或者 tar -xvf nacos-server-$version.tar.gz
   cd nacos/bin
-```  
+```
 
 ## 3.启动服务器
 
@@ -60,9 +60,25 @@ cd distribution/target/nacos-server-$version/nacos/bin
 
 ### Windows
 
+方式一：
+
 启动命令(standalone代表着单机模式运行，非集群模式):
 
 `cmd startup.cmd -m standalone`
+
+或者采取方式二：
+
+直接编辑该目录下的startup.cmd文件，将MODE设置为standalone
+
+```cmd
+set MODE="standalone"
+```
+
+保存后，双击startup.cmd运行
+
+启动后，打开浏览器输入网址http://localhost:8848/nacos/index.html进入登录界面，用户名和密码都是nacos，完成登入
+
+如果无法正常启动，可能由VPN干扰导致，请关闭VPN后重试
 
 ## 4.服务注册&发现和配置管理
 

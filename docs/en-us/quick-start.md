@@ -24,7 +24,7 @@ Before you begin, install the following:
 There are two ways to get Nacos. 
 
 ### 1)Download source code from Github
-  
+
 ```bash
 git clone https://github.com/alibaba/nacos.git
 cd nacos/
@@ -34,7 +34,7 @@ ls -al distribution/target/
 // change the $version to your actual path
 cd distribution/target/nacos-server-$version/nacos/bin
 ```
-  
+
 ### 2)Download run package 
 
 Select the latest stable version from https://github.com/alibaba/nacos/releases
@@ -42,14 +42,14 @@ Select the latest stable version from https://github.com/alibaba/nacos/releases
 ```bash
   unzip nacos-server-$version.zip  OR tar -xvf nacos-server-$version.tar.gz
   cd nacos/bin
-```  
+```
 
 ## 3.Start Server
 
 ### Linux/Unix/Mac
 
 Run the following command to start(standalone means non-cluster mode):
- 
+
 `sh startup.sh -m standalone`
 
 If you are using a ubuntu system, or encounter this error message [[symbol not found, try running as follows:
@@ -61,6 +61,20 @@ If you are using a ubuntu system, or encounter this error message [[symbol not f
 Run the following command to start(standalone means non-cluster mode):
 
 `cmd startup.cmd -m standalone`
+
+Another way to get it start:
+
+Edit the startup.cmd file in the current directory, set the 'MODE' property to standalone 
+
+```cmd
+set MODE="standalone"
+```
+
+Save the file and double-click it to run
+
+After starting Nacos, you can check out the site http://localhost:8848/nacos/index.html and log in. Both username and password are: nacos.
+
+If you cannot start Nacos,  be aware that VPN may cause interference during the process, turn it off and try again.
 
 ## 4.Service & Configuration Management
 
