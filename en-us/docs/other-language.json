@@ -1,7 +1,7 @@
 {
   "filename": "other-language.md",
   "__html": "<h1>Other languages SDK</h1>\n<p>We will rely mainly on the community to develop multi-language clients. We will recommend the most widely used client to Nacos users as the official one in the future.</p>\n<ul>\n<li><a href=\"https://github.com/nacos-group/nacos-sdk-go\">go</a></li>\n<li><a href=\"https://github.com/nacos-group/nacos-sdk-cpp\">cpp</a></li>\n<li><a href=\"https://github.com/nacos-group/nacos-sdk-python\">python</a></li>\n<li><a href=\"https://github.com/nacos-group/nacos-sdk-nodejs\">nodejs</a></li>\n<li>more ...</li>\n</ul>\n",
-  "link": "/en-us/docs/other-language.html",
+  "link": "\\en-us\\docs\\other-language.html",
   "meta": {
     "title": "Other languages SDK",
     "keywords": "Other languages,SDK",

@@ -1,6 +1,6 @@
 {
   "filename": "sdk-properties.md",
   "__html": "<p>Nacos 客户端初始化说明:</p>\n<pre><code>\tpublic final static String ENDPOINT = &quot;endpoint&quot;;\n\tpublic final static String NAMESPACE = &quot;namespace&quot;;\n\tpublic final static String ACCESS_KEY = &quot;accessKey&quot;;\n\tpublic final static String SECRET_KEY = &quot;secretKey&quot;;\n\tpublic final static String SERVER_ADDR = &quot;serverAddr&quot;;\n\tpublic final static String CONTEXT_PATH = &quot;contextPath&quot;;\n\tpublic final static String CLUSTER_NAME = &quot;clusterName&quot;;\n\tpublic final static String ENCODE = &quot;encode&quot;;\n\n</code></pre>\n<p>一、客户端可以通过两种方式初始化（二选一，必传）</p>\n<ol>\n<li>\n<p>通过直接传入Nacos server端信息（ip:port，或者域名）方式</p>\n<p><code>SERVER_ADDR server地址，格式为“ip1:port,ip2.port”</code></p>\n</li>\n<li>\n<p>通过接入点进行接入获取环境信息</p>\n<pre><code>ENDPOINT 接入点 \nCLUSTER_NAME 集群名字\n</code></pre>\n</li>\n</ol>\n<p>二、链接的server的路径（非必传）</p>\n<pre><code>CONTEXT_PATH server根路径 （默认值 nacos）\n</code></pre>\n<p>三、区域隔离（非必传）</p>\n<pre><code>NAMESPACE 名称区域\n</code></pre>\n<p>四、鉴权参数（非必传）</p>\n<pre><code>ACCESS_KEY 公钥\nSECRET_KEY 私钥\n</code></pre>\n",
-  "link": "/en-us/docs/sdk-properties.html",
+  "link": "\\en-us\\docs\\sdk-properties.html",
   "meta": {}
 }

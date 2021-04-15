@@ -41,6 +41,7 @@
 </tr>
 </tbody>
 </table>
+<p><strong>使用VIP/nginx请求时，需要配置成TCP转发，不能配置http2转发，否则连接会被nginx断开。</strong></p>
 <p><img src="/img/nacos2_port_exposure.png" alt="nacos2_port_exposure.png"></p>
 <p>客户端拥有相同的计算逻辑，用户如同1.X的使用方式，配置主端口(默认8848)，通过相同的偏移量，计算对应gRPC端口(默认9848)。</p>
 <p>因此如果客户端和服务端之前存在端口转发，或防火墙时，需要对端口转发配置和防火墙配置做相应的调整。</p>
