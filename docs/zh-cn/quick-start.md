@@ -62,7 +62,7 @@ cd distribution/target/nacos-server-$version/nacos/bin
 
 启动命令(standalone代表着单机模式运行，非集群模式):
 
-`cmd startup.cmd -m standalone`
+`startup.cmd -m standalone`
 
 ## 4.服务注册&发现和配置管理
 
@@ -90,6 +90,6 @@ cd distribution/target/nacos-server-$version/nacos/bin
 
 ### Windows
 
-`cmd shutdown.cmd`
+`shutdown.cmd`
 
 或者双击shutdown.cmd运行文件。
