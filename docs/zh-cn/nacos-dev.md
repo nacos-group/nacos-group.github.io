@@ -64,6 +64,7 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 | [fangjian0423](https://github.com/fangjian0423) | 方剑   | 阿里巴巴 | Committer | fangjian.fj@alibaba-inc.com |
 | [wyp12](https://github.com/wyp12)               | 吴援飘 | 阿里巴巴 | Committer | caogu.wyp@antfin.com |
 | [TsingLiang](https://github.com/TsingLiang)     | 卿亮   | 阿里巴巴 | Committer | qingliang.ql@alibaba-inc.com  |
+| [caojiele](https://github.com/caojiele)         | 曹杰乐 | 三诺生物 | Committer| caojiele1225@126.com           |
 | [KeRan213539](https://github.com/KeRan213539)   | 邪影   | 云南盛达实业集团有限公司 | Committer | 213539@qq.com  |
 | [sanxun0325](https://github.com/sanxun0325)     | 张斌斌  | OpenJaw | Committer | bbz17640380550@163.com |
 | [zongtanghu](https://github.com/zongtanghu)     | 胡宗棠  | 中国移动云能力中心 | Committer | zongtanghu@hotmail.com |
@@ -74,6 +75,5 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 
 | Github 账号                                      | 名字       | 组织             |角色        |邮箱                                 |
 | ------------------------------------------------|------------| ----------------| -----------|------------------------------------|
-| [caojiele](https://github.com/caojiele)         | 曹杰乐      | 三诺生物          | Contributor| caojiele1225@126.com               |
 | [wfnuser](https://github.com/wfnuser)           | 黄清昊      | 阿里巴巴          | Contributor| wfnuser@hotmail.com               |
 | [horizonzy](https://github.com/horizonzy)       | 赵延       | 多点生活(成都)科技有限公司 | Contributor| 1060026287@qq.com           |

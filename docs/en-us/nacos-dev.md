@@ -64,7 +64,8 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [mercyblitz](https://github.com/mercyblitz)     | Mercy Ma     | Alibaba      | Committer  | taogu.mxx@alibaba-inc.com                                    |
 | [fangjian0423](https://github.com/fangjian0423) | Jian Fang    | Alibaba      | Committer  | fangjian.fj@alibaba-inc.com                                  |
 | [wyp12](https://github.com/wyp12)               | Yuanpiao Wu  | Alibaba      | Committer  | caogu.wyp@antfin.com                                         |
-| [TsingLiang](https://github.com/TsingLiang)     | Liang qing   | Alibaba      | Committer  | qingliang.ql@alibaba-inc.com                                 | 
+| [TsingLiang](https://github.com/TsingLiang)     | Liang qing   | Alibaba      | Committer  | qingliang.ql@alibaba-inc.com                                 |
+| [caojiele](https://github.com/caojiele)         | Jiele Cao    | Sinocare     | Committer  | caojiele1225@126.com                                         | 
 | [KeRan213539](https://github.com/KeRan213539)   | Ying Xie     | ShengDa      | Committer  | 213539@qq.com                                                |
 | [sanxun0325](https://github.com/sanxun0325)     | Binbin Zhang | OpenJaw      | Committer  | bbz17640380550@163.com                                       |
 | [zongtanghu](https://github.com/zongtanghu)     | Zongtang Hu  | China Mobile Cloud Centre | Committer | zongtanghu@hotmail.com                           |
@@ -75,6 +76,5 @@ This page shows Nacos developers and continues to expand. The list is not priori
 
 | Github ID                                 | Name               | Organization                 | Roles       | Mail                      |
 |-------------------------------------------|--------------------|------------------------------|-------------|---------------------------|
-| [caojiele](https://github.com/caojiele)   | Jiele Cao          | Sinocare                     | Contributor | caojiele1225@126.com      |
 | [wfnuser](https://github.com/wfnuser)     | Qinghao Huang      | Alibaba                      | Contributor | wfnuser@hotmail.com       |
 | [horizonzy](https://github.com/horizonzy) | Yan Zhao           | Dmall(Cheng Du)              | Contributor | 1060026287@qq.com         |
