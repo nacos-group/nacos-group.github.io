@@ -1,7 +1,7 @@
 {
   "filename": "community.md",
   "__html": "<h1>社区</h1>\n<h2>联系我们</h2>\n<h3>Nacos Gitter-<a href=\"https://gitter.im/alibaba/nacos\">https://gitter.im/alibaba/nacos</a></h3>\n<h3>Nacos 微博-<a href=\"https://weibo.com/u/6574374908\">https://weibo.com/u/6574374908</a></h3>\n<h3>Nacos segmentfault-<a href=\"https://segmentfault.com/t/nacos\">https://segmentfault.com/t/nacos</a></h3>\n<h3>邮件列表</h3>\n<p>邮件列表建议讨论任何与Nacos有关的事情。具体请看<a href=\"https://github.com/apache/incubator-dubbo/wiki/Mailing-list-subscription-guide\">参考手册</a>描述如何订阅我们的邮件列表。</p>\n<ul>\n<li><a href=\"https://lark.alipay.com/nacos/nacosdocs/vl19q1\">dev-nacos@googlegroups.com</a>: 开发邮件列表。如果你在使用或开发Nacos中遇到任何问题,可以在这里提问题。</li>\n<li><a href=\"https://lark.alipay.com/nacos/nacosdocs/vl19q1\">commits-nacos@googlegroups.com</a>: 所有提交将被发送到这个邮件列表。如果你有兴趣Nacos的发展，你可以订阅它。</li>\n<li><a href=\"https://lark.alipay.com/nacos/nacosdocs/vl19q1\">users-nacos@googlegroups.com</a>: 在Github中<a href=\"https://github.com/alibaba/nacos/issues\">提问题</a>、更新和<a href=\"https://github.com/alibaba/nacos/pulls\">提交需求</a>将被发送到这个邮件列表。</li>\n<li><a href=\"https://lark.alipay.com/nacos/nacosdocs/vl19q1\">nacos_dev@linux.alibaba.com</a>.</li>\n</ul>\n",
-  "link": "/zh-cn/docs/community.html",
+  "link": "\\zh-cn\\docs\\community.html",
   "meta": {
     "title": "社区",
     "keywords": "社区,联系方式",

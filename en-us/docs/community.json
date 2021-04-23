@@ -1,7 +1,7 @@
 {
   "filename": "community.md",
   "__html": "<h1>Community</h1>\n<h2>Contact us</h2>\n<h3>Nacos Gitter-<a href=\"https://gitter.im/alibaba/nacos\">https://gitter.im/alibaba/nacos</a></h3>\n<h3>Nacos weibo-<a href=\"https://weibo.com/u/6574374908\">https://weibo.com/u/6574374908</a></h3>\n<h3>Nacos segmentfault-<a href=\"https://segmentfault.com/t/nacos\">https://segmentfault.com/t/nacos</a></h3>\n<h3>Mailing list</h3>\n<p>Mailing list is recommended for discussing almost anything related to Nacos. Please refer to this?<a href=\"https://github.com/apache/incubator-dubbo/wiki/Mailing-list-subscription-guide\">guide</a>?for detailed documentation on how to subscribe to our mailing lists.</p>\n<ul>\n<li><a href=\"mailto:dev-nacos%2Bsubscribe@googlegroups.com\">dev-nacos@googlegroups.com</a>: The develop mailing list. You can ask questions here if you encounter any problem when using or developing Nacos.</li>\n<li><a href=\"mailto:commits-nacos%2Bsubscribe@googlegroups.com\">commits-nacos@googlegroups.com</a>: All commits will be sent to this mailing list. You can subscribe to it if you are interested in Nacos' development.</li>\n<li><a href=\"mailto:users-nacos%2Bsubscribe@googlegroups.com\">users-nacos@googlegroups.com</a>: All Github?<a href=\"https://github.com/alibaba/nacos/issues\">issue</a>?updates and?<a href=\"https://github.com/alibaba/nacos/pulls\">pull request</a>?updates will be sent to this mailing list.</li>\n<li><a href=\"mailto:nacos_dev@linux.alibaba.com\">nacos_dev@linux.alibaba.com</a>.</li>\n</ul>\n",
-  "link": "/en-us/docs/community.html",
+  "link": "\\en-us\\docs\\community.html",
   "meta": {
     "title": "Community",
     "keywords": "community,contact",
