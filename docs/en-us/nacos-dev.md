@@ -71,10 +71,10 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [zongtanghu](https://github.com/zongtanghu)     | Zongtang Hu  | China Mobile Cloud Centre | Committer | zongtanghu@hotmail.com                           |
 | [Maijh97](https://github.com/Maijh97)           | Jianhui Mai  | Yunliuchain  | Committer | xiaomai_h@163.com                                             |
 | [wangweizZZ](https://github.com/wangweizZZ)     | Wei Wang     | China Mobile Cloud Centre | Committer | wwfortunate@gmail.com                            |
-
+| [horizonzy](https://github.com/horizonzy)       | Yan Zhao     | Dmall(Cheng Du)  | Committer | 1060026287@qq.com         |
+| [catcherwong](https://github.com/catcherwong)   | Wenqing Huang| Lianou Health Technology | Committer| catcher_hwq@outlook.com |
 ### Contributors
 
 | Github ID                                 | Name               | Organization                 | Roles       | Mail                      |
 |-------------------------------------------|--------------------|------------------------------|-------------|---------------------------|
 | [wfnuser](https://github.com/wfnuser)     | Qinghao Huang      | Alibaba                      | Contributor | wfnuser@hotmail.com       |
-| [horizonzy](https://github.com/horizonzy) | Yan Zhao           | Dmall(Cheng Du)              | Contributor | 1060026287@qq.com         |
