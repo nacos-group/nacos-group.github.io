@@ -49,7 +49,7 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 | [yanlinly](https://github.com/yanlinly)         | 李艳林 | 阿里巴巴 | Maintainer | yan.lin2009@163.com |
 | [loadchange](https://github.com/loadchange)     | 王彦民 | 饿了么   | Maintainer | wym177771@alibaba-inc.com |
 | [nkorange](https://github.com/nkorange)         | 朱鹏飞 | Shopee  | Maintainer | zpf.073@gmail.com   |
-| [chuntaojun](https://github.com/chuntaojun)     | 廖春涛 |  腾讯  | Maintainer| liaochuntao@live.com               |
+| [chuntaojun](https://github.com/chuntaojun)     | 廖春涛 |  腾讯  | Maintainer| liaochuntao@live.com |
 | [paderlol](https://github.com/paderlol)         | 张龙   | 蜜獾    | Maintainer | huangbbbaihao@gmail.com |
 | [KomachiSion](https://github.com/KomachiSion)   | 杨翊   | 阿里巴巴 | Maintainer | yangyi@apache.org |
 | [zhangjimmy](https://github.com/zhangjimmy)     | 张波   | 虎牙直播 | Committer | zhangjimmy@foxmail.com  |
@@ -70,10 +70,11 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 | [zongtanghu](https://github.com/zongtanghu)     | 胡宗棠  | 中国移动云能力中心 | Committer | zongtanghu@hotmail.com |
 | [Maijh97](https://github.com/Maijh97)           | 麦建辉  | 广州云流区块链科技有限公司 | Committer | xiaomai_h@163.com |
 | [wangweizZZ](https://github.com/wangweizZZ)     | 王维   | 中国移动云能力中心 | Committer | wwfortunate@gmail.com |
+| [horizonzy](https://github.com/horizonzy)       | 赵延   | 多点生活(成都)科技有限公司 | Committer| 1060026287@qq.com |
+| [catcherwong](https://github.com/catcherwong)   | 黄文清  | 广东莲藕健康科技有限公司 | Committer| catcher_hwq@outlook.com |
 
 ### 活跃贡献者
 
 | Github 账号                                      | 名字       | 组织             |角色        |邮箱                                 |
 | ------------------------------------------------|------------| ----------------| -----------|------------------------------------|
 | [wfnuser](https://github.com/wfnuser)           | 黄清昊      | 阿里巴巴          | Contributor| wfnuser@hotmail.com               |
-| [horizonzy](https://github.com/horizonzy)       | 赵延       | 多点生活(成都)科技有限公司 | Contributor| 1060026287@qq.com           |
