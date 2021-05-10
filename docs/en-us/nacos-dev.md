@@ -73,6 +73,8 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [wangweizZZ](https://github.com/wangweizZZ)     | Wei Wang     | China Mobile Cloud Centre | Committer | wwfortunate@gmail.com                            |
 | [horizonzy](https://github.com/horizonzy)       | Yan Zhao     | Dmall(Cheng Du)  | Committer | 1060026287@qq.com         |
 | [catcherwong](https://github.com/catcherwong)   | Wenqing Huang| Lianou Health Technology | Committer| catcher_hwq@outlook.com |
+| [TTTTTAAAAAKKKKEEEENNNN](https://github.com/TTTTTAAAAAKKKKEEEENNNN) | Hanyu Liu | Tencent | Committer | tensai0lhy@gmail.com |
+
 ### Contributors
 
 | Github ID                                 | Name               | Organization                 | Roles       | Mail                      |
