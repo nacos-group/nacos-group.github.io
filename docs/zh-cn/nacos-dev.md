@@ -72,6 +72,7 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 | [wangweizZZ](https://github.com/wangweizZZ)     | 王维   | 中国移动云能力中心 | Committer | wwfortunate@gmail.com |
 | [horizonzy](https://github.com/horizonzy)       | 赵延   | 多点生活(成都)科技有限公司 | Committer| 1060026287@qq.com |
 | [catcherwong](https://github.com/catcherwong)   | 黄文清  | 广东莲藕健康科技有限公司 | Committer| catcher_hwq@outlook.com |
+| [TTTTTAAAAAKKKKEEEENNNN](https://github.com/TTTTTAAAAAKKKKEEEENNNN) | 刘瀚雨 | 腾讯 | Committer | tensai0lhy@gmail.com |
 
 ### 活跃贡献者
 
