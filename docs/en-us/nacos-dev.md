@@ -74,6 +74,7 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [horizonzy](https://github.com/horizonzy)       | Yan Zhao     | Dmall(Cheng Du)  | Committer | 1060026287@qq.com         |
 | [catcherwong](https://github.com/catcherwong)   | Wenqing Huang| Lianou Health Technology | Committer| catcher_hwq@outlook.com |
 | [TTTTTAAAAAKKKKEEEENNNN](https://github.com/TTTTTAAAAAKKKKEEEENNNN) | Hanyu Liu | Tencent | Committer | tensai0lhy@gmail.com |
+| [haoyann](https://github.com/haoyann)           | Hao Yan      | Shusheng Chengdu Technology | Committer | 1064645534@qq.com |
 
 ### Contributors
 
