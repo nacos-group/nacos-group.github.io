@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="2.0.1, 1.4.2" />
+	<meta name="description" content="Nacos 2.0.1 + 1.4.2 Release" />
+	<!-- 网页标签标题 -->
+	<title>Nacos 2.0.1 + 1.4.2 Release</title>
+	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
+	<link rel="stylesheet" href="/build/blogDetail.css" />
+</head>
+<body>
+	<div id="root"><div class="blog-detail-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/en-us/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">中</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/en-us/index.html">HOME</a></li><li class="menu-item menu-item-normal"><a href="/en-us/docs/quick-start.html">DOCS</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/en-us/blog">BLOG</a></li><li class="menu-item menu-item-normal"><a href="/en-us/community">COMMUNITY</a></li><li class="menu-item menu-item-normal"><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0">NACOS IN CLOUD</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></li><li class="menu-item menu-item-normal"><a href="https://job.alibaba.com/zhaopin/position_detail.htm?trace=qrcode_share&amp;positionCode=GP708029">HIRING</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></li><li class="menu-item menu-item-normal"><a href="http://console.nacos.io/nacos/index.html">DEMO-CONSOLE</a></li></ul></div></div></header><section class="blog-content markdown-body"><h1>Nacos 2.0.1 + 1.4.2 Release is officially released, with the supporting of the MCP-OVER-XDS protocol</h1>
+<p>Nacos is Alibaba's open source service discovery and configuration management project. The 2.0.1 version released is mainly dedicated to supporting the MCP-OVER-XDS protocol and making the JRaft election more stable.
+The 1.4.2 version released also greatly enhances the stability of JRaft Leader election.</p>
+<h2>Nacos 2.0.1</h2>
+<p>Main upgrades in 2.0.1:</p>
+<ol>
+<li>Supporting MCP-OVER-XDS protocol in both nacos-istio plug-ins and modules.</li>
+<li>Fixing the stability of the leader election of the JRaft protocol in the k8s environment.</li>
+<li>Fixing the problem of frequently throwing 'Server is Down' error.</li>
+</ol>
+<p>Detail change logs：</p>
+<pre><code>[#3484] Support ldap login.
+[#4856] Support mcp over xds.
+[#5137] Support service list add view subscriber.
+[#5367] Support client encryption plugin for nacos 2.0.
+[#5307] Push support config some parameters
+[#5334] Fix Server is Down problem in k8s environment.
+[#5361] Check isUseGrpcFeatures() when register instance using GRPC protocol.
+[#5486] Refactor Distro Config as singleton and replace GlobalConfig.
+[#5169] Fix instance beat run only by responsible server.
+[#5175] Fix publishConfig lost type.
+[#5178] Fix NPE when init server list failed.
+[#5182] Fix throw NoSuchFieldException in ConfigController when service connect to nacos.
+[#5204] Fix query error when pageNo is larger than service number.
+[#5268] Fix subscriber app unknown
+[#5327] Fix ThreadPool usage problem and add some monitor for distro.
+[#5384] Fix the problem of unable to shutdown NacosConfigService.
+[#5404] Fix frequently udp push for client 1.X.
+[#5419] Fix Nacos 2.0 client auth may invalid for non public namespace.
+[#5442] change state to UP when received status form old version server.
+[#5096] Add unit tests in nacos 2.0.
+[#5171][#5421][#5436][#5450][#5464] Fix IT for nacos 2.0.
+</code></pre>
+<h2>Nacos 1.4.2</h2>
+<ol>
+<li>This version mainly enhances the stability of Leader election in JRAft protocol. It can be used in conjunction with the latest nacos-k8s project to optimize stability to a large extent.</li>
+<li>Moreover, it fixes many bugs in version 1.4.1 such as the prompt about &quot;Server is Down&quot; problems.</li>
+</ol>
+<p>Detail change logs：</p>
+<pre><code>[#4452] Add config compare features.
+[#4602] Add new way for export config.
+[#4996] Make log level changeable for nacos-core module.
+[#5367] Add pre-plugin in client for encrypting config.
+[#3922] Method createServiceIfAbsent in ServiceManager require sync.
+[#4274] skip master-select task when db.num is 1.
+[#4753] Use SafeConstructor to parse yaml configuration.
+[#4762] Naming health check thread num support user define it by self.
+[#4770] Beta publish: change the way of select betaIps, from input to select.
+[#4778] Make SecurityProxy.accessToken threadsafe in single writer multi reader.
+[#4903] Add securuty hint for login page.
+[#4917] Raft ops interface add auth.
+[#4980] Log4J2NacosLogging.loadConfiguration() return directly When location is blank.
+[#5010] Fix the usage of TemplateUtils.
+[#5190] Add some hint log when login failed.
+[#5234] Solve the problem that page can be edited while publishing-config request is processing.
+[#5331] Fix the mouse hovers over the margin in a pointer state and cannot be clicked.
+[#5350] Add hint and detail reason for consistence status Down.
+[#5439] Support specified naming UDP push port for client.
+[#5434] Optimize the ConfigType.isValidType method.
+[#3779] Check groupName can't be empty.
+[#4661] ConfigServletInner#doGetConfig code optimization.
+[#3610] Fix the press F1 to full screen issue in new config page.
+[#3876] Fix push empty service name.
+[#4306] Fix search service by group error problem.
+[#4573,#4629] Jraft leader status check error.
+[#4672] Fix cloning configuration lost description.
+[#4699] Fix metadata batch operation may delete instance problem.
+[#4756] Fix config list sort and search problem.
+[#4787] Losting member if parsing host throw UnknownHostException.
+[#4806] Fix addListener method comment.
+[#4829] Remove instance when distro and raft remove instances data.
+[#4852] Fix main.js is too large problem.
+[#4854] Modify Header to support Keys Ignore Case.
+[#4898] Fix instance list page bug.
+[#4925] Fix member list change will cover member status and metadata problem.
+[#5078] Fix the problem of inconsistent results for querying subscriber list data multiple times.
+[#5026] Fix MetricsHttpAgent metrics twice.
+[#5018] Check group and dataId in groupKey.
+[#5114] ConcurrentHashSet.java is not compatible with jdk1.6 or 1.7.
+[#5253] Fix missing auth identity header error.
+[#5291] Fix Beat task will stop when throw unexpected exception.
+[#5301] Respond all kinds of collections for istio's request.
+[#5351] Fix Consistence status can't switch to UP after Jraft election.
+[#5390] Fix ip verify error.
+[#5427] Fix NPE if Jraft leader is null in CurcuitFilter.
+[#5437] Fix config beta feature will lost dump event problem.
+[#5451] Fix the tag can't be removed problem.
+[#4822][#4823][#4824][#4825][#4979][#5506] Fix dependency security problem.
+[#5277] Subscriber list servername add required.
+[#5380][#5418] Add and enhance unit test.
+</code></pre>
+<h2>Community</h2>
+<p>With Nacos 2.0.1 released， Nacos community has a new committer:</p>
+<p>This committer has made a lot of contributions in promoting multi-data source support, authentication and security, configuration module optimization and improvement, and actively participated in community discussions.</p>
+<p><img src="/img/haoyann_commiter.jpg" alt="haoyann_commiter.jpg"></p>
+<p>The Nacos community welcomes more partners who would participate to contribution, including but not limited to:</p>
+<ul>
+<li>Source codes</li>
+<li>Document</li>
+<li>Discussion in community</li>
+<li>Multiple-language</li>
+<li>Combination of surrounding ecological products</li>
+</ul>
+<p>Active participation will get exquisite small gifts from the Nacos community~</p>
+<h2>About Nacos</h2>
+<p>Nacos is committed to help you discover, configure, and manage your microservices. It provides a set of simple and useful features enabling you to realize dynamic service discovery, service configuration, service metadata and traffic management.</p>
+<p>Nacos makes it easier and faster to construct, deliver and manage your microservices platform. It is the infrastructure that supports a service-centered modern application architecture with a microservices or cloud-native approach.</p>
+</section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>Vision</h3><p>By providing an easy-to-use service infrastructure such as dynamic service discovery, service configuration, service sharing and management and etc., Nacos help users better construct, deliver and manage their own service platform, reuse and composite business service faster and deliver value of business innovation more quickly so as to win market for users in the era of cloud native and in all cloud environments, such as private, mixed, or public clouds.</p></div><div class="col col-6"><dl><dt>Documentation</dt><dd><a href="/en-us/docs/what-is-nacos.html" target="_self">Overview</a></dd><dd><a href="/en-us/docs/quick-start.html" target="_self">Quick start</a></dd><dd><a href="/en-us/docs/contributing.html" target="_self">Developer guide</a></dd></dl></div><div class="col col-6"><dl><dt>Resources</dt><dd><a href="/en-us/community/index.html" target="_self">Community</a></dd><dd><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_self">Cloud Service MSE</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">Cloud Service EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">Cloud Service AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/blogDetail.js"></script>
+</body>
+</html>

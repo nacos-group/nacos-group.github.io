@@ -10,6 +10,15 @@
       }
     },
     {
+      "filename": "2.0.1-release.md",
+      "link": "/en-us/blog/2.0.1-release.html",
+      "meta": {
+        "title": "Nacos 2.0.1 + 1.4.2 Release",
+        "keywords": "2.0.1, 1.4.2",
+        "description": "Nacos 2.0.1 + 1.4.2 Release"
+      }
+    },
+    {
       "filename": "5w1h-what.md",
       "link": "/en-us/blog/5w1h-what.html",
       "meta": {
@@ -274,6 +283,15 @@
         "title": "双十一购物节，Nacos 1.4.0 + Go SDK 1.0.1发布",
         "keywords": "开源,1.4.0,Go 1.0.1",
         "description": "双十一购物节，Nacos 1.4.0 + Go SDK 1.0.1发布"
+      }
+    },
+    {
+      "filename": "2.0.1-release.md",
+      "link": "/zh-cn/blog/2.0.1-release.html",
+      "meta": {
+        "title": "Nacos 2.0.1 + 1.4.2 Release",
+        "keywords": "2.0.1,1.4.2",
+        "description": "Nacos 2.0.1 + 1.4.2 Release"
       }
     },
     {
