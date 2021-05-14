@@ -74,6 +74,7 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 | [catcherwong](https://github.com/catcherwong)   | 黄文清  | 广东莲藕健康科技有限公司 | Committer| catcher_hwq@outlook.com |
 | [TTTTTAAAAAKKKKEEEENNNN](https://github.com/TTTTTAAAAAKKKKEEEENNNN) | 刘瀚雨 | 腾讯 | Committer | tensai0lhy@gmail.com |
 | [haoyann](https://github.com/haoyann)           | 严浩 | 成都书声科技有限公司 | Committer | 1064645534@qq.com |
+| [shiyiyue1102](https://github.com/shiyiyue1102) | 柳遵飞 | 阿里巴巴 | Committer | liuzunfei@gmail.com |
 
 ### 活跃贡献者
 
