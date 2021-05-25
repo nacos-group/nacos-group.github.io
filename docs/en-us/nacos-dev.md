@@ -76,6 +76,7 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [TTTTTAAAAAKKKKEEEENNNN](https://github.com/TTTTTAAAAAKKKKEEEENNNN) | Hanyu Liu | Tencent | Committer | tensai0lhy@gmail.com |
 | [haoyann](https://github.com/haoyann)           | Hao Yan      | Shusheng Chengdu Technology | Committer | 1064645534@qq.com |
 | [shiyiyue1102](https://github.com/shiyiyue1102) | Zunfei Liu   | Alibaba      | Committer | liuzunfei@gmail.com |
+| [JackSun-Developer](https://github.com/JackSun-Developer) | Li Sun | Alibaba  | Committer | yongyue.sl@alibaba-inc.com |
 
 ### Contributors
 

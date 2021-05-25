@@ -141,6 +141,15 @@
       "meta": {}
     },
     {
+      "filename": "iscas2021.md",
+      "link": "/en-us/blog/iscas2021.html",
+      "meta": {
+        "title": "Nacos ISCAS 2021 start to apply",
+        "keywords": "ISCAS2021",
+        "description": "Nacos ISCAS 2021 start to apply"
+      }
+    },
+    {
       "filename": "nacos 1.1.0.md",
       "link": "/en-us/blog/nacos 1.1.0.html",
       "meta": {}
@@ -442,6 +451,15 @@
         "title": "虎牙直播在微服务改造方面的实践和总结",
         "keywords": "nacos,虎牙直播",
         "description": "虎牙直播在微服务改造方面的实践和总结"
+      }
+    },
+    {
+      "filename": "iscas2021.md",
+      "link": "/zh-cn/blog/iscas2021.html",
+      "meta": {
+        "title": "Nacos 开源之夏2021活动 报名正式开启",
+        "keywords": "ISCAS2021",
+        "description": "Nacos 开源之夏2021活动 报名正式开启"
       }
     },
     {
