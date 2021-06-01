@@ -1,7 +1,7 @@
 {
   "filename": "nacos-2nd-anniversary.md",
   "__html": "<h1>Nacos 两周年献礼，Nacos 1.3.2 + Go SDK 1.0.0发布</h1>\n<p>Nacos自2018年8月5日开源以来，在社区两年的共同努力之下，获得了13400+ stars，发布了30个版本，吸引了 125 位优秀贡献者，积累了上百家企业案例的成绩。在Nacos开源两周年之际，社区同时发布Nacos 1.3.2版本和Go SDK 的1.0.0版本，为Nacos庆生。</p>\n<h2>Nacos 1.3.2</h2>\n<p>Nacos 1.3.2版本在1.3.1的基础上，继续重构和优化内核功能，主要改进如下：</p>\n<ol>\n<li>重构并统一 nacos-client 中http客户端的内容，增加拓展性和可读性</li>\n<li>回滚在 nacos-client 1.3.1对apache http的使用，以减少依赖冲突和不可控的日志输出</li>\n<li>重构Nacos中的事件通知模块，提高性能和可读性</li>\n<li>修复Nacos服务端在Windows环境下启动失败的问题</li>\n<li>修复Nacos控制台的部分问题</li>\n<li>修复部分文档的描述错误</li>\n</ol>\n<h2>Nacos Go SDK 1.0.0</h2>\n<p>Nacos-sdk-go的v1.0.0版本主要的改进如下：</p>\n<ol>\n<li>支持一个连接监听多个配置</li>\n<li>支持取消配置监听功能</li>\n<li>日志功能重新实现，支持日志轮转和日志实现替换</li>\n<li>提升了实例选择的性能</li>\n<li>文档和示例的完善</li>\n<li>Nacos与dubbo-go、sentinel-golang等go语言微服务生态集成</li>\n</ol>\n<p>随着Go SDK 1.0.0正式版的发布，意味着Nacos在支持所有主流开发语言上更进了一步。目前，社区已经有Java、Golang、Python、Nodejs的语言支持。C++和C#的SDK也通过编程之夏稳步推进中，相信很快就可以和大家见面。</p>\n<h2>后期规划</h2>\n<p>在新的一年中，Nacos将会继续成长、聚焦 Nacos 内核构建，打造一个更稳定、更安全、更高效的微服务引擎\n目前核心规划是：</p>\n<ul>\n<li>下沉并统一一致性模型</li>\n<li>下沉并优化鉴权模型</li>\n<li>升级连接通道，提升交互效率</li>\n<li>升级服务数据模型，提升服务端运行效率</li>\n</ul>\n<h2>致谢</h2>\n<p>随着视频、直播及线上教育行业大规模发展，Nacos在 虎牙、爱奇艺、芒果、Zoom、掌门、KK直播 等高速发展的企业中落地，有此成就，离不开社区贡献者和用户们的共同努力。</p>\n<p>在此，感谢所有参与社区共建，为Nacos提供代码，设计以及讨论的贡献者和用户。</p>\n<p>同时欢迎更多的个人及企业，参与到Nacos的共建中，让Nacos变得更加高效、稳定。</p>\n<h2>结尾</h2>\n<p>Nacos 致力于帮助您发现、配置和管理微服务。Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。</p>\n<p>Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 Nacos 是构建以“服务”为中心的现代应用架构 (例如微服务范式、云原生范式) 的服务基础设施。</p>\n",
-  "link": "/en-us/blog/nacos-2nd-anniversary.html",
+  "link": "\\en-us\\blog\\nacos-2nd-anniversary.html",
   "meta": {
     "title": "Nacos 两周年献礼，Nacos 1.3.2 + Go SDK 1.0.0发布",
     "keywords": "开源,1.3.2,Go 1.0.0",

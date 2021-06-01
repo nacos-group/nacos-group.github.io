@@ -1,7 +1,7 @@
 {
   "filename": "other-language.md",
   "__html": "<h1>其他语言的SDK</h1>\n<p>Nacos社区当前仅提供了Java版本的客户端，我们将主要依靠社区的贡献来发展多语言客户端。在未来，我们将向Nacos社区用户推荐那些最被广泛使用的以及支持最好的客户端作为Nacos相应语言的官方版本。</p>\n<ul>\n<li><a href=\"https://github.com/nacos-group/nacos-sdk-go\">go</a></li>\n<li><a href=\"https://github.com/nacos-group/nacos-sdk-cpp\">cpp</a></li>\n<li><a href=\"https://github.com/nacos-group/nacos-sdk-python\">python</a></li>\n<li><a href=\"https://github.com/nacos-group/nacos-sdk-nodejs\">nodejs</a></li>\n<li>more ...</li>\n</ul>\n",
-  "link": "/zh-cn/docs/other-language.html",
+  "link": "\\zh-cn\\docs\\other-language.html",
   "meta": {
     "title": "其他语言的SDK",
     "keywords": "其他语言,SDK",
