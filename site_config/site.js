@@ -44,6 +44,12 @@ export default {
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
       {
+        key: 'Summer 2021',
+        text: 'SUMMER 2021',
+        link: 'https://github.com/alibaba/nacos/issues/5693',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
+      {
         text: 'DEMO-CONSOLE',
         link: 'http://console.nacos.io/nacos/index.html',
       },
@@ -125,6 +131,12 @@ export default {
         key: 'We are hiring',
         text: '招贤纳士',
         link: 'https://job.alibaba.com/zhaopin/position_detail.htm?trace=qrcode_share&positionCode=GP708029',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
+      {
+        key: 'Summer 2021',
+        text: '开源之夏',
+        link: 'https://github.com/alibaba/nacos/issues/5693',
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
       {

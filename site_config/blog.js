@@ -4,11 +4,18 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
-            title: 'Nacos 2.0.1 + 1.4.2 Release, with the supporting of the MCP-OVER-XDS protocol!',
-            author: '@涌月',
-            dateStr: 'May 10, 2021',
-            desc: 'Nacos 2.0.1 + 1.4.2 Release, with the supporting of the MCP-OVER-XDS protocol!',
-            link: '/en-us/blog/2.0.1-release.html',
+            title: 'Nacos ISCAS 2021 start to apply!',
+            author: '@杨翊',
+            dateStr: 'May 25, 2021',
+            desc: 'Nacos ISCAS 2021 start to apply!',
+            link: '/en-us/blog/iscas2021.html',
+        },
+        {
+             title: 'Nacos 2.0.1 + 1.4.2 Release, with the supporting of the MCP-OVER-XDS protocol!',
+             author: '@涌月',
+             dateStr: 'May 10, 2021',
+             desc: 'Nacos 2.0.1 + 1.4.2 Release, with the supporting of the MCP-OVER-XDS protocol!',
+             link: '/en-us/blog/2.0.1-release.html',
         },
         {
             title: 'Suggestions for fixing Nacos authentication vulnerability',
@@ -230,6 +237,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: 'Nacos 开源之夏2021活动 报名正式开启!',
+            author: '@杨翊',
+            dateStr: 'May 25, 2021',
+            desc: 'Nacos 开源之夏2021活动 报名正式开启!',
+            link: '/zh-cn/blog/iscas2021.html',
+        },
         {
             title: 'Nacos 2.0.1 + 1.4.2 发布,业界率先支持MCP-OVER-XDS协议!',
             author: '@涌月',

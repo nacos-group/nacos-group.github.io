@@ -6,9 +6,13 @@ This project keeps all sources used for building up [Nacos](https://github.com/a
 
 Nacos website is powered by [docsite](https://github.com/txd-team/docsite). If your version of docsite is less then `1.3.3`, please upgrade to `1.3.3`. Please also make sure your node version is 8.x, versions higher than 8.x is not supported by docsite yet.
 
+If you have already a npm with another version installed, run the folling two commands to change the version to 8.x:
+1. npm install -g n
+2. sudo n 8.0
+
 ## Build instruction
 
-1. Run `npm install docsite -g` to install the dev tool.
+1. Run `npm install docsite@1.3.3 -g` to install the dev tool.
 2. Run `npm i` in the root directory to install the dependencies.
 3. Run `docsite start` in the root directory to start a local server, you will see the website in 'http://127.0.0.1:8080'.
 4. Run `docsite build` to build source code.
