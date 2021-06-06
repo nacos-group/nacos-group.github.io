@@ -7,7 +7,7 @@ export default {
       title: 'Events & News',
       list: [
           {
-              img: 'https://cdn.nlark.com/yuque/0/2021/jpeg/338441/1622944158311-a17478de-1988-4040-b528-d11902da3236.jpeg',
+              img: 'https://sino-cloud-base.oss-cn-hangzhou.aliyuncs.com/fileupload-develop/20210606/19a373eaefb44ec4d476a1dbbfce6489.jpg',
               title: 'Dubbo Nacos 发布 v0.8.0 PRE-GA版本，安全稳定上生产',
               content: '阿里巴巴微服务开源项目[Dubbo Nacos](https://github.com/alibaba/nacos)于本周发布 v0.5.0 版本，该版本主要在 DNS-based Service Discovery，支持 TTL，支持 Java 11，优化Nacos产品用户体验，与Spring Cloud Gateway的集成等方面做了演进。',
               dateStr: 'Jan 20，2019',
@@ -152,7 +152,7 @@ export default {
       title: '事件 & 新闻',
       list: [
           {
-              img: 'https://cdn.nlark.com/yuque/0/2021/jpeg/338441/1622944158311-a17478de-1988-4040-b528-d11902da3236.jpeg',
+              img: 'https://sino-cloud-base.oss-cn-hangzhou.aliyuncs.com/fileupload-develop/20210606/19a373eaefb44ec4d476a1dbbfce6489.jpg',
               title: 'Dubbo Nacos 发布 v0.8.0 PRE-GA版本，安全稳定上生产',
               content: '阿里巴巴微服务开源项目[Dubbo Nacos](https://github.com/alibaba/nacos)于本周发布 v0.5.0 版本，该版本主要在 DNS-based Service Discovery，支持 TTL，支持 Java 11，优化Nacos产品用户体验，与Spring Cloud Gateway的集成等方面做了演进。',
               dateStr: 'Jan 20，2019',
