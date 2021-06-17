@@ -20,3 +20,9 @@ Mailing list is recommended for discussing almost anything related to Nacos. Ple
 * [commits-nacos@googlegroups.com](mailto:commits-nacos%2Bsubscribe@googlegroups.com): All commits will be sent to this mailing list. You can subscribe to it if you are interested in Nacos' development.
 * [users-nacos@googlegroups.com](mailto:users-nacos%2Bsubscribe@googlegroups.com): All Github?[issue](https://github.com/alibaba/nacos/issues)?updates and?[pull request](https://github.com/alibaba/nacos/pulls)?updates will be sent to this mailing list.
 * [nacos_dev@linux.alibaba.com](mailto:nacos_dev@linux.alibaba.com).
+
+### Nacos DingDing group
+
+Welcome to join Nacos community nail group
+
+![nacos_dingding.jpg](/img/nacos_dingding.jpg) 
