@@ -683,8 +683,29 @@ dataId^2group^2tenant^1
 <td style="text-align:left">是</td>
 <td style="text-align:left">配置项历史版本ID</td>
 </tr>
+<tr>
+<td style="text-align:left">tenant</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">否</td>
+<td style="text-align:left">租户信息，对应 Naocs 的命名空间ID字段 （2.0.3起）</td>
+</tr>
+<tr>
+<td style="text-align:left">dataId</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">是</td>
+<td style="text-align:left">配置 ID （2.0.3起）</td>
+</tr>
+<tr>
+<td style="text-align:left">group</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">是</td>
+<td style="text-align:left">配置分组 （2.0.3起）</td>
+</tr>
 </tbody>
 </table>
+<blockquote>
+<p>注意：2.0.3版本起，此接口需要新增字段tenant、dataId和group，其中tenant非必填。</p>
+</blockquote>
 <h3>错误编码</h3>
 <table>
 <thead>
@@ -726,7 +747,7 @@ dataId^2group^2tenant^1
 <ul>
 <li>请求示例</li>
 </ul>
-<pre><code>curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history?nid=203'
+<pre><code>curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history?nid=203&amp;tenant=&amp;dataId=nacos.example&amp;group=com.alibaba.nacos'
 </code></pre>
 <ul>
 <li>返回示例</li>
@@ -771,8 +792,29 @@ dataId^2group^2tenant^1
 <td style="text-align:left">是</td>
 <td style="text-align:left">配置ID</td>
 </tr>
+<tr>
+<td style="text-align:left">tenant</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">否</td>
+<td style="text-align:left">租户信息，对应 Naocs 的命名空间ID字段 （2.0.3起）</td>
+</tr>
+<tr>
+<td style="text-align:left">dataId</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">是</td>
+<td style="text-align:left">配置 ID （2.0.3起）</td>
+</tr>
+<tr>
+<td style="text-align:left">group</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">是</td>
+<td style="text-align:left">配置分组 （2.0.3起）</td>
+</tr>
 </tbody>
 </table>
+<blockquote>
+<p>说明：2.0.3版本起，此接口需要新增字段tenant、dataId和group，其中tenant非必填。</p>
+</blockquote>
 <h3>错误编码</h3>
 <table>
 <thead>
@@ -814,7 +856,7 @@ dataId^2group^2tenant^1
 <ul>
 <li>请求示例</li>
 </ul>
-<pre><code>curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history/previous?id=309135486247505920'
+<pre><code>curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history/previous?id=309135486247505920&amp;tenant=&amp;dataId=nacos.example&amp;group=com.alibaba.nacos'
 </code></pre>
 <ul>
 <li>返回示例</li>

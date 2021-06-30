@@ -746,8 +746,29 @@ Otherwise, an empty string is returned.
 <td style="text-align:left">Yes</td>
 <td style="text-align:left">history config info ID</td>
 </tr>
+<tr>
+<td style="text-align:left">tenant</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">Tenant information. It corresponds to the Namespace ID field in Nacos. (Since 2.0.3)</td>
+</tr>
+<tr>
+<td style="text-align:left">dataId</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">Yes</td>
+<td style="text-align:left">Configuration ID (Since 2.0.3)</td>
+</tr>
+<tr>
+<td style="text-align:left">group</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">Yes</td>
+<td style="text-align:left">Configuration group (Since 2.0.3)</td>
+</tr>
 </tbody>
 </table>
+<blockquote>
+<p>Note: From version 2.0.3, this interface need add three parameter, include tenant, dataId and group, tenant can not be provided.</p>
+</blockquote>
 <h3>Error Code</h3>
 <table>
 <thead>
@@ -787,7 +808,7 @@ Otherwise, an empty string is returned.
 </table>
 <h3>Example</h3>
 <h4>Request example</h4>
-<pre><code>curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history?nid=203'
+<pre><code>curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history?nid=203&amp;tenant=&amp;dataId=nacos.example&amp;group=com.alibaba.nacos'
 </code></pre>
 <h4>Response example</h4>
 <pre><code>{
@@ -830,8 +851,29 @@ Otherwise, an empty string is returned.
 <td style="text-align:left">Yes</td>
 <td style="text-align:left">configuration unique id</td>
 </tr>
+<tr>
+<td style="text-align:left">tenant</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">No</td>
+<td style="text-align:left">Tenant information. It corresponds to the Namespace ID field in Nacos. (Since 2.0.3)</td>
+</tr>
+<tr>
+<td style="text-align:left">dataId</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">Yes</td>
+<td style="text-align:left">Configuration ID (Since 2.0.3)</td>
+</tr>
+<tr>
+<td style="text-align:left">group</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">Yes</td>
+<td style="text-align:left">Configuration group (Since 2.0.3)</td>
+</tr>
 </tbody>
 </table>
+<blockquote>
+<p>Note: From version 2.0.3, this interface need add three parameter, include tenant, dataId and group, tenant can not be provided.</p>
+</blockquote>
 <h3>Error Code</h3>
 <table>
 <thead>
@@ -871,7 +913,7 @@ Otherwise, an empty string is returned.
 </table>
 <h3>Example</h3>
 <h4>Request example</h4>
-<pre><code>curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history/previous?id=309135486247505920'
+<pre><code>curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history/previous?id=309135486247505920&amp;tenant=&amp;dataId=nacos.example&amp;group=com.alibaba.nacos'
 </code></pre>
 <h4>Response example</h4>
 <pre><code>{
