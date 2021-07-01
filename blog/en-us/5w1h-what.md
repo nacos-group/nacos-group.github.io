@@ -1,37 +1,37 @@
 ---
-title: Nacos 帮我们解决什么问题？—— 配置管理篇
+title: What problems does Nacos help us solve? —— Configuration Management
 keywords: nacos
-description: Nacos 配置管理帮我们解决什么问题？
+description: What problems can Nacos configuration management help us solve?
 ---
 
-# Nacos 帮我们解决什么问题？—— 配置管理篇
-> Authors: 何煦
+# What problems does Nacos help us solve? —— Configuration Management
+> Authors: He Xu
 
-## 概述
+## Overview
 
-[Nacos](https://github.com/alibaba/nacos) 是阿里巴巴今年7月份开源的项目，如其名， Naming and Configuration Service ，专注于服务发现和配置管理领域。本系列文章，将从 5W1H（What、Where、When、Who、Why、How）全面剖析 Nacos，希望对开发者们在服务发现和配置管理开源方案选型的时候，有所帮助。
+[Nacos](https://github.com/alibaba/nacos) is Alibaba's open source project in July 2018 this year,As its name, Naming and Configuration Service ,Focus on service discovery and configuration management。This series of articles,We will fully analyze Nacos from 5W1H（What、Where、When、Who、Why、How）,I hope it will be helpful to developers when selecting open source solutions for service discovery and configuration management。
 
-本文作为 Nacos 系列文章的开篇，从 “What” 开始。我们开始关注一个开源项目的时候，通常最先冒出的 2 个问题是：
+This article serves as the beginning of the Nacos series,Start with "What"。When we started to pay attention to an open source project,Usually the first two questions that come to mind are:
 
-* 它是什么？
-* 它帮我们解决什么问题？
+* What is it？
+* What problem does it help us to solve?
 
-Nacos 是什么？
+What is it？
 
-Nacos 是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。
+Nacos is a dynamic service discovery, configuration management and service management platform that makes it easier to build Cloud Native applications.
 
-Nacos 能帮我们解决什么问题？
+What problem does it help us to solve?
 
-本文将先围绕其“配置管理”功能来解答。配置，作为代码如影随形的小伙伴，伴随着应用的整个生命周期，我们当然对它也非常的熟悉，想想配置一般都通过哪几种形式存在？
+This article will first focus on its "configuration management" function to answer。"Configuration",As a buddy with the code,Accompanied by the entire life cycle of the application,Of course we are also very familiar with it,Think about how many forms of configuration generally exist?
 
-* 硬编码
-* 配置文件
-* DB 配置表
+* Hard-Code
+* Configuration file
+* Database configuration table
 
-## 硬编码
+## Hard-Code
 
-配置项作为类字段的形式存在，如：
-
+Configuration items exist in the form of class fields.
+E.g:
 ```java
 public class AppConfig {
 
@@ -47,32 +47,32 @@ public class AppConfig {
 }
 ```
 
-这种形式主要有三个问题：
+There are three main problems with this approach:
 
-如果配置是需要动态修改的话，需要当前应用去暴露管理该配置项的接口，至于是 Controller 的 API 接口，还是 JMX ，都是可以做到。
+If the configuration needs to be modified dynamically,The current application is required to expose the interface for managing the configuration item,As for the Controller's API interface, or JMX, it can be done.
 
-另外，配置变更都是发生在内存中，并没有持久化。因此，在修改配置之后重启应用，配置又会变回代码中的默认值了，这是一个坑啊，笔者就曾经掉进去过，爬了好一会才上岸。
+In addition, configuration changes occur in memory and are not persisted.Therefore, restart the application after modifying the configuration, and the configuration will change back to the default value in the code,This is harmful, I have encountered.
 
-最后一个问题，就是当你有多台机器的时候，要修改一个配置，每一台都得去操作一遍，运维成本可想而知，极其蛋疼。
+Last question,When you have multiple machines,Need to modify a configuration,Every one has to be revised,The cost is very high.
 
-## 配置文件
+## Configuration file
 
-Spring 中常见的 properties、yml 文件，或其他自定义的，如，“conf”后缀等：
+In Spring,properties or ymal or other custom configuration files, such as "conf" suffix：
 
 ```
 # application.properties
 connectTimeoutInMills=5000
 ```
 
-相比“硬编码”的形式，它解决了第二个问题，持久化了配置。但是，另外两个问题并没有解决，运维成本依旧还是很高的。
+Compared to the "hard-code" form,It solves the second problem,Persistent configuration.However, the other two issues are not resolved,Operation and maintenance costs are still high.
 
-配置动态变更，可以是通过类似“硬编码”暴露管理接口的方式，这时，代码中会多一步持久化新配置到文件的逻辑。或者，简单粗暴点，直接登录机器上去修改配置文件，再重启应用，让配置生效。当然，你也可以在代码中增加一个定时任务，如每隔 10s 读取配置文件内容，让最新的配置能够及时在应用中生效，这样也就免去了重启应用这个“较重”的运维操作。
+Dynamic configuration changes,It can be through a similar "hard-code" way to expose the management interface,At this time, there will be one more step in the code to persist the logic of the new configuration to the file. Or, simple and rude,Log in to the machine directly to modify the configuration file,And then restart the app,Let the configuration take effect. Of course, you can also add a timing task to the code,For example, read the content of the configuration file every 10s, so that the latest configuration can take effect in the application in time, so that the "heavier" operation and maintenance operation of restarting the application is eliminated.
 
-通过增加“持久化逻辑”、“定时任务”让“配置文件”的形式比“硬编码”前进了一小步。
+By adding "persistent logic" and "timed tasks", the form of "configuration files" is a small step forward than "hard-code".
 
-## DB 配置表
+## Database configuration table
 
-这里的 DB 可以是 MySQL 等的关系型数据库，也可以是 Redis 等的非关系型数据库。数据表如：
+Database can be a relational database such as MySQL or a non-relational database such as Redis. The data table is as follows：
 
 ```sql
 CREATE TABLE `config` (
@@ -88,25 +88,25 @@ CREATE TABLE `config` (
 INSERT INTO `config` (`key`, `value`, `updated_time`, `created_time`) VALUES ('connectTimeoutInMills', '5000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 ```
 
-它相对于前两者，更进一步，将配置从应用中抽离出来，集中管理，能较大的降低运维成本。
+Compared with the first two, it takes the configuration a step further, separates the configuration from the application, and centrally manages it, which can greatly reduce the operation and maintenance cost.
 
-那么，它能怎么解决动态更新配置的问题呢？据我所知，有两种方式。
+So, how can it solve the problem of dynamically updating the configuration? As far as I know, there are two ways。
 
-其一，如同之前一样，通过暴露管理接口去解决，当然，也一样得增加持久化的逻辑，只不过，之前是写文件，现在是将最新配置写入数据库。不过，程序中还需要有定时从数据库读取最新配置的任务，这样，才能做到只需调用其中一台机器的管理配置接口，就能把最新的配置下发到整个应用集群所有的机器上，真正达到降低运维成本的目的。
+One,Same as before,Solve by exposing management interface,Of course,Also need to increase the logic of persistence,But before it was to write files, now it is to write the latest configuration to the database. However, the program also needs to periodically read the latest configuration task from the database, so that only by calling the management configuration interface of one of the machines, the latest configuration can be distributed to all the machines in the entire application cluster. Really achieve the purpose of reducing operation and maintenance costs.
 
-其二，直接修改数据库，程序中通过定时任务从数据库读取最新的配置内容。
+Second,Modify the database directly, and read the latest configuration content from the database through timed tasks in the program.
 
-“DB 配置表”的形式解决了主要的问题，但是它不够优雅，带来了一些“累赘”。
+The form of "Database configuration table" solves the main problem, but it is not elegant enough and brings some "cumbersome".
 
-## Nacos 配置管理
+## Nacos configuration management
 
-Nacos 真正将配置从应用中剥离出来，统一管理，优雅的解决了配置的动态变更、持久化、运维成本等问题。
+Nacos truly separates the configuration from the application, manages it in a unified way, and elegantly solves the problems of dynamic changes, persistence, operation and maintenance costs of the configuration.
 
-应用自身既不需要去添加管理配置接口，也不需要自己去实现配置的持久化，更不需要引入“定时任务”以便降低运维成本。Nacos 提供的配置管理功能，将配置相关的所有逻辑都收拢，并且提供简单易用的 SDK，让应用的配置可以非常方便被 Nacos 管理起来。
+The application itself does not need to add a management configuration interface, nor does it need to implement configuration persistence by itself, and it does not need to introduce "timed tasks" in order to reduce operation and maintenance costs. Nacos The provided configuration management function gathers all the logic related to the configuration, and provides a simple and easy-to-use SDK, so that the configuration of the application can be easily managed by Nacos.
 
-如果是在 Spring 中使用 Nacos，只需三个步骤即可：
+If you are using Nacos in Spring, you only need three steps:
 
-1. 添加依赖
+1. Add dependency
 
 ```plain
 <dependency>
@@ -116,7 +116,7 @@ Nacos 真正将配置从应用中剥离出来，统一管理，优雅的解决�
 </dependency>
 ```
 
-2. 添加 `@EnableNacosConfig` 注解启用 Nacos Spring 的配置管理服务。以下示例中，我们使用 `@NacosPropertySource` 加载了 `dataId` 为 `example` 的配置源，并开启自动更新：
+2. Add `@EnableNacosConfig` annotation,Enable Nacos Spring's configuration management service。In the following example, we use `@NacosPropertySource` to load the configuration source with `dataId` as `example` and enable automatic update:
 
 ```plain
 @Configuration
@@ -127,9 +127,9 @@ public class NacosConfiguration {
 }
 ```
 
-3. 通过 Spring 的 `@Value` 注解设置属性值。
+3. Set the attribute value through Spring's `@Value` annotation.
 
-注意：需要同时有 `Setter`方法才能在配置变更的时候自动更新。
+Note: You need to have the `Setter` method at the same time to automatically update when the configuration changes.
 
 ```plain
 public class AppConfig {
@@ -147,16 +147,16 @@ public class AppConfig {
 }
 ```
 
-以上的三个步骤，对应用本身几乎没有任何的侵入，1 个依赖 2 注解，寥寥数行，就把配置通过 Nacos 管理起来了。
+The above three steps have almost no code intrusion to the application itself,1 dependency 2 annotations,With just a few lines, the configuration is managed through Nacos.
 
-关于配置的动态更新，对 Nacos Spring 的用户来说，在自身应用中就只是设置 “autoRefreshed” 的一个布尔值。然后在需要修改配置的时候，调用 Nacos 修改配置的接口，或使用 Nacos 的控制台去修改，配置发生变更后， Nacos 就会把最新的配置推送到该应用的所有机器上，简单而高效。
+About the dynamic update of the configuration,For users of Nacos Spring, it is just a boolean value of "autoRefreshed" that is set in their own application。Then when you need to modify the configuration, call Nacos to modify the configuration interface, or use the Nacos console to modify. After the configuration is changed, Nacos will push the latest configuration to all the machines of the application, which is simple and efficient.
 
-想想之前，为了实现此功能，写了多少冤枉代码，做了多少冤枉的运维工作。要是早一点认识 Nacos，该有多好呀！
+Think about it before, in order to realize this function, how much wrong code was written, and how much tedious operation and maintenance work was done. It would be great if you had met Nacos earlier!
 
-## 总结
+## Summary
 
-本文作为 Nacos 5W1H 系列文章的开篇，从“What” 讲述了 Nacos 配置管理能帮我们解决的问题：以简单、优雅、高效的方式管理配置，实现配置的动态变更，大大降低运维成本，让开发同学早点下班。
+This article serves as the beginning of the Nacos 5W1H series,"What" tells the problem that Nacos configuration management can help us solve: manage configuration in a simple, elegant, and efficient way, realize dynamic configuration changes, greatly reduce operation and maintenance costs, and let developers leave work earlier.
 
-当然，Nacos 的配置管理，不单单只有上述的那些功能，还有诸如“灰度发布”、“版本管理”、“快速回滚”、“监听查询”、“推送轨迹”、“权限控制”、“敏感配置（如，数据库连接配置）的加密存储”等等，这些有的已经在 Nacos 中开源实现了，有的在 Nacos 配置管理的阿里云免费产品 [ACM](https://cn.aliyun.com/product/acm) 中提供了，当然，后续也会慢慢开源到 Nacos 中，敬请期待。
+Of course, Nacos configuration management is not only the above-mentioned functions, but also such as "gray release", "version management", "fast rollback", "monitor query", "push trajectory", "authority control", "Encrypted storage of sensitive configuration (eg, database connection configuration)" etc.. Some of these have been implemented in open source in Nacos, and some are provided in the free product of Alibaba Cloud [ACM](https://cn.aliyun.com/product/acm) of Nacos configuration management. Of course, the follow-up will be slow Slowly open source to Nacos, so stay tuned.
 
-本系列文章，会持续为大家讲述 Nacos 的点点滴滴，不单单讲述 “Nacos 能帮我们解决什么问题？”，还会深入源码分析“Nacos 是如何做到简单而强大的？”。同时，如果小伙们有兴趣的话，我们还会给大家八卦一下 Nacos 的 稗官野史，关于 Nacos 在阿里内部的历史，关于 Nacos 服务端口的寓意等等。总之，一句话：我有故事，也有美酒，君还何求？
+This series of articles,Will continue to tell everyone about Nacos bit by bit,It's not just about "What problem can Nacos help us solve?",There will also be an in-depth source code analysis "How is Nacos simple and powerful?"。At the same time, if the guys are interested, we will also give you gossip about Nacos' history of barnyard officials, about the history of Nacos in Ali, about the meaning of the Nacos service port, etc.. In short, one sentence: I have a story, and I also have a good wine, what else can you ask for?
