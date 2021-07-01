@@ -279,6 +279,15 @@
       }
     },
     {
+      "filename": "performance-compare.md",
+      "link": "/en-us/blog/performance-compare.html",
+      "meta": {
+        "title": "Performance comparison between Nacos 2.0 upgrading or not.",
+        "keywords": "2.0,Performance test,Performance comparing",
+        "description": "Nacos 2.0 improved the performance about 10 times by upgrading the communication protocol, framework, and data model, to solve the performance problems gradually exposed after the release of Nacos 1.0. In this article, Nacos1.0, Nacos1.0 upgrade Nacos2.0 process, Nacos2.0 to conduct a comprehensive performance comparison, in order to intuitively show the performance improvement brought by Nacos2.0."
+      }
+    },
+    {
       "filename": "pilot mcp.md",
       "link": "/en-us/blog/pilot mcp.html",
       "meta": {}
@@ -580,6 +589,15 @@
         "title": "Namespace,endpoint 最佳实践",
         "keywords": "namespace,endpoint,最佳实践",
         "description": "随着使用 Nacos 的企业越来越多，遇到的最频繁的两个问题就是：如何在我的生产环境正确的来使用 namespace 以及 endpoint。"
+      }
+    },
+    {
+      "filename": "performance-compare.md",
+      "link": "/zh-cn/blog/performance-compare.html",
+      "meta": {
+        "title": "Nacos 2.0 升级前后性能对比压测",
+        "keywords": "2.0,性能测试,性能对比",
+        "description": "Nacos2.0通过升级通信协议和框架、数据模型的方式将性能提升了约10倍，解决继 Nacos 1.0 发布逐步暴露的性能问题。本文通过压测 Nacos1.0，Nacos1.0升级Nacos2.0过程中，Nacos2.0 进行全面性能对比，直观的展示Nacos2.0所带来的性能提升。"
       }
     },
     {
