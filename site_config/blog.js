@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: 'Performance comparison between Nacos 2.0 upgrading or not.',
+            author: '@杨翊',
+            dateStr: 'July 1, 2021',
+            desc: 'Nacos 2.0 improved the performance about 10 times by upgrading the communication protocol, framework, and data model, to solve the performance problems gradually exposed after the release of Nacos 1.0. In this article, Nacos1.0, Nacos1.0 upgrade Nacos2.0 process, Nacos2.0 to conduct a comprehensive performance comparison, in order to intuitively show the performance improvement brought by Nacos2.0.',
+            link: '/en-us/blog/performance-compare.html',
+        },
+        {
             title: 'Nacos ISCAS 2021 start to apply!',
             author: '@杨翊',
             dateStr: 'May 25, 2021',
@@ -237,6 +244,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: 'Nacos 2.0 升级前后性能对比压测。',
+            author: '@杨翊',
+            dateStr: 'July 1, 2021',
+            desc: 'Nacos2.0通过升级通信协议和框架、数据模型的方式将性能提升了约10倍，解决继 Nacos 1.0 发布逐步暴露的性能问题。本文通过压测 Nacos1.0，Nacos1.0升级Nacos2.0过程中，Nacos2.0 进行全面性能对比，直观的展示Nacos2.0所带来的性能提升。',
+            link: '/zh-cn/blog/performance-compare.html',
+        },
         {
             title: 'Nacos 开源之夏2021活动 报名正式开启!',
             author: '@杨翊',
