@@ -412,6 +412,10 @@ GET
 | 名称 | 类型 | 是否必须 | 描述 |
 | :--- | :--- | :--- | :--- |
 | nid | Integer | 是 | 配置项历史版本ID |
+| tenant | string | 否 | 租户信息，对应 Naocs 的命名空间ID字段 （2.0.3起） |
+| dataId | string | 是 | 配置 ID （2.0.3起）|
+| group | string | 是 | 配置分组 （2.0.3起）|
+> 注意：2.0.3版本起，此接口需要新增字段tenant、dataId和group，其中tenant非必填。
 
 ### 错误编码
 
@@ -428,7 +432,7 @@ GET
 * 请求示例
 
 ```
-curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history?nid=203'
+curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history?nid=203&tenant=&dataId=nacos.example&group=com.alibaba.nacos'
 ```
 
 * 返回示例
@@ -468,6 +472,10 @@ GET
 | 名称 | 类型 | 是否必须 | 描述 |
 | :--- | :--- | :--- | :--- |
 | id | Integer | 是 | 配置ID |
+| tenant | string | 否 | 租户信息，对应 Naocs 的命名空间ID字段 （2.0.3起） |
+| dataId | string | 是 | 配置 ID （2.0.3起）|
+| group | string | 是 | 配置分组 （2.0.3起）|
+> 说明：2.0.3版本起，此接口需要新增字段tenant、dataId和group，其中tenant非必填。
 
 ### 错误编码
 
@@ -484,7 +492,7 @@ GET
 * 请求示例
 
 ```
-curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history/previous?id=309135486247505920'
+curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history/previous?id=309135486247505920&tenant=&dataId=nacos.example&group=com.alibaba.nacos'
 ```
 
 * 返回示例

@@ -497,6 +497,10 @@ GET
 | Name | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
 | nid | Integer | Yes | history config info ID |
+| tenant | string | No | Tenant information. It corresponds to the Namespace ID field in Nacos. (Since 2.0.3) |
+| dataId | string | Yes | Configuration ID (Since 2.0.3) |
+| group | string | Yes | Configuration group (Since 2.0.3) |
+> Note: From version 2.0.3, this interface need add three parameter, include tenant, dataId and group, tenant can not be provided. 
 
 ### Error Code
 
@@ -513,7 +517,7 @@ GET
 #### Request example
 
 ```
-curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history?nid=203'
+curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history?nid=203&tenant=&dataId=nacos.example&group=com.alibaba.nacos'
 ```
 
 #### Response example
@@ -553,6 +557,10 @@ GET
 | Name | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
 | id | Integer | Yes | configuration unique id |
+| tenant | string | No | Tenant information. It corresponds to the Namespace ID field in Nacos. (Since 2.0.3) |
+| dataId | string | Yes | Configuration ID (Since 2.0.3) |
+| group | string | Yes | Configuration group (Since 2.0.3) |
+> Note: From version 2.0.3, this interface need add three parameter, include tenant, dataId and group, tenant can not be provided. 
 
 ### Error Code
 
@@ -568,7 +576,7 @@ GET
 ### Example
 #### Request example
 ```
-curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history/previous?id=309135486247505920'
+curl -X GET 'http://127.0.0.1:8848/nacos/v1/cs/history/previous?id=309135486247505920&tenant=&dataId=nacos.example&group=com.alibaba.nacos'
 ```
 
 #### Response example
