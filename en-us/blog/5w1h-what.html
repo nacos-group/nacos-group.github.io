@@ -5,35 +5,36 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta name="keywords" content="nacos" />
-	<meta name="description" content="Nacos 配置管理帮我们解决什么问题？" />
+	<meta name="description" content="What problems can Nacos configuration management help us solve?" />
 	<!-- 网页标签标题 -->
-	<title>Nacos 帮我们解决什么问题？—— 配置管理篇</title>
+	<title>What problems does Nacos help us solve? —— Configuration Management</title>
 	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
 	<link rel="stylesheet" href="/build/blogDetail.css" />
 </head>
 <body>
-	<div id="root"><div class="blog-detail-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/en-us/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">中</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/en-us/index.html">HOME</a></li><li class="menu-item menu-item-normal"><a href="/en-us/docs/quick-start.html">DOCS</a></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/en-us/blog">BLOG</a></li><li class="menu-item menu-item-normal"><a href="/en-us/community">COMMUNITY</a></li><li class="menu-item menu-item-normal"><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0">NACOS IN CLOUD</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></li><li class="menu-item menu-item-normal"><a href="https://job.alibaba.com/zhaopin/position_detail.htm?trace=qrcode_share&amp;positionCode=GP708029">HIRING</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></li><li class="menu-item menu-item-normal"><a href="https://github.com/alibaba/nacos/issues/5693">SUMMER 2021</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></li><li class="menu-item menu-item-normal"><a href="http://console.nacos.io/nacos/index.html">DEMO-CONSOLE</a></li></ul></div></div></header><section class="blog-content markdown-body"><h1>Nacos 帮我们解决什么问题？—— 配置管理篇</h1>
+	<div id="root"><div class="blog-detail-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/en-us/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">中</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><a href="/en-us/index.html">HOME</a></li><li class="menu-item menu-item-normal"><a href="/en-us/docs/quick-start.html">DOCS</a></li><li class="menu-item menu-item-normal"><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0">NACOS IN CLOUD</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></li><li class="menu-item menu-item-normal menu-item-normal-active"><a href="/en-us/blog">BLOG</a></li><li class="menu-item menu-item-normal"><a href="/en-us/community">COMMUNITY</a></li><li class="menu-item menu-item-normal"><a href="http://console.nacos.io/nacos/index.html">DEMO-CONSOLE</a></li></ul></div></div></header><section class="blog-content markdown-body"><h1>What problems does Nacos help us solve? —— Configuration Management</h1>
 <blockquote>
-<p>Authors: 何煦</p>
+<p>Authors: He Xu</p>
 </blockquote>
-<h2>概述</h2>
-<p><a href="https://github.com/alibaba/nacos">Nacos</a> 是阿里巴巴今年7月份开源的项目，如其名， Naming and Configuration Service ，专注于服务发现和配置管理领域。本系列文章，将从 5W1H（What、Where、When、Who、Why、How）全面剖析 Nacos，希望对开发者们在服务发现和配置管理开源方案选型的时候，有所帮助。</p>
-<p>本文作为 Nacos 系列文章的开篇，从 “What” 开始。我们开始关注一个开源项目的时候，通常最先冒出的 2 个问题是：</p>
+<h2>Overview</h2>
+<p><a href="https://github.com/alibaba/nacos">Nacos</a> is Alibaba's open source project in July 2018 this year,As its name, Naming and Configuration Service ,Focus on service discovery and configuration management。This series of articles,We will fully analyze Nacos from 5W1H（What、Where、When、Who、Why、How）,I hope it will be helpful to developers when selecting open source solutions for service discovery and configuration management。</p>
+<p>This article serves as the beginning of the Nacos series,Start with &quot;What&quot;。When we started to pay attention to an open source project,Usually the first two questions that come to mind are:</p>
 <ul>
-<li>它是什么？</li>
-<li>它帮我们解决什么问题？</li>
+<li>What is it？</li>
+<li>What problem does it help us to solve?</li>
 </ul>
-<p>Nacos 是什么？</p>
-<p>Nacos 是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。</p>
-<p>Nacos 能帮我们解决什么问题？</p>
-<p>本文将先围绕其“配置管理”功能来解答。配置，作为代码如影随形的小伙伴，伴随着应用的整个生命周期，我们当然对它也非常的熟悉，想想配置一般都通过哪几种形式存在？</p>
+<p>What is it？</p>
+<p>Nacos is a dynamic service discovery, configuration management and service management platform that makes it easier to build Cloud Native applications.</p>
+<p>What problem does it help us to solve?</p>
+<p>This article will first focus on its &quot;configuration management&quot; function to answer。&quot;Configuration&quot;,As a buddy with the code,Accompanied by the entire life cycle of the application,Of course we are also very familiar with it,Think about how many forms of configuration generally exist?</p>
 <ul>
-<li>硬编码</li>
-<li>配置文件</li>
-<li>DB 配置表</li>
+<li>Hard-Code</li>
+<li>Configuration file</li>
+<li>Database configuration table</li>
 </ul>
-<h2>硬编码</h2>
-<p>配置项作为类字段的形式存在，如：</p>
+<h2>Hard-Code</h2>
+<p>Configuration items exist in the form of class fields.
+E.g:</p>
 <pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AppConfig</span> </span>{
 
     <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> connectTimeoutInMills = <span class="hljs-number">5000</span>;
@@ -47,20 +48,20 @@
     }
 }
 </code></pre>
-<p>这种形式主要有三个问题：</p>
-<p>如果配置是需要动态修改的话，需要当前应用去暴露管理该配置项的接口，至于是 Controller 的 API 接口，还是 JMX ，都是可以做到。</p>
-<p>另外，配置变更都是发生在内存中，并没有持久化。因此，在修改配置之后重启应用，配置又会变回代码中的默认值了，这是一个坑啊，笔者就曾经掉进去过，爬了好一会才上岸。</p>
-<p>最后一个问题，就是当你有多台机器的时候，要修改一个配置，每一台都得去操作一遍，运维成本可想而知，极其蛋疼。</p>
-<h2>配置文件</h2>
-<p>Spring 中常见的 properties、yml 文件，或其他自定义的，如，“conf”后缀等：</p>
+<p>There are three main problems with this approach:</p>
+<p>If the configuration needs to be modified dynamically,The current application is required to expose the interface for managing the configuration item,As for the Controller's API interface, or JMX, it can be done.</p>
+<p>In addition, configuration changes occur in memory and are not persisted.Therefore, restart the application after modifying the configuration, and the configuration will change back to the default value in the code,This is harmful, I have encountered.</p>
+<p>Last question,When you have multiple machines,Need to modify a configuration,Every one has to be revised,The cost is very high.</p>
+<h2>Configuration file</h2>
+<p>In Spring,properties or ymal or other custom configuration files, such as &quot;conf&quot; suffix：</p>
 <pre><code># application.properties
 connectTimeoutInMills=5000
 </code></pre>
-<p>相比“硬编码”的形式，它解决了第二个问题，持久化了配置。但是，另外两个问题并没有解决，运维成本依旧还是很高的。</p>
-<p>配置动态变更，可以是通过类似“硬编码”暴露管理接口的方式，这时，代码中会多一步持久化新配置到文件的逻辑。或者，简单粗暴点，直接登录机器上去修改配置文件，再重启应用，让配置生效。当然，你也可以在代码中增加一个定时任务，如每隔 10s 读取配置文件内容，让最新的配置能够及时在应用中生效，这样也就免去了重启应用这个“较重”的运维操作。</p>
-<p>通过增加“持久化逻辑”、“定时任务”让“配置文件”的形式比“硬编码”前进了一小步。</p>
-<h2>DB 配置表</h2>
-<p>这里的 DB 可以是 MySQL 等的关系型数据库，也可以是 Redis 等的非关系型数据库。数据表如：</p>
+<p>Compared to the &quot;hard-code&quot; form,It solves the second problem,Persistent configuration.However, the other two issues are not resolved,Operation and maintenance costs are still high.</p>
+<p>Dynamic configuration changes,It can be through a similar &quot;hard-code&quot; way to expose the management interface,At this time, there will be one more step in the code to persist the logic of the new configuration to the file. Or, simple and rude,Log in to the machine directly to modify the configuration file,And then restart the app,Let the configuration take effect. Of course, you can also add a timing task to the code,For example, read the content of the configuration file every 10s, so that the latest configuration can take effect in the application in time, so that the &quot;heavier&quot; operation and maintenance operation of restarting the application is eliminated.</p>
+<p>By adding &quot;persistent logic&quot; and &quot;timed tasks&quot;, the form of &quot;configuration files&quot; is a small step forward than &quot;hard-code&quot;.</p>
+<h2>Database configuration table</h2>
+<p>Database can be a relational database such as MySQL or a non-relational database such as Redis. The data table is as follows：</p>
 <pre><code class="language-sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-string">`config`</span> (
   <span class="hljs-string">`id`</span> <span class="hljs-built_in">bigint</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> AUTO_INCREMENT,
   <span class="hljs-string">`key`</span> <span class="hljs-built_in">varchar</span>(<span class="hljs-number">50</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-string">''</span> <span class="hljs-keyword">COMMENT</span> <span class="hljs-string">'配置项'</span>,
@@ -73,17 +74,17 @@ connectTimeoutInMills=5000
 
 <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> <span class="hljs-string">`config`</span> (<span class="hljs-string">`key`</span>, <span class="hljs-string">`value`</span>, <span class="hljs-string">`updated_time`</span>, <span class="hljs-string">`created_time`</span>) <span class="hljs-keyword">VALUES</span> (<span class="hljs-string">'connectTimeoutInMills'</span>, <span class="hljs-string">'5000'</span>, <span class="hljs-keyword">CURRENT_TIMESTAMP</span>, <span class="hljs-keyword">CURRENT_TIMESTAMP</span>);
 </code></pre>
-<p>它相对于前两者，更进一步，将配置从应用中抽离出来，集中管理，能较大的降低运维成本。</p>
-<p>那么，它能怎么解决动态更新配置的问题呢？据我所知，有两种方式。</p>
-<p>其一，如同之前一样，通过暴露管理接口去解决，当然，也一样得增加持久化的逻辑，只不过，之前是写文件，现在是将最新配置写入数据库。不过，程序中还需要有定时从数据库读取最新配置的任务，这样，才能做到只需调用其中一台机器的管理配置接口，就能把最新的配置下发到整个应用集群所有的机器上，真正达到降低运维成本的目的。</p>
-<p>其二，直接修改数据库，程序中通过定时任务从数据库读取最新的配置内容。</p>
-<p>“DB 配置表”的形式解决了主要的问题，但是它不够优雅，带来了一些“累赘”。</p>
-<h2>Nacos 配置管理</h2>
-<p>Nacos 真正将配置从应用中剥离出来，统一管理，优雅的解决了配置的动态变更、持久化、运维成本等问题。</p>
-<p>应用自身既不需要去添加管理配置接口，也不需要自己去实现配置的持久化，更不需要引入“定时任务”以便降低运维成本。Nacos 提供的配置管理功能，将配置相关的所有逻辑都收拢，并且提供简单易用的 SDK，让应用的配置可以非常方便被 Nacos 管理起来。</p>
-<p>如果是在 Spring 中使用 Nacos，只需三个步骤即可：</p>
+<p>Compared with the first two, it takes the configuration a step further, separates the configuration from the application, and centrally manages it, which can greatly reduce the operation and maintenance cost.</p>
+<p>So, how can it solve the problem of dynamically updating the configuration? As far as I know, there are two ways。</p>
+<p>One,Same as before,Solve by exposing management interface,Of course,Also need to increase the logic of persistence,But before it was to write files, now it is to write the latest configuration to the database. However, the program also needs to periodically read the latest configuration task from the database, so that only by calling the management configuration interface of one of the machines, the latest configuration can be distributed to all the machines in the entire application cluster. Really achieve the purpose of reducing operation and maintenance costs.</p>
+<p>Second,Modify the database directly, and read the latest configuration content from the database through timed tasks in the program.</p>
+<p>The form of &quot;Database configuration table&quot; solves the main problem, but it is not elegant enough and brings some &quot;cumbersome&quot;.</p>
+<h2>Nacos configuration management</h2>
+<p>Nacos truly separates the configuration from the application, manages it in a unified way, and elegantly solves the problems of dynamic changes, persistence, operation and maintenance costs of the configuration.</p>
+<p>The application itself does not need to add a management configuration interface, nor does it need to implement configuration persistence by itself, and it does not need to introduce &quot;timed tasks&quot; in order to reduce operation and maintenance costs. Nacos The provided configuration management function gathers all the logic related to the configuration, and provides a simple and easy-to-use SDK, so that the configuration of the application can be easily managed by Nacos.</p>
+<p>If you are using Nacos in Spring, you only need three steps:</p>
 <ol>
-<li>添加依赖</li>
+<li>Add dependency</li>
 </ol>
 <pre><code class="language-plain">&lt;dependency&gt;
     &lt;groupId&gt;com.alibaba.nacos&lt;/groupId&gt;
@@ -92,7 +93,7 @@ connectTimeoutInMills=5000
 &lt;/dependency&gt;
 </code></pre>
 <ol start="2">
-<li>添加 <code>@EnableNacosConfig</code> 注解启用 Nacos Spring 的配置管理服务。以下示例中，我们使用 <code>@NacosPropertySource</code> 加载了 <code>dataId</code> 为 <code>example</code> 的配置源，并开启自动更新：</li>
+<li>Add <code>@EnableNacosConfig</code> annotation,Enable Nacos Spring's configuration management service。In the following example, we use <code>@NacosPropertySource</code> to load the configuration source with <code>dataId</code> as <code>example</code> and enable automatic update:</li>
 </ol>
 <pre><code class="language-plain">@Configuration
 @EnableNacosConfig(globalProperties = @NacosProperties(serverAddr = &quot;127.0.0.1:8848&quot;))
@@ -102,9 +103,9 @@ public class NacosConfiguration {
 }
 </code></pre>
 <ol start="3">
-<li>通过 Spring 的 <code>@Value</code> 注解设置属性值。</li>
+<li>Set the attribute value through Spring's <code>@Value</code> annotation.</li>
 </ol>
-<p>注意：需要同时有 <code>Setter</code>方法才能在配置变更的时候自动更新。</p>
+<p>Note: You need to have the <code>Setter</code> method at the same time to automatically update when the configuration changes.</p>
 <pre><code class="language-plain">public class AppConfig {
 
     @Value(&quot;${connectTimeoutInMills:5000}&quot;)
@@ -119,13 +120,13 @@ public class NacosConfiguration {
     }
 }
 </code></pre>
-<p>以上的三个步骤，对应用本身几乎没有任何的侵入，1 个依赖 2 注解，寥寥数行，就把配置通过 Nacos 管理起来了。</p>
-<p>关于配置的动态更新，对 Nacos Spring 的用户来说，在自身应用中就只是设置 “autoRefreshed” 的一个布尔值。然后在需要修改配置的时候，调用 Nacos 修改配置的接口，或使用 Nacos 的控制台去修改，配置发生变更后， Nacos 就会把最新的配置推送到该应用的所有机器上，简单而高效。</p>
-<p>想想之前，为了实现此功能，写了多少冤枉代码，做了多少冤枉的运维工作。要是早一点认识 Nacos，该有多好呀！</p>
-<h2>总结</h2>
-<p>本文作为 Nacos 5W1H 系列文章的开篇，从“What” 讲述了 Nacos 配置管理能帮我们解决的问题：以简单、优雅、高效的方式管理配置，实现配置的动态变更，大大降低运维成本，让开发同学早点下班。</p>
-<p>当然，Nacos 的配置管理，不单单只有上述的那些功能，还有诸如“灰度发布”、“版本管理”、“快速回滚”、“监听查询”、“推送轨迹”、“权限控制”、“敏感配置（如，数据库连接配置）的加密存储”等等，这些有的已经在 Nacos 中开源实现了，有的在 Nacos 配置管理的阿里云免费产品 <a href="https://cn.aliyun.com/product/acm">ACM</a> 中提供了，当然，后续也会慢慢开源到 Nacos 中，敬请期待。</p>
-<p>本系列文章，会持续为大家讲述 Nacos 的点点滴滴，不单单讲述 “Nacos 能帮我们解决什么问题？”，还会深入源码分析“Nacos 是如何做到简单而强大的？”。同时，如果小伙们有兴趣的话，我们还会给大家八卦一下 Nacos 的 稗官野史，关于 Nacos 在阿里内部的历史，关于 Nacos 服务端口的寓意等等。总之，一句话：我有故事，也有美酒，君还何求？</p>
+<p>The above three steps have almost no code intrusion to the application itself,1 dependency 2 annotations,With just a few lines, the configuration is managed through Nacos.</p>
+<p>About the dynamic update of the configuration,For users of Nacos Spring, it is just a boolean value of &quot;autoRefreshed&quot; that is set in their own application。Then when you need to modify the configuration, call Nacos to modify the configuration interface, or use the Nacos console to modify. After the configuration is changed, Nacos will push the latest configuration to all the machines of the application, which is simple and efficient.</p>
+<p>Think about it before, in order to realize this function, how much wrong code was written, and how much tedious operation and maintenance work was done. It would be great if you had met Nacos earlier!</p>
+<h2>Summary</h2>
+<p>This article serves as the beginning of the Nacos 5W1H series,&quot;What&quot; tells the problem that Nacos configuration management can help us solve: manage configuration in a simple, elegant, and efficient way, realize dynamic configuration changes, greatly reduce operation and maintenance costs, and let developers leave work earlier.</p>
+<p>Of course, Nacos configuration management is not only the above-mentioned functions, but also such as &quot;gray release&quot;, &quot;version management&quot;, &quot;fast rollback&quot;, &quot;monitor query&quot;, &quot;push trajectory&quot;, &quot;authority control&quot;, &quot;Encrypted storage of sensitive configuration (eg, database connection configuration)&quot; etc.. Some of these have been implemented in open source in Nacos, and some are provided in the free product of Alibaba Cloud <a href="https://cn.aliyun.com/product/acm">ACM</a> of Nacos configuration management. Of course, the follow-up will be slow Slowly open source to Nacos, so stay tuned.</p>
+<p>This series of articles,Will continue to tell everyone about Nacos bit by bit,It's not just about &quot;What problem can Nacos help us solve?&quot;,There will also be an in-depth source code analysis &quot;How is Nacos simple and powerful?&quot;。At the same time, if the guys are interested, we will also give you gossip about Nacos' history of barnyard officials, about the history of Nacos in Ali, about the meaning of the Nacos service port, etc.. In short, one sentence: I have a story, and I also have a good wine, what else can you ask for?</p>
 </section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>Vision</h3><p>By providing an easy-to-use service infrastructure such as dynamic service discovery, service configuration, service sharing and management and etc., Nacos help users better construct, deliver and manage their own service platform, reuse and composite business service faster and deliver value of business innovation more quickly so as to win market for users in the era of cloud native and in all cloud environments, such as private, mixed, or public clouds.</p></div><div class="col col-6"><dl><dt>Documentation</dt><dd><a href="/en-us/docs/what-is-nacos.html" target="_self">Overview</a></dd><dd><a href="/en-us/docs/quick-start.html" target="_self">Quick start</a></dd><dd><a href="/en-us/docs/contributing.html" target="_self">Developer guide</a></dd></dl></div><div class="col col-6"><dl><dt>Resources</dt><dd><a href="/en-us/community/index.html" target="_self">Community</a></dd><dd><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_self">Cloud Service MSE</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">Cloud Service EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">Cloud Service AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
 	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
 	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>

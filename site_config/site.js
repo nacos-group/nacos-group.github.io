@@ -17,6 +17,12 @@ export default {
         link: '/en-us/docs/quick-start.html',
       },
       {
+        key: 'Nacos in Cloud',
+        text: 'NACOS IN CLOUD',
+        link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
+      {
         key: 'blog',
         text: 'BLOG',
         link: '/en-us/blog',
@@ -31,24 +37,6 @@ export default {
       //   text: 'DOWNLOAD',
       //   link: '/en-us/blog/download.html',
       // },
-      {
-        key: 'Nacos in Cloud',
-        text: 'NACOS IN CLOUD',
-        link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
-        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-      },
-      {
-        key: 'We are hiring',
-        text: 'HIRING',
-        link: 'https://job.alibaba.com/zhaopin/position_detail.htm?trace=qrcode_share&positionCode=GP708029',
-        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-      },
-      {
-        key: 'Summer 2021',
-        text: 'SUMMER 2021',
-        link: 'https://github.com/alibaba/nacos/issues/5693',
-        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-      },
       {
         text: 'DEMO-CONSOLE',
         link: 'http://console.nacos.io/nacos/index.html',
@@ -112,6 +100,12 @@ export default {
         link: '/zh-cn/docs/what-is-nacos.html',
       },
       {
+        key: 'Nacos in Cloud',
+        text: '企业版Nacos',
+        link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
+      {
         key: 'blog',
         text: '博客',
         link: '/zh-cn/blog/index.html',
@@ -120,24 +114,6 @@ export default {
         key: 'community',
         text: '社区',
         link: '/zh-cn/community/index.html',
-      },
-      {
-        key: 'Nacos in Cloud',
-        text: '企业版Nacos',
-        link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
-        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-      },
-      {
-        key: 'We are hiring',
-        text: '招贤纳士',
-        link: 'https://job.alibaba.com/zhaopin/position_detail.htm?trace=qrcode_share&positionCode=GP708029',
-        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-      },
-      {
-        key: 'Summer 2021',
-        text: '开源之夏',
-        link: 'https://github.com/alibaba/nacos/issues/5693',
-        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
       {
         text: '控制台样例',
