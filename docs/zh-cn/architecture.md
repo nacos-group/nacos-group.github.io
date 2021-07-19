@@ -12,7 +12,7 @@ description: Nacos 架构
 
 ### 服务 (Service)
 
-服务是指一个或一组软件功能（例如特定信息的检索或一组操作的执行），其目的是不同的客户端可以为不同的目的重用（例如通过跨进程的网络调用）。Nacos 支持主流的服务生态，如 Kubernetes Service、gRPC|Dubbo RPC Service 或者 Spring Cloud RESTful Service.
+服务是指一个或一组软件功能（例如特定信息的检索或一组操作的执行），其目的是不同的客户端可以为不同的目的重用（例如通过跨进程的网络调用）。Nacos 支持主流的服务生态，如 Kubernetes Service、gRPC|Dubbo RPC Service 或者 Spring Cloud RESTful Service。
 
 ### 服务注册中心 (Service Registry)
 
@@ -20,15 +20,15 @@ description: Nacos 架构
 
 ### 服务元数据 (Service Metadata)
 
-服务元数据是指包括服务端点(endpoints)、服务标签、服务版本号、服务实例权重、路由规则、安全策略等描述服务的数据
+服务元数据是指包括服务端点(endpoints)、服务标签、服务版本号、服务实例权重、路由规则、安全策略等描述服务的数据。
 
 ### 服务提供方 (Service Provider)
 
-是指提供可复用和可调用服务的应用方
+是指提供可复用和可调用服务的应用方。
 
 ### 服务消费方 (Service Consumer)
 
-是指会发起对某个服务调用的应用方
+是指会发起对某个服务调用的应用方。
 
 ### 配置 (Configuration)
 
