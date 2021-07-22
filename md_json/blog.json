@@ -604,6 +604,15 @@
       "filename": "pilot mcp.md",
       "link": "/zh-cn/blog/pilot mcp.html",
       "meta": {}
+    },
+    {
+      "filename": "springboot-0.2.10.md",
+      "link": "/zh-cn/blog/springboot-0.2.10.html",
+      "meta": {
+        "title": "Nacos-spring-boot0.2.10发布，全面支持Nacos2.0",
+        "keywords": "Nacos-spring-boot0.2.10,Nacos2.0",
+        "description": "Nacos-spring-boot0.2.10发布，全面支持Nacos2.0"
+      }
     }
   ]
 }
