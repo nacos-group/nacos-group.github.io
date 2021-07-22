@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: 'Nacos-spring-boot0.2.10 released, supporting Nacos2.0',
+            author: '@涌月',
+            dateStr: 'July 22, 2021',
+            desc: 'With the maturity and stability of Nacos2.0, Nacos-spring-boot has released two core versions: 0.1.10 and 0.2.10, which fully supports Nacos2.0, supports automatic identification of configuration type injection capabilities, and fixes data consistency in high concurrency scenarios Sexual issues.',
+            link: '/zh-cn/blog/springboot-0.2.10.html',
+        },
+        {
             title: 'Performance comparison between Nacos 2.0 upgrading or not.',
             author: '@杨翊',
             dateStr: 'July 1, 2021',
@@ -244,6 +251,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: 'Nacos-spring-boot0.2.10发布，全面支持Nacos2.0',
+            author: '@涌月',
+            dateStr: 'July 22, 2021',
+            desc: '随着Nacos2.0成熟稳定，Nacos-spring-boot发布0.1.10、0.2.10两个核心版本，全面支持了Nacos2.0，同时支持自动识别配置类型注入能力，修复了高并发场景下数据一致性问题。',
+            link: '/zh-cn/blog/springboot-0.2.10.html',
+        },
         {
             title: 'Nacos 2.0 升级前后性能对比压测。',
             author: '@杨翊',
