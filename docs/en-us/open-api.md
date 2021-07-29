@@ -695,6 +695,8 @@ ok
 ### Description
 Modify an instance of service.
 
+**Attension：After Nacos2.0 version, the metadata updated through this interface has a higher priority and has the ability to remember. After the instance removed, it will still exist for a period of time. If the instance is re-registered during this period, the metadata will still be Effective. You can modify the memory time through** `nacos.naming.clean.expired-metadata.expired-time` **and** `nacos.naming.clean.expired-metadata.interval`
+
 ### Request Type
 PUT
 

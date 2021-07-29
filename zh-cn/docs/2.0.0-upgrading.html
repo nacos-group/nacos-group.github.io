@@ -99,7 +99,7 @@ ls -al distribution/target/
 <h2>8.2 降级</h2>
 <p>集群升级完毕后，依旧会进行双写，当升级后发现Nacos2.0存在问题时，可以快速进行降级，降级流程为重复步骤1～6，只是将版本改为对应的1.X版本。</p>
 <p>当第一台降级完成后，集群即可观察到<code>logs/naming-server.log</code> 中的<code>upgrade check result false</code> ，且控制台集群管理中，所有新版本<code>&quot;readyToUpgrade&quot;: false</code>。</p>
-<h1>升级相关的openAPI</h1>
+<h1 id="1">升级相关的openAPI</h1> 
 <p>在2.0.2版本中，nacos-server提供了一些方便查看升级状态及不同版本中的数据区别，方便用户排查升级中的问题。</p>
 <h2>查看统计</h2>
 <h3>描述</h3>
@@ -446,6 +446,298 @@ service.V2.not.in.V1           =
 	<span class="hljs-attr">"weight"</span>: <span class="hljs-number">1.0</span>
 }
 </code></pre>
+<h2>添加服务</h2>
+<h3>描述</h3>
+<p>补充添加一个服务到对应Nacos版本下</p>
+<h3>请求类型</h3>
+<p>POST</p>
+<h3>请求路径</h3>
+<pre><code class="language-plain">/nacos/v1/ns/upgrade/ops/service
+</code></pre>
+<h3>请求参数</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">是否必选</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">serviceName</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">是</td>
+<td>服务名</td>
+</tr>
+<tr>
+<td style="text-align:left">groupName</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">否</td>
+<td>分组名</td>
+</tr>
+<tr>
+<td style="text-align:left">namespaceId</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">否</td>
+<td>命名空间ID</td>
+</tr>
+<tr>
+<td style="text-align:left">protectThreshold</td>
+<td style="text-align:left">浮点数</td>
+<td style="text-align:left">否</td>
+<td>保护阈值,取值0到1,默认0</td>
+</tr>
+<tr>
+<td style="text-align:left">metadata</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">否</td>
+<td>元数据</td>
+</tr>
+<tr>
+<td style="text-align:left">selector</td>
+<td style="text-align:left">JSON格式字符串</td>
+<td style="text-align:left">否</td>
+<td>访问策略</td>
+</tr>
+<tr>
+<td style="text-align:left">ver</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">否</td>
+<td>版本 <code>v1</code> 或者 <code>v2</code>, 默认<code>v2</code></td>
+</tr>
+</tbody>
+</table>
+<h3>示例请求</h3>
+<pre><code class="language-plain">curl -X POST '127.0.0.1:8848/nacos/v1/ns/service?serviceName=nacos.test.2&amp;metadata=k1%3dv1'
+</code></pre>
+<h3>示例返回</h3>
+<pre><code>ok
+</code></pre>
+<h2>删除服务</h2>
+<h3>描述</h3>
+<p>从对应Nacos版本中删除一个服务,如果删除v2服务，只有当服务下实例数为0时允许删除。</p>
+<h3>请求类型</h3>
+<p>DELETE</p>
+<h3>请求路径</h3>
+<pre><code class="language-plain">/nacos/v1/ns/upgrade/ops/service
+</code></pre>
+<h3>请求参数</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">是否必选</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">serviceName</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">是</td>
+<td>服务名</td>
+</tr>
+<tr>
+<td style="text-align:left">groupName</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">否</td>
+<td>分组名</td>
+</tr>
+<tr>
+<td style="text-align:left">namespaceId</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">否</td>
+<td>命名空间ID</td>
+</tr>
+<tr>
+<td style="text-align:left">ver</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">否</td>
+<td>版本 <code>v1</code> 或者 <code>v2</code>, 默认<code>v2</code></td>
+</tr>
+</tbody>
+</table>
+<h3>示例请求</h3>
+<pre><code class="language-plain">curl -X DELETE '127.0.0.1:8848/nacos/v1/ns/service?serviceName=nacos.test.2'
+</code></pre>
+<h3>示例返回</h3>
+<pre><code>ok
+</code></pre>
+<h2>注册实例</h2>
+<h3>描述</h3>
+<p>注册一个实例到对应Nacos版本的服务下。</p>
+<h3>请求类型</h3>
+<p>POST</p>
+<h3>请求路径</h3>
+<pre><code class="language-plain">/nacos/v1/ns/upgrade/ops/instance
+</code></pre>
+<h3>请求参数</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">是否必选</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ip</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">是</td>
+<td>服务实例IP</td>
+</tr>
+<tr>
+<td style="text-align:left">port</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">是</td>
+<td>服务实例port</td>
+</tr>
+<tr>
+<td style="text-align:left">namespaceId</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">否</td>
+<td>命名空间ID</td>
+</tr>
+<tr>
+<td style="text-align:left">weight</td>
+<td style="text-align:left">double</td>
+<td style="text-align:left">否</td>
+<td>权重</td>
+</tr>
+<tr>
+<td style="text-align:left">enabled</td>
+<td style="text-align:left">boolean</td>
+<td style="text-align:left">否</td>
+<td>是否上线</td>
+</tr>
+<tr>
+<td style="text-align:left">healthy</td>
+<td style="text-align:left">boolean</td>
+<td style="text-align:left">否</td>
+<td>是否健康</td>
+</tr>
+<tr>
+<td style="text-align:left">metadata</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">否</td>
+<td>扩展信息</td>
+</tr>
+<tr>
+<td style="text-align:left">clusterName</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">否</td>
+<td>集群名</td>
+</tr>
+<tr>
+<td style="text-align:left">serviceName</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">是</td>
+<td>服务名</td>
+</tr>
+<tr>
+<td style="text-align:left">groupName</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">否</td>
+<td>分组名</td>
+</tr>
+<tr>
+<td style="text-align:left">ephemeral</td>
+<td style="text-align:left">boolean</td>
+<td style="text-align:left">否</td>
+<td>是否临时实例</td>
+</tr>
+<tr>
+<td style="text-align:left">ver</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">否</td>
+<td>版本 <code>v1</code> 或者 <code>v2</code>, 默认<code>v2</code></td>
+</tr>
+</tbody>
+</table>
+<h3>示例请求</h3>
+<pre><code class="language-plain">curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?port=8848&amp;healthy=true&amp;ip=11.11.11.11&amp;weight=1.0&amp;serviceName=nacos.test.3&amp;encoding=GBK&amp;namespaceId=n1'
+</code></pre>
+<h3>示例返回</h3>
+<p>ok</p>
+<h2>注销实例</h2>
+<h3>描述</h3>
+<p>删除对应Nacos版本服务下的一个实例。</p>
+<h3>请求类型</h3>
+<p>DELETE</p>
+<h3>请求路径</h3>
+<pre><code class="language-plain">/nacos/v1/ns/upgrade/ops/instance
+</code></pre>
+<h3>请求参数</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">是否必选</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">serviceName</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">是</td>
+<td>服务名</td>
+</tr>
+<tr>
+<td style="text-align:left">groupName</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">否</td>
+<td>分组名</td>
+</tr>
+<tr>
+<td style="text-align:left">ip</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">是</td>
+<td>服务实例IP</td>
+</tr>
+<tr>
+<td style="text-align:left">port</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">是</td>
+<td>服务实例port</td>
+</tr>
+<tr>
+<td style="text-align:left">clusterName</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">否</td>
+<td>集群名称</td>
+</tr>
+<tr>
+<td style="text-align:left">namespaceId</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">否</td>
+<td>命名空间ID</td>
+</tr>
+<tr>
+<td style="text-align:left">ephemeral</td>
+<td style="text-align:left">boolean</td>
+<td style="text-align:left">否</td>
+<td>是否临时实例</td>
+</tr>
+<tr>
+<td style="text-align:left">ver</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">否</td>
+<td>版本 <code>v1</code> 或者 <code>v2</code>, 默认<code>v2</code></td>
+</tr>
+</tbody>
+</table>
+<h3>示例请求</h3>
+<pre><code class="language-plain">curl -X DELETE '127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&amp;ip=1.1.1.1&amp;port=8888&amp;clusterName=TEST1'
+</code></pre>
+<h3>示例返回</h3>
+<p>ok</p>
 <h1>升级过程中可能遇到的问题</h1>
 <h2>1. 最后一台节点升级完成时，注册的服务出现波动（变成不健康或暂时被摘除）</h2>
 <p>升级过程中，为了节约性能，双写的内容仅是内容发生变更时的状态，心跳等内容不会被双写，因此切换版本时，可能有部分实例的心跳过久而健康检查又刚好开始执行，从而被标记非健康或摘除。</p>

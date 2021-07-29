@@ -610,6 +610,8 @@ ok
 ### 描述
 修改服务下的一个实例。
 
+**注意：在Nacos2.0版本后，通过该接口更新的元数据拥有更高的优先级，且具有记忆能力；会在对应实例删除后，依旧存在一段时间，如果在此期间实例重新注册，该元数据依旧生效；您可以通过**`nacos.naming.clean.expired-metadata.expired-time`**及**`nacos.naming.clean.expired-metadata.interval`**对记忆时间进行修改**
+
 ### 请求类型
 PUT
 

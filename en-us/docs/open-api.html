@@ -1170,6 +1170,7 @@ Otherwise, an empty string is returned.
 <h2 id="2.3">Modify instance</h2>
 <h3>Description</h3>
 <p>Modify an instance of service.</p>
+<p><strong>Attension：After Nacos2.0 version, the metadata updated through this interface has a higher priority and has the ability to remember. After the instance removed, it will still exist for a period of time. If the instance is re-registered during this period, the metadata will still be Effective. You can modify the memory time through</strong> <code>nacos.naming.clean.expired-metadata.expired-time</code> <strong>and</strong> <code>nacos.naming.clean.expired-metadata.interval</code></p>
 <h3>Request Type</h3>
 <p>PUT</p>
 <h3>Request Path</h3>
