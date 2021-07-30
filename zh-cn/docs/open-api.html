@@ -1115,6 +1115,7 @@ dataId^2group^2tenant^1
 <h2 id="2.3">修改实例</h2>
 <h3>描述</h3>
 <p>修改服务下的一个实例。</p>
+<p><strong>注意：在Nacos2.0版本后，通过该接口更新的元数据拥有更高的优先级，且具有记忆能力；会在对应实例删除后，依旧存在一段时间，如果在此期间实例重新注册，该元数据依旧生效；您可以通过</strong><code>nacos.naming.clean.expired-metadata.expired-time</code><strong>及</strong><code>nacos.naming.clean.expired-metadata.interval</code><strong>对记忆时间进行修改</strong></p>
 <h3>请求类型</h3>
 <p>PUT</p>
 <h3>请求路径</h3>
