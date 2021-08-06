@@ -27,7 +27,7 @@ export default {
           link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0'
         }, {
           key: 'serverless',
-          text: 'Serverless solutions',
+          text: 'Serverless solution for miscoservices',
           link: 'https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0'
         }, {
           key: 'gts',
@@ -143,7 +143,7 @@ export default {
           link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0'
         }, {
           key: 'serverless',
-          text: 'Serverless解决方案',
+          text: '微服务Serverless解决方案',
           link: 'https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0'
         }, {
           key: 'gts',
