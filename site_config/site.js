@@ -17,6 +17,39 @@ export default {
         link: '/en-us/docs/quick-start.html',
       },
       {
+        key: 'solution',
+        text: 'SOLUTIONS',
+        link: '',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png',
+        children: [{
+          key: 'micoservice',
+          text: 'Microservice solutions',
+          link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0'
+        }, {
+          key: 'serverless',
+          text: 'Serverless solutions',
+          link: 'https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0'
+        }, {
+          key: 'gts',
+          text: 'Distributed transaction solution',
+          link: 'https://www.aliyun.com/aliware/txc?spm=nacos-website.topbar.0.0.0'
+        }, {
+          key: 'msha',
+          text: 'High-availability solution',
+          link: 'https://www.aliyun.com/product/ahas?spm=nacos-website.topbar.0.0.0'
+        },
+        {
+          key: 'appas',
+          text: 'APaaS solution',
+          link: 'https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0'
+        }, {
+          key: 'mesh',
+          text: 'Service mesh solution',
+          link: 'https://www.aliyun.com/product/servicemesh?spm=nacos-website.topbar.0.0.0',
+        }
+        ]
+      },
+      {
         key: 'Nacos in Cloud',
         text: 'NACOS IN CLOUD',
         link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
@@ -98,6 +131,39 @@ export default {
         key: 'docs',
         text: '文档',
         link: '/zh-cn/docs/what-is-nacos.html',
+      },
+      {
+        key: 'solution',
+        text: '解决方案',
+        link: '',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png',
+        children: [{
+          key: 'micoservice',
+          text: '微服务解决方案',
+          link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0'
+        }, {
+          key: 'serverless',
+          text: 'Serverless解决方案',
+          link: 'https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0'
+        }, {
+          key: 'gts',
+          text: '分布式事务解决方案',
+          link: 'https://www.aliyun.com/aliware/txc?spm=nacos-website.topbar.0.0.0'
+        }, {
+          key: 'msha',
+          text: '高可用解决方案',
+          link: 'https://www.aliyun.com/product/ahas?spm=nacos-website.topbar.0.0.0'
+        },
+        {
+          key: 'appas',
+          text: 'APaaS解决方案',
+          link: 'https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0'
+        }, {
+          key: 'mesh',
+          text: '服务网格解决方案',
+          link: 'https://www.aliyun.com/product/servicemesh?spm=nacos-website.topbar.0.0.0',
+        }
+        ]
       },
       {
         key: 'Nacos in Cloud',
