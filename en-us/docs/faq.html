@@ -34,6 +34,7 @@
 <li><a href="#2.4">Nacos Docker deployment</a></li>
 <li><a href="#2.5">How to deploy in k8s Nacos</a></li>
 <li><a href="#2.6">How to monitor Nacos</a></li>
+<li><a href="#2.7">Nacos cannot start in Docker, always print Nacos is starting...</a></li>
 </ul>
 </li>
 <li>
@@ -87,6 +88,8 @@
 <p>In production deployment Nacos cluster, if for Nacos expansion operation, need to manually change the cluster IP file, start a new Nacos <a href="http://service.In">service.In</a> order to automate operations, k8s Nacos and combined use of StatefulSets provides automatic operations plan, to dynamic scalability Nacos capacity, specific details reference <a href="https://github.com/nacos-group/nacos-k8s/blob/master/README.md">Kubernetes Nacos</a>.</p>
 <h4 id="2.6">How to monitor Nacos</h4>
 <p>Nacos0.8 version provides the Metrics data exposed ability, can pass the Metrics data to monitor the running status of Nacos, the content of the details you can refer to <a href="https://nacos.io/en-us/docs/monitor-guide.html">Nacos monitor</a>.</p>
+<h4 id="2.7">Nacos cannot start in Docker, always print Nacos is starting...</h4>
+<p>The reason may be due to insufficient memory in the Docker environment, causing other services to fail to start normally, and finally causing the service to report an error and keep restarting. You can try to solve it by increasing the Docker memory limit.</p>
 <h2>Nacos used questions</h2>
 <h4 id="3.1">Zookeeper service can be migrated to Nacos?</h4>
 <p>Can through the Nacos - Sync moved the Zookeeper service and Nacos, can also be migrated from Nacos Zookeeper, specific details can be used as <a href="https://github.com/paderlol/nacos-sync-example">Nacos Sync reference</a>.</p>
