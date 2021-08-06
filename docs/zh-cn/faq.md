@@ -21,6 +21,7 @@ description: Nacos FAQ
   - [Nacos如何Docker部署](#2.4)
   - [如何在k8s中部署Nacos](#2.5)
   - [如何监控Nacos](#2.6)
+  - [Nacos在Docker环境下集群部署，无法正常启动，日志一直打印 Nacos is starting...](#2.7)
 
 - Nacos使用问题
   - [Zookeeper服务可以迁移到Nacos上吗](#3.1)
@@ -96,6 +97,10 @@ Nacos单机模式默认使用内嵌的数据库作为存储引擎，如果想换
 <h4 id="2.6">如何监控Nacos</h4>
 
 Nacos0.8版本提供了Metrics数据暴露能力，能通过Metrics数据的内容对Nacos的运行状态进行监控，详情参考[Nacos监控](https://nacos.io/zh-cn/docs/monitor-guide.html)。
+
+<h4 id="2.7">Nacos在Docker环境下集群部署，无法正常启动，日志一直打印 Nacos is starting...</h4>
+
+原因可能是由于Docker环境下，内存不足导致另外的服务无法正常启动，最后导致服务报错，一直重启，可以通过增大Docker限制内存尝试解决。
 
 ## Nacos使用问题
 <h4 id="3.1">Zookeeper上的服务可以迁移到Nacos上吗</h4>

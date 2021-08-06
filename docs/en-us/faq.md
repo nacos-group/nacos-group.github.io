@@ -21,6 +21,7 @@ description: Nacos FAQ
   - [Nacos Docker deployment](#2.4)
   - [How to deploy in k8s Nacos](#2.5)
   - [How to monitor Nacos](#2.6)
+  - [Nacos cannot start in Docker, always print Nacos is starting...](#2.7)
 
 - Nacos used questions
   - [Zookeeper service can be migrated to Nacos?](#3.1)
@@ -91,6 +92,10 @@ In production deployment Nacos cluster, if for Nacos expansion operation, need t
 <h4 id="2.6">How to monitor Nacos</h4>
 
 Nacos0.8 version provides the Metrics data exposed ability, can pass the Metrics data to monitor the running status of Nacos, the content of the details you can refer to [Nacos monitor](https://nacos.io/en-us/docs/monitor-guide.html).
+
+<h4 id="2.7">Nacos cannot start in Docker, always print Nacos is starting...</h4>
+
+The reason may be due to insufficient memory in the Docker environment, causing other services to fail to start normally, and finally causing the service to report an error and keep restarting. You can try to solve it by increasing the Docker memory limit.
 
 ## Nacos used questions
 <h4 id="3.1">Zookeeper service can be migrated to Nacos?</h4>
