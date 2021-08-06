@@ -23,28 +23,28 @@ export default {
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png',
         children: [{
           key: 'micoservice',
-          text: 'Microservice solutions',
+          text: 'Microservice Solution',
           link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0'
         }, {
           key: 'serverless',
-          text: 'Serverless solution for miscoservices',
+          text: 'Microservice on Serverless Solution',
           link: 'https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0'
         }, {
           key: 'gts',
-          text: 'Distributed transaction solution',
+          text: 'Distributed transaction Solution',
           link: 'https://www.aliyun.com/aliware/txc?spm=nacos-website.topbar.0.0.0'
         }, {
           key: 'msha',
-          text: 'High-availability solution',
+          text: 'High-availability Solution',
           link: 'https://www.aliyun.com/product/ahas?spm=nacos-website.topbar.0.0.0'
         },
         {
           key: 'appas',
-          text: 'APaaS solution',
+          text: 'APaaS Solution',
           link: 'https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0'
         }, {
           key: 'mesh',
-          text: 'Service mesh solution',
+          text: 'Service mesh Solution',
           link: 'https://www.aliyun.com/product/servicemesh?spm=nacos-website.topbar.0.0.0',
         }
         ]
