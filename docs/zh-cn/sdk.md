@@ -11,9 +11,9 @@ description: Java SDK
 Maven 坐标
 ```
 <dependency>
-<groupId>com.alibaba.nacos</groupId>
-<artifactId>nacos-client</artifactId>
-<version>${version}</version>
+    <groupId>com.alibaba.nacos</groupId>
+    <artifactId>nacos-client</artifactId>
+    <version>${version}</version>
 </dependency>
 ```
 
