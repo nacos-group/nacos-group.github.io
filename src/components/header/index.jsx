@@ -184,7 +184,7 @@ class Header extends React.Component {
                   })}
                 >
                   {item.link ? <span><a href={getLink(item.link)}>{item.text}</a>{item.imgUrl ? <img className={"menu-img"} src={item.imgUrl} /> : null}</span> : null}
-                  {item.children ? <div className="nav-container"><div className="word"><a >{item.text}</a>{item.imgUrl ? <img className={"menu-img"} src={item.imgUrl} /> : null}</div><ul className="sub-nav-container" style={{ width: language === 'zh-cn' ? 180 : 260 }}>{item.children.map((child) => <li><a href={child.link} target="_blank">{child.text}</a></li>)}</ul> </div> : null}
+                  {item.children ? <div className="nav-container"><div className="word"><a >{item.text}</a>{item.imgUrl ? <img className={"menu-img"} src={item.imgUrl} /> : null}</div><ul className="sub-nav-container" style={{ width: language === 'zh-cn' ? 220 : 290 }}>{item.children.map((child) => <li><a href={child.link} target="_blank">{child.text}</a></li>)}</ul> </div> : null}
                 </li>
               ))}
             </ul>
