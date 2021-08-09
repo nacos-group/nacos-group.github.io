@@ -3,7 +3,7 @@ export default {
   port: 8080, // 本地开发服务器的启动端口
   domain: 'nacos.io', // 站点部署域名
   defaultSearch: 'baidu', // 默认搜索引擎，baidu或者google
-  defaultLanguage: 'en-us',
+  defaultLanguage: 'zh-cn',
   'en-us': {
     pageMenu: [
       {
