@@ -206,7 +206,7 @@ export default {
         users: {
             title: '谁在使用Nacos',
             desc: <span>请在 <a rel="noopener noreferrer" target="_blank"
-                              href="https://github.com/alibaba/nacos/issues/273">Wanted: who&#39;s using nacos</a> 上提供信息来帮助Nacos做的更好。</span>,
+                              href="https://github.com/alibaba/nacos/issues/273">谁在使用Nacos</a> 上提供信息来帮助Nacos做的更好。</span>,
             list: [
                 'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563438-a13d7097-fcfd-400f-b066-82564ff31647.jpeg',
                 'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563510-a937249b-4e1d-4b40-97d8-06eb02dad25d.jpeg',
