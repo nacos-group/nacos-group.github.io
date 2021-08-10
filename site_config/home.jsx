@@ -97,6 +97,8 @@ export default {
                 'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563510-a937249b-4e1d-4b40-97d8-06eb02dad25d.jpeg',
                 'https://img.alicdn.com/tfs/TB1aB62OBr0gK0jSZFnXXbRRXXa-280-160.jpg',
                 'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1562465794060-b0a5d9eb-bb52-47cd-a3fd-1b30d805e859.jpeg',
+                'https://user-images.githubusercontent.com/975639/103077254-6dc24e80-460a-11eb-9ff4-81e42dff60c9.png',
+                '/img/xiaomi_log.jpeg',
                 'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563538-cd2549b5-5ad7-4e34-938e-aa1fda5b46bd.jpeg',
                 'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563443-be4d11fe-8c60-4a0d-8df1-d8e0ddda5bc4.jpeg',
                 'https://img.alicdn.com/tfs/TB1JK_GczMZ7e4jSZFOXXX7epXa-280-160.png',
@@ -111,9 +113,7 @@ export default {
                 'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563467-2fc7ba94-f003-465e-ab62-df52aeb457d7.jpeg',
                 'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1569745984623-8f755a9b-f42d-49d2-88a7-cb58b1833a23.jpeg',
                 'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563480-bef2f19b-def8-41e9-869a-90d6604ab100.jpeg',
-                'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563506-70ccec4e-c9ce-4997-8ca4-ac342a0af8f7.jpeg',
-                'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563559-40f4bf4a-bc4c-45cf-9cf9-09280a34f0cc.jpeg',
-                'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563568-d2a64341-bebe-47e9-9de1-efb2c1f6a9fd.jpeg'
+                'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563559-40f4bf4a-bc4c-45cf-9cf9-09280a34f0cc.jpeg'
             ],
         },
     },
@@ -212,6 +212,8 @@ export default {
                 'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563510-a937249b-4e1d-4b40-97d8-06eb02dad25d.jpeg',
                 'https://img.alicdn.com/tfs/TB1aB62OBr0gK0jSZFnXXbRRXXa-280-160.jpg',
                 'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1562465794060-b0a5d9eb-bb52-47cd-a3fd-1b30d805e859.jpeg',
+                'https://user-images.githubusercontent.com/975639/103077254-6dc24e80-460a-11eb-9ff4-81e42dff60c9.png',
+                '/img/xiaomi_log.jpeg',
                 'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563538-cd2549b5-5ad7-4e34-938e-aa1fda5b46bd.jpeg',
                 'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563443-be4d11fe-8c60-4a0d-8df1-d8e0ddda5bc4.jpeg',
                 'https://img.alicdn.com/tfs/TB1JK_GczMZ7e4jSZFOXXX7epXa-280-160.png',
@@ -223,7 +225,10 @@ export default {
                 'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563550-c02c3ffc-75fc-41ae-898c-20b5e60d0e64.jpeg',
                 'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563512-e640635e-a180-4c4d-b004-6ed91863782d.jpeg',
                 'https://img.alicdn.com/tfs/TB1uPvQOpT7gK0jSZFpXXaTkpXa-280-160.png',
-                'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563467-2fc7ba94-f003-465e-ab62-df52aeb457d7.jpeg'
+                'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563467-2fc7ba94-f003-465e-ab62-df52aeb457d7.jpeg',
+                'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1569745984623-8f755a9b-f42d-49d2-88a7-cb58b1833a23.jpeg',
+                'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563480-bef2f19b-def8-41e9-869a-90d6604ab100.jpeg',
+                'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563559-40f4bf4a-bc4c-45cf-9cf9-09280a34f0cc.jpeg'
             ],
         },
     },
