@@ -23,10 +23,6 @@ export default {
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png',
         children: [
         {
-         key: 'appas',
-         text: 'PaaS Solution',
-         link: 'https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0'
-        }, {
           key: 'micoservice',
           text: 'Microservice Solution',
           link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0'
@@ -35,6 +31,11 @@ export default {
           text: 'Microservice on Serverless Solution',
           link: 'https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0'
         }, {
+          key: 'appas',
+          text: 'PaaS Solution',
+          link: 'https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0'
+         },
+         {
           key: 'gts',
           text: 'Distributed transaction Solution',
           link: 'https://www.aliyun.com/aliware/txc?spm=nacos-website.topbar.0.0.0'
@@ -140,10 +141,6 @@ export default {
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png',
         children: [
         {
-          key: 'appas',
-          text: 'PaaS解决方案',
-          link: 'https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0'
-        }, {
           key: 'micoservice',
           text: '微服务解决方案',
           link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0'
@@ -151,6 +148,10 @@ export default {
           key: 'serverless',
           text: '微服务Serverless解决方案',
           link: 'https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0'
+        }, {
+          key: 'appas',
+          text: 'PaaS解决方案',
+          link: 'https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0'
         }, {
           key: 'gts',
           text: '分布式事务解决方案',
