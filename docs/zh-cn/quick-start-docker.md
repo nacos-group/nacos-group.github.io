@@ -13,6 +13,7 @@ description: Nacos Docker 快速开始
   ```powershell
   git clone https://github.com/nacos-group/nacos-docker.git
   cd nacos-docker
+  export NACOS_VERSION='{希望运行的 nacos 版本号}'
   ```
 
 
