@@ -15,6 +15,7 @@ Run the following command：
   ```powershell
   git clone https://github.com/nacos-group/nacos-docker.git
   cd nacos-docker
+  export NACOS_VERSION='{the version of nacos}'
   ```
 
 
