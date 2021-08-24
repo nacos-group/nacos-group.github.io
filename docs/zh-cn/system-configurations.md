@@ -84,10 +84,10 @@ Nacos从1.3版本开始使用HikariCP连接池，但在1.4.1版本前，连接�
 |参数名	|含义	 |     可选值	 |     默认值| 支持版本 |
 |------|------|-----------|-----------------|-------|
 |namingLoadCacheAtStart| 启动时是否优先读取本地缓存 | true/false | false | >= 1.0.0 |
-|namingCacheRegistryDir| 指定缓存子目录，位置为 .../nacos/{SUB_DIR}/naming | 子目录路径 | 空字符串 | >=2.0.2
+|namingCacheRegistryDir| 指定缓存子目录，位置为 `.../nacos/{SUB_DIR}/naming` | 子目录路径 | 空字符串 | >=2.0.2
 |namingClientBeatThreadCount| 客户端心跳的线程池大小 | 正整数 | 机器的CPU数的一半 | >= 1.0.0 |
 |namingPollingThreadCount| 客户端定时轮询数据更新的线程池大小 | 正整数 | 机器的CPU数的一半 | >= 1.0.0 |
-|com.alibaba.nacos.naming.cache.dir(-D)| 客户端缓存目录 | 目录路径 | {user.home}/nacos/naming | >= 1.0.0 |
+|com.alibaba.nacos.naming.cache.dir(-D)| 客户端缓存目录 | 目录路径 | `{user.home}/nacos/naming` | >= 1.0.0 |
 |com.alibaba.nacos.naming.log.level(-D)| Naming客户端的日志级别 | info,error,warn等 | info | >= 1.0.0 |
 |com.alibaba.nacos.client.naming.tls.enable(-D)| 是否打开HTTPS | true/false | false | >= 1.0.0 | 
 
