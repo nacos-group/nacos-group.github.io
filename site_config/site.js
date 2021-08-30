@@ -21,7 +21,8 @@ export default {
         text: 'SOLUTIONS',
         link: '',
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png',
-        children: [{
+        children: [
+        {
           key: 'micoservice',
           text: 'Microservice Solution',
           link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0'
@@ -30,6 +31,11 @@ export default {
           text: 'Microservice on Serverless Solution',
           link: 'https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0'
         }, {
+          key: 'appas',
+          text: 'PaaS Solution',
+          link: 'https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0'
+         },
+         {
           key: 'gts',
           text: 'Distributed transaction Solution',
           link: 'https://www.aliyun.com/aliware/txc?spm=nacos-website.topbar.0.0.0'
@@ -39,10 +45,6 @@ export default {
           link: 'https://www.aliyun.com/product/ahas?spm=nacos-website.topbar.0.0.0'
         },
         {
-          key: 'appas',
-          text: 'APaaS Solution',
-          link: 'https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0'
-        }, {
           key: 'mesh',
           text: 'Service mesh Solution',
           link: 'https://www.aliyun.com/product/servicemesh?spm=nacos-website.topbar.0.0.0',
@@ -137,7 +139,8 @@ export default {
         text: '解决方案',
         link: '',
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png',
-        children: [{
+        children: [
+        {
           key: 'micoservice',
           text: '微服务解决方案',
           link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0'
@@ -146,6 +149,10 @@ export default {
           text: '微服务Serverless解决方案',
           link: 'https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0'
         }, {
+          key: 'appas',
+          text: 'PaaS解决方案',
+          link: 'https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0'
+        }, {
           key: 'gts',
           text: '分布式事务解决方案',
           link: 'https://www.aliyun.com/aliware/txc?spm=nacos-website.topbar.0.0.0'
@@ -153,11 +160,6 @@ export default {
           key: 'msha',
           text: '高可用解决方案',
           link: 'https://www.aliyun.com/product/ahas?spm=nacos-website.topbar.0.0.0'
-        },
-        {
-          key: 'appas',
-          text: 'APaaS解决方案',
-          link: 'https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0'
         }, {
           key: 'mesh',
           text: '服务网格解决方案',
