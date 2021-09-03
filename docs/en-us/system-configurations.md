@@ -87,8 +87,10 @@ Client parameters are divided into two kinds, one kind is through the -D paramet
 |Parameter names	|Meaning	 |     Optional value	 |     Default value| Support version |
 |------|------|-----------|-----------------|-------|
 |namingLoadCacheAtStart| If boot priority reads a local cache | true/false | false | >= 1.0.0 |
+|namingCacheRegistryDir| The subdirectory of cache, default is `.../nacos/{SUB_DIR}/naming` | path of SUB_DIR | empty string | >=2.0.2
 |namingClientBeatThreadCount| client's heartbeat thread pool size | positive integer | number of the machine's CPU half | >= 1.0.0 |
 |namingPollingThreadCount| client regularly polling data update the thread pool size | positive integer | number of the machine's CPU half | >= 1.0.0 |
+|com.alibaba.nacos.naming.cache.dir(-D)| The directory of client cache | path of directory  | `{user.home}/nacos/naming` | >= 1.0.0 |
 
 ### Config client
 
