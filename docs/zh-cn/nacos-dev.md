@@ -54,7 +54,7 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 | [KomachiSion](https://github.com/KomachiSion)   | 杨翊   | 阿里巴巴 | Maintainer | yangyi@apache.org |
 | [zhangjimmy](https://github.com/zhangjimmy)     | 张波   | 虎牙直播 | Committer | zhangjimmy@foxmail.com  |
 | [nanamikon](https://github.com/nanamikon)       | 周健   | 虎牙直播 | Committer | nanamikon@gmail.com |
-| [lzp0412](https://github.com/lzp0412)           | 李志鹏 | 虎牙直播 | Committer | 641785844@qq.com      |
+| [lzp0412](https://github.com/lzp0412)           | 李志鹏 | 蚂蚁金服 | Committer | 641785844@qq.com      |
 | [pguo65535](https://github.com/pguo65535)       | 郭平   | 阿里巴巴 | Committer | guoping.gp@alibaba-inc.com |
 | [hxy1991](https://github.com/hxy1991)           | 黄晓禹 | 阿里巴巴 | Committer | huangxiaoyu1018@gmail.com |
 | [mingyixu](https://github.com/mingyixu)         | 徐小春 | 阿里巴巴 | Committer | xiaochun.xxc@alibaba-inc.com |
@@ -76,6 +76,8 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 | [haoyann](https://github.com/haoyann)           | 严浩 | 成都书声科技有限公司 | Committer | 1064645534@qq.com |
 | [shiyiyue1102](https://github.com/shiyiyue1102) | 柳遵飞 | 阿里巴巴 | Committer | liuzunfei@gmail.com |
 | [JackSun-Developer](https://github.com/JackSun-Developer) | 孙立 | 阿里巴巴 | Committer | yongyue.sl@alibaba-inc.com |
+| [brotherlu-xcq](https://github.com/brotherlu-xcq) | 程露 | 杭州群核信息技术有限公司(酷家乐) | Committer | 1285823170@qq.com |
+| [li-xiao-shuang](https://github.com/li-xiao-shuang) | 李晓双 | 滴滴出行 | Committer | 644968328@qq.com |
 
 ### 活跃贡献者
 
