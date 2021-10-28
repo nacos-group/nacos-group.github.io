@@ -55,7 +55,7 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [KomachiSion](https://github.com/KomachiSion)   | Yi Yang      | Alibaba      | Maintainer | yangyi@apache.org                                            |
 | [zhangjimmy](https://github.com/zhangjimmy)     | Bo Zhang     | Huya         | Committer  | zhangjimmy@foxmail.com                                       |
 | [nanamikon](https://github.com/nanamikon)       | Jian Zhou    | Huya         | Committer  | nanamikon@gmail.com                                          |
-| [lzp0412](https://github.com/lzp0412)           | Zhipeng Li   | Huya         | Committer  | 641785844@qq.com                                             |
+| [lzp0412](https://github.com/lzp0412)           | Zhipeng Li   | Ant Financial| Committer  | 641785844@qq.com                                             |
 | [pguo65535](https://github.com/pguo65535)       | Ping Guo     | Alibaba      | Committer  | guoping.gp@alibaba-inc.com                                   |
 | [hxy1991](https://github.com/hxy1991)           | Xiaoyu Huang | Alibaba      | Committer  | huangxiaoyu1018@gmail.com                                    |
 | [mingyixu](https://github.com/mingyixu)         | Xiaochun Xu  | Alibaba      | Committer  | xiaochun.xxc@alibaba-inc.com                                 |
@@ -77,6 +77,8 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [haoyann](https://github.com/haoyann)           | Hao Yan      | Shusheng Chengdu Technology | Committer | 1064645534@qq.com |
 | [shiyiyue1102](https://github.com/shiyiyue1102) | Zunfei Liu   | Alibaba      | Committer | liuzunfei@gmail.com |
 | [JackSun-Developer](https://github.com/JackSun-Developer) | Li Sun | Alibaba  | Committer | yongyue.sl@alibaba-inc.com |
+| [brotherlu-xcq](https://github.com/brotherlu-xcq) | Lu Cheng | KuJiaLe | Committer | 1285823170@qq.com |
+| [li-xiao-shuang](https://github.com/li-xiao-shuang) | XiaoShuang Li | DiDi | Committer | 644968328@qq.com |
 
 ### Contributors
 

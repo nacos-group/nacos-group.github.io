@@ -324,6 +324,13 @@ It should be noted that <code>url</code>, <code>user</code>, <code>password</cod
 <td>&gt;= 1.0.0</td>
 </tr>
 <tr>
+<td>namingCacheRegistryDir</td>
+<td>The subdirectory of cache, default is <code>.../nacos/{SUB_DIR}/naming</code></td>
+<td>path of SUB_DIR</td>
+<td>empty string</td>
+<td>&gt;=2.0.2</td>
+</tr>
+<tr>
 <td>namingClientBeatThreadCount</td>
 <td>client's heartbeat thread pool size</td>
 <td>positive integer</td>
@@ -335,6 +342,13 @@ It should be noted that <code>url</code>, <code>user</code>, <code>password</cod
 <td>client regularly polling data update the thread pool size</td>
 <td>positive integer</td>
 <td>number of the machine's CPU half</td>
+<td>&gt;= 1.0.0</td>
+</tr>
+<tr>
+<td>com.alibaba.nacos.naming.cache.dir(-D)</td>
+<td>The directory of client cache</td>
+<td>path of directory</td>
+<td><code>{user.home}/nacos/naming</code></td>
 <td>&gt;= 1.0.0</td>
 </tr>
 </tbody>
