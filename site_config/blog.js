@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: '双十一献礼 | Nacos Star破两万的回顾与展望',
+            author: '@涌月 @彦林 @席翁',
+            dateStr: 'Nov 3, 2021',
+            desc: '双十一献礼 | Nacos Star破两万的回顾与展望',
+            link: '/zh-cn/blog/up-to-2w-star.html',
+        },
+        {
             title: 'Nacos 2.0.3 Release, continue to improve stability.',
             author: '@杨翊',
             dateStr: 'July 29, 2021',
@@ -244,6 +251,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: '双十一献礼 | Nacos Star破两万的回顾与展望',
+            author: '@涌月 @彦林 @席翁',
+            dateStr: 'Nov 3, 2021',
+            desc: '双十一献礼 | Nacos Star破两万的回顾与展望',
+            link: '/zh-cn/blog/up-to-2w-star.html',
+        },
         {
             title: 'Nacos 2.0.3版本发布，继续提升集群稳定性及升级稳定性',
             author: '@杨翊',
