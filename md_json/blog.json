@@ -631,6 +631,24 @@
         "keywords": "Nacos-spring-boot0.2.10,Nacos2.0",
         "description": "Nacos-spring-boot0.2.10发布，全面支持Nacos2.0"
       }
+    },
+    {
+      "filename": "up-to-2w-star.md",
+      "link": "/zh-cn/blog/up-to-2w-star.html",
+      "meta": {
+        "title": "双十一献礼 | Nacos Star破两万的回顾与展望",
+        "keywords": "Nacos,双十一",
+        "description": "双十一献礼 | Nacos Star破两万的回顾与展望"
+      }
+    },
+    {
+      "filename": "up-to-2w.md",
+      "link": "/zh-cn/blog/up-to-2w.html",
+      "meta": {
+        "title": "˫ʮһ���� | Nacos Star������Ļع���չ��",
+        "keywords": "Nacos,˫ʮһ",
+        "description": "˫ʮһ���� | Nacos Star������Ļع���չ��"
+      }
     }
   ]
 }
