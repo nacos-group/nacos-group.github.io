@@ -177,7 +177,7 @@ POST
 
 
 ### 参数说明
-* 配置多个字段间分隔符：^2  = Character.toString((char) 2
+* 配置多个字段间分隔符：^2  = Character.toString((char) 2)
 * 配置间分隔符：^1 = Character.toString((char) 1)
 * contentMD5:  MD5(content)，第一次本地缓存为空，所以这块为空串
 

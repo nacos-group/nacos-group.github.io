@@ -247,7 +247,7 @@ POST
 
 
 ### Parameter description
-* A delimiter to separate fields within a configuration: ^2  = Character.toString((char) 2
+* A delimiter to separate fields within a configuration: ^2  = Character.toString((char) 2)
 * A delimiter to separate configurations: ^1 = Character.toString((char) 1)
 * contentMD5:  MD5(content). This is an empty string because the first local cache is empty.
 

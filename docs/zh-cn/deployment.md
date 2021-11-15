@@ -41,8 +41,8 @@ spring.datasource.platform=mysql
 
 db.num=1
 db.url.0=jdbc:mysql://11.162.196.16:3306/nacos_devtest?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
-db.user=nacos_devtest
-db.password=youdontknow
+db.user.0=nacos_devtest
+db.password.0=youdontknow
 ```
 
 再以单机模式启动nacos，nacos所有写嵌入式数据库的数据都写到了mysql
