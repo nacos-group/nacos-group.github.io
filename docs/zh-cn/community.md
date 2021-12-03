@@ -21,8 +21,8 @@ description: 社区
 * [users-nacos@googlegroups.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1): 在Github中[提问题](https://github.com/alibaba/nacos/issues)、更新和[提交需求](https://github.com/alibaba/nacos/pulls)将被发送到这个邮件列表。
 * [nacos\_dev@linux.alibaba.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1).
 
-### Nacos DingDing group
+### Nacos 钉钉群
 
-Welcome to join Nacos community nail group
+欢迎加入Nacos钉钉群
 
 ![nacos_dingding.jpg](/img/nacos_dingding.jpg) 
