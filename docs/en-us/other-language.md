@@ -12,4 +12,5 @@ We will rely mainly on the community to develop multi-language clients. We will 
 * [cpp](https://github.com/nacos-group/nacos-sdk-cpp)
 * [python](https://github.com/nacos-group/nacos-sdk-python)
 * [nodejs](https://github.com/nacos-group/nacos-sdk-nodejs)
+* [c#](https://github.com/nacos-group/nacos-sdk-csharp)
 * more ...
