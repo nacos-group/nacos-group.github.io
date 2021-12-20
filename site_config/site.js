@@ -58,6 +58,12 @@ export default {
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
       {
+        key: 'E-BOOK',
+        text: 'E-BOOK',
+        link: 'https://www.yuque.com/nacos/ebook',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
+      {
         key: 'blog',
         text: 'BLOG',
         link: '/en-us/blog',
@@ -169,8 +175,14 @@ export default {
       },
       {
         key: 'Nacos in Cloud',
-        text: '企业版Nacos',
+        text: '企业版NACOS',
         link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
+      {
+        key: 'E-BOOK',
+        text: 'NACOS架构与原理',
+        link: 'https://www.yuque.com/nacos/ebook',
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
       {
