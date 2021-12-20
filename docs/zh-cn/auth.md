@@ -29,6 +29,7 @@ nacos.core.auth.enabled=false
 nacos.core.auth.enabled=true
 ```
 
+##### 注意：鉴权开关是修改之后立马生效的，不需要重启服务端。
 
 ### Docker环境
 
@@ -112,13 +113,13 @@ try {
 ```plain
 curl -X POST '127.0.0.1:8848/nacos/v1/auth/login' -d 'username=nacos&password=nacos'
 ```
-	
+
 若用户名和密码正确,返回信息如下:
 
 ```
 {"accessToken":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuYWNvcyIsImV4cCI6MTYwNTYyOTE2Nn0.2TogGhhr11_vLEjqKko1HJHUJEmsPuCxkur-CfNojDo","tokenTtl":18000,"globalAdmin":true}
 ```
-	
+
 接下来进行配置信息或服务信息时,应当使用该accessToken鉴权,在url后添加参数accessToken=${accessToken},其中${accessToken}为登录时返回的token信息，例如
 
 ```plain

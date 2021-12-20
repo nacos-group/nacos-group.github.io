@@ -61,7 +61,7 @@
 | 描述 | 主要开发者 | 状态 | 排期 |
 | :---: | --- | --- | --- |
 | 去除MySQL依赖 | chuntaojun | 设计中 |  |
-| Raft协议替换成JRaft | chuntaojun | 设计中 |  |
+| Raft协议替换成JRaft | chuntaojun | 稳定 | 1.4.1 |
 | 异步通知机制统一 | wfnuser | 设计中 |  |
 | 线程模块统一 |  | 排期中 |  |
 | 传输通道统一 | nkorange | 设计中 |  |
