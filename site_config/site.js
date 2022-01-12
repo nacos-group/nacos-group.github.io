@@ -60,7 +60,7 @@ export default {
       {
         key: 'E-BOOK',
         text: 'E-BOOK',
-        link: 'https://www.yuque.com/nacos/ebook',
+        link: 'https://developer.aliyun.com/topic/download?id=8230',
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
       {
@@ -182,7 +182,7 @@ export default {
       {
         key: 'E-BOOK',
         text: 'NACOS架构与原理',
-        link: 'https://www.yuque.com/nacos/ebook',
+        link: 'https://developer.aliyun.com/topic/download?id=8230',
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
       {
