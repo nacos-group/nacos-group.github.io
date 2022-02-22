@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: 'Apache APISIX Realizes Service Discovery Based on Nacos',
+            author: '@Zhihuang Lin(2228586315@qq.com)',
+            dateStr: 'Feb 22, 2022',
+            desc: 'This article introduces the basic concepts of Apache APISIX and Nacos and Service Registry, and shows you the specific operation of Apache APISIX to realize service discovery based on Nacos.',
+            link: '/en-us/blog/apisix.html',
+        },
+        {
             title: '双十一献礼 | Nacos Star破两万的回顾与展望',
             author: '@涌月 @彦林 @席翁',
             dateStr: 'Nov 3, 2021',
@@ -251,6 +258,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: 'Apache APISIX 基于 Nacos 实现服务发现',
+            author: '@林志煌(2228586315@qq.com)',
+            dateStr: 'Feb 22, 2022',
+            desc: '本文为您介绍 Apache APISIX、Nacos 基本概念以及注册中心的作用，并为您展示了 Apache APISIX 基于 Nacos 实现服务发现的具体操作',
+            link: '/zh-cn/blog/apisix.html',
+        },
         {
             title: '双十一献礼 | Nacos Star破两万的回顾与展望',
             author: '@涌月 @彦林 @席翁',
