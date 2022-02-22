@@ -65,6 +65,15 @@
       }
     },
     {
+      "filename": "apisix.md",
+      "link": "/en-us/blog/apisix.html",
+      "meta": {
+        "title": "Apache APISIX Realizes Service Discovery Based on Nacos",
+        "keywords": "Apache APISIX",
+        "description": "This article introduces the basic concepts of Apache APISIX and Nacos and Service Registry, and shows you the specific operation of Apache APISIX to realize service discovery based on Nacos."
+      }
+    },
+    {
       "filename": "chengdu-dubbo.md",
       "link": "/en-us/blog/chengdu-dubbo.html",
       "meta": {
@@ -365,6 +374,15 @@
         "title": "阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾",
         "keywords": "nacos,configserver,alibaba",
         "description": "阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾"
+      }
+    },
+    {
+      "filename": "apisix.md",
+      "link": "/zh-cn/blog/apisix.html",
+      "meta": {
+        "title": "Apache APISIX 基于 Nacos 实现服务发现",
+        "keywords": "Apache APISIX",
+        "description": "本文为您介绍 Apache APISIX、Nacos 基本概念以及注册中心的作用，并为您展示了 Apache APISIX 基于 Nacos 实现服务发现的具体操作"
       }
     },
     {

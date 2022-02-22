@@ -24,7 +24,7 @@ export default {
                 text: 'V1.4.3',
                 link: 'https://github.com/alibaba/nacos/releases/tag/1.4.3',
             },
-            releaseDate: 'Released on July 28, 2021',
+            releaseDate: 'Released on Jan 18, 2022',
 
         },
         functions: {
@@ -140,7 +140,7 @@ export default {
                 text: 'V1.4.3',
                 link: 'https://github.com/alibaba/nacos/releases/tag/1.4.3',
             },
-            releaseDate: '2021年07月28日发布',
+            releaseDate: '2022年01月18日发布',
         },
         functions: {
             title: '功能',
