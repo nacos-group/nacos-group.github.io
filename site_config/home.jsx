@@ -6,13 +6,13 @@ export default {
             briefIntroduction: 'an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native applications',
             buttons: [
                 {
-                    text: 'View on Github',
-                    link: 'https://github.com/alibaba/nacos',
+                    text: 'MSE (half discount)',
+                    link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
                     type: 'primary',
                 },
                 {
-                    text: 'Manual',
-                    link: '/en-us/docs/what-is-nacos.html',
+                    text: 'Open-source version',
+                    link: 'https://github.com/alibaba/nacos',
                     type: 'normal',
                 },
             ],
@@ -122,13 +122,13 @@ export default {
             briefIntroduction: '一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。',
             buttons: [
                 {
-                    text: '前往 Github',
-                    link: 'https://github.com/alibaba/nacos',
+                    text: '企业版限时5折',
+                    link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
                     type: 'primary',
                 },
                 {
-                    text: '手册',
-                    link: '/zh-cn/docs/what-is-nacos.html',
+                    text: '开源版',
+                    link: 'https://github.com/alibaba/nacos',
                     type: 'normal',
                 },
             ],

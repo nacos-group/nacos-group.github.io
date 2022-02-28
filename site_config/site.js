@@ -17,6 +17,12 @@ export default {
         link: '/en-us/docs/quick-start.html',
       },
       {
+        key: 'E-BOOK',
+        text: 'E-BOOK',
+        link: 'https://developer.aliyun.com/topic/download?id=8230',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
+      {
         key: 'solution',
         text: 'SOLUTIONS',
         link: '',
@@ -50,18 +56,6 @@ export default {
           link: 'https://www.aliyun.com/product/servicemesh?spm=nacos-website.topbar.0.0.0',
         }
         ]
-      },
-      {
-        key: 'Nacos in Cloud',
-        text: 'NACOS IN CLOUD',
-        link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
-        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-      },
-      {
-        key: 'E-BOOK',
-        text: 'E-BOOK',
-        link: 'https://developer.aliyun.com/topic/download?id=8230',
-        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
       {
         key: 'blog',
@@ -136,6 +130,12 @@ export default {
         link: '/zh-cn/docs/what-is-nacos.html',
       },
       {
+        key: 'E-BOOK',
+        text: 'NACOS架构与原理',
+        link: 'https://developer.aliyun.com/topic/download?id=8230',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
+      {
         key: 'solution',
         text: '解决方案',
         link: '',
@@ -167,18 +167,6 @@ export default {
           link: 'https://www.aliyun.com/product/servicemesh?spm=nacos-website.topbar.0.0.0',
         }
         ]
-      },
-      {
-        key: 'Nacos in Cloud',
-        text: '企业版NACOS',
-        link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
-        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-      },
-      {
-        key: 'E-BOOK',
-        text: 'NACOS架构与原理',
-        link: 'https://developer.aliyun.com/topic/download?id=8230',
-        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
       {
         key: 'blog',
