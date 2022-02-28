@@ -18,6 +18,16 @@
 	<script>
 		window.rootPath = '<%= rootPath %>';
   </script>
-	<script src="<%= rootPath %>/build/<%= page %>.js"></script>
+	<script src="<%= rootPath %>/build/<%= page %>.js">
+	</script>
+	<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e3a5cec56ef8619cf9d7c2abebd509e3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
 </body>
 </html>
