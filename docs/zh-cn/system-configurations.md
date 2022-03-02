@@ -23,8 +23,6 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |nacos.functionMode(-D)| 启动模式，支持只启动某一个模块，不设置时所有模块都会启动 | config/naming/空 | 空 | >= 0.9.0 |
 |nacos.inetutils.prefer-hostname-over-ip| `cluster.conf`里是否应该填`hostname`| true/false| false | >= 0.3.0 |
 |nacos.inetutils.ip-address | 本机IP，该参数设置后，将会使用这个IP去`cluster.conf`里进行匹配，请确保这个IP的值在`cluster.conf`里是存在的 | 本机IP| null | >= 0.3.0 |
-|nacos.security.ignore.urls | 控制台鉴权跳过的接口 | 需要跳过控制台鉴权的接口列表| 空 | >= 0.9.0 |
-
 
 ### Naming模块
 
@@ -32,7 +30,7 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |------|------|-----------|-----------------|-------|
 |nacos.naming.data.warmup| 是否在Server启动时进行数据预热 | true/false | false | >= 1.0.2 |
 |nacos.naming.expireInstance| 是否自动摘除临时实例 | true/false | true | >= 1.0.2 |
-|nacos.naming.distro.taskDispatchPeriod| 同步任务生成的周期，单位为毫秒 | 正整数 | 200 | >= 1.0.2 |
+|nacos.naming.distro.taskDispatchPeriod| 同步任务生成的周期，单位为毫秒 | 正整数 | 2000 | >= 1.0.2 |
 |nacos.naming.distro.batchSyncKeyCount| 同步任务每批的key的数目 | 正整数 | 1000 | >= 1.0.2 |
 |nacos.naming.distro.syncRetryDelay| 同步任务失败的重试间隔，单位为毫秒 | 正整数 | 5000 | >= 1.0.2 |
 

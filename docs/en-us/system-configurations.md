@@ -23,7 +23,6 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |nacos.functionMode(-D)| Boot mode, support only start one module, do not set all modules will start | config/naming/null | null | >= 0.9.0 |
 |nacos.inetutils.prefer-hostname-over-ip| if you should fill in `hostname` in `cluster.conf` | true/false| false | >= 0.3.0 |
 |nacos.inetutils.ip-address | Native IP, set this parameter, will use this IP to`cluster.conf`matching, please make sure that the IP value exists in the `cluster.conf` | Native IP| null | >= 0.3.0 |
-|nacos.security.ignore.urls | Control over the interface console authentication | List of interfaces need to skip console authentication| null | >= 0.9.0 |
 
 
 ### Naming module
@@ -32,7 +31,7 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |------|------|-----------|-----------------|-------|
 |nacos.naming.data.warmup| Whether the Server startup to preheat the data | true/false | false | >= 1.0.2 |
 |nacos.naming.expireInstance| Whether automatic removal of temporary instance | true/false | true | >= 1.0.2 |
-|nacos.naming.distro.taskDispatchPeriod| Synchronization task generation cycle, milliseconds | positive integer | 200 | >= 1.0.2 |
+|nacos.naming.distro.taskDispatchPeriod| Synchronization task generation cycle, milliseconds | positive integer | 2000 | >= 1.0.2 |
 |nacos.naming.distro.batchSyncKeyCount| The number of each batch of key synchronization task | positive integer | 1000 | >= 1.0.2 |
 |nacos.naming.distro.syncRetryDelay| Synchronization task failure retry intervals, milliseconds | positive integer | 5000 | >= 1.0.2 |
 

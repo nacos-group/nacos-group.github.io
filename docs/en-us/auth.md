@@ -28,7 +28,7 @@ After enabling authentication, the configuration in application.properties is as
 ### If turn on auth system:
 nacos.core.auth.enabled=true
 ```
-
+**Attention:**  the authentication switch takes effect immediately after the modification, and there is no need to restart the server.
 
 ### With Docker
 
@@ -143,7 +143,7 @@ nacos.core.auth.server.identity.key=example
 nacos.core.auth.server.identity.value=example
 ```
 
-** Attention ** All servers in cluster need to be configured with the same `server.identity` information, otherwise it may cause data inconsistency between servers or failure to delete instances.
+**Attention** All servers in cluster need to be configured with the same `server.identity` information, otherwise it may cause data inconsistency between servers or failure to delete instances.
 
 ### Upgrade from old version
 
