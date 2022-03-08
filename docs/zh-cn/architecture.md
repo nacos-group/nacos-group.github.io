@@ -51,8 +51,8 @@ description: Nacos 架构
 
 ## 逻辑架构及其组件介绍
 
-![nacos-logic.jpg](https://cdn.nlark.com/yuque/0/2019/png/338441/1561217775318-6e408805-18bb-4242-b4e9-83c5b929b469.png) 
- 
+![nacos-logic.jpg](https://cdn.nlark.com/yuque/0/2022/png/25601973/1646715315872-7ee3679a-e66e-49e9-ba9f-d24168a86c14.png)
+
 - 服务管理：实现服务CRUD，域名CRUD，服务健康状态检查，服务权重管理等功能
 - 配置管理：实现配置管CRUD，版本管理，灰度管理，监听管理，推送轨迹，聚合数据等功能
 - 元数据管理：提供元数据CURD 和打标能力
