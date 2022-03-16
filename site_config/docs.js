@@ -59,10 +59,6 @@ export default {
                 link: '/en-us/docs/use-nacos-with-kubernetes.html',
               },
               {
-                title: 'Nacos with Rainbond',
-                link: '/en-us/docs/use-nacos-with-rainbond.html',
-              },
-              {
                 title: 'Nacos Sync',
                 link: '/en-us/docs/nacos-sync.html',
               },
@@ -258,10 +254,6 @@ export default {
               {
                 title: 'Nacos k8s',
                 link: '/zh-cn/docs/use-nacos-with-kubernetes.html',
-              },
-              {
-                title: 'Nacos Rainbond',
-                link: '/zh-cn/docs/use-nacos-with-rainbond.html',
               },
               {
                 title: 'Nacos Sync',
