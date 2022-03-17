@@ -1,7 +1,7 @@
 ---
-title: 配置加密
-keywords: AES,encryption,配置加密
-description: 配置加密
+title: CONFIGURE ENCRYPTION
+keywords: AES,ENCRYPTION,CONFIGURE ENCRYPTION
+description: CONFIGURE ENCRYPTION
 ---
 
 > To ensure the security of users' sensitive configuration data, Nacos provides a new feature of configuration encryption. The risk of user usage is reduced, and the configuration is no longer required to be encrypted separately.
