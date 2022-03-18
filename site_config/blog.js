@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: 'Install the HA Nacos cluster in Rainbond with one-click',
+            author: '@郭逊(guox@goodrain.com)',
+            dateStr: 'Mar 16, 2022',
+            desc: 'Current documentation describes how to install a high availability Nacos cluster with one click through Rainbond, a cloud native application management platform.',
+            link: '/en-us/blog/use-nacos-with-rainbond.html',
+        },
+        {
             title: 'Apache APISIX Realizes Service Discovery Based on Nacos',
             author: '@Zhihuang Lin(2228586315@qq.com)',
             dateStr: 'Feb 22, 2022',
@@ -258,6 +265,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: '在 Rainbond 中一键安装高可用 Nacos 集群',
+            author: '@郭逊(guox@goodrain.com)',
+            dateStr: 'Mar 16, 2022',
+            desc: '本文为您描述如何通过云原生应用管理平台 Rainbond 一键安装高可用 Nacos 集群。',
+            link: '/zh-cn/blog/use-nacos-with-rainbond.html',
+        },
         {
             title: 'Apache APISIX 基于 Nacos 实现服务发现',
             author: '@林志煌(2228586315@qq.com)',
