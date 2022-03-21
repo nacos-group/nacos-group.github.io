@@ -6,12 +6,12 @@ export default {
             briefIntroduction: 'an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native applications',
             buttons: [
                 {
-                    text: 'MSE (half discount)',
-                    link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
+                    text: 'Enterprise version',
+                    link: 'https://www.alibabacloud.com/product/microservices-engine',
                     type: 'primary',
                 },
                 {
-                    text: 'Open-source version',
+                    text: 'Community version',
                     link: 'https://github.com/alibaba/nacos',
                     type: 'normal',
                 },
