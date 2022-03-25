@@ -93,6 +93,10 @@ export default {
                 link: '/en-us/docs/auth.html',
               },
               {
+                title: 'Configure Encryption',
+                link: '/en-us/docs/config-encryption.html',
+              },
+              {
                 title: 'FAQ',
                 link: '/en-us/docs/faq.html',
               },
@@ -288,6 +292,10 @@ export default {
               {
                 title: '权限认证',
                 link: '/zh-cn/docs/auth.html',
+              },
+              {
+                title: '配置加密',
+                link: '/zh-cn/docs/config-encryption.html',
               },
               {
                 title: 'FAQ',
