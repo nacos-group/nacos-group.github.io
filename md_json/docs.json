@@ -91,6 +91,15 @@
       }
     },
     {
+      "filename": "config-encryption.md",
+      "link": "/en-us/docs/config-encryption.html",
+      "meta": {
+        "title": "CONFIGURE ENCRYPTION",
+        "keywords": "AES,ENCRYPTION,CONFIGURE ENCRYPTION",
+        "description": "CONFIGURE ENCRYPTION"
+      }
+    },
+    {
       "filename": "console-guide.md",
       "link": "/en-us/docs/console-guide.html",
       "meta": {
@@ -487,6 +496,15 @@
         "title": "Nacos 概念",
         "keywords": "Nacos,概念",
         "description": "Nacos 概念"
+      }
+    },
+    {
+      "filename": "config-encryption.md",
+      "link": "/zh-cn/docs/config-encryption.html",
+      "meta": {
+        "title": "配置加密",
+        "keywords": "AES,encryption,配置加密",
+        "description": "配置加密"
       }
     },
     {

@@ -39,8 +39,12 @@ export default {
                 link: '/en-us/docs/2.0.0-upgrading.html',
               },
               {
-                title: 'Authentication',
+                title: 'Authentication Plugin',
                 link: '/en-us/docs/auth-plugin.html',
+              },
+              {
+                title: 'Configure Encryption Plugin',
+                link: '/en-us/docs/config-encryption.html',
               },
             ],
           },
@@ -108,10 +112,6 @@ export default {
               {
                 title: 'Authentication',
                 link: '/en-us/docs/auth.html',
-              },
-              {
-                title: 'Configure Encryption',
-                link: '/en-us/docs/config-encryption.html',
               },
               {
                 title: 'FAQ',
@@ -247,6 +247,10 @@ export default {
                 title: '鉴权插件',
                 link: '/zh-cn/docs/auth-plugin.html',
               },
+              {
+                title: '配置加密插件',
+                link: '/zh-cn/docs/config-encryption.html',
+              },
             ],
           },
           {
@@ -313,10 +317,6 @@ export default {
               {
                 title: '权限认证',
                 link: '/zh-cn/docs/auth.html',
-              },
-              {
-                title: '配置加密',
-                link: '/zh-cn/docs/config-encryption.html',
               },
               {
                 title: 'FAQ',
