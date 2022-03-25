@@ -37,6 +37,15 @@
       }
     },
     {
+      "filename": "auth-plugin.md",
+      "link": "/en-us/docs/auth-plugin.html",
+      "meta": {
+        "title": "Authorization Plugin",
+        "keywords": "Authorization, Plugin",
+        "description": "This article describes how to develop and use Nacos' authentication plugin."
+      }
+    },
+    {
       "filename": "auth.md",
       "link": "/en-us/docs/auth.html",
       "meta": {
@@ -79,6 +88,15 @@
         "title": "Nacos Concepts",
         "keywords": "Nacos,Concepts",
         "description": "Nacos Concepts"
+      }
+    },
+    {
+      "filename": "config-encryption.md",
+      "link": "/en-us/docs/config-encryption.html",
+      "meta": {
+        "title": "CONFIGURE ENCRYPTION",
+        "keywords": "AES,ENCRYPTION,CONFIGURE ENCRYPTION",
+        "description": "CONFIGURE ENCRYPTION"
       }
     },
     {
@@ -427,6 +445,15 @@
       }
     },
     {
+      "filename": "auth-plugin.md",
+      "link": "/zh-cn/docs/auth-plugin.html",
+      "meta": {
+        "title": "鉴权插件",
+        "keywords": "鉴权, 插件",
+        "description": "本文描述如何开发及使用Nacos的鉴权插件"
+      }
+    },
+    {
       "filename": "auth.md",
       "link": "/zh-cn/docs/auth.html",
       "meta": {
@@ -469,6 +496,15 @@
         "title": "Nacos 概念",
         "keywords": "Nacos,概念",
         "description": "Nacos 概念"
+      }
+    },
+    {
+      "filename": "config-encryption.md",
+      "link": "/zh-cn/docs/config-encryption.html",
+      "meta": {
+        "title": "配置加密",
+        "keywords": "AES,encryption,配置加密",
+        "description": "配置加密"
       }
     },
     {

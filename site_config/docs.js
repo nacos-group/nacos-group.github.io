@@ -27,6 +27,28 @@ export default {
             ],
           },
           {
+            title: 'Nacos 2.0',
+            opened: true,
+            children: [
+              {
+                title: 'Compatibility&Usage',
+                link: '/en-us/docs/2.0.0-compatibility.html',
+              },
+              {
+                title: 'Upgrading',
+                link: '/en-us/docs/2.0.0-upgrading.html',
+              },
+              {
+                title: 'Authentication Plugin',
+                link: '/en-us/docs/auth-plugin.html',
+              },
+              {
+                title: 'Configure Encryption Plugin',
+                link: '/en-us/docs/config-encryption.html',
+              },
+            ],
+          },
+          {
             title: 'Quick Start',
             opened: true,
             children: [
@@ -66,7 +88,6 @@ export default {
           },
           {
             title: 'User Guide',
-            opened: true,
             children: [
               {
                 title: 'Java SDK',
@@ -91,10 +112,6 @@ export default {
               {
                 title: 'Authentication',
                 link: '/en-us/docs/auth.html',
-              },
-              {
-                title: 'Configure Encryption',
-                link: '/en-us/docs/config-encryption.html',
               },
               {
                 title: 'FAQ',
@@ -144,19 +161,6 @@ export default {
               {
                 title: 'Data Migration to Nacos',
                 link: '/en-us/docs/nacos-sync-use.html',
-              },
-            ],
-          },
-          {
-            title: 'Nacos 2.0',
-            children: [
-              {
-                title: 'Compatibility&Usage',
-                link: '/en-us/docs/2.0.0-compatibility.html',
-              },
-              {
-                title: 'Upgrading',
-                link: '/en-us/docs/2.0.0-upgrading.html',
               },
             ],
           },
@@ -228,6 +232,28 @@ export default {
             ],
           },
           {
+            title: 'Nacos 2.0',
+            opened: true,
+            children: [
+              {
+                title: '兼容性及使用',
+                link: '/zh-cn/docs/2.0.0-compatibility.html',
+              },
+              {
+                title: '升级文档',
+                link: '/zh-cn/docs/2.0.0-upgrading.html',
+              },
+              {
+                title: '鉴权插件',
+                link: '/zh-cn/docs/auth-plugin.html',
+              },
+              {
+                title: '配置加密插件',
+                link: '/zh-cn/docs/config-encryption.html',
+              },
+            ],
+          },
+          {
             title: '快速开始',
             opened: true,
             children: [
@@ -267,7 +293,6 @@ export default {
           },
           {
             title: '用户指南',
-            opened: true,
             children: [
               {
                 title: 'Java的SDK',
@@ -292,10 +317,6 @@ export default {
               {
                 title: '权限认证',
                 link: '/zh-cn/docs/auth.html',
-              },
-              {
-                title: '配置加密',
-                link: '/zh-cn/docs/config-encryption.html',
               },
               {
                 title: 'FAQ',
@@ -345,19 +366,6 @@ export default {
               {
                 title: '其他环境迁移到Nacos',
                 link: '/zh-cn/docs/nacos-sync-use.html',
-              },
-            ],
-          },
-          {
-            title: 'Nacos 2.0',
-            children: [
-              {
-                title: '兼容性及使用',
-                link: '/zh-cn/docs/2.0.0-compatibility.html',
-              },
-              {
-                title: '升级文档',
-                link: '/zh-cn/docs/2.0.0-upgrading.html',
               },
             ],
           },
