@@ -37,6 +37,15 @@
       }
     },
     {
+      "filename": "auth-plugin.md",
+      "link": "/en-us/docs/auth-plugin.html",
+      "meta": {
+        "title": "Authorization Plugin",
+        "keywords": "Authorization, Plugin",
+        "description": "This article describes how to develop and use Nacos' authentication plugin."
+      }
+    },
+    {
       "filename": "auth.md",
       "link": "/en-us/docs/auth.html",
       "meta": {
@@ -424,6 +433,15 @@
         "title": "Nacos 架构",
         "keywords": "Nacos,架构",
         "description": "Nacos 架构"
+      }
+    },
+    {
+      "filename": "auth-plugin.md",
+      "link": "/zh-cn/docs/auth-plugin.html",
+      "meta": {
+        "title": "鉴权插件",
+        "keywords": "鉴权, 插件",
+        "description": "本文描述如何开发及使用Nacos的鉴权插件"
       }
     },
     {

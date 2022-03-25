@@ -27,6 +27,24 @@ export default {
             ],
           },
           {
+            title: 'Nacos 2.0',
+            opened: true,
+            children: [
+              {
+                title: 'Compatibility&Usage',
+                link: '/en-us/docs/2.0.0-compatibility.html',
+              },
+              {
+                title: 'Upgrading',
+                link: '/en-us/docs/2.0.0-upgrading.html',
+              },
+              {
+                title: 'Authentication',
+                link: '/en-us/docs/auth-plugin.html',
+              },
+            ],
+          },
+          {
             title: 'Quick Start',
             opened: true,
             children: [
@@ -66,7 +84,6 @@ export default {
           },
           {
             title: 'User Guide',
-            opened: true,
             children: [
               {
                 title: 'Java SDK',
@@ -148,19 +165,6 @@ export default {
             ],
           },
           {
-            title: 'Nacos 2.0',
-            children: [
-              {
-                title: 'Compatibility&Usage',
-                link: '/en-us/docs/2.0.0-compatibility.html',
-              },
-              {
-                title: 'Upgrading',
-                link: '/en-us/docs/2.0.0-upgrading.html',
-              },
-            ],
-          },
-          {
             title: 'Contributor Guide',
             children: [
               {
@@ -228,6 +232,24 @@ export default {
             ],
           },
           {
+            title: 'Nacos 2.0',
+            opened: true,
+            children: [
+              {
+                title: '兼容性及使用',
+                link: '/zh-cn/docs/2.0.0-compatibility.html',
+              },
+              {
+                title: '升级文档',
+                link: '/zh-cn/docs/2.0.0-upgrading.html',
+              },
+              {
+                title: '鉴权插件',
+                link: '/zh-cn/docs/auth-plugin.html',
+              },
+            ],
+          },
+          {
             title: '快速开始',
             opened: true,
             children: [
@@ -267,7 +289,6 @@ export default {
           },
           {
             title: '用户指南',
-            opened: true,
             children: [
               {
                 title: 'Java的SDK',
@@ -345,19 +366,6 @@ export default {
               {
                 title: '其他环境迁移到Nacos',
                 link: '/zh-cn/docs/nacos-sync-use.html',
-              },
-            ],
-          },
-          {
-            title: 'Nacos 2.0',
-            children: [
-              {
-                title: '兼容性及使用',
-                link: '/zh-cn/docs/2.0.0-compatibility.html',
-              },
-              {
-                title: '升级文档',
-                link: '/zh-cn/docs/2.0.0-upgrading.html',
               },
             ],
           },
