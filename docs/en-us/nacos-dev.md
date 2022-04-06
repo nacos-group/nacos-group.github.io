@@ -79,7 +79,8 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [JackSun-Developer](https://github.com/JackSun-Developer) | Li Sun | Alibaba  | Committer | yongyue.sl@alibaba-inc.com |
 | [brotherlu-xcq](https://github.com/brotherlu-xcq) | Lu Cheng | KuJiaLe | Committer | 1285823170@qq.com |
 | [li-xiao-shuang](https://github.com/li-xiao-shuang) | XiaoShuang Li | DiDi | Committer | 644968328@qq.com |
-
+| [MajorHe1](https://github.com/MajorHe1)         | Fan He       | WeBank       | Committer | 601023364@qq.com | 
+| [hujun-w-2](https://github.com/hujun-w-2)       | Jun Hu       | Xiaomi       | Committer | 510830970@qq.com |
 ### Contributors
 
 | Github ID                                 | Name               | Organization                 | Roles       | Mail                      |

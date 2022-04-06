@@ -30,6 +30,7 @@ nacos.core.auth.enabled=false
 </code></pre>
 <p>After enabling authentication, the configuration in application.properties is as follow:</p>
 <pre><code class="language-java">### If turn on auth system:
+nacos.core.auth.system.type=nacos
 nacos.core.auth.enabled=true
 </code></pre>
 <p><strong>Attention:</strong>  the authentication switch takes effect immediately after the modification, and there is no need to restart the server.</p>
@@ -78,7 +79,8 @@ nacos.core.auth.enabled=true
 <pre><code>nacos.core.auth.enabled=false
 </code></pre>
 <p>into</p>
-<pre><code>nacos.core.auth.enabled=true
+<pre><code>nacos.core.auth.system.type=nacos
+nacos.core.auth.enabled=true
 </code></pre>
 <h2>Authentication in Clients</h2>
 <h3>Authentication in Java SDK</h3>

@@ -26,6 +26,7 @@ nacos.core.auth.enabled=false
 开启鉴权之后，application.properties中的配置信息为：
 ```java
 ### If turn on auth system:
+nacos.core.auth.system.type=nacos
 nacos.core.auth.enabled=true
 ```
 
@@ -72,6 +73,7 @@ nacos.core.auth.enabled=false
 ```
 修改为
 ```
+nacos.core.auth.system.type=nacos
 nacos.core.auth.enabled=true
 ```
 然后再配置nacos启动命令。

@@ -78,6 +78,8 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 | [JackSun-Developer](https://github.com/JackSun-Developer) | 孙立 | 阿里巴巴 | Committer | yongyue.sl@alibaba-inc.com |
 | [brotherlu-xcq](https://github.com/brotherlu-xcq) | 程露 | 杭州群核信息技术有限公司(酷家乐) | Committer | 1285823170@qq.com |
 | [li-xiao-shuang](https://github.com/li-xiao-shuang) | 李晓双 | 滴滴出行 | Committer | 644968328@qq.com |
+| [MajorHe1](https://github.com/MajorHe1)         | 贺繁   | 微众银行 | Committer | 601023364@qq.com | 
+| [hujun-w-2](https://github.com/hujun-w-2)       | 胡俊   | 小米科技 | Committer | 510830970@qq.com |
 
 ### 活跃贡献者
 

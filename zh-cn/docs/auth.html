@@ -30,6 +30,7 @@ nacos.core.auth.enabled=false
 </code></pre>
 <p>开启鉴权之后，application.properties中的配置信息为：</p>
 <pre><code class="language-java">### If turn on auth system:
+nacos.core.auth.system.type=nacos
 nacos.core.auth.enabled=true
 </code></pre>
 <h5>注意：鉴权开关是修改之后立马生效的，不需要重启服务端。</h5>
@@ -82,7 +83,8 @@ nacos.core.auth.enabled=true
 <pre><code>nacos.core.auth.enabled=false
 </code></pre>
 <p>修改为</p>
-<pre><code>nacos.core.auth.enabled=true
+<pre><code>nacos.core.auth.system.type=nacos
+nacos.core.auth.enabled=true
 </code></pre>
 <p>然后再配置nacos启动命令。</p>
 <h2>客户端如何进行鉴权</h2>
