@@ -121,7 +121,7 @@ public class DiscoveryController {
 5. 通过调用 [Nacos Open API](https://nacos.io/zh-cn/docs/open-api.html) 向  Nacos server 注册一个名称为 `example` 服务。
 
 ```
-curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=127.0.0.1&port=8080'
+curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=127.0.0.1&port=8080'
 ```
 
 6. 再次访问 `curl http://localhost:8080/discovery/get?serviceName=example`，此时返回内容为：
