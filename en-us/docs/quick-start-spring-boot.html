@@ -133,7 +133,7 @@ public class NacosDiscoveryApplication {
 <p>Call <a href="https://nacos.io/zh-cn/docs/open-api.html">Nacos Open API</a> to register a service called <code>example</code> to the Nacos server.</p>
 </li>
 </ol>
-<pre><code>curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&amp;ip=127.0.0.1&amp;port=8080'
+<pre><code>curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&amp;ip=127.0.0.1&amp;port=8080'
 </code></pre>
 <ol start="6">
 <li>Access <code>curl http://localhost:8080/discovery/get?serviceName=example</code>again and you will get the following return:</li>

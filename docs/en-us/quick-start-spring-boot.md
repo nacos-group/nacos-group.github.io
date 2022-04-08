@@ -139,7 +139,7 @@ public class NacosDiscoveryApplication {
 5. Call [Nacos Open API](https://nacos.io/zh-cn/docs/open-api.html) to register a service called `example` to the Nacos server.
 
 ```
-curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=127.0.0.1&port=8080'
+curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=127.0.0.1&port=8080'
 ```
 
 6. Access `curl http://localhost:8080/discovery/get?serviceName=example`again and you will get the following return:
