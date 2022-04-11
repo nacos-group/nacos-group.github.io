@@ -21,7 +21,7 @@ Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 N
 
 [gRPC](https://grpc.io/docs/guides/concepts.html#service-definition) & [Dubbo RPC Service](https://dubbo.incubator.apache.org)
  
-[Spring Cloud RESTful Service](https://spring.io/understanding/REST)
+[Spring Cloud RESTful Service](https://spring.io/projects/spring-restdocs)
 
 Nacos 的关键特性包括:
 
