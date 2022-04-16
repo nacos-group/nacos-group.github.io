@@ -86,7 +86,7 @@ cd nacos<span class="hljs-literal">-docker</span>
 <tr>
 <td>NACOS_SERVERS</td>
 <td>nacos cluster address</td>
-<td>eg. ip1,ip2,ip3</td>
+<td>eg. ip1:port1 ip2:port2 ip3:port3</td>
 </tr>
 <tr>
 <td>PREFER_HOST_MODE</td>
@@ -94,7 +94,7 @@ cd nacos<span class="hljs-literal">-docker</span>
 <td>hostname/ip default <strong>ip</strong></td>
 </tr>
 <tr>
-<td>NACOS_SERVER_PORT</td>
+<td>NACOS_APPLICATION_PORT</td>
 <td>nacos server port</td>
 <td>default <strong>8848</strong></td>
 </tr>
@@ -109,59 +109,54 @@ cd nacos<span class="hljs-literal">-docker</span>
 <td>mysql / empty default empty</td>
 </tr>
 <tr>
-<td>MYSQL_MASTER_SERVICE_HOST</td>
-<td>mysql master host</td>
+<td>MYSQL_SERVICE_HOST</td>
+<td>mysql  host</td>
 <td></td>
 </tr>
 <tr>
-<td>MYSQL_MASTER_SERVICE_PORT</td>
-<td>mysql master database port</td>
+<td>MYSQL_SERVICE_PORT</td>
+<td>mysql  database port</td>
 <td>default : <strong>3306</strong></td>
 </tr>
 <tr>
-<td>MYSQL_MASTER_SERVICE_DB_NAME</td>
-<td>mysql master database name</td>
+<td>MYSQL_SERVICE_DB_NAME</td>
+<td>mysql  database name</td>
 <td></td>
 </tr>
 <tr>
-<td>MYSQL_MASTER_SERVICE_USER</td>
-<td>username of master database</td>
+<td>MYSQL_SERVICE_USER</td>
+<td>username of  database</td>
 <td></td>
 </tr>
 <tr>
-<td>MYSQL_MASTER_SERVICE_PASSWORD</td>
-<td>password of master database</td>
+<td>MYSQL_SERVICE_PASSWORD</td>
+<td>password of  database</td>
 <td></td>
-</tr>
-<tr>
-<td>MYSQL_SLAVE_SERVICE_HOST</td>
-<td>mysql slave host</td>
-<td></td>
-</tr>
-<tr>
-<td>MYSQL_SLAVE_SERVICE_PORT</td>
-<td>mysql slave database port</td>
-<td>default :3306</td>
 </tr>
 <tr>
 <td>MYSQL_DATABASE_NUM</td>
 <td>It indicates the number of database</td>
-<td>default :2</td>
+<td>default :<strong>1</strong></td>
+</tr>
+<tr>
+<td>MYSQL_SERVICE_DB_PARAM</td>
+<td>Database url parameter</td>
+<td>default:<strong>characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useSSL=false</strong></td>
 </tr>
 <tr>
 <td>JVM_XMS</td>
 <td>-Xms</td>
-<td>default :2g</td>
+<td>default :1g</td>
 </tr>
 <tr>
 <td>JVM_XMX</td>
 <td>-Xmx</td>
-<td>default :2g</td>
+<td>default :1g</td>
 </tr>
 <tr>
 <td>JVM_XMN</td>
 <td>-Xmn</td>
-<td>default :1g</td>
+<td>default :512m</td>
 </tr>
 <tr>
 <td>JVM_MS</td>
@@ -182,6 +177,66 @@ cd nacos<span class="hljs-literal">-docker</span>
 <td>TOMCAT_ACCESSLOG_ENABLED</td>
 <td>server.tomcat.accesslog.enabled</td>
 <td>default :false</td>
+</tr>
+<tr>
+<td>NACOS_AUTH_SYSTEM_TYPE</td>
+<td>The auth system to use, currently only 'nacos' is supported</td>
+<td>default :nacos</td>
+</tr>
+<tr>
+<td>NACOS_AUTH_ENABLE</td>
+<td>If turn on auth system</td>
+<td>default :false</td>
+</tr>
+<tr>
+<td>NACOS_AUTH_TOKEN_EXPIRE_SECONDS</td>
+<td>The token expiration in seconds</td>
+<td>default :18000</td>
+</tr>
+<tr>
+<td>NACOS_AUTH_TOKEN</td>
+<td>The default token</td>
+<td>default :SecretKey012345678901234567890123456789012345678901234567890123456789</td>
+</tr>
+<tr>
+<td>NACOS_AUTH_CACHE_ENABLE</td>
+<td>Turn on/off caching of auth information. By turning on this switch, the update of auth information would have a 15 seconds delay.</td>
+<td>default : false</td>
+</tr>
+<tr>
+<td>MEMBER_LIST</td>
+<td>Set the cluster list with a configuration file or command-line argument</td>
+<td>eg:192.168.16.101:8847?raft_port=8807,192.168.16.101?raft_port=8808,192.168.16.101:8849?raft_port=8809</td>
+</tr>
+<tr>
+<td>EMBEDDED_STORAGE</td>
+<td>Use embedded storage in cluster mode without mysql</td>
+<td><code>embedded</code> default : none</td>
+</tr>
+<tr>
+<td>NACOS_AUTH_CACHE_ENABLE</td>
+<td>nacos.core.auth.caching.enabled</td>
+<td>default : false</td>
+</tr>
+<tr>
+<td>NACOS_AUTH_USER_AGENT_AUTH_WHITE_ENABLE</td>
+<td>nacos.core.auth.enable.userAgentAuthWhite</td>
+<td>default : false</td>
+</tr>
+<tr>
+<td>NACOS_AUTH_IDENTITY_KEY</td>
+<td>nacos.core.auth.server.identity.key</td>
+<td>default : serverIdentity</td>
+</tr>
+<tr>
+<td>NACOS_AUTH_IDENTITY_VALUE</td>
+<td>nacos.core.auth.server.identity.value</td>
+<td>default : security</td>
+</tr>
+<tr>
+<td>NACOS_SECURITY_IGNORE_URLS</td>
+<td>nacos.security.ignore.urls</td>
+<td>default : <code>/,/error,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-fe/public/**,/v1/auth/**,/v1/console/health/**,/actuator/**,/v1/console/server/**</code></td>
 </tr>
 </tbody>
 </table>
