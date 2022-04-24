@@ -108,7 +108,7 @@ Nacos 数据模型 Key 由三元组唯一确定, Namespace默认是空串，公�
 
 服务部分待续
 
-![nacos_sdk_class_relation](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561218077514-bfa98d03-88a1-43b9-b014-1491406e3db7.jpeg) 
+![nacos_sdk_class_relation](https://cdn.nlark.com/yuque/0/2022/png/25574784/1650771676187-d95a9e45-8656-4d1a-8b5b-ed63a23a816b.png) 
 
 
 ## 构建物、部署及启动模式

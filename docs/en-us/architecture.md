@@ -113,7 +113,7 @@ Around the configuration, there are mainly two associated entities, one is the c
 
 // TODO Service part to be continued
 
-![nacos_sdk_class_relation](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561218077514-bfa98d03-88a1-43b9-b014-1491406e3db7.jpeg) 
+![nacos_sdk_class_relation](https://cdn.nlark.com/yuque/0/2022/png/25574784/1650771676187-d95a9e45-8656-4d1a-8b5b-ed63a23a816b.png) 
 
 
 ## Artifacts, Deployment, and Start Mode
