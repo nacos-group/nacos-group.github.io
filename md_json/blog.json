@@ -28,6 +28,15 @@
       }
     },
     {
+      "filename": "2.1.0-release.md",
+      "link": "/en-us/blog/2.1.0-release.html",
+      "meta": {
+        "title": "Nacos 2.1.0版本发布，支持鉴权及加解密插件",
+        "keywords": "2.1.0",
+        "description": "Nacos 2.1.0版本发布，支持鉴权及加解密插件"
+      }
+    },
+    {
       "filename": "5w1h-what.md",
       "link": "/en-us/blog/5w1h-what.html",
       "meta": {
@@ -346,6 +355,15 @@
         "title": "Nacos 2.0.3版本发布，继续提升集群稳定性及升级稳定性",
         "keywords": "2.0.1",
         "description": "Nacos 2.0.3版本发布，继续提升集群稳定性及升级稳定性"
+      }
+    },
+    {
+      "filename": "2.1.0-release.md",
+      "link": "/zh-cn/blog/2.1.0-release.html",
+      "meta": {
+        "title": "Nacos 2.1.0版本发布，支持鉴权及加解密插件",
+        "keywords": "2.1.0",
+        "description": "Nacos 2.1.0版本发布，支持鉴权及加解密插件"
       }
     },
     {

@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: 'Nacos 2.1.0 is released, supporting authentication and encryption plugins',
+            author: '@杨翊',
+            dateStr: 'Apr 29, 2022',
+            desc: 'Nacos 2.1.0 is released, supporting authentication and encryption plugins',
+            link: '/en-us/blog/2.1.0-release.html',
+        },
+        {
             title: 'Install the HA Nacos cluster in Rainbond with one-click',
             author: '@郭逊(guox@goodrain.com)',
             dateStr: 'Mar 16, 2022',
@@ -265,6 +272,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: 'Nacos 2.1.0版本发布，支持鉴权及加解密插件',
+            author: '@杨翊',
+            dateStr: 'Apr 29, 2022',
+            desc: 'Nacos 2.1.0版本发布，支持鉴权及加解密插件',
+            link: '/zh-cn/blog/2.1.0-release.html',
+        },
         {
             title: '在 Rainbond 中一键安装高可用 Nacos 集群',
             author: '@郭逊(guox@goodrain.com)',
