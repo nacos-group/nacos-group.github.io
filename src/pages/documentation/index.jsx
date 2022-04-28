@@ -9,8 +9,6 @@ import Bar from '../../components/bar';
 import Sidemenu from '../../components/sidemenu';
 import Footer from '../../components/footer';
 import docsConfig from '../../../site_config/docs';
-// 开发者页面借用文档页面
-import developConfig from '../../../site_config/develop';
 import { getLink } from '../../../utils';
 import './index.scss';
 
@@ -90,14 +88,12 @@ class Documentation extends Language {
 
   render() {
     const language = this.getLanguage();
-    // 开发者页借助文档页载体
-    const isDevelop = window.location.pathname.split('/').pop().lastIndexOf('-dev.html') !== -1;
-    const dataSource = isDevelop ? developConfig[language] : docsConfig[language];
+    const dataSource = docsConfig[language];
     const __html = this.props.__html || this.state.__html;
     return (
       <div className="documentation-page">
         <Header
-          currentKey={isDevelop ? 'developers' : 'docs'}
+          currentKey={'docs'}
           type="normal"
           logo={getLink('/img/nacos_colorful.png')}
           language={language}
