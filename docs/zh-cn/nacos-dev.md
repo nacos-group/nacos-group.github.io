@@ -52,6 +52,7 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 | [chuntaojun](https://github.com/chuntaojun)     | 廖春涛 |  腾讯  | Maintainer| liaochuntao@live.com |
 | [paderlol](https://github.com/paderlol)         | 张龙   | 蜜獾    | Maintainer | huangbbbaihao@gmail.com |
 | [KomachiSion](https://github.com/KomachiSion)   | 杨翊   | 阿里巴巴 | Maintainer | yangyi@apache.org |
+| [sanxun0325](https://github.com/sanxun0325)     | 张斌斌  | 滴滴出行 | Maintainer | bbz17640380550@163.com |
 | [zhangjimmy](https://github.com/zhangjimmy)     | 张波   | 虎牙直播 | Committer | zhangjimmy@foxmail.com  |
 | [nanamikon](https://github.com/nanamikon)       | 周健   | 虎牙直播 | Committer | nanamikon@gmail.com |
 | [lzp0412](https://github.com/lzp0412)           | 李志鹏 | 蚂蚁金服 | Committer | 641785844@qq.com      |
@@ -66,7 +67,6 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 | [TsingLiang](https://github.com/TsingLiang)     | 卿亮   | 阿里巴巴 | Committer | qingliang.ql@alibaba-inc.com  |
 | [caojiele](https://github.com/caojiele)         | 曹杰乐 | 三诺生物 | Committer| caojiele1225@126.com           |
 | [KeRan213539](https://github.com/KeRan213539)   | 邪影   | 云南盛达实业集团有限公司 | Committer | 213539@qq.com  |
-| [sanxun0325](https://github.com/sanxun0325)     | 张斌斌  | OpenJaw | Committer | bbz17640380550@163.com |
 | [zongtanghu](https://github.com/zongtanghu)     | 胡宗棠  | 中国移动云能力中心 | Committer | zongtanghu@hotmail.com |
 | [Maijh97](https://github.com/Maijh97)           | 麦建辉  | 广州云流区块链科技有限公司 | Committer | xiaomai_h@163.com |
 | [wangweizZZ](https://github.com/wangweizZZ)     | 王维   | 中国移动云能力中心 | Committer | wwfortunate@gmail.com |

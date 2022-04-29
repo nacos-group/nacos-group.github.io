@@ -53,6 +53,7 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [chuntaojun](https://github.com/chuntaojun)     | Chuntao Liao | Tencent      | Maintainer | liaochuntao@live.com                                         |
 | [paderlol](https://github.com/paderlol)         | Pader Zhang  | Shareworks   | Maintainer | huangbbbaihao@gmail.com                                      |
 | [KomachiSion](https://github.com/KomachiSion)   | Yi Yang      | Alibaba      | Maintainer | yangyi@apache.org                                            |
+| [sanxun0325](https://github.com/sanxun0325)     | Binbin Zhang | DiDi         | Maintainer | bbz17640380550@163.com                                       |
 | [zhangjimmy](https://github.com/zhangjimmy)     | Bo Zhang     | Huya         | Committer  | zhangjimmy@foxmail.com                                       |
 | [nanamikon](https://github.com/nanamikon)       | Jian Zhou    | Huya         | Committer  | nanamikon@gmail.com                                          |
 | [lzp0412](https://github.com/lzp0412)           | Zhipeng Li   | Ant Financial| Committer  | 641785844@qq.com                                             |
@@ -67,7 +68,6 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [TsingLiang](https://github.com/TsingLiang)     | Liang qing   | Alibaba      | Committer  | qingliang.ql@alibaba-inc.com                                 |
 | [caojiele](https://github.com/caojiele)         | Jiele Cao    | Sinocare     | Committer  | caojiele1225@126.com                                         | 
 | [KeRan213539](https://github.com/KeRan213539)   | Ying Xie     | ShengDa      | Committer  | 213539@qq.com                                                |
-| [sanxun0325](https://github.com/sanxun0325)     | Binbin Zhang | OpenJaw      | Committer  | bbz17640380550@163.com                                       |
 | [zongtanghu](https://github.com/zongtanghu)     | Zongtang Hu  | China Mobile Cloud Centre | Committer | zongtanghu@hotmail.com                           |
 | [Maijh97](https://github.com/Maijh97)           | Jianhui Mai  | Yunliuchain  | Committer | xiaomai_h@163.com                                             |
 | [wangweizZZ](https://github.com/wangweizZZ)     | Wei Wang     | China Mobile Cloud Centre | Committer | wwfortunate@gmail.com                            |
