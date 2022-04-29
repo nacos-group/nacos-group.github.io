@@ -48,6 +48,8 @@ cd distribution/target/nacos-server-$version/nacos/bin
 
 ## 3.启动服务器
 
+* 注：Nacos的运行需要以至少2C4g60g*3的机器配置下运行。
+
 ### Linux/Unix/Mac 
 
 启动命令(standalone代表着单机模式运行，非集群模式):
