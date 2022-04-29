@@ -121,7 +121,7 @@ export default {
       ],
     },
 
-    copyright: '@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project',
+    copyright: '@ 2022 The Nacos Authors | An Alibaba Middleware (Aliware) Project',
   },
   'zh-cn': {
     pageMenu: [
@@ -181,6 +181,12 @@ export default {
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
       {
+        key: 'E-BOOK1',
+        text: '微服务治理',
+        link: 'https://developer.aliyun.com/ebook/7565',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
+      {
         key: 'blog',
         text: '博客',
         link: '/zh-cn/blog/index.html',
@@ -237,6 +243,6 @@ export default {
         },
       ],
     },
-    copyright: '@ 2018 The Nacos Authors | An Alibaba Middleware (Aliware) Project',
+    copyright: '@ 2022 The Nacos Authors | An Alibaba Middleware (Aliware) Project',
   },
 };
