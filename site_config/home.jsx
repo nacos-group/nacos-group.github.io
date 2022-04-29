@@ -17,14 +17,14 @@ export default {
                 },
             ],
             versionNote: {
-                text: 'Release Note of V2.1.0-BETA',
-                link: 'https://github.com/alibaba/nacos/releases/tag/2.1.0-BETA',
+                text: 'Release Note of V2.1.0',
+                link: 'https://github.com/alibaba/nacos/releases/tag/2.1.0',
             },
             versionNote2: {
                 text: 'V1.4.3',
                 link: 'https://github.com/alibaba/nacos/releases/tag/1.4.3',
             },
-            releaseDate: 'Released on Jan 18, 2022',
+            releaseDate: 'Released on Apr 29, 2022',
 
         },
         functions: {
@@ -133,14 +133,14 @@ export default {
                 },
             ],
             versionNote: {
-                text: 'V2.1.0-BETA 版本说明',
-                link: 'https://github.com/alibaba/nacos/releases/tag/2.1.0-BETA',
+                text: 'V2.1.0 版本说明',
+                link: 'https://github.com/alibaba/nacos/releases/tag/2.1.0',
             },
             versionNote2: {
                 text: 'V1.4.3',
                 link: 'https://github.com/alibaba/nacos/releases/tag/1.4.3',
             },
-            releaseDate: '2022年01月18日发布',
+            releaseDate: '2022年04月29日发布',
         },
         functions: {
             title: '功能',
