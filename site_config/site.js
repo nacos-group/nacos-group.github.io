@@ -182,7 +182,7 @@ export default {
       },
       {
         key: 'E-BOOK1',
-        text: '微服务治理',
+        text: '治理白皮书',
         link: 'https://developer.aliyun.com/ebook/7565',
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
