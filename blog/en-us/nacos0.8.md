@@ -44,7 +44,7 @@ Nacos 通过micrometer统计了运行时的核心指标：
 提供Nacos-Sync同步工具支持用户做服务数据的平滑迁移迁移，支持用户从其他注册中心平滑迁移到Nacos上来，同时支持多个Region独立Nacos服务同步，目前Nacos-Sync支持的源注册中心主要包括ZooKeeper,Eureka等。
 
 #### 使用场景
-* 双向同步功能,支持Dubbo+Zookeeper服务平滑迁移到Dubbo+Naocs,享受Nacos更加优质的服务
+* 双向同步功能,支持Dubbo+Zookeeper服务平滑迁移到Dubbo+Nacos,享受Nacos更加优质的服务
 
 ![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/4232/1548136490076-13655b30-b0e4-4363-95dc-72b79a080fc0.png#align=left&display=inline&height=246&linkTarget=_blank&name=image.png&originHeight=838&originWidth=1728&size=171454&width=508)
 

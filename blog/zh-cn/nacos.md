@@ -14,7 +14,7 @@ description: Nacos 0.1.0 版本Review 活动设计
 * 尝试配置以及启动多节点 Nacos 集群模式任务，提改进意见
 * 尝试使用Nacos Java SDK, 给Java SDK提改进建议
 * 尝试使用Nacos Open API，给OpenAPI提改进建议
-* 尝试根据《如何贡献Naocs文档 TODO》试一下 贡献流程，给贡献者流程提建议
+* 尝试根据《如何贡献Nacos文档 TODO》试一下 贡献流程，给贡献者流程提建议
 * 给Nacos提需求、发展计划、想法和要求等
 
 ## II. 活动参与方式

@@ -32,6 +32,6 @@ description: NacosSync 介绍
 
 ![image.png](https://img.alicdn.com/tfs/TB1Mo6yJ4jaK1RjSZKzXXXVwXXa-1136-798.png)
 
-* 双向同步功能,支持Dubbo+Zookeeper服务平滑迁移到Dubbo+Naocs,享受Nacos更加优质的服务
+* 双向同步功能,支持Dubbo+Zookeeper服务平滑迁移到Dubbo+Nacos,享受Nacos更加优质的服务
 
 ![image.png](https://img.alicdn.com/tfs/TB1Dza8J9zqK1RjSZPxXXc4tVXa-1728-838.png)
