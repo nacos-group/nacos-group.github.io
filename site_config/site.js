@@ -60,7 +60,27 @@ export default {
       {
         key: 'E-BOOK',
         text: 'E-BOOK',
-        link: 'https://developer.aliyun.com/topic/download?id=8230',
+        link: '',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png',
+        children: [
+          {
+            key: 'E-BOOK-NACOS',
+            text: 'NACOS Architecture and Principles',
+            link: 'https://developer.aliyun.com/topic/download?id=8230',
+            imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+          },
+          {
+            key: 'E-BOOK—Governance',
+            text: 'Microservice Governance Technology',
+            link: 'https://developer.aliyun.com/ebook/7565',
+            imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+          }
+        ]
+      },
+      {
+        key: 'ISCAS2022',
+        text: 'ISCAS2022',
+        link: 'https://nacos.io/zh-cn/blog/iscas2022.html',
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
       {
@@ -176,14 +196,28 @@ export default {
       },
       {
         key: 'E-BOOK',
-        text: 'NACOS架构与原理',
-        link: 'https://developer.aliyun.com/topic/download?id=8230',
-        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+        text: '电子书',
+        link: '',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png',
+        children: [
+          {
+            key: 'E-BOOK-NACOS',
+            text: 'NACOS架构与原理',
+            link: 'https://developer.aliyun.com/topic/download?id=8230',
+            imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+          },
+          {
+            key: 'E-BOOK—Governance',
+            text: '微服务治理',
+            link: 'https://developer.aliyun.com/ebook/7565',
+            imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+          }
+        ]
       },
       {
-        key: 'E-BOOK1',
-        text: '微服务治理',
-        link: 'https://developer.aliyun.com/ebook/7565',
+        key: 'ISCAS2022',
+        text: '开源之夏2022',
+        link: 'https://nacos.io/zh-cn/blog/iscas2022.html',
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
       {
