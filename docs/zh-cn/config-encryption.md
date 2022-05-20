@@ -49,6 +49,20 @@ Nacos 加解密插件是可插拔的，有没有都不影响 Nacos 的核心功�
 ```
 ${nacos-aes-encryption-plugin.version} 可以获取插件的最新版本。
 
+> 目前插件需要自己编译,并未上传至maven中央仓库
+
+# 如何编译
+
+编译插件之前需要先编译`nacos`并安装至本地仓库.
+1. git clone git@github.com:alibaba/nacos.git
+2. cd nacos && mvn -B clean package install -Dmaven.test.skip=true
+
+> 若出现`revision`变量无法解析,请更新`maven`至最新版本
+
+3. git clone git@github.com:nacos-group/nacos-plugin.git
+4. mvn install
+
+建议上传到公司的maven仓库
 
 # 创建加密配置
 - 打开 Nacos 控制台，点击新建配置。
