@@ -19,7 +19,7 @@ Nacos 作为注册中心，用来接收客户端（服务实例）发起的注�
 
 先上一张整体的流程图：
 
-![](../../img/blog/nacos-reigster-mechanism/image-20220413171451070bFSgRzW3Rx0S.png)
+![](img/blog/nacos-reigster-mechanism/image-20220413171451070bFSgRzW3Rx0S.png)
 
 - **集群环境**：如果是 Nacos 集群环境，那么拓扑结构是什么样的。
 - **组装请求**：客户端组装注册请求，下一步对 Nacos 服务发起远程调用。
@@ -43,7 +43,7 @@ Nacos 作为注册中心，用来接收客户端（服务实例）发起的注�
 
 告诉大家一个看源码的小技巧，拿到源码后，不是直接各个文件都看一篇，而是先看源码中带的 example 文件夹。如下图所示，找到 example 的 App 类，里面就有发起注册的实例代码。如下图所示：
 
-![](../../img/blog/nacos-reigster-mechanism/image-20220412071138017zxK9mw.png)
+![](img/blog/nacos-reigster-mechanism/image-20220412071138017zxK9mw.png)
 
 当然，我们也可以通过官网给的 curl 命令发起 HTTP 请求：
 
@@ -57,7 +57,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.namin
 
 先来看一下代码的流程图：
 
-![](../../img/blog/nacos-reigster-mechanism/image-20220412071400192DVNL4d.png)
+![](img/blog/nacos-reigster-mechanism/image-20220412071400192DVNL4d.png)
 
 跟着这个流程图，我们 debug 来看下。
 
@@ -65,17 +65,17 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.namin
 
 入口的核心代码如下图所示，它会组装注册的`实例信息`，放到一个 instance 变量里面：
 
-![](../../img/blog/nacos-reigster-mechanism/image-202204111612410590Vmd01.png)
+![](img/blog/nacos-reigster-mechanism/image-202204111612410590Vmd01.png)
 
 通过代码调试，我们可以看到里面的实例信息长这样：
 
-![](../../img/blog/nacos-reigster-mechanism/image-20220411160413112vLIk1i.png)
+![](img/blog/nacos-reigster-mechanism/image-20220411160413112vLIk1i.png)
 
 ### 1.4 组装注册请求 request
 
 发起注册的核心方法是 doRegisterService()，组装的 request 如下图所示，里面有之前组装的实例信息 instance，还有指定的  namespace（Nacos 的命名空间）、serviceName（服务名），groupName（Nacos 的分组）。
 
-![image-20220411162322668](../../img/blog/nacos-reigster-mechanism/image-202204111623226683NnG6U.png)
+![image-20220411162322668](img/blog/nacos-reigster-mechanism/image-202204111623226683NnG6U.png)
 
 ### 1.5 发起远程调用
 
@@ -103,7 +103,7 @@ response = this.currentConnection.request(request, timeoutMills);
 192.168.10.197:8868
 ```
 
-![](../../img/blog/nacos-reigster-mechanism/image-20220408100844549MpxWbbx40la1.png)
+![](img/blog/nacos-reigster-mechanism/image-20220408100844549MpxWbbx40la1.png)
 
 然后**服务 A 和服务 B 都是配置了 Nacos 集群**的 IP 和 端口号的，配置如下所示
 
@@ -114,7 +114,7 @@ spring.cloud.nacos.discovery.server-addr
 
 整体的结构如下图所示，服务 A 和 服务 B 都往 Nacos 集群进行注册。
 
-![](../../img/blog/nacos-reigster-mechanism/image-20220408101723181kPWAUaDBK5jL.png)
+![](img/blog/nacos-reigster-mechanism/image-20220408101723181kPWAUaDBK5jL.png)
 
 **但是里面有一个问题**：服务 A 注册时，是向所有 Nacos 节点发起注册呢？还是只向其中一个节点发起注册？如果只向一个节点注册，要向哪个节点注册呢？
 
@@ -131,7 +131,7 @@ spring.cloud.nacos.discovery.server-addr
 
 我们来看下客户端是如何随机选择一个节点的，流程图如下：
 
-![](../../img/blog/nacos-reigster-mechanism/image-20220412085821355AZgLcJ.png)
+![](img/blog/nacos-reigster-mechanism/image-20220412085821355AZgLcJ.png)
 
 那么如何找到这些代码逻辑呢？思路是怎么样的？
 
@@ -194,7 +194,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.namin
 
 服务 A 随机选择一个 Nacos 节点（图中为 Nacos1）发起注册请求，请求参数中包含了实例信息，Nacos 1 根据实例信息 hash + 取模拿到正确的节点，如果不属于自己，则将请求转发给其他节点（图中为 Nacos2）
 
-![](../../img/blog/nacos-reigster-mechanism/image-20220412215250738gU1BYV.png)
+![](img/blog/nacos-reigster-mechanism/image-20220412215250738gU1BYV.png)
 
 那么路由转发的细节是怎么样的？这个就涉及到 Distro 协议了，我们接着往下看。
 
@@ -202,7 +202,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.namin
 
 其实 Nacos 节点的路由转发逻辑比较简单，先来看下流程图：
 
-![](../../img/blog/nacos-reigster-mechanism/image-20220412184102530MvbD7W.png)
+![](img/blog/nacos-reigster-mechanism/image-20220412184102530MvbD7W.png)
 
 步骤如下：
 
@@ -213,11 +213,15 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.namin
 
 **我没看懂的点**：我这里启动了三个 Nacos 节点，如下图所示的 三个 Running 节点。但是为什么 Nacos 的 ServersList 会多了一个 192.168.10.197:8848的节点？
 
-![IDEA 启动了三个 nacos 节点](../../img/blog/nacos-reigster-mechanism/image-202204122033417675s0J4F.png)
+> 开发者回答：
+> nacos-server存在一个机制，在启动的时候会检查cluster.conf中配置的member内容，如果发现自身不在member列表中，就会将自身地址加入到member列表中。
+> 图中member显示有127.0.0.1的3个节点和一个192.168.10.197节点，说明nacos-server获取到的ip是192.168.10.197，但是cluster.conf中配置的ip是127.0.0.1。
+> 需要解决的话有两种方法，一种是严格按照上文中的配置，配置ip为192.168.10.197，另一种方式是在启动服务是设置JVM参数-Dnacos.server.ip=127.0.0.1
+> 这个配置错误同样常见于使用K8S搭建Nacos集群，域名和hostname互相混用时出现。
 
+![IDEA 启动了三个 nacos 节点](img/blog/nacos-reigster-mechanism/image-202204122033417675s0J4F.png)
 
-
-![nacos 控制台有四个节点](../../img/blog/nacos-reigster-mechanism/image-20220413153431838s2Wj4W.png)
+![nacos 控制台有四个节点](img/blog/nacos-reigster-mechanism/image-20220413153431838s2Wj4W.png)
 
 ### 4.2 路由转发源码分析
 
@@ -250,7 +254,7 @@ Nacos 目前有两个版本，v1 和 v2，如果是 v1，则是 instanceControll
 
 先上流程图：
 
-![添加实例信息的流程](../../img/blog/nacos-reigster-mechanism/image-20220413164932907KHTvVM.png)
+![添加实例信息的流程](img/blog/nacos-reigster-mechanism/image-20220413164932907KHTvVM.png)
 
 测试用的发起注册的命令：
 
@@ -260,7 +264,7 @@ curl -X POST 'http://127.0.0.1:8858/nacos/v1/ns/instance?serviceName=nacos.namin
 
 核心代码就是这个：
 
-![服务端注册实例的方法](../../img/blog/nacos-reigster-mechanism/image-20220413160148289ylcS1n.png)
+![服务端注册实例的方法](img/blog/nacos-reigster-mechanism/image-20220413160148289ylcS1n.png)
 
 有一个 synchronized 锁，将临时的实例信息存放起来，所以重点看下 这个 consistencyService.put() 方法做了什么事情。
 
@@ -294,4 +298,4 @@ distroProtocol.sync(new      DistroKey(key,KeyBuilder.INSTANCE_LIST_KEY_PREFIX),
 
 **核心流程**：
 
-![](../../img/blog/nacos-reigster-mechanism/image-20220413171451070bFSgRz-20220530201153679.png)
+![](img/blog/nacos-reigster-mechanism/image-20220413171451070bFSgRz-20220530201153679.png)
