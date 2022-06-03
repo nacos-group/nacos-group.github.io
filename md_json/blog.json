@@ -591,12 +591,30 @@
       "meta": {}
     },
     {
+      "filename": "nacos-distro-mechanism.md",
+      "link": "/zh-cn/blog/nacos-distro-mechanism.html",
+      "meta": {
+        "title": "Nacos 的 Distro 一致性协议",
+        "keywords": "Nacos,Distro,一致性协议,AP",
+        "description": "详解Nacos 的 Distro 一致性协议"
+      }
+    },
+    {
       "filename": "nacos-is-coming.md",
       "link": "/zh-cn/blog/nacos-is-coming.html",
       "meta": {
         "title": "支持Dubbo生态发展，阿里巴巴启动新的开源项目 Nacos",
         "keywords": "nacos,alibaba,dubbo",
         "description": "支持Dubbo生态发展，阿里巴巴启动新的开源项目 Nacos"
+      }
+    },
+    {
+      "filename": "nacos-reigster-mechanism.md",
+      "link": "/zh-cn/blog/nacos-reigster-mechanism.html",
+      "meta": {
+        "title": "Nacos 的一条注册请求会经历什么？",
+        "keywords": "Nacos,注册",
+        "description": "详解 Nacos 的一条注册请求会经历什么？"
       }
     },
     {

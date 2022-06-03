@@ -215,11 +215,36 @@ export default {
       //   ]
       // },
       {
-        key: 'ISCAS2022',
-        text: '开源之夏2022',
-        link: 'https://nacos.io/zh-cn/blog/iscas2022.html',
-        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-      },
+              key: 'activity',
+              text: '活动',
+              link: '',
+              imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png',
+              children: [
+                {
+                  key: 'ISCAS2022',
+                  text: '中科院开源之夏2022',
+                  link: 'https://nacos.io/zh-cn/blog/iscas2022.html',
+                  imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+                },
+                {
+                  key: 'ASoC2022',
+                  text: '阿里巴巴编程之夏2022',
+                  link: 'https://github.com/alibaba/nacos/issues/8456',
+                  imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+                },
+                {
+                  key: 'middleware-developer',
+                  text: '中间件开发者大会',
+                  link: 'https://developer.aliyun.com/topic/middleware/developer/summit'
+                }
+              ]
+            },
+//      {
+//        key: 'ISCAS2022',
+//        text: '开源之夏2022',
+//        link: 'https://nacos.io/zh-cn/blog/iscas2022.html',
+//        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+//      },
       {
         key: 'blog',
         text: '博客',
