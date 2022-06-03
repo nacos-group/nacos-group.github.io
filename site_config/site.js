@@ -238,13 +238,7 @@ export default {
                   link: 'https://developer.aliyun.com/topic/middleware/developer/summit'
                 }
               ]
-            },
-//      {
-//        key: 'ISCAS2022',
-//        text: '开源之夏2022',
-//        link: 'https://nacos.io/zh-cn/blog/iscas2022.html',
-//        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-//      },
+       },
       {
         key: 'blog',
         text: '博客',
