@@ -200,12 +200,12 @@ export default {
       //   link: '',
       //   imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png',
       //   children: [
-          {
-            key: 'E-BOOK-NACOS',
-            text: 'NACOS架构与原理',
-            link: 'https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST',
-            imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-          },
+      //     {
+      //       key: 'E-BOOK-NACOS',
+      //       text: 'NACOS架构与原理',
+      //       link: 'https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST',
+      //       imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      //     },
       //     {
       //       key: 'E-BOOK—Governance',
       //       text: '微服务治理',
@@ -214,6 +214,12 @@ export default {
       //     }
       //   ]
       // },
+      {
+        key: 'middleware-developer',
+        text: '中间件开发者大会',
+        link: 'https://developer.aliyun.com/topic/middleware/developer/summit',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
       {
               key: 'activity',
               text: '活动',
