@@ -231,11 +231,6 @@ export default {
                   text: '阿里巴巴编程之夏2022',
                   link: 'https://github.com/alibaba/nacos/issues/8456',
                   imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-                },
-                {
-                  key: 'middleware-developer',
-                  text: '中间件开发者大会',
-                  link: 'https://developer.aliyun.com/topic/middleware/developer/summit'
                 }
               ]
        },
