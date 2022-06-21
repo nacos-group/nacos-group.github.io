@@ -25,20 +25,25 @@ Dubbo 融合 Nacos 成为注册中心的操作步骤非常简单，大致步骤�
 
     ...
 
-    <!-- Dubbo dependency -->
     <dependency>
         <groupId>com.alibaba</groupId>
         <artifactId>dubbo</artifactId>
         <version>3.0.5</version>
     </dependency>
-    
-    <!-- 使用Spring装配方式时可选: -->
+
+    <!-- Dubbo Nacos registry dependency -->
+    <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>dubbo-registry-nacos</artifactId>
+        <version>3.0.5</version>
+    </dependency>
+
+    <!-- Alibaba Spring Context extension -->
     <dependency>
         <groupId>com.alibaba.spring</groupId>
         <artifactId>spring-context-support</artifactId>
         <version>1.0.11</version>
     </dependency>
-
     ...
     
 </dependencies>
