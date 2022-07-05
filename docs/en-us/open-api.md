@@ -247,8 +247,8 @@ POST
 
 
 ### Parameter description
-* A delimiter to separate fields within a configuration: ^2  = Character.toString((char) 2
-* A delimiter to separate configurations: ^1 = Character.toString((char) 1)
+* A delimiter to separate fields within a configuration: ^2 = Character.toString((char) 2, The url encoded value is `%02`
+* A delimiter to separate configurations: ^1 = Character.toString((char) 1), The url encoded value is `%01`
 * contentMD5:  MD5(content). This is an empty string because the first local cache is empty.
 
 ### Return parameters
@@ -277,7 +277,7 @@ http://serverIp:8848/nacos/v1/cs/configs/listener
 
 POST request body data:
 
-Listening-Configs=dataId^2group^2contentMD5^2tenant^1
+Listening-Configs=dataId%02group%02contentMD5%02tenant%01
 
 ```
 
@@ -286,7 +286,7 @@ Listening-Configs=dataId^2group^2contentMD5^2tenant^1
 ```
 In case of any configuration changes,
 
-dataId^2group^2tenant^1
+dataId%02group%02tenant%01
 
 Otherwise, an empty string is returned.
 

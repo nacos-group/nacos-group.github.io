@@ -177,8 +177,8 @@ POST
 
 
 ### 参数说明
-* 配置多个字段间分隔符：^2  = Character.toString((char) 2
-* 配置间分隔符：^1 = Character.toString((char) 1)
+* 配置多个字段间分隔符：^2 = Character.toString((char) 2，`urlencode` 后值为 `%02`
+* 配置间分隔符：^1 = Character.toString((char) 1)，`urlencode` 后值为 `%01`
 * contentMD5:  MD5(content)，第一次本地缓存为空，所以这块为空串
 
 ### 返回参数
@@ -207,7 +207,7 @@ http://serverIp:8848/nacos/v1/cs/configs/listener
 
 POST 请求体数据内容：
 
-Listening-Configs=dataId^2group^2contentMD5^2tenant^1
+Listening-Configs=dataId%02group%02contentMD5%02tenant%01
 ```
 
 * 返回示例
@@ -215,7 +215,7 @@ Listening-Configs=dataId^2group^2contentMD5^2tenant^1
 ```
 如果配置变化
 
-dataId^2group^2tenant^1
+dataId%02group%02tenant%01
 
 如果配置无变化：会返回空串
 ```
