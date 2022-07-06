@@ -867,8 +867,10 @@ PUT
 
 | Name | Type | Required | Description |
 | :--- | :--- | :--- | --- |
-| namespaceId | String | no | ID of namespace |
 | serviceName | String | yes | service name |
+| ip | String | yes | ip of instance |
+| port | int | yes | port of instance |
+| namespaceId | String | no | ID of namespace |
 | groupName | String | no | group name |
 | beat | String | yes | beat content |
 

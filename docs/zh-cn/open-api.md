@@ -782,6 +782,9 @@ PUT
 | 名称 | 类型 | 是否必选 | 描述 |
 | :--- | :--- | :--- | --- |
 | serviceName | 字符串 | 是 | 服务名 |
+| ip | 字符串 | 是 | 服务实例IP |
+| port | int | 是 | 服务实例PORT |
+| namespaceId | 字符串 | 否 | 命名空间ID |
 | groupName | 字符串 | 否 | 分组名 |
 | ephemeral | boolean | 否 | 是否临时实例 |
 | beat | JSON格式字符串 | 是 | 实例心跳内容 |
