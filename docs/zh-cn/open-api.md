@@ -1538,8 +1538,8 @@ PUT
 
 | 名称 | 类型 | 是否必选 | 描述 |
 | :--- | :--- | :--- | --- |
-| namespaceId | 字符串 | 是 | 命名空间ID |
-| namespaceName | 字符串 | 是 | 命名空间名 |
+| namespace | 字符串 | 是 | 命名空间ID |
+| namespaceShowName | 字符串 | 是 | 命名空间名 |
 | namespaceDesc | 字符串 | 是 | 命名空间描述 |
 
 ### 错误编码

@@ -1636,8 +1636,8 @@ PUT
 
 | Name | Type | Required | Description |
 | :--- | :--- | :--- | --- |
-| namespaceId | String | yes | ID of namespace |
-| namespaceName | String | yes | Namespace name |
+| namespace | String | yes | ID of namespace |
+| namespaceShowName | String | yes | Namespace name |
 | namespaceDesc | String | yes | Namespace description |
 
 ### error Codes
