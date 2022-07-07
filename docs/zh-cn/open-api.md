@@ -692,22 +692,33 @@ curl -X GET '127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.test.1'
 ### 示例返回
 ```json
 {
-	"dom": "nacos.test.1",
-	"cacheMillis": 1000,
-	"useSpecifiedURL": false,
-	"hosts": [{
-		"valid": true,
-		"marked": false,
-		"instanceId": "10.10.10.10-8888-DEFAULT-nacos.test.1",
-		"port": 8888,
-		"ip": "10.10.10.10",
-		"weight": 1.0,
-		"metadata": {}
-	}],
-	"checksum": "3bbcf6dd1175203a8afdade0e77a27cd1528787794594",
-	"lastRefTime": 1528787794594,
-	"env": "",
-	"clusters": ""
+  "name": "DEFAULT_GROUP@@nacos.test.1", 
+  "groupName": "DEFAULT_GROUP", 
+  "clusters": "", 
+  "cacheMillis": 10000, 
+  "hosts": [
+    {
+      "instanceId": "10.10.10.10#8888#DEFAULT#DEFAULT_GROUP@@nacos.test.1", 
+      "ip": "10.10.10.10", 
+      "port": 8888, 
+      "weight": 1, 
+      "healthy": false, 
+      "enabled": true, 
+      "ephemeral": false, 
+      "clusterName": "DEFAULT", 
+      "serviceName": "DEFAULT_GROUP@@nacos.test.1", 
+      "metadata": { }, 
+      "instanceHeartBeatInterval": 5000, 
+      "instanceIdGenerator": "simple", 
+      "instanceHeartBeatTimeOut": 15000, 
+      "ipDeleteTimeout": 30000
+    }
+  ], 
+  "lastRefTime": 1528787794594, 
+  "checksum": "", 
+  "allIPs": false, 
+  "reachProtectionThreshold": false, 
+  "valid": true
 }
 ```
 <h2 id="2.5">查询实例详情</h2>
