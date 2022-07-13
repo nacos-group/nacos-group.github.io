@@ -247,8 +247,8 @@ POST
 
 
 ### Parameter description
-* A delimiter to separate fields within a configuration: ^2  = Character.toString((char) 2
-* A delimiter to separate configurations: ^1 = Character.toString((char) 1)
+* A delimiter to separate fields within a configuration: ^2 = Character.toString((char) 2, The url encoded value is `%02`
+* A delimiter to separate configurations: ^1 = Character.toString((char) 1), The url encoded value is `%01`
 * contentMD5:  MD5(content). This is an empty string because the first local cache is empty.
 
 ### Return parameters
@@ -277,7 +277,7 @@ http://serverIp:8848/nacos/v1/cs/configs/listener
 
 POST request body data:
 
-Listening-Configs=dataId^2group^2contentMD5^2tenant^1
+Listening-Configs=dataId%02group%02contentMD5%02tenant%01
 
 ```
 
@@ -286,7 +286,7 @@ Listening-Configs=dataId^2group^2contentMD5^2tenant^1
 ```
 In case of any configuration changes,
 
-dataId^2group^2tenant^1
+dataId%02group%02tenant%01
 
 Otherwise, an empty string is returned.
 
@@ -777,22 +777,33 @@ curl -X GET '127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.test.1'
 ### Response Example
 ```json
 {
-	"dom": "nacos.test.1",
-	"cacheMillis": 1000,
-	"useSpecifiedURL": false,
-	"hosts": [{
-		"valid": true,
-		"marked": false,
-		"instanceId": "10.10.10.10-8888-DEFAULT-nacos.test.1",
-		"port": 8888,
-		"ip": "10.10.10.10",
-		"weight": 1.0,
-		"metadata": {}
-	}],
-	"checksum": "3bbcf6dd1175203a8afdade0e77a27cd1528787794594",
-	"lastRefTime": 1528787794594,
-	"env": "",
-	"clusters": ""
+  "name": "DEFAULT_GROUP@@nacos.test.1", 
+  "groupName": "DEFAULT_GROUP", 
+  "clusters": "", 
+  "cacheMillis": 10000, 
+  "hosts": [
+    {
+      "instanceId": "10.10.10.10#8888#DEFAULT#DEFAULT_GROUP@@nacos.test.1", 
+      "ip": "10.10.10.10", 
+      "port": 8888, 
+      "weight": 1, 
+      "healthy": false, 
+      "enabled": true, 
+      "ephemeral": false, 
+      "clusterName": "DEFAULT", 
+      "serviceName": "DEFAULT_GROUP@@nacos.test.1", 
+      "metadata": { }, 
+      "instanceHeartBeatInterval": 5000, 
+      "instanceIdGenerator": "simple", 
+      "instanceHeartBeatTimeOut": 15000, 
+      "ipDeleteTimeout": 30000
+    }
+  ], 
+  "lastRefTime": 1528787794594, 
+  "checksum": "", 
+  "allIPs": false, 
+  "reachProtectionThreshold": false, 
+  "valid": true
 }
 ```
 
@@ -867,8 +878,10 @@ PUT
 
 | Name | Type | Required | Description |
 | :--- | :--- | :--- | --- |
-| namespaceId | String | no | ID of namespace |
 | serviceName | String | yes | service name |
+| ip | String | yes | ip of instance |
+| port | int | yes | port of instance |
+| namespaceId | String | no | ID of namespace |
 | groupName | String | no | group name |
 | beat | String | yes | beat content |
 
@@ -1636,8 +1649,8 @@ PUT
 
 | Name | Type | Required | Description |
 | :--- | :--- | :--- | --- |
-| namespaceId | String | yes | ID of namespace |
-| namespaceName | String | yes | Namespace name |
+| namespace | String | yes | ID of namespace |
+| namespaceShowName | String | yes | Namespace name |
 | namespaceDesc | String | yes | Namespace description |
 
 ### error Codes
