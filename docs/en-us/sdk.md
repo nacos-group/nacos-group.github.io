@@ -17,6 +17,69 @@ Maven coordinates
 </dependency>
 ```
 
+## Nacos Environment(Not activated)
+Community provide a tool called `NacosEnvs`, the tool is used to get some arguments from properties、system environment、jvm arguments and default settings. see https://github.com/alibaba/nacos/issues/8622.
+<p  align="center">
+<img src="/img/nacos_env_default_order.png" alt="nacos_env_default_order" width = "400" height = "500"></br>
+</p>
+
+the above picture show you default searching order:  `PROPERTIES->SYS->JVM->DEFAULT_SETTING` . the `NacosEnvs` will search all the environments(include properties、system environment、jvm arguments and default settings) if can't find any value.
+
+### Design
+![nacos_env_design](/img/nacos_env_design.png)
+
+### Customize search order
+`NacosEnvs` provide `nacos.envs.search` argument that is used in System enviornment and Jvm arguments. `nacos.envs.search` is an Enum:
+- DEFAULT_SETTING (default setting first, `DEFAULT_SETTING->PROPERTIES->SYS->JVM`)
+- SYS （system environment first, `SYS->PROPERTIES->JVM->DEFAULT_SETTING`）
+- JVM (jvm argument first, `JVM->PROPERTIES->SYS->DEFAULT_SETTING`)
+- PROPERTIES (properties first, `PROPERTIES->SYS->JVM->DEFAULT_SETTING`)
+
+example:
+```
+// jvm argument way
+java -jar xx.jar -Dnacos.envs.search=SYS
+
+// system environment way
+NACOS_ENVS_SEARCH=SYS
+```
+
+### Default settings
+There are some default value in the  `nacos_default_setting.properties` file under the client module.
+| key | default value |
+| :--- | :--- |
+| contextPath | /nacos |
+| nacos.cache.data.init.snapshot | true |
+| configLongPollTimeout | 30000 |
+| configRetryTime | 2000 |
+| enableRemoteSyncConfig | false |
+| maxRetry | 3 |
+| limitTime | 5 |
+| isUseEndpointParsingRule | true |
+| isMultiInstance | false |
+| com.alibaba.nacos.naming.log.filename | naming.log |
+| namingRequestTimeout | -1 |
+| com.alibaba.nacos.client.naming.rtimeout | 50000 |
+| com.alibaba.nacos.client.naming.ctimeout | 3000 |
+| tls.enable | false |
+| namingRequestDomainMaxRetryCount | 3 |
+| nacos.use.cloud.namespace.parsing | true |
+| nacos.use.endpoint.parsing.rule | true |
+| nacos.client.contextPath | nacos |
+| nacos.server.port | 8848 |
+| NACOS.CONNECT.TIMEOUT | 1000 |
+| PER_TASK_CONFIG_SIZE | 3000 |
+
+
+### How to use the tool
+```java
+// it must be initialization before use
+final Properties properties = new Properties();
+properties.setProperty("nacos.home", "/home/nacos");
+NacosEnvs.init(properties);
+// get value
+final String value = NacosEnvs.getProperty("nacos.home");
+```
 
 ## Configuration Management
 ### Get configuration

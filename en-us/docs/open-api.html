@@ -320,8 +320,8 @@
 </table>
 <h3>Parameter description</h3>
 <ul>
-<li>A delimiter to separate fields within a configuration: ^2  = Character.toString((char) 2</li>
-<li>A delimiter to separate configurations: ^1 = Character.toString((char) 1)</li>
+<li>A delimiter to separate fields within a configuration: ^2 = Character.toString((char) 2, The url encoded value is <code>%02</code></li>
+<li>A delimiter to separate configurations: ^1 = Character.toString((char) 1), The url encoded value is <code>%01</code></li>
 <li>contentMD5:  MD5(content). This is an empty string because the first local cache is empty.</li>
 </ul>
 <h3>Return parameters</h3>
@@ -384,7 +384,7 @@
 
 POST request body data:
 
-Listening-Configs=dataId^2group^2contentMD5^2tenant^1
+Listening-Configs=dataId%02group%02contentMD5%02tenant%01
 
 </code></pre>
 <ul>
@@ -392,7 +392,7 @@ Listening-Configs=dataId^2group^2contentMD5^2tenant^1
 </ul>
 <pre><code>In case of any configuration changes,
 
-dataId^2group^2tenant^1
+dataId%02group%02tenant%01
 
 Otherwise, an empty string is returned.
 
@@ -1384,22 +1384,33 @@ Otherwise, an empty string is returned.
 </code></pre>
 <h3>Response Example</h3>
 <pre><code class="language-json">{
-	<span class="hljs-attr">"dom"</span>: <span class="hljs-string">"nacos.test.1"</span>,
-	<span class="hljs-attr">"cacheMillis"</span>: <span class="hljs-number">1000</span>,
-	<span class="hljs-attr">"useSpecifiedURL"</span>: <span class="hljs-literal">false</span>,
-	<span class="hljs-attr">"hosts"</span>: [{
-		<span class="hljs-attr">"valid"</span>: <span class="hljs-literal">true</span>,
-		<span class="hljs-attr">"marked"</span>: <span class="hljs-literal">false</span>,
-		<span class="hljs-attr">"instanceId"</span>: <span class="hljs-string">"10.10.10.10-8888-DEFAULT-nacos.test.1"</span>,
-		<span class="hljs-attr">"port"</span>: <span class="hljs-number">8888</span>,
-		<span class="hljs-attr">"ip"</span>: <span class="hljs-string">"10.10.10.10"</span>,
-		<span class="hljs-attr">"weight"</span>: <span class="hljs-number">1.0</span>,
-		<span class="hljs-attr">"metadata"</span>: {}
-	}],
-	<span class="hljs-attr">"checksum"</span>: <span class="hljs-string">"3bbcf6dd1175203a8afdade0e77a27cd1528787794594"</span>,
-	<span class="hljs-attr">"lastRefTime"</span>: <span class="hljs-number">1528787794594</span>,
-	<span class="hljs-attr">"env"</span>: <span class="hljs-string">""</span>,
-	<span class="hljs-attr">"clusters"</span>: <span class="hljs-string">""</span>
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"DEFAULT_GROUP@@nacos.test.1"</span>, 
+  <span class="hljs-attr">"groupName"</span>: <span class="hljs-string">"DEFAULT_GROUP"</span>, 
+  <span class="hljs-attr">"clusters"</span>: <span class="hljs-string">""</span>, 
+  <span class="hljs-attr">"cacheMillis"</span>: <span class="hljs-number">10000</span>, 
+  <span class="hljs-attr">"hosts"</span>: [
+    {
+      <span class="hljs-attr">"instanceId"</span>: <span class="hljs-string">"10.10.10.10#8888#DEFAULT#DEFAULT_GROUP@@nacos.test.1"</span>, 
+      <span class="hljs-attr">"ip"</span>: <span class="hljs-string">"10.10.10.10"</span>, 
+      <span class="hljs-attr">"port"</span>: <span class="hljs-number">8888</span>, 
+      <span class="hljs-attr">"weight"</span>: <span class="hljs-number">1</span>, 
+      <span class="hljs-attr">"healthy"</span>: <span class="hljs-literal">false</span>, 
+      <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>, 
+      <span class="hljs-attr">"ephemeral"</span>: <span class="hljs-literal">false</span>, 
+      <span class="hljs-attr">"clusterName"</span>: <span class="hljs-string">"DEFAULT"</span>, 
+      <span class="hljs-attr">"serviceName"</span>: <span class="hljs-string">"DEFAULT_GROUP@@nacos.test.1"</span>, 
+      <span class="hljs-attr">"metadata"</span>: { }, 
+      <span class="hljs-attr">"instanceHeartBeatInterval"</span>: <span class="hljs-number">5000</span>, 
+      <span class="hljs-attr">"instanceIdGenerator"</span>: <span class="hljs-string">"simple"</span>, 
+      <span class="hljs-attr">"instanceHeartBeatTimeOut"</span>: <span class="hljs-number">15000</span>, 
+      <span class="hljs-attr">"ipDeleteTimeout"</span>: <span class="hljs-number">30000</span>
+    }
+  ], 
+  <span class="hljs-attr">"lastRefTime"</span>: <span class="hljs-number">1528787794594</span>, 
+  <span class="hljs-attr">"checksum"</span>: <span class="hljs-string">""</span>, 
+  <span class="hljs-attr">"allIPs"</span>: <span class="hljs-literal">false</span>, 
+  <span class="hljs-attr">"reachProtectionThreshold"</span>: <span class="hljs-literal">false</span>, 
+  <span class="hljs-attr">"valid"</span>: <span class="hljs-literal">true</span>
 }
 </code></pre>
 <h2 id="2.5">Query instance detail</h2>
@@ -1537,16 +1548,28 @@ Otherwise, an empty string is returned.
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">namespaceId</td>
-<td style="text-align:left">String</td>
-<td style="text-align:left">no</td>
-<td>ID of namespace</td>
-</tr>
-<tr>
 <td style="text-align:left">serviceName</td>
 <td style="text-align:left">String</td>
 <td style="text-align:left">yes</td>
 <td>service name</td>
+</tr>
+<tr>
+<td style="text-align:left">ip</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">yes</td>
+<td>ip of instance</td>
+</tr>
+<tr>
+<td style="text-align:left">port</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">yes</td>
+<td>port of instance</td>
+</tr>
+<tr>
+<td style="text-align:left">namespaceId</td>
+<td style="text-align:left">String</td>
+<td style="text-align:left">no</td>
+<td>ID of namespace</td>
 </tr>
 <tr>
 <td style="text-align:left">groupName</td>
@@ -2949,13 +2972,13 @@ curl -X DELETE 'http://localhost:8848/nacos/v1/ns/instance/metadata/batch' -d 'n
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">namespaceId</td>
+<td style="text-align:left">namespace</td>
 <td style="text-align:left">String</td>
 <td style="text-align:left">yes</td>
 <td>ID of namespace</td>
 </tr>
 <tr>
-<td style="text-align:left">namespaceName</td>
+<td style="text-align:left">namespaceShowName</td>
 <td style="text-align:left">String</td>
 <td style="text-align:left">yes</td>
 <td>Namespace name</td>

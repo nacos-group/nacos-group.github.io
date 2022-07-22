@@ -21,6 +21,134 @@
     &lt;version&gt;${version}&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
+<h2>Nacos Environment(目前还未投入使用)</h2>
+<h3>描述</h3>
+<p>为了统一 <code>Nacos sdk</code> 获取参数的方式,社区提供了<code>NacosEnvs</code>工具类(目前还未正式投入使用), 详见: <a href="https://github.com/alibaba/nacos/issues/8622">https://github.com/alibaba/nacos/issues/8622</a> .该工具支持从系统环境变量、命令行参数、用户自定义参数和默认参数中获取值.</p>
+<p  align="center">
+<img src="/img/nacos_env_default_order.png" alt="nacos_env_default_order" width = "400" height = "500"></br>
+</p>
+<p>上图是默认查找顺序: <code>PROPERTIES-&gt;SYS-&gt;JVM-&gt;DEFAULT_SETTING</code>,若没查找到指定参数的值,则依顺序向下查找,直至查找到为止.</p>
+<h3>设计</h3>
+<p><img src="/img/nacos_env_design.png" alt="nacos_env_design"></p>
+<h3>调整查找优先级</h3>
+<p>为了灵活切换优先级, 提供了<code>nacos.envs.search</code>参数,可用于系统环境变量和命令行参数中. 可接受值为:</p>
+<ul>
+<li>DEFAULT_SETTING 优先从默认参数配置中查找 <code>(DEFAULT_SETTING-&gt;PROPERTIES-&gt;SYS-&gt;JVM)</code></li>
+<li>SYS 优先从系统环境变量中查找 <code>(SYS-&gt;PROPERTIES-&gt;JVM-&gt;DEFAULT_SETTING)</code></li>
+<li>JVM 优先从命令行参数中查找 <code>(JVM-&gt;PROPERTIES-&gt;SYS-&gt;DEFAULT_SETTING)</code></li>
+<li>PROPERTIES 优先从用户自定义参数中查找 （<code>PROPERTIES-&gt;SYS-&gt;JVM-&gt;DEFAULT_SETTING)</code></li>
+</ul>
+<p>例如:</p>
+<pre><code>// 通过命令行方式, 调整查找顺序优先从系统环境变量中查找
+java -jar xx.jar -Dnacos.envs.search=SYS
+
+// 通过环境变量方式, 调整查找顺序优先从系统环境变量中查找
+NACOS_ENVS_SEARCH=SYS
+</code></pre>
+<h3>默认参数</h3>
+<p>默认参数配置在client模块中的<code>nacos_default_setting.properties</code>文件中,提供一些默认参数值</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数名</th>
+<th style="text-align:left">默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">contextPath</td>
+<td style="text-align:left">/nacos</td>
+</tr>
+<tr>
+<td style="text-align:left">nacos.cache.data.init.snapshot</td>
+<td style="text-align:left">true</td>
+</tr>
+<tr>
+<td style="text-align:left">configLongPollTimeout</td>
+<td style="text-align:left">30000</td>
+</tr>
+<tr>
+<td style="text-align:left">configRetryTime</td>
+<td style="text-align:left">2000</td>
+</tr>
+<tr>
+<td style="text-align:left">enableRemoteSyncConfig</td>
+<td style="text-align:left">false</td>
+</tr>
+<tr>
+<td style="text-align:left">maxRetry</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td style="text-align:left">limitTime</td>
+<td style="text-align:left">5</td>
+</tr>
+<tr>
+<td style="text-align:left">isUseEndpointParsingRule</td>
+<td style="text-align:left">true</td>
+</tr>
+<tr>
+<td style="text-align:left">isMultiInstance</td>
+<td style="text-align:left">false</td>
+</tr>
+<tr>
+<td style="text-align:left">com.alibaba.nacos.naming.log.filename</td>
+<td style="text-align:left">naming.log</td>
+</tr>
+<tr>
+<td style="text-align:left">namingRequestTimeout</td>
+<td style="text-align:left">-1</td>
+</tr>
+<tr>
+<td style="text-align:left">com.alibaba.nacos.client.naming.rtimeout</td>
+<td style="text-align:left">50000</td>
+</tr>
+<tr>
+<td style="text-align:left">com.alibaba.nacos.client.naming.ctimeout</td>
+<td style="text-align:left">3000</td>
+</tr>
+<tr>
+<td style="text-align:left">tls.enable</td>
+<td style="text-align:left">false</td>
+</tr>
+<tr>
+<td style="text-align:left">namingRequestDomainMaxRetryCount</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td style="text-align:left">nacos.use.cloud.namespace.parsing</td>
+<td style="text-align:left">true</td>
+</tr>
+<tr>
+<td style="text-align:left">nacos.use.endpoint.parsing.rule</td>
+<td style="text-align:left">true</td>
+</tr>
+<tr>
+<td style="text-align:left">nacos.client.contextPath</td>
+<td style="text-align:left">nacos</td>
+</tr>
+<tr>
+<td style="text-align:left">nacos.server.port</td>
+<td style="text-align:left">8848</td>
+</tr>
+<tr>
+<td style="text-align:left">NACOS.CONNECT.TIMEOUT</td>
+<td style="text-align:left">1000</td>
+</tr>
+<tr>
+<td style="text-align:left">PER_TASK_CONFIG_SIZE</td>
+<td style="text-align:left">3000</td>
+</tr>
+</tbody>
+</table>
+<h3>NacosEnvs 的使用</h3>
+<pre><code class="language-java"><span class="hljs-comment">// 使用前需进行初始化</span>
+<span class="hljs-keyword">final</span> Properties properties = <span class="hljs-keyword">new</span> Properties();
+properties.setProperty(<span class="hljs-string">"nacos.home"</span>, <span class="hljs-string">"/home/nacos"</span>);
+NacosEnvs.init(properties);
+<span class="hljs-comment">// 获取值</span>
+<span class="hljs-keyword">final</span> String value = NacosEnvs.getProperty(<span class="hljs-string">"nacos.home"</span>);
+</code></pre>
 <h2>配置管理</h2>
 <h3>获取配置</h3>
 <h4>描述</h4>

@@ -17,6 +17,69 @@ Maven 坐标
 </dependency>
 ```
 
+## Nacos Environment(目前还未投入使用)
+### 描述
+为了统一 `Nacos sdk` 获取参数的方式,社区提供了`NacosEnvs`工具类(目前还未正式投入使用), 详见: https://github.com/alibaba/nacos/issues/8622 .该工具支持从系统环境变量、命令行参数、用户自定义参数和默认参数中获取值.
+<p  align="center">
+<img src="/img/nacos_env_default_order.png" alt="nacos_env_default_order" width = "400" height = "500"></br>
+</p>
+
+上图是默认查找顺序: `PROPERTIES->SYS->JVM->DEFAULT_SETTING`,若没查找到指定参数的值,则依顺序向下查找,直至查找到为止.
+
+### 设计
+![nacos_env_design](/img/nacos_env_design.png)
+### 调整查找优先级
+为了灵活切换优先级, 提供了`nacos.envs.search`参数,可用于系统环境变量和命令行参数中. 可接受值为:
+- DEFAULT_SETTING 优先从默认参数配置中查找 `(DEFAULT_SETTING->PROPERTIES->SYS->JVM)`
+- SYS 优先从系统环境变量中查找 `(SYS->PROPERTIES->JVM->DEFAULT_SETTING)`
+- JVM 优先从命令行参数中查找 `(JVM->PROPERTIES->SYS->DEFAULT_SETTING)`
+- PROPERTIES 优先从用户自定义参数中查找 （`PROPERTIES->SYS->JVM->DEFAULT_SETTING)`
+
+例如:
+```
+// 通过命令行方式, 调整查找顺序优先从系统环境变量中查找
+java -jar xx.jar -Dnacos.envs.search=SYS
+
+// 通过环境变量方式, 调整查找顺序优先从系统环境变量中查找
+NACOS_ENVS_SEARCH=SYS
+```
+
+### 默认参数
+默认参数配置在client模块中的`nacos_default_setting.properties`文件中,提供一些默认参数值
+| 参数名 | 默认值 |
+| :--- | :--- |
+| contextPath | /nacos |
+| nacos.cache.data.init.snapshot | true |
+| configLongPollTimeout | 30000 |
+| configRetryTime | 2000 |
+| enableRemoteSyncConfig | false |
+| maxRetry | 3 |
+| limitTime | 5 |
+| isUseEndpointParsingRule | true |
+| isMultiInstance | false |
+| com.alibaba.nacos.naming.log.filename | naming.log |
+| namingRequestTimeout | -1 |
+| com.alibaba.nacos.client.naming.rtimeout | 50000 |
+| com.alibaba.nacos.client.naming.ctimeout | 3000 |
+| tls.enable | false |
+| namingRequestDomainMaxRetryCount | 3 |
+| nacos.use.cloud.namespace.parsing | true |
+| nacos.use.endpoint.parsing.rule | true |
+| nacos.client.contextPath | nacos |
+| nacos.server.port | 8848 |
+| NACOS.CONNECT.TIMEOUT | 1000 |
+| PER_TASK_CONFIG_SIZE | 3000 |
+
+### NacosEnvs 的使用
+```java
+// 使用前需进行初始化
+final Properties properties = new Properties();
+properties.setProperty("nacos.home", "/home/nacos");
+NacosEnvs.init(properties);
+// 获取值
+final String value = NacosEnvs.getProperty("nacos.home");
+```
+
 ## 配置管理
 ### 获取配置
 #### 描述

@@ -249,8 +249,8 @@
 </table>
 <h3>参数说明</h3>
 <ul>
-<li>配置多个字段间分隔符：^2  = Character.toString((char) 2</li>
-<li>配置间分隔符：^1 = Character.toString((char) 1)</li>
+<li>配置多个字段间分隔符：^2 = Character.toString((char) 2，<code>urlencode</code> 后值为 <code>%02</code></li>
+<li>配置间分隔符：^1 = Character.toString((char) 1)，<code>urlencode</code> 后值为 <code>%01</code></li>
 <li>contentMD5:  MD5(content)，第一次本地缓存为空，所以这块为空串</li>
 </ul>
 <h3>返回参数</h3>
@@ -313,14 +313,14 @@
 
 POST 请求体数据内容：
 
-Listening-Configs=dataId^2group^2contentMD5^2tenant^1
+Listening-Configs=dataId%02group%02contentMD5%02tenant%01
 </code></pre>
 <ul>
 <li>返回示例</li>
 </ul>
 <pre><code>如果配置变化
 
-dataId^2group^2tenant^1
+dataId%02group%02tenant%01
 
 如果配置无变化：会返回空串
 </code></pre>
@@ -1329,22 +1329,33 @@ dataId^2group^2tenant^1
 </code></pre>
 <h3>示例返回</h3>
 <pre><code class="language-json">{
-	<span class="hljs-attr">"dom"</span>: <span class="hljs-string">"nacos.test.1"</span>,
-	<span class="hljs-attr">"cacheMillis"</span>: <span class="hljs-number">1000</span>,
-	<span class="hljs-attr">"useSpecifiedURL"</span>: <span class="hljs-literal">false</span>,
-	<span class="hljs-attr">"hosts"</span>: [{
-		<span class="hljs-attr">"valid"</span>: <span class="hljs-literal">true</span>,
-		<span class="hljs-attr">"marked"</span>: <span class="hljs-literal">false</span>,
-		<span class="hljs-attr">"instanceId"</span>: <span class="hljs-string">"10.10.10.10-8888-DEFAULT-nacos.test.1"</span>,
-		<span class="hljs-attr">"port"</span>: <span class="hljs-number">8888</span>,
-		<span class="hljs-attr">"ip"</span>: <span class="hljs-string">"10.10.10.10"</span>,
-		<span class="hljs-attr">"weight"</span>: <span class="hljs-number">1.0</span>,
-		<span class="hljs-attr">"metadata"</span>: {}
-	}],
-	<span class="hljs-attr">"checksum"</span>: <span class="hljs-string">"3bbcf6dd1175203a8afdade0e77a27cd1528787794594"</span>,
-	<span class="hljs-attr">"lastRefTime"</span>: <span class="hljs-number">1528787794594</span>,
-	<span class="hljs-attr">"env"</span>: <span class="hljs-string">""</span>,
-	<span class="hljs-attr">"clusters"</span>: <span class="hljs-string">""</span>
+  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"DEFAULT_GROUP@@nacos.test.1"</span>, 
+  <span class="hljs-attr">"groupName"</span>: <span class="hljs-string">"DEFAULT_GROUP"</span>, 
+  <span class="hljs-attr">"clusters"</span>: <span class="hljs-string">""</span>, 
+  <span class="hljs-attr">"cacheMillis"</span>: <span class="hljs-number">10000</span>, 
+  <span class="hljs-attr">"hosts"</span>: [
+    {
+      <span class="hljs-attr">"instanceId"</span>: <span class="hljs-string">"10.10.10.10#8888#DEFAULT#DEFAULT_GROUP@@nacos.test.1"</span>, 
+      <span class="hljs-attr">"ip"</span>: <span class="hljs-string">"10.10.10.10"</span>, 
+      <span class="hljs-attr">"port"</span>: <span class="hljs-number">8888</span>, 
+      <span class="hljs-attr">"weight"</span>: <span class="hljs-number">1</span>, 
+      <span class="hljs-attr">"healthy"</span>: <span class="hljs-literal">false</span>, 
+      <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>, 
+      <span class="hljs-attr">"ephemeral"</span>: <span class="hljs-literal">false</span>, 
+      <span class="hljs-attr">"clusterName"</span>: <span class="hljs-string">"DEFAULT"</span>, 
+      <span class="hljs-attr">"serviceName"</span>: <span class="hljs-string">"DEFAULT_GROUP@@nacos.test.1"</span>, 
+      <span class="hljs-attr">"metadata"</span>: { }, 
+      <span class="hljs-attr">"instanceHeartBeatInterval"</span>: <span class="hljs-number">5000</span>, 
+      <span class="hljs-attr">"instanceIdGenerator"</span>: <span class="hljs-string">"simple"</span>, 
+      <span class="hljs-attr">"instanceHeartBeatTimeOut"</span>: <span class="hljs-number">15000</span>, 
+      <span class="hljs-attr">"ipDeleteTimeout"</span>: <span class="hljs-number">30000</span>
+    }
+  ], 
+  <span class="hljs-attr">"lastRefTime"</span>: <span class="hljs-number">1528787794594</span>, 
+  <span class="hljs-attr">"checksum"</span>: <span class="hljs-string">""</span>, 
+  <span class="hljs-attr">"allIPs"</span>: <span class="hljs-literal">false</span>, 
+  <span class="hljs-attr">"reachProtectionThreshold"</span>: <span class="hljs-literal">false</span>, 
+  <span class="hljs-attr">"valid"</span>: <span class="hljs-literal">true</span>
 }
 </code></pre>
 <h2 id="2.5">查询实例详情</h2>
@@ -1492,6 +1503,24 @@ dataId^2group^2tenant^1
 <td style="text-align:left">字符串</td>
 <td style="text-align:left">是</td>
 <td>服务名</td>
+</tr>
+<tr>
+<td style="text-align:left">ip</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">是</td>
+<td>服务实例IP</td>
+</tr>
+<tr>
+<td style="text-align:left">port</td>
+<td style="text-align:left">int</td>
+<td style="text-align:left">是</td>
+<td>服务实例PORT</td>
+</tr>
+<tr>
+<td style="text-align:left">namespaceId</td>
+<td style="text-align:left">字符串</td>
+<td style="text-align:left">否</td>
+<td>命名空间ID</td>
 </tr>
 <tr>
 <td style="text-align:left">groupName</td>
@@ -2894,13 +2923,13 @@ curl -X DELETE 'http://localhost:8848/nacos/v1/ns/instance/metadata/batch' -d 'n
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">namespaceId</td>
+<td style="text-align:left">namespace</td>
 <td style="text-align:left">字符串</td>
 <td style="text-align:left">是</td>
 <td>命名空间ID</td>
 </tr>
 <tr>
-<td style="text-align:left">namespaceName</td>
+<td style="text-align:left">namespaceShowName</td>
 <td style="text-align:left">字符串</td>
 <td style="text-align:left">是</td>
 <td>命名空间名</td>
