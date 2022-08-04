@@ -53,7 +53,7 @@ ls -al distribution/target/
 <p>如果您使用的是ubuntu系统，或者运行脚本报错提示[[符号找不到，可尝试如下运行：</p>
 <p><code>bash startup.sh -m standalone</code></p>
 <p>单机启动，使用内置数据库（注：使用内置Derby数据库需要保证~/nacos/data/derby-data文件夹下无残留数据）：</p>
-<p><code>bash startup.sh -p embedded</code></p>
+<p><code>bash startup.sh -p embedded -m standalone</code></p>
 <p>集群启动（使用内嵌数据库）：</p>
 <p><code>bash startup.sh -p embedded</code></p>
 <p>集群启动（使用外置数据库）：</p>
