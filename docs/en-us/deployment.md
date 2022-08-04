@@ -16,6 +16,11 @@ All network related concepts such as VIP and network interface mentioned in the 
 * Cluster Mode - used in production environment to ensure high-availability.
 * Multi-Cluster Mode - in complicated production mode, you may want to deploy multi-cluster mode to support different business units.
 
+# Environment preparation
+- JDK installed, 1.8 and above are required
+- Recommendation: 2 core CPU / 4G RAM and above
+- Recommendation: Production environment with 3 nodes and above
+
 ## Running Nacos in Standalone Mode
 
 ### Linux/Unix/Mac

@@ -25,20 +25,25 @@ Dubbo 融合 Nacos 成为注册中心的操作步骤非常简单，大致步骤�
 
     ...
 
-    <!-- Dubbo dependency -->
     <dependency>
         <groupId>com.alibaba</groupId>
         <artifactId>dubbo</artifactId>
-        <version>[latest version]</version>
+        <version>3.0.5</version>
     </dependency>
-    
-    <!-- 使用Spring装配方式时可选: -->
+
+    <!-- Dubbo Nacos registry dependency -->
+    <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>dubbo-registry-nacos</artifactId>
+        <version>3.0.5</version>
+    </dependency>
+
+    <!-- Alibaba Spring Context extension -->
     <dependency>
         <groupId>com.alibaba.spring</groupId>
         <artifactId>spring-context-support</artifactId>
-        <version>[latest version]</version>
+        <version>1.0.11</version>
     </dependency>
-
     ...
     
 </dependencies>
@@ -52,22 +57,11 @@ Dubbo 融合 Nacos 成为注册中心的操作步骤非常简单，大致步骤�
 
 Dubbo Spring 外部化配置是由 Dubbo `2.5.8` 引入的新特性，可通过 Spring `Environment` 属性自动地生成并绑定 Dubbo 配置 Bean，实现配置简化，并且降低微服务开发门槛。
 
-假设您 Dubbo 应用的使用 Zookeeper 作为注册中心，并且其服务器 IP 地址为：`10.20.153.10`，同时，该注册地址作为 Dubbo 外部化配置属性存储在 `dubbo-config.properties` 文件，如下所示：
+假设您 Dubbo 应用的使用 Nacos 作为注册中心，并且其服务器 IP 地址为：`10.20.153.10`，同时，该注册地址作为 Dubbo 外部化配置属性存储在 `dubbo-config.properties` 文件，如下所示：
 
 ```properties
 ## application
 dubbo.application.name = your-dubbo-application
-
-## Zookeeper registry address
-dubbo.registry.address = zookeeper://10.20.153.10:2181
-...
-```
-
-假设您的 Nacos Server 同样运行在服务器 `10.20.153.10` 上，并使用默认 Nacos 服务端口 `8848`，您只需将 `dubbo.registry.address` 属性调整如下：
-
-
-```properties
-## 其他属性保持不变
 
 ## Nacos registry address
 dubbo.registry.address = nacos://10.20.153.10:8848
@@ -88,25 +82,7 @@ dubbo.registry.address = nacos://10.20.153.10:8848
 
 ### Spring XML 配置文件
 
-同样，假设您 Dubbo 应用的使用 Zookeeper 作为注册中心，并且其服务器 IP 地址为：`10.20.153.10`，并且装配 Spring Bean 在 XML 文件中，如下所示：
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd        http://dubbo.apache.org/schema/dubbo        http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
- 
-    <!-- 提供方应用信息，用于计算依赖关系 -->
-    <dubbo:application name="dubbo-provider-xml-demo"  />
- 
-    <!-- 使用 Zookeeper 注册中心 -->
-    <dubbo:registry address="zookeeper://10.20.153.10:2181" />
- 	...
-</beans>
-```
-
-与 [Dubbo Spring 外部化配置](https://mercyblitz.github.io/2018/01/18/Dubbo-%E5%A4%96%E9%83%A8%E5%8C%96%E9%85%8D%E7%BD%AE/) 配置类似，只需要调整 `address` 属性配置即可：
+同样，假设您 Dubbo 应用的使用 Nacos 作为注册中心，并且其服务器 IP 地址为：`10.20.153.10`，并且装配 Spring Bean 在 XML 文件中，如下所示：
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -137,37 +113,32 @@ dubbo.registry.address = nacos://10.20.153.10:8848
 以上图片中的元数据源于 Dubbo Spring 注解驱动示例以及 Dubbo Spring XML 配置驱动示例，下面将分别介绍两者，您可以选择自己偏好的编程模型。在正式讨论之前，先来介绍两者的预备工作，因为它们皆依赖 Java 服务接口和实现。同时，**请确保本地（`127.0.0.1`）环境已启动 Nacos 服务**。
 
 ### 示例接口与实现
+完整代码归档位置：
+https://github.com/nacos-group/nacos-examples/tree/master/nacos-dubbo-example
 
 首先定义示例接口，如下所示：
 
 ```java
-package com.alibaba.dubbo.demo.service;
+package com.alibaba.nacos.example.dubbo.service;
 
-/**
- * DemoService
- *
- * @since 2.6.5
- */
 public interface DemoService {
-
     String sayName(String name);
-
 }
 ```
 
 提供以上接口的实现类：
 
 ```java
-package com.alibaba.dubbo.demo.service;
+
+package com.alibaba.nacos.example.dubbo.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.dubbo.rpc.RpcContext;
-
 import org.springframework.beans.factory.annotation.Value;
 
 /**
  * Default {@link DemoService}
- *
+ *  https://nacos.io/zh-cn/docs/use-nacos-with-dubbo.html
  * @since 2.6.5
  */
 @Service(version = "${demo.service.version}")
@@ -215,27 +186,28 @@ dubbo.protocol.port = -1
 # Provider @Service version
 demo.service.version=1.0.0
 demo.service.name = demoService
-```
 
+dubbo.application.qosEnable=false
+
+```
 
 
 - 实现服务提供方引导类 - `DemoServiceProviderBootstrap`
 
 ```java
-package com.alibaba.dubbo.demo.provider;
+package com.alibaba.nacos.example.dubbo.provider;
 
-import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
-import com.alibaba.dubbo.demo.service.DemoService;
-
+import com.alibaba.nacos.example.dubbo.service.DemoService;
+import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.PropertySource;
-
 import java.io.IOException;
 
 /**
  * {@link DemoService} provider demo
+ * https://nacos.io/zh-cn/docs/use-nacos-with-dubbo.html
  */
-@EnableDubbo(scanBasePackages = "com.alibaba.dubbo.demo.service")
+@EnableDubbo(scanBasePackages = "com.alibaba.nacos.example.dubbo.service")
 @PropertySource(value = "classpath:/provider-config.properties")
 public class DemoServiceProviderBootstrap {
 
@@ -255,7 +227,6 @@ public class DemoServiceProviderBootstrap {
  `@PropertySource` 是 Spring Framework 3.1 引入的标准导入属性配置资源注解，它将为 Dubbo 提供外部化配置。
 
 
-
 #### 服务消费方注解驱动实现
 
 - 定义 Dubbo 消费方外部化配置属性源 -  `consumer-config.properties`
@@ -272,6 +243,8 @@ dubbo.registry.address = nacos://127.0.0.1:8848
 
 # @Reference version
 demo.service.version= 1.0.0
+
+dubbo.application.qosEnable=false
 ```
 
 同样地，`dubbo.registry.address` 属性指向 Nacos 注册中心，其他 Dubbo 服务相关的元信息通过 Nacos 注册中心获取。
@@ -281,32 +254,32 @@ demo.service.version= 1.0.0
 - 实现服务消费方引导类 - `DemoServiceConsumerBootstrap`
 
 ```java
-package com.alibaba.dubbo.demo.consumer;
+package com.alibaba.nacos.example.dubbo.consumer;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
-import com.alibaba.dubbo.demo.service.DemoService;
 
+import com.alibaba.nacos.example.dubbo.service.DemoService;
+import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.PropertySource;
-
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 
 /**
  * {@link DemoService} consumer demo
+ * https://nacos.io/zh-cn/docs/use-nacos-with-dubbo.html
  */
 @EnableDubbo
 @PropertySource(value = "classpath:/consumer-config.properties")
 public class DemoServiceConsumerBootstrap {
 
-    @Reference(version = "${demo.service.version}")
+    @DubboReference(version = "${demo.service.version}")
     private DemoService demoService;
 
     @PostConstruct
     public void init() {
         for (int i = 0; i < 10; i++) {
-            System.out.println(demoService.sayName("小马哥（mercyblitz）"));
+            System.out.println(demoService.sayName("Nacos"));
         }
     }
 
@@ -319,8 +292,6 @@ public class DemoServiceConsumerBootstrap {
 }
 
 ```
-
-
 
 同样地，`@EnableDubbo`  注解激活 Dubbo 注解驱动和外部化配置，不过当前属于服务消费者，无需指定 Java 包名扫描标注 `@Service` 的服务实现。
 
@@ -339,16 +310,16 @@ public class DemoServiceConsumerBootstrap {
 再运行 `DemoServiceConsumerBootstrap`，运行结果如下：
 
 ```
-Service [name :demoService , port : 20880] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :demoService , port : 20881] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :demoService , port : 20880] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :demoService , port : 20880] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :demoService , port : 20881] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :demoService , port : 20881] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :demoService , port : 20880] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :demoService , port : 20880] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :demoService , port : 20881] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :demoService , port : 20881] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
 ```
 
 运行无误，并且服务消费方使用了负载均衡策略，将十次 RPC 调用平均分摊到两个 Dubbo 服务提供方实例中。
@@ -384,19 +355,19 @@ Spring XML 配置驱动是传统 Spring 装配组件的编程模型。
     <dubbo:protocol name="dubbo" port="-1"/>
 
     <!-- 声明需要暴露的服务接口 -->
-    <dubbo:service interface="com.alibaba.dubbo.demo.service.DemoService" ref="demoService" version="2.0.0"/>
+    <dubbo:service interface="com.alibaba.nacos.example.dubbo.service.DemoService" ref="demoService" version="2.0.0"/>
 
     <!-- 和本地bean一样实现服务 -->
-    <bean id="demoService" class="com.alibaba.dubbo.demo.service.DefaultService"/>
+    <bean id="demoService" class="com.alibaba.nacos.example.dubbo.service.DefaultService"/>
 </beans>
 ```
-
 
 
 - 实现服务提供方引导类 - `DemoServiceProviderXmlBootstrap`
 
 ```xml
-package com.alibaba.dubbo.demo.provider;
+
+package com.alibaba.nacos.example.dubbo.provider;
 
 import com.alibaba.dubbo.demo.service.DemoService;
 
@@ -440,7 +411,7 @@ public class DemoServiceProviderXmlBootstrap {
     <!-- <dubbo:registry address="nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932" /> -->
 
     <!-- 引用服务接口 -->
-    <dubbo:reference id="demoService" interface="com.alibaba.dubbo.demo.service.DemoService" version="2.0.0"/>
+    <dubbo:reference id="demoService" interface="com.alibaba.nacos.example.dubbo.service.DemoService" version="2.0.0"/>
 
 </beans>
 ```
@@ -448,7 +419,8 @@ public class DemoServiceProviderXmlBootstrap {
 - 实现服务消费方引导类 - `DemoServiceConsumerXmlBootstrap`
 
 ```java
-package com.alibaba.dubbo.demo.consumer;
+
+package com.alibaba.nacos.example.dubbo.consumer;
 
 import com.alibaba.dubbo.demo.service.DemoService;
 
@@ -468,7 +440,7 @@ public class DemoServiceConsumerXmlBootstrap {
         System.out.println("DemoService consumer (XML) is starting...");
         DemoService demoService = context.getBean("demoService", DemoService.class);
         for (int i = 0; i < 10; i++) {
-            System.out.println(demoService.sayName("小马哥（mercyblitz）"));
+            System.out.println(demoService.sayName("Nacos"));
         }
         context.close();
     }
@@ -486,16 +458,16 @@ XML 配置驱动的服务版本为 `2.0.0`，因此注册服务无误。
 再运行服务消费者引导类 `DemoServiceConsumerXmlBootstrap`，观察控制台输出内容：
 
 ```
-Service [name :null , port : 20882] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :null , port : 20882] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :null , port : 20883] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :null , port : 20882] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :null , port : 20882] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :null , port : 20883] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :null , port : 20882] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :null , port : 20883] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :null , port : 20883] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :null , port : 20883] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
 ```
 
 结果同样运行和负载均衡正常，不过由于当前示例尚未添加属性 `demo.service.name` 的缘故，因此，“name”部分信息输出为 `null`。

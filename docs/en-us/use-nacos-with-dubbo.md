@@ -24,26 +24,26 @@ First, you need to `dubbo-registry-nacos`Maven dependent on added to your projec
 <dependencies>
 
     ...
-        
-    <!-- Dubbo Nacos registry dependency -->
-    <dependency>
-        <groupId>com.alibaba</groupId>
-        <artifactId>dubbo-registry-nacos</artifactId>
-        <version>0.0.1</version>
-    </dependency>   
     
     <!-- Dubbo dependency -->
     <dependency>
         <groupId>com.alibaba</groupId>
         <artifactId>dubbo</artifactId>
-        <version>2.6.5</version>
+        <version>3.0.5</version>
     </dependency>
-    
+
+    <!-- Dubbo Nacos registry dependency -->
+    <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>dubbo-registry-nacos</artifactId>
+        <version>3.0.5</version>
+    </dependency>
+
     <!-- Alibaba Spring Context extension -->
     <dependency>
         <groupId>com.alibaba.spring</groupId>
         <artifactId>spring-context-support</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.11</version>
     </dependency>
 
     ...
@@ -61,21 +61,11 @@ Suppose you Dubbo application using the Spring Framework assembly, there will be
 
 Dubbo Spring externalized configuration consists of Dubbo `2.5.8`  introduced new features, through the Spring `Environment` attribute automatically generate and bind the Dubbo configuration Bean, implement configuration to simplify, and lower the threshold of service development.
 
-Suppose you Dubbo applications using Zookeeper as registry, and the server IP address is:`10.20.153.10` at the same time, the registered address as Dubbo externalized configuration properties are stored in `dubbo-config.properties` file, as shown below:
+Suppose you Dubbo applications using Nacos as registry, and the server IP address is:`10.20.153.10` at the same time, the registered address as Dubbo externalized configuration properties are stored in `dubbo-config.properties` file, as shown below:
 
 ```properties
 ## application
 dubbo.application.name = your-dubbo-application
-
-## Zookeeper registry address
-dubbo.registry.address = zookeeper://10.20.153.10:2181
-...
-```
-
-Suppose you Nacos Server running on the Server also `10.20.153.10` , and use the default Nacos service port `8848`, you only need to `dubbo.registry.address` property adjustment is as follows:
-
-```properties
-## 其他属性保持不变
 
 ## Nacos registry address
 dubbo.registry.address = nacos://10.20.153.10:8848
@@ -97,24 +87,7 @@ If you are using a Spring XML configuration file assembly Dubbo registry, please
 
 ### Spring XML configuration files
 
-Similarly, suppose you Dubbo applications using Zookeeper as registry, and the server IP address is:`10.20.153.10`, and assembling Spring Bean in the XML file, as shown below:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd        http://dubbo.apache.org/schema/dubbo        http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
- 
-    <!-- 提供方应用信息，用于计算依赖关系 -->
-    <dubbo:application name="dubbo-provider-xml-demo"  />
- 
-    <!-- 使用 Zookeeper 注册中心 -->
-    <dubbo:registry address="zookeeper://10.20.153.10:2181" />
- 	...
-</beans>
-```
-Like [Dubbo Spring externalized configuration](https://mercyblitz.github.io/2018/01/18/Dubbo-%E5%A4%96%E9%83%A8%E5%8C%96%E9%85%8D%E7%BD%AE/) configuration, only need to adjust the `address` attribute configuration can be:
+Similarly, suppose you Dubbo applications using Nacos as registry, and the server IP address is:`10.20.153.10`, and assembling Spring Bean in the XML file, as shown below:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -149,33 +122,26 @@ Above pictures of metadata from Dubbo Spring annotations driver sample and Dubbo
 First define the sample interface, as shown below:
 
 ```java
-package com.alibaba.dubbo.demo.service;
+package com.alibaba.nacos.example.dubbo.service;
 
-/**
- * DemoService
- *
- * @since 2.6.5
- */
 public interface DemoService {
-
     String sayName(String name);
-
 }
 ```
 
 Provide the above interface implementation class:
 
 ```java
-package com.alibaba.dubbo.demo.service;
+
+package com.alibaba.nacos.example.dubbo.service;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.dubbo.rpc.RpcContext;
-
 import org.springframework.beans.factory.annotation.Value;
 
 /**
  * Default {@link DemoService}
- *
+ *  https://nacos.io/zh-cn/docs/use-nacos-with-dubbo.html
  * @since 2.6.5
  */
 @Service(version = "${demo.service.version}")
@@ -200,6 +166,8 @@ Interface and implementation after ready, the following will be driven by annota
 
 ### Spring annotations driver sample
 
+https://github.com/nacos-group/nacos-examples/tree/master/nacos-dubbo-example
+
 Dubbo `2.5.7` reconstructed the Spring annotations driver programming model.
 
 #### Provider annotation driven implementation
@@ -223,6 +191,9 @@ dubbo.protocol.port = -1
 # Provider @Service version
 demo.service.version=1.0.0
 demo.service.name = demoService
+
+dubbo.application.qosEnable=false
+
 ```
 
 
@@ -230,20 +201,19 @@ demo.service.name = demoService
 - Implement the provider to guide class - `DemoServiceProviderBootstrap`
 
 ```java
-package com.alibaba.dubbo.demo.provider;
+package com.alibaba.nacos.example.dubbo.provider;
 
-import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
-import com.alibaba.dubbo.demo.service.DemoService;
-
+import com.alibaba.nacos.example.dubbo.service.DemoService;
+import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.PropertySource;
-
 import java.io.IOException;
 
 /**
  * {@link DemoService} provider demo
+ * https://nacos.io/zh-cn/docs/use-nacos-with-dubbo.html
  */
-@EnableDubbo(scanBasePackages = "com.alibaba.dubbo.demo.service")
+@EnableDubbo(scanBasePackages = "com.alibaba.nacos.example.dubbo.service")
 @PropertySource(value = "classpath:/provider-config.properties")
 public class DemoServiceProviderBootstrap {
 
@@ -278,6 +248,9 @@ dubbo.registry.address = nacos://127.0.0.1:8848
 
 # @Reference version
 demo.service.version= 1.0.0
+
+dubbo.application.qosEnable=false
+
 ```
 
 Similarly, `dubbo.registry.address` attribute points to Nacos registry, other dubbo service relevant meta information through Nacos registry access.
@@ -285,32 +258,32 @@ Similarly, `dubbo.registry.address` attribute points to Nacos registry, other du
 - Implementation services consumer guide - `DemoServiceConsumerBootstrap`
 
 ```java
-package com.alibaba.dubbo.demo.consumer;
+package com.alibaba.nacos.example.dubbo.consumer;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
-import com.alibaba.dubbo.demo.service.DemoService;
 
+import com.alibaba.nacos.example.dubbo.service.DemoService;
+import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.PropertySource;
-
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 
 /**
  * {@link DemoService} consumer demo
+ * https://nacos.io/zh-cn/docs/use-nacos-with-dubbo.html
  */
 @EnableDubbo
 @PropertySource(value = "classpath:/consumer-config.properties")
 public class DemoServiceConsumerBootstrap {
 
-    @Reference(version = "${demo.service.version}")
+    @DubboReference(version = "${demo.service.version}")
     private DemoService demoService;
 
     @PostConstruct
     public void init() {
         for (int i = 0; i < 10; i++) {
-            System.out.println(demoService.sayName("小马哥（mercyblitz）"));
+            System.out.println(demoService.sayName("Nacos"));
         }
     }
 
@@ -339,16 +312,16 @@ Twice in the local boot `DemoServiceProviderBootstrap`, the registry will appear
 Run again `DemoServiceConsumerBootstrap`, run results as follows:
 
 ```
-Service [name :demoService , port : 20880] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :demoService , port : 20881] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :demoService , port : 20880] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :demoService , port : 20880] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :demoService , port : 20881] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :demoService , port : 20881] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :demoService , port : 20880] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :demoService , port : 20880] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :demoService , port : 20881] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :demoService , port : 20881] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
 ```
 
 Operate, and service consumer using the load balancing strategy, RPC calls ten times the average contribution to two Dubbo provider instance.
@@ -380,17 +353,17 @@ The Spring XML configuration driven programming model is a traditional Spring as
     <dubbo:protocol name="dubbo" port="-1"/>
 
     <!-- 声明需要暴露的服务接口 -->
-    <dubbo:service interface="com.alibaba.dubbo.demo.service.DemoService" ref="demoService" version="2.0.0"/>
+    <dubbo:service interface="com.alibaba.nacos.example.dubbo.service.DemoService" ref="demoService" version="2.0.0"/>
 
     <!-- 和本地bean一样实现服务 -->
-    <bean id="demoService" class="com.alibaba.dubbo.demo.service.DefaultService"/>
+    <bean id="demoService" class="com.alibaba.nacos.example.dubbo.service.DefaultService"/>
 </beans>
 ```
 
 - Implement the provider to guide class - `DemoServiceProviderXmlBootstrap`
 
 ```xml
-package com.alibaba.dubbo.demo.provider;
+package com.alibaba.nacos.example.dubbo.provider;
 
 import com.alibaba.dubbo.demo.service.DemoService;
 
@@ -432,14 +405,14 @@ public class DemoServiceProviderXmlBootstrap {
     <!-- <dubbo:registry address="nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932" /> -->
 
     <!-- 引用服务接口 -->
-    <dubbo:reference id="demoService" interface="com.alibaba.dubbo.demo.service.DemoService" version="2.0.0"/>
+    <dubbo:reference id="demoService" interface="com.alibaba.nacos.example.dubbo.service.DemoService" version="2.0.0"/>
 
 </beans>
 ```
 - Implementation services consumer guide - `DemoServiceConsumerXmlBootstrap`
 
 ```java
-package com.alibaba.dubbo.demo.consumer;
+package com.alibaba.nacos.example.dubbo.consumer;
 
 import com.alibaba.dubbo.demo.service.DemoService;
 
@@ -459,7 +432,7 @@ public class DemoServiceConsumerXmlBootstrap {
         System.out.println("DemoService consumer (XML) is starting...");
         DemoService demoService = context.getBean("demoService", DemoService.class);
         for (int i = 0; i < 10; i++) {
-            System.out.println(demoService.sayName("小马哥（mercyblitz）"));
+            System.out.println(demoService.sayName("Nacos"));
         }
         context.close();
     }
@@ -477,16 +450,16 @@ XML configuration driven service version for `2.0.0`, therefore the registration
 Again run service consumers leading class `DemoServiceConsumerXmlBootstrap`, watch the console output:
 
 ```
-Service [name :null , port : 20882] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :null , port : 20882] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :null , port : 20883] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :null , port : 20882] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :null , port : 20882] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :null , port : 20883] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :null , port : 20882] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :null , port : 20883] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :null , port : 20883] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
-Service [name :null , port : 20883] sayName("小马哥（mercyblitz）") : Hello,小马哥（mercyblitz）
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
+Service [name :demoService , port : 20880] sayName("Nacos") : Hello,Nacos
 ```
 
 Results also runs and load balancing is normal, but because the current sample has yet to add attributes `demo.service.name` of therefore, "name" part of the information output `null`.

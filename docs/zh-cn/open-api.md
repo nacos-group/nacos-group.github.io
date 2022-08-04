@@ -177,8 +177,8 @@ POST
 
 
 ### 参数说明
-* 配置多个字段间分隔符：^2  = Character.toString((char) 2
-* 配置间分隔符：^1 = Character.toString((char) 1)
+* 配置多个字段间分隔符：^2 = Character.toString((char) 2，`urlencode` 后值为 `%02`
+* 配置间分隔符：^1 = Character.toString((char) 1)，`urlencode` 后值为 `%01`
 * contentMD5:  MD5(content)，第一次本地缓存为空，所以这块为空串
 
 ### 返回参数
@@ -207,7 +207,7 @@ http://serverIp:8848/nacos/v1/cs/configs/listener
 
 POST 请求体数据内容：
 
-Listening-Configs=dataId^2group^2contentMD5^2tenant^1
+Listening-Configs=dataId%02group%02contentMD5%02tenant%01
 ```
 
 * 返回示例
@@ -215,7 +215,7 @@ Listening-Configs=dataId^2group^2contentMD5^2tenant^1
 ```
 如果配置变化
 
-dataId^2group^2tenant^1
+dataId%02group%02tenant%01
 
 如果配置无变化：会返回空串
 ```
@@ -692,22 +692,33 @@ curl -X GET '127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.test.1'
 ### 示例返回
 ```json
 {
-	"dom": "nacos.test.1",
-	"cacheMillis": 1000,
-	"useSpecifiedURL": false,
-	"hosts": [{
-		"valid": true,
-		"marked": false,
-		"instanceId": "10.10.10.10-8888-DEFAULT-nacos.test.1",
-		"port": 8888,
-		"ip": "10.10.10.10",
-		"weight": 1.0,
-		"metadata": {}
-	}],
-	"checksum": "3bbcf6dd1175203a8afdade0e77a27cd1528787794594",
-	"lastRefTime": 1528787794594,
-	"env": "",
-	"clusters": ""
+  "name": "DEFAULT_GROUP@@nacos.test.1", 
+  "groupName": "DEFAULT_GROUP", 
+  "clusters": "", 
+  "cacheMillis": 10000, 
+  "hosts": [
+    {
+      "instanceId": "10.10.10.10#8888#DEFAULT#DEFAULT_GROUP@@nacos.test.1", 
+      "ip": "10.10.10.10", 
+      "port": 8888, 
+      "weight": 1, 
+      "healthy": false, 
+      "enabled": true, 
+      "ephemeral": false, 
+      "clusterName": "DEFAULT", 
+      "serviceName": "DEFAULT_GROUP@@nacos.test.1", 
+      "metadata": { }, 
+      "instanceHeartBeatInterval": 5000, 
+      "instanceIdGenerator": "simple", 
+      "instanceHeartBeatTimeOut": 15000, 
+      "ipDeleteTimeout": 30000
+    }
+  ], 
+  "lastRefTime": 1528787794594, 
+  "checksum": "", 
+  "allIPs": false, 
+  "reachProtectionThreshold": false, 
+  "valid": true
 }
 ```
 <h2 id="2.5">查询实例详情</h2>
@@ -782,6 +793,9 @@ PUT
 | 名称 | 类型 | 是否必选 | 描述 |
 | :--- | :--- | :--- | --- |
 | serviceName | 字符串 | 是 | 服务名 |
+| ip | 字符串 | 是 | 服务实例IP |
+| port | int | 是 | 服务实例PORT |
+| namespaceId | 字符串 | 否 | 命名空间ID |
 | groupName | 字符串 | 否 | 分组名 |
 | ephemeral | boolean | 否 | 是否临时实例 |
 | beat | JSON格式字符串 | 是 | 实例心跳内容 |
@@ -1538,8 +1552,8 @@ PUT
 
 | 名称 | 类型 | 是否必选 | 描述 |
 | :--- | :--- | :--- | --- |
-| namespaceId | 字符串 | 是 | 命名空间ID |
-| namespaceName | 字符串 | 是 | 命名空间名 |
+| namespace | 字符串 | 是 | 命名空间ID |
+| namespaceShowName | 字符串 | 是 | 命名空间名 |
 | namespaceDesc | 字符串 | 是 | 命名空间描述 |
 
 ### 错误编码
