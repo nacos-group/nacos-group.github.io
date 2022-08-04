@@ -173,18 +173,6 @@ export default {
           key: 'appas',
           text: 'PaaS解决方案',
           link: 'https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0'
-        }, {
-          key: 'gts',
-          text: '分布式事务解决方案',
-          link: 'https://www.aliyun.com/aliware/txc?spm=nacos-website.topbar.0.0.0'
-        }, {
-          key: 'msha',
-          text: '高可用解决方案',
-          link: 'https://www.aliyun.com/product/ahas?spm=nacos-website.topbar.0.0.0'
-        }, {
-          key: 'mesh',
-          text: '服务网格解决方案',
-          link: 'https://www.aliyun.com/product/servicemesh?spm=nacos-website.topbar.0.0.0',
         }
         ]
       },
@@ -196,43 +184,9 @@ export default {
       },
        {
          key: 'E-BOOK',
-         text: '电子书',
-         link: '',
-         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png',
-         children: [
-           {
-             key: 'E-BOOK-NACOS',
-             text: 'NACOS架构与原理',
-             link: 'https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST',
-             imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-           },
-           {
-             key: 'E-BOOK—Governance',
-             text: '微服务治理',
-             link: 'https://developer.aliyun.com/ebook/7565',
-             imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-           }
-         ]
-       },
-      {
-              key: 'activity',
-              text: '活动',
-              link: '',
-              imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png',
-              children: [
-                {
-                  key: 'ISCAS2022',
-                  text: '中科院开源之夏2022',
-                  link: 'https://nacos.io/zh-cn/blog/iscas2022.html',
-                  imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-                },
-                {
-                  key: 'ASoC2022',
-                  text: '阿里巴巴编程之夏2022',
-                  link: 'https://github.com/alibaba/nacos/issues/8456',
-                  imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-                }
-              ]
+         text: 'NACOS架构与原理',
+         link: 'https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST',
+         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
        },
       {
         key: 'blog',

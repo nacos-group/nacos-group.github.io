@@ -209,7 +209,7 @@ export default {
                               href="https://github.com/alibaba/nacos/issues/273">谁在使用Nacos</a> 上提供信息来帮助Nacos做的更好。</span>,
             list: [
                 'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563438-a13d7097-fcfd-400f-b066-82564ff31647.jpeg',
-                'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561540563510-a937249b-4e1d-4b40-97d8-06eb02dad25d.jpeg',
+                '/img/weilai_logo.jpg',
                 'https://img.alicdn.com/tfs/TB1aB62OBr0gK0jSZFnXXbRRXXa-280-160.jpg',
                 'https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1562465794060-b0a5d9eb-bb52-47cd-a3fd-1b30d805e859.jpeg',
                 'https://user-images.githubusercontent.com/975639/103077254-6dc24e80-460a-11eb-9ff4-81e42dff60c9.png',
