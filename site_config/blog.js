@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: '小米Nacos2.0扩缩容最佳实践',
+            author: '@胡俊 小米武汉研发部资深开发',
+            dateStr: 'August 5, 2022',
+            desc: '小米集团的Nacos集群升级到了2.0.3版本之后，一直在开启双写的情况下运行稳定，动态的服务发现与分布式配置中心的能力也满足我们的预期，但随着使用我们集群的体量越来越大，需要对集群进行扩容，但在实际操作过程中遇到了一些问题，这篇文章主要总结一下集群扩缩容中遇到问题的解决过程和集群扩缩容步骤。',
+            link: '/zh-cn/blog/xiaomi-scale.html',
+        },
+        {
             title: 'Nacos开源之夏2022，贡献社区赢取12000奖金',
             author: '@Nacos开源之夏',
             dateStr: 'May 16, 2022',
@@ -279,6 +286,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: '小米Nacos2.0扩缩容最佳实践',
+            author: '@胡俊 小米-集团信息技术部-云平台部-武汉研发部-云业务组',
+            dateStr: 'August 5, 2022',
+            desc: '小米的Nacos集群升级到了2.0.3版本之后，一直在开启双写的情况下运行稳定，动态的服务发现与分布式配置中心的能力也满足我们的预期，但随着使用我们集群的体量越来越大，需要对集群进行扩容，但在实际操作过程中遇到了一些问题，这篇文章主要总结一下集群扩缩容中遇到问题的解决过程和集群扩缩容步骤。',
+            link: '/zh-cn/blog/xiaomi-scale.html',
+        },
         {
             title: 'Nacos开源之夏2022，贡献社区赢取12000奖金',
             author: '@杨翊',
