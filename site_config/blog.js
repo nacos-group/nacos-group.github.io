@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+          title: '我们总结了3大使用建议，并首次公开 Nacos3.0 规划图 | Nacos 开源4周年',
+          author: '@邢学超',
+          dateStr: 'August 10, 2022',
+          desc: 'Nacos 已经经历了两个重要阶段，初创期和高速发展期，目前正处于被大规模使用的 Nacos 的第三阶段是成为基础设施，需要面向于基础设施进行演进，帮助企业数字化转型，深度的拥抱各个领域内的场景，并且更深度的帮助企业解决问题。Nacos 社区目前面向于第三阶段，开始筹备 Nacos 3.0 架构设计进行规划讨论，并且逐步开始进行落地。',
+          link: '/zh-cn/blog/nacos3.0-is-coming.html',
+        },
+        {
             title: '小米Nacos2.0扩缩容最佳实践',
             author: '@胡俊 小米武汉研发部资深开发',
             dateStr: 'August 5, 2022',
@@ -286,6 +293,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+          title: '我们总结了3大使用建议，并首次公开 Nacos3.0 规划图 | Nacos 开源4周年',
+          author: '@邢学超',
+          dateStr: 'August 10, 2022',
+          desc: 'Nacos 已经经历了两个重要阶段，初创期和高速发展期，目前正处于被大规模使用的 Nacos 的第三阶段是成为基础设施，需要面向于基础设施进行演进，帮助企业数字化转型，深度的拥抱各个领域内的场景，并且更深度的帮助企业解决问题。Nacos 社区目前面向于第三阶段，开始筹备 Nacos 3.0 架构设计进行规划讨论，并且逐步开始进行落地。',
+          link: '/zh-cn/blog/nacos3.0-is-coming.html',
+        },
         {
             title: '小米Nacos2.0扩缩容最佳实践',
             author: '@胡俊 小米武汉研发部资深研发',
