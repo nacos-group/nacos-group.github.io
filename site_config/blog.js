@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: '2.1.1 and 1.4.4 released for Nacos 4th Anniversary!',
+            author: '@杨翊',
+            dateStr: 'August 10, 2022',
+            desc: 'To celebrate the 4th anniversary of Nacos open source, community releases two new versions 2.1.1 and 1.4.4 at the same time, to give back to the trust of our friends!',
+            link: '/zh-cn/blog/2.1.1-release.html',
+        },
+        {
           title: '我们总结了3大使用建议，并首次公开 Nacos3.0 规划图 | Nacos 开源4周年',
           author: '@邢学超',
           dateStr: 'August 10, 2022',
@@ -293,6 +300,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: 'Nacos 四周年，2.1.1 及 1.4.4 版本同时发布',
+            author: '@杨翊',
+            dateStr: 'August 10, 2022',
+            desc: '为了庆祝 Nacos 开源四周年，我们同时推出 2.1.1 和 1.4.4 两个新版本，回馈小伙伴们的信任！',
+            link: '/zh-cn/blog/2.1.1-release.html',
+        },
         {
           title: '我们总结了3大使用建议，并首次公开 Nacos3.0 规划图 | Nacos 开源4周年',
           author: '@邢学超',
