@@ -306,6 +306,15 @@
       "meta": {}
     },
     {
+      "filename": "nacos3.0-is-coming.md",
+      "link": "/en-us/blog/nacos3.0-is-coming.html",
+      "meta": {
+        "title": "我们总结了3大使用建议，并首次公开 Nacos3.0 规划图 | Nacos 开源4周年",
+        "keywords": "nacos3.0,nacos最佳实践",
+        "description": "我们总结了3大使用建议，并首次公开 Nacos3.0 规划图 | Nacos 开源4周年"
+      }
+    },
+    {
       "filename": "namespace-endpoint-best-practices.md",
       "link": "/en-us/blog/namespace-endpoint-best-practices.html",
       "meta": {
@@ -373,6 +382,15 @@
         "title": "Nacos 2.1.0版本发布，支持鉴权及加解密插件",
         "keywords": "2.1.0",
         "description": "Nacos 2.1.0版本发布，支持鉴权及加解密插件"
+      }
+    },
+    {
+      "filename": "2.1.1-release.md",
+      "link": "/zh-cn/blog/2.1.1-release.html",
+      "meta": {
+        "title": "Nacos 四周年，2.1.1 及 1.4.4 版本同时发布",
+        "keywords": "2.1.1, 1.4.4",
+        "description": "为了庆祝 Nacos 开源四周年，我们同时推出 2.1.1 和 1.4.4 两个新版本，回馈小伙伴们的信任！"
       }
     },
     {
@@ -680,6 +698,15 @@
       "filename": "nacos1.0.0.md",
       "link": "/zh-cn/blog/nacos1.0.0.html",
       "meta": {}
+    },
+    {
+      "filename": "nacos3.0-is-coming.md",
+      "link": "/zh-cn/blog/nacos3.0-is-coming.html",
+      "meta": {
+        "title": "我们总结了3大使用建议，并首次公开 Nacos3.0 规划图 | Nacos 开源4周年",
+        "keywords": "nacos3.0,nacos最佳实践",
+        "description": "我们总结了3大使用建议，并首次公开 Nacos3.0 规划图 | Nacos 开源4周年"
+      }
     },
     {
       "filename": "namespace-endpoint-best-practices.md",
