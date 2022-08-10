@@ -10,7 +10,7 @@ description: What is Nacos
 
 Welcome to Nacos!
 
-Nacos /nɑ:kəʊs/ is the acronym for 'Dynamic Naming and Configuration Service'，an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native applications。
+Nacos /nɑ:kəʊs/  is the acronym for 'Dynamic Naming and Configuration Service'，an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native applications。
 
 Nacos is committed to help you discover, configure, and manage your microservices. It provides a set of simple and useful features enabling you to realize dynamic service discovery, service configuration, service metadata and traffic management. 
 
