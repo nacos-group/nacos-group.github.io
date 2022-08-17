@@ -79,7 +79,7 @@ cd nacos/distribution/target/nacos-server-1.3.0/nacos/bin
 
 #### 初始化 MySQL 数据库
 
-[sql语句源文件](https://github.com/alibaba/nacos/blob/master/distribution/conf/nacos-mysql.sql)
+[sql语句源文件](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)
 
 #### application.properties 配置
 

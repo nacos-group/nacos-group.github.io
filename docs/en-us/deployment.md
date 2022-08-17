@@ -37,7 +37,7 @@ cmd startup.cmd -m standalone
 
 #### Initialize MySQL database
 
-[sql statement source file](https://github.com/alibaba/nacos/blob/master/distribution/conf/nacos-mysql.sql)
+[sql statement source file](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)
 
 #### application.properties configuration
 
