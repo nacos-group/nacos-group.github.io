@@ -38,7 +38,7 @@ cmd startup.cmd -m standalone
 在0.7版本之前，在单机模式时nacos使用嵌入式数据库实现数据的存储，不方便观察数据存储的基本情况。0.7版本增加了支持mysql数据源能力，具体的操作步骤：
 
 - 1.安装数据库，版本要求：5.6.5+
-- 2.初始化mysql数据库，数据库初始化文件：nacos-mysql.sql
+- 2.初始化mysql数据库，数据库初始化文件：mysql-schema.sql
 - 3.修改conf/application.properties文件，增加支持mysql数据源配置（目前只支持mysql），添加mysql数据源的url、用户名和密码。
 
 ```
