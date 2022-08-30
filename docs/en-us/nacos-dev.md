@@ -81,8 +81,11 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [li-xiao-shuang](https://github.com/li-xiao-shuang) | XiaoShuang Li | DiDi | Committer | 644968328@qq.com |
 | [MajorHe1](https://github.com/MajorHe1)         | Fan He       | WeBank       | Committer | 601023364@qq.com | 
 | [hujun-w-2](https://github.com/hujun-w-2)       | Jun Hu       | Xiaomi       | Committer | 510830970@qq.com |
+| [onewe](https://github.com/onewe)               | Wenchao Mao | Independent developer| Committer | 2583021406@qq.com |
+| [chenhao26-nineteen](https://github.com/chenhao26-nineteen)|Hao Chen| Xiaomi | Committer | hashmap2018@163.com |
+
 ### Contributors
 
 | Github ID                                 | Name               | Organization                 | Roles       | Mail                      |
 |-------------------------------------------|--------------------|------------------------------|-------------|---------------------------|
-| [wfnuser](https://github.com/wfnuser)     | Qinghao Huang      | Alibaba                      | Contributor | wfnuser@hotmail.com       |
+| [wfnuser](https://github.com/wfnuser)     | Qinghao Huang      | ByteDance                    | Contributor | wfnuser@hotmail.com       |

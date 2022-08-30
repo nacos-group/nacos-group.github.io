@@ -80,9 +80,11 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 | [li-xiao-shuang](https://github.com/li-xiao-shuang) | 李晓双 | 滴滴出行 | Committer | 644968328@qq.com |
 | [MajorHe1](https://github.com/MajorHe1)         | 贺繁   | 微众银行 | Committer | 601023364@qq.com | 
 | [hujun-w-2](https://github.com/hujun-w-2)       | 胡俊   | 小米科技 | Committer | 510830970@qq.com |
+| [onewe](https://github.com/onewe)               | 毛文超 | 自由开发者| Committer | 2583021406@qq.com |
+| [chenhao26-nineteen](https://github.com/chenhao26-nineteen)|陈浩| 小米科技 | Committer | hashmap2018@163.com |
 
 ### 活跃贡献者
 
 | Github 账号                                      | 名字       | 组织             |角色        |邮箱                                 |
 | ------------------------------------------------|------------| ----------------| -----------|------------------------------------|
-| [wfnuser](https://github.com/wfnuser)           | 黄清昊      | 阿里巴巴          | Contributor| wfnuser@hotmail.com               |
+| [wfnuser](https://github.com/wfnuser)           | 黄清昊      | 字节跳动          | Contributor| wfnuser@hotmail.com               |
