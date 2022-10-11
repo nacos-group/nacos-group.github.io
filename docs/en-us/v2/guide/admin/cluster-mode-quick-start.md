@@ -6,6 +6,8 @@ description: Cluster deployment instructions
 
 # Cluster deployment instructions
 
+> Document optimizing...
+
 ## Cluster Mode Deployment
 
 This Quick Start Manual is to help you quickly download, install and use Nacos on your computer to deploy the cluster mode for production use.
@@ -48,14 +50,12 @@ cd nacos/distribution/target/nacos-server-1.3.0/nacos/bin
 
 Download address
 
-[zip package](https://github.com/alibaba/nacos/releases/download/1.3.0/nacos-server-1.3.0.zip)
-
-[tar.gz package](https://github.com/alibaba/nacos/releases/download/1.3.0/nacos-server-1.3.0.tar.gz)
+Select the latest stable version from [releases](https://github.com/alibaba/nacos/releases) and download `nacos-server-$version.zip` or `nacos-server-$version.tar.gz`
 
 ```bash
-  unzip nacos-server-1.3.0.zip or tar -xvf nacos-server-1.3.0.tar.gz
+  unzip nacos-server-$version.zip  OR tar -xvf nacos-server-$version.tar.gz
   cd nacos/bin
-```
+```  
 
 ## 3. Configuration Cluster Profile
 

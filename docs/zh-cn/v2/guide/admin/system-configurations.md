@@ -6,6 +6,8 @@ description: Nacos系统参数介绍
 
 # Nacos 系统参数介绍
 
+> 文档优化中......
+
 ## Nacos Server
 
 对于Server端来说，一般是设置在`{nacos.home}/conf/application.properties`里，如果参数名后标注了(-D)的，则表示是 JVM 的参数，需要在`{nacos.home}/bin/startup.sh`里进行相应的设置。例如像设置 nacos.home 的值，可以在`{nacos.home}/bin/startup.sh`进行如下设置：
@@ -34,7 +36,7 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |nacos.naming.distro.batchSyncKeyCount| 同步任务每批的key的数目 | 正整数 | 1000 | >= 1.0.2 |
 |nacos.naming.distro.syncRetryDelay| 同步任务失败的重试间隔，单位为毫秒 | 正整数 | 5000 | >= 1.0.2 |
 
-除了上面列到的在`application.properties`里配置的属性，还有一些可以在运行时调用接口来进行调节，这些参数都在[Open API](https://nacos.io/zh-cn/docs/open-api.html)里的```查看系统当前数据指标```这个API里有声明。
+除了上面列到的在`application.properties`里配置的属性，还有一些可以在运行时调用接口来进行调节，这些参数都在[Open API](../user/open-api.md)里的```查看系统当前数据指标```这个API里有声明。
 
 ### Config模块
 
@@ -64,6 +66,8 @@ Nacos从1.3版本开始使用HikariCP连接池，但在1.4.1版本前，连接�
 |nacos.cmdb.labelTaskInterval| 标签集合的拉取间隔，单位为秒 | 正整数 | 300 | >= 0.7.0 |
 
 ## Nacos Java Client
+
+> TODO: 单独一篇文档，放在用户指南中
 
 客户端的参数分为两种，一种是通过-D参数进行指定的配置，一种是构造客户端时，通过`Properties`对象指定的配置，以下没有带-D标注的都是通过`Properties`注入的配置。
 

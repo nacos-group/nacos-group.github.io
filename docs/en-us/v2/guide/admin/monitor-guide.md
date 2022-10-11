@@ -6,12 +6,14 @@ description: Nacos monitor guide
 
 # Nacos monitor guide
 
+> Document optimizing...
+
 Nacos 0.8.0 improves the monitoring system, supporting Nacos operation status monitoring through exposing metrics data access to third-party monitoring system. Currently, prometheus, elastic search and influxdb are supported. The docs introduce how prometheus and grafana monitor Nacos.
-Here is Nacos [grafana monitoring page](http://monitor.nacos.io). You can find out for yourself how to use elastic search and influxdb.
+You can find out for yourself how to use elastic search and influxdb.
 
 ## Deploy Nacos cluster to expose metrics data
 
-Deploy the Nacos cluster according to [the deploy document](https://nacos.io/en-us/docs/deployment.html)
+Deploy the Nacos cluster according to [the deploy document](./deployment.md)
 
 Configure the application. properties file to expose metrics data
 ```
@@ -199,7 +201,7 @@ nacos_client_request_seconds_sum|request time
 ## Nacos-Sync monitor
 
 With the release of Nacos 0.9, Nacos-Sync 0.3 supports metrics monitoring. It can observe the running status of Nacos-Sync service through metrics data, and improve the monitoring capability of Nacos-Sync in production environment.
-Reference for the Construction of the Overall Monitoring System [Nacos Monitoring Manual](https://nacos.io/en-us/docs/monitor-guide.html)
+Reference for the Construction of the Overall Monitoring System [Nacos Monitoring Manual](./monitor-guide.md)
 
 ## grafana monitor Nacos-Sync
 The same as Nacos monitoring, Nacos-Sync also provides monitoring templates to import monitoring [Nacos-Sync templates](https://github.com/nacos-group/nacos-template/blob/master/nacos-sync-grafana)

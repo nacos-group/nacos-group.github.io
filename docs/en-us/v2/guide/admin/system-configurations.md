@@ -6,6 +6,8 @@ description: Nacos system parameters introduce
 
 # Nacos system parameters introduce
 
+> Document optimizing...
+
 ## Nacos Server
 
 For Server side, usually set in `{nacos.home}/conf/application.properties`, if the parameter name after mark (-D), says is the JVM parameter, need in `{nacos.home}/bin/startup.sh` accordingly set up. Such as setting nacos. The value of the home, can be in `{nacos.home}/bin/startup.sh` the following Settings:
@@ -35,7 +37,7 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |nacos.naming.distro.batchSyncKeyCount| The number of each batch of key synchronization task | positive integer | 1000 | >= 1.0.2 |
 |nacos.naming.distro.syncRetryDelay| Synchronization task failure retry intervals, milliseconds | positive integer | 5000 | >= 1.0.2 |
 
-In addition to the above listed to in `application.properties`configuration properties, And some can be adjusted call interface at runtime, These parameters are in the [Open API](https://nacos.io/en-us/docs/open-api.html)```examine system current data index```the API in a statement.
+In addition to the above listed to in `application.properties`configuration properties, And some can be adjusted call interface at runtime, These parameters are in the [Open API](../user/open-api.md)```examine system current data index```the API in a statement.
 
 ### Config module
 
@@ -65,6 +67,8 @@ It should be noted that `url`, `user`, `password` will be rewrite by `db.url.n`,
 |nacos.cmdb.labelTaskInterval| Label the pull interval set, the unit is in seconds | positive integer | 300 | >= 0.7.0 |
 
 ## Nacos Java Client
+
+> TODO: Move to dependent document in user guide
 
 Client parameters are divided into two kinds, one kind is through the -D parameter to specify the configuration of the client is a kind of structure, through `Properties` objects specified in the configuration, the following without -D marked by `Properties` injection configuration.
 

@@ -4,6 +4,8 @@ keywords: Nacos,部署模式
 description: Nacos支持三种部署模式
 ---
 
+> 文档优化中......
+
 # Nacos部署环境
 
 Nacos定义为一个IDC内部应用组件，并非面向公网环境的产品，建议在内部隔离网络环境中部署，强烈不建议部署在公共网络环境。
@@ -54,7 +56,7 @@ db.password=youdontknow
 
 ## 集群模式下运行Nacos
 
-[集群模式下运行Nacos](https://nacos.io/zh-cn/docs/cluster-mode-quick-start.html)
+[集群模式下运行Nacos](./cluster-mode-quick-start.md)
 
 ## 多集群模式
 

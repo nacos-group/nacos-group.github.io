@@ -4,6 +4,8 @@ keywords: Nacos,deployment modes
 description: Nacos supports three types of deployment modes
 ---
 
+> Document optimizing...
+
 # Nacos deployment environment
 
 Nacos is defined as an IDC internal application component, not a product for the public network environment. It is not recommended expose it to the public network environment directly.
@@ -56,7 +58,7 @@ db.password=youdontknow
 
 ## Running Nacos in Multi-Node Cluster Mode
 
-[Nacos in Multi-Node Cluster Mode](https://nacos.io/en-us/docs/cluster-mode-quick-start.html)
+[Nacos in Multi-Node Cluster Mode](./cluster-mode-quick-start.md)
 
 
 ## Deploy Nacos in Multi-Cluster Mode
