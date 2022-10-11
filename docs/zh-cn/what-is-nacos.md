@@ -54,7 +54,7 @@ Nacos 的关键特性包括:
 
     Nacos 能让您从微服务平台建设的视角管理数据中心的所有服务及元数据，包括管理服务的描述、生命周期、服务的静态依赖分析、服务的健康状态、服务的流量管理、路由及安全策略、服务的 SLA 以及最首要的 metrics 统计数据。
 
-* [更多的特性列表 ...](./roadmap.md)
+* [更多的特性列表 ...](docs/zh-cn/archive/roadmap.md)
 
 ## Nacos 地图
 一图看懂 Nacos，下面架构部分会详细介绍。
@@ -80,15 +80,15 @@ Nacos 的关键特性包括:
 
 关于如何在这些生态中使用 Nacos，请参考以下文档：
 
-[Nacos与Spring Cloud一起使用](./use-nacos-with-springcloud.md)
+[Nacos与Spring Cloud一起使用](docs/zh-cn/archive/use-nacos-with-springcloud.md)
 
 [Nacos与Kubernetes一起使用](./use-nacos-with-kubernetes.md)
 
 [Nacos与Dubbo一起使用](./use-nacos-with-dubbo.md)
 
-[Nacos与gRPC一起使用](./roadmap.md)
+[Nacos与gRPC一起使用](docs/zh-cn/archive/roadmap.md)
 
-[Nacos与Istio一起使用](./use-nacos-with-istio.md)
+[Nacos与Istio一起使用](docs/zh-cn/archive/use-nacos-with-istio.md)
 
 
 ## 下一步

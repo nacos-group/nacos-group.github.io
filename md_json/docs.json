@@ -19,8 +19,17 @@
       }
     },
     {
+      "filename": "architecture.md",
+      "link": "/en-us/docs/architecture.html",
+      "meta": {
+        "title": "Nacos architecture",
+        "keywords": "Nacos,architecture",
+        "description": "Nacos architecture"
+      }
+    },
+    {
       "filename": "activity.md",
-      "link": "/en-us/docs/activity.html",
+      "link": "/en-us/docs/archive/activity.html",
       "meta": {
         "title": "Nacos activity",
         "keywords": "Nacos,activity",
@@ -28,12 +37,53 @@
       }
     },
     {
-      "filename": "architecture.md",
-      "link": "/en-us/docs/architecture.html",
+      "filename": "cli-guide.md",
+      "link": "/en-us/docs/archive/cli-guide.html",
       "meta": {
-        "title": "Nacos architecture",
-        "keywords": "Nacos,architecture",
-        "description": "Nacos architecture"
+        "title": "CLI Guide",
+        "keywords": "CLI,Guide",
+        "description": "In plan with Nacos 1.x.x"
+      }
+    },
+    {
+      "filename": "contributing-dev.md",
+      "link": "/en-us/docs/archive/contributing-dev.html",
+      "meta": {
+        "title": "Contributing to Nacos",
+        "keywords": "Nacos,contribute",
+        "description": "Welcome to Nacos! This document is a guideline about how to contribute to Nacos."
+      }
+    },
+    {
+      "filename": "roadmap.md",
+      "link": "/en-us/docs/archive/roadmap.html",
+      "meta": {
+        "title": "Nacos roadmap",
+        "keywords": "Nacos,roadmap",
+        "description": "Nacos roadmap"
+      }
+    },
+    {
+      "filename": "sdk-properties.md",
+      "link": "/en-us/docs/archive/sdk-properties.html",
+      "meta": {}
+    },
+    {
+      "filename": "use-nacos-with-istio.md",
+      "link": "/en-us/docs/archive/use-nacos-with-istio.html",
+      "meta": {
+        "title": "Nacos Istio",
+        "keywords": "Nacos,Istio",
+        "description": "In plan with Nacos 1.x.x"
+      }
+    },
+    {
+      "filename": "use-nacos-with-springcloud.md",
+      "link": "/en-us/docs/archive/use-nacos-with-springcloud.html",
+      "meta": {
+        "title": "Nacos Spring Cloud",
+        "keywords": "nacos,Spring Cloud",
+        "description": "Nacos Spring Cloud"
       }
     },
     {
@@ -52,15 +102,6 @@
         "title": "Authentication",
         "keywords": "Authentication",
         "description": "Authentication"
-      }
-    },
-    {
-      "filename": "cli-guide.md",
-      "link": "/en-us/docs/cli-guide.html",
-      "meta": {
-        "title": "CLI Guide",
-        "keywords": "CLI,Guide",
-        "description": "In plan with Nacos 1.x.x"
       }
     },
     {
@@ -106,15 +147,6 @@
         "title": "Console Guide",
         "keywords": "console,guide",
         "description": "Nacos console aims to enhance the console for service list, health management, service management, a distributed configuration management control ability."
-      }
-    },
-    {
-      "filename": "contributing-dev.md",
-      "link": "/en-us/docs/contributing-dev.html",
-      "meta": {
-        "title": "Contributing to Nacos",
-        "keywords": "Nacos,contribute",
-        "description": "Welcome to Nacos! This document is a guideline about how to contribute to Nacos."
       }
     },
     {
@@ -330,20 +362,6 @@
       }
     },
     {
-      "filename": "roadmap.md",
-      "link": "/en-us/docs/roadmap.html",
-      "meta": {
-        "title": "Nacos roadmap",
-        "keywords": "Nacos,roadmap",
-        "description": "Nacos roadmap"
-      }
-    },
-    {
-      "filename": "sdk-properties.md",
-      "link": "/en-us/docs/sdk-properties.html",
-      "meta": {}
-    },
-    {
       "filename": "sdk.md",
       "link": "/en-us/docs/sdk.html",
       "meta": {
@@ -371,30 +389,12 @@
       }
     },
     {
-      "filename": "use-nacos-with-istio.md",
-      "link": "/en-us/docs/use-nacos-with-istio.html",
-      "meta": {
-        "title": "Nacos Istio",
-        "keywords": "Nacos,Istio",
-        "description": "In plan with Nacos 1.x.x"
-      }
-    },
-    {
       "filename": "use-nacos-with-kubernetes.md",
       "link": "/en-us/docs/use-nacos-with-kubernetes.html",
       "meta": {
         "title": "Kubernetes Nacos",
         "keywords": "nacos,kubernetes",
         "description": "This project contains a Nacos Docker image meant to facilitate the deployment of Nacos on Kubernetes via StatefulSets."
-      }
-    },
-    {
-      "filename": "use-nacos-with-springcloud.md",
-      "link": "/en-us/docs/use-nacos-with-springcloud.html",
-      "meta": {
-        "title": "Nacos Spring Cloud",
-        "keywords": "nacos,Spring Cloud",
-        "description": "Nacos Spring Cloud"
       }
     },
     {
@@ -733,8 +733,17 @@
       }
     },
     {
+      "filename": "architecture.md",
+      "link": "/zh-cn/docs/architecture.html",
+      "meta": {
+        "title": "Nacos 架构",
+        "keywords": "Nacos,架构",
+        "description": "Nacos 架构"
+      }
+    },
+    {
       "filename": "activity.md",
-      "link": "/zh-cn/docs/activity.html",
+      "link": "/zh-cn/docs/archive/activity.html",
       "meta": {
         "title": "Nacos 有奖活动介绍",
         "keywords": "Nacos,活动",
@@ -742,12 +751,53 @@
       }
     },
     {
-      "filename": "architecture.md",
-      "link": "/zh-cn/docs/architecture.html",
+      "filename": "cli-guide.md",
+      "link": "/zh-cn/docs/archive/cli-guide.html",
       "meta": {
-        "title": "Nacos 架构",
-        "keywords": "Nacos,架构",
-        "description": "Nacos 架构"
+        "title": "CLI Guide",
+        "keywords": "CLI,Guide",
+        "description": "In plan with Nacos 1.x.x"
+      }
+    },
+    {
+      "filename": "contributing-dev.md",
+      "link": "/zh-cn/docs/archive/contributing-dev.html",
+      "meta": {
+        "title": "为 Nacos 做贡献",
+        "keywords": "Nacos,贡献",
+        "description": "欢迎来到Nacos！本文档是关于如何为Nacos做出贡献的指南。"
+      }
+    },
+    {
+      "filename": "roadmap.md",
+      "link": "/zh-cn/docs/archive/roadmap.html",
+      "meta": {
+        "title": "Nacos 规划",
+        "keywords": "Nacos,规划",
+        "description": "Nacos 规划"
+      }
+    },
+    {
+      "filename": "sdk-properties.md",
+      "link": "/zh-cn/docs/archive/sdk-properties.html",
+      "meta": {}
+    },
+    {
+      "filename": "use-nacos-with-istio.md",
+      "link": "/zh-cn/docs/archive/use-nacos-with-istio.html",
+      "meta": {
+        "title": "Nacos Istio",
+        "keywords": "Nacos,Istio",
+        "description": "In plan with Nacos 1.x.x"
+      }
+    },
+    {
+      "filename": "use-nacos-with-springcloud.md",
+      "link": "/zh-cn/docs/archive/use-nacos-with-springcloud.html",
+      "meta": {
+        "title": "Nacos Spring Cloud",
+        "keywords": "nacos,Spring Cloud",
+        "description": "Nacos Spring Cloud"
       }
     },
     {
@@ -766,15 +816,6 @@
         "title": "Authorization",
         "keywords": "Authorization",
         "description": "Authorization"
-      }
-    },
-    {
-      "filename": "cli-guide.md",
-      "link": "/zh-cn/docs/cli-guide.html",
-      "meta": {
-        "title": "CLI Guide",
-        "keywords": "CLI,Guide",
-        "description": "In plan with Nacos 1.x.x"
       }
     },
     {
@@ -820,15 +861,6 @@
         "title": "控制台手册",
         "keywords": "控制台,手册",
         "description": "Nacos 控制台主要旨在于增强对于服务列表，健康状态管理，服务治理，分布式配置管理等方面的管控能力。"
-      }
-    },
-    {
-      "filename": "contributing-dev.md",
-      "link": "/zh-cn/docs/contributing-dev.html",
-      "meta": {
-        "title": "为 Nacos 做贡献",
-        "keywords": "Nacos,贡献",
-        "description": "欢迎来到Nacos！本文档是关于如何为Nacos做出贡献的指南。"
       }
     },
     {
@@ -1044,20 +1076,6 @@
       }
     },
     {
-      "filename": "roadmap.md",
-      "link": "/zh-cn/docs/roadmap.html",
-      "meta": {
-        "title": "Nacos 规划",
-        "keywords": "Nacos,规划",
-        "description": "Nacos 规划"
-      }
-    },
-    {
-      "filename": "sdk-properties.md",
-      "link": "/zh-cn/docs/sdk-properties.html",
-      "meta": {}
-    },
-    {
       "filename": "sdk.md",
       "link": "/zh-cn/docs/sdk.html",
       "meta": {
@@ -1085,30 +1103,12 @@
       }
     },
     {
-      "filename": "use-nacos-with-istio.md",
-      "link": "/zh-cn/docs/use-nacos-with-istio.html",
-      "meta": {
-        "title": "Nacos Istio",
-        "keywords": "Nacos,Istio",
-        "description": "In plan with Nacos 1.x.x"
-      }
-    },
-    {
       "filename": "use-nacos-with-kubernetes.md",
       "link": "/zh-cn/docs/use-nacos-with-kubernetes.html",
       "meta": {
         "title": "Kubernetes Nacos",
         "keywords": "nacos,kubernetes",
         "description": "本项目包含一个可构建的Nacos Docker Image，旨在利用 StatefulSets 在 Kubernetes上部署 Nacos。"
-      }
-    },
-    {
-      "filename": "use-nacos-with-springcloud.md",
-      "link": "/zh-cn/docs/use-nacos-with-springcloud.html",
-      "meta": {
-        "title": "Nacos Spring Cloud",
-        "keywords": "nacos,Spring Cloud",
-        "description": "Nacos Spring Cloud"
       }
     },
     {
