@@ -92,7 +92,7 @@ git push origin develop-issue#${issue-number}
 
 ## 8. Create Pull Request according to the pull request template
 
-[pull request template](https://nacos.io/en-us/docs/pull-request.html)
+[pull request template](./pull-request.md)
 
 The Nacos community will review your Pull Request and may propose comments.
 

@@ -46,7 +46,7 @@ description: 我们非常欢迎您的贡献和加入，无论是微不足道的�
 * 做出一些变更提交。
 * 确保提交消息的格式正确（见下文）。
 * 推送变更到你的fork仓库中。
-* 按照[拉取请求模板](https://nacos.io/zh-cn/docs/pull-request.html)中的清单进行操作。
+* 按照[拉取请求模板](./pull-request.md)中的清单进行操作。
 * 在发送拉取请求之前，请将您的fork仓库与远程存储库同步，这将使您的拉取请求变得简单明了。详情见下面的指南：
 ```
 git remote add upstream git@github.com:alibaba/nacos.git
@@ -58,7 +58,7 @@ git push origin your_awesome_patch
 ```
 * 提交pull request 到 alibaba/nacos，等待回复。如果回复的慢，请无情的催促。
 
-* 详细的贡献流程可参考[贡献流程](contributing-flow.html)
+* 详细的贡献流程可参考[贡献流程](./contributing-flow.html)
 
 ## 贡献文档
 
@@ -74,7 +74,7 @@ git push origin your_awesome_patch
 
 ### 贡献流程
 
-可参考[贡献流程](contributing-flow.html)
+可参考[贡献流程](./contributing-flow.html)
 
 ## 成为提交者
 

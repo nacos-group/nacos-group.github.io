@@ -88,7 +88,7 @@ git push origin develop-issue#${issue-number}
 
 ## 8. 按照拉取请求模板中的清单创建Pull Request
 
-[拉取请求模板](https://nacos.io/zh-cn/docs/pull-request.html)
+[拉取请求模板](./pull-request.md)
 
 Nacos社区将会Review您的Pull Request，并可能提出修改意见，您可以根据修改意见回到步骤5进行修改，并使用步骤6进行重新提交。
 

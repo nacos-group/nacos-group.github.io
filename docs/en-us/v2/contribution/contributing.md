@@ -49,7 +49,7 @@ This is a rough outline of what a contributor's workflow looks like:
 * Make commits of logical units.
 * Make sure commit messages are in the proper format (see below).
 * Push changes in a topic branch to your forked repository.
-* Follow the checklist in the [pull request template](https://nacos.io/en-us/docs/pull-request.html).
+* Follow the checklist in the [pull request template](./pull-request.md).
 * Before you send the pull request, please sync your forked repository with remote repository. This will make your pull request simple and clear. See guide below:
 ```
 git remote add upstream git@github.com:alibaba/nacos.git
@@ -61,7 +61,7 @@ git push origin your_awesome_patch
 ```
 * Submit a pull request to alibaba/nacos and wait for reply.
 
-* Detail contribution flow see [Contribution Flow](contributing-flow.html)
+* Detail contribution flow see [Contribution Flow](./contributing-flow.html)
 
 Thanks for contributing!
 
