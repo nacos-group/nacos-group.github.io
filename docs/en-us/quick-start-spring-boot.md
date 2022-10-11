@@ -1,21 +1,30 @@
-# Quick Start for Nacos Spring Boot Projects
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">This quick start introduces how to enable Nacos configuration management and service discovery features for your Spring Boot project.</span></span>
+---
+title: Quick Start for Nacos Spring Boot Projects
+keywords: Nacos,Spring Boot
+description: Quick Start for Nacos Spring Boot Projects
+---
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">The quick start includes two samples:</span></span>
+# Quick Start for Nacos Spring Boot Projects
+
+This quick start introduces how to enable Nacos configuration management and service discovery features for your Spring Boot project.
+
+For more details about Nacos Spring Boot: [nacos-spring-boot-project](https://github.com/nacos-group/nacos-spring-boot-project/wiki/spring-boot-0.2.2-%E4%BB%A5%E5%8F%8A-0.1.2%E7%89%88%E6%9C%AC%E6%96%B0%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C).
+
+The quick start includes two samples:
 * How to enable dynamic configuration updates with Nacos server and nacos-config-spring-boot-starter;
 * How to enable service registration and discovery with Nacos Server and nacos-discovery-spring-boot-starter.
 
 ## Prerequisite
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Follow instructions in </span></span>[Nacos Quick Start](https://nacos.io/zh-cn/docs/quick-start.html)<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> to download Nacos and start the Nacos server.</span></span>
+Follow instructions in [Nacos Quick Start](https://nacos.io/zh-cn/docs/quick-start.html) to download Nacos and start the Nacos server.
 
 ## Enable Configuration Service
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Once you start the Nacos server, you can follow the steps below to enable the Nacos configuration management service for your Spring Boot project. </span></span>
+Once you start the Nacos server, you can follow the steps below to enable the Nacos configuration management service for your Spring Boot project. 
 
 Sample project: [nacos-spring-boot-config-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-boot-example/nacos-spring-boot-config-example)
 
-1. <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Add the Nacos Spring Boot dependency.</span></span>
+1. Add the Nacos Spring Boot dependency.
 
 ```
 <dependency>
@@ -25,13 +34,15 @@ Sample project: [nacos-spring-boot-config-example](https://github.com/nacos-grou
 </dependency>
 ```
 
+**Note**: Version [0.2.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.boot/nacos-config-spring-boot-starter) is compatible with the Spring Boot 2.0.x line. Version [0.1.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.boot/nacos-config-spring-boot-starter) is compatible with the Spring Boot 1.x line.
+
 2. Configure the Nacos server address in `application.properties` :
 
 ```
 nacos.config.server-addr=127.0.0.1:8848
 ```
 
-3. <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Use </span></span>`@NacosPropertySource`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> to load the configuration source whose </span></span>`dataId`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> is </span></span>`example`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> , and enable autorefresh of configuration updates:</span></span>
+3. Use `@NacosPropertySource` to load the configuration source whose `dataId` is `example` , and enable autorefresh of configuration updates:
 
 ```plain
 @SpringBootApplication
@@ -44,21 +55,15 @@ public class NacosConfigApplication {
 }
 ```
 
-4. <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Specify the property value of the </span></span>`@Value`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> annotation of Spring.</span></span>
-
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"><strong>Note: </strong></span></span><span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">You need to use the  </span></span>`Setter`<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> method to enable autorefresh of configuration updates. </span></span>
+4. Specify the property value of the `@NacosValue` annotation of Nacos.
 
 ```
 @Controller
 @RequestMapping("config")
 public class ConfigController {
 
-    @Value("${useLocalCache:false}")
+    @NacosValue(value = "${useLocalCache:false}", autoRefreshed = true)
     private boolean useLocalCache;
-
-    public void setUseLocalCache(boolean useLocalCache) {
-        this.useLocalCache = useLocalCache;
-    }
 
     @RequestMapping(value = "/get", method = GET)
     @ResponseBody
@@ -70,7 +75,7 @@ public class ConfigController {
 
 5. Start `NacosConfigApplication`and call `curl http://localhost:8080/config/get`. You will get a return message of `false`, as no configuration has been published so far.
 
-6. Call [Nacos Open API](https://nacos.io/zh-cn/docs/open-API.html) to publish a configuration to the Nacos server. Assume the dataId is `example`, and the content is `useLocalCache=true`.
+6. Call [Nacos Open API](https://nacos.io/zh-cn/docs/open-api.html) to publish a configuration to the Nacos server. Assume the dataId is `example`, and the content is `useLocalCache=true`.
 
 ```
 curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example&group=DEFAULT_GROUP&content=useLocalCache=true"
@@ -80,11 +85,11 @@ curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example&group=DEF
 
 ## Enable Service Discovery
 
-<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Now you would also like to enable the service discovery feature of Nacos in your Spring Boot project. </span></span>
+Now you would also like to enable the service discovery feature of Nacos in your Spring Boot project. 
 
-Sample project<span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">: </span></span>[nacos-spring-boot-discovery-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-boot-example/nacos-spring-boot-discovery-example)
+Sample project: [nacos-spring-boot-discovery-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-boot-example/nacos-spring-boot-discovery-example)
 
-1. <span data-type="color" style="color:rgb(38, 38, 38)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Add the Nacos Spring Boot dependency.</span></span>
+1. Add the Nacos Spring Boot dependency.
 
 ```
 <dependency>
@@ -93,6 +98,8 @@ Sample project<span data-type="color" style="color:rgb(38, 38, 38)"><span data-t
     <version>${latest.version}</version>
 </dependency>
 ```
+
+**Note**: Version [0.2.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.boot/nacos-discovery-spring-boot-starter) is compatible with the Spring Boot 2.0.x line. Version [0.1.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.boot/nacos-discovery-spring-boot-starter) is compatible with the Spring Boot 1.x line.
 
 2. Configure the Nacos server address in `application.properties` :
 
@@ -129,10 +136,10 @@ public class NacosDiscoveryApplication {
 
 4. Start `NacosDiscoveryApplication`and call `curl http://localhost:8080/discovery/get?serviceName=example`，you will get a return value of an empty JSON array `[]`.
 
-5. Call [Nacos Open API](https://nacos.io/zh-cn/docs/open-API.html) to register a service called `example` to the Nacos server.
+5. Call [Nacos Open API](https://nacos.io/zh-cn/docs/open-api.html) to register a service called `example` to the Nacos server.
 
 ```
-curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=127.0.0.1&port=8080'
+curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=127.0.0.1&port=8080'
 ```
 
 6. Access `curl http://localhost:8080/discovery/get?serviceName=example`again and you will get the following return:
@@ -166,6 +173,4 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=1
 * [Nacos](https://github.com/alibaba/nacos)
 * [Nacos Spring](https://github.com/nacos-group/nacos-spring-project)
 * [Nacos Spring Boot](https://github.com/nacos-group/nacos-spring-boot-project)
-* [Spring Cloud](https://github.com/spring-cloud-incubator/spring-cloud-alibaba) [Alibaba](https://github.com/spring-cloud-incubator/spring-cloud-alibaba)
-    
-
+* [Spring Cloud Alibaba](https://github.com/alibaba/spring-cloud-alibaba)

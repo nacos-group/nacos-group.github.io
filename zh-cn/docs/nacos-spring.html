@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="Nacos,Spring" />
+	<meta name="description" content="Nacos Spring" />
+  <meta name="baidu-site-verification" content="code-wzq5sw7io3" />
+	<!-- 网页标签标题 -->
+	<title>Nacos Spring</title>
+	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
+	<link rel="stylesheet" href="/build/documentation.css" />
+</head>
+<body>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><span><a href="/zh-cn/index.html">首页</a></span></li><li class="menu-item menu-item-normal menu-item-normal-active"><div class="nav-container"><div class="word"><a>文档</a></div><ul class="sub-nav-container" style="width:220px"><li><a href="/zh-cn/docs/v2/quickstart/quick-start.html" target="_blank">2.X（推荐）</a></li><li><a href="/zh-cn/docs/quick-start.html" target="_blank">1.X</a></li></ul> </div></li><li class="menu-item menu-item-normal"><div class="nav-container"><div class="word"><a>解决方案</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></div><ul class="sub-nav-container" style="width:220px"><li><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_blank">微服务解决方案</a></li><li><a href="https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0" target="_blank">微服务Serverless解决方案</a></li><li><a href="https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0" target="_blank">PaaS解决方案</a></li></ul> </div></li><li class="menu-item menu-item-normal"><span><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0">企业版NACOS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST">NACOS架构与原理</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="/zh-cn/blog/index.html">博客</a></span></li><li class="menu-item menu-item-normal"><span><a href="/zh-cn/community/index.html">社区</a></span></li><li class="menu-item menu-item-normal"><span><a href="http://console.nacos.io/nacos/index.html">控制台样例</a></span></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/docs.png" class="front-img"/><div class="bar-title"><span>Nacos 文档</span><div class="bone bone-light"></div></div><img src="/img/docs.png" class="back-img"/></div></div><section class="content-section"><div class="content-body"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>Nacos </span><ul><li style="height:144px;overflow:hidden" class="menu-item menu-item-level-2"><span>Nacos是什么?<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/what-is-nacos.html" target="_self">Nacos简介</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/concepts.html" target="_self">概念</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/architecture.html" target="_self">架构</a></li></ul></li><li style="height:324px;overflow:hidden" class="menu-item menu-item-level-2"><span>快速开始<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start.html" target="_self">Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-spring-boot.html" target="_self">Nacos Spring Boot</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-spring-cloud.html" target="_self">Nacos Spring Cloud</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-docker.html" target="_self">Nacos Docker</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/use-nacos-with-dubbo.html" target="_self">Nacos Dubbo</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/use-nacos-with-kubernetes.html" target="_self">Nacos k8s</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-sync.html" target="_self">Nacos Sync</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>用户指南<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/sdk.html" target="_self">Java的SDK</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/other-language.html" target="_self">其他语言的SDK</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/open-api.html" target="_self">Open-API指南</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/system-configurations.html" target="_self">Nacos系统参数介绍</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/auth.html" target="_self">权限认证</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/faq.html" target="_self">FAQ</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>运维指南<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/deployment.html" target="_self">部署手册</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/cluster-mode-quick-start.html" target="_self">集群部署说明</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/management-api.html" target="_self">运维API</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/console-guide.html" target="_self">控制台手册</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/monitor-guide.html" target="_self">监控手册</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-config-benchmark.html" target="_self">Nacos配置模块压测报告</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-naming-benchmark.html" target="_self">Nacos服务发现模块压测报告</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-sync-use.html" target="_self">其他环境迁移到Nacos</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>开源共建<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/contributing.html" target="_self">贡献源码</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/contributing-flow.html" target="_self">贡献流程</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/pull-request.html" target="_self">pull request模板</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/how-to-reporting-bugs.html" target="_self">如何提交问题报告</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>社区<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/community.html" target="_self">社区</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-dev.html" target="_self">开发团队</a></li></ul></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>Nacos Spring</h1>
+<p>本文将介绍 <a href="https://github.com/nacos-group/nacos-spring-project"><code>nacos-spring-context</code></a> 中的一些关键的特性：</p>
+<ul>
+<li>注解驱动</li>
+<li>依赖注入</li>
+<li>外部化配置</li>
+<li>事件驱动</li>
+</ul>
+<h2>1. 注解驱动</h2>
+<h3>1.1. 启用 Nacos</h3>
+<p><code>@EnableNacos</code>是一个模块驱动的注解，它支持 Nacos Spring 的所有功能，包括<strong>服务发现</strong>和<strong>配置管理</strong>。它等于 <code>@EnableNacosDiscovery</code> 加上 <code>@EnableNacosConfig</code>，可以单独配置并在不同场景中使用。</p>
+<h3>1.2. 配置监听</h3>
+<p>假设在 Nacos 服务中有一个配置，其 <code>dataId</code> 是 &quot;testDataId&quot; 而 <code>groupId</code> 是默认组（&quot;DEFAULT_GROUP&quot;）。 现在，您可以使用 <code>ConfigService#publishConfig</code> 方法更改其内容：</p>
+<pre><code class="language-java"><span class="hljs-meta">@NacosInjected</span>
+<span class="hljs-keyword">private</span> ConfigService configService;
+
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testPublishConfig</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> NacosException </span>{
+    configService.publishConfig(DATA_ID, DEFAULT_GROUP, <span class="hljs-string">"9527"</span>);
+}
+</code></pre>
+<p>然后您可以添加一个监听器，它将监听配置的变化。 您可以通过在 Spring Bean 中添加配置变更监听器方法来执行此操作：</p>
+<pre><code class="language-java"><span class="hljs-meta">@NacosConfigListener</span>(dataId = DATA_ID)
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onMessage</span><span class="hljs-params">(String config)</span> </span>{
+    assertEquals(<span class="hljs-string">"mercyblitz"</span>, config); <span class="hljs-comment">// asserts true</span>
+}
+</code></pre>
+<p>下面的代码具有相同的效果：</p>
+<pre><code class="language-java">configService.addListener(DATA_ID, DEFAULT_GROUP, <span class="hljs-keyword">new</span> AbstractListener() {
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">receiveConfigInfo</span><span class="hljs-params">(String config)</span> </span>{
+        assertEquals(<span class="hljs-string">"9527"</span>, config); <span class="hljs-comment">// asserts true</span>
+    }
+});
+</code></pre>
+<p>另外，<code>@NacosConfigListener</code> 支持更丰富的类型转换。</p>
+<ul>
+<li>请参看： <a href="https://github.com/nacos-group/nacos-spring-project/blob/master/nacos-spring-samples/nacos-spring-webmvc-sample/src/main/java/com/alibaba/nacos/samples/spring/listener/SimpleNacosConfigListener.java">Simple Sample of <code>@NacosConfigListener</code></a></li>
+</ul>
+<h4>1.2.1. 类型</h4>
+<p><code>@NacosConfigListener</code> 的类型转换包括内置和自定义实现。 默认情况下，内置类型转换基于 Spring <code>DefaultFormattingConversionService</code>，这意味着它包好了大多数情况以及 Spring 框架更高级版本的丰富功能。</p>
+<p>例如，前面示例中的内容 &quot;9527&quot; 也可以通过带 &quot;int&quot; 或 &quot;Integer&quot; 参数的方法进行监听：:</p>
+<pre><code class="language-java"><span class="hljs-meta">@NacosConfigListener</span>(dataId = DATA_ID)
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onInteger</span><span class="hljs-params">(Integer value)</span> </span>{
+    assertEquals(Integer.valueOf(<span class="hljs-number">9527</span>), value); <span class="hljs-comment">// asserts true</span>
+}
+
+<span class="hljs-meta">@NacosConfigListener</span>(dataId = DATA_ID)
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onInt</span><span class="hljs-params">(<span class="hljs-keyword">int</span> value)</span> </span>{
+    assertEquals(<span class="hljs-number">9527</span>, value); <span class="hljs-comment">// asserts true</span>
+}
+</code></pre>
+<p>当然, <a href="https://github.com/nacos-group/nacos-spring-project"><code>nacos-spring-context</code></a> 为开发人员提供弹性扩展。 如果定义名为<code>nacosConfigConversionService</code>的Spring Bean，其类型为<code>ConversionService</code>，则将忽略<code>DefaultFormattingConversionService</code>。 此外，您可以自定义<code>NacosConfigConverter</code>接口的实现，以指定类型转换的侦听器方法：</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserNacosConfigConverter</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">NacosConfigConverter</span>&lt;<span class="hljs-title">User</span>&gt; </span>{
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">canConvert</span><span class="hljs-params">(Class&lt;User&gt; targetType)</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> User <span class="hljs-title">convert</span><span class="hljs-params">(String source)</span> </span>{
+        <span class="hljs-keyword">return</span> JSON.parseObject(source, User<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
+    }
+}
+</code></pre>
+<p><code>UserNacosConfigConverter</code> 类绑定在 <code>@NacosConfigListener.converter()</code> 属性上，如下:</p>
+<pre><code class="language-java"><span class="hljs-meta">@NacosInjected</span>
+<span class="hljs-keyword">private</span> ConfigService configService;
+
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testPublishUser</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> NacosException </span>{
+    configService.publishConfig(<span class="hljs-string">"user"</span>, DEFAULT_GROUP, <span class="hljs-string">"{\"id\":1,\"name\":\"mercyblitz\"}"</span>);
+}
+
+<span class="hljs-meta">@NacosConfigListener</span>(dataId = <span class="hljs-string">"user"</span>, converter = UserNacosConfigConverter<span class="hljs-class">.<span class="hljs-keyword">class</span>)
+<span class="hljs-title">public</span> <span class="hljs-title">void</span> <span class="hljs-title">onUser</span>(<span class="hljs-title">User</span> <span class="hljs-title">user</span>) </span>{
+    assertEquals(Long.valueOf(<span class="hljs-number">1L</span>), user.getId()); 
+    assertEquals(<span class="hljs-string">"mercyblitz"</span>, user.getName());
+}
+</code></pre>
+<ul>
+<li>请参看：<a href="https://github.com/nacos-group/nacos-spring-project/blob/master/nacos-spring-samples/nacos-spring-webmvc-sample/src/main/java/com/alibaba/nacos/samples/spring/listener/PojoNacosConfigListener.java">Type Conversion Sample of <code>@NacosConfigListener</code></a></li>
+</ul>
+<h4>1.2.2. 超时时间</h4>
+<p>由于运行自定义的 <code>NacosConfigConverter</code> 可能需要一些时间，因此您可以在 <code>@NacosConfigListener.timeout()</code> 属性中设置最大执行时间，以防止它阻塞其他侦听器：</p>
+<pre><code class="language-java"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Listeners</span> </span>{
+
+    <span class="hljs-keyword">private</span> Integer integerValue;
+
+    <span class="hljs-keyword">private</span> Double doubleValue;
+
+    <span class="hljs-meta">@NacosConfigListener</span>(dataId = DATA_ID, timeout = <span class="hljs-number">50</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onInteger</span><span class="hljs-params">(Integer value)</span> <span class="hljs-keyword">throws</span> Exception </span>{
+        Thread.sleep(<span class="hljs-number">100</span>); <span class="hljs-comment">// timeout of execution</span>
+        <span class="hljs-keyword">this</span>.integerValue = value;
+    }
+
+    <span class="hljs-meta">@NacosConfigListener</span>(dataId = DATA_ID, timeout = <span class="hljs-number">200</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onDouble</span><span class="hljs-params">(Double value)</span> <span class="hljs-keyword">throws</span> Exception </span>{
+        Thread.sleep(<span class="hljs-number">100</span>); <span class="hljs-comment">// normal execution</span>
+        <span class="hljs-keyword">this</span>.doubleValue = value;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Integer <span class="hljs-title">getIntegerValue</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> integerValue;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Double <span class="hljs-title">getDoubleValue</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> doubleValue;
+    }
+}
+</code></pre>
+<p><code>Listeners</code> Bean 的 <code>integerValue</code> 总是为<code>null</code>，不会改变。 因此，以下断言都将是 <code>true</code>：</p>
+<pre><code class="language-java"><span class="hljs-meta">@Autowired</span>
+<span class="hljs-keyword">private</span> Listeners listeners;
+
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testPublishConfig</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> NacosException </span>{
+    configService.publishConfig(DATA_ID, DEFAULT_GROUP, <span class="hljs-string">"9527"</span>);
+    assertNull(listeners.getIntegerValue()); <span class="hljs-comment">// asserts true</span>
+    assertEquals(Double.valueOf(<span class="hljs-number">9527</span>), listeners.getDoubleValue());   <span class="hljs-comment">// asserts true</span>
+}
+</code></pre>
+<ul>
+<li>请参看：<a href="https://github.com/nacos-group/nacos-spring-project/blob/master/nacos-spring-samples/nacos-spring-webmvc-sample/src/main/java/com/alibaba/nacos/samples/spring/listener/TimeoutNacosConfigListener.java">Timeout Sample of <code>@NacosConfigListener</code></a></li>
+</ul>
+<h3>1.3. 全局和自定义 Nacos 属性</h3>
+<p><code>globalProperties</code> 是任何 <code>@EnableNacos</code>，<code>@EnableNacosDiscovery</code> 或 <code>@EnableNacosConfig</code> 中的必选属性，其类型为 <code>@NacosProperties</code>。</p>
+<p><code>globalProperties</code> 将初始化为其他注解或组件的 &quot;<strong>全局 Nacos 属性</strong>&quot;，例如：<code>@NacosInjected</code>。</p>
+<p>换句话说，<strong>全局 Nacos 属性</strong> 定义全局和默认属性。它设置为具有最低优先级，并且也可以被覆盖。覆盖优先级如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>Precedence Order</th>
+<th>Nacos Annotation</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>*.properties()</code></td>
+<td>N</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>@EnableNacosConfig.globalProperties()</code> or <code>@EnableNacosDiscovery.globalProperties()</code></td>
+<td>Y</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>@EnableNacos.globalProperties()</code></td>
+<td>Y</td>
+</tr>
+</tbody>
+</table>
+<p><code>*.properties()</code> 定义来自以下之一的自定义 Nacos 属性：</p>
+<ul>
+<li><code>@NacosInjected.properties()</code></li>
+<li><code>@NacosConfigListener.properties()</code></li>
+<li><code>@NacosPropertySource.properties()</code></li>
+<li><code>@NacosConfigurationProperties.properties()</code></li>
+</ul>
+<p>自定义的 Nacos 属性也由 <code>@NacosProperties</code> 配置。 不过，它们是可选的，用于在特殊情况下覆盖全局 Nacos 属性。 如果没有定义，Nacos 属性将尝试从 <code>@EnableNacosConfig.globalProperties()</code> 或 <code>@EnableNacosDiscovery.globalProperties()</code> 或
+<code>@EnableNacos.globalProperties()</code> 中查找属性。</p>
+<h3>1.4. <code>@NacosProperties</code></h3>
+<p><code>@NacosProperties</code> 是全局和自定义 Nacos 属性的统一注解。 它充当Java <code>Properties</code> 和 <code>NacosFactory</code> 类之间的中介。<code>NacosFactory</code> 负责创建 <code>ConfigService</code> 或 <code>NamingService</code> 实例。</p>
+<p><code>@NacosProperties</code> 的属性完全支持占位符，它的源是Spring <code>Environment</code> 抽象中的各种 <code>PropertySource</code>，通常是Java System <code>Properties</code> 和操作系统环境变量。 所有占位符的前缀都是 <code>nacos.</code>。<code>@NacosProperties</code> 和 Nacos 属性的属性之间的映射如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Property</th>
+<th>Placeholder</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>endpoint()</code></td>
+<td><code>endpoint</code></td>
+<td><code>${nacos.endpoint:}</code></td>
+<td></td>
+<td>N</td>
+</tr>
+<tr>
+<td><code>namespace()</code></td>
+<td><code>namespace</code></td>
+<td><code>${nacos.namespace:}</code></td>
+<td></td>
+<td>N</td>
+</tr>
+<tr>
+<td><code>accessKey()</code></td>
+<td><code>access-key</code></td>
+<td><code>${nacos.access-key:}</code></td>
+<td></td>
+<td>N</td>
+</tr>
+<tr>
+<td><code>secretKey()</code></td>
+<td><code>secret-key</code></td>
+<td><code>${nacos.secret-key:}</code></td>
+<td></td>
+<td>N</td>
+</tr>
+<tr>
+<td><code>serverAddr()</code></td>
+<td><code>server-addr</code></td>
+<td><code>${nacos.server-addr:}</code></td>
+<td></td>
+<td>Y</td>
+</tr>
+<tr>
+<td><code>contextPath()</code></td>
+<td><code>context-path</code></td>
+<td><code>${nacos.context-path:}</code></td>
+<td></td>
+<td>N</td>
+</tr>
+<tr>
+<td><code>clusterName()</code></td>
+<td><code>cluster-name</code></td>
+<td><code>${nacos.cluster-name:}</code></td>
+<td></td>
+<td>N</td>
+</tr>
+<tr>
+<td><code>encode()</code></td>
+<td><code>encode</code></td>
+<td><code>${nacos.encode:UTF-8}</code></td>
+<td></td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+<p>请注意，<code>@EnableNacosDiscovery</code> 和 <code>@EnableNacosConfig</code> 之间 <code>globalProperties()</code> 的占位符存在一些差异：</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th><code>@EnableNacosDiscovery</code>'s Placeholder</th>
+<th><code>@EnableNacosConfig</code>'s Placeholder</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>endpoint()</code></td>
+<td><code>${nacos.discovery.endpoint:${nacos.endpoint:}}</code></td>
+<td><code>${nacos.config.endpoint:${nacos.endpoint:}}</code></td>
+</tr>
+<tr>
+<td><code>namespace()</code></td>
+<td><code>${nacos.discovery.namespace:${nacos.namespace:}}</code></td>
+<td><code>${nacos.config.namespace:${nacos.namespace:}}</code></td>
+</tr>
+<tr>
+<td><code>accessKey()</code></td>
+<td><code>${nacos.discovery.access-key:${nacos.access-key:}}</code></td>
+<td><code>${nacos.config.access-key:${nacos.access-key:}}</code></td>
+</tr>
+<tr>
+<td><code>secretKey()</code></td>
+<td><code>${nacos.discovery.secret-key:${nacos.secret-key:}}</code></td>
+<td><code>${nacos.config.secret-key:${nacos.secret-key:}}</code></td>
+</tr>
+<tr>
+<td><code>serverAddr()</code></td>
+<td><code>${nacos.discovery.server-addr:${nacos.server-addr:}}</code></td>
+<td><code>${nacos.config.server-addr:${nacos.server-addr:}}</code></td>
+</tr>
+<tr>
+<td><code>contextPath()</code></td>
+<td><code>${nacos.discovery.context-path:${nacos.context-path:}}</code></td>
+<td><code>${nacos.config.context-path:${nacos.context-path:}}</code></td>
+</tr>
+<tr>
+<td><code>clusterName()</code></td>
+<td><code>${nacos.discovery.cluster-name:${nacos.cluster-name:}}</code></td>
+<td><code>${nacos.config.cluster-name:${nacos.cluster-name:}}</code></td>
+</tr>
+<tr>
+<td><code>encode()</code></td>
+<td><code>${nacos.discovery.encode:${nacos.encode:UTF-8}}</code></td>
+<td><code>${nacos.config.encode:${nacos.encode:UTF-8}}</code></td>
+</tr>
+</tbody>
+</table>
+<p>这些 <code>@EnableNacosDiscovery</code> 和 <code>@EnableNacosConfig</code> 的占位符用于隔离不同的 Nacos 服务，在大多数情况下都是不必要的。默认情况下，将使用常规占位符。</p>
+<h2>2. 依赖注入</h2>
+<p><code>@NacosInjected</code> 是一个核心注解，用于在Spring Beans 中注入 <code>ConfigService</code> 或 <code>NamingService</code> 实例，并使这些实例<strong>可缓存</strong>。 这意味着如果它们的 <code>@NacosProperties</code> 相等，则实例将是相同的，无论属性是来自全局还是自定义的 Nacos 属性：</p>
+<pre><code class="language-java"><span class="hljs-meta">@NacosInjected</span>
+<span class="hljs-keyword">private</span> ConfigService configService;
+
+<span class="hljs-meta">@NacosInjected</span>(properties = <span class="hljs-meta">@NacosProperties</span>(encode = <span class="hljs-string">"UTF-8"</span>))
+<span class="hljs-keyword">private</span> ConfigService configService2;
+
+<span class="hljs-meta">@NacosInjected</span>(properties = <span class="hljs-meta">@NacosProperties</span>(encode = <span class="hljs-string">"GBK"</span>))
+<span class="hljs-keyword">private</span> ConfigService configService3;
+
+<span class="hljs-meta">@NacosInjected</span>
+<span class="hljs-keyword">private</span> NamingService namingService;
+
+<span class="hljs-meta">@NacosInjected</span>(properties = <span class="hljs-meta">@NacosProperties</span>(encode = <span class="hljs-string">"UTF-8"</span>))
+<span class="hljs-keyword">private</span> NamingService namingService2;
+
+<span class="hljs-meta">@NacosInjected</span>(properties = <span class="hljs-meta">@NacosProperties</span>(encode = <span class="hljs-string">"GBK"</span>))
+<span class="hljs-keyword">private</span> NamingService namingService3;
+
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testInjection</span><span class="hljs-params">()</span> </span>{
+
+    Assert.assertEquals(configService, configService2);
+    Assert.assertNotEquals(configService2, configService3);
+
+    Assert.assertEquals(namingService, namingService2);
+    Assert.assertNotEquals(namingService2, namingService3);
+}
+</code></pre>
+<p>属性 <code>configService</code> 使用 <code>@EnableNacos#globalProperties()</code> 或 <code>@EnableNacosConfig#globalProperties()</code>，因为 <code>encode</code> 属性的默认值是  &quot;UTF-8&quot;，因此 <code>configService</code> 实例和由 <code>@NacosProperties(encode =&quot;UTF-8&quot;)</code> 注解的 <code>configService2</code> 实例是相同的。 <code>namingService</code> 和 <code>namingService2</code> 也是如此。</p>
+<p>值得注意的是，与 <code>NacosFactory.createConfigService()</code> 方法创建的 <code>ConfigService</code> 实例不同，<code>@NacosInjected</code> 注解创建的 <code>ConfigService</code> 实例支持 Nacos Spring 事件。 例如，在增强的 <code>ConfigService</code> 调用 <code>publishConfig()</code> 方法之后会有一个 <code>NacosConfigPublishedEvent</code>。 有关更多详细信息，请参阅&quot;事件驱动&quot;部分。</p>
+<ul>
+<li>请参看：<a href="https://github.com/nacos-group/nacos-spring-project/blob/master/nacos-spring-samples/nacos-spring-webmvc-sample/src/main/java/com/alibaba/nacos/samples/spring/NacosConfiguration.java">Dependency Injection Sample</a></li>
+</ul>
+<h2>3. 外部化配置</h2>
+<p>外部化配置是 Spring Boot 引入的概念，它允许应用程序接收外部属性源以控制运行时行为。 Nacos Server 在应用程序外部运行单独的进程以维护应用程序配置。 <a href="https://github.com/nacos-group/nacos-spring-project"><code>nacos-spring-context</code></a> 提供了对象绑定，动态配置（自动刷新）等功能。</p>
+<p>这里有 <a href="https://github.com/nacos-group/nacos-spring-project"><code>nacos-spring-context</code></a> 和 Spring Stack 之间的简单比较：</p>
+<table>
+<thead>
+<tr>
+<th>Spring Stack</th>
+<th>Nacos Spring</th>
+<th>Highlight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@Value</code></td>
+<td><code>@NacosValue</code></td>
+<td>auto-refreshed</td>
+</tr>
+<tr>
+<td><code>@ConfigurationProperties</code></td>
+<td><code>@NacosConfigurationProperties</code></td>
+<td>auto-refreshed,<code>@NacosProperty</code>,<code>@NacosIgnore</code></td>
+</tr>
+<tr>
+<td><code>@PropertySource</code></td>
+<td><code>@NacosPropertySource</code></td>
+<td>auto-refreshed, precedence order control</td>
+</tr>
+<tr>
+<td><code>@PropertySources</code></td>
+<td><code>@NacosPropertySources</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>请参看：<a href="https://github.com/nacos-group/nacos-spring-project/blob/master/nacos-spring-samples/nacos-spring-webmvc-sample/src/main/java/com/alibaba/nacos/samples/spring/properties/NacosConfigurationPropertiesConfiguration.java">Auto-Refreshed Sample of <code>@NacosConfigurationProperties</code></a></li>
+<li>请参看：<a href="https://github.com/nacos-group/nacos-spring-project/blob/master/nacos-spring-samples/nacos-spring-webmvc-sample/src/main/java/com/alibaba/nacos/samples/spring/env/NacosPropertySourceConfiguration.java">Sample of <code>@NacosPropertySources</code> and <code>@NacosPropertySource</code></a></li>
+</ul>
+<h2>4. 事件驱动</h2>
+<p>Nacos 事件驱动 基于标准的 Spring Event / Listener 机制。 Spring 的 <code>ApplicationEvent</code> 是所有 Nacos Spring 事件的抽象超类：</p>
+<table>
+<thead>
+<tr>
+<th>Nacos Spring Event</th>
+<th>Trigger</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NacosConfigPublishedEvent</code></td>
+<td>After <code>ConfigService.publishConfig()</code></td>
+</tr>
+<tr>
+<td><code>NacosConfigReceivedEvent</code></td>
+<td>After<code>Listener.receiveConfigInfo()</code></td>
+</tr>
+<tr>
+<td><code>NacosConfigRemovedEvent</code></td>
+<td>After <code>configService.removeConfig()</code></td>
+</tr>
+<tr>
+<td><code>NacosConfigTimeoutEvent</code></td>
+<td><code>ConfigService.getConfig()</code> on timeout</td>
+</tr>
+<tr>
+<td><code>NacosConfigListenerRegisteredEvent</code></td>
+<td>After <code>ConfigService.addListner()</code> or <code>ConfigService.removeListener()</code></td>
+</tr>
+<tr>
+<td><code>NacosConfigurationPropertiesBeanBoundEvent</code></td>
+<td>After <code>@NacosConfigurationProperties</code> binding</td>
+</tr>
+<tr>
+<td><code>NacosConfigMetadataEvent</code></td>
+<td>After Nacos Config operations</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>请参看：<a href="https://github.com/nacos-group/nacos-spring-project/blob/master/nacos-spring-samples/nacos-spring-webmvc-sample/src/main/java/com/alibaba/nacos/samples/spring/event/NacosEventListenerConfiguration.java">Event/Listener Sample</a></li>
+</ul>
+<h2>相关项目</h2>
+<ul>
+<li><a href="https://github.com/alibaba/nacos">Nacos</a></li>
+<li><a href="https://github.com/nacos-group/nacos-spring-project">Nacos Spring</a></li>
+<li><a href="https://github.com/nacos-group/nacos-spring-boot-project">Nacos Spring Boot</a></li>
+<li><a href="https://github.com/spring-cloud-incubator/spring-cloud-alibaba">Spring Cloud Alibaba</a></li>
+</ul>
+</div></div></section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>愿景</h3><p>Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/what-is-nacos.html" target="_self">概览</a></dd><dd><a href="/zh-cn/docs/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/contributing.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_self">云服务 MSE</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">云服务 EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">云服务 AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2022 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/documentation.js">
+	</script>
+	<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e3a5cec56ef8619cf9d7c2abebd509e3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+</body>
+</html>

@@ -9,6 +9,7 @@ import Bar from '../../components/bar';
 import Sidemenu from '../../components/sidemenu';
 import Footer from '../../components/footer';
 import docsConfig from '../../../site_config/docs';
+import docs2Config from '../../../site_config/docs2';
 import { getLink } from '../../../utils';
 import './index.scss';
 
@@ -88,12 +89,13 @@ class Documentation extends Language {
 
   render() {
     const language = this.getLanguage();
-    const dataSource = docsConfig[language];
+    const version = window.location.pathname.replace(`${window.rootPath}/${language}/docs/`, '').split('/').slice(0, 1);
+    const dataSource = version[0] === 'v2' ? docs2Config[language] : docsConfig[language];
     const __html = this.props.__html || this.state.__html;
     return (
       <div className="documentation-page">
         <Header
-          currentKey="docs"
+          currentKey={'docs'}
           type="normal"
           logo={getLink('/img/nacos_colorful.png')}
           language={language}

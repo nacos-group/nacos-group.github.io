@@ -1,3 +1,9 @@
+---
+title: 阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾
+keywords: nacos,configserver,alibaba
+description: 阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾
+---
+
 # 《阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾》
 
 作者：阿里巴巴高级技术专家，许真恩(慕义)

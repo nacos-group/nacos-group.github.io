@@ -1,0 +1,10 @@
+{
+  "filename": "open-api.md",
+  "__html": "<h1>Open API Guide</h1>\n<p>Nacos 2.X is compatible with Nacos 1.X OpenAPI, please refer to the document <a href=\"../../../open-api.md\">Nacos1.X OpenAPI</a>.</p>\n<p>Nacos 2.X OpenAPI TODO...</p>\n",
+  "link": "/en-us/docs/v2/guide/user/open-api.html",
+  "meta": {
+    "title": "Open API Guide",
+    "keywords": "Open API,Guide",
+    "description": "Open API Guide"
+  }
+}

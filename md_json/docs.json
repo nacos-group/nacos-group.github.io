@@ -1,0 +1,1322 @@
+{
+  "en-us": [
+    {
+      "filename": "architecture.md",
+      "link": "/en-us/docs/architecture.html",
+      "meta": {
+        "title": "Nacos architecture",
+        "keywords": "Nacos,architecture",
+        "description": "Nacos architecture"
+      }
+    },
+    {
+      "filename": "activity.md",
+      "link": "/en-us/docs/archive/activity.html",
+      "meta": {
+        "title": "Nacos activity",
+        "keywords": "Nacos,activity",
+        "description": "Nacos award activity"
+      }
+    },
+    {
+      "filename": "cli-guide.md",
+      "link": "/en-us/docs/archive/cli-guide.html",
+      "meta": {
+        "title": "CLI Guide",
+        "keywords": "CLI,Guide",
+        "description": "In plan with Nacos 1.x.x"
+      }
+    },
+    {
+      "filename": "contributing-dev.md",
+      "link": "/en-us/docs/archive/contributing-dev.html",
+      "meta": {
+        "title": "Contributing to Nacos",
+        "keywords": "Nacos,contribute",
+        "description": "Welcome to Nacos! This document is a guideline about how to contribute to Nacos."
+      }
+    },
+    {
+      "filename": "feature-list.md",
+      "link": "/en-us/docs/archive/feature-list.html",
+      "meta": {}
+    },
+    {
+      "filename": "roadmap.md",
+      "link": "/en-us/docs/archive/roadmap.html",
+      "meta": {
+        "title": "Nacos roadmap",
+        "keywords": "Nacos,roadmap",
+        "description": "Nacos roadmap"
+      }
+    },
+    {
+      "filename": "sdk-properties.md",
+      "link": "/en-us/docs/archive/sdk-properties.html",
+      "meta": {}
+    },
+    {
+      "filename": "use-nacos-with-istio.md",
+      "link": "/en-us/docs/archive/use-nacos-with-istio.html",
+      "meta": {
+        "title": "Nacos Istio",
+        "keywords": "Nacos,Istio",
+        "description": "In plan with Nacos 1.x.x"
+      }
+    },
+    {
+      "filename": "use-nacos-with-springcloud.md",
+      "link": "/en-us/docs/archive/use-nacos-with-springcloud.html",
+      "meta": {
+        "title": "Nacos Spring Cloud",
+        "keywords": "nacos,Spring Cloud",
+        "description": "Nacos Spring Cloud"
+      }
+    },
+    {
+      "filename": "auth.md",
+      "link": "/en-us/docs/auth.html",
+      "meta": {
+        "title": "Authentication",
+        "keywords": "Authentication",
+        "description": "Authentication"
+      }
+    },
+    {
+      "filename": "cluster-mode-quick-start.md",
+      "link": "/en-us/docs/cluster-mode-quick-start.html",
+      "meta": {
+        "title": "Cluster deployment instructions",
+        "keywords": "Cluster,deployment",
+        "description": "Cluster deployment instructions"
+      }
+    },
+    {
+      "filename": "community.md",
+      "link": "/en-us/docs/community.html",
+      "meta": {
+        "title": "Community",
+        "keywords": "community,contact",
+        "description": "Community"
+      }
+    },
+    {
+      "filename": "concepts.md",
+      "link": "/en-us/docs/concepts.html",
+      "meta": {
+        "title": "Nacos Concepts",
+        "keywords": "Nacos,Concepts",
+        "description": "Nacos Concepts"
+      }
+    },
+    {
+      "filename": "console-guide.md",
+      "link": "/en-us/docs/console-guide.html",
+      "meta": {
+        "title": "Console Guide",
+        "keywords": "console,guide",
+        "description": "Nacos console aims to enhance the console for service list, health management, service management, a distributed configuration management control ability."
+      }
+    },
+    {
+      "filename": "contributing-flow.md",
+      "link": "/en-us/docs/contributing-flow.html",
+      "meta": {
+        "title": "Contributing Flow",
+        "keywords": "Contributing,Source Code",
+        "description": "This contribution flow is applicable to all Nacos community content, including but not limited to Nacos, Nacos wiki/doc, Nacos SDK."
+      }
+    },
+    {
+      "filename": "contributing.md",
+      "link": "/en-us/docs/contributing.html",
+      "meta": {
+        "title": "How to Contribute",
+        "keywords": "contribute,code",
+        "description": "We are always very happy to have contributions, whether for trivial cleanups or big new features."
+      }
+    },
+    {
+      "filename": "deployment.md",
+      "link": "/en-us/docs/deployment.html",
+      "meta": {
+        "title": "Nacos supports three types of deployment modes",
+        "keywords": "Nacos,deployment modes",
+        "description": "Nacos supports three types of deployment modes"
+      }
+    },
+    {
+      "filename": "faq.md",
+      "link": "/en-us/docs/faq.html",
+      "meta": {
+        "title": "FAQ",
+        "keywords": "Nacos,FAQ",
+        "description": "Nacos FAQ"
+      }
+    },
+    {
+      "filename": "how-to-reporting-bugs.md",
+      "link": "/en-us/docs/how-to-reporting-bugs.html",
+      "meta": {
+        "title": "How to report bugs",
+        "keywords": "nacos,submit,reporting bugs",
+        "description": "How to report bugs"
+      }
+    },
+    {
+      "filename": "management-api.md",
+      "link": "/en-us/docs/management-api.html",
+      "meta": {
+        "title": "Management API",
+        "keywords": "Management,API",
+        "description": "In plan with Nacos 1.x.x"
+      }
+    },
+    {
+      "filename": "monitor-guide.md",
+      "link": "/en-us/docs/monitor-guide.html",
+      "meta": {
+        "title": "Nacos monitor guide",
+        "keywords": "Nacos,monitor guide",
+        "description": "Nacos monitor guide"
+      }
+    },
+    {
+      "filename": "nacos-config-benchmark.md",
+      "link": "/en-us/docs/nacos-config-benchmark.html",
+      "meta": {
+        "title": "Nacos service configuration performance test report",
+        "keywords": "Nacos,service,configuration,performance",
+        "description": "Nacos service configuration performance test report"
+      }
+    },
+    {
+      "filename": "nacos-dev.md",
+      "link": "/en-us/docs/nacos-dev.html",
+      "meta": {
+        "title": "Developers",
+        "keywords": "nacos,developers,committer,pmc,nacos team",
+        "description": "Nacos developers page"
+      }
+    },
+    {
+      "filename": "nacos-naming-benchmark.md",
+      "link": "/en-us/docs/nacos-naming-benchmark.html",
+      "meta": {
+        "title": "Nacos service discovery performance test report",
+        "keywords": "Nacos,service,discovery,performance",
+        "description": "Nacos service discovery performance test report"
+      }
+    },
+    {
+      "filename": "nacos-spring.md",
+      "link": "/en-us/docs/nacos-spring.html",
+      "meta": {
+        "title": "Nacos Spring",
+        "keywords": "Nacos,Spring",
+        "description": "Nacos Spring"
+      }
+    },
+    {
+      "filename": "nacos-sync-use.md",
+      "link": "/en-us/docs/nacos-sync-use.html",
+      "meta": {
+        "title": "NacosSync migration user guide",
+        "keywords": "NacosSync,migration,user guide",
+        "description": "NacosSync migration user manual"
+      }
+    },
+    {
+      "filename": "nacos-sync.md",
+      "link": "/en-us/docs/nacos-sync.html",
+      "meta": {
+        "title": "NacosSync introduce",
+        "keywords": "NacosSync,introduce",
+        "description": "NacosSync introduce"
+      }
+    },
+    {
+      "filename": "open-api.md",
+      "link": "/en-us/docs/open-api.html",
+      "meta": {
+        "title": "Open API Guide",
+        "keywords": "Open API,Guide",
+        "description": "Open API Guide"
+      }
+    },
+    {
+      "filename": "other-language.md",
+      "link": "/en-us/docs/other-language.html",
+      "meta": {
+        "title": "Other languages SDK",
+        "keywords": "Other languages,SDK",
+        "description": "Other languages SDK"
+      }
+    },
+    {
+      "filename": "pull-request.md",
+      "link": "/en-us/docs/pull-request.html",
+      "meta": {
+        "title": "Pull request template",
+        "keywords": "pull request,template",
+        "description": "Pull request template"
+      }
+    },
+    {
+      "filename": "quick-start-docker.md",
+      "link": "/en-us/docs/quick-start-docker.html",
+      "meta": {
+        "title": "Quick Start for Nacos Docker",
+        "keywords": "Nacos,Docker",
+        "description": "Quick Start for Nacos Docker"
+      }
+    },
+    {
+      "filename": "quick-start-spring-boot.md",
+      "link": "/en-us/docs/quick-start-spring-boot.html",
+      "meta": {
+        "title": "Quick Start for Nacos Spring Boot Projects",
+        "keywords": "Nacos,Spring Boot",
+        "description": "Quick Start for Nacos Spring Boot Projects"
+      }
+    },
+    {
+      "filename": "quick-start-spring-cloud.md",
+      "link": "/en-us/docs/quick-start-spring-cloud.html",
+      "meta": {
+        "title": "Quick Start for Nacos Spring Cloud Projects",
+        "keywords": "Nacos,Spring Cloud",
+        "description": "Quick Start for Nacos Spring Cloud Projects"
+      }
+    },
+    {
+      "filename": "quick-start-spring.md",
+      "link": "/en-us/docs/quick-start-spring.html",
+      "meta": {
+        "title": "Quick Start for Nacos Spring Projects",
+        "keywords": "Nacos,Spring,quick start",
+        "description": "This quick start introduces how to enable Nacos configuration management and service discovery features for your Spring project."
+      }
+    },
+    {
+      "filename": "quick-start.md",
+      "link": "/en-us/docs/quick-start.html",
+      "meta": {
+        "title": "Quick Start for Nacos",
+        "keywords": "Nacos,Quick start",
+        "description": "This topic is about how to set up and use Nacos."
+      }
+    },
+    {
+      "filename": "sdk.md",
+      "link": "/en-us/docs/sdk.html",
+      "meta": {
+        "title": "Java SDK",
+        "keywords": "Java,SDK",
+        "description": "Java SDK"
+      }
+    },
+    {
+      "filename": "system-configurations.md",
+      "link": "/en-us/docs/system-configurations.html",
+      "meta": {
+        "title": "Nacos system parameters introduce",
+        "keywords": "Nacos,System parameters",
+        "description": "Nacos system parameters introduce"
+      }
+    },
+    {
+      "filename": "use-nacos-with-dubbo.md",
+      "link": "/en-us/docs/use-nacos-with-dubbo.html",
+      "meta": {
+        "title": "Nacos with Dubbo fusion become registry",
+        "keywords": "Dubbo,Nacos,registration center",
+        "description": "Nacos with Dubbo fusion become registry"
+      }
+    },
+    {
+      "filename": "use-nacos-with-kubernetes.md",
+      "link": "/en-us/docs/use-nacos-with-kubernetes.html",
+      "meta": {
+        "title": "Kubernetes Nacos",
+        "keywords": "nacos,kubernetes",
+        "description": "This project contains a Nacos Docker image meant to facilitate the deployment of Nacos on Kubernetes via StatefulSets."
+      }
+    },
+    {
+      "filename": "architecture.md",
+      "link": "/en-us/docs/v2/architecture.html",
+      "meta": {
+        "title": "Nacos architecture",
+        "keywords": "Nacos,architecture",
+        "description": "Nacos architecture"
+      }
+    },
+    {
+      "filename": "community.md",
+      "link": "/en-us/docs/v2/community/community.html",
+      "meta": {
+        "title": "Community",
+        "keywords": "community,contact",
+        "description": "Community"
+      }
+    },
+    {
+      "filename": "nacos-dev.md",
+      "link": "/en-us/docs/v2/community/nacos-dev.html",
+      "meta": {
+        "title": "Developers",
+        "keywords": "nacos,developers,committer,pmc,nacos team",
+        "description": "Nacos developers page"
+      }
+    },
+    {
+      "filename": "concepts.md",
+      "link": "/en-us/docs/v2/concepts.html",
+      "meta": {
+        "title": "Nacos Concepts",
+        "keywords": "Nacos,Concepts",
+        "description": "Nacos Concepts"
+      }
+    },
+    {
+      "filename": "contributing-flow.md",
+      "link": "/en-us/docs/v2/contribution/contributing-flow.html",
+      "meta": {
+        "title": "Contributing Flow",
+        "keywords": "Contributing,Source Code",
+        "description": "This contribution flow is applicable to all Nacos community content, including but not limited to Nacos, Nacos wiki/doc, Nacos SDK."
+      }
+    },
+    {
+      "filename": "contributing.md",
+      "link": "/en-us/docs/v2/contribution/contributing.html",
+      "meta": {
+        "title": "How to Contribute",
+        "keywords": "contribute,code",
+        "description": "We are always very happy to have contributions, whether for trivial cleanups or big new features."
+      }
+    },
+    {
+      "filename": "how-to-reporting-bugs.md",
+      "link": "/en-us/docs/v2/contribution/how-to-reporting-bugs.html",
+      "meta": {
+        "title": "How to report bugs",
+        "keywords": "nacos,submit,reporting bugs",
+        "description": "How to report bugs"
+      }
+    },
+    {
+      "filename": "pull-request.md",
+      "link": "/en-us/docs/v2/contribution/pull-request.html",
+      "meta": {
+        "title": "Pull request template",
+        "keywords": "pull request,template",
+        "description": "Pull request template"
+      }
+    },
+    {
+      "filename": "use-nacos-sync.md",
+      "link": "/en-us/docs/v2/ecology/use-nacos-sync.html",
+      "meta": {
+        "title": "NacosSync user guide",
+        "keywords": "NacosSync,migration,user guide",
+        "description": "NacosSync migration user manual"
+      }
+    },
+    {
+      "filename": "use-nacos-with-dubbo.md",
+      "link": "/en-us/docs/v2/ecology/use-nacos-with-dubbo.html",
+      "meta": {
+        "title": "Nacos with Dubbo fusion become registry",
+        "keywords": "Dubbo,Nacos,registration center",
+        "description": "Nacos with Dubbo fusion become registry"
+      }
+    },
+    {
+      "filename": "use-nacos-with-spring-boot.md",
+      "link": "/en-us/docs/v2/ecology/use-nacos-with-spring-boot.html",
+      "meta": {
+        "title": "Nacos with Spring Boot Projects",
+        "keywords": "Nacos,Spring Boot",
+        "description": "Quick Start for Nacos Spring Boot Projects"
+      }
+    },
+    {
+      "filename": "use-nacos-with-spring-cloud.md",
+      "link": "/en-us/docs/v2/ecology/use-nacos-with-spring-cloud.html",
+      "meta": {
+        "title": "Nacos with Spring Cloud Projects",
+        "keywords": "Nacos,Spring Cloud",
+        "description": "Quick Start for Nacos Spring Cloud Projects"
+      }
+    },
+    {
+      "filename": "use-nacos-with-spring.md",
+      "link": "/en-us/docs/v2/ecology/use-nacos-with-spring.html",
+      "meta": {
+        "title": "Nacos with Spring Projects",
+        "keywords": "Nacos,Spring,quick start",
+        "description": "This quick start introduces how to enable Nacos configuration management and service discovery features for your Spring project."
+      }
+    },
+    {
+      "filename": "cluster-mode-quick-start.md",
+      "link": "/en-us/docs/v2/guide/admin/cluster-mode-quick-start.html",
+      "meta": {
+        "title": "Cluster deployment instructions",
+        "keywords": "Cluster,deployment",
+        "description": "Cluster deployment instructions"
+      }
+    },
+    {
+      "filename": "console-guide.md",
+      "link": "/en-us/docs/v2/guide/admin/console-guide.html",
+      "meta": {
+        "title": "Console Guide",
+        "keywords": "console,guide",
+        "description": "Nacos console aims to enhance the console for service list, health management, service management, a distributed configuration management control ability."
+      }
+    },
+    {
+      "filename": "deployment.md",
+      "link": "/en-us/docs/v2/guide/admin/deployment.html",
+      "meta": {
+        "title": "Nacos supports three types of deployment modes",
+        "keywords": "Nacos,deployment modes",
+        "description": "Nacos supports three types of deployment modes"
+      }
+    },
+    {
+      "filename": "management-api.md",
+      "link": "/en-us/docs/v2/guide/admin/management-api.html",
+      "meta": {
+        "title": "Management API",
+        "keywords": "Management,API",
+        "description": "In plan with Nacos 1.x.x"
+      }
+    },
+    {
+      "filename": "monitor-guide.md",
+      "link": "/en-us/docs/v2/guide/admin/monitor-guide.html",
+      "meta": {
+        "title": "Nacos monitor guide",
+        "keywords": "Nacos,monitor guide",
+        "description": "Nacos monitor guide"
+      }
+    },
+    {
+      "filename": "nacos2-config-benchmark.md",
+      "link": "/en-us/docs/v2/guide/admin/nacos2-config-benchmark.html",
+      "meta": {
+        "title": "Nacos2.0服务配置性能测试报告",
+        "keywords": "Nacos,服务,配置,性能",
+        "description": "Nacos2.0服务配置性能测试报告"
+      }
+    },
+    {
+      "filename": "nacos2-naming-benchmark.md",
+      "link": "/en-us/docs/v2/guide/admin/nacos2-naming-benchmark.html",
+      "meta": {
+        "title": "Nacos2.0服务发现性能测试报告",
+        "keywords": "Nacos,服务,发现,性能",
+        "description": "Nacos2.0服务发现性能测试报告"
+      }
+    },
+    {
+      "filename": "system-configurations.md",
+      "link": "/en-us/docs/v2/guide/admin/system-configurations.html",
+      "meta": {
+        "title": "Nacos system parameters introduce",
+        "keywords": "Nacos,System parameters",
+        "description": "Nacos system parameters introduce"
+      }
+    },
+    {
+      "filename": "auth.md",
+      "link": "/en-us/docs/v2/guide/user/auth.html",
+      "meta": {
+        "title": "Authentication",
+        "keywords": "Authentication",
+        "description": "Authentication"
+      }
+    },
+    {
+      "filename": "faq.md",
+      "link": "/en-us/docs/v2/guide/user/faq.html",
+      "meta": {
+        "title": "FAQ",
+        "keywords": "Nacos,FAQ",
+        "description": "Nacos FAQ"
+      }
+    },
+    {
+      "filename": "open-api.md",
+      "link": "/en-us/docs/v2/guide/user/open-api.html",
+      "meta": {
+        "title": "Open API Guide",
+        "keywords": "Open API,Guide",
+        "description": "Open API Guide"
+      }
+    },
+    {
+      "filename": "other-language.md",
+      "link": "/en-us/docs/v2/guide/user/other-language.html",
+      "meta": {
+        "title": "Other languages SDK",
+        "keywords": "Other languages,SDK",
+        "description": "Other languages SDK"
+      }
+    },
+    {
+      "filename": "sdk.md",
+      "link": "/en-us/docs/v2/guide/user/sdk.html",
+      "meta": {
+        "title": "Java SDK",
+        "keywords": "Java,SDK",
+        "description": "Java SDK"
+      }
+    },
+    {
+      "filename": "auth-plugin.md",
+      "link": "/en-us/docs/v2/plugin/auth-plugin.html",
+      "meta": {
+        "title": "Authorization Plugin",
+        "keywords": "Authorization, Plugin",
+        "description": "This article describes how to develop and use Nacos' authentication plugin."
+      }
+    },
+    {
+      "filename": "config-encryption-plugin.md",
+      "link": "/en-us/docs/v2/plugin/config-encryption-plugin.html",
+      "meta": {
+        "title": "CONFIGURE ENCRYPTION",
+        "keywords": "AES,ENCRYPTION,CONFIGURE ENCRYPTION",
+        "description": "CONFIGURE ENCRYPTION"
+      }
+    },
+    {
+      "filename": "quick-start-docker.md",
+      "link": "/en-us/docs/v2/quickstart/quick-start-docker.html",
+      "meta": {
+        "title": "Quick Start for Nacos Docker",
+        "keywords": "Nacos,Docker",
+        "description": "Quick Start for Nacos Docker"
+      }
+    },
+    {
+      "filename": "quick-start-kubernetes.md",
+      "link": "/en-us/docs/v2/quickstart/quick-start-kubernetes.html",
+      "meta": {
+        "title": "Kubernetes Nacos",
+        "keywords": "nacos,kubernetes",
+        "description": "This project contains a Nacos Docker image meant to facilitate the deployment of Nacos on Kubernetes via StatefulSets."
+      }
+    },
+    {
+      "filename": "quick-start.md",
+      "link": "/en-us/docs/v2/quickstart/quick-start.html",
+      "meta": {
+        "title": "Quick Start for Nacos",
+        "keywords": "Nacos,Quick start",
+        "description": "This topic is about how to set up and use Nacos."
+      }
+    },
+    {
+      "filename": "2.0.0-compatibility.md",
+      "link": "/en-us/docs/v2/upgrading/2.0.0-compatibility.html",
+      "meta": {
+        "title": "Nacos 2.0.0 compatibility",
+        "keywords": "Nacos,2.0.0",
+        "description": "Nacos 2.0.0 compatibility"
+      }
+    },
+    {
+      "filename": "2.0.0-upgrading.md",
+      "link": "/en-us/docs/v2/upgrading/2.0.0-upgrading.html",
+      "meta": {
+        "title": "Nacos 2.0 升级文档",
+        "keywords": "Nacos,2.0,升级",
+        "description": "Nacos 2.0 升级文档"
+      }
+    },
+    {
+      "filename": "what-is-nacos.md",
+      "link": "/en-us/docs/v2/what-is-nacos.html",
+      "meta": {
+        "title": "What is Nacos",
+        "keywords": "nacos",
+        "description": "What is Nacos"
+      }
+    },
+    {
+      "filename": "what-is-nacos.md",
+      "link": "/en-us/docs/what-is-nacos.html",
+      "meta": {
+        "title": "What is Nacos",
+        "keywords": "nacos",
+        "description": "What is Nacos"
+      }
+    }
+  ],
+  "zh-cn": [
+    {
+      "filename": "architecture.md",
+      "link": "/zh-cn/docs/architecture.html",
+      "meta": {
+        "title": "Nacos 架构",
+        "keywords": "Nacos,架构",
+        "description": "Nacos 架构"
+      }
+    },
+    {
+      "filename": "activity.md",
+      "link": "/zh-cn/docs/archive/activity.html",
+      "meta": {
+        "title": "Nacos 有奖活动介绍",
+        "keywords": "Nacos,活动",
+        "description": "Nacos 有奖活动介绍"
+      }
+    },
+    {
+      "filename": "cli-guide.md",
+      "link": "/zh-cn/docs/archive/cli-guide.html",
+      "meta": {
+        "title": "CLI Guide",
+        "keywords": "CLI,Guide",
+        "description": "In plan with Nacos 1.x.x"
+      }
+    },
+    {
+      "filename": "contributing-dev.md",
+      "link": "/zh-cn/docs/archive/contributing-dev.html",
+      "meta": {
+        "title": "为 Nacos 做贡献",
+        "keywords": "Nacos,贡献",
+        "description": "欢迎来到Nacos！本文档是关于如何为Nacos做出贡献的指南。"
+      }
+    },
+    {
+      "filename": "feature-list.md",
+      "link": "/zh-cn/docs/archive/feature-list.html",
+      "meta": {}
+    },
+    {
+      "filename": "roadmap.md",
+      "link": "/zh-cn/docs/archive/roadmap.html",
+      "meta": {
+        "title": "Nacos 规划",
+        "keywords": "Nacos,规划",
+        "description": "Nacos 规划"
+      }
+    },
+    {
+      "filename": "sdk-properties.md",
+      "link": "/zh-cn/docs/archive/sdk-properties.html",
+      "meta": {}
+    },
+    {
+      "filename": "use-nacos-with-istio.md",
+      "link": "/zh-cn/docs/archive/use-nacos-with-istio.html",
+      "meta": {
+        "title": "Nacos Istio",
+        "keywords": "Nacos,Istio",
+        "description": "In plan with Nacos 1.x.x"
+      }
+    },
+    {
+      "filename": "use-nacos-with-springcloud.md",
+      "link": "/zh-cn/docs/archive/use-nacos-with-springcloud.html",
+      "meta": {
+        "title": "Nacos Spring Cloud",
+        "keywords": "nacos,Spring Cloud",
+        "description": "Nacos Spring Cloud"
+      }
+    },
+    {
+      "filename": "auth.md",
+      "link": "/zh-cn/docs/auth.html",
+      "meta": {
+        "title": "Authorization",
+        "keywords": "Authorization",
+        "description": "Authorization"
+      }
+    },
+    {
+      "filename": "cluster-mode-quick-start.md",
+      "link": "/zh-cn/docs/cluster-mode-quick-start.html",
+      "meta": {
+        "title": "集群部署说明",
+        "keywords": "集群,部署",
+        "description": "集群部署说明"
+      }
+    },
+    {
+      "filename": "community.md",
+      "link": "/zh-cn/docs/community.html",
+      "meta": {
+        "title": "社区",
+        "keywords": "社区,联系方式",
+        "description": "社区"
+      }
+    },
+    {
+      "filename": "concepts.md",
+      "link": "/zh-cn/docs/concepts.html",
+      "meta": {
+        "title": "Nacos 概念",
+        "keywords": "Nacos,概念",
+        "description": "Nacos 概念"
+      }
+    },
+    {
+      "filename": "console-guide.md",
+      "link": "/zh-cn/docs/console-guide.html",
+      "meta": {
+        "title": "控制台手册",
+        "keywords": "控制台,手册",
+        "description": "Nacos 控制台主要旨在于增强对于服务列表，健康状态管理，服务治理，分布式配置管理等方面的管控能力。"
+      }
+    },
+    {
+      "filename": "contributing-flow.md",
+      "link": "/zh-cn/docs/contributing-flow.html",
+      "meta": {
+        "title": "贡献流程",
+        "keywords": "贡献,源码",
+        "description": "此贡献流程适用于所有的Nacos社区内容，包括但不限于`Nacos`、`Nacos wiki/doc`、`Nacos SDK`。"
+      }
+    },
+    {
+      "filename": "contributing.md",
+      "link": "/zh-cn/docs/contributing.html",
+      "meta": {
+        "title": "如何贡献",
+        "keywords": "贡献,源码",
+        "description": "我们非常欢迎您的贡献和加入，无论是微不足道的清理或大的新功能。"
+      }
+    },
+    {
+      "filename": "deployment.md",
+      "link": "/zh-cn/docs/deployment.html",
+      "meta": {
+        "title": "Nacos支持三种部署模式",
+        "keywords": "Nacos,部署模式",
+        "description": "Nacos支持三种部署模式"
+      }
+    },
+    {
+      "filename": "faq.md",
+      "link": "/zh-cn/docs/faq.html",
+      "meta": {
+        "title": "FAQ",
+        "keywords": "Nacos,FAQ",
+        "description": "Nacos FAQ"
+      }
+    },
+    {
+      "filename": "how-to-reporting-bugs.md",
+      "link": "/zh-cn/docs/how-to-reporting-bugs.html",
+      "meta": {
+        "title": "如何提交问题报告",
+        "keywords": "提交,问题报告",
+        "description": "如何提交问题报告"
+      }
+    },
+    {
+      "filename": "management-api.md",
+      "link": "/zh-cn/docs/management-api.html",
+      "meta": {
+        "title": "Management API",
+        "keywords": "Management,API",
+        "description": "In plan with Nacos 1.x.x"
+      }
+    },
+    {
+      "filename": "monitor-guide.md",
+      "link": "/zh-cn/docs/monitor-guide.html",
+      "meta": {
+        "title": "Nacos 监控手册",
+        "keywords": "Nacos,监控手册",
+        "description": "Nacos 监控手册"
+      }
+    },
+    {
+      "filename": "nacos-config-benchmark.md",
+      "link": "/zh-cn/docs/nacos-config-benchmark.html",
+      "meta": {
+        "title": "Nacos服务配置性能测试报告",
+        "keywords": "Nacos,服务,配置,性能",
+        "description": "Nacos服务配置性能测试报告"
+      }
+    },
+    {
+      "filename": "nacos-dev.md",
+      "link": "/zh-cn/docs/nacos-dev.html",
+      "meta": {
+        "title": "开发者",
+        "keywords": "nacos,开发者,committer",
+        "description": "Nacos 开发者页"
+      }
+    },
+    {
+      "filename": "nacos-naming-benchmark.md",
+      "link": "/zh-cn/docs/nacos-naming-benchmark.html",
+      "meta": {
+        "title": "Nacos服务发现性能测试报告",
+        "keywords": "Nacos,服务,发现,性能",
+        "description": "Nacos服务发现性能测试报告"
+      }
+    },
+    {
+      "filename": "nacos-spring.md",
+      "link": "/zh-cn/docs/nacos-spring.html",
+      "meta": {
+        "title": "Nacos Spring",
+        "keywords": "Nacos,Spring",
+        "description": "Nacos Spring"
+      }
+    },
+    {
+      "filename": "nacos-sync-use.md",
+      "link": "/zh-cn/docs/nacos-sync-use.html",
+      "meta": {
+        "title": "NacosSync 迁移用户手册",
+        "keywords": "NacosSync,迁移,用户手册",
+        "description": "NacosSync 迁移用户手册"
+      }
+    },
+    {
+      "filename": "nacos-sync.md",
+      "link": "/zh-cn/docs/nacos-sync.html",
+      "meta": {
+        "title": "NacosSync 介绍",
+        "keywords": "NacosSync,介绍",
+        "description": "NacosSync 介绍"
+      }
+    },
+    {
+      "filename": "open-api.md",
+      "link": "/zh-cn/docs/open-api.html",
+      "meta": {
+        "title": "Open API 指南",
+        "keywords": "Open API,指南",
+        "description": "Open API 指南"
+      }
+    },
+    {
+      "filename": "other-language.md",
+      "link": "/zh-cn/docs/other-language.html",
+      "meta": {
+        "title": "其他语言的SDK",
+        "keywords": "其他语言,SDK",
+        "description": "其他语言的SDK"
+      }
+    },
+    {
+      "filename": "pull-request.md",
+      "link": "/zh-cn/docs/pull-request.html",
+      "meta": {
+        "title": "提交需求模板",
+        "keywords": "pull request,模板",
+        "description": "提交需求模板"
+      }
+    },
+    {
+      "filename": "quick-start-docker.md",
+      "link": "/zh-cn/docs/quick-start-docker.html",
+      "meta": {
+        "title": "Nacos Docker 快速开始",
+        "keywords": "Nacos,Docker",
+        "description": "Nacos Docker 快速开始"
+      }
+    },
+    {
+      "filename": "quick-start-spring-boot.md",
+      "link": "/zh-cn/docs/quick-start-spring-boot.html",
+      "meta": {
+        "title": "Nacos Spring Boot 快速开始",
+        "keywords": "Nacos,Spring Boot",
+        "description": "Nacos Spring Boot 快速开始"
+      }
+    },
+    {
+      "filename": "quick-start-spring-cloud.md",
+      "link": "/zh-cn/docs/quick-start-spring-cloud.html",
+      "meta": {
+        "title": "Nacos Spring Cloud 快速开始",
+        "keywords": "Nacos,Spring Cloud",
+        "description": "Nacos Spring Cloud 快速开始"
+      }
+    },
+    {
+      "filename": "quick-start-spring.md",
+      "link": "/zh-cn/docs/quick-start-spring.html",
+      "meta": {
+        "title": "Nacos Spring 快速开始",
+        "keywords": "Nacos,Spring,快速开始",
+        "description": "本文主要面向 Spring 的使用者，通过两个示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现。"
+      }
+    },
+    {
+      "filename": "quick-start.md",
+      "link": "/zh-cn/docs/quick-start.html",
+      "meta": {
+        "title": "Nacos 快速开始",
+        "keywords": "Nacos,快速开始",
+        "description": "这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。"
+      }
+    },
+    {
+      "filename": "sdk.md",
+      "link": "/zh-cn/docs/sdk.html",
+      "meta": {
+        "title": "Java SDK",
+        "keywords": "Java,SDK",
+        "description": "Java SDK"
+      }
+    },
+    {
+      "filename": "system-configurations.md",
+      "link": "/zh-cn/docs/system-configurations.html",
+      "meta": {
+        "title": "Nacos系统参数介绍",
+        "keywords": "Nacos,系统参数",
+        "description": "Nacos系统参数介绍"
+      }
+    },
+    {
+      "filename": "use-nacos-with-dubbo.md",
+      "link": "/zh-cn/docs/use-nacos-with-dubbo.html",
+      "meta": {
+        "title": "Dubbo 融合 Nacos 成为注册中心",
+        "keywords": "Dubbo,Nacos,注册中心",
+        "description": "Dubbo 融合 Nacos 成为注册中心"
+      }
+    },
+    {
+      "filename": "use-nacos-with-kubernetes.md",
+      "link": "/zh-cn/docs/use-nacos-with-kubernetes.html",
+      "meta": {
+        "title": "Kubernetes Nacos",
+        "keywords": "nacos,kubernetes",
+        "description": "本项目包含一个可构建的Nacos Docker Image，旨在利用 StatefulSets 在 Kubernetes上部署 Nacos。"
+      }
+    },
+    {
+      "filename": "architecture.md",
+      "link": "/zh-cn/docs/v2/architecture.html",
+      "meta": {
+        "title": "Nacos 架构",
+        "keywords": "Nacos,架构",
+        "description": "Nacos 架构"
+      }
+    },
+    {
+      "filename": "community.md",
+      "link": "/zh-cn/docs/v2/community/community.html",
+      "meta": {
+        "title": "社区",
+        "keywords": "社区,联系方式",
+        "description": "社区"
+      }
+    },
+    {
+      "filename": "nacos-dev.md",
+      "link": "/zh-cn/docs/v2/community/nacos-dev.html",
+      "meta": {
+        "title": "开发者",
+        "keywords": "nacos,开发者,committer",
+        "description": "Nacos 开发者页"
+      }
+    },
+    {
+      "filename": "concepts.md",
+      "link": "/zh-cn/docs/v2/concepts.html",
+      "meta": {
+        "title": "Nacos 概念",
+        "keywords": "Nacos,概念",
+        "description": "Nacos 概念"
+      }
+    },
+    {
+      "filename": "contributing-flow.md",
+      "link": "/zh-cn/docs/v2/contribution/contributing-flow.html",
+      "meta": {
+        "title": "贡献流程",
+        "keywords": "贡献,源码",
+        "description": "此贡献流程适用于所有的Nacos社区内容，包括但不限于`Nacos`、`Nacos wiki/doc`、`Nacos SDK`。"
+      }
+    },
+    {
+      "filename": "contributing.md",
+      "link": "/zh-cn/docs/v2/contribution/contributing.html",
+      "meta": {
+        "title": "如何贡献",
+        "keywords": "贡献,源码",
+        "description": "我们非常欢迎您的贡献和加入，无论是微不足道的清理或大的新功能。"
+      }
+    },
+    {
+      "filename": "how-to-reporting-bugs.md",
+      "link": "/zh-cn/docs/v2/contribution/how-to-reporting-bugs.html",
+      "meta": {
+        "title": "如何提交问题报告",
+        "keywords": "提交,问题报告",
+        "description": "如何提交问题报告"
+      }
+    },
+    {
+      "filename": "pull-request.md",
+      "link": "/zh-cn/docs/v2/contribution/pull-request.html",
+      "meta": {
+        "title": "提交需求模板",
+        "keywords": "pull request,模板",
+        "description": "提交需求模板"
+      }
+    },
+    {
+      "filename": "use-nacos-sync.md",
+      "link": "/zh-cn/docs/v2/ecology/use-nacos-sync.html",
+      "meta": {
+        "title": "NacosSync 用户手册",
+        "keywords": "NacosSync,迁移,用户手册",
+        "description": "NacosSync 迁移用户手册"
+      }
+    },
+    {
+      "filename": "use-nacos-with-dubbo.md",
+      "link": "/zh-cn/docs/v2/ecology/use-nacos-with-dubbo.html",
+      "meta": {
+        "title": "Dubbo 融合 Nacos 成为注册中心",
+        "keywords": "Dubbo,Nacos,注册中心",
+        "description": "Dubbo 融合 Nacos 成为注册中心"
+      }
+    },
+    {
+      "filename": "use-nacos-with-spring-boot.md",
+      "link": "/zh-cn/docs/v2/ecology/use-nacos-with-spring-boot.html",
+      "meta": {
+        "title": "Nacos 融合 Spring Boot，成为注册配置中心",
+        "keywords": "Nacos,Spring Boot",
+        "description": "本文主要面向 Spring Boot 的使用者，通过示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现。"
+      }
+    },
+    {
+      "filename": "use-nacos-with-spring-cloud.md",
+      "link": "/zh-cn/docs/v2/ecology/use-nacos-with-spring-cloud.html",
+      "meta": {
+        "title": "Nacos 融合 Spring Cloud，成为注册配置中心",
+        "keywords": "Nacos,Spring Cloud",
+        "description": "本文主要面向 Spring Cloud 的使用者，通过示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现"
+      }
+    },
+    {
+      "filename": "use-nacos-with-spring.md",
+      "link": "/zh-cn/docs/v2/ecology/use-nacos-with-spring.html",
+      "meta": {
+        "title": "Nacos 融合 Spring，成为注册配置中心",
+        "keywords": "Nacos,Spring,快速开始",
+        "description": "本文主要面向 Spring 的使用者，通过两个示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现。"
+      }
+    },
+    {
+      "filename": "cluster-mode-quick-start.md",
+      "link": "/zh-cn/docs/v2/guide/admin/cluster-mode-quick-start.html",
+      "meta": {
+        "title": "集群部署说明",
+        "keywords": "集群,部署",
+        "description": "集群部署说明"
+      }
+    },
+    {
+      "filename": "console-guide.md",
+      "link": "/zh-cn/docs/v2/guide/admin/console-guide.html",
+      "meta": {
+        "title": "控制台手册",
+        "keywords": "控制台,手册",
+        "description": "Nacos 控制台主要旨在于增强对于服务列表，健康状态管理，服务治理，分布式配置管理等方面的管控能力。"
+      }
+    },
+    {
+      "filename": "deployment.md",
+      "link": "/zh-cn/docs/v2/guide/admin/deployment.html",
+      "meta": {
+        "title": "Nacos支持三种部署模式",
+        "keywords": "Nacos,部署模式",
+        "description": "Nacos支持三种部署模式"
+      }
+    },
+    {
+      "filename": "management-api.md",
+      "link": "/zh-cn/docs/v2/guide/admin/management-api.html",
+      "meta": {
+        "title": "Management API",
+        "keywords": "Management,API",
+        "description": "In plan with Nacos 1.x.x"
+      }
+    },
+    {
+      "filename": "monitor-guide.md",
+      "link": "/zh-cn/docs/v2/guide/admin/monitor-guide.html",
+      "meta": {
+        "title": "Nacos 监控手册",
+        "keywords": "Nacos,监控手册",
+        "description": "Nacos 监控手册"
+      }
+    },
+    {
+      "filename": "nacos2-config-benchmark.md",
+      "link": "/zh-cn/docs/v2/guide/admin/nacos2-config-benchmark.html",
+      "meta": {
+        "title": "Nacos2.0服务配置性能测试报告",
+        "keywords": "Nacos,服务,配置,性能",
+        "description": "Nacos2.0服务配置性能测试报告"
+      }
+    },
+    {
+      "filename": "nacos2-naming-benchmark.md",
+      "link": "/zh-cn/docs/v2/guide/admin/nacos2-naming-benchmark.html",
+      "meta": {
+        "title": "Nacos2.0服务发现性能测试报告",
+        "keywords": "Nacos,服务,发现,性能",
+        "description": "Nacos2.0服务发现性能测试报告"
+      }
+    },
+    {
+      "filename": "system-configurations.md",
+      "link": "/zh-cn/docs/v2/guide/admin/system-configurations.html",
+      "meta": {
+        "title": "Nacos系统参数介绍",
+        "keywords": "Nacos,系统参数",
+        "description": "Nacos系统参数介绍"
+      }
+    },
+    {
+      "filename": "auth.md",
+      "link": "/zh-cn/docs/v2/guide/user/auth.html",
+      "meta": {
+        "title": "Authorization",
+        "keywords": "Authorization",
+        "description": "Authorization"
+      }
+    },
+    {
+      "filename": "faq.md",
+      "link": "/zh-cn/docs/v2/guide/user/faq.html",
+      "meta": {
+        "title": "FAQ",
+        "keywords": "Nacos,FAQ",
+        "description": "Nacos FAQ"
+      }
+    },
+    {
+      "filename": "open-api.md",
+      "link": "/zh-cn/docs/v2/guide/user/open-api.html",
+      "meta": {
+        "title": "Open API 指南",
+        "keywords": "Open API,指南",
+        "description": "Open API 指南"
+      }
+    },
+    {
+      "filename": "other-language.md",
+      "link": "/zh-cn/docs/v2/guide/user/other-language.html",
+      "meta": {
+        "title": "其他语言的SDK",
+        "keywords": "其他语言,SDK",
+        "description": "其他语言的SDK"
+      }
+    },
+    {
+      "filename": "sdk.md",
+      "link": "/zh-cn/docs/v2/guide/user/sdk.html",
+      "meta": {
+        "title": "Java SDK",
+        "keywords": "Java,SDK",
+        "description": "Java SDK"
+      }
+    },
+    {
+      "filename": "auth-plugin.md",
+      "link": "/zh-cn/docs/v2/plugin/auth-plugin.html",
+      "meta": {
+        "title": "鉴权插件",
+        "keywords": "鉴权, 插件",
+        "description": "本文描述如何开发及使用Nacos的鉴权插件"
+      }
+    },
+    {
+      "filename": "config-encryption-plugin.md",
+      "link": "/zh-cn/docs/v2/plugin/config-encryption-plugin.html",
+      "meta": {
+        "title": "配置加密",
+        "keywords": "AES,encryption,配置加密",
+        "description": "配置加密"
+      }
+    },
+    {
+      "filename": "quick-start-docker.md",
+      "link": "/zh-cn/docs/v2/quickstart/quick-start-docker.html",
+      "meta": {
+        "title": "Nacos Docker 快速开始",
+        "keywords": "Nacos,Docker",
+        "description": "Nacos Docker 快速开始"
+      }
+    },
+    {
+      "filename": "quick-start-kubernetes.md",
+      "link": "/zh-cn/docs/v2/quickstart/quick-start-kubernetes.html",
+      "meta": {
+        "title": "Kubernetes Nacos",
+        "keywords": "nacos,kubernetes",
+        "description": "本项目包含一个可构建的Nacos Docker Image，旨在利用 StatefulSets 在 Kubernetes上部署 Nacos。"
+      }
+    },
+    {
+      "filename": "quick-start.md",
+      "link": "/zh-cn/docs/v2/quickstart/quick-start.html",
+      "meta": {
+        "title": "Nacos 快速开始",
+        "keywords": "Nacos,快速开始",
+        "description": "这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。"
+      }
+    },
+    {
+      "filename": "2.0.0-compatibility.md",
+      "link": "/zh-cn/docs/v2/upgrading/2.0.0-compatibility.html",
+      "meta": {
+        "title": "Nacos 2.0.0 兼容性文档",
+        "keywords": "Nacos,2.0.0",
+        "description": "Nacos 2.0.0 兼容性文档"
+      }
+    },
+    {
+      "filename": "2.0.0-upgrading.md",
+      "link": "/zh-cn/docs/v2/upgrading/2.0.0-upgrading.html",
+      "meta": {
+        "title": "Nacos 2.0 升级文档",
+        "keywords": "Nacos,2.0,升级",
+        "description": "Nacos 2.0 升级文档"
+      }
+    },
+    {
+      "filename": "what-is-nacos.md",
+      "link": "/zh-cn/docs/v2/what-is-nacos.html",
+      "meta": {
+        "title": "什么是 Nacos",
+        "keywords": "nacos",
+        "description": "什么是 Nacos"
+      }
+    },
+    {
+      "filename": "what-is-nacos.md",
+      "link": "/zh-cn/docs/what-is-nacos.html",
+      "meta": {
+        "title": "什么是 Nacos",
+        "keywords": "nacos",
+        "description": "什么是 Nacos"
+      }
+    }
+  ]
+}
