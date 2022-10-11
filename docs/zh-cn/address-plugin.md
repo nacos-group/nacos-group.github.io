@@ -15,7 +15,7 @@ Nacos从2.1.0版本开始，支持通过[SPI](https://docs.oracle.com/javase/tut
 
 当前Nacos集群寻址有三种寻址方式，单机寻址，配置文件寻址和地址服务器寻址，通过寻址插件，用户可以编写自己的寻址逻辑。
 
-## 开发服务端插件
+## 开发Nacos服务端寻址插件
 
 开发Nacos服务端鉴权插件，首先需要依赖鉴权插件的相关API
 
@@ -62,7 +62,7 @@ AddressProperties.getProperty(${key})
 
 ```properties
 ### 所启用的Nacos的寻址插件的名称，与`com.alibaba.nacos.plugin.address.spi.AddressService#getPlugin返回值对应
-nacos.core.member.lookup.type=${authServiceName}
+nacos.core.member.lookup.type=${addressPluginName}
 ```
 随后重启nacos集群，在有请求访问到nacos节点后，可以从`${nacos-server.path}/logs/nacos-cluster.log`中看到如下日志：
 

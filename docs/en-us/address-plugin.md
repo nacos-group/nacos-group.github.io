@@ -15,7 +15,7 @@ Since version 2.1.0, Nacos support to inject authentication plugins through [SPI
 
 At present, there are three addressing modes for Nacos cluster addressing: stand-alone addressing, profile addressing and address server addressing. Through the addressing plugin, users can write their own addressing logic.
 
-## Develop Server Plugin
+## Develop Nacos Server Addressing Plugin
 
 To develop a Nacos server-side addressing plugin, developer first need to depend on the relevant API of the address plugin.
 
@@ -60,7 +60,7 @@ After Adding plugins into classpath, also need to modify some configuration in `
 
 ```properties
 ### The plugin name nacos using，should be same as the return value of `com.alibaba.nacos.plugin.address.spi.AddressPlugin#getPluginName`
-nacos.core.member.lookup.type=${authServiceName}
+nacos.core.member.lookup.type=${addressPluginName}
 ```
 
 Restart nacos cluster, and after any request, some logs can be saw in `${nacos-server.path}/logs/nacos-cluster.log`:
