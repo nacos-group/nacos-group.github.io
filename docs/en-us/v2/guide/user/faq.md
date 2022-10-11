@@ -6,13 +6,14 @@ description: Nacos FAQ
 
 # FAQ
 
+> Document optimizing...
+
 - Nacos standard questions
   - [What is Nacos](#1.1)
   - [Nacos how to support more than the environment](#1.2)
   - [Nacos whether production is available](#1.3)
-  - [Nacos version plan](#1.4)
-  - [Nacos dependent](#1.5)
-  - [Nacos using open source licenses](#1.6)
+  - [Nacos dependent](#1.4)
+  - [Nacos using open source licenses](#1.5)
 
 - Nacos operational questions
   - [Nacos standalone deployment](#2.1)
@@ -46,7 +47,7 @@ description: Nacos FAQ
 ## Nacos standard questions
 <h4 id="1.1">What is Nacos</h4>
 
-Nacos dedicated to help you find, micro configuration and management services. Nacos provides a set of simple and easy to use feature set, help you quickly realize dynamic service discovery, service configuration, service metadata, and traffic management. Details you can refer to [Nacos website](https://nacos.io/en-us/docs/what-is-nacos.html).
+Nacos dedicated to help you find, micro configuration and management services. Nacos provides a set of simple and easy to use feature set, help you quickly realize dynamic service discovery, service configuration, service metadata, and traffic management. Details you can refer to [Nacos website](../../what-is-nacos.md).
 
 <h4 id="1.2">Nacos how to support more than the environment</h4>
 
@@ -56,34 +57,30 @@ In daily use are often need different environment, such as daily, pretest, onlin
 
 Nacos in January 2019 issued a Pre - GA version, to support the security isolation, monitoring and service migration on the last mile of production, in a more stable support the user's production environment. Details you can refer to [Nacos release v0.8.0 Pre - GA version, the safe and stable production](https://www.oschina.net/news/104019/nacos-0-8-0-pre-ga).
 
-<h4 id="1.4">Nacos version plan</h4>
+<h4 id="1.4">Nacos dependent</h4>
 
-Nacos 0.8.0 to support production available, version 1.0 to mass production is available, version 2.0 plan and K8s, Spring Cloud, and further integration Service Mesh, Serverless, details you can refer to [Nacos roadmap](https://nacos.io/en-us/docs/roadmap.html).
+In stand-alone mode, Nacos without any rely on, in cluster mode, Nacos rely on Mysql storage, details you can refer to [Nacos deployment](../admin/deployment.md).
 
-<h4 id="1.5">Nacos dependent</h4>
-
-In stand-alone mode, Nacos without any rely on, in cluster mode, Nacos rely on Mysql storage, details you can refer to [Nacos deployment](https://nacos.io/en-us/docs/deployment.html).
-
-<h4 id="1.6">Nacos using open source licenses</h4>
+<h4 id="1.5">Nacos using open source licenses</h4>
 
 Nacos using [Apache 2.0](https://github.com/alibaba/nacos/blob/master/LICENSE).
 
 ## Nacos operational questions
 <h4 id="2.1">Nacos standalone deployment</h4>
 
-You can refer to the manual Nacos website deployment [quick start](https://nacos.io/en-us/docs/quick-start.html).
+You can refer to the manual Nacos website deployment [quick start](../../quickstart/quick-start.md).
 
 <h4 id="2.2">Nacos standalone deployment using Mysql</h4>
 
-Nacos stand-alone mode defaults to using the embedded database as the storage engine, if you want to change your mysql installation, you can refer to [website document](https://nacos.io/en-us/docs/deployment.html).
+Nacos stand-alone mode defaults to using the embedded database as the storage engine, if you want to change your mysql installation, you can refer to [website document](../admin/deployment.md).
 
 <h4 id="2.3">Nacos production deployment</h4>
 
-Production environment using Nacos in order to achieve high availability cannot use stand-alone mode, need to build Nacos cluster, specific details can refer to [the manual cluster deployment](https://nacos.io/en-us/docs/cluster-mode-quick-start.html).
+Production environment using Nacos in order to achieve high availability cannot use stand-alone mode, need to build Nacos cluster, specific details can refer to [the manual cluster deployment](../admin/cluster-mode-quick-start.md).
 
 <h4 id="2.4">Nacos Docker deployment</h4>
 
-In addition to using compressed package deployment Nacos, Nacos also provides a corresponding Docker image, when Nacos release new versions, Nacos will release the corresponding image version supports Docker deployment.Specific details you can refer to [Nacos Docker](https://nacos.io/en-us/docs/quick-start-docker.html).
+In addition to using compressed package deployment Nacos, Nacos also provides a corresponding Docker image, when Nacos release new versions, Nacos will release the corresponding image version supports Docker deployment.Specific details you can refer to [Nacos Docker](../../quickstart/quick-start-docker.md).
 
 <h4 id="2.5">How to deploy in k8s Nacos</h4>
 
@@ -91,7 +88,7 @@ In production deployment Nacos cluster, if for Nacos expansion operation, need t
 
 <h4 id="2.6">How to monitor Nacos</h4>
 
-Nacos0.8 version provides the Metrics data exposed ability, can pass the Metrics data to monitor the running status of Nacos, the content of the details you can refer to [Nacos monitor](https://nacos.io/en-us/docs/monitor-guide.html).
+Nacos0.8 version provides the Metrics data exposed ability, can pass the Metrics data to monitor the running status of Nacos, the content of the details you can refer to [Nacos monitor](../admin/monitor-guide.md).
 
 <h4 id="2.7">Nacos cannot start in Docker, always print Nacos is starting...</h4>
 
@@ -108,15 +105,15 @@ Nacos through Spring Cloud Alibaba Nacos Config support multiple configuration f
 
 <h4 id="3.3">Nacos support Dubbo</h4>
 
-Nacos version 0.6 and Dubbo integration, support the use of Nacos as registry, related [issue](https://github.com/alibaba/nacos/issues/390), details refer to the document [Nacos and Dubbo fusion become registry](https://nacos.io/en-us/docs/use-nacos-with-dubbo.html).
+Nacos version 0.6 and Dubbo integration, support the use of Nacos as registry, related [issue](https://github.com/alibaba/nacos/issues/390), details refer to the document [Nacos and Dubbo fusion become registry](../../ecology/use-nacos-with-dubbo.md).
 
 <h4 id="3.4">Nacos support Spring system</h4>
 
-Nacos perfect supports the Sping technology stack, details refer to the document [Nacos Spring](https://nacos.io/en-us/docs/quick-start-spring.html)、[Nacos Spring Boot](https://nacos.io/en-us/docs/quick-start-spring-boot.html)、[Spring Cloud](https://nacos.io/en-us/docs/quick-start-spring-cloud.html).
+Nacos perfect supports the Sping technology stack, details refer to the document [Nacos Spring](../../ecology/use-nacos-with-spring.md)、[Nacos Spring Boot](../../ecology/use-nacos-with-spring-boot.md)、[Spring Cloud](../../ecology/use-nacos-with-spring-cloud.md).
 
 <h4 id="3.5">Don't use Nacos SDK how to access the Nacos</h4>
 
-Nacos network interaction is implemented based on Http protocol, provides the [Open-API]((https://nacos.io/en-us/docs/open-api.html)) can easily achieve Nacos access.
+Nacos network interaction is implemented based on Http protocol, provides the [Open-API](./open-api.md) can easily achieve Nacos access.
 
 <h4 id="3.6">Nacos support for multiple languages</h4>
 
