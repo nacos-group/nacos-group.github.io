@@ -22,7 +22,7 @@
 <li>How to enable service registration and discovery with Nacos server and spring-cloud-starter-alibaba-nacos-discovery.</li>
 </ul>
 <h2>Prerequisite</h2>
-<p>Follow instructions in <a href="https://nacos.io/zh-cn/docs/quick-start.html">Nacos Quick Start</a> to download Nacos and start the Nacos server.</p>
+<p>Follow instructions in <a href="../quickstart/quick-start.md">Nacos Quick Start</a> to download Nacos and start the Nacos server.</p>
 <h2>Enable Configuration Service</h2>
 <p>Once you start the Nacos server, you can follow the steps below to enable the Nacos configuration management service for your Spring Cloud project.</p>
 <p>Sample project: <a href="https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-cloud-example/nacos-spring-cloud-config-example">nacos-spring-cloud-config-example</a></p>
@@ -71,7 +71,7 @@ public class ConfigController {
 }
 </code></pre>
 <ol start="5">
-<li>Call <a href="https://nacos.io/zh-cn/docs/open-api.html">Nacos Open API</a> to publish a configuration to the Nacos server. Assume the dataId is <code>example.properties</code>，and the content is <code>useLocalCache=true</code>.</li>
+<li>Call <a href="../guide/user/open-api.md">Nacos Open API</a> to publish a configuration to the Nacos server. Assume the dataId is <code>example.properties</code>，and the content is <code>useLocalCache=true</code>.</li>
 </ol>
 <pre><code>curl -X POST &quot;http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example.properties&amp;group=DEFAULT_GROUP&amp;content=useLocalCache=true&quot;
 </code></pre>
@@ -80,7 +80,7 @@ public class ConfigController {
 <p>Run <code>NacosConfigApplication</code>and call  <code>curl http://localhost:8080/config/get</code>，You will get a returned value of <code>true</code>.</p>
 </li>
 <li>
-<p>Call <a href="https://nacos.io/zh-cn/docs/open-api.html">Nacos Open API</a> again to publish an updated configuration to the Nacos server. Assume the dataId is<code>example.properties</code>，and the content is <code>useLocalCache=false</code>.</p>
+<p>Call <a href="../guide/user/open-api.md">Nacos Open API</a> again to publish an updated configuration to the Nacos server. Assume the dataId is<code>example.properties</code>，and the content is <code>useLocalCache=false</code>.</p>
 </li>
 </ol>
 <pre><code>curl -X POST &quot;http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example.properties&amp;group=DEFAULT_GROUP&amp;content=useLocalCache=false&quot;

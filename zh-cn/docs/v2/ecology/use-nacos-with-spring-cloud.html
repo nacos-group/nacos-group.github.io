@@ -21,7 +21,7 @@
 <li>通过 Nacos Server 和 spring-cloud-starter-alibaba-nacos-discovery 实现服务的注册与发现。</li>
 </ul>
 <h2>前提条件</h2>
-<p>您需要先下载 Nacos 并启动 Nacos server。操作步骤参见 <a href="https://nacos.io/zh-cn/docs/quick-start.html">Nacos 快速入门</a></p>
+<p>您需要先下载 Nacos 并启动 Nacos server。操作步骤参见 <a href="../quickstart/quick-start.md">Nacos 快速入门</a></p>
 <h2>启动配置管理</h2>
 <p>启动了 Nacos server 后，您就可以参考以下示例代码，为您的 Spring Cloud 应用启动 Nacos 配置管理服务了。完整示例代码请参考：<a href="https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-cloud-example/nacos-spring-cloud-config-example">nacos-spring-cloud-config-example</a></p>
 <ol>
@@ -70,7 +70,7 @@ public class ConfigController {
 }
 </code></pre>
 <ol start="5">
-<li>首先通过调用 <a href="https://nacos.io/zh-cn/docs/open-api.html">Nacos Open API</a> 向 Nacos Server 发布配置：dataId 为<code>example.properties</code>，内容为<code>useLocalCache=true</code></li>
+<li>首先通过调用 <a href="../guide/user/open-api.md">Nacos Open API</a> 向 Nacos Server 发布配置：dataId 为<code>example.properties</code>，内容为<code>useLocalCache=true</code></li>
 </ol>
 <pre><code>curl -X POST &quot;http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example.properties&amp;group=DEFAULT_GROUP&amp;content=useLocalCache=true&quot;
 </code></pre>
@@ -79,7 +79,7 @@ public class ConfigController {
 <p>运行 <code>NacosConfigApplication</code>，调用 <code>curl http://localhost:8080/config/get</code>，返回内容是 <code>true</code>。</p>
 </li>
 <li>
-<p>再次调用 <a href="https://nacos.io/zh-cn/docs/open-api.html">Nacos Open API</a> 向 Nacos server 发布配置：dataId 为<code>example.properties</code>，内容为<code>useLocalCache=false</code></p>
+<p>再次调用 <a href="../guide/user/open-api.md">Nacos Open API</a> 向 Nacos server 发布配置：dataId 为<code>example.properties</code>，内容为<code>useLocalCache=false</code></p>
 </li>
 </ol>
 <pre><code>curl -X POST &quot;http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example.properties&amp;group=DEFAULT_GROUP&amp;content=useLocalCache=false&quot;

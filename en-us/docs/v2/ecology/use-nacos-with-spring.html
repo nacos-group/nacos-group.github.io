@@ -22,7 +22,7 @@
 <li>How to enable Nacos server and Nacos Spring service discovery modules to implement service registration and discovery.</li>
 </ul>
 <h2>Prerequisite</h2>
-<p>Follow instructions in <a href="https://nacos.io/zh-cn/docs/quick-start.html">Nacos Quick Start</a> to download Nacos and start the Nacos server.</p>
+<p>Follow instructions in <a href="../quickstart/quick-start.md">Nacos Quick Start</a> to download Nacos and start the Nacos server.</p>
 <h2>Enable Configuration Service</h2>
 <p>Once you start the Nacos server, you can follow the steps below to enable the Nacos configuration management service for your Spring project.</p>
 <p>Sample project: <a href="https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-example/nacos-spring-config-example">nacos-spring-config-example</a></p>
@@ -68,7 +68,7 @@ public class ConfigController {
 <p>Start Tomcat and call  <code>curl http://localhost:8080/config/get</code> to get configuration information. Because no configuration has been published, a <code>false</code>message is returned.</p>
 </li>
 <li>
-<p>Now you can call <a href="https://nacos.io/zh-cn/docs/open-api.html">Nacos Open API</a> to publish a configruation to the Nacos server. Assume the dataId is <code>example</code>, and content is <code>useLocalCache=true</code>.</p>
+<p>Now you can call <a href="../guide/user/open-api.md">Nacos Open API</a> to publish a configruation to the Nacos server. Assume the dataId is <code>example</code>, and content is <code>useLocalCache=true</code>.</p>
 </li>
 </ol>
 <pre><code>curl -X POST &quot;http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example&amp;group=DEFAULT_GROUP&amp;content=useLocalCache=true&quot;
@@ -120,7 +120,7 @@ public class DiscoveryController {
 <p>Start Tomcat and call <code>curl http://localhost:8080/discovery/get?serviceName=example</code>, and the return value is an empty JSON array <code>[]</code>.</p>
 </li>
 <li>
-<p>Call <a href="https://nacos.io/zh-cn/docs/open-api.html">Nacos Open API</a> to register a service called <code>example</code>to the Nacos Server.</p>
+<p>Call <a href="../guide/user/open-api.md">Nacos Open API</a> to register a service called <code>example</code>to the Nacos Server.</p>
 </li>
 </ol>
 <pre><code>curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&amp;ip=127.0.0.1&amp;port=8080'
