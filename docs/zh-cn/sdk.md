@@ -17,6 +17,37 @@ Maven 坐标
 </dependency>
 ```
 
+> 注意：由于Nacos Java SDK在2.0版本后引入了gRPC，为了避免用户业务引入的gRPC版本不同导致冲突，使用了shaded技术将部分依赖直接封装进nacos-client中，导致nacos-client较大。
+> 如果用户未自行引入gRPC或确认版本无冲突，希望使用纯净版的nacos-client以减小依赖，可以使用classifier来指定使用纯净版。
+
+```xml
+    <properties>
+        <!-- 2.1.2版本以上支持纯净版客户端 -->
+        <nacos.version>2.1.2</nacos.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+            <version>${nacos.version}</version>
+            <!-- 指定纯净版SDK -->
+            <classifier>pure</classifier>
+        </dependency>
+        <!-- 使用纯净版时必须要引入同版本nacos-api和nacos-common，否则可能出现运行时找不到类的问题 -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>nacos-common</artifactId>
+            <version>${nacos.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>nacos-api</artifactId>
+            <version>${nacos.version}</version>
+        </dependency>
+    </dependencies>
+```
+
 ## 配置管理
 ### 获取配置
 #### 描述
