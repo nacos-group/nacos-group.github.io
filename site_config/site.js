@@ -14,7 +14,19 @@ export default {
       {
         key: 'docs',
         text: 'DOCS',
-        link: '/en-us/docs/quick-start.html',
+        link: '',
+        children: [
+          {
+            key: 'v2',
+            text: '2.X',
+            link: '/en-us/docs/v2/quickstart/quick-start.html',
+          },
+          {
+            key: 'v1',
+            text: '1.X（Expired）',
+            link: '/en-us/docs/quick-start.html',
+          },
+        ]
       },
       {
         key: 'solution',
@@ -153,7 +165,19 @@ export default {
       {
         key: 'docs',
         text: '文档',
-        link: '/zh-cn/docs/what-is-nacos.html',
+        link: '',
+        children: [
+          {
+            key: 'v2',
+            text: '2.X',
+            link: '/zh-cn/docs/v2/quickstart/quick-start.html',
+          },
+          {
+            key: 'v1',
+            text: '1.X（过期）',
+            link: '/zh-cn/docs/quick-start.html',
+          },
+        ]
       },
       {
         key: 'solution',
