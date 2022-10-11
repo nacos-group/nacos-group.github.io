@@ -108,7 +108,7 @@ description: Nacos Docker 快速开始
 
 
 ## Nacos + Grafana + Prometheus
-参考：[Nacos监控指南](https://nacos.io/zh-cn/docs/monitor-guide.html)
+参考：[Nacos监控指南](../guide/admin/monitor-guide.md)
 
 **Note**:  grafana创建一个新数据源时，数据源地址必须是 **http://prometheus:9090**
 

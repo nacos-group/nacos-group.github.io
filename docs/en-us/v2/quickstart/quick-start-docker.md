@@ -108,7 +108,7 @@ Run the following command：
 
 
 ## Nacos + Grafana + Prometheus
-Usage reference：[Nacos monitor-guide](https://nacos.io/zh-cn/docs/monitor-guide.html)
+Usage reference：[Nacos monitor-guide](../guide/admin/monitor-guide.md)
 
 **Note**:  When Grafana creates a new data source, the data source address must be **http://prometheus:9090**
 
