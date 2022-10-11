@@ -9,7 +9,10 @@ description: 这个快速开始手册是帮忙您快速在您的电脑上，下�
 这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。
 
 ## 0.版本选择
-您可以在Nacos的[release notes](https://github.com/alibaba/nacos/releases)及[博客](https://nacos.io/zh-cn/blog/index.html)中找到每个版本支持的功能的介绍，当前推荐的稳定版本为2.0.3。
+
+Nacos 1.X 是老版本，将来会停止维护。 建议您使用2.X版本。 请移步到 [Nacos2.X相关文档](./v2/quickstart/quick-start.md).
+
+您可以在Nacos的[release notes](https://github.com/alibaba/nacos/releases)及[博客](https://nacos.io/zh-cn/blog/index.html)中找到每个版本支持的功能的介绍，当前推荐的稳定版本为2.1.1。
 
 ## 1.预备环境准备
 

@@ -18,12 +18,12 @@ export default {
         children: [
           {
             key: 'v2',
-            text: '2.X',
+            text: '2.X（Recommend）',
             link: '/en-us/docs/v2/quickstart/quick-start.html',
           },
           {
             key: 'v1',
-            text: '1.X（Expired）',
+            text: '1.X',
             link: '/en-us/docs/quick-start.html',
           },
         ]
@@ -169,12 +169,12 @@ export default {
         children: [
           {
             key: 'v2',
-            text: '2.X',
+            text: '2.X（推荐）',
             link: '/zh-cn/docs/v2/quickstart/quick-start.html',
           },
           {
             key: 'v1',
-            text: '1.X（过期）',
+            text: '1.X',
             link: '/zh-cn/docs/quick-start.html',
           },
         ]
