@@ -83,7 +83,7 @@ nacos.core.auth.system.type=${authServiceName}
 nacos.core.auth.enabled=true
 ```
 
-随后重启nacos集群，在有请求访问到nacos节点后，可以从`${nacos-server.path}/logs/core-auth.log`中看到如下日志：
+随后重启nacos集群，在有请求访问到nacos节点后，可以从`${nacos-server.path}/logs/nacos.log`中看到如下日志：
 
 ```text
 [AuthPluginManager] Load AuthPluginService(xxxx) AuthServiceName(xxx) successfully.
