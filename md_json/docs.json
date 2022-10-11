@@ -1,24 +1,6 @@
 {
   "en-us": [
     {
-      "filename": "2.0.0-compatibility.md",
-      "link": "/en-us/docs/2.0.0-compatibility.html",
-      "meta": {
-        "title": "Nacos 2.0.0 compatibility",
-        "keywords": "Nacos,2.0.0",
-        "description": "Nacos 2.0.0 compatibility"
-      }
-    },
-    {
-      "filename": "2.0.0-upgrading.md",
-      "link": "/en-us/docs/2.0.0-upgrading.html",
-      "meta": {
-        "title": "Nacos 2.0 升级文档",
-        "keywords": "Nacos,2.0,升级",
-        "description": "Nacos 2.0 升级文档"
-      }
-    },
-    {
       "filename": "architecture.md",
       "link": "/en-us/docs/architecture.html",
       "meta": {
@@ -55,6 +37,11 @@
       }
     },
     {
+      "filename": "feature-list.md",
+      "link": "/en-us/docs/archive/feature-list.html",
+      "meta": {}
+    },
+    {
       "filename": "roadmap.md",
       "link": "/en-us/docs/archive/roadmap.html",
       "meta": {
@@ -84,15 +71,6 @@
         "title": "Nacos Spring Cloud",
         "keywords": "nacos,Spring Cloud",
         "description": "Nacos Spring Cloud"
-      }
-    },
-    {
-      "filename": "auth-plugin.md",
-      "link": "/en-us/docs/auth-plugin.html",
-      "meta": {
-        "title": "Authorization Plugin",
-        "keywords": "Authorization, Plugin",
-        "description": "This article describes how to develop and use Nacos' authentication plugin."
       }
     },
     {
@@ -129,15 +107,6 @@
         "title": "Nacos Concepts",
         "keywords": "Nacos,Concepts",
         "description": "Nacos Concepts"
-      }
-    },
-    {
-      "filename": "config-encryption.md",
-      "link": "/en-us/docs/config-encryption.html",
-      "meta": {
-        "title": "CONFIGURE ENCRYPTION",
-        "keywords": "AES,ENCRYPTION,CONFIGURE ENCRYPTION",
-        "description": "CONFIGURE ENCRYPTION"
       }
     },
     {
@@ -184,11 +153,6 @@
         "keywords": "Nacos,FAQ",
         "description": "Nacos FAQ"
       }
-    },
-    {
-      "filename": "feature-list.md",
-      "link": "/en-us/docs/feature-list.html",
-      "meta": {}
     },
     {
       "filename": "how-to-reporting-bugs.md",
@@ -269,24 +233,6 @@
         "title": "NacosSync introduce",
         "keywords": "NacosSync,introduce",
         "description": "NacosSync introduce"
-      }
-    },
-    {
-      "filename": "nacos2-config-benchmark.md",
-      "link": "/en-us/docs/nacos2-config-benchmark.html",
-      "meta": {
-        "title": "Nacos2.0服务配置性能测试报告",
-        "keywords": "Nacos,服务,配置,性能",
-        "description": "Nacos2.0服务配置性能测试报告"
-      }
-    },
-    {
-      "filename": "nacos2-naming-benchmark.md",
-      "link": "/en-us/docs/nacos2-naming-benchmark.html",
-      "meta": {
-        "title": "Nacos2.0服务发现性能测试报告",
-        "keywords": "Nacos,服务,发现,性能",
-        "description": "Nacos2.0服务发现性能测试报告"
       }
     },
     {
@@ -715,24 +661,6 @@
   ],
   "zh-cn": [
     {
-      "filename": "2.0.0-compatibility.md",
-      "link": "/zh-cn/docs/2.0.0-compatibility.html",
-      "meta": {
-        "title": "Nacos 2.0.0 兼容性文档",
-        "keywords": "Nacos,2.0.0",
-        "description": "Nacos 2.0.0 兼容性文档"
-      }
-    },
-    {
-      "filename": "2.0.0-upgrading.md",
-      "link": "/zh-cn/docs/2.0.0-upgrading.html",
-      "meta": {
-        "title": "Nacos 2.0 升级文档",
-        "keywords": "Nacos,2.0,升级",
-        "description": "Nacos 2.0 升级文档"
-      }
-    },
-    {
       "filename": "architecture.md",
       "link": "/zh-cn/docs/architecture.html",
       "meta": {
@@ -769,6 +697,11 @@
       }
     },
     {
+      "filename": "feature-list.md",
+      "link": "/zh-cn/docs/archive/feature-list.html",
+      "meta": {}
+    },
+    {
       "filename": "roadmap.md",
       "link": "/zh-cn/docs/archive/roadmap.html",
       "meta": {
@@ -798,15 +731,6 @@
         "title": "Nacos Spring Cloud",
         "keywords": "nacos,Spring Cloud",
         "description": "Nacos Spring Cloud"
-      }
-    },
-    {
-      "filename": "auth-plugin.md",
-      "link": "/zh-cn/docs/auth-plugin.html",
-      "meta": {
-        "title": "鉴权插件",
-        "keywords": "鉴权, 插件",
-        "description": "本文描述如何开发及使用Nacos的鉴权插件"
       }
     },
     {
@@ -843,15 +767,6 @@
         "title": "Nacos 概念",
         "keywords": "Nacos,概念",
         "description": "Nacos 概念"
-      }
-    },
-    {
-      "filename": "config-encryption.md",
-      "link": "/zh-cn/docs/config-encryption.html",
-      "meta": {
-        "title": "配置加密",
-        "keywords": "AES,encryption,配置加密",
-        "description": "配置加密"
       }
     },
     {
@@ -898,11 +813,6 @@
         "keywords": "Nacos,FAQ",
         "description": "Nacos FAQ"
       }
-    },
-    {
-      "filename": "feature-list.md",
-      "link": "/zh-cn/docs/feature-list.html",
-      "meta": {}
     },
     {
       "filename": "how-to-reporting-bugs.md",
@@ -983,24 +893,6 @@
         "title": "NacosSync 介绍",
         "keywords": "NacosSync,介绍",
         "description": "NacosSync 介绍"
-      }
-    },
-    {
-      "filename": "nacos2-config-benchmark.md",
-      "link": "/zh-cn/docs/nacos2-config-benchmark.html",
-      "meta": {
-        "title": "Nacos2.0服务配置性能测试报告",
-        "keywords": "Nacos,服务,配置,性能",
-        "description": "Nacos2.0服务配置性能测试报告"
-      }
-    },
-    {
-      "filename": "nacos2-naming-benchmark.md",
-      "link": "/zh-cn/docs/nacos2-naming-benchmark.html",
-      "meta": {
-        "title": "Nacos2.0服务发现性能测试报告",
-        "keywords": "Nacos,服务,发现,性能",
-        "description": "Nacos2.0服务发现性能测试报告"
       }
     },
     {
