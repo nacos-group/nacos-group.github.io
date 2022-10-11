@@ -8,12 +8,12 @@
 	<meta name="description" content="This quick start introduces how to enable Nacos configuration management and service discovery features for your Spring project." />
   <meta name="baidu-site-verification" content="code-wzq5sw7io3" />
 	<!-- 网页标签标题 -->
-	<title>Quick Start for Nacos Spring Projects</title>
+	<title>Nacos with Spring Projects</title>
 	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
 	<link rel="stylesheet" href="/build/documentation.css" />
 </head>
 <body>
-	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/en-us/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">中</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><span><a href="/en-us/index.html">HOME</a></span></li><li class="menu-item menu-item-normal menu-item-normal-active"><div class="nav-container"><div class="word"><a>DOCS</a></div><ul class="sub-nav-container" style="width:290px"><li><a href="/en-us/docs/v2/quickstart/quick-start.html" target="_blank">2.X</a></li><li><a href="/en-us/docs/quick-start.html" target="_blank">1.X（Expired）</a></li></ul> </div></li><li class="menu-item menu-item-normal"><div class="nav-container"><div class="word"><a>SOLUTIONS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></div><ul class="sub-nav-container" style="width:290px"><li><a href="https://www.alibabacloud.com/product/microservices-engine" target="_blank">Microservice Solution</a></li><li><a href="https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0" target="_blank">Microservice on Serverless Solution</a></li><li><a href="https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0" target="_blank">PaaS Solution</a></li><li><a href="https://www.aliyun.com/aliware/txc?spm=nacos-website.topbar.0.0.0" target="_blank">Distributed transaction Solution</a></li><li><a href="https://www.aliyun.com/product/ahas?spm=nacos-website.topbar.0.0.0" target="_blank">High-availability Solution</a></li><li><a href="https://www.aliyun.com/product/servicemesh?spm=nacos-website.topbar.0.0.0" target="_blank">Service mesh Solution</a></li></ul> </div></li><li class="menu-item menu-item-normal"><span><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0">NACOS IN CLOUD</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST">E-BOOK-NACOS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="/en-us/blog">BLOG</a></span></li><li class="menu-item menu-item-normal"><span><a href="/en-us/community">COMMUNITY</a></span></li><li class="menu-item menu-item-normal"><span><a href="http://console.nacos.io/nacos/index.html">DEMO-CONSOLE</a></span></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/docs.png" class="front-img"/><div class="bar-title"><span>Documentation</span><div class="bone bone-light"></div></div><img src="/img/docs.png" class="back-img"/></div></div><section class="content-section"><div class="content-body"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>Nacos </span><ul><li style="height:180px;overflow:hidden" class="menu-item menu-item-level-2"><span>What is Nacos<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/what-is-nacos.html" target="_self">What is Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/concepts.html" target="_self">Concepts</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/architecture.html" target="_self">Architecure</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/feature-list.html" target="_self">Feature list</a></li></ul></li><li style="height:180px;overflow:hidden" class="menu-item menu-item-level-2"><span>Nacos 2.0<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/2.0.0-compatibility.html" target="_self">Compatibility&amp;Usage</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/2.0.0-upgrading.html" target="_self">Upgrading</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/auth-plugin.html" target="_self">Authentication Plugin</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/config-encryption.html" target="_self">Configure Encryption Plugin</a></li></ul></li><li style="height:324px;overflow:hidden" class="menu-item menu-item-level-2"><span>Quick Start<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start.html" target="_self">Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring-boot.html" target="_self">Nacos Spring Boot</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring-cloud.html" target="_self">Nacos Spring Cloud</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-docker.html" target="_self">Nacos Docker</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/use-nacos-with-dubbo.html" target="_self">Nacos with Dubbo</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/use-nacos-with-kubernetes.html" target="_self">Nacos with K8s</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-sync.html" target="_self">Nacos Sync</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>User Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/sdk.html" target="_self">Java SDK</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/other-language.html" target="_self">Other Language</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/open-api.html" target="_self">Open-API</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/system-configurations.html" target="_self">Nacos System Configurations</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/auth.html" target="_self">Authentication</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/faq.html" target="_self">FAQ</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Admin Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/deployment.html" target="_self">Deployment Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/cluster-mode-quick-start.html" target="_self">Cluster Mode Deployment</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/management-api.html" target="_self">Management OpenAPI</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/console-guide.html" target="_self">Admin Console Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/monitor-guide.html" target="_self">Nacos Monitor Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-config-benchmark.html" target="_self">Nacos Config Benchmark</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos2-config-benchmark.html" target="_self">Nacos2.0 Config Benchmark</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-naming-benchmark.html" target="_self">Nacos Naming Benchmark</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos2-naming-benchmark.html" target="_self">Nacos2.0 Naming Benchmark</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-sync-use.html" target="_self">Data Migration to Nacos</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Contributor Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/contributing.html" target="_self">Contribute to Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/contributing-flow.html" target="_self">Contributing Flow</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/pull-request.html" target="_self">Pull Request Template</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/how-to-reporting-bugs.html" target="_self">How to report bugs</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Community<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/community.html" target="_self">Community</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-dev.html" target="_self">Develop Team</a></li></ul></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>Quick Start for Nacos Spring Projects</h1>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/en-us/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">中</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><span><a href="/en-us/index.html">HOME</a></span></li><li class="menu-item menu-item-normal menu-item-normal-active"><div class="nav-container"><div class="word"><a>DOCS</a></div><ul class="sub-nav-container" style="width:290px"><li><a href="/en-us/docs/v2/quickstart/quick-start.html" target="_blank">2.X</a></li><li><a href="/en-us/docs/quick-start.html" target="_blank">1.X（Expired）</a></li></ul> </div></li><li class="menu-item menu-item-normal"><div class="nav-container"><div class="word"><a>SOLUTIONS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></div><ul class="sub-nav-container" style="width:290px"><li><a href="https://www.alibabacloud.com/product/microservices-engine" target="_blank">Microservice Solution</a></li><li><a href="https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0" target="_blank">Microservice on Serverless Solution</a></li><li><a href="https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0" target="_blank">PaaS Solution</a></li><li><a href="https://www.aliyun.com/aliware/txc?spm=nacos-website.topbar.0.0.0" target="_blank">Distributed transaction Solution</a></li><li><a href="https://www.aliyun.com/product/ahas?spm=nacos-website.topbar.0.0.0" target="_blank">High-availability Solution</a></li><li><a href="https://www.aliyun.com/product/servicemesh?spm=nacos-website.topbar.0.0.0" target="_blank">Service mesh Solution</a></li></ul> </div></li><li class="menu-item menu-item-normal"><span><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0">NACOS IN CLOUD</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST">E-BOOK-NACOS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="/en-us/blog">BLOG</a></span></li><li class="menu-item menu-item-normal"><span><a href="/en-us/community">COMMUNITY</a></span></li><li class="menu-item menu-item-normal"><span><a href="http://console.nacos.io/nacos/index.html">DEMO-CONSOLE</a></span></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/docs.png" class="front-img"/><div class="bar-title"><span>Documentation</span><div class="bone bone-light"></div></div><img src="/img/docs.png" class="back-img"/></div></div><section class="content-section"><div class="content-body"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>Nacos </span><ul><li style="height:180px;overflow:hidden" class="menu-item menu-item-level-2"><span>What is Nacos<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/what-is-nacos.html" target="_self">What is Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/concepts.html" target="_self">Concepts</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/architecture.html" target="_self">Architecure</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/feature-list.html" target="_self">Feature list</a></li></ul></li><li style="height:180px;overflow:hidden" class="menu-item menu-item-level-2"><span>Nacos 2.0<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/2.0.0-compatibility.html" target="_self">Compatibility&amp;Usage</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/2.0.0-upgrading.html" target="_self">Upgrading</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/auth-plugin.html" target="_self">Authentication Plugin</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/config-encryption.html" target="_self">Configure Encryption Plugin</a></li></ul></li><li style="height:324px;overflow:hidden" class="menu-item menu-item-level-2"><span>Quick Start<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start.html" target="_self">Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring-boot.html" target="_self">Nacos Spring Boot</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring-cloud.html" target="_self">Nacos Spring Cloud</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-docker.html" target="_self">Nacos Docker</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/use-nacos-with-dubbo.html" target="_self">Nacos with Dubbo</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/use-nacos-with-kubernetes.html" target="_self">Nacos with K8s</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-sync.html" target="_self">Nacos Sync</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>User Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/sdk.html" target="_self">Java SDK</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/other-language.html" target="_self">Other Language</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/open-api.html" target="_self">Open-API</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/system-configurations.html" target="_self">Nacos System Configurations</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/auth.html" target="_self">Authentication</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/faq.html" target="_self">FAQ</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Admin Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/deployment.html" target="_self">Deployment Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/cluster-mode-quick-start.html" target="_self">Cluster Mode Deployment</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/management-api.html" target="_self">Management OpenAPI</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/console-guide.html" target="_self">Admin Console Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/monitor-guide.html" target="_self">Nacos Monitor Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-config-benchmark.html" target="_self">Nacos Config Benchmark</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos2-config-benchmark.html" target="_self">Nacos2.0 Config Benchmark</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-naming-benchmark.html" target="_self">Nacos Naming Benchmark</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos2-naming-benchmark.html" target="_self">Nacos2.0 Naming Benchmark</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-sync-use.html" target="_self">Data Migration to Nacos</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Contributor Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/contributing.html" target="_self">Contribute to Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/contributing-flow.html" target="_self">Contributing Flow</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/pull-request.html" target="_self">Pull Request Template</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/how-to-reporting-bugs.html" target="_self">How to report bugs</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Community<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/community.html" target="_self">Community</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-dev.html" target="_self">Develop Team</a></li></ul></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>Nacos with Spring Projects</h1>
 <p>This quick start introduces how to enable Nacos configuration management and service discovery features for your Spring project.</p>
 <p>For more details about Nacos Spring Boot: <a href="https://github.com/nacos-group/nacos-spring-project/wiki/Nacos-Spring-Project-0.3.1-%E6%96%B0%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C">nacos-spring-project</a>.</p>
 <p>The quick start includes two samples:</p>
@@ -151,12 +151,425 @@ public class DiscoveryController {
   }
 ]
 </code></pre>
-<h2>Related Projects</h2>
+<h1>Nacos Spring Key Features</h1>
+<p>This section provides a detailed description of the key features of <a href="nacos-spring-context"><code>nacos-spring-context</code></a>:</p>
+<ul>
+<li>Annotation-Driven</li>
+<li>Dependency Injection</li>
+<li>Externalized Configuration</li>
+<li>Event-Driven</li>
+</ul>
+<h2>1. Annotation-Driven</h2>
+<h3>1.1. Enable Nacos</h3>
+<p><code>@EnableNacos</code> is a modular-driven annotation that enables all features of Nacos Spring, including <strong>Service Discovery</strong> and <strong>Distributed Configuration</strong>. It equals to  <code>@EnableNacosDiscovery</code> and
+<code>@EnableNacosConfig</code>, which can be configured separately and used in different scenarios.</p>
+<h3>1.2. Configure Change Listener method</h3>
+<p>Suppose there was a config in Nacos Server whose <code>dataId</code> is &quot;testDataId&quot; and <code>groupId</code> is default group(&quot;DEFAULT_GROUP&quot;). Now you would like to change its content by using the <code>ConfigService#publishConfig</code> method:</p>
+<pre><code class="language-java"><span class="hljs-meta">@NacosInjected</span>
+<span class="hljs-keyword">private</span> ConfigService configService;
+
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testPublishConfig</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> NacosException </span>{
+    configService.publishConfig(DATA_ID, DEFAULT_GROUP, <span class="hljs-string">"9527"</span>);
+}
+</code></pre>
+<p>Then you would like to add a listener, which will be listening for the config changes. You can do this by adding a config change listener method into your Spring Beans:</p>
+<pre><code class="language-java"><span class="hljs-meta">@NacosConfigListener</span>(dataId = DATA_ID)
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onMessage</span><span class="hljs-params">(String config)</span> </span>{
+    assertEquals(<span class="hljs-string">"mercyblitz"</span>, config); <span class="hljs-comment">// asserts true</span>
+}
+</code></pre>
+<p>The code below has the same effect:</p>
+<pre><code class="language-java">configService.addListener(DATA_ID, DEFAULT_GROUP, <span class="hljs-keyword">new</span> AbstractListener() {
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">receiveConfigInfo</span><span class="hljs-params">(String config)</span> </span>{
+        assertEquals(<span class="hljs-string">"9527"</span>, config); <span class="hljs-comment">// asserts true</span>
+    }
+});
+</code></pre>
+<p><strong>Note:</strong> <code>@NacosConfigListener</code> supports richer type conversions.</p>
+<ul>
+<li>See <a href="https://github.com/nacos-group/nacos-spring-project/blob/master/nacos-spring-samples/nacos-spring-webmvc-sample/src/main/java/com/alibaba/nacos/samples/spring/listener/SimpleNacosConfigListener.java">Simple Sample of <code>@NacosConfigListener</code></a></li>
+</ul>
+<h4>1.2.1. Type Conversion</h4>
+<p>The type conversion of <code>@NacosConfigListener</code> includes both build-in and customized implementations. By default, build-in type conversion is based on Spring <code>DefaultFormattingConversionService</code>, which means it covers most of the general cases as well as the rich features of the higher Spring framework.</p>
+<p>For example, the content &quot;9527&quot; in the preceding example can also be listened by a method with integer or the <code>Integer</code> argument:</p>
+<pre><code class="language-java"><span class="hljs-meta">@NacosConfigListener</span>(dataId = DATA_ID)
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onInteger</span><span class="hljs-params">(Integer value)</span> </span>{
+    assertEquals(Integer.valueOf(<span class="hljs-number">9527</span>), value); <span class="hljs-comment">// asserts true</span>
+}
+
+<span class="hljs-meta">@NacosConfigListener</span>(dataId = DATA_ID)
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onInt</span><span class="hljs-params">(<span class="hljs-keyword">int</span> value)</span> </span>{
+    assertEquals(<span class="hljs-number">9527</span>, value); <span class="hljs-comment">// asserts true</span>
+}
+</code></pre>
+<p>Of course, <a href="nacos-spring-context"><code>nacos-spring-context</code></a> provides elastic extension for developers. If you define a named <code>nacosConfigConversionService</code> Spring Bean whose type is <code>ConversionService</code> , the <code>DefaultFormattingConversionService</code> will be ignored. In addition, you can customize the implementation of  the <code>NacosConfigConverter</code> interface to specify a listener method for type conversion:</p>
+<pre><code class="language-java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserNacosConfigConverter</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">NacosConfigConverter</span>&lt;<span class="hljs-title">User</span>&gt; </span>{
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">canConvert</span><span class="hljs-params">(Class&lt;User&gt; targetType)</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+    }
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> User <span class="hljs-title">convert</span><span class="hljs-params">(String source)</span> </span>{
+        <span class="hljs-keyword">return</span> JSON.parseObject(source, User<span class="hljs-class">.<span class="hljs-keyword">class</span>)</span>;
+    }
+}
+</code></pre>
+<p>The <code>UserNacosConfigConverter</code> class binds the <code>@NacosConfigListener.converter()</code> attribute:</p>
+<pre><code class="language-java"><span class="hljs-meta">@NacosInjected</span>
+<span class="hljs-keyword">private</span> ConfigService configService;
+
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testPublishUser</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> NacosException </span>{
+    configService.publishConfig(<span class="hljs-string">"user"</span>, DEFAULT_GROUP, <span class="hljs-string">"{\"id\":1,\"name\":\"mercyblitz\"}"</span>);
+}
+
+<span class="hljs-meta">@NacosConfigListener</span>(dataId = <span class="hljs-string">"user"</span>, converter = UserNacosConfigConverter<span class="hljs-class">.<span class="hljs-keyword">class</span>)
+<span class="hljs-title">public</span> <span class="hljs-title">void</span> <span class="hljs-title">onUser</span>(<span class="hljs-title">User</span> <span class="hljs-title">user</span>) </span>{
+    assertEquals(Long.valueOf(<span class="hljs-number">1L</span>), user.getId()); 
+    assertEquals(<span class="hljs-string">"mercyblitz"</span>, user.getName());
+}
+</code></pre>
+<ul>
+<li>See <a href="https://github.com/nacos-group/nacos-spring-project/blob/master/nacos-spring-samples/nacos-spring-webmvc-sample/src/main/java/com/alibaba/nacos/samples/spring/listener/PojoNacosConfigListener.java">Type Conversion Sample of <code>@NacosConfigListener</code></a></li>
+</ul>
+<h4>1.2.2. Timeout of Execution</h4>
+<p>As it might cost some time to run customized <code>NacosConfigConverter</code>, you can set  max execution time in the <code>@NacosConfigListener.timeout()</code> attribute to prevent it from blocking other listeners:</p>
+<pre><code class="language-java"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Listeners</span> </span>{
+
+    <span class="hljs-keyword">private</span> Integer integerValue;
+
+    <span class="hljs-keyword">private</span> Double doubleValue;
+
+    <span class="hljs-meta">@NacosConfigListener</span>(dataId = DATA_ID, timeout = <span class="hljs-number">50</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onInteger</span><span class="hljs-params">(Integer value)</span> <span class="hljs-keyword">throws</span> Exception </span>{
+        Thread.sleep(<span class="hljs-number">100</span>); <span class="hljs-comment">// timeout of execution</span>
+        <span class="hljs-keyword">this</span>.integerValue = value;
+    }
+
+    <span class="hljs-meta">@NacosConfigListener</span>(dataId = DATA_ID, timeout = <span class="hljs-number">200</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onDouble</span><span class="hljs-params">(Double value)</span> <span class="hljs-keyword">throws</span> Exception </span>{
+        Thread.sleep(<span class="hljs-number">100</span>); <span class="hljs-comment">// normal execution</span>
+        <span class="hljs-keyword">this</span>.doubleValue = value;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Integer <span class="hljs-title">getIntegerValue</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> integerValue;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Double <span class="hljs-title">getDoubleValue</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> doubleValue;
+    }
+}
+</code></pre>
+<p>The <code>integerValue</code> of <code>Listeners</code> Bean is always <code>null</code> and will not be changed. Therefore, those asserts will be <code>true</code>:</p>
+<pre><code class="language-java"><span class="hljs-meta">@Autowired</span>
+<span class="hljs-keyword">private</span> Listeners listeners;
+
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testPublishConfig</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> NacosException </span>{
+    configService.publishConfig(DATA_ID, DEFAULT_GROUP, <span class="hljs-string">"9527"</span>);
+    assertNull(listeners.getIntegerValue()); <span class="hljs-comment">// asserts true</span>
+    assertEquals(Double.valueOf(<span class="hljs-number">9527</span>), listeners.getDoubleValue());   <span class="hljs-comment">// asserts true</span>
+}
+</code></pre>
+<ul>
+<li>See <a href="https://github.com/nacos-group/nacos-spring-project/blob/master/nacos-spring-samples/nacos-spring-webmvc-sample/src/main/java/com/alibaba/nacos/samples/spring/listener/TimeoutNacosConfigListener.java">Timeout Sample of <code>@NacosConfigListener</code></a></li>
+</ul>
+<h3>1.3. Global and Special Nacos Properties</h3>
+<p>The <code>globalProperties</code> is a required attribute in any <code>@EnableNacos</code>, <code>@EnableNacosDiscovery</code> or <code>@EnableNacosConfig</code>, and its type is <code>@NacosProperties</code>. <code>globalProperties</code> initializes &quot;<strong>Global Nacos Properties</strong>&quot; that will be used by other annotations
+and components, e,g <code>@NacosInjected</code>. In other words, <strong>Global Nacos Properties</strong>&quot; defines the global and default properties. It is set with the lowest priority and can be overridden if needed. The precedence of overiding rules is shown in the following table:</p>
+<table>
+<thead>
+<tr>
+<th>Precedence Order</th>
+<th>Nacos Annotation</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>*.properties()</code></td>
+<td>N</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>@EnableNacosConfig.globalProperties()</code> or <code>@EnableNacosDiscovery.globalProperties()</code></td>
+<td>Y</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>@EnableNacos.globalProperties()</code></td>
+<td>Y</td>
+</tr>
+</tbody>
+</table>
+<p><code>*.properties()</code> defines special Nacos properties which come from one of the following:</p>
+<ul>
+<li><code>@NacosInjected.properties()</code></li>
+<li><code>@NacosConfigListener.properties()</code></li>
+<li><code>@NacosPropertySource.properties()</code></li>
+<li><code>@NacosConfigurationProperties.properties()</code></li>
+</ul>
+<p>Special Nacos properties are also configured by <code>@NacosProperties</code>. However, they are optional and are used to override Global Nacos Properties in special scenarios. If not defined, the Nacos Properties will
+try to retrieve properities from <code>@EnableNacosConfig.globalProperties()</code> or <code>@EnableNacosDiscovery.globalProperties()</code>, or
+<code>@EnableNacos.globalProperties()</code>.</p>
+<h3>1.4. <code>@NacosProperties</code></h3>
+<p><code>@NacosProperties</code> is a uniform annotation for global and special Nacos properties. It serves as a mediator between Java <code>Properties</code> and <code>NacosFactory</code> class.   <code>NacosFactory</code> is responsible for creating <code>ConfigService</code> or <code>NamingService</code> instances.</p>
+<p>The attributes of <code>@NacosProperties</code> completely support placeholders whose source is all kinds of <code>PropertySource</code> in Spring <code>Environment</code> abstraction, typically Java System <code>Properties</code> and OS environment variables. The prefix of all placeholders are <code>nacos.</code>.  The mapping between the attributes of <code>@NacosProperties</code> and Nacos properties are shown below:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Property</th>
+<th>Placeholder</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>endpoint()</code></td>
+<td><code>endpoint</code></td>
+<td><code>${nacos.endpoint:}</code></td>
+<td></td>
+<td>N</td>
+</tr>
+<tr>
+<td><code>namespace()</code></td>
+<td><code>namespace</code></td>
+<td><code>${nacos.namespace:}</code></td>
+<td></td>
+<td>N</td>
+</tr>
+<tr>
+<td><code>accessKey()</code></td>
+<td><code>access-key</code></td>
+<td><code>${nacos.access-key:}</code></td>
+<td></td>
+<td>N</td>
+</tr>
+<tr>
+<td><code>secretKey()</code></td>
+<td><code>secret-key</code></td>
+<td><code>${nacos.secret-key:}</code></td>
+<td></td>
+<td>N</td>
+</tr>
+<tr>
+<td><code>serverAddr()</code></td>
+<td><code>server-addr</code></td>
+<td><code>${nacos.server-addr:}</code></td>
+<td></td>
+<td>Y</td>
+</tr>
+<tr>
+<td><code>contextPath()</code></td>
+<td><code>context-path</code></td>
+<td><code>${nacos.context-path:}</code></td>
+<td></td>
+<td>N</td>
+</tr>
+<tr>
+<td><code>clusterName()</code></td>
+<td><code>cluster-name</code></td>
+<td><code>${nacos.cluster-name:}</code></td>
+<td></td>
+<td>N</td>
+</tr>
+<tr>
+<td><code>encode()</code></td>
+<td><code>encode</code></td>
+<td><code>${nacos.encode:UTF-8}</code></td>
+<td></td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+<p>Note that there are some differences in the placeholders of <code>globalProperties()</code> between <code>@EnableNacosDiscovery</code> and <code>@EnableNacosConfig</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th><code>@EnableNacosDiscovery</code>'s Placeholder</th>
+<th><code>@EnableNacosConfig</code>'s Placeholder</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>endpoint()</code></td>
+<td><code>${nacos.discovery.endpoint:${nacos.endpoint:}}</code></td>
+<td><code>${nacos.config.endpoint:${nacos.endpoint:}}</code></td>
+</tr>
+<tr>
+<td><code>namespace()</code></td>
+<td><code>${nacos.discovery.namespace:${nacos.namespace:}}</code></td>
+<td><code>${nacos.config.namespace:${nacos.namespace:}}</code></td>
+</tr>
+<tr>
+<td><code>accessKey()</code></td>
+<td><code>${nacos.discovery.access-key:${nacos.access-key:}}</code></td>
+<td><code>${nacos.config.access-key:${nacos.access-key:}}</code></td>
+</tr>
+<tr>
+<td><code>secretKey()</code></td>
+<td><code>${nacos.discovery.secret-key:${nacos.secret-key:}}</code></td>
+<td><code>${nacos.config.secret-key:${nacos.secret-key:}}</code></td>
+</tr>
+<tr>
+<td><code>serverAddr()</code></td>
+<td><code>${nacos.discovery.server-addr:${nacos.server-addr:}}</code></td>
+<td><code>${nacos.config.server-addr:${nacos.server-addr:}}</code></td>
+</tr>
+<tr>
+<td><code>contextPath()</code></td>
+<td><code>${nacos.discovery.context-path:${nacos.context-path:}}</code></td>
+<td><code>${nacos.config.context-path:${nacos.context-path:}}</code></td>
+</tr>
+<tr>
+<td><code>clusterName()</code></td>
+<td><code>${nacos.discovery.cluster-name:${nacos.cluster-name:}}</code></td>
+<td><code>${nacos.config.cluster-name:${nacos.cluster-name:}}</code></td>
+</tr>
+<tr>
+<td><code>encode()</code></td>
+<td><code>${nacos.discovery.encode:${nacos.encode:UTF-8}}</code></td>
+<td><code>${nacos.config.encode:${nacos.encode:UTF-8}}</code></td>
+</tr>
+</tbody>
+</table>
+<p>These placeholders of <code>@EnableNacosDiscovery</code> and <code>@EnableNacosConfig</code> are designed to isolate different Nacos servers, and are unnecessary in most scenarios.  By default, general placeholders will be reused.</p>
+<h2>2. Dependency Injection</h2>
+<p><code>@NacosInjected</code> is a core annotation which is used to inject <code>ConfigService</code> or <code>NamingService</code> instance in your Spring Beans and make these instances <strong>cacheable</strong>. This means the instances will be the same if their <code>@NacosProperties</code> are equal, regargless of whether the properties come from global or special Nacos properties:</p>
+<pre><code class="language-java"><span class="hljs-meta">@NacosInjected</span>
+<span class="hljs-keyword">private</span> ConfigService configService;
+
+<span class="hljs-meta">@NacosInjected</span>(properties = <span class="hljs-meta">@NacosProperties</span>(encode = <span class="hljs-string">"UTF-8"</span>))
+<span class="hljs-keyword">private</span> ConfigService configService2;
+
+<span class="hljs-meta">@NacosInjected</span>(properties = <span class="hljs-meta">@NacosProperties</span>(encode = <span class="hljs-string">"GBK"</span>))
+<span class="hljs-keyword">private</span> ConfigService configService3;
+
+<span class="hljs-meta">@NacosInjected</span>
+<span class="hljs-keyword">private</span> NamingService namingService;
+
+<span class="hljs-meta">@NacosInjected</span>(properties = <span class="hljs-meta">@NacosProperties</span>(encode = <span class="hljs-string">"UTF-8"</span>))
+<span class="hljs-keyword">private</span> NamingService namingService2;
+
+<span class="hljs-meta">@NacosInjected</span>(properties = <span class="hljs-meta">@NacosProperties</span>(encode = <span class="hljs-string">"GBK"</span>))
+<span class="hljs-keyword">private</span> NamingService namingService3;
+
+<span class="hljs-meta">@Test</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">testInjection</span><span class="hljs-params">()</span> </span>{
+
+    Assert.assertEquals(configService, configService2);
+    Assert.assertNotEquals(configService2, configService3);
+
+    Assert.assertEquals(namingService, namingService2);
+    Assert.assertNotEquals(namingService2, namingService3);
+}
+</code></pre>
+<p>The property <code>configService</code> uses <code>@EnableNacos#globalProperties()</code> or <code>@EnableNacosConfig#globalProperties()</code>, and because the default value of the <code>encode</code> attribute is &quot;UTF-8&quot;, therefore the <code>configService</code> instance and the <code>configService2</code> instance which is annotated by <code>@NacosProperties(encode = &quot;UTF-8&quot;)</code> are the same. The same is true for <code>namingService</code> and <code>namingService2</code>.</p>
+<p>More importantly, unlike the <code>ConfigService</code> instances created by the <code>NacosFactory.createConfigService()</code> method, the <code>ConfigService</code> instances created by the <code>@NacosInjected</code> annotation support Nacos Spring events. For instance, there will be an <code>NacosConfigPublishedEvent</code>  after an enhanced <code>ConfigService</code> invokes the <code>publishConfig()</code> method. Refer to the <a href="#eventlistener-driven">Event/Listener Driven</a> section for more details.</p>
+<ul>
+<li>See <a href="https://github.com/nacos-group/nacos-spring-project/blob/master/nacos-spring-samples/nacos-spring-webmvc-sample/src/main/java/com/alibaba/nacos/samples/spring/NacosConfiguration.java">Dependency Injection Sample</a></li>
+</ul>
+<h2>3. Externalized Configuration</h2>
+<p>Externalized configuration is a concept introduced by Spring Boot, which allows applications to receive external property sources to control runtime behavior. Nacos Server runs an isolation process outside the application to maintain the application configurations. <a href="nacos-spring-context"><code>nacos-spring-context</code></a> provides properties features including object binding, dynamic configuration(auto-refreshed) and so on, and dependence on Spring Boot or Spring Cloud framework is required.</p>
+<p>Here is a simple comparison between  <a href="nacos-spring-context"><code>nacos-spring-context</code></a> and Spring stack:</p>
+<table>
+<thead>
+<tr>
+<th>Spring Stack</th>
+<th>Nacos Spring</th>
+<th>Highlight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@Value</code></td>
+<td><code>@NacosValue</code></td>
+<td>auto-refreshed</td>
+</tr>
+<tr>
+<td><code>@ConfigurationProperties</code></td>
+<td><code>@NacosConfigurationProperties</code></td>
+<td>auto-refreshed,<code>@NacosProperty</code>,<code>@NacosIgnore</code></td>
+</tr>
+<tr>
+<td><code>@PropertySource</code></td>
+<td><code>@NacosPropertySource</code></td>
+<td>auto-refreshed, precedence order control</td>
+</tr>
+<tr>
+<td><code>@PropertySources</code></td>
+<td><code>@NacosPropertySources</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>See <a href="https://github.com/nacos-group/nacos-spring-project/blob/master/nacos-spring-samples/nacos-spring-webmvc-sample/src/main/java/com/alibaba/nacos/samples/spring/properties/NacosConfigurationPropertiesConfiguration.java">Auto-Refreshed Sample of <code>@NacosConfigurationProperties</code></a></p>
+</li>
+<li>
+<p>See <a href="https://github.com/nacos-group/nacos-spring-project/blob/master/nacos-spring-samples/nacos-spring-webmvc-sample/src/main/java/com/alibaba/nacos/samples/spring/env/NacosPropertySourceConfiguration.java">Sample of <code>@NacosPropertySources</code> and <code>@NacosPropertySource</code></a></p>
+</li>
+</ul>
+<h2>4. Event/Listener Driven</h2>
+<p>Nacos Event/Listener Driven is based on the standard Spring Event/Listener mechanism. The <code>ApplicationEvent</code> of Spring is an abstract super class for all Nacos Spring events:</p>
+<table>
+<thead>
+<tr>
+<th>Nacos Spring Event</th>
+<th>Trigger</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NacosConfigPublishedEvent</code></td>
+<td>After <code>ConfigService.publishConfig()</code></td>
+</tr>
+<tr>
+<td><code>NacosConfigReceivedEvent</code></td>
+<td>After<code>Listener.receiveConfigInfo()</code></td>
+</tr>
+<tr>
+<td><code>NacosConfigRemovedEvent</code></td>
+<td>After <code>configService.removeConfig()</code></td>
+</tr>
+<tr>
+<td><code>NacosConfigTimeoutEvent</code></td>
+<td><code>ConfigService.getConfig()</code> on timeout</td>
+</tr>
+<tr>
+<td><code>NacosConfigListenerRegisteredEvent</code></td>
+<td>After <code>ConfigService.addListner()</code> or <code>ConfigService.removeListener()</code></td>
+</tr>
+<tr>
+<td><code>NacosConfigurationPropertiesBeanBoundEvent</code></td>
+<td>After <code>@NacosConfigurationProperties</code> binding</td>
+</tr>
+<tr>
+<td><code>NacosConfigMetadataEvent</code></td>
+<td>After Nacos Config operations</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>See <a href="https://github.com/nacos-group/nacos-spring-project/blob/master/nacos-spring-samples/nacos-spring-webmvc-sample/src/main/java/com/alibaba/nacos/samples/spring/event/NacosEventListenerConfiguration.java">Event/Listener Sample</a></li>
+</ul>
+<h1>Related Projects</h1>
 <ul>
 <li><a href="https://github.com/alibaba/nacos">Nacos</a></li>
 <li><a href="https://github.com/nacos-group/nacos-spring-project">Nacos Spring</a></li>
 <li><a href="https://github.com/nacos-group/nacos-spring-boot-project">Nacos Spring Boot</a></li>
-<li><a href="https://github.com/alibaba/spring-cloud-alibaba">Spring Cloud Alibaba</a></li>
+<li><a href="https://github.com/spring-cloud-incubator/spring-cloud-alibaba">Spring Cloud Alibaba</a></li>
 </ul>
 </div></div></section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>Vision</h3><p>By providing an easy-to-use service infrastructure such as dynamic service discovery, service configuration, service sharing and management and etc., Nacos help users better construct, deliver and manage their own service platform, reuse and composite business service faster and deliver value of business innovation more quickly so as to win market for users in the era of cloud native and in all cloud environments, such as private, mixed, or public clouds.</p></div><div class="col col-6"><dl><dt>Documentation</dt><dd><a href="/en-us/docs/what-is-nacos.html" target="_self">Overview</a></dd><dd><a href="/en-us/docs/quick-start.html" target="_self">Quick start</a></dd><dd><a href="/en-us/docs/contributing.html" target="_self">Developer guide</a></dd></dl></div><div class="col col-6"><dl><dt>Resources</dt><dd><a href="/en-us/community/index.html" target="_self">Community</a></dd><dd><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_self">Cloud Service MSE</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">Cloud Service EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">Cloud Service AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2022 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
 	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>

@@ -1,10 +1,10 @@
 ---
-title: Quick Start for Nacos Spring Cloud Projects
+title: Nacos with Spring Cloud Projects
 keywords: Nacos,Spring Cloud
 description: Quick Start for Nacos Spring Cloud Projects
 ---
 
-# Quick Start for Nacos Spring Cloud Projects
+# Nacos with Spring Cloud Projects
 
 This quick start introduces how to enable Nacos configuration management and service discovery features for your Spring Cloud project.
 

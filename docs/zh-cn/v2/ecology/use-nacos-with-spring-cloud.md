@@ -1,10 +1,10 @@
 ---
-title: Nacos Spring Cloud 快速开始
+title: Nacos 融合 Spring Cloud，成为注册配置中心
 keywords: Nacos,Spring Cloud
-description: Nacos Spring Cloud 快速开始
+description: 本文主要面向 Spring Cloud 的使用者，通过示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现
 ---
 
-# Nacos Spring Cloud 快速开始
+# Nacos 融合 Spring Cloud，成为注册配置中心
 
 本文主要面向 [Spring Cloud](https://spring.io/projects/spring-cloud) 的使用者，通过两个示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务注册发现。
 

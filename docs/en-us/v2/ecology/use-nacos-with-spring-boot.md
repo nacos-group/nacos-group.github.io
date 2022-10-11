@@ -1,10 +1,10 @@
 ---
-title: Quick Start for Nacos Spring Boot Projects
+title: Nacos with Spring Boot Projects
 keywords: Nacos,Spring Boot
 description: Quick Start for Nacos Spring Boot Projects
 ---
 
-# Quick Start for Nacos Spring Boot Projects
+# Nacos with Spring Boot Projects
 
 This quick start introduces how to enable Nacos configuration management and service discovery features for your Spring Boot project.
 
