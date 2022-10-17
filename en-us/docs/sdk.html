@@ -17,10 +17,40 @@
 <h2>Overview</h2>
 <p>Maven coordinates</p>
 <pre><code>&lt;dependency&gt;
-&lt;groupId&gt;com.alibaba.nacos&lt;/groupId&gt;
-&lt;artifactId&gt;nacos-client&lt;/artifactId&gt;
-&lt;version&gt;${version}&lt;/version&gt;
+    &lt;groupId&gt;com.alibaba.nacos&lt;/groupId&gt;
+    &lt;artifactId&gt;nacos-client&lt;/artifactId&gt;
+    &lt;version&gt;${version}&lt;/version&gt;
 &lt;/dependency&gt;
+</code></pre>
+<blockquote>
+<p>Note: Since version 2.0, the Nacos Java SDK introduced gRPC, and use shaded technology to directly encapsulate some dependencies into nacos-client in order to avoid conflicts caused by different versions of gRPC introduced by users, which resulting in a larger nacos-client.
+If the users don't introduce gRPC or confirms that there is no conflict between the versions, and wants to use the pure version of nacos-client to reduce dependencies, users can use the classifier to specify the pure version.</p>
+</blockquote>
+<pre><code class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span>
+        <span class="hljs-comment">&lt;!-- Upper 2.1.2 support pure client --&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">nacos.version</span>&gt;</span>2.1.2<span class="hljs-tag">&lt;/<span class="hljs-name">nacos.version</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.nacos<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>nacos-client<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${nacos.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+            <span class="hljs-comment">&lt;!--  specify the pure SDK --&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">classifier</span>&gt;</span>pure<span class="hljs-tag">&lt;/<span class="hljs-name">classifier</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-comment">&lt;!-- Same version of nacos-api and nacos-common must be introduced for pure SDK, otherwise there may be a problem that the class cannot be found at runtime --&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>${project.groupId}<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>nacos-common<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${nacos.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>${project.groupId}<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>nacos-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${nacos.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span>
 </code></pre>
 <h2>Configuration Management</h2>
 <h3>Get configuration</h3>
