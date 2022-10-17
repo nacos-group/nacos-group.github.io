@@ -11,12 +11,42 @@ description: Java SDK
 Maven coordinates
 ```
 <dependency>
-<groupId>com.alibaba.nacos</groupId>
-<artifactId>nacos-client</artifactId>
-<version>${version}</version>
+    <groupId>com.alibaba.nacos</groupId>
+    <artifactId>nacos-client</artifactId>
+    <version>${version}</version>
 </dependency>
 ```
 
+> Note: Since version 2.0, the Nacos Java SDK introduced gRPC, and use shaded technology to directly encapsulate some dependencies into nacos-client in order to avoid conflicts caused by different versions of gRPC introduced by users, which resulting in a larger nacos-client.
+> If the users don't introduce gRPC or confirms that there is no conflict between the versions, and wants to use the pure version of nacos-client to reduce dependencies, users can use the classifier to specify the pure version.
+
+```xml
+    <properties>
+        <!-- Upper 2.1.2 support pure client -->
+        <nacos.version>2.1.2</nacos.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+            <version>${nacos.version}</version>
+            <!--  specify the pure SDK -->
+            <classifier>pure</classifier>
+        </dependency>
+        <!-- Same version of nacos-api and nacos-common must be introduced for pure SDK, otherwise there may be a problem that the class cannot be found at runtime -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>nacos-common</artifactId>
+            <version>${nacos.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>nacos-api</artifactId>
+            <version>${nacos.version}</version>
+        </dependency>
+    </dependencies>
+```
 
 ## Configuration Management
 ### Get configuration
