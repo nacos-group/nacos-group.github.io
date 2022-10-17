@@ -23,6 +23,36 @@
     &lt;version&gt;${version}&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
+<blockquote>
+<p>注意：由于Nacos Java SDK在2.0版本后引入了gRPC，为了避免用户业务引入的gRPC版本不同导致冲突，使用了shaded技术将部分依赖直接封装进nacos-client中，导致nacos-client较大。
+如果用户未自行引入gRPC或确认版本无冲突，希望使用纯净版的nacos-client以减小依赖，可以使用classifier来指定使用纯净版。</p>
+</blockquote>
+<pre><code class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span>
+        <span class="hljs-comment">&lt;!-- 2.1.2版本以上支持纯净版客户端 --&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">nacos.version</span>&gt;</span>2.1.2<span class="hljs-tag">&lt;/<span class="hljs-name">nacos.version</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.nacos<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>nacos-client<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${nacos.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+            <span class="hljs-comment">&lt;!-- 指定纯净版SDK --&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">classifier</span>&gt;</span>pure<span class="hljs-tag">&lt;/<span class="hljs-name">classifier</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-comment">&lt;!-- 使用纯净版时必须要引入同版本nacos-api和nacos-common，否则可能出现运行时找不到类的问题 --&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>${project.groupId}<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>nacos-common<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${nacos.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>${project.groupId}<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>nacos-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${nacos.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span>
+</code></pre>
 <h2>配置管理</h2>
 <h3>获取配置</h3>
 <h4>描述</h4>
