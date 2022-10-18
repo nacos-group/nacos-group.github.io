@@ -11,12 +11,13 @@ description: Java SDK
 Maven coordinates
 ```
 <dependency>
-<groupId>com.alibaba.nacos</groupId>
-<artifactId>nacos-client</artifactId>
-<version>${version}</version>
+    <groupId>com.alibaba.nacos</groupId>
+    <artifactId>nacos-client</artifactId>
+    <version>${version}</version>
 </dependency>
 ```
 
+> The latest version of 1.X is 1.4.4
 
 ## Configuration Management
 ### Get configuration
