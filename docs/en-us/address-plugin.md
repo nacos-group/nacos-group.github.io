@@ -6,10 +6,10 @@ description: This article describes how to develop and use Nacos' addressing plu
 
 # Addressing Plugin
 
-Since version 2.1.0, Nacos support to inject authentication plugins through [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html), and select a plugin implementation in the configuration file `application.properties ` as the actual authentication service. This document will describe how to implement an authentication plugin and how to make it work.
+Since version 2.1.0, Nacos support to inject addressing plugins through [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html), and select a plugin implementation in the configuration file `application.properties ` as the actual addressing service. This document will describe how to implement an addressing plugin and how to make it work.
 
 > Attention: 
-> At present, the authentication plugin is still in the beta stage, and its API and interface definitions maybe modified with version upgrades. Please pay attention to the applicable version of your plugin.
+> At present, the addressing plugin is still in the beta stage, and its API and interface definitions maybe modified with version upgrades. Please pay attention to the applicable version of your plugin.
 
 ## Overview Of Addressing Plugin
 
@@ -69,7 +69,7 @@ Restart nacos cluster, and after any request, some logs can be saw in `${nacos-s
 [AddressPluginManager] Load AddressPlugin(xxxx) PluginName(xxx) successfully.
 ```
 
-### Use the default Nacos authentication plugin
+### Use the default Nacos addressing plugin
 
 In order to be compatible with the addressing of the old version, when the user does not use the custom plug-in, the configuration is the same as the original, or the configuration item `nacos.core.member.lookup.type=[file, address server]`.
 
@@ -85,7 +85,7 @@ for example:
  String content = configService.getConfig(dataId, group, 5000);
 ```
 
-### Use the default Nacos authentication plugin
+### Use the default Nacos addressing plugin
 The Java client plug-in of Nacos is adapted to the old version. If the customized plug-in is not applicable, the use of the client is the same as before.
 
 ### Plugin for other programming language
