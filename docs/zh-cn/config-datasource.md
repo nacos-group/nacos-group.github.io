@@ -21,13 +21,14 @@ Nacos从2.1.1版本开始,可通过SPI机制注入多数据源实现插件,并�
 ![](../../img/config-datasource-plugin.png)
 
 # 如何使用
-1. 用户查询当前Nacos是否支持所需数据源，若支持则进行第2步，不支持则进行第3步；
-2. 在`application.properties`配置文件中将`spring.datasource.platform`修改为对应的数据源名称，然后编译运行则可运行多数据源；
-3. 不支持则可以自己编写数据源插件，编写数据源插件步骤见下；
+1. 用户查询当前Nacos是否支持所需数据源；
+2. 在`application.properties`配置文件中将`spring.datasource.platform`修改为对应的数据源名称；
+3. 然后编译运行则可支持此数据源；
 
-# 自定义其他数据源插件
+# 插件编写者如何开发
 1. 首先在`com.alibaba.nacos.plugin.datasource.constants.DataSourceConstant.java`类中加入一个String常量标识其所属数据源，作用是告知Config模块根据此名称读取Mapper；
 2. 其次在`com.alibaba.nacos.plugin.datasource.impl`中实现所有Mapper接口的方法，并将其路径放入`META-INF\services\com.alibaba.nacos.plugin.datasource.mapper.Mapper`中，即可完成其他数据源插件的编写；
+3. 编译运行
 
 Tips:此处Mapper的SQL分类是第一版,未来可能会有较大变动以及更新.
 
