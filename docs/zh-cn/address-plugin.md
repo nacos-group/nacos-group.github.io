@@ -17,7 +17,7 @@ Nacos从2.1.0版本开始，支持通过[SPI](https://docs.oracle.com/javase/tut
 
 ## 开发Nacos服务端寻址插件
 
-开发Nacos服务端鉴权插件，首先需要依赖鉴权插件的相关API
+开发Nacos服务端鉴权插件，首先需要依赖寻址插件的相关API
 
 ```xml
         <dependency>
