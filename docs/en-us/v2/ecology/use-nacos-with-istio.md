@@ -1,3 +1,8 @@
+---
+title: Nacos push xDS with Istio
+keywords: Istio,xDs,Envoy
+description: Nacos push xDS with Istio
+---
 # Istio Guide
 
 It supports CDS and EDS in xDS protocol, and realizes incremental push for EDS and MCP. Users can use Envoy or other XDS protocol-enabled clients to dock with Nacos for service discovery.

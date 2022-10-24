@@ -159,6 +159,10 @@ export default {
                 title: 'Nacos Sync',
                 link: '/en-us/docs/v2/ecology/use-nacos-sync.html',
               },
+              {
+                title: 'CoreDNS',
+                link: '/en-us/docs/v2/ecology/use-nacos-with-coredns.html',
+              },
             ]
           },
           {
@@ -359,6 +363,10 @@ export default {
               {
                 title: 'Nacos Sync',
                 link: '/zh-cn/docs/v2/ecology/use-nacos-sync.html',
+              },
+              {
+                title: 'CoreDNS',
+                link: '/zh-cn/docs/v2/ecology/use-nacos-with-coredns.html',
               },
             ]
           },

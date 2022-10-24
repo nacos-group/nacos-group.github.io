@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="aes-config" content="pid=xux-opensource&user_type=101&uid=&username=&dim10=nacos"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="Istio,xDs,Envoy" />
+	<meta name="description" content="Nacos 融合Istio 下发xDS协议" />
+  <meta name="baidu-site-verification" content="code-wzq5sw7io3" />
+	<!-- 网页标签标题 -->
+	<title>Nacos 融合Istio 下发xDS协议</title>
+	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
+	<link rel="stylesheet" href="/build/documentation.css" />
+</head>
+<body>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><span><a href="/zh-cn/index.html">首页</a></span></li><li class="menu-item menu-item-normal menu-item-normal-active"><div class="nav-container"><div class="word"><a>文档</a></div><ul class="sub-nav-container" style="width:220px"><li><a href="/zh-cn/docs/v2/quickstart/quick-start.html" target="_blank">2.X（推荐）</a></li><li><a href="/zh-cn/docs/quick-start.html" target="_blank">1.X</a></li></ul> </div></li><li class="menu-item menu-item-normal"><div class="nav-container"><div class="word"><a>解决方案</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></div><ul class="sub-nav-container" style="width:220px"><li><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_blank">微服务解决方案</a></li><li><a href="https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0" target="_blank">微服务Serverless解决方案</a></li><li><a href="https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0" target="_blank">PaaS解决方案</a></li></ul> </div></li><li class="menu-item menu-item-normal"><span><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0">企业版NACOS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST">NACOS架构与原理</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="/zh-cn/blog/index.html">博客</a></span></li><li class="menu-item menu-item-normal"><span><a href="/zh-cn/community/index.html">社区</a></span></li><li class="menu-item menu-item-normal"><span><a href="http://console.nacos.io/nacos/index.html">控制台样例</a></span></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/docs.png" class="front-img"/><div class="bar-title"><span>Nacos 文档</span><div class="bone bone-light"></div></div><img src="/img/docs.png" class="back-img"/></div></div><section class="content-section"><div class="content-body"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>Nacos </span><ul><li style="height:144px;overflow:hidden" class="menu-item menu-item-level-2"><span>Nacos是什么?<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/what-is-nacos.html" target="_self">Nacos简介</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/concepts.html" target="_self">概念</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/architecture.html" target="_self">架构</a></li></ul></li><li style="height:324px;overflow:hidden" class="menu-item menu-item-level-2"><span>快速开始<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start.html" target="_self">Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-spring-boot.html" target="_self">Nacos Spring Boot</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-spring-cloud.html" target="_self">Nacos Spring Cloud</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-docker.html" target="_self">Nacos Docker</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/use-nacos-with-dubbo.html" target="_self">Nacos Dubbo</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/use-nacos-with-kubernetes.html" target="_self">Nacos k8s</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-sync.html" target="_self">Nacos Sync</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>用户指南<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/sdk.html" target="_self">Java的SDK</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/other-language.html" target="_self">其他语言的SDK</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/open-api.html" target="_self">Open-API指南</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/system-configurations.html" target="_self">Nacos系统参数介绍</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/auth.html" target="_self">权限认证</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/faq.html" target="_self">FAQ</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>运维指南<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/deployment.html" target="_self">部署手册</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/cluster-mode-quick-start.html" target="_self">集群部署说明</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/management-api.html" target="_self">运维API</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/console-guide.html" target="_self">控制台手册</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/monitor-guide.html" target="_self">监控手册</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-config-benchmark.html" target="_self">Nacos配置模块压测报告</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-naming-benchmark.html" target="_self">Nacos服务发现模块压测报告</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-sync-use.html" target="_self">其他环境迁移到Nacos</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>开源共建<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/contributing.html" target="_self">贡献源码</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/contributing-flow.html" target="_self">贡献流程</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/pull-request.html" target="_self">pull request模板</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/how-to-reporting-bugs.html" target="_self">如何提交问题报告</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>社区<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/community.html" target="_self">社区</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-dev.html" target="_self">开发团队</a></li></ul></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>Istio 指南</h1>
+<p>支持了 xDS 协议中的 CDS、EDS 服务，并为 EDS 以及 MCP 实现了增量推送。用户可以使用 Envoy 或其他支持 xDS 协议的客户端与 Nacos 进行对接，实现服务发现功能。</p>
+<h2>配置</h2>
+<h3>服务端</h3>
+<p>对于发行包，修改 <code>nacos/conf/application.properties</code> 中的 <code>nacos.istio.mcp.server.enabled</code> 为 true；</p>
+<p>对于源码，修改 <code>nacos/distribution/conf/application.properties</code> 中的 <code>nacos.istio.mcp.server.enabled</code> 为 true 。</p>
+<p>若要使用 MCP 增量服务，除上述配置需修改外，还需修改 <code>nacos/istio/misc/IstioConfig</code> 中的 <code>nacos.istio.server.full</code> 为 false。</p>
+<h3>客户端</h3>
+<p>关于客户端，下面示例中使用的是 Envoy，可直接下载 Envoy 或创建镜像并将下述配置文件进行挂载即可。</p>
+<p><strong>Config</strong>：其中使用的端口号根据需求可自行更改</p>
+<pre><code class="language-yaml"><span class="hljs-attr">node:</span>
+  <span class="hljs-attr">cluster:</span> <span class="hljs-string">test-cluster</span>
+  <span class="hljs-attr">id:</span> <span class="hljs-string">test-idn</span>
+
+<span class="hljs-attr">admin:</span>
+  <span class="hljs-attr">address:</span>
+    <span class="hljs-attr">socket_address:</span> <span class="hljs-string">{</span> <span class="hljs-attr">address:</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span><span class="hljs-string">,</span> <span class="hljs-attr">port_value:</span> <span class="hljs-number">15000</span> <span class="hljs-string">}</span>
+
+<span class="hljs-attr">dynamic_resources:</span>
+  <span class="hljs-attr">ads_config:</span>
+    <span class="hljs-attr">api_type:</span> <span class="hljs-string">GRPC</span>
+    <span class="hljs-attr">transport_api_version:</span> <span class="hljs-string">V3</span>
+    <span class="hljs-attr">grpc_services:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">envoy_grpc:</span>
+        <span class="hljs-attr">cluster_name:</span> <span class="hljs-string">nacos_xds</span>
+  <span class="hljs-attr">cds_config:</span>
+    <span class="hljs-attr">ads:</span> <span class="hljs-string">{}</span>
+  <span class="hljs-attr">lds_config:</span>
+    <span class="hljs-attr">path:</span> <span class="hljs-string">/etc/envoy/lds.yaml</span>
+  <span class="hljs-comment"># ads: {}</span>
+
+<span class="hljs-attr">static_resources:</span>
+  <span class="hljs-attr">clusters:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">type:</span> <span class="hljs-string">STATIC</span>
+    <span class="hljs-attr">connect_timeout:</span> <span class="hljs-string">1s</span>
+    <span class="hljs-attr">typed_extension_protocol_options:</span>
+      <span class="hljs-attr">envoy.extensions.upstreams.http.v3.HttpProtocolOptions:</span>
+        <span class="hljs-string">"@type"</span><span class="hljs-string">:</span> <span class="hljs-string">type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions</span>
+        <span class="hljs-attr">explicit_http_config:</span>
+          <span class="hljs-attr">http2_protocol_options:</span> <span class="hljs-string">{}</span>
+    <span class="hljs-attr">name:</span> <span class="hljs-string">nacos_xds</span> 
+    <span class="hljs-attr">load_assignment:</span>
+      <span class="hljs-attr">cluster_name:</span> <span class="hljs-string">nacos_xds</span> 
+      <span class="hljs-attr">endpoints:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">lb_endpoints:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">endpoint:</span>
+            <span class="hljs-attr">address:</span>
+              <span class="hljs-attr">socket_address:</span>
+                <span class="hljs-attr">address:</span> <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> 
+                <span class="hljs-attr">port_value:</span> <span class="hljs-number">18848</span>
+</code></pre>
+<p><strong>lds</strong>：对于监听的服务获取 CDS 后会主动向服务端获取 EDS，监听的服务可自行更改</p>
+<pre><code class="language-yaml"><span class="hljs-attr">resources:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">"@type"</span><span class="hljs-string">:</span> <span class="hljs-string">type.googleapis.com/envoy.config.listener.v3.Listener</span>
+  <span class="hljs-attr">name:</span> <span class="hljs-string">listener_0</span>
+  <span class="hljs-attr">address:</span>
+    <span class="hljs-attr">socket_address:</span> <span class="hljs-string">{</span> <span class="hljs-attr">address:</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span><span class="hljs-string">,</span> <span class="hljs-attr">port_value:</span> <span class="hljs-number">80</span> <span class="hljs-string">}</span>
+  <span class="hljs-comment"># listener_filters:</span>
+  <span class="hljs-comment"># - name: "envoy.filters.listener.tls_inspector"</span>
+  <span class="hljs-attr">filter_chains:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">filters:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">envoy.filters.network.http_connection_manager</span>
+      <span class="hljs-attr">typed_config:</span>
+        <span class="hljs-string">"@type"</span><span class="hljs-string">:</span> <span class="hljs-string">type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager</span>
+        <span class="hljs-attr">stat_prefix:</span> <span class="hljs-string">ingress_http</span>
+        <span class="hljs-attr">access_log:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">envoy.access_loggers.stdout</span>
+          <span class="hljs-attr">typed_config:</span>
+            <span class="hljs-string">"@type"</span><span class="hljs-string">:</span> <span class="hljs-string">type.googleapis.com/envoy.extensions.access_loggers.stream.v3.StdoutAccessLog</span>
+        <span class="hljs-attr">codec_type:</span> <span class="hljs-string">AUTO</span>
+        <span class="hljs-attr">route_config:</span>
+          <span class="hljs-attr">name:</span> <span class="hljs-string">local_route</span>
+          <span class="hljs-attr">virtual_hosts:</span>
+          <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">local_service</span>
+            <span class="hljs-attr">domains:</span> <span class="hljs-string">["*"]</span>
+            <span class="hljs-attr">routes:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-attr">match:</span> <span class="hljs-string">{</span> <span class="hljs-attr">prefix:</span> <span class="hljs-string">"/"</span> <span class="hljs-string">}</span>
+              <span class="hljs-attr">name:</span> <span class="hljs-string">test</span>
+              <span class="hljs-attr">route:</span>
+                <span class="hljs-attr">cluster:</span> <span class="hljs-string">outbound|8071||service-provider.DEFAULT-GROUP.e77d7925-1c90-4fa9-93cb-83153a099636.nacos</span>
+        <span class="hljs-attr">http_filters:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">envoy.filters.http.router</span>
+</code></pre>
+<h2>运行</h2>
+<p>注：同一服务下的各个实例使用的协议需一致，EDS 默认使用增量推送。</p>
+<ol>
+<li>
+<p>部署 Nacos，<a href="https://nacos.io/zh-cn/docs/quick-start.html">部署参考</a>；</p>
+</li>
+<li>
+<p>按上述要求修改配置；</p>
+</li>
+<li>
+<p>启动服务器，详细的启动命令可在上述部署参考中查看；</p>
+<pre><code class="language-bash">bash startup.sh -m standalone -p embedded
+</code></pre>
+</li>
+<li>
+<p>启动客户端。</p>
+<pre><code class="language-bash">docker start envoy
+</code></pre>
+</li>
+</ol>
+<h2>CDS 示例</h2>
+<p>注：日志在 nacos/logs/istio-main.log 查看</p>
+<p>示例中注册的服务配置如下，<a href="https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-cloud-example/nacos-spring-cloud-discovery-example">示例参考</a>。</p>
+<pre><code class="language-properties"><span class="hljs-meta">server.port</span>=<span class="hljs-string">8071</span>
+<span class="hljs-meta">spring.application.name</span>=<span class="hljs-string">service-provider</span>
+<span class="hljs-meta">spring.cloud.nacos.discovery.namespace</span>=<span class="hljs-string">e77d7925-1c90-4fa9-93cb-83153a099636</span>
+<span class="hljs-meta">spring.cloud.nacos.discovery.server-addr</span>=<span class="hljs-string">127.0.0.1:8848</span>
+</code></pre>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/28990648/1666247341241-4e9b2dde-55c7-43ae-af1e-dc081565ab72.png" alt="CDS"></p>
+<h2>EDS 示例</h2>
+<p>服务配置如上</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/28990648/1666247341176-fe312687-6488-41c2-bdd1-346d7a344bd2.png" alt="EDS"></p>
+<h2>全量 CDS 示例</h2>
+<p>现注册两个服务，其配置分别如下：</p>
+<pre><code class="language-properties"><span class="hljs-comment">#service-provider</span>
+<span class="hljs-meta">server.port</span>=<span class="hljs-string">8071</span>
+<span class="hljs-meta">spring.application.name</span>=<span class="hljs-string">service-provider</span>
+<span class="hljs-meta">spring.cloud.nacos.discovery.namespace</span>=<span class="hljs-string">e77d7925-1c90-4fa9-93cb-83153a099636</span>
+<span class="hljs-meta">spring.cloud.nacos.discovery.server-addr</span>=<span class="hljs-string">127.0.0.1:8848</span>
+<span class="hljs-comment">
+#service-consumer</span>
+<span class="hljs-meta">server.port</span>=<span class="hljs-string">8080</span>
+<span class="hljs-meta">spring.application.name</span>=<span class="hljs-string">service-consumer</span>
+<span class="hljs-meta">spring.cloud.nacos.discovery.server-addr</span>=<span class="hljs-string">127.0.0.1:8848</span>
+</code></pre>
+<p>在控制台仅修改 service-consumer 服务配置，推送如下：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/28990648/1666247341233-bc35de56-5653-4d5f-a510-819180dfe7f0.png" alt="Full CDS"></p>
+<h2>增量 EDS 示例</h2>
+<p>在控制台仅修改 service-consumer 实例配置，推送如下：</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/28990648/1666247341234-aa195810-c76d-4ff5-977a-55626775e697.png" alt="Incremental EDS"></p>
+</div></div></section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>愿景</h3><p>Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/what-is-nacos.html" target="_self">概览</a></dd><dd><a href="/zh-cn/docs/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/contributing.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_self">云服务 MSE</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">云服务 EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">云服务 AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2022 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script src="//g.alicdn.com/alilog/mlog/aplus_v2.js" id="beacon-aplus" exparams="clog=o&aplus&sidx=aplusSidx&ckx=aplusCkx"></script>
+  <script src="//g.alicdn.com/aes/??tracker/1.0.34/index.js,tracker-plugin-pv/2.4.5/index.js,tracker-plugin-event/1.2.5/index.js,tracker-plugin-jserror/1.0.13/index.js,tracker-plugin-api/1.1.14/index.js,tracker-plugin-perf/1.1.8/index.js,tracker-plugin-eventTiming/1.0.4/index.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/documentation.js">
+	</script>
+	<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e3a5cec56ef8619cf9d7c2abebd509e3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+</body>
+</html>
