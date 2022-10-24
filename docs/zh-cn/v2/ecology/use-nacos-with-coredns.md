@@ -1,14 +1,14 @@
 ---
-title: CoreDNS插件
-keywords: CoreDNS, 插件
-description: CoreDNS插件
+title: Nacos 融合CoreDNS 下发DNS域名
+keywords: CoreDNS, DNS-F
+description: Nacos 融合CoreDNS 下发DNS域名
 ---
 
-# CoreDNS插件
+# Nacos DNS 使用手册
 本插件提供了一个基于CoreDNS的DNS-F客户端，可以将Nacos上注册的服务导出为DNS域名。 本DNS-F客户端是应用程序进程旁边的一个专用代理进程（side car），可以将服务名作为DNS域名查询请求转发到本客户端，提供服务发现的功能。
 
 ## 快速开始
-要构建和运行本 nacos-coredns 插件，操作系统必须是 Linux 或 Mac。 另外，请确保您的 nacos 服务端版本为2.0或更高级版本，以及 golang 版本为 1.17 或更高级版本， 并且必须正确配置 golang 环境（GOPATH、GOROOT）。因为需要支持 nacos2.x 版本的gRPC连接功能和 go mod 功能。
+要构建和运行本 nacos-coredns 插件，操作系统必须是 Linux 或 Mac。 另外，请确保您的 nacos 服务端版本为2.2或更高级版本，以及 golang 版本为 1.17 或更高级版本， 并且必须正确配置 golang 环境（GOPATH、GOROOT）。因为需要支持 nacos2.x 版本的gRPC连接功能和 go mod 功能。
 
 ## 构建
 ```

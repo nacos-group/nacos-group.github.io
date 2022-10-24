@@ -425,12 +425,30 @@
       }
     },
     {
+      "filename": "use-nacos-with-coredns.md",
+      "link": "/en-us/docs/v2/ecology/use-nacos-with-coredns.html",
+      "meta": {
+        "title": "Nacos push domain with CoreDNS",
+        "keywords": "CoreDNS, DNS-F",
+        "description": "Nacos push domain with CoreDNS"
+      }
+    },
+    {
       "filename": "use-nacos-with-dubbo.md",
       "link": "/en-us/docs/v2/ecology/use-nacos-with-dubbo.html",
       "meta": {
         "title": "Nacos with Dubbo fusion become registry",
         "keywords": "Dubbo,Nacos,registration center",
         "description": "Nacos with Dubbo fusion become registry"
+      }
+    },
+    {
+      "filename": "use-nacos-with-istio.md",
+      "link": "/en-us/docs/v2/ecology/use-nacos-with-istio.html",
+      "meta": {
+        "title": "Nacos push xDS with Istio",
+        "keywords": "Istio,xDs,Envoy",
+        "description": "Nacos push xDS with Istio"
       }
     },
     {
@@ -1085,12 +1103,30 @@
       }
     },
     {
+      "filename": "use-nacos-with-coredns.md",
+      "link": "/zh-cn/docs/v2/ecology/use-nacos-with-coredns.html",
+      "meta": {
+        "title": "Nacos 融合CoreDNS 下发DNS域名",
+        "keywords": "CoreDNS, DNS-F",
+        "description": "Nacos 融合CoreDNS 下发DNS域名"
+      }
+    },
+    {
       "filename": "use-nacos-with-dubbo.md",
       "link": "/zh-cn/docs/v2/ecology/use-nacos-with-dubbo.html",
       "meta": {
         "title": "Dubbo 融合 Nacos 成为注册中心",
         "keywords": "Dubbo,Nacos,注册中心",
         "description": "Dubbo 融合 Nacos 成为注册中心"
+      }
+    },
+    {
+      "filename": "use-nacos-with-istio.md",
+      "link": "/zh-cn/docs/v2/ecology/use-nacos-with-istio.html",
+      "meta": {
+        "title": "Nacos 融合Istio 下发xDS协议",
+        "keywords": "Istio,xDs,Envoy",
+        "description": "Nacos 融合Istio 下发xDS协议"
       }
     },
     {

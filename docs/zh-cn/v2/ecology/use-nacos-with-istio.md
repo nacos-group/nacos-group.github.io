@@ -1,3 +1,8 @@
+---
+title: Nacos 融合Istio 下发xDS协议
+keywords: Istio,xDs,Envoy
+description: Nacos 融合Istio 下发xDS协议
+---
 # Istio 指南
 
 支持了 xDS 协议中的 CDS、EDS 服务，并为 EDS 以及 MCP 实现了增量推送。用户可以使用 Envoy 或其他支持 xDS 协议的客户端与 Nacos 进行对接，实现服务发现功能。

@@ -1,13 +1,13 @@
 ---
-title: CoreDNS Plugin
-keywords: CoreDNS, Plugin
-description: CoreDNS Plugin
+title: Nacos push domain with CoreDNS
+keywords: CoreDNS, DNS-F
+description: Nacos push domain with CoreDNS
 ---
 
-# CoreDNS Plugin
+# Nacos DNS user guide
 This plugin provides a DNS-F client based on CoreDNS, which can help export those registed services on Nacos as DNS domain. DNS-F client is a dedicated agent process(side car) beside the application's process to foward the service discovery DNS domain query request to Nacos.
 ## Quick Start
-To build and run nacos coredns plugin, the OS must be Linux or Mac. And also, make sure your nacos version is 2.0 or higher and golang version is 1.17 or higher. And golang environments(GOPATH,GOROOT,GOHOME) must be configured correctly. Because it needs to support the gRPC connection feature of the nacos2.x version and the go mod function.
+To build and run nacos coredns plugin, the OS must be Linux or Mac. And also, make sure your nacos version is 2.2 or higher and golang version is 1.17 or higher. And golang environments(GOPATH,GOROOT,GOHOME) must be configured correctly. Because it needs to support the gRPC connection feature of the nacos2.x version and the go mod function.
 ## Build
 ```
 git clone https://github.com/nacos-group/nacos-coredns-plugin.git 
