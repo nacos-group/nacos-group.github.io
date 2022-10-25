@@ -22,15 +22,38 @@ Nacos从2.1.1版本开始,可通过SPI机制注入多数据源实现插件,并�
 
 # 如何使用
 1. 用户查询当前Nacos是否支持所需数据源；
-2. 在`application.properties`配置文件中将`spring.datasource.platform`修改为对应的数据源名称；
-3. 然后编译运行则可支持此数据源；
+2. 在服务端引入插件实现依赖，推荐添加到nacos-datasource-plugin模块下
+3. 在`application.properties`配置文件中将`spring.datasource.platform`修改为对应的数据源名称，并配置相关参数；
+4. 然后编译运行则可支持此数据源；
 
 # 插件编写者如何开发
-1. 首先在`com.alibaba.nacos.plugin.datasource.constants.DataSourceConstant.java`类中加入一个String常量标识其所属数据源，作用是告知Config模块根据此名称读取Mapper；
-2. 其次在`com.alibaba.nacos.plugin.datasource.impl`中实现所有Mapper接口的方法，并将其路径放入`META-INF\services\com.alibaba.nacos.plugin.datasource.mapper.Mapper`中，即可完成其他数据源插件的编写；
-3. 编译运行
+1. 引入`nacos-datasource-plugin`依赖
+2. 实现`com.alibaba.nacos.plugin.datasource.mapper`包下数据表对应Mapper接口中的特殊SQL方法，主要是涉及分页等方言差别，可参考`com.alibaba.nacos.plugin.datasource.impl`下Derby以及MySQL的实现，只需实现对应接口即可。接口与表对应关系如下：
 
-Tips:此处Mapper的SQL分类是第一版,未来可能会有较大变动以及更新.
+    | 数据库表     | Mapper|
+    | ----------- | ----------- |
+    |config_info_aggr| ConfigInfoAggrMapper      |
+    |config_info_beta| ConfigInfoBetaMapper        |
+    |config_info|ConfigInfoMapper|
+    |config_info_tag|ConfigInfoTagMapper|
+    |config_tags_relation|ConfigTagsRelationMapper|
+    |his_config_info|HistoryConfigInfoMapper|
+
+3. 编写SPI配置文件，其名字为`com.alibaba.nacos.plugin.datasource.mapper.Mapper`，写入实现Mapper接口的类，可参考config模块中Derby与MySQL配置文件。
+4. 插件使用者则可以通过依赖此插件，达到实现对应数据源操作的效果
+5. 编译运行
+
+# 如何编译
+编译插件之前需要先编译`nacos`并安装至本地仓库.
+1. git clone git@github.com:alibaba/nacos.git
+2. cd nacos && mvn -B clean package install -Dmaven.test.skip=true
+
+> 若出现`revision`变量无法解析,请更新`maven`至最新版本
+
+3. git clone #{对应Git地址}
+4. mvn install
+
+建议上传到公司的maven仓库
 
 # 未来方案
 未来的版本更新如下:
