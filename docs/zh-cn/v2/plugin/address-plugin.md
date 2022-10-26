@@ -6,7 +6,7 @@ description: 本文描述如何开发及使用Nacos的寻址插件
 
 # 寻址插件
 
-Nacos从2.1.0版本开始，支持通过[SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html)的方式注入集群寻址相关插件，并在`application.properties`配置文件中选择某一种插件实现作为实际寻址服务。本文档会详细介绍如何实现一个寻址插件和如何使其生效。
+Nacos从2.3.0版本开始，支持通过[SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html)的方式注入集群寻址相关插件，并在`application.properties`配置文件中选择某一种插件实现作为实际寻址服务。本文档会详细介绍如何实现一个寻址插件和如何使其生效。
 
 > 注意：
 > 目前寻址插件还处于Beta测试的阶段，其API及接口定义可能会随后续版本升级而有所修改，请注意您的插件适用版本。
