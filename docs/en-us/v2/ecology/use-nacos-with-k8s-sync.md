@@ -8,7 +8,7 @@ description: Nacos supports synchronizing metadata from K8S service discovery
 
 ## Data synchronization
 Nacos monitors the changes of services and instances in K8S, obtains its service metadata, and synchronizes the change information to Nacos' service discovery. Supports K8S version 1.22 (corresponding to K8S-Java-API version 14.0.0).The diagram is as follow:
-![](../../img/k8s-sync.jpg)
+![](img/k8s-sync.jpg)
 
 Mapping scheme of K8S resource synchronization to Nacos resource (single-direction, Nacos resource synchronization to K8S resource to be supplemented) :
 
@@ -21,7 +21,7 @@ service port(multiple)|service.ports.port|instance.extendData<String, Object>
 pod ip|pod.status.hostIP / service.ipFamilies|instance.ip
 
 ## Configuration file
-Deploy the Nacos cluster according to [the deploy document](https://nacos.io/en-us/docs/deployment.html)
+Deploy the Nacos cluster according to [the deploy document](../guide/admin/deployment.md)
 
 Configure the application.properties file to enable K8S synchronization:
 ```

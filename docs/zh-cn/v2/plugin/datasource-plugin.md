@@ -13,12 +13,12 @@ Nacos从2.2.0版本开始,可通过SPI机制注入多数据源实现插件,并�
 # 插件化实现
 在原来的Config模块中，所有的SQL操作的执行是通过直接使用JdbcTemplate执行固定SQL语句的形式，使得SQL语句与业务逻辑高度耦合，并且只支持Derby与MySQL两种数据源，原有Config模块架构如下。
 
-![](../../img/config-old-datasource.png)
+![](/img/config-old-datasource.png)
 
 现在的多数据源插件通过SPI机制，将SQL操作按照数据表进行抽象出多个Mapper接口，Mapper接口的实现类需要按照不同的数据源编写对应的SQL方言实现;
 现在插件默认提供Derby以及MySQL的Mapper实现，可直接使用；而其他的数据源则需要用户使用数据源插件进行加载，其改造后架构图如下。
 
-![](../../img/config-datasource-plugin.png)
+![](/img/config-datasource-plugin.png)
 
 # 如何使用
 1. 用户查询当前Nacos是否支持所需数据源，Nacos默认提供Derby以及MySQL的实现，若暂未支持可参考下面插件编写者如何开发步骤开发插件自己使用或贡献；

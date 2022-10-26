@@ -64,6 +64,10 @@ export default {
                 title: 'Configuration Encryption',
                 link: '/en-us/docs/v2/plugin/config-encryption-plugin.html',
               },
+              {
+                title: 'Datasource',
+                link: '/en-us/docs/v2/plugin/datasource-plugin.html',
+              },
             ]
           },
           {
@@ -268,6 +272,10 @@ export default {
               {
                 title: '配置加密',
                 link: '/zh-cn/docs/v2/plugin/config-encryption-plugin.html',
+              },
+              {
+                title: '数据源',
+                link: '/zh-cn/docs/v2/plugin/datasource-plugin.html',
               },
             ]
           },

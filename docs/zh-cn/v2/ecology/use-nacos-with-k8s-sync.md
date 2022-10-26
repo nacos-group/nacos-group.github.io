@@ -8,7 +8,7 @@ description: Nacos支持从K8S服务发现中同步服务元数据
 
 ## 数据同步
 Nacos监听K8S中服务和实例的变化情况，并获取其服务元数据，同步变更信息到Nacos的服务发现模块和实例中。支持K8S版本1.22（对应K8S-Java-API版本为14.0.0）。示意图如下：
-![](../../img/k8s-sync.jpg)
+![](img/k8s-sync.jpg)
 
 K8S资源同步至Nacos资源的映射方案（单向，Nacos资源同步至K8S资源待补充）：
 
@@ -22,7 +22,7 @@ service port(多个)|service.ports.port|instance.extendData<String, Object>
 pod ip|pod.status.hostIP或者service.ipFamilies|instance.ip
 
 ## 配置文件
-按照[部署文档](https://nacos.io/zh-cn/docs/deployment.html)搭建好Nacos集群。
+按照[部署文档](../guide/admin/deployment.md)搭建好Nacos集群。
 
 配置application.properties文件，打开K8S同步的开关：
 ```

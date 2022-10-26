@@ -452,6 +452,15 @@
       }
     },
     {
+      "filename": "use-nacos-with-k8s-sync.md",
+      "link": "/en-us/docs/v2/ecology/use-nacos-with-k8s-sync.html",
+      "meta": {
+        "title": "Nacos supports synchronizing metadata from K8S service discovery",
+        "keywords": "Nacos,k8s,kubernetes",
+        "description": "Nacos supports synchronizing metadata from K8S service discovery"
+      }
+    },
+    {
       "filename": "use-nacos-with-spring-boot.md",
       "link": "/en-us/docs/v2/ecology/use-nacos-with-spring-boot.html",
       "meta": {
@@ -596,6 +605,15 @@
       }
     },
     {
+      "filename": "address-plugin.md",
+      "link": "/en-us/docs/v2/plugin/address-plugin.html",
+      "meta": {
+        "title": "Addressing Plugin",
+        "keywords": "Addressing, Plugin",
+        "description": "This article describes how to develop and use Nacos' addressing plugin."
+      }
+    },
+    {
       "filename": "auth-plugin.md",
       "link": "/en-us/docs/v2/plugin/auth-plugin.html",
       "meta": {
@@ -611,6 +629,15 @@
         "title": "CONFIGURE ENCRYPTION",
         "keywords": "AES,ENCRYPTION,CONFIGURE ENCRYPTION",
         "description": "CONFIGURE ENCRYPTION"
+      }
+    },
+    {
+      "filename": "datasource-plugin.md",
+      "link": "/en-us/docs/v2/plugin/datasource-plugin.html",
+      "meta": {
+        "title": "多数据源",
+        "keywords": "MySQL,Derby,多数据源",
+        "description": "多数据源"
       }
     },
     {
@@ -1130,6 +1157,15 @@
       }
     },
     {
+      "filename": "use-nacos-with-k8s-sync.md",
+      "link": "/zh-cn/docs/v2/ecology/use-nacos-with-k8s-sync.html",
+      "meta": {
+        "title": "Nacos支持从K8S服务发现中同步服务元数据",
+        "keywords": "Nacos,k8s,kubernetes",
+        "description": "Nacos支持从K8S服务发现中同步服务元数据"
+      }
+    },
+    {
       "filename": "use-nacos-with-spring-boot.md",
       "link": "/zh-cn/docs/v2/ecology/use-nacos-with-spring-boot.html",
       "meta": {
@@ -1274,6 +1310,15 @@
       }
     },
     {
+      "filename": "address-plugin.md",
+      "link": "/zh-cn/docs/v2/plugin/address-plugin.html",
+      "meta": {
+        "title": "寻址插件",
+        "keywords": "寻址, 插件",
+        "description": "本文描述如何开发及使用Nacos的寻址插件"
+      }
+    },
+    {
       "filename": "auth-plugin.md",
       "link": "/zh-cn/docs/v2/plugin/auth-plugin.html",
       "meta": {
@@ -1289,6 +1334,15 @@
         "title": "配置加密",
         "keywords": "AES,encryption,配置加密",
         "description": "配置加密"
+      }
+    },
+    {
+      "filename": "datasource-plugin.md",
+      "link": "/zh-cn/docs/v2/plugin/datasource-plugin.html",
+      "meta": {
+        "title": "多数据源",
+        "keywords": "MySQL,Derby,多数据源",
+        "description": "多数据源"
       }
     },
     {

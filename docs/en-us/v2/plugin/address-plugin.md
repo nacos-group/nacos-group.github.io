@@ -6,7 +6,7 @@ description: This article describes how to develop and use Nacos' addressing plu
 
 # Addressing Plugin
 
-Since version 2.1.0, Nacos support to inject addressing plugins through [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html), and select a plugin implementation in the configuration file `application.properties ` as the actual addressing service. This document will describe how to implement an addressing plugin and how to make it work.
+Since version 2.3.0, Nacos support to inject addressing plugins through [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html), and select a plugin implementation in the configuration file `application.properties ` as the actual addressing service. This document will describe how to implement an addressing plugin and how to make it work.
 
 > Attention: 
 > At present, the addressing plugin is still in the beta stage, and its API and interface definitions maybe modified with version upgrades. Please pay attention to the applicable version of your plugin.
