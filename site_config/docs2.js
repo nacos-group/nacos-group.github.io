@@ -68,6 +68,10 @@ export default {
                 title: 'Datasource',
                 link: '/en-us/docs/v2/plugin/datasource-plugin.html',
               },
+              {
+                title: 'Track Tracing',
+                link: '/en-us/docs/v2/plugin/trace-plugin.html',
+              },
             ]
           },
           {
@@ -276,6 +280,10 @@ export default {
               {
                 title: '数据源',
                 link: '/zh-cn/docs/v2/plugin/datasource-plugin.html',
+              },
+              {
+                title: '轨迹追踪',
+                link: '/zh-cn/docs/v2/plugin/trace-plugin.html',
               },
             ]
           },

@@ -394,6 +394,15 @@
       }
     },
     {
+      "filename": "212-and-220beta-release.md",
+      "link": "/zh-cn/blog/212-and-220beta-release.html",
+      "meta": {
+        "title": "Nacos 2.1.2、2.2.0-BETA及go-sdk 2.1.1 版本同时发布，多语言生态再添大将",
+        "keywords": "2.1.2, 2.2.0-BETA, go-sdk, rust-sdk",
+        "description": "Nacos 2.1.2、2.2.0-BETA及go-sdk 2.1.1 版本同时发布，多语言生态再添大将。"
+      }
+    },
+    {
       "filename": "5w1h-what.md",
       "link": "/zh-cn/blog/5w1h-what.html",
       "meta": {
