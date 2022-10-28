@@ -9,7 +9,10 @@ description: This topic is about how to set up and use Nacos.
 This topic is about how to set up and use Nacos.
 
 ## 0.Choose Version
-You can see the introduction of each version at [release notes](https://github.com/alibaba/nacos/releases) or [blog](https://nacos.io/zh-cn/blog/index.html), the current recommended version is 2.0.3.
+
+Nacos 1.X is old version. Recommend you use 2.X version. Please move to [document](./v2/quickstart/quick-start.md).
+
+You can see the introduction of each version at [release notes](https://github.com/alibaba/nacos/releases) or [blog](https://nacos.io/zh-cn/blog/index.html), the current recommended version is 2.1.1.
 
 ## 1.Prerequisites
 
