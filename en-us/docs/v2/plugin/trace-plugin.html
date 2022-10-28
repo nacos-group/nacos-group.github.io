@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="aes-config" content="pid=xux-opensource&user_type=101&uid=&username=&dim10=nacos"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="Track tracing, push tracing, modifying tracing" />
+	<meta name="description" content="Nacos supports Track tracing plugin, can help developers and maintainers find out problems quickly by extending plugin like push tracing." />
+  <meta name="baidu-site-verification" content="code-wzq5sw7io3" />
+	<!-- 网页标签标题 -->
+	<title>Tracing</title>
+	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
+	<link rel="stylesheet" href="/build/documentation.css" />
+</head>
+<body>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/en-us/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">中</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><span><a href="/en-us/index.html">HOME</a></span></li><li class="menu-item menu-item-normal menu-item-normal-active"><div class="nav-container"><div class="word"><a>DOCS</a></div><ul class="sub-nav-container" style="width:290px"><li><a href="/en-us/docs/v2/quickstart/quick-start.html" target="_blank">2.X（Recommend）</a></li><li><a href="/en-us/docs/quick-start.html" target="_blank">1.X</a></li></ul> </div></li><li class="menu-item menu-item-normal"><div class="nav-container"><div class="word"><a>SOLUTIONS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></div><ul class="sub-nav-container" style="width:290px"><li><a href="https://www.alibabacloud.com/product/microservices-engine" target="_blank">Microservice Solution</a></li><li><a href="https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0" target="_blank">Microservice on Serverless Solution</a></li><li><a href="https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0" target="_blank">PaaS Solution</a></li><li><a href="https://www.aliyun.com/aliware/txc?spm=nacos-website.topbar.0.0.0" target="_blank">Distributed transaction Solution</a></li><li><a href="https://www.aliyun.com/product/ahas?spm=nacos-website.topbar.0.0.0" target="_blank">High-availability Solution</a></li><li><a href="https://www.aliyun.com/product/servicemesh?spm=nacos-website.topbar.0.0.0" target="_blank">Service mesh Solution</a></li></ul> </div></li><li class="menu-item menu-item-normal"><span><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0">NACOS IN CLOUD</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST">E-BOOK-NACOS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="/en-us/blog">BLOG</a></span></li><li class="menu-item menu-item-normal"><span><a href="/en-us/community">COMMUNITY</a></span></li><li class="menu-item menu-item-normal"><span><a href="http://console.nacos.io/nacos/index.html">DEMO-CONSOLE</a></span></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/docs.png" class="front-img"/><div class="bar-title"><span>Documentation</span><div class="bone bone-light"></div></div><img src="/img/docs.png" class="back-img"/></div></div><section class="content-section"><div class="content-body"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>Nacos </span><ul><li style="height:144px;overflow:hidden" class="menu-item menu-item-level-2"><span>What is Nacos<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/what-is-nacos.html" target="_self">What is Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/concepts.html" target="_self">Concepts</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/architecture.html" target="_self">Architecure</a></li></ul></li><li style="height:324px;overflow:hidden" class="menu-item menu-item-level-2"><span>Quick Start<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start.html" target="_self">Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring-boot.html" target="_self">Nacos Spring Boot</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring-cloud.html" target="_self">Nacos Spring Cloud</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-docker.html" target="_self">Nacos Docker</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/use-nacos-with-dubbo.html" target="_self">Nacos with Dubbo</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/use-nacos-with-kubernetes.html" target="_self">Nacos with K8s</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-sync.html" target="_self">Nacos Sync</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>User Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/sdk.html" target="_self">Java SDK</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/other-language.html" target="_self">Other Language</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/open-api.html" target="_self">Open-API</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/system-configurations.html" target="_self">Nacos System Configurations</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/auth.html" target="_self">Authentication</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/faq.html" target="_self">FAQ</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Admin Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/deployment.html" target="_self">Deployment Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/cluster-mode-quick-start.html" target="_self">Cluster Mode Deployment</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/management-api.html" target="_self">Management OpenAPI</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/console-guide.html" target="_self">Admin Console Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/monitor-guide.html" target="_self">Nacos Monitor Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-config-benchmark.html" target="_self">Nacos Config Benchmark</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-naming-benchmark.html" target="_self">Nacos Naming Benchmark</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-sync-use.html" target="_self">Data Migration to Nacos</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Contributor Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/contributing.html" target="_self">Contribute to Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/contributing-flow.html" target="_self">Contributing Flow</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/pull-request.html" target="_self">Pull Request Template</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/how-to-reporting-bugs.html" target="_self">How to report bugs</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Community<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/community.html" target="_self">Community</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-dev.html" target="_self">Develop Team</a></li></ul></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>Track tracing plugin</h1>
+<p>Since version 2.2.0, Nacos support to inject track tracing plugins through <a href="https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html">SPI</a>, to subscribe and process trace events in the plugin with the way you want (such as logging, writing to storage, etc.).
+This document will describe how to implement a track tracing plugin and how to make it work.</p>
+<blockquote>
+<p>Attention:
+At present, the track tracing plugin is still in the beta stage, and its API and interface definitions maybe modified with version upgrades. Please pay attention to the applicable version of your plugin.</p>
+<p>The track tracing of Nacos is different from the tracking in general sense. It is mainly used to trace and record some Nacos related operations, such as service registration, de-registration, push, status change, etc.
+It is not used to trace the access and request between micro-services. If you need to monitor the access and request between services, please use the corresponding tracing projects.</p>
+</blockquote>
+<h2>Concepts in Track tracing Plugin</h2>
+<h3>TraceEvent</h3>
+<p>Nacos embeds points in the important operations, and defines a series of trace events named 'TraceEvent'. After combined multiple 'TraceEvent's for the same resource (such as services, configurations, etc.), the trace of the resource will be gotten.</p>
+<p>The TraceEvent will include following:</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>Type of event, defined by sub-events</td>
+</tr>
+<tr>
+<td>eventTime</td>
+<td>Time of the event occurs</td>
+</tr>
+<tr>
+<td>namespaceId</td>
+<td>Corresponding resource namespace ID of the event</td>
+</tr>
+<tr>
+<td>group</td>
+<td>Corresponding resource group name of the event</td>
+</tr>
+<tr>
+<td>name</td>
+<td>Corresponding resource name of the event，such as service name or dataId for config</td>
+</tr>
+</tbody>
+</table>
+<p>Currently, the sub event types defined in Nacos include:</p>
+<table>
+<thead>
+<tr>
+<th>Event Name</th>
+<th>Description</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RegisterInstanceTraceEvent</td>
+<td>The event for service instance registration, mainly occurs when the service provider is registered</td>
+<td><a href="#1.1">Detail</a></td>
+</tr>
+<tr>
+<td>DeregisterInstanceTraceEvent</td>
+<td>The event for service instance de-registration, mainly occurs when the service provider is de-registered</td>
+<td><a href="#1.2">Detail</a></td>
+</tr>
+<tr>
+<td>RegisterServiceTraceEvent</td>
+<td>The event for service registration, different from <code>RegisterInstanceTraceEvent</code>, mainly occurs when create empty services</td>
+<td><a href="#1.3">Detail</a></td>
+</tr>
+<tr>
+<td>DeregisterServiceTraceEvent</td>
+<td>The event for service de-registration, different from <code>DeregisterInstanceTraceEvent</code>, mainly occurs when remove empty services</td>
+<td><a href="#1.4">Detail</a></td>
+</tr>
+<tr>
+<td>SubscribeServiceTraceEvent</td>
+<td>The event for service subscription, mainly occurs when the service is subscribed</td>
+<td><a href="#1.5">Detail</a></td>
+</tr>
+<tr>
+<td>UnsubscribeServiceTraceEvent</td>
+<td>The event for service unsubscription, mainly occurs when the service is unsubscribed</td>
+<td><a href="#1.6">Detail</a></td>
+</tr>
+<tr>
+<td>PushServiceTraceEvent</td>
+<td>The event for service pushing, mainly occurs when the service is pushed to subscribed</td>
+<td><a href="#1.7">Detail</a></td>
+</tr>
+<tr>
+<td>HealthStateChangeTraceEvent</td>
+<td>The event for service instance health state changing, mainly occurs when an instance's health state changes due to a heartbeat/health check</td>
+<td><a href="#1.8">Detail</a></td>
+</tr>
+</tbody>
+</table>
+<h2>Plugin Development</h2>
+<p>To develop a Nacos track tracing plugin, developer first need to depend on the relevant API of the track tracing plugin.</p>
+<pre><code class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.nacos<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>nacos-trace-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${project.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+</code></pre>
+<p><code>${project.version}</code> is the version of Nacos for your development plugin.</p>
+<p>Then implement interface <code>com.alibaba.nacos.plugin.trace.spi.NacosTraceSubscriber</code>, and put your implementation into services of SPI.</p>
+<p>The methods of interface in following:</p>
+<table>
+<thead>
+<tr>
+<th>method name</th>
+<th>parameters</th>
+<th>returns</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>getName</td>
+<td>void</td>
+<td>String</td>
+<td>he name of the plugin. When the name is the same, the plugin loaded later will overwrite the plugin loaded first.</td>
+</tr>
+<tr>
+<td>subscribeTypes</td>
+<td>void</td>
+<td>List&lt;Class&lt;? extends TraceEvent&gt;&gt;</td>
+<td>The expected the event type of the subscription for this plugin. If returns an empty list, plugin will not subscribe any event.</td>
+</tr>
+<tr>
+<td>onEvent</td>
+<td>TraceEvent</td>
+<td>void</td>
+<td>The logic for handle events. The type of events will defined by <code>subscribeTypes</code>.</td>
+</tr>
+<tr>
+<td>executor</td>
+<td>void</td>
+<td>Executor</td>
+<td>When return not <code>null</code>, Nacos will use the <code>Executor</code> to call <code>onEvent</code>, otherwise use event distribution thread to call <code>onEvent</code>.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Attention:
+It is recommend that you use a dependent Executor for plugin implementations, such as blocked IO operations in plugin implementations, which will block onEvent called to other events when there are IO exceptions, causing backlogs.</p>
+</blockquote>
+<p>In <a href="https://github.com/nacos-group/nacos-plugin">nacos-group/nacos-plugin</a>，providing a demo implementation for track tracing plugin. This demo subscribes <code>RegisterInstanceTraceEvent</code> and <code>DeregisterInstanceTraceEvent</code> and print result information into logs.</p>
+<h2>Degradation of Track Tracking Plugin</h2>
+<p>Because the Track Tracking Plugin is for the monitoring category, and will not affect Nacos data. So when the Track Tracking Plugin has problems, it should not affect the Nacos primary works.</p>
+<p>It is recommend that you use a dependent Executor for plugin implementations, such as blocked IO operations in plugin implementations, which will block onEvent called to other events when there are IO exceptions, causing backlogs.</p>
+<p>If the backlog occurs unfortunately, subsequent events will be automatically discarded when the event queue of the Track Tracking Plugin reaches the upper limit to ensure overall system stability.</p>
+<p>You can see the words <code>Trace Event Publish failed, event : {}, publish queue size : {}</code> in <code>nacos.log</code> when the discard occurred</p>
+<h2>Appendix: Sub-trace Event Details</h2>
+<h3 id="1.1">RegisterInstanceTraceEvent</h3>
+<blockquote>
+<p>Since 2.2.0.</p>
+</blockquote>
+<p>type: <code>REGISTER_INSTANCE_TRACE_EVENT</code></p>
+<p>Extra Content:</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clientIp</td>
+<td>The source IP of registering service instance request, probably null.</td>
+</tr>
+<tr>
+<td>rpc</td>
+<td>Whether the source request is gRPC, <code>true</code> when request is gRPC, <code>false</code> is HTTP.</td>
+</tr>
+<tr>
+<td>instanceIp</td>
+<td>The IP or Host of service instance registered</td>
+</tr>
+<tr>
+<td>instancePort</td>
+<td>The Port of service instance registered</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1.2">DeregisterInstanceTraceEvent</h3>
+<blockquote>
+<p>Since 2.2.0.</p>
+</blockquote>
+<p>type: <code>DEREGISTER_INSTANCE_TRACE_EVENT</code></p>
+<p>Extra Content:</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clientIp</td>
+<td>The source IP of de-registering service instance request, probably null.</td>
+</tr>
+<tr>
+<td>reason</td>
+<td>The reason of de-registering, details see <a href="#1.2.1">DeregisterInstanceReason</a></td>
+</tr>
+<tr>
+<td>rpc</td>
+<td>Whether the source request is gRPC, <code>true</code> when request is gRPC, <code>false</code> is HTTP.</td>
+</tr>
+<tr>
+<td>instanceIp</td>
+<td>The IP or Host of service instance de-registered</td>
+</tr>
+<tr>
+<td>instancePort</td>
+<td>The Port of service instance de-registered</td>
+</tr>
+</tbody>
+</table>
+<h4 id="1.2.1"> DeregisterInstanceReason </h4>
+<table>
+<thead>
+<tr>
+<th>Reason</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQUEST</td>
+<td>De-registration comes from client requests, in other word, user initiated de-registration.</td>
+</tr>
+<tr>
+<td>NATIVE_DISCONNECTED</td>
+<td>De-registration comes from client disconnected</td>
+</tr>
+<tr>
+<td>SYNCED_DISCONNECTED</td>
+<td>De-registration comes from client disconnected in other server node, and synced from other server node.</td>
+</tr>
+<tr>
+<td>HEARTBEAT_EXPIRE</td>
+<td>De-registration comes from heartbeat timeout for 1.X version client.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1.3">RegisterServiceTraceEvent</h3>
+<blockquote>
+<p>Since 2.2.0.</p>
+</blockquote>
+<p>type: <code>REGISTER_SERVICE_TRACE_EVENT</code></p>
+<p>Extra Content: None</p>
+<h3 id="1.4">DeregisterServiceTraceEvent</h3>
+<blockquote>
+<p>Since 2.2.0.</p>
+</blockquote>
+<p>type: <code>DEREGISTER_SERVICE_TRACE_EVENT</code></p>
+<p>Extra Content: None</p>
+<h3 id="1.5">SubscribeServiceTraceEvent</h3>
+<blockquote>
+<p>Since 2.2.0.</p>
+</blockquote>
+<p>type: <code>SUBSCRIBE_SERVICE_TRACE_EVENT</code></p>
+<p>Extra Content:</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clientIp</td>
+<td>The IP of subscriber</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1.6">UnsubscribeServiceTraceEvent</h3>
+<blockquote>
+<p>Since 2.2.0.</p>
+</blockquote>
+<p>type: <code>UNSUBSCRIBE_SERVICE_TRACE_EVENT</code></p>
+<p>Extra Content:</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clientIp</td>
+<td>The IP of subscriber</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1.7">PushServiceTraceEvent</h3>
+<blockquote>
+<p>Since 2.2.0.</p>
+</blockquote>
+<p>type: <code>PUSH_SERVICE_TRACE_EVENT</code></p>
+<p>Extra Content:</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>clientIp</td>
+<td>The IP of subscriber</td>
+</tr>
+<tr>
+<td>instanceSize</td>
+<td>The size of service instance for this push</td>
+</tr>
+<tr>
+<td>pushCostTimeForAll</td>
+<td>The full cost for this push, means that the cost from start pushing to end pushing, including the wait time in combined queue and the time for executing.</td>
+</tr>
+<tr>
+<td>pushCostTimeForNetWork</td>
+<td>The network cost for this push, means that the cost from executing to end pushing, only including the network cost.</td>
+</tr>
+<tr>
+<td>serviceLevelAgreementTime</td>
+<td>The actual cost for this push, means the cost from services changeing to end pushing. It's a reference value not accuracy.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1.8">HealthStateChangeTraceEvent</h3>
+<blockquote>
+<p>Since 2.2.0.</p>
+</blockquote>
+<p>type: <code>HEALTH_STATE_CHANGE_TRACE_EVENT</code></p>
+<p>Extra Content:</p>
+<table>
+<thead>
+<tr>
+<th>Field Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>instanceIp</td>
+<td>The IP or Host of service instance changed</td>
+</tr>
+<tr>
+<td>instancePort</td>
+<td>The Port of service instance changed</td>
+</tr>
+<tr>
+<td>isHealthy</td>
+<td>The change result is healthy or not</td>
+</tr>
+<tr>
+<td>healthCheckType</td>
+<td>The type of health check</td>
+</tr>
+<tr>
+<td>healthStateChangeReason</td>
+<td>The reason of healthy changed</td>
+</tr>
+</tbody>
+</table>
+</div></div></section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>Vision</h3><p>By providing an easy-to-use service infrastructure such as dynamic service discovery, service configuration, service sharing and management and etc., Nacos help users better construct, deliver and manage their own service platform, reuse and composite business service faster and deliver value of business innovation more quickly so as to win market for users in the era of cloud native and in all cloud environments, such as private, mixed, or public clouds.</p></div><div class="col col-6"><dl><dt>Documentation</dt><dd><a href="/en-us/docs/what-is-nacos.html" target="_self">Overview</a></dd><dd><a href="/en-us/docs/quick-start.html" target="_self">Quick start</a></dd><dd><a href="/en-us/docs/contributing.html" target="_self">Developer guide</a></dd></dl></div><div class="col col-6"><dl><dt>Resources</dt><dd><a href="/en-us/community/index.html" target="_self">Community</a></dd><dd><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_self">Cloud Service MSE</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">Cloud Service EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">Cloud Service AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2022 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script src="//g.alicdn.com/alilog/mlog/aplus_v2.js" id="beacon-aplus" exparams="clog=o&aplus&sidx=aplusSidx&ckx=aplusCkx"></script>
+  <script src="//g.alicdn.com/aes/??tracker/1.0.34/index.js,tracker-plugin-pv/2.4.5/index.js,tracker-plugin-event/1.2.5/index.js,tracker-plugin-jserror/1.0.13/index.js,tracker-plugin-api/1.1.14/index.js,tracker-plugin-perf/1.1.8/index.js,tracker-plugin-eventTiming/1.0.4/index.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/documentation.js">
+	</script>
+	<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e3a5cec56ef8619cf9d7c2abebd509e3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+</body>
+</html>
