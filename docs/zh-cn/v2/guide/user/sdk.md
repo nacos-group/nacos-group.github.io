@@ -563,3 +563,79 @@ NamingService naming = NamingFactory.createNamingService(System.getProperty("ser
 naming.unsubscribe("nacos.test.3", event -> {});
 
 ```
+
+## NacosClientProperties （Beta）
+### 介绍
+
+该类作为 client-sdk 参数配置总入口, 用于替代以前 properties 的方式. 该类共有4个取值范围, 分别是: 用户自定义、jvm命令行参数、系统环境变量和默认配置.
+
+
+该类可以指定取值范围优先级以改变查找顺序, 默认查找顺序: 用户自定义->jvm命令行参数->系统环境变量->默认配置, 该类取值时会依次查找,直到获取值为止.
+
+目前还处于 beta测试阶段, Naming 和 Config 入口处的 Properties 并未进行替换更改, 内部已经替换成 `NacosClientProperties`.
+
+### 如何使用
+``` java
+// 设置一个全局共享的 key
+NacosClientProperties.PROTOTYPE.setProperty("global-key1", "global-value1");
+
+// 从全局共享配置中创建一个私有的配置
+NacosClientProperties properties1 = NacosClientProperties.derive();
+properties1.setProperty("private-key","value1");
+
+String v1 = properties1.getProperty("private-key"); // v1 == value1
+// 自身未能查找到 global-key1 向上查找
+String v2 = properties1.getProperty("global-key1"); // v2 == global-value1
+
+```
+
+### 设计
+
+![nacos_client_properties-class-relationship.png](/img/nacos_client_properties-class-relationship.png) 
+
+`NacosClientProperties` 默认实现是 `SearchableProperties`, `SearchableProperties` 只能由 `NacosClientProperties` 接口中的 `PROTOTYPE` 进行派生.派生可以理解为配置的一种继承.
+
+#### 配置继承
+
+![nacos_client_properties_extends.png](/img/nacos_client_properties_extends.png) 
+``` java
+
+// 默认查找顺序: 用户自定义->jvm命令行参数->系统环境变量->默认配置
+
+System.setProperty("jvm-key1", "jvm");
+
+NacosClientProperties.PROTOTYPE.setProperty("global-key1", "value1");
+
+// 派生出新配置
+NacosClientProperties properties1 = NacosClientProperties.derive();
+properties1.setProperty("properties1", "value2");
+
+// 查找顺序为 自身 -> 父 properties -> jvm -> system env -> default-setting
+String v1 = properties1.getProperty("global-key1"); //  v1 == value1 
+String v2 = properties1.getProperty("jvm-key1"); // v2 == jvm
+
+
+
+NacosClientProperties properties2 = properties1.derive();
+properties2.getProperty("properties1");
+
+// 查找顺序为 自身 -> 父 properties -> 父 properties -> jvm -> system env -> default-setting
+String v3 = properties2.getProperty("properties1"); // v3 == value2
+
+```
+
+#### 查找优先级
+取值范围总共分为4个:
+- PROPERTIES (用户自定义)
+- JVM (jvm命令行参数)
+- ENV (系统环境变量)
+- DEFAULT_SETTING (默认配置)
+
+默认查找顺序为: PROPERTIES->JVM->ENV->DEFAULT_SETTING
+
+修改取值范围优先级可通过`java -Dnacos.env.first=PROPERTIES|JVM|ENV|DEFAULT_SETTING` 或者设置环境变量 `NACOS_ENV_FIRST=PROPERTIES|JVM|ENV|DEFAULT_SETTING`的方式指定.
+指定之后,会优先查找指定的取值范围
+![nacos_client_properties_first.png](/img/nacos_client_properties_first.png) 
+
+#### 对于 client 中的 logging 支持
+目前 client 中的 log42 和 logback 均完成 `NacosClientProperties` 的适配, 可以通过以上4个取值范围来控制 log xml 配置文件中的参数值
