@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="aes-config" content="pid=xux-opensource&user_type=101&uid=&username=&dim10=nacos"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="Istio,xDs,Envoy" />
+	<meta name="description" content="Nacos push xDS with Istio" />
+  <meta name="baidu-site-verification" content="code-wzq5sw7io3" />
+	<!-- 网页标签标题 -->
+	<title>Nacos push xDS with Istio</title>
+	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
+	<link rel="stylesheet" href="/build/documentation.css" />
+</head>
+<body>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/en-us/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">中</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><span><a href="/en-us/index.html">HOME</a></span></li><li class="menu-item menu-item-normal menu-item-normal-active"><div class="nav-container"><div class="word"><a>DOCS</a></div><ul class="sub-nav-container" style="width:290px"><li><a href="/en-us/docs/v2/quickstart/quick-start.html" target="_blank">2.X（Recommend）</a></li><li><a href="/en-us/docs/quick-start.html" target="_blank">1.X</a></li></ul> </div></li><li class="menu-item menu-item-normal"><div class="nav-container"><div class="word"><a>SOLUTIONS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></div><ul class="sub-nav-container" style="width:290px"><li><a href="https://www.alibabacloud.com/product/microservices-engine" target="_blank">Microservice Solution</a></li><li><a href="https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0" target="_blank">Microservice on Serverless Solution</a></li><li><a href="https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0" target="_blank">PaaS Solution</a></li><li><a href="https://www.aliyun.com/aliware/txc?spm=nacos-website.topbar.0.0.0" target="_blank">Distributed transaction Solution</a></li><li><a href="https://www.aliyun.com/product/ahas?spm=nacos-website.topbar.0.0.0" target="_blank">High-availability Solution</a></li><li><a href="https://www.aliyun.com/product/servicemesh?spm=nacos-website.topbar.0.0.0" target="_blank">Service mesh Solution</a></li></ul> </div></li><li class="menu-item menu-item-normal"><span><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0">NACOS IN CLOUD</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST">E-BOOK-NACOS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="/en-us/blog">BLOG</a></span></li><li class="menu-item menu-item-normal"><span><a href="/en-us/community">COMMUNITY</a></span></li><li class="menu-item menu-item-normal"><span><a href="http://console.nacos.io/nacos/index.html">DEMO-CONSOLE</a></span></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/docs.png" class="front-img"/><div class="bar-title"><span>Documentation</span><div class="bone bone-light"></div></div><img src="/img/docs.png" class="back-img"/></div></div><section class="content-section"><div class="content-body"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>Nacos </span><ul><li style="height:144px;overflow:hidden" class="menu-item menu-item-level-2"><span>What is Nacos<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/what-is-nacos.html" target="_self">What is Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/concepts.html" target="_self">Concepts</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/architecture.html" target="_self">Architecure</a></li></ul></li><li style="height:324px;overflow:hidden" class="menu-item menu-item-level-2"><span>Quick Start<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start.html" target="_self">Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring-boot.html" target="_self">Nacos Spring Boot</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring-cloud.html" target="_self">Nacos Spring Cloud</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-docker.html" target="_self">Nacos Docker</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/use-nacos-with-dubbo.html" target="_self">Nacos with Dubbo</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/use-nacos-with-kubernetes.html" target="_self">Nacos with K8s</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-sync.html" target="_self">Nacos Sync</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>User Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/sdk.html" target="_self">Java SDK</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/other-language.html" target="_self">Other Language</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/open-api.html" target="_self">Open-API</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/system-configurations.html" target="_self">Nacos System Configurations</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/auth.html" target="_self">Authentication</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/faq.html" target="_self">FAQ</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Admin Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/deployment.html" target="_self">Deployment Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/cluster-mode-quick-start.html" target="_self">Cluster Mode Deployment</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/management-api.html" target="_self">Management OpenAPI</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/console-guide.html" target="_self">Admin Console Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/monitor-guide.html" target="_self">Nacos Monitor Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-config-benchmark.html" target="_self">Nacos Config Benchmark</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-naming-benchmark.html" target="_self">Nacos Naming Benchmark</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-sync-use.html" target="_self">Data Migration to Nacos</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Contributor Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/contributing.html" target="_self">Contribute to Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/contributing-flow.html" target="_self">Contributing Flow</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/pull-request.html" target="_self">Pull Request Template</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/how-to-reporting-bugs.html" target="_self">How to report bugs</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Community<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/community.html" target="_self">Community</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-dev.html" target="_self">Develop Team</a></li></ul></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>Istio Guide</h1>
+<p>It supports CDS and EDS in xDS protocol, and realizes incremental push for EDS and MCP. Users can use Envoy or other XDS protocol-enabled clients to dock with Nacos for service discovery.</p>
+<h2>Configuration</h2>
+<h3>Server</h3>
+<p>For distribution packages:</p>
+<p>modify <code>nacos.istio.mcp.server.enabled</code> in <code>nacos/conf/application.properties</code> to true.</p>
+<p>For source code:</p>
+<p>modify <code>nacos.istio.mcp.server.enabled</code>  in <code>nacos/distribution/conf/application.properties</code> to true.</p>
+<p>For incremental MCP:</p>
+<p>modify <code>nacos.istio.server.full</code> in  <code>nacos/istio/misc/IstioConfig</code>  to false in addition to the above configuration.</p>
+<h3>Client</h3>
+<p>In the following example, using Envoy, you can download the Envoy directly or create a mirror and mount the following configuration file.</p>
+<p><strong>Config</strong> : the port number used can be changed on demand.</p>
+<pre><code class="language-yaml"><span class="hljs-attr">node:</span>
+  <span class="hljs-attr">cluster:</span> <span class="hljs-string">test-cluster</span>
+  <span class="hljs-attr">id:</span> <span class="hljs-string">test-idn</span>
+
+<span class="hljs-attr">admin:</span>
+  <span class="hljs-attr">address:</span>
+    <span class="hljs-attr">socket_address:</span> <span class="hljs-string">{</span> <span class="hljs-attr">address:</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span><span class="hljs-string">,</span> <span class="hljs-attr">port_value:</span> <span class="hljs-number">15000</span> <span class="hljs-string">}</span>
+
+<span class="hljs-attr">dynamic_resources:</span>
+  <span class="hljs-attr">ads_config:</span>
+    <span class="hljs-attr">api_type:</span> <span class="hljs-string">GRPC</span>
+    <span class="hljs-attr">transport_api_version:</span> <span class="hljs-string">V3</span>
+    <span class="hljs-attr">grpc_services:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">envoy_grpc:</span>
+        <span class="hljs-attr">cluster_name:</span> <span class="hljs-string">nacos_xds</span>
+  <span class="hljs-attr">cds_config:</span>
+    <span class="hljs-attr">ads:</span> <span class="hljs-string">{}</span>
+  <span class="hljs-attr">lds_config:</span>
+    <span class="hljs-attr">path:</span> <span class="hljs-string">/etc/envoy/lds.yaml</span>
+  <span class="hljs-comment"># ads: {}</span>
+
+<span class="hljs-attr">static_resources:</span>
+  <span class="hljs-attr">clusters:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">type:</span> <span class="hljs-string">STATIC</span>
+    <span class="hljs-attr">connect_timeout:</span> <span class="hljs-string">1s</span>
+    <span class="hljs-attr">typed_extension_protocol_options:</span>
+      <span class="hljs-attr">envoy.extensions.upstreams.http.v3.HttpProtocolOptions:</span>
+        <span class="hljs-string">"@type"</span><span class="hljs-string">:</span> <span class="hljs-string">type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions</span>
+        <span class="hljs-attr">explicit_http_config:</span>
+          <span class="hljs-attr">http2_protocol_options:</span> <span class="hljs-string">{}</span>
+    <span class="hljs-attr">name:</span> <span class="hljs-string">nacos_xds</span> 
+    <span class="hljs-attr">load_assignment:</span>
+      <span class="hljs-attr">cluster_name:</span> <span class="hljs-string">nacos_xds</span> 
+      <span class="hljs-attr">endpoints:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">lb_endpoints:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">endpoint:</span>
+            <span class="hljs-attr">address:</span>
+              <span class="hljs-attr">socket_address:</span>
+                <span class="hljs-attr">address:</span> <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> 
+                <span class="hljs-attr">port_value:</span> <span class="hljs-number">18848</span>
+</code></pre>
+<p><strong>lds</strong> : when Envoy acquires a listening service, it automatically acquires EDS from the server. The listening service can change as needed.</p>
+<pre><code class="language-yaml"><span class="hljs-attr">resources:</span>
+<span class="hljs-bullet">-</span> <span class="hljs-string">"@type"</span><span class="hljs-string">:</span> <span class="hljs-string">type.googleapis.com/envoy.config.listener.v3.Listener</span>
+  <span class="hljs-attr">name:</span> <span class="hljs-string">listener_0</span>
+  <span class="hljs-attr">address:</span>
+    <span class="hljs-attr">socket_address:</span> <span class="hljs-string">{</span> <span class="hljs-attr">address:</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span><span class="hljs-string">,</span> <span class="hljs-attr">port_value:</span> <span class="hljs-number">80</span> <span class="hljs-string">}</span>
+  <span class="hljs-comment"># listener_filters:</span>
+  <span class="hljs-comment"># - name: "envoy.filters.listener.tls_inspector"</span>
+  <span class="hljs-attr">filter_chains:</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">filters:</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">envoy.filters.network.http_connection_manager</span>
+      <span class="hljs-attr">typed_config:</span>
+        <span class="hljs-string">"@type"</span><span class="hljs-string">:</span> <span class="hljs-string">type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager</span>
+        <span class="hljs-attr">stat_prefix:</span> <span class="hljs-string">ingress_http</span>
+        <span class="hljs-attr">access_log:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">envoy.access_loggers.stdout</span>
+          <span class="hljs-attr">typed_config:</span>
+            <span class="hljs-string">"@type"</span><span class="hljs-string">:</span> <span class="hljs-string">type.googleapis.com/envoy.extensions.access_loggers.stream.v3.StdoutAccessLog</span>
+        <span class="hljs-attr">codec_type:</span> <span class="hljs-string">AUTO</span>
+        <span class="hljs-attr">route_config:</span>
+          <span class="hljs-attr">name:</span> <span class="hljs-string">local_route</span>
+          <span class="hljs-attr">virtual_hosts:</span>
+          <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">local_service</span>
+            <span class="hljs-attr">domains:</span> <span class="hljs-string">["*"]</span>
+            <span class="hljs-attr">routes:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-attr">match:</span> <span class="hljs-string">{</span> <span class="hljs-attr">prefix:</span> <span class="hljs-string">"/"</span> <span class="hljs-string">}</span>
+              <span class="hljs-attr">name:</span> <span class="hljs-string">test</span>
+              <span class="hljs-attr">route:</span>
+                <span class="hljs-attr">cluster:</span> <span class="hljs-string">outbound|8071||service-provider.DEFAULT-GROUP.e77d7925-1c90-4fa9-93cb-83153a099636.nacos</span>
+        <span class="hljs-attr">http_filters:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">envoy.filters.http.router</span>
+</code></pre>
+<h2>RUN</h2>
+<p>Note: each instance of the same service should use the same protocol, EDS default to use incremental push.</p>
+<ol>
+<li>
+<p>Deploy Nacos, <a href="https://nacos.io/zh-cn/docs/quick-start.html"> deployment reference </a>;</p>
+</li>
+<li>
+<p>Modify the configuration in accordance with the above requirements;</p>
+</li>
+<li>
+<p>Start the server, the detailed start command can be seen in the above deployment reference;</p>
+<pre><code class="language-bash">bash startup.sh -m standalone -p embedded
+</code></pre>
+</li>
+<li>
+<p>Start the client.</p>
+<pre><code class="language-bash">docker start envoy
+</code></pre>
+</li>
+</ol>
+<h2>CDS Example</h2>
+<p>Note: The logs are viewed in nacos/logs/istio-main.log</p>
+<p>The service configuration registered in the example is as follows, <a href="https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-cloud-example/nacos-spring-cloud-discovery-example"> example reference </a>.</p>
+<pre><code class="language-properties"><span class="hljs-meta">server.port</span>=<span class="hljs-string">8071</span>
+<span class="hljs-meta">spring.application.name</span>=<span class="hljs-string">service-provider</span>
+<span class="hljs-meta">spring.cloud.nacos.discovery.namespace</span>=<span class="hljs-string">e77d7925-1c90-4fa9-93cb-83153a099636</span>
+<span class="hljs-meta">spring.cloud.nacos.discovery.server-addr</span>=<span class="hljs-string">127.0.0.1:8848</span>
+</code></pre>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/28990648/1666247341241-4e9b2dde-55c7-43ae-af1e-dc081565ab72.png" alt="CDS"></p>
+<h2>EDS Example</h2>
+<p>The service is configured as above.</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/28990648/1666247341176-fe312687-6488-41c2-bdd1-346d7a344bd2.png" alt="EDS"></p>
+<h2>Full CDS Example</h2>
+<p>The services are registered with the following configurations:</p>
+<pre><code class="language-properties"><span class="hljs-comment">#service-provider</span>
+<span class="hljs-meta">server.port</span>=<span class="hljs-string">8071</span>
+<span class="hljs-meta">spring.application.name</span>=<span class="hljs-string">service-provider</span>
+<span class="hljs-meta">spring.cloud.nacos.discovery.namespace</span>=<span class="hljs-string">e77d7925-1c90-4fa9-93cb-83153a099636</span>
+<span class="hljs-meta">spring.cloud.nacos.discovery.server-addr</span>=<span class="hljs-string">127.0.0.1:8848</span>
+<span class="hljs-comment">
+#service-consumer</span>
+<span class="hljs-meta">server.port</span>=<span class="hljs-string">8080</span>
+<span class="hljs-meta">spring.application.name</span>=<span class="hljs-string">service-consumer</span>
+<span class="hljs-meta">spring.cloud.nacos.discovery.server-addr</span>=<span class="hljs-string">127.0.0.1:8848</span>
+</code></pre>
+<p>In the console, modify only the service-consumer service configuration, push as follows:</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/28990648/1666247341233-bc35de56-5653-4d5f-a510-819180dfe7f0.png" alt="Full CDS"></p>
+<h2>Incremental EDS Example</h2>
+<p>In the console, modify only the service-consumer instance configuration, push as follows:</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/28990648/1666247341234-aa195810-c76d-4ff5-977a-55626775e697.png" alt="Incremental EDS"></p>
+</div></div></section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>Vision</h3><p>By providing an easy-to-use service infrastructure such as dynamic service discovery, service configuration, service sharing and management and etc., Nacos help users better construct, deliver and manage their own service platform, reuse and composite business service faster and deliver value of business innovation more quickly so as to win market for users in the era of cloud native and in all cloud environments, such as private, mixed, or public clouds.</p></div><div class="col col-6"><dl><dt>Documentation</dt><dd><a href="/en-us/docs/what-is-nacos.html" target="_self">Overview</a></dd><dd><a href="/en-us/docs/quick-start.html" target="_self">Quick start</a></dd><dd><a href="/en-us/docs/contributing.html" target="_self">Developer guide</a></dd></dl></div><div class="col col-6"><dl><dt>Resources</dt><dd><a href="/en-us/community/index.html" target="_self">Community</a></dd><dd><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_self">Cloud Service MSE</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">Cloud Service EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">Cloud Service AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2022 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script src="//g.alicdn.com/alilog/mlog/aplus_v2.js" id="beacon-aplus" exparams="clog=o&aplus&sidx=aplusSidx&ckx=aplusCkx"></script>
+  <script src="//g.alicdn.com/aes/??tracker/1.0.34/index.js,tracker-plugin-pv/2.4.5/index.js,tracker-plugin-event/1.2.5/index.js,tracker-plugin-jserror/1.0.13/index.js,tracker-plugin-api/1.1.14/index.js,tracker-plugin-perf/1.1.8/index.js,tracker-plugin-eventTiming/1.0.4/index.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/documentation.js">
+	</script>
+	<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e3a5cec56ef8619cf9d7c2abebd509e3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+</body>
+</html>

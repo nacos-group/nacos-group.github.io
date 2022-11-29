@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="aes-config" content="pid=xux-opensource&user_type=101&uid=&username=&dim10=nacos"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="MySQL,Derby,多数据源" />
+	<meta name="description" content="多数据源" />
+  <meta name="baidu-site-verification" content="code-wzq5sw7io3" />
+	<!-- 网页标签标题 -->
+	<title>多数据源</title>
+	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
+	<link rel="stylesheet" href="/build/documentation.css" />
+</head>
+<body>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/en-us/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">中</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><span><a href="/en-us/index.html">HOME</a></span></li><li class="menu-item menu-item-normal menu-item-normal-active"><div class="nav-container"><div class="word"><a>DOCS</a></div><ul class="sub-nav-container" style="width:290px"><li><a href="/en-us/docs/v2/quickstart/quick-start.html" target="_blank">2.X（Recommend）</a></li><li><a href="/en-us/docs/quick-start.html" target="_blank">1.X</a></li></ul> </div></li><li class="menu-item menu-item-normal"><div class="nav-container"><div class="word"><a>SOLUTIONS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></div><ul class="sub-nav-container" style="width:290px"><li><a href="https://www.alibabacloud.com/product/microservices-engine" target="_blank">Microservice Solution</a></li><li><a href="https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0" target="_blank">Microservice on Serverless Solution</a></li><li><a href="https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0" target="_blank">PaaS Solution</a></li><li><a href="https://www.aliyun.com/aliware/txc?spm=nacos-website.topbar.0.0.0" target="_blank">Distributed transaction Solution</a></li><li><a href="https://www.aliyun.com/product/ahas?spm=nacos-website.topbar.0.0.0" target="_blank">High-availability Solution</a></li><li><a href="https://www.aliyun.com/product/servicemesh?spm=nacos-website.topbar.0.0.0" target="_blank">Service mesh Solution</a></li></ul> </div></li><li class="menu-item menu-item-normal"><span><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0">NACOS IN CLOUD</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST">E-BOOK-NACOS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="/en-us/blog">BLOG</a></span></li><li class="menu-item menu-item-normal"><span><a href="/en-us/community">COMMUNITY</a></span></li><li class="menu-item menu-item-normal"><span><a href="http://console.nacos.io/nacos/index.html">DEMO-CONSOLE</a></span></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/docs.png" class="front-img"/><div class="bar-title"><span>Documentation</span><div class="bone bone-light"></div></div><img src="/img/docs.png" class="back-img"/></div></div><section class="content-section"><div class="content-body"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>Nacos </span><ul><li style="height:144px;overflow:hidden" class="menu-item menu-item-level-2"><span>What is Nacos<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/what-is-nacos.html" target="_self">What is Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/concepts.html" target="_self">Concepts</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/architecture.html" target="_self">Architecure</a></li></ul></li><li style="height:324px;overflow:hidden" class="menu-item menu-item-level-2"><span>Quick Start<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start.html" target="_self">Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring-boot.html" target="_self">Nacos Spring Boot</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring-cloud.html" target="_self">Nacos Spring Cloud</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-docker.html" target="_self">Nacos Docker</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/use-nacos-with-dubbo.html" target="_self">Nacos with Dubbo</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/use-nacos-with-kubernetes.html" target="_self">Nacos with K8s</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-sync.html" target="_self">Nacos Sync</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>User Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/sdk.html" target="_self">Java SDK</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/other-language.html" target="_self">Other Language</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/open-api.html" target="_self">Open-API</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/system-configurations.html" target="_self">Nacos System Configurations</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/auth.html" target="_self">Authentication</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/faq.html" target="_self">FAQ</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Admin Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/deployment.html" target="_self">Deployment Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/cluster-mode-quick-start.html" target="_self">Cluster Mode Deployment</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/management-api.html" target="_self">Management OpenAPI</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/console-guide.html" target="_self">Admin Console Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/monitor-guide.html" target="_self">Nacos Monitor Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-config-benchmark.html" target="_self">Nacos Config Benchmark</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-naming-benchmark.html" target="_self">Nacos Naming Benchmark</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-sync-use.html" target="_self">Data Migration to Nacos</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Contributor Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/contributing.html" target="_self">Contribute to Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/contributing-flow.html" target="_self">Contributing Flow</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/pull-request.html" target="_self">Pull Request Template</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/how-to-reporting-bugs.html" target="_self">How to report bugs</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Community<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/community.html" target="_self">Community</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-dev.html" target="_self">Develop Team</a></li></ul></li></ul></li></ul></div><div class="doc-content markdown-body"><blockquote>
+<p>Translating...</p>
+</blockquote>
+<h1>多数据源插件</h1>
+<p>Nacos从2.2.0版本开始,可通过SPI机制注入多数据源实现插件,并在引入对应数据源实现后,便可在Nacos启动时通过读取<code>application.properties</code>配置文件中<code>spring.datasource.platform</code>配置项选择加载对应多数据源插件.本文档详细介绍一个多数据源插件如何实现以及如何使其生效。</p>
+<blockquote>
+<p>注意:
+目前多数据源插件处于Beta测试阶段,其API及接口方法定义可能会在后续版本升级而有较大修改，请注意您的插件适用版本。</p>
+</blockquote>
+<h1>插件化实现</h1>
+<p>在原来的Config模块中，所有的SQL操作的执行是通过直接使用JdbcTemplate执行固定SQL语句的形式，使得SQL语句与业务逻辑高度耦合，并且只支持Derby与MySQL两种数据源，原有Config模块架构如下。</p>
+<p><img src="/img/config-old-datasource.png" alt=""></p>
+<p>现在的多数据源插件通过SPI机制，将SQL操作按照数据表进行抽象出多个Mapper接口，Mapper接口的实现类需要按照不同的数据源编写对应的SQL方言实现;
+现在插件默认提供Derby以及MySQL的Mapper实现，可直接使用；而其他的数据源则需要用户使用数据源插件进行加载，其改造后架构图如下。</p>
+<p><img src="/img/config-datasource-plugin.png" alt=""></p>
+<h1>如何使用</h1>
+<ol>
+<li>用户查询当前Nacos是否支持所需数据源，Nacos默认提供Derby以及MySQL的实现，若暂未支持可参考下面插件编写者如何开发步骤开发插件自己使用或贡献；</li>
+<li>在<code>application.properties</code>配置文件中将<code>spring.datasource.platform</code>修改为对应的数据源名称，并配置数据源相关参数；</li>
+<li>然后编译运行则可支持此数据源；</li>
+</ol>
+<h1>插件编写者如何开发</h1>
+<ol>
+<li>引入<code>nacos-datasource-plugin</code>依赖</li>
+<li>实现<code>com.alibaba.nacos.plugin.datasource.mapper</code>包下数据表对应Mapper接口中的特殊SQL方法，主要是涉及分页等方言差别，可参考<code>com.alibaba.nacos.plugin.datasource.impl</code>下Derby以及MySQL的实现，只需实现对应接口即可。接口与表对应关系如下：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>数据库表</th>
+<th>Mapper</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>config_info_aggr</td>
+<td>ConfigInfoAggrMapper</td>
+</tr>
+<tr>
+<td>config_info_beta</td>
+<td>ConfigInfoBetaMapper</td>
+</tr>
+<tr>
+<td>config_info</td>
+<td>ConfigInfoMapper</td>
+</tr>
+<tr>
+<td>config_info_tag</td>
+<td>ConfigInfoTagMapper</td>
+</tr>
+<tr>
+<td>config_tags_relation</td>
+<td>ConfigTagsRelationMapper</td>
+</tr>
+<tr>
+<td>his_config_info</td>
+<td>HistoryConfigInfoMapper</td>
+</tr>
+</tbody>
+</table>
+<ol start="3">
+<li>编写SPI配置文件，其名字为<code>com.alibaba.nacos.plugin.datasource.mapper.Mapper</code>，写入实现Mapper接口的类，可参考config模块中Derby与MySQL配置文件。</li>
+<li>插件使用者则可以通过依赖此插件，达到实现对应数据源操作的效果</li>
+<li>编译运行</li>
+</ol>
+<h1>如何编译</h1>
+<p>编译插件之前需要先编译<code>nacos</code>并安装至本地仓库.</p>
+<ol>
+<li>git clone <a href="mailto:git@github.com">git@github.com</a>:alibaba/nacos.git</li>
+<li>cd nacos &amp;&amp; mvn -B clean package install -Dmaven.test.skip=true</li>
+</ol>
+<blockquote>
+<p>若出现<code>revision</code>变量无法解析,请更新<code>maven</code>至最新版本</p>
+</blockquote>
+<ol start="3">
+<li>git clone #{对应数据源插件实现Git地址}</li>
+<li>mvn install</li>
+</ol>
+<p>建议上传到公司的maven仓库</p>
+<h1>未来方案</h1>
+<p>未来的版本更新如下:</p>
+<ul>
+<li>[ ] 继续细分SQL，在现有的基础上，减少SQL语句的同时，对动态SQL的实现更加友好；</li>
+<li>[ ] 抽离不同数据源之间的差异列表，并通过配置文件或配置类的方式进行差异列表的替换，方便插件编写者编写插件；</li>
+</ul>
+<h1>其他数据源的实现</h1>
+<p>待补充</p>
+</div></div></section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>Vision</h3><p>By providing an easy-to-use service infrastructure such as dynamic service discovery, service configuration, service sharing and management and etc., Nacos help users better construct, deliver and manage their own service platform, reuse and composite business service faster and deliver value of business innovation more quickly so as to win market for users in the era of cloud native and in all cloud environments, such as private, mixed, or public clouds.</p></div><div class="col col-6"><dl><dt>Documentation</dt><dd><a href="/en-us/docs/what-is-nacos.html" target="_self">Overview</a></dd><dd><a href="/en-us/docs/quick-start.html" target="_self">Quick start</a></dd><dd><a href="/en-us/docs/contributing.html" target="_self">Developer guide</a></dd></dl></div><div class="col col-6"><dl><dt>Resources</dt><dd><a href="/en-us/community/index.html" target="_self">Community</a></dd><dd><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_self">Cloud Service MSE</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">Cloud Service EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">Cloud Service AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2022 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script src="//g.alicdn.com/alilog/mlog/aplus_v2.js" id="beacon-aplus" exparams="clog=o&aplus&sidx=aplusSidx&ckx=aplusCkx"></script>
+  <script src="//g.alicdn.com/aes/??tracker/1.0.34/index.js,tracker-plugin-pv/2.4.5/index.js,tracker-plugin-event/1.2.5/index.js,tracker-plugin-jserror/1.0.13/index.js,tracker-plugin-api/1.1.14/index.js,tracker-plugin-perf/1.1.8/index.js,tracker-plugin-eventTiming/1.0.4/index.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/documentation.js">
+	</script>
+	<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e3a5cec56ef8619cf9d7c2abebd509e3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+</body>
+</html>

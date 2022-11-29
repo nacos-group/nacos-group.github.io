@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="aes-config" content="pid=xux-opensource&user_type=101&uid=&username=&dim10=nacos"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="Nacos,Docker" />
+	<meta name="description" content="Nacos Docker 快速开始" />
+  <meta name="baidu-site-verification" content="code-wzq5sw7io3" />
+	<!-- 网页标签标题 -->
+	<title>Nacos Docker 快速开始</title>
+	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
+	<link rel="stylesheet" href="/build/documentation.css" />
+</head>
+<body>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><span><a href="/zh-cn/index.html">首页</a></span></li><li class="menu-item menu-item-normal menu-item-normal-active"><div class="nav-container"><div class="word"><a>文档</a></div><ul class="sub-nav-container" style="width:220px"><li><a href="/zh-cn/docs/v2/quickstart/quick-start.html" target="_blank">2.X（推荐）</a></li><li><a href="/zh-cn/docs/quick-start.html" target="_blank">1.X</a></li></ul> </div></li><li class="menu-item menu-item-normal"><div class="nav-container"><div class="word"><a>解决方案</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></div><ul class="sub-nav-container" style="width:220px"><li><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_blank">微服务解决方案</a></li><li><a href="https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0" target="_blank">微服务Serverless解决方案</a></li><li><a href="https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0" target="_blank">PaaS解决方案</a></li></ul> </div></li><li class="menu-item menu-item-normal"><span><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0">企业版NACOS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST">NACOS架构与原理</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="/zh-cn/blog/index.html">博客</a></span></li><li class="menu-item menu-item-normal"><span><a href="/zh-cn/community/index.html">社区</a></span></li><li class="menu-item menu-item-normal"><span><a href="http://console.nacos.io/nacos/index.html">控制台样例</a></span></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/docs.png" class="front-img"/><div class="bar-title"><span>Nacos 文档</span><div class="bone bone-light"></div></div><img src="/img/docs.png" class="back-img"/></div></div><section class="content-section"><div class="content-body"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>Nacos </span><ul><li style="height:144px;overflow:hidden" class="menu-item menu-item-level-2"><span>Nacos是什么?<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/what-is-nacos.html" target="_self">Nacos简介</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/concepts.html" target="_self">概念</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/architecture.html" target="_self">架构</a></li></ul></li><li style="height:324px;overflow:hidden" class="menu-item menu-item-level-2"><span>快速开始<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start.html" target="_self">Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-spring-boot.html" target="_self">Nacos Spring Boot</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-spring-cloud.html" target="_self">Nacos Spring Cloud</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-docker.html" target="_self">Nacos Docker</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/use-nacos-with-dubbo.html" target="_self">Nacos Dubbo</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/use-nacos-with-kubernetes.html" target="_self">Nacos k8s</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-sync.html" target="_self">Nacos Sync</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>用户指南<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/sdk.html" target="_self">Java的SDK</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/other-language.html" target="_self">其他语言的SDK</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/open-api.html" target="_self">Open-API指南</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/system-configurations.html" target="_self">Nacos系统参数介绍</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/auth.html" target="_self">权限认证</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/faq.html" target="_self">FAQ</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>运维指南<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/deployment.html" target="_self">部署手册</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/cluster-mode-quick-start.html" target="_self">集群部署说明</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/management-api.html" target="_self">运维API</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/console-guide.html" target="_self">控制台手册</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/monitor-guide.html" target="_self">监控手册</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-config-benchmark.html" target="_self">Nacos配置模块压测报告</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-naming-benchmark.html" target="_self">Nacos服务发现模块压测报告</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-sync-use.html" target="_self">其他环境迁移到Nacos</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>开源共建<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/contributing.html" target="_self">贡献源码</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/contributing-flow.html" target="_self">贡献流程</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/pull-request.html" target="_self">pull request模板</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/how-to-reporting-bugs.html" target="_self">如何提交问题报告</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>社区<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/community.html" target="_self">社区</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-dev.html" target="_self">开发团队</a></li></ul></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>Nacos Docker 快速开始</h1>
+<h2>操作步骤</h2>
+<ul>
+<li>
+<p>Clone 项目</p>
+<pre><code class="language-powershell">git clone https://github.com/nacos<span class="hljs-literal">-group</span>/nacos<span class="hljs-literal">-docker</span>.git
+cd nacos<span class="hljs-literal">-docker</span>
+</code></pre>
+</li>
+<li>
+<p>单机模式 Derby</p>
+<pre><code class="language-powershell">docker<span class="hljs-literal">-compose</span> <span class="hljs-operator">-f</span> example/standalone<span class="hljs-literal">-derby</span>.yaml up
+</code></pre>
+</li>
+<li>
+<p>单机模式 MySQL</p>
+</li>
+</ul>
+<p>如果希望使用MySQL5.7</p>
+<pre><code class="language-powershell">docker<span class="hljs-literal">-compose</span> <span class="hljs-operator">-f</span> example/standalone<span class="hljs-literal">-mysql</span><span class="hljs-literal">-5</span>.<span class="hljs-number">7</span>.yaml up
+</code></pre>
+<p>如果希望使用MySQL8</p>
+<pre><code class="language-powershell">docker<span class="hljs-literal">-compose</span> <span class="hljs-operator">-f</span> example/standalone<span class="hljs-literal">-mysql</span><span class="hljs-literal">-8</span>.yaml up
+</code></pre>
+<ul>
+<li>
+<p>集群模式</p>
+<pre><code class="language-powershell">docker<span class="hljs-literal">-compose</span> <span class="hljs-operator">-f</span> example/cluster<span class="hljs-literal">-hostname</span>.yaml up 
+</code></pre>
+</li>
+<li>
+<p>服务注册</p>
+<pre><code class="language-powershell">curl <span class="hljs-literal">-X</span> POST <span class="hljs-string">'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&amp;ip=20.18.7.10&amp;port=8080'</span>
+</code></pre>
+</li>
+<li>
+<p>服务发现</p>
+<pre><code class="language-powershell">curl <span class="hljs-literal">-X</span> GET <span class="hljs-string">'http://127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.naming.serviceName'</span>
+</code></pre>
+</li>
+<li>
+<p>发布配置</p>
+<pre><code class="language-powershell">curl <span class="hljs-literal">-X</span> POST <span class="hljs-string">"http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&amp;content=helloWorld"</span>
+</code></pre>
+</li>
+<li>
+<p>获取配置</p>
+<pre><code class="language-powershell">  curl <span class="hljs-literal">-X</span> GET <span class="hljs-string">"http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test"</span>
+</code></pre>
+</li>
+<li>
+<p>Nacos 控制台</p>
+<p>link：<a href="http://127.0.0.1:8848/nacos/">http://127.0.0.1:8848/nacos/</a></p>
+</li>
+</ul>
+<h2>Common property configuration</h2>
+<table>
+<thead>
+<tr>
+<th>属性名称</th>
+<th>描述</th>
+<th>选项</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MODE</td>
+<td>系统启动方式: 集群/单机</td>
+<td>cluster/standalone默认 <strong>cluster</strong></td>
+</tr>
+<tr>
+<td>NACOS_SERVERS</td>
+<td>集群地址</td>
+<td>p1:port1空格ip2:port2 空格ip3:port3</td>
+</tr>
+<tr>
+<td>PREFER_HOST_MODE</td>
+<td>支持IP还是域名模式</td>
+<td>hostname/ip 默认 <strong>ip</strong></td>
+</tr>
+<tr>
+<td>NACOS_SERVER_PORT</td>
+<td>Nacos 运行端口</td>
+<td>默认 <strong>8848</strong></td>
+</tr>
+<tr>
+<td>NACOS_SERVER_IP</td>
+<td>多网卡模式下可以指定IP</td>
+<td></td>
+</tr>
+<tr>
+<td>SPRING_DATASOURCE_PLATFORM</td>
+<td>单机模式下支持MYSQL数据库</td>
+<td>mysql / 空 默认:空</td>
+</tr>
+<tr>
+<td>MYSQL_SERVICE_HOST</td>
+<td>数据库 连接地址</td>
+<td></td>
+</tr>
+<tr>
+<td>MYSQL_SERVICE_PORT</td>
+<td>数据库端口</td>
+<td>默认 : <strong>3306</strong></td>
+</tr>
+<tr>
+<td>MYSQL_SERVICE_DB_NAME</td>
+<td>数据库库名</td>
+<td></td>
+</tr>
+<tr>
+<td>MYSQL_SERVICE_USER</td>
+<td>数据库用户名</td>
+<td></td>
+</tr>
+<tr>
+<td>MYSQL_SERVICE_PASSWORD</td>
+<td>数据库用户密码</td>
+<td></td>
+</tr>
+<tr>
+<td>MYSQL_SERVICE_DB_PARAM</td>
+<td>数据库连接参数</td>
+<td>default : <strong>characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useSSL=false</strong></td>
+</tr>
+<tr>
+<td>MYSQL_DATABASE_NUM</td>
+<td>数据库编号</td>
+<td>默认 :<strong>1</strong></td>
+</tr>
+<tr>
+<td>JVM_XMS</td>
+<td>-Xms</td>
+<td>默认 :1g</td>
+</tr>
+<tr>
+<td>JVM_XMX</td>
+<td>-Xmx</td>
+<td>默认 :1g</td>
+</tr>
+<tr>
+<td>JVM_XMN</td>
+<td>-Xmn</td>
+<td>默认 :512m</td>
+</tr>
+<tr>
+<td>JVM_MS</td>
+<td>-XX:MetaspaceSize</td>
+<td>默认 :128m</td>
+</tr>
+<tr>
+<td>JVM_MMS</td>
+<td>-XX:MaxMetaspaceSize</td>
+<td>默认 :320m</td>
+</tr>
+<tr>
+<td>NACOS_DEBUG</td>
+<td>是否开启远程DEBUG</td>
+<td>y/n 默认 :n</td>
+</tr>
+<tr>
+<td>TOMCAT_ACCESSLOG_ENABLED</td>
+<td>server.tomcat.accesslog.enabled</td>
+<td>默认 :false</td>
+</tr>
+<tr>
+<td>NACOS_AUTH_SYSTEM_TYPE</td>
+<td>权限系统类型选择,目前只支持nacos类型</td>
+<td>默认 :nacos</td>
+</tr>
+<tr>
+<td>NACOS_AUTH_ENABLE</td>
+<td>是否开启权限系统</td>
+<td>默认 :false</td>
+</tr>
+<tr>
+<td>NACOS_AUTH_TOKEN_EXPIRE_SECONDS</td>
+<td>token 失效时间</td>
+<td>默认 :18000</td>
+</tr>
+<tr>
+<td>NACOS_AUTH_TOKEN</td>
+<td>token</td>
+<td>默认 :SecretKey012345678901234567890123456789012345678901234567890123456789</td>
+</tr>
+<tr>
+<td>NACOS_AUTH_CACHE_ENABLE</td>
+<td>权限缓存开关 ,开启后权限缓存的更新默认有15秒的延迟</td>
+<td>默认 : false</td>
+</tr>
+<tr>
+<td>MEMBER_LIST</td>
+<td>通过环境变量的方式设置集群地址</td>
+<td>例子:192.168.16.101:8847?raft_port=8807,192.168.16.101?raft_port=8808,192.168.16.101:8849?raft_port=8809</td>
+</tr>
+<tr>
+<td>EMBEDDED_STORAGE</td>
+<td>是否开启集群嵌入式存储模式</td>
+<td><code>embedded</code>  默认 : none</td>
+</tr>
+<tr>
+<td>NACOS_AUTH_CACHE_ENABLE</td>
+<td>nacos.core.auth.caching.enabled</td>
+<td>default : false</td>
+</tr>
+<tr>
+<td>NACOS_AUTH_USER_AGENT_AUTH_WHITE_ENABLE</td>
+<td>nacos.core.auth.enable.userAgentAuthWhite</td>
+<td>default : false</td>
+</tr>
+<tr>
+<td>NACOS_AUTH_IDENTITY_KEY</td>
+<td>nacos.core.auth.server.identity.key</td>
+<td>default : serverIdentity</td>
+</tr>
+<tr>
+<td>NACOS_AUTH_IDENTITY_VALUE</td>
+<td>nacos.core.auth.server.identity.value</td>
+<td>default : security</td>
+</tr>
+<tr>
+<td>NACOS_SECURITY_IGNORE_URLS</td>
+<td>nacos.security.ignore.urls</td>
+<td>default : <code>/,/error,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-fe/public/**,/v1/auth/**,/v1/console/health/**,/actuator/**,/v1/console/server/**</code></td>
+</tr>
+</tbody>
+</table>
+<h2>Nacos + Grafana + Prometheus</h2>
+<p>参考：<a href="../guide/admin/monitor-guide.md">Nacos监控指南</a></p>
+<p><strong>Note</strong>:  grafana创建一个新数据源时，数据源地址必须是 <strong><a href="http://prometheus:9090">http://prometheus:9090</a></strong></p>
+<h2>相关项目</h2>
+<ul>
+<li><a href="https://github.com/alibaba/nacos">Nacos</a></li>
+<li><a href="https://github.com/nacos-group/nacos-docker">Nacos Docker</a></li>
+</ul>
+</div></div></section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>愿景</h3><p>Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/what-is-nacos.html" target="_self">概览</a></dd><dd><a href="/zh-cn/docs/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/contributing.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_self">云服务 MSE</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">云服务 EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">云服务 AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2022 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script src="//g.alicdn.com/alilog/mlog/aplus_v2.js" id="beacon-aplus" exparams="clog=o&aplus&sidx=aplusSidx&ckx=aplusCkx"></script>
+  <script src="//g.alicdn.com/aes/??tracker/1.0.34/index.js,tracker-plugin-pv/2.4.5/index.js,tracker-plugin-event/1.2.5/index.js,tracker-plugin-jserror/1.0.13/index.js,tracker-plugin-api/1.1.14/index.js,tracker-plugin-perf/1.1.8/index.js,tracker-plugin-eventTiming/1.0.4/index.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/documentation.js">
+	</script>
+	<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e3a5cec56ef8619cf9d7c2abebd509e3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+</body>
+</html>

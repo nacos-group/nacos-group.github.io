@@ -20,32 +20,6 @@ export default {
                 title: 'Architecure',
                 link: '/en-us/docs/architecture.html',
               },
-              {
-                title: 'Feature list',
-                link: '/en-us/docs/feature-list.html',
-              },
-            ],
-          },
-          {
-            title: 'Nacos 2.0',
-            opened: true,
-            children: [
-              {
-                title: 'Compatibility&Usage',
-                link: '/en-us/docs/2.0.0-compatibility.html',
-              },
-              {
-                title: 'Upgrading',
-                link: '/en-us/docs/2.0.0-upgrading.html',
-              },
-              {
-                title: 'Authentication Plugin',
-                link: '/en-us/docs/auth-plugin.html',
-              },
-              {
-                title: 'Configure Encryption Plugin',
-                link: '/en-us/docs/config-encryption.html',
-              },
             ],
           },
           {
@@ -147,16 +121,8 @@ export default {
                 link: '/en-us/docs/nacos-config-benchmark.html',
               },
               {
-                title: 'Nacos2.0 Config Benchmark',
-                link: '/en-us/docs/nacos2-config-benchmark.html',
-              },
-              {
                 title: 'Nacos Naming Benchmark',
                 link: '/en-us/docs/nacos-naming-benchmark.html',
-              },
-              {
-                title: 'Nacos2.0 Naming Benchmark',
-                link: '/en-us/docs/nacos2-naming-benchmark.html',
               },
               {
                 title: 'Data Migration to Nacos',
@@ -223,33 +189,6 @@ export default {
               {
                 title: '架构',
                 link: '/zh-cn/docs/architecture.html',
-              },
-              {
-                title: '功能和需求列表',
-                link: '/zh-cn/docs/feature-list.html',
-                imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-              },
-            ],
-          },
-          {
-            title: 'Nacos 2.0',
-            opened: true,
-            children: [
-              {
-                title: '兼容性及使用',
-                link: '/zh-cn/docs/2.0.0-compatibility.html',
-              },
-              {
-                title: '升级文档',
-                link: '/zh-cn/docs/2.0.0-upgrading.html',
-              },
-              {
-                title: '鉴权插件',
-                link: '/zh-cn/docs/auth-plugin.html',
-              },
-              {
-                title: '配置加密插件',
-                link: '/zh-cn/docs/config-encryption.html',
               },
             ],
           },
@@ -352,16 +291,8 @@ export default {
                 link: '/zh-cn/docs/nacos-config-benchmark.html',
               },
               {
-                title: 'Nacos2.0配置模块压测报告',
-                link: '/zh-cn/docs/nacos2-config-benchmark.html',
-              },
-              {
                 title: 'Nacos服务发现模块压测报告',
                 link: '/zh-cn/docs/nacos-naming-benchmark.html',
-              },
-              {
-                title: 'Nacos2.0服务发现模块压测报告',
-                link: '/zh-cn/docs/nacos2-naming-benchmark.html',
               },
               {
                 title: '其他环境迁移到Nacos',

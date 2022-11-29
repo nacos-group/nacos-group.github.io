@@ -43,6 +43,7 @@ description: Nacos FAQ
   - [日志打印频繁的问题](#3.17)
   - [集群管理页面，raft term显示不一致问题](#3.18)
   - [找不到符号`com.alibaba.nacos.consistency.entity`](#3.19)
+  - [Beta发布如何使用](#3.20)
   
   
 
@@ -291,5 +292,12 @@ curl '127.0.0.1:8848/nacos/v1/ns/raft/state'
 <h4 id="3.19">找不到符号`com.alibaba.nacos.consistency.entity`</h4>
 
 这个包目录是由`protobuf`在编译时自动生成，您可以通过`mvn compile`来自动生成他们。如果您使用的是IDEA，也可以使用IDEA的protobuf插件。
+
+<h4 id="3.20">Beta发布如何使用</h4>
+
+service-a服务在192.168.31.114,192.168.31.115,192.168.31.116启动了三个实例。
+我们想把其中192.168.31.114实例的配置项"user.password"的值改为xxx（即：Beta发布），192.168.31.115,192.168.31.116的配置不做更改。
+
+![beta](/img/beta.png)
 
 ## Nacos原理问题
