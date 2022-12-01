@@ -27,13 +27,17 @@ Nacos定义为一个IDC内部应用组件，并非面向公网环境的产品，
 
 ### Linux/Unix/Mac
 
-* Standalone means it is non-cluster Mode. * 
-sh startup.sh -m standalone
+```shell
+# Standalone means it is non-cluster Mode.
+$ sh startup.sh -m standalone
+```
 
 ### Windows
 
-* Standalone means it is non-cluster Mode. * 
-cmd startup.cmd -m standalone
+```shell
+# Standalone means it is non-cluster Mode.
+$ cmd startup.cmd -m standalone
+```
 
 ### 单机模式支持mysql
 
