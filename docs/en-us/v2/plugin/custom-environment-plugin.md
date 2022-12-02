@@ -4,7 +4,7 @@ keywords: CustomEnvironment,CustomConfiguration,DatabasePasswordencryption
 description: Nacos Custom environment variable plugin, can customize the extension server configuration and other functions, such as database password encryption.
 ---
 
-# 自定义环境变量插件
+# CustomEnvironmentPlugins
 
 Since version 2.2.0, Nacos support to inject custom environment plugins through [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html),to customize the configuration of nacos in the plugin and do it the way you expect (such as database password encryption).
 This document will describe how to implement a custom environment plugin and how to make it work.
@@ -29,7 +29,7 @@ Then implement interface `com.alibaba.nacos.plugin.environment.spi.CustomEnviron
 
 The methods of interface in following:
 
-| 方法名         | 入参内容                  | 返回内容                  | 描述                                                                                                                                                                                                                    |
+| method name         | parameters                  | returns                  | description                                                                                                                                                                                                                    |
 |-------------|-----------------------|-----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | pluginName  | `void`                | `String`              | The name of the plugin.                                                                                                                                                                                               |
 | propertyKey | `void`                | `Set<String>`         | Specifies the name of the configuration item that you want to customize for the server.                                                                                                                               |
