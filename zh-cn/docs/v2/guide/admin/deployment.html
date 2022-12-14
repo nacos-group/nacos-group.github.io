@@ -34,15 +34,13 @@
 </ul>
 <h2>单机模式下运行Nacos</h2>
 <h3>Linux/Unix/Mac</h3>
-<ul>
-<li>Standalone means it is non-cluster Mode. *
-sh <a href="http://startup.sh">startup.sh</a> -m standalone</li>
-</ul>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash"> Standalone means it is non-cluster Mode.</span>
+<span class="hljs-meta">$</span><span class="bash"> sh startup.sh -m standalone</span>
+</code></pre>
 <h3>Windows</h3>
-<ul>
-<li>Standalone means it is non-cluster Mode. *
-cmd startup.cmd -m standalone</li>
-</ul>
+<pre><code class="language-shell"><span class="hljs-meta">#</span><span class="bash"> Standalone means it is non-cluster Mode.</span>
+<span class="hljs-meta">$</span><span class="bash"> cmd startup.cmd -m standalone</span>
+</code></pre>
 <h3>单机模式支持mysql</h3>
 <p>在0.7版本之前，在单机模式时nacos使用嵌入式数据库实现数据的存储，不方便观察数据存储的基本情况。0.7版本增加了支持mysql数据源能力，具体的操作步骤：</p>
 <ul>

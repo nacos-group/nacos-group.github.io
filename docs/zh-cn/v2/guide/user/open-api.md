@@ -8,6 +8,7 @@ description: Open API 指南
 
 Nacos 2.X 版本兼容 Nacos1.X 版本的OpenAPI, 请参考文档[Nacos1.X OpenAPI](../../../open-api.md)使用。
 
+> 注意：未特殊注明支持版本的OpenAPI均从2.2.0版本开始支持。
 
 - 文档约定
     - [API 统一返回体格式](#0.1)
@@ -608,7 +609,7 @@ API接口返回体中的错误码及对应提示信息汇总见下表
       -d 'port=8090' \
       -d 'weight=0.9' \
       -d 'ephemeral=true' \
-      -X POST 'http://127.0.0.1:8848/nacos/v2/ns/insatnce'
+      -X POST 'http://127.0.0.1:8848/nacos/v2/ns/instance'
     ```
 
 * 返回示例
@@ -669,7 +670,7 @@ API接口返回体中的错误码及对应提示信息汇总见下表
       -d 'port=8090' \
       -d 'weight=0.9' \
       -d 'ephemeral=true' \
-      -X DELETE 'http://127.0.0.1:8848/nacos/v2/ns/insatnce'
+      -X DELETE 'http://127.0.0.1:8848/nacos/v2/ns/instance'
     ```
 
 * 返回示例
@@ -732,7 +733,7 @@ API接口返回体中的错误码及对应提示信息汇总见下表
       -d 'port=8090' \
       -d 'weight=0.9' \
       -d 'ephemeral=true' \
-      -X PUT 'http://127.0.0.1:8848/nacos/v2/ns/insatnce'
+      -X PUT 'http://127.0.0.1:8848/nacos/v2/ns/instance'
     ```
 
 * 返回示例
@@ -789,7 +790,7 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 * 请求示例
 
     ```shell
-    curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/insatnce?namespaceId=public&groupName=&serviceName=test_service&ip=127.0.0.1&port=8080'
+    curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/instance?namespaceId=public&groupName=&serviceName=test_service&ip=127.0.0.1&port=8080'
     ```
 
 * 返回示例
@@ -880,7 +881,7 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 * 请求示例
 
     ```shell
-    curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/insatnce/list?serviceName=test_service&ip=127.0.0.1'
+    curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/instance/list?serviceName=test_service&ip=127.0.0.1'
     ```
 
 * 返回示例
@@ -970,7 +971,7 @@ API接口返回体中的错误码及对应提示信息汇总见下表
       -d 'consistencyType=ephemeral' \
       -d 'instances=[{"ip":"3.3.3.3","port": "8080","ephemeral":"true","clusterName":"xxxx-cluster"},{"ip":"2.2.2.2","port":"8080","ephemeral":"true","clusterName":"xxxx-cluster"}]' \
       -d 'metadata={"age":"20","name":"cocolan"}' \
-      -X PUT 'http://127.0.0.1:8848/nacos/v2/ns/insatnce/metadata/batch'
+      -X PUT 'http://127.0.0.1:8848/nacos/v2/ns/instance/metadata/batch'
     ```
 
 * 返回示例
@@ -1032,7 +1033,7 @@ API接口返回体中的错误码及对应提示信息汇总见下表
       -d 'consistencyType=ephemeral' \
       -d 'instances=[{"ip":"3.3.3.3","port": "8080","ephemeral":"true","clusterName":"xxxx-cluster"},{"ip":"2.2.2.2","port":"8080","ephemeral":"true","clusterName":"xxxx-cluster"}]' \
       -d 'metadata={"age":"20","name":"cocolan"}' \
-      -X DELETE 'http://127.0.0.1:8848/nacos/v2/ns/insatnce/metadata/batch'
+      -X DELETE 'http://127.0.0.1:8848/nacos/v2/ns/instance/metadata/batch'
     ```
 
 * 返回示例

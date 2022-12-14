@@ -72,6 +72,10 @@ export default {
                 title: 'Track Tracing',
                 link: '/en-us/docs/v2/plugin/trace-plugin.html',
               },
+              {
+                title: 'Custom Environment',
+                link: '/en-us/docs/v2/plugin/custom-environment-plugin.html',
+              },
             ]
           },
           {
@@ -284,6 +288,10 @@ export default {
               {
                 title: '轨迹追踪',
                 link: '/zh-cn/docs/v2/plugin/trace-plugin.html',
+              },
+              {
+                title: '环境变量',
+                link: '/zh-cn/docs/v2/plugin/custom-environment-plugin.html',
               },
             ]
           },

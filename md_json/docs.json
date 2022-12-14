@@ -632,6 +632,15 @@
       }
     },
     {
+      "filename": "custom-environment-plugin.md",
+      "link": "/en-us/docs/v2/plugin/custom-environment-plugin.html",
+      "meta": {
+        "title": "CustomEnvironment",
+        "keywords": "CustomEnvironment,CustomConfiguration,DatabasePasswordencryption",
+        "description": "Nacos Custom environment variable plugin, can customize the extension server configuration and other functions, such as database password encryption."
+      }
+    },
+    {
       "filename": "datasource-plugin.md",
       "link": "/en-us/docs/v2/plugin/datasource-plugin.html",
       "meta": {
@@ -1343,6 +1352,15 @@
         "title": "配置加密",
         "keywords": "AES,encryption,配置加密",
         "description": "配置加密"
+      }
+    },
+    {
+      "filename": "custom-environment-plugin.md",
+      "link": "/zh-cn/docs/v2/plugin/custom-environment-plugin.html",
+      "meta": {
+        "title": "自定义环境变量",
+        "keywords": "自定义环境变量,自定义配置,数据库密码加密",
+        "description": "Nacos 自定义环境变量插件，可自定义扩展服务端配置等功能，例如数据库密码加密。"
       }
     },
     {

@@ -35,6 +35,16 @@ nacos.core.auth.enabled=false
 nacos.core.auth.system.type=nacos
 nacos.core.auth.enabled=true
 </code></pre>
+<h4>Custom SecretKey</h4>
+<p>After enabling authentication, you can customize the key used to generate JWT tokens，the configuration in application.properties is as follow：</p>
+<pre><code class="language-properties"><span class="hljs-comment">### The default token(Base64 String):</span>
+<span class="hljs-meta">nacos.core.auth.default.token.secret.key</span>=<span class="hljs-string">SecretKey012345678901234567890123456789012345678901234567890123456789</span>
+</code></pre>
+<p>When customizing the key, it is recommended to set the configuration item to a <strong>Base64 encoded</strong> string,
+and the length of the original key must not be less than 32 characters. For example the following example:</p>
+<pre><code class="language-properties"><span class="hljs-comment">### The default token(Base64 String):</span>
+<span class="hljs-meta">nacos.core.auth.default.token.secret.key</span>=<span class="hljs-string">VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=</span>
+</code></pre>
 <p><strong>Attention:</strong>  the authentication switch takes effect immediately after the modification, and there is no need to restart the server.</p>
 <h3>With Docker</h3>
 <h4>Official images</h4>

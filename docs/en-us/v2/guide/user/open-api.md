@@ -8,6 +8,7 @@ description: Open API Guide
 
 Nacos 2.X is compatible with Nacos 1.X OpenAPI, please refer to the document [Nacos1.X OpenAPI](../../../open-api.md).
 
+> Attension: OpenAPIs which do not specify a supported version, will be supported since 2.2.0.
 
 - Documentation Conventions
     - [API unified return body format](#0.1)
@@ -611,7 +612,7 @@ Register an instance
       -d 'port=8090' \
       -d 'weight=0.9' \
       -d 'ephemeral=true' \
-      -X POST 'http://127.0.0.1:8848/nacos/v2/ns/insatnce'
+      -X POST 'http://127.0.0.1:8848/nacos/v2/ns/instance'
     ```
 
 * Response Example
@@ -672,7 +673,7 @@ Deregister a specified instance
       -d 'port=8090' \
       -d 'weight=0.9' \
       -d 'ephemeral=true' \
-      -X DELETE 'http://127.0.0.1:8848/nacos/v2/ns/insatnce'
+      -X DELETE 'http://127.0.0.1:8848/nacos/v2/ns/instance'
     ```
 
 * Response Example
@@ -735,7 +736,7 @@ Modify instance information
       -d 'port=8090' \
       -d 'weight=0.9' \
       -d 'ephemeral=true' \
-      -X PUT 'http://127.0.0.1:8848/nacos/v2/ns/insatnce'
+      -X PUT 'http://127.0.0.1:8848/nacos/v2/ns/instance'
     ```
 
 * Response Example
@@ -792,7 +793,7 @@ Query the details of a specific instance
 * Request Example
 
     ```shell
-    curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/insatnce?namespaceId=public&groupName=&serviceName=test_service&ip=127.0.0.1&port=8080'
+    curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/instance?namespaceId=public&groupName=&serviceName=test_service&ip=127.0.0.1&port=8080'
     ```
 
 * Response Example
@@ -883,7 +884,7 @@ Query the list of instances under the specified service
 * Request Example
 
     ```shell
-    curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/insatnce/list?serviceName=test_service&ip=127.0.0.1'
+    curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/instance/list?serviceName=test_service&ip=127.0.0.1'
     ```
 
 * Response Example
@@ -973,7 +974,7 @@ Batch update instance metadata
       -d 'consistencyType=ephemeral' \
       -d 'instances=[{"ip":"3.3.3.3","port": "8080","ephemeral":"true","clusterName":"xxxx-cluster"},{"ip":"2.2.2.2","port":"8080","ephemeral":"true","clusterName":"xxxx-cluster"}]' \
       -d 'metadata={"age":"20","name":"cocolan"}' \
-      -X PUT 'http://127.0.0.1:8848/nacos/v2/ns/insatnce/metadata/batch'
+      -X PUT 'http://127.0.0.1:8848/nacos/v2/ns/instance/metadata/batch'
     ```
 
 * Response Example
@@ -1035,7 +1036,7 @@ Batch delete instance metadata
       -d 'consistencyType=ephemeral' \
       -d 'instances=[{"ip":"3.3.3.3","port": "8080","ephemeral":"true","clusterName":"xxxx-cluster"},{"ip":"2.2.2.2","port":"8080","ephemeral":"true","clusterName":"xxxx-cluster"}]' \
       -d 'metadata={"age":"20","name":"cocolan"}' \
-      -X DELETE 'http://127.0.0.1:8848/nacos/v2/ns/insatnce/metadata/batch'
+      -X DELETE 'http://127.0.0.1:8848/nacos/v2/ns/instance/metadata/batch'
     ```
 
 * Response Example
