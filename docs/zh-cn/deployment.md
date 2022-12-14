@@ -17,6 +17,7 @@ Nacos定义为一个IDC内部应用组件，并非面向公网环境的产品，
 * 多集群模式 - 用于多数据中心场景。
 
 # 环境准备
+
 - 安装好 JDK，需要 1.8 及其以上版本
 - 建议: 2核 CPU / 4G 内存 及其以上
 - 建议: 生产环境 3 个节点 及其以上
@@ -25,13 +26,17 @@ Nacos定义为一个IDC内部应用组件，并非面向公网环境的产品，
 
 ### Linux/Unix/Mac
 
-* Standalone means it is non-cluster Mode. * 
-sh startup.sh -m standalone
+```shell
+# Standalone means it is non-cluster Mode.
+$ sh startup.sh -m standalone
+```
 
 ### Windows
 
-* Standalone means it is non-cluster Mode. * 
-cmd startup.cmd -m standalone
+```shell
+# Standalone means it is non-cluster Mode.
+$ cmd startup.cmd -m standalone
+```
 
 ### 单机模式支持mysql
 
@@ -62,7 +67,8 @@ Nacos支持NameServer路由请求模式，通过它您可以设计一个有用�
 
 ## 多网卡IP选择
 
-当本地环境比较复杂的时候，Nacos服务在启动的时候需要选择运行时使用的IP或者网卡。Nacos从多网卡获取IP参考Spring Cloud设计，通过nacos.inetutils参数，可以指定Nacos使用的网卡和IP地址。目前支持的配置参数有:
+当本地环境比较复杂的时候，Nacos服务在启动的时候需要选择运行时使用的IP或者网卡。Nacos从多网卡获取IP参考Spring
+Cloud设计，通过nacos.inetutils参数，可以指定Nacos使用的网卡和IP地址。目前支持的配置参数有:
 
 - ip-address参数可以直接设置nacos的ip
 
