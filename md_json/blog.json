@@ -394,6 +394,15 @@
       }
     },
     {
+      "filename": "2.2.0-release.md",
+      "link": "/zh-cn/blog/2.2.0-release.html",
+      "meta": {
+        "title": "Nacos 2.2.0 版本发布，新增多种插件支持",
+        "keywords": "2.2.0, plugins",
+        "description": "Nacos 2.2.0 版本发布，新增多种插件支持！"
+      }
+    },
+    {
       "filename": "212-and-220beta-release.md",
       "link": "/zh-cn/blog/212-and-220beta-release.html",
       "meta": {
