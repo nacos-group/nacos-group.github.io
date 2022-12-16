@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: 'Nacos 2.2.0 版本发布，新增多种插件支持',
+            author: '@杨翊',
+            dateStr: 'Dec 16, 2022',
+            desc: 'Nacos 2.2.0 版本发布，新增多种插件支持！',
+            link: '/zh-cn/blog/2.2.0-release.html',
+        },
+        {
             title: 'Nacos 2.1.2、2.2.0-BETA及go-sdk 2.1.1 版本同时发布，多语言生态再添大将',
             author: '@杨翊',
             dateStr: 'Oct 28, 2022',
@@ -307,6 +314,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: 'Nacos 2.2.0 版本发布，新增多种插件支持',
+            author: '@杨翊',
+            dateStr: 'Dec 16, 2022',
+            desc: 'Nacos 2.2.0 版本发布，新增多种插件支持！',
+            link: '/zh-cn/blog/2.2.0-release.html',
+        },
         {
             title: 'Nacos 2.1.2、2.2.0-BETA及go-sdk 2.1.1 版本同时发布，多语言生态再添大将',
             author: '@杨翊',
