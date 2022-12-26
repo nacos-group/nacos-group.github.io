@@ -17,7 +17,7 @@ jobs:
           node-version: 8.x
       - name: Build
         run: |
-          npm install && npm run build && mkdir deploy-dist && cp -R zh-cn/ en-us/ build/ img/ md_json/ site_config/ schema/ deploy-dist/ && mv *.html deploy-dist/
+          npm install docsite@1.3.3 -g && npm install && npm run build && mkdir deploy-dist && cp -R zh-cn/ en-us/ build/ img/ md_json/ site_config/ schema/ deploy-dist/ && mv *.html deploy-dist/
       - name: Use Node.js 12.x
         uses: actions/setup-node@v2
         with:
