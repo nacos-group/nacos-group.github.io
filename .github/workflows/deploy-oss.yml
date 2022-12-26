@@ -1,4 +1,4 @@
-name: seata.io deploy
+name: nacos.io deploy
 
 on:
   push:
