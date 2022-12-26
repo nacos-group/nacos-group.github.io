@@ -3,7 +3,7 @@ name: nacos.io deploy
 on:
   push:
     branches:
-      - develop
+      - master
 
 jobs:
   Build-Deploy:
