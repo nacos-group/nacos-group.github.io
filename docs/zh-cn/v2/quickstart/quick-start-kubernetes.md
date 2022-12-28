@@ -7,6 +7,8 @@ description: 本项目包含一个可构建的Nacos Docker Image，旨在利用 
 # Kubernetes Nacos
 
 本项目包含一个可构建的Nacos Docker Image，旨在利用StatefulSets在[Kubernetes](https://kubernetes.io/)上部署[Nacos](https://nacos.io)
+# Tips
+* 推荐使用[Nacos Operator](https://github.com/nacos-group/nacos-k8s/blob/master/operator/README-CN.md)在Kubernetes部署Nacos Server.
 
 # 快速开始
 
@@ -94,36 +96,32 @@ kubectl get pod -l app=nfs-client-provisioner
 
 ## 部署数据库
 
-* 部署主库
+
+
 
 ```shell
 
 cd nacos-k8s
 
-kubectl create -f deploy/mysql/mysql-master-nfs.yaml
+kubectl create -f deploy/mysql/mysql-nfs.yaml
 ```
 
-* 部署从库
 
-```shell
 
-cd nacos-k8s 
-
-kubectl create -f deploy/mysql/mysql-slave-nfs.yaml
-```
 
 * 验证数据库是否正常工作
 
 ```shell
-# master
+
 kubectl get pod 
 NAME                         READY   STATUS    RESTARTS   AGE
-mysql-master-gf2vd                        1/1     Running   0          111m
+mysql-gf2vd                        1/1     Running   0          111m
 
-# slave
-kubectl get pod 
-mysql-slave-kf9cb                         1/1     Running   0          110m
 ```
+## 执行数据库初始化语句
+
+数据库初始化语句位置  <https://github.com/alibaba/nacos/blob/develop/distribution/conf/nacos-mysql.sql>
+
 
 ## 部署Nacos
 
@@ -131,11 +129,11 @@ mysql-slave-kf9cb                         1/1     Running   0          110m
 
 ```yaml
 data:
-  mysql.master.db.name: "主库名称"
-  mysql.master.port: "主库端口"
-  mysql.slave.port: "从库端口"
-  mysql.master.user: "主库用户名"
-  mysql.master.password: "主库密码"
+  mysql.host: "数据库地址"
+  mysql.db.name: "数据库名称"
+  mysql.port: "端口"
+  mysql.user: "用户名"
+  mysql.password: "密码"
 ```
 
 * 创建 Nacos
@@ -202,7 +200,7 @@ for i in 0 1 2; do echo nacos-$i; kubectl exec nacos-$i curl -X GET "http://loca
 | 172.17.79.4 | node01     | CentOS Linux release 7.4.1708 (Core) Single-core processor Mem 4G Cloud disk 40G |
 | 172.17.79.5 | node02     | CentOS Linux release 7.4.1708 (Core) Single-core processor Mem 4G Cloud disk 40G |
 
-- Kubernetes 版本：**1.12.2** （如果你和我一样只使用了三台机器，那么记得开启master节点的部署功能）
+- Kubernetes 版本：**1.20.11** （如果你和我一样只使用了三台机器，那么记得开启master节点的部署功能）
 - NFS 版本：**4.1** 在k8s-master进行安装Server端，并且指定共享目录，本项目指定的**/data/nfs-share**
 - Git
 
@@ -223,13 +221,15 @@ for i in 0 1 2; do echo nacos-$i; kubectl exec nacos-$i curl -X GET "http://loca
 
 | 名称                     | 必要 | 描述                                    |
 | ----------------------- | -------- | --------------------------------------- |
-| `mysql.master.db.name`  | Y       | 主库名称                      |
-| `mysql.master.port`     | N       | 主库端口                        |
-| `mysql.slave.port`      | N       | 从库端口                       |
-| `mysql.master.user`     | Y       | 主库用户名                     |
-| `mysql.master.password` | Y       | 主库密码                     |
+| `mysql.host`            | Y       | 自建数据库地址,使用外部数据库时必须指定                      |
+| `mysql.db.name`         | Y       | 数据库名称                      |
+| `mysql.port`            | N       | 数据库端口                        |
+| `mysql.user`            | Y       | 数据库用户名(请不要含有符号```,```)     |
+| `mysql.password`        | Y       | 数据库密码(请不要含有符号```,```)                     |
+| `SPRING_DATASOURCE_PLATFORM`        | Y       |   数据库类型,默认为embedded嵌入式数据库,参数只支持mysql或embedded	                   |
 | `NACOS_REPLICAS`        | N      | 确定执行Nacos启动节点数量,如果不适用动态扩容插件,就必须配置这个属性，否则使用扩容插件后不会生效 |
-| `NACOS_SERVER_PORT`     | N       | Nacos 端口             |
+| `NACOS_SERVER_PORT`     | N       | Nacos 端口 为peer_finder插件提供端口|
+| `NACOS_APPLICATION_PORT`     | N       | Nacos 端口|
 | `PREFER_HOST_MODE`      | Y       | 启动Nacos集群按域名解析 |
 
 * **nfs** deployment.yaml 
