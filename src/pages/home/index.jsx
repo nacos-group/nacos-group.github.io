@@ -52,90 +52,135 @@ class Home extends Language {
         const dataSource = homeConfig[language];
         const { headerType } = this.state;
         const headerLogo = headerType === 'primary' ? getLink('/img/nacos_white.png') : getLink('/img/nacos_colorful.png');
+        const mseArcUrl =
+        "//img.alicdn.com/imgextra/i2/O1CN01mFrO8X1EYIZp0DMnv_!!6000000000363-2-tps-2880-1512.png";
+        const IS_SAFARI =
+        /Safari/.test(navigator.userAgent) &&
+        /Apple Computer/.test(navigator.vendor);
         return (
-            <div className="home-page">
-                <section className="top-section" style={{ background: `url(${getLink('/img/black_dot.png')}) repeat`, backgroundSize: '14px 14px' }}>
-                    <Header
-                        currentKey="home"
-                        type={headerType}
-                        logo={headerLogo}
-                        language={language}
-                        onLanguageChange={this.onLanguageChange}
-                    />
-                    <div className="vertical-middle">
-                        <img className="product-logo" src={getLink('/img/nacos.png')} />
-                        <p className="product-desc">{dataSource.brand.briefIntroduction}</p>
-                        <div className="button-area">
-                            {
-                                dataSource.brand.buttons.map(b => <Button type={b.type} key={b.type} link={b.link}>{b.text}</Button>)
-                            }
-                        </div>
-                        <div className="github-buttons">
-                            <a href="https://github.com/alibaba/nacos" target="_blank" rel="noopener noreferrer">
-                                <div className="star">
-                                    <img src="https://img.alicdn.com/tfs/TB1FlB1JwHqK1RjSZFPXXcwapXa-32-32.png" />
-                                    <span className="count">{starCount}</span>
-                                </div>
-                            </a>
-                            <a href="https://github.com/alibaba/nacos/fork" target="_blank" rel="noopener noreferrer">
-                                <div className="fork">
-                                    <img src="https://img.alicdn.com/tfs/TB1zbxSJwDqK1RjSZSyXXaxEVXa-32-32.png" />
-                                    <span className="count">{forkCount}</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div className="version-note">
-                            <a target="_blank" rel="noopener noreferrer" href={getLink(dataSource.brand.versionNote.link)}>{dataSource.brand.versionNote.text}</a>
-                            <a target="_blank" rel="noopener noreferrer" href={getLink(dataSource.brand.versionNote2.link)}>{dataSource.brand.versionNote2.text}</a>
-                        </div>
-                        <div className="release-date">{dataSource.brand.releaseDate}</div>
+          <div className="home-page">
+            <section
+              className="top-section"
+              style={{
+                background: `url(${getLink("/img/black_dot.png")}) repeat`,
+                backgroundSize: "14px 14px",
+              }}
+            >
+              <Header
+                currentKey="home"
+                type={headerType}
+                logo={headerLogo}
+                language={language}
+                onLanguageChange={this.onLanguageChange}
+              />
+              <div className="vertical-middle">
+                <img className="product-logo" src={getLink("/img/nacos.png")} />
+                <p className="product-desc">
+                  {dataSource.brand.briefIntroduction}
+                </p>
+                <div className="button-area">
+                  {dataSource.brand.buttons.map((b) => (
+                    <Button type={b.type} key={b.type} link={b.link}>
+                      {b.text}
+                    </Button>
+                  ))}
+                </div>
+                <div className="github-buttons">
+                  <a
+                    href="https://github.com/alibaba/nacos"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div className="star">
+                      <img src="https://img.alicdn.com/tfs/TB1FlB1JwHqK1RjSZFPXXcwapXa-32-32.png" />
+                      <span className="count">{starCount}</span>
                     </div>
-                    <div className="animation animation1" />
-                    <div className="animation animation2" />
-                    <div className="animation animation3" />
-                    <div className="animation animation4" />
-                    <div className="animation animation5" />
-                </section>
-                <section className="function-section">
-                    <h3>{dataSource.functions.title}</h3>
-                    <Bone type="dark" />
-                    <div>
-                        {
-                            dataSource.functions.list.map((func, i) => (
-                                <FunctionItem func={func} key={i} imgFirst={i % 2 === 0} />
-                            ))
-                        }
+                  </a>
+                  <a
+                    href="https://github.com/alibaba/nacos/fork"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div className="fork">
+                      <img src="https://img.alicdn.com/tfs/TB1zbxSJwDqK1RjSZSyXXaxEVXa-32-32.png" />
+                      <span className="count">{forkCount}</span>
                     </div>
-                </section>
-                <section className="feature-section">
-                    <div className="feature-section-body">
-                        <h3>{dataSource.features.title}</h3>
-                        <Bone type="light" />
-                        <ul className="feature-list">
-                            {
-                                dataSource.features.list.map((feature, i) => (
-                                    <FeatureItem feature={feature} key={i} />
-                                ))
-                            }
-                        </ul>
-                    </div>
-                </section>
-                <section className="users-section">
-                    <h3>{dataSource.users.title}</h3>
-                    <Bone type="dark" />
-                    <p>{dataSource.users.desc}</p>
-                    <div className="users">
-                        {
-                            dataSource.users.list.map((user, i) => (
-                              <div className="user-item" key={i}>
-                                  <img src={user} />
-                              </div>
-                            ))
-                        }
-                    </div>
-                </section>
-                <Footer logo={getLink('/img/nacos_gray.png')} language={language} />
-            </div>
+                  </a>
+                </div>
+                <div className="version-note">
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={getLink(dataSource.brand.versionNote.link)}
+                  >
+                    {dataSource.brand.versionNote.text}
+                  </a>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={getLink(dataSource.brand.versionNote2.link)}
+                  >
+                    {dataSource.brand.versionNote2.text}
+                  </a>
+                </div>
+                <div className="release-date">
+                  {dataSource.brand.releaseDate}
+                </div>
+              </div>
+              <div className="animation animation1" />
+              <div className="animation animation2" />
+              <div className="animation animation3" />
+              <div className="animation animation4" />
+              <div className="animation animation5" />
+            </section>
+            <section className="function-section">
+              <h3>{dataSource.functions.title}</h3>
+              <Bone type="dark" />
+              <div>
+                {dataSource.functions.list.map((func, i) => (
+                  <FunctionItem func={func} key={i} imgFirst={i % 2 === 0} />
+                ))}
+              </div>
+            </section>
+            <section className="msemap-section">
+              <div className="msemap-container">
+                <h3>微服务全景图</h3>
+                <Bone type="dark" />
+                {IS_SAFARI ? (
+                  <img
+                    src={getLink(mseArcUrl)}
+                    style={{ width: "100%", height: "100%" }}
+                  />
+                ) : (
+                  <div id="mse-arc-container"></div>
+                )}
+              </div>
+            </section>
+            <section className="feature-section">
+              <div className="feature-section-body">
+                <h3>{dataSource.features.title}</h3>
+                <Bone type="light" />
+                <ul className="feature-list">
+                  {dataSource.features.list.map((feature, i) => (
+                    <FeatureItem feature={feature} key={i} />
+                  ))}
+                </ul>
+              </div>
+            </section>
+            <section className="users-section">
+              <h3>{dataSource.users.title}</h3>
+              <Bone type="dark" />
+              <p>{dataSource.users.desc}</p>
+              <div className="users">
+                {dataSource.users.list.map((user, i) => (
+                  <div className="user-item" key={i}>
+                    <img src={user} />
+                  </div>
+                ))}
+              </div>
+            </section>
+            <Footer logo={getLink("/img/nacos_gray.png")} language={language} />
+          </div>
         );
     }
 }
