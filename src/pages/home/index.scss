@@ -237,6 +237,19 @@ $animationDuration: 2s;
       }
     }
   }
+  .msemap-section{
+    .msemap-container{
+      h3{
+        font-family: Avenir-Medium;
+        font-weight: 400;
+        font-size: 36px;
+        text-align: center;
+      }
+      #mse-arc-container{
+        height: 700px !important;
+      }
+    }
+  }
 
   .feature-section {
     background: $brandColor;
