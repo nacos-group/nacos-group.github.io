@@ -1198,6 +1198,15 @@ h1, h2, h3, h4, h5, h6 {
         transform: translate(-50%, -50%);
         opacity: 0.1; } }
 
+.home-page .msemap-section .msemap-container h3 {
+  font-family: Avenir-Medium;
+  font-weight: 400;
+  font-size: 36px;
+  text-align: center; }
+
+.home-page .msemap-section .msemap-container #mse-arc-container {
+  height: 700px !important; }
+
 .home-page .feature-section {
   background: #2E3034; }
   .home-page .feature-section .feature-section-body {
