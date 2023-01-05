@@ -238,7 +238,6 @@ $animationDuration: 2s;
     }
   }
   .msemap-section{
-    .msemap-container{
       h3{
         font-family: Avenir-Medium;
         font-weight: 400;
@@ -248,10 +247,6 @@ $animationDuration: 2s;
       .bone {
         margin: 0 auto 45px;
       }
-      #mse-arc-container{
-        height: 700px !important;
-      }
-    }
     
   }
 
