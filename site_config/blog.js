@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: 'Higress + Nacos 微服务网关最佳实践',
+            author: '@澄潭',
+            desc: 'Higress: Nacos 的最佳拍档',
+            dateStr: 'Jan 10, 2023',
+            link: '/zh-cn/blog/higress.html',
+        },
+        {
             title: 'Nacos 2.2.0 版本发布，新增多种插件支持',
             author: '@杨翊',
             dateStr: 'Dec 16, 2022',
@@ -314,6 +321,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: 'Higress + Nacos 微服务网关最佳实践',
+            author: '@澄潭',
+            desc: 'Higress: Nacos 的最佳拍档',
+            dateStr: 'Jan 10, 2023',
+            link: '/zh-cn/blog/higress.html',
+        },
         {
             title: 'Nacos 2.2.0 版本发布，新增多种插件支持',
             author: '@杨翊',
