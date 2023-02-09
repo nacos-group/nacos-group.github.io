@@ -47,6 +47,9 @@ export default {
                 },
             ],
         },
+        landscape:{
+            title: 'microservice ecosystem landscape',
+        },
         features: {
             title: 'Why Nacos',
             list: [
@@ -161,6 +164,9 @@ export default {
                     content: '通过支持权重路由，动态DNS服务能让您轻松实现中间层负载均衡、更灵活的路由策略、流量控制以及简单数据中心内网的简单DNS解析服务。动态DNS服务还能让您更容易地实现以DNS协议为基础的服务发现，以消除耦合到厂商私有服务发现API上的风险。',
                 },
             ],
+        },
+        landscape:{
+            title: '微服务生态全景图',
         },
         features: {
             title: '特性一览',
