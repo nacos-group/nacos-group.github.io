@@ -138,7 +138,7 @@ class Home extends Language {
               </div>
             </section>
             <section className="msemap-section">
-                <h3>微服务全景图</h3>
+                <h3>{dataSource.landscape.title}</h3>
                 <Bone type="dark" />
                 <div id="mse-arc-container"></div>
             </section>
