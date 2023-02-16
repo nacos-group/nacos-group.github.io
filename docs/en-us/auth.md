@@ -149,7 +149,7 @@ Since version 2.2.1 of the server, the default authentication plug-in module sup
 ```
 https://github.com/alibaba/nacos/issues/9906
 ```
-#### Backgroup
+#### Background
 Regardless of the client SDK or OpenAPI, after calling the `login` interface to obtain the accessToken, carry the accessToken to access the server, and the server parses the token for authentication. The action of token parsing is time-consuming. If you want to improve the performance of the server, you can consider enabling the feature of caching tokens, which using string comparison instead of token parsing.
 
 #### Way to open
