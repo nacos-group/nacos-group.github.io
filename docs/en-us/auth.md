@@ -162,7 +162,8 @@ Before enabling the feature of token cache, the server will generate a new token
 ```
 nacos.core.auth.plugin.nacos.token.expire.seconds=18000
 ```
-After enabling the feature of token cache, the server will first check whether the token corresponding to the username exists in cache for each request to access the `login` interface with username and password. If it does not exist, generate a new token, insert it into the cache and return it to requester; if it exists, return the token to requester, and the value of the `tokenTtl` field is the value set in the configuration file minus the duration of the token stored in the cache. If the token remains in the cache for more than 90% of the value set in the configuration file, the server will regenerate the token and return it to the requester, and update the cache.
+After enabling the feature of token cache, the server will first check whether the token corresponding to the username exists in cache for each request to access the `login` interface with username and password. If it does not exist, generate a new token, insert it into the cache and return it to requester; if it exists, return the token to requester, and the value of the `tokenTtl` field is the value set in the configuration file minus the duration of the token stored in the cache. 
+If the token stays in the cache for more than 90% of the value set in the configuration file, when the `login` interface receives a request, although the token corresponding to the username exists in the cache, the server will regenerate the token and return it to the requester, and update cache. Therefore, in the worst case, the `tokenTtl` received by the requester is only 10% of the value set in the configuration file.
 
 ## Open feature for server identity
 
