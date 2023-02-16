@@ -148,6 +148,28 @@ curl -X GET '127.0.0.1:8848/nacos/v1/cs/configs?accessToken=eyJhbGciOiJIUzI1NiJ9
 curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?accessToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuYWNvcyIsImV4cCI6MTYwNTYyMzkyM30.O-s2yWfDSUZ7Svd3Vs7jy9tsfDNHs1SuebJB4KlNY8Q&port=8848&healthy=true&ip=11.11.11.11&weight=1.0&serviceName=nacos.test.3&encoding=GBK&namespaceId=n1'
 ```
 
+## 开启Token缓存功能
+
+服务端自2.2.1版本后，默认鉴权插件模块支持token缓存功能，可参见ISSUE #9906 
+```
+https://github.com/alibaba/nacos/issues/9906
+```
+#### 背景
+无论是客户端SDK还是OpenAPI，在调用login接口获取accessToken之后，携带accessToken访问服务端，服务端解析Token进行鉴权。解析的动作比较耗时，如果想要提升接口的性能，可以考虑开启缓存Token的功能，用字符串比较代替Token解析。
+
+#### 开启方式
+```
+nacos.core.auth.plugin.nacos.token.cache.enable=true
+```
+
+#### 注意事项
+在开启Token缓存功能之前，服务端对每一个携带用户名密码访问login接口的请求都会生成新的token，接口的返回值中的tokenTtl字段跟服务端配置文件中设置的值相等，配置如下：
+```
+nacos.core.auth.plugin.nacos.token.expire.seconds=18000
+```
+在开启Token缓存功能之后，服务端对每一个携带用户名密码访问login接口的请求，会先检查缓存中是否存在该用户名对应的token。若不存在，生成新的Token，插入缓存再返回；若存在，返回该token，此时tokenTtl字段的值为配置文件中设置的值减去该Token在缓存中存留的时长。
+如果Token在缓存中存留的时长超过配置文件设置的值的90%，当login接口收到请求时，尽管缓存中存在该用户名对应的Token，服务端会重新生成Token返回给请求方，并更新缓存。因此，最差情况下，请求方收到的tokenTtl只有配置文件设置的值的10%。
+
 ## 开启服务身份识别功能
 
 开启鉴权功能后，服务端之间的请求也会通过鉴权系统的影响。考虑到服务端之间的通信应该是可信的，因此在1.2~1.4.0版本期间，通过User-Agent中是否包含Nacos-Server来进行判断请求是否来自其他服务端。
