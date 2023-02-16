@@ -167,7 +167,8 @@ nacos.core.auth.plugin.nacos.token.cache.enable=true
 ```
 nacos.core.auth.plugin.nacos.token.expire.seconds=18000
 ```
-在开启Token缓存功能之后，服务端对每一个携带用户名密码访问login接口的请求，会先检查缓存中是否存在该用户名对应的token。若不存在，生成新的Token，插入缓存再返回；若存在，返回该token，此时tokenTtl字段的值为配置文件中设置的值减去该Token在缓存中存留的时长。如果Token在缓存中存留的时长超过配置文件设置的值的90%，服务端会重新生成Token返回给请求方，并更新缓存。
+在开启Token缓存功能之后，服务端对每一个携带用户名密码访问login接口的请求，会先检查缓存中是否存在该用户名对应的token。若不存在，生成新的Token，插入缓存再返回；若存在，返回该token，此时tokenTtl字段的值为配置文件中设置的值减去该Token在缓存中存留的时长。
+如果Token在缓存中存留的时长超过配置文件设置的值的90%，当login接口收到请求时，尽管缓存中存在该用户名对应的Token，服务端会重新生成Token返回给请求方，并更新缓存。因此，最差情况下，请求方收到的tokenTtl只有配置文件设置的值的10%。
 
 ## 开启服务身份识别功能
 
