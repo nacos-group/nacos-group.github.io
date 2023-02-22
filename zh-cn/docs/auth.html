@@ -38,6 +38,14 @@ nacos.core.auth.enabled=true
 </code></pre>
 <h4>自定义密钥</h4>
 <p>开启鉴权之后，你可以自定义用于生成JWT令牌的密钥，application.properties中的配置信息为：</p>
+<blockquote>
+<p>注意：</p>
+<ol>
+<li>文档中提供的密钥为公开密钥，在实际部署时请更换为其他密钥内容，防止密钥泄漏导致安全风险。</li>
+<li>在2.2.1版本后，社区发布版本将移除以文档如下值作为默认值，需要自行填充，否则无法启动节点。</li>
+<li>密钥需要保持节点间一致，长时间不一致可能导致403 invalid token错误。</li>
+</ol>
+</blockquote>
 <pre><code class="language-properties"><span class="hljs-comment">### The default token(Base64 String):</span>
 <span class="hljs-meta">nacos.core.auth.default.token.secret.key</span>=<span class="hljs-string">SecretKey012345678901234567890123456789012345678901234567890123456789</span>
 </code></pre>
