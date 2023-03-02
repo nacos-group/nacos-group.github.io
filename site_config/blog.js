@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: '关于Nacos默认token.secret.key风险说明及解决方案公告',
+            author: '@杨翊',
+            dateStr: 'Mar 2nd, 2023',
+            desc: '关于Nacos默认token.secret.key风险说明及解决方案公告',
+            link: '/zh-cn/blog/announcement-token-secret-key.html',
+        },
+        {
             title: 'Nacos 2.2.0 版本发布，新增多种插件支持',
             author: '@杨翊',
             dateStr: 'Dec 16, 2022',
@@ -314,6 +321,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: '关于Nacos默认token.secret.key风险说明及解决方案公告',
+            author: '@杨翊',
+            dateStr: 'Mar 2nd, 2023',
+            desc: '关于Nacos默认token.secret.key风险说明及解决方案公告',
+            link: '/zh-cn/blog/announcement-token-secret-key.html',
+        },
         {
             title: 'Nacos 2.2.0 版本发布，新增多种插件支持',
             author: '@杨翊',

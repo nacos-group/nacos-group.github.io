@@ -17,8 +17,8 @@ export default {
                 },
             ],
             versionNote: {
-                text: 'Release Note of V2.2.0',
-                link: 'https://github.com/alibaba/nacos/releases/tag/2.2.0',
+                text: 'Release Note of V2.2.0.1',
+                link: 'https://github.com/alibaba/nacos/releases/tag/2.2.0.1',
             },
             versionNote2: {
                 text: 'V1.4.4',
@@ -136,8 +136,8 @@ export default {
                 },
             ],
             versionNote: {
-                text: 'V2.2.0 版本说明',
-                link: 'https://github.com/alibaba/nacos/releases/tag/2.2.0',
+                text: 'V2.2.0.1 版本说明',
+                link: 'https://github.com/alibaba/nacos/releases/tag/2.2.0.1',
             },
             versionNote2: {
                 text: 'V1.4.4',
