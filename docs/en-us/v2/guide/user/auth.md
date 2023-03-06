@@ -34,20 +34,31 @@ nacos.core.auth.enabled=true
 
 After enabling authentication, you can customize the key used to generate JWT tokens，the configuration in application.properties is as follow：
 
+> Attention：
+> 1. The secret key provided in the document is a public key. Please replace it with other secret key content during actual deployment to prevent security risks caused by secret key leakage.
+> 2. After version 2.2.0.1, the community release version will remove the following value as the default value in the document, which needs to be filled in by yourself, otherwise the node cannot be started.
+> 3. The secret key needs to be consistent between nodes, and if it is inconsistent for a long time, it may cause 403 invalid token error.
+
 ```properties
 ### The default token(Base64 String):
 nacos.core.auth.default.token.secret.key=SecretKey012345678901234567890123456789012345678901234567890123456789
+
+### Since 2.1.0
+nacos.core.auth.plugin.nacos.token.secret.key=SecretKey012345678901234567890123456789012345678901234567890123456789
 ```
 
 When customizing the key, it is recommended to set the configuration item to a **Base64 encoded** string,
-and the length of the original key must not be less than 32 characters. For example the following example:
+and **the length of the original key must not be less than 32 characters**. For example the following example:
 
 ```properties
 ### The default token(Base64 String):
 nacos.core.auth.default.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
+
+### Since 2.1.0
+nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
 ```
 
-**Attention:**  the authentication switch takes effect immediately after the modification, and there is no need to restart the server.
+> Attention: the authentication switch takes effect immediately after the modification, and there is no need to restart the server.
 
 ### With Docker
 

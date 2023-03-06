@@ -34,19 +34,30 @@ nacos.core.auth.enabled=true
 
 开启鉴权之后，你可以自定义用于生成JWT令牌的密钥，application.properties中的配置信息为：
 
+> 注意：
+> 1. 文档中提供的密钥为公开密钥，在实际部署时请更换为其他密钥内容，防止密钥泄漏导致安全风险。
+> 2. 在2.2.0.1版本后，社区发布版本将移除以文档如下值作为默认值，需要自行填充，否则无法启动节点。
+> 3. 密钥需要保持节点间一致，长时间不一致可能导致403 invalid token错误。
+
 ```properties
 ### The default token(Base64 String):
 nacos.core.auth.default.token.secret.key=SecretKey012345678901234567890123456789012345678901234567890123456789
+
+### 2.1.0 版本后
+nacos.core.auth.plugin.nacos.token.secret.key=SecretKey012345678901234567890123456789012345678901234567890123456789
 ```
 
-自定义密钥时，推荐将配置项设置为**Base64编码**的字符串，且原始密钥长度不得低于32字符。例如下面的的例子：
+自定义密钥时，推荐将配置项设置为**Base64编码**的字符串，且**原始密钥长度不得低于32字符**。例如下面的的例子：
 
 ```properties
 ### The default token(Base64 String):
 nacos.core.auth.default.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
+
+### 2.1.0 版本后
+nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
 ```
 
-**注意**：鉴权开关是修改之后立马生效的，不需要重启服务端。
+> 注意：鉴权开关是修改之后立马生效的，不需要重启服务端。
 
 ### Docker环境
 

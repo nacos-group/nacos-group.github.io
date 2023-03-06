@@ -449,6 +449,15 @@
       }
     },
     {
+      "filename": "announcement-token-secret-key.md",
+      "link": "/zh-cn/blog/announcement-token-secret-key.html",
+      "meta": {
+        "title": "关于Nacos默认token.secret.key风险说明及解决方案公告",
+        "keywords": "nacos,auth,risk,token.secret.key",
+        "description": "关于Nacos默认token.secret.key风险说明及解决方案公告"
+      }
+    },
+    {
       "filename": "apisix.md",
       "link": "/zh-cn/blog/apisix.html",
       "meta": {
