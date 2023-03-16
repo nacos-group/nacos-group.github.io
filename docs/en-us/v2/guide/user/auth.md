@@ -7,10 +7,25 @@ description: Authentication
 > Attention
 > - Nacos is an internal micro service component, which needs to run in a trusted internal network. It can not be exposed to the public network environment to prevent security risks.
 > - Nacos provides a simple authentication implementation. It is a weak authentication system to prevent business misuse, not a strong authentication system to prevent malicious attacks.
-> - If you are running in an untrusted network environment or have strong authentication demands, please refer to the official simple implementation for replacement and enhancement.
+> - If you are running in an untrusted network environment or have strong authentication demands, please refer to the official simple implementation to develop [Authentication plugin](../../plugin/auth-plugin.md).
 
 
 # Authentication
+
+## Related Parameters
+
+|Parameter|Default|Versions|Description|
+|-----|------|------|----|
+|nacos.core.auth.enabled|false|1.2.0 ~ latest|Whether to enable the authentication|
+|nacos.core.auth.system.type|nacos|1.2.0 ~ latest|Type of authentication|
+|nacos.core.auth.plugin.nacos.token.secret.key|SecretKey012345678901234567890123456789012345678901234567890123456789(No default since 2.2.0.1)|2.1.0 ~ latest|Used to generate the key used by the user to login to the temporary accessToken in the default authentication plugin. **Using the default value is a security risk**.|
+|nacos.core.auth.plugin.nacos.token.expire.seconds|18000|2.1.0 ~ latest|Expiration time of user login temporary accessToken|
+|nacos.core.auth.enable.userAgentAuthWhite|false|1.4.1 ~ latest|Whether to use the useragent whitelist, mainly used to adapt to the upgrade of the old version, **Setting `true` is a security risk**|
+|nacos.core.auth.server.identity.key|serverIdentity(No default since 2.2.1)|1.4.1 ~ latest|Used to replace the identification key of the useragent whitelist, **Using the default value is a security risk**|
+|nacos.core.auth.server.identity.value|security(No default since 2.2.1)|1.4.1 ~ latest|It is used to replace the identification value of the useragent whitelist, **Using the default value is a security risk**|
+|~~nacos.core.auth.default.token.secret.key~~|SecretKey012345678901234567890123456789012345678901234567890123456789|1.2.0 ~ 2.0.4|Same as `nacos.core.auth.plugin.nacos.token.secret.key`|
+|~~nacos.core.auth.default.token.expire.seconds~~|18000|1.2.0 ~ 2.0.4|Same as `nacos.core.auth.plugin.nacos.token.expire.seconds`|
+
 
 ## Use Authentication in Servers
 

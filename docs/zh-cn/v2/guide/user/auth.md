@@ -7,10 +7,23 @@ description: Authorization
 > 注意
 > - Nacos是一个内部微服务组件，需要在可信的内部网络中运行，不可暴露在公网环境，防止带来安全风险。
 > - Nacos提供简单的鉴权实现，为防止业务错用的弱鉴权体系，不是防止恶意攻击的强鉴权体系。
-> - 如果运行在不可信的网络环境或者有强鉴权诉求，请参考官方简单实现做替换增强。
-
+> - 如果运行在不可信的网络环境或者有强鉴权诉求，请参考官方简单实现做进行[自定义插件开发](../../plugin/auth-plugin.md)。
 
 # 鉴权
+
+## 相关参数
+
+|参数名|默认值|启止版本|说明|
+|-----|------|------|----|
+|nacos.core.auth.enabled|false|1.2.0 ~ latest|是否开启鉴权功能|
+|nacos.core.auth.system.type|nacos|1.2.0 ~ latest|鉴权类型|
+|nacos.core.auth.plugin.nacos.token.secret.key|SecretKey012345678901234567890123456789012345678901234567890123456789(2.2.0.1后无默认值)|2.1.0 ~ latest|默认鉴权插件用于生成用户登陆临时accessToken所使用的密钥，**使用默认值有安全风险**|
+|nacos.core.auth.plugin.nacos.token.expire.seconds|18000|2.1.0 ~ latest|用户登陆临时accessToken的过期时间|
+|nacos.core.auth.enable.userAgentAuthWhite|false|1.4.1 ~ latest|是否使用useragent白名单，主要用于适配老版本升级，**置为true时有安全风险**|
+|nacos.core.auth.server.identity.key|serverIdentity(2.2.1后无默认值)|1.4.1 ~ latest|用于替换useragent白名单的身份识别key，**使用默认值有安全风险**|
+|nacos.core.auth.server.identity.value|security(2.2.1后无默认值)|1.4.1 ~ latest|用于替换useragent白名单的身份识别value，**使用默认值有安全风险**|
+|~~nacos.core.auth.default.token.secret.key~~|SecretKey012345678901234567890123456789012345678901234567890123456789|1.2.0 ~ 2.0.4|同`nacos.core.auth.plugin.nacos.token.secret.key`|
+|~~nacos.core.auth.default.token.expire.seconds~~|18000|1.2.0 ~ 2.0.4|同`nacos.core.auth.plugin.nacos.token.expire.seconds`|
 
 ## 服务端如何开启鉴权
 
