@@ -46,9 +46,17 @@ cd distribution/target/nacos-server-$version/nacos/bin
   cd nacos/bin
 ```  
 
-## 3.启动服务器
+## 3.修改配置文件
 
-* 注：Nacos的运行需要以至少2C4g60g*3的机器配置下运行。
+修改`conf`目录下的`application.properties`文件。
+
+设置其中的`nacos.core.auth.plugin.nacos.token.secret.key`值，详情可查看[鉴权-自定义密钥](../plugin/auth-plugin.md).
+
+> 注意，文档中的默认值`SecretKey012345678901234567890123456789012345678901234567890123456789`和`VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=`为公开默认值，可用于临时测试，实际使用时请**务必**更换为自定义的其他有效值。
+
+## 4.启动服务器
+
+* 注：Nacos的运行建议至少在2C4G 60G的机器配置下运行。
 
 ### Linux/Unix/Mac 
 
@@ -66,7 +74,7 @@ cd distribution/target/nacos-server-$version/nacos/bin
 
 `startup.cmd -m standalone`
 
-## 4.服务注册&发现和配置管理
+## 5.服务注册&发现和配置管理
 
 ### 服务注册
 
@@ -84,7 +92,7 @@ cd distribution/target/nacos-server-$version/nacos/bin
 
 `curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test"`
 
-## 5.关闭服务器
+## 6.关闭服务器
 
 ### Linux/Unix/Mac 
 
