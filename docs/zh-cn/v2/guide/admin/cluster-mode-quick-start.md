@@ -67,6 +67,12 @@ cd nacos/distribution/target/nacos-server-1.3.0/nacos/bin
 200.8.9.18:8848
 ```
 
+之后修改`conf`目录下的`application.properties`文件。
+
+设置其中的`nacos.core.auth.plugin.nacos.token.secret.key`值，详情可查看[鉴权-自定义密钥](../plugin/auth-plugin.md).
+
+> 注意，文档中的默认值`SecretKey012345678901234567890123456789012345678901234567890123456789`和`VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=`为公开默认值，可用于临时测试，实际使用时请**务必**更换为自定义的其他有效值。
+
 ## 4. 确定数据源
 
 ### 使用内置数据源

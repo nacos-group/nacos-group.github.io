@@ -297,4 +297,10 @@ curl '127.0.0.1:8848/nacos/v1/ns/raft/state'
 默认鉴权插件需要密钥来生成访问token，密钥格式需要长度大于32。若`secret.key`进行BASE64解密后的长度小于32，则会在启动过程中此错误。
 您可以在`application.properties`中设置正确的`secret.key`，详情见[用户指南-权限认证](./auth.md).
 
+<h4 id=3.22>启动报错Empty identity, Please set `nacos.core.auth.server.identity.key` and `nacos.core.auth.server.identity.value`
+
+2.2.1后的版本，移除了配置中间中`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value`的默认值，并添加了启动校验。
+如果在开启鉴权但未设置`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value`的情况下，nacos server会提示以上报错信息，并阻止启动。
+可查看[用户指南-权限认证](./auth.md)文档中相关内容，进行设置后启动。
+
 ## Nacos原理问题

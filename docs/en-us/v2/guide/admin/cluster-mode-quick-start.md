@@ -68,6 +68,12 @@ In the Nacos decompression directory Nacos / conf directory, there is a configur
 200.8.9.18:8848
 ```
 
+Then Setting configuration file `application.properties` under `conf`.
+
+Setting `nacos.core.auth.plugin.nacos.token.secret.key` parameter，detail see [Authentication-Custom SecretKey](../plugin/auth-plugin.md).
+
+> Attention，Default value in Document `SecretKey012345678901234567890123456789012345678901234567890123456789` and `VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=` is a public default, **only** should use in test temporary. Please **make sure** to replace it with another valid value when you actually deploy.
+
 ## 4. Determine The DataSource
 
 ### Using built-in data sources

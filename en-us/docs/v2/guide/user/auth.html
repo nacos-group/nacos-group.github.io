@@ -20,10 +20,77 @@
 <ul>
 <li>Nacos is an internal micro service component, which needs to run in a trusted internal network. It can not be exposed to the public network environment to prevent security risks.</li>
 <li>Nacos provides a simple authentication implementation. It is a weak authentication system to prevent business misuse, not a strong authentication system to prevent malicious attacks.</li>
-<li>If you are running in an untrusted network environment or have strong authentication demands, please refer to the official simple implementation for replacement and enhancement.</li>
+<li>If you are running in an untrusted network environment or have strong authentication demands, please refer to the official simple implementation to develop <a href="../../plugin/auth-plugin.md">Authentication plugin</a>.</li>
 </ul>
 </blockquote>
 <h1>Authentication</h1>
+<h2>Related Parameters</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Versions</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nacos.core.auth.enabled</td>
+<td>false</td>
+<td>1.2.0 ~ latest</td>
+<td>Whether to enable the authentication</td>
+</tr>
+<tr>
+<td>nacos.core.auth.system.type</td>
+<td>nacos</td>
+<td>1.2.0 ~ latest</td>
+<td>Type of authentication</td>
+</tr>
+<tr>
+<td>nacos.core.auth.plugin.nacos.token.secret.key</td>
+<td>SecretKey012345678901234567890123456789012345678901234567890123456789(No default since 2.2.0.1)</td>
+<td>2.1.0 ~ latest</td>
+<td>Used to generate the key used by the user to login to the temporary accessToken in the default authentication plugin. <strong>Using the default value is a security risk</strong>.</td>
+</tr>
+<tr>
+<td>nacos.core.auth.plugin.nacos.token.expire.seconds</td>
+<td>18000</td>
+<td>2.1.0 ~ latest</td>
+<td>Expiration time of user login temporary accessToken</td>
+</tr>
+<tr>
+<td>nacos.core.auth.enable.userAgentAuthWhite</td>
+<td>false</td>
+<td>1.4.1 ~ latest</td>
+<td>Whether to use the useragent whitelist, mainly used to adapt to the upgrade of the old version, <strong>Setting <code>true</code> is a security risk</strong></td>
+</tr>
+<tr>
+<td>nacos.core.auth.server.identity.key</td>
+<td>serverIdentity(No default since 2.2.1)</td>
+<td>1.4.1 ~ latest</td>
+<td>Used to replace the identification key of the useragent whitelist, <strong>Using the default value is a security risk</strong></td>
+</tr>
+<tr>
+<td>nacos.core.auth.server.identity.value</td>
+<td>security(No default since 2.2.1)</td>
+<td>1.4.1 ~ latest</td>
+<td>It is used to replace the identification value of the useragent whitelist, <strong>Using the default value is a security risk</strong></td>
+</tr>
+<tr>
+<td><s>nacos.core.auth.default.token.secret.key</s></td>
+<td>SecretKey012345678901234567890123456789012345678901234567890123456789</td>
+<td>1.2.0 ~ 2.0.4</td>
+<td>Same as <code>nacos.core.auth.plugin.nacos.token.secret.key</code></td>
+</tr>
+<tr>
+<td><s>nacos.core.auth.default.token.expire.seconds</s></td>
+<td>18000</td>
+<td>1.2.0 ~ 2.0.4</td>
+<td>Same as <code>nacos.core.auth.plugin.nacos.token.expire.seconds</code></td>
+</tr>
+</tbody>
+</table>
 <h2>Use Authentication in Servers</h2>
 <h3>Without Docker</h3>
 <p>By default, no login is required to start following the official document configuration, which can expose the configuration center directly to the outside world. However, if the authentication is enabled, one can use nacos only after he configures the user name and password.</p>

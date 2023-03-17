@@ -56,6 +56,11 @@ mvn -Prelease-nacos clean install -U
 200.8.9.17:8848
 200.8.9.18:8848
 </code></pre>
+<p>之后修改<code>conf</code>目录下的<code>application.properties</code>文件。</p>
+<p>设置其中的<code>nacos.core.auth.plugin.nacos.token.secret.key</code>值，详情可查看<a href="../plugin/auth-plugin.md">鉴权-自定义密钥</a>.</p>
+<blockquote>
+<p>注意，文档中的默认值<code>SecretKey012345678901234567890123456789012345678901234567890123456789</code>和<code>VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=</code>为公开默认值，可用于临时测试，实际使用时请<strong>务必</strong>更换为自定义的其他有效值。</p>
+</blockquote>
 <h2>4. 确定数据源</h2>
 <h3>使用内置数据源</h3>
 <p>无需进行任何配置</p>
