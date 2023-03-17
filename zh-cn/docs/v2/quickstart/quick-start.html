@@ -43,9 +43,15 @@ ls -al distribution/target/
 <pre><code class="language-bash">  unzip nacos-server-<span class="hljs-variable">$version</span>.zip 或者 tar -xvf nacos-server-<span class="hljs-variable">$version</span>.tar.gz
   <span class="hljs-built_in">cd</span> nacos/bin
 </code></pre>
-<h2>3.启动服务器</h2>
+<h2>3.修改配置文件</h2>
+<p>修改<code>conf</code>目录下的<code>application.properties</code>文件。</p>
+<p>设置其中的<code>nacos.core.auth.plugin.nacos.token.secret.key</code>值，详情可查看<a href="../plugin/auth-plugin.md">鉴权-自定义密钥</a>.</p>
+<blockquote>
+<p>注意，文档中的默认值<code>SecretKey012345678901234567890123456789012345678901234567890123456789</code>和<code>VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=</code>为公开默认值，可用于临时测试，实际使用时请<strong>务必</strong>更换为自定义的其他有效值。</p>
+</blockquote>
+<h2>4.启动服务器</h2>
 <ul>
-<li>注：Nacos的运行需要以至少2C4g60g*3的机器配置下运行。</li>
+<li>注：Nacos的运行建议至少在2C4G 60G的机器配置下运行。</li>
 </ul>
 <h3>Linux/Unix/Mac</h3>
 <p>启动命令(standalone代表着单机模式运行，非集群模式):</p>
@@ -55,7 +61,7 @@ ls -al distribution/target/
 <h3>Windows</h3>
 <p>启动命令(standalone代表着单机模式运行，非集群模式):</p>
 <p><code>startup.cmd -m standalone</code></p>
-<h2>4.服务注册&amp;发现和配置管理</h2>
+<h2>5.服务注册&amp;发现和配置管理</h2>
 <h3>服务注册</h3>
 <p><code>curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&amp;ip=20.18.7.10&amp;port=8080'</code></p>
 <h3>服务发现</h3>
@@ -64,7 +70,7 @@ ls -al distribution/target/
 <p><code>curl -X POST &quot;http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&amp;content=HelloWorld&quot;</code></p>
 <h3>获取配置</h3>
 <p><code>curl -X GET &quot;http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&quot;</code></p>
-<h2>5.关闭服务器</h2>
+<h2>6.关闭服务器</h2>
 <h3>Linux/Unix/Mac</h3>
 <p><code>sh shutdown.sh</code></p>
 <h3>Windows</h3>

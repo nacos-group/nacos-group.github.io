@@ -56,6 +56,11 @@ mvn -Prelease-nacos clean install -U
 200.8.9.17:8848
 200.8.9.18:8848
 </code></pre>
+<p>Then Setting configuration file <code>application.properties</code> under <code>conf</code>.</p>
+<p>Setting <code>nacos.core.auth.plugin.nacos.token.secret.key</code> parameter，detail see <a href="../plugin/auth-plugin.md">Authentication-Custom SecretKey</a>.</p>
+<blockquote>
+<p>Attention，Default value in Document <code>SecretKey012345678901234567890123456789012345678901234567890123456789</code> and <code>VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=</code> is a public default, <strong>only</strong> should use in test temporary. Please <strong>make sure</strong> to replace it with another valid value when you actually deploy.</p>
+</blockquote>
 <h2>4. Determine The DataSource</h2>
 <h3>Using built-in data sources</h3>
 <p>No configuration is required</p>
