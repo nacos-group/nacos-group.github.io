@@ -169,6 +169,28 @@ curl -X GET '127.0.0.1:8848/nacos/v1/cs/configs?accessToken=eyJhbGciOiJIUzI1NiJ9
 curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?accessToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuYWNvcyIsImV4cCI6MTYwNTYyMzkyM30.O-s2yWfDSUZ7Svd3Vs7jy9tsfDNHs1SuebJB4KlNY8Q&port=8848&healthy=true&ip=11.11.11.11&weight=1.0&serviceName=nacos.test.3&encoding=GBK&namespaceId=n1'
 ```
 
+## Open feature for token cache 
+
+Since version 2.2.1 of the server, the default authentication plug-in module supports the feature of token cache, see ISSUE #9906 
+```
+https://github.com/alibaba/nacos/issues/9906
+```
+#### Background
+Regardless of the client SDK or OpenAPI, after calling the `login` interface to obtain the accessToken, carry the accessToken to access the server, and the server parses the token for authentication. The action of token parsing is time-consuming. If you want to improve the performance of the server, you can consider enabling the feature of caching tokens, which using string comparison instead of token parsing.
+
+#### Way to open
+```
+nacos.core.auth.plugin.nacos.token.cache.enable=true
+```
+
+#### Attention
+Before enabling the feature of token cache, the server will generate a new token for each request carrying a username and password to access the `login` interface. The `tokenTtl` field in the return value of `login` interface is equal to the value set in the server configuration file. The configuration is as follows:
+```
+nacos.core.auth.plugin.nacos.token.expire.seconds=18000
+```
+After enabling the feature of token cache, the server will first check whether the token corresponding to the username exists in cache for each request to access the `login` interface with username and password. If it does not exist, generate a new token, insert it into the cache and return it to requester; if it exists, return the token to requester, and the value of the `tokenTtl` field is the value set in the configuration file minus the duration of the token stored in the cache. 
+If the token stays in the cache for more than 90% of the value set in the configuration file, when the `login` interface receives a request, although the token corresponding to the username exists in the cache, the server will regenerate the token and return it to the requester, and update cache. Therefore, in the worst case, the `tokenTtl` received by the requester is only 10% of the value set in the configuration file.
+
 ## Open feature for server identity
 
 After the authentication feature is enabled, requests between servers will also be affected by the authentication system. Considering that the communication between the servers should be credible, during the 1.2~1.4.0 version, Nacos server use whether the User-Agent includes Nacos-Server to determine whether the request comes from other servers.
