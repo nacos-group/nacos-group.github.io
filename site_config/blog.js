@@ -11,6 +11,13 @@ export default {
             link: '/zh-cn/blog/announcement-token-secret-key.html',
         },
         {
+            title: 'Higress + Nacos 微服务网关最佳实践',
+            author: '@澄潭',
+            desc: 'Higress: Nacos 的最佳拍档',
+            dateStr: 'Jan 10, 2023',
+            link: '/zh-cn/blog/higress.html',
+        },
+        {
             title: 'Nacos 2.2.0 版本发布，新增多种插件支持',
             author: '@杨翊',
             dateStr: 'Dec 16, 2022',
@@ -327,6 +334,13 @@ export default {
             dateStr: 'Mar 2nd, 2023',
             desc: '关于Nacos默认token.secret.key及server.identity风险说明及解决方案公告',
             link: '/zh-cn/blog/announcement-token-secret-key.html',
+        },
+        {
+            title: 'Higress + Nacos 微服务网关最佳实践',
+            author: '@澄潭',
+            desc: 'Higress: Nacos 的最佳拍档',
+            dateStr: 'Jan 10, 2023',
+            link: '/zh-cn/blog/higress.html',
         },
         {
             title: 'Nacos 2.2.0 版本发布，新增多种插件支持',

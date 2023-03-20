@@ -562,6 +562,17 @@
       }
     },
     {
+      "filename": "higress.md",
+      "link": "/zh-cn/blog/higress.html",
+      "meta": {
+        "title": "Higress + Nacos 微服务网关最佳实践",
+        "keywords": "higress,higress nacos",
+        "description": "Higress：Nacos的最佳拍档",
+        "author": "澄潭",
+        "date": "2023-01-10"
+      }
+    },
+    {
       "filename": "huya-nacos.md",
       "link": "/zh-cn/blog/huya-nacos.html",
       "meta": {
