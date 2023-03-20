@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: 'Nacos 多个新版本发布，rust-sdk完全适配完成',
+            author: '@杨翊',
+            dateStr: 'Mar 20, 2023',
+            desc: 'Nacos 多个新版本发布，rust-sdk完全适配完成！',
+            link: '/zh-cn/blog/2.2.1-release.html',
+        },
+        {
             title: '关于Nacos默认token.secret.key及server.identity风险说明及解决方案公告',
             author: '@杨翊',
             dateStr: 'Mar 2nd, 2023',
@@ -328,6 +335,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: 'Nacos 多个新版本发布，rust-sdk完全适配完成',
+            author: '@杨翊',
+            dateStr: 'Mar 20, 2023',
+            desc: 'Nacos 多个新版本发布，rust-sdk完全适配完成！',
+            link: '/zh-cn/blog/2.2.1-release.html',
+        },
         {
             title: '关于Nacos默认token.secret.key及server.identity风险说明及解决方案公告',
             author: '@杨翊',

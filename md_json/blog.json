@@ -403,6 +403,15 @@
       }
     },
     {
+      "filename": "2.2.1-release.md",
+      "link": "/zh-cn/blog/2.2.1-release.html",
+      "meta": {
+        "title": "Nacos 多个新版本发布，rust-sdk完全适配完成",
+        "keywords": "2.2.1, rust-sdk",
+        "description": "Nacos 多个新版本发布，rust-sdk完全适配完成"
+      }
+    },
+    {
       "filename": "212-and-220beta-release.md",
       "link": "/zh-cn/blog/212-and-220beta-release.html",
       "meta": {
