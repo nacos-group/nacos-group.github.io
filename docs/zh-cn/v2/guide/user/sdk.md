@@ -564,78 +564,92 @@ naming.unsubscribe("nacos.test.3", event -> {});
 
 ```
 
-## NacosClientProperties （Beta）
+## NacosClientProperties
 ### 介绍
+从 `2.1.2` 开始引入了 `NacosClientProperties`, 一个类似于 `Spring Environment`用来统一管理客户端的各种配置项. 之前客户端的配置项散落3个地方: 用户传入的 Properties、命令行参数和环境变量. 这种没有一个统一的获取配置的入口,并且不方便做配置的隔离. 基于以上的问题,引入 `NacosClientProperties`.
 
-该类作为 client-sdk 参数配置总入口, 用于替代以前 properties 的方式. 该类共有4个取值范围, 分别是: 用户自定义、jvm命令行参数、系统环境变量和默认配置.
+### 特点
+- 统一管理 Properties、命令行参数、环境变量和默认值
+- 提供优先级搜索功能, 默认搜索顺序 `properties -> 命令行参数 -> 环境参数 -> 默认值`, 可通过调整优先级来调整搜索顺序, 默认是 `properties` 优先
+- 配置隔离, 每个 `NacosClientProperties` 对象,除去全局性的配置互不影响.
 
-
-该类可以指定取值范围优先级以改变查找顺序, 默认查找顺序: 用户自定义->jvm命令行参数->系统环境变量->默认配置, 该类取值时会依次查找,直到获取值为止.
-
-目前还处于 beta测试阶段, Naming 和 Config 入口处的 Properties 并未进行替换更改, 内部已经替换成 `NacosClientProperties`.
 
 ### 如何使用
-``` java
-// 设置一个全局共享的 key
+#### 相关概念
+##### 优先级
+默认优先级是 `properties`, 可通过以下2种方式来调整:
+- (命令行参数)-Dnacos.env.first=PROPERTIES|JVM|ENV
+- (环境变量)NACOS_ENV_FIRST=PROPERTIES|JVM|ENV
+
+以上2种方式都指定的情况下,客户端优先使用命令行参数的方式获取优先级参数,若是通过命令行参数的方式没有获取到优先级参数则使用环境变量的方式获取优先级参数.如果以上2种方式都未指定优先级参数默认优先级为`properties`
+
+默认优先级:
+![default_order.png](/img/nacos_client_properties_default_order.png) 
+
+优先级: PROPERTIES
+![default_order.png](/img/nacos_client_properties_default_order.png) 
+
+优先级: JVM
+![jvm_order.png](/img/nacos_client_properties_jvm_order.png) 
+
+优先级: ENV
+![jvm_order.png](/img/nacos_client_properties_env_order.png) 
+
+##### 搜索
+`NacosClientProperties` 会按照指定优先级进行搜索配置, 以默认优先级(`PROPERTIES`)为例, 如果要获取一个 key 为
+`key1`的值, 查找顺序如下:
+
+![search_order.png](/img/nacos_client_properties_search_order.png) 
+
+`NacosClientProperties` 会按照上图顺序搜索,直到查询到为止.
+
+#### 配置隔离
+为了应对多注册中心,多配置中心的场景, `NacosClientProperties` 引入配置隔离的概念. 在 `NacosClientProperties` 中总共有4个取值源, 分别是: 用户自定义的properties、命令行参数、 环境变量和默认值, 其中 `命令行参数、 环境变量和默认值` 
+这3个是全局共享的无法做到隔离, 那么只剩下用户自定义的properties对象是可以进行隔离的, 每个 `NacosClientProperties` 对象中包含不同的 `Properties` 对象, 通过这种方法做到配置互不影响.
+
+> 注意: 全局共享的配置: 命令行参数、 环境参数和默认值 一旦初始化完毕,后续使用无法更改,使用 `setProperty` 方法,也无法修改. `setProperty` 只能修改`NacosClientProperties` 对象中包含的 `Properties` 对象中的值
+
+#### 配置派生
+在配置隔离的概念之上又引入了配置派生的概念, 其目的是让配置能够继承.所有 `NacosClientProperties` 对象都是由 `NacosClientProperties.PROTOTYPE` 对象派生而来. 无法通过其他方式创建 `NacosClientProperties` 对象
+```java
+// global properties
 NacosClientProperties.PROTOTYPE.setProperty("global-key1", "global-value1");
 
-// 从全局共享配置中创建一个私有的配置
-NacosClientProperties properties1 = NacosClientProperties.derive();
-properties1.setProperty("private-key","value1");
+// properties1 
+NacosClientProperties properties1 = NacosClientProperties.PROTOTYPE.derive();
+properties1.setProperty("properties1-key1", "properties1-value1");
 
-String v1 = properties1.getProperty("private-key"); // v1 == value1
-// 自身未能查找到 global-key1 向上查找
-String v2 = properties1.getProperty("global-key1"); // v2 == global-value1
-
-```
-
-### 设计
-
-![nacos_client_properties-class-relationship.png](/img/nacos_client_properties-class-relationship.png) 
-
-`NacosClientProperties` 默认实现是 `SearchableProperties`, `SearchableProperties` 只能由 `NacosClientProperties` 接口中的 `PROTOTYPE` 进行派生.派生可以理解为配置的一种继承.
-
-#### 配置继承
-
-![nacos_client_properties_extends.png](/img/nacos_client_properties_extends.png) 
-``` java
-
-// 默认查找顺序: 用户自定义->jvm命令行参数->系统环境变量->默认配置
-
-System.setProperty("jvm-key1", "jvm");
-
-NacosClientProperties.PROTOTYPE.setProperty("global-key1", "value1");
-
-// 派生出新配置
-NacosClientProperties properties1 = NacosClientProperties.derive();
-properties1.setProperty("properties1", "value2");
-
-// 查找顺序为 自身 -> 父 properties -> jvm -> system env -> default-setting
-String v1 = properties1.getProperty("global-key1"); //  v1 == value1 
-String v2 = properties1.getProperty("jvm-key1"); // v2 == jvm
-
-
-
+// properties2
 NacosClientProperties properties2 = properties1.derive();
-properties2.getProperty("properties1");
+properties2.setProperty("properties2-key1", "properties2-value1");
+```
+以上代码如下图所示:
+![derive.png](/img/nacos_client_properties_derive.png) 
 
-// 查找顺序为 自身 -> 父 properties -> 父 properties -> jvm -> system env -> default-setting
-String v3 = properties2.getProperty("properties1"); // v3 == value2
+那么搜索会怎么搜索呢? 以默认优先级(PROPERTIES)为例:
+```java
+// value == global-value1
+String value = properties2.getProperty("global-key1");
 
 ```
+![derive_search.png](/img/nacos_client_properties_derive_search.png) 
 
-#### 查找优先级
-取值范围总共分为4个:
-- PROPERTIES (用户自定义)
-- JVM (jvm命令行参数)
-- ENV (系统环境变量)
-- DEFAULT_SETTING (默认配置)
 
-默认查找顺序为: PROPERTIES->JVM->ENV->DEFAULT_SETTING
 
-修改取值范围优先级可通过`java -Dnacos.env.first=PROPERTIES|JVM|ENV|DEFAULT_SETTING` 或者设置环境变量 `NACOS_ENV_FIRST=PROPERTIES|JVM|ENV|DEFAULT_SETTING`的方式指定.
-指定之后,会优先查找指定的取值范围
-![nacos_client_properties_first.png](/img/nacos_client_properties_first.png) 
-
-#### 对于 client 中的 logging 支持
-目前 client 中的 log42 和 logback 均完成 `NacosClientProperties` 的适配, 可以通过以上4个取值范围来控制 log xml 配置文件中的参数值
+#### API
+|方法名| 入参内容| 返回内容| 描述|
+| -   | -      | -     | -  |
+|getProperty| key: String | String  | 获取 key 对应的 value 值, 不存在返回 null|
+|getProperty| key: String, default: String  | String | 获取 key 对应的 value 值, 不存在返回默认值|
+|getBoolean | key: String | Boolean | 获取 key 对应的 Boolean 值, 不存在则返回 null |
+|getBoolean | key: String, default: Boolean | Boolean | 获取 key 对应的 Boolean 值, 不存在返回默认值|
+|getInteger | key: String | Integer | 获取 key 对应的 Integer 值, 不存在返回 null |
+|getInteger | key: String, default: Integer | Integer | 获取 key 对应的 Integer 值, 不存在返回默认值|
+|getLong    | key: String | Long    | 获取 key 对应的 Long 值, 不存在返回 null|
+|getLong    | key: String, default: Long | Long | 获取 key 对应的 Long 值, 不存在返回默认值|
+|setProperty| key: String, value: String | void | 设置 key-value 到 NacosClientProperties 对象中,已存的值会被覆盖|
+|addProperties| properties: Properties | void | 添加 Properties 到 NacosClientProperties 对象中,已存在到值会被覆盖|
+|containsKey| key: String | boolean | 判断是否包含指定 key 的值, 包含返回 true 否则 false|
+|asProperties| void | Properties | 将 NacosClientProperties 对象转换为 Properties 对象|
+|derive| void | NacosClientProperties | 创建一个继承父 NacosClientProperties 所有配置的 NacosClientProperties 对象, 内部包含一个空 Properties |
+|derive| Properties | NacosClientProperties | 创建一个继承父 NacosClientProperties 所有配置的 NacosClientProperties 对象, 内部包含指定的 Properties 对象|
