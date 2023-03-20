@@ -44,6 +44,8 @@ description: Nacos FAQ
   - [日志打印频繁的问题](#3.17)
   - [集群管理页面，raft term显示不一致问题](#3.18)
   - [找不到符号`com.alibaba.nacos.consistency.entity`](#3.19)
+  - [启动报错`the length of secret key must great than or equal 32 bytes...`](#3.20)
+  - [启动报错`The specified key byte array is x bits ...`](#3.20)
   
   
 
@@ -288,5 +290,17 @@ curl '127.0.0.1:8848/nacos/v1/ns/raft/state'
 <h4 id="3.19">找不到符号`com.alibaba.nacos.consistency.entity`</h4>
 
 这个包目录是由`protobuf`在编译时自动生成，您可以通过`mvn compile`来自动生成他们。如果您使用的是IDEA，也可以使用IDEA的protobuf插件。
+
+<h4 id="3.20">启动报错java.lang.IllegalArgumentException: the length of secret key must great than or equal 32 bytes...</h4>
+<h4 id="3.21">启动报错java.lang.IllegalArgumentException: The specified key byte array is x bits which is not secure enough for any JWT HMAC-SHA algorithm.</h4>
+
+默认鉴权插件需要密钥来生成访问token，密钥格式需要长度大于32。若`secret.key`进行BASE64解密后的长度小于32，则会在启动过程中此错误。
+您可以在`application.properties`中设置正确的`secret.key`，详情见[用户指南-权限认证](./auth.md).
+
+<h4 id=3.22>启动报错Empty identity, Please set `nacos.core.auth.server.identity.key` and `nacos.core.auth.server.identity.value`
+
+2.2.1后的版本，移除了配置中间中`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value`的默认值，并添加了启动校验。
+如果在开启鉴权但未设置`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value`的情况下，nacos server会提示以上报错信息，并阻止启动。
+可查看[用户指南-权限认证](./auth.md)文档中相关内容，进行设置后启动。
 
 ## Nacos原理问题

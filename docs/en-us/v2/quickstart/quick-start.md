@@ -44,7 +44,15 @@ Select the latest stable version from https://github.com/alibaba/nacos/releases
   cd nacos/bin
 ```  
 
-## 3.Start Server
+## 3.Setting Configuration
+
+Setting configuration file `application.properties` under `conf`.
+
+Setting `nacos.core.auth.plugin.nacos.token.secret.key` parameter，detail see [Authentication-Custom SecretKey](../plugin/auth-plugin.md).
+
+> Attention，Default value in Document `SecretKey012345678901234567890123456789012345678901234567890123456789` and `VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=` is a public default, **only** should use in test temporary. Please **make sure** to replace it with another valid value when you actually deploy.
+
+## 4.Start Server
 
 ### Linux/Unix/Mac
 
@@ -62,7 +70,7 @@ Run the following command to start(standalone means non-cluster mode):
 
 `cmd startup.cmd -m standalone`
 
-## 4.Service & Configuration Management
+## 5.Service & Configuration Management
 
 ### Service registration
 
@@ -80,7 +88,7 @@ Run the following command to start(standalone means non-cluster mode):
 
 `curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test"    `
 
-## 5.Shutdown Servers
+## 6.Shutdown Servers
 
 ### Linux/Unix/Mac
 

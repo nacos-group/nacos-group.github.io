@@ -17,14 +17,14 @@ export default {
                 },
             ],
             versionNote: {
-                text: 'Release Note of V2.2.0',
-                link: 'https://github.com/alibaba/nacos/releases/tag/2.2.0',
+                text: 'Release Note of V2.2.1',
+                link: 'https://github.com/alibaba/nacos/releases/tag/2.2.1',
             },
             versionNote2: {
-                text: 'V1.4.4',
-                link: 'https://github.com/alibaba/nacos/releases/tag/1.4.4',
+                text: 'V1.4.5',
+                link: 'https://github.com/alibaba/nacos/releases/tag/1.4.5',
             },
-            releaseDate: 'Released on Dec 14, 2022',
+            releaseDate: 'Released on Mar 17, 2023',
 
         },
         functions: {
@@ -46,6 +46,9 @@ export default {
                     content: 'By supporting weighted routing, Dynamic DNS Service helps you implement mid-tier load balancing, more flexible routing, traffic control and DNS resolution services in the production environment within your data center. Dynamic DNS Service also makes it easier for you to implement DNS-based service discovery, which minimizes the risk of coupling to vendor-specific service discovery APIs.',
                 },
             ],
+        },
+        landscape:{
+            title: 'microservice ecosystem landscape',
         },
         features: {
             title: 'Why Nacos',
@@ -133,14 +136,14 @@ export default {
                 },
             ],
             versionNote: {
-                text: 'V2.2.0 版本说明',
-                link: 'https://github.com/alibaba/nacos/releases/tag/2.2.0',
+                text: 'V2.2.1 版本说明',
+                link: 'https://github.com/alibaba/nacos/releases/tag/2.2.1',
             },
             versionNote2: {
-                text: 'V1.4.4',
-                link: 'https://github.com/alibaba/nacos/releases/tag/1.4.4',
+                text: 'V1.4.5',
+                link: 'https://github.com/alibaba/nacos/releases/tag/1.4.5',
             },
-            releaseDate: '2022年12月14日发布',
+            releaseDate: '2023年3月17日发布',
         },
         functions: {
             title: '功能',
@@ -161,6 +164,9 @@ export default {
                     content: '通过支持权重路由，动态DNS服务能让您轻松实现中间层负载均衡、更灵活的路由策略、流量控制以及简单数据中心内网的简单DNS解析服务。动态DNS服务还能让您更容易地实现以DNS协议为基础的服务发现，以消除耦合到厂商私有服务发现API上的风险。',
                 },
             ],
+        },
+        landscape:{
+            title: '微服务生态全景图',
         },
         features: {
             title: '特性一览',
