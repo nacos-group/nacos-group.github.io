@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="aes-config" content="pid=xux-opensource&user_type=101&uid=&username=&dim10=nacos"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="2.2.1, rust-sdk" />
+	<meta name="description" content="Nacos 多个新版本发布，rust-sdk完全适配完成" />
+  <meta name="baidu-site-verification" content="code-wzq5sw7io3" />
+	<!-- 网页标签标题 -->
+	<title>Nacos 多个新版本发布，rust-sdk完全适配完成</title>
+	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
+	<link rel="stylesheet" href="/build/blogDetail.css" />
+	<link rel="stylesheet" href="https://g.alicdn.com/mamba/assets/0.0.14/mse-arc-ui.min.css" />
+</head>
+<body>
+	<div id="root"><div class="blog-detail-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><span><a href="/zh-cn/index.html">首页</a></span></li><li class="menu-item menu-item-normal"><div class="nav-container"><div class="word"><a>文档</a></div><ul class="sub-nav-container" style="width:220px"><li><a href="/zh-cn/docs/v2/quickstart/quick-start.html" target="_blank">2.X（推荐）</a></li><li><a href="/zh-cn/docs/quick-start.html" target="_blank">1.X</a></li></ul> </div></li><li class="menu-item menu-item-normal"><div class="nav-container"><div class="word"><a>解决方案</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></div><ul class="sub-nav-container" style="width:220px"><li><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_blank">微服务解决方案</a></li><li><a href="https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0" target="_blank">微服务Serverless解决方案</a></li><li><a href="https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0" target="_blank">PaaS解决方案</a></li></ul> </div></li><li class="menu-item menu-item-normal"><span><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0">企业版NACOS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST">NACOS架构与原理</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal menu-item-normal-active"><span><a href="/zh-cn/blog/index.html">博客</a></span></li><li class="menu-item menu-item-normal"><span><a href="/zh-cn/community/index.html">社区</a></span></li><li class="menu-item menu-item-normal"><span><a href="http://console.nacos.io/nacos/index.html">控制台样例</a></span></li></ul></div></div></header><section class="blog-content markdown-body"><h1>Nacos 多个新版本发布，rust-sdk完全适配完成</h1>
+<p>Nacos社区新年后好事不断，先是年初在电子标准院2022年度开源成熟度评估中被评为<code>优秀贰级</code>，同时获得了<code>CSDN年度开发者影响力项目</code>和<code>InfoQ 十大开源新锐项目</code>；随后又发布了许多新版本，其中包括Nacos 2.2.1、 1.4.5、rust-sdk 0.2.3 以及 go-sdk 2.2.0版本；在同学们的积极参与下，社区也是又增加了3位新的Committer。</p>
+<h2>新版本发布</h2>
+<h3>Nacos 2.2.1</h3>
+<p>Nacos 2.2.1版本主要针对Nacos社区于12月发布的2.2.0版本进行了一系列的升级以及修复，例如通过<a href="https://github.com/nacos-group/logback-adapter">logback-adapter</a>适配了新版本的logback、升级了grpc、jraft等依赖，从而升级了对应的netty和rocksdb版本，解决旧版本netty的安全漏洞和rocksdb对于ARM64、M1芯片架构的直接支持。
+功能方面，新增一个Beta功能，支持Grpc的TLS功能，用户可在服务端和客户端分别加载CA文件，保证传输过程中的数据进行加密。</p>
+<p>在客户端层面，新增了服务发现模块对Aliyun STS鉴权模式的支持，以及对GraalVM的支持。</p>
+<p>插件方面，为多数据源插件添加了打印SQL的功能，方面插件开发者或使用者获得插件所生成的SQL，减少排查问题的时间；
+同时对默认鉴权插件进行了一定重构，移除了对<code>jjwt</code>的依赖同时提升性能、移除<code>token.secret.key</code>、<code>nacos.core.auth.server.identity.key</code> 和 <code>nacos.core.auth.server.identity.value</code>的默认值并提醒用户配置自定义的<code>token.secret.key</code>、<code>nacos.core.auth.server.identity.key</code> 和 <code>nacos.core.auth.server.identity.value</code>以提高安全性，具体情况请查看<a href="https://nacos.io/zh-cn/blog/announcement-token-secret-key.html">风险公告</a>。</p>
+<p>易用性方面，新增通过配置内容检索配置的功能，但该功能<strong>会损耗大量性能</strong>，因此从内部进行了限流，也请用户尽量避免使用。</p>
+<p>2.2.1 版本更多具体变更内容可参考变更日志：</p>
+<pre><code class="language-markdown"><span class="hljs-section">## feature</span>
+[#9276] Add search config by content.
+[#9703] add catalog v2 API to support list instances which is un-enabled.
+[#9710] Support prometheus-sd basic auth.
+[#9888] Beta support Grpc TLS feature.
+[#10062] Naming support aliyun STS auth.
+
+<span class="hljs-section">## Enhancement&amp;Refactor</span>
+[#9510] Add sql log print function.
+[#9646] Replace concatenated strings with placeholders.
+[#9708] Clean expired and invalid connections for HTTP client.
+[#9783] Handle public namespaceId as default namespaceId for publish and query config for V2 http api.
+[#9837] Enhance Grpc connected time when cluster started to load snapshot quickly.
+[#9859] Refactor default auth plugin, use custom JWT instead of jjwt.
+[#9860] Adapt logback 1.4.5 by SPI.
+[#9885] Add prometheus api exception handling.
+[#9949] Use Grpc replace all Http request between servers.
+[#9951] Judge the message whether <span class="hljs-code">`null`</span> for metadata processor.
+[#10084] Client use Async appender to print log.
+
+<span class="hljs-section">## BugFix</span>
+[#9621] Fix Config Client server check always up problem.
+[#9728] Fix prometheus http sd only return public namespace problem.
+[#9732] Fix namespace v2 api auth not work problem.
+[#9734] Fix http login url without default port problem.
+[#9795] Fix export config failure problem for non admin user after opening auth.
+[#9816] Fix redo data is different from server when register and unregister service with concurrency.
+[#9819] Fix update password failure problem after use nginx.
+[#9825] Fix config histroy page paged problem.
+[#9861] Fix auth check before distro filter.
+[#9862] Fix LDAP login failed.
+[#9943] Fix Config cas update can't work when using derby database.
+[#10014] Clear confused logic about namespace properties.
+[#10038] Fix load failover file failure.
+
+<span class="hljs-section">## Dependency</span>
+[<span class="hljs-string">#9504</span>][<span class="hljs-symbol">#9767</span>] Upgeade-spring-boot version to 2.6.14.
+[#9789] Upgrade jraft version to 1.3.12.
+[#9772] Upgrade Grpc version to 1.50.2.
+[#9985] Replace flatten-maven-plugin with easyj-maven-plugin.
+[#10091] Upgrade snakeYaml to 2.0.
+</code></pre>
+<h3>Nacos 1.4.5</h3>
+<p>Nacos 1.4.5版本基于1.4.4版本，将部分合并在2.X的问题和优化，同步到最新的1.X版本中，具体内容可查看变更日志：</p>
+<pre><code class="language-markdown"><span class="hljs-section"># Enhancement</span>
+[#9064] Enhance error message and error code by merging #9045 and #8881 into v1.x.
+[#10089] Enhance STS auth for naming and async client log into v1.x.
+
+<span class="hljs-section"># BugFix</span>
+[#3720] Fix not admin user can change others password by api.
+[#8979] Fix some ui problem by merging #8787、#8156 and #7364 into the v1.
+[#9020] Fix startup failed without prefix CUSTOM<span class="hljs-emphasis">_SEARCH_</span>LOCATIONS.
+
+<span class="hljs-section"># Dependency</span>
+[#8541] Upgrade spring-boot version to 2.6.8.
+</code></pre>
+<h3>Nacos-Rust-SDK 0.2.3</h3>
+<p>Nacos-Rust-SDK 在年前已经完成了对配置中心的功能适配， 经过社区同学的积极贡献，<a href="https://github.com/nacos-group/nacos-sdk-rust/releases/tag/v0.2.3">Nacos-Rust-SDK 0.2.3</a>版本终于完成了所有功能的适配，同时还能够绑定到nodejs中使用。欢迎正在使用rust的同学使用，并反馈意见。</p>
+<pre><code class="language-markdown"><span class="hljs-bullet">* </span>enhance: add some debug log by @onewe
+<span class="hljs-bullet">* </span>chore: some logic optimization. by @CherishCai
+<span class="hljs-bullet">* </span>add some unit tests by @onewe
+<span class="hljs-bullet">* </span>chore: Optimize and Unified code.
+<span class="hljs-bullet">* </span>ci: fix codecov tarpaulin with 0.22.0
+<span class="hljs-bullet">* </span>chore: try exclude tls openssl by @CherishCai
+<span class="hljs-bullet">* </span>[ISSUES #100] Change: naming api register<span class="hljs-emphasis">_instance/select_</span>instances by @onewe
+<span class="hljs-bullet">* </span>doc: link to nacos-sdk-rust-binding-node by @CherishCai
+<span class="hljs-bullet">* </span>[ISSUES #102] fix naming changed service log by @onewe
+<span class="hljs-bullet">* </span>[ISSUES #101]  env cq count decrease to 1 by @onewe
+<span class="hljs-bullet">* </span>[ISSUES #107] Add asynchronous api by @onewe
+<span class="hljs-bullet">* </span>chore: upgrade version to 0.2.3 by @CherishCai
+</code></pre>
+<h3>Nacos-Go-SDK 2.2.0</h3>
+<p>Nacos-Go-SDK 2.2.0 支持了批量注册服务的<code>batchRegister</code>接口，同时修复了一些旧版本bug，具体内容可查看变更日志：</p>
+<pre><code class="language-markdown"><span class="hljs-bullet">* </span>config center support for disable local cache by @wangdongyun in #565
+<span class="hljs-bullet">* </span>support batch register by @binbin0325 in #573
+<span class="hljs-bullet">* </span>refine grpc_client by @binbin0325 in #574
+<span class="hljs-bullet">* </span>fix MaxInt64 overflows on ARM 32-bits by @bavelee in #575
+<span class="hljs-bullet">* </span>fix panic for rpc errorResponse by @binbin0325 in #577
+<span class="hljs-bullet">* </span>fix QueryInstancesOfService clusters by @binbin0325 in #578
+</code></pre>
+<h2>社区</h2>
+<p>感谢社区小伙伴的积极参与和厚爱，Nacos社区在2022年收获了电子标准院2022年度开源成熟度评估<code>优秀贰级</code>、<code>CSDN年度开发者影响力项目</code>和<code>InfoQ 十大开源新锐项目</code>等殊荣，在2023年也希望有更多的小伙伴参与到Nacos社区中，让Nacos越变越好</p>
+<table>
+<thead>
+<tr>
+<th><img src="https://cdn.nlark.com/yuque/0/2023/png/1577777/1679042599739-e7841f31-4f74-427c-a6b1-15100019212b.png#averageHue=%23b8b5ae&amp;clientId=ue18ba04c-3f94-4&amp;from=paste&amp;height=640&amp;id=u5c52e5b6&amp;name=image.png&amp;originHeight=1280&amp;originWidth=960&amp;originalType=binary&amp;ratio=2&amp;rotation=0&amp;showTitle=false&amp;size=1848649&amp;status=done&amp;style=none&amp;taskId=u85c6ed43-3b8b-4c06-bf69-f6002f5df35&amp;title=&amp;width=480" alt="image.png"></th>
+<th><img src="https://cdn.nlark.com/yuque/0/2023/png/1577777/1679042600206-e0890689-ef18-4dd4-95b6-c3d84375d5d0.png#averageHue=%238088b2&amp;clientId=ue18ba04c-3f94-4&amp;from=paste&amp;height=640&amp;id=ubb66c1c4&amp;name=image.png&amp;originHeight=1280&amp;originWidth=960&amp;originalType=binary&amp;ratio=2&amp;rotation=0&amp;showTitle=false&amp;size=2119680&amp;status=done&amp;style=none&amp;taskId=u83afbd7b-d79b-47c9-b23f-79921c8cb8a&amp;title=&amp;width=480" alt="image.png"></th>
+<th><img src="https://cdn.nlark.com/yuque/0/2023/png/1577777/1679042599053-6d168221-bc17-4d88-bfde-bf69375783f8.png#averageHue=%23908a7e&amp;clientId=ue18ba04c-3f94-4&amp;from=paste&amp;height=640&amp;id=uf2bd9bae&amp;name=image.png&amp;originHeight=1280&amp;originWidth=960&amp;originalType=binary&amp;ratio=2&amp;rotation=0&amp;showTitle=false&amp;size=1304756&amp;status=done&amp;style=none&amp;taskId=u9421b95d-37ea-46f2-a439-790f5893431&amp;title=&amp;width=480" alt="image.png"></th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+<h3>新Committer</h3>
+<p>社区中新增了3位Committer，他们分别为Nacos-K8s、Nacos-Rust-SDK、以及多数据源插件作出了巨大贡献。同时，Nacos社区也迎来了第一位来自开源之夏的Committer同学。</p>
+<table>
+<thead>
+<tr>
+<th><img src="https://cdn.nlark.com/yuque/0/2023/png/1577777/1679042674946-33a8223a-0d8b-4672-813a-322ecf4eb5f8.png#averageHue=%23accae6&amp;clientId=ue18ba04c-3f94-4&amp;from=paste&amp;height=1130&amp;id=ubdd03bac&amp;name=image.png&amp;originHeight=2260&amp;originWidth=1500&amp;originalType=binary&amp;ratio=2&amp;rotation=0&amp;showTitle=false&amp;size=3916282&amp;status=done&amp;style=none&amp;taskId=u476b8ac5-e0eb-482b-bcd4-cd7a3255abb&amp;title=&amp;width=750" alt="image.png"></th>
+<th><img src="https://cdn.nlark.com/yuque/0/2023/jpeg/1577777/1679042628935-5dd6dc8f-6a49-495c-89dc-cc8e9501f8e8.jpeg#averageHue=%23a1cae8&amp;clientId=ue18ba04c-3f94-4&amp;from=paste&amp;height=1130&amp;id=udfc8027f&amp;name=%E8%94%A1%E9%B8%BF%E6%96%87-%20%E4%BA%BA%E7%89%A9%E6%B5%B7%E6%8A%A5.jpg&amp;originHeight=2260&amp;originWidth=1500&amp;originalType=binary&amp;ratio=2&amp;rotation=0&amp;showTitle=false&amp;size=2541050&amp;status=done&amp;style=none&amp;taskId=ud5808db0-3ff5-4d00-a136-300aae3292a&amp;title=&amp;width=750" alt="蔡鸿文- 人物海报.jpg"></th>
+<th><img src="https://cdn.nlark.com/yuque/0/2023/jpeg/1577777/1679042632980-5d760b63-97b7-4197-aba9-ec37542270c3.jpeg#averageHue=%239ec8e9&amp;clientId=ue18ba04c-3f94-4&amp;from=paste&amp;height=1130&amp;id=uc26a01a1&amp;name=%E9%BB%84%E4%B9%99%E8%BD%A9-%E4%BA%BA%E7%89%A9%E6%B5%B7%E6%8A%A5.jpg&amp;originHeight=2260&amp;originWidth=1500&amp;originalType=binary&amp;ratio=2&amp;rotation=0&amp;showTitle=false&amp;size=2403876&amp;status=done&amp;style=none&amp;taskId=uf56dc19e-f032-4192-ada9-70722bd91d9&amp;title=&amp;width=750" alt="黄乙轩-人物海报.jpg"></th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+<h2>展望</h2>
+<h3>2.X 后续计划</h3>
+<p>从2021年3月 2.0.0正式版发布至今，2.X版本已经走了接近2年时间，如今2.2.1版本发布，说明2.X版本已经逐渐成熟稳定，在2.X的后续计划中，除了鼓励社区中提供和完善已有的插件多种实现以外，依旧会为其易用性和扩展性进一步增强，添加更多的插件功能：</p>
+<ul>
+<li>寻址插件</li>
+<li>配置变更钩子插件</li>
+</ul>
+<h3>3.0 计划</h3>
+<p>Nacos社区同时也开启了关于<a href="https://mp.weixin.qq.com/s/8UwwD_WxSJINP8Qr_1wogg">Nacos3.0</a>的畅想和规划，Nacos将会从统一控制面、支持国产化、存储计算分离等方向进一步演进Nacos的功能和架构，欢迎社区积极参与到新版本的建设中。</p>
+<p><img src="/img/blog/2_2_0-release/220-roadmap.png" alt="image.png">
+<img src="https://cdn.nlark.com/yuque/0/2022/png/1577777/1660125280551-a2e881fe-d25e-4ebb-a28f-8e56683deef1.png#clientId=uf10cb19a-105c-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=url&amp;id=Z9to1&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=794&amp;originWidth=1650&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;size=185821&amp;status=done&amp;style=none&amp;taskId=u63849e10-1dae-45cb-b559-04d106ebe86&amp;title=#crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;id=rUihF&amp;originHeight=794&amp;originWidth=1650&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" alt="image.png"></p>
+<h2>About Nacos</h2>
+<p>Nacos 致力于帮助您发现、配置和管理微服务。Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。</p>
+<p>Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 Nacos 是构建以“服务”为中心的现代应用架构 (例如微服务范式、云原生范式) 的服务基础设施。</p>
+<p>最后欢迎大家扫码加入Nacos社区群</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2023/png/1577777/1679276899363-83081d59-67c6-4501-9cf8-0d84ba7c6d7e.png#averageHue=%23c1c2c2&amp;clientId=u9dfeac18-3281-4&amp;from=paste&amp;height=551&amp;id=ubcf45e51&amp;name=image.png&amp;originHeight=1102&amp;originWidth=854&amp;originalType=binary&amp;ratio=2&amp;rotation=0&amp;showTitle=false&amp;size=155261&amp;status=done&amp;style=none&amp;taskId=ud6bea1fe-b003-441b-a810-84435d2aeff&amp;title=&amp;width=427" alt="image.png"></p>
+</section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>愿景</h3><p>Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/what-is-nacos.html" target="_self">概览</a></dd><dd><a href="/zh-cn/docs/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/contributing.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_self">云服务 MSE</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">云服务 EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">云服务 AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2022 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script src="//g.alicdn.com/alilog/mlog/aplus_v2.js" id="beacon-aplus" exparams="clog=o&aplus&sidx=aplusSidx&ckx=aplusCkx"></script>
+  <script src="//g.alicdn.com/aes/??tracker/1.0.34/index.js,tracker-plugin-pv/2.4.5/index.js,tracker-plugin-event/1.2.5/index.js,tracker-plugin-jserror/1.0.13/index.js,tracker-plugin-api/1.1.14/index.js,tracker-plugin-perf/1.1.8/index.js,tracker-plugin-eventTiming/1.0.4/index.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/blogDetail.js">
+	</script>
+	<script src="https://g.alicdn.com/mamba/assets/0.0.14/mse-arc-ui.min.js"></script>
+	<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e3a5cec56ef8619cf9d7c2abebd509e3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0YDFJ7LX7F"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-0YDFJ7LX7F');
+    </script>
+</body>
+</html>
