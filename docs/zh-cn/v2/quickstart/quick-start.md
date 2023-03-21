@@ -45,8 +45,15 @@ cd distribution/target/nacos-server-$version/nacos/bin
   unzip nacos-server-$version.zip 或者 tar -xvf nacos-server-$version.tar.gz
   cd nacos/bin
 ```  
+## 3.导入sql文件
 
-## 3.修改配置文件
+导入nacos表结构`mysql-schema.sql`  
+>压缩包方式在`conf`目录下  
+>源码方式在`distribution/conf`目录下  
+
+默认使用Mysql作为外部数据源，若需要自定义数据源，可查看[数据源-数据源插件](../plugin/datasource-plugin.md)
+
+## 4.修改配置文件
 
 修改`conf`目录下的`application.properties`文件。
 
@@ -54,7 +61,7 @@ cd distribution/target/nacos-server-$version/nacos/bin
 
 > 注意，文档中的默认值`SecretKey012345678901234567890123456789012345678901234567890123456789`和`VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=`为公开默认值，可用于临时测试，实际使用时请**务必**更换为自定义的其他有效值。
 
-## 4.启动服务器
+## 5.启动服务器
 
 * 注：Nacos的运行建议至少在2C4G 60G的机器配置下运行。
 
@@ -74,7 +81,7 @@ cd distribution/target/nacos-server-$version/nacos/bin
 
 `startup.cmd -m standalone`
 
-## 5.服务注册&发现和配置管理
+## 6.服务注册&发现和配置管理
 
 ### 服务注册
 
@@ -92,7 +99,7 @@ cd distribution/target/nacos-server-$version/nacos/bin
 
 `curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test"`
 
-## 6.关闭服务器
+## 7.关闭服务器
 
 ### Linux/Unix/Mac 
 
