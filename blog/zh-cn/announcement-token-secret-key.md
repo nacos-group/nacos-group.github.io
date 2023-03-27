@@ -6,9 +6,9 @@ description: 关于Nacos默认token.secret.key及server.identity风险说明及�
 
 # 关于Nacos默认token.secret.key及server.identity风险说明及解决方案公告
 
-近期Nacos社区收到关于Nacos鉴权功能通过`token.secret.key`默认值进行撞击，绕过身份验证安全漏洞的问题。社区在2.2.0.1版本已移除了自带的默认值，并在`token.secret.key`未传入或非法时阻止Nacos节点启动来提醒用户设置自定义`token.secret.key`。考虑到现在的控制台登陆页面并没有进行模块化，无法和是否开启鉴权功能关联，因此暂时需要强制设置`token.secret.key`，社区正在进行控制台登陆页面和鉴权功能的关联，待完成后，**未开启鉴权**的集群将不再强制需要`token.secret.key`，**开启**后仍然强制需要。
+近期Nacos社区收到关于Nacos鉴权功能通过`token.secret.key`默认值进行撞击，绕过身份验证安全漏洞的问题。社区在2.2.0.1和1.4.5版本已移除了自带的默认值，并在`token.secret.key`未传入或非法时阻止Nacos节点启动来提醒用户设置自定义`token.secret.key`。考虑到现在的控制台登陆页面并没有进行模块化，无法和是否开启鉴权功能关联，因此暂时需要强制设置`token.secret.key`，社区正在进行控制台登陆页面和鉴权功能的关联，待完成后，**未开启鉴权**的集群将不再强制需要`token.secret.key`，**开启**后仍然强制需要。
 
-同时Nacos社区还收到关于通过`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value`默认值进行撞击，绕过身份验证安全漏洞的问题。社区在2.2.1版本已移除了自带的默认值，并在开启鉴权后，未填写这两个参数时阻止Nacos节点启动来提醒用户设置自定义的`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value`。
+同时Nacos社区还收到关于通过`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value`默认值进行撞击，绕过身份验证安全漏洞的问题。社区在2.2.1和1.4.5版本已移除了自带的默认值，并在开启鉴权后，未填写这两个参数时阻止Nacos节点启动来提醒用户设置自定义的`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value`。
 
 > 说明：这两个默认值原意是为了方便新用户在快速搭建新集群进行使用时可以减少一些繁琐步骤，更简单的使用nacos，在实际部署时提供机制修改配置来提高安全性；随着社区用户对安全性要求提升，默认值可能会导致部分用户未修改直接使用时出现安全风险，因此Nacos社区去除了默认值，并在启动时进行校验，阻止启动提示用户配置。
 
