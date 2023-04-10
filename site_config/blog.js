@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: 'Nacos 2.2.2发布，优化启动体验和鉴权提示',
+            author: '@杨翊',
+            dateStr: 'Apr 11, 2023',
+            desc: 'Nacos 2.2.2发布，优化启动体验和鉴权提示！',
+            link: '/zh-cn/blog/2.2.2-release.html',
+        },
+        {
             title: 'Nacos 多个新版本发布，rust-sdk完全适配完成',
             author: '@杨翊',
             dateStr: 'Mar 20, 2023',
@@ -335,6 +342,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: 'Nacos 2.2.2发布，优化启动体验和鉴权提示',
+            author: '@杨翊',
+            dateStr: 'Apr 11, 2023',
+            desc: 'Nacos 2.2.2发布，优化启动体验和鉴权提示！',
+            link: '/zh-cn/blog/2.2.2-release.html',
+        },
         {
             title: 'Nacos 多个新版本发布，rust-sdk完全适配完成',
             author: '@杨翊',

@@ -68,9 +68,20 @@ In the Nacos decompression directory Nacos / conf directory, there is a configur
 200.8.9.18:8848
 ```
 
+### 3.1 Open Default auth plugin (Optional)
+
 Then Setting configuration file `application.properties` under `conf`.
 
-Setting `nacos.core.auth.plugin.nacos.token.secret.key` parameter，detail see [Authentication-Custom SecretKey](../plugin/auth-plugin.md).
+Setting 
+
+```properties
+nacos.core.auth.enabled=true
+nacos.core.auth.system.type=nacos
+nacos.core.auth.plugin.nacos.token.secret.key=${custom, make sure same in all nodes}
+nacos.core.auth.server.identity.key=${custom, make sure same in all nodes}
+nacos.core.auth.server.identity.value=${custom, make sure same in all nodes}
+```
+Detail see [Authentication](../plugin/auth-plugin.md).
 
 > Attention，Default value in Document `SecretKey012345678901234567890123456789012345678901234567890123456789` and `VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=` is a public default, **only** should use in test temporary. Please **make sure** to replace it with another valid value when you actually deploy.
 
@@ -122,17 +133,25 @@ sh startup.sh
 
 `curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'`
 
+> Attention: If open default auth plugin, please call with username and password in header.
+
 ### Service discovery
 
 `curl -X GET 'http://127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.naming.serviceName'`
+
+> Attention: If open default auth plugin, please call with username and password in header.
 
 ### Publish configuration
 
 `curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test&content=helloWorld"`
 
+> Attention: If open default auth plugin, please call with username and password in header.
+
 ### get configuration
 
 `curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test"`
+
+> Attention: If open default auth plugin, please call with username and password in header.
 
 ## 7. shut down server
 

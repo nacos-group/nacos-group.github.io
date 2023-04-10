@@ -733,67 +733,161 @@ NamingService naming = NamingFactory.createNamingService(System.getProperty(<spa
 naming.unsubscribe(<span class="hljs-string">"nacos.test.3"</span>, event -&gt; {});
 
 </code></pre>
-<h2>NacosClientProperties （Beta）</h2>
+<h2>NacosClientProperties</h2>
 <h3>介绍</h3>
-<p>该类作为 client-sdk 参数配置总入口, 用于替代以前 properties 的方式. 该类共有4个取值范围, 分别是: 用户自定义、jvm命令行参数、系统环境变量和默认配置.</p>
-<p>该类可以指定取值范围优先级以改变查找顺序, 默认查找顺序: 用户自定义-&gt;jvm命令行参数-&gt;系统环境变量-&gt;默认配置, 该类取值时会依次查找,直到获取值为止.</p>
-<p>目前还处于 beta测试阶段, Naming 和 Config 入口处的 Properties 并未进行替换更改, 内部已经替换成 <code>NacosClientProperties</code>.</p>
+<p>从 <code>2.1.2</code> 开始引入了 <code>NacosClientProperties</code>, 一个类似于 <code>Spring Environment</code>用来统一管理客户端的各种配置项. 之前客户端的配置项散落3个地方: 用户传入的 Properties、命令行参数和环境变量. 这种没有一个统一的获取配置的入口,并且不方便做配置的隔离. 基于以上的问题,引入 <code>NacosClientProperties</code>.</p>
+<h3>特点</h3>
+<ul>
+<li>统一管理 Properties、命令行参数、环境变量和默认值</li>
+<li>提供优先级搜索功能, 默认搜索顺序 <code>properties -&gt; 命令行参数 -&gt; 环境参数 -&gt; 默认值</code>, 可通过调整优先级来调整搜索顺序, 默认是 <code>properties</code> 优先</li>
+<li>配置隔离, 每个 <code>NacosClientProperties</code> 对象,除去全局性的配置互不影响.</li>
+</ul>
 <h3>如何使用</h3>
-<pre><code class="language-java"><span class="hljs-comment">// 设置一个全局共享的 key</span>
+<h4>相关概念</h4>
+<h5>优先级</h5>
+<p>默认优先级是 <code>properties</code>, 可通过以下2种方式来调整:</p>
+<ul>
+<li>(命令行参数)-Dnacos.env.first=PROPERTIES|JVM|ENV</li>
+<li>(环境变量)NACOS_ENV_FIRST=PROPERTIES|JVM|ENV</li>
+</ul>
+<p>以上2种方式都指定的情况下,客户端优先使用命令行参数的方式获取优先级参数,若是通过命令行参数的方式没有获取到优先级参数则使用环境变量的方式获取优先级参数.如果以上2种方式都未指定优先级参数默认优先级为<code>properties</code></p>
+<p>默认优先级:
+<img src="/img/nacos_client_properties_default_order.png" alt="default_order.png"></p>
+<p>优先级: PROPERTIES
+<img src="/img/nacos_client_properties_default_order.png" alt="default_order.png"></p>
+<p>优先级: JVM
+<img src="/img/nacos_client_properties_jvm_order.png" alt="jvm_order.png"></p>
+<p>优先级: ENV
+<img src="/img/nacos_client_properties_env_order.png" alt="jvm_order.png"></p>
+<h5>搜索</h5>
+<p><code>NacosClientProperties</code> 会按照指定优先级进行搜索配置, 以默认优先级(<code>PROPERTIES</code>)为例, 如果要获取一个 key 为
+<code>key1</code>的值, 查找顺序如下:</p>
+<p><img src="/img/nacos_client_properties_search_order.png" alt="search_order.png"></p>
+<p><code>NacosClientProperties</code> 会按照上图顺序搜索,直到查询到为止.</p>
+<h4>配置隔离</h4>
+<p>为了应对多注册中心,多配置中心的场景, <code>NacosClientProperties</code> 引入配置隔离的概念. 在 <code>NacosClientProperties</code> 中总共有4个取值源, 分别是: 用户自定义的properties、命令行参数、 环境变量和默认值, 其中 <code>命令行参数、 环境变量和默认值</code>
+这3个是全局共享的无法做到隔离, 那么只剩下用户自定义的properties对象是可以进行隔离的, 每个 <code>NacosClientProperties</code> 对象中包含不同的 <code>Properties</code> 对象, 通过这种方法做到配置互不影响.</p>
+<blockquote>
+<p>注意: 全局共享的配置: 命令行参数、 环境参数和默认值 一旦初始化完毕,后续使用无法更改,使用 <code>setProperty</code> 方法,也无法修改. <code>setProperty</code> 只能修改<code>NacosClientProperties</code> 对象中包含的 <code>Properties</code> 对象中的值</p>
+</blockquote>
+<h4>配置派生</h4>
+<p>在配置隔离的概念之上又引入了配置派生的概念, 其目的是让配置能够继承.所有 <code>NacosClientProperties</code> 对象都是由 <code>NacosClientProperties.PROTOTYPE</code> 对象派生而来. 无法通过其他方式创建 <code>NacosClientProperties</code> 对象</p>
+<pre><code class="language-java"><span class="hljs-comment">// global properties</span>
 NacosClientProperties.PROTOTYPE.setProperty(<span class="hljs-string">"global-key1"</span>, <span class="hljs-string">"global-value1"</span>);
 
-<span class="hljs-comment">// 从全局共享配置中创建一个私有的配置</span>
-NacosClientProperties properties1 = NacosClientProperties.derive();
-properties1.setProperty(<span class="hljs-string">"private-key"</span>,<span class="hljs-string">"value1"</span>);
+<span class="hljs-comment">// properties1 </span>
+NacosClientProperties properties1 = NacosClientProperties.PROTOTYPE.derive();
+properties1.setProperty(<span class="hljs-string">"properties1-key1"</span>, <span class="hljs-string">"properties1-value1"</span>);
 
-String v1 = properties1.getProperty(<span class="hljs-string">"private-key"</span>); <span class="hljs-comment">// v1 == value1</span>
-<span class="hljs-comment">// 自身未能查找到 global-key1 向上查找</span>
-String v2 = properties1.getProperty(<span class="hljs-string">"global-key1"</span>); <span class="hljs-comment">// v2 == global-value1</span>
-
-</code></pre>
-<h3>设计</h3>
-<p><img src="/img/nacos_client_properties-class-relationship.png" alt="nacos_client_properties-class-relationship.png"></p>
-<p><code>NacosClientProperties</code> 默认实现是 <code>SearchableProperties</code>, <code>SearchableProperties</code> 只能由 <code>NacosClientProperties</code> 接口中的 <code>PROTOTYPE</code> 进行派生.派生可以理解为配置的一种继承.</p>
-<h4>配置继承</h4>
-<p><img src="/img/nacos_client_properties_extends.png" alt="nacos_client_properties_extends.png"></p>
-<pre><code class="language-java">
-<span class="hljs-comment">// 默认查找顺序: 用户自定义-&gt;jvm命令行参数-&gt;系统环境变量-&gt;默认配置</span>
-
-System.setProperty(<span class="hljs-string">"jvm-key1"</span>, <span class="hljs-string">"jvm"</span>);
-
-NacosClientProperties.PROTOTYPE.setProperty(<span class="hljs-string">"global-key1"</span>, <span class="hljs-string">"value1"</span>);
-
-<span class="hljs-comment">// 派生出新配置</span>
-NacosClientProperties properties1 = NacosClientProperties.derive();
-properties1.setProperty(<span class="hljs-string">"properties1"</span>, <span class="hljs-string">"value2"</span>);
-
-<span class="hljs-comment">// 查找顺序为 自身 -&gt; 父 properties -&gt; jvm -&gt; system env -&gt; default-setting</span>
-String v1 = properties1.getProperty(<span class="hljs-string">"global-key1"</span>); <span class="hljs-comment">//  v1 == value1 </span>
-String v2 = properties1.getProperty(<span class="hljs-string">"jvm-key1"</span>); <span class="hljs-comment">// v2 == jvm</span>
-
-
-
+<span class="hljs-comment">// properties2</span>
 NacosClientProperties properties2 = properties1.derive();
-properties2.getProperty(<span class="hljs-string">"properties1"</span>);
-
-<span class="hljs-comment">// 查找顺序为 自身 -&gt; 父 properties -&gt; 父 properties -&gt; jvm -&gt; system env -&gt; default-setting</span>
-String v3 = properties2.getProperty(<span class="hljs-string">"properties1"</span>); <span class="hljs-comment">// v3 == value2</span>
+properties2.setProperty(<span class="hljs-string">"properties2-key1"</span>, <span class="hljs-string">"properties2-value1"</span>);
+</code></pre>
+<p>以上代码如下图所示:
+<img src="/img/nacos_client_properties_derive.png" alt="derive.png"></p>
+<p>那么搜索会怎么搜索呢? 以默认优先级(PROPERTIES)为例:</p>
+<pre><code class="language-java"><span class="hljs-comment">// value == global-value1</span>
+String value = properties2.getProperty(<span class="hljs-string">"global-key1"</span>);
 
 </code></pre>
-<h4>查找优先级</h4>
-<p>取值范围总共分为4个:</p>
-<ul>
-<li>PROPERTIES (用户自定义)</li>
-<li>JVM (jvm命令行参数)</li>
-<li>ENV (系统环境变量)</li>
-<li>DEFAULT_SETTING (默认配置)</li>
-</ul>
-<p>默认查找顺序为: PROPERTIES-&gt;JVM-&gt;ENV-&gt;DEFAULT_SETTING</p>
-<p>修改取值范围优先级可通过<code>java -Dnacos.env.first=PROPERTIES|JVM|ENV|DEFAULT_SETTING</code> 或者设置环境变量 <code>NACOS_ENV_FIRST=PROPERTIES|JVM|ENV|DEFAULT_SETTING</code>的方式指定.
-指定之后,会优先查找指定的取值范围
-<img src="/img/nacos_client_properties_first.png" alt="nacos_client_properties_first.png"></p>
-<h4>对于 client 中的 logging 支持</h4>
-<p>目前 client 中的 log42 和 logback 均完成 <code>NacosClientProperties</code> 的适配, 可以通过以上4个取值范围来控制 log xml 配置文件中的参数值</p>
+<p><img src="/img/nacos_client_properties_derive_search.png" alt="derive_search.png"></p>
+<h4>API</h4>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>入参内容</th>
+<th>返回内容</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>getProperty</td>
+<td>key: String</td>
+<td>String</td>
+<td>获取 key 对应的 value 值, 不存在返回 null</td>
+</tr>
+<tr>
+<td>getProperty</td>
+<td>key: String, default: String</td>
+<td>String</td>
+<td>获取 key 对应的 value 值, 不存在返回默认值</td>
+</tr>
+<tr>
+<td>getBoolean</td>
+<td>key: String</td>
+<td>Boolean</td>
+<td>获取 key 对应的 Boolean 值, 不存在则返回 null</td>
+</tr>
+<tr>
+<td>getBoolean</td>
+<td>key: String, default: Boolean</td>
+<td>Boolean</td>
+<td>获取 key 对应的 Boolean 值, 不存在返回默认值</td>
+</tr>
+<tr>
+<td>getInteger</td>
+<td>key: String</td>
+<td>Integer</td>
+<td>获取 key 对应的 Integer 值, 不存在返回 null</td>
+</tr>
+<tr>
+<td>getInteger</td>
+<td>key: String, default: Integer</td>
+<td>Integer</td>
+<td>获取 key 对应的 Integer 值, 不存在返回默认值</td>
+</tr>
+<tr>
+<td>getLong</td>
+<td>key: String</td>
+<td>Long</td>
+<td>获取 key 对应的 Long 值, 不存在返回 null</td>
+</tr>
+<tr>
+<td>getLong</td>
+<td>key: String, default: Long</td>
+<td>Long</td>
+<td>获取 key 对应的 Long 值, 不存在返回默认值</td>
+</tr>
+<tr>
+<td>setProperty</td>
+<td>key: String, value: String</td>
+<td>void</td>
+<td>设置 key-value 到 NacosClientProperties 对象中,已存的值会被覆盖</td>
+</tr>
+<tr>
+<td>addProperties</td>
+<td>properties: Properties</td>
+<td>void</td>
+<td>添加 Properties 到 NacosClientProperties 对象中,已存在到值会被覆盖</td>
+</tr>
+<tr>
+<td>containsKey</td>
+<td>key: String</td>
+<td>boolean</td>
+<td>判断是否包含指定 key 的值, 包含返回 true 否则 false</td>
+</tr>
+<tr>
+<td>asProperties</td>
+<td>void</td>
+<td>Properties</td>
+<td>将 NacosClientProperties 对象转换为 Properties 对象</td>
+</tr>
+<tr>
+<td>derive</td>
+<td>void</td>
+<td>NacosClientProperties</td>
+<td>创建一个继承父 NacosClientProperties 所有配置的 NacosClientProperties 对象, 内部包含一个空 Properties</td>
+</tr>
+<tr>
+<td>derive</td>
+<td>Properties</td>
+<td>NacosClientProperties</td>
+<td>创建一个继承父 NacosClientProperties 所有配置的 NacosClientProperties 对象, 内部包含指定的 Properties 对象</td>
+</tr>
+</tbody>
+</table>
 </div></div></section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>愿景</h3><p>Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/what-is-nacos.html" target="_self">概览</a></dd><dd><a href="/zh-cn/docs/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/contributing.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_self">云服务 MSE</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">云服务 EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">云服务 AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2022 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
 	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
 	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>

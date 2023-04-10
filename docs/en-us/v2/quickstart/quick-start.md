@@ -46,6 +46,8 @@ Select the latest stable version from https://github.com/alibaba/nacos/releases
 
 ## 3.Setting Configuration
 
+> Must do this setting in 2.2.0.1 and 2.2.1, otherwise fail to start.
+
 Setting configuration file `application.properties` under `conf`.
 
 Setting `nacos.core.auth.plugin.nacos.token.secret.key` parameter，detail see [Authentication-Custom SecretKey](../plugin/auth-plugin.md).

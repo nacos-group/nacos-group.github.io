@@ -56,8 +56,16 @@ mvn -Prelease-nacos clean install -U
 200.8.9.17:8848
 200.8.9.18:8848
 </code></pre>
+<h3>3.1 Open Default auth plugin (Optional)</h3>
 <p>Then Setting configuration file <code>application.properties</code> under <code>conf</code>.</p>
-<p>Setting <code>nacos.core.auth.plugin.nacos.token.secret.key</code> parameter，detail see <a href="../plugin/auth-plugin.md">Authentication-Custom SecretKey</a>.</p>
+<p>Setting</p>
+<pre><code class="language-properties"><span class="hljs-meta">nacos.core.auth.enabled</span>=<span class="hljs-string">true</span>
+<span class="hljs-meta">nacos.core.auth.system.type</span>=<span class="hljs-string">nacos</span>
+<span class="hljs-meta">nacos.core.auth.plugin.nacos.token.secret.key</span>=<span class="hljs-string">${custom, make sure same in all nodes}</span>
+<span class="hljs-meta">nacos.core.auth.server.identity.key</span>=<span class="hljs-string">${custom, make sure same in all nodes}</span>
+<span class="hljs-meta">nacos.core.auth.server.identity.value</span>=<span class="hljs-string">${custom, make sure same in all nodes}</span>
+</code></pre>
+<p>Detail see <a href="../plugin/auth-plugin.md">Authentication</a>.</p>
 <blockquote>
 <p>Attention，Default value in Document <code>SecretKey012345678901234567890123456789012345678901234567890123456789</code> and <code>VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=</code> is a public default, <strong>only</strong> should use in test temporary. Please <strong>make sure</strong> to replace it with another valid value when you actually deploy.</p>
 </blockquote>
@@ -88,13 +96,25 @@ mvn -Prelease-nacos clean install -U
 </code></pre>
 <h2>6. Service Registration &amp; Discovery and Configuration Management</h2>
 <h3>Service registration</h3>
-<p><code>curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&amp;ip=20.18.7.10&amp;port=8080'</code></p>
+<p><code>curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&amp;ip=20.18.7.10&amp;port=8080'</code></p>
+<blockquote>
+<p>Attention: If open default auth plugin, please call with username and password in header.</p>
+</blockquote>
 <h3>Service discovery</h3>
 <p><code>curl -X GET 'http://127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.naming.serviceName'</code></p>
+<blockquote>
+<p>Attention: If open default auth plugin, please call with username and password in header.</p>
+</blockquote>
 <h3>Publish configuration</h3>
 <p><code>curl -X POST &quot;http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&amp;content=helloWorld&quot;</code></p>
+<blockquote>
+<p>Attention: If open default auth plugin, please call with username and password in header.</p>
+</blockquote>
 <h3>get configuration</h3>
 <p><code>curl -X GET &quot;http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&quot;</code></p>
+<blockquote>
+<p>Attention: If open default auth plugin, please call with username and password in header.</p>
+</blockquote>
 <h2>7. shut down server</h2>
 <h3>Linux/Unix/Mac</h3>
 <pre><code class="language-bash">sh shutdown.sh

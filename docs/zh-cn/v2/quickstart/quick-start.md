@@ -48,6 +48,8 @@ cd distribution/target/nacos-server-$version/nacos/bin
 
 ## 3.修改配置文件
 
+> 在2.2.0.1和2.2.1版本时，必须执行此变更，否则无法启动；其他版本为建议设置。
+
 修改`conf`目录下的`application.properties`文件。
 
 设置其中的`nacos.core.auth.plugin.nacos.token.secret.key`值，详情可查看[鉴权-自定义密钥](../plugin/auth-plugin.md).
