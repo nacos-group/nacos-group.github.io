@@ -70,7 +70,7 @@ nacos.core.auth.default.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU
 nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
 ```
 
-> 注意：鉴权开关是修改之后立马生效的，不需要重启服务端。
+> 注意：鉴权开关是修改之后立马生效的，不需要重启服务端。动态修改`token.secret.key`时，请确保token是有效的，如果修改成无效值，会导致后续无法登录，请求访问异常。
 
 ### Docker环境
 

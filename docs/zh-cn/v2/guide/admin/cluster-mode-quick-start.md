@@ -67,9 +67,19 @@ cd nacos/distribution/target/nacos-server-1.3.0/nacos/bin
 200.8.9.18:8848
 ```
 
+### 3.1 开启默认鉴权插件（可选）
 之后修改`conf`目录下的`application.properties`文件。
 
-设置其中的`nacos.core.auth.plugin.nacos.token.secret.key`值，详情可查看[鉴权-自定义密钥](../plugin/auth-plugin.md).
+设置其中
+```properties
+nacos.core.auth.enabled=true
+nacos.core.auth.system.type=nacos
+nacos.core.auth.plugin.nacos.token.secret.key=${自定义，保证所有节点一致}
+nacos.core.auth.server.identity.key=${自定义，保证所有节点一致}
+nacos.core.auth.server.identity.value=${自定义，保证所有节点一致}
+```
+
+上述内容详情可查看[权限认证](../plugin/auth-plugin.md).
 
 > 注意，文档中的默认值`SecretKey012345678901234567890123456789012345678901234567890123456789`和`VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=`为公开默认值，可用于临时测试，实际使用时请**务必**更换为自定义的其他有效值。
 
@@ -121,17 +131,25 @@ sh startup.sh
 
 `curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'`
 
+> 注意：如果开启默认鉴权插件，需要在Header中带上用户名密码。
+
 ### 服务发现
 
 `curl -X GET 'http://127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.naming.serviceName'`
+
+> 注意：如果开启默认鉴权插件，需要在Header中带上用户名密码。
 
 ### 发布配置
 
 `curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test&content=helloWorld"`
 
+> 注意：如果开启默认鉴权插件，需要在Header中带上用户名密码。
+
 ### 获取配置
 
 `curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test"`
+
+> 注意：如果开启默认鉴权插件，需要在Header中带上用户名密码。
 
 ## 7. 关闭服务器
 

@@ -412,6 +412,15 @@
       }
     },
     {
+      "filename": "2.2.2-release.md",
+      "link": "/zh-cn/blog/2.2.2-release.html",
+      "meta": {
+        "title": "Nacos 2.2.2发布，优化启动体验和鉴权提示",
+        "keywords": "2.2.2, auth",
+        "description": "Nacos 2.2.2发布，优化启动体验和鉴权提示"
+      }
+    },
+    {
       "filename": "212-and-220beta-release.md",
       "link": "/zh-cn/blog/212-and-220beta-release.html",
       "meta": {

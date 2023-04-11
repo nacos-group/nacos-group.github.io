@@ -56,8 +56,16 @@ mvn -Prelease-nacos clean install -U
 200.8.9.17:8848
 200.8.9.18:8848
 </code></pre>
+<h3>3.1 开启默认鉴权插件（可选）</h3>
 <p>之后修改<code>conf</code>目录下的<code>application.properties</code>文件。</p>
-<p>设置其中的<code>nacos.core.auth.plugin.nacos.token.secret.key</code>值，详情可查看<a href="../plugin/auth-plugin.md">鉴权-自定义密钥</a>.</p>
+<p>设置其中</p>
+<pre><code class="language-properties"><span class="hljs-meta">nacos.core.auth.enabled</span>=<span class="hljs-string">true</span>
+<span class="hljs-meta">nacos.core.auth.system.type</span>=<span class="hljs-string">nacos</span>
+<span class="hljs-meta">nacos.core.auth.plugin.nacos.token.secret.key</span>=<span class="hljs-string">${自定义，保证所有节点一致}</span>
+<span class="hljs-meta">nacos.core.auth.server.identity.key</span>=<span class="hljs-string">${自定义，保证所有节点一致}</span>
+<span class="hljs-meta">nacos.core.auth.server.identity.value</span>=<span class="hljs-string">${自定义，保证所有节点一致}</span>
+</code></pre>
+<p>上述内容详情可查看<a href="../plugin/auth-plugin.md">权限认证</a>.</p>
 <blockquote>
 <p>注意，文档中的默认值<code>SecretKey012345678901234567890123456789012345678901234567890123456789</code>和<code>VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=</code>为公开默认值，可用于临时测试，实际使用时请<strong>务必</strong>更换为自定义的其他有效值。</p>
 </blockquote>
@@ -88,13 +96,25 @@ mvn -Prelease-nacos clean install -U
 </code></pre>
 <h2>6. 服务注册&amp;发现和配置管理</h2>
 <h3>服务注册</h3>
-<p><code>curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&amp;ip=20.18.7.10&amp;port=8080'</code></p>
+<p><code>curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&amp;ip=20.18.7.10&amp;port=8080'</code></p>
+<blockquote>
+<p>注意：如果开启默认鉴权插件，需要在Header中带上用户名密码。</p>
+</blockquote>
 <h3>服务发现</h3>
 <p><code>curl -X GET 'http://127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.naming.serviceName'</code></p>
+<blockquote>
+<p>注意：如果开启默认鉴权插件，需要在Header中带上用户名密码。</p>
+</blockquote>
 <h3>发布配置</h3>
 <p><code>curl -X POST &quot;http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&amp;content=helloWorld&quot;</code></p>
+<blockquote>
+<p>注意：如果开启默认鉴权插件，需要在Header中带上用户名密码。</p>
+</blockquote>
 <h3>获取配置</h3>
 <p><code>curl -X GET &quot;http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&quot;</code></p>
+<blockquote>
+<p>注意：如果开启默认鉴权插件，需要在Header中带上用户名密码。</p>
+</blockquote>
 <h2>7. 关闭服务器</h2>
 <h3>Linux/Unix/Mac</h3>
 <pre><code class="language-bash">sh shutdown.sh

@@ -44,6 +44,9 @@ ls -al distribution/target/
   <span class="hljs-built_in">cd</span> nacos/bin
 </code></pre>
 <h2>3.修改配置文件</h2>
+<blockquote>
+<p>在2.2.0.1和2.2.1版本时，必须执行此变更，否则无法启动；其他版本为建议设置。</p>
+</blockquote>
 <p>修改<code>conf</code>目录下的<code>application.properties</code>文件。</p>
 <p>设置其中的<code>nacos.core.auth.plugin.nacos.token.secret.key</code>值，详情可查看<a href="../plugin/auth-plugin.md">鉴权-自定义密钥</a>.</p>
 <blockquote>

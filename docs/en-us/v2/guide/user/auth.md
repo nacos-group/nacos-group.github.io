@@ -73,7 +73,7 @@ nacos.core.auth.default.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU
 nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
 ```
 
-> Attention: the authentication switch takes effect immediately after the modification, and there is no need to restart the server.
+> Attention: the authentication switch takes effect immediately after the modification, and there is no need to restart the server. When dynamic modifing `token.secret.key`, Please make sure the new value is valid, otherwise the login and request will fail.
 
 ### With Docker
 
