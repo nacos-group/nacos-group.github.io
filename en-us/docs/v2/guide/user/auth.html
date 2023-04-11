@@ -128,7 +128,7 @@ and <strong>the length of the original key must not be less than 32 characters</
 <span class="hljs-meta">nacos.core.auth.plugin.nacos.token.secret.key</span>=<span class="hljs-string">VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=</span>
 </code></pre>
 <blockquote>
-<p>Attention: the authentication switch takes effect immediately after the modification, and there is no need to restart the server.</p>
+<p>Attention: the authentication switch takes effect immediately after the modification, and there is no need to restart the server. When dynamic modifing <code>token.secret.key</code>, Please make sure the new value is valid, otherwise the login and request will fail.</p>
 </blockquote>
 <h3>With Docker</h3>
 <h4>Official images</h4>
