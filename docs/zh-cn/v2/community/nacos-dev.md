@@ -82,6 +82,9 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 | [hujun-w-2](https://github.com/hujun-w-2)       | 胡俊   | 小米科技 | Committer | 510830970@qq.com |
 | [onewe](https://github.com/onewe)               | 毛文超 | 自由开发者| Committer | 2583021406@qq.com |
 | [chenhao26-nineteen](https://github.com/chenhao26-nineteen)|陈浩| 小米科技 | Committer | hashmap2018@163.com |
+| [shenkonghui](https://github.com/shenkonghui)   | 沈孔辉 | 杭州谐云科技有限公司| Committer | shenkh1992@gmail.com |
+| [CherishCai](https://github.com/CherishCai)     | 蔡鸿文 | 蚂蚁金服 | Committer | 785427346@qq.com ｜
+| [The-Gamer-01](https://github.com/The-Gamer-01) | 黄乙轩 | 吉首大学 | Committer | 19974361760@163.com ｜
 
 ### 活跃贡献者
 
