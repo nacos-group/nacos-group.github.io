@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: 'Nacos开源之夏2023，贡献社区赢取12000奖金',
+            author: '@Nacos开源之夏',
+            dateStr: 'May 11, 2023',
+            desc: '欢迎在校同学们参与Nacos开源之夏，社区导师手把手让**你的代码被社会广泛复用，来赚取最高12000奖金，可**推荐入职/实习你心意公司，**又拿钱又成长又有价值**，你还等什么呢？报名马上截止，快来参与Nacos开源之夏。',
+            link: '/zh-cn/blog/iscas2023.html',
+        },
+        {
             title: 'Nacos 2.2.2发布，优化启动体验和鉴权提示',
             author: '@杨翊',
             dateStr: 'Apr 11, 2023',
@@ -342,6 +349,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: 'Nacos开源之夏2023，贡献社区赢取12000奖金',
+            author: '@Nacos开源之夏',
+            dateStr: 'May 11, 2023',
+            desc: '欢迎在校同学们参与Nacos开源之夏，社区导师手把手让**你的代码被社会广泛复用，来赚取最高12000奖金，可**推荐入职/实习你心意公司，**又拿钱又成长又有价值**，你还等什么呢？报名马上截止，快来参与Nacos开源之夏。',
+            link: '/zh-cn/blog/iscas2023.html',
+        },
         {
             title: 'Nacos 2.2.2发布，优化启动体验和鉴权提示',
             author: '@杨翊',
