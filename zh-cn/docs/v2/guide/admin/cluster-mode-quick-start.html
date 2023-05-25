@@ -27,6 +27,39 @@
 <p><a href="http://SLB">http://SLB</a>:port/openAPI  挂载SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，直连SLB即可，下面挂server真实ip，可读性不好。</p>
 <p><a href="http://nacos.com">http://nacos.com</a>:port/openAPI  域名 + SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，可读性好，而且换ip方便，推荐模式</p>
 <p><img src="/img/deployDnsVipMode.jpg" alt="deployDnsVipMode.jpg"></p>
+<table>
+<thead>
+<tr>
+<th>端口</th>
+<th>与主端口的偏移量</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8848</td>
+<td>0</td>
+<td>主端口，客户端、控制台及OpenAPI所使用的HTTP端口</td>
+</tr>
+<tr>
+<td>9848</td>
+<td>1000</td>
+<td>客户端gRPC请求服务端端口，用于客户端向服务端发起连接和请求</td>
+</tr>
+<tr>
+<td>9849</td>
+<td>1001</td>
+<td>服务端gRPC请求服务端端口，用于服务间同步等</td>
+</tr>
+<tr>
+<td>7848</td>
+<td>-1000</td>
+<td>Jraft请求服务端端口，用于处理服务端间的Raft相关请求</td>
+</tr>
+</tbody>
+</table>
+<p><strong>使用VIP/nginx请求时，需要配置成TCP转发，不能配置http2转发，否则连接会被nginx断开。</strong>
+<strong>9849和7848端口为服务端之间的通信端口，请勿暴露到外部网络环境和客户端测。</strong></p>
 <h2>1. 预备环境准备</h2>
 <p>请确保是在环境中安装使用:</p>
 <ol>
