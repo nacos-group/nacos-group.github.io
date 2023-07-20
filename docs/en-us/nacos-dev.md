@@ -53,7 +53,7 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [chuntaojun](https://github.com/chuntaojun)     | Chuntao Liao | Tencent      | Maintainer | liaochuntao@live.com                                         |
 | [paderlol](https://github.com/paderlol)         | Pader Zhang  | Shareworks   | Maintainer | huangbbbaihao@gmail.com                                      |
 | [KomachiSion](https://github.com/KomachiSion)   | Yi Yang      | Alibaba      | Maintainer | yangyi@apache.org                                            |
-| [sanxun0325](https://github.com/sanxun0325)     | Binbin Zhang | DiDi         | Maintainer | bbz17640380550@163.com                                       |
+| [binbin0325](https://github.com/binbin0325)     | Binbin Zhang | DiDi         | Maintainer | bbz17640380550@163.com                                       |
 | [zhangjimmy](https://github.com/zhangjimmy)     | Bo Zhang     | Huya         | Committer  | zhangjimmy@foxmail.com                                       |
 | [nanamikon](https://github.com/nanamikon)       | Jian Zhou    | Huya         | Committer  | nanamikon@gmail.com                                          |
 | [lzp0412](https://github.com/lzp0412)           | Zhipeng Li   | Ant Financial| Committer  | 641785844@qq.com                                             |

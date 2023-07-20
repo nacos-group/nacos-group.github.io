@@ -52,7 +52,7 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 | [chuntaojun](https://github.com/chuntaojun)     | 廖春涛 |  腾讯  | Maintainer| liaochuntao@live.com |
 | [paderlol](https://github.com/paderlol)         | 张龙   | 蜜獾    | Maintainer | huangbbbaihao@gmail.com |
 | [KomachiSion](https://github.com/KomachiSion)   | 杨翊   | 阿里巴巴 | Maintainer | yangyi@apache.org |
-| [sanxun0325](https://github.com/sanxun0325)     | 张斌斌  | 滴滴出行 | Maintainer | bbz17640380550@163.com |
+| [binbin0325](https://github.com/binbin0325)     | 张斌斌  | 滴滴出行 | Maintainer | bbz17640380550@163.com |
 | [zhangjimmy](https://github.com/zhangjimmy)     | 张波   | 虎牙直播 | Committer | zhangjimmy@foxmail.com  |
 | [nanamikon](https://github.com/nanamikon)       | 周健   | 虎牙直播 | Committer | nanamikon@gmail.com |
 | [lzp0412](https://github.com/lzp0412)           | 李志鹏 | 蚂蚁金服 | Committer | 641785844@qq.com      |
