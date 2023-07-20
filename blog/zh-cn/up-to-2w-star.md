@@ -67,7 +67,7 @@ Nacos1.x版本主要基于HTTP短连接构建服务注册与发现、配置管�
 
 ![image8.png](/img/up_to_2w/image8.png)
 
-**公有云**：Nacos充分在2.X系列版本中充分拥抱了云原生时代核心生态。Nacos团队内部利用公有云技术支持阿里巴巴集团和成千上万家公司大规模上云，为Nacos开源以及[公有云Nacos](https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0)产品提供了宝贵的生产实践经验，Nacos用户可以充分享受公有云弹性红利、安全、高可用能力。
+**公有云**：Nacos充分在2.X系列版本中充分拥抱了云原生时代核心生态。Nacos团队内部利用公有云技术支持阿里巴巴集团和成千上万家公司大规模上云，为Nacos开源以及[公有云Nacos](https://www.aliyun.com/product/aliware/mse?spm=nacos.io.topbar.0.0.0)产品提供了宝贵的生产实践经验，Nacos用户可以充分享受公有云弹性红利、安全、高可用能力。
 
 **开源**：开源Nacos进行了大量的云原生生态演进。当前Nacos社区开源生态已相对完善：（1）无缝整合Dubbo、Nacos、Spring-cloud-alibaba/Seata/Sentinel阿里微服务DNS框架，并成为国内首选；（2）无缝整合服务网格生态，让用户平滑进入服务网格时代。（3）支持Dapr为用户多语言多一种选择，也为微服务多语言生态多一种探索方向，欢迎感兴趣小伙伴一起推动。
 

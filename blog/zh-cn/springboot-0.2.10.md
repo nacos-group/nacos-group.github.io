@@ -72,7 +72,7 @@ Nacos-spring-boot新版本通过增加智能锁、升级Nacos-spring依赖等方
 
 ## 生产演示
 
-在Nacos服务端，为了方便Nacos部署升级和尽可能保证配置信息的信息安全，我们是从[阿里云微服务引擎MSE](https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0) 中购买的一个2核CPU+4G内存的三节点Nacos集群。
+在Nacos服务端，为了方便Nacos部署升级和尽可能保证配置信息的信息安全，我们是从[阿里云微服务引擎MSE](https://www.aliyun.com/product/aliware/mse?spm=nacos.io.topbar.0.0.0) 中购买的一个2核CPU+4G内存的三节点Nacos集群。
 
 ![springboot2](/img/blog/springboot2.png)
 

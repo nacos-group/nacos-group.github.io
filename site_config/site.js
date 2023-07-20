@@ -28,73 +28,59 @@ export default {
           },
         ]
       },
-      {
-        key: 'solution',
-        text: 'SOLUTIONS',
-        link: '',
-        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png',
-        children: [
-        {
-          key: 'micoservice',
-          text: 'Microservice Solution',
-          link: 'https://www.alibabacloud.com/product/microservices-engine'
-        }, {
-          key: 'serverless',
-          text: 'Microservice on Serverless Solution',
-          link: 'https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0'
-        }, {
-          key: 'appas',
-          text: 'PaaS Solution',
-          link: 'https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0'
-         },
-         {
-          key: 'gts',
-          text: 'Distributed transaction Solution',
-          link: 'https://www.aliyun.com/aliware/txc?spm=nacos-website.topbar.0.0.0'
-        }, {
-          key: 'msha',
-          text: 'High-availability Solution',
-          link: 'https://www.aliyun.com/product/ahas?spm=nacos-website.topbar.0.0.0'
-        },
-        {
-          key: 'mesh',
-          text: 'Service mesh Solution',
-          link: 'https://www.aliyun.com/product/servicemesh?spm=nacos-website.topbar.0.0.0',
-        }
-        ]
-      },
-      {
-        key: 'Nacos in Cloud',
-        text: 'NACOS IN CLOUD',
-        link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
-        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-      },
       // {
-      //   key: 'E-BOOK',
-      //   text: 'E-BOOK',
+      //   key: 'solution',
+      //   text: 'SOLUTIONS',
       //   link: '',
       //   imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png',
       //   children: [
-          {
-            key: 'E-BOOK-NACOS',
-            text: 'E-BOOK-NACOS',
-            link: 'https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST',
-            imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-          },
       //     {
-      //       key: 'E-BOOK—Governance',
-      //       text: 'Microservice Governance Technology',
-      //       link: 'https://developer.aliyun.com/ebook/7565',
-      //       imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      //       key: 'micoservice',
+      //       text: 'Microservice Solution',
+      //       link: 'https://www.alibabacloud.com/product/microservices-engine'
+      //     }, {
+      //       key: 'serverless',
+      //       text: 'Microservice on Serverless Solution',
+      //       link: 'https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0'
+      //     }, {
+      //       key: 'appas',
+      //       text: 'PaaS Solution',
+      //       link: 'https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0'
+      //     },
+      //     {
+      //       key: 'gts',
+      //       text: 'Distributed transaction Solution',
+      //       link: 'https://www.aliyun.com/aliware/txc?spm=nacos-website.topbar.0.0.0'
+      //     }, {
+      //       key: 'msha',
+      //       text: 'High-availability Solution',
+      //       link: 'https://www.aliyun.com/product/ahas?spm=nacos-website.topbar.0.0.0'
+      //     },
+      //     {
+      //       key: 'mesh',
+      //       text: 'Service mesh Solution',
+      //       link: 'https://www.aliyun.com/product/servicemesh?spm=nacos-website.topbar.0.0.0',
       //     }
       //   ]
       // },
-      // {
-      //   key: 'ISCAS2022',
-      //   text: 'ISCAS2022',
-      //   link: 'https://nacos.io/zh-cn/blog/iscas2022.html',
-      //   imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-      // },
+      {
+        key: 'Nacos in Cloud',
+        text: 'NACOS IN CLOUD',
+        link: 'https://www.aliyun.com/product/aliware/mse?spm=nacos.io.topbar.0.0.0',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
+      {
+        key: 'Free Tier',
+        text: 'FREE TIER',
+        link: 'https://free.aliyun.com/?searchKey=nacos&spm=nacos.io.topbar.0.0.0',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
+      {
+        key: 'E-BOOK-NACOS',
+        text: 'E-BOOK-NACOS',
+        link: 'https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
       {
         key: 'blog',
         text: 'BLOG',
@@ -140,7 +126,7 @@ export default {
         },
         {
           text: 'Cloud Service MSE',
-          link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
+          link: 'https://www.aliyun.com/product/aliware/mse?spm=nacos.io.topbar.0.0.0',
         },
         {
           text: 'Cloud Service EDAS',
@@ -179,39 +165,45 @@ export default {
           },
         ]
       },
-      {
-        key: 'solution',
-        text: '解决方案',
-        link: '',
-        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png',
-        children: [
-        {
-          key: 'micoservice',
-          text: '微服务解决方案',
-          link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0'
-        }, {
-          key: 'serverless',
-          text: '微服务Serverless解决方案',
-          link: 'https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0'
-        }, {
-          key: 'appas',
-          text: 'PaaS解决方案',
-          link: 'https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0'
-        }
-        ]
-      },
+      // {
+      //   key: 'solution',
+      //   text: '解决方案',
+      //   link: '',
+      //   imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png',
+      //   children: [
+      //     {
+      //       key: 'micoservice',
+      //       text: '微服务解决方案',
+      //       link: 'https://www.aliyun.com/product/aliware/mse?spm=nacos.io.topbar.0.0.0'
+      //     }, {
+      //       key: 'serverless',
+      //       text: '微服务Serverless解决方案',
+      //       link: 'https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0'
+      //     }, {
+      //       key: 'appas',
+      //       text: 'PaaS解决方案',
+      //       link: 'https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0'
+      //     }
+      //   ]
+      // },
       {
         key: 'Nacos in Cloud',
         text: '企业版NACOS',
-        link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
+        link: 'https://www.aliyun.com/product/aliware/mse?spm=nacos.io.topbar.0.0.0',
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
-       {
-         key: 'E-BOOK',
-         text: 'NACOS架构与原理',
-         link: 'https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST',
-         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-       },
+      {
+        key: 'Free Tier',
+        text: '免费试用',
+        link: 'https://free.aliyun.com/?searchKey=nacos&spm=nacos.io.topbar.0.0.0',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
+      {
+        key: 'E-BOOK',
+        text: 'NACOS架构与原理',
+        link: 'https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
       {
         key: 'blog',
         text: '博客',
@@ -257,7 +249,7 @@ export default {
         },
         {
           text: '云服务 MSE',
-          link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
+          link: 'https://www.aliyun.com/product/aliware/mse?spm=nacos.io.topbar.0.0.0',
         },
         {
           text: '云服务 EDAS',

@@ -132,4 +132,4 @@ Nacos supports two start modes. you can merging the Service Registry and the Con
 	
 ### Free Public Cloud Service on Alibaba Cloud
 
-In addition to deploying and launching Nacos services by users themselves, Nacos also supports public cloud. Nacos public cloud service will be free in Alibaba Cloud's commercial service (such as [MSE](https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0), [EDAS](https://www.aliyun.com/product/edas)). We also welcome other public cloud providers to offer Nacos public cloud services.
+In addition to deploying and launching Nacos services by users themselves, Nacos also supports public cloud. Nacos public cloud service will be free in Alibaba Cloud's commercial service (such as [MSE](https://www.aliyun.com/product/aliware/mse?spm=nacos.io.topbar.0.0.0), [EDAS](https://www.aliyun.com/product/edas)). We also welcome other public cloud providers to offer Nacos public cloud services.
