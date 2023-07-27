@@ -69,12 +69,12 @@ export default {
         link: 'https://www.aliyun.com/product/aliware/mse?spm=nacos.io.topbar.0.0.0',
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
-      // {
-      //   key: 'Free Tier',
-      //   text: 'FREE TIER',
-      //   link: 'https://free.aliyun.com/?searchKey=nacos&spm=nacos.io.topbar.0.0.0',
-      //   imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-      // },
+      {
+        key: 'Free Tier',
+        text: 'FREE TIER',
+        link: 'https://free.aliyun.com/?searchKey=nacos&spm=nacos.io.topbar.0.0.0',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
       {
         key: 'E-BOOK-NACOS',
         text: 'E-BOOK-NACOS',
@@ -192,12 +192,12 @@ export default {
         link: 'https://www.aliyun.com/product/aliware/mse?spm=nacos.io.topbar.0.0.0',
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
-      // {
-      //   key: 'Free Tier',
-      //   text: '免费试用',
-      //   link: 'https://free.aliyun.com/?searchKey=nacos&spm=nacos.io.topbar.0.0.0',
-      //   imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
-      // },
+      {
+        key: 'Free Tier',
+        text: '免费试用',
+        link: 'https://free.aliyun.com/?searchKey=nacos&spm=nacos.io.topbar.0.0.0',
+        imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
+      },
       {
         key: 'E-BOOK',
         text: 'NACOS架构与原理',
