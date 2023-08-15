@@ -80,15 +80,15 @@ Nacos 的关键特性包括:
 
 关于如何在这些生态中使用 Nacos，请参考以下文档：
 
-[Nacos与Spring Cloud一起使用](docs/zh-cn/archive/use-nacos-with-springcloud.md)
+[Nacos与Spring Cloud一起使用](./archive/use-nacos-with-springcloud.md)
 
 [Nacos与Kubernetes一起使用](./use-nacos-with-kubernetes.md)
 
 [Nacos与Dubbo一起使用](./use-nacos-with-dubbo.md)
 
-[Nacos与gRPC一起使用](docs/zh-cn/archive/roadmap.md)
+[Nacos与gRPC一起使用](./archive/roadmap.md)
 
-[Nacos与Istio一起使用](docs/zh-cn/archive/use-nacos-with-istio.md)
+[Nacos与Istio一起使用](./archive/use-nacos-with-istio.md)
 
 
 ## 下一步
