@@ -135,19 +135,21 @@ INSERT INTO roles (username, role) VALUES ('nacos', 'ROLE_ADMIN');
 
 ### Close the login function
 
-As part of its own development console, do not want to be nacos security filter interceptor.Therefore nacos support custom close the login functionFind the configuration file `${nacoshome}/conf/application.properties`. The properties, replace the following content.
+Before `version 2.2.2`, the Nacos default console would always redirect to the login page, whether the authentication function was enabled, which could mislead users into thinking that there was authentication function, but in fact it was disabled, posing a security risk.
 
-```
-## spring security config
-### turn off security
-spring.security.enabled=false
-management.security=false
-security.basic.enabled=false
-nacos.security.ignore.urls=/**
+After consultation and discussion with the community and security engineers, it was decided that when the authentication switch is turned off, the console login function will be automatically disabled when using the Nacos default console.
 
-#nacos.security.ignore.urls=/,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-fe/public/**,/v1/auth/login,/v1/console/health,/v1/cs/**,/v1/ns/**,/v1/cmdb/**,/actuator/**
+Therefore, starting from `version 2.2.2`, when the authentication switch `nacos.core.auth.enabled` is `false`, the Nacos default console will no longer redirect to the login page, but will add a page prompt indicating that the current cluster has not enabled authentication function.
 
-```
+At the same time, a new interface `com.alibaba.nacos.plugin.auth.spi.server.AuthPluginService#isLoginEnabled` has been added for custom authentication plugins to control the login page. By default, it returns `false`.
+
+### Close default console ui
+
+Some companies or users may want to disable the default console of Nacos and use their own unified platform for Nacos configuration and service management. They may also want to separate the authentication for console operations and client requests, meaning that authentication is required for console operations but not for client requests.
+
+Starting from `version 2.3.0`, maintainers can use the `nacos.console.ui.enabled` property in `${nacoshome}/conf/application.properties` to enable or disable the Nacos default console. It is `true` by default.
+
+When the default console is disabled, it will read the content of the `${nacoshome}/conf/console-guide.conf` file and generate a guide page in the default console. This allows maintainers to customize the guide to redirect users who would have used the default console to their own unified platform for operations.
 
 ### Session time
 
