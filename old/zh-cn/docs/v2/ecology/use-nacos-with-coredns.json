@@ -1,0 +1,10 @@
+{
+  "filename": "use-nacos-with-coredns.md",
+  "__html": "<h1>Nacos DNS 使用手册</h1>\n<p>本插件提供了一个基于CoreDNS的DNS-F客户端，可以将Nacos上注册的服务导出为DNS域名。 本DNS-F客户端是应用程序进程旁边的一个专用代理进程（side car），可以将服务名作为DNS域名查询请求转发到本客户端，提供服务发现的功能。</p>\n<h2>快速开始</h2>\n<p>要构建和运行本 nacos-coredns 插件，操作系统必须是 Linux 或 Mac。 另外，请确保您的 nacos 服务端版本为2.2或更高级版本，以及 golang 版本为 1.17 或更高级版本， 并且必须正确配置 golang 环境（GOPATH、GOROOT）。因为需要支持 nacos2.x 版本的gRPC连接功能和 go mod 功能。</p>\n<h2>构建</h2>\n<pre><code>git clone https://github.com/nacos-group/nacos-coredns-plugin.git \ncp nacos-coredns-plugin/bin/build.sh ~/\ncd ~/\nsh build.sh\n</code></pre>\n<h2>配置</h2>\n<p>运行本 nacos-coredns 插件，您需要一个配置文件。 一个标准的配置文件如下：</p>\n<pre><code>. {\n    log\n    nacos {\n    nacos_namespaceId public\n    nacos_server_host 127.0.0.1:8848\n    }\n    forward . /etc/resolv.conf\n}\n</code></pre>\n<ul>\n<li>forward：未在 nacos 注册的域名将被转发到upstream。</li>\n<li>nacos_namespaceId：nacos namespaceId，默认为public。</li>\n<li>nacos_server_host：nacos 服务端的IP地址和端口，如果有两个或多个 nacos 服务端，用逗号分隔</li>\n</ul>\n<h2>运行</h2>\n<ol>\n<li>首先需要部署一个nacos服务端。 <a href=\"https://github.com/alibaba/nacos\">部署参考</a></li>\n<li>其次，在nacos上注册服务。</li>\n<li>然后输入配置文件 <strong>(path_to_corefile)** 和指定端口 **(dns_port)</strong> ，运行本插件。</li>\n</ol>\n<pre><code>$GOPATH/src/coredns/coredns   -conf $path_to_corefile   -dns.port $dns_port \n</code></pre>\n<p><img src=\"https://cdn.nlark.com/yuque/0/2022/png/29425667/1663504581023-95437fee-0e3d-4b6a-851c-44a352dedd81.png\" alt=\"\"></p>\n<h2>服务发现例子</h2>\n<ul>\n<li>输入服务名 <strong>(nacos_service_name)** ，以及插件的IP地址 **(dns_ip)</strong> 和端口 <strong>($dns_port)</strong></li>\n</ul>\n<pre><code>dig   $nacos_service_name   @$dns_ip   -p $dns_port \n</code></pre>\n<p><img src=\"https://cdn.nlark.com/yuque/0/2022/png/29425667/1663504588231-341b38fe-da55-41eb-a24b-e3752b86faa4.png\" alt=\"\"></p>\n",
+  "link": "/zh-cn/docs/v2/ecology/use-nacos-with-coredns.html",
+  "meta": {
+    "title": "Nacos 融合CoreDNS 下发DNS域名",
+    "keywords": "CoreDNS, DNS-F",
+    "description": "Nacos 融合CoreDNS 下发DNS域名"
+  }
+}

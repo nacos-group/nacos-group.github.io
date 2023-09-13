@@ -1,0 +1,42 @@
+{
+  "version.label": {
+    "message": "2.X",
+    "description": "The label for version 2.X"
+  },
+  "sidebar.docs.category.What is Nacos": {
+    "message": "What is Nacos",
+    "description": "The label for category What is Nacos in sidebar docs"
+  },
+  "sidebar.docs.category.Quick Start": {
+    "message": "Quick Start",
+    "description": "The label for category Quick Start in sidebar docs"
+  },
+  "sidebar.docs.category.Upgrading": {
+    "message": "Upgrading",
+    "description": "The label for category Upgrading in sidebar docs"
+  },
+  "sidebar.docs.category.Plugin": {
+    "message": "Plugin",
+    "description": "The label for category Plugin in sidebar docs"
+  },
+  "sidebar.docs.category.User Guide": {
+    "message": "User Guide",
+    "description": "The label for category User Guide in sidebar docs"
+  },
+  "sidebar.docs.category.Admin Guide": {
+    "message": "Admin Guide",
+    "description": "The label for category Admin Guide in sidebar docs"
+  },
+  "sidebar.docs.category.Ecology": {
+    "message": "Ecology",
+    "description": "The label for category Ecology in sidebar docs"
+  },
+  "sidebar.docs.category.Contributor Guide": {
+    "message": "Contributor Guide",
+    "description": "The label for category Contributor Guide in sidebar docs"
+  },
+  "sidebar.docs.category.Community": {
+    "message": "Community",
+    "description": "The label for category Community in sidebar docs"
+  }
+}

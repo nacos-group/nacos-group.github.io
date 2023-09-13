@@ -1,53 +1,50 @@
 {
-  "name": "nacos-site",
-  "version": "0.0.1",
+  "name": "my-website",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "gulp",
-    "build": "gulp build"
-  },
-  "devDependencies": {
-    "babel-core": "6.23.1",
-    "babel-eslint": "^6.0.5",
-    "babel-loader": "6.4.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-decorators-legacy": "^1.3.5",
-    "babel-plugin-transform-object-assign": "^6.22.0",
-    "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-es2015": "6.22.0",
-    "babel-preset-react": "6.23.0",
-    "babel-preset-stage-0": "6.22.0",
-    "babel-register": "^6.26.0",
-    "css-loader": "0.6.12",
-    "eslint": "^3.6.0",
-    "eslint-config-ali": "^1.0.0",
-    "eslint-plugin-import": "^1.16.0",
-    "eslint-plugin-react": "^6.10.3",
-    "extract-text-webpack-plugin": "^2.1.2",
-    "gulp": "3.9.1",
-    "gulp-util": "2.2.20",
-    "json-loader": "*",
-    "node-libs-browser": "2.0.0",
-    "node-sass": "^4.7.2",
-    "opn": "^5.3.0",
-    "raw-loader": "^0.5.1",
-    "react": "15.4.2",
-    "react-dom": "15.4.2",
-    "sass-loader": "6.0.2",
-    "style-loader": "0.6.5",
-    "webpack": "^2.6.1",
-    "webpack-dev-server": "3.1.11"
+    "docusaurus": "docusaurus",
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "swizzle": "docusaurus swizzle",
+    "deploy": "docusaurus deploy",
+    "clear": "docusaurus clear",
+    "serve": "docusaurus serve",
+    "write-translations": "docusaurus write-translations",
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "typecheck": "tsc"
   },
   "dependencies": {
-    "classnames": "^2.2.5",
-    "core-decorators": "^0.20.0",
-    "js-cookie": "^2.2.0",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "react-ga": "^2.5.3",
-    "react-scroll": "^1.7.9",
-    "react-tilt": "^0.1.4",
-    "whatwg-fetch": "^2.0.4"
+    "@docusaurus/core": "2.4.1",
+    "@docusaurus/preset-classic": "2.4.1",
+    "@mdx-js/react": "^1.6.22",
+    "@types/react-dom": "^18.2.7",
+    "classnames": "^2.3.2",
+    "clsx": "^1.2.1",
+    "docusaurus-plugin-sass": "^0.2.5",
+    "prism-react-renderer": "^1.3.5",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "sass": "^1.66.1"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "2.4.1",
+    "@tsconfig/docusaurus": "^1.0.5",
+    "typescript": "^4.7.4"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=16.14"
   }
 }

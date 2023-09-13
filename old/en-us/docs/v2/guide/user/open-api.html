@@ -1,0 +1,4436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="aes-config" content="pid=xux-opensource&user_type=101&uid=&username=&dim10=nacos"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="Open API,Guide" />
+	<meta name="description" content="Open API Guide" />
+  <meta name="baidu-site-verification" content="code-wzq5sw7io3" />
+	<!-- 网页标签标题 -->
+	<title>Open API Guide</title>
+	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
+	<link rel="stylesheet" href="/build/documentation.css" />
+	<link rel="stylesheet" href="https://g.alicdn.com/mamba/assets/0.0.19/mse-arc-ui.min.css" />
+</head>
+<body>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/en-us/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">中</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><span><a href="/en-us/index.html">HOME</a></span></li><li class="menu-item menu-item-normal menu-item-normal-active"><div class="nav-container"><div class="word"><a>DOCS</a></div><ul class="sub-nav-container" style="width:290px"><li><a href="/en-us/docs/v2/quickstart/quick-start.html" target="_blank">2.X（Recommend）</a></li><li><a href="/en-us/docs/quick-start.html" target="_blank">1.X</a></li></ul> </div></li><li class="menu-item menu-item-normal"><div class="nav-container"><div class="word"><a>SOLUTIONS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></div><ul class="sub-nav-container" style="width:290px"><li><a href="https://www.alibabacloud.com/product/microservices-engine" target="_blank">Microservice Solution</a></li><li><a href="https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0" target="_blank">Microservice on Serverless Solution</a></li><li><a href="https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0" target="_blank">PaaS Solution</a></li><li><a href="https://www.aliyun.com/aliware/txc?spm=nacos-website.topbar.0.0.0" target="_blank">Distributed transaction Solution</a></li><li><a href="https://www.aliyun.com/product/ahas?spm=nacos-website.topbar.0.0.0" target="_blank">High-availability Solution</a></li><li><a href="https://www.aliyun.com/product/servicemesh?spm=nacos-website.topbar.0.0.0" target="_blank">Service mesh Solution</a></li></ul> </div></li><li class="menu-item menu-item-normal"><span><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0">NACOS IN CLOUD</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST">E-BOOK-NACOS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="/en-us/blog">BLOG</a></span></li><li class="menu-item menu-item-normal"><span><a href="/en-us/community">COMMUNITY</a></span></li><li class="menu-item menu-item-normal"><span><a href="http://console.nacos.io/nacos/index.html">DEMO-CONSOLE</a></span></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/docs.png" class="front-img"/><div class="bar-title"><span>Documentation</span><div class="bone bone-light"></div></div><img src="/img/docs.png" class="back-img"/></div></div><section class="content-section"><div class="content-body"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>Nacos </span><ul><li style="height:144px;overflow:hidden" class="menu-item menu-item-level-2"><span>What is Nacos<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/what-is-nacos.html" target="_self">What is Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/concepts.html" target="_self">Concepts</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/architecture.html" target="_self">Architecure</a></li></ul></li><li style="height:324px;overflow:hidden" class="menu-item menu-item-level-2"><span>Quick Start<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start.html" target="_self">Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring-boot.html" target="_self">Nacos Spring Boot</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-spring-cloud.html" target="_self">Nacos Spring Cloud</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/quick-start-docker.html" target="_self">Nacos Docker</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/use-nacos-with-dubbo.html" target="_self">Nacos with Dubbo</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/use-nacos-with-kubernetes.html" target="_self">Nacos with K8s</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-sync.html" target="_self">Nacos Sync</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>User Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/sdk.html" target="_self">Java SDK</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/other-language.html" target="_self">Other Language</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/open-api.html" target="_self">Open-API</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/system-configurations.html" target="_self">Nacos System Configurations</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/auth.html" target="_self">Authentication</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/faq.html" target="_self">FAQ</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Admin Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/deployment.html" target="_self">Deployment Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/cluster-mode-quick-start.html" target="_self">Cluster Mode Deployment</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/management-api.html" target="_self">Management OpenAPI</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/console-guide.html" target="_self">Admin Console Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/monitor-guide.html" target="_self">Nacos Monitor Guide</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-config-benchmark.html" target="_self">Nacos Config Benchmark</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-naming-benchmark.html" target="_self">Nacos Naming Benchmark</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-sync-use.html" target="_self">Data Migration to Nacos</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Contributor Guide<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/contributing.html" target="_self">Contribute to Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/contributing-flow.html" target="_self">Contributing Flow</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/pull-request.html" target="_self">Pull Request Template</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/how-to-reporting-bugs.html" target="_self">How to report bugs</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>Community<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/en-us/docs/community.html" target="_self">Community</a></li><li class="menu-item menu-item-level-3"><a href="/en-us/docs/nacos-dev.html" target="_self">Develop Team</a></li></ul></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>Open API Guide</h1>
+<p>Nacos 2.X is compatible with Nacos 1.X OpenAPI, please refer to the document <a href="../../../open-api.md">Nacos1.X OpenAPI</a>.</p>
+<blockquote>
+<p>Attension: OpenAPIs which do not specify a supported version, will be supported since 2.2.0.</p>
+</blockquote>
+<ul>
+<li>
+<p>Documentation Conventions</p>
+<ul>
+<li><a href="#0.1">API unified return body format</a></li>
+<li><a href="#0.2">API error code summary</a></li>
+</ul>
+</li>
+<li>
+<p>Configuration Management</p>
+<ul>
+<li><a href="#1.1">Get configuration</a></li>
+<li><a href="#1.2">Publish configuration</a></li>
+<li><a href="#1.3">Delete configuration</a></li>
+<li><a href="#1.4">Query list of history configuration</a></li>
+<li><a href="#1.5">Query the history details of the configuration</a></li>
+<li><a href="#1.6">Query the previous version of the configuration</a></li>
+<li><a href="#1.7">Query the list of configurations under the specified namespace</a></li>
+</ul>
+</li>
+<li>
+<p>Service Discovery</p>
+<ul>
+<li><a href="#2.1">Register instance</a></li>
+<li><a href="#2.2">Deregister instance</a></li>
+<li><a href="#2.3">Modify instance</a></li>
+<li><a href="#2.4">Query instance detail</a></li>
+<li><a href="#2.5">Query instances</a></li>
+<li><a href="#2.6">Batch update instance metadata(Beta)</a></li>
+<li><a href="#2.7">Batch delete instance metadata(Beta)</a></li>
+<li><a href="#2.8">Create service</a></li>
+<li><a href="#2.9">Delete service</a></li>
+<li><a href="#2.10">Update service</a></li>
+<li><a href="#2.11">Query service</a></li>
+<li><a href="#2.12">Query service list</a></li>
+<li><a href="#2.13">Query system switches</a></li>
+<li><a href="#2.14">Update system switch</a></li>
+<li><a href="#2.15">Query system metrics</a></li>
+<li><a href="#2.16">Update instance health status</a></li>
+<li><a href="#2.17">Query client list (new)</a></li>
+<li><a href="#2.18">Query client (new)</a></li>
+<li><a href="#2.19">Query the registration information of the client (new)</a></li>
+<li><a href="#2.20">Query the subscription information of the client (new)</a></li>
+<li><a href="#2.21">Query the client that registered the specified service (new)</a></li>
+<li><a href="#2.22">Query the information of clients subscribed to the specified service (new)</a></li>
+</ul>
+</li>
+<li>
+<p>Namespace</p>
+<ul>
+<li><a href="#3.1">Query namespaces</a></li>
+<li><a href="#3.2">Query namespace</a></li>
+<li><a href="#3.3">Create namespace</a></li>
+<li><a href="#3.4">Update namespace</a></li>
+<li><a href="#3.5">Delete namespace</a></li>
+</ul>
+</li>
+<li>
+<p>Cluster</p>
+<ul>
+<li><a href="#4.1">Query the current node</a></li>
+<li><a href="#4.2">Query the list of cluster nodes</a></li>
+<li><a href="#4.3">Query the current node health status</a></li>
+<li><a href="#4.4">Switch addressing modes</a></li>
+</ul>
+</li>
+</ul>
+<h2>Documentation Conventions</h2>
+<h2 id="0.1">API unified return body format</h2>
+<p>In Nacos 2.X, the response to all interface requests is a return body of type <code>json</code>, which has the same format</p>
+<pre><code class="language-json">{
+  <span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+  <span class="hljs-attr">"data"</span>: {}
+}
+</code></pre>
+<p>The meanings of the fields in the return body are shown in the following table</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">name</th>
+<th style="text-align:center">type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>code</code></td>
+<td style="text-align:center"><code>int</code></td>
+<td>Error code，<code>0</code> means the execution succeeded, non-<code>0</code> means the execution failed in one of the cases</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>message</code></td>
+<td style="text-align:center"><code>String</code></td>
+<td>Error code prompt message, execution success as &quot;<code>success</code>&quot;</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>data</code></td>
+<td style="text-align:center"><code>Any</code></td>
+<td>Return data, detailed error message in case of execution failure</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Since the <code>code</code> field is the same as the message field in case of successful execution, only the <code>data</code> field of the returned data will be introduced in the subsequent introduction of the returned results of the interface</p>
+</blockquote>
+<h2 id="0.2">API error code summary</h2>
+<p>The error codes and corresponding prompt messages in the return body of the API interface are summarized in the following table</p>
+<table>
+<thead>
+<tr>
+<th>Error Code</th>
+<th>message</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td><code>success</code></td>
+<td>Successful execution</td>
+</tr>
+<tr>
+<td><code>10000</code></td>
+<td><code>parameter missing</code></td>
+<td>Missing parameters</td>
+</tr>
+<tr>
+<td><code>10001</code></td>
+<td><code>access denied</code></td>
+<td>Access Denied</td>
+</tr>
+<tr>
+<td><code>10002</code></td>
+<td><code>data access error</code></td>
+<td>Data access error</td>
+</tr>
+<tr>
+<td><code>20001</code></td>
+<td><code>'tenant' parameter error</code></td>
+<td><code>tenant</code> parameter error</td>
+</tr>
+<tr>
+<td><code>20002</code></td>
+<td><code>parameter validate error</code></td>
+<td>Parameter validation error</td>
+</tr>
+<tr>
+<td><code>20003</code></td>
+<td><code>MediaType Error</code></td>
+<td><code>MediaType</code> error for HTTP requests</td>
+</tr>
+<tr>
+<td><code>20004</code></td>
+<td><code>resource not found</code></td>
+<td>Resource not found</td>
+</tr>
+<tr>
+<td><code>20005</code></td>
+<td><code>resource conflict</code></td>
+<td>Resource access conflicts</td>
+</tr>
+<tr>
+<td><code>20006</code></td>
+<td><code>config listener is null</code></td>
+<td>Listening configuration is empty</td>
+</tr>
+<tr>
+<td><code>20007</code></td>
+<td><code>config listener error</code></td>
+<td>Listening configuration error</td>
+</tr>
+<tr>
+<td><code>20008</code></td>
+<td><code>invalid dataId</code></td>
+<td>Invalid <code>dataId</code> (authentication failure)</td>
+</tr>
+<tr>
+<td><code>20009</code></td>
+<td><code>parameter mismatch</code></td>
+<td>Request parameter mismatch</td>
+</tr>
+<tr>
+<td><code>21000</code></td>
+<td><code>service name error</code></td>
+<td><code>serviceName</code> error</td>
+</tr>
+<tr>
+<td><code>21001</code></td>
+<td><code>weight error</code></td>
+<td><code>weight</code> error</td>
+</tr>
+<tr>
+<td><code>21002</code></td>
+<td><code>instance metadata error</code></td>
+<td>Instance <code>metadata</code> error</td>
+</tr>
+<tr>
+<td><code>21003</code></td>
+<td><code>instance not found</code></td>
+<td><code>instance</code> not found</td>
+</tr>
+<tr>
+<td><code>21004</code></td>
+<td><code>instance error</code></td>
+<td><code>instance</code> error</td>
+</tr>
+<tr>
+<td><code>21005</code></td>
+<td><code>service metadata error</code></td>
+<td>Service <code>metadata</code> error</td>
+</tr>
+<tr>
+<td><code>21006</code></td>
+<td><code>selector error</code></td>
+<td><code>selector</code> error</td>
+</tr>
+<tr>
+<td><code>21007</code></td>
+<td><code>service already exist</code></td>
+<td>Service already exists</td>
+</tr>
+<tr>
+<td><code>21008</code></td>
+<td><code>service not exist</code></td>
+<td>Service does not exist</td>
+</tr>
+<tr>
+<td><code>21009</code></td>
+<td><code>service delete failure</code></td>
+<td>Service instance exists, service deletion failed</td>
+</tr>
+<tr>
+<td><code>21010</code></td>
+<td><code>healthy param miss</code></td>
+<td><code>healthy</code> parameter miss</td>
+</tr>
+<tr>
+<td><code>21011</code></td>
+<td><code>health check still running</code></td>
+<td>Health check is still running</td>
+</tr>
+<tr>
+<td><code>22000</code></td>
+<td><code>illegal namespace</code></td>
+<td><code>namespace</code> is illegal</td>
+</tr>
+<tr>
+<td><code>22001</code></td>
+<td><code>namespace not exist</code></td>
+<td>Namespace does not exist</td>
+</tr>
+<tr>
+<td><code>22002</code></td>
+<td><code>namespace already exist</code></td>
+<td>Namespace already exists</td>
+</tr>
+<tr>
+<td><code>23000</code></td>
+<td><code>illegal state</code></td>
+<td><code>state</code> is illegal</td>
+</tr>
+<tr>
+<td><code>23001</code></td>
+<td><code>node info error</code></td>
+<td>Node information error</td>
+</tr>
+<tr>
+<td><code>23002</code></td>
+<td><code>node down failure</code></td>
+<td>Node offline operation error</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>30000</td>
+<td><code>server error</code></td>
+<td>Other internal errors</td>
+</tr>
+</tbody>
+</table>
+<h2>Configuration Management</h2>
+<h2 id="1.1">Get configuration</h2>
+<h3>Description</h3>
+<p>Get the specified configuration</p>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/cs/config</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Config group name</td>
+</tr>
+<tr>
+<td><code>dataId</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Config name</td>
+</tr>
+<tr>
+<td><code>tag</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Tag</td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>String</code></td>
+<td>Config content</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/cs/config?dataId=nacos.example&amp;group=DEFAULT_GROUP&amp;namespaceId=public'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+      <span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+      <span class="hljs-attr">"data"</span>: <span class="hljs-string">"contentTest"</span>
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="1.2">Publish configuration</h2>
+<h3>Description</h3>
+<p>Publish the specified configuration</p>
+<blockquote>
+<p>Update the configuration when it already exists</p>
+</blockquote>
+<h3>Request Method</h3>
+<p><code>POST</code></p>
+<p><code>Content-Type:application/x-www-form-urlencoded</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/cs/config</code></p>
+<h3>Request Body</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Config group</td>
+</tr>
+<tr>
+<td><code>dataId</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Config name</td>
+</tr>
+<tr>
+<td><code>content</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Config content</td>
+</tr>
+<tr>
+<td><code>tag</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Tag</td>
+</tr>
+<tr>
+<td><code>appName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Application name</td>
+</tr>
+<tr>
+<td><code>srcUser</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Source user</td>
+</tr>
+<tr>
+<td><code>configTags</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Configure Tag list, can be multiple, comma separated</td>
+</tr>
+<tr>
+<td><code>desc</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Config description</td>
+</tr>
+<tr>
+<td><code>use</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>effect</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Config type</td>
+</tr>
+<tr>
+<td><code>schema</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>boolean</code></td>
+<td>Whether the execution is successful</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -d 'dataId=nacos.example' \
+  -d 'group=DEFAULT_GROUP' \
+  -d 'namespaceId=public' \
+  -d 'content=contentTest' \
+  -X POST 'http://127.0.0.1:8848/nacos/v2/cs/config'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+      <span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+      <span class="hljs-attr">"data"</span>: <span class="hljs-literal">true</span>
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="1.3">Delete configuration</h2>
+<h3>Description</h3>
+<p>Delete the specified configuration</p>
+<h3>Request Method</h3>
+<p><code>DELETE</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/cs/config</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Config group name</td>
+</tr>
+<tr>
+<td><code>dataId</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Config name</td>
+</tr>
+<tr>
+<td><code>tag</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Tag</td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>boolean</code></td>
+<td>Whether the execution is successful</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X DELETE 'http://127.0.0.1:8848/nacos/v2/cs/config?dataId=nacos.example&amp;group=DEFAULT_GROUP&amp;namespaceId=public'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+      <span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+      <span class="hljs-attr">"data"</span>: <span class="hljs-literal">true</span>
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="1.4">Query list of history configuration</h2>
+<h3>Description</h3>
+<p>Get a list of historical versions of the specified configuration</p>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/cs/history/list</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Config group name</td>
+</tr>
+<tr>
+<td><code>dataId</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Config name</td>
+</tr>
+<tr>
+<td><code>pageNo</code></td>
+<td><code>int</code></td>
+<td>N</td>
+<td>Current page, default is <code>1</code></td>
+</tr>
+<tr>
+<td><code>pageSize</code></td>
+<td><code>int</code></td>
+<td>N</td>
+<td>Number of page entries, default is <code>100</code>, maximum is <code>500</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>Object</code></td>
+<td>Paging Search Results</td>
+</tr>
+<tr>
+<td><code>data.totalCount</code></td>
+<td><code>int</code></td>
+<td>Total</td>
+</tr>
+<tr>
+<td><code>data.pageNumber</code></td>
+<td><code>int</code></td>
+<td>Current page</td>
+</tr>
+<tr>
+<td><code>data.pagesAvailable</code></td>
+<td><code>int</code></td>
+<td>Total number of pages</td>
+</tr>
+<tr>
+<td><code>data.pageItems</code></td>
+<td><code>Object[]</code></td>
+<td>List of historical configuration items, refer to <a href="#ConfigHistoryInfo">Historical configuration item</a></td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/cs/history/list?dataId=nacos.example&amp;group=com.alibaba.nacos&amp;namespaceId='
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: {
+		<span class="hljs-attr">"totalCount"</span>: <span class="hljs-number">1</span>,
+		<span class="hljs-attr">"pageNumber"</span>: <span class="hljs-number">1</span>,
+		<span class="hljs-attr">"pagesAvailable"</span>: <span class="hljs-number">1</span>,
+		<span class="hljs-attr">"pageItems"</span>: [
+			{
+                <span class="hljs-attr">"id"</span>: <span class="hljs-string">"203"</span>,
+                <span class="hljs-attr">"lastId"</span>: <span class="hljs-number">-1</span>,
+                <span class="hljs-attr">"dataId"</span>: <span class="hljs-string">"nacos.example"</span>,
+                <span class="hljs-attr">"group"</span>: <span class="hljs-string">"com.alibaba.nacos"</span>,
+                <span class="hljs-attr">"tenant"</span>: <span class="hljs-string">""</span>,
+                <span class="hljs-attr">"appName"</span>: <span class="hljs-string">""</span>,
+                <span class="hljs-attr">"md5"</span>: <span class="hljs-string">"9f67e6977b100e00cab385a75597db58"</span>,
+  				<span class="hljs-attr">"content"</span>: <span class="hljs-string">"contentTest"</span>,
+                <span class="hljs-attr">"srcIp"</span>: <span class="hljs-string">"0:0:0:0:0:0:0:1"</span>,
+                <span class="hljs-attr">"srcUser"</span>: <span class="hljs-literal">null</span>,
+                <span class="hljs-attr">"opType"</span>: <span class="hljs-string">"I"</span>,
+                <span class="hljs-attr">"createdTime"</span>: <span class="hljs-string">"2010-05-04T16:00:00.000+0000"</span>,
+                <span class="hljs-attr">"lastModifiedTime"</span>: <span class="hljs-string">"2020-12-05T01:48:03.380+0000"</span>
+			}
+		]
+	}
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="1.5">Query the history details of the configuration</h2>
+<h3>Description</h3>
+<p>Get the historical configuration of the specified version</p>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/cs/history</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Config group name</td>
+</tr>
+<tr>
+<td><code>dataId</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Config name</td>
+</tr>
+<tr>
+<td><code>nid</code></td>
+<td><code>long</code></td>
+<td><strong>Y</strong></td>
+<td>History configuration id</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ConfigHistoryInfo">Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>Object</code></td>
+<td>Historical configuration item</td>
+</tr>
+<tr>
+<td><code>data.id</code></td>
+<td><code>String</code></td>
+<td>Config <code>id</code></td>
+</tr>
+<tr>
+<td><code>data.lastId</code></td>
+<td><code>int</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>data.dataId</code></td>
+<td><code>String</code></td>
+<td>Config name</td>
+</tr>
+<tr>
+<td><code>data.group</code></td>
+<td><code>String</code></td>
+<td>config group</td>
+</tr>
+<tr>
+<td><code>data.tenant</code></td>
+<td><code>String</code></td>
+<td>Tenant (namespace)</td>
+</tr>
+<tr>
+<td><code>data.appName</code></td>
+<td><code>String</code></td>
+<td>Application name</td>
+</tr>
+<tr>
+<td><code>data.md5</code></td>
+<td><code>String</code></td>
+<td>The md5 value of config content</td>
+</tr>
+<tr>
+<td><code>data.content</code></td>
+<td><code>String</code></td>
+<td>Config content</td>
+</tr>
+<tr>
+<td><code>data.srcIp</code></td>
+<td><code>String</code></td>
+<td>Source ip</td>
+</tr>
+<tr>
+<td><code>data.srcUser</code></td>
+<td><code>String</code></td>
+<td>Source user</td>
+</tr>
+<tr>
+<td><code>data.opType</code></td>
+<td><code>String</code></td>
+<td>Operator type</td>
+</tr>
+<tr>
+<td><code>data.createdTime</code></td>
+<td><code>String</code></td>
+<td>Creation time</td>
+</tr>
+<tr>
+<td><code>data.lastModifiedTime</code></td>
+<td><code>String</code></td>
+<td>Last modified time</td>
+</tr>
+<tr>
+<td><code>data.encryptedDataKey</code></td>
+<td><code>String</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/cs/history?dataId=nacos.example&amp;group=com.alibaba.nacos&amp;namespaceId=&amp;nid=203'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: {
+        <span class="hljs-attr">"id"</span>: <span class="hljs-string">"203"</span>,
+        <span class="hljs-attr">"lastId"</span>: <span class="hljs-number">-1</span>,
+        <span class="hljs-attr">"dataId"</span>: <span class="hljs-string">"nacos.example"</span>,
+        <span class="hljs-attr">"group"</span>: <span class="hljs-string">"com.alibaba.nacos"</span>,
+        <span class="hljs-attr">"tenant"</span>: <span class="hljs-string">""</span>,
+        <span class="hljs-attr">"appName"</span>: <span class="hljs-string">""</span>,
+        <span class="hljs-attr">"md5"</span>: <span class="hljs-string">"9f67e6977b100e00cab385a75597db58"</span>,
+  		<span class="hljs-attr">"content"</span>: <span class="hljs-string">"contentTest"</span>,
+        <span class="hljs-attr">"srcIp"</span>: <span class="hljs-string">"0:0:0:0:0:0:0:1"</span>,
+        <span class="hljs-attr">"srcUser"</span>: <span class="hljs-literal">null</span>,
+        <span class="hljs-attr">"opType"</span>: <span class="hljs-string">"I"</span>,
+        <span class="hljs-attr">"createdTime"</span>: <span class="hljs-string">"2010-05-04T16:00:00.000+0000"</span>,
+        <span class="hljs-attr">"lastModifiedTime"</span>: <span class="hljs-string">"2020-12-05T01:48:03.380+0000"</span>
+	}
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="1.6">Query the previous version of the configuration</h2>
+<h3>Description</h3>
+<p>Get the previous version of the specified configuration</p>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/cs/history/previous</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>group</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Config group name</td>
+</tr>
+<tr>
+<td><code>dataId</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Config name</td>
+</tr>
+<tr>
+<td><code>id</code></td>
+<td><code>long</code></td>
+<td><strong>Y</strong></td>
+<td>config id</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ConfigHistoryInfo">Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>Object</code></td>
+<td>Historical configuration item, refer to <a href="#ConfigHistoryInfo">Historical configuration item</a></td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/cs/history/previous?id=309135486247505920&amp;dataId=nacos.example&amp;group=com.alibaba.nacos&amp;namespaceId='
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: {
+        <span class="hljs-attr">"id"</span>: <span class="hljs-string">"203"</span>,
+        <span class="hljs-attr">"lastId"</span>: <span class="hljs-number">-1</span>,
+        <span class="hljs-attr">"dataId"</span>: <span class="hljs-string">"nacos.example"</span>,
+        <span class="hljs-attr">"group"</span>: <span class="hljs-string">"com.alibaba.nacos"</span>,
+        <span class="hljs-attr">"tenant"</span>: <span class="hljs-string">""</span>,
+        <span class="hljs-attr">"appName"</span>: <span class="hljs-string">""</span>,
+        <span class="hljs-attr">"md5"</span>: <span class="hljs-string">"9f67e6977b100e00cab385a75597db58"</span>,
+  		<span class="hljs-attr">"content"</span>: <span class="hljs-string">"contentTest"</span>,
+        <span class="hljs-attr">"srcIp"</span>: <span class="hljs-string">"0:0:0:0:0:0:0:1"</span>,
+        <span class="hljs-attr">"srcUser"</span>: <span class="hljs-literal">null</span>,
+        <span class="hljs-attr">"opType"</span>: <span class="hljs-string">"I"</span>,
+        <span class="hljs-attr">"createdTime"</span>: <span class="hljs-string">"2010-05-04T16:00:00.000+0000"</span>,
+        <span class="hljs-attr">"lastModifiedTime"</span>: <span class="hljs-string">"2020-12-05T01:48:03.380+0000"</span>
+	}
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="1.7">Query the list of configurations under the specified namespace</h2>
+<h3>Description</h3>
+<p>Get the list of configurations under the specified namespace</p>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/cs/history/configs</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Namespace</td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>Object[]</code></td>
+<td>Config list</td>
+</tr>
+<tr>
+<td><code>data.id</code></td>
+<td><code>String</code></td>
+<td>config <code>id</code></td>
+</tr>
+<tr>
+<td><code>data.dataId</code></td>
+<td><code>String</code></td>
+<td>Config name</td>
+</tr>
+<tr>
+<td><code>data.group</code></td>
+<td><code>String</code></td>
+<td>Config group</td>
+</tr>
+<tr>
+<td><code>data.content</code></td>
+<td><code>String</code></td>
+<td>Config content</td>
+</tr>
+<tr>
+<td><code>data.md5</code></td>
+<td><code>String</code></td>
+<td>the md5 value of config content</td>
+</tr>
+<tr>
+<td><code>data.encryptedDataKey</code></td>
+<td><code>String</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>data.tenant</code></td>
+<td><code>String</code></td>
+<td>Tenant (namespace)</td>
+</tr>
+<tr>
+<td><code>data.appName</code></td>
+<td><code>String</code></td>
+<td>Application name</td>
+</tr>
+<tr>
+<td><code>data.type</code></td>
+<td><code>String</code></td>
+<td>config file Type</td>
+</tr>
+<tr>
+<td><code>data.lastModified</code></td>
+<td><code>long</code></td>
+<td>Last modified time</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Only the <code>dataId</code>, <code>group</code>, <code>tenant</code>, <code>appName</code>, <code>type</code> fields are valid for the configuration information in the returned data, the other fields are default values</p>
+</blockquote>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/cs/history/configs?namespaceId='
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: [
+		{
+			<span class="hljs-attr">"id"</span>: <span class="hljs-string">"0"</span>,
+			<span class="hljs-attr">"dataId"</span>: <span class="hljs-string">"nacos.example"</span>,
+        	<span class="hljs-attr">"group"</span>: <span class="hljs-string">"com.alibaba.nacos"</span>,
+			<span class="hljs-attr">"content"</span>: <span class="hljs-literal">null</span>,
+			<span class="hljs-attr">"md5"</span>: <span class="hljs-literal">null</span>,
+			<span class="hljs-attr">"encryptedDataKey"</span>: <span class="hljs-literal">null</span>,
+			<span class="hljs-attr">"tenant"</span>: <span class="hljs-string">""</span>,
+			<span class="hljs-attr">"appName"</span>: <span class="hljs-string">""</span>,
+			<span class="hljs-attr">"type"</span>: <span class="hljs-string">"yaml"</span>,
+			<span class="hljs-attr">"lastModified"</span>: <span class="hljs-number">0</span>
+		}
+    ]
+}
+</code></pre>
+</li>
+</ul>
+<h2>Service Discovery</h2>
+<h2 id="2.1">Register instance</h2>
+<h3>Description</h3>
+<p>Register an instance</p>
+<h3>Request Method</h3>
+<p><code>POST</code></p>
+<p><code>Content-Type:application/x-www-form-urlencoded</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/instance</code></p>
+<h3>Request Body</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace<code>Id</code>, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>groupName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Group name, default is <code>DEFAULT_GROUP</code></td>
+</tr>
+<tr>
+<td><code>serviceName</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Service name</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td><code>IP</code> address</td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td><code>int</code></td>
+<td><strong>Y</strong></td>
+<td>Port number</td>
+</tr>
+<tr>
+<td><code>clusterName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Cluster name, default is <code>DEFAULT</code></td>
+</tr>
+<tr>
+<td><code>healthy</code></td>
+<td><code>boolean</code></td>
+<td>N</td>
+<td>Whether to find only healthy instances, default is <code>true</code></td>
+</tr>
+<tr>
+<td><code>weight</code></td>
+<td><code>double</code></td>
+<td>N</td>
+<td>Instance weights, default is <code>1.0</code></td>
+</tr>
+<tr>
+<td><code>enabled</code></td>
+<td><code>boolean</code></td>
+<td>N</td>
+<td>Enable or not, default is <code>true</code></td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td><code>JSON format String</code></td>
+<td>N</td>
+<td>Instance metadata</td>
+</tr>
+<tr>
+<td><code>ephemeral</code></td>
+<td><code>boolean</code></td>
+<td>N</td>
+<td>Whether it is a temporary instance</td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>boolean</code></td>
+<td>Whether the execution is successful</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -d 'serviceName=test_service' \
+  -d 'ip=127.0.0.1' \
+  -d 'port=8090' \
+  -d 'weight=0.9' \
+  -d 'ephemeral=true' \
+  -X POST 'http://127.0.0.1:8848/nacos/v2/ns/instance'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+      <span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+      <span class="hljs-attr">"data"</span>: <span class="hljs-literal">true</span>
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.2">Deregister instance</h2>
+<h3>Description</h3>
+<p>Deregister a specified instance</p>
+<h3>Request Method</h3>
+<p><code>DELETE</code></p>
+<p><code>Content-Type:application/x-www-form-urlencoded</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/instance</code></p>
+<h3>Request Body</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace<code>Id</code>, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>groupName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Group name, default is <code>DEFAULT_GROUP</code></td>
+</tr>
+<tr>
+<td><code>serviceName</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Service name</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td><code>IP</code> address</td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td><code>int</code></td>
+<td><strong>Y</strong></td>
+<td>Port number</td>
+</tr>
+<tr>
+<td><code>clusterName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Cluster name, default is <code>DEFAULT</code></td>
+</tr>
+<tr>
+<td><code>healthy</code></td>
+<td><code>boolean</code></td>
+<td>N</td>
+<td>Whether to find only healthy instances, default is <code>true</code></td>
+</tr>
+<tr>
+<td><code>weight</code></td>
+<td><code>double</code></td>
+<td>N</td>
+<td>Instance weights, default is <code>1.0</code></td>
+</tr>
+<tr>
+<td><code>enabled</code></td>
+<td><code>boolean</code></td>
+<td>N</td>
+<td>Enable or not, default is <code>true</code></td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td><code>JSON format String</code></td>
+<td>N</td>
+<td>Instance metadata</td>
+</tr>
+<tr>
+<td><code>ephemeral</code></td>
+<td><code>boolean</code></td>
+<td>N</td>
+<td>Whether it is a temporary instance</td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>boolean</code></td>
+<td>Whether the execution is successful</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -d 'serviceName=test_service' \
+  -d 'ip=127.0.0.1' \
+  -d 'port=8090' \
+  -d 'weight=0.9' \
+  -d 'ephemeral=true' \
+  -X DELETE 'http://127.0.0.1:8848/nacos/v2/ns/instance'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+      <span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+      <span class="hljs-attr">"data"</span>: <span class="hljs-literal">true</span>
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.3">Modify instance</h2>
+<h3>Description</h3>
+<p>Modify instance information</p>
+<blockquote>
+<p>The metadata updated through this interface has a higher priority and has the ability to remember. After the instance removed, it will still exist for a period of time. If the instance is re-registered during this period, the metadata will still be Effective. You can modify the memory time through <code>nacos.naming.clean.expired-metadata.expired-time</code> <strong>and</strong> <code>nacos.naming.clean.expired-metadata.interval</code></p>
+</blockquote>
+<h3>Request Method</h3>
+<p><code>PUT</code></p>
+<p><code>Content-Type:application/x-www-form-urlencoded</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/instance</code></p>
+<h3>Request Body</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace<code>Id</code>, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>groupName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Group name, default is <code>DEFAULT_GROUP</code></td>
+</tr>
+<tr>
+<td><code>serviceName</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Service name</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td><code>IP</code> address</td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td><code>int</code></td>
+<td><strong>Y</strong></td>
+<td>Port number</td>
+</tr>
+<tr>
+<td><code>clusterName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Cluster name, default is <code>DEFAULT</code></td>
+</tr>
+<tr>
+<td><code>healthy</code></td>
+<td><code>boolean</code></td>
+<td>N</td>
+<td>Whether to find only healthy instances, default is <code>true</code></td>
+</tr>
+<tr>
+<td><code>weight</code></td>
+<td><code>double</code></td>
+<td>N</td>
+<td>Instance weights, default is <code>1.0</code></td>
+</tr>
+<tr>
+<td><code>enabled</code></td>
+<td><code>boolean</code></td>
+<td>N</td>
+<td>Enable or not, default is <code>true</code></td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td><code>JSON format String</code></td>
+<td>N</td>
+<td>Instance metadata</td>
+</tr>
+<tr>
+<td><code>ephemeral</code></td>
+<td><code>boolean</code></td>
+<td>N</td>
+<td>Whether it is a temporary instance</td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>boolean</code></td>
+<td>Whether the execution is successful</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -d 'serviceName=test_service' \
+  -d 'ip=127.0.0.1' \
+  -d 'port=8090' \
+  -d 'weight=0.9' \
+  -d 'ephemeral=true' \
+  -X PUT 'http://127.0.0.1:8848/nacos/v2/ns/instance'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+      <span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+      <span class="hljs-attr">"data"</span>: <span class="hljs-literal">true</span>
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.4">Query instance detail</h2>
+<h3>Description</h3>
+<p>Query the details of a specific instance</p>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/instance</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace<code>Id</code>, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>groupName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Group name, default is <code>DEFAULT_GROUP</code></td>
+</tr>
+<tr>
+<td><code>serviceName</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Service name</td>
+</tr>
+<tr>
+<td><code>clusterName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Cluster name, default is <code>DEFAULT</code></td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td><code>IP</code> address</td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td><code>int</code></td>
+<td><strong>Y</strong></td>
+<td>Port number</td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>Object</code></td>
+<td>Instance details information</td>
+</tr>
+<tr>
+<td><code>data.serviceName</code></td>
+<td><code>String</code></td>
+<td>Service name</td>
+</tr>
+<tr>
+<td><code>data.ip</code></td>
+<td><code>String</code></td>
+<td><code>IP</code> address</td>
+</tr>
+<tr>
+<td><code>data.port</code></td>
+<td><code>int</code></td>
+<td>Port number</td>
+</tr>
+<tr>
+<td><code>data.clusterName</code></td>
+<td><code>String</code></td>
+<td>Cluster name</td>
+</tr>
+<tr>
+<td><code>data.weight</code></td>
+<td><code>double</code></td>
+<td>Instance weight</td>
+</tr>
+<tr>
+<td><code>data.healthy</code></td>
+<td><code>boolean</code></td>
+<td>healthy</td>
+</tr>
+<tr>
+<td><code>data.instanceId</code></td>
+<td><code>String</code></td>
+<td>Instance <code>id</code></td>
+</tr>
+<tr>
+<td><code>data.metadata</code></td>
+<td><code>map</code></td>
+<td>Instance metadata</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/instance?namespaceId=public&amp;groupName=&amp;serviceName=test_service&amp;ip=127.0.0.1&amp;port=8080'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: {
+		<span class="hljs-attr">"serviceName"</span>: <span class="hljs-string">"DEFAULT_GROUP@@test_service"</span>,
+		<span class="hljs-attr">"ip"</span>: <span class="hljs-string">"127.0.0.1"</span>,
+		<span class="hljs-attr">"port"</span>: <span class="hljs-number">8080</span>,
+		<span class="hljs-attr">"clusterName"</span>: <span class="hljs-string">"DEFAULT"</span>,
+		<span class="hljs-attr">"weight"</span>: <span class="hljs-number">1.0</span>,
+		<span class="hljs-attr">"healthy"</span>: <span class="hljs-literal">true</span>,
+		<span class="hljs-attr">"instanceId"</span>: <span class="hljs-literal">null</span>,
+		<span class="hljs-attr">"metadata"</span>: {
+			<span class="hljs-attr">"value"</span>: <span class="hljs-string">"1"</span>
+		}
+	}
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.5">Query instances</h2>
+<h3>Description</h3>
+<p>Query the list of instances under the specified service</p>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/instance/list</code></p>
+<h3>Request Header</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>User-Agent</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>User agent, default is empty</td>
+</tr>
+<tr>
+<td><code>Client-Version</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Client version, default is empty</td>
+</tr>
+</tbody>
+</table>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace<code>Id</code>, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>groupName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Group name, default is empty</td>
+</tr>
+<tr>
+<td><code>serviceName</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Service name</td>
+</tr>
+<tr>
+<td><code>clusterName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Cluster name, default is <code>DEFAULT</code></td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td><code>IP</code> address, the default is empty, which means no restrictions on <code>IP</code> address</td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td><code>int</code></td>
+<td>N</td>
+<td>Port numberThe default is <code>0</code>, which means no restriction on port number</td>
+</tr>
+<tr>
+<td><code>healthyOnly</code></td>
+<td><code>boolean</code></td>
+<td>N</td>
+<td>Whether to get only healthy instances, default is <code>false</code></td>
+</tr>
+<tr>
+<td><code>app</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Application name, default is empty</td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td></td>
+<td>List of instances of the specified service</td>
+</tr>
+<tr>
+<td><code>data.name</code></td>
+<td><code>String</code></td>
+<td>Group name@@Service name</td>
+</tr>
+<tr>
+<td><code>data.groupName</code></td>
+<td><code>String</code></td>
+<td>Group name</td>
+</tr>
+<tr>
+<td><code>data.clusters</code></td>
+<td><code>String</code></td>
+<td>Cluster name</td>
+</tr>
+<tr>
+<td><code>data.cacheMillis</code></td>
+<td><code>int</code></td>
+<td>Cache name</td>
+</tr>
+<tr>
+<td><code>data.hosts</code></td>
+<td><code>Object[]</code></td>
+<td>Instance list</td>
+</tr>
+<tr>
+<td><code>data.hosts.ip</code></td>
+<td><code>String</code></td>
+<td>Instance <code>IP</code></td>
+</tr>
+<tr>
+<td><code>data.hosts.port</code></td>
+<td><code>int</code></td>
+<td>Instance Port number</td>
+</tr>
+<tr>
+<td><code>data.hosts.weight</code></td>
+<td><code>double</code></td>
+<td>Instance weight</td>
+</tr>
+<tr>
+<td><code>data.hosts.healthy</code></td>
+<td><code>boolean</code></td>
+<td>Instance healthy</td>
+</tr>
+<tr>
+<td><code>data.hosts.enabled</code></td>
+<td><code>boolean</code></td>
+<td>Instance is enabled</td>
+</tr>
+<tr>
+<td><code>data.hosts.ephemeral</code></td>
+<td><code>boolean</code></td>
+<td>Whether it is a temporary instance</td>
+</tr>
+<tr>
+<td><code>data.hosts.clusterName</code></td>
+<td><code>String</code></td>
+<td>Name of the cluster where the instance is located</td>
+</tr>
+<tr>
+<td><code>data.hosts.serviceName</code></td>
+<td><code>String</code></td>
+<td>Service name</td>
+</tr>
+<tr>
+<td><code>data.hosts.metadata</code></td>
+<td><code>map</code></td>
+<td>Instance metadata</td>
+</tr>
+<tr>
+<td><code>data.hosts.instanceHeartBeatTimeOut</code></td>
+<td><code>int</code></td>
+<td>Instance heartbeat timeout time</td>
+</tr>
+<tr>
+<td><code>data.hosts.ipDeleteTimeout</code></td>
+<td><code>int</code></td>
+<td>Instance delete timeout time</td>
+</tr>
+<tr>
+<td><code>data.hosts.instanceHeartBeatInterval</code></td>
+<td><code>int</code></td>
+<td>Instance heartbeat interval</td>
+</tr>
+<tr>
+<td><code>data.lastRefTime</code></td>
+<td><code>int</code></td>
+<td>last refresh time</td>
+</tr>
+<tr>
+<td><code>data.checksum</code></td>
+<td><code>int</code></td>
+<td>checksum</td>
+</tr>
+<tr>
+<td><code>data.allIPs</code></td>
+<td><code>boolean</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>data.reachProtectionThreshold</code></td>
+<td><code>boolean</code></td>
+<td>Whether the protection threshold is reached</td>
+</tr>
+<tr>
+<td><code>data.valid</code></td>
+<td><code>boolean</code></td>
+<td>Valid</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/instance/list?serviceName=test_service&amp;ip=127.0.0.1'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: {
+		<span class="hljs-attr">"name"</span>: <span class="hljs-string">"DEFAULT_GROUP@@test_service"</span>,
+		<span class="hljs-attr">"groupName"</span>: <span class="hljs-string">"DEFAULT_GROUP"</span>,
+		<span class="hljs-attr">"clusters"</span>: <span class="hljs-string">""</span>,
+		<span class="hljs-attr">"cacheMillis"</span>: <span class="hljs-number">10000</span>,
+		<span class="hljs-attr">"hosts"</span>: [
+			{
+				<span class="hljs-attr">"ip"</span>: <span class="hljs-string">"127.0.0.1"</span>,
+				<span class="hljs-attr">"port"</span>: <span class="hljs-number">8080</span>,
+				<span class="hljs-attr">"weight"</span>: <span class="hljs-number">1.0</span>,
+				<span class="hljs-attr">"healthy"</span>: <span class="hljs-literal">true</span>,
+				<span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
+				<span class="hljs-attr">"ephemeral"</span>: <span class="hljs-literal">true</span>,
+				<span class="hljs-attr">"clusterName"</span>: <span class="hljs-string">"DEFAULT"</span>,
+				<span class="hljs-attr">"serviceName"</span>: <span class="hljs-string">"DEFAULT_GROUP@@test_service"</span>,
+				<span class="hljs-attr">"metadata"</span>: {
+					<span class="hljs-attr">"value"</span>: <span class="hljs-string">"1"</span>
+				},
+				<span class="hljs-attr">"instanceHeartBeatTimeOut"</span>: <span class="hljs-number">15000</span>,
+				<span class="hljs-attr">"ipDeleteTimeout"</span>: <span class="hljs-number">30000</span>,
+				<span class="hljs-attr">"instanceHeartBeatInterval"</span>: <span class="hljs-number">5000</span>
+			}
+		],
+		<span class="hljs-attr">"lastRefTime"</span>: <span class="hljs-number">1662554390814</span>,
+		<span class="hljs-attr">"checksum"</span>: <span class="hljs-string">""</span>,
+		<span class="hljs-attr">"allIPs"</span>: <span class="hljs-literal">false</span>,
+		<span class="hljs-attr">"reachProtectionThreshold"</span>: <span class="hljs-literal">false</span>,
+		<span class="hljs-attr">"valid"</span>: <span class="hljs-literal">true</span>
+	}
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.6">Batch update instance metadata</h2>
+<h3>Description</h3>
+<p>Batch update instance metadata</p>
+<blockquote>
+<p>If the key corresponding to the metadata does not exist, add the corresponding metadata.</p>
+</blockquote>
+<h3>Request Method</h3>
+<p><code>PUT</code></p>
+<p><code>Content-Type:application/x-www-form-urlencoded</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/instance/metadata/batch</code></p>
+<h3>Request Body</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace<code>Id</code>, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>groupName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Group name, default is <code>DEFAULT_GROUP</code></td>
+</tr>
+<tr>
+<td><code>serviceName</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Service name</td>
+</tr>
+<tr>
+<td><code>consistencyType</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Persistence type,  default is empty</td>
+</tr>
+<tr>
+<td><code>instances</code></td>
+<td><code>JSON format String</code></td>
+<td>N</td>
+<td>Instance list, default is empty</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td><code>JSON format String</code></td>
+<td><strong>Y</strong></td>
+<td>Instance metadata</td>
+</tr>
+</tbody>
+</table>
+<h3>Parameter Description</h3>
+<blockquote>
+<ul>
+<li><code>consistencyType</code>: Persistence type of Instance, when ``persist`'' means update the metadata of persistent Instance; otherwise means update the metadata of temporary Instance</li>
+<li><code>instances</code>: Instance list to be updated, <code>json</code> array, locate an instance by <code>ip+port+ephemeral+cluster</code>, null means update the metadata of all instances under the specified service</li>
+</ul>
+</blockquote>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>boolean</code></td>
+<td>Whether the execution is successful</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -d 'serviceName=test_service' \
+  -d 'consistencyType=ephemeral' \
+  -d 'instances=[{"ip":"3.3.3.3","port": "8080","ephemeral":"true","clusterName":"xxxx-cluster"},{"ip":"2.2.2.2","port":"8080","ephemeral":"true","clusterName":"xxxx-cluster"}]' \
+  -d 'metadata={"age":"20","name":"cocolan"}' \
+  -X PUT 'http://127.0.0.1:8848/nacos/v2/ns/instance/metadata/batch'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+      <span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+      <span class="hljs-attr">"data"</span>: <span class="hljs-literal">true</span>
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.7">Batch delete instance metadata</h2>
+<h3>Description</h3>
+<p>Batch delete instance metadata</p>
+<blockquote>
+<p>If the key corresponding to the metadata does not exist, then no operation is performed</p>
+</blockquote>
+<h3>Request Method</h3>
+<p><code>DELETE</code></p>
+<p><code>Content-Type:application/x-www-form-urlencoded</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/instance/metadata/batch</code></p>
+<h3>Request Body</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace<code>Id</code>, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>groupName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Group name, default is <code>DEFAULT_GROUP</code></td>
+</tr>
+<tr>
+<td><code>serviceName</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Service name</td>
+</tr>
+<tr>
+<td><code>consistencyType</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Persistence type,  default is empty</td>
+</tr>
+<tr>
+<td><code>instances</code></td>
+<td><code>JSON format String</code></td>
+<td>N</td>
+<td>Instance list, default is empty</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td><code>JSON format String</code></td>
+<td><strong>Y</strong></td>
+<td>Instance metadata</td>
+</tr>
+</tbody>
+</table>
+<h3>Parameter Description</h3>
+<blockquote>
+<ul>
+<li><code>consistencyType</code>: Persistence type of Instance, when ``persist`'' means update the metadata of persistent Instance; otherwise means update the metadata of temporary Instance</li>
+<li><code>instances</code>: Instance list to be updated, <code>json</code> array, locate an instance by <code>ip+port+ephemeral+cluster</code>, null means update the metadata of all instances under the specified service</li>
+</ul>
+</blockquote>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>boolean</code></td>
+<td>Whether the execution is successful</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -d 'serviceName=test_service' \
+  -d 'consistencyType=ephemeral' \
+  -d 'instances=[{"ip":"3.3.3.3","port": "8080","ephemeral":"true","clusterName":"xxxx-cluster"},{"ip":"2.2.2.2","port":"8080","ephemeral":"true","clusterName":"xxxx-cluster"}]' \
+  -d 'metadata={"age":"20","name":"cocolan"}' \
+  -X DELETE 'http://127.0.0.1:8848/nacos/v2/ns/instance/metadata/batch'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+      <span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+      <span class="hljs-attr">"data"</span>: <span class="hljs-literal">true</span>
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.8">Create service</h2>
+<h3>Description</h3>
+<p>Create a service</p>
+<blockquote>
+<p>Failed to create when service already exists</p>
+</blockquote>
+<h3>Request Method</h3>
+<p><code>POST</code></p>
+<p><code>Content-Type:application/x-www-form-urlencoded</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/service</code></p>
+<h3>Request Body</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace<code>Id</code>, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>groupName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Group name, default is <code>DEFAULT_GROUP</code></td>
+</tr>
+<tr>
+<td><code>serviceName</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Service name</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td><code>JSON format String</code></td>
+<td>N</td>
+<td>Service metadata, default is empty</td>
+</tr>
+<tr>
+<td><code>ephemeral</code></td>
+<td><code>boolean</code></td>
+<td>N</td>
+<td>Whether it is a temporary instance, default is <code>false</code></td>
+</tr>
+<tr>
+<td><code>protectThreshold</code></td>
+<td><code>float</code></td>
+<td>N</td>
+<td>Protection threshold, default is <code>0</code></td>
+</tr>
+<tr>
+<td><code>selector</code></td>
+<td><code>JSON format String</code></td>
+<td>N</td>
+<td>Selector, default is empty</td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>boolean</code></td>
+<td>Whether the execution is successful</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -d 'serviceName=nacos.test.1' \
+  -d 'ephemeral=true' \
+  -d 'metadata={"k1":"v1"}' \
+  -X POST 'http://127.0.0.1:8848/nacos/v2/ns/service'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+      <span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+      <span class="hljs-attr">"data"</span>: <span class="hljs-literal">true</span>
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.9">Delete service</h2>
+<h3>Description</h3>
+<p>Delete the specified service</p>
+<blockquote>
+<p>An error is reported when the service does not exist, and deletion fails when an instance of the service still exists</p>
+</blockquote>
+<h3>Request Method</h3>
+<p><code>DELETE</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/service</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace<code>Id</code>, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>groupName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Group name, default is <code>DEFAULT_GROUP</code></td>
+</tr>
+<tr>
+<td><code>serviceName</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Service name</td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>boolean</code></td>
+<td>Whether the execution is successful</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X DELETE 'http://127.0.0.1:8848/nacos/v2/ns/service?serviceName=nacos.test.1'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+      <span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+      <span class="hljs-attr">"data"</span>: <span class="hljs-literal">true</span>
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.10">Update service</h2>
+<h3>Description</h3>
+<p>Update the specified service</p>
+<blockquote>
+<p>Error when service does not exist</p>
+</blockquote>
+<h3>Request Method</h3>
+<p><code>POST</code></p>
+<p><code>Content-Type:application/x-www-form-urlencoded</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/service</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace<code>Id</code>, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>groupName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Group name, default is <code>DEFAULT_GROUP</code></td>
+</tr>
+<tr>
+<td><code>serviceName</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Service name</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td><code>JSON format String</code></td>
+<td>N</td>
+<td>Service metadata, default is empty</td>
+</tr>
+<tr>
+<td><code>protectThreshold</code></td>
+<td><code>float</code></td>
+<td>N</td>
+<td>Protection threshold, default is <code>0</code></td>
+</tr>
+<tr>
+<td><code>selector</code></td>
+<td><code>JSON format String</code></td>
+<td>N</td>
+<td>Selector, default is empty</td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>boolean</code></td>
+<td>Whether the execution is successful</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -d 'serviceName=nacos.test.1' \
+  -d 'metadata={"k1":"v2"}' \
+  -X PUT 'http://127.0.0.1:8848/nacos/v2/ns/service'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+      <span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+      <span class="hljs-attr">"data"</span>: <span class="hljs-literal">true</span>
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.11">Query service</h2>
+<h3>Description</h3>
+<p>Query detailed information about a specific service</p>
+<blockquote>
+<p>Error when service does not exist</p>
+</blockquote>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/service</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace<code>Id</code>, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>groupName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Group name, default is empty</td>
+</tr>
+<tr>
+<td><code>serviceName</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Service name</td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td></td>
+<td>Service information</td>
+</tr>
+<tr>
+<td><code>data.namespace</code></td>
+<td><code>String</code></td>
+<td>Namespace</td>
+</tr>
+<tr>
+<td><code>data.groupName</code></td>
+<td><code>String</code></td>
+<td>Group name</td>
+</tr>
+<tr>
+<td><code>data.serviceName</code></td>
+<td><code>String</code></td>
+<td>Service name</td>
+</tr>
+<tr>
+<td><code>data.clusterMap</code></td>
+<td><code>map</code></td>
+<td>Cluster information</td>
+</tr>
+<tr>
+<td><code>data.metadata</code></td>
+<td><code>map</code></td>
+<td>Service metadata</td>
+</tr>
+<tr>
+<td><code>data.protectThreshold</code></td>
+<td><code>float</code></td>
+<td>Protection threshold</td>
+</tr>
+<tr>
+<td><code>data.selector</code></td>
+<td><code>Object</code></td>
+<td>Selector</td>
+</tr>
+<tr>
+<td><code>data.ephemeral</code></td>
+<td><code>Boolean</code></td>
+<td>Whether it is a temporary instance</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/service?serviceName=nacos.test.1'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: {
+		<span class="hljs-attr">"namespace"</span>: <span class="hljs-string">"public"</span>,
+		<span class="hljs-attr">"serviceName"</span>: <span class="hljs-string">"nacos.test.1"</span>,
+		<span class="hljs-attr">"groupName"</span>: <span class="hljs-string">"DEFAULT_GROUP"</span>,
+		<span class="hljs-attr">"clusterMap"</span>: {},
+		<span class="hljs-attr">"metadata"</span>: {},
+		<span class="hljs-attr">"protectThreshold"</span>: <span class="hljs-number">0</span>,
+		<span class="hljs-attr">"selector"</span>: {
+			<span class="hljs-attr">"type"</span>: <span class="hljs-string">"none"</span>,
+			<span class="hljs-attr">"contextType"</span>: <span class="hljs-string">"NONE"</span>
+		},
+		<span class="hljs-attr">"ephemeral"</span>: <span class="hljs-literal">false</span>
+	}
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.12">Query service list</h2>
+<h3>Description</h3>
+<p>Check the list of eligible services</p>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/service/list</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace<code>Id</code>, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>groupName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Group name, default is empty</td>
+</tr>
+<tr>
+<td><code>selector</code></td>
+<td><code>JSON format String</code></td>
+<td><strong>Y</strong></td>
+<td>Selector</td>
+</tr>
+<tr>
+<td><code>pageNo</code></td>
+<td><code>int</code></td>
+<td>N</td>
+<td>Current page, default is <code>1</code></td>
+</tr>
+<tr>
+<td><code>pageSize</code></td>
+<td><code>int</code></td>
+<td>N</td>
+<td>Number of page, default is <code>20</code>, Up to <code>500</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td></td>
+<td>Service list</td>
+</tr>
+<tr>
+<td><code>data.count</code></td>
+<td><code>String</code></td>
+<td>Number of services</td>
+</tr>
+<tr>
+<td><code>data.services</code></td>
+<td><code>String[]</code></td>
+<td>Service list after paging</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/service/list'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: {
+		<span class="hljs-attr">"count"</span>: <span class="hljs-number">2</span>,
+		<span class="hljs-attr">"services"</span>: [
+			<span class="hljs-string">"nacos.test.1"</span>,
+			<span class="hljs-string">"nacos.test.2"</span>
+		]
+	}
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.13">Query system switches</h2>
+<h3>Description</h3>
+<p>Query system switches</p>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/operator/switches</code></p>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>Object</code></td>
+<td>System switch information</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/operator/switches'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: {
+		<span class="hljs-attr">"masters"</span>: <span class="hljs-literal">null</span>,
+		<span class="hljs-attr">"adWeightMap"</span>: {},
+		<span class="hljs-attr">"defaultPushCacheMillis"</span>: <span class="hljs-number">10000</span>,
+		<span class="hljs-attr">"clientBeatInterval"</span>: <span class="hljs-number">5000</span>,
+		<span class="hljs-attr">"defaultCacheMillis"</span>: <span class="hljs-number">3000</span>,
+		<span class="hljs-attr">"distroThreshold"</span>: <span class="hljs-number">0.7</span>,
+		<span class="hljs-attr">"healthCheckEnabled"</span>: <span class="hljs-literal">true</span>,
+		<span class="hljs-attr">"autoChangeHealthCheckEnabled"</span>: <span class="hljs-literal">true</span>,
+		<span class="hljs-attr">"distroEnabled"</span>: <span class="hljs-literal">true</span>,
+		<span class="hljs-attr">"enableStandalone"</span>: <span class="hljs-literal">true</span>,
+		<span class="hljs-attr">"pushEnabled"</span>: <span class="hljs-literal">true</span>,
+		<span class="hljs-attr">"checkTimes"</span>: <span class="hljs-number">3</span>,
+		<span class="hljs-attr">"httpHealthParams"</span>: {
+			<span class="hljs-attr">"max"</span>: <span class="hljs-number">5000</span>,
+			<span class="hljs-attr">"min"</span>: <span class="hljs-number">500</span>,
+			<span class="hljs-attr">"factor"</span>: <span class="hljs-number">0.85</span>
+		},
+		<span class="hljs-attr">"tcpHealthParams"</span>: {
+			<span class="hljs-attr">"max"</span>: <span class="hljs-number">5000</span>,
+			<span class="hljs-attr">"min"</span>: <span class="hljs-number">1000</span>,
+			<span class="hljs-attr">"factor"</span>: <span class="hljs-number">0.75</span>
+		},
+		<span class="hljs-attr">"mysqlHealthParams"</span>: {
+			<span class="hljs-attr">"max"</span>: <span class="hljs-number">3000</span>,
+			<span class="hljs-attr">"min"</span>: <span class="hljs-number">2000</span>,
+			<span class="hljs-attr">"factor"</span>: <span class="hljs-number">0.65</span>
+		},
+		<span class="hljs-attr">"incrementalList"</span>: [],
+		<span class="hljs-attr">"serverStatusSynchronizationPeriodMillis"</span>: <span class="hljs-number">2000</span>,
+		<span class="hljs-attr">"serviceStatusSynchronizationPeriodMillis"</span>: <span class="hljs-number">5000</span>,
+		<span class="hljs-attr">"disableAddIP"</span>: <span class="hljs-literal">false</span>,
+		<span class="hljs-attr">"sendBeatOnly"</span>: <span class="hljs-literal">false</span>,
+		<span class="hljs-attr">"lightBeatEnabled"</span>: <span class="hljs-literal">true</span>,
+		<span class="hljs-attr">"doubleWriteEnabled"</span>: <span class="hljs-literal">false</span>,
+		<span class="hljs-attr">"limitedUrlMap"</span>: {},
+		<span class="hljs-attr">"distroServerExpiredMillis"</span>: <span class="hljs-number">10000</span>,
+		<span class="hljs-attr">"pushGoVersion"</span>: <span class="hljs-string">"0.1.0"</span>,
+		<span class="hljs-attr">"pushJavaVersion"</span>: <span class="hljs-string">"0.1.0"</span>,
+		<span class="hljs-attr">"pushPythonVersion"</span>: <span class="hljs-string">"0.4.3"</span>,
+		<span class="hljs-attr">"pushCVersion"</span>: <span class="hljs-string">"1.0.12"</span>,
+		<span class="hljs-attr">"pushCSharpVersion"</span>: <span class="hljs-string">"0.9.0"</span>,
+		<span class="hljs-attr">"enableAuthentication"</span>: <span class="hljs-literal">false</span>,
+		<span class="hljs-attr">"overriddenServerStatus"</span>: <span class="hljs-literal">null</span>,
+		<span class="hljs-attr">"defaultInstanceEphemeral"</span>: <span class="hljs-literal">true</span>,
+		<span class="hljs-attr">"healthCheckWhiteList"</span>: [],
+		<span class="hljs-attr">"name"</span>: <span class="hljs-string">"00-00---000-NACOS_SWITCH_DOMAIN-000---00-00"</span>,
+		<span class="hljs-attr">"checksum"</span>: <span class="hljs-literal">null</span>
+	}
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.14">Update system switch</h2>
+<h3>Description</h3>
+<p>Update system switch</p>
+<h3>Request Method</h3>
+<p><code>PUT</code></p>
+<p><code>Content-Type:application/x-www-form-urlencoded</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/operator/switches</code></p>
+<h3>Request Body</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>entry</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Entry</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Value</td>
+</tr>
+<tr>
+<td><code>debug</code></td>
+<td><code>boolean</code></td>
+<td>N</td>
+<td>Whether it takes effect on local machine only,<code>true</code> means it takes effect on local machine,<code>false</code> means it takes effect on cluster</td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>String</code></td>
+<td>&quot;ok&quot; indicates successful execution</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -d 'entry=pushEnabled' \
+  -d 'value=false' \
+  -d 'debug=true' \
+  -X PUT 'http://127.0.0.1:8848/nacos/v2/ns/operator/switches'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+      <span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+      <span class="hljs-attr">"data"</span>: <span class="hljs-string">"ok"</span>
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.15">Query system metrics</h2>
+<h3>Description</h3>
+<p>Query system metrics</p>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/operator/metrics</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>onlyStatus</code></td>
+<td><code>boolean</code></td>
+<td>N</td>
+<td>Show status only, default is <code>true</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>When <code>onlyStatus</code> is set to <code>true</code>, only the string indicating the system status is returned</p>
+</blockquote>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>Object</code></td>
+<td>System metrics</td>
+</tr>
+<tr>
+<td><code>data.status</code></td>
+<td><code>String</code></td>
+<td>System status</td>
+</tr>
+<tr>
+<td><code>data.serviceCount</code></td>
+<td><code>int</code></td>
+<td>Number of services</td>
+</tr>
+<tr>
+<td><code>data.instanceCount</code></td>
+<td><code>int</code></td>
+<td>Number of instances</td>
+</tr>
+<tr>
+<td><code>data.subscribeCount</code></td>
+<td><code>int</code></td>
+<td>Number of subscriptions</td>
+</tr>
+<tr>
+<td><code>data.raftNotifyTaskCount</code></td>
+<td><code>int</code></td>
+<td>Number of <code>Raft</code> notify task</td>
+</tr>
+<tr>
+<td><code>data.responsibleServiceCount</code></td>
+<td><code>int</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>data.responsibleInstanceCount</code></td>
+<td><code>int</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>data.clientCount</code></td>
+<td><code>int</code></td>
+<td>Number of client</td>
+</tr>
+<tr>
+<td><code>data.connectionBasedClientCount</code></td>
+<td><code>int</code></td>
+<td>Number of connectionBasedClient</td>
+</tr>
+<tr>
+<td><code>data.ephemeralIpPortClientCount</code></td>
+<td><code>int</code></td>
+<td>Number of ephemeralIpPortClient</td>
+</tr>
+<tr>
+<td><code>data.persistentIpPortClientCount</code></td>
+<td><code>int</code></td>
+<td>Number of persistentIpPortClient</td>
+</tr>
+<tr>
+<td><code>data.responsibleClientCount</code></td>
+<td><code>int</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>data.cpu</code></td>
+<td><code>float</code></td>
+<td><code>cpu</code> utilization</td>
+</tr>
+<tr>
+<td><code>data.load</code></td>
+<td><code>float</code></td>
+<td>load</td>
+</tr>
+<tr>
+<td><code>data.mem</code></td>
+<td><code>float</code></td>
+<td>Memory usage</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/operator/metrics'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: {
+		<span class="hljs-attr">"status"</span>: <span class="hljs-string">"UP"</span>,
+		<span class="hljs-attr">"serviceCount"</span>: <span class="hljs-number">2</span>,
+		<span class="hljs-attr">"instanceCount"</span>: <span class="hljs-number">2</span>,
+		<span class="hljs-attr">"subscribeCount"</span>: <span class="hljs-number">2</span>,
+		<span class="hljs-attr">"raftNotifyTaskCount"</span>: <span class="hljs-number">0</span>,
+		<span class="hljs-attr">"responsibleServiceCount"</span>: <span class="hljs-number">0</span>,
+		<span class="hljs-attr">"responsibleInstanceCount"</span>: <span class="hljs-number">0</span>,
+		<span class="hljs-attr">"clientCount"</span>: <span class="hljs-number">2</span>,
+		<span class="hljs-attr">"connectionBasedClientCount"</span>: <span class="hljs-number">2</span>,
+		<span class="hljs-attr">"ephemeralIpPortClientCount"</span>: <span class="hljs-number">0</span>,
+		<span class="hljs-attr">"persistentIpPortClientCount"</span>: <span class="hljs-number">0</span>,
+		<span class="hljs-attr">"responsibleClientCount"</span>: <span class="hljs-number">2</span>,
+		<span class="hljs-attr">"cpu"</span>: <span class="hljs-number">0</span>,
+		<span class="hljs-attr">"load"</span>: <span class="hljs-number">-1</span>,
+		<span class="hljs-attr">"mem"</span>: <span class="hljs-number">1</span>
+	}
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.16">Update instance health status</h2>
+<h3>Description</h3>
+<p>Update the health status of the instance</p>
+<h3>Request Method</h3>
+<p><code>PUT</code></p>
+<p><code>Content-Type:application/x-www-form-urlencoded</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/health/instance</code></p>
+<h3>Request Body</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace<code>Id</code>, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>groupName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Group name, default is <code>DEFAULT_GROUP</code></td>
+</tr>
+<tr>
+<td><code>serviceName</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Service name</td>
+</tr>
+<tr>
+<td><code>clusterName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Cluster name, default is <code>DEFAULT</code></td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td><code>IP</code> address</td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td><code>int</code></td>
+<td><strong>Y</strong></td>
+<td>Port number</td>
+</tr>
+<tr>
+<td><code>healthy</code></td>
+<td><code>boolean</code></td>
+<td><strong>Y</strong></td>
+<td>healthy</td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>String</code></td>
+<td>&quot;<code>ok</code>&quot; indicates successful execution</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -d 'serviceName=nacos.test.1' \
+  -d 'ip=127.0.0.1' \
+  -d 'port=8080' \
+  -d 'healthy=false' \
+  -X PUT 'http://127.0.0.1:8848/nacos/v2/ns/health/instance'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+      <span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+      <span class="hljs-attr">"data"</span>: <span class="hljs-string">"ok"</span>
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.17">Query client list (new)</h2>
+<h3>Description</h3>
+<p>Query the current list of all clients</p>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/client/list</code></p>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>String[]</code></td>
+<td>Client <code>id</code> list</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/client/list'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: [
+		<span class="hljs-string">"10.128.164.35:9956#true"</span>,
+		<span class="hljs-string">"1664358687402_127.0.0.1_2300"</span>,
+		<span class="hljs-string">"1664358642902_127.0.0.1_2229"</span>,
+		<span class="hljs-string">"192.168.139.1:49825#true"</span>,
+		<span class="hljs-string">"10.128.164.35:9954#true"</span>,
+		<span class="hljs-string">"192.168.139.1:53556#true"</span>
+	]
+}
+</code></pre>
+</li>
+</ul>
+<blockquote>
+<p>For different versions of the nacos client, there are different ways to create clients.</p>
+<p>For <code>nacos client</code> in <code>1.x</code> version, each Instance will create two clients based on <code>ip+port</code>, corresponding to Instance registration and service subscription, respectively, with <code>clientId</code> in the format <code>ip:port#ephemeral</code></p>
+<p>For <code>nacos client</code> in <code>2.x</code> version, each Instance establishes a <code>RPC</code> connection, which corresponds to an <code>RPC</code> connection-based client with both registration and subscription functions, with <code>clientId</code> in the format <code>time_ip_port</code></p>
+</blockquote>
+<h2 id="2.18">Query client (new)</h2>
+<h3>Description</h3>
+<p>Query the details of the specified client</p>
+<blockquote>
+<p>Error when client does not exist</p>
+</blockquote>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/client</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>clientId</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Client <code>id</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>Object</code></td>
+<td>Client Information</td>
+</tr>
+<tr>
+<td><code>data.clientId</code></td>
+<td><code>String</code></td>
+<td>Client <code>id</code></td>
+</tr>
+<tr>
+<td><code>data.ephemeral</code></td>
+<td><code>boolean</code></td>
+<td>Whether it is a temporary instance</td>
+</tr>
+<tr>
+<td><code>data.lastUpdatedTime</code></td>
+<td><code>int</code></td>
+<td>Last update time</td>
+</tr>
+<tr>
+<td><code>data.clientType</code></td>
+<td><code>String</code></td>
+<td>Client type</td>
+</tr>
+<tr>
+<td><code>data.clientIp</code></td>
+<td><code>String</code></td>
+<td>Client <code>IP</code></td>
+</tr>
+<tr>
+<td><code>data.clientPort</code></td>
+<td><code>String</code></td>
+<td>Client <code>port</code></td>
+</tr>
+<tr>
+<td><code>data.connectType</code></td>
+<td><code>String</code></td>
+<td>Connection type</td>
+</tr>
+<tr>
+<td><code>data.appName</code></td>
+<td><code>String</code></td>
+<td>Application name</td>
+</tr>
+<tr>
+<td><code>data.Version</code></td>
+<td><code>String</code></td>
+<td>Client version</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Only when <code>clientType</code> is <code>connection</code>, the <code>connectType</code>, <code>appName</code> and <code>appName</code> fields will be displayed</p>
+</blockquote>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/client?clientId=1664527081276_127.0.0.1_4400'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: {
+		<span class="hljs-attr">"clientId"</span>: <span class="hljs-string">"1664527081276_127.0.0.1_4400"</span>,
+		<span class="hljs-attr">"ephemeral"</span>: <span class="hljs-literal">true</span>,
+		<span class="hljs-attr">"lastUpdatedTime"</span>: <span class="hljs-number">1664527081642</span>,
+		<span class="hljs-attr">"clientType"</span>: <span class="hljs-string">"connection"</span>,
+		<span class="hljs-attr">"connectType"</span>: <span class="hljs-string">"GRPC"</span>,
+		<span class="hljs-attr">"appName"</span>: <span class="hljs-string">"-"</span>,
+		<span class="hljs-attr">"version"</span>: <span class="hljs-string">"Nacos-Java-Client:v2.1.0"</span>,
+		<span class="hljs-attr">"clientIp"</span>: <span class="hljs-string">"10.128.164.35"</span>,
+		<span class="hljs-attr">"clientPort"</span>: <span class="hljs-string">"4400"</span>
+	}
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.19">Query the registration information of the client (new)</h2>
+<h3>Description</h3>
+<p>Query the registration information of the specified client</p>
+<blockquote>
+<p>Error when client does not exist</p>
+</blockquote>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/client/publish/list</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>clientId</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Client <code>id</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>Object[]</code></td>
+<td>List of services registered by the client</td>
+</tr>
+<tr>
+<td><code>data.namespace</code></td>
+<td><code>String</code></td>
+<td>Namespace</td>
+</tr>
+<tr>
+<td><code>data.group</code></td>
+<td><code>String</code></td>
+<td>Group name</td>
+</tr>
+<tr>
+<td><code>data.serviceName</code></td>
+<td><code>String</code></td>
+<td>Service name</td>
+</tr>
+<tr>
+<td><code>data.registeredInstance</code></td>
+<td><code>Object</code></td>
+<td>Instances registered under this service</td>
+</tr>
+<tr>
+<td><code>data.registeredInstance.ip</code></td>
+<td><code>String</code></td>
+<td><code>IP</code> address</td>
+</tr>
+<tr>
+<td><code>data.registeredInstance.port</code></td>
+<td><code>int</code></td>
+<td>Port number</td>
+</tr>
+<tr>
+<td><code>data.registeredInstance.cluster</code></td>
+<td><code>String</code></td>
+<td>Cluster name</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/client/publish/list?clientId=1664527081276_127.0.0.1_4400'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: [
+		{
+			<span class="hljs-attr">"namespace"</span>: <span class="hljs-string">"public"</span>,
+			<span class="hljs-attr">"group"</span>: <span class="hljs-string">"DEFAULT_GROUP"</span>,
+			<span class="hljs-attr">"serviceName"</span>: <span class="hljs-string">"nacos.test.1"</span>,
+			<span class="hljs-attr">"registeredInstance"</span>: {
+				<span class="hljs-attr">"ip"</span>: <span class="hljs-string">"10.128.164.35"</span>,
+				<span class="hljs-attr">"port"</span>: <span class="hljs-number">9950</span>,
+				<span class="hljs-attr">"cluster"</span>: <span class="hljs-string">"DEFAULT"</span>
+			}
+		}
+	]
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.20">Query the subscription information of the client (new)</h2>
+<h3>Description</h3>
+<p>Query the subscription information of the specified client</p>
+<blockquote>
+<p>Error when client does not exist</p>
+</blockquote>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/client/subscribe/list</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>clientId</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Client <code>id</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>Object[]</code></td>
+<td>List of services to which the client is subscribed</td>
+</tr>
+<tr>
+<td><code>data.namespace</code></td>
+<td><code>String</code></td>
+<td>Namespace</td>
+</tr>
+<tr>
+<td><code>data.group</code></td>
+<td><code>String</code></td>
+<td>Group name</td>
+</tr>
+<tr>
+<td><code>data.serviceName</code></td>
+<td><code>String</code></td>
+<td>Service name</td>
+</tr>
+<tr>
+<td><code>data.subscriberInfo</code></td>
+<td><code>Object</code></td>
+<td>Subscription Information</td>
+</tr>
+<tr>
+<td><code>data.subscriberInfo.app</code></td>
+<td><code>String</code></td>
+<td>Application</td>
+</tr>
+<tr>
+<td><code>data.subscriberInfo.agent</code></td>
+<td><code>String</code></td>
+<td>Client Information</td>
+</tr>
+<tr>
+<td><code>data.subscriberInfo.addr</code></td>
+<td><code>String</code></td>
+<td>Address</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/client/subscribe/list?clientId=1664527081276_127.0.0.1_4400'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: [
+		{
+			<span class="hljs-attr">"namespace"</span>: <span class="hljs-string">"public"</span>,
+			<span class="hljs-attr">"group"</span>: <span class="hljs-string">"DEFAULT_GROUP"</span>,
+			<span class="hljs-attr">"serviceName"</span>: <span class="hljs-string">"nacos.test.1"</span>,
+			<span class="hljs-attr">"subscriberInfo"</span>: {
+				<span class="hljs-attr">"app"</span>: <span class="hljs-string">"unknown"</span>,
+				<span class="hljs-attr">"agent"</span>: <span class="hljs-string">"Nacos-Java-Client:v2.1.0"</span>,
+				<span class="hljs-attr">"addr"</span>: <span class="hljs-string">"10.128.164.35"</span>
+			}
+		}
+	]
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.21">Query the client that registered the specified service (new)</h2>
+<h3>Description</h3>
+<p>Query the client information of the registered specified service</p>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/client/service/publisher/list</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace<code>Id</code>, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>groupName</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Group name, default is <code>DEFAULT_GROUP</code></td>
+</tr>
+<tr>
+<td><code>serviceName</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Service name</td>
+</tr>
+<tr>
+<td><code>ephemeral</code></td>
+<td><code>boolean</code></td>
+<td>N</td>
+<td>Whether it is a temporary instance</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td><code>IP</code> address, default is empty, indicates unrestricted <code>IP</code> address</td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td><code>int</code></td>
+<td>N</td>
+<td>Port number, default is empty, Indicates unrestricted <code>Port</code> number</td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td></td>
+<td>Client list</td>
+</tr>
+<tr>
+<td><code>data.clientId</code></td>
+<td><code>String</code></td>
+<td>Client <code>id</code></td>
+</tr>
+<tr>
+<td><code>data.ip</code></td>
+<td><code>String</code></td>
+<td>Client <code>IP</code></td>
+</tr>
+<tr>
+<td><code>data.port</code></td>
+<td><code>int</code></td>
+<td>Client <code>port</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/client/service/publisher/list?serviceName=nacos.test.1&amp;ip=&amp;port='
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: [
+		{
+			<span class="hljs-attr">"clientId"</span>: <span class="hljs-string">"1664527081276_127.0.0.1_4400"</span>,
+			<span class="hljs-attr">"ip"</span>: <span class="hljs-string">"10.128.164.35"</span>,
+			<span class="hljs-attr">"port"</span>: <span class="hljs-number">9950</span>
+		},
+		{
+			<span class="hljs-attr">"clientId"</span>: <span class="hljs-string">"10.128.164.35:9954#true"</span>,
+			<span class="hljs-attr">"ip"</span>: <span class="hljs-string">"10.128.164.35"</span>,
+			<span class="hljs-attr">"port"</span>: <span class="hljs-number">9954</span>
+		}
+	]
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="2.22">Query the information of clients subscribed to the specified service (new)</h2>
+<h3>Description</h3>
+<p>Query the clients subscribed to the specified service</p>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/ns/client/service/subscriber/list</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td>String</td>
+<td>N</td>
+<td>Namespace<code>Id</code>, default is <code>public</code></td>
+</tr>
+<tr>
+<td><code>groupName</code></td>
+<td>String</td>
+<td>N</td>
+<td>Group name, default is <code>DEFAULT_GROUP</code></td>
+</tr>
+<tr>
+<td><code>serviceName</code></td>
+<td>String</td>
+<td><strong>Y</strong></td>
+<td>Service name</td>
+</tr>
+<tr>
+<td><code>ephemeral</code></td>
+<td>boolean</td>
+<td>N</td>
+<td>Whether it is a temporary instance</td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td>String</td>
+<td>N</td>
+<td><code>IP</code> address, default is empty, indicates unrestricted <code>IP</code> address</td>
+</tr>
+<tr>
+<td><code>port</code></td>
+<td>int</td>
+<td>N</td>
+<td>Port number, default is empty, Indicates unrestricted <code>Port</code> number</td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td></td>
+<td>Client list</td>
+</tr>
+<tr>
+<td><code>data.clientId</code></td>
+<td><code>String</code></td>
+<td>Client <code>id</code></td>
+</tr>
+<tr>
+<td><code>data.ip</code></td>
+<td><code>String</code></td>
+<td>Client <code>IP</code></td>
+</tr>
+<tr>
+<td><code>data.port</code></td>
+<td><code>int</code></td>
+<td>Client <code>port</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/client/service/subscriber/list?serviceName=nacos.test.1&amp;ip=&amp;port='
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: [
+		{
+			<span class="hljs-attr">"clientId"</span>: <span class="hljs-string">"1664527125645_127.0.0.1_4443"</span>,
+			<span class="hljs-attr">"ip"</span>: <span class="hljs-string">"10.128.164.35"</span>,
+			<span class="hljs-attr">"port"</span>: <span class="hljs-number">0</span>
+		},
+		{
+			<span class="hljs-attr">"clientId"</span>: <span class="hljs-string">"172.24.144.1:54126#true"</span>,
+			<span class="hljs-attr">"ip"</span>: <span class="hljs-string">"172.24.144.1"</span>,
+			<span class="hljs-attr">"port"</span>: <span class="hljs-number">54126</span>
+		}
+	]
+}
+</code></pre>
+</li>
+</ul>
+<h2>Namespace</h2>
+<h2 id="3.1">Query namespaces</h2>
+<h3>Description</h3>
+<p>Query all namespaces</p>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/console/namespace/list</code></p>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>Object[]</code></td>
+<td>Namespaces</td>
+</tr>
+<tr>
+<td><code>data.namespace</code></td>
+<td><code>String</code></td>
+<td>Namespace<code>ID</code></td>
+</tr>
+<tr>
+<td><code>data.namespaceShowName</code></td>
+<td><code>String</code></td>
+<td>Namespace name</td>
+</tr>
+<tr>
+<td><code>data.namespaceDesc</code></td>
+<td><code>String</code></td>
+<td>Namespace description</td>
+</tr>
+<tr>
+<td><code>data.quota</code></td>
+<td><code>int</code></td>
+<td>the capacity of Namespace</td>
+</tr>
+<tr>
+<td><code>data.configCount</code></td>
+<td><code>int</code></td>
+<td>Number of configs under namespace</td>
+</tr>
+<tr>
+<td><code>data.type</code></td>
+<td><code>int</code></td>
+<td>Namespace type</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>There are 3 types of Namespace, <code>0</code> - Global Namespace <code>1</code> - Default Private Namespace <code>2</code> - Custom Namespace</p>
+</blockquote>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/console/namespace/list'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: [
+		{
+			<span class="hljs-attr">"namespace"</span>: <span class="hljs-string">""</span>,
+			<span class="hljs-attr">"namespaceShowName"</span>: <span class="hljs-string">"public"</span>,
+			<span class="hljs-attr">"namespaceDesc"</span>: <span class="hljs-literal">null</span>,
+			<span class="hljs-attr">"quota"</span>: <span class="hljs-number">200</span>,
+			<span class="hljs-attr">"configCount"</span>: <span class="hljs-number">1</span>,
+			<span class="hljs-attr">"type"</span>: <span class="hljs-number">0</span>
+		}
+	]
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="3.2">Query namespace</h2>
+<h3>Description</h3>
+<p>Query information about a specific Namespace</p>
+<blockquote>
+<p>Error when namespace does not exist</p>
+</blockquote>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/console/namespace</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Namespace<code>Id</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>Object</code></td>
+<td>Namespace</td>
+</tr>
+<tr>
+<td><code>data.namespace</code></td>
+<td><code>String</code></td>
+<td>Namespace <code>ID</code></td>
+</tr>
+<tr>
+<td><code>data.namespaceShowName</code></td>
+<td><code>String</code></td>
+<td>Namespace name</td>
+</tr>
+<tr>
+<td><code>data.namespaceDesc</code></td>
+<td><code>String</code></td>
+<td>Namespace description</td>
+</tr>
+<tr>
+<td><code>data.quota</code></td>
+<td><code>int</code></td>
+<td>the capacity of Namespace</td>
+</tr>
+<tr>
+<td><code>data.configCount</code></td>
+<td><code>int</code></td>
+<td>Number of configs under namespace</td>
+</tr>
+<tr>
+<td><code>data.type</code></td>
+<td><code>int</code></td>
+<td>Namespace type</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>There are 3 types of Namespace, <code>0</code> - Global Namespace <code>1</code> - Default Private Namespace <code>2</code> - Custom Namespace</p>
+</blockquote>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/console/namespace?namespaceId=test_namespace'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: {
+		<span class="hljs-attr">"namespace"</span>: <span class="hljs-string">"test_namespace"</span>,
+		<span class="hljs-attr">"namespaceShowName"</span>: <span class="hljs-string">"test"</span>,
+		<span class="hljs-attr">"namespaceDesc"</span>: <span class="hljs-literal">null</span>,
+		<span class="hljs-attr">"quota"</span>: <span class="hljs-number">200</span>,
+		<span class="hljs-attr">"configCount"</span>: <span class="hljs-number">0</span>,
+		<span class="hljs-attr">"type"</span>: <span class="hljs-number">2</span>
+	}
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="3.3">Create namespace</h2>
+<h3>Description</h3>
+<p>Create a namespace</p>
+<blockquote>
+<p>Error when namespace already exists</p>
+</blockquote>
+<h3>Request Method</h3>
+<p><code>POST</code></p>
+<p><code>Content-Type:application/x-www-form-urlencoded</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/console/namespace</code></p>
+<h3>Request Body</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Namespace<code>Id</code></td>
+</tr>
+<tr>
+<td><code>namespaceName</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Namespace name</td>
+</tr>
+<tr>
+<td><code>namespaceDesc</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace Description</td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>boolean</code></td>
+<td>Whether the execution is successful</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -d 'namespaceId=test_namespace' \
+  -d 'namespaceName=test' \
+  -X POST 'http://127.0.0.1:8848/nacos/v2/console/namespace'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+      <span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+      <span class="hljs-attr">"data"</span>: <span class="hljs-literal">true</span>
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="3.4">Update namespace</h2>
+<h3>Description</h3>
+<p>Edit namespace</p>
+<h3>Request Method</h3>
+<p><code>PUT</code></p>
+<p><code>Content-Type:application/x-www-form-urlencoded</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/console/namespace</code></p>
+<h3>Request Body</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Namespace<code>Id</code></td>
+</tr>
+<tr>
+<td><code>namespaceName</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Namespace name</td>
+</tr>
+<tr>
+<td><code>namespaceDesc</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Namespace Description</td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>boolean</code></td>
+<td>Whether the execution is successful</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -d 'namespaceId=test_namespace' \
+  -d 'namespaceName=test.nacos' \
+  -X PUT 'http://127.0.0.1:8848/nacos/v2/console/namespace'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+      <span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+      <span class="hljs-attr">"data"</span>: <span class="hljs-literal">true</span>
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="3.5">Delete namespace</h2>
+<h3>Description</h3>
+<p>Delete the specified namespace</p>
+<h3>Request Method</h3>
+<p><code>DELETE</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/console/namespace</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>namespaceId</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Namespace<code>Id</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>boolean</code></td>
+<td>Whether the execution is successful</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -d 'namespaceId=test_namespace' \
+  -X DELETE 'http://127.0.0.1:8848/nacos/v2/console/namespace'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+      <span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+      <span class="hljs-attr">"data"</span>: <span class="hljs-literal">true</span>
+}
+</code></pre>
+</li>
+</ul>
+<h2>Cluster</h2>
+<h2 id="4.1">Query the current node</h2>
+<h3>Description</h3>
+<p>Query the current <code>nacos</code> node</p>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/core/cluster/node/self</code></p>
+<h3 id="Member">Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>Object</code></td>
+<td>Current node</td>
+</tr>
+<tr>
+<td><code>data.ip</code></td>
+<td><code>String</code></td>
+<td>Node <code>IP</code> address</td>
+</tr>
+<tr>
+<td><code>data.port</code></td>
+<td><code>int</code></td>
+<td>Node port</td>
+</tr>
+<tr>
+<td><code>data.state</code></td>
+<td><code>String</code></td>
+<td>Node status</td>
+</tr>
+<tr>
+<td><code>data.extendInfo</code></td>
+<td><code>Object</code></td>
+<td>Node extend information</td>
+</tr>
+<tr>
+<td><code>data.address</code></td>
+<td><code>String</code></td>
+<td>Node address （<code>IP:port</code>）</td>
+</tr>
+<tr>
+<td><code>data.failAccessCnt</code></td>
+<td><code>int</code></td>
+<td>Number of failed access</td>
+</tr>
+<tr>
+<td><code>data.abilities</code></td>
+<td><code>Object</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/self'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: {
+		<span class="hljs-attr">"ip"</span>: <span class="hljs-string">"10.128.164.35"</span>,
+		<span class="hljs-attr">"port"</span>: <span class="hljs-number">8848</span>,
+		<span class="hljs-attr">"state"</span>: <span class="hljs-string">"UP"</span>,
+		<span class="hljs-attr">"extendInfo"</span>: {
+			<span class="hljs-attr">"lastRefreshTime"</span>: <span class="hljs-number">1664521263623</span>,
+			<span class="hljs-attr">"raftMetaData"</span>: {
+				<span class="hljs-attr">"metaDataMap"</span>: {
+					<span class="hljs-attr">"naming_instance_metadata"</span>: {
+						<span class="hljs-attr">"leader"</span>: <span class="hljs-string">"10.128.164.35:7848"</span>,
+						<span class="hljs-attr">"raftGroupMember"</span>: [
+							<span class="hljs-string">"10.128.164.35:7848"</span>
+						],
+						<span class="hljs-attr">"term"</span>: <span class="hljs-number">12</span>
+					},
+					<span class="hljs-attr">"naming_persistent_service_v2"</span>: {
+						<span class="hljs-attr">"leader"</span>: <span class="hljs-string">"10.128.164.35:7848"</span>,
+						<span class="hljs-attr">"raftGroupMember"</span>: [
+							<span class="hljs-string">"10.128.164.35:7848"</span>
+						],
+						<span class="hljs-attr">"term"</span>: <span class="hljs-number">12</span>
+					},
+					<span class="hljs-attr">"naming_service_metadata"</span>: {
+						<span class="hljs-attr">"leader"</span>: <span class="hljs-string">"10.128.164.35:7848"</span>,
+						<span class="hljs-attr">"raftGroupMember"</span>: [
+							<span class="hljs-string">"10.128.164.35:7848"</span>
+						],
+						<span class="hljs-attr">"term"</span>: <span class="hljs-number">12</span>
+					}
+				}
+			},
+			<span class="hljs-attr">"raftPort"</span>: <span class="hljs-string">"7848"</span>,
+			<span class="hljs-attr">"readyToUpgrade"</span>: <span class="hljs-literal">true</span>,
+			<span class="hljs-attr">"version"</span>: <span class="hljs-string">"2.1.0"</span>
+		},
+		<span class="hljs-attr">"address"</span>: <span class="hljs-string">"10.128.164.35:8848"</span>,
+		<span class="hljs-attr">"failAccessCnt"</span>: <span class="hljs-number">0</span>,
+		<span class="hljs-attr">"abilities"</span>: {
+			<span class="hljs-attr">"remoteAbility"</span>: {
+				<span class="hljs-attr">"supportRemoteConnection"</span>: <span class="hljs-literal">true</span>
+			},
+			<span class="hljs-attr">"configAbility"</span>: {
+				<span class="hljs-attr">"supportRemoteMetrics"</span>: <span class="hljs-literal">false</span>
+			},
+			<span class="hljs-attr">"namingAbility"</span>: {
+				<span class="hljs-attr">"supportJraft"</span>: <span class="hljs-literal">true</span>
+			}
+		}
+	}
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="4.2">Query the list of cluster nodes</h2>
+<h3>Description</h3>
+<p>Query the information of all nodes in the cluster</p>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/core/cluster/node/list</code></p>
+<h3>Request Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>address</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Node address, default is empty</td>
+</tr>
+<tr>
+<td><code>state</code></td>
+<td><code>String</code></td>
+<td>N</td>
+<td>Node status, default is empty</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><code>address</code>corresponds to the prefix match condition of the Node address to be queried, and is not restricted when it is empty</p>
+<p><code>state</code>corresponds to the filter condition of node status and is not restricted when it is empty</p>
+</blockquote>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>Object[]</code></td>
+<td>Node list, refer to <a href="#Member">Node info</a></td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/list'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: [
+		{
+			<span class="hljs-attr">"ip"</span>: <span class="hljs-string">"10.128.164.35"</span>,
+			<span class="hljs-attr">"port"</span>: <span class="hljs-number">8848</span>,
+			<span class="hljs-attr">"state"</span>: <span class="hljs-string">"UP"</span>,
+			<span class="hljs-attr">"extendInfo"</span>: {
+				<span class="hljs-attr">"lastRefreshTime"</span>: <span class="hljs-number">1664521263623</span>,
+				<span class="hljs-attr">"raftMetaData"</span>: {
+					<span class="hljs-attr">"metaDataMap"</span>: {
+						<span class="hljs-attr">"naming_instance_metadata"</span>: {
+							<span class="hljs-attr">"leader"</span>: <span class="hljs-string">"10.128.164.35:7848"</span>,
+							<span class="hljs-attr">"raftGroupMember"</span>: [
+								<span class="hljs-string">"10.128.164.35:7848"</span>
+							],
+							<span class="hljs-attr">"term"</span>: <span class="hljs-number">12</span>
+						},
+						<span class="hljs-attr">"naming_persistent_service_v2"</span>: {
+							<span class="hljs-attr">"leader"</span>: <span class="hljs-string">"10.128.164.35:7848"</span>,
+							<span class="hljs-attr">"raftGroupMember"</span>: [
+								<span class="hljs-string">"10.128.164.35:7848"</span>
+							],
+							<span class="hljs-attr">"term"</span>: <span class="hljs-number">12</span>
+						},
+						<span class="hljs-attr">"naming_service_metadata"</span>: {
+							<span class="hljs-attr">"leader"</span>: <span class="hljs-string">"10.128.164.35:7848"</span>,
+							<span class="hljs-attr">"raftGroupMember"</span>: [
+								<span class="hljs-string">"10.128.164.35:7848"</span>
+							],
+							<span class="hljs-attr">"term"</span>: <span class="hljs-number">12</span>
+						}
+					}
+				},
+				<span class="hljs-attr">"raftPort"</span>: <span class="hljs-string">"7848"</span>,
+				<span class="hljs-attr">"readyToUpgrade"</span>: <span class="hljs-literal">true</span>,
+				<span class="hljs-attr">"version"</span>: <span class="hljs-string">"2.1.0"</span>
+			},
+			<span class="hljs-attr">"address"</span>: <span class="hljs-string">"10.128.164.35:8848"</span>,
+			<span class="hljs-attr">"failAccessCnt"</span>: <span class="hljs-number">0</span>,
+			<span class="hljs-attr">"abilities"</span>: {
+				<span class="hljs-attr">"remoteAbility"</span>: {
+					<span class="hljs-attr">"supportRemoteConnection"</span>: <span class="hljs-literal">true</span>
+				},
+				<span class="hljs-attr">"configAbility"</span>: {
+					<span class="hljs-attr">"supportRemoteMetrics"</span>: <span class="hljs-literal">false</span>
+				},
+				<span class="hljs-attr">"namingAbility"</span>: {
+					<span class="hljs-attr">"supportJraft"</span>: <span class="hljs-literal">true</span>
+				}
+			}
+		}
+	]
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="4.3">Query the current node health status</h2>
+<h3>Description</h3>
+<p>Query the current <code>nacos</code> node health status</p>
+<h3>Request Method</h3>
+<p><code>GET</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/core/cluster/node/self/health</code></p>
+<h3 id="Member">Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>String</code></td>
+<td>Current node health status</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Node has five states: <code>STARTING</code>, <code>UP</code>, <code>SUSPICIOUS</code>, <code>DOWN</code> and <code>ISOLATION</code>.</p>
+</blockquote>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/self/health'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: <span class="hljs-string">"UP"</span>
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="4.4">Switch addressing modes</h2>
+<h3>Description</h3>
+<p>Switch addressing modes</p>
+<h3>Request Method</h3>
+<p><code>PUT</code></p>
+<p><code>Content-Type:application/x-www-form-urlencoded</code></p>
+<h3>Request URL</h3>
+<p><code>/nacos/v2/core/cluster/lookup</code></p>
+<h3>Request Body</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type</code></td>
+<td><code>String</code></td>
+<td><strong>Y</strong></td>
+<td>Addressing mode</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>There are two addressing modes: <code>file</code> (file configuration) and <code>address-server</code> (address server)</p>
+</blockquote>
+<h3>Return Data</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>boolean</code></td>
+<td>Whether the execution is successful</td>
+</tr>
+</tbody>
+</table>
+<h3>Example</h3>
+<ul>
+<li>
+<p>Request Example</p>
+<pre><code class="language-shell">curl -d 'type=file' \
+  -X PUT 'http://127.0.0.1:8848/nacos/v2/core/cluster/lookup'
+</code></pre>
+</li>
+<li>
+<p>Response Example</p>
+<pre><code class="language-json">{
+	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
+	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
+	<span class="hljs-attr">"data"</span>: <span class="hljs-literal">true</span>
+}
+</code></pre>
+</li>
+</ul>
+</div></div></section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>Vision</h3><p>By providing an easy-to-use service infrastructure such as dynamic service discovery, service configuration, service sharing and management and etc., Nacos help users better construct, deliver and manage their own service platform, reuse and composite business service faster and deliver value of business innovation more quickly so as to win market for users in the era of cloud native and in all cloud environments, such as private, mixed, or public clouds.</p></div><div class="col col-6"><dl><dt>Documentation</dt><dd><a href="/en-us/docs/what-is-nacos.html" target="_self">Overview</a></dd><dd><a href="/en-us/docs/quick-start.html" target="_self">Quick start</a></dd><dd><a href="/en-us/docs/contributing.html" target="_self">Developer guide</a></dd></dl></div><div class="col col-6"><dl><dt>Resources</dt><dd><a href="/en-us/community/index.html" target="_self">Community</a></dd><dd><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_self">Cloud Service MSE</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">Cloud Service EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">Cloud Service AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2022 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script src="//g.alicdn.com/alilog/mlog/aplus_v2.js" id="beacon-aplus" exparams="clog=o&aplus&sidx=aplusSidx&ckx=aplusCkx"></script>
+  <script src="//g.alicdn.com/aes/??tracker/1.0.34/index.js,tracker-plugin-pv/2.4.5/index.js,tracker-plugin-event/1.2.5/index.js,tracker-plugin-jserror/1.0.13/index.js,tracker-plugin-api/1.1.14/index.js,tracker-plugin-perf/1.1.8/index.js,tracker-plugin-eventTiming/1.0.4/index.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/documentation.js">
+	</script>
+	<script src="https://g.alicdn.com/mamba/assets/0.0.19/mse-arc-ui.min.js"></script>
+	<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e3a5cec56ef8619cf9d7c2abebd509e3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0YDFJ7LX7F"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-0YDFJ7LX7F');
+    </script>
+</body>
+</html>

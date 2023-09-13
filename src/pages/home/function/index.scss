@@ -1,0 +1,74 @@
+@import '../../../css/variables.scss';
+.function-section {
+  max-width: 832px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 82px 0;
+
+  h3 {
+    font-family: Avenir-Heavy;
+    font-size: 36px;
+    text-align: center;
+    font-weight: 400;
+  }
+
+  .bone {
+    margin: 0 auto 45px;
+  }
+
+  .func-item {
+    margin-bottom: 30px;
+    position: relative;
+
+    .col {
+      display: inline-flex;
+      align-items: center;
+      vertical-align: middle;
+      margin: 0 auto;
+      width: 50%;
+      max-width: 750px;
+      min-height: 325px;
+
+      img {
+        width: 325px;
+      }
+
+      h4 {
+        font-weight: 400;
+        font-family: Avenir-Heavy;
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      p {
+        opacity: 0.8;
+        font-family: Avenir-Medium;
+        font-size: 18px;
+        color: #999;
+        margin: 0;
+      }
+    }
+
+    .img {
+      display: inline-block;
+      text-align: center;
+    }
+
+    @media screen and (max-width: 830px) {
+      & {
+        text-align: center;
+      }
+      .col {
+        width: 100%;
+      }
+      .img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0.1;
+      }
+    }
+  }
+}

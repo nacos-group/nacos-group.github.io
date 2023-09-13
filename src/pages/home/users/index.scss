@@ -1,0 +1,54 @@
+@import '../../../css/variables.scss';
+
+.users-section {
+  box-sizing: border-box;
+  max-width: $contentWidth;
+  margin: 0 auto;
+  padding: 80px 40px 40px;
+  position: relative;
+
+  .bone {
+    margin: 0 auto 40px;
+  }
+
+  h3 {
+    font-family: Avenir-Heavy;
+    font-size: 36px;
+    color: #333;
+    text-align: center;
+  }
+
+  p {
+    font-family: Avenir-Medium;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    margin: 0 0 40px;
+
+    a {
+      color: #1e6bb8;
+      text-decoration: none;
+    }
+  }
+
+  .users {
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: center;
+
+    .user-item {
+      display: flex;
+      width: 140px;
+      height: 80px;
+      margin: 10px;
+      padding: 4px;
+      border: 1px solid #eee;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+}

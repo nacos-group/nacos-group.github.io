@@ -1,5 +1,5 @@
-@import '../../variables.scss';
-@import '../../reset.scss';
+@import '../../css/variables.scss';
+@import '../../css/reset.scss';
 
 .community-page {
   .events-section {
@@ -25,7 +25,7 @@
           width: 373px;
           height: 209px;
         }
-        @media screen and (max-width: $mobileWidth / 2) {
+        @media screen and (max-width: 320) {
           width: 320px;
           img {
             width: 320px;
