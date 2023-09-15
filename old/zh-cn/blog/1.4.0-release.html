@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="aes-config" content="pid=xux-opensource&user_type=101&uid=&username=&dim10=nacos"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="开源,1.4.0,Go 1.0.1" />
+	<meta name="description" content="双十一购物节，Nacos 1.4.0 + Go SDK 1.0.1发布" />
+  <meta name="baidu-site-verification" content="code-wzq5sw7io3" />
+	<!-- 网页标签标题 -->
+	<title>双十一购物节，Nacos 1.4.0 + Go SDK 1.0.1发布</title>
+	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
+	<link rel="stylesheet" href="/build/blogDetail.css" />
+	<link rel="stylesheet" href="https://g.alicdn.com/mamba/assets/0.0.19/mse-arc-ui.min.css" />
+</head>
+<body>
+	<div id="root"><div class="blog-detail-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><span><a href="/zh-cn/index.html">首页</a></span></li><li class="menu-item menu-item-normal"><div class="nav-container"><div class="word"><a>文档</a></div><ul class="sub-nav-container" style="width:220px"><li><a href="/zh-cn/docs/v2/quickstart/quick-start.html" target="_blank">2.X（推荐）</a></li><li><a href="/zh-cn/docs/quick-start.html" target="_blank">1.X</a></li></ul> </div></li><li class="menu-item menu-item-normal"><div class="nav-container"><div class="word"><a>解决方案</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></div><ul class="sub-nav-container" style="width:220px"><li><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_blank">微服务解决方案</a></li><li><a href="https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0" target="_blank">微服务Serverless解决方案</a></li><li><a href="https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0" target="_blank">PaaS解决方案</a></li></ul> </div></li><li class="menu-item menu-item-normal"><span><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0">企业版NACOS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST">NACOS架构与原理</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal menu-item-normal-active"><span><a href="/zh-cn/blog/index.html">博客</a></span></li><li class="menu-item menu-item-normal"><span><a href="/zh-cn/community/index.html">社区</a></span></li><li class="menu-item menu-item-normal"><span><a href="http://console.nacos.io/nacos/index.html">控制台样例</a></span></li></ul></div></div></header><section class="blog-content markdown-body"><h1>双十一购物节，Nacos 1.4.0 + Go SDK 1.0.1发布</h1>
+<p>一年一度的双十一购物节又来了，不知道小伙伴们有没有抢到想要的商品呢？
+无论您是否“剁手”成功，Nacos都为社区的各位奉上礼物庆祝双十一 -- <code>Nacos 1.4.0</code>和<code>nacos-sdk-go 1.0.1</code>正式发布。</p>
+<h2>Nacos 1.4.0</h2>
+<p>这个版本主要变更为：</p>
+<ol>
+<li>重构了naming模块的distro协议，并且下沉到了nacos-core模块。</li>
+<li>使用了jraft对旧的自实现raft协议进行了替换，提高性能和raft语义的准确性。</li>
+<li>对nacos所使用的http客户端进行了完全地统一，并优化了一些http客户端的使用，减少了连接损耗，特别是CLOSE_WAIT连接的数量。</li>
+<li>添加了一个单独修改服务元数据的BETA接口。</li>
+<li>修复了一些旧版本的bug并优化了控制台使用。</li>
+</ol>
+<p>具体的变更列表如下：</p>
+<pre><code>[#1654] 修复内容高亮在配置详情页面无效的问题.
+[#2792] 记录操作时的用户信息当打开权限功能后。
+[#2835] 修复控制台不停loading如果没有该namespace的权限。
+[#2866] 修复客户端没有访问 /nacos/v1/ns/operator/metrics权限的问题。
+[#3117] 优化内部事件机制并下沉到nacos-common模块。
+[#3192] 统一nacos服务端的http客户端使用。
+[#3315] nacos客户端支持https。
+[#3397] 修复一些关于启动脚本的错误。
+[#3384] 修复控制台关于raft信息显示不同步的问题。
+[#3500] 统一控制台中服务治理和配置管理的分页列表。
+[#3509] 修复使用地址服务器模式获取nacos集群地址时无法获取nacos配置文件的问题。
+[#3518] 在绑定角色的时候用户列表改成下拉选中的模式。
+[#3530] 在控制台的页面中添加刷新按钮来刷新列表。
+[#3533] 修改客户端缓存目录配置。
+[#3515][#3536][#3899] 升级依赖修复安全漏洞。
+[#3528] 修复客户端会获取到无效的project.version。
+[#3550] 修复服务端无法创建raft协议的持久化文件的问题。
+[#3560] 修改浏览器标签页上的nacos logo。
+[#3566] 从nacos-config模块中下沉权限相关内容到nacos-auth模块。
+[#3576] 给NamingMaintainService添加生命周期相关接口。
+[#3592] 修复修复访问无权限的名称空间时的错误提示。
+[#3628] 优化客户端更新不存在的订阅服务的频率。
+[#3635] 在nacos-naming模块使用Jraft替换自研raft协议。
+[#3651] 优化nacos服务端对http-client的使用以减少CLOSE_WAI连接的数量。
+[#3661] 优化使用Jraft时更新raft group的更新逻辑。
+[#3671] 移动部分工具类到nacos-common模块复用。
+[#3676] 修复还原块在“内容比较”页面中不起作用。
+[#3692] 重构nacos-naming模块中的Distro协议。
+[#3687] 校验服务名格式为Group@@ServiceName。
+[#3710] 修复发布服务会导致丢失元数据中带有特殊字符的问题。
+[#3781] 修复服务实例可能间歇性掉线的问题。
+[#3790] 修复客户端可能发生的配置乱码问题。
+[#3815] 修复当客户端缓存存在中文时可能被截断的问题。
+[#3833] 修复新消息通知系统在没有订阅者的时候抛空指针异常的问题。
+[#3855] 在控制台查看配置详情页面里添加上版本改动的展示。
+[#3904] 支持单独修改服务元数据内容的功能。
+[#3909] 修复nacos服务端无法配置域名的问题。
+[#3973] 修复首次运行时，导入配置失败的问题。
+[#4110] 修复扩容集群时raft协议服务更新新节点的问题。
+</code></pre>
+<h2>Nacos Go SDK 1.0.1</h2>
+<p>这个版本主要是修复了一些旧版本的bug以及增加客户端对于https的支持等等。</p>
+<p>详细的变更列表请查看 <a href="https://github.com/nacos-group/nacos-sdk-go/releases/tag/v1.0.1">https://github.com/nacos-group/nacos-sdk-go/releases/tag/v1.0.1</a></p>
+<h2>社区</h2>
+<p>随着Nacos 1.4.0的发布， Nacos社区又新增了两位Committer：Maijh97 和 wangweizZZ。
+两位分别在统一http client使用，下沉auth模块，客户端的https功能，重构部分服务端线程池和修复bug等内容中作出许多贡献，并积极参与社区讨论。</p>
+<p>Nacos社区欢迎更多愿意参与共建的小伙伴加入，包括但不限于：</p>
+<ul>
+<li>源代码</li>
+<li>文档</li>
+<li>社区讨论</li>
+<li>多语言实现</li>
+<li>周边生态产品结合</li>
+</ul>
+<p>积极参与将可以获得Nacos社区赠送的精美小礼品～</p>
+<h2>结尾</h2>
+<p>Nacos 致力于帮助您发现、配置和管理微服务。Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。</p>
+<p>Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 Nacos 是构建以“服务”为中心的现代应用架构 (例如微服务范式、云原生范式) 的服务基础设施。</p>
+</section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>愿景</h3><p>Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/what-is-nacos.html" target="_self">概览</a></dd><dd><a href="/zh-cn/docs/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/contributing.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_self">云服务 MSE</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">云服务 EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">云服务 AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2022 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script src="//g.alicdn.com/alilog/mlog/aplus_v2.js" id="beacon-aplus" exparams="clog=o&aplus&sidx=aplusSidx&ckx=aplusCkx"></script>
+  <script src="//g.alicdn.com/aes/??tracker/1.0.34/index.js,tracker-plugin-pv/2.4.5/index.js,tracker-plugin-event/1.2.5/index.js,tracker-plugin-jserror/1.0.13/index.js,tracker-plugin-api/1.1.14/index.js,tracker-plugin-perf/1.1.8/index.js,tracker-plugin-eventTiming/1.0.4/index.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/blogDetail.js">
+	</script>
+	<script src="https://g.alicdn.com/mamba/assets/0.0.19/mse-arc-ui.min.js"></script>
+	<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e3a5cec56ef8619cf9d7c2abebd509e3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0YDFJ7LX7F"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-0YDFJ7LX7F');
+    </script>
+</body>
+</html>

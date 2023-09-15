@@ -1,0 +1,86 @@
+{
+  "version.label": {
+    "message": "2.X",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.archive": {
+    "message": "archive",
+    "description": "The label for category archive in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.v2": {
+    "message": "v2",
+    "description": "The label for category v2 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Community": {
+    "message": "Community",
+    "description": "The label for category Community in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.contribution": {
+    "message": "contribution",
+    "description": "The label for category contribution in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.ecology": {
+    "message": "ecology",
+    "description": "The label for category ecology in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.guide": {
+    "message": "guide",
+    "description": "The label for category guide in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.admin": {
+    "message": "admin",
+    "description": "The label for category admin in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.user": {
+    "message": "user",
+    "description": "The label for category user in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.plugin": {
+    "message": "plugin",
+    "description": "The label for category plugin in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.quickstart": {
+    "message": "quickstart",
+    "description": "The label for category quickstart in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.upgrading": {
+    "message": "upgrading",
+    "description": "The label for category upgrading in sidebar tutorialSidebar"
+  },
+  "sidebar.docs.category.What is Nacos": {
+    "message": "What is Nacos",
+    "description": "The label for category What is Nacos in sidebar docs"
+  },
+  "sidebar.docs.category.Quick Start": {
+    "message": "Quick Start",
+    "description": "The label for category Quick Start in sidebar docs"
+  },
+  "sidebar.docs.category.Upgrading": {
+    "message": "Upgrading",
+    "description": "The label for category Upgrading in sidebar docs"
+  },
+  "sidebar.docs.category.Plugin": {
+    "message": "Plugin",
+    "description": "The label for category Plugin in sidebar docs"
+  },
+  "sidebar.docs.category.User Guide": {
+    "message": "User Guide",
+    "description": "The label for category User Guide in sidebar docs"
+  },
+  "sidebar.docs.category.Admin Guide": {
+    "message": "Admin Guide",
+    "description": "The label for category Admin Guide in sidebar docs"
+  },
+  "sidebar.docs.category.Ecology": {
+    "message": "Ecology",
+    "description": "The label for category Ecology in sidebar docs"
+  },
+  "sidebar.docs.category.Contributor Guide": {
+    "message": "Contributor Guide",
+    "description": "The label for category Contributor Guide in sidebar docs"
+  },
+  "sidebar.docs.category.Community": {
+    "message": "Community",
+    "description": "The label for category Community in sidebar docs"
+  }
+}

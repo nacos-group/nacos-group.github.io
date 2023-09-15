@@ -1,0 +1,17 @@
+@import '../css/variables.scss';
+@media screen and (max-width: $mobileWidth) {
+  .feature-section-body, .users-section {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+$animationDuration: 2s;
+@keyframes slashStar {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}

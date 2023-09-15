@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="aes-config" content="pid=xux-opensource&user_type=101&uid=&username=&dim10=nacos"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="nacos 1.1.4" />
+	<meta name="description" content="nacos 1.1.4" />
+  <meta name="baidu-site-verification" content="code-wzq5sw7io3" />
+	<!-- 网页标签标题 -->
+	<title>nacos 1.1.4</title>
+	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
+	<link rel="stylesheet" href="/build/blogDetail.css" />
+	<link rel="stylesheet" href="https://g.alicdn.com/mamba/assets/0.0.19/mse-arc-ui.min.css" />
+</head>
+<body>
+	<div id="root"><div class="blog-detail-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><span><a href="/zh-cn/index.html">首页</a></span></li><li class="menu-item menu-item-normal"><div class="nav-container"><div class="word"><a>文档</a></div><ul class="sub-nav-container" style="width:220px"><li><a href="/zh-cn/docs/v2/quickstart/quick-start.html" target="_blank">2.X（推荐）</a></li><li><a href="/zh-cn/docs/quick-start.html" target="_blank">1.X</a></li></ul> </div></li><li class="menu-item menu-item-normal"><div class="nav-container"><div class="word"><a>解决方案</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></div><ul class="sub-nav-container" style="width:220px"><li><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_blank">微服务解决方案</a></li><li><a href="https://cn.aliyun.com/product/aliware/sae?spm=nacos-website.topbar.0.0.0" target="_blank">微服务Serverless解决方案</a></li><li><a href="https://www.aliyun.com/product/edas?spm=nacos-website.topbar.0.0.0" target="_blank">PaaS解决方案</a></li></ul> </div></li><li class="menu-item menu-item-normal"><span><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0">企业版NACOS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST">NACOS架构与原理</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal menu-item-normal-active"><span><a href="/zh-cn/blog/index.html">博客</a></span></li><li class="menu-item menu-item-normal"><span><a href="/zh-cn/community/index.html">社区</a></span></li><li class="menu-item menu-item-normal"><span><a href="http://console.nacos.io/nacos/index.html">控制台样例</a></span></li></ul></div></div></header><section class="blog-content markdown-body"><h1>Nacos 1.1.4发布，业界率先支持Istio MCP协议</h1>
+<p>Nacos是阿里巴巴开源的服务发现与配置管理项目，本次发布的1.1.4版本，主要带来的是与Istio的对接功能，使用的是Istio最新的MCP协议。本文将介绍包括这个功能在内的新版本发布的功能。</p>
+<p><a name="GdnN0"></a></p>
+<h2>升级指南</h2>
+<p><a name="SXacG"></a></p>
+<h4>服务端</h4>
+<p>0.8.0及以上版本：</p>
+<ol>
+<li>解压安装包后替换{nacos.home}/target/nacos-server.jar</li>
+<li>逐台重启Nacos Server即可</li>
+</ol>
+<p>0.8.0以下版本，先升级到1.0.0版本。
+<a name="CNPhB"></a></p>
+<h4>客户端</h4>
+<p>替换pom依赖即可。</p>
+<p><a name="07ZzZ"></a></p>
+<h2>支持Istio MCP协议</h2>
+<p>这是本次版本最大的更新，主要是实现了Nacos服务数据往Istio下发的功能，也是目前业界所有注册中心里面第一个由官方提供的MCP协议对接版本。Pilot最新的设计中，是使用MCP协议来与所有后端的数据源进行交互的。这样做的好处是可以解耦所有扩展组件的代码，Pilot保持轻量的逻辑，在代码质量、组件稳定性及扩展性方面都大幅提升。我们可以看一下Pilot官方提供的Pilot设计图（地址：<a href="https://docs.google.com/document/d/1S5ygkxR1alNI8cWGG4O4iV8zp8dA6Oc23zQCvFxr83U/edit#heading=h.k34grc1as8vr">https://docs.google.com/document/d/1S5ygkxR1alNI8cWGG4O4iV8zp8dA6Oc23zQCvFxr83U/edit#heading=h.k34grc1as8vr</a>）：<br /><img src="https://cdn.nlark.com/yuque/0/2019/png/333810/1572940023007-e19f92da-a5a1-41f0-b37e-db8a678ad57f.png#align=left&amp;display=inline&amp;height=455&amp;name=image.png&amp;originHeight=659&amp;originWidth=1080&amp;search=&amp;size=360963&amp;status=done&amp;width=746" alt="image.png"><br />图1 Pilot的最新设计概念图</p>
+<p>虽然在设计图中，Pilot后端的MCP Server已经有了Consul、Eureka等，但是这些项目目前都没有官方支持的MCP Server。Nacos是目前首个官方支持Istio MCP协议的项目。</p>
+<p>关于MCP协议的设计，可以参考Istio的<a href="https://github.com/istio/api/tree/master/mcp">文档</a>。Nacos实现的MCP Server，目前使用的是单个服务编号，全量服务推送的模式，因为目前Pilot还不支持增量的服务数据推送（Nacos 1.1.4发布之后，Pilot已经支持了endpoint级别的增量推送，Nacos也会在下个版本支持）。实现的逻辑就是启动一个gRPC Server来进行MCP数据的传输，代码可以参考：<a href="https://github.com/alibaba/nacos/tree/develop/istio">https://github.com/alibaba/nacos/tree/develop/istio</a>。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/333810/1572940023014-089f4517-840c-4f6e-ae29-2c308926d069.png#align=left&amp;display=inline&amp;height=365&amp;name=image.png&amp;originHeight=730&amp;originWidth=1372&amp;search=&amp;size=300144&amp;status=done&amp;width=686" alt="image.png"><br />图2 Nacos MCP Server架构</p>
+<p>使用Nacos MCP Server的方式如下：</p>
+<ol>
+<li>下载最新的Nacos 1.1.4安装包，解压；</li>
+<li>配置application.properties，然后重启Nacos；</li>
+</ol>
+<pre><code class="language-html">nacos.istio.mcp.server.enabled=true
+</code></pre>
+<p>注意：如果Nacos是集群部署，则只需要配置一台Server启动MCP Server即可，因为每台Nacos Server的数        据都是全量的。同时Nacos MCP Server使用的端口是18848，请注意端口是否冲突；</p>
+<ol start="3">
+<li>配置Pilot使用Nacos MCP Server：</li>
+</ol>
+<pre><code class="language-html">configSources
+-- address: x.x.x.x:18848
+</code></pre>
+<ol start="4">
+<li>重启Pilot；</li>
+</ol>
+<p><a name="srliR"></a></p>
+<h2>自定义实例ID</h2>
+<p>在之前的版本中，Instance类的instanceId字段，是用来作为唯一标识这个instance的属性，它的值默认是不能由客户端来指定的。在1.1.4版本中，我们支持了允许客户端自定义ID以及一个新增加的instanceId生成算法：一个服务内唯一的整数，这个整数可以用来作为实例在服务内的唯一索引。这个功能由vettal-wu贡献，非常感谢。</p>
+<p>这个整形instanceId的使用方式为在注册时配置instance的metadata，指定使用该id生成算法，样例代码如下：</p>
+<pre><code class="language-java">Instance instance = <span class="hljs-keyword">new</span> Instance();
+instance.setIp(<span class="hljs-string">"1.1.1.1"</span>);
+instance.setPort(<span class="hljs-number">80</span>);
+<span class="hljs-comment">// 必须设置ephemeral=false，来保证服务端使用的是严格的一致性协议，否则可能会导致生成的instance id冲突：</span>
+instance.setEhpemeral(<span class="hljs-keyword">false</span>);
+instance.setMetadata(<span class="hljs-keyword">new</span> HashMap&lt;String, String&gt;());
+instance.getMetadata().put(PreservedMetadataKeys.INSTANCE_ID_GENERATOR, Constants.SNOWFLAKE_INSTANCE_ID_GENERATOR);
+</code></pre>
+<p>Nacos在这个版本也有一些关于代码质量上的优化更新，具体可以参考1.1.4版本issue列表：<a href="https://github.com/alibaba/nacos/issues?q=is%3Aissue+milestone%3A1.1.4">https://github.com/alibaba/nacos/issues?q=is%3Aissue+milestone%3A1.1.4</a>。</p>
+<p><a name="B7djZ"></a></p>
+<h2>如何共建</h2>
+<p>为了实现这一目标，你需要积极参与Nacos社区。如果您在文档中发现拼写错误，在代码中发现错误，或想要新功能或想要提供建议，您可以<a href="https://github.com/alibaba/Nacos/issues/new">在GitHub上创建一个issues</a>。</p>
+<p>如果您想开始着手，可以选择github仓库中有以下标签的issues。</p>
+<ul>
+<li><a href="https://github.com/alibaba/nacos/labels/good%20first%20issue">good first issue</a>：对于新手来说是非常好的入门issues。</li>
+<li><a href="https://github.com/alibaba/nacos/labels/contribution%20%E6%AC%A2%E8%BF%8E">contribution welcome</a>：非常需要解决的问题和非常重要的模块，但目前缺少贡献者，欢迎贡献者来贡献。</li>
+</ul>
+<p><a name="7ddae8a4"></a></p>
+<h2>蓬勃发展的 Nacos 社区</h2>
+<blockquote>
+<p>DISS is cheap, show me your hand
+比吐槽更重要的是搭把手，参与社区一起发展Nacos</p>
+</blockquote>
+<ul>
+<li>作为用户关注和加入 Nacos 社区</li>
+</ul>
+<p>Nacos 社区正在蓬勃发展，截止到发文为止，Nacos 短短几个月已经有 9 个微信群，其中 7 个已满员，1个QQ群，1个钉钉群，关注 Nacos 的社区人数已经近5000人，在 Nacos 群里跟 “道（基）友” 切磋技术，交流经验，招聘交友，抢抢红包...不亦乐乎。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/333810/1572940023025-5e1cf910-5e80-4353-8b47-d0565a65bbda.png#align=left&amp;display=inline&amp;height=998&amp;name=image.png&amp;originHeight=998&amp;originWidth=1786&amp;search=&amp;size=298649&amp;status=done&amp;width=1786" alt="image.png"></p>
+<ul>
+<li>作为代码贡献者加入 Nacos 社区</li>
+</ul>
+<p>从Nacos用户发展而成贡献者顺理成章，而Nacos开发团队也确实在日趋壮大，从开始的只有4个代码contributor发展到目前的40多个，1.1.4版本中，参与Nacos仓库贡献的开发者有：stackisok,loadchange, ly641921791, EZLippi, rushsky518, universefeeler, nkorange, vettal-wu, beldon等。</p>
+<p><img src="https://cdn.nlark.com/lark/0/2018/png/15914/1542704700864-a9d54856-9bf6-4176-b449-c13fa02c5800.png#align=left&amp;display=inline&amp;height=387&amp;linkTarget=_blank&amp;originHeight=888&amp;originWidth=1716&amp;width=748#align=left&amp;display=inline&amp;height=386&amp;originHeight=888&amp;originWidth=1716&amp;search=&amp;status=done&amp;width=746" alt=""></p>
+<p><a name="2461e1c0"></a></p>
+<h2>新人时刻 - &quot;什么是Nacos？&quot;</h2>
+<blockquote>
+<p>还不知道什么是Nacos? 没关系，在github上star一下跟程序猿兄弟打个招呼吧!!</p>
+</blockquote>
+<p><a href="https://github.com/alibaba/nacos">Nacos</a> 是阿里巴巴于2018年7月份新开源的项目，Nacos的主要愿景是期望通过提供易用的 <code>动态服务发现</code>、<code>服务配置管理</code>、<code>服务共享与管理</code> 的基础设施，帮助用户在云原生时代更好的构建、交付、管理自己的微服务平台。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2019/png/333810/1572940023011-845b558c-5af1-4e75-8f6e-4aee37cdbb44.png#align=left&amp;display=inline&amp;height=332&amp;name=image.png&amp;originHeight=664&amp;originWidth=1614&amp;search=&amp;size=282270&amp;status=done&amp;width=807" alt="image.png"></p>
+<p>github项目地址在 <a href="https://github.com/alibaba/nacos">这里</a></p>
+<p><a name="f26dbb6d"></a></p>
+<h2>更多与 Nacos 相关的开源项目信息</h2>
+<ul>
+<li><a href="https://github.com/alibaba/nacos">Nacos</a></li>
+<li><a href="https://github.com/dubbo/dubbo-registry-nacos">Dubbo Registry Nacos</a></li>
+<li><a href="https://github.com/nacos-group/nacos-coredns-plugin">Nacos DNS-F</a></li>
+<li><a href="https://github.com/nacos-group/nacos-docker">Nacos Docker</a></li>
+<li><a href="https://github.com/nacos-group/nacos-spring-project">Nacos Spring Project</a></li>
+<li><a href="https://github.com/nacos-group/nacos-spring-boot-project">Nacos Spring Boot</a></li>
+<li><a href="https://github.com/spring-cloud-incubator/spring-cloud-alibaba">Spring Cloud Alibaba</a></li>
+<li><a href="http://dubbo.io/">Dubbo</a></li>
+<li><a href="https://github.com/alibaba/Sentinel">Sentinel</a></li>
+<li><a href="https://projects.spring.io/spring-cloud/">Spring Cloud</a></li>
+<li><a href="https://github.com/Nepxion/Discovery">Nepxion Discovery</a></li>
+<li><a href="https://github.com/SpringCloud/spring-cloud-gateway-nacos">Spring Cloud Gateway Nacos</a></li>
+</ul>
+<p><a name="aswNK"></a></p>
+<h2>下期预告</h2>
+<p>Nacos的下个版本是1.2.0版本，将会支持社区广泛关注的权限控制功能，敬请期待。</p>
+</section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>愿景</h3><p>Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/what-is-nacos.html" target="_self">概览</a></dd><dd><a href="/zh-cn/docs/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/contributing.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0" target="_self">云服务 MSE</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">云服务 EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">云服务 AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2022 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script src="//g.alicdn.com/alilog/mlog/aplus_v2.js" id="beacon-aplus" exparams="clog=o&aplus&sidx=aplusSidx&ckx=aplusCkx"></script>
+  <script src="//g.alicdn.com/aes/??tracker/1.0.34/index.js,tracker-plugin-pv/2.4.5/index.js,tracker-plugin-event/1.2.5/index.js,tracker-plugin-jserror/1.0.13/index.js,tracker-plugin-api/1.1.14/index.js,tracker-plugin-perf/1.1.8/index.js,tracker-plugin-eventTiming/1.0.4/index.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/blogDetail.js">
+	</script>
+	<script src="https://g.alicdn.com/mamba/assets/0.0.19/mse-arc-ui.min.js"></script>
+	<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e3a5cec56ef8619cf9d7c2abebd509e3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0YDFJ7LX7F"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-0YDFJ7LX7F');
+    </script>
+</body>
+</html>

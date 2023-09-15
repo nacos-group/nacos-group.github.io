@@ -1,0 +1,62 @@
+{
+  "logo.alt": {
+    "message": "Nacos Logo",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Home": {
+    "message": "Home",
+    "description": "Navbar item with label Home"
+  },
+  "item.label.Docs": {
+    "message": "Docs",
+    "description": "Navbar item with label Docs"
+  },
+  "item.label.Solutions": {
+    "message": "Solutions",
+    "description": "Navbar item with label Solutions"
+  },
+  "item.label.NACOS IN CLOUD": {
+    "message": "NACOS IN CLOUD",
+    "description": "Navbar item with label NACOS IN CLOUD"
+  },
+  "item.label.E-BOOK-NACOS": {
+    "message": "E-BOOK-NACOS",
+    "description": "Navbar item with label E-BOOK-NACOS"
+  },
+  "item.label.BLOG": {
+    "message": "BLOG",
+    "description": "Navbar item with label BLOG"
+  },
+  "item.label.COMMUNITY": {
+    "message": "COMMUNITY",
+    "description": "Navbar item with label COMMUNITY"
+  },
+  "item.label.DEMO-CONSOLE": {
+    "message": "DEMO-CONSOLE",
+    "description": "Navbar item with label DEMO-CONSOLE"
+  },
+  "item.label.Microservice Solution": {
+    "message": "Microservice Solution",
+    "description": "Navbar item with label Microservice Solution"
+  },
+  "item.label.Microservice on Serverless Solution": {
+    "message": "Microservice on Serverless Solution",
+    "description": "Navbar item with label Microservice on Serverless Solution"
+  },
+  "item.label.PaaS Solution": {
+    "message": "PaaS Solution",
+    "description": "Navbar item with label PaaS Solution"
+  },
+  "item.label.Distributed transaction Solution": {
+    "message": "Distributed transaction Solution",
+    "description": "Navbar item with label Distributed transaction Solution"
+  },
+  "item.label.High-availability Solution": {
+    "message": "High-availability Solution",
+    "description": "Navbar item with label High-availability Solution"
+  },
+  "item.label.Service mesh Solution": {
+    "message": "Service mesh Solution",
+    "description": "Navbar item with label Service mesh Solution"
+  }
+}

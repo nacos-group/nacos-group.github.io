@@ -1,0 +1,384 @@
+{
+  "homepage.footerVersionTitle": {
+    "message": "愿景"
+  },
+  "homepage.footerVersionContent": {
+    "message": "Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。"
+  },
+  "homepage.footerDocTitle": {
+    "message": "文档"
+  },
+  "homepage.footerDocListText1": {
+    "message": "概览"
+  },
+  "homepage.footerDocListText2": {
+    "message": "快速开始"
+  },
+  "homepage.footerDocListText3": {
+    "message": "开发者指南"
+  },
+  "homepage.footerResourcesTitle": {
+    "message": "资源"
+  },
+  "homepage.footerResourcesListText1": {
+    "message": "社区"
+  },
+  "community.barText": {
+    "message": "社区"
+  },
+  "community.eventsTitle": {
+    "message": "事件 & 新闻"
+  },
+  "community.contactsTitle": {
+    "message": "联系我们"
+  },
+  "community.contactsDesc": {
+    "message": "有问题需要反馈？可以优先通过钉钉群(1群已满，2群群号:30438813)联系我们，或者通过以下方式参与我们一起互动。"
+  },
+  "community.contributeTitle": {
+    "message": "贡献指南"
+  },
+  "community.contributeDesc": {
+    "message": "Nacos社区欢迎任何形式的贡献。"
+  },
+  "community.dubboTitle": {
+    "message": "开源生态相关"
+  },
+  "theme.navbar.mobileLanguageDropdown.label": {
+    "message": "Languages",
+    "description": "The label for the mobile language switcher dropdown"
+  },
+  "homepage.featureListTitle1": {
+    "message": "易于使用"
+  },
+  "homepage.featureListContent1": {
+    "message": "动态配置管理、服务发现和动态的一站式解决方案;20多种开箱即用的以服务为中心的架构特性;基本符合生产要求的轻量级易用控制台。"
+  },
+  "homepage.featureListTitle2": {
+    "message": "更适应云架构"
+  },
+  "homepage.featureListContent2": {
+    "message": "无缝支持Kubernetes和Spring Cloud;在主流公共云上更容易部署和运行（例如阿里云和AWS）;多租户和多环境支持。"
+  },
+  "homepage.featureListTitle3": {
+    "message": "生产等级"
+  },
+  "homepage.featureListContent3": {
+    "message": "脱胎于历经阿里巴巴10年生产验证的内部产品;支持具有数百万服务的大规模场景;具备企业级SLA的开源产品。"
+  },
+  "homepage.featureListTitle4": {
+    "message": "丰富的应用场景"
+  },
+  "homepage.featureListContent4": {
+    "message": "支持限流、大促销预案和异地多活;直接支持或稍作扩展即可支持大量有用的互联网应用场景;流量调度和服务治理。"
+  },
+  "homepage.featureTitle": {
+    "message": "特色功能"
+  },
+  "homepage.functionListTitle1": {
+    "message": "动态配置服务"
+  },
+  "homepage.functionListContent1": {
+    "message": "动态配置服务让您能够以中心化、外部化和动态化的方式管理所有环境的配置。动态配置消除了配置变更时重新部署应用和服务的需要。配置中心化管理让实现无状态服务更简单，也让按需弹性扩展服务更容易。"
+  },
+  "homepage.functionListTitle2": {
+    "message": "服务发现及管理"
+  },
+  "homepage.functionListContent2": {
+    "message": "动态服务发现对以服务为中心的（例如微服务和云原生）应用架构方式非常关键。Nacos支持DNS-Based和RPC-Based（Dubbo、gRPC）模式的服务发现。Nacos也提供实时健康检查，以防止将请求发往不健康的主机或服务实例。借助Nacos，您可以更容易地为您的服务实现断路器。"
+  },
+  "homepage.functionListTitle3": {
+    "message": "动态DNS服务"
+  },
+  "homepage.functionListContent3": {
+    "message": "通过支持权重路由，动态DNS服务能让您轻松实现中间层负载均衡、更灵活的路由策略、流量控制以及简单数据中心内网的简单DNS解析服务。动态DNS服务还能让您更容易地实现以DNS协议为基础的服务发现，以消除耦合到厂商私有服务发现API上的风险。"
+  },
+  "homepage.functionTitle": {
+    "message": "功能"
+  },
+  "homepage.msemapTitle": {
+    "message": "微服务全景图"
+  },
+  "homepage.briefIntroduction": {
+    "message": "一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。"
+  },
+  "homepage.userDesc1": {
+    "message": "请在"
+  },
+  "homepage.userDesc2": {
+    "message": "上提供信息来帮助 Seata 做的更好。"
+  },
+  "homepage.userTitleBefore": {
+    "message": "谁在使用"
+  },
+  "homepage.userTitleAfter": {
+    "message": " Nacos"
+  },
+  "theme.ErrorPageContent.title": {
+    "message": "This page crashed.",
+    "description": "The title of the fallback page when the page crashed"
+  },
+  "theme.NotFound.title": {
+    "message": "Page Not Found",
+    "description": "The title of the 404 page"
+  },
+  "theme.NotFound.p1": {
+    "message": "We could not find what you were looking for.",
+    "description": "The first paragraph of the 404 page"
+  },
+  "theme.NotFound.p2": {
+    "message": "Please contact the owner of the site that linked you to the original URL and let them know their link is broken.",
+    "description": "The 2nd paragraph of the 404 page"
+  },
+  "theme.admonition.note": {
+    "message": "note",
+    "description": "The default label used for the Note admonition (:::note)"
+  },
+  "theme.admonition.tip": {
+    "message": "tip",
+    "description": "The default label used for the Tip admonition (:::tip)"
+  },
+  "theme.admonition.danger": {
+    "message": "danger",
+    "description": "The default label used for the Danger admonition (:::danger)"
+  },
+  "theme.admonition.info": {
+    "message": "info",
+    "description": "The default label used for the Info admonition (:::info)"
+  },
+  "theme.admonition.caution": {
+    "message": "caution",
+    "description": "The default label used for the Caution admonition (:::caution)"
+  },
+  "theme.BackToTopButton.buttonAriaLabel": {
+    "message": "Scroll back to top",
+    "description": "The ARIA label for the back to top button"
+  },
+  "theme.blog.archive.title": {
+    "message": "Archive",
+    "description": "The page & hero title of the blog archive page"
+  },
+  "theme.blog.archive.description": {
+    "message": "Archive",
+    "description": "The page & hero description of the blog archive page"
+  },
+  "theme.blog.paginator.navAriaLabel": {
+    "message": "Blog list page navigation",
+    "description": "The ARIA label for the blog pagination"
+  },
+  "theme.blog.paginator.newerEntries": {
+    "message": "Newer Entries",
+    "description": "The label used to navigate to the newer blog posts page (previous page)"
+  },
+  "theme.blog.paginator.olderEntries": {
+    "message": "Older Entries",
+    "description": "The label used to navigate to the older blog posts page (next page)"
+  },
+  "theme.blog.post.paginator.navAriaLabel": {
+    "message": "Blog post page navigation",
+    "description": "The ARIA label for the blog posts pagination"
+  },
+  "theme.blog.post.paginator.newerPost": {
+    "message": "Newer Post",
+    "description": "The blog post button label to navigate to the newer/previous post"
+  },
+  "theme.blog.post.paginator.olderPost": {
+    "message": "Older Post",
+    "description": "The blog post button label to navigate to the older/next post"
+  },
+  "theme.blog.post.plurals": {
+    "message": "One post|{count} posts",
+    "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.blog.tagTitle": {
+    "message": "{nPosts} tagged with \"{tagName}\"",
+    "description": "The title of the page for a blog tag"
+  },
+  "theme.tags.tagsPageLink": {
+    "message": "View All Tags",
+    "description": "The label of the link targeting the tag list page"
+  },
+  "theme.colorToggle.ariaLabel": {
+    "message": "Switch between dark and light mode (currently {mode})",
+    "description": "The ARIA label for the navbar color mode toggle"
+  },
+  "theme.colorToggle.ariaLabel.mode.dark": {
+    "message": "dark mode",
+    "description": "The name for the dark color mode"
+  },
+  "theme.colorToggle.ariaLabel.mode.light": {
+    "message": "light mode",
+    "description": "The name for the light color mode"
+  },
+  "theme.docs.breadcrumbs.navAriaLabel": {
+    "message": "Breadcrumbs",
+    "description": "The ARIA label for the breadcrumbs"
+  },
+  "theme.docs.DocCard.categoryDescription": {
+    "message": "{count} items",
+    "description": "The default description for a category card in the generated index about how many items this category includes"
+  },
+  "theme.docs.paginator.navAriaLabel": {
+    "message": "Docs pages",
+    "description": "The ARIA label for the docs pagination"
+  },
+  "theme.docs.paginator.previous": {
+    "message": "Previous",
+    "description": "The label used to navigate to the previous doc"
+  },
+  "theme.docs.paginator.next": {
+    "message": "Next",
+    "description": "The label used to navigate to the next doc"
+  },
+  "theme.docs.tagDocListPageTitle.nDocsTagged": {
+    "message": "One doc tagged|{count} docs tagged",
+    "description": "Pluralized label for \"{count} docs tagged\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.docs.tagDocListPageTitle": {
+    "message": "{nDocsTagged} with \"{tagName}\"",
+    "description": "The title of the page for a docs tag"
+  },
+  "theme.docs.versionBadge.label": {
+    "message": "Version: {versionLabel}"
+  },
+  "theme.docs.versions.unreleasedVersionLabel": {
+    "message": "This is unreleased documentation for {siteTitle} {versionLabel} version.",
+    "description": "The label used to tell the user that he's browsing an unreleased doc version"
+  },
+  "theme.docs.versions.unmaintainedVersionLabel": {
+    "message": "This is documentation for {siteTitle} {versionLabel}, which is no longer actively maintained.",
+    "description": "The label used to tell the user that he's browsing an unmaintained doc version"
+  },
+  "theme.docs.versions.latestVersionSuggestionLabel": {
+    "message": "For up-to-date documentation, see the {latestVersionLink} ({versionLabel}).",
+    "description": "The label used to tell the user to check the latest version"
+  },
+  "theme.docs.versions.latestVersionLinkLabel": {
+    "message": "latest version",
+    "description": "The label used for the latest version suggestion link label"
+  },
+  "theme.common.editThisPage": {
+    "message": "Edit this page",
+    "description": "The link label to edit the current page"
+  },
+  "theme.common.headingLinkTitle": {
+    "message": "Direct link to {heading}",
+    "description": "Title for link to heading"
+  },
+  "theme.lastUpdated.atDate": {
+    "message": " on {date}",
+    "description": "The words used to describe on which date a page has been last updated"
+  },
+  "theme.lastUpdated.byUser": {
+    "message": " by {user}",
+    "description": "The words used to describe by who the page has been last updated"
+  },
+  "theme.lastUpdated.lastUpdatedAtBy": {
+    "message": "Last updated{atDate}{byUser}",
+    "description": "The sentence used to display when a page has been last updated, and by who"
+  },
+  "theme.navbar.mobileVersionsDropdown.label": {
+    "message": "Versions",
+    "description": "The label for the navbar versions dropdown on mobile view"
+  },
+  "theme.tags.tagsListLabel": {
+    "message": "Tags:",
+    "description": "The label alongside a tag list"
+  },
+  "theme.AnnouncementBar.closeButtonAriaLabel": {
+    "message": "Close",
+    "description": "The ARIA label for close button of announcement bar"
+  },
+  "theme.blog.sidebar.navAriaLabel": {
+    "message": "Blog recent posts navigation",
+    "description": "The ARIA label for recent posts in the blog sidebar"
+  },
+  "theme.CodeBlock.copied": {
+    "message": "Copied",
+    "description": "The copied button label on code blocks"
+  },
+  "theme.CodeBlock.copyButtonAriaLabel": {
+    "message": "Copy code to clipboard",
+    "description": "The ARIA label for copy code blocks button"
+  },
+  "theme.CodeBlock.copy": {
+    "message": "Copy",
+    "description": "The copy button label on code blocks"
+  },
+  "theme.CodeBlock.wordWrapToggle": {
+    "message": "Toggle word wrap",
+    "description": "The title attribute for toggle word wrapping button of code block lines"
+  },
+  "theme.DocSidebarItem.toggleCollapsedCategoryAriaLabel": {
+    "message": "Toggle the collapsible sidebar category '{label}'",
+    "description": "The ARIA label to toggle the collapsible sidebar category"
+  },
+  "theme.NavBar.navAriaLabel": {
+    "message": "Main",
+    "description": "The ARIA label for the main navigation"
+  },
+  "theme.TOCCollapsible.toggleButtonLabel": {
+    "message": "On this page",
+    "description": "The label used by the button on the collapsible TOC component"
+  },
+  "theme.blog.post.readMore": {
+    "message": "Read More",
+    "description": "The label used in blog post item excerpts to link to full blog posts"
+  },
+  "theme.blog.post.readMoreLabel": {
+    "message": "Read more about {title}",
+    "description": "The ARIA label for the link to full blog posts from excerpts"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "One min read|{readingTime} min read",
+    "description": "Pluralized label for \"{readingTime} min read\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.docs.breadcrumbs.home": {
+    "message": "Home page",
+    "description": "The ARIA label for the home page in the breadcrumbs"
+  },
+  "theme.docs.sidebar.collapseButtonTitle": {
+    "message": "Collapse sidebar",
+    "description": "The title attribute for collapse button of doc sidebar"
+  },
+  "theme.docs.sidebar.collapseButtonAriaLabel": {
+    "message": "Collapse sidebar",
+    "description": "The title attribute for collapse button of doc sidebar"
+  },
+  "theme.docs.sidebar.navAriaLabel": {
+    "message": "Docs sidebar",
+    "description": "The ARIA label for the sidebar navigation"
+  },
+  "theme.docs.sidebar.closeSidebarButtonAriaLabel": {
+    "message": "Close navigation bar",
+    "description": "The ARIA label for close button of mobile sidebar"
+  },
+  "theme.navbar.mobileSidebarSecondaryMenu.backButtonLabel": {
+    "message": "← Back to main menu",
+    "description": "The label of the back button to return to main menu, inside the mobile navbar sidebar secondary menu (notably used to display the docs sidebar)"
+  },
+  "theme.docs.sidebar.toggleSidebarButtonAriaLabel": {
+    "message": "Toggle navigation bar",
+    "description": "The ARIA label for hamburger menu button of mobile navigation"
+  },
+  "theme.docs.sidebar.expandButtonTitle": {
+    "message": "Expand sidebar",
+    "description": "The ARIA label and title attribute for expand button of doc sidebar"
+  },
+  "theme.docs.sidebar.expandButtonAriaLabel": {
+    "message": "Expand sidebar",
+    "description": "The ARIA label and title attribute for expand button of doc sidebar"
+  },
+  "theme.ErrorPageContent.tryAgain": {
+    "message": "Try again",
+    "description": "The label of the button to try again rendering when the React error boundary captures an error"
+  },
+  "theme.common.skipToMainContent": {
+    "message": "Skip to main content",
+    "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
+  },
+  "theme.tags.tagsPageTitle": {
+    "message": "Tags",
+    "description": "The title of the tag list page"
+  }
+}

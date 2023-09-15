@@ -1,0 +1,62 @@
+{
+  "logo.alt": {
+    "message": "Nacos Logo",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Home": {
+    "message": "首页",
+    "description": "Navbar item with label Home"
+  },
+  "item.label.Docs": {
+    "message": "文档",
+    "description": "Navbar item with label Docs"
+  },
+  "item.label.Solutions": {
+    "message": "解决方案",
+    "description": "Navbar item with label Solutions"
+  },
+  "item.label.NACOS IN CLOUD": {
+    "message": "企业版NACOS",
+    "description": "Navbar item with label NACOS IN CLOUD"
+  },
+  "item.label.E-BOOK-NACOS": {
+    "message": "NACOS架构与原理",
+    "description": "Navbar item with label E-BOOK-NACOS"
+  },
+  "item.label.BLOG": {
+    "message": "博客",
+    "description": "Navbar item with label BLOG"
+  },
+  "item.label.COMMUNITY": {
+    "message": "社区",
+    "description": "Navbar item with label COMMUNITY"
+  },
+  "item.label.DEMO-CONSOLE": {
+    "message": "控制台样例",
+    "description": "Navbar item with label DEMO-CONSOLE"
+  },
+  "item.label.Microservice Solution": {
+    "message": "微服务解决方案",
+    "description": "Navbar item with label Microservice Solution"
+  },
+  "item.label.Microservice on Serverless Solution": {
+    "message": "微服务Serverless解决方案",
+    "description": "Navbar item with label Microservice on Serverless Solution"
+  },
+  "item.label.PaaS Solution": {
+    "message": "PaaS解决方案",
+    "description": "Navbar item with label PaaS Solution"
+  },
+  "item.label.Distributed transaction Solution": {
+    "message": "Distributed transaction Solution",
+    "description": "Navbar item with label Distributed transaction Solution"
+  },
+  "item.label.High-availability Solution": {
+    "message": "High-availability Solution",
+    "description": "Navbar item with label High-availability Solution"
+  },
+  "item.label.Service mesh Solution": {
+    "message": "Service mesh Solution",
+    "description": "Navbar item with label Service mesh Solution"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "link.title.Vision": {
+    "message": "Vision",
+    "description": "The title of the footer links column with title=Vision in the footer"
+  },
+  "link.title.Documentation": {
+    "message": "Documentation",
+    "description": "The title of the footer links column with title=Documentation in the footer"
+  },
+  "link.title.Resources": {
+    "message": "Resources",
+    "description": "The title of the footer links column with title=Resources in the footer"
+  },
+  "link.item.label.Nacos is ...": {
+    "message": "Nacos is ...",
+    "description": "The label of footer link with label=Nacos is ... linking to /"
+  },
+  "link.item.label.Overview": {
+    "message": "What is Nacos?",
+    "description": "The label of footer link with label=What is Nacos? linking to /docs/what-is-nacos"
+  },
+  "link.item.label.Quick Start": {
+    "message": "Quick Start",
+    "description": "The label of footer link with label=Quick Start linking to /docs/quick-start"
+  },
+  "link.item.label.Developer guide": {
+    "message": "Developer guide",
+    "description": "The label of footer link with label=Developer guide linking to /docs/contributing"
+  },
+  "link.item.label.Blog": {
+    "message": "Blog",
+    "description": "The label of footer link with label=Blog linking to /blog"
+  },
+  "copyright": {
+    "message": "Copyright © 2023 Nacos",
+    "description": "The footer copyright"
+  },
+  "link.item.label.Community": {
+    "message": "Community",
+    "description": "The label of footer link with label=Community linking to /community"
+  }
+}

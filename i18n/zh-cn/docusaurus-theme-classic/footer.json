@@ -1,0 +1,42 @@
+{
+  "link.title.Vision": {
+    "message": "愿景",
+    "description": "The title of the footer links column with title=Vision in the footer"
+  },
+  "link.title.Documentation": {
+    "message": "文档",
+    "description": "The title of the footer links column with title=Documentation in the footer"
+  },
+  "link.title.Resources": {
+    "message": "资源",
+    "description": "The title of the footer links column with title=Resources in the footer"
+  },
+  "link.item.label.Nacos is ...": {
+    "message": "Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。",
+    "description": "The label of footer link with label=Nacos is ... linking to /"
+  },
+  "link.item.label.Overview": {
+    "message": "概览",
+    "description": "The label of footer link with label=What is Nacos? linking to /docs/what-is-nacos"
+  },
+  "link.item.label.Quick Start": {
+    "message": "快速开始",
+    "description": "The label of footer link with label=Quick Start linking to /docs/quick-start"
+  },
+  "link.item.label.Developer guide": {
+    "message": "开发者指南",
+    "description": "The label of footer link with label=Developer guide linking to /docs/contributing"
+  },
+  "link.item.label.Blog": {
+    "message": "博客",
+    "description": "The label of footer link with label=Blog linking to /blog"
+  },
+  "link.item.label.Community": {
+    "message": "社区",
+    "description": "The label of footer link with label=Community linking to /community"
+  },
+  "copyright": {
+    "message": "Copyright © 2023 Nacos",
+    "description": "The footer copyright"
+  }
+}
