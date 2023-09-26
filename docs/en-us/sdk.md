@@ -589,6 +589,8 @@ Listen for changes of instances under a service.
 void subscribe(String serviceName, EventListener listener) throws NacosException;
 
 void subscribe(String serviceName, List<String> clusters, EventListener listener) throws NacosException;
+
+void subscribe(String serviceName, NamingSelector selector, EventListener listener) throws NacosException;
 ```
 
 #### Request Parameters
@@ -597,18 +599,61 @@ void subscribe(String serviceName, List<String> clusters, EventListener listener
 | :--- | :--- | --- |
 | serviceName | String | service name |
 | clusters | List | cluster list |
+| selector | NamingSelector | instance selector |
 | listener | EventListener | event listener |
 
 #### Response
 void
 
 #### Request Example
+Listen for changes in the instance list of a service.
+
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 naming.subscribe("nacos.test.3", event -> {
     if (event instanceof NamingEvent) {
         System.out.println(((NamingEvent) event).getServceName());
         System.out.println(((NamingEvent) event).getInstances());
+    }
+});
+```
+
+Listen for changes in the instance list in some clusters.
+```java
+NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
+naming.subscribe("nacos.test.3", Arrays.asList("a","b","c"), event -> {
+    // ...
+});
+```
+
+Listen for changes in the list of instances that use a selector,such as listening for instances matching an IP rule.`NamingSelectorFactory` provides selectors that match instances based on IP, cluster, metadata, health, and so on. You can also implement the `NamingSelector` interface as needed.
+``` Java
+NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
+naming.subscribe("nacos.test.3",
+    NamingSelectorFactory.newIpSelector("^172\\.18\\.137.*"),
+    event -> {
+      // ...
+    });
+```
+To obtain information about changed instances, you can cast `Event` to `NamingChangeEvent` or directly use AbstractNamingChangeListener.
+``` Java
+naming.subscribe("nacos.test.3", new AbstractNamingChangeListener() {
+    @Override
+    public void onChange(NamingChangeEvent event) {
+        // get current instances
+        List<Instance> curIns = event.getInstances();
+        if (event.isAdded()) {
+            // get the new instances
+            List<Instance> addedIns = event.getAddedInstances();
+        }
+        if (event.isRemoved()) {
+            // get the removed instances
+            List<Instance> removedIns = event.getRemovedInstances();
+        }
+        if (event.isModified()) {
+            // get the modified instance
+            List<Instance> modifiedIns = event.getModifiedInstances();
+        }
     }
 });
 ```
@@ -620,6 +665,8 @@ Cancel listening service.
 void unsubscribe(String serviceName, EventListener listener) throws NacosException;
 
 void unsubscribe(String serviceName, List<String> clusters, EventListener listener) throws NacosException;
+
+void unsubscribe(String serviceName, NamingSelector selector, EventListener listener) throws NacosException;
 ```
 
 #### Request Parameters
@@ -628,6 +675,7 @@ void unsubscribe(String serviceName, List<String> clusters, EventListener listen
 | :--- | :--- | --- |
 | serviceName | String | service name |
 | clusters | List | cluster list |
+| selector | NamingSelector | instance selector |
 | listener | EventListener | event listener |
 
 #### Response
@@ -638,3 +686,4 @@ void
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 naming.unsubscribe("nacos.test.3", event -> {});
 ```
+> To unsubscribe from a selector, you need to pass the `NamingSelector` and `EventListener` that were used to initiate the subscription as parameters.

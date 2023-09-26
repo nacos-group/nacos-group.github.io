@@ -483,6 +483,8 @@ System.out.println(naming.selectOneHealthyInstance("nacos.test.3"));
 void subscribe(String serviceName, EventListener listener) throws NacosException;
 
 void subscribe(String serviceName, List<String> clusters, EventListener listener) throws NacosException;
+
+void subscribe(String serviceName, NamingSelector selector, EventListener listener) throws NacosException;
 ```
 
 #### 请求参数
@@ -491,18 +493,61 @@ void subscribe(String serviceName, List<String> clusters, EventListener listener
 | :--- | :--- | --- |
 | serviceName | 字符串 | 服务名 |
 | clusters | List | 集群列表 |
+| selector | NamingSelector | 选择器 |
 | listener | EventListener |  回调listener |
 
 #### 返回参数
 无
 
 #### 请求示例
+监听某个服务下的实例列表变化。
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 naming.subscribe("nacos.test.3", event -> {
     if (event instanceof NamingEvent) {
         System.out.println(((NamingEvent) event).getServceName());
         System.out.println(((NamingEvent) event).getInstances());
+    }
+});
+```
+
+监听某些集群下的实例列表变化。
+```java
+NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
+naming.subscribe("nacos.test.3", Arrays.asList("a","b","c"), event -> {
+    // ...
+});
+```
+
+监听某个选择器下的实例列表变化，比如监听匹配某个IP规则下的实例。`NamingSelectorFactory`提供了根据IP、集群、元数据、健康情况等条件匹配实例的选择器。用户也可以根据需要实现`NamingSelector`接口。
+``` Java
+NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
+naming.subscribe("nacos.test.3",
+    NamingSelectorFactory.newIpSelector("^172\\.18\\.137.*"),
+    event -> {
+      // ...
+    });
+```
+
+如果用户想要获得发生变化的实例信息，可以将`Event`转为`NamingChangeEvent`或者直接使用`AbstractNamingChangeListener`。
+``` Java
+naming.subscribe("nacos.test.3", new AbstractNamingChangeListener() {
+    @Override
+    public void onChange(NamingChangeEvent event) {
+        // 获取当前实例
+        List<Instance> curIns = event.getInstances();
+        if (event.isAdded()) {
+            // 获取新增的实例
+            List<Instance> addedIns = event.getAddedInstances();
+        }
+        if (event.isRemoved()) {
+            // 获取移除的实例
+            List<Instance> removedIns = event.getRemovedInstances();
+        }
+        if (event.isModified()) {
+            // 获取修改的实例
+            List<Instance> modifiedIns = event.getModifiedInstances();
+        }
     }
 });
 ```
@@ -514,6 +559,8 @@ naming.subscribe("nacos.test.3", event -> {
 void unsubscribe(String serviceName, EventListener listener) throws NacosException;
 
 void unsubscribe(String serviceName, List<String> clusters, EventListener listener) throws NacosException;
+
+void unsubscribe(String serviceName, NamingSelector selector, EventListener listener) throws NacosException;
 ```
 
 #### 请求参数
@@ -522,6 +569,7 @@ void unsubscribe(String serviceName, List<String> clusters, EventListener listen
 | :--- | :--- | --- |
 | serviceName | 字符串 | 服务名 |
 | clusters | List | 集群列表 |
+| selector | NamingSelector | 选择器 |
 | listener | EventListener |  回调listener |
 
 #### 返回参数
@@ -532,5 +580,5 @@ void unsubscribe(String serviceName, List<String> clusters, EventListener listen
 
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 naming.unsubscribe("nacos.test.3", event -> {});
-
 ```
+> 取消某个选择器下的订阅时，要传入发起订阅时使用的`NamingSelector`和`EventListener`。
