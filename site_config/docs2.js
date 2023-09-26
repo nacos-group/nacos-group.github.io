@@ -76,6 +76,10 @@ export default {
                 title: 'Custom Environment',
                 link: '/en-us/docs/v2/plugin/custom-environment-plugin.html',
               },
+              {
+                title: 'Control',
+                link: '/en-us/docs/v2/plugin/control-plugin.html',
+              },
             ]
           },
           {
@@ -292,6 +296,10 @@ export default {
               {
                 title: '环境变量',
                 link: '/zh-cn/docs/v2/plugin/custom-environment-plugin.html',
+              },
+              {
+                title: '反脆弱',
+                link: '/zh-cn/docs/v2/plugin/control-plugin.html',
               },
             ]
           },

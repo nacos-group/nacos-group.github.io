@@ -632,6 +632,15 @@
       }
     },
     {
+      "filename": "control-plugin.md",
+      "link": "/en-us/docs/v2/plugin/control-plugin.html",
+      "meta": {
+        "title": "control plugin",
+        "keywords": "anti-fragile,control limit,connection limit,TPS",
+        "description": "Nacos support control plugin."
+      }
+    },
+    {
       "filename": "custom-environment-plugin.md",
       "link": "/en-us/docs/v2/plugin/custom-environment-plugin.html",
       "meta": {
@@ -1352,6 +1361,15 @@
         "title": "配置加密",
         "keywords": "AES,encryption,配置加密",
         "description": "配置加密"
+      }
+    },
+    {
+      "filename": "control-plugin.md",
+      "link": "/zh-cn/docs/v2/plugin/control-plugin.html",
+      "meta": {
+        "title": "反脆弱",
+        "keywords": "反脆弱,限流,连接数限制,TPS",
+        "description": "Nacos 支持反脆弱插件，避免高压下的集群容量问题。"
       }
     },
     {
