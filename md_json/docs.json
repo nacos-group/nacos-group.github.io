@@ -623,6 +623,15 @@
       }
     },
     {
+      "filename": "config-change-plugin.md",
+      "link": "/en-us/docs/v2/plugin/config-change-plugin.html",
+      "meta": {
+        "title": "Config Change Plugin",
+        "keywords": "Config Change,Config audit,Config format check,webhook",
+        "description": "Nacos support Config Change Plugin."
+      }
+    },
+    {
       "filename": "config-encryption-plugin.md",
       "link": "/en-us/docs/v2/plugin/config-encryption-plugin.html",
       "meta": {
@@ -1352,6 +1361,15 @@
         "title": "鉴权插件",
         "keywords": "鉴权, 插件",
         "description": "本文描述如何开发及使用Nacos的鉴权插件"
+      }
+    },
+    {
+      "filename": "config-change-plugin.md",
+      "link": "/zh-cn/docs/v2/plugin/config-change-plugin.html",
+      "meta": {
+        "title": "配置变更",
+        "keywords": "配置变更,配置审计,配置格式校验,webhook",
+        "description": "Nacos 支持配置变更插件，可支持配置审计、配置格式校验、及变更后webhook回调"
       }
     },
     {

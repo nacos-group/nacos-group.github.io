@@ -80,6 +80,10 @@ export default {
                 title: 'Control',
                 link: '/en-us/docs/v2/plugin/control-plugin.html',
               },
+              {
+                title: 'Configuration Change',
+                link: '/en-us/docs/v2/plugin/config-change-plugin.html',
+              },
             ]
           },
           {
@@ -300,6 +304,10 @@ export default {
               {
                 title: '反脆弱',
                 link: '/zh-cn/docs/v2/plugin/control-plugin.html',
+              },
+              {
+                title: '配置变更',
+                link: '/zh-cn/docs/v2/plugin/config-change-plugin.html',
               },
             ]
           },

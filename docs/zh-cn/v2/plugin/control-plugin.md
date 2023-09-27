@@ -53,7 +53,7 @@ Nacos 从2.3.0版本开始，支持通过[SPI](https://docs.oracle.com/javase/tu
 ```xml
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-auth-plugin</artifactId>
+            <artifactId>nacos-control-plugin</artifactId>
             <version>${project.version}</version>
         </dependency>
 ```

@@ -50,12 +50,12 @@ And `RuleDetail` mainly include follow contents:
 
 ## Plugin Development
 
-To develop an control plugin for the Nacos server, you first need to depend on the relevant API of the control plugin.
+To develop a control plugin for the Nacos server, you first need to depend on the relevant API of the control plugin.
 
 ```xml
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-auth-plugin</artifactId>
+            <artifactId>nacos-control-plugin</artifactId>
             <version>${project.version}</version>
         </dependency>
 ```
