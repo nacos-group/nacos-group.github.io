@@ -31,7 +31,7 @@ Nacos 的关键特性包括:
 
 * **服务发现和服务健康监测**
 	
-    Nacos 支持基于 DNS 和基于 RPC 的服务发现。服务提供者使用 [原生SDK](./guide/user/sdk.md)、[OpenAPI](./guide/user/open-api.md)、或一个[独立的Agent TODO](./guide/user/other-language.md)注册 Service 后，服务消费者可以使用[DNS TODO](xx) 或[HTTP&API](./guide/user/open-api.md)查找和发现服务。
+    Nacos 支持基于 DNS 和基于 RPC 的服务发现。服务提供者使用 [原生SDK](./guide/user/sdk.md)、[OpenAPI](./guide/user/open-api.md)、或一个[独立的Agent TODO](./guide/user/other-language.md)注册 Service 后，服务消费者可以使用[DNS TODO](./ecology/use-nacos-with-coredns.md) 或[HTTP&API](./guide/user/open-api.md)查找和发现服务。
     
     Nacos 提供对服务的实时的健康检查，阻止向不健康的主机或服务实例发送请求。Nacos 支持传输层 (PING 或 TCP)和应用层 (如 HTTP、MySQL、用户自定义）的健康检查。 对于复杂的云环境和网络拓扑环境中（如 VPC、边缘网络等）服务的健康检查，Nacos 提供了 agent 上报模式和服务端主动检测2种健康检查模式。Nacos 还提供了统一的健康检查仪表盘，帮助您根据健康状态管理服务的可用性及流量。
                  
@@ -49,7 +49,7 @@ Nacos 的关键特性包括:
 
     动态 DNS 服务支持权重路由，让您更容易地实现中间层负载均衡、更灵活的路由策略、流量控制以及数据中心内网的简单DNS解析服务。动态DNS服务还能让您更容易地实现以 DNS 协议为基础的服务发现，以帮助您消除耦合到厂商私有服务发现 API 上的风险。
 
-    Nacos 提供了一些简单的 [DNS APIs TODO](xx) 帮助您管理服务的关联域名和可用的 IP:PORT 列表.
+    Nacos 提供了一些简单的 [DNS APIs TODO](./ecology/use-nacos-with-coredns.md) 帮助您管理服务的关联域名和可用的 IP:PORT 列表.
 	
 * **服务及其元数据管理**
 

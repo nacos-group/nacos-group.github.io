@@ -525,7 +525,7 @@ List<Instance> getAllInstances(String serviceName, List<String> clusters) throws
 | clusters | List | cluster list |
 
 #### Response
-List<Instance /> instance list。
+List&lt;Instance> instance list。
 #### Request Example
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
@@ -550,7 +550,7 @@ List<Instance> selectInstances(String serviceName, List<String> clusters, boolea
 | healthy | boolean | healthy or not |
 
 #### Response
-List<Instance /> instance list.
+List&lt;Instance> instance list.
 #### Request Example
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));

@@ -76,7 +76,7 @@ No configuration is required
 
 ### Use an external data source
 
-<!-- <span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)"></span></span> -->
+<span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)"></span></span>
 production and use recommendations at least backup mode, or high availability database. 
 
 #### Initializes the MySQL database

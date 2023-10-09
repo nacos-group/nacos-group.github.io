@@ -1,7 +1,6 @@
 import React from 'react';
 import { getLink } from '../../utils';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import './index.scss';
 type CardEvent = {
   link: string;
   img: string;
@@ -28,7 +27,7 @@ const EventCard = (props: Props) => {
             <p>{event.content}</p>
             <a href={getLink(event.link)}>
               {event.dateStr}
-              <img className="arrow" src={`/img/arrow_right.png`} />
+              <img className="arrow" src={`img/arrow_right.png`} />
             </a>
           </div>
         </div>

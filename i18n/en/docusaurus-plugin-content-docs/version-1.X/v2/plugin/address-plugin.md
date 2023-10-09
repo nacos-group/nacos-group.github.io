@@ -36,12 +36,12 @@ The methods of interface in following:
 |method name|parameters|returns|description|
 |-----|-----|-----|---|
 |start|void|String|Start the addressing function of the plugin.|
-|getServerList|void|List<String />|Returns the addresses of all Nacos cluster nodes. The address format is`IP: Port`.|
+|getServerList|void|List&lt;String>|Returns the addresses of all Nacos cluster nodes. The address format is`IP: Port`.|
 |getPluginName|void|String|The name of the plugin. When the name is the same, the plugin loaded later will overwrite the plugin loaded first.|
-|registerListener|Consumer<List<String />>|AddressPlugin|Register the listener and call the listener when the cluster address changes|
+|registerListener|Consumer&lt;List&lt;String>>|AddressPlugin|Register the listener and call the listener when the cluster address changes|
 |shutdown|void|void|Shutdown plugin|
 
-This interface is defined by `com.alibaba.nacos.plugin.address.spi.AbstractAddressPlugin`.The abstract class implements`getServerList`, `registerListener` and `shutdown` methods by default, Users can inherit AbstractAddressPlugin to implement other methods when actually writing plugins. AbstractAddressPlugin has a List<String />member variable named serverList, that is, the cluster address collection. The user needs to maintain this variable.
+This interface is defined by `com.alibaba.nacos.plugin.address.spi.AbstractAddressPlugin`.The abstract class implements`getServerList`, `registerListener` and `shutdown` methods by default, Users can inherit AbstractAddressPlugin to implement other methods when actually writing plugins. AbstractAddressPlugin has a List&lt;String>member variable named serverList, that is, the cluster address collection. The user needs to maintain this variable.
 When users need to configure plugin related parameters in the configuration file, they need to configure keys starting with `address.plugin` in the property configuration file. In this case, the corresponding parameters can be obtained through the `com.alibaba.nacos.plugin.address.common.AddressProperties` singleton class
 ```properties
 address.plugin.$ {key} = ${val}

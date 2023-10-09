@@ -23,9 +23,9 @@ export const getScrollTop = () => {
 export const getLink = (link, language) => {
   if (`${link}`.length > 1 && /^\/[^/]/.test(`${link}`)) {
     if(language === undefined){
-      return `${window.rootPath || ''}${language === 'zh-cn' ? '/zh-cn' : ``}${link}`;
+      return `${window.rootPath || ''}${language === 'default' ? '/zh-cn' : ``}${link}`;
     }
-    return `${window.rootPath || ''}${language === 'zh-cn' ? '/zh-cn' : `/${language}`}${link}`;
+    return `${window.rootPath || ''}${language === 'default' ? '/zh-cn' : `/${language}`}${link}`;
   }
   return link;
 };

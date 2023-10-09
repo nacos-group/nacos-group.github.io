@@ -36,13 +36,13 @@ Nacos从2.3.0版本开始，支持通过[SPI](https://docs.oracle.com/javase/tut
 |方法名|入参内容|返回内容|描述|
 |-----|-----|-----|---|
 |start|void|void|启动该插件的寻址功能。|
-|getServerList|void|List<String />|返回所有Nacos集群结点的地址，地址格式为`IP:Port`。|
+|getServerList|void|List&lt;String>|返回所有Nacos集群结点的地址，地址格式为`IP:Port`。|
 |getPluginName|void|String|插件的名称，当名字相同时，后加载的插件会覆盖先加载的插件|
-|registerListener|Consumer<List<String />>|AddressPlugin|注册监听器, 当集群地址发生改变时调用监听器的方法|
+|registerListener|Consumer&lt;List&lt;String>>|AddressPlugin|注册监听器, 当集群地址发生改变时调用监听器的方法|
 |shutdown|void|void|关闭插件|
 
 该接口由`com.alibaba.nacos.plugin.address.spi.AbstractAddressPlugin`抽象类默认实现`getServerList`, `registerListener`和`shutdown`方法，
-用户在实际编写插件时继承`AbstractAddressPlugin`实现其余方法即可。`AbstractAddressPlugin`有一个名为serverList的List<String />成员变量，即集群地址集合，用户需要在start方法调用后，维护
+用户在实际编写插件时继承`AbstractAddressPlugin`实现其余方法即可。`AbstractAddressPlugin`有一个名为serverList的List&lt;String>成员变量，即集群地址集合，用户需要在start方法调用后，维护
 该变量即可。
 当用户需要在配置文件中配置插件相关的参数， 需要在property配置文件中配置以address.plugin开头的key，这时变可以通过`com.alibaba.nacos.plugin.address.common.AddressProperties`单例类获取对应的参数
 ```properties

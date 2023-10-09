@@ -48,7 +48,7 @@ export default function Home(): React.Element {
         <Feature />
         <User />
         {/* <Community /> */}
-        <Footer logo={getLink("/img/nacos_gray.png")} />
+        <Footer logo={getLink("img/nacos_gray.png")} />
       </div>
     </Layout>
   );

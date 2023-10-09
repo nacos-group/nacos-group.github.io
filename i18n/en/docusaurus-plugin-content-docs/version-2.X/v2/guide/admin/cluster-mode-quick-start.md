@@ -81,7 +81,7 @@ nacos.core.auth.plugin.nacos.token.secret.key=${custom, make sure same in all no
 nacos.core.auth.server.identity.key=${custom, make sure same in all nodes}
 nacos.core.auth.server.identity.value=${custom, make sure same in all nodes}
 ```
-Detail see [Authentication](../plugin/auth-plugin.md).
+Detail see [Authentication](../../plugin/auth-plugin.md).
 
 > Attention，Default value in Document `SecretKey012345678901234567890123456789012345678901234567890123456789` and `VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=` is a public default, **only** should use in test temporary. Please **make sure** to replace it with another valid value when you actually deploy.
 

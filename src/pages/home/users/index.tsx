@@ -56,7 +56,7 @@ const User = () => {
           <div className="users">
             {data.list.map((user, i) => (
               <div className="user-item" key={i}>
-                <img src={user} />
+                <img src={user} rel="noopener noreferrer"/>
               </div>
             ))}
           </div>

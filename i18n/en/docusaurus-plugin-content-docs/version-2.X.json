@@ -4,7 +4,7 @@
     "description": "The label for version 2.X"
   },
   "sidebar.docs.category.What is Nacos": {
-    "message": "What is Nacos",
+    "message": "Nacos",
     "description": "The label for category What is Nacos in sidebar docs"
   },
   "sidebar.docs.category.Quick Start": {
