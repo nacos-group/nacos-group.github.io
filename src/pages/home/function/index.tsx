@@ -8,7 +8,7 @@ import './index.scss';
 const data = {
   list: [
     {
-      icon: '/img/dynamic_configuration.png',
+      icon: 'img/dynamic_configuration.png',
       title: translate({ id: 'homepage.functionListTitle1', message: '动态配置服务' }),
       content: [
         translate({
@@ -19,7 +19,7 @@ const data = {
       ],
     },
     {
-      icon: '/img/service_discovery.png',
+      icon: 'img/service_discovery.png',
       title: translate({ id: 'homepage.functionListTitle2', message: '服务发现及管理' }),
       content: [
         translate({
@@ -29,7 +29,7 @@ const data = {
       ],
     },
     {
-      icon: '/img/dynamic_DNS.png',
+      icon: 'img/dynamic_DNS.png',
       title: translate({ id: 'homepage.functionListTitle3', message: '动态DNS服务' }),
       content: translate({
         id: 'homepage.functionListContent3',
@@ -68,7 +68,7 @@ const Item = (props) => {
         {() => (
           <div className="func-item">
             <div className="col img">
-              <img src={getLink(func.img)} />
+              <img src={getLink(func.icon)} />
             </div>
             <div className="col">
               <div className="vertical-middle">
@@ -92,7 +92,7 @@ const Item = (props) => {
             </div>
           </div>
           <div className="col img">
-            <img src={getLink(func.img)} />
+            <img src={getLink(func.icon)} />
           </div>
         </div>
       )}

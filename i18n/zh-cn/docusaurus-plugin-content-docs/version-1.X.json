@@ -4,39 +4,39 @@
     "description": "The label for version 1.X"
   },
   "sidebar.docs.category.What is Nacos": {
-    "message": "What is Nacos",
+    "message": "Nacos",
     "description": "The label for category What is Nacos in sidebar docs"
   },
   "sidebar.docs.category.Quick Start": {
-    "message": "Quick Start",
+    "message": "快速开始",
     "description": "The label for category Quick Start in sidebar docs"
   },
   "sidebar.docs.category.Upgrading": {
-    "message": "Upgrading",
+    "message": "升级",
     "description": "The label for category Upgrading in sidebar docs"
   },
   "sidebar.docs.category.Plugin": {
-    "message": "Plugin",
+    "message": "插件",
     "description": "The label for category Plugin in sidebar docs"
   },
   "sidebar.docs.category.User Guide": {
-    "message": "User Guide",
+    "message": "用户指南",
     "description": "The label for category User Guide in sidebar docs"
   },
   "sidebar.docs.category.Admin Guide": {
-    "message": "Admin Guide",
+    "message": "运维指南",
     "description": "The label for category Admin Guide in sidebar docs"
   },
   "sidebar.docs.category.Ecology": {
-    "message": "Ecology",
+    "message": "生态融合",
     "description": "The label for category Ecology in sidebar docs"
   },
   "sidebar.docs.category.Contributor Guide": {
-    "message": "Contributor Guide",
+    "message": "开源共建",
     "description": "The label for category Contributor Guide in sidebar docs"
   },
   "sidebar.docs.category.Community": {
-    "message": "Community",
+    "message": "社区",
     "description": "The label for category Community in sidebar docs"
   }
 }

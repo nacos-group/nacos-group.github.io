@@ -64,7 +64,7 @@ The methods of interface in following:
 |method name|parameters|returns|description|
 |-----|-----|-----|---|
 |getAuthServiceName|void|String|The name of the plugin. When the name is the same, the plugin loaded later will overwrite the plugin loaded first.|
-|identityNames|void|Collection<String />|The identity context keywords of the plugin. Nacos will obtain the parameters with these keywords as the key from the request and inject them into the IdentityContext.|
+|identityNames|void|Collection&lt;String>|The identity context keywords of the plugin. Nacos will obtain the parameters with these keywords as the key from the request and inject them into the IdentityContext.|
 |enableAuth|ActionTypes,SignType|boolean|Called before `validateIdentity` and `validateAuthority`, the plugin can decide whether to authenticate this type of operation or this type of module.|
 |validateIdentity|IdentityContext, Resource|boolean|Validate identity, called before `validateAuthority`|
 |validateAuthority|IdentityContext, Permission|boolean|Validate permissions, called when `validateIdentity` returns `true`|
@@ -169,7 +169,7 @@ The methods of interface in following:
 
 |method name|parameters|returns|description|
 |-----|-----|-----|---|
-|setServerList|List<String />,Nacos server address list|void|Called during initialization, to inject the Nacos service list, which is convenient for plugins to access the nacos server, such as calling the login interface, etc.|
+|setServerList|List&lt;String>,Nacos server address list|void|Called during initialization, to inject the Nacos service list, which is convenient for plugins to access the nacos server, such as calling the login interface, etc.|
 |setNacosRestTemplate|NacosRestTemplate,http client for Nacos|void|Called during initialization, to inject Nacos' http client, which is convenient for plugins to access the nacos server, such as calling the login interface, etc.|
 |login|Properties,properties of initialization|boolean|mainly performs the conversion of identity context, such as `username`, `password` is converted to `accessToken`|
 |getLoginIdentityContext|Resource|IdentityContext|Get the identity context converted by the login interface, and the client will inject all the content of the returned object into the request|

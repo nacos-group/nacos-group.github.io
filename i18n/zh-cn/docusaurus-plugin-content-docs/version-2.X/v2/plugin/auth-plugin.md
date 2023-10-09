@@ -64,7 +64,7 @@ Nacos从2.1.0版本开始，支持通过[SPI](https://docs.oracle.com/javase/tut
 |方法名|入参内容|返回内容|描述|
 |-----|-----|-----|---|
 |getAuthServiceName|void|String|插件的名称，当名字相同时，后加载的插件会覆盖先加载的插件。|
-|identityNames|void|Collection<String />|插件的身份信息关键字，Nacos会从请求中获取以这些关键字为key的参数，并注入到IdentityContext中。|
+|identityNames|void|Collection&lt;String>|插件的身份信息关键字，Nacos会从请求中获取以这些关键字为key的参数，并注入到IdentityContext中。|
 |enableAuth|ActionTypes,SignType|boolean|在调用`validateIdentity`和`validateAuthority`前调用，插件可自行判断是否对此类型的操作或此类型的模块进行鉴权。|
 |validateIdentity|IdentityContext, Resource|boolean|对身份信息进行验证，在`validateAuthority`前调用|
 |validateAuthority|IdentityContext, Permission|boolean|对权限进行验证，在`validateIdentity`返回为`true`时调用|
@@ -165,7 +165,7 @@ ConfigFactory.createConfigService(properties);
 
 |方法名|入参内容|返回内容|描述|
 |-----|-----|-----|---|
-|setServerList|List<String />，Nacos服务端地址列表|void|初始化时会调用此接口注入Nacos的服务列表，方便插件访问nacos服务端，如调用登录接口等|
+|setServerList|List&lt;String>，Nacos服务端地址列表|void|初始化时会调用此接口注入Nacos的服务列表，方便插件访问nacos服务端，如调用登录接口等|
 |setNacosRestTemplate|NacosRestTemplate，Nacos的http客户端|void|初始化时会调用此接口注入Nacos的http客户端，方便插件访问nacos服务端，如调用登录接口等|
 |login|Properties，即初始化Nacos客户端时传入的参数|boolean|登录接口，主要执行的是身份信息的转换工作，如`username`，`password`转换为`accessToken`|
 |getLoginIdentityContext|Resource|IdentityContext|获取经过登录接口转换后的身份信息，客户端会将该返回对象的内容全部注入到请求中|

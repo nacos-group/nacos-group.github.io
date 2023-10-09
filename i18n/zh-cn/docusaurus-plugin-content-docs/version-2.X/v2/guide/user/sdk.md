@@ -448,7 +448,7 @@ List<Instance> getAllInstances(String serviceName, List<String> clusters) throws
 | clusters | List | 集群列表 |
 
 #### 返回参数
-List<Instance /> 实例列表。
+List&lt;Instance> 实例列表。
 #### 请求示例
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
@@ -473,7 +473,7 @@ List<Instance> selectInstances(String serviceName, List<String> clusters, boolea
 | healthy | boolean | 是否健康 |
 
 #### 返回参数
-List<Instance /> 实例列表。
+List&lt;Instance> 实例列表。
 #### 请求示例
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));

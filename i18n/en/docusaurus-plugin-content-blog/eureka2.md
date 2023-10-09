@@ -289,7 +289,7 @@ ServerList  |提供 getInitialListOfServers 和 getUpdatedListOfServers 方法�
 IRule       |选择出一个服务节点
 IPing       |提供 isAlive 方法，负责探测serverList中节点是否可用
 
-目前 ans-starter 在 spring context 中默认实例化了一个 AnsServerList。AnsServerList 实现了 Ribbon 的 ServerList<Server /> 接口。
+目前 ans-starter 在 spring context 中默认实例化了一个 AnsServerList。AnsServerList 实现了 Ribbon 的 ServerList&lt;Server> 接口。
 
     @Bean
     @ConditionalOnMissingBean

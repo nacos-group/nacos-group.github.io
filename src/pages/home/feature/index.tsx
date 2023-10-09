@@ -8,7 +8,7 @@ import './index.scss';
 const data = {
   list: [
     {
-      icon: '/img/feature_easy_to_use.png',
+      icon: 'img/feature_easy_to_use.png',
       title: translate({ id: 'homepage.featureListTitle1', message: '易于使用' }),
       content: [
         translate({
@@ -19,7 +19,7 @@ const data = {
       ],
     },
     {
-      icon: '/img/feature_adaptable.png',
+      icon: 'img/feature_adaptable.png',
       title: translate({ id: 'homepage.featureListTitle2', message: '更适应云架构' }),
       content: [
         translate({
@@ -29,7 +29,7 @@ const data = {
       ],
     },
     {
-      icon: '/img/feature_production_grade.png',
+      icon: 'img/feature_production_grade.png',
       title: translate({ id: 'homepage.featureListTitle3', message: '生产等级' }),
       content: translate({
         id: 'homepage.featureListContent3',
@@ -38,7 +38,7 @@ const data = {
       }),
     },
     {
-      icon: '/img/feature_rich.png',
+      icon: 'img/feature_rich.png',
       title: translate({ id: 'homepage.featureListTitle4', message: '丰富的应用场景' }),
       content: translate({
         id: 'homepage.featureListContent4',

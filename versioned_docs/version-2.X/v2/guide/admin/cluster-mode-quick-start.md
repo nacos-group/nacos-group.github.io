@@ -89,7 +89,7 @@ nacos.core.auth.server.identity.key=${自定义，保证所有节点一致}
 nacos.core.auth.server.identity.value=${自定义，保证所有节点一致}
 ```
 
-上述内容详情可查看[权限认证](../plugin/auth-plugin.md).
+上述内容详情可查看[权限认证](../../plugin/auth-plugin.md).
 
 > 注意，文档中的默认值`SecretKey012345678901234567890123456789012345678901234567890123456789`和`VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=`为公开默认值，可用于临时测试，实际使用时请**务必**更换为自定义的其他有效值。
 

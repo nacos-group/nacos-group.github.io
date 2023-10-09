@@ -14,7 +14,7 @@ If you find something incorrect or missing, please leave comments / suggestions.
 
 ### Code of Conduct
 
-Please make sure to read and observe our [Code of Conduct](./CODE_OF_CONDUCT.md).
+Please make sure to read and observe our [Code of Conduct](https://github.com/alibaba/nacos/blob/master/CODE_OF_CONDUCT.md).
 
 ## Contributing
 
@@ -67,7 +67,7 @@ Now, if you are ready to create PR, here is the workflow for contributors:
 
 When creating pull request:
 
-1.  Please follow [the pull request template](./.github/PULL_REQUEST_TEMPLATE.md).
+1.  Please follow [the pull request template](https://github.com/alibaba/nacos/blob/master/.github/PULL_REQUEST_TEMPLATE.md).
     
 2.  Please create the request to **develop** branch.
     

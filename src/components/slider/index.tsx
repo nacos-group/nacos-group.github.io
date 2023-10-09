@@ -14,7 +14,7 @@ type State = {
   screenIndex: number;
 };
 
-export class Slider extends React.Component<Props, State> {
+class Slider extends React.Component<Props, State> {
   container;
   throttleAdjust;
   sliderItemChild0;
@@ -53,7 +53,6 @@ export class Slider extends React.Component<Props, State> {
     const childWidth = this.sliderItemChild0?.getBoundingClientRect
       ? this.sliderItemChild0?.getBoundingClientRect().width
       : ReactDOM.findDOMNode(this.sliderItemChild0)?.getBoundingClientRect().width;
-      
     if (containerWidth && childWidth) {
       result = Math.floor(containerWidth / childWidth);
     }
@@ -71,7 +70,6 @@ export class Slider extends React.Component<Props, State> {
     if (this.container) {
       const containerWidth = this.container?.getBoundingClientRect().width;
       width = containerWidth * splitNum;
-      
     }
     return width;
   };
@@ -170,4 +168,6 @@ export class Slider extends React.Component<Props, State> {
     );
   }
 }
+
+export default Slider;
 

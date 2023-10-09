@@ -54,7 +54,7 @@ Key features of Nacos:
 
     Nacos allows you to manage all of your services and metadata from the perspective of a microservices platform builder. This includes managing service description, life cycle, service static dependencies analysis, service health status, service traffic management，routing and security rules, service SLA, and first line metrics.
 
-* [Check more features ...](docs/en-us/archive/roadmap.md)
+* [Check more features ...](archive/roadmap.md)
 
 ## Nacos Map
 A picture to understand Nacos, the following structure will be described in detail.
@@ -75,7 +75,7 @@ A picture to understand Nacos, the following structure will be described in deta
 
 ![nacos_landscape.png](https://cdn.nlark.com/lark/0/2018/png/11189/1533045871534-e64b8031-008c-4dfc-b6e8-12a597a003fb.png)
  
-As the figure above shows, Nacos seamlessly supports open source ecologies including [Dubbo and Dubbo Mesh](./use-nacos-with-dubbo.md), [Spring Cloud](docs/en-us/archive/use-nacos-with-springcloud.md), and [Kubernetes and CNCF](./use-nacos-with-kubernetes.md).
+As the figure above shows, Nacos seamlessly supports open source ecologies including [Dubbo and Dubbo Mesh](./use-nacos-with-dubbo.md), [Spring Cloud](archive/use-nacos-with-springcloud.md), and [Kubernetes and CNCF](./use-nacos-with-kubernetes.md).
 
 Use Nacos to simplify your solutions in service discovery, configuration management, and service governance and management. With Nacos, microservices management in open source system is easy.
 
@@ -85,11 +85,11 @@ For more information about how to use Nacos with other open source projects, see
 
 [Use Nacos with Dubbo](./use-nacos-with-dubbo.md)
 
-[Use Nacos with gRPC](docs/en-us/archive/roadmap.md)
+[Use Nacos with gRPC](archive/roadmap.md)
 
-[Use Nacos with Spring Cloud](docs/en-us/archive/use-nacos-with-springcloud.md)
+[Use Nacos with Spring Cloud](archive/use-nacos-with-springcloud.md)
 
-[Use Nacos with Istio](docs/en-us/archive/use-nacos-with-istio.md)
+[Use Nacos with Istio](archive/use-nacos-with-istio.md)
 
 
 ## What’s next

@@ -44,25 +44,25 @@ const data = {
       desc: translate({ id: 'community.contactsDesc', message: '有问题需要反馈？可以优先通过钉钉群(1群已满，2群群号:30438813)联系我们，或者通过以下方式参与我们一起互动。' }),
       list: [
         {
-          img: '/img/mailinglist.png',
+          img: 'img/mailinglist.png',
           imgHover: '/img/mailinglist_hover.png',
           title: '邮件列表',
           link: 'mailto:nacos_dev@linux.alibaba.com'
         },
         {
-          img: '/img/alibaba.png',
+          img: 'img/alibaba.png',
           imgHover: '/img/alibaba_hover.png',
           title: 'Gitter',
           link: 'https://gitter.im/alibaba/nacos',
         },
         {
-          img: '/img/segmentfault.png',
+          img: 'img/segmentfault.png',
           imgHover: '/img/segmentfault_hover.png',
           title: 'segmentfault',
           link: 'https://segmentfault.com/t/nacos'
         },
         {
-          img: '/img/weibo.png',
+          img: 'img/weibo.png',
           imgHover: '/img/weibo_hover.png',
           title: '@Nacos',
           link: 'https://weibo.com/u/6574374908',
@@ -74,22 +74,22 @@ const data = {
       desc: translate({ id: 'community.contributeDesc', message: 'Nacos社区欢迎任何形式的贡献。' }),
       list: [
         {
-          img: '/img/mailinglist.png',
+          img: 'img/mailinglist.png',
           title: '邮件列表',
           content: <span>发送 <a href="mailto:nacos_dev@linux.alibaba.com">邮件列表 </a>参与讨论。</span>,
         },
         {
-          img: '/img/issue.png',
+          img: 'img/issue.png',
           title: '报告缺陷',
           content: <span>通过<a href="https://github.com/alibaba/nacos/issues"> Github issues </a>报告缺陷。</span>,
         },
         {
-          img: '/img/documents.png',
+          img: 'img/documents.png',
           title: '文档',
           content: <span>优化Nacos <a href="http://nacos.io/zh-cn/docs/what-is-nacos.html"> 文档</a>。</span>,
         },
         {
-          img: '/img/pullrequest.png',
+          img: 'img/pullrequest.png',
           title: 'Pull Request',
           content: <span>提交 <a href="https://github.com/alibaba/nacos/pulls"> Pull requests </a>来修复问题。</span>,
         },
@@ -157,42 +157,54 @@ const data = {
         {() => (
         <Layout title={'Nacos'} description="Nacos Community">
           <div className="community-page">
-            <Bar img={getLink('/img/community.png')} text={data.barText} />
+            <Bar img={getLink('img/community.png')} text={data.barText} />
             <section className="events-section">
-              <h3>{data.events.title}</h3>
-              <Slider>
-                {data.events.list.map((event, i) => (
-                  <EventCard event={event} key={i} />
-                ))}
-              </Slider>
-            </section>
-            <section className="contact-section">
-              <h3>{data.contacts.title}</h3>
-              <p>{data.contacts.desc}</p>
-              <div className="contact-list">
-                {data.contacts.list.map((contact, i) => (
-                  <ContactItem contact={contact as ContactData} key={i} />
-                ))}
-              </div>
-            </section>
-            <section className="contributor-section">
-              <h3>{data.contributorGuide.title}</h3>
-              <p>{data.contributorGuide.desc}</p>
-              <div className="contributor-list">
-                {data.contributorGuide.list.map((contributor, i) => (
-                  <ContributorItem contributor={contributor as ContributorData} key={i} />
-                ))}
+              <div className='events-body'>
+                <h3>{data.events.title}</h3>
+                <Slider>
+                  {data.events.list.map((event, i) => (
+                    <EventCard event={event} key={i} />
+                  ))}
+                </Slider>
               </div>
             </section>
             <section className="eco-section">
               <h3>{data.ecos.title}</h3>
-              <div className="eco-list">
-                {data.ecos.list.map((eco, i) => (
-                  <EcoItem eco={eco as EcoData} key={i} />
-                ))}
+              <div className="eco-lists">
+              {
+                data.ecos.list.map((eco, i) => (
+                  <EcoItem eco={eco} key={i} />
+                ))
+              }
               </div>
             </section>
-            <Footer logo={getLink('/img/nacos_gray.png')}/>
+            <section className="contact-section">
+              <div className="contact-body">
+                <h3>{data.contacts.title}</h3>
+                <p>{data.contacts.desc}</p>
+                <div className="contact-list">
+                {
+                  data.contacts.list.map((contact, i) => (
+                    <ContactItem contact={contact} key={i} />
+                  ))
+                }
+                </div>
+              </div>
+            </section>
+            <section className="contributor-section">
+              <div className="contributor-body">
+                <h3>{data.contributorGuide.title}</h3>
+                <p>{data.contributorGuide.desc}</p>
+                <div className="contributor-list">
+                {
+                  data.contributorGuide.list.map((contributor, i) => (
+                    <ContributorItem contributor={contributor} key={i} />
+                  ))
+                }
+                </div>
+              </div>
+            </section>
+            <Footer logo={getLink('img/nacos_gray.png')}/>
           </div>
         </Layout>
         )}

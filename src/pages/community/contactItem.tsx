@@ -1,7 +1,6 @@
 import React from 'react';
 import { getLink } from '../../utils';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import './index.scss';
 type Props = {
   contact: ContactData;
 };

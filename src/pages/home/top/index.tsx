@@ -58,19 +58,18 @@ const Top = ({ language }: { language?: string }) => {
         });
       });
   }, []);
-  console.log(getLink("/img/black_dot.png"))
   return (
     <BrowserOnly>
       {() => (
         <section
         className="top-section"
         style={{
-          background: `url(${getLink("/img/black_dot.png")}) repeat`,
+          background: `url(${getLink("img/black_dot.png")}) repeat`,
           backgroundSize: "14px 14px",
         }}
       >
         <div className="vertical-middle">
-          <img className="product-logo" src={getLink("/img/nacos.png")} />
+          <img className="product-logo" src={getLink("img/nacos.png")} />
           <p className="product-desc">
             {topData.briefIntroduction}
           </p>
