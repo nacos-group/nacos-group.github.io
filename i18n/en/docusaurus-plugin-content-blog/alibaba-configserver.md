@@ -12,7 +12,7 @@ description: 阿里巴巴服务注册中心产品ConfigServer 10年技术发展�
 
 # Eureka1.0架构存在的问题
 
-Eureka作为Netflix公司力推和SpringCloud微服务标配的注册中心开源解决方案，其<span data-type="color" style="color:rgb(36, 41, 46)">Eureka 2.0 (Discontinued)的消息在社区引起了不小的骚动；其实早在2015年社区就已经放出了2.0架构的升级设想，但是3年的时间过去，等到的确是Discontinued的消息，虽然2.0的代码在github的主页上也已经放出，但是告诫用户要自行承担当中的使用风险。我想不会有人真的把2.0直接投入到生产中使用。</span>
+Eureka作为Netflix公司力推和SpringCloud微服务标配的注册中心开源解决方案，其Eureka 2.0 (Discontinued)的消息在社区引起了不小的骚动；其实早在2015年社区就已经放出了2.0架构的升级设想，但是3年的时间过去，等到的确是Discontinued的消息，虽然2.0的代码在github的主页上也已经放出，但是告诫用户要自行承担当中的使用风险。我想不会有人真的把2.0直接投入到生产中使用。
 
 对于为什么要做Eureka2.0，其官方的wiki中的Why Eureka 2.0和Eureka 2.0 Improvements做了如下的说明
 
@@ -91,7 +91,7 @@ ConfigServer的集群版本跟普通的应用有一些区别：普通的应用�
 
 这个版本是ConfigServer历史上一个比较稳定的里程碑版本。
 
-<span data-type="color" style="color:rgb(36, 41, 46)">但是随着2009年天猫独创的双十一大促活动横空出世，服务数量剧增，应用发</span>布时候ConfigServer集群又开始了大面积的抖动，还是体现在内存和网卡的吃紧，甚至渐渐到了fullgc的边缘；为了提高数据推送能力，需要对集群进行扩容，但是扩容的同时又会导致每台服务器的写能力下降，我们的架构到了“按下葫芦浮起瓢”的瓶颈。
+但是随着2009年天猫独创的双十一大促活动横空出世，服务数量剧增，应用发布时候ConfigServer集群又开始了大面积的抖动，还是体现在内存和网卡的吃紧，甚至渐渐到了fullgc的边缘；为了提高数据推送能力，需要对集群进行扩容，但是扩容的同时又会导致每台服务器的写能力下降，我们的架构到了“按下葫芦浮起瓢”的瓶颈。
 
 ## 2012年底，ConfigServer集群版V3.0
 
@@ -126,13 +126,13 @@ V3版本可见的一个架构的问题就是data集群是存储全量的服务�
 
 # Nacos
 
-<span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)">作为同属于AP类型的注册中心，Eureka和ConfigServer发展过程中所面临的诸多问题有很大的相似性，但是阿里巴巴这些年业务的跨越式发展，每年翻番的服务规模，不断的给ConfigServer的技术架构演进带来更高的要求和挑战，我们有更多的机会在生产环境发现和解决一个个问题的过程中，做架构的一代代升级。我们正在计划通过开源的手段把我们这些年在生产环境上的实践经验通过Nacos(</span></span>[链接](http://nacos.io))<span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)">产品贡献给社区，一方面能够助力和满足同行们在微服务落地过程当中对工业级注册中心的诉求，另一方面也希望通过开源社区及开源生态的协同发展给ConfigServer带来更多的可能性。</span></span>
+作为同属于AP类型的注册中心，Eureka和ConfigServer发展过程中所面临的诸多问题有很大的相似性，但是阿里巴巴这些年业务的跨越式发展，每年翻番的服务规模，不断的给ConfigServer的技术架构演进带来更高的要求和挑战，我们有更多的机会在生产环境发现和解决一个个问题的过程中，做架构的一代代升级。我们正在计划通过开源的手段把我们这些年在生产环境上的实践经验通过Nacos([链接](http://nacos.io))产品贡献给社区，一方面能够助力和满足同行们在微服务落地过程当中对工业级注册中心的诉求，另一方面也希望通过开源社区及开源生态的协同发展给ConfigServer带来更多的可能性。
 
-<span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)">炎炎夏日，在Eureka 2.0 (Discontinued) 即将结束的时候，在同样的云原生时代，Nacos却正在迎来新生，技术演进和变迁的趣味莫过于此。</span></span>
+炎炎夏日，在Eureka 2.0 (Discontinued) 即将结束的时候，在同样的云原生时代，Nacos却正在迎来新生，技术演进和变迁的趣味莫过于此。
 
-<span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)">Nacos将努力继承Eureka未竟的遗志，扛着AP系注册中心的旗帜继续前行，不同的是Nacos更关注DNS-based Service Discovery以及与Kubernetes体系的融会贯通。</span></span>
+Nacos将努力继承Eureka未竟的遗志，扛着AP系注册中心的旗帜继续前行，不同的是Nacos更关注DNS-based Service Discovery以及与Kubernetes体系的融会贯通。
 
-<span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)">我们看不透未来，却仍将与同行们一起上下求索，砥砺前行。</span></span>
+我们看不透未来，却仍将与同行们一起上下求索，砥砺前行。
 
 最后附上Nacos的架构图。
 

@@ -61,7 +61,7 @@ git push origin your_awesome_patch
 ```
 * Submit a pull request to alibaba/nacos and wait for reply.
 
-* Detail contribution flow see [Contribution Flow](./contributing-flow.html)
+* Detail contribution flow see [Contribution Flow](./contributing-flow.md)
 
 Thanks for contributing!
 
