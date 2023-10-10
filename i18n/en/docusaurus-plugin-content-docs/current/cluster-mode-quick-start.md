@@ -99,7 +99,7 @@ sh startup.sh -m standalone
 
 #### Cluster mode
 
-> Using built-in data sources
+> Using built-in data sources 
 
 ```bash
 sh startup.sh -p embedded
