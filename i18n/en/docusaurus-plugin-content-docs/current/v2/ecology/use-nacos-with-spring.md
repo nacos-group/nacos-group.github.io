@@ -158,7 +158,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=
 
 # Nacos Spring Key Features
 
-This section provides a detailed description of the key features of [`nacos-spring-context`](nacos-spring-context):
+This section provides a detailed description of the key features of [`nacos-spring-context`](https://github.com/nacos-group/nacos-spring-project):
 
 - Annotation-Driven
 - Dependency Injection
@@ -228,7 +228,7 @@ public void onInt(int value) {
 }
 ```
 
-Of course, [`nacos-spring-context`](nacos-spring-context) provides elastic extension for developers. If you define a named `nacosConfigConversionService` Spring Bean whose type is `ConversionService` , the `DefaultFormattingConversionService` will be ignored. In addition, you can customize the implementation of  the `NacosConfigConverter` interface to specify a listener method for type conversion:
+Of course, [`nacos-spring-context`](https://github.com/nacos-group/nacos-spring-project) provides elastic extension for developers. If you define a named `nacosConfigConversionService` Spring Bean whose type is `ConversionService` , the `DefaultFormattingConversionService` will be ignored. In addition, you can customize the implementation of  the `NacosConfigConverter` interface to specify a listener method for type conversion:
 
 ```java
 public class UserNacosConfigConverter implements NacosConfigConverter<User> {
@@ -414,9 +414,9 @@ More importantly, unlike the `ConfigService` instances created by the `NacosFact
 
 ## 3. Externalized Configuration
 
-Externalized configuration is a concept introduced by Spring Boot, which allows applications to receive external property sources to control runtime behavior. Nacos Server runs an isolation process outside the application to maintain the application configurations. [`nacos-spring-context`](nacos-spring-context) provides properties features including object binding, dynamic configuration(auto-refreshed) and so on, and dependence on Spring Boot or Spring Cloud framework is required.
+Externalized configuration is a concept introduced by Spring Boot, which allows applications to receive external property sources to control runtime behavior. Nacos Server runs an isolation process outside the application to maintain the application configurations. [`nacos-spring-context`](https://github.com/nacos-group/nacos-spring-project) provides properties features including object binding, dynamic configuration(auto-refreshed) and so on, and dependence on Spring Boot or Spring Cloud framework is required.
 
-Here is a simple comparison between  [`nacos-spring-context`](nacos-spring-context) and Spring stack:
+Here is a simple comparison between  [`nacos-spring-context`](https://github.com/nacos-group/nacos-spring-project) and Spring stack:
 
 | Spring Stack               | Nacos Spring                    | Highlight                                      |
 | -------------------------- | ------------------------------- | ---------------------------------------------- |

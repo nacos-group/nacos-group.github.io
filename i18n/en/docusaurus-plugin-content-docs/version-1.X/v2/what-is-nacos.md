@@ -32,7 +32,7 @@ Key features of Nacos:
 
 * **Service Discovery And Service Health Check**
 
-    Nacos supports both DNS-based and RPC-based (Dubbo/gRPC) service discovery. After a service provider registers a service with [native](./guide/user/sdk.md), [OpenAPI](./guide/user/open-api.md), or [a dedicated agent](./guide/user/other-language.md), a consumer can discover the service with either [DNS_TODO](xx) or [HTTP](./guide/user/open-api.md).
+    Nacos supports both DNS-based and RPC-based (Dubbo/gRPC) service discovery. After a service provider registers a service with [native](./guide/user/sdk.md), [OpenAPI](./guide/user/open-api.md), or [a dedicated agent](./guide/user/other-language.md), a consumer can discover the service with either [DNS_TODO](./what-is-nacos.md) or [HTTP](./guide/user/open-api.md).
     
     Nacos provides real-time health check to prevent services from sending requests to unhealthy hosts or service instances. Nacos supports both transport layer (PING or TCP) health check and application layer (such as HTTP, Redis, MySQL, and user-defined protocol) health check. For the health check of complex clouds and network topologies(such as VPC, Edge Service etc), Nacos provides both agent mode and server mode health check. Nacos also provide a unity service health dashboard to help you manage the availability and traffic of services.    
     
@@ -50,7 +50,7 @@ Key features of Nacos:
 
     Dynamic DNS service which supports weighted routing makes it easier for you to implement mid-tier load balancing, flexible routing policies, traffic control, and simple DNS resolution services in your production environment within your data center. Dynamic DNS service makes it easier for you to implement DNS-based Service discovery. 
 
-    Nacos provides some simple [DNS APIs TODO](xx) for you to manage your DNS domain names and IPs.
+    Nacos provides some simple [DNS APIs TODO](./what-is-nacos.md) for you to manage your DNS domain names and IPs.
 
 * **Service governance and metadata management**
 

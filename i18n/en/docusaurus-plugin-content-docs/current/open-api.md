@@ -100,7 +100,7 @@ GET
 
 ### Description
 
-This API is used to listen for configurations in Nacos to capture configuration changes. In case of any configuration changes, you can use the [Get Configurations](~~64131~~) API to obtain the latest value of the configuration and dynamically refresh the local cache.
+This API is used to listen for configurations in Nacos to capture configuration changes. In case of any configuration changes, you can use the [Get Configurations](./system-configurations.md) API to obtain the latest value of the configuration and dynamically refresh the local cache.
 
 A listener is registered using an asynchronous servlet. The nature of registering a listener is to compare the configuration value and the MD5 value of it with that of the backend. If the values differ, the inconsistent configuration is returned immediately. Otherwise, an empty string is returned after 30 seconds.
 
