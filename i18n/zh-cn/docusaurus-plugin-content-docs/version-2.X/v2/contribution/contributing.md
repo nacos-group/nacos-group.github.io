@@ -58,7 +58,7 @@ git push origin your_awesome_patch
 ```
 * 提交pull request 到 alibaba/nacos，等待回复。如果回复的慢，请无情的催促。
 
-* 详细的贡献流程可参考[贡献流程](./contributing-flow.html)
+* 详细的贡献流程可参考[贡献流程](./contributing-flow.md)
 
 ## 贡献文档
 
@@ -74,7 +74,7 @@ git push origin your_awesome_patch
 
 ### 贡献流程
 
-可参考[贡献流程](./contributing-flow.html)
+可参考[贡献流程](./contributing-flow.md)
 
 ## 成为提交者
 

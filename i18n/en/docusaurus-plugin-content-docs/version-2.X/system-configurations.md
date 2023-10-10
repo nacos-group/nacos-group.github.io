@@ -35,7 +35,7 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |nacos.naming.distro.batchSyncKeyCount| The number of each batch of key synchronization task | positive integer | 1000 | >= 1.0.2 |
 |nacos.naming.distro.syncRetryDelay| Synchronization task failure retry intervals, milliseconds | positive integer | 5000 | >= 1.0.2 |
 
-In addition to the above listed to in `application.properties`configuration properties, And some can be adjusted call interface at runtime, These parameters are in the [Open API](https://nacos.io/en-us/docs/open-api.html)```examine system current data index```the API in a statement.
+In addition to the above listed to in `application.properties`configuration properties, And some can be adjusted call interface at runtime, These parameters are in the [Open API](open-api.md)```examine system current data index```the API in a statement.
 
 ### Config module
 

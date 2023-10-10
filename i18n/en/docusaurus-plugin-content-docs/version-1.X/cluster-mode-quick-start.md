@@ -14,13 +14,13 @@ This Quick Start Manual is to help you quickly download, install and use Nacos o
 
 Therefore, when it is open source, it is recommended that users put all server lists under a vip and then hang under a domain name.
 
-Http://ip1:port/openAPI Directly connected to ip mode, the machine needs to be modified to use ip.
+<Http://ip1:port/openAPI> Directly connected to ip mode, the machine needs to be modified to use ip.
 
-Http://SLB:port/openAPI Mount the SLB mode(Intranet, do not expose internet to avoid security risks), directly connect to SLB, the following server ip real ip, readability is not good.
+<Http://SLB:port/openAPI> Mount the SLB mode(Intranet, do not expose internet to avoid security risks), directly connect to SLB, the following server ip real ip, readability is not good.
 
-Http://nacos.com:port/openAPI Domain name + SLB mode(Intranet, do not expose internet to avoid security risks), good readability, and easy to change ip, recommended mode
+<Http://nacos.com:port/openAPI> Domain name + SLB mode(Intranet, do not expose internet to avoid security risks), good readability, and easy to change ip, recommended mode
 
-![deployDnsVipMode.jpg](/img/deployDnsVipMode.jpg) 
+![deployDnsVipMode.jpg](/img/deployDnsVipMode.jpg)  
 
 ## 1. Preparing for the Environment
 
@@ -76,8 +76,8 @@ No configuration is required
 
 ### Use an external data source
 
-<span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)"></span></span>
-production and use recommendations at least backup mode, or high availability database. 
+<!-- <span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)"></span></span> -->
+production and use recommendations at least backup mode, or high availability database.  
 
 #### Initializes the MySQL database
 
@@ -131,7 +131,7 @@ sh startup.sh
 
 ## 7. shut down server
 
-### Linux/Unix/Mac
+Linux/Unix/Mac
 
 ```bash
 sh shutdown.sh

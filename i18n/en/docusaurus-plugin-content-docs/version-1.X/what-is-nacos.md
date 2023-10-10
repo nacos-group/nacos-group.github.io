@@ -48,7 +48,7 @@ Key features of Nacos:
 
     Dynamic DNS service which supports weighted routing makes it easier for you to implement mid-tier load balancing, flexible routing policies, traffic control, and simple DNS resolution services in your production environment within your data center. Dynamic DNS service makes it easier for you to implement DNS-based Service discovery. 
 
-    Nacos provides some simple [DNS APIs TODO](xx) for you to manage your DNS domain names and IPs.
+    Nacos provides some simple [DNS APIs TODO](./what-is-nacos.md) for you to manage your DNS domain names and IPs.
 
 * **Service governance and metadata management**
 

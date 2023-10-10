@@ -4,7 +4,7 @@ keywords: [集群,部署]
 description: 集群部署说明
 ---
 
-# 集群部署说明
+<!-- # 集群部署说明 -->
 
 ## 集群模式部署
 
@@ -14,13 +14,13 @@ description: 集群部署说明
 
 因此开源的时候推荐用户把所有服务列表放到一个vip下面，然后挂到一个域名下面
 
-http://ip1:port/openAPI  直连ip模式，机器挂则需要修改ip才可以使用。
+<http://ip1:port/openAPI>  直连ip模式，机器挂则需要修改ip才可以使用。
 
-http://SLB:port/openAPI  挂载SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，直连SLB即可，下面挂server真实ip，可读性不好。
+<http://SLB:port/openAPI>  挂载SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，直连SLB即可，下面挂server真实ip，可读性不好。
 
-http://nacos.com:port/openAPI  域名 + SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，可读性好，而且换ip方便，推荐模式
+<http://nacos.com:port/openAPI>  域名 + SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，可读性好，而且换ip方便，推荐模式
 
-![deployDnsVipMode.jpg](/img/deployDnsVipMode.jpg) 
+![deployDnsVipMode.jpg](/img/deployDnsVipMode.jpg)  
 
 ## 1. 预备环境准备
 
@@ -60,6 +60,7 @@ cd nacos/distribution/target/nacos-server-1.3.0/nacos/bin
 ## 3. 配置集群配置文件
 
 在nacos的解压目录nacos/的conf目录下，有配置文件cluster.conf，请每行配置成ip:port。（请配置3个或3个以上节点）
+
 ```plain
 # ip:port
 200.8.9.16:8848
@@ -75,9 +76,9 @@ cd nacos/distribution/target/nacos-server-1.3.0/nacos/bin
 
 ### 使用外置数据源
 
-<span data-type="color" style="color:rgb(25, 31, 37)">
+<!-- <span data-type="color" style="color:rgb(25, 31, 37)">
   <span data-type="background" style="background-color:rgb(255, 255, 255)">生产使用建议至少主备模式，或者采用高可用数据库。</span>
-</span>
+</span> -->
 
 #### 初始化 MySQL 数据库
 
@@ -112,7 +113,7 @@ sh startup.sh
 ```
 
 ## 6. 服务注册&发现和配置管理
- 
+
 ### 服务注册
 
 `curl -X PUT 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'`
@@ -131,7 +132,7 @@ sh startup.sh
 
 ## 7. 关闭服务器
 
-### Linux/Unix/Mac
+Linux/Unix/Mac
 
 ```bash
 sh shutdown.sh

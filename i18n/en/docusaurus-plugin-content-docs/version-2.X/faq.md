@@ -117,7 +117,7 @@ Nacos perfect supports the Sping technology stack, details refer to the document
 
 <h4 id="3.5">Don't use Nacos SDK how to access the Nacos</h4>
 
-Nacos network interaction is implemented based on Http protocol, provides the [Open-API]((https://nacos.io/en-us/docs/open-api.html)) can easily achieve Nacos access.
+Nacos network interaction is implemented based on Http protocol, provides the [Open-API](open-api.md) can easily achieve Nacos access.
 
 <h4 id="3.6">Nacos support for multiple languages</h4>
 
