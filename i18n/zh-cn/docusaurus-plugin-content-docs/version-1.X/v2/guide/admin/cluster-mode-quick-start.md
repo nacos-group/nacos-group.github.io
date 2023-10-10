@@ -104,7 +104,7 @@ nacos.core.auth.server.identity.value=${自定义，保证所有节点一致}
 
 ### 使用外置数据源
 
-<span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)"></span></span>
+<!-- <span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)"></span></span> -->
 生产使用建议至少主备模式，或者采用高可用数据库。
 
 #### 初始化 MySQL 数据库
