@@ -2,6 +2,7 @@
 title: 关于Nacos默认token.secret.key及server.identity风险说明及解决方案公告
 keywords: [nacos,auth,risk,token.secret.key,server.identity]
 description: 关于Nacos默认token.secret.key及server.identity风险说明及解决方案公告
+date: 2023-03-02
 ---
 
 # 关于Nacos默认token.secret.key及server.identity风险说明及解决方案公告

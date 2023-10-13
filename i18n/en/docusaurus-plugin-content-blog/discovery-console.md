@@ -2,6 +2,7 @@
 title: Nacos服务发现控制台预览
 keywords: [nacos]
 description: Nacos服务发现控制台预览
+date: 2018-10-02
 ---
 
 # Nacos服务发现控制台预览

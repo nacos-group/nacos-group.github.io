@@ -1,3 +1,10 @@
+---
+title: Nacos 1.2.0权限控制介绍和使用
+keywords: [Nacos 1.2.0,nacos]
+description: Nacos是阿里巴巴开源的服务发现与配置管理项目，本次发布的1.2.0版本，主要带来的是权限控制。
+date: 2020-03-10
+---
+
 # Nacos 1.2.0 权限控制介绍和使用
 
 <a name="bc2d5709"></a>

@@ -2,6 +2,7 @@
 title: Nacos 1.3.0 全新内核构建过程
 keywords: [nacos1.3.0,内核]
 description: Nacos 1.3.0 全新内核构建过程
+date: 2020-02-12
 ---
 
 # Nacos 1.3.0 特性以及功能使用文档

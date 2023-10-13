@@ -1,3 +1,9 @@
+---
+title: Eureka 2.0 开源工作宣告停止？别担心，ANS 即将 C位强势出道！
+keywords: [Eureka 2.0]
+description: Eureka 2.0 开源工作宣告停止？别担心，ANS 即将 C位强势出道！
+---
+
 近日，Netflix 公司在 github 上公告 Eureka 2.0 开源工作停止，继续使用风险自负。这一消息在spring cloud 开发者中引起了一些担心和忧虑。
 
 同时在阿里巴巴正式宣布其开源计划， 将通过 Nacos 项目将阿里巴巴在建设共享服务体系中使用的服务发现、配置及服务管理平台贡献给开源社区，通过打造 Dubbo + Nacos 的经典组合进一步释放 Dubbo 在云原生及 Service Mesh 时代中，在大规模微服务治理、流量治理、服务集成与服务共享等服务平台能力建设上的威力，同时 Nacos 会非常关注对主流开源社区，如 Spring Cloud 和 Kubernetes 云原生体系的无缝对接与支持。

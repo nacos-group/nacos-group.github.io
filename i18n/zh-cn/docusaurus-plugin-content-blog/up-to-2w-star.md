@@ -2,6 +2,7 @@
 title: 双十一献礼 | Nacos Star破两万的回顾与展望
 keywords: [Nacos,双十一]
 description: 双十一献礼 | Nacos Star破两万的回顾与展望
+date: 2021-11-03
 ---
 
 # 双十一献礼 | Nacos Star破两万的回顾与展望

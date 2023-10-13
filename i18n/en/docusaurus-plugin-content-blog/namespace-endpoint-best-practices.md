@@ -2,6 +2,7 @@
 title: Namespace,endpoint 最佳实践
 keywords: [namespace,endpoint,最佳实践]
 description: 随着使用 Nacos 的企业越来越多，遇到的最频繁的两个问题就是：如何在我的生产环境正确的来使用 namespace 以及 endpoint。
+date: 2019-12-06
 ---
 
 # Namespace, endpoint 最佳实践

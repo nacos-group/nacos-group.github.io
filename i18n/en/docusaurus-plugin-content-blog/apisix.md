@@ -2,6 +2,7 @@
 title: Apache APISIX Realizes Service Discovery Based on Nacos
 keywords: [Apache APISIX]
 description: This article introduces the basic concepts of Apache APISIX and Nacos and Service Registry, and shows you the specific operation of Apache APISIX to realize service discovery based on Nacos.
+date: 2022-02-22
 ---
 
 # Background information
