@@ -58,6 +58,13 @@ Nacos 2.X is compatible with Nacos 1.X OpenAPI, please refer to the document [Na
     - [Query the list of cluster nodes](#4.2)
     - [Query the current node health status](#4.3)
     - [Switch addressing modes](#4.4)
+- Connection Load Management
+    - [Query the List of Current Node Client Connections](#5.1)
+    - [Reload the Number of Current Node Client Connections](#5.2)
+    - [Intelligently Balance the Number of Client Connections in the Cluster](#5.3)
+    - [Reset a Specific Client Connection](#5.4)
+    - [Get SDK Metrics for the Cluster](#5.5)
+
 
 ## Documentation Conventions
 
@@ -2524,4 +2531,274 @@ Switch addressing modes
     }
     ```
 
+## Connection Load Management
 
+### <h2 id="5.1">Query the List of Current Node Client Connections</h2>
+
+#### Description
+
+Query the list of client connections on the current `Nacos` node.
+
+#### Request Method
+
+`GET`
+
+#### Request URL
+
+`/nacos/v2/core/loader/current`
+
+#### Return Data
+
+| Parameter      | Type      | Description          |
+|----------------|-----------|----------------------|
+| `traced`       | `Boolean` | Monitoring indicator |
+| `abilityTable` | `Map`     | Capability table     |
+| `metaInfo`     | `Object`  | Metadata             |
+| `connected`    | `Integer` | Connection status    |
+| `labels`       | `Map`     | Labels               |
+
+#### Example
+
+* Request Example
+
+```shell
+curl -X GET 'http://localhost:8848/nacos/v2/core/loader/current'
+```
+
+* Response Example
+
+```json
+{
+    "1697424543845_127.0.0.1_11547": {
+        "traced": false,
+        "abilityTable": null,
+        "metaInfo": {
+            "connectType": "GRPC",
+            "clientIp": "192.168.49.1",
+            "localPort": 9848,
+            "version": "Nacos-Java-Client:v2.1.0",
+            "connectionId": "1697424543845_127.0.0.1_11547",
+            "createTime": "2023-10-16T10:49:03.907+08:00",
+            "lastActiveTime": 1697424869827,
+            "appName": "unknown",
+            "tenant": "",
+            "labels": {
+                "source": "sdk",
+                "taskId": "0",
+                "module": "config",
+                "AppName": "unknown"
+            },
+            "tag": null,
+            "sdkSource": true,
+            "clusterSource": false
+        },
+        "connected": true,
+        "labels": {
+            "source": "sdk",
+            "taskId": "0",
+            "module": "config",
+            "AppName": "unknown"
+        }
+    }
+}
+
+```
+
+<h2 id="5.2">Reload the Number of Current Node Client Connections</h2>
+
+### Description
+
+Reload the number of client connections on the current `Nacos` node.
+
+### Request Method
+
+`GET`
+
+### Request URL
+
+`/nacos/v2/core/loader/current/reloadCurrent`
+
+### Request Parameters
+
+| Parameter         | Type      | Required | Description       |
+|-------------------|-----------|----------|-------------------|
+| `count`           | `Integer` | **Y**    | ID of connections |
+| `redirectAddress` | `String`  | N        | Redirect address  |
+
+### Return Data
+
+| Parameter | Type     | Description      |
+|-----------|----------|------------------|
+| `data`    | `String` | Execution result |
+
+### Example
+
+* Request Example
+
+    ```shell
+    curl -X GET 'http://localhost:8848/nacos/v2/core/loader/reloadCurrent?count=1&redirectAddress=127.0.0.1:8848'
+    ```
+
+* Response Example
+
+    ```text
+    success
+    ```
+
+<h2 id="5.3">Intelligently Balance the Number of Client Connections in the Cluster</h2>
+
+### Description
+
+Intelligently balance the client connections among all nodes in the `Nacos` cluster.
+
+### Request Method
+
+`GET`
+
+### Request URL
+
+`/nacos/v2/core/loader/current/smartReloadCluster`
+
+### Request Parameters
+
+| Parameter      | Type     | Required | Description           |
+|----------------|----------|----------|-----------------------|
+| `loaderFactor` | `String` | **Y**    | Number of connections |
+| `force`        | `String` | N        | Force flag            |
+
+### Return Data
+
+| Parameter | Type     | Description      |
+|-----------|----------|------------------|
+| `data`    | `String` | Execution result |
+
+### Example
+
+* Request Example
+
+    ```shell
+    curl -X GET 'http://localhost:8848/nacos/v2/core/loader/smartReloadCluster?loaderFactor=1'
+    ```
+
+* Response Example
+
+    ```text
+    Ok
+    ```
+
+<h2 id="5.4">Reset a Specific Client Connection</h2>
+
+### Description
+
+Send a connection reset request based on the `SDK` connection ID.
+
+### Request Method
+
+`GET`
+
+### Request URL
+
+`/nacos/v2/core/loader/current/reloadClient`
+
+### Request Body
+
+| Parameter         | Type     | Required | Description   |
+|-------------------|----------|----------|---------------|
+| `connectionId`    | `String` | **Y**    | Connection ID |
+| `redirectAddress` | `String` | N        | Reset address |
+
+### Return Data
+
+| Parameter | Type     | Description      |
+|-----------|----------|------------------|
+| `data`    | `String` | Execution result |
+
+### Example
+
+* Request Example
+
+    ```shell
+    curl -X GET 'http://localhost:8848/nacos/v2/core/loader/reloadClient?connectionId=1&redirectAddress=127.0.0.1:8848'
+    ```
+
+* Response Example
+
+    ```text
+    success
+    ```
+
+<h2 id="5.5">Get SDK Metrics for the Cluster</h2>
+
+### Description
+
+Get SDK metrics for all nodes in the `Nacos` cluster.
+
+### Request Method
+
+`GET`
+
+### Request URL
+
+`/nacos/v2/core/loader/current/cluster`
+
+### Return Data
+
+| Parameter        | Type                  | Description                                                                                                                                                               |
+|------------------|-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `total`          | `Integer`             | Current number of cluster nodes                                                                                                                                           |
+| `min`            | `Integer`             | Minimum load value                                                                                                                                                        |
+| `avg`            | `Integer`             | Average load value                                                                                                                                                        |
+| `max`            | `Integer`             | Maximum load value                                                                                                                                                        |
+| `memberCount`    | `Integer`             | Number of members in the current node                                                                                                                                     |
+| `metricsCount`   | `Integer`             | Number of load information                                                                                                                                                |
+| `threshold`      | `Float`               | Load threshold. The threshold is calculated as: Average load value * 1.1                                                                                                  |
+| `detail`         | `String`              | Contains detailed load information for each node                                                                                                                          |
+| `detail.address` | `Map<String, String>` | Node address                                                                                                                                                              |
+| `detail.metric`  | `Map<String, String>` | Metric information                                                                                                                                                        |
+| `completed`      | `Boolean`             | Indicates whether the collection of load information has been completed. If true, it means that load information for all nodes has been collected, otherwise, it is false |
+
+### Example
+
+* Request Example
+
+    ```shell
+    curl -X GET 'http://localhost:8848/nacos/v2/core/loader/cluster'
+    ```
+
+* Response Example
+
+    ```json
+    {
+        "1697424543845_127.0.0.1_11547": {
+            "traced": false,
+            "abilityTable": null,
+            "metaInfo": {
+                "connectType": "GRPC",
+                "clientIp": "192.168.49.1",
+                "localPort": 9848,
+                "version": "Nacos-Java-Client:v2.1.0",
+                "connectionId": "1697424543845_127.0.0.1_11547",
+                "createTime": "2023-10-16T10:49:03.907+08:00",
+                "lastActiveTime": 1697424869827,
+                "appName": "unknown",
+                "tenant": "",
+                "labels": {
+                "source": "sdk",
+                "taskId": "0",
+                "module": "config",
+                "AppName": "unknown"
+            },
+            "tag": null,
+            "sdkSource": true,
+            "clusterSource": false
+            },
+            "connected": true,
+            "labels": {
+                "source": "sdk",
+                "taskId": "0",
+                "module": "config",
+                "AppName": "unknown"
+            }
+        }
+    }
+    ```
