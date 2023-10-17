@@ -2,6 +2,7 @@
 title: Nacos-spring-boot0.2.10发布，全面支持Nacos2.0
 keywords: [Nacos-spring-boot0.2.10,Nacos2.0]
 description: Nacos-spring-boot0.2.10发布，全面支持Nacos2.0
+date: 2021-07-26
 ---
 
 # Nacos-spring-boot0.2.10发布，全面支持Nacos2.0

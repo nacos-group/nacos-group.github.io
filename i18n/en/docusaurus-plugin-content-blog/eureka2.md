@@ -2,6 +2,7 @@
 title: Eureka 2.0 开源工作宣告停止？别担心，ANS 即将 C位强势出道！
 keywords: [Eureka 2.0]
 description: Eureka 2.0 开源工作宣告停止？别担心，ANS 即将 C位强势出道！
+date: 2019-08-22
 ---
 
 近日，Netflix 公司在 github 上公告 Eureka 2.0 开源工作停止，继续使用风险自负。这一消息在spring cloud 开发者中引起了一些担心和忧虑。

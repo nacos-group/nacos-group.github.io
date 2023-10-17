@@ -2,7 +2,7 @@
 title: Nacos 的一条注册请求会经历什么？
 keywords: [Nacos,注册]
 description: 详解 Nacos 的一条注册请求会经历什么？
-
+date: 2022-12-28
 ---
 
 转载且编辑自[Nacos 的一条注册请求会经历什么?](http://www.passjava.cn/#/13.SpringCloud架构剖析/07.Nacos配置注册中心/02.Nacos架构原理①：一条注册请求会经历什么？)
