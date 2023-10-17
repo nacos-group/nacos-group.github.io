@@ -45,25 +45,25 @@ const data = {
       list: [
         {
           img: 'img/mailinglist.png',
-          imgHover: '/img/mailinglist_hover.png',
+          imgHover: 'img/mailinglist_hover.png',
           title: '邮件列表',
           link: 'mailto:nacos_dev@linux.alibaba.com'
         },
         {
           img: 'img/alibaba.png',
-          imgHover: '/img/alibaba_hover.png',
+          imgHover: 'img/alibaba_hover.png',
           title: 'Gitter',
           link: 'https://gitter.im/alibaba/nacos',
         },
         {
           img: 'img/segmentfault.png',
-          imgHover: '/img/segmentfault_hover.png',
+          imgHover: 'img/segmentfault_hover.png',
           title: 'segmentfault',
           link: 'https://segmentfault.com/t/nacos'
         },
         {
           img: 'img/weibo.png',
-          imgHover: '/img/weibo_hover.png',
+          imgHover: 'img/weibo_hover.png',
           title: '@Nacos',
           link: 'https://weibo.com/u/6574374908',
         },
