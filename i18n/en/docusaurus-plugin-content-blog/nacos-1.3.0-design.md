@@ -2,6 +2,7 @@
 title: Nacos 1.3.0 new kernel construction process
 keywords: [nacos1.3.0,kernel]
 description: Nacos 1.3.0 new kernel construction process
+date: 2020-02-12
 ---
 
 # Nacos 1.3.0 Documentation of features and functionality

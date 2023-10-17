@@ -2,6 +2,7 @@
 title: Performance comparison between Nacos 2.0 upgrading or not.
 keywords: [2.0,Performance test,Performance comparing]
 description: Nacos 2.0 improved the performance about 10 times by upgrading the communication protocol, framework, and data model, to solve the performance problems gradually exposed after the release of Nacos 1.0. In this article, Nacos1.0, Nacos1.0 upgrade Nacos2.0 process, Nacos2.0 to conduct a comprehensive performance comparison, in order to intuitively show the performance improvement brought by Nacos2.0.
+date: 2021-07-29
 ---
 
 # Nacos 2.0 升级前后性能对比压测

@@ -2,6 +2,7 @@
 title: 阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾
 keywords: [nacos,configserver,alibaba]
 description: 阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾
+date: 2018-05-20
 ---
 
 # 《阿里巴巴服务注册中心产品ConfigServer 10年技术发展回顾》

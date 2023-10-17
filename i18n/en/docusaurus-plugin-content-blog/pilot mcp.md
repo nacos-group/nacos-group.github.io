@@ -1,3 +1,10 @@
+---
+title: Pilot MCP协议介绍
+keywords: [Pilot MCP协议介绍]
+description: Istio是目前主流的Service Mesh组件。Istio基于Service Mesh的理念，承担着服务发现、服务通信、负载均衡、限流熔断、监控等等功能
+date: 2019-11-20
+---
+
 # Pilot MCP协议介绍
 
 

@@ -2,6 +2,7 @@
 title: Install the HA Nacos cluster in Rainbond with one-click
 keywords: [nacos,kubernetes,rainbond,cloudnative]
 description: Current documentation describes how to install a high availability Nacos cluster with one click through Rainbond, a cloud native application management platform.
+date: 2022-03-16
 ---
 
 # Rainbond Nacos

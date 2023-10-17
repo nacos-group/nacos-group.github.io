@@ -1,3 +1,10 @@
+---
+title: 阿里巴巴基于 Nacos 实现环境隔离的实践
+keywords: [alibaba,nacos]
+description: 说到环境隔离，首先应该搞清楚什么环境。 环境这个词目前还没有一个比较统一的定义，有些公司叫环境，在阿里云上叫region，在kubernetes架构中叫namespace等等。
+date: 2019-06-05
+---
+
 # Nacos环境隔离
 
 <!--truncate-->

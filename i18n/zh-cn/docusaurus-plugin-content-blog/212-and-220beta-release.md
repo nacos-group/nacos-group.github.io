@@ -2,6 +2,7 @@
 title: Nacos 2.1.2、2.2.0-BETA及go-sdk 2.1.1 版本同时发布，多语言生态再添大将
 keywords: [2.1.2, 2.2.0-BETA, go-sdk, rust-sdk]
 description: Nacos 2.1.2、2.2.0-BETA及go-sdk 2.1.1 版本同时发布，多语言生态再添大将。
+date: 2022-10-28
 ---
 
 # Nacos 2.1.2、2.2.0-BETA及go-sdk 2.1.1 版本同时发布，多语言生态再添大将

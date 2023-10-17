@@ -2,6 +2,7 @@
 title: v0.5.0 of Nacos-sdk-csharp was released! Capabilities aligned with Java SDK！
 keywords: [csharp, sdk]
 description: v0.5.0 of Nacos-sdk-csharp was released! Capabilities aligned with Java SDK!
+date: 2020-09-03
 ---
 
 # v0.5.0 of Nacos-sdk-csharp was released!

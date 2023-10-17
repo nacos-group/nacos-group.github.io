@@ -1,3 +1,10 @@
+---
+title: Nacos GA后的整体规划
+keywords: [nacos,GA]
+description: 根据Nacos既定的演进方向，以及在与社区进行充分的[讨论](https://github.com/alibaba/nacos/issues/1433)后，Nacos接下来的版本计划也浮出水面。
+date: 2019-07-08
+---
+
 # Nacos Roadmap：Nacos GA后会有哪些大动作？
 
 

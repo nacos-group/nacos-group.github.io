@@ -2,6 +2,7 @@
 title: Nacos 帮我们解决什么问题？—— 配置管理篇
 keywords: [nacos]
 description: Nacos 配置管理帮我们解决什么问题？
+date: 2018-10-17
 ---
 
 # Nacos 帮我们解决什么问题？—— 配置管理篇

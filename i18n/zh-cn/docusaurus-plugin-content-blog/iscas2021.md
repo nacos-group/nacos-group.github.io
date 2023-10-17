@@ -2,6 +2,7 @@
 title: Nacos 开源之夏2021活动 报名正式开启
 keywords: [ISCAS2021]
 description: Nacos 开源之夏2021活动 报名正式开启
+date: 2021-05-25
 ---
 
 # Nacos 开源之夏2021活动 报名正式开启
