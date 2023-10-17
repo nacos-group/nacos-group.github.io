@@ -2,6 +2,7 @@
 title: Nacos 的 Distro 一致性协议
 keywords: [Nacos,Distro,一致性协议,AP]
 description: 详解Nacos 的 Distro 一致性协议
+date: 2020-09-14
 ---
 
 转载且编辑自[Nacos 的 Distro 一致性协议](http://www.passjava.cn/#/13.SpringCloud架构剖析/07.Nacos配置注册中心/03.Nacos架构原理②：揭秘AP架构——Distro一致性协议)
