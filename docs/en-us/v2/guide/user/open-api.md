@@ -2661,10 +2661,10 @@ Intelligently balance the client connections among all nodes in the `Nacos` clus
 
 ### Request Parameters
 
-| Parameter      | Type     | Required | Description           |
-|----------------|----------|----------|-----------------------|
-| `loaderFactor` | `String` | **Y**    | Number of connections |
-| `force`        | `String` | N        | Force flag            |
+| Parameter      | Type     | Required | Description                                                                                                                                                 |
+|----------------|----------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `loaderFactor` | `Float`  | N        | The loading factor, with a default value of 0.1, determines the number of SDKs per node, calculated as (1 - loaderFactor) * avg ~ (1 + loaderFactor) * avg. |
+| `force`        | `String` | N        | Force flag                                                                                                                                                  |
 
 ### Return Data
 
