@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
+                       xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+  <ShortName>Nacos</ShortName>
+  <Description>Search Nacos</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image width="16" height="16" type="image/x-icon">https://nacos.io/en/https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png</Image>
+  <Url type="text/html" method="get" template="https://nacos.io/en/search?q={searchTerms}"/>
+  <Url type="application/opensearchdescription+xml" rel="self" template="https://nacos.io/en/opensearch.xml" />
+  <moz:SearchForm>https://nacos.io/en/</moz:SearchForm>
+</OpenSearchDescription>
