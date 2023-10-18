@@ -187,6 +187,15 @@ const config = {
       prism: {
         theme: lightCodeTheme,
       },
+      algolia: {
+        // The application ID provided by Algolia
+        appId: '1QV814950M',
+
+        // Public API key: it is safe to commit it
+        apiKey: '7445da3dec050d45d29f3fe93ed45af3',
+
+        indexName: 'nacos',
+      },
     }),
 };
 
