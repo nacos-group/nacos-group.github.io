@@ -11,12 +11,27 @@
   border-radius: 4px;
   text-decoration: none;
   padding: 0%;
-  
+
   &-primary {
     background: #267DF7;
   }
+
   &-normal {
-    background: transparent;
     border: 1px solid #fff;
+  }
+
+  &-secondary {
+    border: 1px solid #267DF7;
+    color: #267DF7;
+  }
+
+  &-secondary:hover {
+    color: #fff;
+    background-color: #267DF7;
+  }
+
+  &-free {
+    color: #fff;
+    background-color: #267DF7;
   }
 }

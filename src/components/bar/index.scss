@@ -3,6 +3,7 @@
 .bar {
   margin-top: $headerHeight;
   background-image: linear-gradient(-90deg, $startColor 0%, $intermediateColor 51%, $endColor 100%);
+
   .bar-body {
     max-width: $contentWidth;
     margin: 0 auto;
@@ -12,19 +13,24 @@
     font-size: 36px;
     color: #FFF;
     position: relative;
+
     .bar-title {
       display: inline-block;
       line-height: 1;
+
       .bone {
         margin-top: 6px;
       }
     }
+
     .front-img {
       width: 80px;
       height: 80px;
       vertical-align: middle;
       margin: 0 28px 0 40px;
+      display: inline-block;
     }
+
     .back-img {
       width: 160px;
       height: 160px;
@@ -33,7 +39,8 @@
       bottom: 0;
       opacity: 0.15;
     }
-    @media screen and (max-width: $mobileWidth){
+
+    @media screen and (max-width: $mobileWidth) {
       .front-img {
         margin-left: 20px;
       }

@@ -1,6 +1,6 @@
-import React from 'react';
-import { getLink } from '../../utils';
-import BrowserOnly from '@docusaurus/BrowserOnly';
+import React from "react";
+import { getLink } from "../../utils";
+import BrowserOnly from "@docusaurus/BrowserOnly";
 type CardEvent = {
   link: string;
   img: string;
@@ -27,7 +27,10 @@ const EventCard = (props: Props) => {
             <p>{event.content}</p>
             <a href={getLink(event.link)}>
               {event.dateStr}
-              <img className="arrow" src={`img/arrow_right.png`} />
+              <img
+                className="arrow"
+                src={`https://img.alicdn.com/imgextra/i4/O1CN01CWa2ug1T6YucJf3Ct_!!6000000002333-2-tps-16-26.png`}
+              />
             </a>
           </div>
         </div>
