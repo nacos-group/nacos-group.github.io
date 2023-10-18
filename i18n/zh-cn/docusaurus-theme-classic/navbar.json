@@ -19,6 +19,10 @@
     "message": "企业版NACOS",
     "description": "Navbar item with label NACOS IN CLOUD"
   },
+  "item.label.NACOS CLOUD": {
+    "message": "Nacos Cloud",
+    "description": "Navbar item with label Nacos Cloud"
+  },
   "item.label.E-BOOK-NACOS": {
     "message": "NACOS架构与原理",
     "description": "Navbar item with label E-BOOK-NACOS"

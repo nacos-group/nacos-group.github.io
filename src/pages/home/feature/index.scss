@@ -1,4 +1,5 @@
 @import '../../../css/variables.scss';
+
 .feature-section {
   background: $brandColor;
 
@@ -18,7 +19,7 @@
     }
 
     .bone {
-      margin: 0 auto 45px;
+      margin: 20px auto 45px;
     }
 
     .feature-list {
@@ -34,7 +35,9 @@
 
         ul {
           list-style: disc;
-          padding-left: 14px;
+          padding-left: 0px;
+          color: #999;
+          font-size: 14px;
 
           li {
             font-family: Avenir-Medium;
