@@ -81,6 +81,12 @@ const config = {
                 src: '//g.alicdn.com/aes/??tracker/1.0.34/index.js,tracker-plugin-pv/2.4.5/index.js,tracker-plugin-event/1.2.5/index.js,tracker-plugin-jserror/1.0.13/index.js,tracker-plugin-api/1.1.14/index.js,tracker-plugin-perf/1.1.8/index.js,tracker-plugin-eventTiming/1.0.4/index.js',
               },
             },
+            {
+              tagName: 'script',
+              attributes: {
+                src: '//hm.baidu.com/hm.js?e3a5cec56ef8619cf9d7c2abebd509e3',
+              },
+            }
           ],
         }
       },
