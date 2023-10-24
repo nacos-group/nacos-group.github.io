@@ -2,13 +2,10 @@ import React from 'react';
 import { translate } from '@docusaurus/Translate';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { Bar, Footer, Slider } from '../../components';
-import EventCard from './eventCard';
-import ContactItem, { ContactData } from './contactItem';
-import ContributorItem, { ContributorData } from './contributorItem';
-import EcoItem, { EcoData } from './ecoItem';
 import Layout from '@theme/Layout';
+import Top from './top';
+import Users from './users'
 
-import './index.scss';
 import { getLink } from '../../utils';
 
 const data = {
@@ -151,59 +148,14 @@ const data = {
     },
   };
   
-  export default function Community(): JSX.Element {
+  export default function Cloud(): JSX.Element {
   return (
       <BrowserOnly>
         {() => (
         <Layout title={'Nacos'} description="Nacos Community">
           <div className="community-page">
-            <Bar img={getLink('img/community.png')} text={data.barText} />
-            <section className="events-section">
-              <div className='events-body'>
-                <h3>{data.events.title}</h3>
-                <Slider>
-                  {data.events.list.map((event, i) => (
-                    <EventCard event={event} key={i} />
-                  ))}
-                </Slider>
-              </div>
-            </section>
-            <section className="eco-section">
-              <h3>{data.ecos.title}</h3>
-              <div className="eco-lists">
-              {
-                data.ecos.list.map((eco, i) => (
-                  <EcoItem eco={eco} key={i} />
-                ))
-              }
-              </div>
-            </section>
-            <section className="contact-section">
-              <div className="contact-body">
-                <h3>{data.contacts.title}</h3>
-                <p>{data.contacts.desc}</p>
-                <div className="contact-list">
-                {
-                  data.contacts.list.map((contact, i) => (
-                    <ContactItem contact={contact} key={i} />
-                  ))
-                }
-                </div>
-              </div>
-            </section>
-            <section className="contributor-section">
-              <div className="contributor-body">
-                <h3>{data.contributorGuide.title}</h3>
-                <p>{data.contributorGuide.desc}</p>
-                <div className="contributor-list">
-                {
-                  data.contributorGuide.list.map((contributor, i) => (
-                    <ContributorItem contributor={contributor} key={i} />
-                  ))
-                }
-                </div>
-              </div>
-            </section>
+            <Top />
+            <Users />
             <Footer logo={getLink('img/nacos_gray.png')}/>
           </div>
         </Layout>

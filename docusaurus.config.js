@@ -63,7 +63,7 @@ const config = {
   ],
   plugins: [
       'docusaurus-plugin-sass',
-    
+      './postcss-tailwind-loader.js'
   ],
   presets: [
     [
@@ -151,6 +151,11 @@ const config = {
             href: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
             position: 'right',
             target: '_blank',
+          },
+          {
+            label: 'NACOS CLOUD',
+            position: 'right',
+            to:'/cloud'
           },
           {
             label: 'E-BOOK-NACOS',

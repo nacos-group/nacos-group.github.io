@@ -6,6 +6,7 @@ import { getLink } from '../../../utils';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 
 import './index.scss';
+// import '../../tailwind.css'
 
 const topData = {
   brandName: 'Nacos',
@@ -67,9 +68,15 @@ const Top = ({ language }: { language?: string }) => {
           background: `url(${getLink("img/black_dot.png")}) repeat`,
           backgroundSize: "14px 14px",
         }}
-      >
+        >
+          1111111111
         <div className="vertical-middle">
-          <img className="product-logo" src={getLink("img/nacos.png")} />
+            <img className="product-logo" src={getLink("img/nacos.png")} />
+            <template>
+          <div className="w-32 h-32 bg-blue-500">
+            testtesttest
+      </div>
+    </template>
           <p className="product-desc">
             {topData.briefIntroduction}
           </p>
