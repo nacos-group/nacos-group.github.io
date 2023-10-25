@@ -10,6 +10,8 @@ import { Footer } from '../components';
 import './index.scss';
 import Function from './home/function/index';
 import { getLink } from '../utils';
+import 'tailwindcss/tailwind.css';
+import './tailwind.css'
 
 export default function Home(): React.Element {
   const { siteConfig, i18n } = useDocusaurusContext();
@@ -41,15 +43,15 @@ export default function Home(): React.Element {
 
   return (
     <Layout title={'Nacos'} description="Nacos official site">
-      <div ref={el} className="home-page">
-        <Top language={curLang} />
-        <Function />
-        <MseMap />
-        <Feature />
-        <User />
-        {/* <Community /> */}
-        <Footer logo={getLink("img/nacos_gray.png")} />
-      </div>
-    </Layout>
+    <div ref={el} className="home-page">
+      <Top language={curLang} />
+      <Function />
+      <MseMap />
+      <Feature />
+      <User />
+      {/* <Community /> */}
+      <Footer logo={getLink("img/nacos_gray.png")} />
+    </div>
+  </Layout>
   );
 }
