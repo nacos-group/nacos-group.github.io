@@ -86,6 +86,16 @@
 <li><a href="#4.4">切换寻址模式</a></li>
 </ul>
 </li>
+<li>
+<p>连接负载管理</p>
+<ul>
+<li><a href="#5.1">查询当前节点客户端连接列表</a></li>
+<li><a href="#5.2">重新加载当前节点客户端连接数量</a></li>
+<li><a href="#5.3">智能平衡集群节点的连接数</a></li>
+<li><a href="#5.4">根据SDK连接ID重新加载指定客户端连接</a></li>
+<li><a href="#5.5">获取集群的连接负载信息</a></li>
+</ul>
+</li>
 </ul>
 <h2>文档规定</h2>
 <h2 id="0.1">API 统一返回体格式</h2>
@@ -4401,6 +4411,389 @@
 	<span class="hljs-attr">"code"</span>: <span class="hljs-number">0</span>,
 	<span class="hljs-attr">"message"</span>: <span class="hljs-string">"success"</span>,
 	<span class="hljs-attr">"data"</span>: <span class="hljs-literal">true</span>
+}
+</code></pre>
+</li>
+</ul>
+<h2>连接负载管理</h2>
+<h2 id="5.1">查询当前节点客户端连接列表</h2>
+<h3>接口描述</h3>
+<p>查询当前<code>Nacos</code>节点上的客户端连接列表</p>
+<h3>请求方式</h3>
+<p><code>GET</code></p>
+<h3>请求URL</h3>
+<p><code>/nacos/v2/core/loader/current</code></p>
+<h3>返回数据</h3>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数类型</th>
+<th>描述说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>traced</code></td>
+<td><code>Boolean</code></td>
+<td>是否监控</td>
+</tr>
+<tr>
+<td><code>abilityTable</code></td>
+<td><code>Map</code></td>
+<td>能力表</td>
+</tr>
+<tr>
+<td><code>metaInfo</code></td>
+<td><code>Object</code></td>
+<td>元信息</td>
+</tr>
+<tr>
+<td><code>connected</code></td>
+<td><code>Integer</code></td>
+<td>是否连接</td>
+</tr>
+<tr>
+<td><code>labels</code></td>
+<td><code>Map</code></td>
+<td>标签</td>
+</tr>
+</tbody>
+</table>
+<h3>示例</h3>
+<ul>
+<li>
+<p>请求示例</p>
+<pre><code class="language-shell">curl -X GET 'http://localhost:8848/nacos/v2/core/loader/current'
+</code></pre>
+</li>
+<li>
+<p>返回示例</p>
+<pre><code class="language-json">{
+    <span class="hljs-attr">"1697424543845_127.0.0.1_11547"</span>: {
+        <span class="hljs-attr">"traced"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"abilityTable"</span>: <span class="hljs-literal">null</span>,
+        <span class="hljs-attr">"metaInfo"</span>: {
+            <span class="hljs-attr">"connectType"</span>: <span class="hljs-string">"GRPC"</span>,
+            <span class="hljs-attr">"clientIp"</span>: <span class="hljs-string">"192.168.49.1"</span>,
+            <span class="hljs-attr">"localPort"</span>: <span class="hljs-number">9848</span>,
+            <span class="hljs-attr">"version"</span>: <span class="hljs-string">"Nacos-Java-Client:v2.1.0"</span>,
+            <span class="hljs-attr">"connectionId"</span>: <span class="hljs-string">"1697424543845_127.0.0.1_11547"</span>,
+            <span class="hljs-attr">"createTime"</span>: <span class="hljs-string">"2023-10-16T10:49:03.907+08:00"</span>,
+            <span class="hljs-attr">"lastActiveTime"</span>: <span class="hljs-number">1697424869827</span>,
+            <span class="hljs-attr">"appName"</span>: <span class="hljs-string">"unknown"</span>,
+            <span class="hljs-attr">"tenant"</span>: <span class="hljs-string">""</span>,
+            <span class="hljs-attr">"labels"</span>: {
+            <span class="hljs-attr">"source"</span>: <span class="hljs-string">"sdk"</span>,
+            <span class="hljs-attr">"taskId"</span>: <span class="hljs-string">"0"</span>,
+            <span class="hljs-attr">"module"</span>: <span class="hljs-string">"config"</span>,
+            <span class="hljs-attr">"AppName"</span>: <span class="hljs-string">"unknown"</span>
+        },
+        <span class="hljs-attr">"tag"</span>: <span class="hljs-literal">null</span>,
+        <span class="hljs-attr">"sdkSource"</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">"clusterSource"</span>: <span class="hljs-literal">false</span>
+        },
+        <span class="hljs-attr">"connected"</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">"labels"</span>: {
+            <span class="hljs-attr">"source"</span>: <span class="hljs-string">"sdk"</span>,
+            <span class="hljs-attr">"taskId"</span>: <span class="hljs-string">"0"</span>,
+            <span class="hljs-attr">"module"</span>: <span class="hljs-string">"config"</span>,
+            <span class="hljs-attr">"AppName"</span>: <span class="hljs-string">"unknown"</span>
+        }
+    }
+}
+</code></pre>
+</li>
+</ul>
+<h2 id="5.2">重新加载当前节点客户端连接数量</h2>
+<h3>接口描述</h3>
+<p>重新加载当前<code>Nacos</code>节点的客户端连接数量</p>
+<h3>请求方式</h3>
+<p><code>GET</code></p>
+<h3>请求URL</h3>
+<p><code>/nacos/v2/core/loader/current/reloadCurrent</code></p>
+<h3>请求参数</h3>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数类型</th>
+<th>是否必填</th>
+<th>描述说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>count</code></td>
+<td><code>Integer</code></td>
+<td><strong>是</strong></td>
+<td>连接数量</td>
+</tr>
+<tr>
+<td><code>redirectAddress</code></td>
+<td><code>String</code></td>
+<td>否</td>
+<td>重定向地址</td>
+</tr>
+</tbody>
+</table>
+<h3>返回数据</h3>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>String</code></td>
+<td>是否执行成功</td>
+</tr>
+</tbody>
+</table>
+<h3>示例</h3>
+<ul>
+<li>
+<p>请求示例</p>
+<pre><code class="language-shell">curl -X GET 'http://localhost:8848/nacos/v2/core/loader/reloadCurrent?count=1&amp;redirectAddress=127.0.0.1:8848'
+</code></pre>
+</li>
+<li>
+<p>返回示例</p>
+<pre><code class="language-text">success
+</code></pre>
+</li>
+</ul>
+<h2 id="5.3">智能平衡集群节点的连接数</h2>
+<h3>接口描述</h3>
+<p>智能平衡<code>Nacos</code>集群中所有节点的客户端连接数</p>
+<h3>请求方式</h3>
+<p><code>GET</code></p>
+<h3>请求URL</h3>
+<p><code>/nacos/v2/core/loader/current/smartReloadCluster</code></p>
+<h3>请求参数</h3>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数类型</th>
+<th>是否必填</th>
+<th>描述说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>loaderFactor</code></td>
+<td><code>Float</code></td>
+<td>否</td>
+<td>加载因子，默认加载因子0.1，每个节点的SDK数量（1-loaderFactor）* avg~（1+loaderFactor）* avg</td>
+</tr>
+<tr>
+<td><code>force</code></td>
+<td><code>String</code></td>
+<td>否</td>
+<td>是否强制</td>
+</tr>
+</tbody>
+</table>
+<h3>返回数据</h3>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>String</code></td>
+<td>是否执行成功</td>
+</tr>
+</tbody>
+</table>
+<h3>示例</h3>
+<ul>
+<li>
+<p>请求示例</p>
+<pre><code class="language-shell">curl -X GET 'http://localhost:8848/nacos/v2/core/loader/smartReloadCluster?loaderFactor=1'
+</code></pre>
+</li>
+<li>
+<p>返回示例</p>
+<pre><code class="language-text">Ok
+</code></pre>
+</li>
+</ul>
+<h2 id="5.4">重置指定客户端的连接</h2>
+<h3>接口描述</h3>
+<p>根据 <code>SDK</code> 连接 <code>ID</code> 发送连接重置请求</p>
+<h3>请求方式</h3>
+<p><code>GET</code></p>
+<h3>请求URL</h3>
+<p><code>/nacos/v2/core/loader/current/reloadClient</code></p>
+<h3>请求参数</h3>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数类型</th>
+<th>是否必填</th>
+<th>描述说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>connectionId</code></td>
+<td><code>String</code></td>
+<td><strong>是</strong></td>
+<td>连接ID</td>
+</tr>
+<tr>
+<td><code>redirectAddress</code></td>
+<td><code>String</code></td>
+<td>否</td>
+<td>重置地址</td>
+</tr>
+</tbody>
+</table>
+<h3>返回数据</h3>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data</code></td>
+<td><code>String</code></td>
+<td>是否执行成功</td>
+</tr>
+</tbody>
+</table>
+<h3>示例</h3>
+<ul>
+<li>
+<p>请求示例</p>
+<pre><code class="language-shell">curl -X GET 'http://localhost:8848/nacos/v2/core/loader/reloadClient?connectionId=1&amp;redirectAddress=127.0.0.1:8848'
+</code></pre>
+</li>
+<li>
+<p>返回示例</p>
+<pre><code class="language-text">success
+</code></pre>
+</li>
+</ul>
+<h2 id="5.5">获取集群的`SDK`指标</h2>
+<h3>接口描述</h3>
+<p>获取<code>Nacos</code>集群中所有的SDK指标</p>
+<h3>请求方式</h3>
+<p><code>GET</code></p>
+<h3>请求URL</h3>
+<p><code>/nacos/v2/core/loader/current/cluster</code></p>
+<h3>返回数据</h3>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>参数类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>total</code></td>
+<td><code>Integer</code></td>
+<td>当前集群节点数</td>
+</tr>
+<tr>
+<td><code>min</code></td>
+<td><code>Integer</code></td>
+<td>最小负载值</td>
+</tr>
+<tr>
+<td><code>avg</code></td>
+<td><code>Integer</code></td>
+<td>平均负载值</td>
+</tr>
+<tr>
+<td><code>max</code></td>
+<td><code>Integer</code></td>
+<td>最大负载值</td>
+</tr>
+<tr>
+<td><code>memberCount</code></td>
+<td><code>Integer</code></td>
+<td>当前节点的成员数</td>
+</tr>
+<tr>
+<td><code>metricsCount</code></td>
+<td><code>Integer</code></td>
+<td>负载信息数量</td>
+</tr>
+<tr>
+<td><code>threshold</code></td>
+<td><code>Float</code></td>
+<td>负载阈值。阈值的计算公式为：平均负载值 * 1.1</td>
+</tr>
+<tr>
+<td><code>detail</code></td>
+<td><code>List</code></td>
+<td>包含每个节点的详细负载信息</td>
+</tr>
+<tr>
+<td><code>detail.address</code></td>
+<td><code>String</code></td>
+<td>节点地址</td>
+</tr>
+<tr>
+<td><code>detail.metric</code></td>
+<td><code>Map&lt;String,String&gt;</code></td>
+<td>指标信息</td>
+</tr>
+<tr>
+<td><code>completed</code></td>
+<td><code>Boolean</code></td>
+<td>表示是否已完成负载信息的收集，如果为 <code>true</code>，则表示所有节点的负载信息均已收集，否则为 <code>false</code></td>
+</tr>
+</tbody>
+</table>
+<h3>示例</h3>
+<ul>
+<li>
+<p>请求示例</p>
+<pre><code class="language-shell">curl -X GET 'http://localhost:8848/nacos/v2/core/loader/cluster'
+</code></pre>
+</li>
+<li>
+<p>返回示例</p>
+<pre><code class="language-json">{
+    <span class="hljs-attr">"total"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"min"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"avg"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"max"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"memberCount"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"metricsCount"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-attr">"threshold"</span>: <span class="hljs-number">1.1</span>,
+    <span class="hljs-attr">"detail"</span>: [
+        {
+            <span class="hljs-attr">"address"</span>: <span class="hljs-string">"192.168.49.1:8848"</span>,
+            <span class="hljs-attr">"metric"</span>: {
+                <span class="hljs-attr">"load"</span>: <span class="hljs-string">"-1.0"</span>,
+                <span class="hljs-attr">"sdkConCount"</span>: <span class="hljs-string">"1"</span>,
+                <span class="hljs-attr">"cpu"</span>: <span class="hljs-string">"0.1487509"</span>,
+                <span class="hljs-attr">"conCount"</span>: <span class="hljs-string">"1"</span>
+            }
+        }
+    ],
+    <span class="hljs-attr">"completed"</span>: <span class="hljs-literal">true</span>
 }
 </code></pre>
 </li>
