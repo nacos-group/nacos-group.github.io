@@ -421,6 +421,16 @@
       }
     },
     {
+      "filename": "2.3.0-beta-release.md",
+      "link": "/zh-cn/blog/2.3.0-beta-release.html",
+      "meta": {
+        "title": "Nacos 荣获GLCC优秀社区，同时2.3.0-BETA发布，欢迎试用",
+        "keywords": "2.3.0",
+        "description": "Nacos 荣获GLCC优秀社区，同时2.3.0-BETA发布，欢迎试用",
+        "date": "2023-10-24"
+      }
+    },
+    {
       "filename": "212-and-220beta-release.md",
       "link": "/zh-cn/blog/212-and-220beta-release.html",
       "meta": {

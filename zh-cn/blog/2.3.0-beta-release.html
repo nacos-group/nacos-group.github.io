@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="aes-config" content="pid=xux-opensource&user_type=101&uid=&username=&dim10=nacos"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="2.3.0" />
+	<meta name="description" content="Nacos 荣获GLCC优秀社区，同时2.3.0-BETA发布，欢迎试用" />
+  <meta name="baidu-site-verification" content="code-wzq5sw7io3" />
+	<!-- 网页标签标题 -->
+	<title>Nacos 荣获GLCC优秀社区，同时2.3.0-BETA发布，欢迎试用</title>
+	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
+	<link rel="stylesheet" href="/build/blogDetail.css" />
+	<link rel="stylesheet" href="https://g.alicdn.com/mamba/assets/0.0.19/mse-arc-ui.min.css" />
+</head>
+<body>
+	<div id="root"><div class="blog-detail-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><span><a href="/zh-cn/index.html">首页</a></span></li><li class="menu-item menu-item-normal"><div class="nav-container"><div class="word"><a>文档</a></div><ul class="sub-nav-container" style="width:220px"><li><a href="/zh-cn/docs/v2/quickstart/quick-start.html" target="_blank">2.X（推荐）</a></li><li><a href="/zh-cn/docs/quick-start.html" target="_blank">1.X</a></li></ul> </div></li><li class="menu-item menu-item-normal"><span><a href="https://www.aliyun.com/product/aliware/mse?spm=nacos.io.topbar.0.0.0">企业版NACOS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="https://free.aliyun.com/?searchKey=nacos&amp;spm=nacos.io.topbar.0.0.0">免费试用</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST">NACOS架构与原理</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal menu-item-normal-active"><span><a href="/zh-cn/blog/index.html">博客</a></span></li><li class="menu-item menu-item-normal"><span><a href="/zh-cn/community/index.html">社区</a></span></li><li class="menu-item menu-item-normal"><span><a href="http://console.nacos.io/nacos/index.html">控制台样例</a></span></li></ul></div></div></header><section class="blog-content markdown-body"><h1>Nacos 荣获GLCC优秀社区，同时2.3.0-BETA发布，欢迎试用</h1>
+<h2>新版本发布</h2>
+<p>经过4个多月社区的大量贡献，Nacos 2.3.0版本终于进入的Beta发布阶段，在经历了2.2.X的多个安全风险修复的版本后，又一次迎来了功能性上的更新版本。</p>
+<h3>Nacos 反脆弱插件</h3>
+<p>2.2.0版本加入ALPHA版本的反脆弱插件后，社区经过多次重构和修改，提升抽象度和稳定性，终于在2.3.0版本中正式公布了Nacos的反脆弱插件，用于避免Nacos集群在大量请求和连接时导致的容量问题而引发更大规模的故障。</p>
+<p>默认反脆弱实现插件的使用以及自定义反脆弱插件的开发可参考文档<a href="/zh-cn/docs/v2/plugin/control-plugin.html">反脆弱插件</a>.</p>
+<h3>Nacos 配置变更插件</h3>
+<p>Nacos配置管理作为Nacos的核心功能，一直受到开发人员、运维人员和审计人员的关注，不少运维人员和审计人员向社区提出诉求，希望Nacos能够提供配置变更的审计、变更通知等功能；同时开发人员也希望Nacos提供一定的格式校验功能，避免修改配置时出现错误导致应用故障。</p>
+<p>由于Nacos配置管理本身对配置内容是不感知的，且各个用户公司的审计、通知系统也各不相同，因此Nacos为了能够更广阔的适配各个用户的诉求，在去年的开源之夏中制定了配置变更插件的课题，希望以插件化的形式，来满足对配置变更过程的介入。</p>
+<p>经过同学和导师长期的努力，该插件在2.3.0版本发布，用户可以开发自定义插件，在配置变更前和变更完成后，分别对接公司的审计系统和通知系统，并在变更前进行更多的校验操作，如格式校验，配置名字的规范化等。同时Nacos社区也提供了默认插件的实现，可接入webhook进行配置变更的通知以及导入配置的文件名校验等；详情可参考文档<a href="/zh-cn/docs/v2/plugin/config-change-plugin.html">配置变更插件</a></p>
+<h3>Nacos 请求参数校验</h3>
+<p>2.3.0版本之前的Nacos的参数校验逻辑分散，由各类请求的处理方法单独进行校验，难以更改维护，经常出现参数校验的遗漏，参数校验的规则也没有明确统一；这使得用户使用时经常会因为一些特殊字符导致功能不符合预期或出现漏洞，甚至导致大量推送，导致带宽打满，内存占用过多，导致应用出现故障。</p>
+<p>在2.3.0版本中，Nacos明确了参数校验规则，在服务端实现了统一的参数校验逻辑并添加了参数校验层，根据校验规则对客户端向服务端发送的请求进行校验。用户可以选择开启参数校验功能，开启后Nacos将会对客户端向服务端发送的请求中的部分参数进行参数校验，确保参数的合法性，避免由于错误使用，导致的不符合预期以及性能问题。</p>
+<p>详细情况可参考文档<a href="/zh-cn/docs/v2/guide/user/parameters-check.html">参数校验规则</a></p>
+<h3>Nacos 能力协商</h3>
+<p>随着Nacos功能越来越多，版本越来越多，客户端和服务端之间的兼容性愈发重要，如果继续保持尝试性的兼容，只会兼容能力愈发的困难。因此Nacos社区在去年开源之夏中，发布了课题，通过增加客户端和服务端之间的能力协商机制，在客户端连接到服务端时，让连接双方知道对方分别支持的功能，在支持对应功能的情况下，开启对应功能。避免通过尝试而增加通信开销。</p>
+<p>在2.3.0版本中，该能力也被集成进来，为之后Nacos3.0支持更多优化功能提供基础。</p>
+<h3>其他重要改动</h3>
+<p>除了上述改动，Nacos2.3.0版本还支持了：客户端异常的metrics、grpc长连接的SSL功能、关闭开源控制台等功能，更多细节可以查看变更列表，欢迎试用：</p>
+<pre><code class="language-markdown"><span class="hljs-section">## feature</span>
+[#5698] Support nacos control plugin.
+[#8458] Support ability negotiations between server and clients.
+[#8460] Support config change hook plugin.
+[#10117] Support metrics for nacos client request server exception.
+[#10150] Support SSL for grpc connection.
+[#10223] Support auto build instance id when client request instance id is null.
+[#10288] Support get more module state and switches in console.
+[#10734] Support validate most of request parameters.
+[#10774] Support toml format for configuration in console ui.
+[#10831] Support batch deregister instances for service.
+[#10971] Support disable console ui and support add guide information.
+
+<span class="hljs-section">## Enhancement&amp;Refactor</span>
+[#6819] Add page size selector in service details page.
+[<span class="hljs-string">#8107</span>][<span class="hljs-symbol">#9109</span>][<span class="hljs-string">#10169</span>][<span class="hljs-symbol">#10176</span>] Enhance hint when console ui session expired for default auth plugin.
+[#9085] Add the Reachability Metadata required by native-image.
+[#9821] Enhance datasource plugin to make more datasource implementation easier.
+[#9881] Enhance configuration page to supports folding when editing configuration.
+[#10067] Enhance Windows compatibility for configuration snapshot.
+[#10155] Enhance hints for grpc request when request timeout.
+[#10343] Use CMS as default GC when jdk less 9.
+[#10361] Refactor module switches to make only load specified module but not only close in console ui.
+[#10520] Validate for namespace show name when create new namespace.
+[#10521] Enhance the hints for <span class="hljs-code">`No DataSourceSet`</span> error by validate datasource after construction.
+[#10539] Enhance logs when opeation configuration failed.
+[#10730] Link to v2 document for console ui.
+[#10811] Enhance compatibility for colorful service healthy status in console ui.
+[#10891] Support setting maximum number of push retries.
+[#10930] Forward compatible old version secretKey for default auth plugin.
+[#11129] Remove the namespace information from the node list page.
+[#11231] Optimize the handleSpringBinder method in PropertiesUtil.
+
+<span class="hljs-section">## BugFix</span>
+[#10056] Fix loss revision of client for distro sync.
+[#10128] Fix wrong judgement in raft stateMachine.
+[#10149] Fix dead lock on sending connection reset request on server over limit.
+[#10271] Fix nacos-client failover switch file path.
+[#10318] Fix import configuration problem.
+[#10347] Fix only admin role user can register service into default namespace when enabled default auth plugin.
+[#10406] Fix jraft install leader snapshot error after disconnection.
+[#10427] Fix nacos client no response when handle server request with exception.
+[#10464] Fix NPE when concurrent operations for client.
+[#10470] Fix some missed i18n for console ui.
+[#10509] Fix out data connection not be disconnect problem.
+[#10548] Fix switch domain might not load snapshot after restart.
+[#10556] Fix index loss for client and service in extreme scenarios.
+[#10583] Fix some new API loss auth check.
+[#10585] Fix selectInstances and selectOneHealthyInstance methods will not subscribe service problem.
+[#10593] Fix invalid create <span class="hljs-code">`file:`</span> dir under <span class="hljs-code">`nacos.home`</span>.
+[#10598] Fix nacos-client not random get server address when using address.
+[#10606] Fix memory leak for nacos client when user create and shutdown client frequently.
+[#10657] Fix NPE when using derby datasource for cluster mode.
+[#10935] Fix startsWith judgement wrong when ignoreCase is true.
+[#11056] Fix Batch register count size wrong, when batch register sereval time.
+[#11059] Fix RPC<span class="hljs-emphasis">_CLIENT_</span>TLS_PROTOCOLS setting error.
+[#11192] Fix batchRegisterInstance not recalculate revision prblem.
+[#11197] Fix frequent do query service when hit protect empty.
+
+<span class="hljs-section">## Dependency</span>
+[#7698] Remove httpasyncclient version dependency management to avoid version conflicts.
+[#10416] Upgrade console yaml editor.
+[#10648] Optimize Guava Dependency.
+[#10893] Upgrade spring boot to 2.7.15.
+[#11199] Upgrade grpc version to 1.57.2.
+</code></pre>
+<h2>开源之夏OSPP 2023以及编程夏令营GLCC 2023</h2>
+<p>经过夏天如火如荼的努力，Nacos今年的开源之夏也接近尾声，各项目进展稳步推进，均取得了不小的进展。</p>
+<h3>开源之夏 OSPP 2023</h3>
+<p>Nacos在2023年度的<a href="https://summer-ospp.ac.cn/org/orgdetail/ab188e59-fab8-468f-bc89-bdc2bd8b5e64?lang=zh">开源之夏</a> 中，发布了9个项目，其中6个项目成功匹配同学，并基本完成了项目课题，其中不乏大量社区期待的新增功能和优化，将在后续版本中加入。</p>
+<p>入选项目列表</p>
+<ul>
+<li>客户端订阅者合并和数据选择功能</li>
+<li>为nacos-spring-boot-starter支持适配spring boot 3</li>
+<li>ConfigMap到Nacos配置中心自动同步工具</li>
+<li>客户端可观测性指标建设</li>
+<li>支持Nacos注册中心的模糊订阅能力</li>
+<li>实现其他部分xDS协议</li>
+</ul>
+<p>感谢导师和同学们的辛苦付出，也感谢主办方中科院软件所提供的优秀平台和活动。</p>
+<h3>Nacos 荣获编程夏令营 GLCC 2023优秀社区</h3>
+<p>Nacos在2023年度的<a href="https://www.gitlink.org.cn/glcc/2023/projects">编程夏令营</a> 申报了一个Nacos3.0中呼声较高的一个功能作为课题 -- 支持分布式锁。 目前已在导师和同学的共同努力下，初步完成了功能，预计会在Nacos3.0的Alpha版本中在社区公布。</p>
+<p>由于导师和同学的努力，Nacos社区荣获CCF Gitlink 颁发的开源编程夏令营的优秀社区奖，感谢主办方Gitlink为社区提供的平台和活动。</p>
+<table>
+<thead>
+<tr>
+<th><img src="https://cdn.nlark.com/yuque/0/2023/jpeg/1577777/1698197262198-f88bab75-a8f8-41f8-9675-9bfa916642c7.jpeg#averageHue=%23786456&amp;clientId=ueeb4d907-433f-4&amp;from=drop&amp;id=udede56df&amp;originHeight=3024&amp;originWidth=4032&amp;originalType=binary&amp;ratio=2&amp;rotation=0&amp;showTitle=false&amp;size=877771&amp;status=done&amp;style=none&amp;taskId=u6da77a56-e076-4a34-ae9b-c1e8afb010b&amp;title=" alt="奖杯"></th>
+<th><img src="https://cdn.nlark.com/yuque/0/2023/jpeg/1577777/1698197100242-e440717c-80ec-4825-93c1-2daca1f289c4.jpeg#averageHue=%236664b2&amp;clientId=u14301240-344a-4&amp;from=drop&amp;id=ua9e02282&amp;originHeight=854&amp;originWidth=1280&amp;originalType=binary&amp;ratio=2&amp;rotation=0&amp;showTitle=false&amp;size=204483&amp;status=done&amp;style=none&amp;taskId=u7637d2eb-a17e-431e-a637-231a61f9e96&amp;title=" alt="现场"></th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+<h2>展望</h2>
+<h3>2.X 后续计划</h3>
+<p>从2021年3月 2.0.0正式版发布至今，2.X版本已经走了接近2年时间，如今2.3.0版本发布，完成了大部分功能的插件化提炼，在之后的2.3.X版本中，会主要对当前版本的问题进行修复，并做出小范围的功能优化。同时对于2.4.0版本，会作为一个Nacos3.0的过度版本，对大量代码进行优化重构，在提升稳定性、健壮性的同时，提升易用性和可观测性，向Nacos3.0版本平稳过度。</p>
+<h3>3.0 计划</h3>
+<p>Nacos社区同时也开启了关于<a href="https://mp.weixin.qq.com/s/8UwwD_WxSJINP8Qr_1wogg">Nacos3.0</a> 的畅想和规划，Nacos将会从统一控制面、支持国产化、存储计算分离等方向进一步演进Nacos的功能和架构，欢迎社区积极参与到新版本的建设中。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2023/png/1577777/1698198629123-af9f1216-f996-4ac2-81bf-436048823d21.png" alt="image.png"></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2022/png/1577777/1660125280551-a2e881fe-d25e-4ebb-a28f-8e56683deef1.png#clientId=uf10cb19a-105c-4&amp;crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;from=url&amp;id=Z9to1&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=794&amp;originWidth=1650&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;size=185821&amp;status=done&amp;style=none&amp;taskId=u63849e10-1dae-45cb-b559-04d106ebe86&amp;title=#crop=0&amp;crop=0&amp;crop=1&amp;crop=1&amp;id=rUihF&amp;originHeight=794&amp;originWidth=1650&amp;originalType=binary&amp;ratio=1&amp;rotation=0&amp;showTitle=false&amp;status=done&amp;style=none&amp;title=" alt="image.png"></p>
+<h2>About Nacos</h2>
+<p>Nacos 致力于帮助您发现、配置和管理微服务。Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。</p>
+<p>Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 Nacos 是构建以“服务”为中心的现代应用架构 (例如微服务范式、云原生范式) 的服务基础设施。</p>
+<p>最后欢迎大家扫码加入Nacos社区群</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2023/png/1577777/1679276899363-83081d59-67c6-4501-9cf8-0d84ba7c6d7e.png#averageHue=%23c1c2c2&amp;clientId=u9dfeac18-3281-4&amp;from=paste&amp;height=551&amp;id=ubcf45e51&amp;name=image.png&amp;originHeight=1102&amp;originWidth=854&amp;originalType=binary&amp;ratio=2&amp;rotation=0&amp;showTitle=false&amp;size=155261&amp;status=done&amp;style=none&amp;taskId=ud6bea1fe-b003-441b-a810-84435d2aeff&amp;title=&amp;width=427" alt="image.png"></p>
+</section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>愿景</h3><p>Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/what-is-nacos.html" target="_self">概览</a></dd><dd><a href="/zh-cn/docs/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/contributing.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://www.aliyun.com/product/aliware/mse?spm=nacos.io.topbar.0.0.0" target="_self">云服务 MSE</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">云服务 EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">云服务 AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2022 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script src="//g.alicdn.com/alilog/mlog/aplus_v2.js" id="beacon-aplus" exparams="clog=o&aplus&sidx=aplusSidx&ckx=aplusCkx"></script>
+  <script src="//g.alicdn.com/aes/??tracker/1.0.34/index.js,tracker-plugin-pv/2.4.5/index.js,tracker-plugin-event/1.2.5/index.js,tracker-plugin-jserror/1.0.13/index.js,tracker-plugin-api/1.1.14/index.js,tracker-plugin-perf/1.1.8/index.js,tracker-plugin-eventTiming/1.0.4/index.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/blogDetail.js">
+	</script>
+	<script src="https://g.alicdn.com/mamba/assets/0.0.19/mse-arc-ui.min.js"></script>
+	<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e3a5cec56ef8619cf9d7c2abebd509e3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0YDFJ7LX7F"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-0YDFJ7LX7F');
+    </script>
+</body>
+</html>
