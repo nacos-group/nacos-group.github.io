@@ -133,6 +133,8 @@ INSERT INTO users (username, password, enabled) VALUES ('nacos', '$2a$10$EuWPZHz
 INSERT INTO roles (username, role) VALUES ('nacos', 'ROLE_ADMIN');
 ```
 
+<h3 id="1.1"></h3>
+
 ### 关闭登录功能
 
 Nacos默认控制台在`2.2.2`版本前，无论是否开启[鉴权](../user/auth.md)功能，默认控制台都会跳转到登录页，导致用户被误导认为控制台存在鉴权功能，实际没有开启鉴权，存在安全隐患。
@@ -142,6 +144,8 @@ Nacos默认控制台在`2.2.2`版本前，无论是否开启[鉴权](../user/aut
 因此从`2.2.2`版本开始，当鉴权开关`nacos.core.auth.enabled`关闭时，Nacos默认控制台将不再跳转登录页，同时添加页面提示，提示当前集群未开启鉴权功能。
 
 同时针对自定义的[鉴权插件](../../plugin/auth-plugin.md)添加新接口`com.alibaba.nacos.plugin.auth.spi.server.AuthPluginService#isLoginEnabled(默认返回false)`来对自定义插件进行登录页控制。
+
+<h3 id="1.2"></h3>
 
 ### 关闭默认控制台
 

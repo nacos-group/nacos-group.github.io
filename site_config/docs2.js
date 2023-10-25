@@ -101,10 +101,10 @@ export default {
                 title: 'Open-API',
                 link: '/en-us/docs/v2/guide/user/open-api.html',
               },
-              // {
-              //   title: 'Nacos Spring',
-              //   link: '/zh-cn/docs/nacos-spring.html',
-              // },
+              {
+                title: 'Parameter Check',
+                link: '/zh-cn/docs/v2/guide/user/parameters-check.html',
+              },
               {
                 title: 'Authentication',
                 link: '/en-us/docs/v2/guide/user/auth.html',
@@ -326,10 +326,10 @@ export default {
                 title: 'Open-API指南',
                 link: '/zh-cn/docs/v2/guide/user/open-api.html',
               },
-              // {
-              //   title: 'Nacos Spring',
-              //   link: '/zh-cn/docs/nacos-spring.html',
-              // },
+              {
+                title: '参数校验',
+                link: '/zh-cn/docs/v2/guide/user/parameters-check.html',
+              },
               {
                 title: '权限认证',
                 link: '/zh-cn/docs/v2/guide/user/auth.html',
