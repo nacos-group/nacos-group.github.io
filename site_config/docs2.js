@@ -76,6 +76,14 @@ export default {
                 title: 'Custom Environment',
                 link: '/en-us/docs/v2/plugin/custom-environment-plugin.html',
               },
+              {
+                title: 'Control',
+                link: '/en-us/docs/v2/plugin/control-plugin.html',
+              },
+              {
+                title: 'Configuration Change',
+                link: '/en-us/docs/v2/plugin/config-change-plugin.html',
+              },
             ]
           },
           {
@@ -93,10 +101,10 @@ export default {
                 title: 'Open-API',
                 link: '/en-us/docs/v2/guide/user/open-api.html',
               },
-              // {
-              //   title: 'Nacos Spring',
-              //   link: '/zh-cn/docs/nacos-spring.html',
-              // },
+              {
+                title: 'Parameter Check',
+                link: '/zh-cn/docs/v2/guide/user/parameters-check.html',
+              },
               {
                 title: 'Authentication',
                 link: '/en-us/docs/v2/guide/user/auth.html',
@@ -293,6 +301,14 @@ export default {
                 title: '环境变量',
                 link: '/zh-cn/docs/v2/plugin/custom-environment-plugin.html',
               },
+              {
+                title: '反脆弱',
+                link: '/zh-cn/docs/v2/plugin/control-plugin.html',
+              },
+              {
+                title: '配置变更',
+                link: '/zh-cn/docs/v2/plugin/config-change-plugin.html',
+              },
             ]
           },
           {
@@ -310,10 +326,10 @@ export default {
                 title: 'Open-API指南',
                 link: '/zh-cn/docs/v2/guide/user/open-api.html',
               },
-              // {
-              //   title: 'Nacos Spring',
-              //   link: '/zh-cn/docs/nacos-spring.html',
-              // },
+              {
+                title: '参数校验',
+                link: '/zh-cn/docs/v2/guide/user/parameters-check.html',
+              },
               {
                 title: '权限认证',
                 link: '/zh-cn/docs/v2/guide/user/auth.html',

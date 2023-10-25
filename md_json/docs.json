@@ -623,12 +623,30 @@
       }
     },
     {
+      "filename": "config-change-plugin.md",
+      "link": "/en-us/docs/v2/plugin/config-change-plugin.html",
+      "meta": {
+        "title": "Config Change Plugin",
+        "keywords": "Config Change,Config audit,Config format check,webhook",
+        "description": "Nacos support Config Change Plugin."
+      }
+    },
+    {
       "filename": "config-encryption-plugin.md",
       "link": "/en-us/docs/v2/plugin/config-encryption-plugin.html",
       "meta": {
         "title": "CONFIGURE ENCRYPTION",
         "keywords": "AES,ENCRYPTION,CONFIGURE ENCRYPTION",
         "description": "CONFIGURE ENCRYPTION"
+      }
+    },
+    {
+      "filename": "control-plugin.md",
+      "link": "/en-us/docs/v2/plugin/control-plugin.html",
+      "meta": {
+        "title": "control plugin",
+        "keywords": "anti-fragile,control limit,connection limit,TPS",
+        "description": "Nacos support control plugin."
       }
     },
     {
@@ -1319,6 +1337,16 @@
       }
     },
     {
+      "filename": "parameters-check.md",
+      "link": "/zh-cn/docs/v2/guide/user/parameters-check.html",
+      "meta": {
+        "title": "参数校验",
+        "keywords": "参数校验，使用规则",
+        "description": "参数校验",
+        "date": "2023-10-24"
+      }
+    },
+    {
       "filename": "sdk.md",
       "link": "/zh-cn/docs/v2/guide/user/sdk.html",
       "meta": {
@@ -1346,12 +1374,30 @@
       }
     },
     {
+      "filename": "config-change-plugin.md",
+      "link": "/zh-cn/docs/v2/plugin/config-change-plugin.html",
+      "meta": {
+        "title": "配置变更",
+        "keywords": "配置变更,配置审计,配置格式校验,webhook",
+        "description": "Nacos 支持配置变更插件，可支持配置审计、配置格式校验、及变更后webhook回调"
+      }
+    },
+    {
       "filename": "config-encryption-plugin.md",
       "link": "/zh-cn/docs/v2/plugin/config-encryption-plugin.html",
       "meta": {
         "title": "配置加密",
         "keywords": "AES,encryption,配置加密",
         "description": "配置加密"
+      }
+    },
+    {
+      "filename": "control-plugin.md",
+      "link": "/zh-cn/docs/v2/plugin/control-plugin.html",
+      "meta": {
+        "title": "反脆弱",
+        "keywords": "反脆弱,限流,连接数限制,TPS",
+        "description": "Nacos 支持反脆弱插件，避免高压下的集群容量问题。"
       }
     },
     {

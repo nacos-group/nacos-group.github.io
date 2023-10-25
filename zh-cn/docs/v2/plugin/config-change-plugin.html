@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="aes-config" content="pid=xux-opensource&user_type=101&uid=&username=&dim10=nacos"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="keywords" content="配置变更,配置审计,配置格式校验,webhook" />
+	<meta name="description" content="Nacos 支持配置变更插件，可支持配置审计、配置格式校验、及变更后webhook回调" />
+  <meta name="baidu-site-verification" content="code-wzq5sw7io3" />
+	<!-- 网页标签标题 -->
+	<title>配置变更</title>
+	<link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png"/>
+	<link rel="stylesheet" href="/build/documentation.css" />
+	<link rel="stylesheet" href="https://g.alicdn.com/mamba/assets/0.0.19/mse-arc-ui.min.css" />
+</head>
+<body>
+	<div id="root"><div class="documentation-page" data-reactroot=""><header class="header-container header-container-normal"><div class="header-body"><a href="/zh-cn/index.html"><img class="logo" src="/img/nacos_colorful.png"/></a><div class="search search-normal"><span class="icon-search"></span></div><span class="language-switch language-switch-normal">En</span><div class="header-menu"><img class="header-menu-toggle" src="/img/menu_gray.png"/><ul><li class="menu-item menu-item-normal"><span><a href="/zh-cn/index.html">首页</a></span></li><li class="menu-item menu-item-normal menu-item-normal-active"><div class="nav-container"><div class="word"><a>文档</a></div><ul class="sub-nav-container" style="width:220px"><li><a href="/zh-cn/docs/v2/quickstart/quick-start.html" target="_blank">2.X（推荐）</a></li><li><a href="/zh-cn/docs/quick-start.html" target="_blank">1.X</a></li></ul> </div></li><li class="menu-item menu-item-normal"><span><a href="https://www.aliyun.com/product/aliware/mse?spm=nacos.io.topbar.0.0.0">企业版NACOS</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="https://free.aliyun.com/?searchKey=nacos&amp;spm=nacos.io.topbar.0.0.0">免费试用</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST">NACOS架构与原理</a><img class="menu-img" src="https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png"/></span></li><li class="menu-item menu-item-normal"><span><a href="/zh-cn/blog/index.html">博客</a></span></li><li class="menu-item menu-item-normal"><span><a href="/zh-cn/community/index.html">社区</a></span></li><li class="menu-item menu-item-normal"><span><a href="http://console.nacos.io/nacos/index.html">控制台样例</a></span></li></ul></div></div></header><div class="bar"><div class="bar-body"><img src="/img/docs.png" class="front-img"/><div class="bar-title"><span>Nacos 文档</span><div class="bone bone-light"></div></div><img src="/img/docs.png" class="back-img"/></div></div><section class="content-section"><div class="content-body"><div class="sidemenu"><div class="sidemenu-toggle"><img src="https://img.alicdn.com/tfs/TB1E6apXHGYBuNjy0FoXXciBFXa-200-200.png"/></div><ul><li class="menu-item menu-item-level-1"><span>Nacos </span><ul><li style="height:144px;overflow:hidden" class="menu-item menu-item-level-2"><span>Nacos是什么?<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/what-is-nacos.html" target="_self">Nacos简介</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/concepts.html" target="_self">概念</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/architecture.html" target="_self">架构</a></li></ul></li><li style="height:324px;overflow:hidden" class="menu-item menu-item-level-2"><span>快速开始<img style="transform:rotate(0deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start.html" target="_self">Nacos</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-spring-boot.html" target="_self">Nacos Spring Boot</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-spring-cloud.html" target="_self">Nacos Spring Cloud</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/quick-start-docker.html" target="_self">Nacos Docker</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/use-nacos-with-dubbo.html" target="_self">Nacos Dubbo</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/use-nacos-with-kubernetes.html" target="_self">Nacos k8s</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-sync.html" target="_self">Nacos Sync</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>用户指南<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/sdk.html" target="_self">Java的SDK</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/other-language.html" target="_self">其他语言的SDK</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/open-api.html" target="_self">Open-API指南</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-spring.html" target="_self">Nacos Spring</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/system-configurations.html" target="_self">Nacos系统参数介绍</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/auth.html" target="_self">权限认证</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/faq.html" target="_self">FAQ</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>运维指南<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/deployment.html" target="_self">部署手册</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/cluster-mode-quick-start.html" target="_self">集群部署说明</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/management-api.html" target="_self">运维API</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/console-guide.html" target="_self">控制台手册</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/monitor-guide.html" target="_self">监控手册</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-config-benchmark.html" target="_self">Nacos配置模块压测报告</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-naming-benchmark.html" target="_self">Nacos服务发现模块压测报告</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-sync-use.html" target="_self">其他环境迁移到Nacos</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>开源共建<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/contributing.html" target="_self">贡献源码</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/contributing-flow.html" target="_self">贡献流程</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/pull-request.html" target="_self">pull request模板</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/how-to-reporting-bugs.html" target="_self">如何提交问题报告</a></li></ul></li><li style="height:36px;overflow:hidden" class="menu-item menu-item-level-2"><span>社区<img style="transform:rotate(-90deg)" class="menu-toggle" src="/img/arrow_down.png"/></span><ul><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/community.html" target="_self">社区</a></li><li class="menu-item menu-item-level-3"><a href="/zh-cn/docs/nacos-dev.html" target="_self">开发团队</a></li></ul></li></ul></li></ul></div><div class="doc-content markdown-body"><h1>配置变更插件</h1>
+<p>社区中一直以来都希望Nacos配置中心能在配置发生变更时，通知一些特定系统，用于发送记录、警告等审计功能。在2.3.0版本前，只能通过模拟Nacos客户端订阅配置的方式，对核心配置的变更操作进行订阅，在收到变更通知后，进行发送记录、警告等功能的执行。</p>
+<p>这种实现方式有几个比较大的问题，第一是监听的配置需要逐个添加，难以对所有配置变更进行获取；第二是只能在配置变更后执行功能逻辑，无法做到前置的操作，如格式校验，白名单校验等。</p>
+<p>因此Nacos在2.3.0版本后，支持通过<a href="https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html">SPI</a>注入配置变更插件，允许用户通过自定义插件的方式，对配置变更前，和变更完成后分别执行一些自定义逻辑，如格式校验，白名单校验，webhook等。</p>
+<h2>配置变更插件中的概念</h2>
+<p>Nacos的配置变更插件，参考了面向切面编程AOP的设计思想，将配置的变更操作（如新增，更新，删除）作为<code>切点（PointCut)</code>，并在这些切点<code>前(Before)</code>和<code>后(After)</code>织入插件。</p>
+<h3>配置变更切点(ConfigChangePointCutTypes)</h3>
+<p>Nacos根据配置变更的行为和来源，将配置变更操作在<code>com.alibaba.nacos.plugin.config.constants.ConfigChangePointCutTypes</code>中定位为了数个<code>配置变更切点(ConfigChangePointCutTypes)</code>，具体内容如下：</p>
+<table>
+<thead>
+<tr>
+<th>切点名称</th>
+<th>描述</th>
+<th>起始版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PUBLISH_BY_HTTP</td>
+<td>配置通过HTTP接口进行发布，包含了创建配置及修改配置</td>
+<td>2.3.0</td>
+</tr>
+<tr>
+<td>PUBLISH_BY_RPC</td>
+<td>配置通过GRPC接口进行发布，包含了创建配置及修改配置</td>
+<td>2.3.0</td>
+</tr>
+<tr>
+<td>REMOVE_BY_HTTP</td>
+<td>配置通过HTTP接口进行删除</td>
+<td>2.3.0</td>
+</tr>
+<tr>
+<td>REMOVE_BY_RPC</td>
+<td>配置通过GRPC接口进行删除</td>
+<td>2.3.0</td>
+</tr>
+<tr>
+<td>IMPORT_BY_HTTP</td>
+<td>配置通过HTTP接口进行导入</td>
+<td>2.3.0</td>
+</tr>
+<tr>
+<td>REMOVE_BATCH_HTTP</td>
+<td>配置通过HTTP接口进行批量删除</td>
+<td>2.3.0</td>
+</tr>
+</tbody>
+</table>
+<h3>配置变更织入类型(ConfigChangeExecuteTypes)</h3>
+<p>Nacos的配置变更插件需要在<code>配置变更切点</code>之前或之后进行执行，即需要选择<code>配置变更织入类型(ConfigChangeExecuteTypes)</code>，定义在<code>com.alibaba.nacos.plugin.config.constants.ConfigChangeExecuteTypes</code>中，具体内容如下：</p>
+<table>
+<thead>
+<tr>
+<th>织入类型</th>
+<th>描述</th>
+<th>起始版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EXECUTE_BEFORE_TYPE</td>
+<td>插件实现在<code>配置变更切点</code>之<strong>前</strong>执行</td>
+<td>2.3.0</td>
+</tr>
+<tr>
+<td>EXECUTE_AFTER_TYPE</td>
+<td>插件实现在<code>配置变更切点</code>之<strong>后</strong>执行</td>
+<td>2.3.0</td>
+</tr>
+</tbody>
+</table>
+<h2>插件开发</h2>
+<p>开发Nacos服务端配置变更插件，首先需要依赖配置变更插件的的相关API</p>
+<pre><code class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.nacos<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>nacos-config-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${project.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+</code></pre>
+<p><code>${project.version}</code> 为您开发插件所对应的Nacos版本，<code>2.3.0</code>及以上。</p>
+<p>随后实现<code>com.alibaba.nacos.plugin.config.spi.ConfigChangePluginService</code>接口，该接口需要实现的方法如下：</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>入参内容</th>
+<th>返回内容</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>getServiceType</td>
+<td>void</td>
+<td>String</td>
+<td>插件的名称，用于区分不同类型的插件实现</td>
+</tr>
+<tr>
+<td>getOrder</td>
+<td>void</td>
+<td>int</td>
+<td>插件的执行顺序，配置变更插件采用链式插件设计，多个插件实现时会按照顺序执行，getOrder越小，顺序越靠前</td>
+</tr>
+<tr>
+<td>executeType</td>
+<td>void</td>
+<td>ConfigChangeExecuteTypes</td>
+<td>插件实现的<code>配置变更织入类型</code></td>
+</tr>
+<tr>
+<td>pointcutMethodNames</td>
+<td>void</td>
+<td>ConfigChangePointCutTypes[]</td>
+<td>插件实现织入的<code>配置变更切点</code></td>
+</tr>
+<tr>
+<td>execute</td>
+<td>ConfigChangeRequest,ConfigChangeResponse</td>
+<td>void</td>
+<td>实际插件执行的逻辑</td>
+</tr>
+</tbody>
+</table>
+<p>其中<code>ConfigChangeRequest</code>和<code>ConfigChangeResponse</code>分别为执行逻辑时传入的内容及执行结果，</p>
+<p><code>ConfigChangeRequest</code>的具体内容如下:</p>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>字段类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>requestType</td>
+<td>ConfigChangePointCutTypes</td>
+<td>本次配置变更的切点类型</td>
+</tr>
+<tr>
+<td>requestArgs</td>
+<td>HashMap&lt;String, Object&gt;</td>
+<td>本次配置变更的实际参数，主要包含有<code>namespace</code>,<code>group</code>,<code>dataId</code>,<code>content</code>等内容，不同的切点类型参数存在不同</td>
+</tr>
+</tbody>
+</table>
+<p><code>ConfigChangeResponse</code>的具体内容如下:</p>
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>字段类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>responseType</td>
+<td>ConfigChangePointCutTypes</td>
+<td>本次配置变更的切点类型</td>
+</tr>
+<tr>
+<td>isSuccess</td>
+<td>boolean</td>
+<td>执行是否成功，当返回值为<code>false</code>时，将会拦截本次配置变更，并直接返回失败的结果</td>
+</tr>
+<tr>
+<td>retVal</td>
+<td>Object</td>
+<td>返回内容，预留字段，暂未启用</td>
+</tr>
+<tr>
+<td>msg</td>
+<td>String</td>
+<td>执行结果信息，在<code>isSuccess</code>为<code>false</code>时获取，用于返回给客户端的信息</td>
+</tr>
+<tr>
+<td>args</td>
+<td>Object[]</td>
+<td>配置变更操作的执行参数，在<code>EXECUTE_BEFORE_TYPE</code>的插件类型时生效，可用于修改实际执行的配置变更时的内容，如将content中的某些内容修改为其他值</td>
+</tr>
+</tbody>
+</table>
+<h3>加载插件</h3>
+<p>插件开发完成后，需要打包成jar/zip，放置到nacos服务端的classpath中，如果您不知道如何修改classpath，请直接放置到<code>${nacos-server.path}/plugins</code>下</p>
+<p>放置后，需要修改<code>${nacos-server.path}/conf/application.properties</code>中的以下配置</p>
+<pre><code class="language-properties"><span class="hljs-comment">### 所启用的Nacos的配置变更插件的名称，与com.alibaba.nacos.plugin.config.spi.ConfigChangePluginService 的getServiceType 返回值对应</span>
+<span class="hljs-meta">nacos.core.config.plugin.${configChangePluginName}.enabled</span>=<span class="hljs-string">true</span>
+</code></pre>
+<p>随后重启nacos集群，启动完成后，可在<code>${nacos-server.path}/logs/nacos.log</code>日志中看到如下日志。</p>
+<pre><code class="language-text">[ConfigChangePluginManager] Load ${className}(${classFullName}) ConfigChangeServiceName(${configChangePluginName}) successfully.
+</code></pre>
+<h3>插件自定义参数传递</h3>
+<p>部分插件可能希望通过配置文件设置一些参数，自定义插件可以通过修改<code>${nacos-server.path}/conf/application.properties</code>中的以下配置完成：</p>
+<pre><code class="language-properties"><span class="hljs-comment">### 所启用的Nacos的配置变更插件的名称，与com.alibaba.nacos.plugin.config.spi.ConfigChangePluginService 的getServiceType 返回值对应</span>
+<span class="hljs-meta">nacos.core.config.plugin.${configChangePluginName}.${propertyKey}</span>=<span class="hljs-string">${propertyValue}</span>
+</code></pre>
+<p>之后能在<code>ConfigChangeRequest</code>中，通过下述方法获取该参数：</p>
+<pre><code class="language-Java"><span class="hljs-keyword">final</span> Properties properties = (Properties) configChangeRequest.getArg(ConfigChangeConstants.PLUGIN_PROPERTIES);
+<span class="hljs-keyword">final</span> String ${propertyKey} = properties.getProperty(<span class="hljs-string">"${propertyKey}"</span>);
+</code></pre>
+<h2>插件DEMO实现</h2>
+<p>在<a href="https://github.com/nacos-group/nacos-plugin">nacos-group/nacos-plugin</a>中，有一个demo的配置变更插件的实现，该demo插件实现了对配置内容格式的校验、配置导入名称白名单的校验、以及变更后回调webhook。打包成jar/zip，放置到nacos服务端的classpath中，在<code>${nacos-server.path}/conf/application.properties</code>中的加入以下配置：</p>
+<pre><code class="language-properties"><span class="hljs-comment"># webhook</span>
+<span class="hljs-comment">#nacos.core.config.plugin.webhook.enabled=true</span>
+<span class="hljs-comment"># It is recommended to use EB https://help.aliyun.com/document_detail/413974.html</span>
+<span class="hljs-comment">#nacos.core.config.plugin.webhook.url=http://${webhookIp}:${webhookPort}/${webhookUri}?token=***</span>
+<span class="hljs-comment"># The content push max capacity ,byte</span>
+<span class="hljs-comment">#nacos.core.config.plugin.webhook.contentMaxCapacity=102400</span>
+<span class="hljs-comment">
+# whitelist</span>
+<span class="hljs-comment">#nacos.core.config.plugin.whitelist.enabled=true</span>
+<span class="hljs-comment"># The import file suffixs</span>
+<span class="hljs-comment">#nacos.core.config.plugin.whitelist.suffixs=xml,text,properties,yaml,html</span>
+<span class="hljs-comment">
+# fileformatcheck,which validate the import file of type and content</span>
+<span class="hljs-comment">#nacos.core.config.plugin.fileformatcheck.enabled=true</span>
+</code></pre>
+</div></div></section><footer class="footer-container"><div class="footer-body"><img src="/img/nacos_gray.png"/><div class="cols-container"><div class="col col-12"><h3>愿景</h3><p>Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。</p></div><div class="col col-6"><dl><dt>文档</dt><dd><a href="/zh-cn/docs/what-is-nacos.html" target="_self">概览</a></dd><dd><a href="/zh-cn/docs/quick-start.html" target="_self">快速开始</a></dd><dd><a href="/zh-cn/docs/contributing.html" target="_self">开发者指南</a></dd></dl></div><div class="col col-6"><dl><dt>资源</dt><dd><a href="/zh-cn/community/index.html" target="_self">社区</a></dd><dd><a href="https://www.aliyun.com/product/aliware/mse?spm=nacos.io.topbar.0.0.0" target="_self">云服务 MSE</a></dd><dd><a href="https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219" target="_self">云服务 EDAS</a></dd><dd><a href="https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225" target="_self">云服务 AHAS</a></dd></dl></div></div><div class="copyright"><span>@ 2022 The Nacos Authors | An Alibaba Middleware (Aliware) Project</span></div></div></footer></div></div>
+	<script src="https://f.alicdn.com/react/15.4.1/react-with-addons.min.js"></script>
+	<script src="https://f.alicdn.com/react/15.4.1/react-dom.min.js"></script>
+	<script src="//g.alicdn.com/alilog/mlog/aplus_v2.js" id="beacon-aplus" exparams="clog=o&aplus&sidx=aplusSidx&ckx=aplusCkx"></script>
+  <script src="//g.alicdn.com/aes/??tracker/1.0.34/index.js,tracker-plugin-pv/2.4.5/index.js,tracker-plugin-event/1.2.5/index.js,tracker-plugin-jserror/1.0.13/index.js,tracker-plugin-api/1.1.14/index.js,tracker-plugin-perf/1.1.8/index.js,tracker-plugin-eventTiming/1.0.4/index.js"></script>
+	<script>
+		window.rootPath = '';
+  </script>
+	<script src="/build/documentation.js">
+	</script>
+	<script src="https://g.alicdn.com/mamba/assets/0.0.19/mse-arc-ui.min.js"></script>
+	<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e3a5cec56ef8619cf9d7c2abebd509e3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0YDFJ7LX7F"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-0YDFJ7LX7F');
+    </script>
+</body>
+</html>

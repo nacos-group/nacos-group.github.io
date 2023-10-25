@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: 'Nacos 荣获GLCC优秀社区，同时2.3.0-BETA发布，欢迎试用',
+            author: '@杨翊',
+            dateStr: 'Oct 24, 2023',
+            desc: 'Nacos 2.3.0-BETA发布，欢迎试用。',
+            link: '/zh-cn/blog/2.3.0-beta-release.html',
+        },
+        {
             title: 'Nacos开源之夏2023，贡献社区赢取12000奖金',
             author: '@Nacos开源之夏',
             dateStr: 'May 11, 2023',
@@ -349,6 +356,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: 'Nacos 荣获GLCC优秀社区，同时2.3.0-BETA发布，欢迎试用',
+            author: '@杨翊',
+            dateStr: 'Oct 24, 2023',
+            desc: 'Nacos 2.3.0-BETA发布，欢迎试用。',
+            link: '/zh-cn/blog/2.3.0-beta-release.html',
+        },
         {
             title: 'Nacos开源之夏2023，贡献社区赢取12000奖金',
             author: '@Nacos开源之夏',
