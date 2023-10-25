@@ -55,6 +55,13 @@ Nacos 2.X 版本兼容 Nacos1.X 版本的OpenAPI, 请参考文档[Nacos1.X OpenA
     - [查询集群节点列表](#4.2)
     - [查询当前节点健康状态](#4.3)
     - [切换寻址模式](#4.4)
+- 连接负载管理
+    - [查询当前节点客户端连接列表](#5.1)
+    - [重新加载当前节点客户端连接数量](#5.2)
+    - [智能平衡集群节点的连接数](#5.3)
+    - [根据SDK连接ID重新加载指定客户端连接](#5.4)
+    - [获取集群的连接负载信息](#5.5)
+
 
 ## 文档规定
 
@@ -2523,4 +2530,260 @@ API接口返回体中的错误码及对应提示信息汇总见下表
     }
     ```
 
+## 连接负载管理
+
+<h2 id="5.1">查询当前节点客户端连接列表</h2>
+
+### 接口描述
+
+查询当前`Nacos`节点上的客户端连接列表
+
+### 请求方式
+
+`GET`
+
+### 请求URL
+
+`/nacos/v2/core/loader/current`
+
+### 返回数据
+
+| 参数名            | 参数类型      | 描述说明 |
+|----------------|-----------|------|
+| `traced`       | `Boolean` | 是否监控 |
+| `abilityTable` | `Map`     | 能力表  |
+| `metaInfo`     | `Object`  | 元信息  |
+| `connected`    | `Integer` | 是否连接 |
+| `labels`       | `Map`     | 标签   |
+
+### 示例
+
+* 请求示例
+
+    ```shell
+    curl -X GET 'http://localhost:8848/nacos/v2/core/loader/current'
+    ```
+
+* 返回示例
+
+    ```json
+    {
+        "1697424543845_127.0.0.1_11547": {
+            "traced": false,
+            "abilityTable": null,
+            "metaInfo": {
+                "connectType": "GRPC",
+                "clientIp": "192.168.49.1",
+                "localPort": 9848,
+                "version": "Nacos-Java-Client:v2.1.0",
+                "connectionId": "1697424543845_127.0.0.1_11547",
+                "createTime": "2023-10-16T10:49:03.907+08:00",
+                "lastActiveTime": 1697424869827,
+                "appName": "unknown",
+                "tenant": "",
+                "labels": {
+                "source": "sdk",
+                "taskId": "0",
+                "module": "config",
+                "AppName": "unknown"
+            },
+            "tag": null,
+            "sdkSource": true,
+            "clusterSource": false
+            },
+            "connected": true,
+            "labels": {
+                "source": "sdk",
+                "taskId": "0",
+                "module": "config",
+                "AppName": "unknown"
+            }
+        }
+    }
+    ```
+
+<h2 id="5.2">重新加载当前节点客户端连接数量</h2>
+
+### 接口描述
+
+重新加载当前`Nacos`节点的客户端连接数量
+
+### 请求方式
+
+`GET`
+
+### 请求URL
+
+`/nacos/v2/core/loader/current/reloadCurrent`
+
+### 请求参数
+
+| 参数名               | 参数类型      | 是否必填  | 描述说明  |
+|-------------------|-----------|-------|-------|
+| `count`           | `Integer` | **是** | 连接数量  |
+| `redirectAddress` | `String`  | 否     | 重定向地址 |
+
+### 返回数据
+
+| 参数名    | 参数类型     | 描述     |
+|--------|----------|--------|
+| `data` | `String` | 是否执行成功 |
+
+### 示例
+
+* 请求示例
+
+    ```shell
+    curl -X GET 'http://localhost:8848/nacos/v2/core/loader/reloadCurrent?count=1&redirectAddress=127.0.0.1:8848'
+    ```
+    
+* 返回示例
+
+    ```text
+    success
+    ```
+<h2 id="5.3">智能平衡集群节点的连接数</h2>
+
+### 接口描述
+
+智能平衡`Nacos`集群中所有节点的客户端连接数
+
+### 请求方式
+
+`GET`
+
+### 请求URL
+
+`/nacos/v2/core/loader/current/smartReloadCluster`
+
+### 请求参数
+
+| 参数名            | 参数类型       | 是否必填  | 描述说明 |
+|----------------|------------|-------|--|
+| `loaderFactor` | `Float`   | 否 | 加载因子，默认加载因子0.1，每个节点的SDK数量（1-loaderFactor）* avg~（1+loaderFactor）* avg |
+| `force`        | `String`   | 否     | 是否强制 |
+
+### 返回数据
+
+| 参数名    | 参数类型     | 描述     |
+|--------|----------|--------|
+| `data` | `String` | 是否执行成功 |
+
+### 示例
+
+* 请求示例
+
+    ```shell
+    curl -X GET 'http://localhost:8848/nacos/v2/core/loader/smartReloadCluster?loaderFactor=1'
+    ```
+
+* 返回示例
+
+    ```text
+    Ok
+    ```
+<h2 id="5.4">重置指定客户端的连接</h2>
+
+### 接口描述
+
+根据 `SDK` 连接 `ID` 发送连接重置请求
+
+### 请求方式
+
+`GET`
+
+### 请求URL
+
+`/nacos/v2/core/loader/current/reloadClient`
+
+### 请求参数
+
+| 参数名               | 参数类型     | 是否必填  | 描述说明 |
+|-------------------|----------|-------|------|
+| `connectionId`    | `String` | **是** | 连接ID |
+| `redirectAddress` | `String` | 否     | 重置地址 |
+
+### 返回数据
+
+| 参数名    | 参数类型     | 描述     |
+|--------|----------|--------|
+| `data` | `String` | 是否执行成功 |
+
+### 示例
+
+* 请求示例
+
+    ```shell
+    curl -X GET 'http://localhost:8848/nacos/v2/core/loader/reloadClient?connectionId=1&redirectAddress=127.0.0.1:8848'
+    ```
+
+* 返回示例
+
+    ```text
+    success
+    ```
+<h2 id="5.5">获取集群的`SDK`指标</h2>
+
+### 接口描述
+
+获取`Nacos`集群中所有的SDK指标
+
+### 请求方式
+
+`GET`
+
+### 请求URL
+
+`/nacos/v2/core/loader/current/cluster`
+
+### 返回数据
+
+| 参数名              | 参数类型                 | 描述                                                     |
+|------------------|----------------------|--------------------------------------------------------|
+| `total`          | `Integer`            | 当前集群节点数                                                |
+| `min`            | `Integer`            | 最小负载值                                                  |
+| `avg`            | `Integer`            | 平均负载值                                                  |
+| `max`            | `Integer`            | 最大负载值                                                  |
+| `memberCount`    | `Integer`            | 当前节点的成员数                                               |
+| `metricsCount`   | `Integer`            | 负载信息数量                                                 |
+| `threshold`      | `Float`              | 负载阈值。阈值的计算公式为：平均负载值 * 1.1                              |
+| `detail`         | `List`               | 包含每个节点的详细负载信息                                          |
+| `detail.address` | `String`             | 节点地址                                                   |
+| `detail.metric`  | `Map<String,String>` | 指标信息                                                   |
+| `completed`      | `Boolean`            | 表示是否已完成负载信息的收集，如果为 `true`，则表示所有节点的负载信息均已收集，否则为 `false` |
+
+
+### 示例
+
+* 请求示例
+
+    ```shell
+    curl -X GET 'http://localhost:8848/nacos/v2/core/loader/cluster'
+    ```
+
+* 返回示例
+
+    ```json
+    {
+        "total": 1,
+        "min": 1,
+        "avg": 1,
+        "max": 1,
+        "memberCount": 1,
+        "metricsCount": 1,
+        "threshold": 1.1,
+        "detail": [
+            {
+                "address": "192.168.49.1:8848",
+                "metric": {
+                    "load": "-1.0",
+                    "sdkConCount": "1",
+                    "cpu": "0.1487509",
+                    "conCount": "1"
+                }
+            }
+        ],
+        "completed": true
+    }
+    ```
 
