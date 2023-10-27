@@ -42,7 +42,7 @@ const config = {
     }
   },
   scripts: [
-    { src: '//g.alicdn.com/mamba/assets/0.0.19/mse-arc-ui.min.js' },
+    { src: '//dev.g.alicdn.com/mamba/mse-arc-ui/0.0.4/umd/mse-arc-ui.min.js' },
     {
       src: '//g.alicdn.com/alilog/mlog/aplus_v2.js',
       id: 'beacon-aplus',
@@ -58,12 +58,13 @@ const config = {
   ],
   stylesheets: [
     {
-      href: '//g.alicdn.com/mamba/assets/0.0.19/mse-arc-ui.min.css',
+      href: '//dev.g.alicdn.com/mamba/mse-arc-ui/0.0.4/umd/mse-arc-ui.min.css',
     },
   ],
   plugins: [
-      'docusaurus-plugin-sass',
-      './postcss-tailwind-loader.js'
+    'docusaurus-plugin-sass',
+    './postcss-tailwind-loader.js'
+
   ],
   presets: [
     [
@@ -109,6 +110,11 @@ const config = {
             activeBaseRegex: '^/$',
             position: 'right',
           },
+          // {
+          //   label: 'Blog',
+          //   to: '/blog',
+          //   activeBaseRegex: '^/blog/',
+          // },
           {
             type: "docsVersionDropdown",
             label: "Docs",
@@ -155,7 +161,7 @@ const config = {
           {
             label: 'NACOS CLOUD',
             position: 'right',
-            to:'/cloud'
+            to: '/cloud'
           },
           {
             label: 'E-BOOK-NACOS',
@@ -202,6 +208,16 @@ const config = {
         indexName: 'nacos',
       },
     }),
+
+  headTags: [
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'referrer',
+        content: 'no-referrer',
+      }
+    }
+  ]
 };
 
 module.exports = config;
