@@ -10,14 +10,17 @@ const config = {
   favicon: 'https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png',
 
   // Set the production url of your site here
-  url: 'https://nacos.io',
+  // url: 'https://nacos.io',
+  url: 'https://github.com/qq635840580/nacos-group.github.io.git',
+  organizationName: 'qq635840580',
+  deploymentBranch: 'develop-new-framework',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'alibaba', // Usually your GitHub org/user name.
+  // organizationName: 'alibaba', // Usually your GitHub org/user name.
   projectName: 'nacos', // Usually your repo name.
 
   onBrokenLinks: 'throw',
