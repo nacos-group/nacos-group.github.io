@@ -63,7 +63,6 @@ export default function Home(): React.Element {
     el.current = document.getElementsByClassName("navbar")[0] as HTMLDivElement;
     el.current.style.position = "fixed";
     el.current.style.width = "100%";
-
     setEleBg(el.current, true);
     const onScroll = () => {
       const scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;

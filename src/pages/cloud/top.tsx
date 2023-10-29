@@ -19,7 +19,7 @@ const topData = {
       unit: "",
       desc: "免费测试和体验",
       linkName: "点击试用",
-      link: "https://free.aliyun.com/?searchKey=nacos&spm=5176.28055625.J_5831864660.9.387b154aI04KmX",
+      link: "https://free.aliyun.com/?searchKey=nacos&spm=nacos.cloud.topbar.0.0.0",
       feature: ["未购买商业版的用户可领取免费试用", "开发版1C2G，1个月"],
     },
     {
@@ -28,7 +28,7 @@ const topData = {
       unit: "/月起",
       desc: "用于开发环境",
       linkName: "点击订阅",
-      link: "https://www.aliyun.com/product/aliware/mse",
+      link: "https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0",
       feature: ["月包6折，年包4折，续费不涨价", "1C2G，1个月"],
     },
     {
@@ -37,7 +37,7 @@ const topData = {
       unit: "/小时",
       desc: "流量波动大、中小流量等场景，成本更低",
       linkName: "点击订阅",
-      link: "https://www.aliyun.com/product/aliware/mse",
+      link: "https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0",
       feature: ["按连接数收费", "<=10个连接数"],
     },
     {
@@ -46,7 +46,7 @@ const topData = {
       unit: "/月起",
       desc: "3节点配置，可用性高",
       linkName: "点击订阅",
-      link: "https://www.aliyun.com/product/aliware/mse",
+      link: "https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0",
       feature: ["按实例子规格收费", "1C2G，1个月"],
     },
   ],
@@ -58,7 +58,7 @@ const Top = ({ language }: { language?: string }) => {
       {() => (
         <section className="bg-gradient-to-b from-white to-blue-400">
           <div className="mb-8">
-            <p className="pt-16 pb-16 text-center text-4xl text-[#4190FF] font-semibold">{topData.title}</p>
+            <p className="pt-16 pb-16 text-center text-5xl text-[#4190FF] font-semibold">{topData.title}</p>
             {/* <p className="text-center text-[#353535] font-normal leading-6 mt-14">{topData.desc}</p> */}
           </div>
           <div className="flex justify-center flex-wrap text-center0 pb-8">
@@ -76,8 +76,14 @@ const Top = ({ language }: { language?: string }) => {
                   </div>
                   <div className="mt-[24px]">
                     <Button
-                      customStyle={{ width: "100%", height: "40px", lineHeight: "40px" }}
-                      type="secondary"
+                      customStyle={{
+                        width: "100%",
+                        height: "40px",
+                        lineHeight: "40px",
+                        // backgroundColor: !item?.unit ? "#267DF7" : "#fff",
+                        // color: !item?.unit ? "#fff" : "#267DF7",
+                      }}
+                      type={!item?.unit ? "free" : "secondary"}
                       link={item?.link}
                       target="_blank"
                     >

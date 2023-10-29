@@ -54,12 +54,12 @@ const topData = {
       description:
         "我们通过 MSE 云原生网关构建了零信任架构，无需重配 Nginx Ingress 规则即可平滑迁移，性能提升 90%，响应时间下降 50% ，并大幅提升业务入口的稳定及安全性，高效支撑每日 1 亿+粉丝交互， 4 万+线下门店、每月 3000 万+笔的移动支付需求。",
     },
-    {
-      title: "星火保",
-      imgUrl: "https://img.alicdn.com/imgextra/i4/O1CN01tis0HR1xz0NxdjpaH_!!6000000006513-2-tps-160-130.png",
-      description:
-        "在技术方向上，我们倾向云原生的技术架构演进方向，将基于 ECS 自建的 Zookeeper 集群替换为了 MSE-Nacos，实现微服务之间的服务发现和注册中心，尽量降低团队对基础设施运维的负担。",
-    },
+    // {
+    //   title: "星火保",
+    //   imgUrl: "https://img.alicdn.com/imgextra/i4/O1CN01tis0HR1xz0NxdjpaH_!!6000000006513-2-tps-160-130.png",
+    //   description:
+    //     "在技术方向上，我们倾向云原生的技术架构演进方向，将基于 ECS 自建的 Zookeeper 集群替换为了 MSE-Nacos，实现微服务之间的服务发现和注册中心，尽量降低团队对基础设施运维的负担。",
+    // },
     {
       title: "致景科技",
       imgUrl: "https://img.alicdn.com/imgextra/i1/O1CN01CofhSr1sqh6P9CuXl_!!6000000005818-2-tps-544-180.png",

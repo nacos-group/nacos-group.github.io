@@ -10,19 +10,19 @@ const config = {
   favicon: 'https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png',
 
   // Set the production url of your site here
-  url: 'https://nacos-group.github.io',
-  // url: 'https://qq635840580.github.io/nacos-group.github.io/',
-  organizationName: 'qq635840580',
-  deploymentBranch: 'develop-new-framework',
-  projectName: 'nacos-group.github.io',
+  url: 'https://nacos.io',
+  // url: 'https://nacos-group.github.io',
+  // organizationName: 'qq635840580',
+  // deploymentBranch: 'develop-new-framework',
+  // projectName: 'nacos-group.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  // organizationName: 'alibaba', // Usually your GitHub org/user name.
-  // projectName: 'nacos', // Usually your repo name.
+  organizationName: 'alibaba', // Usually your GitHub org/user name.
+  projectName: 'nacos', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -156,12 +156,12 @@ const config = {
           //     },
           //   ],
           // },
-          {
-            label: 'NACOS IN CLOUD',
-            href: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
-            position: 'right',
-            target: '_blank',
-          },
+          // {
+          //   label: 'NACOS IN CLOUD',
+          //   href: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
+          //   position: 'right',
+          //   target: '_blank',
+          // },
           {
             label: 'NACOS CLOUD',
             position: 'right',
