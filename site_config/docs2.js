@@ -335,6 +335,14 @@ export default {
                 link: '/zh-cn/docs/v2/guide/user/auth.html',
               },
               {
+                title: '可观测性能力使用文档',
+                link: '/zh-cn/docs/v2/guide/user/observability-guide.html',
+              },
+              {
+                title: '可观测性指标文档',
+                link: '/zh-cn/docs/v2/guide/user/meter.html',
+              },
+              {
                 title: 'FAQ',
                 link: '/zh-cn/docs/v2/guide/user/faq.html',
               },
