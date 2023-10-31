@@ -48,15 +48,7 @@ const config = {
   scripts: [
     { src: '//dev.g.alicdn.com/mamba/mse-arc-ui/0.0.4/umd/mse-arc-ui.min.js' },
     {
-      src: '//g.alicdn.com/alilog/mlog/aplus_v2.js',
-      id: 'beacon-aplus',
-      exparams: 'clog=o&aplus&sidx=aplusSidx&ckx=aplusCkx',
-    },
-    {
-      src: '//g.alicdn.com/aes/??tracker/1.0.34/index.js,tracker-plugin-pv/2.4.5/index.js,tracker-plugin-event/1.2.5/index.js,tracker-plugin-jserror/1.0.13/index.js,tracker-plugin-api/1.1.14/index.js,tracker-plugin-perf/1.1.8/index.js,tracker-plugin-eventTiming/1.0.4/index.js',
-    },
-    {
-      src: 'https://www.googletagmanager.com/gtag/js?id=G-YHS75WKFBR',
+      src: 'https://www.googletagmanager.com/gtag/js?id=G-0YDFJ7LX7F',
       async: true,
     },
   ],
@@ -65,10 +57,45 @@ const config = {
       href: '//dev.g.alicdn.com/mamba/mse-arc-ui/0.0.4/umd/mse-arc-ui.min.css',
     },
   ],
-  plugins: [
-    'docusaurus-plugin-sass',
-    './postcss-tailwind-loader.js'
-
+  plugins: ['docusaurus-plugin-sass',
+  './postcss-tailwind-loader.js',
+    ['docusaurus-plugin-includes',
+      {
+        injectedHtmlTags: {
+          headTags: [
+            {
+              tagName: 'meta',
+              attributes: {
+                name: 'aes-config',
+                content: 'pid=xux-opensource&user_type=101&uid=&username=&dim10=nacos',
+              },
+            },
+          ],
+          preBodyTags: [
+            {
+              tagName: 'script',
+              attributes: {
+                src: '//g.alicdn.com/alilog/mlog/aplus_v2.js',
+                id: 'beacon-aplus',
+                exparams: 'clog=o&aplus&sidx=aplusSidx&ckx=aplusCkx',
+              },
+            },
+            {
+              tagName: 'script',
+              attributes: {
+                src: '//g.alicdn.com/aes/??tracker/1.0.34/index.js,tracker-plugin-pv/2.4.5/index.js,tracker-plugin-event/1.2.5/index.js,tracker-plugin-jserror/1.0.13/index.js,tracker-plugin-api/1.1.14/index.js,tracker-plugin-perf/1.1.8/index.js,tracker-plugin-eventTiming/1.0.4/index.js',
+              },
+            },
+            {
+              tagName: 'script',
+              attributes: {
+                src: '//hm.baidu.com/hm.js?e3a5cec56ef8619cf9d7c2abebd509e3',
+              },
+            }
+          ],
+        }
+      },
+    ]
   ],
   presets: [
     [
