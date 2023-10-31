@@ -8,7 +8,7 @@
     "description": "Navbar item with label Home"
   },
   "item.label.Docs": {
-    "message": "文档",
+    "message": "用户文档",
     "description": "Navbar item with label Docs"
   },
   "item.label.Solutions": {
@@ -18,6 +18,10 @@
   "item.label.NACOS IN CLOUD": {
     "message": "企业版NACOS",
     "description": "Navbar item with label NACOS IN CLOUD"
+  },
+  "item.label.NACOS CLOUD": {
+    "message": "Nacos Cloud",
+    "description": "Navbar item with label Nacos Cloud"
   },
   "item.label.E-BOOK-NACOS": {
     "message": "NACOS架构与原理",

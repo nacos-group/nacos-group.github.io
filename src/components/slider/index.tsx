@@ -1,9 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import classnames from 'classnames';
-import { throttle } from '../../utils';
+import React from "react";
+import ReactDOM from "react-dom";
+import classnames from "classnames";
+import { throttle } from "../../utils";
 
-import './index.scss';
+import "./index.scss";
 
 type Props = {
   children: React.ReactElement[];
@@ -33,7 +33,7 @@ class Slider extends React.Component<Props, State> {
         visibleNum: this.getVisibleNum(),
       });
     }, 200);
-    window?.addEventListener?.('resize', this.throttleAdjust);
+    window?.addEventListener?.("resize", this.throttleAdjust);
     // 做重新布局
     /* eslint-disable react/no-did-mount-set-state */
     this.setState({
@@ -42,13 +42,13 @@ class Slider extends React.Component<Props, State> {
   }
 
   componentWillUnmount() {
-    window?.removeEventListener?.('resize', this.throttleAdjust);
+    window?.removeEventListener?.("resize", this.throttleAdjust);
   }
 
   getVisibleNum = () => {
     // 比较粗略的计算，假定一屏的子节点外边距之和不会超过一个子节点的宽度
     /* eslint-disable react/no-find-dom-node */
-    let result = 1;
+    let result = 3;
     const containerWidth = this.container?.getBoundingClientRect().width;
     const childWidth = this.sliderItemChild0?.getBoundingClientRect
       ? this.sliderItemChild0?.getBoundingClientRect().width
@@ -102,7 +102,7 @@ class Slider extends React.Component<Props, State> {
           transform: `translateX(-${
             screenIndex * ((this.container && this.container?.getBoundingClientRect().width) || 0)
           }px)`,
-          transition: 'transform 500ms ease',
+          transition: "transform 500ms ease",
           width: this.getListWidth(),
         }}
       >
@@ -144,8 +144,8 @@ class Slider extends React.Component<Props, State> {
         <span
           key={i}
           className={classnames({
-            'slider-control-item': true,
-            'slider-control-item-active': i === screenIndex,
+            "slider-control-item": true,
+            "slider-control-item-active": i === screenIndex,
           })}
           onClick={this.changeScreen.bind(this, i)}
         />
@@ -170,4 +170,3 @@ class Slider extends React.Component<Props, State> {
 }
 
 export default Slider;
-

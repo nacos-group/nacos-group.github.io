@@ -11,6 +11,10 @@ const config = {
 
   // Set the production url of your site here
   url: 'https://nacos.io',
+  // url: 'https://nacos-group.github.io',
+  // organizationName: 'qq635840580',
+  // deploymentBranch: 'develop-new-framework',
+  // projectName: 'nacos-group.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -42,7 +46,7 @@ const config = {
     }
   },
   scripts: [
-    { src: '//g.alicdn.com/mamba/assets/0.0.19/mse-arc-ui.min.js' },
+    { src: '//dev.g.alicdn.com/mamba/mse-arc-ui/0.0.20/umd/mse-arc-ui.min.js' },
     {
       src: 'https://www.googletagmanager.com/gtag/js?id=G-0YDFJ7LX7F',
       async: true,
@@ -50,10 +54,11 @@ const config = {
   ],
   stylesheets: [
     {
-      href: '//g.alicdn.com/mamba/assets/0.0.19/mse-arc-ui.min.css',
+      href: '//dev.g.alicdn.com/mamba/mse-arc-ui/0.0.20/umd/mse-arc-ui.min.css',
     },
   ],
   plugins: ['docusaurus-plugin-sass',
+    './postcss-tailwind-loader.js',
     ['docusaurus-plugin-includes',
       {
         injectedHtmlTags: {
@@ -99,6 +104,13 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
+          // lastVersion: 'current',
+          // versions: {
+          //   current: {
+          //     label: '',
+          //     path: '',
+          //   },
+          // },
         },
         blog: {
           showReadingTime: true,
@@ -136,6 +148,11 @@ const config = {
             activeBaseRegex: '^/$',
             position: 'right',
           },
+          // {
+          //   label: 'Blog',
+          //   to: '/blog',
+          //   activeBaseRegex: '^/blog/',
+          // },
           {
             type: "docsVersionDropdown",
             label: "Docs",
@@ -173,11 +190,16 @@ const config = {
           //     },
           //   ],
           // },
+          // {
+          //   label: 'NACOS IN CLOUD',
+          //   href: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
+          //   position: 'right',
+          //   target: '_blank',
+          // },
           {
-            label: 'NACOS IN CLOUD',
-            href: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
+            label: 'NACOS CLOUD',
             position: 'right',
-            target: '_blank',
+            to: '/cloud'
           },
           {
             label: 'E-BOOK-NACOS',
@@ -224,6 +246,16 @@ const config = {
         indexName: 'nacos',
       },
     }),
+
+  headTags: [
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'referrer',
+        content: 'no-referrer',
+      }
+    }
+  ]
 };
 
 module.exports = config;
