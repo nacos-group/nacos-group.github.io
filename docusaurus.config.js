@@ -77,6 +77,13 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
+          // lastVersion: 'current',
+          // versions: {
+          //   current: {
+          //     label: '',
+          //     path: '',
+          //   },
+          // },
         },
         blog: {
           showReadingTime: true,

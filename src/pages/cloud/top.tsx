@@ -10,7 +10,7 @@ import { getLink } from "../../utils";
 
 const topData = {
   brandName: "Nacos",
-  title: "NACOS订阅计划",
+  title: "Nacos Cloud",
   desc: "这里是占位文字这里是占位文字这里是占位文字这里是占位文字这里是占位文字这里是占位文字",
   cardList: [
     {

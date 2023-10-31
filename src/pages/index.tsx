@@ -19,12 +19,13 @@ export default function Home(): React.Element {
   const el = React.useRef<HTMLDivElement>(null);
 
   const setEleBg = (ele: HTMLDivElement, isTransparent: boolean) => {
+    if (!ele) return;
     if (isTransparent) {
       ele.style.backgroundColor = "transparent";
       ele.style.boxShadow = "unset";
       const allLink = ele?.childNodes[0]?.childNodes[1]?.childNodes;
       allLink?.forEach((item, index) => {
-        if (index === 1 || index === 8) {
+        if (index === 1 || index === 7) {
           // @ts-ignore
           item.childNodes[0].className = "navbar__link text-white";
         } else {
@@ -42,7 +43,7 @@ export default function Home(): React.Element {
       ele.style.boxShadow = "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px";
       const allLink = ele?.childNodes[0]?.childNodes[1]?.childNodes;
       allLink?.forEach((item, index) => {
-        if (index === 1 || index === 8) {
+        if (index === 1 || index === 7) {
           // @ts-ignore
           item.childNodes[0].className = "navbar__link";
         } else {

@@ -8,7 +8,7 @@
     "description": "Navbar item with label Home"
   },
   "item.label.Docs": {
-    "message": "文档",
+    "message": "用户文档",
     "description": "Navbar item with label Docs"
   },
   "item.label.Solutions": {
