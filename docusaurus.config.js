@@ -46,7 +46,7 @@ const config = {
     }
   },
   scripts: [
-    { src: '//dev.g.alicdn.com/mamba/mse-arc-ui/0.0.4/umd/mse-arc-ui.min.js' },
+    { src: '//dev.g.alicdn.com/mamba/mse-arc-ui/0.0.20/umd/mse-arc-ui.min.js' },
     {
       src: 'https://www.googletagmanager.com/gtag/js?id=G-0YDFJ7LX7F',
       async: true,
@@ -54,11 +54,11 @@ const config = {
   ],
   stylesheets: [
     {
-      href: '//dev.g.alicdn.com/mamba/mse-arc-ui/0.0.4/umd/mse-arc-ui.min.css',
+      href: '//dev.g.alicdn.com/mamba/mse-arc-ui/0.0.20/umd/mse-arc-ui.min.css',
     },
   ],
   plugins: ['docusaurus-plugin-sass',
-  './postcss-tailwind-loader.js',
+    './postcss-tailwind-loader.js',
     ['docusaurus-plugin-includes',
       {
         injectedHtmlTags: {
