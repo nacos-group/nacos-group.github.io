@@ -1,3 +1,9 @@
+---
+title: Java Client Failover
+keywords: Failover
+description: Java client failover user guide
+---
+
 # Java Client Failover
 
 We can turn on the local data failover feature to handle the situation when Nacos server side is unstable or has problematic data.
