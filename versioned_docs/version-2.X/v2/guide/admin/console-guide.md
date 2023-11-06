@@ -1,6 +1,6 @@
 ---
 title: 控制台手册
-keywords: [控制台,手册]
+keywords: 控制台,手册
 description: Nacos 控制台主要旨在于增强对于服务列表，健康状态管理，服务治理，分布式配置管理等方面的管控能力。
 ---
 
@@ -9,16 +9,16 @@ description: Nacos 控制台主要旨在于增强对于服务列表，健康状�
 [Nacos 控制台](http://console.nacos.io/nacos/index.html)主要旨在于增强对于服务列表，健康状态管理，服务治理，分布式配置管理等方面的管控能力，以便进一步帮助用户降低管理微服务应用架构的成本，将提供包括下列基本功能:
 
 * 服务管理
-    * 服务列表及服务健康状态展示
-    * 服务元数据存储及编辑
-    * 服务流量权重的调整
-    * 服务优雅上下线
+  * 服务列表及服务健康状态展示
+  * 服务元数据存储及编辑
+  * 服务流量权重的调整
+  * 服务优雅上下线
 * 配置管理
-    * 多种配置格式编辑
-    * 编辑DIFF
-    * 示例代码
-    * 推送状态查询
-    * 配置版本及一键回滚
+  * 多种配置格式编辑
+  * 编辑DIFF
+  * 示例代码
+  * 推送状态查询
+  * 配置版本及一键回滚
 * 命名空间
 * 登录管理
 
@@ -133,21 +133,27 @@ INSERT INTO users (username, password, enabled) VALUES ('nacos', '$2a$10$EuWPZHz
 INSERT INTO roles (username, role) VALUES ('nacos', 'ROLE_ADMIN');
 ```
 
+<h3 id="1.1"></h3>
+
 ### 关闭登录功能
 
-由于部分公司自己开发控制台，不希望被nacos的安全filter拦截。因此nacos支持定制关闭登录功能找到配置文件 `${nacoshome}/conf/application.properties`， 替换以下内容即可。
+Nacos默认控制台在`2.2.2`版本前，无论是否开启[鉴权](../user/auth.md)功能，默认控制台都会跳转到登录页，导致用户被误导认为控制台存在鉴权功能，实际没有开启鉴权，存在安全隐患。
 
-```
-## spring security config
-### turn off security
-spring.security.enabled=false
-management.security=false
-security.basic.enabled=false
-nacos.security.ignore.urls=/**
+经过社区和安全工程师协商讨论，需要在使用Nacos默认控制台时，鉴权开关关闭时将会自动关闭控制台登录功能。
 
-#nacos.security.ignore.urls=/,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-fe/public/**,/v1/auth/login,/v1/console/health,/v1/cs/**,/v1/ns/**,/v1/cmdb/**,/actuator/**
+因此从`2.2.2`版本开始，当鉴权开关`nacos.core.auth.enabled`关闭时，Nacos默认控制台将不再跳转登录页，同时添加页面提示，提示当前集群未开启鉴权功能。
 
-```
+同时针对自定义的[鉴权插件](../../plugin/auth-plugin.md)添加新接口`com.alibaba.nacos.plugin.auth.spi.server.AuthPluginService#isLoginEnabled(默认返回false)`来对自定义插件进行登录页控制。
+
+<h3 id="1.2"></h3>
+
+### 关闭默认控制台
+
+部分公司或用户希望关闭默认控制台，使用公司的统一平台进行Nacos的配置和服务管理；或将控制台鉴权和客户端访问的鉴权分离，即控制台操作进行鉴权但客户端请求不进行鉴权。
+
+从`2.3.0`版本开始，可以通过`${nacoshome}/conf/application.properties`中的`nacos.console.ui.enabled`来开启或关闭Nacos默认控制台，默认为开启。
+
+同时在关闭默认控制台时，默认控制台会读取`${nacoshome}/conf/console-guide.conf`文件中的内容，并在默认控制台中生成引导页，让维护者自定义将使用默认控制台的用户引导向自定义的统一平台上进行操作。
 
 ### 会话时间
 
