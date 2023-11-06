@@ -207,7 +207,7 @@ IP地址
 
 #### OpenAPI示例
 
-[更新实例](./open-api.md){:name='2.3'}
+[更新实例](./open-api.md)
 
 #### Java SDK示例
 
