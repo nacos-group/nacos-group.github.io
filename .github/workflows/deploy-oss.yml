@@ -1,4 +1,4 @@
-name: nacos.io deploy on oss
+name: nacos.io deploy on OSS
 
 on:
   push:
