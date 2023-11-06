@@ -53,7 +53,7 @@ date: 2023-10-24
 
 #### OpenAPI示例
 
-- [命名空间](./open-api.md)(#3.2)
+- [命名空间](./open-api.md)
 
 #### 校验失败报错信息
 
@@ -72,8 +72,8 @@ date: 2023-10-24
 
 #### OpenAPI示例
 
-- [获取配置](./open-api.md#1.1)
-- [注册实例](./open-api.md#2.1)
+- [获取配置](./open-api.md)
+- [注册实例](./open-api.md)
 
 #### 校验失败报错信息
 
@@ -92,7 +92,7 @@ date: 2023-10-24
 
 #### OpenAPI示例
 
-[发布配置](./open-api.md#1.2)
+[发布配置](./open-api.md)
 
 #### Java SDK示例
 
@@ -115,7 +115,7 @@ date: 2023-10-24
 
 #### OpenAPI示例
 
-[注册实例](./open-api.md#2.1)
+[注册实例](./open-api.md)
 
 #### Java SDK示例
 
@@ -138,7 +138,7 @@ date: 2023-10-24
 
 #### OpenAPI示例
 
-[查询实例列表](./open-api.md#2.4)
+[查询实例列表](./open-api.md)
 
 #### Java SDK示例
 
@@ -161,7 +161,7 @@ date: 2023-10-24
 
 #### OpenAPI示例
 
-[更新实例](./open-api.md#2.3)
+[更新实例](./open-api.md)
 
 #### Java SDK示例
 
@@ -184,7 +184,7 @@ IP地址
 
 #### OpenAPI示例
 
-[查询指定服务的实例列表](./open-api.md#2.5)
+[查询指定服务的实例列表](./open-api.md)
 
 #### Java SDK示例
 
@@ -229,7 +229,7 @@ IP地址
 
 #### OpenAPI示例
 
-[更新实例](./open-api.md#2.3)
+[更新实例](./open-api.md)
 
 #### Java SDK示例
 
