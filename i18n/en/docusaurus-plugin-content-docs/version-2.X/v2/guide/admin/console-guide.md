@@ -1,6 +1,6 @@
 ---
 title: Console Guide
-keywords: console,guide
+keywords: [console,guide]
 description: Nacos console aims to enhance the console for service list, health management, service management, a distributed configuration management control ability.
 ---
 

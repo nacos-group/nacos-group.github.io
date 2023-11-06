@@ -1,6 +1,6 @@
 ---
 title: control plugin
-keywords: anti-fragile,control limit,connection limit,TPS
+keywords: [anti-fragile,control limit,connection limit,TPS]
 description: Nacos support control plugin.
 ---
 
