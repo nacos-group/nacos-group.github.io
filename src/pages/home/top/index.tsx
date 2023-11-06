@@ -28,15 +28,15 @@ const topData = {
     },
   ],
   versionNote: {
-    text: 'V2.2.3 版本说明',
-    link: 'https://github.com/alibaba/nacos/releases/tag/2.2.3',
+    text: 'V2.3.0-BETA 版本说明',
+    link: 'https://github.com/alibaba/nacos/releases/tag/2.3.0-BETA',
   },
   versionNote2: {
     text: 'V1.4.6',
     link: 'https://github.com/alibaba/nacos/releases/tag/1.4.6',
   },
   releaseDate: {
-    text: '2023年5月25日发布',
+    text: '2023年10月19日发布',
   },
 };
 

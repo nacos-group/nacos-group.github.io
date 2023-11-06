@@ -25,6 +25,11 @@ description: Authorization
 |~~nacos.core.auth.default.token.secret.key~~|SecretKey012345678901234567890123456789012345678901234567890123456789|1.2.0 ~ 2.0.4|同`nacos.core.auth.plugin.nacos.token.secret.key`|
 |~~nacos.core.auth.default.token.expire.seconds~~|18000|1.2.0 ~ 2.0.4|同`nacos.core.auth.plugin.nacos.token.expire.seconds`|
 
+## 默认控制台登录页
+
+2.2.2版本之前的Nacos默认控制台，无论服务端是否开启鉴权，都会存在一个登录页；这导致很多用户被**误导**认为Nacos默认是存在鉴权的。在社区安全工程师的建议下，Nacos自**2.2.2**版本开始，在未开启鉴权时，默认控制台将不需要登录即可访问，同时在控制台中给予提示，提醒用户当前集群未开启鉴权。
+
+在用户开启鉴权后，控制台才需要进行登录访问。 同时针对不同的鉴权插件，提供新的接口方法，用于提示控制台是否开启登录页；同时在`2.2.3`版本后，Nacos可支持关闭开源控制台，并引导到用户自定义的Nacos控制台，详情可查看[Nacos鉴权插件-服务端插件](../../plugin/auth-plugin.md)及[控制台手册-关闭登录功能](/zh-cn/docs/v2/guide/admin/console-guide.html#1.1)
 ## 服务端如何开启鉴权
 
 ### 非Docker环境
