@@ -1,6 +1,6 @@
 ---
 title: 反脆弱
-keywords: 反脆弱,限流,连接数限制,TPS
+keywords: [反脆弱,限流,连接数限制,TPS]
 description: Nacos 支持反脆弱插件，避免高压下的集群容量问题。
 ---
 
