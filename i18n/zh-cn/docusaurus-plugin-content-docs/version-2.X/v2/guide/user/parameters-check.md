@@ -9,7 +9,7 @@ date: 2023-10-24
 
 2.3.0版本之前的Nacos的参数校验逻辑分散，由各类请求的处理方法单独进行校验，难以更改维护，经常出现参数校验的遗漏，参数校验的规则也没有明确统一；这使得用户使用时经常会因为一些特殊字符导致功能不符合预期或出现漏洞，甚至导致大量推送，导致带宽打满，内存占用过多，导致应用出现故障。
 
-在2.3.0版本中，Nacos明确了参数#### 校验规则，在服务端实现了统一的参数校验逻辑并添加了参数校验层，根据#### 校验规则对客户端向服务端发送的请求进行校验。
+在2.3.0版本中，Nacos明确了参数校验规则，在服务端实现了统一的参数校验逻辑并添加了参数校验层，根据校验规则对客户端向服务端发送的请求进行校验。
 
 用户可以选择开启参数校验功能，开启后Nacos将会对客户端向服务端发送的请求中的部分参数进行参数校验，确保参数的合法性，避免由于错误使用，导致的不符合预期以及性能问题。
 
@@ -27,9 +27,9 @@ date: 2023-10-24
 
 ## 参数校验规则
 
-开启参数校验后OpenAPI文档 和 SDK文档中的所有接口中的相关参数都会接受格式校验，现对相关参数以及#### 校验规则进行说明：
+开启参数校验后OpenAPI文档 和 SDK文档中的所有接口中的相关参数都会接受格式校验，现对相关参数以及校验规则进行说明：
 
-|参数描述|最大字符长度|#### 校验规则|
+|参数描述|最大字符长度|校验规则|
 |-----|-----|-----|
 |命名空间名称|256|禁止`@#$%^&*`，对应正则表达式：`[^@#$%^&*]+$`|
 |命名空间ID|64|只允许字母数字下划线以及"-"字符，对应正则表达式：`^[\w-]+`｜
@@ -57,8 +57,8 @@ date: 2023-10-24
 
 #### 校验失败报错信息
 
--超出长度：`Param 'namespaceShowName' is illegal, the param length should not exceed 256.`
--非法字符：`Param 'namespaceShowName' is illegal, illegal characters should not appear in the param.`
+- 超出长度：`Param 'namespaceShowName' is illegal, the param length should not exceed 256.`
+- 非法字符：`Param 'namespaceShowName' is illegal, illegal characters should not appear in the param.`
 
 ### 2. namespaceId/tenant/namespace
 
@@ -77,8 +77,8 @@ date: 2023-10-24
 
 #### 校验失败报错信息
 
--超出长度：`Param 'namespaceId/tenant' is illegal, the param length should not exceed 64.`
--非法字符：`Param 'namespaceId/tenant' is illegal, illegal characters should not appear in the param.`
+- 超出长度：`Param 'namespaceId/tenant' is illegal, the param length should not exceed 64.`
+- 非法字符：`Param 'namespaceId/tenant' is illegal, illegal characters should not appear in the param.`
 
 ### 3. dataId
 
@@ -92,7 +92,7 @@ date: 2023-10-24
 
 #### OpenAPI示例
 
-  [发布配置](./open-api.md)
+[发布配置](./open-api.md)
 
 #### Java SDK示例
 
@@ -100,8 +100,8 @@ date: 2023-10-24
 
 #### 校验失败报错信息
 
--超出长度：`Param 'dataId' is illegal, the param length should not exceed 512.`
--非法字符：`Param 'dataId' is illegal, illegal characters should not appear in the param.`
+- 超出长度：`Param 'dataId' is illegal, the param length should not exceed 512.`
+- 非法字符：`Param 'dataId' is illegal, illegal characters should not appear in the param.`
 
 ### 4. service/serviceName
 
@@ -115,7 +115,7 @@ date: 2023-10-24
 
 #### OpenAPI示例
 
-  [注册实例](./open-api.md)
+[注册实例](./open-api.md)
 
 #### Java SDK示例
 
@@ -123,8 +123,8 @@ date: 2023-10-24
 
 #### 校验失败报错信息
 
--超出长度：`Param 'serviceName' is illegal, the param length should not exceed 512.`
--非法字符：`Param 'serviceName' is illegal, illegal characters should not appear in the param.`
+- 超出长度：`Param 'serviceName' is illegal, the param length should not exceed 512.`
+- 非法字符：`Param 'serviceName' is illegal, illegal characters should not appear in the param.`
 
 ### 5. group/groupName
 
@@ -138,7 +138,7 @@ date: 2023-10-24
 
 #### OpenAPI示例
 
-  [查询实例列表](./open-api.md)
+[查询实例列表](./open-api.md)
 
 #### Java SDK示例
 
@@ -146,8 +146,8 @@ date: 2023-10-24
 
 #### 校验失败报错信息
 
--超出长度：`Param 'group' is illegal, the param length should not exceed 512.`
--非法字符：`Param 'group' is illegal, illegal characters should not appear in the param.`
+- 超出长度：`Param 'group' is illegal, the param length should not exceed 512.`
+- 非法字符：`Param 'group' is illegal, illegal characters should not appear in the param.`
 
 ### 6. cluster/clusterName
 
@@ -161,7 +161,7 @@ date: 2023-10-24
 
 #### OpenAPI示例
 
-  [更新实例](./open-api.md)
+[更新实例](./open-api.md)
 
 #### Java SDK示例
 
@@ -169,8 +169,8 @@ date: 2023-10-24
 
 #### 校验失败报错信息
 
--超出长度：`Param 'cluster' is illegal, the param length should not exceed 64.`
--非法字符：`Param 'cluster' is illegal, illegal characters should not appear in the param.`
+- 超出长度：`Param 'cluster' is illegal, the param length should not exceed 64.`
+- 非法字符：`Param 'cluster' is illegal, illegal characters should not appear in the param.`
 
 ### 7. ip
 
@@ -184,7 +184,7 @@ IP地址
 
 #### OpenAPI示例
 
-  [查询指定服务的实例列表](./open-api.md)
+[查询指定服务的实例列表](./open-api.md)
 
 #### Java SDK示例
 
@@ -192,8 +192,8 @@ IP地址
 
 #### 校验失败报错信息
 
--超出长度：`Param 'ip' is illegal, the param length should not exceed 128.`
--非法字符：`Param 'ip' is illegal, illegal characters should not appear in the param.`
+- 超出长度：`Param 'ip' is illegal, the param length should not exceed 128.`
+- 非法字符：`Param 'ip' is illegal, illegal characters should not appear in the param.`
 
 ### 8. port
 
@@ -207,7 +207,7 @@ IP地址
 
 #### OpenAPI示例
 
-  [更新实例](./open-api.md)
+[更新实例](./open-api.md)
 
 #### Java SDK示例
 
@@ -229,7 +229,7 @@ IP地址
 
 #### OpenAPI示例
 
-  [更新实例](./open-api.md)
+[更新实例](./open-api.md)
 
 #### Java SDK示例
 
@@ -237,4 +237,4 @@ IP地址
 
 #### 校验失败报错信息
 
-实例总长度超出范围：`Param 'Metadata' is illegal, the param length should not ex
+实例总长度超出范围：`Param 'Metadata' is illegal, the param length should not exceed %d.`
