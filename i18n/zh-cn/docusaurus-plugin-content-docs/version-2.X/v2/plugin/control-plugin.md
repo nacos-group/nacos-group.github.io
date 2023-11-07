@@ -28,7 +28,7 @@ Nacos 从2.3.0版本开始，支持通过[SPI](https://docs.oracle.com/javase/tu
 |字段名|类型|描述|
 |-----|-----|-----|
 |countLimit|int|连接数总数限制，默认为-1，不限制|
-|monitorIpList|Set<String>|trace监控的Ip列表，用于详细观察对应ip的连接做了哪些操作，添加后，对应ip的连接请求会被详细打印在remote-digest.log日志中|
+|monitorIpList|Set&lt;String&gt;|trace监控的Ip列表，用于详细观察对应ip的连接做了哪些操作，添加后，对应ip的连接请求会被详细打印在remote-digest.log日志中|
 
 `每秒请求数规则（TpsControlRule）`主要包含如下内容：
 
