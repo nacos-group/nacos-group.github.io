@@ -37,13 +37,13 @@ const sidebars = {
       type: 'category',
       label: 'Plugin',
       collapsible: false,
-      items: ['v2/plugin/auth-plugin', 'v2/plugin/config-encryption-plugin','v2/plugin/datasource-plugin','v2/plugin/trace-plugin','v2/plugin/custom-environment-plugin'],
+      items: ['v2/plugin/auth-plugin', 'v2/plugin/config-encryption-plugin','v2/plugin/datasource-plugin','v2/plugin/trace-plugin','v2/plugin/custom-environment-plugin','v2/plugin/config-change-plugin','v2/plugin/control-plugin'],
     },
     {
       type: 'category',
       label: 'User Guide',
       collapsible: false,
-      items: ['v2/guide/user/sdk', 'v2/guide/user/other-language', 'v2/guide/user/open-api','v2/guide/user/auth','v2/guide/user/faq',],
+      items: ['v2/guide/user/sdk', 'v2/guide/user/other-language', 'v2/guide/user/open-api','v2/guide/user/auth','v2/guide/user/faq','v2/guide/user/parameters-check'],
     },
     {
       type: 'category',
