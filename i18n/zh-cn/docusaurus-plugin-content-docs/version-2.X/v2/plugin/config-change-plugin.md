@@ -1,6 +1,6 @@
 ---
 title: 配置变更
-keywords: 配置变更,配置审计,配置格式校验,webhook
+keywords: [配置变更,配置审计,配置格式校验,webhook]
 description: Nacos 支持配置变更插件，可支持配置审计、配置格式校验、及变更后webhook回调
 ---
 
