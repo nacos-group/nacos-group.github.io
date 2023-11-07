@@ -49,70 +49,88 @@
     "description": "The label for the mobile language switcher dropdown"
   },
   "homepage.featureListTitle1": {
-    "message": "易于使用"
+    "message": "Easy to use"
   },
   "homepage.featureListContent1": {
-    "message": "动态配置管理、服务发现和动态的一站式解决方案;20多种开箱即用的以服务为中心的架构特性;基本符合生产要求的轻量级易用控制台。"
+    "message": "One-stop solution for dynamic service discovery, configuration management and dynamic DNS service;20+ out-of-the-box features for service-centric architectures;Light-weight production-ready console."
   },
   "homepage.featureListTitle2": {
-    "message": "更适应云架构"
+    "message": "More adaptive to cloud architectures"
   },
   "homepage.featureListContent2": {
-    "message": "无缝支持Kubernetes和Spring Cloud;在主流公共云上更容易部署和运行（例如阿里云和AWS）;多租户和多环境支持。"
+    "message": "Seamlessly support kubernetes and spring cloud;Easier to deploy and run on popular public cloud (for example AliCloud and AWS);Support multi-tenants and multi-environments."
   },
   "homepage.featureListTitle3": {
-    "message": "生产等级"
+    "message": "Production grade"
   },
   "homepage.featureListContent3": {
-    "message": "脱胎于历经阿里巴巴10年生产验证的内部产品;支持具有数百万服务的大规模场景;具备企业级SLA的开源产品。"
+    "message": "Originated from time-tested internal products from Alibaba Group;Supports large-scale scenarios with millions of services;Open-source product with enterprise-level SLA."
   },
   "homepage.featureListTitle4": {
-    "message": "丰富的应用场景"
+    "message": "Rich internet application scenarios affinity"
   },
   "homepage.featureListContent4": {
-    "message": "支持限流、大促销预案和异地多活;直接支持或稍作扩展即可支持大量有用的互联网应用场景;流量调度和服务治理。"
+    "message": "Supports rate throttling, big promotion plans, and multi-region active-active architectures;Supports a variety of relevant internet-based use cases directly or with slight extension;Traffic scheduling & service governance."
   },
   "homepage.featureTitle": {
-    "message": "特色功能"
+    "message": "Why Nacos"
   },
   "homepage.functionListTitle1": {
-    "message": "动态配置服务"
+    "message": "Dynamic Configuration Service"
   },
   "homepage.functionListContent1": {
-    "message": "动态配置服务让您能够以中心化、外部化和动态化的方式管理所有环境的配置。动态配置消除了配置变更时重新部署应用和服务的需要。配置中心化管理让实现无状态服务更简单，也让按需弹性扩展服务更容易。"
+    "message": "Dynamic Configuration Service allows you to manage configurations in all environments in a centralized, externalized, and dynamic approach. Dynamic configuration saves you from redeploying your applications and services when configuration is updated. You can implement stateless services and achieve on-demand scaling effortlessly."
   },
   "homepage.functionListTitle2": {
-    "message": "服务发现及管理"
+    "message": "Service Discovery and Management"
   },
   "homepage.functionListContent2": {
-    "message": "动态服务发现对以服务为中心的（例如微服务和云原生）应用架构方式非常关键。Nacos支持DNS-Based和RPC-Based（Dubbo、gRPC）模式的服务发现。Nacos也提供实时健康检查，以防止将请求发往不健康的主机或服务实例。借助Nacos，您可以更容易地为您的服务实现断路器。"
+    "message": "Dynamic Service Discovery is key to service-centric (for example microservice or cloud-native) architectures. Nacos supports both DNS-based and RPC-based (Dubbo, gRPC) service discovery, and provides real-time service health checks to prevent routing requests from being sent to unhealthy hosts or service instances. With Nacos, you can also implement circuit breakers for your services with ease."
   },
   "homepage.functionListTitle3": {
-    "message": "动态DNS服务"
+    "message": "Dynamic DNS Service"
   },
   "homepage.functionListContent3": {
-    "message": "通过支持权重路由，动态DNS服务能让您轻松实现中间层负载均衡、更灵活的路由策略、流量控制以及简单数据中心内网的简单DNS解析服务。动态DNS服务还能让您更容易地实现以DNS协议为基础的服务发现，以消除耦合到厂商私有服务发现API上的风险。"
+    "message": "By supporting weighted routing, Dynamic DNS Service helps you implement mid-tier load balancing, more flexible routing, traffic control and DNS resolution services in the production environment within your data center. Dynamic DNS Service also makes it easier for you to implement DNS-based service discovery, which minimizes the risk of coupling to vendor-specific service discovery APIs."
   },
   "homepage.functionTitle": {
-    "message": "功能"
+    "message": "Features"
   },
   "homepage.msemapTitle": {
-    "message": "微服务全景图"
+    "message": "microservice ecosystem landscape"
   },
   "homepage.briefIntroduction": {
-    "message": "一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。"
+    "message": "an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native applications"
   },
   "homepage.userDesc1": {
-    "message": "请在"
+    "message": "Providing your info on"
   },
   "homepage.userDesc2": {
-    "message": "上提供信息来帮助 Nacos 做的更好。"
+    "message": "to help improving nacos better."
+  },
+  "homepage.userDesc3": {
+    "message": "who's using nacos"
   },
   "homepage.userTitleBefore": {
-    "message": "谁在使用"
+    "message": "who's using nacos"
   },
   "homepage.userTitleAfter": {
     "message": " Nacos"
+  },
+  "homepage.togithubText": {
+    "message": "View on Github"
+  },
+  "homepage.bookText": {
+    "message": "Manual"
+  },
+  "homepage.223version": {
+    "message": "Release Note of V2.2.3"
+  },
+  "homepage.146version": {
+    "message": "V1.4.6"
+  },
+  "homepage.pubTime": {
+    "message": "Released on May 25, 2023"
   },
   "theme.ErrorPageContent.title": {
     "message": "This page crashed.",
