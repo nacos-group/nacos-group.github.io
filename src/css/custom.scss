@@ -64,9 +64,17 @@
 
 .navbar {
   .navbar__item {
-    font-size: 17px;
+    font-size: 14px;
     font-family: Avenir-Medium;
   }
+
+  .navbar__logo img {
+    height: 24px;
+  }
+}
+
+.DocSearch-Button {
+  background: var(--docsearch-searchbox-background) !important;
 }
 
 .dropdown__menu {
@@ -285,7 +293,7 @@ aside[class^="theme-doc-sidebar-container"] {
 html[data-theme="dark"] .menu {
   // @extend %scrollbar-style-dark;
 
-  .menu__list > .menu__list-item > .menu__link--sublist {
+  .menu__list>.menu__list-item>.menu__link--sublist {
     color: var(--ifm-color-emphasis-400);
   }
 
@@ -365,4 +373,3 @@ div[class^="tableOfContents"] {
 button[class*="tocCollapsibleButton"] {
   color: var(--ifm-color-content-secondary);
 }
-

@@ -29,9 +29,9 @@ export default function LocaleDropdownNavbarItem({ mobile, dropdownItemsBefore, 
         // eslint-disable-next-line no-nested-ternary
         locale === currentLocale
           ? // Similar idea as DefaultNavbarItem: select the right Infima active
-            // class name. This cannot be substituted with isActive, because the
-            // target URLs contain `pathname://` and therefore are not NavLinks!
-            mobile
+          // class name. This cannot be substituted with isActive, because the
+          // target URLs contain `pathname://` and therefore are not NavLinks!
+          mobile
             ? 'menu__link--active'
             : 'dropdown__link--active'
           : '',
@@ -43,10 +43,10 @@ export default function LocaleDropdownNavbarItem({ mobile, dropdownItemsBefore, 
   // Mobile is handled a bit differently
   const dropdownLabel = mobile
     ? translate({
-        message: 'Languages',
-        id: 'theme.navbar.mobileLanguageDropdown.label',
-        description: 'The label for the mobile language switcher dropdown',
-      })
+      message: 'Languages',
+      id: 'theme.navbar.mobileLanguageDropdown.label',
+      description: 'The label for the mobile language switcher dropdown',
+    })
     : localeConfigs[currentLocale].label;
   return (
     <DropdownNavbarItem

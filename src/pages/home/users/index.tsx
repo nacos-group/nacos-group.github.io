@@ -10,7 +10,7 @@ const data = {
     <span>
       <Translate id="homepage.userDesc1">请在</Translate>{' '}
       <a rel="noopener noreferrer" target="_blank" href="https://github.com/alibaba/nacos/issues/273">
-      谁在使用Nacos
+      <Translate id="homepage.userDesc3">谁在使用Nacos</Translate>
       </a>{' '}
       <Translate id="homepage.userDesc2">上提供信息来帮助 Nacos 做的更好。</Translate>
     </span>
