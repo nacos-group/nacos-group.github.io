@@ -1,6 +1,6 @@
 ---
 title: 参数校验
-keywords: 参数校验，使用规则
+keywords: [参数校验,使用规则]
 description: 参数校验
 date: 2023-10-24
 ---
@@ -53,7 +53,7 @@ date: 2023-10-24
 
 #### OpenAPI示例
 
-- [命名空间](/zh-cn/docs/v2/guide/user/open-api.html#3.1)
+[命名空间](./open-api.md)
 
 #### 校验失败报错信息
 
@@ -72,8 +72,8 @@ date: 2023-10-24
 
 #### OpenAPI示例
 
-- [获取配置](/zh-cn/docs/v2/guide/user/open-api.html#1.1)
-- [注册实例](/zh-cn/docs/v2/guide/user/open-api.html#2.1)
+[获取配置](./open-api.md)
+[注册实例](./open-api.md)
 
 #### 校验失败报错信息
 
@@ -92,7 +92,7 @@ date: 2023-10-24
 
 #### OpenAPI示例
 
-[发布配置](https://nacos.io/zh-cn/docs/v2/guide/user/open-api.html#1.2)
+[发布配置](./open-api.md)
 
 #### Java SDK示例
 
@@ -115,7 +115,7 @@ date: 2023-10-24
 
 #### OpenAPI示例
 
-[注册实例](https://nacos.io/zh-cn/docs/v2/guide/user/open-api.html#2.1)
+[注册实例](./open-api.md)
 
 #### Java SDK示例
 
@@ -138,7 +138,7 @@ date: 2023-10-24
 
 #### OpenAPI示例
 
-[查询实例列表](https://nacos.io/zh-cn/docs/v2/guide/user/open-api.html#2.4)
+[查询实例列表](./open-api.md)
 
 #### Java SDK示例
 
@@ -161,7 +161,7 @@ date: 2023-10-24
 
 #### OpenAPI示例
 
-[更新实例](https://nacos.io/zh-cn/docs/v2/guide/user/open-api.html#2.3)
+[更新实例](./open-api.md)
 
 #### Java SDK示例
 
@@ -184,7 +184,7 @@ IP地址
 
 #### OpenAPI示例
 
-[查询指定服务的实例列表](https://nacos.io/zh-cn/docs/v2/guide/user/open-api.html#2.5)
+[查询指定服务的实例列表](./open-api.md)
 
 #### Java SDK示例
 
@@ -207,7 +207,7 @@ IP地址
 
 #### OpenAPI示例
 
-[更新实例](https://nacos.io/zh-cn/docs/v2/guide/user/open-api.html#2.3)
+[更新实例](./open-api.md)
 
 #### Java SDK示例
 
@@ -229,7 +229,7 @@ IP地址
 
 #### OpenAPI示例
 
-[更新实例](https://nacos.io/zh-cn/docs/v2/guide/user/open-api.html#2.3)
+[更新实例](./open-api.md)
 
 #### Java SDK示例
 
@@ -237,4 +237,4 @@ IP地址
 
 #### 校验失败报错信息
 
-实例总长度超出范围：`Param 'Metadata' is illegal, the param length should not exceed %d.`
+实例总长度超出范围：`Param 'Metadata' is illegal, the param length should not ex
