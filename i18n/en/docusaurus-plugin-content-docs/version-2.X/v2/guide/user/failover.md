@@ -17,7 +17,7 @@ The full detailed solution description can be found in https://github.com/alibab
 
 ## Procedures
 
-<img width="1000" alt="image" src="https://github.com/alibaba/nacos/assets/4593375/f9011075-11b8-401b-9dbb-1366347a9a44">
+<img width="1000" alt="image" src="https://github.com/alibaba/nacos/assets/4593375/f9011075-11b8-401b-9dbb-1366347a9a44" />
 
 As shown above, the query requests to Nacos client would first be checked by FailoverReactor, and only if FailoverReactor has no related data, can the requests move on to query ServiceInfoHolder.
 
