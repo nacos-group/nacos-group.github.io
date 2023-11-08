@@ -50,7 +50,8 @@
         "v2/guide/user/other-language",
         "v2/guide/user/open-api",
         "v2/guide/user/auth",
-        "v2/guide/user/faq"
+        "v2/guide/user/faq",
+        "v2/guide/user/failover"
       ]
     },
     {
