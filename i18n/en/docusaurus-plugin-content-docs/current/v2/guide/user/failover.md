@@ -138,6 +138,7 @@ Create a file under the resource root path:
 One example of `{resource.root}` is src/main/resources.
 
 The file content is:
+
 ```
 your.package.MyFailoverDataSource
 ```
