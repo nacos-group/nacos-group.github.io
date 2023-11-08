@@ -135,7 +135,7 @@ Create a file under the resource root path:
 {resource.root}/META-INF/services/com.alibaba.nacos.client.naming.backups.FailoverDataSource
 ```
 
-One example of {resource.root} is src/main/resources.   
+One example of `{resource.root}` is src/main/resources.   
 
 The file content is: 
 ```
