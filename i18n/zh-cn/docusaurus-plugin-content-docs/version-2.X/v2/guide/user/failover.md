@@ -17,7 +17,7 @@ description: Java客户端容灾用户指南
 
 ## 流程简介
 
-<img width="1000" alt="image" src="https://github.com/alibaba/nacos/assets/4593375/f9011075-11b8-401b-9dbb-1366347a9a44">
+<img width="1000" alt="image" src="https://github.com/alibaba/nacos/assets/4593375/f9011075-11b8-401b-9dbb-1366347a9a44" />
 
 如上图所示，客户端的查询请求都会先经过FailoverReactor，如果FailoverReactor有数据，则直接使用，从而忽略掉Nacos Server返回的数据；如果FailoverReactor里面没有数据，则走正常流程，从ServiceInfoHolder里读取缓存；
 
