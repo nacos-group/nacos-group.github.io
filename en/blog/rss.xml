@@ -4,7 +4,7 @@
         <title>Nacos Blog</title>
         <link>https://nacos.io/en/blog</link>
         <description>Nacos Blog</description>
-        <lastBuildDate>Wed, 08 Nov 2023 06:22:37 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 08 Nov 2023 06:34:02 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -12,7 +12,7 @@
             <title><![CDATA[2.1.1-release]]></title>
             <link>https://nacos.io/en/blog/2.1.1-release</link>
             <guid>https://nacos.io/en/blog/2.1.1-release</guid>
-            <pubDate>Wed, 08 Nov 2023 06:22:37 GMT</pubDate>
+            <pubDate>Wed, 08 Nov 2023 06:34:02 GMT</pubDate>
             <description><![CDATA[Placeholder. DO NOT DELETE.]]></description>
             <content:encoded><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content:encoded>
         </item>
@@ -20,7 +20,7 @@
             <title><![CDATA[2.2.0-release]]></title>
             <link>https://nacos.io/en/blog/2.2.0-release</link>
             <guid>https://nacos.io/en/blog/2.2.0-release</guid>
-            <pubDate>Wed, 08 Nov 2023 06:22:37 GMT</pubDate>
+            <pubDate>Wed, 08 Nov 2023 06:34:02 GMT</pubDate>
             <description><![CDATA[Placeholder. DO NOT DELETE.]]></description>
             <content:encoded><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content:encoded>
         </item>
@@ -28,7 +28,7 @@
             <title><![CDATA[2.2.1-release]]></title>
             <link>https://nacos.io/en/blog/2.2.1-release</link>
             <guid>https://nacos.io/en/blog/2.2.1-release</guid>
-            <pubDate>Wed, 08 Nov 2023 06:22:37 GMT</pubDate>
+            <pubDate>Wed, 08 Nov 2023 06:34:02 GMT</pubDate>
             <description><![CDATA[Placeholder. DO NOT DELETE.]]></description>
             <content:encoded><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content:encoded>
         </item>
@@ -36,7 +36,7 @@
             <title><![CDATA[2.2.2-release]]></title>
             <link>https://nacos.io/en/blog/2.2.2-release</link>
             <guid>https://nacos.io/en/blog/2.2.2-release</guid>
-            <pubDate>Wed, 08 Nov 2023 06:22:37 GMT</pubDate>
+            <pubDate>Wed, 08 Nov 2023 06:34:02 GMT</pubDate>
             <description><![CDATA[Placeholder. DO NOT DELETE.]]></description>
             <content:encoded><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content:encoded>
         </item>
@@ -44,7 +44,7 @@
             <title><![CDATA[212-and-220beta-release]]></title>
             <link>https://nacos.io/en/blog/212-and-220beta-release</link>
             <guid>https://nacos.io/en/blog/212-and-220beta-release</guid>
-            <pubDate>Wed, 08 Nov 2023 06:22:37 GMT</pubDate>
+            <pubDate>Wed, 08 Nov 2023 06:34:02 GMT</pubDate>
             <description><![CDATA[Placeholder. DO NOT DELETE.]]></description>
             <content:encoded><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content:encoded>
         </item>
@@ -52,7 +52,7 @@
             <title><![CDATA[announcement-token-secret-key]]></title>
             <link>https://nacos.io/en/blog/announcement-token-secret-key</link>
             <guid>https://nacos.io/en/blog/announcement-token-secret-key</guid>
-            <pubDate>Wed, 08 Nov 2023 06:22:37 GMT</pubDate>
+            <pubDate>Wed, 08 Nov 2023 06:34:02 GMT</pubDate>
             <description><![CDATA[Placeholder. DO NOT DELETE.]]></description>
             <content:encoded><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content:encoded>
         </item>
@@ -60,7 +60,7 @@
             <title><![CDATA[higress]]></title>
             <link>https://nacos.io/en/blog/higress</link>
             <guid>https://nacos.io/en/blog/higress</guid>
-            <pubDate>Wed, 08 Nov 2023 06:22:37 GMT</pubDate>
+            <pubDate>Wed, 08 Nov 2023 06:34:02 GMT</pubDate>
             <description><![CDATA[Placeholder. DO NOT DELETE.]]></description>
             <content:encoded><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content:encoded>
         </item>
@@ -68,7 +68,7 @@
             <title><![CDATA[iscas2023]]></title>
             <link>https://nacos.io/en/blog/iscas2023</link>
             <guid>https://nacos.io/en/blog/iscas2023</guid>
-            <pubDate>Wed, 08 Nov 2023 06:22:37 GMT</pubDate>
+            <pubDate>Wed, 08 Nov 2023 06:34:02 GMT</pubDate>
             <description><![CDATA[Placeholder. DO NOT DELETE.]]></description>
             <content:encoded><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content:encoded>
         </item>
@@ -76,7 +76,7 @@
             <title><![CDATA[nacos-distro-mechanism]]></title>
             <link>https://nacos.io/en/blog/nacos-distro-mechanism</link>
             <guid>https://nacos.io/en/blog/nacos-distro-mechanism</guid>
-            <pubDate>Wed, 08 Nov 2023 06:22:37 GMT</pubDate>
+            <pubDate>Wed, 08 Nov 2023 06:34:02 GMT</pubDate>
             <description><![CDATA[Placeholder. DO NOT DELETE.]]></description>
             <content:encoded><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content:encoded>
         </item>
@@ -84,7 +84,7 @@
             <title><![CDATA[nacos-reigster-mechanism]]></title>
             <link>https://nacos.io/en/blog/nacos-reigster-mechanism</link>
             <guid>https://nacos.io/en/blog/nacos-reigster-mechanism</guid>
-            <pubDate>Wed, 08 Nov 2023 06:22:37 GMT</pubDate>
+            <pubDate>Wed, 08 Nov 2023 06:34:02 GMT</pubDate>
             <description><![CDATA[Placeholder. DO NOT DELETE.]]></description>
             <content:encoded><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content:encoded>
         </item>
@@ -92,7 +92,7 @@
             <title><![CDATA[springboot-0.2.10]]></title>
             <link>https://nacos.io/en/blog/springboot-0.2.10</link>
             <guid>https://nacos.io/en/blog/springboot-0.2.10</guid>
-            <pubDate>Wed, 08 Nov 2023 06:22:37 GMT</pubDate>
+            <pubDate>Wed, 08 Nov 2023 06:34:02 GMT</pubDate>
             <description><![CDATA[Placeholder. DO NOT DELETE.]]></description>
             <content:encoded><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content:encoded>
         </item>
@@ -100,7 +100,7 @@
             <title><![CDATA[up-to-2w-star]]></title>
             <link>https://nacos.io/en/blog/up-to-2w-star</link>
             <guid>https://nacos.io/en/blog/up-to-2w-star</guid>
-            <pubDate>Wed, 08 Nov 2023 06:22:37 GMT</pubDate>
+            <pubDate>Wed, 08 Nov 2023 06:34:02 GMT</pubDate>
             <description><![CDATA[Placeholder. DO NOT DELETE.]]></description>
             <content:encoded><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content:encoded>
         </item>
@@ -108,7 +108,7 @@
             <title><![CDATA[xiaomi-scale]]></title>
             <link>https://nacos.io/en/blog/xiaomi-scale</link>
             <guid>https://nacos.io/en/blog/xiaomi-scale</guid>
-            <pubDate>Wed, 08 Nov 2023 06:22:37 GMT</pubDate>
+            <pubDate>Wed, 08 Nov 2023 06:34:02 GMT</pubDate>
             <description><![CDATA[Placeholder. DO NOT DELETE.]]></description>
             <content:encoded><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content:encoded>
         </item>
