@@ -143,11 +143,17 @@ const config = {
         },
         items: [
           {
-            label: 'Home',
-            to: '/',
+            label: ' ',
+            to: '/docs/v2/quickstart/quick-start.html',
             activeBaseRegex: '^/$',
             position: 'right',
           },
+          {
+          label: 'Home',
+          to: '/',
+          activeBaseRegex: '^/$',
+          position: 'right',
+        },
           // {
           //   label: 'Blog',
           //   to: '/blog',
