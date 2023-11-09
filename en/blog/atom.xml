@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nacos.io/en/blog</id>
     <title>Nacos Blog</title>
-    <updated>2023-11-09T05:40:02.000Z</updated>
+    <updated>2023-11-09T10:52:43.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://nacos.io/en/blog"/>
     <subtitle>Nacos Blog</subtitle>
@@ -11,7 +11,7 @@
         <title type="html"><![CDATA[2.1.1-release]]></title>
         <id>https://nacos.io/en/blog/2.1.1-release</id>
         <link href="https://nacos.io/en/blog/2.1.1-release"/>
-        <updated>2023-11-09T05:40:02.000Z</updated>
+        <updated>2023-11-09T10:52:43.000Z</updated>
         <summary type="html"><![CDATA[Placeholder. DO NOT DELETE.]]></summary>
         <content type="html"><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content>
     </entry>
@@ -19,7 +19,7 @@
         <title type="html"><![CDATA[2.2.0-release]]></title>
         <id>https://nacos.io/en/blog/2.2.0-release</id>
         <link href="https://nacos.io/en/blog/2.2.0-release"/>
-        <updated>2023-11-09T05:40:02.000Z</updated>
+        <updated>2023-11-09T10:52:43.000Z</updated>
         <summary type="html"><![CDATA[Placeholder. DO NOT DELETE.]]></summary>
         <content type="html"><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content>
     </entry>
@@ -27,7 +27,7 @@
         <title type="html"><![CDATA[2.2.1-release]]></title>
         <id>https://nacos.io/en/blog/2.2.1-release</id>
         <link href="https://nacos.io/en/blog/2.2.1-release"/>
-        <updated>2023-11-09T05:40:02.000Z</updated>
+        <updated>2023-11-09T10:52:43.000Z</updated>
         <summary type="html"><![CDATA[Placeholder. DO NOT DELETE.]]></summary>
         <content type="html"><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content>
     </entry>
@@ -35,7 +35,7 @@
         <title type="html"><![CDATA[2.2.2-release]]></title>
         <id>https://nacos.io/en/blog/2.2.2-release</id>
         <link href="https://nacos.io/en/blog/2.2.2-release"/>
-        <updated>2023-11-09T05:40:02.000Z</updated>
+        <updated>2023-11-09T10:52:43.000Z</updated>
         <summary type="html"><![CDATA[Placeholder. DO NOT DELETE.]]></summary>
         <content type="html"><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content>
     </entry>
@@ -43,7 +43,7 @@
         <title type="html"><![CDATA[212-and-220beta-release]]></title>
         <id>https://nacos.io/en/blog/212-and-220beta-release</id>
         <link href="https://nacos.io/en/blog/212-and-220beta-release"/>
-        <updated>2023-11-09T05:40:02.000Z</updated>
+        <updated>2023-11-09T10:52:43.000Z</updated>
         <summary type="html"><![CDATA[Placeholder. DO NOT DELETE.]]></summary>
         <content type="html"><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content>
     </entry>
@@ -51,7 +51,7 @@
         <title type="html"><![CDATA[announcement-token-secret-key]]></title>
         <id>https://nacos.io/en/blog/announcement-token-secret-key</id>
         <link href="https://nacos.io/en/blog/announcement-token-secret-key"/>
-        <updated>2023-11-09T05:40:02.000Z</updated>
+        <updated>2023-11-09T10:52:43.000Z</updated>
         <summary type="html"><![CDATA[Placeholder. DO NOT DELETE.]]></summary>
         <content type="html"><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content>
     </entry>
@@ -59,7 +59,7 @@
         <title type="html"><![CDATA[higress]]></title>
         <id>https://nacos.io/en/blog/higress</id>
         <link href="https://nacos.io/en/blog/higress"/>
-        <updated>2023-11-09T05:40:02.000Z</updated>
+        <updated>2023-11-09T10:52:43.000Z</updated>
         <summary type="html"><![CDATA[Placeholder. DO NOT DELETE.]]></summary>
         <content type="html"><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content>
     </entry>
@@ -67,7 +67,7 @@
         <title type="html"><![CDATA[iscas2023]]></title>
         <id>https://nacos.io/en/blog/iscas2023</id>
         <link href="https://nacos.io/en/blog/iscas2023"/>
-        <updated>2023-11-09T05:40:02.000Z</updated>
+        <updated>2023-11-09T10:52:43.000Z</updated>
         <summary type="html"><![CDATA[Placeholder. DO NOT DELETE.]]></summary>
         <content type="html"><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content>
     </entry>
@@ -75,7 +75,7 @@
         <title type="html"><![CDATA[nacos-distro-mechanism]]></title>
         <id>https://nacos.io/en/blog/nacos-distro-mechanism</id>
         <link href="https://nacos.io/en/blog/nacos-distro-mechanism"/>
-        <updated>2023-11-09T05:40:02.000Z</updated>
+        <updated>2023-11-09T10:52:43.000Z</updated>
         <summary type="html"><![CDATA[Placeholder. DO NOT DELETE.]]></summary>
         <content type="html"><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content>
     </entry>
@@ -83,7 +83,7 @@
         <title type="html"><![CDATA[nacos-reigster-mechanism]]></title>
         <id>https://nacos.io/en/blog/nacos-reigster-mechanism</id>
         <link href="https://nacos.io/en/blog/nacos-reigster-mechanism"/>
-        <updated>2023-11-09T05:40:02.000Z</updated>
+        <updated>2023-11-09T10:52:43.000Z</updated>
         <summary type="html"><![CDATA[Placeholder. DO NOT DELETE.]]></summary>
         <content type="html"><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content>
     </entry>
@@ -91,7 +91,7 @@
         <title type="html"><![CDATA[springboot-0.2.10]]></title>
         <id>https://nacos.io/en/blog/springboot-0.2.10</id>
         <link href="https://nacos.io/en/blog/springboot-0.2.10"/>
-        <updated>2023-11-09T05:40:02.000Z</updated>
+        <updated>2023-11-09T10:52:43.000Z</updated>
         <summary type="html"><![CDATA[Placeholder. DO NOT DELETE.]]></summary>
         <content type="html"><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content>
     </entry>
@@ -99,7 +99,7 @@
         <title type="html"><![CDATA[up-to-2w-star]]></title>
         <id>https://nacos.io/en/blog/up-to-2w-star</id>
         <link href="https://nacos.io/en/blog/up-to-2w-star"/>
-        <updated>2023-11-09T05:40:02.000Z</updated>
+        <updated>2023-11-09T10:52:43.000Z</updated>
         <summary type="html"><![CDATA[Placeholder. DO NOT DELETE.]]></summary>
         <content type="html"><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content>
     </entry>
@@ -107,7 +107,7 @@
         <title type="html"><![CDATA[xiaomi-scale]]></title>
         <id>https://nacos.io/en/blog/xiaomi-scale</id>
         <link href="https://nacos.io/en/blog/xiaomi-scale"/>
-        <updated>2023-11-09T05:40:02.000Z</updated>
+        <updated>2023-11-09T10:52:43.000Z</updated>
         <summary type="html"><![CDATA[Placeholder. DO NOT DELETE.]]></summary>
         <content type="html"><![CDATA[<p>Placeholder. DO NOT DELETE.</p>]]></content>
     </entry>
