@@ -43,7 +43,7 @@ const sidebars = {
       type: 'category',
       label: 'User Guide',
       collapsible: false,
-      items: ['v2/guide/user/sdk', 'v2/guide/user/other-language', 'v2/guide/user/open-api','v2/guide/user/auth','v2/guide/user/faq','v2/guide/user/parameters-check','v2/guide/user/failover'],
+      items: ['v2/guide/user/sdk', 'v2/guide/user/other-language', 'v2/guide/user/open-api','v2/guide/user/auth','v2/guide/user/faq','v2/guide/user/parameters-check','v2/guide/user/failover','v2/guide/user/meter','v2/guide/user/observability-guide'],
     },
     {
       type: 'category',
