@@ -144,7 +144,7 @@ const config = {
         items: [
           {
             label: ' ',
-            to: '/docs/v2/quickstart/quick-start.html',
+            to: 'https://nacos.io/zh-cn/docs/v2/quickstart/quick-start.html',
             activeBaseRegex: '^/$',
             position: 'right',
           },
