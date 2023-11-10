@@ -1,0 +1,33 @@
+name: nacos.io deploy on OSS
+
+on:
+  push:
+    branches:
+      - develop-new-framework
+jobs:
+  Build-Deploy:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.x
+      - name: Build
+        run: |
+          npm install && npm run build && mkdir deploy-dist && cp -R build/* deploy-dist/ && mv build *.xml *.html *.txt deploy-dist/
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12.x
+      - run: npm i @serverless-devs/s -g  --registry=https://registry.npmmirror.com
+      - run: s config add --AccountID ${{secrets.ACCOUNT_ID}}  --AccessKeyID ${{secrets.ACCESS_KEYID}}  --AccessKeySecret ${{secrets.ACCESS_KEYSECRET}} -a nacos -f
+      - name: Deploy
+        run: s deploy --use-local -y
+      - name: Update Cache-Control
+        uses: doggycool/ossutil-github-action@master
+        with:
+          ossArgs: 'set-meta oss://nacos-website-cn-hongkong/ Cache-Control:no-cache -rf'
+          accessKey: ${{ secrets.ACCESS_KEYID }}
+          accessSecret: ${{ secrets.ACCESS_KEYSECRET }}
+          endpoint: oss-cn-hongkong.aliyuncs.com

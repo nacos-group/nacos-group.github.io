@@ -16,27 +16,47 @@ const topData = {
   }),
   buttons: [
     {
-      text: '前往 Github',
+      text: translate({
+        id: 'homepage.togithubText',
+        message:
+          '前往 Github',
+      }),
       link: 'https://github.com/alibaba/nacos',
       type: 'primary',
       target: '_blank',
     },
     {
-      text: '手册',
+      text: translate({
+        id: 'homepage.bookText',
+        message:
+          '手册',
+      }),
       link: '/docs/v2/what-is-nacos.html',
       type: 'normal',
     },
   ],
   versionNote: {
-    text: 'V2.2.3 版本说明',
-    link: 'https://github.com/alibaba/nacos/releases/tag/2.2.3',
+    text: translate({
+      id: 'homepage.223version',
+      message:
+      'V2.3.0-BETA 版本说明',
+    }),
+    link: 'https://github.com/alibaba/nacos/releases/tag/2.3.0-BETA',
   },
   versionNote2: {
-    text: 'V1.4.6',
+    text: translate({
+      id: 'homepage.146version',
+      message:
+      'V1.4.6',
+    }),
     link: 'https://github.com/alibaba/nacos/releases/tag/1.4.6',
   },
   releaseDate: {
-    text: '2023年5月25日发布',
+    text: translate({
+      id: 'homepage.pubTime',
+      message:
+      '2023年10月19日发布',
+    }),
   },
 };
 

@@ -1,4 +1,4 @@
-name: nacos.io deploy
+name: nacos.io deploy on github page
 
 on:
   push:

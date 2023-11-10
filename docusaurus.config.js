@@ -143,11 +143,22 @@ const config = {
         },
         items: [
           {
-            label: 'Home',
-            to: '/',
+            label: ' ',
+            to: 'https://nacos.io/zh-cn/docs/v2/quickstart/quick-start.html',
             activeBaseRegex: '^/$',
             position: 'right',
           },
+          // {
+          //   label: 'Blog',
+          //   to: '/blog',
+          //   activeBaseRegex: '^/blog/',
+          // },
+          {
+          label: 'Home',
+          to: '/',
+          activeBaseRegex: '^/$',
+          position: 'right',
+        },
           // {
           //   label: 'Blog',
           //   to: '/blog',
