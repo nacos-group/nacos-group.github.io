@@ -148,6 +148,11 @@ const config = {
             activeBaseRegex: '^/$',
             position: 'right',
           },
+          // {
+          //   label: 'Blog',
+          //   to: '/blog',
+          //   activeBaseRegex: '^/blog/',
+          // },
           {
           label: 'Home',
           to: '/',
