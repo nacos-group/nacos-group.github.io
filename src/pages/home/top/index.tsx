@@ -37,7 +37,7 @@ const topData = {
   ],
   versionNote: {
     text: translate({
-      id: 'homepage.223version',
+      id: 'homepage.230-BETA',
       message:
       'V2.3.0-BETA 版本说明',
     }),
