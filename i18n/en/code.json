@@ -1,27 +1,33 @@
 {
   "homepage.footerVersionTitle": {
-    "message": "愿景"
+    "message": "Vision"
   },
   "homepage.footerVersionContent": {
-    "message": "Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。"
+    "message": "By providing an easy-to-use service infrastructure such as dynamic service discovery, service configuration, service sharing and management and etc., Nacos help users better construct, deliver and manage their own service platform, reuse and composite business service faster and deliver value of business innovation more quickly so as to win market for users in the era of cloud native and in all cloud environments, such as private, mixed, or public clouds."
   },
   "homepage.footerDocTitle": {
-    "message": "文档"
+    "message": "Documentation"
   },
   "homepage.footerDocListText1": {
-    "message": "概览"
+    "message": "Overview"
   },
   "homepage.footerDocListText2": {
-    "message": "快速开始"
+    "message": "Quick start"
   },
   "homepage.footerDocListText3": {
-    "message": "开发者指南"
+    "message": "Developer guide"
   },
   "homepage.footerResourcesTitle": {
-    "message": "资源"
+    "message": "Resources"
   },
   "homepage.footerResourcesListText1": {
-    "message": "社区"
+    "message": "Community"
+  },
+  "homepage.footerResourcesListText2": {
+    "message": "Cloud Service MSE"
+  },
+  "homepage.footerResourcesListText3": {
+    "message": "Cloud Service EDAS"
   },
   "community.barText": {
     "message": "社区"

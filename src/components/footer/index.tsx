@@ -39,18 +39,13 @@ const data = {
         target: '',
       },
       {
-        text: '云服务 MSE',
+        text: translate({ id: 'homepage.footerResourcesListText2', message: '云服务 MSE' }),
         link: '//cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
         target: "_blank",
       },
       {
-        text: '云服务 EDAS',
+        text: translate({ id: 'homepage.footerResourcesListText3', message: '云服务 EDAS' }),
         link: '//www.aliyun.com/product/edas?source_type=nacos_pc_20181219',
-        target: "_blank",
-      },
-      {
-        text: '云服务 AHAS',
-        link: '//www.aliyun.com/product/ahas?source_type=nacos_pc_20190225',
         target: "_blank",
       },
     ],
