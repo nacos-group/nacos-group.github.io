@@ -252,7 +252,7 @@ const config = {
         appId: '1QV814950M',
 
         // Public API key: it is safe to commit it
-        apiKey: '7445da3dec050d45d29f3fe93ed45af3',
+        apiKey: 'c64d042c0f37873d8d45183b2f3675f8',
 
         indexName: 'nacos',
       },
