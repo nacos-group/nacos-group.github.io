@@ -38,7 +38,9 @@
         "v2/plugin/config-encryption-plugin",
         "v2/plugin/datasource-plugin",
         "v2/plugin/trace-plugin",
-        "v2/plugin/custom-environment-plugin"
+        "v2/plugin/custom-environment-plugin",
+        "v2/plugin/config-change-plugin",
+        "v2/plugin/control-plugin"
       ]
     },
     {
@@ -51,6 +53,7 @@
         "v2/guide/user/open-api",
         "v2/guide/user/auth",
         "v2/guide/user/faq",
+        "v2/guide/user/parameters-check",
         "v2/guide/user/failover"
       ]
     },
