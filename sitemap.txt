@@ -160,3 +160,4 @@ https://nacos.io/zh-cn/docs/v2/plugin/custom-environment-plugin.html
 https://nacos.io/zh-cn/docs/v2/plugin/trace-plugin.html
 https://nacos.io/zh-cn/docs/v2/guide/user/sdk.html
 https://nacos.io/zh-cn/docs/v2/guide/user/open-api.html
+https://nacos.io/zh-cn/docs/v2/what-is-nacos.html
