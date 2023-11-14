@@ -66,7 +66,7 @@ export default {
       {
         key: 'Nacos in Cloud',
         text: 'NACOS IN CLOUD',
-        link: 'https://www.aliyun.com/product/aliware/mse?spm=nacos.io.topbar.0.0.0',
+        link: '/en/cloud',
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
       {
@@ -189,7 +189,7 @@ export default {
       {
         key: 'Nacos in Cloud',
         text: '企业版NACOS',
-        link: 'https://www.aliyun.com/product/aliware/mse?spm=nacos.io.topbar.0.0.0',
+        link: '/zh-cn/cloud',
         imgUrl: 'https://img.alicdn.com/tfs/TB1esl_m.T1gK0jSZFrXXcNCXXa-200-200.png'
       },
       {
