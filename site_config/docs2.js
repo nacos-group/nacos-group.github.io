@@ -113,10 +113,10 @@ export default {
                 title: 'FAQ',
                 link: '/en-us/docs/v2/guide/user/faq.html',
               },
-              {
-                title: 'Java Client Failover',
-                link: '/en-us/docs/failover.html',
-              },
+              // {
+              //   title: 'Java Client Failover',
+              //   link: '/en-us/docs/failover.html',
+              // },
             ],
           },
           {
@@ -342,10 +342,10 @@ export default {
                 title: 'FAQ',
                 link: '/zh-cn/docs/v2/guide/user/faq.html',
               },
-              {
-                title: 'Java客户端容灾',
-                link: '/zh-cn/docs/failover.html',
-              },
+              // {
+              //   title: 'Java客户端容灾',
+              //   link: '/zh-cn/docs/failover.html',
+              // },
             ],
           },
           {

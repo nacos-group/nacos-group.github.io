@@ -146,6 +146,15 @@
       }
     },
     {
+      "filename": "failover.md",
+      "link": "/en-us/docs/failover.html",
+      "meta": {
+        "title": "Java Client Failover",
+        "keywords": "Failover",
+        "description": "Java client failover user guide"
+      }
+    },
+    {
       "filename": "faq.md",
       "link": "/en-us/docs/faq.html",
       "meta": {
@@ -884,6 +893,15 @@
         "title": "Nacos支持三种部署模式",
         "keywords": "Nacos,部署模式",
         "description": "Nacos支持三种部署模式"
+      }
+    },
+    {
+      "filename": "failover.md",
+      "link": "/zh-cn/docs/failover.html",
+      "meta": {
+        "title": "Java客户端容灾",
+        "keywords": "容灾",
+        "description": "Java客户端容灾用户指南"
       }
     },
     {
