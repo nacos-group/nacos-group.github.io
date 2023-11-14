@@ -56,7 +56,10 @@ const Top = ({ language }: { language?: string }) => {
   return (
     <BrowserOnly>
       {() => (
-        <section className="bg-gradient-to-b from-white to-blue-400">
+        <section
+          className="bg-gradient-to-b from-white to-blue-400"
+          style={{ background: "repeating-linear-gradient(to top, #60a5fa, #ffffff)" }}
+        >
           <div className="mb-8">
             <p className="pt-16 pb-16 text-center text-5xl text-[#4190FF] font-semibold">{topData.title}</p>
             {/* <p className="text-center text-[#353535] font-normal leading-6 mt-14">{topData.desc}</p> */}
@@ -96,6 +99,7 @@ const Top = ({ language }: { language?: string }) => {
                       <div
                         key={i}
                         className="text-left text-xs border-t border-[#979797] leading-9 text-[#000]"
+                        style={{ borderTop: "1px solid #979797" }}
                       >
                         <img
                           src="img/success.png"
