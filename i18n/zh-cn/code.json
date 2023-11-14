@@ -23,6 +23,12 @@
   "homepage.footerResourcesListText1": {
     "message": "社区"
   },
+  "homepage.footerResourcesListText2": {
+    "message": "云服务 MSE"
+  },
+  "homepage.footerResourcesListText3": {
+    "message": "云服务 EDAS"
+  },
   "community.barText": {
     "message": "社区"
   },
