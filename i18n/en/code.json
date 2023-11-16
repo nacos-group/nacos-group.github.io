@@ -30,76 +30,25 @@
     "message": "Cloud Service EDAS"
   },
   "community.barText": {
-    "message": "Community"
+    "message": "社区"
   },
   "community.eventsTitle": {
-    "message": "Events & News"
+    "message": "事件 & 新闻"
   },
   "community.contactsTitle": {
-    "message": "Talk To Us"
+    "message": "联系我们"
   },
   "community.contactsDesc": {
-    "message": "Feel free to contact us  through the DingTalk group (1 group is full, 2 group number: 30438813), or via the following channel."
-  },
-  "community.contactsTitle1": {
-    "message": "Mailing List"
-  },
-  "community.contactsTitle2": {
-    "message": "#alibaba/Nacos"
+    "message": "有问题需要反馈？可以优先通过钉钉群(1群已满，2群群号:30438813)联系我们，或者通过以下方式参与我们一起互动。"
   },
   "community.contributeTitle": {
-    "message": "Contributor Guide"
+    "message": "贡献指南"
   },
   "community.contributeDesc": {
-    "message": "Want to contribute to Nacos?"
-  },
-  "community.contributeTitle1": {
-    "message": "Mailing List"
-  },
-  "community.contributeTitle11": {
-    "message": "Join the"
-  },
-  "community.contributeTitle12": {
-    "message": "mailing list"
-  },
-  "community.contributeTitle13": {
-    "message": "and discussion your ideas with us."
-  },
-  "community.contributeTitle2": {
-    "message": "Issue"
-  },
-  "community.contributeTitle21": {
-    "message": "Reporting issues via"
-  },
-  "community.contributeTitle22": {
-    "message": "."
-  },
-  "community.contributeTitle3": {
-    "message": "Documents"
-  },
-  "community.contributeTitle31": {
-    "message": "Improve the"
-  },
-  "community.contributeTitle32": {
-    "message": " documentation."
-  },
-  "community.contributeTitle41": {
-    "message": "Send your awesome enhancement via"
-  },
-  "community.contributeTitle42": {
-    "message": "Pull requests."
+    "message": "Nacos社区欢迎任何形式的贡献。"
   },
   "community.dubboTitle": {
-    "message": "Open Source Ecology Corelated"
-  },
-  "community.dubboText1": {
-    "message": "Dubbo and Nacos are the classic combination from production practice of Alibaba's large-scale micro-service. Compared to traditional registry centers such as ZooKeeper and configuration center solutions, when building a microservice application platform by using cloud native and Service Mesh paradigm, with the use of Nacos in Dubbo, all the power of Dubbo in the large-scale microservice management, traffic management, service integration and sharing can be fully released."
-  },
-  "community.dubboText2": {
-    "message": "Nacos supports service discovery and dynamic configuration management required by Kubernetes and CNCF. Nacos can replace completely and seamlessly Kubernetes’ primary DNS-based Service Discovery solutions. Nacos is featured with providing more service governance, which includes management of service domain, service health and life cycle management, traffic management and intelligent routing strategy management and etc. Nacos also enhances the management of ConfigMap, including version configuration and gated launch and etc."
-  },
-  "community.dubboText3": {
-    "message": "Nacos is fully compatible and seamlessly supports the relevant API and main related functions of Spring Cloud. You can use Nacos as a configuration service for Spring Cloud Config Server or a better alternative for product of service discovery such as Eureka/Consul/ZooKeeper and etc. Nacos brings many feature enhancements required by the production and micro-service governance in configuration management and service management."
+    "message": "开源生态相关"
   },
   "theme.navbar.mobileLanguageDropdown.label": {
     "message": "Languages",

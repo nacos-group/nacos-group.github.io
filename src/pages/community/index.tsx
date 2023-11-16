@@ -10,7 +10,6 @@ import Layout from "@theme/Layout";
 
 import "./index.scss";
 import { getLink } from "../../utils";
-import Translate from "@docusaurus/Translate";
 
 const data = {
   barText: translate({ id: "community.barText", message: "社区" }),
@@ -55,14 +54,14 @@ const data = {
         img: "https://img.alicdn.com/imgextra/i3/O1CN018jYPjh1EwZeZ0x4Ir_!!6000000000416-2-tps-160-160.png",
         imgHover:
           "https://img.alicdn.com/imgextra/i4/O1CN017jnUKf1MHMwlRqS5W_!!6000000001409-2-tps-160-160.png",
-        title: translate({ id: "community.contactsTitle1", message: "邮件列表" }),
+        title: "邮件列表",
         link: "mailto:nacos_dev@linux.alibaba.com",
       },
       {
         img: "https://img.alicdn.com/imgextra/i1/O1CN010WA9R91tvZ1fQNaQt_!!6000000005964-2-tps-172-172.png",
         imgHover:
           "https://img.alicdn.com/imgextra/i1/O1CN01ZJTRpF21zhWvsfrOx_!!6000000007056-2-tps-172-172.png",
-        title: translate({ id: "community.contactsTitle2", message: "Gitter" }),
+        title: "Gitter",
         link: "https://gitter.im/alibaba/nacos",
       },
       {
@@ -87,36 +86,28 @@ const data = {
     list: [
       {
         img: "https://img.alicdn.com/imgextra/i3/O1CN018jYPjh1EwZeZ0x4Ir_!!6000000000416-2-tps-160-160.png",
-        title: translate({ id: "community.contributeTitle1", message: "邮件列表" }),
-        content: ( 
+        title: "邮件列表",
+        content: (
           <span>
-            <Translate id="community.contributeTitle11">发送</Translate>
-            <a href="mailto:nacos_dev@linux.alibaba.com">
-            <Translate id="community.contributeTitle12">邮件列表</Translate> </a>
-            <Translate id="community.contributeTitle13">参与讨论。</Translate>
+            发送 <a href="mailto:nacos_dev@linux.alibaba.com">邮件列表 </a>参与讨论。
           </span>
         ),
       },
       {
         img: "https://img.alicdn.com/imgextra/i3/O1CN01HZvKBp1IWFLd5xG19_!!6000000000900-2-tps-160-160.png",
-        title: translate({ id: "community.contributeTitle2", message: "报告缺陷" }),
+        title: "报告缺陷",
         content: (
           <span>
-            <Translate id="community.contributeTitle21">通过</Translate>
-            <a href="https://github.com/alibaba/nacos/issues"> Github issues </a>
-            <Translate id="community.contributeTitle22">报告缺陷。</Translate>
+            通过<a href="https://github.com/alibaba/nacos/issues"> Github issues </a>报告缺陷。
           </span>
         ),
       },
       {
         img: "https://img.alicdn.com/imgextra/i4/O1CN01bYb6VG1JUhd9wqL83_!!6000000001032-2-tps-160-160.png",
-        title: translate({ id: "community.contributeTitle3", message: "文档" }),
+        title: "文档",
         content: (
           <span>
-            <Translate id="community.contributeTitle31">优化Nacos</Translate>
-             <a href="http://nacos.io/zh-cn/docs/what-is-nacos.html"> 
-            <Translate id="community.contributeTitle32">文档</Translate>
-             </a>。
+            优化Nacos <a href="http://nacos.io/zh-cn/docs/what-is-nacos.html"> 文档</a>。
           </span>
         ),
       },
@@ -125,9 +116,7 @@ const data = {
         title: "Pull Request",
         content: (
           <span>
-            <Translate id="community.contributeTitle41">提交</Translate>
-             <a href="https://github.com/alibaba/nacos/pulls"> Pull requests </a>
-            <Translate id="community.contributeTitle42">来修复问题。</Translate>
+            提交 <a href="https://github.com/alibaba/nacos/pulls"> Pull requests </a>来修复问题。
           </span>
         ),
       },
@@ -141,10 +130,9 @@ const data = {
         title: "Dubbo and Dubbo Mesh",
         content: (
           <span>
-            <Translate id="community.dubboText1">Dubbo 及
+            Dubbo 及
             Nacos是阿里巴巴大规模微服务生产实践中的经典组合，对比传统的如ZooKeeper等注册中心与配置中心解决方案，在使用云原生及Service
             Mesh范式构建微服务应用平台时，通过在Dubbo中使用Nacos，可以完全释放Dubbo在大规模微服务治理、流量管理、服务集成及共享上的所有威力。
-            </Translate>
           </span>
         ),
         tags: [
@@ -164,11 +152,10 @@ const data = {
         title: "Kubernetes and CNCF",
         content: (
           <span>
-            <Translate id="community.dubboText2">Nacos 支持Kubernetes 以及
+            Nacos 支持Kubernetes 以及
             CNCF所需要的服务发现及动态配置管理的需求，Nacos可以完全无缝的替代Kubernetes的原生的DNS-based
             Service Discovery 解决方案，Nacos
             提供了更多的服务治理侧的特性，这包括服务的域名管理，服务健康及生命周期管理，流量管理及智能路由策略管理等，Nacos也增强了对ConfigMap的管理，这包括版本配置、灰度发布等。
-            </Translate>
           </span>
         ),
         tags: [
@@ -188,11 +175,9 @@ const data = {
         title: "Spring Cloud",
         content: (
           <span>
-            <Translate id="community.dubboText3">
             Nacos 完全兼容和无缝支持 Spring Cloud的相关API及主要相关功能，你可以将Nacos作为SpringCloud Config
             Server的配置服务或者Eureka/Consul/ZooKeeper等的服务发现产品的更好替代者，Nacos
             在配置管理和服务管理上带来了很多面向生产及微服务治理所需要的特性增强。
-            </Translate>
           </span>
         ),
         tags: [

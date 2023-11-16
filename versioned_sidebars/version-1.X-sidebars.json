@@ -5,9 +5,9 @@
       "label": "What is Nacos",
       "collapsible": false,
       "items": [
-        "v2/what-is-nacos",
-        "v2/concepts",
-        "v2/architecture"
+        "what-is-nacos",
+        "concepts",
+        "architecture"
       ]
     },
     {
@@ -15,30 +15,14 @@
       "label": "Quick Start",
       "collapsible": false,
       "items": [
-        "v2/quickstart/quick-start",
-        "v2/quickstart/quick-start-docker",
-        "v2/quickstart/quick-start-kubernetes"
-      ]
-    },
-    {
-      "type": "category",
-      "label": "Upgrading",
-      "collapsible": false,
-      "items": [
-        "v2/upgrading/2.0.0-compatibility",
-        "v2/upgrading/2.0.0-upgrading"
-      ]
-    },
-    {
-      "type": "category",
-      "label": "Plugin",
-      "collapsible": false,
-      "items": [
-        "v2/plugin/auth-plugin",
-        "v2/plugin/config-encryption-plugin",
-        "v2/plugin/datasource-plugin",
-        "v2/plugin/trace-plugin",
-        "v2/plugin/custom-environment-plugin"
+        "quick-start",
+        "quick-start-spring",
+        "quick-start-spring-boot",
+        "quick-start-spring-cloud",
+        "quick-start-docker",
+        "use-nacos-with-dubbo",
+        "use-nacos-with-kubernetes",
+        "nacos-sync"
       ]
     },
     {
@@ -46,12 +30,13 @@
       "label": "User Guide",
       "collapsible": false,
       "items": [
-        "v2/guide/user/sdk",
-        "v2/guide/user/other-language",
-        "v2/guide/user/open-api",
-        "v2/guide/user/auth",
-        "v2/guide/user/faq",
-        "v2/guide/user/failover"
+        "sdk",
+        "other-language",
+        "open-api",
+        "nacos-spring",
+        "system-configurations",
+        "auth",
+        "faq"
       ]
     },
     {
@@ -59,28 +44,14 @@
       "label": "Admin Guide",
       "collapsible": false,
       "items": [
-        "v2/guide/admin/deployment",
-        "v2/guide/admin/cluster-mode-quick-start",
-        "v2/guide/admin/system-configurations",
-        "v2/guide/admin/management-api",
-        "v2/guide/admin/console-guide",
-        "v2/guide/admin/monitor-guide",
-        "v2/guide/admin/nacos2-config-benchmark",
-        "v2/guide/admin/nacos2-naming-benchmark",
-        "v2/ecology/use-nacos-sync"
-      ]
-    },
-    {
-      "type": "category",
-      "label": "Ecology",
-      "collapsible": false,
-      "items": [
-        "v2/ecology/use-nacos-with-dubbo",
-        "v2/ecology/use-nacos-with-spring",
-        "v2/ecology/use-nacos-with-spring-boot",
-        "v2/ecology/use-nacos-with-spring-cloud",
-        "v2/ecology/use-nacos-sync",
-        "v2/ecology/use-nacos-with-coredns"
+        "deployment",
+        "cluster-mode-quick-start",
+        "management-api",
+        "console-guide",
+        "monitor-guide",
+        "nacos-config-benchmark",
+        "nacos-naming-benchmark",
+        "nacos-sync-use"
       ]
     },
     {
@@ -88,10 +59,10 @@
       "label": "Contributor Guide",
       "collapsible": false,
       "items": [
-        "v2/contribution/contributing",
-        "v2/contribution/contributing-flow",
-        "v2/contribution/pull-request",
-        "v2/contribution/how-to-reporting-bugs"
+        "contributing",
+        "contributing-flow",
+        "pull-request",
+        "how-to-reporting-bugs"
       ]
     },
     {
@@ -99,8 +70,8 @@
       "label": "Community",
       "collapsible": false,
       "items": [
-        "v2/community/community",
-        "v2/community/nacos-dev"
+        "community",
+        "nacos-dev"
       ]
     }
   ]

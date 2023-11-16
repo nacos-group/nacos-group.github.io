@@ -167,7 +167,7 @@ const config = {
           {
             type: "docsVersionDropdown",
             label: "Docs",
-            docid: "/what-is-nacos",
+            docid: "what-is-nacos",
             position: "right",
           },
           // {
