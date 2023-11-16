@@ -58,25 +58,49 @@
     "message": "Easy to use"
   },
   "homepage.featureListContent1": {
-    "message": "One-stop solution for dynamic service discovery, configuration management and dynamic DNS service;20+ out-of-the-box features for service-centric architectures;Light-weight production-ready console."
+    "message": "One-stop solution for dynamic service discovery, configuration management and dynamic DNS service"
+  },
+  "homepage.featureListContent2": {
+    "message": "20+ out-of-the-box features for service-centric architectures"
+  },
+  "homepage.featureListContent3": {
+    "message": "Light-weight production-ready console"
   },
   "homepage.featureListTitle2": {
     "message": "More adaptive to cloud architectures"
   },
-  "homepage.featureListContent2": {
-    "message": "Seamlessly support kubernetes and spring cloud;Easier to deploy and run on popular public cloud (for example AliCloud and AWS);Support multi-tenants and multi-environments."
+  "homepage.featureListContent4": {
+    "message": "Seamlessly support kubernetes and spring cloud"
+  },
+  "homepage.featureListContent5": {
+    "message": "Easier to deploy and run on popular public cloud (for example AliCloud and AWS)"
+  },
+  "homepage.featureListContent6": {
+    "message": "Support multi-tenants and multi-environments"
   },
   "homepage.featureListTitle3": {
     "message": "Production grade"
   },
-  "homepage.featureListContent3": {
-    "message": "Originated from time-tested internal products from Alibaba Group;Supports large-scale scenarios with millions of services;Open-source product with enterprise-level SLA."
+  "homepage.featureListContent7": {
+    "message": "Originated from time-tested internal products from Alibaba Group"
+  },
+  "homepage.featureListContent8": {
+    "message": "Supports large-scale scenarios with millions of services"
+  },
+  "homepage.featureListContent9": {
+    "message": "Open-source product with enterprise-level SLA"
   },
   "homepage.featureListTitle4": {
     "message": "Rich internet application scenarios affinity"
   },
-  "homepage.featureListContent4": {
-    "message": "Supports rate throttling, big promotion plans, and multi-region active-active architectures;Supports a variety of relevant internet-based use cases directly or with slight extension;Traffic scheduling & service governance."
+  "homepage.featureListContent10": {
+    "message": "Supports rate throttling, big promotion plans, and multi-region active-active architectures"
+  },
+  "homepage.featureListContent11": {
+    "message": "Supports a variety of relevant internet-based use cases directly or with slight extension"
+  },
+  "homepage.featureListContent12": {
+    "message": "Traffic scheduling & service governance"
   },
   "homepage.featureTitle": {
     "message": "Why Nacos"
@@ -103,7 +127,7 @@
     "message": "Features"
   },
   "homepage.msemapTitle": {
-    "message": "microservice ecosystem landscape"
+    "message": "Microservice Ecosystem Landscape"
   },
   "homepage.briefIntroduction": {
     "message": "an easy-to-use dynamic service discovery, configuration and service management platform for building cloud native applications"
@@ -112,13 +136,13 @@
     "message": "Providing your info on"
   },
   "homepage.userDesc2": {
-    "message": "to help improving nacos better."
+    "message": "to help improving Nacos better."
   },
   "homepage.userDesc3": {
-    "message": "who's using nacos"
+    "message": " Wanted: who's using Nacos"
   },
   "homepage.userTitleBefore": {
-    "message": "who's using nacos"
+    "message": "Who's using"
   },
   "homepage.userTitleAfter": {
     "message": " Nacos"
@@ -536,7 +560,39 @@
     "message": "Search docs",
     "description": "The placeholder of the input of the DocSearch pop-up modal"
   },
-  "community.contactsListTitle1": {
+  "theme.SearchPage.documentsFound.plurals": {
+    "message": "One document found|{count} documents found",
+    "description": "Pluralized label for \"{count} documents found\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.SearchPage.existingResultsTitle": {
+    "message": "Search results for \"{query}\"",
+    "description": "The search page title for non-empty query"
+  },
+  "theme.SearchPage.emptyResultsTitle": {
+    "message": "Search the documentation",
+    "description": "The search page title for empty query"
+  },
+  "theme.SearchPage.inputPlaceholder": {
+    "message": "Type your search here",
+    "description": "The placeholder for search page input"
+  },
+  "theme.SearchPage.inputLabel": {
+    "message": "Search",
+    "description": "The ARIA label for search page input"
+  },
+  "theme.SearchPage.algoliaLabel": {
+    "message": "Search by Algolia",
+    "description": "The ARIA label for Algolia mention"
+  },
+  "theme.SearchPage.noResultsText": {
+    "message": "No results were found",
+    "description": "The paragraph for empty search result"
+  },
+  "theme.SearchPage.fetchingNewResults": {
+    "message": "Fetching new results...",
+    "description": "The paragraph for fetching new search results"
+  },
+   "community.contactsListTitle1": {
     "message": "Mailing List"
   },
   "community.contactsListTitle2": {

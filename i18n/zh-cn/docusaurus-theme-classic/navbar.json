@@ -21,7 +21,7 @@
   },
   "item.label.NACOS CLOUD": {
     "message": "Nacos Cloud",
-    "description": "Navbar item with label Nacos Cloud"
+    "description": "Navbar item with label NACOS CLOUD"
   },
   "item.label.E-BOOK-NACOS": {
     "message": "NACOS架构与原理",
@@ -62,5 +62,9 @@
   "item.label.Service mesh Solution": {
     "message": "Service mesh Solution",
     "description": "Navbar item with label Service mesh Solution"
+  },
+  "item.label. ": {
+    "message": " ",
+    "description": "Navbar item with label  "
   }
 }
