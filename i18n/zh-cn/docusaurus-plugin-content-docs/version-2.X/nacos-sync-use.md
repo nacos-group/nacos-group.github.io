@@ -116,7 +116,7 @@ Dubbo服务的部署信息：![image.png](https://img.alicdn.com/tfs/TB1Ci_eJ4Tp
 
 > 注意：集群名字可以自定义，但是一旦确认，不能被修改，否则基于此集群增加的任务，在 NacosSync 重启后，将不会恢复成功。
 
-2.同样的步骤，增加NacosSync集群。
+2.同样的步骤，增加Nacos集群。
 ![image.png](https://img.alicdn.com/tfs/TB1HQPhJVzqK1RjSZFCXXbbxVXa-2846-1042.png)
 
 3.添加完成后，可以在列表中查询到：
