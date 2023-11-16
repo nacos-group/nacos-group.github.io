@@ -58,5 +58,13 @@
   "item.label.Service mesh Solution": {
     "message": "Service mesh Solution",
     "description": "Navbar item with label Service mesh Solution"
+  },
+  "item.label. ": {
+    "message": " ",
+    "description": "Navbar item with label  "
+  },
+  "item.label.NACOS CLOUD": {
+    "message": "NACOS CLOUD",
+    "description": "Navbar item with label NACOS CLOUD"
   }
 }
