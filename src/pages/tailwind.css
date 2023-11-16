@@ -7,12 +7,27 @@
 
 h1 {
     @apply text-5xl;
+    @apply font-bold;
 }
 
 h2 {
     @apply text-xl;
+    @apply font-bold;
 }
 
 h3 {
     @apply text-lg;
+    @apply font-bold;
+}
+
+h4 {
+    @apply font-bold;
+}
+
+h5 {
+    @apply font-bold;
+}
+
+h6 {
+    @apply font-bold;
 }
