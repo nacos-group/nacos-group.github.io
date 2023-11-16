@@ -13,6 +13,7 @@ import { getLink } from "../utils";
 import "tailwindcss/tailwind.css";
 import "./tailwind.css";
 
+// @ts-ignore
 export default function Home(): React.Element {
   const { siteConfig, i18n } = useDocusaurusContext();
   const curLang = i18n.currentLocale;
@@ -25,7 +26,7 @@ export default function Home(): React.Element {
       ele.style.boxShadow = "unset";
       const allLink = ele?.childNodes[0]?.childNodes[1]?.childNodes;
       allLink?.forEach((item, index) => {
-        if (index === 1 || index === 7) {
+        if (index === 2 || index === 8) {
           // @ts-ignore
           item.childNodes[0].className = "navbar__link text-white";
         } else {
@@ -43,7 +44,7 @@ export default function Home(): React.Element {
       ele.style.boxShadow = "rgba(0, 0, 0, 0.1) 0px 1px 2px 0px";
       const allLink = ele?.childNodes[0]?.childNodes[1]?.childNodes;
       allLink?.forEach((item, index) => {
-        if (index === 1 || index === 7) {
+        if (index === 2 || index === 8) {
           // @ts-ignore
           item.childNodes[0].className = "navbar__link";
         } else {

@@ -46,7 +46,7 @@ const config = {
     }
   },
   scripts: [
-    { src: '//dev.g.alicdn.com/mamba/mse-arc-ui/0.0.20/umd/mse-arc-ui.min.js' },
+    { src: '//g.alicdn.com/mamba/mse-arc-ui/0.0.21/umd/mse-arc-ui.min.js' },
     {
       src: 'https://www.googletagmanager.com/gtag/js?id=G-0YDFJ7LX7F',
       async: true,
@@ -54,7 +54,7 @@ const config = {
   ],
   stylesheets: [
     {
-      href: '//dev.g.alicdn.com/mamba/mse-arc-ui/0.0.20/umd/mse-arc-ui.min.css',
+      href: '//g.alicdn.com/mamba/mse-arc-ui/0.0.21/umd/mse-arc-ui.min.css',
     },
   ],
   plugins: ['docusaurus-plugin-sass',
@@ -143,11 +143,22 @@ const config = {
         },
         items: [
           {
-            label: 'Home',
-            to: '/',
+            label: ' ',
+            to: 'https://nacos.io/zh-cn/docs/v2/quickstart/quick-start.html',
             activeBaseRegex: '^/$',
             position: 'right',
           },
+          // {
+          //   label: 'Blog',
+          //   to: '/blog',
+          //   activeBaseRegex: '^/blog/',
+          // },
+          {
+          label: 'Home',
+          to: '/',
+          activeBaseRegex: '^/$',
+          position: 'right',
+        },
           // {
           //   label: 'Blog',
           //   to: '/blog',
@@ -241,7 +252,7 @@ const config = {
         appId: '1QV814950M',
 
         // Public API key: it is safe to commit it
-        apiKey: '7445da3dec050d45d29f3fe93ed45af3',
+        apiKey: 'c64d042c0f37873d8d45183b2f3675f8',
 
         indexName: 'nacos',
       },

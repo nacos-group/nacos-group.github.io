@@ -15,7 +15,7 @@ jobs:
           node-version: 18.x
       - name: Build
         run: |
-          npm install && npm run build && mkdir deploy-dist && cp -R build/* deploy-dist/ && mv build deploy-dist/
+          npm install && npm run build && mkdir deploy-dist && cp -R build/* deploy-dist/ && mv build *.xml *.html *.txt deploy-dist/
       - name: Use Node.js 12.x
         uses: actions/setup-node@v2
         with:

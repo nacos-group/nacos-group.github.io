@@ -35,22 +35,17 @@ const data = {
     list: [
       {
         text: translate({ id: 'homepage.footerResourcesListText1', message: '社区' }),
-        link: '/community/index',
+        link: '/community',
         target: '',
       },
       {
-        text: '云服务 MSE',
-        link: 'https://cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
+        text: translate({ id: 'homepage.footerResourcesListText2', message: '云服务 MSE' }),
+        link: '//cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
         target: "_blank",
       },
       {
-        text: '云服务 EDAS',
-        link: 'https://www.aliyun.com/product/edas?source_type=nacos_pc_20181219',
-        target: "_blank",
-      },
-      {
-        text: '云服务 AHAS',
-        link: 'https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225',
+        text: translate({ id: 'homepage.footerResourcesListText3', message: '云服务 EDAS' }),
+        link: '//www.aliyun.com/product/edas?source_type=nacos_pc_20181219',
         target: "_blank",
       },
     ],

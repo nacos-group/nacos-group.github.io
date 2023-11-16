@@ -23,6 +23,12 @@
   "homepage.footerResourcesListText1": {
     "message": "社区"
   },
+  "homepage.footerResourcesListText2": {
+    "message": "云服务 MSE"
+  },
+  "homepage.footerResourcesListText3": {
+    "message": "云服务 EDAS"
+  },
   "community.barText": {
     "message": "社区"
   },
@@ -35,14 +41,65 @@
   "community.contactsDesc": {
     "message": "有问题需要反馈？可以优先通过钉钉群(1群已满，2群群号:30438813)联系我们，或者通过以下方式参与我们一起互动。"
   },
+  "community.contactsTitle1": {
+    "message": "邮件列表"
+  },
+  "community.contactsTitle2": {
+    "message": "Gitter"
+  },
   "community.contributeTitle": {
     "message": "贡献指南"
   },
   "community.contributeDesc": {
     "message": "Nacos社区欢迎任何形式的贡献。"
   },
+  "community.contributeTitle1": {
+    "message": "邮件列表"
+  },
+  "community.contributeTitle11": {
+    "message": "发送"
+  },
+  "community.contributeTitle12": {
+    "message": "邮件列表"
+  },
+  "community.contributeTitle13": {
+    "message": "参与讨论。"
+  },
+  "community.contributeTitle2": {
+    "message": "报告缺陷"
+  },
+  "community.contributeTitle21": {
+    "message": "通过"
+  },
+  "community.contributeTitle22": {
+    "message": "报告缺陷。"
+  },
+  "community.contributeTitle3": {
+    "message": "文档"
+  },
+  "community.contributeTitle31": {
+    "message": "优化Nacos"
+  },
+  "community.contributeTitle32": {
+    "message": "文档"
+  },
+  "community.contributeTitle41": {
+    "message": "提交"
+  },
+  "community.contributeTitle42": {
+    "message": "来修复问题。"
+  },
   "community.dubboTitle": {
     "message": "开源生态相关"
+  },
+  "community.dubboText1": {
+    "message": "Dubbo 及Nacos是阿里巴巴大规模微服务生产实践中的经典组合，对比传统的如ZooKeeper等注册中心与配置中心解决方案，在使用云原生及Service Mesh范式构建微服务应用平台时，通过在Dubbo中使用Nacos，可以完全释放Dubbo在大规模微服务治理、流量管理、服务集成及共享上的所有威力。"
+  },
+  "community.dubboText2": {
+    "message": "Nacos 支持Kubernetes 以及 CNCF所需要的服务发现及动态配置管理的需求，Nacos可以完全无缝的替代Kubernetes的原生的DNS-basedService Discovery 解决方案，Nacos提供了更多的服务治理侧的特性，这包括服务的域名管理，服务健康及生命周期管理，流量管理及智能路由策略管理等，Nacos也增强了对ConfigMap的管理，这包括版本配置、灰度发布等。"
+  },
+  "community.dubboText3": {
+    "message": "Nacos 完全兼容和无缝支持 Spring Cloud的相关API及主要相关功能，你可以将Nacos作为SpringCloud ConfigServer的配置服务或者Eureka/Consul/ZooKeeper等的服务发现产品的更好替代者，Nacos在配置管理和服务管理上带来了很多面向生产及微服务治理所需要的特性增强。"
   },
   "homepage.featureListTitle1": {
     "message": "易于使用"
@@ -119,14 +176,14 @@
   "homepage.bookText": {
     "message": "手册"
   },
-  "homepage.223version": {
-    "message": "V2.2.3 版本说明"
+  "homepage.230-BETA": {
+    "message": "V2.3.0-BETA 版本说明"
   },
   "homepage.146version": {
     "message": "V1.4.6"
   },
   "homepage.pubTime": {
-    "message": "2023年5月25日发布"
+    "message": "2023年10月19日发布"
   },
   "theme.navbar.mobileLanguageDropdown.label": {
     "message": "选择语言",

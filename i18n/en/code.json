@@ -1,48 +1,105 @@
 {
   "homepage.footerVersionTitle": {
-    "message": "愿景"
+    "message": "Vision"
   },
   "homepage.footerVersionContent": {
-    "message": "Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。"
+    "message": "By providing an easy-to-use service infrastructure such as dynamic service discovery, service configuration, service sharing and management and etc., Nacos help users better construct, deliver and manage their own service platform, reuse and composite business service faster and deliver value of business innovation more quickly so as to win market for users in the era of cloud native and in all cloud environments, such as private, mixed, or public clouds."
   },
   "homepage.footerDocTitle": {
-    "message": "文档"
+    "message": "Documentation"
   },
   "homepage.footerDocListText1": {
-    "message": "概览"
+    "message": "Overview"
   },
   "homepage.footerDocListText2": {
-    "message": "快速开始"
+    "message": "Quick start"
   },
   "homepage.footerDocListText3": {
-    "message": "开发者指南"
+    "message": "Developer guide"
   },
   "homepage.footerResourcesTitle": {
-    "message": "资源"
+    "message": "Resources"
   },
   "homepage.footerResourcesListText1": {
-    "message": "社区"
+    "message": "Community"
+  },
+  "homepage.footerResourcesListText2": {
+    "message": "Cloud Service MSE"
+  },
+  "homepage.footerResourcesListText3": {
+    "message": "Cloud Service EDAS"
   },
   "community.barText": {
-    "message": "社区"
+    "message": "Community"
   },
   "community.eventsTitle": {
-    "message": "事件 & 新闻"
+    "message": "Events & News"
   },
   "community.contactsTitle": {
-    "message": "联系我们"
+    "message": "Talk To Us"
   },
   "community.contactsDesc": {
-    "message": "有问题需要反馈？可以优先通过钉钉群(1群已满，2群群号:30438813)联系我们，或者通过以下方式参与我们一起互动。"
+    "message": "Feel free to contact us  through the DingTalk group (1 group is full, 2 group number: 30438813), or via the following channel."
+  },
+  "community.contactsTitle1": {
+    "message": "Mailing List"
+  },
+  "community.contactsTitle2": {
+    "message": "#alibaba/Nacos"
   },
   "community.contributeTitle": {
-    "message": "贡献指南"
+    "message": "Contributor Guide"
   },
   "community.contributeDesc": {
-    "message": "Nacos社区欢迎任何形式的贡献。"
+    "message": "Want to contribute to Nacos?"
+  },
+  "community.contributeTitle1": {
+    "message": "Mailing List"
+  },
+  "community.contributeTitle11": {
+    "message": "Join the"
+  },
+  "community.contributeTitle12": {
+    "message": "mailing list"
+  },
+  "community.contributeTitle13": {
+    "message": "and discussion your ideas with us."
+  },
+  "community.contributeTitle2": {
+    "message": "Issue"
+  },
+  "community.contributeTitle21": {
+    "message": "Reporting issues via"
+  },
+  "community.contributeTitle22": {
+    "message": "."
+  },
+  "community.contributeTitle3": {
+    "message": "Documents"
+  },
+  "community.contributeTitle31": {
+    "message": "Improve the"
+  },
+  "community.contributeTitle32": {
+    "message": " documentation."
+  },
+  "community.contributeTitle41": {
+    "message": "Send your awesome enhancement via"
+  },
+  "community.contributeTitle42": {
+    "message": "Pull requests."
   },
   "community.dubboTitle": {
-    "message": "开源生态相关"
+    "message": "Open Source Ecology Corelated"
+  },
+  "community.dubboText1": {
+    "message": "Dubbo and Nacos are the classic combination from production practice of Alibaba's large-scale micro-service. Compared to traditional registry centers such as ZooKeeper and configuration center solutions, when building a microservice application platform by using cloud native and Service Mesh paradigm, with the use of Nacos in Dubbo, all the power of Dubbo in the large-scale microservice management, traffic management, service integration and sharing can be fully released."
+  },
+  "community.dubboText2": {
+    "message": "Nacos supports service discovery and dynamic configuration management required by Kubernetes and CNCF. Nacos can replace completely and seamlessly Kubernetes’ primary DNS-based Service Discovery solutions. Nacos is featured with providing more service governance, which includes management of service domain, service health and life cycle management, traffic management and intelligent routing strategy management and etc. Nacos also enhances the management of ConfigMap, including version configuration and gated launch and etc."
+  },
+  "community.dubboText3": {
+    "message": "Nacos is fully compatible and seamlessly supports the relevant API and main related functions of Spring Cloud. You can use Nacos as a configuration service for Spring Cloud Config Server or a better alternative for product of service discovery such as Eureka/Consul/ZooKeeper and etc. Nacos brings many feature enhancements required by the production and micro-service governance in configuration management and service management."
   },
   "theme.navbar.mobileLanguageDropdown.label": {
     "message": "Languages",
@@ -123,14 +180,14 @@
   "homepage.bookText": {
     "message": "Manual"
   },
-  "homepage.223version": {
-    "message": "Release Note of V2.2.3"
+  "homepage.230-BETA": {
+    "message": "Release Note of V2.3.0-BETA"
   },
   "homepage.146version": {
     "message": "V1.4.6"
   },
   "homepage.pubTime": {
-    "message": "Released on May 25, 2023"
+    "message": "Released on Oct 19, 2023"
   },
   "theme.ErrorPageContent.title": {
     "message": "This page crashed.",

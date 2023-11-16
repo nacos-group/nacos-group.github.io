@@ -37,11 +37,11 @@ const topData = {
   ],
   versionNote: {
     text: translate({
-      id: 'homepage.223version',
+      id: 'homepage.230-BETA',
       message:
-      'V2.2.3 版本说明',
+      'V2.3.0-BETA 版本说明',
     }),
-    link: 'https://github.com/alibaba/nacos/releases/tag/2.2.3',
+    link: 'https://github.com/alibaba/nacos/releases/tag/2.3.0-BETA',
   },
   versionNote2: {
     text: translate({
@@ -55,7 +55,7 @@ const topData = {
     text: translate({
       id: 'homepage.pubTime',
       message:
-      '2023年5月25日发布',
+      '2023年10月19日发布',
     }),
   },
 };

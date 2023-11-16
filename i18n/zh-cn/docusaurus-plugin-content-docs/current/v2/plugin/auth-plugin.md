@@ -68,6 +68,7 @@ Nacos从2.1.0版本开始，支持通过[SPI](https://docs.oracle.com/javase/tut
 |enableAuth|ActionTypes,SignType|boolean|在调用`validateIdentity`和`validateAuthority`前调用，插件可自行判断是否对此类型的操作或此类型的模块进行鉴权。|
 |validateIdentity|IdentityContext, Resource|boolean|对身份信息进行验证，在`validateAuthority`前调用|
 |validateAuthority|IdentityContext, Permission|boolean|对权限进行验证，在`validateIdentity`返回为`true`时调用|
+|isLoginEnabled|void|boolean|是否该插件开启开源控制台登录页，返回`true`时，访问开源控制台将需要通过登录页登录|
 
 ### 加载服务端插件
 
