@@ -30,25 +30,25 @@
     "message": "Cloud Service EDAS"
   },
   "community.barText": {
-    "message": "社区"
+    "message": "Community"
   },
   "community.eventsTitle": {
-    "message": "事件 & 新闻"
+    "message": "Events & News"
   },
   "community.contactsTitle": {
-    "message": "联系我们"
+    "message": "Talk To Us"
   },
   "community.contactsDesc": {
-    "message": "有问题需要反馈？可以优先通过钉钉群(1群已满，2群群号:30438813)联系我们，或者通过以下方式参与我们一起互动。"
+    "message": "Feel free to contact us through the DingTalk group (1 group is full, 2 group number: 30438813), or via the following channel."
   },
   "community.contributeTitle": {
-    "message": "贡献指南"
+    "message": "Contributor Guide"
   },
   "community.contributeDesc": {
-    "message": "Nacos社区欢迎任何形式的贡献。"
+    "message": "Want to contribute to Nacos?"
   },
   "community.dubboTitle": {
-    "message": "开源生态相关"
+    "message": "Open Source Ecology Corelated"
   },
   "theme.navbar.mobileLanguageDropdown.label": {
     "message": "Languages",
@@ -432,6 +432,38 @@
   "theme.SearchBar.seeAll": {
     "message": "See all {count} results"
   },
+  "theme.SearchPage.documentsFound.plurals": {
+    "message": "One document found|{count} documents found",
+    "description": "Pluralized label for \"{count} documents found\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.SearchPage.existingResultsTitle": {
+    "message": "Search results for \"{query}\"",
+    "description": "The search page title for non-empty query"
+  },
+  "theme.SearchPage.emptyResultsTitle": {
+    "message": "Search the documentation",
+    "description": "The search page title for empty query"
+  },
+  "theme.SearchPage.inputPlaceholder": {
+    "message": "Type your search here",
+    "description": "The placeholder for search page input"
+  },
+  "theme.SearchPage.inputLabel": {
+    "message": "Search",
+    "description": "The ARIA label for search page input"
+  },
+  "theme.SearchPage.algoliaLabel": {
+    "message": "Search by Algolia",
+    "description": "The ARIA label for Algolia mention"
+  },
+  "theme.SearchPage.noResultsText": {
+    "message": "No results were found",
+    "description": "The paragraph for empty search result"
+  },
+  "theme.SearchPage.fetchingNewResults": {
+    "message": "Fetching new results...",
+    "description": "The paragraph for fetching new search results"
+  },
   "theme.SearchBar.label": {
     "message": "Search",
     "description": "The ARIA label and placeholder for search button"
@@ -559,5 +591,53 @@
   "theme.SearchPage.fetchingNewResults": {
     "message": "Fetching new results...",
     "description": "The paragraph for fetching new search results"
+  },
+   "community.contactsListTitle1": {
+    "message": "Mailing List"
+  },
+  "community.contactsListTitle2": {
+    "message": "Gitter"
+  },
+  "community.contactsListTitle3": {
+    "message": "segmentfault"
+  },
+  "community.contactsListTitle4": {
+    "message": "@Nacos"
+  },
+  "community.contributeListTitle1": {
+    "message": "Mailing List"
+  },
+  "community.contributeListContent1": {
+    "message": "Mailing List"
+  },
+  "community.contributeListTitle2": {
+    "message": "Issue"
+  },
+  "community.contributeListContent2_1": {
+    "message": "Reporting issues via "
+  },
+  "community.contributeListContent2_2": {
+    "message": ""
+  },
+  "community.contributeListTitle3": {
+    "message": "Documents"
+  },
+  "community.contributeListContent3_1": {
+    "message": "Improve the"
+  },
+  "community.contributeListContent3_2": {
+    "message": "documentation"
+  },
+  "community.contributeListTitle4": {
+    "message": "Pull Request"
+  },
+  "community.ecosListContent1": {
+    "message": "Dubbo and Nacos are the classic combination from production practice of Alibaba's large-scale micro-service. Compared to traditional registry centers such as ZooKeeper and configuration center solutions, when building a microservice application platform by using cloud native and Service Mesh paradigm, with the use of Nacos in Dubbo, all the power of Dubbo in the large-scale microservice management, traffic management, service integration and sharing can be fully released."
+  },
+  "community.ecosListContent2": {
+    "message": "Nacos supports service discovery and dynamic configuration management required by Kubernetes and CNCF. Nacos can replace completely and seamlessly Kubernetes’ primary DNS-based Service Discovery solutions. Nacos is featured with providing more service governance, which includes management of service domain, service health and life cycle management, traffic management and intelligent routing strategy management and etc. Nacos also enhances the management of ConfigMap, including version configuration and gated launch and etc."
+  },
+  "community.ecosListContent3": {
+    "message": "Nacos is fully compatible and seamlessly supports the relevant API and main related functions of Spring Cloud. You can use Nacos as a configuration service for Spring Cloud Config Server or a better alternative for product of service discovery such as Eureka/Consul/ZooKeeper and etc. Nacos brings many feature enhancements required by the production and micro-service governance in configuration management and service management."
   }
 }

@@ -149,7 +149,7 @@ The migration of services:
 
 > Note: the cluster name can customize, but once confirmed, cannot be modified, otherwise increase task based on the cluster, after NacosSync restart, success will not resume.
 
-2.The same steps, increase NacosSync cluster.
+2.The same steps, increase Nacos cluster.
 ![image.png](https://img.alicdn.com/tfs/TB1HQPhJVzqK1RjSZFCXXbbxVXa-2846-1042.png)
 
 3.After the completion of the add, can inquire on the list:
