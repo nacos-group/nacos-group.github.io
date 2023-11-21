@@ -6,6 +6,8 @@ description: What is Nacos
 
 # What is Nacos
 
+> Document optimizing...
+
 ## Overview
 
 Welcome to Nacos!
@@ -22,15 +24,15 @@ Service is a first-class citizen in Nacos. Nacos supports discovering, configuri
 
 [Kubernetes Service](https://kubernetes.io/docs/concepts/services-networking/service/)
 
-[gRPC](https://grpc.io/docs/guides/concepts.html#service-definition) & [Dubbo RPC Service](https://dubbo.incubator.apache.org)
+[gRPC](https://grpc.io/docs/guides/concepts.html#service-definition) & [Dubbo RPC Service](https://dubbo.apache.org)
 
-[Spring Cloud RESTful Service](https://spring.io/understanding/REST)
+[Spring Cloud RESTful Service](https://spring.io/projects/spring-cloud)
 
 Key features of Nacos:
 
 * **Service Discovery And Service Health Check**
 
-    Nacos supports both DNS-based and RPC-based (Dubbo/gRPC) service discovery. After a service provider registers a service with [native](./sdk.md), [OpenAPI](./open-api.md), or [a dedicated agent](./other-language.md), a consumer can discover the service with either [DNS](./other-language.md) or [HTTP](./open-api.md).
+    Nacos supports both DNS-based and RPC-based (Dubbo/gRPC) service discovery. After a service provider registers a service with [native](./guide/user/sdk.md), [OpenAPI](./guide/user/open-api.md), or [a dedicated agent](./guide/user/other-language.md), a consumer can discover the service with either [DNS_TODO](./what-is-nacos.md) or [HTTP](./guide/user/open-api.md).
     
     Nacos provides real-time health check to prevent services from sending requests to unhealthy hosts or service instances. Nacos supports both transport layer (PING or TCP) health check and application layer (such as HTTP, Redis, MySQL, and user-defined protocol) health check. For the health check of complex clouds and network topologies(such as VPC, Edge Service etc), Nacos provides both agent mode and server mode health check. Nacos also provide a unity service health dashboard to help you manage the availability and traffic of services.    
     
@@ -54,8 +56,6 @@ Key features of Nacos:
 
     Nacos allows you to manage all of your services and metadata from the perspective of a microservices platform builder. This includes managing service description, life cycle, service static dependencies analysis, service health status, service traffic management，routing and security rules, service SLA, and first line metrics.
 
-* [Check more features ...](archive/roadmap.md)
-
 ## Nacos Map
 A picture to understand Nacos, the following structure will be described in detail.
 
@@ -75,23 +75,22 @@ A picture to understand Nacos, the following structure will be described in deta
 
 ![nacos_landscape.png](https://cdn.nlark.com/lark/0/2018/png/11189/1533045871534-e64b8031-008c-4dfc-b6e8-12a597a003fb.png)
  
-As the figure above shows, Nacos seamlessly supports open source ecologies including [Dubbo and Dubbo Mesh](./use-nacos-with-dubbo.md), [Spring Cloud](archive/use-nacos-with-springcloud.md), and [Kubernetes and CNCF](./use-nacos-with-kubernetes.md).
+As the figure above shows, Nacos seamlessly supports open source ecologies including 
+
+* [Spring Cloud](./ecology/use-nacos-with-spring-cloud.md)
+* [Apache Dubbo and Dubbo Mesh](./ecology/use-nacos-with-dubbo.md)
+* [Kubernetes and CNCF](./quickstart/quick-start-kubernetes.md)
 
 Use Nacos to simplify your solutions in service discovery, configuration management, and service governance and management. With Nacos, microservices management in open source system is easy.
 
 For more information about how to use Nacos with other open source projects, see the following:
 
-[Use Nacos with Kubernetes](./use-nacos-with-kubernetes.md)
+[Use Nacos with Spring Cloud](./ecology/use-nacos-with-spring-cloud.md)
 
-[Use Nacos with Dubbo](./use-nacos-with-dubbo.md)
+[Use Nacos with Kubernetes](./quickstart/quick-start-kubernetes.md)
 
-[Use Nacos with gRPC](archive/roadmap.md)
-
-[Use Nacos with Spring Cloud](archive/use-nacos-with-springcloud.md)
-
-[Use Nacos with Istio](archive/use-nacos-with-istio.md)
-
+[Use Nacos with Dubbo](./ecology/use-nacos-with-dubbo.md)
 
 ## What’s next
 
-Continue with [quick start](./quick-start.md) to get started with Nacos.
+Continue with [quick start](./quickstart/quick-start.md) to get started with Nacos.

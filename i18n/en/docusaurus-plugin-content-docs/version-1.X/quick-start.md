@@ -10,7 +10,7 @@ This topic is about how to set up and use Nacos.
 
 ## 0.Choose Version
 
-Nacos 1.X is old version. Recommend you use 2.X version. Please move to [document](./v2/quickstart/quick-start.md).
+Nacos 1.X is old version. Recommend you use 2.X version. Please move to [document](https://nacos.io/zh-cn/docs/v2/quickstart/quick-start).
 
 You can see the introduction of each version at [release notes](https://github.com/alibaba/nacos/releases) or [blog](https://nacos.io/zh-cn/blog/index.html), the current recommended version is 2.2.3.
 
