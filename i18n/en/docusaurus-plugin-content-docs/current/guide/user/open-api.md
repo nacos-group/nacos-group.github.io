@@ -6,7 +6,7 @@ description: Open API Guide
 
 # Open API Guide
 
-Nacos 2.X is compatible with Nacos 1.X OpenAPI, please refer to the document [Nacos1.X OpenAPI](../../../open-api.md).
+Nacos 2.X is compatible with Nacos 1.X OpenAPI, please refer to the document [Nacos1.X OpenAPI](https://nacos.io/en/docs/1.X/open-api).
 
 > Attension: OpenAPIs which do not specify a supported version, will be supported since 2.2.0.
 
