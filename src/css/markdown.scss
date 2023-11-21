@@ -604,7 +604,7 @@
   padding: 0.2em 0.4em;
   margin: 0;
   font-size: 85%;
-  background-color: rgba(27,31,35,0.05);
+  background-color: rgba(27, 31, 35, 0.05);
   border-radius: 3px;
 }
 
@@ -695,14 +695,14 @@
   border-bottom-color: #eee;
 }
 
- /* 代码高亮 */
+/* 代码高亮 */
 
 /*
  * Visual Studio 2015 dark style
  * Author: Nicolas LLOBERA <nllobera@gmail.com>
  */
 
- .markdown-body pre code {
+.markdown-body pre code {
   display: block;
   overflow-x: auto;
   padding: 0.5em;
@@ -716,6 +716,7 @@
 .hljs-name {
   color: #569CD6;
 }
+
 .hljs-link {
   color: #569CD6;
   text-decoration: underline;
