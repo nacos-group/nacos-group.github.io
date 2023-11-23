@@ -3,7 +3,7 @@ name: nacos.io deploy on OSS
 on:
   push:
     branches:
-      - develop-new-framework-close-oss-deploy
+      - develop-new-framework
 jobs:
   Build-Deploy:
     runs-on: ubuntu-22.04
