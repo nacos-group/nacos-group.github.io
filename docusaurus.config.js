@@ -40,7 +40,7 @@ const config = {
     }
   },
   scripts: [
-    { src: '//g.alicdn.com/mamba/mse-arc-ui/0.0.21/umd/mse-arc-ui.min.js' },
+    // { src: '//g.alicdn.com/mamba/mse-arc-ui/0.0.21/umd/mse-arc-ui.min.js' },
     {
       src: 'https://www.googletagmanager.com/gtag/js?id=G-0YDFJ7LX7F',
       async: true,
@@ -148,11 +148,11 @@ const config = {
           //   activeBaseRegex: '^/blog/',
           // },
           {
-          label: 'Home',
-          to: '/',
-          activeBaseRegex: '^/$',
-          position: 'right',
-        },
+            label: 'Home',
+            to: '/',
+            activeBaseRegex: '^/$',
+            position: 'right',
+          },
           // {
           //   label: 'Blog',
           //   to: '/blog',

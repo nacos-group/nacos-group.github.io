@@ -1,7 +1,7 @@
 import React from "react";
 import { translate } from "@docusaurus/Translate";
 import { Button, ButtonType } from "../../components";
-
+import useBaseUrl from "@docusaurus/useBaseUrl";
 import BrowserOnly from "@docusaurus/BrowserOnly";
 import { getLink } from "../../utils";
 
@@ -102,7 +102,7 @@ const Top = ({ language }: { language?: string }) => {
                         style={{ borderTop: "1px solid #979797" }}
                       >
                         <img
-                          src="img/success.png"
+                          src={useBaseUrl("/img/success.png")}
                           style={{ width: "13px", display: "inline-block", marginRight: "10px" }}
                         />
                         {el}
