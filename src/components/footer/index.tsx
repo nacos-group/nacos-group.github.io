@@ -3,7 +3,6 @@ import { translate } from '@docusaurus/Translate';
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 
 import './index.scss';
-import { getLink } from '../../utils';
 
 const data = {
   vision: {
@@ -20,12 +19,12 @@ const data = {
       },
       {
         text: translate({ id: 'homepage.footerDocListText2', message: '快速开始' }),
-        link: '/docs/quick-start',
+        link: '/docs/quickstart/quick-start',
         target: '',
       },
       {
         text: translate({ id: 'homepage.footerDocListText3', message: '开发者指南' }),
-        link: '/docs/contributing',
+        link: '/docs/contribution/contributing',
         target: '',
       },
     ],
@@ -40,12 +39,17 @@ const data = {
       },
       {
         text: translate({ id: 'homepage.footerResourcesListText2', message: '云服务 MSE' }),
-        link: '//cn.aliyun.com/product/aliware/mse?spm=nacos-website.topbar.0.0.0',
+        link: 'https://cn.aliyun.com/product/aliware/mse?from_alibabacloud=&spm=nacos.io.topbar.0.0.0',
         target: "_blank",
       },
       {
         text: translate({ id: 'homepage.footerResourcesListText3', message: '云服务 EDAS' }),
-        link: '//www.aliyun.com/product/edas?source_type=nacos_pc_20181219',
+        link: 'https://cn.aliyun.com/product/edas?from_alibabacloud=&source_type=nacos_pc_20181219',
+        target: "_blank",
+      },
+      {
+        text: translate({ id: 'homepage.footerResourcesListText4', message: '云服务 AHAS' }),
+        link: 'https://www.aliyun.com/product/ahas?source_type=nacos_pc_20190225',
         target: "_blank",
       },
     ],
@@ -64,41 +68,58 @@ const Footer = (props: Props) => {
 
   return (
     <footer className="footer-container">
-        <div className="footer-body">
-          <img src={props.logo} />
-          <div className="cols-container">
-            <div className="col col-12">
-              <h3>{data.vision.title}</h3>
-              <p>{data.vision.content}</p>
-            </div>
-            <div className="col col-6">
-              <dl>
-                <dt>{data.documentation.title}</dt>
-                {
-                  data.documentation.list.map((d, i) => (
-                    <dd key={i}><a href={`/${curLang}${d.link}`} target={d.target || "_self"}>
-                    {d.text}
-                  </a></dd>
-                  ))
-                }
-              </dl>
-            </div>
-            <div className="col col-6">
-            <dl>
-            <dt>{data.resources.title}</dt>
-            {
-              data.resources.list.map((d, i) => (
-                <dd key={i}><a href={`/${curLang}${d.link}`} target={d.target || "_self"}>
-                {d.text}
-              </a></dd>
-              ))
-            }
-            </dl>
-            </div>
+      <div className="footer-body">
+        <img style={{ marginTop: "4px", maxWidth: "120px", height: "auto"}} src={logo} />
+        {/* <p className="docusaurus-power">website powered by docusaurus</p> */}
+        <div className="cols-container"> 
+          <div className="col col-12">
+            <h3>{data.vision.title}</h3>
+            <p>{data.vision.content}</p>
           </div>
-          <div className="copyright"><span>{data.copyright}</span></div>
+          <div className="col col-6">
+            <dl>
+              <dt>{data.documentation.title}</dt>
+              {data.documentation.list.map((d, i) => (
+                <dd key={i}>
+                  {d.link?.substr(0, 4) === "http" && (
+                    <a href={d.link} target={d.target || "_self"}>
+                      {d.text}
+                    </a>
+                  )}
+                  {d.link?.substr(0, 4) !== "http" && (
+                    <a href={`/${curLang}${d.link}`} target={d.target || "_self"}>
+                      {d.text}
+                    </a>
+                  )}
+                </dd>
+              ))}
+            </dl>
+          </div>
+          <div className="col col-6">
+            <dl>
+              <dt>{data.resources.title}</dt>
+              {data.resources.list.map((d, i) => (
+                <dd key={i}>
+                  {d.link?.substr(0, 4) === "http" && (
+                    <a href={d.link} target={d.target || "_self"}>
+                      {d.text}
+                    </a>
+                  )}
+                  {d.link?.substr(0, 4) !== "http" && (
+                    <a href={`/${curLang}${d.link}`} target={d.target || "_self"}>
+                      {d.text}
+                    </a>
+                  )}
+                </dd>
+              ))}
+            </dl>
+          </div>
         </div>
-      </footer>
+        <div className="copyright">
+          <span>{data.copyright}</span>
+        </div>
+      </div>
+    </footer>
   );
 };
 

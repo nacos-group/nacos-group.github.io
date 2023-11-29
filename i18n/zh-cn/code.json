@@ -559,5 +559,56 @@
   "theme.SearchModal.placeholder": {
     "message": "搜索文档",
     "description": "The placeholder of the input of the DocSearch pop-up modal"
+  },
+  "homepage.footerResourcesListText4": {
+    "message": "云服务 AHAS"
+  },
+  "community.contactsListTitle1": {
+    "message": "邮件列表"
+  },
+  "community.contactsListTitle2": {
+    "message": "Gitter"
+  },
+  "community.contactsListTitle3": {
+    "message": "segmentfault"
+  },
+  "community.contactsListTitle4": {
+    "message": "@Nacos"
+  },
+  "community.contributeListTitle1": {
+    "message": "邮件列表"
+  },
+  "community.contributeListContent1": {
+    "message": "邮件列表"
+  },
+  "community.contributeListTitle2": {
+    "message": "报告缺陷"
+  },
+  "community.contributeListContent2_1": {
+    "message": "提交"
+  },
+  "community.contributeListContent2_2": {
+    "message": "来修复问题。"
+  },
+  "community.contributeListTitle3": {
+    "message": "文档"
+  },
+  "community.contributeListContent3_1": {
+    "message": "优化 Nacos"
+  },
+  "community.contributeListContent3_2": {
+    "message": "文档"
+  },
+  "community.contributeListTitle4": {
+    "message": "Pull Request"
+  },
+  "community.ecosListContent1": {
+    "message": "Dubbo 及Nacos是阿里巴巴大规模微服务生产实践中的经典组合，对比传统的如ZooKeeper等注册中心与配置中心解决方案，在使用云原生及ServiceMesh范式构建微服务应用平台时，通过在Dubbo中使用Nacos，可以完全释放Dubbo在大规模微服务治理、流量管理、服务集成及共享上的所有威力。"
+  },
+  "community.ecosListContent2": {
+    "message": "Nacos 支持Kubernetes 以及CNCF所需要的服务发现及动态配置管理的需求，Nacos可以完全无缝的替代Kubernetes的原生的DNS-basedService Discovery 解决方案，Nacos提供了更多的服务治理侧的特性，这包括服务的域名管理，服务健康及生命周期管理，流量管理及智能路由策略管理等，Nacos也增强了对ConfigMap的管理，这包括版本配置、灰度发布等。"
+  },
+  "community.ecosListContent3": {
+    "message": "Nacos 完全兼容和无缝支持 Spring Cloud的相关API及主要相关功能，你可以将Nacos作为SpringCloud ConfigServer的配置服务或者Eureka/Consul/ZooKeeper等的服务发现产品的更好替代者，Nacos在配置管理和服务管理上带来了很多面向生产及微服务治理所需要的特性增强。"
   }
 }
