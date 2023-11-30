@@ -1,14 +1,23 @@
 @import '../../css/variables.scss';
 
 .footer-container {
-  background: #F8F8F8;
+  background: #f8f8f8;
+  border-top: 1px solid #0054d1;
+
   .footer-body {
     max-width: $contentWidth;
     margin: 0 auto;
+    box-sizing: border-box;
     padding: 40px 40px 0;
     @media screen and (max-width: $mobileWidth) {
       padding-left: 20px;
       padding-right: 20px;
+    }
+    .docusaurus-power {
+      font-size: 14px;
+      color: #ccc;
+      line-height: 18px;
+      margin-bottom: 40px;
     }
     img {
       display: block;
@@ -17,6 +26,7 @@
       margin-bottom: 40px;
     }
     .cols-container {
+      margin-bottom: 60px;
       .col {
         display: inline-block;
         box-sizing: border-box;
@@ -31,6 +41,7 @@
       }
       h3 {
         font-family: Avenir-Heavy;
+        font-weight: 700;
         font-size: 18px;
         color: #333;
         line-height: 18px;
@@ -44,6 +55,7 @@
       }
       dl {
         font-family: Avenir-Heavy;
+        font-weight: 700;
         line-height: 18px;
       }
       dt {
@@ -68,7 +80,6 @@
       }
     }
     .copyright {
-      margin-top: 44px;
       border-top: 1px solid #ccc;
       min-height: 60px;
       line-height: 20px;
@@ -81,7 +92,7 @@
       span {
         display: inline-block;
         margin: 0 auto;
-      } 
+      }
     }
   }
 }
