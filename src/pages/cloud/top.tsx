@@ -47,7 +47,7 @@ const topData = {
       desc: "3节点配置，可用性高",
       linkName: "点击订阅",
       link: "https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0",
-      feature: ["按实例子规格收费", "1C2G，1个月"],
+      feature: ["按实例规格收费", "1C2G，1个月"],
     },
   ],
 };
