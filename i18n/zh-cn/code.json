@@ -149,14 +149,14 @@
   "homepage.bookText": {
     "message": "手册"
   },
-  "homepage.230-BETA": {
-    "message": "V2.3.0-BETA 版本说明"
+  "homepage.latest-version": {
+    "message": "V2.3.0 版本说明"
   },
-  "homepage.146version": {
+  "homepage.1x-version": {
     "message": "V1.4.6"
   },
   "homepage.pubTime": {
-    "message": "2023年10月19日发布"
+    "message": "2023年11月30日发布"
   },
   "theme.navbar.mobileLanguageDropdown.label": {
     "message": "选择语言",

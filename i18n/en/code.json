@@ -153,14 +153,14 @@
   "homepage.bookText": {
     "message": "Manual"
   },
-  "homepage.230-BETA": {
-    "message": "Release Note of V2.3.0-BETA"
+  "homepage.latest-version": {
+    "message": "Release Note of V2.3.0"
   },
-  "homepage.146version": {
+  "homepage.1x-version": {
     "message": "V1.4.6"
   },
   "homepage.pubTime": {
-    "message": "Released on Oct 19, 2023"
+    "message": "Released on Nov 30, 2023"
   },
   "theme.ErrorPageContent.title": {
     "message": "This page crashed.",

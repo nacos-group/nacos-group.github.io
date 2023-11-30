@@ -37,15 +37,15 @@ const topData = {
   ],
   versionNote: {
     text: translate({
-      id: 'homepage.230-BETA',
+      id: 'homepage.latest-version',
       message:
       'V2.3.0-BETA 版本说明',
     }),
-    link: 'https://github.com/alibaba/nacos/releases/tag/2.3.0-BETA',
+    link: 'https://github.com/alibaba/nacos/releases/tag/2.3.0',
   },
   versionNote2: {
     text: translate({
-      id: 'homepage.146version',
+      id: 'homepage.1x-version',
       message:
       'V1.4.6',
     }),
