@@ -34,7 +34,7 @@ localhost:3000/
 
 ## 版本要求
 Base docusaurus v2.4.1  
-Node.js version 16.14+
+Node.js version 19.5.0
 
 ## 国际化（i18n）注意事项
 请注意，如果您使用 `npm run start -- --locale zh-cn` 或 `npm run start -- --locale en` 以开发模式启动网站，**语言切换功能将不起作用**。请使用构建过程在生产模式下运行网站，以启用语言切换功能。

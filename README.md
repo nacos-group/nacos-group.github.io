@@ -34,7 +34,7 @@ localhost:3000/
 
 ## Requirements
 Base docusaurus v2.4.1  
-Node.js version 16.14+
+Node.js version 19.5.0
 
 ## Note for i18n
 Please be noted that **locale switching function doesn't work** if you start the website in development mode using `npm run start -- --locale zh-cn` or `npm run start -- --locale en`. Please run it in production mode using the build-and-serve process to enable the locale switching function.
