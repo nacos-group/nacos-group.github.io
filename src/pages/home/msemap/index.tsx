@@ -3,7 +3,6 @@ import { translate } from '@docusaurus/Translate';
 import './index.scss';
 import { Bone } from '../../../components';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import '//g.alicdn.com/mamba/mse-arc-ui/0.0.21/umd/mse-arc-ui.min.js';
 
 const data = {
   title: translate({ id: 'homepage.msemapTitle', message: '微服务全景图' }),
