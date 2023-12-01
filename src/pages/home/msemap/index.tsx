@@ -2,7 +2,6 @@ import React from 'react';
 import { translate } from '@docusaurus/Translate';
 import './index.scss';
 import { Bone } from '../../../components';
-
 import BrowserOnly from '@docusaurus/BrowserOnly';
 
 const data = {
