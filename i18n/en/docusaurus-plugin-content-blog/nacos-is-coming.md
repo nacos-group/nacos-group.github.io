@@ -14,11 +14,11 @@ date: 2018-06-01
 
 活动的 [视频回放](http://www.itdks.com/dakashuo/playback/2307)
 
-## 什么是 Nacos /nɑ:kəʊs/?
+## 什么是 Nacos `/nɑ:kəʊs/`?
 
 Nacos 是阿里巴巴的新开源项目，其核心定位是 “一个更易于帮助构建云原生应用的动态服务发现、配置和服务管理平台”。
 
-![Screen Shot 2018-06-27 at 15.09.35.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530083408486-b4698533-8e69-4e0a-9f3a-fdb1cdfbd290.png) 
+![Screen Shot 2018-06-27 at 15.09.35.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530083408486-b4698533-8e69-4e0a-9f3a-fdb1cdfbd290.png)
 
 Nacos 有三大主要功能:
 
@@ -41,7 +41,7 @@ Nacos 有三大主要功能:
 
 * **围绕着Service为中心的分布式基础设施正在变的越来越重要**
 
-![Screen Shot 2018-06-27 at 13.28.09.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077340492-513a25c0-51d0-494f-b39d-6f615d7e3915.png) 
+![Screen Shot 2018-06-27 at 13.28.09.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077340492-513a25c0-51d0-494f-b39d-6f615d7e3915.png)
 
 世界正在变的更快，创新和市场竞争的节奏正在变得愈发剧烈，如何超快速实现业务增长成为商业竞争的主旋律，几乎一夜之间共享单车就火遍全国，不到几年滴滴就改变了我们的打车方式，腾讯三班倒实现全民“吃鸡”，现在企业估值在从0到100亿所需的时间越来越短，而企业的平均寿命从标普的数据来看却从上世纪60年代的60年下降到了今天的15年，一切都表示创新和竞争的速度和烈度在加强。
 
@@ -51,7 +51,7 @@ Nacos 有三大主要功能:
 
 * **阿里巴巴在 "共享服务体系" 建设上的经验可以在各个行业大规模复用**
 
-![Screen Shot 2018-06-27 at 13.29.52.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077414293-3d22cd01-6e3c-49d1-82ea-ad2f8d443cf9.png) 
+![Screen Shot 2018-06-27 at 13.29.52.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077414293-3d22cd01-6e3c-49d1-82ea-ad2f8d443cf9.png)
 
 阿里巴巴中台理念和体系，与云原生在精神的“道”上完全契合，即“厚技术平台，薄应用” 支持业务的快速创新与试错，从而赢得市场，中台体系倡导双引擎架构，略过“大数据”不谈，但看业务中台，就是一个大的以“服务”为中心的共享服务平台，在线服务沉淀业务数据，同步到大数据平台计算和挖掘，大数据平台则通过数据回馈，指导业务及服务的创新，支成可沉淀和可共享“服务”体系的服务注册与服务治理平台是这个体系的关键要素之一。
 
@@ -59,68 +59,68 @@ Nacos 有三大主要功能:
 
 支持创新从小苗长成参天大树，服务平台不断演进，这一切需要一个强大的服务平台和服务基础设施的支撑。
 
-![Screen Shot 2018-06-27 at 13.30.25.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077444757-d36f344d-d3ae-4df0-808f-8500b4320e8d.png) 
+![Screen Shot 2018-06-27 at 13.30.25.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077444757-d36f344d-d3ae-4df0-808f-8500b4320e8d.png)
 
 * **阿里巴巴将通过Dubbo + Nacos以及一系列开源项目打造服务发现、服务及流量管理、服务共享平台**
 
-![Screen Shot 2018-06-27 at 13.30.58.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077476468-4ce30dd9-0da7-414a-875d-acc151739c1d.png) 
+![Screen Shot 2018-06-27 at 13.30.58.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077476468-4ce30dd9-0da7-414a-875d-acc151739c1d.png)
 
 ## Nacos 与 主流开源生态的关系
 
 Nacos 不会是个封闭的体系，除了对于阿里开源生态体系如Dubbo等自身的支持，也非常强调融入其它的开源生态，这里就包括Java的微服务生态体系Spring Cloud，Kubernetes/CNCF云原生生态体系，正如Nacos的未来全景图展示的那样
 
-![Screen Shot 2018-06-27 at 13.31.30.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077509217-d4fec359-8a41-4c51-a986-c44e06d16950.png) 
+![Screen Shot 2018-06-27 at 13.31.30.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077509217-d4fec359-8a41-4c51-a986-c44e06d16950.png)
 
 * Dubbo + Nacos， 专为Dubbo而生的注册中心与配置中心
 
 在阿里巴巴生产环境上，Dubbo和Nacos天然就是长在一起的，因为Nacos的缺失，传统的注册中心解决方案让Dubbo在服务治理、流量治理、服务运营和管理等方面的威力被限制和削弱了，Nacos的开源和开放会在采用Dubbo的用户环境中释放这些威力
 
-![Screen Shot 2018-06-27 at 13.31.57.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077613925-04d767fd-ec95-4fe2-8249-ce8650fbe372.png) 
+![Screen Shot 2018-06-27 at 13.31.57.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077613925-04d767fd-ec95-4fe2-8249-ce8650fbe372.png)
 
 * Nacos 会完全兼容Spring Cloud
 
 Nacos会无缝支持Spring Cloud，为Spring Cloud用户其提供更简便的配置中心和注册中心的解决方案，使用Nacos不用再仅仅为服务和配置就需要在生产上hold住 Eureka，Spring Cloud Config Server，Git，RabbitMQ/Kafka 起码四个开源产品。
-    
-![Screen Shot 2018-06-27 at 13.33.40.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077646935-7ca8a74d-59e5-4e01-865e-06fd5631e623.png) 
+
+![Screen Shot 2018-06-27 at 13.33.40.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077646935-7ca8a74d-59e5-4e01-865e-06fd5631e623.png)
 
 * Nacos 支持Kubernetes DNS-based Service Discovery
 
 在演讲中坤宇也表示，阿里巴巴这么多年在VIPServer DNS-based Service Discovery上的实践证明，在云原生时代，应用会更关注与基础设施的解耦合、多语言乃至多云的诉求，服务发现的未来一定是基于标准的DNS协议做，而不是像Eureka或者像ZooKeeper这样的私有API或者协议做, 同时在云上，在服务发现场景中，注册中心更关注的是可用性而不是数据一致性，所以Nacos会首推DNS-based Servcie Discovery，并优先关注可用性，而这也正是Nacos可以无缝融合进Kubernetes服务发现体系的原因所在
-    
-![Screen Shot 2018-06-27 at 13.34.18.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077691493-4dae9605-6886-4307-bc9d-16ba1cceb7ac.png) 
+
+![Screen Shot 2018-06-27 at 13.34.18.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077691493-4dae9605-6886-4307-bc9d-16ba1cceb7ac.png)
 
 * Nacos 会填补Spring Cloud 体系与 Kubernetes 体系的鸿沟
-    
+
 未来会有越来越多java生态的用户会选择 Kubernetes+Spring Cloud 组合，但不幸的是，在服务发现和配置管理的解决方案上，这2个体系都采用了完全不同的方案，这给同时采用2个体系的用户在注册中心和配置中心的需求上带来了非常大的不必要的复杂性。Nacos会尝试填补2者的鸿沟，以便在2套体系下可以采用同一套服务发现和配置管理的解决方案，这将大大的简化使用和维护的成本。
-    
-![Screen Shot 2018-06-27 at 13.35.05.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077731231-85a58c0e-ff5c-45a1-9bc8-b989e2b09d55.png) 
+
+![Screen Shot 2018-06-27 at 13.35.05.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077731231-85a58c0e-ff5c-45a1-9bc8-b989e2b09d55.png)
 
 * Nacos 与 Service Mesh
 
-![Screen Shot 2018-06-27 at 13.35.38.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077754298-39bbbdd0-c7af-434a-b189-8fd7ac958b43.png) 
+![Screen Shot 2018-06-27 at 13.35.38.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077754298-39bbbdd0-c7af-434a-b189-8fd7ac958b43.png)
 
-## Nacos 部分特性预览 
+## Nacos 部分特性预览
 
 同时在会上，坤宇对Nacos 1.0版本的部分特性给大家做了预览
 
-![Screen Shot 2018-06-27 at 13.36.06.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077784470-27f0e268-8d1f-443a-b1a5-3d59e15ab8f4.png) 
+![Screen Shot 2018-06-27 at 13.36.06.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077784470-27f0e268-8d1f-443a-b1a5-3d59e15ab8f4.png)
 
 每个产品都有自己的风格和标签，坤宇在演讲中表示，团队会通过持续的贡献和努力，希望未来给Nacos贴上四个方面的标签
 
-![Screen Shot 2018-06-27 at 13.37.10.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077851626-25444089-c027-4b89-a606-2e693b4e052d.png) 
+![Screen Shot 2018-06-27 at 13.37.10.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077851626-25444089-c027-4b89-a606-2e693b4e052d.png)
 
 在部署形态上，Nacos会支持多种部署形态，包括注册中心与配置中心的分离部署，同时在阿里云上提供Nacos的SaaS化部署服务，感兴趣的可以直接在阿里云上开通账户免费体验Nacos服务，在开源与商业化版本差别上，商业化的ACM以及EDAS ANS更强调与阿里云其它云服务以及其它Aliware PaaS的商业产品的集成体验以及提供商业服务。
 
-![Screen Shot 2018-06-27 at 13.36.37.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077875162-26cfa0e2-3da0-473e-98b9-190aa6d6d97a.png) 
+![Screen Shot 2018-06-27 at 13.36.37.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077875162-26cfa0e2-3da0-473e-98b9-190aa6d6d97a.png)
 
 
 ## Nacos 的主要产品里程碑及计划
 
-> 罗马不是一天建成的，吾将上下而求索 
+> 罗马不是一天建成的，吾将上下而求索
 
 因为Nacos是脱胎于阿里巴巴的生产代码，整体体系非常庞杂，在代码梳理、重构和剥离与内部的耦合上是一个渐进的过程，所以@坤宇特别提醒社区在Nacos 0.8达到生产可用状态前，不建议用于生产，不过可以在开发和测试环境尝试使用，在0.8版本开始，大家可以放心的用于生产环境，Nacos整体研发计划是在未来6-8个月将达到生产可用的状态，未来会很快启动将Nacos贡献给开源基金会进一步社区化发展。
 
-![Screen Shot 2018-06-27 at 13.38.13.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077912860-52c7fea4-5285-45a0-a3b8-73ba010c53da.png) 
+![Screen Shot 2018-06-27 at 13.38.13.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077912860-52c7fea4-5285-45a0-a3b8-73ba010c53da.png)
 
 ## Nacos 与相关开源产品的对比
 
@@ -128,22 +128,22 @@ Nacos会无缝支持Spring Cloud，为Spring Cloud用户其提供更简便的配
 
 如上面对整体业务及技术形式的判断，我们可以看到 Nacos 与同类竞品的主要不同主要在于理念，@坤宇介绍说，严格来说这些市面上的产品并不与Nacos完全对标，只是与Nacos里面的服务发现部分对标，Nacos的未来更看重在这些产品的基础上构建服务平台的能力，而不仅仅是在基础的服务发现能力上。
 
-![Screen Shot 2018-06-27 at 13.38.41.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077938157-00e6b34f-9a16-498c-9b89-cc48f6d6bb73.png) 
+![Screen Shot 2018-06-27 at 13.38.41.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077938157-00e6b34f-9a16-498c-9b89-cc48f6d6bb73.png)
 
-## 社区化发展，欢迎加入并贡献社区  
+## 社区化发展，欢迎加入并贡献社区
 
 > DISS is cheap, show me your hand
 > 比吐槽更重要的是搭把手，参与社区一起发展Nacos
 
 与阿里巴巴早期的开源不同，阿里巴巴新一轮的开源包括RocketMQ，Pouch Container，Dubbo, Nacos等开源产品更强调社区化的发展与社区的多样性，鼓励更多的公司和更多的开发者参与到开源项目中来，依托于社区将产品做得更好，同时一开始就会关注国际化，与国外同类产品的直面竞争。
 
-Nacos初步计划，在第一年就吸收至少超过5名来自其它公司的PMC,至少10名的外部Committer, 而且Nacos处在项目开源的初期，有大把的空间让有想法、有热情、有能力的开发者参与进来，Nacos本身在很多方面都急需要社区的帮助，这里面就急需包括前端及UI建设，Spring Cloud、Kubernetes、Service Mesh体系融合与集成，多语言客户端等各方面的技术领导者的参与，如果您对Nacos这个开源项目感兴趣，欢迎加入Nacos社区。你可以通过扫“超哥”的微信二维码，让“超哥” 帮你加入 “Nacos社区交流群” 
+Nacos初步计划，在第一年就吸收至少超过5名来自其它公司的PMC,至少10名的外部Committer, 而且Nacos处在项目开源的初期，有大把的空间让有想法、有热情、有能力的开发者参与进来，Nacos本身在很多方面都急需要社区的帮助，这里面就急需包括前端及UI建设，Spring Cloud、Kubernetes、Service Mesh体系融合与集成，多语言客户端等各方面的技术领导者的参与，如果您对Nacos这个开源项目感兴趣，欢迎加入Nacos社区。你可以通过扫“超哥”的微信二维码，让“超哥” 帮你加入 “Nacos社区交流群”
 
-![Screen Shot 2018-06-27 at 13.39.09.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077965587-8f4e3100-bdd4-469a-9ea0-7af7061bc9ef.png) 
+![Screen Shot 2018-06-27 at 13.39.09.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530077965587-8f4e3100-bdd4-469a-9ea0-7af7061bc9ef.png)
 
 ## 感谢所有未来给我们帮助的朋友
 
-![Screen Shot 2018-06-27 at 13.39.40.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530078016801-65ce72c1-c135-42b6-8076-a046f7829ba7.png) 
+![Screen Shot 2018-06-27 at 13.39.40.png](https://cdn.yuque.com/lark/0/2018/png/15914/1530078016801-65ce72c1-c135-42b6-8076-a046f7829ba7.png)
 
 ## References
 

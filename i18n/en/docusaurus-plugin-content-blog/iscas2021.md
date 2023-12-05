@@ -9,7 +9,7 @@ date: 2021-05-25
 
 ## 关于Nacos
 
-Nacos（/nɑ:kəʊs/）是Dynamic <u>Na</u>ming and <u>Co</u>nfiguration <u>S</u>ervice的首字母简称，是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。它孵化于阿里巴巴，成长于十年双十一的洪峰考验，沉淀了简单易用、稳定可靠、性能卓越的核心竞争力。
+Nacos（`/nɑ:kəʊs/`）是Dynamic <u>Na</u>ming and <u>Co</u>nfiguration <u>S</u>ervice的首字母简称，是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。它孵化于阿里巴巴，成长于十年双十一的洪峰考验，沉淀了简单易用、稳定可靠、性能卓越的核心竞争力。
 ![image.png](/img/blog/features.png)
 
 Nacos经过数年的社区共建，支持诸如Java、Go、Python等主流语言、支持如Dubbo和Spring Cloud Alibaba等主流服务框架和配置管理框架、同时还支持对接了如Istio，CoreDNS等云原生组件，是目前使用最广泛的微服务框架基础设施。
