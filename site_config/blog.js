@@ -4,6 +4,13 @@ export default {
     postsTitle: 'All posts',
     list: [
         {
+            title: 'Nacos 2.3.0 正式版发布、 Nacos Controller 项目开源',
+            author: '@杨翊',
+            dateStr: 'Dec 07, 2023',
+            desc: 'Nacos 2.3.0 正式版发布、 Nacos Controller 项目开源。',
+            link: '/zh-cn/blog/2.3.0-release.html',
+        },
+        {
             title: 'Nacos 荣获GLCC优秀社区，同时2.3.0-BETA发布，欢迎试用',
             author: '@杨翊',
             dateStr: 'Oct 24, 2023',
@@ -356,6 +363,13 @@ export default {
     barText: '博客',
     postsTitle: '所有文章',
     list: [
+        {
+            title: 'Nacos 2.3.0 正式版发布、 Nacos Controller 项目开源',
+            author: '@杨翊',
+            dateStr: 'Dec 07, 2023',
+            desc: 'Nacos 2.3.0 正式版发布、 Nacos Controller 项目开源。',
+            link: '/zh-cn/blog/2.3.0-release.html',
+        },
         {
             title: 'Nacos 荣获GLCC优秀社区，同时2.3.0-BETA发布，欢迎试用',
             author: '@杨翊',
