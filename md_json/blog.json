@@ -431,6 +431,16 @@
       }
     },
     {
+      "filename": "2.3.0-release.md",
+      "link": "/zh-cn/blog/2.3.0-release.html",
+      "meta": {
+        "title": "Nacos 2.3.0 正式版发布、 Nacos Controller 项目开源",
+        "keywords": "2.3.0",
+        "description": "Nacos 2.3.0 正式版发布、 Nacos Controller 项目开源。",
+        "date": "2023-12-07"
+      }
+    },
+    {
       "filename": "212-and-220beta-release.md",
       "link": "/zh-cn/blog/212-and-220beta-release.html",
       "meta": {
