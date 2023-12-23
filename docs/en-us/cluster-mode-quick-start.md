@@ -72,7 +72,10 @@ In the Nacos decompression directory Nacos / conf directory, there is a configur
 
 ### Using built-in data sources
 
-No configuration is required
+No configuration is required for the data source, but you need to specify the use of the built-in data source at startup:
+```bash
+sh startup.sh -p embedded
+```
 
 ### Use an external data source
 

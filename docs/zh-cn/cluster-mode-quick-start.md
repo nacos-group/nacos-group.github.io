@@ -71,7 +71,10 @@ cd nacos/distribution/target/nacos-server-1.3.0/nacos/bin
 
 ### 使用内置数据源
 
-无需进行任何配置
+数据源方面无需进行任何配置，但启动时需要指明使用内置数据源：
+```bash
+sh startup.sh -p embedded
+```
 
 ### 使用外置数据源
 
