@@ -13,7 +13,7 @@ import goatConfig from './goat.config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://nacos.io',
+	site: process.env.DEPLOY_SITE || 'https://nacos.io',
 	image: {
 		domain: ["img.alicdn"]
 	},
