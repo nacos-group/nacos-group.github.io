@@ -1,0 +1,23 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class:className } = Astro.props;
+---
+
+<div class={'base-layout ' + className}>
+    <slot/>
+</div>
+
+<style>
+  .base-layout {
+    width: 85.125rem;
+  }
+  @media (max-width: 85.125rem) {
+    /* 在这里编写屏幕宽度小于85.125rem的CSS样式 */
+    .header-content {
+      width: 100%;
+    }
+  }
+</style>

@@ -1,0 +1,470 @@
+[
+    {
+        "label": "封面",
+        "translations": {
+            "en": ""
+        },
+        "items": [
+            {
+                "label": "封面&推荐语",
+                "translations": {
+                    "en": ""
+                },
+                "items": [],
+                "link": "docs/ebook/kbyo6n.mdx"
+            }
+        ]
+    },
+    {
+        "label": "前言",
+        "translations": {
+            "en": ""
+        },
+        "items": [
+            {
+                "label": "序言",
+                "translations": {
+                    "en": ""
+                },
+                "items": [],
+                "link": "docs/ebook/pb40qx.mdx"
+            }
+        ]
+    },
+    {
+        "label": "简介",
+        "translations": {
+            "en": ""
+        },
+        "items": [
+            {
+                "label": "Nacos 简介",
+                "translations": {
+                    "en": ""
+                },
+                "items": [],
+                "link": "docs/ebook/iez8a4.mdx"
+            }
+        ]
+    },
+    {
+        "label": "Nacos架构",
+        "translations": {
+            "en": ""
+        },
+        "items": [
+            {
+                "label": "Nacos 总体设计",
+                "translations": {
+                    "en": ""
+                },
+                "items": [
+                    {
+                        "label": "Nacos 架构",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/un9fgs.mdx"
+                    },
+                    {
+                        "label": "Nacos 配置模型",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/szf3gh.mdx"
+                    }
+                ]
+            },
+            {
+                "label": "Nacos 内核设计",
+                "translations": {
+                    "en": ""
+                },
+                "items": [
+                    {
+                        "label": "Nacos 一致性协议",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/agxdnq.mdx"
+                    },
+                    {
+                        "label": "Nacos 自研Distro协议",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/ktwggk.mdx"
+                    },
+                    {
+                        "label": "Nacos 通信通道",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/sufa23.mdx"
+                    },
+                    {
+                        "label": "Nacos 寻址机制",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/ki4dgp.mdx"
+                    }
+                ]
+            },
+            {
+                "label": "Nacos 服务发现模块",
+                "translations": {
+                    "en": ""
+                },
+                "items": [
+                    {
+                        "label": "Nacos 注册中心的设计原理",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/ynstox.mdx"
+                    },
+                    {
+                        "label": "Nacos 注册中心服务数据模型",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/knk2h0.mdx"
+                    },
+                    {
+                        "label": "Nacos 健康检查机制",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/qrkw0g.mdx"
+                    }
+                ]
+            },
+            {
+                "label": "Nacos 配置管理模块",
+                "translations": {
+                    "en": ""
+                },
+                "items": [
+                    {
+                        "label": "配置一致性模型",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/dl5k6n.mdx"
+                    }
+                ]
+            },
+            {
+                "label": "Nacos 高可用设计",
+                "translations": {
+                    "en": ""
+                },
+                "items": [
+                    {
+                        "label": "Nacos 高可用设计",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/lgif1e.mdx",
+                        "attrs": {
+                            "lock": true
+                        }
+                    }
+                ]
+            },
+            {
+                "label": "Nacos 鉴权插件",
+                "translations": {
+                    "en": ""
+                },
+                "items": [
+                    {
+                        "label": "Nacos 账号权限体系",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/hcq5tb.mdx",
+                        "attrs": {
+                            "lock": true
+                        }
+                    },
+                    {
+                        "label": "Nacos 认证机制",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/vki2ag.mdx",
+                        "attrs": {
+                            "lock": true
+                        }
+                    }
+                ]
+            },
+            {
+                "label": "Nacos 前端设计",
+                "translations": {
+                    "en": ""
+                },
+                "items": [
+                    {
+                        "label": "Nacos 前端设计",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/ucfklf.mdx",
+                        "attrs": {
+                            "lock": true
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "label": "Nacos 性能报告",
+        "translations": {
+            "en": ""
+        },
+        "items": [
+            {
+                "label": "Nacos Naming 大规模测试报告",
+                "translations": {
+                    "en": ""
+                },
+                "items": [],
+                "link": "docs/ebook/qrhtgr.mdx",
+                "attrs": {
+                    "lock": true
+                }
+            }
+        ]
+    },
+    {
+        "label": "Nacos 生态",
+        "translations": {
+            "en": ""
+        },
+        "items": [
+            {
+                "label": "Nacos Spring 生态",
+                "translations": {
+                    "en": ""
+                },
+                "items": [],
+                "link": "docs/ebook/sih0nw.mdx",
+                "attrs": {
+                    "lock": true
+                }
+            },
+            {
+                "label": "Nacos Docker & Kubernetes 生态",
+                "translations": {
+                    "en": ""
+                },
+                "items": [],
+                "link": "docs/ebook/fplzfx.mdx",
+                "attrs": {
+                    "lock": true
+                }
+            },
+            {
+                "label": "Nacos 服务网格生态",
+                "translations": {
+                    "en": ""
+                },
+                "items": [],
+                "link": "docs/ebook/lhgpkh.mdx",
+                "attrs": {
+                    "lock": true
+                }
+            },
+            {
+                "label": "Nacos Golang生态",
+                "translations": {
+                    "en": ""
+                },
+                "items": [],
+                "link": "docs/ebook/ex6h8a.mdx",
+                "attrs": {
+                    "lock": true
+                }
+            },
+            {
+                "label": "Nacos C# 生态",
+                "translations": {
+                    "en": ""
+                },
+                "items": [],
+                "link": "docs/ebook/gekxwv.mdx",
+                "attrs": {
+                    "lock": true
+                }
+            },
+            {
+                "label": "Nacos-Sync 简介",
+                "translations": {
+                    "en": ""
+                },
+                "items": [],
+                "link": "docs/ebook/ushmi0.mdx",
+                "attrs": {
+                    "lock": true
+                }
+            }
+        ]
+    },
+    {
+        "label": "Nacos 最佳实践",
+        "translations": {
+            "en": ""
+        },
+        "items": [
+            {
+                "label": "企业落地最佳实践",
+                "translations": {
+                    "en": ""
+                },
+                "items": [
+                    {
+                        "label": "虎牙直播在微服务改造的实践总结",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/akfgmk.mdx",
+                        "attrs": {
+                            "lock": true
+                        }
+                    },
+                    {
+                        "label": "虎牙在全球 DNS 秒级生效上的实践",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/tmqg3o.mdx",
+                        "attrs": {
+                            "lock": true
+                        }
+                    },
+                    {
+                        "label": "小米Nacos2.0扩缩容最佳实践",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/mthae0.mdx",
+                        "attrs": {
+                            "lock": true
+                        }
+                    }
+                ]
+            },
+            {
+                "label": "服务发现最佳实践",
+                "translations": {
+                    "en": ""
+                },
+                "items": [
+                    {
+                        "label": "Eureka 平滑迁移 Nacos 方案",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/gf3vmh.mdx",
+                        "attrs": {
+                            "lock": true
+                        }
+                    },
+                    {
+                        "label": "Nacos 打通 CMDB 实现就近访问",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/uk8inc.mdx",
+                        "attrs": {
+                            "lock": true
+                        }
+                    },
+                    {
+                        "label": "跨注册中心服务同步实践",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/rxif2a.mdx",
+                        "attrs": {
+                            "lock": true
+                        }
+                    }
+                ]
+            },
+            {
+                "label": "配置管理最佳实践",
+                "translations": {
+                    "en": ""
+                },
+                "items": [
+                    {
+                        "label": "Nacos 限流最佳实践",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/mk78dd.mdx",
+                        "attrs": {
+                            "lock": true
+                        }
+                    },
+                    {
+                        "label": "Nacos 无缝支持 confd 配置管理",
+                        "translations": {
+                            "en": ""
+                        },
+                        "items": [],
+                        "link": "docs/ebook/fyac5p.mdx",
+                        "attrs": {
+                            "lock": true
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "label": "结语",
+        "translations": {
+            "en": ""
+        },
+        "items": [
+            {
+                "label": "结语",
+                "translations": {
+                    "en": ""
+                },
+                "items": [],
+                "link": "docs/ebook/ais5np.mdx",
+                "attrs": {
+                    "lock": true
+                }
+            }
+        ]
+    }
+]

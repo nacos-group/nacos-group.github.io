@@ -1,0 +1,122 @@
+---
+interface Props {
+  id: string,
+  size?: 'large' | 'small',
+  lang: 'zh-cn' | 'en' | string,
+}
+const { id, size = "small", lang } = Astro.props;
+const initialState = lang === 'zh-cn' ? false : true;
+---
+
+<toggle-content class="switch float-left relative m-0 rounded-[2rem]">
+  <input data-switch class="switch-checkbox hidden" id={`${id}-switch`} type="checkbox" checked={initialState} />
+  <label class="switch-label block overflow-hidden cursor-pointer rounded-[2rem]" for={`${id}-switch`}>
+      <span class="switch-inner block" data-on="中文" data-off="EN"></span>
+      <span class="switch-switch absolute float-right mx-1"></span>
+  </label>
+</toggle-content>
+
+
+<script>
+  class Toggle extends HTMLElement {
+    private switchElement: HTMLInputElement;
+      constructor() {
+          super();
+          this.switchElement = this.querySelector<HTMLInputElement>(
+            "input[data-switch]",
+          )!;
+          this.switchElement.addEventListener("click", () => {
+            this.toggleLanguage();
+          });
+      }
+
+      toggleLanguage = () => {
+        if (this.switchElement.checked) {
+          window.location.pathname = window.location.pathname.replace('/', '/en/');
+        } else {
+          window.location.pathname = window.location.pathname.replace('/en/', '/');
+        }
+      };
+  }
+  customElements.define("toggle-content", Toggle);
+</script>
+
+<style define:vars={{ size, initialState }}>
+toggle-content {
+  --toggle-ml-width: 7rem;
+  --toggle-xl-width: 7.5rem;
+  --toggle-ml-height: 2rem;
+  --toggle-xl-height: 2.5rem;
+  --toggle-ml-font: 0.75rem;
+  --toggle-xl-font: 0.85rem;
+  --toggle-ml-switch-width: 3.5rem;
+  --toggle-xl-switch-width: 3.75rem;
+  --toggle-ml-switch-height: 1.5rem;
+  --toggle-xl-switch-height: 2rem;
+}
+.switch {
+  width: var(--toggle-ml-width);
+}
+.switch-inner {
+  width: 200%;
+  margin-left: -100%;
+}
+.switch-inner::before,
+.switch-inner::after {
+  display: block;
+  float: right;
+  width: 50%;
+  height: var(--toggle-ml-height);
+  padding: 0;
+  line-height: var(--toggle-ml-height);
+  font-size: var(--toggle-ml-font);
+  color: theme("colors.gray.06");
+  box-sizing: border-box;
+}
+.switch-inner::after {
+  content: attr(data-on);
+  padding-left: 1.25rem;
+  background-color: theme("colors.gray.13");
+  color: theme("colors.gray.06");
+}
+.switch-inner::before {
+  content: attr(data-off);
+  padding-right: 1.25rem;
+  background-color: theme("colors.gray.13");
+  color: theme("colors.gray.06");
+  text-align: right;
+}
+.switch-switch {
+  background: theme("colors.gray.12");
+  height: var(--toggle-ml-switch-height);
+  width: var(--toggle-ml-switch-width);
+  bottom: 0.25rem;
+  border-radius: 2rem;
+  transition: all 0.3s ease-in 0s;
+  text-align: right;
+}
+.switch-switch::before {
+  display: flex;
+  content: '中文';
+  height: 100%;
+  font-size: var(--toggle-ml-font);
+  color: theme("colors.gray.01");
+  align-items: center;
+  justify-content: center;
+}
+.switch-checkbox:checked+.switch-label .switch-inner {
+  margin-left: 0;
+}
+.switch-checkbox:checked+.switch-label .switch-switch {
+  right: 0;
+}
+.switch-checkbox:checked+.switch-label .switch-switch::before {
+  display: flex;
+  content: 'EN';
+  height: 100%;
+  font-size: var(--toggle-ml-font);
+  color: theme("colors.gray.01");
+  align-items: center;
+  justify-content: center;
+}
+</style>

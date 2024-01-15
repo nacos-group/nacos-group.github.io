@@ -1,0 +1,41 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import BlogTop from "@components/markdownSet/BlogTop.astro";
+import Footer from "@components/common/Footer.astro";
+import { ACTIVITY_CATEGORY } from "src/consts";
+import BlogContent from "@components/markdownSet/BlogContent.astro"
+import { useTranslations } from '@i18n/util';
+const t = useTranslations(Astro);
+
+const blogCategories = new Set(ACTIVITY_CATEGORY.map(item => item.type));
+
+const posts = await getCollection("blog", (item) => blogCategories.has(item.data.category));
+
+
+const sortedPosts = posts.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf());
+
+const categoryPosts = ACTIVITY_CATEGORY.map(item => ({
+  posts: item.type === "all" ? sortedPosts : sortedPosts.filter(post => post.data.category === item.type),
+  ...item,
+}));
+
+---
+
+<BaseLayout
+  title="Nacos Blog"
+  description={t("blog.activity.explore")}
+>
+<!-- 活动：捕捉Nacos动态，链接开源脉搏。 -->
+<BlogTop title={t('commmon.header.comm.active')}  type="home" category={ACTIVITY_CATEGORY} />
+  <div class="bg-gray-14">
+    <BlogContent source="activity" categoryPosts={categoryPosts} />
+    <Footer />
+  </div>
+</BaseLayout>
+<style>
+  main {
+    width: 960px;
+  }
+  
+</style>

@@ -1,0 +1,241 @@
+---
+import TocComponent from "@components/markdownSet/TocComponents/TocComponent.astro";
+import { useTranslations } from "@i18n/util";
+const { align = "home", headings, categories, title, href } = Astro.props;
+const justifyContent = align === "detail" ? "flex-start" : "space-between";
+const isBlock = align === "detail" ? "block" : "none";
+const isFlexNone = align === "detail" ? "none" : 1;
+const isFlex = align === "detail" ? 1 : "none";
+const isRight = align === "detail" ? "auto" : "0px";
+const t = useTranslations(Astro);
+---
+
+<blog-header class="blog_header bg-gray-14 sticky top-0 z-11">
+  <div class="w-full">
+    <div
+      class="blog_header_content flex h-16 items-center justify-between w-full"
+    >
+      <!-- 顶部logo -->
+      <div class="blog_logo flex-1 md:flex md:items-center md:gap-12">
+        <a class="block text-teal-600" href={href}>
+          <span class="text-gray-01 text-4xl font-black">{title}</span>
+        </a>
+      </div>
+      <!-- 大屏菜单 -->
+      <div class="md:flex md:items-center md:gap-12">
+        <nav aria-label="Global" class="hidden md:block">
+          <ul class="flex items-center gap-6 text-sm list-none">
+            {
+              categories &&
+                categories.map((category) => {
+                  return (
+                    <li>
+                      <a
+                        class="sub-title text-gray-500 transition hover:text-gray-500/75"
+                        href={category.href}
+                        aria-current = {}
+                      >
+                        {category.title}
+                      </a>
+                    </li>
+                  );
+                })
+            }
+          </ul>
+        </nav>
+      </div>
+      <!-- 小屏菜单 -->
+      <div class="blog_menu_mobile flex items-center gap-4 relative">
+        <div class="block md:hidden">
+          <button
+            data-blog-menu-button
+            class="cursor-pointer rounded-full bg-gray-01 p-2 w-8 h-8 text-gray-14 transition hover:text-gray-14/75"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 28 28"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+          <div
+            class="data-blog-menu-content bg-gray-01 p-4 absolute top-full hidden"
+          >
+          <ul class="flex flex-col items-left gap-2 text-sm list-none p-0 w-24">
+            {
+              categories &&
+                categories.map((category) => {
+                  return (
+                  <li>
+                <a
+                  class="text-gray-500 transition hover:text-gray-500/75"
+                  href={category.href}
+                >
+                {category.title}
+                </a>
+              </li>
+                  );
+                })
+            }
+          </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 博客详情锚点 -->
+      <div
+        class="blog_menu_tocComponent cursor-pointer rounded-md border border-solid border-gray-01 hidden relative"
+      >
+        <div data-blog-tocComponent-button class="text-gray-01 pl-2">
+          {t('commmon.markdown.subheading.page')}
+          <svg
+            aria-hidden="true"
+            class="cursor-pointer"
+            width="20"
+            height="20"
+            viewBox="0 0 24 18"
+            fill="currentColor"
+          >
+            <path
+              d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"
+            ></path>
+          </svg>
+        </div>
+        <div
+          class="blog-tocComponent-content hidden absolute right-0 top-full w-96 bg-gray-12 text-gray-01 pl-8 pb-8 pt-4"
+        >
+          <TocComponent headings={headings} />
+        </div>
+      </div>
+    </div>
+  </div>
+</blog-header>
+<script>
+  class BlogHeaderLayout extends HTMLElement {
+    constructor() {
+      super();
+      let blogMenuStatus = false;
+      const blogMenu = this.querySelector<HTMLButtonElement>(
+        "button[data-blog-menu-button]",
+      )!;
+      const blogMenuContent = this.querySelector<HTMLDivElement>(
+        "div.data-blog-menu-content",
+      )!;
+      const blogTocComponentButton = this.querySelector<HTMLDivElement>(
+        "div[data-blog-tocComponent-button]",
+      )!;
+      const blogTocComponentContent = this.querySelector<HTMLDivElement>(
+        "div.blog-tocComponent-content",
+      )!;
+      // 移动端点击折叠按钮打开/关闭级联菜单
+      blogMenu.addEventListener("click", () => {
+        blogMenuStatus = !blogMenuStatus;
+        if (blogMenuStatus) {
+          blogMenuContent?.classList.remove("hidden");
+        } else {
+          blogMenuContent?.classList.add("hidden");
+        }
+      });
+      blogTocComponentButton.addEventListener("click", () => {
+        blogMenuStatus = !blogMenuStatus;
+        if (blogMenuStatus) {
+          blogTocComponentContent?.classList.remove("hidden");
+        } else {
+          blogTocComponentContent?.classList.add("hidden");
+        }
+      });
+    }
+  }
+  customElements.define("blog-header", BlogHeaderLayout);
+</script>
+
+<style define:vars={{ justifyContent, isBlock, isFlex, isFlexNone, isRight }}>
+  a {
+    text-decoration: inherit;
+    color: inherit;
+  }
+  .blog_header {
+    --logo-width: 96px;
+    --header-height: 5rem;
+    --header-ml-padding: 1rem;
+    --header-xl-padding: 2rem;
+  }
+  .blog_header {
+    /* height: 100%; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-height);
+    padding-left: var(--header-xl-padding);
+    padding-right: var(--header-xl-padding);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .shadow {
+    border: 1px solid theme("colors.gray.02");
+    box-shadow: 1px 1px 12px theme("colors.gray.14");
+  }
+  .logo {
+    vertical-align: sub;
+    width: var(--logo-width);
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  .menu-item {
+    height: 100%;
+  }
+  .label {
+    height: 100%;
+    font-size: 1rem;
+    line-height: 1rem;
+    cursor: pointer;
+    padding-left: var(--header-ml-padding);
+  }
+  .text {
+    margin-right: var(--header-ml-padding);
+  }
+  .line {
+    width: 1px;
+    height: 1rem;
+    display: inline-block;
+  }
+  .data-blog-menu-content {
+    right: var(--isRight);
+  }
+  .blog-tocComponent-content :global(h2) {
+    font-size: 1rem;
+  }
+  .blog-tocComponent-content :global(a) {
+    display: block;
+    font-size: var(--sl-text-xs);
+    text-decoration: none;
+    color: var(--sl-color-gray-5);
+    overflow-wrap: anywhere;
+  }
+  @media (max-width: 48rem) {
+    .blog_header_content {
+      justify-content: var(--justifyContent) !important;
+    }
+    .blog_menu_tocComponent {
+      display: var(--isBlock);
+    }
+    .blog_menu_mobile {
+      flex: var(--isFlex);
+    }
+    .blog_logo {
+      flex: var(--isFlexNone) !important;
+      margin-right: 1.5rem;
+    }
+  }
+</style>

@@ -1,0 +1,281 @@
+---
+import UIString from "../common/UIString.astro";
+import { useTranslations } from "@i18n/util";
+import houston from "./houston-happy.webp";
+import { Icon } from "@astrojs/starlight/components";
+
+const t = useTranslations(Astro);
+export interface Props {
+}
+---
+
+<feedback-form>
+	<button data-open-modal class="btn btn-primary btn-sm mt-4 rounded-2xl text-xs">
+		<UIString key="feedback.button" />
+	</button>
+
+	<dialog style="padding:0" aria-label={t("feedback.a11yLabel")}>
+		<div class="dialog-frame">
+			<!-- close button  -->
+			<button data-close-modal>
+				<Icon name="close" />
+			</button>
+
+			<form action="" class="space-y-1">
+
+				<h1 class="my-1"><UIString key="feedback.formTitle" /></h1>
+
+				<!-- 反馈问题类型 -->
+				<div>
+					<label class="block text-sm font-medium text-gray-15 mb-2">
+						<UIString key="feedback.type" />
+					</label>
+					<select
+						class="select select-primary select-sm w-full max-w-xs"
+						name="type"
+					>
+						<option value="correct"
+							><UIString key="feedback.type.correct" /></option
+						>
+						<option value="bug"
+							><UIString key="feedback.type.bug" /></option
+						>
+						<option value="search"
+							><UIString key="feedback.type.search" /></option
+						>
+						<option value="link"
+							><UIString key="feedback.type.link" /></option
+						>
+						<option value="other"
+							><UIString key="feedback.type.other" /></option
+						>
+					</select>
+				</div>
+
+				<!-- 问题描述 -->
+				<div>
+					<label
+						class="block text-sm font-medium text-gray-15 mb-2"
+						for="name"
+						><UIString key="feedback.description" /></label
+					>
+					<textarea
+						class="textarea textarea-primary textarea-sm w-full max-w-xs h-32"
+						placeholder={t("feedback.description.placeholder")}
+						name="description"
+					></textarea>
+				</div>
+
+				<!-- 联系方式 -->
+				<div>
+					<label
+						class="block text-sm font-medium text-gray-15 mb-2"
+						for="name"><UIString key="feedback.phone" /></label
+					>
+					<input
+						class="input input-primary input-sm w-full max-w-xs"
+						placeholder={t("feedback.phone.placeholder")}
+						name="phone"
+					/>
+				</div>
+
+				<!-- 提交按钮 -->
+				<div>
+					<button class="btn btn-primary btn-sm mt-6 w-full max-w-xs" type="submit"><UIString key="feedback.submit" /></button>
+				</div>
+			</form>
+			<div class="success-pane" hidden tabindex="-1">
+				<img src={houston.src} alt="" width="128" height="128" />
+				<p>
+					<UIString key="feedback.success" />
+				</p>
+			</div>
+		</div>
+	</dialog>
+</feedback-form>
+
+<script>
+	class FeedbackForm extends HTMLElement {
+		constructor() {
+			super();
+
+			// 反馈触发按钮
+			const openBtn = this.querySelector<HTMLButtonElement>(
+				"button[data-open-modal]",
+			)!;
+			// 弹窗关闭按钮
+			const closeBtn = this.querySelector<HTMLButtonElement>(
+				"button[data-close-modal]",
+			)!;
+			// 弹窗提交按钮
+			const submitBtn = this.querySelector<HTMLButtonElement>(
+				'button[type="submit"]',
+			)!;
+			// 弹窗
+			const dialog = this.querySelector("dialog")!;
+			// 弹窗内部frame
+			const dialogFrame = this.querySelector(".dialog-frame")!;
+			// 表单
+			const form = this.querySelector("form")!;
+			//成功发送按钮
+			const success =
+				this.querySelector<HTMLDivElement>("div.success-pane")!;
+
+			// 表单提交成功后的事件函数
+			const showSuccess = (show: boolean) => {
+				form.hidden = show;
+				success.hidden = !show;
+				if (show) success.focus();
+			};
+
+			// 打开弹窗后，如果点击了页面之外的地方，则关闭弹窗
+			const onWindowClick = (event: MouseEvent) => {
+				if (!dialogFrame.contains(event.target as Node)) closeModal();
+			};
+
+			// 打开弹窗
+			const openModal = (event: MouseEvent) => {
+				showSuccess(false);
+				dialog.showModal();
+				form.querySelector<HTMLInputElement>("input:checked")?.focus();
+				// Prevent click bubbling up and immediately closing the modal again.
+				event.stopPropagation();
+				window.addEventListener("click", onWindowClick);
+			};
+
+			// 关闭弹窗
+			const closeModal = () => {
+				dialog.close();
+				window.removeEventListener("click", onWindowClick);
+			};
+
+			openBtn.addEventListener("click", openModal);
+			closeBtn.addEventListener("click", closeModal);
+
+			form.addEventListener("submit", async (event) => {
+				event.preventDefault();
+				// Disable submit button while submitting to guard against re-submits.
+				submitBtn.disabled = true;
+				try {
+					const type = form.type.value;
+					const description = form.description.value;
+					const phone = form.phone.value;
+					const res = await fetch(
+						`http://goat.cn-hangzhou.log.aliyuncs.com/logstores/feedback/track?APIVersion=0.6.0&type=${type}&description=${description}&phone=${phone}&url=${location.href}`,
+					);
+					if (!res.ok) throw new Error(res.statusText);
+					const data = await res.json();
+					if (data.error) throw new Error(data.error);
+				} catch (e) {
+					console.error("Error submitting feedback form\n", e);
+				}
+				showSuccess(true);
+				submitBtn.disabled = false;
+				form.reset();
+			});
+
+			// Enable the “Give us feedback” button once JS has loaded.
+			openBtn.disabled = false;
+		}
+	}
+
+	customElements.define("feedback-form", FeedbackForm);
+</script>
+
+<style>
+	feedback-form {
+		--feedback-form-padding: 1rem;
+		--feedback-form-close-icon-size: 1.5rem;
+	}
+
+	dialog {
+		font-size: 1rem;
+		margin: 1.5rem auto auto;
+		border: 1px solid theme("colors.blue.03");
+		border-radius: 0.5rem;
+		width: 32rem;
+		background-color: theme("colors.blue.01");
+		/* box-shadow: 0 0.75rem 1rem var(--theme-backdrop-overlay); */
+	}
+
+	@media (max-width: 50rem) {
+		dialog {
+			width: 26rem;
+		}
+	}
+
+	@media (min-width: 30em) {
+		dialog {
+			margin-top: 4rem;
+		}
+	}
+
+	dialog::backdrop {
+		background-color: rgba(0, 0, 0, 0.5);
+	}
+
+	dialog * {
+		margin: 0;
+	}
+
+	dialog header {
+		display: grid;
+		grid-template-columns: 1fr auto 1fr;
+		gap: 1rem;
+	}
+
+	.dialog-frame {
+		display: flex;
+		flex-direction: column;
+		text-align: center;
+		padding: var(--feedback-form-padding);
+		background-color: theme("colors.blue.01");
+	}
+
+	form {
+		display: contents;
+	}
+
+	fieldset {
+		border: 0;
+		padding: 0;
+	}
+
+	.category-options {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 0.75rem;
+	}
+
+	@media (max-width: 50em) {
+		.submit-buttons {
+			flex-direction: column;
+			align-items: stretch;
+		}
+	}
+
+	form:invalid button[type="submit"] {
+		opacity: 0.5;
+	}
+
+	.success-pane {
+		padding: 2rem;
+	}
+
+	button[data-close-modal] {
+		position: absolute;
+		top: var(--feedback-form-padding);
+		right: var(--feedback-form-padding);
+		display: flex;
+		border: 0;
+		padding: 0.125rem;
+		background-color: transparent;
+		justify-self: flex-end;
+		cursor: pointer;
+	}
+
+
+	[hidden] {
+		display: none;
+	}
+</style>

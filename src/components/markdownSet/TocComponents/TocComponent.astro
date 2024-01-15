@@ -1,0 +1,70 @@
+---
+import TableOfContentsList from "@components/starlight/TableOfContentsList.astro";
+import "./style.css";
+import { useTranslations } from "@i18n/util";
+const t = useTranslations(Astro);
+
+// Props
+const { headings = [] } = Astro.props;
+
+const toc = [{ depth: 2, slug: "_top", text: "概述", children: [] }];
+
+/** Inject a ToC entry as deep in the tree as its `depth` property requires. */
+function injectChild(items, item): void {
+    const lastItem = items.at(-1);
+    if (!lastItem || lastItem.depth >= item.depth) {
+        items.push(item);
+    } else {
+        return injectChild(lastItem.children, item);
+    }
+}
+
+for (const heading of headings) injectChild(toc, { ...heading, children: [] });
+const depth = 0;
+---
+
+{
+    toc && (
+        <markdown-toc data-min-h="1" data-max-h="4" class={"isMobile"}>
+            <nav
+                aria-labelledby="starlight__on-this-page"
+                class="starlight__on-this-page"
+            >
+                <h2 id="starlight__on-this-page" class="heading">
+                    {t('rightSidebar.onThisPage')}
+                </h2>
+                <TableOfContentsList toc={toc} />
+            </nav>
+        </markdown-toc>
+    )
+}
+
+<style define:vars={{ depth }}>
+    ul {
+        padding: 0;
+        list-style: none;
+    }
+    a {
+        --pad-inline: 0.5rem;
+        display: block;
+        border-radius: 0.25rem;
+        padding-block: 0.25rem;
+        padding-inline: calc(1rem * var(--depth) + var(--pad-inline))
+            var(--pad-inline);
+        line-height: 1.25;
+    }
+    a[aria-current="true"],
+    a[aria-current="true"]:hover,
+    a[aria-current="true"]:focus {
+        color: theme("colors.gray.14") !important;
+        background-color: theme("colors.gray.02") !important;
+        border-left-style: solid;
+        border-left-width: 3px;
+        border-left-color: theme("colors.gray.14");
+        padding-left: 0.625rem !important;
+        font-weight: normal !important;
+        border-radius: 0 !important;
+    }
+</style>
+
+<script src="./markdown-toc.ts"></script>

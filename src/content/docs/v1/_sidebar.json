@@ -1,0 +1,280 @@
+[
+    {
+        "label": "Nacos是什么?",
+        "translations": {
+          "en": "What is Nacos"
+        },
+        "collapsed": false,
+        "items": [
+          {
+            "label": "Nacos 简介",
+            "link": "docs/what-is-nacos",
+            "translations": {
+                "en": "What is Nacos"
+            }
+          },
+          {
+            "label": "概念",
+            "link": "docs/concepts",
+            "translations": {
+                "en": "concepts"
+            }
+          },
+          {
+            "label": "架构",
+            "link": "docs/architecture",
+            "translations": {
+                "en": "architecture"
+            }
+          }
+        ]
+    },
+    {
+    "label": "快速开始",
+    "translations": {
+        "en": "Quick Start"
+    },
+    "collapsed": false,
+    "items": [
+        {
+        "label": "Nacos",
+        "link": "docs/quick-start",
+        "translations": {
+            "en": "Nacos"
+        }
+        },
+        {
+        "label": "Nacos Spring",
+        "link": "docs/quick-start-spring",
+        "translations": {
+            "en": "Nacos Spring"
+        }
+        },
+        {
+        "label": "Nacos Spring Boot",
+        "link": "docs/quick-start-spring-boot",
+        "translations": {
+            "en": "Nacos Spring Boot"
+        }
+        },
+        {
+        "label": "Nacos Spring Cloud",
+        "link": "docs/quick-start-spring-cloud",
+        "translations": {
+            "en": "Nacos Spring Cloud"
+        }
+        },
+        {
+        "label": "Nacos Docker",
+        "link": "docs/quick-start-docker",
+        "translations": {
+            "en": "Nacos Docker"
+        }
+        },
+        {
+        "label": "Nacos Dubbo",
+        "link": "docs/use-nacos-with-dubbo",
+        "translations": {
+            "en": "Nacos Dubbo"
+        }
+        },
+        {
+        "label": "Nacos K8s",
+        "link": "docs/use-nacos-with-kubernetes",
+        "translations": {
+            "en": "Nacos K8s"
+        }
+        },
+        {
+        "label": "Nacos Sync",
+        "link": "docs/nacos-sync",
+        "translations": {
+            "en": "Nacos Sync"
+        }
+        }
+    ]
+    },
+    {
+        "label": "用户指南",
+        "translations": {
+            "en": "User Guide"
+        },
+        "collapsed": false,
+        "items": [
+            {
+            "label": "Java的SDK",
+            "link": "docs/sdk",
+            "translations": {
+                "en": "Java SDK"
+            }
+            },
+            {
+            "label": "其他语言的SDK",
+            "link": "docs/other-language",
+            "translations": {
+                "en": "Other languages SDK"
+            }
+            },
+            {
+            "label": "Open-API指南",
+            "link": "docs/open-api",
+            "translations": {
+                "en": "Open API Guide"
+            }
+            },
+            {
+            "label": "Nacos Spring",
+            "link": "docs/nacos-spring",
+            "translations": {
+                "en": "Nacos Spring"
+            }
+            },
+            {
+            "label": "Nacos系统参数介绍",
+            "link": "docs/system-configurations",
+            "translations": {
+                "en": "Nacos System Configurations"
+            }
+            },
+            {
+            "label": "权限认证",
+            "link": "docs/auth",
+            "translations": {
+                "en": "Authentication"
+            }
+            },
+            {
+            "label": "FAQ",
+            "link": "docs/faq",
+            "translations": {
+                "en": "FAQ"
+            }
+            }
+        ]
+    },
+    {
+        "label": "运维指南",
+        "translations": {
+            "en": "Admin Guide"
+        },
+        "collapsed": false,
+        "items": [
+            {
+            "label": "部署手册",
+            "link": "docs/deployment",
+            "translations": {
+                "en": "Deployment Guide"
+            }
+            },
+            {
+            "label": "集群部署说明",
+            "link": "docs/cluster-mode-quick-start",
+            "translations": {
+                "en": "Cluster Mode Deployment"
+            }
+            },
+            {
+            "label": "运维API",
+            "link": "docs/management-api",
+            "translations": {
+                "en": "Management OpenAPI"
+            }
+            },
+            {
+            "label": "控制台手册",
+            "link": "docs/console-guide",
+            "translations": {
+                "en": "Admin Console Guide"
+            }
+            },
+            {
+            "label": "监控手册",
+            "link": "docs/monitor-guide",
+            "translations": {
+                "en": "Nacos Monitor Guide"
+            }
+            },
+            {
+            "label": "Nacos配置模块压测报告",
+            "link": "docs/nacos-config-benchmark",
+            "translations": {
+                "en": "Nacos Config Benchmark"
+            }
+            },
+            {
+            "label": "Nacos服务发现模块压测报告",
+            "link": "docs/nacos-naming-benchmark",
+            "translations": {
+                "en": "Nacos Naming Benchmark"
+            }
+            },
+            {
+            "label": "其他环境迁移到Nacos",
+            "link": "docs/nacos-sync-use",
+            "translations": {
+                "en": "Data Migration to Nacos"
+            }
+            }
+        ]
+    },
+    {
+        "label": "开源共建",
+        "translations": {
+            "en": "Contributor Guide"
+        },
+        "collapsed": false,
+        "items": [
+          {
+            "label": "贡献源码",
+            "link": "docs/contributing",
+            "translations": {
+                "en": "Contribute to Nacos"
+            }
+          },
+          {
+            "label": "贡献流程",
+            "link": "docs/contributing-flow",
+            "translations": {
+                "en": "Contributing Flow"
+            }
+          },
+          {
+            "label": "pull request模板",
+            "link": "docs/pull-request",
+            "translations": {
+                "en": "Pull Request Template"
+            }
+          },
+          {
+            "label": "如何提交问题报告",
+            "link": "docs/how-to-reporting-bugs",
+            "translations": {
+                "en": "How to report bugs"
+            }
+          }
+        ]
+    },
+    {
+        "label": "社区",
+        "translations": {
+            "en": "Community"
+        },
+        "collapsed": false,
+        "items": [
+          {
+            "label": "社区",
+            "link": "docs/community",
+            "translations": {
+                "en": "Community"
+            }
+          },
+          {
+            "label": "开发团队",
+            "link": "docs/nacos-dev",
+            "translations": {
+                "en": "Develop Team"
+            }
+          }
+        ]
+    }
+]

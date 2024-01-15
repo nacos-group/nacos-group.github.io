@@ -1,0 +1,58 @@
+---
+title: Nacos Server 下载
+order: 0
+---
+
+
+# Nacos Server 下载
+
+:::tip
+
+Nacos Server **2.3.0** 已正式发布。支持持久化服务通过gRPC协议注册和注销，修复问题若干。
+
+欢迎[下载和试用](https://github.com/alibaba/nacos/releases/tag/2.3.0).
+
+:::
+
+
+## 系统要求
+
+:::note
+
+以下是部署Nacos Server的最小系统要求。如果您的环境无法满足系统最小要求，可能会导致无法部署和启动Nacos Server。
+
+:::
+
+|             |                                                                                                                         |
+|-------------|------------------------------------------------------------------------------------------------------------------------------------|
+| **JDK/JRE** | 8及以上  |
+| **CPU**  | 1核及以上，支持64位CPU    |
+| **内存** | 2G及以上 |
+| **硬盘** | 无最小要求，根据保留日志自行调整|
+| **操作系统** | Linux, Mac OS X, Windows |
+
+## 稳定版本
+
+### 2.x
+| 版本 | 二进制包下载                                                  | Docker 镜像                                                 | MD5                         | 发布说明                                    | 参考文档                                   |
+| ------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------------------- | ------------------------------------------------ | ------------------------------------------------ |
+| 2.3.0   | [2.3.0.zip](http://download.nacos.io/nacos-server/nacos-server-2.3.0.zip) | [nacos/nacos-server:2.3.0](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=2.3.0) | 71d55f2b195e9357d01d9979f5cba37e | [2.3.0 Release Notes](https://github.com/alibaba/nacos/releases/tag/2.3.0)      | [2.3.x Quick Start](/docs/v2/quickstart/quick-start)      |
+
+### 1.x
+
+| 版本 | 二进制包下载                                                | Docker 镜像                                                 | MD5                         | 发布说明                                     | 参考文档                                  |
+| ------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------------------- | ------------------------------------------------ | ------------------------------------------------ |
+| 1.4.6   | [1.4.6.zip](https://github.com/alibaba/nacos/releases/download/1.4.6/nacos-server-1.4.6.zip) | [nacos/nacos-server:1.4.6](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=1.4.6) | 1d2fb750fdc743b55ad77a0ddc70407f | [1.4.6 Release Notes](https://github.com/alibaba/nacos/releases/tag/1.4.6)      | [1.4.6 Quick Start](/docs/v1/quickstart/quick-start)      |
+
+
+ - 请尽可能的升级到最新已发布版本，版本升级请参考 [upgrade guide](/docs/v2/upgrading/version2-upgrading)
+ - 更多历史版本下载，请参考 [Release History](release-history)
+ - 基于 [Apache License, version 2.0](https://www.apache.org/licenses/) 分发版本。
+
+## 快照版本
+
+快照版本仍在开发中，我们鼓励您试用和反馈问题，但不建议生产使用。
+
+| 版本 | 二进制包下载                                                | Docker 镜像                                                 | MD5                         | 发布说明                                     | 参考文档                                  |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 2.3.0-BETA | [2.3.0-BETA.zip](https://github.com/alibaba/nacos/releases/download/2.3.0-BETA/nacos-server-2.3.0-BETA.zip) | [nacos/nacos-server:latest](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=latest) | d5ec477776dd7896236315352c4e9953 | [2.3.0-BETA Release Notes](https://github.com/alibaba/nacos/releases/tag/2.3.0-BETA)      | [2.3.0-BETA Quick Start](/docs/user/quickstart/)      |

@@ -1,0 +1,111 @@
+[
+    {
+        "label": "Nacos是什么?",
+        "translations": {
+          "en": "What is Nacos"
+        },
+        "collapsed": false,
+        "items": [
+          {
+            "label": "Nacos 简介",
+            "link": "docs/what-is-nacos",
+            "translations": {
+                "en": "What is Nacos"
+            }
+          },
+          {
+            "label": "概念",
+            "link": "docs/concepts",
+            "translations": {
+                "en": "concepts"
+            }
+          },
+          {
+            "label": "架构",
+            "link": "docs/architecture",
+            "translations": {
+                "en": "architecture"
+            }
+          }
+        ]
+    },
+    {
+    "label": "快速开始",
+    "translations": {
+        "en": "Quick Start"
+    },
+    "collapsed": false,
+    "items": [
+        {
+        "label": "Nacos",
+        "link": "docs/quickstart/quick-start",
+        "translations": {
+            "en": "Nacos"
+        }
+        },
+        {
+        "label": "Nacos Docker",
+        "link": "docs/quickstart/quick-start-docker",
+        "translations": {
+            "en": "Nacos Docker"
+        }
+        },
+        {
+        "label": "Nacos Kubernetes",
+        "link": "docs/quickstart/quick-start-kubernetes",
+        "translations": {
+            "en": "Nacos Kubernetes"
+        }
+        }
+    ]
+    },
+    {
+        "label": "升级",
+        "translations": {
+            "en": "Upgrading"
+        },
+        "autogenerate": { "directory": "upgrading" }
+    },
+    {
+        "label": "插件",
+        "translations": {
+            "en": "Plugin"
+        },
+        "autogenerate": { "directory": "plugin" }
+    },
+    {
+        "label": "用户指南",
+        "translations": {
+            "en": "User Guide"
+        },
+        "autogenerate": { "directory": "guide/user" }
+    },
+    {
+        "label": "运维指南",
+        "translations": {
+            "en": "Admin Guide"
+        },
+        "autogenerate": { "directory": "guide/admin" }
+    },
+    {
+        "label": "生态融合",
+        "translations": {
+            "en": "Ecology"
+        },
+        "autogenerate": { "directory": "ecology" }
+    },
+    {
+        "label": "开源共建",
+        "translations": {
+            "en": "Contributor Guide"
+        },
+        "autogenerate": { "directory": "contribution" }
+    },
+    {
+        "label": "社区",
+        "translations": {
+            "en": "Community"
+        },
+        "autogenerate": { "directory": "community" }
+    }
+]

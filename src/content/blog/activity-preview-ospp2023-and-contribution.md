@@ -1,0 +1,65 @@
+---
+title: Nacos 开源之夏2023来袭、Nacos2022年度优秀贡献者评选及阿里巴巴开源开发者回馈活动开启
+keywords: [开源之夏, 年度优秀贡献者, 开源开发者回馈活动]
+description: Nacos 开源之夏2023来袭、Nacos2022年度优秀贡献者评选及阿里巴巴开源开发者回馈活动开启.
+date: "2023-04-11"
+category: activity-preview
+---
+# Nacos 开源之夏2023来袭、Nacos2022年度优秀贡献者评选及阿里巴巴开源开发者回馈活动开启
+
+## 开源之夏2023
+
+一年一度的[开源之夏](https://summer-ospp.ac.cn/org/orgdetail/ab188e59-fab8-468f-bc89-bdc2bd8b5e64)如期而至，Nacos社区今年也积极参与，目前暂定的课题有：
+
+- 为Nacos适配Oracle数据库插件
+
+- 为Nacos适配达梦数据库插件
+
+欢迎社区同学积极提供课题，尝试成为导师，想要提交新课题的同学请在Github中以issue的形式提交，格式为`[Proposal][Summer 2023]+课题名`，导师申请请在对应课题下回复评论并留下联系方式。
+
+- 提案新课题尽量以新增独立功能或模块为主，需要参与同学进行一定的设计和一定实现的代码量。
+
+- 导师要求对课题相关Nacos源代码有一定的了解，并对课题的设计和实现方向有清晰的认知和把控。
+
+## 2022年度优秀贡献者
+
+Nacos社区在2022年获得诸多成就，离不开社区同学的积极参与和贡献。为了感谢2022年度积极参与Nacos社区和贡献代码的同学，Nacos社区在按照[github仓库贡献统计](https://github.com/alibaba/nacos/graphs/contributors)和[阿里巴巴开源贡献榜](https://opensource.alibaba.com/contribution_leaderboard/details?projectValue=nacos&timeType=month&time=1677600000000)，设置多个奖项，并附赠奖杯和礼品。
+
+- 贡献之星：在Nacos仓库统计和开源贡献榜中均有较高贡献的同学。
+   - [chenhao26-nineteen](https://github.com/chenhao26-nineteen)、[li-xiao-shuang](https://github.com/li-xiao-shuang)、[hujun-w-2](https://github.com/hujun-w-2)
+- 生态之星：在Nacos的group生态仓库中有持续参与且做出杰出贡献的同学。
+   - [catcherwong](https://github.com/catcherwong)、[czy88840616](https://github.com/czy88840616)、[binbin0325](https://github.com/binbin0325)、[paderlol](https://github.com/paderlol)
+- 代码之星：在Nacos仓库中密集且长期持续性进行代码贡献的同学。
+   - [onewe](https://github.com/onewe)、[CherishCai](https://github.com/CherishCai)
+- 未来之星：在2022年度中，新加入Nacos社区，且有较大贡献的同学。
+   - [wuchubuzai2018](https://github.com/wuchubuzai2018)、[Oliverwqcwrw](https://github.com/Oliverwqcwrw)、[liqipeng](https://github.com/liqipeng)、[The-Gamer-01](https://github.com/The-Gamer-01)
+- 进步之星：在2022年前已经加入Nacos社区贡献，且在2022年度中贡献程度进步较大的同学。
+   - [YunWZ](https://github.com/YunWZ)、[karsonto](https://github.com/karsonto)
+
+> 说明：以上排名不分先后。
+
+| ![IMG_3466.HEIC.JPG](https://cdn.nlark.com/yuque/0/2023/jpeg/1577777/1680852964284-2443605d-d594-4dc8-bb75-6da14cdd8f12.jpeg#averageHue=%23a07b5e&clientId=udb7e5972-f7b4-4&from=paste&height=437&id=u6436f8f0&name=IMG_3466.HEIC.JPG&originHeight=874&originWidth=1166&originalType=binary&ratio=2&rotation=0&showTitle=false&size=264073&status=done&style=none&taskId=u7e0f0ab0-a69e-47b3-ad71-b1f016221bf&title=&width=583) | ![IMG_1181.HEIC.JPG](https://cdn.nlark.com/yuque/0/2023/jpeg/1577777/1680852964324-f149c75c-b204-445c-a3b4-24aff8b79b5b.jpeg#averageHue=%23586c77&clientId=udb7e5972-f7b4-4&from=paste&height=437&id=uc7c2a34e&name=IMG_1181.HEIC.JPG&originHeight=874&originWidth=1166&originalType=binary&ratio=2&rotation=0&showTitle=false&size=247482&status=done&style=none&taskId=u7dfe30f4-5949-49b8-8a86-5d19ccd7324&title=&width=583) | ![mmexport1680323559666.jpg](https://cdn.nlark.com/yuque/0/2023/jpeg/1577777/1680852987035-7bb5cad5-fbb1-4764-8383-19ddd22fb996.jpeg#averageHue=%23929990&clientId=udb7e5972-f7b4-4&from=paste&height=477&id=uea2c475d&name=mmexport1680323559666.jpg&originHeight=954&originWidth=1279&originalType=binary&ratio=2&rotation=0&showTitle=false&size=114898&status=done&style=none&taskId=ub2325bbf-d12c-4937-96d2-fd0261d93c3&title=&width=639.5) | ![1426060892935891238.jpg](https://cdn.nlark.com/yuque/0/2023/jpeg/1577777/1681263310705-6a4bc1b0-b17a-4d46-9a82-597401cda18b.jpeg#averageHue=%23b59584&clientId=u0dc24e80-8387-4&from=drop&id=u054e0974&name=1426060892935891238.jpg&originHeight=874&originWidth=1166&originalType=binary&ratio=2&rotation=0&showTitle=false&size=211224&status=done&style=none&taskId=uee90003b-75bd-4847-a2fa-29e5b7523e6&title=) |
+| --- | --- | --- | --- |
+
+| ![-785282054-1335766433.jpeg](https://cdn.nlark.com/yuque/0/2023/jpeg/1577777/1681263479015-956f234c-10dd-4150-acb1-f5aed470bd3a.jpeg#averageHue=%239b9e97&clientId=ua7179cf3-e42b-4&from=drop&id=u92c70cc9&name=-785282054-1335766433.jpeg&originHeight=1166&originWidth=1166&originalType=binary&ratio=2&rotation=0&showTitle=false&size=904298&status=done&style=none&taskId=u87fee435-af68-44d7-928e-4fb0610365e&title=) | ![mmexport1680336390244.jpg](https://cdn.nlark.com/yuque/0/2023/jpeg/1577777/1681263583874-fc2c0b22-0d8f-405b-847a-c0c6076b8cb6.jpeg#averageHue=%23a7aaa3&clientId=u61417e98-ccbb-4&from=drop&id=u3d14b102&name=mmexport1680336390244.jpg&originHeight=1780&originWidth=1162&originalType=binary&ratio=2&rotation=0&showTitle=false&size=118932&status=done&style=none&taskId=ua477518c-0ee2-4ba8-bd7a-461c4a3f0e9&title=) | ![mmexport1680339291530.jpg](https://cdn.nlark.com/yuque/0/2023/jpeg/1577777/1681263589035-47d7ba3c-615a-4b17-a76d-df8c9f01c441.jpeg#averageHue=%23c4c2b8&clientId=u61417e98-ccbb-4&from=drop&id=u24a8e681&name=mmexport1680339291530.jpg&originHeight=2066&originWidth=1162&originalType=binary&ratio=2&rotation=0&showTitle=false&size=447708&status=done&style=none&taskId=u01e12f78-7602-4938-a19f-93e79692b42&title=) |
+| --- | --- | --- |
+
+## 阿里巴巴开源开发者回馈计划
+阿里巴巴开源发起了开源开发者回馈计划，希望在合理量化开发者们的贡献的基础上，进一步给到实质性的回馈。该计划使用了 X-lab 开放实验室提出的 OpenRank 算法，即一种基于全域协作网络的算法去度量每位开发者的贡献。该算法从 2023 年 1 月起在阿里巴巴的 20 个重点项目上开始试运行。
+
+此次，阿里巴巴开源统计了这 20 个项目中从 2023 年第一季度 [OpenRank](https://opensource.alibaba.com/contribution_leaderboard/details?projectValue=nacos&timeType=month&time=1677600000000) 排名最高的 30 位社区外部贡献者，并寄出第一波礼品。
+
+其中Nacos项目在2023 年第一季度的OpenRank中，有11位同学荣获第一波礼品，本次回馈计划的礼品非常豪华，是一把**人体工学椅**。其他参与社区贡献的同学也不要灰心，只要继续保持社区参与和贡献，依旧能得到下一次的大礼。
+
+阿里巴巴开源将持续统计社区贡献者们在每个月上的 OpenRank 值，并作为积分不断累积，在未来，社区贡献者们可以通过积分兑换的形式获得更多礼品。我们相信，开源世界中的每一份贡献都值得回报！
+
+## About Nacos
+
+Nacos 致力于帮助您发现、配置和管理微服务。Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。
+
+Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 Nacos 是构建以“服务”为中心的现代应用架构 (例如微服务范式、云原生范式) 的服务基础设施。
+
+最后欢迎大家扫码加入Nacos社区群
+
+![image.png](https://cdn.nlark.com/yuque/0/2023/png/1577777/1679276899363-83081d59-67c6-4501-9cf8-0d84ba7c6d7e.png#averageHue=%23c1c2c2&clientId=u9dfeac18-3281-4&from=paste&height=551&id=ubcf45e51&name=image.png&originHeight=1102&originWidth=854&originalType=binary&ratio=2&rotation=0&showTitle=false&size=155261&status=done&style=none&taskId=ud6bea1fe-b003-441b-a810-84435d2aeff&title=&width=427)
+

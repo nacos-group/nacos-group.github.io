@@ -18,7 +18,7 @@ services:
       region: ${vars.region}
       bucket: ${vars.oss.bucketName} # OSS bucket 自动生成
       acl: public-read # 读写权限
-      codeUri: ./deploy-dist # 指定本地要上传目录文件地址
+      codeUri: ./dist # 指定本地要上传目录文件地址
       website: # OSS 静态网站配置
         index: index.html # 默认首页
         error: 404.html # 默认 404 页

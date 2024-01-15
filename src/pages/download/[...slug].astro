@@ -1,0 +1,132 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from "@layouts/BaseLayout.astro"
+ 
+export async function getStaticPaths() {
+  const downloadEntries = await getCollection('download', ({ slug }) => {
+    return slug.startsWith('zh-cn/');
+  });
+  return downloadEntries.map(entry => {
+    return {
+      params: { slug: entry.slug.replace('zh-cn/', '') }, props: { entry },
+    };
+  });
+}
+ 
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const frontmatter = entry?.data;
+ 
+const entries = await getCollection('download', ({ slug }) => {
+    return slug.startsWith('zh-cn/');
+  });
+const menus = entries.map(entry => {
+  
+  const pathname = `/download/${entry.slug.replace('zh-cn/', '')}`;
+  const _active = pathname === Astro.url.pathname;
+  return {
+    slug: entry.slug,
+    label: entry.data.title,
+    order: entry.data.order,
+    href: pathname,
+    active: _active,
+  }
+}).sort((a, b) => a.order - b.order);
+ 
+---
+ 
+<BaseLayout 
+  align='docs' 
+  title={frontmatter.title}
+>
+  <div class="bg-gray-01 h-2"></div>
+  <download-layout>
+    <div class="download-container flex">
+      <div class="download-menu">
+        <ul class="top-level">
+          {
+            menus.map((entry) => (
+              <li class="cursor-pointer">
+                <a
+                  href={entry.href}
+                  class:list={["large", "flex", "items-center", { 'menu-active': entry.active }]}
+                >
+                  <span>{entry.label}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="download-content">
+        <article class="prose max-w-none">
+          <Content />
+        </article>
+      </div>
+    </div>
+  </download-layout>
+</BaseLayout>
+ 
+<script>
+  class DownloadLayout extends HTMLElement {
+    private currentRoute: string;
+    private menus: HTMLElement[];
+ 
+    constructor() {
+			super();
+    }
+ 
+  }
+  customElements.define("download-layout", DownloadLayout);
+</script>
+ 
+ 
+<style>
+  .download-container {
+    height: calc(100vh - 4.5rem);
+  }
+  .download-menu {
+    width: 18.75rem;
+    padding: 1rem 1rem;
+    border-right: solid 1px #DDDEE4;
+  }
+	ul {
+		list-style: none;
+		padding: 0;
+	}
+	li {
+		overflow-wrap: anywhere;
+	}
+	.large {
+    display: block;
+		/* border-radius: 0.25rem; */
+		text-decoration: none;
+    font-size: 0.875rem;
+		color: var(--sl-color-gray-2);
+		padding: 0.3rem 0.5rem;
+		line-height: 1.4;
+	}
+	.top-level > li + li {
+		margin-top: 0.75rem;
+	}
+	a:hover,
+	a:focus {
+		color: var(--sl-color-white);
+	}
+ 
+  .menu-active {
+    color: theme("colors.gray.14");
+    background-color: theme("colors.gray.02");
+    border-left-style: solid;
+    border-left-width: 4px;
+    border-left-color: theme("colors.gray.14");
+    padding-left:  0.625rem !important;
+  }
+ 
+  .download-content {
+    width: 100%;
+    padding: 1rem 1rem 2rem;
+    overflow: auto;
+  }
+ 
+</style>
