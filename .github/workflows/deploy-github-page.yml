@@ -3,7 +3,7 @@ name: nacos.io deploy on github page
 on:
   push:
     branches:
-      - develop-new-framework
+      - develop-astro-nacos
 
 jobs:
   Build-Deploy:
