@@ -3,7 +3,7 @@ name: nacos.io deploy
 on:
   push:
     branches:
-      - master
+      - develop-astro-nacos
 jobs:
   Build-Deploy:
     runs-on: ubuntu-22.04
@@ -15,7 +15,7 @@ jobs:
           node-version: 18.x
       - name: Build
         run: |
-          npm install && npm run build
+          npm install && npm run build && mkdir deploy-dist && cp -R dist/* deploy-dist/
       - run: npm i @serverless-devs/s -g  --registry=https://registry.npmmirror.com
       - run: s config add --AccountID ${{secrets.ACCOUNT_ID}}  --AccessKeyID ${{secrets.ACCESS_KEYID}}  --AccessKeySecret ${{secrets.ACCESS_KEYSECRET}} -a nacos -f
       - name: Deploy
