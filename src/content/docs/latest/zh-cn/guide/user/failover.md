@@ -4,6 +4,7 @@ keywords: [容灾]
 description: Java客户端容灾用户指南
 sidebar:
     order: 7
+    hidden: true
 ---
 
 # Java客户端容灾
