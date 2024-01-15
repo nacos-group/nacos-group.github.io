@@ -1,0 +1,24 @@
+---
+import LinkList from "../common/LinkList.astro";
+
+export interface Props {
+	hideOnLargerScreens?: boolean;
+}
+
+const { hideOnLargerScreens = false } = Astro.props as Props;
+
+const linkItems = [
+	{
+		href: `/blog`,
+		text: "rightSidebar.readBlog",
+		icon: "document",
+	},
+	{
+		href: "https://github.com/nacos-group/nacos-group.github.io/tree/develop-astro-nacos/src/content/docs",
+		text: "rightSidebar.github",
+		icon: "github",
+	},
+];
+---
+
+<LinkList headingTitle="rightSidebar.community" linkItems={linkItems} />

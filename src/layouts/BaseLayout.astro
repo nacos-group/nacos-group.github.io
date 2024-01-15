@@ -1,0 +1,63 @@
+---
+import '@starlight/style/props.css';
+import '@starlight/style/reset.css';
+import '@starlight/style/shiki.css';
+import '@starlight/style/util.css';
+import '../style/global.css';
+import '../style/fonts.css';
+import '@starlight/style/asides.css'
+import locales from '@i18n/languages';
+import { useTranslations } from '@i18n/util';
+import Head from '@components/starlight/Head.astro';
+// import HomeHeader from '@components/common/Header.astro';
+import _ from 'lodash';
+import HomeHeader from '@components/common/Header/index.astro';
+const t = useTranslations(Astro);
+
+export type Props = {
+  title: string;
+  description?: string;
+  lang?: string;
+  keywords?: string[] | string;
+  align?: 'home' | 'docs';
+};
+const { title, description, keywords, align = 'home' } = Astro.props;
+const headEntry = {
+  data: {
+    description: description,
+    keywords: keywords || t('commmon.base.layout.keywords'),
+    title: title,
+    head: [],
+  },
+};
+
+const url = new URL(Astro.url);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const hasBase = url.pathname.startsWith(base);
+if (hasBase) url.pathname = url.pathname.replace(base, '');
+const [_leadingSlash, baseSegment] = url.pathname.split('/');
+let lang = locales.root.lang;
+if (baseSegment && baseSegment in locales) {
+  lang = baseSegment;
+}
+Astro.props.lang = lang;
+---
+
+<html lang={Astro.props.lang} data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="referrer" content="no-referrer" />
+    <Head entry={headEntry} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link data-rh="true" rel="icon" href="https://img.alicdn.com/tfs/TB1hgJpHAPoK1RjSZKbXXX1IXXa-64-64.png">
+    
+    
+  </head>
+  <body>
+    <!-- <HomeHeader align="home" position={position} lang={Astro.props.lang} {...Astro.props} /> -->
+    <HomeHeader align={align} lang={Astro.props.lang} {...Astro.props} />
+    <slot />
+    
+  </body>
+</html>

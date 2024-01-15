@@ -1,0 +1,14 @@
+{
+  "extends": "astro/tsconfigs/base",
+  "compilerOptions": {
+    "baseUrl": ".",
+	"paths": {
+		"@components/*": ["src/components/*"],
+		"@layouts/*": ["src/layouts/*"],
+		"@i18n/*": ["src/i18n/*"],
+		"@helpers/*": ["src/helpers/*"],
+		"@starlight/*": ["node_modules/@astrojs/starlight/*"],
+		"@style/*": ["src/style/*"],
+	}
+  }
+}

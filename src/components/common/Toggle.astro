@@ -1,0 +1,195 @@
+---
+import UpDown from '@components/icon/UpDown.astro';
+interface Props {
+  route?: string;
+  title?: string;
+  trigger?: "hover" | "click";
+  class?: string;
+  active?: boolean;
+  target?: '_blank' | '_self';
+  slot?: HTMLElement;
+  // 如果下拉窗口内容比较多，可以相对视图定位，自定义下拉内容
+  position?: 'absolute' | 'fixed';
+  showArrow?: boolean;
+}
+
+const { title, trigger = "hover", route = '', slot, position = 'absolute', active = false, showArrow = true, target = '_self' } = Astro.props;
+const ifdropdown = slot && !route;
+const Component = slot;
+
+// let components = [];
+// if (slot.indexOf('DocsDrop')) {
+//   components = slot && await Astro.glob('./Header2/TextDrop.astro');
+// } else if (slot.indexOf('ComtDrop')) {
+//   components = slot && await Astro.glob('./Header2/ComtDrop.astro');
+// }
+
+// const [component, ] = components;
+
+---
+
+
+
+<toggle-component 
+  data-trigger={trigger}
+  class="toggle-component h-full" 
+>
+  <div class=`toggle-trigger cursor-pointer flex items-center h-full ${Astro.props?.class || ''}`>
+    <slot name="trigger">
+      {
+        ifdropdown ? (
+          <div class={`toggle-text flex items-center justify-center h-full ${active ? 'toggle-text-active' : ''}`}>{title}</div>
+        ) : (
+          <a 
+            href={route}
+            target={target}
+            class={`toggle-text flex items-center justify-center no-underline h-full ${active ? 'toggle-text-active' : ''}`}
+          >
+            {title}
+          </a>
+        )
+      }
+    </slot>
+    {
+      ifdropdown && showArrow ? (
+        <UpDown data-updown class="ml-2" />
+      ) : null
+    }
+  </div>
+
+  {
+    ifdropdown ? (
+      <div class="toggle-dropdown w-fit inset-x-0">
+        <slot name="dropdown">
+          <Component />
+        </slot>
+      </div>
+    ) : null
+  }
+
+</toggle-component>
+
+
+
+
+
+<script>
+  class Toggle extends HTMLElement {
+    constructor() {
+      super();
+      const trigger = this.getAttribute('data-trigger');
+      const content = this.querySelector('.toggle-dropdown');
+      const updown = this.querySelector<SVGElement>("svg[data-updown]")!;
+      if (trigger === 'click') {
+
+        this.addEventListener('click', () => {
+          content.classList.toggle('toggle-dropdown-active');
+          document.body.classList.toggle('overflow-hidden');
+          const classList = Array.from(updown?.classList || []);
+          classList.includes('toggle-trigger-up') ? this.toggleDown(updown) : this.toggleUp(updown);
+          
+        });
+
+      } else if (trigger === 'hover') {
+        this.addEventListener('mouseenter', () => {
+          content.classList.add('toggle-dropdown-active');
+          document.body.classList.add('overflow-hidden');
+          this.toggleUp(updown);
+        });
+
+        this.addEventListener('mouseleave', () => {
+          content.classList.remove('toggle-dropdown-active');
+          document.body.classList.remove('overflow-hidden');
+          this.toggleDown(updown);
+        });
+      }
+    }
+
+    toggleUp = (element: SVGElement) => {
+      element?.classList.remove('toggle-trigger-down');
+      element?.classList.add('toggle-trigger-up');
+    };
+
+    toggleDown = (element: SVGElement) => {
+      element?.classList.remove('toggle-trigger-up');
+      element?.classList.add('toggle-trigger-down');
+    };
+  }
+  customElements.define("toggle-component", Toggle);
+</script>
+
+
+
+<style define:vars={{ position }}>
+  toggle-component {
+    /* 14px */
+    --toggle-font: 0.875rem; 
+    /* 20px */
+    --toggle-line: 1.25rem; 
+    --toggle-trigger-hp: 1rem;
+    --toggle-trigger-vp: 0.5rem;
+    /* 默认颜色 */
+    --toggle-trigger-tc: theme('colors.gray.06');
+    /* 默认激活颜色 */
+    --toggle-trigger-atc: theme('colors.gray.03');
+    /* 默认背景色 */
+    --toggle-trigger-bgd: theme('colors.gray.14');
+  }
+
+  .toggle-component {
+    position: relative;
+    display: inline-block;
+    font-size: var(--toggle-font);
+    line-height: var(--toggle-line);
+    color: var(--toggle-trigger-tc);
+    /* background-color: var(--toggle-trigger-bgd); */
+  }
+
+  .toggle-component a {
+    color: inherit;
+  }
+
+  .toggle-trigger {
+    padding: var(--toggle-trigger-vp) var(--toggle-trigger-hp);
+  }
+
+  .toggle-text-active {
+    font-weight: 500;
+    color: var(--toggle-trigger-atc) !important;
+  }
+
+  .toggle-component:hover .toggle-text {
+    font-weight: 500;
+    color: var(--toggle-trigger-atc);
+  }
+
+  .toggle-trigger-up {
+    transform: rotate(180deg);
+    transition: transform 0.3s;
+  }
+
+  .toggle-trigger-down {
+    transform: rotate(0deg);
+    transition: transform 0.3s;
+  }
+
+  .toggle-trigger-rotate {
+    transform: rotate(180deg);
+    transition: transform 0.3s;
+  }
+
+  .toggle-dropdown {
+    display: none;
+    /* position: absolute; */
+    position: var(--position);
+    z-index: 100000;
+    /* background-color: var(--toggle-trigger-bgd); */
+    /* 去掉之后外部使用更灵活 */
+    /* padding: var(--toggle-trigger-vp) var(--toggle-trigger-hp); */
+  }
+
+  .toggle-dropdown-active {
+    display: block;
+  }
+
+  </style>

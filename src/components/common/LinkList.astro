@@ -1,0 +1,37 @@
+---
+import UIString from "./UIString.astro";
+import HeadLink from "./HeadLink.astro";
+import { Icon } from "@astrojs/starlight/components";
+import type { UIDictionaryKeys } from "../i18n/translation-checkers";
+
+export interface Props {
+    headingTitle: UIDictionaryKeys;
+    linkItems: any[];
+}
+
+const { headingTitle, linkItems } = Astro.props as Props;
+---
+
+<h2 class="heading"><UIString key={headingTitle} /></h2>
+<ul>
+    <li>
+        {
+            linkItems.map((item) => {
+                return (
+                    <HeadLink href={item.href} depth={item.depth}>
+                        <div class="flex items-center">
+                            <Icon name={item.icon} class="mr-1" />
+                            <UIString key={item.text} />
+                        </div>
+                    </HeadLink>
+                );
+            })
+        }
+    </li>
+</ul>
+
+<style>
+    .heading {
+        margin-top: 1rem;
+    }
+</style>

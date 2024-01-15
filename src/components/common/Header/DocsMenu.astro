@@ -1,0 +1,99 @@
+---
+import { isChinese } from '@i18n/util';
+const ifzh = isChinese(Astro);
+interface Props {
+  items: {
+    label: string;
+    link?: string;
+  }[];
+}
+
+export const docsItems = [
+    {
+        label: "最新版（Latest）",
+        target: "_self",
+        link: "/docs/latest/what-is-nacos",
+        translations: {
+            en: "Latest",
+            link: "/en/docs/latest/what-is-nacos",
+        }
+    },
+    {
+        label: "预览版（Next）",
+        target: "_self",
+        link: "/docs/next/what-is-nacos",
+        translations: {
+            en: "Next",
+            link: "/en/docs/next/what-is-nacos",
+        }
+    },
+    {
+      label: "2.x",
+      target: "_self",
+      link: "/docs/v2/what-is-nacos",
+      translations: {
+          en: "2.x",
+          link: "/en/docs/v2/what-is-nacos",
+      }
+    },
+    {
+        label: "1.x",
+        target: "_self",
+        link: "/docs/v1/what-is-nacos",
+        translations: {
+            en: "1.x",
+            link: "/en/docs/v1/what-is-nacos",
+        }
+    }
+];
+
+const getVersion = (pathname) => {
+  if (ifzh && !pathname.startsWith('/docs/')) return;
+  if (ifzh && pathname.startsWith('/docs/ebook')) return;
+  if (!ifzh && !pathname.startsWith('/en/docs/')) return;
+  if (!ifzh && pathname.startsWith('/en/docs/ebook')) return;
+  const regex = ifzh ? /\/docs\/([^\/]*)/ : /\/en\/docs\/([^\/]*)/;
+  const match = pathname.match(regex);
+  // next v1 v2
+  const result = match?.[1] || '';
+  return ['next', 'v1', 'v2'].includes(result) ? result : 'latest';
+}
+
+const ifactive = (link) => {
+  const version = getVersion(link);
+  const currentVersion = getVersion(Astro.url.pathname);
+  return version === currentVersion;
+}
+
+---
+
+<docs-menu class="dropdown-docs block bg-gray-13 rounded-lg">
+  <ul class="w-[9.25rem] list-none m-0 p-2">
+    {
+      docsItems.map((item) => {
+        const { label, link, translations } = item;
+        const active = ifactive(ifzh ? link : translations.link);
+        return (
+          <li class={`no-underline cursor-pointer my-1 rounded-lg ${active ? 'bg-gray-12' : ''} hover:bg-gray-12`}>
+            <a 
+              href={ifzh ? link : translations.link}
+              class="inline-block w-full p-2 no-underline text-inherit text-gray-02" 
+            >
+              {ifzh ? label : item.translations?.en}
+            </a>
+          </li>
+        )
+      })
+    }
+  </ul>
+</docs-menu>
+
+<script>
+  class DocsMenu extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+  }
+  customElements.define("docs-menu", DocsMenu);
+</script>

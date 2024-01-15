@@ -1,0 +1,30 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CloudIntroduce from '@components/cloud/CloudIntroduce.astro';
+import CompaniesFeedback from '@components/cloud/CompaniesFeedback.astro';
+import CloudFooter from '@components/common/Footer.astro';
+import { useTranslations } from "@i18n/util";
+const t = useTranslations(Astro);
+---
+
+<BaseLayout 
+  title={t('cloud.title')}
+  description={t('cloud.description')}
+>
+  <CloudIntroduce />
+
+  <cloud-body>
+    <CompaniesFeedback />
+  </cloud-body>
+
+  <CloudFooter />
+</BaseLayout>
+
+<script>
+  class CloudBody extends HTMLElement {
+    constructor() {
+      super();
+    }
+  }
+  customElements.define('cloud-body', CloudBody);
+</script>

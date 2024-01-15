@@ -1,0 +1,236 @@
+---
+import { useTranslations } from "@i18n/util";
+const t = useTranslations(Astro);
+import LinkButton from '../common/LinkButton.astro';
+import Button from '@components/common/Button.astro';
+---
+<footer-layout class="home-footer w-full bg-gray-14 flex flex-col items-center py-10">
+  <slot name="after-footer" />
+  <div
+    class="footer-top flex-col flex bg-gray-13 rounded-2xl text-center lg:flex-row"
+  >
+    <div
+      class="footer-left flex flex-col gap-0 text-left my-9 ml-10 max-w-2xl"
+    >
+      <p
+        class="footer-left-title text-gray-02 text-[1.75rem] leading-9 lg:w-[25.9375rem] lg:h-10"
+      >
+        {t('commmon.footer.title')}
+      </p>
+      <p
+        class="footer_left_des flex-1 text-gray-09 text-[0.875rem] w-[42rem] h-[4.5rem] mt-4 mb-[3rem]"
+      >
+        {t('commmon.footer.description')}
+      </p>
+      <Button
+        size="large"
+        class="rounded-3xl font-semibold"
+        href="https://github.com/alibaba/nacos"
+      >
+        GitHub
+      </Button>
+    </div>
+    <div
+      class="footer-right grid grid-cols-2 gap-2 flex text-left mt-9 ml-[9.625rem]"
+    >
+      <div>
+        <p
+          class="text-gray-10 text-[0.75rem] leading-4 tracking-[.15em] lg:mb-[3.0625rem]"
+        >
+          {t('commmon.footer.docs')}
+        </p>
+        <ul class="list-none w-[13.3125rem] h-4 ps-0">
+          <li>
+            <a
+              href="#"
+              class="text-[.875rem] font-medium leading-5 tracking-normal mb-4 text-gray-04 no-underline"
+            >
+              {t('commmon.footer.actions.overview')}
+            </a>
+          </li>
+          <li>
+            <a
+              href="/docs/v2/quickstart/quick-start"
+              class="text-[.875rem] font-medium leading-5 tracking-normal mb-4 text-gray-04 no-underline"
+            >
+              {t('commmon.footer.actions.start')}
+            </a>
+          </li>
+          <li>
+            <a
+              href="/docs/v2/contribution/contributing"
+              class="text-[.875rem] font-medium leading-5 tracking-normal mb-4 text-gray-04 no-underline"
+            >
+              {t('commmon.footer.actions.guide')}
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <p
+          class="text-gray-10 text-[0.75rem] leading-4 tracking-[.15em] lg:mb-[3.0625rem]"
+        >
+          {t('commmon.footer.resource')}
+        </p>
+        <ul class="list-none w-[13.3125rem] h-4 ps-0">
+          <li>
+            <a
+              href="/docs/ebook/kbyo6n.mdx"
+              class="text-[.875rem] font-medium leading-5 tracking-normal mb-4 text-gray-04 no-underline"
+            >
+              {t('commmon.footer.actions.comm')}
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.aliyun.com/product/aliware/mse?spm=nacos.io.topbar.0.0.0"
+              target="_blank"
+              class="text-[.875rem] font-medium leading-5 tracking-normal mb-4 text-gray-04 no-underline"
+            >
+              {t('commmon.footer.actions.mse')}
+            </a>
+          </li>
+          <li>
+            <a
+              href="/download/nacos-server"
+              class="text-[.875rem] font-medium leading-5 tracking-normal mb-4 text-gray-04 no-underline"
+            >
+              {t('commmon.footer.actions.download')}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-[85.125rem] self-center divider divider-vertical bg-gray-13 mt-10 mb-0 h-[0.05rem]"></div>
+  <div
+    class="bottom_watermark text-[.875rem] text-gray-09 leading-6 text-center tracking-normal lg:pb-1 lg:pt-8"
+  >
+    © Nacos Authors 2024 | Documentation Distributed under <a href="https://creativecommons.org/licenses/by/4.0">CC-BY-4.0</a>
+    <br/>
+    Copyright © 2017-2024, Alibaba. All rights reserved. Alibaba has registered trademarks and uses trademarks.
+  </div>
+</footer-layout>
+
+<script>
+  class FooterLayout extends HTMLElement {
+      constructor() {
+        super();
+  
+      }
+    }
+    customElements.define("footer-layout", FooterLayout);
+  </script>
+
+<style>
+  a {
+    text-decoration: none; /* 清除下划线等默认样式 */
+    color: theme('colors.blue.08'); /* 继承父元素的颜色 */
+  }
+  .footer-top {
+    width: 85.125rem;
+  }
+  @media (min-width: 50rem) and (max-width: 86rem) {
+    .home-footer {
+      padding: 2.5rem;
+    }
+    .footer-top {
+      height: auto;
+      width: 100%;
+      min-height: 28rem;
+    }
+    .footer-right {
+      margin-left: 2.5rem ;
+      margin-bottom: 2rem;
+    }
+    .footer-left-button {
+      margin: 1rem 0rem;
+    }
+    .footer-right > div {
+      height: auto;
+    }
+    .footer-right p {
+      margin-bottom: 2rem;
+    }
+    .footer-right ul {
+      height: 100%;
+    }
+    .divider-vertical {
+      width: 100%;
+    }
+  }
+  @media (max-width: 50rem) {
+    .home-footer {
+      padding: 1.5rem !important;
+    }
+    .footer-top {
+      /* align-items: center; */
+      min-height: 28rem;
+      padding: 1.5rem;
+      height: auto;
+      width: 100%;
+    }
+
+    .footer-left {
+      width: 100%;
+      margin-left: 0;
+      margin-bottom: 1rem;
+      margin-top: 0;
+    }
+
+    .footer-left p {
+      margin: 0rem 0rem 1rem 0rem;
+      width: auto;
+      height: auto;
+    }
+    .footer-left-title{
+      font-size: 1.125rem;
+    }
+    .footer-left-des{
+      font-size: .875rem;
+    }
+
+    .footer-left-button {
+      margin: 1rem 0rem;
+      width:6rem;
+      height: 2rem;
+      min-height: 2rem;
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+
+    .footer-right {
+      width: 100%;
+      margin: 0rem !important;
+      padding-top: 0rem;
+      overflow: hidden;
+    }
+
+    .footer-right > div {
+      margin-right: 1rem;
+      margin-bottom: 1rem;
+      width: 8.25rem;
+      height: auto;
+    }
+
+    .footer-right p {
+      width: 8.25rem;
+      margin-right: 1rem;
+      margin-bottom: 1rem;
+    }
+    .footer-right ul {
+      height: 100%;
+    }
+    .footer-right a{
+      font-size: .75rem !important;
+    }
+    .bottom_watermark {
+      margin: 0rem 0.5rem;
+      padding: 0.5rem 0rem;
+    }
+    .divider-vertical {
+      width: 100%;
+    }
+  }
+</style>
