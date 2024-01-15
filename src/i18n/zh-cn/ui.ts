@@ -52,7 +52,7 @@ export default {
 	'home.introduce.nacos.manual': '手册',
 	'home.introduce.nacos.notes': '发布于2023年11月30日',
 	'home.introduce.nacos.release.note': 'V2.3.0的发行说明',
-	'home.introduce.nacos.define': 'Nacos 是 Dynamic Naming and Configuration Service（动态命名和配置服务）的首字母缩写，是一个平台，通过动态服务发现、配置管理和服务治理，促进构建云原生应用。',
+	'home.introduce.nacos.define': 'Nacos /nɑ:kəʊs/ 是 Naming and Configuration Service 的首字母缩写，是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。',
 	'home.introduce.nacos.aim': '我们相信一切都是服务，每个服务节点被构想为一个星球，每个服务都是一个星系。Nacos 致力于帮助建立这些服务之间的连接，并方便地聚合和管理整个星空，旨在达到浩瀚星辰的广袤海洋。',
 	'home.nacos.edge.about': '核心功能',
 	'home.nacos.edge.title': '持续增强开源能力',

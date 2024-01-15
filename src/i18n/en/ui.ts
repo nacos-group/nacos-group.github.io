@@ -52,7 +52,7 @@ export default {
 	'home.introduce.nacos.manual': 'MANUAL',
 	'home.introduce.nacos.notes': 'Released on Nov 30, 2023',
 	'home.introduce.nacos.release.note': 'Release Note of V2.3.0',
-	'home.introduce.nacos.define': 'Nacos is an acronym for Dynamic Naming and Configuration Service, a platform that facilitates the building of cloud-native applications through dynamic service discovery, configuration management, and service governance.',
+	'home.introduce.nacos.define': 'Nacos /nɑ:kəʊs/, acronym for Naming and Configuration Service, is a dynamic service discovery, configuration management, and service management platform that makes it easier to build cloud-native applications.',
 	'home.introduce.nacos.aim': 'We believe that everything is a service, with each service node envisioned as a planet and each service as a galaxy. Nacos is dedicated to helping establish connections among these services, and to conveniently aggregate and manage the entire expanse of this celestial space, aiming towards the vast ocean of stars.',
 	'home.nacos.edge.about': 'CORE FUNCTION',
 	'home.nacos.edge.title': 'Continue to enhance open source capabilities',
