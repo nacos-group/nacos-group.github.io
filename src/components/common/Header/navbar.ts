@@ -28,7 +28,7 @@ export default [
       translations: {
           en: "COMMUNITY"
       },
-      trigger: "click",
+      trigger: "hover",
       slot: CommunityMenu,
       position: "fixed",
       activePath: ['/news', '/activity', '/blog', '/docs/ebook/', '/download'],
