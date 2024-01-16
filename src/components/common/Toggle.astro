@@ -93,13 +93,11 @@ const Component = slot;
       } else if (trigger === 'hover') {
         this.addEventListener('mouseenter', () => {
           content.classList.add('toggle-dropdown-active');
-          document.body.classList.add('overflow-hidden');
           this.toggleUp(updown);
         });
 
         this.addEventListener('mouseleave', () => {
           content.classList.remove('toggle-dropdown-active');
-          document.body.classList.remove('overflow-hidden');
           this.toggleDown(updown);
         });
       }
