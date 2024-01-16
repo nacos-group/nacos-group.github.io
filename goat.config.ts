@@ -61,7 +61,21 @@ const replaceNavigation = async () => {
 		}`
 	);
 
-	await fs.writeFile(originFile, sideBarLinkContent);
+	/**
+	 * 核心的 localeDir链接构建
+	 */
+	/**
+	 * /v2/en/quickstart/quick-start-docker.html => /docs/v2/quickstart/quick-start-docker.html
+	 * /v2/zh-cn/quickstart/quick-start-kubernetes.html => /docs/v2/quickstart/quick-start-docker.html
+	 */
+	const localeDirRegex = /const localeDir = locale.+/;
+	const localeDirContent = sideBarLinkContent.replace(
+		localeDirRegex,
+		`const regex = /(next|latest|ebook|v[0-9]\\.[0-9]\\.[0-9]|v[0-9]\\.[0-9]|v[0-9]|[0-9]\\.[0-9]\\.[0-9]|[0-9]\\.[0-9]|[0-9])\\/(en|zh-cn)/;
+		const localeDir = locale ? locale + '/' + directory.replace(regex, "$1/"+locale) : directory;`
+	);
+
+	await fs.writeFile(originFile, localeDirContent);
 }
 
 
