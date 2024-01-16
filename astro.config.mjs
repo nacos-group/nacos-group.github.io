@@ -8,6 +8,7 @@ import remarkRemoveMdLinks from "./plugins/remarkRemoveMdLinks"
 import remarkRemovePlainLanguageCode from "./plugins/remarkRemovePlainLanguageCode"
 import remarkRemoveRepeatHeader from "./plugins/remarkRemoveRepeatHeader"
 import addPrefixImageLink from "./plugins/addPrefixImageLink"
+import setLinkReferrer from './plugins/remarkReferer'
 import { starlightAsides } from './node_modules/@astrojs/starlight/integrations/asides'
 import goatConfig from './goat.config';
 
@@ -22,13 +23,6 @@ export default defineConfig({
 			title: 'Nacos',
 			favicon: '/favicon.ico',
 			head: [
-				{
-					tag: 'meta',
-					attrs: {
-					  name: 'referrer',
-					  content:'no-referrer'
-					},
-				  }
 			],
 			expressiveCode: {
 				themes: ['github-dark'],
@@ -64,18 +58,13 @@ export default defineConfig({
 		},
 	],
 	markdown: {
-		rehypePlugins: [
-			// 在这里添加 rehype-external-links 插件配置
-			[rehypeExternalLinks, {
-				target: '_blank',
-				rel: ['noopener', 'noreferrer']
-			}]],
 		remarkPlugins: [
 			remarkRemoveMdLinks, 
 			remarkRemovePlainLanguageCode, 
 			remarkRemoveRepeatHeader, 
 			addPrefixImageLink,
-			starlightAsides
+			starlightAsides,
+			setLinkReferrer
 		]
 	},
 	redirects: {
