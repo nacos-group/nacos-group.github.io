@@ -16,7 +16,7 @@ jobs:
           node-version: 18.x
       - name: Build
         run: |
-          npm install && npm run build
+          npm install && DEPLOY_SITE=https://nacos-group.github.io npm run build
       - name: Generate nojekyll
         run: touch ./dist/.nojekyll
       - name: Deploy
