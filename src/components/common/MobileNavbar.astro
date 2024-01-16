@@ -55,8 +55,7 @@ for (let i = 0; i < dataSource.length; i++) {
   <mobile-menu-button>
     <button
       aria-expanded="false"
-      aria-label='menu-button'
-      aria-controls="starlight__sidebar"
+      aria-label='mobile-menu-button'
     >
       <svg
         viewBox="0 0 1024 1024"
@@ -123,9 +122,9 @@ for (let i = 0; i < dataSource.length; i++) {
 <style define:vars={{ top }}>
 	.mobile-navbar button {
 		border: 0;
-    display: flex;
+	    display: flex;
     align-items: center;
-		height: 2rem;
+	height: var(--top);
     background-color: transparent;
 		cursor: pointer;
 	}
@@ -134,12 +133,10 @@ for (let i = 0; i < dataSource.length; i++) {
 		visibility: var(--sl-sidebar-visibility, hidden);
 		position: fixed;
 		z-index: 5;
-		inset-block: 0;
 		inset-inline-start: 0;
-		/* padding-top: 4rem; */
-    margin-top: var(--top);
 		width: 100%;
 		overflow-y: auto;
+		height: calc(100vh - var(--top));
 	}
 
 	:global([aria-expanded='true']) ~ .navbar-panel {
