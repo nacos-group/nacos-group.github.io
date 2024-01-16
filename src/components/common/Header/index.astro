@@ -40,7 +40,7 @@ let height, width, xpadding = "";
   <!-- 方便控制header宽度 -->
   <div class="header-content flex items-center justify-between">
 
-    <div class="left-content flex items-center">
+    <div class="left-content h-full flex items-center">
       <a class="no-underline" href="/">
         <img
           class="logo"
@@ -48,7 +48,7 @@ let height, width, xpadding = "";
           alt="nacos-log"
         />
       </a>
-      <MobileNavbar top={height} class="mobile-navbar ml-4" />
+      <MobileNavbar top={height} class="mobile-navbar h-full ml-4" />
     </div>
 
     <div class="center-content h-full">
@@ -146,6 +146,7 @@ let height, width, xpadding = "";
     }
     .code-toggle {
       padding: 0;
+      background-color: transparent;
       span {
         display: none;
       }
