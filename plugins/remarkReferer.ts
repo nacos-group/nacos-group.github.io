@@ -8,7 +8,6 @@ function setLinkReferrer() {
             node.data = node.data || {};
             node.data.hProperties = node.data.hProperties || {};
             node.data.hProperties.referrerpolicy = 'unsafe-url';
-            node.data.hProperties.target = '__blank';
         }
     });
 
