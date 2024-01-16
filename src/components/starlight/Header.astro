@@ -4,6 +4,9 @@ import DocsHeader from '@components/common/Header/index.astro';
  
 ---
  
- 
-<!-- <DocsHeader align="docs" position="sticky" /> -->
 <DocsHeader align="docs" lang={Astro.props.lang} {...Astro.props} />
+
+<script>
+	const html = document.documentElement;
+    html.setAttribute('data-theme', 'light');
+</script>
