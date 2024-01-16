@@ -35,7 +35,6 @@ function updateDateInMarkdownFiles(dir) {
         // 将更新后的 front matter 和内容写回文件
         const newContent = matter.stringify(parsed.content, parsed.data, { engines: { yaml: { stringify: customStringify } } });
 fs.writeFileSync(filePath, newContent, 'utf8');
-console.log(`Updated date in: ${filePath}`);
 
       }
     }
