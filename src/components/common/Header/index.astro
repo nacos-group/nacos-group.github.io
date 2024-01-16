@@ -84,6 +84,7 @@ let height, width, xpadding = "";
     }
 
     handleScroll = () => {
+      if (window.innerWidth <= 800) return;
       if (window.scrollY >= 100 && !this.ifscroll) {
         this.ifscroll = true;
         this.classList.add('bg-gray-14/[0.84]');
@@ -145,8 +146,8 @@ let height, width, xpadding = "";
       display: none;
     }
     .code-toggle {
-      padding: 0;
-      background-color: transparent;
+      padding: 0 !important;
+      background-color: transparent !important;
       span {
         display: none;
       }
