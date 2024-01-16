@@ -7,7 +7,7 @@ function setLinkReferrer() {
             // 为非图片链接设置referrer
             node.data = node.data || {};
             node.data.hProperties = node.data.hProperties || {};
-            node.data.hProperties.rel = 'unsafe-url';
+            node.data.hProperties.referrerpolicy = 'unsafe-url';
             node.data.hProperties.target = '__blank';
         }
     });
