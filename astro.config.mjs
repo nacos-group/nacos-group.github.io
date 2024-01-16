@@ -58,6 +58,11 @@ export default defineConfig({
 		},
 	],
 	markdown: {
+		rehypePlugins: [
+			// 在这里添加 rehype-external-links 插件配置
+			[rehypeExternalLinks, {
+				target: '_blank'
+			}]],
 		remarkPlugins: [
 			remarkRemoveMdLinks, 
 			remarkRemovePlainLanguageCode, 
