@@ -132,7 +132,6 @@ const head = createHead(headDefaults, config.head, data.head);
   ))
 }
 
-
 <!--初始化SDK-->
 <script>
   (function (w, d, s, q, i) {
@@ -154,9 +153,12 @@ const head = createHead(headDefaults, config.head, data.head);
     t.src =
       '//g.alicdn.com/aes/??tracker/3.3.3/index.js,tracker-plugin-pv/3.0.5/index.js,tracker-plugin-event/3.0.0/index.js,tracker-plugin-autolog/3.0.3/index.js,tracker-plugin-survey/3.0.3/index.js';
     t.onload = function () {
+      if (window.location.hostname !== 'nacos.io') {
+        return;
+      }
       window.AES_CONFIG = window.AES_CONFIG || {
         // 判断当前环境
-        env: window?.location?.href.includes('localhost')? 'daily' :'prod',
+        env: 'prod',
       };
       window.aes = new AES({
         pid: 'e7WQkK',
@@ -170,7 +172,7 @@ const head = createHead(headDefaults, config.head, data.head);
         ),
         aes.use(AESPluginEvent, window.AESPluginEventConfig || {}),
         aes.use(AESPluginSurvey, window.AESPluginEventConfig || {}),
-        // aes.use(AESPluginAutolog, window.AESPluginAutologConfig || {}),
+        aes.use(AESPluginAutolog, window.AESPluginAutologConfig || {}),
       ];
     };
     setTimeout(function () {
@@ -190,7 +192,8 @@ const head = createHead(headDefaults, config.head, data.head);
 </script>
 
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-0YDFJ7LX7F"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0YDFJ7LX7F"
+></script>
 
 <script>
   window.dataLayer = window.dataLayer || [];
