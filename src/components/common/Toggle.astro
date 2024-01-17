@@ -10,10 +10,11 @@ interface Props {
   slot?: HTMLElement;
   // 如果下拉窗口内容比较多，可以相对视图定位，自定义下拉内容
   position?: 'absolute' | 'fixed';
+  top?: "4rem" | "3.5rem";
   showArrow?: boolean;
 }
 
-const { title, trigger = "hover", route = '', slot, position = 'absolute', active = false, showArrow = true, target = '_self' } = Astro.props;
+const { title, trigger = "hover", route = '', slot, position = 'absolute', active = false, showArrow = true, target = '_self', top = '4rem' } = Astro.props;
 const ifdropdown = slot && !route;
 const Component = slot;
 
@@ -118,7 +119,7 @@ const Component = slot;
 
 
 
-<style define:vars={{ position }}>
+<style define:vars={{ position, top }}>
   toggle-component {
     /* 14px */
     --toggle-font: 0.875rem; 
@@ -178,12 +179,9 @@ const Component = slot;
 
   .toggle-dropdown {
     display: none;
-    /* position: absolute; */
     position: var(--position);
+    top: var(--top);
     z-index: 100000;
-    /* background-color: var(--toggle-trigger-bgd); */
-    /* 去掉之后外部使用更灵活 */
-    /* padding: var(--toggle-trigger-vp) var(--toggle-trigger-hp); */
   }
 
   .toggle-dropdown-active {
