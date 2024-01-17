@@ -18,6 +18,7 @@ export default defineConfig({
 	image: {
 		domain: ["img.alicdn"]
 	},
+	trailingSlash: 'always',
 	integrations: [
 		starlight({
 			title: 'Nacos',

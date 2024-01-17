@@ -7,9 +7,19 @@ export default function remarkRemoveMdLinks() {
   return (tree) => {
     visit(tree, 'link', (node) => {
       if (node.url.endsWith('.md')) {
-        node.url = node.url.slice(0, -3);
-		node.url = node.url.replace(/^\.\//,'../')
-		node.url = node.url.replace(/^\.\.\//,'../../')
+        node.url = node.url.slice(0, -3) + '/';
+		if(/^[^\.|~\/].+/.test(node.url)) {
+			node.url = "./" + node.url;
+		}
+		let url = '';
+		if(/^\.\//.test(node.url)) {
+			// ./deployment.md
+			url = node.url.replace(/^\.\//,'../');
+		}else if(/^\.\.\//.test(node.url)) {
+			// ../deployment.md
+			url = node.url.replace(/^\.\.\//,'../../');
+		}
+		node.url = url;
       }
     });
   };
