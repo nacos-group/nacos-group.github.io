@@ -83,7 +83,7 @@ const Component = slot;
       if (trigger === 'click') {
 
         this.addEventListener('click', () => {
-          content.classList.toggle('toggle-dropdown-active');
+          content && content.classList.toggle('toggle-dropdown-active');
           document.body.classList.toggle('overflow-hidden');
           const classList = Array.from(updown?.classList || []);
           classList.includes('toggle-trigger-up') ? this.toggleDown(updown) : this.toggleUp(updown);
@@ -92,12 +92,12 @@ const Component = slot;
 
       } else if (trigger === 'hover') {
         this.addEventListener('mouseenter', () => {
-          content.classList.add('toggle-dropdown-active');
+          content && content.classList.add('toggle-dropdown-active');
           this.toggleUp(updown);
         });
 
         this.addEventListener('mouseleave', () => {
-          content.classList.remove('toggle-dropdown-active');
+          content && content.classList.remove('toggle-dropdown-active');
           this.toggleDown(updown);
         });
       }
