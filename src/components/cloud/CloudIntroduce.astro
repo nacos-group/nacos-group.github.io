@@ -5,7 +5,6 @@ import BaseContainer from "@components/common/BaseContainer.astro";
 const introduceData = [
   {
     title: t("cloud.introduce.free.pkg"),
-    desc: t("cloud.introduce.free.desc"),
     price: t("cloud.introduce.free.price"),
     unit: "",
     priceDesc: t("cloud.introduce.free.feature"),
@@ -20,6 +19,7 @@ const introduceData = [
     title: t("cloud.introduce.develop.pkg"),
     price: t("cloud.introduce.develop.price"),
     priceDesc: t("cloud.introduce.develop.feature"),
+    priceSupply:t("cloud.introduce.develop.price_supply"),
     unit: "/MONTH",
     linkName: t("cloud.introduce.develop.link"),
     link: "https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0",
@@ -30,9 +30,9 @@ const introduceData = [
   },
   {
     title: t("cloud.introduce.serverless.pkg"),
-    desc: t("cloud.introduce.serverless.desc"),
     priceDesc: t("cloud.introduce.serverless.feature"),
     price: t("cloud.introduce.serverless.price"),
+    priceSupply:t("cloud.introduce.serverless.price_supply"),
     unit: "/HOUR",
     linkName: t("cloud.introduce.serverless.link"),
     link: "https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0",
@@ -43,9 +43,9 @@ const introduceData = [
   },
   {
     title: t("cloud.introduce.regular.pkg"),
-    desc: t("cloud.introduce.regular.desc"),
     priceDesc: t("cloud.introduce.regular.feature"),
     price: t("cloud.introduce.regular.price"),
+    priceSupply:t("cloud.introduce.regular.price_supply"),
     unit: "/MONTH",
     linkName: t("cloud.introduce.regular.link"),
     link: "https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0",
@@ -86,12 +86,14 @@ const introduceData = [
               <div class="title text-gray-03 text-2xl font-sans font-medium">
                 {item?.title}
               </div>
-              <div class="text-[.875rem] leading-[1.125rem] text-gray-07">{item?.desc}</div>
             </div>
             <div class ="price-content pt-4 border-b border-t border-gray-12 h-32">
-              <div class="price text-[2.75rem] leading-[3rem] font-bold text-gray-03">
+              <span class="price text-[2.75rem] leading-[3rem] font-bold text-gray-03">
                 {item?.price}
-              </div>
+              </span>
+              <span class="price font-bold text-gray-08">
+                {item?.priceSupply}
+              </span>
               <div class="description font-sans pt-4 text-xs text-gray-08 line-clamp-2">
                 {item?.priceDesc}
               </div>

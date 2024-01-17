@@ -6,15 +6,17 @@ interface Props {
   class?: string;
   // hover时是否显示默认的箭头
   visibility?: boolean
+  target?: '_blank' | '_self'
 }
 
-const { href, type = 'normal', size = 'medium', visibility = true } = Astro.props;
+const { href, type = 'normal', size = 'medium', visibility = true, target = "_self" } = Astro.props;
 ---
 
 <!-- <button> 可以设置默认样式 -->
 <button class=`button w-fit p-0 bg-transparent`>
   <a 
     href={href}
+    target={target}
     class=`${type === 'normal' ? 'button-normal' : 'button-primary'} flex items-center justify-center no-underline ${size === 'small' ? 'xp-small h-small' : ''} ${size === 'medium' ? 'xp-medium h-medium' : ''} ${size === 'large' ? 'xp-large h-large' : ''} ${Astro.props?.class || ''}`
   >
     <slot />
