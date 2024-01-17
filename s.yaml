@@ -8,12 +8,6 @@ vars:
 services:
   portal-www: # 静态资源
     component: oss
-    actions:
-      post-deploy:
-        - plugin: cdn-cache-plugin
-          args:
-            operateType: refresh
-            objectPath: https://nacos.io/
     props:
       region: ${vars.region}
       bucket: ${vars.oss.bucketName} # OSS bucket 自动生成

@@ -68,7 +68,7 @@ const replaceNavigation = async () => {
 	 * /v2/en/quickstart/quick-start-docker.html => /docs/v2/quickstart/quick-start-docker.html
 	 * /v2/zh-cn/quickstart/quick-start-kubernetes.html => /docs/v2/quickstart/quick-start-docker.html
 	 */
-	const localeDirRegex = /const localeDir = locale.+/;
+	const localeDirRegex = /const localeDir = locale \? locale \+ \'\/\' \+ directory \: directory\;/;
 	const localeDirContent = sideBarLinkContent.replace(
 		localeDirRegex,
 		`const regex = /(next|latest|ebook|v[0-9]\\.[0-9]\\.[0-9]|v[0-9]\\.[0-9]|v[0-9]|[0-9]\\.[0-9]\\.[0-9]|[0-9]\\.[0-9]|[0-9])\\/(en|zh-cn)/;
