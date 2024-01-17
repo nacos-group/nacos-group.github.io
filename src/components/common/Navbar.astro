@@ -8,7 +8,9 @@ const ifzh = isChinese(Astro);
 
 interface Props {
   class?: string;
+  top?: "4rem" | "3.5rem";
 }
+const { top = '4rem' } = Astro.props;
 
 // 修改 文档 菜单显示逻辑
 const lastIdx = dataSource.length - 1;
@@ -92,6 +94,7 @@ const ifactive = (toggle) => {
             slot={slot}
             target={target}
             position={position}
+            top={top}
             class={`item ${index === lastIdx ? 'item-last-child' : ''}`}
           >
           </Toggle>
