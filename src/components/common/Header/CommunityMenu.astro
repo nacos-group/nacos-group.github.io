@@ -288,6 +288,12 @@ const blogImgs = [
   class CommunitytMenu extends HTMLElement {
     constructor() {
       super();
+      const toggleDropdown = this.parentElement;
+      const communityOverlay = this.querySelector('.dropdown-overlay');
+      communityOverlay.addEventListener('mouseenter', () => {
+        toggleDropdown.classList.remove('toggle-dropdown-active'); 
+        toggleDropdown.classList.add('toggle-dropdown-notactive'); 
+      });
     }
 
   }
@@ -295,6 +301,9 @@ const blogImgs = [
 </script>
 
 <style>
+  .toggle-dropdown-notactive {
+    display: none;
+  }
   
 </style>
 

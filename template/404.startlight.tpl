@@ -43,20 +43,21 @@ const route = generateRouteData({
 	url: Astro.url,
 });
 
-/**
- * Redirect to latest version if not found
- * /doc/v1/{slug} => /doc/latest/{slug}
- */
-const regexs = /\/docs\/(latest|ebook|next|v[0-9]\.[0-9]\.[0-9]|v[0-9]\.[0-9]|v[0-9]|[0-9]\.[0-9]\.[0-9]|[0-9]\.[0-9]|[0-9])\/.+/;
-const match = regexs.exec(Astro.url.pathname)
-if(!match) {
-	const [lang, rest] = Astro.url.pathname.split('/docs');
-	if(lang === '/en-us') {
-		return Astro.redirect('/en/docs'+ '/latest' + rest);
-	} else {
-		return Astro.redirect('/docs'+ '/latest' + Astro.url.pathname.split('/docs').join(''));
-	}
-}
 ---
 
 <Page {...route}><Content /></Page>
+
+
+<script>
+	const pathname = window?.location?.pathname;
+	const regexs = /\/docs\/(latest|ebook|next|v[0-9]\.[0-9]\.[0-9]|v[0-9]\.[0-9]|v[0-9]|[0-9]\.[0-9]\.[0-9]|[0-9]\.[0-9]|[0-9])\/.+/;
+	const match = regexs.exec(pathname)
+	if(!match) {
+		const [lang, rest] = pathname.split('/docs');
+		if(lang === '/en-us') {
+			window.location.pathname = '/en/docs'+ '/latest' + rest
+		} else {
+			window.location.pathname = '/docs'+ '/latest' + pathname.split('/docs').join('')
+		}
+	}
+</script>
