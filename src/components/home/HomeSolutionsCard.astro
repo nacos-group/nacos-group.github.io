@@ -46,6 +46,7 @@ const solutionList = [
               />
               <label
                 for={`c${index}`}
+                input-id={`c${index}`}
                 class="solutions-card overflow-hidden flex flex-col justify-between cursor-pointer rounded-2xl mx-2"
               >
               
@@ -107,8 +108,29 @@ const solutionList = [
 
 <script>
   class HomeSolutionCard extends HTMLElement {
+    cardSolution = this.querySelector(".solution-container")
+    currentInputid = 'c0'
+    // 添加节流开关，防止动画期间频繁抖动
+    flag = true
     constructor() {
       super();
+      this.cardSolution.addEventListener('mouseover', (e) => {
+        this.selectedLabel(e)
+      })
+    }
+
+    selectedLabel(e) {
+      const inputId = e.target.getAttribute('input-id')
+      if (this.flag && inputId && (inputId !== this.currentInputid)) {
+        this.currentInputid = inputId
+        this.flag = false
+        setTimeout(() => {
+          this.flag = true
+        }, 200);
+        console.log(inputId, this.currentInputid);
+        let input = this.querySelector(`input[type=radio]#${inputId}`)
+        input && input.checked === false ? input.checked = true : null
+      }
     }
   }
   customElements.define('card-solution', HomeSolutionCard);
@@ -166,7 +188,7 @@ const solutionList = [
     background-image: url('https://img.alicdn.com/imgextra/i1/O1CN017UPiCy1xJmqGNV93n_!!6000000006423-2-tps-1688-1016.png');
   }
   .solutions-card[for='c1'] {
-    background-image: url('https://img.alicdn.com/imgextra/i1/O1CN01DXhkjl1ScnC0wYxRw_!!6000000002268-0-tps-1344-896.jpg');
+    background-image: url('https://img.alicdn.com/imgextra/i2/O1CN0145ww871PcNzzFJfR1_!!6000000001861-0-tps-1360-907.jpg');
   }
   .solutions-card[for='c2'] {
     background-image: url('https://img.alicdn.com/imgextra/i4/O1CN01ufR2md1L6XzxK8NH2_!!6000000001250-0-tps-1344-896.jpg');
