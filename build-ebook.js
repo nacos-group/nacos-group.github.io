@@ -46,7 +46,7 @@ function generateSlugSidebar(tocItem, lock) {
         items: []
     }
     if (tocItem.slug !== '#') {
-        itemToc.link = `docs/ebook/${tocItem.slug}.mdx`;
+        itemToc.link = `docs/ebook/${tocItem.slug}.mdx/`;
         if (lock) {
             itemToc = {
                 ...itemToc,
