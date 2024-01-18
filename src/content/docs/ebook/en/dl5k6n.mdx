@@ -1,0 +1,31 @@
+---
+title: 配置一致性模型
+keywords: [ Nacos ]
+description: 李艳林（彦林） Nacos PMCNacos 配置管理一致性协议分为两个大部分，第一部分是 Server 间一致性协议，一个是 SDK 与 Server 的一致性协议，配置作为分布式系统中非强一致数据，在出现脑裂的时候可用性高于一致性，因此阿里配置中心是采用 AP 一致性协议。Server 间...
+---
+> 李艳林（彦林） Nacos PMC
+
+Nacos 配置管理一致性协议分为两个大部分，第一部分是 Server 间一致性协议，一个是 SDK 与 Server 的一致性协议，配置作为分布式系统中非强一致数据，在出现脑裂的时候可用性高于一致性，因此阿里配置中心是采用 AP 一致性协议。
+
+<a name="MSXEc"></a>
+## Server 间的一致性协议
+
+<a name="QFDcN"></a>
+### 有 DB 模式（读写分离架构）
+一致性的核心是 Server 与 DB 保持数据一致性，从而保证 Server 数据一致；Server 之间都是对等的。数据写任何一个 Server，优先持久化，持久化成功后异步通知其他节点到数据库中拉取最新配置值，并且通知写入成功。
+
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/1465210/1638696617667-8289352e-9c9f-4b9f-af2c-f193ab8a9fe6.png#clientId=u3b04501a-c59e-4&from=paste&height=517&id=u2069157a&originHeight=517&originWidth=755&originalType=binary&ratio=1&rotation=0&showTitle=false&size=170846&status=done&style=none&taskId=u06ce5105-a46b-44b3-9ea9-24a40d6b9dc&title=&width=755)
+<a name="fluo1"></a>
+### 无 DB 模式
+Server 间采用 Raft 协议保证数据一致性，行业大部分产品才用此模式，因此不展开介绍。Nacos 提供此模式，是方便用户本机运行，降低对存储依赖。
+
+<a name="hukkX"></a>
+## SDK 与 Server 的一致性协议
+SDK 与 Server 一致性协议的核心是通过 MD5 值是否一致，如果不一致就拉取最新值。
+<a name="bgMgw"></a>
+### Nacos 1.X
+Nacos 1.X 采用 Http 1.1 短链接模拟长链接，每 30s 发一个心跳跟 Server 对比 SDK 配置 MD5 值是否跟 Server 保持一致，如果一致就 hold 住链接，如果有不一致配置，就把不一致的配置返回，然后 SDK 获取最新配置值。<br />![image.png](https://cdn.nlark.com/yuque/0/2021/png/1465210/1638694463403-cca6a98d-5386-42d5-8261-13e86b76cbe1.png#clientId=u0fc61378-96c1-4&from=paste&height=394&id=u26f1927a&originHeight=394&originWidth=529&originalType=binary&ratio=1&rotation=0&showTitle=false&size=88025&status=done&style=none&taskId=ufbadc22b-c870-47b2-8600-400634375be&title=&width=529)
+
+<a name="atBzq"></a>
+### Nacos 2.X
+Nacos 2.x 相比上面 30s 一次的长轮训，升级成长链接模式，配置变更，启动建立长链接，配置变更服务端推送变更配置列表，然后 SDK 拉取配置更新，因此通信效率大幅提升。
