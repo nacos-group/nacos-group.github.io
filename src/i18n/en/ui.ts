@@ -44,8 +44,8 @@ export default {
 	'commmon.footer.actions.edas': 'Cloud Service EDAS',
 	'commmon.footer.actions.download': 'Download',
 
-	'home.title': 'Home',
-	'home.description': 'Nacos is a solution for dynamic service discovery, configuration management, and service management, aimed at helping developers build and maintain cloud-native applications.',
+	'home.title': 'Dynamic service discovery, configuration management and service management platform Nacos',
+	'home.description': 'Nacos is a solution for dynamic service discovery, configuration management, and service management designed to help developers build and maintain cloud-native applications. By providing simple and easy-to-use service infrastructure such as dynamic service discovery, service configuration, service sharing and management, Nacos helps users to better build, deliver and manage their own microservice platform, reuse and combine business services faster, and deliver the value of business innovation faster in all cloud environments such as private cloud, hybrid cloud or public cloud in the cloud native era. So as to win the market for users.',
 	'home.introduce.about': 'ABOUT NACOS',
 	'home.introduce.title': 'An easy-to-use dynamic service discovery, configuration and service management platform for building cloud native applications',
 	'home.introduce.nacos.code': 'VIEW ON GITHUB',

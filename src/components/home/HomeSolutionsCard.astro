@@ -127,8 +127,7 @@ const solutionList = [
         setTimeout(() => {
           this.flag = true
         }, 200);
-        console.log(inputId, this.currentInputid);
-        let input = this.querySelector(`input[type=radio]#${inputId}`)
+        let input: HTMLInputElement = this.querySelector(`input[type=radio]#${inputId}`)
         input && input.checked === false ? input.checked = true : null
       }
     }
