@@ -1,0 +1,98 @@
+---
+title: Nacos 配置模型
+keywords: [ Nacos ]
+description: 李晓双 Nacos Committer背景在单体架构的时候我们可以将配置写在配置文件中，但有一个缺点就是每次修改配置都需要重启服务才能生效。当应用程序实例比较少的时候还可以维护。如果转向微服务架构有成百上千个实例，每修改一次配置要将全部实例重启，不仅增加了系统的不稳定性，也提高了维护的成本。那...
+---
+> 李晓双 Nacos Committer
+
+<a name="8e1b944f"></a>
+# 背景
+在单体架构的时候我们可以将配置写在配置文件中，但有一个缺点就是每次修改配置都需要重启服务才能生效。<br />当应用程序实例比较少的时候还可以维护。如果转向微服务架构有成百上千个实例，每修改一次配置要将全部实例重启，不仅增加了系统的不稳定性，也提高了维护的成本。<br />![未命名文件 (4).png](https://cdn.nlark.com/yuque/0/2021/png/1299788/1638803097791-67af9da5-b04a-4a89-92fe-043da09eac05.png#clientId=u77ae56d0-5fc9-4&from=paste&height=350&id=ubb74c720&originHeight=542&originWidth=846&originalType=binary&ratio=1&rotation=0&showTitle=false&size=22956&status=done&style=none&taskId=u309b0a3e-3b96-4675-9bd6-1c8d66c1819&title=&width=547)
+
+那么如何能够做到服务不重启就可以修改配置？所有就产生了四个基础诉求：
+
+- 需要支持动态修改配置
+- 需要动态变更实时生效
+- 变更快了之后如何管控控制变更风险，如灰度、回滚等
+- 敏感配置如何做安全配置
+<a name="8fb4ce69"></a>
+# ![Nacos 产品规划图 (2).png](https://cdn.nlark.com/yuque/0/2021/png/1299788/1638808953475-d5f519dd-4ae2-4cac-b616-1300187cc4cf.png#clientId=ub2e18160-98eb-4&from=drop&id=u062dd918&originHeight=1088&originWidth=2032&originalType=binary&ratio=1&rotation=0&showTitle=false&size=232885&status=done&style=none&taskId=uf5229b36-a3c6-4d43-ba0a-07886ef7ed3&title=)概念介绍
+<a name="8ecf8070"></a>
+## 配置**(Configuration)**
+
+在系统开发过程中通常会将一些需要变更的参数、变量等从代码中分离出来独立管理，以独立的配置文件的形式存在。目的是让静态的系统工件或者交付物（如 WAR，JAR 包等）更好地和实际的物理运行环境进行适配。配置管理一般包含在系统部署的过程中，由系统管理员或者运维人员完成这个步骤。配置变更是调整系统运行时的行为的有效手段之一。
+
+<a name="97f969f1"></a>
+## **配置管理 (Configuration Management)**
+
+在 Nacos 中，系统中所有配置的存储、编辑、删除、灰度管理、历史版本管理、变更审计等所有与配置相关的活动统称为配置管理。
+
+<a name="8aaf61b7"></a>
+## **配置服务 (Configuration Service)**
+
+在服务或者应用运行过程中，提供动态配置或者元数据以及配置管理的服务提供者。
+
+<a name="02583a71"></a>
+## 配置项（Configuration Item）
+
+一个具体的可配置的参数与其值域，通常以 param-key = param-value 的形式存在。例如我们常配置系统的日志输出级别（logLevel = INFO | WARN | ERROR） 就是一个配置项。
+
+<a name="3d4f728c"></a>
+## 配置集（Configuration Set）
+
+一组相关或者不相关的配置项的集合称为配置集。在系统中，一个配置文件通常就是一个配置集，包含了系统各个方面的配置。例如，一个配置集可能包含了数据源、线程池、日志级别等配置项。
+
+<a name="95c7c23d"></a>
+## 命名空间（Namespace）
+
+用于进行租户粒度的配置隔离。不同的命名空间下，可以存在相同的 Group 或 Data ID 的配置。Namespace 的常用场景之一是不同环境的配置的区分隔离，例如开发测试环境和生产环境的资源（如数据库配置、限流阈值、降级开关）隔离等。如果在没有指定 Namespace 的情况下，默认使用 public 命名空间。
+
+<a name="4aa4a982"></a>
+## 配置组（Group）
+
+Nacos 中的一组配置集，是配置的维度之一。通过一个有意义的字符串（如 ABTest 中的实验组、对照组）对配置集进行分组，从而区分 Data ID 相同的配置集。当您在 Nacos 上创建一个配置时，如果未填写配置分组的名称，则配置分组的名称默认采用 DEFAULT_GROUP 。配置分组的常见场景：不同的应用或组件使用了相同的配置项，如 database_url 配置和 MQ_Topic 配置。
+
+<a name="1428bce4"></a>
+## 配置ID（Data ID）
+
+Nacos 中的某个配置集的 ID。配置集 ID 是划分配置的维度之一。Data ID 通常用于划分系统的配置集。一个系统或者应用可以包含多个配置集，每个配置集都可以被一个有意义的名称标识。Data ID 尽量保障全局唯一，可以参考 Nacos Spring Cloud 中的命名规则：
+
+```java
+${prefix}-${spring.profiles.active}-${file-extension}
+```
+
+<a name="5f6d251b"></a>
+## 配置快照（Configuration Snapshot）
+
+Nacos 的客户端 SDK 会在本地生成配置的快照。当客户端无法连接到 Nacos Server 时，可以使用配置快照显示系统的整体容灾能力。配置快照类似于 Git 中的本地 commit，也类似于缓存，会在适当的时机更新，但是并没有缓存过期（expiration）的概念。
+
+<a name="4d36ab0d"></a>
+# Nacos配置模型
+
+<a name="ab3e3382"></a>
+## 基础模型
+![nacos配置基础模型 (1).png](https://cdn.nlark.com/yuque/0/2021/png/1299788/1638027702353-8724b0f6-566d-4ab1-95d3-09ad6ca24c62.png#clientId=ud9c6a9ca-aba3-4&from=drop&id=ua6dab432&originHeight=1224&originWidth=1660&originalType=binary&ratio=1&rotation=0&showTitle=false&size=92914&status=done&style=none&taskId=u7a967fd8-e298-48fc-a4de-485d4f6bd13&title=)<br />上图是 Nacos 配置管理的基础模型：
+
+1. Nacos 提供可视化的控制台，可以对配置进行发布、更新、删除、灰度、版本管理等功能。
+2. SDK 可以提供发布配置、更新配置、监听配置等功能。
+3. SDK 通过 GRPC 长连接监听配置变更，Server 端对比 Client 端配置的 MD5 和本地 MD5 是否相等，不相等推送配置变更。
+4. SDK会保存配置的快照，当服务端出现问题的时候从本地获取。
+
+<a name="e7c42753"></a>
+## 配置资源模型
+
+Namespace 的设计就是用来进行资源隔离的，我们在进行配置资源的时候可以从以下两个角度来看：
+
+-  从单个租户的角度来看，我们要配置多套环境的配置，可以根据不同的环境来创建 Namespace 。比如开发环境、测试环境、线上环境，我们就创建对应的 Namespace（dev、test、prod），Nacos 会自动生成对应的 Namespace Id 。如果同一个环境内想配置相同的配置，可以通过 Group 来区分。如下图所示：
+
+![Nacos 资源模型 (2).png](https://cdn.nlark.com/yuque/0/2021/png/1299788/1638028128383-439a216b-2884-4bd4-9483-8b30b22ce9c5.png#clientId=u5b7fc48d-b395-4&from=drop&id=u744ec4c2&originHeight=1476&originWidth=2304&originalType=binary&ratio=1&rotation=0&showTitle=false&size=156962&status=done&style=none&taskId=u14f8ec7e-13e7-4595-a16e-e88c0712042&title=)
+
+-  从多个租户的角度来看，每个租户都可以有自己的命名空间。我们可以为每个用户创建一个命名空间，并给用户分配对应的权限，比如多个租户（zhangsan、lisi、wangwu），每个租户都想有一套自己的多环境配置，也就是每个租户都想配置多套环境。那么可以给每个租户创建一个 Namespace （zhangsan、lisi、wangwu）。同样会生成对应的 Namespace Id。然后使用 Group 来区分不同环境的配置。如下图所示：<br />![Nacos 资源模型2 (1).png](https://cdn.nlark.com/yuque/0/2021/png/1299788/1638028092623-8ffd6ec8-488e-4fd2-a7de-03c43da4d68a.png#clientId=u5b7fc48d-b395-4&from=drop&id=uee9adb8b&originHeight=1476&originWidth=2304&originalType=binary&ratio=1&rotation=0&showTitle=false&size=157327&status=done&style=none&taskId=u10cf3f2f-0aa7-49fa-93e4-94275727496&title=)
+<a name="e0d26af6"></a>
+## 配置存储模型（ER图）
+![Nacos 存储模型 (1).png](https://cdn.nlark.com/yuque/0/2021/png/1299788/1638027867180-f59634ea-e4fa-469f-91f3-efd80b1bb036.png#clientId=u5b7fc48d-b395-4&from=drop&id=ucbad413c&originHeight=3072&originWidth=3476&originalType=binary&ratio=1&rotation=0&showTitle=false&size=573911&status=done&style=none&taskId=uf51eea31-a7a1-4d8c-a28f-6a6ee12fcdc&title=)<br />Nacos存储配置有几个比较重要的表分别是: 
+
+- config_info  存储配置信息的主表，里面包含 dataId、groupId、content、tenantId、encryptedDataKey 等数据。
+- config_info_beta 灰度测试的配置信息表，存储的内容和 config_info 基本相似。有一个 beta_ips 字段用于客户端请求配置时判断是否是灰度的ip。
+- config_tags_relation 配置的标签表，在发布配置的时候如果指定了标签，那么会把标签和配置的关联信息存储在该表中。
+- his_config_info 配置的历史信息表，在配置的发布、更新、删除等操作都会记录一条数据，可以做多版本管理和快速回滚。
