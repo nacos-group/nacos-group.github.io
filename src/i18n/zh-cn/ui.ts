@@ -48,7 +48,7 @@ export default {
 	'home.description': 'Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。',
 	'home.introduce.about': '关于 NACOS',
 	'home.introduce.title': '一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台',
-	'home.introduce.nacos.code': '前往 Github',
+	'home.introduce.nacos.code': '前往 GitHub',
 	'home.introduce.nacos.manual': '手册',
 	'home.introduce.nacos.notes': '发布于2023年11月30日',
 	'home.introduce.nacos.release.note': 'V2.3.0的发行说明',
