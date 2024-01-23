@@ -214,4 +214,5 @@ export default {
 	'page.blog.news.all':'All News',
 	'page.blog.news.personnel.promotion':'Personnel Promotion',
 	'page.blog.news.community.cooperation':'Community Cooperation',
+	'page.limiting.prompt':'The current download channel is too crowded, please try again later...',
 };
