@@ -1,19 +1,12 @@
 ---
 import { useTranslations, isChinese } from "@i18n/util";
-import Star from "../icon/Star.astro";
-import Fork from "../icon/Fork.astro";
+import StarAndFork from "./StarAndFork.astro";
 import UpRight from "../icon/UpRight.astro";
 import Button from '@components/common/Button.astro';
 import HomeBackground from "../home/HomeBackground.astro";
 
 const t = useTranslations(Astro);
 const ifzh = isChinese(Astro);
-
-const data = await fetch("https://api.github.com/repos/alibaba/nacos").then(
-  (r) => r.json(),
-);
-const { stargazers_count: startCount = 0, forks_count: forkCount = 0 } =
-  data || { stargazers_count: 0, forks_count: 0 };
 ---
 
 <home-introduce class="introduce flex flex-col justify-center items-center bg-gray-14">
@@ -27,28 +20,7 @@ const { stargazers_count: startCount = 0, forks_count: forkCount = 0 } =
     >
       {t("home.introduce.title")}
     </div>
-    <div class="shortcut flex">
-      <Button 
-        size="large"
-        class="rounded-3xl mr-4"
-        href="https://github.com/alibaba/nacos"
-        target="_blank"
-      >
-        <Star />
-        <span class="text-[0.875rem] leading-4 ml-2">{startCount}</span>
-      </Button>
-
-      <Button 
-        size="large"
-        type="primary"
-        class="rounded-3xl"
-        href="https://github.com/alibaba/nacos/fork"
-        target="_blank"
-      >
-        <Fork theme="light" />
-        <span class="ml-2">{forkCount}</span>
-      </Button>
-    </div>
+    <StarAndFork client:load/>
     <div class="notes mt-16 text-gray-07 text-xs flex justify-between">
       <div>
         <a class="mr-2.5 text-blue-03" href="https://github.com/alibaba/nacos/releases/tag/2.3.0 " target="_blank">
