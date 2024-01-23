@@ -1,0 +1,60 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { useTranslations } from "@i18n/util";
+const t = useTranslations(Astro);
+---
+
+<BaseLayout
+  title={t('home.title')}
+  description={t('home.description')}
+>
+  <div class="limiting-box">
+    <div class="limiting-content">
+      <img src="https://img.alicdn.com/imgextra/i2/O1CN01luyB2F1NLK0lLJa1S_!!6000000001553-2-tps-760-358.png" alt="">
+      <div class="limiting-text">{t('page.limiting.prompt')}</div>
+    </div>
+  </div>
+
+</BaseLayout>
+<style>
+  .limiting-box {
+    height: calc(100vh - 4rem);
+    position: relative;
+  }
+  .limiting-box .limiting-content{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  .limiting-content img {
+    width: 23.75rem;
+    height: 10.94rem;
+  }
+  .limiting-content .limiting-text {
+    font-size: 1.375rem;
+    font-weight: 500;
+    padding-top: 1.5rem;
+  }
+  @media (max-width: 50rem) {
+    .limiting-content img {
+      width: 18.75rem;
+      height: 8.63rem;
+    }
+    .limiting-content .limiting-text {
+    font-size: 1rem;
+    font-weight: 500;
+    padding-top: 1.2rem;
+  }
+  }
+</style>
+
+<script>
+  class HomeBody extends HTMLElement {
+    constructor() {
+      super();
+    }
+  }
+  customElements.define('home-body', HomeBody);
+</script>
