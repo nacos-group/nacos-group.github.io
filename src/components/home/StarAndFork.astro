@@ -10,7 +10,7 @@ const { stargazers_count: startCount = 0, forks_count: forkCount = 0 } =
   data || { stargazers_count: 0, forks_count: 0 };
 ---
 
-<div class="shortcut flex">
+<starAndFork class="shortcut flex">
   <Button 
     size="large"
     class="rounded-3xl mr-4"
@@ -31,5 +31,14 @@ const { stargazers_count: startCount = 0, forks_count: forkCount = 0 } =
     <Fork theme="light" />
     <span class="ml-2">{forkCount}</span>
   </Button>
-</div>
+</starAndFork>
+
+<script>
+  class StarAndFork extends HTMLElement {
+    constructor() {
+      super();
+    }
+  }
+  customElements.define("starAndFork", StarAndFork);
+</script>
   

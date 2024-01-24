@@ -1,0 +1,61 @@
+---
+import members from "../contributors/gitHubData.json";
+---
+
+<contributors class="members flex block bg-gray-14 mb-4 mt-9">
+  <div class="text">
+    {members.length}
+  </div>
+  <div class="img-box flex">
+    {
+      members.map((v) => {
+        return (
+          <div class="img-item">
+            <img
+              class="avatar-img"
+              src={v.avatar_url}
+              alt={v.login}
+              title={v.login}
+            />
+          </div>
+        );
+      })
+    }
+  </div>
+</contributors>
+
+<script>
+  class Contributors extends HTMLElement {
+    constructor() {
+      super();
+    }
+  }
+  customElements.define("contributors", Contributors);
+</script>
+
+<style>
+  .members {
+  }
+
+  .members .text {
+    flex: 1;
+  }
+
+  .members .img-box {
+    flex: 1;
+    flex-wrap: wrap;
+    height: 15rem;
+    overflow: auto;
+
+  }
+
+  .img-item {
+    padding: 2px;
+    
+  }
+  .avatar-img {
+    width: 4rem;
+    height: 4rem;
+    vertical-align: middle;
+  }
+</style>
