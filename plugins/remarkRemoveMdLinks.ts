@@ -10,8 +10,12 @@ export default function remarkRemoveMdLinks() {
 			if (node.url.startsWith("http://") || node.url.startsWith("https://") || node.url.startsWith("//")) {
 				return;
 			}
-			if (node.url.endsWith('.md')) {
-				node.url = node.url.slice(0, -3) + '/';
+			if (node.url.endsWith('.md') || node.url.endsWith('.mdx')) {
+				if(node.url.endsWith('.mdx')) {
+					node.url = node.url.slice(0, -4) + '/';	
+				} else {
+					node.url = node.url.slice(0, -3) + '/';
+				}
 				if (/^[^\.|~\/].+/.test(node.url)) {
 					node.url = "./" + node.url;
 				}
