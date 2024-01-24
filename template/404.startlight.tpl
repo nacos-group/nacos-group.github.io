@@ -42,22 +42,47 @@ const route = generateRouteData({
 	props: { ...entryMeta, entryMeta, headings, entry, id: entry.id, slug: entry.slug },
 	url: Astro.url,
 });
-
 ---
 
 <Page {...route}><Content /></Page>
 
-
 <script>
 	const pathname = window?.location?.pathname;
-	const regexs = /\/docs\/(latest|ebook|next|v[0-9]\.[0-9]\.[0-9]|v[0-9]\.[0-9]|v[0-9]|[0-9]\.[0-9]\.[0-9]|[0-9]\.[0-9]|[0-9])\/.+/;
-	const match = regexs.exec(pathname)
-	if(!match) {
-		const [lang, rest] = pathname.split('/docs');
-		if(lang === '/en-us') {
-			window.location.pathname = '/en/docs'+ '/latest' + rest
+
+	if(pathname === '/en') {
+		window.location.pathname = '/en'
+	}
+
+	if(pathname.slice(-1)!== '/'){
+		window.location.pathname += '/'
+	}
+
+	// if( Number(redirect)>3 ) {
+	// 	window.location.pathname = '/404/';
+	// 	// 重点上报
+	// }
+
+	// 对文档情况进行重定向
+	if (pathname.includes('docs')) {
+		const regexs = /\/docs\/(latest|ebook|next|v[0-9]\.[0-9]\.[0-9]|v[0-9]\.[0-9]|v[0-9]|[0-9]\.[0-9]\.[0-9]|[0-9]\.[0-9]|[0-9])\/.+/;
+		const match = regexs.exec(pathname)
+		if (!match) {
+			const [lang, rest] = pathname.split('/docs');
+			if(lang === '/en') {
+				window.location.pathname = '/en/docs'+ '/latest' + rest
+			} else {
+				window.location.pathname = '/docs'+ '/latest' + rest
+			}
+			
+			// params.set('redirect',`${+redirect + 1}`)
 		} else {
-			window.location.pathname = '/docs'+ '/latest' + pathname.split('/docs').join('')
+			// // 埋点上报
+			// window.location.pathname = '404.html'
+			// params.set('redirect',`${+redirect + 1}`)
 		}
 	}
+	// console.log('-------',redirect)
+	// const newUrl = params.toString() === '' ? baseUrl : `${baseUrl}?${params}`;
+	// window.history.replaceState({}, '', newUrl);
+	
 </script>
