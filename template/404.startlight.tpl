@@ -49,18 +49,31 @@ const route = generateRouteData({
 <script>
 	const pathname = window?.location?.pathname;
 
+	const track404 = (props)=>{ 
+		const { type } = props;
+
+		 setTimeout(function () {
+			if(window.aes && window.AESPluginEvent) {
+				const sendEvent = window?.aes.use(window.AESPluginEvent)
+				const AES_EVENT_TYPE = {
+					TRACK_404: 'TRACK_404'
+				};
+				console.log('-------')
+				sendEvent(AES_EVENT_TYPE.TRACK_404, {
+					c1:  window?.location?.pathname,
+					c2: type, //文档或其他
+				});
+			}
+		 }, 1000)
+	};
+
 	if(pathname === '/en') {
-		window.location.pathname = '/en'
+		window.location.pathname = '/en/'
 	}
 
 	if(pathname.slice(-1)!== '/'){
 		window.location.pathname += '/'
 	}
-
-	// if( Number(redirect)>3 ) {
-	// 	window.location.pathname = '/404/';
-	// 	// 重点上报
-	// }
 
 	// 对文档情况进行重定向
 	if (pathname.includes('docs')) {
@@ -74,15 +87,12 @@ const route = generateRouteData({
 				window.location.pathname = '/docs'+ '/latest' + rest
 			}
 			
-			// params.set('redirect',`${+redirect + 1}`)
 		} else {
-			// // 埋点上报
-			// window.location.pathname = '404.html'
-			// params.set('redirect',`${+redirect + 1}`)
+			 // 埋点上报
+			track404({ type:'docs'})
 		}
+	} else {
+		track404({type:'others'});
 	}
-	// console.log('-------',redirect)
-	// const newUrl = params.toString() === '' ? baseUrl : `${baseUrl}?${params}`;
-	// window.history.replaceState({}, '', newUrl);
 	
 </script>
