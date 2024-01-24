@@ -1,6 +1,9 @@
 # Nacos Official WebSite
 All website material of https://nacos.io.
 
+# README.md
+- en [English](README.md)
+- zh_CN [简体中文](README.zh_CN.md)
 
 ## Starlight Starter Kit: Basics
 
@@ -14,7 +17,7 @@ npm create astro@latest -- --template starlight
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/starlight/tree/main/examples/basics)
 [![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/starlight/tree/main/examples/basics)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+<!-- > 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun! -->
 
 ## Quick Start
 
@@ -99,8 +102,8 @@ Refer to [this blog](src/content/docs/latest/what-is-nacos)
 ### Add a new doc
 
 1. Add new .md file under `docs/en` or `docs/zh-cn`.
-2. Update `_sidebar.json`, add a new entry to the blog in either en-us or zh-cn.
-3. Send the pull request contains the .md and _sidebar.json only.
+2. Update `_sidebar.json`, add a new entry to the blog in either en or zh-cn.
+3. Send the pull request contains the `.md` and `_sidebar.json` only.
 
 ## 👀 Want to learn more?
 
