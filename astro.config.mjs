@@ -77,6 +77,7 @@ export default defineConfig({
 		'/zh-cn/': '/',
 		'/en-us/': '/en/',
 		'/[...slug].html': '/[...slug]',
+		'/en-us/[...slug]/': '/en/[...slug]/',
 		'/zh-cn/[...slug]': '/[...slug]',
 		'/docs/': '/docs/latest/what-is-nacos/',
 	}

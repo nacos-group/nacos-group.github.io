@@ -94,6 +94,5 @@ const route = generateRouteData({
 	} else {
 		track404({type:'others'});
 	}
-
 	
 </script>
