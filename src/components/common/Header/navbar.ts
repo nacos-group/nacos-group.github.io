@@ -19,7 +19,7 @@ export default [
           en: "NACOS CLOUD"
       },
       trigger: "click", 
-      route: "/cloud",
+      route: "/cloud/",
       target: "_self",
       activePath: ['/cloud'],
   },

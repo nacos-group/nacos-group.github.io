@@ -20,7 +20,7 @@ export default {
 	'commmon.header.comm.leftcut': 'Key to service-centric (for example microservice or cloud-native) architectures.',
 	'commmon.header.comm.rightcut': 'An easy-to-use platform for building cloud native applications',
 	'commmon.header.comm.contact': 'CONTACT US',
-	'commmon.header.contact.git': 'Github',
+	'commmon.header.contact.git': 'GitHub',
 	'commmon.header.contact.ding': 'DingDing',
 	'commmon.header.contact.mail': 'E-mail',
 	'commmon.ebook.click.download':'Click to download',
