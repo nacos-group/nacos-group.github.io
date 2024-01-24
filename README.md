@@ -17,6 +17,30 @@ This project keeps all sources used for building up [Nacos](https://github.com/a
 
 Node.js version >= 18.14.1
 
+## 🚀 Project Structure
+
+Inside of your Astro + Starlight project, you'll see the following folders and files:
+
+```
+.
+├── public/
+├── src/
+│   ├── assets/
+│   ├── content/
+│   │   ├── docs/
+│   │   └── config.ts
+│   └── env.d.ts
+├── astro.config.mjs
+├── package.json
+└── tsconfig.json
+```
+
+Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+
+Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+
+Static assets, like favicons, can be placed in the `public/` directory.
+
 ## How to Contribute
 
 1. Create an issue first to description the issue
@@ -40,7 +64,7 @@ sidebar:
 ---
 ```
 
-Refer to [this blog](src/content/docs/latest/what-is-nacos)
+Refer to [this blog](src/content/docs/latest/en/what-is-nacos.md)
 **Note:**
 1. `title` can not include `:` 
 2. `keywords` must be a `Array`
