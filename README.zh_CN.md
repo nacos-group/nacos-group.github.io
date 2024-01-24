@@ -1,73 +1,21 @@
 # Nacos 官方网站
-此仓库包含 https://nacos.io 的所有网站材料
+
+该项目保留了用于构建 [Nacos](https://github.com/alibaba/nacos)官方网站的所有资源，该网站服务于http://nacos.io。
 
 # README.md同时有以下语言的版本
+
 - en [English](README.md)
 - zh_CN [简体中文](README.zh_CN.md)
 
-## Starlight Starter Kit: 基础知识
+## 构建指令
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
-
-```
-
-npm create astro@latest -- --template starlight
-```
-
-[![在StackBlitz中打开](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/starlight/tree/main/examples/basics)
-[![使用CodeSandbox打开](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/starlight/tree/main/examples/basics)
-
-
-### 快速开始
-
-1. `npm install`
-
-2. `npm run dev`
-
-3. Visit
-```
-localhost:4321/
-```
+1. 在 `npm i` 根目录中运行以安装依赖项。
+2. 在根目录下运行 `npm run dev` 启动本地服务器，您将在“http://localhost:4321/”中看到网站。
+3. 运行 `npm run build` 以构建源代码。
 
 ## 版本要求
-Node.js version >=18.14.1
 
-## 🚀 项目结构
-
-在 Astro + Starlight 项目中，您将看到以下文件夹和文件：
-
-```
-.
-├── public/
-├── src/
-│   ├── assets/
-│   ├── content/
-│   │   ├── docs/
-│   │   └── config.ts
-│   └── env.d.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
-```
-
-Starlight 在目录中查找`.md`或`.mdx`文件 `src/content/docs/`。每个文件都根据其文件名公开为路由。
-
-`src/assets/`可以通过相对链接将图像添加到Markdown 并嵌入到 Markdown 中。
-
-静态资源（如网站图标）可以放置在该 `public/`目录中。
-
-## 🧞 命令
-
-所有命令都从项目的根目录的终端运行：
-
-| 命令                      | 功能                                           |
-| :------------------------ | :--------------------------------------------- |
-| `npm install`             | 安装依赖项                                     |
-| `npm run dev`             | 启动本地开发服务器 `localhost:4321`            |
-| `npm run build`           | 将您的生产站点构建为 `./dist/`                 |
-| `npm run preview`         | 部署之前在本地预览您的构建                     |
-| `npm run astro ...`       | 运行 CLI 命令，例如 `astro add`, `astro check` |
-| `npm run astro -- --help` | 使用 Astro CLI 获取帮助                        |
+Node.js 版本 >= 18.14.1
 
 ## 如何贡献
 
