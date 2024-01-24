@@ -20,7 +20,7 @@ export default {
 	'commmon.header.comm.leftcut': '服务为中心（例如微服务或云原生）架构的关键。',
 	'commmon.header.comm.rightcut': '一个易于使用的构建云原生应用程序的平台。',
 	'commmon.header.comm.contact': '联系我们',
-	'commmon.header.contact.git': 'Github',
+	'commmon.header.contact.git': 'GitHub',
 	'commmon.header.contact.ding': '钉钉',
 	'commmon.header.contact.mail': '电子邮箱',
 	'commmon.ebook.click.download':'点击下载',

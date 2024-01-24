@@ -84,12 +84,5 @@ const { Content, headings } = await Astro.props.entry.render();
 
 const route = generateRouteData({ props: { ...Astro.props, headings, categories: categories }, url: Astro.url });
 
-
-const regexs = /\/docs\/(latest|ebook|next|v[0-9]\.[0-9]\.[0-9]|v[0-9]\.[0-9]|v[0-9]|[0-9]\.[0-9]\.[0-9]|[0-9]\.[0-9]|[0-9])\/.+/;
-
-const match = regexs.exec(Astro.url.pathname)
-if(!match) {
-	return Astro.redirect('/docs'+ '/latest' + Astro.url.pathname.split('/docs').join(''));
-}
 ---
 <Page {...route}><Content /></Page>

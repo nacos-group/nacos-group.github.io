@@ -42,22 +42,57 @@ const route = generateRouteData({
 	props: { ...entryMeta, entryMeta, headings, entry, id: entry.id, slug: entry.slug },
 	url: Astro.url,
 });
-
 ---
 
 <Page {...route}><Content /></Page>
 
-
 <script>
 	const pathname = window?.location?.pathname;
-	const regexs = /\/docs\/(latest|ebook|next|v[0-9]\.[0-9]\.[0-9]|v[0-9]\.[0-9]|v[0-9]|[0-9]\.[0-9]\.[0-9]|[0-9]\.[0-9]|[0-9])\/.+/;
-	const match = regexs.exec(pathname)
-	if(!match) {
-		const [lang, rest] = pathname.split('/docs');
-		if(lang === '/en-us') {
-			window.location.pathname = '/en/docs'+ '/latest' + rest
-		} else {
-			window.location.pathname = '/docs'+ '/latest' + pathname.split('/docs').join('')
-		}
+
+	const track404 = (props)=>{ 
+		const { type } = props;
+
+		 setTimeout(function () {
+			if(window.aes && window.AESPluginEvent) {
+				const sendEvent = window?.aes.use(window.AESPluginEvent)
+				const AES_EVENT_TYPE = {
+					TRACK_404: 'TRACK_404'
+				};
+				console.log('-------')
+				sendEvent(AES_EVENT_TYPE.TRACK_404, {
+					c1:  window?.location?.pathname,
+					c2: type, //文档或其他
+				});
+			}
+		 }, 1000)
+	};
+
+	if(pathname === '/en') {
+		window.location.pathname = '/en/'
 	}
+
+	if(pathname.slice(-1)!== '/'){
+		window.location.pathname += '/'
+	}
+
+	// 对文档情况进行重定向
+	if (pathname.includes('docs')) {
+		const regexs = /\/docs\/(latest|ebook|next|v[0-9]\.[0-9]\.[0-9]|v[0-9]\.[0-9]|v[0-9]|[0-9]\.[0-9]\.[0-9]|[0-9]\.[0-9]|[0-9])\/.+/;
+		const match = regexs.exec(pathname)
+		if (!match) {
+			const [lang, rest] = pathname.split('/docs');
+			if(lang === '/en') {
+				window.location.pathname = '/en/docs'+ '/latest' + rest
+			} else {
+				window.location.pathname = '/docs'+ '/latest' + rest
+			}
+			
+		} else {
+			 // 埋点上报
+			track404({ type:'docs'})
+		}
+	} else {
+		track404({type:'others'});
+	}
+	
 </script>
