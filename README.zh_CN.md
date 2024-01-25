@@ -22,16 +22,40 @@ Node.js 版本 >= 18.14.1
 在 Astro + Starlight 项目中，您将看到以下文件夹和文件：
 
 ```
-.
-├── public/
-├── src/
+
+├── public/                # 静态资源
+│   ├── font/
+│   ├── img/
+├── src/                   # 源代码目录
 │   ├── assets/
+│   ├── components/        # 公共组件
+│   │   ├── cloud/
+│   │   ├── common/        # 通用组件
+│   │   ├── contributors/
+│   │   ├── home/          # 首页组件
+│   │   ├── icon/
+│   │   ├── markdownSet/
+│   │   ├── starlight/ 
 │   ├── content/
-│   │   ├── docs/
+│   │   ├── blog/          # 博客目录
+│   │   ├── docs/          # 文档目录
+│   │   ├── download/      # 下载目录
 │   │   └── config.ts
+│   ├── helpers/
+│   ├── i18n/              # 国际化词条配置
+│   │   └── en/
+│   │   └── zh-cn/
+│   ├── layouts/           # 项目基础布局
+│   ├── pages/           
+│   ├── style/
+│   └── consts.ts          # 项目常量管理
 │   └── env.d.ts
-├── astro.config.mjs
-├── package.json
+│   └── util.ts            # 通用工具函数
+├── template/              # 404等通用页面模板
+├── astro.config.mjs       # Astro 配置文件
+├── package.json         
+├── tailwind.config.json   #tailwindcss配置文件
+├── themeColor.json
 └── tsconfig.json
 ```
 
