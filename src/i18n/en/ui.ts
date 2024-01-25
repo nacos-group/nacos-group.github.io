@@ -101,6 +101,10 @@ export default {
 	'home.solutions.card.keyword.lossless':'Application lossless online and offline',
 	'home.solutions.card.keyword.grayscale':'Full link grayscale capability',
 	'home.solutions.card.keyword.service_governance':'service governance',
+	'home.contributors.members': 'MEMBERS',
+	'home.contributors.our': 'Our',
+	'home.contributors.community.stars': 'Community Stars',
+	'home.contributors.learn.more': 'LEARN MORE',
 
 	'cloud.title': 'Nacos Cloud',
 	'cloud.description': 'Nacos Cloud is specifically designed for cloud-native applications, providing powerful features for service discovery, dynamic configuration management, and service management. It supports efficient application development and operations.',

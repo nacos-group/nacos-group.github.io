@@ -101,7 +101,10 @@ export default {
 	'home.solutions.card.keyword.lossless':'应用无损上下线',
 	'home.solutions.card.keyword.grayscale':'全链路灰度能力',
 	'home.solutions.card.keyword.service_governance':'服务治理',
-
+	'home.contributors.members': '贡献者',
+	'home.contributors.our': '我们的',
+	'home.contributors.community.stars': '贡献之星',
+	'home.contributors.learn.more': '更多',
 
 	'cloud.title': 'Nacos Cloud',
 	'cloud.description': 'Nacos Cloud 专为云原生应用设计，提供强大的服务发现、动态配置管理和服务管理功能，支持高效的应用开发和运维。',

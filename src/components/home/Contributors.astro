@@ -1,28 +1,56 @@
 ---
+import Button from '@components/common/Button.astro';
+import { useTranslations } from "@i18n/util";
 import members from "../contributors/gitHubData.json";
+const t = useTranslations(Astro);
 ---
 
-<contributors class="members flex block bg-gray-14 mb-4 mt-9">
-  <div class="text">
-    {members.length}
+<nacos-contributors class="nacos-contributors flex flex-col justify-center items-center bg-gary-02 py-10">
+  <div class="contributors-container block flex items-center justify-between bg-gray-13 rounded-2xl p-9 mt-10">
+    <div class="left-container h-full flex flex-col justify-around">
+      <div class="flex flex-col">
+        <div class="text-blue-02 text-xs tracking-[0.15em]">{t('home.contributors.members')}</div>
+        <div class="text-blue-01 font-medium text-[2.75rem] leading-[3.5rem] mt-6">
+          {t('home.contributors.our')}
+          <br/>
+          {t('home.contributors.community.stars')}
+        </div>
+      </div>
+      <Button 
+        size="large"
+        class="rounded-3xl"
+        href="https://github.com/alibaba/nacos/graphs/contributors"
+      >
+        {t('home.contributors.learn.more')}
+      </Button>
+    </div>
+    <div class="right-container">
+      {
+        members.map((v) => {
+          return (
+            <div class="img-item">
+              <img
+                class="avatar-img rounded-xl"
+                src={v.avatar_url}
+                alt={v.login}
+                title={v.login}
+              />
+            </div>
+          );
+        })
+      }
+    </div>
   </div>
-  <div class="img-box flex">
-    {
-      members.map((v) => {
-        return (
-          <div class="img-item">
-            <img
-              class="avatar-img"
-              src={v.avatar_url}
-              alt={v.login}
-              title={v.login}
-            />
-          </div>
-        );
-      })
-    }
+  <div class="mobile-contributors-container hidden w-full bg-gray-14 flex-col items-center rounded-3xl p-6 mt-10">
+    <div class="top-title w-full flex flex-col items-center">
+      <span class="text-gray-04 text-xs mb-6">{t('home.contributors.members')}</span>
+      <span class="title text-gray-01 text-lg font-medium">{t('home.contributors.our') + t('home.contributors.community.stars')}</span>
+    </div>
+    <a href="https://github.com/alibaba/nacos/graphs/contributors">
+      <button class="btn btn-secondary rounded-3xl mt-16">{t('home.contributors.learn.more')}</button>
+    </a>
   </div>
-</contributors>
+</nacos-contributors>
 
 <script>
   class Contributors extends HTMLElement {
@@ -34,28 +62,66 @@ import members from "../contributors/gitHubData.json";
 </script>
 
 <style>
-  .members {
+  .contributors-container {
+    height: 30rem;
+    width: 85.125rem;
   }
-
-  .members .text {
-    flex: 1;
+  .left-container {
+    width: 50%;
+    padding-left: 8.5rem;
   }
-
-  .members .img-box {
-    flex: 1;
+  .right-container {
+    display: flex;
     flex-wrap: wrap;
-    height: 15rem;
-    overflow: auto;
-
+    width: 50%;
+    height: 20rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
-
-  .img-item {
-    padding: 2px;
-    
+  .right-container .img-item{
+    padding: 4px;
   }
-  .avatar-img {
+  .right-container .img-item .avatar-img{
     width: 4rem;
     height: 4rem;
     vertical-align: middle;
+  }
+  
+    /* 小于50rem  小于 800px */
+  @media (max-width: 50rem) { 
+    .nacos-contributors {
+      padding: 1.5rem;
+    }
+    .contributors-container {
+      display: none !important;
+    }
+    .mobile-contributors-container {
+      display: flex !important;
+    }
+    .mobile-contributors-container button {
+        height: 2rem;
+        min-height: 2rem;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
+    .top-title .title {
+      font-size: 1.125rem; /* 18px */
+      line-height: 1.75rem; /* 28px */
+    }
+  }
+  
+  
+  /* 大于50rem 小于 72rem  800px < width < 1152 */
+  @media (min-width: 50rem) and (max-width: 86rem) { 
+    .nacos-contributors {
+      padding: 2.5rem;
+    }
+    .contributors-container {
+      height: 26rem;
+      width: 100%;
+    }
+    .left-container {
+      padding-left: 1.5rem;
+    }
   }
 </style>
