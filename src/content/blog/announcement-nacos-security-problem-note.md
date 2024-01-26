@@ -19,7 +19,7 @@ identity来设置服务端之间通信的安全认证，不再简单使用UA进�
 
 [download page](https://github.com/alibaba/nacos/releases/tag/1.4.1).
 
-[document](https://nacos.io/zh-cn/docs/auth.html).
+[document](https://nacos.io/docs/latest/guide/user/auth/).
 
 # 关于Nacos的部署建议
 

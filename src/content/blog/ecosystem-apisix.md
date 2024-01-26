@@ -50,7 +50,7 @@ Apache APISIX + Nacos 可以将各个微服务节点中与业务无关的各项�
 
 - 操作系统 Centos 7.9。
 - 已安装 Apache APISIX 12.1.0，详情请参考：[Apache APISIX how-to-bulid](https://apisix.apache.org/zh/docs/apisix/how-to-buildhttps://apisix.apache.org/zh/docs/apisix/how-to-build)。
-- 已安装 Nacos 2.0.4 及以上版本，详情请参考：[quick start](https://nacos.io/zh-cn/docs/quick-start.html)。
+- 已安装 Nacos 2.0.4 及以上版本，详情请参考：[quick start](https://nacos.io/docs/v2/quickstart/quick-start/)。
 - 已安装 Node.js，详情请参考：[node.js Installation](https://github.com/nodejs/help/wiki/Installation)。
 
 ## 步骤一：服务注册

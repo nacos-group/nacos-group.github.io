@@ -212,7 +212,7 @@ Nacos 社区正在蓬勃发展，截止到发文为止，Nacos 已经有 9 个�
 
 为了能够与代码贡献者更方便的交流，我们组建了钉钉群“Nacos社区核心贡献小组（**23335652**）”，这个群里都是都是对Nacos贡献非常感兴趣的小伙伴，如果你也想成为Nacos贡献者，甚至成为Committer，欢迎加入这个群和群里的小伙伴一起切磋！
 
-在Nacos官网 [nacos.io](http://nacos.io/) 中，已经添加[团队介绍页](https://nacos.io/zh-cn/docs/nacos-dev.html)，里面包括Nacos的开发者角色定义及职责划分，同时包含了Naocs的开发者们介绍和靓照哦，欢迎大家加入Nacos社区，贡献社区。用Apache的话说，**“社区高于代码”!**
+在Nacos官网 [nacos.io](http://nacos.io/) 中，已经添加[团队介绍页](https://nacos.io/docs/latest/community/nacos-dev/)，里面包括Nacos的开发者角色定义及职责划分，同时包含了Naocs的开发者们介绍和靓照哦，欢迎大家加入Nacos社区，贡献社区。用Apache的话说，**“社区高于代码”!**
 
 ![](https://cdn.nlark.com/lark/0/2018/png/15914/1542704700864-a9d54856-9bf6-4176-b449-c13fa02c5800.png#align=left&display=inline&height=387&linkTarget=_blank&originHeight=888&originWidth=1716&width=748#align=left&display=inline&height=386&originHeight=888&originWidth=1716&status=done&width=746)
 
