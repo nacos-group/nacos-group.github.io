@@ -13,15 +13,15 @@ button:where(.astro-bweis6se){--button-bg-color: #F4F4F6;--button-hover-color: #
 <p>经过4个多月社区的大量贡献，Nacos 2.3.0版本终于进入的Beta发布阶段，在经历了2.2.X的多个安全风险修复的版本后，又一次迎来了功能性上的更新版本。</p>
 <h3 id="nacos-反脆弱插件">Nacos 反脆弱插件</h3>
 <p>2.2.0版本加入ALPHA版本的反脆弱插件后，社区经过多次重构和修改，提升抽象度和稳定性，终于在2.3.0版本中正式公布了Nacos的反脆弱插件，用于避免Nacos集群在大量请求和连接时导致的容量问题而引发更大规模的故障。</p>
-<p>默认反脆弱实现插件的使用以及自定义反脆弱插件的开发可参考文档<a href="/zh-cn/docs/v2/plugin/control-plugin.html" referrerpolicy="unsafe-url">反脆弱插件</a>.</p>
+<p>默认反脆弱实现插件的使用以及自定义反脆弱插件的开发可参考文档<a href="https://nacos.io/docs/v2/plugin/control-plugin/" referrerpolicy="unsafe-url" rel="nofollow" target="_blank">反脆弱插件</a>.</p>
 <h3 id="nacos-配置变更插件">Nacos 配置变更插件</h3>
 <p>Nacos配置管理作为Nacos的核心功能，一直受到开发人员、运维人员和审计人员的关注，不少运维人员和审计人员向社区提出诉求，希望Nacos能够提供配置变更的审计、变更通知等功能；同时开发人员也希望Nacos提供一定的格式校验功能，避免修改配置时出现错误导致应用故障。</p>
 <p>由于Nacos配置管理本身对配置内容是不感知的，且各个用户公司的审计、通知系统也各不相同，因此Nacos为了能够更广阔的适配各个用户的诉求，在去年的开源之夏中制定了配置变更插件的课题，希望以插件化的形式，来满足对配置变更过程的介入。</p>
-<p>经过同学和导师长期的努力，该插件在2.3.0版本发布，用户可以开发自定义插件，在配置变更前和变更完成后，分别对接公司的审计系统和通知系统，并在变更前进行更多的校验操作，如格式校验，配置名字的规范化等。同时Nacos社区也提供了默认插件的实现，可接入webhook进行配置变更的通知以及导入配置的文件名校验等；详情可参考文档<a href="/zh-cn/docs/v2/plugin/config-change-plugin.html" referrerpolicy="unsafe-url">配置变更插件</a></p>
+<p>经过同学和导师长期的努力，该插件在2.3.0版本发布，用户可以开发自定义插件，在配置变更前和变更完成后，分别对接公司的审计系统和通知系统，并在变更前进行更多的校验操作，如格式校验，配置名字的规范化等。同时Nacos社区也提供了默认插件的实现，可接入webhook进行配置变更的通知以及导入配置的文件名校验等；详情可参考文档<a href="https://nacos.io/docs/v2/plugin/config-change-plugin/" referrerpolicy="unsafe-url" rel="nofollow" target="_blank">配置变更插件</a></p>
 <h3 id="nacos-请求参数校验">Nacos 请求参数校验</h3>
 <p>2.3.0版本之前的Nacos的参数校验逻辑分散，由各类请求的处理方法单独进行校验，难以更改维护，经常出现参数校验的遗漏，参数校验的规则也没有明确统一；这使得用户使用时经常会因为一些特殊字符导致功能不符合预期或出现漏洞，甚至导致大量推送，导致带宽打满，内存占用过多，导致应用出现故障。</p>
 <p>在2.3.0版本中，Nacos明确了参数校验规则，在服务端实现了统一的参数校验逻辑并添加了参数校验层，根据校验规则对客户端向服务端发送的请求进行校验。用户可以选择开启参数校验功能，开启后Nacos将会对客户端向服务端发送的请求中的部分参数进行参数校验，确保参数的合法性，避免由于错误使用，导致的不符合预期以及性能问题。</p>
-<p>详细情况可参考文档<a href="/zh-cn/docs/v2/guide/user/parameters-check.html" referrerpolicy="unsafe-url">参数校验规则</a></p>
+<p>详细情况可参考文档<a href="https://nacos.io/docs/v2/guide/user/parameters-check/" referrerpolicy="unsafe-url" rel="nofollow" target="_blank">参数校验规则</a></p>
 <h3 id="nacos-能力协商">Nacos 能力协商</h3>
 <p>随着Nacos功能越来越多，版本越来越多，客户端和服务端之间的兼容性愈发重要，如果继续保持尝试性的兼容，只会兼容能力愈发的困难。因此Nacos社区在去年开源之夏中，发布了课题，通过增加客户端和服务端之间的能力协商机制，在客户端连接到服务端时，让连接双方知道对方分别支持的功能，在支持对应功能的情况下，开启对应功能。避免通过尝试而增加通信开销。</p>
 <p>在2.3.0版本中，该能力也被集成进来，为之后Nacos3.0支持更多优化功能提供基础。</p>
