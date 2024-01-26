@@ -44,7 +44,7 @@ export default {
 	'commmon.footer.actions.edas': 'Cloud Service EDAS',
 	'commmon.footer.actions.download': 'Download',
 
-	'home.title': 'Dynamic service discovery, configuration management and service management platform Nacos',
+	'home.title': 'Nacos Website | Nacos Official Community | Nacos Download',
 	'home.description': 'Nacos by providing simple and easy to use dynamic service discovery, service configuration, service sharing and management and other service infrastructure, to help users in the cloud native era, in the private cloud, hybrid cloud or public cloud and all cloud environments, better build, deliver, manage their own microservice platform, faster reuse and combination of business services, faster delivery of business innovation value, So as to win the market for users',
 	'home.introduce.about': 'ABOUT NACOS',
 	'home.introduce.title': 'An easy-to-use dynamic service discovery, configuration and service management platform for building cloud native applications',
