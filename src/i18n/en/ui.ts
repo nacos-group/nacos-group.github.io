@@ -47,7 +47,7 @@ export default {
 	'home.title': 'Dynamic service discovery, configuration management and service management platform Nacos',
 	'home.description': 'Nacos by providing simple and easy to use dynamic service discovery, service configuration, service sharing and management and other service infrastructure, to help users in the cloud native era, in the private cloud, hybrid cloud or public cloud and all cloud environments, better build, deliver, manage their own microservice platform, faster reuse and combination of business services, faster delivery of business innovation value, So as to win the market for users',
 	'home.introduce.about': 'ABOUT NACOS',
-	'home.introduce.title': 'Nacos Website | Nacos Official Community | Nacos Download',
+	'home.introduce.title': 'An easy-to-use dynamic service discovery, configuration and service management platform for building cloud native applications',
 	'home.introduce.nacos.code': 'VIEW ON GITHUB',
 	'home.introduce.nacos.manual': 'MANUAL',
 	'home.introduce.nacos.notes': 'Released on Nov 30, 2023',
