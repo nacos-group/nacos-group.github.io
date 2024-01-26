@@ -108,7 +108,7 @@ Nacos支持服务、集群和实例多级别的元数据信息，与服务实例
 
 随着 [Spring Cloud for Alibaba 0.2.0 的发布](https://spring.io/blog/2018/10/30/spring-cloud-for-alibaba-0-2-0-released)，Nacos Configuration, Nacos Service Discovery 和 Sentinel Circuite Breaker 都已一网而聚之。
 
-想了解如何在Spring Cloud中快速开始使用 Nacos 做配置中心和服务发现，可以点击[这里](https://nacos.io/zh-cn/docs/quick-start-spring-cloud.html)。
+想了解如何在Spring Cloud中快速开始使用 Nacos 做配置中心和服务发现，可以点击[这里](https://nacos.io/docs/latest/ecology/use-nacos-with-spring-cloud/)。
 
 ## 持续优化用户体验
 

@@ -36,7 +36,7 @@ __Nacos__ 从 __v0.6__ 版本开始，支持 __Dubbo__ 注册中心和配置中�
 
 ### Dubbo融合Nacos
 
-Nacos 作为 Dubbo 生态系统中重要的注册中心基础设施，其中 [dubbo-registry-nacos](https://github.com/dubbo/dubbo-registry-nacos) 是 Dubbo 融合 Nacos 注册中心的桥梁，它基于 Dubbo 强大的[注册中心 SPI ](http://dubbo.apache.org/zh-cn/docs/dev/impls/registry.html) 以及 Nacos Naming 服务，提供实时的服务注册和发现。目前 [dubbo-registry-nacos](https://github.com/dubbo/dubbo-registry-nacos)  处于 preview 阶段，最新的发布版本为 `0.0.2`，已测试最新的 Dubbo 以及 Dubbo OPS，推荐开发人员使用最新的 Dubbo `2.6.5` 以及 Nacos `0.6.1` ，确保享受最佳体验。如果您现在正在使用 Zookeeper 或者 Redis 作为注册中心的话，迁移到 Nacos 的部分也非常简单，以 Zookeeper 为例：
+Nacos 作为 Dubbo 生态系统中重要的注册中心基础设施，其中 [dubbo-registry-nacos](https://github.com/dubbo/dubbo-registry-nacos) 是 Dubbo 融合 Nacos 注册中心的桥梁，它基于 Dubbo 强大的[注册中心 SPI ](https://cn.dubbo.apache.org/zh-cn/overview/mannual/java-sdk/reference-manual/spi/description/) 以及 Nacos Naming 服务，提供实时的服务注册和发现。目前 [dubbo-registry-nacos](https://github.com/dubbo/dubbo-registry-nacos)  处于 preview 阶段，最新的发布版本为 `0.0.2`，已测试最新的 Dubbo 以及 Dubbo OPS，推荐开发人员使用最新的 Dubbo `2.6.5` 以及 Nacos `0.6.1` ，确保享受最佳体验。如果您现在正在使用 Zookeeper 或者 Redis 作为注册中心的话，迁移到 Nacos 的部分也非常简单，以 Zookeeper 为例：
 
 * 场景一：外部化配置
 
