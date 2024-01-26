@@ -82,7 +82,7 @@ Nacos目前的鉴权实现也已经重构成默认的鉴权插件，社区所贡
 ### 默认关闭兼容1.X服务端升级
 
 默认关闭支持服务端从 1.X 版本升级的能力是Nacos2.1.0版本的另一个重要改动。在2.0.X版本中，数据结构进行了一些重新设计，导致和1.X的数据无法直接兼容，为了方便社区用户从1.X平滑升级到Nacos2.0版本，Nacos2.0版本除了兼容1.X的openAPI外，还新增了双写数据等逻辑；但这部分逻辑对系统资源有较大的损耗，并且由于机制较为复杂，导致部分直接使用2.0版本的用户可能会遇到一些版本切换的疑问。因此在Nacos2.1版本中，我们默认关闭了兼容1.X服务端平滑升级能功能，关闭该功能后直接部署2.1版本将不会再从1.X模式进行检测和升级，而是直接运行在2.X的数据模式下，同时也支持2.0版本直接升级2.1版本。
-若是希望从Nacos1.X直接升级到Nacos2.1.0版本，则需要在application.properties文件中设置配置`nacos.core.support.upgrade.from.1x=true`，此时Nacos2.1版本会和Nacos2.0版本一样，以1.X的数据模式启动，并开始自动升级检测，待全集群数据一致，且准备完毕后，切换至2.0数据模式，更多升级相关的内容，请参考文档[升级文档](https://nacos.io/zh-cn/docs/2.0.0-upgrading.html)。
+若是希望从Nacos1.X直接升级到Nacos2.1.0版本，则需要在application.properties文件中设置配置`nacos.core.support.upgrade.from.1x=true`，此时Nacos2.1版本会和Nacos2.0版本一样，以1.X的数据模式启动，并开始自动升级检测，待全集群数据一致，且准备完毕后，切换至2.0数据模式，更多升级相关的内容，请参考文档[升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading/)。
 
 ### About Nacos
 
