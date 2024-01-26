@@ -34,7 +34,7 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |nacos.naming.distro.batchSyncKeyCount| 同步任务每批的key的数目 | 正整数 | 1000 | >= 1.0.2 |
 |nacos.naming.distro.syncRetryDelay| 同步任务失败的重试间隔，单位为毫秒 | 正整数 | 5000 | >= 1.0.2 |
 
-除了上面列到的在`application.properties`里配置的属性，还有一些可以在运行时调用接口来进行调节，这些参数都在[Open API](https://nacos.io/zh-cn/docs/open-api.html)里的```查看系统当前数据指标```这个API里有声明。
+除了上面列到的在`application.properties`里配置的属性，还有一些可以在运行时调用接口来进行调节，这些参数都在[Open API](https://nacos.io/docs/latest/open-api/)里的```查看系统当前数据指标```这个API里有声明。
 
 ### Config模块
 
