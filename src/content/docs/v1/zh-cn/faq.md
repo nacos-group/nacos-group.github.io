@@ -122,7 +122,7 @@ Nacos完善支持了Sping技术栈，具体可以参考[Nacos Spring](https://na
 
 <h4 id="3.5">不使用Nacos SDK如何访问Nacos</h4>
 
-Nacos的网络交互都是基于Http协议实现的，提供了[Open-API](https://nacos.io/zh-cn/docs/open-api.html)可以很容易实现Nacos的访问。
+Nacos的网络交互都是基于Http协议实现的，提供了[Open-API](https://nacos.io/docs/latest/open-api/)可以很容易实现Nacos的访问。
 
 <h4 id="3.6">Nacos对多语言的支持</h4>
 

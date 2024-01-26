@@ -22,16 +22,40 @@ Node.js version >= 18.14.1
 Inside of your Astro + Starlight project, you'll see the following folders and files:
 
 ```
-.
-├── public/
-├── src/
+
+├── public/                # Static Assest
+│   ├── font/
+│   ├── img/
+├── src/                   # Source Directory
 │   ├── assets/
+│   ├── components/        # Common Components
+│   │   ├── cloud/
+│   │   ├── common/        # General Components
+│   │   ├── contributors/
+│   │   ├── home/          # Homepage Components
+│   │   ├── icon/
+│   │   ├── markdownSet/
+│   │   ├── starlight/ 
 │   ├── content/
-│   │   ├── docs/
+│   │   ├── blog/          # Blog Directory
+│   │   ├── docs/          # Docs Directory
+│   │   ├── download/      # Download Directory
 │   │   └── config.ts
+│   ├── helpers/
+│   ├── i18n/              # International entry configuration
+│   │   └── en/
+│   │   └── zh-cn/
+│   ├── layouts/           # Basic layout of the project
+│   ├── pages/           
+│   ├── style/
+│   └── consts.ts          # Project Constant Management
 │   └── env.d.ts
-├── astro.config.mjs
-├── package.json
+│   └── util.ts            # General utility functions
+├── template/              # 404 and other universal page templates
+├── astro.config.mjs       # Astro profile
+├── package.json         
+├── tailwind.config.json   # tailwindcss profile
+├── themeColor.json
 └── tsconfig.json
 ```
 
