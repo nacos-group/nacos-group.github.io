@@ -18,7 +18,7 @@ After discussion and development in the community, the core features of Nacos 2.
 
 2.0.0 has released and welcome to use.
 
-2.0.0 support to smoothly upgrade and downgrade with Nacos1.X server, please refer to [Nacos2.0 upgrade document](./2.0.0-upgrading.md) for details.
+2.0.0 support to smoothly upgrade and downgrade with Nacos1.X server, please refer to [Nacos2.0 upgrade document](./200-upgrading.md) for details.
 
 ## Benchmark for Nacos 2.0.0
 

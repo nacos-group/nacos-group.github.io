@@ -151,7 +151,7 @@ const head = createHead(headDefaults, config.head, data.head);
     t.type = 'text/javascript';
     t.async = true;
     t.src =
-      '//g.alicdn.com/aes/??tracker/3.3.4/index.js,tracker-plugin-pv/3.0.5/index.js,tracker-plugin-event/3.0.0/index.js,tracker-plugin-autolog/3.0.3/index.js,tracker-plugin-survey/3.0.3/index.js';
+      '//g.alicdn.com/aes/??tracker/3.3.4/index.js,tracker-plugin-pv/3.0.5/index.js,tracker-plugin-event/3.0.0/index.js,tracker-plugin-autolog/3.0.3/index.js,tracker-plugin-survey/3.0.3/index.js,tracker-plugin-jserror/3.0.3/index.js,tracker-plugin-resourceError/3.0.3/index.js';
     t.onload = function () {
       if (window.location.hostname !== 'nacos.io') {
         return;
@@ -173,6 +173,8 @@ const head = createHead(headDefaults, config.head, data.head);
         aes.use(AESPluginEvent, window.AESPluginEventConfig || {}),
         aes.use(AESPluginSurvey, window.AESPluginEventConfig || {}),
         aes.use(AESPluginAutolog, window.AESPluginAutologConfig || {}),
+        aes.use(AESPluginJSError, window.AESPluginJSError || {}),
+        aes.use(AESPluginResourceError, window.AESPluginResourceError || {}),
       ];
     };
     setTimeout(function () {

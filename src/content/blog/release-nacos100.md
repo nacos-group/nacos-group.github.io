@@ -124,6 +124,7 @@ Nacos 1.0.0 支持了 MySQL 8.0 驱动。您只需要将8.0版本的驱动jar包
 
 *地址：https://nacos.io/docs/v1/open-api/*
 
+
 除了核心功能外，也包含部分运维接口，方便开发者进行集成。同时对于 Nacos 的数据模型、集群模型、架构设计及模块设计文档进行了更新
 
 *地址：https://nacos.io/docs/v1/architecture/*
