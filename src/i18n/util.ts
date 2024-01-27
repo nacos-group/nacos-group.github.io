@@ -1,5 +1,5 @@
 import type { AstroGlobal } from 'astro';
-import { getLanguageFromURL } from '../util';
+import { getLanguageFromURL } from '@/utils/util';
 import type {
 	UIDict,
 	UIDictionaryKeys,

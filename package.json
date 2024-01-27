@@ -21,6 +21,7 @@
     "lodash": "^4.17.21",
     "mdast-util-toc": "^7.0.0",
     "moment": "^2.29.4",
+    "qs": "^6.11.2",
     "rehype-external-links": "^3.0.0",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",

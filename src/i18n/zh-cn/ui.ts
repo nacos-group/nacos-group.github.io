@@ -183,6 +183,7 @@ export default {
 	'feedback.submit': '发送反馈',
 	'feedback.close': '关闭反馈表单',
 	'feedback.success': '感谢！我们收到了你的反馈。',
+	'feedback.err': '网络异常，请稍后重试。',
 	'feedback.type': '反馈问题类型',
 	'feedback.type.correct': '内容正确性问题',
 	'feedback.type.search': '搜索问题',
