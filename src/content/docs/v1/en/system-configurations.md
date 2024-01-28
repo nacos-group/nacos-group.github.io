@@ -72,8 +72,8 @@ Client parameters are divided into two kinds, one kind is through the -D paramet
 
 |Parameter names	|Meaning	 |     Optional value	 |     Default value| Support version |
 |------|------|-----------|-----------------|-------|
-|endpoint| Connection Nacos Server specify the connection point, you can refer to [file](https://nacos.io/en-us/blog/address-server.html) | domain name | null | >= 0.1.0 |
-|endpointPort| Connection Nacos Server specify the connection port, you can refer to [file](https://nacos.io/en-us/blog/address-server.html) | Legal port | null | >= 0.1.0 |
+|endpoint| Connection Nacos Server specify the connection point, you can refer to [file](https://nacos.io/blog/case-address-server/) | domain name | null | >= 0.1.0 |
+|endpointPort| Connection Nacos Server specify the connection port, you can refer to [file](https://nacos.io/blog/case-address-server/) | Legal port | null | >= 0.1.0 |
 |namespace| namespace ID  | namespace ID | config module is empty, naming module is public| >= 0.8.0 |
 |serverAddr| Nacos Server address list, this value is higher priority than the endpoint | ip:port,ip:port,... | null | >= 0.1.0 |
 |JM.LOG.PATH(-D)|  client log directory | directory path | root directory of the user | >= 0.1.0 |
