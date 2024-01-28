@@ -16,7 +16,7 @@ The quick start includes two samples:
 
 ## Prerequisite
 
-Follow instructions in [Nacos Quick Start](https://nacos.io/zh-cn/docs/quick-start.html) to download Nacos and start the Nacos server.
+Follow instructions in [Nacos Quick Start](https://nacos.io/docs/v1/quickstart/quick-start/) to download Nacos and start the Nacos server.
 
 ## Enable Configuration Service
 

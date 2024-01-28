@@ -9,7 +9,7 @@ description: Nacos 监控手册
 Nacos 0.8.0版本完善了监控系统，支持通过暴露metrics数据接入第三方监控系统监控Nacos运行状态，目前支持prometheus、elastic search和influxdb，下面结合prometheus和grafana如何监控Nacos，官网[grafana监控页面](http://monitor.nacos.io)。与elastic search和influxdb结合可自己查找相关资料
 
 ## 搭建Nacos集群暴露metrics数据
-按照[部署文档](https://nacos.io/zh-cn/docs/deployment.html)搭建好Nacos集群
+按照[部署文档](https://nacos.io/docs/v1/deployment/)搭建好Nacos集群
 
 配置application.properties文件，暴露metrics数据
 ```
@@ -198,7 +198,7 @@ nacos_client_request_seconds_sum|请求的总耗时，包括多种(url,方法,co
 ## Nacos-Sync监控
 
 随着Nacos 0.9版本发布，Nacos-Sync 0.3版本支持了metrics监控，能通过metrics数据观察Nacos-Sync服务的运行状态，提升了Nacos-Sync的在生产环境的监控能力。
-整体的监控体系的搭建参考[Nacos监控手册](https://nacos.io/zh-cn/docs/monitor-guide.html)
+整体的监控体系的搭建参考[Nacos监控手册](https://nacos.io/docs/v1/monitor-guide/)
 
 ## grafana监控Nacos-Sync
 和Nacos监控一样，Nacos-Sync也提供了监控模版，导入监控[模版](https://github.com/nacos-group/nacos-template/blob/master/nacos-sync-grafana)

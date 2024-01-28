@@ -140,7 +140,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 /**
  * Default {@link DemoService}
- *  https://nacos.io/zh-cn/docs/use-nacos-with-dubbo.html
+ *  https://nacos.io/docs/latest/ecology/use-nacos-with-dubbo/
  * @since 2.6.5
  */
 @Service(version = "${demo.service.version}")
@@ -207,7 +207,7 @@ import java.io.IOException;
 
 /**
  * {@link DemoService} provider demo
- * https://nacos.io/zh-cn/docs/use-nacos-with-dubbo.html
+ * https://nacos.io/docs/latest/ecology/use-nacos-with-dubbo/
  */
 @EnableDubbo(scanBasePackages = "com.alibaba.nacos.example.dubbo.service")
 @PropertySource(value = "classpath:/provider-config.properties")
@@ -269,7 +269,7 @@ import java.io.IOException;
 
 /**
  * {@link DemoService} consumer demo
- * https://nacos.io/zh-cn/docs/use-nacos-with-dubbo.html
+ * https://nacos.io/docs/latest/ecology/use-nacos-with-dubbo/
  */
 @EnableDubbo
 @PropertySource(value = "classpath:/consumer-config.properties")

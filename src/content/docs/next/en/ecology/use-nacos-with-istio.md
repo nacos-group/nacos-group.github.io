@@ -111,7 +111,7 @@ resources:
 
 Note: each instance of the same service should use the same protocol, EDS default to use incremental push.
 
-1. Deploy Nacos, [ deployment reference ](https://nacos.io/zh-cn/docs/quick-start.html);
+1. Deploy Nacos, [ deployment reference ](https://nacos.io/en/docs/latest/quickstart/quick-start/);
 
 2. Modify the configuration in accordance with the above requirements;
 

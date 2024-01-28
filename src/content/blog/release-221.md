@@ -18,7 +18,7 @@ Nacos 2.2.1版本主要针对Nacos社区于12月发布的2.2.0版本进行了一
 在客户端层面，新增了服务发现模块对Aliyun STS鉴权模式的支持，以及对GraalVM的支持。
 
 插件方面，为多数据源插件添加了打印SQL的功能，方面插件开发者或使用者获得插件所生成的SQL，减少排查问题的时间；
-同时对默认鉴权插件进行了一定重构，移除了对`jjwt`的依赖同时提升性能、移除`token.secret.key`、`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value`的默认值并提醒用户配置自定义的`token.secret.key`、`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value`以提高安全性，具体情况请查看[风险公告](https://nacos.io/zh-cn/blog/announcement-token-secret-key.html)。
+同时对默认鉴权插件进行了一定重构，移除了对`jjwt`的依赖同时提升性能、移除`token.secret.key`、`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value`的默认值并提醒用户配置自定义的`token.secret.key`、`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value`以提高安全性，具体情况请查看[风险公告](https://nacos.io/blog/announcement-token-secret-key/)。
 
 易用性方面，新增通过配置内容检索配置的功能，但该功能**会损耗大量性能**，因此从内部进行了限流，也请用户尽量避免使用。
 
