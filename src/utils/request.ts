@@ -6,10 +6,10 @@
 import qs from 'qs';
 
 /** 封装fetch请求 */
-function request(url, storageName, params = null, method = 'GET') {
+function request(url: string, storageName: string, params: any = null, method: string = 'GET') {
     return new Promise(async (resolve, reject) => {
         if (storageName && localStorage && localStorage.getItem(storageName)) {
-            resolve(JSON.parse(localStorage.getItem(storageName)))
+            resolve(JSON.parse(localStorage.getItem(storageName) || ''))
             return
         }
         // 配置的参数
