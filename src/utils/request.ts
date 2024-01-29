@@ -6,8 +6,12 @@
 import qs from 'qs';
 
 /** 封装fetch请求 */
-function sendFetch(url, params = null, method = 'GET') {
+function request(url, storageName, params = null, method = 'GET') {
     return new Promise(async (resolve, reject) => {
+        if (storageName && localStorage && localStorage.getItem(storageName)) {
+            resolve(JSON.parse(localStorage.getItem(storageName)))
+            return
+        }
         // 配置的参数
         let config = {}
         // 判断请求类型
@@ -36,7 +40,14 @@ function sendFetch(url, params = null, method = 'GET') {
                 mode: 'cors',
                 ...config,
             });
+
             response.json().then(res => {
+                if (!response.ok) {
+                    return reject(res)
+                }
+                if (storageName && localStorage) {
+                    localStorage.setItem(storageName, JSON.stringify(res))
+                }
                 resolve(res);
             }).catch(error => {
                 error.message === "Unexpected end of JSON input" ? resolve({}) : reject(error);
@@ -50,4 +61,4 @@ function sendFetch(url, params = null, method = 'GET') {
 
 
 // 导出配置好的对象
-export default sendFetch;
+export default request;

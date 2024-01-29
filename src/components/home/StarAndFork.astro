@@ -2,11 +2,6 @@
 import Star from "../icon/Star.astro";
 import Fork from "../icon/Fork.astro";
 import Button from '@components/common/Button.astro';
-import sendFetch from "@/utils/sendFetch"
-
-const data = await sendFetch("https://api.github.com/repos/alibaba/nacos")
-const { stargazers_count: startCount = 0, forks_count: forkCount = 0 } =
-  data || { stargazers_count: 0, forks_count: 0 };
 ---
 
 <star-and-fork class="shortcut flex">
@@ -17,7 +12,7 @@ const { stargazers_count: startCount = 0, forks_count: forkCount = 0 } =
     target="_blank"
   >
     <Star />
-    <span class="text-[0.875rem] leading-4 ml-2">{startCount}</span>
+    <span class="text-[0.875rem] leading-4 ml-2 start-count">0</span>
   </Button>
 
   <Button 
@@ -28,14 +23,22 @@ const { stargazers_count: startCount = 0, forks_count: forkCount = 0 } =
     target="_blank"
   >
     <Fork theme="light" />
-    <span class="ml-2">{forkCount}</span>
+    <span class="ml-2 fork-count">0</span>
   </Button>
 </star-and-fork>
 
 <script>
+  import request from "@/utils/request"
+
   class StarAndFork extends HTMLElement {
     constructor() {
       super();
+      const startCount = this.querySelector('.start-count')
+      const forkCount = this.querySelector('.fork-count')
+      request("https://api.github.com/repos/alibaba/nacos", 'starAndFork').then(res => {
+        startCount.innerText = res.stargazers_count || 0
+        forkCount.innerText = res.forks_count || 0
+      })
     }
   }
   customElements.define("star-and-fork", StarAndFork);

@@ -101,7 +101,7 @@ export interface Props {
 </feedback-form>
 
 <script>
-	import sendFetch from "@/utils/sendFetch"
+	import request from "@/utils/request"
 
 	class FeedbackForm extends HTMLElement {
 		constructor() {
@@ -178,9 +178,9 @@ export interface Props {
 				const type = form.type.value;
 				const description = form.description.value;
 				const phone = form.phone.value;
-				const res = await sendFetch(
+				const res = await request(
 					`http://goat.cn-hangzhou.log.aliyuncs.com/logstores/feedback/track?APIVersion=0.6.0&type=${type}&description=${description}&phone=${phone}&url=${location.href}`,
-				);
+				null);
 				if (res.errorCode) {
 					showErrPane(true);
 				} else {
