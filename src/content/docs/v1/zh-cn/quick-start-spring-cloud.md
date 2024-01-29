@@ -15,7 +15,7 @@ description: Nacos Spring Cloud 快速开始
 
 ## 前提条件
 
-您需要先下载 Nacos 并启动 Nacos server。操作步骤参见 [Nacos 快速入门](https://nacos.io/zh-cn/docs/quick-start.html)
+您需要先下载 Nacos 并启动 Nacos server。操作步骤参见 [Nacos 快速入门](https://nacos.io/docs/v1/quickstart/quick-start/)
 
 ## 启动配置管理
 
@@ -75,7 +75,7 @@ public class ConfigController {
 ```
 
 
-5. 首先通过调用 [Nacos Open API](https://nacos.io/zh-cn/docs/open-api.html) 向 Nacos Server 发布配置：dataId 为`example.properties`，内容为`useLocalCache=true`
+5. 首先通过调用 [Nacos Open API](https://nacos.io/docs/latest/open-api/) 向 Nacos Server 发布配置：dataId 为`example.properties`，内容为`useLocalCache=true`
 
 ```
 curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example.properties&group=DEFAULT_GROUP&content=useLocalCache=true"
@@ -83,7 +83,7 @@ curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example.propertie
 
 6. 运行 `NacosConfigApplication`，调用 `curl http://localhost:8080/config/get`，返回内容是 `true`。
 
-7. 再次调用 [Nacos Open API](https://nacos.io/zh-cn/docs/open-api.html) 向 Nacos server 发布配置：dataId 为`example.properties`，内容为`useLocalCache=false`
+7. 再次调用 [Nacos Open API](https://nacos.io/docs/latest/open-api/) 向 Nacos server 发布配置：dataId 为`example.properties`，内容为`useLocalCache=false`
 
 ```
 curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example.properties&group=DEFAULT_GROUP&content=useLocalCache=false"

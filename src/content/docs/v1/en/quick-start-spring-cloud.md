@@ -17,7 +17,7 @@ The quick start includes two samples:
 
 ## Prerequisite
 
-Follow instructions in [Nacos Quick Start](https://nacos.io/zh-cn/docs/quick-start.html) to download Nacos and start the Nacos server.
+Follow instructions in [Nacos Quick Start](https://nacos.io/en/docs/v1/quickstart/quick-start/) to download Nacos and start the Nacos server.
 
 ## Enable Configuration Service
 
@@ -77,7 +77,7 @@ public class ConfigController {
 ```
 
 
-5. Call [Nacos Open API](https://nacos.io/zh-cn/docs/open-api.html) to publish a configuration to the Nacos server. Assume the dataId is `example.properties`，and the content is `useLocalCache=true`.
+5. Call [Nacos Open API](https://nacos.io/docs/latest/open-api/) to publish a configuration to the Nacos server. Assume the dataId is `example.properties`，and the content is `useLocalCache=true`.
 
 ```
 curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example.properties&group=DEFAULT_GROUP&content=useLocalCache=true"
@@ -85,7 +85,7 @@ curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example.propertie
 
 6. Run `NacosConfigApplication`and call  `curl http://localhost:8080/config/get`，You will get a returned value of `true`.
 
-7. Call [Nacos Open API](https://nacos.io/zh-cn/docs/open-api.html) again to publish an updated configuration to the Nacos server. Assume the dataId is`example.properties`，and the content is `useLocalCache=false`.
+7. Call [Nacos Open API](https://nacos.io/docs/latest/open-api/) again to publish an updated configuration to the Nacos server. Assume the dataId is`example.properties`，and the content is `useLocalCache=false`.
 
 ```
 curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example.properties&group=DEFAULT_GROUP&content=useLocalCache=false"

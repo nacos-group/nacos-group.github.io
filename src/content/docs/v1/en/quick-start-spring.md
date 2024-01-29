@@ -16,7 +16,7 @@ The quick start includes two samples:
 
 ## Prerequisite
 
-Follow instructions in [Nacos Quick Start](https://nacos.io/zh-cn/docs/quick-start.html) to download Nacos and start the Nacos server.
+Follow instructions in [Nacos Quick Start](https://nacos.io/en/docs/next/quickstart/quick-start/) to download Nacos and start the Nacos server.
 
 ## Enable Configuration Service
 
@@ -67,7 +67,7 @@ public class ConfigController {
 
 4. Start Tomcat and call  `curl http://localhost:8080/config/get` to get configuration information. Because no configuration has been published, a `false`message is returned.
 
-5. Now you can call [Nacos Open API](https://nacos.io/zh-cn/docs/open-api.html) to publish a configruation to the Nacos server. Assume the dataId is `example`, and content is `useLocalCache=true`.
+5. Now you can call [Nacos Open API](https://nacos.io/docs/latest/open-api/) to publish a configruation to the Nacos server. Assume the dataId is `example`, and content is `useLocalCache=true`.
 
 ```
 curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example&group=DEFAULT_GROUP&content=useLocalCache=true"
@@ -123,7 +123,7 @@ public class DiscoveryController {
 
 4. Start Tomcat and call `curl http://localhost:8080/discovery/get?serviceName=example`, and the return value is an empty JSON array `[]`.
 
-5. Call [Nacos Open API](https://nacos.io/zh-cn/docs/open-api.html) to register a service called `example`to the Nacos Server.
+5. Call [Nacos Open API](https://nacos.io/docs/latest/open-api/) to register a service called `example`to the Nacos Server.
 
 ```
 curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=127.0.0.1&port=8080'

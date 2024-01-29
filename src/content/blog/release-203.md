@@ -74,7 +74,7 @@ Nacos服务端支持从1.X平滑升级到Nacos2.0.X；由于Nacos2.0对服务发
 比如接口`/nacos/v1/ns/upgrade/ops/metrics`， 可以快速的查看到当前节点的状态，如当前1.X模式的服务数，实例数；2.0模式的服务数，实例数；双写任务遗留量；对应模式缺失的服务名等等内容，帮助用户快速定位升级问题。
 
 
-更多升级相关信息请查看 [Nacos 2.0 升级文档](https://nacos.io/zh-cn/docs/2.0.0-upgrading.html)
+更多升级相关信息请查看 [Nacos 2.0 升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading/)
 
 
 ## 客户端支持2.0

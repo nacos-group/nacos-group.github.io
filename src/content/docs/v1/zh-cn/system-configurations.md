@@ -34,7 +34,7 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |nacos.naming.distro.batchSyncKeyCount| 同步任务每批的key的数目 | 正整数 | 1000 | >= 1.0.2 |
 |nacos.naming.distro.syncRetryDelay| 同步任务失败的重试间隔，单位为毫秒 | 正整数 | 5000 | >= 1.0.2 |
 
-除了上面列到的在`application.properties`里配置的属性，还有一些可以在运行时调用接口来进行调节，这些参数都在[Open API](https://nacos.io/zh-cn/docs/open-api.html)里的```查看系统当前数据指标```这个API里有声明。
+除了上面列到的在`application.properties`里配置的属性，还有一些可以在运行时调用接口来进行调节，这些参数都在[Open API](https://nacos.io/docs/latest/open-api/)里的```查看系统当前数据指标```这个API里有声明。
 
 ### Config模块
 
@@ -71,8 +71,8 @@ Nacos从1.3版本开始使用HikariCP连接池，但在1.4.1版本前，连接�
 
 |参数名	|含义	 |     可选值	 |     默认值| 支持版本 |
 |------|------|-----------|-----------------|-------|
-|endpoint| 连接Nacos Server指定的连接点，可以参考[文档](https://nacos.io/zh-cn/blog/address-server.html) | 域名 | 空 | >= 0.1.0 |
-|endpointPort| 连接Nacos Server指定的连接点端口，可以参考[文档](https://nacos.io/zh-cn/blog/address-server.html) | 合法端口号 | 空 | >= 0.1.0 |
+|endpoint| 连接Nacos Server指定的连接点，可以参考[文档](https://nacos.io/blog/case-address-server/) | 域名 | 空 | >= 0.1.0 |
+|endpointPort| 连接Nacos Server指定的连接点端口，可以参考[文档](https://nacos.io/blog/case-address-server/) | 合法端口号 | 空 | >= 0.1.0 |
 |namespace| 命名空间的ID | 命名空间的ID | config模块为空，naming模块为public | >= 0.8.0 |
 |serverAddr| Nacos Server的地址列表，这个值的优先级比endpoint高 | ip:port,ip:port,... | 空 | >= 0.1.0 |
 |JM.LOG.PATH(-D)| 客户端日志的目录 | 目录路径 | 用户根目录 | >= 0.1.0 |

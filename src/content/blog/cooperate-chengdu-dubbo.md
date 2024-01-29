@@ -61,5 +61,5 @@ Nacos强调社区化的发展与社区的多样性，采取PMC和Committer机制
 
 画外音：我们准备了40个Nacos限量版纪念品，用于奖励参与“Nacos有奖活动”的开发者。
 活动链接：
-https://nacos.io/zh-cn/docs/activity.html
+https://nacos.io/activity/
 

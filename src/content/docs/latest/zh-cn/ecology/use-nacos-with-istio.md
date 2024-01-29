@@ -105,7 +105,7 @@ resources:
 
 注：同一服务下的各个实例使用的协议需一致，EDS 默认使用增量推送。
 
-1. 部署 Nacos，[部署参考](https://nacos.io/zh-cn/docs/quick-start.html)；
+1. 部署 Nacos，[部署参考](https://nacos.io/docs/latest/quickstart/quick-start/)；
 2. 按上述要求修改配置；
 3. 启动服务器，详细的启动命令可在上述部署参考中查看；
 

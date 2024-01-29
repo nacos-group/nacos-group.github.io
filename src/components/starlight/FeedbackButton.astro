@@ -90,11 +90,19 @@ export interface Props {
 					<UIString key="feedback.success" />
 				</p>
 			</div>
+			<div class="err-pane" hidden tabindex="-1">
+				<img src={houston.src} alt="" width="128" height="128" />
+				<p>
+					<UIString key="feedback.err" />
+				</p>
+			</div>
 		</div>
 	</dialog>
 </feedback-form>
 
 <script>
+	import sendFetch from "@/utils/sendFetch"
+
 	class FeedbackForm extends HTMLElement {
 		constructor() {
 			super();
@@ -120,12 +128,22 @@ export interface Props {
 			//成功发送按钮
 			const success =
 				this.querySelector<HTMLDivElement>("div.success-pane")!;
+			//失败发送提醒
+			const errPane =
+				this.querySelector<HTMLDivElement>("div.err-pane")!;
 
 			// 表单提交成功后的事件函数
 			const showSuccess = (show: boolean) => {
 				form.hidden = show;
 				success.hidden = !show;
 				if (show) success.focus();
+			};
+
+			// 表单提交失败后的事件函数
+			const showErrPane = (show: boolean) => {
+				form.hidden = show;
+				errPane.hidden = !show;
+				if (show) errPane.focus();
 			};
 
 			// 打开弹窗后，如果点击了页面之外的地方，则关闭弹窗
@@ -136,6 +154,7 @@ export interface Props {
 			// 打开弹窗
 			const openModal = (event: MouseEvent) => {
 				showSuccess(false);
+				showErrPane(false);
 				dialog.showModal();
 				form.querySelector<HTMLInputElement>("input:checked")?.focus();
 				// Prevent click bubbling up and immediately closing the modal again.
@@ -156,20 +175,17 @@ export interface Props {
 				event.preventDefault();
 				// Disable submit button while submitting to guard against re-submits.
 				submitBtn.disabled = true;
-				try {
-					const type = form.type.value;
-					const description = form.description.value;
-					const phone = form.phone.value;
-					const res = await fetch(
-						`http://goat.cn-hangzhou.log.aliyuncs.com/logstores/feedback/track?APIVersion=0.6.0&type=${type}&description=${description}&phone=${phone}&url=${location.href}`,
-					);
-					if (!res.ok) throw new Error(res.statusText);
-					const data = await res.json();
-					if (data.error) throw new Error(data.error);
-				} catch (e) {
-					console.error("Error submitting feedback form\n", e);
+				const type = form.type.value;
+				const description = form.description.value;
+				const phone = form.phone.value;
+				const res = await sendFetch(
+					`http://goat.cn-hangzhou.log.aliyuncs.com/logstores/feedback/track?APIVersion=0.6.0&type=${type}&description=${description}&phone=${phone}&url=${location.href}`,
+				);
+				if (res.errorCode) {
+					showErrPane(true);
+				} else {
+					showSuccess(true);
 				}
-				showSuccess(true);
 				submitBtn.disabled = false;
 				form.reset();
 			});

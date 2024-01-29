@@ -52,7 +52,7 @@ description: Nacos FAQ
 ## Nacos常规问题
 <h4 id="1.1">Nacos是什么</h4>
 
-Nacos 致力于帮助您发现、配置和管理微服务。Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。详情可以参考[Nacos官网介绍](https://nacos.io/zh-cn/docs/what-is-nacos.html)。
+Nacos 致力于帮助您发现、配置和管理微服务。Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。详情可以参考[Nacos官网介绍](https://nacos.io/docs/v1/what-is-nacos/)。
 
 <h4 id="1.2">Nacos如何支持多环境</h4>
 
@@ -64,11 +64,10 @@ Nacos在2019.1发布了Pre-GA版本，支持了安全隔离、监控和服务迁
 
 <h4 id="1.4">Nacos版本计划</h4>
 
-Nacos 0.8.0 开始支持生产可用，1.0版本达到大规模生产可用，2.0版本计划与K8s、Spring Cloud、Service Mesh、Serverless进一步融合，具体的详情参考[Nacos规划](https://nacos.io/zh-cn/docs/roadmap.html)。
-
+Nacos 0.8.0 开始支持生产可用，1.0版本达到大规模生产可用，2.0版本计划与K8s、Spring Cloud、Service Mesh、Serverless进一步融合。
 <h4 id="1.5">Nacos有什么依赖</h4>
 
-在单机模式下，Nacos没有任何依赖，在集群模式下，Nacos依赖Mysql做存储，详情可以参考[Nacos部署](https://nacos.io/zh-cn/docs/deployment.html)。
+在单机模式下，Nacos没有任何依赖，在集群模式下，Nacos依赖Mysql做存储，详情可以参考[Nacos部署](https://nacos.io/docs/v1/deployment/)。
 
 <h4 id="1.6">Nacos使用什么开源协议</h4>
 
@@ -77,19 +76,19 @@ Nacos使用[Apache 2.0](https://github.com/alibaba/nacos/blob/master/LICENSE)。
 ## Nacos运维问题
 <h4 id="2.1">Nacos如何单机部署</h4>
 
-可以参考Nacos官网部署手册[quick start](https://nacos.io/zh-cn/docs/quick-start.html)。
+可以参考Nacos官网部署手册[quick start](https://nacos.io/docs/v1/quickstart/quick-start/)。
 
 <h4 id="2.2">Nacos单机部署如何使用mysql</h4>
 
-Nacos单机模式默认使用内嵌的数据库作为存储引擎，如果想换成自己安装的mysql，可以按照[官网文档](https://nacos.io/zh-cn/docs/deployment.html)。
+Nacos单机模式默认使用内嵌的数据库作为存储引擎，如果想换成自己安装的mysql，可以按照[官网文档](https://nacos.io/docs/v1/deployment/)。
 
 <h4 id="2.3">生产环境如何部署Nacos</h4>
 
-生产环境使用Nacos为了达到高可用不能使用单机模式，需要搭建nacos集群，具体详情可以参考[集群部署手册](https://nacos.io/zh-cn/docs/cluster-mode-quick-start.html)。
+生产环境使用Nacos为了达到高可用不能使用单机模式，需要搭建nacos集群，具体详情可以参考[集群部署手册](https://nacos.io/docs/v1/cluster-mode-quick-start/)。
 
 <h4 id="2.4">Nacos如何Docker部署</h4>
 
-除了使用压缩包部署Nacos，Nacos也提供了相应的Docker镜像，当Nacos发布新的版本的时候，Nacos会发布对应的镜像版本支持Docker部署。具体详情可以参考[Nacos Docker](https://nacos.io/zh-cn/docs/quick-start-docker.html)。
+除了使用压缩包部署Nacos，Nacos也提供了相应的Docker镜像，当Nacos发布新的版本的时候，Nacos会发布对应的镜像版本支持Docker部署。具体详情可以参考[Nacos Docker](https://nacos.io/docs/v1/quick-start-docker/)。
 
 <h4 id="2.5">如何在k8s中部署Nacos</h4>
 
@@ -97,7 +96,7 @@ Nacos单机模式默认使用内嵌的数据库作为存储引擎，如果想换
 
 <h4 id="2.6">如何监控Nacos</h4>
 
-Nacos0.8版本提供了Metrics数据暴露能力，能通过Metrics数据的内容对Nacos的运行状态进行监控，详情参考[Nacos监控](https://nacos.io/zh-cn/docs/monitor-guide.html)。
+Nacos0.8版本提供了Metrics数据暴露能力，能通过Metrics数据的内容对Nacos的运行状态进行监控，详情参考[Nacos监控](https://nacos.io/docs/v1/monitor-guide/)。
 
 <h4 id="2.7">Nacos在Docker环境下集群部署，无法正常启动，日志一直打印 Nacos is starting...</h4>
 
@@ -114,15 +113,15 @@ Nacos通过Spring Cloud Alibaba Nacos Config支持了多配置文件，可以将
 
 <h4 id="3.3">Nacos支持Dubbo</h4>
 
-Nacos 0.6版本和Dubbo集成，支持使用Nacos作为注册中心，关联[issue](https://github.com/alibaba/nacos/issues/390),具体文档参考[Dubbo 融合 Nacos 成为注册中心](https://nacos.io/zh-cn/docs/use-nacos-with-dubbo.html)。
+Nacos 0.6版本和Dubbo集成，支持使用Nacos作为注册中心，关联[issue](https://github.com/alibaba/nacos/issues/390),具体文档参考[Dubbo 融合 Nacos 成为注册中心](https://nacos.io/docs/latest/ecology/use-nacos-with-dubbo/)。
 
 <h4 id="3.4">Nacos支持Spring体系</h4>
 
-Nacos完善支持了Sping技术栈，具体可以参考[Nacos Spring](https://nacos.io/zh-cn/docs/quick-start-spring.html)、[Nacos Spring Boot](https://nacos.io/zh-cn/docs/quick-start-spring-boot.html)、[Spring Cloud](https://nacos.io/zh-cn/docs/quick-start-spring-cloud.html)。
+Nacos完善支持了Sping技术栈，具体可以参考[Nacos Spring](https://nacos.io/docs/v1/quick-start-spring/)、[Nacos Spring Boot](https://nacos.io/docs/v1/quick-start-spring-boot/)、[Spring Cloud](https://nacos.io/docs/v1/quick-start-spring-cloud/)。
 
 <h4 id="3.5">不使用Nacos SDK如何访问Nacos</h4>
 
-Nacos的网络交互都是基于Http协议实现的，提供了[Open-API](https://nacos.io/zh-cn/docs/open-api.html)可以很容易实现Nacos的访问。
+Nacos的网络交互都是基于Http协议实现的，提供了[Open-API](https://nacos.io/docs/latest/open-api/)可以很容易实现Nacos的访问。
 
 <h4 id="3.6">Nacos对多语言的支持</h4>
 

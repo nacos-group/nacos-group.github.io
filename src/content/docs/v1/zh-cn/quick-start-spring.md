@@ -15,7 +15,7 @@ description: 本文主要面向 Spring 的使用者，通过两个示例来介�
 
 ## 前提条件
 
-您需要先下载 Nacos 并启动 Nacos server。操作步骤参见 [Nacos 快速入门](https://nacos.io/zh-cn/docs/quick-start.html)。
+您需要先下载 Nacos 并启动 Nacos server。操作步骤参见 [Nacos 快速入门](https://nacos.io/docs/v1/quickstart/quick-start/)。
 
 ## 启动配置管理
 
@@ -64,7 +64,7 @@ public class ConfigController {
 
 4. 启动 Tomcat，调用 `curl http://localhost:8080/config/get`尝试获取配置信息。由于此时还未发布过配置，所以返回内容是 `false`。
 
-5. 通过调用 [Nacos Open API](https://nacos.io/zh-cn/docs/open-api.html) 向 Nacos Server 发布配置：dataId 为`example`，内容为`useLocalCache=true`
+5. 通过调用 [Nacos Open API](https://nacos.io/docs/latest/open-api/) 向 Nacos Server 发布配置：dataId 为`example`，内容为`useLocalCache=true`
 
 ```
 curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example&group=DEFAULT_GROUP&content=useLocalCache=true"
@@ -118,7 +118,7 @@ public class DiscoveryController {
 
 4. 启动 Tomcat，调用 `curl http://localhost:8080/discovery/get?serviceName=example`，此时返回为空 JSON 数组`[]`。
 
-5. 通过调用 [Nacos Open API](https://nacos.io/zh-cn/docs/open-api.html) 向  Nacos server 注册一个名称为 `example` 服务。
+5. 通过调用 [Nacos Open API](https://nacos.io/docs/latest/open-api/) 向  Nacos server 注册一个名称为 `example` 服务。
 
 ```
 curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=example&ip=127.0.0.1&port=8080'
