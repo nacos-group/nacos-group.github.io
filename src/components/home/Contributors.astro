@@ -28,17 +28,19 @@ const getBackgroundRandomColor = () =>  colorList[Math.floor(Math.random() * col
     <div class="right-container flex flex-wrap">
       {
         members.slice(0, 50).map((v) => {
-          const { avatar_url, login } = v;
+          const { avatar_url, login, html_url } = v;
           return (
             <div class="img-item relative mt-[0.35rem] mr-[0.35rem]">
               <div class="avatar-wrap relative w-[4rem] h-[4rem] align-middle">
-                <img
-                  class="avatar-img relative w-[4rem] h-[4rem] text-center z-10 rounded-xl"
-                  src={avatar_url}
-                  alt={login}
-                  title={login}
-                />
-                <div class="absolute left-0 top-0 w-[4rem] h-[4rem] avatar-alt p-2 truncate overflow-hidden text-sm rounded-xl text-gray-01" style={{background: getBackgroundRandomColor()}}>{login}</div>
+                <a href={html_url} class="inline-block" target="_blank">
+                  <img
+                    class="avatar-img relative w-[4rem] h-[4rem] text-center z-10 rounded-xl"
+                    src={avatar_url}
+                    alt={login}
+                    title={login}
+                  />
+                  <div class="absolute left-0 top-0 w-[4rem] h-[4rem] avatar-alt p-2 truncate overflow-hidden text-sm rounded-xl text-gray-01" style={{background: getBackgroundRandomColor()}}>{login}</div>
+                </a>
               </div>
             </div>
           );
