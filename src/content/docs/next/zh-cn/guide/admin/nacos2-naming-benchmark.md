@@ -12,7 +12,7 @@ sidebar:
 
 Nacos2.0对连接模型，服务发现的数据模型也运作模式进行了大范围的重构，因此需要在相同或类似的场景下，了解Nacos2的服务发现性能负载和容量与Nacos1的区别，帮助用户更快的运用评估Nacos系统负荷。
 
-Nacos1.0性能测试参考 [服务发现性能测试报告](https://nacos.io/zh-cn/docs/1.X/nacos-naming-benchmark)
+Nacos1.0性能测试参考 [服务发现性能测试报告](https://nacos.io/docs/v1/nacos-naming-benchmark)
 
 ## 测试工具
 

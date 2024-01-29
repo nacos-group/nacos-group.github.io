@@ -15,7 +15,7 @@ description: Nacos Spring Cloud 快速开始
 
 ## 前提条件
 
-您需要先下载 Nacos 并启动 Nacos server。操作步骤参见 [Nacos 快速入门](https://nacos.io/zh-cn/docs/quick-start.html)
+您需要先下载 Nacos 并启动 Nacos server。操作步骤参见 [Nacos 快速入门](https://nacos.io/docs/v1/quickstart/quick-start/)
 
 ## 启动配置管理
 

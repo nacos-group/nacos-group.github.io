@@ -24,10 +24,14 @@ const ifzh = isChinese(Astro);
     <div class="notes mt-16 text-gray-07 text-xs flex justify-between">
       <div>
         <a class="mr-2.5 text-blue-03" href="https://github.com/alibaba/nacos/releases/tag/2.3.0 " target="_blank">
-          {t("home.introduce.nacos.release.note.1")}
+          <span class="pc-version-intro">{t("home.introduce.nacos.release.note.1")}</span>
+          <span class="mobile-version-intro">{t("home.introduce.nacos.release.note.1.mobile")}</span>
         </a>
         |
-        <a class="ml-2.5 text-blue-03" href="https://github.com/alibaba/nacos/releases/tag/1.4.6" target="_blank">{t("home.introduce.nacos.release.note.2")}</a>
+        <a class="ml-2.5 text-blue-03" href="https://github.com/alibaba/nacos/releases/tag/1.4.6" target="_blank">
+          <span class="pc-version-intro">{t("home.introduce.nacos.release.note.2")}</span>
+          <span class="mobile-version-intro">{t("home.introduce.nacos.release.note.2.mobile")}</span>
+        </a>
       </div>
       <span>{t("home.introduce.nacos.notes")}</span>
     </div>
@@ -111,6 +115,12 @@ const ifzh = isChinese(Astro);
     overflow: hidden;
     /* border-bottom: 1px solid theme('colors.gray.12'); */
   }
+  .top-section .notes .pc-version-intro {
+    display: inline;
+  }
+  .top-section .notes .mobile-version-intro {
+    display: none;
+  }
   .top-section .shortcut button {
     height: 3rem;
     min-height: 3rem;
@@ -187,6 +197,12 @@ const ifzh = isChinese(Astro);
       font-size: 1.875rem;
       line-height: 2.25rem;
     }
+    .top-section .notes .pc-version-intro {
+      display: none;
+    }
+    .top-section .notes .mobile-version-intro {
+      display: inline;
+    }
     .top-section .shortcut button {
       height: 2rem;
       min-height: 2rem;
@@ -219,6 +235,12 @@ const ifzh = isChinese(Astro);
     .top-section,
     .bottom-section {
       width: 100%;
+    }
+    .top-section .notes .pc-version-intro {
+      display: none;
+    }
+    .top-section .notes .mobile-version-intro {
+      display: inline;
     }
     .bottom-section .desc div {
       overflow: hidden;

@@ -14,7 +14,7 @@ category: release
 
 2.1.2 主要增强了控制台的UI效果，变更了控制台的样式，使得内容更加紧凑美观；
 
-另外2.1.2对客户端大小进行了优化，大幅降低了客户端的jar包大小，同时还提供了纯净版java-client，方便没有依赖gRPC或希望使用非shaded版本客户端用户使用，可以到[Java SDK](/zh-cn/docs/v2/guide/user/sdk)中查看纯净版使用方式。
+另外2.1.2对客户端大小进行了优化，大幅降低了客户端的jar包大小，同时还提供了纯净版java-client，方便没有依赖gRPC或希望使用非shaded版本客户端用户使用，可以到[Java SDK](https://nacos.io/docs/latest/guide/user/sdk/)中查看纯净版使用方式。
 
 最后2.1.2修复了许多旧版本的问题，提高了稳定性。具体变更内容可参考变更日志：
 
@@ -65,9 +65,9 @@ category: release
 
 首先，2.2.0将会删除旧的冗余代码，即1.X模式服务发现和双写相关代码。删除后，2.2.0版本将无法从Nacos 1.X服务器升级，只能从至少2.0.0版本升级。此更改不会影响对1.X客户端请求的适配，用户仍然可以使用1.X客户端链接2.2.0版本服务端。
 
-其次，2.2.0将会合并部分阿里巴巴编程之夏2022和开源之夏2022的课题结果，例如[V2版本的 openAPI](/zh-cn/docs/v2/guide/user/open-api) 和 [数据源插件](/zh-cn/docs/v2/plugin/datasource-plugin)。其他课题也将在未来版本中发布。
+其次，2.2.0将会合并部分阿里巴巴编程之夏2022和开源之夏2022的课题结果，例如[V2版本的 openAPI](https://nacos.io/docs/v2/guide/user/open-api/) 和 [数据源插件](https://nacos.io/docs/v2/plugin/datasource-plugin/)。其他课题也将在未来版本中发布。
 
-最后，2.2.0增强了在2.1.1版本被列为beta功能的`轨迹追踪插件`和`批量注册`，这使它们更易于使用。关于如何开发和使用`轨迹追踪插件`，可以参考[插件文档](/zh-cn/docs/v2/plugin/trace-plugin)进行开发。
+最后，2.2.0增强了在2.1.1版本被列为beta功能的`轨迹追踪插件`和`批量注册`，这使它们更易于使用。关于如何开发和使用`轨迹追踪插件`，可以参考[插件文档](https://nacos.io/docs/v2/plugin/trace-plugin/)进行开发。
 
 由于这个版本中有许多重要的变化，所以社区计划做一个预发布的BETA版本。根据BETA测试的结果，下一个版本计划是BETA2或GA版本，欢迎广大用户积极[下载](https://github.com/alibaba/nacos/releases/tag/2.2.0-BETA)试用测试，帮助社区尽早发现问题。
 
