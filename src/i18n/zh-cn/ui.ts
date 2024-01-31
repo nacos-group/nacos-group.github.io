@@ -43,7 +43,7 @@ export default {
 	'commmon.footer.actions.edas': '云服务 EDAS',
 	'commmon.actions.download': '前往下载',
 
-	'home.title': '动态服务发现、配置管理和服务管理平台 Nacos',
+	'home.title': 'Nacos官网 | Nacos 官方社区 | Nacos 下载',
 	'home.description': 'Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。',
 	'home.introduce.about': '关于 NACOS',
 	'home.introduce.title': ' 一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台',
@@ -55,8 +55,8 @@ export default {
 	'home.introduce.nacos.release.note.2': 'V1.4.6 的版本说明',
 	'home.introduce.nacos.release.note.2.mobile': 'V1.4.6',
 	'home.introduce.nacos.define': 'Nacos /nɑ:kəʊs/ 是 Naming and Configuration Service 的首字母缩写，是一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。',
-	'home.introduce.nacos.aim': '我们相信一切都是服务，每个服务节点被构想为一个星球，每个服务都是一个星系。Nacos 致力于帮助建立这些服务之间的连接，并方便地聚合和管理整个星空，旨在达到浩瀚星辰的广袤海洋。',
 	'home.nacos.edge.about': '主要特性',
+	'home.introduce.nacos.aim': '我们相信一切都是服务，每个服务节点被构想为一个星球，每个服务都是一个星系。Nacos 致力于帮助建立这些服务之间的连接，助力每个面向星辰的梦想能够透过云层，飞在云上，更好的链接整片星空。',
 	'home.nacos.edge.title': '持续增强开源能力',
 	'home.nacos.edge.1.title': '易用',
 	'home.nacos.edge.1.description': '动态服务发现的一站式解决方案。配置管理和动态 DNS服务。提供 20 多项开箱即用的特性，适用于面向服务的架构。轻量级的生产就绪控制台。',

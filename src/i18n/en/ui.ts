@@ -43,7 +43,7 @@ export default {
 	'commmon.footer.actions.edas': 'Cloud Service EDAS',
 	'commmon.actions.download': 'Download',
 
-	'home.title': 'Dynamic service discovery, configuration management and service management platform Nacos',
+	'home.title': 'Nacos Website | Nacos Official Community | Nacos Download',
 	'home.description': 'Nacos by providing simple and easy to use dynamic service discovery, service configuration, service sharing and management and other service infrastructure, to help users in the cloud native era, in the private cloud, hybrid cloud or public cloud and all cloud environments, better build, deliver, manage their own microservice platform, faster reuse and combination of business services, faster delivery of business innovation value, So as to win the market for users',
 	'home.introduce.about': 'ABOUT NACOS',
 	'home.introduce.title': 'An easy-to-use dynamic service discovery, configuration and service management platform for building cloud native applications',
@@ -55,8 +55,8 @@ export default {
 	'home.introduce.nacos.release.note.2': 'Release Note of V1.4.6',
 	'home.introduce.nacos.release.note.2.mobile': 'V1.4.6',
 	'home.introduce.nacos.define': 'Nacos /nɑ:kəʊs/, acronym for Naming and Configuration Service, is a dynamic service discovery, configuration management, and service management platform that makes it easier to build cloud-native applications.',
-	'home.introduce.nacos.aim': 'We believe that everything is a service, with each service node envisioned as a planet and each service as a galaxy. Nacos is dedicated to helping establish connections among these services, and to conveniently aggregate and manage the entire expanse of this celestial space, aiming towards the vast ocean of stars.',
 	'home.nacos.edge.about': 'Main features',
+	'home.introduce.nacos.aim': 'We believe that everything is a service, each service node is conceived as a planet, and each service is a galaxy. Nacos is committed to helping build connections between these services, helping every dream of the stars to fly through the clouds, on the cloud, better link the whole sky.',
 	'home.nacos.edge.title': 'Continue to enhance open source capabilities',
 	'home.nacos.edge.1.title': 'EASY',
 	'home.nacos.edge.1.description': 'One-stop solution for dynamic service discovery. Configuration management and dynamic DNS service 20+ out-of-the-box features for service-centric architectures Light-weight production-ready console',

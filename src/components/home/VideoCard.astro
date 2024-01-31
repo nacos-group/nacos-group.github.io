@@ -1,0 +1,124 @@
+---
+interface Props {
+  src: string;
+  classes?: string[];
+  description: string;
+}
+const width = "24rem";
+const height = "14rem";
+const { src, description, classes = [] } = Astro.props;
+---
+
+<video-card class:list={["video-card", "m-2.5", ...classes]}>
+  <div
+    data-layer-wrap
+    class="layer-wrap w-full h-full p-4 rounded-3xl flex flex-col justify-between"
+  >
+    <div class="flex items-center">
+      <a
+        data-play-video
+        class="btn btn-secondary btn-sm rounded-3xl mr-4 text-xs"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          fill="none"
+          version="1.1"
+          width="8"
+          height="8.918435096740723"
+          viewBox="0 0 8 8.918435096740723"
+          ><g
+            ><path
+              d="M0,8.91844L0,0L8,4.45922L0,8.91844Z"
+              fill="#121316"
+              fill-opacity="1"></path></g
+          ></svg
+        >
+        <span>PLAY VIDEO</span>
+      </a>
+      <a
+        data-bilibili
+        class="btn btn-secondary btn-sm rounded-3xl mr-4 text-xs"
+      >
+        <img class="w-12 h-5" src="/bilibili.png" />
+      </a>
+    </div>
+    <div class="text-gray-02 text-sm">{description}</div>
+  </div>
+
+  <div data-video-wrap class="video-wrap w-full h-full hidden">
+    <video
+      src={src}
+      height="100%"
+      class="rounded-3xl"
+      data-media-video
+      controls="controls"
+      controlslist="nodownload"
+      poster="https://img.alicdn.com/imgextra/i3/O1CN016iqMUQ2214USJHwNh_!!6000000007059-0-tps-760-400.jpg"
+    ></video>
+  </div>
+</video-card>
+
+<script>
+  class VedioCard extends HTMLElement {
+    private layerWrap: HTMLDivElement;
+    private videoWrap: HTMLDivElement;
+    private playVideo: HTMLButtonElement;
+    private bilibili: HTMLButtonElement;
+    private mediaVideo: HTMLVideoElement;
+
+    constructor() {
+      super();
+
+      this.layerWrap = this.querySelector<HTMLDivElement>(
+        "div[data-layer-wrap]",
+      )!;
+      this.videoWrap = this.querySelector<HTMLDivElement>(
+        "div[data-video-wrap]",
+      )!;
+      this.playVideo = this.querySelector<HTMLButtonElement>(
+        "button[data-play-video]",
+      )!;
+      this.bilibili = this.querySelector<HTMLButtonElement>(
+        "button[data-bilibili]",
+      )!;
+      this.mediaVideo = this.querySelector<HTMLVideoElement>(
+        "video[data-media-video]",
+      )!;
+
+      this.playVideo.addEventListener("click", () => {
+        this.playMediaVideo();
+      });
+
+      this.bilibili.addEventListener("click", () => {
+        console.log("bilibili");
+      });
+    }
+
+    playMediaVideo = () => {
+      this.layerWrap?.classList.add("hidden");
+      this.videoWrap?.classList.remove("hidden");
+      this.mediaVideo?.play();
+    };
+  }
+  customElements.define("video-card", VedioCard);
+</script>
+
+<style define:vars={{ width, height }}>
+  .video-card {
+    display: flex;
+    min-width: var(--width);
+    height: var(--height);
+  }
+
+  .layer-wrap {
+    background: url("https://img.alicdn.com/imgextra/i4/O1CN01imuhna1FvwkTxTaWu_!!6000000000550-2-tps-1280-816.png")
+      no-repeat;
+    background-size: 100% 100%;
+    background-position: center 0;
+    background-attachment: fixed;
+  }
+
+  .video-wrap {
+  }
+</style>
