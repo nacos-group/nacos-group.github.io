@@ -255,3 +255,23 @@
   padding: 0 !important;
 	border-bottom: none !important;
 }
+
+/* 解决starlight的menu按钮位置问题（daisyui影响） */
+starlight-menu-button button{
+	top: 4rem !important;
+}
+
+/* 解决starlight的toc按钮位置问题（daisyui影响） */
+#starlight__mobile-toc{
+	#starlight__on-this-page--mobile{
+		.toggle{
+			width: auto;
+			height: auto;
+			border-radius: .5rem;
+			background-color: transparent;
+		}
+	}
+	.dropdown{
+		display: block;
+	}
+}
