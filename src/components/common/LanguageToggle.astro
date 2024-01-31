@@ -4,35 +4,46 @@ interface Props {
   size?: 'large' | 'small';
   lang: 'zh-cn' | 'en' | string;
 }
+import { useTranslations } from "@i18n/util";
 const { id, size = 'small', lang } = Astro.props;
 const initialState = lang === 'zh-cn' ? false : true;
+const t = useTranslations(Astro);
 ---
-
-<toggle-content class="switch float-left relative m-0 rounded-[2rem]">
-  <input
+<div>
+  <toggle-content class="switch float-left relative m-0 rounded-[2rem] max-md:hidden">
+    <input
+      data-switch
+      class="switch-checkbox hidden"
+      id={`${id}-switch`}
+      type="checkbox"
+      checked={initialState}
+    />
+    <label
+      class="switch-label block overflow-hidden cursor-pointer rounded-[2rem]"
+      for={`${id}-switch`}
+    >
+      <span class="switch-inner block" data-on="中文" data-off="EN"></span>
+      <span class="switch-switch absolute float-right mx-1"></span>
+    </label>
+  </toggle-content>
+  <div
     data-switch
-    class="switch-checkbox hidden"
+    class="w-[3.5rem] h-[1.5rem] leading-[1.5rem] text-xs text-center rounded-2xl bg-gray-12 text-white max-md:inline-block md:hidden"
     id={`${id}-switch`}
-    type="checkbox"
-    checked={initialState}
-  />
-  <label
-    class="switch-label block overflow-hidden cursor-pointer rounded-[2rem]"
-    for={`${id}-switch`}
   >
-    <span class="switch-inner block" data-on="中文" data-off="EN"></span>
-    <span class="switch-switch absolute float-right mx-1"></span>
-  </label>
-</toggle-content>
-
+    {t('commmon.header.common.translator')}
+  </div>
+</div>
 <script>
   class Toggle extends HTMLElement {
-    private switchElement: HTMLInputElement;
     constructor() {
       super();
-      this.switchElement =
-        this.querySelector<HTMLInputElement>('input[data-switch]')!;
-      this.switchElement.addEventListener('click', () => {
+      const pcSwitchElement = document.querySelectorAll('input[data-switch]')[0];
+      const mobileSwitchElement = document.querySelectorAll('div[data-switch]')[0];
+      pcSwitchElement.addEventListener('click', () => {
+        this.toggleLanguage();
+      });
+      mobileSwitchElement.addEventListener('click', () => {
         this.toggleLanguage();
       });
     }
