@@ -39,7 +39,7 @@ const sortedPosts = posts.sort(
 
 const articlePosts = [{
 	type: 'group',
-	label: t(blogArticle[post.data.category]),
+	label: blogArticle[post.data.category] ? t(blogArticle[post.data.category]) : post.data.category,
 	entries: []
 }]
 
@@ -76,8 +76,8 @@ const next = articlePosts[0].entries[currentIndex + 1]
 			</BlogPost>
 			{(prev || next) && (<Pagination
 			labels={{
-				'page.previousLink': '上一篇',
-				'page.nextLink': '下一篇'
+				'page.previousLink': t('commmon.base.page.previousLink'),
+        'page.nextLink': t('commmon.base.page.nextLink')
 			}}
 			pagination={{
 				prev: prev,

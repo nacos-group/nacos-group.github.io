@@ -27,6 +27,9 @@ export default {
 	'commmon.ebook.enjoy.read':'Enjoy the reading experience to the fullest',
 	'commmon.markdown.subheading.page':'This Page',
 	'commmon.base.layout.keywords':'Dynamic service discovery, configuration management, service management',
+	'commmon.base.page.previousLink':'Prev',
+	'commmon.base.page.nextLink':'Next',
+
 
 	'commmon.footer.title': 'Vision',
 	'commmon.footer.subscribe': 'By providing an easy-to-use service infrastructure such as dynamic service discovery,service configuration, service sharing and management and etc.',

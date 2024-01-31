@@ -40,19 +40,19 @@ const sortedPosts = posts.sort(
 
 const articlePosts = [{
 	type: 'group',
-	label: t(blogArticle[post.data.category]),
+	label: blogArticle[post.data.category] ? t(blogArticle[post.data.category]) : post.data.category,
 	entries: []
 }]
 
 let currentIndex
 
-sortedPosts.forEach((item) => {
+sortedPosts.forEach((item) => {	
 	if ( item.data.category === post.data.category ) {
 		if (post.id === item.id) currentIndex = articlePosts[0].entries.length
 		articlePosts[0].entries.push({
 			type: 'link',
 			label: item.data.title,
-			href: `/blog/${item.slug}/`,
+			href: `/en/blog/${item.slug}/`,
 			isCurrent: post.id === item.id,
 			attrs: {}
 		})
@@ -73,12 +73,12 @@ const next = articlePosts[0].entries[currentIndex + 1]
 		</div>
 		<div class="ml-[20%] w-full 2xl:w-[50%] xl:w-[50%] lg:w-[50%] md:w-[50%] inline-block">
 			<BlogPost {...post.data}>
-					<Content />
+				<Content />
 			</BlogPost>
 			{(prev || next) && (<Pagination
 			labels={{
-				'page.previousLink': 'prev',
-				'page.nextLink': 'next'
+				'page.previousLink': t('commmon.base.page.previousLink'),
+        'page.nextLink': t('commmon.base.page.nextLink')
 			}}
 			pagination={{
 				prev: prev,

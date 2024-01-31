@@ -9,11 +9,11 @@ const t = useTranslations(Astro);
 
 export async function getStaticPaths() {
   const downloadEntries = await getCollection('download', ({ slug }) => {
-    return slug.startsWith('zh-cn/');
+    return slug.startsWith('en/');
   });
   return downloadEntries.map(entry => {
     return {
-      params: { slug: entry.slug.replace('zh-cn/', '') }, props: { entry },
+      params: { slug: entry.slug.replace('en/', '') }, props: { entry },
     };
   });
 }
@@ -23,12 +23,12 @@ const { Content } = await entry.render();
 const frontmatter = entry?.data;
  
 const entries = await getCollection('download', ({ slug }) => {
-  return slug.startsWith('zh-cn/');
+  return slug.startsWith('en/');
 });
 
 const menusEntries = entries.map(entry => {
   
-  const pathname = `/download/${entry.slug.replace('zh-cn/', '')}/`;
+  const pathname = `/download/${entry.slug.replace('en/', '')}/`;
   const _active = pathname === Astro.url.pathname;
   
   return {
@@ -67,8 +67,8 @@ const next = menus[0].entries[currentIndex + 1]
           <Content />
           {(prev || next) && (<Pagination
             labels={{
-              'page.previousLink': '上一篇',
-              'page.nextLink': '下一篇'
+              'page.previousLink': t('commmon.base.page.previousLink'),
+              'page.nextLink': t('commmon.base.page.nextLink')
             }}
             pagination={{
               prev: prev,
