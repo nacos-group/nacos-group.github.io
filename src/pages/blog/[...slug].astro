@@ -4,6 +4,13 @@ import BlogPost from '@components/markdownSet/MarkdownDetail.astro';
 import TocComponent from '@components/markdownSet/TocComponents/TocComponent.astro';
 import BaseLayout from '@layouts/BaseLayout.astro';
 
+import Sidebar from '@components/starlight/Sidebar.astro';
+import { useTranslations } from '@i18n/util';
+import { Pagination } from 'virtual:starlight/components';
+
+const t = useTranslations(Astro);
+
+
 export async function getStaticPaths() {
 	const posts = await getCollection("blog");
 	return posts.map((post) => ({
@@ -11,11 +18,48 @@ export async function getStaticPaths() {
 		props: post,
 	}));
 }
+
+const blogArticle = {
+	article: 'blog.article.technical',
+	case: 'blog.article.case.best.practices',
+	ecosystem: 'blog.article.ecosystem.articles'
+}
+
 type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
+
 const { Content, headings } = await post.render();
 
+const posts = await getCollection("blog");
+
+const sortedPosts = posts.sort(
+		(a,b)=> new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
+);
+
+const articlePosts = [{
+	type: 'group',
+	label: t(blogArticle[post.data.category]),
+	entries: []
+}]
+
+let currentIndex
+
+sortedPosts.forEach((item) => {
+	if ( item.data.category === post.data.category ) {
+		if (post.id === item.id) currentIndex = articlePosts[0].entries.length
+		articlePosts[0].entries.push({
+			type: 'link',
+			label: item.data.title,
+			href: `/blog/${item.slug}`,
+			isCurrent: post.id === item.id,
+			attrs: {}
+		})
+	}
+});
+
+const prev = articlePosts[0].entries[currentIndex - 1]
+const next = articlePosts[0].entries[currentIndex + 1]
 ---
 
 <BaseLayout 
@@ -23,10 +67,23 @@ const { Content, headings } = await post.render();
 	title="Nacos Blog"
 >
 	<div>
-		<div class="w-full 2xl:w-[75%] xl:w-[75%] lg:w-[75%] md:w-[75%] inline-block">
+		<div class="w-[20%] sidebar-content fixed overflow-auto h-full hidden 2xl:inline-block xl:inline-block lg:inline-block md:inline-block">
+			<Sidebar sidebar={articlePosts} />
+		</div>
+		<div class="ml-[20%] w-full 2xl:w-[50%] xl:w-[50%] lg:w-[50%] md:w-[50%] inline-block">
 			<BlogPost {...post.data}>
 					<Content />
 			</BlogPost>
+			{(prev || next) && (<Pagination
+			labels={{
+				'page.previousLink': '上一篇',
+				'page.nextLink': '下一篇'
+			}}
+			pagination={{
+				prev: prev,
+				next: next
+			}}
+		/>)}
 		</div>
 		<div class="right-sidebar-panel w-[25%] fixed h-full hidden 2xl:inline-block xl:inline-block lg:inline-block md:inline-block">
 			<TocComponent headings={headings} />
@@ -36,6 +93,12 @@ const { Content, headings } = await post.render();
 </BaseLayout>
 
 <style>
+	.sidebar-content  {
+		height: 100%;
+    padding: 1rem var(--sl-sidebar-pad-x) 0;
+    flex-direction: column;
+    gap: 1rem;
+	}
 	.right-sidebar-panel {
 		flex-direction: column;
 		justify-content: space-between;
