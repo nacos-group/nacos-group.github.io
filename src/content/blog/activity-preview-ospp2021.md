@@ -34,7 +34,7 @@ Nacos支持主流的微服务框架和应用框架，支持云原生生态。选
 
 Nacos主要通过官方网站和Github来进行社区参与，参与内容不仅限于代码提交，还包括文档、翻译、测试、文章分享、社区治理等等。
 
-- Nacos官方网站：[https://nacos.io](https://nacos.io/zh-cn/index.html)
+- Nacos官方网站：[https://nacos.io](https://nacos.io/)
 - Nacos项目地址：[https://github.com/alibaba/nacos](https://github.com/alibaba/nacos)
 - Nacos生态地址：[https://github.com/nacos-group](https://github.com/nacos-group)
 
@@ -55,7 +55,7 @@ Nacos社区为同学们准备了数个难度不一的题目，可以帮同学们
 更多详细内容可进入，Nacos官网、Nacos github或ISCAS官网中了解：
 ​
 
-Nacos官方网址：[https://nacos.io](https://nacos.io/zh-cn/index.html)
+Nacos官方网址：[https://nacos.io](https://nacos.io/)
 
 Nacos社区相关内容：[https://github.com/alibaba/nacos/issues/5693](https://github.com/alibaba/nacos/issues/5693)
 

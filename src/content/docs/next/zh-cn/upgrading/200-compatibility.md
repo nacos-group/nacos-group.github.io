@@ -16,7 +16,7 @@ Nacos代码当前保存在develop分支中，启动方式与Nacos 1.x相同（�
 
 经过社区的讨论和开发， Nacos 基于长连接的2.0.0版本的核心功能已开发完成，目前2.0.0正式版本已发布，欢迎大家使用。
 
-2.0.0支持Nacos1.X服务端的平滑升降级的能力，详情请查看[Nacos2.0升级文档](src/content/docs/next/zh-cn/upgrading/200-upgrading.md) 。
+2.0.0支持Nacos1.X服务端的平滑升降级的能力，详情请查看[Nacos2.0升级文档](https://nacos.io/docs/v2/upgrading/version2-upgrading/) 。
 
 ## Nacos 2.0.0版本压测
 

@@ -14,7 +14,7 @@ category: announcement
 
 > 说明：这两个默认值原意是为了方便新用户在快速搭建新集群进行使用时可以减少一些繁琐步骤，更简单的使用nacos，在实际部署时提供机制修改配置来提高安全性；随着社区用户对安全性要求提升，默认值可能会导致部分用户未修改直接使用时出现安全风险，因此Nacos社区去除了默认值，并在启动时进行校验，阻止启动提示用户配置。
 
-使用旧版本的用户请根据[文档](https://nacos.io/zh-cn/docs/v2/guide/user/auth.html)进行环境检查，查看是否使用了默认的`token.secret.key`、`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value`，如仍然使用默认值，请参考文档内容尽快进行修改。
+使用旧版本的用户请根据[文档](https://nacos.io/docs/v2/guide/user/auth/)进行环境检查，查看是否使用了默认的`token.secret.key`、`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value`，如仍然使用默认值，请参考文档内容尽快进行修改。
 
 新部署环境请使用最新2.2.1版本部署，并根据文档设置`token.secret.key`、`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value`，并尽快修改默认密码。
 
@@ -58,6 +58,6 @@ nacos.core.auth.plugin.nacos.token.expire.seconds=5
 
 ### 解决方式
 
-按照[文档](https://nacos.io/zh-cn/docs/v2/guide/user/auth.html)提示，先开启userAgent白名单，在变更新`server.identity`后，立刻关闭userAgent白名单。
+按照[文档](https://nacos.io/docs/latest/guide/user/auth/)提示，先开启userAgent白名单，在变更新`server.identity`后，立刻关闭userAgent白名单。
 
 或保证变更`server.identity`期间，不进行业务应用的变更。

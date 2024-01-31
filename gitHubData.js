@@ -18,7 +18,8 @@ let res = await request("https://api.github.com/repos/alibaba/nacos/contributors
 let contributors = res.map(v => {
     return {
         login: v.login,
-        avatar_url: v.avatar_url
+        avatar_url: v.avatar_url,
+        html_url: v.html_url
     }
 })
 

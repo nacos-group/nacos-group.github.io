@@ -59,7 +59,7 @@ db.password=youdontknow
 
 ## 集群模式下运行Nacos
 
-[集群模式下运行Nacos](https://nacos.io/zh-cn/docs/cluster-mode-quick-start.html)
+[集群模式下运行Nacos](https://nacos.io/docs/v1/cluster-mode-quick-start/)
 
 ## 多集群模式
 

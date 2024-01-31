@@ -12,6 +12,7 @@ declare module 'virtual:starlight/user-images' {
 	};
 }
 
+declare module 'qs'
 
 declare module 'virtual:starlight/components' {
 	export const Badge: typeof import('@astrojs/starlight/components/Badge.astro').default;

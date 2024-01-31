@@ -182,7 +182,7 @@ description: Nacos功能和需求列表
 ### 参与共建能得到什么？
 参与Nacos共建，你将有机会让你的代码被全中国甚至全世界的用户阅读并使用，同时在成为Nacos Committer后（如何成为Nacos Committer可以参考[手册](https://github.com/alibaba/nacos/blob/develop/CONTRIBUTING.md)），还可以有以下福利：
 
-- 在Nacos官网[团队页](https://nacos.io/zh-cn/docs/nacos-dev.html)留名；
+- 在Nacos官网[团队页](https://nacos.io/docs/latest/community/nacos-dev/)留名；
 - 收到我们带Nacos logo的小礼物，有T恤、水杯、帽衫等等；
 - 代表Nacos参加各种线上线下活动，与更多小伙伴交流；
 - 更多我们还在筹划中的福利；

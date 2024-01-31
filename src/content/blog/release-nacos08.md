@@ -39,7 +39,7 @@ Nacos 通过micrometer统计了运行时的核心指标：
 
 <br /><br />grafana具备强大的的数据可视化能力，能将采集的数据展示出来，支持多种数据源。同时可对重要指标配置告警规则，数据达到阈值时可以通知相关负责人。<br />Nacos官网提供了结合prometheus和grafana实现metrics监控<br /><br /><br />![](https://intranetproxy.alipay.com/skylark/lark/0/2019/png/53357/1548122164953-6011a9ee-a521-447c-a871-7ebcf10c2ce4.png#align=left&display=inline&height=417&linkTarget=_blank&originHeight=1584&originWidth=2832&size=0&width=746)
 
-具体的详情可以参考官网[监控文档](https://nacos.io/zh-cn/docs/monitor-guide.html)。
+具体的详情可以参考官网[监控文档](https://nacos.io/docs/v1/guide/admin/monitor-guide/)。
 ### 
 ### Nacos-Sync 支持服务平滑迁移
 
