@@ -33,7 +33,7 @@ let height, width, xpadding = "";
 
 ---
 
-<header-layout
+<my-layout
   style={`position: ${position}; height: ${height}`}
   class=" backdrop-blur-md top-0 z-[10000] bg-gray-14 flex justify-center"
 >
@@ -71,7 +71,7 @@ let height, width, xpadding = "";
 
   </div>
   
-</header-layout>
+</my-layout>
 
 
 
@@ -97,12 +97,12 @@ let height, width, xpadding = "";
     }
 
   }
-  customElements.define("header-layout", HeaderLayout2);
+  customElements.define("my-layout", HeaderLayout2);
 
 </script>
 
 <style define:vars={{ width, height, xpadding }}>
-  header-layout {
+  my-layout {
     --header-content-width: var(--width);
     --logo-width: 96px;
     --header-height: var(--height);
