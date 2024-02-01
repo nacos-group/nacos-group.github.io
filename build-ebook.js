@@ -46,7 +46,7 @@ function generateSlugSidebar(tocItem, lock) {
         items: []
     }
     if (tocItem.slug !== '#') {
-        itemToc.link = `docs/ebook/${tocItem.slug}.mdx/`;
+        itemToc.link = `docs/ebook/${tocItem.slug}/`;
         if (lock) {
             itemToc = {
                 ...itemToc,
@@ -101,7 +101,7 @@ ${body}`
                 fs.writeFile(path.resolve(bookDir, `${tocItem.slug}.mdx`), getMdContent(body, bookItem.data), 'utf8')
             }
         } else if(tocItem.slug !== '#') {
-            fs.writeFile(path.resolve(bookDir, `${tocItem.slug}.mdx`), getMdContent(`
+            fs.writeFile(path.resolve(bookDir, `${tocItem.slug}`), getMdContent(`
 import Lock from "@components/common/EbookLock.astro";
 
 <Lock />`), 'utf8')
