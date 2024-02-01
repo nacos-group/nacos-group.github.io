@@ -51,7 +51,7 @@ sortedPosts.forEach((item) => {
 		articlePosts[0].entries.push({
 			type: 'link',
 			label: item.data.title,
-			href: `/blog/${item.slug}`,
+			href: `/blog/${item.slug}/`,
 			isCurrent: post.id === item.id,
 			attrs: {}
 		})

@@ -225,5 +225,6 @@ export default {
 	'page.blog.news.all':'全部新闻',
 	'page.blog.news.personnel.promotion':'人员晋升',
 	'page.blog.news.community.cooperation':'社区合作',
-	'page.limiting.prompt':'当前下载通道太拥挤，请稍后重试...',
+	'page.limiting.prompt': '当前下载通道太拥挤，请稍后重试...',
+	"themeSelect.accessibleLabel": "选择主题",
 };
