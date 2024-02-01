@@ -1,10 +1,12 @@
 ---
-import { BLOG_CATEGORY } from 'src/consts';
+import { i18nMap } from 'src/consts';
 import { Icon } from "@astrojs/starlight/components";
 import BaseContainer from '@components/common/BaseContainer.astro';
 import Button from '@components/common/Button.astro';
+import { useTranslations } from '@i18n/util';
+const t = useTranslations(Astro);
 
-const { title = "", type="home",category } = Astro.props;
+const { source, title = "", type="home",category } = Astro.props;
 
 const backIconMap = {
   "blog-sub": "/blog",
@@ -31,7 +33,7 @@ const backIconMap = {
                   href={category.href}
                   class='rounded-3xl mr-4 mb-2'
                 >
-                  {category.title}
+                {t(i18nMap[source][category.type])}
                 </Button>
           );
       })}

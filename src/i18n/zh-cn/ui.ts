@@ -215,6 +215,7 @@ export default {
 	'blog.activity.preview.event':'活动预告',
 	'blog.activity.all.event':'全部活动',
 	'blog.activity.community.announcement':'社区公告',
+	'blog.activity.release.statement':'发布声明',
 	'blog.activity.explore':'探索Nacos 博客，了解服务发现和配置管理的最新资讯、教程和技术分析。',
 	'blog.all.articles':'全部文章',
 	'blog.article.technical':'技术文章',

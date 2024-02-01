@@ -65,16 +65,18 @@ const next = menus[0].entries[currentIndex + 1]
       <div class="download-content">
         <article class="prose max-w-none">
           <Content />
-          {(prev || next) && (<Pagination
-            labels={{
-              'page.previousLink': t('commmon.base.page.previousLink'),
-              'page.nextLink': t('commmon.base.page.nextLink')
-            }}
-            pagination={{
-              prev: prev,
-              next: next
-            }}
-          />)}
+          <div class="pb-6">
+            {(prev || next) && (<Pagination
+              labels={{
+                'page.previousLink': t('commmon.base.page.previousLink'),
+                'page.nextLink': t('commmon.base.page.nextLink')
+              }}
+              pagination={{
+                prev: prev,
+                next: next
+              }}
+            />)}
+          </div>
         </article>
       </div>
     </div>
