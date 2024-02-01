@@ -11,7 +11,7 @@
                     "en": ""
                 },
                 "items": [],
-                "link": "docs/ebook/kbyo6n.mdx"
+                "link": "docs/ebook/kbyo6n"
             }
         ]
     },
@@ -27,7 +27,7 @@
                     "en": ""
                 },
                 "items": [],
-                "link": "docs/ebook/pb40qx.mdx"
+                "link": "docs/ebook/pb40qx"
             }
         ]
     },
@@ -43,7 +43,7 @@
                     "en": ""
                 },
                 "items": [],
-                "link": "docs/ebook/iez8a4.mdx"
+                "link": "docs/ebook/iez8a4"
             }
         ]
     },
@@ -65,7 +65,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/un9fgs.mdx"
+                        "link": "docs/ebook/un9fgs"
                     },
                     {
                         "label": "Nacos 配置模型",
@@ -73,7 +73,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/szf3gh.mdx"
+                        "link": "docs/ebook/szf3gh"
                     }
                 ]
             },
@@ -89,7 +89,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/agxdnq.mdx"
+                        "link": "docs/ebook/agxdnq"
                     },
                     {
                         "label": "Nacos 自研Distro协议",
@@ -97,7 +97,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/ktwggk.mdx"
+                        "link": "docs/ebook/ktwggk"
                     },
                     {
                         "label": "Nacos 通信通道",
@@ -105,7 +105,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/sufa23.mdx"
+                        "link": "docs/ebook/sufa23"
                     },
                     {
                         "label": "Nacos 寻址机制",
@@ -113,7 +113,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/ki4dgp.mdx"
+                        "link": "docs/ebook/ki4dgp"
                     }
                 ]
             },
@@ -129,7 +129,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/ynstox.mdx"
+                        "link": "docs/ebook/ynstox"
                     },
                     {
                         "label": "Nacos 注册中心服务数据模型",
@@ -137,7 +137,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/knk2h0.mdx"
+                        "link": "docs/ebook/knk2h0"
                     },
                     {
                         "label": "Nacos 健康检查机制",
@@ -145,7 +145,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/qrkw0g.mdx"
+                        "link": "docs/ebook/qrkw0g"
                     }
                 ]
             },
@@ -161,7 +161,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/dl5k6n.mdx"
+                        "link": "docs/ebook/dl5k6n"
                     }
                 ]
             },
@@ -177,7 +177,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/lgif1e.mdx",
+                        "link": "docs/ebook/lgif1e",
                         "attrs": {
                             "lock": true
                         }
@@ -196,7 +196,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/hcq5tb.mdx",
+                        "link": "docs/ebook/hcq5tb",
                         "attrs": {
                             "lock": true
                         }
@@ -207,7 +207,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/vki2ag.mdx",
+                        "link": "docs/ebook/vki2ag",
                         "attrs": {
                             "lock": true
                         }
@@ -226,7 +226,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/ucfklf.mdx",
+                        "link": "docs/ebook/ucfklf",
                         "attrs": {
                             "lock": true
                         }
@@ -247,7 +247,7 @@
                     "en": ""
                 },
                 "items": [],
-                "link": "docs/ebook/qrhtgr.mdx",
+                "link": "docs/ebook/qrhtgr",
                 "attrs": {
                     "lock": true
                 }
@@ -266,7 +266,7 @@
                     "en": ""
                 },
                 "items": [],
-                "link": "docs/ebook/sih0nw.mdx",
+                "link": "docs/ebook/sih0nw",
                 "attrs": {
                     "lock": true
                 }
@@ -277,7 +277,7 @@
                     "en": ""
                 },
                 "items": [],
-                "link": "docs/ebook/fplzfx.mdx",
+                "link": "docs/ebook/fplzfx",
                 "attrs": {
                     "lock": true
                 }
@@ -288,7 +288,7 @@
                     "en": ""
                 },
                 "items": [],
-                "link": "docs/ebook/lhgpkh.mdx",
+                "link": "docs/ebook/lhgpkh",
                 "attrs": {
                     "lock": true
                 }
@@ -299,7 +299,7 @@
                     "en": ""
                 },
                 "items": [],
-                "link": "docs/ebook/ex6h8a.mdx",
+                "link": "docs/ebook/ex6h8a",
                 "attrs": {
                     "lock": true
                 }
@@ -310,7 +310,7 @@
                     "en": ""
                 },
                 "items": [],
-                "link": "docs/ebook/gekxwv.mdx",
+                "link": "docs/ebook/gekxwv",
                 "attrs": {
                     "lock": true
                 }
@@ -321,7 +321,7 @@
                     "en": ""
                 },
                 "items": [],
-                "link": "docs/ebook/ushmi0.mdx",
+                "link": "docs/ebook/ushmi0",
                 "attrs": {
                     "lock": true
                 }
@@ -346,7 +346,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/akfgmk.mdx",
+                        "link": "docs/ebook/akfgmk",
                         "attrs": {
                             "lock": true
                         }
@@ -357,7 +357,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/tmqg3o.mdx",
+                        "link": "docs/ebook/tmqg3o",
                         "attrs": {
                             "lock": true
                         }
@@ -368,7 +368,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/mthae0.mdx",
+                        "link": "docs/ebook/mthae0",
                         "attrs": {
                             "lock": true
                         }
@@ -387,7 +387,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/gf3vmh.mdx",
+                        "link": "docs/ebook/gf3vmh",
                         "attrs": {
                             "lock": true
                         }
@@ -398,7 +398,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/uk8inc.mdx",
+                        "link": "docs/ebook/uk8inc",
                         "attrs": {
                             "lock": true
                         }
@@ -409,7 +409,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/rxif2a.mdx",
+                        "link": "docs/ebook/rxif2a",
                         "attrs": {
                             "lock": true
                         }
@@ -428,7 +428,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/mk78dd.mdx",
+                        "link": "docs/ebook/mk78dd",
                         "attrs": {
                             "lock": true
                         }
@@ -439,7 +439,7 @@
                             "en": ""
                         },
                         "items": [],
-                        "link": "docs/ebook/fyac5p.mdx",
+                        "link": "docs/ebook/fyac5p",
                         "attrs": {
                             "lock": true
                         }
@@ -460,7 +460,7 @@
                     "en": ""
                 },
                 "items": [],
-                "link": "docs/ebook/ais5np.mdx",
+                "link": "docs/ebook/ais5np",
                 "attrs": {
                     "lock": true
                 }
