@@ -1,15 +1,14 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content';
-import BlogPost from '@components/markdownSet/MarkdownDetail.astro';
-import TocComponent from '@components/markdownSet/TocComponents/TocComponent.astro';
-import BaseLayout from '@layouts/BaseLayout.astro';
+import { type CollectionEntry, getCollection } from "astro:content";
+import BlogPost from "@components/markdownSet/MarkdownDetail.astro";
+import TocComponent from "@components/markdownSet/TocComponents/TocComponent.astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
 
-import Sidebar from '@components/starlight/Sidebar.astro';
-import { useTranslations } from '@i18n/util';
-import { Pagination } from 'virtual:starlight/components';
+import Sidebar from "@components/starlight/Sidebar.astro";
+import { useTranslations } from "@i18n/util";
+import { Pagination } from "virtual:starlight/components";
 
 const t = useTranslations(Astro);
-
 
 export async function getStaticPaths() {
 	const posts = await getCollection("blog");
@@ -20,10 +19,16 @@ export async function getStaticPaths() {
 }
 
 const blogArticle = {
-	article: 'blog.article.technical',
-	case: 'blog.article.case.best.practices',
-	ecosystem: 'blog.article.ecosystem.articles',
-}
+	'article': "blog.article.technical",
+	'case': "blog.article.case.best.practices",
+	'ecosystem': "blog.article.ecosystem.articles",
+	'announcement': "blog.activity.community.announcement",
+	'release': "blog.activity.release.statement",
+	'committer': "page.blog.news.personnel.promotion",
+	'cooperate': "page.blog.news.community.cooperation",
+	"activity-preview": "blog.activity.preview.event",
+	"activity-detail": "blog.activity.detail.event",
+};
 
 type Props = CollectionEntry<"blog">;
 
@@ -34,64 +39,74 @@ const { Content, headings } = await post.render();
 const posts = await getCollection("blog");
 
 const sortedPosts = posts.sort(
-		(a,b)=> new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
+	(a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf(),
 );
 
-const articlePosts = [{
-	type: 'group',
-	label: blogArticle[post.data.category] ? t(blogArticle[post.data.category]) : post.data.category,
-	entries: []
-}]
+const articlePosts = [
+	{
+		type: "group",
+		label: blogArticle[post.data.category]
+			? t(blogArticle[post.data.category])
+			: post.data.category,
+		entries: [],
+	},
+];
 
-let currentIndex
+let currentIndex;
 
-sortedPosts.forEach((item) => {	
-	if ( item.data.category === post.data.category ) {
-		if (post.id === item.id) currentIndex = articlePosts[0].entries.length
+sortedPosts.forEach((item) => {
+	if (item.data.category === post.data.category) {
+		if (post.id === item.id) currentIndex = articlePosts[0].entries.length;
 		articlePosts[0].entries.push({
-			type: 'link',
+			type: "link",
 			label: item.data.title,
 			href: `/en/blog/${item.slug}/`,
 			isCurrent: post.id === item.id,
-			attrs: {}
-		})
+			attrs: {},
+		});
 	}
 });
 
-const prev = articlePosts[0].entries[currentIndex - 1]
-const next = articlePosts[0].entries[currentIndex + 1]
+const prev = articlePosts[0].entries[currentIndex - 1];
+const next = articlePosts[0].entries[currentIndex + 1];
 ---
 
-<BaseLayout 
-	align='docs' 
-	title="Nacos Blog"
->
+<BaseLayout align="docs" title="Nacos Blog">
 	<div>
-		<div class="w-[20%] fixed overflow-auto h-full hidden 2xl:inline-block xl:inline-block lg:inline-block md:inline-block">
+		<div
+			class="w-[20%] fixed overflow-auto h-full hidden 2xl:inline-block xl:inline-block lg:inline-block md:inline-block"
+		>
 			<Sidebar sidebar={articlePosts} />
 		</div>
-		<div class="ml-[20%] w-full 2xl:w-[50%] xl:w-[50%] lg:w-[50%] md:w-[50%] inline-block">
+		<div
+			class="ml-[20%] w-full 2xl:w-[50%] xl:w-[50%] lg:w-[50%] md:w-[50%] inline-block"
+		>
 			<BlogPost {...post.data}>
 				<Content />
 			</BlogPost>
 			<div class="pb-6">
-				{(prev || next) && (<Pagination
-					labels={{
-						'page.previousLink': t('commmon.base.page.previousLink'),
-						'page.nextLink': t('commmon.base.page.nextLink')
-					}}
-					pagination={{
-						prev: prev,
-						next: next
-					}}
-				/>)}
+				{
+					(prev || next) && (
+						<Pagination
+							labels={{
+								"page.previousLink": t("commmon.base.page.previousLink"),
+								"page.nextLink": t("commmon.base.page.nextLink"),
+							}}
+							pagination={{
+								prev: prev,
+								next: next,
+							}}
+						/>
+					)
+				}
 			</div>
 		</div>
-		<div class="right-sidebar-panel w-[25%] fixed h-full hidden 2xl:inline-block xl:inline-block lg:inline-block md:inline-block">
+		<div
+			class="right-sidebar-panel w-[25%] fixed h-full hidden 2xl:inline-block xl:inline-block lg:inline-block md:inline-block"
+		>
 			<TocComponent headings={headings} />
 		</div>
 	</div>
-
 </BaseLayout>
 
 <style>
