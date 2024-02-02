@@ -59,7 +59,7 @@ const dataSource = [
               <div class="py-4 text-gray-12 text-[.875rem] leading-4 tracking-[0.15em]">{title}</div>
             </div>
             
-            <div class="text-gray-08 text-sm">{description}</div>
+            <div class="text-gray-08 text-sm" set:html={description}></div>
           </div>
         );
       })
