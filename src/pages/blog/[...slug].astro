@@ -20,9 +20,15 @@ export async function getStaticPaths() {
 }
 
 const blogArticle = {
-	article: 'blog.article.technical',
-	case: 'blog.article.case.best.practices',
-	ecosystem: 'blog.article.ecosystem.articles'
+	'article': "blog.article.technical",
+	'case': "blog.article.case.best.practices",
+	'ecosystem': "blog.article.ecosystem.articles",
+	'announcement': "blog.activity.community.announcement",
+	'release': "blog.activity.release.statement",
+	'committer': "page.blog.news.personnel.promotion",
+	'cooperate': "page.blog.news.community.cooperation",
+	"activity-preview": "blog.activity.preview.event",
+	"activity-detail": "blog.activity.detail.event",
 }
 
 type Props = CollectionEntry<"blog">;
@@ -74,16 +80,6 @@ const next = articlePosts[0].entries[currentIndex + 1]
 			<BlogPost {...post.data}>
 					<Content />
 			</BlogPost>
-			{(prev || next) && (<Pagination
-			labels={{
-				'page.previousLink': t('commmon.base.page.previousLink'),
-        'page.nextLink': t('commmon.base.page.nextLink')
-			}}
-			pagination={{
-				prev: prev,
-				next: next
-			}}
-		/>)}
 		</div>
 		<div class="right-sidebar-panel w-[25%] fixed h-full hidden 2xl:inline-block xl:inline-block lg:inline-block md:inline-block">
 			<TocComponent headings={headings} />

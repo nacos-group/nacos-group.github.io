@@ -211,6 +211,8 @@ export default {
 	'blog.activity.preview.event':'Event Trailer',
 	'blog.activity.all.event':'All Activities',
 	'blog.activity.community.announcement':'Community Announcement',
+	'blog.activity.release.statement':'Release Statement',
+
 	'blog.activity.explore':'Explore the Nacos blog to learn about the latest information, tutorials, and technical analysis on service discovery and configuration management.',
 	'blog.all.articles':'All Articles',
 	'blog.article.technical':'Technical Articles',
