@@ -80,6 +80,22 @@ const next = articlePosts[0].entries[currentIndex + 1]
 			<BlogPost {...post.data}>
 					<Content />
 			</BlogPost>
+			<div class="pb-6">
+				{
+					(prev || next) && (
+						<Pagination
+							labels={{
+								"page.previousLink": t("commmon.base.page.previousLink"),
+								"page.nextLink": t("commmon.base.page.nextLink"),
+							}}
+							pagination={{
+								prev: prev,
+								next: next,
+							}}
+						/>
+					)
+				}
+			</div>
 		</div>
 		<div class="right-sidebar-panel w-[25%] fixed h-full hidden 2xl:inline-block xl:inline-block lg:inline-block md:inline-block">
 			<TocComponent headings={headings} />

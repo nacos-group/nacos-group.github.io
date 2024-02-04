@@ -74,7 +74,7 @@ const next = articlePosts[0].entries[currentIndex + 1];
 <BaseLayout align="docs" title="Nacos Blog">
 	<div>
 		<div
-			class="w-[20%] fixed overflow-auto h-full hidden 2xl:inline-block xl:inline-block lg:inline-block md:inline-block"
+			class="w-[20%] sidebar-content fixed overflow-auto h-full hidden 2xl:inline-block xl:inline-block lg:inline-block md:inline-block"
 		>
 			<Sidebar sidebar={articlePosts} />
 		</div>
@@ -110,6 +110,12 @@ const next = articlePosts[0].entries[currentIndex + 1];
 </BaseLayout>
 
 <style>
+	.sidebar-content  {
+		height: 100%;
+    padding: 1rem var(--sl-sidebar-pad-x) 0;
+    flex-direction: column;
+    gap: 1rem;
+	}
 	.right-sidebar-panel {
 		flex-direction: column;
 		justify-content: space-between;
