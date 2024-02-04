@@ -28,6 +28,7 @@ const t = useTranslations(Astro);
                     </div>
                     <NewCard
                         type="blog"
+                        source={source}
                         post={recentPosts[0]}
                         classList={["lg:col-span-3", "lg:py-8"]}
                     />
@@ -88,6 +89,7 @@ const t = useTranslations(Astro);
                                         .slice(0, 3)
                                         .map((post, postIndex) => (
                                             <BlogCard
+                                                source={source}
                                                 post={post as any}
                                                 index={
                                                     postIndex +
