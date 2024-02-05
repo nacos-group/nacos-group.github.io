@@ -8,6 +8,7 @@ import Button from '@components/common/Button.astro';
 
 const t = useTranslations(Astro);
 export type Props = {
+  source: string;
   post: {
     slug: string;
     body: string;
@@ -24,7 +25,7 @@ export type Props = {
   index?: number;
 };
 
-const { post, posterWidth, type = "blog",index = 0 } = Astro.props;
+const { post, source, posterWidth, type = "blog",index = 0 } = Astro.props;
 ---
 
 <div class="card h-[420px] bg-gray-02 shadow-none w-full">
@@ -44,7 +45,7 @@ const { post, posterWidth, type = "blog",index = 0 } = Astro.props;
     </h2>
     <Button 
       size="large" 
-      href={`/blog/${post.slug}/`}
+      href={`/blog/${post.slug}/?source=${source}`}
       class="rounded-3xl text-xs absolute bottom-3"
     >
       {t('blog.card.read.artile')}

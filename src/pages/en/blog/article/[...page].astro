@@ -54,7 +54,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
                 {
                     page.data.map((post) => (
                         <div>
-                            <BlogCard post={post as Post} posterWidth="350" />
+                            <BlogCard post={post as Post} posterWidth="350" source="blog_article" />
                         </div>
                     ))
                 }
