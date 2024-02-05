@@ -78,9 +78,9 @@ const next = articlePosts[0].entries[currentIndex + 1]
 			<Sidebar sidebar={articlePosts} />
 		</div>
 		<div class="ml-[20%] w-full 2xl:w-[50%] xl:w-[50%] lg:w-[50%] md:w-[50%] inline-block">
-			<div id="back-btn" class="pt-2">
+			<div id="back-btn" class="pt-4 pl-6">
 				<Button
-					type='primary'
+					type='normal'
 					class='rounded-3xl'
 					visibility={false}
 				>
@@ -117,7 +117,8 @@ const next = articlePosts[0].entries[currentIndex + 1]
 
 <script>
 	const url = new URL(window.location.href)
-	const source = url.searchParams.get('source')
+	let source = url.searchParams.get('source')
+	source = source.replace(/_/g, '/')
 	const backBtn: HTMLAnchorElement = document.querySelector('#back-btn a')
 	backBtn.href = `/${source}/`
 </script>
