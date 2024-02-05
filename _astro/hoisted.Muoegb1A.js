@@ -1,0 +1,1 @@
+import"./hoisted.JLy9imnV.js";import"./markdown-toc.etSrasMh.js";import"./hoisted.Ezxh7wXc.js";import"./index.PDhEm6KS.js";const r=new URL(window.location.href);let e=r.searchParams.get("source");e=e.replace(/_/g,"/");const o=document.querySelector("#back-btn a");o.href=`/${e}/`;
