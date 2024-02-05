@@ -8,7 +8,7 @@ import Button from '@components/common/Button.astro';
 const t = useTranslations(Astro);
 
 
-const { type = "blog", post, classList = [] } = Astro.props;
+const { type = "blog", source, post, classList = [] } = Astro.props;
 ---
 
 <div class:list={[...classList]}>
@@ -47,7 +47,7 @@ const { type = "blog", post, classList = [] } = Astro.props;
                 <Button
                   size="large" 
                   class="text-gray-15 font-medium mb-5 rounded-lg"
-                  href={`/blog/${post.slug}/`}
+                  href={`/blog/${post.slug}/?source=${source}`}
                 >
                   {t('blog.card.btn.read')}
                 </Button>

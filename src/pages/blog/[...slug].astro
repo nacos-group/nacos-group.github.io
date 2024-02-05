@@ -3,19 +3,70 @@ import { type CollectionEntry, getCollection } from 'astro:content';
 import BlogPost from '@components/markdownSet/MarkdownDetail.astro';
 import TocComponent from '@components/markdownSet/TocComponents/TocComponent.astro';
 import BaseLayout from '@layouts/BaseLayout.astro';
+import Button from '@components/common/Button.astro';
+import { Icon } from "@astrojs/starlight/components";
+import Sidebar from '@components/starlight/Sidebar.astro';
+import { useTranslations } from '@i18n/util';
+import { Pagination } from 'virtual:starlight/components';
+
+const t = useTranslations(Astro);
+
 
 export async function getStaticPaths() {
 	const posts = await getCollection("blog");
 	return posts.map((post) => ({
-		params: { slug: post.slug },
+		params: { slug: post.slug,  },
 		props: post,
 	}));
 }
+
+const blogArticle = {
+	'article': "blog.article.technical",
+	'case': "blog.article.case.best.practices",
+	'ecosystem': "blog.article.ecosystem.articles",
+	'announcement': "blog.activity.community.announcement",
+	'release': "blog.activity.release.statement",
+	'committer': "page.blog.news.personnel.promotion",
+	'cooperate': "page.blog.news.community.cooperation",
+	"activity-preview": "blog.activity.preview.event",
+	"activity-detail": "blog.activity.detail.event",
+}
+
 type Props = CollectionEntry<"blog">;
 
 const post = Astro.props;
+
 const { Content, headings } = await post.render();
 
+const posts = await getCollection("blog");
+
+const sortedPosts = posts.sort(
+		(a,b)=> new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
+);
+
+const articlePosts = [{
+	type: 'group',
+	label: blogArticle[post.data.category] ? t(blogArticle[post.data.category]) : post.data.category,
+	entries: []
+}]
+
+let currentIndex
+
+sortedPosts.forEach((item) => {
+	if ( item.data.category === post.data.category ) {
+		if (post.id === item.id) currentIndex = articlePosts[0].entries.length
+		articlePosts[0].entries.push({
+			type: 'link',
+			label: item.data.title,
+			href: `/blog/${item.slug}/`,
+			isCurrent: post.id === item.id,
+			attrs: {}
+		})
+	}
+});
+
+const prev = articlePosts[0].entries[currentIndex - 1]
+const next = articlePosts[0].entries[currentIndex + 1]
 ---
 
 <BaseLayout 
@@ -23,10 +74,39 @@ const { Content, headings } = await post.render();
 	title="Nacos Blog"
 >
 	<div>
-		<div class="w-full 2xl:w-[75%] xl:w-[75%] lg:w-[75%] md:w-[75%] inline-block">
+		<div class="w-[20%] sidebar-content fixed overflow-auto h-full hidden 2xl:inline-block xl:inline-block lg:inline-block md:inline-block">
+			<Sidebar sidebar={articlePosts} />
+		</div>
+		<div class="ml-[20%] w-full 2xl:w-[50%] xl:w-[50%] lg:w-[50%] md:w-[50%] inline-block">
+			<div id="back-btn" class="pt-4 pl-6">
+				<Button
+					type='normal'
+					class='rounded-3xl'
+					visibility={false}
+				>
+					<Icon name="left-arrow" class="text-lg align-middle" />
+					<span class="ml-1">BACK</span>
+				</Button>
+			</div>			
 			<BlogPost {...post.data}>
 					<Content />
 			</BlogPost>
+			<div class="pb-6">
+				{
+					(prev || next) && (
+						<Pagination
+							labels={{
+								"page.previousLink": t("commmon.base.page.previousLink"),
+								"page.nextLink": t("commmon.base.page.nextLink"),
+							}}
+							pagination={{
+								prev: prev,
+								next: next,
+							}}
+						/>
+					)
+				}
+			</div>
 		</div>
 		<div class="right-sidebar-panel w-[25%] fixed h-full hidden 2xl:inline-block xl:inline-block lg:inline-block md:inline-block">
 			<TocComponent headings={headings} />
@@ -35,7 +115,21 @@ const { Content, headings } = await post.render();
 
 </BaseLayout>
 
+<script>
+	const url = new URL(window.location.href)
+	let source = url.searchParams.get('source')
+	source = source.replace(/_/g, '/')
+	const backBtn: HTMLAnchorElement = document.querySelector('#back-btn a')
+	backBtn.href = `/${source}/`
+</script>
+
 <style>
+	.sidebar-content  {
+		height: 100%;
+    padding: 1rem var(--sl-sidebar-pad-x) 0;
+    flex-direction: column;
+    gap: 1rem;
+	}
 	.right-sidebar-panel {
 		flex-direction: column;
 		justify-content: space-between;

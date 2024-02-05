@@ -1,7 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from "@layouts/BaseLayout.astro"
- 
+import Sidebar from '@components/starlight/Sidebar.astro';
+import { Pagination } from 'virtual:starlight/components';
+import { useTranslations } from '@i18n/util';
+
+const t = useTranslations(Astro); 
+
 export async function getStaticPaths() {
   const downloadEntries = await getCollection('download', ({ slug }) => {
     return slug.startsWith('en/');
@@ -18,21 +23,33 @@ const { Content } = await entry.render();
 const frontmatter = entry?.data;
  
 const entries = await getCollection('download', ({ slug }) => {
-    return slug.startsWith('en/');
-  });
-const menus = entries.map(entry => {
+  return slug.startsWith('en/');
+});
+
+const menusEntries = entries.map(entry => {
   
-  const pathname = `/en/download/${entry.slug.replace('en/', '')}`;
+  const pathname = `/download/${entry.slug.replace('en/', '')}/`;
   const _active = pathname === Astro.url.pathname;
+  
   return {
-    slug: entry.slug,
+    type: 'link',
     label: entry.data.title,
     order: entry.data.order,
     href: pathname,
-    active: _active,
+    isCurrent: _active,
+    attrs: {}
   }
 }).sort((a, b) => a.order - b.order);
- 
+
+const menus = [{
+  type: 'group',
+	label: t('commmon.header.comm.download'),
+	entries: menusEntries
+}]
+
+const currentIndex = menus[0].entries.findIndex(item => item.isCurrent)
+const prev = menus[0].entries[currentIndex - 1]
+const next = menus[0].entries[currentIndex + 1]
 ---
  
 <BaseLayout 
@@ -43,24 +60,23 @@ const menus = entries.map(entry => {
   <download-layout>
     <div class="download-container flex">
       <div class="download-menu">
-        <ul class="top-level">
-          {
-            menus.map((entry) => (
-              <li class="cursor-pointer">
-                <a
-                  href={entry.href}
-                  class:list={["large", "flex", "items-center", { 'menu-active': entry.active }]}
-                >
-                  <span>{entry.label}</span>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
+        <Sidebar sidebar={menus} />
       </div>
       <div class="download-content">
         <article class="prose max-w-none">
           <Content />
+          <div class="pb-6">
+            {(prev || next) && (<Pagination
+              labels={{
+                'page.previousLink': t('commmon.base.page.previousLink'),
+                'page.nextLink': t('commmon.base.page.nextLink')
+              }}
+              pagination={{
+                prev: prev,
+                next: next
+              }}
+            />)}
+          </div>
         </article>
       </div>
     </div>
@@ -90,43 +106,10 @@ const menus = entries.map(entry => {
     padding: 1rem 1rem;
     border-right: solid 1px #DDDEE4;
   }
-	ul {
-		list-style: none;
-		padding: 0;
-	}
-	li {
-		overflow-wrap: anywhere;
-	}
-	.large {
-    display: block;
-		/* border-radius: 0.25rem; */
-		text-decoration: none;
-    font-size: 0.875rem;
-		color: var(--sl-color-gray-2);
-		padding: 0.3rem 0.5rem;
-		line-height: 1.4;
-	}
-	.top-level > li + li {
-		margin-top: 0.75rem;
-	}
-	a:hover,
-	a:focus {
-		color: var(--sl-color-white);
-	}
- 
-  .menu-active {
-    color: theme("colors.gray.14");
-    background-color: theme("colors.gray.02");
-    border-left-style: solid;
-    border-left-width: 4px;
-    border-left-color: theme("colors.gray.14");
-    padding-left:  0.625rem !important;
-  }
  
   .download-content {
     width: 100%;
     padding: 1rem 1rem 2rem;
     overflow: auto;
   }
- 
 </style>

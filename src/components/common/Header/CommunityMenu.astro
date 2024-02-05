@@ -82,7 +82,7 @@ export const communityItems = [
       {
         label: "电子书",
         target: "_self",
-        link: "/docs/ebook/kbyo6n.mdx/",
+        link: "/docs/ebook/kbyo6n/",
         translations: {
             en: "E-book"
         }
@@ -98,6 +98,19 @@ export const communityItems = [
     ]
   }
 ];
+
+const categoryMap = {
+  'article': 'blog_article',
+  'case': 'blog_case.',
+  'ecosystem': 'blog_ecosystem',
+  'release': 'news_release',
+  'committer': 'news_personnel',
+  'announcement': 'news_announcement',
+  'cooperate': 'news_cooperate',
+  'activity-preview': 'activity_activity-preview',
+  'activity-detail': 'activity_activity-preview',
+
+}
 const [comt, events, resources] = communityItems;
 const posts = await getEntries(HEADER_ACTIVITY_CARD as any);
 const blogImgs = [
@@ -184,7 +197,7 @@ const blogImgs = [
                   </p>
                   <a
                     class="flex justify-center items-center w-[8.5rem] h-[2.5rem] absolute bottom-2 text-xs bg-gray-12 text-gray-01 border-0 rounded-3xl no-underline"
-                    href={`/${item.collection}/${item.slug}/`}
+                    href={`/${item.collection}/${item.slug}/?source=${categoryMap[item.data.category]}`}
                   >
                     {t("commmon.header.comm.shortcut")}
                   </a>

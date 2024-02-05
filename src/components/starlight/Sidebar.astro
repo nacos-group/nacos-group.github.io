@@ -2,11 +2,71 @@
 import type { Props } from '@astrojs/starlight/props';
 import { MobileMenuFooter } from 'virtual:starlight/components';
 import SidebarSublist from './SidebarSublist.astro';
+import { useTranslations } from '@i18n/util';
+
+const t = useTranslations(Astro);
 
 const { sidebar } = Astro.props;
----
 
-<SidebarSublist sublist={sidebar} />
-<div class="md:sl-hidden">
-	<MobileMenuFooter {...Astro.props} />
-</div>
+---
+<blog-theme >
+  <SidebarSublist sublist={sidebar} />
+</blog-theme>
+
+<script>
+	type Theme = 'auto' | 'dark' | 'light';
+
+  // 设置博客详情的主题为light
+	class StarlightThemeSelect extends HTMLElement {
+		/** Key in `localStorage` to store color theme preference at. */
+		#key = 'starlight-theme';
+
+		constructor() {
+			super();
+			this.#onThemeChange(this.#loadTheme());
+		}
+
+		/** Get a typesafe theme string from any JS value (unknown values are coerced to `'auto'`). */
+		#parseTheme(theme: unknown): Theme {
+			if (theme === 'auto' || theme === 'dark' || theme === 'light') {
+				return theme;
+			} else {
+				return 'auto';
+			}
+		}
+
+		/** Get the preferred system color scheme. */
+		#getPreferredColorScheme(): Theme {
+			return matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+		}
+
+		/** Update select menu UI, document theme, and local storage state. */
+		#onThemeChange(theme: Theme): void {
+			// window?.StarlightThemeProvider.updatePickers(theme);
+			document.documentElement.dataset.theme =
+				theme === 'auto' ? this.#getPreferredColorScheme() : theme;
+      console.log("00000",document.documentElement.dataset.theme)
+
+			this.#storeTheme(theme);
+		}
+
+		/** Store the user’s preference in `localStorage`. */
+		#storeTheme(theme: Theme): void {
+			if (typeof localStorage !== 'undefined') {
+				if (theme === 'light' || theme === 'dark') {
+					localStorage.setItem(this.#key, theme);
+				} else {
+					localStorage.removeItem(this.#key);
+				}
+			}
+		}
+
+		/** Load the user’s preference from `localStorage`. */
+		#loadTheme(): Theme {
+			const theme = typeof localStorage !== 'undefined' && localStorage.getItem(this.#key);
+			return this.#parseTheme(theme);
+		}
+	}
+
+	customElements.define('blog-theme', StarlightThemeSelect);
+</script>

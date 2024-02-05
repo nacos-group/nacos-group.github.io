@@ -8,9 +8,8 @@ import _ from 'lodash';
 export async function getStaticPaths() {
 	const currentPath = paths.filter((item) => {
 		// 支持类似 v2.3.2 的格式，默认slug会去掉 .
-		const slug = item.props.id.replace(/.md$/, "") === item.props.slug ? item.props.slug : item.props.id.replace(/.md$/, "")
+		const slug = item.props.id.replace(/.(md|mdx)$/, "") === item.props.slug ? item.props.slug : item.props.id.replace(/.(md|mdx)$/, "")
 		const [version, lang, ...rest] = slug.split('/');
-
 		/**
 		 * 默认每个目录都会生成一份路由，因为有版本的概念，会多生成一份
 		 * 所以使用中文生成的路由，同时把相关的信息刷成英文格式
