@@ -77,7 +77,7 @@ const next = articlePosts[0].entries[currentIndex + 1]
 		<div class="w-[20%] sidebar-content fixed overflow-auto h-full hidden 2xl:inline-block xl:inline-block lg:inline-block md:inline-block">
 			<Sidebar sidebar={articlePosts} />
 		</div>
-		<div class="ml-[20%] w-full 2xl:w-[50%] xl:w-[50%] lg:w-[50%] md:w-[50%] inline-block">
+		<div class=" w-full 2xl:ml-[20%] xl:ml-[20%] lg:ml-[20%] md:ml-[20%] 2xl:w-[50%] xl:w-[50%] lg:w-[50%] md:w-[50%] inline-block">
 			<div id="back-btn" class="pt-4 pl-6">
 				<Button
 					type='normal'
@@ -120,7 +120,10 @@ const next = articlePosts[0].entries[currentIndex + 1]
 	let source = url.searchParams.get('source')
 	source = source.replace(/_/g, '/')
 	const backBtn: HTMLAnchorElement = document.querySelector('#back-btn a')
-	backBtn.href = `/${source}/`
+	backBtn.onclick = (e) => {
+		e.preventDefault()
+		location.href = `/${source}/`
+	}
 </script>
 
 <style>
