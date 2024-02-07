@@ -5,6 +5,7 @@ import Navbar from '@components/common/Navbar.astro';
 import Button from '@components/common/Button.astro';
 import LanguageToggle from "@components/common/LanguageToggle.astro";
 import MobileNavbar from '@components/common/MobileNavbar.astro';
+import SearchComp from './searchComp/index.astro'
 
 interface Props {
   align?: "home" | "docs";
@@ -48,6 +49,7 @@ let height, width, xpadding = "";
           alt="nacos-log"
         />
       </a>
+      <SearchComp />
       <MobileNavbar top={height} class="mobile-navbar h-full ml-4" />
     </div>
 
