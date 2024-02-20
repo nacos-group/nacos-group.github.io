@@ -1,0 +1,1 @@
+import"./StarAndFork.astro_astro_type_script_index_0_lang.oO7r-OxS.js";import"./hoisted.oP2_d7V8.js";import"./hoisted.oMB3-vTm.js";import"./index.PDhEm6KS.js";class e extends HTMLElement{constructor(){super()}}customElements.define("home-body",e);
