@@ -117,3 +117,9 @@ export const BLOG_IMAGE_SOURCE = [
     "https://img.alicdn.com/imgextra/i2/O1CN01l7gM7r1Y4L5ngHWb8_!!6000000003005-2-tps-608-358.png",
     "https://img.alicdn.com/imgextra/i2/O1CN01oWfLB51kfENwUFaQw_!!6000000004710-2-tps-608-358.png"
 ]
+
+export const ALGOLIA_CONFIG = {
+    appId: '1QV814950M',
+    apiKey: '7445da3dec050d45d29f3fe93ed45af3',
+    indexName: 'nacos',
+}
