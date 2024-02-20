@@ -57,13 +57,13 @@ ${nacos-aes-encryption-plugin.version} Get the latest version of the plugin。
 
 You need to compile `nacos` and install to your local repository,before all the things.
 
-1. git clone git@github.com:alibaba/nacos.git
-2. cd nacos && mvn -B clean package install -Dmaven.test.skip=true
+1. `git clone git@github.com:alibaba/nacos.git`
+2. `cd nacos && mvn -B clean package install -Dmaven.test.skip=true`
 
 > if during this time occur an error that maven can't resolve `${revision}`, you may need to update maven version to latest.
 
-3. git clone git@github.com:nacos-group/nacos-plugin.git
-4. mvn install
+3. `git clone git@github.com:nacos-group/nacos-plugin.git`
+4. `mvn install`
 
 Done, enjoy it!
 

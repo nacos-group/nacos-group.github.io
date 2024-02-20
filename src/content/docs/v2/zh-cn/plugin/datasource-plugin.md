@@ -46,13 +46,13 @@ Nacos从2.2.0版本开始,可通过SPI机制注入多数据源实现插件,并�
 
 # 如何编译
 编译插件之前需要先编译`nacos`并安装至本地仓库.
-1. git clone git@github.com:alibaba/nacos.git
-2. cd nacos && mvn -B clean package install -Dmaven.test.skip=true
+1. `git clone git@github.com:alibaba/nacos.git`
+2. `cd nacos && mvn -B clean package install -Dmaven.test.skip=true`
 
 > 若出现`revision`变量无法解析,请更新`maven`至最新版本
 
-3. git clone #{对应数据源插件实现Git地址}
-4. mvn install
+3. `git clone #{对应数据源插件实现Git地址}`
+4. `mvn install`
 
 建议上传到公司的maven仓库
 

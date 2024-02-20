@@ -56,13 +56,13 @@ ${nacos-aes-encryption-plugin.version} 可以获取插件的最新版本。
 # 如何编译
 
 编译插件之前需要先编译`nacos`并安装至本地仓库.
-1. git clone git@github.com:alibaba/nacos.git
-2. cd nacos && mvn -B clean package install -Dmaven.test.skip=true
+1. `git@github.com:alibaba/nacos.git`
+2. `cd nacos && mvn -B clean package install -Dmaven.test.skip=true`
 
 > 若出现`revision`变量无法解析,请更新`maven`至最新版本
 
-3. git clone git@github.com:nacos-group/nacos-plugin.git
-4. mvn install
+3. `git clone git@github.com:nacos-group/nacos-plugin.git`
+4. `mvn install`
 
 建议上传到公司的maven仓库
 
