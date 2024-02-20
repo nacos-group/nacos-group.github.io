@@ -1,0 +1,118 @@
+---
+import '@docsearch/css/dist/modal.css';
+import type docsearch from '@docsearch/js';
+import './variables.css'; 
+
+const { labels = {} } = Astro.props;
+
+type DocSearchTranslationProps = Pick<
+	Parameters<typeof docsearch>[0],
+	'placeholder' | 'translations'
+>;
+
+const pick = (keyStart: string) =>
+	Object.fromEntries(
+		Object.entries(labels)
+			.filter(([key]) => key.startsWith(keyStart))
+			.map(([key, value]) => [key.replace(keyStart, ''), value])
+	);
+
+const docsearchTranslations: DocSearchTranslationProps = {
+	placeholder: labels['search.label'],
+	translations: {
+		button: { buttonText: labels['search.label'], buttonAriaLabel: labels['search.label'] },
+		modal: {
+			searchBox: pick('docsearch.searchBox.'),
+			startScreen: pick('docsearch.startScreen.'),
+			errorScreen: pick('docsearch.errorScreen.'),
+			footer: pick('docsearch.footer.'),
+			noResultsScreen: pick('docsearch.noResultsScreen.'),
+		},
+	},
+};
+---
+<sl-doc-search data-translations={JSON.stringify(docsearchTranslations)}>
+	<button type="button" class="DocSearch DocSearch-Button" aria-label={labels['search.label']}>
+		<span class="DocSearch-Button-Container">
+			<svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 20 20">
+				<path
+					d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z"
+					stroke="currentColor"
+					fill="none"
+					fill-rule="evenodd"
+					stroke-linecap="round"
+					stroke-linejoin="round"></path>
+			</svg>
+			<span class="DocSearch-Button-Placeholder">{labels['search.label']}</span>
+		</span>
+		<span class="DocSearch-Button-Keys"></span>
+	</button>
+</sl-doc-search>
+
+<style is:global>
+	.DocSearch-Button {
+		display: flex;
+		align-items: center;
+		height: 2rem;
+		border: 0;
+		padding: 0 1rem;
+		gap: 0.5rem;
+		border-radius: 1.5rem;
+		cursor: pointer;
+		color: theme('colors.gray.06');
+    background-color: theme('colors.gray.13');
+		font-size: 0.75rem;
+    line-height: 1rem;
+		transform: translateX(0.9rem);
+	}
+	.DocSearch-Button:hover {
+		
+	}
+	.DocSearch-Button-Container {
+		display: contents;
+	}
+	.DocSearch-Search-Icon {
+		width: 0.875em;
+		height: 0.875em;
+		font-size: 1.1rem;
+		stroke-width: 0.125rem;
+	}
+	.DocSearch-Button-Keys,
+	.DocSearch-Button-Key {
+		display: none;
+	}
+	.DocSearch-Button-Placeholder {
+		display: block;
+	}
+	@media (max-width: 860px) {
+		.DocSearch-Button {
+			background: none;
+		}
+		.DocSearch-Search-Icon {
+			font-size: 1.6rem;
+			color: var(--sl-color-black);
+		}
+		.DocSearch-Button-Placeholder {
+			display: none;
+		}
+	}
+</style>
+
+<script>
+	import { ALGOLIA_CONFIG } from "../../../../../src/consts";
+	class StarlightDocSearch extends HTMLElement {
+		constructor() {
+			super();
+			window.addEventListener('DOMContentLoaded', async () => {
+				const { default: docsearch } = await import('@docsearch/js');
+				const options: Parameters<typeof docsearch>[0] = { ...ALGOLIA_CONFIG, container: 'sl-doc-search' };
+				try {
+					const translations = JSON.parse(this.dataset.translations || '{}');
+					Object.assign(options, translations);
+				} catch {}
+				docsearch(options);
+			});
+		}
+	}
+	customElements.define('sl-doc-search', StarlightDocSearch);
+</script>

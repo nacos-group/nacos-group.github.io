@@ -5,6 +5,7 @@ import Navbar from '@components/common/Navbar.astro';
 import Button from '@components/common/Button.astro';
 import LanguageToggle from "@components/common/LanguageToggle.astro";
 import MobileNavbar from '@components/common/MobileNavbar.astro';
+import SearchComp from './searchComp/index.astro'
 
 interface Props {
   align?: "home" | "docs";
@@ -35,7 +36,7 @@ let height, width, xpadding = "";
 
 <my-layout
   style={`position: ${position}; height: ${height}`}
-  class=" backdrop-blur-md top-0 z-[10000] bg-gray-14 flex justify-center"
+  class=" backdrop-blur-md top-0 z-[10] bg-gray-14 flex justify-center"
 >
   <!-- 方便控制header宽度 -->
   <div class="header-content flex items-center justify-between">
@@ -48,6 +49,7 @@ let height, width, xpadding = "";
           alt="nacos-log"
         />
       </a>
+      <SearchComp />
       <MobileNavbar top={height} class="mobile-navbar h-full ml-4" />
     </div>
 
