@@ -43,6 +43,8 @@ export default {
 	'commmon.footer.actions.guide': 'Developer Guide',
 	'commmon.footer.resource': 'RESOURCES',
 	'commmon.footer.actions.comm': 'Ebook',
+	'commmon.footer.actions.distribution': 'Distribution Download',
+	'commmon.footer.actions.enterprise': 'Enterprise',
 	'commmon.footer.actions.mse': 'Cloud Service MSE',
 	'commmon.footer.actions.edas': 'Cloud Service EDAS',
 	'commmon.actions.download': 'Download',
