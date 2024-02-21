@@ -42,9 +42,11 @@ export default {
 	'commmon.footer.actions.guide': '开发者指南',
 	'commmon.footer.resource': '资源',
 	'commmon.footer.actions.comm': '电子书',
+	'commmon.footer.actions.distribution': '发行版下载',
+	'commmon.footer.actions.enterprise': '企业版',
 	'commmon.footer.actions.mse': '云服务 MSE',
 	'commmon.footer.actions.edas': '云服务 EDAS',
-	'commmon.actions.download': '前往下载',
+	'commmon.actions.download': '下载',
 
 	'home.title': 'Nacos官网 | Nacos 官方社区 | Nacos 下载',
 	'home.description': 'Nacos 通过提供简单易用的动态服务发现、服务配置、服务共享与管理等服务基础设施，帮助用户在云原生时代，在私有云、混合云或者公有云等所有云环境中，更好的构建、交付、管理自己的微服务平台，更快的复用和组合业务服务，更快的交付商业创新的价值，从而为用户赢得市场。',

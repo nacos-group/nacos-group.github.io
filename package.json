@@ -14,6 +14,8 @@
     "@astrojs/starlight": "^0.15.0",
     "@astrojs/starlight-tailwind": "^2.0.1",
     "@astrojs/tailwind": "^5.0.2",
+    "@docsearch/css": "3.5.2",
+    "@docsearch/js": "^3.5.2",
     "@tailwindcss/nesting": "^0.0.0-insiders.565cd3e",
     "astro": "^4.0.6",
     "date-fns": "^2.30.0",
