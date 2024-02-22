@@ -28,24 +28,24 @@ const getBackgroundRandomColor = () =>  colorList[Math.floor(Math.random() * col
     <div class="right-container flex-1">
       <div
         id="right-container-warp" 
-        class="right-container-warp flex flex-wrap justify-around m-auto w-[14rem] ssm:w-[21rem] md:w-[25rem] lg:w-[27rem]"
+        class="right-container-warp flex flex-wrap justify-around m-auto w-[16rem] ssm:w-[21rem] md:w-[25rem] lg:w-[27rem]"
       >
         {
           members.slice(0, 24).map((v, index) => {
             const { login, html_url } = v;
             return (
               <div class="img-item flex-16 relative box-border max-w-1/6 pt-[0.3rem] pr-[0.3rem] ssm:pt-[0.6rem] ssm:pr-[0.6rem]" data-tag={login}>
-                <div class="avatar-wrap relative w-[2rem] h-[2rem] ssm:w-[3rem] ssm:h-[3rem] md:w-[3.5rem] md:h-[3.5rem] lg:w-[4rem] lg:h-[4rem] align-middle">
+                <div class="avatar-wrap relative w-[2.3rem] h-[2.3rem] ssm:w-[3rem] ssm:h-[3rem] md:w-[3.5rem] md:h-[3.5rem] lg:w-[4rem] lg:h-[4rem] align-middle">
                   <a href={html_url} class="inline-block" target="_blank">
                     <div class="avatar-img-wrap absolute top-0 opacity-0 z-[1] animate-fade-by-group" data-index={index+1} }>
                       <img
-                        class="avatar-img relative w-[2rem] h-[2rem] ssm:w-[3rem] ssm:h-[3rem] md:w-[3.5rem] md:h-[3.5rem] lg:w-[4rem] lg:h-[4rem] text-center z-10 rounded-xl"
+                        class="avatar-img relative w-[2.3rem] h-[2.3rem] ssm:w-[3rem] ssm:h-[3rem] md:w-[3.5rem] md:h-[3.5rem] lg:w-[4rem] lg:h-[4rem] text-center z-10 rounded-xl"
                         src={`/img/contributors/${login}.jpg`}
                         alt={login}
                         title={login}
                       />
                     </div>
-                    <div class="avatar-alt absolute left-0 top-0 w-[2rem] h-[2rem] ssm:w-[3rem] ssm:h-[3rem] md:w-[3.5rem] md:h-[3.5rem] lg:w-[4rem] lg:h-[4rem] p-2 truncate overflow-hidden text-sm rounded-xl text-gray-01" style={{background: getBackgroundRandomColor()}} />
+                    <div class="avatar-alt absolute left-0 top-0 w-[2.3rem] h-[2.3rem] ssm:w-[3rem] ssm:h-[3rem] md:w-[3.5rem] md:h-[3.5rem] lg:w-[4rem] lg:h-[4rem] p-2 truncate overflow-hidden text-sm rounded-xl text-gray-01" style={{background: getBackgroundRandomColor()}} />
                   </a>
                 </div>
               </div>
