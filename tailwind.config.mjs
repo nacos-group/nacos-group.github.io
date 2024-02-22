@@ -80,6 +80,9 @@ export default {
 				sans: ["Roboto","SourceHanSans","sans-serif"],
 				mono: ["Roboto","SourceHanSans","sans-serif"],
 			},
+			screens: {
+				'ssm': '450px',
+			},
 			// 设置starlight文档颜色
 			colors: {
 				gray: {
