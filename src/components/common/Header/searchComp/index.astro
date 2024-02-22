@@ -100,18 +100,27 @@ const docsearchTranslations: DocSearchTranslationProps = {
 
 <script>
 	import { ALGOLIA_CONFIG } from "../../../../../src/consts";
+	let url = '';
 	class StarlightDocSearch extends HTMLElement {
 		constructor() {
 			super();
-			window.addEventListener('DOMContentLoaded', async () => {
-				const { default: docsearch } = await import('@docsearch/js');
-				const options: Parameters<typeof docsearch>[0] = { ...ALGOLIA_CONFIG, container: 'sl-doc-search' };
-				try {
-					const translations = JSON.parse(this.dataset.translations || '{}');
-					Object.assign(options, translations);
-				} catch {}
-				docsearch(options);
-			});
+			setTimeout(() => {
+				if (url && url !== window.location.href) {
+					this.initDocSearch();
+				}
+				url = window.location.href;
+			}, 0);
+			window.addEventListener('DOMContentLoaded', this.initDocSearch);
+		}
+
+		async initDocSearch () {
+			const { default: docsearch } = await import('@docsearch/js');
+			const options: Parameters<typeof docsearch>[0] = { ...ALGOLIA_CONFIG, container: 'sl-doc-search' };
+			try {
+				const translations = JSON.parse(this.dataset.translations || '{}');
+				Object.assign(options, translations);
+			} catch {}
+			docsearch(options);
 		}
 	}
 	customElements.define('sl-doc-search', StarlightDocSearch);
