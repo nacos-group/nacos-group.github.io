@@ -4,6 +4,7 @@ keywords: [寻址, 插件]
 description: 本文描述如何开发及使用Nacos的寻址插件
 sidebar:
     order: 2
+    hidden: true
 ---
 
 # 寻址插件
