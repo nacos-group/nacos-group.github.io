@@ -6,7 +6,7 @@ sidebar:
     order: 2
 ---
 
-<!-- # Cluster deployment instructions -->
+# Cluster deployment instructions
 
 > Document optimizing...
 
@@ -18,11 +18,11 @@ This Quick Start Manual is to help you quickly download, install and use Nacos o
 
 Therefore, when it is open source, it is recommended that users put all server lists under a vip and then hang under a domain name.
 
-<Http://ip1:port/openAPI> Directly connected to ip mode, the machine needs to be modified to use ip.
+Http://ip1:port/openAPI Directly connected to ip mode, the machine needs to be modified to use ip.
 
-<Http://SLB:port/openAPI> Mount the SLB mode(Intranet, do not expose internet to avoid security risks), directly connect to SLB, the following server ip real ip, readability is not good.
+Http://SLB:port/openAPI Mount the SLB mode(Intranet, do not expose internet to avoid security risks), directly connect to SLB, the following server ip real ip, readability is not good.
 
-<Http://nacos.com:port/openAPI> Domain name + SLB mode(Intranet, do not expose internet to avoid security risks), good readability, and easy to change ip, recommended mode
+Http://nacos.com:port/openAPI Domain name + SLB mode(Intranet, do not expose internet to avoid security risks), good readability, and easy to change ip, recommended mode
 
 ![deployDnsVipMode.jpg](/img/deployDnsVipMode.jpg)  
 
@@ -74,7 +74,7 @@ In the Nacos decompression directory Nacos / conf directory, there is a configur
 
 Then Setting configuration file `application.properties` under `conf`.
 
-Setting
+Setting 
 
 ```properties
 nacos.core.auth.enabled=true
@@ -83,7 +83,6 @@ nacos.core.auth.plugin.nacos.token.secret.key=${custom, make sure same in all no
 nacos.core.auth.server.identity.key=${custom, make sure same in all nodes}
 nacos.core.auth.server.identity.value=${custom, make sure same in all nodes}
 ```
-
 Detail see [Authentication](../../plugin/auth-plugin.md).
 
 > Attention，Default value in Document `SecretKey012345678901234567890123456789012345678901234567890123456789` and `VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=` is a public default, **only** should use in test temporary. Please **make sure** to replace it with another valid value when you actually deploy.
@@ -159,7 +158,7 @@ sh startup.sh
 
 ## 7. shut down server
 
-Linux/Unix/Mac
+### Linux/Unix/Mac
 
 ```bash
 sh shutdown.sh

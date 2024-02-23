@@ -2,6 +2,8 @@
 title: CustomEnvironment
 keywords: [CustomEnvironment,CustomConfiguration,DatabasePasswordencryption]
 description: Nacos Custom environment variable plugin, can customize the extension server configuration and other functions, such as database password encryption.
+sidebar:
+    order: 6
 ---
 
 # CustomEnvironmentPlugins

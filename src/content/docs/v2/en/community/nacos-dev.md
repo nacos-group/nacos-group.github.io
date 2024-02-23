@@ -86,8 +86,10 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [onewe](https://github.com/onewe)               | Wenchao Mao | Independent developer| Committer | 2583021406@qq.com |
 | [chenhao26-nineteen](https://github.com/chenhao26-nineteen)|Hao Chen| Xiaomi | Committer | hashmap2018@163.com |
 | [shenkonghui](https://github.com/shenkonghui)   | Konghui Shen | Harmony Cloud| Committer | shenkh1992@gmail.com |
-| [CherishCai](https://github.com/CherishCai)     | Hongwen Cai | Ant Financial| Committer | 785427346@qq.com ｜
-| [The-Gamer-01](https://github.com/The-Gamer-01) | Yixuan Huang | Jishou University | Committer | 19974361760@163.com ｜
+| [CherishCai](https://github.com/CherishCai)     | Hongwen Cai | Ant Financial| Committer | 785427346@qq.com |
+| [The-Gamer-01](https://github.com/The-Gamer-01) | Yixuan Huang | Jishou University | Committer | 19974361760@163.com |
+| [Karsonto](https://github.com/karsonto)         | Karson | ICBC (Asia) | Committer | karsontao@hotmail.com |
+| [Daydreamer-ia](https://github.com/Daydreamer-ia) | Yiqin Chen | Guangdong University of Technology | Committer | 2296032269@qq.com  |
 
 ### Contributors
 

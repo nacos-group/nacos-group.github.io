@@ -2,6 +2,8 @@
 title: Config Change Plugin
 keywords: [Config Change,Config audit,Config format check,webhook]
 description: Nacos support Config Change Plugin.
+sidebar:
+    order: 8
 ---
 
 > Translated by AI.

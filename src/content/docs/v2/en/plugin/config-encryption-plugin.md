@@ -2,6 +2,8 @@
 title: CONFIGURE ENCRYPTION
 keywords: [AES,ENCRYPTION,CONFIGURE ENCRYPTION]
 description: CONFIGURE ENCRYPTION
+sidebar:
+    order: 3
 ---
 
 > To ensure the security of users' sensitive configuration data, Nacos provides a new feature of configuration encryption. The risk of user usage is reduced, and the configuration is no longer required to be encrypted separately.

@@ -1,5 +1,5 @@
 ---
-title: 部署手册
+title: Nacos支持三种部署模式
 keywords: [Nacos,部署模式]
 description: Nacos支持三种部署模式
 sidebar:
