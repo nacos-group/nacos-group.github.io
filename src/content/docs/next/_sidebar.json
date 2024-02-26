@@ -1,33 +1,10 @@
 [
     {
-        "label": "Nacos是什么?",
+        "label": "概览",
+        "link": "docs/overview/",
         "translations": {
-          "en": "What is Nacos"
-        },
-        "collapsed": false,
-        "items": [
-          {
-            "label": "Nacos 简介",
-            "link": "docs/what-is-nacos/",
-            "translations": {
-                "en": "What is Nacos"
-            }
-          },
-          {
-            "label": "概念",
-            "link": "docs/concepts/",
-            "translations": {
-                "en": "concepts"
-            }
-          },
-          {
-            "label": "架构",
-            "link": "docs/architecture/",
-            "translations": {
-                "en": "architecture"
-            }
-          }
-        ]
+            "en": "Overview"
+        }
     },
     {
     "label": "快速开始",
