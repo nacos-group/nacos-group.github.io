@@ -1,0 +1,172 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Button from "@components/common/Button.astro";
+import UpRight from "@components/icon/UpRight.astro";
+
+import { useTranslations } from "@i18n/util";
+const t = useTranslations(Astro);
+
+const dataSource = [
+  {
+    title: t('page.team.introduction.1.title'),
+    enTitle: 'technical question',
+    descriptionList:[
+      {
+        text: t('page.team.introduction.1.search.text'),
+        linkBtn: {
+          title: t('page.team.introduction.1.search.btn'),
+          link: ''
+        }
+      },
+      {
+        text: t('page.team.introduction.1.group.text'),
+        linkBtn: {
+          title: t('page.team.introduction.1.group.btn'),
+          link: ''
+        }
+      },
+      {
+        text: t('page.team.introduction.1.feedback.text'),
+        linkBtn: {
+          title: t('page.team.introduction.1.feedback.btn'),
+          link: ''
+        }
+      },
+    ]
+  },
+  {
+    title: t('page.team.introduction.2.title'),
+    enTitle: 'Commercial support',
+    descriptionList:[
+      {
+        text: t('page.team.introduction.2.estimate.text'),
+        linkBtn: {
+          title: t('page.team.introduction.2.estimate.btn'),
+          link: ''
+        }
+      },
+      {
+        text: t('page.team.introduction.2.migrate.text'),
+        linkBtn: {
+          title: t('page.team.introduction.2.migrate.btn'),
+          link: ''
+        }
+      },
+    ]
+  },
+  {
+    title: t('page.team.introduction.3.title'),
+    enTitle: 'Activity registration',
+    descriptionList:[
+      {
+        text: t('page.team.introduction.3.collect.text'),
+        linkBtn: {
+          title: t('page.team.introduction.3.collect.btn'),
+          link: ''
+        }
+      },
+      {
+        text: t('page.team.introduction.3.enroll.text'),
+        linkBtn: {
+          title: t('page.team.introduction.3.enroll.btn'),
+          link: ''
+        }
+      },
+    ]
+  }
+];
+---
+
+<BaseLayout title={t("home.title")} description={t("home.description")}>
+  <div class="card lg:card-side bg-gray-14 rounded-none px-10 py-12">
+    <video
+      loop
+      muted
+      preload="true"
+      height="400px"
+      autoplay="autoplay"
+      src="/introduce-log.webm"
+      poster="https://img.alicdn.com/imgextra/i4/O1CN01RPNu2l1QGESqixRuU_!!6000000001948-0-tps-1600-900.jpg"
+      class="object-cover rounded-3xl lg:w-6/12 cursor-pointer"
+      ></video>
+    <div class="card-body px-5">
+      <h2 class="card-title text-gray-04 pb-5">{t("page.team.introduction")}</h2>
+      <p class="text-gray-09 text-sm">
+        {t('page.team.introduction.text')}
+      </p>
+      <div class="card-actions">
+        <Button
+          size="large"
+          class="rounded-3xl font-semibold"
+          href="https://github.com/alibaba/nacos"
+          target="_blank"
+        >
+          {t('page.team.introduction.btn')}
+        </Button>
+      </div>
+    </div>
+  </div>
+  <div
+    class="choose-reason bg-gary-01 py-10 items-center"
+  >
+    <div class="top-title flex flex-col items-center my-20">
+      <span class="text-gray-10 text-xs mb-6 tracking-[0.15em]">{t('page.team.introduction.understand')}</span>
+      <span
+        class="title text-gray-14 text-[2.5rem] leading-[3.5rem] font-medium"
+        >{t('page.team.introduction.contact')}</span
+      >
+    </div>
+    <div class="xl:px-52 lg:px-44 py-20 flex flex-wrap justify-between">
+      {dataSource.map(v => 
+      <div class="data-box px-6 py-6 mb-6 bg-gray-02 rounded-3xl m-auto">
+        <div class="text-xs text-gray-09">
+          {v.enTitle}
+        </div>
+        <h2 class="item-title mt-4">
+          {v.title}
+        </h2>
+        <div class="description-list flex flex-col flex-nowrap justify-end text-sm">
+          {v.descriptionList.map(val =>
+            <div class="text-gray-08 mt-10">{val.text}</div>
+            <a class="text-gray-14 font-medium mt-2" href={val.linkBtn.link}>
+              {val.linkBtn.title}
+              <UpRight class="ml-2 arrow " theme="dark" />
+              </a>
+            )}
+          <div></div>
+        </div>
+      </div>
+      )}
+    </div>
+  </div>
+</BaseLayout>
+
+<script></script>
+
+<style>
+  a {
+    text-decoration: none;
+    color: var(--text-gray-14);
+  }
+  a:active {
+    color: var(--text-gray-14);
+  }
+  .data-box {
+    width: 20rem;
+    height: 30.625rem;
+  }
+  .item-title {
+    font-size: 1.75rem;
+    font-weight: 500;
+    line-height: 2.25rem;
+  }
+  .description-list {
+    height: calc(100% - 4.25rem);
+  }
+  .arrow {
+    color: var(--text-gray-10);
+    width: .375rem;
+    height: .375rem;
+    vertical-align: super;
+  }
+</style>
