@@ -65,6 +65,28 @@
         "autogenerate": { "directory": "guide/admin" }
     },
     {
+        "label": "运维手册",
+        "translations": {
+            "en": "Admin Manual"
+        },
+        "items": [
+            {
+                "label": "部署手册",
+                "translations": {
+                    "en": "Deploy Guide"
+                },
+                "autogenerate": { "directory": "manual/admin/deployment" }
+            },
+            {
+                "label": "系统参数",
+                "translations": {
+                    "en": "Nacos Configuration"
+                },
+                "link": "docs/manual/admin/system-configurations"
+            }
+        ]
+    },
+    {
         "label": "生态融合",
         "translations": {
             "en": "Ecology"

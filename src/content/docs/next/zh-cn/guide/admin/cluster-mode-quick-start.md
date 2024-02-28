@@ -8,7 +8,7 @@ sidebar:
 
 <!-- # 集群部署说明 -->
 
-> 文档优化中......
+> 该文档即将废弃，推荐查看[运维手册-部署手册-集群模式部署](../../manual/admin/deployment/deployment-cluster.md)。
 
 ## 集群模式部署
 
