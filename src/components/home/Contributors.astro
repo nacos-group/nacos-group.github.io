@@ -4,110 +4,70 @@ import Button from '@components/common/Button.astro';
 import members from "../contributors/gitHubData.json"; 
 const t = useTranslations(Astro);
 
-const colorList = ['#3D57DA', '#B3B6C1', '#1E1F24', '#D8D8D8'];
+const colorList = ['#3D57DA', '#B3B6C1', '#D8D8D8'];
 const getBackgroundRandomColor = () =>  colorList[Math.floor(Math.random() * colorList.length)];
 ---
 
-<nacos-contributors class="nacos-contributors flex flex-col justify-center items-center bg-gary-02 py-10">
-  <div class="contributors-container grid grid-cols-1 md:grid-cols-2 bg-gray-13 p-9 mt-10">
-    <div class="left-container h-full flex flex-col justify-around md:pl-[8.5rem]">
+<nacos-contributors class="nacos-contributors flex flex-col items-center justify-center bg-gary-02 p-6 md:p-10">
+  <div class="contributors-container md:flex block w-full bg-gray-13 p-9 mt-10 rounded-2xl">
+    <div class="left-container flex-1 h-full flex flex-col justify-around md:pl-[8.5rem]">
       <div class="flex flex-col">
         <div class="text-blue-02 text-xs text-center tracking-[0.15em] md:text-left">{t('home.contributors.members')}</div>
-        <div class="text-blue-01 font-medium text-center text-lg leading-[3.5rem] md:mt-6 md:text-left md:text-[2.75rem]">
+        <div class="title text-blue-01 font-medium text-center text-lg leading-[3.5rem] md:mt-6 md:text-left md:text-[2.4rem] lg:text-[2.75rem] ">
           {t('home.contributors.our')}<br class="hidden md:block" />{t('home.contributors.community.stars')}
         </div>
       </div>
       <Button 
         size="large"
-        class="more rounded-3xl"
+        class="more hidden md:inline-block leading-[3.5] md:mt-[2.5rem] lg:mt-[4rem] rounded-3xl"
         href="https://github.com/alibaba/nacos/graphs/contributors"
       >
         {t('home.contributors.learn.more')}
       </Button>
     </div>
-    <div class="right-container flex flex-wrap">
-      {
-        members.slice(0, 50).map((v) => {
-          const { avatar_url, login, html_url } = v;
-          return (
-            <div class="img-item relative z-[1] mt-[0.35rem] mr-[0.35rem]">
-              <div class="avatar-wrap relative w-[4rem] h-[4rem] align-middle">
-                <a href={html_url} class="inline-block" target="_blank">
-                  <img
-                    class="avatar-img relative w-[4rem] h-[4rem] text-center z-10 rounded-xl"
-                    src={avatar_url}
-                    alt={login}
-                    title={login}
-                  />
-                  <div class="absolute left-0 top-0 w-[4rem] h-[4rem] avatar-alt p-2 truncate overflow-hidden text-sm rounded-xl text-gray-01" style={{background: getBackgroundRandomColor()}}>{login}</div>
-                </a>
+    <div class="right-container flex-1">
+      <div
+        id="right-container-warp" 
+        class="right-container-warp flex flex-wrap justify-around m-auto w-[16rem] ssm:w-[21rem] md:w-[25rem] lg:w-[27rem]"
+      >
+        {
+          members.slice(0, 24).map((v, index) => {
+            const { login, html_url } = v;
+            return (
+              <div class="img-item flex-16 relative box-border max-w-1/6 pt-[0.3rem] pr-[0.3rem] ssm:pt-[0.6rem] ssm:pr-[0.6rem]" data-tag={login}>
+                <div class="avatar-wrap relative w-[2.3rem] h-[2.3rem] ssm:w-[3rem] ssm:h-[3rem] md:w-[3.5rem] md:h-[3.5rem] lg:w-[4rem] lg:h-[4rem] align-middle">
+                  <a href={html_url} class="inline-block" target="_blank">
+                    <div class="avatar-img-wrap absolute top-0 opacity-0 z-[1] animate-fade-by-group" data-index={index+1} }>
+                      <img
+                        class="avatar-img relative w-[2.3rem] h-[2.3rem] ssm:w-[3rem] ssm:h-[3rem] md:w-[3.5rem] md:h-[3.5rem] lg:w-[4rem] lg:h-[4rem] text-center z-10 rounded-xl"
+                        src={`/img/contributors/${login}.jpg`}
+                        alt={login}
+                        title={login}
+                      />
+                    </div>
+                    <div class="avatar-alt absolute left-0 top-0 w-[2.3rem] h-[2.3rem] ssm:w-[3rem] ssm:h-[3rem] md:w-[3.5rem] md:h-[3.5rem] lg:w-[4rem] lg:h-[4rem] p-2 truncate overflow-hidden text-sm rounded-xl text-gray-01" style={{background: getBackgroundRandomColor()}} />
+                  </a>
+                </div>
               </div>
-            </div>
-          );
-        })
-      }
+            );
+          })
+        }
+      </div>
     </div>
   </div>
 </nacos-contributors>
 
 <style>
-  .right-container {
-    .img-item {
-      .avatar-img {
-        /* filter: grayscale(100%); */
+  .contributors-container{
+    .avatar-img-wrap{
+      &[data-index="22"],&[data-index="11"],&[data-index="20"],&[data-index="12"],&[data-index="5"],&[data-index="2"],&[data-index="9"],&[data-index="13"]{
+        animation-delay: 0s;
       }
-    }
-  }
-  /*  小于 768px */
-  @media (max-width: 768px) {
-    .left-container .more{
-      display: none;
-    }
-    .right-container {
-      justify-content: center;
-      .img-item {
-        margin: 0 0.25rem 0.25rem 0;
-        .avatar-wrap, .avatar-img, .avatar-alt {
-          width: 2.4rem;
-          height: 2.4rem;
-        }
+      &[data-index="10"],&[data-index="6"],&[data-index="3"],&[data-index="19"],&[data-index="7"],&[data-index="15"],&[data-index="8"],&[data-index="18"]{
+        animation-delay:3s;
       }
-    }
-  }
-
-  /*  768px < width < 1070px */
-  @media (min-width: 768px) and (max-width: 1070px) {
-    .right-container {
-      .img-item {
-        .avatar-wrap {
-          margin: 0 0 0.15rem 0;
-        }
-        .avatar-wrap, .avatar-img, .avatar-alt {
-          width: 3rem;
-          height: 3rem;
-        }
-      }
-    }
-  }
-  
-  /*  1070px < width < 1334px */
-  @media (min-width: 940px) and (max-width: 1334px) { 
-    .contributors-container {
-      padding: 1rem 0;
-      width: 100%;
-    }
-    .left-container {
-      padding-left: 1.5rem;
-    }
-    .right-container {
-      .img-item {
-        .avatar-wrap{
-          margin: 0 0.35rem 0.35rem 0;
-        }
-        .avatar-wrap, .avatar-img, .avatar-alt {
-          width: 3.5rem;
-          height: 3.5rem;
-        }
+      &[data-index="16"],&[data-index="1"],&[data-index="21"],&[data-index="14"],&[data-index="4"],&[data-index="17"],&[data-index="23"],&[data-index="0"]{
+        animation-delay: 6s;
       }
     }
   }

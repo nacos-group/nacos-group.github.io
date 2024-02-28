@@ -61,9 +61,27 @@ export default {
 			}
 		},
 		extend: {
+			keyframes: {
+        fadeByGroup: {
+          '0%, 35%, 100%': { opacity: 0 },
+    			'5%, 30%': { opacity: 1 }
+        }
+      },
+			animation: {
+        'fade-by-group': 'fadeByGroup 9s infinite linear'
+      },
+			flex: {
+				'16': '0 0 16.66%',
+			},
+			maxWidth: {
+				'1/6': '16.66%'
+			},
 			fontFamily: {
 				sans: ["Roboto","SourceHanSans","sans-serif"],
 				mono: ["Roboto","SourceHanSans","sans-serif"],
+			},
+			screens: {
+				'ssm': '450px',
 			},
 			// 设置starlight文档颜色
 			colors: {
