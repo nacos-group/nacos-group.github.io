@@ -102,8 +102,18 @@ export const ACTIVITY_CATEGORY = [
 ]
 
 export const HEADER_ACTIVITY_CARD = [
-    { collection: 'blog', slug: 'ecosystem-nacos-controller-opensource' },
-    { collection: 'blog', slug: 'announcement-2023-award' },
+    {
+        "collection": "blog",
+        "slug": "ecosystem-nacos-controller-opensource",
+        "description": "Nacos Controller 项目开源，支持与Kubernetes互通配置",
+        "imageUrl": "https://img.alicdn.com/imgextra/i4/O1CN01bGnAVW1pFeLFnlaQL_!!6000000005331-2-tps-508-370.png"
+    },
+    {
+        "collection": "blog",
+        "slug": "announcement-2023-award",
+        "description": "Nacos社区2023年底斩获三项开源大奖",
+        "imageUrl": "https://img.alicdn.com/imgextra/i4/O1CN01zfayJW1Lhe4kliPv9_!!6000000001331-2-tps-508-370.png"
+    }
 ]
 
 export const BLOG_IMAGE_SOURCE = [
