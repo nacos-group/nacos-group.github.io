@@ -112,11 +112,14 @@ const categoryMap = {
 
 }
 const [comt, events, resources] = communityItems;
-const posts = await getEntries(HEADER_ACTIVITY_CARD as any);
-const blogImgs = [
-  "https://img.alicdn.com/imgextra/i4/O1CN01bGnAVW1pFeLFnlaQL_!!6000000005331-2-tps-508-370.png",
-  "https://img.alicdn.com/imgextra/i4/O1CN01zfayJW1Lhe4kliPv9_!!6000000001331-2-tps-508-370.png",
-];
+const simplifiedPosts = HEADER_ACTIVITY_CARD.map((item)=>({
+  collection: item.collection,
+  slug: item.slug
+}))
+const blogDescrip = HEADER_ACTIVITY_CARD.map((item)=>(item.description))
+
+const blogImgs = HEADER_ACTIVITY_CARD.map((item)=>(item.imageUrl))
+const posts = await getEntries(simplifiedPosts as any);
 
 ---
 
@@ -193,7 +196,7 @@ const blogImgs = [
                     height="185"
                   />
                   <p class="w-[15.875rem] text-lg line-clamp-2 mt-3 text-blue-01">
-                    {item.data.title}
+                    {blogDescrip[index] || item.data.title}
                   </p>
                   <a
                     class="flex justify-center items-center w-[8.5rem] h-[2.5rem] absolute bottom-2 text-xs bg-gray-12 text-gray-01 border-0 rounded-3xl no-underline"
