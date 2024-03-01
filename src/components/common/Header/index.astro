@@ -2,7 +2,6 @@
 import _ from 'lodash';
 import { useTranslations } from "@i18n/util";
 import Navbar from '@components/common/Navbar.astro';
-import Button from '@components/common/Button.astro';
 import LanguageToggle from "@components/common/LanguageToggle.astro";
 import MobileNavbar from '@components/common/MobileNavbar.astro';
 import SearchComp from './searchComp/index.astro'
@@ -49,7 +48,6 @@ let height, width, xpadding = "";
           alt="nacos-log"
         />
       </a>
-      <SearchComp />
       <MobileNavbar top={height} class="mobile-navbar h-full ml-4" />
     </div>
 
@@ -57,18 +55,9 @@ let height, width, xpadding = "";
       <Navbar top={height} class='pc-navbar h-full'/>
     </div>
 
-    <div class="right-content flex items-center">
-      <Button  
-        type='primary' 
-        visibility={false}
-        class='code-toggle rounded-3xl mr-3'
-        href="https://github.com/alibaba/nacos"
-        target="_blank"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="none" version="1.1" width="15" height="15" viewBox="0 0 15 15"><g><path d="M7.50084,6.72409e-7C3.35661,-0.0017207,0,3.44446,0,7.69796C0,11.0615,2.09977,13.9207,5.02402,14.9707C5.41783,15.0723,5.3575,14.7848,5.3575,14.5886L5.3575,13.2545C3.08345,13.5282,2.99129,11.9824,2.83879,11.7242C2.53044,11.1837,1.80147,11.046,2.01933,10.7878C2.53715,10.5141,3.06502,10.8567,3.67668,11.7845C4.11909,12.4575,4.98212,12.3439,5.41951,12.232C5.51503,11.8275,5.71947,11.466,6.00101,11.1854C3.64484,10.7517,2.66283,9.27473,2.66283,7.51894C2.66283,6.66686,2.93598,5.88364,3.47224,5.25189C3.13038,4.21047,3.50408,3.3188,3.55435,3.18625C4.52799,3.09674,5.54016,3.90234,5.61892,3.96603C6.17194,3.81283,6.80371,3.73193,7.51089,3.73193C8.22143,3.73193,8.85488,3.81627,9.41291,3.9712C9.60228,3.82316,10.5407,3.13117,11.4456,3.21552C11.4942,3.34806,11.8596,4.21907,11.5378,5.24673C12.0808,5.88019,12.3573,6.6703,12.3573,7.5241C12.3573,9.28334,11.3686,10.762,9.0057,11.1889C9.39951,11.5882,9.64417,12.1425,9.64417,12.7553L9.64417,14.6919C9.65758,14.8468,9.64417,15,9.89554,15C12.8634,13.9723,15,11.0925,15,7.69968C15,3.44446,11.6417,6.72409e-7,7.50084,6.72409e-7Z" fill="#C7C9D1" fill-opacity="1"/></g></svg>
-        <span class="text-xs ml-2">{t('home.introduce.nacos.code')}</span>
-      </Button>
+    <div class="right-content flex items-center md:gap-4">
       <LanguageToggle id="pc-toggle" size="small" lang={lang.toLowerCase()} />
+      <SearchComp /> 
     </div>
 
   </div>
