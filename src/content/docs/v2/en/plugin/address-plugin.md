@@ -2,6 +2,9 @@
 title: Addressing Plugin
 keywords: [Addressing, Plugin]
 description: This article describes how to develop and use Nacos' addressing plugin.
+sidebar:
+    order: 2
+    hidden: true
 ---
 
 # Addressing Plugin

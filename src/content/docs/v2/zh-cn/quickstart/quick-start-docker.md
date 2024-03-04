@@ -2,6 +2,8 @@
 title: Nacos Docker 快速开始
 keywords: [Nacos,Docker]
 description: Nacos Docker 快速开始
+sidebar:
+    order: 2
 ---
 
 # Nacos Docker 快速开始

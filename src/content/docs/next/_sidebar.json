@@ -1,33 +1,10 @@
 [
     {
-        "label": "Nacos是什么?",
+        "label": "概览",
+        "link": "docs/overview/",
         "translations": {
-          "en": "What is Nacos"
-        },
-        "collapsed": false,
-        "items": [
-          {
-            "label": "Nacos 简介",
-            "link": "docs/what-is-nacos/",
-            "translations": {
-                "en": "What is Nacos"
-            }
-          },
-          {
-            "label": "概念",
-            "link": "docs/concepts/",
-            "translations": {
-                "en": "concepts"
-            }
-          },
-          {
-            "label": "架构",
-            "link": "docs/architecture/",
-            "translations": {
-                "en": "architecture"
-            }
-          }
-        ]
+            "en": "Overview"
+        }
     },
     {
     "label": "快速开始",
@@ -86,6 +63,28 @@
             "en": "Admin Guide"
         },
         "autogenerate": { "directory": "guide/admin" }
+    },
+    {
+        "label": "运维手册",
+        "translations": {
+            "en": "Admin Manual"
+        },
+        "items": [
+            {
+                "label": "部署手册",
+                "translations": {
+                    "en": "Deploy Guide"
+                },
+                "autogenerate": { "directory": "manual/admin/deployment" }
+            },
+            {
+                "label": "系统参数",
+                "translations": {
+                    "en": "Nacos Configuration"
+                },
+                "link": "docs/manual/admin/system-configurations"
+            }
+        ]
     },
     {
         "label": "生态融合",

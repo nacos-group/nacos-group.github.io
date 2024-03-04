@@ -2,6 +2,8 @@
 title: Kubernetes Nacos
 keywords: [nacos,kubernetes]
 description: This project contains a Nacos Docker image meant to facilitate the deployment of Nacos on Kubernetes via StatefulSets.
+sidebar:
+    order: 3
 ---
 
 # Kubernetes Nacos

@@ -2,6 +2,8 @@
 title: Authorization Plugin
 keywords: [Authorization, Plugin]
 description: This article describes how to develop and use Nacos' authentication plugin.
+sidebar:
+    order: 1
 ---
 
 # Authorization Plugin

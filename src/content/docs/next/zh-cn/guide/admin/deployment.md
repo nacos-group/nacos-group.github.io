@@ -6,7 +6,7 @@ sidebar:
     order: 1
 ---
 
-> 文档优化中......
+> 该文档即将废弃，推荐查看[运维手册-部署手册-部署手册概览](../../manual/admin/deployment/deployment-overview.md)。
 
 # Nacos部署环境
 

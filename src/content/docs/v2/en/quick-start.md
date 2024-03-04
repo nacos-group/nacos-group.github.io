@@ -2,6 +2,8 @@
 title: Quick Start for Nacos
 keywords: [Nacos,Quick start]
 description: This topic is about how to set up and use Nacos.
+sidebar:
+    order: 1
 ---
 
 # Quick Start for Nacos

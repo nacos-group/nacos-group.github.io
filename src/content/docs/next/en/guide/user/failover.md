@@ -4,6 +4,7 @@ keywords: [Failover]
 description: Java client failover user guide
 sidebar:
     order: 7
+    hidden: true
 ---
 
 # Java Client Failover

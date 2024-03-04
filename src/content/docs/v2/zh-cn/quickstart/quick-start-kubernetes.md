@@ -2,6 +2,8 @@
 title: Kubernetes Nacos
 keywords: [nacos,kubernetes]
 description: 本项目包含一个可构建的Nacos Docker Image，旨在利用 StatefulSets 在 Kubernetes上部署 Nacos。
+sidebar:
+    order: 3
 ---
 
 # Kubernetes Nacos

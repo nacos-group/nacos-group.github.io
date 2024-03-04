@@ -2,6 +2,8 @@
 title: Tracing
 keywords: [Track tracing, push tracing, modifying tracing]
 description: Nacos supports Track tracing plugin, can help developers and maintainers find out problems quickly by extending plugin like push tracing.
+sidebar:
+    order: 5
 ---
 
 # Track tracing plugin
