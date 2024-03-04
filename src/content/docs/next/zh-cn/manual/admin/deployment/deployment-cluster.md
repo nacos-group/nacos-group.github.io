@@ -20,7 +20,7 @@ sidebar:
 
 <http://nacos.com:port/openAPI>  域名 + SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，可读性好，而且换ip方便，推荐模式
 
-![deployDnsVipMode.jpg](/img/deployDnsVipMode.jpg)
+![deployDnsVipMode.jpg](/img/doc/manual/admin/deployment/deploy-dns-vip-mode.svg)
 
 在使用VIP时，需要开放Nacos服务的主端口(默认8848)以及gRPC端口(默认9848)、同时如果对Nacos的主端口有所修改的话，需要对vip中的端口映射作出配置，具体端口的映射方式参考[部署手册概览-Nacos部署架构](./deployment-overview#1-Nacos部署架构)
 
