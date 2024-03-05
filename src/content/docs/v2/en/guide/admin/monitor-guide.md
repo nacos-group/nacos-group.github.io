@@ -163,6 +163,7 @@ http_server_requests_seconds_count|http requests count
 http_server_requests_seconds_sum|http requests time
 nacos_timer_seconds_sum|Nacos config notify time
 nacos_timer_seconds_count|Nacos config notify count
+grpc_server_requests_seconds_max|Nacos grpc request handle record
 grpc_server_executor{name='maximumPoolSize'}|Nacos grpc server executor maximum pool size
 grpc_server_executor{name='corePoolSize'}|Nacos grpc server executor core pool size
 grpc_server_executor{name='taskCount'}|Nacos grpc server executor task count

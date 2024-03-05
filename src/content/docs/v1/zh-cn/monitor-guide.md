@@ -158,6 +158,7 @@ http_server_requests_seconds_count|http请求次数，包括多种(url,方法,co
 http_server_requests_seconds_sum|http请求总耗时，包括多种(url,方法,code)
 nacos_timer_seconds_sum|Nacos config水平通知耗时
 nacos_timer_seconds_count|Nacos config水平通知次数
+grpc_server_requests_seconds_max|Nacos grpc请求处理情况记录
 grpc_server_executor{name='maximumPoolSize'}|Nacos grpc服务器线程池的最大线程数
 grpc_server_executor{name='corePoolSize'}|Nacos grpc服务器线程池的核心线程数
 grpc_server_executor{name='taskCount'}|Nacos grpc服务器线程池的任务数量
