@@ -1,0 +1,68 @@
+---
+title: "Nacos 2.3.1 版本发布，支持UI深色模式"
+description: "Nacos 2.3.1 版本发布，支持UI深色模式。"
+date: "2024-03-07"
+category: "release"
+keywords: ["Nacos"]
+authors: "阿里云高级工程师"
+---
+
+<a name="GG18o"></a>
+## Nacos 2.3.1 版本发布
+Nacos 2.3.1 主要对 2.3.0版本 进行了一些增强和Bug修复，以提高易用性和稳定性。 <br />从这个版本开始，Nacos再次支持使用SnowFlake算法生成实例ID，使用方式与旧版本相同。 <br />对于控制台，此版本新增了深色风格。感谢所有社区贡献者的无私贡献。<br />关于Nacos2.3.1的详细change log，请查看：
+```markdown
+## Feature
+[#9001] Support snowFlakeInstanceId by SPI.
+[#11441][#11708] Add console UI Dark mode.
+
+## Enhancement&Refactor
+[#10846] Support metricsfor grpc server executor and grpc request.
+[#11053] Enhance Nacos Client Failover Logic.
+[#11306] Change the length of the field named resource from 255 to 128.
+[#11514] Check server stream ready state to avoid bytebuffer back up in flow control pending write queue.
+[#11518] Enhance the timed incremental reconciliation for configuration center.
+[#11521] Add UT coverage for config module.
+[#11526] Add service info log when client receive server push data.
+[#11571] Fix Persistent services load snapshot will casue data inconsistent by thread safety.
+[#11601] Enhance to remove check auth identity key and value for standalone mode.
+[#11612] Unified use of NameThreadFactory to create thread pools.
+[#11618] Add the config of max thread count for client worker & naming polling.
+[#11658] Enhance dump configuration logic to reduce network traffic.
+[#11695] Fix PreviousConfigHistory show encrypted configuration problem.
+[#11670] Remove direct read logic for configuration center when starting with derby.
+
+## BugFix
+[#10752] Fix Prometheus sd api security is not compatiable with nacos original security configs.
+[#11416] Fix connection count of current node is not accurate.
+[#11459] Fix RowMapper is required problem in embedded storage with cluster.
+[#11489] Fix PageHandlerAdapterFactory initHandlerAdapters error.
+[#11493] Fix service name group check in nacos client.
+[#11494] Fix Login api request frequently when disabled auth with 2.x client.
+[#11497] Fix ClassCastException when `nacos.plugin.datasource.log.enabled=true`.
+[#11499] Fix address server health check error.
+[#11573][#11619][#11624][#11626] Fix default control plugin invalid problem.
+[#11595] Fix user update permission problem.
+[#11647] Fix logged raft-config always `{}` problem.
+[#11654] Fix server don't send its abilities if client don't send its abilities when setting up connection.
+[#11679] Fix totalpush count cannot increase when push fail.
+[#11718] Fix ErrorCode have the same code.
+[#11701] Fix BatchRegister service might cause distro sync handle exception and data delay after timeout.
+
+## Dependency
+[#11473] Upgrade logback to 1.2.13.
+[#11586] Remove deprecated dependency api of spring security.
+[#11422] Upgrade Jraft to 1.3.14.
+[#11777] Upgrade console-ui dependencies by `npm audit fix` to fix some ui security.
+```
+<a name="TQS9F"></a>
+## 展望
+<a name="RBzcg"></a>
+### 2.X 后续计划
+社区计划下一个版本为`2.4.0`版本，这个版本将作为2.X到3.0的一个过渡版本， 会对Nacos2.X版本中的一些遗留问题、稳定性和可运维功能做出一定优化和增强；同时对架构作出一定重构，以更好的适配后续Nacos3.0的升级。
+<a name="Q5fbA"></a>
+### 3.0 计划
+Nacos社区同时也开启了关于[Nacos3.0](https://mp.weixin.qq.com/s/8UwwD_WxSJINP8Qr_1wogg) 的畅想和规划，Nacos将会从统一控制面、支持国产化、存储计算分离等方向进一步演进Nacos的功能和架构，欢迎社区积极参与到新版本的建设中。<br />![](https://cdn.nlark.com/yuque/0/2023/png/1577777/1698198629123-af9f1216-f996-4ac2-81bf-436048823d21.png#from=url&id=PtLUy&originHeight=914&originWidth=3787&originalType=binary&ratio=2&rotation=0&showTitle=false&status=done&style=none&title=)<br />![image.png](https://cdn.nlark.com/yuque/0/2022/png/1577777/1660125280551-a2e881fe-d25e-4ebb-a28f-8e56683deef1.png#clientId=uf10cb19a-105c-4&crop=0&crop=0&crop=1&crop=1&from=url&id=Z9to1&margin=%5Bobject%20Object%5D&name=image.png&originHeight=794&originWidth=1650&originalType=binary&ratio=1&rotation=0&showTitle=false&size=185821&status=done&style=none&taskId=u63849e10-1dae-45cb-b559-04d106ebe86&title=#crop=0&crop=0&crop=1&crop=1&id=rUihF&originHeight=794&originWidth=1650&originalType=binary&ratio=1&rotation=0&showTitle=false&status=done&style=none&title=#from=url&id=ltpbb&originHeight=794&originWidth=1650&originalType=binary&ratio=2&rotation=0&showTitle=false&status=done&style=none&title=)
+<a name="wQhjj"></a>
+## About Nacos
+Nacos 致力于帮助您发现、配置和管理微服务。Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。<br />Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 Nacos 是构建以“服务”为中心的现代应用架构 (例如微服务范式、云原生范式) 的服务基础设施。<br />最后欢迎大家扫码加入Nacos社区群<br />![1709790121592.png](https://intranetproxy.alipay.com/skylark/lark/0/2024/png/297800/1709790173653-e1e38c79-7712-48c2-b3f7-fe889f97d330.png#clientId=u083bd1c9-c197-4&from=drop&height=604&id=u87a51673&originHeight=407&originWidth=432&originalType=binary&ratio=2&rotation=0&showTitle=false&size=33676&status=done&style=none&taskId=u12810da6-ec7a-46a0-bc72-b779d0da31f&title=&width=641)
+
