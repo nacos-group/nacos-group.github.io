@@ -1,7 +1,7 @@
 ---
 import Toggle from '@components/common/Toggle.astro';
 import { isChinese } from '@i18n/util';
-import _ from 'lodash';
+import cloneDeep from 'lodash.clonedeep';
 import dataSource from '@components/common/Header/navbar.ts';
 import { docsItems } from '@components/common/Header/DocsMenu.astro';
 const ifzh = isChinese(Astro);
@@ -14,7 +14,7 @@ const { top = '4rem' } = Astro.props;
 
 // 修改 文档 菜单显示逻辑
 const lastIdx = dataSource.length - 1;
-let _dataSource = _.cloneDeep(dataSource);
+let _dataSource = cloneDeep(dataSource);
 
 
 (() => {
