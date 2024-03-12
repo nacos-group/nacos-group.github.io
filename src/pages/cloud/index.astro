@@ -13,18 +13,9 @@ const t = useTranslations(Astro);
 >
   <CloudIntroduce />
 
-  <cloud-body>
     <CompaniesFeedback />
-  </cloud-body>
 
   <CloudFooter />
 </BaseLayout>
 
-<script>
-  class CloudBody extends HTMLElement {
-    constructor() {
-      super();
-    }
-  }
-  customElements.define('cloud-body', CloudBody);
-</script>
+
