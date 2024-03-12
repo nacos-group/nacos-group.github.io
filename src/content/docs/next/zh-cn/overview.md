@@ -137,3 +137,4 @@ Nacos 提供了两种两种部署运行模式：`单机模式`和`集群模式`
 
 ## 参与社区
 
+Nacos 主要通过Github 进行社区的协作，欢迎社区中所有的用户和开发者加入到Nacos的开发中来。详情请参考[如何共建](contribution/contributing.md)。
