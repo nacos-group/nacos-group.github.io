@@ -179,7 +179,7 @@ export interface Props {
 				const description = form.description.value;
 				const phone = form.phone.value;
 				const res = await sendFetch(
-					`http://goat.cn-hangzhou.log.aliyuncs.com/logstores/feedback/track?APIVersion=0.6.0&type=${type}&description=${description}&phone=${phone}&url=${location.href}`,
+					`https://goat.cn-hangzhou.log.aliyuncs.com/logstores/feedback/track?APIVersion=0.6.0&type=${type}&description=${description}&phone=${phone}&url=${location.href}`,
 				);
 				if (res.errorCode) {
 					showErrPane(true);
