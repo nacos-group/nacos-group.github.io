@@ -14,23 +14,23 @@ sidebar:
 
 无论采用何种部署方式，推荐用户把Nacos集群中所有服务节点放到一个vip下面，然后挂到一个域名下面。
 
-<http://ip1:port/openAPI>  直连ip模式，机器挂则需要修改ip才可以使用。
+`<http://ip1:port/openAPI>`  直连ip模式，机器挂则需要修改ip才可以使用。
 
-<http://SLB:port/openAPI>  挂载SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，直连SLB即可，下面挂server真实ip，可读性不好。
+`<http://SLB:port/openAPI>`  挂载SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，直连SLB即可，下面挂server真实ip，可读性不好。
 
-<http://nacos.com:port/openAPI>  域名 + SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，可读性好，而且换ip方便，推荐模式
+`<http://nacos.com:port/openAPI>`  域名 + SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，可读性好，而且换ip方便，推荐模式
 
 ![deployDnsVipMode.jpg](/img/doc/manual/admin/deployment/deploy-dns-vip-mode.svg)
 
 在使用VIP时，需要开放Nacos服务的主端口(默认8848)以及gRPC端口(默认9848)、同时如果对Nacos的主端口有所修改的话，需要对vip中的端口映射作出配置，具体端口的映射方式参考[部署手册概览-Nacos部署架构](./deployment-overview#1-Nacos部署架构)
 
-## 1. 直接部署
+## 1. 发行版部署
 
 ### 1.1. 使用MySQL数据库（推荐）
 
 #### 1.1.1. 环境准备
 
-参考[快速开始](../../../quickstart/quick-start.md)中，进行Nacos的环境准备、发行版的下载等。
+参考[快速开始](../../../quickstart/quick-start.mdx)中，进行Nacos的环境准备、发行版的下载等。
 
 同时在使用MySQL数据源部署Nacos单机模式时，需要自行准备MySQL数据库：
 
@@ -101,7 +101,7 @@ startup.cmd
 
 #### 1.2.1. 环境准备
 
-参考[快速开始](../../../quickstart/quick-start.md)中，进行Nacos的环境准备、发行版的下载等。
+参考[快速开始](../../../quickstart/quick-start.mdx)中，进行Nacos的环境准备、发行版的下载等。
 
 #### 1.2.2. 配置集群配置文件
 
