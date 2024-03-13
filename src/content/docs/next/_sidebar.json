@@ -83,6 +83,13 @@
                     "en": "Nacos Configuration"
                 },
                 "link": "docs/manual/admin/system-configurations"
+            },
+            {
+                "label": "升级手册",
+                "translations": {
+                    "en": "Upgrading Guide"
+                },
+                "link": "docs/manual/admin/upgrading"
             }
         ]
     },

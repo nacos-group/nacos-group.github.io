@@ -3,7 +3,7 @@ title: 系统参数
 keywords: [Nacos,系统参数]
 description: Nacos系统参数介绍
 sidebar:
-    order: 3
+    order: 4
 ---
 
 # Nacos 系统参数介绍
