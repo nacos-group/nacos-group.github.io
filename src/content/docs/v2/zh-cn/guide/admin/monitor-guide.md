@@ -162,6 +162,14 @@ http_server_requests_seconds_count|http请求次数，包括多种(url,方法,co
 http_server_requests_seconds_sum|http请求总耗时，包括多种(url,方法,code)
 nacos_timer_seconds_sum|Nacos config水平通知耗时
 nacos_timer_seconds_count|Nacos config水平通知次数
+grpc_server_requests_seconds_max|Nacos grpc请求处理情况记录
+grpc_server_executor{name='maximumPoolSize'}|Nacos grpc服务器线程池的最大线程数
+grpc_server_executor{name='corePoolSize'}|Nacos grpc服务器线程池的核心线程数
+grpc_server_executor{name='taskCount'}|Nacos grpc服务器线程池的任务数量
+grpc_server_executor{name='poolSize'}|Nacos grpc服务器线程池当前线程数量
+grpc_server_executor{name='activeCount'}|Nacos grpc服务器线程池当前活跃的线程数量
+grpc_server_executor{name='completedTaskCount'}|Nacos grpc服务器线程池完成的任务数量
+grpc_server_executor{name='inQueueTaskCount'}|Nacos grpc服务器线程池在任务队列中的任务数量
 nacos_monitor{name='longPolling'}|Nacos config长连接数
 nacos_monitor{name='configCount'}|Nacos config配置个数
 nacos_monitor{name='dumpTask'}|Nacos config配置落盘任务堆积数
@@ -178,6 +186,7 @@ nacos_monitor{name='maxPushCost'}|Nacos naming最大推送耗时(ms)
 nacos_monitor{name='mysqlhealthCheck'}|Nacos naming mysql健康检查次数
 nacos_monitor{name='httpHealthCheck'}|Nacos naming http健康检查次数
 nacos_monitor{name='tcpHealthCheck'}|Nacos naming tcp健康检查次数
+nacos_monitor{name='longConnection'}|Nacos基于模块划分的连接数量
 
 ### nacos 异常指标
 指标|含义

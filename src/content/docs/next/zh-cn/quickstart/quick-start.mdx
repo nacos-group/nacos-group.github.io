@@ -6,6 +6,8 @@ sidebar:
     order: 1
 ---
 
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
 # Nacos 快速开始
 
 这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。
@@ -25,16 +27,17 @@ Nacos 依赖 [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_j
 
 你可以通过Nacos官网网站及Github两种方式来获取 **Nacos 发行包** 。
 
-### 2.1. 从官网下载方式
+<Tabs>
+  <TabItem label="官网">
+    进入Nacos官网[版本下载页面](/download/nacos-server/)，选择 [稳定版本](/download/nacos-server/#稳定版本)， 然后点击`二进制包下载`列中的`${nacos.version}.zip`进行下载。
 
-进入Nacos官网[版本下载页面](/download/nacos-server/)，选择 [稳定版本](/download/nacos-server/#稳定版本)， 然后点击`二进制包下载`列中的`${nacos.version}.zip`进行下载。
+    > 注意：有时大量用户同时进行下载时，可能会遇到下载限流失败的情况，若出现下载限流失败，请稍等后重试，或采用`从 Github 下载方式`。
+  </TabItem>
+  <TabItem label="Github">
+    进入Nacos Github 的 [最新稳定版本](https://github.com/alibaba/nacos/releases) ，选择需要下载的Nacos版本，在`Assets`中点击下载 `nacos-server-$version.zip` 包。
+  </TabItem>
+</Tabs>
 
-> 注意：有时大量用户同时进行下载时，可能会遇到下载限流失败的情况，若出现下载限流失败，请稍等后重试，或采用`从 Github 下载方式`。
-
-### 2.2. 从 Github 下载方式
-
-进入Nacos Github 的 [最新稳定版本](https://github.com/alibaba/nacos/releases) ，选择需要下载的Nacos版本，在`Assets`中点击下载 `nacos-server-$version.zip` 包。
-  
 ## 3. 解压缩Nacos 发行包
 
 ```bash
@@ -47,21 +50,20 @@ Nacos 依赖 [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_j
 
 * 注：Nacos的运行建议至少在2C4G 60G的机器配置下运行。
 
-### 4.1. Linux/Unix/Mac 
+<Tabs>
+  <TabItem label="Linux/Unix/Mac">
+    启动命令(standalone代表着单机模式运行，非集群模式):
 
-启动命令(standalone代表着单机模式运行，非集群模式):
+    `sh startup.sh -m standalone`
 
-`sh startup.sh -m standalone`
+    如果您使用的是ubuntu系统，或者运行脚本报错提示[[符号找不到，可尝试如下运行：
+  </TabItem>
+  <TabItem label="Windows">
+    启动命令(standalone代表着单机模式运行，非集群模式):
 
-如果您使用的是ubuntu系统，或者运行脚本报错提示[[符号找不到，可尝试如下运行：
-
-`bash startup.sh -m standalone`
-
-### 4.2. Windows
-
-启动命令(standalone代表着单机模式运行，非集群模式):
-
-`startup.cmd -m standalone`
+    `startup.cmd -m standalone`
+  </TabItem>
+</Tabs>
 
 ## 5.验证Nacos服务是否启动成功
 

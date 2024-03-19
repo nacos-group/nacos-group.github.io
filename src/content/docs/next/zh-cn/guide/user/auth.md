@@ -1,5 +1,5 @@
 ---
-title: Authorization
+title: 权限校验
 keywords: [Authorization]
 description: Authorization
 sidebar:
