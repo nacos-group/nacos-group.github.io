@@ -233,7 +233,43 @@ You can find out for yourself how to use elastic search and influxdb.</p>
 
 
 
-<table><thead><tr><th>item</th><th>meaning</th></tr></thead><tbody><tr><td>http_server_requests_seconds_count</td><td>http requests count</td></tr><tr><td>http_server_requests_seconds_sum</td><td>http requests time</td></tr><tr><td>nacos_timer_seconds_sum</td><td>Nacos config notify time</td></tr><tr><td>nacos_timer_seconds_count</td><td>Nacos config notify count</td></tr><tr><td>nacos_monitor{name=‘longPolling’}</td><td>Nacos config connection count</td></tr><tr><td>nacos_monitor{name=‘configCount’}</td><td>Nacos configuration file count</td></tr><tr><td>nacos_monitor{name=‘dumpTask’}</td><td>Nacos config dump task count</td></tr><tr><td>nacos_monitor{name=‘notifyTask’}</td><td>Nacos config notify task count</td></tr><tr><td>nacos_monitor{name=‘getConfig’}</td><td>Nacos config read configuration count</td></tr><tr><td>nacos_monitor{name=‘publish’}</td><td>Nacos config update configuration count</td></tr><tr><td>nacos_monitor{name=‘ipCount’}</td><td>Nacos naming ip count</td></tr><tr><td>nacos_monitor{name=‘domCount’}</td><td>Nacos naming domain count(1.x version)</td></tr><tr><td>nacos_monitor{name=‘serviceCount’}</td><td>Nacos naming domain count(2.x version)</td></tr><tr><td>nacos_monitor{name=‘failedPush’}</td><td>Nacos naming push fail count</td></tr><tr><td>nacos_monitor{name=‘avgPushCost’}</td><td>Nacos naming push cost time(average)(ms)</td></tr><tr><td>nacos_monitor{name=‘leaderStatus’}</td><td>Nacos naming if node is leader</td></tr><tr><td>nacos_monitor{name=‘maxPushCost’}</td><td>Nacos naming push cost time(max)(ms)</td></tr><tr><td>nacos_monitor{name=‘mysqlhealthCheck’}</td><td>Nacos naming mysql health check count</td></tr><tr><td>nacos_monitor{name=‘httpHealthCheck’}</td><td>Nacos naming http health check count</td></tr><tr><td>nacos_monitor{name=‘tcpHealthCheck’}</td><td>Nacos naming tcp health check count</td></tr></tbody></table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>item</th><th>meaning</th></tr></thead><tbody><tr><td>http_server_requests_seconds_count</td><td>http requests count</td></tr><tr><td>http_server_requests_seconds_sum</td><td>http requests time</td></tr><tr><td>nacos_timer_seconds_sum</td><td>Nacos config notify time</td></tr><tr><td>nacos_timer_seconds_count</td><td>Nacos config notify count</td></tr><tr><td>grpc_server_requests_seconds_max</td><td>Nacos grpc request handle record</td></tr><tr><td>grpc_server_executor{name=‘maximumPoolSize’}</td><td>Nacos grpc server executor maximum pool size</td></tr><tr><td>grpc_server_executor{name=‘corePoolSize’}</td><td>Nacos grpc server executor core pool size</td></tr><tr><td>grpc_server_executor{name=‘taskCount’}</td><td>Nacos grpc server executor task count</td></tr><tr><td>grpc_server_executor{name=‘poolSize’}</td><td>Nacos grpc server executor current pool size</td></tr><tr><td>grpc_server_executor{name=‘activeCount’}</td><td>Nacos grpc server executor current active thread count</td></tr><tr><td>grpc_server_executor{name=‘completedTaskCount’}</td><td>Nacos grpc server executor completed task count</td></tr><tr><td>grpc_server_executor{name=‘inQueueTaskCount’}</td><td>Nacos grpc server executor current in queue task count</td></tr><tr><td>nacos_monitor{name=‘longPolling’}</td><td>Nacos config connection count</td></tr><tr><td>nacos_monitor{name=‘configCount’}</td><td>Nacos configuration file count</td></tr><tr><td>nacos_monitor{name=‘dumpTask’}</td><td>Nacos config dump task count</td></tr><tr><td>nacos_monitor{name=‘notifyTask’}</td><td>Nacos config notify task count</td></tr><tr><td>nacos_monitor{name=‘getConfig’}</td><td>Nacos config read configuration count</td></tr><tr><td>nacos_monitor{name=‘publish’}</td><td>Nacos config update configuration count</td></tr><tr><td>nacos_monitor{name=‘ipCount’}</td><td>Nacos naming ip count</td></tr><tr><td>nacos_monitor{name=‘domCount’}</td><td>Nacos naming domain count(1.x version)</td></tr><tr><td>nacos_monitor{name=‘serviceCount’}</td><td>Nacos naming domain count(2.x version)</td></tr><tr><td>nacos_monitor{name=‘failedPush’}</td><td>Nacos naming push fail count</td></tr><tr><td>nacos_monitor{name=‘avgPushCost’}</td><td>Nacos naming push cost time(average)(ms)</td></tr><tr><td>nacos_monitor{name=‘leaderStatus’}</td><td>Nacos naming if node is leader</td></tr><tr><td>nacos_monitor{name=‘maxPushCost’}</td><td>Nacos naming push cost time(max)(ms)</td></tr><tr><td>nacos_monitor{name=‘mysqlhealthCheck’}</td><td>Nacos naming mysql health check count</td></tr><tr><td>nacos_monitor{name=‘httpHealthCheck’}</td><td>Nacos naming http health check count</td></tr><tr><td>nacos_monitor{name=‘tcpHealthCheck’}</td><td>Nacos naming tcp health check count</td></tr><tr><td>nacos_monitor{name=‘longConnection’}</td><td>Nacos core connection count group by module</td></tr></tbody></table>
 <h3 id="nacos-exception">nacos exception</h3>
 
 

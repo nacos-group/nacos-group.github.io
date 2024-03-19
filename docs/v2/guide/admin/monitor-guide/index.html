@@ -232,7 +232,43 @@ html:not([data-has-toc]){--sl-mobile-toc-height: 0rem}html:not([data-has-sidebar
 
 
 
-<table><thead><tr><th>指标</th><th>含义</th></tr></thead><tbody><tr><td>http_server_requests_seconds_count</td><td>http请求次数，包括多种(url,方法,code)</td></tr><tr><td>http_server_requests_seconds_sum</td><td>http请求总耗时，包括多种(url,方法,code)</td></tr><tr><td>nacos_timer_seconds_sum</td><td>Nacos config水平通知耗时</td></tr><tr><td>nacos_timer_seconds_count</td><td>Nacos config水平通知次数</td></tr><tr><td>nacos_monitor{name=‘longPolling’}</td><td>Nacos config长连接数</td></tr><tr><td>nacos_monitor{name=‘configCount’}</td><td>Nacos config配置个数</td></tr><tr><td>nacos_monitor{name=‘dumpTask’}</td><td>Nacos config配置落盘任务堆积数</td></tr><tr><td>nacos_monitor{name=‘notifyTask’}</td><td>Nacos config配置水平通知任务堆积数</td></tr><tr><td>nacos_monitor{name=‘getConfig’}</td><td>Nacos config读配置统计数</td></tr><tr><td>nacos_monitor{name=‘publish’}</td><td>Nacos config写配置统计数</td></tr><tr><td>nacos_monitor{name=‘ipCount’}</td><td>Nacos naming ip个数</td></tr><tr><td>nacos_monitor{name=‘domCount’}</td><td>Nacos naming域名个数(1.x 版本)</td></tr><tr><td>nacos_monitor{name=‘serviceCount’}</td><td>Nacos naming域名个数(2.x 版本)</td></tr><tr><td>nacos_monitor{name=‘failedPush’}</td><td>Nacos naming推送失败数</td></tr><tr><td>nacos_monitor{name=‘avgPushCost’}</td><td>Nacos naming平均推送耗时(ms)</td></tr><tr><td>nacos_monitor{name=‘leaderStatus’}</td><td>Nacos naming角色状态</td></tr><tr><td>nacos_monitor{name=‘maxPushCost’}</td><td>Nacos naming最大推送耗时(ms)</td></tr><tr><td>nacos_monitor{name=‘mysqlhealthCheck’}</td><td>Nacos naming mysql健康检查次数</td></tr><tr><td>nacos_monitor{name=‘httpHealthCheck’}</td><td>Nacos naming http健康检查次数</td></tr><tr><td>nacos_monitor{name=‘tcpHealthCheck’}</td><td>Nacos naming tcp健康检查次数</td></tr></tbody></table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>指标</th><th>含义</th></tr></thead><tbody><tr><td>http_server_requests_seconds_count</td><td>http请求次数，包括多种(url,方法,code)</td></tr><tr><td>http_server_requests_seconds_sum</td><td>http请求总耗时，包括多种(url,方法,code)</td></tr><tr><td>nacos_timer_seconds_sum</td><td>Nacos config水平通知耗时</td></tr><tr><td>nacos_timer_seconds_count</td><td>Nacos config水平通知次数</td></tr><tr><td>grpc_server_requests_seconds_max</td><td>Nacos grpc请求处理情况记录</td></tr><tr><td>grpc_server_executor{name=‘maximumPoolSize’}</td><td>Nacos grpc服务器线程池的最大线程数</td></tr><tr><td>grpc_server_executor{name=‘corePoolSize’}</td><td>Nacos grpc服务器线程池的核心线程数</td></tr><tr><td>grpc_server_executor{name=‘taskCount’}</td><td>Nacos grpc服务器线程池的任务数量</td></tr><tr><td>grpc_server_executor{name=‘poolSize’}</td><td>Nacos grpc服务器线程池当前线程数量</td></tr><tr><td>grpc_server_executor{name=‘activeCount’}</td><td>Nacos grpc服务器线程池当前活跃的线程数量</td></tr><tr><td>grpc_server_executor{name=‘completedTaskCount’}</td><td>Nacos grpc服务器线程池完成的任务数量</td></tr><tr><td>grpc_server_executor{name=‘inQueueTaskCount’}</td><td>Nacos grpc服务器线程池在任务队列中的任务数量</td></tr><tr><td>nacos_monitor{name=‘longPolling’}</td><td>Nacos config长连接数</td></tr><tr><td>nacos_monitor{name=‘configCount’}</td><td>Nacos config配置个数</td></tr><tr><td>nacos_monitor{name=‘dumpTask’}</td><td>Nacos config配置落盘任务堆积数</td></tr><tr><td>nacos_monitor{name=‘notifyTask’}</td><td>Nacos config配置水平通知任务堆积数</td></tr><tr><td>nacos_monitor{name=‘getConfig’}</td><td>Nacos config读配置统计数</td></tr><tr><td>nacos_monitor{name=‘publish’}</td><td>Nacos config写配置统计数</td></tr><tr><td>nacos_monitor{name=‘ipCount’}</td><td>Nacos naming ip个数</td></tr><tr><td>nacos_monitor{name=‘domCount’}</td><td>Nacos naming域名个数(1.x 版本)</td></tr><tr><td>nacos_monitor{name=‘serviceCount’}</td><td>Nacos naming域名个数(2.x 版本)</td></tr><tr><td>nacos_monitor{name=‘failedPush’}</td><td>Nacos naming推送失败数</td></tr><tr><td>nacos_monitor{name=‘avgPushCost’}</td><td>Nacos naming平均推送耗时(ms)</td></tr><tr><td>nacos_monitor{name=‘leaderStatus’}</td><td>Nacos naming角色状态</td></tr><tr><td>nacos_monitor{name=‘maxPushCost’}</td><td>Nacos naming最大推送耗时(ms)</td></tr><tr><td>nacos_monitor{name=‘mysqlhealthCheck’}</td><td>Nacos naming mysql健康检查次数</td></tr><tr><td>nacos_monitor{name=‘httpHealthCheck’}</td><td>Nacos naming http健康检查次数</td></tr><tr><td>nacos_monitor{name=‘tcpHealthCheck’}</td><td>Nacos naming tcp健康检查次数</td></tr><tr><td>nacos_monitor{name=‘longConnection’}</td><td>Nacos基于模块划分的连接数量</td></tr></tbody></table>
 <h3 id="nacos-异常指标">nacos 异常指标</h3>
 
 
