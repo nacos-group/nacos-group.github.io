@@ -76,7 +76,6 @@ export default defineConfig({
 	redirects: {
 		'/en-us/': '/en/',
 		'/[...slug].html': '/[...slug]',
-		'/zh-cn/[...slug]': '/[...slug]',
 		'/docs/': '/docs/latest/what-is-nacos/',
 	}
 });
