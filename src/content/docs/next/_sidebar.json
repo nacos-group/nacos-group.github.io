@@ -90,6 +90,13 @@
                     "en": "Upgrading Guide"
                 },
                 "link": "docs/manual/admin/upgrading"
+            },
+            {
+                "label": "运维API",
+                "translations": {
+                    "en": "Management API"
+                },
+                "link": "docs/manual/admin/admin-api"
             }
         ]
     },
