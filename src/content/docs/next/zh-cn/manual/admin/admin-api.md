@@ -111,7 +111,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/loader/current'
 
 #### 返回数据
 
-成功则返回`success`，失败则返回[Nacos open API 统一返回体格式](../../guide/user/open-api.md/#0.1)
+成功则返回`success`，失败则返回[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)
 
 #### 示例
 
@@ -150,7 +150,7 @@ success
 
 #### 返回数据
 
-成功则返回`success`，失败则返回[Nacos open API 统一返回体格式](../../guide/user/open-api.md/#0.1)
+成功则返回`success`，失败则返回[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)
 
 #### 示例
 
@@ -269,7 +269,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/loader/cluster'
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../../guide/user/open-api.md/#0.1)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名        | 参数类型 | 描述     |
 |--------|----------|----------|
@@ -375,7 +375,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/self'
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../../guide/user/open-api.md/#0.1)，`data`字段为[获取本节点信息](#返回数据-4)的返回数据的列表。
+返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，`data`字段为[获取本节点信息](#返回数据-4)的返回数据的列表。
 
 #### 示例
 
@@ -488,7 +488,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/list'
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../../guide/user/open-api.md/#0.1)。
+返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)。
 
 | 参数名        | 参数类型 | 描述     |
 |--------|----------|----------|
@@ -534,7 +534,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/list'
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../../guide/user/open-api.md/#0.1)。
+返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)。
 
 | 参数名        | 参数类型 | 描述     |
 |--------|----------|----------|
@@ -593,7 +593,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v2/core/cluster/lookup?type=file'
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../../guide/user/open-api.md/#0.1)。
+返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)。
 
 | 参数名        | 参数类型 | 描述     |
 |--------|----------|----------|
@@ -649,7 +649,7 @@ curl -X POST -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v2/
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../../guide/user/open-api.md/#0.1)。
+返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)。
 
 | 参数名        | 参数类型 | 描述     |
 |--------|----------|----------|
@@ -695,7 +695,7 @@ curl -X PUT -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v2/c
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../../guide/user/open-api.md/#0.1)，返回数据`data`字段为json格式，展示各个开关的和配置的具体内容：
+返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，返回数据`data`字段为json格式，展示各个开关的和配置的具体内容：
 
 | 参数名        | 参数类型 | 描述     |
 |--------|----------|----------|
@@ -801,7 +801,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/ns/ops/switches'
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../../guide/user/open-api.md/#0.1):
+返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式):
 
 | 参数名        | 参数类型 | 描述     |
 |--------|----------|----------|

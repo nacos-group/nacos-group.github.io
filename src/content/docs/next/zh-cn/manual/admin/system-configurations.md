@@ -165,7 +165,7 @@ Nacos从1.3版本开始使用HikariCP连接池，但在1.4.1版本前，连接�
 |nacos.core.auth.server.identity.value|Nacos Server节点身份信息的value，用户Server节点之间通信的识别，当开启鉴权时为必填项|字符串|null|
 |nacos.core.auth.enable.userAgentAuthWhite|Nacos Server使用UserAgent来进行Server节点之间通信的识别，在1.4.1版本后仅作为升级时的兼容，开启后会存在安全问题，后续版本将移除该参数|true/false|false|
 
-同时对于Nacos默认鉴权插件的使用及更多默认鉴权插件的配置项，请参考[权限校验](../../guide/user/auth.md/#相关参数)
+同时对于Nacos默认鉴权插件的使用及更多默认鉴权插件的配置项，请参考[权限校验](../../guide/user/auth/#相关参数)
 
 #### 1.8.2. 数据源插件
 
