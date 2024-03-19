@@ -65,6 +65,13 @@
         "autogenerate": { "directory": "guide/admin" }
     },
     {
+        "label": "用户手册",
+        "translations": {
+            "en": "User Manual"
+        },
+        "autogenerate": { "directory": "manual/user" }
+    },
+    {
         "label": "运维手册",
         "translations": {
             "en": "Admin Manual"
