@@ -163,6 +163,14 @@ http_server_requests_seconds_count|http requests count
 http_server_requests_seconds_sum|http requests time
 nacos_timer_seconds_sum|Nacos config notify time
 nacos_timer_seconds_count|Nacos config notify count
+grpc_server_requests_seconds_max|Nacos grpc request handle record
+grpc_server_executor{name='maximumPoolSize'}|Nacos grpc server executor maximum pool size
+grpc_server_executor{name='corePoolSize'}|Nacos grpc server executor core pool size
+grpc_server_executor{name='taskCount'}|Nacos grpc server executor task count
+grpc_server_executor{name='poolSize'}|Nacos grpc server executor current pool size
+grpc_server_executor{name='activeCount'}|Nacos grpc server executor current active thread count
+grpc_server_executor{name='completedTaskCount'}|Nacos grpc server executor completed task count
+grpc_server_executor{name='inQueueTaskCount'}|Nacos grpc server executor current in queue task count
 nacos_monitor{name='longPolling'}|Nacos config connection count
 nacos_monitor{name='configCount'}|Nacos configuration file count
 nacos_monitor{name='dumpTask'}|Nacos config dump task count
@@ -179,6 +187,7 @@ nacos_monitor{name='maxPushCost'}|Nacos naming push cost time(max)(ms)
 nacos_monitor{name='mysqlhealthCheck'}|Nacos naming mysql health check count
 nacos_monitor{name='httpHealthCheck'}|Nacos naming http health check count
 nacos_monitor{name='tcpHealthCheck'}|Nacos naming tcp health check count
+nacos_monitor{name='longConnection'}|Nacos core connection count group by module
 
 ### nacos exception
 item|meaning
