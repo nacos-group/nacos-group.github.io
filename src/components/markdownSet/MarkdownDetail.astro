@@ -6,7 +6,7 @@ import "@style/markdown.css";
 
 type Props = CollectionEntry<"blog">["data"];
 
-const { title, description, date, updatedDate, heroImage } = Astro.props;
+const { title, description, date, updatedDate, heroImage, author } = Astro.props;
 ---
 
 <div class="sl-markdown-content">
@@ -17,6 +17,7 @@ const { title, description, date, updatedDate, heroImage } = Astro.props;
 		<div class="nacos-prose mx-auto">
 			<div class="title">	
 				<h1 id="_top">{title}</h1>
+				<div >{author}</div>
 				<div class="date">
 					<FormattedDate date={new Date(date)} />
 					{

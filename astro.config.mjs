@@ -74,7 +74,6 @@ export default defineConfig({
 		]
 	},
 	redirects: {
-		'/zh-cn/': '/',
 		'/en-us/': '/en/',
 		'/[...slug].html': '/[...slug]',
 		'/zh-cn/[...slug]': '/[...slug]',
