@@ -6,6 +6,4 @@ sidebar:
     order: 4
 ---
 
-> 文档优化中......
-
-TODO
+> 该文档已废弃，请查看[运维手册-运维API](../../manual/admin/admin-api.md)

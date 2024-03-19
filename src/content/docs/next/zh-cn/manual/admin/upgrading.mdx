@@ -1,0 +1,135 @@
+---
+title: 升级手册
+keywords: [Nacos,升级]
+description: Nacos版本升级指南，本文档将介绍Nacos升级的一般步骤和方法。
+sidebar:
+    order: 5
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+# 升级手册
+
+## 1. 升级版本兼容性
+
+当前文档所对应的版本为2.4.X，所有Nacos版本可升级到该版本的兼容性如下：
+
+| Nacos版本 | 是否支持升级到当前版本 | 备注 |
+|----------|--------------------|------|
+| 0.X ～ 1.1.X | 不支持 | 0.X ~ 1.1.X 版本需要先升级到1.2以上的，然后参考[Nacos2.0升级文档](https://nacos.io/docs/v2/upgrading/200-upgrading/) 先升级到2.0或2.1版本后再进行升级 |
+| 1.2.X ~ 1.4.X | 不支持 | 2.4.X版本不支持从 1.2.X ~ 1.4.X 之间的版本直接升级，请参考[Nacos2.0升级文档](https://nacos.io/docs/v2/upgrading/200-upgrading/) 先升级到2.0或2.1版本后再进行升级 |
+| 2.0.X | 支持 | 2.4.X版本支持从 2.0.X 升级到 2.4.X， 但数据库表结构有发生变化，请升级前对比[mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)文件，并应用新的表结构后进行升级 |
+| 2.1.X ~ 2.3.X | 支持 | 2.4.X版本支持从 2.1.X ~ 2.3.X 升级到 2.4.X |
+
+## 2. 升级步骤
+
+### 2.1. 发行版升级
+
+#### 2.1.1 确认表结构
+
+先对比部署的旧版本Nacos版本的mysql-schema.sql文件和将升级版本的mysql-schema.sql文件，确认表结构是否有变化。
+
+若文件中表结构存在变化，请先进行数据库变更，例如：
+
+```SQL
+ALTER TABLE `config_info` ADD COLUMN `encrypted_data_key` varchar(255) NOT NULL COMMENT '密钥',
+```
+
+#### 2.1.2. 下载新版本
+
+<Tabs>
+  <TabItem label="官网">
+    进入Nacos官网[版本下载页面](/download/nacos-server/)，选择 [稳定版本](/download/nacos-server/#稳定版本)， 然后点击`二进制包下载`列中的`${nacos.version}.zip`进行下载。
+
+    > 注意：有时大量用户同时进行下载时，可能会遇到下载限流失败的情况，若出现下载限流失败，请稍等后重试，或采用`从 Github 下载方式`。
+  </TabItem>
+  <TabItem label="Github">
+    进入Nacos Github 的 [最新稳定版本](https://github.com/alibaba/nacos/releases) ，选择需要下载的Nacos版本，在`Assets`中点击下载 `nacos-server-$version.zip` 包。
+  </TabItem>
+</Tabs>
+
+#### 2.1.3. 替换二进制jar包
+
+解压新下载的发行版压缩包
+
+```bash
+  unzip nacos-server-$version.zip
+  # 或者 tar -xvf nacos-server-$version.tar.gz
+```
+
+然后 找到`nacos/targer/nacos-server.jar` 将该jar包替换到旧的发行版中，例如：
+
+```bash
+cp nacos/target/nacos-server.jar ${old.nacos.home}/target/
+```
+
+#### 2.1.4. 修改配置文件（可选）
+
+对比部署的旧版本的配置文件和新版本的配置文件`conf/application.properties`，确认是否有新增或修改的配置项，将这些配置项添加到旧的配置文件中，例如：
+
+```bash
+diff nacos/conf/application.properties ${old.nacos.home}/conf/application.properties
+```
+
+#### 2.1.5. 修改启动参数（可选）
+
+对比部署的旧版本的启动脚本和新版本的启动脚本`bin/startup.sh`或`bin/startup.cmd`，确认是否有新增或修改的配置项，将这些配置项添加到旧的启动脚本件中，例如：
+
+```bash
+diff nacos/bin/startup.sh ${old.nacos.home}/bin/startup.sh
+```
+
+#### 2.1.6. 重启Nacos Server
+
+均替换完成后，重启Nacos Server:
+
+```
+# 以集群模式为例
+## Linux
+${nacos.home}/bin/shutdown.sh
+${nacos.home}/bin/startup.sh
+
+## Windows
+${nacos.home}/bin/shutdown.cmd
+${nacos.home}/bin/startup.cmd
+```
+###  2.2. Docker/Kubernetes升级
+
+#### 2.2.1 确认表结构
+
+先对比部署的旧版本Nacos版本的mysql-schema.sql文件和将升级版本的mysql-schema.sql文件，确认表结构是否有变化。
+
+若文件中表结构存在变化，请先进行数据库变更，例如：
+
+```SQL
+ALTER TABLE `config_info` ADD COLUMN `encrypted_data_key` varchar(255) NOT NULL COMMENT '密钥',
+```
+
+#### 2.2.2. 确认环境变量
+
+可以对比当前部署版本的环境变量与[系统参数-镜像环境变量](../system-configurations/#2-镜像环境变量)中的环境变量是否有变化，如有，需要修改Docker的环境变量文件或Kubernetes的regcenter中的环境变量。
+
+#### 2.2.3. 修改镜像版本
+
+<Tabs>
+  <TabItem label="Docker">
+    首先修改docker compose所对应的文件中的Nacos八本，例如[Nacos Docker](https://github.com/nacos-group/nacos-docker)项目下的standalone-mysql-8.yaml中的
+    ```yaml
+    services:
+        nacos:
+            image:
+                nacos/nacos-server:${target_version}
+    ```
+    然后执行如下命令进行升级
+    ```bash
+      docker-compose pull
+      docker-compose up -d --remove-orphans
+    ```
+  </TabItem>
+  <TabItem label="Kubernetes">
+    通过kubectl set image 命令更新版本，如：
+    ```bash
+        kubectl set image deployment/nacos-deployment ${container_name}=nacos/nacos-server:${target_version}
+    ```
+  </TabItem>
+</Tabs>
