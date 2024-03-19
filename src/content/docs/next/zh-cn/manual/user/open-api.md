@@ -10,8 +10,6 @@ sidebar:
 
 Nacos 2.X 版本兼容 Nacos1.X 版本的OpenAPI, 请参考文档[Nacos1.X OpenAPI](https://nacos.io/docs/v1/open-api)使用。
 
-> 注意：未特殊注明支持版本的OpenAPI均从2.2.0版本开始支持。
-
 ## 1. 文档规定
 
 ### 1.1. API 统一返回体格式
