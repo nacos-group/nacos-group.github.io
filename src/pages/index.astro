@@ -31,10 +31,5 @@ const t = useTranslations(Astro);
 </BaseLayout>
 
 <script>
-  class HomeBody extends HTMLElement {
-    constructor() {
-      super();
-    }
-  }
-  customElements.define('home-body', HomeBody);
+  import '../script/browser-check'
 </script>
