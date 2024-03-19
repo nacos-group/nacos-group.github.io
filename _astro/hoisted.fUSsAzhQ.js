@@ -1,0 +1,1 @@
+import"./hoisted.6y5bd2ZW.js";import"./hoisted.dQtQQwl3.js";import"./hoisted.kKR2v2Yr.js";import"./index.PDhEm6KS.js";class o extends HTMLElement{constructor(){super()}}customElements.define("cloud-body",o);
