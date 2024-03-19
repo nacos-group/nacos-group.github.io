@@ -1,0 +1,1 @@
+import"./hoisted.CYiEIpI8.js";import"./Tabs.astro_astro_type_script_index_0_lang.BqK4QFew.js";import"./index.DImtQWSj.js";class t extends HTMLElement{constructor(){super()}}customElements.define("footer-layout",t);
