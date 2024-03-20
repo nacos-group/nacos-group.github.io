@@ -60,7 +60,7 @@ const Component = slot;
 
   {
     ifdropdown ? (
-      <div class="toggle-dropdown w-fit inset-x-0">
+      <div class={`toggle-dropdown w-fit inset-x-0 ${position} t-${top}`}>
         <slot name="dropdown">
           <Component />
         </slot>
@@ -69,9 +69,6 @@ const Component = slot;
   }
 
 </toggle-component>
-
-
-
 
 
 <script>
@@ -119,7 +116,7 @@ const Component = slot;
 
 
 
-<style define:vars={{ position, top }}>
+<style >
   toggle-component {
     /* 14px */
     --toggle-font: 0.875rem; 
@@ -179,8 +176,6 @@ const Component = slot;
 
   .toggle-dropdown {
     display: none;
-    position: var(--position);
-    top: var(--top);
     z-index: 100000;
   }
 
