@@ -15,7 +15,7 @@ const { href, target = '_self', class: className = '', visibility = 'hover', ico
 <a 
   href={href} 
   target={target}
-  class={'link-text cursor-pointer no-underline flex items-center w-fit ' + className}
+  class={'link-text-wrapper cursor-pointer no-underline flex items-center w-fit ' + className}
 >
   <slot></slot>
   {
@@ -53,14 +53,14 @@ const { href, target = '_self', class: className = '', visibility = 'hover', ico
   }
 </a>
 
-<style>
- .link-text .link-icon {
+<style is:global>
+ .link-text-wrapper .link-icon {
     width: 0;
     opacity: 0;
     transition: transform 0.5s ease, width 0.3s ease, opacity 0.3s ease;
  }
 
- .link-text:hover .link-icon {
+ .link-text-wrapper:hover .link-icon {
     transform: translate(3px, 0px);
     opacity: 1;
     width: 8px;

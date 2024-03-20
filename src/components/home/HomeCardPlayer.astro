@@ -2,48 +2,80 @@
 const mediaResource = [
   {
     checked: true,
-    src: 'https://cloud.video.taobao.com/play/u/3897629815/p/1/e/6/t/1/237687627217.mp4',
-    description: '2 Hours to learn Nacos steps by steps.',
+    src: "https://cloud.video.taobao.com/play/u/3897629815/p/1/e/6/t/1/237687627217.mp4",
+    description: "2 Hours to learn Nacos steps by steps.",
   },
   {
     checked: false,
-    src: 'https://cloud.video.taobao.com/play/u/3897629815/p/1/e/6/t/1/308859040210.mp4',
-    description: '3 minutes to learn how to migrate to the cloud.',
+    src: "https://cloud.video.taobao.com/play/u/3897629815/p/1/e/6/t/1/308859040210.mp4",
+    description: "3 minutes to learn how to migrate to the cloud.",
   },
   {
     checked: false,
-    src: 'https://cloud.video.taobao.com/play/u/3897629815/p/1/e/6/t/1/258260782833.mp4',
-    description: 'Introduction to the sixth generation instance specifications.',
+    src: "https://cloud.video.taobao.com/play/u/3897629815/p/1/e/6/t/1/258260782833.mp4",
+    description:
+      "Introduction to the sixth generation instance specifications.",
   },
 ];
-
 ---
 
 <card-player class="card-player block bg-gary-02 p-10">
   <div class="top-title w-full flex flex-col items-center mb-20 mt-16">
     <span class="text-gray-10 text-xs mb-6">COMMUNITY VOICE</span>
-    <span class="title text-gray-14 text-4xl font-medium">Tutorials from Community</span>
+    <span class="title text-gray-14 text-4xl font-medium"
+      >Tutorials from Community</span
+    >
   </div>
 
-  <div class="bottom-media-card block w-full flex items-center justify-center h-fit">
+  <div
+    class="bottom-media-card block w-full flex items-center justify-center h-fit"
+  >
     <div class="media-container h-[23rem] w-fit flex flex-nowrap justify-start">
       {
         mediaResource.map((item, index) => {
           const { src, description, checked } = item;
           return (
-            <input type="radio" name="silder" id={`c${index}`} checked={checked} />
-            <label for={`c${index}`} class="card overflow-hidden flex flex-col justify-between cursor-pointer p-4 rounded-3xl mx-2">
-              <div class="row flex align-center flex-nowrap opacity-0 w-full">
-                <a class="btn btn-secondary btn-sm rounded-3xl mr-4 text-xs font-normal">
-                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="none" version="1.1" width="8" height="8.918435096740723" viewBox="0 0 8 8.918435096740723"><g><path d="M0,8.91844L0,0L8,4.45922L0,8.91844Z" fill="#121316" fill-opacity="1"/></g></svg>
-                  <span>PLAY VIDEO</span>
-                </a>
-                <a class="btn btn-secondary btn-sm rounded-3xl mr-4 text-xs">
-                  <img class="w-12 h-5" src="/bilibili.png" /> 
-                </a>
-              </div>
-              <div class="description opacity-0 w-full text-gray-02 text-sm">{description}</div>
-            </label>
+            <>
+              <input
+                type="radio"
+                name="silder"
+                id={`c${index}`}
+                checked={checked}
+              />
+              <label
+                for={`c${index}`}
+                class="card overflow-hidden flex flex-col justify-between cursor-pointer p-4 rounded-3xl mx-2"
+              >
+                <div class="row flex align-center flex-nowrap opacity-0 w-full">
+                  <a class="btn btn-secondary btn-sm rounded-3xl mr-4 text-xs font-normal">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      fill="none"
+                      version="1.1"
+                      width="8"
+                      height="8.918435096740723"
+                      viewBox="0 0 8 8.918435096740723"
+                    >
+                      <g>
+                        <path
+                          d="M0,8.91844L0,0L8,4.45922L0,8.91844Z"
+                          fill="#121316"
+                          fill-opacity="1"
+                        />
+                      </g>
+                    </svg>
+                    <span>PLAY VIDEO</span>
+                  </a>
+                  <a class="btn btn-secondary btn-sm rounded-3xl mr-4 text-xs">
+                    <img class="w-12 h-5" src="/bilibili.png" />
+                  </a>
+                </div>
+                <div class="description opacity-0 w-full text-gray-02 text-sm">
+                  {description}
+                </div>
+              </label>
+            </>
           );
         })
       }
@@ -58,11 +90,27 @@ const mediaResource = [
           <div class="mobile-card h-[14rem] w-full overflow-hidden flex flex-col justify-between cursor-pointer p-4 rounded-3xl">
             <div class="flex align-center flex-nowrap w-full">
               <a class="btn btn-secondary btn-sm rounded-3xl mr-4 text-xs font-normal">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="none" version="1.1" width="8" height="8.918435096740723" viewBox="0 0 8 8.918435096740723"><g><path d="M0,8.91844L0,0L8,4.45922L0,8.91844Z" fill="#121316" fill-opacity="1"/></g></svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  fill="none"
+                  version="1.1"
+                  width="8"
+                  height="8.918435096740723"
+                  viewBox="0 0 8 8.918435096740723"
+                >
+                  <g>
+                    <path
+                      d="M0,8.91844L0,0L8,4.45922L0,8.91844Z"
+                      fill="#121316"
+                      fill-opacity="1"
+                    />
+                  </g>
+                </svg>
                 <span>PLAY VIDEO</span>
               </a>
               <a class="btn btn-secondary btn-sm rounded-3xl mr-4 text-xs">
-                <img class="w-12 h-5" src="/bilibili.png" /> 
+                <img class="w-12 h-5" src="/bilibili.png" />
               </a>
             </div>
             <div class="w-full text-gray-02 text-sm">{description}</div>
@@ -71,112 +119,103 @@ const mediaResource = [
       })
     }
   </div>
-
 </card-player>
 
 <script>
-
-class HomeCardPlayer extends HTMLElement {
-  constructor() {
-    super();
+  class HomeCardPlayer extends HTMLElement {
+    constructor() {
+      super();
+    }
   }
-}
-customElements.define("card-player", HomeCardPlayer);
-
+  customElements.define("card-player", HomeCardPlayer);
 </script>
 
-
-<style>
-
-.card {
-  /* 默认宽度 */
-  width: 9.75rem;
-  background-size: cover;
-  transition: .6s cubic-bezier(.28, -0.03, 0, .99);
-  /* box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.8); */
-}
-.media-container > .card:first-of-type {
-  margin-left: 0;
-}
-.media-container > .card:last-of-type {
-  margin-right: 0;
-}
-@keyframes showcontent {
-  from{
-    opacity: 0;
-    /* transform: translate(0, 100px); */
-    /* filter: blur(1rem); */
-  }to{
-    opacity: 1;
-    /* transform: translate(0, 0); */
-    /* filter: blur(0); */
-  }
-}
-input {
-  display: none;
-}
-input:checked + label {
-  width: 42rem;
-}
-input:checked + label .row{
-  animation: showcontent 0.3s ease-in-out 0.3s 1 forwards;
-}
-input:checked + label .description{
-  animation: showcontent 0.3s ease-in-out 0.3s 1 forwards;
-}
-.card[for="c0"] {
-  background-image: url("https://img.alicdn.com/imgextra/i4/O1CN01imuhna1FvwkTxTaWu_!!6000000000550-2-tps-1280-816.png");
-}
-.card[for="c1"] {
-  background-image: url("https://img.alicdn.com/imgextra/i4/O1CN01imuhna1FvwkTxTaWu_!!6000000000550-2-tps-1280-816.png");
-}
-.card[for="c2"] {
-  background-image: url("https://img.alicdn.com/imgextra/i4/O1CN01imuhna1FvwkTxTaWu_!!6000000000550-2-tps-1280-816.png");
-}
-
-
-
-/* 小于50rem  小于 800px */
-@media (max-width: 50rem) { 
+<style is:global>
   .card-player {
-    padding: 1.5rem;
-  }
-  .top-title {
-    margin-top: 2.5rem;
-    margin-bottom: 2.5rem;
-  }
-  .top-title .title {
-    font-size: 1.125rem; /* 18px */
-    line-height: 1.75rem; /* 28px */
-  }
-  .bottom-media-card {
-    display: none;
-  }
-  .mobile-bottom-media-card {
-    display: block;
-  }
-  .mobile-card {
-    background-size: cover;
-    background-image: url("https://img.alicdn.com/imgextra/i4/O1CN01imuhna1FvwkTxTaWu_!!6000000000550-2-tps-1280-816.png");
-  }
-  .mobile-bottom-media-card > .mobile-card:first-of-type {
-    margin-bottom: 1rem;
-  }
-  .mobile-bottom-media-card > .mobile-card:nth-child(2) {
-    margin-bottom: 1rem;
-  }
-}
+    .card {
+      /* 默认宽度 */
+      width: 9.75rem;
+      background-size: cover;
+      transition: 0.6s cubic-bezier(0.28, -0.03, 0, 0.99);
+      /* box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.8); */
+    }
+    .media-container > .card:first-of-type {
+      margin-left: 0;
+    }
+    .media-container > .card:last-of-type {
+      margin-right: 0;
+    }
+    @keyframes showcontent {
+      from {
+        opacity: 0;
+        /* transform: translate(0, 100px); */
+        /* filter: blur(1rem); */
+      }
+      to {
+        opacity: 1;
+        /* transform: translate(0, 0); */
+        /* filter: blur(0); */
+      }
+    }
+    input {
+      display: none;
+    }
+    input:checked + label {
+      width: 42rem;
+    }
+    input:checked + label .row {
+      animation: showcontent 0.3s ease-in-out 0.3s 1 forwards;
+    }
+    input:checked + label .description {
+      animation: showcontent 0.3s ease-in-out 0.3s 1 forwards;
+    }
+    .card[for="c0"] {
+      background-image: url("https://img.alicdn.com/imgextra/i4/O1CN01imuhna1FvwkTxTaWu_!!6000000000550-2-tps-1280-816.png");
+    }
+    .card[for="c1"] {
+      background-image: url("https://img.alicdn.com/imgextra/i4/O1CN01imuhna1FvwkTxTaWu_!!6000000000550-2-tps-1280-816.png");
+    }
+    .card[for="c2"] {
+      background-image: url("https://img.alicdn.com/imgextra/i4/O1CN01imuhna1FvwkTxTaWu_!!6000000000550-2-tps-1280-816.png");
+    }
 
+    /* 小于50rem  小于 800px */
+    @media (max-width: 50rem) {
+      padding: 1.5rem;
+      .top-title {
+        margin-top: 2.5rem;
+        margin-bottom: 2.5rem;
+      }
+      .top-title .title {
+        font-size: 1.125rem; /* 18px */
+        line-height: 1.75rem; /* 28px */
+      }
+      .bottom-media-card {
+        display: none;
+      }
+      .mobile-bottom-media-card {
+        display: block;
+      }
+      .mobile-card {
+        background-size: cover;
+        background-image: url("https://img.alicdn.com/imgextra/i4/O1CN01imuhna1FvwkTxTaWu_!!6000000000550-2-tps-1280-816.png");
+      }
+      .mobile-bottom-media-card > .mobile-card:first-of-type {
+        margin-bottom: 1rem;
+      }
+      .mobile-bottom-media-card > .mobile-card:nth-child(2) {
+        margin-bottom: 1rem;
+      }
+    }
 
-/* 大于50rem 小于 72rem  800px < width < 1152 */
-@media (min-width: 50rem) and (max-width: 72rem) { 
-  .media-container {
-    width: 100%;
+    /* 大于50rem 小于 72rem  800px < width < 1152 */
+    @media (min-width: 50rem) and (max-width: 72rem) {
+      .media-container {
+        width: 100%;
+      }
+      input:checked + label {
+        flex: 1;
+      }
+    }
   }
-  input:checked + label {
-    flex: 1;
-  }
-
-}
-
 </style>

@@ -1,148 +1,159 @@
 ---
 interface Props {
   href?: string;
-  type?: 'primary' | 'normal';
-  size?: 'small' | 'medium' | 'large';
+  type?: "primary" | "normal";
+  size?: "small" | "medium" | "large";
   class?: string;
   // hover时是否显示默认的箭头
-  visibility?: boolean
-  target?: '_blank' | '_self'
+  visibility?: boolean;
+  target?: "_blank" | "_self";
 }
 
-const { href, type = 'normal', size = 'medium', visibility = true, target = "_self" } = Astro.props;
+const {
+  href,
+  type = "normal",
+  size = "medium",
+  visibility = true,
+  target = "_self",
+} = Astro.props;
 ---
 
-<!-- <button> 可以设置默认样式 -->
-<button class=`button w-fit p-0 bg-transparent`>
-  <a 
-    href={href}
-    target={target}
-    class=`${type === 'normal' ? 'button-normal' : 'button-primary'} flex items-center justify-center no-underline ${size === 'small' ? 'xp-small h-small' : ''} ${size === 'medium' ? 'xp-medium h-medium' : ''} ${size === 'large' ? 'xp-large h-large' : ''} ${Astro.props?.class || ''}`
-  >
-    <slot />
-    {
-      visibility && (
-        <span class="icon">
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            xmlns:xlink="http://www.w3.org/1999/xlink" 
-            fill="none" version="1.1" width="8" height="8" viewBox="0 0 8 8"
-          >
-            <g transform="matrix(-1,0,0,1,16,0)">
-              <path 
-                fill={type === 'normal' ? '#1E1F24' : '#A3A6B3'} 
-                fill-opacity="1"
-                d="M9.27237,2.16302L9.27237,6.99801Q9.27237,7.26839,9.08915,7.45161Q8.905925,7.63483,8.636183,7.6342Q8.365805,7.6342,8.183221,7.45097Q8.000636137,7.26775,8,6.99801L8,0.636183Q8,0.365805,8.183221,0.183221Q8.366441,0.000636364,8.636183,0L14.99801,0Q15.26839,0,15.451609999999999,0.183221Q15.634830000000001,0.366441,15.63419,0.636183Q15.63419,0.906561,15.45097,1.08978Q15.26775,1.273,14.99801,1.27237L10.16302,1.27237L15.825050000000001,6.93439Q16,7.10935,16,7.37972Q16,7.6501,15.825050000000001,7.82505Q15.6501,8,15.379719999999999,8Q15.10935,8,14.93439,7.82505L9.27237,2.16302Z" 
-              />
-            </g>
-          </svg>
-      </span>
-      )
+<span class="button-div">
+  <!-- <button> 可以设置默认样式 -->
+  <button class=`button w-fit p-0 bg-transparent`>
+    <a
+      href={href}
+      target={target}
+      class=`${type === 'normal' ? 'button-normal' : 'button-primary'} flex items-center justify-center no-underline ${size === 'small' ? 'xp-small h-small' : ''} ${size === 'medium' ? 'xp-medium h-medium' : ''} ${size === 'large' ? 'xp-large h-large' : ''} ${Astro.props?.class || ''}`
+    >
+      <slot />
+      {
+        visibility && (
+          <span class="icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              fill="none"
+              version="1.1"
+              width="8"
+              height="8"
+              viewBox="0 0 8 8"
+            >
+              <g transform="matrix(-1,0,0,1,16,0)">
+                <path
+                  fill={type === "normal" ? "#1E1F24" : "#A3A6B3"}
+                  fill-opacity="1"
+                  d="M9.27237,2.16302L9.27237,6.99801Q9.27237,7.26839,9.08915,7.45161Q8.905925,7.63483,8.636183,7.6342Q8.365805,7.6342,8.183221,7.45097Q8.000636137,7.26775,8,6.99801L8,0.636183Q8,0.365805,8.183221,0.183221Q8.366441,0.000636364,8.636183,0L14.99801,0Q15.26839,0,15.451609999999999,0.183221Q15.634830000000001,0.366441,15.63419,0.636183Q15.63419,0.906561,15.45097,1.08978Q15.26775,1.273,14.99801,1.27237L10.16302,1.27237L15.825050000000001,6.93439Q16,7.10935,16,7.37972Q16,7.6501,15.825050000000001,7.82505Q15.6501,8,15.379719999999999,8Q15.10935,8,14.93439,7.82505L9.27237,2.16302Z"
+                />
+              </g>
+            </svg>
+          </span>
+        )
+      }
+    </a>
+  </button>
+</span>
+
+<style is:global>
+  .button-div {
+    button {
+      /* normal */
+      --button-bg-color: theme("colors.gray.01");
+      --button-hover-color: theme("colors.gray.03");
+      --button-text-color: theme("colors.gray.13");
+      /* primary */
+      --primary-bg-color: theme("colors.gray.13");
+      --primary-hover-color: theme("colors.gray.12");
+      --primary-text-color: theme("colors.gray.06");
+
+      --button-rounded: 0.5rem;
+
+      /* 14px */
+      --button-font-size: 0.875rem;
+      /* 24px */
+      --button-small-height: 1.5rem;
+      /* 32px */
+      --button-medium-height: 2rem;
+      /* 48px */
+      --button-large-height: 3rem;
+      /* 12px */
+      --button-small-xpadding: 0.75rem;
+      /* 16px */
+      --button-medium-xpadding: 1rem;
+      /* 36px */
+      --button-large-xpadding: 2.25rem;
     }
-  </a>
-</button>
 
+    .button {
+      /* 默认样式 */
+      cursor: pointer;
+      font-weight: normal;
+      font-size: var(--button-font-size);
+      color: var(--button-text-color);
+    }
 
+    .button-primary {
+      color: var(--primary-text-color);
+      /* border-radius: var(--button-rounded); */
+      background-color: var(--primary-bg-color);
+      &:hover {
+        background-color: var(--primary-hover-color);
+      }
+    }
 
+    .button-normal {
+      color: var(--button-text-color);
+      /* border-radius: var(--button-rounded); */
+      background-color: var(--button-bg-color);
+      &:hover {
+        background-color: var(--button-hover-color);
+      }
+    }
 
-<style>
-button {
-  /* normal */
-  --button-bg-color: theme('colors.gray.01');
-  --button-hover-color: theme('colors.gray.03');
-  --button-text-color: theme('colors.gray.13');
-  /* primary */
-  --primary-bg-color: theme('colors.gray.13');
-  --primary-hover-color: theme('colors.gray.12');
-  --primary-text-color: theme('colors.gray.06');
+    .button-normal,
+    .button-primary {
+      .icon {
+        opacity: 0;
+        width: 0;
+        margin-left: 0;
+        transition:
+          transform 0.5s ease,
+          width 0.3s ease,
+          opacity 0.3s ease,
+          margin-left 0.3s ease;
+      }
+      &:hover {
+        .icon {
+          transform: translate(3px, 0px);
+          opacity: 1;
+          width: 8px;
+          margin-left: 0.5rem;
+        }
+      }
+    }
 
-  --button-rounded: 0.5rem;
+    .xp-small {
+      padding: 0 var(--button-small-xpadding);
+    }
 
-  /* 14px */
-  --button-font-size: 0.875rem;
-  /* 24px */
-  --button-small-height: 1.5rem;
-  /* 32px */
-  --button-medium-height: 2rem;
-  /* 48px */
-  --button-large-height: 3rem;
-  /* 12px */
-  --button-small-xpadding: 0.75rem;
-  /* 16px */
-  --button-medium-xpadding: 1rem;
-  /* 36px */
-  --button-large-xpadding: 2.25rem;
-}
+    .xp-medium {
+      padding: 0 var(--button-medium-xpadding);
+    }
 
-.button {
-  /* 默认样式 */
-  cursor: pointer;
-  font-weight: normal;
-  font-size: var(--button-font-size);
-  color: var(--button-text-color);
-}
+    .xp-large {
+      padding: 0 var(--button-large-xpadding);
+    }
 
-.button-primary {
-  color: var(--primary-text-color);
-  /* border-radius: var(--button-rounded); */
-  background-color: var(--primary-bg-color);
-  &:hover {
-    background-color: var(--primary-hover-color);
-  }
-}
+    .h-small {
+      height: var(--button-small-height);
+    }
 
-.button-normal {
-  color: var(--button-text-color);
-  /* border-radius: var(--button-rounded); */
-  background-color: var(--button-bg-color);
-  &:hover {
-    background-color: var(--button-hover-color);
-  }
-}
+    .h-medium {
+      height: var(--button-medium-height);
+    }
 
-.button-normal, .button-primary {
-  .icon {
-    opacity: 0;
-    width: 0;
-    margin-left: 0;
-    transition: transform 0.5s ease, width 0.3s ease, opacity 0.3s ease, margin-left 0.3s ease;
-  }
-  &:hover {
-    .icon {
-      transform: translate(3px, 0px);
-      opacity: 1;
-      width: 8px;
-      margin-left: 0.5rem;
+    .h-large {
+      height: var(--button-large-height);
     }
   }
-}
-
-.xp-small {
-  padding: 0 var(--button-small-xpadding);
-}
-
-.xp-medium {
-  padding: 0 var(--button-medium-xpadding);
-}
-
-.xp-large {
-  padding: 0 var(--button-large-xpadding);
-}
-
-.h-small {
-  height: var(--button-small-height);
-}
-
-.h-medium {
-  height: var(--button-medium-height);
-}
-
-.h-large {
-  height: var(--button-large-height);
-}
-
-
-
-
-  
 </style>

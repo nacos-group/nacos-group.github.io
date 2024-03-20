@@ -36,98 +36,99 @@ const companiesLogosBottom = [
 const companiesLogos = companiesLogosTop.concat(companiesLogosBottom);
 ---
 
-<use-companies
-  class="use-companies flex flex-col items-center bg-gary-02 py-10"
->
-  <div class="top-title flex flex-col items-center mb-4 mt-16">
-    <span class="text-gray-10 text-xs w-full max-w-[63.5rem]"
-      >{t("home.use.companies.about")}</span
-    >
-  </div>
+<span class="use-companies-wrapper">
+  <use-companies
+    class="use-companies flex flex-col items-center bg-gary-02 py-10"
+  >
+    <div class="top-title flex flex-col items-center mb-4 mt-16">
+      <span class="text-gray-10 text-xs w-full max-w-[63.5rem]"
+        >{t("home.use.companies.about")}</span
+      >
+    </div>
 
-  <div class="bottom-silder">
-    <ul class="slider">
-      {
-        companiesLogosTop.map((logo, index) => (
-          <li class="slider-item">
-            <Image
-              src={logo}
-              alt="log"
-              width="112"
-              height="96"
-              class="object-contain opacity-70"
-            />
-          </li>
-        ))
-      }
-    </ul>
-    <ul class="slider">
-      {
-        companiesLogosTop.map((logo, index) => (
-          <li class="slider-item">
-            <Image
-              src={logo}
-              alt="log"
-              width="112"
-              height="96"
-              class="object-contain opacity-70"
-            />
-          </li>
-        ))
-      }
-    </ul>
-  </div>
+    <div class="bottom-silder">
+      <ul class="slider">
+        {
+          companiesLogosTop.map((logo, index) => (
+            <li class="slider-item">
+              <Image
+                src={logo}
+                alt="log"
+                width="112"
+                height="96"
+                class="object-contain opacity-70"
+              />
+            </li>
+          ))
+        }
+      </ul>
+      <ul class="slider">
+        {
+          companiesLogosTop.map((logo, index) => (
+            <li class="slider-item">
+              <Image
+                src={logo}
+                alt="log"
+                width="112"
+                height="96"
+                class="object-contain opacity-70"
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
 
-  <div class="bottom-silder">
-    <ul class="slider-other">
+    <div class="bottom-silder">
+      <ul class="slider-other">
+        {
+          companiesLogosBottom.map((logo, index) => (
+            <li class="slider-item-bottom">
+              <Image
+                src={logo}
+                alt="log"
+                width="112"
+                height="76"
+                class="object-contain opacity-70"
+              />
+            </li>
+          ))
+        }
+      </ul>
+      <ul class="slider-other">
+        {
+          companiesLogosBottom.map((logo, index) => (
+            <li class="slider-item-bottom">
+              <Image
+                src={logo}
+                alt="log"
+                width="112"
+                height="76"
+                class="object-contain opacity-70"
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="mobile-bottom-card hidden">
       {
-        companiesLogosBottom.map((logo, index) => (
-          <li class="slider-item-bottom">
+        companiesLogos.map((logo) => (
+          <div class="card-item">
             <Image
               src={logo}
               alt="log"
-              width="112"
+              width="139"
               height="76"
-              class="object-contain opacity-70"
+              class="object-contain"
             />
-          </li>
+          </div>
         ))
       }
-    </ul>
-    <ul class="slider-other">
-      {
-        companiesLogosBottom.map((logo, index) => (
-          <li class="slider-item-bottom">
-            <Image
-              src={logo}
-              alt="log"
-              width="112"
-              height="76"
-              class="object-contain opacity-70"
-            />
-          </li>
-        ))
-      }
-    </ul>
-  </div>
-
-  <div class="mobile-bottom-card hidden">
-    {
-      companiesLogos.map((logo) => (
-        <div class="card-item">
-          <Image
-            src={logo}
-            alt="log"
-            width="139"
-            height="76"
-            class="object-contain"
-          />
-        </div>
-      ))
-    }
-  </div>
-</use-companies>
-
+    </div>
+  </use-companies>
+</span>
 <script>
   class UseCompanies extends HTMLElement {
     constructor() {
@@ -137,146 +138,148 @@ const companiesLogos = companiesLogosTop.concat(companiesLogosBottom);
   customElements.define("use-companies", UseCompanies);
 </script>
 
-<style>
-  use-companies {
-    --time: 40s;
-  }
-  .top-title,
-  .bottom-silder {
-    width: 85.125rem;
-  }
-  .bottom-silder {
-    position: relative;
-    display: flex;
-    /* width: auto; */
-    overflow: hidden;
-    mask-image: linear-gradient(
-      90deg,
-      transparent,
-      theme("colors.gray.01") 20%,
-      theme("colors.gray.01") 80%,
-      transparent
-    );
-  }
-  .slider {
-    padding: 0rem;
-    list-style-type: none;
-    display: inline-block;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background-color 0.5s;
-  }
-  .slider-other {
-    padding: 0rem;
-    list-style-type: none;
-    display: inline-block;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background-color 0.5s;
-  }
-  .slider-item {
-    display: inline-block;
-    padding: 0 1.25rem;
-    filter: grayscale(100%);
-  }
-  .slider-item-bottom {
-    display: inline-block;
-    padding: 0 1.25rem;
-    filter: grayscale(100%);
-  }
-  Image {
-    /* max-height: 3.125rem; */
-    cursor: pointer;
-    transition: filter 0.5s;
-  }
-  .slider {
-    white-space: nowrap;
-    animation: slide var(--time) linear infinite;
-  }
-  @keyframes slide {
-    0% {
-      transform: translateX(0%);
-    }
-
-    100% {
-      transform: translateX(-100%);
-    }
-  }
-  .bottom-silder:hover > .slider {
-    animation-play-state: paused;
-  }
-  .bottom-silder:hover > .slider-other {
-    animation-play-state: paused;
-  }
-  .slider-item:first-child {
-    animation: reset var(--time) step-end infinite;
-    animation-delay: calc(var(--time) / -2);
-  }
-  @keyframes reset {
-    0% {
-      transform: translateX(0%);
-    }
-
-    100% {
-      transform: translateX(100%);
-    }
-  }
-
-  .slider-other {
-    white-space: nowrap;
-    animation: reslide var(--time) linear infinite;
-  }
-  @keyframes reslide {
-    0% {
-      transform: translateX(-100%);
-    }
-
-    100% {
-      transform: translateX(0%);
-    }
-  }
-
-  @media (max-width: 50rem) {
-    .use-companies {
-      padding: 1.5rem;
-    }
-    .top-title {
-      width: 100%;
-      margin-top: 2.5rem;
-    }
-    .bottom-silder {
-      width: 100%;
-      display: none !important;
-    }
-    .mobile-bottom-card {
-      display: flex !important;
-      flex-wrap: wrap;
-      margin: 0 -8px;
-      /* justify-content: space-between; */
-    }
-
-    .card-item {
-      padding: 0.375rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 1px solid theme("colors.gray.03");
-      max-width: 100%;
-      flex: 1;
-      margin: 0 8px 8px;
-      margin-bottom: 1rem;
-      background-color: #fff;
-      filter: grayscale(100%);
-    }
-  }
-
-  @media (min-width: 50rem) and (max-width: 86rem) {
-    .use-companies {
-      padding: 2.5rem;
+<style is:global>
+  .use-companies-wrapper {
+    use-companies {
+      --time: 40s;
     }
     .top-title,
     .bottom-silder {
-      width: 100%;
+      width: 85.125rem;
+    }
+    .bottom-silder {
+      position: relative;
+      display: flex;
+      /* width: auto; */
+      overflow: hidden;
+      mask-image: linear-gradient(
+        90deg,
+        transparent,
+        theme("colors.gray.01") 20%,
+        theme("colors.gray.01") 80%,
+        transparent
+      );
+    }
+    .slider {
+      padding: 0rem;
+      list-style-type: none;
+      display: inline-block;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color 0.5s;
+    }
+    .slider-other {
+      padding: 0rem;
+      list-style-type: none;
+      display: inline-block;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color 0.5s;
+    }
+    .slider-item {
+      display: inline-block;
+      padding: 0 1.25rem;
+      filter: grayscale(100%);
+    }
+    .slider-item-bottom {
+      display: inline-block;
+      padding: 0 1.25rem;
+      filter: grayscale(100%);
+    }
+    Image {
+      /* max-height: 3.125rem; */
+      cursor: pointer;
+      transition: filter 0.5s;
+    }
+    .slider {
+      white-space: nowrap;
+      animation: slide var(--time) linear infinite;
+    }
+    @keyframes slide {
+      0% {
+        transform: translateX(0%);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+    .bottom-silder:hover > .slider {
+      animation-play-state: paused;
+    }
+    .bottom-silder:hover > .slider-other {
+      animation-play-state: paused;
+    }
+    .slider-item:first-child {
+      animation: reset var(--time) step-end infinite;
+      animation-delay: calc(var(--time) / -2);
+    }
+    @keyframes reset {
+      0% {
+        transform: translateX(0%);
+      }
+
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    .slider-other {
+      white-space: nowrap;
+      animation: reslide var(--time) linear infinite;
+    }
+    @keyframes reslide {
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(0%);
+      }
+    }
+
+    @media (max-width: 50rem) {
+      .use-companies {
+        padding: 1.5rem;
+      }
+      .top-title {
+        width: 100%;
+        margin-top: 2.5rem;
+      }
+      .bottom-silder {
+        width: 100%;
+        display: none !important;
+      }
+      .mobile-bottom-card {
+        display: flex !important;
+        flex-wrap: wrap;
+        margin: 0 -8px;
+        /* justify-content: space-between; */
+      }
+
+      .card-item {
+        padding: 0.375rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid theme("colors.gray.03");
+        max-width: 100%;
+        flex: 1;
+        margin: 0 8px 8px;
+        margin-bottom: 1rem;
+        background-color: #fff;
+        filter: grayscale(100%);
+      }
+    }
+
+    @media (min-width: 50rem) and (max-width: 86rem) {
+      .use-companies {
+        padding: 2.5rem;
+      }
+      .top-title,
+      .bottom-silder {
+        width: 100%;
+      }
     }
   }
 </style>

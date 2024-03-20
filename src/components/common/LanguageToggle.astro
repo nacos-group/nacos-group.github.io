@@ -5,11 +5,13 @@ interface Props {
   lang: 'zh-cn' | 'en' | string;
 }
 import { useTranslations } from "@i18n/util";
+import {generateRandomString} from "@utils/util"
+
 const { id, size = 'small', lang } = Astro.props;
 const initialState = lang === 'zh-cn' ? false : true;
 const t = useTranslations(Astro);
 ---
-<div>
+<div class='common-languageToggle'>
   <toggle-content class="switch float-left relative m-0 rounded-[2rem] max-md:hidden">
     <input
       data-switch
@@ -66,7 +68,8 @@ const t = useTranslations(Astro);
   customElements.define('toggle-content', Toggle);
 </script>
 
-<style define:vars={{ size, initialState }}>
+<style define:vars={{ size, initialState}} is:global>
+.common-languageToggle{
   toggle-content {
     --toggle-ml-width: 7rem;
     --toggle-xl-width: 7.5rem;
@@ -144,4 +147,7 @@ const t = useTranslations(Astro);
     align-items: center;
     justify-content: center;
   }
+}
 </style>
+
+  

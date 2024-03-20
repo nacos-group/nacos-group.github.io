@@ -1,59 +1,58 @@
 ---
-import Toggle from '@components/common/Toggle.astro';
-import { isChinese } from '@i18n/util';
-import cloneDeep from 'lodash.clonedeep';
-import dataSource from '@components/common/Header/navbar.ts';
-import { docsItems } from '@components/common/Header/DocsMenu.astro';
+import Toggle from "@components/common/Toggle.astro";
+import { isChinese } from "@i18n/util";
+import cloneDeep from "lodash.clonedeep";
+import dataSource from "@components/common/Header/navbar.ts";
+import { docsItems } from "@components/common/Header/DocsMenu.astro";
 const ifzh = isChinese(Astro);
 
 interface Props {
   class?: string;
   top?: "4rem" | "3.5rem";
 }
-const { top = '4rem' } = Astro.props;
+const { top = "4rem" } = Astro.props;
 
 // 修改 文档 菜单显示逻辑
 const lastIdx = dataSource.length - 1;
 let _dataSource = cloneDeep(dataSource);
 
-
 (() => {
   const pathname = Astro.url.pathname;
-  if (ifzh && !pathname.startsWith('/docs/')) return;
-  if (ifzh && pathname.startsWith('/docs/ebook')) return;
-  if (!ifzh && !pathname.startsWith('/en/docs/')) return;
-  if (!ifzh && pathname.startsWith('/en/docs/ebook')) return;
+  if (ifzh && !pathname.startsWith("/docs/")) return;
+  if (ifzh && pathname.startsWith("/docs/ebook")) return;
+  if (!ifzh && !pathname.startsWith("/en/docs/")) return;
+  if (!ifzh && pathname.startsWith("/en/docs/ebook")) return;
 
-  const regex = ifzh ? /\/docs\/(?!what-is-nacos)([^\/]+)/ : /\/en\/docs\/(?!what-is-nacos)([^\/]+)/;
+  const regex = ifzh
+    ? /\/docs\/(?!what-is-nacos)([^\/]+)/
+    : /\/en\/docs\/(?!what-is-nacos)([^\/]+)/;
 
   const matchVersion = {};
-  const versions = docsItems.map(item => {
+  const versions = docsItems.map((item) => {
     const _link = ifzh ? item.link : item.translations?.link;
     const match = _link.match(regex);
-    const version = match?.[1] || 'latest';
+    const version = match?.[1] || "latest";
     Reflect.set(matchVersion, version, {
       zh: item.label,
       en: item.translations?.en,
-    })
+    });
     return version;
   });
 
   const match = pathname.match(
-    ifzh ? /\/docs\/([^\/]*)/ : /\/en\/docs\/([^\/]*)/
+    ifzh ? /\/docs\/([^\/]*)/ : /\/en\/docs\/([^\/]*)/,
   );
   // next v1 v2
-  const result = match?.[1] || '';
+  const result = match?.[1] || "";
   // 文档的当前版本
-  const version = versions.includes(result) ? result : 'latest';
+  const version = versions.includes(result) ? result : "latest";
 
-
-  const docsLabel = matchVersion[version]['zh'];
+  const docsLabel = matchVersion[version]["zh"];
 
   _dataSource[0].label = docsLabel;
   _dataSource[0].translations = {
-    en: matchVersion[version]['en']
+    en: matchVersion[version]["en"],
   };
-
 })();
 
 const ifactive = (toggle) => {
@@ -66,80 +65,77 @@ const ifactive = (toggle) => {
     return Astro.url.pathname.startsWith(`/en${route}`);
   }
 
-  active = activePath.some(path => {
+  active = activePath.some((path) => {
     if (ifzh) {
       return Astro.url.pathname.startsWith(path);
     }
     return Astro.url.pathname.startsWith(`/en${path}`);
   });
   return active;
-}
-
+};
 ---
 
+<span class="navbar-wrapper">
+  <navbar-component class="navbar-component h-full">
+    <div class=`pc-navbar ${Astro.props?.class || ''}`>
+      {
+        _dataSource.map(async (toggle, index) => {
+          const {
+            label,
+            translations,
+            trigger,
+            route,
+            slot,
+            position = "absolute",
+            target = "_self",
+          } = toggle;
+          // const component = slot && await import(slot);
+          const active = ifactive(toggle);
+          return (
+            <Toggle
+              title={ifzh ? label : translations?.en}
+              route={route}
+              trigger={trigger}
+              active={active}
+              slot={slot}
+              target={target}
+              position={position}
+              top={top}
+              class={`item ${index === lastIdx ? "item-last-child" : ""}`}
+            ></Toggle>
+          );
+        })
+      }
+    </div>
+  </navbar-component>
+</span>
 
-<navbar-component class="navbar-component h-full">
-  <div class=`pc-navbar ${Astro.props?.class || ''}`>
-    {
-      _dataSource.map(async (toggle, index) => {
-        const { label, translations, trigger, route, slot, position = 'absolute', target = "_self", } = toggle;
-        // const component = slot && await import(slot);
-        const active = ifactive(toggle);
-        return (
-          <Toggle 
-            title={ifzh ? label : translations?.en}
-            route={route}
-            trigger={trigger}
-            active={active}
-            slot={slot}
-            target={target}
-            position={position}
-            top={top}
-            class={`item ${index === lastIdx ? 'item-last-child' : ''}`}
-          >
-          </Toggle>
-        );
-      })
+<style is:global>
+  .navbar-wrapper {
+    navbar-component {
+      --navbar-line-bgd: theme("colors.gray.12");
     }
-  </div>
 
-</navbar-component>
-
-<script>
-  class Navbar extends HTMLElement {
-    constructor() {
-      super();
+    .navbar-component {
+      display: inline-block;
+      /* 防止换行和空白间隙 2px 默认值 外部不用修改*/
+      font-size: 0.125rem;
     }
 
-  }
-  customElements.define("navbar-component", Navbar);
-</script>
+    .navbar-component .item::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 100%;
+      width: 1px;
+      height: 16px;
+      /* height: calc(100% - 20px); */
+      background-color: var(--navbar-line-bgd);
+    }
 
-<style>
-  navbar-component {
-    --navbar-line-bgd: theme('colors.gray.12');
+    .navbar-component .item-last-child::after {
+      display: none;
+    }
   }
-  
-  .navbar-component {
-    display: inline-block;
-    /* 防止换行和空白间隙 2px 默认值 外部不用修改*/
-    font-size: 0.125rem; 
-  }
-
-  .navbar-component .item::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 100%;
-    width: 1px;
-    height: 16px;
-    /* height: calc(100% - 20px); */
-    background-color: var(--navbar-line-bgd);
-  }
-
-  .navbar-component .item-last-child::after {
-    display: none;
-  }
-
 </style>

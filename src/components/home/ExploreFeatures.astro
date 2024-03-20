@@ -3,252 +3,258 @@ import { useTranslations } from "@i18n/util";
 const t = useTranslations(Astro);
 ---
 
-<explore-features class="explore-features block bg-gary-02 p-10">
-  <div class="top-title w-full flex flex-col items-center mb-20 mt-16">
-    <span class="text-gray-10 text-xs mb-6">{t('home.features.about')}</span>
-    <span class="title text-gray-14 text-4xl font-medium">{t('home.features.title')}</span>
-  </div>
+<span class="explore-feature-wrapper">
+  <explore-features class="explore-features block bg-gary-02 p-10">
+    <div class="top-title w-full flex flex-col items-center mb-20 mt-16">
+      <span class="text-gray-10 text-xs mb-6">{t("home.features.about")}</span>
+      <span class="title text-gray-14 text-4xl font-medium"
+        >{t("home.features.title")}</span
+      >
+    </div>
 
-  <div class="bottom-features w-full">
-    <div class="w-full flex flex-wrap justify-center">
-      <div class="dynamic relative item flex flex-col items-center cursor-pointer bg-gray-03 rounded-3xl p-6">
-        <div class="w-full title text-gray-15 text-2xl">
-          {t('home.features.1.summary')}
-        </div>
-        <img class="mt-6" src="/features1.svg" alt="">
-        <div class="hover-title text-gray-08 text-sm mt-10">
-          <div class="hover-explain-one">
-            {t('home.features.1.explain.one')}
+    <div class="bottom-features w-full">
+      <div class="w-full flex flex-wrap justify-center">
+        <div
+          class="dynamic relative item flex flex-col items-center cursor-pointer bg-gray-03 rounded-3xl p-6"
+        >
+          <div class="w-full title text-gray-15 text-2xl">
+            {t("home.features.1.summary")}
           </div>
-          <div class="hover-explain">
-            {t('home.features.1.explain')}
+          <img class="mt-6" src="/features1.svg" alt="" />
+          <div class="hover-title text-gray-08 text-sm mt-10">
+            <div class="hover-explain-one">
+              {t("home.features.1.explain.one")}
+            </div>
+            <div class="hover-explain">
+              {t("home.features.1.explain")}
+            </div>
+          </div>
+        </div>
+
+        <div class="transfrom-split w-4"></div>
+        <div
+          class="discovery relative item flex flex-col items-center cursor-pointer bg-blue-08 rounded-3xl p-6"
+        >
+          <div class="w-full title text-blue-01 text-2xl">
+            {t("home.features.2.summary")}
+          </div>
+          <img class="mt-4" src="/features2.svg" alt="" />
+          <div class="hover-title text-blue-05 text-sm mt-10">
+            <div class="hover-explain-one">
+              {t("home.features.2.explain.one")}
+            </div>
+            <div class="hover-explain">
+              {t("home.features.2.explain")}
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="transfrom-split w-4"></div>
-      <div class="discovery relative item flex flex-col items-center cursor-pointer bg-blue-08 rounded-3xl p-6">
-        <div class="w-full title text-blue-01 text-2xl">
-          {t('home.features.2.summary')}
-        </div>
-        <img class="mt-4" src="/features2.svg" alt="">
-        <div class="hover-title text-blue-05 text-sm mt-10">
-          <div class="hover-explain-one">
-            {t('home.features.2.explain.one')}
+      <div class="flex justify-center mt-4">
+        <div
+          class="dns relative black-item flex flex-col justify-between cursor-pointer bg-gray-14 rounded-3xl p-6"
+        >
+          <img src="/features3.svg" alt="" />
+          <div class="title text-gray-02 text-2xl">
+            {t("home.features.3.summary")}
           </div>
-          <div class="hover-explain">
-            {t('home.features.2.explain')}
+          <div class="hover-title w-1/2 text-gray-04 text-sm">
+            <div class="hover-explain-one">
+              {t("home.features.3.explain.one")}
+            </div>
+            <div class="hover-explain">
+              {t("home.features.3.explain")}
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="flex justify-center mt-4">
-      <div class="dns relative black-item flex flex-col justify-between cursor-pointer bg-gray-14 rounded-3xl p-6">
-        <img src="/features3.svg" alt="">
-        <div class="title text-gray-02 text-2xl">
-          {t('home.features.3.summary')}
-        </div>
-        <div class="hover-title w-1/2 text-gray-04 text-sm">
-          <div class="hover-explain-one">
-            {t('home.features.3.explain.one')}
-          </div>
-          <div class="hover-explain">
-            {t('home.features.3.explain')}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</explore-features>
+  </explore-features>
+</span>
 
 <script>
-class ExploreFeatures extends HTMLElement {
-  constructor() {
-    super();
-
+  class ExploreFeatures extends HTMLElement {
+    constructor() {
+      super();
+    }
   }
-}
-customElements.define("explore-features", ExploreFeatures);
+  customElements.define("explore-features", ExploreFeatures);
 </script>
 
+<style is:global>
+  .explore-feature-wrapper {
+    .item {
+      width: 31.25rem;
+      height: 31.25rem;
+      overflow: hidden;
+    }
 
-<style>
-  .item {
-    width: 31.25rem;
-    height: 31.25rem;
-    overflow: hidden;
-  }
+    .black-item {
+      width: 63.5rem;
+      /* 给固定高度防止给固定高度防止hover时高度发生变化抖动 */
+      height: 14rem;
+    }
+    .item .hover-title {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      right: 1.5rem;
+    }
+    .item .hover-title .hover-explain-one {
+      display: block;
+    }
+    .item .hover-title .hover-explain {
+      height: 0;
+      max-height: 0rem;
+      overflow: hidden;
+      transition: max-height 0.8s ease-in-out; /* 动画效果 */
+    }
+    .item:hover .hover-title .hover-explain {
+      height: auto;
+      max-height: 99rem;
+    }
+    .item:hover .hover-title .hover-explain-one {
+      display: none;
+    }
 
-  .black-item {
-    width: 63.5rem;
-    /* 给固定高度防止给固定高度防止hover时高度发生变化抖动 */
-    height: 14rem;
-  }
-  .item .hover-title {
-    position: absolute;
-    bottom: 1.5rem;
-    left: 1.5rem;
-    right: 1.5rem;
-  }
-  .item .hover-title .hover-explain-one {
-    display: block;
-  }
-  .item .hover-title .hover-explain {
-    height: 0;
-    max-height: 0rem;
-    overflow: hidden;
-    transition: max-height 0.8s ease-in-out; /* 动画效果 */
-  }
-  .item:hover .hover-title .hover-explain {
-    height: auto;
-    max-height: 99rem;
-  }
-  .item:hover .hover-title .hover-explain-one {
-    display: none;
-  }
+    .item img {
+      transition: transform 0.8s;
+      transform: scale(0.8, 0.8);
+    }
+    .item:hover img {
+      transform: scale(0.64, 0.64);
+    }
+    .black-item img {
+      position: absolute;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 60%;
+    }
+    .black-item .title {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+    }
+    .black-item .title {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+    }
+    .black-item .hover-title {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      right: 1.5rem;
+    }
+    .black-item .hover-title .hover-explain-one {
+      display: block;
+      width: calc(100% - 3rem);
+    }
+    .black-item .hover-title .hover-explain {
+      height: 0;
+      max-height: 0rem;
+      overflow: hidden;
+      transition: max-height 0.8s ease-in-out; /* 动画效果 */
+    }
+    .black-item:hover .hover-title .hover-explain {
+      height: auto;
+      max-height: 99rem;
+    }
+    .black-item:hover .hover-title .hover-explain-one {
+      display: none;
+    }
 
-  .item img {
-    transition: transform 0.8s;
-    transform: scale(0.8, 0.8);
-  }
-  .item:hover img {
-    transform: scale(0.64, 0.64);
-  }
-  .black-item img {
-    position: absolute;
-    right: 1.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 60%;
-  }
-  .black-item .title {
-    position: absolute;
-    top: 1.5rem;
-    left: 1.5rem;
-  }
-  .black-item .title {
-    position: absolute;
-    top: 1.5rem;
-    left: 1.5rem;
-  }
-  .black-item .hover-title {
-    position: absolute;
-    bottom: 1.5rem;
-    left: 1.5rem;
-    right: 1.5rem;
-  }
-  .black-item .hover-title .hover-explain-one {
-    display: block;
-    width: calc(100% - 3rem);
-  }
-  .black-item .hover-title .hover-explain {
-    height: 0;
-    max-height: 0rem;
-    overflow: hidden;
-    transition: max-height 0.8s ease-in-out; /* 动画效果 */
-  }
-  .black-item:hover .hover-title .hover-explain {
-    height: auto;
-    max-height: 99rem;
-  }
-  .black-item:hover .hover-title .hover-explain-one {
-    display: none;
-  }
+    /* 小于50rem  小于 800px */
+    @media (max-width: 50rem) {
+      .explore-features {
+        padding: 1.5rem;
+      }
+      .top-title {
+        margin-top: 2.5rem;
+        margin-bottom: 2.5rem;
+      }
+      .top-title .title {
+        font-size: 1.125rem; /* 18px */
+        line-height: 1.75rem; /* 28px */
+      }
+      .bottom-features div:first-child {
+        flex-direction: column;
+        align-items: center;
+      }
+      .bottom-features .transfrom-split {
+        width: 100%;
+        height: 1rem;
+      }
+      .bottom-features .discovery .hover-title {
+        bottom: 0.5rem;
+      }
+      .bottom-features .item {
+        width: 100%;
+        height: 20rem;
+      }
+      .bottom-features .black-item {
+        width: 100%;
+        height: 20rem;
+      }
+      .bottom-features .item .title {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+      }
+      .bottom-features .item .hover-title {
+        opacity: 1;
+        font-size: 0.75rem; /* 12px */
+        line-height: 1rem; /* 16px */
+        margin-top: 1.5rem;
+      }
+      .bottom-features .item img {
+        margin-top: 1rem;
+        transform: scale(0.8, 0.8);
+        width: 7.5rem;
+        height: 7.5rem;
+      }
+      .bottom-features .black-item img {
+        position: static;
+        margin-top: 1rem;
+        transform: scale(0.8, 0.8);
+        width: 7.5rem;
+        height: 7.5rem;
+      }
+      .hover-explain {
+        width: calc(100% - 3rem);
+      }
+      .bottom-features .black-item .title {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+      }
+      .bottom-features .black-item .hover-title {
+        opacity: 1;
+        width: 100%;
+        margin-top: 1.5rem;
+      }
+    }
 
-  /* 小于50rem  小于 800px */
-@media (max-width: 50rem) { 
-  .explore-features {
-    padding: 1.5rem;
+    /* 大于50rem 小于 72rem  800px < width < 1152 */
+    @media (min-width: 50rem) and (max-width: 72rem) {
+      .bottom-features .transfrom-split {
+        height: 100%;
+        width: 1rem;
+      }
+      .bottom-features .discovery .hover-title {
+        bottom: 0.5rem;
+      }
+      .bottom-features .item {
+        /* width: 31.25rem; */
+        flex: 1;
+        height: 31.25rem;
+      }
+      .bottom-features .black-item {
+        width: 100%;
+        height: 16rem;
+      }
+      .bottom-features .black-item .hover-title {
+        width: 100%;
+      }
+    }
   }
-  .top-title {
-    margin-top: 2.5rem;
-    margin-bottom: 2.5rem;
-  }
-  .top-title .title {
-    font-size: 1.125rem; /* 18px */
-    line-height: 1.75rem; /* 28px */
-  }
-  .bottom-features div:first-child {
-    flex-direction: column;
-    align-items: center;
-  }
-  .bottom-features .transfrom-split {
-    width: 100%;
-    height: 1rem;
-  }
-  .bottom-features .discovery .hover-title {
-    bottom: .5rem;
-  }
-  .bottom-features .item {
-    width: 100%;
-    height: 20rem;
-  }
-  .bottom-features .black-item {
-    width: 100%;
-    height: 20rem;
-  }
-  .bottom-features .item .title {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-  }
-  .bottom-features .item .hover-title {
-    opacity: 1;
-    font-size: 0.75rem; /* 12px */
-    line-height: 1rem; /* 16px */
-    margin-top: 1.5rem;
-  }
-  .bottom-features .item img {
-    margin-top: 1rem;
-    transform: scale(0.8, 0.8);
-    width: 7.5rem;
-    height: 7.5rem;
-  }
-  .bottom-features .black-item img {
-    position: static;
-    margin-top: 1rem;
-    transform: scale(0.8, 0.8);
-    width: 7.5rem;
-    height: 7.5rem;
-  }
-  .hover-explain {
-    width: calc(100% - 3rem);
-  }
-  .bottom-features .black-item .title {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-  }
-  .bottom-features .black-item .hover-title {
-    opacity: 1;
-    width: 100%;
-    margin-top: 1.5rem;
-  }
-  
-}
-
-
-/* 大于50rem 小于 72rem  800px < width < 1152 */
-@media (min-width: 50rem) and (max-width: 72rem) { 
-  .bottom-features .transfrom-split {
-    height: 100%;
-    width: 1rem;
-  }
-  .bottom-features .discovery .hover-title {
-    bottom: .5rem;
-  }
-  .bottom-features .item {
-    /* width: 31.25rem; */
-    flex: 1;
-    height: 31.25rem;
-  }
-  .bottom-features .black-item {
-    width: 100%;
-    height: 16rem;
-  }
-  .bottom-features .black-item .hover-title {
-    width: 100%;
-  }
-}
-
 </style>

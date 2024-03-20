@@ -12,7 +12,7 @@ export interface Props {
 const { headingTitle, linkItems } = Astro.props as Props;
 ---
 
-<h2 class="heading"><UIString key={headingTitle} /></h2>
+<h2 class="link-list-wrapper"><UIString key={headingTitle} /></h2>
 <ul>
     <li>
         {
@@ -30,8 +30,8 @@ const { headingTitle, linkItems } = Astro.props as Props;
     </li>
 </ul>
 
-<style>
-    .heading {
+<style is:global>
+    .link-list-wrapper {
         margin-top: 1rem;
     }
 </style>

@@ -6,71 +6,75 @@ import "@style/markdown.css";
 
 type Props = CollectionEntry<"blog">["data"];
 
-const { title, description, date, updatedDate, heroImage, author } = Astro.props;
+const { title, description, date, updatedDate, heroImage, author } =
+	Astro.props;
 ---
 
-<div class="sl-markdown-content">
-	<div class="hero-image">
-		{heroImage && <img width={1020} height={510} src={heroImage} alt="" />}
-	</div>
-	<main>
-		<div class="nacos-prose mx-auto">
-			<div class="title">	
-				<h1 id="_top">{title}</h1>
-				<div >{author}</div>
-				<div class="date">
-					<FormattedDate date={new Date(date)} />
-					{
-						updatedDate && (
-							<div class="last-updated-on">
-								Last updated on{" "}
-								<FormattedDate date={updatedDate} />
-							</div>
-						)
-					}
-				</div>
-				<hr />
-			</div>
-			<slot />
+<span class="markdown-detail-wrapper">
+	<div class="sl-markdown-content">
+		<div class="hero-image">
+			{heroImage && <img width={1020} height={510} src={heroImage} alt="" />}
 		</div>
-	</main>
-</div>
+		<main>
+			<div class="nacos-prose mx-auto">
+				<div class="title">
+					<h1 id="_top">{title}</h1>
+					<div>{author}</div>
+					<div class="date">
+						<FormattedDate date={new Date(date)} />
+						{
+							updatedDate && (
+								<div class="last-updated-on">
+									Last updated on <FormattedDate date={updatedDate} />
+								</div>
+							)
+						}
+					</div>
+					<hr />
+				</div>
+				<slot />
+			</div>
+		</main>
+	</div>
+</span>
 
-<style>
-	main {
-		width: calc(100% - 2em);
-		max-width: 100%;
-		margin: 0;
-	}
-	.hero-image {
-		width: 100%;
-	}
-	.hero-image img {
-		display: block;
-		margin: 0 auto;
-		border-radius: 12px;
-		box-shadow: var(--box-shadow);
-	}
+<style is:global>
+	.markdown-detail-wrapper {
+		main {
+			width: calc(100% - 2em);
+			max-width: 100%;
+			margin: 0;
+		}
+		.hero-image {
+			width: 100%;
+		}
+		.hero-image img {
+			display: block;
+			margin: 0 auto;
+			border-radius: 12px;
+			box-shadow: var(--box-shadow);
+		}
 
-	.nacos-prose {
-		width: 100%;
-		padding: 1.5rem;
-		color: rgb(var(--gray-dark));
-	}
-	.title {
-		margin-bottom: 1em;
-		padding: 1em 0;
-		text-align: center;
-		line-height: 1;
-	}
-	.title h1 {
-		margin: 0 0 0.5em 0;
-	}
-	.date {
-		margin-bottom: 0.5em;
-		color: rgb(var(--gray));
-	}
-	.last-updated-on {
-		font-style: italic;
+		.nacos-prose {
+			width: 100%;
+			padding: 1.5rem;
+			color: rgb(var(--gray-dark));
+		}
+		.title {
+			margin-bottom: 1em;
+			padding: 1em 0;
+			text-align: center;
+			line-height: 1;
+		}
+		.title h1 {
+			margin: 0 0 0.5em 0;
+		}
+		.date {
+			margin-bottom: 0.5em;
+			color: rgb(var(--gray));
+		}
+		.last-updated-on {
+			font-style: italic;
+		}
 	}
 </style>
