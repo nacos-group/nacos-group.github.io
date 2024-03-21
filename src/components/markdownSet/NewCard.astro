@@ -3,143 +3,148 @@ import { Image } from "astro:assets";
 import Logo from "/public//nacos_white.png";
 import { useTranslations } from "@i18n/util";
 import moment from "moment";
-import Button from '@components/common/Button.astro';
+import Button from "@components/common/Button.astro";
 
 const t = useTranslations(Astro);
-
 
 const { type = "blog", source, post, classList = [] } = Astro.props;
 ---
 
-<div class:list={[...classList]}>
-  <div
-    class="new_card_container flex flex-row bg-gray-15 text-gray-01 rounded-3xl "
-  >
-    <div class="new_card_container_left basis-2/5 p-2">
-      <div class="shadow-xl poster rounded-3xl w-full h-full">
-        <Image
-          src="https://img.alicdn.com/imgextra/i4/O1CN01RCVHvA1Jor5A5fnIx_!!6000000001076-2-tps-800-800.png"
-          alt="Background"
-          class:list={["background", "z-0", "rounded-3xl", "w-auto"]}
-          width="400"
-          height="400"
-        />
+  <div class:list={[...classList,"new-card-wrapper"]}>
+    <div
+      class="new_card_container flex flex-row bg-gray-15 text-gray-01 rounded-3xl"
+    >
+      <div class="new_card_container_left basis-2/5 p-2">
+        <div class="shadow-xl poster rounded-3xl w-full h-full">
+          <Image
+            src="https://img.alicdn.com/imgextra/i4/O1CN01RCVHvA1Jor5A5fnIx_!!6000000001076-2-tps-800-800.png"
+            alt="Background"
+            class:list={["background", "z-0", "rounded-3xl", "w-auto"]}
+            width="400"
+            height="400"
+          />
+        </div>
+        {type !== "blog" && <slot name="left-content" />}
       </div>
-      {type !== "blog" && <slot name="left-content" />}
-    </div>
-    <div class="new_card_container_right basis-3/5 py-6 px-9">
-      {
-        type === "blog" && (
-          <div class="flex flex-col h-96">
-            <div class="flex-[0_0_auto] mb-auto">
-              <div class="text-2xl text-gray-02 leading-8">
-                {post.data.title}
+      <div class="new_card_container_right basis-3/5 py-6 px-9">
+        {
+          type === "blog" && (
+            <div class="flex flex-col h-96">
+              <div class="flex-[0_0_auto] mb-auto">
+                <div class="text-2xl text-gray-02 leading-8">
+                  {post.data.title}
+                </div>
+                <div class="text-gray-04 text-xs mt-6 leading-5">
+                  by
+                  <span class="ml-1.5"> {post.data.author || "nacos"}</span>
+                  <span class=" ml-1.5">
+                    {t("blog.card.author.alibaba.Cloud.engineer")}
+                  </span>
+                </div>
+                <div class="mt-8 text-sm leading-6">
+                  {post.data.description}
+                </div>
               </div>
-              <div class="text-gray-04 text-xs mt-6 leading-5">
-                by
-                <span class="ml-1.5"> {post.data.author || "nacos"}</span>
-                <span class=" ml-1.5">{t('blog.card.author.alibaba.Cloud.engineer')}</span>
-              </div>
-              <div class="mt-8 text-sm leading-6">{post.data.description}</div>
-            </div>
 
-            <div class="flex-[0_0_auto] mt-auto">
+              <div class="flex-[0_0_auto] mt-auto">
                 <Button
-                  size="large" 
+                  size="large"
                   class="text-gray-15 font-medium mb-5 rounded-lg"
                   href={`/blog/${post.slug}/?source=${source}`}
                 >
-                  {t('blog.card.btn.read')}
+                  {t("blog.card.btn.read")}
                 </Button>
-              <div class="card-bottom flex flex-row justify-between blog_latest_bottom pt-2.5 ">
-                <div class="text-gray-07 text-sm font-medium leading-5">
-                  {moment(post.data.date).format("MMMM D, YYYY")}
-                </div>
-                <div class="h-2">
-                  <Image src={Logo} alt="" class="h-3 w-14" />
+                <div class="card-bottom flex flex-row justify-between blog_latest_bottom pt-2.5 ">
+                  <div class="text-gray-07 text-sm font-medium leading-5">
+                    {moment(post.data.date).format("MMMM D, YYYY")}
+                  </div>
+                  <div class="h-2">
+                    <Image src={Logo} alt="" class="h-3 w-14" />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )
-      }
-      {type !== "blog" && <slot name="right-content" />}
+          )
+        }
+        {type !== "blog" && <slot name="right-content" />}
+      </div>
     </div>
   </div>
-</div>
 
-<style>
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-  .poster {
-    position: relative;
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .new_card_container {
-    min-height: 420px;
-    transition:
-      transform 0.2s,
-      box-shadow 0.2s;
-  }
-  .new_card_container:hover {
-    transition:
-      transform 0.2s,
-      box-shadow 0.2s;
-    transform: translateY(-4px);
-    box-shadow:
-      4px 4px 8px rgba(0, 0, 0, 0.1),
-      -4px -4px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .background {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-  }
-
-  .title {
-    font-size: 1.25em; /* 调整为合适的大小 */
-    text-align: center;
-    z-index: 5;
-    line-height: 1.5em;
-  }
-
-  .info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-  .logo {
-    width: 40px;
-    height: auto;
-  }
-
-  .card-bottom {
-    border-top: 1px solid theme('colors.gray.11')
-  }
-
-  /* 小于50rem  小于 800px */
-  @media (max-width: 50rem) {
+<style is:global>
+  .new-card-wrapper {
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
     .poster {
-      height: 200px;
-    }
-    .new_card_container {
+      position: relative;
+      background-size: cover;
+      display: flex;
       flex-direction: column;
-      height: auto;
-      /* margin: 0 1rem; */
+      justify-content: center;
+      align-items: center;
     }
-  }
-  /* 大于50rem 小于 72rem  800px < width < 1152 */
-  @media (min-width: 50rem) and (max-width: 72rem) {
+
+    .new_card_container {
+      min-height: 420px;
+      transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+    }
+    .new_card_container:hover {
+      transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+      transform: translateY(-4px);
+      box-shadow:
+        4px 4px 8px rgba(0, 0, 0, 0.1),
+        -4px -4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    .title {
+      font-size: 1.25em; /* 调整为合适的大小 */
+      text-align: center;
+      z-index: 5;
+      line-height: 1.5em;
+    }
+
+    .info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    .logo {
+      width: 40px;
+      height: auto;
+    }
+
+    .card-bottom {
+      border-top: 1px solid theme("colors.gray.11");
+    }
+
+    /* 小于50rem  小于 800px */
+    @media (max-width: 50rem) {
+      .poster {
+        height: 200px;
+      }
+      .new_card_container {
+        flex-direction: column;
+        height: auto;
+        /* margin: 0 1rem; */
+      }
+    }
+    /* 大于50rem 小于 72rem  800px < width < 1152 */
+    @media (min-width: 50rem) and (max-width: 72rem) {
+    }
   }
 </style>

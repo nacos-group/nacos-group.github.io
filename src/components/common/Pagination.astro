@@ -29,114 +29,118 @@ const pages = allPages.map((href, i) => {
 const collapsedPages = collapseRange(page, pages);
 ---
 
-<nav aria-label={ariaLabel} {...attrs}>
-    <ul class="flex items-center gap-4 text-lg">
-        {
-            page.url.prev && (
-                <li class="prev rounded-full border border-gray-07">
-                    <a
-                        href={page.url.prev}
-                        rel="prefetch"
-                        class="flex h-10 w-10 items-center justify-center"
-                    >
-                        <Icon name="left-arrow" />
-                    </a>
-                </li>
-            )
-        }
-        {
-            collapsedPages.map((link) => (
-                <li class="hidden sm:inline-block">
-                    {!link.href ? (
-                        <p class="text">{link.text}</p>
-                    ) : (
+<span class="pagination-wrapper">
+    <nav aria-label={ariaLabel} {...attrs}>
+        <ul class="flex items-center gap-4 text-lg">
+            {
+                page.url.prev && (
+                    <li class="prev rounded-full border border-gray-07">
                         <a
-                            href={link.href}
-                            class:list={[
-                                "relative rounded-md w-10 h-10 flex items-center justify-center border border-transparent transition-colors duration-150",
-                                link.pageNum !== page.currentPage &&
-                                    "hover:border-gray-07 focus:border-gray-07",
-                            ]}
-                            aria-current={
-                                link.pageNum === page.currentPage
-                                    ? "page"
-                                    : undefined
-                            }
+                            href={page.url.prev}
+                            rel="prefetch"
+                            class="flex h-10 w-10 items-center justify-center"
                         >
-                            {link.pageNum}
+                            <Icon name="left-arrow" />
                         </a>
-                    )}
-                </li>
-            ))
+                    </li>
+                )
+            }
+            {
+                collapsedPages.map((link) => (
+                    <li class="hidden sm:inline-block">
+                        {!link.href ? (
+                            <p class="text">{link.text}</p>
+                        ) : (
+                            <a
+                                href={link.href}
+                                class:list={[
+                                    "relative rounded-md w-10 h-10 flex items-center justify-center border border-transparent transition-colors duration-150",
+                                    link.pageNum !== page.currentPage &&
+                                        "hover:border-gray-07 focus:border-gray-07",
+                                ]}
+                                aria-current={
+                                    link.pageNum === page.currentPage
+                                        ? "page"
+                                        : undefined
+                                }
+                            >
+                                {link.pageNum}
+                            </a>
+                        )}
+                    </li>
+                ))
+            }
+            <li class="sm:hidden">
+                <p aria-current="page" class="text">
+                    Page {page.currentPage} of {page.lastPage}
+                </p>
+            </li>
+            {
+                page.url.next && (
+                    <li class="next ease rounded-full border border-gray-07 transition-colors duration-150">
+                        <a
+                            href={page.url.next}
+                            rel="prefetch"
+                            class="flex h-10 w-10 items-center justify-center"
+                        >
+                            <Icon name="right-arrow" />
+                        </a>
+                    </li>
+                )
+            }
+        </ul>
+    </nav>
+</span>
+<style is:global>
+    .pagination-wrapper {
+        a {
+            z-index: 1;
+            text-decoration: none;
+            color: theme("colors.gray.15");
         }
-        <li class="sm:hidden">
-            <p aria-current="page" class="text">
-                Page {page.currentPage} of {page.lastPage}
-            </p>
-        </li>
-        {
-            page.url.next && (
-                <li class="next ease rounded-full border border-gray-07 transition-colors duration-150">
-                    <a
-                        href={page.url.next}
-                        rel="prefetch"
-                        class="flex h-10 w-10 items-center justify-center"
-                    >
-                        <Icon name="right-arrow" />
-                    </a>
-                </li>
-            )
+        ul {
+            list-style-type: none;
         }
-    </ul>
-</nav>
-<style>
-    a {
-        z-index: 1;
-        text-decoration: none;
-        color: theme('colors.gray.15')
-    }
-    ul {
-        list-style-type: none;
-    }
-    li :active {
-        color: theme('colors.gray.15')
-    }
-    .next:hover,
-    .prev:hover {
-        background-color: theme('colors.gray.07');
-       a {
-        color: theme('colors.gray.14')
-       } 
-    }
-
-    .text {
-        color: theme('colors.gray.15')
-    }
-
-    @media screen(sm) {
-        [aria-current="page"]::before {
-            position:absolute;
-            inset: 0;
-            content: "";
-            margin: -1px;
-            border-radius: inherit;
-            background: linear-gradient(
-                247.23deg,
-                theme('colors.blue.07'),
-                theme('colors.gray.04')
-            );
-            z-index: -1;
+        li :active {
+            color: theme("colors.gray.15");
+        }
+        .next:hover,
+        .prev:hover {
+            background-color: theme("colors.gray.07");
+            a {
+                color: theme("colors.gray.14");
+            }
         }
 
-        [aria-current="page"]::after {
-            content: "";
-            border-radius: inherit;
-            background: rgb(35 38 45)
-                linear-gradient(
+        .text {
+            color: theme("colors.gray.15");
+        }
+
+        @media screen(sm) {
+            [aria-current="page"]::before {
+                position: absolute;
+                inset: 0;
+                content: "";
+                margin: -1px;
+                border-radius: inherit;
+                background: linear-gradient(
                     247.23deg,
-                    theme('colors.gray.07'),
-                    theme('colors.blue.04')
+                    theme("colors.blue.07"),
+                    theme("colors.gray.04")
                 );
+                z-index: -1;
+            }
+
+            [aria-current="page"]::after {
+                content: "";
+                border-radius: inherit;
+                background: rgb(35 38 45)
+                    linear-gradient(
+                        247.23deg,
+                        theme("colors.gray.07"),
+                        theme("colors.blue.04")
+                    );
+            }
         }
     }
 </style>

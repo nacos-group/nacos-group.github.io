@@ -1,0 +1,17 @@
+---
+const PAGE_TITLE_ID = "_top";
+---
+
+<h1 class="page-title-wrapper" id={PAGE_TITLE_ID}>
+  {Astro.props.entry.data.title}
+</h1>
+
+<style is:global>
+  .page-title-wrapper {
+    margin-top: 1rem;
+    font-size: var(--sl-text-h1);
+    line-height: var(--sl-line-height-headings);
+    font-weight: 600;
+    color: var(--sl-color-white);
+  }
+</style>

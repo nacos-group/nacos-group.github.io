@@ -1,154 +1,175 @@
 ---
 import MobileNavbarSublist from "./MobileNavbarSublist.astro";
-import dataSource from '@components/common/Header/navbar.ts';
-import { docsItems } from '@components/common/Header/DocsMenu.astro';
-import { communityItems } from '@components/common/Header/CommunityMenu.astro';
+import dataSource from "@components/common/Header/navbar.ts";
+import { docsItems } from "@components/common/Header/DocsMenu.astro";
+import { communityItems } from "@components/common/Header/CommunityMenu.astro";
 
 interface Props {
   top?: "4rem" | "3.5rem";
   class?: string;
 }
-const { top = '4rem' } = Astro.props;
+const { top = "4rem" } = Astro.props;
 
 const sublist = [];
 for (let i = 0; i < dataSource.length; i++) {
   const item = dataSource[i];
   let _item = {};
   if (item.slot) {
-    _item = { type: 'group', label: item.label, entries: [], collapsed: true };
+    _item = { type: "group", label: item.label, entries: [], collapsed: true };
   } else {
-    _item = { type: 'link', label: item.label, href: item.route, isCurrent: false }
+    _item = {
+      type: "link",
+      label: item.label,
+      href: item.route,
+      isCurrent: false,
+    };
   }
   sublist.push(_item);
 }
 
 (() => {
-  const [docs, , community, ] = sublist;
+  const [docs, , community] = sublist;
   const docsEntries = [];
   const communityEntries = [];
   for (let i = 0; i < docsItems.length; i++) {
     const item = docsItems[i];
-    docsEntries.push({ type: 'link', label: item.label, href: item.link, isCurrent: false })
+    docsEntries.push({
+      type: "link",
+      label: item.label,
+      href: item.link,
+      isCurrent: false,
+    });
   }
 
   for (let i = 0; i < communityItems.length; i++) {
     const item = communityItems[i];
     if (item.children) {
-      const _item = { type: 'group', label: item.label, entries: [], collapsed: false, class: 'large-weight text-13px' };
+      const _item = {
+        type: "group",
+        label: item.label,
+        entries: [],
+        collapsed: false,
+        class: "large-weight text-13px",
+      };
       for (let j = 0; j < item.children.length; j++) {
         const child = item.children[j];
-        _item.entries.push({ type: 'link', label: child.label, href: child.link, isCurrent: false });
+        _item.entries.push({
+          type: "link",
+          label: child.label,
+          href: child.link,
+          isCurrent: false,
+        });
       }
       communityEntries.push(_item);
     } else {
-      communityEntries.push({ type: 'link', label: item.label, href: item.link, isCurrent: false });
+      communityEntries.push({
+        type: "link",
+        label: item.label,
+        href: item.link,
+        isCurrent: false,
+      });
     }
   }
   docs.entries = docsEntries;
   community.entries = communityEntries;
-})()
-
+})();
 ---
 
-
-<div class={`mobile-navbar ${Astro.props.class}`}>
-  <mobile-menu-button>
-    <button
-      aria-expanded="false"
-      aria-label='mobile-menu-button'
-    >
-      <svg
-        viewBox="0 0 1024 1024"
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
-        p-id="6304"
-        width="28"
-        height="28"
-      >
-        <path
-          d="M192.037 287.953h640.124c17.673 0 32-14.327 32-32s-14.327-32-32-32H192.037c-17.673 0-32 14.327-32 32s14.327 32 32 32zM832.161 479.169H438.553c-17.673 0-32 14.327-32 32s14.327 32 32 32h393.608c17.673 0 32-14.327 32-32s-14.327-32-32-32zM832.161 735.802H192.037c-17.673 0-32 14.327-32 32s14.327 32 32 32h640.124c17.673 0 32-14.327 32-32s-14.327-32-32-32zM319.028 351.594l-160 160 160 160z"
-          fill="#f4f4f6"
-          p-id="6305"
+<span class="mobile-navbar-wrapper">
+  <div class={`mobile-navbar ${Astro.props.class}`}>
+    <mobile-menu-button>
+      <button aria-expanded="false" aria-label="mobile-menu-button">
+        <svg
+          viewBox="0 0 1024 1024"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          p-id="6304"
+          width="28"
+          height="28"
         >
-        </path>
-      </svg>
-    </button>
-  </mobile-menu-button>
+          <path
+            d="M192.037 287.953h640.124c17.673 0 32-14.327 32-32s-14.327-32-32-32H192.037c-17.673 0-32 14.327-32 32s14.327 32 32 32zM832.161 479.169H438.553c-17.673 0-32 14.327-32 32s14.327 32 32 32h393.608c17.673 0 32-14.327 32-32s-14.327-32-32-32zM832.161 735.802H192.037c-17.673 0-32 14.327-32 32s14.327 32 32 32h640.124c17.673 0 32-14.327 32-32s-14.327-32-32-32zM319.028 351.594l-160 160 160 160z"
+            fill="#f4f4f6"
+            p-id="6305"
+          >
+          </path>
+        </svg>
+      </button>
+    </mobile-menu-button>
 
-  <div class="navbar-panel bg-gray-14">
-    <div class="navbar-content flex">
-      <MobileNavbarSublist sublist={sublist} />
+    <div class="navbar-panel bg-gray-14">
+      <div class="navbar-content flex">
+        <MobileNavbarSublist sublist={sublist} />
+      </div>
     </div>
   </div>
-</div>
-
+</span>
 
 <script>
-	class MobileMenuButton extends HTMLElement {
-		menuButton = this.querySelector('button')!;
+  class MobileMenuButton extends HTMLElement {
+    menuButton = this.querySelector("button")!;
 
-		constructor() {
-			super();
-			this.menuButton.addEventListener('click', () => this.toggleExpanded());
+    constructor() {
+      super();
+      this.menuButton.addEventListener("click", () => this.toggleExpanded());
 
-			const parentNav = this.closest('nav');
-			if (parentNav) {
-				parentNav.addEventListener('keyup', (e) => this.closeOnEscape(e));
-			}
-		}
+      const parentNav = this.closest("nav");
+      if (parentNav) {
+        parentNav.addEventListener("keyup", (e) => this.closeOnEscape(e));
+      }
+    }
 
-		setExpanded(expanded: boolean) {
-			this.setAttribute('aria-expanded', String(expanded));
-			document.body.toggleAttribute('data-mobile-menu-expanded', expanded);
-		}
+    setExpanded(expanded: boolean) {
+      this.setAttribute("aria-expanded", String(expanded));
+      document.body.toggleAttribute("data-mobile-menu-expanded", expanded);
+    }
 
-		toggleExpanded() {
+    toggleExpanded() {
       // document.body.classList.toggle('overflow-hidden');
-			this.setExpanded(this.getAttribute('aria-expanded') !== 'true');
-		}
+      this.setExpanded(this.getAttribute("aria-expanded") !== "true");
+    }
 
-		closeOnEscape(e: KeyboardEvent) {
-			if (e.code === 'Escape') {
-				this.setExpanded(false);
-				this.menuButton.focus();
-			}
-		}
-	}
+    closeOnEscape(e: KeyboardEvent) {
+      if (e.code === "Escape") {
+        this.setExpanded(false);
+        this.menuButton.focus();
+      }
+    }
+  }
 
-	customElements.define('mobile-menu-button', MobileMenuButton);
+  customElements.define("mobile-menu-button", MobileMenuButton);
 </script>
 
+<style define:vars={{ top }} is:global>
+  .mobile-navbar-wrapper {
+    .mobile-navbar button {
+      border: 0;
+      display: flex;
+      align-items: center;
+      height: var(--top);
+      background-color: transparent;
+      cursor: pointer;
+    }
 
-<style define:vars={{ top }}>
-	.mobile-navbar button {
-		border: 0;
-	    display: flex;
-    align-items: center;
-	height: var(--top);
-    background-color: transparent;
-		cursor: pointer;
-	}
+    .mobile-navbar .navbar-panel {
+      visibility: var(--sl-sidebar-visibility, hidden);
+      position: fixed;
+      z-index: 5;
+      inset-inline-start: 0;
+      width: 100%;
+      overflow-y: auto;
+      height: calc(100vh - var(--top));
+    }
 
-  .mobile-navbar .navbar-panel {
-		visibility: var(--sl-sidebar-visibility, hidden);
-		position: fixed;
-		z-index: 5;
-		inset-inline-start: 0;
-		width: 100%;
-		overflow-y: auto;
-		height: calc(100vh - var(--top));
-	}
+    [aria-expanded="true"] ~ .navbar-panel {
+      --sl-sidebar-visibility: visible;
+    }
 
-	:global([aria-expanded='true']) ~ .navbar-panel {
-		--sl-sidebar-visibility: visible;
-	}
-
-	.mobile-navbar .navbar-content {
-		height: 100%;
-		min-height: max-content;
-		padding: 1rem 1rem 0;
-		flex-direction: column;
-	}
-
-
+    .mobile-navbar .navbar-content {
+      height: 100%;
+      min-height: max-content;
+      padding: 1rem 1rem 0;
+      flex-direction: column;
+    }
+  }
 </style>

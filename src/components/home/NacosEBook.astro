@@ -2,42 +2,59 @@
 import { Image } from "astro:assets";
 import ebookLog from "/public/ebook.png";
 import { useTranslations } from "@i18n/util";
-import Button from '@components/common/Button.astro';
+import Button from "@components/common/Button.astro";
 const t = useTranslations(Astro);
 ---
 
-<nacos-ebook class="nacos-ebook flex flex-col justify-center items-center bg-gary-02 py-10">
-  <div class="ebook-container block flex items-center justify-between bg-gray-13 rounded-2xl p-9 mt-10">
-    <div class="left-container h-full flex flex-col justify-around">
-      <div class="flex flex-col">
-        <div class="text-blue-02 text-xs tracking-[0.15em]">{t('home.ebook.resource')}</div>
-        <div class="text-blue-01 font-medium text-[2.75rem] leading-[3.5rem] mt-6">
-          {t('home.ebook.nacos')}
+<span class="nacos-ebook-wrapper">
+  <nacos-ebook
+    class="nacos-ebook flex flex-col justify-center items-center bg-gary-02 py-10"
+  >
+    <div
+      class="ebook-container block flex items-center justify-between bg-gray-13 rounded-2xl p-9 mt-10"
+    >
+      <div class="left-container h-full flex flex-col justify-around">
+        <div class="flex flex-col">
+          <div class="text-blue-02 text-xs tracking-[0.15em]">
+            {t("home.ebook.resource")}
+          </div>
+          <div
+            class="text-blue-01 font-medium text-[2.75rem] leading-[3.5rem] mt-6"
+          >
+            {t("home.ebook.nacos")}
+          </div>
         </div>
+        <Button size="large" class="rounded-3xl" href="/docs/ebook/kbyo6n/">
+          {t("commmon.actions.download")}
+        </Button>
       </div>
-      <Button 
-        size="large"
-        class="rounded-3xl"
-        href="/docs/ebook/kbyo6n/"
-      >
-        {t('commmon.actions.download')}
-      </Button>
+      <div class="right-container h-full relative rounded-2xl overflow-hidden">
+        <Image
+          src={ebookLog}
+          alt="nacos ebook"
+          class="ebook-log absolute left-[30%] cursor-pointer"
+        />
+      </div>
     </div>
-    <div class="right-container h-full relative rounded-2xl overflow-hidden">
-      <Image src={ebookLog} alt="nacos ebook" class="ebook-log absolute left-[30%] cursor-pointer" />
-    </div>
-  </div>
 
-  <div class="mobile-ebook-container hidden w-full bg-gray-14 flex-col items-center rounded-3xl p-6 mt-10">
-    <div class="top-title w-full flex flex-col items-center">
-      <span class="text-gray-04 text-xs mb-6">{t('home.ebook.resource')}</span>
-      <span class="title text-gray-01 text-lg font-medium">{t('home.ebook.nacos')}</span>
+    <div
+      class="mobile-ebook-container hidden w-full bg-gray-14 flex-col items-center rounded-3xl p-6 mt-10"
+    >
+      <div class="top-title w-full flex flex-col items-center">
+        <span class="text-gray-04 text-xs mb-6">{t("home.ebook.resource")}</span
+        >
+        <span class="title text-gray-01 text-lg font-medium"
+          >{t("home.ebook.nacos")}</span
+        >
+      </div>
+      <a href="/docs/ebook/kbyo6n/">
+        <button data-download class="btn btn-secondary rounded-3xl mt-16"
+          >{t("commmon.actions.download")}</button
+        >
+      </a>
     </div>
-    <a href="/docs/ebook/kbyo6n/">
-      <button data-download class="btn btn-secondary rounded-3xl mt-16">{t('commmon.actions.download')}</button>
-    </a>
-  </div>
-</nacos-ebook>
+  </nacos-ebook>
+</span>
 
 <script>
   class NacosEBook extends HTMLElement {
@@ -48,76 +65,75 @@ const t = useTranslations(Astro);
   customElements.define("nacos-ebook", NacosEBook);
 </script>
 
-<style>
-
-.ebook-container {
-  height: 30rem;
-  width: 85.125rem;
-}
-.left-container {
-  width: 50%;
-  padding-left: 8.5rem;
-}
-.right-container {
-  width: 50%;
-  background: url("https://img.alicdn.com/imgextra/i4/O1CN01imuhna1FvwkTxTaWu_!!6000000000550-2-tps-1280-816.png") no-repeat;
-  background-size: 100% 100%;
-  background-position: center 0;
-  background-attachment: fixed;
-}
-.right-container .ebook-log {
-  width: 19.625rem;
-  height: 28rem;
-  bottom: -8.2rem;
-  transition: transform 0.8s;
-}
-.right-container .ebook-log:hover {
-  transform: scale(1.15);
-}
-
-  /* 小于50rem  小于 800px */
-@media (max-width: 50rem) { 
-  .nacos-ebook {
-    padding: 1.5rem;
-  }
-  .ebook-container {
-    display: none !important;
-  }
-  .mobile-ebook-container {
-    display: flex !important;
-  }
-  .mobile-ebook-container button {
-      height: 2rem;
-      min-height: 2rem;
-      padding-left: 0.75rem;
-      padding-right: 0.75rem;
+<style is:global>
+  .nacos-ebook-wrapper {
+    .ebook-container {
+      height: 30rem;
+      width: 85.125rem;
     }
-  .top-title .title {
-    font-size: 1.125rem; /* 18px */
-    line-height: 1.75rem; /* 28px */
-  }
-}
+    .left-container {
+      width: 50%;
+      padding-left: 8.5rem;
+    }
+    .right-container {
+      width: 50%;
+      background: url("https://img.alicdn.com/imgextra/i4/O1CN01imuhna1FvwkTxTaWu_!!6000000000550-2-tps-1280-816.png")
+        no-repeat;
+      background-size: 100% 100%;
+      background-position: center 0;
+      background-attachment: fixed;
+    }
+    .right-container .ebook-log {
+      width: 19.625rem;
+      height: 28rem;
+      bottom: -8.2rem;
+      transition: transform 0.8s;
+    }
+    .right-container .ebook-log:hover {
+      transform: scale(1.15);
+    }
 
+    /* 小于50rem  小于 800px */
+    @media (max-width: 50rem) {
+      .nacos-ebook {
+        padding: 1.5rem;
+      }
+      .ebook-container {
+        display: none !important;
+      }
+      .mobile-ebook-container {
+        display: flex !important;
+      }
+      .mobile-ebook-container button {
+        height: 2rem;
+        min-height: 2rem;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
+      .top-title .title {
+        font-size: 1.125rem; /* 18px */
+        line-height: 1.75rem; /* 28px */
+      }
+    }
 
-/* 大于50rem 小于 72rem  800px < width < 1152 */
-@media (min-width: 50rem) and (max-width: 86rem) { 
-  .nacos-ebook {
-    padding: 2.5rem;
+    /* 大于50rem 小于 72rem  800px < width < 1152 */
+    @media (min-width: 50rem) and (max-width: 86rem) {
+      .nacos-ebook {
+        padding: 2.5rem;
+      }
+      .ebook-container {
+        height: 26rem;
+        width: 100%;
+      }
+      .left-container {
+        padding-left: 1.5rem;
+      }
+      .right-container .ebook-log {
+        width: 40%;
+        height: 24rem;
+        transition: transform 0.8s;
+        bottom: -7rem;
+      }
+    }
   }
-  .ebook-container {
-    height: 26rem;
-    width: 100%;
-  }
-  .left-container {
-    padding-left: 1.5rem;
-  }
-  .right-container .ebook-log {
-    width: 40%;
-    height: 24rem;
-    transition: transform 0.8s;
-    bottom: -7rem;
-  }
-}
-
-
 </style>

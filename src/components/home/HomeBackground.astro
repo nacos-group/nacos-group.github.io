@@ -1,7 +1,8 @@
 ---
+
 ---
 
-<div class="container">
+<div class="stars-wrapper">
   <div class="stars"></div>
   <div class="stars"></div>
   <div class="stars"></div>
@@ -20,198 +21,217 @@
   <div class="meteor2"></div>
 </div>
 
+<style is:global>
+  .stars-wrapper {
+    .stars {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background-color: #fff;
+      border-radius: 50%;
+      /* animation: twinkle 1s infinite; */
+    }
 
-<style>
+    @keyframes twinkle {
+      0% {
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
 
-.stars {
-  position: absolute;
-  width: 3px;
-  height: 3px;
-  background-color: #FFF;
-  border-radius: 50%;
-  /* animation: twinkle 1s infinite; */
-}
+    /* 随机生成星星的位置 */
+    .stars:nth-child(1) {
+      left: 10%;
+      top: 20%;
+      animation: twinkle 1s infinite;
+    }
 
-@keyframes twinkle {
-  0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0; }
-}
+    .stars:nth-child(2) {
+      left: 20%;
+      top: 40%;
+      animation: twinkle 1.4s infinite;
+    }
 
-/* 随机生成星星的位置 */
-.stars:nth-child(1) {
-  left: 10%; top: 20%;
-  animation: twinkle 1s infinite;
-}
+    .stars:nth-child(3) {
+      left: 40%;
+      top: 60%;
+      animation: twinkle 1.8s infinite;
+    }
 
-.stars:nth-child(2) {
-  left: 20%; top: 40%;
-  animation: twinkle 1.4s infinite;
-}
+    .stars:nth-child(4) {
+      left: 40%;
+      top: 20%;
+      animation: twinkle 1.2s infinite;
+    }
 
-.stars:nth-child(3) {
-  left: 40%; top: 60%;
-  animation: twinkle 1.8s infinite;
-}
+    .stars:nth-child(5) {
+      left: 50%;
+      top: 10%;
+      animation: twinkle 1.6s infinite;
+    }
 
-.stars:nth-child(4) {
-  left: 40%; top: 20%;
-  animation: twinkle 1.2s infinite;
-}
+    .stars:nth-child(6) {
+      left: 60%;
+      top: 30%;
+      animation: twinkle 1.2s infinite;
+    }
 
-.stars:nth-child(5) {
-  left: 50%; top: 10%;
-  animation: twinkle 1.6s infinite;
-}
+    .stars:nth-child(7) {
+      left: 73%;
+      top: 80%;
+      animation: twinkle 1.8s infinite;
+    }
 
-.stars:nth-child(6) {
-  left: 60%; top: 30%;
-  animation: twinkle 1.2s infinite;
-}
+    .stars:nth-child(8) {
+      left: 82%;
+      top: 50%;
+      animation: twinkle 2s infinite;
+    }
 
-.stars:nth-child(7) {
-  left: 73%; top: 80%;
-  animation: twinkle 1.8s infinite;
-}
+    .stars:nth-child(9) {
+      left: 65%;
+      top: 50%;
+      animation: twinkle 1.6s infinite;
+    }
 
-.stars:nth-child(8) {
-  left: 82%; top: 50%;
-  animation: twinkle 2.0s infinite;
-}
+    .stars:nth-child(10) {
+      left: 25%;
+      top: 15%;
+      animation: twinkle 2.2s infinite;
+    }
 
-.stars:nth-child(9) {
-  left: 65%; top: 50%;
-  animation: twinkle 1.6s infinite;
-}
+    .stars:nth-child(11) {
+      left: 55%;
+      top: 45%;
+      animation: twinkle 2.4s infinite;
+    }
 
-.stars:nth-child(10) {
-  left: 25%; top: 15%;
-  animation: twinkle 2.2s infinite;
-}
+    .stars:nth-child(12) {
+      left: 75%;
+      top: 35%;
+      animation: twinkle 1.8s infinite;
+    }
+    .stars:nth-child(13) {
+      right: 16%;
+      top: 12%;
+      animation: twinkle 1.6s infinite;
+    }
 
-.stars:nth-child(11) {
-  left: 55%; top: 45%;
-  animation: twinkle 2.4s infinite;
-}
+    .stars:nth-child(14) {
+      right: 23%;
+      bottom: 40%;
+      animation: twinkle 1.6s infinite;
+    }
 
-.stars:nth-child(12) {
-  left: 75%; top: 35%;
-  animation: twinkle 1.8s infinite;
-}
-.stars:nth-child(13) {
-  right: 16%; top: 12%;
-  animation: twinkle 1.6s infinite;
-}
+    /* 随机生成星星的颜色 */
+    .stars:nth-child(1)::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #0000ff;
+      border-radius: 50%;
+      opacity: 0.5;
+    }
 
-.stars:nth-child(14) {
-  right: 23%; bottom: 40%;
-  animation: twinkle 1.6s infinite;
-}
+    .stars:nth-child(2)::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #ffffff;
+      border-radius: 50%;
+      opacity: 0.5;
+    }
 
-/* 随机生成星星的颜色 */
-.stars:nth-child(1)::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: #0000FF;
-  border-radius: 50%;
-  opacity: 0.5;
-}
+    .stars:nth-child(3)::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #0000ff;
+      border-radius: 50%;
+      opacity: 0.5;
+    }
 
-.stars:nth-child(2)::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: #FFFFFF;
-  border-radius: 50%;
-  opacity: 0.5;
-}
+    .stars:nth-child(4)::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #ffffff;
+      border-radius: 50%;
+      opacity: 0.5;
+    }
 
-.stars:nth-child(3)::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: #0000FF;
-  border-radius: 50%;
-  opacity: 0.5;
-}
+    .stars:nth-child(5)::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #0000ff;
+      border-radius: 50%;
+      opacity: 0.5;
+    }
+    .stars:nth-child(12)::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #0000ff;
+      border-radius: 50%;
+      opacity: 0.8;
+    }
 
-.stars:nth-child(4)::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: #FFFFFF;
-  border-radius: 50%;
-  opacity: 0.5;
-}
+    .stars:nth-child(14)::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #0000ff;
+      border-radius: 50%;
+      opacity: 0.5;
+    }
 
-.stars:nth-child(5)::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: #0000FF;
-  border-radius: 50%;
-  opacity: 0.5;
-}
-.stars:nth-child(12)::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: #0000FF;
-  border-radius: 50%;
-  opacity: 0.8;
-}
+    .meteor1 {
+      position: absolute;
+      top: 20%;
+      left: 30%;
+      animation: animatemeteor 3s linear infinite;
+    }
+    .meteor2 {
+      position: absolute;
+      top: 6%;
+      left: 10%;
+      animation: animatemeteor 6s linear infinite;
+    }
 
-.stars:nth-child(14)::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: #0000FF;
-  border-radius: 50%;
-  opacity: 0.5;
-}
-
-
-.meteor1 {
-  position: absolute;
-  top: 20%;
-  left: 30%;
-  animation: animatemeteor 3s linear infinite;
-}
-.meteor2 {
-  position: absolute;
-  top: 6%;
-  left: 10%;
-  animation: animatemeteor 6s linear infinite;
-}
-
-.meteor1::before, .meteor2::before {
-  content: "";
-  position: absolute;
-  top: 10%;
-  width: 160px;
-  height: 2px;
-  background: linear-gradient(270deg, #c7c9d1, transparent);
-}
-@keyframes animatemeteor {
-  0% {
-    transform: rotate(-320deg) translateX(0);
-    opacity: 1;
+    .meteor1::before,
+    .meteor2::before {
+      content: "";
+      position: absolute;
+      top: 10%;
+      width: 160px;
+      height: 2px;
+      background: linear-gradient(270deg, #c7c9d1, transparent);
+    }
+    @keyframes animatemeteor {
+      0% {
+        transform: rotate(-320deg) translateX(0);
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: rotate(-320deg) translateX(1000px);
+        opacity: 0;
+      }
+    }
   }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    transform: rotate(-320deg) translateX(1000px);
-    opacity: 0;
-  }
-}
-
 </style>

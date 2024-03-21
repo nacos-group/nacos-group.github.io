@@ -10,6 +10,7 @@ const isRight = align === "detail" ? "auto" : "0px";
 const t = useTranslations(Astro);
 ---
 
+<span class="sub-heading-wrapper">
 <blog-header class="blog_header bg-gray-14 sticky top-0 z-11">
   <div class="w-full">
     <div
@@ -117,6 +118,8 @@ const t = useTranslations(Astro);
     </div>
   </div>
 </blog-header>
+</span>
+
 <script>
   class BlogHeaderLayout extends HTMLElement {
     constructor() {
@@ -156,7 +159,8 @@ const t = useTranslations(Astro);
   customElements.define("blog-header", BlogHeaderLayout);
 </script>
 
-<style define:vars={{ justifyContent, isBlock, isFlex, isFlexNone, isRight }}>
+<style define:vars={{ justifyContent, isBlock, isFlex, isFlexNone, isRight }} is:global>
+.sub-heading-wrapper{
   a {
     text-decoration: inherit;
     color: inherit;
@@ -238,4 +242,5 @@ const t = useTranslations(Astro);
       margin-right: 1.5rem;
     }
   }
+}
 </style>

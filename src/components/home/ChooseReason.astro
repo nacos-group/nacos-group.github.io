@@ -4,151 +4,222 @@ const t = useTranslations(Astro);
 
 const dataSource = [
   {
-    title: t('home.nacos.edge.1.title'),
-    svgKey: 'easy',
-    description: t('home.nacos.edge.1.description'),
+    title: t("home.nacos.edge.1.title"),
+    svgKey: "easy",
+    description: t("home.nacos.edge.1.description"),
   },
   {
-    title: t('home.nacos.edge.2.title'),
-    svgKey: 'adaptive',
-    description: t('home.nacos.edge.2.description'),
+    title: t("home.nacos.edge.2.title"),
+    svgKey: "adaptive",
+    description: t("home.nacos.edge.2.description"),
   },
   {
-    title: t('home.nacos.edge.3.title'),
-    svgKey: 'timeTested',
-    description: t('home.nacos.edge.3.description'),
+    title: t("home.nacos.edge.3.title"),
+    svgKey: "timeTested",
+    description: t("home.nacos.edge.3.description"),
   },
   {
-    title: t('home.nacos.edge.4.title'),
-    svgKey: 'variety',
-    description: t('home.nacos.edge.4.description'),
-  }
+    title: t("home.nacos.edge.4.title"),
+    svgKey: "variety",
+    description: t("home.nacos.edge.4.description"),
+  },
 ];
 ---
 
-<choose-reason class="choose-reason block bg-gary-01 py-10 flex flex-col justify-center items-center">
-  <div class="top-title flex flex-col items-center my-20">
-    <span class="text-gray-10 text-xs mb-6 tracking-[0.15em]">{t('home.nacos.edge.about')}</span>
-    <span class="title text-gray-14 text-[2.5rem] leading-[3.5rem] font-medium">{t('home.nacos.edge.title')}</span>
-  </div>
+<span class="choose-reason-wrapper">
+  <choose-reason
+    class="choose-reason block bg-gary-01 py-10 flex flex-col justify-center items-center"
+  >
+    <div class="top-title flex flex-col items-center my-20">
+      <span class="text-gray-10 text-xs mb-6 tracking-[0.15em]"
+        >{t("home.nacos.edge.about")}</span
+      >
+      <span
+        class="title text-gray-14 text-[2.5rem] leading-[3.5rem] font-medium"
+        >{t("home.nacos.edge.title")}</span
+      >
+    </div>
 
-  <div class="bottom-card flex flex-wrap">
-    {
-      dataSource.map(reason => {
-        const { title, svgKey, description } = reason;
-        return (
-          <div class="item px-5">
-            <div class="transfrom-header block">
-              <div class="w-12 h-12 bg-blue-02 rounded-md flex justify-center items-center mb-5">
-                {
-                  svgKey === 'easy' ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="none" version="1.1" width="20" height="20.000804901123047" viewBox="0 0 20 20.000804901123047"><g><path d="M6.94453,0.684089C6.77011,0.160285,6.20409,-0.122948,5.68029,0.0514688C5.15648,0.225886,4.87325,0.791907,5.04767,1.31571L6.04707,4.31391C6.22121,4.83809,6.78747,5.12169,7.31153,4.94719C7.83559,4.77269,8.11879,4.20623,7.94393,3.68229L6.94453,0.684089ZM13.6985,3.70528C14.0772,3.31314,14.0718,2.68979,13.6863,2.30428C13.3008,1.91877,12.6775,1.91336,12.2853,2.29212L10.2865,4.29093C9.90778,4.68307,9.9132,5.3064,10.2987,5.69191C10.6842,6.07741,11.3075,6.08282,11.6997,5.70408L13.6985,3.70528ZM1.3159,5.04847C0.792196,4.87409,0.226259,5.15712,0.0516264,5.68075C-0.123007,6.20437,0.159746,6.77044,0.683284,6.94533L3.68149,7.94473C4.20542,8.1196,4.77188,7.83639,4.94638,7.31233C5.12088,6.78827,4.83729,6.22201,4.31311,6.04787L1.31491,5.04847L1.3159,5.04847ZM8.33669,7.05727C7.97207,6.92472,7.56368,7.01518,7.28913,7.2893C7.01458,7.56342,6.92349,7.97167,7.05546,8.3365L11.0531,19.3299C11.1947,19.7193,11.5619,19.9808,11.9762,19.9875C12.3904,19.9941,12.7659,19.7445,12.9199,19.3599L14.3561,15.771L18.2817,19.6957C18.6699,20.0976,19.3122,20.1032,19.7073,19.7081C20.1024,19.313,20.0968,18.6707,19.6949,18.2825L15.7692,14.3569L19.3591,12.9218C19.7444,12.768,19.9946,12.3922,19.988,11.9775C19.9813,11.5627,19.7191,11.1952,19.3291,11.0539L8.33569,7.05627L8.33669,7.05727ZM5.70327,11.7005C6.10517,11.3123,6.11076,10.67,5.71566,10.2749C5.32057,9.87985,4.67829,9.88543,4.29012,10.2873L2.29132,12.2861C1.88943,12.6743,1.88386,13.3166,2.27895,13.7117C2.67404,14.1067,3.3163,14.1012,3.70447,13.6993L5.70327,11.7005Z" fill-rule="evenodd" fill="#3D57DA" fill-opacity="1"/></g></svg>
+    <div class="bottom-card flex flex-wrap">
+      {
+        dataSource.map((reason) => {
+          const { title, svgKey, description } = reason;
+          return (
+            <div class="item px-5">
+              <div class="transfrom-header block">
+                <div class="w-12 h-12 bg-blue-02 rounded-md flex justify-center items-center mb-5">
+                  {svgKey === "easy" ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      fill="none"
+                      version="1.1"
+                      width="20"
+                      height="20.000804901123047"
+                      viewBox="0 0 20 20.000804901123047"
+                    >
+                      <g>
+                        <path
+                          d="M6.94453,0.684089C6.77011,0.160285,6.20409,-0.122948,5.68029,0.0514688C5.15648,0.225886,4.87325,0.791907,5.04767,1.31571L6.04707,4.31391C6.22121,4.83809,6.78747,5.12169,7.31153,4.94719C7.83559,4.77269,8.11879,4.20623,7.94393,3.68229L6.94453,0.684089ZM13.6985,3.70528C14.0772,3.31314,14.0718,2.68979,13.6863,2.30428C13.3008,1.91877,12.6775,1.91336,12.2853,2.29212L10.2865,4.29093C9.90778,4.68307,9.9132,5.3064,10.2987,5.69191C10.6842,6.07741,11.3075,6.08282,11.6997,5.70408L13.6985,3.70528ZM1.3159,5.04847C0.792196,4.87409,0.226259,5.15712,0.0516264,5.68075C-0.123007,6.20437,0.159746,6.77044,0.683284,6.94533L3.68149,7.94473C4.20542,8.1196,4.77188,7.83639,4.94638,7.31233C5.12088,6.78827,4.83729,6.22201,4.31311,6.04787L1.31491,5.04847L1.3159,5.04847ZM8.33669,7.05727C7.97207,6.92472,7.56368,7.01518,7.28913,7.2893C7.01458,7.56342,6.92349,7.97167,7.05546,8.3365L11.0531,19.3299C11.1947,19.7193,11.5619,19.9808,11.9762,19.9875C12.3904,19.9941,12.7659,19.7445,12.9199,19.3599L14.3561,15.771L18.2817,19.6957C18.6699,20.0976,19.3122,20.1032,19.7073,19.7081C20.1024,19.313,20.0968,18.6707,19.6949,18.2825L15.7692,14.3569L19.3591,12.9218C19.7444,12.768,19.9946,12.3922,19.988,11.9775C19.9813,11.5627,19.7191,11.1952,19.3291,11.0539L8.33569,7.05627L8.33669,7.05727ZM5.70327,11.7005C6.10517,11.3123,6.11076,10.67,5.71566,10.2749C5.32057,9.87985,4.67829,9.88543,4.29012,10.2873L2.29132,12.2861C1.88943,12.6743,1.88386,13.3166,2.27895,13.7117C2.67404,14.1067,3.3163,14.1012,3.70447,13.6993L5.70327,11.7005Z"
+                          fill-rule="evenodd"
+                          fill="#3D57DA"
+                          fill-opacity="1"
+                        />
+                      </g>
+                    </svg>
+                  ) : svgKey === "adaptive" ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      fill="none"
+                      version="1.1"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                    >
+                      <g>
+                        <path
+                          d="M7.99883,0C9.58716,-0.0000883341,10.9002,1.23818,10.9934,2.824L10.9984,3L10.9984,4L13.998,4C15.0444,3.99967,15.9142,4.80632,15.9927,5.85L15.9977,6L15.9977,9L16.9975,9C18.621,8.99844,19.951,10.289,19.9987,11.912C20.0463,13.535,18.7943,14.9013,17.1735,14.995L16.9975,15L15.9977,15L15.9977,18C15.998,19.0466,15.1915,19.9165,14.1479,19.995L13.998,20L10.9984,20C9.95193,20.0003,9.08217,19.1937,9.00369,18.15L8.99869,18L8.99869,17C8.9981,16.4709,8.58554,16.0338,8.05743,16.0028C7.52932,15.9718,7.06846,16.3576,7.00598,16.883L6.99898,17L6.99898,18C6.99931,19.0466,6.19278,19.9165,5.14925,19.995L4.99927,20L1.99971,20C0.953237,20.0003,0.0834846,19.1937,0.00499945,18.15L1.78788e-7,18L1.78788e-7,15C-0.000332188,13.9534,0.806205,13.0835,1.84973,13.005L1.99971,13L2.99956,13C3.52858,12.9994,3.96559,12.5868,3.99659,12.0586C4.02759,11.5304,3.64186,11.0695,3.11655,11.007L2.99956,11L1.99971,11C0.953237,11.0003,0.0834846,10.1937,0.00499945,9.15L1.78788e-7,9L1.78788e-7,6C-0.000330936,4.95338,0.806206,4.0835,1.84973,4.005L1.99971,4L4.99927,4L4.99927,3C4.99927,1.34315,6.34222,-1.78814e-7,7.99883,0Z"
+                          fill="#3D57DA"
+                          fill-opacity="1"
+                        />
+                      </g>
+                    </svg>
+                  ) : svgKey === "timeTested" ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      fill="none"
+                      version="1.1"
+                      width="20"
+                      height="23.333332061767578"
+                      viewBox="0 0 20 23.333332061767578"
+                    >
+                      <g>
+                        <path
+                          d="M7.77778,2.22222Q7.30556,2.22222,6.98667,1.90222Q6.66778,1.58222,6.66667,1.11111Q6.66667,0.638889,6.98667,0.32Q7.30667,0.00111113,7.77778,0L12.2222,0Q12.6944,0,13.0144,0.32Q13.3344,0.64,13.3333,1.11111Q13.3333,1.58333,13.0133,1.90333Q12.6933,2.22333,12.2222,2.22222L7.77778,2.22222ZM10,14.4444Q10.4722,14.4444,10.7922,14.1244Q11.1122,13.8044,11.1111,13.3333L11.1111,8.88889Q11.1111,8.41667,10.7911,8.09778Q10.4711,7.77889,10,7.77778Q9.52778,7.77778,9.20889,8.09778Q8.89,8.41778,8.88889,8.88889L8.88889,13.3333Q8.88889,13.8056,9.20889,14.1256Q9.52889,14.4456,10,14.4444ZM18.5,8Q19,9,19.4444,10.0278Q20,11.6111,20,13.3333Q20,15.3889,19.2078,17.2089Q18.4156,19.0289,17.0556,20.3889Q15.6944,21.75,13.8744,22.5422Q12.0544,23.3344,10,23.3333Q7.94444,23.3333,6.12444,22.5422Q4.30444,21.7511,2.94444,20.3889Q1.58333,19.0278,0.792222,17.2078Q0.00111063,15.3878,0,13.3333Q0,11.2778,0.792222,9.45778Q1.58444,7.63778,2.94444,6.27778Q4.30556,4.91667,6.12556,4.12556Q7.94555,3.33444,10,3.33333Q11.7222,3.33333,13.3056,3.88889Q14.8889,4.44444,16.2778,5.5C17,6,18,7,18.5,8Z"
+                          fill="#3D57DA"
+                          fill-opacity="1"
+                        />
+                      </g>
+                    </svg>
                   ) : (
-                    svgKey === 'adaptive' ? (
-                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="none" version="1.1" width="20" height="20" viewBox="0 0 20 20"><g><path d="M7.99883,0C9.58716,-0.0000883341,10.9002,1.23818,10.9934,2.824L10.9984,3L10.9984,4L13.998,4C15.0444,3.99967,15.9142,4.80632,15.9927,5.85L15.9977,6L15.9977,9L16.9975,9C18.621,8.99844,19.951,10.289,19.9987,11.912C20.0463,13.535,18.7943,14.9013,17.1735,14.995L16.9975,15L15.9977,15L15.9977,18C15.998,19.0466,15.1915,19.9165,14.1479,19.995L13.998,20L10.9984,20C9.95193,20.0003,9.08217,19.1937,9.00369,18.15L8.99869,18L8.99869,17C8.9981,16.4709,8.58554,16.0338,8.05743,16.0028C7.52932,15.9718,7.06846,16.3576,7.00598,16.883L6.99898,17L6.99898,18C6.99931,19.0466,6.19278,19.9165,5.14925,19.995L4.99927,20L1.99971,20C0.953237,20.0003,0.0834846,19.1937,0.00499945,18.15L1.78788e-7,18L1.78788e-7,15C-0.000332188,13.9534,0.806205,13.0835,1.84973,13.005L1.99971,13L2.99956,13C3.52858,12.9994,3.96559,12.5868,3.99659,12.0586C4.02759,11.5304,3.64186,11.0695,3.11655,11.007L2.99956,11L1.99971,11C0.953237,11.0003,0.0834846,10.1937,0.00499945,9.15L1.78788e-7,9L1.78788e-7,6C-0.000330936,4.95338,0.806206,4.0835,1.84973,4.005L1.99971,4L4.99927,4L4.99927,3C4.99927,1.34315,6.34222,-1.78814e-7,7.99883,0Z" fill="#3D57DA" fill-opacity="1"/></g></svg>
-                    ) : (
-                      svgKey === 'timeTested' ? (
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="none" version="1.1" width="20" height="23.333332061767578" viewBox="0 0 20 23.333332061767578"><g><path d="M7.77778,2.22222Q7.30556,2.22222,6.98667,1.90222Q6.66778,1.58222,6.66667,1.11111Q6.66667,0.638889,6.98667,0.32Q7.30667,0.00111113,7.77778,0L12.2222,0Q12.6944,0,13.0144,0.32Q13.3344,0.64,13.3333,1.11111Q13.3333,1.58333,13.0133,1.90333Q12.6933,2.22333,12.2222,2.22222L7.77778,2.22222ZM10,14.4444Q10.4722,14.4444,10.7922,14.1244Q11.1122,13.8044,11.1111,13.3333L11.1111,8.88889Q11.1111,8.41667,10.7911,8.09778Q10.4711,7.77889,10,7.77778Q9.52778,7.77778,9.20889,8.09778Q8.89,8.41778,8.88889,8.88889L8.88889,13.3333Q8.88889,13.8056,9.20889,14.1256Q9.52889,14.4456,10,14.4444ZM18.5,8Q19,9,19.4444,10.0278Q20,11.6111,20,13.3333Q20,15.3889,19.2078,17.2089Q18.4156,19.0289,17.0556,20.3889Q15.6944,21.75,13.8744,22.5422Q12.0544,23.3344,10,23.3333Q7.94444,23.3333,6.12444,22.5422Q4.30444,21.7511,2.94444,20.3889Q1.58333,19.0278,0.792222,17.2078Q0.00111063,15.3878,0,13.3333Q0,11.2778,0.792222,9.45778Q1.58444,7.63778,2.94444,6.27778Q4.30556,4.91667,6.12556,4.12556Q7.94555,3.33444,10,3.33333Q11.7222,3.33333,13.3056,3.88889Q14.8889,4.44444,16.2778,5.5C17,6,18,7,18.5,8Z" fill="#3D57DA" fill-opacity="1"/></g></svg>
-                      ) : (
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="none" version="1.1" width="20" height="20.08167839050293" viewBox="0 0 20 20.08167839050293"><g><path d="M7.20166,0.396607C3.22924,1.55209,0.370946,5.02406,0,9.14445L4.58979,9.14445C4.85587,6.08085,5.74412,3.10372,7.20023,0.395173L7.20166,0.396607ZM4.58979,10.9373L7.94803e-8,10.9373C0.370171,15.0579,3.22792,18.5305,7.20023,19.6866C5.74412,16.9781,4.85587,14.0009,4.58979,10.9373ZM9.50086,20.0696C7.76075,17.3121,6.69449,14.1836,6.38841,10.9373L13.6102,10.9373C13.3041,14.1836,12.2378,17.3121,10.4977,20.0696C10.1656,20.0857,9.83295,20.0857,9.50086,20.0696ZM12.7998,19.6852C16.7716,18.5292,19.6293,15.0573,20,10.9373L15.4102,10.9373C15.1441,14.0009,14.2559,16.9781,12.7998,19.6866L12.7998,19.6852ZM15.4102,9.14445L20,9.14445C19.6298,5.0239,16.7721,1.55134,12.7998,0.395173C14.2559,3.10371,15.1442,6.08084,15.4102,9.14445ZM9.50086,0.0122124C9.83342,-0.00407079,10.1666,-0.00407079,10.4991,0.0122124C12.2387,2.76983,13.3045,5.89834,13.6102,9.14445L6.38984,9.14445C6.70109,5.87853,7.77108,2.74744,9.50229,0.0122124L9.50086,0.0122124Z" fill-rule="evenodd" fill="#3D57DA" fill-opacity="1"/></g></svg>
-                      )
-                    )
-                  )
-                }
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      fill="none"
+                      version="1.1"
+                      width="20"
+                      height="20.08167839050293"
+                      viewBox="0 0 20 20.08167839050293"
+                    >
+                      <g>
+                        <path
+                          d="M7.20166,0.396607C3.22924,1.55209,0.370946,5.02406,0,9.14445L4.58979,9.14445C4.85587,6.08085,5.74412,3.10372,7.20023,0.395173L7.20166,0.396607ZM4.58979,10.9373L7.94803e-8,10.9373C0.370171,15.0579,3.22792,18.5305,7.20023,19.6866C5.74412,16.9781,4.85587,14.0009,4.58979,10.9373ZM9.50086,20.0696C7.76075,17.3121,6.69449,14.1836,6.38841,10.9373L13.6102,10.9373C13.3041,14.1836,12.2378,17.3121,10.4977,20.0696C10.1656,20.0857,9.83295,20.0857,9.50086,20.0696ZM12.7998,19.6852C16.7716,18.5292,19.6293,15.0573,20,10.9373L15.4102,10.9373C15.1441,14.0009,14.2559,16.9781,12.7998,19.6866L12.7998,19.6852ZM15.4102,9.14445L20,9.14445C19.6298,5.0239,16.7721,1.55134,12.7998,0.395173C14.2559,3.10371,15.1442,6.08084,15.4102,9.14445ZM9.50086,0.0122124C9.83342,-0.00407079,10.1666,-0.00407079,10.4991,0.0122124C12.2387,2.76983,13.3045,5.89834,13.6102,9.14445L6.38984,9.14445C6.70109,5.87853,7.77108,2.74744,9.50229,0.0122124L9.50086,0.0122124Z"
+                          fill-rule="evenodd"
+                          fill="#3D57DA"
+                          fill-opacity="1"
+                        />
+                      </g>
+                    </svg>
+                  )}
+                </div>
+                <div class="py-4 text-gray-12 text-[.875rem] leading-4 tracking-[0.15em]">
+                  {title}
+                </div>
               </div>
-              <div class="py-4 text-gray-12 text-[.875rem] leading-4 tracking-[0.15em]">{title}</div>
+
+              <div class="text-gray-08 text-sm" set:html={description} />
             </div>
-            
-            <div class="text-gray-08 text-sm" set:html={description}></div>
-          </div>
-        );
-      })
-    }
-  </div>
-</choose-reason>
+          );
+        })
+      }
+    </div>
+  </choose-reason>
+</span>
 
 <script>
-class ChooseReason extends HTMLElement {
+  class ChooseReason extends HTMLElement {
     constructor() {
-			super();
-
-		}
+      super();
+    }
   }
   customElements.define("choose-reason", ChooseReason);
 </script>
 
+<style is:global>
+  .choose-reason-wrapper {
+    .top-title,
+    .bottom-card {
+      width: 85.125rem;
+    }
+    .bottom-card .item {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 0 0 25%;
+      border-left: 1px solid theme("colors.gray.03");
+    }
 
-<style>
-.top-title, .bottom-card {
-  width: 85.125rem;
-}
-.bottom-card .item {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex: 0 0 25%;
-  border-left: 1px solid theme('colors.gray.03');
-}
+    /* 小于50rem  小于 800px */
+    @media (max-width: 50rem) {
+      .choose-reason {
+        padding: 1.5rem;
+      }
+      .top-title,
+      .bottom-card {
+        width: 100%;
+      }
+      .top-title {
+        margin-top: 2.5rem;
+        margin-bottom: 2.5rem;
+      }
+      .top-title .title {
+        font-size: 1.125rem; /* 18px */
+        line-height: 1.75rem; /* 28px */
+      }
+      .bottom-card .item {
+        flex: 0 0 100%;
+        border-left: none;
+        padding: 1.25rem 0;
+        border-bottom: 1px solid theme("colors.gray.03");
+      }
+      .bottom-card .item .transfrom-header {
+        display: flex;
+      }
+      .transfrom-header div:last-child {
+        margin-left: 1rem;
+      }
+    }
 
-/* 小于50rem  小于 800px */
-@media (max-width: 50rem) { 
-  .choose-reason {
-    padding: 1.5rem;
+    /* 大于50rem 小于 72rem  800px < width < 1152 */
+    @media (min-width: 50rem) and (max-width: 86rem) {
+      .choose-reason {
+        padding: 2.5rem;
+      }
+      .top-title,
+      .bottom-card {
+        width: 100%;
+      }
+      .bottom-card .item {
+        flex: 0 0 50%;
+        border-left: none;
+        padding-bottom: 1.25rem;
+      }
+      .bottom-card .item:first-child {
+        border-right: 1px solid theme("colors.gray.03");
+        border-bottom: 1px solid theme("colors.gray.03");
+      }
+      .bottom-card .item:nth-child(2) {
+        border-bottom: 1px solid theme("colors.gray.03");
+      }
+      .bottom-card .item:nth-child(3) {
+        border-right: 1px solid theme("colors.gray.03");
+        padding-top: 1.25rem;
+      }
+      .bottom-card .item:last-child {
+        padding-top: 1.25rem;
+      }
+    }
   }
-  .top-title, .bottom-card {
-    width: 100%;
-  }
-  .top-title {
-    margin-top: 2.5rem;
-    margin-bottom: 2.5rem;
-  }
-  .top-title .title {
-    font-size: 1.125rem; /* 18px */
-    line-height: 1.75rem; /* 28px */
-  }
-  .bottom-card .item {
-    flex: 0 0 100%;
-    border-left: none;
-    padding: 1.25rem 0;
-    border-bottom: 1px solid theme('colors.gray.03');
-  }
-  .bottom-card .item .transfrom-header {
-    display: flex;
-  }
-  .transfrom-header div:last-child {
-    margin-left: 1rem;
-  }
-}
-
-
-/* 大于50rem 小于 72rem  800px < width < 1152 */
-@media (min-width: 50rem) and (max-width: 86rem) { 
-  .choose-reason {
-    padding: 2.5rem;
-  }
-  .top-title, .bottom-card {
-    width: 100%;
-  }
-  .bottom-card .item {
-    flex: 0 0 50%;
-    border-left: none;
-    padding-bottom: 1.25rem;
-  }
-  .bottom-card .item:first-child {
-    border-right: 1px solid theme('colors.gray.03');
-    border-bottom: 1px solid theme('colors.gray.03');
-  }
-  .bottom-card .item:nth-child(2) {
-    border-bottom: 1px solid theme('colors.gray.03');
-  }
-  .bottom-card .item:nth-child(3) {
-    border-right: 1px solid theme('colors.gray.03');
-    padding-top: 1.25rem;
-  }
-  .bottom-card .item:last-child{
-    padding-top: 1.25rem;
-  }
-}
-
-
 </style>

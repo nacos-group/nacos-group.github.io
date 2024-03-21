@@ -19,7 +19,7 @@ const introduceData = [
     title: t("cloud.introduce.develop.pkg"),
     price: t("cloud.introduce.develop.price"),
     priceDesc: t("cloud.introduce.develop.feature"),
-    priceSupply:t("cloud.introduce.develop.price_supply"),
+    priceSupply: t("cloud.introduce.develop.price_supply"),
     unit: "/MONTH",
     linkName: t("cloud.introduce.develop.link"),
     link: "https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0",
@@ -32,19 +32,17 @@ const introduceData = [
     title: t("cloud.introduce.serverless.pkg"),
     priceDesc: t("cloud.introduce.serverless.feature"),
     price: t("cloud.introduce.serverless.price"),
-    priceSupply:t("cloud.introduce.serverless.price_supply"),
+    priceSupply: t("cloud.introduce.serverless.price_supply"),
     unit: "/HOUR",
     linkName: t("cloud.introduce.serverless.link"),
     link: "https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0",
-    feature: [
-      t("cloud.introduce.serverless.discount.1"),
-    ],
+    feature: [t("cloud.introduce.serverless.discount.1")],
   },
   {
     title: t("cloud.introduce.regular.pkg"),
     priceDesc: t("cloud.introduce.regular.feature"),
     price: t("cloud.introduce.regular.price"),
-    priceSupply:t("cloud.introduce.regular.price_supply"),
+    priceSupply: t("cloud.introduce.regular.price_supply"),
     unit: "/MONTH",
     linkName: t("cloud.introduce.regular.link"),
     link: "https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0",
@@ -56,218 +54,221 @@ const introduceData = [
 ];
 ---
 
-<cloud-introduce
-  class="cloud-introduce flex flex-col justify-center items-center pt-10 pb-14"
->
-  <BaseContainer class="top-introduce flex">
-    <div class="left-section flex-1 flex flex-col">
-      <div class="pt-[1.375rem] pb-4 text-gray-08 text-xs">{t("cloud.introduce.about")}</div>
-      <div class="title leading-[5rem] text-gray-03  mb-[1.1875rem] text-[4rem]">
-        {t("cloud.introduce.title")}
+<span class="cloud-introduce-div">
+  <cloud-introduce
+    class="cloud-introduce flex flex-col justify-center items-center pt-10 pb-14"
+  >
+    <BaseContainer class="top-introduce flex">
+      <div class="left-section flex-1 flex flex-col">
+        <div class="pt-[1.375rem] pb-4 text-gray-08 text-xs">
+          {t("cloud.introduce.about")}
+        </div>
+        <div
+          class="title leading-[5rem] text-gray-03 mb-[1.1875rem] text-[4rem]"
+        >
+          {t("cloud.introduce.title")}
+        </div>
+        <span class="start-cloud text-gray-09 text-2xl"
+          >{t("cloud.introduce.invite")}</span
+        >
       </div>
-      <span class="start-cloud text-gray-09 text-2xl"
-        >{t("cloud.introduce.invite")}</span>
-    </div>
-    <!-- <div class="right-section flex-1 self-center">
+      <!-- <div class="right-section flex-1 self-center">
       <img
         class="w-full"
         src="https://img.alicdn.com/imgextra/i2/O1CN01xCdBka1ZUH8O6ODOp_!!6000000003197-2-tps-1934-888.png"
       />
     </div> -->
-  </BaseContainer>
+    </BaseContainer>
 
-  <BaseContainer class="bottom-package flex justify-center mt-[2.9375rem]">
-    {
-      introduceData.map((item, index) => {
-        return (
-          <div class="card-package cursor-pointer bg-gray-14 border-[.0313rem] hover:border border-text-gray-06 rounded-2xl flex-1 text-center p-8">
-            <div class="package h-16">
-              <div class="title text-gray-03 text-2xl font-sans font-medium">
-                {item?.title}
+    <BaseContainer class="bottom-package flex justify-center mt-[2.9375rem]">
+      {
+        introduceData.map((item, index) => {
+          return (
+            <div class="card-package cursor-pointer bg-gray-14 border-[.0313rem] hover:border border-text-gray-06 rounded-2xl flex-1 text-center p-8">
+              <div class="package h-16">
+                <div class="title text-gray-03 text-2xl font-sans font-medium">
+                  {item?.title}
+                </div>
+              </div>
+              <div class="price-content pt-4 border-b border-t border-gray-12 h-32">
+                <span class="price text-[2.75rem] leading-[3rem] font-bold text-gray-03">
+                  {item?.price}
+                </span>
+                <span class="price font-bold text-gray-08">
+                  {item?.priceSupply}
+                </span>
+                <div class="description font-sans pt-4 text-xs text-gray-08 line-clamp-2">
+                  {item?.priceDesc}
+                </div>
+              </div>
+              <div class="pl-2 h-16">
+                {item?.feature?.map((el, i) => {
+                  return (
+                    <div class="feature text-left text-xs text-gray-07 mt-4 line-clamp-2">
+                      {el}
+                    </div>
+                  );
+                })}
+              </div>
+              <div class="subscribe text-center mt-6 mb-2">
+                <a href={item?.link} target="_blank">
+                  <button class="btn button-transform rounded-full w-full bg-gray-14 text-gray-03 hover:bg-gray-12">
+                    {item?.linkName}
+                  </button>
+                </a>
               </div>
             </div>
-            <div class ="price-content pt-4 border-b border-t border-gray-12 h-32">
-              <span class="price text-[2.75rem] leading-[3rem] font-bold text-gray-03">
-                {item?.price}
-              </span>
-              <span class="price font-bold text-gray-08">
-                {item?.priceSupply}
-              </span>
-              <div class="description font-sans pt-4 text-xs text-gray-08 line-clamp-2">
-                {item?.priceDesc}
-              </div>
-            </div>
-            <div class="pl-2 h-16">
-              {item?.feature?.map((el, i) => {
-                return (
-                  <div class="feature text-left text-xs text-gray-07 mt-4 line-clamp-2">
-                    {el}
-                  </div>
-                );
-              })}
-            </div>
-            <div class="subscribe text-center mt-6 mb-2">
-              <a href={item?.link} target="_blank">
-                <button class="btn button-transform rounded-full w-full bg-gray-14 text-gray-03 hover:bg-gray-12">
-                  {item?.linkName}
-                </button>
-              </a>
-            </div>
-          </div>
-        );
-      })
-    }
-  </BaseContainer>
-</cloud-introduce>
+          );
+        })
+      }
+    </BaseContainer>
+  </cloud-introduce>
+</span>
 
-<script>
-  class CloudIntroduce extends HTMLElement {
-    constructor() {
-      super();
-    }
-  }
-  customElements.define("cloud-introduce", CloudIntroduce);
-</script>
-
-<style>
-  .cloud-introduce {
-    background-color: theme("colors.gray.14");
-    background-image: url("https://img.alicdn.com/imgextra/i3/O1CN01WdSy2u1glrf0I5cXJ_!!6000000004183-2-tps-2400-2400.png"); /* 设置背景图片 */
-    background-repeat: no-repeat;
-    background-position: right ;
-    background-size: 70%;
-  }
-
-  .card-package {
-    flex: 1;
-    margin: 0 0.5rem;
-    transition:
-      transform 0.2s,
-      box-shadow 0.2s;
-  }
-  .card-package:hover {
-    transition:
-      transform 0.2s,
-      box-shadow 0.2s;
-    transform: translateY(-4px);
-    box-shadow:
-      4px 4px 8px rgba(0, 0, 0, 0.1),
-      -4px -4px 8px rgba(0, 0, 0, 0.1);
-  }
-  .bottom-package .card-package:first-child {
-    margin-left: 0;
-    background-color: theme("colors.blue.01");
-  }
-  .bottom-package .card-package:first-child .package .title {
-    color: theme("colors.gray.14");
-  }
-  .bottom-package .card-package:first-child .price-content {
-    border-color: theme("colors.gray.03");
-  }
-  .bottom-package .card-package:first-child .price-content .price {
-    color: theme("colors.gray.14");
-  }
-  .bottom-package .card-package:first-child .price-content .description {
-    color: theme("colors.gray.14");
-  }
-  .bottom-package .card-package:first-child .feature {
-    color: theme("colors.gray.08");
-  }
-  .bottom-package .card-package:last-child {
-    margin-right: 0;
-  }
-  .button-transform {
-    display: inline-block;
-    vertical-align: middle;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(1px) translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    -webkit-transition-duration: 0.3s;
-    transition-duration: 0.3s;
-    -webkit-transition-property: box-shadow, transform;
-    transition-property: box-shadow, transform;
-    transition: background-color 0.5s ease;
-  }
-
-  .bottom-package .card-package:first-child .subscribe .button-transform:hover {
-    color: theme('colors.gray.03');
-    background: linear-gradient(226deg, #2c46c9 -2%, rgba(0, 0, 0, 0) 43%),
-      #121316;
-  }
-
-  .button-transform:hover {
-    color: theme('colors.gray.13');
-    background-color: theme('colors.gray.01');
-  }
-  /* 小于50rem  小于 800px */
-  @media (max-width: 50rem) {
+<style is:global>
+  .cloud-introduce-div {
     .cloud-introduce {
-      padding: 1.5rem;
-    }
-    .top-introduce {
-      width: 100%;
-    }
-    .top-introduce .left-section .title {
-      font-size: 1.875rem;
-      line-height: 2.25rem;
-    }
-    .top-introduce .left-section .start-cloud {
-      font-size: 1.125rem; /* 18px */
-      line-height: 1.75rem; /* 28px */
-    }
-    .top-introduce .right-section {
-      display: none;
-    }
-    .bottom-package {
-      width: 100%;
-      flex-wrap: wrap;
-    }
-    .bottom-package .card-package {
-      padding: 1.5rem;
-      flex: 0 0 100%;
-      margin: 0 0 1rem 0;
-    }
-    .bottom-package .card-package:last-child {
-      margin-bottom: 0;
+      background-color: theme("colors.gray.14");
+      background-image: url("https://img.alicdn.com/imgextra/i3/O1CN01WdSy2u1glrf0I5cXJ_!!6000000004183-2-tps-2400-2400.png"); /* 设置背景图片 */
+      background-repeat: no-repeat;
+      background-position: right;
+      background-size: 70%;
     }
 
-    /* 手机端卡片样式单独设置 */
-    .price-content .price {
-      font-size: 1.875rem; /* 30px */
-      line-height: 2.25rem; /* 36px */
+    .card-package {
+      flex: 1;
+      margin: 0 0.5rem;
+      transition:
+        transform 0.2s,
+        box-shadow 0.2s;
     }
-    .subscribe {
-      margin-bottom: 0;
-    }
-    .subscribe .button-transform {
-      height: 2rem;
-      min-height: 2rem;
-      padding-left: 0.75rem;
-      padding-right: 0.75rem;
-    }
-  }
-
-  /* 大于50rem 小于 72rem  800px < width < 1152 */
-  @media (min-width: 50rem) and (max-width: 86rem) {
-    .cloud-introduce {
-      padding: 2.5rem;
-    }
-    .top-introduce {
-      width: 100%;
-    }
-    .bottom-package {
-      width: 100%;
-      flex-wrap: wrap;
-    }
-    .bottom-package .card-package {
-      flex: 0 0 40%;
-      margin: 0 0.5rem 1rem 0.5rem;
+    .card-package:hover {
+      transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+      transform: translateY(-4px);
+      box-shadow:
+        4px 4px 8px rgba(0, 0, 0, 0.1),
+        -4px -4px 8px rgba(0, 0, 0, 0.1);
     }
     .bottom-package .card-package:first-child {
-      margin-left: 0.5rem;
+      margin-left: 0;
+      background-color: theme("colors.blue.01");
+    }
+    .bottom-package .card-package:first-child .package .title {
+      color: theme("colors.gray.14");
+    }
+    .bottom-package .card-package:first-child .price-content {
+      border-color: theme("colors.gray.03");
+    }
+    .bottom-package .card-package:first-child .price-content .price {
+      color: theme("colors.gray.14");
+    }
+    .bottom-package .card-package:first-child .price-content .description {
+      color: theme("colors.gray.14");
+    }
+    .bottom-package .card-package:first-child .feature {
+      color: theme("colors.gray.08");
     }
     .bottom-package .card-package:last-child {
-      margin-right: 0.5rem;
+      margin-right: 0;
+    }
+    .button-transform {
+      display: inline-block;
+      vertical-align: middle;
+      -webkit-transform: perspective(1px) translateZ(0);
+      transform: perspective(1px) translateZ(0);
+      box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+      -webkit-transition-duration: 0.3s;
+      transition-duration: 0.3s;
+      -webkit-transition-property: box-shadow, transform;
+      transition-property: box-shadow, transform;
+      transition: background-color 0.5s ease;
+    }
+
+    .bottom-package
+      .card-package:first-child
+      .subscribe
+      .button-transform:hover {
+      color: theme("colors.gray.03");
+      background: linear-gradient(226deg, #2c46c9 -2%, rgba(0, 0, 0, 0) 43%),
+        #121316;
+    }
+
+    .button-transform:hover {
+      color: theme("colors.gray.13");
+      background-color: theme("colors.gray.01");
+    }
+    /* 小于50rem  小于 800px */
+    @media (max-width: 50rem) {
+      .cloud-introduce {
+        padding: 1.5rem;
+      }
+      .top-introduce {
+        width: 100%;
+      }
+      .top-introduce .left-section .title {
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+      }
+      .top-introduce .left-section .start-cloud {
+        font-size: 1.125rem; /* 18px */
+        line-height: 1.75rem; /* 28px */
+      }
+      .top-introduce .right-section {
+        display: none;
+      }
+      .bottom-package {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+      .bottom-package .card-package {
+        padding: 1.5rem;
+        flex: 0 0 100%;
+        margin: 0 0 1rem 0;
+      }
+      .bottom-package .card-package:last-child {
+        margin-bottom: 0;
+      }
+
+      /* 手机端卡片样式单独设置 */
+      .price-content .price {
+        font-size: 1.875rem; /* 30px */
+        line-height: 2.25rem; /* 36px */
+      }
+      .subscribe {
+        margin-bottom: 0;
+      }
+      .subscribe .button-transform {
+        height: 2rem;
+        min-height: 2rem;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
+    }
+
+    /* 大于50rem 小于 72rem  800px < width < 1152 */
+    @media (min-width: 50rem) and (max-width: 86rem) {
+      .cloud-introduce {
+        padding: 2.5rem;
+      }
+      .top-introduce {
+        width: 100%;
+      }
+      .bottom-package {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+      .bottom-package .card-package {
+        flex: 0 0 40%;
+        margin: 0 0.5rem 1rem 0.5rem;
+      }
+      .bottom-package .card-package:first-child {
+        margin-left: 0.5rem;
+      }
+      .bottom-package .card-package:last-child {
+        margin-right: 0.5rem;
+      }
     }
   }
 </style>

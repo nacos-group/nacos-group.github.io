@@ -19,43 +19,52 @@ const t = useTranslations(Astro);
         />
     </head>
     <body>
-        <div class="container w-full">
-            <div class="content">
-                <p class="text-gray-01 text-3xl">
-                    {t('commmon.ebook.click.download')}<br /> {t('commmon.ebook.complete.get')}<br /> {t('commmon.ebook.enjoy.read')}
-                </p>
-                <Button title={t('commmon.ebook.click.download')} href="https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST" />
+        <div class="ebook-div">
+            <div class="container w-full">
+                <div class="content">
+                    <p class="text-gray-01 text-3xl">
+                        {t("commmon.ebook.click.download")}<br />
+                        {t("commmon.ebook.complete.get")}<br />
+                        {t("commmon.ebook.enjoy.read")}
+                    </p>
+                    <Button
+                        title={t("commmon.ebook.click.download")}
+                        href="https://developer.aliyun.com/ebook/36?spm=a2c6h.20345107.ebook-index.18.152c2984fsi5ST"
+                    />
+                </div>
             </div>
         </div>
     </body>
 </html>
 
-<style>
-    .container {
-        background-image: url("https://img.alicdn.com/imgextra/i1/O1CN013hvJlN1pvKNo31b1W_!!6000000005422-0-tps-1600-800.jpg");
-        background-size: cover;
-        background-position: center;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        padding-left: 3rem;
-        height: 400px;
-
-        p {
-            line-height: 3rem;
-            margin: 1.75rem 0;
-        }
-    }
-
-    @media (max-width: 50rem) {
+<style is:global>
+    .ebook-div {
         .container {
-            height: 200px;
-            padding-left: 1.5rem;
+            background-image: url("https://img.alicdn.com/imgextra/i1/O1CN013hvJlN1pvKNo31b1W_!!6000000005422-0-tps-1600-800.jpg");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding-left: 3rem;
+            height: 400px;
+
             p {
-                font-size: 16px;
-                font-weight: 500;
-                line-height: 24px;
-                margin: 1rem 0;
+                line-height: 3rem;
+                margin: 1.75rem 0;
+            }
+        }
+
+        @media (max-width: 50rem) {
+            .container {
+                height: 200px;
+                padding-left: 1.5rem;
+                p {
+                    font-size: 16px;
+                    font-weight: 500;
+                    line-height: 24px;
+                    margin: 1rem 0;
+                }
             }
         }
     }

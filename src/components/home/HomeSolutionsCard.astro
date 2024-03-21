@@ -1,259 +1,286 @@
 ---
-import { useTranslations } from '@i18n/util';
+import { useTranslations } from "@i18n/util";
 const t = useTranslations(Astro);
-import Button from '@components/common/Button.astro';
+import Button from "@components/common/Button.astro";
 const solutionList = [
   {
     checked: true,
-    src: 'https://help.aliyun.com/zh/mse/use-cases/implement-high-availability-capabilities-of-mse-microservices-registry/?spm=a2c4g.11186623.0.0.102a27e0juv8vG',
-    title: t('home.solutions.card.1'),
-    keyword:[t('home.solutions.card.keyword.high_availability') ,t('home.solutions.card.keyword.multi_availability'), t('home.solutions.card.keyword.multi_data'), t('home.solutions.card.keyword.disaster_recovery_protect')]
+    src: "https://help.aliyun.com/zh/mse/use-cases/implement-high-availability-capabilities-of-mse-microservices-registry/?spm=a2c4g.11186623.0.0.102a27e0juv8vG",
+    title: t("home.solutions.card.1"),
+    keyword: [
+      t("home.solutions.card.keyword.high_availability"),
+      t("home.solutions.card.keyword.multi_availability"),
+      t("home.solutions.card.keyword.multi_data"),
+      t("home.solutions.card.keyword.disaster_recovery_protect"),
+    ],
   },
   {
     checked: false,
-    src: 'https://help.aliyun.com/zh/mse/use-cases/migration-solution-based-on-mse-sync/?spm=a2c4g.11186623.0.0.13f12318fSap49',
-    title: t('home.solutions.card.2'),
-    keyword:[t('home.solutions.card.keyword.data_synchronization_migration'),t('home.solutions.card.keyword.smooth_migration'),t('home.solutions.card.keyword.migration_high_availability'),t('home.solutions.card.keyword.easy_use')]
+    src: "https://help.aliyun.com/zh/mse/use-cases/migration-solution-based-on-mse-sync/?spm=a2c4g.11186623.0.0.13f12318fSap49",
+    title: t("home.solutions.card.2"),
+    keyword: [
+      t("home.solutions.card.keyword.data_synchronization_migration"),
+      t("home.solutions.card.keyword.smooth_migration"),
+      t("home.solutions.card.keyword.migration_high_availability"),
+      t("home.solutions.card.keyword.easy_use"),
+    ],
   },
   {
     checked: false,
-    src: 'https://developer.aliyun.com/article/1265016?spm=5176.21213303.J_qCOwPWspKEuWcmp8qiZNQ.10.c89e2f3dQa2WtF&scm=20140722.S_community@@%E6%96%87%E7%AB%A0@@1265016._.ID_community@@%E6%96%87%E7%AB%A0@@1265016-RL_%E4%BA%91%E5%8E%9F%E7%94%9F%E7%BD%91%E5%85%B3%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E8%83%BD%E5%8A%9B-LOC_llm-OR_ser-V_3-RK_rerank-P0_2',
-    title: t('home.solutions.card.3'),
-    keyword:[t('home.solutions.card.keyword.three_in_one'),t('home.solutions.card.keyword.safety'),t('home.solutions.card.keyword.plugin_ecosystem'),t('home.solutions.card.keyword.application_firewall')]
+    src: "https://developer.aliyun.com/article/1265016?spm=5176.21213303.J_qCOwPWspKEuWcmp8qiZNQ.10.c89e2f3dQa2WtF&scm=20140722.S_community@@%E6%96%87%E7%AB%A0@@1265016._.ID_community@@%E6%96%87%E7%AB%A0@@1265016-RL_%E4%BA%91%E5%8E%9F%E7%94%9F%E7%BD%91%E5%85%B3%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4%E8%83%BD%E5%8A%9B-LOC_llm-OR_ser-V_3-RK_rerank-P0_2",
+    title: t("home.solutions.card.3"),
+    keyword: [
+      t("home.solutions.card.keyword.three_in_one"),
+      t("home.solutions.card.keyword.safety"),
+      t("home.solutions.card.keyword.plugin_ecosystem"),
+      t("home.solutions.card.keyword.application_firewall"),
+    ],
   },
   {
     checked: false,
-    src: 'https://help.aliyun.com/zh/mse/use-cases/implement-graceful-start-and-shutdown-of-microservice-applications-by-using-mse/?spm=a2c4g.11186623.0.0.385116bftBJhAY',
-    title: t('home.solutions.card.4'),
-    keyword:[t('home.solutions.card.keyword.lossless'),t('home.solutions.card.keyword.multi_availability'),t('home.solutions.card.keyword.grayscale'),t('home.solutions.card.keyword.service_governance')]
+    src: "https://help.aliyun.com/zh/mse/use-cases/implement-graceful-start-and-shutdown-of-microservice-applications-by-using-mse/?spm=a2c4g.11186623.0.0.385116bftBJhAY",
+    title: t("home.solutions.card.4"),
+    keyword: [
+      t("home.solutions.card.keyword.lossless"),
+      t("home.solutions.card.keyword.multi_availability"),
+      t("home.solutions.card.keyword.grayscale"),
+      t("home.solutions.card.keyword.service_governance"),
+    ],
   },
 ];
 ---
 
-<card-solution class="card-solution block bg-gray-14 mb-4 mt-9">
-  <div class="bottom-solutions-card flex items-center justify-center h-fit">
-    <div class="solution-container h-[31.75rem] w-full flex flex-nowrap justify-start">
+<span class="card-solution-wrapper">
+  <card-solution class="card-solution block bg-gray-14 mb-4 mt-9">
+    <div class="bottom-solutions-card flex items-center justify-center h-fit">
+      <div
+        class="solution-container h-[31.75rem] w-full flex flex-nowrap justify-start"
+      >
+        {
+          solutionList.map((item, index) => {
+            const { src, checked } = item;
+            return (
+              <>
+                <input
+                  type="radio"
+                  name="silder"
+                  id={`c${index}`}
+                  checked={checked}
+                />
+                <label
+                  for={`c${index}`}
+                  input-id={`c${index}`}
+                  class="solutions-card overflow-hidden flex flex-col justify-between cursor-pointer rounded-2xl mx-2"
+                >
+                  <div class="mx-16 ">
+                    <div class="main-title text-xs text-blue-03 mt-[1.25rem] tracking-[0.15em] text-center opacity-0 tracking-wider">
+                      {t("home.solutions.about")}
+                    </div>
+                    <div class="item-title text-blue-01 text-[2.5rem] leading-[3rem] mt-[3.125rem] opacity-0 mb-7">
+                      {item.title}
+                    </div>
+                    {item.keyword.map((it) => {
+                      return (
+                        <span class="item-keyword opacity-0 border border-blue-04 rounded-[2.25rem] h-8 px-6 py-2 text-xs text-blue-02 mr-3 inline-block mb-4">
+                          {it}
+                        </span>
+                      );
+                    })}
+                  </div>
+                  <div class="button opacity-0 mx-auto mb-[3.75rem]">
+                    <Button size="large" class="rounded-3xl" href={src}>
+                      {t("home.solutions.action")}
+                    </Button>
+                  </div>
+                </label>
+              </>
+            );
+          })
+        }
+      </div>
+    </div>
+
+    <div class="mobile-bottom-solutions-card w-full flex flex-col hidden">
       {
         solutionList.map((item, index) => {
-          const { src, checked } = item;
+          const { src, title } = item;
           return (
-            <>
-              <input
-                type="radio"
-                name="silder"
-                id={`c${index}`}
-                checked={checked}
-              />
-              <label
-                for={`c${index}`}
-                input-id={`c${index}`}
-                class="solutions-card overflow-hidden flex flex-col justify-between cursor-pointer rounded-2xl mx-2"
-              >
-              
-                <div class="mx-16 ">
-                  <div class="main-title text-xs text-blue-03 mt-[1.25rem] tracking-[0.15em] text-center opacity-0 tracking-wider">
-                    {t('home.solutions.about')}
-                  </div>
-                  <div class="item-title text-blue-01 text-[2.5rem] leading-[3rem] mt-[3.125rem] opacity-0 mb-7">
-                    {item.title}
-                  </div>
-                  {item.keyword.map(it => {return(
-                    <span class="item-keyword opacity-0 border border-blue-04 rounded-[2.25rem] h-8 px-6 py-2 text-xs text-blue-02 mr-3 inline-block mb-4">{it}</span>
-                  )})}
+            <div class="solutions-mobile-card mx-auto h-[14rem] overflow-hidden flex flex-col justify-between cursor-pointer p-4 rounded-3xl">
+              <div class="flex align-center flex-nowrap w-full">
+                <div class="mx-auto text-xs font-normal text-gray-05 tracking-wider">
+                  {t("home.solutions.about")}
                 </div>
-                <div class="button opacity-0 mx-auto mb-[3.75rem]">
-                  <Button 
-                    size="large"
-                    class="rounded-3xl"
-                    href={src}
-                  >
-                    {t('home.solutions.action')}
-                  </Button>
-                </div>
-              </label>
-            </>
+              </div>
+              <div class="w-full text-gray-02 text-base">{title}</div>
+              <div class="button mx-auto">
+                <Button class="rounded-3xl" href={src} target="_blank">
+                  {t("home.solutions.action")}
+                </Button>
+              </div>
+            </div>
           );
         })
       }
     </div>
-  </div>
-
-  <div class="mobile-bottom-solutions-card w-full flex flex-col hidden">
-    {
-      solutionList.map((item, index) => {
-        const { src, title } = item;
-        return (
-          <div class="solutions-mobile-card mx-auto h-[14rem] overflow-hidden flex flex-col justify-between cursor-pointer p-4 rounded-3xl">
-            <div class="flex align-center flex-nowrap w-full">
-              <div class="mx-auto text-xs font-normal text-gray-05 tracking-wider">
-                {t('home.solutions.about')}
-              </div>
-            </div>
-            <div class="w-full text-gray-02 text-base">{title}</div>
-            <div class="button mx-auto">
-              <Button 
-                class="rounded-3xl"
-                href={src}
-                target="_blank"
-              >
-                {t('home.solutions.action')}
-              </Button>
-            </div>
-          </div>
-        );
-      })
-    }
-  </div>
-</card-solution>
+  </card-solution>
+</span>
 
 <script>
   class HomeSolutionCard extends HTMLElement {
-    cardSolution = this.querySelector(".solution-container")
-    currentInputid = 'c0'
+    cardSolution = this.querySelector(".solution-container");
+    currentInputid = "c0";
     // 添加节流开关，防止动画期间频繁抖动
-    flag = true
+    flag = true;
     constructor() {
       super();
-      this.cardSolution.addEventListener('mouseover', (e) => {
-        this.selectedLabel(e)
-      })
+      this.cardSolution.addEventListener("mouseover", (e) => {
+        this.selectedLabel(e);
+      });
     }
 
     selectedLabel(e) {
-      const inputId = e.target.getAttribute('input-id')
-      if (this.flag && inputId && (inputId !== this.currentInputid)) {
-        this.currentInputid = inputId
-        this.flag = false
+      const inputId = e.target.getAttribute("input-id");
+      if (this.flag && inputId && inputId !== this.currentInputid) {
+        this.currentInputid = inputId;
+        this.flag = false;
         setTimeout(() => {
-          this.flag = true
+          this.flag = true;
         }, 200);
-        let input: HTMLInputElement = this.querySelector(`input[type=radio]#${inputId}`)
-        input && input.checked === false ? input.checked = true : null
+        let input: HTMLInputElement = this.querySelector(
+          `input[type=radio]#${inputId}`,
+        );
+        input && input.checked === false ? (input.checked = true) : null;
       }
     }
   }
-  customElements.define('card-solution', HomeSolutionCard);
+  customElements.define("card-solution", HomeSolutionCard);
 </script>
 
-<style>
-  .bottom-solutions-card {
-    width: 85.125rem;
-  }
-  .solutions-card {
-    /* 默认宽度 */
-    width: 9.75rem;
-    background-size: cover;
-    transition: 0.6s cubic-bezier(0.28, -0.03, 0, 0.99);
-    /* box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.8); */
-    background-size: cover;
-    background-position: center;
-
-  }
-  .solution-container > .solutions-card:first-of-type {
-    margin-left: 0;
-  }
-  .solution-container > .solutions-card:last-of-type {
-    margin-right: 0;
-  }
-  @keyframes showcontent {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  input {
-    display: none;
-  }
-  input:checked + label {
-    flex: 1;
-    animation: zoom-animation 5s 0.6s infinite;
-  }
-  input:checked + label .main-title {
-    animation: showcontent 0.3s ease-in-out 0.3s 1 forwards;
-  }
-  input:checked + label .item-title {
-    animation: showcontent 0.3s ease-in-out 0.3s 1 forwards;
-  }
-  input:checked + label .item-keyword {
-    animation: showcontent 0.3s ease-in-out 0.3s 1 forwards;
-  }
-  input:checked + label .button {
-    animation: showcontent 0.3s ease-in-out 0.3s 1 forwards;
-  }
-
-  .solutions-card[for='c0'] {
-    background-image: url('https://img.alicdn.com/imgextra/i1/O1CN017UPiCy1xJmqGNV93n_!!6000000006423-2-tps-1688-1016.png');
-  }
-  .solutions-card[for='c1'] {
-    background-image: url('https://img.alicdn.com/imgextra/i2/O1CN0145ww871PcNzzFJfR1_!!6000000001861-0-tps-1360-907.jpg');
-  }
-  .solutions-card[for='c2'] {
-    background-image: url('https://img.alicdn.com/imgextra/i4/O1CN01ufR2md1L6XzxK8NH2_!!6000000001250-0-tps-1344-896.jpg');
-  }
-  .solutions-card[for='c3'] {
-    background-image: url('https://img.alicdn.com/imgextra/i2/O1CN01nfn6fa1FD3w7JaA0w_!!6000000000452-0-tps-1024-1024.jpg');
-  }
-
-
-@keyframes zoom-animation {
-  0% { background-size: 100% cover; }
-  5% { background-size: 100% auto; }
-  50% { background-size: 140% auto; }
-  100% { background-size: 100% auto; }
-}
-
-
-
-  /* 小于50rem  小于 800px */
-  @media (max-width: 50rem) {
-    .card-solution {
-      width: 100%;
-    }
-    .top-title {
-      margin-top: 2.5rem;
-      margin-bottom: 2.5rem;
-    }
-    .top-title .title {
-      font-size: 1.125rem; /* 18px */
-      line-height: 1.75rem; /* 28px */
-    }
+<style is:global>
+  .card-solution-wrapper {
     .bottom-solutions-card {
-      width: 100%;
-      display: none !important;
+      width: 85.125rem;
     }
-    .mobile-bottom-solutions-card {
-      display: block !important;
-    }
-    .solutions-mobile-card {
+    .solutions-card {
+      /* 默认宽度 */
+      width: 9.75rem;
       background-size: cover;
-      background-image: url('https://img.alicdn.com/imgextra/i1/O1CN017UPiCy1xJmqGNV93n_!!6000000006423-2-tps-1688-1016.png');
+      transition: 0.6s cubic-bezier(0.28, -0.03, 0, 0.99);
+      /* box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.8); */
+      background-size: cover;
+      background-position: center;
     }
-    .mobile-bottom-solutions-card > .solutions-mobile-card:first-of-type {
-      margin-bottom: 1rem;
+    .solution-container > .solutions-card:first-of-type {
+      margin-left: 0;
     }
-    .mobile-bottom-solutions-card > .solutions-mobile-card:nth-child(2) {
-      margin-bottom: 1rem;
+    .solution-container > .solutions-card:last-of-type {
+      margin-right: 0;
     }
-    .mobile-bottom-solutions-card > .solutions-mobile-card:nth-child(3) {
-      margin-bottom: 1rem;
+    @keyframes showcontent {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
     }
-  }
-
-  /* 大于50rem 小于 72rem  800px < width < 1152 */
-  @media (min-width: 50rem) and (max-width: 86rem) {
-    .card-solution {
-      width: 100%;
-    }
-    .bottom-solutions-card {
-      width: 100%;
-    }
-    .solution-container {
-      width: 100%;
+    input {
+      display: none;
     }
     input:checked + label {
       flex: 1;
+      animation: zoom-animation 5s 0.6s infinite;
+    }
+    input:checked + label .main-title {
+      animation: showcontent 0.3s ease-in-out 0.3s 1 forwards;
+    }
+    input:checked + label .item-title {
+      animation: showcontent 0.3s ease-in-out 0.3s 1 forwards;
+    }
+    input:checked + label .item-keyword {
+      animation: showcontent 0.3s ease-in-out 0.3s 1 forwards;
+    }
+    input:checked + label .button {
+      animation: showcontent 0.3s ease-in-out 0.3s 1 forwards;
+    }
+
+    .solutions-card[for="c0"] {
+      background-image: url("https://img.alicdn.com/imgextra/i1/O1CN017UPiCy1xJmqGNV93n_!!6000000006423-2-tps-1688-1016.png");
+    }
+    .solutions-card[for="c1"] {
+      background-image: url("https://img.alicdn.com/imgextra/i2/O1CN0145ww871PcNzzFJfR1_!!6000000001861-0-tps-1360-907.jpg");
+    }
+    .solutions-card[for="c2"] {
+      background-image: url("https://img.alicdn.com/imgextra/i4/O1CN01ufR2md1L6XzxK8NH2_!!6000000001250-0-tps-1344-896.jpg");
+    }
+    .solutions-card[for="c3"] {
+      background-image: url("https://img.alicdn.com/imgextra/i2/O1CN01nfn6fa1FD3w7JaA0w_!!6000000000452-0-tps-1024-1024.jpg");
+    }
+
+    @keyframes zoom-animation {
+      0% {
+        background-size: 100% cover;
+      }
+      5% {
+        background-size: 100% auto;
+      }
+      50% {
+        background-size: 140% auto;
+      }
+      100% {
+        background-size: 100% auto;
+      }
+    }
+
+    /* 小于50rem  小于 800px */
+    @media (max-width: 50rem) {
+      .card-solution {
+        width: 100%;
+      }
+      .top-title {
+        margin-top: 2.5rem;
+        margin-bottom: 2.5rem;
+      }
+      .top-title .title {
+        font-size: 1.125rem; /* 18px */
+        line-height: 1.75rem; /* 28px */
+      }
+      .bottom-solutions-card {
+        width: 100%;
+        display: none !important;
+      }
+      .mobile-bottom-solutions-card {
+        display: block !important;
+      }
+      .solutions-mobile-card {
+        background-size: cover;
+        background-image: url("https://img.alicdn.com/imgextra/i1/O1CN017UPiCy1xJmqGNV93n_!!6000000006423-2-tps-1688-1016.png");
+      }
+      .mobile-bottom-solutions-card > .solutions-mobile-card:first-of-type {
+        margin-bottom: 1rem;
+      }
+      .mobile-bottom-solutions-card > .solutions-mobile-card:nth-child(2) {
+        margin-bottom: 1rem;
+      }
+      .mobile-bottom-solutions-card > .solutions-mobile-card:nth-child(3) {
+        margin-bottom: 1rem;
+      }
+    }
+
+    /* 大于50rem 小于 72rem  800px < width < 1152 */
+    @media (min-width: 50rem) and (max-width: 86rem) {
+      .card-solution {
+        width: 100%;
+      }
+      .bottom-solutions-card {
+        width: 100%;
+      }
+      .solution-container {
+        width: 100%;
+      }
+      input:checked + label {
+        flex: 1;
+      }
     }
   }
 </style>

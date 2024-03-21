@@ -1,269 +1,391 @@
 ---
 import { Image } from "astro:assets";
-import { useTranslations,isChinese } from "@i18n/util";
+import { useTranslations, isChinese } from "@i18n/util";
 const t = useTranslations(Astro);
 const ifzh = isChinese(Astro);
 
-  const companyCustomers = [
-    {
-      name: t('cloud.feedback.soul.name'),
-      theme: 'blue',
-      logo: "https://img.alicdn.com/imgextra/i2/O1CN01GZhEqR1bY3dY5SOuY_!!6000000003476-2-tps-160-130.png",
-      href: "https://code.alibaba-inc.com/goat/astro-nacos",
-      description: t('cloud.feedback.soul.description'),
-    },
-    {
-      name: t('cloud.feedback.laidian.name'),
-      theme: 'black',
-      logo: "https://img.alicdn.com/imgextra/i3/O1CN010ulPrT1M45UNBCAXe_!!6000000001380-2-tps-160-130.png",
-      href: "https://developer.aliyun.com/article/855894",
-      description: t('cloud.feedback.laidian.description'),
-    },
-    {
-      name: t('cloud.feedback.zeekr.name'),
-      theme: 'gray',
-      logo: "https://img.alicdn.com/imgextra/i2/O1CN01zluUCK29BKvOCojPr_!!6000000008029-2-tps-160-130.png",
-      href: "https://developer.aliyun.com/article/1173573",
-      description: t('cloud.feedback.zeekr.description'),
-    }, 
-    {
-      name: t('cloud.feedback.ykc.name'),
-      theme: 'blue',
-      logo: "https://img.alicdn.com/imgextra/i1/O1CN01LWMfwx1Ggf9VGmXBF_!!6000000000652-2-tps-160-130.png",
-      href: "https://developer.aliyun.com/article/1172572?groupCode=mse",
-      description: t('cloud.feedback.ykc.description'),
-    },
-    {
-      name: t('cloud.feedback.bosideng.name'),
-      theme: 'black',
-      logo: "https://img.alicdn.com/imgextra/i2/O1CN01d7EDXs1HLsnXSTgGG_!!6000000000742-2-tps-160-130.png",
-      href: "https://developer.aliyun.com/article/1147221?groupCode=mse",
-      description: t('cloud.feedback.bosideng.description'),
-    },
-    {
-      name: t('cloud.feedback.skechers.name'),
-      theme: 'gray',
-      logo: "https://img.alicdn.com/imgextra/i1/O1CN01P1k9gA1YpVsxPYzAw_!!6000000003108-2-tps-160-130.png",
-      href: "https://developer.aliyun.com/article/844814",
-      description: t('cloud.feedback.skechers.description'),
-    },
-    {
-      name: t('cloud.feedback.very.name'),
-      theme: 'blue',
-      logo: "https://img.alicdn.com/imgextra/i1/O1CN01DevTFA28W7HY1JFC6_!!6000000007939-2-tps-160-130.png",
-      href: "https://developer.aliyun.com/article/992090",
-      description: t('cloud.feedback.very.description'),
-    },
-    {
-      name: t('cloud.feedback.helian.name'),
-      theme: 'black',
-      logo: "https://img.alicdn.com/imgextra/i3/O1CN01YmUBmh1snwqr4kRot_!!6000000005812-2-tps-544-180.png",
-      href: "https://developer.aliyun.com/article/1095573",
-      description: t('cloud.feedback.helian.description'),
-    },
-    {
-      name: t('cloud.feedback.zhijin.name'),
-      theme: 'gray',
-      logo: "https://img.alicdn.com/imgextra/i3/O1CN015GIqM31qsPTObt2CV_!!6000000005551-2-tps-544-180.png",
-      href: "https://developer.aliyun.com/article/1064881",
-      description: t('cloud.feedback.zhijin.description'),
-    }
-  ];
+const companyCustomers = [
+  {
+    name: t("cloud.feedback.soul.name"),
+    theme: "blue",
+    logo: "https://img.alicdn.com/imgextra/i2/O1CN01GZhEqR1bY3dY5SOuY_!!6000000003476-2-tps-160-130.png",
+    href: "https://code.alibaba-inc.com/goat/astro-nacos",
+    description: t("cloud.feedback.soul.description"),
+  },
+  {
+    name: t("cloud.feedback.laidian.name"),
+    theme: "black",
+    logo: "https://img.alicdn.com/imgextra/i3/O1CN010ulPrT1M45UNBCAXe_!!6000000001380-2-tps-160-130.png",
+    href: "https://developer.aliyun.com/article/855894",
+    description: t("cloud.feedback.laidian.description"),
+  },
+  {
+    name: t("cloud.feedback.zeekr.name"),
+    theme: "gray",
+    logo: "https://img.alicdn.com/imgextra/i2/O1CN01zluUCK29BKvOCojPr_!!6000000008029-2-tps-160-130.png",
+    href: "https://developer.aliyun.com/article/1173573",
+    description: t("cloud.feedback.zeekr.description"),
+  },
+  {
+    name: t("cloud.feedback.ykc.name"),
+    theme: "blue",
+    logo: "https://img.alicdn.com/imgextra/i1/O1CN01LWMfwx1Ggf9VGmXBF_!!6000000000652-2-tps-160-130.png",
+    href: "https://developer.aliyun.com/article/1172572?groupCode=mse",
+    description: t("cloud.feedback.ykc.description"),
+  },
+  {
+    name: t("cloud.feedback.bosideng.name"),
+    theme: "black",
+    logo: "https://img.alicdn.com/imgextra/i2/O1CN01d7EDXs1HLsnXSTgGG_!!6000000000742-2-tps-160-130.png",
+    href: "https://developer.aliyun.com/article/1147221?groupCode=mse",
+    description: t("cloud.feedback.bosideng.description"),
+  },
+  {
+    name: t("cloud.feedback.skechers.name"),
+    theme: "gray",
+    logo: "https://img.alicdn.com/imgextra/i1/O1CN01P1k9gA1YpVsxPYzAw_!!6000000003108-2-tps-160-130.png",
+    href: "https://developer.aliyun.com/article/844814",
+    description: t("cloud.feedback.skechers.description"),
+  },
+  {
+    name: t("cloud.feedback.very.name"),
+    theme: "blue",
+    logo: "https://img.alicdn.com/imgextra/i1/O1CN01DevTFA28W7HY1JFC6_!!6000000007939-2-tps-160-130.png",
+    href: "https://developer.aliyun.com/article/992090",
+    description: t("cloud.feedback.very.description"),
+  },
+  {
+    name: t("cloud.feedback.helian.name"),
+    theme: "black",
+    logo: "https://img.alicdn.com/imgextra/i3/O1CN01YmUBmh1snwqr4kRot_!!6000000005812-2-tps-544-180.png",
+    href: "https://developer.aliyun.com/article/1095573",
+    description: t("cloud.feedback.helian.description"),
+  },
+  {
+    name: t("cloud.feedback.zhijin.name"),
+    theme: "gray",
+    logo: "https://img.alicdn.com/imgextra/i3/O1CN015GIqM31qsPTObt2CV_!!6000000005551-2-tps-544-180.png",
+    href: "https://developer.aliyun.com/article/1064881",
+    description: t("cloud.feedback.zhijin.description"),
+  },
+];
 
-  // blue 
-  // bg: bg-blue-08; text: text-blue-01 logo: text-gray-03
-  // black
-  // bg: bg-gray-14; text: text-gray-03 logo: text-gray-03
-  // gray
-  // bg: bg-gray-03; text: text-gray-14 logo: text-gray-14
+// blue
+// bg: bg-blue-08; text: text-blue-01 logo: text-gray-03
+// black
+// bg: bg-gray-14; text: text-gray-03 logo: text-gray-03
+// gray
+// bg: bg-gray-03; text: text-gray-14 logo: text-gray-14
 ---
 
-<companies-feedback class="companies-feedback flex flex-col justify-center items-center bg-gary-02 py-10">
-  <div class="top-title flex flex-col items-center mb-20 mt-[3.625rem]">
-    <span class="text-gray-10 text-xs mb-6">{t('cloud.feedback.about')}</span>
-    <div class="title text-gray-14 text-[2.75rem] leading-[3.5rem] font-medium text-center whitespace-normal max-w-[60%]">{t('cloud.feedback.title')}</div>
-  </div>
+<span class="companies-feedback-wrapper">
+  <companies-feedback
+    class="companies-feedback flex flex-col justify-center items-center bg-gary-02 py-10"
+  >
+    <div class="top-title flex flex-col items-center mb-20 mt-[3.625rem]">
+      <span class="text-gray-10 text-xs mb-6">{t("cloud.feedback.about")}</span>
+      <div
+        class="title text-gray-14 text-[2.75rem] leading-[3.5rem] font-medium text-center whitespace-normal max-w-[60%]"
+      >
+        {t("cloud.feedback.title")}
+      </div>
+    </div>
 
-  <div class="bottom-feedback relative flex overflow-hidden rounded-2xl">
-    <ul class="slider p-0 list-none inline-block uppercase cursor-pointer flex flex-nowrap">
+    <div class="bottom-feedback relative flex overflow-hidden rounded-2xl">
+      <ul
+        class="slider p-0 list-none inline-block uppercase cursor-pointer flex flex-nowrap"
+      >
+        {
+          companyCustomers.map((company) => {
+            const { name, logo, description, theme, href } = company;
+            const isBule = theme === "blue";
+            const isBlack = theme === "black";
+            const isGray = theme === "gray";
+            return (
+              <a href={href} target="_blank">
+                <li class="slider-item w-[31.25rem] inline-block">
+                  <div
+                    class:list={[
+                      "flex",
+                      "flex-col",
+                      "p-8",
+                      "rounded-2xl",
+                      {
+                        "text-[1.25rem]": ifzh,
+                        "leading-9": ifzh,
+                        "text-2xl": !ifzh,
+                        "bg-blue-08": isBule,
+                        "bg-gray-14": isBlack,
+                        "bg-gray-03": isGray,
+                      },
+                    ]}
+                  >
+                    <div
+                      class:list={[
+                        "normal-case",
+                        {
+                          "text-blue-01": isBule,
+                          "text-gray-03": isBlack,
+                          "text-gray-14": isGray,
+                        },
+                      ]}
+                    >
+                      {description}
+                    </div>
+                    <div class="flex justify-between mt-[10rem] items-center">
+                      <div
+                        class:list={[
+                          "text-xs",
+                          { "text-gray-03": !isGray, "text-gray-14": isGray },
+                        ]}
+                      >
+                        {name}
+                      </div>
+                      <Image
+                        src={logo}
+                        width="80"
+                        height="65"
+                        alt={name}
+                        class="object-contain"
+                      />
+                    </div>
+                  </div>
+                </li>
+              </a>
+            );
+          })
+        }
+      </ul>
+      <ul
+        class="slider p-0 list-none inline-block uppercase cursor-pointer flex flex-nowrap"
+      >
+        {
+          companyCustomers.map((company) => {
+            const { name, logo, description, theme, href } = company;
+            const isBule = theme === "blue";
+            const isBlack = theme === "black";
+            const isGray = theme === "gray";
+            return (
+              <a href={href} target="_blank">
+                <li class="slider-item w-[31.25rem] inline-block">
+                  <div
+                    class:list={[
+                      "flex",
+                      "flex-col",
+                      "p-8",
+                      "rounded-2xl",
+                      {
+                        "text-[1.25rem]": ifzh,
+                        "leading-9": ifzh,
+                        "text-2xl": !ifzh,
+                        "bg-blue-08": isBule,
+                        "bg-gray-14": isBlack,
+                        "bg-gray-03": isGray,
+                      },
+                    ]}
+                  >
+                    <div
+                      class:list={[
+                        "normal-case",
+                        {
+                          "text-blue-01": isBule,
+                          "text-gray-03": isBlack,
+                          "text-gray-14": isGray,
+                        },
+                      ]}
+                    >
+                      {description}
+                    </div>
+                    <div class="flex justify-between mt-[10rem] items-center">
+                      <div
+                        class:list={[
+                          "text-xs",
+                          { "text-gray-03": !isGray, "text-gray-14": isGray },
+                        ]}
+                      >
+                        {name}
+                      </div>
+                      <Image
+                        src={logo}
+                        width="80"
+                        height="65"
+                        alt={name}
+                        class="object-contain"
+                      />
+                    </div>
+                  </div>
+                </li>
+              </a>
+            );
+          })
+        }
+      </ul>
+    </div>
+
+    <div class="mobile-bottom-feedback hidden w-full flex-col">
       {
         companyCustomers.map((company) => {
           const { name, logo, description, theme, href } = company;
-          const isBule = theme === 'blue';
-          const isBlack = theme === 'black';
-          const isGray = theme === 'gray';
+          const isBule = theme === "blue";
+          const isBlack = theme === "black";
+          const isGray = theme === "gray";
           return (
             <a href={href} target="_blank">
-              <li class="slider-item w-[31.25rem] inline-block">
-                <div class:list={['flex', 'flex-col', 'p-8', 'rounded-2xl', {'text-[1.25rem]':ifzh,'leading-9':ifzh,'text-2xl':!ifzh, 'bg-blue-08': isBule, 'bg-gray-14': isBlack, 'bg-gray-03': isGray }]}>
-                  <div class:list={['normal-case', { 'text-blue-01': isBule, 'text-gray-03': isBlack, 'text-gray-14': isGray }]}>{description}</div>
-                  <div class="flex justify-between mt-[10rem] items-center">
-                    <div class:list={['text-xs', { 'text-gray-03': !isGray, 'text-gray-14': isGray }]}>{name}</div>
-                    <Image src={logo} width="80" height="65" alt={name} class="object-contain" />
+              <div class="w-full mb-4">
+                <div
+                  class:list={[
+                    "content",
+                    "flex",
+                    "flex-col",
+                    "p-8",
+                    "rounded-2xl",
+                    {
+                      "bg-blue-08": isBule,
+                      "bg-gray-14": isBlack,
+                      "bg-gray-03": isGray,
+                    },
+                  ]}
+                >
+                  <div
+                    class:list={[
+                      "normal-case",
+                      "description",
+                      "line-clamp-2",
+                      {
+                        "text-blue-01": isBule,
+                        "text-gray-03": isBlack,
+                        "text-gray-14": isGray,
+                      },
+                    ]}
+                  >
+                    {description}
                   </div>
-                </div>
-              </li>
-            </a>
-          );
-        })
-      }
-    </ul>
-    <ul class="slider p-0 list-none inline-block uppercase cursor-pointer flex flex-nowrap">
-      {
-        companyCustomers.map((company) => {
-          const { name, logo, description, theme,href } = company;
-          const isBule = theme === 'blue';
-          const isBlack = theme === 'black';
-          const isGray = theme === 'gray';
-          return (
-          <a href={href} target="_blank">
-              <li class="slider-item w-[31.25rem] inline-block">
-                <div class:list={['flex', 'flex-col', 'p-8', 'rounded-2xl', {'text-[1.25rem]':ifzh,'leading-9':ifzh,'text-2xl':!ifzh, 'bg-blue-08': isBule, 'bg-gray-14': isBlack, 'bg-gray-03': isGray }]}>
-                  <div class:list={['normal-case', { 'text-blue-01': isBule, 'text-gray-03': isBlack, 'text-gray-14': isGray }]}>{description}</div>
-                  <div class="flex justify-between mt-[10rem] items-center">
-                    <div class:list={['text-xs', { 'text-gray-03': !isGray, 'text-gray-14': isGray }]}>{name}</div>
-                    <Image src={logo} width="80" height="65" alt={name} class="object-contain" />
+                  <div class="company flex justify-between mt-12 items-center">
+                    <div
+                      class:list={[
+                        "text-xs",
+                        { "text-gray-03": !isGray, "text-gray-14": isGray },
+                      ]}
+                    >
+                      {name}
+                    </div>
+                    <Image
+                      src={logo}
+                      width="80"
+                      height="65"
+                      alt={name}
+                      class="object-contain"
+                    />
                   </div>
-                </div>
-              </li>
-            </a>
-          );
-        })
-      }
-    </ul>
-  </div>
-
-  <div class="mobile-bottom-feedback hidden w-full flex-col">
-    {
-      companyCustomers.map((company) => {
-        const { name, logo, description, theme, href } = company;
-        const isBule = theme === 'blue';
-        const isBlack = theme === 'black';
-        const isGray = theme === 'gray';
-        return (
-          <a href={href} target="_blank">
-            <div class="w-full mb-4">
-              <div class:list={['content', 'flex', 'flex-col', 'p-8', 'rounded-2xl', { 'bg-blue-08': isBule, 'bg-gray-14': isBlack, 'bg-gray-03': isGray }]}>
-                <div class:list={['normal-case', 'description', 'line-clamp-2', { 'text-blue-01': isBule, 'text-gray-03': isBlack, 'text-gray-14': isGray }]}>{description}</div>
-                <div class="company flex justify-between mt-12 items-center">
-                  <div class:list={['text-xs', { 'text-gray-03': !isGray, 'text-gray-14': isGray }]}>{name}</div>
-                  <Image src={logo} width="80" height="65" alt={name} class="object-contain" />
                 </div>
               </div>
-            </div>
-          </a>
-        );
-      })
+            </a>
+          );
+        })
+      }
+    </div>
+  </companies-feedback>
+</span>
+
+<style is:global>
+  .companies-feedback-wrapper {
+    companies-feedback {
+      --time: 100s;
     }
-  </div>
-</companies-feedback>
+    .top-title,
+    .bottom-feedback {
+      width: 85.125rem;
+    }
+    .companies-feedback {
+      /* 最后一个元素 距离底部footer 52px */
+      padding-bottom: 3.25rem;
+    }
+    .bottom-feedback {
+      /* mask-image: linear-gradient(90deg, transparent, theme('colors.gray.01') 20%, theme('colors.gray.01') 80%, transparent); */
+    }
+    .slider {
+      transition: background-color 0.5s;
+      /* animation: slide var(--time) linear infinite; */
+    }
+    .slider-item {
+      margin: 0 0.5rem;
+    }
+    img {
+      cursor: pointer;
+      transition: filter 0.5s;
+    }
+    .slider {
+      animation: slide var(--time) linear infinite;
+    }
+    @keyframes slide {
+      0% {
+        transform: translateX(0%);
+      }
 
-<script>
-class CompaniesFeedback extends HTMLElement {
-  constructor() {
-    super();
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+    .bottom-feedback:hover > .slider {
+      animation-play-state: paused;
+    }
+    .slider-item:first-child {
+      animation: reset var(--time) step-end infinite;
+      animation-delay: calc(var(--time) / -2);
+    }
+    a {
+      text-decoration: none; /* 清除下划线等默认样式 */
+      color: inherit; /* 继承父元素的颜色 */
+    }
+    @keyframes reset {
+      0% {
+        transform: translateX(0%);
+      }
 
-  }
-}
-customElements.define("companies-feedback", CompaniesFeedback);
-</script>
+      100% {
+        transform: translateX(100%);
+      }
+    }
 
-<style>
-companies-feedback {
-  --time: 100s
-}
-.top-title, .bottom-feedback {
-  width: 85.125rem;
-}
-.companies-feedback {
-  /* 最后一个元素 距离底部footer 52px */
-  padding-bottom: 3.25rem;
-}
-.bottom-feedback {
-  /* mask-image: linear-gradient(90deg, transparent, theme('colors.gray.01') 20%, theme('colors.gray.01') 80%, transparent); */
-}
-.slider {
-  transition: background-color 0.5s;
-  /* animation: slide var(--time) linear infinite; */
-}
-.slider-item {
-  margin: 0 0.5rem;
-}
-img {
-  cursor: pointer;
-  transition: filter 0.5s;
-}
-.slider {
-  animation: slide var(--time) linear infinite;
-}
-@keyframes slide {
-  0% {
-    transform: translateX(0%);
-  }
+    @media (max-width: 50rem) {
+      .companies-feedback {
+        padding: 1.5rem;
+      }
+      .top-title {
+        width: 100%;
+        margin-top: 2.5rem;
+        margin-bottom: 2.5rem;
+      }
+      .top-title .title {
+        max-width: 100%;
+        font-size: 1.125rem; /* 18px */
+        line-height: 1.75rem; /* 28px */
+      }
+      .bottom-feedback {
+        width: 100%;
+        display: none !important;
+      }
+      .mobile-bottom-feedback {
+        display: flex !important;
+      }
+      .mobile-bottom-feedback .content {
+        padding: 1.5rem;
+        padding-bottom: 0;
+      }
+      .mobile-bottom-feedback .company {
+        height: 4rem;
+        margin-top: 1.5rem;
+      }
+    }
 
-  100% {
-    transform: translateX(-100%);
+    @media (min-width: 50rem) and (max-width: 86rem) {
+      .companies-feedback {
+        padding: 2.5rem;
+      }
+      .top-title,
+      .bottom-feedback {
+        width: 100%;
+      }
+    }
   }
-}
-.bottom-feedback:hover > .slider {
-  animation-play-state: paused;
-}
-.slider-item:first-child {
-  animation: reset var(--time) step-end infinite;
-  animation-delay: calc(var(--time) / -2);
-}
-a {
-    text-decoration: none; /* 清除下划线等默认样式 */
-    color: inherit; /* 继承父元素的颜色 */
-  }
-@keyframes reset {
-  0% {
-    transform: translateX(0%);
-  }
-
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-@media (max-width: 50rem) {
-  .companies-feedback {
-    padding: 1.5rem;
-  }
-  .top-title {
-    width: 100%;
-    margin-top: 2.5rem;
-    margin-bottom: 2.5rem;
-  }
-  .top-title .title {
-    max-width: 100%;
-    font-size: 1.125rem; /* 18px */
-    line-height: 1.75rem; /* 28px */
-  }
-  .bottom-feedback {
-    width: 100%;
-    display: none !important;
-  }
-  .mobile-bottom-feedback {
-    display: flex !important;
-  }
-  .mobile-bottom-feedback .content {
-    padding: 1.5rem;
-    padding-bottom: 0;
-  }
-  .mobile-bottom-feedback .company {
-    height: 4rem;
-    margin-top: 1.5rem;
-  }
-
-}
-
-@media (min-width: 50rem) and (max-width: 86rem) {
-  .companies-feedback {
-    padding: 2.5rem;
-  }
-  .top-title, .bottom-feedback {
-    width: 100%;
-  }
-}
 </style>

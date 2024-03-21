@@ -3,8 +3,8 @@ import { useTranslations } from "@i18n/util";
 import { getEntries } from "astro:content";
 import { Image } from "astro:assets";
 import { HEADER_ACTIVITY_CARD } from "../../../consts";
-import LinkText from '@components/common/LinkText.astro';
-import { isChinese } from '@i18n/util';
+import LinkText from "@components/common/LinkText.astro";
+import { isChinese } from "@i18n/util";
 const t = useTranslations(Astro);
 const ifzh = isChinese(Astro);
 
@@ -12,7 +12,7 @@ export const communityItems = [
   {
     label: "社区",
     translations: {
-        en: "COMMUNITY"
+      en: "COMMUNITY",
     },
     children: [
       {
@@ -20,31 +20,31 @@ export const communityItems = [
         target: "_blank",
         link: "https://github.com/nacos-group/nacos-group.github.io/issues",
         translations: {
-            en: "Report a doc issue"
-        }
+          en: "Report a doc issue",
+        },
       },
       {
         label: "贡献社区",
         target: "_blank",
         link: "https://github.com/alibaba/nacos/pulls",
         translations: {
-            en: "Contribute community"
-        }
+          en: "Contribute community",
+        },
       },
       {
         label: "贡献者",
         target: "_blank",
         link: "https://github.com/alibaba/nacos/graphs/contributors",
         translations: {
-            en: "Contributors"
-        }
-      }
-    ]
+          en: "Contributors",
+        },
+      },
+    ],
   },
   {
     label: "事件",
     translations: {
-        en: "Events"
+      en: "Events",
     },
     children: [
       {
@@ -52,23 +52,23 @@ export const communityItems = [
         target: "_self",
         link: "/news/",
         translations: {
-            en: "News"
-        }
+          en: "News",
+        },
       },
       {
         label: "活动",
         target: "_self",
         link: "/activity/",
         translations: {
-            en: "Activity"
-        }
-      }
-    ]
+          en: "Activity",
+        },
+      },
+    ],
   },
   {
     label: "资源",
     translations: {
-        en: "Resources"
+      en: "Resources",
     },
     children: [
       {
@@ -76,68 +76,70 @@ export const communityItems = [
         target: "_self",
         link: "/blog/",
         translations: {
-            en: "Blog"
-        }
+          en: "Blog",
+        },
       },
       {
         label: "电子书",
         target: "_self",
         link: "/docs/ebook/kbyo6n/",
         translations: {
-            en: "E-book"
-        }
+          en: "E-book",
+        },
       },
       {
         label: "版本下载",
         target: "_self",
         link: "/download/nacos-server/",
         translations: {
-            en: "Download"
-        }
-      }
-    ]
-  }
+          en: "Download",
+        },
+      },
+    ],
+  },
 ];
 
 const categoryMap = {
-  'article': 'blog_article',
-  'case': 'blog_case.',
-  'ecosystem': 'blog_ecosystem',
-  'release': 'news_release',
-  'committer': 'news_personnel',
-  'announcement': 'news_announcement',
-  'cooperate': 'news_cooperate',
-  'activity-preview': 'activity_activity-preview',
-  'activity-detail': 'activity_activity-preview',
-
-}
+  article: "blog_article",
+  case: "blog_case.",
+  ecosystem: "blog_ecosystem",
+  release: "news_release",
+  committer: "news_personnel",
+  announcement: "news_announcement",
+  cooperate: "news_cooperate",
+  "activity-preview": "activity_activity-preview",
+  "activity-detail": "activity_activity-preview",
+};
 const [comt, events, resources] = communityItems;
-const simplifiedPosts = HEADER_ACTIVITY_CARD.map((item)=>({
+const simplifiedPosts = HEADER_ACTIVITY_CARD.map((item) => ({
   collection: item.collection,
-  slug: item.slug
-}))
-const blogDescrip = HEADER_ACTIVITY_CARD.map((item)=>(item.description))
+  slug: item.slug,
+}));
+const blogDescrip = HEADER_ACTIVITY_CARD.map((item) => item.description);
 
-const blogImgs = HEADER_ACTIVITY_CARD.map((item)=>(item.imageUrl))
+const blogImgs = HEADER_ACTIVITY_CARD.map((item) => item.imageUrl);
 const posts = await getEntries(simplifiedPosts as any);
-
 ---
 
-<community-menu class="dropdown-docs w-screen h-screen flex flex-col justify-start items-center">
+<community-menu
+  class="dropdown-docs w-screen h-screen flex flex-col justify-start items-center"
+>
   <div class="bg-gray-14 p-10 w-full flex justify-center">
     <div class="w-fit">
       <div class="flex justify-between mb-[3.5rem]">
         <div class="flex">
           <!-- 社区label -->
           <div class="border-l border-gray-12 flex flex-col px-7 min-w-[12rem]">
-            <span class="text-xs text-gray-10 mb-2">{ ifzh ? comt.label : comt.translations?.en}</span>
+            <span class="text-xs text-gray-10 mb-2"
+              >{ifzh ? comt.label : comt.translations?.en}</span
+            >
             {
               comt.children.map((menu) => {
                 const { label, translations, link, target = "_self" } = menu;
                 return (
-                  <LinkText 
-                    href={link} 
-                    target={target} 
+                  <LinkText
+                    href={link}
+                    target={target}
                     class="text-sm text-gray-02 mt-3"
                   >
                     {ifzh ? label : translations?.en}
@@ -148,14 +150,25 @@ const posts = await getEntries(simplifiedPosts as any);
           </div>
 
           <!-- 事件、资源label -->
-          <div class:list={['border-l', 'border-gray-12', 'flex', 'flex-col', 'px-7', 'mr-10']}>
-            <span class="text-xs text-gray-10 mb-2">{ifzh ? events.label : events.translations?.en}</span>
+          <div
+            class:list={[
+              "border-l",
+              "border-gray-12",
+              "flex",
+              "flex-col",
+              "px-7",
+              "mr-10",
+            ]}
+          >
+            <span class="text-xs text-gray-10 mb-2"
+              >{ifzh ? events.label : events.translations?.en}</span
+            >
             {
               events.children.map((menu) => {
                 const { label, translations, link, target = "_self" } = menu;
                 return (
-                  <LinkText 
-                    href={link} 
+                  <LinkText
+                    href={link}
                     target={target}
                     class="text-sm text-gray-02 mt-3"
                   >
@@ -164,14 +177,16 @@ const posts = await getEntries(simplifiedPosts as any);
                 );
               })
             }
-            <span class="text-xs text-gray-10 mb-2 mt-10">{ifzh ? resources.label : resources.translations?.en}</span>
+            <span class="text-xs text-gray-10 mb-2 mt-10"
+              >{ifzh ? resources.label : resources.translations?.en}</span
+            >
             {
               resources.children.map((menu) => {
                 const { label, translations, link, target = "_self" } = menu;
                 return (
-                  <LinkText 
-                    href={link} 
-                    target={target} 
+                  <LinkText
+                    href={link}
+                    target={target}
                     class="text-sm text-gray-02 mt-3"
                   >
                     {ifzh ? label : translations?.en}
@@ -185,7 +200,7 @@ const posts = await getEntries(simplifiedPosts as any);
         <!-- 卡片 -->
         <div class="flex">
           {
-            posts.map((item,index) => {
+            posts.map((item, index) => {
               return (
                 <div class="relative w-[16.875] h-[22.5rem] bg-gray-13 rounded-2xl p-2 flex flex-col ml-4">
                   <Image
@@ -200,7 +215,9 @@ const posts = await getEntries(simplifiedPosts as any);
                   </p>
                   <a
                     class="flex justify-center items-center w-[8.5rem] h-[2.5rem] absolute bottom-2 text-xs bg-gray-12 text-gray-01 border-0 rounded-3xl no-underline"
-                    href={`/${item.collection}/${item.slug}/?source=${categoryMap[item.data.category]}`}
+                    href={`/${item.collection}/${item.slug}/?source=${
+                      categoryMap[item.data.category]
+                    }`}
                   >
                     {t("commmon.header.comm.shortcut")}
                   </a>
@@ -212,7 +229,9 @@ const posts = await getEntries(simplifiedPosts as any);
       </div>
 
       <!-- 联系我们 -->
-      <div class="w-[70rem] bg-gray-13 flex items-center justify-between rounded-2xl h-9 pl-10 pr-[8.5rem]">
+      <div
+        class="w-[70rem] bg-gray-13 flex items-center justify-between rounded-2xl h-9 pl-10 pr-[8.5rem]"
+      >
         <span class="text-gray-07 text-xs leading-9 tracking-[0.15em]">
           {t("commmon.header.comm.contact")}
         </span>
@@ -220,7 +239,7 @@ const posts = await getEntries(simplifiedPosts as any);
           <a
             target="_blank"
             href="https://github.com/alibaba/nacos"
-            class="mr-16 text-gray-02 flex items-center no-underline" 
+            class="mr-16 text-gray-02 flex items-center no-underline"
           >
             <svg
               class="icon"
@@ -235,10 +254,13 @@ const posts = await getEntries(simplifiedPosts as any);
                 d="M20.48 503.72608c0 214.4256 137.4208 396.73856 328.94976 463.6672 25.8048 6.5536 21.87264-11.8784 21.87264-24.33024v-85.07392c-148.93056 17.44896-154.86976-81.1008-164.94592-97.52576-20.23424-34.52928-67.91168-43.33568-53.69856-59.76064 33.91488-17.44896 68.48512 4.42368 108.46208 63.61088 28.95872 42.88512 85.44256 35.6352 114.15552 28.4672a138.8544 138.8544 0 0 1 38.0928-66.7648c-154.25536-27.60704-218.60352-121.77408-218.60352-233.79968 0-54.31296 17.94048-104.2432 53.0432-144.54784-22.36416-66.43712 2.08896-123.24864 5.3248-131.6864 63.81568-5.7344 130.00704 45.6704 135.168 49.68448 36.2496-9.78944 77.57824-14.9504 123.82208-14.9504 46.4896 0 88.064 5.3248 124.5184 15.23712 12.288-9.4208 73.80992-53.53472 133.12-48.128 3.15392 8.43776 27.0336 63.93856 6.02112 129.4336 35.59424 40.38656 53.69856 90.76736 53.69856 145.24416 0 112.18944-64.7168 206.4384-219.42272 233.71776a140.0832 140.0832 0 0 1 41.7792 99.9424v123.4944c0.86016 9.87136 0 19.6608 16.50688 19.6608 194.31424-65.49504 334.2336-249.15968 334.2336-465.5104C1002.57792 232.48896 782.66368 12.77952 511.5904 12.77952 240.18944 12.65664 20.48 232.40704 20.48 503.72608z"
                 fill="#567BE1"
                 opacity=".65"
-                p-id="3234">
+                p-id="3234"
+              >
               </path>
             </svg>
-            <span class="ml-2 mt-1 text-sm text-gray-02">{t("commmon.header.contact.git")}</span>
+            <span class="ml-2 mt-1 text-sm text-gray-02"
+              >{t("commmon.header.contact.git")}</span
+            >
           </a>
 
           <div class="mr-16 hoverable relative">
@@ -264,10 +286,13 @@ const posts = await getEntries(simplifiedPosts as any);
                   p-id="4748"></path><path
                   d="M786.978133 481.6896c-153.770667-117.5552-327.133867-273.237333-517.188266-440.183467-14.984533-13.141333-28.2624-7.953067-34.952534 9.5232-42.8032 111.957333-1.297067 211.421867 65.774934 268.731734 67.345067 57.582933 167.492267 110.592 228.829866 138.683733 2.389333 1.092267 0.3072 4.573867-2.116266 3.515733-112.674133-49.152-191.044267-84.650667-297.3696-165.819733-11.434667-8.738133-23.04-5.3248-24.405334 11.707733-8.704 107.042133 60.484267 191.146667 137.728 219.5456 47.786667 17.6128 100.0448 27.3408 148.548267 33.109334 2.525867 0.341333 1.9456 4.027733-0.580267 4.027733-62.498133 0.2048-138.001067-14.609067-203.332266-39.458133-13.789867-5.256533-18.5344 5.632-16.418134 14.267733 11.1616 45.226667 67.652267 114.346667 157.5936 128.887467 16.827733 2.730667 34.747733 3.072 50.722134 2.628266 3.7888-0.136533 4.7104 1.9456 3.4816 4.846934 0 0-61.098667 103.6288-63.761067 108.066133-2.082133 3.447467-0.8192 6.212267 3.515733 6.212267h80.622934c3.754667 0 6.0416 2.389333 4.096 5.5296-1.877333 3.140267-107.656533 176.7424-112.64 185.0368-4.369067 7.202133 0.785067 12.731733 8.942933 6.826666 8.192-5.9392 346.180267-250.88 355.805867-257.911466 4.437333-3.208533 3.413333-7.5776-2.833067-7.5776h-72.2944c-4.744533 0-5.768533-3.140267-2.56-6.314667 3.242667-3.1744 82.090667-80.964267 110.08-110.08 29.184-30.378667 44.100267-86.050133-5.290667-123.8016"
                   fill="#567BE1"
-                  p-id="4749">
+                  p-id="4749"
+                >
                 </path>
               </svg>
-              <span class="ml-2 mt-1 text-sm text-gray-02">{t("commmon.header.contact.ding")}</span>
+              <span class="ml-2 mt-1 text-sm text-gray-02"
+                >{t("commmon.header.contact.ding")}</span
+              >
             </span>
           </div>
 
@@ -291,13 +316,16 @@ const posts = await getEntries(simplifiedPosts as any);
               >
               </path>
             </svg>
-            <span class="ml-2 mt-1 text-sm text-gray-02">{t("commmon.header.contact.mail")}</span>
+            <span class="ml-2 mt-1 text-sm text-gray-02"
+              >{t("commmon.header.contact.mail")}</span
+            >
           </a>
         </div>
       </div>
     </div>
   </div>
-  <div class="dropdown-overlay w-full flex-1 bg-gray-14/[0.4] backdrop-blur-md"></div>
+  <div class="dropdown-overlay w-full flex-1 bg-gray-14/[0.4] backdrop-blur-md">
+  </div>
 </community-menu>
 
 <script>
@@ -305,24 +333,24 @@ const posts = await getEntries(simplifiedPosts as any);
     constructor() {
       super();
       const toggleDropdown = this.parentElement;
-      const communityOverlay = this.querySelector('.dropdown-overlay');
-      communityOverlay.addEventListener('mouseenter', () => {
-        toggleDropdown.classList.remove('toggle-dropdown-active'); 
-        toggleDropdown.classList.add('toggle-dropdown-notactive'); 
+      const communityOverlay = this.querySelector(".dropdown-overlay");
+      communityOverlay.addEventListener("mouseenter", () => {
+        toggleDropdown.classList.remove("toggle-dropdown-active");
+        toggleDropdown.classList.add("toggle-dropdown-notactive");
       });
     }
-
   }
   customElements.define("community-menu", CommunitytMenu);
 </script>
 
-<style>
-  .toggle-dropdown-notactive {
-    display: none;
-  }
-  .hoverable:hover img{
-    display: block;
-    z-index: 1;
+<style is:global>
+  community-menu {
+    .toggle-dropdown-notactive {
+      display: none;
+    }
+    .hoverable:hover img {
+      display: block;
+      z-index: 1;
+    }
   }
 </style>
-

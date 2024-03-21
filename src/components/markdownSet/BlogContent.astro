@@ -4,200 +4,197 @@ const { recentPosts, categoryPosts, source } = Astro.props;
 import BlogCard from "@components/markdownSet/Card.astro";
 import BlogTop from "@components/markdownSet/BlogTop.astro";
 import NewCard from "@components/markdownSet/NewCard.astro";
-import BaseContainer from '@components/common/BaseContainer.astro';
+import BaseContainer from "@components/common/BaseContainer.astro";
 import { useTranslations } from "@i18n/util";
 const t = useTranslations(Astro);
 ---
 
-<!-- 最新1篇博客展示 -->{
-    source === "blog" && (
-        <div class="category bg-gray-01 w-full flex flex-col items-center">
-            <BaseContainer class="py-8 sm:py-12">
-                <div class="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:items-stretch">
-                    <div class="category-title grid rounded py-6 pr-6 sm:py-8 sm:pr-8">
-                        <div class="mx-auto max-w-md text-center lg:text-left">
-                            <header>
-                                <h2 class="text-xl font-bold text-gray-14 sm:text-3xl">
-                                    New
-                                </h2>
-                                <div class="text-xl text-gray-08 pt-4">
-                                    This Week
-                                </div>
-                            </header>
+<span class="blog-content-wrapper bg-gray-01 w-full ">
+    <!-- 最新1篇博客展示 -->{
+        source === "blog" && (
+            <div class="category flex flex-col items-center">
+                <BaseContainer class="py-8 sm:py-12">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:items-stretch">
+                        <div class="category-title grid rounded py-6 pr-6 sm:py-8 sm:pr-8">
+                            <div class="mx-auto max-w-md text-center lg:text-left">
+                                <header>
+                                    <h2 class="text-xl font-bold text-gray-14 sm:text-3xl">
+                                        New
+                                    </h2>
+                                    <div class="text-xl text-gray-08 pt-4">
+                                        This Week
+                                    </div>
+                                </header>
+                            </div>
                         </div>
+                        <NewCard
+                            type="blog"
+                            source={source}
+                            post={recentPosts[0]}
+                            classList={["lg:col-span-3", "lg:py-8"]}
+                        />
                     </div>
-                    <NewCard
-                        type="blog"
-                        source={source}
-                        post={recentPosts[0]}
-                        classList={["lg:col-span-3", "lg:py-8"]}
-                    />
-                </div>
-            </BaseContainer>
-        </div>
-    )
-}
+                </BaseContainer>
+            </div>
+        )
+    }
 
-<!-- 按照分类展示 -->
-{
-    categoryPosts &&
-        categoryPosts.map((categoryPost, categoryIndex) => {
-            if (categoryPost.type === "all") return;
-            return (
-                <div class="category bg-gray-01 w-full flex flex-col items-center">
-                    <BaseContainer class="py-8 sm:py-12">
-                        <div class="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:items-stretch">
-                            <div class="category-title title grid rounded py-6 pr-6 sm:py-8 pr-8">
-                                <div class="mx-auto mt-3 max-w-md text-center lg:text-left">
-                                    <header>
-                                        <h2 class="text-xl font-bold text-gray-14 sm:text-3xl">
-                                            {categoryPost.title}
-                                        </h2>
-                                        <div class="text-base text-blue-08 pt-4">
-                                            <a href={categoryPost.href}>
-                                                {t('blog.card.view.all')} {categoryPost.title}
-                                                <svg
-                                                    class="icon"
-                                                    viewBox="0 0 1220 800"
-                                                    version="1.1"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    p-id="7491"
-                                                    width="16"
-                                                    height="16"
-                                                >
-                                                    <>
-                                                        <path
-                                                            d="M717.034962 1023.997037a47.40727 47.40727 0 0 1-33.185089-80.592359l427.850614-427.850614a15.407363 15.407363 0 0 0 4.740727-10.666636 11.851818 11.851818 0 0 0-3.555545-8.296272L699.257236 81.777541a47.768751 47.768751 0 0 1 67.55536-67.55536l413.628433 413.628433a105.481176 105.481176 0 0 1 30.814725 77.036814 110.221903 110.221903 0 0 1-33.185089 77.036814L750.220051 1010.960038a47.40727 47.40727 0 0 1-33.185089 13.036999z"
-                                                            fill="#3D57DA"
-                                                            p-id="7492"
-                                                        />
-                                                        <path
-                                                            d="M1142.515213 559.405789H47.40727a47.40727 47.40727 0 1 1 0-94.814541h1095.107943a47.40727 47.40727 0 1 1 0 94.814541z"
-                                                            fill="#3D57DA"
-                                                            p-id="7493"
-                                                        />
-                                                    </>
-                                                </svg>
-                                            </a>
-                                        </div>
-                                    </header>
+    <!-- 按照分类展示 -->
+    {
+        categoryPosts &&
+            categoryPosts.map((categoryPost, categoryIndex) => {
+                if (categoryPost.type === "all") return;
+                return (
+                    <div class="category flex flex-col items-center">
+                        <BaseContainer class="py-8 sm:py-12">
+                            <div class="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:items-stretch">
+                                <div class="category-title title grid rounded py-6 pr-6 sm:py-8 pr-8">
+                                    <div class="mx-auto mt-3 max-w-md text-center lg:text-left">
+                                        <header>
+                                            <h2 class="text-xl font-bold text-gray-14 sm:text-3xl">
+                                                {categoryPost.title}
+                                            </h2>
+                                            <div class="text-base text-blue-08 pt-4">
+                                                <a href={categoryPost.href}>
+                                                    {t("blog.card.view.all")}{" "}
+                                                    {categoryPost.title}
+                                                    <svg
+                                                        class="icon"
+                                                        viewBox="0 0 1220 800"
+                                                        version="1.1"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        p-id="7491"
+                                                        width="16"
+                                                        height="16"
+                                                    >
+                                                        <>
+                                                            <path
+                                                                d="M717.034962 1023.997037a47.40727 47.40727 0 0 1-33.185089-80.592359l427.850614-427.850614a15.407363 15.407363 0 0 0 4.740727-10.666636 11.851818 11.851818 0 0 0-3.555545-8.296272L699.257236 81.777541a47.768751 47.768751 0 0 1 67.55536-67.55536l413.628433 413.628433a105.481176 105.481176 0 0 1 30.814725 77.036814 110.221903 110.221903 0 0 1-33.185089 77.036814L750.220051 1010.960038a47.40727 47.40727 0 0 1-33.185089 13.036999z"
+                                                                fill="#3D57DA"
+                                                                p-id="7492"
+                                                            />
+                                                            <path
+                                                                d="M1142.515213 559.405789H47.40727a47.40727 47.40727 0 1 1 0-94.814541h1095.107943a47.40727 47.40727 0 1 1 0 94.814541z"
+                                                                fill="#3D57DA"
+                                                                p-id="7493"
+                                                            />
+                                                        </>
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </header>
+                                    </div>
+                                </div>
+                                <div class="lg:col-span-3 lg:py-8 flex flex-col items-center">
+                                    <ul class="grid w-2/5 grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-3 2xl:grid-cols-3 xl:w-full 2xl:w-full gap-6 place-items-stretch">
+                                        {categoryPost.posts
+                                            .slice(0, 3)
+                                            .map((post, postIndex) => (
+                                                <BlogCard
+                                                    source={source}
+                                                    post={post as any}
+                                                    index={
+                                                        postIndex +
+                                                        categoryIndex +
+                                                        1
+                                                    }
+                                                />
+                                            ))}
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="lg:col-span-3 lg:py-8 flex flex-col items-center">
-                                <ul class="grid w-2/5 grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-3 2xl:grid-cols-3 xl:w-full 2xl:w-full gap-6 place-items-stretch">
-                                    {categoryPost.posts
-                                        .slice(0, 3)
-                                        .map((post, postIndex) => (
-                                            <BlogCard
-                                                source={source}
-                                                post={post as any}
-                                                index={
-                                                    postIndex +
-                                                    categoryIndex +
-                                                    1
-                                                }
-                                            />
-                                        ))}
-                                </ul>
-                            </div>
-                        </div>
-                    </BaseContainer>
-                </div>
-            );
-        })
-}
+                        </BaseContainer>
+                    </div>
+                );
+            })
+    }
+</span>
 
-<style>
-    .category {
-        padding: 0;
-    }
-    .category-title {
-        place-content: start;
-    }
-    a {
-        text-decoration: none;
-        color: inherit;
-    }
-    main {
-        width: 960px;
-    }
-    ul {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2rem;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-    }
-    ul li {
-        width: calc(50% - 1rem);
-    }
-    ul li * {
-        text-decoration: none;
-        transition: 0.2s ease;
-    }
-    ul li:first-child {
-        width: 100%;
-        margin-bottom: 1rem;
-        text-align: center;
-    }
-    ul li:first-child img {
-        width: 100%;
-    }
-    ul li:first-child .title {
-        font-size: 2.369rem;
-    }
-    ul li img {
-        margin-bottom: 0.5rem;
-        border-radius: 12px;
-    }
-    ul li a {
-        display: block;
-    }
-    .title {
-        margin: 0;
-        color: rgb(var(--black));
-        line-height: 1;
-    }
-    .date {
-        margin: 0;
-        color: rgb(var(--gray));
-    }
-    ul li a:hover h4,
-    ul li a:hover .date {
-        color: rgb(var(--accent));
-    }
-    ul a:hover img {
-        box-shadow: var(--box-shadow);
-    }
-    .category-container {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    @media (max-width: 50rem) {
+<style is:global>
+    .blog-content-wrapper {
         .category {
-            padding: 0 1.5rem;
+            padding: 0;
         }
         .category-title {
-            place-content: center;
+            place-content: start;
         }
-        ul {
-            gap: 0.5em;
-            width: 100% !important;
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        main {
+            width: 960px;
         }
         ul li {
-            width: 100%;
-            text-align: center;
+            width: calc(50% - 1rem);
+        }
+        ul li * {
+            text-decoration: none;
+            transition: 0.2s ease;
         }
         ul li:first-child {
-            margin-bottom: 0;
+            width: 100%;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        ul li:first-child img {
+            width: 100%;
         }
         ul li:first-child .title {
-            font-size: 1.563em;
+            font-size: 2.369rem;
         }
-    }
-    .blog_latest_bottom {
-        border-top: 2px solid theme("colors.gray.12");
+        ul li img {
+            margin-bottom: 0.5rem;
+            border-radius: 12px;
+        }
+        ul li a {
+            display: block;
+        }
+        .title {
+            margin: 0;
+            color: rgb(var(--black));
+            line-height: 1;
+        }
+        .date {
+            margin: 0;
+            color: rgb(var(--gray));
+        }
+        ul li a:hover h4,
+        ul li a:hover .date {
+            color: rgb(var(--accent));
+        }
+        ul a:hover img {
+            box-shadow: var(--box-shadow);
+        }
+        .category-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        @media (max-width: 50rem) {
+            .category {
+                padding: 0 1.5rem;
+            }
+            .category-title {
+                place-content: center;
+            }
+            ul {
+                gap: 0.5em;
+                width: 100% !important;
+            }
+            ul li {
+                width: 100%;
+                text-align: center;
+            }
+            ul li:first-child {
+                margin-bottom: 0;
+            }
+            ul li:first-child .title {
+                font-size: 1.563em;
+            }
+        }
+        .blog_latest_bottom {
+            border-top: 2px solid theme("colors.gray.12");
+        }
     }
 </style>

@@ -17,79 +17,88 @@ let diffDomain = false;
 // 防止无效href导致抛错
 try {
     diffDomain = new URL(href).hostname !== new URL(currentPageUrl).hostname;
-} catch (e) {
-}
+} catch (e) {}
 
-const target = diffDomain? "_blank" : "_self";
+const target = diffDomain ? "_blank" : "_self";
 ---
-<a class={`header-link depth-${depth} ${className}`} href={href} target={target} {...props}>
-    <slot />
-</a>
-<style>
-    .header-link {
-        font-size: 1em;
-        transition:
-            border-inline-start-color 100ms ease-out,
-            background-color 200ms ease-out;
-    }
 
-    @media (min-width: 50em) {
-        a.header-link {
-            padding-top: 0.275rem;
-            padding-bottom: 0.275rem;
+<span class="header-link-wrapper">
+    <a
+        class={`header-link depth-${depth} ${className}`}
+        href={href}
+        target={target}
+        {...props}
+    >
+        <slot />
+    </a>
+</span>
+<style is:global>
+    .header-link-wrapper {
+        .header-link {
+            font-size: 1em;
+            transition:
+                border-inline-start-color 100ms ease-out,
+                background-color 200ms ease-out;
         }
-    }
 
-    .header-link:hover,
-    .header-link:focus,
-    .header-link:focus-within {
-        border-inline-start-color: var(--theme-accent-secondary);
-    }
-
-    a.header-link:hover,
-    a.header-link:focus {
-        color: var(--theme-text);
-        text-decoration: underline;
-    }
-    .header-link svg {
-        opacity: 0.6;
-    }
-    .header-link:hover svg {
-        opacity: 0.8;
-    }
-
-    /* Add line and padding on the left side */
-    .header-link {
-        padding-inline-start: 1rem;
-    }
-    .header-link.depth-3 {
-        padding-inline-start: 2rem;
-    }
-    .header-link.depth-4 {
-        padding-inline-start: 3rem;
-    }
-
-    /* Apply different TOC styling for wide viewports showing the right sidebar */
-    @media (min-width: 72em) {
-        h2.heading {
-            padding-inline-start: calc(1rem + 4px);
+        @media (min-width: 50em) {
+            a.header-link {
+                padding-top: 0.275rem;
+                padding-bottom: 0.275rem;
+            }
         }
-    }
 
-    /* Highlight TOC header link matching the current scroll position */
-    a.current-header-link {
-        background-color: var(--theme-bg-accent);
-        /* Indicates the current heading for forced colors users in older browsers */
-        outline: 1px solid transparent;
-    }
+        .header-link:hover,
+        .header-link:focus,
+        .header-link:focus-within {
+            border-inline-start-color: var(--theme-accent-secondary);
+        }
 
-    @media (forced-colors: active) {
+        a.header-link:hover,
+        a.header-link:focus {
+            color: var(--theme-text);
+            text-decoration: underline;
+        }
+        .header-link svg {
+            opacity: 0.6;
+        }
+        .header-link:hover svg {
+            opacity: 0.8;
+        }
+
+        /* Add line and padding on the left side */
+        .header-link {
+            padding-inline-start: 1rem;
+        }
+        .header-link.depth-3 {
+            padding-inline-start: 2rem;
+        }
+        .header-link.depth-4 {
+            padding-inline-start: 3rem;
+        }
+
+        /* Apply different TOC styling for wide viewports showing the right sidebar */
+        @media (min-width: 72em) {
+            h2.heading {
+                padding-inline-start: calc(1rem + 4px);
+            }
+        }
+
+        /* Highlight TOC header link matching the current scroll position */
         a.current-header-link {
-            border: 1px solid CanvasText;
+            background-color: var(--theme-bg-accent);
+            /* Indicates the current heading for forced colors users in older browsers */
+            outline: 1px solid transparent;
         }
-    }
 
-    a.current-header-link {
-        color: var(--theme-text);
+        @media (forced-colors: active) {
+            a.current-header-link {
+                border: 1px solid CanvasText;
+            }
+        }
+
+        a.current-header-link {
+            color: var(--theme-text);
+        }
     }
 </style>

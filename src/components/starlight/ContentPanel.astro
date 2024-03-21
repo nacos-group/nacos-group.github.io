@@ -1,0 +1,31 @@
+---
+import type { Props } from "../props";
+---
+
+<div class="content-panel content-panel-wrapper">
+  <div class="sl-container"><slot /></div>
+</div>
+
+<style is:global>
+  .content-panel-wrapper {
+    padding: 1.5rem var(--sl-content-pad-x);
+  }
+  .content-panel-wrapper + .content-panel {
+    border-top: 1px solid var(--sl-color-hairline);
+  }
+  .content-panel-wrapper {
+    .sl-container {
+      max-width: var(--sl-content-width);
+    }
+
+    .sl-container>(* + *) {
+      margin-top: 1.5rem;
+    }
+
+    @media (min-width: 72rem) {
+      .sl-container {
+        margin-inline: var(--sl-content-margin-inline, auto);
+      }
+    }
+  }
+</style>

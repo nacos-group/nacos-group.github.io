@@ -9,7 +9,7 @@ const getBackgroundRandomColor = () =>  colorList[Math.floor(Math.random() * col
 ---
 
 <nacos-contributors class="nacos-contributors flex flex-col items-center justify-center bg-gary-02 p-6 md:p-10">
-  <div class="contributors-container md:flex block w-full bg-gray-13 p-9 mt-10 rounded-2xl">
+  <div class="contributors-container-wrapper md:flex block w-full bg-gray-13 p-9 mt-10 rounded-2xl">
     <div class="left-container flex-1 h-full flex flex-col justify-around md:pl-[8.5rem]">
       <div class="flex flex-col">
         <div class="text-blue-02 text-xs text-center tracking-[0.15em] md:text-left">{t('home.contributors.members')}</div>
@@ -57,8 +57,8 @@ const getBackgroundRandomColor = () =>  colorList[Math.floor(Math.random() * col
   </div>
 </nacos-contributors>
 
-<style>
-  .contributors-container{
+<style is:global>
+  .contributors-container-wrapper{
     .avatar-img-wrap{
       &[data-index="22"],&[data-index="11"],&[data-index="20"],&[data-index="12"],&[data-index="5"],&[data-index="2"],&[data-index="9"],&[data-index="13"]{
         animation-delay: 0s;

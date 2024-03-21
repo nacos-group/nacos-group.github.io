@@ -1,5 +1,5 @@
 ---
-import UpRight from '../icon/UpRight.astro';
+import UpRight from "../icon/UpRight.astro";
 
 interface Props {
   title: string;
@@ -8,65 +8,67 @@ interface Props {
   class?: string;
 }
 
-const { href, title, arrowTheme = 'dark', class: className = '' } = Astro.props;
+const { href, title, arrowTheme = "dark", class: className = "" } = Astro.props;
 ---
 
-<a class={'btn mr-4 text-xs ' + className} href={href} target="_blank">
-  <slot />
-  {title}
-  <span class="up-right-arrow">
-    <UpRight theme={arrowTheme} />
-  </span>
-</a>
-
-<style>
-  .btn {
-    font-size: 0.8rem;
-    padding: 0 2.5rem;
-    transition: box-shadow 0.3s ease-in-out;
-    /* 覆盖starlight中的a链接颜色 */
-    color: theme('colors.gray.14') !important;
-    /* box-shadow: 0 0 10px rgba(52, 152, 219, 0.5); */
-  }
-  /* .btn:hover{
+<span class="link-button-wrapper">
+  <a class={"btn mr-4 text-xs " + className} href={href} target="_blank">
+    <slot />
+    {title}
+    <span class="up-right-arrow">
+      <UpRight theme={arrowTheme} />
+    </span>
+  </a>
+</span>
+<style is:global>
+  .link-button-wrapper {
+    .btn {
+      font-size: 0.8rem;
+      padding: 0 2.5rem;
+      transition: box-shadow 0.3s ease-in-out;
+      /* 覆盖starlight中的a链接颜色 */
+      color: theme("colors.gray.14") !important;
+      /* box-shadow: 0 0 10px rgba(52, 152, 219, 0.5); */
+    }
+    /* .btn:hover{
     box-shadow: 0 0 20px rgba(52, 152, 219, 0.7);
 
   }
   .btn:active {
     box-shadow: 0 0 30px rgba(52, 152, 219, 1);
   } */
-  .btn .up-right-arrow {
-    opacity: 0;
-    width: 0;
-    transition:
-      transform 0.5s ease,
-      width 0.3s ease,
-      opacity 0.3s ease;
-  }
-  .btn:hover .up-right-arrow {
-    transform: translate(3px, 0px);
-    opacity: 1;
-    width: 8px;
-  }
-
-  .btn-primary {
-    color: theme('colors.gray.01') !important;
-    :hover {
-      background-color: theme('colors.gray.10');
-      color: theme('colors.gray.01') !important;
+    .btn .up-right-arrow {
+      opacity: 0;
+      width: 0;
+      transition:
+        transform 0.5s ease,
+        width 0.3s ease,
+        opacity 0.3s ease;
     }
-    :active {
-      background-color: theme('colors.gray.10');
-      color: theme('colors.gray.01') !important;
+    .btn:hover .up-right-arrow {
+      transform: translate(3px, 0px);
+      opacity: 1;
+      width: 8px;
     }
-  }
 
-  .btn-primary.btn-disabled {
-    background-color: theme('colors.gray.10');
-    color: theme('colors.gray.01');
-  }
+    .btn-primary {
+      color: theme("colors.gray.01") !important;
+      :hover {
+        background-color: theme("colors.gray.10");
+        color: theme("colors.gray.01") !important;
+      }
+      :active {
+        background-color: theme("colors.gray.10");
+        color: theme("colors.gray.01") !important;
+      }
+    }
 
-  /* .btn-secondary {
+    .btn-primary.btn-disabled {
+      background-color: theme("colors.gray.10");
+      color: theme("colors.gray.01");
+    }
+
+    /* .btn-secondary {
     color: theme('colors.gray.14') !important;
   }
 
@@ -75,13 +77,14 @@ const { href, title, arrowTheme = 'dark', class: className = '' } = Astro.props;
     color: theme('colors.gray.01');
   } */
 
-  @media (max-width: 50rem) {
-    .btn {
-      min-width: 7rem;
-      height: 2.8rem;
-      min-height: 2.8rem;
-      padding-left: 0.75rem;
-      padding-right: 0.75rem;
+    @media (max-width: 50rem) {
+      .btn {
+        min-width: 7rem;
+        height: 2.8rem;
+        min-height: 2.8rem;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+      }
     }
   }
 </style>
