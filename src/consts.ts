@@ -3,6 +3,14 @@
 export const SITE_TITLE = 'Astro Blog';
 export const SITE_DESCRIPTION = 'Welcome to my website!';
 
+// 文档根据版本区分的提示banner
+export const DOCS_BANNER = {
+    latest: '',
+    next:'',
+    v1: '',
+    v2:'',
+}
+
 export const i18nMap = {
     "blog": {
         article: 'blog.article.technical',

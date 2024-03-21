@@ -1,0 +1,38 @@
+---
+import { DOCS_BANNER } from "@/consts";
+
+let banner = "";
+
+if (Astro.props.entry.collection === "docs") {
+  const version = Astro.props.entry.id.split("/")[0];
+  if (
+    typeof DOCS_BANNER[version] === "string" &&
+    DOCS_BANNER[version].length > 0
+  ) {
+    banner = DOCS_BANNER[version];
+  }
+}
+---
+
+{banner && <div class="sl-banner-wrapper bg-blue-08" set:html={banner} />}
+
+<style is:global>
+  .sl-banner-wrapper {
+    --__sl-banner-text: var(
+      --sl-color-banner-text,
+      var(--sl-color-text-invert)
+    );
+    padding: var(--sl-nav-pad-y) var(--sl-nav-pad-x);
+    background-color: var(--sl-color-banner-bg, var(--sl-color-bg-accent));
+    color: theme("colors.gray.03");
+    line-height: var(--sl-line-height-headings);
+    text-align: center;
+    text-wrap: balance;
+    box-shadow: var(--sl-shadow-sm);
+  }
+  .sl-banner-wrapper a {
+    color: theme("colors.gray.01");
+    cursor: pointer;
+    text-decoration: underline;
+  }
+</style>
