@@ -82,44 +82,49 @@ const Component = slot;
 </span>
 <script>
   class Toggle extends HTMLElement {
-    constructor() {
-      super();
-      const trigger = this.getAttribute("data-trigger");
-      const content = this.querySelector(".toggle-dropdown");
-      const updown = this.querySelector<SVGElement>("svg[data-updown]")!;
-      if (trigger === "click") {
-        this.addEventListener("click", () => {
-          content && content.classList.toggle("toggle-dropdown-active");
-          document.body.classList.toggle("overflow-hidden");
-          const classList = Array.from(updown?.classList || []);
-          classList.includes("toggle-trigger-up")
-            ? this.toggleDown(updown)
-            : this.toggleUp(updown);
-        });
-      } else if (trigger === "hover") {
-        this.addEventListener("mouseenter", () => {
-          content && content.classList.add("toggle-dropdown-active");
-          this.toggleUp(updown);
-        });
+  constructor() {
+    super();
+    const trigger = this.getAttribute("data-trigger");
+    const content = this.querySelector(".toggle-dropdown");
+    const updown = this.querySelector("svg[data-updown]");
 
-        this.addEventListener("mouseleave", () => {
-          content && content.classList.remove("toggle-dropdown-active");
-          this.toggleDown(updown);
-        });
-      }
+    // 为了确保 updown 不为空，可以在后续操作之前添加一个检查
+    if (!updown) return;
+
+    if (trigger === "click") {
+      this.addEventListener("click", () => {
+        if (content) content.classList.toggle("toggle-dropdown-active");
+        document.body.classList.toggle("overflow-hidden");
+        const classList = Array.from(updown.classList);
+        classList.includes("toggle-trigger-up")
+          ? this.toggleDown(updown)
+          : this.toggleUp(updown);
+      });
+    } else if (trigger === "hover") {
+      this.addEventListener("mouseenter", () => {
+        if (content) content.classList.add("toggle-dropdown-active");
+        this.toggleUp(updown);
+      });
+      this.addEventListener("mouseleave", () => {
+        if (content) content.classList.remove("toggle-dropdown-active");
+        this.toggleDown(updown);
+      });
     }
-
-    toggleUp = (element: SVGElement) => {
-      element?.classList.remove("toggle-trigger-down");
-      element?.classList.add("toggle-trigger-up");
-    };
-
-    toggleDown = (element: SVGElement) => {
-      element?.classList.remove("toggle-trigger-up");
-      element?.classList.add("toggle-trigger-down");
-    };
   }
-  customElements.define("toggle-component", Toggle);
+
+  toggleUp(element) {
+    element.classList.remove("toggle-trigger-down");
+    element.classList.add("toggle-trigger-up");
+  }
+
+  toggleDown(element) {
+    element.classList.remove("toggle-trigger-up");
+    element.classList.add("toggle-trigger-down");
+  }
+}
+
+customElements.define("toggle-component", Toggle);
+
 </script>
 
 <style is:global>
