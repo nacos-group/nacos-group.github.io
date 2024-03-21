@@ -1,119 +1,126 @@
 ---
-import { i18nMap } from 'src/consts';
+import { i18nMap } from "src/consts";
 import { Icon } from "@astrojs/starlight/components";
-import BaseContainer from '@components/common/BaseContainer.astro';
-import Button from '@components/common/Button.astro';
-import { useTranslations } from '@i18n/util';
+import BaseContainer from "@components/common/BaseContainer.astro";
+import Button from "@components/common/Button.astro";
+import { useTranslations } from "@i18n/util";
 const t = useTranslations(Astro);
 
-const { source, title = "", type="home",category } = Astro.props;
+const { source, title = "", type = "home", category } = Astro.props;
 
 const backIconMap = {
   "blog-sub": "/blog",
   "news-sub": "/news",
-  "activity-sub":"/activity"
-}
+  "activity-sub": "/activity",
+};
 ---
 
-<div class="bg-gray-14 w-full text-gray-01 blog_header flex justify-center items-center">
-  <BaseContainer class="blog_header_content mt-9">
-    <div class="blog_header_title">{title}</div>
-    <div class="blog_category_menu">
-      {type==="home"&& category && category.map((category)=>{
-         return (
+  <div
+    class="blog-top-wrapper bg-gray-14 w-full text-gray-01 blog_header flex justify-center items-center"
+  >
+    <BaseContainer class="blog_header_content mt-9">
+      <div class="blog_header_title">{title}</div>
+      <div class="blog_category_menu">
+        {
+          type === "home" &&
+            category &&
+            category.map((category) => {
+              return (
                 // <a
-                //   class="blog_menu_item" 
+                //   class="blog_menu_item"
                 //   href={category.href}
                 //   aria-current = {}
                 // >
                 //   {category.title}
                 // </a>
-                <Button 
-                  type='primary'
+                <Button
+                  type="primary"
                   href={category.href}
-                  class='rounded-3xl mr-4 mb-2'
+                  class="rounded-3xl mr-4 mb-2"
                 >
-                {t(i18nMap[source][category.type])}
+                  {t(i18nMap[source][category.type])}
                 </Button>
-          );
-      })}
-      {
-        type!=="home" && (
-          <Button 
-            type='primary'
-            href={backIconMap[type]}
-            class='rounded-3xl'
-            visibility={false}
-          >
-            <Icon name="left-arrow" class="text-lg align-middle" />
-            <span class="ml-1">BACK</span>
-          </Button>
-        )
-      }
-    </div>
-  </BaseContainer>
-</div>
+              );
+            })
+        }
+        {
+          type !== "home" && (
+            <Button
+              type="primary"
+              href={backIconMap[type]}
+              class="rounded-3xl"
+              visibility={false}
+            >
+              <Icon name="left-arrow" class="text-lg align-middle" />
+              <span class="ml-1">BACK</span>
+            </Button>
+          )
+        }
+      </div>
+    </BaseContainer>
+  </div>
 
-
-  <style>
+<style is:global>
+  .blog-top-wrapper{
     a {
-        text-decoration: none;
-        color: inherit;
+      text-decoration: none;
+      color: inherit;
     }
-    .blog_header_title{
-        font-size: 4.5rem;
-        line-height: 6rem;
+    .blog_header_title {
+      font-size: 4.5rem;
+      line-height: 6rem;
     }
-    .blog_category_menu{
-        margin-top: 2rem;
-        margin-bottom: 2.5rem;
-     }
-    .blog_menu_item{
-        padding: 8px 16px;
-        border-radius: 24px;
-        margin-right: 16px ;
-        font-size: 14px;
-        background-color: theme("colors.gray.12");
-        color: theme("colors.gray.05");
+    .blog_category_menu {
+      margin-top: 2rem;
+      margin-bottom: 2.5rem;
     }
-    .blog_menu_item:hover{
-        background-color: theme("colors.gray.11");
-        color: theme("colors.gray.03");
+    .blog_menu_item {
+      padding: 8px 16px;
+      border-radius: 24px;
+      margin-right: 16px;
+      font-size: 14px;
+      background-color: theme("colors.gray.12");
+      color: theme("colors.gray.05");
     }
-    .blog_menu_item:active{
-        background-color: theme("colors.blue.08");
-        color: theme("colors.gray.01");
+    .blog_menu_item:hover {
+      background-color: theme("colors.gray.11");
+      color: theme("colors.gray.03");
     }
-  @media (max-width: 50rem) {
+    .blog_menu_item:active {
+      background-color: theme("colors.blue.08");
+      color: theme("colors.gray.01");
+    }
+    @media (max-width: 50rem) {
       .blog_header {
         padding: 1.5rem;
       }
-      .blog_header_content{
+      .blog_header_content {
         width: 100%;
         margin-top: 0;
       }
-      .blog_header_title{
+      .blog_header_title {
         font-size: 1.875rem;
         line-height: 2.25rem;
       }
-      .blog_menu_item{
+      .blog_menu_item {
         padding: 4px 8px;
         font-size: 12px;
         margin-right: 8px;
       }
     }
 
-  @media (min-width: 50rem) and (max-width: 86rem) { 
-    .blog_header {
-      padding: 2.5rem;
-      width: 100%;
-    }
-    .blog_header_content{
-      width: 100%;
-      margin-top: 0;
-    }
-    .blog_category_menu{
+    @media (min-width: 50rem) and (max-width: 86rem) {
+      .blog_header {
+        padding: 2.5rem;
+        width: 100%;
+      }
+      .blog_header_content {
+        width: 100%;
+        margin-top: 0;
+      }
+      .blog_category_menu {
         margin-bottom: 0;
-     }
+      }
+    }
   }
-  </style>
+</style>

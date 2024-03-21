@@ -12,12 +12,12 @@ interface Props {
 
 const { toc, isMobile = false, depth = 0 } = Astro.props;
 ---
-
+<span class="table-of-contents-wrapper">
 <ul class:list={{ isMobile }}>
 	{
 		toc.map((heading) => (
 			<li>
-				<a href={'#' + heading.slug }>
+				<a href={'#' + heading.slug } class="py-1">
 					<span>{heading.text}</span>
 				</a>
 				{heading.children.length > 0 && (
@@ -27,8 +27,10 @@ const { toc, isMobile = false, depth = 0 } = Astro.props;
 		))
 	}
 </ul>
+</span>
 
-<style define:vars={{ depth }}>
+<style define:vars={{ depth }} is:global>
+.table-of-contents-wrapper{
 	ul {
 		padding: 0;
 		list-style: none;
@@ -87,4 +89,5 @@ const { toc, isMobile = false, depth = 0 } = Astro.props;
 		mask-repeat: no-repeat;
 		flex-shrink: 0;
 	}
+}
 </style>

@@ -5,10 +5,12 @@ interface Props {
 }
 const { variant = 'default', text } = Astro.props;
 ---
-
+<span class="badge-wrapper">
 <span class:list={['sl-badge', variant]} set:html={text} />
+</span>
 
-<style>
+<style is:global>
+	.badge-wrapper{
 	.sl-badge {
 		display: inline-block;
 		border: 1px solid var(--sl-color-border-badge);
@@ -58,27 +60,28 @@ const { variant = 'default', text } = Astro.props;
 		--sl-color-border-badge: var(--sl-color-purple);
 	}
 
-	:global([data-theme='light']) .default {
+	[data-theme='light'] .default {
 		--sl-color-bg-badge: var(--sl-color-accent-high);
 	}
 
-	:global([data-theme='light']) .note {
+	[data-theme='light'] .note {
 		--sl-color-bg-badge: var(--sl-color-blue-high);
 	}
 
-	:global([data-theme='light']) .danger {
+	[data-theme='light'] .danger {
 		--sl-color-bg-badge: var(--sl-color-red-high);
 	}
 
-	:global([data-theme='light']) .success {
+	[data-theme='light'] .success {
 		--sl-color-bg-badge: var(--sl-color-green-high);
 	}
 
-	:global([data-theme='light']) .caution {
+	[data-theme='light'] .caution {
 		--sl-color-bg-badge: var(--sl-color-orange-high);
 	}
 
-	:global([data-theme='light']) .tip {
+	[data-theme='light'] .tip {
 		--sl-color-bg-badge: var(--sl-color-purple-high);
 	}
+}
 </style>

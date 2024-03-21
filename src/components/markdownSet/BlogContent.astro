@@ -9,10 +9,10 @@ import { useTranslations } from "@i18n/util";
 const t = useTranslations(Astro);
 ---
 
-<span class="blog-content-wrapper">
+<span class="blog-content-wrapper bg-gray-01 w-full ">
     <!-- 最新1篇博客展示 -->{
         source === "blog" && (
-            <div class="category bg-gray-01 w-full flex flex-col items-center">
+            <div class="category flex flex-col items-center">
                 <BaseContainer class="py-8 sm:py-12">
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:items-stretch">
                         <div class="category-title grid rounded py-6 pr-6 sm:py-8 sm:pr-8">
@@ -45,7 +45,7 @@ const t = useTranslations(Astro);
             categoryPosts.map((categoryPost, categoryIndex) => {
                 if (categoryPost.type === "all") return;
                 return (
-                    <div class="category bg-gray-01 w-full flex flex-col items-center">
+                    <div class="category flex flex-col items-center">
                         <BaseContainer class="py-8 sm:py-12">
                             <div class="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:items-stretch">
                                 <div class="category-title title grid rounded py-6 pr-6 sm:py-8 pr-8">
@@ -124,14 +124,6 @@ const t = useTranslations(Astro);
         }
         main {
             width: 960px;
-        }
-        ul {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
         }
         ul li {
             width: calc(50% - 1rem);
