@@ -32,7 +32,16 @@ export default [
       slot: CommunityMenu,
       position: "fixed",
       activePath: ['/news', '/activity', '/blog', '/docs/ebook/', '/download'],
-  },
+    },
+    {
+        label: "博客",
+        translations: {
+            en: "BLOG"
+        },
+        trigger: "click", 
+        target: "_self",
+        route: "/blog/"
+    },
   {
       label: "控制台样例",
       translations: {
