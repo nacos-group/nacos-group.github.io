@@ -44,7 +44,8 @@ export default defineConfig({
 				PageSidebar: './src/components/starlight/PageSidebar.astro',
 				PageTitle: './src/components/starlight/PageTitle.astro',
 				ContentPanel: './src/components/starlight/ContentPanel.astro',
-				Pagination:'./src/components/starlight/Pagination.astro'
+				Pagination: './src/components/starlight/Pagination.astro',
+				Banner: './src/components/starlight/Banner.astro'
 			},
 			editLink: {
 				baseUrl: 'https://github.com/nacos-group/nacos-group.github.io/tree/develop-astro-nacos',
