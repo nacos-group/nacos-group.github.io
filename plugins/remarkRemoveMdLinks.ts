@@ -11,55 +11,28 @@ export default function remarkRemoveMdLinks() {
 				return;
 			}
 
-			if (node.url.endsWith('.md') || node.url.endsWith('.mdx')) {
-				if(node.url.endsWith('.mdx')) {
-					node.url = node.url.slice(0, -4) + '/';	
-				} else {
-					node.url = node.url.slice(0, -3) + '/';
-				}
-				if (/^[^\.|~\/].+/.test(node.url)) {
-					node.url = "./" + node.url;
-				}
-				let url = '';
-				if (/^\.\//.test(node.url)) {
-					// ./deployment.md
-					url = node.url.replace(/^\.\//, '../');
-				} else if (/^\.\.\//.test(node.url)) {
-					// ../deployment.md
-					url = node.url.replace(/^\.\.\//, '../../');
-				}
-				node.url = url;
-			}
-			if (node.url.includes('.md#')) {
-				let [url, anchor] = node.url.split('#');
-				node.url = url.slice(0, -3) + '/';	
-				if (/^[^\.|~\/].+/.test(node.url)) {
-					node.url = "./" + node.url;
-				}
-				if (/^\.\//.test(node.url)) {
-					// ./deployment.md
-					url = node.url.replace(/^\.\//, '../');
-				} else if (/^\.\.\//.test(node.url)) {
-					// ../deployment.md
-					url = node.url.replace(/^\.\.\//, '../../');
-				}
-				node.url = url + '#' + anchor;
-			}
-			if (node.url.includes('.mdx#')) {
-				let [url, anchor] = node.url.split('#');
-				node.url = url.slice(0, -4) + '/';	
-				if (/^[^\.|~\/].+/.test(node.url)) {
-					node.url = "./" + node.url;
-				}
-				if (/^\.\//.test(node.url)) {
-					// ./deployment.md
-					url = node.url.replace(/^\.\//, '../');
-				} else if (/^\.\.\//.test(node.url)) {
-					// ../deployment.md
-					url = node.url.replace(/^\.\.\//, '../../');
-				}
-				node.url = url + '#' + anchor;
-			}
+			let isMdxLink = node.url.includes('.mdx')
+      
+      // Process internal markdown links (.md or .mdx)
+      if (node.url.includes('.md') || isMdxLink ) {
+        const extensionLength = isMdxLink ? 4 : 3;
+        const parts = node.url.split('#');
+        parts[0] = parts[0].slice(0, -extensionLength) + '/'; // Remove extension and add trailing slash
+        
+        // Ensure relative links start with ./
+        if (!/^[.~/]/.test(parts[0])) {
+          parts[0] = './' + parts[0];
+        }
+        
+        node.url = parts.join('#');
+      }
+
+      // Adjust relative paths
+      if (/^\.\//.test(node.url)) {
+        node.url = node.url.replace(/^\.\//, '../');
+      } else if (/^\.\.\//.test(node.url)) {
+        node.url = node.url.replace(/^\.\.\//, '../../');
+      }
 		});
 	};
 }
