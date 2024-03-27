@@ -7,7 +7,6 @@ import { createHead } from '@starlight/utils/head';
 import { localizedUrl } from '@starlight/utils/localizedUrl';
 import type { Props } from '@starlight/props';
 import get from 'lodash.get';
-import isArray from 'lodash.isarray';
 import { ViewTransitions } from 'astro:transitions';
 
 const { entry, lang } = Astro.props;
@@ -18,7 +17,7 @@ const canonical = Astro.site
   : undefined;
 const description = data.description || config.description;
 const originKeywords = get(data, 'keywords', description);
-const keywords = isArray(originKeywords)
+const keywords = Array.isArray(originKeywords)
   ? originKeywords.join(',')
   : originKeywords;
 
