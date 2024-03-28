@@ -22,7 +22,7 @@ sidebar:
 
 ![deployDnsVipMode.jpg](/img/doc/manual/admin/deployment/deploy-dns-vip-mode.svg)
 
-在使用VIP时，需要开放Nacos服务的主端口(默认8848)以及gRPC端口(默认9848)、同时如果对Nacos的主端口有所修改的话，需要对vip中的端口映射作出配置，具体端口的映射方式参考[部署手册概览-Nacos部署架构](./deployment-overview#1-Nacos部署架构)
+在使用VIP时，需要开放Nacos服务的主端口(默认8848)以及gRPC端口(默认9848)、同时如果对Nacos的主端口有所修改的话，需要对vip中的端口映射作出配置，具体端口的映射方式参考[部署手册概览-Nacos部署架构](./deployment-overview/#1-Nacos部署架构)
 
 ## 1. 发行版部署
 
@@ -75,7 +75,7 @@ nacos.core.auth.server.identity.key=${自定义，保证所有节点一致}
 nacos.core.auth.server.identity.value=${自定义，保证所有节点一致}
 ```
 
-上述内容详情可查看[权限认证](../../plugin/auth-plugin.md).
+上述内容详情可查看[权限认证](../../../plugin/auth-plugin.md).
 
 > 注意，文档中的默认值`SecretKey012345678901234567890123456789012345678901234567890123456789`和`VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=`为公开默认值，可用于临时测试，实际使用时请**务必**更换为自定义的其他有效值。
 
@@ -176,7 +176,7 @@ docker-compose -f example/cluster-embedded.yaml up
 
 ### 2.3 高级配置
 
-如果你有很多自定义配置的需求，可以通过指定[系统参数-镜像环境变量](./system-configurations/#2-镜像环境变量)的方式进行配置，例如需要开启鉴权时：
+如果你有很多自定义配置的需求，可以通过指定[系统参数-镜像环境变量](../system-configurations/#2-镜像环境变量)的方式进行配置，例如需要开启鉴权时：
 
 ```powershell
 docker run --name nacos-cluster-auth -e MODE=cluster -e NACOS_AUTH_ENABLE=true -e NACOS_AUTH_TOKEN=${customToken} -e NACOS_AUTH_IDENTITY_KEY=${customKey} NACOS_AUTH_IDENTITY_VALUE=${customValue} -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest

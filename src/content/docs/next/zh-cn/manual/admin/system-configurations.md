@@ -34,7 +34,7 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 |nacos.core.monitor.topn.enabled| Nacos Server topN 监控统计能力开关 | true/false | true |
 |nacos.core.monitor.topn.count|Nacos Server topN 监控统计 top的个数，如如配置为10，表示top10的配置和服务 | 正整数 | 10 |
 |nacos.core.snowflake.worker-id| Nacos Server 的snowflake workerId| 正整数 | -1 |
-|nacos.core.param.check.enabled| Nacos Server 参数校验能力开关，开启后将会校验请求时的参数是否符合规范，不符合将被拦截，详情查看 [参数校验](../../guild/user/parameters-check.md) | true/false | true |
+|nacos.core.param.check.enabled| Nacos Server 参数校验能力开关，开启后将会校验请求时的参数是否符合规范，不符合将被拦截，详情查看 [参数校验](../../guide/user/parameters-check.md) | true/false | true |
 |server.port| Nacos Server 的端口 | 正整数 | 8848 |
 |server.servlet.context-path| Nacos Server 的Servlet上下文路径 | 正则表达式 | /nacos |
 |spring.config.additional-location| Nacos Server 的额外配置文件路径，除`{nacos.home}/conf/application.properties`外，用户可以添加额外的配置文件 | 文件路径，多个文件路径用逗号分隔 | null | 
