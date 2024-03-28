@@ -16,10 +16,11 @@ const { labels } = Astro.props;
 
 <script>
   class StarlightMenuButton extends HTMLElement {
-    btn = this.querySelector("button")!;
+    btn : Element | null = null;
 
     constructor() {
       super();
+      this.btn = this.querySelector("button")!;
       // Toggle `aria-expanded` state when a user clicks the button.
       this.btn.addEventListener("click", () => this.toggleExpanded());
 
