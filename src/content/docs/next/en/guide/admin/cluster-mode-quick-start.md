@@ -98,9 +98,13 @@ No configuration is required
 <!-- <span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> </span></span> -->
 production and use recommendations at least backup mode, or high availability database.
 
-#### Initializes the MySQL database
+#### Initialize Database
+>Select Database Initialization Scheme Based on Business Needs
+- MySQL
+  - [SQL Statement Source File](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)
 
-[sql statement source file](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)
+- PostgreSQL
+  - [SQL Statement Source File](https://github.com/alibaba/nacos/blob/master/distribution/conf/derby-schema.sql)
 
 ### application. properties configuration
 

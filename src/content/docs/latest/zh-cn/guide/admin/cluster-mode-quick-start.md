@@ -109,9 +109,15 @@ nacos.core.auth.server.identity.value=${自定义，保证所有节点一致}
 <!-- <span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)"></span></span> -->
 生产使用建议至少主备模式，或者采用高可用数据库。
 
-#### 初始化 MySQL 数据库
+#### 初始化数据库
 
-[sql语句源文件](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)
+>根据业务需求自主选择数据库初始化方案
+
+- MySQL
+  - [sql语句源文件](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)
+
+- PostgreSQL
+  - [sql语句源文件](https://github.com/alibaba/nacos/blob/master/distribution/conf/derby-schema.sql)
 
 #### application.properties 配置
 
