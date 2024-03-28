@@ -107,15 +107,15 @@ for (let i = 0; i < dataSource.length; i++) {
 
 <script>
   class MobileMenuButton extends HTMLElement {
-    menuButton = this.querySelector("button")!;
 
     constructor() {
       super();
-      this.menuButton.addEventListener("click", () => this.toggleExpanded());
+      const menuButton = this.querySelector("button")!;
+      menuButton.addEventListener("click", () => this.toggleExpanded());
 
       const parentNav = this.closest("nav");
       if (parentNav) {
-        parentNav.addEventListener("keyup", (e) => this.closeOnEscape(e));
+        parentNav.addEventListener("keyup", (e) => this.closeOnEscape(e,menuButton));
       }
     }
 
@@ -129,10 +129,10 @@ for (let i = 0; i < dataSource.length; i++) {
       this.setExpanded(this.getAttribute("aria-expanded") !== "true");
     }
 
-    closeOnEscape(e: KeyboardEvent) {
+    closeOnEscape(e: KeyboardEvent,menuButton) {
       if (e.code === "Escape") {
         this.setExpanded(false);
-        this.menuButton.focus();
+        menuButton.focus();
       }
     }
   }

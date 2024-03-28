@@ -127,32 +127,45 @@ const solutionList = [
 
 <script>
   class HomeSolutionCard extends HTMLElement {
-    cardSolution = this.querySelector(".solution-container");
-    currentInputid = "c0";
-    // 添加节流开关，防止动画期间频繁抖动
-    flag = true;
+    // cardSolution: Element | null = null;
+    // currentInputid: string;
+    // flag: boolean;
     constructor() {
-      super();
-      this.cardSolution.addEventListener("mouseover", (e) => {
-        this.selectedLabel(e);
-      });
+        super();
+        // 初始化时不要访问 DOM 或设置属性
+        this.currentInputid = "c0";
+        this.flag = true;
+        // 由于在 constructor 中无法访问 DOM，所以不在这里绑定事件
+    }
+
+    // 使用 connectedCallback 来设置初始化逻辑和事件监听器
+    connectedCallback() {
+        var _this = this;
+        this.cardSolution = this.querySelector(".solution-container");
+        if (this.cardSolution) {
+            this.cardSolution.addEventListener("mouseover", function(e) {
+                _this.selectedLabel(e);
+            });
+        }
     }
 
     selectedLabel(e) {
-      const inputId = e.target.getAttribute("input-id");
-      if (this.flag && inputId && inputId !== this.currentInputid) {
-        this.currentInputid = inputId;
-        this.flag = false;
-        setTimeout(() => {
-          this.flag = true;
-        }, 200);
-        let input: HTMLInputElement = this.querySelector(
-          `input[type=radio]#${inputId}`,
-        );
-        input && input.checked === false ? (input.checked = true) : null;
-      }
+        var _this = this;
+        var inputId = e.target.getAttribute("input-id");
+        if (this.flag && inputId && inputId !== this.currentInputid) {
+            this.currentInputid = inputId;
+            this.flag = false;
+            setTimeout(function() {
+                _this.flag = true;
+            }, 200);
+            var input = this.querySelector('input[type=radio]#' + inputId);
+            if (input && !input.checked) {
+                input.checked = true;
+            }
+        }
     }
-  }
+}
+
   customElements.define("card-solution", HomeSolutionCard);
 </script>
 
