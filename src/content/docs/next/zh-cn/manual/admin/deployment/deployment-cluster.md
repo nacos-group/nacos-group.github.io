@@ -176,7 +176,7 @@ docker-compose -f example/cluster-embedded.yaml up
 
 ### 2.3 高级配置
 
-如果你有很多自定义配置的需求，可以通过指定[系统参数-镜像环境变量](../system-configurations/#2-镜像环境变量)的方式进行配置，例如需要开启鉴权时：
+如果你有很多自定义配置的需求，可以通过指定[系统参数-镜像环境变量](./system-configurations/#2-镜像环境变量)的方式进行配置，例如需要开启鉴权时：
 
 ```powershell
 docker run --name nacos-cluster-auth -e MODE=cluster -e NACOS_AUTH_ENABLE=true -e NACOS_AUTH_TOKEN=${customToken} -e NACOS_AUTH_IDENTITY_KEY=${customKey} NACOS_AUTH_IDENTITY_VALUE=${customValue} -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest
