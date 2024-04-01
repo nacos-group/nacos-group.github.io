@@ -4,6 +4,7 @@ import Navbar from "@components/common/Navbar.astro";
 import LanguageToggle from "@components/common/LanguageToggle.astro";
 import MobileNavbar from "@components/common/MobileNavbar.astro";
 import SearchComp from "./searchComp/index.astro";
+import Alert from "./Alert.astro";
 
 interface Props {
   align?: "home" | "docs";
@@ -33,11 +34,18 @@ let height,
 })();
 ---
 
-<span class="header-wrapper">
+<span
+  class="header-wrapper top-0 z-[10]"
+  style={`position: ${position}; height: ${height}`}
+>
+  <Alert />
   <my-layout
+    <<<<<<<
+    HEAD
     style={`position: ${position}; height: ${height}`}
-    class="w-screen backdrop-blur-md top-0 z-[10] bg-gray-14 flex justify-center"
-  >
+    style={` height: ${height}`}
+    >>>>>>> f90e7cd9cb72f70c323c0a3b00274f81c3655828 class="w-screen
+    backdrop-blur-md top-0 z-[10] bg-gray-14 flex justify-center" >
     <!-- 方便控制header宽度 -->
     <div class="header-content flex items-center justify-between">
       <div class="left-content h-full flex items-center">
