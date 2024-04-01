@@ -45,6 +45,7 @@
 }
 .sl-markdown-content dd:not(:where(.not-content *)) {
 	padding-inline-start: 1rem;
+	-webkit-padding-start:1rem;
 }
 
 .sl-markdown-content :is(h1, h2, h3, h4, h5, h6):not(:where(.not-content *)) {
@@ -110,6 +111,7 @@
 .sl-markdown-content blockquote:not(:where(.not-content *)) {
 	border-inline-start: 1.5px solid var(--sl-color-gray-5);
 	padding-inline-start: 1rem;
+	-webkit-padding-start:1rem;
 	background-color: theme('colors.gray.01');
 }
 
