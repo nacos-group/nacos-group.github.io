@@ -4,7 +4,7 @@ import Navbar from "@components/common/Navbar.astro";
 import LanguageToggle from "@components/common/LanguageToggle.astro";
 import MobileNavbar from "@components/common/MobileNavbar.astro";
 import SearchComp from "./searchComp/index.astro";
-import Alert from './Alert.astro'
+import Alert from "./Alert.astro";
 
 interface Props {
   align?: "home" | "docs";
@@ -34,7 +34,10 @@ let height,
 })();
 ---
 
-<span class="header-wrapper top-0 z-[10]"  style={`position: ${position}; height: ${height}`}>
+<span
+  class="header-wrapper top-0 z-[10]"
+  style={`position: ${position}; height: ${height}`}
+>
   <Alert />
   <my-layout
     style={` height: ${height}`}
@@ -89,7 +92,7 @@ let height,
       window.CNPilot.mounted({
         CNPilot_NODE_ENV: "development",
         CNPilot_OPEN_SOURCE: ["nacos.io"],
-        // CNPilot_OPEN_SOURCE_API: 'https://ai.nacos.io',
+        CNPilot_OPEN_SOURCE_API: "https://ai.nacos.io",
         showFloatICON: true,
         globalStyle: {
           top: "64px",
