@@ -287,3 +287,8 @@ starlight-menu-button button{
 		display: block;
 	}
 }
+
+#copilot-booter .content_wrapper {
+	height: 100vh !important;
+	top: 0 !important;
+}
