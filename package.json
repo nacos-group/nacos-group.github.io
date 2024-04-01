@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": " node runtime.js && node script/gitHubData.js && astro build && node animateSupport.js",
+    "build": " node runtime.js && node script/gitHubData.js && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -22,7 +22,6 @@
     "dotenv": "^16.3.1",
     "lodash.clonedeep": "^4.5.0",
     "lodash.get": "^4.4.2",
-    "lodash.isarray": "^4.0.0",
     "mdast-util-toc": "^7.0.0",
     "moment": "^2.29.4",
     "qs": "^6.11.2",

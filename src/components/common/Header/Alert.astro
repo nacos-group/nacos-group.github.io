@@ -1,0 +1,48 @@
+---
+import { TOPBAR } from "@/consts";
+---
+
+<div
+  class={`alert-bar w-full bg-blue-09 h-6 flex align-center justify-between top-0`}
+  client:load
+>
+  <span class="m-auto text-blue-03 text-12 leading-6" set:html={TOPBAR} />
+  <button
+    class="close-button text-blue-03 bg-blue-09 border-none cursor-pointer text-sm leading-6 mr-4"
+  >
+    &times;
+  </button>
+</div>
+
+<script>
+  // handleAlertClose函数用于处理提示条的关闭逻辑。
+  function handleAlertClose(button) {
+    button.parentNode.style.display = "none";
+    window.alertBarClosed = true;
+  }
+
+  // 检查localStorage中的状态，看是否需要显示提示条。
+  function initAlertBar() {
+    try {
+      const alertBar = document.querySelector(".alert-bar");
+      const closeButton = document.querySelector(".close-button");
+      const isClosed = window.alertBarClosed || false;
+
+      if (isClosed === true) {
+        alertBar.style.display = "none";
+      } else {
+        closeButton.addEventListener("click", function () {
+          handleAlertClose(closeButton);
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  // // 当页面加载时，调用initAlertBar函数。
+  window.addEventListener("DOMContentLoaded", initAlertBar);
+
+  // 监听astro页面切换事件：在新页面替换旧页面后立即触发的事件
+  document.addEventListener("astro:after-swap", initAlertBar);
+</script>

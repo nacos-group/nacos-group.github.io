@@ -4,6 +4,7 @@ import Navbar from "@components/common/Navbar.astro";
 import LanguageToggle from "@components/common/LanguageToggle.astro";
 import MobileNavbar from "@components/common/MobileNavbar.astro";
 import SearchComp from "./searchComp/index.astro";
+import Alert from './Alert.astro'
 
 interface Props {
   align?: "home" | "docs";
@@ -33,10 +34,11 @@ let height,
 })();
 ---
 
-<span class="header-wrapper">
+<span class="header-wrapper top-0 z-[10]"  style={`position: ${position}; height: ${height}`}>
+  <Alert />
   <my-layout
-    style={`position: ${position}; height: ${height}`}
-    class="backdrop-blur-md top-0 z-[10] bg-gray-14 flex justify-center"
+    style={` height: ${height}`}
+    class="w-screen backdrop-blur-md top-0 z-[10] bg-gray-14 flex justify-center"
   >
     <!-- 方便控制header宽度 -->
     <div class="header-content flex items-center justify-between">
@@ -62,6 +64,44 @@ let height,
     </div>
   </my-layout>
 </span>
+
+<script>
+  // animation
+  let script = document.createElement("script");
+  script.src =
+    "https://g.alicdn.com/cm-design/mw-vendor/1.6.12/web-animations-next.min.js?spm=defwork.home.0.0.413a5c4bEOqptl&file=web-animations-next.min.js";
+  script.onload = function () {
+    if (!document.getAnimations) {
+      document.getAnimations = window.Element.prototype.getAnimations;
+    }
+  };
+  document.head.appendChild(script);
+</script>
+
+<script>
+  //cnpilot
+  const copilotJSScript = document.createElement("script");
+  copilotJSScript.type = "text/javascript";
+  copilotJSScript.src =
+    "//g.alicdn.com/cm-design/copilot-booter/0.0.21/copilot-booter.js";
+  copilotJSScript.addEventListener("load", function () {
+    if (window.CNPilot) {
+      window.CNPilot.mounted({
+        CNPilot_NODE_ENV: "development",
+        CNPilot_OPEN_SOURCE: ["https://nacos.io"],
+        // CNPilot_OPEN_SOURCE_API: 'https://ai.nacos.io',
+        showFloatICON: true,
+        globalStyle: {
+          top: "64px",
+        },
+        headerProps: {
+          closeIcon: { show: true }, // 关闭按钮
+        },
+      });
+    }
+  });
+  document.body.append(copilotJSScript);
+</script>
 
 <script>
   class HeaderLayout2 extends HTMLElement {

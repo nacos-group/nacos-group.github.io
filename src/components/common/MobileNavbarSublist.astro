@@ -2,149 +2,150 @@
 import { Icon } from "@astrojs/starlight/components";
 
 interface Props {
-	sublist?: any[];
-	nested?: boolean;
+  sublist?: any[];
+  nested?: boolean;
 }
 
 const { sublist, nested } = Astro.props;
 
 const flattenSidebar = (sidebar) => {
-	return sidebar.flatMap((entry) =>
-		entry.type === "group" ? flattenSidebar(entry.entries) : entry,
-	);
+  return sidebar.flatMap((entry) =>
+    entry.type === "group" ? flattenSidebar(entry.entries) : entry
+  );
 };
 ---
 
 <span class="mobile-nav-sublist-wrapper">
-	<ul class:list={{ "top-level": !nested }}>
-		{
-			sublist.map((entry) => (
-				<li>
-					{entry.type === "link" ? (
-						<a
-							href={entry.href}
-							aria-current={entry.isCurrent && "page"}
-							class:list={[{ large: !nested }, "flex", "items-center"]}
-							{...entry.attrs}
-						>
-							<span>{entry.label}</span>
-						</a>
-					) : (
-						<details
-							open={
-								flattenSidebar(entry.entries).some((i) => i.isCurrent) ||
-								!entry.collapsed
-							}
-						>
-							<summary>
-								<div class="group-label">
-									<span class={`large ${entry.class}`}>{entry.label}</span>
-								</div>
-								<Icon
-									name="right-caret"
-									class="caret"
-									size="1.25rem"
-									color="#818598"
-								/>
-							</summary>
-							<Astro.self sublist={entry.entries} nested />
-						</details>
-					)}
-				</li>
-			))
-		}
-	</ul>
+  <ul class:list={{ "top-level": !nested }}>
+    {
+      sublist.map((entry) => (
+        <li>
+          {entry.type === "link" ? (
+            <a
+              href={entry.href}
+              aria-current={entry.isCurrent && "page"}
+              class:list={[{ large: !nested }, "flex", "items-center"]}
+              {...entry.attrs}
+            >
+              <span>{entry.label}</span>
+            </a>
+          ) : (
+            <details
+              open={
+                flattenSidebar(entry.entries).some((i) => i.isCurrent) ||
+                !entry.collapsed
+              }
+            >
+              <summary>
+                <div class="group-label">
+                  <span class={`large ${entry.class}`}>{entry.label}</span>
+                </div>
+                <Icon
+                  name="right-caret"
+                  class="caret"
+                  size="1.25rem"
+                  color="#818598"
+                />
+              </summary>
+              <Astro.self sublist={entry.entries} nested />
+            </details>
+          )}
+        </li>
+      ))
+    }
+  </ul>
 </span>
 
 <style is:global>
-	.mobile-nav-sublist-wrapper {
-		ul {
-			list-style: none;
-			padding: 0;
-		}
+  .mobile-nav-sublist-wrapper {
+    ul {
+      list-style: none;
+      padding: 0;
+    }
 
-		li {
-			overflow-wrap: anywhere;
-		}
+    li {
+      overflow-wrap: anywhere;
+    }
 
-		ul ul li {
-			margin-inline-start: 0.5rem;
-			border-inline-start: 1px solid theme("colors.gray.12");
-			padding-inline-start: 0.5rem;
-		}
+    ul ul li {
+      margin-inline-start: 0.5rem;
+      border-inline-start: 1px solid theme("colors.gray.12");
+      padding-inline-start: 0.5rem;
+      -webkit-padding-start: 0.5rem;
+    }
 
-		.large {
-			font-size: 0.875rem;
-			/* font-weight: 500; */
-			color: theme("colors.gray.08");
-		}
+    .large {
+      font-size: 0.875rem;
+      /* font-weight: 500; */
+      color: theme("colors.gray.08");
+    }
 
-		.large-weight {
-			font-weight: 400;
-		}
+    .large-weight {
+      font-weight: 400;
+    }
 
-		.text-13px {
-			font-size: 13px;
-		}
+    .text-13px {
+      font-size: 13px;
+    }
 
-		.top-level > li + li {
-			margin-top: 0.5rem;
-		}
+    .top-level > li + li {
+      margin-top: 0.5rem;
+    }
 
-		summary {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			padding: 0.25rem 0.5rem;
-			line-height: 1.4;
-			cursor: pointer;
-			user-select: none;
-		}
-		summary::marker,
-		summary::-webkit-details-marker {
-			display: none;
-		}
+    summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.25rem 0.5rem;
+      line-height: 1.4;
+      cursor: pointer;
+      user-select: none;
+    }
+    summary::marker,
+    summary::-webkit-details-marker {
+      display: none;
+    }
 
-		.caret {
-			transition: transform 0.2s ease-in-out;
-			flex-shrink: 0;
-		}
-		[dir="rtl"] .caret {
-			transform: rotateZ(180deg);
-		}
-		[open] > summary .caret {
-			transform: rotateZ(90deg);
-		}
+    .caret {
+      transition: transform 0.2s ease-in-out;
+      flex-shrink: 0;
+    }
+    [dir="rtl"] .caret {
+      transform: rotateZ(180deg);
+    }
+    [open] > summary .caret {
+      transform: rotateZ(90deg);
+    }
 
-		a {
-			display: block;
-			border-radius: 0.25rem;
-			text-decoration: none;
-			color: theme("colors.gray.06");
-			padding: 0.5rem 0.5rem;
-			line-height: 1.4;
-			font-size: 0.75rem;
-		}
+    a {
+      display: block;
+      border-radius: 0.25rem;
+      text-decoration: none;
+      color: theme("colors.gray.06");
+      padding: 0.5rem 0.5rem;
+      line-height: 1.4;
+      font-size: 0.75rem;
+    }
 
-		a:hover,
-		a:focus {
-			color: theme("colors.gray.06");
-		}
+    a:hover,
+    a:focus {
+      color: theme("colors.gray.06");
+    }
 
-		[aria-current="page"],
-		[aria-current="page"]:hover,
-		[aria-current="page"]:focus {
-			color: theme("colors.gray.14");
-			background-color: theme("colors.gray.02");
-			border-left-style: solid;
-			border-left-width: 4px;
-			border-left-color: theme("colors.gray.14");
-			padding-left: 0.625rem !important;
-		}
+    [aria-current="page"],
+    [aria-current="page"]:hover,
+    [aria-current="page"]:focus {
+      color: theme("colors.gray.14");
+      background-color: theme("colors.gray.02");
+      border-left-style: solid;
+      border-left-width: 4px;
+      border-left-color: theme("colors.gray.14");
+      padding-left: 0.625rem !important;
+    }
 
-		a > *:not(:last-child),
-		.group-label > *:not(:last-child) {
-			margin-inline-end: 0.25em;
-		}
-	}
+    a > *:not(:last-child),
+    .group-label > *:not(:last-child) {
+      margin-inline-end: 0.25em;
+    }
+  }
 </style>
