@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": " node runtime.js && node script/gitHubData.js && astro build && node animateSupport.js",
+    "build": " node runtime.js && node script/gitHubData.js && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
