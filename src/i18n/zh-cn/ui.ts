@@ -20,6 +20,7 @@ export default {
 	'commmon.header.comm.rightcut': '一个易于使用的构建云原生应用程序的平台。',
 	'commmon.header.comm.contact': '联系我们',
 	'commmon.header.common.translator': '中文',
+	'commmon.header.alert.link': '点此了解',
 	'commmon.header.contact.git': 'GitHub',
 	'commmon.header.contact.ding': '钉钉',
 	'commmon.header.contact.mail': '电子邮箱',

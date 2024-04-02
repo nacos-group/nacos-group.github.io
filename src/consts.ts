@@ -4,7 +4,11 @@ export const SITE_TITLE = 'Astro Blog';
 export const SITE_DESCRIPTION = 'Welcome to my website!';
 
 // 吊顶提示文案
-export const TOPBAR = `云原生开源沙龙北京站开启报名，详情请<a style="color: inherit; display: inline" href="https://nacos.io/blog/nacos-gvr7dx_awbbpb_sozg59av10r22awa/?source=activity_activity-preview">点击</a>了解。`
+export const TOPBAR = {
+    text: '云原生开源开发者沙龙_北京站开启报名',
+    mobileText:'云原生开源沙龙_北京站',
+    link: 'https://nacos.io/blog/nacos-gvr7dx_awbbpb_sozg59av10r22awa/?source=activity_activity-preview'
+}
 
 // 文档根据版本区分的提示banner
 export const DOCS_BANNER = {
