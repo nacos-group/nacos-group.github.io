@@ -96,6 +96,8 @@ docker run --env PREFER_HOST_MODE=hostname \
   --env MODE=standalone \
   --env NACOS_AUTH_ENABLE=true \
   -e NACOS_AUTH_TOKEN=SecretKeyM1Z2WDc4dnVyZkQ3NmZMZjZ3RHRwZnJjNFROdkJOemEK \
+  -e NACOS_AUTH_IDENTITY_KEY=mpYGXyu7 \
+  -e NACOS_AUTH_IDENTITY_VALUE=mpYGXyu7 \
   -p 8848:8848 nacos/nacos-server
 ```
 
