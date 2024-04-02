@@ -88,6 +88,7 @@ const ifactive = (toggle) => {
             slot,
             position = "absolute",
             target = "_self",
+            relativePosition='parent'
           } = toggle;
           // const component = slot && await import(slot);
           const active = ifactive(toggle);
@@ -101,6 +102,7 @@ const ifactive = (toggle) => {
               target={target}
               position={position}
               top={top}
+              relativePosition = {relativePosition}
               class={`item ${index === lastIdx ? "item-last-child" : ""}`}
             ></Toggle>
           );

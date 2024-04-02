@@ -10,6 +10,7 @@ interface Props {
   slot?: HTMLElement;
   // 如果下拉窗口内容比较多，可以相对视图定位，自定义下拉内容
   position?: "absolute" | "fixed";
+  relativePosition?: 'page' | 'parent';
   top?: "4rem" | "3.5rem";
   showArrow?: boolean;
 }
@@ -24,7 +25,11 @@ const {
   showArrow = true,
   target = "_self",
   top = "4rem",
+  relativePosition = 'parent'
 } = Astro.props;
+
+// 父组件的定位方式
+const parentPosition = relativePosition === 'page'?'static':'relative'
 const ifdropdown = slot && !route;
 const Component = slot;
 
@@ -39,7 +44,7 @@ const Component = slot;
 ---
 
 <span class="toggle-wrapper">
-  <toggle-component data-trigger={trigger} class="toggle-component h-full">
+  <toggle-component data-trigger={trigger} class=`toggle-component h-full ${parentPosition}`>
     <div
       class=`toggle-trigger cursor-pointer flex items-center h-full ${Astro.props?.class || ''}`
     >
@@ -145,7 +150,6 @@ customElements.define("toggle-component", Toggle);
     }
 
     .toggle-component {
-      position: relative;
       display: inline-block;
       font-size: var(--toggle-font);
       line-height: var(--toggle-line);

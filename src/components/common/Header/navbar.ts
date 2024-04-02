@@ -29,7 +29,8 @@ export default [
     },
     trigger: "hover",
     slot: CommunityMenu,
-    position: "fixed",
+    position: "absolute",
+    relativePosition: 'page',
     activePath: ["/news", "/activity", "/blog", "/docs/ebook/", "/download"],
   },
   {
