@@ -90,7 +90,11 @@ NACOS_AUTH_ENABLE=true
 For example, you can run this command to run a docker container with Authentication:
 
 ```powershell
-docker run --env PREFER_HOST_MODE=hostname --env MODE=standalone --env NACOS_AUTH_ENABLE=true -p 8848:8848 nacos/nacos-server
+docker run --env PREFER_HOST_MODE=hostname \
+  --env MODE=standalone \
+  --env NACOS_AUTH_ENABLE=true \
+  -e NACOS_AUTH_TOKEN=SecretKeyM1Z2WDc4dnVyZkQ3NmZMZjZ3RHRwZnJjNFROdkJOemEK \
+  -p 8848:8848 nacos/nacos-server
 ```
 
 Besides, you can also add the other related enviroment parameters:
