@@ -11,7 +11,7 @@ sidebar:
 这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。
 
 ## 0.版本选择
-您可以在Nacos的[release notes](https://github.com/alibaba/nacos/releases)及[博客](https://nacos.io/blog/)中找到每个版本支持的功能的介绍，当前推荐的稳定版本为2.3.1。
+您可以在Nacos的[release notes](https://github.com/alibaba/nacos/releases)及[博客](https://nacos.io/blog/)中找到每个版本支持的功能的介绍，当前推荐的稳定版本为2.3.2。
 
 ## 1.预备环境准备
 
