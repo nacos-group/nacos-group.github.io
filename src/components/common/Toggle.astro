@@ -46,7 +46,7 @@ const Component = slot;
 <span class="toggle-wrapper">
   <toggle-component data-trigger={trigger} class=`toggle-component h-full ${parentPosition}`>
     <div
-      class=`toggle-trigger cursor-pointer flex items-center h-full ${Astro.props?.class || ''}`
+      class=`toggle-trigger relative cursor-pointer flex items-center h-full ${Astro.props?.class || ''}`
     >
       <slot name="trigger">
         {
