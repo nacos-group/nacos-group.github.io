@@ -7,6 +7,14 @@ import DocsHeader from '@components/common/Header/index.astro';
 <DocsHeader align="docs" lang={Astro.props.lang} {...Astro.props} />
 
 <script>
-	const html = document.documentElement;
-    html.setAttribute('data-theme', 'light');
+    function setLightMode(document) {
+        document.documentElement.dataset.theme = "light";
+    }
+
+  setLightMode(document);
+
+  document.addEventListener('astro:before-swap', ev => {
+    // Pass the incoming document to set the theme on it
+    setLightMode(ev.newDocument);
+  });
 </script>
