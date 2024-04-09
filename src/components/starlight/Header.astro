@@ -8,13 +8,14 @@ import DocsHeader from '@components/common/Header/index.astro';
 
 <script>
     function setLightMode(document) {
-        document.documentElement.dataset.theme = "light";
-    }
+      const html = document.documentElement;
+      html.setAttribute('data-theme', 'light');
+      }
 
-  setLightMode(document);
+    setLightMode(document);
 
-  document.addEventListener('astro:before-swap', ev => {
-    // Pass the incoming document to set the theme on it
-    setLightMode(ev.newDocument);
-  });
+    document.addEventListener('astro:before-swap', ev => {
+      console.log("=======astro:before-swap=======")
+      setLightMode(ev.newDocument);
+    });
 </script>
