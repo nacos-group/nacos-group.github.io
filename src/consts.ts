@@ -5,9 +5,10 @@ export const SITE_DESCRIPTION = 'Welcome to my website!';
 
 // 吊顶提示文案
 export const TOPBAR = {
-    text: '云原生开源沙龙 ｜云原生安全零信任专场，4月13日_北京',
-    mobileText:'开源沙龙，云原生安全零信任专场，4月13日_北京',
-    link: 'https://nacos.io/blog/nacos-gvr7dx_awbbpb_sozg59av10r22awa/?source=activity_activity-preview'
+    text: '云原生开源沙龙 ｜云原生安全零信任专场精彩回顾',
+    mobileText:'云原生开源沙龙 ｜云原生安全零信任专场精彩回顾',
+    link: 'https://mp.weixin.qq.com/s/qtxgMb00A9kIzIulNFtuPg',
+    target: '_blank'
 }
 
 // 文档根据版本区分的提示banner
