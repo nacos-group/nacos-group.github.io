@@ -185,7 +185,7 @@ export default {
 	'rightSidebar.editPage': 'Edit this page',
 	'rightSidebar.feedbackIssue': 'Feedback this page',
 	'rightSidebar.translatePage': 'Translate this page',
-	'rightSidebar.github': 'Astro Docs on GitHub',
+	'rightSidebar.github': 'Nacos Docs on GitHub',
 
 	// Feedback Fish widget
 	'feedback.button': 'Give us feedback',

@@ -31,12 +31,3 @@ const { stargazers_count: startCount = 0, forks_count: forkCount = 0 } =
     <span class="ml-2">{forkCount}</span>
   </Button>
 </star-and-fork>
-
-<script>
-  class StarAndFork extends HTMLElement {
-    constructor() {
-      super();
-    }
-  }
-  customElements.define("star-and-fork", StarAndFork);
-</script>

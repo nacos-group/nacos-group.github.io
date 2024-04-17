@@ -6,7 +6,7 @@ import DocsHeader from '@components/common/Header/index.astro';
  
 <DocsHeader align="docs" lang={Astro.props.lang} {...Astro.props} />
 
-<script>
+<script is:inline>
     function setLightMode(document) {
       const html = document.documentElement;
       html.setAttribute('data-theme', 'light');
