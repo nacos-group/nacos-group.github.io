@@ -3,7 +3,7 @@ import starlight from "@astrojs/starlight";
 import locales from "./src/i18n/languages";
 import tailwind from "@astrojs/tailwind";
 import rehypeExternalLinks from "rehype-external-links";
-
+import preact from "@astrojs/preact";
 import remarkRemoveMdLinks from "./plugins/remarkRemoveMdLinks";
 import remarkRemovePlainLanguageCode from "./plugins/remarkRemovePlainLanguageCode";
 import remarkRemoveRepeatHeader from "./plugins/remarkRemoveRepeatHeader";
@@ -65,6 +65,7 @@ export default defineConfig({
         },
       },
     },
+    preact({ compat: true }),
   ],
   markdown: {
     rehypePlugins: [
