@@ -41,7 +41,9 @@ let height,
     class="w-full backdrop-blur-md top-0 z-[10] bg-gray-14 flex justify-center"
   >
     <!-- 方便控制header宽度 -->
-    <div class=`header-content flex items-center justify-between border-b border-gray-14`>
+    <div
+      class=`header-content flex items-center justify-between border-b border-gray-14`
+    >
       <div class="left-content h-full flex items-center">
         <a class="no-underline" href="/">
           <img
@@ -80,27 +82,42 @@ let height,
 
 <script>
   //cnpilot
-  const copilotJSScript = document.createElement("script");
-  copilotJSScript.type = "text/javascript";
-  copilotJSScript.src =
-    "//g.alicdn.com/cm-design/copilot-booter/0.0.21/copilot-booter.js";
-  copilotJSScript.addEventListener("load", function () {
-    if (window.CNPilot) {
-      window.CNPilot.mounted({
-        CNPilot_NODE_ENV: "development",
-        CNPilot_OPEN_SOURCE: ["nacos.io"],
-        CNPilot_OPEN_SOURCE_API: "https://ai.nacos.io",
-        showFloatICON: true,
-        globalStyle: {
-          top: "64px",
-        },
-        headerProps: {
-          closeIcon: { show: true }, // 关闭按钮
-        },
-      });
-    }
+  function addCopilot() {
+    //cnpilot
+    const copilotJSScript = document.createElement("script");
+    copilotJSScript.type = "text/javascript";
+    copilotJSScript.src =
+      // "//dev.g.alicdn.com/cm-design/copilot-booter/0.0.22/copilot-booter.js";
+      "https://g.alicdn.com/cm-design/copilot-booter/0.0.22/copilot-booter.js";
+    copilotJSScript.addEventListener("load", function () {
+      if (window.CNPilot) {
+        window.CNPilot.mounted({
+          CNPilot_NODE_ENV: "development",
+          CNPilot_OPEN_SOURCE: ["nacos.io"],
+          CNPilot_OPEN_SOURCE_API: "https://ai.nacos.io",
+          showFloatICON: true,
+          globalStyle: {
+            top: "64px",
+          },
+          entryIconProps: {
+            "position-type": "updown",
+            "icon-hover-text": "AI专家",
+            // 'icon-url':'https://pic.rmb.bdstatic.com/bjh/914b8c0f9814b14c5fedeec7ec6615df5813.jpeg',
+          },
+          headerProps: {
+            closeIcon: { show: true }, // 关闭按钮
+            titleText: "nacos文档答疑助手",
+          },
+        });
+      }
+    });
+    document.body.append(copilotJSScript);
+  }
+  addCopilot();
+  document.addEventListener("astro:page-load", function () {
+    if (window.CNPilot) window.CNPilot.unmounted();
+    addCopilot();
   });
-  document.body.append(copilotJSScript);
 </script>
 
 <script>
