@@ -117,8 +117,8 @@ export const Product = ({
           className="absolute z-10 shadow-md -mt-20 ml-2"
           style={{
             visibility: isHovering ? "visible" : "hidden",
-            bottom: direction === 'top' ? '113px' : '',
-            top: direction === 'top' ? '' : '113px',
+            bottom: direction === 'top' ? '95px' : '',
+            top: direction === 'top' ? '' : '165px',
             // ...popupPosition,
           }}
           onMouseLeave={() => setHovering(false)}
