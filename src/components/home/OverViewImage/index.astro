@@ -3,22 +3,45 @@ import { OverviewImage } from "./index";
 import { useTranslations } from "@i18n/util";
 const t = useTranslations(Astro);
 ---
+
+<div class="overview-image-wrapper">
     <div class="top-title w-full flex flex-col items-center mb-[31px] mt-16">
-        <span class="text-gray-10 text-xs mb-6">{t("home.overviewcard.about")}</span>
-        <span class="title text-gray-14 text-4xl font-medium">{t("home.overviewcard.title")}</span>
-      </div>
-<OverviewImage
-    client:load
-    colors={{
-        arrowColor: "#8BABE9",
-        highlightFontColor: "#2C46C9",
-        normalFontColor: "#9295A5",
-        tagBgColor:'#C6D6F7',//弹框右上方标签背景颜色
-        tagBorderColor:'#8BABE9',//弹框右上方标签边框颜色
-        tagFontColor:'#0B1337',//弹框右上方标签字体颜色
-        starForkFontColor:'#8498ee',//弹框收藏、分享数据字体颜色
-        starForkBgColor:'#E0E9FB',//弹框收藏、分享数据背景颜色
-        linkColor:'#7097E6',//弹框链接颜色
-    }}
-    className = 'mx-auto'
-/>
+        <span class="text-gray-10 text-xs mb-6"
+            >{t("home.overviewcard.about")}</span
+        >
+        <span class="title text-gray-14 text-4xl font-medium"
+            >{t("home.overviewcard.title")}</span
+        >
+    </div>
+    <OverviewImage
+        client:load
+        colors={{
+            arrowColor: "#8BABE9",
+            highlightFontColor: "#2C46C9",
+            normalFontColor: "#9295A5",
+            tagBgColor: "#C6D6F7", //弹框右上方标签背景颜色
+            tagBorderColor: "#8BABE9", //弹框右上方标签边框颜色
+            tagFontColor: "#0B1337", //弹框右上方标签字体颜色
+            starForkFontColor: "#8498ee", //弹框收藏、分享数据字体颜色
+            starForkBgColor: "#E0E9FB", //弹框收藏、分享数据背景颜色
+            linkColor: "#7097E6", //弹框链接颜色
+        }}
+        className="mx-auto"
+    />
+</div>
+
+<style is:global>
+    .overview-image-wrapper {
+        /* 小于50rem  小于 800px */
+        @media (max-width: 50rem) {
+            .top-title {
+                margin-top: 2.5rem;
+                margin-bottom: 2.5rem;
+            }
+            .top-title .title {
+                font-size: 1.125rem; /* 18px */
+                line-height: 1.75rem; /* 28px */
+            }
+        }
+    }
+</style>
