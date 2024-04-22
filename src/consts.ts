@@ -5,9 +5,9 @@ export const SITE_DESCRIPTION = 'Welcome to my website!';
 
 // 吊顶提示文案
 export const TOPBAR = {
-    text: '云原生开源沙龙 ｜云原生安全零信任专场精彩回顾',
-    mobileText:'云原生开源沙龙 ｜云原生安全零信任专场精彩回顾',
-    link: 'https://mp.weixin.qq.com/s/qtxgMb00A9kIzIulNFtuPg',
+    text: 'Nacos 配置中心安全问题汇总及解决方案',
+    mobileText:'Nacos 配置中心安全问题汇总及解决方案',
+    link: 'https://nacos.io/blog/nacos-gvr7dx_awbbpb_sdtk4vkbson424zn/?source=blog_article',
     target: '_blank'
 }
 
