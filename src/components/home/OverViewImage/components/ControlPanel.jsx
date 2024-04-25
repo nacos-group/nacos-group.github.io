@@ -1,36 +1,28 @@
 import React from "react";
 import { Panel } from "./common/Panel";
 import { Product } from "./common/Product";
-import { hoverOpenkruiseData,hoverKubernetesData } from "../utils";
+import { hoverNacosData,hoverOpenSergoData } from "../utils";
 import { ProductPanel } from "./common/ProductPanel";
 
-export const ControlPanel = ({}) => {
+export const ControlPanel = ({ }) => {
   return (
     <ProductPanel title="控制面">
-      {/* <Product
-        image={
-          "https://gw.alicdn.com/imgextra/i2/O1CN01S2OTiK1o8wxUvatne_!!6000000005181-2-tps-216-170.png"
-        }
-        logo="https://gw.alicdn.com/imgextra/i4/O1CN01ch91fH1kEfRHCN1iT_!!6000000004652-2-tps-56-64.png"
-        label="KubeVela"
-        hoverContent={hoverKubeVelaData}
-      /> */}
       <Product
-        // image={
-        //   "https://gw.alicdn.com/imgextra/i2/O1CN01S2OTiK1o8wxUvatne_!!6000000005181-2-tps-216-170.png"
-        // }
-        logo="https://img.alicdn.com/imgextra/i1/O1CN01wGWLaP1WHVHF2P73D_!!6000000002763-2-tps-80-80.png"
-        label="Openkruise"
-        hoverContent={hoverOpenkruiseData}
+        image={
+          "https://gw.alicdn.com/imgextra/i3/O1CN01dI5UtV1iMnEY2sB3r_!!6000000004399-2-tps-216-154.png"
+        }
+        label="Nacos"
+        hoverContent={hoverNacosData}
+        logo="https://img.alicdn.com/imgextra/i3/O1CN01GdSxST24NB7Yl5Pdx_!!6000000007378-2-tps-80-80.png"
         direction="bottom"
       />
       <Product
         image={
-          "https://gw.alicdn.com/imgextra/i4/O1CN01b9Zgrx1px9zjkxaBN_!!6000000005426-2-tps-216-160.png"
+          "https://gw.alicdn.com/imgextra/i3/O1CN01g7SsmO1GHTOMxOpzr_!!6000000000597-2-tps-216-160.png"
         }
-        logo="https://img.alicdn.com/imgextra/i1/O1CN01FxpqPp1Q3rn1Xh6N1_!!6000000001921-2-tps-80-80.png"
-        label="Kubernetes"
-        hoverContent={hoverKubernetesData}
+        label="OpenSergo"
+        hoverContent={hoverOpenSergoData}
+        logo="https://img.alicdn.com/imgextra/i3/O1CN01oLvUis1DjSkwk53Tg_!!6000000000252-2-tps-80-80.png"
         direction="bottom"
       />
     </ProductPanel>
