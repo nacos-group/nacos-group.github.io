@@ -4,7 +4,7 @@ import { getCollection } from "astro:content";
 import BlogTop from "@components/markdownSet/BlogTop.astro";
 import Footer from "@components/common/Footer.astro";
 import BlogContent from "@components/markdownSet/BlogContent.astro"
-import { BLOG_CATEGORY } from "src/consts";
+import { BLOG_CATEGORY, BLOG_CATEGORY_EN } from "src/consts";
 import { useTranslations } from '@i18n/util';
 const t = useTranslations(Astro);
 
@@ -35,7 +35,8 @@ const categoryPosts = BLOG_CATEGORY.map(item => ({
       title={t("commmon.header.comm.blog")}
       source="blog"
       type="home"
-      category={BLOG_CATEGORY}
+      category={BLOG_CATEGORY_EN}
+      activeCategory='all'
     />
     <BlogContent source="blog" recentPosts={recentPosts} categoryPosts={categoryPosts} />
     <Footer />

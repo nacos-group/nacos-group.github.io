@@ -42,7 +42,13 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 ---
 
 <BaseLayout title="Nacos Blog" >
-    <BlogTop title={t("blog.all.articles")}  type="blog-sub" />
+    <BlogTop 
+        title={t("blog.all.articles")}  
+        type="blog-sub" 
+        source="blog"
+        category={BLOG_CATEGORY}
+        activeCategory='all'
+    />
     <div
         class="mx-auto flex flex-col items-center gap-20 py-8 lg:p-12 xl:p-20 bg-gray-01"
     >

@@ -44,6 +44,11 @@ export const i18nMap = {
 
 export const BLOG_CATEGORY = [
     {
+        type: 'all',
+        title: '全部文章',
+        href: '/blog/all'
+    },
+    {
         type: 'article',
         title: '技术文章',
         href: '/blog/article'
@@ -59,12 +64,12 @@ export const BLOG_CATEGORY = [
         title: '最佳实践',
         href: '/blog/case'
     },
-    {
-        type: 'all',
-        title: '全部文章',
-        href: '/blog/all'
-    },
-]
+];
+
+export const BLOG_CATEGORY_EN = BLOG_CATEGORY.map(item => ({
+    ...item,
+    href: '/en' + item.href
+}));
 
 export const NEWS_CATEGORY = [
     {
