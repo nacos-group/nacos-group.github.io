@@ -80,7 +80,7 @@
             {
                 "label": "部署手册",
                 "translations": {
-                    "en": "Deploy Guide"
+                    "en": "Deploy Manual"
                 },
                 "autogenerate": { "directory": "manual/admin/deployment" }
             },
@@ -94,7 +94,7 @@
             {
                 "label": "升级手册",
                 "translations": {
-                    "en": "Upgrading Guide"
+                    "en": "Upgrading Manual"
                 },
                 "link": "docs/manual/admin/upgrading"
             },
@@ -104,6 +104,13 @@
                     "en": "Management API"
                 },
                 "link": "docs/manual/admin/admin-api"
+            },
+            {
+                "label": "监控手册",
+                "translations": {
+                    "en": "Monitor Manual"
+                },
+                "link": "docs/manual/admin/monitor"
             }
         ]
     },
