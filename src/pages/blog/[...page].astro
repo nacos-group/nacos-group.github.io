@@ -3,12 +3,10 @@ import type { GetStaticPathsOptions } from "astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import Pagination from "@components/common/Pagination.astro";
-import SimpleCard from "@components/markdownSet/SimpleCard.astro";
 import { BLOG_CATEGORY } from 'src/consts';
 import BlogTop from "@components/markdownSet/BlogTop.astro";
 import SimpleContainer from '@components/markdownSet/SimpleContainer.astro';
 import { useTranslations } from '@i18n/util';
-import { getExcerpt } from '@/utils/util';
 const t = useTranslations(Astro);
 
 // 分页数据在page参数中传递
@@ -16,10 +14,6 @@ const { page } = Astro.props;
 
 const allPages = [...Array(page.lastPage).keys()].map((num) => {
     return `/blog${num === 0 ? "" : `/${String(num + 1)}`}`;
-});
-
-page.data.forEach(item => {
-    item.excerpt = getExcerpt(item.body, 120, item.data?.description);
 });
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {

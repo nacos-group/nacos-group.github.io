@@ -21,6 +21,28 @@ interface Props {
 }
 
 const { pageList, allPages } = Astro.props;
+
+// Get word for mdx
+const getExcerpt = (content, length = 200, defaultExcerpt = '') => {
+  try {
+		const strippedContent = content.replace(/(<([^>]+)>)/gi, '');
+        const plainText = strippedContent.replace(/[#>*-]|\[.*?\]\(.*?\)|\!\[.*?\]\(.*?\)/g, '');
+		let excerpt = plainText.substring(0, length);
+	
+		if (plainText.length > length) {
+			excerpt += '...';
+		};
+		return excerpt;
+  } catch(error) {
+     return defaultExcerpt;
+  };
+};
+
+if(pageList && pageList.length) {
+    pageList.forEach(item => {
+        item.excerpt = getExcerpt(item.body, 120, item.data?.description);
+    });
+};
 ---
 
 <BaseContainer class="flex justify-between">
@@ -42,7 +64,7 @@ const { pageList, allPages } = Astro.props;
         </div>
     </div>
   
-    <ul class="blog-all grid grid-cols-1 gap-6 place-items-stretch 2xl:ml-[100px] xl:ml-[80px] lg:ml-[50px] md:ml-[0px]">
+    <ul class="flex-1 blog-all grid grid-cols-1 gap-6 place-items-stretch 2xl:ml-[100px] xl:ml-[80px] lg:ml-[50px] md:ml-[0px]">
         {
             pageList.map((post) => (
                 <SimpleCard 
