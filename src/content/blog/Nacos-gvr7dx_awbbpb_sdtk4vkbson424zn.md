@@ -4,10 +4,10 @@ description: "Nacos 安全零信任实践"
 date: "2024-04-22"
 category: "article"
 keywords: ["Nacos"]
-authors: "阿里云高级工程师"
+authors: "CH3CHO"
 ---
 
-作者 柳遵飞<br />Nacos 作为配置中心经常存储一些敏感信息，但是由于误用导致安全风险，最常见的主要是以下两个问题：<br />1、Nacos暴露公网可以吗？ 不可以，因为Nacos定位是注册配置中心，是内部系统，不应该暴露到公网使用。<br />2、不得已要开公网不开鉴权可以吗？ 不可以，开公网不开鉴权等同于裸奔，为黑客攻击创造充分条件。 
+作者 柳遵飞<br />Nacos 作为配置中心经常存储一些敏感信息，但是由于误用导致安全风险，最常见的主要是以下两个问题：<br />1、Nacos暴露公网可以吗？ 不可以，因为Nacos定位是注册配置中心，是内部系统，不应该暴露到公网使用。<br />2、不得已要开公网不开鉴权可以吗？ 不可以，开公网不开鉴权等同于裸奔，为黑客攻击创造充分条件。
 
 看到赶紧自查一下是否有这两类问题，如果有立即解决一下！！！  解决完这些基础问题，可以看一下下面安全的进阶玩法。
 <a name="cf040"></a>
@@ -100,7 +100,7 @@ Nacos服务端没有开启权限访问，任何知道server节点IP地址的人�
 
    - *nacos.remote.client.rpc.tls.trustCollectionChainPath={trustFilePath}
 
-trustAll为true时，需要设置受信任服务端CA证书文件
+trustAll为false时，需要设置受信任服务端CA证书文件
 
    - *nacos.remote.client.rpc.tls.mutualAuth=true/false
 
