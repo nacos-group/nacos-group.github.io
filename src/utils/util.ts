@@ -22,3 +22,19 @@ export const stripLangFromSlug = (slug: CollectionEntry<'docs'>['slug']) =>
 
 /** Get a page’s lang tag from its slug (e.g. `'en/migrate'` => `'en'`). */
 export const getLangFromSlug = (slug: CollectionEntry<'docs'>['slug']) => slug.split('/')[0];
+
+// Get word for mdx
+export const getExcerpt = (content, length = 200, defaultExcerpt = '') => {
+  try {
+		const strippedContent = content.replace(/(<([^>]+)>)/gi, '');
+    const plainText = strippedContent.replace(/[#>*-]|\[.*?\]\(.*?\)|\!\[.*?\]\(.*?\)/g, '');
+		let excerpt = plainText.substring(0, length);
+	
+		if (plainText.length > length) {
+			excerpt += '...';
+		};
+		return excerpt;
+  } catch(error) {
+     return defaultExcerpt;
+  };
+};

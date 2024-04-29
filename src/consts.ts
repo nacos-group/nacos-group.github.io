@@ -46,7 +46,7 @@ export const BLOG_CATEGORY = [
     {
         type: 'all',
         title: '全部文章',
-        href: '/blog/all'
+        href: '/blog'
     },
     {
         type: 'article',

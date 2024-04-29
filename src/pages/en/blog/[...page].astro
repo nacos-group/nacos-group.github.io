@@ -4,7 +4,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import Pagination from "@components/common/Pagination.astro";
 import BlogCard from "@components/markdownSet/Card.astro";
-import { BLOG_CATEGORY } from 'src/consts';
+import { BLOG_CATEGORY, BLOG_CATEGORY_EN } from 'src/consts';
 import BlogTop from "@components/markdownSet/BlogTop.astro";
 import BaseContainer from '@components/common/BaseContainer.astro';
 import { useTranslations } from '@i18n/util';
@@ -25,7 +25,7 @@ interface Post {
 const { page } = Astro.props;
 
 const allPages = [...Array(page.lastPage).keys()].map((num) => {
-    return `/blog/all${num === 0 ? "" : `/${String(num + 1)}`}`;
+    return `/blog${num === 0 ? "" : `/${String(num + 1)}`}`;
 });
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
@@ -38,19 +38,19 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
         (a,b)=> new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
     );
     return paginate(sortedPosts, { pageSize: 9 });
-}
+};
 ---
 
 <BaseLayout title="Nacos Blog" >
     <BlogTop 
-        title={t("blog.all.articles")}  
+        title={t("blog.all.articles")} 
         type="blog-sub" 
         source="blog"
-        category={BLOG_CATEGORY}
+        category={BLOG_CATEGORY_EN}
         activeCategory='all'
     />
     <div
-        class="mx-auto flex flex-col items-center gap-20 py-8 lg:p-12 xl:p-20 bg-gray-01"
+        class="mx-auto flex flex-col items-center gap-20 py-8 lg:p-12 xl:p-20 bg-gray-02"
     >
         <BaseContainer>
             <ul class="blog-all grid 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 gap-6 place-items-stretch">
