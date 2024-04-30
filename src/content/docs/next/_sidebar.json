@@ -92,18 +92,25 @@
                 "link": "docs/manual/admin/system-configurations"
             },
             {
-                "label": "升级手册",
-                "translations": {
-                    "en": "Upgrading Manual"
-                },
-                "link": "docs/manual/admin/upgrading"
-            },
-            {
                 "label": "运维API",
                 "translations": {
                     "en": "Management API"
                 },
                 "link": "docs/manual/admin/admin-api"
+            },
+            {
+                "label": "鉴权手册",
+                "translations": {
+                    "en": "Authorization Manual"
+                },
+                "link": "docs/manual/admin/auth"
+            },
+            {
+                "label": "升级手册",
+                "translations": {
+                    "en": "Upgrading Manual"
+                },
+                "link": "docs/manual/admin/upgrading"
             },
             {
                 "label": "监控手册",

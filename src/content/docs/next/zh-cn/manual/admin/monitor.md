@@ -3,7 +3,7 @@ title: 监控手册
 keywords: [Nacos,监控]
 description: Nacos 如何开启和部署监控
 sidebar:
-    order: 6
+    order: 8
 ---
 
 # 监控手册
