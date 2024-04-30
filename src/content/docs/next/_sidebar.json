@@ -112,6 +112,14 @@
                 },
                 "link": "docs/manual/admin/monitor"
             }
+        ,
+            {
+                "label": "控制台手册",
+                "translations": {
+                    "en": "Console Manual"
+                },
+                "link": "docs/manual/admin/console"
+            }
         ]
     },
     {
