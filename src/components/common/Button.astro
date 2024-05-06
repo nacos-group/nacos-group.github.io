@@ -1,7 +1,7 @@
 ---
 interface Props {
   href?: string;
-  type?: "primary" | "normal";
+  type?: "primary" | "normal" | "active" | "card";
   size?: "small" | "medium" | "large";
   class?: string;
   // hover时是否显示默认的箭头
@@ -24,7 +24,7 @@ const {
     <a
       href={href}
       target={target}
-      class=`${type === 'normal' ? 'button-normal' : 'button-primary'} flex items-center justify-center no-underline ${size === 'small' ? 'xp-small h-small' : ''} ${size === 'medium' ? 'xp-medium h-medium' : ''} ${size === 'large' ? 'xp-large h-large' : ''} ${Astro.props?.class || ''}`
+      class=`button-${type || 'normal'} flex items-center justify-center no-underline ${size === 'small' ? 'xp-small h-small' : ''} ${size === 'medium' ? 'xp-medium h-medium' : ''} ${size === 'large' ? 'xp-large h-large' : ''} ${Astro.props?.class || ''}`
     >
       <slot />
       {
@@ -65,6 +65,14 @@ const {
       --primary-bg-color: theme("colors.gray.13");
       --primary-hover-color: theme("colors.gray.12");
       --primary-text-color: theme("colors.gray.06");
+      /* active */
+      --active-bg-color: theme("colors.blue.08");
+      --active-hover-color: theme("colors.blue.07");
+      --active-text-color: theme("colors.gray.03");
+      /* card */
+      --card-bg-color: theme("colors.gray.02");
+      --card-hover-color: theme("colors.gray.03");
+      --card-text-color: theme("colors.gray.13");
 
       --button-rounded: 0.5rem;
 
@@ -110,7 +118,25 @@ const {
       }
     }
 
+    .button-card {
+      color: var(--card-text-color);
+      background-color: var(--card-bg-color);
+      &:hover {
+        background-color: var(--card-hover-color);
+      }
+    }
+
+    .button-active {
+      color: var(--active-text-color);
+      background-color: var(--active-bg-color);
+      &:hover {
+        background-color: var(--active-hover-color);
+      }
+    }
+
     .button-normal,
+    .button-card,
+    .button-active,
     .button-primary {
       .icon {
         opacity: 0;

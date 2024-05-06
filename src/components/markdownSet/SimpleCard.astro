@@ -1,0 +1,77 @@
+---
+import Button from '@components/common/Button.astro';
+import moment from "moment";
+import { useTranslations } from "@i18n/util";
+
+const t = useTranslations(Astro);
+export type Props = {
+  source: string;
+  post: {
+    slug: string;
+    body: string;
+    collection: string;
+    excerpt?: string;
+    data: {
+      title: string;
+      description: string;
+      date: string;
+      keywords?: any[];
+    };
+  };
+  posterWidth?: string;
+  type?: string;
+  index?: number;
+  useAnchor?: boolean;
+};
+
+const { post, source, posterWidth, type = "blog",index = 0, class: className = "", useAnchor=false, } = Astro.props;
+---
+
+<div class={"card h-[332px] p-[24px] bg-gray-01 shadow-none w-full flex" + className}>
+    <!-- 锚点 -->
+    {useAnchor?<a name={post.slug} class={"absolute z-[-100] top-[-4rem]"}></a>:null}
+    
+    <p class="text-gray-07 text-xs font-normal">
+        {moment(post.data.date).format("MMMM D, YYYY")}
+    </p>
+    <h2 class="card-title text-gray-14 leading-8 line-clamp-2 mb-3 font-normal text-xl mt-3 truncate">
+        {post.data.title}
+    </h2>
+
+    <div class="w-full text-lg text-gart-14 leading-8 overflow-hidden">
+        {post.excerpt || post.data.description}
+    </div>
+    
+    <Button 
+        size="large" 
+        type="card"
+        href={`/blog/${post.slug}/?source=${source}`}
+        class="rounded-3xl text-xs absolute bottom-3 bg-gray-02"
+    >
+        {t('blog.card.read.artile')}
+    </Button>
+</div>
+
+<style>
+  .card {
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
+  }
+  .card:hover {
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
+    transform: translateY(-4px);
+    box-shadow:
+      4px 4px 8px rgba(0, 0, 0, 0.1),
+      -4px -4px 8px rgba(0, 0, 0, 0.1);
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  h2 {
+    min-height: 3rem;
+  }
+</style>

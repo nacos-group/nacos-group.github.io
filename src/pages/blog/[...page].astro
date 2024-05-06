@@ -3,46 +3,42 @@ import type { GetStaticPathsOptions } from "astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import Pagination from "@components/common/Pagination.astro";
-// import BlogHeader from "@components/markdownSet/SubHeading.astro";
-import { BLOG_CATEGORY_EN } from 'src/consts';
+import { BLOG_CATEGORY } from 'src/consts';
 import BlogTop from "@components/markdownSet/BlogTop.astro";
-import { useTranslations } from '@i18n/util';
 import SimpleContainer from '@components/markdownSet/SimpleContainer.astro';
+import { useTranslations } from '@i18n/util';
 const t = useTranslations(Astro);
 
 // 分页数据在page参数中传递
 const { page } = Astro.props;
 
-const posts = await getCollection("blog");
-
 const allPages = [...Array(page.lastPage).keys()].map((num) => {
-    return `/blog/ecosystem${num === 0 ? "" : `/${String(num + 1)}`}`;
+    return `/blog${num === 0 ? "" : `/${String(num + 1)}`}`;
 });
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-    const posts = await getCollection("blog");
+    const blogCategories = new Set(BLOG_CATEGORY.map((item) => item.type));
+    const posts = await getCollection("blog", (item) =>
+        blogCategories.has(item.data.category),
+    );
 
     const sortedPosts = posts.sort(
         (a,b)=> new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
     );
-
-    const ecosystemPosts = sortedPosts.filter((post) => {
-        return post.data.category === "ecosystem";
-    });
-    return paginate(ecosystemPosts, { pageSize: 9 });
+    return paginate(sortedPosts, { pageSize: 9 });
 }
 ---
 
 <BaseLayout title="Nacos Blog" >
     <BlogTop 
-        title={t("blog.article.ecosystem.articles")}  
+        title={t("blog.all.articles")}  
         type="blog-sub" 
         source="blog"
-        category={BLOG_CATEGORY_EN}
-        activeCategory='ecosystem'
+        category={BLOG_CATEGORY}
+        activeCategory='all'
     />
     <div
-        class="flex flex-col items-center gap-20 py-8 bg-gray-02"
+        class="mx-auto flex flex-col items-center gap-20 py-8 lg:p-12 xl:p-20 bg-gray-02"
     >
         <SimpleContainer 
             pageList={page.data}

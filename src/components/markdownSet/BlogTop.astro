@@ -6,7 +6,7 @@ import Button from "@components/common/Button.astro";
 import { useTranslations } from "@i18n/util";
 const t = useTranslations(Astro);
 
-const { source, title = "", type = "home", category } = Astro.props;
+const { source, title = "", type = "home", category, activeCategory = "" } = Astro.props;
 
 const backIconMap = {
   "blog-sub": "/blog",
@@ -22,19 +22,12 @@ const backIconMap = {
       <div class="blog_header_title">{title}</div>
       <div class="blog_category_menu">
         {
-          type === "home" &&
-            category &&
+          (type === "home" || type == "blog-sub") &&
+          category &&
             category.map((category) => {
               return (
-                // <a
-                //   class="blog_menu_item"
-                //   href={category.href}
-                //   aria-current = {}
-                // >
-                //   {category.title}
-                // </a>
                 <Button
-                  type="primary"
+                  type={category.type == activeCategory? "active": "primary"}
                   href={category.href}
                   class="rounded-3xl mr-4 mb-2"
                 >
@@ -42,19 +35,6 @@ const backIconMap = {
                 </Button>
               );
             })
-        }
-        {
-          type !== "home" && (
-            <Button
-              type="primary"
-              href={backIconMap[type]}
-              class="rounded-3xl"
-              visibility={false}
-            >
-              <Icon name="left-arrow" class="text-lg align-middle" />
-              <span class="ml-1">BACK</span>
-            </Button>
-          )
         }
       </div>
     </BaseContainer>

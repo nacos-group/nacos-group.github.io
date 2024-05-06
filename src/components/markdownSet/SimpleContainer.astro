@@ -1,0 +1,151 @@
+---
+import BaseContainer from '@components/common/BaseContainer.astro';
+import Pagination from "@components/common/Pagination.astro";
+import SimpleCard from "@components/markdownSet/SimpleCard.astro";
+
+interface Post {
+    slug: string;
+    body: string;
+    collection: string;
+    data: {
+        title: string;
+        description: string;
+        date: string;
+        keywords?: any[];
+    };
+};
+
+interface Props {
+    pageList: Post[];
+    allPages?: string[];
+}
+
+const { pageList, allPages } = Astro.props;
+
+// Get word for mdx
+const getExcerpt = (content, length = 200, defaultExcerpt = '') => {
+  try {
+		const strippedContent = content.replace(/(<([^>]+)>)/gi, '');
+        const plainText = strippedContent.replace(/[#>*-]|\[.*?\]\(.*?\)|\!\[.*?\]\(.*?\)/g, '');
+		let excerpt = plainText.substring(0, length);
+	
+		if (plainText.length > length) {
+			excerpt += '...';
+		};
+		return excerpt;
+  } catch(error) {
+     return defaultExcerpt;
+  };
+};
+
+if(pageList && pageList.length) {
+    pageList.forEach(item => {
+        item.excerpt = getExcerpt(item.body, 120, item.data?.description);
+    });
+};
+---
+
+<BaseContainer class="flex justify-between">
+    <div class="max-w-[200px] min-w-[200px] hidden 2xl:block xl:block lg:block">
+        <div class="text-lg text-gray-08 mb-[32px]">文章</div>
+        <div class="text-lg text-gray-14">
+            {
+                pageList.map(post=>{
+                    return (
+                        <a 
+                            class="text-gray-14 no-underline font-normal block mb-[24px]"
+                            href={`#${post.slug}`}
+                        >
+                            { post.data.title }
+                        </a>
+                    );
+                })
+            }
+        </div>
+    </div>
+  
+    <ul class="flex-1 blog-all grid grid-cols-1 gap-6 place-items-stretch 2xl:ml-[100px] xl:ml-[80px] lg:ml-[50px] md:ml-[0px]">
+        {
+            pageList.map((post) => (
+                <SimpleCard 
+                    post={post as Post} 
+                    source="blog_all"
+                    useAnchor={true}
+                />
+            ))
+        }
+    </ul>
+</BaseContainer>
+
+<style>
+    main {
+        width: 960px;
+    }
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    ul li {
+        width: calc(50% - 1rem);
+    }
+    ul li * {
+        text-decoration: none;
+        transition: 0.2s ease;
+    }
+    ul li:first-child {
+        width: 100%;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    ul li:first-child img {
+        width: 100%;
+    }
+    ul li:first-child .title {
+        font-size: 2.369rem;
+    }
+    ul li img {
+        margin-bottom: 0.5rem;
+        border-radius: 12px;
+    }
+    ul li a {
+        display: block;
+    }
+    .title {
+        margin: 0;
+        color: rgb(var(--black));
+        line-height: 1;
+    }
+    .date {
+        margin: 0;
+        color: rgb(var(--gray));
+    }
+    ul li a:hover h4,
+    ul li a:hover .date {
+        color: rgb(var(--accent));
+    }
+    ul a:hover img {
+        box-shadow: var(--box-shadow);
+    }
+    @media (max-width: 50rem) {
+        .blog-all {
+            padding: 0 1.5rem;
+        }
+        ul {
+            gap: 0.5em;
+        }
+        ul li {
+            width: 100%;
+            text-align: center;
+        }
+        ul li:first-child {
+            margin-bottom: 0;
+        }
+        ul li:first-child .title {
+            font-size: 1.563em;
+        }
+    }
+</style>
