@@ -23,13 +23,13 @@ const t = useTranslations(Astro);
             <>
               <input
                 type="radio"
-                name="silder"
-                id={`c${index}`}
+                name="player"
+                id={`i${index}`}
                 
               />
               <label
-                input-id={`c${index}`}
-                for={`c${index}`}
+                input-id={`i${index}`}
+                for={`i${index}`}
                 class="card overflow-hidden flex flex-col justify-between cursor-pointer rounded-3xl mx-2 relative"
               >
                 
@@ -96,8 +96,8 @@ const t = useTranslations(Astro);
     constructor() {
       super();
       // 初始化时不要访问 DOM 或设置属性
-      this.currentInputid = "c0";
-        this.flag = true;
+      this.currentId = "i0";
+        this.flagState = true;
         // 由于在 constructor 中无法访问 DOM，所以不在这里绑定事件
     }
     toggleFullScreen(videoElement) {
@@ -133,6 +133,7 @@ const t = useTranslations(Astro);
         const videos = this.querySelectorAll('video');
         // 设置初始选中的输入元素为checked
         _this.setInitialCheckedState();
+        
         if (this.cardSolution) {
             this.cardSolution.addEventListener("click", function(e) {
                 _this.selectedLabel(e);
@@ -144,7 +145,7 @@ const t = useTranslations(Astro);
           video.addEventListener('play', (e) => this.onPlay(e));
           video.addEventListener('pause', (e) => this.onPause(e));
         });
-        
+
         // 绑定单个事件监听器到容器上
       this.cardSolution.addEventListener('click', e => {
         // 对播放按钮的点击操作
@@ -170,7 +171,7 @@ const t = useTranslations(Astro);
     }
     // 设置第一个input 默认选中
     setInitialCheckedState() {
-      let initialInput = this.querySelector('input[type=radio]#c0');
+      let initialInput = this.querySelector('input[type=radio]#i0');
       if (initialInput) {
         initialInput.checked = true;
       }
@@ -180,18 +181,30 @@ const t = useTranslations(Astro);
     toggleVideoPlay(e) {
       const videoId = e.target.closest('[video-id]').getAttribute('video-id');
       const video = this.querySelector(`#${videoId}`);
-      const playIcon = e.target.closest('.video-play-bt').querySelector('.play-icon');
-      const pauseIcon = e.target.closest('.video-play-bt').querySelector('.pause-icon');
       if (video) {
         if (video.paused) {
+          // 在播放当前视频前，先暂停其他所有视频
+          this.pauseOtherVideos(videoId);
           video.play();
-          this.onPlay(e)
+          this.onPlay(e);
         } else {
           video.pause();
-          this.onPause(e)
+          this.onPause(e);
         }
       }
     }
+
+    // 暂停除当前选中之外的所有视频
+    pauseOtherVideos(currentVideoId) {
+      const videos = this.querySelectorAll('video');
+      videos.forEach(video => {
+        if (video.id !== currentVideoId) {
+          video.pause();
+          this.onPause({target: video}); // 调用onPause来更新播放/暂停按钮的状态
+        }
+      });
+    }
+
 
     // 播放
     onPlay(e) {
@@ -221,11 +234,11 @@ const t = useTranslations(Astro);
     selectedLabel(e) {
         var _this = this;
         var inputId = e.target.getAttribute("input-id");
-        if (this.flag && inputId && inputId !== this.currentInputid) {
-            this.currentInputid = inputId;
-            this.flag = false;
+        if (this.flagState && inputId && inputId !== this.currentId) {
+            this.currentId = inputId;
+            this.flagState = false;
             setTimeout(function() {
-                _this.flag = true;
+                _this.flagState = true;
             }, 200);
             var input = this.querySelector('input[type=radio]#' + inputId);
             if (input && !input.checked) {
