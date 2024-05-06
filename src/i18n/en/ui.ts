@@ -114,6 +114,8 @@ export default {
 	'home.contributors.learn.more': 'LEARN MORE',
 	'home.overviewcard.about': 'Panoramic overview',
 	'home.overviewcard.title': 'Overview Image',
+	'home.card.player.voice':'COMMUNITY VOICE',
+	'home.card.player.tutorials':'Tutorials from Community',
 
 	'cloud.title': 'Nacos Cloud',
 	'cloud.description': 'Nacos Cloud is specifically designed for cloud-native applications, providing powerful features for service discovery, dynamic configuration management, and service management. It supports efficient application development and operations.',

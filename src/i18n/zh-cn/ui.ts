@@ -113,6 +113,8 @@ export default {
 	'home.contributors.learn.more': '更多',
 	'home.overviewcard.about': '全景概览',
 	'home.overviewcard.title': '微服务全景图',
+	'home.card.player.voice':'社区声音',
+	'home.card.player.tutorials':'社区教程',
 
 	'cloud.title': 'Nacos Cloud',
 	'cloud.description': 'Nacos Cloud 专为云原生应用设计，提供强大的服务发现、动态配置管理和服务管理功能，支持高效的应用开发和运维。',

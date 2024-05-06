@@ -22,6 +22,7 @@ const backIconMap = {
       <div class="blog_header_title">{title}</div>
       <div class="blog_category_menu">
         {
+          (type === "home" || type == "blog-sub") &&
           category &&
             category.map((category) => {
               return (

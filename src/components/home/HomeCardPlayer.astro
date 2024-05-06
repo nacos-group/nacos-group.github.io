@@ -1,54 +1,47 @@
 ---
-const mediaResource = [
-  {
-    checked: true,
-    src: "https://cloud.video.taobao.com/play/u/3897629815/p/1/e/6/t/1/237687627217.mp4",
-    description: "2 Hours to learn Nacos steps by steps.",
-  },
-  {
-    checked: false,
-    src: "https://cloud.video.taobao.com/play/u/3897629815/p/1/e/6/t/1/308859040210.mp4",
-    description: "3 minutes to learn how to migrate to the cloud.",
-  },
-  {
-    checked: false,
-    src: "https://cloud.video.taobao.com/play/u/3897629815/p/1/e/6/t/1/258260782833.mp4",
-    description:
-      "Introduction to the sixth generation instance specifications.",
-  },
-];
+import Pause from "../icon/Pause.astro";
+import { useTranslations } from "@i18n/util";
+import { MEDIARESOURCE } from "src/consts";
+const t = useTranslations(Astro);
+
 ---
 
 <card-player class="card-player block bg-gary-02 p-10">
   <div class="top-title w-full flex flex-col items-center mb-20 mt-16">
-    <span class="text-gray-10 text-xs mb-6">COMMUNITY VOICE</span>
-    <span class="title text-gray-14 text-4xl font-medium"
-      >Tutorials from Community</span
-    >
+    <span class="text-gray-10 text-xs mb-6">{t('home.card.player.voice')}</span>
+    <span class="title text-gray-14 text-4xl font-medium">{t('home.card.player.tutorials')}</span>
   </div>
 
   <div
     class="bottom-media-card block w-full flex items-center justify-center h-fit"
   >
-    <div class="media-container h-[23rem] w-fit flex flex-nowrap justify-start">
-      {
-        mediaResource.map((item, index) => {
-          const { src, description, checked } = item;
+    <div class="media-container h-[23rem] w-fit flex flex-nowrap justify-start ">
+  {
+        MEDIARESOURCE.map((item, index) => {
+          const { src,cover } = item;
           return (
             <>
               <input
                 type="radio"
                 name="silder"
                 id={`c${index}`}
-                checked={checked}
+                
               />
               <label
+                input-id={`c${index}`}
                 for={`c${index}`}
-                class="card overflow-hidden flex flex-col justify-between cursor-pointer p-4 rounded-3xl mx-2"
+                class="card overflow-hidden flex flex-col justify-between cursor-pointer rounded-3xl mx-2 relative"
               >
-                <div class="row flex align-center flex-nowrap opacity-0 w-full">
-                  <a class="btn btn-secondary btn-sm rounded-3xl mr-4 text-xs font-normal">
-                    <svg
+                
+                <video id={`v${index}`} poster={cover}  class=' h-full rounded-3xl object-cover hidden'  >
+                  <source src={src}  type="video/mp4" />
+                </video>
+                <span 
+                  class="video-play-bt btn btn-secondary btn-sm rounded-3xl mr-4 text-xs font-normal absolute bottom-2.5 left-3 "
+                  video-id={`v${index}`}
+                >
+                    <span class="play-icon" video-id={`v${index}`}>
+                      <svg
                       xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink"
                       fill="none"
@@ -57,23 +50,23 @@ const mediaResource = [
                       height="8.918435096740723"
                       viewBox="0 0 8 8.918435096740723"
                     >
-                      <g>
-                        <path
-                          d="M0,8.91844L0,0L8,4.45922L0,8.91844Z"
-                          fill="#121316"
-                          fill-opacity="1"
-                        />
-                      </g>
-                    </svg>
-                    <span>PLAY VIDEO</span>
-                  </a>
-                  <a class="btn btn-secondary btn-sm rounded-3xl mr-4 text-xs">
-                    <img class="w-12 h-5" src="/bilibili.png" />
-                  </a>
-                </div>
-                <div class="description opacity-0 w-full text-gray-02 text-sm">
-                  {description}
-                </div>
+                        <g>
+                          <path
+                            d="M0,8.91844L0,0L8,4.45922L0,8.91844Z"
+                            fill="#121316"
+                            fill-opacity="1"
+                          />
+                        </g>
+                      </svg>
+                    </span>
+                    <span class="pause-icon" video-id={`v${index}`} style="display: none;">
+                      <Pause />
+                    </span>
+                  </span>
+                  <span class='fullscreen-btn absolute bottom-0 right-4 opacity-0'>
+                    <svg t="1714358262928" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2414" width="24" height="24" video-id={`v${index}`}>
+                      <path d="M358.4 768H426.666667v85.333333H213.333333v-213.333333h85.333334v68.266667l128-128 59.733333 59.733333-128 128z m345.6 0l-128-128 59.733333-59.733333 132.266667 132.266666V640h85.333333v213.333333h-213.333333v-85.333333h64zM358.4 298.666667l128 128-59.733333 59.733333-128-128V426.666667H213.333333V213.333333h213.333334v85.333334H358.4z m345.6 0H640V213.333333h213.333333v213.333334h-85.333333V354.133333l-132.266667 132.266667-59.733333-59.733333 128-128z" fill="#e6e6e6" p-id="2415"></path></svg>
+                  </span>
               </label>
             </>
           );
@@ -84,36 +77,13 @@ const mediaResource = [
 
   <div class="mobile-bottom-media-card hidden w-full flex flex-col">
     {
-      mediaResource.map((item, index) => {
-        const { src, description } = item;
+      MEDIARESOURCE.map((item, index) => {
+        const { src,cover } = item;
         return (
-          <div class="mobile-card h-[14rem] w-full overflow-hidden flex flex-col justify-between cursor-pointer p-4 rounded-3xl">
-            <div class="flex align-center flex-nowrap w-full">
-              <a class="btn btn-secondary btn-sm rounded-3xl mr-4 text-xs font-normal">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  fill="none"
-                  version="1.1"
-                  width="8"
-                  height="8.918435096740723"
-                  viewBox="0 0 8 8.918435096740723"
-                >
-                  <g>
-                    <path
-                      d="M0,8.91844L0,0L8,4.45922L0,8.91844Z"
-                      fill="#121316"
-                      fill-opacity="1"
-                    />
-                  </g>
-                </svg>
-                <span>PLAY VIDEO</span>
-              </a>
-              <a class="btn btn-secondary btn-sm rounded-3xl mr-4 text-xs">
-                <img class="w-12 h-5" src="/bilibili.png" />
-              </a>
-            </div>
-            <div class="w-full text-gray-02 text-sm">{description}</div>
+          <div class="mobile-card h-[14rem] w-full overflow-hidden flex flex-col justify-between cursor-pointer rounded-3xl mb-4">
+            <video controls poster={cover}  class=' h-full rounded-3xl object-cover'  >
+              <source src={src}  type="video/mp4" />
+            </video>
           </div>
         );
       })
@@ -125,6 +95,143 @@ const mediaResource = [
   class HomeCardPlayer extends HTMLElement {
     constructor() {
       super();
+      // 初始化时不要访问 DOM 或设置属性
+      this.currentInputid = "c0";
+        this.flag = true;
+        // 由于在 constructor 中无法访问 DOM，所以不在这里绑定事件
+    }
+    toggleFullScreen(videoElement) {
+      if (!document.fullscreenElement && !document.mozFullScreenElement &&
+          !document.webkitFullscreenElement && !document.msFullscreenElement ) {
+        // 当前没有任何元素处于全屏状态，开始进入全屏
+        if (videoElement.requestFullscreen) {
+          videoElement.requestFullscreen();
+        } else if (videoElement.msRequestFullscreen) {
+          videoElement.msRequestFullscreen();
+        } else if (videoElement.mozRequestFullScreen) {
+          videoElement.mozRequestFullScreen();
+        } else if (videoElement.webkitRequestFullscreen) {
+          videoElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+        }
+      } else {
+        // 当前有元素处于全屏状态，退出全屏
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        } else if (document.msExitFullscreen) {
+          document.msExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
+      }
+    }
+    connectedCallback() {
+        var _this = this;
+        this.cardSolution = this.querySelector(".media-container");
+        this.videoPlayButtons = this.querySelector(".video-play-bt");
+        const videos = this.querySelectorAll('video');
+        // 设置初始选中的输入元素为checked
+        _this.setInitialCheckedState();
+        if (this.cardSolution) {
+            this.cardSolution.addEventListener("click", function(e) {
+                _this.selectedLabel(e);
+            });
+        }
+
+        // 取消全屏后同步播放状态到自定义播放按钮
+        videos.forEach(video => {
+          video.addEventListener('play', (e) => this.onPlay(e));
+          video.addEventListener('pause', (e) => this.onPause(e));
+        });
+        
+        // 绑定单个事件监听器到容器上
+      this.cardSolution.addEventListener('click', e => {
+        // 对播放按钮的点击操作
+        if (e.target.closest('.video-play-bt')) {
+          e.stopPropagation();
+          this.toggleVideoPlay(e);
+        } else if (e.target.tagName === 'LABEL') {
+          this.selectedLabel(e);
+        }
+      });
+
+      // 事件委托监听全屏按钮的点击
+      this.cardSolution.addEventListener('click', e => {
+        if (e.target.closest('.fullscreen-btn')) {
+          e.stopPropagation();
+          const videoId = e.target.closest('[video-id]').getAttribute('video-id');
+          const video = this.querySelector(`#${videoId}`);
+          if (video) {
+            this.toggleFullScreen(video);
+          }
+        }
+      });
+    }
+    // 设置第一个input 默认选中
+    setInitialCheckedState() {
+      let initialInput = this.querySelector('input[type=radio]#c0');
+      if (initialInput) {
+        initialInput.checked = true;
+      }
+    }
+
+    // 播放/暂停
+    toggleVideoPlay(e) {
+      const videoId = e.target.closest('[video-id]').getAttribute('video-id');
+      const video = this.querySelector(`#${videoId}`);
+      const playIcon = e.target.closest('.video-play-bt').querySelector('.play-icon');
+      const pauseIcon = e.target.closest('.video-play-bt').querySelector('.pause-icon');
+      if (video) {
+        if (video.paused) {
+          video.play();
+          this.onPlay(e)
+        } else {
+          video.pause();
+          this.onPause(e)
+        }
+      }
+    }
+
+    // 播放
+    onPlay(e) {
+      const videoId = e.target.id;
+      const playIcon = this.querySelector(`[video-id='${videoId}'] .play-icon`);
+      const pauseIcon = this.querySelector(`[video-id='${videoId}'] .pause-icon`);
+      
+      if (playIcon && pauseIcon) {
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'inline';
+      }
+    }
+
+    // 暂停
+    onPause(e) {
+      const videoId = e.target.id;
+      const playIcon = this.querySelector(`[video-id='${videoId}'] .play-icon`);
+      const pauseIcon = this.querySelector(`[video-id='${videoId}'] .pause-icon`);
+      
+      if (playIcon && pauseIcon) {
+        playIcon.style.display = 'inline';
+        pauseIcon.style.display = 'none';
+      }
+    }
+
+    // 展开折叠
+    selectedLabel(e) {
+        var _this = this;
+        var inputId = e.target.getAttribute("input-id");
+        if (this.flag && inputId && inputId !== this.currentInputid) {
+            this.currentInputid = inputId;
+            this.flag = false;
+            setTimeout(function() {
+                _this.flag = true;
+            }, 200);
+            var input = this.querySelector('input[type=radio]#' + inputId);
+            if (input && !input.checked) {
+                input.checked = true;
+            }
+        }
     }
   }
   customElements.define("card-player", HomeCardPlayer);
@@ -138,7 +245,9 @@ const mediaResource = [
       background-size: cover;
       transition: 0.6s cubic-bezier(0.28, -0.03, 0, 0.99);
       /* box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.8); */
+      
     }
+    
     .media-container > .card:first-of-type {
       margin-left: 0;
     }
@@ -163,20 +272,16 @@ const mediaResource = [
     input:checked + label {
       width: 42rem;
     }
-    input:checked + label .row {
+    input:checked + label video {
+      display:inline-block
+    }
+    input:checked + label .fullscreen-btn {
       animation: showcontent 0.3s ease-in-out 0.3s 1 forwards;
     }
-    input:checked + label .description {
-      animation: showcontent 0.3s ease-in-out 0.3s 1 forwards;
-    }
-    .card[for="c0"] {
-      background-image: url("https://img.alicdn.com/imgextra/i4/O1CN01imuhna1FvwkTxTaWu_!!6000000000550-2-tps-1280-816.png");
-    }
-    .card[for="c1"] {
-      background-image: url("https://img.alicdn.com/imgextra/i4/O1CN01imuhna1FvwkTxTaWu_!!6000000000550-2-tps-1280-816.png");
-    }
-    .card[for="c2"] {
-      background-image: url("https://img.alicdn.com/imgextra/i4/O1CN01imuhna1FvwkTxTaWu_!!6000000000550-2-tps-1280-816.png");
+
+    input:not(:checked) + label {
+        background-image: url("https://img.alicdn.com/imgextra/i4/O1CN01imuhna1FvwkTxTaWu_!!6000000000550-2-tps-1280-816.png");
+        background-size: cover;
     }
 
     /* 小于50rem  小于 800px */
@@ -196,15 +301,12 @@ const mediaResource = [
       .mobile-bottom-media-card {
         display: block;
       }
-      .mobile-card {
-        background-size: cover;
-        background-image: url("https://img.alicdn.com/imgextra/i4/O1CN01imuhna1FvwkTxTaWu_!!6000000000550-2-tps-1280-816.png");
+      
+      .mobile-bottom-media-card > .mobile-card:nth-child(4) {
+        margin-bottom: 0rem;
       }
-      .mobile-bottom-media-card > .mobile-card:first-of-type {
-        margin-bottom: 1rem;
-      }
-      .mobile-bottom-media-card > .mobile-card:nth-child(2) {
-        margin-bottom: 1rem;
+      .mobile-bottom-media-card > .mobile-card:nth-child(3) > video{
+        object-fit:fill;
       }
     }
 
