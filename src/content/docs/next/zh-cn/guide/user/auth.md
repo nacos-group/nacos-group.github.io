@@ -6,6 +6,8 @@ sidebar:
     order: 5
 ---
 
+> 该文档即将废弃，若想查看服务端如何开启鉴权功能推荐查看[运维手册-鉴权手册](../../manual/admin/auth.mdx); 若想查看客户端如何配置鉴权信息推荐查看[用户手册-配置鉴权信息](../../manual/user/auth.mdx)。
+
 > 注意
 > - Nacos是一个内部微服务组件，需要在可信的内部网络中运行，不可暴露在公网环境，防止带来安全风险。
 > - Nacos提供简单的鉴权实现，为防止业务错用的弱鉴权体系，不是防止恶意攻击的强鉴权体系。
@@ -92,7 +94,13 @@ NACOS_AUTH_ENABLE=true
 例如，可以通过如下命令运行开启了鉴权的容器:
 
 ```powershell
-docker run --env PREFER_HOST_MODE=hostname --env MODE=standalone --env NACOS_AUTH_ENABLE=true -p 8848:8848 nacos/nacos-server
+docker run --env PREFER_HOST_MODE=hostname \
+  --env MODE=standalone \
+  --env NACOS_AUTH_ENABLE=true \
+  -e NACOS_AUTH_TOKEN=SecretKeyM1Z2WDc4dnVyZkQ3NmZMZjZ3RHRwZnJjNFROdkJOemEK \
+  -e NACOS_AUTH_IDENTITY_KEY=mpYGXyu7 \
+  -e NACOS_AUTH_IDENTITY_VALUE=mpYGXyu7 \
+  -p 8848:8848 nacos/nacos-server
 ```
 
 除此之外，还可以添加其他鉴权相关的环境变量信息：

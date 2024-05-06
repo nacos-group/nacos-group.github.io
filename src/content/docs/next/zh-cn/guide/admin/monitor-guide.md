@@ -8,7 +8,7 @@ sidebar:
 
 # Nacos 监控手册
 
-> 文档优化中......
+> 该文档即将废弃，推荐查看[运维手册-监控手册](../../manual/admin/monitor.md)。
 
 Nacos 0.8.0版本完善了监控系统，支持通过暴露metrics数据接入第三方监控系统监控Nacos运行状态，目前支持prometheus、elastic search和influxdb，下面结合prometheus和grafana如何监控Nacos。与elastic search和influxdb结合可自己查找相关资料
 

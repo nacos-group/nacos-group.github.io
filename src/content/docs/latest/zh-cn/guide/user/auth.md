@@ -92,7 +92,13 @@ NACOS_AUTH_ENABLE=true
 例如，可以通过如下命令运行开启了鉴权的容器:
 
 ```powershell
-docker run --env PREFER_HOST_MODE=hostname --env MODE=standalone --env NACOS_AUTH_ENABLE=true -p 8848:8848 nacos/nacos-server
+docker run --env PREFER_HOST_MODE=hostname \
+  --env MODE=standalone \
+  --env NACOS_AUTH_ENABLE=true \
+  -e NACOS_AUTH_TOKEN=SecretKeyM1Z2WDc4dnVyZkQ3NmZMZjZ3RHRwZnJjNFROdkJOemEK \
+  -e NACOS_AUTH_IDENTITY_KEY=mpYGXyu7 \
+  -e NACOS_AUTH_IDENTITY_VALUE=mpYGXyu7 \
+  -p 8848:8848 nacos/nacos-server
 ```
 
 除此之外，还可以添加其他鉴权相关的环境变量信息：

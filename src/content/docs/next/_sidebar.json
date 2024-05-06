@@ -80,7 +80,7 @@
             {
                 "label": "部署手册",
                 "translations": {
-                    "en": "Deploy Guide"
+                    "en": "Deploy Manual"
                 },
                 "autogenerate": { "directory": "manual/admin/deployment" }
             },
@@ -92,18 +92,40 @@
                 "link": "docs/manual/admin/system-configurations"
             },
             {
-                "label": "升级手册",
-                "translations": {
-                    "en": "Upgrading Guide"
-                },
-                "link": "docs/manual/admin/upgrading"
-            },
-            {
                 "label": "运维API",
                 "translations": {
                     "en": "Management API"
                 },
                 "link": "docs/manual/admin/admin-api"
+            },
+            {
+                "label": "鉴权手册",
+                "translations": {
+                    "en": "Authorization Manual"
+                },
+                "link": "docs/manual/admin/auth"
+            },
+            {
+                "label": "升级手册",
+                "translations": {
+                    "en": "Upgrading Manual"
+                },
+                "link": "docs/manual/admin/upgrading"
+            },
+            {
+                "label": "监控手册",
+                "translations": {
+                    "en": "Monitor Manual"
+                },
+                "link": "docs/manual/admin/monitor"
+            }
+        ,
+            {
+                "label": "控制台手册",
+                "translations": {
+                    "en": "Console Manual"
+                },
+                "link": "docs/manual/admin/console"
             }
         ]
     },

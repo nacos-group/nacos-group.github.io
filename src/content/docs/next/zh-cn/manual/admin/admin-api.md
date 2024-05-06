@@ -3,7 +3,7 @@ title: 运维API
 keywords: [Nacos,运维API]
 description: Nacos Server的一些运维API，一般给予控制台使用或需要进行自定义Nacos运维工具开发的相关程序和人员使用。
 sidebar:
-    order: 6
+    order: 5
 ---
 
 # 运维API
