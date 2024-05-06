@@ -120,14 +120,14 @@ export const ACTIVITY_CATEGORY = [
 export const HEADER_ACTIVITY_CARD = [
     {
         "collection": "blog",
-        "slug": "nacos-gvr7dx_awbbpb_sozg59av10r22awa",
-        "description": "云原生开源沙龙北京站开启报名",
+        "slug": "activity-preview-opss2024",
+        "description": "Nacos开源之夏2024，贡献社区赢取12000奖金",
         "imageUrl": "https://img.alicdn.com/imgextra/i4/O1CN01bGnAVW1pFeLFnlaQL_!!6000000005331-2-tps-508-370.png"
     },
     {
         "collection": "blog",
-        "slug": "announcement-2023-award",
-        "description": "Nacos 荣获三个开源奖项",
+        "slug": "case-authorization",
+        "description": "Nacos 安全使用最佳实践 - 访问控制实践",
         "imageUrl": "https://img.alicdn.com/imgextra/i4/O1CN01zfayJW1Lhe4kliPv9_!!6000000001331-2-tps-508-370.png"
     }
 ]
