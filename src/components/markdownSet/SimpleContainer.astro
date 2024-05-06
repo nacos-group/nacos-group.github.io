@@ -40,7 +40,7 @@ const getExcerpt = (content, length = 200, defaultExcerpt = '') => {
 
 if(pageList && pageList.length) {
     pageList.forEach(item => {
-        item.excerpt = getExcerpt(item.body, 120, item.data?.description);
+        item.excerpt = getExcerpt(item.body, 200, item.data?.description);
     });
 };
 ---
@@ -48,7 +48,7 @@ if(pageList && pageList.length) {
 <BaseContainer class="flex justify-between">
     <div class="max-w-[200px] min-w-[200px] hidden 2xl:block xl:block lg:block">
         <div class="text-lg text-gray-08 mb-[32px]">文章</div>
-        <div class="text-lg text-gray-14">
+        <div class="text-[16px] text-gray-14">
             {
                 pageList.map(post=>{
                     return (
@@ -69,7 +69,7 @@ if(pageList && pageList.length) {
             pageList.map((post) => (
                 <SimpleCard 
                     post={post as Post} 
-                    source="blog_all"
+                    source="blog"
                     useAnchor={true}
                 />
             ))

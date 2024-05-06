@@ -38,7 +38,7 @@ const { post, source, posterWidth, type = "blog",index = 0, class: className = "
         {post.data.title}
     </h2>
 
-    <div class="w-full text-lg text-gart-14 leading-8 overflow-hidden">
+    <div class="w-full text-lg leading-8 overflow-hidden mt-[24px] simple-card-desc">
         {post.excerpt || post.data.description}
     </div>
     
@@ -73,5 +73,11 @@ const { post, source, posterWidth, type = "blog",index = 0, class: className = "
   }
   h2 {
     min-height: 3rem;
+  }
+  .simple-card-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    color: #848487;
   }
 </style>
