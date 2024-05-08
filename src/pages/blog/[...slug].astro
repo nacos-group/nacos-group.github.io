@@ -120,11 +120,17 @@ const next = articlePosts[0].entries[currentIndex + 1];
 <script>
 	const url = new URL(window.location.href);
 	let source = url.searchParams.get("source");
-	source = source.replace(/_/g, "/");
+	if(source) {
+		source = source.replace(/_/g, "/");
+	};
 	const backBtn: HTMLAnchorElement = document.querySelector("#back-btn a");
 	backBtn.onclick = (e) => {
 		e.preventDefault();
-		location.href = `/${source}/`;
+		if(source && source !== 'undefined') {
+			location.href = `/${source}/`;
+		} else {
+			location.href = `/blog/`;
+		};
 	};
 </script>
 

@@ -22,7 +22,7 @@ const backIconMap = {
       <div class="blog_header_title">{title}</div>
       <div class="blog_category_menu">
         {
-          (type === "home" || type == "blog-sub") &&
+          ["blog-sub", "home"].includes(type) &&
           category &&
             category.map((category) => {
               return (
@@ -35,6 +35,20 @@ const backIconMap = {
                 </Button>
               );
             })
+        }
+
+        {
+          !["home", "blog-sub"].includes(type) && (
+            <Button
+              type="primary"
+              href={backIconMap[type]}
+              class="rounded-3xl"
+              visibility={false}
+            >
+              <Icon name="left-arrow" class="text-lg align-middle" />
+              <span class="ml-1">BACK</span>
+            </Button>
+          )
         }
       </div>
     </BaseContainer>

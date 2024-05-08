@@ -46,21 +46,26 @@ if(pageList && pageList.length) {
 ---
 
 <BaseContainer class="flex justify-between">
-    <div class="max-w-[200px] min-w-[200px] hidden 2xl:block xl:block lg:block">
-        <div class="text-lg text-gray-08 mb-[32px]">文章</div>
-        <div class="text-[16px] text-gray-14">
-            {
-                pageList.map(post=>{
-                    return (
-                        <a 
-                            class="text-gray-14 no-underline font-normal block mb-[24px]"
-                            href={`#${post.slug}`}
-                        >
-                            { post.data.title }
-                        </a>
-                    );
-                })
+    <div class="max-w-[200px] min-w-[200px] hidden 2xl:block xl:block lg:block relative">
+        <div class="sticky top-[100px]">
+            {pageList && pageList.length? 
+                <div class="text-lg text-gray-08 mb-[32px]">文章</div>
+                :null
             }
+            <div class="text-[16px] text-gray-14">
+                {
+                    pageList.map(post=>{
+                        return (
+                            <a 
+                                class="text-gray-14 no-underline font-normal block mb-[24px]"
+                                href={`#${post.slug}`}
+                            >
+                                { post.data.title }
+                            </a>
+                        );
+                    })
+                }
+            </div>
         </div>
     </div>
   
