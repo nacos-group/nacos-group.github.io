@@ -43,6 +43,15 @@ export default [
     route: "/blog/",
   },
   {
+    label: "下载",
+    translations: {
+      en: "DOWNLOAD",
+    },
+    trigger: "click",
+    target: "_self",
+    route: "/download/nacos-server/",
+  },
+  {
     label: "控制台样例",
     translations: {
       en: "DEMO",
