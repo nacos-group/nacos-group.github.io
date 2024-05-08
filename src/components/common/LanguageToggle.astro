@@ -12,7 +12,7 @@ const initialState = lang === 'zh-cn' ? false : true;
 const t = useTranslations(Astro);
 ---
 <div class='common-languageToggle'>
-  <toggle-content class="switch float-left relative m-0 rounded-[2rem] max-md:hidden">
+  <toggle-content class="switch float-left relative m-0 rounded-[2rem]">
     <input
       data-switch
       class="switch-checkbox hidden"
@@ -30,7 +30,7 @@ const t = useTranslations(Astro);
   </toggle-content>
   <div
     data-switch
-    class="w-[3.5rem] h-[1.5rem] leading-[1.5rem] text-xs text-center rounded-2xl bg-gray-12 text-white max-md:inline-block md:hidden"
+    class="mobile-toggle w-[3.5rem] h-[1.5rem] leading-[1.5rem] text-xs text-center rounded-2xl bg-gray-12 text-white max-md:inline-block"
     id={`${id}-switch`}
   >
     {t('commmon.header.common.translator')}
@@ -147,6 +147,22 @@ const t = useTranslations(Astro);
     align-items: center;
     justify-content: center;
   }
+  .mobile-toggle {
+    display: none;
+  }
+  toggle-content {
+    display: block;
+  }
+  /* 兼容下英文界面 */
+  @media (max-width: 970px) {
+		.mobile-toggle {
+			display: block;
+		}
+
+		toggle-content {
+    display: none;
+  }
+	}
 }
 </style>
 
