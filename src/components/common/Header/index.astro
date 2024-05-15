@@ -86,14 +86,11 @@ let height,
     //cnpilot
     const copilotJSScript = document.createElement("script");
     copilotJSScript.type = "text/javascript";
-    copilotJSScript.src =
-      // "//dev.g.alicdn.com/cm-design/copilot-booter/0.0.22/copilot-booter.js";
-      "https://g.alicdn.com/cm-design/copilot-booter/0.0.22/copilot-booter.js";
+    copilotJSScript.src = "https://g.alicdn.com/cm-design/copilot-booter/0.0.23/copilot-booter.js";
     copilotJSScript.addEventListener("load", function () {
       if (window.CNPilot) {
         window.CNPilot.mounted({
-          CNPilot_NODE_ENV: "development",
-          CNPilot_OPEN_SOURCE: ["nacos.io"],
+          CNPilot_OPEN_SOURCE: ["nacos.io",'localhost:4321'],
           CNPilot_OPEN_SOURCE_API: "https://ai.nacos.io",
           showFloatICON: true,
           globalStyle: {
@@ -101,12 +98,17 @@ let height,
           },
           entryIconProps: {
             "position-type": "updown",
-            "icon-hover-text": "AI专家",
-            // 'icon-url':'https://pic.rmb.bdstatic.com/bjh/914b8c0f9814b14c5fedeec7ec6615df5813.jpeg',
+            "icon-hover-text": "专家答疑",
+            "icon-style": {
+                color: "red", 
+                background: "white", 
+                border: "2px solid red", 
+                borderRadius: "20px"
+            }
           },
           headerProps: {
             closeIcon: { show: true }, // 关闭按钮
-            titleText: "nacos文档答疑助手",
+            titleText: "AI答疑专家",
           },
         });
       }
