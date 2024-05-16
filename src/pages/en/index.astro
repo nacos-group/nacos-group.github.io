@@ -4,12 +4,12 @@ import HomeIntroduce from '@components/home/HomeIntroduce.astro';
 import ChooseReason from '@components/home/ChooseReason.astro';
 import NacosEBook from '@components/home/NacosEBook.astro';
 import ExploreFeatures from '@components/home/ExploreFeatures.astro';
-import HomeCardPlayer from '@components/home/HomeCardPlayer.astro';
 import UseCompanies from '@components/home/UseCompanies.astro';
-import HomeCardPlayer from '@components/home/HomeCardPlayer.astro';
 import Contributors from '@components/home/Contributors.astro';
 import HomeSolutionsCard from '@components/home/HomeSolutionsCard.astro';
 import HomeFooter from '@components/common/Footer.astro';
+import OverviewImage from '@components/home/OverViewImage/index.astro';
+import HomeCardPlayer from '@components/home/HomeCardPlayer.astro';
 import { useTranslations } from "@i18n/util";
 const t = useTranslations(Astro);
 ---
@@ -18,13 +18,13 @@ const t = useTranslations(Astro);
   title={t('home.title')}
   description={t('home.description')}
 >
-  <HomeIntroduce />
-
   <home-body>
+    <HomeIntroduce />
     <ChooseReason />
     <NacosEBook />
     <ExploreFeatures />
     <UseCompanies />
+    <OverviewImage />
     <HomeCardPlayer/>
     <Contributors />
   </home-body>
@@ -33,12 +33,3 @@ const t = useTranslations(Astro);
     <HomeSolutionsCard slot="after-footer" />
   </HomeFooter>
 </BaseLayout>
-
-<script>
-  class HomeBody extends HTMLElement {
-    constructor() {
-      super();
-    }
-  }
-  customElements.define('home-body', HomeBody);
-</script>
