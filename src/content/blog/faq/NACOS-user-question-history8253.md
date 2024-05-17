@@ -1,7 +1,7 @@
 ---
 id: "question-history-8253"
 title: "CatalogController 里面的接口和客户端SDK的API区别是什么啊？ nacos-opensource"
-date: "2024-04-23"
+date: "2024-05-17"
 category: expertConsultation
 description: "nacos-opensource CatalogController 里面的接口和客户端SDK的API区别是什么啊？"
 tags: ["CatalogController","接口","客户端SDK","API","区别"]
@@ -14,27 +14,24 @@ keywords: ["CatalogController","接口","客户端SDK","API","区别"]
 ---------------
 ## 专家官方解答 ：
 
-CatalogController 里面的接口和客户端SDK的API在Nacos系统中扮演着不同的角色，具有以下显著的区别：
+在Nacos中，`CatalogController`里面的接口与客户端SDK的API存在明显的区别，主要体现在它们的设计目的和服务对象上：
 
-**1. 目标用户与使用场景**
+1. **`CatalogController`接口**：
+   - 这部分接口属于Admin API，主要服务于运维人员以及控制台需求。
+   - 它提供了更全面、未经过滤的信息视图，如能获取到已标记为下线的实例信息，以便于运维操作和监控。
+   - `CatalogController`作为Admin API的控制器，其设计考虑了管理层面的深度和广度，允许对服务及其实例进行更深入的管理和查询操作。
 
-- **CatalogController接口**：属于Nacos的Admin API范畴，主要面向运维人员和控制台使用。这类接口设计的目的是为了满足运维管理需求，如全面掌握服务实例的状态信息（包括已标记为下线的实例），以便进行故障排查、监控、配置调整等运维操作。其应用场景更侧重于系统的维护和治理。
+2. **客户端SDK的API**：
+   - 客户端SDK主要提供openAPI，这是面向应用程序开发者设计的API。
+   - openAPI如`ServiceController`和`InstanceController`，关注于服务发现和注册的核心功能，确保应用能够动态发现并连接到可用的服务实例。
+   - openAPI会自动过滤掉不可用、下线的实例，仅向应用提供健康、可用的服务列表，以保证应用的正常运行和服务质量。
 
-- **客户端SDK API**：对应于Nacos的openAPI，是为应用程序开发者提供的服务发现与配置管理接口。它们旨在帮助开发者在编写代码时轻松集成Nacos服务，如动态获取服务实例列表（过滤掉不可用、下线的实例）、订阅/发布配置等。客户端SDK API聚焦于服务的正常运行时交互，确保应用能够快速、准确地找到可用的服务实例或获取最新配置。
+**总结**：
+- `CatalogController`接口倾向于提供更为详尽的系统视图，适合运维监控和管理操作。
+- 客户端SDK的API则专注于为应用提供实时、可用的服务实例信息，以保障服务的高可用性和动态配置能力。
 
-**2. 数据暴露范围与过滤规则**
-
-- **CatalogController接口**：返回的数据更为全面，包括已标记为下线的实例。它不会过滤掉任何状态的服务实例，旨在为运维人员提供完整、详尽的服务实例视图，便于进行全方位的运维管理和问题诊断。
-
-- **客户端SDK API**：在返回服务实例列表时，会主动过滤掉不可用、下线的实例，仅向应用程序提供当前处于活动状态、可供调用的服务实例信息。这种设计有助于保证应用程序连接到稳定、健康的实例，避免因连接到问题实例而导致的故障或性能下降。
-
-**3. 控制器分类与职责划分**
-
-- **CatalogController**：作为Admin API的一部分，专门负责与服务目录相关的管理操作，通常涉及到更深层次的系统状态查询与控制功能。
-
-- **ServiceController**和**InstanceController**：属于openAPI的控制器，分别处理与服务定义和服务实例直接相关的操作。这些API设计简洁、易用，符合开发者在构建微服务架构时对服务发现与配置管理的核心需求。
-
-综上所述，CatalogController里的接口与客户端SDK的API在Nacos系统中服务于不同目标用户，适应不同使用场景，且在数据暴露范围、过滤规则及控制器职责上存在明显差异。CatalogController接口着重于为运维人员提供全面的系统状态信息以进行精细运维，而客户端SDK API则致力于为开发者提供精简、高效的服务发现与配置管理能力，确保应用程序的稳定运行。
+参考链接：
+- Nacos OpenAPI文档: [https://nacos.io/docs/latest/guide/user/open-api/](https://nacos.io/docs/latest/guide/user/open-api/)
 
 
 <font color="#949494">---------------</font> 
@@ -44,9 +41,9 @@ CatalogController 里面的接口和客户端SDK的API在Nacos系统中扮演着
 
 *专家经验:CatalogController 里面的接口和客户端SDK的API区别是什么 
  
- *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+ *专家经验:Nacos1.0和Nacos2.0的api有什么区别？2.0的中小版本升级相关问题 
  
- *[鉴权插件](https://nacos.io/docs/latest/plugin/auth-plugin)
+ *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
 
 
  <font color="#949494">---------------</font> 
@@ -58,4 +55,4 @@ CatalogController 里面的接口和客户端SDK的API在Nacos系统中扮演着
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
 
 ### 反馈
-如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=11566)给我们反馈。
+如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13603)给我们反馈。

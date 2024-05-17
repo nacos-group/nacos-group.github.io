@@ -1,7 +1,7 @@
 ---
 id: "question-history-11185"
 title: "nacos nacos 怎么安装 nacos-opensource"
-date: "2024-04-23"
+date: "2024-05-17"
 category: expertConsultation
 description: "nacos-opensource nacos nacos 怎么安装"
 tags: ["安装"]
@@ -14,92 +14,41 @@ keywords: ["安装"]
 ---------------
 ## 专家官方解答 ：
 
-Nacos 是阿里巴巴开源的一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。如果您需要安装 Nacos，以下是详细的步骤：
+为了安装Nacos，请遵循以下详细步骤：
 
-1. **版本选择**:
-   首先，访问 Nacos 的 [release notes](https://github.com/alibaba/nacos/releases) 和 [博客](https://nacos.io/blog/)，以了解当前推荐的稳定版本及其支持的功能。当前推荐的稳定版本为 2.3.2。
+1. **版本选择**：
+   首先，访问Nacos的[release notes](https://github.com/alibaba/nacos/releases)以确定最新的稳定版本。当前推荐的稳定版本为2.3.2。选择适合您需求的版本进行安装。
 
-2. **预备环境准备**:
-   - **操作系统**: 安装 64-bit 的 Linux/Unix/Mac 操作系统（Windows 亦可，但推荐前者）。
-   - **Java**: 确保已安装 64-bit JDK 1.8 或更高版本。您可以通过 [此处](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 下载并按照 [指南](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/) 配置 Java 环境。
-   - **Maven**: 若您计划从源码构建 Nacos，请确保已安装 Maven 3.2.x 或更高版本。您可在 [这里](https://maven.apache.org/download.cgi) 下载并参照 [官方文档](https://maven.apache.org/settings.html) 进行配置。
+2. **预备环境准备**：
+   - 确保您的操作系统是64位的Linux/Unix/Mac/Windows，推荐使用Linux/Unix/Mac。
+   - 安装64位JDK 1.8或更高版本。如需下载和配置，请访问：[JDK下载](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) 和 [JDK配置指南](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/)。
+   - 配置Maven 3.2.x或更高版本。下载地址：[Maven下载](https://maven.apache.org/download.cgi)，配置说明：[Maven配置](https://maven.apache.org/settings.html)。
 
-3. **下载源码或安装包**:
-   - **源码方式**:
-     执行以下命令克隆 Nacos GitHub 仓库并构建项目：
+3. **下载Nacos**：
+   有两种方式获取Nacos：
+   
+   - **源码方式**：
      ```
      git clone https://github.com/alibaba/nacos.git
      cd nacos/
      mvn -Prelease-nacos -Dmaven.test.skip=true clean install -U
      ls -al distribution/target/
+     ```
+     然后根据实际路径进入`nacos-server-$version/nacos/bin`目录。
      
-     // 将 $version 替换为您实际构建得到的版本号
-     cd distribution/target/nacos-server-$version/nacos/bin
-     ```
+   - **下载安装包**：
+     访问[最新稳定版本](https://github.com/alibaba/nacos/releases)下载`nacos-server-$version.zip`或`.tar.gz`，解压后进入`nacos/bin`目录。
 
-   - **安装包方式**:
-     访问 [Nacos 最新稳定版本](https://github.com/alibaba/nacos/releases) 下载 `nacos-server-$version.zip` 或 `nacos-server-$version.tar.gz` 压缩包。解压后进入 `nacos/bin` 目录：
-     ```
-     unzip nacos-server-$version.zip 或者 tar -xvf nacos-server-$version.tar.gz
-     cd nacos/bin
-     ```
+4. **修改配置文件**（针对特定版本）：
+   在`conf/application.properties`中设置`nacos.core.auth.plugin.nacos.token.secret.key`，以启用自定义鉴权密钥。避免使用默认值，确保生产安全。
 
-4. **修改配置文件**:
-   在 `conf` 目录下找到 `application.properties` 文件，根据需要调整配置。特别注意，在 2.2.0.1 和 2.2.1 版本中，必须设置 `nacos.core.auth.plugin.nacos.token.secret.key` 值以确保正常启动。参考 [鉴权-自定义密钥](https://nacos.io/plugin/auth-plugin/) 文档，设置一个自定义密钥，切勿使用默认值。
+5. **启动Nacos服务器**：
+   - **Linux/Unix/Mac**：执行`sh startup.sh -m standalone`。若遇到[[符号错误，使用`bash startup.sh -m standalone`。
+   - **Windows**：运行`startup.cmd -m standalone`。
 
-5. **启动服务器**:
-   根据您的操作系统，执行相应的启动命令（建议在至少 2C4G 60G 配置的机器上运行 Nacos）：
-   - **Linux/Unix/Mac**:
-     ```
-     sh startup.sh -m standalone
-     ```
-     如遇到 `[` 符号找不到的错误，可尝试：
-     ```
-     bash startup.sh -m standalone
-     ```
+   注意：推荐在至少2C4G 60G配置的机器上运行Nacos。
 
-   - **Windows**:
-     ```
-     startup.cmd -m standalone
-     ```
-
-6. **服务注册与发现、配置管理验证**:
-   可以通过执行以下 curl 命令来验证 Nacos 服务注册、发现以及配置管理功能是否正常工作：
-
-   - **服务注册**:
-     ```
-     curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'
-     ```
-
-   - **服务发现**:
-     ```
-     curl -X GET 'http://127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.naming.serviceName'
-     ```
-
-   - **发布配置**:
-     ```
-     curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test&content=HelloWorld"
-     ```
-
-   - **获取配置**:
-     ```
-     curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test"
-     ```
-
-7. **关闭服务器**:
-   当需要停止 Nacos 服务时，执行以下命令：
-
-   - **Linux/Unix/Mac**:
-     ```
-     sh shutdown.sh
-     ```
-
-   - **Windows**:
-     ```
-     shutdown.cmd
-     ```
-
-按照以上步骤，您即可成功安装并启动 Nacos 服务器，完成服务注册、发现与配置管理的基本验证。后续在实际使用中，可根据项目需求进一步配置和集成 Nacos。
+完成上述步骤后，Nacos将成功安装并运行在单机模式下。接下来，您可以根据需要进行服务注册、发现和配置管理操作。如果需要在ARM架构下使用Docker部署Nacos，可选用带有`slim`标识的镜像版本，例如`v2.3.1-slim`，并参考官方文档的Docker快速启动指南进行配置调整。
 
 
 <font color="#949494">---------------</font> 
@@ -109,9 +58,9 @@ Nacos 是阿里巴巴开源的一个更易于构建云原生应用的动态服�
 
 *专家经验:Nacos 快速开始 
  
- *专家经验:Nacos raft日志太大怎么清理 
- 
  *专家经验:Nacos 介绍 
+ 
+ *专家经验:Nacos 请问nacos有arm架构的docker镜像么 
 
 
  <font color="#949494">---------------</font> 
@@ -123,4 +72,4 @@ Nacos 是阿里巴巴开源的一个更易于构建云原生应用的动态服�
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
 
 ### 反馈
-如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=11687)给我们反馈。
+如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13724)给我们反馈。

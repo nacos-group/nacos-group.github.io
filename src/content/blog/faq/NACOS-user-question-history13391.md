@@ -1,11 +1,11 @@
 ---
 id: "question-history-13391"
 title: "nacos docker derby下使用grafana 查看nacos monitor 提示 Failed to upgrade legacy queries Datasource prometheus was not found USER : http: prometheus:9090 提示DNS_PROBE_FINISHED_NXDOMAIN nacos-opensource"
-date: "2024-05-13"
+date: "2024-05-17"
 category: expertConsultation
 description: "nacos-opensource nacos docker derby下使用grafana 查看nacos monitor 提示 Failed to upgrade legacy queries Datasource prometheus was not found USER : http: prometheus:9090 提示DNS_PROBE_FINISHED_NXDOMAIN"
-tags: ["nacos","docker","derby","grafana","nacos monitor","Failed to upgrade legacy queries","Datasource","prometheus","9090","DNS_PROBE_FINISHED_NXDOMAIN"]
-keywords: ["nacos","docker","derby","grafana","nacos monitor","Failed to upgrade legacy queries","Datasource","prometheus","9090","DNS_PROBE_FINISHED_NXDOMAIN"]
+tags: ["nacos","docker","derby","grafana","nacos monitor","Failed to upgrade legacy queries","Datasource prometheus was not found","http: prometheus:9090","DNS_PROBE_FINISHED_NXDOMAIN"]
+keywords: ["nacos","docker","derby","grafana","nacos monitor","Failed to upgrade legacy queries","Datasource prometheus was not found","http: prometheus:9090","DNS_PROBE_FINISHED_NXDOMAIN"]
 ---
 
 ## 用户问题 ： 
@@ -14,41 +14,33 @@ keywords: ["nacos","docker","derby","grafana","nacos monitor","Failed to upgrade
 ---------------
 ## 专家官方解答 ：
 
-根据提供的知识内容，我们可以分析您遇到的问题原因及提供解决步骤如下：
+根据提供的知识内容，您遇到的问题可能是由于以下原因导致的：
 
-**问题分析：**
-您在使用Docker部署的Nacos，并且试图通过Grafana查看Nacos Monitor时，遇到了“Failed to upgrade legacy queries Datasource prometheus was not found”错误，以及“DNS_PROBE_FINISHED_NXDOMAIN”的提示。这表明Grafana无法找到或连接到Prometheus数据源。
+1. **DNS解析问题**："DNS_PROBE_FINISHED_NXDOMAIN"提示表明客户端无法解析`http://prometheus:9090`这个地址。这可能是因为您的环境中没有正确设置Prometheus服务的DNS记录，或者Prometheus服务未正确运行。
 
-可能的原因包括：
-1. **Prometheus数据源未正确配置**：Grafana未能识别名为`prometheus`的数据源，意味着它可能未被正确设置或地址不正确。
-2. **DNS解析问题**：`DNS_PROBE_FINISHED_NXDOMAIN`提示意味着尝试访问的域名（http://prometheus:9090）在DNS中找不到，这在容器环境中可能是因为服务发现机制未正确工作。
+2. **Grafana数据源配置错误**：错误信息"Datasource prometheus was not found"意味着Grafana未能找到名为Prometheus的数据源。确保您已在Grafana中正确配置了指向Prometheus的数据源，并且数据源的URL与Prometheus的实际地址匹配。
 
-**解决步骤：**
-1. **检查Prometheus配置**：
-   确认Prometheus已经在您的环境中运行，并且可以通过指定的端口（默认9090）访问。如果您是通过Docker-compose或Kubernetes部署的，确保服务名`prometheus`能够被其他服务（如Grafana）正确解析。对于Docker环境，确保网络配置允许服务间的通信。
+为了解决这些问题，请按照以下步骤操作：
 
-2. **配置Grafana数据源**：
-   - 登录Grafana界面。
-   - 转至侧边栏的“数据源”选项。
-   - 点击“添加数据源”，选择“Prometheus”类型。
-   - 在“URL”字段输入`http://prometheus:9090`，前提是您的环境支持这样的服务发现方式。如果是Docker Compose或Kubernetes集群内部通信，请确认服务名称解析设置正确。
-   - 确认配置无误后保存数据源。
+### 步骤1：检查Prometheus服务状态
+- **对于Docker环境**，请确保Prometheus容器正在运行，并且网络配置正确，以便可以从Grafana容器中访问。可以使用`docker ps`命令查看容器状态，或使用`docker logs <prometheus_container_id>`查看Prometheus容器的日志以确认其运行状态及监听地址。
 
-3. **验证服务发现与网络连通性**：
-   - 确保您的Docker网络配置正确，或者在Kubernetes中服务与端口映射无误。
-   - 使用命令行工具（如`curl`），从Grafana容器内尝试访问Prometheus服务，以验证网络连通性。例如，在Grafana容器中执行`curl http://prometheus:9090`，看是否能获取到响应。
+### 步骤2：验证网络连接
+- 在运行Grafana的容器或主机上尝试直接访问Prometheus的地址（例如，使用`curl http://prometheus:9090`），以确认网络可达性。如果无法访问，需要检查网络配置，如Docker网络桥接或DNS设置。
 
-4. **检查DNS解析设置**（针对自定义网络配置）：
-   如果您不是在标准的Kubernetes或Docker Compose网络模式下，可能需要手动配置DNS解析。确保容器间的服务名称能正确解析到IP地址。
+### 步骤3：配置Grafana数据源
+- 登录到Grafana界面，导航至数据源设置页面，添加一个新的数据源。
+    - **类型**选择Prometheus。
+    - **URL**填写`http://prometheus:9090`或根据实际情况调整（特别是如果您使用的是特定端口映射或不同主机名）。
+    - 确认配置后保存数据源。
 
-**注意：** 根据您的实际情况调整上述步骤中的细节，比如服务名、端口号等。
+### 步骤4：测试数据源连接
+- 在Grafana数据源设置页面，对于刚添加的Prometheus数据源，利用“测试数据源连接”功能确保配置无误。
 
-**参考资料：**
-- [Nacos监控指南](../guide/admin/monitor-guide.md)
-- [Grafana监控Nacos-Sync](https://github.com/nacos-group/nacos-template/blob/master/nacos-sync-grafana)
-- [下载Prometheus](https://prometheus.io/download/)
+### 步骤5：使用正确的监控面板
+- 确保您在Grafana中使用的监控面板模板与Nacos兼容，并且正确导入了Nacos监控模版（如果尚未导入，请参照提供的链接[[Nacos-Sync监控模版](https://github.com/nacos-group/nacos-template/blob/master/nacos-sync-grafana)]进行操作）。
 
-希望以上步骤能帮助您解决问题。如果问题仍然存在，可能需要更细致地检查您的网络和配置细节。
+完成以上步骤后，应当能够解决您遇到的监控数据显示问题。如果问题依旧，请检查Grafana和Prometheus的日志文件，寻找更具体的错误信息来进一步诊断问题。
 
 
 <font color="#949494">---------------</font> 
@@ -70,4 +62,4 @@ keywords: ["nacos","docker","derby","grafana","nacos monitor","Failed to upgrade
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
 
 ### 反馈
-如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13403)给我们反馈。
+如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13886)给我们反馈。

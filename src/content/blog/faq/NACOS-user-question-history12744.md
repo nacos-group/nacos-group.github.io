@@ -1,7 +1,7 @@
 ---
 id: "question-history-12744"
 title: "com.alibaba.nacos.naming.updater 线程不释放怎么处理？ nacos-opensource"
-date: "2024-05-10"
+date: "2024-05-17"
 category: expertConsultation
 description: "nacos-opensource com.alibaba.nacos.naming.updater 线程不释放怎么处理？"
 tags: ["com.alibaba.nacos.naming.updater","线程不释放","处理"]
@@ -14,30 +14,32 @@ keywords: ["com.alibaba.nacos.naming.updater","线程不释放","处理"]
 ---------------
 ## 专家官方解答 ：
 
-首先，从问题描述来看，您遇到了`com.alibaba.nacos.naming.updater`线程不释放的情况。根据提供的知识内容，我们可以分析原因并提出解决步骤。
+首先，根据提供的知识内容，我们可以分析`com.alibaba.nacos.naming.updater`线程不释放的问题可能由以下几个原因造成：
 
-### 原因分析
-1. **Nacos-Client实例过多**：每个NacosNamingService实例会有一个对应的更新缓存线程，如果创建了过多的NacosNamingService实例，可能导致该类线程数量超出预期。
-2. **配置或环境问题**：可能是应用获取到的CPU核心数不准确，导致线程池大小配置不当，进而影响到了`com.alibaba.nacos.naming.updater`线程的管理。
-3. **线程池未正确关闭**：虽然直接提及的是`nacos-grpc-client-executor`线程池，但是错误的实例管理逻辑也可能影响到其他线程池，包括负责服务更新的线程。
+1. **Nacos-Client实例创建过多**：每个NacosNamingService实例都会有一个或多个此类线程用于更新服务缓存，过多的NacosNamingService实例会导致这类线程数量激增。
+2. **CPU数量误读**：应用可能错误地识别了运行环境的CPU数量，导致线程数量按错误的CPU基数计算，超出预期。
+3. **未正确配置线程池大小**：如果没有通过-Dnacos.common.processors或NACOS_COMMON_PROCESSORS指定正确的CPU数量，或者未调整nacos-grpc-client-executor线程池的核心与最大大小，可能导致线程池管理不当。
 
-### 解决步骤
+针对`com.alibaba.nacos.naming.updater`线程不释放的处理步骤如下：
+
 1. **检查Nacos-Client实例数量**：
-   - 使用`jmap -histo ${pid} > histo.log`命令，统计`NacosNamingService`的数量。如果数量过多，请检查应用代码，确保Nacos-Client实例得到复用而不是每次创建新的实例。
-   
-2. **确认线程数是否符合预期**：
-   - 运行`jstack ${pid} > jstack.log`，然后统计`com.alibaba.nacos.client.naming.updater`线程的数量。对比预期数量（NacosNamingService数量 * (CPU数 / 2)），确认是否存在异常。
+   - 执行命令`jmap -histo ${pid} > histo.log`，然后通过`grep "NacosNamingService" histo.log | awk '{print $2,$4}'`统计NacosNamingService实例的数量。如果发现实例数过多，请检查应用代码，确保Nacos-Client实例得到适当复用，避免频繁创建新的实例。
 
-3. **检查CPU核心数识别**：
-   - 使用`Runtime.getRuntime().availableProcessors()`确认应用识别到的CPU核心数是否正确。如果不正确，考虑使用参数`-Dnacos.common.processors`或环境变量`NACOS_COMMON_PROCESSORS`来强制指定正确的CPU核心数，前提是您的Nacos-Client版本为2.1.1及以上。
+2. **验证CPU数量识别**：
+   - 在应用中加入验证逻辑，打印`Runtime.getRuntime().availableProcessors()`的结果，确认应用是否正确识别了CPU数量。如果不正确，考虑使用参数`-Dnacos.common.processors`或设置环境变量`NACOS_COMMON_PROCESSORS`来手动指定正确的CPU数量。
 
-4. **调整线程池配置**（如果前几步未解决问题）：
-   - 尝试通过参数`-Dnacos.remote.client.grpc.pool.core.size`和`-Dnacos.remote.client.grpc.pool.max.size`手动调整线程池大小，尽管这直接针对的是`nacos-grpc-client-executor`线程池，但适当调整可能间接影响到其他线程池的管理，尤其是当它们共享某些基础配置或资源时。
+3. **调整线程池配置**：
+   - 确保Nacos-Client版本为2.1.1及以上，然后根据实际情况调整相关线程池参数。对于`com.alibaba.nacos.naming.updater`这类线程，虽然直接调整参数不太直接，但可以通过合理配置其他线程池（如nacos-grpc-client-executor）间接影响整体线程管理。可以尝试调整`-Dnacos.remote.client.grpc.pool.core.size`和`-Dnacos.remote.client.grpc.pool.max.size`来控制线程池的大小，以适应实际负载需求，避免不必要的线程创建。
 
-### 解释
-上述步骤首先帮助您诊断问题的具体根源，然后通过调整实例管理、确认系统配置、以及必要时的手动线程池调整，逐步定位并解决`com.alibaba.nacos.naming.updater`线程不释放的问题。请注意，每一步操作后都需要重新观察线程行为和系统性能，以验证调整效果。
+4. **监控与日志分析**：
+   - 继续使用`jstack ${pid} > jstack.log`分析线程堆栈，特别关注`com.alibaba.nacos.naming.updater`线程的状态，判断是否存在阻塞或死锁情况。结合应用日志，寻找可能的异常或长时间运行的任务线索。
 
-如果您尝试了这些步骤仍无法解决问题，可能需要进一步调查应用代码中的线程管理逻辑，或者考虑咨询Nacos社区或查看相关开源问题跟踪系统，比如提供的链接[Sentinel框架在旧版本中的Bug](https://github.com/alibaba/Sentinel/issues/2953)和[Dubbo框架在2.7.8版本中的Bug](https://github.com/apache/dubbo/issues/6988)，尽管它们直接关联的不是当前问题，但可能会启发解决类似问题的思路。
+5. **资源与配置复查**：
+   - 确认容器或虚拟化环境下的资源配置是否正确映射，因为容器环境中的CPU限制可能影响到应用对CPU数量的感知。
+
+如果上述步骤不能有效解决问题，可能需要更深入地分析应用与Nacos的集成代码，检查是否有特定的使用模式导致线程无法正常回收，或者考虑咨询Nacos社区和官方文档以获取进一步的帮助。
+
+请注意，上述步骤依赖于具体的环境和Nacos-Client版本，务必根据实际情况灵活调整。
 
 
 <font color="#949494">---------------</font> 
@@ -46,8 +48,6 @@ keywords: ["com.alibaba.nacos.naming.updater","线程不释放","处理"]
 ## 参考链接 ：
 
 *专家经验:如何排查Nacos线程数过多的问题 
- 
- *专家经验:nacos的部署 
 
 
  <font color="#949494">---------------</font> 
@@ -59,4 +59,4 @@ keywords: ["com.alibaba.nacos.naming.updater","线程不释放","处理"]
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
 
 ### 反馈
-如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=12895)给我们反馈。
+如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13871)给我们反馈。

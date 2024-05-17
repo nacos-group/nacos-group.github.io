@@ -1,7 +1,7 @@
 ---
 id: "question-history-13442"
 title: "nacos服务端使用的版本是 2.3.2 客户端 nacos-client要用什么版本的 nacos-opensource"
-date: "2024-05-13"
+date: "2024-05-17"
 category: expertConsultation
 description: "nacos-opensource nacos服务端使用的版本是 2.3.2 客户端 nacos-client要用什么版本的"
 tags: ["nacos服务端","2.3.2","客户端","nacos-client","版本"]
@@ -14,17 +14,15 @@ keywords: ["nacos服务端","2.3.2","客户端","nacos-client","版本"]
 ---------------
 ## 专家官方解答 ：
 
-根据已知信息，Nacos服务端版本为2.3.2。根据Nacos的兼容性规则：
+根据已有知识，Nacos服务端版本2.3.2属于Nacos2.X系列。根据Nacos版本兼容性规则：
 
 - Nacos2.X的服务端版本能够兼容所有的Nacos2.X的客户端版本，以及Nacos1.2.0之后的所有客户端版本。
 
-因此，对于服务端版本2.3.2，客户端`nacos-client`应选择的版本可以是Nacos2.X系列中的任意版本，确保与服务端保持最佳兼容性。同时，确保客户端版本不低于1.2.0，尽管实际上推荐使用与服务端相近或最新的客户端版本以获取最佳功能支持和性能。
+因此，对于Nacos服务端版本2.3.2，客户端`nacos-client`应选择的版本为：
+- 任何Nacos2.X版本的客户端。
+- 或者，至少为Nacos1.2.0及以上版本的客户端，但考虑到功能和性能的优化，推荐使用与服务端同系列的2.X版本客户端。
 
-综上所述，为了保证最佳兼容性和功能性，建议使用Nacos客户端版本2.3.2或该系列中的最新稳定版本。您可以通过以下链接获取Nacos客户端的最新稳定版本：
-- [Nacos官网下载页面](https://nacos.io/download/nacos-server/)
-- [GitHub Release 页面](https://github.com/alibaba/nacos/releases)
-
-这样可以确保客户端与服务端之间的顺畅通信和利用最新的特性与改进。
+综上所述，为了确保最佳兼容性和获取最新特性，建议使用Nacos2.X系列的客户端版本与服务端2.3.2搭配使用。具体版本号可访问Nacos官网[https://nacos.io/download/nacos-server/](https://nacos.io/download/nacos-server/) 或其GitHub Release页面[https://github.com/alibaba/nacos/releases](https://github.com/alibaba/nacos/releases)查询并下载最新的2.X客户端版本。
 
 
 <font color="#949494">---------------</font> 
@@ -48,4 +46,4 @@ keywords: ["nacos服务端","2.3.2","客户端","nacos-client","版本"]
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
 
 ### 反馈
-如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13445)给我们反馈。
+如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13897)给我们反馈。

@@ -1,11 +1,11 @@
 ---
 id: "question-history-8240"
 title: "Nacos Pod takes up a lot of memory cache. As the service life of nacos pod continues to increase, the memory cache is also gradually increasing, and the memory cache usage is consistent with the RSS memory. nacos-opensource"
-date: "2024-04-23"
+date: "2024-05-17"
 category: expertConsultation
 description: "nacos-opensource Nacos Pod takes up a lot of memory cache. As the service life of nacos pod continues to increase, the memory cache is also gradually increasing, and the memory cache usage is consistent with the RSS memory."
-tags: ["Nacos","Pod","内存缓存","占用","增加","服务生命周期","RSS 内存"]
-keywords: ["Nacos","Pod","内存缓存","占用","增加","服务生命周期","RSS 内存"]
+tags: ["Nacos","Pod","memory cache","service life","RSS memory"]
+keywords: ["Nacos","Pod","memory cache","service life","RSS memory"]
 ---
 
 ## 用户问题 ： 
@@ -14,34 +14,19 @@ keywords: ["Nacos","Pod","内存缓存","占用","增加","服务生命周期","
 ---------------
 ## 专家官方解答 ：
 
-针对Nacos Pod内存缓存占用不断增加的问题，其原因主要集中在以下几个方面：
+针对Nacos Pod内存缓存占用过大的问题，主要从以下几个方面分析与解决：
 
-1. **JVM堆内存过大**：JVM堆内存设置可能超过了物理内存的合理比例（如较低），导致Nacos Pod内存占用过高。
+1. **检查JVM堆内存设置**：依据问题描述，随着Nacos Pod运行时间增长，内存缓存（RSS内存）持续增加，首先应检查Nacos的JVM堆内存配置是否合理。根据推荐实践，JVM堆内存不应超过物理内存的70%。请确保你的Nacos实例配置了合适的-Xms（初始堆大小）和-Xmx（最大堆大小），避免因堆内存设置过大导致的内存占用问题。
 
-2. **NIO堆外内存无限制**：Nacos的NIO堆外内存可能未设置最大值（`-XX:MaxDirectMemorySize=`），在无限制的情况下，随着服务生命周期的延长和数据交互增多，内存缓存会持续增长。
+2. **限制NIO堆外内存**：除了JVM堆内内存，Nacos的网络NIO也可能占用大量堆外内存。确保已在启动参数中设置了`-XX:MaxDirectMemorySize=`来限制NIO堆外内存的最大值，推荐设置为JVM堆内存的1/4，以避免无限制的堆外内存增长。
 
-3. **RSS内存与内存缓存一致**：表明Nacos Pod的内存使用情况与系统报告的常驻集大小（RSS内存）相符，进一步验证了上述内存分配问题可能导致的内存占用持续增加现象。
+3. **监控与日志分析**：持续监控Nacos服务的内存使用情况，并结合日志分析，特别是关注是否有异常的日志输出，这有助于定位是否存在特定操作或周期性任务导致的内存泄漏。
 
-基于上述原因，可按照以下步骤进行排查与优化：
+4. **资源清理与重启**：如果内存占用持续增长且无法通过配置优化解决，考虑在维护窗口期间重启Nacos Pod，以清理累积的内存缓存。同时，检查`${nacos.home}/data/protocol`目录，必要时进行清理，这有助于解决潜在的持久化数据问题。
 
-**步骤一：检查JVM参数配置**
+5. **版本更新与社区反馈**：如果问题依然存在，考虑检查Nacos的当前版本是否为最新稳定版，有时软件的更新会包含性能优化和bug修复。此外，也可以在Nacos的开源社区或GitHub上查找是否有相似问题的报告或解决方案。
 
-1. 登录到运行Nacos Pod的服务器。
-2. 获取Nacos进程的JVM启动参数，通常可以通过查看进程命令行参数（如使用`ps aux | grep nacos`命令）或查阅Nacos部署配置文件获取。
-3. 确认JVM堆内存（如`-Xms`和`-Xmx`参数）设置是否超过物理内存的较低。若超出，应适当降低堆内存大小，以避免过度占用系统资源。
-
-**步骤二：限制NIO堆外内存**
-
-1. 在Nacos的JVM启动参数中查找`-XX:MaxDirectMemorySize=`设置项，确认是否已设定最大值。
-2. 若未设置或值设定不合理（如远大于堆内存的1/4），应添加或调整该参数，将其设置为堆内存的约1/4，以限制NIO堆外内存的增长。
-
-**步骤三：监控与验证优化效果**
-
-1. 应用上述调整后，重启Nacos Pod以使新的JVM参数生效。
-2. 使用系统监控工具（如`top`、`htop`、`vmstat`等）或 Kubernetes（如通过`kubectl top pods`命令）监控Nacos Pod的内存使用情况，包括总体内存占用和RSS内存。
-3. 观察在服务生命周期内，尤其是经过一段时间运行后，内存缓存占用是否得到有效控制，不再持续无限制增长。
-
-通过执行以上步骤，针对JVM堆内存过大和NIO堆外内存无限制的问题进行针对性调整，有望解决Nacos Pod内存缓存占用不断增加的现象。持续监控并根据实际情况适时调整内存相关参数，有助于保持Nacos服务的稳定性和资源高效利用。
+综上所述，通过调整JVM堆内存设置、限制NIO堆外内存、实施监控与日志分析、适时进行资源清理与重启，以及考虑软件版本更新，可以有效应对Nacos Pod内存缓存占用过大的问题。如果问题复杂，进一步的诊断与优化可能需要深入代码级别分析或寻求社区帮助。
 
 
 <font color="#949494">---------------</font> 
@@ -51,7 +36,9 @@ keywords: ["Nacos","Pod","内存缓存","占用","增加","服务生命周期","
 
 *专家经验:Nacos 内存占用过大 
  
- *专家经验:Nacos 欢迎你 
+ *专家经验:Fail to get leader of group naming_persistent_service_v2 
+ 
+ *专家经验:Nacos 介绍 
 
 
  <font color="#949494">---------------</font> 
@@ -63,4 +50,4 @@ keywords: ["Nacos","Pod","内存缓存","占用","增加","服务生命周期","
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
 
 ### 反馈
-如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=11554)给我们反馈。
+如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13591)给我们反馈。

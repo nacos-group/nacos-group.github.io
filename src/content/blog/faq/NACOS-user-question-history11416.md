@@ -1,7 +1,7 @@
 ---
 id: "question-history-11416"
 title: "如何使用docker方式部署nacos nacos-opensource"
-date: "2024-04-23"
+date: "2024-05-17"
 category: expertConsultation
 description: "nacos-opensource 如何使用docker方式部署nacos"
 tags: ["docker","部署","nacos"]
@@ -14,51 +14,43 @@ keywords: ["docker","部署","nacos"]
 ---------------
 ## 专家官方解答 ：
 
-使用Docker方式部署Nacos，您可以按照以下步骤进行操作：
+要使用Docker方式部署Nacos，特别是配置为集群模式并开启鉴权，您可以遵循以下步骤：
 
-1. **获取Nacos官方Docker镜像**：
-   访问Nacos的Docker仓库地址（如：[Docker Hub](https://hub.docker.com/r/nacos/nacos-server)或使用GitHub项目提供的Dockerfile构建自己的镜像）。确保选择您需要的Nacos版本。可以通过以下命令拉取官方镜像：
+1. **准备环境**：
+   - 确保您的系统中已安装Docker，并且Docker服务正在运行。
 
-   ```bash
-   docker pull nacos/nacos-server:<version>
-   ```
+2. **获取Nacos Docker镜像**：
+   - 访问Nacos Docker镜像的GitHub仓库[[1](https://github.com/nacos-group/nacos-docker)]以获取最新的镜像信息。您可以通过命令`docker pull nacos/nacos-server`来拉取官方的Nacos服务器镜像。
 
-   替换 `<version>` 为所需的Nacos版本号（如：2.2.3）。
+3. **配置鉴权参数**：
+   - 根据Nacos集群部署需求，您需要设置以下环境变量来开启鉴权和其他相关安全配置：
+     - `NACOS_AUTH_ENABLE=true`：开启鉴权功能。
+     - `NACOS_AUTH_TOKEN=您自定义的长于32位的字符串（确保安全性），并进行Base64编码`：用于Token生产的密钥。
+     - `NACOS_AUTH_IDENTITY_KEY=自定义的服务端标识键`：例如，`nacos_server`。
+     - `NACOS_AUTH_IDENTITY_VALUE=自定义的服务端标识值`：用于识别不同服务端实例。
 
-2. **配置Nacos容器启动参数**：
-   在启动Nacos容器时，需要指定一些必要的环境变量以开启鉴权功能（如有需要）、配置数据持久化路径以及集群模式下的相关参数。以下是启动Nacos容器的基本示例：
+4. **启动Nacos容器**：
+   - 使用如下命令启动Nacos容器，记得替换`<其他自定义参数>`为您可能需要的其他环境变量或配置（比如集群配置）：
+     ```shell
+     docker run -d --name nacos-server \
+       -p 8848:8848 \
+       -e MODE=cluster \
+       -e NACOS_AUTH_ENABLE=true \
+       -e NACOS_AUTH_TOKEN=<Base64编码后的密钥> \
+       -e NACOS_AUTH_IDENTITY_KEY=nacos_server \
+       -e NACOS_AUTH_IDENTITY_VALUE=my_unique_value \
+       <其他自定义参数> \
+       nacos/nacos-server
+     ```
+   - 注意，如果您打算部署Nacos集群，需要为每个节点分配不同的标识值，并且确保它们之间的网络通信畅通无阻。
 
-   ```bash
-   docker run -d \
-     --name nacos-server \
-     -p 8848:8848 \
-     -e MODE=standalone \
-     -e NACOS_AUTH_ENABLE=true \
-     -e NACOS_AUTH_TOKEN=<your-token-secret-key> \
-     -e NACOS_AUTH_IDENTITY_KEY=<your-identity-key> \
-     -e NACOS_AUTH_IDENTITY_VALUE=<your-identity-value> \
-     -v /path/to/persistent/data:/home/nacos/conf \
-     nacos/nacos-server:<version>
-   ```
+5. **配置集群**：
+   - 若要配置Nacos集群，您需要为每个节点指定不同的IP或主机名，并在`nacos.properties`中设置集群相关信息，或者通过环境变量传递。具体配置方法可以参考Nacos官方文档或Nacos-Docker仓库中的说明[[1](https://github.com/nacos-group/nacos-docker)]。
 
-   其中：
+6. **验证部署**：
+   - 访问http://localhost:8848/nacos/，使用配置的鉴权信息登录控制台，确认Nacos服务正常运行且鉴权功能生效。
 
-   - `-p 8848:8848`：映射宿主机端口8848到容器内部的Nacos服务端口。
-   - `-e MODE=standalone`：指定Nacos以单节点模式运行。若要部署集群，请参考Nacos官方文档设置相应环境变量。
-   - `-e NACOS_AUTH_ENABLE=true`：启用Nacos鉴权功能。
-   - `-e NACOS_AUTH_TOKEN=<your-token-secret-key>`：设置用于生成Token的密钥。
-   - `-e NACOS_AUTH_IDENTITY_KEY=<your-identity-key>`：设置服务端身份识别键。
-   - `-e NACOS_AUTH_IDENTITY_VALUE=<your-identity-value>`：设置服务端身份识别值。
-   - `-v /path/to/persistent/data:/home/nacos/conf`：将宿主机上的目录挂载到容器内，用于持久化Nacos配置及数据。
-
-   根据实际需求调整上述环境变量和挂载点。
-
-3. **访问Nacos控制台**：
-   启动容器后，Nacos服务应已在宿主机的8848端口运行。打开浏览器访问 `http://localhost:8848/nacos`（或相应服务器IP），使用已配置的鉴权信息登录控制台。
-
-   如果您的环境中存在VIP网络设备，根据需要映射其他端口（如9848和7848）并确保网络设备正确转发流量。
-
-以上就是使用Docker方式部署Nacos的详细步骤。根据实际需求，您可以进一步参照Nacos官方文档调整其他配置项或扩展容器以集成自定义插件等。
+通过上述步骤，您就可以成功使用Docker部署具有鉴权功能的Nacos服务了。如果需要更高级的配置或遇到具体问题，详细文档和帮助可以参考Nacos官方文档[[2](https://nacos.io/docs/latest/guide/user/auth/)]和Nacos-Docker项目页面[[1](https://github.com/nacos-group/nacos-docker)]。
 
 
 <font color="#949494">---------------</font> 
@@ -66,11 +58,11 @@ keywords: ["docker","部署","nacos"]
 
 ## 参考链接 ：
 
-*[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+*专家经验:Nacos k8s部署得nacos2.2.3版本集群模式怎么配置鉴权 
  
- *专家经验:Nacos k8s部署得nacos2.2.3版本集群模式怎么配置鉴权 
+ *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
  
- *专家经验:Nacos部署开放端口，集群部署开通端口 
+ *[Nacos 2.0 升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading)
 
 
  <font color="#949494">---------------</font> 
@@ -82,4 +74,4 @@ keywords: ["docker","部署","nacos"]
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
 
 ### 反馈
-如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=11711)给我们反馈。
+如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13748)给我们反馈。

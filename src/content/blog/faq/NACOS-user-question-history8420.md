@@ -1,7 +1,7 @@
 ---
 id: "question-history-8420"
 title: "请问一下1.2.0如何修改默认密码 nacos-opensource"
-date: "2024-04-23"
+date: "2024-05-17"
 category: expertConsultation
 description: "nacos-opensource 请问一下1.2.0如何修改默认密码"
 tags: ["1.2.0","修改","默认密码"]
@@ -14,37 +14,41 @@ keywords: ["1.2.0","修改","默认密码"]
 ---------------
 ## 专家官方解答 ：
 
-在Nacos 1.2.0版本中，修改默认密码的步骤如下：
+在Nacos 1.2.0中修改默认密码的步骤如下：
 
-1. **确认Nacos部署模式**：Nacos可以使用内置的嵌入式数据库（如Derby）进行部署，也可以使用外置数据库（如MySQL）。不同的部署模式，修改默认密码的方法略有不同。
+1. **初始化前修改**：
+   如果你的Nacos集群尚未初始化，可以在初始化之前修改默认的用户名和密码。你需要编辑`${nacos.home}/conf/`目录下的`mysql-schema.sql`或`derby-schema.sql`（取决于你使用的数据库类型），找到关于`users`表的插入语句，将默认密码`nacos`替换为你希望设置的新密码。注意，新密码需要经过BCrypt加密。你可以使用Nacos提供的`PasswordEncoderUtil`工具类进行加密，具体操作是在Java环境中运行以下代码，并将`nacos`替换为你想要设定的密码，之后获取输出的加密密码：
 
-2. **针对内置数据库部署**：
+   ```java
+   public class PasswordEncoderUtil {
+       public static void main(String[] args) {
+           System.out.println(new BCryptPasswordEncoder().encode("你想要设定的密码"));
+       }
+   }
+   ```
 
-   a. **直接在配置文件中修改**：找到Nacos安装目录下的`conf/derby-schema.sql`文件，定位到与用户密码相关的SQL插入语句。将其中默认的密码（通常为'nacos'）替换为你希望设置的新密码。确保新密码经过BCrypt加密处理。
+2. **初始化后修改**：
+   一旦Nacos集群已经初始化，用户名`nacos`将不能被修改，但你可以通过控制台或API来修改密码。以下是通过控制台修改密码的步骤：
 
-   b. **重新启动Nacos**：修改配置文件后，需要重启Nacos服务以使更改生效。执行`nacos/bin/startup.sh`（Linux环境）或`nacos/bin/startup.cmd`（Windows环境）启动Nacos。
+   - 登录Nacos控制台。
+   - 导航至`权限控制` -> `用户管理`。
+   - 选择默认用户`nacos`，点击修改密码，按照提示操作即可。
 
-   c. **验证密码更改**：使用新密码尝试登录Nacos控制台，确认密码已成功更新。
+   或者，使用运维API来修改密码，确保你有管理员权限，并且Nacos的鉴权功能已开启：
 
-3. **针对外置数据库部署**：
+   ```shell
+   curl -X PUT 'http://${nacos_host}:${nacos_port}/nacos/v1/auth/users?username=nacos&newPassword=${new_password}'
+   ```
 
-   a. **直接在数据库中修改**：登录Nacos所使用的外置数据库（如MySQL），执行相应的SQL更新语句来更改默认用户的密码。例如：
+   其中，`${new_password}`应替换为BCrypt加密后的新密码。
 
-      ```sql
-      UPDATE users SET password='{{新密码经BCrypt加密后的值}}' WHERE username='nacos';
-      ```
+请注意，直接在数据库中修改密码仅适用于外置数据库（如MySQL），并且需要确保密码经过正确的加密处理。对于内置Derby数据库，不推荐直接修改，以避免数据一致性问题。
 
-      确保新密码已经过BCrypt加密处理。
+参考链接：
+- Nacos密码加密工具使用：[Nacos官方文档](https://nacos.io/docs/zh-cn/2.0.3/api.html#%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86%E5%B7%A5%E5%85%B7)
+- Nacos权限控制与用户管理API：[Nacos API文档](https://nacos.io/zh-cn/docs/open-api.html)
 
-   b. **验证密码更改**：使用新密码尝试登录Nacos控制台，确认密码已成功更新。
-
-**注意事项**：
-
-- **BCrypt加密**：无论是直接修改配置文件还是在数据库中更新密码，都需要确保新密码经过BCrypt加密。可以使用Nacos提供的`PasswordEncoderUtil`工具类（或其他语言的BCrypt库）进行加密。
-
-- **权限要求**：如果Nacos开启了鉴权功能，进行上述操作可能需要具备管理员权限。
-
-综上所述，通过上述步骤即可在Nacos 1.2.0版本中成功修改默认密码。根据你的部署模式选择相应的方法进行操作。
+以上步骤可以帮助你在Nacos 1.2.0中完成修改默认密码的操作。
 
 
 <font color="#949494">---------------</font> 
@@ -54,9 +58,9 @@ keywords: ["1.2.0","修改","默认密码"]
 
 *专家经验:nacos用户密码设置 
  
- *专家经验:如何解决Nacos连接超时问题 
+ *专家经验:Nacos 配置加密 
  
- *[Nacos 2.0 升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading)
+ *专家经验:/nacos/v1/core/cluster/nodes 这个访问权限如何关闭？ 
 
 
  <font color="#949494">---------------</font> 
@@ -68,4 +72,4 @@ keywords: ["1.2.0","修改","默认密码"]
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
 
 ### 反馈
-如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=11605)给我们反馈。
+如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13642)给我们反馈。

@@ -1,9 +1,11 @@
 ---
 id: "question-history-11820"
 title: "nacos 在哪下载？ nacos-opensource"
-date: "2024-04-24"
+date: "2024-05-17"
 category: expertConsultation
 description: "nacos-opensource nacos 在哪下载？"
+tags: ["nacos","下载"]
+keywords: ["nacos","下载"]
 ---
 
 ## 用户问题 ： 
@@ -12,30 +14,14 @@ description: "nacos-opensource nacos 在哪下载？"
 ---------------
 ## 专家官方解答 ：
 
-在Nacos的下载问题上，我了解的知识明确指出，推荐使用的版本为Nacos 2.X系列的最新稳定版本。这是基于以下原因：
+Nacos可以在其官方网站或GitHub上下载最新稳定版本。具体步骤如下：
 
-1. **稳定性保障**：Nacos 1.0之后的非ALPHA、BETA、RC版本均视为稳定版本，意味着它们经过充分测试，适用于生产环境部署。
-2. **功能迭代**：尽管Nacos 1.X版本稳定，但官方已停止对其功能进行迭代，仅针对重大BUG和安全漏洞进行修复。相比之下，Nacos 2.X版本持续进行功能更新，能够提供更先进的特性和更好的兼容性。
-3. **官方推荐**：根据我了解的知识，官方明确推荐用户选择使用2.X的最新稳定版本，以获得最佳使用体验和最新的功能支持。
+1. 访问Nacos官方网站的下载页面：[https://nacos.io/download/nacos-server/](https://nacos.io/download/nacos-server/)
+2. 在该页面上，你可以找到Nacos服务器的最新稳定版本。根据你的操作系统选择相应的安装包进行下载。
+3. 另外，你也可以通过访问Nacos的GitHub发布页面来获取版本信息及下载：[https://github.com/alibaba/nacos/releases](https://github.com/alibaba/nacos/releases)
+4. 在GitHub的Release页面，找到最新的稳定版本发布项，点击对应的资产下载链接来获取Nacos服务器的安装包或压缩包。
 
-鉴于我了解的知识中提供了获取Nacos 2.X最新稳定版本的建议步骤，以下是具体的下载步骤及解释：
-
-**步骤一：访问Nacos官方下载页面**
-打开Nacos官方网站提供的下载链接：[https://nacos.io/download/nacos-server/](https://nacos.io/download/nacos-server/)。该页面提供了官方发布的最新版本下载资源，确保您获取的是官方认可且经过验证的软件包。
-
-**步骤二：查找并确认2.X最新稳定版本**
-在官方下载页面中，浏览列表找到标注为“Stable”（稳定版）的Nacos 2.X版本。通常，列表会按照发布时间从新到旧排序，位于顶部的2.X版本即为最新稳定版本。
-
-**步骤三：下载适合您操作系统的安装包**
-根据您的服务器或开发环境的操作系统类型（如Linux、Windows、macOS等），选择对应的Nacos安装包进行下载。通常，文件名中会包含版本号及操作系统标识，确保下载正确的版本。
-
-**步骤四：验证下载文件完整性（可选）**
-为了确保下载的安装包未在传输过程中受损，您可以对比官方提供的SHA-256校验码或使用其他哈希工具计算下载文件的哈希值，确认二者一致后再进行安装。
-
-**步骤五：按照官方文档进行安装与配置**
-下载完成后，参照Nacos官方文档提供的安装指南进行解压、配置及启动等操作。确保按照文档指示正确设置环境变量、配置文件等，以保证Nacos服务的正常运行。
-
-综上所述，通过遵循上述步骤，您可以顺利地从Nacos官方网站下载到2.X系列的最新稳定版本，并依据官方文档完成安装与配置。这样不仅确保了所使用版本的稳定性，还能享受到最新的功能更新与技术支持。
+以上两个途径都可以确保你获取到Nacos的最新稳定版本，适用于生产环境的部署与使用。
 
 
 <font color="#949494">---------------</font> 
@@ -44,6 +30,10 @@ description: "nacos-opensource nacos 在哪下载？"
 ## 参考链接 ：
 
 *专家经验:nacos哪个版本最常用 
+ 
+ *专家经验:Nacos 介绍 
+ 
+ *专家经验:Nacos使用的稳定性说明 
 
 
  <font color="#949494">---------------</font> 
@@ -55,4 +45,4 @@ description: "nacos-opensource nacos 在哪下载？"
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
 
 ### 反馈
-如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=11821)给我们反馈。
+如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13808)给我们反馈。

@@ -1,7 +1,7 @@
 ---
 id: "question-history-13480"
 title: "nacos 集群部署 nacos-opensource"
-date: "2024-05-14"
+date: "2024-05-17"
 category: expertConsultation
 description: "nacos-opensource nacos 集群部署"
 tags: ["nacos","集群部署"]
@@ -14,42 +14,48 @@ keywords: ["nacos","集群部署"]
 ---------------
 ## 专家官方解答 ：
 
-针对Nacos的开源集群部署问题，我们可以从以下几个方面进行详细解析和操作指导：
+在进行Nacos集群部署时，需关注以下几个关键步骤和注意事项，以确保部署的成功与安全性：
 
 ### 1. 鉴权配置
-在Nacos 2.2.3版本的Kubernetes（k8s）集群模式部署中，开启鉴权功能是确保服务安全的重要步骤。根据提供的知识，可以通过以下环境变量配置实现鉴权：
-- **NACOS_AUTH_ENABLE**: 设为`true`以启用鉴权。
-- **NACOS_AUTH_TOKEN**: 设置用于生成Token的密钥，建议使用大于32位的字符串，并进行Base64编码。
-- **NACOS_AUTH_IDENTITY_KEY**: 定义服务间通信的身份验证键。
-- **NACOS_AUTH_IDENTITY_VALUE**: 提供与`NACOS_AUTH_IDENTITY_KEY`对应的值，用于身份验证。
+为了保障Nacos集群的安全，建议启用鉴权功能。根据Nacos官方文档，需要配置以下参数：
+- `nacos.core.auth.enabled`=true 开启鉴权功能。
+- `nacos.core.auth.plugin.nacos.token.secret.key` 设置一个大于32位的字符串作为Token密钥，并进行Base64编码。
+- `nacos.core.auth.server.identity.key` 与 `nacos.core.auth.server.identity.value` 用于服务间身份验证。
 
-具体操作时，确保在Kubernetes的Deployment配置中包含这些环境变量，或者如果是使用Docker Compose或其他容器编排工具，也要在相应的服务定义中设置这些环境变量。
+在Kubernetes (k8s) 环境下，可以通过设置环境变量实现：
+- NACOS_AUTH_ENABLE=true
+- NACOS_AUTH_TOKEN=（Base64编码后的密钥）
+- NACOS_AUTH_IDENTITY_KEY=（自定义的标识键）
+- NACOS_AUTH_IDENTITY_VALUE=（标识键的值）
 
-### 2. 端口配置
-Nacos集群部署时涉及多个端口的开放与配置，主要端口及其用途包括：
-- **8848**: HTTP端口，用于客户端、控制台及OpenAPI访问。
-- **9848**: gRPC客户端请求服务端端口。
-- **9849**: gRPC服务端间通信端口。
-- **7848**: Jraft请求服务端端口，用于Raft协议相关的内部通信。
+### 2. 端口配置与开放
+Nacos集群需要正确配置端口以确保服务间的通信无阻。默认情况下，Nacos会使用以下端口：
+- 主端口（HTTP）: 8848
+- 客户端gRPC端口: 9848
+- 服务端gRPC端口: 9849
+- Jraft请求服务端端口: 7848
 
-在Kubernetes中，可以通过配置Service类型为NodePort或LoadBalancer，以公开必要的端口（通常是8848和9848）。确保网络策略允许所需端口的流量。
+在Kubernetes中，可以通过Service或者NodePort/LoadBalancer服务类型来公开必要的端口，通常至少需要公开8848和9848端口。
 
-### 3. 部署模式选择
-决定是否将配置中心和注册中心功能部署在同一集群中，需基于实际业务规模和隔离需求：
-- **合并部署**: 对于服务数量和配置管理需求相对简单的场景，可以将配置中心和注册中心合并部署，以简化运维复杂度。
-- **分离部署**: 对于大型复杂系统，尤其是对高可用性、性能隔离和安全性有严格要求的环境，建议配置中心与注册中心分离部署，以实现更细粒度的管理和故障隔离。
+### 3. 集群模式配置
+确保每个Nacos节点都知道其他节点的存在，这通常通过配置文件中的`cluster.conf`或相应的环境变量来实现。每个节点地址应列于此配置项中。
 
-### 总结步骤
-1. **配置鉴权**：在k8s部署配置中添加鉴权所需的环境变量。
-2. **端口暴露**：确保Kubernetes服务配置正确公开必要的Nacos端口。
-3. **选择部署模式**：根据业务需求决定是否将配置中心与注册中心分离部署。
+### 4. 部署策略选择
+根据业务需求决定是否将配置中心与注册中心分离部署。对于资源有限或服务较少的场景，可考虑合并在同一集群部署。而对于大型复杂系统，建议配置中心与注册中心独立部署以提高隔离性、可用性和可管理性。
 
-请参考以下官方文档链接以获取更详细的操作指南：
-- [Nacos鉴权配置文档](https://nacos.io/docs/latest/guide/user/auth/)
-- [Nacos端口说明与集群部署参考](https://nacos.io/docs/latest/guide/admin/cluster-mode-quick-start/)
-- [配置中心与注册中心部署策略](https://nacos.io/zh-cn/docs/2.0.3-compatibility.html)
+### 实施步骤概览
+1. **准备环境**：确认Kubernetes集群已就绪，准备好Nacos的Docker镜像。
+2. **配置鉴权**：按照上述鉴权参数设置环境变量。
+3. **端口映射**：在Kubernetes的Deployment或Service定义中正确映射所需的端口。
+4. **集群配置**：在每个Nacos实例的配置中指定其他节点地址。
+5. **部署Nacos实例**：使用Kubernetes的Deployment资源部署Nacos Pod，并确保有适当的数量以满足高可用需求。
+6. **服务发现与负载均衡**：配置Kubernetes Service确保外部访问和服务发现的正常运作。
 
-通过以上步骤，您可以有效地部署和配置Nacos集群，满足不同场景下的服务发现与配置管理需求。
+参考链接：
+- [Nacos官方鉴权文档](https://nacos.io/docs/latest/guide/user/auth/)
+- [Nacos官方Docker部署说明](https://github.com/nacos-group/nacos-docker)
+- [Nacos集群模式快速启动指南](https://nacos.io/docs/latest/guide/admin/cluster-mode-quick-start/)
+- [Nacos升级与兼容性说明](https://nacos.io/docs/latest/upgrading/200-compatibility/)
 
 
 <font color="#949494">---------------</font> 
@@ -73,4 +79,4 @@ Nacos集群部署时涉及多个端口的开放与配置，主要端口及其用
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
 
 ### 反馈
-如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13493)给我们反馈。
+如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13905)给我们反馈。

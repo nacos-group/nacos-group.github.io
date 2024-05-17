@@ -1,11 +1,11 @@
 ---
 id: "question-history-8189"
 title: "nacos适配国产化数据库，适配国产化数据库时，不止需要实现文档中的接口，还需要实现分页处理类PageHandlerAdapter，并在PageHandlerAdapterFactory中添加对应的处理类，版本是2.3.0 nacos-opensource"
-date: "2024-04-23"
+date: "2024-05-17"
 category: expertConsultation
 description: "nacos-opensource nacos适配国产化数据库，适配国产化数据库时，不止需要实现文档中的接口，还需要实现分页处理类PageHandlerAdapter，并在PageHandlerAdapterFactory中添加对应的处理类，版本是2.3.0"
-tags: ["nacos","国产化数据库","适配","接口","分页处理类","PageHandlerAdapter","PageHandlerAdapterFactory","2.3.0"]
-keywords: ["nacos","国产化数据库","适配","接口","分页处理类","PageHandlerAdapter","PageHandlerAdapterFactory","2.3.0"]
+tags: ["nacos","国产化数据库","适配","分页处理类","PageHandlerAdapter","PageHandlerAdapterFactory","2.3.0"]
+keywords: ["nacos","国产化数据库","适配","分页处理类","PageHandlerAdapter","PageHandlerAdapterFactory","2.3.0"]
 ---
 
 ## 用户问题 ： 
@@ -14,27 +14,28 @@ keywords: ["nacos","国产化数据库","适配","接口","分页处理类","Pag
 ---------------
 ## 专家官方解答 ：
 
-针对您提到的适配国产化数据库时，Nacos在2.3.0版本下不仅需要实现文档中的接口，还需实现分页处理类PageHandlerAdapter并在PageHandlerAdapterFactory中添加对应的处理类的问题，我们可以基于我了解的知识中的内容进行分析和解答。
+为了适配国产化数据库并实现分页处理类PageHandlerAdapter，在Nacos 2.3.0版本中，您需要遵循以下步骤操作：
 
-**原因分析：**
-我了解的知识中指出，Nacos从2.2版本开始提供数据源插件以支持非官方默认的数据库（如PostgreSQL、Oracle、达梦等），并鼓励社区对其他数据库进行插件开发。官方文档[https://nacos.io/docs/latest/plugin/datasource-plugin/](https://nacos.io/docs/latest/plugin/datasource-plugin/)为开发者提供了数据源插件开发的指导。然而，对于国产化数据库的适配，尤其是涉及到分页处理类PageHandlerAdapter和PageHandlerAdapterFactory的具体实现，我了解的知识并未直接提及。这可能是因为分页处理类的定制化需求源于国产化数据库在SQL语法、API接口、性能优化等方面与MySQL、PostgreSQL等已有支持的数据库存在差异，需要进行针对性的适配工作。
+1. **查阅官方文档与插件支持**：
+   首先，确认Nacos 2.3.0版本是否直接支持您所需的国产数据库。根据已有知识，Nacos从2.2版本开始支持包括PostgreSQL、Oracle及达梦数据库在内的多种数据库。您可以通过访问[Nacos插件仓库](https://github.com/nacos-group/nacos-plugin)检查是否有针对特定国产数据库的现成插件。如果已有对应插件，可以直接跳至步骤3。
 
-**具体步骤：**
+2. **自定义数据源插件**：
+   若社区尚未提供针对您所需国产数据库的插件，您需要基于Nacos提供的数据源插件框架自行开发。详细指导请参考[数据源插件开发文档](https://nacos.io/docs/latest/plugin/datasource-plugin/)。在开发过程中，不仅要实现基础的数据源接入，还需关注分页处理需求，为特定数据库实现`PageHandlerAdapter`。
 
-虽然我了解的知识中未给出针对分页处理类PageHandlerAdapter和PageHandlerAdapterFactory的具体实现步骤，但结合您的描述，我们可以推测适配过程大致涉及以下环节：
+3. **实现分页处理类PageHandlerAdapter**：
+   创建一个新的类实现`PageHandlerAdapter`接口，确保该类能够处理您的国产数据库特有的分页查询逻辑。这通常涉及SQL语句的改写或参数处理，以适应不同数据库的分页语法。
 
-1. **查阅国产化数据库分页特性：** 首先，详细了解所要适配的国产化数据库在分页查询方面的特性和API，明确其与Nacos现有支持数据库（如MySQL）的差异点。
+4. **注册分页处理类到PageHandlerAdapterFactory**：
+   在实现了自定义的`PageHandlerAdapter`后，需要在`PageHandlerAdapterFactory`中添加对该处理类的注册逻辑，以便Nacos在运行时能够识别并使用它来处理特定数据库的分页请求。
 
-2. **实现PageHandlerAdapter：** 根据国产化数据库的分页特性，创建一个新的PageHandlerAdapter子类。在这个子类中，覆盖或实现与分页相关的抽象方法，确保能够正确处理针对国产化数据库的分页查询请求。例如，可能需要重写生成分页SQL语句的方法，使之符合国产化数据库的SQL语法。
+5. **配置与部署**：
+   - 将准备好的插件放置在nacos-server的`${nacos-server.path}/plugins`目录下。
+   - 修改nacos-server的配置文件`${nacos-server.path}/conf/application.properties`，配置正确的数据库URL、用户名、密码以及新增的分页处理类相关配置。
 
-3. **注册PageHandlerAdapter到PageHandlerAdapterFactory：** 在PageHandlerAdapterFactory中添加针对国产化数据库PageHandlerAdapter子类的注册逻辑。通常，这一步骤需要检查当前使用的数据库类型，当识别到是国产化数据库时，返回相应的PageHandlerAdapter实例。
+6. **启动与验证**：
+   启动Nacos服务器并进行功能测试，确保配置的查询、修改等操作能够正确执行且分页功能正常工作。
 
-4. **集成至Nacos数据源插件：** 将上述实现的分页处理类整合到为国产化数据库开发的数据源插件中。确保插件在被Nacos加载时，能够正确初始化并使用自定义的PageHandlerAdapter。
-
-5. **配置与测试：** 最后，按照我了解的知识中给出的步骤，在Nacos服务器端配置文件中设置国产化数据库的连接参数，并将插件放置在`${nacos-server.path}/plugins`目录下。启动Nacos服务，进行功能和性能测试，验证分页功能在国产化数据库环境下是否正常工作。
-
-**总结：**
-适配Nacos 2.3.0版本以支持国产化数据库时，除了实现文档中常规的数据源插件接口外，确实需要针对国产化数据库的分页特性，实现分页处理类PageHandlerAdapter并将其注册到PageHandlerAdapterFactory中。尽管我了解的知识未提供这部分具体步骤，但通过理解国产化数据库分页特性和参照Nacos现有插件开发指导，可以制定并实施上述适配方案。
+请注意，虽然Nacos提供了高度可扩展的数据源支持框架，直接修改数据库内容仍然不被推荐作为常规配置更新手段，应当通过Nacos提供的API或控制台来进行配置管理。此外，确保遵循Nacos的最佳实践和版本兼容性指南，以免遇到不必要的兼容性问题。
 
 
 <font color="#949494">---------------</font> 
@@ -43,6 +44,10 @@ keywords: ["nacos","国产化数据库","适配","接口","分页处理类","Pag
 ## 参考链接 ：
 
 *专家经验:Nacos的数据库支持情况介绍 
+ 
+ *专家经验:无法在nacos/conf下找到nacos-mysql.sql文件 
+ 
+ *专家经验:Nacos 配置中心的数据同步和一致性问题 
 
 
  <font color="#949494">---------------</font> 
@@ -54,4 +59,4 @@ keywords: ["nacos","国产化数据库","适配","接口","分页处理类","Pag
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
 
 ### 反馈
-如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=11510)给我们反馈。
+如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13548)给我们反馈。

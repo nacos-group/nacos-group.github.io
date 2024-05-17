@@ -1,11 +1,11 @@
 ---
 id: "question-history-10488"
 title: "#Nacos支持哪些存储介质？ nacos-opensource"
-date: "2024-04-23"
+date: "2024-05-17"
 category: expertConsultation
 description: "nacos-opensource #Nacos支持哪些存储介质？"
-tags: ["open-source","存储介质"]
-keywords: ["open-source","存储介质"]
+tags: ["Nacos","存储介质"]
+keywords: ["Nacos","存储介质"]
 ---
 
 ## 用户问题 ： 
@@ -14,22 +14,31 @@ keywords: ["open-source","存储介质"]
 ---------------
 ## 专家官方解答 ：
 
-Nacos支持以下存储介质：
+Nacos主要支持以下存储介质：
 
-1. **MySQL数据库**：Nacos官方直接提供了对MySQL数据库的支持，适用于MySQL 5.6版本及以上。MySQL作为独立部署的数据库，适用于生产环境中的大规模部署和高可用需求。
+1. **MySQL**：Nacos官方默认支持MySQL作为配置数据的存储后台，要求版本为5.6及以上。这为大多数用户提供了一个稳定且广泛使用的存储选项。
 
-2. **Derby数据库**：Nacos启动时会自动携带Derby数据库，无需用户单独部署。对于轻量级场景或开发测试环境，Derby提供了一种便捷的选择。
+2. **Derby**：除了MySQL，Nacos还内置支持Derby数据库，这是一个轻量级的嵌入式数据库，适用于测试和轻量级部署场景，无需单独安装部署。
 
-3. **兼容MySQL协议的数据库**：由于Nacos支持MySQL协议，因此所有遵循该协议的数据库产品，如TiDB和MariaDB，都可以直接与Nacos配合使用。
+3. **PostgreSQL**：自Nacos 2.2版本起，通过引入数据源插件机制，官方已支持PostgreSQL数据库，满足希望使用PostgreSQL的用户需求。
 
-4. **插件支持的数据库**：
-   - **PostgreSQL**：Nacos通过数据源插件支持PostgreSQL数据库，用户需从[nacos-group/nacos-plugin](https://github.com/nacos-group/nacos-plugin)项目获取相应插件，或按照[datasource-plugin文档](https://nacos.io/docs/latest/plugin/datasource-plugin/)自行开发。
-   - **Oracle**：Nacos同样通过数据源插件支持Oracle数据库，插件获取与使用方式同上。
-   - **达梦数据库**：达梦数据库也在Nacos插件支持之列，遵循与PostgreSQL和Oracle同样的插件获取与配置流程。
+4. **Oracle**：同样从2.2版本开始，Nacos增加了对Oracle数据库的支持，适合那些已经在企业环境中广泛使用Oracle的用户。
 
-5. **其他数据库（可能需要自行开发插件）**：对于Nacos插件项目尚未涵盖的其他类型数据库，如国产GaussDB或GoldenDB，用户可以参考[datasource-plugin文档](https://nacos.io/docs/latest/plugin/datasource-plugin/)自行开发插件以实现与Nacos的集成。一旦开发完成并放置在`${nacos-server.path}/plugins`目录下，通过相应配置即可启用。
+5. **达梦数据库**：作为对国产数据库支持的一部分，Nacos也兼容达梦数据库。
 
-综上所述，Nacos支持的存储介质包括MySQL、Derby以及兼容MySQL协议的数据库（如TiDB、MariaDB），并通过插件机制扩展支持PostgreSQL、Oracle和达梦数据库。对于其他未直接支持的数据库，用户可参照官方文档开发数据源插件以实现与Nacos的集成。
+对于其他数据库类型，如国产的GaussDB或GoldenDB，以及Microsoft SQL Server等，虽然Nacos官方没有直接声明支持，但通过其提供的数据源插件扩展机制，用户可以根据文档自行开发适配插件来实现对这些数据库的支持。具体操作步骤如下：
+
+- **检查插件**: 首先访问[Nacos数据源插件仓库](https://github.com/nacos-group/nacos-plugin)，查看是否有社区已贡献的对应数据库插件。
+  
+- **自定义开发**: 如未找到现成插件，参考[Nacos数据源插件开发文档](https://nacos.io/docs/latest/plugin/datasource-plugin/)自行开发。
+  
+- **插件部署**: 将开发或获取到的插件放置到`nacos-server/plugins`目录下。
+  
+- **配置修改**: 在`nacos-server/conf/application.properties`中，调整数据库配置项，如数据库类型、URL、用户名、密码等，以匹配所选用的数据库。
+
+- **启动Nacos**: 完成上述步骤后，启动Nacos服务器，此时Nacos将使用指定的数据库作为配置存储介质。
+
+综上所述，Nacos不仅支持常见的MySQL和Derby，还通过扩展机制兼容了包括PostgreSQL、Oracle在内的多种数据库，确保了在不同环境下的灵活性和适应性。对于特定数据库的支持，用户可以根据实际情况选择官方支持的数据库或自主开发插件以满足需求。
 
 
 <font color="#949494">---------------</font> 
@@ -37,11 +46,11 @@ Nacos支持以下存储介质：
 
 ## 参考链接 ：
 
-*专家经验:Nacos是否支持IPV6 
- 
- *专家经验:主流的配置中心有哪些？ 
+*专家经验:主流的配置中心有哪些？ 
  
  *专家经验:Nacos的数据库支持情况介绍 
+ 
+ *专家经验:Nacos 介绍 
 
 
  <font color="#949494">---------------</font> 
@@ -53,4 +62,4 @@ Nacos支持以下存储介质：
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
 
 ### 反馈
-如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=11648)给我们反馈。
+如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13685)给我们反馈。
