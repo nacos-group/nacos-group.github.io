@@ -70,10 +70,11 @@ sortedPosts.forEach((item) => {
 
 const prev = articlePosts[0].entries[currentIndex - 1];
 const next = articlePosts[0].entries[currentIndex + 1];
+const baseLayout_title = post?.data?.title || "Nacos Blog";
 ---
 
 <span class="blog-slug-wrapper">
-	<BaseLayout align="docs" title="Nacos Blog">
+	<BaseLayout align="docs" title={baseLayout_title}>
 		<div>
 			<div
 				class="w-[20%] sidebar-content fixed overflow-auto h-full hidden 2xl:inline-block xl:inline-block lg:inline-block md:inline-block"
