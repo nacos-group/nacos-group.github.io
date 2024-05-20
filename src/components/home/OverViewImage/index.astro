@@ -5,7 +5,7 @@ const t = useTranslations(Astro);
 ---
 
 <div class="overview-image-wrapper">
-    <div class="top-title w-full flex flex-col items-center mb-[31px] mt-16">
+    <div class="top-title w-full flex flex-col items-center mb-[10px] pt-16">
         <span class="text-gray-10 text-xs mb-6"
             >{t("home.overviewcard.about")}</span
         >
@@ -35,7 +35,6 @@ const t = useTranslations(Astro);
         /* 小于50rem  小于 800px */
         @media (max-width: 50rem) {
             .top-title {
-                margin-top: 2.5rem;
                 margin-bottom: 2.5rem;
             }
             .top-title .title {

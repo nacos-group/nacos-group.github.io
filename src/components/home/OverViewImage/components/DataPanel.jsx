@@ -10,7 +10,7 @@ export const DataPanel = () => {
   const appContext = useContext(AppContext);
   return (
     <Panel title="数据面" width="90%">
-      <div className="flex items-center justify-evenly w-full pt-4 pr-4">
+      <div className="flex items-center justify-evenly w-full pt-1 pr-4">
         <Product
           image={
             "https://gw.alicdn.com/imgextra/i2/O1CN014ZK8OP1msdEMGutsg_!!6000000005010-2-tps-166-160.png"

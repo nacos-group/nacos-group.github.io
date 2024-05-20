@@ -42,7 +42,7 @@ export const Panel = ({
             {children}
           </div> */}
         </div>
-        <div class="h-full w-full flex items-center justify-evenly relative p-4">
+        <div class="h-full w-full flex items-center justify-evenly relative p-1">
           {children}
         </div>
       </div>
