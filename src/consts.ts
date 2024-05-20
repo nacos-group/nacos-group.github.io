@@ -57,7 +57,10 @@ export const i18nMap = {
         'activity-detail': 'blog.activity.detail.event',
         'all': 'blog.activity.all.event'
 
-    }
+    },
+    "wuyi": {
+      'expertConsultation': 'wuyi.meet-professor.title',
+    },
 }
 
 export const BLOG_CATEGORY = [

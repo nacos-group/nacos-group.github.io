@@ -222,6 +222,8 @@ export default {
 	'blog.activity.all.event':'All Activities',
 	'blog.activity.community.announcement':'Community Announcement',
 	'blog.activity.release.statement':'Release Statement',
+	'wuyi.meet-professor.title': "Meet Professor",
+	'wuyi.meet-professor.article': "Article",
 
 	'blog.activity.explore':'Explore the Nacos blog to learn about the latest information, tutorials, and technical analysis on service discovery and configuration management.',
 	'blog.all.articles':'All Articles',

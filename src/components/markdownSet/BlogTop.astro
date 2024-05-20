@@ -13,6 +13,7 @@ const backIconMap = {
   "news-sub": "/news",
   "activity-sub": "/activity",
 };
+const typeArr = ["home", "blog-sub", "wuyi-sub"];
 ---
 
   <div
@@ -22,7 +23,7 @@ const backIconMap = {
       <div class="blog_header_title">{title}</div>
       <div class="blog_category_menu">
         {
-          ["blog-sub", "home"].includes(type) &&
+          typeArr.includes(type) &&
           category &&
             category.map((category) => {
               return (
@@ -38,7 +39,7 @@ const backIconMap = {
         }
 
         {
-          !["home", "blog-sub"].includes(type) && (
+          !typeArr.includes(type) && (
             <Button
               type="primary"
               href={backIconMap[type]}

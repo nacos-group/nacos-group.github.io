@@ -238,6 +238,9 @@ export default {
 	'page.blog.news.community.cooperation':'社区合作',
 	'page.limiting.prompt': '当前下载通道太拥挤，请稍后重试...',
 	"themeSelect.accessibleLabel": "选择主题",
+	'wuyi.meet-professor.title': "专家答疑审阅后归档",
+	'wuyi.meet-professor.article': "文章",
+	
 
 	"page.team.introduction": '团队介绍',
 	"page.team.introduction.text": 'Nacos 创始团队来自于阿里云微服务架构团队，团队由数十位在微服务技术领域有深厚经验的工程师组成，他们在阿里巴巴的内部微服务技术积累和实践的基础上，设计开发了 Nacos 项目。 Nacos 开源之后，社区不断壮大，和全球开发者一同推动项目向前发展，功能也在持续得到完善和优化。微服务架构团队支撑了集团千万实例扩展，打造微服务企业产品，通过开源连接百万开发者，定义下一代微服务架构，致力于打造世界一流微服务体系。欢迎加入我们。',

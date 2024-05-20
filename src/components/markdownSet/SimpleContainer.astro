@@ -1,20 +1,9 @@
 ---
 import BaseContainer from '@components/common/BaseContainer.astro';
-import Pagination from "@components/common/Pagination.astro";
 import SimpleCard from "@components/markdownSet/SimpleCard.astro";
-
-interface Post {
-    slug: string;
-    body: string;
-    collection: string;
-    data: {
-        title: string;
-        description: string;
-        date: string;
-        keywords?: any[];
-    };
-    excerpt?: string;
-};
+import type { Post } from 'src/types';
+import { useTranslations } from "@i18n/util";
+const t = useTranslations(Astro);
 
 interface Props {
     pageList: Post[];
@@ -50,7 +39,9 @@ if(pageList && pageList.length) {
     <div class="max-w-[200px] min-w-[200px] hidden 2xl:block xl:block lg:block relative">
         <div class="sticky top-[100px]">
             {pageList && pageList.length? 
-                <div class="text-lg text-gray-08 mb-[32px]">文章</div>
+                <div class="text-lg text-gray-08 mb-[32px]">
+                    {t('wuyi.meet-professor.article')}
+                </div>
                 :null
             }
             <div class="text-[16px] text-gray-14">

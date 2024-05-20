@@ -13,6 +13,7 @@ interface Props {
   relativePosition?: 'page' | 'parent';
   top?: "4rem" | "3.5rem";
   showArrow?: boolean;
+  hotIcon?: HTMLElement;
 }
 
 const {
@@ -25,7 +26,8 @@ const {
   showArrow = true,
   target = "_self",
   top = "4rem",
-  relativePosition = 'parent'
+  relativePosition = 'parent',
+  hotIcon = '',
 } = Astro.props;
 
 // 父组件的定位方式
@@ -67,6 +69,7 @@ const Component = slot;
               }`}
             >
               {title}
+              {hotIcon}
             </a>
           )
         }
