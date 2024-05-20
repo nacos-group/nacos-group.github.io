@@ -96,10 +96,11 @@ const ifactive = (toggle) => {
           const newFlames = {
             aftericon: route == "/wuyi/"? <Flames /> : "",
           };
+          const targetRoute = target == "_self" && route? `${ifzh? "" : "/en"}${route}`: route;
           return (
             <Toggle
               title={ifzh ? label : translations?.en}
-              route={route? `${ifzh? "" : "/en"}${route}`: ""}
+              route={targetRoute}
               trigger={trigger}
               active={active}
               slot={slot}
