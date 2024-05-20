@@ -1,9 +1,9 @@
 ---
 import Button from '@components/common/Button.astro';
 import moment from "moment";
-import { useTranslations } from "@i18n/util";
-
+import { useTranslations, isChinese } from "@i18n/util";
 const t = useTranslations(Astro);
+const ifzh = isChinese(Astro);
 export type Props = {
   source: string;
   post: {
@@ -46,7 +46,7 @@ const { post, source, posterWidth, type = "blog",index = 0, class: className = "
     <Button 
         size="large" 
         type="card"
-        href={`/blog/${post.slug}/?source=${source}`}
+        href={`${ifzh? '': '/en'}/blog/${post.slug}/?source=${source}`}
         class="rounded-3xl text-xs absolute bottom-3 bg-gray-02"
     >
         {t('blog.card.read.artile')}
