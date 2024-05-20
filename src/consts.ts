@@ -84,6 +84,14 @@ export const BLOG_CATEGORY = [
     },
 ];
 
+export const WUYI_CATEGORY = [
+    {
+        type: 'expertConsultation',
+        title: '全部文章',
+        href: '/wuyi/'
+    },
+];
+
 export const BLOG_CATEGORY_EN = BLOG_CATEGORY.map(item => ({
     ...item,
     href: '/en' + item.href

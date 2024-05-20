@@ -13,14 +13,15 @@ interface Post {
         date: string;
         keywords?: any[];
     };
+    excerpt?: string;
 };
 
 interface Props {
     pageList: Post[];
-    allPages?: string[];
+    source?: string;
 }
 
-const { pageList, allPages } = Astro.props;
+const { pageList, source="blog" } = Astro.props;
 
 // Get word for mdx
 const getExcerpt = (content, length = 200, defaultExcerpt = '') => {
@@ -57,7 +58,7 @@ if(pageList && pageList.length) {
                     pageList.map(post=>{
                         return (
                             <a 
-                                class="text-gray-14 no-underline font-normal block mb-[24px]"
+                                class="text-gray-14 no-underline font-normal block mb-[24px] pagelist-a hover:font-bold duration-100"
                                 href={`#${post.slug}`}
                             >
                                 { post.data.title }
@@ -74,7 +75,7 @@ if(pageList && pageList.length) {
             pageList.map((post) => (
                 <SimpleCard 
                     post={post as Post} 
-                    source="blog"
+                    source={source}
                     useAnchor={true}
                 />
             ))

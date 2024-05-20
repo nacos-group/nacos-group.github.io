@@ -22,6 +22,7 @@ export type Props = {
   type?: string;
   index?: number;
   useAnchor?: boolean;
+  class?: string;
 };
 
 const { post, source, posterWidth, type = "blog",index = 0, class: className = "", useAnchor=false, } = Astro.props;
@@ -29,7 +30,7 @@ const { post, source, posterWidth, type = "blog",index = 0, class: className = "
 
 <div class={"card h-[332px] p-[24px] bg-gray-01 shadow-none w-full flex" + className}>
     <!-- 锚点 -->
-    {useAnchor?<a name={post.slug} class={"absolute z-[-100] top-[-4rem]"}></a>:null}
+    {useAnchor?<a id={post.slug} class={"absolute z-[-100] top-[-4rem]"}></a>:null}
     
     <p class="text-gray-07 text-xs font-normal">
         {moment(post.data.date).format("MMMM D, YYYY")}

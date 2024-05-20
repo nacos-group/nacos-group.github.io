@@ -4,45 +4,47 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import Pagination from "@components/common/Pagination.astro";
 import BlogTop from "@components/markdownSet/BlogTop.astro";
-import { useTranslations } from '@i18n/util';
-import { BLOG_CATEGORY } from 'src/consts';
-import type { Post } from 'src/types';
+import { useTranslations } from "@i18n/util";
 import SimpleContainer from '@components/markdownSet/SimpleContainer.astro';
+import { WUYI_CATEGORY } from 'src/consts';
+import type { Post } from 'src/types';
 const t = useTranslations(Astro);
+
 // 分页数据在page参数中传递
 const { page } = Astro.props;
 
 const allPages = [...Array(page.lastPage).keys()].map((num) => {
-    return `/blog/case${num === 0 ? "" : `/${String(num + 1)}`}`;
+    return `/wuyi${num === 0 ? "" : `/${String(num + 1)}`}`;
 });
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-    const posts = await getCollection("blog");
-
-    const sortedPosts = posts.sort(
-        (a,b)=> new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
+    const blogCategories = new Set(WUYI_CATEGORY.map((item) => item.type));
+    const posts = await getCollection("blog", (item) =>
+        blogCategories.has(item.data.category),
     );
 
-    const casePosts = sortedPosts.filter((post) => {
-        return post.data.category === "case";
-    });
-    return paginate(casePosts, { pageSize: 9 });
+    const sortedPosts = posts.sort(
+        (a, b) =>
+            new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf(),
+    );
+    return paginate(sortedPosts, { pageSize: 9 });
 }
 ---
 
-<BaseLayout title="Nacos Blog" >
+<BaseLayout title="SCA FAQ">
     <BlogTop 
-        title={t("blog.article.case.best.practices")}  
-        type="blog-sub" 
-        source="blog"
-        category={BLOG_CATEGORY}
-        activeCategory='case'
+        title={t("blog.all.articles")} 
+        type="wuyi-sub" 
+        source="wuyi"
+        category={WUYI_CATEGORY}
+        activeCategory="expertConsultation"
     />
     <div
-        class="flex flex-col items-center gap-20 py-8 lg:p-12 xl:p-20 bg-gray-02"
+        class="mx-auto flex flex-col items-center gap-20 py-8 lg:p-12 xl:p-20 bg-gray-02"
     >
         <SimpleContainer 
             pageList={page.data as Post[]}
+            source="wuyi"
         />
 
         <Pagination restRoute allPages={allPages} page={page} class="mx-auto" />

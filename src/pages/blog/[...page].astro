@@ -7,6 +7,7 @@ import { BLOG_CATEGORY } from 'src/consts';
 import BlogTop from "@components/markdownSet/BlogTop.astro";
 import SimpleContainer from '@components/markdownSet/SimpleContainer.astro';
 import { useTranslations } from '@i18n/util';
+import type { Post } from 'src/types';
 const t = useTranslations(Astro);
 
 // 分页数据在page参数中传递
@@ -41,8 +42,8 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
         class="mx-auto flex flex-col items-center gap-20 py-8 lg:p-12 xl:p-20 bg-gray-02"
     >
         <SimpleContainer 
-            pageList={page.data}
-            allPages={allPages}
+            pageList={page.data as Post[]}
+            source="blog"
         />
 
         <Pagination restRoute allPages={allPages} page={page} class="mx-auto" />
