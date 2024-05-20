@@ -27,7 +27,7 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
         (a, b) =>
             new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf(),
     );
-    return paginate(sortedPosts, { pageSize: 9 });
+    return paginate(sortedPosts, { pageSize: 20 });
 }
 ---
 
