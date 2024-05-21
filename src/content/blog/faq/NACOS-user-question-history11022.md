@@ -22,11 +22,11 @@ keywords: ["2.2.0","api v2"]
 
 ## 参考链接 ：
 
-*专家经验:Nacos1.0和Nacos2.0的api有什么区别？2.0的中小版本升级相关问题 
+*专家经验：Nacos1.0和Nacos2.0的api有什么区别？2.0的中小版本升级相关问题 
  
- *专家经验:Nacos 欢迎你 
+ *专家经验：Nacos 欢迎你 
  
- *专家经验:Nacos 如何关闭/nacos/v2/console/namespace，使api不对外开放 
+ *专家经验：Nacos 如何关闭/nacos/v2/console/namespace，使api不对外开放 
 
 
  <font color="#949494">---------------</font> 

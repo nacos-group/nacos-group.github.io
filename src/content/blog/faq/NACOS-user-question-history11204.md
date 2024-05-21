@@ -36,7 +36,7 @@ keywords: ["集群","VIP"]
 
 ## 参考链接 ：
 
-*专家经验:Nacos部署开放端口，集群部署开通端口 
+*专家经验：Nacos部署开放端口，集群部署开通端口 
  
  *[Nacos 监控手册](https://nacos.io/docs/latest/guide/admin/monitor-guide)
 

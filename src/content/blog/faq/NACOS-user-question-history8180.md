@@ -30,11 +30,11 @@ keywords: ["nacos-mysql.sql","nacos conf","找不到文件"]
 
 ## 参考链接 ：
 
-*专家经验:无法在nacos/conf下找到nacos-mysql.sql文件 
+*专家经验：无法在nacos/conf下找到nacos-mysql.sql文件 
  
- *专家经验:Nacos 欢迎你 
+ *专家经验：Nacos 欢迎你 
  
- *专家经验:nacos 各类配置文件都在那？ 
+ *专家经验：nacos 各类配置文件都在那？ 
 
 
  <font color="#949494">---------------</font> 

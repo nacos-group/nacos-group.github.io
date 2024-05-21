@@ -30,11 +30,11 @@ keywords: ["继续发送请求","服务实例","健康状态","false"]
 
 ## 参考链接 ：
 
-*专家经验:如何向健康状态为false的服务实例继续发请求 
+*专家经验：如何向健康状态为false的服务实例继续发请求 
  
  *[Java SDK](https://nacos.io/docs/latest/guide/user/sdk)
  
- *专家经验:Nacos中持久化服务和临时服务的区别 
+ *专家经验：Nacos中持久化服务和临时服务的区别 
 
 
  <font color="#949494">---------------</font> 

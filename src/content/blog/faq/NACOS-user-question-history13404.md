@@ -57,7 +57,7 @@ keywords: ["开源","nacos.core.auth.plugin.nacos.token.secret"]
 
 *[Kubernetes Nacos](https://nacos.io/docs/latest/quickstart/quick-start-kubernetes)
  
- *专家经验:Nacos 欢迎你 
+ *专家经验：Nacos 欢迎你 
  
  *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
 

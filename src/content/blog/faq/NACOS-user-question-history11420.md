@@ -71,7 +71,7 @@ sh startup.sh -m cluster
  
  *[Kubernetes Nacos](https://nacos.io/docs/latest/quickstart/quick-start-kubernetes)
  
- *专家经验:nacos的部署 
+ *专家经验：nacos的部署 
 
 
  <font color="#949494">---------------</font> 

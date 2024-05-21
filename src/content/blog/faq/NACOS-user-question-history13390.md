@@ -56,7 +56,7 @@ keywords: ["nacos","docker","derby","grafana","监控","prometheus","prometheus-
 
 ## 参考链接 ：
 
-*专家经验:Nacos支持推送监控数据到监控系统吗？ 
+*专家经验：Nacos支持推送监控数据到监控系统吗？ 
  
  *[Nacos 监控手册](https://nacos.io/docs/latest/guide/admin/monitor-guide)
  

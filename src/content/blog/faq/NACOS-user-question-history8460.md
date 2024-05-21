@@ -46,7 +46,7 @@ keywords: ["nacos","v2.2.3","k8s","微服务","注册","nacos","强制删除","p
 
 *[Nacos 2.0 升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading)
  
- *专家经验:在Nacos控制台上删除服务或实例，过一会儿还会出现 
+ *专家经验：在Nacos控制台上删除服务或实例，过一会儿还会出现 
  
  *[Java SDK](https://nacos.io/docs/latest/guide/user/sdk)
 

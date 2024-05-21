@@ -42,11 +42,11 @@ Nacos raft日志过大的问题主要原因是Nacos使用了Sofa的JRaft作为Ra
 
 ## 参考链接 ：
 
-*专家经验:Nacos raft日志太大怎么清理 
+*专家经验：Nacos raft日志太大怎么清理 
  
- *专家经验:如何获取Nacos-Client的日志？ 
+ *专家经验：如何获取Nacos-Client的日志？ 
  
- *专家经验:nacos的部署 
+ *专家经验：nacos的部署 
 
 
  <font color="#949494">---------------</font> 

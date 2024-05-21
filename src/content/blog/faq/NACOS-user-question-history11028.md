@@ -43,11 +43,11 @@ keywords: ["linux","部署","access.log","保留时间"]
 
 ## 参考链接 ：
 
-*专家经验:Nacos 配置access.log的保留时间 
+*专家经验：Nacos 配置access.log的保留时间 
  
  *[Nacos 2.0 升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading)
  
- *专家经验:nacos的部署 
+ *专家经验：nacos的部署 
 
 
  <font color="#949494">---------------</font> 

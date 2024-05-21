@@ -46,7 +46,7 @@ keywords: ["nacos","2.3.0","元数据大小限制","API无法注册"]
 
 ## 参考链接 ：
 
-*专家经验:Param 'Metadata' is illegal, the param length should not exceed %d 
+*专家经验：Param 'Metadata' is illegal, the param length should not exceed %d 
  
  *[Kubernetes Nacos](https://nacos.io/docs/latest/quickstart/quick-start-kubernetes)
  

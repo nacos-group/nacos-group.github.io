@@ -46,7 +46,7 @@ keywords: ["nacos","docker","搭建","本地","单机","配置中心","具体方
 
 *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
  
- *专家经验:Nacos用作配置中心的话，能够支持百万级别的客户端连接嘛 
+ *专家经验：Nacos用作配置中心的话，能够支持百万级别的客户端连接嘛 
  
  *[Nacos 融合 Spring，成为注册配置中心](https://nacos.io/docs/latest/ecology/use-nacos-with-spring)
 

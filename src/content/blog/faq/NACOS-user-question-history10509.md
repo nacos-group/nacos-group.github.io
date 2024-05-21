@@ -36,9 +36,9 @@ Nacos和Eureka之间的区别主要体现在以下几个方面：
 
 ## 参考链接 ：
 
-*专家经验:Nacos和Eureka的区别是什么？ 
+*专家经验：Nacos和Eureka的区别是什么？ 
  
- *专家经验:Nacos使用的稳定性说明 
+ *专家经验：Nacos使用的稳定性说明 
  
  *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
 

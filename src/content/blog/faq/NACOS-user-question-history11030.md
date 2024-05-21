@@ -28,11 +28,11 @@ Nacos确实提供有针对ARM架构的Docker镜像。您可以在社区中找到
 
 ## 参考链接 ：
 
-*专家经验:Nacos 请问nacos有arm架构的docker镜像么 
+*专家经验：Nacos 请问nacos有arm架构的docker镜像么 
  
  *[FAQ](https://nacos.io/docs/latest/guide/user/faq)
  
- *专家经验:Nacos Docker镜像的参数和Nacos系统参数的映射关系 
+ *专家经验：Nacos Docker镜像的参数和Nacos系统参数的映射关系 
 
 
  <font color="#949494">---------------</font> 

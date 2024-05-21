@@ -58,11 +58,11 @@ keywords: ["服务提供者","Nacos注册中心","续约"]
 
 ## 参考链接 ：
 
-*专家经验:实际服务正常再跑 注册中心上没了怎么回事? 
+*专家经验：实际服务正常再跑 注册中心上没了怎么回事? 
  
  *[Nacos 融合 Spring Cloud，成为注册配置中心](https://nacos.io/docs/latest/ecology/use-nacos-with-spring-cloud)
  
- *专家经验:Nacos nacos 2.3.0 如何关闭cp模式，只保留ap的注册中心？ 
+ *专家经验：Nacos nacos 2.3.0 如何关闭cp模式，只保留ap的注册中心？ 
 
 
  <font color="#949494">---------------</font> 

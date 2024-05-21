@@ -34,11 +34,11 @@ keywords: ["Nacos","Pod","memory cache","service life","RSS memory"]
 
 ## 参考链接 ：
 
-*专家经验:Nacos 内存占用过大 
+*专家经验：Nacos 内存占用过大 
  
- *专家经验:Fail to get leader of group naming_persistent_service_v2 
+ *专家经验：Fail to get leader of group naming_persistent_service_v2 
  
- *专家经验:Nacos 介绍 
+ *专家经验：Nacos 介绍 
 
 
  <font color="#949494">---------------</font> 

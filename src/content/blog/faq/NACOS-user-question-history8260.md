@@ -40,7 +40,7 @@ keywords: ["持久化实例","健康检查","频率","参数修改"]
 
 *[Java SDK](https://nacos.io/docs/latest/guide/user/sdk)
  
- *专家经验:Nacos中持久化服务和临时服务的区别 
+ *专家经验：Nacos中持久化服务和临时服务的区别 
 
 
  <font color="#949494">---------------</font> 

@@ -36,11 +36,11 @@ Nacos支持以下客户端语言：
 
 ## 参考链接 ：
 
-*专家经验:nacos 多语言支持 
+*专家经验：nacos 多语言支持 
  
  *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
  
- *专家经验:Nacos是否支持IPV6 
+ *专家经验：Nacos是否支持IPV6 
 
 
  <font color="#949494">---------------</font> 

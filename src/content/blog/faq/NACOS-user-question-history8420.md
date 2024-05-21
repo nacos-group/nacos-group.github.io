@@ -56,11 +56,11 @@ keywords: ["1.2.0","修改","默认密码"]
 
 ## 参考链接 ：
 
-*专家经验:nacos用户密码设置 
+*专家经验：nacos用户密码设置 
  
- *专家经验:Nacos 配置加密 
+ *专家经验：Nacos 配置加密 
  
- *专家经验:/nacos/v1/core/cluster/nodes 这个访问权限如何关闭？ 
+ *专家经验：/nacos/v1/core/cluster/nodes 这个访问权限如何关闭？ 
 
 
  <font color="#949494">---------------</font> 

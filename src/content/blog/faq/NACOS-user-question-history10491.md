@@ -42,11 +42,11 @@ Nacos的配置推送机制从UDP转向gRPC双向流，体现了从追求速度�
 
 ## 参考链接 ：
 
-*专家经验:Nacos UDP推送失败 
+*专家经验：Nacos UDP推送失败 
  
- *专家经验:怎么能让nacos 的actuator 查不到任何信息呢 
+ *专家经验：怎么能让nacos 的actuator 查不到任何信息呢 
  
- *专家经验:Nacos 服务数据一直推送失败 
+ *专家经验：Nacos 服务数据一直推送失败 
 
 
  <font color="#949494">---------------</font> 

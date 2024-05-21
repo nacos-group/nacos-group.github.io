@@ -34,7 +34,7 @@ keywords: ["Nacos","网络分区","网络隔离"]
 
 ## 参考链接 ：
 
-*专家经验:如何解决Nacos连接超时问题 
+*专家经验：如何解决Nacos连接超时问题 
  
  *[FAQ](https://nacos.io/docs/latest/guide/user/faq)
 

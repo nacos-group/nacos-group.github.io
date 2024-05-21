@@ -41,11 +41,11 @@ keywords: ["Nacos","配置","动态刷新"]
 
 ## 参考链接 ：
 
-*专家经验:Nacos 配置无法动态刷新 
+*专家经验：Nacos 配置无法动态刷新 
  
- *专家经验:如何获取Nacos-Client的日志？ 
+ *专家经验：如何获取Nacos-Client的日志？ 
  
- *专家经验:Nacos 配置加密 
+ *专家经验：Nacos 配置加密 
 
 
  <font color="#949494">---------------</font> 

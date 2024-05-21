@@ -57,11 +57,11 @@ keywords: ["bootstrap.yml","为什么","定义"]
 
 ## 参考链接 ：
 
-*专家经验:为什么Nacos不使用ORM框架访问数据库 
+*专家经验：为什么Nacos不使用ORM框架访问数据库 
  
  *[Nacos 融合 Spring，成为注册配置中心](https://nacos.io/docs/latest/ecology/use-nacos-with-spring)
  
- *专家经验:Nacos和Eureka的区别是什么？ 
+ *专家经验：Nacos和Eureka的区别是什么？ 
 
 
  <font color="#949494">---------------</font> 

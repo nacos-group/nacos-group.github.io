@@ -30,9 +30,9 @@ keywords: ["关闭","nacos v2 console namespace","api不对外开放"]
 
 ## 参考链接 ：
 
-*专家经验:Nacos 如何关闭/nacos/v2/console/namespace，使api不对外开放 
+*专家经验：Nacos 如何关闭/nacos/v2/console/namespace，使api不对外开放 
  
- *专家经验:/nacos/v1/core/cluster/nodes 这个访问权限如何关闭？ 
+ *专家经验：/nacos/v1/core/cluster/nodes 这个访问权限如何关闭？ 
 
 
  <font color="#949494">---------------</font> 

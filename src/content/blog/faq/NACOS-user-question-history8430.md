@@ -54,7 +54,7 @@ Nacos确实支持IPv6，根据提供的信息，以下是配置Nacos以支持IPv
 
 ## 参考链接 ：
 
-*专家经验:Nacos是否支持IPV6 
+*专家经验：Nacos是否支持IPV6 
 
 
  <font color="#949494">---------------</font> 

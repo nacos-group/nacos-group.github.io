@@ -43,7 +43,7 @@ keywords: ["配置中心","主流"]
 
 ## 参考链接 ：
 
-*专家经验:主流的配置中心有哪些？ 
+*专家经验：主流的配置中心有哪些？ 
  
  *[Nacos 融合 Spring，成为注册配置中心](https://nacos.io/docs/latest/ecology/use-nacos-with-spring)
 

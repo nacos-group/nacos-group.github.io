@@ -46,7 +46,7 @@ Nacos的自动健康检查机制是通过Spring Actuator框架集成实现的，
 
 ## 参考链接 ：
 
-*专家经验:Nacos 麻烦咨询下 spring actuator 如何关闭 nacosconfig 的健康检查 ？ 
+*专家经验：Nacos 麻烦咨询下 spring actuator 如何关闭 nacosconfig 的健康检查 ？ 
  
  *[Java SDK](https://nacos.io/docs/latest/guide/user/sdk)
 

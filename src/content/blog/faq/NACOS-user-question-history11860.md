@@ -62,7 +62,7 @@ spring.cloud.nacos.discovery.server-addr=localhost:8848
  
  *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
  
- *专家经验:如何清除本地客户端的缓存 
+ *专家经验：如何清除本地客户端的缓存 
 
 
  <font color="#949494">---------------</font> 

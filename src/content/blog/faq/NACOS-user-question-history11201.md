@@ -56,9 +56,9 @@ Nacos 是阿里巴巴开源的一款用于服务发现、配置管理和动态�
 
 *[FAQ](https://nacos.io/docs/latest/guide/user/faq)
  
- *专家经验:Nacos使用的稳定性说明 
+ *专家经验：Nacos使用的稳定性说明 
  
- *专家经验:nacos 与 springboot 联合使用 
+ *专家经验：nacos 与 springboot 联合使用 
 
 
  <font color="#949494">---------------</font> 

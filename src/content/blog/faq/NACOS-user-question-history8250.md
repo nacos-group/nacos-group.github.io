@@ -22,9 +22,9 @@ Nacos 2.2.3版本确实支持JDK17。根据提供的知识内容，Nacos支持JD
 
 ## 参考链接 ：
 
-*专家经验:Does nacos 2.2.3 support jdk17 
+*专家经验：Does nacos 2.2.3 support jdk17 
  
- *专家经验:Nacos 欢迎你 
+ *专家经验：Nacos 欢迎你 
  
  *[Nacos系统参数介绍](https://nacos.io/docs/latest/guide/admin/system-configurations)
 

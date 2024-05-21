@@ -43,9 +43,9 @@ keywords: ["docker-compose","standalone-derby.yaml","数据保存"]
 
 *[Nacos Docker 快速开始](https://nacos.io/docs/latest/quickstart/quick-start-docker)
  
- *专家经验:nacos 各类配置文件都在那？ 
+ *专家经验：nacos 各类配置文件都在那？ 
  
- *专家经验:【阿里云】根据监管部门开展的网络安全检查，发现您的阿里云IP:xxx上的Nacos服务存在高危安全问题，可能导致数据或资金损失，请尽快修复 
+ *专家经验：【阿里云】根据监管部门开展的网络安全检查，发现您的阿里云IP:xxx上的Nacos服务存在高危安全问题，可能导致数据或资金损失，请尽快修复 
 
 
  <font color="#949494">---------------</font> 

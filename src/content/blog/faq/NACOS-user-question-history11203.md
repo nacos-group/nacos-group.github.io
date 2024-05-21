@@ -40,11 +40,11 @@ keywords: ["nacos","启动命令"]
 
 ## 参考链接 ：
 
-*专家经验:Nacos 快速开始 
+*专家经验：Nacos 快速开始 
  
  *[Nacos 2.0 升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading)
  
- *专家经验:No DataSource set 
+ *专家经验：No DataSource set 
 
 
  <font color="#949494">---------------</font> 

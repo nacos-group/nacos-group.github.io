@@ -52,11 +52,11 @@ keywords: ["nacos","集群","挂了","机器","重启","控制台","显示","DOW
 
 ## 参考链接 ：
 
-*专家经验:服务提供者已关闭，但是还在被其他应用调用 
+*专家经验：服务提供者已关闭，但是还在被其他应用调用 
  
  *[控制台手册](https://nacos.io/docs/latest/guide/admin/console-guide)
  
- *专家经验:Nacos重启后再启动微服务项目时，后台出现“NacosException: failed to req API”异常解决办法 
+ *专家经验：Nacos重启后再启动微服务项目时，后台出现“NacosException: failed to req API”异常解决办法 
 
 
  <font color="#949494">---------------</font> 
