@@ -1,8 +1,7 @@
 ---
 import { useTranslations, isChinese } from "@i18n/util";
-import StarAndFork from "./StarAndFork.astro";
+import StarAndForkV2 from "./StarAndForkV2/index.jsx";
 import UpRight from "../icon/UpRight.astro";
-import Button from "@components/common/Button.astro";
 import HomeBackground from "../home/HomeBackground.astro";
 
 const t = useTranslations(Astro);
@@ -23,7 +22,7 @@ const ifzh = isChinese(Astro);
       >
         {t("home.introduce.title")}
       </div>
-      <StarAndFork />
+      <StarAndForkV2 client:load/>
       <div class="notes mt-16 text-gray-07 text-xs flex justify-between">
         <div>
           <a
