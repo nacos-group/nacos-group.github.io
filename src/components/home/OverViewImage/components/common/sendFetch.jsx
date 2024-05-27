@@ -31,12 +31,6 @@ function sendFetch(url, params = null, method = 'GET') {
             }
         }
 
-        if(url.includes("api.github.com/repos/")) {
-            const headerToken = {
-                // 'Authorization': '',
-            };
-            config.headers = config.headers? Object.assign(config.headers, headerToken): headerToken;
-        };
 
         try {
             const response = await fetch(url, {

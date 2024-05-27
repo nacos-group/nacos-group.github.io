@@ -9,7 +9,7 @@ const StarAndForkV2 = () =>{
     const [forkCount, setForkCount] = useState(0);
 
     const start = async () =>{
-        const { stargazers_count=0, forks_count=0 } = await sendFetch("https://api.github.com/repos/alibaba/nacos");
+        const { stargazers_count=0, forks_count=0 } = await sendFetch("https://git-proxy-test-git-proxy-ieeqhwptvv.cn-hongkong.fcapp.run/api/alibaba/nacos");
         setStartCount(stargazers_count || 0);
         setForkCount(forks_count || 0);
     };
