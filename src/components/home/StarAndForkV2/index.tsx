@@ -5,6 +5,7 @@ import { useEffect, useState } from "preact/hooks";
 import useCustomSWR from "@/utils/useCustomSWR";
 import type { StarAndForkT } from 'src/types';
 
+
 const StarAndForkV2 = (props:StarAndForkT) =>{
 	const { swrData={}, fetchData } = useCustomSWR("https://git-proxy-test-git-proxy-ieeqhwptvv.cn-hongkong.fcapp.run/api/alibaba/nacos");
 	const [startCount, setStartCount] = useState(props.stargazers_count || 0);
