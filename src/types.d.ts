@@ -10,3 +10,8 @@ export interface Post {
   };
   excerpt?: string;
 };
+
+export interface StarAndForkT {
+  stargazers_count?: number;
+  forks_count?: number;
+};

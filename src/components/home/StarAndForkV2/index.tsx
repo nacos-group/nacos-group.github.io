@@ -1,21 +1,27 @@
 import Button from './Button.jsx';
 import Star from "./Star.jsx";
 import Fork from "./Fork.jsx";
-import sendFetch from "@/utils/sendFetch"
 import { useEffect, useState } from "preact/hooks";
+import useCustomSWR from "@/utils/useCustomSWR";
+import type { StarAndForkT } from 'src/types';
 
-const StarAndForkV2 = (props) =>{
-    const [startCount, setStartCount] = useState( props.stargazers_count || 0 );
-    const [forkCount, setForkCount] = useState( props.forks_count || 0 );
+const StarAndForkV2 = (props:StarAndForkT) =>{
+	const { swrData={}, fetchData } = useCustomSWR("https://git-proxy-test-git-proxy-ieeqhwptvv.cn-hongkong.fcapp.run/api/alibaba/nacos");
+	const [startCount, setStartCount] = useState(props.stargazers_count || 0);
+	const [forkCount, setForkCount] = useState(props.forks_count || 0);
 
-    const start = async () =>{
-        const { stargazers_count=0, forks_count=0 } = await sendFetch("https://git-proxy-test-git-proxy-ieeqhwptvv.cn-hongkong.fcapp.run/api/alibaba/nacos");
-        setStartCount(stargazers_count || 0);
-        setForkCount(forks_count || 0);
-    };
+	const start = async () =>{
+			const { stargazers_count = 0, forks_count = 0 } = swrData || {};
+			setStartCount(stargazers_count || 0);
+			setForkCount(forks_count || 0);
+	};
 
 	useEffect(()=>{
-        start();
+		start();
+	},[swrData]);
+
+	useEffect(()=>{
+			fetchData()
 	},[]);
 
 	return (

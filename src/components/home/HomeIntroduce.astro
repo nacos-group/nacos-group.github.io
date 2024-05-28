@@ -1,15 +1,16 @@
 ---
 import { useTranslations, isChinese } from "@i18n/util";
-import StarAndForkV2 from "./StarAndForkV2/index.jsx";
+import StarAndForkV2 from "./StarAndForkV2/index.tsx";
 import UpRight from "../icon/UpRight.astro";
 import HomeBackground from "../home/HomeBackground.astro";
 import sendFetch from "@/utils/sendFetch";
+import type { StarAndForkT } from 'src/types';
 
 const t = useTranslations(Astro);
 const ifzh = isChinese(Astro);
 
 // 服务端构建预先获取star数和fork数作为兜底
-const { stargazers_count=0, forks_count=0 } = await sendFetch("https://api.github.com/repos/alibaba/nacos");
+const { stargazers_count=0, forks_count=0 }:StarAndForkT = await sendFetch("https://api.github.com/repos/alibaba/nacos");
 ---
 
 <span class="home-introduce-wrapper">
