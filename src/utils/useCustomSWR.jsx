@@ -10,6 +10,7 @@ const useCustomSWR = (api) => {
     shouldFetch? api: null, 
     fetcher, {
       dedupingInterval: 3600000, // 1h
+      revalidateOnFocus: false,
     }
   );
 

@@ -37,7 +37,7 @@ const StarAndForkV2 = (props) =>{
 				href="https://github.com/alibaba/nacos/fork"
 				target="_blank"
 			>
-				<Fork theme="light" />
+				<Fork />
 				<span class="ml-2">{forkCount}</span>
 			</Button>
         </star-and-fork>
