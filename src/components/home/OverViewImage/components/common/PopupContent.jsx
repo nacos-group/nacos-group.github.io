@@ -1,13 +1,27 @@
 import React from "react";
-import {  useState,useContext } from "preact/hooks";
+import {  useState,useContext, useEffect } from "preact/hooks";
 import { twMerge } from "tailwind-merge";
 import { AppContext } from "../../context";
+import useCustomSWR from "@/utils/useCustomSWR";
 
-export const PopupContent = ({ image, title, labels, links, direction = 'top',data }) => {
+export const PopupContent = ({ image, title, labels, links, direction = 'top', isHovering }) => {
+  const { swrData={}, fetchData } = useCustomSWR(links?.Github?.apiLink);
   const appContext = useContext(AppContext);
   const [arrow, setArrow] = useState('');
-  const { stargazers_count: startCount = 0, forks_count: forkCount = 0 } =
-    data || { stargazers_count: 0, forks_count: 0 };
+  const [startCount, setStartCount] = useState(0);
+  const [forkCount, setForkCount] = useState(0);
+
+  useEffect(()=>{
+    const { stargazers_count = 0, forks_count = 0 } = swrData || {};
+    setStartCount(stargazers_count || 0);
+    setForkCount(forks_count || 0);
+  },[swrData]);
+
+  useEffect(()=>{
+    if(isHovering) {
+      fetchData();
+    };
+  },[isHovering])
 
   if (direction === 'bottom') {
     // hover弹框在下面,箭头在上面
