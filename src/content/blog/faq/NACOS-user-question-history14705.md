@@ -8,6 +8,12 @@ tags: ["auth","server","identity","key"]
 keywords: ["auth","server","identity","key"]
 ---
 
+## 用户问题 ： 
+ nacos.core.auth.server.identity.key nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 在Nacos中配置`nacos.core.auth.server.identity.key`是为了实现服务器身份验证的一部分，它与`nacos.core.auth.server.identity.value`共同构成一个键值对，用于标识Nacos服务器的身份。这一配置尤其重要，当你开启了Nacos的鉴权功能时，以确保只有合法的服务器能参与集群工作，增加安全性。以下是根据提供的知识进行的详细步骤指导：
 
 ### 分析问题原因
@@ -39,6 +45,24 @@ keywords: ["auth","server","identity","key"]
 ### 解释
 
 以上步骤的目的是确保Nacos服务器之间的通信安全，通过自定义且唯一的身份标识键值对，可以有效防止未经授权的访问和保护敏感信息。配置这些参数是Nacos鉴权体系的一个基础环节，对于维护Nacos集群的稳定性和安全性至关重要。记得在每次配置更改后，都要重启服务以使更改生效，并且在生产环境中实施此类更改时应谨慎行事，避免影响现有服务的正常运行。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos鉴权相关建议 
+ 
+ *专家经验：Nacos 欢迎你 
+ 
+ *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

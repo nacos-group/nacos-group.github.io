@@ -8,6 +8,12 @@ tags: ["nacos","docker","derby","grafana","监控","prometheus","prometheus-stan
 keywords: ["nacos","docker","derby","grafana","监控","prometheus","prometheus-standalone.yaml","修改"]
 ---
 
+## 用户问题 ： 
+ nacos docker derby 下使用grafana监控，如何修改example prometheus prometheus-standalone.yaml nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 要修改`example/prometheus/prometheus-standalone.yaml`配置文件以适应Nacos在Docker中使用Derby数据库并集成Grafana进行监控，可以遵循以下步骤：
 
 1. **理解基础配置**：
@@ -43,6 +49,24 @@ keywords: ["nacos","docker","derby","grafana","监控","prometheus","prometheus-
 请注意，直接修改`prometheus-standalone.yaml`配置文件前，建议备份原文件。此外，如果Nacos运行在Docker容器内，确保网络配置允许Prometheus访问到Nacos的监控端口。
 
 以上步骤基于提供的参考资料和一般实践，具体实施时还需根据你的实际环境调整。如果遇到特定错误或配置难题，建议查阅Nacos、Prometheus及Grafana的官方文档或社区资源。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos支持推送监控数据到监控系统吗？ 
+ 
+ *[Nacos 监控手册](https://nacos.io/docs/latest/guide/admin/monitor-guide)
+ 
+ *[Nacos Docker 快速开始](https://nacos.io/docs/latest/quickstart/quick-start-docker)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

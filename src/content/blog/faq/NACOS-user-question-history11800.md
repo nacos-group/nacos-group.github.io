@@ -8,6 +8,12 @@ tags: ["nacos","docker","搭建","本地","单机","配置中心","具体方法"
 keywords: ["nacos","docker","搭建","本地","单机","配置中心","具体方法"]
 ---
 
+## 用户问题 ： 
+ nacos docker搭建本地单机配置中心的具体方法 nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 要搭建本地单机的Nacos配置中心，可以按照以下步骤操作，这些步骤基于提供的参考资料：
 
 ### 步骤 1: 获取Nacos Docker镜像
@@ -31,6 +37,24 @@ keywords: ["nacos","docker","搭建","本地","单机","配置中心","具体方
 - 虽然参考资料中提到Nacos可以支持大规模客户端连接，但单机配置主要是为了快速搭建和学习使用，对于生产级别的配置中心部署，请参考集群部署的相关文档。
 
 通过以上步骤，你就成功地在本地搭建了一个单机版的Nacos配置中心，可以开始进行服务的注册与配置管理了。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+ 
+ *专家经验：Nacos用作配置中心的话，能够支持百万级别的客户端连接嘛 
+ 
+ *[Nacos 融合 Spring，成为注册配置中心](https://nacos.io/docs/latest/ecology/use-nacos-with-spring)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

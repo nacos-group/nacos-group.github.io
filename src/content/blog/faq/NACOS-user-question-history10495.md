@@ -8,6 +8,12 @@ tags: ["Nacos","自动健康检查","工作原理"]
 keywords: ["Nacos","自动健康检查","工作原理"]
 ---
 
+## 用户问题 ： 
+ #Nacos的自动健康检查是如何工作的？ nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 Nacos的自动健康检查主要是通过Spring Actuator与Nacos客户端集成来实现的。当您的应用集成了Nacos作为配置中心（通过`nacos-spring-boot-starter`或`spring-cloud-alibaba-nacos-config`）或服务发现（通过`nacos-spring-boot-starter`或`spring-cloud-alibaba-nacos-discovery`）时，健康检查功能会默认启用。
 
 ### 工作原理简述：
@@ -33,6 +39,22 @@ management.endpoint.nacos-config.enabled=false
 
 ### 总结：
 Nacos的自动健康检查机制是通过Spring Actuator框架集成实现的，它监控Nacos客户端与服务器之间的通信状况以及配置管理的健康性。用户可根据需要调整健康检查策略，以适应不同的运维需求。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos 麻烦咨询下 spring actuator 如何关闭 nacosconfig 的健康检查 ？ 
+ 
+ *[Java SDK](https://nacos.io/docs/latest/guide/user/sdk)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

@@ -8,6 +8,12 @@ tags: ["bootstrap.yml","为什么","定义"]
 keywords: ["bootstrap.yml","为什么","定义"]
 ---
 
+## 用户问题 ： 
+ #为什么要定义bootstrap.yml nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 在Spring Boot应用中，`bootstrap.yml`（或`bootstrap.properties`）文件有着特殊的作用，尤其在使用包括Nacos在内的配置中心时。虽然提供的知识片段未直接提及`bootstrap.yml`的详细原因，但我们可以基于Spring Boot和微服务配置管理的最佳实践来分析这个问题。
 
 ### 原因分析：
@@ -44,6 +50,24 @@ keywords: ["bootstrap.yml","为什么","定义"]
 ### 解释：
 
 通过上述步骤，`bootstrap.yml`为Nacos客户端提供了初始化连接到Nacos服务器所需的基本配置，保证了在应用启动之初就能正确地与配置中心交互，获取到必要的服务发现和配置管理信息，为后续的业务逻辑配置提供基础。这种方式既保证了配置的优先级和安全性，又实现了配置的灵活管理。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：为什么Nacos不使用ORM框架访问数据库 
+ 
+ *[Nacos 融合 Spring，成为注册配置中心](https://nacos.io/docs/latest/ecology/use-nacos-with-spring)
+ 
+ *专家经验：Nacos和Eureka的区别是什么？ 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

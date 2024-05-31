@@ -8,6 +8,12 @@ tags: ["nacos","默认用户名密码"]
 keywords: ["nacos","默认用户名密码"]
 ---
 
+## 用户问题 ： 
+ nacos默认用户名密码 nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 Nacos的默认用户名和密码均为`nacos`。这一信息直接来源于其初始化设置，默认情况下，Nacos会使用这些凭证作为管理员账户的凭据。
 
 如果您需要修改默认的用户名密码或者在初始化集群后管理用户密码，可以遵循以下步骤：
@@ -30,6 +36,22 @@ Nacos的默认用户名和密码均为`nacos`。这一信息直接来源于其�
 请注意，对于安全方面的考虑，如果发现存在身份认证绕过漏洞，应立即采取措施升级Nacos至最新稳定版本，并按照官方文档调整相关安全配置，如修改`nacos.core.auth.plugin.nacos.token.secret.key`等敏感参数，以避免潜在风险。具体指导可参考Nacos官方文档的[身份验证指南](https://nacos.io/docs/latest/guide/user/auth/)和关于[Token Secret Key的重要公告](https://nacos.io/blog/announcement-token-secret-key/?source=activity)。
 
 综上所述，无论是初始化时的密码设定还是后续的管理操作，都应确保遵循最佳安全实践，以维护Nacos系统的安全性。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：nacos用户密码设置 
+ 
+ *专家经验：Nacos 身份认证绕过漏洞 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
