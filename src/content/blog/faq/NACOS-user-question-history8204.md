@@ -8,6 +8,12 @@ tags: ["nacos","2.3.0","元数据大小限制","API无法注册"]
 keywords: ["nacos","2.3.0","元数据大小限制","API无法注册"]
 ---
 
+## 用户问题 ： 
+ nacos升级到2.3.0后，元数据大小限制导致部分API无法注册 nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 在Nacos升级到2.3.0后，遇到“Param 'Metadata' is illegal, the param length should not exceed 1024.”的错误，意味着您的部分API无法注册，这是由于元数据大小超过了Nacos服务端新设定的限制1024个字符。这一改变旨在增强系统稳定性与安全性，通过统一参数校验逻辑来避免潜在的性能问题和安全风险。
 
 ### 原因分析
@@ -33,6 +39,24 @@ keywords: ["nacos","2.3.0","元数据大小限制","API无法注册"]
 - [Nacos参数校验文档](https://nacos.io/docs/latest/guide/user/parameters-check/#9-metadata)
 
 通过以上步骤，您应该能够解决Nacos 2.3.0升级后因元数据大小限制导致的API注册问题。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Param 'Metadata' is illegal, the param length should not exceed %d 
+ 
+ *[Kubernetes Nacos](https://nacos.io/docs/latest/quickstart/quick-start-kubernetes)
+ 
+ *[Nacos 2.0 升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

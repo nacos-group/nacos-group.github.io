@@ -8,6 +8,12 @@ tags: ["IPV6","配置"]
 keywords: ["IPV6","配置"]
 ---
 
+## 用户问题 ： 
+ 请问nacos支持IPV6 都要做什么配置？谢谢 nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 Nacos确实支持IPv6，根据提供的信息，以下是配置Nacos以支持IPv6的具体步骤：
 
 ### 对于Nacos Server（2.1及以上版本）
@@ -41,6 +47,20 @@ Nacos确实支持IPv6，根据提供的信息，以下是配置Nacos以支持IPv
 - 如果在配置过程中遇到`java.net.MalformedURLException`异常，检查地址格式是否正确，确保端口号的正确添加或移除，并考虑更新至最新版Nacos以避免已知问题。
 
 综上所述，Nacos支持IPv6主要通过配置服务器和客户端的地址来实现，现代版本大多支持自动识别，而较旧版本或特定需求下可能需要手动指定IPv6配置。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos是否支持IPV6 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

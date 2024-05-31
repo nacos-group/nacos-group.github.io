@@ -8,6 +8,12 @@ tags: ["消费者","调用","提供者"]
 keywords: ["消费者","调用","提供者"]
 ---
 
+## 用户问题 ： 
+ #消费者是如何调用提供者的 nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 在Nacos环境下，消费者调用服务提供者的过程大致如下，依据提供的知识进行分析：
 
 ### 1. 服务发现
@@ -36,6 +42,24 @@ keywords: ["消费者","调用","提供者"]
 [[相关链接](https://aliyuque.antfin.com/ozb6sn/nacos-opensource/hitz9hrpcdxnrovn)]
 [[相关链接](https://aliyuque.antfin.com/ozb6sn/nacos-opensource/ci3i97p07s73tewg)]
 [[相关链接](https://aliyuque.antfin.com/ozb6sn/nacos-opensource/kzc8nbuxwbpnxn5w)]
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：应用服务调用了依赖服务的提供者时，提示No provider或找不到服务等错误。 
+ 
+ *专家经验：服务提供者已关闭，但是还在被其他应用调用 
+ 
+ *专家经验：Nacos 接口/nacos/v1/ns/service/subscribers返回的订阅者列表中，port全部都是0 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

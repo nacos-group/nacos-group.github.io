@@ -8,6 +8,12 @@ tags: ["Springboot","Dubbo","Nacos","微服务","调用","详细方法"]
 keywords: ["Springboot","Dubbo","Nacos","微服务","调用","详细方法"]
 ---
 
+## 用户问题 ： 
+ Springboot 下 整合Dubbo Nacos实现微服务调用的详细方法 nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 整合Nacos与Dubbo到Spring Boot应用中，以实现微服务之间的调用，涉及几个关键步骤。虽然直接的“知识”内容未提供，但基于这些技术的通用实践，以下是详细的整合方法：
 
 ### 1. 环境准备与依赖添加
@@ -97,6 +103,20 @@ public interface GreetingService {
 - 使用Nacos提供的控制台，可以查看服务列表、配置管理以及进行服务的健康检查等操作。
 
 以上步骤概述了如何在Spring Boot项目中整合Dubbo与Nacos，实现微服务之间的调用。实际应用中，还需根据具体需求调整配置细节。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Dubbo 融合 Nacos 成为注册中心](https://nacos.io/docs/latest/ecology/use-nacos-with-dubbo)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
