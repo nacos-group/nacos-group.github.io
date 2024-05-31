@@ -1,12 +1,18 @@
 ---
 id: "question-history-8460"
-title: "nacos v2.2.3版本，k8s 微服务注册nacos，强制删除 pod, nacos注册实例不会消失，一直显示健康。跪求大佬帮忙看看！ nacos-opensource"
+title: "nacos v2.2.3版本，k8s 微服务注册nacos，强制删除 pod, nacos注册实例不会消失 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据您的描述和提供的知识内容，问题的原因可能在于Nacos中注册的实例为非持久化服务，这类服务依赖客户端心跳保持活跃状态。当您在Kubernetes (k8s) 环境下强制删除Pod后，若Pod内的服务进程没有正确终止，或者存在某些情况下服务实例的心跳机制仍在运行，Nacos服务端会继续收到心跳信号"
 tags: ["nacos","v2.2.3","k8s","微服务","注册","nacos","强制删除","pod","注册实例","不会消失","一直显示健康"]
 keywords: ["nacos","v2.2.3","k8s","微服务","注册","nacos","强制删除","pod","注册实例","不会消失","一直显示健康"]
 ---
+
+## 用户问题 ： 
+ nacos v2.2.3版本，k8s 微服务注册nacos，强制删除 pod, nacos注册实例不会消失，一直显示健康。跪求大佬帮忙看看！ nacos-opensource 
+
+---------------
+## 专家官方解答 ：
 
 根据您的描述和提供的知识内容，问题的原因可能在于Nacos中注册的实例为非持久化服务，这类服务依赖客户端心跳保持活跃状态。当您在Kubernetes (k8s) 环境下强制删除Pod后，若Pod内的服务进程没有正确终止，或者存在某些情况下服务实例的心跳机制仍在运行，Nacos服务端会继续收到心跳信号，导致实例虽然在K8s中已被删除，但在Nacos上仍显示为健康并在线。
 
@@ -31,6 +37,24 @@ keywords: ["nacos","v2.2.3","k8s","微服务","注册","nacos","强制删除","p
    - 若您的服务注册是通过代理完成的，检查代理服务是否有相应的清理逻辑，确保代理在接收到服务下线通知时，也能正确地从Nacos注销实例。
 
 综上所述，问题的关键在于确保服务实例被正确地从客户端注销，以及处理好服务终止时的各类边缘情况，以避免Nacos服务列表中出现不应存在的实例记录。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Nacos 2.0 升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading)
+ 
+ *专家经验：在Nacos控制台上删除服务或实例，过一会儿还会出现 
+ 
+ *[Java SDK](https://nacos.io/docs/latest/guide/user/sdk)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

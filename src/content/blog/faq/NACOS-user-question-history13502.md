@@ -8,6 +8,12 @@ tags: ["dubbo","nacos","集成"]
 keywords: ["dubbo","nacos","集成"]
 ---
 
+## 用户问题 ： 
+ dubbo和nacos集成 nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 为了实现Nacos与Dubbo的集成，我们首先需要理解这两个组件的基本功能和它们如何协同工作。Nacos作为一款动态服务发现、配置管理和服务管理平台，能够帮助Dubbo实现服务的自动注册与发现。以下是基于此理解的集成步骤：
 
 ### 步骤1：环境准备
@@ -60,6 +66,20 @@ public class ProviderApplication {
 以上步骤首先准备了集成所需的环境和依赖，接着通过配置连接到Nacos服务器，并在服务提供者与消费者两端配置Dubbo以使用Nacos作为注册中心。最后，通过启动应用并进行调用测试，验证集成的正确性。这样，Dubbo服务就能利用Nacos实现服务的自动发现与配置管理，提高系统的灵活性和可维护性。
 
 请注意，具体配置可能根据Nacos和Dubbo的版本有所差异，建议查阅最新的官方文档以获取最准确的配置信息。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Dubbo 融合 Nacos 成为注册中心](https://nacos.io/docs/latest/ecology/use-nacos-with-dubbo)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

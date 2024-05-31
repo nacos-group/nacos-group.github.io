@@ -8,6 +8,12 @@ tags: ["1.2.0","修改","默认密码"]
 keywords: ["1.2.0","修改","默认密码"]
 ---
 
+## 用户问题 ： 
+ 请问一下1.2.0如何修改默认密码 nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 在Nacos 1.2.0中修改默认密码的步骤如下：
 
 1. **初始化前修改**：
@@ -43,6 +49,24 @@ keywords: ["1.2.0","修改","默认密码"]
 - Nacos权限控制与用户管理API：[Nacos API文档](https://nacos.io/zh-cn/docs/open-api.html)
 
 以上步骤可以帮助你在Nacos 1.2.0中完成修改默认密码的操作。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：nacos用户密码设置 
+ 
+ *专家经验：Nacos 配置加密 
+ 
+ *专家经验：/nacos/v1/core/cluster/nodes 这个访问权限如何关闭？ 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

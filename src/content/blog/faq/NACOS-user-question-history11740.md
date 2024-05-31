@@ -1,12 +1,18 @@
 ---
 id: "question-history-11740"
-title: "Unresolved dependency: ‘com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:unknown‘ nacos-opensource"
+title: "Unresolved dependency: ‘com.alibaba.cloud:spring-clou nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，遇到“nacos-opensource Unresolved dependency: ‘com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:unknown‘”的问题，可能是由于以下几个原因造成的：1. *"
 tags: ["Unresolved dependency","com.alibaba.cloud","spring-cloud-starter-alibaba-nacos-config","jar","unknown"]
 keywords: ["Unresolved dependency","com.alibaba.cloud","spring-cloud-starter-alibaba-nacos-config","jar","unknown"]
 ---
+
+## 用户问题 ： 
+ Unresolved dependency: ‘com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:unknown‘ nacos-opensource 
+
+---------------
+## 专家官方解答 ：
 
 根据提供的知识内容，遇到“nacos-opensource Unresolved dependency: ‘com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:unknown‘”的问题，可能是由于以下几个原因造成的：
 
@@ -56,6 +62,24 @@ keywords: ["Unresolved dependency","com.alibaba.cloud","spring-cloud-starter-ali
   ```
 
 通过以上步骤，你应该能解决“Unresolved dependency”的问题。如果问题依旧存在，考虑检查网络连接、公司防火墙设置或尝试手动下载依赖后安装到本地仓库。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[FAQ](https://nacos.io/docs/latest/guide/user/faq)
+ 
+ *[Nacos 融合 Spring Cloud，成为注册配置中心](https://nacos.io/docs/latest/ecology/use-nacos-with-spring-cloud)
+ 
+ *专家经验：Nacos spring 适配 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

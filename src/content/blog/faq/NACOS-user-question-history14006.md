@@ -8,6 +8,12 @@ tags: ["nacos","安装","详细步骤","说明","linux","docker"]
 keywords: ["nacos","安装","详细步骤","说明","linux","docker"]
 ---
 
+## 用户问题 ： 
+ nacos 安装的详细步骤说明,linux docker nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 要在Linux环境下通过Docker安装Nacos，请按照以下详细步骤操作：
 
 1. **克隆Nacos-Docker项目**:
@@ -70,6 +76,24 @@ keywords: ["nacos","安装","详细步骤","说明","linux","docker"]
      ```
 
 以上步骤覆盖了在Linux系统上通过Docker部署Nacos的主要流程，确保每一步都成功执行且符合你的环境配置。如果遇到问题，可以查阅Nacos官方文档或在GitHub项目页面寻找解决方案。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Nacos Docker 快速开始](https://nacos.io/docs/latest/quickstart/quick-start-docker)
+ 
+ *[Nacos 2.0 升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading)
+ 
+ *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
