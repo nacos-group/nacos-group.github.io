@@ -8,6 +8,12 @@ tags: ["nacos","配置","pg数据库"]
 keywords: ["nacos","配置","pg数据库"]
 ---
 
+## 用户问题 ： 
+ nacos配置pg数据库 nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 为了配置Nacos使用PostgreSQL（pg数据库），请遵循以下步骤操作：
 
 1. **确认Nacos版本**：确保您的Nacos版本是2.2或更高版本，因为从2.2版本开始，Nacos官方开始支持PostgreSQL。如果您使用的是较旧版本，请先进行升级。
@@ -36,6 +42,24 @@ keywords: ["nacos","配置","pg数据库"]
 - 最后的启动步骤验证配置是否成功，以及Nacos服务是否能正常运行在PostgreSQL上。
 
 通过遵循这些步骤，您可以顺利地将Nacos配置为使用PostgreSQL作为其后端数据库。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos的数据库支持情况介绍 
+ 
+ *专家经验：Nacos 配置加密 
+ 
+ *专家经验：无法在nacos/conf下找到nacos-mysql.sql文件 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

@@ -8,6 +8,12 @@ tags: ["nacos","集群部署"]
 keywords: ["nacos","集群部署"]
 ---
 
+## 用户问题 ： 
+ nacos 集群部署 nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 在进行Nacos集群部署时，需关注以下几个关键步骤和注意事项，以确保部署的成功与安全性：
 
 ### 1. 鉴权配置
@@ -50,6 +56,24 @@ Nacos集群需要正确配置端口以确保服务间的通信无阻。默认情
 - [Nacos官方Docker部署说明](https://github.com/nacos-group/nacos-docker)
 - [Nacos集群模式快速启动指南](https://nacos.io/docs/latest/guide/admin/cluster-mode-quick-start/)
 - [Nacos升级与兼容性说明](https://nacos.io/docs/latest/upgrading/200-compatibility/)
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos部署集群模式怎么打开鉴权 
+ 
+ *专家经验：Nacos部署开放端口，集群部署开通端口 
+ 
+ *专家经验：NACOS 配置中心和注册中心是分两个集群部署还是放在一个集群中 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

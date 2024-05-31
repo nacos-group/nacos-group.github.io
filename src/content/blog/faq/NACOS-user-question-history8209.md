@@ -8,6 +8,12 @@ tags: ["nacos","grpc通信","服务器","指定","通信","grpc客户端","端�
 keywords: ["nacos","grpc通信","服务器","指定","通信","grpc客户端","端口","支持"]
 ---
 
+## 用户问题 ： 
+ nacos 客户端与服务端进行grpc通信,我们服务器有特殊需要指定通信的grpc客户端 端口 ,请问有支持么 nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 Nacos确实支持指定gRPC客户端通信端口的需求。根据提供的知识，这里是如何操作的具体步骤：
 
 1. **服务端端口指定**：
@@ -25,6 +31,24 @@ Nacos确实支持指定gRPC客户端通信端口的需求。根据提供的知�
 参考链接：
 - [Nacos官方文档-集群模式快速启动](https://nacos.io/docs/latest/guide/admin/cluster-mode-quick-start/)
 - [Nacos官方文档-兼容性升级说明](https://nacos.io/docs/latest/upgrading/200-compatibility/)
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos如何指定端口 
+ 
+ *专家经验：Nacos客户端与服务端grpc的连接有定期ping-pong机制吗 
+ 
+ *专家经验：Nacos部署开放端口，集群部署开通端口 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

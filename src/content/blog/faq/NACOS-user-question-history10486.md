@@ -8,6 +8,12 @@ tags: ["Nacos","服务注册","服务发现","协议"]
 keywords: ["Nacos","服务注册","服务发现","协议"]
 ---
 
+## 用户问题 ： 
+ #Nacos支持哪些服务注册和发现协议？ nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 Nacos支持的服务注册与发现功能包括：
 
 1. **服务注册**：允许应用程序在Nacos服务器上注册其服务实例，使得服务消费者能够发现并调用这些服务。这一过程涉及服务实例的基本信息，如IP地址、端口等的注册。
@@ -37,6 +43,24 @@ Nacos支持的服务注册与发现功能包括：
   - C#：[https://github.com/nacos-group/nacos-sdk-csharp](https://github.com/nacos-group/nacos-sdk-csharp)
   - Python：[https://github.com/nacos-group/nacos-sdk-python](https://github.com/nacos-group/nacos-sdk-python)
   - PHP：[https://github.com/nacos-group/nacos-sdk-php](https://github.com/nacos-group/nacos-sdk-php)
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+ 
+ *[Open API 指南](https://nacos.io/docs/latest/guide/user/open-api)
+ 
+ *专家经验：nacos 多语言支持 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
