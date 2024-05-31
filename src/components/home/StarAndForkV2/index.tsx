@@ -11,10 +11,13 @@ const StarAndForkV2 = (props:StarAndForkT) =>{
 	const [startCount, setStartCount] = useState(props.stargazers_count || 0);
 	const [forkCount, setForkCount] = useState(props.forks_count || 0);
 
-	const start = async () =>{
-			const { stargazers_count = 0, forks_count = 0 } = swrData || {};
-			setStartCount(stargazers_count || 0);
-			setForkCount(forks_count || 0);
+	const start = async () => {
+		// 请求成功才会设置star/fork数
+			if (swrData.stargazers_count) {
+				const { stargazers_count, forks_count } = swrData;
+				setStartCount(stargazers_count || props.stargazers_count);
+				setForkCount(forks_count || props.forks_count);
+			}
 	};
 
 	useEffect(()=>{

@@ -2,11 +2,6 @@ import React from "react";
 import "tailwindcss/tailwind.css";
 import "./style.css";
 import { useState } from "preact/hooks";
-import { Arrow } from "./components/common/Arrow";
-import { Panel } from "./components/common/Panel";
-import { Product } from "./components/common/Product";
-
-import { PopupContent } from "./components/common/PopupContent";
 import { GovernancePanel } from "./components/GovernancePanel";
 import { ControlPanel } from "./components/ControlPanel";
 import { OpsPanel } from "./components/OpsPanel";
