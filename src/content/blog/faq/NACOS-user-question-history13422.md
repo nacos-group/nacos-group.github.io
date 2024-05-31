@@ -2,17 +2,11 @@
 id: "question-history-13422"
 title: "nacos 鉴权怎么做？ nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource nacos 鉴权怎么做？"
+category: "expertConsultation"
+description: "要在Nacos中实现鉴权，您可以遵循以下步骤操作：1. **理解鉴权配置需求**：   Nacos鉴权功能的开启和配置主要围绕四个核心参数：   - `nacos.core.auth.enabled`：鉴权功能开关，需设为`true`以启用鉴权。   - `nacos.core.auth.plugi"
 tags: ["nacos-opensource","鉴权"]
 keywords: ["nacos-opensource","鉴权"]
 ---
-
-## 用户问题 ： 
- nacos 鉴权怎么做？ nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 要在Nacos中实现鉴权，您可以遵循以下步骤操作：
 
@@ -44,20 +38,6 @@ keywords: ["nacos-opensource","鉴权"]
      通过以上步骤，您启用了Nacos的鉴权功能，确保了只有经过验证的用户或服务才能访问Nacos的配置和服务管理接口，增强了系统的安全性。环境变量的方式适用于容器化部署，而直接修改配置文件则适合传统部署方式。自定义鉴权插件的引入则为有特定安全需求的用户提供了灵活性。
 
 综上所述，根据Nacos的部署方式选择合适的配置方法，即可实现Nacos的鉴权功能。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:Nacos k8s部署得nacos2.2.3版本集群模式怎么配置鉴权 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

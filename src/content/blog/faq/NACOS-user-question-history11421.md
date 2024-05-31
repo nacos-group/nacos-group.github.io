@@ -2,17 +2,11 @@
 id: "question-history-11421"
 title: "如何实现Dubbo集成Nacos作为注册中心 nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource 如何实现Dubbo集成Nacos作为注册中心"
+category: "expertConsultation"
+description: "要实现Dubbo集成Nacos作为注册中心，您可以遵循以下步骤操作：1. **添加依赖**：首先确保您的项目中引入了Dubbo和Nacos的相关依赖。对于Maven项目，您需要在`pom.xml`文件中添加如下依赖：   ```xml   !-- Dubbo Spring Boot Starter "
 tags: ["Dubbo","集成","Nacos","注册中心"]
 keywords: ["Dubbo","集成","Nacos","注册中心"]
 ---
-
-## 用户问题 ： 
- 如何实现Dubbo集成Nacos作为注册中心 nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 要实现Dubbo集成Nacos作为注册中心，您可以遵循以下步骤操作：
 
@@ -69,20 +63,6 @@ keywords: ["Dubbo","集成","Nacos","注册中心"]
 注意：上述步骤基于假设您已有Nacos服务器运行在指定地址上。如果尚未部署Nacos，请先参照{{{知识:nacos-deploy-guide}}}进行安装与配置。
 
 这样，您就可以利用Nacos提供的强大功能，包括服务的健康检查、配置管理等，来增强Dubbo微服务架构的灵活性与可靠性。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*[Dubbo 融合 Nacos 成为注册中心](https://nacos.io/docs/latest/ecology/use-nacos-with-dubbo)
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

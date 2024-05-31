@@ -2,17 +2,11 @@
 id: "question-history-12458"
 title: "load logback configuration of nacos fail, message: could not initialize logb nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource load logback configuration of nacos fail, message: could not initialize logb"
+category: "expertConsultation"
+description: "遇到`nacos-opensource load logback configuration of nacos fail, message: could not initialize logb`的问题，其原因在于Spring Cloud Alibaba项目中使用的logback版本与Nacos客户端"
 tags: ["logback","configuration","nacos","fail","initialize","logb"]
 keywords: ["logback","configuration","nacos","fail","initialize","logb"]
 ---
-
-## 用户问题 ： 
- load logback configuration of nacos fail, message: could not initialize logb nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 遇到`nacos-opensource load logback configuration of nacos fail, message: could not initialize logb`的问题，其原因在于Spring Cloud Alibaba项目中使用的logback版本与Nacos客户端默认引入的logback配置不兼容。具体来说，Spring Boot 3.0.x及以上版本或Spring Cloud Alibaba默认依赖的logback版本为1.4.5，这与Nacos客户端期望的logback版本不匹配，导致加载Nacos的logback配置失败。
 
@@ -54,20 +48,6 @@ keywords: ["logback","configuration","nacos","fail","initialize","logb"]
 参考链接：
 - [logback-adapter工程实现](https://github.com/nacos-group/logback-adapter)
 - [关于logback-adapter的讨论](https://github.com/alibaba/nacos/issues/9860)
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:无法初始化logback.xml 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

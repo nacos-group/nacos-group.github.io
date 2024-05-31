@@ -2,17 +2,11 @@
 id: "question-history-8262"
 title: "Nacos 2.2.1 com.alibaba.nacos.api.exception.NacosException: errCode: 400, errMsg: Current service DEFAULT_GROUP@@stock-service is persistent service, can't register ephemeral instance. nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource Nacos 2.2.1 com.alibaba.nacos.api.exception.NacosException: errCode: 400, errMsg: Current service DEFAULT_GROUP@@stock-service is persistent service, can't register ephemeral instance."
+category: "expertConsultation"
+description: "根据你的描述，遇到的错误信息是“errCode: 400, errMsg: Current service DEFAULT_GROUP@@stock-service is persistent service, can't register ephemeral instance.”，这意味着你尝试在"
 tags: ["Nacos","2.2.1","com.alibaba.nacos.api.exception.NacosException","errCode: 400","errMsg: Current service DEFAULT_GROUP@@stock-service is persistent service cant register ephemeral instance."]
 keywords: ["Nacos","2.2.1","com.alibaba.nacos.api.exception.NacosException","errCode: 400","errMsg: Current service DEFAULT_GROUP@@stock-service is persistent service cant register ephemeral instance."]
 ---
-
-## 用户问题 ： 
- Nacos 2.2.1 com.alibaba.nacos.api.exception.NacosException: errCode: 400, errMsg: Current service DEFAULT_GROUP@@stock-service is persistent service, can't register ephemeral instance. nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 根据你的描述，遇到的错误信息是“errCode: 400, errMsg: Current service DEFAULT_GROUP@@stock-service is persistent service, can't register ephemeral instance.”，这意味着你尝试在一个持久化服务（persistent service）下注册一个临时实例（ephemeral instance），而Nacos对此操作进行了限制。
 
@@ -41,24 +35,6 @@ Nacos服务有两种类型：持久化服务（persistent）和临时服务（ep
 - 如果是通过自动化脚本或配置管理工具进行实例注册，确保脚本或工具的配置也做了相应的调整。
 
 由于直接具体的代码或配置修改指导不在提供的知识内容中，以上建议较为通用。如果问题依然存在，建议查阅Nacos官方文档或社区讨论，以获得更精确的解决方案。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:Nacos 欢迎你 
- 
- *专家经验:Nacos 介绍 
- 
- *[Java SDK](https://nacos.io/docs/latest/guide/user/sdk)
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

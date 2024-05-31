@@ -2,17 +2,11 @@
 id: "question-history-8276"
 title: "nacos-cluster-grpc-executor 线程数量很多。clusterRpcExecutor 的配置需要和 sdkRpcExecutor 一样吗？nacos server 2.x 间的 rpc 请求也很多？另外，如果是 nacos server 维护，我们停止一个节点，该节点的连接被快速转移到其余节点，这种情况下，clusterRpcExecutor 和 sdkRpcExecutor 均会快速长高，比如，我这里，两者均会快速涨到 1024，之后 clusterRpcExecutor 再降低，这不利于资源的充分利用呀，我的意思是，受内存限制，假设 线程数量 设置到 2048 是理想值，由于同时存在 clusterRpcExecutor 和 sdkRpcExecutor，那么 sdkRpcExecutor 只能设置到 1024，因为对应的 clusterRpcExecutor 也为 1024，之后虽然 clusterRpcExecutor 会因为超时释放线程，但释放了也没法让 sdkRpcExecutor 使用。是否应该让 clusterRpcExecutor 的配置不要和 sdkRpcExecutor 一模一样呢？ nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource nacos-cluster-grpc-executor 线程数量很多。clusterRpcExecutor 的配置需要和 sdkRpcExecutor 一样吗？nacos server 2.x 间的 rpc 请求也很多？另外，如果是 nacos server 维护，我们停止一个节点，该节点的连接被快速转移到其余节点，这种情况下，clusterRpcExecutor 和 sdkRpcExecutor 均会快速长高，比如，我这里，两者均会快速涨到 1024，之后 clusterRpcExecutor 再降低，这不利于资源的充分利用呀，我的意思是，受内存限制，假设 线程数量 设置到 2048 是理想值，由于同时存在 clusterRpcExecutor 和 sdkRpcExecutor，那么 sdkRpcExecutor 只能设置到 1024，因为对应的 clusterRpcExecutor 也为 1024，之后虽然 clusterRpcExecutor 会因为超时释放线程，但释放了也没法让 sdkRpcExecutor 使用。是否应该让 clusterRpcExecutor 的配置不要和 sdkRpcExecutor 一模一样呢？"
+category: "expertConsultation"
+description: "根据提供的知识内容，我们可以分析并解答您的问题。首先，对于`nacos-cluster-grpc-executor`线程数量很多的现象，这通常意味着Nacos Server端处理RPC请求时线程资源占用较高。在Nacos Server 2.x版本中，确实可能存在大量的集群间RPC通信，尤其是在高并发"
 tags: ["nacos-cluster-grpc-executor","线程数量","clusterRpcExecutor","sdkRpcExecutor","配置","nacos server","2.x","rpc 请求","维护","停止节点","连接转移","资源充分利用","内存限制","线程数量设置","2048","理想值","超时释放线程"]
 keywords: ["nacos-cluster-grpc-executor","线程数量","clusterRpcExecutor","sdkRpcExecutor","配置","nacos server","2.x","rpc 请求","维护","停止节点","连接转移","资源充分利用","内存限制","线程数量设置","2048","理想值","超时释放线程"]
 ---
-
-## 用户问题 ： 
- nacos-cluster-grpc-executor 线程数量很多。clusterRpcExecutor 的配置需要和 sdkRpcExecutor 一样吗？nacos server 2.x 间的 rpc 请求也很多？另外，如果是 nacos server 维护，我们停止一个节点，该节点的连接被快速转移到其余节点，这种情况下，clusterRpcExecutor 和 sdkRpcExecutor 均会快速长高，比如，我这里，两者均会快速涨到 1024，之后 clusterRpcExecutor 再降低，这不利于资源的充分利用呀，我的意思是，受内存限制，假设 线程数量 设置到 2048 是理想值，由于同时存在 clusterRpcExecutor 和 sdkRpcExecutor，那么 sdkRpcExecutor 只能设置到 1024，因为对应的 clusterRpcExecutor 也为 1024，之后虽然 clusterRpcExecutor 会因为超时释放线程，但释放了也没法让 sdkRpcExecutor 使用。是否应该让 clusterRpcExecutor 的配置不要和 sdkRpcExecutor 一模一样呢？ nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 根据提供的知识内容，我们可以分析并解答您的问题。
 
@@ -35,20 +29,6 @@ keywords: ["nacos-cluster-grpc-executor","线程数量","clusterRpcExecutor","sd
 4. **测试与验证**：在生产环境调整前，务必在测试环境中进行充分的压力测试，以验证调整后的配置是否满足性能和稳定性要求。
 
 综上所述，`clusterRpcExecutor`和`sdkRpcExecutor`的配置不应一模一样，而是应依据它们各自承担的职责和系统的实际负载情况分别进行细致调整，以达到资源的高效利用和系统的稳定运行。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:如何排查Nacos线程数过多的问题 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

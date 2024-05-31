@@ -2,17 +2,11 @@
 id: "question-history-11858"
 title: "nacos服务端动态修改日志级别 nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource nacos服务端动态修改日志级别"
+category: "expertConsultation"
+description: "在Nacos服务端动态修改日志级别，可以采取以下步骤操作：1. **使用HTTP接口调整日志级别**：   - 准备工作：确保你知道Nacos服务器的主机地址（$nacos_host）以及想要修改的日志模块名称（如`naming-event`）和目标日志级别（如`DEBUG`）。   - 执行命令："
 tags: ["nacos","服务端","动态修改","日志级别"]
 keywords: ["nacos","服务端","动态修改","日志级别"]
 ---
-
-## 用户问题 ： 
- nacos服务端动态修改日志级别 nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 在Nacos服务端动态修改日志级别，可以采取以下步骤操作：
 
@@ -29,22 +23,6 @@ keywords: ["nacos","服务端","动态修改","日志级别"]
    - 在此文件中，根据Logback的配置语法，直接修改或添加相应的`<logger>`元素，设定各组件的日志级别。修改后，需要重启Nacos服务端使更改生效。
 
 请注意，上述HTTP接口方法允许你在不重启服务的情况下动态调整部分日志级别，而直接修改配置文件的方法则需要服务重启才能应用新配置。根据实际需求选择合适的方法进行日志级别的调整。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:如何在启动二进制版本的nacos时，设置日志级别为debug呢？ 
- 
- *专家经验:Nacos 配置无法动态刷新 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

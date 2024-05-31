@@ -2,17 +2,11 @@
 id: "question-history-8254"
 title: "The API deregisterInstances provided by the client SDK is called successfully, but the instance is not offline. nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource The API deregisterInstances provided by the client SDK is called successfully, but the instance is not offline."
+category: "expertConsultation"
+description: "根据提供的知识内容，我们可以分析该问题的原因及提出解决方案。问题描述为：通过客户端SDK调用deregisterInstances API成功，但实例并未下线。### 原因分析- **非持久化服务特性**：此问题可能出现在非持久化服务上，因为这类服务依赖客户端心跳维持其在Nacos服务列表中的活跃状"
 tags: ["deregisterInstances","instance","offline"]
 keywords: ["deregisterInstances","instance","offline"]
 ---
-
-## 用户问题 ： 
- The API deregisterInstances provided by the client SDK is called successfully, but the instance is not offline. nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 根据提供的知识内容，我们可以分析该问题的原因及提出解决方案。问题描述为：通过客户端SDK调用deregisterInstances API成功，但实例并未下线。
 
@@ -32,24 +26,6 @@ keywords: ["deregisterInstances","instance","offline"]
 - **代理注册的同步处理**：在有多重注册机制的场景下，所有注册点都需要协调一致地管理服务实例的生命周期，避免遗漏导致的问题。
 
 综上所述，通过结合客户端逻辑调整、环境检查和跨系统协同操作，可以有效地解决通过客户端SDK调用deregisterInstances成功后实例未能下线的问题。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:在Nacos控制台上删除服务或实例，过一会儿还会出现 
- 
- *专家经验:Why Use HTTP for Registration of the Nacos2.0 Raft Protocol 
- 
- *专家经验:Param 'Metadata' is illegal, the param length should not exceed %d 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

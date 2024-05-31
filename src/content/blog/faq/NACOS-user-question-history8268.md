@@ -2,17 +2,11 @@
 id: "question-history-8268"
 title: "Could not initialize Logback Nacos logging from classpath:nacos-logback.xml nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource Could not initialize Logback Nacos logging from classpath:nacos-logback.xml"
+category: "expertConsultation"
+description: "遇到`Could not initialize Logback Nacos logging from classpath:nacos-logback.xml`的问题，其原因在于Spring Cloud Alibaba 2022.0.0.0版本与Nacos客户端（版本2.2.3或2.2.1）在集成时，"
 tags: ["Could not initialize","Logback","Nacos logging","classpath:nacos-logback.xml"]
 keywords: ["Could not initialize","Logback","Nacos logging","classpath:nacos-logback.xml"]
 ---
-
-## 用户问题 ： 
- Could not initialize Logback Nacos logging from classpath:nacos-logback.xml nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 遇到`Could not initialize Logback Nacos logging from classpath:nacos-logback.xml`的问题，其原因在于Spring Cloud Alibaba 2022.0.0.0版本与Nacos客户端（版本2.2.3或2.2.1）在集成时，由于Spring Boot 3.0.x默认依赖的Logback 1.4.5版本与Nacos客户端默认引入的Logback接口不兼容所导致。
 
@@ -49,24 +43,6 @@ keywords: ["Could not initialize","Logback","Nacos logging","classpath:nacos-log
 3. **更新配置**: 确认你的项目中没有直接引用或覆盖了nacos-logback.xml，如果有，请确保其与所使用的logback-adapter兼容。
 
 完成上述步骤后，重新构建并启动你的应用，该问题应该得到解决。这样通过使用官方提供的适配器，使得Logback的新版本与Nacos客户端能够正常协同工作，从而避免了初始化日志配置失败的问题。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:无法初始化logback.xml 
- 
- *专家经验:Nacos 欢迎你 
- 
- *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

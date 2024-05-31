@@ -2,17 +2,11 @@
 id: "question-history-8257"
 title: "在只用OpenFeign远程调用时，怎么样可以忽略@FeignClient中填写的服务名称与已经注册到nacos服务上的服务名称大小写问题 nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource 在只用OpenFeign远程调用时，怎么样可以忽略@FeignClient中填写的服务名称与已经注册到nacos服务上的服务名称大小写问题"
+category: "expertConsultation"
+description: "在使用OpenFeign进行远程调用时，若希望忽略@FeignClient注解中填写的服务名称与Nacos服务注册时的名称大小写不匹配问题，虽然直接通过Nacos或Feign的配置来解决这一特定大小写敏感性问题没有直接的官方支持，但我们可以通过一些间接的方式来绕过这个问题。以下是基于当前知识的分析与"
 tags: ["OpenFeign","远程调用","忽略","FeignClient","服务名称","大小写问题","已注册","nacos服务"]
 keywords: ["OpenFeign","远程调用","忽略","FeignClient","服务名称","大小写问题","已注册","nacos服务"]
 ---
-
-## 用户问题 ： 
- 在只用OpenFeign远程调用时，怎么样可以忽略@FeignClient中填写的服务名称与已经注册到nacos服务上的服务名称大小写问题 nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 在使用OpenFeign进行远程调用时，若希望忽略@FeignClient注解中填写的服务名称与Nacos服务注册时的名称大小写不匹配问题，虽然直接通过Nacos或Feign的配置来解决这一特定大小写敏感性问题没有直接的官方支持，但我们可以通过一些间接的方式来绕过这个问题。以下是基于当前知识的分析与建议：
 
@@ -36,24 +30,6 @@ keywords: ["OpenFeign","远程调用","忽略","FeignClient","服务名称","大
 以上提出的解决方案主要是因为直接在Nacos或OpenFeign层面解决服务名大小写敏感问题没有标准配置，因此需要采取一些定制化的开发策略。通过统一命名规范是最简单直接的，而自定义Feign命名策略和中间层服务映射则提供了更灵活但实施成本略高的解决方式。这些方法虽然增加了些许复杂度，但能有效确保服务调用的健壮性和一致性。
 
 请注意，实际操作前应评估上述方案对现有架构的影响，并确保有相应的测试覆盖以验证修改的效果。由于直接的配置解决方案缺失，这些变通办法可能需要结合项目实际情况做适当调整。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:服务提供者已关闭，但是还在被其他应用调用 
- 
- *专家经验:实际服务正常再跑 注册中心上没了怎么回事? 
- 
- *专家经验:应用服务调用了依赖服务的提供者时，提示No provider或找不到服务等错误。 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

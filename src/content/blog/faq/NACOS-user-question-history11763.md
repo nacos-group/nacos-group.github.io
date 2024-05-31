@@ -2,17 +2,11 @@
 id: "question-history-11763"
 title: "nacos修改默认用户名和密码的具体步骤 nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource nacos修改默认用户名和密码的具体步骤"
+category: "expertConsultation"
+description: "要修改Nacos的默认用户名和密码，您可以按照以下步骤操作：### 初始化集群前修改默认用户名和密码1. **准备加密密码**：首先，您需要使用BCrypt算法对新密码进行加密。可以利用Nacos提供的`PasswordEncoderUtil`工具类进行加密。在Java环境中，运行以下代码片段，将`"
 tags: ["修改","默认","用户名","密码","具体步骤"]
 keywords: ["修改","默认","用户名","密码","具体步骤"]
 ---
-
-## 用户问题 ： 
- nacos修改默认用户名和密码的具体步骤 nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 要修改Nacos的默认用户名和密码，您可以按照以下步骤操作：
 
@@ -64,24 +58,6 @@ keywords: ["修改","默认","用户名","密码","具体步骤"]
   记得将`new_bcrypt_password`替换为预先加密的密码。
 
 请注意，直接操作数据库仅适用于外置数据库，并且确保操作不会破坏集群间的数据一致性。在进行任何修改前，建议备份相关数据以防不测。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:nacos用户密码设置 
- 
- *[Nacos 2.0 升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading)
- 
- *[Authorization](https://nacos.io/docs/latest/guide/user/auth)
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

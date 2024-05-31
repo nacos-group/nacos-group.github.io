@@ -2,17 +2,11 @@
 id: "question-history-11754"
 title: "nacos 配置mysql数据源 nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource nacos 配置mysql数据源"
+category: "expertConsultation"
+description: "为了配置Nacos使用MySQL数据源，请遵循以下详细步骤：1. **确认环境与版本**：确保你的Nacos服务器版本是2.2或更高，因为从Nacos 2.2版本开始，才正式支持除MySQL和Derby之外的其他数据库类型，包括通过插件方式支持MySQL。2. **访问插件仓库**：虽然Nacos官"
 tags: ["nacos","配置","mysql","数据源"]
 keywords: ["nacos","配置","mysql","数据源"]
 ---
-
-## 用户问题 ： 
- nacos 配置mysql数据源 nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 为了配置Nacos使用MySQL数据源，请遵循以下详细步骤：
 
@@ -45,22 +39,6 @@ keywords: ["nacos","配置","mysql","数据源"]
 - 重启Nacos服务器是为了让新的数据库配置生效，Nacos将使用MySQL作为其数据存储后端。
 
 这样，你就完成了Nacos配置MySQL数据源的过程。如果遇到任何连接问题，可以参照错误日志和Nacos官方文档进一步排查。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:Nacos的数据库支持情况介绍 
- 
- *专家经验:No DataSource set 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

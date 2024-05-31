@@ -2,17 +2,11 @@
 id: "question-history-11838"
 title: "nacos配置mysql数据库 nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource nacos配置mysql数据库"
+category: "expertConsultation"
+description: "要配置Nacos使用MySQL数据库，请按照以下步骤操作：1. **确认Nacos版本**：确保你的Nacos版本是2.2或更高，因为从2.2版本开始，Nacos才开始支持除MySQL和Derby之外的更多数据库类型通过插件的方式。如果版本低于2.2，请先升级Nacos。2. **下载与配置MySQ"
 tags: ["nacos","配置","mysql","数据库"]
 keywords: ["nacos","配置","mysql","数据库"]
 ---
-
-## 用户问题 ： 
- nacos配置mysql数据库 nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 要配置Nacos使用MySQL数据库，请按照以下步骤操作：
 
@@ -41,24 +35,6 @@ keywords: ["nacos","配置","mysql","数据库"]
 如果在启动过程中遇到任何问题，如无法连接数据库，请检查网络连接、数据库访问权限以及`application.properties`中的配置是否正确。如果有必要，可以查看Nacos的日志以获取更详细的错误信息，帮助定位问题。
 
 以上步骤基于Nacos开源项目的官方文档和已知信息整理得出，应能帮助你成功配置Nacos使用MySQL数据库。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:Nacos的数据库支持情况介绍 
- 
- *专家经验:无法在nacos/conf下找到nacos-mysql.sql文件 
- 
- *专家经验:No DataSource set 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

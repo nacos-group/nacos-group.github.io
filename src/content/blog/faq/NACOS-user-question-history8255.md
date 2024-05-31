@@ -2,17 +2,11 @@
 id: "question-history-8255"
 title: "Actual scenario:During log monitoring after the network intrusion, I can obtain the access_token and other information carried by the access, and then I can obtain the account password of the configuration information under the configuration center nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource Actual scenario:During log monitoring after the network intrusion, I can obtain the access_token and other information carried by the access, and then I can obtain the account password of the configuration information under the configuration center"
+category: "expertConsultation"
+description: "基于提供的知识，我们可以分析您的情况如下：1. **问题背景理解**：您在进行网络入侵日志监控后，发现可以获取到访问时携带的access_token及其它信息，并进一步获取配置中心下配置信息的账户密码。2. **原因分析**：根据提及的错误信息，特别是在Nacos开源项目环境下，如果遇到与密钥长度或"
 tags: ["log monitoring","network intrusion","access_token","configuration center","account password"]
 keywords: ["log monitoring","network intrusion","access_token","configuration center","account password"]
 ---
-
-## 用户问题 ： 
- Actual scenario:During log monitoring after the network intrusion, I can obtain the access_token and other information carried by the access, and then I can obtain the account password of the configuration information under the configuration center nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 基于提供的知识，我们可以分析您的情况如下：
 
@@ -29,24 +23,6 @@ keywords: ["log monitoring","network intrusion","access_token","configuration ce
 4. **解释**：以上步骤旨在直接解决安全密钥不足的问题，并通过加强访问控制、日志审计和账户安全管理，来全面提升系统在遭受网络入侵情况下的防御能力。这不仅解决了当前暴露的安全隐患，也为长期的系统安全维护奠定了基础。
 
 请注意，如果问题涉及更深层次的安全漏洞或攻击手段，可能还需进一步的专业安全评估和防护措施。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:启动报错java.lang.IllegalArgumentException: the length of secret key must great than or equal 32 bytes... 
- 
- *专家经验:Why Use HTTP for Registration of the Nacos2.0 Raft Protocol 
- 
- *专家经验:启动报错java.lang.IllegalArgumentException: The specified key byte array is x bits which is not secure enough for any JWT HMAC-SHA 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

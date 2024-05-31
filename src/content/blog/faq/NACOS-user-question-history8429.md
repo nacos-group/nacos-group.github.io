@@ -2,17 +2,11 @@
 id: "question-history-8429"
 title: "大佬我想请教下，我们的4个应用服务和nacos服务分别部署在三台服务器上并且都使用docker部署，也就是应用服务和nacos server 都是三个节点，在做高可用测试的时候，模拟服务器断电后重启的情况，我们reboot其中一台A服务器，并且停掉C服务器上的nacos server节点，这时候应该只有B服务器上的nacos 节点是UP的状态，A服务器的nacos状态应该是先从UP变成SUSPICOUS 再变成 DOWN ,最后恢复成UP , 但是我们A服务器上的业务应用在开机自启动的时候，有出现服务注册不了的情况，按道理这时候A服务器上的业务应用的责任节点应该都重新分配到B的nacos节点上了才对，但是看nacos server的日志报了一个receive invalid redirect request from peer {ip} ,这种看源码应该是两个nacos节点计算责任节点出现不一致导致的，但是这里我一直搞不明白为什么会出现这种不一致？ nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource 大佬我想请教下，我们的4个应用服务和nacos服务分别部署在三台服务器上并且都使用docker部署，也就是应用服务和nacos server 都是三个节点，在做高可用测试的时候，模拟服务器断电后重启的情况，我们reboot其中一台A服务器，并且停掉C服务器上的nacos server节点，这时候应该只有B服务器上的nacos 节点是UP的状态，A服务器的nacos状态应该是先从UP变成SUSPICOUS 再变成 DOWN ,最后恢复成UP , 但是我们A服务器上的业务应用在开机自启动的时候，有出现服务注册不了的情况，按道理这时候A服务器上的业务应用的责任节点应该都重新分配到B的nacos节点上了才对，但是看nacos server的日志报了一个receive invalid redirect request from peer {ip} ,这种看源码应该是两个nacos节点计算责任节点出现不一致导致的，但是这里我一直搞不明白为什么会出现这种不一致？"
+category: "expertConsultation"
+description: "根据您的描述，这个问题可能涉及Nacos集群的高可用机制与Docker容器重启后的服务注册逻辑。尽管提供的知识内容没有直接覆盖到您遇到的特定错误信息，我们可以结合Nacos的工作原理和您描述的现象进行分析。### 原因分析：1. **Nacos节点状态转换异常**：A服务器上的Nacos节点状态从U"
 tags: ["高可用","测试","服务器断电","重启","docker","部署","应用服务","nacos server","节点","UP","SUSPICOUS","DOWN","恢复","服务注册","开机自启动","责任节点","分配","日志","receive invalid redirect request","peer","源码","计算责任节点","不一致"]
 keywords: ["高可用","测试","服务器断电","重启","docker","部署","应用服务","nacos server","节点","UP","SUSPICOUS","DOWN","恢复","服务注册","开机自启动","责任节点","分配","日志","receive invalid redirect request","peer","源码","计算责任节点","不一致"]
 ---
-
-## 用户问题 ： 
- 大佬我想请教下，我们的4个应用服务和nacos服务分别部署在三台服务器上并且都使用docker部署，也就是应用服务和nacos server 都是三个节点，在做高可用测试的时候，模拟服务器断电后重启的情况，我们reboot其中一台A服务器，并且停掉C服务器上的nacos server节点，这时候应该只有B服务器上的nacos 节点是UP的状态，A服务器的nacos状态应该是先从UP变成SUSPICOUS 再变成 DOWN ,最后恢复成UP , 但是我们A服务器上的业务应用在开机自启动的时候，有出现服务注册不了的情况，按道理这时候A服务器上的业务应用的责任节点应该都重新分配到B的nacos节点上了才对，但是看nacos server的日志报了一个receive invalid redirect request from peer {ip} ,这种看源码应该是两个nacos节点计算责任节点出现不一致导致的，但是这里我一直搞不明白为什么会出现这种不一致？ nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 根据您的描述，这个问题可能涉及Nacos集群的高可用机制与Docker容器重启后的服务注册逻辑。尽管提供的知识内容没有直接覆盖到您遇到的特定错误信息，我们可以结合Nacos的工作原理和您描述的现象进行分析。
 
@@ -40,24 +34,6 @@ keywords: ["高可用","测试","服务器断电","重启","docker","部署","�
 
 ### 结论：
 虽然直接的步骤可能需要根据实际情况调整，上述分析和建议方向应能帮助您排查和解决服务注册失败的问题。如果问题依然存在，建议深入研究Nacos的源代码逻辑，特别是关于服务注册、集群管理和健康检查的部分，以获得更深层次的理解和解决方案。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:Nacos中持久化服务和临时服务的区别 
- 
- *专家经验:服务提供者已关闭，但是还在被其他应用调用 
- 
- *专家经验:实际服务正常再跑 注册中心上没了怎么回事? 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

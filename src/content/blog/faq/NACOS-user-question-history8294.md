@@ -2,17 +2,11 @@
 id: "question-history-8294"
 title: "Is there a solution to migrate Nacos Derby to MySQL Will using embedded storage in a Nacos cluster lead to a loss of cluster high availability If using MySQL can solve this problem, is it possible to migrate Derby to MySQL nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource Is there a solution to migrate Nacos Derby to MySQL Will using embedded storage in a Nacos cluster lead to a loss of cluster high availability If using MySQL can solve this problem, is it possible to migrate Derby to MySQL"
+category: "expertConsultation"
+description: "Nacos确实支持将配置信息从嵌入式Derby数据库迁移至MySQL，以增强数据存储的稳定性和集群的高可用性。以下是根据已有知识进行的分析与建议步骤：### 分析原因：1. **Derby存储限制**：嵌入式Derby数据库主要用于单机测试环境，它不是为生产环境的高并发或大数据量设计的。2. **高"
 tags: ["migrate","Nacos Derby","MySQL","embedded storage","cluster high availability","loss","MySQL","migrate","Derby","MySQL"]
 keywords: ["migrate","Nacos Derby","MySQL","embedded storage","cluster high availability","loss","MySQL","migrate","Derby","MySQL"]
 ---
-
-## 用户问题 ： 
- Is there a solution to migrate Nacos Derby to MySQL Will using embedded storage in a Nacos cluster lead to a loss of cluster high availability If using MySQL can solve this problem, is it possible to migrate Derby to MySQL nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 Nacos确实支持将配置信息从嵌入式Derby数据库迁移至MySQL，以增强数据存储的稳定性和集群的高可用性。以下是根据已有知识进行的分析与建议步骤：
 
@@ -52,24 +46,6 @@ Nacos确实支持将配置信息从嵌入式Derby数据库迁移至MySQL，以�
 - 虽然直接的命令行或图形界面迁移工具未提及，Nacos的设计允许通过修改配置轻松实现存储层的切换。
 
 综上所述，使用MySQL替代嵌入式Derby可以解决集群高可用性问题，且迁移过程相对直接，主要依赖于配置文件的调整与数据库的预先准备。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:nacos 各类配置文件都在那？ 
- 
- *专家经验:Nacos 欢迎你 
- 
- *专家经验:Nacos 介绍 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

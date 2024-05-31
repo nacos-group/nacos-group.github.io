@@ -2,17 +2,11 @@
 id: "question-history-13418"
 title: "怎么创建新的用户和密码？ nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource 怎么创建新的用户和密码？"
+category: "expertConsultation"
+description: "在Nacos中创建新的用户和密码，可以通过以下步骤进行：### 控制台操作1. **登录Nacos控制台**：首先，使用管理员账号（默认为`nacos`/`nacos`）登录Nacos控制台。2. **进入用户管理**：在控制台导航至`权限控制`  `用户管理`页面。3. **添加新用户**：点击`"
 tags: ["创建","新","用户","密码"]
 keywords: ["创建","新","用户","密码"]
 ---
-
-## 用户问题 ： 
- 怎么创建新的用户和密码？ nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 在Nacos中创建新的用户和密码，可以通过以下步骤进行：
 
@@ -49,22 +43,6 @@ curl -X POST 'http://${nacos_host}:${nacos_port}/nacos/v1/auth/users?username=${
 - 密码加密是必要的安全措施，务必使用BCrypt加密算法。
 
 以上步骤详细介绍了如何在Nacos中创建新用户和密码，您可以根据实际情况选择最适合的方法进行操作。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:nacos用户密码设置 
- 
- *专家经验:自建用户用于nacos客户端应用验证时，如果对namespace开启只读将也无法注册该空间的服务应该怎么处理？ 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

@@ -2,17 +2,11 @@
 id: "question-history-11418"
 title: "如何通过docker-compose 安装部署单机版nacos nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource 如何通过docker-compose 安装部署单机版nacos"
+category: "expertConsultation"
+description: "要通过docker-compose安装部署单机版Nacos，请遵循以下步骤：1. **准备环境**：确保你的系统中已安装Docker和docker-compose，这是运行Nacos单机版的基础环境需求。2. **获取docker-compose.yml文件**：访问Nacos-Docker项目的G"
 tags: ["docker-compose","安装部署","单机版","nacos"]
 keywords: ["docker-compose","安装部署","单机版","nacos"]
 ---
-
-## 用户问题 ： 
- 如何通过docker-compose 安装部署单机版nacos nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 要通过docker-compose安装部署单机版Nacos，请遵循以下步骤：
 
@@ -50,24 +44,6 @@ keywords: ["docker-compose","安装部署","单机版","nacos"]
 6. **配置与优化**：根据实际需求，你可以在后续通过调整`docker-compose.yml`中的环境变量或挂载的配置文件来进一步配置和优化Nacos服务。
 
 通过以上步骤，你应该能够成功通过docker-compose部署单机版的Nacos服务。更多高级配置和管理细节，建议直接查阅Nacos官方文档[[4](https://nacos.io/docs/latest/guide/user/auth/)]和Nacos-Docker项目仓库[[1](https://github.com/nacos-group/nacos-docker)]以获取最新的指导信息。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
- 
- *专家经验:nacos的部署 
- 
- *专家经验:Nacos k8s部署得nacos2.2.3版本集群模式怎么配置鉴权 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

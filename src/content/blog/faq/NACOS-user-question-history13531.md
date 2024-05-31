@@ -2,17 +2,11 @@
 id: "question-history-13531"
 title: "更改nacos的默认用户名nacos nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource 更改nacos的默认用户名nacos"
+category: "expertConsultation"
+description: "更改Nacos的默认用户名（从'nacos'更改为其他用户名）的操作并不直接支持。Nacos的设计原则是初始化后不允许修改用户名，仅支持修改密码及新增用户。根据提供的知识内容，这里给出相应的指导：1. **初始化集群前修改用户名**   - 如果您还未部署Nacos集群，可以在部署前，通过修改配置文"
 tags: ["nacos","更改","默认用户名"]
 keywords: ["nacos","更改","默认用户名"]
 ---
-
-## 用户问题 ： 
- 更改nacos的默认用户名nacos nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 更改Nacos的默认用户名（从'nacos'更改为其他用户名）的操作并不直接支持。Nacos的设计原则是初始化后不允许修改用户名，仅支持修改密码及新增用户。根据提供的知识内容，这里给出相应的指导：
 
@@ -36,24 +30,6 @@ keywords: ["nacos","更改","默认用户名"]
    - 执行上述操作时，如果Nacos已开启鉴权，需使用具有管理员权限的账号进行。
 
 综上所述，更改Nacos默认用户名并非直接支持的功能，建议通过创建新用户并赋予相应权限的方式来满足管理需求。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:nacos用户密码设置 
- 
- *[Authorization](https://nacos.io/docs/latest/guide/user/auth)
- 
- *专家经验:无法在nacos/conf下找到nacos-mysql.sql文件 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

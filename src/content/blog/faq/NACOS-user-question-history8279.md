@@ -2,17 +2,11 @@
 id: "question-history-8279"
 title: "How to do HTTP health check use register instance port nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource How to do HTTP health check use register instance port"
+category: "expertConsultation"
+description: "要使用HTTP健康检查并利用注册实例端口，可以参照Nacos提供的HTTP API来实现。根据提供的知识内容，以下是具体的步骤：1. **准备服务信息**：   - 确定你需要检查的服务名称（如：`serviceName=nacos.test.1`）。   - 确认服务实例的IP地址（如：`ip=1"
 tags: ["HTTP health check","register instance port"]
 keywords: ["HTTP health check","register instance port"]
 ---
-
-## 用户问题 ： 
- How to do HTTP health check use register instance port nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 要使用HTTP健康检查并利用注册实例端口，可以参照Nacos提供的HTTP API来实现。根据提供的知识内容，以下是具体的步骤：
 
@@ -61,24 +55,6 @@ keywords: ["HTTP health check","register instance port"]
 - 步骤3的验证是确认你的健康检查设置是否生效的重要环节，确保Nacos正确接收并处理了你的健康状态更新请求。
 
 综上所述，通过调用Nacos提供的HTTP API，你可以有效地实施HTTP健康检查，并利用实例注册时指定的端口进行状态监控和更新。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:Why Use HTTP for Registration of the Nacos2.0 Raft Protocol 
- 
- *[Open API 指南](https://nacos.io/docs/latest/guide/user/open-api)
- 
- *[提交需求模板](https://nacos.io/docs/latest/contribution/pull-request)
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

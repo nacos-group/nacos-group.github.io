@@ -2,17 +2,11 @@
 id: "question-history-12714"
 title: "nacos 如何修改默认密钥 nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource nacos 如何修改默认密钥"
+category: "expertConsultation"
+description: "在Nacos中修改默认密钥主要涉及两个方面：一是配置中心存储的配置加密密钥，二是控制台登录的鉴权密钥。根据提供的知识内容，我们可以分步骤讨论如何修改这两类默认密钥。### 修改配置中心加密密钥对于Nacos配置中心存储的配置加密，Nacos提供了配置加密插件，默认采用AES加密算法。若需修改默认密钥"
 tags: ["nacos","修改","默认密钥"]
 keywords: ["nacos","修改","默认密钥"]
 ---
-
-## 用户问题 ： 
- nacos 如何修改默认密钥 nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 在Nacos中修改默认密钥主要涉及两个方面：一是配置中心存储的配置加密密钥，二是控制台登录的鉴权密钥。根据提供的知识内容，我们可以分步骤讨论如何修改这两类默认密钥。
 
@@ -46,24 +40,6 @@ keywords: ["nacos","修改","默认密钥"]
 - 修改密钥是一个敏感操作，务必在安全环境下进行，并考虑对旧密钥保护的敏感信息进行重新加密。
 
 综上所述，修改Nacos的默认密钥主要通过查阅官方文档、自定义或配置已有插件，并在相应配置文件中应用新密钥来完成。务必确保整个过程中安全性得到妥善处理。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:Nacos 配置加密 
- 
- *[Authorization](https://nacos.io/docs/latest/guide/user/auth)
- 
- *[Nacos 2.0 升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading)
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

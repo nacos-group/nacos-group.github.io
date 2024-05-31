@@ -2,37 +2,13 @@
 id: "question-history-13992"
 title: "nacos怎么读 nacos-opensource"
 date: "2024-05-22"
-category: expertConsultation
-description: "nacos-opensource nacos怎么读"
+category: "expertConsultation"
+description: "Nacos 读作 nay-kos。它是阿里巴巴开源的一款用于动态服务发现、配置管理和服务管理的平台，旨在简化云原生应用的构建与管理。"
 tags: ["开源","nacos读法"]
 keywords: ["开源","nacos读法"]
 ---
 
-## 用户问题 ： 
- nacos怎么读 nacos-opensource 
-
----------------
-## 专家官方解答 ：
-
 Nacos 读作 "nay-kos"。它是阿里巴巴开源的一款用于动态服务发现、配置管理和服务管理的平台，旨在简化云原生应用的构建与管理。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验：Nacos 快速开始 
- 
- *专家经验：Nacos 介绍 
- 
- *专家经验：Nacos和Eureka的区别是什么？ 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

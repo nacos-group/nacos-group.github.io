@@ -2,17 +2,11 @@
 id: "question-history-11474"
 title: "nacos配置 nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource nacos配置"
+category: "expertConsultation"
+description: "针对Nacos配置的问题，我们可以从几个方面进行分析和解决：### 1. Nacos与Spring框架的适配当涉及到Nacos与Spring Boot、Spring Cloud的集成时，确保选择了正确的适配组件。根据Nacos官方提供的信息，可以参考以下仓库来获取适配用例和指导：- [Nacos S"
 tags: ["nacos配置"]
 keywords: ["nacos配置"]
 ---
-
-## 用户问题 ： 
- nacos配置 nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 针对Nacos配置的问题，我们可以从几个方面进行分析和解决：
 
@@ -40,24 +34,6 @@ server.tomcat.accesslog.maxDays=15
 这里设置了最大保留15天的日志。
 
 综上所述，解决Nacos配置问题需根据具体情况，从框架适配、动态刷新机制检查以及日志配置调整等角度出发，参考官方文档和示例项目进行细致排查和配置。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:Nacos spring 适配 
- 
- *专家经验:Nacos 配置无法动态刷新 
- 
- *专家经验:Nacos 配置access.log的保留时间 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

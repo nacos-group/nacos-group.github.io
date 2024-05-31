@@ -2,17 +2,11 @@
 id: "question-history-8235"
 title: "How to Init Configuration of Microservice by Yaml Files nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource How to Init Configuration of Microservice by Yaml Files"
+category: "expertConsultation"
+description: "To initialize the configuration of a microservice using YAML files in Nacos, follow these steps based on the provided knowledge:1. **Understand YAML C"
 tags: ["Init Configuration","Microservice","Yaml Files"]
 keywords: ["Init Configuration","Microservice","Yaml Files"]
 ---
-
-## 用户问题 ： 
- How to Init Configuration of Microservice by Yaml Files nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 To initialize the configuration of a microservice using YAML files in Nacos, follow these steps based on the provided knowledge:
 
@@ -44,22 +38,6 @@ For more detailed instructions tailored to your specific technology stack or fur
 - [Nacos Docker镜像的参数和Nacos系统参数的映射关系](https://github.com/nacos-group/nacos-docker/blob/master/README.md)
 
 This guide assumes a basic understanding of Nacos and its role in centralized configuration management. If your question was seeking a more explicit guide on YAML-specific integration which is not covered in the provided knowledge, further research into Nacos documentation or community resources may be necessary.
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*[Nacos Docker 快速开始](https://nacos.io/docs/latest/quickstart/quick-start-docker)
- 
- *专家经验:Nacos Docker镜像的参数和Nacos系统参数的映射关系 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

@@ -2,17 +2,11 @@
 id: "question-history-14712"
 title: "nacos配置加密插件。新增可以，如果再修改配置重新发布后内容又没加密是什么情况呢？ nacos-opensource"
 date: "2024-05-29"
-category: expertConsultation
-description: "nacos-opensource nacos配置加密插件。新增可以，如果再修改配置重新发布后内容又没加密是什么情况呢？"
+category: "expertConsultation"
+description: "首先，让我们根据已有的知识分析这个问题。当遇到配置在初次加密发布后，再次修改并重新发布后内容未保持加密状态的情况，可能的原因有几个方面：1. **加密插件未正确配置或启用**：确保在Nacos客户端和服务端都正确安装并启用了配置加密插件。根据Nacos官方文档，配置加密功能是从2.1版本开始提供的，"
 tags: ["nacos配置加密插件","性能","报错","修改配置","重新发布","内容未加密"]
 keywords: ["nacos配置加密插件","性能","报错","修改配置","重新发布","内容未加密"]
 ---
-
-## 用户问题 ： 
- nacos配置加密插件。新增可以，如果再修改配置重新发布后内容又没加密是什么情况呢？ nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 首先，让我们根据已有的知识分析这个问题。当遇到配置在初次加密发布后，再次修改并重新发布后内容未保持加密状态的情况，可能的原因有几个方面：
 
@@ -43,24 +37,6 @@ keywords: ["nacos配置加密插件","性能","报错","修改配置","重新发
    - 根据Nacos提供的文档指导[配置加密插件](https://nacos.io/docs/latest/plugin/config-encryption-plugin/)和[自定义环境变量插件](https://nacos.io/docs/latest/plugin/custom-environment-plugin/)，仔细检查每个配置步骤是否符合要求。
 
 如果以上步骤均无误但问题依旧，建议查阅Nacos社区论坛或提交工单寻求更专业的技术支持。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验：Nacos 配置加密 
- 
- *专家经验：Nacos缓存目录修改 
- 
- *[Java SDK](https://nacos.io/docs/latest/guide/user/sdk)
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

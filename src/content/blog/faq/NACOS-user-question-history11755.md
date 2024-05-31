@@ -2,17 +2,11 @@
 id: "question-history-11755"
 title: "nacos 配置PostgreSQL数据源 nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource nacos 配置PostgreSQL数据源"
+category: "expertConsultation"
+description: "要配置Nacos使用PostgreSQL作为数据源，您可以按照以下步骤操作：1. **检查插件是否存在**：   首先，访问[Nacos的GitHub插件仓库](https://github.com/nacos-group/nacos-plugin)，确认是否有现成的PostgreSQL数据库插件。"
 tags: ["nacos","配置","PostgreSQL","数据源"]
 keywords: ["nacos","配置","PostgreSQL","数据源"]
 ---
-
-## 用户问题 ： 
- nacos 配置PostgreSQL数据源 nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 要配置Nacos使用PostgreSQL作为数据源，您可以按照以下步骤操作：
 
@@ -41,22 +35,6 @@ keywords: ["nacos","配置","PostgreSQL","数据源"]
 
 **解释**：
 这些步骤基于Nacos官方对PostgreSQL支持的说明，确保了您能正确地集成并配置PostgreSQL作为Nacos的数据存储。通过使用官方推荐的插件和配置方式，可以确保最佳的兼容性和稳定性。如果在操作过程中遇到特定问题，可以进一步查阅Nacos的官方文档或在社区寻求帮助。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:Nacos的数据库支持情况介绍 
- 
- *专家经验:Nacos 配置加密 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

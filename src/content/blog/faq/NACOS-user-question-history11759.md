@@ -2,17 +2,11 @@
 id: "question-history-11759"
 title: "nacos 作为配置中心，微服务让别人调用，怎么做？ nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource nacos 作为配置中心，微服务让别人调用，怎么做？"
+category: "expertConsultation"
+description: "为了使Nacos作为配置中心的微服务能够被其他服务调用，您可以遵循以下步骤进行配置和部署，基于提供的Nacos开源信息与集成Spring Cloud的场景：### 1. 准备Nacos Server- 确保您已安装并启动了Nacos Server。如果尚未进行，参考[Nacos快速入门](../qu"
 tags: ["配置中心","微服务"]
 keywords: ["配置中心","微服务"]
 ---
-
-## 用户问题 ： 
- nacos 作为配置中心，微服务让别人调用，怎么做？ nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 为了使Nacos作为配置中心的微服务能够被其他服务调用，您可以遵循以下步骤进行配置和部署，基于提供的Nacos开源信息与集成Spring Cloud的场景：
 
@@ -52,22 +46,6 @@ keywords: ["配置中心","微服务"]
 - 确认服务消费者可以成功调用服务提供者的接口。可以通过单元测试或者直接发送HTTP请求进行验证。
 
 通过以上步骤，您的微服务就能以Nacos作为配置中心，并且能够被其他服务通过Nacos发现机制顺利调用。记得根据实际环境调整IP地址、端口等配置信息。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*[Nacos 融合 Spring，成为注册配置中心](https://nacos.io/docs/latest/ecology/use-nacos-with-spring)
- 
- *[Nacos 融合 Spring Cloud，成为注册配置中心](https://nacos.io/docs/latest/ecology/use-nacos-with-spring-cloud)
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

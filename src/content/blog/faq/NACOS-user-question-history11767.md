@@ -2,17 +2,11 @@
 id: "question-history-11767"
 title: "nacos怎么用 nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource nacos怎么用"
+category: "expertConsultation"
+description: "要开始使用Nacos进行服务发现和配置管理，请遵循以下步骤：### 1. 版本选择与环境准备- 访问Nacos的[release notes](https://github.com/alibaba/nacos/releases)选择稳定版本，如推荐的2.3.2。- 确保环境满足要求：  - **操作"
 tags: ["nacos","怎么用"]
 keywords: ["nacos","怎么用"]
 ---
-
-## 用户问题 ： 
- nacos怎么用 nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 要开始使用Nacos进行服务发现和配置管理，请遵循以下步骤：
 
@@ -77,24 +71,6 @@ cd distribution/target/nacos-server-$version/nacos/bin
 - 对于ARM架构，可以使用社区提供的`silm`镜像，如`v2.3.1-slim`，通过修改yaml配置文件中的镜像版本为含`slim`的版本，并参考[Nacos官方Docker快速启动文档](http://localhost:4321/docs/next/quickstart/quick-start-docker/)进行部署。
 
 以上步骤详细介绍了如何下载、安装、配置及基本使用Nacos进行服务管理和配置中心的操作。在具体应用中，还需根据项目需求调整配置细节。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:Nacos 快速开始 
- 
- *[Nacos 融合 Spring，成为注册配置中心](https://nacos.io/docs/latest/ecology/use-nacos-with-spring)
- 
- *专家经验:Nacos 请问nacos有arm架构的docker镜像么 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

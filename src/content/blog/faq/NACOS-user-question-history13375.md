@@ -2,17 +2,11 @@
 id: "question-history-13375"
 title: "nacos docker 单机版部署 nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource nacos docker 单机版部署"
+category: "expertConsultation"
+description: "为了在Docker环境下部署Nacos的单机版并配置相关鉴权，您可以遵循以下步骤操作：### 步骤分析与准备1. **理解需求**：您希望基于Docker部署Nacos的单机版本，并开启鉴权功能。这涉及到配置Nacos的核心鉴权参数，确保服务安全。2. **参考文档**：主要依据Nacos官方的Do"
 tags: ["nacos","docker","单机版部署"]
 keywords: ["nacos","docker","单机版部署"]
 ---
-
-## 用户问题 ： 
- nacos docker 单机版部署 nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 为了在Docker环境下部署Nacos的单机版并配置相关鉴权，您可以遵循以下步骤操作：
 
@@ -59,24 +53,6 @@ nacos-group/nacos-server
 
 ### 解释
 以上步骤首先通过Docker拉取了Nacos服务器镜像，并基于该镜像运行了一个单机模式的Nacos容器。通过环境变量的方式配置了鉴权参数，确保了服务的安全性。需要注意的是，为了安全起见，`NACOS_AUTH_TOKEN`的设置应当使用一个强密码，并经过Base64编码处理。最后，通过验证步骤确保了部署与鉴权配置的成功。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:Nacos k8s部署得nacos2.2.3版本集群模式怎么配置鉴权 
- 
- *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
- 
- *专家经验:Nacos部署开放端口，集群部署开通端口 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

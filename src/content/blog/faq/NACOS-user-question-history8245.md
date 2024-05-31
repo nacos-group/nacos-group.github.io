@@ -2,17 +2,11 @@
 id: "question-history-8245"
 title: "Why Use HTTP for Registration of the Nacos2.0 Raft Protocol nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource Why Use HTTP for Registration of the Nacos2.0 Raft Protocol"
+category: "expertConsultation"
+description: "在Nacos2.0中，选择使用HTTP协议进行Raft协议的注册主要基于以下原因：1. **问题背景**：Nacos的持久化服务设计初衷是为了适应那些不便直接集成nacos-client的环境，例如MySQL服务发现、CoreDNS等场景。在这些场景下，直接利用nacos-client进行操作较为繁"
 tags: ["Why Use HTTP","Registration","Nacos2.0","Raft Protocol"]
 keywords: ["Why Use HTTP","Registration","Nacos2.0","Raft Protocol"]
 ---
-
-## 用户问题 ： 
- Why Use HTTP for Registration of the Nacos2.0 Raft Protocol nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 在Nacos2.0中，选择使用HTTP协议进行Raft协议的注册主要基于以下原因：
 
@@ -37,22 +31,6 @@ keywords: ["Why Use HTTP","Registration","Nacos2.0","Raft Protocol"]
 以上步骤旨在帮助用户快速通过HTTP协议完成Nacos2.0中服务实例的持久化注册，充分利用HTTP的通用性和易用性，简化集成过程。同时，尽管存在gRPC等其他注册方式的发展，Nacos保持了对HTTP接口的支持，体现了其对不同应用场景需求的广泛兼容。
 
 综上所述，使用HTTP进行Nacos2.0 Raft协议的注册，是在考虑易用性、兼容性和技术生态的基础上做出的合理选择，且Nacos提供了详尽的文档指导，便于开发者实施。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:Why Use HTTP for Registration of the Nacos2.0 Raft Protocol 
- 
- *[Nacos 2.0.0 兼容性文档](https://nacos.io/docs/latest/upgrading/200-compatibility)
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

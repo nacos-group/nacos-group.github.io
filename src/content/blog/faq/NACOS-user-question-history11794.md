@@ -2,17 +2,11 @@
 id: "question-history-11794"
 title: "nacos 分布式配置中心搭建的具体步骤 nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource nacos 分布式配置中心搭建的具体步骤"
+category: "expertConsultation"
+description: "为了搭建Nacos作为分布式配置中心，您可以遵循以下具体步骤，这些步骤基于提供的Nacos与Spring集成的知识：### 1. 准备Nacos Server- **下载与启动Nacos Server**    首先，根据[Nacos快速入门](../quickstart/quick-start.m"
 tags: ["nacos","分布式配置中心","搭建","具体步骤"]
 keywords: ["nacos","分布式配置中心","搭建","具体步骤"]
 ---
-
-## 用户问题 ： 
- nacos 分布式配置中心搭建的具体步骤 nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 为了搭建Nacos作为分布式配置中心，您可以遵循以下具体步骤，这些步骤基于提供的Nacos与Spring集成的知识：
 
@@ -92,22 +86,6 @@ public class DiscoveryController {
   访问应用端点验证配置是否生效和服务是否被正确注册。
 
 以上步骤概括了使用Nacos构建分布式配置中心和实现服务注册发现的关键流程。确保每一步都正确配置并测试，以确保系统正常运行。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*[Nacos 融合 Spring，成为注册配置中心](https://nacos.io/docs/latest/ecology/use-nacos-with-spring)
- 
- *[Nacos 融合 Spring Cloud，成为注册配置中心](https://nacos.io/docs/latest/ecology/use-nacos-with-spring-cloud)
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
