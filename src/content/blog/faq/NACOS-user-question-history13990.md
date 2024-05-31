@@ -8,6 +8,12 @@ tags: ["nacos.core.auth.plugin.nacos.token.secret.key","说明"]
 keywords: ["nacos.core.auth.plugin.nacos.token.secret.key","说明"]
 ---
 
+## 用户问题 ： 
+ nacos.core.auth.plugin.nacos.token.secret.key 说明 nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 Nacos中的`nacos.core.auth.plugin.nacos.token.secret.key`配置项是用于鉴权机制中生成令牌（Token）的密钥。这个密钥对于保障通信安全至关重要，因为它被用来对客户端的身份验证信息进行加密，从而生成一个安全的访问令牌。以下是关于此配置项的详细说明与操作步骤：
 
 1. **作用说明**：
@@ -28,6 +34,20 @@ Nacos中的`nacos.core.auth.plugin.nacos.token.secret.key`配置项是用于鉴�
    - **鉴权开启**：在配置好密钥后，还需确保鉴权功能已启用(`nacos.core.auth.enabled=true`)，以实现完整的安全防护。
 
 通过以上步骤，您可以确保Nacos中的鉴权机制基于一个强大且定制化的密钥运行，为您的系统添加了额外的安全保障层。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos鉴权相关建议 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

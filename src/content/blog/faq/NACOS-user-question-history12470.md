@@ -8,6 +8,12 @@ tags: ["Nacos","2.2.3","启动","报错","No DataSource set","设置错误"]
 keywords: ["Nacos","2.2.3","启动","报错","No DataSource set","设置错误"]
 ---
 
+## 用户问题 ： 
+ Nacos 2.2.3 启动报：No DataSource set 是什么设置有错误？ nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 根据提供的知识内容，Nacos 2.2.3 启动时报错"No DataSource set"通常意味着Nacos在尝试连接到配置的数据库时遇到了问题，无法正确设置数据源。这可能是由于以下几个原因造成的：
 
 1. **配置错误**：检查`conf/application.properties`文件中的数据库连接配置，确保jdbcUrl、用户名和密码等信息正确无误。错误可能包括但不限于地址、端口、数据库名的错误，以及凭据不匹配。
@@ -31,6 +37,24 @@ keywords: ["Nacos","2.2.3","启动","报错","No DataSource set","设置错误"]
 - **步骤五**：重启Nacos服务。在完成以上步骤的调整后，重新启动Nacos服务，观察是否还存在"No DataSource set"的错误。
 
 通过上述步骤，你应该能定位并解决Nacos启动时因数据库连接问题导致的"No DataSource set"错误。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：No DataSource set 
+ 
+ *专家经验：Nacos和Eureka的区别是什么？ 
+ 
+ *专家经验：Nacos 介绍 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

@@ -8,6 +8,12 @@ tags: ["k8s","部署","nacos","服务端"]
 keywords: ["k8s","部署","nacos","服务端"]
 ---
 
+## 用户问题 ： 
+ 如何使用 k8s 部署一个 nacos 服务端 nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 要使用K8s部署一个Nacos服务端，可以遵循以下步骤：
 
 1. **准备环境**：
@@ -34,6 +40,22 @@ keywords: ["k8s","部署","nacos","服务端"]
    - 也可以设置Ingress规则以更灵活的方式暴露服务。
 
 通过上述步骤，你就能在Kubernetes集群中成功部署一个Nacos服务端。注意，实际操作中可能需要根据具体的集群环境和需求调整配置。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+ 
+ *专家经验：Nacos部署开放端口，集群部署开通端口 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

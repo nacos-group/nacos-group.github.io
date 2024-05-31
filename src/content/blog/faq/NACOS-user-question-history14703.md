@@ -8,6 +8,12 @@ tags: ["鉴权"]
 keywords: ["鉴权"]
 ---
 
+## 用户问题 ： 
+ 如何开启鉴权 nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 要开启Nacos的服务端鉴权功能，您可以根据您的部署环境（非Docker或Docker环境）采取以下步骤操作：
 
 ### 非Docker环境
@@ -52,6 +58,20 @@ keywords: ["鉴权"]
 一旦服务端鉴权开启，客户端在访问Nacos时必须提供有效的认证信息。对于Java SDK，您需要在配置中加入用户名和密码；而对于Open-API或其它语言的SDK，您需要先通过API登录获取AccessToken，然后在每次请求中携带此AccessToken进行鉴权。
 
 以上步骤详细介绍了如何在Nacos中开启鉴权功能以及客户端如何进行相应的鉴权操作。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Authorization](https://nacos.io/docs/latest/guide/user/auth)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

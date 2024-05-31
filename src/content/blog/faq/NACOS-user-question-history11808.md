@@ -8,6 +8,12 @@ tags: ["nacos配置中心","加密","具体方法"]
 keywords: ["nacos配置中心","加密","具体方法"]
 ---
 
+## 用户问题 ： 
+ nacos配置中心加密的具体方法 nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 在Nacos配置中心实现加密的具体方法如下：
 
 ### 1. 针对Nacos Server自身的数据库配置加密
@@ -39,6 +45,24 @@ Nacos Server配置文件（如`application.properties`）中可能包含敏感�
 - **特定框架集成**：如果使用Dubbo、Spring Boot、Spring Cloud等框架，检查框架是否有提供配置解密的支持，并依据框架文档操作。
 
 综上，Nacos配置中心提供了对自身数据库配置及存储配置的加密支持，而对于客户端连接配置的安全性，鼓励在应用层面实施加密策略以增强安全性。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos 配置加密 
+ 
+ *专家经验：nacos用户密码设置 
+ 
+ *[Nacos 融合 Spring Cloud，成为注册配置中心](https://nacos.io/docs/latest/ecology/use-nacos-with-spring-cloud)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
