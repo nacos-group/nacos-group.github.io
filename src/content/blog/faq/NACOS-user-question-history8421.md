@@ -2,17 +2,11 @@
 id: "question-history-8421"
 title: "怎么能让nacos 的actuator 查不到任何信息呢？ nacos-opensource"
 date: "2024-05-17"
-category: expertConsultation
-description: "nacos-opensource 怎么能让nacos 的actuator 查不到任何信息呢？"
+category: "expertConsultation"
+description: "为了使Nacos的Actuator查不到任何信息，您可以按照以下步骤操作：1. **确认默认状态**：Nacos默认情况下不启用Actuator，因此，如果没有特意配置开启，Actuator信息应该是不可见的。检查您的配置文件，特别是`application.properties`或`applica"
 tags: ["actuator","查不到任何信息"]
 keywords: ["actuator","查不到任何信息"]
 ---
-
-## 用户问题 ： 
- 怎么能让nacos 的actuator 查不到任何信息呢？ nacos-opensource 
-
----------------
-## 专家官方解答 ：
 
 为了使Nacos的Actuator查不到任何信息，您可以按照以下步骤操作：
 
@@ -25,22 +19,6 @@ keywords: ["actuator","查不到任何信息"]
 4. **特定场景处理**：对于使用了Spring Cloud Alibaba相关组件（如nacos-spring-boot-starter）的情况，如果想关闭特定模块如Nacos Config或Nacos Discovery的健康检查，可以通过设置`management.endpoint.nacos-config.enabled=false`和`management.endpoint.nacos-discovery.enabled=false`来实现。
 
 综上所述，通过调整配置管理端点的暴露策略及可能的安全配置，可以有效控制Nacos Actuator暴露的信息量，甚至达到不暴露任何信息的目的。请根据实际需求调整相应的配置项，并记得重启Nacos服务以应用更改。
-
-
-<font color="#949494">---------------</font> 
-
-
-## 参考链接 ：
-
-*专家经验:怎么能让nacos 的actuator 查不到任何信息呢 
- 
- *专家经验:Nacos 麻烦咨询下 spring actuator 如何关闭 nacosconfig 的健康检查 ？ 
-
-
- <font color="#949494">---------------</font> 
- 
-
-
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
