@@ -8,6 +8,12 @@ tags: ["open api","v1","v2","区别"]
 keywords: ["open api","v1","v2","区别"]
 ---
 
+## 用户问题 ： 
+ open api 中v1 和 v2 区别？ nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 Nacos Open API v1与v2之间存在以下几点主要区别：
 
 1. **协议与实现**：Nacos2.0开始，很多客户端访问的API由HTTP切换到了gRPC协议，这导致了Nacos1.X和Nacos2.X在API层面，无论是在路径还是协议上都有较大不同。但是，Nacos2.X服务端为了兼容性，仍然支持Nacos1.X的客户端和OpenAPI。
@@ -21,6 +27,24 @@ Nacos Open API v1与v2之间存在以下几点主要区别：
 5. **运维与客户端API差异**：Nacos的API分为面向用户的OpenAPI和面向运维人员的Admin API。OpenAPI关注于提供给服务的实际可用实例信息，而Admin API则能提供包括已下线实例在内的全量信息，以满足运维操作需求。这一区分同样适用于v1与v2版本。
 
 综上所述，Nacos Open API v2是对v1的重大升级，不仅在技术协议上有所调整，还在API的设计理念、易用性和功能性上做出了显著改进，推荐新项目或计划升级的用户采用v2版本。对于现有基于v1构建的应用，考虑到向后兼容性，可以根据业务需求考虑是否迁移至v2。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Open API 指南](https://nacos.io/docs/latest/guide/user/open-api)
+ 
+ *专家经验：Nacos1.0和Nacos2.0的api有什么区别？2.0的中小版本升级相关问题 
+ 
+ *专家经验：CatalogController 里面的接口和客户端SDK的API区别是什么 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

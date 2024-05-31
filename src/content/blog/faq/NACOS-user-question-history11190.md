@@ -8,6 +8,12 @@ tags: ["ipv6","设置"]
 keywords: ["ipv6","设置"]
 ---
 
+## 用户问题 ： 
+ nacos ipv6 设置 nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 Nacos 支持 IPv6 的设置，具体操作步骤如下：
 
 1. **Nacos Server 端设置**：
@@ -27,6 +33,20 @@ Nacos 支持 IPv6 的设置，具体操作步骤如下：
    - 如果遇到 `java.net.MalformedURLException` 异常，检查地址配置是否正确，确保端口号（如8848）与地址格式配合无误。必要时，尝试升级至最新版 Nacos 客户端以解决潜在的兼容性问题。
 
 综上所述，实现 Nacos 在 IPv6 环境下的配置主要涉及服务器端的自动识别或手动指定，以及客户端连接地址的正确设置。通过这些步骤，可以确保 Nacos 在 IPv6 网络环境中正常运行。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos是否支持IPV6 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

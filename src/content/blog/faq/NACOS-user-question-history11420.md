@@ -8,6 +8,12 @@ tags: ["Linux","部署","nacos"]
 keywords: ["Linux","部署","nacos"]
 ---
 
+## 用户问题 ： 
+ 如何在Linux环境下部署nacos nacos-opensource 
+
+---------------
+## 专家官方解答 ：
+
 要在Linux环境下部署Nacos，我们可以遵循以下步骤，结合提供的知识进行操作：
 
 ### 准备工作
@@ -54,6 +60,24 @@ sh startup.sh -m cluster
 - 对于生产环境，考虑数据持久化配置以及日志和监控的配置。
 
 通过以上步骤，你应该能在Linux环境中成功部署并运行Nacos服务器。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Nacos2.0服务配置性能测试报告](https://nacos.io/docs/latest/guide/admin/nacos2-config-benchmark)
+ 
+ *[Kubernetes Nacos](https://nacos.io/docs/latest/quickstart/quick-start-kubernetes)
+ 
+ *专家经验：nacos的部署 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
