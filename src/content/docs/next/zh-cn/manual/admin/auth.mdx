@@ -91,6 +91,44 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
   </TabItem>
 </Tabs>
 
+### 3.1. 设置管理员密码
+
+自2.4.0版本开始，Nacos构建时不再提供管理员用户`nacos`的默认密码，需要在首次开启鉴权后，通过API或Nacos控制台进行管理员用户`nacos`的密码初始化步骤，具体操作如下：
+
+<Tabs>
+  <TabItem label="API">
+    通过Admin API，指定或随机生成一个管理员用户`nacos`的密码，当密码指定或生成后，该API将无法再进行调用。
+
+    ```powelshell
+    curl -X 'http://$nacos_server_host:$nacos_server_port/v1/auth/users/admin' -d 'password=$your_password'
+    ```
+
+    > 注意：若输入的`$your_password`为空字符串，或未带有`password`参数，Nacos将会生成随机密码，请保存好生成的随机密码。
+
+    此时若指定或生成随机密码成功后，会返回如下：
+
+    ```json
+    {"username":"nacos", "password":"$your_password"}
+    ```
+
+  </TabItem>
+  <TabItem label="Nacos控制台">
+    当Nacos集群开启鉴权后访问Nacos控制台时，会校验是否已经初始化过管理员用户`nacos`的密码，若发现未初始化密码时，则会跳转至初始化密码的页面进行初始化。在该页面密码文本框内输入自定义密码，然后点击提交即可；
+
+    > 注意：若密码文本框内未输入自定义密码或输入空白密码，Nacos将会生成随机密码，请保存好生成的随机密码。
+
+    初始化成功后会弹窗提示初始化成功，并展示指定的密码或随机生成的密码，请保存好此密码。
+
+  </TabItem>
+</Tabs>
+
+### 3.2. 密码强度注意事项
+
+> 重要：在Nacos在初始化管理员用户`nacos`、创建或用户密码更新操作期间不强制执行特定密码长度。Nacos集群管理员有责任对自行构建的密码强度进行控制。为了避免与密码强度相关的安全风险，强烈建议初始化时使用强度较高的密码。
+
+### 3.3. 升级集群注意事项
+
+> 若Nacos集群升级自旧版本的Nacos，Nacos会认为当前已经存在管理员用户`nacos`，因此并不会要求进行管理员用户`nacos`的初始化流程，管理员用户`nacos`的密码仍然会保留旧版本时所使用的密码；因此若是使用旧版本时未修改过管理员用户`nacos`的默认密码，强烈建议升级后尽快修改管理员用户`nacos`的密码。
 
 ## 4. 客户端如何进行鉴权
 
