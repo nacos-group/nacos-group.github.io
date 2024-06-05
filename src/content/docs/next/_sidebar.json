@@ -167,12 +167,14 @@
         "translations": {
             "en": "Archiving"
         },
+        "collapsed": true,
         "items": [
             {
                 "label": "升级",
                 "translations": {
                     "en": "Upgrading"
                 },
+                "collapsed": true,
                 "autogenerate": { "directory": "upgrading" }
             },
             {
@@ -180,6 +182,7 @@
                 "translations": {
                     "en": "User Guide"
                 },
+                "collapsed": true,
                 "autogenerate": { "directory": "guide/user" }
             },
             {
@@ -187,6 +190,7 @@
                 "translations": {
                     "en": "Admin Guide"
                 },
+                "collapsed": true,
                 "autogenerate": { "directory": "guide/admin" }
             }
         ]
