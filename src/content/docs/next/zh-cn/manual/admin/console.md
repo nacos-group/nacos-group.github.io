@@ -112,7 +112,7 @@ Nacos 基于Namespace 帮助用户逻辑隔离多个命名空间，这可以帮�
 
 ## 3. 登录管理
 
-Nacos支持简单登录功能，默认用户名/密码为： `nacos/nacos`。
+Nacos支持简单登录功能，在开启[鉴权](./auth.mdx)功能后启用，管理员用户名为： `nacos`, 密码需要在首次开启控制台时进行初始化。
 
 ![login](https://cdn.nlark.com/yuque/0/2019/jpeg/338441/1561262748106-4fc05174-bf70-4806-bcbd-90296c5bcbaa.jpeg)
 
