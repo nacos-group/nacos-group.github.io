@@ -1,12 +1,12 @@
 ---
-title: Open API 指南
-keywords: [Open API,指南]
-description: Open API 指南
+title: Open API 手册
+keywords: [Open API,手册]
+description: Open API 手册
 sidebar:
-    order: 1
+    order: 4
 ---
 
-# Open API 指南
+# Open API 手册
 
 Nacos 2.X 版本兼容 Nacos1.X 版本的OpenAPI, 请参考文档[Nacos1.X OpenAPI](https://nacos.io/docs/v1/open-api)使用。
 

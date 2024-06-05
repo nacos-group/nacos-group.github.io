@@ -37,39 +37,44 @@
     ]
     },
     {
-        "label": "升级",
-        "translations": {
-            "en": "Upgrading"
-        },
-        "autogenerate": { "directory": "upgrading" }
-    },
-    {
-        "label": "插件",
-        "translations": {
-            "en": "Plugin"
-        },
-        "autogenerate": { "directory": "plugin" }
-    },
-    {
-        "label": "用户指南",
-        "translations": {
-            "en": "User Guide"
-        },
-        "autogenerate": { "directory": "guide/user" }
-    },
-    {
-        "label": "运维指南",
-        "translations": {
-            "en": "Admin Guide"
-        },
-        "autogenerate": { "directory": "guide/admin" }
-    },
-    {
         "label": "用户手册",
         "translations": {
             "en": "User Manual"
         },
-        "autogenerate": { "directory": "manual/user" }
+        "items": [
+            {
+                "label": "JAVA SDK",
+                "autogenerate": { "directory": "manual/user/java-sdk" }
+            },
+            {
+                "label": "Open API 手册",
+                "translations": {
+                    "en": "Open API Manual"
+                },
+                "link": "docs/manual/user/open-api"
+            },
+            {
+                "label": "配置鉴权",
+                "translations": {
+                    "en": "Authorization"
+                },
+                "link": "docs/manual/user/auth"
+            },
+            {
+                "label": "参数校验",
+                "translations": {
+                    "en": "Parameters Check"
+                },
+                "link": "docs/manual/user/parameters-check"
+            },
+            {
+                "label": "其他语言SDK",
+                "translations": {
+                    "en": "Other SDK"
+                },
+                "link": "docs/manual/user/other-language"
+            }
+        ]
     },
     {
         "label": "运维手册",
@@ -130,6 +135,13 @@
         ]
     },
     {
+        "label": "插件",
+        "translations": {
+            "en": "Plugin"
+        },
+        "autogenerate": { "directory": "plugin" }
+    },
+    {
         "label": "生态融合",
         "translations": {
             "en": "Ecology"
@@ -149,5 +161,34 @@
             "en": "Community"
         },
         "autogenerate": { "directory": "community" }
+    },
+    {
+        "label": "将归档",
+        "translations": {
+            "en": "Archiving"
+        },
+        "items": [
+            {
+                "label": "升级",
+                "translations": {
+                    "en": "Upgrading"
+                },
+                "autogenerate": { "directory": "upgrading" }
+            },
+            {
+                "label": "用户指南",
+                "translations": {
+                    "en": "User Guide"
+                },
+                "autogenerate": { "directory": "guide/user" }
+            },
+            {
+                "label": "运维指南",
+                "translations": {
+                    "en": "Admin Guide"
+                },
+                "autogenerate": { "directory": "guide/admin" }
+            }
+        ]
     }
 ]

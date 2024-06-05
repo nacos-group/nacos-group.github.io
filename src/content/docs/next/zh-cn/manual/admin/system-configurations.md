@@ -12,32 +12,32 @@ sidebar:
 
 对于Server端来说，一般是设置在`{nacos.home}/conf/application.properties`里，如果参数名后标注了(-D)的，则表示是 JVM 的参数，需要在`{nacos.home}/bin/startup.sh`里进行相应的设置。例如像设置 nacos.home 的值，可以在`{nacos.home}/bin/startup.sh`进行如下设置：
 
-若没有标注(-D)的参数，则同时可以在`{nacos.home}/conf/application.properties`里和JVM参数中配置，如果同时配置了JVM参数和`{nacos.home}/conf/application.properties`，那么JVM参数的优先级更高。
-
 ```
 JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 ```
+
+若没有标注(-D)的参数，则同时可以在`{nacos.home}/conf/application.properties`里和JVM参数中配置，如果同时配置了JVM参数和`{nacos.home}/conf/application.properties`，那么JVM参数的优先级更高。
 
 ### 1.1. 全局参数
 
 #### 1.1.1. 基础参数
 
-|参数名	|含义	 |     可选值	 |     默认值| 
-|------|------|-----------|-----------------|
-|nacos.home(-D)| Nacos的根目录 | 目录路径| Nacos安装的目录 | 
-|nacos.standalone(-D)| 是否在单机模式 | true/false | false |
-|nacos.functionMode(-D)| 启动模式，支持只启动某一个模块，不设置时所有模块都会启动 | config/naming/空 | 空 | 
-|nacos.server.ip(-D)| Nacos服务端的IP，优先级比`nacos.inetutils.ip-address`更高，如果配置了该参数，则`nacos.inetutils.ip-address`不再生效 | 本机IP | null |
-|nacos.inetutils.prefer-hostname-over-ip| 节点优先使用hostname作为本机ip，若为`true`时，`cluster.conf`里是否应该填`hostname`| true/false| false | 
-|nacos.inetutils.ip-address | 本机IP，该参数设置后，将会使用这个IP去`cluster.conf`里进行匹配，请确保这个IP的值在`cluster.conf`里是存在的 | 本机IP| null |
-|nacos.core.sys.basic.processors|指定服务端的处理器个数，用于部分虚拟化场景，防止读取CPU个数时读取到错误的值，导致线程数过多或过少 |正整数| CPU个数|
-|nacos.core.monitor.topn.enabled| Nacos Server topN 监控统计能力开关 | true/false | true |
-|nacos.core.monitor.topn.count|Nacos Server topN 监控统计 top的个数，如如配置为10，表示top10的配置和服务 | 正整数 | 10 |
-|nacos.core.snowflake.worker-id| Nacos Server 的snowflake workerId| 正整数 | -1 |
-|nacos.core.param.check.enabled| Nacos Server 参数校验能力开关，开启后将会校验请求时的参数是否符合规范，不符合将被拦截，详情查看 [参数校验](../../guide/user/parameters-check.md) | true/false | true |
-|server.port| Nacos Server 的端口 | 正整数 | 8848 |
-|server.servlet.context-path| Nacos Server 的Servlet上下文路径 | 正则表达式 | /nacos |
-|spring.config.additional-location| Nacos Server 的额外配置文件路径，除`{nacos.home}/conf/application.properties`外，用户可以添加额外的配置文件 | 文件路径，多个文件路径用逗号分隔 | null | 
+|参数名	| 含义	                                                                                        |     可选值	 |     默认值| 
+|------|--------------------------------------------------------------------------------------------|-----------|-----------------|
+|nacos.home(-D)| Nacos的根目录                                                                                  | 目录路径| Nacos安装的目录 | 
+|nacos.standalone(-D)| 是否在单机模式                                                                                    | true/false | false |
+|nacos.functionMode(-D)| 启动模式，支持只启动某一个模块，不设置时所有模块都会启动                                                               | config/naming/空 | 空 | 
+|nacos.server.ip(-D)| Nacos服务端的IP，优先级比`nacos.inetutils.ip-address`更高，如果配置了该参数，则`nacos.inetutils.ip-address`不再生效  | 本机IP | null |
+|nacos.inetutils.prefer-hostname-over-ip| 节点优先使用hostname作为本机ip，若为`true`时，`cluster.conf`里是否应该填`hostname`                              | true/false| false | 
+|nacos.inetutils.ip-address | 本机IP，该参数设置后，将会使用这个IP去`cluster.conf`里进行匹配，请确保这个IP的值在`cluster.conf`里是存在的                     | 本机IP| null |
+|nacos.core.sys.basic.processors| 指定服务端的处理器个数，用于部分虚拟化场景，防止读取CPU个数时读取到错误的值，导致线程数过多或过少                                         |正整数| CPU个数|
+|nacos.core.monitor.topn.enabled| Nacos Server topN 监控统计能力开关                                                                 | true/false | true |
+|nacos.core.monitor.topn.count| Nacos Server topN 监控统计 top的个数，如如配置为10，表示top10的配置和服务                                        | 正整数 | 10 |
+|nacos.core.snowflake.worker-id| Nacos Server 的snowflake workerId                                                           | 正整数 | -1 |
+|nacos.core.param.check.enabled| Nacos Server 参数校验能力开关，开启后将会校验请求时的参数是否符合规范，不符合将被拦截，详情查看 [参数校验](../user/parameters-check.md) | true/false | true |
+|server.port| Nacos Server 的端口                                                                           | 正整数 | 8848 |
+|server.servlet.context-path| Nacos Server 的Servlet上下文路径                                                                 | 正则表达式 | /nacos |
+|spring.config.additional-location| Nacos Server 的额外配置文件路径，除`{nacos.home}/conf/application.properties`外，用户可以添加额外的配置文件          | 文件路径，多个文件路径用逗号分隔 | null | 
 
 #### 1.1.2. 数据库
 
@@ -178,7 +178,7 @@ Nacos从1.3版本开始使用HikariCP连接池，但在1.4.1版本前，连接�
 
 #### 1.8.3. 环境变量插件
 
-关于如何开发环境变量插件，请参考[鉴权插件](../../plugin/custom-environment-plugin.md)
+关于如何开发环境变量插件，请参考[环境变量插件](../../plugin/custom-environment-plugin.md)
 
 |参数名	|含义	 |     可选值	 |     默认值|
 |------|------|-----------|-----------------|

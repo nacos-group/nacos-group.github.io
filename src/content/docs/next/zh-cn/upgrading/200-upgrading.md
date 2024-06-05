@@ -6,7 +6,7 @@ sidebar:
     order: 2
 ---
 
-> 文档优化中......
+> 该文档即将废弃，推荐查看[运维手册-升级手册](../manual/admin/upgrading.mdx)。
 
 # Nacos 2.0.0 部署及升级文档
 

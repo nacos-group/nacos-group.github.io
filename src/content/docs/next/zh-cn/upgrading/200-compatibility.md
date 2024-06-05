@@ -6,7 +6,7 @@ sidebar:
     order: 1
 ---
 
-> 文档优化中......
+> 该文档即将废弃，推荐查看[运维手册-升级手册](../manual/admin/upgrading.mdx)。
 
 # Nacos2.0代码存放位置
 

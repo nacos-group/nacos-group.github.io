@@ -1,16 +1,14 @@
 ---
-title: Java SDK
-keywords: [Java,SDK]
-description: Java SDK
+title: Java SDK 使用手册
+keywords: [Java,SDK,使用手册]
+description: 本文档介绍了Nacos的Java SDK(nacos-client)的使用方式，包括如何配置Nacos Client、如何使用Nacos Client、如何使用Nacos Client的API。
 sidebar:
     order: 1
 ---
 
-> 该文档即将废弃，推荐查看[用户手册-JAVA SDK-JAVA SDK 使用手册](../../manual/user/java-sdk/usage.md)。
+# Java SDK 使用手册
 
-# Java SDK
-
-## 概述部分
+## 1. 引用概述
 
 Maven 坐标
 ```
@@ -27,7 +25,7 @@ Maven 坐标
 ```xml
     <properties>
         <!-- 2.1.2版本以上支持纯净版客户端 -->
-        <nacos.version>2.1.2</nacos.version>
+        <nacos.version>2.4.0</nacos.version>
     </properties>
 
     <dependencies>
@@ -52,8 +50,44 @@ Maven 坐标
     </dependencies>
 ```
 
-## 配置管理
-### 获取配置
+## 2. 初始化SDK
+
+Nacos 初始化SDK仅需要使用 `NacosFactory` 类进行不同模块的创建即可：
+
+```java
+
+String serverAddr = "localhost:8848";
+
+# 初始化配置中心的Nacos Java SDK
+ConfigService configService = NacosFactory.createConfigService(serverAddr);
+
+# 初始化配置中心的Nacos Java SDK
+NamingService namingService = NacosFactory.createNamingService(serverAddr);
+```
+
+如果初始化SDK时，还需要配置一些参数，可以使用 `Properties` 类进行配置：
+
+```java
+
+Properties properties = new Properties();
+# 指定Nacos-Server的地址
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "localhost:8848");
+# 指定Nacos-SDK的命名空间
+properties.setProperty(PropertyKeyConst.NAMESPACE, "${namespaceId}");
+
+# 初始化配置中心的Nacos Java SDK
+ConfigService configService = NacosFactory.createConfigService(properties);
+
+# 初始化配置中心的Nacos Java SDK
+NamingService namingService = NacosFactory.createNamingService(properties);
+```
+
+更多初始化时所涉及的参数配置，请参考[Java SDK 配置参数](./properties.md)。
+
+> 注意：一个Nacos Java SDK实例只能用于获取同一个命名空间下的配置和服务，如果要获取不同的命名空间下的配置或服务，需要创建不同的Nacos Java SDK实例。
+
+## 3. 配置管理 API
+### 3.1. 获取配置
 #### 描述
 
 用于服务启动的时候从 Nacos 获取配置。
@@ -99,7 +133,7 @@ try {
 
 读取配置超时或网络异常，抛出 NacosException 异常。
 
-### 监听配置
+### 3.2. 监听配置
 #### 描述
 
 如果希望 Nacos 推送配置变更，可以使用 Nacos 动态监听配置接口来实现。
@@ -207,7 +241,7 @@ while (true) {
 }
 ```
 
-### 删除监听
+### 3.3. 删除监听
 #### 描述
 
 取消监听配置，取消监听后配置不会再推送。
@@ -237,7 +271,7 @@ ConfigService configService = NacosFactory.createConfigService(properties);
 configService.removeListener(dataId, group, yourListener);
 ```
 
-### 发布配置
+### 3.4. 发布配置
 #### 描述
 
 用于通过程序自动发布 Nacos 配置，以便通过自动化手段降低运维成本。
@@ -279,7 +313,7 @@ try {
 	String group = "{group}";
 	Properties properties = new Properties();
 	properties.put("serverAddr", serverAddr);
-    ConfigService configService = NacosFactory.createConfigService(properties);
+    ConfigService configService = NacosFactory.createConfigService(properties);
 	boolean isPublishOk = configService.publishConfig(dataId, group, "content");
 	System.out.println(isPublishOk);
 } catch (NacosException e) {
@@ -292,7 +326,7 @@ try {
 
 读取配置超时或网络异常，抛出 NacosException 异常。
 
-### 删除配置
+### 3.5. 删除配置
 #### 描述
 
 用于通过程序自动删除 Nacos 配置，以便通过自动化手段降低运维成本。
@@ -346,8 +380,8 @@ try {
 
 
 
-## 服务发现SDK
-### 注册实例
+## 4. 服务发现API
+### 4.1. 注册实例
 #### 描述注册一个实例到服务。
 ```java
 void registerInstance(String serviceName, String ip, int port) throws NacosException;
@@ -410,7 +444,7 @@ instance.setCluster(cluster);
 naming.registerInstance("nacos.test.4", instance);
 ```
 
-### 注销实例
+### 4.2. 注销实例
 #### 描述
 删除服务下的一个实例。
 ```java
@@ -435,7 +469,7 @@ void deregisterInstance(String serviceName, String ip, int port, String clusterN
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 naming.deregisterInstance("nacos.test.3", "11.11.11.11", 8888, "DEFAULT");
 ```
-### 获取全部实例
+### 4.3. 获取全部实例
 #### 描述
 获取服务下的所有实例。
 ```java
@@ -459,7 +493,7 @@ NamingService naming = NamingFactory.createNamingService(System.getProperty("ser
 System.out.println(naming.getAllInstances("nacos.test.3"));
 ```
 
-### 获取健康或不健康实例列表
+### 4.4. 获取健康或不健康实例列表
 #### 描述
 根据条件获取过滤后的实例列表。
 ```java
@@ -484,7 +518,7 @@ NamingService naming = NamingFactory.createNamingService(System.getProperty("ser
 System.out.println(naming.selectInstances("nacos.test.3", true));
 ```
 
-### 获取一个健康实例
+### 4.5. 获取一个健康实例
 #### 描述
 根据负载均衡算法随机获取一个健康实例。
 ```java
@@ -509,7 +543,7 @@ NamingService naming = NamingFactory.createNamingService(System.getProperty("ser
 System.out.println(naming.selectOneHealthyInstance("nacos.test.3"));
 ```
 
-### 监听服务
+### 4.6. 监听服务
 #### 描述
 监听服务下的实例列表变化。
 ```java
@@ -540,7 +574,7 @@ naming.subscribe("nacos.test.3", event -> {
 });
 ```
 
-### 取消监听服务
+### 4.7. 取消监听服务
 #### 描述
 取消监听服务下的实例列表变化。
 ```java
@@ -568,92 +602,3 @@ naming.unsubscribe("nacos.test.3", event -> {});
 
 ```
 
-## NacosClientProperties
-### 介绍
-从 `2.1.2` 开始引入了 `NacosClientProperties`, 一个类似于 `Spring Environment`用来统一管理客户端的各种配置项. 之前客户端的配置项散落3个地方: 用户传入的 Properties、命令行参数和环境变量. 这种没有一个统一的获取配置的入口,并且不方便做配置的隔离. 基于以上的问题,引入 `NacosClientProperties`.
-
-### 特点
-- 统一管理 Properties、命令行参数、环境变量和默认值
-- 提供优先级搜索功能, 默认搜索顺序 `properties -> 命令行参数 -> 环境参数 -> 默认值`, 可通过调整优先级来调整搜索顺序, 默认是 `properties` 优先
-- 配置隔离, 每个 `NacosClientProperties` 对象,除去全局性的配置互不影响.
-
-
-### 如何使用
-#### 相关概念
-##### 优先级
-默认优先级是 `properties`, 可通过以下2种方式来调整:
-- (命令行参数)-Dnacos.env.first=PROPERTIES|JVM|ENV
-- (环境变量)NACOS_ENV_FIRST=PROPERTIES|JVM|ENV
-
-以上2种方式都指定的情况下,客户端优先使用命令行参数的方式获取优先级参数,若是通过命令行参数的方式没有获取到优先级参数则使用环境变量的方式获取优先级参数.如果以上2种方式都未指定优先级参数默认优先级为`properties`
-
-默认优先级:
-![default_order.png](/img/nacos_client_properties_default_order.png) 
-
-优先级: PROPERTIES
-![default_order.png](/img/nacos_client_properties_default_order.png) 
-
-优先级: JVM
-![jvm_order.png](/img/nacos_client_properties_jvm_order.png) 
-
-优先级: ENV
-![jvm_order.png](/img/nacos_client_properties_env_order.png) 
-
-##### 搜索
-`NacosClientProperties` 会按照指定优先级进行搜索配置, 以默认优先级(`PROPERTIES`)为例, 如果要获取一个 key 为
-`key1`的值, 查找顺序如下:
-
-![search_order.png](/img/nacos_client_properties_search_order.png) 
-
-`NacosClientProperties` 会按照上图顺序搜索,直到查询到为止.
-
-#### 配置隔离
-为了应对多注册中心,多配置中心的场景, `NacosClientProperties` 引入配置隔离的概念. 在 `NacosClientProperties` 中总共有4个取值源, 分别是: 用户自定义的properties、命令行参数、 环境变量和默认值, 其中 `命令行参数、 环境变量和默认值` 
-这3个是全局共享的无法做到隔离, 那么只剩下用户自定义的properties对象是可以进行隔离的, 每个 `NacosClientProperties` 对象中包含不同的 `Properties` 对象, 通过这种方法做到配置互不影响.
-
-> 注意: 全局共享的配置: 命令行参数、 环境参数和默认值 一旦初始化完毕,后续使用无法更改,使用 `setProperty` 方法,也无法修改. `setProperty` 只能修改`NacosClientProperties` 对象中包含的 `Properties` 对象中的值
-
-#### 配置派生
-在配置隔离的概念之上又引入了配置派生的概念, 其目的是让配置能够继承.所有 `NacosClientProperties` 对象都是由 `NacosClientProperties.PROTOTYPE` 对象派生而来. 无法通过其他方式创建 `NacosClientProperties` 对象
-```java
-// global properties
-NacosClientProperties.PROTOTYPE.setProperty("global-key1", "global-value1");
-
-// properties1 
-NacosClientProperties properties1 = NacosClientProperties.PROTOTYPE.derive();
-properties1.setProperty("properties1-key1", "properties1-value1");
-
-// properties2
-NacosClientProperties properties2 = properties1.derive();
-properties2.setProperty("properties2-key1", "properties2-value1");
-```
-以上代码如下图所示:
-![derive.png](/img/nacos_client_properties_derive.png) 
-
-那么搜索会怎么搜索呢? 以默认优先级(PROPERTIES)为例:
-```java
-// value == global-value1
-String value = properties2.getProperty("global-key1");
-
-```
-![derive_search.png](/img/nacos_client_properties_derive_search.png) 
-
-
-
-#### API
-|方法名| 入参内容| 返回内容| 描述|
-| -   | -      | -     | -  |
-|getProperty| key: String | String  | 获取 key 对应的 value 值, 不存在返回 null|
-|getProperty| key: String, default: String  | String | 获取 key 对应的 value 值, 不存在返回默认值|
-|getBoolean | key: String | Boolean | 获取 key 对应的 Boolean 值, 不存在则返回 null |
-|getBoolean | key: String, default: Boolean | Boolean | 获取 key 对应的 Boolean 值, 不存在返回默认值|
-|getInteger | key: String | Integer | 获取 key 对应的 Integer 值, 不存在返回 null |
-|getInteger | key: String, default: Integer | Integer | 获取 key 对应的 Integer 值, 不存在返回默认值|
-|getLong    | key: String | Long    | 获取 key 对应的 Long 值, 不存在返回 null|
-|getLong    | key: String, default: Long | Long | 获取 key 对应的 Long 值, 不存在返回默认值|
-|setProperty| key: String, value: String | void | 设置 key-value 到 NacosClientProperties 对象中,已存的值会被覆盖|
-|addProperties| properties: Properties | void | 添加 Properties 到 NacosClientProperties 对象中,已存在到值会被覆盖|
-|containsKey| key: String | boolean | 判断是否包含指定 key 的值, 包含返回 true 否则 false|
-|asProperties| void | Properties | 将 NacosClientProperties 对象转换为 Properties 对象|
-|derive| void | NacosClientProperties | 创建一个继承父 NacosClientProperties 所有配置的 NacosClientProperties 对象, 内部包含一个空 Properties |
-|derive| Properties | NacosClientProperties | 创建一个继承父 NacosClientProperties 所有配置的 NacosClientProperties 对象, 内部包含指定的 Properties 对象|

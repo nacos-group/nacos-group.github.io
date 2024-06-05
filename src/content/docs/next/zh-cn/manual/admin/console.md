@@ -120,31 +120,16 @@ Nacos支持简单登录功能，默认用户名/密码为： `nacos/nacos`。
 
 #### 3.1.1. 初始化时生成
 
-1. 生成加密密码， 在`com.alibaba.nacos.console.utils.PasswordEncoderUtil.main`函数中，将 nacos 改成你要改成的密码，运行即可得到加密有算法。注意盐值是随机的，所以生成密码每次可能不一样，请不要担心。
+当Nacos集群开启鉴权后访问Nacos控制台时，会校验是否已经初始化过管理员用户`nacos`的密码，若发现未初始化密码时，则会跳转至初始化密码的页面进行初始化。在该页面密码文本框内输入自定义密码，然后点击提交即可；
 
-```
-public class PasswordEncoderUtil {
+> 注意：若密码文本框内未输入自定义密码或输入空白密码，Nacos将会生成随机密码，请保存好生成的随机密码。
 
-    public static void main(String[] args) {
-        System.out.println(new BCryptPasswordEncoder().encode("nacos"));
-    }
-}
-```
-
-2. 创建用户名或者密码的时候，用指定用户名密码即可。
-```
-// 新增
-INSERT INTO users (username, password, enabled) VALUES ('nacos', '${BCryptPassword}', TRUE);
-INSERT INTO roles (username, role) VALUES ('nacos', 'ROLE_ADMIN');
-
-// 修改
-UPDATE users SET password = '${BCryptPassword}' WHERE username = 'nacos';
-```
+初始化成功后会弹窗提示初始化成功，并展示指定的密码或随机生成的密码，请保存好此密码。
 
 #### 3.1.2. 控制台上修改
 
 1. 登录控制台，选择`权限控制` -> `用户列表`。
-2. 找到nacos用户，并在该用户对应的`操作`列表中点击`修改`按钮，将密码修改为默认密码
+2. 找到nacos用户，并在该用户对应的`操作`列表中点击`修改`按钮，进行密码修改
 
 ### 3.2. 关闭登录功能
 
