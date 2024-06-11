@@ -117,9 +117,9 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 
     ```json
     {
-	      "code": 0,
-	      "message": "success",
-	      "data": "contentTest"
+              "code": 0,
+              "message": "success",
+              "data": "contentTest"
     }
     ```
 
@@ -181,9 +181,9 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 
     ```json
     {
-	      "code": 0,
-	      "message": "success",
-	      "data": true
+              "code": 0,
+              "message": "success",
+              "data": true
     }
     ```
 
@@ -280,14 +280,14 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 
     ```json
     {
-    	"code": 0,
-    	"message": "success",
-    	"data": {
-    		"totalCount": 1,
-    		"pageNumber": 1,
-    		"pagesAvailable": 1,
-    		"pageItems": [
-    			{
+            "code": 0,
+            "message": "success",
+            "data": {
+                    "totalCount": 1,
+                    "pageNumber": 1,
+                    "pagesAvailable": 1,
+                    "pageItems": [
+                            {
                     "id": "203",
                     "lastId": -1,
                     "dataId": "nacos.example",
@@ -295,15 +295,15 @@ API接口返回体中的错误码及对应提示信息汇总见下表
                     "tenant": "",
                     "appName": "",
                     "md5": "9f67e6977b100e00cab385a75597db58",
-      				"content": "contentTest",
+                                      "content": "contentTest",
                     "srcIp": "0:0:0:0:0:0:0:1",
                     "srcUser": null,
                     "opType": "I",
                     "createdTime": "2010-05-04T16:00:00.000+0000",
                     "lastModifiedTime": "2020-12-05T01:48:03.380+0000"
-    			}
-    		]
-    	}
+                            }
+                    ]
+            }
     }
     ```
 
@@ -362,9 +362,9 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 
     ```json
     {
-    	"code": 0,
-    	"message": "success",
-    	"data": {
+            "code": 0,
+            "message": "success",
+            "data": {
             "id": "203",
             "lastId": -1,
             "dataId": "nacos.example",
@@ -372,13 +372,13 @@ API接口返回体中的错误码及对应提示信息汇总见下表
             "tenant": "",
             "appName": "",
             "md5": "9f67e6977b100e00cab385a75597db58",
-      		"content": "contentTest",
+                      "content": "contentTest",
             "srcIp": "0:0:0:0:0:0:0:1",
             "srcUser": null,
             "opType": "I",
             "createdTime": "2010-05-04T16:00:00.000+0000",
             "lastModifiedTime": "2020-12-05T01:48:03.380+0000"
-    	}
+            }
     }
     ```
 
@@ -423,9 +423,9 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 
     ```json
     {
-    	"code": 0,
-    	"message": "success",
-    	"data": {
+        "code": 0,
+        "message": "success",
+            "data": {
             "id": "203",
             "lastId": -1,
             "dataId": "nacos.example",
@@ -433,17 +433,25 @@ API接口返回体中的错误码及对应提示信息汇总见下表
             "tenant": "",
             "appName": "",
             "md5": "9f67e6977b100e00cab385a75597db58",
-      		"content": "contentTest",
+            "content": "contentTest",
             "srcIp": "0:0:0:0:0:0:0:1",
             "srcUser": null,
             "opType": "I",
             "createdTime": "2010-05-04T16:00:00.000+0000",
             "lastModifiedTime": "2020-12-05T01:48:03.380+0000"
-    	}
+        }
     }
     ```
 
 ## 3. 服务发现
+
+:::note
+Nacos v2的openAPI中，已移除关于`发送实例心跳`的相关API，原因是Nacos2.0对于非持久化实例，已经使用长链接作为存活的基准，而不是通过传统`心跳续约`的方式进行。因此对于使用Nacos2.0的客户端用户，以及针对Nacos2.0进行服务开发的用户，其实已经不再需要使用v2的心跳openAPI。
+
+Nacos v2的`注册实例`的OpenAPI，更多的是给予持久化服务实例进行注册；非持久化实例的注册，建议采用Nacos2.0客户端进行，获取更高的性能及更灵敏的变化感知能力。
+
+对于仍然在使用Nacos1.X客户端的用户，以及基于Nacos v1 `发送实例心跳`的openAPI的用户，依旧可以继续使用。
+:::
 
 ### 3.1. 注册实例
 
@@ -681,20 +689,20 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 
     ```json
     {
-    	"code": 0,
-    	"message": "success",
-    	"data": {
-    		"serviceName": "DEFAULT_GROUP@@test_service",
-    		"ip": "127.0.0.1",
-    		"port": 8080,
-    		"clusterName": "DEFAULT",
-    		"weight": 1.0,
-    		"healthy": true,
-    		"instanceId": null,
-    		"metadata": {
-    			"value": "1"
-    		}
-    	}
+            "code": 0,
+            "message": "success",
+            "data": {
+                    "serviceName": "DEFAULT_GROUP@@test_service",
+                    "ip": "127.0.0.1",
+                    "port": 8080,
+                    "clusterName": "DEFAULT",
+                    "weight": 1.0,
+                    "healthy": true,
+                    "instanceId": null,
+                    "metadata": {
+                            "value": "1"
+                    }
+            }
     }
     ```
 
@@ -772,37 +780,37 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 
     ```json
     {
-    	"code": 0,
-    	"message": "success",
-    	"data": {
-    		"name": "DEFAULT_GROUP@@test_service",
-    		"groupName": "DEFAULT_GROUP",
-    		"clusters": "",
-    		"cacheMillis": 10000,
-    		"hosts": [
-    			{
-    				"ip": "127.0.0.1",
-    				"port": 8080,
-    				"weight": 1.0,
-    				"healthy": true,
-    				"enabled": true,
-    				"ephemeral": true,
-    				"clusterName": "DEFAULT",
-    				"serviceName": "DEFAULT_GROUP@@test_service",
-    				"metadata": {
-    					"value": "1"
-    				},
-    				"instanceHeartBeatTimeOut": 15000,
-    				"ipDeleteTimeout": 30000,
-    				"instanceHeartBeatInterval": 5000
-    			}
-    		],
-    		"lastRefTime": 1662554390814,
-    		"checksum": "",
-    		"allIPs": false,
-    		"reachProtectionThreshold": false,
-    		"valid": true
-    	}
+            "code": 0,
+            "message": "success",
+            "data": {
+                    "name": "DEFAULT_GROUP@@test_service",
+                    "groupName": "DEFAULT_GROUP",
+                    "clusters": "",
+                    "cacheMillis": 10000,
+                    "hosts": [
+                            {
+                                    "ip": "127.0.0.1",
+                                    "port": 8080,
+                                    "weight": 1.0,
+                                    "healthy": true,
+                                    "enabled": true,
+                                    "ephemeral": true,
+                                    "clusterName": "DEFAULT",
+                                    "serviceName": "DEFAULT_GROUP@@test_service",
+                                    "metadata": {
+                                            "value": "1"
+                                    },
+                                    "instanceHeartBeatTimeOut": 15000,
+                                    "ipDeleteTimeout": 30000,
+                                    "instanceHeartBeatInterval": 5000
+                            }
+                    ],
+                    "lastRefTime": 1662554390814,
+                    "checksum": "",
+                    "allIPs": false,
+                    "reachProtectionThreshold": false,
+                    "valid": true
+            }
     }
     ```
 
@@ -1140,21 +1148,21 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 
     ```json
     {
-    	"code": 0,
-    	"message": "success",
-    	"data": {
-    		"namespace": "public",
-    		"serviceName": "nacos.test.1",
-    		"groupName": "DEFAULT_GROUP",
-    		"clusterMap": {},
-    		"metadata": {},
-    		"protectThreshold": 0,
-    		"selector": {
-    			"type": "none",
-    			"contextType": "NONE"
-    		},
-    		"ephemeral": false
-    	}
+            "code": 0,
+            "message": "success",
+            "data": {
+                    "namespace": "public",
+                    "serviceName": "nacos.test.1",
+                    "groupName": "DEFAULT_GROUP",
+                    "clusterMap": {},
+                    "metadata": {},
+                    "protectThreshold": 0,
+                    "selector": {
+                            "type": "none",
+                            "contextType": "NONE"
+                    },
+                    "ephemeral": false
+            }
     }
     ```
 
@@ -1202,15 +1210,15 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 
     ```json
     {
-    	"code": 0,
-    	"message": "success",
-    	"data": {
-    		"count": 2,
-    		"services": [
-    			"nacos.test.1",
-    			"nacos.test.2"
-    		]
-    	}
+            "code": 0,
+            "message": "success",
+            "data": {
+                    "count": 2,
+                    "services": [
+                            "nacos.test.1",
+                            "nacos.test.2"
+                    ]
+            }
     }
     ```
 
@@ -1302,16 +1310,16 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 
     ```json
     {
-    	"code": 0,
-    	"message": "success",
-    	"data": [
-    		"10.128.164.35:9956#true",
-    		"1664358687402_127.0.0.1_2300",
-    		"1664358642902_127.0.0.1_2229",
-    		"192.168.139.1:49825#true",
-    		"10.128.164.35:9954#true",
-    		"192.168.139.1:53556#true"
-    	]
+            "code": 0,
+            "message": "success",
+            "data": [
+                    "10.128.164.35:9956#true",
+                    "1664358687402_127.0.0.1_2300",
+                    "1664358642902_127.0.0.1_2229",
+                    "192.168.139.1:49825#true",
+                    "10.128.164.35:9954#true",
+                    "192.168.139.1:53556#true"
+            ]
     }
     ```
 
@@ -1375,19 +1383,19 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 
     ```json
     {
-    	"code": 0,
-    	"message": "success",
-    	"data": {
-    		"clientId": "1664527081276_127.0.0.1_4400",
-    		"ephemeral": true,
-    		"lastUpdatedTime": 1664527081642,
-    		"clientType": "connection",
-    		"connectType": "GRPC",
-    		"appName": "-",
-    		"version": "Nacos-Java-Client:v2.1.0",
-    		"clientIp": "10.128.164.35",
-    		"clientPort": "4400"
-    	}
+            "code": 0,
+            "message": "success",
+            "data": {
+                    "clientId": "1664527081276_127.0.0.1_4400",
+                    "ephemeral": true,
+                    "lastUpdatedTime": 1664527081642,
+                    "clientType": "connection",
+                    "connectType": "GRPC",
+                    "appName": "-",
+                    "version": "Nacos-Java-Client:v2.1.0",
+                    "clientIp": "10.128.164.35",
+                    "clientPort": "4400"
+            }
     }
     ```
 
@@ -1438,20 +1446,20 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 
     ```json
     {
-    	"code": 0,
-    	"message": "success",
-    	"data": [
-    		{
-    			"namespace": "public",
-    			"group": "DEFAULT_GROUP",
-    			"serviceName": "nacos.test.1",
-    			"registeredInstance": {
-    				"ip": "10.128.164.35",
-    				"port": 9950,
-    				"cluster": "DEFAULT"
-    			}
-    		}
-    	]
+            "code": 0,
+            "message": "success",
+            "data": [
+                    {
+                            "namespace": "public",
+                            "group": "DEFAULT_GROUP",
+                            "serviceName": "nacos.test.1",
+                            "registeredInstance": {
+                                    "ip": "10.128.164.35",
+                                    "port": 9950,
+                                    "cluster": "DEFAULT"
+                            }
+                    }
+            ]
     }
     ```
 
@@ -1502,20 +1510,20 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 
     ```json
     {
-    	"code": 0,
-    	"message": "success",
-    	"data": [
-    		{
-    			"namespace": "public",
-    			"group": "DEFAULT_GROUP",
-    			"serviceName": "nacos.test.1",
-    			"subscriberInfo": {
-    				"app": "unknown",
-    				"agent": "Nacos-Java-Client:v2.1.0",
-    				"addr": "10.128.164.35"
-    			}
-    		}
-    	]
+            "code": 0,
+            "message": "success",
+            "data": [
+                    {
+                            "namespace": "public",
+                            "group": "DEFAULT_GROUP",
+                            "serviceName": "nacos.test.1",
+                            "subscriberInfo": {
+                                    "app": "unknown",
+                                    "agent": "Nacos-Java-Client:v2.1.0",
+                                    "addr": "10.128.164.35"
+                            }
+                    }
+            ]
     }
     ```
 
@@ -1565,20 +1573,20 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 
     ```json
     {
-    	"code": 0,
-    	"message": "success",
-    	"data": [
-    		{
-    			"clientId": "1664527081276_127.0.0.1_4400",
-    			"ip": "10.128.164.35",
-    			"port": 9950
-    		},
-    		{
-    			"clientId": "10.128.164.35:9954#true",
-    			"ip": "10.128.164.35",
-    			"port": 9954
-    		}
-    	]
+            "code": 0,
+            "message": "success",
+            "data": [
+                    {
+                            "clientId": "1664527081276_127.0.0.1_4400",
+                            "ip": "10.128.164.35",
+                            "port": 9950
+                    },
+                    {
+                            "clientId": "10.128.164.35:9954#true",
+                            "ip": "10.128.164.35",
+                            "port": 9954
+                    }
+            ]
     }
     ```
 
@@ -1628,20 +1636,20 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 
     ```json
     {
-    	"code": 0,
-    	"message": "success",
-    	"data": [
-    		{
-    			"clientId": "1664527125645_127.0.0.1_4443",
-    			"ip": "10.128.164.35",
-    			"port": 0
-    		},
-    		{
-    			"clientId": "172.24.144.1:54126#true",
-    			"ip": "172.24.144.1",
-    			"port": 54126
-    		}
-    	]
+            "code": 0,
+            "message": "success",
+            "data": [
+                    {
+                            "clientId": "1664527125645_127.0.0.1_4443",
+                            "ip": "10.128.164.35",
+                            "port": 0
+                    },
+                    {
+                            "clientId": "172.24.144.1:54126#true",
+                            "ip": "172.24.144.1",
+                            "port": 54126
+                    }
+            ]
     }
     ```
 
@@ -1687,18 +1695,18 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 
     ```json
     {
-    	"code": 0,
-    	"message": "success",
-    	"data": [
-    		{
-    			"namespace": "",
-    			"namespaceShowName": "public",
-    			"namespaceDesc": null,
-    			"quota": 200,
-    			"configCount": 1,
-    			"type": 0
-    		}
-    	]
+            "code": 0,
+            "message": "success",
+            "data": [
+                    {
+                            "namespace": "",
+                            "namespaceShowName": "public",
+                            "namespaceDesc": null,
+                            "quota": 200,
+                            "configCount": 1,
+                            "type": 0
+                    }
+            ]
     }
     ```
 
@@ -1750,16 +1758,16 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 
     ```json
     {
-    	"code": 0,
-    	"message": "success",
-    	"data": {
-    		"namespace": "test_namespace",
-    		"namespaceShowName": "test",
-    		"namespaceDesc": null,
-    		"quota": 200,
-    		"configCount": 0,
-    		"type": 2
-    	}
+            "code": 0,
+            "message": "success",
+            "data": {
+                    "namespace": "test_namespace",
+                    "namespaceShowName": "test",
+                    "namespaceDesc": null,
+                    "quota": 200,
+                    "configCount": 0,
+                    "type": 2
+            }
     }
     ```
 
