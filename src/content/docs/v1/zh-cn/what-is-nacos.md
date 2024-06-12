@@ -1,7 +1,7 @@
 ---
-title: 什么是 Nacos
+title: Nacos 配置中心简介, Nacos 是什么
 keywords: [nacos]
-description: 什么是 Nacos
+description: Nacos 配置中心简介，Nacos 是什么
 ---
 
 # 什么是 Nacos

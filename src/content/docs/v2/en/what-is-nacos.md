@@ -1,5 +1,5 @@
 ---
-title: What is Nacos
+title: Nacos Configuration Center profile
 keywords: [nacos]
 description: What is Nacos
 ---
