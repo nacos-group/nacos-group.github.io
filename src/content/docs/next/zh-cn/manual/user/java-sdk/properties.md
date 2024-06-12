@@ -144,7 +144,7 @@ String value = properties2.getProperty("global-key1");
 | ramRoleName         | RAM_ROLE_NAME         | 使用阿里云RAM鉴权时需要使用的ramRoleName                                                                                  | 任意字符串                                             | 无                        |
 | signatureRegionId   | SIGNATURE_REGION_ID   | 使用阿里云RAM鉴权时，需要使用的signatureRegionId                                                                           | 任意字符串                                             | 无                        |
 | logAllProperties    | LOG_ALL_PROPERTIES    | 启动Java SDK时，是否打印全量参数，包含自定义properties、JVM和环境变量，主要用户调试和问题排查。                                                   | boolean                                           | false                    |
-| ~~serverName~~      | ~~SERVER_NAME~~       | 该 JAVA SDK 的名称，目前仅在访问endpoint时使用，将废弃                                                                         | 任意字符串                                             | 由serverAddr/endpoint自动拼接 |
+| ~~serverName~~      | ~~SERVER_NAME~~       | 该 JAVA SDK 的名称，目前仅在访问endpoint时使用，由于使用率低且命名不合理，将废弃                                                            | 任意字符串                                             | 由serverAddr/endpoint自动拼接 |
 
 ### 2.2. 配置中心相关参数
 
@@ -175,3 +175,43 @@ String value = properties2.getProperty("global-key1");
 | redoDelayTime                    | REDO_DELAY_TIME                      | 注册中心NamingService与Nacos Server链接断开后，间隔多长时间检查并进行redo操作，单位毫秒        | 任意long值   | 3000                                            |
 | redoDelayThreadCount             | REDO_DELAY_THREAD_COUNT              | 注册中心NamingService执行redo操作的线程数                                     | 任意int值    | 1                                               |
 | ~~namingClientBeatThreadCount~~  | ~~NAMING_CLIENT_BEAT_THREAD_COUNT~~  | 注册中心NamingService旧版本使用的，用于发送所注册服务实例心跳的线程数，已废弃                     | 任意int值    | 无                                               |
+
+### 2.4. 连接相关
+
+Nacos Java SDK 连接Nacos Server时，可以设置一系列的参数，来提升针对网络抖动时的容错能力，这部分配置暂时**只能通过JVM参数(
+-D)**进行设置，社区正在进行改造，支持其能够通过`NacosClientProperties`（即初始化Java SDK时传入的Properties）进行配置，尽请期待。
+
+| 参数名                                                             | 含义                                                                                 | 可选值     | 默认值           | 
+|-----------------------------------------------------------------|------------------------------------------------------------------------------------|---------|---------------|
+| nacos.server.grpc.port.offset                                   | Nacos Server GRPC端口相对主端口的偏移量                                                       | 任意int值  | 1000          |
+| nacos.remote.client.grpc.name                                   | 该Nacos Java SDK的GRPC连接的名字                                                          | 任意字符串   | null          |
+| nacos.remote.client.grpc.connect.keep.alive                     | 该Nacos Java SDK的GRPC连接的Keep Alive                                                  | 任意Long值 | 5000          |
+| nacos.remote.client.grpc.retry.times                            | 该Nacos Java SDK的GRPC连接发起请求时的最大重试次数                                                 | 任意int值  | 3             |
+| nacos.remote.client.grpc.timeout                                | 该Nacos Java SDK的GRPC连接发起请求时的请求超时时间                                                 | 任意Long值 | 3000          |
+| nacos.remote.client.grpc.pool.alive                             | 该Nacos Java SDK的GRPC连接所使用的线程池的线程Keep Alive时间，单位毫秒                                  | 任意Long值 | 10000         |
+| nacos.remote.client.grpc.pool.core.size                         | 该Nacos Java SDK的GRPC连接所使用的线程池的最小大小                                                 | 任意int值  | CPU个数*2       |
+| nacos.remote.client.grpc.pool.max.size                          | 该Nacos Java SDK的GRPC连接所使用的线程池的最大大小                                                 | 任意int值  | CPU个数*8       |
+| nacos.remote.client.grpc.server.check.timeout                   | 该Nacos Java SDK的GRPC连接刚连接上服务端时，进行连接注册的超时时间                                         | 任意Long值 | 3000          |
+| nacos.remote.client.grpc.queue.size                             | 该Nacos Java SDK的GRPC连接的请求队列长度                                                      | 任意int值  | 10000         |
+| nacos.remote.client.grpc.health.retry                           | 该Nacos Java SDK的GRPC连接的健康检查重试次数，达到这个次数健康检查失败的连接会被客户端强制关闭，进行重连                      | 任意int值  | 3             |
+| nacos.remote.client.grpc.health.timeout                         | 该Nacos Java SDK的GRPC连接的健康检查超时时间                                                    | 任意Long值 | 3000          |
+| nacos.remote.client.grpc.maxinbound.message.size                | 该Nacos Java SDK的GRPC连接单次请求的Request的最大大小，单位byte                                     | 任意int值  | 10M           |
+| nacos.remote.client.grpc.channel.keep.alive                     | 该Nacos Java SDK的GRPC连接对应的TCP Channel的Keep Alive时间，此时间应该大于`connect.keep.alive`,单位毫秒 | 任意int值  | 6 * 60 * 1000 |
+| nacos.remote.client.grpc.channel.keep.alive.timeout             | 该Nacos Java SDK的GRPC连接对应的TCP Channel的Keep Alive超时时间，单位毫秒                           | 任意Long值 | 20 * 1000     |
+| nacos.remote.client.grpc.channel.capability.negotiation.timeout | 该Nacos Java SDK的GRPC连接对应的TLS握手超时时间                                                 | 任意Long值 | 5000          |
+
+### 2.5. 其他参数
+
+Nacos Java SDK 中有部分参数对运行时期的影响较小，且需要全局一致，因此此类参数目前需要通过JVM参数（-D）或环境变量进行设置，一般使用时使用默认值即可，仅在遇到一些特殊场景时才需要设置。
+
+| 参数名                       | 含义                                                                                                                 | 可选值                | 默认值               | 
+|---------------------------|--------------------------------------------------------------------------------------------------------------------|--------------------|-------------------|
+| PER_TASK_CONFIG_SIZE      | 每个`ConfigService`可监听的最大配置数                                                                                         | 任意int              | 3000              |
+| JM.SNAPSHOT.PATH          | Nacos Java SDK的本地快照根目录，根目录下会创建`naming`和`config`两个目录用于存放订阅的服务和配置的缓存信息                                               | 任意目录               | ${user.home}      |
+| JM.LOG.PATH               | Nacos Java SDK的日志输出目录，正常情况下Nacos Java SDK的日志会输出到该目录下，部分特殊的场景和版本，可能会输出到业务日志中（如使用了log4j1.0的版本，或使用Spring Cloud重载了日志配置 | 任意目录               | ${user.home}/logs |
+| nacos.server.port         | 默认的Nacos Server**配置中心和鉴权login**的端口，当传入的`serverAddr`参数中不带有端口号时，使用此设置的端口连接Nacos Server，建议统一通过`serverAddr`参数设置端口      | 0～65535            | 8848              |
+| nacos.naming.exposed.port | 默认的Nacos Server**注册中心**的端口，当传入的`serverAddr`参数中不带有端口号时，使用此设置的端口连接Nacos Server，建议统一通过`serverAddr`参数设置端口              | 0～65535            | 8848              |
+| nacos.client.contextPath  | 默认的Nacos Server contentPath，`contextPath`和`endpointContextPath` 未传入时使用                                             | 任意URL支持的path       | nacos             |
+| nacos.env.first           | Nacos JAVA SDK 的 `NacosClientProperties` 配置搜索顺序。详情见[1.3.1. 优先级](#131-优先级)                                          | PROPERTIES/JVM/ENV | PROPERTIES        |
+| project.name              | 该SDK所归属的应用名，可在服务订阅者列表和配置订阅者列表中使用，仅作为参考字段使用                                                                         | 任意字符串              | unknown           |
+| ~~NACOS.CONNECT.TIMEOUT~~ | 连接服务时的连接超时时间，旧版本Http使用，已废弃                                                                                         | 任意int              | 1000              |
