@@ -228,7 +228,7 @@ export default {
 	'blog.activity.community.announcement':'社区公告',
 	'blog.activity.release.statement':'发布声明',
 	'blog.activity.explore':'探索Nacos 博客，了解服务发现和配置管理的最新资讯、教程和技术分析。',
-	'blog.all.articles':'全部文章',
+	'blog.all.articles': '全部文章',
 	'blog.article.technical':'技术文章',
 	'blog.article.case.best.practices':'最佳实践',
 	'blog.article.ecosystem.articles':'生态文章',
@@ -240,6 +240,7 @@ export default {
 	"themeSelect.accessibleLabel": "选择主题",
 	'wuyi.meet-professor.title': "专家答疑审阅后归档",
 	'wuyi.meet-professor.article': "文章",
+	'wuyi.blog.title': '专家答疑样例',
 	
 
 	"page.team.introduction": '团队介绍',

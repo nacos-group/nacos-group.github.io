@@ -61,9 +61,9 @@ export default [
     route: "http://console.nacos.io/nacos/index.html",
   },
   {
-    label: "专家答疑",
+    label: "答疑样例",
     translations: {
-      en: "WUYI",
+      en: "FAQ",
     },
     trigger: "click",
     target: "_self",
