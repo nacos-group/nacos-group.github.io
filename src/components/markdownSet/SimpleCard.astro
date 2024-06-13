@@ -31,7 +31,7 @@ const { post, source, posterWidth, type = "blog",index = 0, class: className = "
   href={`${ifzh ? '' : '/en'}/blog/${post.slug}/?source=${source}`}
   class="card h-[250px] p-[24px] bg-gray-01 shadow-none w-full flex flex-column items-start justify-between"
 >
-  <!-- {useAnchor?<a id={post.slug} class={"absolute z-[-100] top-[-4rem]"}></a>:null} -->
+  {useAnchor?<p id={post.slug} class={"absolute z-[-100] top-[-4rem]"}></p>:null}
   <p class="flex-1 text-gray-07 text-xs font-normal">
     {moment(post.data.date).format("MMMM D, YYYY")}
   </p>
