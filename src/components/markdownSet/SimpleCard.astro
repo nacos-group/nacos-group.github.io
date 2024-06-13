@@ -27,31 +27,22 @@ export type Props = {
 
 const { post, source, posterWidth, type = "blog",index = 0, class: className = "", useAnchor=false, } = Astro.props;
 ---
+<a
+  href={`${ifzh ? '' : '/en'}/blog/${post.slug}/?source=${source}`}
+  class="card h-[250px] p-[24px] bg-gray-01 shadow-none w-full flex flex-column items-start justify-between"
+>
+  <!-- {useAnchor?<a id={post.slug} class={"absolute z-[-100] top-[-4rem]"}></a>:null} -->
+  <p class="flex-1 text-gray-07 text-xs font-normal">
+    {moment(post.data.date).format("MMMM D, YYYY")}
+  </p>
+  <h2 class="flex-1 card-title text-gray-14 line-clamp-2 font-normal text-2xl truncate">
+    {post.data.title}
+  </h2>
+  <div class="flex-[3_3_0%] w-full text-lg leading-8 overflow-hidden mt-[24px] simple-card-desc">
+    {post.excerpt || post.data.description}
+  </div>
+</a>
 
-<div class={"card h-[332px] p-[24px] bg-gray-01 shadow-none w-full flex" + className}>
-    <!-- 锚点 -->
-    {useAnchor?<a id={post.slug} class={"absolute z-[-100] top-[-4rem]"}></a>:null}
-    
-    <p class="text-gray-07 text-xs font-normal">
-        {moment(post.data.date).format("MMMM D, YYYY")}
-    </p>
-    <h2 class="card-title text-gray-14 leading-8 line-clamp-2 mb-3 font-normal text-xl mt-3 truncate">
-        {post.data.title}
-    </h2>
-
-    <div class="w-full text-lg leading-8 overflow-hidden mt-[24px] simple-card-desc">
-        {post.excerpt || post.data.description}
-    </div>
-    
-    <Button 
-        size="large" 
-        type="card"
-        href={`${ifzh? '': '/en'}/blog/${post.slug}/?source=${source}`}
-        class="rounded-3xl text-xs absolute bottom-3 bg-gray-02"
-    >
-        {t('blog.card.read.artile')}
-    </Button>
-</div>
 
 <style>
   .card {

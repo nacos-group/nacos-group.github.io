@@ -30,7 +30,7 @@ const getExcerpt = (content, length = 200, defaultExcerpt = '') => {
 
 if(pageList && pageList.length) {
     pageList.forEach(item => {
-        item.excerpt = getExcerpt(item.body, 200, item.data?.description);
+        item.excerpt = getExcerpt(item.body, 300, item.data?.description);
     });
 };
 ---
