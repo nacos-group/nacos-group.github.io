@@ -154,14 +154,14 @@ export const ACTIVITY_CATEGORY = [
 export const HEADER_ACTIVITY_CARD = [
     {
         "collection": "blog",
-        "slug": "activity-preview-opss2024",
-        "description": "Nacos开源之夏2024，贡献社区赢取12000奖金",
+        "slug": "announcement-docker-hub-solution",
+        "description": "关于Nacos镜像无法从DockerHub进行下载的临时解决方案",
         "imageUrl": "https://img.alicdn.com/imgextra/i4/O1CN01bGnAVW1pFeLFnlaQL_!!6000000005331-2-tps-508-370.png"
     },
     {
         "collection": "blog",
-        "slug": "case-authorization",
-        "description": "Nacos 安全使用最佳实践 - 访问控制实践",
+        "slug": "release-240-beta",
+        "description": "2.4.0-BETA发布，欢迎试用",
         "imageUrl": "https://img.alicdn.com/imgextra/i4/O1CN01zfayJW1Lhe4kliPv9_!!6000000001331-2-tps-508-370.png"
     }
 ]
