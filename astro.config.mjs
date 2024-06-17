@@ -21,7 +21,7 @@ export default defineConfig({
   trailingSlash: "always",
   integrations: [
     starlight({
-      title: "Nacos",
+      title: "Nacos 官网",
       favicon: "/favicon.ico",
       head: [],
       expressiveCode: {
