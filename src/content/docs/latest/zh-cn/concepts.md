@@ -1,7 +1,7 @@
 ---
 title: Nacos 概念
-keywords: [Nacos,概念]
-description: Nacos 概念
+keywords: [Nacos, 概念, 配置管理, 服务发现, 健康检查]
+description: Nacos作为动态配置与服务发现管理平台，介绍了关键概念如地域、可用区、配置、命名空间等，强调配置管理的重要性及服务的注册与发现机制，确保系统高可用性和灵活性。
 ---
 
 # Nacos 概念
