@@ -1,7 +1,7 @@
 ---
 title: Authorization
-keywords: [Authorization]
-description: Authorization
+keywords: [Nacos, 鉴权, 微服务, 安全风险, 插件开发, JWT, Token, 缓存, 服务端, 客户端, SDK, Open-API, Docker, 身份识别]
+description: 
 sidebar:
     order: 5
 ---

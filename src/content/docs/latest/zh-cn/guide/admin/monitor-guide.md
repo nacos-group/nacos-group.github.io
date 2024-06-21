@@ -1,6 +1,6 @@
 ---
 title: Nacos 监控手册
-keywords: [Nacos,监控手册]
+keywords: [Nacos, 监控手册, Prometheus, Grafana, metrics, 集群, 告警, 指标]
 description: Nacos 监控手册
 sidebar:
     order: 6
