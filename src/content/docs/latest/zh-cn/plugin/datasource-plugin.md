@@ -1,7 +1,7 @@
 ---
 title: 多数据源
-keywords: [MySQL,Derby,多数据源]
-description: 多数据源
+keywords: [Nacos,多数据源插件,SPI机制,MySQL,Derby,数据源插件开发]
+description: Nacos从2.2.0版起支持SPI机制注入多数据源插件，允许用户通过配置轻松切换MySQL或Derby等数据源。本文介绍如何实现多数据源插件、使用方法及开发指南，包括引入依赖、实现Mapper接口和编写SPI配置，简化数据源扩展和管理。注意该功能目前为Beta阶段，可能随版本更新变动。
 sidebar:
     order: 4
 ---

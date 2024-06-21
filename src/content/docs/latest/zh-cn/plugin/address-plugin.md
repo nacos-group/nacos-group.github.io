@@ -1,6 +1,6 @@
 ---
 title: 寻址插件
-keywords: [寻址, 插件]
+keywords: [Nacos, 寻址插件, SPI, 服务端, 客户端, 自定义插件]
 description: 本文描述如何开发及使用Nacos的寻址插件
 sidebar:
     order: 2

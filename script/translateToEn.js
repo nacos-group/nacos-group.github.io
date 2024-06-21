@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 const envPath = path.resolve(__dirname, '../.env');
 config({ path: envPath });
 
-const isTranslate = true;
+const isTranslate = false;
 
 const askAI = async (content) => {
     const url = "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation"
@@ -191,7 +191,8 @@ const generateEnFile = async (filename, content) => {
     }
 }
     
-traverseDirectorySync(path.resolve(__dirname, '../src/content/docs/latest/zh-cn/guide'))
+await traverseDirectorySync(path.resolve(__dirname, '../src/content/docs/ebook/zh-cn'))
+
 
 
 

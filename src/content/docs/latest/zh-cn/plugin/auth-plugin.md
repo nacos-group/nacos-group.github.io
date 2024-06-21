@@ -1,6 +1,6 @@
 ---
 title: 鉴权插件
-keywords: [鉴权, 插件]
+keywords: [鉴权插件, Nacos, SPI, API, 服务端插件, 客户端插件, 自定义插件, 身份信息, 资源, 操作类型, Beta测试]
 description: 本文描述如何开发及使用Nacos的鉴权插件
 sidebar:
     order: 1

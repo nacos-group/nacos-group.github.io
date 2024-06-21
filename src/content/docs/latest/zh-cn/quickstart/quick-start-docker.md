@@ -1,7 +1,7 @@
 ---
 title: Nacos Docker 快速开始
-keywords: [Nacos,Docker]
-description: Nacos Docker 快速开始
+keywords: [Nacos, Docker, 快速开始, 服务注册, 服务发现, 配置管理, 集群模式, 单机模式, MySQL, Prometheus, Grafana]
+description: 本文介绍了如何快速使用Docker部署Nacos服务，包括单机与集群模式的配置，以及如何利用Docker Compose启动不同存储模式下的Nacos实例。详细步骤覆盖了Derby与MySQL数据库的集成，服务的注册与发现，配置发布与获取，还提供了Nacos控制台访问方式。此外，文章提及了Nacos与其他工具如Grafana和Prometheus的集成监控方案，并列出了Nacos的常用属性配置项及其说明。
 sidebar:
     order: 2
 ---

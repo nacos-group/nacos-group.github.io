@@ -1,7 +1,7 @@
 ---
 title: Kubernetes Nacos
-keywords: [nacos,kubernetes]
-description: 本项目包含一个可构建的Nacos Docker Image，旨在利用 StatefulSets 在 Kubernetes上部署 Nacos。
+keywords: [Kubernetes, Nacos, Docker Image, StatefulSets, 部署, 持久卷, 自动扩容缩容, NFS, MySQL, 集群配置]
+description: 该文档介绍了如何在Kubernetes上部署Nacos服务，通过定制化的Docker镜像与StatefulSets实现稳定部署。提供了从快速启动到高级配置的全面指南，包括使用NFS进行持久化存储、MySQL数据库集成、以及如何进行服务的注册与发现等操作。还展示了如何利用Nacos Operator进行更简便的部署管理，以及如何实施动态扩容以满足不同场景需求。
 sidebar:
     order: 3
 ---

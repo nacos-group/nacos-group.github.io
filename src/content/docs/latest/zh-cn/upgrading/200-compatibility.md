@@ -1,7 +1,7 @@
 ---
 title: Nacos 2.0.0 兼容性文档
-keywords: [Nacos,2.0.0]
-description: Nacos 2.0.0 兼容性文档
+keywords: [Nacos, 2.0.0, 兼容性, gRPC, 部署, 生态兼容, FAQ]
+description: 本文详细介绍了Nacos 2.0.0版本的兼容性特性，包括服务端与1.X客户端的平滑升降级能力，新引入的gRPC通信方式及其端口配置，各功能模块的完成度与旧版本客户端的适配情况，生态系统的兼容性改进，如Spring Cloud Alibaba、Dubbo的适配进展，以及新版本的部署注意事项和常见问题解答。
 sidebar:
     order: 1
 ---

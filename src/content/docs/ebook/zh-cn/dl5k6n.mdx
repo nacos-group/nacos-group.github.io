@@ -1,7 +1,7 @@
 ---
 title: 配置一致性模型
-keywords: [ Nacos ]
-description: 李艳林（彦林） Nacos PMCNacos 配置管理一致性协议分为两个大部分，第一部分是 Server 间一致性协议，一个是 SDK 与 Server 的一致性协议，配置作为分布式系统中非强一致数据，在出现脑裂的时候可用性高于一致性，因此阿里配置中心是采用 AP 一致性协议。Server 间...
+keywords: [Nacos, 配置管理, 一致性协议, Server间一致性, SDK与Server一致性, AP一致性, Raft协议, MD5校验, Nacos 1.X, Nacos 2.X]
+description: 本文详细介绍了Nacos配置管理的一致性模型，包括Server间与SDK与Server的两部分协议。首先阐述了在分布式系统中，配置数据的AP一致性选择，接着解析了有DB模式下的读写分离架构及无DB模式下的Raft协议应用。进一步说明了Nacos 1.X与2.X版本中如何利用MD5校验确保配置同步，其中2.X升级为长链接模式，提高了配置变更的通信效率。
 ---
 > 李艳林（彦林） Nacos PMC
 
