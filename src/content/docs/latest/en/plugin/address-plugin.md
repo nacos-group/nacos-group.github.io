@@ -2,7 +2,7 @@
 title: Addressing Plugin
 keywords: [Nacos, Addressing Plugin, SPI, Server-side, Client-side, Custom Plugin]
 description: This article elaborates on the support for cluster addressing plugins in Nacos starting from version 2.3.0, including steps to develop server and client-side addressing plugins, implementation details of interfaces, and how to configure and enable these plugins. It also alerts developers that the addressing plugin is currently in Beta, with potential API changes in future updates.
-
+---
 # Addressing Plugin
 
 Starting with version 2.3.0, Nacos supports injecting cluster addressing-related plugins through the [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html) mechanism and selecting one of the plugin implementations in the `application.properties` configuration file for actual addressing services. This document will provide a comprehensive guide on implementing an addressing plugin and making it effective.
