@@ -1,6 +1,6 @@
 ---
 title: Community
-keywords: [community,contact]
+keywords: [Community, Contact Information]
 description: Community
 sidebar:
     order: 1
@@ -8,23 +8,23 @@ sidebar:
 
 # Community
 
-## Contact us
+## Contact Us
 
-### Nacos Gitter-[https://gitter.im/alibaba/nacos](https://gitter.im/alibaba/nacos)
-### Nacos weibo-[https://weibo.com/u/6574374908](https://weibo.com/u/6574374908)
-### Nacos segmentfault-[https://segmentfault.com/t/nacos](https://segmentfault.com/t/nacos)
+### Nacos Gitter - [https://gitter.im/alibaba/nacos](https://gitter.im/alibaba/nacos)
+### Nacos Weibo - [https://weibo.com/u/6574374908](https://weibo.com/u/6574374908)
+### Nacos SegmentFault - [https://segmentfault.com/t/nacos](https://segmentfault.com/t/nacos)
 
-### Mailing list
+### Mailing List
 
-Mailing list is recommended for discussing almost anything related to Nacos. Please refer to this?[guide](https://github.com/apache/incubator-dubbo/wiki/Mailing-list-subscription-guide)?for detailed documentation on how to subscribe to our mailing lists.
+The mailing list is recommended for discussions on anything related to Nacos. Please refer to the [Reference Manual](https://github.com/apache/incubator-dubbo/wiki/Mailing-list-subscription-guide) for instructions on subscribing to our mailing lists.
 
-* [dev-nacos@googlegroups.com](mailto:dev-nacos%2Bsubscribe@googlegroups.com): The develop mailing list. You can ask questions here if you encounter any problem when using or developing Nacos.
-* [commits-nacos@googlegroups.com](mailto:commits-nacos%2Bsubscribe@googlegroups.com): All commits will be sent to this mailing list. You can subscribe to it if you are interested in Nacos' development.
-* [users-nacos@googlegroups.com](mailto:users-nacos%2Bsubscribe@googlegroups.com): All Github?[issue](https://github.com/alibaba/nacos/issues)?updates and?[pull request](https://github.com/alibaba/nacos/pulls)?updates will be sent to this mailing list.
-* [nacos_dev@linux.alibaba.com](mailto:nacos_dev@linux.alibaba.com).
+* [dev-nacos@googlegroups.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1): Development mailing list. If you encounter any issues while using or developing Nacos, feel free to ask here.
+* [commits-nacos@googlegroups.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1): All commits will be sent to this mailing list. Subscribe if you are interested in the development of Nacos.
+* [users-nacos@googlegroups.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1): Issues raised on Github, updates, and [feature requests](https://github.com/alibaba/nacos/pulls) will be forwarded to this mailing list.
+* [nacos_dev@linux.alibaba.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1).
 
-### Nacos DingDing group
+### Nacos DingTalk Group
 
-Welcome to join Nacos community nail group
+You're welcome to join the Nacos DingTalk group.
 
-![nacos_dingding.jpg](/img/nacos_dingding.jpg) 
+![nacos_dingding.jpg](/img/nacos_dingding.jpg)

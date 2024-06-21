@@ -1,7 +1,7 @@
 ---
 title: Nacos 规划
-keywords: [Nacos,规划]
-description: Nacos 规划
+keywords: [Nacos, 规划, 生产可用, 服务发现, 配置管理, 开源生态, Spring Cloud, Kubernetes, Dubbo, 服务治理体系]
+description: Nacos计划在0.8.0版后达到生产环境使用标准，预计6至8个月内完成进化，不超过1年。主要路线图覆盖Nacos 1.0与2.0，聚焦于构建服务相关工具集、生态融合支持、易用性提升、大规模性能调优及统一服务管理平台建设。
 ---
 
 # Nacos 规划

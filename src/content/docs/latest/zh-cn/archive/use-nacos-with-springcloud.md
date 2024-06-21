@@ -1,7 +1,7 @@
 ---
 title: Nacos Spring Cloud
-keywords: [nacos,Spring Cloud]
-description: Nacos Spring Cloud
+keywords: [Nacos,Spring Cloud,微服务配置,服务发现,阿里巴巴云]
+description: Nacos Spring Cloud是阿里巴巴开源的微服务管理工具，它无缝集成了Spring Cloud框架，提供了强大而灵活的服务发现、配置管理功能，通过Nacos Config Example和Nacos Discovery Example学习其应用，相关项目包括Nacos、Nacos Spring等，是构建云原生应用的理想选择。
 ---
 
 # Nacos Spring Cloud

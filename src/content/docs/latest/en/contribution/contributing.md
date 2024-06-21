@@ -1,59 +1,56 @@
 ---
 title: How to Contribute
-keywords: [contribute,code]
-description: We are always very happy to have contributions, whether for trivial cleanups or big new features.
+keywords: [Contribution, Source Code]
+description: We warmly welcome your contributions and participation, whether it's minor cleanups or major new features.
 sidebar:
     order: 1
 ---
 
 # How to Contribute
 
-Nacos is released under the non-restrictive Apache 2.0 license, and follows a very standard Github development process, using Github tracker for issues and merging pull requests into master. If you want to contribute even something trivial, please do not hesitate, but follow the guidelines below.
+We warmly welcome your contributions and involvement, be it trivial cleanups or substantial new features. Our aim is to provide high-quality, well-documented code for every programming language.
 
-We are always very happy to have contributions, whether for trivial cleanups or big new features.
-We want to have high quality, well documented codes for each programming language.
+Code isn't the only way to contribute to the project. We highly value improvements in documentation, integration with other projects, and gladly accept enhancements in these areas.
 
-Nor is code the only way to contribute to the project. We strongly value documentation, integration with other project, and gladly accept improvements for these aspects.
+## Reach Out to Us
 
-## Contact us
+#### Nacos Gitter - [https://gitter.im/alibaba/nacos](https://gitter.im/alibaba/nacos)
+#### Nacos Weibo - [https://weibo.com/u/6574374908](https://weibo.com/u/6574374908)
+#### Nacos SegmentFault - [https://segmentfault.com/t/nacos](https://segmentfault.com/t/nacos)
 
-##### Nacos Gitter- [https://gitter.im/alibaba/nacos](https://gitter.im/alibaba/nacos)
-##### Nacos weibo- [https://weibo.com/u/6574374908](https://weibo.com/u/6574374908)
-##### Nacos segmentfault- [https://segmentfault.com/t/nacos](https://segmentfault.com/t/nacos)
+#### Mailing List
 
-#### Mailing list
+The mailing list is recommended for discussing anything related to Nacos. Refer to the [Reference Manual](https://github.com/apache/incubator-dubbo/wiki/Mailing-list-subscription-guide) for instructions on subscribing to our mailing lists.
 
-Mailing list is recommended for discussing almost anything related to Nacos. Please refer to this?[guide](https://github.com/apache/incubator-dubbo/wiki/Mailing-list-subscription-guide)?for detailed documentation on how to subscribe to our mailing lists.
-
-* [dev-nacos@googlegroups.com](mailto:dev-nacos%2Bsubscribe@googlegroups.com): The develop mailing list. You can ask questions here if you encounter any problem when using or developing Nacos.
-* [commits-nacos@googlegroups.com](mailto:commits-nacos%2Bsubscribe@googlegroups.com): All commits will be sent to this mailing list. You can subscribe to it if you are interested in Nacos' development.
-* [users-nacos@googlegroups.com](mailto:users-nacos%2Bsubscribe@googlegroups.com): All Github?[issue](https://github.com/alibaba/nacos/issues)?updates and?[pull request](https://github.com/alibaba/nacos/pulls)?updates will be sent to this mailing list.
-* [nacos_dev@linux.alibaba.com](mailto:nacos_dev@linux.alibaba.com).
+- [dev-nacos@googlegroups.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1): Development mailing list. If you encounter any issues while using or developing Nacos, feel free to ask here.
+- [commits-nacos@googlegroups.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1): All commits are sent to this mailing list. Subscribe if you're interested in Nacos' development.
+- [users-nacos@googlegroups.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1): Issues raised, updates, and [feature requests](https://github.com/alibaba/nacos/pulls) on Github are sent here.
+- [nacos_dev@linux.alibaba.com](https://lark.alipay.com/nacos/nacosdocs/vl19q1).
 
 ## Contributing Code
 
-### Notice
+### Guidelines for Contributing Code
 
-To submit a change for inclusion, please do the following:
+Before contributing code, please confirm and check the following:
 
-#### Read Nacos [Code of Conduct](https://github.com/alibaba/nacos/blob/develop/style/codeStyle.md), and make sure your IDE has set code style and install plugin.
+#### Read Nacos' [Coding Convention](https://github.com/alibaba/nacos/blob/develop/style/codeStyle.md) and set up your IDE's code style and validation plugins accordingly.
 
-#### If the change is non-trivial, please include unit tests that cover the new functionality.
+#### If changes are minor, write some unit tests that cover the new functionality.
 
-#### If you are introducing a completely new feature or API, it is a good idea to start a wiki and get consensus on the basic design first.
+#### If introducing a brand-new feature or API, initiate a wiki discussion and reach a consensus on the basic design before proceeding.
 
-### Contribution flow
+### Contribution Workflow
 
-This is a rough outline of what a contributor's workflow looks like:
+Here is a general workflow for contributors:
 
-* Fork the current repository.
-* Create a topic branch from where to base the contribution. This is usually the master branch.
-* Make commits of logical units.
-* Make sure commit messages are in the proper format (see below).
-* Push changes in a topic branch to your forked repository.
-* Follow the checklist in the [pull request template](./pull-request.md).
-* Before you send the pull request, please sync your forked repository with remote repository. This will make your pull request simple and clear. See guide below:
-```
+* Fork the current GitHub repository.
+* Create a branch as the base for your contribution, typically the develop branch.
+* Make some changes and commit them.
+* Ensure commit messages follow the correct format (see below).
+* Push your changes to your forked repository.
+* Follow the checklist in the [Pull Request Template](./pull-request.md).
+* Before submitting a pull request, sync your fork repository with the upstream one to simplify your pull request. Details are as follows:
+```bash
 git remote add upstream git@github.com:alibaba/nacos.git
 git fetch upstream
 git rebase upstream/master
@@ -61,42 +58,44 @@ git checkout -b your_awesome_patch
 ... add some work
 git push origin your_awesome_patch
 ```
-* Submit a pull request to alibaba/nacos and wait for reply.
+* Submit a pull request to alibaba/nacos and await feedback. If replies are slow, kindly remind us.
 
-* Detail contribution flow see [Contribution Flow](./contributing-flow.md)
+* For a detailed contribution process, refer to [Contribution Flow](./contributing-flow.md).
 
-Thanks for contributing!
+## Contributing Documentation
 
-## Contributing Document
+### Guidelines for Contributing Documentation
 
-### Notice
+Before contributing documentation, please confirm and check the following:
 
-When contributing documents, please confirm and check the following:
+#### Confirm that the documentation indeed contains errors or is missing information.
 
-#### Has been confirmed that the document is indeed wrong or missing.
+#### Familiarity with [Markdown](https://www.markdownguide.org/getting-started).
 
-#### Familiar with [Markdown](https://www.markdownguide.org/getting-started)
+#### Familiarity with [docsite](https://github.com/txd-team/docsite), at least able to complete local debugging based on the [official documentation README.md](https://github.com/nacos-group/nacos-group.github.io).
 
-#### Familiar with [docsite](https://github.com/txd-team/docsite), at least be able to complete local debugging according to the [document README.md](https://github.com/nacos-group/nacos-group.github.io).
+### Contribution Workflow
+
+Refer to [Contribution Flow](./contributing-flow.md).
 
 ## Becoming a Committer
 
-We are always interested in adding new contributors. What we look for are series of contributions, good taste and ongoing interest in the project. If you are interested in becoming a committer, please let one of the existing committers know and they can help you walk through the process.
+We actively onboard new contributors. We prioritize a series of continuous contributions, good taste, and sustained interest in maintaining the project. If you wish to become a Committer, let an existing Committer know; they will assist you in joining through your contributions.
 
-Nowadays, we have several important contribution points:
+Currently, we have several key areas for contribution:
 
 #### Wiki & JavaDoc
 #### Nacos Console
-#### Nacos SDK(C++\.Net\PHP\Python\Go\Node.js)
+#### Nacos SDK (C++, .Net, PHP, Python, Go, Node.js)
 
 #### Prerequisites
 
-If you want to contribute to the above listing points, you must abide by the prerequisites listed below:
+If you wish to contribute to these areas, you must adhere to some prerequisites:
 
-##### Readability - APIs as well as important methods must have Javadoc.
+##### Readability – An API must have JavaDoc, and some crucial methods must also have JavaDoc.
 
-##### Testability - Ensure over 80% unit test coverage for main processes.
+##### Testability – Unit test coverage for the testing process should be at least 80%.
 
-##### Maintainability - Comply with our [Code of Conduct](https://github.com/alibaba/nacos/blob/develop/style/codeStyle.md), with an update frequency at least once every 3 months.
+##### Maintainability – Must comply with our [Coding Convention](https://github.com/alibaba/nacos/blob/develop/style/codeStyle.md) and have an update frequency of at least once every three months.
 
-##### Deployability - We encourage you to deploy into [maven repository](http://search.maven.org/).
+##### Deployability – We encourage deployments to the [Maven Repository](http://search.maven.org/)

@@ -1,7 +1,7 @@
 ---
 title: 提交需求模板
-keywords: [pull request,模板]
-description: 提交需求模板
+keywords: [提交需求模板,pull request,模板,changelog,单元测试]
+description: 本文介绍了提交需求模板的规范，强调了提交前应创建相关问题，明确了修改的目的、简要变更日志以及验证方法。提供了检查清单指导贡献者快速有效地整合代码，包括使用Github issue跟踪、格式化提交标题、详尽描述更改、编写单元测试及运行必要的Maven命令进行检查。对于大型贡献，需签署Apache个人贡献者许可协议。
 sidebar:
     order: 3
 ---

@@ -23,17 +23,15 @@ const askAI = async (content) => {
                 "messages": [
                     {
                         "role": "system",
-                        "content": "你是SEO领域的专家，擅长总结文章并输出有利于SEO的关键词。你还是一个翻译专家，擅长以开源微服务为技术背景做中/英文之间的翻译。"
+                        "content": "你是SEO领域的专家，擅长总结文章并输出有利于SEO的关键词。你还是一个翻译专家，擅长以开源微服务为技术背景做中/英文之间的翻译，生成与中文文档格式完全一致的英文翻译稿"
                     },
                     {
                         "role": "user",
-                    "content": `请阅读以下markdown格式的文章，并严格按照下面的格式输出回答，方便后续进行正则匹配和内容截取（关键词、描述信息 ${isTranslate && "、翻译后的英文文章"}，这些小标题一个字都不允许变），同时请注意关键词与描述信息需要为中文内容：
+                    "content": `请阅读以下markdown格式的文章，并严格按照下面的格式输出回答，方便后续进行正则匹配和内容截取（关键词、描述信息、翻译后的英文文章}，这些小标题一个字都不允许变），同时请注意关键词与描述信息需要为中文内容：
                         
                     1. 关键词: "总结的中文关键词，要求格式为数组，多个关键词用英文逗号分隔，不超过5个"，
                     2. 描述信息: "总结的内容，语言为中文，大概在150-160字之间，不要超过200字"
-                   ${isTranslate && `
-                   3. 翻译后的英文文章："翻译之后的英文文章，需要与我给你的格式完全相同，即需要有front-matter。不需要为markdown格式，为字符串格式即可"`}
-                   
+                    3. 翻译后的英文文章："根据原文翻译之后的英文文章。需要与我给你的格式完全相同，即需要有front-matter。不需要为markdown格式，为字符串格式即可"
                     请根据以下原文进行生成返回内容：
                     ${content}
                     `
@@ -49,40 +47,53 @@ const askAI = async (content) => {
         let res = await request(url, "POST", header, body);
         return res.output.choices[0].message.content
     } catch (error) {
-        console.error(error);
+        throw(error)
     }
     
 }
 
-const blogPath = path.resolve(__dirname, '../src/content/docs/latest/zh-cn');
-
-const files = await fs.readdir(blogPath);
-for (const file of files) {
-    if(file.endsWith('.md')) {
-        const filePath = path.resolve(blogPath, file);
-        fs.readFile(filePath, 'utf8')
-            .then(async data => {
+async function traverseDirectorySync (dir) {
+    try {
+        const files = await fs.readdir(dir,{ withFileTypes: true })
+        // console.log("-======",files)
+        for (const file of files) {
+            const filePath = path.join(dir, file.name);
+            if (file.isDirectory()) {
+                // 如果是文件夹，输出文件夹路径并递归遍历
+                console.log(`目录：${filePath}`);
+                traverseDirectorySync(filePath);
+            } else if (file.name.endsWith('.md') || file.name.endsWith('.mdx')) {
+                const data = await fs.readFile(filePath, 'utf8');
                 let res = await askAI(data);
-                console.log(res)
-                const keywordsRegex = /关键词:\s*"([^"]*)"/;
-                const regDescrip = /描述信息:\s*"([^"]*)"/;
-                const regContent = /翻译后的英文文章：\s*"([\s\S]*)"/;
+                console.log(file.name, "回答问题完成");
+                console.log("======",res)
+                const { keywords, description, content } = regContent(res);
 
-                const keywordsMatch = res.match(keywordsRegex);
-                const keywords = keywordsMatch ? keywordsMatch[1].trim() : '';
-                // console.log("关键词:", keywords);
-
-                const descripMatch = res.match(regDescrip);
-                const description = descripMatch ? descripMatch[1].trim() : '';
-                // console.log("描述信息:", description);
-
-                const contentMatch = res.match(regContent);
-                const content = contentMatch ? contentMatch[1].trim() : '';
-                // console.log("翻译后的英文文章:\n", content);
+                // 替换中文文档内容
                 await replaceZhContent( filePath, data, keywords, description );
-                isTranslate && await generateEnFile( filePath, content )
-  })
+                // 生成英文翻译文件
+                isTranslate && await generateEnFile(filePath, content)
+            } 
+        }
+    } catch (err) {
+        console.error(err);
     }
+}
+
+function regContent(res) {
+    const keywordsRegex = /关键词:\s*"([^"]*)"/;
+    const regDescrip = /描述信息:\s*"([^"]*)"/;
+    const regContent = /翻译后的英文文章：\s*"([\s\S]*)"/;
+
+    const keywordsMatch = res.match(keywordsRegex);
+    const keywords = keywordsMatch ? keywordsMatch[1].trim() : '';
+
+    const descripMatch = res.match(regDescrip);
+    const description = descripMatch ? descripMatch[1].trim() : '';
+
+    const contentMatch = res.match(regContent);
+    const content = contentMatch ? contentMatch[1].trim() : '';
+    return { keywords, description, content };
 }
 // const filename = "activity-preview-nacos.md"
 // fs.readFile(path.resolve(__dirname, '../src/content/blog/activity-preview-nacos.md'), 'utf8')
@@ -180,7 +191,7 @@ const generateEnFile = async (filename, content) => {
     }
 }
     
-
+traverseDirectorySync(path.resolve(__dirname, '../src/content/docs/latest/zh-cn/guide'))
 
 
 

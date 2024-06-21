@@ -1,7 +1,7 @@
 ---
 title: 社区
-keywords: [社区,联系方式]
-description: 社区
+keywords: [社区,联系方式,邮件列表,Nacos,Gitter,微博,segmentfault,钉钉群]
+description: 介绍Nacos社区的联系方式，包括Gitter聊天室、微博账号、segmentfault板块以及邮件列表的详细信息，同时邀请加入Nacos钉钉群以便更直接的交流。
 sidebar:
     order: 1
 ---

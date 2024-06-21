@@ -1,7 +1,7 @@
 ---
 title: 如何提交问题报告
-keywords: [提交,问题报告]
-description: 如何提交问题报告
+keywords: [提交问题报告, Nacos, GitHub, 错误报告, 安全问题, ASRC]
+description: 本文指导用户如何向Nacos项目提交问题报告，包括详细步骤和建议，以及如何通过ASRC报告安全问题，确保问题得到有效处理。
 sidebar:
     order: 4
 ---

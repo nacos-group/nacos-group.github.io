@@ -1,74 +1,67 @@
 ---
-title: Contributing Flow
-keywords: [Contributing,Source Code]
-description: This contribution flow is applicable to all Nacos community content, including but not limited to Nacos, Nacos wiki/doc, Nacos SDK.
-sidebar:
-    order: 2
+title: Nacos Contribution Workflow
+keywords: [Nacos, Contribution Process, Source Code, GitHub, Community Contribution, Pull Request, Rebase]
+description: This contribution workflow is applicable to all Nacos community content, including but not limited to `Nacos`, `Nacos Wiki/Doc`, and `Nacos SDK`.
 ---
 
-# Nacos Contributing Flow
+# Nacos Contribution Workflow
 
-This contribution flow is applicable to all Nacos community content, including but not limited to `Nacos`, `Nacos wiki/doc`, `Nacos SDK`.
+This contribution workflow is universal for all Nacos community content, encompassing elements like `Nacos`, `Nacos Wiki/Documentation`, and `Nacos SDK`.
 
-The following use contributing `Nacos` as an example to explain the contribution flow in detail.
+Below, we use contributing to `Nacos` as an example to elaborate on the contribution process.
 
-## 1. Fork Alibaba/Nacos repository to your Github.
+## 1. Fork the Alibaba/Nacos Project to Your GitHub Repository
 
-## 2. Clone your fork Nacos repository to local.
+## 2. Clone or Download the Forked Nacos Code Repository Locally
 
-```
+```shell
 git clone ${your fork nacos repo address}
 
 cd nacos
 ```
 
-## 3. Add Alibaba/Nacos repository as upstream repo.
+## 3. Add the Alibaba/Nacos Repository as the Upstream Repository
 
-```
+```shell
 git remote add upstream https://github.com/alibaba/nacos.git
 
 git remote -v 
 
-    origin	   ${your fork nacos repo address} (fetch)
-    origin	   ${your fork nacos repo address} (push)
-    upstream	https://github.com/alibaba/nacos.git (fetch)
-    upstream	https://github.com/alibaba/nacos.git (push)
+    origin    ${your fork nacos repo address} (fetch)
+    origin    ${your fork nacos repo address} (push)
+    upstream  https://github.com/alibaba/nacos.git (fetch)
+    upstream  https://github.com/alibaba/nacos.git (push)
     
 git fetch origin
 git fetch upstream
 ```
 
-## 4. Choose a basic branch of development usually upstream/develop,and create a new branch based on it.
+## 4. Choose a Development Base Branch, Typically upstream/develop, and Create a New Branch from It
 
-```
-(checkout branch from remote repo to local）
+```shell
+# Fetch the branch from the remote repository to local
 git checkout -b upstream-develop upstream/develop
 
-(Create a development branch from the local branch, usually using the issue number as the development branch name）
+# From the local branch, create a development branch, usually named after the related issue number
 git checkout -b develop-issue#${issue-number}
-
 ```
 
-## 5. Do your change in your local develop branch.
+## 5. Make Modifications on the Newly Created Local Development Branch
 
-First please make sure you read and set the `Nacos code style` correctly, please read the related content [Code of Conduct](https://github.com/alibaba/nacos/blob/develop/style/codeStyle.md).
+Before modifying, ensure you've read and set up the `Nacos Code Style`. Refer to [Nacos Coding Convention](https://github.com/alibaba/nacos/blob/develop/style/codeStyle.md).
 
-When making changes, please ensure that the changes on this branch are **only relevant to the issue**, and try to be as small as possible, so that **only one thing is modified in one branch, and only one thing is modified in one PR**.
+When making changes, ensure they are **solely related to the issue** and as granular as possible, adhering to the principle of **one branch, one modification, one PR**.
 
-At the same time, please use your English description as much as possible for your commits. It is mainly described by **predicate + object**, such as: `Fix xxx problem/bug`.
+Commit messages should primarily be in English, structured as **Verb + Object**, e.g., `Fix xxx problem/bug`. For minor adjustments, use `For xxx`, e.g., `For codestyle`. If the commit relates to a specific ISSUE, prefix it with the ISSUE number, e.g., `For #10000, Fix xxx problem/bug`.
 
-Some simple commits can be described using `For xxx`, such as: `For codestyle`. 
+## 6. Rebase the Base Branch with the Development Branch
 
-If the commits is related to an ISSUE, you can add the ISSUE number as a prefix, such as: `For #10000, Fix xxx problem/bug`.
+During your modifications, others' changes might have been merged, potentially causing conflicts. Use the rebase command to resolve these, which benefits in two ways:
 
-## 6. Rebase develop branch
+1. Your commit history will be clean, devoid of `Merge xxxx branch` entries.
+2. After rebasing, your branch's commit log forms a single chain, simplifying traceback.
 
-When you make changes, other people's changes may have commited and merged. At this time, there may be conflicts. Please use the rebase command to merge and resolve. There are two main benefits:
-
-1. Your submission record will be very clean, without the words `Merge xxxx branch`.
-2. After rebase, the commit log of your branch is also a single chain, it is easier to check back.
-
-```
+```shell
 git fetch upstream
 
 git rebase -i upstream/develop
@@ -77,31 +70,27 @@ git rebase -i upstream/develop
 
 OR
 
-```
+```shell
 git checkout upstream-develop
 git pull 
 git checkout develop-issue#${issue-number}
 git rebase -i upstream-develop
 ```
 
-**If you are using Intellij IDEA**, it is recommended to use the IDE version control, which has a more convenient visual panel to resolve conflicts and squash operations.
+**For IntelliJ IDEA users**, the version control module provides a visual interface for conflict resolution and squashing operations.
 
-## 7. Push your develop branch to your fork repository.
+## 7. Push Your Developed and Rebased Branch to Your Forked Repository
 
-```
+```shell
 git push origin develop-issue#${issue-number}
 ```
 
-## 8. Create Pull Request according to the pull request template
+## 8. Create a Pull Request Following the Pull Request Template
 
-[pull request template](./pull-request.md)
+[Pull Request Template](./pull-request.md)
 
-The Nacos community will review your Pull Request and may propose comments.
+The Nacos community will review your Pull Request and may provide feedback for adjustments. You can return to step 5 for modifications and use step 6 to resubmit.
 
-You can return to step 5 to modify code according to the comments and use step 6 to resubmit.
+**If prompted about commit record conflicts upon resubmission, force push to your forked branch since your commit ID changed post-rebase due to new merges in the base branch.**
 
-**If you are prompted that there are conflicts when you push to fork repo again, Force push to your fork branch will be ok.** The reason of conflicts is that the commit ID has changed after you rebase with others changes.
-
-
-## 9. If no more problem, Nacos community will merge your PR. Congratulations for you becoming a official contributor of Nacos.
-
+## 9. Once approved, your changes will be merged into the base branch, congratulating you on becoming an official Nacos contributor.

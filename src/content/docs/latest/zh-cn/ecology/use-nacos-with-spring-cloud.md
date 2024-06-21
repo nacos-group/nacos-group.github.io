@@ -1,7 +1,7 @@
 ---
 title: Nacos 融合 Spring Cloud，成为注册配置中心
-keywords: [Nacos,Spring Cloud]
-description: 本文主要面向 Spring Cloud 的使用者，通过示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现
+keywords: [Nacos, Spring Cloud, 配置管理, 服务发现, 注册中心, 分布式环境, 动态配置]
+description: 文章介绍了如何将Nacos与Spring Cloud结合，构建分布式系统中的配置管理和服务发现功能。通过实战示例，展示了使用Nacos Server与Spring Cloud starter实现配置动态变更和服务注册的具体步骤，包括配置Nacos server地址、在Spring Boot应用中添加依赖、配置文件设置以及如何利用Open API动态更新配置。同时，也演示了服务发现功能的启用过程，让读者能够快速上手在Spring Cloud项目中集成Nacos。
 sidebar:
     order: 4
 ---

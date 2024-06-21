@@ -1,7 +1,7 @@
 ---
 title: Nacos支持从K8S服务发现中同步服务元数据
-keywords: [Nacos,k8s,kubernetes]
-description: Nacos支持从K8S服务发现中同步服务元数据
+keywords: [Nacos, k8s, Kubernetes, 服务元数据, 同步]
+description: Nacos现支持与Kubernetes(K8S)服务发现集成，实现服务元数据的自动同步。该功能监控K8S内服务与实例的动态，确保Nacos服务发现模块及时更新，兼容K8S 1.22版本及以上，通过特定配置开启双向数据流动，简化微服务架构管理。
 ---
 
 # Nacos支持从K8S服务发现中同步服务元数据

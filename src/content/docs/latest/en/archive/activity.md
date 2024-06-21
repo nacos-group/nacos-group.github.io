@@ -1,50 +1,41 @@
 ---
-title: Nacos activity
-keywords: [Nacos,activity]
-description: Nacos award activity
+title: Introduction to the Nacos Reward Program
+keywords: [Nacos, Reward Program, Community Contribution, GitHub Issue, Customized Gifts]
+description: Nacos launches a reward program to encourage users to participate in product improvements, including identifying errors on the official website and documentation, optimizing startup procedures, testing cluster mode, contributing suggestions for Java SDK and OpenAPI, streamlining contribution processes, among others. Participants must join the Nacos WeChat community group, submit found issues or suggestions via reporting GitHub Issues, with opportunities to win customized gifts. Due to resource constraints, the event is limited to the first 40 registrants. Communication via mailing lists or Issues is encouraged for documentation and sharing purposes.
 ---
+# Introduction to the Nacos Reward Program
 
-# Nacos activity
+## I. Activity Task List
 
-## I. Activity task list
+- Review the official website content, locate bugs, and provide constructive suggestions for both Chinese and English versions.
+- Read through both Chinese and English documentation, identify errors, and suggest improvements, especially focusing on suboptimal English translations.
+- Test the code compilation, packaging, Nacos server startup/shutdown process, and propose enhancements.
+- Configure and initiate multi-node Nacos cluster mode tasks, offering improvement feedback.
+- Utilize the Nacos Java SDK and provide improvement suggestions.
+- Try the Nacos Open API and contribute suggestions for improvement.
+- Follow the 'How to Contribute to Nacos Documentation' guide and propose enhancements to the contributor process.
+- Share your requirements, development plans, ideas, and expectations for Nacos.
 
-* Read the official website copy, find the official website bug, and make constructive suggestions for the official website of Chinese and English.
-* Read Chinese and English documents, find document bugs, and give suggestions for improving Chinese and English documents (especially pay attention to places where English translation is not good, because English is our own programmers)
-* Try the code -> compile and package -> start Nacos server -> stop Nacos server process, propose improvements
-* Try to configure and start multi-node Nacos cluster mode tasks, suggestions for improvement
-* Try to use the Nacos Java SDK to give suggestions for improvements to the Java SDK
-* Try to improve the OpenAPI with the Nacos Open API
-* Try to contribute to the contributor process by trying to contribute to the contribution process based on How to Contribute to Nacos Documentation
-* Ask Nacos for needs, development plans, ideas and requirements, etc.
+## II. Participation Method
 
-## II. Activity participation method
+- Scan the WeChat QR code of "Super Brother" to be included in the "Nacos Community Discussion Group."
+- Select one or more tasks from Section I.
+- After discovering issues or bugs, follow the 'Issue Reporting Method' detailed in Section III and assign it to the GitHub user [xuechaos](https://github.com/xuechaos).
 
-* Scan "超哥" WeChat 2 microcode, let "超哥"" help join "Nacos community exchange group"
+## III. Issue Reporting Method
 
+- Submit issues based on the issue template in the Nacos GitHub repository.
+- For code repository issues, submit pull requests for fixes, which upon review and approval will merge into the main branch, earning you the title of Contributor.
 
+## IV. Task Rewards
 
-![WeChat QR code | left](https://cdn.yuque.com/lark/0/2018/png/11189/1532004866850-5e03b901-6d76-4380-b7bf-66e227808bdc.png "")
+- Customized gifts featuring the Nacos logo are being prepared for participants who make significant contributions, with consideration for shipping these gifts to standout contributors.
+- Although the gifts are modest, they symbolize our gratitude for your assistance.
+- With limited funding, we can only offer 40 gifts at present, hence participation is capped at 40 individuals on a first-come, first-served basis.
+- Recipients are encouraged, if willing, to share a photo (with the option to conceal their face) with the gift for potential use in future community event materials.
 
+## V. Additional Notes
 
-* Select one or more experience tasks in (I)
-* After discovering the problem or bug, follow the "Report Report Method" in (III), send a corresponding github issue, and assign it to @github account [xuechaos] ([https://github.com/xuechaos](https://github.com/xuechaos))
-
-## III. Problem Report Mode
-
-* Submit questions in the nacos repository at github according to the issues template.
-* Code warehouse problem, submit pull request repair, after review, merge into the trunk, it becomes a Contributor.
-* [https://github.com/alibaba/nacos](https://github.com/alibaba/nacos)
-* [https://github.com/nacos-group/nacos-group.github.io](https://github.com/nacos-group/nacos-group.github.io)
-
-## IV. Mission Rewards
-
-* We are customizing some small gifts with Nacos Logo for the small partners who have participated and made outstanding contributions, and will consider the courier to the small partners who have made outstanding contributions in the process.
-* The gift is light, but I hope I can express my gratitude for your help.
-* Due to limited funds, we can only provide 40 gifts at present, so we limit the number of participants to 40 people, first come first served.
-* If you wish, the partner who wishes to receive the gift can send a photo with the gift (can hide the face) for us as a photo material for our community activities.
-
-## V. Other instructions
-
-* We are not sure that every proposal will be adopted in the end, but we will try to explain what kind of consideration we are based on, and we did not recommend your proposal.
-* Try to report problems by mailing list or report issue instead of reporting on WeChat group to document and facilitate our communication process.
-
+- While we cannot guarantee the adoption of every suggestion, we strive to explain our considerations for those not implemented.
+- Preferably, utilize the mailing list or report issues instead of WeChat group discussions to document and facilitate communication and knowledge preservation.
+---

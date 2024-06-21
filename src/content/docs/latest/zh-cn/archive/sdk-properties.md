@@ -1,7 +1,7 @@
 ---
 title: Nacos 客户端初始化说明
-keywords: [Nacos,客户端,初始化]
-description: Nacos 客户端初始化说明
+keywords: [Nacos,客户端,初始化,配置,集群]
+description: 本文详细介绍了Nacos客户端初始化的两种方式，包括直接配置服务器信息与通过接入点接入，以及非必传参数如链接路径、区域隔离与鉴权设置。
 ---
 
 Nacos 客户端初始化说明

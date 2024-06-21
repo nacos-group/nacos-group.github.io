@@ -1,40 +1,41 @@
 ---
 title: Developers
-keywords: [nacos,developers,committer,pmc,nacos team]
-description: Nacos developers page
+keywords: [Nacos, developers, Maintainer, Committer, Contributor]
+description: A detailed introduction to the developer system of the Nacos project, including definitions, rights, and obligations of roles such as Maintainer, Committer, and Contributor, along with showcasing key members of the development team, highlighting the responsibilities and contributions recognized in open-source projects.
 sidebar:
     order: 2
 ---
 
 # Developers
 
-## Nacos Developer Roles
+## Roles of Nacos Developers
 
-Nacos developers include three roles: Maintainer, Committer, and Contributor. The standard definitions for each role are as follows.
+Nacos developers encompass three roles: Maintainer, Committer, and Contributor, each defined as follows.
 
 ### Maintainer
 
-Maintainer is an individual who has made a significant contribution to the evolution and development of the Nacos project, including projects under the nacos-group. Specifically includes the following criteria:
+Maintainers are individuals who have made significant contributions to the evolution and growth of the Nacos project (including projects under nacos-group). They typically:
 
-* Completing the design and development of multiple key modules or projects, is an core developer of the project
-* Continuous investment and passion, can actively participate in the maintenance of related matters such as community, official website, issue, PR, etc.
-* Has a visible influence in the community and is able to represent Nacos in important community meetings and events
-* Have the consciousness and ability to cultivate Committer and Contributor
+- Design and develop multiple key modules or projects, functioning as core developers;
+- Continuously invest time and passion, actively participating in community maintenance, official website management, issue handling, and PR activities;
+- Possess notable influence within the community, representing Nacos at important community conferences and events;
+- Demonstrate awareness and capability to nurture Committers and Contributors.
 
 ### Committer
 
-Committer is an individual with write access to the Nacos repository and includes the following criteria:
+Committers are individuals with write access to the Nacos repository, meeting criteria such as:
 
-* An individual who can contribute to the issue and PR continuously for a long time;
-* Participate in the maintenance of the issue list and discussion of important features;
-* Participate in code review;
+- Consistently contributing issues and PRs over an extended period;
+- Engaging in issue list maintenance and discussions on major features;
+- Participating in code reviews.
 
 ### Contributor
 
-Contributor is an individual who contributes to the Nacos project. The standard is:
+Contributors are individuals who have made contributions to the Nacos project, specifically by having their PRs merged.
 
-* Submitted a PR that is merged;
+### Rights and Obligations of Nacos Developers
 
+The rights and obligations of Nacos developers are outlined in a chart which visually represents these aspects.
 
 ### Nacos Developer Rights and Obligations
 
