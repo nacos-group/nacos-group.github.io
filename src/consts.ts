@@ -12,29 +12,29 @@ export const TOPBAR = {
 }
 export const MEDIARESOURCE = [
     {
-      src: "https://cloud.video.taobao.com/vod/play/REFkazc0bXZaVE82emRHbklyTEdsNjFUYnBNSkd6cmpoU0U5cG9KRWtZQzZQZWw1SnpKVVVCTlh4OVFON0V5UUVMUDduY1RJak82VE1sdXdHTjNOaHc9PQ",
-      cover:'https://img.alicdn.com/imgextra/i2/O1CN01mZMLGh1WIsTB2WOEB_!!6000000002766-0-tps-2516-1282.jpg'
+        src: "https://cloud.video.taobao.com/vod/play/REFkazc0bXZaVE82emRHbklyTEdsNjFUYnBNSkd6cmpoU0U5cG9KRWtZQzZQZWw1SnpKVVVCTlh4OVFON0V5UUVMUDduY1RJak82VE1sdXdHTjNOaHc9PQ",
+        cover: 'https://img.alicdn.com/imgextra/i2/O1CN01mZMLGh1WIsTB2WOEB_!!6000000002766-0-tps-2516-1282.jpg'
     },
     {
-      src: "https://cloud.video.taobao.com/vod/play/REFkazc0bXZaVE82emRHbklyTEdsMWppZ21TWGh4TDE/U2FmT3I2OU9yZTZQZWw1SnpKVVVCTlh4OVFON0V5UUVMUDduY1RJak82VE1sdXdHTjNOaHc9PQ",
-      cover:'https://img.alicdn.com/imgextra/i2/O1CN01S9Q8mE1FJvunXlzc2_!!6000000000467-0-tps-2296-1164.jpg'
+        src: "https://cloud.video.taobao.com/vod/play/REFkazc0bXZaVE82emRHbklyTEdsMWppZ21TWGh4TDE/U2FmT3I2OU9yZTZQZWw1SnpKVVVCTlh4OVFON0V5UUVMUDduY1RJak82VE1sdXdHTjNOaHc9PQ",
+        cover: 'https://img.alicdn.com/imgextra/i2/O1CN01S9Q8mE1FJvunXlzc2_!!6000000000467-0-tps-2296-1164.jpg'
     },
     {
-      src: "https://cloud.video.taobao.com/vod/play/REFkazc0bXZaVE82emRHbklyTEdsMERLOHRmWmdQR1Ywcjl5dlM2Nk1YSzZQZWw1SnpKVVVCTlh4OVFON0V5UUVMUDduY1RJak82VE1sdXdHTjNOaHc9PQ",
-      cover:"https://img.alicdn.com/imgextra/i2/O1CN01MOLx6f1k1qMPncU8j_!!6000000004624-0-tps-2552-1158.jpg"
+        src: "https://cloud.video.taobao.com/vod/play/REFkazc0bXZaVE82emRHbklyTEdsMERLOHRmWmdQR1Ywcjl5dlM2Nk1YSzZQZWw1SnpKVVVCTlh4OVFON0V5UUVMUDduY1RJak82VE1sdXdHTjNOaHc9PQ",
+        cover: "https://img.alicdn.com/imgextra/i2/O1CN01MOLx6f1k1qMPncU8j_!!6000000004624-0-tps-2552-1158.jpg"
     },
     {
-      src: "https://cloud.video.taobao.com/vod/play/REFkazc0bXZaVE82emRHbklyTEdsNFFUMXFoNnp2NXBPaEFUNFNDYUVRRzZQZWw1SnpKVVVCTlh4OVFON0V5UUVMUDduY1RJak82VE1sdXdHTjNOaHc9PQ",
-      cover:"https://img.alicdn.com/imgextra/i1/O1CN01fkLmjc1n7HuqYQst1_!!6000000005042-0-tps-2300-1166.jpg",
+        src: "https://cloud.video.taobao.com/vod/play/REFkazc0bXZaVE82emRHbklyTEdsNFFUMXFoNnp2NXBPaEFUNFNDYUVRRzZQZWw1SnpKVVVCTlh4OVFON0V5UUVMUDduY1RJak82VE1sdXdHTjNOaHc9PQ",
+        cover: "https://img.alicdn.com/imgextra/i1/O1CN01fkLmjc1n7HuqYQst1_!!6000000005042-0-tps-2300-1166.jpg",
     },
-  ];
+];
 
 // 文档根据版本区分的提示banner
 export const DOCS_BANNER = {
     latest: '',
-    next:'',
+    next: '',
     v1: '',
-    v2:'',
+    v2: '',
 }
 
 export const i18nMap = {
@@ -59,7 +59,7 @@ export const i18nMap = {
 
     },
     "wuyi": {
-      'expertConsultation': 'wuyi.meet-professor.title',
+        'expertConsultation': 'wuyi.meet-professor.title',
     },
 }
 
@@ -183,3 +183,269 @@ export const ALGOLIA_CONFIG = {
     apiKey: '7445da3dec050d45d29f3fe93ed45af3',
     indexName: 'nacos',
 }
+
+export const Usability = [
+    {
+        name: {
+            title: '自动化运维',
+        },
+        free: '',
+        develop: true,
+        speciality: true,
+        serverless: {
+            checked: false,
+            des: '免运维'
+        },
+    },
+    {
+        name: {
+            title: '域名自动绑定',
+        },
+        free: '',
+        develop: true,
+        speciality: true,
+        serverless: {
+            checked: true,
+        },
+    },
+    {
+        name: {
+            title: '故障节点自动摘除',
+        },
+        free: '',
+        develop: true,
+        speciality: true,
+        serverless: {
+            checked: true,
+        },
+    },
+    {
+        name: {
+            title: '云原生网关、治理深度集成',
+        },
+        free: '',
+        develop: true,
+        speciality: true,
+        serverless: {
+            checked: true,
+        },
+    },
+    {
+        name: {
+            title: '平滑迁移工具',
+        },
+        free: '',
+        develop: true,
+        speciality: true,
+        serverless: {
+            checked: true,
+        },
+    },
+    {
+        name: {
+            title: 'Eureka 协议兼容',
+        },
+        free: '',
+        develop: true,
+        speciality: true,
+        serverless: {
+            checked: true,
+        },
+    },
+];
+
+export const Enable = [
+    {
+        name: {
+            title: 'SLA',
+        },
+        free: '',
+        develop: '无 SLA 保障',
+        speciality: '99.95%',
+        serverless: {
+            checked: false,
+            des: '99.95%'
+        },
+    },
+    {
+        name: {
+            title: '多节点容灾',
+        },
+        free: '',
+        develop: '',
+        speciality: true,
+        serverless: {
+            checked: true,
+        },
+    },
+    {
+        name: {
+            title: '多可区容灾',
+        },
+        free: '',
+        develop: '',
+        speciality: true,
+        serverless: {
+            checked: true,
+        },
+    },
+    {
+        name: {
+            title: '全局风险自动识别管理',
+        },
+        free: '',
+        develop: true,
+        speciality: true,
+        serverless: {
+            checked: true,
+        },
+    },
+    {
+        name: {
+            title: '注册中心推空保护',
+        },
+        free: '',
+        develop: '',
+        speciality: true,
+        serverless: {
+            checked: true,
+        },
+    },
+    {
+        name: {
+            title: '无损上下线能力',
+        },
+        free: '',
+        develop: '',
+        speciality: true,
+        serverless: {
+            checked: true,
+        },
+    },
+    {
+        name: {
+            title: '自动扩缩容',
+        },
+        free: '',
+        develop: '',
+        speciality: true,
+        serverless: {
+            checked: true,
+            des: '内置扩容上限，避免恶意攻击导致资损'
+        },
+    },
+];
+
+export const Security = [
+    {
+        name: {
+            title: 'RAM 鉴权体系',
+        },
+        free: '',
+        develop: true,
+        speciality: true,
+        serverless: {
+            checked: true,
+        },
+    },
+    {
+        name: {
+            title: '无 AK 的 访问模式',
+        },
+        free: '',
+        develop: true,
+        speciality: true,
+        serverless: {
+            checked: true,
+        },
+    },
+    {
+        name: {
+            title: 'ACL 控制',
+        },
+        free: '',
+        develop: true,
+        speciality: true,
+        serverless: {
+            checked: true,
+        },
+    },
+    {
+        name: {
+            title: 'TLS 传输加密，变更实时生效',
+        },
+        free: '',
+        develop: true,
+        speciality: true,
+        serverless: {
+            checked: true,
+        },
+    },
+    {
+        name: {
+            title: 'KMS 存储加密，自定义轮转， 变更实时生效',
+        },
+        free: '',
+        develop: true,
+        speciality: true,
+        serverless: {
+            checked: true,
+        },
+    },
+];
+
+export const Performance = [
+    {
+        name: {
+            title: 'TPS 性能提升',
+        },
+        free: '自行调优',
+        develop: '持平',
+        speciality: '40%',
+        serverless: {
+            checked: false,
+            des: '40%'
+        },
+    },
+    {
+        name: {
+            title: 'QPS 送性能提升',
+        },
+        free: '自行调优',
+        develop: '持平',
+        speciality: '55%',
+        serverless: {
+            checked: false,
+            des: '55%',
+        },
+    },
+];
+
+export const Observability = [
+    {
+        name: {
+            title: '基础监控告警',
+            des: '（注册中心、配置中心、资源用量等）'
+        },
+        free: '',
+        develop: true,
+        speciality: true,
+        serverless: {
+            checked: true,
+            des: '只提供业务监控指标，用于自动弹性伸缩'
+        },
+    },
+    {
+        name: {
+            title: '高级监控',
+            des: '（服务推送轨迹、配置推送轨迹等）'
+        },
+        free: '',
+        develop: '',
+        speciality: true,
+        serverless: {
+            checked: false,
+            des: '免运维'
+        },
+    },
+];

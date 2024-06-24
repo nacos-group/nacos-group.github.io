@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CloudIntroduce from '@components/cloud/CloudIntroduce.astro';
+import FunctionalCompare from '@/components/cloud/FunctionalCompare.astro';
 import CompaniesFeedback from '@components/cloud/CompaniesFeedback.astro';
 import CloudFooter from '@components/common/Footer.astro';
 import { useTranslations } from "@i18n/util";
@@ -14,6 +15,7 @@ const t = useTranslations(Astro);
   <CloudIntroduce />
 
   <cloud-body>
+    <FunctionalCompare /> 
     <CompaniesFeedback />
   </cloud-body>
 

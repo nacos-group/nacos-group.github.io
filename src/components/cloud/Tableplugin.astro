@@ -1,0 +1,150 @@
+---
+import Correct from "../icon/Correct.astro";
+import Button from "@components/common/Button.astro";
+const { dataSource, title, isHead = false } = Astro.props;
+const totalRows = dataSource.length;
+---
+
+  <div class="overflow-x-auto rounded-2xl mb-6">
+  {
+    isHead && (
+      <table class="table table-fixed sticky-table-top">
+        <tr>
+          <th class="col1 border-0" />
+          <th class="col2 border-0" />
+          <th class="col3 overflow-hidden">
+            <p class="mb-6"> 免费版</p>
+            <Button
+              visibility={false}
+              href=" "
+              size="large"
+              target="_blank"
+              class="w-[196px] h-[54px] rounded-3xl text-xs font-medium"
+            >
+              免费试用
+            </Button>
+          </th>
+          <th class="col4">
+            <p class="mb-6"> 开发版</p>
+            <Button
+              visibility={false}
+              href=""
+              size="large"
+              target="_blank"
+              class="w-[196px] h-[54px] rounded-3xl text-xs font-medium"
+            >
+              咨询定价
+            </Button>
+          </th>
+          <th class="col5">
+            <p class="mb-6"> 专业版</p>
+            <Button
+              visibility={false}
+              href=""
+              size="large"
+              target="_blank"
+              class="w-[196px] h-[54px] rounded-3xl text-xs font-medium"
+            >
+              咨询定价
+            </Button>
+          </th>
+          <th class="col6">
+            <p class="mb-6"> Serverless 版</p>
+            <Button
+              visibility={false}
+              href=""
+              size="large"
+              target="_blank"
+              class="w-[196px] h-[54px] rounded-3xl text-xs font-medium"
+            >
+              咨询定价
+            </Button>
+          </th>
+        </tr>
+      </table>
+    )
+  }
+  <table class="table bg-gray-01 rounded-2xl table-fixed">
+    {
+      dataSource.map((item, index) => {
+        return (
+          <tr>
+            {index === 0 && (
+              <td
+                class="col1 text-xs align-top text-center "
+                rowspan={totalRows}
+              >
+                {title}
+              </td>
+            )}
+            <td class="col2 text-base font-normal color-gray-14">
+              {item.name.title && <p>{item.name.title}</p>}
+              {item.name.des && <p class="text-xs">{item.name.des}</p>}
+            </td>
+            <td class="col3 text-center">
+              {typeof item.free === "boolean" ? <Correct /> : item.free}
+            </td>
+            <td class="col4 text-center">
+              {typeof item.develop === "boolean" ? <Correct /> : item.develop}
+            </td>
+            <td class="col5 text-center">
+              {typeof item.speciality === "boolean" ? (
+                <Correct />
+              ) : (
+                item.speciality
+              )}
+            </td>
+            <td class="col6 text-center">
+              {item.serverless.checked && <Correct />}
+              {item.serverless.des && (
+                <p class="text-xs font-normal color-gray-08">
+                  {item.serverless.des}
+                </p>
+              )}
+            </td>
+          </tr>
+        );
+      })
+    }
+  </table>
+
+  </div>
+
+<style>
+  table,
+  td {
+    border-collapse: collapse;
+  }
+  td {
+    height: 60px;
+    border-left: 1px dotted theme("colors.gray.03");
+    border-right: 1px dotted theme("colors.gray.03");
+    border-bottom: 1px dotted theme("colors.gray.03");
+  }
+  th {
+    border-left: 1px dotted theme("colors.gray.03");
+    border-bottom: hidden;
+    text-align: center;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 32px;
+    color: theme("colors.gray.14");
+  }
+  .col1 {
+    width: 70px;
+    border-right: 0px;
+  }
+  .col2 {
+    width: 200px;
+    border-left: 0px;
+  }
+  .col3,
+  .col4,
+  .col5,
+  .col6 {
+    width: 200px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+  }
+</style>
