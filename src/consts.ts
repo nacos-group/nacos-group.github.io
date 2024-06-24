@@ -5,10 +5,10 @@ export const SITE_DESCRIPTION = 'Welcome to my website!';
 
 // 吊顶提示文案
 export const TOPBAR = {
-    text: 'Nacos 配置中心安全问题汇总及解决方案',
-    mobileText:'Nacos 配置中心安全问题汇总及解决方案',
-    link: 'https://nacos.io/blog/nacos-gvr7dx_awbbpb_sdtk4vkbson424zn/?source=blog_article',
-    target: '_blank'
+    "text": "7月6日（周六）开源沙龙首个AI原生应用架构专场 | 上海站 ，欢迎报名！",
+    "mobileText": "7月6日（周六）开源沙龙首个AI原生应用架构专场 | 上海站 ，欢迎报名！",
+    "link": "https://summit.aliyun.com/cloudnative2024_developer_shanghai?spm=5176.20960838.0.0.7802305eyqMQf8",
+    "target": "_self"
 }
 export const MEDIARESOURCE = [
     {
@@ -154,14 +154,14 @@ export const ACTIVITY_CATEGORY = [
 export const HEADER_ACTIVITY_CARD = [
     {
         "collection": "blog",
-        "slug": "announcement-docker-hub-solution",
-        "description": "关于Nacos镜像无法从DockerHub进行下载的临时解决方案",
+        "slug": "activity-preview-opss2024",
+        "description": "Nacos开源之夏2024，贡献社区赢取12000奖金",
         "imageUrl": "https://img.alicdn.com/imgextra/i4/O1CN01bGnAVW1pFeLFnlaQL_!!6000000005331-2-tps-508-370.png"
     },
     {
         "collection": "blog",
-        "slug": "release-240-beta",
-        "description": "2.4.0-BETA发布，欢迎试用",
+        "slug": "case-authorization",
+        "description": "Nacos 安全使用最佳实践 - 访问控制实践",
         "imageUrl": "https://img.alicdn.com/imgextra/i4/O1CN01zfayJW1Lhe4kliPv9_!!6000000001331-2-tps-508-370.png"
     }
 ]
