@@ -1,0 +1,151 @@
+---
+import { useTranslations, isChinese } from "@i18n/util";
+import Tableplugin from "./Tableplugin.astro";
+import Button from "@components/common/Button.astro";
+import {
+  Usability,
+  Enable,
+  Security,
+  Performance,
+  Observability,
+} from "../../consts";
+const t = useTranslations(Astro);
+const ifzh = isChinese(Astro);
+---
+
+<functional-compare
+  class="functional-compare-wrapper top-[100px] flex flex-col justify-center items-center mt-10"
+>
+  <div class="collapse bg-base-200 collapse-arrow bg-gray-02 w-[85.125rem]">
+    <input type="checkbox" checked />
+    <div class="collapse-title text-2xl font-normal">不同版本功能对比</div>
+    <div class="collapse-content">
+      <Tableplugin dataSource={Usability} title="易用性" isHead={true} />
+      <Tableplugin dataSource={Enable} title="可用性" />
+      <Tableplugin dataSource={Security} title="安全性" />
+      <Tableplugin dataSource={Performance} title="性能" />
+      <Tableplugin dataSource={Observability} title="可观测性" />
+    </div>
+  </div>
+  <!-- 吸底 -->
+  <table
+    class="table table-fixed sticky-table-bottom bg-gray-02 w-[85.125rem] mt-6 hidden"
+  >
+    <tr>
+      <th class="col1 border-0"></th>
+      <th class="col2 border-0"></th>
+      <th class="col3 overflow-hidden">
+        <p class="mb-6">免费版</p>
+        <Button
+          visibility={false}
+          href=" "
+          size="large"
+          target="_blank"
+          class="w-[196px] h-[54px] rounded-3xl text-xs font-medium"
+        >
+          免费试用
+        </Button>
+      </th>
+      <th class="col4">
+        <p class="mb-6">开发版</p>
+        <Button
+          visibility={false}
+          href=""
+          size="large"
+          target="_blank"
+          class="w-[196px] h-[54px] rounded-3xl text-xs font-medium"
+        >
+          咨询定价
+        </Button>
+      </th>
+      <th class="col5">
+        <p class="mb-6">专业版</p>
+        <Button
+          visibility={false}
+          href=""
+          size="large"
+          target="_blank"
+          class="w-[196px] h-[54px] rounded-3xl text-xs font-medium"
+        >
+          咨询定价
+        </Button>
+      </th>
+      <th class="col6">
+        <p class="mb-6">Serverless 版</p>
+        <Button
+          visibility={false}
+          href=""
+          size="large"
+          target="_blank"
+          class="w-[196px] h-[54px] rounded-3xl text-xs font-medium"
+        >
+          咨询定价
+        </Button>
+      </th>
+    </tr>
+  </table>
+</functional-compare>
+
+<style is:global>
+  th {
+    border-left: 1px dotted theme("colors.gray.03");
+    border-bottom: hidden;
+    text-align: center;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 32px;
+    color: theme("colors.gray.14");
+  }
+  .col1 {
+    width: 70px;
+    border-right: 0px;
+  }
+  .col2 {
+    width: 200px;
+    border-left: 0px;
+  }
+  .col3,
+  .col4,
+  .col5,
+  .col6 {
+    width: 200px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+  }
+  .sticky-table-bottom {
+    position: sticky;
+    bottom: 0;
+  }
+  @media (max-width: 50rem) {
+  }
+
+  @media (min-width: 50rem) and (max-width: 86rem) {
+  }
+</style>
+
+<script>
+  class FunctionalCompare extends HTMLElement {
+    constructor() {
+      super();
+      this.init();
+    }
+
+    init() {
+      const collapse = this.querySelector('.collapse');
+      const stickyTable = this.querySelector('.sticky-table-bottom');
+      const checkPosition = () => {
+        const rect = collapse.getBoundingClientRect();
+        if (rect.top <= 0) {
+          stickyTable.classList.remove('hidden');
+        } else {
+          stickyTable.classList.add('hidden');
+        }
+      };
+
+      window.addEventListener('scroll', checkPosition);
+      checkPosition();
+    }
+  }
+  customElements.define('functional-compare', FunctionalCompare);
+</script>
