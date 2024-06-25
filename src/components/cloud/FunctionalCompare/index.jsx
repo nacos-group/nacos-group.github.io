@@ -66,21 +66,21 @@ const FunctionalCompare = (props) => {
               </th>
               <th class="col4">
                 <p class="mb-6"> 开发版</p>
-                <p class='text-gray-08 text-xs'>目录价：118元/月起</p>
-                <p class='text-gray-08 text-xs'>折扣价：47.2元/月起</p>
-                <p class='text-gray-08 text-xs'>折扣详情：月包7折，年包4折，新老同享</p>
+                <p class='text-gray-08 text-xs mb-1'>目录价：118元/月起</p>
+                <p class='text-gray-08 text-xs mb-1'>折扣价：47.2元/月起</p>
+                <p class='text-gray-08 text-xs mb-1'>折扣详情：月包7折，年包4折，新老同享</p>
               </th>
               <th class="col5">
                 <p class="mb-6"> 专业版</p>
-                <p class='text-gray-08 text-xs'>目录价：498元/月起</p>
-                <p class='text-gray-08 text-xs'>折扣价：209.16元/月起</p>
-                <p class='text-gray-08 text-xs'>折扣详情：首购4.2折</p>
+                <p class='text-gray-08 text-xs mb-1'>目录价：498元/月起</p>
+                <p class='text-gray-08 text-xs mb-1'>折扣价：209.16元/月起</p>
+                <p class='text-gray-08 text-xs mb-1'>折扣详情：首购4.2折</p>
               </th>
               <th class="col6">
                 <p class="mb-6"> Serverless 版</p>
-                <p class='text-gray-08 text-xs'>目录价：0.16元/10个连接起</p>
-                <p class='text-gray-08 text-xs'>折扣价：0.15元/10个连接起</p>
-                <p class='text-gray-08 text-xs'>折扣详情：节省计划9.5折，新老同享</p>
+                <p class='text-gray-08 text-xs mb-1'>目录价：0.16元/10个连接起</p>
+                <p class='text-gray-08 text-xs mb-1'>折扣价：0.15元/10个连接起</p>
+                <p class='text-gray-08 text-xs mb-1'>折扣详情：节省计划9.5折，新老同享</p>
               </th>
             </tr>
       </table>}
