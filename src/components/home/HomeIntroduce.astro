@@ -10,7 +10,9 @@ const t = useTranslations(Astro);
 const ifzh = isChinese(Astro);
 
 // 服务端构建预先获取star数和fork数作为兜底
-const { stargazers_count=0, forks_count=0 }:StarAndForkT = await sendFetch("https://api.github.com/repos/alibaba/nacos");
+// const { stargazers_count=0, forks_count=0 }:StarAndForkT = await sendFetch("https://api.github.com/repos/alibaba/nacos");
+const stargazers_count=0;
+const forks_count=0
 ---
 
 <span class="home-introduce-wrapper">

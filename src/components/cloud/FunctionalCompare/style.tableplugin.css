@@ -1,0 +1,51 @@
+table,
+  td {
+    border-collapse: collapse;
+  }
+  td {
+    height: 60px;
+    border-left: 1px dotted theme("colors.gray.03");
+    border-right: 1px dotted theme("colors.gray.03");
+    border-bottom: 1px dotted theme("colors.gray.03");
+  }
+  th {
+    border-left: 1px dotted theme("colors.gray.03");
+    border-bottom: hidden;
+    text-align: center;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 32px;
+    color: theme("colors.gray.14");
+  }
+  .col1 {
+    width: 70px;
+    border-right: 0px;
+  }
+  .col2 {
+    width: 200px;
+    border-left: 0px;
+  }
+  .col3,
+  .col4,
+  .col5,
+  .col6 {
+    width: 200px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+  }
+  .btn {
+    width: 196px ;
+  }
+  @media (min-width: 50rem) and (max-width: 86rem) {
+    .col2,
+    .col3,
+    .col4,
+    .col5,
+    .col6 {
+      width: 100px;
+    }
+    .btn {
+      width: fit-content;
+    }
+  }

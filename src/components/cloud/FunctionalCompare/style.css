@@ -1,0 +1,112 @@
+.collapse,
+.sticky-table-bottom {
+  width: 85.125rem;
+}
+
+th {
+  border-left: 1px dotted theme("colors.gray.03");
+  border-bottom: hidden;
+  text-align: center;
+  font-size: 24px;
+  font-weight: normal;
+  line-height: 32px;
+  color: theme("colors.gray.14");
+}
+
+.col1 {
+  width: 70px;
+  border-right: 0px;
+}
+
+.col2 {
+  width: 200px;
+  border-left: 0px;
+}
+
+.col3,
+.col4,
+.col5,
+.col6 {
+  width: 200px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.sticky-table-bottom {
+  position: sticky;
+  bottom: 0;
+}
+
+.btn-version {
+  width: 196px;
+}
+
+.mobile-content {
+  display: none;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 1000;
+  /* 确保在页面上所有元素之上 */
+}
+
+/* 弹框样式 */
+.dialog {
+  background-color: white;
+  padding: 16px;
+  width: 100%;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+  /* 确保在遮罩层上面 */
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+@media (max-width: 50rem) {
+  .functional-compare-wrapper {
+    padding: 1.5rem;
+  }
+
+  .collapse,
+  .sticky-table-bottom {
+    display: none;
+  }
+
+  .mobile-content {
+    display: inline-block;
+  }
+}
+
+@media (min-width: 50rem) and (max-width: 86rem) {
+
+  .collapse,
+  .sticky-table-bottom {
+    width: 100%;
+  }
+
+  .col2,
+  .col3,
+  .col4,
+  .col5,
+  .col6 {
+    width: 100px;
+  }
+
+  .btn-version {
+    width: fit-content;
+  }
+}

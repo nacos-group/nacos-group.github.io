@@ -184,268 +184,480 @@ export const ALGOLIA_CONFIG = {
     indexName: 'nacos',
 }
 
-export const Usability = [
-    {
-        name: {
-            title: '自动化运维',
+export const versionDataSource = [
+    { title: "易用性", data:[
+        {
+            name: {
+                title: '自动化运维',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: false,
+                des: '免运维'
+            },
         },
-        free: '',
-        develop: true,
-        speciality: true,
-        serverless: {
-            checked: false,
-            des: '免运维'
+        {
+            name: {
+                title: '域名自动绑定',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
         },
-    },
-    {
-        name: {
-            title: '域名自动绑定',
+        {
+            name: {
+                title: '故障节点自动摘除',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: '',
+            },
         },
-        free: '',
-        develop: true,
-        speciality: true,
-        serverless: {
-            checked: true,
+        {
+            name: {
+                title: '云原生网关、治理深度集成',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
         },
-    },
-    {
-        name: {
-            title: '故障节点自动摘除',
+        {
+            name: {
+                title: '平滑迁移工具',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
         },
-        free: '',
-        develop: true,
-        speciality: true,
-        serverless: {
-            checked: true,
+        {
+            name: {
+                title: 'Eureka 协议兼容',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
         },
-    },
-    {
-        name: {
-            title: '云原生网关、治理深度集成',
+    ] },
+    { title: "可用性", data: [
+        {
+            name: {
+                title: 'SLA',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: false,
+                des: '无 SLA 保障'
+            },
+            speciality: {
+                checked: false,
+                des: '99.95%',
+            },
+            serverless: {
+                checked: false,
+                des: '99.95%'
+            },
         },
-        free: '',
-        develop: true,
-        speciality: true,
-        serverless: {
-            checked: true,
+        {
+            name: {
+                title: '多节点容灾',
+                des: ''
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: false,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
         },
-    },
-    {
-        name: {
-            title: '平滑迁移工具',
+        {
+            name: {
+                title: '多可区容灾',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: false,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
         },
-        free: '',
-        develop: true,
-        speciality: true,
-        serverless: {
-            checked: true,
+        {
+            name: {
+                title: '全局风险自动识别管理',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
         },
-    },
-    {
-        name: {
-            title: 'Eureka 协议兼容',
+        {
+            name: {
+                title: '注册中心推空保护',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: false,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
         },
-        free: '',
-        develop: true,
-        speciality: true,
-        serverless: {
-            checked: true,
+        {
+            name: {
+                title: '无损上下线能力',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: false,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
         },
-    },
-];
-
-export const Enable = [
-    {
-        name: {
-            title: 'SLA',
+        {
+            name: {
+                title: '自动扩缩容',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: false,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: '内置扩容上限，避免恶意攻击导致资损'
+            },
         },
-        free: '',
-        develop: '无 SLA 保障',
-        speciality: '99.95%',
-        serverless: {
-            checked: false,
-            des: '99.95%'
+    ] },
+    { title: "安全性", data: [
+        {
+            name: {
+                title: 'RAM 鉴权体系',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
         },
-    },
-    {
-        name: {
-            title: '多节点容灾',
+        {
+            name: {
+                title: '无 AK 的 访问模式',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
         },
-        free: '',
-        develop: '',
-        speciality: true,
-        serverless: {
-            checked: true,
+        {
+            name: {
+                title: 'ACL 控制',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
         },
-    },
-    {
-        name: {
-            title: '多可区容灾',
+        {
+            name: {
+                title: 'TLS 传输加密，变更实时生效',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
         },
-        free: '',
-        develop: '',
-        speciality: true,
-        serverless: {
-            checked: true,
+        {
+            name: {
+                title: 'KMS 存储加密，自定义轮转， 变更实时生效',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
         },
-    },
-    {
-        name: {
-            title: '全局风险自动识别管理',
+    ] },
+    { title: "性能", data: [
+        {
+            name: {
+                title: 'TPS 性能提升',
+            },
+            free: {
+                checked: false,
+                des: '自行调优',
+            },
+            develop: {
+                checked: false,
+                des: '持平',
+            },
+            speciality: {
+                checked: false,
+                des: '40%',
+            },
+            serverless: {
+                checked: false,
+                des: '40%'
+            },
         },
-        free: '',
-        develop: true,
-        speciality: true,
-        serverless: {
-            checked: true,
+        {
+            name: {
+                title: 'QPS 送性能提升',
+            },
+            free: {
+                checked: false,
+                des: '自行调优',
+            },
+            develop:  {
+                checked: false,
+                des: '持平',
+            },
+            speciality:{
+                checked: false,
+                des: '55%',
+            },
+            serverless: {
+                checked: false,
+                des: '55%',
+            },
         },
-    },
-    {
-        name: {
-            title: '注册中心推空保护',
+    ] },
+    { title: "可观测性", data: [
+        {
+            name: {
+                title: '基础监控告警',
+                des: '（注册中心、配置中心、资源用量等）'
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: '只提供业务监控指标，用于自动弹性伸缩'
+            },
         },
-        free: '',
-        develop: '',
-        speciality: true,
-        serverless: {
-            checked: true,
+        {
+            name: {
+                title: '高级监控',
+                des: '（服务推送轨迹、配置推送轨迹等）'
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: false,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: false,
+                des: '免运维'
+            },
         },
-    },
-    {
-        name: {
-            title: '无损上下线能力',
-        },
-        free: '',
-        develop: '',
-        speciality: true,
-        serverless: {
-            checked: true,
-        },
-    },
-    {
-        name: {
-            title: '自动扩缩容',
-        },
-        free: '',
-        develop: '',
-        speciality: true,
-        serverless: {
-            checked: true,
-            des: '内置扩容上限，避免恶意攻击导致资损'
-        },
-    },
-];
-
-export const Security = [
-    {
-        name: {
-            title: 'RAM 鉴权体系',
-        },
-        free: '',
-        develop: true,
-        speciality: true,
-        serverless: {
-            checked: true,
-        },
-    },
-    {
-        name: {
-            title: '无 AK 的 访问模式',
-        },
-        free: '',
-        develop: true,
-        speciality: true,
-        serverless: {
-            checked: true,
-        },
-    },
-    {
-        name: {
-            title: 'ACL 控制',
-        },
-        free: '',
-        develop: true,
-        speciality: true,
-        serverless: {
-            checked: true,
-        },
-    },
-    {
-        name: {
-            title: 'TLS 传输加密，变更实时生效',
-        },
-        free: '',
-        develop: true,
-        speciality: true,
-        serverless: {
-            checked: true,
-        },
-    },
-    {
-        name: {
-            title: 'KMS 存储加密，自定义轮转， 变更实时生效',
-        },
-        free: '',
-        develop: true,
-        speciality: true,
-        serverless: {
-            checked: true,
-        },
-    },
-];
-
-export const Performance = [
-    {
-        name: {
-            title: 'TPS 性能提升',
-        },
-        free: '自行调优',
-        develop: '持平',
-        speciality: '40%',
-        serverless: {
-            checked: false,
-            des: '40%'
-        },
-    },
-    {
-        name: {
-            title: 'QPS 送性能提升',
-        },
-        free: '自行调优',
-        develop: '持平',
-        speciality: '55%',
-        serverless: {
-            checked: false,
-            des: '55%',
-        },
-    },
-];
-
-export const Observability = [
-    {
-        name: {
-            title: '基础监控告警',
-            des: '（注册中心、配置中心、资源用量等）'
-        },
-        free: '',
-        develop: true,
-        speciality: true,
-        serverless: {
-            checked: true,
-            des: '只提供业务监控指标，用于自动弹性伸缩'
-        },
-    },
-    {
-        name: {
-            title: '高级监控',
-            des: '（服务推送轨迹、配置推送轨迹等）'
-        },
-        free: '',
-        develop: '',
-        speciality: true,
-        serverless: {
-            checked: false,
-            des: '免运维'
-        },
-    },
-];
+    ] },
+]
