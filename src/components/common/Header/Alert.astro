@@ -30,9 +30,10 @@ const {
 
 <script>
   // handleAlertClose函数用于处理提示条的关闭逻辑。
-  function handleAlertClose(button) {
+  function handleAlertClose(button, pageFrame) {
     button.parentNode.style.display = "none";
     window.alertBarClosed = true;
+    pageFrame.classList.remove('alert-bar-exist')
   }
 
   // 检查localStorage中的状态，看是否需要显示提示条。
@@ -41,13 +42,16 @@ const {
       const alertBar = document.querySelector(".alert-bar");
       const closeButton = document.querySelector(".close-button");
       const isClosed = window.alertBarClosed || false;
+      const pageFrame = document.querySelector('.sidebar-pane');
 
       if (isClosed === true) {
         alertBar.style.display = "none";
+        pageFrame.classList.remove('alert-bar-exist')
       } else {
         closeButton.addEventListener("click", function () {
-          handleAlertClose(closeButton);
+          handleAlertClose(closeButton,pageFrame);
         });
+        pageFrame.classList.add('alert-bar-exist')
       }
     } catch (e) {
       console.log(e);
