@@ -27,7 +27,7 @@ th {
 .col4,
 .col5,
 .col6 {
-  width: 200px;
+  width: 210px;
   font-size: 12px;
   font-weight: 500;
   line-height: 18px;
@@ -83,7 +83,7 @@ th {
 
   .collapse,
   .sticky-table-bottom {
-    display: none;
+    display: none !important;
   }
 
   .mobile-content {

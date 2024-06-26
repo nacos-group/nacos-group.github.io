@@ -203,7 +203,7 @@ export const versionDataSource = [
                 des: ''
             },
             serverless: {
-                checked: false,
+                checked: '',
                 des: '免运维'
             },
         },
@@ -323,15 +323,15 @@ export const versionDataSource = [
                 des: ''
             },
             develop: {
-                checked: false,
+                checked: '',
                 des: '无 SLA 保障'
             },
             speciality: {
-                checked: false,
+                checked: '',
                 des: '99.95%',
             },
             serverless: {
-                checked: false,
+                checked: '',
                 des: '99.95%'
             },
         },
@@ -576,19 +576,19 @@ export const versionDataSource = [
                 title: 'TPS 性能提升',
             },
             free: {
-                checked: false,
+                checked: '',
                 des: '自行调优',
             },
             develop: {
-                checked: false,
+                checked: '',
                 des: '持平',
             },
             speciality: {
-                checked: false,
+                checked: '',
                 des: '40%',
             },
             serverless: {
-                checked: false,
+                checked: '',
                 des: '40%'
             },
         },
@@ -597,19 +597,19 @@ export const versionDataSource = [
                 title: 'QPS 送性能提升',
             },
             free: {
-                checked: false,
+                checked: '',
                 des: '自行调优',
             },
             develop:  {
-                checked: false,
+                checked: '',
                 des: '持平',
             },
             speciality:{
-                checked: false,
+                checked: '',
                 des: '55%',
             },
             serverless: {
-                checked: false,
+                checked: '',
                 des: '55%',
             },
         },
@@ -655,7 +655,7 @@ export const versionDataSource = [
                 des: ''
             },
             serverless: {
-                checked: false,
+                checked: '',
                 des: '免运维'
             },
         },

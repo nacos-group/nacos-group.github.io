@@ -20,6 +20,8 @@ const FunctionalCompare = (props) => {
   const [version, setVersion] = useState('免费版');
   const [isSticky, setIsSticky] = useState(false);
   const [isShow, setIsShow] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
+
   const functionalCompareWrapperRef = useRef(null);
 
   const handleScroll = () => {
@@ -43,7 +45,7 @@ const FunctionalCompare = (props) => {
       class="functional-compare-wrapper top-[100px] flex flex-col justify-center items-center mt-10"
     >
       <div class="collapse bg-base-200 collapse-arrow bg-gray-02">
-        <input type="checkbox" checked />
+      <input type="checkbox" checked={isCollapsed} onChange={() => setIsCollapsed(!isCollapsed)} />
         <div class="collapse-title text-2xl font-normal">不同版本功能对比</div>
         <div class="collapse-content">
           {versionDataSource.map((item, index) => {
@@ -54,36 +56,45 @@ const FunctionalCompare = (props) => {
         </div>
       </div>
       {/* <!-- 吸底 --> */}
-      {isSticky && <table
-        class={`table table-fixed sticky-table-bottom bg-gray-02 mt-6`}
-      >
-        <tr>
-              <th class="col1 border-0" />
-              <th class="col2 border-0" />
-              <th class="col3 overflow-hidden">
-                <p class="mb-6 "> 免费版</p>
-                <div class='text-gray-08 text-xs h-16 leading-8'>免费试用</div>
-              </th>
-              <th class="col4">
-                <p class="mb-6"> 开发版</p>
-                <p class='text-gray-08 text-xs mb-1'>目录价：118元/月起</p>
-                <p class='text-gray-08 text-xs mb-1'>折扣价：47.2元/月起</p>
-                <p class='text-gray-08 text-xs mb-1'>折扣详情：月包7折，年包4折，新老同享</p>
-              </th>
-              <th class="col5">
-                <p class="mb-6"> 专业版</p>
-                <p class='text-gray-08 text-xs mb-1'>目录价：498元/月起</p>
-                <p class='text-gray-08 text-xs mb-1'>折扣价：209.16元/月起</p>
-                <p class='text-gray-08 text-xs mb-1'>折扣详情：首购4.2折</p>
-              </th>
-              <th class="col6">
-                <p class="mb-6"> Serverless 版</p>
-                <p class='text-gray-08 text-xs mb-1'>目录价：0.16元/10个连接起</p>
-                <p class='text-gray-08 text-xs mb-1'>折扣价：0.15元/10个连接起</p>
-                <p class='text-gray-08 text-xs mb-1'>折扣详情：节省计划9.5折，新老同享</p>
-              </th>
-            </tr>
-      </table>}
+      {isSticky && isCollapsed && <div class='table table-fixed sticky-table-bottom bg-gray-02 mt-6 px-4'>
+        <table class='w-full'>
+          <tr>
+            <th class="col1 border-0" />
+            <th class="col2 border-0" />
+            <th class="col3 overflow-hidden">
+              <p class="mb-6 text-2xl font-normal"> 免费版</p>
+              <div class='text-gray-08 text-xs h-20 leading-8'>免费试用</div>
+            </th>
+            <th class="col4">
+              <p class="mb-6 text-2xl font-normal"> 开发版</p>
+              <div class='h-20 text-gray-08 text-xs mb-1'>
+                <p class='mb-1'>目录价：118元/月起</p>
+                <p class='mb-1'>折扣价：47.2元/月起</p>
+                <p class='mb-1'>折扣详情：月包7折，年包4折，新老同享</p>
+              </div>
+
+            </th>
+            <th class="col5">
+              <p class="mb-6 text-2xl font-normal"> 专业版</p>
+              <div class='h-20 text-gray-08 text-xs'>
+                <p class='mb-1'>目录价：498元/月起</p>
+                <p class='mb-1'>折扣价：209.16元/月起</p>
+                <p class='mb-1'>折扣详情：首购4.2折</p>
+              </div>
+
+            </th>
+            <th class="col6">
+              <p class="mb-6 text-2xl font-normal"> Serverless 版</p>
+              <div class='h-20 text-gray-08 text-xs'>
+                <p class='mb-1'>目录价：0.16元/10个连接起</p>
+                <p class='mb-1'>折扣价：0.15元/10个连接起</p>
+                <p class='mb-1'>折扣详情：节省计划9.5折，新老同享</p>
+              </div>
+            </th>
+          </tr>
+        </table>
+      </div>
+      }
 
       {/* <!-- 移动端 --> */}
       <div class="mobile-content">
@@ -93,7 +104,7 @@ const FunctionalCompare = (props) => {
             <UpDown class="w-8 h-4" />
           </label>
 
-          <input type="checkbox" id="my_modal_6" className="modal-toggle" checked={isShow}  onChange={(e) => setIsShow(e.target.checked)} />
+          <input type="checkbox" id="my_modal_6" className="modal-toggle" checked={isShow} onChange={(e) => setIsShow(e.target.checked)} />
           {
             isShow && <div className="modal" role="dialog">
               <div className="modal-box">

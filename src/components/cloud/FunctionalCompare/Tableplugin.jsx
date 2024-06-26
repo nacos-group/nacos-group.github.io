@@ -18,26 +18,34 @@ const Tableplugin = (props) => {
               <th class="col1 border-0" />
               <th class="col2 border-0" />
               <th class="col3 overflow-hidden">
-                <p class="mb-6 "> 免费版</p>
-                <div class='text-gray-08 text-xs h-16 leading-8'>免费试用</div>
+                <p class="mb-6 text-2xl font-normal"> 免费版</p>
+                <div class='text-gray-08 text-xs h-20 leading-8'>免费试用</div>
               </th>
               <th class="col4">
-                <p class="mb-6"> 开发版</p>
-                <p class='text-gray-08 text-xs mb-1'>目录价：118元/月起</p>
-                <p class='text-gray-08 text-xs mb-1'>折扣价：47.2元/月起</p>
-                <p class='text-gray-08 text-xs mb-1'>折扣详情：月包7折，年包4折，新老同享</p>
+                <p class="mb-6 text-2xl font-normal"> 开发版</p>
+                <div class='h-20 text-gray-08 text-xs mb-1'>
+                  <p class='mb-1'>目录价：118元/月起</p>
+                  <p class='mb-1'>折扣价：47.2元/月起</p>
+                  <p class='mb-1'>折扣详情：月包7折，年包4折，新老同享</p>
+                </div>
+
               </th>
               <th class="col5">
-                <p class="mb-6"> 专业版</p>
-                <p class='text-gray-08 text-xs mb-1'>目录价：498元/月起</p>
-                <p class='text-gray-08 text-xs mb-1'>折扣价：209.16元/月起</p>
-                <p class='text-gray-08 text-xs mb-1'>折扣详情：首购4.2折</p>
+                <p class="mb-6 text-2xl font-normal"> 专业版</p>
+                <div class='h-20 text-gray-08 text-xs'>
+                  <p class='mb-1'>目录价：498元/月起</p>
+                  <p class='mb-1'>折扣价：209.16元/月起</p>
+                  <p class='mb-1'>折扣详情：首购4.2折</p>
+                </div>
+
               </th>
               <th class="col6">
-                <p class="mb-6"> Serverless 版</p>
-                <p class='text-gray-08 text-xs mb-1'>目录价：0.16元/10个连接起</p>
-                <p class='text-gray-08 text-xs mb-1'>折扣价：0.15元/10个连接起</p>
-                <p class='text-gray-08 text-xs mb-1'>折扣详情：节省计划9.5折，新老同享</p>
+                <p class="mb-6 text-2xl font-normal"> Serverless 版</p>
+                <div class='h-20 text-gray-08 text-xs'>
+                  <p class='mb-1'>目录价：0.16元/10个连接起</p>
+                  <p class='mb-1'>折扣价：0.15元/10个连接起</p>
+                  <p class='mb-1'>折扣详情：节省计划9.5折，新老同享</p>
+                </div>
               </th>
             </tr>
           </table>
@@ -50,7 +58,7 @@ const Tableplugin = (props) => {
               <tr>
                 {index === 0 && (
                   <td
-                    class="col1 text-xs align-top text-center "
+                    class="col1 text-[12px] align-top text-center leading-8"
                     rowspan={totalRows}
                   >
                     {title}

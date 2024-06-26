@@ -1,6 +1,6 @@
 
 
-const UpDown = (props) => {
+const Correct = (props) => {
   return (
     <svg
       class="icon"
@@ -21,4 +21,4 @@ const UpDown = (props) => {
   );
 };
 
-export default UpDown;
+export default Correct;
