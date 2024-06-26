@@ -1,6 +1,6 @@
 ---
 id: "question-history-13426"
-title: "nacos开启接口鉴权 nacos-opensource"
+title: "nacos开启接口鉴权 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "为了在Nacos中开启接口鉴权，我们可以遵循以下步骤操作，依据提供的知识内容，这里主要分为非Docker环境和Docker环境两种情况来说明：### 非Docker环境下的步骤：1. **修改配置文件**：编辑Nacos服务器的`application.properties`文件，确保包含以下配置以"

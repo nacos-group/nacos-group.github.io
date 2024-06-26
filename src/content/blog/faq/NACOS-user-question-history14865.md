@@ -1,13 +1,13 @@
 ---
 id: "question-history-14865"
-title: "nacos2.3开启鉴权后,首次进入会报命名空间无访问权限，后续不会报出。使用的是nacos 默认账号，n nacos-opensource"
+title: "nacos2.3开启鉴权后,首次进入会报命名空间无访问权限，后续不会报出。使用的是nacos 默认账号，n "
 date: "2024-06-02"
 category: "expertConsultation"
 description: "根据提供的知识内容，我们可以分析您遇到的问题原因及提供相应的解决步骤。### 问题原因分析：在Nacos 2.3集群环境下，您开启了鉴权功能后首次登录报出命名空间无访问权限，之后访问正常。这可能是由于Nacos的默认账号（通常是nacos/nacos）在鉴权开启后未被正确地赋予命名空间的访问权限。#"
 ---
 
 ## 用户问题 ： 
- nacos2.3开启鉴权后,首次进入会报命名空间无访问权限，后续不会报出。使用的是nacos 默认账号，nacos集群环境。 nacos-opensource 
+ nacos2.3开启鉴权后,首次进入会报命名空间无访问权限，后续不会报出。使用的是nacos 默认账号，nacos集群环境。  
 
 ---------------
 ## 专家官方解答 ：

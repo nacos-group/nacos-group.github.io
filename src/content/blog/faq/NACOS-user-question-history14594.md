@@ -1,6 +1,6 @@
 ---
 id: "question-history-14594"
-title: "nacos 和nacos cloud 的有什么区别？ nacos-opensource"
+title: "nacos 和nacos cloud 的有什么区别？ "
 date: "2024-05-27"
 category: "expertConsultation"
 description: "Nacos开源版与Nacos Cloud（即集成在阿里云微服务引擎MSE中的Nacos商业化版本）的主要区别在于以下几个方面：1. **易用性增强**：   MSE提供的Nacos商业化版额外支持自动化运维能力、域名自动绑定、故障节点自动摘除、云原生网关集成、与治理能力的深度集成、平滑迁移工具，以及"

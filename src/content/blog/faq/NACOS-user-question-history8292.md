@@ -1,6 +1,6 @@
 ---
 id: "question-history-8292"
-title: "麒麟V10下，loongarch64 龙芯架构， librocksdbjni-linux64.so:无法打开共享对象文件 nacos-opensource"
+title: "麒麟V10下，loongarch64 龙芯架构， librocksdbjni-linux64.so:无法打开共享对象文件 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据已知信息分析，您在麒麟V10系统（loongarch64龙芯架构）下遇到`librocksdbjni-linux64.so:无法打开共享对象文件`的问题，可能是由于以下原因：1. **不兼容性问题**：Nacos早期版本中使用的Jraft默认依赖的rocksdb库可能未针对LoongArch64"

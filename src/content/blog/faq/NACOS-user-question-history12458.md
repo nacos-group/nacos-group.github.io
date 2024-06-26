@@ -1,14 +1,14 @@
 ---
 id: "question-history-12458"
-title: "load logback configuration of nacos fail, message: could not initialize logb nacos-opensource"
+title: "load logback configuration of nacos fail, message: could not initialize logb "
 date: "2024-05-17"
 category: "expertConsultation"
-description: "遇到`nacos-opensource load logback configuration of nacos fail, message: could not initialize logb`的问题，其原因在于Spring Cloud Alibaba项目中使用的logback版本与Nacos客户端"
+description: "遇到` load logback configuration of nacos fail, message: could not initialize logb`的问题，其原因在于Spring Cloud Alibaba项目中使用的logback版本与Nacos客户端"
 tags: ["logback","configuration","nacos","fail","initialize","logb"]
 keywords: ["logback","configuration","nacos","fail","initialize","logb"]
 ---
 
-遇到`nacos-opensource load logback configuration of nacos fail, message: could not initialize logb`的问题，其原因在于Spring Cloud Alibaba项目中使用的logback版本与Nacos客户端默认引入的logback配置不兼容。具体来说，Spring Boot 3.0.x及以上版本或Spring Cloud Alibaba默认依赖的logback版本为1.4.5，这与Nacos客户端期望的logback版本不匹配，导致加载Nacos的logback配置失败。
+遇到` load logback configuration of nacos fail, message: could not initialize logb`的问题，其原因在于Spring Cloud Alibaba项目中使用的logback版本与Nacos客户端默认引入的logback配置不兼容。具体来说，Spring Boot 3.0.x及以上版本或Spring Cloud Alibaba默认依赖的logback版本为1.4.5，这与Nacos客户端期望的logback版本不匹配，导致加载Nacos的logback配置失败。
 
 解决此问题的一个有效方法是采用nacos-group提供的logback-adapter。以下是具体的解决步骤：
 

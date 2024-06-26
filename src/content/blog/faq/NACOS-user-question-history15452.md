@@ -1,13 +1,13 @@
 ---
 id: "question-history-15452"
-title: "通过用户名密码获取accessToken后，访问其他接口，token如何传递？ nacos-opensource"
+title: "通过用户名密码获取accessToken后，访问其他接口，token如何传递？ "
 date: "2024-06-17"
 category: "expertConsultation"
 description: "### 分析问题原因在Nacos开源版本中，一旦用户通过用户名和密码成功认证并获取到accessToken，这个accessToken应当用于后续API请求的授权验证，确保请求的安全性。根据一般的RESTful API设计原则，token通常通过HTTP头部进行传递，以便服务器端能够识别并验证请求的"
 ---
 
 ## 用户问题 ： 
- 通过用户名密码获取accessToken后，访问其他接口，token如何传递？ nacos-opensource 
+ 通过用户名密码获取accessToken后，访问其他接口，token如何传递？  
 
 ---------------
 ## 专家官方解答 ：

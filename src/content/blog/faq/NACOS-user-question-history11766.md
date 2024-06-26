@@ -1,6 +1,6 @@
 ---
 id: "question-history-11766"
-title: "nacos和eureka怎么选？ nacos-opensource"
+title: "nacos和eureka怎么选？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在选择Nacos与Eureka之间，我们可以根据以下几个方面来分析：1. **功能需求**：Nacos相比Eureka，提供了更全面的功能集。它不仅支持服务发现和注册，还集成了配置管理、消息总线等特性。如果你的项目需要动态配置管理或更复杂的服务治理能力，Nacos可能是更优选择。2. **可靠性与多"

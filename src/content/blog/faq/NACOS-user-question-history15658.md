@@ -1,13 +1,13 @@
 ---
 id: "question-history-15658"
-title: "我修改了nacos的配置文件中的以下两个参数，依赖这个nacos集群的应用服务需要重启吗？ nacos.c nacos-opensource"
+title: "我修改了nacos的配置文件中的以下两个参数，依赖这个nacos集群的应用服务需要重启吗？ nacos.c "
 date: "2024-06-18"
 category: "expertConsultation"
 description: "根据您提供的信息，修改了Nacos配置文件中的两个参数：1. `nacos.core.auth.enabled=true`2. `nacos.core.auth.plugin.nacos.token.secret.key=XXXXXXX`这两个参数分别用于开启Nacos的认证功能以及设置token的"
 ---
 
 ## 用户问题 ： 
- 我修改了nacos的配置文件中的以下两个参数，依赖这个nacos集群的应用服务需要重启吗？ nacos.core.auth.enabled=true nacos.core.auth.plugin.nacos.token.secret.key=XXXXXXX nacos-opensource 
+ 我修改了nacos的配置文件中的以下两个参数，依赖这个nacos集群的应用服务需要重启吗？ nacos.core.auth.enabled=true nacos.core.auth.plugin.nacos.token.secret.key=XXXXXXX  
 
 ---------------
 ## 专家官方解答 ：

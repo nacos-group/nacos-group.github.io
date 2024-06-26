@@ -1,13 +1,13 @@
 ---
 id: "question-history-15614"
-title: "nacos必须开启鉴权吗 nacos-opensource"
+title: "nacos必须开启鉴权吗 "
 date: "2024-06-18"
 category: "expertConsultation"
 description: "Nacos并不强制要求必须开启鉴权，但它是一个内网核心组件，主要负责配置管理和服务发现等功能，因此**强烈建议在生产环境中开启鉴权**以保障系统的安全性。根据提供的知识内容，我们可以了解到以下几点原因和建议：### 原因分析：1. **安全风险**：若Nacos不开启鉴权并暴露于公网，其存储的配置和"
 ---
 
 ## 用户问题 ： 
- nacos必须开启鉴权吗 nacos-opensource 
+ nacos必须开启鉴权吗  
 
 ---------------
 ## 专家官方解答 ：

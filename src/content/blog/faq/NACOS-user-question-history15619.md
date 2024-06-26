@@ -1,13 +1,13 @@
 ---
 id: "question-history-15619"
-title: "如何使用docker 部署 nacos nacos-opensource"
+title: "如何使用docker 部署 nacos "
 date: "2024-06-18"
 category: "expertConsultation"
 description: "要使用Docker部署Nacos，您可以遵循以下详细步骤：### 1. 准备工作确保您已安装Docker并且具备基本的Docker操作知识。此外，了解Nacos的基本概念和需求会对部署过程有所帮助。### 2. 获取Nacos Docker镜像访问Nacos Docker项目的GitHub仓库([h"
 ---
 
 ## 用户问题 ： 
- 如何使用docker 部署 nacos nacos-opensource 
+ 如何使用docker 部署 nacos  
 
 ---------------
 ## 专家官方解答 ：

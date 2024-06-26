@@ -1,6 +1,6 @@
 ---
 id: "question-history-11765"
-title: "nacos 新增配置是否需要重启？ nacos-opensource"
+title: "nacos 新增配置是否需要重启？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，Nacos配置的新增并不需要重启服务。Nacos作为配置中心，其设计目的之一就是实现配置的动态更新，允许应用在运行时获取并应用最新的配置信息，而无需重启。以下是基于此理解的分析步骤：1. **配置动态刷新机制**：Nacos客户端通过订阅(dataId, group)对应的配置，"

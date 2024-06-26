@@ -1,13 +1,13 @@
 ---
 id: "question-history-15393"
-title: "如何实现在Nacos网关与Nacos配置中心之间动态路由监听和更新 nacos-opensource"
+title: "如何实现在Nacos网关与Nacos配置中心之间动态路由监听和更新 "
 date: "2024-06-17"
 category: "expertConsultation"
 description: "要实现在Nacos网关与Nacos配置中心之间动态路由监听和更新，我们可以基于Nacos提供的动态配置监听接口来设计解决方案。根据提供的知识内容，这里是一个分步骤的策略：### 分析问题原因1. **配置中心管理配置**: Nacos配置中心作为集中化的配置管理与分发组件，存储了包括路由规则在内的各"
 ---
 
 ## 用户问题 ： 
- 如何实现在Nacos网关与Nacos配置中心之间动态路由监听和更新 nacos-opensource 
+ 如何实现在Nacos网关与Nacos配置中心之间动态路由监听和更新  
 
 ---------------
 ## 专家官方解答 ：

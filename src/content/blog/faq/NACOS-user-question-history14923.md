@@ -1,13 +1,13 @@
 ---
 id: "question-history-14923"
-title: "Springboot3.1.5用那个版本nacos啊？ nacos-opensource"
+title: "Springboot3.1.5用那个版本nacos啊？ "
 date: "2024-06-03"
 category: "expertConsultation"
 description: "为了确定Spring Boot 3.1.5应用与Nacos的最佳版本搭配，我们首先需要了解Spring Cloud Alibaba项目对Spring Boot 3.1.x的支持情况，因为这直接影响到Nacos客户端的选择。根据提供的知识内容，虽然没有直接提及Spring Boot 3.1.5与Nac"
 ---
 
 ## 用户问题 ： 
- Springboot3.1.5用那个版本nacos啊？ nacos-opensource 
+ Springboot3.1.5用那个版本nacos啊？  
 
 ---------------
 ## 专家官方解答 ：

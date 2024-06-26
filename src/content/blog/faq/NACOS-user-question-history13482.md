@@ -1,6 +1,6 @@
 ---
 id: "question-history-13482"
-title: "nacos单例模式启动 nacos-opensource"
+title: "nacos单例模式启动 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要以单例模式启动Nacos，您可以遵循以下步骤操作：1. **版本选择与环境准备**：   - 确保您已经选择了合适的Nacos版本。推荐使用稳定版本2.3.2。请参阅[Nacos官方发布说明](https://github.com/alibaba/nacos/releases)获取最新稳定版本信息"

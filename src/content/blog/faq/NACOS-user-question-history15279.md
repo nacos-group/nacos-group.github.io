@@ -1,13 +1,13 @@
 ---
 id: "question-history-15279"
-title: "自定一个空间 dev，再dev空间添加一个配置 test，默认分组，使用api获取test的配置信息 US nacos-opensource"
+title: "自定一个空间 dev，再dev空间添加一个配置 test，默认分组，使用api获取test的配置信息 US "
 date: "2024-06-13"
 category: "expertConsultation"
 description: "根据您的需求，您想在自定义的命名空间`dev`下添加一个配置项`test`，并使用默认分组，然后通过API来获取这个配置信息。根据提供的知识内容，我可以为您提供以下步骤指导：### 步骤分析与操作指导#### 1. 确保命名空间已创建- **原因分析**: 在Nacos中，首先需要确保您已经创建了名"
 ---
 
 ## 用户问题 ： 
- 自定一个空间 dev，再dev空间添加一个配置 test，默认分组，使用api获取test的配置信息 USER : 127.0.0.1:8848 nacos v1 cs configs 使用此接口获取dev空间下的test配置信息 nacos-opensource 
+ 自定一个空间 dev，再dev空间添加一个配置 test，默认分组，使用api获取test的配置信息 USER : 127.0.0.1:8848 nacos v1 cs configs 使用此接口获取dev空间下的test配置信息  
 
 ---------------
 ## 专家官方解答 ：

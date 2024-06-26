@@ -1,13 +1,13 @@
 ---
 id: "question-history-14878"
-title: "如何检测access token的有效期 nacos-opensource"
+title: "如何检测access token的有效期 "
 date: "2024-06-02"
 category: "expertConsultation"
 description: "在Nacos开源版本中，直接检查access token有效期的功能并未直接提及。但考虑到Nacos可以通过与Spring Security集成来进行鉴权管理，我们可以通过扩展Spring Security的功能来实现access token有效期的检查。虽然我了解的知识中没有直接提供关于检测acc"
 ---
 
 ## 用户问题 ： 
- 如何检测access token的有效期 nacos-opensource 
+ 如何检测access token的有效期  
 
 ---------------
 ## 专家官方解答 ：

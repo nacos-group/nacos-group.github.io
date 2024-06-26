@@ -1,13 +1,13 @@
 ---
 id: "question-history-15618"
-title: "docker挂载conf目录到宿主机时java.io.FileNotFoundException:  ho nacos-opensource"
+title: "docker挂载conf目录到宿主机时java.io.FileNotFoundException:  ho "
 date: "2024-06-18"
 category: "expertConsultation"
 description: "根据您提供的问题，看起来您在尝试将Nacos的配置目录（conf）挂载到宿主机时遇到了`java.io.FileNotFoundException: /home/nacos/conf/nacos-logback.xml (No such file or directory)`错误。这个问题通常是因为"
 ---
 
 ## 用户问题 ： 
- docker挂载conf目录到宿主机时java.io.FileNotFoundException:  home nacos conf nacos-logback.xml (No such file or directory) nacos-opensource 
+ docker挂载conf目录到宿主机时java.io.FileNotFoundException:  home nacos conf nacos-logback.xml (No such file or directory)  
 
 ---------------
 ## 专家官方解答 ：

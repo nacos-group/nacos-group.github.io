@@ -1,6 +1,6 @@
 ---
 id: "question-history-11415"
-title: "如何快速部署Nacos nacos-opensource"
+title: "如何快速部署Nacos "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要快速部署Nacos，您可以遵循以下步骤：1. **克隆Nacos-K8s项目**：   首先，您需要从GitHub上克隆Nacos针对Kubernetes环境的部署项目。在终端中执行以下命令：   ```shell   git clone https://github.com/nacos-grou"

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15449"
-title: "Nacos nacos2.2.3版本变更nacos.core.auth.server.identity.k nacos-opensource"
+title: "Nacos nacos2.2.3版本变更nacos.core.auth.server.identity.k "
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据已有的知识内容，我可以明确您的问题。在Nacos 2.2.3版本中，如果您需要变更`nacos.core.auth.server.identity.key`和`nacos.core.auth.server.identity.value`这两个配置项，是需要重启Nacos服务的。这是因为这些配置属"
 ---
 
 ## 用户问题 ： 
- Nacos nacos2.2.3版本变更nacos.core.auth.server.identity.key 和 nacos.core.auth.server.identity.value是否需要重启服务，有什么影响 nacos-opensource 
+ Nacos nacos2.2.3版本变更nacos.core.auth.server.identity.key 和 nacos.core.auth.server.identity.value是否需要重启服务，有什么影响  
 
 ---------------
 ## 专家官方解答 ：

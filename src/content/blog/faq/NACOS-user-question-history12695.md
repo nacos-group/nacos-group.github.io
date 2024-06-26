@@ -1,14 +1,14 @@
 ---
 id: "question-history-12695"
-title: "com.alibaba.nacos.client.security.SecurityProxy - login failed: {code:403,message:unknown user!, nacos-opensource"
+title: "com.alibaba.nacos.client.security.SecurityProxy - login failed: {code:403,message:unknown user!, "
 date: "2024-05-17"
 category: "expertConsultation"
-description: "根据提供的知识内容，我们可以分析并解答您遇到的问题：“nacos-opensource com.alibaba.nacos.client.security.SecurityProxy - login failed: code:403,message:unknown user!”。### 原因分析：-"
+description: "根据提供的知识内容，我们可以分析并解答您遇到的问题：“ com.alibaba.nacos.client.security.SecurityProxy - login failed: code:403,message:unknown user!”。### 原因分析：-"
 tags: ["com.alibaba.nacos.client.security.SecurityProxy","login failed","403","unknown user"]
 keywords: ["com.alibaba.nacos.client.security.SecurityProxy","login failed","403","unknown user"]
 ---
 
-根据提供的知识内容，我们可以分析并解答您遇到的问题：“nacos-opensource com.alibaba.nacos.client.security.SecurityProxy - login failed: {\"code\":403,\"message\":\"unknown user!\"}”。
+根据提供的知识内容，我们可以分析并解答您遇到的问题：“ com.alibaba.nacos.client.security.SecurityProxy - login failed: {\"code\":403,\"message\":\"unknown user!\"}”。
 
 ### 原因分析：
 - **未知用户错误**：错误信息表明登录失败，原因是服务器不认识该用户，即尝试登录的用户名在Nacos服务器上不存在。

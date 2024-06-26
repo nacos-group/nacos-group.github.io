@@ -1,6 +1,6 @@
 ---
 id: "question-history-11759"
-title: "nacos 作为配置中心，微服务让别人调用，怎么做？ nacos-opensource"
+title: "nacos 作为配置中心，微服务让别人调用，怎么做？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "为了使Nacos作为配置中心的微服务能够被其他服务调用，您可以遵循以下步骤进行配置和部署，基于提供的Nacos开源信息与集成Spring Cloud的场景：### 1. 准备Nacos Server- 确保您已安装并启动了Nacos Server。如果尚未进行，参考[Nacos快速入门](../qu"

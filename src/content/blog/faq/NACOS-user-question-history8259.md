@@ -1,6 +1,6 @@
 ---
 id: "question-history-8259"
-title: "临时节点，服务端有主动探活机制吗？ nacos-opensource"
+title: "临时节点，服务端有主动探活机制吗？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中，对于临时节点（ephemeral=true），服务端确实具有主动的健康检查机制。根据提供的知识内容分析：1. **临时节点的特性**：临时服务的生命周期与微服务应用的运行状态直接相关，当微服务实例停止或与Nacos服务器的连接中断时，Nacos会自动移除这些临时实例。为了确保服务列表"

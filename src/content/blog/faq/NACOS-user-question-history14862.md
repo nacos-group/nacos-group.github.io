@@ -1,13 +1,13 @@
 ---
 id: "question-history-14862"
-title: "nacos 2.2.0 以后 控制台 无需密码就能登录是怎么回事？ nacos-opensource"
+title: "nacos 2.2.0 以后 控制台 无需密码就能登录是怎么回事？ "
 date: "2024-06-01"
 category: "expertConsultation"
 description: "在 Nacos 2.2.2 版本之后，控制台无需密码就能登录的现象是由于 Nacos 对其默认控制台的登录策略进行了调整。根据提供的知识，这一改变是为了纠正用户的误解，即之前用户可能误以为Nacos默认是有鉴权机制的，实际上在未开启鉴权配置的情况下，默认是没有登录需求的。具体来说，Nacos 在2."
 ---
 
 ## 用户问题 ： 
- nacos 2.2.0 以后 控制台 无需密码就能登录是怎么回事？ nacos-opensource 
+ nacos 2.2.0 以后 控制台 无需密码就能登录是怎么回事？  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,6 +1,6 @@
 ---
 id: "question-history-13444"
-title: "如何只使用 nacos java SDK，手动注册一个实例，并维护实例的健康状态？ nacos-opensource"
+title: "如何只使用 nacos java SDK，手动注册一个实例，并维护实例的健康状态？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要使用Nacos Java SDK手动注册一个实例并维护其健康状态，可以遵循以下步骤：1. **准备环境**:   - 确保你的项目中已经引入了Nacos的Java SDK依赖。可以通过Maven或Gradle添加依赖，例如Maven依赖如下：     ```xml     dependency  "

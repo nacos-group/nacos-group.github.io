@@ -1,6 +1,6 @@
 ---
 id: "question-history-8428"
-title: "各位大佬，异地多活场景，由于nacos2.0 引入了Distro，是否可以直接部署一个大集群，不需要引入nacos-sync了？ nacos-opensource"
+title: "各位大佬，异地多活场景，由于nacos2.0 引入了Distro，是否可以直接部署一个大集群，不需要引入nacos-sync了？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在异地多活场景下，尽管Nacos 2.0引入了Distro作为集群内服务数据同步协议，但这并不意味着可以直接部署一个大集群来覆盖所有异地节点以实现容灾，而无需引入nacos-sync。原因在于，Distro设计为星形AP一致性协议，主要解决的是单个集群内的数据同步问题，而非集群间的同步。将多个地理位"

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15437"
-title: "nacos登录密码忘记了如何修改，nacos是2.2.0版本的 nacos-opensource"
+title: "nacos登录密码忘记了如何修改，nacos是2.2.0版本的 "
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据您的问题，您使用的是Nacos 2.2.0版本并且忘记了登录密码。根据我了解的知识中的信息，我们可以按照以下步骤来解决这个问题：### 分析问题原因Nacos默认提供了一个管理员账户，用户名和密码均为`nacos`。如果您忘记了自定义的密码或者初始化时未更改默认密码，您需要通过官方提供的方法来重"
 ---
 
 ## 用户问题 ： 
- nacos登录密码忘记了如何修改，nacos是2.2.0版本的 nacos-opensource 
+ nacos登录密码忘记了如何修改，nacos是2.2.0版本的  
 
 ---------------
 ## 专家官方解答 ：

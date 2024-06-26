@@ -1,6 +1,6 @@
 ---
 id: "question-history-8226"
-title: "client version is1.4.2, server version is 2.1.0, Single threaded udp push delay of 30 minutes nacos-opensource"
+title: "client version is1.4.2, server version is 2.1.0, Single threaded udp push delay of 30 minutes "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的信息，您遇到的问题是在Nacos客户端版本为1.4.2，服务器版本为2.1.0的环境下，单线程UDP推送存在30分钟的延迟。这一问题的根本原因在于Nacos从1.X版本开始引入UDP推送作为优化手段，旨在加速服务发现，但由于UDP协议本身的不可靠性（无连接、不保证消息到达），可能导致数据推"

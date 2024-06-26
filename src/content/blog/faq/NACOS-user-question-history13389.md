@@ -1,6 +1,6 @@
 ---
 id: "question-history-13389"
-title: "Deployment部署nacos nacos-opensource"
+title: "Deployment部署nacos "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "部署Nacos开源版涉及到几个关键步骤，结合提供的知识，以下是一种详细的部署指南，尤其适用于初次部署或希望了解基本过程的场景：### 1. 环境准备确保你的部署环境中具备以下条件：- **Java环境**：Nacos Server需要Java 8或更高版本的运行环境。- **网络环境**：确认端口8"

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15186"
-title: "nacos做配置中心样例 nacos-opensource"
+title: "nacos做配置中心样例 "
 date: "2024-06-08"
 category: "expertConsultation"
 description: "要了解如何使用Nacos作为配置中心的样例，我们可以依据提供的知识内容进行详细解析和步骤指导。这里将基于Nacos与Spring的集成来展示配置管理的实现过程。### 步骤解析：#### 1. 环境准备- **前提条件**：确保已下载并启动Nacos Server。如果尚未完成，请参照[Nacos快"
 ---
 
 ## 用户问题 ： 
- nacos做配置中心样例 nacos-opensource 
+ nacos做配置中心样例  
 
 ---------------
 ## 专家官方解答 ：

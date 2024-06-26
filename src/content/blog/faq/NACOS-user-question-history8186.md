@@ -1,6 +1,6 @@
 ---
 id: "question-history-8186"
-title: "does not support pushing monitoring data to alertmanager Nacos不支持push监控数据到alertmanager nacos-opensource"
+title: "does not support pushing monitoring data to alertmanager Nacos不支持push监控数据到alertmanager "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos-opensource确实不支持直接推送监控数据到AlertManager。根据现有信息，Nacos Server利用Micrometer暴露监控指标，通常这种方式需监控系统主动拉取数据而非服务器推送。针对您的需求，这里有几个步骤可以考虑：1. **评估主动采集方案**：   - 考虑使用"

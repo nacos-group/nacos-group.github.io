@@ -1,13 +1,13 @@
 ---
 id: "question-history-15189"
-title: "nacos配置中心 go语言样例 nacos-opensource"
+title: "nacos配置中心 go语言样例 "
 date: "2024-06-08"
 category: "expertConsultation"
 description: "要获取Nacos配置中心Go语言的使用样例，您可以参考Nacos官方提供的Go SDK。根据提供的知识内容，Go语言的SDK仓库地址为：[https://github.com/nacos-group/nacos-sdk-go](https://github.com/nacos-group/nacos"
 ---
 
 ## 用户问题 ： 
- nacos配置中心 go语言样例 nacos-opensource 
+ nacos配置中心 go语言样例  
 
 ---------------
 ## 专家官方解答 ：

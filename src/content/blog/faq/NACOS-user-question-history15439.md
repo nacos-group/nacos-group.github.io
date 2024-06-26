@@ -1,13 +1,13 @@
 ---
 id: "question-history-15439"
-title: "Nacos Driver com.mysql.cj.jdbc.Driver claims to not a nacos-opensource"
+title: "Nacos Driver com.mysql.cj.jdbc.Driver claims to not a "
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据您提供的问题，该异常“Nacos Driver com.mysql.cj.jdbc.Driver claims to not accept jdbcUrl”通常是因为数据库连接URL（jdbcUrl）的格式不正确或者Nacos尝试连接数据库时使用的驱动与配置的URL不匹配所致。尽管直接的知识内容"
 ---
 
 ## 用户问题 ： 
- Nacos Driver com.mysql.cj.jdbc.Driver claims to not accept jdbcUrl异常是什么原因？ nacos-opensource 
+ Nacos Driver com.mysql.cj.jdbc.Driver claims to not accept jdbcUrl异常是什么原因？  
 
 ---------------
 ## 专家官方解答 ：

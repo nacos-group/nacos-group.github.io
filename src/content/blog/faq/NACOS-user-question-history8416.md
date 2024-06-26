@@ -1,6 +1,6 @@
 ---
 id: "question-history-8416"
-title: "各位大佬，2.3.0版本适配oceanbase数据库，这里取DefaultPageHandlerAdapter会出现空指针异常，有人遇到过吗？ nacos-opensource"
+title: "各位大佬，2.3.0版本适配oceanbase数据库，这里取DefaultPageHandlerAdapter会出现空指针异常，有人遇到过吗？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据已有的知识信息，没有直接提及Nacos 2.3.0版本与OceanBase数据库的特定兼容性问题，也没有直接讨论到`DefaultPageHandlerAdapter`空指针异常的情况。但是，我们可以尝试从以下几个方面分析并给出建议：1. **检查版本兼容性**：虽然Nacos 2.3.0是一个"

@@ -1,18 +1,18 @@
 ---
 id: "question-history-15175"
-title: "nacos 与 apollo 配置中心 功能对比 nacos-opensource"
+title: "nacos 与 apollo 配置中心 功能对比 "
 date: "2024-06-08"
 category: "expertConsultation"
-description: "我目前了解到的信息可能不足以支持你的问题，关于nacos-opensource与apollo配置中心的功能对比并不在提供的知识内容中。你可以换一个问法，比如询问如何使用Nacos作为Spring应用的配置中心或服务发现的具体步骤，或者关于Nacos部署策略的问题，这样我能更准确地根据已有知识库提供帮"
+description: "我目前了解到的信息可能不足以支持你的问题，关于与apollo配置中心的功能对比并不在提供的知识内容中。你可以换一个问法，比如询问如何使用Nacos作为Spring应用的配置中心或服务发现的具体步骤，或者关于Nacos部署策略的问题，这样我能更准确地根据已有知识库提供帮"
 ---
 
 ## 用户问题 ： 
- nacos 与 apollo 配置中心 功能对比 nacos-opensource 
+ nacos 与 apollo 配置中心 功能对比  
 
 ---------------
 ## 专家官方解答 ：
 
-我目前了解到的信息可能不足以支持你的问题，关于nacos-opensource与apollo配置中心的功能对比并不在提供的知识内容中。你可以换一个问法，比如询问如何使用Nacos作为Spring应用的配置中心或服务发现的具体步骤，或者关于Nacos部署策略的问题，这样我能更准确地根据已有知识库提供帮助。
+我目前了解到的信息可能不足以支持你的问题，关于与apollo配置中心的功能对比并不在提供的知识内容中。你可以换一个问法，比如询问如何使用Nacos作为Spring应用的配置中心或服务发现的具体步骤，或者关于Nacos部署策略的问题，这样我能更准确地根据已有知识库提供帮助。
 
 
 <font color="#949494">---------------</font> 

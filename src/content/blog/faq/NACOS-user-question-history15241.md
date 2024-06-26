@@ -1,13 +1,13 @@
 ---
 id: "question-history-15241"
-title: "nacos如何查询服务提供者数 nacos-opensource"
+title: "nacos如何查询服务提供者数 "
 date: "2024-06-12"
 category: "expertConsultation"
 description: "要查询Nacos中的服务提供者数量，您可以按照以下步骤操作：1. **确定查询需求**：   首先明确您想要查询哪个服务的服务提供者数量，以及是否需要指定分组名、命名空间ID或是服务版本。这将帮助您构造正确的查询请求。2. **使用查询服务列表API**：   根据提供的知识内容，可以使用Nacos"
 ---
 
 ## 用户问题 ： 
- nacos如何查询服务提供者数 nacos-opensource 
+ nacos如何查询服务提供者数  
 
 ---------------
 ## 专家官方解答 ：

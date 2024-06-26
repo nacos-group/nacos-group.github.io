@@ -1,13 +1,13 @@
 ---
 id: "question-history-15113"
-title: "nacos  Node.js 客户端下载 nacos-opensource"
+title: "nacos  Node.js 客户端下载 "
 date: "2024-06-05"
 category: "expertConsultation"
 description: "根据您的需求，您想了解如何下载Nacos的Node.js客户端。根据提供的知识，Nacos的Node.js客户端的GitHub仓库地址是[[这里]](https://github.com/nacos-group/nacos-sdk-nodejs)。为了下载这个客户端，您可以按照以下步骤操作：1. *"
 ---
 
 ## 用户问题 ： 
- nacos  Node.js 客户端下载 nacos-opensource 
+ nacos  Node.js 客户端下载  
 
 ---------------
 ## 专家官方解答 ：

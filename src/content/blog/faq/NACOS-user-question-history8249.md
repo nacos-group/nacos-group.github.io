@@ -1,6 +1,6 @@
 ---
 id: "question-history-8249"
-title: "nacos2.x版本的临时实例是不是已经不支持心跳机制？ nacos-opensource"
+title: "nacos2.x版本的临时实例是不是已经不支持心跳机制？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，Nacos 2.x版本中，临时实例依然支持心跳机制。在Nacos系统中，临时服务的实例是通过nacos-client发送心跳来维持其注册信息的活性。当客户端与Nacos服务端的连接中断或者心跳检测连续失败时，Nacos会自动移除这些临时实例。这表明心跳机制是临时实例管理的核心部分"

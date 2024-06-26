@@ -1,13 +1,13 @@
 ---
 id: "question-history-15137"
-title: "nacos服务发现 与  动态dns服务coredns整合的具体方法 nacos-opensource"
+title: "nacos服务发现 与  动态dns服务coredns整合的具体方法 "
 date: "2024-06-07"
 category: "expertConsultation"
 description: "要整合Nacos服务发现与动态DNS服务CoreDNS，我们可以遵循以下逻辑进行操作，尽管直接的整合步骤在提供的知识中未明确给出，但我们可以基于Nacos的服务发现机制和CoreDNS的灵活性来设计一个整合方案。### 步骤分析1. **理解Nacos服务发现**：   - Nacos作为一个服务发"
 ---
 
 ## 用户问题 ： 
- nacos服务发现 与  动态dns服务coredns整合的具体方法 nacos-opensource 
+ nacos服务发现 与  动态dns服务coredns整合的具体方法  
 
 ---------------
 ## 专家官方解答 ：

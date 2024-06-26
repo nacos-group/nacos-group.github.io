@@ -1,13 +1,13 @@
 ---
 id: "question-history-15188"
-title: "nacos配置中心 python语言样例 nacos-opensource"
+title: "nacos配置中心 python语言样例 "
 date: "2024-06-08"
 category: "expertConsultation"
 description: "要获取Nacos配置中心在Python语言中的使用样例，您可以参考Nacos提供的官方Python SDK。根据我了解的知识中的信息，Nacos对多语言的支持中包含了Python SDK，您可以通过以下步骤来开始使用：### 步骤1: 安装Python SDK首先，确保您的环境中安装了Python，"
 ---
 
 ## 用户问题 ： 
- nacos配置中心 python语言样例 nacos-opensource 
+ nacos配置中心 python语言样例  
 
 ---------------
 ## 专家官方解答 ：

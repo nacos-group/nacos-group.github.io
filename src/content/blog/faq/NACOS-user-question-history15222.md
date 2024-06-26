@@ -1,13 +1,13 @@
 ---
 id: "question-history-15222"
-title: "为什么最新版本的Nacos没有发送心跳的API nacos-opensource"
+title: "为什么最新版本的Nacos没有发送心跳的API "
 date: "2024-06-12"
 category: "expertConsultation"
 description: "根据已有的知识内容，我们并没有直接的信息说明最新版本的Nacos为何没有发送心跳的API。但是，我们可以从Nacos的工作机制来进行合理推测。Nacos作为服务发现与注册工具，确实与Eureka有所不同，其中最显著的一点是Nacos采用了健康检查机制而非Eureka的心跳检测机制。这意味着Nacos"
 ---
 
 ## 用户问题 ： 
- 为什么最新版本的Nacos没有发送心跳的API nacos-opensource 
+ 为什么最新版本的Nacos没有发送心跳的API  
 
 ---------------
 ## 专家官方解答 ：

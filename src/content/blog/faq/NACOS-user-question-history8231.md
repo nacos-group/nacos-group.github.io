@@ -1,6 +1,6 @@
 ---
 id: "question-history-8231"
-title: "没有pod了，服务建康实例数多个，且一直显示上线 nacos-opensource"
+title: "没有pod了，服务建康实例数多个，且一直显示上线 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识，该问题可能是由以下几个原因造成的：1. **服务提供者进程未彻底关闭**：即使Kubernetes中的Pod已经消失，但服务实例的进程可能仍在节点(Node)中运行，并继续向Nacos发送心跳，导致Nacos认为服务仍在线。2. **代理注册场景**：可能存在其他应用程序或服务作为代"

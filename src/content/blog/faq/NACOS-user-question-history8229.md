@@ -1,12 +1,12 @@
 ---
 id: "question-history-8229"
-title: "How to clear old logs nacos-opensource"
+title: "How to clear old logs "
 date: "2024-05-29"
 category: "expertConsultation"
-description: "针对问题 nacos-opensource How to clear old logs?，以下是详细的解答步骤及解析：### 问题原因分析Nacos 使用的 SofaJRaft 组件基于 RocksDB 存储 Raft 日志，随时间推移，在 `$nacos.home/data/protocol/ra"
+description: "针对问题  How to clear old logs?，以下是详细的解答步骤及解析：### 问题原因分析Nacos 使用的 SofaJRaft 组件基于 RocksDB 存储 Raft 日志，随时间推移，在 `$nacos.home/data/protocol/ra"
 ---
 
-针对问题 "nacos-opensource How to clear old logs?"，以下是详细的解答步骤及解析：
+针对问题 " How to clear old logs?"，以下是详细的解答步骤及解析：
 
 ### 问题原因分析
 Nacos 使用的 SofaJRaft 组件基于 RocksDB 存储 Raft 日志，随时间推移，在 `$nacos.home/data/protocol/raft/$raft_group/log` 目录下会积累大量的以 `LOG.*` 开头的操作日志文件。这些日志文件可能会占用大量磁盘空间，因此需要定期清理以维护系统性能和稳定性。

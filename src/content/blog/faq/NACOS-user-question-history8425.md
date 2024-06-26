@@ -1,6 +1,6 @@
 ---
 id: "question-history-8425"
-title: "请教个问题， nacos2.1.1 以standalone部署在k8s上，在服务日志里面时不时的出现 下面的错误信息，查看 nacos的日志没有发现异常信息，查看网上有说是spring版本与nacos不匹配，哪位有遇到过。com.alibaba.nacos.client.config.impl.ClientWorker longPolling error : java.net.ConnectException: no available server, currentServerAddr : http: nacos:8848 nacos-opensource"
+title: "请教个问题， nacos2.1.1 以standalone部署在k8s上，在服务日志里面时不时的出现 下面的错误信息，查看 nacos的日志没有发现异常信息，查看网上有说是spring版本与nacos不匹配，哪位有遇到过。com.alibaba.nacos.client.config.impl.ClientWorker longPolling error : java.net.ConnectException: no available server, currentServerAddr : http: nacos:8848 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据您的描述，错误信息指向的是Nacos客户端在尝试与Nacos服务器进行长轮询(longPolling)配置更新时遇到的连接问题。具体错误为`java.net.ConnectException: no available server`，表明客户端无法找到可用的服务器。尽管Nacos服务端日志没有"

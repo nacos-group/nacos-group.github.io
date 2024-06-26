@@ -1,13 +1,13 @@
 ---
 id: "question-history-15638"
-title: "mse注册配置中心，使用了阿里云RAM认证，服务无损下载时，调用Open API，认证信息AccessKe nacos-opensource"
+title: "mse注册配置中心，使用了阿里云RAM认证，服务无损下载时，调用Open API，认证信息AccessKe "
 date: "2024-06-18"
 category: "expertConsultation"
 description: "我目前了解到的信息可能不足以支持你的问题，因为提供的知识内容主要涉及微服务在Nacos上的注册与调用问题，以及Nacos的权限控制问题，并未直接覆盖到使用阿里云RAM认证与Open API调用时如何传值AccessKey ID和AccessKey Secret的具体细节。你的问题涉及到的是如何在MS"
 ---
 
 ## 用户问题 ： 
- mse注册配置中心，使用了阿里云RAM认证，服务无损下载时，调用Open API，认证信息AccessKey ID，AccessKey Secret，如何传值 nacos-opensource 
+ mse注册配置中心，使用了阿里云RAM认证，服务无损下载时，调用Open API，认证信息AccessKey ID，AccessKey Secret，如何传值  
 
 ---------------
 ## 专家官方解答 ：

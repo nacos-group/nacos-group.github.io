@@ -1,13 +1,13 @@
 ---
 id: "question-history-14883"
-title: "RefreshScope实现配置自动更新的原理？ nacos-opensource"
+title: "RefreshScope实现配置自动更新的原理？ "
 date: "2024-06-02"
 category: "expertConsultation"
 description: "Nacos-opensource中`@RefreshScope`实现配置自动更新的原理可以依据提供的知识进行如下分析：1. **初始化与注册监听器**：   当Spring Cloud应用启动时，配置了`@RefreshScope`的Bean（如示例中的`ConfigController`）会被Sp"
 ---
 
 ## 用户问题 ： 
- RefreshScope实现配置自动更新的原理？ nacos-opensource 
+ RefreshScope实现配置自动更新的原理？  
 
 ---------------
 ## 专家官方解答 ：

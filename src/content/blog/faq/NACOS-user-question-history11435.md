@@ -1,6 +1,6 @@
 ---
 id: "question-history-11435"
-title: "nacos对比erueka有什么优势 nacos-opensource"
+title: "nacos对比erueka有什么优势 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos对比Eureka的优势主要体现在以下几个方面：1. **功能全面性**：Nacos不仅提供了服务发现和注册功能，还集成了配置管理和消息总线等特性，而Eureka主要聚焦于服务发现与注册，功能相对单一。这意味着Nacos能更好地满足复杂分布式系统的需求，减少对外部工具的依赖。2. **可靠性"

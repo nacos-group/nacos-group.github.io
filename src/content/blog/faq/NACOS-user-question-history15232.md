@@ -1,13 +1,13 @@
 ---
 id: "question-history-15232"
-title: "nacos从2.0.2升级到2.3.2，可以直接升级吗 nacos-opensource"
+title: "nacos从2.0.2升级到2.3.2，可以直接升级吗 "
 date: "2024-06-12"
 category: "expertConsultation"
 description: "根据已有的知识信息，nacos从2.0.2升级到2.3.2是可以直接升级的，因为Nacos2.X版本内部维护了向前兼容的特性，即较高版本的服务端通常兼容较低版本的客户端通信。这里涉及到的是服务端升级，符合Nacos升级的一般步骤。以下是基于Nacos升级步骤的详细建议：### 升级步骤：1. **检"
 ---
 
 ## 用户问题 ： 
- nacos从2.0.2升级到2.3.2，可以直接升级吗 nacos-opensource 
+ nacos从2.0.2升级到2.3.2，可以直接升级吗  
 
 ---------------
 ## 专家官方解答 ：

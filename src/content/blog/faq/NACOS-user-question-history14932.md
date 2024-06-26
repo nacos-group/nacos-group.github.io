@@ -1,13 +1,13 @@
 ---
 id: "question-history-14932"
-title: "Nacos 如何支持oracle 作为数据源？ nacos-opensource"
+title: "Nacos 如何支持oracle 作为数据源？ "
 date: "2024-06-03"
 category: "expertConsultation"
 description: "Nacos支持Oracle作为数据源的步骤如下：1. **检查插件存在性**：   首先，访问[Nacos插件仓库](https://github.com/nacos-group/nacos-plugin)，确认社区是否已提供Oracle数据库的插件。根据Nacos官方说明，自2.2版本起，已支持包"
 ---
 
 ## 用户问题 ： 
- Nacos 如何支持oracle 作为数据源？ nacos-opensource 
+ Nacos 如何支持oracle 作为数据源？  
 
 ---------------
 ## 专家官方解答 ：

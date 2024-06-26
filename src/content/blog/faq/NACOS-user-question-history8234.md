@@ -1,6 +1,6 @@
 ---
 id: "question-history-8234"
-title: "nacos-server-2.2.1 启动后频繁fullgc nacos-opensource"
+title: "nacos-server-2.2.1 启动后频繁fullgc "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "针对Nacos-2.2.1启动后频繁发生Full GC的问题，我们可以依据已有知识进行分析与解决：### 1. 分析问题原因- **用量过大**：检查是否因长轮询数、长连接数、服务提供者数量过多导致内存使用紧张。- **JVM参数不合理**：确认JVM堆内存配置是否过小，或新生代与老年代比例是否不恰"

@@ -1,6 +1,6 @@
 ---
 id: "question-history-8432"
-title: "nacos的client2.2.0兼容nacos的server2.1.0的版本吗 nacos-opensource"
+title: "nacos的client2.2.0兼容nacos的server2.1.0的版本吗 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，Nacos客户端2.2.0与服务器端2.1.0的兼容性情况如下分析：1. **服务端兼容性规则**：Nacos2.X的服务端版本能够兼容所有的Nacos2.X的客户端版本，以及Nacos1.2.0之后的所有客户端版本。2. **特定版本分析**：Nacos客户端2.2.0属于Na"

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15116"
-title: "nacos  c# 客户端下载 nacos-opensource"
+title: "nacos  c# 客户端下载 "
 date: "2024-06-05"
 category: "expertConsultation"
 description: "为了下载Nacos的C#客户端，您可以按照以下步骤操作：1. **访问GitHub仓库**：   首先，您需要访问Nacos专门为C#客户端维护的GitHub仓库。根据提供的信息，C#客户端的GitHub仓库地址是：[https://github.com/catcherwong/nacos-sdk-"
 ---
 
 ## 用户问题 ： 
- nacos  c# 客户端下载 nacos-opensource 
+ nacos  c# 客户端下载  
 
 ---------------
 ## 专家官方解答 ：

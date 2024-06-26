@@ -1,18 +1,18 @@
 ---
 id: "question-history-14953"
-title: "通过@nacosvalue读取到的值始终不变，是什么原因？ nacos-opensource"
+title: "通过@nacosvalue读取到的值始终不变，是什么原因？ "
 date: "2024-06-04"
 category: "expertConsultation"
-description: "根据提供的知识内容，分析`nacos-opensource`通过`@NacosValue`读取到的值始终不变的原因可能涉及以下几个方面：1. **配置未正确更新**：如果直接修改了Nacos配置中心的数据库内容而没有通过Nacos的控制台或API进行配置更新，Nacos的客户端可能无法收到配置变更的"
+description: "根据提供的知识内容，分析``通过`@NacosValue`读取到的值始终不变的原因可能涉及以下几个方面：1. **配置未正确更新**：如果直接修改了Nacos配置中心的数据库内容而没有通过Nacos的控制台或API进行配置更新，Nacos的客户端可能无法收到配置变更的"
 ---
 
 ## 用户问题 ： 
- 通过@nacosvalue读取到的值始终不变，是什么原因？ nacos-opensource 
+ 通过@nacosvalue读取到的值始终不变，是什么原因？  
 
 ---------------
 ## 专家官方解答 ：
 
-根据提供的知识内容，分析`nacos-opensource`通过`@NacosValue`读取到的值始终不变的原因可能涉及以下几个方面：
+根据提供的知识内容，分析``通过`@NacosValue`读取到的值始终不变的原因可能涉及以下几个方面：
 
 1. **配置未正确更新**：如果直接修改了Nacos配置中心的数据库内容而没有通过Nacos的控制台或API进行配置更新，Nacos的客户端可能无法收到配置变更的通知。因为Nacos设计上不支持直接修改数据库来同步配置，而是依赖于其内部的通知机制来确保客户端与服务端配置的一致性。
 

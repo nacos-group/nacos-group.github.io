@@ -1,13 +1,13 @@
 ---
 id: "question-history-15456"
-title: "nacos服务端版本是2.0.3 java客户端版本是1.4,链接报错com.alibaba.nacos. nacos-opensource"
+title: "nacos服务端版本是2.0.3 java客户端版本是1.4,链接报错com.alibaba.nacos. "
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据您提供的信息，nacos服务端版本是2.0.3，而java客户端版本是1.4，出现了错误提示`http error, code=403,msg=unknown user!`。结合我了解的知识，我们可以分析并给出建议：### 分析问题原因：1. 根据**第1篇参考内容**，Nacos服务端2.X版"
 ---
 
 ## 用户问题 ： 
- nacos服务端版本是2.0.3 java客户端版本是1.4,链接报错com.alibaba.nacos.api.exception.NacosException: http error, code=403,msg=unknown user!,dataId=service-dev.yml,group=DEFAULT_GROUP,tenant=4b489428-7973-4b67-ad08-2b79748d4e01 nacos-opensource 
+ nacos服务端版本是2.0.3 java客户端版本是1.4,链接报错com.alibaba.nacos.api.exception.NacosException: http error, code=403,msg=unknown user!,dataId=service-dev.yml,group=DEFAULT_GROUP,tenant=4b489428-7973-4b67-ad08-2b79748d4e01  
 
 ---------------
 ## 专家官方解答 ：

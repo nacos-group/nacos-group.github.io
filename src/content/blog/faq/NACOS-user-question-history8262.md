@@ -1,6 +1,6 @@
 ---
 id: "question-history-8262"
-title: "Nacos 2.2.1 com.alibaba.nacos.api.exception.NacosException: errCode: 400, errMsg: Current service DEFAULT_GROUP@@stock-service is persistent service, can't register ephemeral instance. nacos-opensource"
+title: "Nacos 2.2.1 com.alibaba.nacos.api.exception.NacosException: errCode: 400, errMsg: Current service DEFAULT_GROUP@@stock-service is persistent service, can't register ephemeral instance. "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据你的描述，遇到的错误信息是“errCode: 400, errMsg: Current service DEFAULT_GROUP@@stock-service is persistent service, can't register ephemeral instance.”，这意味着你尝试在"

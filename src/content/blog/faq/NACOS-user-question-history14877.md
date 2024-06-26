@@ -1,13 +1,13 @@
 ---
 id: "question-history-14877"
-title: "centos操作系统安装nacos后，在nacos中配置达梦数据库，启动nacos一直报错，如何解决？ nacos-opensource"
+title: "centos操作系统安装nacos后，在nacos中配置达梦数据库，启动nacos一直报错，如何解决？ "
 date: "2024-06-02"
 category: "expertConsultation"
 description: "为了解决CentOS操作系统上安装Nacos后，在Nacos中配置达梦数据库启动时一直报错的问题，我们可以按照以下步骤进行分析与解决：### 1. 分析问题原因根据提供的知识，Nacos从2.2版本开始支持了包括达梦数据库在内的多种数据库。首先，确保您的Nacos版本是2.2或更高版本。如果版本过低"
 ---
 
 ## 用户问题 ： 
- centos操作系统安装nacos后，在nacos中配置达梦数据库，启动nacos一直报错，如何解决？ nacos-opensource 
+ centos操作系统安装nacos后，在nacos中配置达梦数据库，启动nacos一直报错，如何解决？  
 
 ---------------
 ## 专家官方解答 ：

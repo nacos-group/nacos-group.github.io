@@ -1,13 +1,13 @@
 ---
 id: "question-history-15227"
-title: "nacos集群部署如何配置nginx反向代理 nacos-opensource"
+title: "nacos集群部署如何配置nginx反向代理 "
 date: "2024-06-12"
 category: "expertConsultation"
 description: "虽然提供的知识内容没有直接涵盖Nacos集群部署如何配置Nginx反向代理的具体步骤，但基于Nginx的基本配置原理和Nacos的部署特性，我可以为您提供一个大致的指导思路。请注意，以下步骤需要您根据实际情况调整，并确保您对Nginx和Nacos都有一定的了解。### 分析问题原因Nginx反向代理"
 ---
 
 ## 用户问题 ： 
- nacos集群部署如何配置nginx反向代理 nacos-opensource 
+ nacos集群部署如何配置nginx反向代理  
 
 ---------------
 ## 专家官方解答 ：

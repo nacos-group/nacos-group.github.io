@@ -1,14 +1,14 @@
 ---
 id: "question-history-8185"
-title: "服务多实例进行滚动更新重启中断 nacos-opensource"
+title: "服务多实例进行滚动更新重启中断 "
 date: "2024-05-17"
 category: "expertConsultation"
-description: "在进行nacos-opensource服务多实例的滚动更新重启时，若遇到中断问题，可以按以下步骤分析原因并尝试解决方案：### 1. 分析问题原因- **服务未彻底关闭**：检查服务提供者是否完全关闭，确保没有残留进程仍在发送心跳至Nacos，导致Nacos未能及时摘除该实例。- **推空保护机制*"
+description: "在进行服务多实例的滚动更新重启时，若遇到中断问题，可以按以下步骤分析原因并尝试解决方案：### 1. 分析问题原因- **服务未彻底关闭**：检查服务提供者是否完全关闭，确保没有残留进程仍在发送心跳至Nacos，导致Nacos未能及时摘除该实例。- **推空保护机制*"
 tags: ["服务多实例","滚动更新重启中断"]
 keywords: ["服务多实例","滚动更新重启中断"]
 ---
 
-在进行nacos-opensource服务多实例的滚动更新重启时，若遇到中断问题，可以按以下步骤分析原因并尝试解决方案：
+在进行服务多实例的滚动更新重启时，若遇到中断问题，可以按以下步骤分析原因并尝试解决方案：
 
 ### 1. 分析问题原因
 
@@ -44,7 +44,7 @@ keywords: ["服务多实例","滚动更新重启中断"]
 
 ### 结论
 
-通过上述步骤，可以系统地诊断和解决nacos-opensource服务多实例滚动更新重启期间的中断问题。关键在于确保服务实例状态的准确同步，优化配置以适应快速变化的服务环境，并及时排查网络与应用层面的潜在障碍。[[nacos-opensource服务发现示例]](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-cloud-example/nacos-spring-cloud-discovery-example)可作为参考配置与实践基础。
+通过上述步骤，可以系统地诊断和解决服务多实例滚动更新重启期间的中断问题。关键在于确保服务实例状态的准确同步，优化配置以适应快速变化的服务环境，并及时排查网络与应用层面的潜在障碍。[[服务发现示例]](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-cloud-example/nacos-spring-cloud-discovery-example)可作为参考配置与实践基础。
 ## <font color="#FF0000">答疑服务说明：</font> 
 
 本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题

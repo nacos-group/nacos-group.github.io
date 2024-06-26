@@ -1,6 +1,6 @@
 ---
 id: "question-history-8183"
-title: "Nacos部署开放端口，集群部署开通端口 nacos-opensource"
+title: "Nacos部署开放端口，集群部署开通端口 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos部署时涉及的开放端口及其配置方法如下：1. **主要端口及其用途**:   - **8848**: 主端口，用于客户端、控制台及OpenAPI的HTTP通信。   - **9848**: 客户端gRPC请求服务端端口，客户端通过此端口与服务端建立gRPC连接。   - **9849**: "

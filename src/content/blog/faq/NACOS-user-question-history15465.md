@@ -1,13 +1,13 @@
 ---
 id: "question-history-15465"
-title: "nacos 鉴权涉及到端口有哪些？ nacos-opensource"
+title: "nacos 鉴权涉及到端口有哪些？ "
 date: "2024-06-17"
 category: "expertConsultation"
 description: "在Nacos的鉴权过程中，直接涉及的端口主要是用于HTTP通信的主端口，默认为8848。这是客户端、控制台以及OpenAPI进行交互的主要端口。鉴权操作如登录获取accessToken通常是通过此端口进行的，例如使用curl命令登录Nacos服务器：```plaincurl -X POST '127"
 ---
 
 ## 用户问题 ： 
- nacos 鉴权涉及到端口有哪些？ nacos-opensource 
+ nacos 鉴权涉及到端口有哪些？  
 
 ---------------
 ## 专家官方解答 ：

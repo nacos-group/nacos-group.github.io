@@ -1,18 +1,18 @@
 ---
 id: "question-history-15177"
-title: "配置中心技术选型 功能对比nacos, apollo, Spring Cloud Config nacos-opensource"
+title: "配置中心技术选型 功能对比nacos, apollo, Spring Cloud Config "
 date: "2024-06-08"
 category: "expertConsultation"
-description: "在进行nacos-opensource配置中心技术选型及与Apollo、Spring Cloud Config的功能对比时，我们可以依据以下几个关键点来分析：### 1. 社区活跃度与生态支持- **Nacos**：作为阿里巴巴开源的项目，拥有较大的社区基础和活跃度，特别是在国内企业中应用广泛，如阿"
+description: "在进行配置中心技术选型及与Apollo、Spring Cloud Config的功能对比时，我们可以依据以下几个关键点来分析：### 1. 社区活跃度与生态支持- **Nacos**：作为阿里巴巴开源的项目，拥有较大的社区基础和活跃度，特别是在国内企业中应用广泛，如阿"
 ---
 
 ## 用户问题 ： 
- 配置中心技术选型 功能对比nacos, apollo, Spring Cloud Config nacos-opensource 
+ 配置中心技术选型 功能对比nacos, apollo, Spring Cloud Config  
 
 ---------------
 ## 专家官方解答 ：
 
-在进行nacos-opensource配置中心技术选型及与Apollo、Spring Cloud Config的功能对比时，我们可以依据以下几个关键点来分析：
+在进行配置中心技术选型及与Apollo、Spring Cloud Config的功能对比时，我们可以依据以下几个关键点来分析：
 
 ### 1. 社区活跃度与生态支持
 - **Nacos**：作为阿里巴巴开源的项目，拥有较大的社区基础和活跃度，特别是在国内企业中应用广泛，如阿里等大公司在使用，意味着有持续的更新维护和丰富的生态插件支持。

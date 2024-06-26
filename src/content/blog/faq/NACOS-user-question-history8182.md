@@ -1,6 +1,6 @@
 ---
 id: "question-history-8182"
-title: "nacos用户密码设置 nacos-opensource"
+title: "nacos用户密码设置 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中设置或修改用户密码，可以根据不同的场景采取以下步骤：### 初始化集群时设置默认用户密码1. **修改数据库脚本**：在Nacos集群初始化前，进入`$nacos.home/conf/`目录，编辑`mysql-schema.sql`（假设使用MySQL作为外部数据库），修改默认密码插入"

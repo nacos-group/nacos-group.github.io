@@ -1,6 +1,6 @@
 ---
 id: "question-history-11868"
-title: "nacos cluster is running with 1.x mode, can't accept grpc request temporaril nacos-opensource"
+title: "nacos cluster is running with 1.x mode, can't accept grpc request temporaril "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "遇到“Nacos cluster is running with 1.x mode, can't accept grpc request temporarily.”的问题，其原因在于您尝试以gRPC协议向运行在1.x模式下的Nacos集群发送请求，而该版本的Nacos集群暂时不支持处理gRPC请求。"
@@ -18,7 +18,7 @@ keywords: ["cluster","1.x mode","grpc request"]
 
 4. **临时解决方案**：若业务紧急且无法等待，考虑临时调整您的应用配置，改用HTTP协议与Nacos集群通信，直至集群升级完毕并稳定支持gRPC。这需要在您的服务发现客户端配置中做出相应调整。
 
-5. **监控与验证**：在等待期间或调整协议后，密切监控应用日志和服务注册情况，确保服务发现和配置管理功能恢复正常。如遇其他连接问题，可参考Nacos官方文档中关于[链接超时问题排查](https://aliyuque.antfin.com/ozb6sn/nacos-opensource/kzc8nbuxwbpnxn5w)和[连接失败问题排查](https://aliyuque.antfin.com/ozb6sn/nacos-opensource/rlweywdok5rwnqt0)的指南进行故障排除。
+5. **监控与验证**：在等待期间或调整协议后，密切监控应用日志和服务注册情况，确保服务发现和配置管理功能恢复正常。如遇其他连接问题，可参考Nacos官方文档中关于[链接超时问题排查](https://aliyuque.antfin.com/ozb6sn//kzc8nbuxwbpnxn5w)和[连接失败问题排查](https://aliyuque.antfin.com/ozb6sn//rlweywdok5rwnqt0)的指南进行故障排除。
 
 综上所述，面对此问题，主要是识别集群状态，采取适当等待或临时调整策略，并做好后续的监控与验证工作。
 ## <font color="#FF0000">答疑服务说明：</font> 

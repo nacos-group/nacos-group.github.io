@@ -1,6 +1,6 @@
 ---
 id: "question-history-11197"
-title: "nacos和eureka 哪个是主流？理由是什么？ nacos-opensource"
+title: "nacos和eureka 哪个是主流？理由是什么？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos被认为是当前更为主流的服务发现与配置管理工具，相比Eureka，其主流地位的理由包括：1. **功能全面性**：Nacos不仅提供了服务发现和注册的基本功能，还集成了配置管理、健康检查、消息总线等高级特性，这使得Nacos能够更好地适应复杂和多样化的分布式系统需求。2. **可靠性增强**"

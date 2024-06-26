@@ -1,6 +1,6 @@
 ---
 id: "question-history-11758"
-title: "nacos为什么性能好 nacos-opensource"
+title: "nacos为什么性能好 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos之所以具有较好的性能，主要归因于其设计上的几个关键决策：1. **轻量级设计**：Nacos避免使用诸如ORM或JPA这样的重量级框架来访问数据库，而是直接采用JDBC结合连接池的方式。这样做有效减少了依赖，降低了部署包的大小，同时规避了ORM框架中可能引入的性能开销，如反射、Bean拷贝"

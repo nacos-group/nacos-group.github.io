@@ -1,6 +1,6 @@
 ---
 id: "question-history-13487"
-title: "nacos 控制台默认地址 nacos-opensource"
+title: "nacos 控制台默认地址 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos控制台的默认访问地址通常是 `http://localhost:8848/nacos`。这个地址假设您是在本地部署Nacos服务，并且使用的是Nacos默认的端口号8848。如果您是在远程服务器上部署或者更改了默认端口，需要将`localhost`替换为服务器的实际IP地址，并将8848替"

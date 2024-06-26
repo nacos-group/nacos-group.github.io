@@ -1,13 +1,13 @@
 ---
 id: "question-history-14947"
-title: "nacos.core.auth.plugin.nacos.token.secret.key的作用说明 nacos-opensource"
+title: "nacos.core.auth.plugin.nacos.token.secret.key的作用说明 "
 date: "2024-06-03"
 category: "expertConsultation"
 description: "Nacos中的配置项`nacos.core.auth.plugin.nacos.token.secret.key`主要应用于其鉴权机制的核心部分，负责为访问Nacos Server的Token提供加密和验证的基础。以下是该配置项的具体作用说明：1. **安全密钥**: 此配置项设置了一个用于Toke"
 ---
 
 ## 用户问题 ： 
- nacos.core.auth.plugin.nacos.token.secret.key的作用说明 nacos-opensource 
+ nacos.core.auth.plugin.nacos.token.secret.key的作用说明  
 
 ---------------
 ## 专家官方解答 ：

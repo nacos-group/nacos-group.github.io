@@ -1,6 +1,6 @@
 ---
 id: "question-history-8268"
-title: "Could not initialize Logback Nacos logging from classpath:nacos-logback.xml nacos-opensource"
+title: "Could not initialize Logback Nacos logging from classpath:nacos-logback.xml "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "遇到`Could not initialize Logback Nacos logging from classpath:nacos-logback.xml`的问题，其原因在于Spring Cloud Alibaba 2022.0.0.0版本与Nacos客户端（版本2.2.3或2.2.1）在集成时，"

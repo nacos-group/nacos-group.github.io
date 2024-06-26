@@ -1,6 +1,6 @@
 ---
 id: "question-history-11767"
-title: "nacos怎么用 nacos-opensource"
+title: "nacos怎么用 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要开始使用Nacos进行服务发现和配置管理，请遵循以下步骤：### 1. 版本选择与环境准备- 访问Nacos的[release notes](https://github.com/alibaba/nacos/releases)选择稳定版本，如推荐的2.3.2。- 确保环境满足要求：  - **操作"

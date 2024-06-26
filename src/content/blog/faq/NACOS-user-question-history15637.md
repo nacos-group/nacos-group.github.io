@@ -1,13 +1,13 @@
 ---
 id: "question-history-15637"
-title: "Nacos是否支持达梦数据库的jar包 nacos-opensource"
+title: "Nacos是否支持达梦数据库的jar包 "
 date: "2024-06-18"
 category: "expertConsultation"
 description: "Nacos确实支持达梦数据库。根据提供的知识内容，Nacos从2.2版本开始就已经原生支持了包括达梦数据库在内的多种数据库。为了帮助您使用达梦数据库的jar包与Nacos集成，以下是具体操作步骤：1. **检查社区插件**: 首先访问[Nacos插件仓库](https://github.com/na"
 ---
 
 ## 用户问题 ： 
- Nacos是否支持达梦数据库的jar包 nacos-opensource 
+ Nacos是否支持达梦数据库的jar包  
 
 ---------------
 ## 专家官方解答 ：

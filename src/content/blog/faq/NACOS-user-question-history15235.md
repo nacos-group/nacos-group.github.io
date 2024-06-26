@@ -1,13 +1,13 @@
 ---
 id: "question-history-15235"
-title: "k8s 安装 nacos 2.2.3 sts 模式的详细操作步 nacos-opensource"
+title: "k8s 安装 nacos 2.2.3 sts 模式的详细操作步 "
 date: "2024-06-12"
 category: "expertConsultation"
 description: "为了帮助您完成在Kubernetes(K8s)上安装Nacos 2.2.3的STS（StatefulSet）模式部署，我们将依据已有知识逐步解析并提供相应指导。但请注意，直接的操作步骤并未在给定的知识中详细列出，特别是针对STS模式的特定说明，因此以下步骤会基于通用的K8s部署实践和Nacos配置调"
 ---
 
 ## 用户问题 ： 
- k8s 安装 nacos 2.2.3 sts 模式的详细操作步 nacos-opensource 
+ k8s 安装 nacos 2.2.3 sts 模式的详细操作步  
 
 ---------------
 ## 专家官方解答 ：

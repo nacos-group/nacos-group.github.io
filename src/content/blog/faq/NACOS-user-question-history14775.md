@@ -1,6 +1,6 @@
 ---
 id: "question-history-14775"
-title: "nacos 注册为永久实例后怎么变成临时实例 nacos-opensource"
+title: "nacos 注册为永久实例后怎么变成临时实例 "
 date: "2024-05-30"
 category: "expertConsultation"
 description: "要将Nacos中已注册为永久实例的服务更改为临时实例，您需要重新注册该实例并设置`ephemeral`参数为`true`。根据提供的知识内容，以下是具体操作步骤：1. **准备实例信息**：首先，您需要收集或确定要修改为临时实例的服务的相关信息，包括但不限于`serviceName`（服务名）、`i"

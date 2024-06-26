@@ -1,6 +1,6 @@
 ---
 id: "question-history-11797"
-title: "nacos 搭建本地集群配置中心 nacos-opensource"
+title: "nacos 搭建本地集群配置中心 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要搭建本地Nacos集群作为配置中心，您可以遵循以下步骤操作：1. **准备环境与下载Nacos**：   - 确保您的本地开发环境满足Nacos运行的基本要求，包括Java环境（推荐使用Java 8或更高版本）。   - 从Nacos的GitHub仓库下载最新版本的Nacos服务器包：[Nacos"

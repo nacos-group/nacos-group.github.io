@@ -1,13 +1,13 @@
 ---
 id: "question-history-15242"
-title: "细介绍一下怎么读取nacos的配置 nacos-opensource"
+title: "细介绍一下怎么读取nacos的配置 "
 date: "2024-06-12"
 category: "expertConsultation"
 description: "要细介绍一下如何读取Nacos的配置，我们可以依据提供的知识内容进行详细解析和步骤说明。### 步骤分析与执行指南#### 1. 准备工作首先，确保你的应用环境中已安装并配置好Nacos Server。接下来，根据你的业务需求，在Nacos控制台上创建或选择一个合适的命名空间（Namespace）。"
 ---
 
 ## 用户问题 ： 
- 细介绍一下怎么读取nacos的配置 nacos-opensource 
+ 细介绍一下怎么读取nacos的配置  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,6 +1,6 @@
 ---
 id: "question-history-8261"
-title: "本地环境配置的文件，有nacos的账号和密码加密的，有什么方案能在spring启动的时候就加个解密操作，导致时密文的nacos客户端一启动就报错 nacos-opensource"
+title: "本地环境配置的文件，有nacos的账号和密码加密的，有什么方案能在spring启动的时候就加个解密操作，导致时密文的nacos客户端一启动就报错 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "首先，从问题描述中了解到，您希望在Spring启动时对本地环境配置中Nacos的账号和密码进行解密操作，以避免因密文直接配置导致Nacos客户端启动报错的情况。基于提供的知识内容，我们可以采取以下步骤解决这一问题：### 分析问题原因1. **敏感信息加密需求**：出于安全考虑，Nacos客户端连接"

@@ -1,6 +1,6 @@
 ---
 id: "question-history-13991"
-title: "nacos安装配置和部署教程 nacos-opensource"
+title: "nacos安装配置和部署教程 "
 date: "2024-05-22"
 category: "expertConsultation"
 description: "要进行Nacos的安装配置和部署，您可以遵循以下详细步骤：### 1. 版本选择- **推荐版本**：根据官方推荐，稳定版本为2.3.2。请访问[Nacos Release Notes](https://github.com/alibaba/nacos/releases)以获取最新信息。### 2."

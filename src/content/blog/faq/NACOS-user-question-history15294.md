@@ -1,13 +1,13 @@
 ---
 id: "question-history-15294"
-title: "nacos有专门的sdk去更新实例吗？ 或者更新权重？ nacos-opensource"
+title: "nacos有专门的sdk去更新实例吗？ 或者更新权重？ "
 date: "2024-06-13"
 category: "expertConsultation"
 description: "Nacos确实提供了SDK来允许用户更新实例信息或者更新实例的权重。根据提供的知识内容，我们可以这样理解并给出操作建议：### 分析问题原因虽然直接的问题描述不涉及特定的现象或错误，但根据Nacos的常规操作和管理流程，更新实例或权重的需求通常涉及到客户端与Nacos服务器的交互，确保服务的健康状态"
 ---
 
 ## 用户问题 ： 
- nacos有专门的sdk去更新实例吗？ 或者更新权重？ nacos-opensource 
+ nacos有专门的sdk去更新实例吗？ 或者更新权重？  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,12 +1,12 @@
 ---
 id: "question-history-14825"
-title: "springcloud 集成 nacos2.2.0 服务列表不显示服务 nacos-opensource"
+title: "springcloud 集成 nacos2.2.0 服务列表不显示服务 "
 date: "2024-05-31"
 category: "expertConsultation"
-description: "根据已有的知识内容，我们可以分析您遇到的问题“nacos-opensource springcloud 集成 nacos2.2.0 服务列表不显示服务”的可能原因及解决方向：1. **检查服务注册配置**：首先确认Spring Cloud应用是否正确配置了Nacos作为服务发现组件，包括但不限于`s"
+description: "根据已有的知识内容，我们可以分析您遇到的问题“ springcloud 集成 nacos2.2.0 服务列表不显示服务”的可能原因及解决方向：1. **检查服务注册配置**：首先确认Spring Cloud应用是否正确配置了Nacos作为服务发现组件，包括但不限于`s"
 ---
 
-根据已有的知识内容，我们可以分析您遇到的问题“nacos-opensource springcloud 集成 nacos2.2.0 服务列表不显示服务”的可能原因及解决方向：
+根据已有的知识内容，我们可以分析您遇到的问题“ springcloud 集成 nacos2.2.0 服务列表不显示服务”的可能原因及解决方向：
 
 1. **检查服务注册配置**：首先确认Spring Cloud应用是否正确配置了Nacos作为服务发现组件，包括但不限于`spring.cloud.nacos.discovery.server-addr`指向正确的Nacos服务器地址，以及确保应用在启动时能够成功连接到Nacos服务器并完成服务注册。请参照Spring Cloud集成Nacos的官方文档或示例配置进行核对。
 

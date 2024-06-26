@@ -1,6 +1,6 @@
 ---
 id: "question-history-12698"
-title: "nacos有时会调到下线的服务，有哪些可能的原因？ nacos-opensource"
+title: "nacos有时会调到下线的服务，有哪些可能的原因？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "调到下线的服务在Nacos中可能由以下几个原因造成：1. **服务提供者未彻底关闭**：进程仍然存在并发送心跳维持连接，导致Nacos未能及时摘除服务提供者。这可能发生在Kubernetes环境中，即使pod已查询不到，但节点上的进程仍在运行，或者有其他额外进程注册同一服务。2. **推空保护机制*"

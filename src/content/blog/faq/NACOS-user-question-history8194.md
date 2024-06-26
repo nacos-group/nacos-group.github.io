@@ -1,14 +1,14 @@
 ---
 id: "question-history-8194"
-title: "Using ingress as nacos load balancing error reporting, current status: STARTING nacos-opensource"
+title: "Using ingress as nacos load balancing error reporting, current status: STARTING "
 date: "2024-05-17"
 category: "expertConsultation"
-description: "根据提供的知识内容，对于问题“nacos-opensource Using ingress as nacos load balancing error reporting, current status: STARTING”，我们可以分析并提出解决方案如下：### 问题分析- 错误信息表明应用程序正"
+description: "根据提供的知识内容，对于问题“ Using ingress as nacos load balancing error reporting, current status: STARTING”，我们可以分析并提出解决方案如下：### 问题分析- 错误信息表明应用程序正"
 tags: ["ingress","nacos","load balancing","error reporting","STARTING"]
 keywords: ["ingress","nacos","load balancing","error reporting","STARTING"]
 ---
 
-根据提供的知识内容，对于问题“nacos-opensource Using ingress as nacos load balancing error reporting, current status: STARTING”，我们可以分析并提出解决方案如下：
+根据提供的知识内容，对于问题“ Using ingress as nacos load balancing error reporting, current status: STARTING”，我们可以分析并提出解决方案如下：
 
 ### 问题分析
 - 错误信息表明应用程序正在使用Ingress作为Nacos的负载均衡，并报告了错误，当前状态为“STARTING”。这通常意味着Nacos客户端尚未成功连接到Nacos服务器，可能处于初始化连接阶段即出现问题。

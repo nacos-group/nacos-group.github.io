@@ -1,6 +1,6 @@
 ---
 id: "question-history-14776"
-title: "nacos v2.1.0如何平衡客户端连接数 nacos-opensource"
+title: "nacos v2.1.0如何平衡客户端连接数 "
 date: "2024-05-30"
 category: "expertConsultation"
 description: "在Nacos v2.1.0中平衡客户端连接数，主要涉及到客户端的合理配置与服务端的性能调优。虽然直接关于平衡客户端连接数的详细步骤在提供的知识中没有明确阐述，但我们可以根据已有的信息推导出一些策略。以下是基于现有知识的分析与建议：### 分析问题原因：1. **客户端配置不当**：客户端连接数过多或"

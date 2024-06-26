@@ -1,6 +1,6 @@
 ---
 id: "question-history-13533"
-title: "docker nacos 2.2.3开启鉴权的具体流程 nacos-opensource"
+title: "docker nacos 2.2.3开启鉴权的具体流程 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos 2.2.3版本中，针对Docker部署环境下开启鉴权的具体流程如下：1. **修改token.secret.key与identity.key配置**   - **Docker镜像部署环境下**，通过环境变量方式修改密钥与身份标识：     - 设置环境变量`NACOS_AUTH_TOK"

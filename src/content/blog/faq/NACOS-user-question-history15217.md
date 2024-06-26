@@ -1,13 +1,13 @@
 ---
 id: "question-history-15217"
-title: "nacos 如何配置白名单 nacos-opensource"
+title: "nacos 如何配置白名单 "
 date: "2024-06-12"
 category: "expertConsultation"
 description: "在 我了解的知识 中并没有直接提供关于 nacos 配置白名单的具体步骤，但我可以根据通用的 Spring Security 配置逻辑为您提供一个大致的方向。因为 Nacos 依赖于 Spring Boot 和 Spring Actuator，所以我们可以借鉴 Spring Boot 的安全配置来实"
 ---
 
 ## 用户问题 ： 
- nacos 如何配置白名单 nacos-opensource 
+ nacos 如何配置白名单  
 
 ---------------
 ## 专家官方解答 ：

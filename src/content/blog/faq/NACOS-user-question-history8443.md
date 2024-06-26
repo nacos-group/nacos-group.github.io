@@ -1,6 +1,6 @@
 ---
 id: "question-history-8443"
-title: "JM.LOG.PATH=${user.home} logs nacos 和JM.SNAPSHOT.PATH=${user.home} nacos  如果同一台部署多个dubbo应用，会不会有问题，日志和快照是共享 的？ nacos-opensource"
+title: "JM.LOG.PATH=${user.home} logs nacos 和JM.SNAPSHOT.PATH=${user.home} nacos  如果同一台部署多个dubbo应用，会不会有问题，日志和快照是共享 的？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识，我们可以分析如下：1. **日志路径配置**：Nacos-Client在Java语言的应用中，日志默认存储在`$user.home/logs/nacos/`目录下，这包括了naming.log、config.log以及remote.log等文件，分别记录了注册中心、配置中心及gRPC"

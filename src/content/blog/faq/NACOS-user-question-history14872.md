@@ -1,13 +1,13 @@
 ---
 id: "question-history-14872"
-title: "nacos启动时报[db-load-error]load jdbc.properties error nacos-opensource"
+title: "nacos启动时报[db-load-error]load jdbc.properties error "
 date: "2024-06-02"
 category: "expertConsultation"
 description: "根据提供的知识内容，对于nacos启动时报`[db-load-error]load jdbc.properties error`的问题，我们可以分析原因并给出相应的解决步骤。### 分析问题原因该错误表明nacos在启动时尝试加载`jdbc.properties`文件时遇到错误，这通常与数据库配置相"
 ---
 
 ## 用户问题 ： 
- nacos启动时报[db-load-error]load jdbc.properties error nacos-opensource 
+ nacos启动时报[db-load-error]load jdbc.properties error  
 
 ---------------
 ## 专家官方解答 ：

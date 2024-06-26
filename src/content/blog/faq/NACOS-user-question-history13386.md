@@ -1,6 +1,6 @@
 ---
 id: "question-history-13386"
-title: "nacos 导出导入配置api是什么？ nacos-opensource"
+title: "nacos 导出导入配置api是什么？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos 提供了配置管理的 API，虽然直接提及导出导入配置 API 的细节在提供的知识中未明确列出，但根据 Nacos 的功能特性，我们可以推测这样的操作可以通过其配置管理接口间接实现。下面是如何利用 Nacos 配置管理 API 进行配置导出和导入的一个概览性指导：### 导出配置1. **查"

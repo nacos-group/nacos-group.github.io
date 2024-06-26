@@ -1,18 +1,18 @@
 ---
 id: "question-history-15411"
-title: "nacos服务注册阻塞 nacos-opensource"
+title: "nacos服务注册阻塞 "
 date: "2024-06-17"
 category: "expertConsultation"
-description: "针对您提出的问题“nacos-opensource nacos服务注册阻塞”，我将依据现有知识进行分析并尝试给出解决方案。**分析问题原因：**1. **版本问题与DNS解析失败：** 首先考虑是否因使用了存在BUG的Nacos客户端版本（如1.4.1）导致。该版本中存在当遇到DNS解析失败时，心跳"
+description: "针对您提出的问题“ nacos服务注册阻塞”，我将依据现有知识进行分析并尝试给出解决方案。**分析问题原因：**1. **版本问题与DNS解析失败：** 首先考虑是否因使用了存在BUG的Nacos客户端版本（如1.4.1）导致。该版本中存在当遇到DNS解析失败时，心跳"
 ---
 
 ## 用户问题 ： 
- nacos服务注册阻塞 nacos-opensource 
+ nacos服务注册阻塞  
 
 ---------------
 ## 专家官方解答 ：
 
-针对您提出的问题“nacos-opensource nacos服务注册阻塞”，我将依据现有知识进行分析并尝试给出解决方案。
+针对您提出的问题“ nacos服务注册阻塞”，我将依据现有知识进行分析并尝试给出解决方案。
 
 **分析问题原因：**
 

@@ -1,6 +1,6 @@
 ---
 id: "question-history-12489"
-title: "微服务会从nacos拉配置到本地吗 nacos-opensource"
+title: "微服务会从nacos拉配置到本地吗 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos作为配置中心，其设计目的是为了让微服务在启动时以及运行期间能够自动地从Nacos服务器拉取配置信息到本地。这一过程是Nacos为微服务提供的核心功能之一。当微服务应用集成Nacos客户端后，会按照以下逻辑操作：1. **初始化配置**: 在微服务启动阶段，Nacos客户端会根据配置的`da"

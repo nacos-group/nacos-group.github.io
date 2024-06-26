@@ -1,6 +1,6 @@
 ---
 id: "question-history-13354"
-title: "加密nacos客户端连接用户密码 nacos-opensource"
+title: "加密nacos客户端连接用户密码 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中，对于客户端连接Nacos服务端的用户密码加密，官方并没有直接提供一个统一的加密插件方案，因为Nacos客户端本身并不直接读取配置文件中的敏感信息，如用户名和密码。这些信息通常是用户通过应用程序的代码逻辑，以加密或未加密的形式加载到`Properties`对象中，随后传递给Nacos客"

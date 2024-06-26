@@ -1,6 +1,6 @@
 ---
 id: "question-history-11199"
-title: "Nacos nacos配置灰度发布 nacos-opensource"
+title: "Nacos nacos配置灰度发布 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos 支持配置的灰度发布主要是通过配置的分组和数据ID来实现的，尽管直接的“灰度发布”功能并未在提供的参考内容中详细阐述，但我们可以通过现有的功能组合来实现类似灰度发布的场景。以下是基于Nacos现有特性的配置灰度发布思路：### 分析问题原因在Nacos中，每个配置由`dataId`、`gr"

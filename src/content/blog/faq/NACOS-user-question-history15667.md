@@ -1,13 +1,13 @@
 ---
 id: "question-history-15667"
-title: "nacos 的 endpoint 和 address-server 模式有什么区别  看起来都是通过htt nacos-opensource"
+title: "nacos 的 endpoint 和 address-server 模式有什么区别  看起来都是通过htt "
 date: "2024-06-18"
 category: "expertConsultation"
 description: "我目前了解到的信息可能不足以支持你的问题，关于nacos的endpoint和address-server模式的区别，知识库中并未直接提及。你可以换一个问法再试试，或者提供更多关于这两种模式的具体背景信息，这样我可能能更好地帮助你解答。"
 ---
 
 ## 用户问题 ： 
- nacos 的 endpoint 和 address-server 模式有什么区别  看起来都是通过http接口提供nacos server的节点信息 nacos-opensource 
+ nacos 的 endpoint 和 address-server 模式有什么区别  看起来都是通过http接口提供nacos server的节点信息  
 
 ---------------
 ## 专家官方解答 ：

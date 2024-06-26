@@ -1,6 +1,6 @@
 ---
 id: "question-history-8213"
-title: "永久实例的应用场景是什么 nacos-opensource"
+title: "永久实例的应用场景是什么 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "永久实例（ephemeral=false）的应用场景主要集中在那些需要长期存在且不随微服务应用生命周期变化的服务上。这些场景的特点是服务的稳定性要求较高，或者服务提供者的变化不频繁，例如：1. **数据库服务**：如MySQL服务，这类基础服务的地址和状态相对固定，不适合随着应用的启停而变化，使用永"

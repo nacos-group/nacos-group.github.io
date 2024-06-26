@@ -1,18 +1,18 @@
 ---
 id: "question-history-15147"
-title: "nacos windows启动 nacos-opensource"
+title: "nacos windows启动 "
 date: "2024-06-07"
 category: "expertConsultation"
-description: "针对您的问题「nacos-opensource nacos windows启动」，我依据已有知识进行如下解答：### 问题原因分析根据提供的知识内容，我们知道在某些Nacos的早期版本中，Windows环境下存在启动问题，如“invalid Argument make dir ...”错误。这主要是"
+description: "针对您的问题「 nacos windows启动」，我依据已有知识进行如下解答：### 问题原因分析根据提供的知识内容，我们知道在某些Nacos的早期版本中，Windows环境下存在启动问题，如“invalid Argument make dir ...”错误。这主要是"
 ---
 
 ## 用户问题 ： 
- nacos windows启动 nacos-opensource 
+ nacos windows启动  
 
 ---------------
 ## 专家官方解答 ：
 
-针对您的问题「nacos-opensource nacos windows启动」，我依据已有知识进行如下解答：
+针对您的问题「 nacos windows启动」，我依据已有知识进行如下解答：
 
 ### 问题原因分析
 根据提供的知识内容，我们知道在某些Nacos的早期版本中，Windows环境下存在启动问题，如“invalid Argument make dir ...”错误。这主要是因为早期版本的Nacos可能未完全兼容Windows操作系统。但这一问题在后续版本中已被修复，特别是2.x.x版本之后。

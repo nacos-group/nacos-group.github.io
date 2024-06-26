@@ -1,13 +1,13 @@
 ---
 id: "question-history-15287"
-title: "如何设置nacos客户端连接服务端时使用的grpc端口的默认偏移量 nacos-opensource"
+title: "如何设置nacos客户端连接服务端时使用的grpc端口的默认偏移量 "
 date: "2024-06-13"
 category: "expertConsultation"
 description: "要设置Nacos客户端连接服务端时使用的gRPC端口的默认偏移量，可以按照以下步骤操作：1. **理解默认偏移量**: 默认情况下，Nacos客户端会根据服务端的主端口自动计算gRPC端口，这个偏移量通常是1000。意味着如果服务端主端口是8848，客户端会尝试通过9848端口（即8848 + 10"
 ---
 
 ## 用户问题 ： 
- 如何设置nacos客户端连接服务端时使用的grpc端口的默认偏移量 nacos-opensource 
+ 如何设置nacos客户端连接服务端时使用的grpc端口的默认偏移量  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,6 +1,6 @@
 ---
 id: "question-history-13481"
-title: "nacos是否合适做注册中心？ nacos-opensource"
+title: "nacos是否合适做注册中心？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos（阿里巴巴开源的项目）作为一个动态服务发现、配置管理和服务管理平台，非常适合用作注册中心。以下是基于Nacos特性分析其作为注册中心的适用性的几个关键点：1. **服务发现**：Nacos支持基于DNS和HTTP/HTTPS的服务发现协议，允许服务实例在启动时向Nacos注册，同时其他服务"

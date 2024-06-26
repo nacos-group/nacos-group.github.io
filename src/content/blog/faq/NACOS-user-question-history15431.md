@@ -1,13 +1,13 @@
 ---
 id: "question-history-15431"
-title: "nacos.core.auth.server.identity.key ： nacos.core.auth nacos-opensource"
+title: "nacos.core.auth.server.identity.key ： nacos.core.auth "
 date: "2024-06-17"
 category: "expertConsultation"
 description: "在Nacos的鉴权机制中，`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value` 这两个配置项起到了至关重要的角色，主要用于服务器身份验证，以增强系统的安全性。下面是这两个配置项的具体作用及如何进"
 ---
 
 ## 用户问题 ： 
- nacos.core.auth.server.identity.key ： nacos.core.auth.server.identity.value ： 这两个配置的作用是什么 nacos-opensource 
+ nacos.core.auth.server.identity.key ： nacos.core.auth.server.identity.value ： 这两个配置的作用是什么  
 
 ---------------
 ## 专家官方解答 ：

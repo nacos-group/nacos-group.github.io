@@ -1,6 +1,6 @@
 ---
 id: "question-history-12714"
-title: "nacos 如何修改默认密钥 nacos-opensource"
+title: "nacos 如何修改默认密钥 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中修改默认密钥主要涉及两个方面：一是配置中心存储的配置加密密钥，二是控制台登录的鉴权密钥。根据提供的知识内容，我们可以分步骤讨论如何修改这两类默认密钥。### 修改配置中心加密密钥对于Nacos配置中心存储的配置加密，Nacos提供了配置加密插件，默认采用AES加密算法。若需修改默认密钥"

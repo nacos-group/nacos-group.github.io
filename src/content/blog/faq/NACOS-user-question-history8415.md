@@ -1,6 +1,6 @@
 ---
 id: "question-history-8415"
-title: "java.util.concurrent.RejectedExecutionException: Task io.grpc.internal.SerializingExecutor@12819f3d rejected from java.util.concurrent.ThreadPoolExecutor@76ae056f[Running, pool size = 512, active threads = 0, queued tasks = 16384, completed tasks = 19646742] at java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:2063) 有没有人帮忙解决，active threads = 0，nacos 2.2.3，不知道什么原因，active threads = 0，怎么避免这个问题，nacos运行一段时间就挂 nacos-opensource"
+title: "java.util.concurrent.RejectedExecutionException: Task io.grpc.internal.SerializingExecutor@12819f3d rejected from java.util.concurrent.ThreadPoolExecutor@76ae056f[Running, pool size = 512, active threads = 0, queued tasks = 16384, completed tasks = 19646742] at java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:2063) 有没有人帮忙解决，active threads = 0，nacos 2.2.3，不知道什么原因，active threads = 0，怎么避免这个问题，nacos运行一段时间就挂 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的错误信息，问题在于`java.util.concurrent.RejectedExecutionException`异常，表明任务被线程池拒绝，尽管`active threads = 0`，这通常意味着线程池队列已满，无法接受更多任务。考虑到这是在Nacos 2.2.3版本中遇到的问题，我"

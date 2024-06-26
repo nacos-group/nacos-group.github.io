@@ -1,13 +1,13 @@
 ---
 id: "question-history-15621"
-title: "nacos2.0.2更新配置时，底层sql会在config_info表中更新原有的还是新增一条 nacos-opensource"
+title: "nacos2.0.2更新配置时，底层sql会在config_info表中更新原有的还是新增一条 "
 date: "2024-06-18"
 category: "expertConsultation"
 description: "根据已有的知识内容，我们可以分析您关于`nacos2.0.2更新配置时，底层sql会在config_info表中更新原有的还是新增一条`的问题。虽然提供的参考资料没有直接提及Nacos 2.0.2版本中关于`config_info`表操作的具体SQL行为，但我们可以基于Nacos的工作原理进行合理推"
 ---
 
 ## 用户问题 ： 
- nacos2.0.2更新配置时，底层sql会在config_info表中更新原有的还是新增一条 nacos-opensource 
+ nacos2.0.2更新配置时，底层sql会在config_info表中更新原有的还是新增一条  
 
 ---------------
 ## 专家官方解答 ：

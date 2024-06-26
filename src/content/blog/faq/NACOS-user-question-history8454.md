@@ -1,6 +1,6 @@
 ---
 id: "question-history-8454"
-title: "问下 nacos2.0.3是不是存在服务被踢掉的bug？ nacos-opensource"
+title: "问下 nacos2.0.3是不是存在服务被踢掉的bug？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，Nacos 2.0.3 版本确实可能存在一些与服务下线或被踢掉相关的问题，尤其是在处理服务实例的生命周期管理上。虽然没有直接指出2.0.3存在一个特定的“服务被踢掉”的bug，但从描述中可以推测出以下几个可能导致服务意外重新上线或下线操作未按预期生效的原因及潜在问题：1. **非"

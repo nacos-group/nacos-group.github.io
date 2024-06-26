@@ -1,6 +1,6 @@
 ---
 id: "question-history-11824"
-title: "nacos application.properties 详细介绍 nacos-opensource"
+title: "nacos application.properties 详细介绍 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos的`application.properties`文件是其配置核心，用于定制Nacos Server的行为。下面将依据提供的知识进行详细介绍：### 全局参数配置- **nacos.home(-D)**: 指定Nacos的根目录，通常在启动脚本中通过`JAVA_OPT`环境变量设置，如`J"

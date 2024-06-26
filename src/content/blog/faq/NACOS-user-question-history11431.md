@@ -1,6 +1,6 @@
 ---
 id: "question-history-11431"
-title: "如何实现Nacos 融合 Spring Boot 成为注册配置中心 nacos-opensource"
+title: "如何实现Nacos 融合 Spring Boot 成为注册配置中心 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要实现Nacos融合Spring Boot成为注册配置中心，遵循以下步骤进行配置与集成：### 1. 准备工作- **启动Nacos Server**：确保Nacos服务器已下载并启动。具体操作可参考[Nacos快速入门](../quickstart/quick-start.md)。- **选择合适"

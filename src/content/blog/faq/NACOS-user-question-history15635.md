@@ -1,18 +1,18 @@
 ---
 id: "question-history-15635"
-title: "nacos 没有开启认证 报错user not found nacos-opensource"
+title: "nacos 没有开启认证 报错user not found "
 date: "2024-06-18"
 category: "expertConsultation"
-description: "根据您描述的问题“nacos-opensource nacos 没有开启认证 报错user not found”，这通常意味着Nacos服务端未正确配置身份验证，导致客户端尝试访问时因未找到认证用户而失败。依据提供的知识内容，我们可以按以下步骤分析并解决问题：### 分析问题原因1. **检查Nac"
+description: "根据您描述的问题“ nacos 没有开启认证 报错user not found”，这通常意味着Nacos服务端未正确配置身份验证，导致客户端尝试访问时因未找到认证用户而失败。依据提供的知识内容，我们可以按以下步骤分析并解决问题：### 分析问题原因1. **检查Nac"
 ---
 
 ## 用户问题 ： 
- nacos 没有开启认证 报错user not found nacos-opensource 
+ nacos 没有开启认证 报错user not found  
 
 ---------------
 ## 专家官方解答 ：
 
-根据您描述的问题“nacos-opensource nacos 没有开启认证 报错user not found”，这通常意味着Nacos服务端未正确配置身份验证，导致客户端尝试访问时因未找到认证用户而失败。依据提供的知识内容，我们可以按以下步骤分析并解决问题：
+根据您描述的问题“ nacos 没有开启认证 报错user not found”，这通常意味着Nacos服务端未正确配置身份验证，导致客户端尝试访问时因未找到认证用户而失败。依据提供的知识内容，我们可以按以下步骤分析并解决问题：
 
 ### 分析问题原因
 1. **检查Nacos版本**：首先确认您当前使用的Nacos服务器版本。如果版本低于1.4.1，存在身份认证绕过漏洞，可能导致安全配置不生效。
