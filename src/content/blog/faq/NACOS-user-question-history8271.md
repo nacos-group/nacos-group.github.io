@@ -1,12 +1,18 @@
 ---
 id: "question-history-8271"
-title: "#io.grpc.netty.shaded.io.netty.util.internal.OutOfDirectMemoryError: failed to allocate 2097152 byte(s) of direct memory (used: 501219607, max: 503316480) nacos-opensource"
+title: "#io.grpc.netty.shaded.io.netty.util.internal.OutOfDir"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，针对您遇到的`io.grpc.netty.shaded.io.netty.util.internal.OutOfDirectMemoryError`错误，其主要原因是堆外内存分配失败，已使用的直接内存达到了501,219,607字节，而最大允许的是503,316,480字节。具体"
 tags: ["io.grpc.netty.shaded.io.netty.util.internal.OutOfDirectMemoryError","failed to allocate","direct memory","2097152","byte(s)","used","501219607","max","503316480"]
 keywords: ["io.grpc.netty.shaded.io.netty.util.internal.OutOfDirectMemoryError","failed to allocate","direct memory","2097152","byte(s)","used","501219607","max","503316480"]
 ---
+
+## 用户问题 ： 
+ #io.grpc.netty.shaded.io.netty.util.internal.OutOfDirectMemoryError: failed to allocate 2097152 byte(s) of direct memory (used: 501219607, max: 503316480)  
+
+---------------
+## 专家官方解答 ：
 
 根据提供的知识内容，针对您遇到的`io.grpc.netty.shaded.io.netty.util.internal.OutOfDirectMemoryError`错误，其主要原因是堆外内存分配失败，已使用的直接内存达到了501,219,607字节，而最大允许的是503,316,480字节。具体分析与解决步骤如下：
 
@@ -39,9 +45,27 @@ keywords: ["io.grpc.netty.shaded.io.netty.util.internal.OutOfDirectMemoryError",
 - **合理配置JVM堆**是为了整体上平衡JVM内存使用，避免因堆内存设置不当间接影响堆外内存的使用效率。
 
 通过以上步骤，可以有效应对和解决堆外内存分配失败的问题，确保Nacos服务的稳定运行。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：io.grpc.netty.shaded.io.netty.util.internal.OutOfDirectMemoryError 
+ 
+ *专家经验：Nacos 内存占用过大 
+ 
+ *专家经验：Why Use HTTP for Registration of the Nacos2.0 Raft Protocol 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13619)给我们反馈。

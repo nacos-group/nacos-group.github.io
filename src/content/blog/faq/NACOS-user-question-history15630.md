@@ -1,13 +1,13 @@
 ---
 id: "question-history-15630"
-title: "于如何发送请求监测服务器启动成功 nacos-opensource"
+title: "于如何发送请求监测服务器启动成功"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "要监测Nacos服务器是否启动成功，您可以按照以下步骤操作：1. **检查启动日志**：   - 首先，您需要查看Nacos安装目录下的`logs/start.out`或`logs/nacos.log`文件。这一步骤是根据我了解的知识中的**第1篇参考内容**指导的。在这些日志文件中寻找类似于`Na"
 ---
 
 ## 用户问题 ： 
- 于如何发送请求监测服务器启动成功 nacos-opensource 
+ 于如何发送请求监测服务器启动成功  
 
 ---------------
 ## 专家官方解答 ：

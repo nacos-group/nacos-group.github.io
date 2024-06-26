@@ -1,6 +1,6 @@
 ---
 id: "question-history-13480"
-title: "nacos 集群部署 nacos-opensource"
+title: "nacos 集群部署"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在进行Nacos集群部署时，需关注以下几个关键步骤和注意事项，以确保部署的成功与安全性：### 1. 鉴权配置为了保障Nacos集群的安全，建议启用鉴权功能。根据Nacos官方文档，需要配置以下参数：- `nacos.core.auth.enabled`=true 开启鉴权功能。- `nacos.c"
@@ -9,7 +9,7 @@ keywords: ["nacos","集群部署"]
 ---
 
 ## 用户问题 ： 
- nacos 集群部署 nacos-opensource 
+ nacos 集群部署  
 
 ---------------
 ## 专家官方解答 ：

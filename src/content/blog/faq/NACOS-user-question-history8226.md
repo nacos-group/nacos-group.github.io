@@ -1,12 +1,18 @@
 ---
 id: "question-history-8226"
-title: "client version is1.4.2, server version is 2.1.0, Single threaded udp push delay of 30 minutes nacos-opensource"
+title: "client version is1.4.2, server version is 2.1.0, Sing"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的信息，您遇到的问题是在Nacos客户端版本为1.4.2，服务器版本为2.1.0的环境下，单线程UDP推送存在30分钟的延迟。这一问题的根本原因在于Nacos从1.X版本开始引入UDP推送作为优化手段，旨在加速服务发现，但由于UDP协议本身的不可靠性（无连接、不保证消息到达），可能导致数据推"
 tags: ["client version 1.4.2","server version 2.1.0","udp push delay","30 minutes"]
 keywords: ["client version 1.4.2","server version 2.1.0","udp push delay","30 minutes"]
 ---
+
+## 用户问题 ： 
+ client version is1.4.2, server version is 2.1.0, Single threaded udp push delay of 30 minutes  
+
+---------------
+## 专家官方解答 ：
 
 根据提供的信息，您遇到的问题是在Nacos客户端版本为1.4.2，服务器版本为2.1.0的环境下，单线程UDP推送存在30分钟的延迟。这一问题的根本原因在于Nacos从1.X版本开始引入UDP推送作为优化手段，旨在加速服务发现，但由于UDP协议本身的不可靠性（无连接、不保证消息到达），可能导致数据推送不稳定。而到了Nacos 2.0及以后的版本，官方已经废弃了UDP推送机制，转而采用更为稳定可靠的TCP连接，特别是通过gRPC双向流来确保数据推送的时效性和稳定性。
 
@@ -21,9 +27,27 @@ keywords: ["client version 1.4.2","server version 2.1.0","udp push delay","30 mi
 4. **监控与调优**：升级后，建议密切监控系统性能，特别是垃圾回收(GC)行为和内存使用情况，根据实际情况调整JVM参数，以防止FullGC问题，如调整堆内存分配(-Xms, -Xmx)和新生代与老年代的比例(-Xmn)，并考虑使用G1或CMSGC等现代GC策略。
 
 综上所述，解决您所面临问题的关键步骤是**升级客户端版本**至与服务端兼容的最新版本，并依据新版本特性重新配置客户端，同时关注系统监控与调优，以确保服务的稳定高效运行。请参考Nacos官方文档进行具体操作。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos UDP推送失败 
+ 
+ *[Nacos系统参数介绍](https://nacos.io/docs/latest/guide/admin/system-configurations)
+ 
+ *专家经验：nacos-server 频繁FullGC 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13579)给我们反馈。

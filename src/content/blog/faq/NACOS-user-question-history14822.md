@@ -1,10 +1,16 @@
 ---
 id: "question-history-14822"
-title: "raft日志太大怎么清理 nacos-opensource"
+title: "raft日志太大怎么清理"
 date: "2024-05-31"
 category: "expertConsultation"
 description: "Nacos的Raft日志如果变得过大，主要是因为Nacos采用了Sofa的JRaft作为Raft协议的实现，而JRaft默认使用RocksDB作为Raft日志的存储系统。随着运行时间的增长，在`$nacos.home/data/protocol/raft/$raft_group/log`目录下会累积"
 ---
+
+## 用户问题 ： 
+ raft日志太大怎么清理  
+
+---------------
+## 专家官方解答 ：
 
 Nacos的Raft日志如果变得过大，主要是因为Nacos采用了Sofa的JRaft作为Raft协议的实现，而JRaft默认使用RocksDB作为Raft日志的存储系统。随着运行时间的增长，在`$nacos.home/data/protocol/raft/$raft_group/log`目录下会累积大量的以`LOG.*`开头的操作日志文件。这些日志文件是可以安全清理的，以释放磁盘空间，而不会影响到Nacos的正常运行。
 
@@ -32,9 +38,25 @@ Nacos的Raft日志如果变得过大，主要是因为Nacos采用了Sofa的JRaft
 - **定期执行**：建议将此清理操作加入到定期维护脚本中，比如每周或每月执行一次，以避免日志文件长期积累导致磁盘空间紧张。
 
 通过以上步骤，可以有效地管理并控制Nacos的Raft日志大小，确保系统运行的稳定性和效率。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos raft日志太大怎么清理 
+ 
+ *专家经验：Nacos 内存占用过大 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=14827)给我们反馈。

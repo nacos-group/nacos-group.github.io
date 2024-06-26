@@ -1,6 +1,6 @@
 ---
 id: "question-history-10508"
-title: "#Nacos CAP nacos-opensource"
+title: "#Nacos CAP"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos作为一款流行的微服务管理工具，遵循了分布式系统中的CAP原则。在这里，CAP指的是Consistency（一致性）、Availability（可用性）和Partition tolerance（分区容错性）。任何分布式系统都无法同时满足这三项需求，而必须在其中做出权衡。Nacos在设计时，主"
@@ -9,7 +9,7 @@ keywords: ["Nacos","CAP"]
 ---
 
 ## 用户问题 ： 
- #Nacos CAP nacos-opensource 
+ #Nacos CAP  
 
 ---------------
 ## 专家官方解答 ：

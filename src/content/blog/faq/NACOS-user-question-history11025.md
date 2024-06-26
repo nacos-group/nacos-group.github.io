@@ -1,6 +1,6 @@
 ---
 id: "question-history-11025"
-title: "Nacos 如何关闭 nacos v2 console namespace，使api不对外开放 nacos-opensource"
+title: "Nacos 如何关闭 nacos v2 console namespace，使api不对外开放"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，对于问题“Nacos 如何关闭/nacos/v2/console/namespace，使api不对外开放”，可以理解到：1. **问题原因分析**：`/nacos/v2/console/namespace`接口是Nacos用于展示集群中存在的命名空间列表的OpenAPI，其设计初"
@@ -9,7 +9,7 @@ keywords: ["关闭","nacos v2 console namespace","api不对外开放"]
 ---
 
 ## 用户问题 ： 
- Nacos 如何关闭 nacos v2 console namespace，使api不对外开放 nacos-opensource 
+ Nacos 如何关闭 nacos v2 console namespace，使api不对外开放  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15276"
-title: "k8s部署nacos-2.2.3，并在application.properties中启动认证认证 nacos-opensource"
+title: "k8s部署nacos-2.2.3，并在application.properties中启动认证认证"
 date: "2024-06-13"
 category: "expertConsultation"
 description: "为了帮助您在Kubernetes(K8s)环境中部署Nacos 2.2.3版本并启用认证，我们将依据提供的知识进行详细解答。### 分析问题原因根据您的需求，您希望在K8s集群中部署Nacos 2.2.3版本，并确保服务具有认证功能。Nacos 2.2.3版本属于文档中提及的高版本范畴，理论上不存在"
 ---
 
 ## 用户问题 ： 
- k8s部署nacos-2.2.3，并在application.properties中启动认证认证 nacos-opensource 
+ k8s部署nacos-2.2.3，并在application.properties中启动认证认证  
 
 ---------------
 ## 专家官方解答 ：
@@ -80,7 +80,7 @@ description: "为了帮助您在Kubernetes(K8s)环境中部署Nacos 2.2.3版本�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15290)给我们反馈。

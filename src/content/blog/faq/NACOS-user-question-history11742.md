@@ -1,12 +1,18 @@
 ---
 id: "question-history-11742"
-title: "开防火墙时nacos要开哪些端口？ nacos-opensource"
+title: "开防火墙时nacos要开哪些端口？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在为Nacos配置防火墙时，需要开放以下端口以确保其正常运行和服务发现、配置管理等功能不受影响：1. **主HTTP端口**（默认8848）：这是Nacos客户端、控制台以及OpenAPI使用的端口，用于处理HTTP请求。2. **客户端gRPC端口**（默认9848）：用于客户端通过gRPC协议向"
 tags: ["防火墙","端口"]
 keywords: ["防火墙","端口"]
 ---
+
+## 用户问题 ： 
+ 开防火墙时nacos要开哪些端口？  
+
+---------------
+## 专家官方解答 ：
 
 在为Nacos配置防火墙时，需要开放以下端口以确保其正常运行和服务发现、配置管理等功能不受影响：
 
@@ -22,9 +28,27 @@ keywords: ["防火墙","端口"]
 参考链接：
 - [Nacos部署开放端口说明](https://nacos.io/docs/latest/guide/admin/cluster-mode-quick-start/)
 - [Nacos端口指定说明](https://nacos.io/docs/latest/guide/admin/cluster-mode-quick-start/)
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos部署开放端口，集群部署开通端口 
+ 
+ *专家经验：主流的配置中心有哪些？ 
+ 
+ *专家经验：Nacos如何指定端口 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13779)给我们反馈。

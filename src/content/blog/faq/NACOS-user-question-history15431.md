@@ -1,13 +1,13 @@
 ---
 id: "question-history-15431"
-title: "nacos.core.auth.server.identity.key ： nacos.core.auth nacos-opensource"
+title: "nacos.core.auth.server.identity.key ： nacos.core.auth"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "在Nacos的鉴权机制中，`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value` 这两个配置项起到了至关重要的角色，主要用于服务器身份验证，以增强系统的安全性。下面是这两个配置项的具体作用及如何进"
 ---
 
 ## 用户问题 ： 
- nacos.core.auth.server.identity.key ： nacos.core.auth.server.identity.value ： 这两个配置的作用是什么 nacos-opensource 
+ nacos.core.auth.server.identity.key ： nacos.core.auth.server.identity.value ： 这两个配置的作用是什么  
 
 ---------------
 ## 专家官方解答 ：
@@ -67,7 +67,7 @@ description: "在Nacos的鉴权机制中，`nacos.core.auth.server.identity.key`
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15501)给我们反馈。

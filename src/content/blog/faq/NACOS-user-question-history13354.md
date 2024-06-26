@@ -1,12 +1,18 @@
 ---
 id: "question-history-13354"
-title: "加密nacos客户端连接用户密码 nacos-opensource"
+title: "加密nacos客户端连接用户密码"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中，对于客户端连接Nacos服务端的用户密码加密，官方并没有直接提供一个统一的加密插件方案，因为Nacos客户端本身并不直接读取配置文件中的敏感信息，如用户名和密码。这些信息通常是用户通过应用程序的代码逻辑，以加密或未加密的形式加载到`Properties`对象中，随后传递给Nacos客"
 tags: ["加密","nacos客户端","连接","用户密码"]
 keywords: ["加密","nacos客户端","连接","用户密码"]
 ---
+
+## 用户问题 ： 
+ 加密nacos客户端连接用户密码  
+
+---------------
+## 专家官方解答 ：
 
 在Nacos中，对于客户端连接Nacos服务端的用户密码加密，官方并没有直接提供一个统一的加密插件方案，因为Nacos客户端本身并不直接读取配置文件中的敏感信息，如用户名和密码。这些信息通常是用户通过应用程序的代码逻辑，以加密或未加密的形式加载到`Properties`对象中，随后传递给Nacos客户端。因此，加密此用户密码的操作应当在客户端应用这一侧完成。
 
@@ -28,9 +34,25 @@ keywords: ["加密","nacos客户端","连接","用户密码"]
 - **框架集成**：如果你的应用使用了如Spring Boot或Dubbo等框架，检查是否有框架级别的支持或推荐做法来处理此类敏感信息的加密。
 
 综上所述，虽然Nacos本身没有直接提供客户端连接密码的加密插件，但通过在客户端应用层面实施加密解密逻辑，依然可以有效地保护这些敏感信息。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos 配置加密 
+ 
+ *专家经验：nacos用户密码设置 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13872)给我们反馈。

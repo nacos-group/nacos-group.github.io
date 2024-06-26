@@ -1,6 +1,6 @@
 ---
 id: "question-history-10505"
-title: "#Nacos配置中心宕机，还能读取到配置吗 nacos-opensource"
+title: "#Nacos配置中心宕机，还能读取到配置吗"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "当Nacos配置中心发生宕机时，应用实例是否还能读取到配置取决于以下几个因素，基于提供的知识内容，我们可以分析如下：1. **本地缓存机制**：Nacos提供了配置的本地缓存能力，即当配置项被客户端成功拉取后，会存储在本地。如果Nacos配置中心宕机，而应用实例在此之前已经成功拉取并缓存了配置信息，"
@@ -9,7 +9,7 @@ keywords: ["Nacos配置中心","宕机","读取","配置"]
 ---
 
 ## 用户问题 ： 
- #Nacos配置中心宕机，还能读取到配置吗 nacos-opensource 
+ #Nacos配置中心宕机，还能读取到配置吗  
 
 ---------------
 ## 专家官方解答 ：

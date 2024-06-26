@@ -1,13 +1,13 @@
 ---
 id: "question-history-15225"
-title: "docker pull nacos nacos-server:v2.2.1 无法下载这个镜像 nacos-opensource"
+title: "docker pull nacos nacos-server:v2.2.1 无法下载这个镜像"
 date: "2024-06-12"
 category: "expertConsultation"
 description: "根据您提供的问题，您似乎遇到了在尝试使用 `docker pull nacos/nacos-server:v2.2.1` 命令下载 Nacos Server 镜像时遇到的问题。根据我的理解，这个问题并不直接由我掌握的知识(知识: nacos-opensource )中提及的内容所覆盖，因为该知识主要"
 ---
 
 ## 用户问题 ： 
- docker pull nacos nacos-server:v2.2.1 无法下载这个镜像 nacos-opensource 
+ docker pull nacos nacos-server:v2.2.1 无法下载这个镜像  
 
 ---------------
 ## 专家官方解答 ：
@@ -49,7 +49,7 @@ description: "根据您提供的问题，您似乎遇到了在尝试使用 `dock
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15248)给我们反馈。

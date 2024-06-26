@@ -1,6 +1,6 @@
 ---
 id: "question-history-8280"
-title: "docker部署nacos集群nginx负载均衡，服务注册正常，但是grpc报错 nacos-opensource"
+title: "docker部署nacos集群nginx负载均衡，服务注册正常，但是grpc报错"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "首先，根据提供的知识内容，我们分析问题原因可能是由于Nacos集群通过Docker部署并使用Nginx做负载均衡时，gRPC通信遇到了障碍。gRPC报错通常涉及到网络配置、端口映射或负载均衡配置不当。Nacos在集群模式下使用gRPC通信的端口为9848（客户端gRPC请求服务端端口）和9849（服"
@@ -9,7 +9,7 @@ keywords: ["docker","nacos集群","nginx","负载均衡","服务注册","grpc","
 ---
 
 ## 用户问题 ： 
- docker部署nacos集群nginx负载均衡，服务注册正常，但是grpc报错 nacos-opensource 
+ docker部署nacos集群nginx负载均衡，服务注册正常，但是grpc报错  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,12 +1,18 @@
 ---
 id: "question-history-8443"
-title: "JM.LOG.PATH=${user.home} logs nacos 和JM.SNAPSHOT.PATH=${user.home} nacos  如果同一台部署多个dubbo应用，会不会有问题，日志和快照是共享 的？ nacos-opensource"
+title: "JM.LOG.PATH=${user.home} logs nacos 和JM.SNAPSHOT.PATH"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识，我们可以分析如下：1. **日志路径配置**：Nacos-Client在Java语言的应用中，日志默认存储在`$user.home/logs/nacos/`目录下，这包括了naming.log、config.log以及remote.log等文件，分别记录了注册中心、配置中心及gRPC"
 tags: ["dubbo","日志","快照","共享"]
 keywords: ["dubbo","日志","快照","共享"]
 ---
+
+## 用户问题 ： 
+ JM.LOG.PATH=${user.home} logs nacos 和JM.SNAPSHOT.PATH=${user.home} nacos  如果同一台部署多个dubbo应用，会不会有问题，日志和快照是共享 的？  
+
+---------------
+## 专家官方解答 ：
 
 根据提供的知识，我们可以分析如下：
 
@@ -30,9 +36,27 @@ keywords: ["dubbo","日志","快照","共享"]
 通过以上调整，即使在同一台服务器上部署多个应用，也能有效避免日志和快照的混淆与冲突，提高运维的便利性和系统的稳定性。
 
 请注意，对于快照路径的配置修改，需依据具体应用的配置指南进行，确保所做的更改符合应用的配置规范。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：如何获取Nacos-Client的日志？ 
+ 
+ *专家经验：Nacos 配置中心的数据同步和一致性问题 
+ 
+ *专家经验：NACOS 配置中心和注册中心是分两个集群部署还是放在一个集群中 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13661)给我们反馈。

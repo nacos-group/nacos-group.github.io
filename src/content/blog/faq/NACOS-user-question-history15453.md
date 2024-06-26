@@ -1,13 +1,13 @@
 ---
 id: "question-history-15453"
-title: "如何注销Nacos实例 nacos-opensource"
+title: "如何注销Nacos实例"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "要注销Nacos实例，您可以选择使用Java API或者通过HTTP DELETE请求的方式来实现。下面我将依据提供的知识内容，分步骤向您展示如何操作：### 使用Java API注销实例**步骤1:** 首先，需要创建一个`NamingService`实例。这通常涉及到设置Nacos服务器的地址，"
 ---
 
 ## 用户问题 ： 
- 如何注销Nacos实例 nacos-opensource 
+ 如何注销Nacos实例  
 
 ---------------
 ## 专家官方解答 ：
@@ -77,7 +77,7 @@ curl -X DELETE '127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.test.1&ip=
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15523)给我们反馈。

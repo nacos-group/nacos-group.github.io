@@ -1,6 +1,6 @@
 ---
 id: "question-history-8203"
-title: "使用MySQL数据库，配置中心最多支持多少Nacos节点呀 nacos-opensource"
+title: "使用MySQL数据库，配置中心最多支持多少Nacos节点呀"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos配置中心在使用MySQL数据库的情况下，其最大支持的节点数量并非固定值，而是与多个因素相关，包括但不限于每个Nacos节点的规格（如CPU、内存）、MySQL数据库的类型和规格、实际承载的服务数、配置数以及连接数等。根据现有知识，1C2G规格的Nacos节点，在搭配外置MySQL数据库时，"
@@ -9,7 +9,7 @@ keywords: ["MySQL数据库","配置中心","最多支持","Nacos节点"]
 ---
 
 ## 用户问题 ： 
- 使用MySQL数据库，配置中心最多支持多少Nacos节点呀 nacos-opensource 
+ 使用MySQL数据库，配置中心最多支持多少Nacos节点呀  
 
 ---------------
 ## 专家官方解答 ：

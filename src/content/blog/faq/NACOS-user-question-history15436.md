@@ -1,13 +1,13 @@
 ---
 id: "question-history-15436"
-title: "nacos 和 loadbalanceer 版本对应关系 nacos-opensource"
+title: "nacos 和 loadbalanceer 版本对应关系"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "关于您询问的nacos-opensource与loadbalancer的版本对应关系，我目前了解到的信息可能不足以支持直接您的问题，因为在提供的知识内容中并未具体提及nacos与loadbalancer（这里假设您指的是如Netflix OSS的Ribbon或其他负载均衡器）之间的版本对应细节。Na"
 ---
 
 ## 用户问题 ： 
- nacos 和 loadbalanceer 版本对应关系 nacos-opensource 
+ nacos 和 loadbalanceer 版本对应关系  
 
 ---------------
 ## 专家官方解答 ：
@@ -45,7 +45,7 @@ description: "关于您询问的nacos-opensource与loadbalancer的版本对应�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15506)给我们反馈。

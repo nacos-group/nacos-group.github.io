@@ -1,13 +1,13 @@
 ---
 id: "question-history-14916"
-title: "nacos修复CVE-2024-22243这个漏洞了吗 nacos-opensource"
+title: "nacos修复CVE-2024-22243这个漏洞了吗"
 date: "2024-06-03"
 category: "expertConsultation"
 description: "针对问题「nacos-opensource nacos修复CVE-2024-22243这个漏洞了吗」，根据提供的知识内容，可以明确如下：是的，Nacos针对CVE-2024-22243漏洞已经提供了修复方案。为了修复此漏洞，用户需要采取以下步骤：1. 更新Nacos Server的`pom.xml`"
 ---
 
 ## 用户问题 ： 
- nacos修复CVE-2024-22243这个漏洞了吗 nacos-opensource 
+ nacos修复CVE-2024-22243这个漏洞了吗  
 
 ---------------
 ## 专家官方解答 ：
@@ -39,7 +39,7 @@ description: "针对问题「nacos-opensource nacos修复CVE-2024-22243这个漏
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=14919)给我们反馈。

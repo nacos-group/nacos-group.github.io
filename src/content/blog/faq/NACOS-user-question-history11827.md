@@ -1,12 +1,18 @@
 ---
 id: "question-history-11827"
-title: "nacos nacos 1.3.1 升级2.2.3 具体步骤 nacos-opensource"
+title: "nacos nacos 1.3.1 升级2.2.3 具体步骤"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，针对Nacos从1.3.1版本升级到2.2.3版本的具体步骤可以概括如下：1. **检查并更新数据库脚本**：   - 首先，你需要应用新的`nacos-mysql.sql`（或其他适用的数据库类型脚本），以确保数据库表结构与Nacos 2.2.3版本兼容。这一步骤主要是为了确认"
 tags: ["nacos","1.3.1","升级","2.2.3","具体步骤"]
 keywords: ["nacos","1.3.1","升级","2.2.3","具体步骤"]
 ---
+
+## 用户问题 ： 
+ nacos nacos 1.3.1 升级2.2.3 具体步骤  
+
+---------------
+## 专家官方解答 ：
 
 根据提供的知识内容，针对Nacos从1.3.1版本升级到2.2.3版本的具体步骤可以概括如下：
 
@@ -29,9 +35,27 @@ keywords: ["nacos","1.3.1","升级","2.2.3","具体步骤"]
    - 根据Nacos客户端和服务端的兼容性规则，Nacos 2.2.3服务端应兼容Nacos 1.2.0及之后版本的客户端。因此，如果你的客户端版本低于1.2.0，需要先将客户端升级至至少1.2.0版本，以确保与服务端的兼容性。
 
 请注意，升级过程可能需要停机操作，并且务必在升级前做好数据备份，以防升级过程中发生意外情况。同时，建议在非生产环境先行测试升级流程，确保一切顺利后再在生产环境中实施。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos升级的具体步骤 
+ 
+ *[Nacos 2.0 升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading)
+ 
+ *专家经验：Nacos客户端和服务端版本的兼容性问题 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13814)给我们反馈。

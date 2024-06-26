@@ -1,13 +1,13 @@
 ---
 id: "question-history-15458"
-title: "Nacos批量注册如何实现的 nacos-opensource"
+title: "Nacos批量注册如何实现的"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "在Nacos中实现批量注册实例，虽然直接提供的API示例是单个实例的注册方法，但可以通过编程方式循环调用这些API来实现批量注册。基于提供的我了解的知识, 我将指导你如何进行批量注册实例。### 批量注册实例的逻辑步骤1. **初始化Nacos客户端**:   首先，需要创建并初始化一个Nacos的"
 ---
 
 ## 用户问题 ： 
- Nacos批量注册如何实现的 nacos-opensource 
+ Nacos批量注册如何实现的  
 
 ---------------
 ## 专家官方解答 ：
@@ -71,7 +71,7 @@ description: "在Nacos中实现批量注册实例，虽然直接提供的API示�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15528)给我们反馈。

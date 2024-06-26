@@ -1,6 +1,6 @@
 ---
 id: "question-history-11760"
-title: "如何使用nacos 进行微服务治理 nacos-opensource"
+title: "如何使用nacos 进行微服务治理"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "使用Nacos进行微服务治理涉及多个方面，包括服务发现与注册、配置管理、服务监控与管理等关键功能。根据提供的知识内容，以下是使用Nacos进行微服务治理的详细步骤与说明：### 1. **服务发现与注册**- **Java SDK集成**：  1. **初始化配置**：创建`Properties`对"
@@ -9,7 +9,7 @@ keywords: ["nacos","微服务治理"]
 ---
 
 ## 用户问题 ： 
- 如何使用nacos 进行微服务治理 nacos-opensource 
+ 如何使用nacos 进行微服务治理  
 
 ---------------
 ## 专家官方解答 ：

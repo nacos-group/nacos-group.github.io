@@ -1,6 +1,6 @@
 ---
 id: "question-history-12704"
-title: "nacos 报错403 user not found! 怎么处理？ nacos-opensource"
+title: "nacos 报错403 user not found! 怎么处理？"
 date: "2024-05-29"
 category: "expertConsultation"
 description: "遇到Nacos报错403 user not found的情况，可以按照以下步骤进行排查和解决：1. **检查用户名和密码**：   - 确保在客户端、控制台或OpenAPI请求中使用的用户名和密码是正确的，没有输入错误，比如多余的空格或特殊字符。   - 登录Nacos控制台，进入权限控制的用户管理"
@@ -9,7 +9,7 @@ keywords: ["nacos-opensource","报错403","user not found","处理"]
 ---
 
 ## 用户问题 ： 
- nacos 报错403 user not found! 怎么处理？ nacos-opensource 
+ nacos 报错403 user not found! 怎么处理？  
 
 ---------------
 ## 专家官方解答 ：

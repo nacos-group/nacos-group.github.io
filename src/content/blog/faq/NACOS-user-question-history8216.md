@@ -1,12 +1,18 @@
 ---
 id: "question-history-8216"
-title: "关于SpringCloud和nacos版本匹配的问题，Springboot版本为2.3.12.RELEASE、springcloud版本为Hoxton.SR12。版本最高对应到Spring Cloud Alibaba 2.2.10-RC1 对应的nacos为2.2.0，能否将nacos升级到2.2.1以上。 nacos-opensource"
+title: "关于SpringCloud和nacos版本匹配的问题，Springboot版本为2.3.12.RELEAS"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据已有的知识信息，我们可以分析如下：1. **Spring Cloud Alibaba与Nacos版本兼容性**：您提到Spring Cloud版本为Hoxton.SR12，这对应Spring Cloud Alibaba 2.2.10-RC1，而这个版本对应的Nacos服务端版本为2.2.0。2."
 tags: ["SpringCloud","nacos","版本匹配","Springboot","2.3.12.RELEASE","springcloud","Hoxton.SR12","Spring Cloud Alibaba","2.2.10-RC1","nacos","2.2.0","升级","2.2.1以上"]
 keywords: ["SpringCloud","nacos","版本匹配","Springboot","2.3.12.RELEASE","springcloud","Hoxton.SR12","Spring Cloud Alibaba","2.2.10-RC1","nacos","2.2.0","升级","2.2.1以上"]
 ---
+
+## 用户问题 ： 
+ 关于SpringCloud和nacos版本匹配的问题，Springboot版本为2.3.12.RELEASE、springcloud版本为Hoxton.SR12。版本最高对应到Spring Cloud Alibaba 2.2.10-RC1 对应的nacos为2.2.0，能否将nacos升级到2.2.1以上。  
+
+---------------
+## 专家官方解答 ：
 
 根据已有的知识信息，我们可以分析如下：
 
@@ -31,9 +37,27 @@ keywords: ["SpringCloud","nacos","版本匹配","Springboot","2.3.12.RELEASE","s
 6. **正式部署**：在所有测试通过后，选择合适的时间窗口在生产环境中执行升级操作。
 
 请注意，虽然基于Nacos的兼容性设计，这种升级通常是安全的，但实际操作前详细评估和测试是非常必要的，以确保生产环境的稳定性。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos1.0和Nacos2.0的api有什么区别？2.0的中小版本升级相关问题 
+ 
+ *专家经验：nacos哪个版本最常用 
+ 
+ *专家经验：Nacos客户端和服务端版本的兼容性问题 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13573)给我们反馈。

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15660"
-title: "v1.0 获取配置的OpenApi 获取完的配置 怎么使用yaml.load()转换 nacos-opensource"
+title: "v1.0 获取配置的OpenApi 获取完的配置 怎么使用yaml.load()转换"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "要使用 `yaml.load()` 方法将 Nacos OpenAPI 获取到的配置转换为 Python 对象，你需要首先确保你的环境中已经安装了 `PyYAML` 这个库，因为 `yaml.load()` 函数是它提供的。如果还未安装，可以通过 `pip install pyyaml` 命令来安装"
 ---
 
 ## 用户问题 ： 
- v1.0 获取配置的OpenApi 获取完的配置 怎么使用yaml.load()转换 nacos-opensource 
+ v1.0 获取配置的OpenApi 获取完的配置 怎么使用yaml.load()转换  
 
 ---------------
 ## 专家官方解答 ：

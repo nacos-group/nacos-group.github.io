@@ -1,13 +1,13 @@
 ---
 id: "question-history-15605"
-title: "服务端根据nacos.core.auth.plugin.nacos.token.secret.key生成的 nacos-opensource"
+title: "服务端根据nacos.core.auth.plugin.nacos.token.secret.key生成的"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，nacos-opensource服务端根据`nacos.core.auth.plugin.nacos.token.secret.key`生成的accessToken确实有过期时间。过期时间的具体值可以通过配置项`nacos.core.auth.plugin.nacos.token"
 ---
 
 ## 用户问题 ： 
- 服务端根据nacos.core.auth.plugin.nacos.token.secret.key生成的accessToken有过期时间吗？多久？过期了会怎么办？ nacos-opensource 
+ 服务端根据nacos.core.auth.plugin.nacos.token.secret.key生成的accessToken有过期时间吗？多久？过期了会怎么办？  
 
 ---------------
 ## 专家官方解答 ：

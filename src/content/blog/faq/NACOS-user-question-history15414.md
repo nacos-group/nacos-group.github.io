@@ -1,13 +1,13 @@
 ---
 id: "question-history-15414"
-title: "nacos 2.2.0版本怎么开启ip白名单 nacos-opensource"
+title: "nacos 2.2.0版本怎么开启ip白名单"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据已有的知识信息，关于如何在Nacos 2.2.0版本中开启IP白名单的直接步骤没有明确说明。但我们可以根据Nacos的一般配置原则来指导如何进行此类安全配置。Nacos允许通过配置文件来调整众多的安全与访问控制选项，尽管具体的IP白名单配置项未直接提及，我们通常可以在其`application."
 ---
 
 ## 用户问题 ： 
- nacos 2.2.0版本怎么开启ip白名单 nacos-opensource 
+ nacos 2.2.0版本怎么开启ip白名单  
 
 ---------------
 ## 专家官方解答 ：
@@ -54,7 +54,7 @@ description: "根据已有的知识信息，关于如何在Nacos 2.2.0版本中�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15484)给我们反馈。

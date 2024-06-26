@@ -1,6 +1,6 @@
 ---
 id: "question-history-11420"
-title: "如何在Linux环境下部署nacos nacos-opensource"
+title: "如何在Linux环境下部署nacos"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要在Linux环境下部署Nacos，我们可以遵循以下步骤，结合提供的知识进行操作：### 准备工作1. **确保Java环境**：确保你的Linux系统上已安装了Java 8或更高版本。可以通过命令`java -version`来检查。2. **下载Nacos**：访问Nacos的官方GitHub仓"
@@ -9,7 +9,7 @@ keywords: ["Linux","部署","nacos"]
 ---
 
 ## 用户问题 ： 
- 如何在Linux环境下部署nacos nacos-opensource 
+ 如何在Linux环境下部署nacos  
 
 ---------------
 ## 专家官方解答 ：

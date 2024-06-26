@@ -1,12 +1,18 @@
 ---
 id: "question-history-14711"
-title: "nacos server升级到了2.3.2 并开启了鉴权, 使用java sdk nacos-client 2.2.0 连接返回 user not found 错误，这个怎么解决啊 nacos-opensource"
+title: "nacos server升级到了2.3.2 并开启了鉴权, 使用java sdk nacos-client"
 date: "2024-05-29"
 category: "expertConsultation"
 description: "根据你描述的问题，你在尝试使用Java SDK `nacos-client 2.2.0`连接升级到`2.3.2`版本并已开启鉴权的Nacos Server时遇到了`user not found`错误。结合已有知识，我们可以分析并解决此问题。### 原因分析：1. **客户端配置问题**：可能是由于客"
 tags: ["nacos server","2.3.2","鉴权","java sdk","nacos-client","2.2.0","user not found","错误"]
 keywords: ["nacos server","2.3.2","鉴权","java sdk","nacos-client","2.2.0","user not found","错误"]
 ---
+
+## 用户问题 ： 
+ nacos server升级到了2.3.2 并开启了鉴权, 使用java sdk nacos-client 2.2.0 连接返回 user not found 错误，这个怎么解决啊  
+
+---------------
+## 专家官方解答 ：
 
 根据你描述的问题，你在尝试使用Java SDK `nacos-client 2.2.0`连接升级到`2.3.2`版本并已开启鉴权的Nacos Server时遇到了`user not found`错误。结合已有知识，我们可以分析并解决此问题。
 
@@ -43,9 +49,27 @@ keywords: ["nacos server","2.3.2","鉴权","java sdk","nacos-client","2.2.0","us
 - 步骤4是为了排除外部环境因素对连接的影响，确保问题定位的全面性。
 
 如果以上步骤未能解决问题，建议查阅Nacos官方文档或社区论坛，可能存在特定于版本的已知问题或解决方案。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：user not found 
+ 
+ *专家经验：Nacos1.0和Nacos2.0的api有什么区别？2.0的中小版本升级相关问题 
+ 
+ *专家经验：Nacos不开启鉴权&暴露公网会导致风险 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=14732)给我们反馈。

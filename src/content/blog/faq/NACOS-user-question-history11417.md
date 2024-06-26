@@ -1,12 +1,18 @@
 ---
 id: "question-history-11417"
-title: "如何docker部署nacos集群 nacos-opensource"
+title: "如何docker部署nacos集群"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要使用Docker部署Nacos集群，您可以遵循以下步骤：1. **准备环境与基础了解**：   - 确保您已经具备Docker环境，并且对Docker的基本操作有所了解。   - 参考Nacos官方的Docker部署说明，地址：[https://github.com/nacos-group/nac"
 tags: ["docker","部署","nacos","集群"]
 keywords: ["docker","部署","nacos","集群"]
 ---
+
+## 用户问题 ： 
+ 如何docker部署nacos集群  
+
+---------------
+## 专家官方解答 ：
 
 要使用Docker部署Nacos集群，您可以遵循以下步骤：
 
@@ -36,9 +42,27 @@ keywords: ["docker","部署","nacos","集群"]
    - 通过Nacos控制台验证集群状态和服务发现、配置管理功能是否正常工作。
 
 通过以上步骤，您可以完成Nacos集群在Docker环境中的部署。确保在部署过程中参考官方文档以获取最新的配置细节和最佳实践。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos部署集群模式怎么打开鉴权 
+ 
+ *专家经验：NACOS 配置中心和注册中心是分两个集群部署还是放在一个集群中 
+ 
+ *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13749)给我们反馈。

@@ -1,6 +1,6 @@
 ---
 id: "question-history-10484"
-title: "#Nacos与Zookeeper和Consul有什么区别？ nacos-opensource"
+title: "#Nacos与Zookeeper和Consul有什么区别？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos与Zookeeper和Consul的主要区别可以从以下几个方面进行分析：1. **背景与生态**：   - Nacos：由阿里巴巴开源，专为云原生环境设计，集成了服务发现、配置管理、健康检查及服务管理等多功能于一体，旨在简化微服务架构中的服务治理工作。Nacos紧密集成Spring Clo"
@@ -9,7 +9,7 @@ keywords: ["Nacos","Zookeeper","Consul","区别"]
 ---
 
 ## 用户问题 ： 
- #Nacos与Zookeeper和Consul有什么区别？ nacos-opensource 
+ #Nacos与Zookeeper和Consul有什么区别？  
 
 ---------------
 ## 专家官方解答 ：

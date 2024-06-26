@@ -1,6 +1,6 @@
 ---
 id: "question-history-8440"
-title: "新人报道，我想问下nacos有支持达梦数据源的版本或分支吗 nacos-opensource"
+title: "新人报道，我想问下nacos有支持达梦数据源的版本或分支吗"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos确实支持达梦数据库。从Nacos 2.2版本开始，官方已经加入了对包括达梦数据库在内的多种数据库的支持。为了帮助您在Nacos中使用达梦数据源，您可以按照以下步骤操作：1. **检查插件是否存在**：   首先访问[Nacos插件仓库](https://github.com/nacos-g"
@@ -9,7 +9,7 @@ keywords: ["达梦数据源","版本","分支"]
 ---
 
 ## 用户问题 ： 
- 新人报道，我想问下nacos有支持达梦数据源的版本或分支吗 nacos-opensource 
+ 新人报道，我想问下nacos有支持达梦数据源的版本或分支吗  
 
 ---------------
 ## 专家官方解答 ：

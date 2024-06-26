@@ -1,12 +1,18 @@
 ---
 id: "question-history-12683"
-title: "nacos1.3 升级到2.3步骤与需要注意的地方有哪些？ nacos-opensource"
+title: "nacos1.3 升级到2.3步骤与需要注意的地方有哪些？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "升级Nacos从1.3版本到2.3版本，可以遵循以下步骤并注意相应的地方：1. **准备阶段**：   - 首先，确保备份当前Nacos 1.3的所有数据和配置文件，以防升级过程中发生意外。   - 查阅Nacos官方文档中关于从1.X升级到2.X的特定说明，特别是针对1.3到2.3之间可能存在的重"
 tags: ["nacos1.3","升级","2.3","步骤","注意","地方"]
 keywords: ["nacos1.3","升级","2.3","步骤","注意","地方"]
 ---
+
+## 用户问题 ： 
+ nacos1.3 升级到2.3步骤与需要注意的地方有哪些？  
+
+---------------
+## 专家官方解答 ：
 
 升级Nacos从1.3版本到2.3版本，可以遵循以下步骤并注意相应的地方：
 
@@ -37,9 +43,27 @@ keywords: ["nacos1.3","升级","2.3","步骤","注意","地方"]
 
 **总结**：
 升级过程需要细致规划和充分测试，尤其是在关键版本跨越时。务必关注官方文档的最新变更和推荐实践，以确保升级顺利且不影响现有业务。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Nacos 2.0 升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading)
+ 
+ *专家经验：Nacos升级的具体步骤 
+ 
+ *专家经验：Nacos1.0和Nacos2.0的api有什么区别？2.0的中小版本升级相关问题 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13851)给我们反馈。

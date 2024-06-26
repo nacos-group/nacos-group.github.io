@@ -1,13 +1,13 @@
 ---
 id: "question-history-14992"
-title: "在k8s等容器化部署场景下，注册到nacos的服务是否应该尽量使用临时实例类型？ nacos-opensource"
+title: "在k8s等容器化部署场景下，注册到nacos的服务是否应该尽量使用临时实例类型？"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "在Kubernetes（k8s）等容器化部署场景下，注册到Nacos的服务确实应该**尽量使用临时实例类型**。这是因为容器化的环境特点是服务实例的生命周期相对较短，且可能频繁地启动和停止，这与临时服务（ephemeral=true）的设计理念相契合。临时服务的生命周期与微服务应用实例严格绑定，当应"
 ---
 
 ## 用户问题 ： 
- 在k8s等容器化部署场景下，注册到nacos的服务是否应该尽量使用临时实例类型？ nacos-opensource 
+ 在k8s等容器化部署场景下，注册到nacos的服务是否应该尽量使用临时实例类型？  
 
 ---------------
 ## 专家官方解答 ：
@@ -50,7 +50,7 @@ description: "在Kubernetes（k8s）等容器化部署场景下，注册到Nacos
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15045)给我们反馈。

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15613"
-title: "通过设置 spring.cloud.nacos.config.enabled = false 未完全关闭  nacos-opensource"
+title: "通过设置 spring.cloud.nacos.config.enabled = false 未完全关闭 "
 date: "2024-06-18"
 category: "expertConsultation"
 description: "根据您的描述和提供的知识内容，您尝试通过设置 `spring.cloud.nacos.config.enabled = false` 来完全关闭 Spring Cloud Nacos Config，但似乎没有达到预期效果。让我们基于已有知识逐步分析并提供可能的解决方案。### 原因分析1. **配置"
 ---
 
 ## 用户问题 ： 
- 通过设置 spring.cloud.nacos.config.enabled = false 未完全关闭 Spring Cloud Nacos Config nacos-opensource 
+ 通过设置 spring.cloud.nacos.config.enabled = false 未完全关闭 Spring Cloud Nacos Config  
 
 ---------------
 ## 专家官方解答 ：
@@ -60,7 +60,7 @@ description: "根据您的描述和提供的知识内容，您尝试通过设置
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15627)给我们反馈。

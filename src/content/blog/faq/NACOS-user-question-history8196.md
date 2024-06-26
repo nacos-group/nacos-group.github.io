@@ -1,12 +1,18 @@
 ---
 id: "question-history-8196"
-title: "项目启动注册nacos时本地生成的logs和nacos目录支持修改？非源码启动 nacos-opensource"
+title: "项目启动注册nacos时本地生成的logs和nacos目录支持修改？非源码启动"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在非源码启动的情况下，针对nacos-opensource项目启动并注册到Nacos时，本地自动生成的`logs`和`nacos`目录的支持修改情况，可以依据以下分析与建议进行操作：### 分析原因1. **logs目录**: 默认情况下，Nacos服务器会生成日志文件在指定的日志目录下，这个路径通"
 tags: ["项目启动","注册nacos","本地生成","logs","nacos目录","支持修改","非源码启动"]
 keywords: ["项目启动","注册nacos","本地生成","logs","nacos目录","支持修改","非源码启动"]
 ---
+
+## 用户问题 ： 
+ 项目启动注册nacos时本地生成的logs和nacos目录支持修改？非源码启动  
+
+---------------
+## 专家官方解答 ：
 
 在非源码启动的情况下，针对nacos-opensource项目启动并注册到Nacos时，本地自动生成的`logs`和`nacos`目录的支持修改情况，可以依据以下分析与建议进行操作：
 
@@ -40,9 +46,27 @@ keywords: ["项目启动","注册nacos","本地生成","logs","nacos目录","支
 - 确认新设置的目录路径可达且具备足够的磁盘空间。
 
 综上所述，不论是`logs`还是`nacos`目录，在非源码启动的Nacos环境中都是支持修改的，主要通过相应的配置文件调整即可实现。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Kubernetes Nacos](https://nacos.io/docs/latest/quickstart/quick-start-kubernetes)
+ 
+ *专家经验：如何在启动二进制版本的nacos时，设置日志级别为debug呢？ 
+ 
+ *专家经验：Nacos重启后再启动微服务项目时，后台出现“NacosException: failed to req API”异常解决办法 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13555)给我们反馈。

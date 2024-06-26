@@ -1,12 +1,18 @@
 ---
 id: "question-history-8189"
-title: "nacos适配国产化数据库，适配国产化数据库时，不止需要实现文档中的接口，还需要实现分页处理类PageHandlerAdapter，并在PageHandlerAdapterFactory中添加对应的处理类，版本是2.3.0 nacos-opensource"
+title: "nacos适配国产化数据库，适配国产化数据库时，不止需要实现文档中的接口，还需要实现分页处理类PageHa"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "为了适配国产化数据库并实现分页处理类PageHandlerAdapter，在Nacos 2.3.0版本中，您需要遵循以下步骤操作：1. **查阅官方文档与插件支持**：   首先，确认Nacos 2.3.0版本是否直接支持您所需的国产数据库。根据已有知识，Nacos从2.2版本开始支持包括Postg"
 tags: ["nacos","国产化数据库","适配","分页处理类","PageHandlerAdapter","PageHandlerAdapterFactory","2.3.0"]
 keywords: ["nacos","国产化数据库","适配","分页处理类","PageHandlerAdapter","PageHandlerAdapterFactory","2.3.0"]
 ---
+
+## 用户问题 ： 
+ nacos适配国产化数据库，适配国产化数据库时，不止需要实现文档中的接口，还需要实现分页处理类PageHandlerAdapter，并在PageHandlerAdapterFactory中添加对应的处理类，版本是2.3.0  
+
+---------------
+## 专家官方解答 ：
 
 为了适配国产化数据库并实现分页处理类PageHandlerAdapter，在Nacos 2.3.0版本中，您需要遵循以下步骤操作：
 
@@ -30,9 +36,27 @@ keywords: ["nacos","国产化数据库","适配","分页处理类","PageHandlerA
    启动Nacos服务器并进行功能测试，确保配置的查询、修改等操作能够正确执行且分页功能正常工作。
 
 请注意，虽然Nacos提供了高度可扩展的数据源支持框架，直接修改数据库内容仍然不被推荐作为常规配置更新手段，应当通过Nacos提供的API或控制台来进行配置管理。此外，确保遵循Nacos的最佳实践和版本兼容性指南，以免遇到不必要的兼容性问题。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos的数据库支持情况介绍 
+ 
+ *专家经验：无法在nacos/conf下找到nacos-mysql.sql文件 
+ 
+ *专家经验：Nacos 配置中心的数据同步和一致性问题 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13548)给我们反馈。

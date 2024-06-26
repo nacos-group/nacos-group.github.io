@@ -1,13 +1,13 @@
 ---
 id: "question-history-15007"
-title: "Nacos get changed dataId error, code: 400 nacos-opensource"
+title: "Nacos get changed dataId error, code: 400"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "针对您提出的问题「nacos-opensource Nacos get changed dataId error, code: 400」，我们可以根据已有的知识进行分析和解答。### 原因分析根据错误描述，您遇到的是在尝试获取配置变更时收到HTTP状态码400的错误，这通常意味着客户端发送的请求对于"
 ---
 
 ## 用户问题 ： 
- Nacos get changed dataId error, code: 400 nacos-opensource 
+ Nacos get changed dataId error, code: 400  
 
 ---------------
 ## 专家官方解答 ：

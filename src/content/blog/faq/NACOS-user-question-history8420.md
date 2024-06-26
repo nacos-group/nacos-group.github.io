@@ -1,6 +1,6 @@
 ---
 id: "question-history-8420"
-title: "请问一下1.2.0如何修改默认密码 nacos-opensource"
+title: "请问一下1.2.0如何修改默认密码"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos 1.2.0中修改默认密码的步骤如下：1. **初始化前修改**：   如果你的Nacos集群尚未初始化，可以在初始化之前修改默认的用户名和密码。你需要编辑`$nacos.home/conf/`目录下的`mysql-schema.sql`或`derby-schema.sql`（取决于你使"
@@ -9,7 +9,7 @@ keywords: ["1.2.0","修改","默认密码"]
 ---
 
 ## 用户问题 ： 
- 请问一下1.2.0如何修改默认密码 nacos-opensource 
+ 请问一下1.2.0如何修改默认密码  
 
 ---------------
 ## 专家官方解答 ：

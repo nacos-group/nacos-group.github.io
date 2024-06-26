@@ -1,13 +1,13 @@
 ---
 id: "question-history-14880"
-title: "nacos2开启了加密功能，ConfigService configService = NacosFact nacos-opensource"
+title: "nacos2开启了加密功能，ConfigService configService = NacosFact"
 date: "2024-06-02"
 category: "expertConsultation"
 description: "在Nacos 2.x中，如果你已经开启了配置加密功能，并且需要通过`NacosFactory.createConfigService(Properties properties)`的方式来创建`ConfigService`实例，你需要确保传递给`Properties`对象的用户名和密码已经是加密后的"
 ---
 
 ## 用户问题 ： 
- nacos2开启了加密功能，ConfigService configService = NacosFactory.createConfigService(properties)中的properties要如何设置用户名和密码 nacos-opensource 
+ nacos2开启了加密功能，ConfigService configService = NacosFactory.createConfigService(properties)中的properties要如何设置用户名和密码  
 
 ---------------
 ## 专家官方解答 ：

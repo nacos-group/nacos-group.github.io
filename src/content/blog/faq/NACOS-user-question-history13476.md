@@ -1,12 +1,18 @@
 ---
 id: "question-history-13476"
-title: "nacos如何启动 nacos-opensource"
+title: "nacos如何启动"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "启动Nacos服务端取决于您所处的环境（非Docker或Docker环境）以及是否需要启用鉴权。以下是根据您的需求整理的启动步骤：### 非Docker环境下启动Nacos并启用鉴权：1. **修改配置文件**：打开Nacos的`application.properties`文件，进行以下修改以启用"
 tags: ["启动"]
 keywords: ["启动"]
 ---
+
+## 用户问题 ： 
+ nacos如何启动  
+
+---------------
+## 专家官方解答 ：
 
 启动Nacos服务端取决于您所处的环境（非Docker或Docker环境）以及是否需要启用鉴权。以下是根据您的需求整理的启动步骤：
 
@@ -46,9 +52,25 @@ keywords: ["启动"]
 - **注解驱动**：在Spring Boot应用的主类或配置类上添加`@EnableNacos`注解来启用Nacos的功能。这将同时启用服务发现和服务配置管理。
 
 请注意，上述步骤提供了启动Nacos服务端及在Spring应用中启用Nacos的基本指导。具体操作可能还需参照您的实际环境和版本做出适当调整。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Authorization](https://nacos.io/docs/latest/guide/user/auth)
+ 
+ *[Nacos 融合 Spring，成为注册配置中心](https://nacos.io/docs/latest/ecology/use-nacos-with-spring)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13901)给我们反馈。

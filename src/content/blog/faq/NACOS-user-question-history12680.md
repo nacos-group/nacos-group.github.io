@@ -1,6 +1,6 @@
 ---
 id: "question-history-12680"
-title: "nacos服务手工下线怎么做？ nacos-opensource"
+title: "nacos服务手工下线怎么做？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中手动下线服务实例，可以通过以下几个步骤操作：1. **登录Nacos控制台**：首先，确保你已经登录到了Nacos的Web控制台。2. **定位服务**：在Nacos控制台的“服务管理”或“服务列表”页面，找到你想要下线的服务名称。3. **查看服务详情**：点击服务名称，进入该服务的"
@@ -9,7 +9,7 @@ keywords: ["nacos","服务","手工","下线"]
 ---
 
 ## 用户问题 ： 
- nacos服务手工下线怎么做？ nacos-opensource 
+ nacos服务手工下线怎么做？  
 
 ---------------
 ## 专家官方解答 ：

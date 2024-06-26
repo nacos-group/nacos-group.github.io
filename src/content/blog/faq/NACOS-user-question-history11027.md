@@ -1,6 +1,6 @@
 ---
 id: "question-history-11027"
-title: "Nacos 各位大佬，请教个问题，nacos动态刷新问题，具体表现是我开发机器Windows可以动态刷新， nacos-opensource"
+title: "Nacos 各位大佬，请教个问题，nacos动态刷新问题，具体表现是我开发机器Windows可以动态刷新，"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据你描述的问题，我们可以按照以下逻辑进行分析和排查：1. **环境差异检查**：首先，由于你在Windows开发环境下能正常实现Nacos配置的动态刷新，而在Linux生产环境则不能，这可能指向环境配置或系统行为的差异。需要确认Linux环境与Windows环境在以下几个方面的配置是否一致：   "
@@ -11,7 +11,7 @@ keywords: ["动态刷新问题","Windows","Linux环境","重启服务","springcl
 ## 用户问题 ： 
  Nacos 各位大佬，请教个问题，nacos动态刷新问题，具体表现是我开发机器Windows可以动态刷新，Linux环境就不能，每次修改配置还需要重启服务。
 版本是：springcloud 2021.0.4， nacos 2021.0.4，大佬们有遇见过类似的情况吗，是怎么解决的呢？
-修改完配置之后 看日志推送的配置也是对的，但是refresh keys changed：是空数组，感觉是和老配置对比不成功 nacos-opensource 
+修改完配置之后 看日志推送的配置也是对的，但是refresh keys changed：是空数组，感觉是和老配置对比不成功  
 
 ---------------
 ## 专家官方解答 ：

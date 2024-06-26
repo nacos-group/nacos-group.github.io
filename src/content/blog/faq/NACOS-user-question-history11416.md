@@ -1,12 +1,18 @@
 ---
 id: "question-history-11416"
-title: "如何使用docker方式部署nacos nacos-opensource"
+title: "如何使用docker方式部署nacos"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要使用Docker方式部署Nacos，特别是配置为集群模式并开启鉴权，您可以遵循以下步骤：1. **准备环境**：   - 确保您的系统中已安装Docker，并且Docker服务正在运行。2. **获取Nacos Docker镜像**：   - 访问Nacos Docker镜像的GitHub仓库[["
 tags: ["docker","部署","nacos"]
 keywords: ["docker","部署","nacos"]
 ---
+
+## 用户问题 ： 
+ 如何使用docker方式部署nacos  
+
+---------------
+## 专家官方解答 ：
 
 要使用Docker方式部署Nacos，特别是配置为集群模式并开启鉴权，您可以遵循以下步骤：
 
@@ -45,9 +51,27 @@ keywords: ["docker","部署","nacos"]
    - 访问http://localhost:8848/nacos/，使用配置的鉴权信息登录控制台，确认Nacos服务正常运行且鉴权功能生效。
 
 通过上述步骤，您就可以成功使用Docker部署具有鉴权功能的Nacos服务了。如果需要更高级的配置或遇到具体问题，详细文档和帮助可以参考Nacos官方文档[[2](https://nacos.io/docs/latest/guide/user/auth/)]和Nacos-Docker项目页面[[1](https://github.com/nacos-group/nacos-docker)]。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos部署集群模式怎么打开鉴权 
+ 
+ *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+ 
+ *[Nacos 2.0 升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13748)给我们反馈。

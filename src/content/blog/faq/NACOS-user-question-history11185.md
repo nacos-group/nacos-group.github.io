@@ -1,12 +1,18 @@
 ---
 id: "question-history-11185"
-title: "nacos nacos 怎么安装 nacos-opensource"
+title: "nacos nacos 怎么安装"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "为了安装Nacos，请遵循以下详细步骤：1. **版本选择**：   首先，访问Nacos的[release notes](https://github.com/alibaba/nacos/releases)以确定最新的稳定版本。当前推荐的稳定版本为2.3.2。选择适合您需求的版本进行安装。2. *"
 tags: ["安装"]
 keywords: ["安装"]
 ---
+
+## 用户问题 ： 
+ nacos nacos 怎么安装  
+
+---------------
+## 专家官方解答 ：
 
 为了安装Nacos，请遵循以下详细步骤：
 
@@ -43,9 +49,27 @@ keywords: ["安装"]
    注意：推荐在至少2C4G 60G配置的机器上运行Nacos。
 
 完成上述步骤后，Nacos将成功安装并运行在单机模式下。接下来，您可以根据需要进行服务注册、发现和配置管理操作。如果需要在ARM架构下使用Docker部署Nacos，可选用带有`slim`标识的镜像版本，例如`v2.3.1-slim`，并参考官方文档的Docker快速启动指南进行配置调整。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos 快速开始 
+ 
+ *专家经验：Nacos 介绍 
+ 
+ *专家经验：Nacos 请问nacos有arm架构的docker镜像么 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13724)给我们反馈。

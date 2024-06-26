@@ -1,13 +1,13 @@
 ---
 id: "question-history-15295"
-title: "nacos2.x默认端口为8848、9848、9849，客户端连接时只能配置管理端访问端口8848，我想要 nacos-opensource"
+title: "nacos2.x默认端口为8848、9848、9849，客户端连接时只能配置管理端访问端口8848，我想要"
 date: "2024-06-13"
 category: "expertConsultation"
 description: "首先，根据提供的知识内容，我们了解到Nacos 2.x默认使用的端口为8848（HTTP管理端口）、9848（客户端gRPC请求服务端端口）和9849（服务端gRPC请求服务端端口）。客户端在连接时，虽然主要配置的是管理端访问端口8848，但实际上客户端会根据服务端的配置自动计算其他端口进行通信。如"
 ---
 
 ## 用户问题 ： 
- nacos2.x默认端口为8848、9848、9849，客户端连接时只能配置管理端访问端口8848，我想要配置其他两个端口，该怎么做 nacos-opensource 
+ nacos2.x默认端口为8848、9848、9849，客户端连接时只能配置管理端访问端口8848，我想要配置其他两个端口，该怎么做  
 
 ---------------
 ## 专家官方解答 ：
@@ -51,7 +51,7 @@ description: "首先，根据提供的知识内容，我们了解到Nacos 2.x默
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15310)给我们反馈。

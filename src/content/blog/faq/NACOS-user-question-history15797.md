@@ -1,13 +1,13 @@
 ---
 id: "question-history-15797"
-title: "springboot如何集成nacos配置中心 nacos-opensource"
+title: "springboot如何集成nacos配置中心"
 date: "2024-06-21"
 category: "expertConsultation"
 description: "要集成Nacos作为Spring Boot应用的配置中心，您可以遵循以下步骤操作，这些步骤基于提供的知识内容：### 1. 确保前提条件- **启动Nacos Server**：首先，确保您已下载并启动了Nacos服务器。如果您尚未完成这一步，请参照[Nacos快速入门](../quickstart"
 ---
 
 ## 用户问题 ： 
- springboot如何集成nacos配置中心 nacos-opensource 
+ springboot如何集成nacos配置中心  
 
 ---------------
 ## 专家官方解答 ：

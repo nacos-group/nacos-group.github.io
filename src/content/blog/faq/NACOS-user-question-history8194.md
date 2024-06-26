@@ -1,12 +1,18 @@
 ---
 id: "question-history-8194"
-title: "Using ingress as nacos load balancing error reporting, current status: STARTING nacos-opensource"
+title: "Using ingress as nacos load balancing error reporting"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，对于问题“nacos-opensource Using ingress as nacos load balancing error reporting, current status: STARTING”，我们可以分析并提出解决方案如下：### 问题分析- 错误信息表明应用程序正"
 tags: ["ingress","nacos","load balancing","error reporting","STARTING"]
 keywords: ["ingress","nacos","load balancing","error reporting","STARTING"]
 ---
+
+## 用户问题 ： 
+ Using ingress as nacos load balancing error reporting, current status: STARTING  
+
+---------------
+## 专家官方解答 ：
 
 根据提供的知识内容，对于问题“nacos-opensource Using ingress as nacos load balancing error reporting, current status: STARTING”，我们可以分析并提出解决方案如下：
 
@@ -39,9 +45,27 @@ keywords: ["ingress","nacos","load balancing","error reporting","STARTING"]
 
 ### 解释
 以上步骤旨在系统性地排查和解决问题，从基本的网络连通性到配置细节，再到版本兼容性和系统层面的健康状况，每一步都是为了缩小问题范围并定位具体原因。通过这些步骤，通常可以识别并解决Nacos连接初始化失败的问题。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：如何排查Nacos连接失败问题 
+ 
+ *专家经验：Nacos "status":501,"error":"Not Implemented","message":"no such api:...","path":"... 
+ 
+ *专家经验：日志报错ERROR [DISTRO-INIT] load snapshot Nacos:Naming:v2:ClientData from 10.111.107.10:8878 failed. com.alibaba.nacos.core.distribu 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13553)给我们反馈。

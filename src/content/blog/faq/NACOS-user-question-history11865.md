@@ -1,12 +1,18 @@
 ---
 id: "question-history-11865"
-title: "nacos 介绍一下nacos配置中心支持的功能 nacos-opensource"
+title: "nacos 介绍一下nacos配置中心支持的功能"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos 配置中心主要支持以下功能：1. **动态配置服务**：Nacos 允许用户在中心化的位置管理应用的配置，实现配置的外部化和动态化管理。应用可以在运行时从Nacos服务器动态拉取配置，无需重启即可使新配置生效。当配置发生变化时，Nacos会自动推送配置更新到各个客户端应用，确保应用配置的实"
 tags: ["nacos-opensource","配置中心","功能"]
 keywords: ["nacos-opensource","配置中心","功能"]
 ---
+
+## 用户问题 ： 
+ nacos 介绍一下nacos配置中心支持的功能  
+
+---------------
+## 专家官方解答 ：
 
 Nacos 配置中心主要支持以下功能：
 
@@ -25,9 +31,27 @@ Nacos 配置中心主要支持以下功能：
 7. **权限控制**：集成基于角色的访问控制（RBAC），管理员可以为不同用户或团队分配针对命名空间的读写权限，保证配置管理的安全性。
 
 综上所述，Nacos 配置中心旨在简化分布式系统中的配置管理复杂度，提供高效、可靠且安全的配置管理服务，是构建云原生应用不可或缺的组件之一。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos 介绍 
+ 
+ *[Nacos系统参数介绍](https://nacos.io/docs/latest/guide/admin/system-configurations)
+ 
+ *专家经验：介绍一下nacos的多租户 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13831)给我们反馈。

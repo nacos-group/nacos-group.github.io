@@ -1,13 +1,13 @@
 ---
 id: "question-history-15226"
-title: "k8s pod重启ip会变， cluster.conf怎么配置呢 nacos-opensource"
+title: "k8s pod重启ip会变， cluster.conf怎么配置呢"
 date: "2024-06-12"
 category: "expertConsultation"
 description: "在Kubernetes(K8s)环境中部署Nacos时，由于Pod重启会导致IP变化，这会影响到Nacos客户端正确地连接到Nacos服务器。为了确保Nacos客户端能够动态地发现Nacos服务的地址，即使Pod IP发生变化，你需要采取以下措施来配置`cluster.conf`或其他适当的配置方式"
 ---
 
 ## 用户问题 ： 
- k8s pod重启ip会变， cluster.conf怎么配置呢 nacos-opensource 
+ k8s pod重启ip会变， cluster.conf怎么配置呢  
 
 ---------------
 ## 专家官方解答 ：
@@ -60,7 +60,7 @@ nacos.config.server-addr=nacos-server.default.svc.cluster.local
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15249)给我们反馈。

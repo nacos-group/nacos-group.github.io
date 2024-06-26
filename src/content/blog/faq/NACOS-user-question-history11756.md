@@ -1,12 +1,18 @@
 ---
 id: "question-history-11756"
-title: "nacos 配置PG数据源 nacos-opensource"
+title: "nacos 配置PG数据源"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "为了配置Nacos使用PostgreSQL（PG）作为数据源，您可以遵循以下步骤操作：1. **检查插件是否存在**：   首先，访问[Nacos插件仓库](https://github.com/nacos-group/nacos-plugin)，确认社区是否已经提供了PostgreSQL数据库的插"
 tags: ["nacos","配置","PG","数据源"]
 keywords: ["nacos","配置","PG","数据源"]
 ---
+
+## 用户问题 ： 
+ nacos 配置PG数据源  
+
+---------------
+## 专家官方解答 ：
 
 为了配置Nacos使用PostgreSQL（PG）作为数据源，您可以遵循以下步骤操作：
 
@@ -39,9 +45,25 @@ keywords: ["nacos","配置","PG","数据源"]
 - 最后，启动Nacos服务器检验配置是否成功，如果一切配置无误，Nacos将能够顺利地使用PostgreSQL作为其数据存储后端。
 
 请注意，这些步骤基于Nacos 2.2及以上版本，因为早期版本可能不支持除MySQL和Derby之外的数据库。如果您使用的Nacos版本较旧，请考虑升级。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos的数据库支持情况介绍 
+ 
+ *专家经验：Nacos 配置加密 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13783)给我们反馈。

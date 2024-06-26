@@ -1,12 +1,18 @@
 ---
 id: "question-history-8212"
-title: "目前信创要求已经很普遍了，nacos是否有可能支持国产GauessDB数据库呢 nacos-opensource"
+title: "目前信创要求已经很普遍了，nacos是否有可能支持国产GauessDB数据库呢"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos确实考虑到了对国产数据库的支持需求。根据提供的信息，Nacos从2.2版本开始已经支持了包括PostgreSQL、Oracle及达梦数据库在内的多种数据库，并且提供了数据源插件机制来进一步扩展对其他数据库的支持。这表明Nacos设计时已预留了对不同数据库系统的兼容性接口。针对国产Gaues"
 tags: ["信创","GauessDB数据库","支持"]
 keywords: ["信创","GauessDB数据库","支持"]
 ---
+
+## 用户问题 ： 
+ 目前信创要求已经很普遍了，nacos是否有可能支持国产GauessDB数据库呢  
+
+---------------
+## 专家官方解答 ：
 
 Nacos确实考虑到了对国产数据库的支持需求。根据提供的信息，Nacos从2.2版本开始已经支持了包括PostgreSQL、Oracle及达梦数据库在内的多种数据库，并且提供了数据源插件机制来进一步扩展对其他数据库的支持。这表明Nacos设计时已预留了对不同数据库系统的兼容性接口。
 
@@ -23,9 +29,27 @@ Nacos确实考虑到了对国产数据库的支持需求。根据提供的信息
 由于Nacos鼓励社区贡献，如果成功开发出GauessDB的数据源插件，建议你也考虑将其贡献回Nacos社区，以便其他用户受益。此外，考虑到信创环境的普遍性，这样的贡献也会增强Nacos在国产化环境下的应用能力。
 
 综上所述，虽然直接信息未明确指出GauessDB的支持状态，但Nacos的架构设计及其现有的插件机制为支持GauessDB提供了清晰的路径。通过上述步骤，理论上可以实现Nacos与GauessDB的集成。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos的数据库支持情况介绍 
+ 
+ *专家经验：nacos 多语言支持 
+ 
+ *专家经验：nacos支持服务列表分组隔离了嘛 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13569)给我们反馈。

@@ -1,13 +1,13 @@
 ---
 id: "question-history-14875"
-title: "signature check true, auth check false; nacos-opensource"
+title: "signature check true, auth check false;"
 date: "2024-06-02"
 category: "expertConsultation"
 description: "根据提供的知识内容，对于问题“nacos-opensource signature check true, auth check false”，我们可以分析如下：1. **问题原因分析**：   - **Signature Check True**: 这表明签名检查已经通过，意味着请求的数据完整性得"
 ---
 
 ## 用户问题 ： 
- signature check true, auth check false; nacos-opensource 
+ signature check true, auth check false;  
 
 ---------------
 ## 专家官方解答 ：
@@ -43,7 +43,7 @@ description: "根据提供的知识内容，对于问题“nacos-opensource sign
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=14900)给我们反馈。

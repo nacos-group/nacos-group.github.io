@@ -1,6 +1,6 @@
 ---
 id: "question-history-11206"
-title: "NacosException: http error, code=403,msg=user not fou nacos-opensource"
+title: "NacosException: http error, code=403,msg=user not fou"
 date: "2024-05-29"
 category: "expertConsultation"
 description: "根据提供的知识内容，针对您遇到的问题`NacosException: http error, code=403,msg=user not found!,dataId=application-dev.yml,group=DEFAULT_GROUP,tenant=`，我们可以分析并提出解决方案如下：##"
@@ -9,7 +9,7 @@ keywords: ["http error","code=403","msg=user not found!","dataId=application-dev
 ---
 
 ## 用户问题 ： 
- NacosException: http error, code=403,msg=user not found!,dataId=application-dev.yml,group=DEFAULT_GROUP,tenant= nacos-opensource 
+ NacosException: http error, code=403,msg=user not found!,dataId=application-dev.yml,group=DEFAULT_GROUP,tenant=  
 
 ---------------
 ## 专家官方解答 ：

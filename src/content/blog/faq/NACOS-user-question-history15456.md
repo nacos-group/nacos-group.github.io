@@ -1,13 +1,13 @@
 ---
 id: "question-history-15456"
-title: "nacos服务端版本是2.0.3 java客户端版本是1.4,链接报错com.alibaba.nacos. nacos-opensource"
+title: "nacos服务端版本是2.0.3 java客户端版本是1.4,链接报错com.alibaba.nacos."
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据您提供的信息，nacos服务端版本是2.0.3，而java客户端版本是1.4，出现了错误提示`http error, code=403,msg=unknown user!`。结合我了解的知识，我们可以分析并给出建议：### 分析问题原因：1. 根据**第1篇参考内容**，Nacos服务端2.X版"
 ---
 
 ## 用户问题 ： 
- nacos服务端版本是2.0.3 java客户端版本是1.4,链接报错com.alibaba.nacos.api.exception.NacosException: http error, code=403,msg=unknown user!,dataId=service-dev.yml,group=DEFAULT_GROUP,tenant=4b489428-7973-4b67-ad08-2b79748d4e01 nacos-opensource 
+ nacos服务端版本是2.0.3 java客户端版本是1.4,链接报错com.alibaba.nacos.api.exception.NacosException: http error, code=403,msg=unknown user!,dataId=service-dev.yml,group=DEFAULT_GROUP,tenant=4b489428-7973-4b67-ad08-2b79748d4e01  
 
 ---------------
 ## 专家官方解答 ：
@@ -50,7 +50,7 @@ description: "根据您提供的信息，nacos服务端版本是2.0.3，而java�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15526)给我们反馈。

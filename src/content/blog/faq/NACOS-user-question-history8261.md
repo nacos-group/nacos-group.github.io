@@ -1,12 +1,18 @@
 ---
 id: "question-history-8261"
-title: "本地环境配置的文件，有nacos的账号和密码加密的，有什么方案能在spring启动的时候就加个解密操作，导致时密文的nacos客户端一启动就报错 nacos-opensource"
+title: "本地环境配置的文件，有nacos的账号和密码加密的，有什么方案能在spring启动的时候就加个解密操作，导"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "首先，从问题描述中了解到，您希望在Spring启动时对本地环境配置中Nacos的账号和密码进行解密操作，以避免因密文直接配置导致Nacos客户端启动报错的情况。基于提供的知识内容，我们可以采取以下步骤解决这一问题：### 分析问题原因1. **敏感信息加密需求**：出于安全考虑，Nacos客户端连接"
 tags: ["本地环境配置","账号密码加密","解密操作","spring启动","密文","nacos客户端","报错","方案"]
 keywords: ["本地环境配置","账号密码加密","解密操作","spring启动","密文","nacos客户端","报错","方案"]
 ---
+
+## 用户问题 ： 
+ 本地环境配置的文件，有nacos的账号和密码加密的，有什么方案能在spring启动的时候就加个解密操作，导致时密文的nacos客户端一启动就报错  
+
+---------------
+## 专家官方解答 ：
 
 首先，从问题描述中了解到，您希望在Spring启动时对本地环境配置中Nacos的账号和密码进行解密操作，以避免因密文直接配置导致Nacos客户端启动报错的情况。基于提供的知识内容，我们可以采取以下步骤解决这一问题：
 
@@ -64,9 +70,27 @@ public class NacosConfigDecryption {
 ### 解释
 
 上述步骤首先定义了解密逻辑，并通过Spring的依赖注入机制，在应用启动时自动执行解密操作，将加密的账号密码转换为明文，从而确保Nacos客户端能够使用正确的凭证初始化并成功连接至Nacos服务器。这样的设计既保证了配置的安全性，又确保了应用的正常启动流程。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos 配置加密 
+ 
+ *专家经验：nacos用户密码设置 
+ 
+ *专家经验：无法在nacos/conf下找到nacos-mysql.sql文件 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13610)给我们反馈。

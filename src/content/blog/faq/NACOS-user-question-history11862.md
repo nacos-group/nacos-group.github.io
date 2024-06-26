@@ -1,12 +1,18 @@
 ---
 id: "question-history-11862"
-title: "nacos v1 core cluster nodes 访问权限如何关闭？ nacos-opensource"
+title: "nacos v1 core cluster nodes 访问权限如何关闭？"
 date: "2024-05-28"
 category: "expertConsultation"
 description: "要关闭 `/nacos/v1/core/cluster/nodes` 的访问权限，可以依据以下步骤操作：1. **版本升级**：首先确认你的 Nacos 服务端版本。如果版本低于 2.3.0，建议升级到 2.3.0 或更高版本。这是因为从 2.3.0 版本开始，该接口需要 Admin 权限才能访问，"
 tags: ["访问权限","关闭"]
 keywords: ["访问权限","关闭"]
 ---
+
+## 用户问题 ： 
+ nacos v1 core cluster nodes 访问权限如何关闭？  
+
+---------------
+## 专家官方解答 ：
 
 要关闭 `/nacos/v1/core/cluster/nodes` 的访问权限，可以依据以下步骤操作：
 
@@ -19,9 +25,27 @@ keywords: ["访问权限","关闭"]
 4. **商业版本**：考虑使用阿里云的 Nacos 商业版（MSE），它在开源 Nacos 的基础上提供了更多安全保障，包括针对此类问题的修复和持续维护能力。迁移至云版本可以享受官方提供的安全更新和服务。
 
 请注意，直接“关闭”这个接口的功能并不被原生 Nacos 支持，上述方案主要是通过升级、鉴权和网络控制来达到限制访问的目的。对于更定制化的需求，可能需要深入到 Nacos 源码进行修改并自建部署。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：/nacos/v1/core/cluster/nodes 这个访问权限如何关闭？ 
+ 
+ *专家经验：怎么能让nacos 的actuator 查不到任何信息呢 
+ 
+ *专家经验：Nacos 如何关闭/nacos/v2/console/namespace，使api不对外开放 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=14631)给我们反馈。

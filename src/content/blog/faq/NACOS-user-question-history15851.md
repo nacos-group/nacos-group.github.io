@@ -1,13 +1,13 @@
 ---
 id: "question-history-15851"
-title: "java 注解获取nacos配置中心内容 nacos-opensource"
+title: "java 注解获取nacos配置中心内容"
 date: "2024-06-25"
 category: "expertConsultation"
 description: "要使用Nacos作为Java应用的配置中心并通过注解获取配置内容，您可以按照以下步骤操作，这些步骤基于提供的知识内容：### 1. 准备工作确保您已启动并运行了Nacos Server。如果您尚未完成这一步，请参照[Nacos 快速入门](../quickstart/quick-start.md)进"
 ---
 
 ## 用户问题 ： 
- java 注解获取nacos配置中心内容 nacos-opensource 
+ java 注解获取nacos配置中心内容  
 
 ---------------
 ## 专家官方解答 ：

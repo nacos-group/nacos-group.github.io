@@ -1,13 +1,13 @@
 ---
 id: "question-history-15017"
-title: "Nacos多集群模式是如何部署的 nacos-opensource"
+title: "Nacos多集群模式是如何部署的"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "Nacos多集群模式的部署主要取决于您的业务需求和系统规模。根据之前的讨论，有以下两种基本部署策略：### 1. 分析问题原因- **资源利用与运维便捷性**：若服务数量与配置数量适中，且对数据隔离性要求不高，合并部署能简化结构，便于管理。- **高可用性与性能隔离**：对于大型微服务架构，分离部署"
 ---
 
 ## 用户问题 ： 
- Nacos多集群模式是如何部署的 nacos-opensource 
+ Nacos多集群模式是如何部署的  
 
 ---------------
 ## 专家官方解答 ：

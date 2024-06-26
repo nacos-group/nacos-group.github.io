@@ -1,6 +1,6 @@
 ---
 id: "question-history-11850"
-title: "介绍一下nacos的多租户 nacos-opensource"
+title: "介绍一下nacos的多租户"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos 的多租户特性主要通过“命名空间”实现，旨在支持不同用户或业务团队在共享的 Nacos 实例中独立操作和管理资源，确保数据安全与隔离性。以下是关于 Nacos 多租户的详细介绍：1. **租户标识与命名空间：**   每个租户通过创建独立的“命名空间”来区分，它是逻辑隔离环境的基础单位。命"
@@ -9,7 +9,7 @@ keywords: ["多租户"]
 ---
 
 ## 用户问题 ： 
- 介绍一下nacos的多租户 nacos-opensource 
+ 介绍一下nacos的多租户  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,6 +1,6 @@
 ---
 id: "question-history-8204"
-title: "nacos升级到2.3.0后，元数据大小限制导致部分API无法注册 nacos-opensource"
+title: "nacos升级到2.3.0后，元数据大小限制导致部分API无法注册"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos升级到2.3.0后，遇到“Param 'Metadata' is illegal, the param length should not exceed 1024.”的错误，意味着您的部分API无法注册，这是由于元数据大小超过了Nacos服务端新设定的限制1024个字符。这一改变旨在增强"
@@ -9,7 +9,7 @@ keywords: ["nacos","2.3.0","元数据大小限制","API无法注册"]
 ---
 
 ## 用户问题 ： 
- nacos升级到2.3.0后，元数据大小限制导致部分API无法注册 nacos-opensource 
+ nacos升级到2.3.0后，元数据大小限制导致部分API无法注册  
 
 ---------------
 ## 专家官方解答 ：

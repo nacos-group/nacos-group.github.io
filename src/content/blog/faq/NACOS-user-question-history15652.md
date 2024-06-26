@@ -1,13 +1,13 @@
 ---
 id: "question-history-15652"
-title: "Nacos 配置 tomcat.connection-timeout=5000 nacos-opensource"
+title: "Nacos 配置 tomcat.connection-timeout=5000"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "根据您提供的问题“nacos-opensource Nacos 配置 tomcat.connection-timeout=5000”，这看起来像是您想要在Nacos中配置Tomcat的连接超时设置。不过，直接从您的问题中，我们无法确切判断是遇到了配置问题、如何配置、还是配置后遇到何种困难（比如配置不"
 ---
 
 ## 用户问题 ： 
- Nacos 配置 tomcat.connection-timeout=5000 nacos-opensource 
+ Nacos 配置 tomcat.connection-timeout=5000  
 
 ---------------
 ## 专家官方解答 ：
@@ -72,7 +72,7 @@ description: "根据您提供的问题“nacos-opensource Nacos 配置 tomcat.co
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15704)给我们反馈。

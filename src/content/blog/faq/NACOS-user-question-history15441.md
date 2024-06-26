@@ -1,13 +1,13 @@
 ---
 id: "question-history-15441"
-title: "2.1.2版本如何禁用鉴权功能 nacos-opensource"
+title: "2.1.2版本如何禁用鉴权功能"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "要禁用Nacos-OpenSource 2.1.2版本的鉴权功能，您需要调整其配置文件`application.properties`中的相关设置。根据提供的知识，您可以遵循以下步骤操作：1. **定位配置文件**：   确保您能够访问到Nacos服务器的配置文件`application.prope"
 ---
 
 ## 用户问题 ： 
- 2.1.2版本如何禁用鉴权功能 nacos-opensource 
+ 2.1.2版本如何禁用鉴权功能  
 
 ---------------
 ## 专家官方解答 ：
@@ -53,7 +53,7 @@ description: "要禁用Nacos-OpenSource 2.1.2版本的鉴权功能，您需要�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15511)给我们反馈。

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15220"
-title: "nacos需要暴露的端口都有哪些？全部列出 nacos-opensource"
+title: "nacos需要暴露的端口都有哪些？全部列出"
 date: "2024-06-12"
 category: "expertConsultation"
 description: "Nacos在部署时需要暴露的端口及其默认值如下：1. **主端口 (HTTP)**: 默认为8848，此端口用于客户端、控制台及OpenAPI的HTTP通信。2. **客户端gRPC端口**: 默认为主端口+1000，即9848，用于客户端通过gRPC协议向服务端发起连接和请求。3. **服务端gR"
 ---
 
 ## 用户问题 ： 
- nacos需要暴露的端口都有哪些？全部列出 nacos-opensource 
+ nacos需要暴露的端口都有哪些？全部列出  
 
 ---------------
 ## 专家官方解答 ：

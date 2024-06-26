@@ -1,6 +1,6 @@
 ---
 id: "question-history-11019"
-title: "Nacos nacos使用稳定吗？我们还在使用eureka nacos-opensource"
+title: "Nacos nacos使用稳定吗？我们还在使用eureka"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos自2018年开源至今，经历了多个大版本迭代，从1.0版本起就被视为生产环境下的稳定选择，并被广泛应用于不同行业。进入2.X版本后，Nacos不仅在架构和数据模型上进行了优化，显著提升了性能和稳定性，还扩展了插件机制以支持鉴权、脱敏及可观测性等多方面需求，展现出高度的稳定性和持续的发展活力。"
@@ -9,7 +9,7 @@ keywords: ["nacos","稳定","使用","eureka"]
 ---
 
 ## 用户问题 ： 
- Nacos nacos使用稳定吗？我们还在使用eureka nacos-opensource 
+ Nacos nacos使用稳定吗？我们还在使用eureka  
 
 ---------------
 ## 专家官方解答 ：

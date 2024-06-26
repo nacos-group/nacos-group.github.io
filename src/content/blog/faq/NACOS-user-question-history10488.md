@@ -1,6 +1,6 @@
 ---
 id: "question-history-10488"
-title: "#Nacos支持哪些存储介质？ nacos-opensource"
+title: "#Nacos支持哪些存储介质？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos主要支持以下存储介质：1. **MySQL**：Nacos官方默认支持MySQL作为配置数据的存储后台，要求版本为5.6及以上。这为大多数用户提供了一个稳定且广泛使用的存储选项。2. **Derby**：除了MySQL，Nacos还内置支持Derby数据库，这是一个轻量级的嵌入式数据库，适"
@@ -9,7 +9,7 @@ keywords: ["Nacos","存储介质"]
 ---
 
 ## 用户问题 ： 
- #Nacos支持哪些存储介质？ nacos-opensource 
+ #Nacos支持哪些存储介质？  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,12 +1,18 @@
 ---
 id: "question-history-12712"
-title: "nacos2.3数据库兼容postgresql的步骤 nacos-opensource"
+title: "nacos2.3数据库兼容postgresql的步骤"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "为了使Nacos 2.3版本兼容PostgreSQL数据库，您可以遵循以下步骤操作：1. **检查插件与版本兼容性**：   首先，确认Nacos 2.3版本支持PostgreSQL。根据提供的知识，Nacos从2.2版本开始支持PostgreSQL，因此2.3版本是支持的。您可以在[Nacos官方"
 tags: ["nacos2.3","数据库兼容","postgresql","步骤"]
 keywords: ["nacos2.3","数据库兼容","postgresql","步骤"]
 ---
+
+## 用户问题 ： 
+ nacos2.3数据库兼容postgresql的步骤  
+
+---------------
+## 专家官方解答 ：
 
 为了使Nacos 2.3版本兼容PostgreSQL数据库，您可以遵循以下步骤操作：
 
@@ -41,9 +47,27 @@ keywords: ["nacos2.3","数据库兼容","postgresql","步骤"]
    - 访问Nacos控制台，检查各项功能是否正常运作，确认数据存储与读取无误。
 
 通过上述步骤，您应该能够成功地使Nacos 2.3版本兼容并使用PostgreSQL数据库。在整个过程中，确保密切关注官方文档和社区更新，以便获取最新的兼容信息和解决可能出现的问题。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Nacos 2.0 升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading)
+ 
+ *专家经验：Nacos的数据库支持情况介绍 
+ 
+ *专家经验：Nacos升级的具体步骤 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13863)给我们反馈。

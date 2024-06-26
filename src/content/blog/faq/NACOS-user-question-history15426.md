@@ -1,13 +1,13 @@
 ---
 id: "question-history-15426"
-title: "nacos 支持控制台权限配置吗？ nacos-opensource"
+title: "nacos 支持控制台权限配置吗？"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "Nacos开源版本支持控制台权限配置的间接方式。虽然它本身不直接支持复杂的控制台权限配置功能（如AK/SK鉴权，根据知识:#开源版本可以支持ak/sk鉴权吗？中的，开源版不支持ak/sk鉴权），但是可以通过配置来实现一定程度上的控制台访问管理。从知识:#关闭默认控制台中我们知道，从Nacos 2.3"
 ---
 
 ## 用户问题 ： 
- nacos 支持控制台权限配置吗？ nacos-opensource 
+ nacos 支持控制台权限配置吗？  
 
 ---------------
 ## 专家官方解答 ：
@@ -41,7 +41,7 @@ Nacos开源版本支持控制台权限配置的间接方式。虽然它本身不
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15496)给我们反馈。

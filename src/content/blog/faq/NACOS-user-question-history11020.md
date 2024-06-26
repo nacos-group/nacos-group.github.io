@@ -1,6 +1,6 @@
 ---
 id: "question-history-11020"
-title: "Nacos 大佬们针对nacos的异常监控指标有做报警吗？ nacos-opensource"
+title: "Nacos 大佬们针对nacos的异常监控指标有做报警吗？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos的监控体系中，确实包含了对异常监控指标的支持，并且能够配置报警机制以应对异常情况。根据Nacos监控手册以及Nacos-Sync监控的相关信息，可以总结出以下步骤来实现Nacos的异常监控指标报警：1. **监控数据暴露**：   首先确保你的Nacos（特别是Nacos 0.8.0及以"
@@ -9,7 +9,7 @@ keywords: ["异常监控指标","报警"]
 ---
 
 ## 用户问题 ： 
- Nacos 大佬们针对nacos的异常监控指标有做报警吗？ nacos-opensource 
+ Nacos 大佬们针对nacos的异常监控指标有做报警吗？  
 
 ---------------
 ## 专家官方解答 ：

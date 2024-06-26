@@ -1,6 +1,6 @@
 ---
 id: "question-history-11203"
-title: "nacos 启动命令 nacos-opensource"
+title: "nacos 启动命令"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，Nacos的启动命令如下：对于Linux/Unix/Mac系统：1. 打开终端，进入Nacos的bin目录。2. 执行启动命令：`sh startup.sh -m standalone`对于Windows系统：1. 打开命令提示符或PowerShell，进入Nacos的bin目录"
@@ -9,7 +9,7 @@ keywords: ["nacos","启动命令"]
 ---
 
 ## 用户问题 ： 
- nacos 启动命令 nacos-opensource 
+ nacos 启动命令  
 
 ---------------
 ## 专家官方解答 ：

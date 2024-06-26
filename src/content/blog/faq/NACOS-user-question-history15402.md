@@ -1,13 +1,13 @@
 ---
 id: "question-history-15402"
-title: "Nacos 如何配置获取自定义的配置文件 nacos-opensource"
+title: "Nacos 如何配置获取自定义的配置文件"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "要配置Nacos以获取自定义的配置文件，您可以遵循以下步骤操作，这基于您提供的信息和Nacos的工作机制：### 分析问题原因在微服务架构中，Nacos作为一个动态配置中心，允许开发者集中管理应用的配置信息。自定义配置文件的需求通常涉及到如何在应用程序中正确设置Nacos客户端以指向特定的配置数据。"
 ---
 
 ## 用户问题 ： 
- Nacos 如何配置获取自定义的配置文件 nacos-opensource 
+ Nacos 如何配置获取自定义的配置文件  
 
 ---------------
 ## 专家官方解答 ：

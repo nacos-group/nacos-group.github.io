@@ -1,6 +1,6 @@
 ---
 id: "question-history-8209"
-title: "nacos 客户端与服务端进行grpc通信,我们服务器有特殊需要指定通信的grpc客户端 端口 ,请问有支 nacos-opensource"
+title: "nacos 客户端与服务端进行grpc通信,我们服务器有特殊需要指定通信的grpc客户端 端口 ,请问有支"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos确实支持指定gRPC客户端通信端口的需求。根据提供的知识，这里是如何操作的具体步骤：1. **服务端端口指定**：   - Nacos服务端可以通过配置`server.port`来指定其主端口。其他端口，包括gRPC客户端所对应的端口，会根据预设的偏移量自动计算。默认情况下，gRPC客户端"
@@ -9,7 +9,7 @@ keywords: ["nacos","grpc通信","服务器","指定","通信","grpc客户端","�
 ---
 
 ## 用户问题 ： 
- nacos 客户端与服务端进行grpc通信,我们服务器有特殊需要指定通信的grpc客户端 端口 ,请问有支持么 nacos-opensource 
+ nacos 客户端与服务端进行grpc通信,我们服务器有特殊需要指定通信的grpc客户端 端口 ,请问有支持么  
 
 ---------------
 ## 专家官方解答 ：

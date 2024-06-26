@@ -1,13 +1,13 @@
 ---
 id: "question-history-15412"
-title: "如何结合nacos使用feign nacos-opensource"
+title: "如何结合nacos使用feign"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "在Nacos与Spring Boot集成的场景中，使用Feign客户端进行服务间调用时，可以遵循以下步骤结合Nacos使用Feign：1. **添加依赖**:   首先确保你的项目中已经包含了Spring Cloud Alibaba的相关依赖，特别是`spring-cloud-starter-ali"
 ---
 
 ## 用户问题 ： 
- 如何结合nacos使用feign nacos-opensource 
+ 如何结合nacos使用feign  
 
 ---------------
 ## 专家官方解答 ：
@@ -94,7 +94,7 @@ description: "在Nacos与Spring Boot集成的场景中，使用Feign客户端进
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15482)给我们反馈。

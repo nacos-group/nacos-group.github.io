@@ -1,12 +1,18 @@
 ---
 id: "question-history-11788"
-title: "使用nacos 作为微服务dubbo的注册中心、配置中心搭建的具体方法 nacos-opensource"
+title: "使用nacos 作为微服务dubbo的注册中心、配置中心搭建的具体方法"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要在项目中使用Nacos作为Dubbo微服务的注册中心和配置中心，可以遵循以下步骤进行搭建：### 环境准备1. **安装Java环境**：确保系统中已安装Java Development Kit (JDK) 8或更高版本。2. **下载并启动Nacos Server**：   - 访问[Nacos"
 tags: ["nacos","微服务","dubbo","注册中心","配置中心","搭建","具体方法"]
 keywords: ["nacos","微服务","dubbo","注册中心","配置中心","搭建","具体方法"]
 ---
+
+## 用户问题 ： 
+ 使用nacos 作为微服务dubbo的注册中心、配置中心搭建的具体方法  
+
+---------------
+## 专家官方解答 ：
 
 要在项目中使用Nacos作为Dubbo微服务的注册中心和配置中心，可以遵循以下步骤进行搭建：
 
@@ -58,9 +64,23 @@ keywords: ["nacos","微服务","dubbo","注册中心","配置中心","搭建","�
 - 通过服务消费者应用调用远程服务，验证服务调用是否正常。
 
 通过上述步骤，您可以完成使用Nacos作为Dubbo微服务的注册中心和配置中心的搭建。请根据实际情况调整配置细节，如Nacos服务器地址、命名空间等。如果在实施过程中遇到具体问题，建议查阅Nacos和Dubbo的官方文档或社区论坛获取更详细的解决方案。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Dubbo 融合 Nacos 成为注册中心](https://nacos.io/docs/latest/ecology/use-nacos-with-dubbo)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13799)给我们反馈。

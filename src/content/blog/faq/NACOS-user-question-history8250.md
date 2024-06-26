@@ -1,6 +1,6 @@
 ---
 id: "question-history-8250"
-title: "Does nacos 2.2.3 support jdk17 nacos-opensource"
+title: "Does nacos 2.2.3 support jdk17"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos 2.2.3版本确实支持JDK17。根据提供的知识内容，Nacos支持JDK8到JDK17的所有版本，并且理论上也支持JDK17以上的版本，但更高版本可能需要更多的测试验证。因此，你可以放心地在JDK17环境下使用Nacos 2.2.3。"
@@ -9,7 +9,7 @@ keywords: ["nacos","2.2.3","jdk17"]
 ---
 
 ## 用户问题 ： 
- Does nacos 2.2.3 support jdk17 nacos-opensource 
+ Does nacos 2.2.3 support jdk17  
 
 ---------------
 ## 专家官方解答 ：

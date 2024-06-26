@@ -1,13 +1,13 @@
 ---
 id: "question-history-14990"
-title: "centos7上怎么部署nacos nacos-opensource"
+title: "centos7上怎么部署nacos"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "在CentOS 7上部署Nacos可以遵循以下步骤，基于提供的知识内容：### 1. 确保环境要求满足- **操作系统**: 确认您的CentOS 7系统符合Nacos运行所需的64位操作系统环境。- **Java环境**: 安装并配置Java 1.8+。您可以使用如下命令安装OpenJDK 8： "
 ---
 
 ## 用户问题 ： 
- centos7上怎么部署nacos nacos-opensource 
+ centos7上怎么部署nacos  
 
 ---------------
 ## 专家官方解答 ：

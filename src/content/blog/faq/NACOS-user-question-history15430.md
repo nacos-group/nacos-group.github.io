@@ -1,13 +1,13 @@
 ---
 id: "question-history-15430"
-title: "如何切换Nacos使用SQL Server数据库 nacos-opensource"
+title: "如何切换Nacos使用SQL Server数据库"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "要切换Nacos以使用SQL Server（MSSQL）数据库，我们可以按照以下步骤操作：### 分析问题原因根据提供的知识，Nacos官方默认支持MySQL和Derby数据库，但自Nacos 2.2版本起，通过引入数据源插件机制，已扩展支持包括PostgreSQL、Oracle及达梦数据库在内的多"
 ---
 
 ## 用户问题 ： 
- 如何切换Nacos使用SQL Server数据库 nacos-opensource 
+ 如何切换Nacos使用SQL Server数据库  
 
 ---------------
 ## 专家官方解答 ：

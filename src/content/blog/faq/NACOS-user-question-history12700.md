@@ -1,6 +1,6 @@
 ---
 id: "question-history-12700"
-title: "nacos有时会调到下线的服务 nacos-opensource"
+title: "nacos有时会调到下线的服务"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos环境中，调到下线服务的问题可能是由以下几个原因造成的：1. **服务提供者未彻底关闭**：确保服务提供者进程完全终止，无残留心跳导致Nacos未能正确摘除服务实例。检查是否有其他进程错误地注册相同服务。2. **推空保护机制**：若服务下线后没有可用实例，检查是否因推空保护导致老实例依然"
@@ -9,7 +9,7 @@ keywords: ["nacos","调到下线的服务"]
 ---
 
 ## 用户问题 ： 
- nacos有时会调到下线的服务 nacos-opensource 
+ nacos有时会调到下线的服务  
 
 ---------------
 ## 专家官方解答 ：

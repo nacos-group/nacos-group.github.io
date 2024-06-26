@@ -1,12 +1,18 @@
 ---
 id: "question-history-13994"
-title: "nacos api 介绍 nacos-opensource"
+title: "nacos api 介绍"
 date: "2024-05-22"
 category: "expertConsultation"
 description: "Nacos API介绍主要涉及其提供的核心功能，包括服务发现、配置管理、动态DNS服务等。以下是对Nacos API几个关键领域的概述，以及如何开始使用它们的一些建议：### 1. 服务发现与健康检查Nacos允许通过API注册服务实例并进行健康检查。服务提供者可以使用API向Nacos服务器注册服"
 tags: ["nacos","api","介绍"]
 keywords: ["nacos","api","介绍"]
 ---
+
+## 用户问题 ： 
+ nacos api 介绍  
+
+---------------
+## 专家官方解答 ：
 
 Nacos API介绍主要涉及其提供的核心功能，包括服务发现、配置管理、动态DNS服务等。以下是对Nacos API几个关键领域的概述，以及如何开始使用它们的一些建议：
 
@@ -25,9 +31,27 @@ Nacos的动态DNS服务API支持域名解析与服务路由，允许根据策略
 - **实践操作：** 使用HTTP客户端或集成Nacos SDK到你的应用中，开始尝试调用这些API。记得在调用API时，根据需要指定正确的命名空间（如果有使用多租户特性的话），确保操作的隔离性和安全性。
 
 通过遵循上述步骤，你可以有效地利用Nacos API来管理你的微服务架构中的服务发现、配置和DNS需求。如果在具体实施过程中遇到问题，建议直接查阅Nacos的官方文档或社区论坛寻求更详细的解决方案。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos "status":501,"error":"Not Implemented","message":"no such api:...","path":"... 
+ 
+ *专家经验：Nacos 介绍 
+ 
+ *专家经验：介绍一下nacos的多租户 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=14012)给我们反馈。

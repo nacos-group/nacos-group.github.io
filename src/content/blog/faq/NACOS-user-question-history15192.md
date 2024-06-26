@@ -1,13 +1,13 @@
 ---
 id: "question-history-15192"
-title: "dubbo对接注册中心使用注解 nacos-opensource"
+title: "dubbo对接注册中心使用注解"
 date: "2024-06-08"
 category: "expertConsultation"
 description: "为了帮助您解决关于nacos-opensource与dubbo对接注册中心并使用注解的问题，我将依据现有的知识库进行分析和解答。### 分析问题原因在Dubbo框架中，要实现与Nacos作为服务注册中心的对接，并通过注解方式配置服务，关键在于正确设置Dubbo的配置以及在服务提供者和服务消费者应用中"
 ---
 
 ## 用户问题 ： 
- dubbo对接注册中心使用注解 nacos-opensource 
+ dubbo对接注册中心使用注解  
 
 ---------------
 ## 专家官方解答 ：
@@ -103,7 +103,7 @@ description: "为了帮助您解决关于nacos-opensource与dubbo对接注册中
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15212)给我们反馈。

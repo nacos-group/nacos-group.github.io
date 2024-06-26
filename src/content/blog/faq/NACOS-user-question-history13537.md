@@ -1,12 +1,18 @@
 ---
 id: "question-history-13537"
-title: "Invalid server identity key or value, Please make sure set `nacos.core.auth.server.identity.key nacos-opensource"
+title: "Invalid server identity key or value, Please make sur"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "遇到“Invalid server identity key or value, Please make sure set `nacos.core.auth.server.identity.key`”的错误提示，表明Nacos在尝试验证服务器标识密钥(key)及其对应的值(value)时发现配置不正"
 tags: ["Invalid server identity key or value","nacos.core.auth.server.identity.key"]
 keywords: ["Invalid server identity key or value","nacos.core.auth.server.identity.key"]
 ---
+
+## 用户问题 ： 
+ Invalid server identity key or value, Please make sure set `nacos.core.auth.server.identity.key  
+
+---------------
+## 专家官方解答 ：
 
 遇到“Invalid server identity key or value, Please make sure set `nacos.core.auth.server.identity.key`”的错误提示，表明Nacos在尝试验证服务器标识密钥(key)及其对应的值(value)时发现配置不正确或缺失。根据提供的知识，这是鉴权过程的一部分，确保只有合法的服务能够接入。以下是根据所述知识分析问题原因及提供解决方案的步骤：
 
@@ -36,9 +42,27 @@ keywords: ["Invalid server identity key or value","nacos.core.auth.server.identi
 - **遵循最佳实践**：参考Nacos官方文档中关于[权限认证](https://nacos.io/docs/latest/guide/user/auth/)的部分，确保配置与实践符合最新安全标准。
 
 以上步骤应当解决您遇到的问题，并增强Nacos系统的安全性。如果问题依然存在，可能需要进一步排查配置细节或检查网络日志以获取更多信息。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos鉴权相关建议 
+ 
+ *专家经验：nacso 报 403 invalid token 
+ 
+ *专家经验：启动报错java.lang.IllegalArgumentException: the length of secret key must great than or equal 32 bytes... 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13918)给我们反馈。

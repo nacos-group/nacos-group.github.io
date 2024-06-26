@@ -1,6 +1,6 @@
 ---
 id: "question-history-10492"
-title: "#Nacos的服务注册与发现是如何保证实时性的？ nacos-opensource"
+title: "#Nacos的服务注册与发现是如何保证实时性的？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos的服务注册与发现机制确保实时性主要依赖于以下几个核心组件和技术实践：1. **心跳检测**：Nacos实现了健康检查功能，其中客户端心跳是关键一环。每个注册到Nacos服务器的服务实例都需要定期发送心跳包到服务器，以表明自身仍然在线且运行正常。心跳机制确保了服务状态的实时更新，一旦心跳超时"
@@ -9,7 +9,7 @@ keywords: ["Nacos","服务注册","发现","实时性"]
 ---
 
 ## 用户问题 ： 
- #Nacos的服务注册与发现是如何保证实时性的？ nacos-opensource 
+ #Nacos的服务注册与发现是如何保证实时性的？  
 
 ---------------
 ## 专家官方解答 ：

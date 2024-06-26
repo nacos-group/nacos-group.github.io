@@ -1,6 +1,6 @@
 ---
 id: "question-history-14706"
-title: "怎么清除nacos缓存 nacos-opensource"
+title: "怎么清除nacos缓存"
 date: "2024-05-29"
 category: "expertConsultation"
 description: "要清除Nacos的缓存，具体步骤如下：1. **识别缓存位置**：   首先，确定Nacos客户端缓存的位置。通常情况下，Nacos客户端的缓存默认存储在`$user.home/nacos`目录下。但是，如果在启动客户端时通过JVM参数设置了`JM.SNAPSHOT.PATH`，那么缓存将位于您自定"
@@ -9,7 +9,7 @@ keywords: ["nacos","清除","缓存"]
 ---
 
 ## 用户问题 ： 
- 怎么清除nacos缓存 nacos-opensource 
+ 怎么清除nacos缓存  
 
 ---------------
 ## 专家官方解答 ：

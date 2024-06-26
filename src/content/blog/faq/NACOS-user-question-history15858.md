@@ -1,13 +1,13 @@
 ---
 id: "question-history-15858"
-title: "nacos配置中心下载 nacos-opensource"
+title: "nacos配置中心下载"
 date: "2024-06-25"
 category: "expertConsultation"
 description: "要下载Nacos配置中心，您需要按照以下步骤操作：1. **访问Nacos官方GitHub仓库**：   首先，您需要访问Nacos的GitHub页面，这里提供了Nacos的所有相关资源和文档。Nacos的GitHub地址是：[https://github.com/alibaba/nacos](ht"
 ---
 
 ## 用户问题 ： 
- nacos配置中心下载 nacos-opensource 
+ nacos配置中心下载  
 
 ---------------
 ## 专家官方解答 ：

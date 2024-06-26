@@ -1,13 +1,13 @@
 ---
 id: "question-history-15438"
-title: "k8s部署nacos集群，访问域名提示1080端口 nacos-opensource"
+title: "k8s部署nacos集群，访问域名提示1080端口"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据您提供的信息，您遇到了在K8s部署Nacos集群后，通过访问域名提示1080端口的问题。首先，让我们分析这个问题的原因：1. **端口暴露问题**：Nacos 默认使用的端口是8848，而您提到的是1080端口，这可能意味着Nacos服务并没有正确地映射到预期的8848端口，或者是存在其他服务占"
 ---
 
 ## 用户问题 ： 
- k8s部署nacos集群，访问域名提示1080端口 nacos-opensource 
+ k8s部署nacos集群，访问域名提示1080端口  
 
 ---------------
 ## 专家官方解答 ：
@@ -61,7 +61,7 @@ description: "根据您提供的信息，您遇到了在K8s部署Nacos集群后�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15508)给我们反馈。

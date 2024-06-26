@@ -1,6 +1,6 @@
 ---
 id: "question-history-12460"
-title: "docker-compose -f example standalone-derby.yaml up 数据 nacos-opensource"
+title: "docker-compose -f example standalone-derby.yaml up 数据"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "当您使用 `docker-compose -f example/standalone-derby.yaml up` 命令启动 Nacos 时，根据 Nacos 的配置和默认行为，数据将会保存在 Derby 数据库中。Derby 是一个嵌入式数据库，这意味着它不需要单独安装，数据文件会直接存储在 Na"
@@ -9,7 +9,7 @@ keywords: ["docker-compose","standalone-derby.yaml","数据保存"]
 ---
 
 ## 用户问题 ： 
- docker-compose -f example standalone-derby.yaml up 数据保存在哪里了 nacos-opensource 
+ docker-compose -f example standalone-derby.yaml up 数据保存在哪里了  
 
 ---------------
 ## 专家官方解答 ：

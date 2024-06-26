@@ -1,13 +1,13 @@
 ---
 id: "question-history-15642"
-title: "本地项目怎么配置才能读取到Nacos的配置文件 nacos-opensource"
+title: "本地项目怎么配置才能读取到Nacos的配置文件"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "要使本地项目能够读取到Nacos的配置文件，你需要按照以下步骤进行配置：1. **添加Nacos依赖**：确保你的项目中包含了Nacos Config的依赖，这通常是通过Maven或Gradle来完成的。这一步骤虽然在提供的知识中未直接提及，但是是配置Nacos作为配置中心的前提。2. **配置Na"
 ---
 
 ## 用户问题 ： 
- 本地项目怎么配置才能读取到Nacos的配置文件 nacos-opensource 
+ 本地项目怎么配置才能读取到Nacos的配置文件  
 
 ---------------
 ## 专家官方解答 ：
@@ -61,7 +61,7 @@ description: "要使本地项目能够读取到Nacos的配置文件，你需要�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15694)给我们反馈。

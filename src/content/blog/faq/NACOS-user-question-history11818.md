@@ -1,12 +1,18 @@
 ---
 id: "question-history-11818"
-title: "nacos 支持 pgSQL么？ nacos-opensource"
+title: "nacos 支持 pgSQL么？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos确实支持PostgreSQL（简称PgSQL）。从Nacos2.2版本开始，官方已经加入了对PostgreSQL、Oracle及达梦数据库的支持。为了在Nacos中使用PostgreSQL，你可以按照以下具体步骤操作：1. **检查插件是否存在**：   首先访问[Nacos的GitHub"
 tags: ["nacos","pgSQL"]
 keywords: ["nacos","pgSQL"]
 ---
+
+## 用户问题 ： 
+ nacos 支持 pgSQL么？  
+
+---------------
+## 专家官方解答 ：
 
 Nacos确实支持PostgreSQL（简称PgSQL）。从Nacos2.2版本开始，官方已经加入了对PostgreSQL、Oracle及达梦数据库的支持。为了在Nacos中使用PostgreSQL，你可以按照以下具体步骤操作：
 
@@ -34,9 +40,25 @@ Nacos确实支持PostgreSQL（简称PgSQL）。从Nacos2.2版本开始，官方�
    完成上述配置后，启动Nacos服务器，它将使用PostgreSQL作为其后端数据库。
 
 综上所述，通过使用官方或社区提供的PostgreSQL插件，并适当配置，Nacos能够顺利支持PostgreSQL数据库。确保遵循正确的配置步骤以保证Nacos与PostgreSQL的兼容与稳定运行。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos的数据库支持情况介绍 
+ 
+ *专家经验：Nacos最大能水平扩容多少个节点 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13807)给我们反馈。

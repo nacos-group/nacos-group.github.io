@@ -1,13 +1,13 @@
 ---
 id: "question-history-15275"
-title: "nacos 鉴权涉及到端口有哪些 nacos-opensource"
+title: "nacos 鉴权涉及到端口有哪些"
 date: "2024-06-13"
 category: "expertConsultation"
 description: "在Nacos的鉴权过程中，直接涉及的端口主要是Nacos服务的HTTP端口，即默认的8848端口。这是因为无论是Java SDK中的鉴权配置、其他语言SDK的鉴权（虽然具体方法未给出，但原理相同），还是通过Open-API进行鉴权操作，所有的鉴权请求都是通过HTTP协议发送到Nacos服务器的。例如"
 ---
 
 ## 用户问题 ： 
- nacos 鉴权涉及到端口有哪些 nacos-opensource 
+ nacos 鉴权涉及到端口有哪些  
 
 ---------------
 ## 专家官方解答 ：
@@ -65,7 +65,7 @@ description: "在Nacos的鉴权过程中，直接涉及的端口主要是Nacos�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15289)给我们反馈。

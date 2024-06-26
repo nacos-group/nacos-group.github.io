@@ -1,13 +1,13 @@
 ---
 id: "question-history-15228"
-title: "在阿里云ecs服务器中，启动nacos为什么会出现cpu占满的情况 nacos-opensource"
+title: "在阿里云ecs服务器中，启动nacos为什么会出现cpu占满的情况"
 date: "2024-06-12"
 category: "expertConsultation"
 description: "在阿里云ECS服务器中启动Nacos出现CPU占满的情况，根据已有知识，我们可以分析可能的原因及提供相应的排查步骤，但请注意，这里并没有直接提供针对CPU占用高的具体解决方案，因此我会基于现有信息给出分析和建议的排查方向。### 分析原因：1. **配置不当**：检查Nacos的配置是否合理，不恰当"
 ---
 
 ## 用户问题 ： 
- 在阿里云ecs服务器中，启动nacos为什么会出现cpu占满的情况 nacos-opensource 
+ 在阿里云ecs服务器中，启动nacos为什么会出现cpu占满的情况  
 
 ---------------
 ## 专家官方解答 ：
@@ -65,7 +65,7 @@ description: "在阿里云ECS服务器中启动Nacos出现CPU占满的情况，�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15251)给我们反馈。

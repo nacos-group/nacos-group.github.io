@@ -1,13 +1,13 @@
 ---
 id: "question-history-15855"
-title: "监听nacos配置中心刷新回调 nacos-opensource"
+title: "监听nacos配置中心刷新回调"
 date: "2024-06-25"
 category: "expertConsultation"
 description: "为了解决Nacos配置中心监听配置刷新回调的问题，我们可以按照以下步骤进行排查和解决：1. **检查网络连接与配置信息**：    - 首先确保你的客户端能够正常连接到Nacos服务器，检查日志中是否存在网络连接失败或超时的错误信息。同时确认`dataId`、`group`以及命名空间是否配置正确，"
 ---
 
 ## 用户问题 ： 
- 监听nacos配置中心刷新回调 nacos-opensource 
+ 监听nacos配置中心刷新回调  
 
 ---------------
 ## 专家官方解答 ：

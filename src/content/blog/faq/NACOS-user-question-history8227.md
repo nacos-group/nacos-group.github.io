@@ -1,12 +1,18 @@
 ---
 id: "question-history-8227"
-title: "请问构建nacos集群时，通过VIP nginx构建性能好还是直接注册到集群性能好？ nacos-opensource"
+title: "请问构建nacos集群时，通过VIP nginx构建性能好还是直接注册到集群性能好？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在构建Nacos集群时，关于VIP Nginx与直接注册到集群的性能比较，我们可以从以下几个方面进行分析：1. **网络路径与负载均衡**：   - VIP Nginx方式：通过虚拟IP（VIP）配合Nginx实现负载均衡，可以提供统一的访问入口，Nginx能够根据配置策略智能地分发请求到后端不同的"
 tags: ["nacos","集群","VIP nginx","构建性能","直接注册","集群性能"]
 keywords: ["nacos","集群","VIP nginx","构建性能","直接注册","集群性能"]
 ---
+
+## 用户问题 ： 
+ 请问构建nacos集群时，通过VIP nginx构建性能好还是直接注册到集群性能好？  
+
+---------------
+## 专家官方解答 ：
 
 在构建Nacos集群时，关于VIP Nginx与直接注册到集群的性能比较，我们可以从以下几个方面进行分析：
 
@@ -30,9 +36,25 @@ keywords: ["nacos","集群","VIP nginx","构建性能","直接注册","集群性
 - 若追求极致的性能和架构简洁性，且不介意在客户端进行更多配置管理，直接注册到Nacos集群的方法可能更合适。
 
 由于具体性能差异还受到网络环境、硬件配置、负载情况等多种因素影响，实际部署前建议进行充分的测试和评估。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Nacos 监控手册](https://nacos.io/docs/latest/guide/admin/monitor-guide)
+ 
+ *专家经验：NACOS 配置中心和注册中心是分两个集群部署还是放在一个集群中 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13580)给我们反馈。

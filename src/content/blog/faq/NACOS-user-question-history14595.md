@@ -1,12 +1,18 @@
 ---
 id: "question-history-14595"
-title: "nacos 和MSE 有什么区别？ nacos-opensource"
+title: "nacos 和MSE 有什么区别？"
 date: "2024-05-27"
 category: "expertConsultation"
 description: "Nacos和微服务引擎(MSE)的主要区别在于它们的范畴和服务内容。Nacos是一个由阿里巴巴开源的动态服务发现、配置管理和服务管理平台，专注于提供服务发现、健康检查、配置管理等核心功能，适用于构建云原生应用。以下是Nacos的核心特性摘要：1. **服务发现与健康检查**：支持DNS和RPC服务发"
 tags: ["nacos","MSE","区别"]
 keywords: ["nacos","MSE","区别"]
 ---
+
+## 用户问题 ： 
+ nacos 和MSE 有什么区别？  
+
+---------------
+## 专家官方解答 ：
 
 Nacos和微服务引擎(MSE)的主要区别在于它们的范畴和服务内容。Nacos是一个由阿里巴巴开源的动态服务发现、配置管理和服务管理平台，专注于提供服务发现、健康检查、配置管理等核心功能，适用于构建云原生应用。以下是Nacos的核心特性摘要：
 
@@ -24,9 +30,27 @@ Nacos和微服务引擎(MSE)的主要区别在于它们的范畴和服务内容�
 5. **可观测性**：提供基础与高级监控告警，如服务与配置推送轨迹监控。
 
 简而言之，Nacos是一个强大的微服务基础设施组件，而MSE是包含并超越Nacos的一个全面的微服务管理与运维解决方案，特别适合追求高可用性、易用性和安全性的企业级微服务部署。对于希望深入了解两者功能和价格差异的用户，可以查阅[商业版Nacos](https://nacos.io/cloud/)的官方介绍页面。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：微服务引擎(MSE）介绍 
+ 
+ *专家经验：Nacos和Eureka的区别是什么？ 
+ 
+ *专家经验：Nacos 介绍 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=14597)给我们反馈。

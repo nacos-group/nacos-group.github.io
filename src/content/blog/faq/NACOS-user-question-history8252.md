@@ -1,12 +1,18 @@
 ---
 id: "question-history-8252"
-title: "使用客户端SDK的删除实例API之后，为什么客户端查询实例依然可以查询到？但是使用管理端页面下线之后，使用客户端查询就查询不到了？客户端SDK删除实例和管理端页面下线的区别是什么？ nacos-opensource"
+title: "使用客户端SDK的删除实例API之后，为什么客户端查询实例依然可以查询到？但是使用管理端页面下线之后，使用"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中，客户端SDK删除实例与管理端页面下线实例存在本质区别，这直接导致了您观察到的现象。**原因分析：**1. **客户端SDK删除实例：**   客户端SDK调用删除实例API时，通常是指向OpenAPI。根据Nacos的设计，OpenAPI的主要目的是服务于应用程序，确保它们能获取到当"
 tags: ["客户端SDK","删除实例API","查询实例","管理端页面","下线","区别","客户端查询","查询不到"]
 keywords: ["客户端SDK","删除实例API","查询实例","管理端页面","下线","区别","客户端查询","查询不到"]
 ---
+
+## 用户问题 ： 
+ 使用客户端SDK的删除实例API之后，为什么客户端查询实例依然可以查询到？但是使用管理端页面下线之后，使用客户端查询就查询不到了？客户端SDK删除实例和管理端页面下线的区别是什么？  
+
+---------------
+## 专家官方解答 ：
 
 在Nacos中，客户端SDK删除实例与管理端页面下线实例存在本质区别，这直接导致了您观察到的现象。
 
@@ -24,9 +30,27 @@ keywords: ["客户端SDK","删除实例API","查询实例","管理端页面","�
 - 管理端页面下线实例则会即时改变实例状态，并影响OpenAPI的查询结果，从而立即反映在客户端查询中。
 
 基于上述分析，如果您希望客户端查询结果立即与实例下线状态保持一致，推荐使用管理端页面进行操作，因为这直接影响服务实例的可用性标识，进而迅速被客户端识别。而对于客户端SDK调用删除API后查询结果的延迟，是Nacos设计中对服务可用性保障的一部分。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：CatalogController 里面的接口和客户端SDK的API区别是什么 
+ 
+ *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+ 
+ *[鉴权插件](https://nacos.io/docs/latest/plugin/auth-plugin)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13602)给我们反馈。

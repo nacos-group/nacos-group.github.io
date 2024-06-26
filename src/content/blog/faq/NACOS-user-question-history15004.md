@@ -1,13 +1,13 @@
 ---
 id: "question-history-15004"
-title: "如果我想在nacos上新建一个未注册的服务，例如将服务名为out-service的服务都路由到192.16 nacos-opensource"
+title: "如果我想在nacos上新建一个未注册的服务，例如将服务名为out-service的服务都路由到192.16"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "根据您的需求，您想在Nacos上创建一个实际上未注册的服务（out-service），并将其路由到特定的IP和端口（192.168.0.3:3389）。Nacos本身作为服务注册与发现的平台，并不直接支持手动创建未注册的服务并进行路由配置，它的设计原则是基于服务实例的自动注册与发现。不过，您可以通过"
 ---
 
 ## 用户问题 ： 
- 如果我想在nacos上新建一个未注册的服务，例如将服务名为out-service的服务都路由到192.168.0.3:3389,应该怎么做 nacos-opensource 
+ 如果我想在nacos上新建一个未注册的服务，例如将服务名为out-service的服务都路由到192.168.0.3:3389,应该怎么做  
 
 ---------------
 ## 专家官方解答 ：

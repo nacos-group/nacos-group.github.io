@@ -1,13 +1,13 @@
 ---
 id: "question-history-15469"
-title: "多个客户端 同时给 注册中心发送心跳包 注册中心会有压力吗 nacos-opensource"
+title: "多个客户端 同时给 注册中心发送心跳包 注册中心会有压力吗"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "在“nacos-opensource 多个客户端 同时给 注册中心发送心跳包 注册中心会有压力吗？”这个问题前，让我们先回顾一下Nacos的知识点。从提供的知识内容来看，Nacos作为一个高度可扩展的服务发现与配置管理平台，设计上考虑到了高并发场景。心跳机制是服务注册与发现中维持服务实例活性的重要环"
 ---
 
 ## 用户问题 ： 
- 多个客户端 同时给 注册中心发送心跳包 注册中心会有压力吗 nacos-opensource 
+ 多个客户端 同时给 注册中心发送心跳包 注册中心会有压力吗  
 
 ---------------
 ## 专家官方解答 ：
@@ -57,7 +57,7 @@ description: "在“nacos-opensource 多个客户端 同时给 注册中心发�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15539)给我们反馈。

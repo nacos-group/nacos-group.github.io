@@ -1,13 +1,13 @@
 ---
 id: "question-history-15633"
-title: "nacos accessToken有过期时间吗？ nacos-opensource"
+title: "nacos accessToken有过期时间吗？"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "nacos accessToken确实有过期时间。根据提供的知识内容，在服务端配置中，默认的accessToken过期时间是通过`nacos.core.auth.plugin.nacos.token.expire.seconds`参数设定的，其默认值为18000秒（即5小时）。具体来说：1. **过"
 ---
 
 ## 用户问题 ： 
- nacos accessToken有过期时间吗？ nacos-opensource 
+ nacos accessToken有过期时间吗？  
 
 ---------------
 ## 专家官方解答 ：
@@ -36,7 +36,7 @@ nacos accessToken确实有过期时间。根据提供的知识内容，在服务
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15685)给我们反馈。

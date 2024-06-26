@@ -1,13 +1,13 @@
 ---
 id: "question-history-15024"
-title: "spring cloud alibaba 2022.0.0.0 最低jdk版本 nacos-opensource"
+title: "spring cloud alibaba 2022.0.0.0 最低jdk版本"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "根据已有的知识信息，我们可以分析如下：1. **Spring Cloud Alibaba与Nacos的版本对应关系**：要确定Spring Cloud Alibaba 2022.0.0.0版本所支持的最低JDK版本，最直接的方式是参考SCA团队提供的官方说明。根据提及的[sca网站的版本说明](ht"
 ---
 
 ## 用户问题 ： 
- spring cloud alibaba 2022.0.0.0 最低jdk版本 nacos-opensource 
+ spring cloud alibaba 2022.0.0.0 最低jdk版本  
 
 ---------------
 ## 专家官方解答 ：

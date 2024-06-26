@@ -1,12 +1,18 @@
 ---
 id: "question-history-12449"
-title: "com.alibaba.nacos.api.exception.nacosexception: client not connect,current status:STARTING nacos-opensource"
+title: "com.alibaba.nacos.api.exception.nacosexception: clien"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "遇到`com.alibaba.nacos.api.exception.NacosException: client not connect, current status:STARTING`的问题，可以按照以下步骤分析和解决：1. **检查Nacos服务器地址配置**：首先确认应用程序中配置的Nac"
 tags: ["com.alibaba.nacos.api.exception.nacosexception","client not connect","current status:STARTING"]
 keywords: ["com.alibaba.nacos.api.exception.nacosexception","client not connect","current status:STARTING"]
 ---
+
+## 用户问题 ： 
+ com.alibaba.nacos.api.exception.nacosexception: client not connect,current status:STARTING  
+
+---------------
+## 专家官方解答 ：
 
 遇到`com.alibaba.nacos.api.exception.NacosException: client not connect, current status:STARTING`的问题，可以按照以下步骤分析和解决：
 
@@ -30,9 +36,27 @@ keywords: ["com.alibaba.nacos.api.exception.nacosexception","client not connect"
 请参考Nacos官方文档以获取更多帮助和详细配置说明：[Nacos官方文档](https://nacos.io/zh-cn/docs/)
 
 希望上述步骤能帮助您解决问题。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：如何排查Nacos连接失败问题 
+ 
+ *[Nacos系统参数介绍](https://nacos.io/docs/latest/guide/admin/system-configurations)
+ 
+ *专家经验：如何获取Nacos-Client的日志？ 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13833)给我们反馈。

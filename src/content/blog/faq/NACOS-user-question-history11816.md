@@ -1,12 +1,18 @@
 ---
 id: "question-history-11816"
-title: "nacos 支持国产化数据库么？ nacos-opensource"
+title: "nacos 支持国产化数据库么？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos确实支持国产化数据库。从Nacos2.2版本开始，官方增加了对国产数据库的支持，特别是针对PostgreSQL、Oracle及达梦数据库的直接支持。这意味着Nacos能够适应国内用户在数据库选型上的多样化需求，促进了软件的国产化适配。为了在Nacos中使用国产化数据库，您可以按照以下步骤操"
 tags: ["国产化数据库"]
 keywords: ["国产化数据库"]
 ---
+
+## 用户问题 ： 
+ nacos 支持国产化数据库么？  
+
+---------------
+## 专家官方解答 ：
 
 Nacos确实支持国产化数据库。从Nacos2.2版本开始，官方增加了对国产数据库的支持，特别是针对PostgreSQL、Oracle及达梦数据库的直接支持。这意味着Nacos能够适应国内用户在数据库选型上的多样化需求，促进了软件的国产化适配。
 
@@ -28,9 +34,25 @@ Nacos确实支持国产化数据库。从Nacos2.2版本开始，官方增加了�
    完成上述配置后，启动Nacos服务器，它将使用您配置的国产数据库作为数据存储。
 
 通过这些步骤，您可以成功地在Nacos中集成并使用国产化数据库，满足特定的项目需求或合规要求。这种灵活性体现了Nacos对多环境、多数据库类型的良好支持，有助于提升系统的兼容性和可扩展性。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos的数据库支持情况介绍 
+ 
+ *专家经验：为什么Nacos不使用ORM框架访问数据库 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13806)给我们反馈。

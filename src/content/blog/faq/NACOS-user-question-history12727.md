@@ -1,12 +1,18 @@
 ---
 id: "question-history-12727"
-title: "nacos  如何管理页面设置密码？ nacos-opensource"
+title: "nacos  如何管理页面设置密码？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos管理页面设置密码，主要涉及初始化时的密码设置、集群初始化后的密码修改以及新增用户。以下是详细步骤：### 初始化集群时设置默认用户密码1. **修改默认密码脚本**：在Nacos初始化前，编辑`$nacos.home/conf/`目录下的`mysql-schema.sql`（或`derb"
 tags: ["nacos","管理页面","设置密码"]
 keywords: ["nacos","管理页面","设置密码"]
 ---
+
+## 用户问题 ： 
+ nacos  如何管理页面设置密码？  
+
+---------------
+## 专家官方解答 ：
 
 在Nacos管理页面设置密码，主要涉及初始化时的密码设置、集群初始化后的密码修改以及新增用户。以下是详细步骤：
 
@@ -44,9 +50,27 @@ keywords: ["nacos","管理页面","设置密码"]
 - 操作均需在开启鉴权后，使用管理员权限执行。
 
 以上步骤涵盖了在Nacos管理页面设置密码的主要方法，确保遵循安全实践，合理管理访问权限。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：nacos用户密码设置 
+ 
+ *[Open API 指南](https://nacos.io/docs/latest/guide/user/open-api)
+ 
+ *专家经验：Nacos 配置加密 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13868)给我们反馈。

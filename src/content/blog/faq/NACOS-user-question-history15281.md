@@ -1,13 +1,13 @@
 ---
 id: "question-history-15281"
-title: "Nacos的服务端程序对SpringCloud的版本有什么要求吗 nacos-opensource"
+title: "Nacos的服务端程序对SpringCloud的版本有什么要求吗"
 date: "2024-06-13"
 category: "expertConsultation"
 description: "根据已有的知识内容，直接关于Nacos的服务端程序对SpringCloud的版本有什么要求的问题并不直接明确。但是，我们可以从以下几个方面进行分析和指导：1. **版本兼容性原则理解**：Nacos作为服务发现与配置管理的组件，其主要关注的是与自身客户端版本的兼容性，确保服务端与客户端之间的顺畅通信"
 ---
 
 ## 用户问题 ： 
- Nacos的服务端程序对SpringCloud的版本有什么要求吗 nacos-opensource 
+ Nacos的服务端程序对SpringCloud的版本有什么要求吗  
 
 ---------------
 ## 专家官方解答 ：
@@ -37,7 +37,7 @@ description: "根据已有的知识内容，直接关于Nacos的服务端程序�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15301)给我们反馈。

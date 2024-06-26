@@ -1,12 +1,18 @@
 ---
 id: "question-history-12682"
-title: "nacos启动内存设置多少好些？ nacos-opensource"
+title: "nacos启动内存设置多少好些？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "针对Nacos启动内存设置的问题，根据已有的知识，我们可以分析并给出建议如下：1. **分析问题原因**：Nacos内存占用主要涉及三个方面——JVM堆内存、网络NIO堆外内存和Rocksdb直接内存。其中，JVM堆内存及NIO堆外内存的设置不当往往是导致内存占用过大的主要原因。2. **具体步骤建"
 tags: ["内存设置"]
 keywords: ["内存设置"]
 ---
+
+## 用户问题 ： 
+ nacos启动内存设置多少好些？  
+
+---------------
+## 专家官方解答 ：
 
 针对Nacos启动内存设置的问题，根据已有的知识，我们可以分析并给出建议如下：
 
@@ -22,9 +28,25 @@ keywords: ["内存设置"]
 3. **解释说明**：通过上述调整，可以有效避免Nacos因内存配置不合理导致的资源过度消耗问题。设置JVM堆内存不超过物理内存的70%是为了保证系统在高负载情况下仍能稳定运行，避免内存溢出。限制NIO堆外内存则是为了避免这部分内存无限制增长，导致整体内存占用过高。虽然Rocksdb直接内存在当前不可调且占用不大，但了解整体内存分配结构对于合理配置Nacos内存至关重要。
 
 综上所述，合理设置Nacos启动内存，需关注JVM堆内存与NIO堆外内存的配置，确保它们在服务器资源允许的范围内高效运作。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos 内存占用过大 
+ 
+ *专家经验：Nacos 欢迎你 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13850)给我们反馈。

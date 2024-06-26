@@ -1,12 +1,18 @@
 ---
 id: "question-history-8183"
-title: "Nacos部署开放端口，集群部署开通端口 nacos-opensource"
+title: "Nacos部署开放端口，集群部署开通端口"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos部署时涉及的开放端口及其配置方法如下：1. **主要端口及其用途**:   - **8848**: 主端口，用于客户端、控制台及OpenAPI的HTTP通信。   - **9848**: 客户端gRPC请求服务端端口，客户端通过此端口与服务端建立gRPC连接。   - **9849**: "
 tags: ["Nacos","部署","开放端口","集群部署","开通端口"]
 keywords: ["Nacos","部署","开放端口","集群部署","开通端口"]
 ---
+
+## 用户问题 ： 
+ Nacos部署开放端口，集群部署开通端口  
+
+---------------
+## 专家官方解答 ：
 
 Nacos部署时涉及的开放端口及其配置方法如下：
 
@@ -32,9 +38,27 @@ Nacos部署时涉及的开放端口及其配置方法如下：
 参考文档：
 - [Nacos部署文档](https://nacos.io/docs/latest/guide/admin/cluster-mode-quick-start/)
 - [Nacos兼容性与升级指导](https://nacos.io/docs/latest/upgrading/200-compatibility/)
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos部署开放端口，集群部署开通端口 
+ 
+ *专家经验：Nacos如何指定端口 
+ 
+ *专家经验：NACOS 配置中心和注册中心是分两个集群部署还是放在一个集群中 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13543)给我们反馈。

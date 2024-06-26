@@ -1,13 +1,13 @@
 ---
 id: "question-history-14877"
-title: "centos操作系统安装nacos后，在nacos中配置达梦数据库，启动nacos一直报错，如何解决？ nacos-opensource"
+title: "centos操作系统安装nacos后，在nacos中配置达梦数据库，启动nacos一直报错，如何解决？"
 date: "2024-06-02"
 category: "expertConsultation"
 description: "为了解决CentOS操作系统上安装Nacos后，在Nacos中配置达梦数据库启动时一直报错的问题，我们可以按照以下步骤进行分析与解决：### 1. 分析问题原因根据提供的知识，Nacos从2.2版本开始支持了包括达梦数据库在内的多种数据库。首先，确保您的Nacos版本是2.2或更高版本。如果版本过低"
 ---
 
 ## 用户问题 ： 
- centos操作系统安装nacos后，在nacos中配置达梦数据库，启动nacos一直报错，如何解决？ nacos-opensource 
+ centos操作系统安装nacos后，在nacos中配置达梦数据库，启动nacos一直报错，如何解决？  
 
 ---------------
 ## 专家官方解答 ：
@@ -70,7 +70,7 @@ db.pool.config.driverClassName=dm.jdbc.driver.DmDriver
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=14902)给我们反馈。

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15850"
-title: "nacos配置中心如何看是否链接成功 nacos-opensource"
+title: "nacos配置中心如何看是否链接成功"
 date: "2024-06-25"
 category: "expertConsultation"
 description: "要检查 Nacos 配置中心是否连接成功，您可以依据 Nacos 的日志和健康检查功能来进行判断。虽然提供的知识文档中没有直接提及查看连接状态的方法，但我们可以根据 Nacos 的常规使用逻辑提供以下步骤：### 步骤分析与检查方法1. **查看日志文件**:   - Nacos 服务器端和客户端（"
 ---
 
 ## 用户问题 ： 
- nacos配置中心如何看是否链接成功 nacos-opensource 
+ nacos配置中心如何看是否链接成功  
 
 ---------------
 ## 专家官方解答 ：

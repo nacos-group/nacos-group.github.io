@@ -1,13 +1,13 @@
 ---
 id: "question-history-15651"
-title: "naocs 漏洞修复-检测到目标URL存在http host头攻击漏洞 nacos-opensource"
+title: "naocs 漏洞修复-检测到目标URL存在http host头攻击漏洞"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "针对您提出的问题「nacos-opensource naocs 漏洞修复-检测到目标URL存在http host头攻击漏洞」，我们可以依据已有的知识进行分析并提供相应的指导。### 原因分析根据提及的漏洞情况，特别是与CVE-2024-22243相关的内容，该漏洞主要是由于Spring框架在处理外部"
 ---
 
 ## 用户问题 ： 
- naocs 漏洞修复-检测到目标URL存在http host头攻击漏洞 nacos-opensource 
+ naocs 漏洞修复-检测到目标URL存在http host头攻击漏洞  
 
 ---------------
 ## 专家官方解答 ：
@@ -52,7 +52,7 @@ description: "针对您提出的问题「nacos-opensource naocs 漏洞修复-检
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15703)给我们反馈。

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15854"
-title: "spring cloud怎么读到nacos配置中心数据的 nacos-opensource"
+title: "spring cloud怎么读到nacos配置中心数据的"
 date: "2024-06-25"
 category: "expertConsultation"
 description: "要使Nacos与Spring Cloud应用集成并从Nacos配置中心读取数据，您可以遵循以下步骤进行配置和操作，这些步骤基于提供的知识内容：### 1. 添加依赖确保您的Spring Cloud项目中添加了正确的依赖来集成Nacos。这通常涉及在项目的`pom.xml`或`build.gradle"
 ---
 
 ## 用户问题 ： 
- spring cloud怎么读到nacos配置中心数据的 nacos-opensource 
+ spring cloud怎么读到nacos配置中心数据的  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,6 +1,6 @@
 ---
 id: "question-history-11028"
-title: "Nacos linux部署nacos可以配置access.log的保留时间吗 nacos-opensource"
+title: "Nacos linux部署nacos可以配置access.log的保留时间吗"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "可以的，Nacos 在Linux环境下的部署中，确实可以配置access.log的保留时间。根据提供的知识，这是通过调整Spring Boot嵌入的Tomcat相关配置来实现的。以下是具体步骤：1. **修改配置文件**：在Nacos的配置文件（通常是`application.properties`"
@@ -9,7 +9,7 @@ keywords: ["linux","部署","access.log","保留时间"]
 ---
 
 ## 用户问题 ： 
- Nacos linux部署nacos可以配置access.log的保留时间吗 nacos-opensource 
+ Nacos linux部署nacos可以配置access.log的保留时间吗  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15274"
-title: "Nacos nacos2.3.2开启鉴权后，在容器环境里获取不到配置中心的里的配置文件 nacos-opensource"
+title: "Nacos nacos2.3.2开启鉴权后，在容器环境里获取不到配置中心的里的配置文件"
 date: "2024-06-13"
 category: "expertConsultation"
 description: "根据您提供的问题，看起来您在尝试使用Nacos 2.3.2版本并开启了鉴权功能，在容器环境中遇到无法获取配置中心配置文件的问题。结合已有的知识内容，我们可以尝试分析并提供潜在的解决方案。### 分析问题原因：1. **鉴权配置不正确**：鉴权开启后，如果没有正确配置客户端的身份验证信息，Nacos服"
 ---
 
 ## 用户问题 ： 
- Nacos nacos2.3.2开启鉴权后，在容器环境里获取不到配置中心的里的配置文件 nacos-opensource 
+ Nacos nacos2.3.2开启鉴权后，在容器环境里获取不到配置中心的里的配置文件  
 
 ---------------
 ## 专家官方解答 ：
@@ -69,7 +69,7 @@ description: "根据您提供的问题，看起来您在尝试使用Nacos 2.3.2�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15288)给我们反馈。

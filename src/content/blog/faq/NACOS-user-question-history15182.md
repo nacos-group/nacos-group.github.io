@@ -1,13 +1,13 @@
 ---
 id: "question-history-15182"
-title: "使用nacos当配置中心的优点是什么？ nacos-opensource"
+title: "使用nacos当配置中心的优点是什么？"
 date: "2024-06-08"
 category: "expertConsultation"
 description: "使用 Nacos 作为配置中心的优点主要包括以下几点，这些点可以从提供的知识内容中提炼得出：1. **动态配置更新**：Nacos 支持配置的动态更新，这意味着在应用程序运行过程中，如果配置发生变化，Nacos 能够自动感知并即时推送给各个客户端应用，无需重启服务。这在实际生产环境中极为重要，可以减"
 ---
 
 ## 用户问题 ： 
- 使用nacos当配置中心的优点是什么？ nacos-opensource 
+ 使用nacos当配置中心的优点是什么？  
 
 ---------------
 ## 专家官方解答 ：
@@ -47,7 +47,7 @@ description: "使用 Nacos 作为配置中心的优点主要包括以下几点�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15202)给我们反馈。

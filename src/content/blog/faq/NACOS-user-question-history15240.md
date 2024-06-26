@@ -1,13 +1,13 @@
 ---
 id: "question-history-15240"
-title: "nacos哪个版本可以支持pgsql nacos-opensource"
+title: "nacos哪个版本可以支持pgsql"
 date: "2024-06-12"
 category: "expertConsultation"
 description: "Nacos支持PostgreSQL（pgsql）是从2.2版本开始的。如果您想要使用Nacos并支持pgsql，您需要遵循以下步骤操作：1. **确认Nacos版本**：首先，确保您使用的Nacos版本是2.2或更高。考虑到稳定性与功能性，推荐使用2.X的最新稳定版本，您可以通过[Nacos官方网站"
 ---
 
 ## 用户问题 ： 
- nacos哪个版本可以支持pgsql nacos-opensource 
+ nacos哪个版本可以支持pgsql  
 
 ---------------
 ## 专家官方解答 ：

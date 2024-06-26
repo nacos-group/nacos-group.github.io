@@ -1,13 +1,13 @@
 ---
 id: "question-history-15447"
-title: "在请求curl -X GET 'http: 127.0.0.1:8848 nacos v2 cs conf nacos-opensource"
+title: "在请求curl -X GET 'http: 127.0.0.1:8848 nacos v2 cs conf"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据您提供的错误信息和已有知识，我们可以分析并尝试解决您遇到的问题。### 问题原因分析您在使用curl命令请求Nacos配置时遇到了403 Forbidden错误，错误信息为user not found!。这通常意味着您的请求没有提供有效的认证信息，即Nacos服务器未能识别出合法的用户身份。##"
 ---
 
 ## 用户问题 ： 
- 在请求curl -X GET 'http: 127.0.0.1:8848 nacos v2 cs config dataId=nacos.example&group=DEFAULT_GROUP&namespaceId=public'时报{ "timestamp": "2024-06-13T09:12:03.161 00:00", "status": 403, "error": "Forbidden", "message": "user not found!", "path": " nacos v2 cs config" }是什么原因 nacos-opensource 
+ 在请求curl -X GET 'http: 127.0.0.1:8848 nacos v2 cs config dataId=nacos.example&group=DEFAULT_GROUP&namespaceId=public'时报{ "timestamp": "2024-06-13T09:12:03.161 00:00", "status": 403, "error": "Forbidden", "message": "user not found!", "path": " nacos v2 cs config" }是什么原因  
 
 ---------------
 ## 专家官方解答 ：
@@ -70,7 +70,7 @@ description: "根据您提供的错误信息和已有知识，我们可以分析
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15517)给我们反馈。

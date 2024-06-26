@@ -1,12 +1,18 @@
 ---
 id: "question-history-13391"
-title: "nacos docker derby下使用grafana 查看nacos monitor 提示 Failed to upgrade legacy queries Datasource prometheus was not found USER : http: prometheus:9090 提示DNS_PROBE_FINISHED_NXDOMAIN nacos-opensource"
+title: "nacos docker derby下使用grafana 查看nacos monitor 提示 Faile"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，您遇到的问题可能是由于以下原因导致的：1. **DNS解析问题**：DNS_PROBE_FINISHED_NXDOMAIN提示表明客户端无法解析`http://prometheus:9090`这个地址。这可能是因为您的环境中没有正确设置Prometheus服务的DNS记录，或者P"
 tags: ["nacos","docker","derby","grafana","nacos monitor","Failed to upgrade legacy queries","Datasource prometheus was not found","http: prometheus:9090","DNS_PROBE_FINISHED_NXDOMAIN"]
 keywords: ["nacos","docker","derby","grafana","nacos monitor","Failed to upgrade legacy queries","Datasource prometheus was not found","http: prometheus:9090","DNS_PROBE_FINISHED_NXDOMAIN"]
 ---
+
+## 用户问题 ： 
+ nacos docker derby下使用grafana 查看nacos monitor 提示 Failed to upgrade legacy queries Datasource prometheus was not found USER : http: prometheus:9090 提示DNS_PROBE_FINISHED_NXDOMAIN  
+
+---------------
+## 专家官方解答 ：
 
 根据提供的知识内容，您遇到的问题可能是由于以下原因导致的：
 
@@ -35,9 +41,25 @@ keywords: ["nacos","docker","derby","grafana","nacos monitor","Failed to upgrade
 - 确保您在Grafana中使用的监控面板模板与Nacos兼容，并且正确导入了Nacos监控模版（如果尚未导入，请参照提供的链接[[Nacos-Sync监控模版](https://github.com/nacos-group/nacos-template/blob/master/nacos-sync-grafana)]进行操作）。
 
 完成以上步骤后，应当能够解决您遇到的监控数据显示问题。如果问题依旧，请检查Grafana和Prometheus的日志文件，寻找更具体的错误信息来进一步诊断问题。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Nacos Docker 快速开始](https://nacos.io/docs/latest/quickstart/quick-start-docker)
+ 
+ *[Nacos 监控手册](https://nacos.io/docs/latest/guide/admin/monitor-guide)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13886)给我们反馈。

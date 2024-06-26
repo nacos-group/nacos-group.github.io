@@ -1,12 +1,18 @@
 ---
 id: "question-history-12726"
-title: "nacos docker 单机模式derby怎么配置？ nacos-opensource"
+title: "nacos docker 单机模式derby怎么配置？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要配置Nacos Docker单机模式使用Derby作为嵌入式数据库，你可以遵循以下步骤操作：1. **准备Nacos Docker镜像**：   - 根据Nacos开源社区提供的信息，确保你使用的Nacos Docker镜像是支持arm架构的，如果需要，可以选择带有`slim`标识的镜像版本，例如"
 tags: ["nacos","docker","单机模式","derby","配置"]
 keywords: ["nacos","docker","单机模式","derby","配置"]
 ---
+
+## 用户问题 ： 
+ nacos docker 单机模式derby怎么配置？  
+
+---------------
+## 专家官方解答 ：
 
 要配置Nacos Docker单机模式使用Derby作为嵌入式数据库，你可以遵循以下步骤操作：
 
@@ -29,9 +35,27 @@ keywords: ["nacos","docker","单机模式","derby","配置"]
    - 启动容器后，可以通过访问`http://localhost:8848/nacos`来验证Nacos服务是否正常启动，并检查数据是否正确存储在Derby数据库中。
 
 注意：上述步骤中提到的配置文件路径、Docker镜像版本等信息，请根据实际情况调整。如果需要开启鉴权或进行其他高级配置，请参考Nacos官方文档中关于[认证授权](https://nacos.io/docs/latest/guide/user/auth/)的部分进行相应设置。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos 请问nacos有arm架构的docker镜像么 
+ 
+ *专家经验：Nacos部署集群模式怎么打开鉴权 
+ 
+ *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13867)给我们反馈。

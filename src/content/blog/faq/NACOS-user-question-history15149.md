@@ -1,13 +1,13 @@
 ---
 id: "question-history-15149"
-title: "nacos 鉴权配置 nacos-opensource"
+title: "nacos 鉴权配置"
 date: "2024-06-07"
 category: "expertConsultation"
 description: "内容要有条理，分步骤：### 1. 分析问题原因在配置Nacos的鉴权功能时，用户可能面临如何正确设置相关参数以确保安全性的问题。根据提供的知识，Nacos鉴权主要依赖于几个关键配置参数，包括是否开启鉴权(`nacos.core.auth.enabled`)、密钥(`nacos.core.auth."
 ---
 
 ## 用户问题 ： 
- nacos 鉴权配置 nacos-opensource 
+ nacos 鉴权配置  
 
 ---------------
 ## 专家官方解答 ：
@@ -72,7 +72,7 @@ description: "内容要有条理，分步骤：### 1. 分析问题原因在配�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15159)给我们反馈。

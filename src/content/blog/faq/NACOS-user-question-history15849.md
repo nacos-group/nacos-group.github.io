@@ -1,13 +1,13 @@
 ---
 id: "question-history-15849"
-title: "springboot nacos配置中心如何找到本项目的配置 nacos-opensource"
+title: "springboot nacos配置中心如何找到本项目的配置"
 date: "2024-06-25"
 category: "expertConsultation"
 description: "要找到Spring Boot项目中Nacos配置中心的配置，您可以遵循以下步骤进行操作，这些步骤基于提供的我了解的知识内容：### 分析问题原因在使用Nacos作为Spring Boot项目的配置中心时，通常遇到的问题在于如何正确地配置和接入Nacos，以实现从Nacos服务器动态获取项目的配置信息"
 ---
 
 ## 用户问题 ： 
- springboot nacos配置中心如何找到本项目的配置 nacos-opensource 
+ springboot nacos配置中心如何找到本项目的配置  
 
 ---------------
 ## 专家官方解答 ：

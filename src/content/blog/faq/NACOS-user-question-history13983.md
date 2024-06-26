@@ -1,12 +1,18 @@
 ---
 id: "question-history-13983"
-title: "nacos 持久化存储方案介绍 nacos-opensource"
+title: "nacos 持久化存储方案介绍"
 date: "2024-05-22"
 category: "expertConsultation"
 description: "Nacos在设计上支持两种类型的服务存储方案：持久化服务和临时服务，它们在数据持久性和生命周期管理上有显著差异。下面详细介绍这两种存储方案的特点及适用场景：### 持久化服务（ephemeral=false）- **特点**：  - 数据持久存在，除非用户手动删除，否则即使遇到集群故障、节点重启或微"
 tags: ["nacos","持久化存储方案"]
 keywords: ["nacos","持久化存储方案"]
 ---
+
+## 用户问题 ： 
+ nacos 持久化存储方案介绍  
+
+---------------
+## 专家官方解答 ：
 
 Nacos在设计上支持两种类型的服务存储方案：持久化服务和临时服务，它们在数据持久性和生命周期管理上有显著差异。下面详细介绍这两种存储方案的特点及适用场景：
 
@@ -27,9 +33,27 @@ Nacos在设计上支持两种类型的服务存储方案：持久化服务和临
 - **特定场景**：在无法集成nacos-client或需进行长期审计维护的场景，如MySQL服务、DNS服务（包括CoreDNS），应选择**持久化服务**。并根据实际情况合理配置健康检查策略，以确保服务的稳定性和可靠性。
 
 综上所述，Nacos提供的持久化与临时服务存储方案，旨在满足不同应用场景下的服务管理和发现需求，用户可根据实际场景选择最合适的存储类型。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos 介绍 
+ 
+ *[NacosSync 用户手册](https://nacos.io/docs/latest/ecology/use-nacos-sync)
+ 
+ *专家经验：Nacos中持久化服务和临时服务的区别 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13987)给我们反馈。

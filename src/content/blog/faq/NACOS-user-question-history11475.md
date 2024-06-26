@@ -1,12 +1,18 @@
 ---
 id: "question-history-11475"
-title: "nacos配置数据源 nacos-opensource"
+title: "nacos配置数据源"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中配置数据源主要涉及两个方面：一是Nacos Server自身连接的数据库配置，二是用户应用通过Nacos Client配置管理时的数据源配置。以下是如何根据Nacos开源插件和指南进行配置的详细步骤：### 1. Nacos Server 数据源配置#### 原因分析Nacos Ser"
 tags: ["nacos","配置","数据源"]
 keywords: ["nacos","配置","数据源"]
 ---
+
+## 用户问题 ： 
+ nacos配置数据源  
+
+---------------
+## 专家官方解答 ：
 
 在Nacos中配置数据源主要涉及两个方面：一是Nacos Server自身连接的数据库配置，二是用户应用通过Nacos Client配置管理时的数据源配置。以下是如何根据Nacos开源插件和指南进行配置的详细步骤：
 
@@ -46,9 +52,25 @@ Nacos Server 需要连接数据库来存储其元数据和配置信息，默认�
 3. **客户端解密使用**：在客户端应用中，Nacos SDK会自动解密这些配置，确保应用能够安全地使用真实的数据库连接信息。
 
 综上所述，通过Nacos提供的插件机制和加密功能，您可以灵活配置Nacos Server的数据源，并且安全地管理应用的数据源配置信息。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos 配置加密 
+ 
+ *专家经验：Nacos的数据库支持情况介绍 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13762)给我们反馈。

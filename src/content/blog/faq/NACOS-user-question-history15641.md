@@ -1,13 +1,13 @@
 ---
 id: "question-history-15641"
-title: "nacos权限绕过漏洞(CVE-2022-0828)，如何解决 nacos-opensource"
+title: "nacos权限绕过漏洞(CVE-2022-0828)，如何解决"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "关于您提到的nacos权限绕过漏洞（CVE-2022-0828），当前我掌握的知识库中并没有直接提及此特定CVE编号的详细信息及解决方案。不过，基于相似问题与背景知识，我可以提供一些可能有帮助的分析与建议路径。### 分析原因根据以往Nacos中身份认证绕过漏洞的处理方式，此类问题通常与以下几个方面"
 ---
 
 ## 用户问题 ： 
- nacos权限绕过漏洞(CVE-2022-0828)，如何解决 nacos-opensource 
+ nacos权限绕过漏洞(CVE-2022-0828)，如何解决  
 
 ---------------
 ## 专家官方解答 ：
@@ -57,7 +57,7 @@ description: "关于您提到的nacos权限绕过漏洞（CVE-2022-0828），当
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15693)给我们反馈。

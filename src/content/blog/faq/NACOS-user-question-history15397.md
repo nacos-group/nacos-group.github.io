@@ -1,13 +1,13 @@
 ---
 id: "question-history-15397"
-title: "acos Load Logback Configuration of Nacos fail, messag nacos-opensource"
+title: "acos Load Logback Configuration of Nacos fail, messag"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "遇到问题「nacos Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml」的原因在于logback"
 ---
 
 ## 用户问题 ： 
- acos Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml nacos-opensource 
+ acos Load Logback Configuration of Nacos fail, message: Could not initialize Logback Nacos logging from classpath:nacos-logback.xml  
 
 ---------------
 ## 专家官方解答 ：
@@ -64,7 +64,7 @@ description: "遇到问题「nacos Load Logback Configuration of Nacos fail, mes
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15474)给我们反馈。

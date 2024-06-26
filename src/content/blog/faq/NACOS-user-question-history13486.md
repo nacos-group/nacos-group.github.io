@@ -1,12 +1,18 @@
 ---
 id: "question-history-13486"
-title: "windows 安装nacos nacos-opensource"
+title: "windows 安装nacos"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要在Windows上安装Nacos，请遵循以下步骤：1. **环境准备**:   - 确保您的系统满足以下要求：     - 64位操作系统（支持Windows）。     - 64位JDK 1.8+。如果您尚未安装，请从[这里](http://www.oracle.com/technetwork/"
 tags: ["windows","安装","nacos"]
 keywords: ["windows","安装","nacos"]
 ---
+
+## 用户问题 ： 
+ windows 安装nacos  
+
+---------------
+## 专家官方解答 ：
 
 要在Windows上安装Nacos，请遵循以下步骤：
 
@@ -45,9 +51,27 @@ keywords: ["windows","安装","nacos"]
      或者直接双击该文件执行。
 
 以上步骤概述了在Windows系统上安装并运行Nacos的基本流程。请根据实际情况调整配置，并确保遵循Nacos官方文档的指导以获得最佳实践和最新的配置信息。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos 快速开始 
+ 
+ *专家经验：Nacos 欢迎你 
+ 
+ *专家经验：Nacos nacos 2.3.0全新安装也需要关闭双写吗？ 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13911)给我们反馈。

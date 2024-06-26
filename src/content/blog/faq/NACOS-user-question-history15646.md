@@ -1,13 +1,13 @@
 ---
 id: "question-history-15646"
-title: "nacos的客户端支持这种方式吗？客户端缓存服务实例信息 nacos-opensource"
+title: "nacos的客户端支持这种方式吗？客户端缓存服务实例信息"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "Nacos的客户端确实支持服务实例信息的缓存。根据提供的知识内容，客户端缓存一般位于`$user.home/nacos`目录下，默认情况下，如果需要清除这些缓存信息，可以直接删除该目录下的内容。另外，如果客户端特别设置了缓存目录（通过JVM参数`JM.SNAPSHOT.PATH`指定），则清理相应自"
 ---
 
 ## 用户问题 ： 
- nacos的客户端支持这种方式吗？客户端缓存服务实例信息 nacos-opensource 
+ nacos的客户端支持这种方式吗？客户端缓存服务实例信息  
 
 ---------------
 ## 专家官方解答 ：
@@ -37,7 +37,7 @@ Nacos的客户端确实支持服务实例信息的缓存。根据提供的知识
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15698)给我们反馈。

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15131"
-title: "如何基于 spring cloud 的 refreshscope 实现配置自动刷新？ nacos-opensource"
+title: "如何基于 spring cloud 的 refreshscope 实现配置自动刷新？"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "要基于Nacos和Spring Cloud的`refreshScope`实现配置自动刷新，我们可以按照以下步骤操作：### 1. 分析问题原因根据您的问题，我们直接跳过问题原因分析阶段，因为您已经明确了想要了解如何利用`refreshScope`实现配置自动刷新，这通常涉及到配置管理与Spring "
 ---
 
 ## 用户问题 ： 
- 如何基于 spring cloud 的 refreshscope 实现配置自动刷新？ nacos-opensource 
+ 如何基于 spring cloud 的 refreshscope 实现配置自动刷新？  
 
 ---------------
 ## 专家官方解答 ：
@@ -74,7 +74,7 @@ Spring Cloud提供了多种触发配置刷新的机制，最直接的是通过�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15133)给我们反馈。

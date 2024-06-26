@@ -1,13 +1,13 @@
 ---
 id: "question-history-15796"
-title: "nacos配置中心的缓存目录和容灾目录 nacos-opensource"
+title: "nacos配置中心的缓存目录和容灾目录"
 date: "2024-06-21"
 category: "expertConsultation"
 description: "关于您的问题「nacos-opensource nacos配置中心的缓存目录和容灾目录」，根据提供的知识内容，我们可以这样分析和解答：### 缓存目录的配置与管理1. **Nacos Server的缓存目录**：默认固定在`$nacos.home/data`目录下，目前官方说明指出这个目录是不能修改"
 ---
 
 ## 用户问题 ： 
- nacos配置中心的缓存目录和容灾目录 nacos-opensource 
+ nacos配置中心的缓存目录和容灾目录  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15449"
-title: "Nacos nacos2.2.3版本变更nacos.core.auth.server.identity.k nacos-opensource"
+title: "Nacos nacos2.2.3版本变更nacos.core.auth.server.identity.k"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据已有的知识内容，我可以明确您的问题。在Nacos 2.2.3版本中，如果您需要变更`nacos.core.auth.server.identity.key`和`nacos.core.auth.server.identity.value`这两个配置项，是需要重启Nacos服务的。这是因为这些配置属"
 ---
 
 ## 用户问题 ： 
- Nacos nacos2.2.3版本变更nacos.core.auth.server.identity.key 和 nacos.core.auth.server.identity.value是否需要重启服务，有什么影响 nacos-opensource 
+ Nacos nacos2.2.3版本变更nacos.core.auth.server.identity.key 和 nacos.core.auth.server.identity.value是否需要重启服务，有什么影响  
 
 ---------------
 ## 专家官方解答 ：
@@ -46,7 +46,7 @@ description: "根据已有的知识内容，我可以明确您的问题。在Nac
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15519)给我们反馈。

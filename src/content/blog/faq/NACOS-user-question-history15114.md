@@ -1,13 +1,13 @@
 ---
 id: "question-history-15114"
-title: "nacos  python 客户端下载 nacos-opensource"
+title: "nacos  python 客户端下载"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "根据您的问题，您希望了解如何下载Nacos的Python客户端。根据提供的知识内容，这里是具体的步骤和说明：1. **识别客户端信息：**   首先，从知识中我们知道Nacos提供了多语言客户端，其中Python客户端的GitHub仓库地址是[[Python客户端](https://github.c"
 ---
 
 ## 用户问题 ： 
- nacos  python 客户端下载 nacos-opensource 
+ nacos  python 客户端下载  
 
 ---------------
 ## 专家官方解答 ：
@@ -53,7 +53,7 @@ description: "根据您的问题，您希望了解如何下载Nacos的Python客�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15126)给我们反馈。

@@ -1,12 +1,18 @@
 ---
 id: "question-history-11193"
-title: "nacos 怎么支持达梦数据库 nacos-opensource"
+title: "nacos 怎么支持达梦数据库"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos 支持达梦数据库的操作步骤如下：1. **检查插件是否存在**：   首先，访问[Nacos插件仓库](https://github.com/nacos-group/nacos-plugin)，在`nacos-datasource-plugin-ext`目录下查找是否有针对达梦数据库（Da"
 tags: ["达梦数据库"]
 keywords: ["达梦数据库"]
 ---
+
+## 用户问题 ： 
+ nacos 怎么支持达梦数据库  
+
+---------------
+## 专家官方解答 ：
 
 Nacos 支持达梦数据库的操作步骤如下：
 
@@ -38,9 +44,27 @@ Nacos 支持达梦数据库的操作步骤如下：
 - 最后一步是验证配置是否成功，通过启动Nacos服务检查是否能正常连接到达梦数据库并完成预期的功能。
 
 以上步骤基于Nacos官方文档和社区实践，旨在帮助您成功地使Nacos支持达梦数据库。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos的数据库支持情况介绍 
+ 
+ *专家经验：为什么Nacos不使用ORM框架访问数据库 
+ 
+ *专家经验：No DataSource set 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13732)给我们反馈。

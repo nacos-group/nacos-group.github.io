@@ -1,12 +1,18 @@
 ---
 id: "question-history-8258"
-title: "Misleading caused: no ips found for cluster DEFAULT in service DEFAULT_GROUP@@nacos.test.3; is reported when running example CURL to register service nacos-opensource"
+title: "Misleading caused: no ips found for cluster DEFAULT i"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，针对问题“nacos-opensource Misleading 'caused: no ips found for cluster DEFAULT in service DEFAULT_GROUP@@nacos.test.3;' when running example CUR"
 tags: ["Misleading","no ips found","cluster DEFAULT","service DEFAULT_GROUP@@nacos.test.3","CURL","register service"]
 keywords: ["Misleading","no ips found","cluster DEFAULT","service DEFAULT_GROUP@@nacos.test.3","CURL","register service"]
 ---
+
+## 用户问题 ： 
+ Misleading "caused: no ips found for cluster DEFAULT in service DEFAULT_GROUP@@nacos.test.3;" is reported when running example CURL to register service  
+
+---------------
+## 专家官方解答 ：
 
 根据提供的知识内容，针对问题“nacos-opensource Misleading 'caused: no ips found for cluster DEFAULT in service DEFAULT_GROUP@@nacos.test.3;' when running example CURL to register service”，我们可以分析和解答如下：
 
@@ -39,9 +45,27 @@ keywords: ["Misleading","no ips found","cluster DEFAULT","service DEFAULT_GROUP@
 
 **解释：**
 以上步骤旨在从服务定义一致性、网络连通性、命令准确性、日志分析、版本兼容性和基础配置等多个角度排查问题，以定位并解决服务注册失败的具体原因。由于问题可能源于多种因素，逐一排查是必要的，这有助于精准定位并采取相应措施修复。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Dubbo 融合 Nacos 成为注册中心](https://nacos.io/docs/latest/ecology/use-nacos-with-dubbo)
+ 
+ *专家经验：Nacos "status":501,"error":"Not Implemented","message":"no such api:...","path":"... 
+ 
+ *[Nacos 2.0 升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13607)给我们反馈。

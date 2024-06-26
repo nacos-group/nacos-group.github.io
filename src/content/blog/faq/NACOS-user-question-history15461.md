@@ -1,13 +1,13 @@
 ---
 id: "question-history-15461"
-title: "如何通过gRPC接口在Nacos中进行配置发布 nacos-opensource"
+title: "如何通过gRPC接口在Nacos中进行配置发布"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "要通过gRPC接口在Nacos中进行配置发布，首先需要确保你的Nacos客户端配置正确以支持gRPC通信。根据提供的知识内容，这里没有直接描述如何发布配置的具体步骤，但我们可以根据已有信息推导出基本流程。以下是基于Nacos客户端配置和使用gRPC端口的一般指导：### 1. 配置Nacos客户端以"
 ---
 
 ## 用户问题 ： 
- 如何通过gRPC接口在Nacos中进行配置发布 nacos-opensource 
+ 如何通过gRPC接口在Nacos中进行配置发布  
 
 ---------------
 ## 专家官方解答 ：
@@ -55,7 +55,7 @@ description: "要通过gRPC接口在Nacos中进行配置发布，首先需要确
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15531)给我们反馈。

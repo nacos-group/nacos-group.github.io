@@ -1,13 +1,13 @@
 ---
 id: "question-history-15150"
-title: "linux安装nacos nacos-opensource"
+title: "linux安装nacos"
 date: "2024-06-07"
 category: "expertConsultation"
 description: "为了在Linux上安装Nacos，您可以遵循以下详细步骤，这些步骤基于提供的知识内容：### 1. 版本选择- 首先，确认您要安装的Nacos版本。根据推荐，稳定版本为2.3.2。您可以访问[Nacos的release notes](https://github.com/alibaba/nacos/"
 ---
 
 ## 用户问题 ： 
- linux安装nacos nacos-opensource 
+ linux安装nacos  
 
 ---------------
 ## 专家官方解答 ：

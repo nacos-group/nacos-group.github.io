@@ -1,13 +1,13 @@
 ---
 id: "question-history-15665"
-title: "Nacos配置变更通知 nacos-opensource"
+title: "Nacos配置变更通知"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "在关于Nacos配置变更通知的问题前，我需要确认几个前提条件，以确保我的解答能够针对性地解决您的疑问：1. **您想了解的是Nacos如何实现配置变更的通知机制，还是遇到了特定的问题，比如配置更新后服务未收到通知？**2. **您使用的Nacos客户端（如Java客户端）是否有正确配置并监听了所需的"
 ---
 
 ## 用户问题 ： 
- Nacos配置变更通知 nacos-opensource 
+ Nacos配置变更通知  
 
 ---------------
 ## 专家官方解答 ：
@@ -57,7 +57,7 @@ Nacos配置变更通知机制是基于发布/订阅模式的，当配置发生�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15717)给我们反馈。

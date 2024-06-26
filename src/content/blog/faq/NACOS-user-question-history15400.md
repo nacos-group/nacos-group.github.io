@@ -1,13 +1,13 @@
 ---
 id: "question-history-15400"
-title: "nacos 适配springboot 3.* 吗 nacos-opensource"
+title: "nacos 适配springboot 3.* 吗"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据我的知识库，Nacos确实支持与Spring Boot的集成，并且提供了适配不同Spring Boot版本的能力。对于Spring Boot 3.*的适配问题，虽然直接的版本信息未明确指出，但Nacos通常会跟进Spring Boot的主要版本更新进行适配。### 分析原因1. **Nacos "
 ---
 
 ## 用户问题 ： 
- nacos 适配springboot 3.* 吗 nacos-opensource 
+ nacos 适配springboot 3.* 吗  
 
 ---------------
 ## 专家官方解答 ：

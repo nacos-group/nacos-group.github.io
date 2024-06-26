@@ -1,13 +1,13 @@
 ---
 id: "question-history-15028"
-title: "spring cloud alibaba相同配置使用本地配置 nacos-opensource"
+title: "spring cloud alibaba相同配置使用本地配置"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "在使用Nacos作为Spring Cloud Alibaba的配置中心及服务注册发现组件时，若想让某些配置优先使用本地配置，而非Nacos服务器上的配置，可以按照以下步骤操作：### 原因分析（依托我了解的知识）:根据我了解的知识中提到的内容，Nacos 能够帮助我们实现配置的动态变更和服务的注册发"
 ---
 
 ## 用户问题 ： 
- spring cloud alibaba相同配置使用本地配置 nacos-opensource 
+ spring cloud alibaba相同配置使用本地配置  
 
 ---------------
 ## 专家官方解答 ：

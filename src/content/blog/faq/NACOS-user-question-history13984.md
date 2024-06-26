@@ -1,12 +1,18 @@
 ---
 id: "question-history-13984"
-title: "nacos 配置样例 nacos-opensource"
+title: "nacos 配置样例"
 date: "2024-05-22"
 category: "expertConsultation"
 description: "要了解Nacos的配置样例，我们可以从几个维度来探讨，包括Nacos与Spring框架、Spring Boot、以及Spring Cloud的适配，同时也会简要提及Nacos的配置日志管理。### Nacos与Spring框架适配样例Nacos为Spring生态提供了良好的支持。对于基本的Sprin"
 tags: ["nacos","配置样例"]
 keywords: ["nacos","配置样例"]
 ---
+
+## 用户问题 ： 
+ nacos 配置样例  
+
+---------------
+## 专家官方解答 ：
 
 要了解Nacos的配置样例，我们可以从几个维度来探讨，包括Nacos与Spring框架、Spring Boot、以及Spring Cloud的适配，同时也会简要提及Nacos的配置日志管理。
 
@@ -29,9 +35,27 @@ server.tomcat.accesslog.pattern=%{yyyyMMddHHmmssSSS}t|%a|%h|%H|%r|%{Referer}i|%s
 这段配置启用了access日志记录，设置日志最大保留时间为15天，并定义了日志的格式。
 
 综上所述，Nacos的配置样例覆盖了从基础框架集成到具体功能配置的多个方面，开发者可以根据自己的应用场景选择相应的示例进行学习和实践。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos spring 适配 
+ 
+ *专家经验：Nacos 的典型案例 
+ 
+ *专家经验：Nacos 配置access.log的保留时间 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13988)给我们反馈。

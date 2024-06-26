@@ -1,6 +1,6 @@
 ---
 id: "question-history-14700"
-title: "麒麟v10部署nacos出现coredump nacos-opensource"
+title: "麒麟v10部署nacos出现coredump"
 date: "2024-05-29"
 category: "expertConsultation"
 description: "在麒麟V10系统上部署Nacos出现coredump问题，可能是由于以下原因导致：1. **JDK兼容性问题**：Nacos要求使用64位的JDK 1.8及以上版本。麒麟V10作为国产操作系统，其自带或推荐的JDK版本可能与Nacos所需的版本不完全兼容，导致运行时错误。2. **系统库兼容性**："
@@ -9,7 +9,7 @@ keywords: ["麒麟v10","部署","nacos","coredump"]
 ---
 
 ## 用户问题 ： 
- 麒麟v10部署nacos出现coredump nacos-opensource 
+ 麒麟v10部署nacos出现coredump  
 
 ---------------
 ## 专家官方解答 ：

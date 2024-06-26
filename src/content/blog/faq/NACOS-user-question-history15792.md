@@ -1,13 +1,13 @@
 ---
 id: "question-history-15792"
-title: "如何快速搭建nacos配置中心？ nacos-opensource"
+title: "如何快速搭建nacos配置中心？"
 date: "2024-06-21"
 category: "expertConsultation"
 description: "要快速搭建 Nacos 配置中心，请按照以下步骤操作：1. **下载并启动 Nacos Server**:   首先，您需要从 Nacos 的官方 GitHub 仓库下载 Nacos 并启动 Nacos Server。这一步是使用 Nacos 的前提条件。具体操作步骤可以参考 Nacos 官方文档的"
 ---
 
 ## 用户问题 ： 
- 如何快速搭建nacos配置中心？ nacos-opensource 
+ 如何快速搭建nacos配置中心？  
 
 ---------------
 ## 专家官方解答 ：

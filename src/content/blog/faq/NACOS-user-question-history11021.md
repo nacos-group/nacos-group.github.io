@@ -1,6 +1,6 @@
 ---
 id: "question-history-11021"
-title: "Nacos nacos现在有支持5.1版本的mysql吗？ nacos-opensource"
+title: "Nacos nacos现在有支持5.1版本的mysql吗？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos官方支持MySQL数据库，并且要求版本为5.6及以上。因此，Nacos是可以支持MySQL 5.1版本以上的，但具体到5.1版本，虽然理论上可能可以兼容，但由于5.6及以上版本的特性更被广泛测试和推荐，使用5.1版本可能存在一些未预期的兼容性问题。为了确保稳定性和功能完整性，强烈建议升级到"
@@ -9,7 +9,7 @@ keywords: ["nacos","5.1版本","mysql"]
 ---
 
 ## 用户问题 ： 
- Nacos nacos现在有支持5.1版本的mysql吗？ nacos-opensource 
+ Nacos nacos现在有支持5.1版本的mysql吗？  
 
 ---------------
 ## 专家官方解答 ：

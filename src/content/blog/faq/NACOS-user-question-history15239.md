@@ -1,13 +1,13 @@
 ---
 id: "question-history-15239"
-title: "nacos报错caused: Could not commit JDBC transaction; nes nacos-opensource"
+title: "nacos报错caused: Could not commit JDBC transaction; nes"
 date: "2024-06-12"
 category: "expertConsultation"
 description: "根据您提供的错误信息，这个问题涉及到的是在Nacos中尝试提交JDBC事务时遇到的约束违反异常，具体为重复键入`set-DEFAULT_GROUP-`导致的唯一键约束冲突。这通常意味着您尝试插入的配置信息与数据库中已存在的记录冲突。结合已有知识，我们可以分析并给出建议：### 原因分析1. **重复"
 ---
 
 ## 用户问题 ： 
- nacos报错caused: Could not commit JDBC transaction; nested exception is java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'set-DEFAULT_GROUP-' for key 'config_info.uk_configinfo_datagrouptenant';caused: Duplicate entry 'set-DEFAULT_GROUP-' for key 'config_info.uk_configinfo_datagrouptenant nacos-opensource 
+ nacos报错caused: Could not commit JDBC transaction; nested exception is java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'set-DEFAULT_GROUP-' for key 'config_info.uk_configinfo_datagrouptenant';caused: Duplicate entry 'set-DEFAULT_GROUP-' for key 'config_info.uk_configinfo_datagrouptenant  
 
 ---------------
 ## 专家官方解答 ：
@@ -51,7 +51,7 @@ description: "根据您提供的错误信息，这个问题涉及到的是在Nac
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15262)给我们反馈。

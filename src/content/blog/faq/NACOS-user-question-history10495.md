@@ -1,6 +1,6 @@
 ---
 id: "question-history-10495"
-title: "#Nacos的自动健康检查是如何工作的？ nacos-opensource"
+title: "#Nacos的自动健康检查是如何工作的？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos的自动健康检查主要是通过Spring Actuator与Nacos客户端集成来实现的。当您的应用集成了Nacos作为配置中心（通过`nacos-spring-boot-starter`或`spring-cloud-alibaba-nacos-config`）或服务发现（通过`nacos-s"
@@ -9,7 +9,7 @@ keywords: ["Nacos","自动健康检查","工作原理"]
 ---
 
 ## 用户问题 ： 
- #Nacos的自动健康检查是如何工作的？ nacos-opensource 
+ #Nacos的自动健康检查是如何工作的？  
 
 ---------------
 ## 专家官方解答 ：

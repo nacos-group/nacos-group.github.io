@@ -1,13 +1,13 @@
 ---
 id: "question-history-15856"
-title: "nacos的配置中心刷新原则 nacos-opensource"
+title: "nacos的配置中心刷新原则"
 date: "2024-06-25"
 category: "expertConsultation"
 description: "Nacos配置中心刷新原则主要基于以下几个核心点：1. **实时监听与更新**：Nacos客户端通过向服务端注册监听(dataId, group)对来实时监听配置变化。一旦配置有更新，服务端会通过长连接向所有订阅了该配置的客户端推送更新通知。客户端收到通知后，会对比本地缓存的配置内容的MD5值与服务"
 ---
 
 ## 用户问题 ： 
- nacos的配置中心刷新原则 nacos-opensource 
+ nacos的配置中心刷新原则  
 
 ---------------
 ## 专家官方解答 ：

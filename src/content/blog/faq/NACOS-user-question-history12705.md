@@ -1,6 +1,6 @@
 ---
 id: "question-history-12705"
-title: "nacos不使用外部数据库（如mysql) 怎么配置？ nacos-opensource"
+title: "nacos不使用外部数据库（如mysql) 怎么配置？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos 在不使用外部数据库（如MySQL）的情况下，默认使用的是嵌入式的Derby数据库。Derby是Apache软件基金会提供的一个开源的、纯Java编写的关系型数据库，它被直接打包在Nacos服务器中，无需单独安装和配置。以下是不使用外部数据库配置Nacos的基本步骤：1. **无需额外数据"
@@ -9,7 +9,7 @@ keywords: ["nacos-opensource","配置","不使用","外部数据库","mysql"]
 ---
 
 ## 用户问题 ： 
- nacos不使用外部数据库（如mysql) 怎么配置？ nacos-opensource 
+ nacos不使用外部数据库（如mysql) 怎么配置？  
 
 ---------------
 ## 专家官方解答 ：

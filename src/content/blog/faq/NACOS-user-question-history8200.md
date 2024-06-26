@@ -1,6 +1,6 @@
 ---
 id: "question-history-8200"
-title: "2.1.2版本的服务端nacos支持2.2.4版本的客户端nacos吗 nacos-opensource"
+title: "2.1.2版本的服务端nacos支持2.2.4版本的客户端nacos吗"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，Nacos服务端2.X版本能够兼容所有的Nacos2.X的客户端版本。因此，Nacos服务端2.1.2版本确实支持与Nacos客户端2.2.4版本的兼容。这是因为Nacos在2.X系列中设计了向前兼容的机制，确保了较高版本的客户端可以正常工作在较低版本的服务端环境下。总结来说，N"
@@ -9,7 +9,7 @@ keywords: ["2.1.2","服务端","nacos","2.2.4","客户端","兼容性"]
 ---
 
 ## 用户问题 ： 
- 2.1.2版本的服务端nacos支持2.2.4版本的客户端nacos吗 nacos-opensource 
+ 2.1.2版本的服务端nacos支持2.2.4版本的客户端nacos吗  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15852"
-title: "apisix 使用nacos 作为配置中心与服务 nacos-opensource"
+title: "apisix 使用nacos 作为配置中心与服务"
 date: "2024-06-25"
 category: "expertConsultation"
 description: "要使用 Nacos 作为 Apache APISIX 的配置中心与服务发现组件，虽然直接的集成示例可能不在提供的参考资料内，但我们可以基于 Nacos 与 Spring 集成的知识点，推测和指导如何实现这一目标。因为 APISIX 是基于 Lua 和 Nginx 的，所以直接集成 Nacos 不像在"
 ---
 
 ## 用户问题 ： 
- apisix 使用nacos 作为配置中心与服务 nacos-opensource 
+ apisix 使用nacos 作为配置中心与服务  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,13 +1,13 @@
 ---
 id: "question-history-14887"
-title: "nacos derby 配置 给我直接可以复制粘贴的配置 nacos-opensource"
+title: "nacos derby 配置 给我直接可以复制粘贴的配置"
 date: "2024-06-02"
 category: "expertConsultation"
 description: "根据提供的知识内容，为了帮助您配置Nacos使用Derby作为数据存储，您可以按照以下步骤操作：1. **准备配置文件**：   - 首先，确保您已获取Nacos服务器软件包，进入`nacos-server-2.x.xconf`目录。   - 在此目录下，您会找到默认的数据库配置文件，包括`derb"
 ---
 
 ## 用户问题 ： 
- nacos derby 配置 给我直接可以复制粘贴的配置 nacos-opensource 
+ nacos derby 配置 给我直接可以复制粘贴的配置  
 
 ---------------
 ## 专家官方解答 ：
@@ -59,7 +59,7 @@ description: "根据提供的知识内容，为了帮助您配置Nacos使用Derb
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=14910)给我们反馈。

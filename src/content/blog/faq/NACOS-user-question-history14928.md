@@ -1,13 +1,13 @@
 ---
 id: "question-history-14928"
-title: "2.3.2 版本开启鉴权之后的默认用户和密码 nacos-opensource"
+title: "2.3.2 版本开启鉴权之后的默认用户和密码"
 date: "2024-06-03"
 category: "expertConsultation"
 description: "在Nacos 2.3.2版本中，开启鉴权后，默认用户仍然是`nacos`，但默认情况下，密码不再是明文的`nacos`。根据Nacos的安全实践，强烈建议在初始化或首次启动时即修改默认密码。如果在开启鉴权的过程中没有特别设置，默认密码应该是通过BCrypt加密的`nacos`值。由于加密后的密码每次"
 ---
 
 ## 用户问题 ： 
- 2.3.2 版本开启鉴权之后的默认用户和密码 nacos-opensource 
+ 2.3.2 版本开启鉴权之后的默认用户和密码  
 
 ---------------
 ## 专家官方解答 ：
@@ -68,7 +68,7 @@ description: "在Nacos 2.3.2版本中，开启鉴权后，默认用户仍然是`
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=14930)给我们反馈。

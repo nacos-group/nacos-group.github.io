@@ -1,12 +1,18 @@
 ---
 id: "question-history-11768"
-title: "nacos怎么修改服务分组 nacos-opensource"
+title: "nacos怎么修改服务分组"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要修改Nacos中的服务分组，可以遵循以下步骤操作：1. **登录Nacos控制台**：   首先，你需要访问Nacos的Web控制台。假设你的Nacos服务已经在本地启动，通常可以通过访问 `http://127.0.0.1:8848/nacos` 来打开控制台界面。根据实际情况，地址中的IP和端"
 tags: ["nacos","修改","服务分组"]
 keywords: ["nacos","修改","服务分组"]
 ---
+
+## 用户问题 ： 
+ nacos怎么修改服务分组  
+
+---------------
+## 专家官方解答 ：
 
 要修改Nacos中的服务分组，可以遵循以下步骤操作：
 
@@ -28,9 +34,25 @@ keywords: ["nacos","修改","服务分组"]
 请注意，直接修改服务分组可能会影响到服务的发现逻辑，特别是对于依赖特定分组配置的应用，因此在进行此类修改时需谨慎，并做好相应的测试验证。
 
 此过程依据Nacos提供的基本功能进行，具体UI界面和操作路径可能会随着Nacos不同版本有所变化，但核心逻辑应保持一致。如果在操作过程中遇到具体问题，建议查阅Nacos官方文档或社区论坛寻求帮助。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：nacos支持服务列表分组隔离了嘛 
+ 
+ *专家经验：Nacos 快速开始 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13795)给我们反馈。

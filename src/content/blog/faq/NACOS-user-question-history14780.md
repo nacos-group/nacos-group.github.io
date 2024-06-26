@@ -1,13 +1,13 @@
 ---
 id: "question-history-14780"
-title: "nacos的v2版本支持ipv6访问吗 nacos-opensource"
+title: "nacos的v2版本支持ipv6访问吗"
 date: "2024-05-30"
 category: "expertConsultation"
 description: "Nacos的V2版本确实支持IPv6访问。从Nacos 2.1版本开始，服务器端（Nacos Server）能够自动识别IPv4或IPv6环境，无需特别配置。如果需要在双栈环境中强制指定使用IPv6，可以通过设置`nacos.server.ip`或`nacos.inetutils.ip-addres"
 ---
 
 ## 用户问题 ： 
- nacos的v2版本支持ipv6访问吗 nacos-opensource 
+ nacos的v2版本支持ipv6访问吗  
 
 ---------------
 ## 专家官方解答 ：

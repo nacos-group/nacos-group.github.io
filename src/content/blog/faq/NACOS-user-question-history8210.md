@@ -1,6 +1,6 @@
 ---
 id: "question-history-8210"
-title: "本地idea连接不了服务器nacos，服务器正常启动，页面也可以访问，在本地启动服务连接服务器nacos时 nacos-opensource"
+title: "本地idea连接不了服务器nacos，服务器正常启动，页面也可以访问，在本地启动服务连接服务器nacos时"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，我们可以分析并尝试解决您在本地IDEA环境下连接服务器Nacos时遇到的问题“Client not connected, current status: STARTING”，尽管直接的解决方案未明确给出，但我们可以依据已有的信息和常见故障排查步骤来尝试解决。### 分析问题原因1"
@@ -9,7 +9,7 @@ keywords: ["idea","服务器nacos","连接不了","Client not connected","curren
 ---
 
 ## 用户问题 ： 
- 本地idea连接不了服务器nacos，服务器正常启动，页面也可以访问，在本地启动服务连接服务器nacos时报错Client not connected, current status:STARTING，ping、防火墙、安全组全部正常 nacos-opensource 
+ 本地idea连接不了服务器nacos，服务器正常启动，页面也可以访问，在本地启动服务连接服务器nacos时报错Client not connected, current status:STARTING，ping、防火墙、安全组全部正常  
 
 ---------------
 ## 专家官方解答 ：

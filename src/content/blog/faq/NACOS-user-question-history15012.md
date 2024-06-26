@@ -1,13 +1,13 @@
 ---
 id: "question-history-15012"
-title: "arm架构的nacos怎么安装，不使用docker nacos-opensource"
+title: "arm架构的nacos怎么安装，不使用docker"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "根据您提供的信息，关于在ARM架构上安装Nacos而不使用Docker的问题，当前知识库中并未直接提供针对ARM架构的具体安装指南。但是，我们可以尝试基于现有的x86_64安装流程，结合ARM架构的特点，给出一些指导性的建议。请注意，以下步骤可能需要您根据实际情况调整。### 分析问题原因ARM架构"
 ---
 
 ## 用户问题 ： 
- arm架构的nacos怎么安装，不使用docker nacos-opensource 
+ arm架构的nacos怎么安装，不使用docker  
 
 ---------------
 ## 专家官方解答 ：

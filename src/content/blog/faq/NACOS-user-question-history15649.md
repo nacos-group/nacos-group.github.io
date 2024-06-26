@@ -1,13 +1,13 @@
 ---
 id: "question-history-15649"
-title: "com.alibaba.nacos.api.exception.NacosException: faile nacos-opensource"
+title: "com.alibaba.nacos.api.exception.NacosException: faile"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "根据您提供的错误信息，`nacos-opensource com.alibaba.nacos.api.exception.NacosException: failed to req API:archive-eureka:8848/nacos/v1/ns/instance/list. code:400"
 ---
 
 ## 用户问题 ： 
- com.alibaba.nacos.api.exception.NacosException: failed to req API:archive-eureka:8848 nacos v1 ns instance list. code:400 msg: Param 'serviceName' is illegal, illegal characters should not appear in the param. nacos-opensource 
+ com.alibaba.nacos.api.exception.NacosException: failed to req API:archive-eureka:8848 nacos v1 ns instance list. code:400 msg: Param 'serviceName' is illegal, illegal characters should not appear in the param.  
 
 ---------------
 ## 专家官方解答 ：
@@ -51,7 +51,7 @@ description: "根据您提供的错误信息，`nacos-opensource com.alibaba.nac
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15701)给我们反馈。

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15435"
-title: "nacos 扩展配置(extension-configs) 和 共享配置(shared-configs) nacos-opensource"
+title: "nacos 扩展配置(extension-configs) 和 共享配置(shared-configs)"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "在Nacos中，扩展配置(extension-configs)和共享配置(shared-configs)是针对不同场景下配置管理的需求而设计的概念。### 分析问题原因根据提供的我了解的知识, 我们可以理解Nacos作为配置中心，能够很好地融入Spring Cloud生态中，提供动态配置管理和服务发"
 ---
 
 ## 用户问题 ： 
- nacos 扩展配置(extension-configs) 和 共享配置(shared-configs) nacos-opensource 
+ nacos 扩展配置(extension-configs) 和 共享配置(shared-configs)  
 
 ---------------
 ## 专家官方解答 ：
@@ -57,7 +57,7 @@ description: "在Nacos中，扩展配置(extension-configs)和共享配置(share
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15505)给我们反馈。

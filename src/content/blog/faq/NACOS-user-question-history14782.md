@@ -1,10 +1,16 @@
 ---
 id: "question-history-14782"
-title: "nacos配置更新后，springboot后台的配置了类并没有更新 nacos-opensource"
+title: "nacos配置更新后，springboot后台的配置了类并没有更新"
 date: "2024-05-30"
 category: "expertConsultation"
 description: "根据提供的知识内容，我们可以分析并解决您遇到的问题：nacos-opensource配置更新后，Spring Boot后台配置的类并没有更新。### 分析问题原因1. **配置监听未生效**：可能是应用未正确订阅配置更新，或者Listener实现逻辑存在问题，导致虽然收到了nacos-server的"
 ---
+
+## 用户问题 ： 
+ nacos配置更新后，springboot后台的配置了类并没有更新  
+
+---------------
+## 专家官方解答 ：
 
 根据提供的知识内容，我们可以分析并解决您遇到的问题：nacos-opensource配置更新后，Spring Boot后台配置的类并没有更新。
 
@@ -40,9 +46,27 @@ description: "根据提供的知识内容，我们可以分析并解决您遇到
 ### 解释
 
 以上步骤旨在系统地排查并解决配置更新不生效的问题，从监听配置的正确实施，到处理逻辑的准确性，再到配置自动刷新的机制，以及基础的网络与日志检查，都是为了确保配置更新流程中的每一步都能正确无误地执行。特别注意，Spring Boot应用的动态配置能力依赖于正确的监听机制和配置管理框架的支持，因此确保这些组件正确集成至关重要。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos 配置无法动态刷新 
+ 
+ *专家经验：Nacos 扩缩容问题 
+ 
+ *专家经验：应用配置获取失败 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=14792)给我们反馈。

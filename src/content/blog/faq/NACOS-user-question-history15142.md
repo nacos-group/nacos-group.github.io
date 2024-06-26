@@ -1,13 +1,13 @@
 ---
 id: "question-history-15142"
-title: "nacos启动页面 nacos-opensource"
+title: "nacos启动页面"
 date: "2024-06-07"
 category: "expertConsultation"
 description: "为了解答关于“nacos-opensource nacos启动页面”的问题，我们首先需要确保Nacos服务已经成功启动。根据提供的知识内容，我们可以分步骤来进行分析和解答：### 步骤1：启动Nacos服务- **操作说明**：请按照第1篇参考内容所述，使用Nacos目录下`nacos/bin/st"
 ---
 
 ## 用户问题 ： 
- nacos启动页面 nacos-opensource 
+ nacos启动页面  
 
 ---------------
 ## 专家官方解答 ：
@@ -55,7 +55,7 @@ description: "为了解答关于“nacos-opensource nacos启动页面”的问�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15144)给我们反馈。

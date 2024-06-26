@@ -1,13 +1,13 @@
 ---
 id: "question-history-15794"
-title: "为什么选用nacos注册和配置中心 nacos-opensource"
+title: "为什么选用nacos注册和配置中心"
 date: "2024-06-21"
 category: "expertConsultation"
 description: "Nacos开源项目被选作注册和配置中心的原因主要包括以下几点，这些点可以从提供的知识内容中提炼出来：1. **强大的功能整合**：Nacos能够融合Spring框架（包括基础Spring和Spring Cloud），提供一站式的服务发现与配置管理解决方案。这意味着开发者可以使用统一的平台处理微服务架"
 ---
 
 ## 用户问题 ： 
- 为什么选用nacos注册和配置中心 nacos-opensource 
+ 为什么选用nacos注册和配置中心  
 
 ---------------
 ## 专家官方解答 ：

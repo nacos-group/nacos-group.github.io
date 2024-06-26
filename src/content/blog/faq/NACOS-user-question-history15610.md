@@ -1,13 +1,13 @@
 ---
 id: "question-history-15610"
-title: "spring-cloud-starter-alibaba-nacos-discovery版本对应的spri nacos-opensource"
+title: "spring-cloud-starter-alibaba-nacos-discovery版本对应的spri"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "根据提供的知识内容，为了确定`nacos-spring-cloud-starter-alibaba-nacos-discovery`版本所对应的Spring Boot版本，我们可以遵循以下步骤分析和查找信息：1. **理解Nacos与Spring Boot的适配原则**：Nacos提供了与Sprin"
 ---
 
 ## 用户问题 ： 
- spring-cloud-starter-alibaba-nacos-discovery版本对应的springboot版本 nacos-opensource 
+ spring-cloud-starter-alibaba-nacos-discovery版本对应的springboot版本  
 
 ---------------
 ## 专家官方解答 ：

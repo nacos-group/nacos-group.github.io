@@ -1,6 +1,6 @@
 ---
 id: "question-history-12470"
-title: "Nacos 2.2.3 启动报：No DataSource set 是什么设置有错误？ nacos-opensource"
+title: "Nacos 2.2.3 启动报：No DataSource set 是什么设置有错误？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，Nacos 2.2.3 启动时报错No DataSource set通常意味着Nacos在尝试连接到配置的数据库时遇到了问题，无法正确设置数据源。这可能是由于以下几个原因造成的：1. **配置错误**：检查`conf/application.properties`文件中的数据库连"
@@ -9,7 +9,7 @@ keywords: ["Nacos","2.2.3","启动","报错","No DataSource set","设置错误"]
 ---
 
 ## 用户问题 ： 
- Nacos 2.2.3 启动报：No DataSource set 是什么设置有错误？ nacos-opensource 
+ Nacos 2.2.3 启动报：No DataSource set 是什么设置有错误？  
 
 ---------------
 ## 专家官方解答 ：

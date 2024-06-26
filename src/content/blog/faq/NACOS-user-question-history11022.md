@@ -1,6 +1,6 @@
 ---
 id: "question-history-11022"
-title: "Nacos社区群4 你好，问下nacos 2.2.0用的是api v2吗 nacos-opensource"
+title: "Nacos社区群4 你好，问下nacos 2.2.0用的是api v2吗"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos 2.2.0版本中，确实引入了新的一套v2 Nacos OpenAPI。这些API在返回格式、返回码以及规范化方面进行了大幅改进，旨在逐步替代之前1.x版本的OpenAPI，特别是在控制台操作和自定义应用程序开发场景中。要了解更多关于v2 OpenAPI的详细信息和如何使用，可以参考官方"
@@ -9,7 +9,7 @@ keywords: ["2.2.0","api v2"]
 ---
 
 ## 用户问题 ： 
- Nacos社区群4 你好，问下nacos 2.2.0用的是api v2吗 nacos-opensource 
+ Nacos社区群4 你好，问下nacos 2.2.0用的是api v2吗  
 
 ---------------
 ## 专家官方解答 ：

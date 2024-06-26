@@ -1,13 +1,13 @@
 ---
 id: "question-history-15001"
-title: "Nacos nacos是否支持同时向多个不同的注册中心注册服务？ nacos-opensource"
+title: "Nacos nacos是否支持同时向多个不同的注册中心注册服务？"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "Nacos 是一个动态服务发现、配置管理和服务管理平台，它主要设计用于支持微服务架构下的服务注册与发现。关于您的问题：**nacos 是否支持同时向多个不同的注册中心注册服务？**根据我掌握的知识(知识: Nacos 开源项目介绍和使用场景)，Nacos 本身作为一个注册中心，其核心功能聚焦于为微服"
 ---
 
 ## 用户问题 ： 
- Nacos nacos是否支持同时向多个不同的注册中心注册服务？ nacos-opensource 
+ Nacos nacos是否支持同时向多个不同的注册中心注册服务？  
 
 ---------------
 ## 专家官方解答 ：

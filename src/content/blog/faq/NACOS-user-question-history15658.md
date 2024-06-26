@@ -1,13 +1,13 @@
 ---
 id: "question-history-15658"
-title: "我修改了nacos的配置文件中的以下两个参数，依赖这个nacos集群的应用服务需要重启吗？ nacos.c nacos-opensource"
+title: "我修改了nacos的配置文件中的以下两个参数，依赖这个nacos集群的应用服务需要重启吗？ nacos.c"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "根据您提供的信息，修改了Nacos配置文件中的两个参数：1. `nacos.core.auth.enabled=true`2. `nacos.core.auth.plugin.nacos.token.secret.key=XXXXXXX`这两个参数分别用于开启Nacos的认证功能以及设置token的"
 ---
 
 ## 用户问题 ： 
- 我修改了nacos的配置文件中的以下两个参数，依赖这个nacos集群的应用服务需要重启吗？ nacos.core.auth.enabled=true nacos.core.auth.plugin.nacos.token.secret.key=XXXXXXX nacos-opensource 
+ 我修改了nacos的配置文件中的以下两个参数，依赖这个nacos集群的应用服务需要重启吗？ nacos.core.auth.enabled=true nacos.core.auth.plugin.nacos.token.secret.key=XXXXXXX  
 
 ---------------
 ## 专家官方解答 ：
@@ -53,7 +53,7 @@ description: "根据您提供的信息，修改了Nacos配置文件中的两个�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15710)给我们反馈。

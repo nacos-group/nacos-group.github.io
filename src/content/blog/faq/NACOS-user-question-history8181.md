@@ -1,12 +1,18 @@
 ---
 id: "question-history-8181"
-title: "Does Nacos only support polling for querying service online offline status Can Nacos provide a watch mechanism similar to Zookeeper nacos-opensource"
+title: "Does Nacos only support polling for querying service "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos does offer a mechanism beyond simple polling for tracking the online/offline status of services, akin to the watch mechanism in Zookeeper. While"
 tags: ["Nacos","polling","querying","service","online offline status","watch mechanism","Zookeeper"]
 keywords: ["Nacos","polling","querying","service","online offline status","watch mechanism","Zookeeper"]
 ---
+
+## 用户问题 ： 
+ Does Nacos only support polling for querying service online offline status Can Nacos provide a watch mechanism similar to Zookeeper  
+
+---------------
+## 专家官方解答 ：
 
 Nacos does offer a mechanism beyond simple polling for tracking the online/offline status of services, akin to the watch mechanism in Zookeeper. While the provided knowledge doesn't directly discuss this feature in depth, Nacos does have capabilities that align with your query.
 
@@ -26,9 +32,27 @@ Nacos indeed supports a more efficient way to monitor service status changes wit
 While the specific steps for setup are not detailed here due to the nature of the provided knowledge, I encourage referring to the official Nacos documentation for the most up-to-date instructions on how to set up event listening or subscription mechanisms for service status changes.
 
 For a deeper dive into Nacos features and configurations, including dynamic service discovery and management, refer to the official documentation at [https://nacos.io/docs/latest/](https://nacos.io/docs/latest/). This will provide comprehensive guides tailored to different use cases and development environments.
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos "status":501,"error":"Not Implemented","message":"no such api:...","path":"... 
+ 
+ *专家经验：Nacos 欢迎你 
+ 
+ *专家经验：Nacos 介绍 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13541)给我们反馈。

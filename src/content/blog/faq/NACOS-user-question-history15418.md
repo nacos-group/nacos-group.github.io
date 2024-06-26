@@ -1,13 +1,13 @@
 ---
 id: "question-history-15418"
-title: "nacos默认需要放开哪几个端口号 nacos-opensource"
+title: "nacos默认需要放开哪几个端口号"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "Nacos默认需要放开以下四个端口号：1. **8848**：这是Nacos服务的主端口，用于客户端、控制台以及OpenAPI的HTTP通信。2. **9848**：客户端gRPC请求服务端的端口，客户端通过此端口向Nacos服务端发起连接和请求。3. **9849**：服务端gRPC请求服务端的端"
 ---
 
 ## 用户问题 ： 
- nacos默认需要放开哪几个端口号 nacos-opensource 
+ nacos默认需要放开哪几个端口号  
 
 ---------------
 ## 专家官方解答 ：
@@ -52,7 +52,7 @@ Nacos默认需要放开以下四个端口号：
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15488)给我们反馈。

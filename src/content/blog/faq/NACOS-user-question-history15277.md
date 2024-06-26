@@ -1,13 +1,13 @@
 ---
 id: "question-history-15277"
-title: "请问我服务端用的2.0,3版本搭建好了集群,客户端用2.0,4进行服务注册时报错 Nacos cluste nacos-opensource"
+title: "请问我服务端用的2.0,3版本搭建好了集群,客户端用2.0,4进行服务注册时报错 Nacos cluste"
 date: "2024-06-13"
 category: "expertConsultation"
 description: "根据您提供的问题，服务端使用的是Nacos 2.0.3版本，而客户端使用的是2.0.4版本，在服务注册时遇到错误提示“Nacos cluster is running with 1.X mode, can't accept gRPC request temporarily. Please check"
 ---
 
 ## 用户问题 ： 
- 请问我服务端用的2.0,3版本搭建好了集群,客户端用2.0,4进行服务注册时报错 Nacos cluster is running with 1.X mode, can't accept gRPC request temporarily. Please check the server status or close Double write to force open 2.0 mode要怎么解决 nacos-opensource 
+ 请问我服务端用的2.0,3版本搭建好了集群,客户端用2.0,4进行服务注册时报错 Nacos cluster is running with 1.X mode, can't accept gRPC request temporarily. Please check the server status or close Double write to force open 2.0 mode要怎么解决  
 
 ---------------
 ## 专家官方解答 ：
@@ -61,7 +61,7 @@ description: "根据您提供的问题，服务端使用的是Nacos 2.0.3版本�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15291)给我们反馈。

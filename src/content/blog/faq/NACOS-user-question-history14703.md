@@ -1,6 +1,6 @@
 ---
 id: "question-history-14703"
-title: "如何开启鉴权 nacos-opensource"
+title: "如何开启鉴权"
 date: "2024-05-29"
 category: "expertConsultation"
 description: "要开启Nacos的服务端鉴权功能，您可以根据您的部署环境（非Docker或Docker环境）采取以下步骤操作：### 非Docker环境1. **修改配置文件**：编辑Nacos服务端的`application.properties`文件，进行如下更改：   - 将原来的配置：     ```   "
@@ -9,7 +9,7 @@ keywords: ["鉴权"]
 ---
 
 ## 用户问题 ： 
- 如何开启鉴权 nacos-opensource 
+ 如何开启鉴权  
 
 ---------------
 ## 专家官方解答 ：

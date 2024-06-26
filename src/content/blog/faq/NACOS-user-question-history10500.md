@@ -1,6 +1,6 @@
 ---
 id: "question-history-10500"
-title: "#Nacos的主要优点是什么？ nacos-opensource"
+title: "#Nacos的主要优点是什么？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos的主要优点包括：1. **全面的功能集**：Nacos作为阿里巴巴开源的服务发现与配置管理工具，不仅支持服务的注册与发现，还集成了配置管理、健康检查、动态DNS服务及服务元数据管理等特性，能够满足现代云原生应用的多样化需求。2. **增强的可靠性**：相较于Eureka，Nacos支持配置"
@@ -9,7 +9,7 @@ keywords: ["Nacos","主要优点"]
 ---
 
 ## 用户问题 ： 
- #Nacos的主要优点是什么？ nacos-opensource 
+ #Nacos的主要优点是什么？  
 
 ---------------
 ## 专家官方解答 ：

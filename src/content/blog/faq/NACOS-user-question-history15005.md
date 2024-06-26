@@ -1,13 +1,13 @@
 ---
 id: "question-history-15005"
-title: "k8s-sync 怎么安装部署？git里没看到说明 nacos-opensource"
+title: "k8s-sync 怎么安装部署？git里没看到说明"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "根据你提供的信息，关于nacos-opensource k8s-sync的安装部署，虽然直接的说明在给定的知识内容中没有明确提及，但我们可以基于已有的知识进行分析并给出一般性的指导。Nacos-K8s项目（[GitHub链接](https://github.com/nacos-group/nacos"
 ---
 
 ## 用户问题 ： 
- k8s-sync 怎么安装部署？git里没看到说明 nacos-opensource 
+ k8s-sync 怎么安装部署？git里没看到说明  
 
 ---------------
 ## 专家官方解答 ：

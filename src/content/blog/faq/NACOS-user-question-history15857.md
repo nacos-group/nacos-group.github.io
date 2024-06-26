@@ -1,13 +1,13 @@
 ---
 id: "question-history-15857"
-title: "nacos配置中心 dataid nacos-opensource"
+title: "nacos配置中心 dataid"
 date: "2024-06-25"
 category: "expertConsultation"
 description: "在Nacos作为配置中心时，`dataId`是一个关键概念，它用于唯一标识一个配置文件。根据提供的知识，让我详细解析如何在Spring应用中使用Nacos配置中心，并特别关注`dataId`的作用及其设置方法。### 数据解析与原因分析**1. **`dataId`的定义与作用：**   `data"
 ---
 
 ## 用户问题 ： 
- nacos配置中心 dataid nacos-opensource 
+ nacos配置中心 dataid  
 
 ---------------
 ## 专家官方解答 ：

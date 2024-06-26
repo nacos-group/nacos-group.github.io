@@ -1,6 +1,6 @@
 ---
 id: "question-history-14005"
-title: "nacos默认密码是什么？ nacos-opensource"
+title: "nacos默认密码是什么？"
 date: "2024-05-22"
 category: "expertConsultation"
 description: "Nacos的默认用户名和密码均为`nacos`。这一默认凭证是在Nacos集群初始化时自动设置的。如果您需要修改默认密码，可以在初始化集群前编辑相应的数据库脚本文件，如`mysql-schema.sql`，并将`$new_password`替换为经过BCrypt加密的新密码。或者在集群启动后，通过控"
@@ -9,7 +9,7 @@ keywords: ["默认密码"]
 ---
 
 ## 用户问题 ： 
- nacos默认密码是什么？ nacos-opensource 
+ nacos默认密码是什么？  
 
 ---------------
 ## 专家官方解答 ：

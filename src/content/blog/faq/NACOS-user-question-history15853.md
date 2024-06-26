@@ -1,13 +1,13 @@
 ---
 id: "question-history-15853"
-title: "nacos配置中心的加载顺序 nacos-opensource"
+title: "nacos配置中心的加载顺序"
 date: "2024-06-25"
 category: "expertConsultation"
 description: "Nacos配置中心在Spring环境下加载顺序的相关信息，在提供的知识内容中并未直接阐述其具体加载顺序。但是，我们可以通过分析Nacos与Spring集成的配置过程，推测其大致的加载流程。根据Nacos与Spring（尤其是Spring Cloud）的集成实践，Nacos配置中心的加载顺序可以概括为"
 ---
 
 ## 用户问题 ： 
- nacos配置中心的加载顺序 nacos-opensource 
+ nacos配置中心的加载顺序  
 
 ---------------
 ## 专家官方解答 ：

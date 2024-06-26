@@ -1,13 +1,13 @@
 ---
 id: "question-history-14997"
-title: "core-auth.log文件出现load failed nacos-opensource"
+title: "core-auth.log文件出现load failed"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "根据您提供的问题描述“nacos-opensource core-auth.log文件出现load failed”，这似乎是与Nacos在启动或运行过程中遇到的加载失败问题相关。虽然直接针对`core-auth.log`文件的具体错误信息未在给定的知识中详细说明，我们可以依据现有的知识内容进行一定的"
 ---
 
 ## 用户问题 ： 
- core-auth.log文件出现load failed nacos-opensource 
+ core-auth.log文件出现load failed  
 
 ---------------
 ## 专家官方解答 ：
@@ -56,7 +56,7 @@ description: "根据您提供的问题描述“nacos-opensource core-auth.log文
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15050)给我们反馈。

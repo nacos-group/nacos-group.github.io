@@ -1,12 +1,18 @@
 ---
 id: "question-history-13483"
-title: "nacos 开启鉴权 nacos-opensource"
+title: "nacos 开启鉴权"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要开启Nacos的鉴权功能，首先明确你的部署环境，这里提供非Docker环境、Docker环境以及Kubernetes环境下的操作指导。### 非Docker环境1. **修改配置文件**：   - 打开`application.properties`文件。   - 修改或添加以下配置项以开启鉴权："
 tags: ["nacos-opensource","鉴权","开启鉴权"]
 keywords: ["nacos-opensource","鉴权","开启鉴权"]
 ---
+
+## 用户问题 ： 
+ nacos 开启鉴权  
+
+---------------
+## 专家官方解答 ：
 
 要开启Nacos的鉴权功能，首先明确你的部署环境，这里提供非Docker环境、Docker环境以及Kubernetes环境下的操作指导。
 
@@ -78,9 +84,27 @@ keywords: ["nacos-opensource","鉴权","开启鉴权"]
   - [Nacos Docker镜像说明](https://github.com/nacos-group/nacos-docker)
   
 以上步骤适用于开启Nacos的鉴权功能，确保遵循每个步骤以正确配置和启用鉴权。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Authorization](https://nacos.io/docs/latest/guide/user/auth)
+ 
+ *专家经验：Nacos部署集群模式怎么打开鉴权 
+ 
+ *[鉴权插件](https://nacos.io/docs/latest/plugin/auth-plugin)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13908)给我们反馈。

@@ -1,12 +1,18 @@
 ---
 id: "question-history-8214"
-title: "Nacos2.0.1控制台显示 readyToUpgrade: false, nacos-opensource"
+title: "Nacos2.0.1控制台显示 readyToUpgrade: false,"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "遇到Nacos2.0.1控制台显示 `readyToUpgrade: false` 的问题，可以按照以下步骤分析和解决：1. **检查集群状态**：   - 确认集群中所有节点是否都已经升级到Nacos2.0及以上版本。如果存在未升级的节点，请参照官方升级指南[[1](https://nacos.i"
 tags: ["Nacos2.0.1","控制台","readyToUpgrade","false"]
 keywords: ["Nacos2.0.1","控制台","readyToUpgrade","false"]
 ---
+
+## 用户问题 ： 
+ Nacos2.0.1控制台显示 "readyToUpgrade": false,  
+
+---------------
+## 专家官方解答 ：
 
 遇到Nacos2.0.1控制台显示 `"readyToUpgrade": false` 的问题，可以按照以下步骤分析和解决：
 
@@ -31,9 +37,27 @@ keywords: ["Nacos2.0.1","控制台","readyToUpgrade","false"]
 请记得，每个步骤都需要细致操作，并且在进行改动前后，备份好相关配置和数据，以防不测。上述解决方案基于提供的知识内容，如果问题依然存在，可能需要更深入地检查系统日志或寻求社区帮助。
 
 [[1](https://nacos.io/docs/latest/upgrading/200-upgrading/)] 是解决该问题的关键参考资料。其他提及的手册和监控内容虽与直接解决此问题关系不大，但对全面了解和管理Nacos系统仍有价值。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos2.0.0～2.1.X版本，控制台显示 "readyToUpgrade": false 
+ 
+ *[控制台手册](https://nacos.io/docs/latest/guide/admin/console-guide)
+ 
+ *[Nacos 监控手册](https://nacos.io/docs/latest/guide/admin/monitor-guide)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13571)给我们反馈。

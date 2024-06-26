@@ -1,10 +1,16 @@
 ---
 id: "question-history-8431"
-title: "请帮忙看看，按照如下配置，nacos IPV6注册失败的错误 谢谢~~~Nacos服务端版本  2.2.3 单机版本  客户端版本是nacos-client-1.4.6.jar 。nacos conf application.properties新增如下配置spring.cloud.nacos.discovery.prefer-ipv6-address=true启动nacos,启动正常，且显示已经是IPV6类型。应用配置nacos地址如下application.properties文件：spring.cloud.nacos.discovery.server-addr=fe80::3a66:fb19:39ff:8072:8848启动后报错信息如下：com.alibaba.nacos.api.exception.NacosException: failed to req API: nacos v1 ns instance after all servers ([fe80::3a66: fb19:39ff:8072:8848]) tried: java.net.MalformedURLException: For input string: :3a66: fb19:39ff:8072:8848:8848 已经配置了：spring.cloud.nacos.discovery.prefer-ipv6-address=true server.ipv6=true server.listen=[::]:8848 nacos-opensource"
+title: "请帮忙看看，按照如下配置，nacos IPV6注册失败的错误 谢谢~~~Nacos服务端版本  2.2.3"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据你提供的信息和已有的知识，我们可以分析并尝试解决Nacos IPv6注册失败的问题。**原因分析：**1. 你提到的错误信息`java.net.MalformedURLException: For input string: :3a66: fb19:39ff:8072:8848:8848`表明在"
 ---
+
+## 用户问题 ： 
+ 请帮忙看看，按照如下配置，nacos IPV6注册失败的错误 谢谢~~~Nacos服务端版本  2.2.3 单机版本  客户端版本是nacos-client-1.4.6.jar 。nacos conf application.properties新增如下配置spring.cloud.nacos.discovery.prefer-ipv6-address=true启动nacos,启动正常，且显示已经是IPV6类型。应用配置nacos地址如下application.properties文件：spring.cloud.nacos.discovery.server-addr=fe80::3a66:fb19:39ff:8072:8848启动后报错信息如下：com.alibaba.nacos.api.exception.NacosException: failed to req API: nacos v1 ns instance after all servers ([fe80::3a66: fb19:39ff:8072:8848]) tried: java.net.MalformedURLException: For input string: ":3a66: fb19:39ff:8072:8848:8848" 已经配置了：spring.cloud.nacos.discovery.prefer-ipv6-address=true server.ipv6=true server.listen=[::]:8848  
+
+---------------
+## 专家官方解答 ：
 
 根据你提供的信息和已有的知识，我们可以分析并尝试解决Nacos IPv6注册失败的问题。
 
@@ -28,9 +34,27 @@ description: "根据你提供的信息和已有的知识，我们可以分析并
 4. **客户端版本兼容性：** 虽然知识库指出Nacos 2.X服务端兼容Nacos1.2.0及之后的客户端版本，但为了最佳兼容性和功能支持，考虑将客户端升级到与服务端相同的大版本，即使用Nacos 2.X系列的客户端。这可能不是直接解决当前错误的方法，但长期来看有助于避免因版本差异引起的问题。
 
 综上所述，主要通过修正客户端配置中的地址格式来直接解决注册失败的问题。希望这些建议能帮助你解决问题。如果问题依旧存在，建议详细检查网络配置及日志，或者在Nacos社区寻求进一步的帮助。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：nacos哪个版本最常用 
+ 
+ *专家经验：Nacos是否支持IPV6 
+ 
+ *专家经验：Nacos客户端和服务端版本的兼容性问题 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13652)给我们反馈。

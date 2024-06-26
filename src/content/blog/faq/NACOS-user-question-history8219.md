@@ -1,12 +1,18 @@
 ---
 id: "question-history-8219"
-title: "Param check invalid:Param 'Metadata' is illegal, the param length should not exceed 1024. nacos-opensource"
+title: "Param check invalid:Param 'Metadata' is illegal, the "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "遇到错误 nacos-opensource Param check invalid: Param 'Metadata' is illegal, the param length should not exceed 1024. 的原因是Nacos 2.3.0及以后版本引入了统一的参数校验逻辑，以确保请"
 tags: ["Param check invalid","Metadata","illegal","param length","exceed 1024"]
 keywords: ["Param check invalid","Metadata","illegal","param length","exceed 1024"]
 ---
+
+## 用户问题 ： 
+ Param check invalid:Param 'Metadata' is illegal, the param length should not exceed 1024.  
+
+---------------
+## 专家官方解答 ：
 
 遇到错误 "nacos-opensource Param check invalid: Param 'Metadata' is illegal, the param length should not exceed 1024." 的原因是Nacos 2.3.0及以后版本引入了统一的参数校验逻辑，以确保请求参数的合法性并避免潜在的问题。具体到这个问题，元数据（Metadata）的长度超过了服务端允许的最大值1024个字符。
 
@@ -25,9 +31,23 @@ keywords: ["Param check invalid","Metadata","illegal","param length","exceed 102
 - 调整校验配置是一种权宜之计，适用于特殊情况。但关闭校验意味着放弃了Nacos提供的一层安全保障，可能需要额外的自定义校验逻辑来弥补。
 
 以上步骤结合了问题原因分析及我了解的知识中提供的官方指导，旨在帮助你有效解决“元数据长度超过限制”的问题。请根据实际情况选择合适的解决策略。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Param 'Metadata' is illegal, the param length should not exceed %d 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13575)给我们反馈。

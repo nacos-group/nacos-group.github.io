@@ -1,13 +1,13 @@
 ---
 id: "question-history-14870"
-title: "请问nacos有arm架构的docker镜像么 nacos-opensource"
+title: "请问nacos有arm架构的docker镜像么"
 date: "2024-06-02"
 category: "expertConsultation"
 description: "确实存在针对ARM架构的Nacos Docker镜像。根据相关信息，Nacos社区提供了带有`slim`标识的镜像版本，例如`v2.3.1-slim`，它适用于ARM架构。为了使用这个镜像，您可以按照以下步骤操作：1. **访问官方文档**：首先，请参考[Nacos官方Docker快速启动指南](h"
 ---
 
 ## 用户问题 ： 
- 请问nacos有arm架构的docker镜像么 nacos-opensource 
+ 请问nacos有arm架构的docker镜像么  
 
 ---------------
 ## 专家官方解答 ：

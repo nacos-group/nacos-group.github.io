@@ -1,12 +1,18 @@
 ---
 id: "question-history-13382"
-title: "怎么快速配置nacos nacos-opensource"
+title: "怎么快速配置nacos"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要快速配置Nacos，您可以遵循以下步骤：### 1. 版本选择与环境准备- **选择版本**：推荐使用稳定版本2.3.2，您可以通过访问[Nacos的release notes](https://github.com/alibaba/nacos/releases)了解各版本详情。- **环境准备*"
 tags: ["快速配置","nacos"]
 keywords: ["快速配置","nacos"]
 ---
+
+## 用户问题 ： 
+ 怎么快速配置nacos  
+
+---------------
+## 专家官方解答 ：
 
 要快速配置Nacos，您可以遵循以下步骤：
 
@@ -62,9 +68,25 @@ keywords: ["快速配置","nacos"]
 - **快速启动**：进入`nacos-k8s`目录，执行`chmod +x quick-startup.sh && ./quick-startup.sh`。注意，此方式不带持久化存储，存在数据丢失风险。
 
 以上步骤涵盖了快速配置和启动Nacos的基本流程，根据实际需求调整相应的参数和服务名称即可。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos 快速开始 
+ 
+ *[Kubernetes Nacos](https://nacos.io/docs/latest/quickstart/quick-start-kubernetes)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13877)给我们反馈。

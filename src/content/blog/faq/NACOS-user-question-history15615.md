@@ -1,13 +1,13 @@
 ---
 id: "question-history-15615"
-title: "使用nacos2.0.2版本并使用mysql持久化，在nacos配置列表中修改配置保存。此操作的底层是在c nacos-opensource"
+title: "使用nacos2.0.2版本并使用mysql持久化，在nacos配置列表中修改配置保存。此操作的底层是在c"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "在Nacos 2.0.2版本中，当你在配置列表中修改配置并保存时，这一操作的底层实际上是在`config_info`表中进行**修改**而非新增。Nacos设计上会通过匹配配置的唯一标识（如dataId和group）来定位到已存在的配置记录，并更新其配置内容及相关元数据，比如修改时间等。这一过程确保"
 ---
 
 ## 用户问题 ： 
- 使用nacos2.0.2版本并使用mysql持久化，在nacos配置列表中修改配置保存。此操作的底层是在config_info表中是新增还是修改 nacos-opensource 
+ 使用nacos2.0.2版本并使用mysql持久化，在nacos配置列表中修改配置保存。此操作的底层是在config_info表中是新增还是修改  
 
 ---------------
 ## 专家官方解答 ：
@@ -45,7 +45,7 @@ description: "在Nacos 2.0.2版本中，当你在配置列表中修改配置并�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15674)给我们反馈。

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15640"
-title: "SpringBoot在启动的时间如何读取Nacos配置的yaml内容 nacos-opensource"
+title: "SpringBoot在启动的时间如何读取Nacos配置的yaml内容"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "在Spring Boot应用启动时读取Nacos配置的yaml内容，主要涉及两个方面：配置Nacos作为Spring Cloud Config Server以及在Spring Boot应用中正确配置以从Nacos获取配置。以下是详细步骤，结合Nacos的特性与Spring Boot集成实践进行说明："
 ---
 
 ## 用户问题 ： 
- SpringBoot在启动的时间如何读取Nacos配置的yaml内容 nacos-opensource 
+ SpringBoot在启动的时间如何读取Nacos配置的yaml内容  
 
 ---------------
 ## 专家官方解答 ：

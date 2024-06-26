@@ -1,6 +1,6 @@
 ---
 id: "question-history-8460"
-title: "nacos v2.2.3版本，k8s 微服务注册nacos，强制删除 pod, nacos注册实例不会消失 nacos-opensource"
+title: "nacos v2.2.3版本，k8s 微服务注册nacos，强制删除 pod, nacos注册实例不会消失"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据您的描述和提供的知识内容，问题的原因可能在于Nacos中注册的实例为非持久化服务，这类服务依赖客户端心跳保持活跃状态。当您在Kubernetes (k8s) 环境下强制删除Pod后，若Pod内的服务进程没有正确终止，或者存在某些情况下服务实例的心跳机制仍在运行，Nacos服务端会继续收到心跳信号"
@@ -9,7 +9,7 @@ keywords: ["nacos","v2.2.3","k8s","微服务","注册","nacos","强制删除","p
 ---
 
 ## 用户问题 ： 
- nacos v2.2.3版本，k8s 微服务注册nacos，强制删除 pod, nacos注册实例不会消失，一直显示健康。跪求大佬帮忙看看！ nacos-opensource 
+ nacos v2.2.3版本，k8s 微服务注册nacos，强制删除 pod, nacos注册实例不会消失，一直显示健康。跪求大佬帮忙看看！  
 
 ---------------
 ## 专家官方解答 ：

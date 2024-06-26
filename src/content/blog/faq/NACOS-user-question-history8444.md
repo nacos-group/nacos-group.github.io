@@ -1,12 +1,18 @@
 ---
 id: "question-history-8444"
-title: "各位大佬，想咨询下，怎么在 Nacos 2.3.0 通过helm方式部署设置开启授权认证功能？ nacos-opensource"
+title: "各位大佬，想咨询下，怎么在 Nacos 2.3.0 通过helm方式部署设置开启授权认证功能？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要在 Nacos 2.3.0 版本中通过 Helm 方式部署并设置开启授权认证功能，可以遵循以下步骤操作：1. **准备鉴权相关配置参数**：   根据 Nacos 的官方文档和已知信息，开启鉴权需要配置以下几个关键参数：   - `nacos.core.auth.enabled=true`：启用鉴"
 tags: ["Nacos","2.3.0","helm","部署","开启","授权认证","功能"]
 keywords: ["Nacos","2.3.0","helm","部署","开启","授权认证","功能"]
 ---
+
+## 用户问题 ： 
+ 各位大佬，想咨询下，怎么在 Nacos 2.3.0 通过helm方式部署设置开启授权认证功能？  
+
+---------------
+## 专家官方解答 ：
 
 要在 Nacos 2.3.0 版本中通过 Helm 方式部署并设置开启授权认证功能，可以遵循以下步骤操作：
 
@@ -43,9 +49,25 @@ keywords: ["Nacos","2.3.0","helm","部署","开启","授权认证","功能"]
 - [Nacos身份认证绕过漏洞说明](https://nacos.io/blog/announcement-token-secret-key/?source=activity)
 
 请注意，上述步骤基于Nacos的一般配置逻辑和Helm的通用用法。具体到Nacos 2.3.0版本和特定的Helm Chart实现细节，可能还需查阅该版本和Chart的最新文档以获取最准确的指导信息。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos部署集群模式怎么打开鉴权 
+ 
+ *专家经验：Nacos 身份认证绕过漏洞 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13662)给我们反馈。

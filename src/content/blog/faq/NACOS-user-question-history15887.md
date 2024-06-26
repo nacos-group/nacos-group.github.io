@@ -1,13 +1,13 @@
 ---
 id: "question-history-15887"
-title: "html  body  h1 Whitelabel Error Page  h1  p This appl nacos-opensource"
+title: "html  body  h1 Whitelabel Error Page  h1  p This appl"
 date: "2024-06-26"
 category: "expertConsultation"
 description: "根据您提供的错误信息，这似乎是一个HTTP 403 Forbidden错误，具体提示为“unknown user!”，这通常意味着服务器理解请求客户端的请求，但是拒绝执行此请求。结合我们的知识库，这个问题与Nacos访问控制相关，特别是用户身份验证失败的情况。下面是对该问题的分析及建议步骤：### "
 ---
 
 ## 用户问题 ： 
- html  body  h1 Whitelabel Error Page  h1  p This application has no explicit mapping for  error, so you are seeing this as a fallback.  p  div id='created' Tue Jun 25 18:14:58 CST 2024  div  div There was an unexpected error (type=Forbidden, status=403).  div  div unknown user!  div   body   html nacos-opensource 
+ html  body  h1 Whitelabel Error Page  h1  p This application has no explicit mapping for  error, so you are seeing this as a fallback.  p  div id='created' Tue Jun 25 18:14:58 CST 2024  div  div There was an unexpected error (type=Forbidden, status=403).  div  div unknown user!  div   body   html  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,12 +1,18 @@
 ---
 id: "question-history-12695"
-title: "com.alibaba.nacos.client.security.SecurityProxy - login failed: {code:403,message:unknown user!, nacos-opensource"
+title: "com.alibaba.nacos.client.security.SecurityProxy - log"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，我们可以分析并解答您遇到的问题：“nacos-opensource com.alibaba.nacos.client.security.SecurityProxy - login failed: code:403,message:unknown user!”。### 原因分析：-"
 tags: ["com.alibaba.nacos.client.security.SecurityProxy","login failed","403","unknown user"]
 keywords: ["com.alibaba.nacos.client.security.SecurityProxy","login failed","403","unknown user"]
 ---
+
+## 用户问题 ： 
+ com.alibaba.nacos.client.security.SecurityProxy - login failed: {"code":403,"message":"unknown user!",  
+
+---------------
+## 专家官方解答 ：
 
 根据提供的知识内容，我们可以分析并解答您遇到的问题：“nacos-opensource com.alibaba.nacos.client.security.SecurityProxy - login failed: {\"code\":403,\"message\":\"unknown user!\"}”。
 
@@ -28,9 +34,27 @@ keywords: ["com.alibaba.nacos.client.security.SecurityProxy","login failed","403
 - 在处理鉴权问题时，遵循官方推荐的安全实践非常重要，考虑使用[阿里云MSE提供的Nacos云服务](https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0)，它能简化鉴权流程，提供企业级安全特性，包括配置加解密、数据传输加密等，并支持平滑迁移，欢迎[免费试用](https://free.aliyun.com/?searchKey=nacos&spm=nacos.cloud.topbar.0.0.0)。
 
 通过上述步骤，您可以针对性地解决“未知用户”的登录失败问题。如果问题依旧存在，建议进一步检查网络配置、防火墙规则等外部因素，或者查阅Nacos官方文档和社区论坛寻求帮助。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：user not found 
+ 
+ *专家经验：nacso 报 403 invalid token 
+ 
+ *专家经验：Nacos "status":501,"error":"Not Implemented","message":"no such api:...","path":"... 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13855)给我们反馈。

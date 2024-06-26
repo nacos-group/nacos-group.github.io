@@ -1,13 +1,13 @@
 ---
 id: "question-history-15609"
-title: "spring-cloud-dependencies 2021.0.9 spring-cloud-start nacos-opensource"
+title: "spring-cloud-dependencies 2021.0.9 spring-cloud-start"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "根据您提供的信息，您遇到了`spring.cloud.nacos.config.enabled=false`设置无效的问题，这可能是由于配置不被正确识别或覆盖导致的。虽然直接的解决方案没有在给定的知识中明确提供，我们可以基于Nacos与Spring Cloud集成的一般知识来进行分析和提出可能的解决"
 ---
 
 ## 用户问题 ： 
- spring-cloud-dependencies 2021.0.9 spring-cloud-starter-alibaba-nacos-config 2021.0.6.0版本 spring.cloud.nacos.config.enabled=false无效怎么办 nacos-opensource 
+ spring-cloud-dependencies 2021.0.9 spring-cloud-starter-alibaba-nacos-config 2021.0.6.0版本 spring.cloud.nacos.config.enabled=false无效怎么办  
 
 ---------------
 ## 专家官方解答 ：

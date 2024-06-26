@@ -1,6 +1,6 @@
 ---
 id: "question-history-12730"
-title: "修改nacos默认密码的方法说明 nacos-opensource"
+title: "修改nacos默认密码的方法说明"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "修改Nacos默认密码的方法可以分为以下几种情况：### 初始化集群前设置默认用户密码1. **修改初始化脚本**：在Nacos集群初始化之前，编辑`$nacos.home/conf/`目录下的`mysql-schema.sql`（或相应的数据库类型脚本），找到关于`users`表的插入语句，将默认"
@@ -9,7 +9,7 @@ keywords: ["修改","默认密码","方法说明"]
 ---
 
 ## 用户问题 ： 
- 修改nacos默认密码的方法说明 nacos-opensource 
+ 修改nacos默认密码的方法说明  
 
 ---------------
 ## 专家官方解答 ：

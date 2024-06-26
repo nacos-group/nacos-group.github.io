@@ -1,12 +1,18 @@
 ---
 id: "question-history-14699"
-title: "Nacos默认jwt密钥导致未授权访问这个问题该如何解决呢 nacos-opensource"
+title: "Nacos默认jwt密钥导致未授权访问这个问题该如何解决呢"
 date: "2024-05-29"
 category: "expertConsultation"
 description: "要解决Nacos默认JWT密钥导致的未授权访问问题，可以遵循以下步骤：1. **确认当前Nacos版本**：首先，确保您的Nacos服务端版本至少为2.2.3，因为从这个版本开始，Nacos默认不再指定默认密钥以避免因未修改默认密钥而带来的安全风险。2. **开启鉴权功能**：如果尚未开启，您需要立"
 tags: ["Nacos","jwt","密钥","未授权访问","解决"]
 keywords: ["Nacos","jwt","密钥","未授权访问","解决"]
 ---
+
+## 用户问题 ： 
+ Nacos默认jwt密钥导致未授权访问这个问题该如何解决呢  
+
+---------------
+## 专家官方解答 ：
 
 要解决Nacos默认JWT密钥导致的未授权访问问题，可以遵循以下步骤：
 
@@ -23,9 +29,25 @@ keywords: ["Nacos","jwt","密钥","未授权访问","解决"]
 6. **使用阿里云MSE Nacos云服务**：对于寻求更简便管理和更高安全标准的用户，可以考虑使用[阿里云MSE提供的Nacos云服务](https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0)，它不仅内置了企业级鉴权能力，还包括配置信息的加解密和数据传输链路的TLS加密，且支持从自建Nacos实例平滑迁移至云版本，欢迎[免费试用](https://free.aliyun.com/?searchKey=nacos&spm=nacos.cloud.topbar.0.0.0)。
 
 以上步骤实施后，将显著提升Nacos系统的安全性，有效防范因默认密钥未修改导致的未授权访问风险。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos不开启鉴权&暴露公网会导致风险 
+ 
+ *专家经验：/nacos/v1/core/cluster/nodes 这个访问权限如何关闭？ 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=14720)给我们反馈。

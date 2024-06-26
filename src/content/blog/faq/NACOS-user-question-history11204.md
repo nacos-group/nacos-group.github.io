@@ -1,6 +1,6 @@
 ---
 id: "question-history-11204"
-title: "nacos集群为什么建议用vip？ nacos-opensource"
+title: "nacos集群为什么建议用vip？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos集群部署中，建议使用VIP（Virtual IP）的原因主要在于提高系统的可用性和灵活性。VIP可以视为一个浮动的IP地址，它不绑定到特定的服务器上，而是由负载均衡器管理，自动在健康的集群节点之间切换。这样设计的好处体现在以下几个方面：1. **负载均衡**：通过VIP，客户端的请求可以"
@@ -9,7 +9,7 @@ keywords: ["集群","VIP"]
 ---
 
 ## 用户问题 ： 
- nacos集群为什么建议用vip？ nacos-opensource 
+ nacos集群为什么建议用vip？  
 
 ---------------
 ## 专家官方解答 ：

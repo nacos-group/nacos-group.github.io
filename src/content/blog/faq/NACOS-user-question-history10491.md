@@ -1,6 +1,6 @@
 ---
 id: "question-history-10491"
-title: "#Nacos的配置推送如何工作？ nacos-opensource"
+title: "#Nacos的配置推送如何工作？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos的配置推送工作原理主要经历了不同的发展阶段，在早期的1.X版本中采用了UDP推送作为优化手段，而在2.0及之后的版本中，则转向了更为稳定和高效的TCP连接，具体通过gRPC双向流实现。下面详细解析其工作原理：### Nacos 1.X 版本（UDP推送）在Nacos 1.X版本中，为了加速"
@@ -9,7 +9,7 @@ keywords: ["Nacos","配置推送","工作原理"]
 ---
 
 ## 用户问题 ： 
- #Nacos的配置推送如何工作？ nacos-opensource 
+ #Nacos的配置推送如何工作？  
 
 ---------------
 ## 专家官方解答 ：

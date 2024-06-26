@@ -1,6 +1,6 @@
 ---
 id: "question-history-8270"
-title: "How to continue sending requests to service instances nacos-opensource"
+title: "How to continue sending requests to service instances"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中，若要向健康状态为false的服务实例继续发请求，可以采取以下步骤：1. **使用Nacos-Client的`getAllInstances`方法**：首先，利用Nacos客户端提供的`getAllInstances`方法来获取指定服务的所有实例信息。这包括了健康状态为false及权重"
@@ -9,7 +9,7 @@ keywords: ["继续发送请求","服务实例","健康状态","false"]
 ---
 
 ## 用户问题 ： 
- How to continue sending requests to service instances with a health status of false（如何向健康状态为false的服务实例继续发请求） nacos-opensource 
+ How to continue sending requests to service instances with a health status of false（如何向健康状态为false的服务实例继续发请求）  
 
 ---------------
 ## 专家官方解答 ：

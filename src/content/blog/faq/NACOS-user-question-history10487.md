@@ -1,6 +1,6 @@
 ---
 id: "question-history-10487"
-title: "#Nacos的高可用性如何保证？ nacos-opensource"
+title: "#Nacos的高可用性如何保证？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos的高可用性主要通过以下几个方面来保证：1. **多节点集群部署**：Nacos支持集群部署模式，通常推荐至少部署三个节点以形成稳定集群，这样即使个别节点发生故障，其他节点仍能继续提供服务，确保服务发现与配置管理功能不间断。2. **数据复制与一致性协议**：Nacos利用了AP协议(Dis"
@@ -9,7 +9,7 @@ keywords: ["Nacos","高可用性"]
 ---
 
 ## 用户问题 ： 
- #Nacos的高可用性如何保证？ nacos-opensource 
+ #Nacos的高可用性如何保证？  
 
 ---------------
 ## 专家官方解答 ：

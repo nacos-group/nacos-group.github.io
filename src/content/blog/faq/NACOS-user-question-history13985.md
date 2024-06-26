@@ -1,12 +1,18 @@
 ---
 id: "question-history-13985"
-title: "介绍一下 nacos 是什么？ nacos-opensource"
+title: "介绍一下 nacos 是什么？"
 date: "2024-05-22"
 category: "expertConsultation"
 description: "Nacos 是阿里巴巴开源的一款强大的云原生应用配套工具，它主要聚焦于服务发现、配置管理以及服务管理领域，旨在简化微服务架构中的服务治理与配置管理复杂性。具体来说，Nacos 提供以下核心功能：1. **服务发现与健康检查**：Nacos 支持DNS与RPC服务发现协议，允许自动发现、路由与负载均衡"
 tags: ["nacos"]
 keywords: ["nacos"]
 ---
+
+## 用户问题 ： 
+ 介绍一下 nacos 是什么？  
+
+---------------
+## 专家官方解答 ：
 
 Nacos 是阿里巴巴开源的一款强大的云原生应用配套工具，它主要聚焦于服务发现、配置管理以及服务管理领域，旨在简化微服务架构中的服务治理与配置管理复杂性。具体来说，Nacos 提供以下核心功能：
 
@@ -23,9 +29,27 @@ Nacos 是阿里巴巴开源的一款强大的云原生应用配套工具，它�
 此外，Nacos生态中还有如NacosSync这样的组件，能够实现不同注册中心间的数据同步，进一步增强了其在多环境、多技术栈下的适应性和灵活性。比如，支持从Zookeeper、Eureka或Consul等迁移至Nacos，促进服务架构的平滑升级和优化。
 
 综上所述，Nacos是一个高度集成且功能丰富的平台，特别适合构建和管理现代云原生应用的微服务架构。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos 介绍 
+ 
+ *专家经验：Nacos和Eureka的区别是什么？ 
+ 
+ *[NacosSync 用户手册](https://nacos.io/docs/latest/ecology/use-nacos-sync)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13989)给我们反馈。

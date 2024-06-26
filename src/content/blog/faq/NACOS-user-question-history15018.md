@@ -1,13 +1,13 @@
 ---
 id: "question-history-15018"
-title: "启动成功但是访问不了管理界面 nacos-opensource"
+title: "启动成功但是访问不了管理界面"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "根据您提供的信息，nacos-opensource 启动成功但无法访问管理界面，我们可以按照以下步骤分析和解决这一问题：### 步骤1：确认启动日志- **操作**: 首先，请检查 `nacos` 目录下的 `logs/start.out` 或 `logs/nacos.log` 文件，确保有日志表明"
 ---
 
 ## 用户问题 ： 
- 启动成功但是访问不了管理界面 nacos-opensource 
+ 启动成功但是访问不了管理界面  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,6 +1,6 @@
 ---
 id: "question-history-14707"
-title: "nacos支持达梦数据库连接吗 nacos-opensource"
+title: "nacos支持达梦数据库连接吗"
 date: "2024-05-29"
 category: "expertConsultation"
 description: "Nacos确实支持达梦数据库的连接。从Nacos2.2版本开始，官方增加了对包括达梦数据库在内的多种数据库的支持。为了帮助您连接达梦数据库，以下是基于提供的知识内容，整理的具体操作步骤：1. **检查插件是否存在**：   首先，访问[Nacos的数据库插件仓库](https://github.co"
@@ -9,7 +9,7 @@ keywords: ["nacos","达梦数据库连接"]
 ---
 
 ## 用户问题 ： 
- nacos支持达梦数据库连接吗 nacos-opensource 
+ nacos支持达梦数据库连接吗  
 
 ---------------
 ## 专家官方解答 ：

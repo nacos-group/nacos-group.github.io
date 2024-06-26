@@ -1,13 +1,13 @@
 ---
 id: "question-history-15413"
-title: "nacos子服务的配置文件应该写什么 nacos-opensource"
+title: "nacos子服务的配置文件应该写什么"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "在您的问题“nacos-opensource nacos子服务的配置文件应该写什么”之前，我们需要澄清几个概念以确保我们能够提供准确的指导。Nacos作为配置中心，允许您集中管理和分发配置信息到各个微服务应用。对于子服务的配置文件，通常指的是微服务应用从Nacos配置中心获取的配置内容。这些配置可以"
 ---
 
 ## 用户问题 ： 
- nacos子服务的配置文件应该写什么 nacos-opensource 
+ nacos子服务的配置文件应该写什么  
 
 ---------------
 ## 专家官方解答 ：
@@ -68,7 +68,7 @@ description: "在您的问题“nacos-opensource nacos子服务的配置文件�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15483)给我们反馈。

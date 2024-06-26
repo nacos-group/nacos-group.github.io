@@ -1,6 +1,6 @@
 ---
 id: "question-history-8220"
-title: "Nacos客户端与服务端grpc的连接有定期ping-pong机制吗 nacos-opensource"
+title: "Nacos客户端与服务端grpc的连接有定期ping-pong机制吗"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos客户端与服务端之间的gRPC连接确实具备定期的ping-pong机制以确保连接的有效性。具体来说：1. **双向监听**：Nacos客户端和服务端均会监视底层TCP链接的状态。一旦检测到链接因任何原因被断开，双方会立即做出反应，执行重连逻辑或清理相关联的数据结构。2. **健康检查请求（H"
@@ -9,7 +9,7 @@ keywords: ["Nacos","客户端","服务端","grpc","连接","定期","ping-pong",
 ---
 
 ## 用户问题 ： 
- Nacos客户端与服务端grpc的连接有定期ping-pong机制吗 nacos-opensource 
+ Nacos客户端与服务端grpc的连接有定期ping-pong机制吗  
 
 ---------------
 ## 专家官方解答 ：

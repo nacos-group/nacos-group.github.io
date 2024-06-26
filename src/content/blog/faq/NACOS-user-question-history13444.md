@@ -1,12 +1,18 @@
 ---
 id: "question-history-13444"
-title: "如何只使用 nacos java SDK，手动注册一个实例，并维护实例的健康状态？ nacos-opensource"
+title: "如何只使用 nacos java SDK，手动注册一个实例，并维护实例的健康状态？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要使用Nacos Java SDK手动注册一个实例并维护其健康状态，可以遵循以下步骤：1. **准备环境**:   - 确保你的项目中已经引入了Nacos的Java SDK依赖。可以通过Maven或Gradle添加依赖，例如Maven依赖如下：     ```xml     dependency  "
 tags: ["nacos","java SDK","手动注册","实例","维护","健康状态"]
 keywords: ["nacos","java SDK","手动注册","实例","维护","健康状态"]
 ---
+
+## 用户问题 ： 
+ 如何只使用 nacos java SDK，手动注册一个实例，并维护实例的健康状态？  
+
+---------------
+## 专家官方解答 ：
 
 要使用Nacos Java SDK手动注册一个实例并维护其健康状态，可以遵循以下步骤：
 
@@ -64,9 +70,25 @@ keywords: ["nacos","java SDK","手动注册","实例","维护","健康状态"]
    ```
 
 总结而言，通过Nacos Java SDK手动注册实例并维护健康状态，主要涉及创建NamingService实例、使用其方法注册和更新实例信息。健康状态的维护更多依赖于正确的配置和自动检查机制，必要时也可以通过编程方式手动调整。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Java SDK](https://nacos.io/docs/latest/guide/user/sdk)
+ 
+ *[Nacos 2.0 升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13899)给我们反馈。

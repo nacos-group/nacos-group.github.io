@@ -1,6 +1,6 @@
 ---
 id: "question-history-8201"
-title: "在K8S环境，注册到Nacos的那些服务实例应该注册为临时实例还是持久化实例？ nacos-opensource"
+title: "在K8S环境，注册到Nacos的那些服务实例应该注册为临时实例还是持久化实例？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在K8S环境中，注册到Nacos的服务实例通常应该注册为**临时实例**。这是因为在Kubernetes这样的容器化环境中，服务实例的生命周期较短，经常因扩缩容、滚动更新、故障重建等原因创建或销毁，这与临时服务的特性相匹配。临时服务（ephemeral=true）的生命周期与微服务应用实例紧密相关，"
@@ -9,7 +9,7 @@ keywords: ["K8S","注册","Nacos","服务实例","临时实例","持久化实例
 ---
 
 ## 用户问题 ： 
- 在K8S环境，注册到Nacos的那些服务实例应该注册为临时实例还是持久化实例？ nacos-opensource 
+ 在K8S环境，注册到Nacos的那些服务实例应该注册为临时实例还是持久化实例？  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,10 +1,16 @@
 ---
 id: "question-history-14824"
-title: "K8S No DataSource set nacos-opensource"
+title: "K8S No DataSource set"
 date: "2024-05-31"
 category: "expertConsultation"
 description: "在Kubernetes(K8s)环境中遇到`nacos-opensource K8S No DataSource set`问题，这通常意味着Nacos服务在尝试启动时无法正确连接到配置的数据库数据源。根据提供的知识内容，我们可以按照以下步骤分析并解决问题：1. **检查application.pro"
 ---
+
+## 用户问题 ： 
+ K8S No DataSource set  
+
+---------------
+## 专家官方解答 ：
 
 在Kubernetes(K8s)环境中遇到`nacos-opensource K8S No DataSource set`问题，这通常意味着Nacos服务在尝试启动时无法正确连接到配置的数据库数据源。根据提供的知识内容，我们可以按照以下步骤分析并解决问题：
 
@@ -29,9 +35,27 @@ description: "在Kubernetes(K8s)环境中遇到`nacos-opensource K8S No DataSour
    - 对于使用Nacos集群+内置数据库的情况，确保所有集群节点的配置一致，且网络通信正常，没有半数以上节点同时不可达或配置错误。检查`cluster.conf`文件，确认其中列出的IP地址都是当前集群中有效且可达的节点。
 
 通过以上步骤，可以系统地诊断并解决`No DataSource set`问题。如果问题依然存在，建议进一步深入日志分析，并考虑咨询Nacos社区或官方文档以获得更专业的帮助。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：No DataSource set 
+ 
+ *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+ 
+ *专家经验：Nacos 欢迎你 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=14829)给我们反馈。

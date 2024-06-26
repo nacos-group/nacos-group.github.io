@@ -1,13 +1,13 @@
 ---
 id: "question-history-15620"
-title: "目前哪个版本nacos最常用 nacos-opensource"
+title: "目前哪个版本nacos最常用"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "根据提供的知识内容，目前最常用的Nacos版本应该是2.X系列的最新稳定版本。Nacos团队推荐使用2.X版本，因为1.X版本虽然稳定，但已停止功能迭代，仅进行BUG修复和安全更新。要获取2.X的最新稳定版本，可以直接访问[Nacos官网下载页面](https://nacos.io/download"
 ---
 
 ## 用户问题 ： 
- 目前哪个版本nacos最常用 nacos-opensource 
+ 目前哪个版本nacos最常用  
 
 ---------------
 ## 专家官方解答 ：

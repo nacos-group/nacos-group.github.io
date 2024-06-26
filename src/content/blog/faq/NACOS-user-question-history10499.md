@@ -1,6 +1,6 @@
 ---
 id: "question-history-10499"
-title: "#Nacos是否支持对敏感数据的加密？ nacos-opensource"
+title: "#Nacos是否支持对敏感数据的加密？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos确实支持对敏感数据的加密以增强安全性。以下是根据提供的知识内容，对不同场景下敏感数据加密的总结与建议：1. **Nacos Server配置加密**：   - **问题原因**：Nacos Server配置文件中可能包含数据库账号密码等敏感信息。   - **解决方案**：从Nacos 2"
@@ -9,7 +9,7 @@ keywords: ["Nacos","敏感数据","加密"]
 ---
 
 ## 用户问题 ： 
- #Nacos是否支持对敏感数据的加密？ nacos-opensource 
+ #Nacos是否支持对敏感数据的加密？  
 
 ---------------
 ## 专家官方解答 ：

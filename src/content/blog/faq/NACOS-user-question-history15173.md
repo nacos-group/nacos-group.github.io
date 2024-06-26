@@ -1,13 +1,13 @@
 ---
 id: "question-history-15173"
-title: "配置中心有哪些可选项推荐？ nacos-opensource"
+title: "配置中心有哪些可选项推荐？"
 date: "2024-06-08"
 category: "expertConsultation"
 description: "根据提供的知识内容，对于nacos-opensource配置中心的可选项推荐如下：**推荐选择：**1. **Nacos**：这是阿里巴巴开源的一款服务发现、配置管理和服务管理平台，特别适合构建云原生应用。它的社区活跃度高，得到阿里等大公司的广泛应用和支持，因此我们推荐使用Nacos作为配置中心。*"
 ---
 
 ## 用户问题 ： 
- 配置中心有哪些可选项推荐？ nacos-opensource 
+ 配置中心有哪些可选项推荐？  
 
 ---------------
 ## 专家官方解答 ：
@@ -55,7 +55,7 @@ description: "根据提供的知识内容，对于nacos-opensource配置中心�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15174)给我们反馈。

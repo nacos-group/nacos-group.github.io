@@ -1,6 +1,6 @@
 ---
 id: "question-history-14702"
-title: "open api 中v1 和 v2 区别？ nacos-opensource"
+title: "open api 中v1 和 v2 区别？"
 date: "2024-05-29"
 category: "expertConsultation"
 description: "Nacos Open API v1与v2之间存在以下几点主要区别：1. **协议与实现**：Nacos2.0开始，很多客户端访问的API由HTTP切换到了gRPC协议，这导致了Nacos1.X和Nacos2.X在API层面，无论是在路径还是协议上都有较大不同。但是，Nacos2.X服务端为了兼容性，"
@@ -9,7 +9,7 @@ keywords: ["open api","v1","v2","区别"]
 ---
 
 ## 用户问题 ： 
- open api 中v1 和 v2 区别？ nacos-opensource 
+ open api 中v1 和 v2 区别？  
 
 ---------------
 ## 专家官方解答 ：

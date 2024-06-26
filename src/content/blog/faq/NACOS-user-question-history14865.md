@@ -1,13 +1,13 @@
 ---
 id: "question-history-14865"
-title: "nacos2.3开启鉴权后,首次进入会报命名空间无访问权限，后续不会报出。使用的是nacos 默认账号，n nacos-opensource"
+title: "nacos2.3开启鉴权后,首次进入会报命名空间无访问权限，后续不会报出。使用的是nacos 默认账号，n"
 date: "2024-06-02"
 category: "expertConsultation"
 description: "根据提供的知识内容，我们可以分析您遇到的问题原因及提供相应的解决步骤。### 问题原因分析：在Nacos 2.3集群环境下，您开启了鉴权功能后首次登录报出命名空间无访问权限，之后访问正常。这可能是由于Nacos的默认账号（通常是nacos/nacos）在鉴权开启后未被正确地赋予命名空间的访问权限。#"
 ---
 
 ## 用户问题 ： 
- nacos2.3开启鉴权后,首次进入会报命名空间无访问权限，后续不会报出。使用的是nacos 默认账号，nacos集群环境。 nacos-opensource 
+ nacos2.3开启鉴权后,首次进入会报命名空间无访问权限，后续不会报出。使用的是nacos 默认账号，nacos集群环境。  
 
 ---------------
 ## 专家官方解答 ：
@@ -56,7 +56,7 @@ description: "根据提供的知识内容，我们可以分析您遇到的问题
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=14890)给我们反馈。

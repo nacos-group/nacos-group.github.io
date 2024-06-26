@@ -1,6 +1,6 @@
 ---
 id: "question-history-10506"
-title: "#服务提供者如何向Nacos注册中心续约 nacos-opensource"
+title: "#服务提供者如何向Nacos注册中心续约"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "服务提供者向Nacos注册中心续约的过程通常由Nacos客户端自动管理，确保服务实例持续被注册中心识别。根据提供的知识内容，我们可以分步骤理解并概述这一过程，以及如何排查或优化续约行为：### 续约机制概览1. **初始化配置**: 服务提供者在启动时，会根据配置的Nacos Server地址、端口"
@@ -9,7 +9,7 @@ keywords: ["服务提供者","Nacos注册中心","续约"]
 ---
 
 ## 用户问题 ： 
- #服务提供者如何向Nacos注册中心续约 nacos-opensource 
+ #服务提供者如何向Nacos注册中心续约  
 
 ---------------
 ## 专家官方解答 ：

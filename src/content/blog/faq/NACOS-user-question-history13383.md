@@ -1,12 +1,18 @@
 ---
 id: "question-history-13383"
-title: "Nacos 新建配置的配置内容如何编辑 nacos-opensource"
+title: "Nacos 新建配置的配置内容如何编辑"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中新建配置并编辑配置内容的步骤如下：1. **登录Nacos控制台**     首先，你需要登录到Nacos的Web控制台。控制台地址通常是http://your_nacos_server_ip:8848/nacos，其中`your_nacos_server_ip`是Nacos服务器的I"
 tags: ["Nacos","新建配置","配置内容","编辑"]
 keywords: ["Nacos","新建配置","配置内容","编辑"]
 ---
+
+## 用户问题 ： 
+ Nacos 新建配置的配置内容如何编辑  
+
+---------------
+## 专家官方解答 ：
 
 在Nacos中新建配置并编辑配置内容的步骤如下：
 
@@ -35,9 +41,27 @@ keywords: ["Nacos","新建配置","配置内容","编辑"]
 **注意**：如果在编辑配置内容后发现应用并未实时更新，可以参考之前提到的知识点进行故障排查，比如检查网络连接、配置监听是否正常、以及日志中的`notify-ok`或`notify-error`等关键字，以定位问题所在。
 
 以上步骤指导你完成在Nacos中新建及编辑配置内容的过程，确保你的应用能够顺利接入和使用Nacos进行配置管理。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos 配置无法动态刷新 
+ 
+ *专家经验：Nacos 配置加密 
+ 
+ *专家经验：Nacos 配置access.log的保留时间 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13878)给我们反馈。

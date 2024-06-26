@@ -1,12 +1,18 @@
 ---
 id: "question-history-8441"
-title: "兄弟，你知道现在nacos还能使用内置数据源吗，我这配置文件mysql注释了，但是启动提示找不到jb.url nacos-opensource"
+title: "兄弟，你知道现在nacos还能使用内置数据源吗，我这配置文件mysql注释了，但是启动提示找不到jb.ur"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，我分析您的问题如下：1. 您提到的“nacos还能使用内置数据源”，根据Nacos的配置特性，它确实支持使用内置数据源（如Derby）以及外部数据源（如MySQL）。当未配置或注释掉MySQL相关设置时，理论上应自动切换到内置数据源。2. 您遇到的问题是启动Nacos时提示找不到"
 tags: ["nacos","内置数据源","配置文件","mysql","注释","启动提示","jb.url"]
 keywords: ["nacos","内置数据源","配置文件","mysql","注释","启动提示","jb.url"]
 ---
+
+## 用户问题 ： 
+ 兄弟，你知道现在nacos还能使用内置数据源吗，我这配置文件mysql注释了，但是启动提示找不到jb.url  
+
+---------------
+## 专家官方解答 ：
 
 根据提供的知识内容，我分析您的问题如下：
 
@@ -29,9 +35,27 @@ keywords: ["nacos","内置数据源","配置文件","mysql","注释","启动提�
 ### 解释：
 
 以上步骤旨在帮助您诊断并解决配置问题。首先，确保配置的正确性和完整性是基础，接着通过系统地检查和验证来定位问题所在。由于直接针对`jb.url`的特定指导缺失，上述建议基于通用的故障排除逻辑。如果问题依旧，可能需要进一步调查应用程序的特定配置细节或版本兼容性问题。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：无法在nacos/conf下找到nacos-mysql.sql文件 
+ 
+ *专家经验：Nacos使用的稳定性说明 
+ 
+ *专家经验：nacos 各类配置文件都在那？ 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13660)给我们反馈。

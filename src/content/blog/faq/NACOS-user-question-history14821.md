@@ -1,10 +1,16 @@
 ---
 id: "question-history-14821"
-title: "springboot 集成nacos 服务日志报out of date data received, old-t:1717063808644,new-t:1717063720455这个报错 nacos-opensource"
+title: "springboot 集成nacos 服务日志报out of date data received, ol"
 date: "2024-05-31"
 category: "expertConsultation"
 description: "根据已有的知识，该报错`out of date data received, old-t:1717063808644,new-t:1717063720455`表明您的Spring Boot应用在集成Nacos作为服务发现与配置管理时，收到了过时的数据，这可能是由于客户端和服务端的时间不一致或者网络延"
 ---
+
+## 用户问题 ： 
+ springboot 集成nacos 服务日志报out of date data received, old-t:1717063808644,new-t:1717063720455这个报错  
+
+---------------
+## 专家官方解答 ：
 
 根据已有的知识，该报错`out of date data received, old-t:1717063808644,new-t:1717063720455`表明您的Spring Boot应用在集成Nacos作为服务发现与配置管理时，收到了过时的数据，这可能是由于客户端和服务端的时间不一致或者网络延迟导致的数据更新顺序出现问题。
 
@@ -31,9 +37,27 @@ description: "根据已有的知识，该报错`out of date data received, old-t
 如果以上步骤均无法解决问题，建议查阅Nacos官方文档或社区论坛（如GitHub Issues），可能有其他用户遇到过类似问题并分享了解决方案。同时，考虑提交一个issue到Nacos的GitHub仓库，附上详细的错误日志和配置信息，寻求更专业的帮助。
 
 请注意，上述步骤是基于通用故障排查逻辑提出的建议，并非直接从提供的知识内容中提取的明确解决方案。如果问题依旧，进一步的诊断可能需要更详细的应用配置信息和错误上下文。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：如何获取Nacos-Client的日志？ 
+ 
+ *专家经验：nacos 与 springboot 联合使用 
+ 
+ *专家经验：Nacos 在windows下不支持:的bug如何处理? 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=14826)给我们反馈。

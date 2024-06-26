@@ -1,12 +1,18 @@
 ---
 id: "question-history-8244"
-title: "Lost of nacos-grpc-executor thread park nacos-opensource"
+title: "Lost of nacos-grpc-executor thread park"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "分析问题原因：当遇到“nacos-grpc-executor thread park”现象时，这通常意味着Nacos客户端或服务端的gRPC线程池中的线程处于空闲等待状态。根据提供的知识内容，我们可以从以下几个方面分析此问题的原因：1. **线程池配置不当**：如果线程池的核心线程数（core si"
 tags: ["nacos-grpc-executor","thread park"]
 keywords: ["nacos-grpc-executor","thread park"]
 ---
+
+## 用户问题 ： 
+ Lost of nacos-grpc-executor thread park  
+
+---------------
+## 专家官方解答 ：
 
 分析问题原因：
 
@@ -38,9 +44,27 @@ keywords: ["nacos-grpc-executor","thread park"]
    - 代码层面，检查是否有重复创建Nacos-Client实例的行为，确保每个服务仅初始化必要的Nacos客户端，并在不再使用时调用`shutdown`方法清理资源。
 
 综上所述，解决“nacos-grpc-executor thread park”问题需要综合考虑线程池配置、健康检查机制、环境因素以及网络稳定性，通过调整配置、优化代码及监控分析来逐步定位并解决问题。[[Dubbo框架在2.7.8版本中的Bug](https://github.com/apache/dubbo/issues/6988)][[Sentinel框架在旧版本中的Bug](https://github.com/alibaba/Sentinel/issues/2953)]
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：如何排查Nacos线程数过多的问题 
+ 
+ *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+ 
+ *专家经验：Nacos客户端与服务端grpc的连接有定期ping-pong机制吗 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13595)给我们反馈。

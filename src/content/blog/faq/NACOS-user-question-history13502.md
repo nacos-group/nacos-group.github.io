@@ -1,6 +1,6 @@
 ---
 id: "question-history-13502"
-title: "dubbo和nacos集成 nacos-opensource"
+title: "dubbo和nacos集成"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "为了实现Nacos与Dubbo的集成，我们首先需要理解这两个组件的基本功能和它们如何协同工作。Nacos作为一款动态服务发现、配置管理和服务管理平台，能够帮助Dubbo实现服务的自动注册与发现。以下是基于此理解的集成步骤：### 步骤1：环境准备确保你的开发环境中已安装Java，并配置好Maven或"
@@ -9,7 +9,7 @@ keywords: ["dubbo","nacos","集成"]
 ---
 
 ## 用户问题 ： 
- dubbo和nacos集成 nacos-opensource 
+ dubbo和nacos集成  
 
 ---------------
 ## 专家官方解答 ：

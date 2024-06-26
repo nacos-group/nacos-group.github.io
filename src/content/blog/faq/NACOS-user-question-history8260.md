@@ -1,6 +1,6 @@
 ---
 id: "question-history-8260"
-title: "持久化实例，健康检查的频率有参数修改吗 nacos-opensource"
+title: "持久化实例，健康检查的频率有参数修改吗"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中，对于持久化实例（ephemeral=false），健康检查的频率是可以调整的。虽然直接的参数修改细节未在提供的知识中明确给出，但根据Nacos的配置习惯和架构理解，这类高级设置通常涉及Nacos服务端的配置调整。健康检查相关的频率配置项一般位于Nacos服务器的配置文件中，例如`na"
@@ -9,7 +9,7 @@ keywords: ["持久化实例","健康检查","频率","参数修改"]
 ---
 
 ## 用户问题 ： 
- 持久化实例，健康检查的频率有参数修改吗 nacos-opensource 
+ 持久化实例，健康检查的频率有参数修改吗  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,12 +1,18 @@
 ---
 id: "question-history-13484"
-title: "nacos9848端口干嘛的 nacos-opensource"
+title: "nacos9848端口干嘛的"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos的9848端口是专门用于客户端gRPC请求服务端的端口。这意味着，当Nacos客户端需要通过gRPC协议与Nacos服务端进行通信时，它会连接到这个端口发起请求和服务订阅等操作。此端口默认是在Nacos服务端的主端口（通常是8848）基础上加上1000的偏移量得到的。### 原因分析：根据"
 tags: ["nacos9848端口","干嘛的"]
 keywords: ["nacos9848端口","干嘛的"]
 ---
+
+## 用户问题 ： 
+ nacos9848端口干嘛的  
+
+---------------
+## 专家官方解答 ：
 
 Nacos的9848端口是专门用于客户端gRPC请求服务端的端口。这意味着，当Nacos客户端需要通过gRPC协议与Nacos服务端进行通信时，它会连接到这个端口发起请求和服务订阅等操作。此端口默认是在Nacos服务端的主端口（通常是8848）基础上加上1000的偏移量得到的。
 
@@ -23,9 +29,25 @@ Nacos的9848端口是专门用于客户端gRPC请求服务端的端口。这意�
 ### 相关文档链接：
 - Nacos部署与配置文档：[Nacos部署指南](https://nacos.io/docs/latest/guide/admin/cluster-mode-quick-start/)
 - 兼容性与升级说明：[Nacos兼容性与升级指南](https://nacos.io/docs/latest/upgrading/200-compatibility/)
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos部署开放端口，集群部署开通端口 
+ 
+ *专家经验：Nacos如何指定端口 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13909)给我们反馈。

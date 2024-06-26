@@ -1,12 +1,18 @@
 ---
 id: "question-history-11196"
-title: "nacos k8s怎么部署nacos集群？ nacos-opensource"
+title: "nacos k8s怎么部署nacos集群？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要部署Nacos集群到Kubernetes(K8s)环境中，可以遵循以下步骤：1. **准备环境与配置**：   - 确保你的Kubernetes集群已经准备好，并具备足够的资源来部署Nacos集群。   - 参考Nacos官方K8s部署项目的GitHub仓库：[https://github.com"
 tags: ["k8s","部署","nacos集群"]
 keywords: ["k8s","部署","nacos集群"]
 ---
+
+## 用户问题 ： 
+ nacos k8s怎么部署nacos集群？  
+
+---------------
+## 专家官方解答 ：
 
 要部署Nacos集群到Kubernetes(K8s)环境中，可以遵循以下步骤：
 
@@ -36,9 +42,27 @@ keywords: ["k8s","部署","nacos集群"]
    - 根据实际运行情况，监控Nacos集群的性能与稳定性，适时调整资源配置或部署策略以优化服务。
 
 请注意，具体的部署细节可能会根据Nacos的版本更新及K8s环境的差异有所不同，务必参考最新的官方文档与GitHub仓库的Readme进行操作。此外，如果考虑安全性与隔离性，根据业务需求决定是否将配置中心与注册中心分开部署。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos部署集群模式怎么打开鉴权 
+ 
+ *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+ 
+ *专家经验：NACOS 配置中心和注册中心是分两个集群部署还是放在一个集群中 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13735)给我们反馈。

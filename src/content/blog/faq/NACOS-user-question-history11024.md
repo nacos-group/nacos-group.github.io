@@ -1,6 +1,6 @@
 ---
 id: "question-history-11024"
-title: "Nacos社区群4 加解密插件在console更新配置后变成明文问题 nacos-opensource"
+title: "Nacos社区群4 加解密插件在console更新配置后变成明文问题"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，对于Nacos社区群4中提到的“加解密插件在console更新配置后变成明文问题”，我们可以这样分析并给出建议：### 原因分析：1. **配置加密插件工作原理**：Nacos配置加密插件主要用于在配置存储和传输过程中对敏感信息进行加密，确保安全性。当配置通过控制台更新时，理论上"
@@ -9,7 +9,7 @@ keywords: ["加解密插件","console","更新配置","明文"]
 ---
 
 ## 用户问题 ： 
- Nacos社区群4 加解密插件在console更新配置后变成明文问题 nacos-opensource 
+ Nacos社区群4 加解密插件在console更新配置后变成明文问题  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15608"
-title: "nacos 检测到目标URL存在http host头攻击漏洞 nacos-opensource"
+title: "nacos 检测到目标URL存在http host头攻击漏洞"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "根据您提供的信息，关于nacos检测到目标URL存在HTTP Host头攻击漏洞的问题，我们可以这样分析与解答：**原因分析：**此问题很可能与Spring框架引入的安全漏洞CVE-2024-22243相关，该漏洞可能导致应用程序遭受开放重定向攻击或服务器端请求伪造（SSRF）攻击。当应用程序使用U"
 ---
 
 ## 用户问题 ： 
- nacos 检测到目标URL存在http host头攻击漏洞 nacos-opensource 
+ nacos 检测到目标URL存在http host头攻击漏洞  
 
 ---------------
 ## 专家官方解答 ：

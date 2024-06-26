@@ -1,12 +1,18 @@
 ---
 id: "question-history-11435"
-title: "nacos对比erueka有什么优势 nacos-opensource"
+title: "nacos对比erueka有什么优势"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos对比Eureka的优势主要体现在以下几个方面：1. **功能全面性**：Nacos不仅提供了服务发现和注册功能，还集成了配置管理和消息总线等特性，而Eureka主要聚焦于服务发现与注册，功能相对单一。这意味着Nacos能更好地满足复杂分布式系统的需求，减少对外部工具的依赖。2. **可靠性"
 tags: ["nacos","erueka","优势"]
 keywords: ["nacos","erueka","优势"]
 ---
+
+## 用户问题 ： 
+ nacos对比erueka有什么优势  
+
+---------------
+## 专家官方解答 ：
 
 Nacos对比Eureka的优势主要体现在以下几个方面：
 
@@ -25,9 +31,27 @@ Nacos对比Eureka的优势主要体现在以下几个方面：
 参考链接：
 - Nacos开源介绍及功能概览：[Nacos官网](https://nacos.io/)
 - Eureka与Nacos差异比较：[Nacos和Eureka的区别](https://github.com/alibaba/nacos/issues/1661)
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos和Eureka的区别是什么？ 
+ 
+ *专家经验：Nacos 介绍 
+ 
+ *专家经验：Nacos 快速开始 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13756)给我们反馈。

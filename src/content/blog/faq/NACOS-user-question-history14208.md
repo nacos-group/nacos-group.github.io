@@ -1,6 +1,6 @@
 ---
 id: "question-history-14208"
-title: "nacos 获取动态配置，提示 config data not exist nacos-opensource"
+title: "nacos 获取动态配置，提示 config data not exist"
 date: "2024-05-22"
 category: "expertConsultation"
 description: "根据提供的知识内容，我们可以分析和解决您遇到的问题“nacos 获取动态配置，提示 config data not exist”。### 原因分析：1. **配置不存在**：最直接的原因是尝试获取的配置项（dataId 和 group 组合）在 Nacos 服务器上不存在。2. **命名空间问题**"
@@ -9,7 +9,7 @@ keywords: ["nacos-opensource","config data not exist"]
 ---
 
 ## 用户问题 ： 
- nacos 获取动态配置，提示 config data not exist nacos-opensource 
+ nacos 获取动态配置，提示 config data not exist  
 
 ---------------
 ## 专家官方解答 ：

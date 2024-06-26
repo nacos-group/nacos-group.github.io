@@ -1,6 +1,6 @@
 ---
 id: "question-history-10486"
-title: "#Nacos支持哪些服务注册和发现协议？ nacos-opensource"
+title: "#Nacos支持哪些服务注册和发现协议？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos支持的服务注册与发现功能包括：1. **服务注册**：允许应用程序在Nacos服务器上注册其服务实例，使得服务消费者能够发现并调用这些服务。这一过程涉及服务实例的基本信息，如IP地址、端口等的注册。2. **服务发现**：Nacos提供服务发现机制，使得服务消费者能够动态地获取到可用服务实"
@@ -9,7 +9,7 @@ keywords: ["Nacos","服务注册","服务发现","协议"]
 ---
 
 ## 用户问题 ： 
- #Nacos支持哪些服务注册和发现协议？ nacos-opensource 
+ #Nacos支持哪些服务注册和发现协议？  
 
 ---------------
 ## 专家官方解答 ：

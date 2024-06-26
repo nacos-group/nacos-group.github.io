@@ -1,6 +1,6 @@
 ---
 id: "question-history-10493"
-title: "#Nacos如何处理网络分区问题（网络隔离）？ nacos-opensource"
+title: "#Nacos如何处理网络分区问题（网络隔离）？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在处理Nacos的网络分区问题（网络隔离）时，我们可以从以下几个方面分析原因并采取相应措施：1. **网络配置检查**：首先检查是否存在网络配置不当导致的隔离问题，如错误的路由规则、子网划分、网络策略（如ACL）或防火墙设置。确保客户端与Nacos服务端之间的网络路径畅通无阻。根据我了解的知识中的指"
@@ -9,7 +9,7 @@ keywords: ["Nacos","网络分区","网络隔离"]
 ---
 
 ## 用户问题 ： 
- #Nacos如何处理网络分区问题（网络隔离）？ nacos-opensource 
+ #Nacos如何处理网络分区问题（网络隔离）？  
 
 ---------------
 ## 专家官方解答 ：

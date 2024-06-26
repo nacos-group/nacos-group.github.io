@@ -1,13 +1,13 @@
 ---
 id: "question-history-15446"
-title: "给一份nacos-client注册中心和配置中心的配置,带用户名密码的 nacos-opensource"
+title: "给一份nacos-client注册中心和配置中心的配置,带用户名密码的"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "要配置Nacos Client作为注册中心和配置中心，并且带有用户名和密码，您可以按照以下步骤操作，这些步骤结合了您提及的知识内容与通用实践：### 1. 添加依赖确保您的项目中添加了Nacos客户端的相关依赖。对于Spring Cloud项目，您应该添加如下依赖：```xmldependency "
 ---
 
 ## 用户问题 ： 
- 给一份nacos-client注册中心和配置中心的配置,带用户名密码的 nacos-opensource 
+ 给一份nacos-client注册中心和配置中心的配置,带用户名密码的  
 
 ---------------
 ## 专家官方解答 ：
@@ -93,7 +93,7 @@ public class AppConfig {
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15516)给我们反馈。

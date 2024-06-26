@@ -1,6 +1,6 @@
 ---
 id: "question-history-14704"
-title: "nacos-client:2.2.3 如何配置用户名密码 nacos-opensource"
+title: "nacos-client:2.2.3 如何配置用户名密码"
 date: "2024-05-29"
 category: "expertConsultation"
 description: "在Nacos Client 2.2.3中配置用户名和密码主要涉及到直接操作`Properties`对象进行设置。根据提供的知识内容，这里是没有特定于2.2.3版本的特殊配置指导，但基本流程适用于包括2.2.3在内的多个版本。下面是配置用户名和密码的步骤，结合通用做法进行说明：1. **初始化Prop"
@@ -9,7 +9,7 @@ keywords: ["nacos-client:2.2.3","配置","用户名密码"]
 ---
 
 ## 用户问题 ： 
- nacos-client:2.2.3 如何配置用户名密码 nacos-opensource 
+ nacos-client:2.2.3 如何配置用户名密码  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,6 +1,6 @@
 ---
 id: "question-history-11202"
-title: "nacos 内置数据库 nacos-opensource"
+title: "nacos 内置数据库"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos 支持使用内置数据库来存储配置信息，其内置的数据库为 Derby。使用 Derby 数据库时，Nacos 会依赖于其自研的一致性协议来确保所有 Nacos 节点之间的一致性。当在任意节点发布配置，Nacos 会通知所有节点更新它们的缓存，利用配置内容的 MD5 值来保证缓存与数据库数据的一"
@@ -9,7 +9,7 @@ keywords: ["内置数据库"]
 ---
 
 ## 用户问题 ： 
- nacos 内置数据库 nacos-opensource 
+ nacos 内置数据库  
 
 ---------------
 ## 专家官方解答 ：

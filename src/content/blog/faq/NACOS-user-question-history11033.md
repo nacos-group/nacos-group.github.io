@@ -1,6 +1,6 @@
 ---
 id: "question-history-11033"
-title: "Nacos 麻烦咨询下  spring actuator 如何关闭 nacosconfig 的健康检查 ？ nacos-opensource"
+title: "Nacos 麻烦咨询下  spring actuator 如何关闭 nacosconfig 的健康检查 ？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要关闭Nacos Config在Spring Actuator中的健康检查，您可以按照以下步骤操作：1. **确认依赖版本**：首先确认您使用的是否为`spring-cloud-alibaba-nacos-config`或相关版本，因为早期的`nacos-spring-boot-starter`不支"
@@ -9,7 +9,7 @@ keywords: ["spring actuator","关闭","nacosconfig","健康检查"]
 ---
 
 ## 用户问题 ： 
- Nacos 麻烦咨询下  spring actuator 如何关闭 nacosconfig 的健康检查 ？ nacos-opensource 
+ Nacos 麻烦咨询下  spring actuator 如何关闭 nacosconfig 的健康检查 ？  
 
 ---------------
 ## 专家官方解答 ：

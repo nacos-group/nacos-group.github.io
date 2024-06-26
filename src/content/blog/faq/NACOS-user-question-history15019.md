@@ -1,13 +1,13 @@
 ---
 id: "question-history-15019"
-title: "Nacos如何异地多活，异地容灾 nacos-opensource"
+title: "Nacos如何异地多活，异地容灾"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "关于您的问题「nacos-opensource Nacos如何异地多活，异地容灾」，根据提供的知识内容，以下是详细的分析与解答：### 原因分析Nacos为了实现异地多活与异地容灾，理论上可以通过将不同地域的Nacos集群组合成一个大集群来实现数据共享与高可用。但是，这种方法并不被推荐，主要原因在于"
 ---
 
 ## 用户问题 ： 
- Nacos如何异地多活，异地容灾 nacos-opensource 
+ Nacos如何异地多活，异地容灾  
 
 ---------------
 ## 专家官方解答 ：

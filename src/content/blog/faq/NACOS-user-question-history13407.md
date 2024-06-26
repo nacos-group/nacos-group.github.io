@@ -1,6 +1,6 @@
 ---
 id: "question-history-13407"
-title: "nacos默认用户名密码 nacos-opensource"
+title: "nacos默认用户名密码"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos的默认用户名和密码均为`nacos`。这一信息直接来源于其初始化设置，默认情况下，Nacos会使用这些凭证作为管理员账户的凭据。如果您需要修改默认的用户名密码或者在初始化集群后管理用户密码，可以遵循以下步骤：1. **初始化集群时修改默认密码：**   - 在Nacos安装目录的`conf"
@@ -9,7 +9,7 @@ keywords: ["nacos","默认用户名密码"]
 ---
 
 ## 用户问题 ： 
- nacos默认用户名密码 nacos-opensource 
+ nacos默认用户名密码  
 
 ---------------
 ## 专家官方解答 ：

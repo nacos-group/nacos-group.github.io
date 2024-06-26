@@ -1,13 +1,13 @@
 ---
 id: "question-history-15236"
-title: "Field configService in com.nptpark.listener.NacosConf nacos-opensource"
+title: "Field configService in com.nptpark.listener.NacosConf"
 date: "2024-06-12"
 category: "expertConsultation"
 description: "根据您提出的问题，似乎是您在使用Nacos配置中心时，遇到了Spring在初始化`NacosConfigFailureListener`监听器时找不到`ConfigService` Bean的情况。这通常意味着您的Spring应用上下文中未正确配置或注册`ConfigService` Bean。让我"
 ---
 
 ## 用户问题 ： 
- Field configService in com.nptpark.listener.NacosConfigFailureListener required a bean of type 'com.alibaba.nacos.api.config.ConfigService' that could not be found. USER : 缺少了对ConfigService Bean的定义，请帮我定义 nacos-opensource 
+ Field configService in com.nptpark.listener.NacosConfigFailureListener required a bean of type 'com.alibaba.nacos.api.config.ConfigService' that could not be found. USER : 缺少了对ConfigService Bean的定义，请帮我定义  
 
 ---------------
 ## 专家官方解答 ：
@@ -87,7 +87,7 @@ public class NacosConfig {
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15259)给我们反馈。

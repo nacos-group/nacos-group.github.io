@@ -1,13 +1,13 @@
 ---
 id: "question-history-15444"
-title: "如何在Windows上部署Nacos的单机模式 nacos-opensource"
+title: "如何在Windows上部署Nacos的单机模式"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "在Windows上部署Nacos的单机模式，可以参照以下步骤操作：### 分析问题原因根据提供的知识，我们知道Nacos在部分旧版本中存在不兼容Windows路径的问题，表现为使用:符号时可能导致错误。但此问题在2.x.x版本中已被解决。因此，选择合适的Nacos版本是关键。### 具体步骤####"
 ---
 
 ## 用户问题 ： 
- 如何在Windows上部署Nacos的单机模式 nacos-opensource 
+ 如何在Windows上部署Nacos的单机模式  
 
 ---------------
 ## 专家官方解答 ：
@@ -66,7 +66,7 @@ description: "在Windows上部署Nacos的单机模式，可以参照以下步骤
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15514)给我们反馈。

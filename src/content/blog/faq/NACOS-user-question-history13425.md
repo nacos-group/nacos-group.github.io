@@ -1,12 +1,18 @@
 ---
 id: "question-history-13425"
-title: "nacos2.2.3 开启鉴权配置、权限认证的具体流程 nacos-opensource"
+title: "nacos2.2.3 开启鉴权配置、权限认证的具体流程"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要在Nacos 2.2.3版本中开启鉴权配置并进行权限认证，具体流程如下：### 1. 确定部署环境- **非Docker环境**：直接编辑`application.properties`文件。- **Docker环境**：通过环境变量配置。- **Kubernetes (k8s)环境**：通过配置"
 tags: ["nacos2.2.3","开启鉴权配置","权限认证","具体流程"]
 keywords: ["nacos2.2.3","开启鉴权配置","权限认证","具体流程"]
 ---
+
+## 用户问题 ： 
+ nacos2.2.3 开启鉴权配置、权限认证的具体流程  
+
+---------------
+## 专家官方解答 ：
 
 要在Nacos 2.2.3版本中开启鉴权配置并进行权限认证，具体流程如下：
 
@@ -62,9 +68,25 @@ keywords: ["nacos2.2.3","开启鉴权配置","权限认证","具体流程"]
 - 在集群环境中，确保所有节点的鉴权配置一致，包括密钥和身份标识，以免引发403错误。
 
 以上步骤涵盖了Nacos 2.2.3版本开启鉴权配置与权限认证的基本流程。确保遵循每个环节的具体指导，以顺利完成配置。更多详细信息和最新更新，请参考Nacos官方文档：[Nacos官方鉴权指南](https://nacos.io/docs/latest/guide/user/auth/) 和 [Nacos Docker部署说明](https://github.com/nacos-group/nacos-docker)。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Authorization](https://nacos.io/docs/latest/guide/user/auth)
+ 
+ *专家经验：Nacos部署集群模式怎么打开鉴权 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13895)给我们反馈。

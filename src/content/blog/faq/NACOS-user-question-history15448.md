@@ -1,13 +1,13 @@
 ---
 id: "question-history-15448"
-title: "nacos鉴权开启，users.properties添加了用户名密码不生效 nacos-opensource"
+title: "nacos鉴权开启，users.properties添加了用户名密码不生效"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "针对您的问题「nacos-opensource nacos鉴权开启，users.properties添加了用户名密码不生效」，我们可以依据已有的知识进行分析并提供相应的解决方案。**原因分析：**1. **配置文件错误或未被读取**：可能是您在`users.properties`文件中添加的用户名密"
 ---
 
 ## 用户问题 ： 
- nacos鉴权开启，users.properties添加了用户名密码不生效 nacos-opensource 
+ nacos鉴权开启，users.properties添加了用户名密码不生效  
 
 ---------------
 ## 专家官方解答 ：
@@ -67,7 +67,7 @@ description: "针对您的问题「nacos-opensource nacos鉴权开启，users.pr
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15518)给我们反馈。

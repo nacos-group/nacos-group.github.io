@@ -1,12 +1,18 @@
 ---
 id: "question-history-8224"
-title: "在开启auth为true后，使用open-api 客户端启动完隔一阵就报403 nacos-opensource"
+title: "在开启auth为true后，使用open-api 客户端启动完隔一阵就报403"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，分析您遇到的问题（nacos-opensource 开启auth后，使用open-api客户端启动不久即报403错误），可能的原因与解决方案如下：**问题原因分析：**1. **Token过期**：OpenAPI访问时使用的accessToken有效期可能较短，导致操作一段时间后"
 tags: ["auth","true","open-api","客户端","报403","403","权限验证失败"]
 keywords: ["auth","true","open-api","客户端","报403","403","权限验证失败"]
 ---
+
+## 用户问题 ： 
+ 在开启auth为true后，使用open-api 客户端启动完隔一阵就报403  
+
+---------------
+## 专家官方解答 ：
 
 根据提供的知识内容，分析您遇到的问题（nacos-opensource 开启auth后，使用open-api客户端启动不久即报403错误），可能的原因与解决方案如下：
 
@@ -39,9 +45,27 @@ keywords: ["auth","true","open-api","客户端","报403","403","权限验证失�
 - 如果权限管理变得复杂，考虑到企业级的安全需求，可以考虑使用[阿里云MSE提供的Nacos云服务](https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0)，它提供了更为便捷的企业级鉴权能力和安全特性，包括配置信息加解密、数据传输加密等，同时支持平滑迁移。
 
 以上步骤旨在解决您遇到的403权限验证失败问题，请根据实际情况调整实施细节。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：user not found 
+ 
+ *专家经验：自建用户用于nacos客户端应用验证时，如果对namespace开启只读将也无法注册该空间的服务应该怎么处理？ 
+ 
+ *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13578)给我们反馈。

@@ -1,13 +1,13 @@
 ---
 id: "question-history-14945"
-title: "CVE-2021-29441 漏洞怎么修复 nacos-opensource"
+title: "CVE-2021-29441 漏洞怎么修复"
 date: "2024-06-03"
 category: "expertConsultation"
 description: "针对CVE-2021-29441漏洞的修复，可以按照以下步骤操作：1. **检查当前Nacos版本**：首先确认您使用的Nacos服务器版本。如果版本低于1.4.1，存在身份认证绕过漏洞，需要紧急升级。2. **升级Nacos至最新版本**：如果发现版本过低，应立即升级到1.4.1或更高版本，推荐升"
 ---
 
 ## 用户问题 ： 
- CVE-2021-29441 漏洞怎么修复 nacos-opensource 
+ CVE-2021-29441 漏洞怎么修复  
 
 ---------------
 ## 专家官方解答 ：
@@ -56,7 +56,7 @@ description: "针对CVE-2021-29441漏洞的修复，可以按照以下步骤操�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=14946)给我们反馈。

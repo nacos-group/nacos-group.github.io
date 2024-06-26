@@ -1,13 +1,13 @@
 ---
 id: "question-history-15009"
-title: "Nacos [db-error] master db down nacos-opensource"
+title: "Nacos [db-error] master db down"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "根据您提出的问题「nacos-opensource Nacos [db-error] master db down」，这表明Nacos在尝试连接主数据库时遇到问题，无法正常工作。依据提供的知识内容，我们可以进行如下分析与建议：### 问题分析1. **配置错误**：检查`conf/applicati"
 ---
 
 ## 用户问题 ： 
- Nacos [db-error] master db down nacos-opensource 
+ Nacos [db-error] master db down  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,6 +1,6 @@
 ---
 id: "question-history-11031"
-title: "Nacos nacos 2.3.0全新安装也需要关闭双写吗？ nacos-opensource"
+title: "Nacos nacos 2.3.0全新安装也需要关闭双写吗？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，对于Nacos 2.3.0全新安装是否需要关闭双写的问题，可以明确如下：1. **原因分析：**   Nacos从2.1版本开始，在部署时就已经支持直接以新版本的运行模式启动，这种模式下并不存在双写模式。因此，2.3.0作为2.X系列的较新版本，其默认部署即是不含双写模式的。2."
@@ -9,7 +9,7 @@ keywords: ["nacos","2.3.0","双写"]
 ---
 
 ## 用户问题 ： 
- Nacos nacos 2.3.0全新安装也需要关闭双写吗？ nacos-opensource 
+ Nacos nacos 2.3.0全新安装也需要关闭双写吗？  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,6 +1,6 @@
 ---
 id: "question-history-10504"
-title: "#为什么要定义bootstrap.yml nacos-opensource"
+title: "#为什么要定义bootstrap.yml"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Spring Boot应用中，`bootstrap.yml`（或`bootstrap.properties`）文件有着特殊的作用，尤其在使用包括Nacos在内的配置中心时。虽然提供的知识片段未直接提及`bootstrap.yml`的详细原因，但我们可以基于Spring Boot和微服务配置管理的最"
@@ -9,7 +9,7 @@ keywords: ["bootstrap.yml","为什么","定义"]
 ---
 
 ## 用户问题 ： 
- #为什么要定义bootstrap.yml nacos-opensource 
+ #为什么要定义bootstrap.yml  
 
 ---------------
 ## 专家官方解答 ：

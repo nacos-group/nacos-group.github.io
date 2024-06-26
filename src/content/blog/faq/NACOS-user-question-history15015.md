@@ -1,13 +1,13 @@
 ---
 id: "question-history-15015"
-title: "Nacos支持蓝绿发布吗？ nacos-opensource"
+title: "Nacos支持蓝绿发布吗？"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "Nacos支持蓝绿发布。虽然直接的“蓝绿发布”概念在提供的知识中未被明确提及，但Nacos的特性为实现蓝绿发布提供了基础。蓝绿发布是一种部署策略，通过保持两个环境（通常是生产环境和预发布环境，类比为“蓝”和“绿”）的同构性，实现平滑的版本切换。Nacos如何支持蓝绿发布，可以从以下几个方面理解：1."
 ---
 
 ## 用户问题 ： 
- Nacos支持蓝绿发布吗？ nacos-opensource 
+ Nacos支持蓝绿发布吗？  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,6 +1,6 @@
 ---
 id: "question-history-11800"
-title: "nacos docker搭建本地单机配置中心的具体方法 nacos-opensource"
+title: "nacos docker搭建本地单机配置中心的具体方法"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要搭建本地单机的Nacos配置中心，可以按照以下步骤操作，这些步骤基于提供的参考资料：### 步骤 1: 获取Nacos Docker镜像- 访问Nacos的Docker部署仓库：[https://github.com/nacos-group/nacos-docker](https://github"
@@ -9,7 +9,7 @@ keywords: ["nacos","docker","搭建","本地","单机","配置中心","具体方
 ---
 
 ## 用户问题 ： 
- nacos docker搭建本地单机配置中心的具体方法 nacos-opensource 
+ nacos docker搭建本地单机配置中心的具体方法  
 
 ---------------
 ## 专家官方解答 ：

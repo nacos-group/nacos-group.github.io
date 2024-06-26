@@ -1,12 +1,18 @@
 ---
 id: "question-history-12472"
-title: "Nacos 可以更新到什么版本 nacos-opensource"
+title: "Nacos 可以更新到什么版本"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos的更新版本选择取决于您当前使用的客户端版本和服务端需求。根据提供的信息，有以下几点需要注意：1. **Nacos 1.X与2.X的API变化**：Nacos2.0引入了gRPC协议，很多API相对于1.X有了根本性变化，但为了兼容性，Nacos2.X服务端依然支持Nacos1.X的客户端和"
 tags: ["Nacos","更新","版本"]
 keywords: ["Nacos","更新","版本"]
 ---
+
+## 用户问题 ： 
+ Nacos 可以更新到什么版本  
+
+---------------
+## 专家官方解答 ：
 
 Nacos的更新版本选择取决于您当前使用的客户端版本和服务端需求。根据提供的信息，有以下几点需要注意：
 
@@ -17,9 +23,27 @@ Nacos的更新版本选择取决于您当前使用的客户端版本和服务端
 3. **关于Nacos OpenAPI v2**：从Nacos 2.2.0版本开始，引入了新的v2 OpenAPI，它在返回格式、返回码及规范化方面做了显著提升。如果希望利用这些改进，应考虑将服务端升级到2.2以上的版本，并参考[v2 OpenAPI文档](https://nacos.io/docs/latest/guide/user/open-api/)进行相应的调整。
 
 综上所述，Nacos可以并且推荐更新到2.X的最新稳定版本，这不仅因为其持续的功能更新与优化，也因为它对旧版本客户端的良好兼容性以及提供了更先进的OpenAPI v2。请定期检查Nacos官网或GitHub发布页，以获取最新的版本信息并进行相应升级。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos1.0和Nacos2.0的api有什么区别？2.0的中小版本升级相关问题 
+ 
+ *专家经验：nacos哪个版本最常用 
+ 
+ *专家经验：Does nacos 2.2.3 support jdk17 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13843)给我们反馈。

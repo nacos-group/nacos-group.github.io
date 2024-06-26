@@ -1,13 +1,13 @@
 ---
 id: "question-history-15190"
-title: "nacos配置中心 c#语言样例 nacos-opensource"
+title: "nacos配置中心 c#语言样例"
 date: "2024-06-08"
 category: "expertConsultation"
 description: "为了提供关于nacos配置中心使用C#语言的样例，我们首先确认一下关键信息：Nacos确实支持C#，并且有一个由社区维护的C# SDK，您可以在这里找到它：[Nacos C# SDK](https://github.com/nacos-group/nacos-sdk-csharp)。现在，虽然直接的"
 ---
 
 ## 用户问题 ： 
- nacos配置中心 c#语言样例 nacos-opensource 
+ nacos配置中心 c#语言样例  
 
 ---------------
 ## 专家官方解答 ：

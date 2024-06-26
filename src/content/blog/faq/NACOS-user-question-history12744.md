@@ -1,12 +1,18 @@
 ---
 id: "question-history-12744"
-title: "com.alibaba.nacos.naming.updater 线程不释放怎么处理？ nacos-opensource"
+title: "com.alibaba.nacos.naming.updater 线程不释放怎么处理？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "首先，根据提供的知识内容，我们可以分析`com.alibaba.nacos.naming.updater`线程不释放的问题可能由以下几个原因造成：1. **Nacos-Client实例创建过多**：每个NacosNamingService实例都会有一个或多个此类线程用于更新服务缓存，过多的Nacos"
 tags: ["com.alibaba.nacos.naming.updater","线程不释放","处理"]
 keywords: ["com.alibaba.nacos.naming.updater","线程不释放","处理"]
 ---
+
+## 用户问题 ： 
+ com.alibaba.nacos.naming.updater 线程不释放怎么处理？  
+
+---------------
+## 专家官方解答 ：
 
 首先，根据提供的知识内容，我们可以分析`com.alibaba.nacos.naming.updater`线程不释放的问题可能由以下几个原因造成：
 
@@ -34,9 +40,23 @@ keywords: ["com.alibaba.nacos.naming.updater","线程不释放","处理"]
 如果上述步骤不能有效解决问题，可能需要更深入地分析应用与Nacos的集成代码，检查是否有特定的使用模式导致线程无法正常回收，或者考虑咨询Nacos社区和官方文档以获取进一步的帮助。
 
 请注意，上述步骤依赖于具体的环境和Nacos-Client版本，务必根据实际情况灵活调整。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：如何排查Nacos线程数过多的问题 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13871)给我们反馈。

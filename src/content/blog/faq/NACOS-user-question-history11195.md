@@ -1,12 +1,18 @@
 ---
 id: "question-history-11195"
-title: "nacos 是什么？ nacos-opensource"
+title: "nacos 是什么？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos是阿里巴巴开源的一个强大的基础服务管理平台，旨在简化云原生应用的构建、部署和管理过程。Nacos的核心特性包括服务发现与健康检查、动态配置服务、动态DNS服务以及服务和元数据管理。具体来说：1. **服务发现与健康检查**：Nacos支持通过DNS和RPC协议实现服务发现，能够自动进行服务"
 tags: ["nacos"]
 keywords: ["nacos"]
 ---
+
+## 用户问题 ： 
+ nacos 是什么？  
+
+---------------
+## 专家官方解答 ：
 
 Nacos是阿里巴巴开源的一个强大的基础服务管理平台，旨在简化云原生应用的构建、部署和管理过程。Nacos的核心特性包括服务发现与健康检查、动态配置服务、动态DNS服务以及服务和元数据管理。具体来说：
 
@@ -21,9 +27,27 @@ Nacos是阿里巴巴开源的一个强大的基础服务管理平台，旨在简
 关于Nacos不使用ORM框架访问数据库的原因，在另一篇参考内容中提到，这是因为Nacos追求轻量级与高性能。直接使用JDBC结合连接池的方式避免了ORM框架引入的额外开销，如反射、对象映射及动态SQL处理等，这些对于Nacos而言并非必要且会造成性能损失。因此，Nacos选择了一种更为简洁高效的方式来实现数据库交互。
 
 综上，Nacos是一个集成了服务发现与配置管理的全方位解决方案，特别适用于构建复杂且高效的分布式系统环境。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos和Eureka的区别是什么？ 
+ 
+ *专家经验：Nacos 介绍 
+ 
+ *专家经验：为什么Nacos不使用ORM框架访问数据库 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13734)给我们反馈。

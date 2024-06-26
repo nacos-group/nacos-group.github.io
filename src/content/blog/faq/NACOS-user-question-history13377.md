@@ -1,12 +1,18 @@
 ---
 id: "question-history-13377"
-title: "nacos1.0升级到2.0,客户端要做升级吗 nacos-opensource"
+title: "nacos1.0升级到2.0,客户端要做升级吗"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据已知信息，当Nacos从1.0升级到2.0时，客户端确实需要进行升级。原因在于Nacos2.0在API层面做了较大调整，包括将大量客户端访问的API由HTTP切换到gRPC，这导致Nacos1.0和Nacos2.0的API在路径和协议上存在显著差异。尽管Nacos2.X服务端为了兼容性，能够支持"
 tags: ["nacos1.0","2.0","客户端","升级"]
 keywords: ["nacos1.0","2.0","客户端","升级"]
 ---
+
+## 用户问题 ： 
+ nacos1.0升级到2.0,客户端要做升级吗  
+
+---------------
+## 专家官方解答 ：
 
 根据已知信息，当Nacos从1.0升级到2.0时，客户端确实需要进行升级。原因在于Nacos2.0在API层面做了较大调整，包括将大量客户端访问的API由HTTP切换到gRPC，这导致Nacos1.0和Nacos2.0的API在路径和协议上存在显著差异。尽管Nacos2.X服务端为了兼容性，能够支持Nacos1.2.0及之后版本的客户端，但这并不意味着Nacos1.0的客户端可以直接与Nacos2.0服务端无缝对接。
 
@@ -32,9 +38,27 @@ keywords: ["nacos1.0","2.0","客户端","升级"]
 - Nacos OpenAPI的详细说明：[Nacos OpenAPI v2文档](https://nacos.io/docs/latest/guide/user/open-api/)
 
 请注意，以上步骤为概括性指导，具体实施时应参照最新的官方文档和发行说明，以获取最准确的操作指引。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos客户端和服务端版本的兼容性问题 
+ 
+ *专家经验：Nacos1.0和Nacos2.0的api有什么区别？2.0的中小版本升级相关问题 
+ 
+ *专家经验：Nacos升级的具体步骤 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13875)给我们反馈。

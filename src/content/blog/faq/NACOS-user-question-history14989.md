@@ -1,13 +1,13 @@
 ---
 id: "question-history-14989"
-title: "error cosole  nacos vl ns operator cluster state nacos-opensource"
+title: "error cosole  nacos vl ns operator cluster state"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "根据您提供的错误信息`nacos-opensource error cosole /nacos/vl/ns/operator/cluster state`，看起来您遇到了与Nacos操作集群状态API相关的问题。结合我所掌握的知识，特别是关于Nacos API调用错误的篇章，我们可以这样分析和解决您"
 ---
 
 ## 用户问题 ： 
- error cosole  nacos vl ns operator cluster state nacos-opensource 
+ error cosole  nacos vl ns operator cluster state  
 
 ---------------
 ## 专家官方解答 ：
@@ -55,7 +55,7 @@ description: "根据您提供的错误信息`nacos-opensource error cosole /naco
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15042)给我们反馈。

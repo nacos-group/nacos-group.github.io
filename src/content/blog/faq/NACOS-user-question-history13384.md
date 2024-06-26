@@ -1,12 +1,18 @@
 ---
 id: "question-history-13384"
-title: "无法连接服务器上的nacos，但是本地能登入访问nacos服务网站 nacos-opensource"
+title: "无法连接服务器上的nacos，但是本地能登入访问nacos服务网站"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，针对问题“nacos-opensource 无法连接服务器上的nacos，但是本地能登入访问nacos服务网站”，我们可以分析并提出解决步骤如下：### 分析问题原因1. **网络配置差异**：本地能够访问Nacos服务网站，但服务器上无法连接，可能是因为服务器与Nacos服务器"
 tags: ["无法连接","服务器","nacos","本地能登入","访问","nacos服务网站"]
 keywords: ["无法连接","服务器","nacos","本地能登入","访问","nacos服务网站"]
 ---
+
+## 用户问题 ： 
+ 无法连接服务器上的nacos，但是本地能登入访问nacos服务网站  
+
+---------------
+## 专家官方解答 ：
 
 根据提供的知识内容，针对问题“nacos-opensource 无法连接服务器上的nacos，但是本地能登入访问nacos服务网站”，我们可以分析并提出解决步骤如下：
 
@@ -42,9 +48,27 @@ keywords: ["无法连接","服务器","nacos","本地能登入","访问","nacos�
 ### 解释
 
 以上步骤旨在系统性地排查和解决从网络基础到服务配置的所有潜在问题。首先，通过基本的网络工具确认物理层的连通性，接着深入到应用配置层面，确保客户端配置无误。进一步，通过查看服务端配置和日志，以及版本兼容性检查，可以识别出更深层次的问题。最后，对于特定的网络环境配置，如DNS解析和端口访问，也进行了针对性的检查，以全面覆盖可能的故障点。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：实际服务正常再跑 注册中心上没了怎么回事? 
+ 
+ *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+ 
+ *专家经验：服务提供者注册失败 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13879)给我们反馈。

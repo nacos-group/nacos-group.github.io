@@ -1,13 +1,13 @@
 ---
 id: "question-history-15799"
-title: "nacos配置中心客户端鉴权 nacos-opensource"
+title: "nacos配置中心客户端鉴权"
 date: "2024-06-21"
 category: "expertConsultation"
 description: "要实现Nacos配置中心客户端的鉴权，您可以按照以下步骤操作：### 对于Java SDK的鉴权1. **初始化配置服务**：   - 准备好Nacos服务器地址（`serverAddr`），例如：`String serverAddr = 您的Nacos服务器地址;`   - 创建`Properti"
 ---
 
 ## 用户问题 ： 
- nacos配置中心客户端鉴权 nacos-opensource 
+ nacos配置中心客户端鉴权  
 
 ---------------
 ## 专家官方解答 ：

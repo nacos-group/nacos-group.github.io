@@ -1,13 +1,13 @@
 ---
 id: "question-history-15795"
-title: "spring cloud 如何集成 nacos配置中心 nacos-opensource"
+title: "spring cloud 如何集成 nacos配置中心"
 date: "2024-06-21"
 category: "expertConsultation"
 description: "要集成Nacos配置中心到Spring Cloud应用中，您可以遵循以下步骤操作，这些步骤基于提供的知识内容：### 1. 确保前提条件- **安装并启动Nacos Server**：首先，您需要下载并运行Nacos服务器。具体操作指南请参考[Nacos快速入门](../quickstart/qui"
 ---
 
 ## 用户问题 ： 
- spring cloud 如何集成 nacos配置中心 nacos-opensource 
+ spring cloud 如何集成 nacos配置中心  
 
 ---------------
 ## 专家官方解答 ：

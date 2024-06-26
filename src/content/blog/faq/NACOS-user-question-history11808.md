@@ -1,6 +1,6 @@
 ---
 id: "question-history-11808"
-title: "nacos配置中心加密的具体方法 nacos-opensource"
+title: "nacos配置中心加密的具体方法"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos配置中心实现加密的具体方法如下：### 1. 针对Nacos Server自身的数据库配置加密**原因分析：**Nacos Server配置文件（如`application.properties`）中可能包含敏感信息，如数据库账号密码。**具体步骤：**- **自定义环境变量插件**：从"
@@ -9,7 +9,7 @@ keywords: ["nacos配置中心","加密","具体方法"]
 ---
 
 ## 用户问题 ： 
- nacos配置中心加密的具体方法 nacos-opensource 
+ nacos配置中心加密的具体方法  
 
 ---------------
 ## 专家官方解答 ：

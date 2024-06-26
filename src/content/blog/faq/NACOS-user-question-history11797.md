@@ -1,12 +1,18 @@
 ---
 id: "question-history-11797"
-title: "nacos 搭建本地集群配置中心 nacos-opensource"
+title: "nacos 搭建本地集群配置中心"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要搭建本地Nacos集群作为配置中心，您可以遵循以下步骤操作：1. **准备环境与下载Nacos**：   - 确保您的本地开发环境满足Nacos运行的基本要求，包括Java环境（推荐使用Java 8或更高版本）。   - 从Nacos的GitHub仓库下载最新版本的Nacos服务器包：[Nacos"
 tags: ["nacos","搭建","本地","集群","配置中心"]
 keywords: ["nacos","搭建","本地","集群","配置中心"]
 ---
+
+## 用户问题 ： 
+ nacos 搭建本地集群配置中心  
+
+---------------
+## 专家官方解答 ：
 
 要搭建本地Nacos集群作为配置中心，您可以遵循以下步骤操作：
 
@@ -47,9 +53,25 @@ keywords: ["nacos","搭建","本地","集群","配置中心"]
    - 详细文档和示例代码请查看：[Nacos Spring Project](https://github.com/nacos-group/nacos-spring-project/wiki/Nacos-Spring-Project-0.3.1-%E6%96%B0%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C)
 
 通过以上步骤，您将成功搭建起一个本地Nacos集群，并且能够开始为您的Spring应用提供配置管理和服务发现服务。记得根据实际需求调整配置文件中的具体参数，比如数据库连接信息（如果使用外部存储）、集群节点的网络配置等。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Nacos 监控手册](https://nacos.io/docs/latest/guide/admin/monitor-guide)
+ 
+ *[Nacos 融合 Spring，成为注册配置中心](https://nacos.io/docs/latest/ecology/use-nacos-with-spring)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13802)给我们反馈。

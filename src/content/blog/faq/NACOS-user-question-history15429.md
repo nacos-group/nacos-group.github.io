@@ -1,13 +1,13 @@
 ---
 id: "question-history-15429"
-title: "如何关闭nacos健康检查 nacos-opensource"
+title: "如何关闭nacos健康检查"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "要关闭Nacos的健康检查，首先需要确定您使用的具体组件。根据提供的信息，这里有两种场景：### 场景一：使用nacos-spring-boot-starter如果您正在使用`nacos-spring-boot-starter`，当前并不直接支持通过配置来关闭Nacos Config和Nacos D"
 ---
 
 ## 用户问题 ： 
- 如何关闭nacos健康检查 nacos-opensource 
+ 如何关闭nacos健康检查  
 
 ---------------
 ## 专家官方解答 ：
@@ -54,7 +54,7 @@ description: "要关闭Nacos的健康检查，首先需要确定您使用的具�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15499)给我们反馈。

@@ -1,13 +1,13 @@
 ---
 id: "question-history-14987"
-title: "there was an error querying the data,request nacos-opensource"
+title: "there was an error querying the data,request"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "根据您提出的问题“nacos-opensource there was an error querying the data,request”，这似乎是与Nacos查询数据时遇到错误相关。虽然提供的知识库中没有直接针对这个特定错误消息的讨论，我们可以尝试从相似问题和已知的故障场景中推理可能的原因及解"
 ---
 
 ## 用户问题 ： 
- there was an error querying the data,request nacos-opensource 
+ there was an error querying the data,request  
 
 ---------------
 ## 专家官方解答 ：
@@ -66,7 +66,7 @@ description: "根据您提出的问题“nacos-opensource there was an error que
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15040)给我们反馈。

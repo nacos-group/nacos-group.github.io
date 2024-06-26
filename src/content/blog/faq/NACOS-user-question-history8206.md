@@ -1,6 +1,6 @@
 ---
 id: "question-history-8206"
-title: "Nacos配置中心一致性问题 nacos-opensource"
+title: "Nacos配置中心一致性问题"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos配置中心中，一致性问题主要源于配置更新与缓存同步的机制，以及多节点部署时对共享数据源的依赖。以下是针对Nacos配置中心一致性问题的分析与建议：### 原因分析：1. **数据同步机制**：Nacos通过自研的通知协议，在配置发布后向所有节点发送更新通知，确保各节点缓存与数据库内容一致。"
@@ -9,7 +9,7 @@ keywords: ["Nacos","配置中心","一致性问题"]
 ---
 
 ## 用户问题 ： 
- Nacos配置中心一致性问题 nacos-opensource 
+ Nacos配置中心一致性问题  
 
 ---------------
 ## 专家官方解答 ：

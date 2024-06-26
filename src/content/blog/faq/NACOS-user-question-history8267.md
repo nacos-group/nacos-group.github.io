@@ -1,12 +1,18 @@
 ---
 id: "question-history-8267"
-title: "get changed dataId error 导致服务不停打印error日志，导致OOM nacos-opensource"
+title: "get changed dataId error 导致服务不停打印error日志，导致OOM"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "针对nacos-opensource中get changed dataId error导致服务不停打印error日志，最终引发OOM的问题，我们可以依据提供的知识进行如下分析与解决：1. **问题定位**：   - 根据错误信息get changed dataId error，初步判断可能是应用在尝"
 tags: ["get changed dataId error","服务","不停打印","error日志","OOM"]
 keywords: ["get changed dataId error","服务","不停打印","error日志","OOM"]
 ---
+
+## 用户问题 ： 
+ get changed dataId error 导致服务不停打印error日志，导致OOM  
+
+---------------
+## 专家官方解答 ：
 
 针对nacos-opensource中"get changed dataId error"导致服务不停打印error日志，最终引发OOM的问题，我们可以依据提供的知识进行如下分析与解决：
 
@@ -33,9 +39,27 @@ keywords: ["get changed dataId error","服务","不停打印","error日志","OOM
    - 若日志持续大量产生，考虑优化应用的内存分配，确保有足够的内存来缓冲日志，避免OOM。同时，长期看应修复根本问题，避免错误日志频繁生成。
 
 通过上述步骤，可以有效诊断并解决因"get changed dataId error"导致的服务日志溢出问题，确保服务稳定运行。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：应用配置获取失败 
+ 
+ *专家经验：如何获取Nacos-Client的日志？ 
+ 
+ *专家经验：如何在启动二进制版本的nacos时，设置日志级别为debug呢？ 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13615)给我们反馈。

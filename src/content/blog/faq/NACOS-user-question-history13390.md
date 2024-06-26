@@ -1,6 +1,6 @@
 ---
 id: "question-history-13390"
-title: "nacos docker derby 下使用grafana监控，如何修改example prometheu nacos-opensource"
+title: "nacos docker derby 下使用grafana监控，如何修改example prometheu"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要修改`example/prometheus/prometheus-standalone.yaml`配置文件以适应Nacos在Docker中使用Derby数据库并集成Grafana进行监控，可以遵循以下步骤：1. **理解基础配置**：   首先，确保你已经熟悉了Nacos监控的基础配置，特别是如何"
@@ -9,7 +9,7 @@ keywords: ["nacos","docker","derby","grafana","监控","prometheus","prometheus-
 ---
 
 ## 用户问题 ： 
- nacos docker derby 下使用grafana监控，如何修改example prometheus prometheus-standalone.yaml nacos-opensource 
+ nacos docker derby 下使用grafana监控，如何修改example prometheus prometheus-standalone.yaml  
 
 ---------------
 ## 专家官方解答 ：

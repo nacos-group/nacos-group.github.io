@@ -1,12 +1,18 @@
 ---
 id: "question-history-8274"
-title: "Nacos2.0.3 data source does not support pgsql nacos-opensource"
+title: "Nacos2.0.3 data source does not support pgsql"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos 2.0.3版本中，官方确实还未直接支持PostgreSQL数据库，这与您遇到的“Nacos2.0.3 data source does not support pgsql”的问题相吻合。根据 我了解的知识 中的信息，Nacos是从2.2版本开始才正式支持PostgreSQL的。因此，若"
 tags: ["Nacos2.0.3","data source","does not support","pgsql"]
 keywords: ["Nacos2.0.3","data source","does not support","pgsql"]
 ---
+
+## 用户问题 ： 
+ Nacos2.0.3 data source does not support pgsql  
+
+---------------
+## 专家官方解答 ：
 
 在Nacos 2.0.3版本中，官方确实还未直接支持PostgreSQL数据库，这与您遇到的“Nacos2.0.3 data source does not support pgsql”的问题相吻合。根据 我了解的知识 中的信息，Nacos是从2.2版本开始才正式支持PostgreSQL的。因此，若要解决您当前在Nacos 2.0.3中不支持PostgreSQL数据源的问题，您可以考虑以下几个步骤：
 
@@ -19,9 +25,25 @@ keywords: ["Nacos2.0.3","data source","does not support","pgsql"]
 4. **配置更改**：一旦您有了支持PostgreSQL的数据源插件，需要按照Nacos的配置要求，在`${nacos-server.path}/conf/application.properties`中进行相应的配置调整，例如设置`spring.datasource.platform=postgresql`，以及正确的数据库URL、用户名和密码等。
 
 综上所述，最直接且长期有效的解决方案是升级到支持PostgreSQL的Nacos版本。如果升级不可行，则探索社区已有资源或自行开发插件是较为复杂但可行的替代方案。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos 欢迎你 
+ 
+ *专家经验：Nacos的数据库支持情况介绍 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13620)给我们反馈。

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15434"
-title: "nacos作为注册中心使用，数据会存储在外部共享数据库吗 nacos-opensource"
+title: "nacos作为注册中心使用，数据会存储在外部共享数据库吗"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "Nacos 作为服务注册中心使用时，其数据存储方式是可以配置的。默认情况下，Nacos 使用嵌入式数据库（SQLite）来存储服务实例信息、配置数据等。但是，为了适应生产环境的需求，Nacos 支持将数据存储在外部的共享数据库中，以提高数据的可靠性和可扩展性。**依托于** 知识: Nacos 配置"
 ---
 
 ## 用户问题 ： 
- nacos作为注册中心使用，数据会存储在外部共享数据库吗 nacos-opensource 
+ nacos作为注册中心使用，数据会存储在外部共享数据库吗  
 
 ---------------
 ## 专家官方解答 ：
@@ -57,7 +57,7 @@ Nacos 作为服务注册中心使用时，其数据存储方式是可以配置�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15504)给我们反馈。

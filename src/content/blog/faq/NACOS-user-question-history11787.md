@@ -1,10 +1,16 @@
 ---
 id: "question-history-11787"
-title: "使用nacos 作为微服务spring cloud的注册中心、配置中心搭建的具体方法 nacos-opensource"
+title: "使用nacos 作为微服务spring cloud的注册中心、配置中心搭建的具体方法"
 date: "2024-05-31"
 category: "expertConsultation"
 description: "要使用Nacos作为微服务Spring Cloud的注册中心和配置中心，可以遵循以下步骤进行搭建：### 1. 环境准备与Nacos Server启动- **下载与启动Nacos Server**    首先，确保您已下载并启动了Nacos Server。如果您还没有这样做，请参照[Nacos 快速"
 ---
+
+## 用户问题 ： 
+ 使用nacos 作为微服务spring cloud的注册中心、配置中心搭建的具体方法  
+
+---------------
+## 专家官方解答 ：
 
 要使用Nacos作为微服务Spring Cloud的注册中心和配置中心，可以遵循以下步骤进行搭建：
 
@@ -60,9 +66,25 @@ description: "要使用Nacos作为微服务Spring Cloud的注册中心和配置�
   启动多个服务实例，并通过服务发现API验证服务列表是否正确。
 
 通过以上步骤，您可以成功地将Nacos集成为Spring Cloud项目的注册中心和配置中心。更多高级配置和详细信息，请参考[Nacos Config](https://github.com/spring-cloud-incubator/spring-cloud-alibaba/wiki/Nacos-config)和[Nacos Discovery](https://github.com/spring-cloud-incubator/spring-cloud-alibaba/wiki/Nacos-discovery)官方文档。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*[Nacos 融合 Spring Cloud，成为注册配置中心](https://nacos.io/docs/latest/ecology/use-nacos-with-spring-cloud)
+ 
+ *[Nacos 融合 Spring，成为注册配置中心](https://nacos.io/docs/latest/ecology/use-nacos-with-spring)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=14856)给我们反馈。

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15634"
-title: "服务端根据nacos.core.auth.plugin.nacos.token.secret.key生成的 nacos-opensource"
+title: "服务端根据nacos.core.auth.plugin.nacos.token.secret.key生成的"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "nacos-opensource 服务端根据`nacos.core.auth.plugin.nacos.token.secret.key`生成的accessToken确实有过期时间。根据提供的知识内容，在服务端配置中可以通过`nacos.core.auth.plugin.nacos.token.ex"
 ---
 
 ## 用户问题 ： 
- 服务端根据nacos.core.auth.plugin.nacos.token.secret.key生成的accessToken有过期时间吗？ nacos-opensource 
+ 服务端根据nacos.core.auth.plugin.nacos.token.secret.key生成的accessToken有过期时间吗？  
 
 ---------------
 ## 专家官方解答 ：
@@ -46,7 +46,7 @@ nacos.core.auth.plugin.nacos.token.expire.seconds=18000
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15686)给我们反馈。

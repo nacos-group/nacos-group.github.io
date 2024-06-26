@@ -1,12 +1,18 @@
 ---
 id: "question-history-13381"
-title: "vm与k8s混合部署情况下，如何使用nacos来解决服务发现的问题,k8s侧部署的应用，注册到nacos上的是podip还是其他？ nacos-opensource"
+title: "vm与k8s混合部署情况下，如何使用nacos来解决服务发现的问题,k8s侧部署的应用，注册到nacos上"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos开源项目(vm与k8s混合部署)的场景下，解决服务发现的问题，特别是针对K8s部署的应用注册到Nacos上的识别问题，关键在于理解Kubernetes环境的特殊性以及如何适配Nacos的服务注册机制。### 分析问题原因1. **K8s环境特性**：Kubernetes环境中，Pod I"
 tags: ["vm","k8s","混合部署","服务发现","nacos","k8s","应用","注册","podip"]
 keywords: ["vm","k8s","混合部署","服务发现","nacos","k8s","应用","注册","podip"]
 ---
+
+## 用户问题 ： 
+ vm与k8s混合部署情况下，如何使用nacos来解决服务发现的问题,k8s侧部署的应用，注册到nacos上的是podip还是其他？  
+
+---------------
+## 专家官方解答 ：
 
 在Nacos开源项目(vm与k8s混合部署)的场景下，解决服务发现的问题，特别是针对K8s部署的应用注册到Nacos上的识别问题，关键在于理解Kubernetes环境的特殊性以及如何适配Nacos的服务注册机制。
 
@@ -33,9 +39,27 @@ keywords: ["vm","k8s","混合部署","服务发现","nacos","k8s","应用","注�
 ### 解释
 
 以上步骤确保了在K8s与VM混合部署环境下，应用实例能够通过Nacos实现高效且可靠的服务发现。通过利用K8s Service的稳定性克服Pod IP变动的问题，并结合Nacos灵活的服务注册与发现机制，实现了跨平台的服务交互能力。同时，合理配置Nacos集群的网络访问，保证了混合环境下的网络连通性，是解决此类问题的关键所在。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos中持久化服务和临时服务的区别 
+ 
+ *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+ 
+ *专家经验：Nacos部署开放端口，集群部署开通端口 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13876)给我们反馈。

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15427"
-title: "nacos 控制台配置权限后， 需要获取配置需要配置权限密钥吗？ nacos-opensource"
+title: "nacos 控制台配置权限后， 需要获取配置需要配置权限密钥吗？"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，关于“nacos-opensource nacos 控制台配置权限后，需要获取配置需要配置权限密钥吗？”这一问题，我们可以这样分析与解答：1. **问题背景理解**：   - Nacos 提供了配置管理功能，包括发布、修改、查询配置以及配置的灰度发布等，这些操作在控制台上均可进行"
 ---
 
 ## 用户问题 ： 
- nacos 控制台配置权限后， 需要获取配置需要配置权限密钥吗？ nacos-opensource 
+ nacos 控制台配置权限后， 需要获取配置需要配置权限密钥吗？  
 
 ---------------
 ## 专家官方解答 ：
@@ -54,7 +54,7 @@ description: "根据提供的知识内容，关于“nacos-opensource nacos 控�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15497)给我们反馈。

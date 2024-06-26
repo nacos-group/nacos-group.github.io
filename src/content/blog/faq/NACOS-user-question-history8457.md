@@ -1,12 +1,18 @@
 ---
 id: "question-history-8457"
-title: "有遇到过nacos客户端不发送心跳检测的问题嘛 nacos-opensource"
+title: "有遇到过nacos客户端不发送心跳检测的问题嘛"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据已有知识，Nacos客户端确实具备心跳检测机制，用于维持与服务端的连接健康。心跳检测是通过`HealthCheckRequest`来实现的，此机制可以定时校验连接的存活状态。如果遇到Nacos客户端不发送心跳检测的问题，可能的原因包括但不限于配置错误、网络问题或客户端实现的特定bug。解决此问题"
 tags: ["nacos","客户端","心跳检测","问题"]
 keywords: ["nacos","客户端","心跳检测","问题"]
 ---
+
+## 用户问题 ： 
+ 有遇到过nacos客户端不发送心跳检测的问题嘛  
+
+---------------
+## 专家官方解答 ：
 
 根据已有知识，Nacos客户端确实具备心跳检测机制，用于维持与服务端的连接健康。心跳检测是通过`HealthCheckRequest`来实现的，此机制可以定时校验连接的存活状态。如果遇到Nacos客户端不发送心跳检测的问题，可能的原因包括但不限于配置错误、网络问题或客户端实现的特定bug。
 
@@ -23,9 +29,27 @@ keywords: ["nacos","客户端","心跳检测","问题"]
 5. **社区与文档求助**：如果以上步骤未能解决问题，可以查阅Nacos官方文档或在GitHub的Nacos项目中查找是否有相似问题的讨论。同时，考虑在Nacos社区或GitHub上提问，提供详细的错误描述和已尝试的解决步骤，以便获得更专业的帮助。
 
 请注意，虽然Nacos设计有心跳检测机制来保障连接活跃性，但在实际应用中，正确配置和环境因素同样重要，需综合排查以确保该机制能正常工作。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos客户端与服务端grpc的连接有定期ping-pong机制吗 
+ 
+ *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+ 
+ *[FAQ](https://nacos.io/docs/latest/guide/user/faq)
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13674)给我们反馈。

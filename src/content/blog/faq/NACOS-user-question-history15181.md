@@ -1,13 +1,13 @@
 ---
 id: "question-history-15181"
-title: "springboot  结合 nacos 配置中心 详细配置流程 nacos-opensource"
+title: "springboot  结合 nacos 配置中心 详细配置流程"
 date: "2024-06-08"
 category: "expertConsultation"
 description: "要将Spring Boot应用与Nacos配置中心结合，您可以遵循以下详细步骤进行配置。这些步骤基于提供的知识内容进行了整理和说明：### 1. 准备工作- **确保Nacos Server运行**：根据前提条件，您需先下载并启动Nacos Server。具体操作指引请参考[Nacos快速入门](."
 ---
 
 ## 用户问题 ： 
- springboot  结合 nacos 配置中心 详细配置流程 nacos-opensource 
+ springboot  结合 nacos 配置中心 详细配置流程  
 
 ---------------
 ## 专家官方解答 ：
@@ -83,7 +83,7 @@ public class MyService {
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15201)给我们反馈。

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15653"
-title: "http: xxxxx:8848 nacos; http: xxxx:8848 nacos v1 cs c nacos-opensource"
+title: "http: xxxxx:8848 nacos; http: xxxx:8848 nacos v1 cs c"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "根据您提供的信息，您关注的是关于Nacos服务存在潜在的HTTP拒绝服务攻击漏洞及缓慢攻击的问题，特别是针对提供的几个URL。虽然直接相关的解决方案未在给定的知识内容中明确阐述，我们可以依据现有知识进行分析并尝试提出一些建议措施。### 分析问题原因1. **HTTP拒绝服务攻击（DoS）**：这种"
 ---
 
 ## 用户问题 ： 
- http: xxxxx:8848 nacos; http: xxxx:8848 nacos v1 cs configs listener; http: xxxxx:8848; 存在漏洞，检测可能存在缓慢的http拒绝服务攻击 如何解决 nacos-opensource 
+ http: xxxxx:8848 nacos; http: xxxx:8848 nacos v1 cs configs listener; http: xxxxx:8848; 存在漏洞，检测可能存在缓慢的http拒绝服务攻击 如何解决  
 
 ---------------
 ## 专家官方解答 ：
@@ -68,7 +68,7 @@ description: "根据您提供的信息，您关注的是关于Nacos服务存在�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15705)给我们反馈。

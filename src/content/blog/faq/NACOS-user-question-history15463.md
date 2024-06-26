@@ -1,13 +1,13 @@
 ---
 id: "question-history-15463"
-title: "两台电脑，电脑A上有项目，电脑B上有NACOS，现在要在电脑A上起动项目，连接电脑B中的NACOS，A中的 nacos-opensource"
+title: "两台电脑，电脑A上有项目，电脑B上有NACOS，现在要在电脑A上起动项目，连接电脑B中的NACOS，A中的"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "要实现在电脑A上的项目连接到电脑B上的Nacos，你需要进行以下几个步骤的配置：1. **确保Nacos Server在电脑B上正确运行**：   - 确保Nacos服务器已经在电脑B上安装并正常启动。你可以通过访问电脑B的Nacos控制台URL（默认可能是 `http://B的IP地址:8848/"
 ---
 
 ## 用户问题 ： 
- 两台电脑，电脑A上有项目，电脑B上有NACOS，现在要在电脑A上起动项目，连接电脑B中的NACOS，A中的项目要调整NACOS中的哪里？ nacos-opensource 
+ 两台电脑，电脑A上有项目，电脑B上有NACOS，现在要在电脑A上起动项目，连接电脑B中的NACOS，A中的项目要调整NACOS中的哪里？  
 
 ---------------
 ## 专家官方解答 ：
@@ -69,7 +69,7 @@ description: "要实现在电脑A上的项目连接到电脑B上的Nacos，你�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15533)给我们反馈。

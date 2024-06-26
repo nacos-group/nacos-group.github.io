@@ -1,13 +1,13 @@
 ---
 id: "question-history-15013"
-title: "Nacos 客户端连接负载不均匀，如何处理？ nacos-opensource"
+title: "Nacos 客户端连接负载不均匀，如何处理？"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "针对您提出的问题“nacos-opensource Nacos 客户端连接负载不均匀，如何处理？”，我们可以依据已有的知识进行分析和解答。### 原因分析Nacos客户端连接负载不均通常由以下因素引起：- **长轮询机制**：Nacos客户端使用长轮询来获取配置更新，这可能导致在特定时间点某些节点承"
 ---
 
 ## 用户问题 ： 
- Nacos 客户端连接负载不均匀，如何处理？ nacos-opensource 
+ Nacos 客户端连接负载不均匀，如何处理？  
 
 ---------------
 ## 专家官方解答 ：

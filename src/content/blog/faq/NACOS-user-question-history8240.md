@@ -1,6 +1,6 @@
 ---
 id: "question-history-8240"
-title: "Nacos Pod takes up a lot of memory cache. As the serv nacos-opensource"
+title: "Nacos Pod takes up a lot of memory cache. As the serv"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "针对Nacos Pod内存缓存占用过大的问题，主要从以下几个方面分析与解决：1. **检查JVM堆内存设置**：依据问题描述，随着Nacos Pod运行时间增长，内存缓存（RSS内存）持续增加，首先应检查Nacos的JVM堆内存配置是否合理。根据推荐实践，JVM堆内存不应超过物理内存的70%。请确保"
@@ -9,7 +9,7 @@ keywords: ["Nacos","Pod","memory cache","service life","RSS memory"]
 ---
 
 ## 用户问题 ： 
- Nacos Pod takes up a lot of memory cache. As the service life of nacos pod continues to increase, the memory cache is also gradually increasing, and the memory cache usage is consistent with the RSS memory. nacos-opensource 
+ Nacos Pod takes up a lot of memory cache. As the service life of nacos pod continues to increase, the memory cache is also gradually increasing, and the memory cache usage is consistent with the RSS memory.  
 
 ---------------
 ## 专家官方解答 ：

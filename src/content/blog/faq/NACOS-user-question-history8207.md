@@ -1,6 +1,6 @@
 ---
 id: "question-history-8207"
-title: "Nacos用作配置中心的话，能够支持百万级别的客户端连接嘛 nacos-opensource"
+title: "Nacos用作配置中心的话，能够支持百万级别的客户端连接嘛"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos用作配置中心确实可以支持百万级别的客户端连接，但并非单个节点直接支持。根据Nacos 2.0的压测报告[[1](https://nacos.io/docs/latest/guide/admin/nacos2-config-benchmark/)]，在8C16G的机器规格下，单节点Nacos"
@@ -9,7 +9,7 @@ keywords: ["Nacos","配置中心","百万级别","客户端连接"]
 ---
 
 ## 用户问题 ： 
- Nacos用作配置中心的话，能够支持百万级别的客户端连接嘛 nacos-opensource 
+ Nacos用作配置中心的话，能够支持百万级别的客户端连接嘛  
 
 ---------------
 ## 专家官方解答 ：

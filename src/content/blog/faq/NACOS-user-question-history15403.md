@@ -1,13 +1,13 @@
 ---
 id: "question-history-15403"
-title: "Java项目，SpringBoot启动时，连接不上nacos配置文件，启动报错 nacos-opensource"
+title: "Java项目，SpringBoot启动时，连接不上nacos配置文件，启动报错"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据您提供的问题“nacos-opensource Java项目，SpringBoot启动时，连接不上nacos配置文件，启动报错”，我们可以依托于已有知识进行分析并提供解决步骤。### 分析问题原因1. **配置错误**：可能是SpringBoot项目的配置中关于Nacos服务器的地址、端口、命名"
 ---
 
 ## 用户问题 ： 
- Java项目，SpringBoot启动时，连接不上nacos配置文件，启动报错 nacos-opensource 
+ Java项目，SpringBoot启动时，连接不上nacos配置文件，启动报错  
 
 ---------------
 ## 专家官方解答 ：

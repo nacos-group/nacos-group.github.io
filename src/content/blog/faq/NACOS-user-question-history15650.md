@@ -1,13 +1,13 @@
 ---
 id: "question-history-15650"
-title: "nacos有mac版本的吗 nacos-opensource"
+title: "nacos有mac版本的吗"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "Nacos确实提供了Mac版本的支持。根据我了解的知识中的信息，Nacos是一个Java程序，因此它可以运行在包括Mac、Linux、Windows等在内的多种操作系统上。当您从Nacos的官方网站[https://nacos.io/download/nacos-server/](https://n"
 ---
 
 ## 用户问题 ： 
- nacos有mac版本的吗 nacos-opensource 
+ nacos有mac版本的吗  
 
 ---------------
 ## 专家官方解答 ：

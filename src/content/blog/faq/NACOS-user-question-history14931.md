@@ -1,13 +1,13 @@
 ---
 id: "question-history-14931"
-title: "Nacos 同一个服务可以属于不同的分组吗？ nacos-opensource"
+title: "Nacos 同一个服务可以属于不同的分组吗？"
 date: "2024-06-03"
 category: "expertConsultation"
 description: "Nacos同一个服务确实可以属于不同的分组。根据提供的知识，Nacos服务的定义由三个核心要素构成：命名空间（namespace）、分组（group）和资源名（如serviceName或dataId）。命名空间提供强隔离，而分组则用于逻辑分类，实现弱隔离。这意味着，您可以在不同的分组中注册相同的服务"
 ---
 
 ## 用户问题 ： 
- Nacos 同一个服务可以属于不同的分组吗？ nacos-opensource 
+ Nacos 同一个服务可以属于不同的分组吗？  
 
 ---------------
 ## 专家官方解答 ：
@@ -35,7 +35,7 @@ Nacos同一个服务确实可以属于不同的分组。根据提供的知识，
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=14938)给我们反馈。

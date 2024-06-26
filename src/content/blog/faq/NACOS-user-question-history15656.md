@@ -1,13 +1,13 @@
 ---
 id: "question-history-15656"
-title: "openfeign组件，是不是用了nacos的api来获取对应服务的IP nacos-opensource"
+title: "openfeign组件，是不是用了nacos的api来获取对应服务的IP"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "在Nacos开源体系中，关于OpenFeign组件与Nacos的集成，确实利用了Nacos的API来动态地获取对应服务的IP地址。OpenFeign作为Spring Cloud的一个重要组件，它能够基于接口定义来实现HTTP请求的客户端抽象，简化了服务间的调用过程。当与Nacos结合使用时，Open"
 ---
 
 ## 用户问题 ： 
- openfeign组件，是不是用了nacos的api来获取对应服务的IP nacos-opensource 
+ openfeign组件，是不是用了nacos的api来获取对应服务的IP  
 
 ---------------
 ## 专家官方解答 ：
@@ -49,7 +49,7 @@ description: "在Nacos开源体系中，关于OpenFeign组件与Nacos的集成�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15708)给我们反馈。

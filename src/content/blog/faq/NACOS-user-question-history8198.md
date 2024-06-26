@@ -1,12 +1,18 @@
 ---
 id: "question-history-8198"
-title: "k8s 中部署了 3 个 nacos 节点，spring cloud alibaba 应该怎么配置。k8s 中部署了 3 个 nacos 节点，对应三个 headless 地址： nacos-opensource"
+title: "k8s 中部署了 3 个 nacos 节点，spring cloud alibaba 应该怎么配置。k8s"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Kubernetes (k8s) 中部署了3个Nacos节点并采用Spring Cloud Alibaba集成时，您需要确保客户端能够发现并连接到这些Nacos节点。由于您提到了三个headless地址，这意味着每个Nacos节点都有一个独立的DNS记录，可以直接通过域名访问而无需负载均衡器。以下"
 tags: ["k8s","nacos","spring cloud alibaba","配置","headless 地址"]
 keywords: ["k8s","nacos","spring cloud alibaba","配置","headless 地址"]
 ---
+
+## 用户问题 ： 
+ k8s 中部署了 3 个 nacos 节点，spring cloud alibaba 应该怎么配置。k8s 中部署了 3 个 nacos 节点，对应三个 headless 地址：  
+
+---------------
+## 专家官方解答 ：
 
 在Kubernetes (k8s) 中部署了3个Nacos节点并采用Spring Cloud Alibaba集成时，您需要确保客户端能够发现并连接到这些Nacos节点。由于您提到了三个headless地址，这意味着每个Nacos节点都有一个独立的DNS记录，可以直接通过域名访问而无需负载均衡器。以下是基于您提供的信息和我了解的知识中的相关内容，如何在Spring Cloud Alibaba中配置以连接到这些Nacos节点的步骤：
 
@@ -47,9 +53,27 @@ keywords: ["k8s","nacos","spring cloud alibaba","配置","headless 地址"]
 - **鉴权考量**：虽然本问题未直接询问鉴权配置，但鉴于安全性重要性，提及了如果Nacos集群开启了鉴权，客户端集成时也需要相应配置。
 
 以上步骤应该能帮助您成功地在Spring Cloud Alibaba应用中集成并配置好Kubernetes中部署的Nacos集群。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Nacos部署集群模式怎么打开鉴权 
+ 
+ *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+ 
+ *专家经验：NACOS 配置中心和注册中心是分两个集群部署还是放在一个集群中 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13557)给我们反馈。

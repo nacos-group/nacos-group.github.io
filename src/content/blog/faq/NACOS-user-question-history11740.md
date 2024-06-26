@@ -1,6 +1,6 @@
 ---
 id: "question-history-11740"
-title: "Unresolved dependency: ‘com.alibaba.cloud:spring-clou nacos-opensource"
+title: "Unresolved dependency: ‘com.alibaba.cloud:spring-clou"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，遇到“nacos-opensource Unresolved dependency: ‘com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:unknown‘”的问题，可能是由于以下几个原因造成的：1. *"
@@ -9,7 +9,7 @@ keywords: ["Unresolved dependency","com.alibaba.cloud","spring-cloud-starter-ali
 ---
 
 ## 用户问题 ： 
- Unresolved dependency: ‘com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:unknown‘ nacos-opensource 
+ Unresolved dependency: ‘com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:unknown‘  
 
 ---------------
 ## 专家官方解答 ：

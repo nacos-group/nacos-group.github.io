@@ -1,6 +1,6 @@
 ---
 id: "question-history-11860"
-title: "本地启动nacos拉取线上服务至本地 nacos-opensource"
+title: "本地启动nacos拉取线上服务至本地"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要实现在本地启动Nacos并拉取线上服务至本地进行调试或监控，可以遵循以下步骤：### 1. **本地部署Nacos Server**首先确保你的本地环境能够运行Nacos Server。你可以通过以下方式之一来部署：- **下载并运行Nacos Server**：  访问Nacos GitHub仓"
@@ -9,7 +9,7 @@ keywords: ["本地启动","nacos","拉取","线上服务","至本地"]
 ---
 
 ## 用户问题 ： 
- 本地启动nacos拉取线上服务至本地 nacos-opensource 
+ 本地启动nacos拉取线上服务至本地  
 
 ---------------
 ## 专家官方解答 ：

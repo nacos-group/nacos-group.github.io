@@ -1,13 +1,13 @@
 ---
 id: "question-history-15183"
-title: "nacos 仅做配置中心时的配置样例 nacos-opensource"
+title: "nacos 仅做配置中心时的配置样例"
 date: "2024-06-08"
 category: "expertConsultation"
 description: "要使用Nacos作为仅配置中心的配置样例，您可以遵循以下步骤进行配置，这些步骤基于提供的知识内容进行了简化，专注于配置管理部分：### 步骤 1: 添加依赖确保您的Spring项目中添加了Nacos Spring Context的依赖。可以通过Maven或Gradle添加。以下是一个Maven依赖的"
 ---
 
 ## 用户问题 ： 
- nacos 仅做配置中心时的配置样例 nacos-opensource 
+ nacos 仅做配置中心时的配置样例  
 
 ---------------
 ## 专家官方解答 ：
@@ -83,7 +83,7 @@ public class SomeService {
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15203)给我们反馈。

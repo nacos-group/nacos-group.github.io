@@ -1,6 +1,6 @@
 ---
 id: "question-history-8208"
-title: "请问nacos使用mysql作为后端数据库，其中his_config_info的内容会一直保存吗？或者会保 nacos-opensource"
+title: "请问nacos使用mysql作为后端数据库，其中his_config_info的内容会一直保存吗？或者会保"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos 使用 MySQL 作为后端数据库时，`his_config_info` 表中的内容并不会一直保存。默认情况下，Nacos 会定期清理 `his_config_info` 表中的数据，保留30天前的配置变更历史。这一设定旨在避免表过大而影响查询效率和存储成本。如果你需要调整这个保留周期，可"
@@ -9,7 +9,7 @@ keywords: ["mysql","his_config_info","内容","保存","保留多久"]
 ---
 
 ## 用户问题 ： 
- 请问nacos使用mysql作为后端数据库，其中his_config_info的内容会一直保存吗？或者会保留多久呢？ nacos-opensource 
+ 请问nacos使用mysql作为后端数据库，其中his_config_info的内容会一直保存吗？或者会保留多久呢？  
 
 ---------------
 ## 专家官方解答 ：

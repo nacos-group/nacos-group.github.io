@@ -1,13 +1,13 @@
 ---
 id: "question-history-15464"
-title: "NacosSync 有开放接口吗？ nacos-opensource"
+title: "NacosSync 有开放接口吗？"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据提供的我了解的知识, 我可以确认Nacos开源项目提供了以下接口：1. **查询指定客户端的详细信息**：此接口允许用户获取客户端的详细情况，包括但不限于配置、元数据等。当请求的客户端不存在于系统中时，Nacos会返回错误信息。2. **查询指定客户端的注册信息**：该接口用于检索客户端在Nac"
 ---
 
 ## 用户问题 ： 
- NacosSync 有开放接口吗？ nacos-opensource 
+ NacosSync 有开放接口吗？  
 
 ---------------
 ## 专家官方解答 ：
@@ -40,7 +40,7 @@ Nacos开源版本确实提供了与同步相关的开放接口，尽管没有直
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15534)给我们反馈。

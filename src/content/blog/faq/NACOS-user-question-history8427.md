@@ -1,12 +1,18 @@
 ---
 id: "question-history-8427"
-title: "请教个问题，我的客户端版本是2.2.1，服务端是2.2.3，启动的是报错：[com.alibaba.nacos.client.naming.security] c.a.n.c.a.i.process.HttpLoginProcessor   : login failed: {code:403,message:user not found!,header:{header:{Accept-Charset:UTF-8,Authorization:Bearer,Connection:keep-alive,Content-Length:15,Content-Security-Policy:script-src 'self',Content-Type:text html;charset=UTF-8,Date:Tue, 20 Feb 2024 03:12:49 GMT,Keep-Alive:timeout=60,Vary:Access-Control-Request-Headers},originalResponseHeader:{Authorization:[Bearer],Connection:[keep-alive],Content-Length:[15],Content-Security-Policy:[script-src 'self'],Content-Type:[text html;charset=UTF-8],Date:[Tue, 20 Feb 2024 03:12:49 GMT],Keep-Alive:[timeout=60],Vary:[Access-Control-Request-Headers,Access-Control-Request-Method,Origin]},charset:UTF-8}}，这个错误目前感觉没影响程序的使用，程序访问正常。我配置的discovery心跳是3秒一次，这个错误就是每3秒左右提示一次，这个错误会不会跟服务端配置的nacos.core.auth.enabled=true有关系？ nacos-opensource"
+title: "请教个问题，我的客户端版本是2.2.1，服务端是2.2.3，启动的是报错：[com.alibaba.nac"
 date: "2024-05-29"
 category: "expertConsultation"
 description: "根据你描述的问题，结合已有知识，我们可以分析并尝试解决你遇到的`user not found!`错误及频繁提示的情况。### 分析原因：1. **认证信息未正确配置**：错误信息表明登录失败，用户未找到，这通常意味着客户端在向服务端发送请求时携带的认证信息（如token）未被服务端识别，可能是因为认"
 tags: ["客户端版本2.2.1","服务端2.2.3","报错","login failed","403","user not found","discovery心跳3秒","nacos.core.auth.enabled=true"]
 keywords: ["客户端版本2.2.1","服务端2.2.3","报错","login failed","403","user not found","discovery心跳3秒","nacos.core.auth.enabled=true"]
 ---
+
+## 用户问题 ： 
+ 请教个问题，我的客户端版本是2.2.1，服务端是2.2.3，启动的是报错：[com.alibaba.nacos.client.naming.security] c.a.n.c.a.i.process.HttpLoginProcessor   : login failed: {"code":403,"message":"user not found!","header":{"header":{"Accept-Charset":"UTF-8","Authorization":"Bearer","Connection":"keep-alive","Content-Length":"15","Content-Security-Policy":"script-src 'self'","Content-Type":"text html;charset=UTF-8","Date":"Tue, 20 Feb 2024 03:12:49 GMT","Keep-Alive":"timeout=60","Vary":"Access-Control-Request-Headers"},"originalResponseHeader":{"Authorization":["Bearer"],"Connection":["keep-alive"],"Content-Length":["15"],"Content-Security-Policy":["script-src 'self'"],"Content-Type":["text html;charset=UTF-8"],"Date":["Tue, 20 Feb 2024 03:12:49 GMT"],"Keep-Alive":["timeout=60"],"Vary":["Access-Control-Request-Headers","Access-Control-Request-Method","Origin"]},"charset":"UTF-8"}}，这个错误目前感觉没影响程序的使用，程序访问正常。我配置的discovery心跳是3秒一次，这个错误就是每3秒左右提示一次，这个错误会不会跟服务端配置的nacos.core.auth.enabled=true有关系？  
+
+---------------
+## 专家官方解答 ：
 
 根据你描述的问题，结合已有知识，我们可以分析并尝试解决你遇到的`user not found!`错误及频繁提示的情况。
 
@@ -41,9 +47,27 @@ keywords: ["客户端版本2.2.1","服务端2.2.3","报错","login failed","403"
 此错误与服务端鉴权配置`nacos.core.auth.enabled=true`有直接关联，通过上述步骤应该能定位并解决问题。如果错误依旧，可能需要更深入地检查网络环境、日志文件或考虑是否有其他安全策略（如防火墙规则）阻止了认证信息的有效传递。
 
 务必记得在调试完毕后，根据实际情况决定是否恢复鉴权配置以保证系统的安全性。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：user not found 
+ 
+ *专家经验：Nacos客户端和服务端版本的兼容性问题 
+ 
+ *专家经验：nacos哪个版本最常用 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=14678)给我们反馈。

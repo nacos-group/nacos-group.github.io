@@ -1,13 +1,13 @@
 ---
 id: "question-history-15233"
-title: "在NacosConfigFailureListener 使用 configService.getConfi nacos-opensource"
+title: "在NacosConfigFailureListener 使用 configService.getConfi"
 date: "2024-06-12"
 category: "expertConsultation"
 description: "根据你遇到的问题，你在使用`NacosConfigFailureListener`并调用`configService.getConfig(dataId, group, 5000)`时收到403错误，这表明访问Nacos配置中心时权限不足。结合已有知识，我们可以分析并提供解决步骤。### 分析原因1."
 ---
 
 ## 用户问题 ： 
- 在NacosConfigFailureListener 使用 configService.getConfig(dataId, group, 5000);得到的结果是403，应该是没有权限调用nacos获取配置，应该如何解决呢 nacos-opensource 
+ 在NacosConfigFailureListener 使用 configService.getConfig(dataId, group, 5000);得到的结果是403，应该是没有权限调用nacos获取配置，应该如何解决呢  
 
 ---------------
 ## 专家官方解答 ：
@@ -63,7 +63,7 @@ description: "根据你遇到的问题，你在使用`NacosConfigFailureListener
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15256)给我们反馈。

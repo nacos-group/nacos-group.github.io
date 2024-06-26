@@ -1,13 +1,13 @@
 ---
 id: "question-history-15460"
-title: "客户端启动应用 报nacos com.alibaba.nacos.api.exception.NacosE nacos-opensource"
+title: "客户端启动应用 报nacos com.alibaba.nacos.api.exception.NacosE"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据您提供的异常信息`nacos com.alibaba.nacos.api.exception.NacosException: user not found!`，我们可以分析问题原因并提供相应的解决步骤。### 分析问题原因1. **认证信息错误**：这通常意味着应用程序尝试连接到Nacos服务器"
 ---
 
 ## 用户问题 ： 
- 客户端启动应用 报nacos com.alibaba.nacos.api.exception.NacosException: user not found! 异常 nacos-opensource 
+ 客户端启动应用 报nacos com.alibaba.nacos.api.exception.NacosException: user not found! 异常  
 
 ---------------
 ## 专家官方解答 ：

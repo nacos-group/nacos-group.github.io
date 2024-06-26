@@ -1,12 +1,18 @@
 ---
 id: "question-history-8292"
-title: "麒麟V10下，loongarch64 龙芯架构， librocksdbjni-linux64.so:无法打开共享对象文件 nacos-opensource"
+title: "麒麟V10下，loongarch64 龙芯架构， librocksdbjni-linux64.so:无法打"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据已知信息分析，您在麒麟V10系统（loongarch64龙芯架构）下遇到`librocksdbjni-linux64.so:无法打开共享对象文件`的问题，可能是由于以下原因：1. **不兼容性问题**：Nacos早期版本中使用的Jraft默认依赖的rocksdb库可能未针对LoongArch64"
 tags: ["麒麟V10","loongarch64","龙芯架构","librocksdbjni-linux64.so","无法打开共享对象文件"]
 keywords: ["麒麟V10","loongarch64","龙芯架构","librocksdbjni-linux64.so","无法打开共享对象文件"]
 ---
+
+## 用户问题 ： 
+ 麒麟V10下，loongarch64 龙芯架构， librocksdbjni-linux64.so:无法打开共享对象文件  
+
+---------------
+## 专家官方解答 ：
 
 根据已知信息分析，您在麒麟V10系统（loongarch64龙芯架构）下遇到`librocksdbjni-linux64.so:无法打开共享对象文件`的问题，可能是由于以下原因：
 
@@ -32,9 +38,23 @@ keywords: ["麒麟V10","loongarch64","龙芯架构","librocksdbjni-linux64.so","
 
 ### 解释说明
 以上步骤旨在通过软件升级、社区资源利用、自定义编译以及依赖管理来解决您遇到的共享对象文件无法打开的问题。每一步都是基于提高软件兼容性或直接解决架构不匹配的策略来设计的。如果问题依旧存在，可能需要更深入的技术探讨或等待官方对特定架构的正式支持。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：librocksdbjni-linux64.so:无法打开共享对象文件 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13631)给我们反馈。

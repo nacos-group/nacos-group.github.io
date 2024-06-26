@@ -1,13 +1,13 @@
 ---
 id: "question-history-15234"
-title: "如何对Nacos源码进行打包 nacos-opensource"
+title: "如何对Nacos源码进行打包"
 date: "2024-06-12"
 category: "expertConsultation"
 description: "要对Nacos源码进行打包，首先明确Nacos的代码结构包括client、server和console三个主要部分。根据Nacos开源协议（Apache License 2.0）的规定，您有权对Nacos源码进行修改和重新打包，但在进行这些操作时需确保遵守其许可证要求，比如保留原有版权和许可声明。以"
 ---
 
 ## 用户问题 ： 
- 如何对Nacos源码进行打包 nacos-opensource 
+ 如何对Nacos源码进行打包  
 
 ---------------
 ## 专家官方解答 ：
@@ -70,7 +70,7 @@ java -jar target/nacos-server-{version}.jar --spring.profiles.active=standalone
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15257)给我们反馈。

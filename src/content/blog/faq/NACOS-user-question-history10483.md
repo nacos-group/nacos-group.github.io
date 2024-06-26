@@ -1,6 +1,6 @@
 ---
 id: "question-history-10483"
-title: "#nacos的核心功能 nacos-opensource"
+title: "#nacos的核心功能"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos作为一款动态服务发现、配置管理和服务管理平台，其核心功能主要集中在以下几个方面：1. **服务发现与注册**：Nacos允许服务实例在启动时向Nacos Server注册自己的元数据信息（如IP地址、端口等），并维持心跳以保持服务的健康状态。客户端可通过Nacos查询到这些注册的服务列表，"
@@ -9,7 +9,7 @@ keywords: ["nacos","核心功能"]
 ---
 
 ## 用户问题 ： 
- #nacos的核心功能 nacos-opensource 
+ #nacos的核心功能  
 
 ---------------
 ## 专家官方解答 ：

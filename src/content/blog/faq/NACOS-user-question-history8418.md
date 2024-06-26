@@ -1,12 +1,18 @@
 ---
 id: "question-history-8418"
-title: "Nacos 大量报错：Request cannot be executed； I O reactor status: STOPPED nacos-opensource"
+title: "Nacos 大量报错：Request cannot be executed； I O reactor st"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，针对Nacos大量报错“Request cannot be executed；I/O reactor status: STOPPED”的问题，我们可以分析并提出解决方案如下：### 问题原因分析1. **网络问题**：Nacos-Client与Nacos-Server之间的网络连"
 tags: ["Nacos","大量报错","Request cannot be executed","I O reactor status","STOPPED"]
 keywords: ["Nacos","大量报错","Request cannot be executed","I O reactor status","STOPPED"]
 ---
+
+## 用户问题 ： 
+ Nacos 大量报错：Request cannot be executed； I O reactor status: STOPPED  
+
+---------------
+## 专家官方解答 ：
 
 根据提供的知识内容，针对Nacos大量报错“Request cannot be executed；I/O reactor status: STOPPED”的问题，我们可以分析并提出解决方案如下：
 
@@ -32,9 +38,27 @@ keywords: ["Nacos","大量报错","Request cannot be executed","I O reactor stat
 - 网络状况排查是为了确认报错是否由瞬时网络波动或配置不当导致的连接中断引起，确保通信链路的稳定性是处理这类I/O错误的关键步骤。
 
 以上步骤应能有效定位并解决Nacos中关于“I/O reactor status: STOPPED”报错的问题。如果问题依旧存在，可能需要更深入地检查Nacos的日志文件，或考虑是否有特定的网络策略（如防火墙规则）限制了通信。
+
+
+<font color="#949494">---------------</font> 
+
+
+## 参考链接 ：
+
+*专家经验：Request cannot be executed； I/O reactor status: STOPPED 
+ 
+ *专家经验：日志报错ERROR [DISTRO-INIT] load snapshot Nacos:Naming:v2:ClientData from 10.111.107.10:8878 failed. com.alibaba.nacos.core.distribu 
+ 
+ *专家经验：Nacos 内存占用过大 
+
+
+ <font color="#949494">---------------</font> 
+ 
+
+
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=13640)给我们反馈。

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15110"
-title: "nacos 有没有python客户端？ nacos-opensource"
+title: "nacos 有没有python客户端？"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "根据已有的知识内容，Nacos确实提供了Python客户端，它是社区贡献的一部分，当前状态标记为beta，这表明它可能处于测试阶段或功能相对不完全稳定。您可以通过以下链接查看和使用Python客户端：[Python客户端GitHub仓库](https://github.com/nacos-group"
 ---
 
 ## 用户问题 ： 
- nacos 有没有python客户端？ nacos-opensource 
+ nacos 有没有python客户端？  
 
 ---------------
 ## 专家官方解答 ：

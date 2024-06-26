@@ -1,13 +1,13 @@
 ---
 id: "question-history-15238"
-title: "nacos2.3.2的docker镜像包有吗 在哪里下载呢 nacos-opensource"
+title: "nacos2.3.2的docker镜像包有吗 在哪里下载呢"
 date: "2024-06-12"
 category: "expertConsultation"
 description: "根据我的知识库，关于Nacos 2.3.2的Docker镜像信息并未直接提及。但是，考虑到Nacos社区通常会为每个新版本提供Docker镜像支持，并且提到了存在arm架构的`silm`镜像如`v2.3.1-slim`，可以推测Nacos 2.3.2也应该有相应的Docker镜像。**查找与下载步骤"
 ---
 
 ## 用户问题 ： 
- nacos2.3.2的docker镜像包有吗 在哪里下载呢 nacos-opensource 
+ nacos2.3.2的docker镜像包有吗 在哪里下载呢  
 
 ---------------
 ## 专家官方解答 ：
@@ -51,7 +51,7 @@ description: "根据我的知识库，关于Nacos 2.3.2的Docker镜像信息并�
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15261)给我们反馈。

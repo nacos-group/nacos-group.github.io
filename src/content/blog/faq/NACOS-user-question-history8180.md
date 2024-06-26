@@ -1,6 +1,6 @@
 ---
 id: "question-history-8180"
-title: "can't find the nacos-mysql.sql file under nacos conf  nacos-opensource"
+title: "can't find the nacos-mysql.sql file under nacos conf "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos2.x版本中，`nacos-mysql.sql`文件已被重命名为`mysql-schema.sql`，因此在`nacos/conf`目录下直接寻找`nacos-mysql.sql`会找不到。请检查您的Nacos版本，如果是2.x版本或以上，您应该查找的是`mysql-schema.sql"
@@ -9,7 +9,7 @@ keywords: ["nacos-mysql.sql","nacos conf","找不到文件"]
 ---
 
 ## 用户问题 ： 
- can't find the nacos-mysql.sql file under nacos conf 无法在nacos conf下找到nacos-mysql.sql文件 nacos-opensource 
+ can't find the nacos-mysql.sql file under nacos conf 无法在nacos conf下找到nacos-mysql.sql文件  
 
 ---------------
 ## 专家官方解答 ：

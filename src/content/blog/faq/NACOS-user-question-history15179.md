@@ -1,13 +1,13 @@
 ---
 id: "question-history-15179"
-title: "nacos做注册中心 集成 feign 样例 nacos-opensource"
+title: "nacos做注册中心 集成 feign 样例"
 date: "2024-06-08"
 category: "expertConsultation"
 description: "为了帮助您集成Nacos作为注册中心以及与Feign的结合使用，我们首先需要明确几个关键点，基于这些我将尝试从我的知识库中提取相关信息来解答您的问题。### 分析问题原因1. **Nacos作为注册中心**：Nacos作为一个服务发现和配置管理平台，能够帮助微服务进行服务的注册与发现，这是微服务架构"
 ---
 
 ## 用户问题 ： 
- nacos做注册中心 集成 feign 样例 nacos-opensource 
+ nacos做注册中心 集成 feign 样例  
 
 ---------------
 ## 专家官方解答 ：
@@ -119,7 +119,7 @@ public class ConsumerController {
 
 ## <font color="#FF0000">答疑服务说明：</font> 
 
-本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://opensource.alibaba.com/chatBot) 。 咨询其他产品的的问题
+本内容经由技术专家审阅的用户问答的镜像生成，我们提供了<font color="#FF0000">专家智能答疑服务</font>，在<font color="#FF0000">页面的右下的浮窗”专家答疑“</font>。您也可以访问 : [全局专家答疑](https://answer.opensource.alibaba.com/docs/intro) 。 咨询其他产品的的问题
 
 ### 反馈
 如问答有错漏，欢迎点：[差评](https://ai.nacos.io/user/feedbackByEnhancerGradePOJOID?enhancerGradePOJOId=15199)给我们反馈。

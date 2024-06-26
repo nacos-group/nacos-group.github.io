@@ -1,6 +1,6 @@
 ---
 id: "question-history-8205"
-title: "为什么要在代码里面写拼接sql来实现crud nacos-opensource"
+title: "为什么要在代码里面写拼接sql来实现crud"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos选择在代码中直接写拼接SQL来实现CRUD操作的原因主要基于以下几点：1. **轻量化设计需求**：作为一款基础服务组件，Nacos追求高度的轻量化以确保其高性能和低资源消耗。引入ORM（如JPA）框架会增加项目的依赖复杂度和部署包大小，据估计会使得部署包大小扩大超过20%，这与Nacos"
@@ -9,7 +9,7 @@ keywords: ["crud","拼接sql"]
 ---
 
 ## 用户问题 ： 
- 为什么要在代码里面写拼接sql来实现crud nacos-opensource 
+ 为什么要在代码里面写拼接sql来实现crud  
 
 ---------------
 ## 专家官方解答 ：

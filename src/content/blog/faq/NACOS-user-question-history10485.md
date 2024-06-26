@@ -1,6 +1,6 @@
 ---
 id: "question-history-10485"
-title: "#Nacos的配置管理如何工作？ nacos-opensource"
+title: "#Nacos的配置管理如何工作？"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos的配置管理主要通过以下几个步骤工作：1. **初始化配置环境**：   - 在Spring Cloud应用中，首先通过Maven或Gradle添加`spring-cloud-starter-alibaba-nacos-config`依赖，确保与Spring Boot版本兼容。具体版本对应关"
@@ -9,7 +9,7 @@ keywords: ["Nacos","配置管理","工作原理"]
 ---
 
 ## 用户问题 ： 
- #Nacos的配置管理如何工作？ nacos-opensource 
+ #Nacos的配置管理如何工作？  
 
 ---------------
 ## 专家官方解答 ：

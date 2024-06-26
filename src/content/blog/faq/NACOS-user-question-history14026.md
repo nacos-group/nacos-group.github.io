@@ -1,6 +1,6 @@
 ---
 id: "question-history-14026"
-title: "Springboot 下 整合Dubbo Nacos实现微服务调用的详细方法 nacos-opensource"
+title: "Springboot 下 整合Dubbo Nacos实现微服务调用的详细方法"
 date: "2024-05-22"
 category: "expertConsultation"
 description: "整合Nacos与Dubbo到Spring Boot应用中，以实现微服务之间的调用，涉及几个关键步骤。虽然直接的“知识”内容未提供，但基于这些技术的通用实践，以下是详细的整合方法：### 1. 环境准备与依赖添加- **确保环境**：首先，确保你的开发环境中已安装Java开发工具包(JDK)和Mave"
@@ -9,7 +9,7 @@ keywords: ["Springboot","Dubbo","Nacos","微服务","调用","详细方法"]
 ---
 
 ## 用户问题 ： 
- Springboot 下 整合Dubbo Nacos实现微服务调用的详细方法 nacos-opensource 
+ Springboot 下 整合Dubbo Nacos实现微服务调用的详细方法  
 
 ---------------
 ## 专家官方解答 ：

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15029"
-title: "spring cloud alibaba 分布式事务 nacos-opensource"
+title: "spring cloud alibaba 分布式事务"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "关于您的问题「nacos-opensource spring cloud alibaba 分布式事务」，从提供的知识内容来看，没有直接涉及分布式事务管理的具体实现细节。但是，我们可以基于现有的信息，对如何在使用Nacos与Spring Cloud Alibaba的环境下考虑分布式事务管理做一些基本的"
 ---
 
 ## 用户问题 ： 
- spring cloud alibaba 分布式事务 nacos-opensource 
+ spring cloud alibaba 分布式事务  
 
 ---------------
 ## 专家官方解答 ：
