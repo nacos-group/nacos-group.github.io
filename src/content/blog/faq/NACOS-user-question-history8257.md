@@ -1,6 +1,6 @@
 ---
 id: "question-history-8257"
-title: "在只用OpenFeign远程调用时，怎么样可以忽略@FeignClient中填写的服务名称与已经注册到nacos服务上的服务名称大小写问题 nacos-opensource"
+title: "在只用OpenFeign远程调用时，怎么样可以忽略@FeignClient中填写的服务名称与已经注册到nacos服务上的服务名称大小写问题 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在使用OpenFeign进行远程调用时，若希望忽略@FeignClient注解中填写的服务名称与Nacos服务注册时的名称大小写不匹配问题，虽然直接通过Nacos或Feign的配置来解决这一特定大小写敏感性问题没有直接的官方支持，但我们可以通过一些间接的方式来绕过这个问题。以下是基于当前知识的分析与"

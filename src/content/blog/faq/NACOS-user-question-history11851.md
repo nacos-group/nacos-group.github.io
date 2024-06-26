@@ -1,6 +1,6 @@
 ---
 id: "question-history-11851"
-title: "alibaba nacos 认证绕过漏洞 怎么处理？ nacos-opensource"
+title: "alibaba nacos 认证绕过漏洞 怎么处理？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "处理 Alibaba Nacos 认证绕过漏洞的步骤如下：1. **确认当前Nacos版本**：首先，确定您使用的Nacos服务器版本。这一步至关重要，因为不同版本的处理方式有所不同。2. **针对低版本（低于1.4.1）**：   - **升级Nacos**：如果版本低于1.4.1，请立即升级到最"

@@ -1,6 +1,6 @@
 ---
 id: "question-history-8199"
-title: "Nacos默认密码，请问下使用内置数据库在单机情况下可以修改密码，但是集群下却不行 nacos-opensource"
+title: "Nacos默认密码，请问下使用内置数据库在单机情况下可以修改密码，但是集群下却不行 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos集群环境下，使用内置数据库（Derby）直接修改用户密码导致的问题，其根本原因在于Derby数据库作为嵌入式数据库，被设计为与Nacos集群紧密集成并通过Raft协议维护数据一致性。当在单机模式下，由于不存在分布式一致性的问题，直接修改Derby数据库中的用户密码是可行的，且修改效果立竿"

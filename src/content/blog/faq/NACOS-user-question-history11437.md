@@ -1,6 +1,6 @@
 ---
 id: "question-history-11437"
-title: "nacos和consul有什么区别 nacos-opensource"
+title: "nacos和consul有什么区别 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos与Consul都是流行的微服务基础设施组件，它们在服务发现、配置管理方面有着相似之处，但也存在一些关键差异：1. **背景与生态**：   - Nacos源自阿里巴巴，专为云原生环境设计，与Spring Cloud Alibaba体系紧密集成，非常适合使用Spring Boot/Sprin"

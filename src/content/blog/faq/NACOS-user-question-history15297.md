@@ -1,13 +1,13 @@
 ---
 id: "question-history-15297"
-title: "我利用naming.registerInstance(serviceName,groupName, ins nacos-opensource"
+title: "我利用naming.registerInstance(serviceName,groupName, ins "
 date: "2024-06-13"
 category: "expertConsultation"
 description: "根据您提供的问题和现有知识，这里尝试分析并解答您的疑问。**问题分析：**您提到使用`naming.registerInstance(serviceName, groupName, instance)`方法更新某个实例的权重时，发现有时生效有时不生效。根据Nacos的工作机制，这可能是由于以下几个原"
 ---
 
 ## 用户问题 ： 
- 我利用naming.registerInstance(serviceName,groupName, instance); 这个去更新某个实例的权重时 发现有时候会生效有时候不会生效 nacos-opensource 
+ 我利用naming.registerInstance(serviceName,groupName, instance); 这个去更新某个实例的权重时 发现有时候会生效有时候不会生效  
 
 ---------------
 ## 专家官方解答 ：

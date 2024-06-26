@@ -1,13 +1,13 @@
 ---
 id: "question-history-15659"
-title: "我现在有nacos源码，现在我要升级console-ui一些组件，升级完以后，如何打包jar包 nacos-opensource"
+title: "我现在有nacos源码，现在我要升级console-ui一些组件，升级完以后，如何打包jar包 "
 date: "2024-06-18"
 category: "expertConsultation"
 description: "虽然提供的知识内容主要聚焦于Nacos服务端的升级步骤，没有直接涉及到Nacos Console UI组件升级的具体流程，但我们可以根据一般的开源软件开发和打包流程，为您提供一个大概的指导思路。请注意，针对特定版本的Nacos Console UI组件升级，查阅其官方文档或GitHub仓库中的更新日"
 ---
 
 ## 用户问题 ： 
- 我现在有nacos源码，现在我要升级console-ui一些组件，升级完以后，如何打包jar包 nacos-opensource 
+ 我现在有nacos源码，现在我要升级console-ui一些组件，升级完以后，如何打包jar包  
 
 ---------------
 ## 专家官方解答 ：

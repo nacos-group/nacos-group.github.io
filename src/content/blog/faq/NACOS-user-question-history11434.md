@@ -1,6 +1,6 @@
 ---
 id: "question-history-11434"
-title: "nacos和erueka的区别 nacos-opensource"
+title: "nacos和erueka的区别 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos与Eureka之间的区别主要体现在以下几个方面：1. **开源背景与社区支持**：Nacos是由阿里巴巴开源的服务发现与注册工具，而Eureka则是Netflix开源的。这意味着两者背后的社区力量和技术生态存在差异。2. **功能集的广度**：Nacos不仅提供了服务发现与注册的基本功能，"

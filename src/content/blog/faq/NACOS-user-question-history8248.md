@@ -1,6 +1,6 @@
 ---
 id: "question-history-8248"
-title: "nacos 是否可以专门划分一个模块去编写对应编写springboot的适配呢 nacos-opensource"
+title: "nacos 是否可以专门划分一个模块去编写对应编写springboot的适配呢 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos确实可以专门为Spring Boot编写一个适配模块，实际上，Nacos社区已经提供了这样的支持。根据提供的知识内容，可以看到有以下关键点：1. **Nacos Spring Project**: Nacos团队为Spring框架提供了适配支持，相关的适配用例和代码可以在[https://"

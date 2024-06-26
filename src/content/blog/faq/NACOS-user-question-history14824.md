@@ -1,12 +1,12 @@
 ---
 id: "question-history-14824"
-title: "K8S No DataSource set nacos-opensource"
+title: "K8S No DataSource set "
 date: "2024-05-31"
 category: "expertConsultation"
-description: "在Kubernetes(K8s)环境中遇到`nacos-opensource K8S No DataSource set`问题，这通常意味着Nacos服务在尝试启动时无法正确连接到配置的数据库数据源。根据提供的知识内容，我们可以按照以下步骤分析并解决问题：1. **检查application.pro"
+description: "在Kubernetes(K8s)环境中遇到` K8S No DataSource set`问题，这通常意味着Nacos服务在尝试启动时无法正确连接到配置的数据库数据源。根据提供的知识内容，我们可以按照以下步骤分析并解决问题：1. **检查application.pro"
 ---
 
-在Kubernetes(K8s)环境中遇到`nacos-opensource K8S No DataSource set`问题，这通常意味着Nacos服务在尝试启动时无法正确连接到配置的数据库数据源。根据提供的知识内容，我们可以按照以下步骤分析并解决问题：
+在Kubernetes(K8s)环境中遇到` K8S No DataSource set`问题，这通常意味着Nacos服务在尝试启动时无法正确连接到配置的数据库数据源。根据提供的知识内容，我们可以按照以下步骤分析并解决问题：
 
 1. **检查application.properties配置**：
    - 确认在Nacos部署配置中（特别是对于K8s环境下的ConfigMap或Secret），`conf/application.properties`文件内的数据库连接信息（如jdbcUrl、用户名、密码）是否正确无误。错误的配置是导致无法连接数据库的常见原因。

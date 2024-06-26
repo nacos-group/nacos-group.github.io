@@ -1,6 +1,6 @@
 ---
 id: "question-history-13416"
-title: "nacos.core.auth.plugin.nacos.token.secret.key 配置建议 nacos-opensource"
+title: "nacos.core.auth.plugin.nacos.token.secret.key 配置建议 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在配置Nacos的鉴权参数`nacos.core.auth.plugin.nacos.token.secret.key`时，应遵循以下建议以确保系统的安全性：1. **生成强密码**: 使用一个自定义的Base64编码字符串作为该参数的值。此密钥将用于加密生成的令牌，确保其强度是至关重要的。原始密钥"

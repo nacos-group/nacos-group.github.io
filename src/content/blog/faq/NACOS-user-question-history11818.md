@@ -1,6 +1,6 @@
 ---
 id: "question-history-11818"
-title: "nacos 支持 pgSQL么？ nacos-opensource"
+title: "nacos 支持 pgSQL么？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos确实支持PostgreSQL（简称PgSQL）。从Nacos2.2版本开始，官方已经加入了对PostgreSQL、Oracle及达梦数据库的支持。为了在Nacos中使用PostgreSQL，你可以按照以下具体步骤操作：1. **检查插件是否存在**：   首先访问[Nacos的GitHub"

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15191"
-title: "nacos配置中心 nodejs语言样例 nacos-opensource"
+title: "nacos配置中心 nodejs语言样例 "
 date: "2024-06-08"
 category: "expertConsultation"
 description: "要获取Nacos配置中心在Node.js语言中的使用样例，您可以参考Nacos提供的官方SDK。根据我了解的知识中的信息，Nacos为Node.js提供了支持的SDK，您可以通过访问以下链接获取详细信息及示例代码：- Node.js SDK GitHub仓库：[https://github.com/"
 ---
 
 ## 用户问题 ： 
- nacos配置中心 nodejs语言样例 nacos-opensource 
+ nacos配置中心 nodejs语言样例  
 
 ---------------
 ## 专家官方解答 ：

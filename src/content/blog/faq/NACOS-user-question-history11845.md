@@ -1,6 +1,6 @@
 ---
 id: "question-history-11845"
-title: "nacos v1 core cluster nodes 的访问权限如何关闭？防止漏洞 nacos-opensource"
+title: "nacos v1 core cluster nodes 的访问权限如何关闭？防止漏洞 "
 date: "2024-05-28"
 category: "expertConsultation"
 description: "为了关闭 `/nacos/v1/core/cluster/nodes` 的访问权限以防止潜在的漏洞，可以遵循以下步骤：1. **版本升级**：   - 首先，确认当前Nacos服务器的版本。如果版本低于2.3.0，考虑升级Nacos到2.3.0或更高版本。这是因为从2.3.0版本开始，该接口要求具有"

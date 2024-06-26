@@ -1,6 +1,6 @@
 ---
 id: "question-history-11761"
-title: "spring cloud 服务注册的流程 nacos-opensource"
+title: "spring cloud 服务注册的流程 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos与Spring Cloud集成的服务注册流程中，主要涉及以下几个步骤：1. **环境准备**：   - 确保Nacos Server已安装并启动。根据Nacos官方文档或快速入门指南完成这一步骤。[[Nacos 快速入门](../quickstart/quick-start.md)]2."

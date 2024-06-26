@@ -1,13 +1,13 @@
 ---
 id: "question-history-15187"
-title: "nacos配置中心实时刷新的原理是什么？ nacos-opensource"
+title: "nacos配置中心实时刷新的原理是什么？ "
 date: "2024-06-08"
 category: "expertConsultation"
 description: "Nacos配置中心实时刷新的原理基于以下几个核心步骤与机制，这些信息可以从提供的知识内容中提炼出来：1. **配置存储与监听**: Nacos Server作为配置中心，负责存储所有配置信息。当应用启动并配置了Nacos Config客户端后，客户端会连接到Nacos Server并根据配置的`da"
 ---
 
 ## 用户问题 ： 
- nacos配置中心实时刷新的原理是什么？ nacos-opensource 
+ nacos配置中心实时刷新的原理是什么？  
 
 ---------------
 ## 专家官方解答 ：

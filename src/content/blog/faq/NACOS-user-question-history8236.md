@@ -1,6 +1,6 @@
 ---
 id: "question-history-8236"
-title: "请问如何计算合理jvm参数配置 nacos-opensource"
+title: "请问如何计算合理jvm参数配置 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在计算合理的JVM参数配置以优化Nacos客户端或服务端性能时，可以遵循以下步骤，结合已知的知识进行分析和调整：### 1. 分析应用需求与资源限制- **内存需求评估**：根据应用程序的业务逻辑复杂度、数据量大小以及Nacos的预期使用情况（如配置数量、服务注册数量）来预估所需的堆内存大小。通常，"

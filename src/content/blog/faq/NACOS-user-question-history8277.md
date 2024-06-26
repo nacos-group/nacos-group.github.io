@@ -1,6 +1,6 @@
 ---
 id: "question-history-8277"
-title: "we use different Nacos for test, pressure test, development environment, and use nacos namespace to distinguish different microservices, we also have configuration for canary environment by creating different Group。it's a huge amount of work to compare these configuration, I was wondering if there's any way to do a comparison for below request：1.Comparing in different Nacos environment and get an output.2.Comparing in a same Nacos environment for different Group and get an output nacos-opensource"
+title: "we use different Nacos for test, pressure test, development environment, and use nacos namespace to distinguish different microservices, we also have configuration for canary environment by creating different Group。it's a huge amount of work to compare these configuration, I was wondering if there's any way to do a comparison for below request：1.Comparing in different Nacos environment and get an output.2.Comparing in a same Nacos environment for different Group and get an output "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "面对您提出的关于在不同Nacos环境及同一环境不同Group间进行配置比较的需求，虽然直接的解决方案未在提供的参考内容中明确给出，但我可以根据Nacos的功能特性为您提供一些建议性的思路：### 分析问题的原因1. **多环境配置分散**：您提到在测试、压力测试、开发环境中使用了不同的Nacos实例"

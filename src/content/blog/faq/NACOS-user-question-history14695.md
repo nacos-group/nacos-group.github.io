@@ -1,6 +1,6 @@
 ---
 id: "question-history-14695"
-title: "Nacos 服务端升级到2.3.2，客户端需要升级么，客户端是2.0.3 nacos-opensource"
+title: "Nacos 服务端升级到2.3.2，客户端需要升级么，客户端是2.0.3 "
 date: "2024-05-29"
 category: "expertConsultation"
 description: "根据已知信息，Nacos服务端2.X版本能够兼容所有Nacos2.X的客户端版本，以及从Nacos1.2.0开始的所有客户端版本。您提到的服务端升级到了2.3.2版本，而客户端是2.0.3版本，由于2.0.3属于Nacos2.X系列的客户端版本，因此根据兼容性规则，您的客户端2.0.3无需升级即可继"

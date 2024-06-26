@@ -1,6 +1,6 @@
 ---
 id: "question-history-11438"
-title: "nacos和apollo有什么区别 nacos-opensource"
+title: "nacos和apollo有什么区别 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos与Apollo都是阿里巴巴开源的配置管理工具，但它们的设计目标和应用场景有所差异：**Nacos（动态服务发现、配置管理和服务管理平台）**：- **服务发现**：Nacos重点支持微服务架构中的服务发现与健康检查，能够帮助实现服务的自动注册、发现与故障转移。- **配置管理**：提供中心"

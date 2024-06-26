@@ -1,6 +1,6 @@
 ---
 id: "question-history-11186"
-title: "nacos-opensource 为什么Nacos不使用ORM框架访问数据库 nacos-opensource"
+title: " 为什么Nacos不使用ORM框架访问数据库 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos不使用ORM框架访问数据库的原因在于其设计原则和性能考量。具体分析如下：1. **轻量化与高性能需求**：Nacos作为一款基础组件，主要服务于微服务架构中的服务发现、配置管理等功能，其设计追求轻量级与高性能。引入ORM框架，如JPA，虽然能简化数据库操作，但会显著增加项目的依赖复杂度和部"

@@ -1,6 +1,6 @@
 ---
 id: "question-history-8458"
-title: "Caused by: java.io.IOException: Failed to bind to address 0.0.0.0 0.0.0.0:9849 Caused by: io.grpc.netty.shaded.io.netty.channel.unix.Errors$NativeIoException: bind(..) failed: Address already in use 启动nacos 2.3.0 版本 standalone模式 为什么会提示grpc端口占用？ org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.alibaba.nacos.naming.core.v2.service.impl.PersistentClientOperationServiceImpl]: Constructor threw exception; nested exception is java.lang.UnsatisfiedLinkError:  tmp librocksdbjni6292792729875964513.so: libstdc  .so.6: cannot open shared object file: No such file or directory  各位大神  K8s容器部署 启动报这个错误怎么解决 nacos-opensource"
+title: "Caused by: java.io.IOException: Failed to bind to address 0.0.0.0 0.0.0.0:9849 Caused by: io.grpc.netty.shaded.io.netty.channel.unix.Errors$NativeIoException: bind(..) failed: Address already in use 启动nacos 2.3.0 版本 standalone模式 为什么会提示grpc端口占用？ org.springframework.beans.BeanInstantiationException: Failed to instantiate [com.alibaba.nacos.naming.core.v2.service.impl.PersistentClientOperationServiceImpl]: Constructor threw exception; nested exception is java.lang.UnsatisfiedLinkError:  tmp librocksdbjni6292792729875964513.so: libstdc  .so.6: cannot open shared object file: No such file or directory  各位大神  K8s容器部署 启动报这个错误怎么解决 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的错误信息，你遇到的问题主要分为两部分：### 1. gRPC端口占用问题（9849端口）错误信息表明你在尝试启动Nacos 2.3.0 standalone模式时，gRPC端口9849已经被其他应用或服务占用了。这是由于Nacos在启动时会尝试绑定到指定的端口，但该端口已被使用，导致启动失"

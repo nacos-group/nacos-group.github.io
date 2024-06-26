@@ -1,13 +1,13 @@
 ---
 id: "question-history-15153"
-title: "nacos client  支持https 配置样例 nacos-opensource"
+title: "nacos client  支持https 配置样例 "
 date: "2024-06-07"
 category: "expertConsultation"
 description: "要配置Nacos Client以支持HTTPS，您可以参考以下步骤进行设置，这里以Java客户端为例：### 配置HTTPS支持1. **确定HTTPS可用性**     确保您的Nacos Server已经配置并启用了HTTPS服务。这通常涉及到服务器证书的安装与配置，确保Nacos Server"
 ---
 
 ## 用户问题 ： 
- nacos client  支持https 配置样例 nacos-opensource 
+ nacos client  支持https 配置样例  
 
 ---------------
 ## 专家官方解答 ：

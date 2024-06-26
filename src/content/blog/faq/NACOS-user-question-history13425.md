@@ -1,6 +1,6 @@
 ---
 id: "question-history-13425"
-title: "nacos2.2.3 开启鉴权配置、权限认证的具体流程 nacos-opensource"
+title: "nacos2.2.3 开启鉴权配置、权限认证的具体流程 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要在Nacos 2.2.3版本中开启鉴权配置并进行权限认证，具体流程如下：### 1. 确定部署环境- **非Docker环境**：直接编辑`application.properties`文件。- **Docker环境**：通过环境变量配置。- **Kubernetes (k8s)环境**：通过配置"

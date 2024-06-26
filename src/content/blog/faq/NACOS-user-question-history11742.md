@@ -1,6 +1,6 @@
 ---
 id: "question-history-11742"
-title: "开防火墙时nacos要开哪些端口？ nacos-opensource"
+title: "开防火墙时nacos要开哪些端口？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在为Nacos配置防火墙时，需要开放以下端口以确保其正常运行和服务发现、配置管理等功能不受影响：1. **主HTTP端口**（默认8848）：这是Nacos客户端、控制台以及OpenAPI使用的端口，用于处理HTTP请求。2. **客户端gRPC端口**（默认9848）：用于客户端通过gRPC协议向"

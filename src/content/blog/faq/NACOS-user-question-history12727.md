@@ -1,6 +1,6 @@
 ---
 id: "question-history-12727"
-title: "nacos  如何管理页面设置密码？ nacos-opensource"
+title: "nacos  如何管理页面设置密码？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos管理页面设置密码，主要涉及初始化时的密码设置、集群初始化后的密码修改以及新增用户。以下是详细步骤：### 初始化集群时设置默认用户密码1. **修改默认密码脚本**：在Nacos初始化前，编辑`$nacos.home/conf/`目录下的`mysql-schema.sql`（或`derb"

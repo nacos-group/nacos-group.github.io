@@ -1,13 +1,13 @@
 ---
 id: "question-history-15286"
-title: "在nacos的客户端 中的 实例中 有个上线 下线的按钮 这俩按钮可以通过sdk调用吗？ nacos-opensource"
+title: "在nacos的客户端 中的 实例中 有个上线 下线的按钮 这俩按钮可以通过sdk调用吗？ "
 date: "2024-06-13"
 category: "expertConsultation"
 description: "可以的，Nacos的客户端SDK支持实例的上线与下线操作。这主要通过调用Nacos提供的OpenAPI来实现。### 如何通过SDK调用上线与下线1. **上线实例**：如果需要通过代码上线一个实例，可以通过调用Nacos客户端的相应API来更新实例的`enabled`字段为`true`。这实质上是"
 ---
 
 ## 用户问题 ： 
- 在nacos的客户端 中的 实例中 有个上线 下线的按钮 这俩按钮可以通过sdk调用吗？ nacos-opensource 
+ 在nacos的客户端 中的 实例中 有个上线 下线的按钮 这俩按钮可以通过sdk调用吗？  
 
 ---------------
 ## 专家官方解答 ：

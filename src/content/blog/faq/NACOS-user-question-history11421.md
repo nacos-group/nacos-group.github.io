@@ -1,6 +1,6 @@
 ---
 id: "question-history-11421"
-title: "如何实现Dubbo集成Nacos作为注册中心 nacos-opensource"
+title: "如何实现Dubbo集成Nacos作为注册中心 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要实现Dubbo集成Nacos作为注册中心，您可以遵循以下步骤操作：1. **添加依赖**：首先确保您的项目中引入了Dubbo和Nacos的相关依赖。对于Maven项目，您需要在`pom.xml`文件中添加如下依赖：   ```xml   !-- Dubbo Spring Boot Starter "

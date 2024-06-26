@@ -1,13 +1,13 @@
 ---
 id: "question-history-15445"
-title: "nacos支持spring boot 3.x吗 nacos-opensource"
+title: "nacos支持spring boot 3.x吗 "
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据我掌握的知识，Nacos官方文档和示例项目主要针对Spring Boot 2.x的适配进行了说明。在提供的参考资料中并没有直接提及Nacos是否支持Spring Boot 3.x的明确信息。考虑到技术生态的更新迭代，虽然没有直接证据显示支持情况，但Nacos作为流行的配置管理与服务发现组件，通常"
 ---
 
 ## 用户问题 ： 
- nacos支持spring boot 3.x吗 nacos-opensource 
+ nacos支持spring boot 3.x吗  
 
 ---------------
 ## 专家官方解答 ：

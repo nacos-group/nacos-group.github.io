@@ -1,6 +1,6 @@
 ---
 id: "question-history-8274"
-title: "Nacos2.0.3 data source does not support pgsql nacos-opensource"
+title: "Nacos2.0.3 data source does not support pgsql "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos 2.0.3版本中，官方确实还未直接支持PostgreSQL数据库，这与您遇到的“Nacos2.0.3 data source does not support pgsql”的问题相吻合。根据 我了解的知识 中的信息，Nacos是从2.2版本开始才正式支持PostgreSQL的。因此，若"

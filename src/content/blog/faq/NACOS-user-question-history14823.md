@@ -1,6 +1,6 @@
 ---
 id: "question-history-14823"
-title: "springcloud alibaba 和nacos版本对应 nacos-opensource"
+title: "springcloud alibaba 和nacos版本对应 "
 date: "2024-05-31"
 category: "expertConsultation"
 description: "为了获取Spring Cloud Alibaba与Nacos版本之间的对应关系，您可以直接参考SCA团队维护的官方信息。根据提供的知识，建议您采取以下步骤：1. 访问SCA官方网站的版本说明页面，网址为：[https://sca.aliyun.com/docs/2023/overview/versi"

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15282"
-title: "SpringCloud2021.0.5.0适用什么版本的Nacos服务端程序 nacos-opensource"
+title: "SpringCloud2021.0.5.0适用什么版本的Nacos服务端程序 "
 date: "2024-06-13"
 category: "expertConsultation"
 description: "为了解答这个问题，我们首先需要查询Spring Cloud 2021.0.5.0推荐使用的Nacos客户端版本，然后根据Nacos客户端与服务端的兼容性来确定适用的服务端版本。根据我了解的知识，Nacos客户端的版本选择与Spring Boot的版本紧密相关。虽然直接信息未提及Spring Clou"
 ---
 
 ## 用户问题 ： 
- SpringCloud2021.0.5.0适用什么版本的Nacos服务端程序 nacos-opensource 
+ SpringCloud2021.0.5.0适用什么版本的Nacos服务端程序  
 
 ---------------
 ## 专家官方解答 ：

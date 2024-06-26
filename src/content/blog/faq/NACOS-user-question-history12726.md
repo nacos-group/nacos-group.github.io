@@ -1,6 +1,6 @@
 ---
 id: "question-history-12726"
-title: "nacos docker 单机模式derby怎么配置？ nacos-opensource"
+title: "nacos docker 单机模式derby怎么配置？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要配置Nacos Docker单机模式使用Derby作为嵌入式数据库，你可以遵循以下步骤操作：1. **准备Nacos Docker镜像**：   - 根据Nacos开源社区提供的信息，确保你使用的Nacos Docker镜像是支持arm架构的，如果需要，可以选择带有`slim`标识的镜像版本，例如"

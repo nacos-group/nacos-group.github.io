@@ -1,6 +1,6 @@
 ---
 id: "question-history-8193"
-title: "nacos不支持跨namespace获取数据 nacos-opensource"
+title: "nacos不支持跨namespace获取数据 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos确实不支持跨namespace直接获取数据。这是由于命名空间（namespace）设计初衷是为了实现资源的强制隔离，比如区分不同的环境（开发、测试、生产）或不同租户之间的数据。因此，在一个命名空间中无法直接查看或操作另一个命名空间的数据。### 原因分析- **命名空间的隔离性**：Nac"

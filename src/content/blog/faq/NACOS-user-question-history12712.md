@@ -1,6 +1,6 @@
 ---
 id: "question-history-12712"
-title: "nacos2.3数据库兼容postgresql的步骤 nacos-opensource"
+title: "nacos2.3数据库兼容postgresql的步骤 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "为了使Nacos 2.3版本兼容PostgreSQL数据库，您可以遵循以下步骤操作：1. **检查插件与版本兼容性**：   首先，确认Nacos 2.3版本支持PostgreSQL。根据提供的知识，Nacos从2.2版本开始支持PostgreSQL，因此2.3版本是支持的。您可以在[Nacos官方"

@@ -1,6 +1,6 @@
 ---
 id: "question-history-8216"
-title: "关于SpringCloud和nacos版本匹配的问题，Springboot版本为2.3.12.RELEASE、springcloud版本为Hoxton.SR12。版本最高对应到Spring Cloud Alibaba 2.2.10-RC1 对应的nacos为2.2.0，能否将nacos升级到2.2.1以上。 nacos-opensource"
+title: "关于SpringCloud和nacos版本匹配的问题，Springboot版本为2.3.12.RELEASE、springcloud版本为Hoxton.SR12。版本最高对应到Spring Cloud Alibaba 2.2.10-RC1 对应的nacos为2.2.0，能否将nacos升级到2.2.1以上。 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据已有的知识信息，我们可以分析如下：1. **Spring Cloud Alibaba与Nacos版本兼容性**：您提到Spring Cloud版本为Hoxton.SR12，这对应Spring Cloud Alibaba 2.2.10-RC1，而这个版本对应的Nacos服务端版本为2.2.0。2."

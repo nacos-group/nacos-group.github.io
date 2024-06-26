@@ -1,6 +1,6 @@
 ---
 id: "question-history-13381"
-title: "vm与k8s混合部署情况下，如何使用nacos来解决服务发现的问题,k8s侧部署的应用，注册到nacos上的是podip还是其他？ nacos-opensource"
+title: "vm与k8s混合部署情况下，如何使用nacos来解决服务发现的问题,k8s侧部署的应用，注册到nacos上的是podip还是其他？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos开源项目(vm与k8s混合部署)的场景下，解决服务发现的问题，特别是针对K8s部署的应用注册到Nacos上的识别问题，关键在于理解Kubernetes环境的特殊性以及如何适配Nacos的服务注册机制。### 分析问题原因1. **K8s环境特性**：Kubernetes环境中，Pod I"

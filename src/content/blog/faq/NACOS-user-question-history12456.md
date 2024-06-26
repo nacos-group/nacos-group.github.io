@@ -1,6 +1,6 @@
 ---
 id: "question-history-12456"
-title: "nacos日志打开debug nacos-opensource"
+title: "nacos日志打开debug "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要打开Nacos的日志调试模式（Debug级别），请按照以下步骤操作：### 对于Nacos Server1. **动态修改**：通过API接口实时调整特定日志模块的级别为DEBUG。   ```shell   curl -X POST '$nacos_host:8848/nacos/v1/ns/o"

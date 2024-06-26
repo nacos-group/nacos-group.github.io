@@ -1,13 +1,13 @@
 ---
 id: "question-history-15753"
-title: "nacos重启命令 nacos-opensource"
+title: "nacos重启命令 "
 date: "2024-06-19"
 category: "expertConsultation"
 description: "要重启Nacos服务器，根据您所使用的操作系统，可以参照以下步骤操作：### 对于Linux/Unix/Mac系统：1. 打开终端并导航到Nacos的bin目录下。如果您按照之前的教程安装并通过命令行启动Nacos，这个路径通常会是类似`/path/to/nacos-server-$version/"
 ---
 
 ## 用户问题 ： 
- nacos重启命令 nacos-opensource 
+ nacos重启命令  
 
 ---------------
 ## 专家官方解答 ：

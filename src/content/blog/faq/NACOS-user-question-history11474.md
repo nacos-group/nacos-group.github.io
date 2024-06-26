@@ -1,6 +1,6 @@
 ---
 id: "question-history-11474"
-title: "nacos配置 nacos-opensource"
+title: "nacos配置 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "针对Nacos配置的问题，我们可以从几个方面进行分析和解决：### 1. Nacos与Spring框架的适配当涉及到Nacos与Spring Boot、Spring Cloud的集成时，确保选择了正确的适配组件。根据Nacos官方提供的信息，可以参考以下仓库来获取适配用例和指导：- [Nacos S"

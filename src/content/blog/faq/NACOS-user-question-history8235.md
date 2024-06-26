@@ -1,6 +1,6 @@
 ---
 id: "question-history-8235"
-title: "How to Init Configuration of Microservice by Yaml Files nacos-opensource"
+title: "How to Init Configuration of Microservice by Yaml Files "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "To initialize the configuration of a microservice using YAML files in Nacos, follow these steps based on the provided knowledge:1. **Understand YAML C"

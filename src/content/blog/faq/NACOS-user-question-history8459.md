@@ -1,6 +1,6 @@
 ---
 id: "question-history-8459"
-title: "请教下 nacos服务端 这里的节点同时展示了IPV4和IPV6 怎么只展示IPV6 谢谢 nacos-opensource"
+title: "请教下 nacos服务端 这里的节点同时展示了IPV4和IPV6 怎么只展示IPV6 谢谢 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要使得Nacos服务端仅展示IPv6地址，您可以依据以下步骤操作：1. **确认Nacos Server版本**：确保您的Nacos Server版本是在2.1或之后的版本，因为这些版本支持自动识别IPv4和IPv6环境，且能够更容易地配置以优先使用IPv6。2. **配置强制使用IPv6**：即使"

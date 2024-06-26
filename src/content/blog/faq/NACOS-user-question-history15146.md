@@ -1,13 +1,13 @@
 ---
 id: "question-history-15146"
-title: "docker 部署 nacos 配置样例 nacos-opensource"
+title: "docker 部署 nacos 配置样例 "
 date: "2024-06-07"
 category: "expertConsultation"
 description: "为了帮助您配置Nacos通过Docker方式进行部署的样例，我们可以依据提供的知识进行详细解析与指导。以下是基于Nacos-Docker部署并配置鉴权的详细步骤：### 1. 分析问题原因根据您的需求，您希望了解如何使用Docker部署Nacos时配置鉴权。Nacos的鉴权主要是通过特定的配置参数来"
 ---
 
 ## 用户问题 ： 
- docker 部署 nacos 配置样例 nacos-opensource 
+ docker 部署 nacos 配置样例  
 
 ---------------
 ## 专家官方解答 ：

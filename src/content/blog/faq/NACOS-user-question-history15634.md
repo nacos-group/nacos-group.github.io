@@ -1,18 +1,18 @@
 ---
 id: "question-history-15634"
-title: "服务端根据nacos.core.auth.plugin.nacos.token.secret.key生成的 nacos-opensource"
+title: "服务端根据nacos.core.auth.plugin.nacos.token.secret.key生成的 "
 date: "2024-06-18"
 category: "expertConsultation"
-description: "nacos-opensource 服务端根据`nacos.core.auth.plugin.nacos.token.secret.key`生成的accessToken确实有过期时间。根据提供的知识内容，在服务端配置中可以通过`nacos.core.auth.plugin.nacos.token.ex"
+description: " 服务端根据`nacos.core.auth.plugin.nacos.token.secret.key`生成的accessToken确实有过期时间。根据提供的知识内容，在服务端配置中可以通过`nacos.core.auth.plugin.nacos.token.ex"
 ---
 
 ## 用户问题 ： 
- 服务端根据nacos.core.auth.plugin.nacos.token.secret.key生成的accessToken有过期时间吗？ nacos-opensource 
+ 服务端根据nacos.core.auth.plugin.nacos.token.secret.key生成的accessToken有过期时间吗？  
 
 ---------------
 ## 专家官方解答 ：
 
-nacos-opensource 服务端根据`nacos.core.auth.plugin.nacos.token.secret.key`生成的accessToken确实有过期时间。根据提供的知识内容，在服务端配置中可以通过`nacos.core.auth.plugin.nacos.token.expire.seconds`来设定这个过期时间，其默认单位是秒。这意味着，一旦accessToken被生成并提供给客户端使用，它将在指定的秒数后失效。
+ 服务端根据`nacos.core.auth.plugin.nacos.token.secret.key`生成的accessToken确实有过期时间。根据提供的知识内容，在服务端配置中可以通过`nacos.core.auth.plugin.nacos.token.expire.seconds`来设定这个过期时间，其默认单位是秒。这意味着，一旦accessToken被生成并提供给客户端使用，它将在指定的秒数后失效。
 
 具体来说，如果服务端配置如下所示：
 ```properties

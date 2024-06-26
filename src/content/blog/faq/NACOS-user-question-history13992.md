@@ -1,6 +1,6 @@
 ---
 id: "question-history-13992"
-title: "nacos怎么读 nacos-opensource"
+title: "nacos怎么读 "
 date: "2024-05-22"
 category: "expertConsultation"
 description: "Nacos 读作 nay-kos。它是阿里巴巴开源的一款用于动态服务发现、配置管理和服务管理的平台，旨在简化云原生应用的构建与管理。"

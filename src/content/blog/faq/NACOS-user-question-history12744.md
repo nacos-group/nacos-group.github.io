@@ -1,6 +1,6 @@
 ---
 id: "question-history-12744"
-title: "com.alibaba.nacos.naming.updater 线程不释放怎么处理？ nacos-opensource"
+title: "com.alibaba.nacos.naming.updater 线程不释放怎么处理？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "首先，根据提供的知识内容，我们可以分析`com.alibaba.nacos.naming.updater`线程不释放的问题可能由以下几个原因造成：1. **Nacos-Client实例创建过多**：每个NacosNamingService实例都会有一个或多个此类线程用于更新服务缓存，过多的Nacos"

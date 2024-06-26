@@ -1,14 +1,14 @@
 ---
 id: "question-history-8258"
-title: "Misleading caused: no ips found for cluster DEFAULT in service DEFAULT_GROUP@@nacos.test.3; is reported when running example CURL to register service nacos-opensource"
+title: "Misleading caused: no ips found for cluster DEFAULT in service DEFAULT_GROUP@@nacos.test.3; is reported when running example CURL to register service "
 date: "2024-05-17"
 category: "expertConsultation"
-description: "根据提供的知识内容，针对问题“nacos-opensource Misleading 'caused: no ips found for cluster DEFAULT in service DEFAULT_GROUP@@nacos.test.3;' when running example CUR"
+description: "根据提供的知识内容，针对问题“ Misleading 'caused: no ips found for cluster DEFAULT in service DEFAULT_GROUP@@nacos.test.3;' when running example CUR"
 tags: ["Misleading","no ips found","cluster DEFAULT","service DEFAULT_GROUP@@nacos.test.3","CURL","register service"]
 keywords: ["Misleading","no ips found","cluster DEFAULT","service DEFAULT_GROUP@@nacos.test.3","CURL","register service"]
 ---
 
-根据提供的知识内容，针对问题“nacos-opensource Misleading 'caused: no ips found for cluster DEFAULT in service DEFAULT_GROUP@@nacos.test.3;' when running example CURL to register service”，我们可以分析和解答如下：
+根据提供的知识内容，针对问题“ Misleading 'caused: no ips found for cluster DEFAULT in service DEFAULT_GROUP@@nacos.test.3;' when running example CURL to register service”，我们可以分析和解答如下：
 
 **问题分析：**
 1. 错误信息表明在尝试通过CURL命令注册服务时，Nacos报告了一个误导性的错误：“没有为集群DEFAULT在服务DEFAULT_GROUP@@nacos.test.3中找到IP”。

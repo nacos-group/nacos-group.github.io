@@ -1,20 +1,20 @@
 ---
 id: "question-history-14999"
-title: "启动成功但是访问不了管理界面 nacos-opensource"
+title: "启动成功但是访问不了管理界面 "
 date: "2024-06-05"
 category: "expertConsultation"
-description: "根据您提供的信息和 知识: nacos-opensource   中的内容，我们首先确认了 Nacos 已经成功启动，并且在日志中看到了预期的成功启动信息以及一些正常运行的日志条目，比如 Nacos started successfully in cluster mode. use xxx stor"
+description: "根据您提供的信息和 知识:    中的内容，我们首先确认了 Nacos 已经成功启动，并且在日志中看到了预期的成功启动信息以及一些正常运行的日志条目，比如 Nacos started successfully in cluster mode. use xxx stor"
 ---
 
 ## 用户问题 ： 
- 启动成功但是访问不了管理界面 nacos-opensource 
+ 启动成功但是访问不了管理界面  
 
 ---------------
 ## 专家官方解答 ：
 
-根据您提供的信息和 {{{知识: nacos-opensource  }}} 中的内容，我们首先确认了 Nacos 已经成功启动，并且在日志中看到了预期的成功启动信息以及一些正常运行的日志条目，比如 "Nacos started successfully in cluster mode. use xxx storage" 以及 "upgrade check result false" 和 "Check whether close double write"，这些都是表明 Nacos 正常运行的迹象。
+根据您提供的信息和 {{{知识:   }}} 中的内容，我们首先确认了 Nacos 已经成功启动，并且在日志中看到了预期的成功启动信息以及一些正常运行的日志条目，比如 "Nacos started successfully in cluster mode. use xxx storage" 以及 "upgrade check result false" 和 "Check whether close double write"，这些都是表明 Nacos 正常运行的迹象。
 
-针对您的问题：**nacos-opensource 启动成功但是访问不了管理界面**，我们可以按照以下步骤进行排查：
+针对您的问题：** 启动成功但是访问不了管理界面**，我们可以按照以下步骤进行排查：
 
 1. **检查访问地址和端口**：
    确认您正在尝试访问的 URL 是否正确。默认情况下，Nacos 的管理界面可以通过 `http://localhost:8848/nacos` 访问。请确保您使用的 IP 地址（如果是远程访问）和端口号与 Nacos 配置的一致。

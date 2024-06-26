@@ -1,6 +1,6 @@
 ---
 id: "question-history-11839"
-title: "nacos配置达梦数据库 nacos-opensource"
+title: "nacos配置达梦数据库 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "为了配置Nacos使用达梦数据库，我们可以依据以下步骤操作：1. **确认Nacos版本**：确保您的Nacos版本是2.2或更高版本，因为从2.2版本开始，Nacos官方才开始支持包括达梦在内的多种数据库。2. **检查已有插件**：访问[Nacos插件仓库](https://github.com"

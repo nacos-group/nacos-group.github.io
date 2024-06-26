@@ -1,13 +1,13 @@
 ---
 id: "question-history-15617"
-title: "nacos配置修改后，客户端logback线程一直创建，导致oom。nacos client 版本：2.0 nacos-opensource"
+title: "nacos配置修改后，客户端logback线程一直创建，导致oom。nacos client 版本：2.0 "
 date: "2024-06-18"
 category: "expertConsultation"
 description: "根据已有的知识，我们可以分析您遇到的问题：nacos配置修改后，客户端logback线程一直创建，导致OOM（Out Of Memory）的现象。您使用的nacos client版本为2.0.4，服务端版本为2.1.0。尽管直接的知识点没有完全覆盖您的具体问题，我们可以尝试从已有的信息中推导可能的原"
 ---
 
 ## 用户问题 ： 
- nacos配置修改后，客户端logback线程一直创建，导致oom。nacos client 版本：2.0.4，服务端版本2.1.0 nacos-opensource 
+ nacos配置修改后，客户端logback线程一直创建，导致oom。nacos client 版本：2.0.4，服务端版本2.1.0  
 
 ---------------
 ## 专家官方解答 ：

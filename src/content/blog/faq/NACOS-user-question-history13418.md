@@ -1,6 +1,6 @@
 ---
 id: "question-history-13418"
-title: "怎么创建新的用户和密码？ nacos-opensource"
+title: "怎么创建新的用户和密码？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中创建新的用户和密码，可以通过以下步骤进行：### 控制台操作1. **登录Nacos控制台**：首先，使用管理员账号（默认为`nacos`/`nacos`）登录Nacos控制台。2. **进入用户管理**：在控制台导航至`权限控制`  `用户管理`页面。3. **添加新用户**：点击`"

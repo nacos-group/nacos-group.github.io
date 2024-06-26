@@ -1,6 +1,6 @@
 ---
 id: "question-history-14693"
-title: "如何本地不能访问到server端的9848端口，启动会有什么效果 nacos-opensource"
+title: "如何本地不能访问到server端的9848端口，启动会有什么效果 "
 date: "2024-05-29"
 category: "expertConsultation"
 description: "当在本地无法访问到Nacos Server端的9848端口时，这可能是由于以下几个原因造成的：1. **防火墙限制**：本地或服务器的防火墙可能阻止了9848端口的出入流量。2. **端口未正确开放**：确保Nacos Server配置中已正确设置了`server.port`，并且gRPC端口（默认"

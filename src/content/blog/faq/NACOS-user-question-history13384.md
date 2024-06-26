@@ -1,14 +1,14 @@
 ---
 id: "question-history-13384"
-title: "无法连接服务器上的nacos，但是本地能登入访问nacos服务网站 nacos-opensource"
+title: "无法连接服务器上的nacos，但是本地能登入访问nacos服务网站 "
 date: "2024-05-17"
 category: "expertConsultation"
-description: "根据提供的知识内容，针对问题“nacos-opensource 无法连接服务器上的nacos，但是本地能登入访问nacos服务网站”，我们可以分析并提出解决步骤如下：### 分析问题原因1. **网络配置差异**：本地能够访问Nacos服务网站，但服务器上无法连接，可能是因为服务器与Nacos服务器"
+description: "根据提供的知识内容，针对问题“ 无法连接服务器上的nacos，但是本地能登入访问nacos服务网站”，我们可以分析并提出解决步骤如下：### 分析问题原因1. **网络配置差异**：本地能够访问Nacos服务网站，但服务器上无法连接，可能是因为服务器与Nacos服务器"
 tags: ["无法连接","服务器","nacos","本地能登入","访问","nacos服务网站"]
 keywords: ["无法连接","服务器","nacos","本地能登入","访问","nacos服务网站"]
 ---
 
-根据提供的知识内容，针对问题“nacos-opensource 无法连接服务器上的nacos，但是本地能登入访问nacos服务网站”，我们可以分析并提出解决步骤如下：
+根据提供的知识内容，针对问题“ 无法连接服务器上的nacos，但是本地能登入访问nacos服务网站”，我们可以分析并提出解决步骤如下：
 
 ### 分析问题原因
 
@@ -25,7 +25,7 @@ keywords: ["无法连接","服务器","nacos","本地能登入","访问","nacos�
     
 2. **审查Nacos客户端配置**：
     - 在服务器的应用程序配置文件中，确认Nacos服务器地址、端口、命名空间等参数是否与Nacos服务实际配置相匹配。
-    - 参考[如何获取Nacos-Client的日志？](https://aliyuque.antfin.com/ozb6sn/nacos-opensource/ci3i97p07s73tewg)定位并检查Nacos-Client日志，确认实际使用的配置及是否存在错误信息。
+    - 参考[如何获取Nacos-Client的日志？](https://aliyuque.antfin.com/ozb6sn//ci3i97p07s73tewg)定位并检查Nacos-Client日志，确认实际使用的配置及是否存在错误信息。
     
 3. **验证Nacos服务端配置**：
     - 确认Nacos服务端是否正确配置了允许外部访问的安全策略，包括但不限于防火墙规则、网络ACL设置。

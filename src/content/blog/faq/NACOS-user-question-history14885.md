@@ -1,13 +1,13 @@
 ---
 id: "question-history-14885"
-title: "nacos怎么通过融合CoreDNS把注册的所有服务下发到DNS上？ nacos-opensource"
+title: "nacos怎么通过融合CoreDNS把注册的所有服务下发到DNS上？ "
 date: "2024-06-02"
 category: "expertConsultation"
 description: "要实现Nacos通过融合CoreDNS将注册的所有服务下发到DNS上，可以遵循以下逻辑进行分析与操作，尽管直接的步骤在提供的知识中未明确给出，但我们可以基于Nacos与DNS集成的基本原理推导出可能的解决方案。### 分析问题背景1. **Nacos作为服务发现平台**：Nacos作为一个服务发现与"
 ---
 
 ## 用户问题 ： 
- nacos怎么通过融合CoreDNS把注册的所有服务下发到DNS上？ nacos-opensource 
+ nacos怎么通过融合CoreDNS把注册的所有服务下发到DNS上？  
 
 ---------------
 ## 专家官方解答 ：

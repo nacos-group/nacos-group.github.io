@@ -1,18 +1,18 @@
 ---
 id: "question-history-15645"
-title: ". startup.sh -m standalone命令没有启动成功 nacos-opensource"
+title: ". startup.sh -m standalone命令没有启动成功 "
 date: "2024-06-18"
 category: "expertConsultation"
-description: "根据您提供的问题“nacos-opensource ./startup.sh -m standalone命令没有启动成功”，结合已有知识，我们可以按以下步骤分析和尝试解决问题：### 分析原因1. **命令参数**: 确认 `-m standalone` 参数是否正确无误，此参数意在以单机模式启动 "
+description: "根据您提供的问题“ ./startup.sh -m standalone命令没有启动成功”，结合已有知识，我们可以按以下步骤分析和尝试解决问题：### 分析原因1. **命令参数**: 确认 `-m standalone` 参数是否正确无误，此参数意在以单机模式启动 "
 ---
 
 ## 用户问题 ： 
- . startup.sh -m standalone命令没有启动成功 nacos-opensource 
+ . startup.sh -m standalone命令没有启动成功  
 
 ---------------
 ## 专家官方解答 ：
 
-根据您提供的问题“nacos-opensource ./startup.sh -m standalone命令没有启动成功”，结合已有知识，我们可以按以下步骤分析和尝试解决问题：
+根据您提供的问题“ ./startup.sh -m standalone命令没有启动成功”，结合已有知识，我们可以按以下步骤分析和尝试解决问题：
 
 ### 分析原因
 1. **命令参数**: 确认 `-m standalone` 参数是否正确无误，此参数意在以单机模式启动 Nacos，通常这是没有问题的，但确保它符合您的预期配置。

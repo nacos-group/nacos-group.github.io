@@ -1,6 +1,6 @@
 ---
 id: "question-history-8295"
-title: "自建用户用于nacos客户端应用验证时，如果对namespace开启只读将也无法注册该空间的服务 nacos-opensource"
+title: "自建用户用于nacos客户端应用验证时，如果对namespace开启只读将也无法注册该空间的服务 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "当自建用户用于Nacos客户端应用验证时，如果对特定Namespace开启了只读权限，这将导致客户端无法在该命名空间下注册服务。这是因为只读权限限制了写入操作，包括服务注册、配置更新等。根据提供的知识内容，解决此问题的方法如下：1. **使用不同权限的用户**：   - 鉴于Nacos支持为不同操作"

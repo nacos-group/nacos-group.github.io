@@ -1,6 +1,6 @@
 ---
 id: "question-history-11836"
-title: "nacos 是否有推空保护机制？ nacos-opensource"
+title: "nacos 是否有推空保护机制？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中确实存在推空保护机制，该机制主要是通过客户端配置来实现的。为了启用客户端的推空保护功能，你需要设置参数 `namingPushEmptyProtection=true`。这主要适用于使用Java语言新版本客户端的情况，能够避免因推送空配置而导致的问题。然而，由于不同客户端可能存在兼容性"

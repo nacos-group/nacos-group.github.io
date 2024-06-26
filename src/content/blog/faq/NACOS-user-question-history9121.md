@@ -1,6 +1,6 @@
 ---
 id: "question-history-9121"
-title: "请问大佬有遇到这样的问题嘛，grpc服务，服务实例已经销毁，但nacos上服务一直不下线。 nacos-opensource"
+title: "请问大佬有遇到这样的问题嘛，grpc服务，服务实例已经销毁，但nacos上服务一直不下线。 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据已知知识，对于grpc服务实例已经销毁但Nacos上服务一直不下线的问题，原因可能涉及以下几个方面：1. **心跳问题**：服务实例可能仍在发送心跳到Nacos Server，即使服务实际已销毁。这可能是因为进程未彻底关闭，或有其他进程在代理注册此服务并持续发送心跳。2. **非持久化服务特性*"

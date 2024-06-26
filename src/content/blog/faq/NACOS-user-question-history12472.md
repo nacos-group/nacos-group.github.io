@@ -1,6 +1,6 @@
 ---
 id: "question-history-12472"
-title: "Nacos 可以更新到什么版本 nacos-opensource"
+title: "Nacos 可以更新到什么版本 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos的更新版本选择取决于您当前使用的客户端版本和服务端需求。根据提供的信息，有以下几点需要注意：1. **Nacos 1.X与2.X的API变化**：Nacos2.0引入了gRPC协议，很多API相对于1.X有了根本性变化，但为了兼容性，Nacos2.X服务端依然支持Nacos1.X的客户端和"

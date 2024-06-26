@@ -1,13 +1,13 @@
 ---
 id: "question-history-14988"
-title: "2.1.2 docker如何拉取下来 nacos-opensource"
+title: "2.1.2 docker如何拉取下来 "
 date: "2024-06-05"
 category: "expertConsultation"
 description: "为了获取Nacos 2.1.2的Docker镜像并将其拉取下来，我们可以遵循以下步骤：### 分析问题根据您的需求，您希望基于Nacos开源项目使用Docker部署Nacos Server 2.1.2版本。从提供的知识中，我们知道存在一个关于Nacos-Docker的参考内容，它提供了稳定版本的Do"
 ---
 
 ## 用户问题 ： 
- 2.1.2 docker如何拉取下来 nacos-opensource 
+ 2.1.2 docker如何拉取下来  
 
 ---------------
 ## 专家官方解答 ：

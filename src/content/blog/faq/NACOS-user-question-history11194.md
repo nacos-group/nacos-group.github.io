@@ -1,6 +1,6 @@
 ---
 id: "question-history-11194"
-title: "nacos 能否支持达梦数据库？ nacos-opensource"
+title: "nacos 能否支持达梦数据库？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos确实支持达梦数据库。这一支持是从Nacos 2.2版本开始的，因此，如果您想要在Nacos中使用达梦数据库，您需要确保运行的是Nacos 2.2或更高版本。为了帮助您配置Nacos以使用达梦数据库，以下是基于提供的知识内容整理的具体步骤：1. **检查插件是否存在**：   首先，访问[N"

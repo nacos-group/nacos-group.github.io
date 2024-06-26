@@ -1,6 +1,6 @@
 ---
 id: "question-history-8285"
-title: "Nacos Docker可以配置Ldap进行权限认证吗？期望在docker中配置环境变量，启用ldap进行身份认证 nacos-opensource"
+title: "Nacos Docker可以配置Ldap进行权限认证吗？期望在docker中配置环境变量，启用ldap进行身份认证 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据当前提供的知识内容，虽然没有直接提及Nacos Docker环境中配置LDAP进行权限认证的步骤，但我们可以基于Nacos的一般配置原则和Docker容器化部署的特点，推理出一个大致的配置方法。请注意，以下步骤是基于通用理解和推理，具体实现可能需要根据Nacos的最新文档和实际部署环境调整。##"

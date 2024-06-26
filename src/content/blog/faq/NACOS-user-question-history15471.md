@@ -1,13 +1,13 @@
 ---
 id: "question-history-15471"
-title: "windows部署nacos2.3.2 无法开启鉴权 nacos-opensource"
+title: "windows部署nacos2.3.2 无法开启鉴权 "
 date: "2024-06-17"
 category: "expertConsultation"
 description: "针对您的问题，首先我们分析一下原因：在Windows环境下部署Nacos 2.3.2版本时，如果遇到无法开启鉴权的问题，这可能是由于配置不当导致的。根据我了解的知识中提供的信息，无论部署环境如何，开启鉴权的核心在于正确配置相关的参数。对于Nacos 2.3.2，您需要确保以下几个关键参数已经被正确设"
 ---
 
 ## 用户问题 ： 
- windows部署nacos2.3.2 无法开启鉴权 nacos-opensource 
+ windows部署nacos2.3.2 无法开启鉴权  
 
 ---------------
 ## 专家官方解答 ：

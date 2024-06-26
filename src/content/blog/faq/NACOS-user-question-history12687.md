@@ -1,6 +1,6 @@
 ---
 id: "question-history-12687"
-title: "nacos的 端口有哪些 以及端口的协议 nacos-opensource"
+title: "nacos的 端口有哪些 以及端口的协议 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos暴露的端口及其协议包括：1. **主端口 (HTTP)**: 默认为8848，用于客户端、控制台以及OpenAPI的HTTP通信。2. **客户端gRPC端口**: 默认为主端口+1000，即9848，用于客户端通过gRPC协议向服务端发起连接和请求。3. **服务端gRPC端口**: 默"

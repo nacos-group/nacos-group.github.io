@@ -1,6 +1,6 @@
 ---
 id: "question-history-13476"
-title: "nacos如何启动 nacos-opensource"
+title: "nacos如何启动 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "启动Nacos服务端取决于您所处的环境（非Docker或Docker环境）以及是否需要启用鉴权。以下是根据您的需求整理的启动步骤：### 非Docker环境下启动Nacos并启用鉴权：1. **修改配置文件**：打开Nacos的`application.properties`文件，进行以下修改以启用"

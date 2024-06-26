@@ -1,13 +1,13 @@
 ---
 id: "question-history-15284"
-title: "nacos如何集成达梦 nacos-opensource"
+title: "nacos如何集成达梦 "
 date: "2024-06-13"
 category: "expertConsultation"
 description: "要集成Nacos与达梦数据库，首先我们确认Nacos官方自2.2版本起支持了包括达梦在内的多种数据库。以下是根据Nacos官方文档指导的集成步骤：**步骤分析与操作指南：**1. **检查Nacos版本**：   确保你的Nacos服务器版本是2.2或以上，因为达梦数据库的支持是从这个版本开始引入的"
 ---
 
 ## 用户问题 ： 
- nacos如何集成达梦 nacos-opensource 
+ nacos如何集成达梦  
 
 ---------------
 ## 专家官方解答 ：

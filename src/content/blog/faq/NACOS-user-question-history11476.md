@@ -1,6 +1,6 @@
 ---
 id: "question-history-11476"
-title: "nacos拿不到配置 nacos-opensource"
+title: "nacos拿不到配置 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在遇到Nacos拿不到配置的问题时，我们可以按照以下步骤进行排查和解决：1. **检查网络连接与配置信息**：   - 首先确认Nacos客户端与服务器之间的网络是否畅通无阻，检查日志中是否存在连接失败或超时的错误信息。同时，验证Nacos服务器的地址、端口以及命名空间、group、dataId等配"

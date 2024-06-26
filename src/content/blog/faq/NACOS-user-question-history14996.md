@@ -1,13 +1,13 @@
 ---
 id: "question-history-14996"
-title: "集群部署nacos，需要配置哪些？怎么配置？ nacos-opensource"
+title: "集群部署nacos，需要配置哪些？怎么配置？ "
 date: "2024-06-05"
 category: "expertConsultation"
 description: "为了集群部署Nacos并配置鉴权，您可以遵循以下步骤操作：### 1. 分析问题原因集群部署Nacos并启用鉴权主要是为了提升系统的安全性和管理能力，确保只有经过授权的用户或服务能访问Nacos提供的配置和服务发现功能。这涉及到正确配置Nacos的相关参数以开启鉴权机制，并确保集群中所有节点的配置一"
 ---
 
 ## 用户问题 ： 
- 集群部署nacos，需要配置哪些？怎么配置？ nacos-opensource 
+ 集群部署nacos，需要配置哪些？怎么配置？  
 
 ---------------
 ## 专家官方解答 ：

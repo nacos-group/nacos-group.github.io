@@ -1,6 +1,6 @@
 ---
 id: "question-history-14595"
-title: "nacos 和MSE 有什么区别？ nacos-opensource"
+title: "nacos 和MSE 有什么区别？ "
 date: "2024-05-27"
 category: "expertConsultation"
 description: "Nacos和微服务引擎(MSE)的主要区别在于它们的范畴和服务内容。Nacos是一个由阿里巴巴开源的动态服务发现、配置管理和服务管理平台，专注于提供服务发现、健康检查、配置管理等核心功能，适用于构建云原生应用。以下是Nacos的核心特性摘要：1. **服务发现与健康检查**：支持DNS和RPC服务发"

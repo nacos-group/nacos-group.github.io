@@ -1,6 +1,6 @@
 ---
 id: "question-history-11864"
-title: "nacos配置中心支持的功能有哪些 nacos-opensource"
+title: "nacos配置中心支持的功能有哪些 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos配置中心作为一款强大的开源工具，支持以下核心功能：1. **动态配置管理**：   - **集中管理配置**：允许开发者在Nacos Server集中管理所有环境的应用配置，实现配置的统一托管与维护。   - **动态配置更新**：支持配置的实时更新和推送，当配置发生变化时，Nacos能够"

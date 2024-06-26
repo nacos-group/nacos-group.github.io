@@ -1,13 +1,13 @@
 ---
 id: "question-history-15639"
-title: "Nacos 如何获取你的数据集 nacos-opensource"
+title: "Nacos 如何获取你的数据集 "
 date: "2024-06-18"
 category: "expertConsultation"
 description: "要获取Nacos的数据集，特别是监控数据，您可以遵循以下步骤操作：### 1. **了解监控数据暴露方式**根据Nacos的设计，它使用Micrometer框架暴露监控指标。这意味着Nacos服务器能够以标准化的方式公开其内部状态和性能指标，但默认并不直接“推送”这些数据到外部监控系统。### 2."
 ---
 
 ## 用户问题 ： 
- Nacos 如何获取你的数据集 nacos-opensource 
+ Nacos 如何获取你的数据集  
 
 ---------------
 ## 专家官方解答 ：

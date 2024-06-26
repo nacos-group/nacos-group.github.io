@@ -1,13 +1,13 @@
 ---
 id: "question-history-15237"
-title: "nacos如果读取配置失败，如何在springboot中监听到 nacos-opensource"
+title: "nacos如果读取配置失败，如何在springboot中监听到 "
 date: "2024-06-12"
 category: "expertConsultation"
 description: "在Spring Boot应用中，如果Nacos读取配置失败，我们可以通过集成Nacos的配置管理功能并实现配置监听来及时捕获这类问题。根据提供的知识，这里是如何在Spring Boot中设置Nacos配置监听以感知配置读取失败的步骤：### 问题分析1. **原因定位**：Nacos配置读取失败可能"
 ---
 
 ## 用户问题 ： 
- nacos如果读取配置失败，如何在springboot中监听到 nacos-opensource 
+ nacos如果读取配置失败，如何在springboot中监听到  
 
 ---------------
 ## 专家官方解答 ：

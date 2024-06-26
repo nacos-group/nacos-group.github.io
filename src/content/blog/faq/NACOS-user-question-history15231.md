@@ -1,13 +1,13 @@
 ---
 id: "question-history-15231"
-title: "容器部署的nacos集群升级需要注意哪些 nacos-opensource"
+title: "容器部署的nacos集群升级需要注意哪些 "
 date: "2024-06-12"
 category: "expertConsultation"
 description: "在容器部署的Nacos集群升级过程中，需注意以下几个关键点，依据提供的知识内容，这里主要针对从Nacos 1.x版本升级到Nacos 2.x版本的情况进行说明：### 1. 数据结构变化与双写准备由于Nacos 1.x和Nacos 2.x之间数据结构发生变化，为确保平滑升级，需要在升级前准备好数据的"
 ---
 
 ## 用户问题 ： 
- 容器部署的nacos集群升级需要注意哪些 nacos-opensource 
+ 容器部署的nacos集群升级需要注意哪些  
 
 ---------------
 ## 专家官方解答 ：

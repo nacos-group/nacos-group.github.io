@@ -1,6 +1,6 @@
 ---
 id: "question-history-8233"
-title: "nacos客戶端和服務端的版本兼容性 nacos-opensource"
+title: "nacos客戶端和服務端的版本兼容性 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos客户端与服务端的版本兼容性遵循以下规则：1. **Nacos 2.X 服务端**：   - 兼容所有 **Nacos 2.X** 的客户端版本。   - 同时兼容 **Nacos 1.2.0** 及之后的所有 **Nacos 1.X** 客户端版本。2. **Nacos 1.X 服务端**"

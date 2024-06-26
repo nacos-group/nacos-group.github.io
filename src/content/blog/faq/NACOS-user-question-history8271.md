@@ -1,6 +1,6 @@
 ---
 id: "question-history-8271"
-title: "#io.grpc.netty.shaded.io.netty.util.internal.OutOfDirectMemoryError: failed to allocate 2097152 byte(s) of direct memory (used: 501219607, max: 503316480) nacos-opensource"
+title: "#io.grpc.netty.shaded.io.netty.util.internal.OutOfDirectMemoryError: failed to allocate 2097152 byte(s) of direct memory (used: 501219607, max: 503316480) "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，针对您遇到的`io.grpc.netty.shaded.io.netty.util.internal.OutOfDirectMemoryError`错误，其主要原因是堆外内存分配失败，已使用的直接内存达到了501,219,607字节，而最大允许的是503,316,480字节。具体"

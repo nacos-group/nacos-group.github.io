@@ -1,6 +1,6 @@
 ---
 id: "question-history-13388"
-title: "nacos client 1.4.6有没有bug？ nacos-opensource"
+title: "nacos client 1.4.6有没有bug？ "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据已有的知识内容，没有直接提及Nacos Client 1.4.6版本存在特定的bug。但是，从第一篇参考内容中我们可以了解到，Nacos在不同版本之间存在显著的变化，特别是关于UDP推送功能的调整。在Nacos 1.X系列中，UDP推送可能存在不稳定性和资源消耗问题，且在Nacos 2.0之后，"

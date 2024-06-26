@@ -1,13 +1,13 @@
 ---
 id: "question-history-14991"
-title: "nacos 2.2.3版本 查看配置文件的历史版本的接口 是针对MySQL数据库的sql 改成postgr nacos-opensource"
+title: "nacos 2.2.3版本 查看配置文件的历史版本的接口 是针对MySQL数据库的sql 改成postgr "
 date: "2024-06-05"
 category: "expertConsultation"
 description: "首先，根据您的问题描述，您在使用Nacos 2.2.3版本时，尝试查看配置文件的历史版本接口，遇到了由MySQL SQL语句转换为PostgreSQL后执行报错的情况。这是因为MySQL和PostgreSQL虽然功能相似，但在SQL语法上存在一些差异。### 分析问题原因1. **SQL语法不兼容*"
 ---
 
 ## 用户问题 ： 
- nacos 2.2.3版本 查看配置文件的历史版本的接口 是针对MySQL数据库的sql 改成postgresql后 sql语句报错 该怎么解决 nacos-opensource 
+ nacos 2.2.3版本 查看配置文件的历史版本的接口 是针对MySQL数据库的sql 改成postgresql后 sql语句报错 该怎么解决  
 
 ---------------
 ## 专家官方解答 ：

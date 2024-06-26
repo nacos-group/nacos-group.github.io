@@ -1,13 +1,13 @@
 ---
 id: "question-history-15666"
-title: "网关和nacos实现动态路由监听更新 nacos-opensource"
+title: "网关和nacos实现动态路由监听更新 "
 date: "2024-06-18"
 category: "expertConsultation"
 description: "要实现在Nacos网关（这里假设为Spring Cloud Gateway或Nginx+Lua等支持动态配置更新的网关）与Nacos配置中心之间动态路由监听更新，我们可以分几个步骤来进行，尽管提供的参考内容未直接涉及网关配置的动态更新，但我们可以基于Nacos配置管理的基本原理来推导解决方案。###"
 ---
 
 ## 用户问题 ： 
- 网关和nacos实现动态路由监听更新 nacos-opensource 
+ 网关和nacos实现动态路由监听更新  
 
 ---------------
 ## 专家官方解答 ：

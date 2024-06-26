@@ -1,6 +1,6 @@
 ---
 id: "question-history-13484"
-title: "nacos9848端口干嘛的 nacos-opensource"
+title: "nacos9848端口干嘛的 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos的9848端口是专门用于客户端gRPC请求服务端的端口。这意味着，当Nacos客户端需要通过gRPC协议与Nacos服务端进行通信时，它会连接到这个端口发起请求和服务订阅等操作。此端口默认是在Nacos服务端的主端口（通常是8848）基础上加上1000的偏移量得到的。### 原因分析：根据"

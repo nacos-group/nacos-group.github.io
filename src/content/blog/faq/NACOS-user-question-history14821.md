@@ -1,6 +1,6 @@
 ---
 id: "question-history-14821"
-title: "springboot 集成nacos 服务日志报out of date data received, old-t:1717063808644,new-t:1717063720455这个报错 nacos-opensource"
+title: "springboot 集成nacos 服务日志报out of date data received, old-t:1717063808644,new-t:1717063720455这个报错 "
 date: "2024-05-31"
 category: "expertConsultation"
 description: "根据已有的知识，该报错`out of date data received, old-t:1717063808644,new-t:1717063720455`表明您的Spring Boot应用在集成Nacos作为服务发现与配置管理时，收到了过时的数据，这可能是由于客户端和服务端的时间不一致或者网络延"

@@ -1,6 +1,6 @@
 ---
 id: "question-history-8293"
-title: "当权重为0时候，是否可能将这个实例作为备选backup，即当其它服务都不可用状态下的备选，类似nginx的backup。 nacos-opensource"
+title: "当权重为0时候，是否可能将这个实例作为备选backup，即当其它服务都不可用状态下的备选，类似nginx的backup。 "
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中，当权重为0的实例确实可以视为一种备选的backup机制，类似于Nginx的backup配置。根据Nacos的设计，即使实例的权重设置为0，它依然会被Nacos-Client的`getAllInstances`方法发现，并且能够在应用程序层面决定是否使用这些实例。这意味着，尽管这些实例"
