@@ -44,7 +44,7 @@ const FunctionalCompare = (props) => {
       ref={functionalCompareWrapperRef}
       class="functional-compare-wrapper top-[100px] flex flex-col justify-center items-center mt-10"
     >
-      <div class="collapse bg-base-200 collapse-arrow bg-gray-02">
+      <div id='collapse-fold' class="collapse bg-base-200 collapse-arrow bg-gray-02">
       <input type="checkbox" checked={isCollapsed} onChange={() => setIsCollapsed(!isCollapsed)} />
         <div class="collapse-title text-2xl font-normal">不同版本功能对比</div>
         <div class="collapse-content">
@@ -56,7 +56,7 @@ const FunctionalCompare = (props) => {
         </div>
       </div>
       {/* <!-- 吸底 --> */}
-      {isSticky && isCollapsed && <div class='table table-fixed sticky-table-bottom bg-gray-02 mt-6 px-4'>
+      {isSticky && isCollapsed && <div id='sticky-table-bottom' class='table table-fixed bg-gray-02 mt-6 px-4'>
         <table class='w-full'>
           <tr>
             <th class="col1 border-0" />
