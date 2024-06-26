@@ -8,25 +8,30 @@ const {
   mobileText,
   link,
   target,
+  display,
 } = TOPBAR;
 ---
+{
+  display && (
+    <div
+      class={`alert-bar w-full  h-12 flex align-center justify-between top-0 bg-cover bg-[url('https://img.alicdn.com/imgextra/i3/O1CN010OMCW91rMde4sifaA_!!6000000005617-0-tps-828-52.jpg')] md:bg-[url('https://img.alicdn.com/imgextra/i4/O1CN01wkq3Nl1O9FCjTbQNk_!!6000000001662-0-tps-2880-96.jpg')]`}
+      client:load
+    >
+    <div class="md:text-base text-sm m-auto leading-6 ">
+      <span class=" text-blue-03 mr-4 md:mr-6 opacity-30 hidden md:inline-block" >{`</>`}</span>
+      <span class="alert-text hidden md:inline-block bg-gradient-to-r from-gray-01 to-gray-10 font-medium" set:html={text} />
+      <span class="alert-text bg-gradient-to-r from-gray-01 to-gray-10 text-blue-03  md:hidden font-medium" set:html={mobileText} />
+      <a href={link} target={target} class="mx-auto flex justify-center md:inline text-blue-07 font-medium md:ml-4 no-underline">{t('commmon.header.alert.link')}</a>
+    </div>
+      <button
+        class="close-button text-blue-03 bg-transparent border-none cursor-pointer text-lg leading-6 mr-1 md:mr-4"
+      >
+        &times;
+      </button>
+    </div>
+)
+}
 
-<div
-  class={`alert-bar w-full  h-12 flex align-center justify-between top-0 bg-cover bg-[url('https://img.alicdn.com/imgextra/i3/O1CN010OMCW91rMde4sifaA_!!6000000005617-0-tps-828-52.jpg')] md:bg-[url('https://img.alicdn.com/imgextra/i4/O1CN01wkq3Nl1O9FCjTbQNk_!!6000000001662-0-tps-2880-96.jpg')]`}
-  client:load
->
-<div class="md:text-base text-sm m-auto leading-6 ">
-  <span class=" text-blue-03 mr-4 md:mr-6 opacity-30 hidden md:inline-block" >{`</>`}</span>
-  <span class="alert-text hidden md:inline-block bg-gradient-to-r from-gray-01 to-gray-10 font-medium" set:html={text} />
-  <span class="alert-text bg-gradient-to-r from-gray-01 to-gray-10 text-blue-03  md:hidden font-medium" set:html={mobileText} />
-  <a href={link} target={target} class="mx-auto flex justify-center md:inline text-blue-07 font-medium md:ml-4 no-underline">{t('commmon.header.alert.link')}</a>
-</div>
-  <button
-    class="close-button text-blue-03 bg-transparent border-none cursor-pointer text-lg leading-6 mr-1 md:mr-4"
-  >
-    &times;
-  </button>
-</div>
 
 <script>
   // handleAlertClose函数用于处理提示条的关闭逻辑。
