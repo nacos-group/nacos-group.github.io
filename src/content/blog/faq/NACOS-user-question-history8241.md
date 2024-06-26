@@ -1,6 +1,6 @@
 ---
 id: "question-history-8241"
-title: "请问可以直接排除spring-cloud-starter-alibaba-nacos-discovery里的nacos-client-2.2.0,直接引入 nacos-client-2.2.4吗, 需要升级nacos-server的版本吗 "
+title: "请问可以直接排除spring-cloud-starter-alibaba-nacos-discovery里的nacos-client-2.2.0,直接引入 nacos-client-2.2.4吗, 需要升级nacos-server的版本吗 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，我们可以分析您的问题如下：1. **Nacos客户端与服务端的兼容性**：Nacos2.2.4客户端属于Nacos2.X系列，根据兼容性规则，Nacos2.X的服务端版本能够兼容所有的Nacos2.X的客户端版本，以及Nacos1.2.0之后的所有客户端版本。这意味着您直接引入n"

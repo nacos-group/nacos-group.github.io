@@ -1,6 +1,6 @@
 ---
 id: "question-history-11741"
-title: "nacos默认端口号是多少？ "
+title: "nacos默认端口号是多少？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos的默认端口号是8848，这个端口是主端口，用于客户端、控制台及OpenAPI的HTTP通信。此外，Nacos还会根据该主端口自动计算出其他辅助端口，但8848是最为核心的默认端口。[[来源](https://nacos.io/docs/latest/guide/admin/cluster-"

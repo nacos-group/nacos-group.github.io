@@ -1,6 +1,6 @@
 ---
 id: "question-history-13984"
-title: "nacos 配置样例 "
+title: "nacos 配置样例 nacos-opensource"
 date: "2024-05-22"
 category: "expertConsultation"
 description: "要了解Nacos的配置样例，我们可以从几个维度来探讨，包括Nacos与Spring框架、Spring Boot、以及Spring Cloud的适配，同时也会简要提及Nacos的配置日志管理。### Nacos与Spring框架适配样例Nacos为Spring生态提供了良好的支持。对于基本的Sprin"

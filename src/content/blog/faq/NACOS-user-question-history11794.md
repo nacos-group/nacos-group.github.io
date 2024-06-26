@@ -1,6 +1,6 @@
 ---
 id: "question-history-11794"
-title: "nacos 分布式配置中心搭建的具体步骤 "
+title: "nacos 分布式配置中心搭建的具体步骤 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "为了搭建Nacos作为分布式配置中心，您可以遵循以下具体步骤，这些步骤基于提供的Nacos与Spring集成的知识：### 1. 准备Nacos Server- **下载与启动Nacos Server**    首先，根据[Nacos快速入门](../quickstart/quick-start.m"

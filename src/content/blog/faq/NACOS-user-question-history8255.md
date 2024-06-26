@@ -1,6 +1,6 @@
 ---
 id: "question-history-8255"
-title: "Actual scenario:During log monitoring after the network intrusion, I can obtain the access_token and other information carried by the access, and then I can obtain the account password of the configuration information under the configuration center "
+title: "Actual scenario:During log monitoring after the network intrusion, I can obtain the access_token and other information carried by the access, and then I can obtain the account password of the configuration information under the configuration center nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "基于提供的知识，我们可以分析您的情况如下：1. **问题背景理解**：您在进行网络入侵日志监控后，发现可以获取到访问时携带的access_token及其它信息，并进一步获取配置中心下配置信息的账户密码。2. **原因分析**：根据提及的错误信息，特别是在Nacos开源项目环境下，如果遇到与密钥长度或"

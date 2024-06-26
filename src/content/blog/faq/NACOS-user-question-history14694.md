@@ -1,6 +1,6 @@
 ---
 id: "question-history-14694"
-title: "Error creating bean with name 'embeddedDumpService': Invocation of init method failed "
+title: "Error creating bean with name 'embeddedDumpService': Invocation of init method failed nacos-opensource"
 date: "2024-05-29"
 category: "expertConsultation"
 description: "根据提供的知识内容，我们可以分析您遇到的问题`Error creating bean with name 'embeddedDumpService': Invocation of init method failed`可能与Nacos在启动过程中尝试初始化某个bean（在这里是`embeddedDu"

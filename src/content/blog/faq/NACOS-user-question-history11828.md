@@ -1,6 +1,6 @@
 ---
 id: "question-history-11828"
-title: "nacos单机(standalone)启动命令 "
+title: "nacos单机(standalone)启动命令 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos单机(standalone)模式下启动命令如下：对于Linux/Unix/Mac系统：1. 打开终端，导航到Nacos的bin目录下。2. 执行启动脚本：`sh startup.sh -m standalone`如果在Ubuntu系统上遇到运行脚本时报错，可以尝试使用bash命令执行：`"

@@ -1,6 +1,6 @@
 ---
 id: "question-history-13529"
-title: "nacos_config 中users 表中 username：nacos password的加密方式是什么 "
+title: "nacos_config 中users 表中 username：nacos password的加密方式是什么 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos的`users`表中，username为`nacos`的password加密方式是使用BCrypt算法进行加密的。Nacos采用这种加密方式来确保密码的安全性。如果您需要修改或设置密码，应该先使用BCrypt算法对新密码进行加密，然后再进行相应的更新操作。如果您想要获取BCrypt加密的"

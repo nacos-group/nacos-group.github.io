@@ -1,6 +1,6 @@
 ---
 id: "question-history-13486"
-title: "windows 安装nacos "
+title: "windows 安装nacos nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要在Windows上安装Nacos，请遵循以下步骤：1. **环境准备**:   - 确保您的系统满足以下要求：     - 64位操作系统（支持Windows）。     - 64位JDK 1.8+。如果您尚未安装，请从[这里](http://www.oracle.com/technetwork/"

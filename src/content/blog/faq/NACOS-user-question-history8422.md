@@ -1,6 +1,6 @@
 ---
 id: "question-history-8422"
-title: "nacos2.3.0 docker开鉴权 项目确yml连不上 但是换成nacos1.4.1就可以为什么 "
+title: "nacos2.3.0 docker开鉴权 项目确yml连不上 但是换成nacos1.4.1就可以为什么 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在解决您遇到的Nacos 2.3.0 Docker集群开启鉴权后项目无法连接，但Nacos 1.4.1版本无此问题的情况时，我们可以从以下几个方面分析和尝试解决问题：1. **配置差异检查**：   - 首先确认在Nacos 2.3.0中开启鉴权所设置的环境变量或配置是否与Nacos 1.4.1中有"

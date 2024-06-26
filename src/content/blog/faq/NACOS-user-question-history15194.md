@@ -1,13 +1,13 @@
 ---
 id: "question-history-15194"
-title: "nacos作为配置中心 与 cloud gateway 集成 "
+title: "nacos作为配置中心 与 cloud gateway 集成 nacos-opensource"
 date: "2024-06-08"
 category: "expertConsultation"
 description: "要将 Nacos 作为配置中心与 Spring Cloud Gateway 集成，我们可以参照 Nacos 融合 Spring Cloud 的方式来进行。尽管提供的参考资料未直接提及与 Cloud Gateway 的集成，但我们可以根据 Nacos 在 Spring Cloud 环境下的配置管理和服"
 ---
 
 ## 用户问题 ： 
- nacos作为配置中心 与 cloud gateway 集成  
+ nacos作为配置中心 与 cloud gateway 集成 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

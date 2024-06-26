@@ -1,13 +1,13 @@
 ---
 id: "question-history-15661"
-title: "nacos 升级到2.3.2了，nacos-client对应的版本应该是多少？ "
+title: "nacos 升级到2.3.2了，nacos-client对应的版本应该是多少？ nacos-opensource"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "根据已有的知识信息，Nacos 2.3.2服务端版本兼容的客户端版本范围是Nacos1.2.0至Nacos2.X的所有客户端版本。因此，如果您已将Nacos服务端升级到了2.3.2版本，nacos-client对应的版本应该选择2.3.2或介于1.2.0与2.X之间的任何稳定版本。为了确保最佳的兼容"
 ---
 
 ## 用户问题 ： 
- nacos 升级到2.3.2了，nacos-client对应的版本应该是多少？  
+ nacos 升级到2.3.2了，nacos-client对应的版本应该是多少？ nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

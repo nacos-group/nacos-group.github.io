@@ -1,6 +1,6 @@
 ---
 id: "question-history-13443"
-title: "对于持久化实例， nacos服务端会向实例的 ip:port 发送心跳检测吗？ "
+title: "对于持久化实例， nacos服务端会向实例的 ip:port 发送心跳检测吗？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中，对于**持久化实例**（ephemeral=false），**Nacos服务端确实会向实例的ip:port发送心跳检测**。这一做法是为了监控这些实例的健康状态。如果服务端发现某个持久化实例不响应心跳检测或者健康检查失败，它会将该实例标记为不健康，从而避免上游服务继续将流量导向这个不"

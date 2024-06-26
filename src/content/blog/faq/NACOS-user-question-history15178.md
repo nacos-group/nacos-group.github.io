@@ -1,13 +1,13 @@
 ---
 id: "question-history-15178"
-title: "nacos做注册中心 集成 dubbo 样例 "
+title: "nacos做注册中心 集成 dubbo 样例 nacos-opensource"
 date: "2024-06-08"
 category: "expertConsultation"
 description: "为了帮助您集成Nacos作为注册中心到Dubbo应用中，我们首先需要理解Nacos与Dubbo集成的基本概念和步骤。根据您的问题，我将依托于我了解的知识来提供相应的指导。### 步骤分析与说明#### 1. 理解Nacos与DubboNacos（Dynamic Naming and Configur"
 ---
 
 ## 用户问题 ： 
- nacos做注册中心 集成 dubbo 样例  
+ nacos做注册中心 集成 dubbo 样例 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

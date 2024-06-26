@@ -1,11 +1,11 @@
 ---
 id: "question-history-13483"
-title: "nacos 开启鉴权 "
+title: "nacos 开启鉴权 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要开启Nacos的鉴权功能，首先明确你的部署环境，这里提供非Docker环境、Docker环境以及Kubernetes环境下的操作指导。### 非Docker环境1. **修改配置文件**：   - 打开`application.properties`文件。   - 修改或添加以下配置项以开启鉴权："
-tags: ["","鉴权","开启鉴权"]
-keywords: ["","鉴权","开启鉴权"]
+tags: ["nacos-opensource","鉴权","开启鉴权"]
+keywords: ["nacos-opensource","鉴权","开启鉴权"]
 ---
 
 要开启Nacos的鉴权功能，首先明确你的部署环境，这里提供非Docker环境、Docker环境以及Kubernetes环境下的操作指导。

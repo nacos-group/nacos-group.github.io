@@ -1,13 +1,13 @@
 ---
 id: "question-history-15145"
-title: "bootstrap.yml的配置在什么情况下回自动回复？ "
+title: "bootstrap.yml的配置在什么情况下回自动回复？ nacos-opensource"
 date: "2024-06-07"
 category: "expertConsultation"
 description: "在Nacos开源配置管理场景下，`bootstrap.yml`配置文件中的配置会在以下情况自动更新：1. **确保网络通畅**：根据我了解的知识中的描述，首先确保nacos-client能够正常连接到nacos-server，没有网络问题导致的配置更新失败。检查日志中是否存在网络连接相关的错误信息，"
 ---
 
 ## 用户问题 ： 
- bootstrap.yml的配置在什么情况下回自动回复？  
+ bootstrap.yml的配置在什么情况下回自动回复？ nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

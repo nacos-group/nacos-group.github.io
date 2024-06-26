@@ -1,6 +1,6 @@
 ---
 id: "question-history-11193"
-title: "nacos 怎么支持达梦数据库 "
+title: "nacos 怎么支持达梦数据库 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos 支持达梦数据库的操作步骤如下：1. **检查插件是否存在**：   首先，访问[Nacos插件仓库](https://github.com/nacos-group/nacos-plugin)，在`nacos-datasource-plugin-ext`目录下查找是否有针对达梦数据库（Da"

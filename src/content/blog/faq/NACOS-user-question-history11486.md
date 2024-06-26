@@ -1,6 +1,6 @@
 ---
 id: "question-history-11486"
-title: "nacos 推送失败 "
+title: "nacos 推送失败 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "首先，根据提供的知识内容，我们可以分析Nacos推送失败问题的可能原因：1. **版本兼容性问题**：如果您使用的是Nacos1.X版本并且遇到UDP推送失败，这可能是因为UDP推送的不稳定性导致。Nacos2.X版本以后已废弃UDP推送，转而使用更稳定的TCP连接（gRPC双向流）。因此，升级到N"

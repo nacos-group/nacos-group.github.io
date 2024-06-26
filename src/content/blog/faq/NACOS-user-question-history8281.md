@@ -1,6 +1,6 @@
 ---
 id: "question-history-8281"
-title: "client 端的快照是否可以支持可配置。Client端的配置信息目前会在本地保存一份的快照，有一些敏感数据是不能在本地缓存的，这个快照是否可以支持多种保存形式或者可以支持不保存快照？ "
+title: "client 端的快照是否可以支持可配置。Client端的配置信息目前会在本地保存一份的快照，有一些敏感数据是不能在本地缓存的，这个快照是否可以支持多种保存形式或者可以支持不保存快照？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos Client端的快照功能确实是支持配置的，以适应不同场景下的需求，尤其是关于敏感数据的处理。根据提供的知识，以下是对您问题的详细解答：1. **快照保存位置的配置**：Nacos Client允许您自定义快照的保存目录。通过设置JVM参数`-D JM.SNAPSHOT.PATH=/pat"

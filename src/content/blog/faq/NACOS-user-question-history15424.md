@@ -1,13 +1,13 @@
 ---
 id: "question-history-15424"
-title: "Nacos启动后会在root目录下生成一个nacos文件夹，里面有一个config文件夹，所有的nacos "
+title: "Nacos启动后会在root目录下生成一个nacos文件夹，里面有一个config文件夹，所有的nacos nacos-opensource"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据您提供的信息以及相关知识，我们可以这样分析和解答您的问题：1. **分析问题原因**：   - 即便您已经将Nacos的数据存储方式更改为MySQL，Nacos在启动时仍然会在其根目录下创建一个名为`nacos`的文件夹，主要用于存放一些默认配置和日志文件。这是因为Nacos的默认行为不仅包括存"
 ---
 
 ## 用户问题 ： 
- Nacos启动后会在root目录下生成一个nacos文件夹，里面有一个config文件夹，所有的nacos里面的配置都会被存在这个里面，怎么不让存 。我已经更改了nacos的数据存储方式为Mysql，为什么还会在主目录下自动生成一个名为nacos的文件夹，用于存放SQLite数据库文件及日志  
+ Nacos启动后会在root目录下生成一个nacos文件夹，里面有一个config文件夹，所有的nacos里面的配置都会被存在这个里面，怎么不让存 。我已经更改了nacos的数据存储方式为Mysql，为什么还会在主目录下自动生成一个名为nacos的文件夹，用于存放SQLite数据库文件及日志 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

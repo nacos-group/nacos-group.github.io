@@ -1,18 +1,18 @@
 ---
 id: "question-history-14927"
-title: "USER : user not found 的建议处理方式是？ "
+title: "USER : user not found 的建议处理方式是？ nacos-opensource"
 date: "2024-06-03"
 category: "expertConsultation"
-description: "遇到` USER: user not found`的问题时，建议按照以下步骤处理：1. **检查用户名和密码**：   - 确保在尝试登录Nacos控制台或通过OpenAPI访问时，使用的用户名和密码是正确的。特别注意是否有输入错误，比如多余的空格或特殊字符。   -"
+description: "遇到`nacos-opensource USER: user not found`的问题时，建议按照以下步骤处理：1. **检查用户名和密码**：   - 确保在尝试登录Nacos控制台或通过OpenAPI访问时，使用的用户名和密码是正确的。特别注意是否有输入错误，比如多余的空格或特殊字符。   -"
 ---
 
 ## 用户问题 ： 
- USER : user not found 的建议处理方式是？  
+ USER : user not found 的建议处理方式是？ nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：
 
-遇到` USER: user not found`的问题时，建议按照以下步骤处理：
+遇到`nacos-opensource USER: user not found`的问题时，建议按照以下步骤处理：
 
 1. **检查用户名和密码**：
    - 确保在尝试登录Nacos控制台或通过OpenAPI访问时，使用的用户名和密码是正确的。特别注意是否有输入错误，比如多余的空格或特殊字符。

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15395"
-title: "我应该如何把mysql nacos springcloud组成的项目部署到docker上 具体每一步应该怎 "
+title: "我应该如何把mysql nacos springcloud组成的项目部署到docker上 具体每一步应该怎 nacos-opensource"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "要将基于MySQL、Nacos、Spring Cloud组成的项目部署到Docker上，您可以按照以下步骤操作：### 准备工作1. **确保基础环境**：确保您的机器上已安装Docker以及Docker Compose，因为这将简化多容器（如MySQL、Nacos、Spring Cloud应用及其"
 ---
 
 ## 用户问题 ： 
- 我应该如何把mysql nacos springcloud组成的项目部署到docker上 具体每一步应该怎么做  
+ 我应该如何把mysql nacos springcloud组成的项目部署到docker上 具体每一步应该怎么做 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

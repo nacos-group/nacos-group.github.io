@@ -1,13 +1,13 @@
 ---
 id: "question-history-15654"
-title: "对于nacos的客户端，username，password和nacos的配置nacos.core.auth "
+title: "对于nacos的客户端，username，password和nacos的配置nacos.core.auth nacos-opensource"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "根据已有的知识，我们可以分析如下：1. **理解Nacos客户端认证**: 在Nacos中，客户端连接到服务器时可能需要进行身份验证。这通常涉及到用户名（username）和密码（password），它们是基本的认证凭证，用于确认客户端是否有权访问Nacos服务。2. **Nacos系统配置与认证插"
 ---
 
 ## 用户问题 ： 
- 对于nacos的客户端，username，password和nacos的配置nacos.core.auth.plugin.nacos.token.secret.key，有什么关系？  
+ 对于nacos的客户端，username，password和nacos的配置nacos.core.auth.plugin.nacos.token.secret.key，有什么关系？ nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

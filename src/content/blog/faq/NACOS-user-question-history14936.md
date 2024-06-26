@@ -1,18 +1,18 @@
 ---
 id: "question-history-14936"
-title: "nacos server ，基于mysql初始化 "
+title: "nacos server ，基于mysql初始化 nacos-opensource"
 date: "2024-06-03"
 category: "expertConsultation"
-description: "针对您的问题「 nacos server ，基于mysql初始化」，以下是详细的步骤与解析，依据提供的知识内容：### 初始化步骤与解析1. **确认Nacos版本与SQL脚本名称**     首先，确认您正在使用的Nacos版本。如果为Nacos 1.X版本，请查找"
+description: "针对您的问题「nacos-opensource nacos server ，基于mysql初始化」，以下是详细的步骤与解析，依据提供的知识内容：### 初始化步骤与解析1. **确认Nacos版本与SQL脚本名称**     首先，确认您正在使用的Nacos版本。如果为Nacos 1.X版本，请查找"
 ---
 
 ## 用户问题 ： 
- nacos server ，基于mysql初始化  
+ nacos server ，基于mysql初始化 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：
 
-针对您的问题「 nacos server ，基于mysql初始化」，以下是详细的步骤与解析，依据提供的知识内容：
+针对您的问题「nacos-opensource nacos server ，基于mysql初始化」，以下是详细的步骤与解析，依据提供的知识内容：
 
 ### 初始化步骤与解析
 

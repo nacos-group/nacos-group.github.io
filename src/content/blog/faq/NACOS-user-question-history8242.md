@@ -1,6 +1,6 @@
 ---
 id: "question-history-8242"
-title: "使用K8S启动集群，外部mysql作为存储，是否有必要使用pvc持久化 "
+title: "使用K8S启动集群，外部mysql作为存储，是否有必要使用pvc持久化 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在使用K8S部署Nacos集群并采用外部MySQL作为存储的情况下，是否启用PVC（Persistent Volume Claim，持久卷声明）进行持久化主要取决于以下几个因素：1. **数据安全与持久性需求**：虽然Nacos的配置和服务信息可以存储在外部MySQL中，保证了服务信息的持久性，但是"

@@ -1,6 +1,6 @@
 ---
 id: "question-history-13942"
-title: "nacos启动命令是什么？ "
+title: "nacos启动命令是什么？ nacos-opensource"
 date: "2024-05-21"
 category: "expertConsultation"
 description: "Nacos的启动命令根据您的操作系统有所不同：#### 对于Linux/Unix/Mac系统：启动命令为（以单机模式运行）：```shellsh startup.sh -m standalone```如果在Ubuntu系统上运行上述命令遇到问题，可以尝试使用bash命令执行：```shellbash"

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15193"
-title: "nacos配置中心dataid 命名规则建议 "
+title: "nacos配置中心dataid 命名规则建议 nacos-opensource"
 date: "2024-06-08"
 category: "expertConsultation"
 description: "在Nacos作为配置中心时，`dataId`的命名规则对于维护和理解配置至关重要。虽然Nacos官方文档没有严格规定必须遵循特定的命名规范，但根据最佳实践和可维护性原则，这里有一些建议可以帮助你设计良好的`dataId`命名规则：### 建议的命名规则1. **应用相关性**：`dataId`应体现"
 ---
 
 ## 用户问题 ： 
- nacos配置中心dataid 命名规则建议  
+ nacos配置中心dataid 命名规则建议 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

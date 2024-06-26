@@ -1,11 +1,11 @@
 ---
 id: "question-history-13422"
-title: "nacos 鉴权怎么做？ "
+title: "nacos 鉴权怎么做？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要在Nacos中实现鉴权，您可以遵循以下步骤操作：1. **理解鉴权配置需求**：   Nacos鉴权功能的开启和配置主要围绕四个核心参数：   - `nacos.core.auth.enabled`：鉴权功能开关，需设为`true`以启用鉴权。   - `nacos.core.auth.plugi"
-tags: ["","鉴权"]
-keywords: ["","鉴权"]
+tags: ["nacos-opensource","鉴权"]
+keywords: ["nacos-opensource","鉴权"]
 ---
 
 要在Nacos中实现鉴权，您可以遵循以下步骤操作：

@@ -1,18 +1,18 @@
 ---
 id: "question-history-15142"
-title: "nacos启动页面 "
+title: "nacos启动页面 nacos-opensource"
 date: "2024-06-07"
 category: "expertConsultation"
-description: "为了解答关于“ nacos启动页面”的问题，我们首先需要确保Nacos服务已经成功启动。根据提供的知识内容，我们可以分步骤来进行分析和解答：### 步骤1：启动Nacos服务- **操作说明**：请按照第1篇参考内容所述，使用Nacos目录下`nacos/bin/st"
+description: "为了解答关于“nacos-opensource nacos启动页面”的问题，我们首先需要确保Nacos服务已经成功启动。根据提供的知识内容，我们可以分步骤来进行分析和解答：### 步骤1：启动Nacos服务- **操作说明**：请按照第1篇参考内容所述，使用Nacos目录下`nacos/bin/st"
 ---
 
 ## 用户问题 ： 
- nacos启动页面  
+ nacos启动页面 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：
 
-为了解答关于“ nacos启动页面”的问题，我们首先需要确保Nacos服务已经成功启动。根据提供的知识内容，我们可以分步骤来进行分析和解答：
+为了解答关于“nacos-opensource nacos启动页面”的问题，我们首先需要确保Nacos服务已经成功启动。根据提供的知识内容，我们可以分步骤来进行分析和解答：
 
 ### 步骤1：启动Nacos服务
 - **操作说明**：请按照第1篇参考内容所述，使用Nacos目录下`nacos/bin/startup.sh`脚本启动Nacos 2.0。这一步是确保能够访问Nacos启动页面的前提。

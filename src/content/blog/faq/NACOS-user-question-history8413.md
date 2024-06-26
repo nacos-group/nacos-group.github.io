@@ -1,6 +1,6 @@
 ---
 id: "question-history-8413"
-title: "nacos controller仅支持nacos2.3.0以上版本吗 "
+title: "nacos controller仅支持nacos2.3.0以上版本吗 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据已有的信息，Nacos官方推荐使用2.X的最新稳定版本，并指出1.X版本已停止功能迭代，仅维护重大BUG和安全问题。虽然没有直接提及Nacos Controller支持的具体版本起始点，但考虑到控制器作为Nacos系统的一部分，其兼容性和支持的版本通常会与Nacos Server的推荐版本保持一"

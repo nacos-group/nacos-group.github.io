@@ -1,6 +1,6 @@
 ---
 id: "question-history-11191"
-title: "nacos com.alibaba.nacos.api.exception.nacosexception: http error, "
+title: "nacos com.alibaba.nacos.api.exception.nacosexception: http error, nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，我们可以分析您遇到的问题`nacos com.alibaba.nacos.api.exception.nacosexception: http error`可能是由以下原因造成的：1. **HTTP请求错误**：这可能是由于客户端发送的HTTP请求存在问题，比如请求的URI、HT"

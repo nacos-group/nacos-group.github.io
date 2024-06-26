@@ -1,13 +1,13 @@
 ---
 id: "question-history-15443"
-title: "Nacos集群中单一节点停机导致微服务无法使用的情况如何处理 "
+title: "Nacos集群中单一节点停机导致微服务无法使用的情况如何处理 nacos-opensource"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "在处理Nacos集群中单一节点停机导致微服务无法使用的情况时，我们可以按照以下步骤进行分析和处理，基于提供的我了解的知识内容：### 分析问题原因1. **检查集群健康状态**：首先确认停机节点是否正确执行了停机流程，即使用`nacos/bin/shutdown.sh`脚本停止服务，避免了直接杀进程"
 ---
 
 ## 用户问题 ： 
- Nacos集群中单一节点停机导致微服务无法使用的情况如何处理  
+ Nacos集群中单一节点停机导致微服务无法使用的情况如何处理 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

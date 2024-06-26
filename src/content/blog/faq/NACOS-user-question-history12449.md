@@ -1,6 +1,6 @@
 ---
 id: "question-history-12449"
-title: "com.alibaba.nacos.api.exception.nacosexception: client not connect,current status:STARTING "
+title: "com.alibaba.nacos.api.exception.nacosexception: client not connect,current status:STARTING nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "遇到`com.alibaba.nacos.api.exception.NacosException: client not connect, current status:STARTING`的问题，可以按照以下步骤分析和解决：1. **检查Nacos服务器地址配置**：首先确认应用程序中配置的Nac"

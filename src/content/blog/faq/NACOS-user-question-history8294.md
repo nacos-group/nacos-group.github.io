@@ -1,6 +1,6 @@
 ---
 id: "question-history-8294"
-title: "Is there a solution to migrate Nacos Derby to MySQL Will using embedded storage in a Nacos cluster lead to a loss of cluster high availability If using MySQL can solve this problem, is it possible to migrate Derby to MySQL "
+title: "Is there a solution to migrate Nacos Derby to MySQL Will using embedded storage in a Nacos cluster lead to a loss of cluster high availability If using MySQL can solve this problem, is it possible to migrate Derby to MySQL nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos确实支持将配置信息从嵌入式Derby数据库迁移至MySQL，以增强数据存储的稳定性和集群的高可用性。以下是根据已有知识进行的分析与建议步骤：### 分析原因：1. **Derby存储限制**：嵌入式Derby数据库主要用于单机测试环境，它不是为生产环境的高并发或大数据量设计的。2. **高"

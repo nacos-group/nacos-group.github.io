@@ -1,13 +1,13 @@
 ---
 id: "question-history-15428"
-title: "naocs的配置文件存储路径是哪里 "
+title: "naocs的配置文件存储路径是哪里 nacos-opensource"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据已有的知识内容，nacos的配置文件存储路径如下：1. **默认本地存储情况**：   对于nacos2.x.x版本为例，配置文件存储在nacos服务器的特定目录下。具体路径为：`nacos-server-2.x.xconf`。在这个目录下，包含了如`application.properties"
 ---
 
 ## 用户问题 ： 
- naocs的配置文件存储路径是哪里  
+ naocs的配置文件存储路径是哪里 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

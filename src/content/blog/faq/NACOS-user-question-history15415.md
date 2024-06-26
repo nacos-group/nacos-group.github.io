@@ -1,13 +1,13 @@
 ---
 id: "question-history-15415"
-title: "如何在springcloud项目开启nacos "
+title: "如何在springcloud项目开启nacos nacos-opensource"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "要在一个Spring Cloud项目中开启Nacos配置管理，可以遵循以下步骤操作：### 1. 添加依赖确保你的项目中包含了Spring Cloud Alibaba的依赖，这将帮助你集成Nacos作为配置中心。根据你的Spring Cloud版本选择合适的依赖。在`pom.xml`或`build."
 ---
 
 ## 用户问题 ： 
- 如何在springcloud项目开启nacos  
+ 如何在springcloud项目开启nacos nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

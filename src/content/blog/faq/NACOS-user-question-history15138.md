@@ -1,13 +1,13 @@
 ---
 id: "question-history-15138"
-title: "nacos 服务注册 发现 "
+title: "nacos 服务注册 发现 nacos-opensource"
 date: "2024-06-07"
 category: "expertConsultation"
 description: "要实现Nacos的服务注册与发现，您可以按照以下步骤操作，这些步骤基于提供的知识内容：### 1. 添加依赖确保您的Spring Boot项目中包含了正确的Nacos服务发现起步依赖。根据您的Spring Boot版本选择合适的依赖版本。例如，对于Spring Boot 2.1.x，您应该在`pom"
 ---
 
 ## 用户问题 ： 
- nacos 服务注册 发现  
+ nacos 服务注册 发现 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

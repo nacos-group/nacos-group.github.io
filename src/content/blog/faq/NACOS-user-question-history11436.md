@@ -1,6 +1,6 @@
 ---
 id: "question-history-11436"
-title: "为什么使用Nacos而不是Eureka "
+title: "为什么使用Nacos而不是Eureka nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "选择Nacos而非Eureka主要基于以下几个原因：1. **功能全面性**：Nacos除了提供服务发现和注册的核心功能外，还集成了配置管理和服务动态配置推送、消息总线等特性，这使得Nacos成为一个更为全面的服务治理平台。相比之下，Eureka主要聚焦于服务发现和注册，功能较为单一。2. **可靠"

@@ -1,6 +1,6 @@
 ---
 id: "question-history-14711"
-title: "nacos server升级到了2.3.2 并开启了鉴权, 使用java sdk nacos-client 2.2.0 连接返回 user not found 错误，这个怎么解决啊 "
+title: "nacos server升级到了2.3.2 并开启了鉴权, 使用java sdk nacos-client 2.2.0 连接返回 user not found 错误，这个怎么解决啊 nacos-opensource"
 date: "2024-05-29"
 category: "expertConsultation"
 description: "根据你描述的问题，你在尝试使用Java SDK `nacos-client 2.2.0`连接升级到`2.3.2`版本并已开启鉴权的Nacos Server时遇到了`user not found`错误。结合已有知识，我们可以分析并解决此问题。### 原因分析：1. **客户端配置问题**：可能是由于客"

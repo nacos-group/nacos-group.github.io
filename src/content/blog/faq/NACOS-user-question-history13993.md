@@ -1,6 +1,6 @@
 ---
 id: "question-history-13993"
-title: "nacos是干什么用的 "
+title: "nacos是干什么用的 nacos-opensource"
 date: "2024-05-22"
 category: "expertConsultation"
 description: "Nacos是阿里巴巴开源的一款服务发现、配置管理和服务管理平台，专为云原生应用设计。它的核心用途包括：1. **服务发现与健康检查**：Nacos允许应用程序自动发现和连接到服务提供者，同时通过健康检查机制监控服务实例的状态，确保只将请求路由到健康的实例上。2. **动态配置服务**：它提供了一个集"

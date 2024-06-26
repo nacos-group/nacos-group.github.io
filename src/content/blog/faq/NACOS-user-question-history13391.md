@@ -1,6 +1,6 @@
 ---
 id: "question-history-13391"
-title: "nacos docker derby下使用grafana 查看nacos monitor 提示 Failed to upgrade legacy queries Datasource prometheus was not found USER : http: prometheus:9090 提示DNS_PROBE_FINISHED_NXDOMAIN "
+title: "nacos docker derby下使用grafana 查看nacos monitor 提示 Failed to upgrade legacy queries Datasource prometheus was not found USER : http: prometheus:9090 提示DNS_PROBE_FINISHED_NXDOMAIN nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，您遇到的问题可能是由于以下原因导致的：1. **DNS解析问题**：DNS_PROBE_FINISHED_NXDOMAIN提示表明客户端无法解析`http://prometheus:9090`这个地址。这可能是因为您的环境中没有正确设置Prometheus服务的DNS记录，或者P"

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15244"
-title: "nacos放在公网上，怎么开启鉴权 "
+title: "nacos放在公网上，怎么开启鉴权 nacos-opensource"
 date: "2024-06-12"
 category: "expertConsultation"
 description: "为了在公网上安全地部署Nacos并开启鉴权，您可以遵循以下步骤操作：### 1. 确认鉴权需求与风险首先，明确了解将Nacos部署在公网上的风险，包括但不限于黑客攻击和敏感信息泄露。确保您已评估此操作的必要性和潜在威胁。### 2. 选择合适的鉴权策略根据Nacos官方文档，从2.2.3版本起，默认"
 ---
 
 ## 用户问题 ： 
- nacos放在公网上，怎么开启鉴权  
+ nacos放在公网上，怎么开启鉴权 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

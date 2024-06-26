@@ -1,14 +1,14 @@
 ---
 id: "question-history-11841"
-title: "could not find leader : naming_persistent_service_v2 "
+title: "could not find leader : naming_persistent_service_v2 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
-description: "针对您遇到的问题——` could not find leader: naming_persistent_service_v2`，依据提供的知识，我们可以按照以下步骤进行排查和解决：1. **检查集群配置**：   - 首先，需仔细审查`cluster.conf`文件"
+description: "针对您遇到的问题——`nacos-opensource could not find leader: naming_persistent_service_v2`，依据提供的知识，我们可以按照以下步骤进行排查和解决：1. **检查集群配置**：   - 首先，需仔细审查`cluster.conf`文件"
 tags: ["could not find leader","naming_persistent_service_v2"]
 keywords: ["could not find leader","naming_persistent_service_v2"]
 ---
 
-针对您遇到的问题——` could not find leader: naming_persistent_service_v2`，依据提供的知识，我们可以按照以下步骤进行排查和解决：
+针对您遇到的问题——`nacos-opensource could not find leader: naming_persistent_service_v2`，依据提供的知识，我们可以按照以下步骤进行排查和解决：
 
 1. **检查集群配置**：
    - 首先，需仔细审查`cluster.conf`文件中记录的IP地址或域名，确认其中没有不属于当前集群的成员信息。错误的配置可能导致集群无法正常识别所有成员，进而影响选主过程。如果发现错误，请修正配置，并执行以下操作：

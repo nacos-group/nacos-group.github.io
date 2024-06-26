@@ -1,6 +1,6 @@
 ---
 id: "question-history-8449"
-title: "Nacos部署对外需要开放哪些端口？只开放8848就可以了吗？ "
+title: "Nacos部署对外需要开放哪些端口？只开放8848就可以了吗？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos部署对外开放时，通常需要考虑以下几个端口：1. **主端口 (默认 8848)**：这是客户端、控制台以及OpenAPI所使用的HTTP端口。大部分场景下，与Nacos交互都会通过这个端口进行。2. **客户端gRPC请求服务端端口 (默认 9848)**：用于客户端通过gRPC协议向服务"

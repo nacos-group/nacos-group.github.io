@@ -1,6 +1,6 @@
 ---
 id: "question-history-13383"
-title: "Nacos 新建配置的配置内容如何编辑 "
+title: "Nacos 新建配置的配置内容如何编辑 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中新建配置并编辑配置内容的步骤如下：1. **登录Nacos控制台**     首先，你需要登录到Nacos的Web控制台。控制台地址通常是http://your_nacos_server_ip:8848/nacos，其中`your_nacos_server_ip`是Nacos服务器的I"

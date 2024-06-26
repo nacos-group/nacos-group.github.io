@@ -1,14 +1,14 @@
 ---
 id: "question-history-13973"
-title: "mysql_service_host nacos "
+title: "mysql_service_host nacos nacos-opensource"
 date: "2024-05-22"
 category: "expertConsultation"
-description: "在Nacos的开源信息中，提及了与MySQL配置相关的参数，这似乎与您的问题“ mysql_service_host nacos”相关。看起来您可能在询问如何在Nacos中配置MySQL服务主机信息，特别是当使用Nacos开源版本时。下面依据提供的知识进行分析并给出指"
+description: "在Nacos的开源信息中，提及了与MySQL配置相关的参数，这似乎与您的问题“nacos-opensource mysql_service_host nacos”相关。看起来您可能在询问如何在Nacos中配置MySQL服务主机信息，特别是当使用Nacos开源版本时。下面依据提供的知识进行分析并给出指"
 tags: ["mysql_service_host","nacos"]
 keywords: ["mysql_service_host","nacos"]
 ---
 
-在Nacos的开源信息中，提及了与MySQL配置相关的参数，这似乎与您的问题“ mysql_service_host nacos”相关。看起来您可能在询问如何在Nacos中配置MySQL服务主机信息，特别是当使用Nacos开源版本时。下面依据提供的知识进行分析并给出指导：
+在Nacos的开源信息中，提及了与MySQL配置相关的参数，这似乎与您的问题“nacos-opensource mysql_service_host nacos”相关。看起来您可能在询问如何在Nacos中配置MySQL服务主机信息，特别是当使用Nacos开源版本时。下面依据提供的知识进行分析并给出指导：
 
 1. **识别需求**：您希望配置Nacos以使用MySQL作为其存储服务，并且关注如何设置MySQL服务主机地址。在Nacos的Config模块配置中，虽然直接提及MySQL服务主机(host)的配置项较少，但可以通过数据库连接URL(db.url.X)间接指定MySQL服务的地址。
 

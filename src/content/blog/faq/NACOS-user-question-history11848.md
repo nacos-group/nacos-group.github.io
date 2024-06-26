@@ -1,6 +1,6 @@
 ---
 id: "question-history-11848"
-title: "nacos中的API  auth users 返回敏感信息 "
+title: "nacos中的API  auth users 返回敏感信息 nacos-opensource"
 date: "2024-05-20"
 category: "expertConsultation"
 description: "在Nacos环境中，如果您遇到API `/auth/users` 返回敏感信息的问题，这主要是因为您的Nacos集群可能未正确配置鉴权功能。根据提供的知识内容，以下是分析及解决步骤：### 问题原因- **未启用鉴权：** Nacos集群在默认配置下可能没有开启鉴权功能，导致无需任何身份验证即可访问"

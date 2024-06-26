@@ -1,6 +1,6 @@
 ---
 id: "question-history-12711"
-title: "nacos 如何修改密码？ "
+title: "nacos 如何修改密码？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中修改密码，您可以根据Nacos集群的初始化状态以及您是否拥有管理员权限，选择合适的方法进行操作。以下是具体的步骤指导：### 如果Nacos集群尚未初始化1. **自定义初始化密码**：   - 在部署Nacos前，手动编辑配置文件。找到`$nacos.home/conf/`目录下的`"

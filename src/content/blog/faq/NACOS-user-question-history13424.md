@@ -1,6 +1,6 @@
 ---
 id: "question-history-13424"
-title: "nacos 怎么开启鉴权？ "
+title: "nacos 怎么开启鉴权？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要开启Nacos的鉴权功能，您可以根据不同的部署环境采取以下步骤：### 针对Kubernetes (k8s) 和 Docker 部署的Nacos集群/单机模式：1. **设置环境变量**：在部署Nacos的Docker容器时，通过环境变量来开启鉴权及配置相关参数。至少需要设置以下环境变量：   -"

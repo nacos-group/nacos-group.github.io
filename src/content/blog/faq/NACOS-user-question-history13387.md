@@ -1,6 +1,6 @@
 ---
 id: "question-history-13387"
-title: "nacos 客户端 心跳怎么设置？ "
+title: "nacos 客户端 心跳怎么设置？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos客户端中，心跳设置是通过健康检查请求`HealthCheckRequest`来实现的，这主要用于维持客户端与服务端之间的连接活跃性，并及时发现失效的连接。根据提供的知识内容，可以按以下步骤进行心跳设置的调整：1. **了解现有配置项**：   - **最大重试次数**：通过配置项`nac"

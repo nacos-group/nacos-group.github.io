@@ -1,6 +1,6 @@
 ---
 id: "question-history-11487"
-title: "可以同时把服务注册到两个nacos集群吗 "
+title: "可以同时把服务注册到两个nacos集群吗 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos-opensource本身并不直接支持将服务同时注册到两个Nacos集群的功能。根据现有知识，Nacos设计为单一集群管理模式，用于维护服务的注册与发现。然而，对于希望实现跨Nacos集群的服务注册与发现需求，虽然没有直接内置的支持，但可以通过一些间接方式尝试实现：1. **自定义实现**"

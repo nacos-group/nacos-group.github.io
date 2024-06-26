@@ -1,6 +1,6 @@
 ---
 id: "question-history-8232"
-title: "linux安装部署完成后，本地页面 nacos能访问，但是springboot无法连接，切换多个版本都不行 "
+title: "linux安装部署完成后，本地页面 nacos能访问，但是springboot无法连接，切换多个版本都不行 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，我们可以分析和解决springboot无法连接Nacos的问题，尽管已知信息未直接提供安装部署的具体步骤，但我们可以依据故障排查思路来进行：1. **检查网络与配置问题**:   - 确认springboot应用的Nacos配置（如`application.properties`"

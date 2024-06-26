@@ -1,6 +1,6 @@
 ---
 id: "question-history-8253"
-title: "CatalogController 里面的接口和客户端SDK的API区别是什么啊？ "
+title: "CatalogController 里面的接口和客户端SDK的API区别是什么啊？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中，`CatalogController`里面的接口与客户端SDK的API存在明显的区别，主要体现在它们的设计目的和服务对象上：1. **`CatalogController`接口**：   - 这部分接口属于Admin API，主要服务于运维人员以及控制台需求。   - 它提供了更全面"

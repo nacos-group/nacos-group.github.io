@@ -1,13 +1,13 @@
 ---
 id: "question-history-15422"
-title: "nacos_exception_total{name=‘leaderSendBeatFailed’}==2 "
+title: "nacos_exception_total{name=‘leaderSendBeatFailed’}==2 nacos-opensource"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据您提供的信息，出现了`nacos_exception_totalname='leaderSendBeatFailed'==2`的情况，这意味着Nacos命名空间的领导者发送心跳失败了2次。同时，`nacos_monitorname='leaderStatus'==1`表明Nacos命名服务的角色"
 ---
 
 ## 用户问题 ： 
- nacos_exception_total{name=‘leaderSendBeatFailed’}==2 USER : nacos_monitor{name='leaderStatus'}==1 BOT  
+ nacos_exception_total{name=‘leaderSendBeatFailed’}==2 USER : nacos_monitor{name='leaderStatus'}==1 BOT nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

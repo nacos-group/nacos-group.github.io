@@ -1,6 +1,6 @@
 ---
 id: "question-history-11838"
-title: "nacos配置mysql数据库 "
+title: "nacos配置mysql数据库 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要配置Nacos使用MySQL数据库，请按照以下步骤操作：1. **确认Nacos版本**：确保你的Nacos版本是2.2或更高，因为从2.2版本开始，Nacos才开始支持除MySQL和Derby之外的更多数据库类型通过插件的方式。如果版本低于2.2，请先升级Nacos。2. **下载与配置MySQ"

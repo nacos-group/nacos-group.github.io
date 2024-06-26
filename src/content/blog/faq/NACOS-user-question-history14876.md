@@ -1,13 +1,13 @@
 ---
 id: "question-history-14876"
-title: "namespace指定的的dev服务注册到nacos上还是跑到了public上面是为什么 "
+title: "namespace指定的的dev服务注册到nacos上还是跑到了public上面是为什么 nacos-opensource"
 date: "2024-06-02"
 category: "expertConsultation"
 description: "根据提供的知识内容，服务注册到错误的namespace可能是由以下原因造成的：1. **配置错误**：应用程序可能配置了错误的namespace ID，导致服务被注册到了默认或其他非预期的namespace上。2. **环境变量或配置文件问题**：应用程序在读取环境变量或配置文件时，可能未能正确解析"
 ---
 
 ## 用户问题 ： 
- namespace指定的的dev服务注册到nacos上还是跑到了public上面是为什么  
+ namespace指定的的dev服务注册到nacos上还是跑到了public上面是为什么 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：
@@ -26,7 +26,7 @@ description: "根据提供的知识内容，服务注册到错误的namespace可
    - 如果使用环境变量或命令行参数传递namespace信息，确保这些值被正确设置并在应用启动时被正确读取。
 
 2. **日志审查**：
-   - 查看Nacos-Client日志以确认实际生效的namespace配置。根据知识中的指引[如何获取Nacos-Client的日志？](https://aliyuque.antfin.com/ozb6sn//ci3i97p07s73tewg)，检查应用启动时是否记录了正确的namespace信息。
+   - 查看Nacos-Client日志以确认实际生效的namespace配置。根据知识中的指引[如何获取Nacos-Client的日志？](https://aliyuque.antfin.com/ozb6sn/nacos-opensource/ci3i97p07s73tewg)，检查应用启动时是否记录了正确的namespace信息。
    - 注意检查是否有错误提示或警告指出namespace配置不当。
 
 3. **环境验证**：

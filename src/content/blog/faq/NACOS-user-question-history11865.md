@@ -1,11 +1,11 @@
 ---
 id: "question-history-11865"
-title: "nacos 介绍一下nacos配置中心支持的功能 "
+title: "nacos 介绍一下nacos配置中心支持的功能 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos 配置中心主要支持以下功能：1. **动态配置服务**：Nacos 允许用户在中心化的位置管理应用的配置，实现配置的外部化和动态化管理。应用可以在运行时从Nacos服务器动态拉取配置，无需重启即可使新配置生效。当配置发生变化时，Nacos会自动推送配置更新到各个客户端应用，确保应用配置的实"
-tags: ["","配置中心","功能"]
-keywords: ["","配置中心","功能"]
+tags: ["nacos-opensource","配置中心","功能"]
+keywords: ["nacos-opensource","配置中心","功能"]
 ---
 
 Nacos 配置中心主要支持以下功能：

@@ -1,6 +1,6 @@
 ---
 id: "question-history-11756"
-title: "nacos 配置PG数据源 "
+title: "nacos 配置PG数据源 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "为了配置Nacos使用PostgreSQL（PG）作为数据源，您可以遵循以下步骤操作：1. **检查插件是否存在**：   首先，访问[Nacos插件仓库](https://github.com/nacos-group/nacos-plugin)，确认社区是否已经提供了PostgreSQL数据库的插"

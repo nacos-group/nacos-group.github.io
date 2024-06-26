@@ -1,13 +1,13 @@
 ---
 id: "question-history-15425"
-title: "为什么Nacos 开启了控制台鉴权，但配置权限无法限制只针对特定的 namespace "
+title: "为什么Nacos 开启了控制台鉴权，但配置权限无法限制只针对特定的 namespace nacos-opensource"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "首先，让我们分析问题的原因。根据您的描述，您已经开启了Nacos的控制台鉴权，但是发现配置权限无法限制只针对特定的namespace。这通常意味着尽管鉴权机制已经被激活，但是在配置权限管理上可能存在配置不当或者理解偏差。在Nacos中，鉴权与权限控制是两个层面的概念。鉴权确保了访问Nacos的用户身"
 ---
 
 ## 用户问题 ： 
- 为什么Nacos 开启了控制台鉴权，但配置权限无法限制只针对特定的 namespace  
+ 为什么Nacos 开启了控制台鉴权，但配置权限无法限制只针对特定的 namespace nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

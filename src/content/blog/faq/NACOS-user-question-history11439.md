@@ -1,6 +1,6 @@
 ---
 id: "question-history-11439"
-title: "nacos和eureka哪个是主流 "
+title: "nacos和eureka哪个是主流 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，Nacos相比Eureka在功能全面性、可靠性以及对多数据中心的支持上都表现得更为出色。Nacos不仅具备服务发现和注册的基本功能，还集成了配置管理和消息总线等高级特性，适用于复杂的分布式架构。此外，Nacos拥有活跃的社区支持，并且被包括阿里巴巴在内的多家公司广泛采用作为主流方"

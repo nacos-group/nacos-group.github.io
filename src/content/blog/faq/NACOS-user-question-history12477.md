@@ -1,6 +1,6 @@
 ---
 id: "question-history-12477"
-title: "nacos最小启动内存是多少？ "
+title: "nacos最小启动内存是多少？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识，Nacos并没有明确指出一个绝对的最小启动内存值，而是强调了内存设置应依据实际情况进行调整。不过，可以从建议的配置角度来推断一个合理的起点：1. **JVM堆内存设置**：建议不超过物理内存的70%。尽管这是针对一般情况的建议，而非严格意义上的“最小”值，但我们可理解为在资源受限环境"

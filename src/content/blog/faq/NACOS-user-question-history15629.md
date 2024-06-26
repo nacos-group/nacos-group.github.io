@@ -1,13 +1,13 @@
 ---
 id: "question-history-15629"
-title: "如何关闭nacos双写的请求 "
+title: "如何关闭nacos双写的请求 nacos-opensource"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "要关闭Nacos的双写功能，您可以按照以下步骤操作：1. **确认集群状态**：在执行关闭操作之前，请确保您的Nacos集群正在稳定运行，没有异常情况。因为关闭双写后将无法平滑降级，所以这一步骤至关重要。2. **执行关闭命令**：使用curl命令通过API接口关闭双写功能。具体命令为：   ```"
 ---
 
 ## 用户问题 ： 
- 如何关闭nacos双写的请求  
+ 如何关闭nacos双写的请求 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

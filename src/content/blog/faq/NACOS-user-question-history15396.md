@@ -1,13 +1,13 @@
 ---
 id: "question-history-15396"
-title: "在Nacos配置管理中，如何添加`spring.config.import=nacos:`属性至我的应用配 "
+title: "在Nacos配置管理中，如何添加`spring.config.import=nacos:`属性至我的应用配 nacos-opensource"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "在Nacos配置管理中添加`spring.config.import=nacos:`属性至您的应用配置，涉及到将Spring Boot或Spring Cloud应用与Nacos配置中心集成的过程。虽然直接的步骤在提供的知识中未明确给出，但我们可以依据Nacos集成的一般流程，为您提供一个指导性的方案"
 ---
 
 ## 用户问题 ： 
- 在Nacos配置管理中，如何添加`spring.config.import=nacos:`属性至我的应用配置  
+ 在Nacos配置管理中，如何添加`spring.config.import=nacos:`属性至我的应用配置 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

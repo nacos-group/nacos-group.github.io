@@ -1,6 +1,6 @@
 ---
 id: "question-history-12459"
-title: "nacos docker单机版部署 "
+title: "nacos docker单机版部署 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "为了在Docker环境中部署Nacos单机版并配置鉴权，您可以遵循以下步骤操作：1. **准备环境**：   - 确保您的系统中已安装Docker并且可以正常运行。2. **拉取Nacos Docker镜像**：   执行以下命令从Docker Hub获取最新版本的Nacos镜像：   ```bas"

@@ -1,6 +1,6 @@
 ---
 id: "question-history-12682"
-title: "nacos启动内存设置多少好些？ "
+title: "nacos启动内存设置多少好些？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "针对Nacos启动内存设置的问题，根据已有的知识，我们可以分析并给出建议如下：1. **分析问题原因**：Nacos内存占用主要涉及三个方面——JVM堆内存、网络NIO堆外内存和Rocksdb直接内存。其中，JVM堆内存及NIO堆外内存的设置不当往往是导致内存占用过大的主要原因。2. **具体步骤建"

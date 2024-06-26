@@ -1,6 +1,6 @@
 ---
 id: "question-history-12683"
-title: "nacos1.3 升级到2.3步骤与需要注意的地方有哪些？ "
+title: "nacos1.3 升级到2.3步骤与需要注意的地方有哪些？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "升级Nacos从1.3版本到2.3版本，可以遵循以下步骤并注意相应的地方：1. **准备阶段**：   - 首先，确保备份当前Nacos 1.3的所有数据和配置文件，以防升级过程中发生意外。   - 查阅Nacos官方文档中关于从1.X升级到2.X的特定说明，特别是针对1.3到2.3之间可能存在的重"

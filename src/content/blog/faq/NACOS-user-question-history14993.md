@@ -1,18 +1,18 @@
 ---
 id: "question-history-14993"
-title: "No DataSource set "
+title: "No DataSource set nacos-opensource"
 date: "2024-06-05"
 category: "expertConsultation"
-description: "根据你提出的问题「 No DataSource set」，我将依据已有知识进行分析与解答。**问题分析：**当你遇到「No DataSource set」错误时，这表明Nacos在启动过程中未能成功连接到配置的数据库。这可能是由几个关键因素引起的，包括但不限于配置错误"
+description: "根据你提出的问题「nacos-opensource No DataSource set」，我将依据已有知识进行分析与解答。**问题分析：**当你遇到「No DataSource set」错误时，这表明Nacos在启动过程中未能成功连接到配置的数据库。这可能是由几个关键因素引起的，包括但不限于配置错误"
 ---
 
 ## 用户问题 ： 
- No DataSource set  
+ No DataSource set nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：
 
-根据你提出的问题「 No DataSource set」，我将依据已有知识进行分析与解答。
+根据你提出的问题「nacos-opensource No DataSource set」，我将依据已有知识进行分析与解答。
 
 **问题分析：**
 当你遇到「No DataSource set」错误时，这表明Nacos在启动过程中未能成功连接到配置的数据库。这可能是由几个关键因素引起的，包括但不限于配置错误、网络问题或数据库自身的配置限制。

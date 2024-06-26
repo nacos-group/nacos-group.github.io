@@ -1,6 +1,6 @@
 ---
 id: "question-history-13478"
-title: "nacos1和2的区别 "
+title: "nacos1和2的区别 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos 1和Nacos 2的主要区别在于API的变更和协议的升级。Nacos2.0开始，对大量客户端访问的API进行了调整，从HTTP协议切换到了gRPC协议，这导致了Nacos1.X与Nacos2.X在API路径和通信协议上存在显著不同。尽管如此，Nacos2.X的服务端为了保证向后兼容，仍然"

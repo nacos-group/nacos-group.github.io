@@ -1,6 +1,6 @@
 ---
 id: "question-history-8212"
-title: "目前信创要求已经很普遍了，nacos是否有可能支持国产GauessDB数据库呢 "
+title: "目前信创要求已经很普遍了，nacos是否有可能支持国产GauessDB数据库呢 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos确实考虑到了对国产数据库的支持需求。根据提供的信息，Nacos从2.2版本开始已经支持了包括PostgreSQL、Oracle及达梦数据库在内的多种数据库，并且提供了数据源插件机制来进一步扩展对其他数据库的支持。这表明Nacos设计时已预留了对不同数据库系统的兼容性接口。针对国产Gaues"

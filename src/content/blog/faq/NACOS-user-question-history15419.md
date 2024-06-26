@@ -1,13 +1,13 @@
 ---
 id: "question-history-15419"
-title: "用docker部署一个nacos服务，开启鉴权，并且在springBoot项目里面配置nacos实现访问， "
+title: "用docker部署一个nacos服务，开启鉴权，并且在springBoot项目里面配置nacos实现访问， nacos-opensource"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "要使用Docker部署一个Nacos服务并开启鉴权，同时在Spring Boot项目中配置Nacos以实现访问，您可以按照以下步骤操作：### 步骤分析与操作指南#### 1. **Nacos Docker部署并开启鉴权**- **准备鉴权参数**：根据Nacos的鉴权需求，您需要准备以下环境变量值"
 ---
 
 ## 用户问题 ： 
- 用docker部署一个nacos服务，开启鉴权，并且在springBoot项目里面配置nacos实现访问，请问怎么操作？  
+ 用docker部署一个nacos服务，开启鉴权，并且在springBoot项目里面配置nacos实现访问，请问怎么操作？ nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

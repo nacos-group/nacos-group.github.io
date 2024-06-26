@@ -1,6 +1,6 @@
 ---
 id: "question-history-11195"
-title: "nacos 是什么？ "
+title: "nacos 是什么？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos是阿里巴巴开源的一个强大的基础服务管理平台，旨在简化云原生应用的构建、部署和管理过程。Nacos的核心特性包括服务发现与健康检查、动态配置服务、动态DNS服务以及服务和元数据管理。具体来说：1. **服务发现与健康检查**：Nacos支持通过DNS和RPC协议实现服务发现，能够自动进行服务"

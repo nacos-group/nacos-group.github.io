@@ -1,6 +1,6 @@
 ---
 id: "question-history-13377"
-title: "nacos1.0升级到2.0,客户端要做升级吗 "
+title: "nacos1.0升级到2.0,客户端要做升级吗 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据已知信息，当Nacos从1.0升级到2.0时，客户端确实需要进行升级。原因在于Nacos2.0在API层面做了较大调整，包括将大量客户端访问的API由HTTP切换到gRPC，这导致Nacos1.0和Nacos2.0的API在路径和协议上存在显著差异。尽管Nacos2.X服务端为了兼容性，能够支持"

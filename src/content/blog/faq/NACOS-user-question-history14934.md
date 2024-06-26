@@ -1,13 +1,13 @@
 ---
 id: "question-history-14934"
-title: "k8s 的Nacos 从2.0.3 升级到2.2.1b 具体步骤 "
+title: "k8s 的Nacos 从2.0.3 升级到2.2.1b 具体步骤 nacos-opensource"
 date: "2024-06-03"
 category: "expertConsultation"
 description: "根据已有的知识，我们可以概括出升级Nacos在Kubernetes(K8s)环境中从2.0.3版本到2.2.1b版本的基本步骤。虽然直接针对K8s环境的具体步骤未明确定义，但我们可以根据通用的Nacos升级流程进行调整以适应K8s部署场景。以下是结合Nacos升级通用步骤及K8s环境特点定制的升级步"
 ---
 
 ## 用户问题 ： 
- k8s 的Nacos 从2.0.3 升级到2.2.1b 具体步骤  
+ k8s 的Nacos 从2.0.3 升级到2.2.1b 具体步骤 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

@@ -1,6 +1,6 @@
 ---
 id: "question-history-11187"
-title: "Nacos nacos 开源当前稳定版本 "
+title: "Nacos nacos 开源当前稳定版本 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos的当前稳定版本推荐使用2.X系列。您可以通过访问Nacos官方网站的[下载页面](https://nacos.io/download/nacos-server/)或者查看GitHub上的[release版本](https://github.com/alibaba/nacos/release"

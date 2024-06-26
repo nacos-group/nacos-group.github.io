@@ -1,13 +1,13 @@
 ---
 id: "question-history-15462"
-title: "如何实现nacos配置文件热更新 "
+title: "如何实现nacos配置文件热更新 nacos-opensource"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "要实现Nacos配置文件的热更新，我们首先需要确保配置正确并理解Nacos热更新的工作原理，接下来根据遇到的问题进行排查和解决。以下是基于提供的知识进行的分析与步骤指导：### 理解与准备Nacos配置热更新主要是通过客户端监听配置变更来实现的。当Nacos服务器上的配置发生变化时，它会自动推送给已"
 ---
 
 ## 用户问题 ： 
- 如何实现nacos配置文件热更新  
+ 如何实现nacos配置文件热更新 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

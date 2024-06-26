@@ -1,6 +1,6 @@
 ---
 id: "question-history-11823"
-title: "nacos application.properties详解 "
+title: "nacos application.properties详解 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos `application.properties` 配置文件是Nacos服务端配置的核心部分，用于定制化Nacos的各种行为和特性。以下是对Nacos `application.properties` 文件中关键参数的详解，依据提供的知识内容：### 全局参数配置- **nacos.hom"

@@ -1,6 +1,6 @@
 ---
 id: "question-history-12713"
-title: "nacos关闭双写 需要每个节点执行么？ "
+title: "nacos关闭双写 需要每个节点执行么？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos 2.3.0及以上版本中，由于这些版本默认不存在双写模式，因此无需执行关闭双写的操作。但针对提问中的“nacos关闭双写需要每个节点执行么？”这一问题，基于Nacos的运作机制和提供的解决方案，如果是在需要关闭双写的旧版本情况下，关闭双写的操作理论上是针对整个集群的配置更改，因而确实需要"

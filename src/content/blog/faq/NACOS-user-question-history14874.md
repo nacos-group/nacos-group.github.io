@@ -1,13 +1,13 @@
 ---
 id: "question-history-14874"
-title: "nacos 作为注册中心403，本地代码正常连接，推到linux 403 "
+title: "nacos 作为注册中心403，本地代码正常连接，推到linux 403 nacos-opensource"
 date: "2024-06-02"
 category: "expertConsultation"
 description: "根据您描述的问题，即Nacos作为注册中心在本地运行正常，但部署到Linux服务器后遇到403错误，我们可以从几个方面进行分析和排查：### 分析原因：1. **权限与防火墙设置**：Linux服务器上可能有更严格的权限控制或防火墙规则，导致Nacos客户端无法成功访问Nacos Server。2."
 ---
 
 ## 用户问题 ： 
- nacos 作为注册中心403，本地代码正常连接，推到linux 403  
+ nacos 作为注册中心403，本地代码正常连接，推到linux 403 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

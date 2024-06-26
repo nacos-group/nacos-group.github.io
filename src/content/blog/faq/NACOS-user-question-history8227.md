@@ -1,6 +1,6 @@
 ---
 id: "question-history-8227"
-title: "请问构建nacos集群时，通过VIP nginx构建性能好还是直接注册到集群性能好？ "
+title: "请问构建nacos集群时，通过VIP nginx构建性能好还是直接注册到集群性能好？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在构建Nacos集群时，关于VIP Nginx与直接注册到集群的性能比较，我们可以从以下几个方面进行分析：1. **网络路径与负载均衡**：   - VIP Nginx方式：通过虚拟IP（VIP）配合Nginx实现负载均衡，可以提供统一的访问入口，Nginx能够根据配置策略智能地分发请求到后端不同的"

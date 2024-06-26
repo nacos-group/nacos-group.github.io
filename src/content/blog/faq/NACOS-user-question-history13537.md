@@ -1,6 +1,6 @@
 ---
 id: "question-history-13537"
-title: "Invalid server identity key or value, Please make sure set `nacos.core.auth.server.identity.key "
+title: "Invalid server identity key or value, Please make sure set `nacos.core.auth.server.identity.key nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "遇到“Invalid server identity key or value, Please make sure set `nacos.core.auth.server.identity.key`”的错误提示，表明Nacos在尝试验证服务器标识密钥(key)及其对应的值(value)时发现配置不正"

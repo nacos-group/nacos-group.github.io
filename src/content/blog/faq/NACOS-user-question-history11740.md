@@ -1,20 +1,20 @@
 ---
 id: "question-history-11740"
-title: "Unresolved dependency: ‘com.alibaba.cloud:spring-clou "
+title: "Unresolved dependency: ‘com.alibaba.cloud:spring-clou nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
-description: "根据提供的知识内容，遇到“ Unresolved dependency: ‘com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:unknown‘”的问题，可能是由于以下几个原因造成的：1. *"
+description: "根据提供的知识内容，遇到“nacos-opensource Unresolved dependency: ‘com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:unknown‘”的问题，可能是由于以下几个原因造成的：1. *"
 tags: ["Unresolved dependency","com.alibaba.cloud","spring-cloud-starter-alibaba-nacos-config","jar","unknown"]
 keywords: ["Unresolved dependency","com.alibaba.cloud","spring-cloud-starter-alibaba-nacos-config","jar","unknown"]
 ---
 
 ## 用户问题 ： 
- Unresolved dependency: ‘com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:unknown‘  
+ Unresolved dependency: ‘com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:unknown‘ nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：
 
-根据提供的知识内容，遇到“ Unresolved dependency: ‘com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:unknown‘”的问题，可能是由于以下几个原因造成的：
+根据提供的知识内容，遇到“nacos-opensource Unresolved dependency: ‘com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:unknown‘”的问题，可能是由于以下几个原因造成的：
 
 1. **版本不匹配或未知**: Maven在解析依赖时无法识别`spring-cloud-starter-alibaba-nacos-config`的特定版本，因为你在依赖声明中使用了`[latest version]`或者实际使用的版本标记为`unknown`，这会导致Maven无法确定具体的版本号去下载相应的依赖。
 

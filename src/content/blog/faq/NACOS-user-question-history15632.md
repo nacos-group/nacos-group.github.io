@@ -1,13 +1,13 @@
 ---
 id: "question-history-15632"
-title: "nacos2.2.1和2.3.2区别 "
+title: "nacos2.2.1和2.3.2区别 nacos-opensource"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "我目前了解到的信息可能不足以支持你的问题，关于Nacos 2.2.1和2.3.2的具体区别，知识库中并未直接提供详细的版本对比信息。你可以参考Nacos的官方文档或发行说明来获取这两个版本之间的具体差异，或者提供更具体的问题点，如是否有关于API变更、性能改进、新功能引入等方面的疑问，这样我可能能更"
 ---
 
 ## 用户问题 ： 
- nacos2.2.1和2.3.2区别  
+ nacos2.2.1和2.3.2区别 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

@@ -1,6 +1,6 @@
 ---
 id: "question-history-8279"
-title: "How to do HTTP health check use register instance port "
+title: "How to do HTTP health check use register instance port nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要使用HTTP健康检查并利用注册实例端口，可以参照Nacos提供的HTTP API来实现。根据提供的知识内容，以下是具体的步骤：1. **准备服务信息**：   - 确定你需要检查的服务名称（如：`serviceName=nacos.test.1`）。   - 确认服务实例的IP地址（如：`ip=1"

@@ -1,6 +1,6 @@
 ---
 id: "question-history-11854"
-title: "Nacos status:501,error:Not Implemented,message:no such api:GET: nacos v1 ns cluster state,path: nacos v1 ns cluster state} "
+title: "Nacos status:501,error:Not Implemented,message:no such api:GET: nacos v1 ns cluster state,path: nacos v1 ns cluster state} nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "遇到Nacos返回`status:501,error:Not Implemented`错误，表明您尝试访问的API在Nacos服务器上未实现。根据提供的信息，具体错误信息为`message:no such api:GET:/nacos/v1/ns/cluster/state`。针对这一问题，您可以按"

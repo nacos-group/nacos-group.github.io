@@ -1,6 +1,6 @@
 ---
 id: "question-history-13531"
-title: "更改nacos的默认用户名nacos "
+title: "更改nacos的默认用户名nacos nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "更改Nacos的默认用户名（从'nacos'更改为其他用户名）的操作并不直接支持。Nacos的设计原则是初始化后不允许修改用户名，仅支持修改密码及新增用户。根据提供的知识内容，这里给出相应的指导：1. **初始化集群前修改用户名**   - 如果您还未部署Nacos集群，可以在部署前，通过修改配置文"

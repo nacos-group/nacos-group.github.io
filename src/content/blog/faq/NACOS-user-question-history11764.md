@@ -1,6 +1,6 @@
 ---
 id: "question-history-11764"
-title: "nacos可以重启吗？ "
+title: "nacos可以重启吗？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos服务是可以重启的，但重启后可能会遇到如“NacosException: failed to req API”这类异常，尤其是在Nacos服务所在的机器IP发生改变的情况下。根据提供的知识内容，这里有一些与重启相关的处理步骤和注意事项：1. **理解重启后的潜在问题**：重启Nacos服务器"

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15183"
-title: "nacos 仅做配置中心时的配置样例 "
+title: "nacos 仅做配置中心时的配置样例 nacos-opensource"
 date: "2024-06-08"
 category: "expertConsultation"
 description: "要使用Nacos作为仅配置中心的配置样例，您可以遵循以下步骤进行配置，这些步骤基于提供的知识内容进行了简化，专注于配置管理部分：### 步骤 1: 添加依赖确保您的Spring项目中添加了Nacos Spring Context的依赖。可以通过Maven或Gradle添加。以下是一个Maven依赖的"
 ---
 
 ## 用户问题 ： 
- nacos 仅做配置中心时的配置样例  
+ nacos 仅做配置中心时的配置样例 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15447"
-title: "在请求curl -X GET 'http: 127.0.0.1:8848 nacos v2 cs conf "
+title: "在请求curl -X GET 'http: 127.0.0.1:8848 nacos v2 cs conf nacos-opensource"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据您提供的错误信息和已有知识，我们可以分析并尝试解决您遇到的问题。### 问题原因分析您在使用curl命令请求Nacos配置时遇到了403 Forbidden错误，错误信息为user not found!。这通常意味着您的请求没有提供有效的认证信息，即Nacos服务器未能识别出合法的用户身份。##"
 ---
 
 ## 用户问题 ： 
- 在请求curl -X GET 'http: 127.0.0.1:8848 nacos v2 cs config dataId=nacos.example&group=DEFAULT_GROUP&namespaceId=public'时报{ "timestamp": "2024-06-13T09:12:03.161 00:00", "status": 403, "error": "Forbidden", "message": "user not found!", "path": " nacos v2 cs config" }是什么原因  
+ 在请求curl -X GET 'http: 127.0.0.1:8848 nacos v2 cs config dataId=nacos.example&group=DEFAULT_GROUP&namespaceId=public'时报{ "timestamp": "2024-06-13T09:12:03.161 00:00", "status": 403, "error": "Forbidden", "message": "user not found!", "path": " nacos v2 cs config" }是什么原因 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

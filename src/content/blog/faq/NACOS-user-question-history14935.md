@@ -1,13 +1,13 @@
 ---
 id: "question-history-14935"
-title: "ubuntu下用sh单机启动nacos会启动失败，用bash启动nacos会成功，为什么 "
+title: "ubuntu下用sh单机启动nacos会启动失败，用bash启动nacos会成功，为什么 nacos-opensource"
 date: "2024-06-03"
 category: "expertConsultation"
 description: "在Ubuntu系统下，使用`sh`启动Nacos可能会遇到脚本执行的问题，因为`sh`默认指向的是dash shell，而Nacos的启动脚本可能包含了bash特定的语法，这在dash中可能不被支持。相比之下，`bash`是GNU Bourne Again Shell，它支持更多的高级特性和语法，因"
 ---
 
 ## 用户问题 ： 
- ubuntu下用sh单机启动nacos会启动失败，用bash启动nacos会成功，为什么  
+ ubuntu下用sh单机启动nacos会启动失败，用bash启动nacos会成功，为什么 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

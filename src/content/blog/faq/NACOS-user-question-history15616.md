@@ -1,18 +1,18 @@
 ---
 id: "question-history-15616"
-title: "nacos helm安装后如何开启监控指标暴露 "
+title: "nacos helm安装后如何开启监控指标暴露 nacos-opensource"
 date: "2024-06-18"
 category: "expertConsultation"
-description: "为了您的问题「 nacos helm安装后如何开启监控指标暴露」，我们可以依据提供的知识进行分析和解答。### 分析问题原因根据知识内容，我们知道Nacos支持通过Micrometer暴露监控指标，允许与诸如Prometheus这样的监控系统集成。但是，直接的信息中并"
+description: "为了您的问题「nacos-opensource nacos helm安装后如何开启监控指标暴露」，我们可以依据提供的知识进行分析和解答。### 分析问题原因根据知识内容，我们知道Nacos支持通过Micrometer暴露监控指标，允许与诸如Prometheus这样的监控系统集成。但是，直接的信息中并"
 ---
 
 ## 用户问题 ： 
- nacos helm安装后如何开启监控指标暴露  
+ nacos helm安装后如何开启监控指标暴露 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：
 
-为了您的问题「 nacos helm安装后如何开启监控指标暴露」，我们可以依据提供的知识进行分析和解答。
+为了您的问题「nacos-opensource nacos helm安装后如何开启监控指标暴露」，我们可以依据提供的知识进行分析和解答。
 
 ### 分析问题原因
 

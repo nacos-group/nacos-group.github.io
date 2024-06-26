@@ -1,6 +1,6 @@
 ---
 id: "question-history-8187"
-title: "如何在启动二进制版本的nacos时，设置日志级别为debug呢？ "
+title: "如何在启动二进制版本的nacos时，设置日志级别为debug呢？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在启动二进制版本的Nacos时，若要设置日志级别为debug，您可以按照以下步骤操作：1. **动态修改日志级别**（无需重启Nacos服务器）:   - 使用curl命令通过Nacos提供的接口来调整特定日志模块的级别。例如，要将naming-event日志级别设置为DEBUG，执行以下命令：  "

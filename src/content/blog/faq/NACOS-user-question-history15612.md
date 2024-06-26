@@ -1,13 +1,13 @@
 ---
 id: "question-history-15612"
-title: "在调用Nacos的发布配置接口时，如何区分是新增还是修改 "
+title: "在调用Nacos的发布配置接口时，如何区分是新增还是修改 nacos-opensource"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "在调用Nacos的发布配置接口时，实际上无需直接区分操作是新增还是修改。Nacos的设计已经自动处理了这一逻辑。根据提供的我了解的知识，当我们使用`publishConfig`方法时，Nacos会根据`dataId`和`group`确定配置项。如果该配置项尚不存在，Nacos会创建一个新的配置；如果"
 ---
 
 ## 用户问题 ： 
- 在调用Nacos的发布配置接口时，如何区分是新增还是修改  
+ 在调用Nacos的发布配置接口时，如何区分是新增还是修改 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

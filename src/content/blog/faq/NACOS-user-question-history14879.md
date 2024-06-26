@@ -1,13 +1,13 @@
 ---
 id: "question-history-14879"
-title: "nacos 2.0.4版本 初始化数据库sql "
+title: "nacos 2.0.4版本 初始化数据库sql nacos-opensource"
 date: "2024-06-02"
 category: "expertConsultation"
 description: "在Nacos 2.0.4版本中，初始化数据库所需的SQL脚本名为`mysql-schema.sql`，这与早期Nacos 1.x版本中的`nacos-mysql.sql`不同。根据已有知识，这里是解决该问题的具体步骤：1. **定位SQL脚本**：   首先，确认Nacos 2.0.4安装包解压后的"
 ---
 
 ## 用户问题 ： 
- nacos 2.0.4版本 初始化数据库sql  
+ nacos 2.0.4版本 初始化数据库sql nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

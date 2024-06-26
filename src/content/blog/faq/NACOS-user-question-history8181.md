@@ -1,6 +1,6 @@
 ---
 id: "question-history-8181"
-title: "Does Nacos only support polling for querying service online offline status Can Nacos provide a watch mechanism similar to Zookeeper "
+title: "Does Nacos only support polling for querying service online offline status Can Nacos provide a watch mechanism similar to Zookeeper nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos does offer a mechanism beyond simple polling for tracking the online/offline status of services, akin to the watch mechanism in Zookeeper. While"
