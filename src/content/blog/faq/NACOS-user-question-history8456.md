@@ -1,6 +1,6 @@
 ---
 id: "question-history-8456"
-title: "各位大佬  请问一下在K8s上部署nacos  mysql用单独的库  NFS是必须的吗  作用是用于管理raft日志的 是吗？ "
+title: "各位大佬  请问一下在K8s上部署nacos  mysql用单独的库  NFS是必须的吗  作用是用于管理raft日志的 是吗？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Kubernetes(K8s)上部署Nacos时，使用MySQL作为外部存储而非嵌入式数据库是一种常见做法，以提高数据的持久性和可靠性。关于NFS（Network File System）的需求，这主要关联到Nacos的Raft模式下日志的存储管理。NFS并不是Nacos部署的强制性需求，但它可以"

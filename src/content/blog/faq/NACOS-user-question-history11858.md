@@ -1,6 +1,6 @@
 ---
 id: "question-history-11858"
-title: "nacos服务端动态修改日志级别 "
+title: "nacos服务端动态修改日志级别 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos服务端动态修改日志级别，可以采取以下步骤操作：1. **使用HTTP接口调整日志级别**：   - 准备工作：确保你知道Nacos服务器的主机地址（$nacos_host）以及想要修改的日志模块名称（如`naming-event`）和目标日志级别（如`DEBUG`）。   - 执行命令："

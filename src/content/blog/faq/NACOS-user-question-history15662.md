@@ -1,18 +1,18 @@
 ---
 id: "question-history-15662"
-title: "nacos js main.js nacos部署的静态js再部署的什么地方 "
+title: "nacos js main.js nacos部署的静态js再部署的什么地方 nacos-opensource"
 date: "2024-06-18"
 category: "expertConsultation"
-description: "根据提供的知识内容，关于` /nacos/js/main.js`的部署位置并没有直接说明。但是，我们可以根据Nacos的部署原理和结构来进行合理推测。Nacos作为一个服务发现与配置管理平台，其静态资源如`main.js`等文件通常位于Nacos服务器的Web应用静态"
+description: "根据提供的知识内容，关于`nacos-opensource /nacos/js/main.js`的部署位置并没有直接说明。但是，我们可以根据Nacos的部署原理和结构来进行合理推测。Nacos作为一个服务发现与配置管理平台，其静态资源如`main.js`等文件通常位于Nacos服务器的Web应用静态"
 ---
 
 ## 用户问题 ： 
- nacos js main.js nacos部署的静态js再部署的什么地方  
+ nacos js main.js nacos部署的静态js再部署的什么地方 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：
 
-根据提供的知识内容，关于` /nacos/js/main.js`的部署位置并没有直接说明。但是，我们可以根据Nacos的部署原理和结构来进行合理推测。
+根据提供的知识内容，关于`nacos-opensource /nacos/js/main.js`的部署位置并没有直接说明。但是，我们可以根据Nacos的部署原理和结构来进行合理推测。
 
 Nacos作为一个服务发现与配置管理平台，其静态资源如`main.js`等文件通常位于Nacos服务器的Web应用静态资源目录下。在Nacos的部署结构中，这些静态资源通常是作为Nacos服务器Web应用的一部分被打包部署的。当你通过官方发行包或源码构建的方式部署Nacos时，这些静态资源会被部署在Nacos服务器内部，并通过Nacos的Web容器（通常是嵌入式的Tomcat）对外提供服务。
 

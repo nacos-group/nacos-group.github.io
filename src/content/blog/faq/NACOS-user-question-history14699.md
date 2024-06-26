@@ -1,6 +1,6 @@
 ---
 id: "question-history-14699"
-title: "Nacos默认jwt密钥导致未授权访问这个问题该如何解决呢 "
+title: "Nacos默认jwt密钥导致未授权访问这个问题该如何解决呢 nacos-opensource"
 date: "2024-05-29"
 category: "expertConsultation"
 description: "要解决Nacos默认JWT密钥导致的未授权访问问题，可以遵循以下步骤：1. **确认当前Nacos版本**：首先，确保您的Nacos服务端版本至少为2.2.3，因为从这个版本开始，Nacos默认不再指定默认密钥以避免因未修改默认密钥而带来的安全风险。2. **开启鉴权功能**：如果尚未开启，您需要立"

@@ -1,6 +1,6 @@
 ---
 id: "question-history-11763"
-title: "nacos修改默认用户名和密码的具体步骤 "
+title: "nacos修改默认用户名和密码的具体步骤 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要修改Nacos的默认用户名和密码，您可以按照以下步骤操作：### 初始化集群前修改默认用户名和密码1. **准备加密密码**：首先，您需要使用BCrypt算法对新密码进行加密。可以利用Nacos提供的`PasswordEncoderUtil`工具类进行加密。在Java环境中，运行以下代码片段，将`"

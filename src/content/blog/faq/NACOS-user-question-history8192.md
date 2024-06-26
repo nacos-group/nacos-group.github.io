@@ -1,6 +1,6 @@
 ---
 id: "question-history-8192"
-title: "自研注册中心 配置中心 并兼容 nacos client 是否存在开源协议的冲突？ "
+title: "自研注册中心 配置中心 并兼容 nacos client 是否存在开源协议的冲突？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据已有的知识内容，自研注册中心和配置中心并兼容Nacos Client不存在开源协议的冲突。Nacos采用的是Apache License 2.0，这一许可证允许用户自由地使用、复制、修改、合并、发布和再许可被授权软件的副本。只要在使用或修改Nacos源代码时保留原始版权、许可和免责声明，并在修改"

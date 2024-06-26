@@ -1,6 +1,6 @@
 ---
 id: "question-history-8419"
-title: "有同学有nacos2.3.0部署的yaml吗。试了几个好像不太行。 "
+title: "有同学有nacos2.3.0部署的yaml吗。试了几个好像不太行。 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据你提到的需求，虽然提供的参考内容没有直接包含Nacos 2.3.0的完整部署yaml文件，但可以基于现有信息给出一些建议来帮助你正确配置Nacos 2.3.0的部署yaml。### 分析问题你希望获取适用于Nacos 2.3.0版本的部署yaml配置，用于确保服务能够顺利部署。尽管直接的yaml"

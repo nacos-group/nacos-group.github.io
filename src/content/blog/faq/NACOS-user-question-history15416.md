@@ -1,13 +1,13 @@
 ---
 id: "question-history-15416"
-title: "如何解决Nacos serverIdentity 权限绕过的问题 "
+title: "如何解决Nacos serverIdentity 权限绕过的问题 nacos-opensource"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "为了解决Nacos serverIdentity权限绕过的问题，我们首先需要明确您当前使用的Nacos服务器版本，然后根据具体情况采取相应的措施。根据提供的知识内容，这里分几种情况来解答：### 问题分析- **低版本存在漏洞**: 如果您的Nacos版本低于1.4.1，存在身份认证绕过漏洞。这主要"
 ---
 
 ## 用户问题 ： 
- 如何解决Nacos serverIdentity 权限绕过的问题  
+ 如何解决Nacos serverIdentity 权限绕过的问题 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

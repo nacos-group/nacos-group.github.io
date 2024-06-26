@@ -1,6 +1,6 @@
 ---
 id: "question-history-8265"
-title: "客户端注册到 nacos 之后, 此时客户端断网很长时间后, nacos 服务端一直无法下线服务 "
+title: "客户端注册到 nacos 之后, 此时客户端断网很长时间后, nacos 服务端一直无法下线服务 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，我们可以分析该问题的原因及提出相应的解决方案。### 问题原因1. **心跳维持问题**：客户端虽然断网，但若客户端进程仍在运行，可能会因心跳机制继续向Nacos服务端发送心跳，导致服务端认为客户端仍在线。2. **网络状态检测延迟**：Nacos服务端可能因为网络状况检测的延迟"

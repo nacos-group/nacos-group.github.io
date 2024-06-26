@@ -1,12 +1,12 @@
 ---
 id: "question-history-14773"
-title: "INF0 receive config info: unknown#racos2-0.nacos2-headless.default.svc.cluster.local:8848#171702068 "
+title: "INF0 receive config info: unknown#racos2-0.nacos2-headless.default.svc.cluster.local:8848#171702068 nacos-opensource"
 date: "2024-05-30"
 category: "expertConsultation"
-description: "根据提供的信息，您遇到的问题是` INF0 receive config info: unknown#racos2-0.nacos2-headless.default.svc.cluster.local:8848#171702068`。这表明Nacos在接收配置信息时"
+description: "根据提供的信息，您遇到的问题是`nacos-opensource INF0 receive config info: unknown#racos2-0.nacos2-headless.default.svc.cluster.local:8848#171702068`。这表明Nacos在接收配置信息时"
 ---
 
-根据提供的信息，您遇到的问题是` INF0 receive config info: unknown#racos2-0.nacos2-headless.default.svc.cluster.local:8848#171702068`。这表明Nacos在接收配置信息时识别到了一个名为`unknown`的应用来源，同时指出了该请求来源于`racos2-0.nacos2-headless.default.svc.cluster.local:8848`这一地址。
+根据提供的信息，您遇到的问题是`nacos-opensource INF0 receive config info: unknown#racos2-0.nacos2-headless.default.svc.cluster.local:8848#171702068`。这表明Nacos在接收配置信息时识别到了一个名为`unknown`的应用来源，同时指出了该请求来源于`racos2-0.nacos2-headless.default.svc.cluster.local:8848`这一地址。
 
 ### 原因分析
 结合我了解的知识，特别是第3篇参考内容《Nacos 订阅者列表 应用名显示 unknown》，问题原因很可能是**应用启动时未正确设置应用名**。这意味着Nacos无法识别到具体是哪个应用发起了配置信息的订阅请求，因此显示为`unknown`。

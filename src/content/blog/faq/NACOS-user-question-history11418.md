@@ -1,6 +1,6 @@
 ---
 id: "question-history-11418"
-title: "如何通过docker-compose 安装部署单机版nacos "
+title: "如何通过docker-compose 安装部署单机版nacos nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要通过docker-compose安装部署单机版Nacos，请遵循以下步骤：1. **准备环境**：确保你的系统中已安装Docker和docker-compose，这是运行Nacos单机版的基础环境需求。2. **获取docker-compose.yml文件**：访问Nacos-Docker项目的G"

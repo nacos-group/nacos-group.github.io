@@ -1,6 +1,6 @@
 ---
 id: "question-history-11184"
-title: "nacos python支持 "
+title: "nacos python支持 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos确实支持Python语言，这使得Python开发者能够集成Nacos来实现服务发现与配置管理等功能。为了在Python项目中使用Nacos，你可以参考Nacos官方提供的Python SDK，它由Nacos社区维护。### 使用步骤：1. **安装Nacos Python SDK**：  "

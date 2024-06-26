@@ -1,6 +1,6 @@
 ---
 id: "question-history-11787"
-title: "使用nacos 作为微服务spring cloud的注册中心、配置中心搭建的具体方法 "
+title: "使用nacos 作为微服务spring cloud的注册中心、配置中心搭建的具体方法 nacos-opensource"
 date: "2024-05-31"
 category: "expertConsultation"
 description: "要使用Nacos作为微服务Spring Cloud的注册中心和配置中心，可以遵循以下步骤进行搭建：### 1. 环境准备与Nacos Server启动- **下载与启动Nacos Server**    首先，确保您已下载并启动了Nacos Server。如果您还没有这样做，请参照[Nacos 快速"

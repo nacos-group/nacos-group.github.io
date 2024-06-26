@@ -1,13 +1,13 @@
 ---
 id: "question-history-15152"
-title: "nacos 默认端口介绍 "
+title: "nacos 默认端口介绍 nacos-opensource"
 date: "2024-06-07"
 category: "expertConsultation"
 description: "Nacos默认端口的介绍如下：1. **主端口 (HTTP)**: 默认为8848。此端口用于客户端、控制台以及OpenAPI的HTTP通信。客户端通过这个端口与Nacos服务端进行配置信息、服务发现等数据交互。2. **客户端gRPC请求服务端端口**: 默认为9848，即主端口+1000。这个端"
 ---
 
 ## 用户问题 ： 
- nacos 默认端口介绍  
+ nacos 默认端口介绍 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

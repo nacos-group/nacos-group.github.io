@@ -1,6 +1,6 @@
 ---
 id: "question-history-8457"
-title: "有遇到过nacos客户端不发送心跳检测的问题嘛 "
+title: "有遇到过nacos客户端不发送心跳检测的问题嘛 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据已有知识，Nacos客户端确实具备心跳检测机制，用于维持与服务端的连接健康。心跳检测是通过`HealthCheckRequest`来实现的，此机制可以定时校验连接的存活状态。如果遇到Nacos客户端不发送心跳检测的问题，可能的原因包括但不限于配置错误、网络问题或客户端实现的特定bug。解决此问题"

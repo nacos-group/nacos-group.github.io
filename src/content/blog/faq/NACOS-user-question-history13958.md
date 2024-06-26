@@ -1,6 +1,6 @@
 ---
 id: "question-history-13958"
-title: "nacos配置中心实现原理介绍 "
+title: "nacos配置中心实现原理介绍 nacos-opensource"
 date: "2024-05-21"
 category: "expertConsultation"
 description: "Nacos配置中心实现原理主要基于以下几个核心步骤与技术机制：1. **服务发现与注册**：   - **原理**：Nacos作为服务发现组件，允许微服务实例在启动时向Nacos Server注册自身信息（如IP地址、端口号等）。这一步骤通过集成`nacos-discovery-spring-boo"

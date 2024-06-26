@@ -1,13 +1,13 @@
 ---
 id: "question-history-15423"
-title: "nacos_exception_total{name=‘leaderSendBeatFailed’}==2 "
+title: "nacos_exception_total{name=‘leaderSendBeatFailed’}==2 nacos-opensource"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据您提供的信息，`nacos_exception_totalname='leaderSendBeatFailed'==2` 表示Nacos命名空间的领导者发送心跳失败的异常次数为2。这意味着Nacos集群中可能存在主节点（领导者）与其它节点之间的心跳同步问题，这可能影响到服务的正常发现与注册功能。"
 ---
 
 ## 用户问题 ： 
- nacos_exception_total{name=‘leaderSendBeatFailed’}==2 BOT  
+ nacos_exception_total{name=‘leaderSendBeatFailed’}==2 BOT nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

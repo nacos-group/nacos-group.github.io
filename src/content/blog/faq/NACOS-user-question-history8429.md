@@ -1,6 +1,6 @@
 ---
 id: "question-history-8429"
-title: "大佬我想请教下，我们的4个应用服务和nacos服务分别部署在三台服务器上并且都使用docker部署，也就是应用服务和nacos server 都是三个节点，在做高可用测试的时候，模拟服务器断电后重启的情况，我们reboot其中一台A服务器，并且停掉C服务器上的nacos server节点，这时候应该只有B服务器上的nacos 节点是UP的状态，A服务器的nacos状态应该是先从UP变成SUSPICOUS 再变成 DOWN ,最后恢复成UP , 但是我们A服务器上的业务应用在开机自启动的时候，有出现服务注册不了的情况，按道理这时候A服务器上的业务应用的责任节点应该都重新分配到B的nacos节点上了才对，但是看nacos server的日志报了一个receive invalid redirect request from peer {ip} ,这种看源码应该是两个nacos节点计算责任节点出现不一致导致的，但是这里我一直搞不明白为什么会出现这种不一致？ "
+title: "大佬我想请教下，我们的4个应用服务和nacos服务分别部署在三台服务器上并且都使用docker部署，也就是应用服务和nacos server 都是三个节点，在做高可用测试的时候，模拟服务器断电后重启的情况，我们reboot其中一台A服务器，并且停掉C服务器上的nacos server节点，这时候应该只有B服务器上的nacos 节点是UP的状态，A服务器的nacos状态应该是先从UP变成SUSPICOUS 再变成 DOWN ,最后恢复成UP , 但是我们A服务器上的业务应用在开机自启动的时候，有出现服务注册不了的情况，按道理这时候A服务器上的业务应用的责任节点应该都重新分配到B的nacos节点上了才对，但是看nacos server的日志报了一个receive invalid redirect request from peer {ip} ,这种看源码应该是两个nacos节点计算责任节点出现不一致导致的，但是这里我一直搞不明白为什么会出现这种不一致？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据您的描述，这个问题可能涉及Nacos集群的高可用机制与Docker容器重启后的服务注册逻辑。尽管提供的知识内容没有直接覆盖到您遇到的特定错误信息，我们可以结合Nacos的工作原理和您描述的现象进行分析。### 原因分析：1. **Nacos节点状态转换异常**：A服务器上的Nacos节点状态从U"

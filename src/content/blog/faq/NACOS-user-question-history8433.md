@@ -1,6 +1,6 @@
 ---
 id: "question-history-8433"
-title: "单机模式 自建MySQL数据库  需要自己创建数据库和表么？ "
+title: "单机模式 自建MySQL数据库  需要自己创建数据库和表么？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在使用Nacos单机模式搭配自建MySQL数据库时，您确实需要自己预先创建数据库和表。根据Nacos开源项目的指导信息，这里为您梳理具体操作步骤：1. **准备MySQL环境**：确保您的环境中已安装并运行了MySQL服务器，且版本兼容性需满足Nacos的要求，即支持MySQL5.6及以上版本。2."

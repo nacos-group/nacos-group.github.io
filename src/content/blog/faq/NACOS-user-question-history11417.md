@@ -1,6 +1,6 @@
 ---
 id: "question-history-11417"
-title: "如何docker部署nacos集群 "
+title: "如何docker部署nacos集群 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要使用Docker部署Nacos集群，您可以遵循以下步骤：1. **准备环境与基础了解**：   - 确保您已经具备Docker环境，并且对Docker的基本操作有所了解。   - 参考Nacos官方的Docker部署说明，地址：[https://github.com/nacos-group/nac"

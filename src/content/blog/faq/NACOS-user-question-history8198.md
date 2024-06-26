@@ -1,6 +1,6 @@
 ---
 id: "question-history-8198"
-title: "k8s 中部署了 3 个 nacos 节点，spring cloud alibaba 应该怎么配置。k8s 中部署了 3 个 nacos 节点，对应三个 headless 地址： "
+title: "k8s 中部署了 3 个 nacos 节点，spring cloud alibaba 应该怎么配置。k8s 中部署了 3 个 nacos 节点，对应三个 headless 地址： nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Kubernetes (k8s) 中部署了3个Nacos节点并采用Spring Cloud Alibaba集成时，您需要确保客户端能够发现并连接到这些Nacos节点。由于您提到了三个headless地址，这意味着每个Nacos节点都有一个独立的DNS记录，可以直接通过域名访问而无需负载均衡器。以下"

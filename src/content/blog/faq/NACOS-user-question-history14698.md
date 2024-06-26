@@ -1,6 +1,6 @@
 ---
 id: "question-history-14698"
-title: "Nacos http error, code=403,msg=unknown user!,dataId=springcloud-gateway-local.yaml,group=DEFAULT_GROUP,tenant=4085e8a3-d364-457a-a983-7142f92c5964 "
+title: "Nacos http error, code=403,msg=unknown user!,dataId=springcloud-gateway-local.yaml,group=DEFAULT_GROUP,tenant=4085e8a3-d364-457a-a983-7142f92c5964 nacos-opensource"
 date: "2024-05-29"
 category: "expertConsultation"
 description: "根据你遇到的问题，Nacos 报告了一个 HTTP 错误，错误代码为 403，消息为 unknown user!，涉及的配置文件为 `springcloud-gateway-local.yaml`，组名为 `DEFAULT_GROUP`，租户 ID 为 `4085e8a3-d364-457a-a98"

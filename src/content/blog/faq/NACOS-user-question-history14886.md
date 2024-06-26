@@ -1,13 +1,13 @@
 ---
 id: "question-history-14886"
-title: "K8S部署的怎么开启nacos.core.auth.enabled=true "
+title: "K8S部署的怎么开启nacos.core.auth.enabled=true nacos-opensource"
 date: "2024-06-02"
 category: "expertConsultation"
 description: "要在一个Kubernetes(K8s)集群中部署的Nacos实例上开启鉴权功能，即设置`nacos.core.auth.enabled=true`，你可以按照以下步骤操作：1. **准备环境变量**: 根据Nacos官方提供的Kubernetes部署指南和镜像文档，你需要在部署Nacos的Kuber"
 ---
 
 ## 用户问题 ： 
- K8S部署的怎么开启nacos.core.auth.enabled=true  
+ K8S部署的怎么开启nacos.core.auth.enabled=true nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

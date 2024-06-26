@@ -1,6 +1,6 @@
 ---
 id: "question-history-8269"
-title: "core-auth日志文件一直在无休止打印异常日志。日志内容：DEBUG auth start, request: POST  nacos v1 cs configs listener；DEBUG access denied, request: POST  nacos v1 cs configs listener, reason: user not foud "
+title: "core-auth日志文件一直在无休止打印异常日志。日志内容：DEBUG auth start, request: POST  nacos v1 cs configs listener；DEBUG access denied, request: POST  nacos v1 cs configs listener, reason: user not foud nacos-opensource"
 date: "2024-05-29"
 category: "expertConsultation"
 description: "根据提供的信息，问题的核心在于Nacos的core-auth组件日志文件不停打印DEBUG级别的异常日志，特别是关于“access denied, reason: user not found”的错误。结合已有知识，我们可以分步分析并提出解决策略：1. **问题分析**:   - 日志中显示“acc"

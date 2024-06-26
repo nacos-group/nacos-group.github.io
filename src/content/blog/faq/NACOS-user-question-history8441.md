@@ -1,6 +1,6 @@
 ---
 id: "question-history-8441"
-title: "兄弟，你知道现在nacos还能使用内置数据源吗，我这配置文件mysql注释了，但是启动提示找不到jb.url "
+title: "兄弟，你知道现在nacos还能使用内置数据源吗，我这配置文件mysql注释了，但是启动提示找不到jb.url nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，我分析您的问题如下：1. 您提到的“nacos还能使用内置数据源”，根据Nacos的配置特性，它确实支持使用内置数据源（如Derby）以及外部数据源（如MySQL）。当未配置或注释掉MySQL相关设置时，理论上应自动切换到内置数据源。2. 您遇到的问题是启动Nacos时提示找不到"

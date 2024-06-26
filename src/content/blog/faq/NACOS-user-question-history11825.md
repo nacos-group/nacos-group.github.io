@@ -1,6 +1,6 @@
 ---
 id: "question-history-11825"
-title: "nacos 为什么要关闭双写？ "
+title: "nacos 为什么要关闭双写？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos集群升级完成后，关闭双写的主要原因是为了解除因双写机制带来的性能约束，从而提升系统运行效率。双写机制原本是为了确保数据在升级过程中的一致性，即在新旧两个版本的数据存储之间同时写入数据，确保双方数据同步。这一过程虽然增强了数据可靠性，但是也消耗了额外的系统资源，尤其是在写操作频繁的场景下，"

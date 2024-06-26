@@ -1,6 +1,6 @@
 ---
 id: "question-history-8184"
-title: "nacos-server 2.0.3升级到2.1.x "
+title: "nacos-server 2.0.3升级到2.1.x nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，对于从Nacos Server 2.0.3升级到2.1.x的步骤，可以概括如下：1. **检查并应用数据库变更**：   - 首先，你需要查看Nacos 2.1.x版本相对于2.0.3是否有数据库表结构的变化。这通常通过对比新版本的`nacos-mysql.sql`与当前使用的数"

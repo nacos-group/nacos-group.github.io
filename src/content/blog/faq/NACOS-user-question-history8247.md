@@ -1,6 +1,6 @@
 ---
 id: "question-history-8247"
-title: "nacos支持服务列表分组隔离了嘛 "
+title: "nacos支持服务列表分组隔离了嘛 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos确实支持服务列表的分组隔离。根据提供的知识内容，Nacos通过三个核心要素来管理服务和配置：命名空间（namespace）、分组（group）和服务名（serviceName或dataId）。其中：1. **命名空间（namespace）**：用于强制隔离资源，适用于环境、租户等需要严格隔"

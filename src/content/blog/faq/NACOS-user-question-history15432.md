@@ -1,13 +1,13 @@
 ---
 id: "question-history-15432"
-title: "数据库初始化语句位置 https: github.com alibaba nacos blob devel "
+title: "数据库初始化语句位置 https: github.com alibaba nacos blob devel nacos-opensource"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据您的问题，您似乎在寻找Nacos数据库初始化语句的位置，并提到了一个特定的URL（https://github.com/alibaba/nacos/blob/develop/distribution/conf/nacos-mysql.sql）以及一个关于在`nacos/conf`目录下找不到`n"
 ---
 
 ## 用户问题 ： 
- 数据库初始化语句位置 https: github.com alibaba nacos blob develop distribution conf nacos-mysql.sql USER : 无法在nacos conf下找到nacos-mysql.sql  
+ 数据库初始化语句位置 https: github.com alibaba nacos blob develop distribution conf nacos-mysql.sql USER : 无法在nacos conf下找到nacos-mysql.sql nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

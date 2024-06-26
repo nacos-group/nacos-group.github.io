@@ -1,6 +1,6 @@
 ---
 id: "question-history-12724"
-title: "Nacos windows运行nacos，如何判断成功运行 "
+title: "Nacos windows运行nacos，如何判断成功运行 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要判断Nacos在Windows上是否成功运行，可以遵循以下步骤：1. **启动Nacos**：   - 根据Nacos官方文档的[quick start](../../quickstart/quick-start.md)，在Windows环境下，通常你会下载Nacos的压缩包，解压后进入`bin`"

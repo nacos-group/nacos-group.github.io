@@ -1,13 +1,13 @@
 ---
 id: "question-history-15648"
-title: "如果nacos连接失败，服务间的调用openfeign，多久会不可用？如何修改该缓存时间？ "
+title: "如果nacos连接失败，服务间的调用openfeign，多久会不可用？如何修改该缓存时间？ nacos-opensource"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "在Nacos连接失败的情况下，服务间通过OpenFeign进行调用时，OpenFeign客户端通常会根据其配置的ribbon或loadbalancer的超时设置来决定何时标记服务为不可用。默认情况下，如果没有特别配置，Ribbon（OpenFeign默认使用的客户端负载均衡器）有以下几个关键的超时配"
 ---
 
 ## 用户问题 ： 
- 如果nacos连接失败，服务间的调用openfeign，多久会不可用？如何修改该缓存时间？  
+ 如果nacos连接失败，服务间的调用openfeign，多久会不可用？如何修改该缓存时间？ nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

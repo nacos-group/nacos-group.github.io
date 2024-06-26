@@ -1,13 +1,13 @@
 ---
 id: "question-history-15141"
-title: "nacos.core.auth.plugin.nacos.token.secret.key 怎么 生成？ "
+title: "nacos.core.auth.plugin.nacos.token.secret.key 怎么 生成？ nacos-opensource"
 date: "2024-06-07"
 category: "expertConsultation"
 description: "要生成`nacos.core.auth.plugin.nacos.token.secret.key`，您可以按照以下步骤操作：1. **选择或创建一个密钥字符串**：首先，您需要选定一个至少32个字符的文本字符串作为原始密钥。这可以是任意组合的字母、数字或者特殊字符，建议使用随机生成的方式以保证安全"
 ---
 
 ## 用户问题 ： 
- nacos.core.auth.plugin.nacos.token.secret.key 怎么 生成？  
+ nacos.core.auth.plugin.nacos.token.secret.key 怎么 生成？ nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

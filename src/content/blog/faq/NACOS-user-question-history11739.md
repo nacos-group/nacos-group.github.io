@@ -1,14 +1,14 @@
 ---
 id: "question-history-11739"
-title: "code:400 msg: param 'metadata' is illegal, the param length should not exceed "
+title: "code:400 msg: param 'metadata' is illegal, the param length should not exceed nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
-description: "遇到错误信息  code:400 msg: param 'metadata' is illegal, the param length should not exceed，其根源在于Nacos 2.3.0及之后版本引入了统一的参数校验逻辑，旨在确保客户端发送至服务端的"
+description: "遇到错误信息 nacos-opensource code:400 msg: param 'metadata' is illegal, the param length should not exceed，其根源在于Nacos 2.3.0及之后版本引入了统一的参数校验逻辑，旨在确保客户端发送至服务端的"
 tags: ["code:400","msg:param metadata is illegal the param length should not exceed"]
 keywords: ["code:400","msg:param metadata is illegal the param length should not exceed"]
 ---
 
-遇到错误信息 " code:400 msg: param 'metadata' is illegal, the param length should not exceed"，其根源在于Nacos 2.3.0及之后版本引入了统一的参数校验逻辑，旨在确保客户端发送至服务端的参数符合预设规则，避免潜在的安全隐患和性能问题。具体到此错误，意味着您尝试注册的服务或实例的元数据（Metadata）长度超过了服务端允许的最大值1024个字符。
+遇到错误信息 "nacos-opensource code:400 msg: param 'metadata' is illegal, the param length should not exceed"，其根源在于Nacos 2.3.0及之后版本引入了统一的参数校验逻辑，旨在确保客户端发送至服务端的参数符合预设规则，避免潜在的安全隐患和性能问题。具体到此错误，意味着您尝试注册的服务或实例的元数据（Metadata）长度超过了服务端允许的最大值1024个字符。
 
 ### 解决步骤：
 

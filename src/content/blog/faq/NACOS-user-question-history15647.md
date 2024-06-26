@@ -1,13 +1,13 @@
 ---
 id: "question-history-15647"
-title: "JBoss如何集成nacos "
+title: "JBoss如何集成nacos nacos-opensource"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "要集成Nacos到JBoss应用服务器，虽然直接的教程未在提供的知识中明确给出，但我们可以通过理解Nacos的基本集成原理和JBoss的应用部署方式来指导这一过程。下面是一般步骤和考虑因素，帮助你在JBoss中集成Nacos：### 步骤分析与建议#### 1. 准备工作- **确保Nacos Se"
 ---
 
 ## 用户问题 ： 
- JBoss如何集成nacos  
+ JBoss如何集成nacos nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

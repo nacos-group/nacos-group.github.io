@@ -1,6 +1,6 @@
 ---
 id: "question-history-11796"
-title: "nacos 搭建本地单机配置中心 "
+title: "nacos 搭建本地单机配置中心 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要搭建本地单机的Nacos配置中心，遵循以下步骤进行操作：### 1. 下载并启动Nacos Server- **下载Nacos**: 访问Nacos的GitHub仓库[[1](https://github.com/alibaba/nacos)]，在页面上找到最新的稳定版本或直接根据文档指引[[2]"

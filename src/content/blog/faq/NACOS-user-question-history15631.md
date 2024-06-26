@@ -1,13 +1,13 @@
 ---
 id: "question-history-15631"
-title: "nacos2.3.2支持Jdk1.8吗 "
+title: "nacos2.3.2支持Jdk1.8吗 nacos-opensource"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "根据我的知识库，Nacos 2.3.2版本支持Jdk1.8。因为在Nacos的支持文档中明确提到，Nacos支持从Jdk8到Jdk17的所有版本。因此，您可以放心地在Jdk1.8环境下使用Nacos 2.3.2。**总结：**- Nacos 2.3.2版本支持Jdk1.8。- 这个结论基于Nacos"
 ---
 
 ## 用户问题 ： 
- nacos2.3.2支持Jdk1.8吗  
+ nacos2.3.2支持Jdk1.8吗 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

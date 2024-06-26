@@ -1,14 +1,14 @@
 ---
 id: "question-history-11482"
-title: "cannot resolve com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discover "
+title: "cannot resolve com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discover nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
-description: "遇到“ cannot resolve com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discover”的问题，这通常意味着在构建项目时，Maven或Gradle无法找到指定的依赖项。根据提供的知识，我们可以分"
+description: "遇到“nacos-opensource cannot resolve com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discover”的问题，这通常意味着在构建项目时，Maven或Gradle无法找到指定的依赖项。根据提供的知识，我们可以分"
 tags: ["cannot resolve","com.alibaba.cloud","spring-cloud-starter-alibaba-nacos-discover"]
 keywords: ["cannot resolve","com.alibaba.cloud","spring-cloud-starter-alibaba-nacos-discover"]
 ---
 
-遇到“ cannot resolve com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discover”的问题，这通常意味着在构建项目时，Maven或Gradle无法找到指定的依赖项。根据提供的知识，我们可以分析并解决这个问题：
+遇到“nacos-opensource cannot resolve com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discover”的问题，这通常意味着在构建项目时，Maven或Gradle无法找到指定的依赖项。根据提供的知识，我们可以分析并解决这个问题：
 
 ### 分析原因：
 1. **依赖项名称错误**：问题中提到的依赖名`spring-cloud-starter-alibaba-nacos-discover`存在拼写错误，正确名称应为`spring-cloud-starter-alibaba-nacos-discovery`，注意结尾是`-discovery`而非`-discover`。

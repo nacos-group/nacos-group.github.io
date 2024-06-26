@@ -1,13 +1,13 @@
 ---
 id: "question-history-15459"
-title: "nacos是免费的么 "
+title: "nacos是免费的么 nacos-opensource"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "nacos本身是开源免费的，这意味着基础版本的Nacos可以无成本地下载和使用。它提供了服务发现、配置管理等核心功能，适用于那些寻求基础微服务管理解决方案的用户或项目。不过，值得注意的是，虽然Nacos开源版是免费的，但阿里巴巴也提供了Nacos的Cloud版，该版本被集成在微服务引擎MSE这款产品"
 ---
 
 ## 用户问题 ： 
- nacos是免费的么  
+ nacos是免费的么 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

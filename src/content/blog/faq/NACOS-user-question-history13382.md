@@ -1,6 +1,6 @@
 ---
 id: "question-history-13382"
-title: "怎么快速配置nacos "
+title: "怎么快速配置nacos nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要快速配置Nacos，您可以遵循以下步骤：### 1. 版本选择与环境准备- **选择版本**：推荐使用稳定版本2.3.2，您可以通过访问[Nacos的release notes](https://github.com/alibaba/nacos/releases)了解各版本详情。- **环境准备*"

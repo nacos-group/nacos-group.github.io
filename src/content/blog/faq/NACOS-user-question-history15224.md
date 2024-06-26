@@ -1,13 +1,13 @@
 ---
 id: "question-history-15224"
-title: "Nacos 目前2.x的稳定版是哪个 "
+title: "Nacos 目前2.x的稳定版是哪个 nacos-opensource"
 date: "2024-06-12"
 category: "expertConsultation"
 description: "为了获取Nacos目前2.x的稳定版信息，您可以直接访问Nacos的官方网站[https://nacos.io/download/nacos-server/](https://nacos.io/download/nacos-server/) 或者查看其GitHub Release页面[https:/"
 ---
 
 ## 用户问题 ： 
- Nacos 目前2.x的稳定版是哪个  
+ Nacos 目前2.x的稳定版是哪个 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15180"
-title: "nacos做注册中心 集成 spring cloud alibaba "
+title: "nacos做注册中心 集成 spring cloud alibaba nacos-opensource"
 date: "2024-06-08"
 category: "expertConsultation"
 description: "要集成Nacos作为注册中心到Spring Cloud Alibaba项目中，您可以按照以下步骤操作：### 步骤分析与操作建议#### 1. 引入依赖首先，确保您的Spring Cloud Alibaba项目中引入了Nacos Discovery的相关依赖。根据Nacos官方文档和实践案例，这通常"
 ---
 
 ## 用户问题 ： 
- nacos做注册中心 集成 spring cloud alibaba  
+ nacos做注册中心 集成 spring cloud alibaba nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

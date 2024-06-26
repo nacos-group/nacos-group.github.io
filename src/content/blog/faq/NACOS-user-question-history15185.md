@@ -1,13 +1,13 @@
 ---
 id: "question-history-15185"
-title: "springboot整合nacos注册中心和配置中心 "
+title: "springboot整合nacos注册中心和配置中心 nacos-opensource"
 date: "2024-06-08"
 category: "expertConsultation"
 description: "要整合 Spring Boot 项目与 Nacos 作为注册中心和配置中心，您可以按照以下步骤操作，这些步骤基于提供的知识内容：### 整合 Nacos 作为配置中心**前提条件：**- 已启动并运行 Nacos Server。1. **添加依赖：**   在 `pom.xml` 文件中加入 Nac"
 ---
 
 ## 用户问题 ： 
- springboot整合nacos注册中心和配置中心  
+ springboot整合nacos注册中心和配置中心 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

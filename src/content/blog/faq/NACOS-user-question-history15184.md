@@ -1,13 +1,13 @@
 ---
 id: "question-history-15184"
-title: "nacos 仅做配置中心 基于spring cloud alibaba的配置样例 "
+title: "nacos 仅做配置中心 基于spring cloud alibaba的配置样例 nacos-opensource"
 date: "2024-06-08"
 category: "expertConsultation"
 description: "要实现Nacos仅作为配置中心，并基于Spring Cloud Alibaba的配置样例，我们可以参考以下步骤进行配置：### 1. 引入依赖首先，确保你的项目中引入了正确的依赖。对于Spring Cloud Alibaba，你需要在项目的`pom.xml`文件中加入`spring-cloud-st"
 ---
 
 ## 用户问题 ： 
- nacos 仅做配置中心 基于spring cloud alibaba的配置样例  
+ nacos 仅做配置中心 基于spring cloud alibaba的配置样例 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

@@ -1,6 +1,6 @@
 ---
 id: "question-history-11475"
-title: "nacos配置数据源 "
+title: "nacos配置数据源 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中配置数据源主要涉及两个方面：一是Nacos Server自身连接的数据库配置，二是用户应用通过Nacos Client配置管理时的数据源配置。以下是如何根据Nacos开源插件和指南进行配置的详细步骤：### 1. Nacos Server 数据源配置#### 原因分析Nacos Ser"

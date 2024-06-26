@@ -1,6 +1,6 @@
 ---
 id: "question-history-11788"
-title: "使用nacos 作为微服务dubbo的注册中心、配置中心搭建的具体方法 "
+title: "使用nacos 作为微服务dubbo的注册中心、配置中心搭建的具体方法 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要在项目中使用Nacos作为Dubbo微服务的注册中心和配置中心，可以遵循以下步骤进行搭建：### 环境准备1. **安装Java环境**：确保系统中已安装Java Development Kit (JDK) 8或更高版本。2. **下载并启动Nacos Server**：   - 访问[Nacos"

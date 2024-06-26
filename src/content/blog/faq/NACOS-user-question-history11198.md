@@ -1,6 +1,6 @@
 ---
 id: "question-history-11198"
-title: "docker 怎么安装nacos "
+title: "docker 怎么安装nacos nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要通过Docker安装Nacos，请遵循以下步骤：1. **获取Nacos Docker镜像**：   访问Nacos的Docker镜像仓库，你可以直接使用命令行拉取官方镜像。对于稳定需求，可以选择不带特定后缀的版本，例如：   ```shell   docker pull nacos/nacos-"

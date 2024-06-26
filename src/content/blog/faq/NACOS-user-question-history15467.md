@@ -1,13 +1,13 @@
 ---
 id: "question-history-15467"
-title: "我服务端用的2.0,3版本搭建好了集群,客户端用2.0,4进行服务注册时报错 Nacos cluster  "
+title: "我服务端用的2.0,3版本搭建好了集群,客户端用2.0,4进行服务注册时报错 Nacos cluster  nacos-opensource"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据您提供的问题，服务端使用的是Nacos 2.0.3版本，而客户端使用的是2.0.4版本，在服务注册时遇到错误提示“Nacos cluster is running with 1.X mode, can't accept gRPC request temporarily. Please check"
 ---
 
 ## 用户问题 ： 
- 我服务端用的2.0,3版本搭建好了集群,客户端用2.0,4进行服务注册时报错 Nacos cluster is running with 1.X mode, can't accept gRPC request temporarily. Please check the server status or close Double write to force open 2.0 mode要怎么解决  
+ 我服务端用的2.0,3版本搭建好了集群,客户端用2.0,4进行服务注册时报错 Nacos cluster is running with 1.X mode, can't accept gRPC request temporarily. Please check the server status or close Double write to force open 2.0 mode要怎么解决 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

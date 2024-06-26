@@ -1,18 +1,18 @@
 ---
 id: "question-history-15009"
-title: "Nacos [db-error] master db down "
+title: "Nacos [db-error] master db down nacos-opensource"
 date: "2024-06-05"
 category: "expertConsultation"
-description: "根据您提出的问题「 Nacos [db-error] master db down」，这表明Nacos在尝试连接主数据库时遇到问题，无法正常工作。依据提供的知识内容，我们可以进行如下分析与建议：### 问题分析1. **配置错误**：检查`conf/applicati"
+description: "根据您提出的问题「nacos-opensource Nacos [db-error] master db down」，这表明Nacos在尝试连接主数据库时遇到问题，无法正常工作。依据提供的知识内容，我们可以进行如下分析与建议：### 问题分析1. **配置错误**：检查`conf/applicati"
 ---
 
 ## 用户问题 ： 
- Nacos [db-error] master db down  
+ Nacos [db-error] master db down nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：
 
-根据您提出的问题「 Nacos [db-error] master db down」，这表明Nacos在尝试连接主数据库时遇到问题，无法正常工作。依据提供的知识内容，我们可以进行如下分析与建议：
+根据您提出的问题「nacos-opensource Nacos [db-error] master db down」，这表明Nacos在尝试连接主数据库时遇到问题，无法正常工作。依据提供的知识内容，我们可以进行如下分析与建议：
 
 ### 问题分析
 1. **配置错误**：检查`conf/application.properties`文件中关于数据库连接的配置是否正确无误，包括JDBC URL、用户名和密码等信息。确保这些配置与实际数据库设置相匹配。

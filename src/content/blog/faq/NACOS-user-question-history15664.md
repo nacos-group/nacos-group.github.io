@@ -1,13 +1,13 @@
 ---
 id: "question-history-15664"
-title: "Nacos application.properties如何配置 nacos actuator healt "
+title: "Nacos application.properties如何配置 nacos actuator healt nacos-opensource"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "要配置Nacos的`/nacos/actuator/health`访问端口，首先需要明确一点，Nacos使用Spring Boot Actuator来暴露健康检查等端点信息。因此，配置健康检查端点的访问实际上涉及到Spring Boot Actuator的配置，而非直接修改Nacos特定的端口配置。"
 ---
 
 ## 用户问题 ： 
- Nacos application.properties如何配置 nacos actuator health访问端口  
+ Nacos application.properties如何配置 nacos actuator health访问端口 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

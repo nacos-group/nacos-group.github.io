@@ -1,6 +1,6 @@
 ---
 id: "question-history-11816"
-title: "nacos 支持国产化数据库么？ "
+title: "nacos 支持国产化数据库么？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos确实支持国产化数据库。从Nacos2.2版本开始，官方增加了对国产数据库的支持，特别是针对PostgreSQL、Oracle及达梦数据库的直接支持。这意味着Nacos能够适应国内用户在数据库选型上的多样化需求，促进了软件的国产化适配。为了在Nacos中使用国产化数据库，您可以按照以下步骤操"

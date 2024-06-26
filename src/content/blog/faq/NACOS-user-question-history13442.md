@@ -1,6 +1,6 @@
 ---
 id: "question-history-13442"
-title: "nacos服务端使用的版本是 2.3.2 客户端 nacos-client要用什么版本的 "
+title: "nacos服务端使用的版本是 2.3.2 客户端 nacos-client要用什么版本的 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据已有知识，Nacos服务端版本2.3.2属于Nacos2.X系列。根据Nacos版本兼容性规则：- Nacos2.X的服务端版本能够兼容所有的Nacos2.X的客户端版本，以及Nacos1.2.0之后的所有客户端版本。因此，对于Nacos服务端版本2.3.2，客户端`nacos-client`应"

@@ -1,6 +1,6 @@
 ---
 id: "question-history-8214"
-title: "Nacos2.0.1控制台显示 readyToUpgrade: false, "
+title: "Nacos2.0.1控制台显示 readyToUpgrade: false, nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "遇到Nacos2.0.1控制台显示 `readyToUpgrade: false` 的问题，可以按照以下步骤分析和解决：1. **检查集群状态**：   - 确认集群中所有节点是否都已经升级到Nacos2.0及以上版本。如果存在未升级的节点，请参照官方升级指南[[1](https://nacos.i"

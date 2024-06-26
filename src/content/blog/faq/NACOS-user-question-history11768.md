@@ -1,6 +1,6 @@
 ---
 id: "question-history-11768"
-title: "nacos怎么修改服务分组 "
+title: "nacos怎么修改服务分组 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要修改Nacos中的服务分组，可以遵循以下步骤操作：1. **登录Nacos控制台**：   首先，你需要访问Nacos的Web控制台。假设你的Nacos服务已经在本地启动，通常可以通过访问 `http://127.0.0.1:8848/nacos` 来打开控制台界面。根据实际情况，地址中的IP和端"

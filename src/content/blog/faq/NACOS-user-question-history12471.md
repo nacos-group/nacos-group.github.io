@@ -1,6 +1,6 @@
 ---
 id: "question-history-12471"
-title: "nacos ui 从哪里下载 "
+title: "nacos ui 从哪里下载 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos UI通常是作为Nacos服务的前端界面使用的，您可以直接从Nacos的GitHub仓库中找到相关的UI源代码或发行包。虽然直接提供的下载链接可能随时间变化，但以下步骤可以帮助您获取Nacos UI：1. 访问Nacos GitHub仓库的页面：[https://github.com/al"

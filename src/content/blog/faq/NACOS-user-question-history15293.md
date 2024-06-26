@@ -1,13 +1,13 @@
 ---
 id: "question-history-15293"
-title: "http: 127.0.0.1:8848 nacos v1 core cluster nodes naco "
+title: "http: 127.0.0.1:8848 nacos v1 core cluster nodes naco nacos-opensource"
 date: "2024-06-13"
 category: "expertConsultation"
 description: "为了解决您提到的nacos存在未授权访问的安全漏洞，我们可以按照以下步骤操作：### 1. **确定当前Nacos版本**首先，确认您当前使用的Nacos服务版本。这一步很关键，因为不同版本的解决方案有所差异。### 2. **升级Nacos版本（推荐）**- 如果您的Nacos版本低于2.3.0，"
 ---
 
 ## 用户问题 ： 
- http: 127.0.0.1:8848 nacos v1 core cluster nodes nacos存在未授权访问，这个安全漏洞怎么修复  
+ http: 127.0.0.1:8848 nacos v1 core cluster nodes nacos存在未授权访问，这个安全漏洞怎么修复 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

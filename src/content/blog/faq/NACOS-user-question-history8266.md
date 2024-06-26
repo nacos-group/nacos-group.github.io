@@ -1,6 +1,6 @@
 ---
 id: "question-history-8266"
-title: "开源版本可以支持ak sk鉴权吗？ "
+title: "开源版本可以支持ak sk鉴权吗？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "开源版本的Nacos不支持ak/sk鉴权。这是因为ak/sk作为一种云产品提供的鉴权方式，其具体的校验逻辑和实现依赖于云服务商，例如阿里云MSE。开源软件无法内置这些特定于云服务商的鉴权机制，只能由用户根据所使用的云平台来配置相应的鉴权方式。因此，Nacos开源版本不能直接支持ak/sk鉴权。对于想"

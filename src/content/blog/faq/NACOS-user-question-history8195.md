@@ -1,6 +1,6 @@
 ---
 id: "question-history-8195"
-title: "非临时实例持久化的方式 "
+title: "非临时实例持久化的方式 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中实现非临时实例的持久化方式，主要涉及到服务实例的注册过程及配置参数的选择。根据提供的知识内容，以下是创建非临时（持久化）实例的具体步骤与说明：1. **确定服务实例属性**：   - 准备服务实例的基本信息，包括服务名（`serviceName`）、服务实例IP（`ip`）、服务实例端"

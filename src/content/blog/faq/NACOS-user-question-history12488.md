@@ -1,6 +1,6 @@
 ---
 id: "question-history-12488"
-title: "linux查看nacos版本 "
+title: "linux查看nacos版本 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要在Linux系统中查看Nacos的服务版本，可以按照以下步骤操作：1. **登录到Nacos服务器**：首先，你需要通过SSH或其他远程登录方式进入运行Nacos服务的Linux系统。2. **定位Nacos安装目录**：找到Nacos服务安装或解压后的目录。默认情况下，如果按照官方文档进行安装，"

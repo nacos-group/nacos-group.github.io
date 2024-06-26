@@ -1,6 +1,6 @@
 ---
 id: "question-history-8435"
-title: "问下nacos nacos-server:2.2.0版本启动报这个错咋弄啊 ： java.lang.IllegalStateException: Fail to get leader of group naming_persistent_service_v2 "
+title: "问下nacos nacos-server:2.2.0版本启动报这个错咋弄啊 ： java.lang.IllegalStateException: Fail to get leader of group naming_persistent_service_v2 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，针对您遇到的问题“nacos/nacos-server:2.2.0版本启动报错：java.lang.IllegalStateException: Fail to get leader of group naming_persistent_service_v2”，我们可以按照以下步"

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15417"
-title: "docker安装简易版单机nacos "
+title: "docker安装简易版单机nacos nacos-opensource"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "为了帮助您安装简易版单机Nacos通过Docker，我将依据提供的知识进行指导。根据[[第1篇参考内容](https://github.com/nacos-group/nacos-docker)]和[[第2篇参考内容](http://localhost:4321/docs/next/quicksta"
 ---
 
 ## 用户问题 ： 
- docker安装简易版单机nacos  
+ docker安装简易版单机nacos nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

@@ -1,13 +1,13 @@
 ---
 id: "question-history-15466"
-title: "如何在Kubernetes(K8s)环境中部署Nacos 2.2.3版本并启用认证 "
+title: "如何在Kubernetes(K8s)环境中部署Nacos 2.2.3版本并启用认证 nacos-opensource"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "要在Kubernetes(K8s)环境中部署Nacos 2.2.3版本并启用认证，您可以遵循以下步骤：### 1. 分析问题原因根据提供的知识，我们知道要打开Nacos的鉴权功能，主要是通过配置特定参数来实现，无论部署在何种环境。对于Kubernetes环境下的部署，特别需要注意的是如何在配置中正确"
 ---
 
 ## 用户问题 ： 
- 如何在Kubernetes(K8s)环境中部署Nacos 2.2.3版本并启用认证  
+ 如何在Kubernetes(K8s)环境中部署Nacos 2.2.3版本并启用认证 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

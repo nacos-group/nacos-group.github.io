@@ -1,6 +1,6 @@
 ---
 id: "question-history-11799"
-title: "nacos docker搭建本地集群配置中心的具体方法 "
+title: "nacos docker搭建本地集群配置中心的具体方法 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "首先，根据您的需求，您希望了解如何使用Docker搭建Nacos的本地集群配置中心。虽然提供的参考内容没有直接提及使用Docker的具体步骤，但我们可以基于Nacos集群部署的一般步骤和Docker的基本操作，为您提供一个概要性的指导方案。以下是搭建Nacos本地集群配置中心的步骤概述：### 1."

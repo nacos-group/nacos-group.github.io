@@ -1,6 +1,6 @@
 ---
 id: "question-history-11827"
-title: "nacos nacos 1.3.1 升级2.2.3 具体步骤 "
+title: "nacos nacos 1.3.1 升级2.2.3 具体步骤 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，针对Nacos从1.3.1版本升级到2.2.3版本的具体步骤可以概括如下：1. **检查并更新数据库脚本**：   - 首先，你需要应用新的`nacos-mysql.sql`（或其他适用的数据库类型脚本），以确保数据库表结构与Nacos 2.2.3版本兼容。这一步骤主要是为了确认"

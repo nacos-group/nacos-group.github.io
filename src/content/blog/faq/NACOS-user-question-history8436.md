@@ -1,6 +1,6 @@
 ---
 id: "question-history-8436"
-title: "nacos docker如何运行 "
+title: "nacos docker如何运行 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要运行Nacos using Docker，您可以遵循以下步骤：1. **准备环境**: 确保您的系统上已安装Docker并且Docker服务正在运行。2. **获取Nacos Docker镜像**: 您可以从Docker Hub获取最新的Nacos镜像，或者使用Nacos提供的特定版本。可以通过以"

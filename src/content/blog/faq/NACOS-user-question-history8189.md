@@ -1,6 +1,6 @@
 ---
 id: "question-history-8189"
-title: "nacos适配国产化数据库，适配国产化数据库时，不止需要实现文档中的接口，还需要实现分页处理类PageHandlerAdapter，并在PageHandlerAdapterFactory中添加对应的处理类，版本是2.3.0 "
+title: "nacos适配国产化数据库，适配国产化数据库时，不止需要实现文档中的接口，还需要实现分页处理类PageHandlerAdapter，并在PageHandlerAdapterFactory中添加对应的处理类，版本是2.3.0 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "为了适配国产化数据库并实现分页处理类PageHandlerAdapter，在Nacos 2.3.0版本中，您需要遵循以下步骤操作：1. **查阅官方文档与插件支持**：   首先，确认Nacos 2.3.0版本是否直接支持您所需的国产数据库。根据已有知识，Nacos从2.2版本开始支持包括Postg"

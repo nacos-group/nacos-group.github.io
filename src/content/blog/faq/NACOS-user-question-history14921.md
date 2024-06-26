@@ -1,13 +1,13 @@
 ---
 id: "question-history-14921"
-title: "nacos config-client-request.log 日志信息说明 "
+title: "nacos config-client-request.log 日志信息说明 nacos-opensource"
 date: "2024-06-03"
 category: "expertConsultation"
 description: "在Nacos Config客户端中，日志文件`config-client-request.log`记录了客户端与Nacos Server之间交互的详细信息，这包括但不限于配置的获取、更新、监听等操作。要理解这些日志信息，我们可以依据Nacos配置客户端参数及日志配置的设定来分析。### 分析日志信息"
 ---
 
 ## 用户问题 ： 
- nacos config-client-request.log 日志信息说明  
+ nacos config-client-request.log 日志信息说明 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

@@ -1,6 +1,6 @@
 ---
 id: "question-history-11414"
-title: "nacos可以用来做什么 "
+title: "nacos可以用来做什么 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos是一个由阿里巴巴开源的云原生技术栈中的关键组件，它的核心功能围绕着服务发现、配置管理和服务管理展开，具体可以用来做以下几件事：1. **服务发现与健康检查**：Nacos支持DNS和RPC服务发现协议，能够自动注册和发现微服务实例，同时实施健康检查，确保仅将健康的服务实例纳入负载均衡，对于"

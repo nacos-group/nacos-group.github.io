@@ -1,13 +1,13 @@
 ---
 id: "question-history-15643"
-title: "nacos的客户端一直报这个错误，是什么原因？com.alibaba.nacos.api.exceptio "
+title: "nacos的客户端一直报这个错误，是什么原因？com.alibaba.nacos.api.exceptio nacos-opensource"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "根据您提供的错误信息`com.alibaba.nacos.api.exception.NacosException: token invalid!`，这表明Nacos客户端在尝试与服务器通信时使用的token无效。结合已有的知识内容，我们可以分析并提供解决方案。### 原因分析1. **Token未"
 ---
 
 ## 用户问题 ： 
- nacos的客户端一直报这个错误，是什么原因？com.alibaba.nacos.api.exception.NacosException: token invalid!  
+ nacos的客户端一直报这个错误，是什么原因？com.alibaba.nacos.api.exception.NacosException: token invalid! nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

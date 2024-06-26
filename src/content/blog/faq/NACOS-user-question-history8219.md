@@ -1,14 +1,14 @@
 ---
 id: "question-history-8219"
-title: "Param check invalid:Param 'Metadata' is illegal, the param length should not exceed 1024. "
+title: "Param check invalid:Param 'Metadata' is illegal, the param length should not exceed 1024. nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
-description: "遇到错误  Param check invalid: Param 'Metadata' is illegal, the param length should not exceed 1024. 的原因是Nacos 2.3.0及以后版本引入了统一的参数校验逻辑，以确保请"
+description: "遇到错误 nacos-opensource Param check invalid: Param 'Metadata' is illegal, the param length should not exceed 1024. 的原因是Nacos 2.3.0及以后版本引入了统一的参数校验逻辑，以确保请"
 tags: ["Param check invalid","Metadata","illegal","param length","exceed 1024"]
 keywords: ["Param check invalid","Metadata","illegal","param length","exceed 1024"]
 ---
 
-遇到错误 " Param check invalid: Param 'Metadata' is illegal, the param length should not exceed 1024." 的原因是Nacos 2.3.0及以后版本引入了统一的参数校验逻辑，以确保请求参数的合法性并避免潜在的问题。具体到这个问题，元数据（Metadata）的长度超过了服务端允许的最大值1024个字符。
+遇到错误 "nacos-opensource Param check invalid: Param 'Metadata' is illegal, the param length should not exceed 1024." 的原因是Nacos 2.3.0及以后版本引入了统一的参数校验逻辑，以确保请求参数的合法性并避免潜在的问题。具体到这个问题，元数据（Metadata）的长度超过了服务端允许的最大值1024个字符。
 
 根据提供的解决方案，你可以采取以下步骤来解决这个问题：
 

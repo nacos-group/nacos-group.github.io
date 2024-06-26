@@ -1,6 +1,6 @@
 ---
 id: "question-history-11185"
-title: "nacos nacos 怎么安装 "
+title: "nacos nacos 怎么安装 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "为了安装Nacos，请遵循以下详细步骤：1. **版本选择**：   首先，访问Nacos的[release notes](https://github.com/alibaba/nacos/releases)以确定最新的稳定版本。当前推荐的稳定版本为2.3.2。选择适合您需求的版本进行安装。2. *"

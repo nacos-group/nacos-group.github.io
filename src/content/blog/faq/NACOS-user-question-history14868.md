@@ -1,13 +1,13 @@
 ---
 id: "question-history-14868"
-title: "k8s 部署nacos "
+title: "k8s 部署nacos nacos-opensource"
 date: "2024-06-02"
 category: "expertConsultation"
 description: "要使用Kubernetes (K8s) 部署 Nacos，并配置其为集群模式，同时考虑鉴权设置，可以按照以下步骤操作：### 分析问题原因根据提供的知识，Nacos-K8s项目的存在（[GitHub项目](https://github.com/nacos-group/nacos-k8s)）表明Nac"
 ---
 
 ## 用户问题 ： 
- k8s 部署nacos  
+ k8s 部署nacos nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

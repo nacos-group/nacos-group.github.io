@@ -1,14 +1,14 @@
 ---
 id: "question-history-11192"
-title: "nettyserver init error:errcode:500, errmsg:failed to req api: nacos v1 ns in 这是碰到了什么问题？怎么解决？ "
+title: "nettyserver init error:errcode:500, errmsg:failed to req api: nacos v1 ns in 这是碰到了什么问题？怎么解决？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
-description: "根据提供的知识内容，遇到` nettyserver init error:errcode:500, errmsg:failed to req api:/nacos/v1/ns/in`的问题，可以分析其原因及解决方案如下：### 原因分析- **错误代码500**通常表"
+description: "根据提供的知识内容，遇到`nacos-opensource nettyserver init error:errcode:500, errmsg:failed to req api:/nacos/v1/ns/in`的问题，可以分析其原因及解决方案如下：### 原因分析- **错误代码500**通常表"
 tags: ["init error","errcode:500","errmsg:failed to req api: nacos v1 ns in"]
 keywords: ["init error","errcode:500","errmsg:failed to req api: nacos v1 ns in"]
 ---
 
-根据提供的知识内容，遇到` nettyserver init error:errcode:500, errmsg:failed to req api:/nacos/v1/ns/in`的问题，可以分析其原因及解决方案如下：
+根据提供的知识内容，遇到`nacos-opensource nettyserver init error:errcode:500, errmsg:failed to req api:/nacos/v1/ns/in`的问题，可以分析其原因及解决方案如下：
 
 ### 原因分析
 - **错误代码500**通常表明服务器遇到了意外的情况，未能完成对请求的处理。这可能涉及到服务器内部错误，如配置不当、服务未完全启动或API路由问题。

@@ -1,18 +1,18 @@
 ---
 id: "question-history-15148"
-title: "nacos-k8s-sync 安装 "
+title: "nacos-k8s-sync 安装 nacos-opensource"
 date: "2024-06-07"
 category: "expertConsultation"
-description: "我目前了解到的信息可能不足以支持你的问题 nacos-k8s-sync 安装，因为提供的知识内容主要集中在Nacos-Sync的监控方面，包括监控体系的搭建、Grafana监控模板的使用以及Metrics含义的解释，并未直接涵盖Nacos-K8s-Sync的安装步骤。"
+description: "我目前了解到的信息可能不足以支持你的问题nacos-opensource nacos-k8s-sync 安装，因为提供的知识内容主要集中在Nacos-Sync的监控方面，包括监控体系的搭建、Grafana监控模板的使用以及Metrics含义的解释，并未直接涵盖Nacos-K8s-Sync的安装步骤。"
 ---
 
 ## 用户问题 ： 
- nacos-k8s-sync 安装  
+ nacos-k8s-sync 安装 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：
 
-我目前了解到的信息可能不足以支持你的问题" nacos-k8s-sync 安装"，因为提供的知识内容主要集中在Nacos-Sync的监控方面，包括监控体系的搭建、Grafana监控模板的使用以及Metrics含义的解释，并未直接涵盖Nacos-K8s-Sync的安装步骤。你可以换一个问法，比如关于Nacos-Sync监控的实施细节，或者询问有关Nacos或Nacos-Sync的一般性操作和配置问题，这样我能更准确地提供帮助。
+我目前了解到的信息可能不足以支持你的问题"nacos-opensource nacos-k8s-sync 安装"，因为提供的知识内容主要集中在Nacos-Sync的监控方面，包括监控体系的搭建、Grafana监控模板的使用以及Metrics含义的解释，并未直接涵盖Nacos-K8s-Sync的安装步骤。你可以换一个问法，比如关于Nacos-Sync监控的实施细节，或者询问有关Nacos或Nacos-Sync的一般性操作和配置问题，这样我能更准确地提供帮助。
 
 
 <font color="#949494">---------------</font> 

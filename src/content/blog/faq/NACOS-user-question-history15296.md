@@ -1,13 +1,13 @@
 ---
 id: "question-history-15296"
-title: "Nacos中持久化服务和临时服务的区别 "
+title: "Nacos中持久化服务和临时服务的区别 nacos-opensource"
 date: "2024-06-13"
 category: "expertConsultation"
 description: "Nacos中持久化服务和临时服务的区别主要体现在以下几个方面：1. **生命周期管理**：   - **临时服务（ephemeral=true)**：这类服务的生命周期与微服务应用的生命周期紧密相关。一旦微服务应用停止或与Nacos服务器的连接断开，Nacos会自动移除这些服务实例的注册信息。这适用"
 ---
 
 ## 用户问题 ： 
- Nacos中持久化服务和临时服务的区别  
+ Nacos中持久化服务和临时服务的区别 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

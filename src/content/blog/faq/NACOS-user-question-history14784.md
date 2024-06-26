@@ -1,6 +1,6 @@
 ---
 id: "question-history-14784"
-title: "我们服务可以正常启动，但是启动时，客户端一直发送心跳包，一直是failed to request "
+title: "我们服务可以正常启动，但是启动时，客户端一直发送心跳包，一直是failed to request nacos-opensource"
 date: "2024-05-30"
 category: "expertConsultation"
 description: "根据提供的知识内容，我们可以分析并尝试解决您遇到的问题：服务可以正常启动，但客户端在启动时一直发送心跳包且失败。### 原因分析1. **客户端配置问题**：可能客户端配置的Nacos Server地址、端口不正确，或者网络不通导致心跳包无法到达Nacos Server。2. **Nacos Ser"

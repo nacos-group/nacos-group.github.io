@@ -1,6 +1,6 @@
 ---
 id: "question-history-11745"
-title: "nacos使用需要创建数据库吗？ "
+title: "nacos使用需要创建数据库吗？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在使用Nacos时，确实需要事先创建数据库。Nacos支持多种数据库，如MySQL、PostgreSQL、Oracle及达梦等，具体取决于您的选择。以下是基于Nacos开源信息的操作步骤概述：1. **确定数据库类型**：根据您的需求和环境，选择一个受支持的数据库类型。Nacos官方默认支持MySQ"

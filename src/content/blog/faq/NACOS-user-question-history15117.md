@@ -1,13 +1,13 @@
 ---
 id: "question-history-15117"
-title: "nacos  c   客户端下载 "
+title: "nacos  c   客户端下载 nacos-opensource"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "为了获取Nacos C/C++客户端的下载信息，我们可以直接参考Nacos官方提供的多语言SDK存储库。根据已知知识，C/C++客户端的SDK地址为：[https://github.com/nacos-group/nacos-sdk-cpp](https://github.com/nacos-gro"
 ---
 
 ## 用户问题 ： 
- nacos  c   客户端下载  
+ nacos  c   客户端下载 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

@@ -1,6 +1,6 @@
 ---
 id: "question-history-8254"
-title: "The API deregisterInstances provided by the client SDK is called successfully, but the instance is not offline. "
+title: "The API deregisterInstances provided by the client SDK is called successfully, but the instance is not offline. nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据提供的知识内容，我们可以分析该问题的原因及提出解决方案。问题描述为：通过客户端SDK调用deregisterInstances API成功，但实例并未下线。### 原因分析- **非持久化服务特性**：此问题可能出现在非持久化服务上，因为这类服务依赖客户端心跳维持其在Nacos服务列表中的活跃状"

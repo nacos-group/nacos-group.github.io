@@ -1,6 +1,6 @@
 ---
 id: "question-history-13477"
-title: "nacos standalone启动 "
+title: "nacos standalone启动 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要启动Nacos以standalone模式运行，您可以遵循以下步骤：1. **环境检查与准备**：   - 确保您的操作系统是64位的Linux/Unix/Mac或Windows。   - 安装并配置好Java 1.8+环境。您可以从[这里](http://www.oracle.com/techne"

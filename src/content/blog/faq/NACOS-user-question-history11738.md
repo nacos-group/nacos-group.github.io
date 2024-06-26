@@ -1,6 +1,6 @@
 ---
 id: "question-history-11738"
-title: "com.alibaba.nacos.api.exception.NacosException: user not found! "
+title: "com.alibaba.nacos.api.exception.NacosException: user not found! nacos-opensource"
 date: "2024-05-29"
 category: "expertConsultation"
 description: "遇到`com.alibaba.nacos.api.exception.NacosException: user not found!`异常，通常是由于以下原因导致的：1. **用户身份验证失败**：这意味着尝试访问Nacos服务时使用的用户名未在系统中找到，或者与该用户名关联的凭据（密码或token"

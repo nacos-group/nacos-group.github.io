@@ -1,6 +1,6 @@
 ---
 id: "question-history-8238"
-title: "nacos的api似乎一直无法获得dataid,这是出于安全考虑吗 "
+title: "nacos的api似乎一直无法获得dataid,这是出于安全考虑吗 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos 设计其 API 时，确实考虑到了安全因素，尤其是对于敏感信息如配置数据（dataid对应的配置内容）的访问控制。虽然直接依据提供的知识无法确定特定情况下 dataid 无法获取是否完全出于安全考虑，但我们可以推测这可能是出于以下几个安全相关的考量：1. **权限控制**：Nacos 支持"

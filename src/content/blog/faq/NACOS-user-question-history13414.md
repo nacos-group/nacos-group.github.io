@@ -1,14 +1,14 @@
 ---
 id: "question-history-13414"
-title: "invalid server identity key or value, please make sure set `nacos.core.auth. "
+title: "invalid server identity key or value, please make sure set `nacos.core.auth. nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
-description: "遇到“ invalid server identity key or value, please make sure set `nacos.core.auth.server.identity.key` and `nacos.core.auth.server.ident"
+description: "遇到“nacos-opensource invalid server identity key or value, please make sure set `nacos.core.auth.server.identity.key` and `nacos.core.auth.server.ident"
 tags: ["invalid server identity key","value","set","nacos.core.auth"]
 keywords: ["invalid server identity key","value","set","nacos.core.auth"]
 ---
 
-遇到“ invalid server identity key or value, please make sure set `nacos.core.auth.server.identity.key` and `nacos.core.auth.server.identity.value`”的错误提示，意味着Nacos配置中服务器标识密钥(key)或其对应的值(value)存在问题。这通常是因为它们未被正确设置，或者是使用了默认值，从而导致鉴权失败。根据提供的知识，以下是解决此问题的详细步骤：
+遇到“nacos-opensource invalid server identity key or value, please make sure set `nacos.core.auth.server.identity.key` and `nacos.core.auth.server.identity.value`”的错误提示，意味着Nacos配置中服务器标识密钥(key)或其对应的值(value)存在问题。这通常是因为它们未被正确设置，或者是使用了默认值，从而导致鉴权失败。根据提供的知识，以下是解决此问题的详细步骤：
 
 ### 原因分析
 - **服务器标识密钥与值未设置或使用默认值**：Nacos要求为鉴权配置唯一的服务器标识密钥及其对应的值，以增强安全性。默认值容易受到攻击，因此系统提示需手动设置。

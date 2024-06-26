@@ -1,6 +1,6 @@
 ---
 id: "question-history-14576"
-title: "如何通过openAPI访问开启鉴权后的nacos "
+title: "如何通过openAPI访问开启鉴权后的nacos nacos-opensource"
 date: "2024-05-23"
 category: "expertConsultation"
 description: "要通过Open-API访问已开启鉴权的Nacos，可以遵循以下步骤：1. **登录获取AccessToken**:   首先，需要使用curl命令通过POST请求登录Nacos服务器并获取AccessToken。确保替换`$serverAddr`为你的Nacos服务器地址，`$username`和`"

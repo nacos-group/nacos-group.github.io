@@ -1,18 +1,18 @@
 ---
 id: "question-history-15649"
-title: "com.alibaba.nacos.api.exception.NacosException: faile "
+title: "com.alibaba.nacos.api.exception.NacosException: faile nacos-opensource"
 date: "2024-06-18"
 category: "expertConsultation"
-description: "根据您提供的错误信息，` com.alibaba.nacos.api.exception.NacosException: failed to req API:archive-eureka:8848/nacos/v1/ns/instance/list. code:400"
+description: "根据您提供的错误信息，`nacos-opensource com.alibaba.nacos.api.exception.NacosException: failed to req API:archive-eureka:8848/nacos/v1/ns/instance/list. code:400"
 ---
 
 ## 用户问题 ： 
- com.alibaba.nacos.api.exception.NacosException: failed to req API:archive-eureka:8848 nacos v1 ns instance list. code:400 msg: Param 'serviceName' is illegal, illegal characters should not appear in the param.  
+ com.alibaba.nacos.api.exception.NacosException: failed to req API:archive-eureka:8848 nacos v1 ns instance list. code:400 msg: Param 'serviceName' is illegal, illegal characters should not appear in the param. nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：
 
-根据您提供的错误信息，` com.alibaba.nacos.api.exception.NacosException: failed to req API:archive-eureka:8848/nacos/v1/ns/instance/list. code:400 msg: Param 'serviceName' is illegal, illegal characters should not appear in the param.` 这个错误表明您在尝试通过Nacos API列出实例时，传入的服务名称(`serviceName`)包含了不被允许的非法字符。
+根据您提供的错误信息，`nacos-opensource com.alibaba.nacos.api.exception.NacosException: failed to req API:archive-eureka:8848/nacos/v1/ns/instance/list. code:400 msg: Param 'serviceName' is illegal, illegal characters should not appear in the param.` 这个错误表明您在尝试通过Nacos API列出实例时，传入的服务名称(`serviceName`)包含了不被允许的非法字符。
 
 依托于已知的知识，我们可以分析问题原因及提供相应的解决步骤：
 

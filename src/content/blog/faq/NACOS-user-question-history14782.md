@@ -1,12 +1,12 @@
 ---
 id: "question-history-14782"
-title: "nacos配置更新后，springboot后台的配置了类并没有更新 "
+title: "nacos配置更新后，springboot后台的配置了类并没有更新 nacos-opensource"
 date: "2024-05-30"
 category: "expertConsultation"
-description: "根据提供的知识内容，我们可以分析并解决您遇到的问题：配置更新后，Spring Boot后台配置的类并没有更新。### 分析问题原因1. **配置监听未生效**：可能是应用未正确订阅配置更新，或者Listener实现逻辑存在问题，导致虽然收到了nacos-server的"
+description: "根据提供的知识内容，我们可以分析并解决您遇到的问题：nacos-opensource配置更新后，Spring Boot后台配置的类并没有更新。### 分析问题原因1. **配置监听未生效**：可能是应用未正确订阅配置更新，或者Listener实现逻辑存在问题，导致虽然收到了nacos-server的"
 ---
 
-根据提供的知识内容，我们可以分析并解决您遇到的问题：配置更新后，Spring Boot后台配置的类并没有更新。
+根据提供的知识内容，我们可以分析并解决您遇到的问题：nacos-opensource配置更新后，Spring Boot后台配置的类并没有更新。
 
 ### 分析问题原因
 

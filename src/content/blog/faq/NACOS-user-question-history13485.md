@@ -1,6 +1,6 @@
 ---
 id: "question-history-13485"
-title: "nacos 配置pg数据库的具体方法 "
+title: "nacos 配置pg数据库的具体方法 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "为了配置Nacos使用PostgreSQL（PG）数据库，您可以遵循以下详细步骤，这些步骤基于提供的知识内容：1. **检查插件是否存在**：   首先，访问[Nacos插件仓库](https://github.com/nacos-group/nacos-plugin)，在这个仓库中查找是否有针对P"

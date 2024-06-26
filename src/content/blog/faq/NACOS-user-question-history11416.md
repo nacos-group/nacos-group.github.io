@@ -1,6 +1,6 @@
 ---
 id: "question-history-11416"
-title: "如何使用docker方式部署nacos "
+title: "如何使用docker方式部署nacos nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要使用Docker方式部署Nacos，特别是配置为集群模式并开启鉴权，您可以遵循以下步骤：1. **准备环境**：   - 确保您的系统中已安装Docker，并且Docker服务正在运行。2. **获取Nacos Docker镜像**：   - 访问Nacos Docker镜像的GitHub仓库[["

@@ -1,6 +1,6 @@
 ---
 id: "question-history-13376"
-title: "nacos有时会调到下线的服务是怎么回事？ "
+title: "nacos有时会调到下线的服务是怎么回事？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos中调到下线服务的现象可能由多种原因引起，结合提供的知识内容，我们可以分析并提出解决方案：### 原因分析：1. **服务提供者未彻底关闭或有额外进程发送心跳**：这可能导致Nacos服务列表中仍显示该服务为在线状态。2. **推空保护机制**：当服务提供者全部下线，某些客户端配置可能会触"

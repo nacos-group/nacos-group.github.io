@@ -1,13 +1,13 @@
 ---
 id: "question-history-15457"
-title: "nacos在什么版本之后可以支持外部的mysql8.0 "
+title: "nacos在什么版本之后可以支持外部的mysql8.0 nacos-opensource"
 date: "2024-06-17"
 category: "expertConsultation"
 description: "根据已有的知识信息，Nacos从2.2版本开始支持了包括MySQL8.0在内的多种数据库类型，这是因为它从该版本起引入了数据源插件机制，允许通过扩展支持更多数据库。具体步骤如下：1. **确认Nacos版本**：确保你使用的Nacos版本是2.2或更高。你可以访问[Nacos官网下载页面](http"
 ---
 
 ## 用户问题 ： 
- nacos在什么版本之后可以支持外部的mysql8.0  
+ nacos在什么版本之后可以支持外部的mysql8.0 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

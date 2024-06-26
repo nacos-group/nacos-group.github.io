@@ -1,6 +1,6 @@
 ---
 id: "question-history-8237"
-title: "nacos 开源版本类型 "
+title: "nacos 开源版本类型 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "Nacos的开源版本主要分为两大类：稳定版本和历史迭代版本。根据官方推荐，Nacos 1.0之后的非ALPHA、BETA、RC版本均视为稳定版本，但请注意，1.X系列的功能迭代已停止，主要针对重大BUG和安全漏洞进行修复。因此，对于寻求最新特性和持续维护支持的用户，应选择2.X的最新稳定版本。这些稳"

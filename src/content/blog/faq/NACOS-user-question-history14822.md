@@ -1,6 +1,6 @@
 ---
 id: "question-history-14822"
-title: "raft日志太大怎么清理 "
+title: "raft日志太大怎么清理 nacos-opensource"
 date: "2024-05-31"
 category: "expertConsultation"
 description: "Nacos的Raft日志如果变得过大，主要是因为Nacos采用了Sofa的JRaft作为Raft协议的实现，而JRaft默认使用RocksDB作为Raft日志的存储系统。随着运行时间的增长，在`$nacos.home/data/protocol/raft/$raft_group/log`目录下会累积"

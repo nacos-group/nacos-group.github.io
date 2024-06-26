@@ -1,6 +1,6 @@
 ---
 id: "question-history-11419"
-title: "如何通过k8s部署nacos集群 "
+title: "如何通过k8s部署nacos集群 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要通过Kubernetes(K8s)部署Nacos集群，可以遵循以下步骤：1. **准备环境与配置**：   - 确保你的Kubernetes集群已正确安装并运行。   - 参考Nacos官方提供的K8s部署项目：[https://github.com/nacos-group/nacos-k8s]("

@@ -1,6 +1,6 @@
 ---
 id: "question-history-14777"
-title: "升级到2.3.2,后Read timed out "
+title: "升级到2.3.2,后Read timed out nacos-opensource"
 date: "2024-05-30"
 category: "expertConsultation"
 description: "在升级Nacos到2.3.2版本后遇到`Read timed out`问题，可能是由于以下原因导致的：1. **网络延迟或不稳定**：网络连接到Nacos服务器可能存在延迟高或不稳定的情况，导致读取超时。2. **配置问题**：升级过程中可能未正确配置与超时相关的设置，如客户端的连接超时时间和读取超"

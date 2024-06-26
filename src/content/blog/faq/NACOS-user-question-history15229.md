@@ -1,13 +1,13 @@
 ---
 id: "question-history-15229"
-title: "Nacos怎么样配置自己作为服务注册到Nacos服务器中 "
+title: "Nacos怎么样配置自己作为服务注册到Nacos服务器中 nacos-opensource"
 date: "2024-06-12"
 category: "expertConsultation"
 description: "要配置Nacos使其自身作为服务注册到Nacos服务器中，我们可以参考Nacos服务发现的机制并稍作调整。虽然直接的示例未在提供的知识中明确给出，但我们可以基于现有的服务发现流程推导出相应步骤。以下是根据Nacos服务发现的一般流程改编的配置指南，以实现Nacos实例自我注册到Nacos服务器的目标"
 ---
 
 ## 用户问题 ： 
- Nacos怎么样配置自己作为服务注册到Nacos服务器中  
+ Nacos怎么样配置自己作为服务注册到Nacos服务器中 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

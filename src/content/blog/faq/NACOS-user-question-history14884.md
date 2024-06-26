@@ -1,13 +1,13 @@
 ---
 id: "question-history-14884"
-title: "nacos 是否建议使用单独的关系型数据库 "
+title: "nacos 是否建议使用单独的关系型数据库 nacos-opensource"
 date: "2024-06-02"
 category: "expertConsultation"
 description: "Nacos官方推荐使用单独的关系型数据库来存储配置和服务信息，以保证数据的可靠性和系统的稳定性。根据提供的知识，Nacos原生支持MySQL数据库，并且从2.2版本开始，通过扩展插件的方式增加了对PostgreSQL、Oracle及达梦等数据库的支持。这表明Nacos设计时考虑到了与独立数据库集成的"
 ---
 
 ## 用户问题 ： 
- nacos 是否建议使用单独的关系型数据库  
+ nacos 是否建议使用单独的关系型数据库 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

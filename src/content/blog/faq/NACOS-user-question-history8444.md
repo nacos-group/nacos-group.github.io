@@ -1,6 +1,6 @@
 ---
 id: "question-history-8444"
-title: "各位大佬，想咨询下，怎么在 Nacos 2.3.0 通过helm方式部署设置开启授权认证功能？ "
+title: "各位大佬，想咨询下，怎么在 Nacos 2.3.0 通过helm方式部署设置开启授权认证功能？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要在 Nacos 2.3.0 版本中通过 Helm 方式部署并设置开启授权认证功能，可以遵循以下步骤操作：1. **准备鉴权相关配置参数**：   根据 Nacos 的官方文档和已知信息，开启鉴权需要配置以下几个关键参数：   - `nacos.core.auth.enabled=true`：启用鉴"

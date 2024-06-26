@@ -1,6 +1,6 @@
 ---
 id: "question-history-11481"
-title: "nacos 已启动,  mysql无法链接 "
+title: "nacos 已启动,  mysql无法链接 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "当遇到`nacos`已启动但`mysql无法链接`的问题时，根据提供的知识，我们可以按以下步骤分析和解决：1. **检查配置文件**：   - 首先，确认`conf/application.properties`文件中的数据库连接配置是否正确。这包括JDBC URL、用户名和密码等是否准确无误。例如"

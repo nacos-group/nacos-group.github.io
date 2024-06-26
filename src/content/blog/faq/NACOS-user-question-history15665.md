@@ -1,13 +1,13 @@
 ---
 id: "question-history-15665"
-title: "Nacos配置变更通知 "
+title: "Nacos配置变更通知 nacos-opensource"
 date: "2024-06-18"
 category: "expertConsultation"
 description: "在关于Nacos配置变更通知的问题前，我需要确认几个前提条件，以确保我的解答能够针对性地解决您的疑问：1. **您想了解的是Nacos如何实现配置变更的通知机制，还是遇到了特定的问题，比如配置更新后服务未收到通知？**2. **您使用的Nacos客户端（如Java客户端）是否有正确配置并监听了所需的"
 ---
 
 ## 用户问题 ： 
- Nacos配置变更通知  
+ Nacos配置变更通知 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

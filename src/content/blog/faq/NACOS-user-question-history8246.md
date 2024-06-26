@@ -1,6 +1,6 @@
 ---
 id: "question-history-8246"
-title: "使用Nacos-Sync将数据从zookeeper迁移到Nacos，在配置DemoService 服务的同步任务后，如何在Nacos中保活。这个阶段，应用provider端还没有切换到Nacos上，所以没有心跳续约。是Nacos-Sync 来模拟的？这个大概能支持多大的实例量？ "
+title: "使用Nacos-Sync将数据从zookeeper迁移到Nacos，在配置DemoService 服务的同步任务后，如何在Nacos中保活。这个阶段，应用provider端还没有切换到Nacos上，所以没有心跳续约。是Nacos-Sync 来模拟的？这个大概能支持多大的实例量？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在使用Nacos-Sync将数据从Zookeeper迁移至Nacos的过程中，确保DemoService服务在Nacos中保活，尤其是在应用provider端尚未切换到Nacos，缺乏自然心跳续约机制的情况下，Nacos-Sync工具并不直接负责模拟心跳以保活实例。Nacos-Sync主要用于数据迁"

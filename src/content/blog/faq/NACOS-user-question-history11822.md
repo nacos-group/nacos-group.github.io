@@ -1,6 +1,6 @@
 ---
 id: "question-history-11822"
-title: "除了nacos还有哪些配置中心 "
+title: "除了nacos还有哪些配置中心 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "除了Nacos，还有多种配置中心可以作为选择，根据不同的需求和场景，这些配置中心各有优势。以下是其他几个主流的配置中心：1. **Etcd**：Etcd是一个分布式键值存储系统，常用于共享配置和服务发现。尽管其可持续性存在疑问，但依然是某些场景下的选择之一。2. **Apollo（阿波罗）**：由携"

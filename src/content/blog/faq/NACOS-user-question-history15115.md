@@ -1,13 +1,13 @@
 ---
 id: "question-history-15115"
-title: "nacos  go 客户端下载 "
+title: "nacos  go 客户端下载 nacos-opensource"
 date: "2024-06-05"
 category: "expertConsultation"
 description: "根据您的问题，您想要了解如何下载Nacos的Go客户端。根据提供的知识内容，您可以直接访问Go客户端的GitHub仓库进行下载。以下是具体步骤：1. **访问GitHub仓库：**   访问Nacos Go客户端的官方GitHub仓库，链接为：[Nacos Go客户端](https://github"
 ---
 
 ## 用户问题 ： 
- nacos  go 客户端下载  
+ nacos  go 客户端下载 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

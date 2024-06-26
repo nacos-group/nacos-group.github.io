@@ -1,6 +1,6 @@
 ---
 id: "question-history-12457"
-title: "mysql-schema.sql在哪里能找到？ "
+title: "mysql-schema.sql在哪里能找到？ nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "在Nacos 2.x.x版本中，`mysql-schema.sql`文件位于`nacos-server-2.x.xconf`目录下。此文件用于数据库初始化，尤其是在您打算将Nacos配置信息存储于MySQL数据库时。如果您正在寻找此文件以便进行数据库 schema 的创建或更新，请直接在Nacos服"

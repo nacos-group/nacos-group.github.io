@@ -1,18 +1,18 @@
 ---
 id: "question-history-15663"
-title: "nacos2.3.2 对应的nacos-api 和 nacos-client版本是多少？ "
+title: "nacos2.3.2 对应的nacos-api 和 nacos-client版本是多少？ nacos-opensource"
 date: "2024-06-18"
 category: "expertConsultation"
-description: "根据已有的知识信息，我没有直接找到关于 nacos2.3.2对应的nacos-api和nacos-client确切版本号的明确说明。但我们可以根据一些原则和建议来推理和寻找答案。### 分析原因1. **版本兼容性**：Nacos团队通常会保持服务端与客户端之间的良好"
+description: "根据已有的知识信息，我没有直接找到关于nacos-opensource nacos2.3.2对应的nacos-api和nacos-client确切版本号的明确说明。但我们可以根据一些原则和建议来推理和寻找答案。### 分析原因1. **版本兼容性**：Nacos团队通常会保持服务端与客户端之间的良好"
 ---
 
 ## 用户问题 ： 
- nacos2.3.2 对应的nacos-api 和 nacos-client版本是多少？  
+ nacos2.3.2 对应的nacos-api 和 nacos-client版本是多少？ nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：
 
-根据已有的知识信息，我没有直接找到关于 nacos2.3.2对应的nacos-api和nacos-client确切版本号的明确说明。但我们可以根据一些原则和建议来推理和寻找答案。
+根据已有的知识信息，我没有直接找到关于nacos-opensource nacos2.3.2对应的nacos-api和nacos-client确切版本号的明确说明。但我们可以根据一些原则和建议来推理和寻找答案。
 
 ### 分析原因
 1. **版本兼容性**：Nacos团队通常会保持服务端与客户端之间的良好兼容性，特别是对于小版本的升级，倾向于做到向后兼容，以减少用户升级的成本。

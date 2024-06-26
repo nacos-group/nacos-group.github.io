@@ -1,18 +1,18 @@
 ---
 id: "question-history-15652"
-title: "Nacos 配置 tomcat.connection-timeout=5000 "
+title: "Nacos 配置 tomcat.connection-timeout=5000 nacos-opensource"
 date: "2024-06-18"
 category: "expertConsultation"
-description: "根据您提供的问题“ Nacos 配置 tomcat.connection-timeout=5000”，这看起来像是您想要在Nacos中配置Tomcat的连接超时设置。不过，直接从您的问题中，我们无法确切判断是遇到了配置问题、如何配置、还是配置后遇到何种困难（比如配置不"
+description: "根据您提供的问题“nacos-opensource Nacos 配置 tomcat.connection-timeout=5000”，这看起来像是您想要在Nacos中配置Tomcat的连接超时设置。不过，直接从您的问题中，我们无法确切判断是遇到了配置问题、如何配置、还是配置后遇到何种困难（比如配置不"
 ---
 
 ## 用户问题 ： 
- Nacos 配置 tomcat.connection-timeout=5000  
+ Nacos 配置 tomcat.connection-timeout=5000 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：
 
-根据您提供的问题“ Nacos 配置 tomcat.connection-timeout=5000”，这看起来像是您想要在Nacos中配置Tomcat的连接超时设置。不过，直接从您的问题中，我们无法确切判断是遇到了配置问题、如何配置、还是配置后遇到何种困难（比如配置不生效）。因此，为了更精确地帮助您，我需要一些额外的信息或澄清：
+根据您提供的问题“nacos-opensource Nacos 配置 tomcat.connection-timeout=5000”，这看起来像是您想要在Nacos中配置Tomcat的连接超时设置。不过，直接从您的问题中，我们无法确切判断是遇到了配置问题、如何配置、还是配置后遇到何种困难（比如配置不生效）。因此，为了更精确地帮助您，我需要一些额外的信息或澄清：
 
 1. **您是否在尝试设置Tomcat的连接超时，并希望这个配置能通过Nacos动态管理？**
 2. **如果您已经在Nacos中进行了配置，遇到了什么具体的问题？比如配置不生效、找不到配置项、或者其他错误信息？**

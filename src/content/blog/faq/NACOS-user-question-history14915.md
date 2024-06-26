@@ -1,13 +1,13 @@
 ---
 id: "question-history-14915"
-title: "nacos 可以获取到mapping分组的服务配置，但获取不到dubbo分组的服务配置 "
+title: "nacos 可以获取到mapping分组的服务配置，但获取不到dubbo分组的服务配置 nacos-opensource"
 date: "2024-06-03"
 category: "expertConsultation"
 description: "根据提供的知识内容，我们可以分析您遇到的问题：nacos 可以获取到`mapping`分组的服务配置，但获取不到`dubbo`分组的服务配置。这可能是由于以下几个原因：1. **分组名称确认**：首先，请确保您尝试访问的`dubbo`分组确实存在并且拼写正确。分组名称是区分大小写的，且只能包含英文字"
 ---
 
 ## 用户问题 ： 
- nacos 可以获取到mapping分组的服务配置，但获取不到dubbo分组的服务配置  
+ nacos 可以获取到mapping分组的服务配置，但获取不到dubbo分组的服务配置 nacos-opensource 
 
 ---------------
 ## 专家官方解答 ：

@@ -1,14 +1,14 @@
 ---
 id: "question-history-8196"
-title: "项目启动注册nacos时本地生成的logs和nacos目录支持修改？非源码启动 "
+title: "项目启动注册nacos时本地生成的logs和nacos目录支持修改？非源码启动 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
-description: "在非源码启动的情况下，针对项目启动并注册到Nacos时，本地自动生成的`logs`和`nacos`目录的支持修改情况，可以依据以下分析与建议进行操作：### 分析原因1. **logs目录**: 默认情况下，Nacos服务器会生成日志文件在指定的日志目录下，这个路径通"
+description: "在非源码启动的情况下，针对nacos-opensource项目启动并注册到Nacos时，本地自动生成的`logs`和`nacos`目录的支持修改情况，可以依据以下分析与建议进行操作：### 分析原因1. **logs目录**: 默认情况下，Nacos服务器会生成日志文件在指定的日志目录下，这个路径通"
 tags: ["项目启动","注册nacos","本地生成","logs","nacos目录","支持修改","非源码启动"]
 keywords: ["项目启动","注册nacos","本地生成","logs","nacos目录","支持修改","非源码启动"]
 ---
 
-在非源码启动的情况下，针对项目启动并注册到Nacos时，本地自动生成的`logs`和`nacos`目录的支持修改情况，可以依据以下分析与建议进行操作：
+在非源码启动的情况下，针对nacos-opensource项目启动并注册到Nacos时，本地自动生成的`logs`和`nacos`目录的支持修改情况，可以依据以下分析与建议进行操作：
 
 ### 分析原因
 1. **logs目录**: 默认情况下，Nacos服务器会生成日志文件在指定的日志目录下，这个路径通常可以在Nacos配置文件（如`nacos-logback.xml`）中指定。对于客户端而言，其日志生成路径依赖于应用自身的日志配置。

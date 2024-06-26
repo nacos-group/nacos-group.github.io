@@ -1,6 +1,6 @@
 ---
 id: "question-history-13983"
-title: "nacos 持久化存储方案介绍 "
+title: "nacos 持久化存储方案介绍 nacos-opensource"
 date: "2024-05-22"
 category: "expertConsultation"
 description: "Nacos在设计上支持两种类型的服务存储方案：持久化服务和临时服务，它们在数据持久性和生命周期管理上有显著差异。下面详细介绍这两种存储方案的特点及适用场景：### 持久化服务（ephemeral=false）- **特点**：  - 数据持久存在，除非用户手动删除，否则即使遇到集群故障、节点重启或微"

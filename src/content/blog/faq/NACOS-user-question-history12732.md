@@ -1,6 +1,6 @@
 ---
 id: "question-history-12732"
-title: "如何确定nacos是否运行 "
+title: "如何确定nacos是否运行 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "要确定Nacos是否正在运行，可以遵循以下步骤：1. **检查服务端日志**：   首先，查看Nacos服务端的日志文件，这通常是诊断服务状态的第一步。日志通常位于Nacos部署目录下的`logs`文件夹中，主要查看`nacos-server.log`。日志中应有服务启动成功的信息，例如“Nacos"

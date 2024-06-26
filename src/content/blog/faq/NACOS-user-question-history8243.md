@@ -1,6 +1,6 @@
 ---
 id: "question-history-8243"
-title: "升级nacos2.2.3后，漏洞扫描依旧显示存在身份认证绕过漏洞 "
+title: "升级nacos2.2.3后，漏洞扫描依旧显示存在身份认证绕过漏洞 nacos-opensource"
 date: "2024-05-17"
 category: "expertConsultation"
 description: "根据已知信息，如果您已经升级到Nacos 2.2.3版本，并且漏洞扫描仍显示存在身份认证绕过漏洞，按照Nacos官方文档说明，该版本理论上不应存在此漏洞。以下是针对此问题的分析与建议步骤：1. **确认版本信息**：首先，请确保您当前运行的Nacos版本确实是2.2.3或更高。可以通过检查Nacos"
