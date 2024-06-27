@@ -1,6 +1,7 @@
 import Button from './Button.jsx';
 import Star from "./Star.jsx";
-import Fork from "./Fork.jsx";
+import Fork from "./Fork.jsx"
+import Start from "./Start.jsx"
 import { useEffect, useState } from "preact/hooks";
 import useCustomSWR from "@/utils/useCustomSWR";
 import type { StarAndForkT } from 'src/types';
@@ -44,11 +45,13 @@ const StarAndForkV2 = (props:StarAndForkT) =>{
 				size="large"
 				type="primary"
 				class="rounded-3xl"
-				href="https://github.com/alibaba/nacos/fork"
-				target="_blank"
+				href="/docs/latest/quickstart/quick-start/"
+				target="_self"
 			>
-				<Fork />
-				<span class="ml-2">{forkCount}</span>
+				<Start />
+				{/* <Fork />  */}
+				
+				<span class="ml-2">快速开始</span>
 			</Button>
         </star-and-fork>
 	);
