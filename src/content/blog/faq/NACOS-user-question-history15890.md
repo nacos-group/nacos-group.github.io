@@ -3,7 +3,7 @@ id: "question-history-15890"
 title: "nacos 客户端报错user not found原因与处理建议"
 date: "2024-06-26"
 category: "expertConsultation"
-description: "根据提供的知识内容，对于问题“ nacos 客户端报错user not found原因与处理建议”，我们可以分析并提出以下解答：### 原因分析：1. **客户端配置错误**：客户端/控制台登录时输入的用户名不存在或密码错误。2. **Token无效或认证信息错误**"
+description: "根据提供的知识内容，对于问题“nacos-opensource nacos 客户端报错user not found原因与处理建议”，我们可以分析并提出以下解答：### 原因分析：1. **客户端配置错误**：客户端/控制台登录时输入的用户名不存在或密码错误。2. **Token无效或认证信息错误**"
 ---
 
 ## 用户问题 ： 
@@ -12,7 +12,7 @@ description: "根据提供的知识内容，对于问题“ nacos 客户端报�
 ---------------
 ## 专家官方解答 ：
 
-根据提供的知识内容，对于问题“ nacos 客户端报错user not found原因与处理建议”，我们可以分析并提出以下解答：
+根据提供的知识内容，对于问题“nacos-opensource nacos 客户端报错user not found原因与处理建议”，我们可以分析并提出以下解答：
 
 ### 原因分析：
 
