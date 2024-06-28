@@ -1,7 +1,7 @@
 ---
 title: 开发者
-keywords: [Nacos, 开发者, Maintainer, Committer, Contributor, 开源项目, 贡献者角色]
-description: 本文详细介绍了Nacos项目的开发者体系，包括Maintainer、Committer、Contributor三种角色的定义、权利与义务，以及展示了部分核心开发团队成员信息，体现了开源项目中不同贡献者的职责与贡献认可。
+keywords: [Nacos, 开发者体系, Maintainer, Committer, Contributor, 开源项目, 贡献者角色, 社区维护, code review, PR合并]
+description: 文章详述了Nacos项目的开发者体系结构，包括Maintainer、Committer、Contributor角色的职责、权利与义务，展示核心开发团队，突出了开源环境下不同贡献者的责任与价值认可。
 sidebar:
     order: 2
 ---

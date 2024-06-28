@@ -1,7 +1,7 @@
 ---
 title: 自定义环境变量
-keywords: [自定义环境变量,自定义配置,数据库密码加密]
-description: Nacos自定义环境变量插件支持通过SPI机制扩展服务端配置，实现如数据库密码加密等功能，适用于2.2.0及以上版本，目前处于Beta阶段，需留意API变动。
+keywords: [Nacos,自定义环境变量,插件开发,SPI机制,数据库密码加密,Beta测试阶段]
+description: Nacos 2.2.0+支持SPI机制自定义环境变量插件，实现配置扩展如数据库密码加密，当前处于Beta版，需关注API变更。
 sidebar:
     order: 6
 ---
