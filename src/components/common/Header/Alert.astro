@@ -35,32 +35,50 @@ const {
 
 <script>
   // handleAlertClose函数用于处理提示条的关闭逻辑。
-  function handleAlertClose(button, pageFrame) {
+  function handleAlertClose(button) {
     button.parentNode.style.display = "none";
     window.alertBarClosed = true;
-    pageFrame.classList.remove('alert-bar-exist')
   }
 
   // 检查localStorage中的状态，看是否需要显示提示条。
   function initAlertBar() {
-    try {
+    const displayAlert = [
+      "/",
+      "/en/",
+      "/cloud/",
+      "/en/cloud/",
+      "/news/",
+      "/en/news/",
+      "/activity",
+      "/en/activity",
+      "/blog/",
+      "/en/blog/",
+      "/download/nacos-server/",
+      "/en/download/nacos-server/",
+      "/wuyi/",
+      "/en/wuyi/"
+    ]
+    if(!displayAlert.includes(location.pathname)){
+      // 如果为文档/博客详情等不期望展示提示条，则隐藏提示条。
+      document.querySelector(".alert-bar") && (document.querySelector(".alert-bar").style.display = "none")
+    } else {
+      try {
       const alertBar = document.querySelector(".alert-bar");
       const closeButton = document.querySelector(".close-button");
       const isClosed = window.alertBarClosed || false;
-      const pageFrame = document.querySelector('.sidebar-pane');
 
       if (isClosed === true) {
         alertBar.style.display = "none";
-        pageFrame.classList.remove('alert-bar-exist')
       } else {
         closeButton.addEventListener("click", function () {
-          handleAlertClose(closeButton,pageFrame);
+          handleAlertClose(closeButton);
         });
-        pageFrame.classList.add('alert-bar-exist')
       }
     } catch (e) {
       console.log(e);
     }
+    }
+    
   }
 
   // // 当页面加载时，调用initAlertBar函数。
