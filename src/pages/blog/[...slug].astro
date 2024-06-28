@@ -77,14 +77,14 @@ const description = post?.data?.description || "";
 
 <span class="blog-slug-wrapper">
 	<BaseLayout align="docs" title={baseLayout_title} description={description}>
-		<div>
+		<div class="w-full">
 			<div
 				class="w-[20%] sidebar-content fixed overflow-auto h-full hidden 2xl:inline-block xl:inline-block lg:inline-block md:inline-block"
 			>
 				<Sidebar sidebar={articlePosts} />
 			</div>
 			<div
-				class="w-full 2xl:ml-[20%] xl:ml-[20%] lg:ml-[20%] md:ml-[20%] 2xl:w-[50%] xl:w-[50%] lg:w-[50%] md:w-[50%] inline-block"
+				class="w-full 2xl:ml-[20%] xl:ml-[20%] lg:ml-[20%] md:ml-[20%] 2xl:w-[60%] xl:w-[60%] lg:w-[80%] md:w-[80%] inline-block"
 			>
 				<div id="back-btn" class="pt-4 pl-6">
 					<Button type="normal" class="rounded-3xl" visibility={false}>
@@ -113,7 +113,7 @@ const description = post?.data?.description || "";
 				</div>
 			</div>
 			<div
-				class="right-sidebar-panel w-[25%] fixed h-full hidden 2xl:inline-block xl:inline-block lg:inline-block md:inline-block"
+				class="right-sidebar-panel w-[18%] fixed h-full hidden 2xl:inline-block xl:inline-block"
 			>
 				<TocComponent headings={headings} />
 			</div>

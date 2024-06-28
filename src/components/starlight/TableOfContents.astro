@@ -4,7 +4,6 @@ import ContributeMenu from './ContributeMenu.astro';
 import CommunityMenu from './CommunityMenu.astro';
 import type { Props } from '@astrojs/starlight/props';
 import './style.css';
-import FeedbackButton from './FeedbackButton.astro';
 import { useTranslations } from "@i18n/util";
 const t = useTranslations(Astro);
 const { locale, toc, editUrl,entry } = Astro.props;
@@ -18,7 +17,6 @@ const { locale, toc, editUrl,entry } = Astro.props;
 				<TableOfContentsList toc={toc.items} />
 				<ContributeMenu editHref={editUrl.href} title={entry?.data?.title}/>
 				<CommunityMenu />
-				<FeedbackButton />
 			</nav>
 		</starlight-toc>
 	)
