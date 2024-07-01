@@ -2,6 +2,8 @@
 import { useTranslations } from "@i18n/util";
 const t = useTranslations(Astro);
 import BaseContainer from "@components/common/BaseContainer.astro";
+
+// 卡片链接为硬编码，后续如果需要修改，需同步替换script中的链接值
 const introduceData = [
   {
     title: t("cloud.introduce.free.pkg"),
@@ -54,7 +56,7 @@ const introduceData = [
 ];
 ---
 
-<span class="cloud-introduce-div">
+<span class="cloud-introduce-div" id="cloud-introduce">
   <cloud-introduce
     class="cloud-introduce flex flex-col justify-center items-center pt-10 pb-14"
   >
@@ -111,7 +113,7 @@ const introduceData = [
                 })}
               </div>
               <div class="subscribe text-center mt-6 mb-2">
-                <a href={item?.link} target="_blank">
+                <a href={item?.link} target="_blank" name="introduce-data">
                   <button class="btn button-transform rounded-full w-full bg-gray-14 text-gray-03 hover:bg-gray-12">
                     {item?.linkName}
                   </button>
@@ -123,6 +125,29 @@ const introduceData = [
       }
     </BaseContainer>
   </cloud-introduce>
+  <script>
+    function replaceUrl(document){
+      if(window.location.search && document.getElementById("cloud-introduce")){
+        const params = new URLSearchParams(window.location.search);
+        const fromParams = params.get("from");
+        if(fromParams === 'wuyi'){
+          const linkElements = document.getElementsByName("introduce-data")
+
+          // 注意： 当前链接为硬编码，后续需要根据需求进行修改
+          linkElements[0].href = "https://free.aliyun.com/?searchKey=nacos&spm=nacos.sx.topbar.1.1.1";
+          linkElements[1].href= "https://www.aliyun.com/product/aliware/mse?spm=nacos.sx.topbar.0.0.0";
+          linkElements[2].href= "https://www.aliyun.com/product/aliware/mse?spm=nacos.sx.topbar.0.0.0";
+          linkElements[3].href= "https://www.aliyun.com/product/aliware/mse?spm=nacos.sx.topbar.0.0.0";
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded",()=>{
+      replaceUrl(document)
+    })
+    document.addEventListener("astro:before-swap",ev=>{
+      replaceUrl(ev.newDocument)
+    })
+  </script>
 </span>
 
 <style is:global>
@@ -272,3 +297,5 @@ const introduceData = [
     }
   }
 </style>
+
+
