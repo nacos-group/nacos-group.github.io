@@ -1,7 +1,7 @@
 ---
 title: 配置变更
-keywords: [Nacos, 配置变更, 配置审计, 配置格式校验, webhook, SPI, AOP, 插件开发]
-description: Nacos 2.3.0引入配置变更插件支持，实现配置审计、格式校验与webhook回调。通过SPI注入，开发者能定制变更前后逻辑，增强配置管理灵活性。文章详述了插件概念、开发流程、加载与自定义参数传递，及DEMO实现。
+keywords: [Nacos, 配置变更插件, SPI注入, 配置审计, 格式校验, webhook回调, AOP设计, 插件开发, 自定义参数传递, DEMO实现]
+description: Nacos 2.3.0新增配置变更插件支持，通过SPI实现配置变更的灵活管理，包括审计、格式检查及webhook通知。文章介绍插件概念、开发步骤、加载过程及自定义参数传递，附DEMO演示。
 sidebar:
     order: 8
 ---

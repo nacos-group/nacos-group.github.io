@@ -1,7 +1,7 @@
 ---
 title: 反脆弱
-keywords: [反脆弱, Nacos, SPI, 连接数限制, TPS, 插件开发, 反脆弱规则, 监控点, ControlPoint, ControlRule]
-description: Nacos 支持反脆弱插件，避免高压下的集群容量问题。
+keywords: [Nacos, 反脆弱插件, SPI, 连接数限制, TPS, 插件开发, 监控点, ControlPoint, ControlRule, 插件扩展, 反脆弱规则存储]
+description: Nacos 2.3.0+ 支持SPI反脆弱插件，通过监控点和规则限制访问频次，保护服务在高压力下稳定运行，可自定义扩展与规则存储策略。
 sidebar:
     order: 7
 ---

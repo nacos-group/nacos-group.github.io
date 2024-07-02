@@ -78,6 +78,57 @@ let height,
     }
   };
   document.head.appendChild(script);
+
+  // 切换页面时如果有search参数，则将search参数添加到新页面的url中
+  document.addEventListener("astro:before-swap", ev => {
+    const originUrl = ev.from;
+    const newUrl = ev.to;
+    const oldSearchParams = originUrl.searchParams;
+    const newSearchParams = newUrl.searchParams;
+     // 如果旧页面有from参数，则将from参数添加到新页面的url（主要是为了无疑的漏斗使用）
+    if (oldSearchParams.get("from")) {
+      newSearchParams.set("from", oldSearchParams.get("from"));
+    }
+    // 如果新的页面没有source参数，则将source参数添加到新页面的url中
+    if(oldSearchParams.get("source") && !newSearchParams.get("source")){
+      newSearchParams.set("source", oldSearchParams.get("source"));
+    }
+  })
+
+  const trackNavigate = ()=>{ 
+		 setTimeout(function () {
+			if(window.aes && window.AESPluginEvent) {
+				const sendEvent = window?.aes.use(window.AESPluginEvent)
+        const fromSearch = new URLSearchParams(window?.location?.search).get("from")
+				sendEvent('TRACK_NAVIGATE', {
+					c1:  window?.location?.pathname,
+          c2: fromSearch
+				});
+			}
+		 }, 1000)
+	};
+
+  document.addEventListener("DOMContentLoaded", () => {
+    if (performance.getEntriesByType('navigation').length > 0) {
+        // 尝试获取 PerformanceNavigationTiming 信息
+        const [navigationEntry] = performance.getEntriesByType('navigation');
+
+        if (navigationEntry) {
+          // 使用 PerformanceNavigationTiming API
+          if(navigationEntry.type === 'navigate') {
+            console.log("navigate")
+            trackNavigate()
+          }
+        }
+    } else {
+      // Fallback: 使用 performance.navigation (已废弃但用于兼容性)
+        const navigationType = performance.navigation.type;
+        if (navigationType === performance.navigation.TYPE_NAVIGATE) {
+          console.log("fallback navigate")
+          trackNavigate()
+        }
+    }
+  })
 </script>
 
 <script>
@@ -86,7 +137,6 @@ let height,
     //cnpilot
     const copilotJSScript = document.createElement("script");
     copilotJSScript.type = "text/javascript";
-    // copilotJSScript.src = "https://g.alicdn.com/cm-design/copilot-booter/0.0.23/copilot-booter.js";
     copilotJSScript.src = "https://g.alicdn.com/cm-design/copilot-booter/0.0.26/copilot-booter.js";
     copilotJSScript.addEventListener("load", function () {
       if (window.CNPilot) {

@@ -34,7 +34,7 @@ const Tableplugin = (props) => {
                 <p class="mb-6 text-2xl font-normal"> 专业版</p>
                 <div class='h-20 text-gray-08 text-xs'>
                   <p class='mb-1'>目录价：498元/月起</p>
-                  <p class='mb-1'>折扣价：209.16元/月起</p>
+                  <p class='mb-1'>折扣价：209.2元/月起</p>
                   <p class='mb-1'>折扣详情：首购4.2折</p>
                 </div>
 

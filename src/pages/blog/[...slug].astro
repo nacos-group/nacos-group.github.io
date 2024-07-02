@@ -121,20 +121,34 @@ const description = post?.data?.description || "";
 	</BaseLayout>
 </span>
 <script>
-	const url = new URL(window.location.href);
-	let source = url.searchParams.get("source");
-	if(source) {
-		source = source.replace(/_/g, "/");
-	};
-	const backBtn: HTMLAnchorElement = document.querySelector("#back-btn a");
-	backBtn.onclick = (e) => {
-		e.preventDefault();
-		if(source && source !== 'undefined') {
-			location.href = `/${source}/`;
-		} else {
-			location.href = `/blog/`;
+	function addBackBtnClick (){
+		const url = new URL(window.location.href);
+		let source = url.searchParams.get("source");
+		if(source) {
+			source = source.replace(/_/g, "/");
 		};
-	};
+		const backBtn: HTMLAnchorElement = document.querySelector("#back-btn a");
+		if(backBtn){
+			backBtn.onclick = (e) => {
+				e.preventDefault();
+				const params = new URLSearchParams(window.location.search);
+				params.delete("source")
+
+				let newPathname = ""
+				if (source && source !== 'undefined') {
+						newPathname = `/${source}/`;
+				} else {
+						newPathname = '/blog/';
+				}
+				const newUrl = `${newPathname}?${params.toString()}`;
+
+				window.location.href = newUrl; 
+			};
+		}
+		
+	}
+	document.addEventListener("astro:page-load",addBackBtnClick);
+	document.addEventListener("DOMContentLoaded", addBackBtnClick)
 </script>
 
 <style is:global>
