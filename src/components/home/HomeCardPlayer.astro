@@ -6,7 +6,7 @@ const t = useTranslations(Astro);
 
 ---
 
-<card-player class="card-player block bg-gary-02 p-10">
+<card-player class="card-player block bg-gray-02 p-10">
   <div class="top-title w-full flex flex-col items-center mb-20 mt-16">
     <span class="text-gray-10 text-xs mb-6">{t('home.card.player.voice')}</span>
     <span class="title text-gray-14 text-4xl font-medium">{t('home.card.player.tutorials')}</span>
@@ -33,8 +33,8 @@ const t = useTranslations(Astro);
                 class="card overflow-hidden flex flex-col justify-between cursor-pointer rounded-3xl mx-2 relative"
               >
                 
-                <video id={`v${index}`} poster={cover}  class=' h-full rounded-3xl object-cover hidden'  >
-                  <source src={src}  type="video/mp4" />
+                <video  id={`v${index}`} poster={cover}  preload="metadata"  data-src={src}  class=' h-full rounded-3xl object-cover hidden lazy-video'  >
+                  <source type="video/mp4" />
                 </video>
                 <span 
                   class="video-play-bt btn btn-secondary btn-sm rounded-3xl mr-4 text-xs font-normal absolute bottom-2.5 left-3 "
@@ -80,9 +80,9 @@ const t = useTranslations(Astro);
       MEDIARESOURCE.map((item, index) => {
         const { src,cover } = item;
         return (
-          <div class="mobile-card h-[14rem] w-full overflow-hidden flex flex-col justify-between cursor-pointer rounded-3xl mb-4">
-            <video controls poster={cover}  class=' h-full rounded-3xl object-cover'  >
-              <source src={src}  type="video/mp4" />
+          <div class="mobile-card h-[14rem] w-full overflow-hidden flex flex-col justify-between cursor-pointer rounded-3xl mb-4 ">
+            <video controls poster={cover} data-src={src} preload="metadata"  class=' h-full rounded-3xl object-cover lazy-video'  >
+              <source type="video/mp4" />
             </video>
           </div>
         );
@@ -248,6 +248,42 @@ const t = useTranslations(Astro);
     }
   }
   customElements.define("card-player", HomeCardPlayer);
+</script>
+
+
+<script>
+  // Lazy loading using IntersectionObserver
+  document.addEventListener('DOMContentLoaded', () => {
+  const lazyVideos = document.querySelectorAll('.lazy-video');
+
+  if ('IntersectionObserver' in window) {
+    let lazyVideoObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const video = entry.target;
+
+          // Load the video source
+          video.src = video.getAttribute('data-src');
+          video.load(); // Optionally, start loading the video
+
+          video.classList.remove('lazy-video');
+          lazyVideoObserver.unobserve(video);
+        }
+      });
+    });
+
+    lazyVideos.forEach(video => {
+      lazyVideoObserver.observe(video);
+    });
+  } else {
+    // Fallback for browsers that do not support IntersectionObserver
+    lazyVideos.forEach(video => {
+      video.src = video.getAttribute('data-src');
+      video.load(); // Optionally, start loading the video
+    });
+  }
+});
+
 </script>
 
 <style is:global>

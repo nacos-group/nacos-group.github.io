@@ -208,6 +208,29 @@ const { stargazers_count=0, forks_count=0 }:StarAndForkT = await sendFetch("http
       backdrop-filter: blur(36px);
     }
 
+   
+ /* 大于50rem 小于 72rem  800px < width < 1440 */
+    @media (min-width: 50rem) and (max-width: 86rem) {
+      .introduce {
+        padding: 2.5rem;
+      }
+      .top-section,
+      .bottom-section {
+        width: 100%;
+      }
+      .top-section .notes .pc-version-intro {
+        display: none;
+      }
+      .top-section .notes .mobile-version-intro {
+        display: inline;
+      }
+      .bottom-section .desc div {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+      }
+    }
     /* 小于50rem  小于 800px */
     @media (max-width: 50rem) {
       .introduce {
@@ -251,26 +274,15 @@ const { stargazers_count=0, forks_count=0 }:StarAndForkT = await sendFetch("http
       }
     }
 
-    /* 大于50rem 小于 72rem  800px < width < 1440 */
-    @media (min-width: 50rem) and (max-width: 86rem) {
-      .introduce {
-        padding: 2.5rem;
-      }
-      .top-section,
-      .bottom-section {
-        width: 100%;
-      }
-      .top-section .notes .pc-version-intro {
-        display: none;
-      }
-      .top-section .notes .mobile-version-intro {
-        display: inline;
-      }
-      .bottom-section .desc div {
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 4;
+   
+
+         /*   小于 400px */
+     @media (max-width: 25rem) {
+     .top-section .shortcut button {
+        height: 2rem;
+        min-height: 2rem;
+        padding-left: 0;
+        padding-right: 0;
       }
     }
   }
