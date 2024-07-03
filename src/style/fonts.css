@@ -3,6 +3,7 @@
   font-style: normal;
   font-weight: normal;
   src: url('https://g.alicdn.com/cm-design/mw-vendor/1.6.11/Roboto-Regular.ttf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
@@ -10,6 +11,7 @@
   font-style: normal;
   font-weight: bold;
   src: url('https://g.alicdn.com/cm-design/mw-vendor/1.6.11/Roboto-Bold.ttf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
@@ -17,6 +19,7 @@ font-family: 'Roboto';
 font-style: italic;
 font-weight: bold;
 src: url('https://g.alicdn.com/cm-design/mw-vendor/1.6.11/Roboto-BoldItalic.ttf') format('truetype');
+font-display: swap;
 }
 
 @font-face {
@@ -24,6 +27,7 @@ font-family: 'Roboto';
 font-style: normal;
 font-weight: 500;
 src: url('https://g.alicdn.com/cm-design/mw-vendor/1.6.11/Roboto-Medium.ttf') format('truetype');
+font-display: swap;
 }
 
 @font-face {
@@ -31,6 +35,7 @@ font-family: 'Roboto';
 font-style: italic;
 font-weight: 500;
 src: url('https://g.alicdn.com/cm-design/mw-vendor/1.6.11/Roboto-MediumItalic.ttf') format('truetype');
+font-display: swap;
 }
 
 
@@ -40,6 +45,7 @@ src: url('https://g.alicdn.com/cm-design/mw-vendor/1.6.11/Roboto-MediumItalic.tt
   font-style: normal;
   font-weight: normal;
   src: url('https://g.alicdn.com/cm-design/mw-vendor/1.6.11/SourceHanSansSC-Normal-Min.ttf') format('truetype');
+  font-display: swap;
 }
 
 @font-face {
@@ -47,6 +53,7 @@ src: url('https://g.alicdn.com/cm-design/mw-vendor/1.6.11/Roboto-MediumItalic.tt
   font-style: normal;
   font-weight: 500;
   src: url('https://g.alicdn.com/cm-design/mw-vendor/1.6.11/SourceHanSansSC-Medium-Min.ttf') format('truetype');
+  font-display: swap;
 }
 
 
@@ -56,6 +63,7 @@ src: url('https://g.alicdn.com/cm-design/mw-vendor/1.6.11/Roboto-MediumItalic.tt
   font-style: normal;
   font-weight: bold;
   src: url('https://g.alicdn.com/cm-design/mw-vendor/1.6.11/SourceHanSansSC-Bold-Min.ttf') format('truetype');
+  font-display: swap;
 }
 
 
