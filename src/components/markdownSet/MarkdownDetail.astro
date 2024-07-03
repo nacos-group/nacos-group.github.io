@@ -21,7 +21,7 @@ const { title, description, date, updatedDate, heroImage, author } =
 					<h1 id="_top">{title}</h1>
 					<div>{author}</div>
 					<div class="date">
-						<FormattedDate date={new Date(date)} />
+						{date && <FormattedDate date={new Date(date)} />}
 						{
 							updatedDate && (
 								<div class="last-updated-on">
