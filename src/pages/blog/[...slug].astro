@@ -56,9 +56,15 @@ const articlePosts = [
 
 let currentIndex;
 
+// 对于有weight值的博客进行抽取，使其按照weight值优先排序。
+let hasWeightBlog = [];
+
 sortedPosts.forEach((item) => {
 	if (item.data.category === post.data.category) {
 		if (post.id === item.id) currentIndex = articlePosts[0].entries.length;
+		if( "weight" in item.data ){
+			hasWeightBlog.push(item)
+		}
 		articlePosts[0].entries.push({
 			type: "link",
 			label: item.data.title,
@@ -67,6 +73,19 @@ sortedPosts.forEach((item) => {
 			attrs: {},
 		});
 	}
+});
+
+// weight值越小越靠前。0为最小。
+const sortedWeightBlog = hasWeightBlog.sort((a, b) => b.data.weight - a.data.weight);
+
+sortedWeightBlog.forEach((item) => {
+	articlePosts[0].entries.unshift({
+		type: "link",
+		label: item.data.title,
+		href: `/blog/${item.slug}/`,
+		isCurrent: post.id === item.id,
+		attrs: {},
+	});
 });
 
 const prev = articlePosts[0].entries[currentIndex - 1];
