@@ -7,7 +7,7 @@ export const SITE_DESCRIPTION = 'Welcome to my website!';
 // 吊顶提示文案
 export const TOPBAR = {
     "text": "8月2日（周五）开源沙龙首个AI原生应用架构专场 | 上海站 ，欢迎报名！",
-    "mobileText": "8月2日（周五）开源沙龙首个AI原生应用架构专场 | 上海站 ，欢迎报名！",
+    "mobileText": "欢迎报名8月2日上海首个AI原生应用架构开源沙龙！",
     "link": "https://summit.aliyun.com/cloudnative2024_developer_shanghai?spm=5176.20960838.0.0.7802305eyqMQf8",
     "target": "_blank",
     "display": true
