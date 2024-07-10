@@ -90,6 +90,8 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [The-Gamer-01](https://github.com/The-Gamer-01) | Yixuan Huang | Jishou University | Committer | 19974361760@163.com |
 | [Karsonto](https://github.com/karsonto)         | Karson | ICBC (Asia) | Committer | karsontao@hotmail.com |
 | [Daydreamer-ia](https://github.com/Daydreamer-ia) | Yiqin Chen | Guangdong University of Technology | Committer | 2296032269@qq.com  |
+| [shalk](https://github.com/shalk) | Kun Xiao      | NASDAQ：TIGR | Committer | xshalk@163.com               |
+| [heqingpan](https://github.com/heqingpan) | Qingpan He    | 爱橙科技 | Committer | heqingpan@126.com            |
 
 ### Contributors
 
