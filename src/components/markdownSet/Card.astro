@@ -45,7 +45,7 @@ const { post, source, posterWidth, type = "blog",index = 0 } = Astro.props;
     </h2>
     <Button 
       size="large" 
-      href={`/blog/${post.slug}/?source=${source}`}
+      href={`/blog/${post.slug}/?source=${source}/`}
       class="rounded-3xl text-xs absolute bottom-3"
     >
       {t('blog.card.read.artile')}

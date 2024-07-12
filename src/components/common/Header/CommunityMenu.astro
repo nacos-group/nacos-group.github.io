@@ -217,7 +217,7 @@ const posts = await getEntries(simplifiedPosts as any);
                     class="flex justify-center items-center w-[8.5rem] h-[2.5rem] absolute bottom-2 text-xs bg-gray-12 text-gray-01 border-0 rounded-3xl no-underline"
                     href={`/${item.collection}/${item.slug}/?source=${
                       categoryMap[item.data.category]
-                    }`}
+                    }/`}
                   >
                     {t("commmon.header.comm.shortcut")}
                   </a>
