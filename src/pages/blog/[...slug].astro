@@ -159,7 +159,7 @@ const description = post?.data?.description || "";
 				} else {
 						newPathname = '/blog/';
 				}
-				const newUrl = `${newPathname}?${params.toString()}`;
+				const newUrl = `${newPathname}${params.toString() ? `?${params.toString()}` : ''}`;
 
 				window.location.href = newUrl; 
 			};

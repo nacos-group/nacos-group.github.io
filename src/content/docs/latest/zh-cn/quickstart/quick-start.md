@@ -1,6 +1,6 @@
 ---
 title: Nacos 快速开始
-keywords: [Nacos,快速开始]
+keywords: [Nacos,快速开始,启动命令]
 description: 这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。
 sidebar:
     order: 1

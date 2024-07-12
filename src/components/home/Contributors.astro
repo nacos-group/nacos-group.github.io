@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { useTranslations } from "@i18n/util";
 import Button from '@components/common/Button.astro';
 import members from "../contributors/gitHubData.json"; 
@@ -38,11 +39,13 @@ const getBackgroundRandomColor = () =>  colorList[Math.floor(Math.random() * col
                 <div class="avatar-wrap relative w-[2.3rem] h-[2.3rem] ssm:w-[3rem] ssm:h-[3rem] md:w-[3.5rem] md:h-[3.5rem] lg:w-[4rem] lg:h-[4rem] align-middle">
                   <a href={html_url} class="inline-block" target="_blank">
                     <div class="avatar-img-wrap absolute top-0 opacity-0 z-[1] animate-fade-by-group" data-index={index+1} }>
-                      <img
+                      <Image
                         class="avatar-img relative w-[2.3rem] h-[2.3rem] ssm:w-[3rem] ssm:h-[3rem] md:w-[3.5rem] md:h-[3.5rem] lg:w-[4rem] lg:h-[4rem] text-center z-10 rounded-xl"
                         src={`/img/contributors/${login}.jpg`}
                         alt={login}
                         title={login}
+                        width="36"
+                        height="36"
                       />
                     </div>
                     <div class="avatar-alt absolute left-0 top-0 w-[2.3rem] h-[2.3rem] ssm:w-[3rem] ssm:h-[3rem] md:w-[3.5rem] md:h-[3.5rem] lg:w-[4rem] lg:h-[4rem] p-2 truncate overflow-hidden text-sm rounded-xl text-gray-01" style={{background: getBackgroundRandomColor()}} />
