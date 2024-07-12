@@ -89,6 +89,8 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 | [The-Gamer-01](https://github.com/The-Gamer-01) | 黄乙轩 | 吉首大学 | Committer | 19974361760@163.com |
 | [Karsonto](https://github.com/karsonto)         | 陶健敏 | 中国工商银行（亚洲） | Committer | karsontao@hotmail.com |
 | [Daydreamer-ia](https://github.com/Daydreamer-ia) | 陈亿钦 | 广东工业大学 | Committer | 2296032269@qq.com  |
+| [shalk](https://github.com/shalk) | 肖焜 | 老虎证券 | Committer | xshalk@163.com               |
+| [heqingpan](https://github.com/heqingpan) | 何庆攀 | 爱橙科技 | Committer | heqingpan@126.com            |
 
 ### 活跃贡献者
 
