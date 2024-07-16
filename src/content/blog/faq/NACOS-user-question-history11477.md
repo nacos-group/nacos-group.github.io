@@ -49,11 +49,11 @@ keywords: ["nacos","多环境配置"]
 
 ## 参考链接 ：
 
-*[Nacos2.0服务配置性能测试报告](https://nacos.io/docs/latest/guide/admin/nacos2-config-benchmark)
+* [Nacos2.0服务配置性能测试报告](https://nacos.io/docs/latest/guide/admin/nacos2-config-benchmark)
  
- *专家经验：Nacos用作配置中心的话，能够支持百万级别的客户端连接嘛 
+ * 专家经验：Nacos用作配置中心的话，能够支持百万级别的客户端连接嘛 
  
- *专家经验：Nacos spring 适配 
+ * 专家经验：Nacos spring 适配 
 
 
  <font color="#949494">---------------</font> 

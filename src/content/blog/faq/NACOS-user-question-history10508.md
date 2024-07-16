@@ -44,11 +44,11 @@ Nacos在CAP原则中倾向于CP，保证了数据的一致性和分区容错性�
 
 ## 参考链接 ：
 
-*[Nacos系统参数介绍](https://nacos.io/docs/latest/guide/admin/system-configurations)
+* [Nacos系统参数介绍](https://nacos.io/docs/latest/guide/admin/system-configurations)
  
- *[Kubernetes Nacos](https://nacos.io/docs/latest/quickstart/quick-start-kubernetes)
+ * [Kubernetes Nacos](https://nacos.io/docs/latest/quickstart/quick-start-kubernetes)
  
- *专家经验：Nacos 欢迎你 
+ * 专家经验：Nacos 欢迎你 
 
 
  <font color="#949494">---------------</font> 

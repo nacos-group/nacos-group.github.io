@@ -41,9 +41,9 @@ Nacos与Consul都是流行的微服务基础设施组件，它们在服务发现
 
 ## 参考链接 ：
 
-*专家经验：Nacos和Eureka的区别是什么？ 
+* 专家经验：Nacos和Eureka的区别是什么？ 
  
- *专家经验：Nacos 介绍 
+ * 专家经验：Nacos 介绍 
 
 
  <font color="#949494">---------------</font> 

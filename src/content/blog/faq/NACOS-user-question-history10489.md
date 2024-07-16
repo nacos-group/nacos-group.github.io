@@ -70,9 +70,9 @@ spring:
 
 ## 参考链接 ：
 
-*[Kubernetes Nacos](https://nacos.io/docs/latest/quickstart/quick-start-kubernetes)
+* [Kubernetes Nacos](https://nacos.io/docs/latest/quickstart/quick-start-kubernetes)
  
- *专家经验：Nacos 快速开始 
+ * 专家经验：Nacos 快速开始 
 
 
  <font color="#949494">---------------</font> 

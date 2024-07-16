@@ -34,11 +34,11 @@ Nacos与Eureka之间的区别主要体现在以下几个方面：
 
 ## 参考链接 ：
 
-*专家经验：Nacos和Eureka的区别是什么？ 
+* 专家经验：Nacos和Eureka的区别是什么？ 
  
- *[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+ * [Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
  
- *专家经验：CatalogController 里面的接口和客户端SDK的API区别是什么 
+ * 专家经验：CatalogController 里面的接口和客户端SDK的API区别是什么 
 
 
  <font color="#949494">---------------</font> 

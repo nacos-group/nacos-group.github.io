@@ -50,11 +50,11 @@ Nacos支持的服务注册与发现功能包括：
 
 ## 参考链接 ：
 
-*[Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
+* [Nacos功能和需求列表](https://nacos.io/docs/latest/archive/feature-list)
  
- *[Open API 指南](https://nacos.io/docs/latest/guide/user/open-api)
+ * [Open API 指南](https://nacos.io/docs/latest/guide/user/open-api)
  
- *专家经验：nacos 多语言支持 
+ * 专家经验：nacos 多语言支持 
 
 
  <font color="#949494">---------------</font> 

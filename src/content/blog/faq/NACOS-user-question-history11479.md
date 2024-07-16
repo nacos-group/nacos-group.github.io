@@ -68,11 +68,11 @@ Nacos客户端提供了`getConfig`方法用于获取单个配置项，但没有�
 
 ## 参考链接 ：
 
-*[Kubernetes Nacos](https://nacos.io/docs/latest/quickstart/quick-start-kubernetes)
+* [Kubernetes Nacos](https://nacos.io/docs/latest/quickstart/quick-start-kubernetes)
  
- *[Java SDK](https://nacos.io/docs/latest/guide/user/sdk)
+ * [Java SDK](https://nacos.io/docs/latest/guide/user/sdk)
  
- *专家经验：Nacos spring 适配 
+ * 专家经验：Nacos spring 适配 
 
 
  <font color="#949494">---------------</font> 

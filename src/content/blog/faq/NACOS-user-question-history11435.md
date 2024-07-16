@@ -38,11 +38,11 @@ Nacos对比Eureka的优势主要体现在以下几个方面：
 
 ## 参考链接 ：
 
-*专家经验：Nacos和Eureka的区别是什么？ 
+* 专家经验：Nacos和Eureka的区别是什么？ 
  
- *专家经验：Nacos 介绍 
+ * 专家经验：Nacos 介绍 
  
- *专家经验：Nacos 快速开始 
+ * 专家经验：Nacos 快速开始 
 
 
  <font color="#949494">---------------</font> 

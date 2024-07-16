@@ -47,11 +47,11 @@ server.tomcat.accesslog.maxDays=15
 
 ## 参考链接 ：
 
-*专家经验：Nacos spring 适配 
+* 专家经验：Nacos spring 适配 
  
- *专家经验：Nacos 配置无法动态刷新 
+ * 专家经验：Nacos 配置无法动态刷新 
  
- *专家经验：Nacos 配置access.log的保留时间 
+ * 专家经验：Nacos 配置access.log的保留时间 
 
 
  <font color="#949494">---------------</font> 

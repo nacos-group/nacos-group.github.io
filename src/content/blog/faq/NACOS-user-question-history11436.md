@@ -36,11 +36,11 @@ keywords: ["Nacos","Eureka","为什么使用","而不是"]
 
 ## 参考链接 ：
 
-*专家经验：Nacos和Eureka的区别是什么？ 
+* 专家经验：Nacos和Eureka的区别是什么？ 
  
- *专家经验：Nacos使用的稳定性说明 
+ * 专家经验：Nacos使用的稳定性说明 
  
- *专家经验：nacos 与 springboot 联合使用 
+ * 专家经验：nacos 与 springboot 联合使用 
 
 
  <font color="#949494">---------------</font> 

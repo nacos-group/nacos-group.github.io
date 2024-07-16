@@ -39,9 +39,9 @@ keywords: ["角色授权","命名空间","多选","命令空间"]
 
 ## 参考链接 ：
 
-*专家经验：角色授权时不能多选命令空间 
+* 专家经验：角色授权时不能多选命令空间 
  
- *[控制台手册](https://nacos.io/docs/latest/guide/admin/console-guide)
+ * [控制台手册](https://nacos.io/docs/latest/guide/admin/console-guide)
 
 
  <font color="#949494">---------------</font> 

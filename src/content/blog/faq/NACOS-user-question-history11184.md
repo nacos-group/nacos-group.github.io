@@ -72,11 +72,11 @@ Nacos确实支持Python语言，这使得Python开发者能够集成Nacos来实�
 
 ## 参考链接 ：
 
-*专家经验：nacos 多语言支持 
+* 专家经验：nacos 多语言支持 
  
- *专家经验：Nacos是否支持IPV6 
+ * 专家经验：Nacos是否支持IPV6 
  
- *专家经验：nacos支持服务列表分组隔离了嘛 
+ * 专家经验：nacos支持服务列表分组隔离了嘛 
 
 
  <font color="#949494">---------------</font> 

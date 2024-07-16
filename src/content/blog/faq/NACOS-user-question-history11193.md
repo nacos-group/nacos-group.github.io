@@ -51,11 +51,11 @@ Nacos 支持达梦数据库的操作步骤如下：
 
 ## 参考链接 ：
 
-*专家经验：Nacos的数据库支持情况介绍 
+* 专家经验：Nacos的数据库支持情况介绍 
  
- *专家经验：为什么Nacos不使用ORM框架访问数据库 
+ * 专家经验：为什么Nacos不使用ORM框架访问数据库 
  
- *专家经验：No DataSource set 
+ * 专家经验：No DataSource set 
 
 
  <font color="#949494">---------------</font> 

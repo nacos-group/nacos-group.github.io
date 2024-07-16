@@ -37,9 +37,9 @@ Nacos与Apollo都是阿里巴巴开源的配置管理工具，但它们的设计
 
 ## 参考链接 ：
 
-*专家经验：Nacos 介绍 
+* 专家经验：Nacos 介绍 
  
- *专家经验：CatalogController 里面的接口和客户端SDK的API区别是什么 
+ * 专家经验：CatalogController 里面的接口和客户端SDK的API区别是什么 
 
 
  <font color="#949494">---------------</font> 

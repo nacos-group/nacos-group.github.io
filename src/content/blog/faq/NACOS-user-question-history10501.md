@@ -20,9 +20,9 @@ description: "我目前了解到的信息可能不足以支持你的问题nacos-
 
 ## 参考链接 ：
 
-*专家经验：如何把 brpc 服务注册到 nacos 
+* 专家经验：如何把 brpc 服务注册到 nacos 
  
- *专家经验：Nacos 介绍 
+ * 专家经验：Nacos 介绍 
 
 
  <font color="#949494">---------------</font> 

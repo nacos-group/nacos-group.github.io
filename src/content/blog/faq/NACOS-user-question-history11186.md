@@ -28,11 +28,11 @@ Nacos不使用ORM框架访问数据库的原因在于其设计原则和性能考
 
 ## 参考链接 ：
 
-*专家经验：为什么Nacos不使用ORM框架访问数据库 
+* 专家经验：为什么Nacos不使用ORM框架访问数据库 
  
- *专家经验：无法在nacos/conf下找到nacos-mysql.sql文件 
+ * 专家经验：无法在nacos/conf下找到nacos-mysql.sql文件 
  
- *[FAQ](https://nacos.io/docs/latest/guide/user/faq)
+ * [FAQ](https://nacos.io/docs/latest/guide/user/faq)
 
 
  <font color="#949494">---------------</font> 

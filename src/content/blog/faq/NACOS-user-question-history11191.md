@@ -49,11 +49,11 @@ keywords: ["com.alibaba.nacos.api.exception.NacosException","http error"]
 
 ## 参考链接 ：
 
-*专家经验：Why Use HTTP for Registration of the Nacos2.0 Raft Protocol 
+* 专家经验：Why Use HTTP for Registration of the Nacos2.0 Raft Protocol 
  
- *专家经验：Nacos "status":501,"error":"Not Implemented","message":"no such api:...","path":"... 
+ * 专家经验：Nacos "status":501,"error":"Not Implemented","message":"no such api:...","path":"... 
  
- *专家经验：Nacos 欢迎你 
+ * 专家经验：Nacos 欢迎你 
 
 
  <font color="#949494">---------------</font> 

@@ -42,7 +42,7 @@ keywords: ["异常监控指标","报警"]
 
 ## 参考链接 ：
 
-*[Nacos 监控手册](https://nacos.io/docs/latest/guide/admin/monitor-guide)
+* [Nacos 监控手册](https://nacos.io/docs/latest/guide/admin/monitor-guide)
 
 
  <font color="#949494">---------------</font> 

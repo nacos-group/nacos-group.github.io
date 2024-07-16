@@ -48,11 +48,11 @@ keywords: ["init error","errcode:500","errmsg:failed to req api: nacos v1 ns in"
 
 ## 参考链接 ：
 
-*专家经验：Nacos "status":501,"error":"Not Implemented","message":"no such api:...","path":"... 
+* 专家经验：Nacos "status":501,"error":"Not Implemented","message":"no such api:...","path":"... 
  
- *专家经验：Nacos重启后再启动微服务项目时，后台出现“NacosException: failed to req API”异常解决办法 
+ * 专家经验：Nacos重启后再启动微服务项目时，后台出现“NacosException: failed to req API”异常解决办法 
  
- *专家经验：如何解决Nacos连接超时问题 
+ * 专家经验：如何解决Nacos连接超时问题 
 
 
  <font color="#949494">---------------</font> 

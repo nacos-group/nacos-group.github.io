@@ -41,11 +41,11 @@ keywords: ["快速部署","Nacos"]
 
 ## 参考链接 ：
 
-*[Kubernetes Nacos](https://nacos.io/docs/latest/quickstart/quick-start-kubernetes)
+* [Kubernetes Nacos](https://nacos.io/docs/latest/quickstart/quick-start-kubernetes)
  
- *[Nacos 2.0 升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading)
+ * [Nacos 2.0 升级文档](https://nacos.io/docs/latest/upgrading/200-upgrading)
  
- *专家经验：Nacos部署开放端口，集群部署开通端口 
+ * 专家经验：Nacos部署开放端口，集群部署开通端口 
 
 
  <font color="#949494">---------------</font> 

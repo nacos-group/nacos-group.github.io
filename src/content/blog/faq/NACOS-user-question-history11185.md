@@ -56,11 +56,11 @@ keywords: ["安装"]
 
 ## 参考链接 ：
 
-*专家经验：Nacos 快速开始 
+* 专家经验：Nacos 快速开始 
  
- *专家经验：Nacos 介绍 
+ * 专家经验：Nacos 介绍 
  
- *专家经验：Nacos 请问nacos有arm架构的docker镜像么 
+ * 专家经验：Nacos 请问nacos有arm架构的docker镜像么 
 
 
  <font color="#949494">---------------</font> 
