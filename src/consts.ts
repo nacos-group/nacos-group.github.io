@@ -157,7 +157,7 @@ export const HEADER_ACTIVITY_CARD = [
     {
         "collection": "blog",
         "slug": "announcement-derby-ops-api",
-        "description": "关于Nacos Derby数据库运维接口/nacos/v1/cs/ops/derby相关问题公告",
+        "description": "关于Nacos Derby数据库运维接口相关问题公告",
         "imageUrl": "https://img.alicdn.com/imgextra/i4/O1CN01bGnAVW1pFeLFnlaQL_!!6000000005331-2-tps-508-370.png"
     },
     {

@@ -1,20 +1,20 @@
 ---
-title: 关于Nacos Derby数据库运维接口/nacos/v1/cs/ops/derby相关问题公告
+title: 关于Nacos Derby数据库运维接口相关问题公告
 keywords: [nacos, derby, ops, removal]
-description: 关于Nacos Derby数据库运维接口/nacos/v1/cs/ops/derby相关问题公告
+description: 关于Nacos Derby数据库运维接口相关问题公告
 date: "2024-07-16"
 category: announcement
 ---
 
-# 关于Nacos Derby数据库运维接口/nacos/v1/cs/ops/derby相关问题公告
+# 关于Nacos Derby数据库运维接口相关问题公告
 
 尊敬的Nacos社区用户：
 
-近期，社区收到了许多关于Nacos Derby数据库运维接口`（/nacos/v1/cs/ops/derby）`的反馈和问题报告，这些问题包括疑似存在SQL注入等安全隐患。为了向广大用户释疑解惑，并确保大家的系统安全，我们特此发布此公告进行详细说明。
+近期，社区收到了许多关于Nacos Derby数据库运维接口`/nacos/v1/cs/ops/derby`和`/nacos/v1/cs/ops/data/removal`的反馈和问题报告，这些问题包括疑似存在SQL注入等安全隐患。为了向广大用户释疑解惑，并确保大家的系统安全，我们特此发布此公告进行详细说明。
 
 ### 1. 该接口作用说明
 
-该接口`（/nacos/v1/cs/ops/derby）`在使用Derby数据库作为内置数据源时，用于运维人员进行数据运维和问题排查。如果使用外置数据库（如MySQL）该接口自动关闭访问不通。Derby不同于外置数据库（如MySQL），Derby数据库作为内置数据库不能像外置数据库那样方便地通过其他工具进行访问和查询。因此，此接口为运维人员提供了一种便捷的方法来执行Derby数据库SQL语句。
+该接口`/nacos/v1/cs/ops/derby`和`/nacos/v1/cs/ops/data/removal`在使用Derby数据库作为内置数据源时，用于运维人员进行数据运维和问题排查。如果使用外置数据库（如MySQL）该接口自动关闭访问不通。Derby不同于外置数据库（如MySQL），Derby数据库作为内置数据库不能像外置数据库那样方便地通过其他工具进行访问和查询。因此，此接口为运维人员提供了一种便捷的方法来执行Derby数据库SQL语句。
 
 ### 2. 该接口具备鉴权机制
 
@@ -22,7 +22,7 @@ category: announcement
 
 ### 3. 建议使用外置数据库
 
-当Nacos使用MySQL等外置数据库时，`/nacos/v1/cs/ops/derby`等接口将无法访问。这是因为外置数据库不需要通过此接口进行操作，它们通常具备其他办法来支撑数据管理和查询。
+当Nacos使用MySQL等外置数据库时，`/nacos/v1/cs/ops/derby`和`/nacos/v1/cs/ops/data/removal`接口将无法访问。这是因为外置数据库不需要通过此接口进行操作，它们通常具备其他办法来支撑数据管理和查询。
 
 ### 4. 使用Derby内置数据库的场景
 
