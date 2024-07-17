@@ -18,8 +18,8 @@ const Tableplugin = (props) => {
               <th class="col1 border-0" />
               <th class="col2 border-0" />
               <th class="col3 overflow-hidden">
-                <p class="mb-6 text-2xl font-normal"> 免费版</p>
-                <div class='text-gray-08 text-xs h-20 leading-8'>免费试用</div>
+                <p class="mb-6 text-2xl font-normal">社区版</p>
+                <div class='text-gray-08 text-xs h-20 leading-8'>免费</div>
               </th>
               <th class="col4">
                 <p class="mb-6 text-2xl font-normal"> 开发版</p>
