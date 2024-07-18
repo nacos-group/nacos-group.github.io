@@ -17,6 +17,8 @@
     "@docsearch/css": "3.5.2",
     "@docsearch/js": "^3.5.2",
     "@serverless-cd/goat-ui": "^0.0.27-beta.3",
+    "@swc/core": "~1.6.13",
+    "@swc/helpers": "^0.5.12",
     "@tailwindcss/nesting": "^0.0.0-insiders.565cd3e",
     "astro": "^4.9.1",
     "date-fns": "^2.30.0",
