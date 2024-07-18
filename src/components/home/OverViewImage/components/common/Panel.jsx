@@ -2,6 +2,7 @@ import { twMerge } from "tailwind-merge";
 import React from "react";
 import { useContext, useState, useEffect } from "preact/hooks";
 import { AppContext } from "../../context";
+import { isSafari } from "@/utils/util";
 
 export const Panel = ({
   className = "",
@@ -15,12 +16,6 @@ export const Panel = ({
 }) => {
 
   const [isSafariBrowser, setIsSafariBrowser] = useState(true);
-
-  const isSafari = () => {
-    const userAgent = navigator?.userAgent?.toLowerCase();
-    return userAgent.includes('safari') && !userAgent.includes('chrome');
-  };
-
 
   useEffect(() => {
     // 判断是否为safari浏览器

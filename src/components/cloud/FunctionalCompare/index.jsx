@@ -5,6 +5,7 @@ import UpDown from "./UpDown.jsx";
 import {
   versionDataSource
 } from "../../../consts.ts";
+import { isSafari } from "@/utils/util.ts";
 import "./style.css";
 
 
@@ -17,6 +18,7 @@ const FunctionalCompare = (props) => {
     '专业版': 'speciality',
     'Serverless 版': 'serverless',
   }
+  const [isSafariBrowser, setIsSafariBrowser] = useState(true);
   const [version, setVersion] = useState('免费版');
   const [isSticky, setIsSticky] = useState(false);
   const [isShow, setIsShow] = useState(false);
@@ -33,6 +35,11 @@ const FunctionalCompare = (props) => {
   };
 
   useEffect(() => {
+    // 判断是否为safari浏览器
+    setIsSafariBrowser(isSafari());
+  }, []);
+
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll);
 
     // 移除事件监听器
@@ -45,9 +52,11 @@ const FunctionalCompare = (props) => {
       class="functional-compare-wrapper top-[100px] flex flex-col justify-center items-center mt-10"
     >
       <div id='collapse-fold' class="collapse bg-base-200 collapse-arrow bg-gray-02">
-      <input type="checkbox" checked={isCollapsed} onChange={() => setIsCollapsed(!isCollapsed)} />
+      {
+          !isSafariBrowser && (<input type="checkbox" checked={isCollapsed} onChange={() => setIsCollapsed(!isCollapsed)} />)
+        } 
         <div class="collapse-title text-2xl font-normal">不同版本功能对比</div>
-        <div class="collapse-content">
+        <div class={`${!isSafariBrowser && 'collapse-content'}`}>
           {versionDataSource.map((item, index) => {
             return (
               <Tableplugin dataSource={item.data} title={item.title} isHead={index == 0} />

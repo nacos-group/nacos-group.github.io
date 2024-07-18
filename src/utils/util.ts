@@ -22,3 +22,9 @@ export const stripLangFromSlug = (slug: CollectionEntry<'docs'>['slug']) =>
 
 /** Get a page’s lang tag from its slug (e.g. `'en/migrate'` => `'en'`). */
 export const getLangFromSlug = (slug: CollectionEntry<'docs'>['slug']) => slug.split('/')[0];
+
+// 判断是否为safari浏览器
+export const isSafari = () => {
+    const userAgent = navigator?.userAgent?.toLowerCase();
+    return userAgent.includes('safari') && !userAgent.includes('chrome');
+  };
