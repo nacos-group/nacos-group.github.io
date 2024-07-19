@@ -1,7 +1,7 @@
 ---
 title: 贡献流程
-keywords: [贡献,源码]
-description: 此贡献流程适用于所有的Nacos社区内容，包括但不限于`Nacos`、`Nacos wiki/doc`、`Nacos SDK`。
+keywords: [Nacos, 贡献流程, 源码, GitHub, 社区贡献, Pull Request, Rebase]
+description: 本文详细介绍了向Nacos社区贡献代码的标准化流程，包括如何Fork项目、克隆代码、设置上游仓库、创建开发分支、遵循代码规范、Rebase解决冲突、推送更改及创建Pull Request，旨在帮助新贡献者顺利参与Nacos开源项目。
 sidebar:
     order: 2
 ---

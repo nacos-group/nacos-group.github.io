@@ -1,7 +1,7 @@
 ---
 title: Java客户端容灾
-keywords: [容灾]
-description: Java客户端容灾用户指南
+keywords: [Java客户端容灾, 容灾数据源, 磁盘容灾, SPI扩展, Nacos服务端]
+description: 本文介绍了Java客户端容灾机制，包括如何在Nacos服务端问题时维持客户端稳定，通过开启本地容灾使用缓存数据。详细说明了两种应用场景、容灾流程、磁盘容灾的实现细节及自定义扩展容灾数据源的方法。
 sidebar:
     order: 7
     hidden: true

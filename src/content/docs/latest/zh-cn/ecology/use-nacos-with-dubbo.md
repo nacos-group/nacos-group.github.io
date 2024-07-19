@@ -1,7 +1,7 @@
 ---
 title: Dubbo 融合 Nacos 成为注册中心
-keywords: [Dubbo,Nacos,注册中心]
-description: Dubbo 融合 Nacos 成为注册中心
+keywords: [Dubbo,Nacos,注册中心,微服务,Spring框架,Maven依赖,Spring Boot,外部化配置,服务提供者,服务消费者]
+description:  Dubbo 融合 Nacos 成为注册中心
 sidebar:
     order: 1
 ---

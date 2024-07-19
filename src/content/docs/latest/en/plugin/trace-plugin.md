@@ -1,54 +1,49 @@
 ---
-title: Tracing
-keywords: [Track tracing, push tracing, modifying tracing]
-description: Nacos supports Track tracing plugin, can help developers and maintainers find out problems quickly by extending plugin like push tracing.
-sidebar:
-    order: 5
+title: Trace Tracking
+keywords: [Nacos, Trace Tracking, Push Tracking, Change Tracking, SPI mechanism, Plugin Development, Service Registration, Deregistration, Distributed Tracing, Beta Testing]
+description: Nacos supports custom trace tracking plugins via the SPI mechanism, monitoring operations like service registration and deregistration to facilitate rapid issue localization by operations personnel. Plugins are based on an event model, including types like RegisterInstanceTraceEvent, making them easily extensible and customizable. Currently in Beta, users should be aware of potential API changes.
 ---
+# Trace Tracking Plugin
 
-# Track tracing plugin
+Starting from version 2.2.0, Nacos allows injection of trace tracking implementation plugins through the [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html) mechanism. Plugins can subscribe and process tracing events, handling them according to desired methods (e.g., logging, storage). This document provides a comprehensive guide on implementing a trace tracking plugin and enabling its functionality.
 
-Since version 2.2.0, Nacos support to inject track tracing plugins through [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html), to subscribe and process trace events in the plugin with the way you want (such as logging, writing to storage, etc.). 
-This document will describe how to implement a track tracing plugin and how to make it work.
+> Note:
+> The trace tracking plugin is currently in Beta testing; its APIs and interface definitions may undergo significant modifications in future updates. Please ensure compatibility with your plugin's target version.
+>
+> Unlike conventional distributed tracing, Nacos's trace tracking focuses on monitoring and recording operations related to Nacos, such as service registration, de-registration, pushes, and status changes, not inter-service communication paths. For monitoring service interactions, use dedicated distributed tracing solutions.
 
-> Attention:
-> At present, the track tracing plugin is still in the beta stage, and its API and interface definitions maybe modified with version upgrades. Please pay attention to the applicable version of your plugin.
-> 
-> The track tracing of Nacos is different from the tracking in general sense. It is mainly used to trace and record some Nacos related operations, such as service registration, de-registration, push, status change, etc. 
-> It is not used to trace the access and request between micro-services. If you need to monitor the access and request between services, please use the corresponding tracing projects.
+## Concepts in Trace Tracking Plugins
 
-## Concepts in Track tracing Plugin
+### Trace Event
 
-### TraceEvent
+Nacos embeds tracing points at critical operational stages, defining a series of trace events (`TraceEvent`). Linking multiple events targeting the same resource (e.g., services, configurations) forms a trace for that resource.
 
-Nacos embeds points in the important operations, and defines a series of trace events named 'TraceEvent'. After combined multiple 'TraceEvent's for the same resource (such as services, configurations, etc.), the trace of the resource will be gotten.
+A `TraceEvent` includes:
 
-The TraceEvent will include following:
+|Field Name| Description|
+|----------|------------|
+|type| The type of event, defined by specific events|
+|eventTime| Time of the event occurrence|
+|namespaceId| Namespace ID of the event's corresponding resource|
+|group| Group name of the event's corresponding resource|
+|name| Resource name, such as a service name or configuration dataId|
 
-|Field Name|Description|
-|-----|---|
-|type|Type of event, defined by sub-events|
-|eventTime|Time of the event occurs|
-|namespaceId|Corresponding resource namespace ID of the event|
-|group| Corresponding resource group name of the event|
-|name | Corresponding resource name of the event，such as service name or dataId for config|
+Nacos has predefined sub-event types:
 
-Currently, the sub event types defined in Nacos include:
-
-|Event Name|Description|Details|
-|-----|---|---|
-|RegisterInstanceTraceEvent|The event for service instance registration, mainly occurs when the service provider is registered|[Detail](#1.1)|
-|DeregisterInstanceTraceEvent|The event for service instance de-registration, mainly occurs when the service provider is de-registered|[Detail](#1.2)|
-|RegisterServiceTraceEvent|The event for service registration, different from `RegisterInstanceTraceEvent`, mainly occurs when create empty services|[Detail](#1.3)|
-|DeregisterServiceTraceEvent|The event for service de-registration, different from `DeregisterInstanceTraceEvent`, mainly occurs when remove empty services|[Detail](#1.4)|
-|SubscribeServiceTraceEvent|The event for service subscription, mainly occurs when the service is subscribed|[Detail](#1.5)|
-|UnsubscribeServiceTraceEvent|The event for service unsubscription, mainly occurs when the service is unsubscribed|[Detail](#1.6)|
-|PushServiceTraceEvent|The event for service pushing, mainly occurs when the service is pushed to subscribed|[Detail](#1.7)|
-|HealthStateChangeTraceEvent|The event for service instance health state changing, mainly occurs when an instance's health state changes due to a heartbeat/health check|[Detail](#1.8)|
+|Event Name| Description| Details|
+|----------|------------|--------|
+|RegisterInstanceTraceEvent| Service instance registration event, triggered when registering a service provider||
+|DeregisterInstanceTraceEvent| Service instance deregistration event, triggered upon service provider deregistration||
+|RegisterServiceTraceEvent| Service registration event, distinct from instance registration, occurs during service creation||
+|DeregisterServiceTraceEvent| Service deregistration event, different from instance deregistration, happens when deleting a service||
+|SubscribeServiceTraceEvent| Service subscription event, activated when subscribing to a service||
+|UnsubscribeServiceTraceEvent| Service unsubscription event, triggered upon unsubscribing from a service||
+|PushServiceTraceEvent| Service push event, occurs during service push||
+|HealthStateChangeTraceEvent| Service instance health state change event, triggered when instance health changes due to heartbeats or health checks||
 
 ## Plugin Development
 
-To develop a Nacos track tracing plugin, developer first need to depend on the relevant API of the track tracing plugin.
+To develop a Nacos server-side trace tracking plugin, first, depend on the trace tracking plugin's API:
 
 ```xml
         <dependency>
@@ -58,33 +53,31 @@ To develop a Nacos track tracing plugin, developer first need to depend on the r
         </dependency>
 ```
 
-`${project.version}` is the version of Nacos for your development plugin.
+Replace `${project.version}` with the Nacos version for which you're developing the plugin.
 
-Then implement interface `com.alibaba.nacos.plugin.trace.spi.NacosTraceSubscriber`, and put your implementation into services of SPI.
+Next, implement the `com.alibaba.nacos.plugin.trace.spi.NacosTraceSubscriber` interface and register your implementation into SPI services.
 
-The methods of interface in following:
+The required methods include:
 
-|method name|parameters|returns|description|
-|-----|-----|-----|---|
-|getName|void|String|he name of the plugin. When the name is the same, the plugin loaded later will overwrite the plugin loaded first.|
-|subscribeTypes|void|List<Class<? extends TraceEvent>>|The expected the event type of the subscription for this plugin. If returns an empty list, plugin will not subscribe any event.|
-|onEvent|TraceEvent|void|The logic for handle events. The type of events will defined by `subscribeTypes`.|
-|executor|void|Executor|When return not `null`, Nacos will use the `Executor` to call `onEvent`, otherwise use event distribution thread to call `onEvent`.|
+|Method Name| Input Content| Return Content| Description|
+|-----------|--------------|---------------|------------|
+|getName| void| String| The plugin's name; if names conflict, the latter loaded plugin will overwrite the former.|
+|subscribeTypes| void| List<Class<? extends TraceEvent>>| The types of events this plugin subscribes to; returns an empty list for no subscriptions.|
+|onEvent| TraceEvent| void| The logic for event handling; input event types are defined by `subscribeTypes`.|
+|executor| void| Executor| If not `null`, the `onEvent` call uses this Executor; otherwise, it uses the event distribution thread.|
 
-> Attention:
-> It is recommend that you use a dependent Executor for plugin implementations, such as blocked IO operations in plugin implementations, which will block onEvent called to other events when there are IO exceptions, causing backlogs.
+> Note:
+> It is advised to use a dedicated Executor in plugin implementations to prevent blocking I/O operations in one plugin from delaying other events' processing.
 
-In [nacos-group/nacos-plugin](https://github.com/nacos-group/nacos-plugin)，providing a demo implementation for track tracing plugin. This demo subscribes `RegisterInstanceTraceEvent` and `DeregisterInstanceTraceEvent` and print result information into logs.
+A demo trace tracking plugin implementation is available in the [nacos-group/nacos-plugin](https://github.com/nacos-group/nacos-plugin) repository, subscribing to instance registration and deregistration events and logging them.
 
-## Degradation of Track Tracking Plugin
+## Plugin Degradation Strategy
 
-Because the Track Tracking Plugin is for the monitoring category, and will not affect Nacos data. So when the Track Tracking Plugin has problems, it should not affect the Nacos primary works.
+As a monitoring enhancement, trace tracking plugins do not impact Nacos data. Thus, when issues arise, the primary workflow should remain unaffected.
 
-It is recommend that you use a dependent Executor for plugin implementations, such as blocked IO operations in plugin implementations, which will block onEvent called to other events when there are IO exceptions, causing backlogs.
+Hence, using a dedicated Executor is recommended. If there are blocking I/O operations in the plugin, I/O exceptions could stall other event `onEvent` calls, causing a backlog.
 
-If the backlog occurs unfortunately, subsequent events will be automatically discarded when the event queue of the Track Tracking Plugin reaches the upper limit to ensure overall system stability.
-
-You can see the words `Trace Event Publish failed, event : {}, publish queue size : {}` in `nacos.log` when the discard occurred
+In case of a backlog, the trace tracking plugin's event queue automatically discards subsequent events once its capacity is reached, ensuring overall system stability. Log entries indicating dropped events will appear in `nacos.log`.
 
 ## Appendix: Sub-trace Event Details
 

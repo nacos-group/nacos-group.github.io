@@ -1,37 +1,37 @@
 ---
-title: Nacos supports synchronizing metadata from K8S service discovery
-keywords: [Nacos,k8s,kubernetes]
-description: Nacos supports synchronizing metadata from K8S service discovery
+title: Nacos Supports Synchronizing Service Metadata from K8S Service Discovery
+keywords: [Nacos, k8s, Kubernetes, service metadata, synchronization]
+description: Nacos now integrates with Kubernetes (K8S) service discovery, enabling automatic synchronization of service metadata. This feature monitors dynamic changes in services and instances within K8S, ensuring timely updates to the Nacos service discovery module, compatible with K8S version 1.22 and above. It facilitates a two-way data flow with specific configurations, streamlining microservices architecture management.
 ---
 
-# Nacos supports synchronizing metadata from K8S service discovery
+# Nacos Supports Synchronization of Service Metadata from K8S Service Discovery
 
-## Data synchronization
-Nacos monitors the changes of services and instances in K8S, obtains its service metadata, and synchronizes the change information to Nacos' service discovery. Supports K8S version 1.22 (corresponding to K8S-Java-API version 14.0.0).The diagram is as follow:
-![](img/k8s-sync.jpg)
+## Data Synchronization
+Nacos listens for changes in services and instances within K8S, acquiring their service metadata, and synchronizing update information to the Nacos service discovery module and instances. It supports K8S version 1.22 (corresponding to the K8S-Java-API version 14.0.0). An illustrative diagram is as follows:
+![K8S Sync Illustration](img/k8s-sync.jpg)
 
-Mapping scheme of K8S resource synchronization to Nacos resource (single-direction, Nacos resource synchronization to K8S resource to be supplemented) :
+The mapping scheme for synchronizing K8S resources to Nacos resources (unidirectional, with supplementation for Nacos resource synchronization to K8S resources pending):
 
-K8S Data to be synchronized|Field in K8S|Field mapped to Nacos
----|---|---
-service name|service.metadata.name|service.name
-service targetPort(pod port)(multiple)|service.ports.targetPort|instance.port
-service name|service.metadata.name|instance.cluster
-service port(multiple)|service.ports.port|instance.extendData<String, Object>
-pod ip|pod.status.hostIP / service.ipFamilies|instance.ip
+|K8S Data to be Synchronized| K8S Field| Mapped to Nacos Field|
+|---|---|---|
+|Service Name| service.metadata.name| service.name|
+|Pod Target Port(s)| service.ports.targetPort| instance.port|
+|Service Name| service.metadata.name| instance.cluster|
+|Service Port(s)| service.ports.port| instance.extendData<String, Object>|
+|Pod IP| pod.status.hostIP or service.ipFamilies| instance.ip|
 
-## Configuration file
-Deploy the Nacos cluster according to [the deploy document](../guide/admin/deployment.md)
+## Configuration
+Follow the [Deployment Documentation](../guide/admin/deployment.md) to set up the Nacos cluster.
 
-Configure the application.properties file to enable K8S synchronization:
-```
+Modify the application.properties file to enable K8S synchronization:
+```properties
 nacos.k8s.sync.enabled=true
 ```
 
-If you are using the Java API from an application outside the K8S cluster, you need to specify kubeConfig:
-```
+For applications outside the K8S cluster using the Java API, specify the kubeConfig:
+```properties
 nacos.k8s.sync.outsideCluster=true
 nacos.k8s.sync.kubeConfig=/.kube/config
 ```
 
-After configuration, services and instance changes in K8S are automatically synchronized to Nacos.
+Upon configuration, changes in services and instances within K8S will automatically synchronize to Nacos.

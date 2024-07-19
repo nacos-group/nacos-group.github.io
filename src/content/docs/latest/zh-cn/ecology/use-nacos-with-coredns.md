@@ -1,7 +1,7 @@
 ---
 title: Nacos 融合CoreDNS 下发DNS域名
-keywords: [CoreDNS, DNS-F]
-description: Nacos 融合CoreDNS 下发DNS域名
+keywords: [Nacos, CoreDNS, DNS域名, 服务发现, golang]
+description: Nacos融合CoreDNS插件可将Nacos注册服务导出为DNS域名，作为side car代理进程实现服务发现。支持Linux和Mac系统，需nacos 2.2+和golang 1.17+版本。通过配置nacos_server_host与namespaceId，利用build脚本构建并运行，未注册域名自动转发至upstream。
 sidebar:
     order: 6
 ---

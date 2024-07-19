@@ -1,45 +1,50 @@
 ---
-title: Cluster deployment instructions
-keywords: [Cluster,deployment]
-description: Cluster deployment instructions
-sidebar:
-    order: 2
+title: Cluster Deployment Guide
+keywords: [Cluster Deployment, Nacos, Cluster Mode, Port Configuration, Data Source Configuration, Service Registration and Discovery, Configuration Management, Authentication]
+description: This guide details the deployment process of Nacos in cluster mode, covering cluster architecture, environment setup, obtaining source code or packages, cluster configuration, data source setup, and comprehensive steps for service registration, discovery, and configuration management. It emphasizes port configurations for different deployment modes, usage of internal and external data sources, and provides examples for configuring authentication.
 ---
-
 # Cluster deployment instructions
 
 > Document optimizing...
 
-## Cluster Mode Deployment
+# Cluster Deployment Guide
 
-This Quick Start Manual is to help you quickly download, install and use Nacos on your computer to deploy the cluster mode for production use.
+This quick start manual assists you in rapidly downloading, installing, and using Nacos in a production-ready clustered mode on your computer.
 
-### Cluster Deployment Architecture
+## Cluster Deployment Architecture
 
-Therefore, when it is open source, it is recommended that users put all server lists under a vip and then hang under a domain name.
+Open-source recommendations include placing all service lists under a VIP and associating it with a domain name.
 
-Http://ip1:port/openAPI Directly connected to ip mode, the machine needs to be modified to use ip.
+- `<http://ip1:port/openAPI>`: Direct IP mode requires IP modification when a machine fails.
+- `<http://SLB:port/openAPI>`: SLB (intranet) mounting mode is not to be exposed to the public network due to security risks.
+- `<http://nacos.com:port/openAPI>`: Domain + SLB (intranet) mode is recommended for its readability and easy IP swapping.
 
-Http://SLB:port/openAPI Mount the SLB mode(Intranet, do not expose internet to avoid security risks), directly connect to SLB, the following server ip real ip, readability is not good.
+![deployDnsVipMode.jpg](/img/deployDnsVipMode.jpg)
 
-Http://nacos.com:port/openAPI Domain name + SLB mode(Intranet, do not expose internet to avoid security risks), good readability, and easy to change ip, recommended mode
+|Port| Offset from Main Port| Description|
+|--|--|--|
+|8848|0| Primary port used by clients, console, and OpenAPI for HTTP requests.|
+|9848|1000| gRPC client request to server port, for client-initiated connections and requests.|
+|9849|1001| Server-to-server gRPC request port for service synchronization, etc.|
+|7848|-1000| Jraft request to server port, for handling Raft-related requests among servers.|
 
-![deployDnsVipMode.jpg](/img/deployDnsVipMode.jpg)  
+**When using VIP/nginx, configure TCP forwarding instead of http2 to prevent connection termination by nginx.**
+**Ports 9849 and 7848 are for inter-service communication; do not expose them to external networks or clients.**
 
-## 1. Preparing for the Environment
+## 1. Prerequisite Environment Preparation
 
-Make sure that it is installed and used in the environment:
+Ensure the following are installed and used:
 
-1. 64 bit OS Linux/Unix/Mac, recommended Linux system.
-2. 64 bit JDK 1.8+; [Download](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html). [Configuration](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javome_t/).
-3. Maven 3.2.x+; [Download](https://maven.apache.org/download.cgi). [Configuration](https://maven.apache.org/settings.html).
-4. 3 or more Nacos Nodes;
+- 64-bit OS: Linux/Unix/Mac, Linux is recommended.
+- 64-bit JDK 1.8+; [Download](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html). [Configuration](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/).
+- Maven 3.2.x+; [Download](https://maven.apache.org/download.cgi). [Configuration](https://maven.apache.org/settings.html).
+- A minimum of 3 Nacos nodes to form a cluster.
 
-## 2. Download source code or installation package
+## 2. Obtain Source Code or Installation Package
 
-You can get Nacos in two ways.
+Nacos can be obtained through two methods.
 
-### Download source code from Github
+### Download Source Code from GitHub
 
 ```bash
 unzip nacos-source.zip
@@ -48,20 +53,18 @@ mvn -Prelease-nacos clean install -U
 cd nacos/distribution/target/nacos-server-1.3.0/nacos/bin
 ```
 
-### Download Compressed Packet after Compilation
+### Download Compiled Package
 
-Download address
-
-Select the latest stable version from [releases](https://github.com/alibaba/nacos/releases) and download `nacos-server-$version.zip` or `nacos-server-$version.tar.gz`
+Download from the [latest stable version](https://github.com/alibaba/nacos/releases) `nacos-server-$version.zip` or `nacos-server-$version.tar.gz`.
 
 ```bash
-  unzip nacos-server-$version.zip  OR tar -xvf nacos-server-$version.tar.gz
-  cd nacos/bin
-```  
+unzip nacos-server-$version.zip or tar -xvf nacos-server-$version.tar.gz
+cd nacos/bin
+```
 
-## 3. Configuration Cluster Profile
+## 3. Configure Cluster Configuration Files
 
-In the Nacos decompression directory Nacos / conf directory, there is a configuration file cluster. conf, please configure each line as ip: port.
+Under the `conf` directory in the extracted `nacos/`, edit `cluster.conf` with each line as `ip:port` (minimum 3 nodes).
 
 ```plain
 # ip:port
@@ -70,61 +73,61 @@ In the Nacos decompression directory Nacos / conf directory, there is a configur
 200.8.9.18:8848
 ```
 
-### 3.1 Open Default auth plugin (Optional)
+### 3.1 Enable Default Authentication Plugin (Optional)
 
-Then Setting configuration file `application.properties` under `conf`.
+Modify `application.properties` in the `conf` directory.
 
-Setting 
+Set:
 
 ```properties
 nacos.core.auth.enabled=true
 nacos.core.auth.system.type=nacos
-nacos.core.auth.plugin.nacos.token.secret.key=${custom, make sure same in all nodes}
-nacos.core.auth.server.identity.key=${custom, make sure same in all nodes}
-nacos.core.auth.server.identity.value=${custom, make sure same in all nodes}
+nacos.core.auth.plugin.nacos.token.secret.key=${custom, ensure consistency across all nodes}
+nacos.core.auth.server.identity.key=${custom, ensure consistency across all nodes}
+nacos.core.auth.server.identity.value=${custom, ensure consistency across all nodes}
 ```
-Detail see [Authentication](../../plugin/auth-plugin.md).
 
-> Attention，Default value in Document `SecretKey012345678901234567890123456789012345678901234567890123456789` and `VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=` is a public default, **only** should use in test temporary. Please **make sure** to replace it with another valid value when you actually deploy.
+For more details, refer to [Authentication](../../plugin/auth-plugin.md).
 
-## 4. Determine The DataSource
+> Note: The default values `SecretKey012345678901234567890123456789012345678901234567890123456789` and `VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=` are public defaults, suitable for temporary testing. Replace with custom values for actual use.
 
-### Using built-in data sources
+## 4. Determine Data Source
 
-No configuration is required
+### Use Built-in Data Source
 
-### Use an external data source
+No configuration required.
 
-<!-- <span data-type="color" style="color:rgb(25, 31, 37)"><span data-type="background" style="background-color:rgb(255, 255, 255)"> </span></span> -->
-production and use recommendations at least backup mode, or high availability database.
+### Use External Data Source
 
-#### Initializes the MySQL database
+Recommended for production in at least master-slave mode or with a highly available database.
 
-[sql statement source file](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)
+#### Initialize MySQL Database
 
-### application. properties configuration
+[SQL script source](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)
 
-[application.properties configuration file](https://github.com/alibaba/nacos/blob/master/distribution/conf/application.properties)
+#### application.properties Configuration
 
-## 5. start server
+[application.properties file](https://github.com/alibaba/nacos/blob/master/distribution/conf/application.properties)
+
+## 5. Start Server
 
 ### Linux/Unix/Mac
 
-#### Standalone mode
+#### Standalone Mode
 
 ```bash
 sh startup.sh -m standalone
 ```
 
-#### Cluster mode
+#### Cluster Mode
 
-> Using built-in data sources
+> Built-in Data Source
 
 ```bash
 sh startup.sh -p embedded
 ```
 
-> Use an external data source
+> External Data Source
 
 ```bash
 sh startup.sh
@@ -132,34 +135,31 @@ sh startup.sh
 
 ## 6. Service Registration & Discovery and Configuration Management
 
-### Service registration
-
-`curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'`
-
-> Attention: If open default auth plugin, please call with username and password in header.
-
-### Service discovery
-
-`curl -X GET 'http://127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.naming.serviceName'`
-
-> Attention: If open default auth plugin, please call with username and password in header.
-
-### Publish configuration
-
-`curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test&content=helloWorld"`
-
-> Attention: If open default auth plugin, please call with username and password in header.
-
-### get configuration
-
-`curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test"`
-
-> Attention: If open default auth plugin, please call with username and password in header.
-
-## 7. shut down server
-
-### Linux/Unix/Mac
+### Service Registration
 
 ```bash
-sh shutdown.sh
+curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'
 ```
+
+> If the default authentication plugin is enabled, include credentials in the Header.
+
+### Service Discovery
+
+```bash
+curl -X GET 'http://127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.naming.serviceName'
+```
+
+> If the default authentication plugin is enabled, include credentials in the Header.
+
+### Publish Configuration
+
+```bash
+curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test&content=helloWorld"
+```
+
+> If the default authentication plugin is enabled, include credentials in the Header.
+
+### Retrieve Configuration
+
+```bash
+curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test

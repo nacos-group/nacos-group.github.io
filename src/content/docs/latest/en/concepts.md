@@ -1,101 +1,77 @@
 ---
 title: Nacos Concepts
-keywords: [Nacos,Concepts]
-description: Nacos Concepts
+keywords: [Nacos, Concepts, Configuration Management, Service Discovery, Health Check]
+description: Nacos, as a dynamic configuration and service discovery platform, introduces key concepts such as regions, availability zones, configurations, and namespaces, highlighting the importance of configuration management and the mechanisms for service registration and discovery to ensure system high availability and flexibility.
 ---
-
 # Nacos Concepts
 
-> NOTE: Nacos introduces some basic concepts and systematic understanding of these concepts can help you better understand and correct use Nacos products.
+> NOTE: Nacos introduces fundamental concepts; understanding these systematically can help you better comprehend and effectively utilize the Nacos product.
 
 ## Region
+A physical data center where resources, once created, cannot be changed.
 
-Physical data centers, unalterable after resources are created.
+## Availability Zone
+A physically independent region within the same region with separate power and network. Instances within the same availability zone have lower network latency.
 
-## Available Zone
-
-Physical areas with independent power grids and networks in one region. The network latency for instances in the same zone is lower.
-
-## Endpoint
-
-The entry domain name of a service in each region.
+## Access Point
+The entry domain name of a service in a region.
 
 ## Namespace
-
-For configuration isolation by tenants. Different namespaces may have configurations with the same Group or Data ID. One of the common scenarios for namespace is to differentiate and isolate the configurations in different environments, as in development and test environment and production environment.
+For tenant-level configuration isolation. Different namespaces can contain identical Group or Data ID configurations. A common scenario for namespaces is the separation of resources (like configurations, services) between development/test environments and production.
 
 ## Configuration
-
-During system development, developers usually extract some parameters or variables that need to be changed from the code and manage them in a separate configuration file. This enables the static system artifacts or deliverables (such as WAR and JAR packages) to fit with the physical operating environment in a better way. Configuration management is usually a part of system deployment, which is executed by the administrator or operation and maintenance personnel. Configuration modification is an effective way to adjust the behavior of a running system.
+During system development, developers typically separate variables requiring changes from code into standalone managed configurations. This aims to adapt static system artifacts or deliverables (e.g., WAR, JAR files) to actual runtime environments more efficiently. Configuration management generally includes activities such as editing, storing, distributing, change management, historical versioning, and audit trails related to configurations.
 
 ## Configuration Management
-
-Configuration-related activities including editing, storage, distribution, modification management, release version management, and modification audit.
+All activities involving configurations, including editing, storage, distribution, change management, history, and auditing.
 
 ## Configuration Item
-
-A specific configurable parameter with its value range, generally in the form of param-key=param-value. For example, the log output level (logLevel=INFO|WARN|ERROR) of a system is regarded as a configuration item.
+An individual configurable parameter and its value range, typically in the form of param-key=param-value. For example, setting a system's log output level (logLevel=INFO|WARN|ERROR) is a configuration item.
 
 ## Configuration Set
+A collection of related or unrelated configuration items is a configuration set. In a system, a configuration file is often a configuration set containing various system configurations. A configuration set may include settings for databases, thread pools, log levels, etc.
 
-A collection of related or unrelated configuration items.In a system, a configuration file is generally a configuration set which contains all the configurations of the system. For example, a configuration set may contain configuration items such as data sources, thread pools, and log levels.
+## Configuration Set ID
+The ID of a specific configuration set in Nacos. The Data ID is one of the dimensions for organizing configurations, typically following a naming rule akin to Java packages (e.g., com.taobao.tc.refund.log.level) for global uniqueness, though not mandatory.
 
-## Data ID
-
-The ID of a configuration set in Nacos. It is one of the dimensions according to which configurations are organized. Data ID is generally used to organize the system configuration sets. A system or application can contain multiple configuration sets, each of which can be identified by a meaningful name. The Data ID usually uses the naming rule similar to Java packages (for example, com.taobao.tc.refund.log.level) to ensure global uniqueness. This naming rule is not mandatory.
-
-## Group
-
-The group of configuration sets in Nacos. It is one of the dimensions according to which configurations are organized. The configuration sets are always grouped by a meaningful string such as Buy or Trade to differentiate the configuration sets with the same Data ID. When you create a configuration on Nacos, the group name is replaced by DEFAULT\_GROUP by default if not specified. A typical scenario of Group is when the same configuration type is used for different applications or components, such as database\_url configuration and MQ\_topic configuration.
+## Configuration Group
+A group of configuration sets in Nacos, another dimension for organization. Meaningful strings (e.g., Buy or Trade) distinguish configuration sets with identical Data IDs. If the configuration group name is not specified when creating a configuration in Nacos, it defaults to DEFAULT_GROUP. Common scenarios include different applications or components using the same configuration types, like database_url and MQ_topic.
 
 ## Configuration Snapshot
-
-The Nacos client SDK can generate snapshots of configurations on local machines. Snapshots can be used to indicate the overall disaster recovery capabilities of the system when the client cannot connect to the Nacos server. Configuration snapshot is similar to local commit in Git, or cache, which is updated at the appropriate time, but does not have the notion of expiration as in cache.
+The Nacos client SDK generates local snapshots of configurations. These serve to enhance the system's overall disaster recovery capability when the client cannot connect to the Nacos Server. Configuration snapshots resemble local commits in Git or caches, updated at appropriate times but without expiration.
 
 ## Service
-
-Software functions which are provided to the client via the network through a predefined interface.
+Software functionality provided over a network via predefined interfaces for clients.
 
 ## Service Name
-
-Identifier provided by the service, by which the service it refers to can be uniquely determined.
+The identifier for a service, allowing unique determination of the referred service.
 
 ## Service Registry
-
-Database which stores the instances of services and the load balancing policies for services.
+A database storing service instances and load balancing strategies.
 
 ## Service Discovery
-
-On a computer network, the address and metadata of an instance under the service are probed (usually using a service name) and provided to the client for querying with a predefined interface.
+In computer networks,探测服务实例的地址和元数据（usually by service name） and providing them to clients through predefined interfaces.
 
 ## Metadata
-
-Custom configuration information, such as a disaster recovery policy, a load balancing policy, an authentication configuration, and various tags. From the scope of action, it is divided into meta-information of service level, meta-information of virtual cluster, and meta-information of instance.
+Descriptive information of Nacos data (configurations and services), such as service versions, weights, disaster recovery strategies, load balancing policies, authentication configurations, and various custom labels (labels). Ranging from service-level, cluster-level, to instance-level metadata.
 
 ## Application
-
-Property of service which can be used to identify the service provider.
+An attribute of a service identifying the service provider.
 
 ## Service Group
-
-Different services can be categorized into the same service group.
+Different services can be categorized under the same group.
 
 ## Virtual Cluster
-
-Service instances under the same service can be further classified. One possible unit of this classification is Virtual Cluster.
+All service instances under the same service form a default cluster, which can be further divided into virtual clusters as needed.
 
 ## Instance
-
-A process with an accessible network address (IP:Port) that provides one or more services.
+A process with an accessible network address (IP:Port) providing one or more services.
 
 ## Weight
-
-Instance-level configuration. Weight is a floating-point number. The greater the weight, the greater the traffic that the instance expects to be allocated.
+An instance-level configuration. Weights are floating-point numbers. Higher weights result in more traffic directed to that instance.
 
 ## Health Check
+Inspects the health of instances attached to a service to determine if they can provide service. Based on the check results, instances are marked healthy or unhealthy. When requesting resolution for a service, unhealthy instances are not returned to clients.
 
-Health check of the instances under a service in a specified manner to ensure that the instances can work properly. Instances are judged to be healthy or unhealthy according to the inspection results. Unhealthy instances are not returned to the client when initiating a resolution request to the service.
-
-## Protect Threshold
-
-To prevent traffic from flowing to healthy instances because of some unhealthy instances, which causes traffic pressure, healthy instance collapse, and finally an avalanche, the health protection threshold should be defined as a floating point number between 0 and 1. When the proportion of the domain name healthy instance to the total instance is smaller than this value, the instance is returned to the client regardless of the health of the instance. Although this can result in a loss of some of the traffic, we ensure that the remaining healthy instances can work normally.
+## Health Protection Threshold
+To prevent healthy instances from being overwhelmed by traffic due to too many unhealthy instances, this threshold, a float between 0 and 1, ensures that even unhealthy instances are returned to clients when the ratio of healthy instances to total service instances falls below this value. Although some traffic is lost, this safeguards the remaining healthy instances from collapsing under pressure and avoids a cascading failure.

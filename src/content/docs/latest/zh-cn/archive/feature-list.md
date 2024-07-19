@@ -1,7 +1,7 @@
 ---
 title: Nacos功能和需求列表
-keywords: [Nacos,功能]
-description: Nacos功能和需求列表
+keywords: [Nacos, 功能需求, 服务发现, 配置管理, 元数据管理, 地址服务器, 内核优化, 安全稳定性, 云原生, 客户端支持, Docker部署, Kubernetes集成, Nacos-Sync, 官网建设, 共建参与]
+description: 文章详列Nacos微服务项目功能与需求，涵盖服务发现、配置管理等，展示功能开发状态与认领教程，鼓励社区共建。
 ---
 
 # Nacos功能和需求列表

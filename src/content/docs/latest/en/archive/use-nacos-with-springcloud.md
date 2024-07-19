@@ -1,7 +1,7 @@
 ---
 title: Nacos Spring Cloud
-keywords: [nacos,Spring Cloud]
-description: Nacos Spring Cloud
+keywords: [Nacos, Spring Cloud, microservice configuration, service discovery, Alibaba Cloud]
+description: Nacos Spring Cloud is an open-source microservices management tool from Alibaba that seamlessly integrates with the Spring Cloud framework, offering powerful and flexible service discovery and configuration management features. Learn its applications through Nacos Config Example and Nacos Discovery Example, with related projects including Nacos, Nacos Spring, among others – making it an ideal choice for building cloud-native applications.
 ---
 
 # Nacos Spring Cloud

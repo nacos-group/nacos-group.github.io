@@ -1,32 +1,30 @@
 ---
-title: Pull request template
-keywords: [pull request,template]
-description: Pull request template
-sidebar:
-    order: 3
+title: Submitting Request Templates
+keywords: [pull request, template, changelog, unit test]
+description: This article outlines the guidelines for submitting request templates, emphasizing the need to create associated issues before submission. It clarifies the purpose of the change, provides a brief changelog, and details verification procedures. A comprehensive checklist is provided to guide contributors on effectively integrating their code, covering aspects such as using Github issues, formatting pull request titles, writing descriptive change summaries, conducting necessary unit tests, and executing essential Maven commands for checks. Contributors of substantial work are reminded to sign the Apache Individual Contributor License Agreement.
 ---
 
-# Pull request template
+# Submitting Request Templates
 
-Please do not create a Pull Request without creating an issue first.
+Do not submit requests without creating corresponding issues.
 
-## What is the purpose of the change
+## Purpose of the Change
 
 XXXXX
 
-## Brief changelog
+## Brief Changelog
 
 XX
 
-## Verifying this change
+## Verifying This Change
 
 XXXX
 
-Follow this checklist to help us incorporate your contribution quickly and easily:
+Adhere to this checklist to facilitate the swift and effortless incorporation of your contribution:
 
-* [ ] Make sure there is a Github issue filed for the change (usually before you start working on it). Trivial changes like typos do not require a Github issue. Your pull request should address just this issue, without pulling in other changes - one PR resolves one issue.
-* [ ] Format the pull request title like `[ISSUE #123] Fix UnknownException when host config not exist`. Each commit in the pull request should have a meaningful subject line and body.
-* [ ] Write a pull request description that is detailed enough to understand what the pull request does, how, and why.
-* [ ] Write necessary unit-test to verify your logic correction, more mock a little better when cross module dependency exist. If the new feature or significant change is committed, please remember to add integration-test in [test module](https://github.com/apache/rocketmq/tree/master/test).
-* [ ] Run `mvn -B clean apache-rat:check findbugs:findbugs` to make sure basic checks pass. Run `mvn clean install -DskipITs` to make sure unit-test pass. Run `mvn clean test-compile failsafe:integration-test`  to make sure integration-test pass.
-* [ ] If this contribution is large, please file an [Apache Individual Contributor License Agreement](http://www.apache.org/licenses/#clas).
+* [ ] Ensure a Github issue exists for the change (typically before starting work), except for trivial changes like typos. Your pull request should address solely this issue, avoiding inclusion of additional changes – one PR resolves one issue.
+* [ ] Format the pull request title as `[ISSUE #123] Fix UnknownException when host config not exist`. Each commit within the pull request should have a meaningful subject and body.
+* [ ] Compose a pull request description that sufficiently elucidates the change, its methodology, and rationale.
+* [ ] Develop necessary unit tests to validate your logic corrections, employing more mocks when dealing with cross-module dependencies. If introducing a new feature or significant modification, remember to include integration tests in the [test module](https://github.com/apache/rocketmq/tree/master/test).
+* [ ] Execute `mvn -B clean apache-rat:check findbugs:findbugs` to confirm the passage of fundamental checks. Run `mvn clean install -DskipITs` to ensure unit tests pass. Execute `mvn clean test-compile failsafe:integration-test` to verify the success of integration tests.
+* [ ] For substantial contributions, please submit an [Apache Individual Contributor License Agreement](http://www.apache.org/licenses/#clas).

@@ -1,6 +1,6 @@
 ---
 title: NacosSync 用户手册
-keywords: [NacosSync,迁移,用户手册]
+keywords: [NacosSync,迁移,用户手册,多注册中心同步,服务迁移,Zookeeper,Nacos,Dubbo]
 description: NacosSync 迁移用户手册
 sidebar:
     order: 5

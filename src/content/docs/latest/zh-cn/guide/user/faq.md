@@ -1,7 +1,7 @@
 ---
 title: FAQ
-keywords: [Nacos,FAQ]
-description: Nacos FAQ
+keywords: [Nacos, FAQ, 常规问题, 运维问题, 使用问题, 原理问题, 微服务, 配置管理, 服务发现, Docker, Kubernetes, Spring Cloud, Dubbo, 多环境, 生产可用, 监控, 扩缩容, 权重, 加密, 错误代码401, 日志, 集群部署]
+description: 本文档整理了Nacos常见问题解答（FAQ），涵盖Nacos的常规理解、运维部署、使用技巧以及深入原理等多个维度。针对微服务配置管理与服务发现的需求，详细解答了如何在不同环境部署Nacos、如何处理生产环境中遇到的问题、与Spring Cloud、Dubbo等框架的集成方法、如何进行监控与日志管理、服务扩缩容操作、配置加密等高级话题。此外，还涉及Nacos在Docker、Kubernetes等容器化环境下的部署策略，以及解决启动、运行时常见错误的方法。
 sidebar:
     order: 6
 ---
