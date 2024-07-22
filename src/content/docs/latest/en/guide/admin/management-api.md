@@ -1,9 +1,11 @@
 ---
 title: Management API
-keywords: [Management API, Nacos 1.x.x, Documentation Optimization]
-description: This document pertains to the introduction of Management API within Nacos 1.x.x version, currently undergoing documentation optimization and is pending completion.
+keywords: [Management,API]
+description: In plan with Nacos 1.x.x
+sidebar:
+    order: 4
 ---
 
-> Documentation under optimization...
+> Document optimizing...
 
 TODO

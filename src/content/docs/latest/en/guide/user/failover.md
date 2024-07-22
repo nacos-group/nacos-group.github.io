@@ -1,97 +1,146 @@
 ---
-title: Java Client Disaster Recovery
-keywords: [Java Client Disaster Recovery, Data Source for Disaster Recovery, Disk Disaster Recovery, SPI Extension, Nacos Server Issues]
-description: This article delves into the disaster recovery mechanisms for Java clients, explaining how to maintain client stability when facing Nacos server issues by启用 local disaster recovery and leveraging cached data. It elaborates on two usage scenarios, the disaster recovery process, specifics of disk disaster recovery implementation, and the method for customizing and extending disaster recovery data sources.
+title: Java Client Failover
+keywords: [Failover]
+description: Java client failover user guide
+sidebar:
+    order: 7
+    hidden: true
 ---
 
-# Java Client Disaster Recovery
+# Java Client Failover
 
-We can enable local disaster recovery on the client side to ensure data and API stability when the Nacos server encounters issues.
+We can turn on the local data failover feature to handle the situation when Nacos server side is unstable or has problematic data.
 
-There are two application scenarios:
+There are two typical scenarios:
 
-1. During Nacos server deployment, we proactively activate disaster recovery, allowing clients to solely use local disaster recovery data. This ensures that fluctuations or errors in Nacos server data do not affect clients. We then disable disaster recovery after the upgrade is complete and data validation is successful.
-2. If Nacos services unexpectedly become unavailable or exhibit data anomalies during operation, we can swiftly enable disaster recovery, enabling clients to utilize this backup data. This minimizes the impact window on services until the Nacos server is restored and disaster recovery can be deactivated.
+1. When Nacos server is in deployment, we can switch on the failover so the clients use local data only. The data anomaly or oscillation at Nacos server won't affect the clients. After the deployment and the data verification are done, we can switch off the failover feature.
+2. When there is a sudden data anomaly at Nacos server at runtime, we can turn on the failover feature to prevent Nacos clients using wrong data.
 
-Refer to https://github.com/alibaba/nacos/issues/11053 for a detailed solution.
+The full detailed solution description can be found in https://github.com/alibaba/nacos/issues/11053
 
-## Brief Process Overview
+## Procedures
 
-[Image Description: Illustrates the flow where client queries first pass through the FailoverReactor. If data is available, it is used directly, bypassing data from the Nacos Server; otherwise, the normal process of fetching data from ServiceInfoHolder proceeds.]
+<img width="1000" alt="image" src="https://github.com/alibaba/nacos/assets/4593375/f9011075-11b8-401b-9dbb-1366347a9a44" />
 
-## Disk Disaster Recovery
+As shown above, the query requests to Nacos client would first be checked by FailoverReactor, and only if FailoverReactor has no related data, can the requests move on to query ServiceInfoHolder.
 
-The data within the FailoverReactor can leverage different data sources, with the default being disk storage.
+## Disk based Failover
 
-### Disk Disaster Recovery Directory
+FailoverReactor can select different data sources. Disk is the default option.
 
-The default directory for disk disaster recovery files is:
+### Disk Failover File Path
+
+The default path of disk failover files are:
 
 ```
 {user.home}/nacos/naming/{namespace}/failover
 ```
 
-This directory can be customized using the `-DJM.SNAPSHOT.PATH=/mypath` parameter, changing the disaster recovery disk file directory to:
+This path can be customised via -D argument:
+
+```
+-DJM.SNAPSHOT.PATH=/mypath
+```
+
+So the path becomes:
 
 ```
 /mypath/nacos/naming/{namespace}/failover
 ```
 
-### Disaster Recovery Switch on Disk
+### Disk Failover Switch
 
-The disaster recovery switch resides in a file within the disk disaster recovery directory, named:
+The disk failover switch is stored in a file with name:
 
 ```
 00-00---000-VIPSRV_FAILOVER_SWITCH-000---00-00
 ```
 
-The file contains a digit, 0 for disabling or 1 for enabling disaster recovery.
+The content of this file is just a number 0 or 1, where 0 represents failover is off, 1 is on.
 
-### Disk Disaster Recovery Data
+### Disk Failover Data
 
-Disaster recovery data is divided across multiple files stored in the disk disaster recovery directory. Each file contains the disaster recovery data for a single service, with filenames formatted as:
+The disk failover data is stored in multiple files under the failover path. Each file stores the failover data for a single service.
+
+The file name is in the following format:
 
 ```
 {group.name}%40%40{service.name}
 ```
+The content in the file is the JSON string of one ServiceInfo object, for instance:
 
-Content includes a JSON serialized string of the ServiceInfo class.
+```
+{
+    "name":"DEFAULT_GROUP@@test.2",
+    "groupName":"DEFAULT_GROUP",
+    "clusters":"",
+    "cacheMillis":10000,
+    "hosts":[
+        {
+            "instanceId":"1.1.2.1#8888#DEFAULT#DEFAULT_GROUP@@test.2",
+            "ip":"1.1.2.1",
+            "port":8888,
+            "weight":1,
+            "healthy":true,
+            "enabled":true,
+            "ephemeral":true,
+            "clusterName":"DEFAULT",
+            "serviceName":"DEFAULT_GROUP@@test.2",
+            "metadata":{
+                "k1":"v1"
+            },
+            "instanceHeartBeatInterval":5000,
+            "instanceHeartBeatTimeOut":15000,
+            "ipDeleteTimeout":30000
+        }
+    ],
+    "lastRefTime":1689835375819,
+    "checksum":"",
+    "allIPs":false,
+    "reachProtectionThreshold":false,
+    "valid":true
+}
+```
 
-## Expanding Disaster Recovery Data Sources
+## Extent Failover Data Source
 
-While disk-based disaster recovery is dependency-free and simple, managing it can be cumbersome. Therefore, we also support SPI extensions for using storage beyond disk. Below are the steps for such an extension.
+Disk failover is simple and requires no extra remote components. But sometimes we may want to use another kind of data source, such as Redis, Mysql, etc.
 
-### Developing a Custom Disaster Recovery Data Source Class
+Now we support extending the failover data source with SPI mechanism. Here are the steps:
 
-Implement the interface `com.alibaba.nacos.client.naming.backups.FailoverDataSource`:
+### Develop Your Own Failover Data Source
 
-```java
+Write a class and implement the interface com.alibaba.nacos.client.naming.backups.FailoverDataSource:
+
+```
 public class MyFailoverDataSource implements FailoverDataSource {
+    
     @Override
     public FailoverSwitch getSwitch() {
-        // Implement your logic here.
+        // TODO write your own implementation.
         return null;
     }
-
+    
     @Override
     public Map<String, FailoverData> getFailoverData() {
-        // Provide your implementation. For the naming module, the map should associate service names with ServiceInfo instances.
+        // TODO write your own implementation. For naming module, the map
+        // should contain failover data with service name as key and ServiceInfo as value
         return null;
     }
 }
 ```
 
-### Configuring the Disaster Recovery Data Source Class
+### Configure Failover Data Source Class
 
-Create a file under the resource directory:
+Create a file under the resource root path:
 
 ```
 {resource.root}/META-INF/services/com.alibaba.nacos.client.naming.backups.FailoverDataSource
 ```
 
-An example of {resource.root} is `src/main/resources`.
+One example of `{resource.root}` is src/main/resources.
 
-File content should be:
+The file content is:   
 
 ```
 your.package.MyFailoverDataSource

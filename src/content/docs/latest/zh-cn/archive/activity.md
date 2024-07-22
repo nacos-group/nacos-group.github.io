@@ -1,7 +1,7 @@
 ---
 title: Nacos 有奖活动介绍
-keywords: [Nacos, 有奖活动, 社区贡献, GitHub Issue, 定制礼品]
-description: Nacos推出激励活动，鼓励用户通过改进产品、优化文档等获取定制礼品，活动涉及多环节反馈与GitHub参与，促进社区发展。
+keywords: [Nacos,活动]
+description: Nacos 有奖活动介绍
 ---
 
 # Nacos 有奖活动介绍

@@ -1,7 +1,7 @@
 ---
 title: Nacos Spring Cloud
-keywords: [Nacos,Spring Cloud,微服务配置,服务发现,阿里巴巴云]
-description: Nacos Spring Cloud是阿里开源的微服务管理工具，集成Spring Cloud，提供服务发现、配置管理等功能，适用于云原生应用开发。
+keywords: [nacos,Spring Cloud]
+description: Nacos Spring Cloud
 ---
 
 # Nacos Spring Cloud

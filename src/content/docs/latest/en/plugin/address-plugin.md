@@ -1,22 +1,26 @@
 ---
 title: Addressing Plugin
-keywords: [Nacos, Addressing Plugin, SPI, Server-side, Client-side, Custom Plugin]
-description: This article elaborates on the support for cluster addressing plugins in Nacos starting from version 2.3.0, including steps to develop server and client-side addressing plugins, implementation details of interfaces, and how to configure and enable these plugins. It also alerts developers that the addressing plugin is currently in Beta, with potential API changes in future updates.
+keywords: [Addressing, Plugin]
+description: This article describes how to develop and use Nacos' addressing plugin.
+sidebar:
+    order: 2
+    hidden: true
 ---
+
 # Addressing Plugin
 
-Starting with version 2.3.0, Nacos supports injecting cluster addressing-related plugins through the [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html) mechanism and selecting one of the plugin implementations in the `application.properties` configuration file for actual addressing services. This document will provide a comprehensive guide on implementing an addressing plugin and making it effective.
+Since version 2.3.0, Nacos support to inject addressing plugins through [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html), and select a plugin implementation in the configuration file `application.properties ` as the actual addressing service. This document will describe how to implement an addressing plugin and how to make it work.
 
-> Note:
-> The addressing plugin is currently in Beta testing, and its APIs and interface definitions may change with subsequent version upgrades. Please ensure your plugin compatibility accordingly.
+> Attention: 
+> At present, the addressing plugin is still in the beta stage, and its API and interface definitions maybe modified with version upgrades. Please pay attention to the applicable version of your plugin.
 
-## Overview of Addressing Plugins
+## Overview Of Addressing Plugin
 
-Currently, Nacos offers three addressing methods: single-machine addressing, configuration file addressing, and address server addressing. With addressing plugins, users can write their own addressing logic.
+At present, there are three addressing modes for Nacos cluster addressing: stand-alone addressing, profile addressing and address server addressing. Through the addressing plugin, users can write their own addressing logic.
 
-## Developing Nacos Server-Side Addressing Plugin
+## Develop Nacos Server Addressing Plugin
 
-To develop a Nacos server-side addressing plugin, first, depend on the relevant API for addressing plugins:
+To develop a Nacos server-side addressing plugin, developer first need to depend on the relevant API of the address plugin.
 
 ```xml
         <dependency>
@@ -26,61 +30,57 @@ To develop a Nacos server-side addressing plugin, first, depend on the relevant 
         </dependency>
 ```
 
-Where `${project.version}` corresponds to the Nacos version you are developing the plugin against.
+`${project.version}` is the version of Nacos for your development plugin.
 
-Then, implement the `com.alibaba.nacos.plugin.address.spi.AddressPlugin` interface and add your implementation to the SPI's services.
+Then implement interface`com.alibaba.nacos.plugin.address.spi.AddressPlugin`, and put your implementation into services of SPI.
 
-Methods to implement within the interface include:
+The methods of interface in following:
 
-|Method Name|Input|Return|Description|
+|method name|parameters|returns|description|
 |-----|-----|-----|---|
-|start|void|void|Initiates the addressing function of the plugin.|
-|getServerList|void|List<String>|Returns all Nacos cluster node addresses in the format `IP:Port`.|
-|getPluginName|void|String|The name of the plugin; when names clash, the later-loaded plugin overrides the earlier one.|
-|registerListener|Consumer<List<String>>|AddressPlugin|Registers a listener called when cluster addresses change.|
-|shutdown|void|void|Disables the plugin.|
+|start|void|String|Start the addressing function of the plugin.|
+|getServerList|void|List&lt;String>|Returns the addresses of all Nacos cluster nodes. The address format is`IP: Port`.|
+|getPluginName|void|String|The name of the plugin. When the name is the same, the plugin loaded later will overwrite the plugin loaded first.|
+|registerListener|Consumer&lt;List&lt;String>>|AddressPlugin|Register the listener and call the listener when the cluster address changes|
+|shutdown|void|void|Shutdown plugin|
 
-The `com.alibaba.nacos.plugin.address.spi.AbstractAddressPlugin` abstract class provides default implementations for `getServerList`, `registerListener`, and `shutdown`. Users extending `AbstractAddressPlugin` only need to implement the remaining methods. The `AbstractAddressPlugin` has a `serverList` member variable (List<String>) representing the cluster address collection, which users must maintain after calling the start method.
-
-For configuring plugin-related parameters in the property file, use keys prefixed with `address.plugin`, accessible via the `com.alibaba.nacos.plugin.address.common.AddressProperties` singleton:
-
+This interface is defined by `com.alibaba.nacos.plugin.address.spi.AbstractAddressPlugin`.The abstract class implements`getServerList`, `registerListener` and `shutdown` methods by default, Users can inherit AbstractAddressPlugin to implement other methods when actually writing plugins. AbstractAddressPlugin has a List&lt;String>member variable named serverList, that is, the cluster address collection. The user needs to maintain this variable.
+When users need to configure plugin related parameters in the configuration file, they need to configure keys starting with `address.plugin` in the property configuration file. In this case, the corresponding parameters can be obtained through the `com.alibaba.nacos.plugin.address.common.AddressProperties` singleton class
 ```properties
-address.plugin.${key} = ${val}
+address.plugin.$ {key} = ${val}
 ```
-
-Post-configuration, developers can retrieve parameters through:
-
+After configuration, users can write plugins through the
 ```java
 AddressProperties.getProperty(${key})
 ```
+To get the parameters.
 
-### Using Server-Side Plugins
+### Use Server Plugin
 
-After development, package the plugin as a jar/zip and place it in the Nacos server's classpath or directly into `${nacos-server.path}/plugins`.
+After the plugin finished, it needs to be packaged into jar/zip and places in the classpath of the nacos server. If you don't know how to add plugins into the classpath, please place plugins under `${nacos-server.path}/plugins` directly.
 
-Modify `${nacos-server.path}/conf/application.properties`:
+After Adding plugins into classpath, also need to modify some configuration in `${nacos-server.path}/conf/application.properties`.
 
 ```properties
-### Enabled Nacos addressing plugin name, corresponding to `com.alibaba.nacos.plugin.address.spi.AddressService#getPlugin` return value
+### The plugin name nacos using，should be same as the return value of `com.alibaba.nacos.plugin.address.spi.AddressPlugin#getPluginName`
 nacos.core.member.lookup.type=${addressPluginName}
 ```
 
-Restart Nacos cluster, and upon receiving requests, observe logs in `${nacos-server.path}/logs/nacos-cluster.log`:
+Restart nacos cluster, and after any request, some logs can be saw in `${nacos-server.path}/logs/nacos-cluster.log`:
 
 ```text
 [AddressPluginManager] Load AddressPlugin(xxxx) PluginName(xxx) successfully.
 ```
 
-### Leveraging Built-in Nacos Addressing Plugins
+### Use the default Nacos addressing plugin
 
-For backward compatibility, without custom plugins, configurations remain unchanged with `nacos.core.member.lookup.type=[file,address-server]`.
+In order to be compatible with the addressing of the old version, when the user does not use the custom plug-in, the configuration is the same as the original, or the configuration item `nacos.core.member.lookup.type=[file, address server]`.
 
-## Client-Side Plugins
+## Client Plugin
 
-### Implementing Custom Plugins
-
-Nacos client-side users follow similar steps as the server-side for custom addressing plugin implementation. After packaging the developed client plugin into a jar/zip and placing it in the application's classpath, it automatically takes effect. When initializing `NacosConfigService` or `NacosNamingService`, include a property in the passed `Properties` object with key `addressPluginName` and value from `getPluginName` method of the plugin.
-
+### Use Custom Plugins
+The implementation of custom plugins is the same as that of the server. When users need to use custom plugins, they inherit `com.alibaba.nacos.plugin.address.spi.AbstractAddressPlugin` or implement `com.alibaba.nacos.plugin.address.spi.AddressPlugin`, package the developed client plug-in into jar/zip, and put it into your application's classpath to automatically take effect. When initializing `NacosConfigService` or `NacosNamingService`, the key passed in the `Properties` object is `addressPluginName`, and val is the parameter returned by the plugin `getPluginName`.
+for example:
 ```java
  Properties properties = new Properties();
  properties.put("addressPluginName", ${addressPluginName});
@@ -88,10 +88,9 @@ Nacos client-side users follow similar steps as the server-side for custom addre
  String content = configService.getConfig(dataId, group, 5000);
 ```
 
-### Using Built-in Nacos Client-Side Plugins
+### Use the default Nacos addressing plugin
+The Java client plug-in of Nacos is adapted to the old version. If the customized plug-in is not applicable, the use of the client is the same as before.
 
-For Nacos Java client, built-in addressing plugin adaptations ensure compatibility with previous versions. Without custom plugins, client usage remains unchanged.
+### Plugin for other programming language
 
-### Addressing Plugins for Other Language Clients
-
-Awaiting community contributions.
+TODO

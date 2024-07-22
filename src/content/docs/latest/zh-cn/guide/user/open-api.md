@@ -6,6 +6,8 @@ sidebar:
     order: 3
 ---
 
+> 该文档即将废弃，请参考[用户手册-OpenAPI指南](../../manual/user/open-api.md)，部分接口被定义为运维API，请参考[运维手册-运维API](../../manual/admin/admin-api.md)。
+
 # Open API 指南
 
 Nacos 2.X 版本兼容 Nacos1.X 版本的OpenAPI, 请参考文档[Nacos1.X OpenAPI](https://nacos.io/docs/v1/open-api)使用。

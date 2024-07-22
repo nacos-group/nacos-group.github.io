@@ -1,12 +1,12 @@
 ---
 title: Nacos支持三种部署模式
-keywords: [Nacos,部署模式,单机模式,集群模式,多集群模式,JDK,MySQL]
-description: Nacos支持单机、集群及多集群三种部署模式，适用于不同场景需求。推荐在内部网络环境下部署，确保安全与稳定性。单机模式适用于测试，集群模式保证生产环境的高可用性，多集群模式满足多数据中心部署。环境准备包括JDK 1.8+、建议硬件配置及MySQL数据库支持。
+keywords: [Nacos,部署模式]
+description: Nacos支持三种部署模式
 sidebar:
     order: 1
 ---
 
-> 文档优化中......
+> 该文档即将废弃，推荐查看[运维手册-部署手册-部署手册概览](../../manual/admin/deployment/deployment-overview.md)。
 
 # Nacos部署环境
 

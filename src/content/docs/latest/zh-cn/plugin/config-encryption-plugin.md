@@ -1,7 +1,7 @@
 ---
 title: 配置加密
-keywords: [Nacos, 配置加密, 数据安全, SPI, AES, MySQL, 内嵌数据库]
-description: Nacos新特性实现配置加密，保护敏感数据，支持2.x以上版本，通过SPI集成AES等加密算法，用户可自定加密方式，需添加依赖如nacos-aes-encryption-plugin，控制台轻松创建cipher-前缀加密配置。
+keywords: [AES,encryption,配置加密]
+description: 配置加密
 sidebar:
     order: 3
 ---

@@ -1,7 +1,7 @@
 ---
 title: 寻址插件
-keywords: [Nacos, 寻址插件, SPI, 服务端, 客户端, 自定义插件]
-description: 文章介绍了Nacos从2.3.0版本起支持的SPI寻址插件开发与应用方法，包括服务端与客户端插件的实现与配置，自定义寻址逻辑以适应不同集群环境。
+keywords: [寻址, 插件]
+description: 本文描述如何开发及使用Nacos的寻址插件
 sidebar:
     order: 2
     hidden: true

@@ -1,6 +1,6 @@
 ---
 title: Nacos系统参数介绍
-keywords: [Nacos, 系统参数, 服务器配置, Java客户端, 数据库配置, 连接池, 日志级别, 配置模块, 命名空间]
+keywords: [Nacos,系统参数]
 description: Nacos系统参数介绍
 sidebar:
     order: 3
@@ -8,7 +8,7 @@ sidebar:
 
 # Nacos 系统参数介绍
 
-> 文档优化中......
+> 该文档即将废弃，Server的参数推荐查看[运维手册-系统参数](../../manual/admin/system-configurations.md)，Client的参数推荐查看[用户手册-客户端参数 TODO](#nacos-java-client)
 
 ## Nacos Server
 

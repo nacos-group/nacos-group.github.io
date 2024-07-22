@@ -1,7 +1,7 @@
 ---
 title: 轨迹追踪
-keywords: [Nacos, 轨迹追踪插件, SPI机制, Beta测试, 服务注册, 注销, 链路追踪, 插件开发, 事件模型, RegisterInstanceTraceEvent]
-description: Nacos利用SPI机制实现自定义轨迹追踪插件，监控服务注册注销等，处于Beta阶段。插件基于事件模型，如RegisterInstanceTraceEvent，可扩展定制化处理，辅助运维快速定位问题。
+keywords: [轨迹追踪,推送轨迹,变更轨迹]
+description: Nacos 支持轨迹追踪插件，可自定义扩展制作推送轨迹等功能，帮助运维人员快速定位问题。
 sidebar:
     order: 5
 ---

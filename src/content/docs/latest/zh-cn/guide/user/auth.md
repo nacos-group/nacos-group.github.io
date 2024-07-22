@@ -1,10 +1,12 @@
 ---
-title: Authorization
-keywords: [Nacos, 鉴权, 微服务, 安全风险, 插件开发, JWT, Token, 缓存, 服务端, 客户端, SDK, Open-API, Docker, 身份识别]
+title: 权限校验
+keywords: [Authorization]
 description: Authorization
 sidebar:
     order: 5
 ---
+
+> 该文档即将废弃，若想查看服务端如何开启鉴权功能推荐查看[运维手册-鉴权手册](../../manual/admin/auth.mdx); 若想查看客户端如何配置鉴权信息推荐查看[用户手册-配置鉴权信息](../../manual/user/auth.mdx)。
 
 > 注意
 > - Nacos是一个内部微服务组件，需要在可信的内部网络中运行，不可暴露在公网环境，防止带来安全风险。

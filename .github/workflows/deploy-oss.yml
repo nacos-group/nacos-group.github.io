@@ -13,9 +13,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 18.x
+      - name: Install
+        run: |
+          npm install && npm i @swc/core@1.6.0
       - name: Build
         run: |
-          npm install && npm run build && mkdir deploy-dist && cp -R dist/* deploy-dist/
+          npm run build && mkdir deploy-dist && cp -R dist/* deploy-dist/
       - run: npm i @serverless-devs/s -g  --registry=https://registry.npmmirror.com
       - run: s config add --AccountID ${{secrets.ACCOUNT_ID}}  --AccessKeyID ${{secrets.ACCESS_KEYID}}  --AccessKeySecret ${{secrets.ACCESS_KEYSECRET}} -a nacos -f
       - name: Deploy

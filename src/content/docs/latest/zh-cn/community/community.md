@@ -1,7 +1,7 @@
 ---
 title: 社区
-keywords: [Nacos社区,联系方式,邮件列表,Gitter聊天室,微博,segmentfault,钉钉群]
-description: 了解Nacos社区的各种联系方式，参与Gitter聊天、关注微博动态、浏览SegmentFault板块，加入邮件列表深度交流，及加入钉钉群与开发者直接沟通。
+keywords: [社区,联系方式]
+description: 社区
 sidebar:
     order: 1
 ---

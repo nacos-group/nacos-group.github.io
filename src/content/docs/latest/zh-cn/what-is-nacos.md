@@ -1,7 +1,7 @@
 ---
 title: Nacos 配置中心简介, Nacos 是什么
-keywords: [Nacos, 服务发现, 配置管理, 微服务, 云原生]
-description: Nacos作为云原生动态服务发现、配置管理平台，支持微服务构建、部署及管理，集成Spring Cloud、Dubbo等生态，简化服务治理流程。
+keywords: [nacos]
+description: Nacos 配置中心简介，Nacos 是什么
 ---
 
 # 什么是 Nacos

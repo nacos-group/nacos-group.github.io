@@ -1,12 +1,12 @@
 ---
 title: Nacos 2.0 升级文档
-keywords: [Nacos 2.0, 升级部署, 双写, 平滑升级, 降级, 开源微服务]
-description: Nacos 2.0升级部署指南，包括部署步骤与从1.x平滑升级的详细流程，强调双写机制对性能的影响及如何关闭，介绍升级API与可能遇到的问题解决方案，适用于开源微服务架构升级场景。
+keywords: [Nacos,2.0,升级]
+description: Nacos 2.0 升级文档
 sidebar:
     order: 2
 ---
 
-> 文档优化中......
+> 该文档即将废弃，推荐查看[运维手册-升级手册](../manual/admin/upgrading.mdx)。
 
 # Nacos 2.0.0 部署及升级文档
 

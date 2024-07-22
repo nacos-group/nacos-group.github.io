@@ -1,7 +1,7 @@
 ---
 title: Nacos 规划
-keywords: [Nacos, 规划, 生产可用, 服务发现, 配置管理]
-description: Nacos规划在未来6至8个月内达到生产环境标准，聚焦服务发现、配置管理等工具集构建，及与Spring Cloud、Kubernetes、Dubbo等生态融合，目标一年内推出Nacos 1.0与2.0版本，建立统一服务管理平台。
+keywords: [Nacos,规划]
+description: Nacos 规划
 ---
 
 # Nacos 规划

@@ -6,6 +6,8 @@ sidebar:
     order: 1
 ---
 
+> 该文档即将废弃，推荐查看[用户手册-JAVA SDK-JAVA SDK 使用手册](../../manual/user/java-sdk/usage.md)。
+
 # Java SDK
 
 ## 概述部分

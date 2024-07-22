@@ -1,7 +1,7 @@
 ---
 title: 为 Nacos 做贡献
-keywords: [Nacos, 贡献指南, 行为守则, GitHub Issues, Pull Request, 社区参与, Committer晋升]
-description: 了解如何为Nacos开源项目贡献力量，遵循行为准则，通过GitHub提交问题与拉取请求，参与社区互动，遵循指南晋升为Committer。
+keywords: [Nacos,贡献]
+description: 欢迎来到Nacos！本文档是关于如何为Nacos做出贡献的指南。
 ---
 
 # 为 Nacos 做贡献
