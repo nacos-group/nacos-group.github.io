@@ -55,7 +55,7 @@ export default {
 	'home.introduce.title': ' 一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台',
 	'home.introduce.nacos.code': '前往 GitHub',
 	'home.introduce.nacos.manual': '手册',
-	'home.introduce.nacos.notes': '发布于2024年7月19日',
+	'home.introduce.nacos.notes': '发布于2024年7月22日',
 	'home.introduce.nacos.release.note.1': 'V2.4.0 的版本说明',
 	'home.introduce.nacos.release.note.1.mobile': 'V2.4.0',
 	'home.introduce.nacos.release.note.2': 'V1.4.7 的版本说明',
