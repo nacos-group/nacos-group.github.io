@@ -75,9 +75,27 @@ const replaceNavigation = async () => {
 		const localeDir = locale ? locale + '/' + directory.replace(regex, "$1/"+locale) : directory;`
 	);
 
-	await fs.writeFile(originFile, localeDirContent);
-}
 
+	// 增加slugToPathname的入参，为版本号中有.的版本设置正确的sidebar路径
+	// slug.id => docs/2.2.x/quickstart/quick-start-docker.md
+	// slug.slug => 22x/quickstart/quick-start-docker
+	const linkFromRouteRegex = /function linkFromRoute\(route: Route, currentPathname: string\): Link {[\s\S]*?}/;
+
+	const linkFromRouteContent = localeDirContent.replace(
+		linkFromRouteRegex,
+		`function linkFromRoute(route: Route, currentPathname: string): Link {
+			return makeLink(
+				slugToPathname(route.slug,route.id),
+				route.entry.data.sidebar.label || route.entry.data.title,
+				currentPathname,
+				route.entry.data.sidebar.badge,
+				route.entry.data.sidebar.attrs
+			);
+		}\n`
+	)
+
+	await fs.writeFile(originFile, linkFromRouteContent);
+}
 
 /**
  * @description: 替换 index.astro
@@ -99,9 +117,39 @@ const replace404Astro = async () => {
 	await fs.writeFile(originFile, replacedContent.toString());
 }
 
+
+/**
+ * @description: 替换 utils/slugs.ts
+ */
+const replaceSlugs = async () => {
+	const originFile = path.join(starlightPath, "/utils/slugs.ts");
+	const originContent = await fs.readFile(originFile);
+
+	/**
+	 * 获取当前页面的 id，生成正确的 pathname
+	 * 主要为2.2.x版本的autogenerate生成正确的sidebar
+	 */
+	const linkFromRouteRegex = /export function slugToPathname\(slug\: string\)\: string {[\s\S]*?}/;
+	const linkFromRouteContent = originContent.toString().replace(
+		linkFromRouteRegex,
+		`export function slugToPathname(slug: string, id: string): string {
+			// 2.2.x/zh-cn/overview/version-explain.md
+			let param = slugToParam(slug);
+			const [curVersion,lang, ...rest] = id.split('/');
+			rest[rest.length-1] = rest[rest.length-1].replace(/.(md|mdx)$/, "")
+			param = "docs/" + curVersion + "/" + rest.join("/")
+			return param ? '/' + param + '/' : '/';
+		}\n`
+	)
+
+	await fs.writeFile(originFile, linkFromRouteContent);
+}
+
+
 export default async () => {
 	await replaceRouteData();
 	await replaceNavigation();
 	await replaceIndexAstro();
 	await replace404Astro();
+	await replaceSlugs()
 }
