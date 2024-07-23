@@ -56,7 +56,7 @@ export default {
 	'home.introduce.title': 'An easy-to-use dynamic service discovery, configuration and service management platform for building cloud native applications',
 	'home.introduce.nacos.code': 'VIEW ON GITHUB',
 	'home.introduce.nacos.manual': 'MANUAL',
-	'home.introduce.nacos.notes': 'Released on July 19rth, 2024',
+	'home.introduce.nacos.notes': 'Released on July 22rth, 2024',
 	'home.introduce.nacos.release.note.1': 'Release Note of V2.4.0',
 	'home.introduce.nacos.release.note.1.mobile': 'V2.4.0',
 	'home.introduce.nacos.release.note.2': 'Release Note of V1.4.7',

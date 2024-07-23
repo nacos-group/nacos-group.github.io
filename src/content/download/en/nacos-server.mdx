@@ -1,65 +1,39 @@
 ---
-title: Nacos Server
+title: Nacos Server Download
 order: 0
 ---
-
-
 # Nacos Server Download
-
 :::tip
-
-Version **2.3.2** has been released. Fix 2.3.1 client frequently receive configuration pushes.
-
-You are welcome to download and [try it out](#stable-version).
-
-Nacos Server **2.4.0-BETA** has been released. The default password for the administrator user `nacos` has been removed, and it now supports initializing with a specified password.
-
-You are welcome to [download and try 2.4.0-BETA](#snapshot-version).
-
+Nacos Server **2.4.0** has been officially released. The default password for the administrator user `nacos` has been removed, and it now supports initializing a specified password. The derby maintenance interface is closed by default. Feel free to [download and try it out](#stable-versions).
 :::
-
-
 ## System Requirements
-
 :::note
-
-The following system requirements are the minimum required to deploy Nacos Server. if your device does not meet these requirements, you may not be able to deploy Nacos Server on your device.
-
+The following are the minimum system requirements for deploying Nacos Server. If your environment does not meet the minimum requirements, it may cause the Nacos Server to be unable to deploy and start.
 :::
-
 |             |                                                                                                                         |
 |-------------|------------------------------------------------------------------------------------------------------------------------------------|
-| **Java Development Kit (JDK)** | JDK 8 or higher.  |
-| **CPU**  | 1 core and above, supports 64-bit CPUs.    |
-| **Memory** | 2G and above. |
-| **Disk** | No minimum requirement, requires specific adjustments based on logging.|
-| **Operating System** | Linux, Mac OS X, Windows. |
-
-## Stable Version
-
+| **JDK/JRE** | 8 and above  |
+| **CPU**  | 1 core or higher, 64-bit CPU support    |
+| **Memory** | 2G or more |
+| **Hard disk** | No minimum requirement, adjust according to log retention |
+| **Operating system** | Linux, Mac OS X, Windows |
+## Stable Versions
 ### 2.x
-| Version | Binary Link                                                  | Docker Image                                                 | MD5                         | Release Notes                                    | Reference Docs                                   |
+| Version | Binary Package Download                                                  | Docker Image                                                 | MD5                         | Release Notes                                    | Reference Documentation                                  |
 | ------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------------------- | ------------------------------------------------ | ------------------------------------------------ |
-| 2.4.0   | [2.4.0.zip](https://download.nacos.io/nacos-server/nacos-server-2.4.0.zip) | [nacos/nacos-server:2.4.0](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=2.4.0) | 4e42e848ecaa868867215ae2c8812d3d | [Release Notes](https://github.com/alibaba/nacos/releases/tag/2.4.0)      | [Quick Start](/docs/latest/quickstart/quick-start)      |
+| 2.4.0   | [2.4.0.zip](https://download.nacos.io/nacos-server/nacos-server-2.4.0.1.zip) | [nacos/nacos-server:2.4.0](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=2.4.0.1) | 4bac1a1640284262b41421856a3617cd | [Release Notes](https://github.com/alibaba/nacos/releases/tag/2.4.0.1)      | [Quick Start](/docs/latest/quickstart/quick-start/)      |
 
 ### 1.x
-
-The Nacos 1.x has already stopped functional maintenance, please upgrade to the 2.x as soon as possible.
-
-| Version | Binary Link                                                  | Docker Image                                                 | CheckSum                         | Release Notes                                    | Reference Docs                                   |
+Support for Nacos 1.x has stopped, please upgrade to version 2.x as soon as possible.
+| Version | Binary Package Download                                                | Docker Image                                                 | MD5                         | Release Notes                                     | Reference Documentation                                  |
 | ------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------------------- | ------------------------------------------------ | ------------------------------------------------ |
-| 1.4.7   | [1.4.7.zip](https://download.nacos.io/nacos-server/nacos-server-1.4.7.zip) | [nacos/nacos-server:1.4.7](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=1.4.7) | 8a91f939ee59665d97be031faeac5cf7 | [1.4.7 Release Notes](https://github.com/alibaba/nacos/releases/tag/1.4.7)      | [1.4.7 Quick Start](/docs/v1/quick-start)      |
-
-
- - Please upgrade to the latest version as soon as possible. For version upgrade, please refer to the [upgrade guide](/docs/v2/upgrading/version2-upgrading)
- - For more release history downloads, please refer to [Release History](release-history)
- - Distributed under the [Apache License v2.0](https://www.apache.org/licenses/)
-
-## Snapshot Version
-
-Snapshot is currently under development, so while we are encouraging users to try it and report any issue, it is NOT safe for production use.
-
-| Version | Binary Link | Docker Image | CheckSum | Release Notes | Reference Docs |
+| 1.4.7   | [1.4.7.zip](https://download.nacos.io/nacos-server/nacos-server-1.4.7.zip) | [nacos/nacos-server:1.4.7](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=1.4.7) | 8a91f939ee59665d97be031faeac5cf7 | [Release Notes](https://github.com/alibaba/nacos/releases/tag/1.4.7)      | [Quick Start](/docs/v1/quick-start)      |
+ - Upgrade to the latest released version as much as possible. For version upgrades, refer to the [upgrade guide](/docs/v2/upgrading/version2-upgrading)
+ - For more historical version downloads, refer to the [release history](/download/release-history/)
+ - Distributed under the [Apache License v2.0](https://www.apache.org/licenses/).
+## Snapshot Versions
+Snapshot versions are still in development. We encourage you to try them out and provide feedback, but it is not recommended for production use.
+| Version | Binary Package Download                                                | Docker Image                                                 | MD5                         | Release Notes                                     | Reference Documentation                                  |
 | ---- | ---- | ---- | ---- | ---- | ---- |
-| 2.4.0-BETA | [2.4.0-BETA.zip](https://github.com/alibaba/nacos/releases/download/2.4.0-BETA/nacos-server-2.4.0-BETA.zip) | [nacos/nacos-server:latest](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=latest) | 35a703665870e069dff8a8d3f16cfd8d | [2.4.0-BETA Release Notes](https://github.com/alibaba/nacos/releases/tag/2.4.0-BETA)      | [2.4.0-BETA Quick Start](/docs/user/quickstart/)      |
-| 2.3.0-BETA | [2.3.0-BETA.zip](https://github.com/alibaba/nacos/releases/download/2.3.0-BETA/nacos-server-2.3.0-BETA.zip) | [nacos/nacos-server:latest](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=latest) | d5ec477776dd7896236315352c4e9953 | [2.3.0-BETA Release Notes](https://github.com/alibaba/nacos/releases/tag/2.3.0-BETA)      | [2.3.0-BETA Quick Start](/docs/user/quickstart/)      |
+| 2.4.0-BETA | [2.4.0-BETA.zip](https://github.com/alibaba/nacos/releases/download/2.4.0-BETA/nacos-server-2.4.0-BETA.zip) | Snapshots do not provide images. For images, it is recommended to use the stable version: [nacos/nacos-server:latest](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=latest) | 35a703665870e069dff8a8d3f16cfd8d | [Release Notes](https://github.com/alibaba/nacos/releases/tag/2.4.0-BETA)      | [Quick Start](/docs/user/quickstart/)      |
+| 2.3.0-BETA | [2.3.0-BETA.zip](https://github.com/alibaba/nacos/releases/download/2.3.0-BETA/nacos-server-2.3.0-BETA.zip) | Snapshots do not provide images. For images, it is recommended to use the stable version: [nacos/nacos-server:latest](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=latest) | d5ec477776dd7896236315352c4e9953 | [Release Notes](https://github.com/alibaba/nacos/releases/tag/2.3.0-BETA)      | [Quick Start](/docs/user/quickstart/)      |

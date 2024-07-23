@@ -21,3 +21,7 @@ pnpm-debug.log*
 .DS_Store
 
 *.lock
+
+# IDEs and editors
+.idea/
+

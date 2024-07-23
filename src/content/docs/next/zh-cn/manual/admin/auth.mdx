@@ -100,7 +100,7 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
     通过Admin API，指定或随机生成一个管理员用户`nacos`的密码，当密码指定或生成后，该API将无法再进行调用。
 
     ```powelshell
-    curl -X 'http://$nacos_server_host:$nacos_server_port/v1/auth/users/admin' -d 'password=$your_password'
+    curl -X POST 'http://$nacos_server_host:$nacos_server_port/nacos/v1/auth/users/admin' -d 'password=$your_password'
     ```
 
     > 注意：若输入的`$your_password`为空字符串，或未带有`password`参数，Nacos将会生成随机密码，请保存好生成的随机密码。
