@@ -1,0 +1,120 @@
+---
+title: "OpenAI 国内停服，除了停机迁移，这个方案更平滑"
+description: "OpenAI 国内停服，除了停机迁移，这个方案更平滑"
+date: "2024-07-23"
+category: "article"
+keywords: ["Nacos"]
+authors: "阿里云高级工程师"
+---
+
+OpenAI 国内停服，除了各个大模型厂商提供的迁移方案外，是否有其他更平滑的迁移方案呢？本文以 OpenAI 切换到通义千问为例，介绍开源网关 Higress 的应对方案。优势是：
+
+- 默认按照模型价格和能力进行了合理映射，且支持用户自定义调整配置
+- 可以通过 OpenAI 的统一协议对接多种大模型，屏蔽实现细节，降低接入新大模型的 API 适配成本
+- Higress 可以提供 token 限流插件、内容审核插件，通过网关的工程化能力实现业务收益
+<a name="MY7ym"></a>
+## 实操视频
+[higress-ai.mp4](https://yuque.antfin.com/attachments/lark/0/2024/mp4/299576/1721706742511-4d5c7b2f-c06b-45ec-81eb-c15e8bf1d461.mp4?_lake_card=%7B%22src%22%3A%22https%3A%2F%2Fyuque.antfin.com%2Fattachments%2Flark%2F0%2F2024%2Fmp4%2F299576%2F1721706742511-4d5c7b2f-c06b-45ec-81eb-c15e8bf1d461.mp4%22%2C%22name%22%3A%22higress-ai.mp4%22%2C%22size%22%3A88784074%2C%22ext%22%3A%22mp4%22%2C%22source%22%3A%22%22%2C%22status%22%3A%22done%22%2C%22download%22%3Atrue%2C%22taskId%22%3A%22uf35285b6-6766-4a52-82c7-47d5e34aa28%22%2C%22taskType%22%3A%22transfer%22%2C%22type%22%3A%22video%2Fmp4%22%2C%22mode%22%3A%22title%22%2C%22id%22%3A%22fuBYF%22%2C%22card%22%3A%22file%22%7D)<br />（视频链接：[https://cloud.video.taobao.com/vod/play/Mm1ETWtJV1lTVklhK1UwSEU3SlVrZW5j/cjNYSEhMYXd1ZitLM1FkRk15NlBlbDVKekpVVUJOWHg5UU43RXlRRUxQN25jVElqTzZUTWx1d0dOM05odz09](https://cloud.video.taobao.com/vod/play/Mm1ETWtJV1lTVklhK1UwSEU3SlVrZW5j/cjNYSEhMYXd1ZitLM1FkRk15NlBlbDVKekpVVUJOWHg5UU43RXlRRUxQN25jVElqTzZUTWx1d0dOM05odz09)）
+<a name="XgotM"></a>
+## 步骤介绍
+> 准备工作：需要登陆阿里云[申请通义千问 API Key](https://help.aliyun.com/zh/dashscope/opening-service?spm=a2c4g.11186623.0.0.72c2369dLprd45)
+
+<a name="ew4c2"></a>
+### 第一步：启动 Higress AI 网关
+Higress 有多种部署方式，例如 K8s Helm 部署，或者对接 Nacos 部署等。最简单的方式是通过一个 Docker 命令直接在本地启动：
+```bash
+# 创建一个工作目录
+mkdir higress; cd higress
+# 启动 higress，配置文件会写到工作目录下
+docker run -d --rm --name higress-ai -v ${PWD}:/data \
+        -p 8001:8001 -p 8080:8080 \
+        -e CONFIG_TEMPLATE=ai-proxy -e DEFAULT_AI_SERVICE=qwen \
+        -e DASHSCOPE_API_KEY=这里填你自己的通义千问APIKey \
+        higress-registry.cn-hangzhou.cr.aliyuncs.com/higress/all-in-one:1.4.1
+```
+<a name="RpVeh"></a>
+### 第二步：调整 API 地址
+不用改任何代码逻辑，只需通过`base_url`调整 API 地址为 Higress AI 网关的 API 地址，这里是里本地启动的，所以填：`http://127.0.0.1:8080/v1`<br />例如下面是 openai 流式响应的例子：
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    api_key="your-api-key",
+    base_url="http://127.0.0.1:8080/v1"
+)
+
+# 不需要修改模型，higress 做了等价映射
+stream = client.chat.completions.create(
+    model="gpt-4o",
+    messages=[{"role": "user", "content": "你是谁"}],
+    stream=True,
+)
+
+# 换行打印收到的每个流式响应
+for chunk in stream:
+    if chunk.choices[0].delta.content:
+        print(chunk.choices[0].delta.content)
+```
+测试生效：<br />![higress-qwen.gif](https://intranetproxy.alipay.com/skylark/lark/0/2024/gif/22499/1719385493294-68196bc5-e442-42d2-9757-1ec6d562832b.gif#clientId=u02eca281-8b6f-4&from=drop&id=u645ff861&originHeight=644&originWidth=876&originalType=binary&ratio=1&rotation=0&showTitle=false&size=67549&status=done&style=none&taskId=u515cb675-caeb-4759-848f-a29c2413e9d&title=)
+
+<a name="pfLTG"></a>
+## Higress AI 代理能力介绍
+AI 代理插件目前支持的大模型 API 有：**通义千问，OpenAI/Azure OpenAI，月之暗面，百川智能，零一万物，智谱 AI，阶跃星辰，文心一言，腾讯混元，DeepSeek，Anthropic Claude，Groq，MiniMax，Ollama**<br />可以用类似方式，通过 Higress 将业务对 OpenAI 的依赖快速迁移到其他厂商的大模型。<br />下图以 OpenAI SDK 流式处理为例， Higress 的 AI 代理原理如下，可以纯流式处理多种不同厂商的模型协议：<br />![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2024/png/22499/1719392361143-dcd4c5d6-b9f0-442b-afc7-175482b20b78.png#clientId=u219dd788-f291-4&from=paste&height=500&id=u1d85fb45&originHeight=500&originWidth=570&originalType=binary&ratio=1&rotation=0&showTitle=false&size=164585&status=done&style=none&taskId=u36398831-baeb-465a-adcf-40510fa0af8&title=&width=570)
+<a name="H3VBl"></a>
+## 探索更多 Higress AI 网关能力
+<a name="HjrFu"></a>
+### 自定义模型映射
+Higress 默认将所有 OpenAI 模型按能力和价格做了到通义千问的等价映射：<br />![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2024/png/22499/1719385723442-1806431a-98fa-4700-b9b4-205aea6d3336.png#clientId=u02eca281-8b6f-4&from=paste&height=758&id=u33daf3fc&originHeight=758&originWidth=1829&originalType=binary&ratio=1&rotation=0&showTitle=false&size=823665&status=done&style=none&taskId=u9a774f82-10ab-4438-8230-d50f1eece6d&title=&width=1829)<br />用户也可以进入 Higress 控制台，自定义模型映射
+<a name="xQ22M"></a>
+### 开启通义千问联网搜索能力
+AI 代理插件配置为:
+```yaml
+provider:
+  type: qwen
+  apiTokens:
+  - "你自己的通义千问 API Key"
+  modelMapping:
+  # 映射配置省略
+  ...
+  # 开启联网搜索能力
+  qwenEnableSearch: true
+```
+然后使用 LobeChat 进行测试（这里查看：[LobeChat 对接方式](https://github.com/alibaba/higress/issues/1023)）：<br />![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2024/png/22499/1719386509759-dc19cfeb-9222-4177-9d8f-4c4e84903f29.png#clientId=u02eca281-8b6f-4&from=paste&height=762&id=ub923b6b6&originHeight=762&originWidth=856&originalType=binary&ratio=1&rotation=0&showTitle=false&size=396161&status=done&style=none&taskId=u5f7db87e-474b-4043-b4d8-6efac20cf1c&title=&width=856)
+<a name="ipC2A"></a>
+### 实现最简单的 RAG 
+上传一份文件用于 RAG (详细可以查看这里的[文档](https://help.aliyun.com/zh/dashscope/developer-reference/openai-file-interface?spm=a2c4g.11186623.0.0.4f5e4ad0clKblp)):
+```bash
+curl --location --request POST 'https://dashscope.aliyuncs.com/compatible-mode/v1/files' \
+  --header 'Authorization: Bearer 这里填APIKey' \
+  --form 'file=@" ./doc.md"' \
+  --form 'purpose="file-extract"'
+
+# 返回内容中包含文件id：
+{"id":"file-fe-xxxxxxx","object":"file","bytes":596687,"created_at":1716635947,"filename":"doc.md","purpose":"file-extract","status":"processed"}
+```
+AI 代理插件配置为:
+```yaml
+provider:
+  type: qwen
+  apiTokens:
+  - "你自己的通义千问 API Key"
+  modelMapping:
+  # 映射配置省略
+  ...
+  # 在这里配置上面返回的文件id
+  qwenFileIds:
+  - "file-fe-xxxxxxx"
+```
+导入 Higress 官网文档的文件 id，测试效果：<br />![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2024/png/22499/1719386150679-e08e6f59-7b6c-4b0c-865f-eee60741a570.png#clientId=u02eca281-8b6f-4&from=paste&height=985&id=u7fd4d87d&originHeight=985&originWidth=750&originalType=binary&ratio=1&rotation=0&showTitle=false&size=207537&status=done&style=none&taskId=u7b068c09-4c87-49f6-b1da-25011b9d108&title=&width=750)
+<a name="vZjce"></a>
+### Higress 的更多 AI 能力
+从 2020 年开始，我们通过服务阿里内部，以及云上客户的需求，沉淀了云原生网关 Higress，在开源社区分享代码和知识的同时，通过大量开源用户的使用反馈，得以进一步完善自身能力。<br />今天，**Higress 企业版既是通义千问等阿里云核心 AI 业务的 API 网关，又是云上多家 AGI 厂商的的 API 网关**，我们也很乐于分享在接入这些场景过程中积累的心得体会，并将相关 AI 能力全面开源：<br />![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2024/png/22499/1719386865977-fac1767d-6c28-4900-954c-09b85dc82d95.png#clientId=u02eca281-8b6f-4&from=paste&height=4500&id=u782c7e5f&originHeight=4500&originWidth=8000&originalType=binary&ratio=1&rotation=0&showTitle=false&size=11007747&status=done&style=none&taskId=u31630184-427a-449a-8bec-f0184487b18&title=&width=8000)<br />Higress AI 网关相关能力已经全面开源，可以查看这篇文档：[《Higress 重磅更新：AI 能力全面开源，云原生能力再升级》](https://mp.weixin.qq.com/s/7yaN1wQSQC0JPdUenE53lg)<br />关于 AI 代理插件，以及 Higress 其他 AI 插件的能力介绍和使用方式在 Higress 官网文档均有详细说明，可以访问 [https://higress.cn](https://higress.cn) 查看。<br />如果你有企业级 AI 网关需求，可以点击[查看原文](https://www.aliyun.com/product/aliware/mse?spm=higress-website.topbar.0.0.0)，了解 Higress 企业版，立即拥有通义千问的同款流量网关。
+<a name="ugyFg"></a>
+### 加入 Higress 社区
+欢迎更多小伙伴一起参与到 Higress 社区的建设中，近期的社区活动有：
+
+- [22.5万奖金池｜Higress AI 网关编程挑战赛启动](https://mp.weixin.qq.com/s/HD9Jq-2u_fQNsDWBzDsbcg)
+- [GLCC 开源夏令营的 Higress 三大课题](https://www.gitlink.org.cn/glcc/2024/projects)
+
+了解更多社区动态，可以加入 Higress 微信/钉钉群（群号：_30735012403 _）：<br />![higress-comm.jpg](https://intranetproxy.alipay.com/skylark/lark/0/2024/jpeg/22499/1719387999764-639f6a5d-3241-4706-8198-9b5e875e8faa.jpeg#clientId=u02eca281-8b6f-4&from=drop&id=u63a8b77f&originHeight=405&originWidth=720&originalType=binary&ratio=1&rotation=0&showTitle=false&size=58254&status=done&style=none&taskId=u23872761-8747-46a9-bc35-a679f7f57d4&title=)
+
