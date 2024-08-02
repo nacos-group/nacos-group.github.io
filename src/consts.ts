@@ -10,7 +10,7 @@ export const TOPBAR = {
     "mobileText": "欢迎报名8月2日上海首个AI原生应用架构开源沙龙！",
     "link": "https://summit.aliyun.com/cloudnative2024_developer_shanghai?spm=5176.20960838.0.0.7802305eyqMQf8",
     "target": "_blank",
-    "display": true
+    "display": false
 }
 export const MEDIARESOURCE = [
     {
@@ -156,8 +156,8 @@ export const ACTIVITY_CATEGORY = [
 export const HEADER_ACTIVITY_CARD = [
     {
         "collection": "blog",
-        "slug": "announcement-derby-ops-api",
-        "description": "关于Nacos Derby数据库运维接口相关问题公告",
+        "slug": "activity-preview-opss2024",
+        "description": "Nacos开源之夏2024，贡献社区赢取12000奖金",
         "imageUrl": "https://img.alicdn.com/imgextra/i4/O1CN01bGnAVW1pFeLFnlaQL_!!6000000005331-2-tps-508-370.png"
     },
     {
