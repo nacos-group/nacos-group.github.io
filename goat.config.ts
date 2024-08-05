@@ -134,21 +134,14 @@ const replaceSlugs = async () => {
 		linkFromRouteRegex,
 		`export function slugToPathname(slug: string, id: string): string {
 			// 2.2.x/zh-cn/overview/version-explain.md
-			if (slug.includes('zh-cn')) {
-				let param = slugToParam(slug);
-				const [curVersion,lang, ...rest] = id.split('/');
-				rest[rest.length-1] = rest[rest.length-1].replace(/.(md|mdx)$/, "")
-				param = "docs/" + curVersion + "/" + rest.join("/")
-				return param ? '/' + param + '/' : '/';
-			} else if (slug.includes('en')) {
-				// en/v23/en/upgrading/200-compatibility
-				let param = slugToParam(slug);
-					const [lang,curVersion,repeatLang, ...rest] = id.split('/');
-					rest[rest.length-1] = rest[rest.length-1].replace(/.(md|mdx)$/, "")
-					param = lang +"/docs/" + curVersion + "/" + rest.join("/")
-					return param ? '/' + param + '/' : '/';
+			let param = slugToParam(slug);
+			if (id.startsWith("en/")) {
+				id = id.slice(3)
 			}
-			
+			const [curVersion,lang, ...rest] = id.split('/');
+			rest[rest.length-1] = rest[rest.length-1].replace(/.(md|mdx)$/, "")
+			param =( lang === "en" ? "en/" : "" )+  "docs/" + curVersion + "/" + rest.join("/")
+			return param ? '/' + param + '/' : '/';
 		}\n`
 	)
 
@@ -161,5 +154,5 @@ export default async () => {
 	await replaceNavigation();
 	await replaceIndexAstro();
 	await replace404Astro();
-	await replaceSlugs()
+	await replaceSlugs();
 }
