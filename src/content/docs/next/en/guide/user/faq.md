@@ -72,7 +72,7 @@ Nacos using [Apache 2.0](https://github.com/alibaba/nacos/blob/master/LICENSE).
 ## Nacos operational questions
 <h4 id="2.1">Nacos standalone deployment</h4>
 
-You can refer to the manual Nacos website deployment [quick start](../../quickstart/quick-start.md).
+You can refer to the manual Nacos website deployment [quick start](../../quickstart/quick-start.mdx).
 
 <h4 id="2.2">Nacos standalone deployment using Mysql</h4>
 
@@ -84,7 +84,7 @@ Production environment using Nacos in order to achieve high availability cannot 
 
 <h4 id="2.4">Nacos Docker deployment</h4>
 
-In addition to using compressed package deployment Nacos, Nacos also provides a corresponding Docker image, when Nacos release new versions, Nacos will release the corresponding image version supports Docker deployment.Specific details you can refer to [Nacos Docker](../../quickstart/quick-start-docker.md).
+In addition to using compressed package deployment Nacos, Nacos also provides a corresponding Docker image, when Nacos release new versions, Nacos will release the corresponding image version supports Docker deployment.Specific details you can refer to [Nacos Docker](../../quickstart/quick-start-docker.mdx).
 
 <h4 id="2.5">How to deploy in k8s Nacos</h4>
 

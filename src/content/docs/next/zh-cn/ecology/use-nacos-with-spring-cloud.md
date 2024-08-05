@@ -17,7 +17,7 @@ sidebar:
 
 ## 前提条件
 
-您需要先下载 Nacos 并启动 Nacos server。操作步骤参见 [Nacos 快速入门](../quickstart/quick-start.md)
+您需要先下载 Nacos 并启动 Nacos server。操作步骤参见 [Nacos 快速入门](../quickstart/quick-start.mdx)
 
 ## 启动配置管理
 

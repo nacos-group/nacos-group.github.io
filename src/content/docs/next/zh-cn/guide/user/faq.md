@@ -77,7 +77,7 @@ Nacos使用[Apache 2.0](https://github.com/alibaba/nacos/blob/master/LICENSE)。
 ## Nacos运维问题
 <h4 id="2.1">Nacos如何单机部署</h4>
 
-可以参考Nacos官网部署手册[quick start](../../quickstart/quick-start.md)。
+可以参考Nacos官网部署手册[quick start](../../quickstart/quick-start.mdx)。
 
 <h4 id="2.2">Nacos单机部署如何使用mysql</h4>
 
@@ -89,7 +89,7 @@ Nacos单机模式默认使用内嵌的数据库作为存储引擎，如果想换
 
 <h4 id="2.4">Nacos如何Docker部署</h4>
 
-除了使用压缩包部署Nacos，Nacos也提供了相应的Docker镜像，当Nacos发布新的版本的时候，Nacos会发布对应的镜像版本支持Docker部署。具体详情可以参考[Nacos Docker](../../quickstart/quick-start-docker.md)。
+除了使用压缩包部署Nacos，Nacos也提供了相应的Docker镜像，当Nacos发布新的版本的时候，Nacos会发布对应的镜像版本支持Docker部署。具体详情可以参考[Nacos Docker](../../quickstart/quick-start-docker.mdx)。
 
 <h4 id="2.5">如何在k8s中部署Nacos</h4>
 
