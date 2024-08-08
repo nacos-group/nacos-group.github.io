@@ -73,9 +73,9 @@ if __name__ == '__main__':
 
 在这个简短的Flask应用中，我们首先初始化了Nacos客户端，随后从Nacos中获取配置来动态调整我们的“欢迎信息”，以及将当前的服务实例注册到了Nacos服务端，使得其他服务也能轻易发现并与其通信。
 
-![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2024/png/110097/1722221065398-1ba322fd-7675-40f5-8e81-1e2dd44ad2f4.png#clientId=u43a875ae-b721-4&from=paste&height=216&id=ufceda834&originHeight=216&originWidth=1142&originalType=binary&ratio=1&rotation=0&showTitle=false&size=127761&status=done&style=none&taskId=u4020e3af-d53d-41e4-9ad6-df028eae960&title=&width=1142)
+![image.png](https://img.alicdn.com/imgextra/i1/O1CN01fe3O6J1pvKRnybxQi_!!6000000005422-0-tps-1142-216.jpg)
 
-![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2024/png/110097/1722220028375-ea416978-8d4e-4ef0-86f7-56d5791764e2.png#clientId=u43a875ae-b721-4&from=paste&height=385&id=u2677a592&originHeight=1518&originWidth=2964&originalType=binary&ratio=1&rotation=0&showTitle=false&size=1160910&status=done&style=none&taskId=u41c3964c-a66c-41f2-a05b-b2843c6eb35&title=&width=751)
+![image.png](https://img.alicdn.com/imgextra/i3/O1CN01wW1MA61HWsMhxlrDu_!!6000000000766-0-tps-2964-1518.jpg)
 
 <a name="JKmWL"></a>
 ##### FastAPI篇 —— 模型服务的配置管理
@@ -145,7 +145,7 @@ if __name__ == '__main__':
     uvicorn.run(app, host="0.0.0.0", port=8000)
 ```
 
-![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2024/png/110097/1722321328247-1473fa28-e8a0-42f8-8627-5d710f1f3851.png#clientId=u75a1fe89-1dbe-4&from=paste&height=1444&id=uba091b09&originHeight=1444&originWidth=2938&originalType=binary&ratio=1&rotation=0&showTitle=false&size=1066549&status=done&style=none&taskId=u2de7b2f5-1fad-407c-8037-92577d072e3&title=&width=2938)
+![image.png](https://img.alicdn.com/imgextra/i2/O1CN01dB3jx51vQXW5RoCTt_!!6000000006167-0-tps-2964-1518.jpg)
 
 通过这个例子，你也可以继续加工，尝试把你的AI算法模型包装成服务对外暴露调用，同时一些算法模型参数通过nacos来作为配置化动态管理。
 
@@ -214,7 +214,7 @@ def hello_world():
 
 可以看到在这个例子中，我们把APP_KEY、APP_ID这类参数都放在了Nacos中存储，同时经常需要调整的promot模板利用Nacos的动态配置下发能力来实现运营实时调整更新，非常容易实现类似ABTest的效果。
 
-这里我们模拟了一个电商客户助手的场景，通过Prompt模板的配置下发，来动态调整小助手回复客户的话术，而这一切完全不需要你重新修改或者重新部署模型就可以办到。下面的对比是否有觉得效果更拟人呢？<br />调优前：<br />![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2024/png/110097/1722497976346-f89c07fd-fb18-45ff-939f-d8e0812855ad.png#clientId=u0281a9af-4bab-4&from=paste&height=424&id=ue1827657&originHeight=847&originWidth=1109&originalType=binary&ratio=2&rotation=0&showTitle=false&size=571424&status=done&style=none&taskId=u1336bc88-ab66-4bcb-9a2d-235aa28b648&title=&width=554.5)<br />调优后：<br />![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2024/png/110097/1722498037028-1cc4b33a-d73b-4c2d-abee-19670dd632b0.png#clientId=u0281a9af-4bab-4&from=paste&height=227&id=u6351b0c1&originHeight=453&originWidth=1115&originalType=binary&ratio=2&rotation=0&showTitle=false&size=291361&status=done&style=none&taskId=u55d1ee01-402c-4649-add6-2c38e19dd59&title=&width=557.5)
+这里我们模拟了一个电商客户助手的场景，通过Prompt模板的配置下发，来动态调整小助手回复客户的话术，而这一切完全不需要你重新修改或者重新部署模型就可以办到。下面的对比是否有觉得效果更拟人呢？<br />调优前：<br />![image.png](https://img.alicdn.com/imgextra/i3/O1CN01DfPukT1pW8fBbPUBH_!!6000000005367-0-tps-2964-1518.jpg)
 
 <a name="osdel"></a>
 ### 加入我们：
