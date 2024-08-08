@@ -1,0 +1,226 @@
+---
+title: "Nacos Python SDK 强势来袭，动态管理大模型Prompt！"
+description: "Nacos Python SDK 强势来袭，动态管理大模型Prompt！"
+date: "2024-08-08"
+category: "release"
+keywords: ["Nacos"]
+authors: "阿里云高级工程师"
+---
+
+亲爱的开发者们：<br />我们激动地宣布，Nacos Python SDK——`nacos-sdk-python`1.0.0稳定版 正式发布啦！Nacos从0.8.0版本开始就一直参与Python生态建设，努力作为Python生态中分布式微服务发现和配置管理的解决方案一直往前演进。目前随着AI领域的发展，Nacos社区的Python开发者用户越来越多，因此这次我们迭代了Python的GA稳定版本，对不少历史问题做了修复以及易用性层面的各项兼容优化，帮助大家可以更好的在大模型时代落地自己的业务场景。
+
+<a name="YLD8s"></a>
+### 核心亮点
+全面兼容性：支持Python 2.7、3.6及3.7版本，确保广泛的项目适配性。<br />无缝对接Nacos：兼容Nacos 1.x 以及 Nacos 2.x with http protocol 版本，无论是现有项目升级还是新项目集成，都能平滑过渡。<br />便捷安装：通过pip一键安装，快速上手，命令行输入`pip install nacos-sdk-python`即可开启服务注册、配置管理之旅。<br />简洁API设计：无论是获取配置、监听变更，还是服务注册与发现，API接口设计直观易用，极大降低了学习成本。<br />安全认证：支持用户名密码加密认证模式，通过AK/SK机制确保交互的安全性。<br />灵活配置：丰富的额外选项配置，包括日志轮转配置、自定义超时时间、长轮询间隔、后台心跳保活等，满足不同场景下的定制需求。<br />本地快照与故障转移：自动存储配置快照，即使服务器不可达，也能从本地恢复配置，保障服务连续性。<br />强大的监听与通知机制：轻松添加监听器，实时响应配置变化，确保服务配置的即时更新。<br />详尽API参考：详尽的API文档，涵盖从基础配置获取到高级服务管理的所有操作，助力您高效开发。
+
+<a name="HpelA"></a>
+### 快速开始：
+<a name="bgh2o"></a>
+##### Flask篇 —— 简洁而优雅的配置之旅
+ 第一个例子选Flask的原因是因为它是一个轻量级的 Python Web 框架，简单易用，特别适合快速开发小型应用和原型。在Flask的世界里，保持轻量级是王道，在Nacos社区也经常能看到有用户在做Flask和Nacos的集成，使用nacos-sdk-python，您可以很轻松地搞定Flask的服务注册与发现，以及配置的动态化管理，下面是一个完整的例子：
+```
+# 导入Flask库，用于构建web应用
+from flask import Flask
+
+# 导入NacosClient，用于与Nacos服务器交互，实现配置管理和服务发现功能
+from nacos import NacosClient
+
+# 初始化Flask应用实例
+app = Flask(__name__)
+
+# 设置Nacos服务器地址，请替换为实际的Nacos服务器地址
+SERVER_ADDRESSES = "Your nacos server address"
+
+# 设置Nacos命名空间ID，请替换为实际的命名空间ID
+NAMESPACE = "Your nacos namespace"
+
+# 设置Nacos用户名和密码，用于认证访问Nacos服务器
+USERNAME = 'Your user name'
+PASSWORD = 'Your password'
+
+client = NacosClient(server_addresses=SERVER_ADDRESSES, namespace=NAMESPACE, username=USERNAME, password=PASSWORD,
+                     log_level='INFO')
+
+
+# 定义路由，访问根路径'/'时返回的消息，展示来自Nacos的配置信息
+@app.route('/')
+def hello_world():
+    # 使用flask的config对象获取名为"config"的配置项，展示配置内容
+    return f'Hello, World! Config from Nacos: {app.config.get("config")}'
+
+
+def init():
+    # 服务注册：让Flask应用在启动时自动注册到Nacos，实现服务发现的自动化。heartbeat_interval可以调整后台心跳间隔时间，默认为5秒。
+    client.add_naming_instance(service_name='my-flask-service', ip='localhost', port=5000, heartbeat_interval=5)
+
+    # 设置Nacos中配置数据的数据ID和分组，默认分组为'DEFAULT_GROUP'
+    data_id = 'test'
+    group = 'DEFAULT_GROUP'
+
+    # 从Nacos获取配置，并更新到Flask应用的config对象中，以便在应用中使用这些配置
+    app.config.update(config=client.get_config(data_id=data_id, group=group))
+
+    # 添加配置监听器，当Nacos中的配置发生变化时，自动更新Flask应用的config对象
+    client.add_config_watcher(data_id=data_id, group=group,
+                              cb=lambda cfg: app.config.update(config=cfg['content']))
+
+
+if __name__ == '__main__':
+    init()
+    app.run()
+
+```
+
+在这个简短的Flask应用中，我们首先初始化了Nacos客户端，随后从Nacos中获取配置来动态调整我们的“欢迎信息”，以及将当前的服务实例注册到了Nacos服务端，使得其他服务也能轻易发现并与其通信。
+
+![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2024/png/110097/1722221065398-1ba322fd-7675-40f5-8e81-1e2dd44ad2f4.png#clientId=u43a875ae-b721-4&from=paste&height=216&id=ufceda834&originHeight=216&originWidth=1142&originalType=binary&ratio=1&rotation=0&showTitle=false&size=127761&status=done&style=none&taskId=u4020e3af-d53d-41e4-9ad6-df028eae960&title=&width=1142)
+
+![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2024/png/110097/1722220028375-ea416978-8d4e-4ef0-86f7-56d5791764e2.png#clientId=u43a875ae-b721-4&from=paste&height=385&id=u2677a592&originHeight=1518&originWidth=2964&originalType=binary&ratio=1&rotation=0&showTitle=false&size=1160910&status=done&style=none&taskId=u41c3964c-a66c-41f2-a05b-b2843c6eb35&title=&width=751)
+
+<a name="JKmWL"></a>
+##### FastAPI篇 —— 模型服务的配置管理
+ FastAPI也是一套很优秀的Python Web框架，如果你追求高性能、异步编程和类型安全，FastAPI可能是个更好的选择。他基于Python 3.6+类型提示，利用Pydantic进行数据验证，Starlette和asyncio实现异步操作，使得RESTful API开发既快速又简单。<br />同时我们注意到，AI社区也会基于FastAPI来构建模型服务，经常会碰到以下问题：
+
+- 模型服务如何暴露给其他服务调用，包括类似Java等跨语言服务的调用
+- 模型服务节点的调用负载如何均衡
+- 模型服务的容灾Failover能力如何实现
+- AI模型领域的业务配置如何管理
+
+如果你有以上的困惑，借助nacos-sdk-python的能力实现AI模型服务跟nacos的完美融合，服务注册发现与配置管理也会变得前所未有的简洁高效。我们来看下面的一个简单例子吧：
+```
+# 导入FastAPI库，用于构建API服务
+from fastapi import FastAPI
+from nacos import NacosClient
+
+app = FastAPI()
+
+# 设置Nacos服务器地址，请替换为实际的Nacos服务器地址
+SERVER_ADDRESSES = "Your nacos server address"
+
+# 设置Nacos命名空间ID，请替换为实际的命名空间ID
+NAMESPACE = "Your nacos namespace"
+
+# 设置Nacos用户名和密码，用于认证访问Nacos服务器
+USERNAME = 'Your user name'
+PASSWORD = 'Your password'
+
+client = NacosClient(server_addresses=SERVER_ADDRESSES, namespace=NAMESPACE, username=USERNAME, password=PASSWORD,
+                     log_level='INFO')
+
+
+# 定义一个异步函数，在FastAPI应用启动时执行
+@app.on_event("startup")
+async def startup_event():
+    # 在启动时创建一个任务来初始化配置
+    asyncio.create_task(init())
+
+
+# 通过NacosClient获取配置，并存储在应用的状态(state)中，以便后续使用
+async def load_config(data_id, group):
+    app.state = {'config_data': client.get_config(data_id=data_id, group=group)}
+
+
+# 异步函数，用于初始化应用所需的各种配置和监听器
+async def init():
+    data_id = 'test'
+    group = 'DEFAULT_GROUP'
+    await load_config(data_id, group)
+
+    def on_config_change(cfg):
+        # 当Nacos中的配置发生变化时，更新应用状态中的配置数据
+        app.state = {'config_data': cfg['content']}
+
+    client.add_config_watcher(data_id, group, cb=on_config_change)
+    client.add_naming_instance(service_name='my-flask-service', ip='localhost', port=8000, heartbeat_interval=5)
+
+# 定义一个GET请求的路由，返回简单的欢迎信息及当前从Nacos获取的配置数据
+@app.get("/")
+def hello_world():
+    return f'Hello, World! Config from Nacos: {app.state["config_data"]}'
+
+
+if __name__ == '__main__':
+    import uvicorn
+
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+```
+
+![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2024/png/110097/1722321328247-1473fa28-e8a0-42f8-8627-5d710f1f3851.png#clientId=u75a1fe89-1dbe-4&from=paste&height=1444&id=uba091b09&originHeight=1444&originWidth=2938&originalType=binary&ratio=1&rotation=0&showTitle=false&size=1066549&status=done&style=none&taskId=u2de7b2f5-1fad-407c-8037-92577d072e3&title=&width=2938)
+
+通过这个例子，你也可以继续加工，尝试把你的AI算法模型包装成服务对外暴露调用，同时一些算法模型参数通过nacos来作为配置化动态管理。
+
+<a name="VrZXI"></a>
+##### AI大模型篇 —— AI场景的配置管理加速器
+为什么这里需要把AI大模型配置场景拎出来单独讲，是因为这在AI领域十分重要，因为算法往往需要根据不同的应用场景或性能要求频繁调整配置，以下是一些常见的AI算法动态配置场景，大家还可以继续自由发挥想象空间：
+
+1. **模型版本管理**：在持续迭代和优化模型的过程中，可以通过Nacos动态切换不同版本的模型配置。例如，在A/B测试新旧模型效果时，可以快速调整配置指向新的模型版本，而无需修改代码或重启服务。
+2. **Dynamic Prompt Template**：开发者通常会使用 Prompt Template来与大型模型交互，实际的开发和测试过程中，他们会不断调整模板，以测试与大模型的交互效果。
+3. **参数调整**：AI算法的性能很大程度上依赖于超参数的选择。利用Nacos，可以动态调整学习率、批量大小、正则化参数等，从而在运行时优化模型表现，实现快速迭代调优。
+4. **数据源配置**：AI模型训练和推理可能涉及多个数据源。通过Nacos管理数据源的URL、访问密钥等信息，可以根据需要轻松切换数据源，或者应对数据源的变动，提高系统的灵活性和稳定性。
+5. **特征选择与权重调整**：在复杂模型中，特征的选择及其权重对模型性能至关重要。Nacos可以帮助动态调整哪些特征被启用、特征的预处理方式以及特征的重要性权重，从而快速响应业务需求变化或市场环境变化。
+6. **推理服务资源分配**：对于资源密集型的AI推理任务，可以根据实时负载情况动态调整资源分配策略，比如GPU/CPU资源的分配比例、并发请求处理数限制等，以优化服务性能和成本效率。
+7. **算法策略选择**：在一些应用场景中，可能会部署多种算法策略（如推荐系统中的基于内容的推荐、协同过滤等）。通过Nacos，可以根据用户行为分析或业务需求动态选择最合适的算法策略进行部署。
+8. **安全与隐私配置**：对于敏感应用，模型的使用可能需要遵循严格的安全和隐私政策。通过Nacos，可以动态管理加密算法、数据脱敏规则、访问控制列表等配置，确保AI服务的合规性和安全性
+
+基于动态Promot调整这个case，这次我们来结合阿里云通义百炼实践一下，来看看Nacos可以在其中流程中扮演什么样的角色
+
+```
+# 定义一个名为NacosConfigManager的类，用于管理Nacos配置
+class NacosConfigManager:
+    def __init__(self):
+        # 初始化方法，创建一个空字典用于缓存配置信息
+        self.config_cache = {}
+
+    def get_config(self, data_id, group="DEFAULT_GROUP", need_watch=False):
+        """
+        获取配置，如果缓存中没有则从Nacos获取并缓存。        
+        如果need_watch为True，则为该配置添加监听器以便在配置变化时自动更新。
+        """
+        if data_id not in self.config_cache:
+            config = client.get_config(data_id=data_id, group=group)
+            self.config_cache[data_id] = config
+
+        if need_watch:
+            client.add_config_watcher(data_id, group, cb=self.on_config_change)
+        return self.config_cache[data_id]
+
+    def on_config_change(self, cfg):
+        self.config_cache[cfg['data_id']] = cfg['content']
+
+
+config_manager = NacosConfigManager()
+
+# 初始化异步函数
+async def init():
+    group = 'DEFAULT_GROUP'
+    config_manager.get_config(promot_data_id, group, True)
+    config_manager.get_config(app_id_data_id, group)
+    config_manager.get_config(app_key_id, group)
+
+@app.get("/")
+def hello_world():
+    # 通过百炼Application.call方法来调用模型，传递从Nacos获取的配置参数
+    response = Application.call(app_id=config_manager.get_config(app_id_data_id),
+                                prompt=config_manager.get_config(promot_data_id),
+                                api_key=config_manager.get_config(app_key_id),
+                                )
+    if response.status_code != HTTPStatus.OK:
+        print('request_id=%s, code=%s, message=%s\n' % (response.request_id, response.status_code, response.message))
+    else:
+        print('request_id=%s\n output=%s\n usage=%s\n' % (response.request_id, response.output, response.usage))
+
+    return response.output.text
+```
+
+可以看到在这个例子中，我们把APP_KEY、APP_ID这类参数都放在了Nacos中存储，同时经常需要调整的promot模板利用Nacos的动态配置下发能力来实现运营实时调整更新，非常容易实现类似ABTest的效果。
+
+这里我们模拟了一个电商客户助手的场景，通过Prompt模板的配置下发，来动态调整小助手回复客户的话术，而这一切完全不需要你重新修改或者重新部署模型就可以办到。下面的对比是否有觉得效果更拟人呢？<br />调优前：<br />![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2024/png/110097/1722497976346-f89c07fd-fb18-45ff-939f-d8e0812855ad.png#clientId=u0281a9af-4bab-4&from=paste&height=424&id=ue1827657&originHeight=847&originWidth=1109&originalType=binary&ratio=2&rotation=0&showTitle=false&size=571424&status=done&style=none&taskId=u1336bc88-ab66-4bcb-9a2d-235aa28b648&title=&width=554.5)<br />调优后：<br />![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2024/png/110097/1722498037028-1cc4b33a-d73b-4c2d-abee-19670dd632b0.png#clientId=u0281a9af-4bab-4&from=paste&height=227&id=u6351b0c1&originHeight=453&originWidth=1115&originalType=binary&ratio=2&rotation=0&showTitle=false&size=291361&status=done&style=none&taskId=u55d1ee01-402c-4649-add6-2c38e19dd59&title=&width=557.5)
+
+<a name="osdel"></a>
+### 加入我们：
+最后，我们诚邀每一位Python开发者体验`nacos-sdk-python`，并期待您的宝贵反馈。无论是功能建议还是遇到的问题，都请不吝告知。让我们携手推动Python微服务生态的发展，共创更加高效、稳定的开发环境。<br />立即行动吧，探索Nacos带来的无限可能，让您的微服务架构更加健壮、灵活！
+
+加个预告：我们的Nacos Python SDK适配Nacos 2.x Grpc模式工作也在进行中，不久的将来就能跟大家正式亮相！
+
+**GitHub仓库:**[访问nacos-sdk-python](https://github.com/nacos-group/nacos-sdk-python)，查看文档、报告问题或贡献代码，共同构建更好的Nacos Python社区。<br />[https://github.com/nacos-group/nacos-sdk-python](https://github.com/nacos-group/nacos-sdk-python)
+
