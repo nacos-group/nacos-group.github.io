@@ -17,7 +17,7 @@ Nacos属于内网核心组件**不建议暴露公网**，在暴露公网情况�
 
 为此我们建议您的集群按照下属步骤进行及检查和开启鉴权，修改默认用户名密码，避免风险；我们根据通用场景列出了开启鉴权和修改默认账密方式步骤，请按照不同业务场景进行选择性操作，操作项比较多，建议在业务低峰期进行操作，具体操作时请做好检查和灰度，避免影响业务运行。
 
-如果有需要也可以考虑迁移至[阿里云MSE提供的Nacos云服务](https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0)，可以更简单、方便的解决安全风险，不仅支持企业级鉴权能力，还支持集成配置信息加解密能力、数据传输链路TLS加密，支持 [平滑迁移](https://help.aliyun.com/zh/mse/user-guide/migrate-applications-from-self-managed-instances-to-mse-microservices-registry?spm=a2c4g.11186623.0.0.76e17b26TS1Abr) ，欢迎[免费试用](https://free.aliyun.com/?searchKey=nacos&spm=nacos.cloud.topbar.0.0.0) 。
+如果有需要也可以考虑迁移至[阿里云MSE提供的Nacos云服务](https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0)，可以更简单、方便的解决安全风险，不仅支持企业级鉴权能力，还支持集成配置信息加解密能力、数据传输链路TLS加密，支持 [平滑迁移](https://help.aliyun.com/zh/mse/user-guide/migrate-applications-from-self-managed-instances-to-mse-microservices-registry) ，欢迎[免费试用](https://free.aliyun.com/?searchKey=nacos&spm=nacos.cloud.topbar.0.0.0) 。
 
 ## 风险项检查和修复的步骤
 

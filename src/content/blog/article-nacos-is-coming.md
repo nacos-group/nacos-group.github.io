@@ -149,7 +149,7 @@ Nacos初步计划，在第一年就吸收至少超过5名来自其它公司的PM
 ## References
 
 * [阿里巴巴为什么不用 ZooKeeper 做服务发现？](https://yq.aliyun.com/articles/601745)
-* [现代应用架构中的配置管理面临的挑战和应对之道](https://yq.aliyun.com/articles/226238?spm=5176.163362.847322.3.5a8925397in790)
+* [现代应用架构中的配置管理面临的挑战和应对之道](https://yq.aliyun.com/articles/226238)
 * [章文嵩博士和他背后的负载均衡帝国](http://jm.taobao.org/2016/06/02/zhangwensong-and-load-balance/)
 * [VIPServer：阿里智能地址映射及环境管理系统详解](https://blog.csdn.net/heyc861221/article/details/80126013)
 

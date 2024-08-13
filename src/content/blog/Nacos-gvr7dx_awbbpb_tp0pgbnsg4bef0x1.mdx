@@ -19,7 +19,7 @@ OpenAI 国内停服，除了各个大模型厂商提供的迁移方案外，是�
 </video>
 <a name="XgotM"></a>
 ## 步骤介绍
-> 准备工作：需要登陆阿里云[申请通义千问 API Key](https://help.aliyun.com/zh/dashscope/opening-service?spm=a2c4g.11186623.0.0.72c2369dLprd45)
+> 准备工作：需要登陆阿里云[申请通义千问 API Key](https://help.aliyun.com/zh/dashscope/opening-service)
 
 <a name="ew4c2"></a>
 ### 第一步：启动 Higress AI 网关
@@ -84,7 +84,7 @@ provider:
 然后使用 LobeChat 进行测试（这里查看：[LobeChat 对接方式](https://github.com/alibaba/higress/issues/1023)）：<br />![image.png](https://intranetproxy.alipay.com/skylark/lark/0/2024/png/22499/1719386509759-dc19cfeb-9222-4177-9d8f-4c4e84903f29.png#clientId=u02eca281-8b6f-4&from=paste&height=762&id=ub923b6b6&originHeight=762&originWidth=856&originalType=binary&ratio=1&rotation=0&showTitle=false&size=396161&status=done&style=none&taskId=u5f7db87e-474b-4043-b4d8-6efac20cf1c&title=&width=856)
 <a name="ipC2A"></a>
 ### 实现最简单的 RAG 
-上传一份文件用于 RAG (详细可以查看这里的[文档](https://help.aliyun.com/zh/dashscope/developer-reference/openai-file-interface?spm=a2c4g.11186623.0.0.4f5e4ad0clKblp)):
+上传一份文件用于 RAG (详细可以查看这里的[文档](https://help.aliyun.com/zh/dashscope/developer-reference/openai-file-interface)):
 ```bash
 curl --location --request POST 'https://dashscope.aliyuncs.com/compatible-mode/v1/files' \
   --header 'Authorization: Bearer 这里填APIKey' \
