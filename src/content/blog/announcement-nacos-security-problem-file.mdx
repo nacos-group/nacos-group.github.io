@@ -1,0 +1,37 @@
+---
+title: 关于近期Nacos的任意文件读写漏洞说明及解决办法
+keywords: [文件读写, 漏洞]
+description: 关于近期Nacos的任意文件读写漏洞说明及解决办法
+date: "2024-08-15"
+category: announcement
+---
+
+# 关于近期Nacos的任意文件读写漏洞说明及解决办法
+
+近期Nacos社区收到关于Jraft端口（默认值7848）任意文件读写的漏洞，可通过此漏洞进行Nacos Server所在节点的文件读写。社区排查原因是部分Jraft请求磁盘操作时，未限制文件路径导致的问题。
+
+社区在`2.4.1`和`1.4.8`版本中已经修复该漏洞，可以在官网下载页面进行下载，请旧版本用户尽快升级新版本，解决此安全风险。同时新部署的环境请使用最新版本进行部署。
+
+:::note
+
+该Jraft端口是服务端之间通信端口，非跟客户端通信端口，一般不应该对外暴露，该漏洞风险跟暴露范围相关，也建议按照最佳实践最小化暴露端口范围，最大程度避免风险
+
+对于短期内无法升级的用户，可以通过禁止该端口来自Nacos集群外的请求达到止血目的（如部署时已进行限制或未暴露，则风险可控）。
+
+:::
+
+![deployment](/img/blog/announcement/security-problem-file/file-security-deploy.svg)
+
+十分抱歉给广大Nacos用户造成了困扰和问题。
+
+## 下载地址&升级指南
+
+[download page](https://nacos.io/download/nacos-server/).
+
+[upgrade guide](https://nacos.io/docs/latest/manual/admin/upgrading/?source=news%2F)
+
+# 关于安全漏洞的报告
+
+由于安全漏洞的issue比较特殊，希望社区的安全工程师能够通过[ASRC（Alibaba Security Response Center阿里安全响应中心）]( https://security.alibaba.com) 告知漏洞。
+
+

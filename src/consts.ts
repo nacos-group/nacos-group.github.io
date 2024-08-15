@@ -156,8 +156,8 @@ export const ACTIVITY_CATEGORY = [
 export const HEADER_ACTIVITY_CARD = [
     {
         "collection": "blog",
-        "slug": "activity-preview-opss2024",
-        "description": "Nacos开源之夏2024，贡献社区赢取12000奖金",
+        "slug": "announcement-nacos-security-problem-file",
+        "description": "关于近期Nacos的任意文件读写漏洞说明及解决办法",
         "imageUrl": "https://img.alicdn.com/imgextra/i4/O1CN01bGnAVW1pFeLFnlaQL_!!6000000005331-2-tps-508-370.png"
     },
     {
