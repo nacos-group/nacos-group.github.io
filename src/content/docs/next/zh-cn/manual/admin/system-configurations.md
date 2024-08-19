@@ -134,6 +134,7 @@ Nacos从1.3版本开始使用HikariCP连接池，但在1.4.1版本前，连接�
 |nacos.config.search.max_thread|根据配置内容查找配置功能的最大线程数，最大并发数，最大不可超过16| 0～16 | 2     | 
 |nacos.config.search.wait_timeout|根据配置内容查找配置功能的等待超时时间，超过等待时间的查找任务会直接失败丢弃，单位毫秒| 正整数 | 8000  | 
 |nacos.config.derby.ops.enabled|当使用derby数据库作为存储时，是否开启derby的相关运维接口| true/false | false |
+|nacos.persistence.sql.derby.limit.enabled|当使用derby数据库作为存储时,限制derby数据库可执行的SQL范围为DML和部分DDL，从`2.4.1`版本开始支持| true/false | true |
 
 ### 1.6. CMDB模块
 

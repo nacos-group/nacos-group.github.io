@@ -82,7 +82,7 @@ Make sure each .md starts with the following texts:
 ---
 title: title
 keywords: [keywords1,keywords2,keywords3]
-description: some description
+description: some description(less than 160 words)
 sidebar:
     order: Article table of contents order(optional)
 ---
