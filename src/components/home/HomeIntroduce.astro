@@ -19,14 +19,12 @@ const { stargazers_count=0, forks_count=0 }:StarAndForkT = await sendFetch("http
   >
     <div class="top-section flex flex-col relative">
       <HomeBackground />
-      <div class="introduce_about pt-6 pb-4 text-gray-08 text-xs mt-[2.375rem]">
+      <h1 class="font-light pt-6 pb-4 text-gray-08 text-xs mt-[2.375rem]">
         {t("home.introduce.about")}
-      </div>
-      <div
-        class=`title leading-[5rem] text-gray-03 mb-8 ${ifzh ? 'text-[3.75rem]' : 'text-[4rem]'}`
-      >
+      </h1>
+      <p class=`title leading-[5rem] text-gray-03 mb-8 ${ifzh ? 'text-[3.75rem]' : 'text-[4rem]'}`>
         {t("home.introduce.title")}
-      </div>
+      </p>
       <StarAndForkV2 client:load stargazers_count={stargazers_count} forks_count={forks_count} />
       <div class="notes mt-16 text-gray-07 text-xs flex justify-between">
         <div>
@@ -70,11 +68,9 @@ const { stargazers_count=0, forks_count=0 }:StarAndForkT = await sendFetch("http
           <div>{t("home.introduce.nacos.define")}</div>
           <div class="mt-4">{t("home.introduce.nacos.aim")}</div>
         </div>
-        <div
-          class="text-gray-02 text-xs tracking-[0.15em] absolute bottom-6 left-6"
-        >
+        <h1 class="font-light text-gray-02 text-xs tracking-[0.15em] absolute bottom-6 left-6">
           {t("home.introduce.about")}
-        </div>
+        </h1>
       </div>
 
       <div class="log relative rounded-2xl">

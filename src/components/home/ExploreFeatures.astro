@@ -6,49 +6,51 @@ const t = useTranslations(Astro);
 <span class="explore-feature-wrapper">
   <explore-features class="explore-features block bg-gary-02 p-10">
     <div class="top-title w-full flex flex-col items-center mb-20 mt-16">
-      <span class="text-gray-10 text-xs mb-6">{t("home.features.about")}</span>
-      <span class="title text-gray-14 text-4xl font-medium"
-        >{t("home.features.title")}</span
-      >
+      <h2 class="font-light text-gray-10 text-xs mb-6">
+        {t("home.features.about")}
+      </h2>
+      <b class="title text-gray-14 text-4xl font-medium">
+        {t("home.features.title")}
+      </b>
     </div>
 
     <div class="bottom-features w-full">
-      <div class="w-full flex flex-wrap justify-center">
-        <div
+      <ul class="p-0 w-full flex flex-wrap justify-center">
+        <li
           class="dynamic relative item flex flex-col items-center cursor-pointer bg-gray-03 rounded-3xl p-6"
         >
-          <div class="w-full title text-gray-15 text-2xl">
+          <p class="w-full title text-gray-15 text-2xl">
             {t("home.features.1.summary")}
-          </div>
+          </p>
           <img class="mt-6" src="/features1.svg" alt="" />
           <div class="hover-title text-gray-08 text-sm mt-10">
-            <div class="hover-explain-one">
+            <p class="hover-explain-one">
               {t("home.features.1.explain.one")}
-            </div>
-            <div class="hover-explain">
+            </p>
+            <p class="hover-explain">
               {t("home.features.1.explain")}
-            </div>
+            </p>
           </div>
-        </div>
+        </li>
 
-        <div class="transfrom-split w-4"></div>
-        <div
+        <li class="transfrom-split w-4"></li>
+        <li
           class="discovery relative item flex flex-col items-center cursor-pointer bg-blue-08 rounded-3xl p-6"
         >
-          <div class="w-full title text-blue-01 text-2xl">
+          <p class="w-full title text-blue-01 text-2xl">
             {t("home.features.2.summary")}
-          </div>
+          </p>
           <img class="mt-4" src="/features2.svg" alt="" />
           <div class="hover-title text-blue-05 text-sm mt-10">
-            <div class="hover-explain-one">
+            <p class="hover-explain-one">
               {t("home.features.2.explain.one")}
-            </div>
-            <div class="hover-explain">
+            </p>
+            <p class="hover-explain">
               {t("home.features.2.explain")}
-            </div>
+            </p>
           </div>
-        </div>
-      </div>
+        </li>
+      </ul>
 
       <div class="flex justify-center mt-4">
         <div
