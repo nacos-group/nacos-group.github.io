@@ -6,12 +6,12 @@ const t = useTranslations(Astro);
 
 <div class="overview-image-wrapper">
     <div class="top-title w-full flex flex-col items-center mb-[10px] pt-16">
-        <span class="text-gray-10 text-xs mb-6"
-            >{t("home.overviewcard.about")}</span
-        >
-        <span class="title text-gray-14 text-4xl font-medium"
-            >{t("home.overviewcard.title")}</span
-        >
+        <h2 class="font-light text-gray-10 text-xs mb-6">
+            {t("home.overviewcard.about")}
+        </h2>
+        <b class="title text-gray-14 text-4xl font-medium">
+            {t("home.overviewcard.title")}
+        </b>
     </div>
     <OverviewImage
         client:load

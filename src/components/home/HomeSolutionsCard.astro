@@ -73,19 +73,23 @@ const solutionList = [
                   class="solutions-card overflow-hidden flex flex-col justify-between cursor-pointer rounded-2xl mx-2"
                 >
                   <div class="mx-16 ">
-                    <div class="main-title text-xs text-blue-03 mt-[1.25rem] tracking-[0.15em] text-center opacity-0 tracking-wider">
+                    <h2 class="font-light main-title text-xs text-blue-03 mt-[1.25rem] tracking-[0.15em] text-center opacity-0 tracking-wider">
                       {t("home.solutions.about")}
-                    </div>
-                    <div class="item-title text-blue-01 text-[2.5rem] leading-[3rem] mt-[3.125rem] opacity-0 mb-7">
+                    </h2>
+                    <h3 class="font-light item-title text-blue-01 text-[2.5rem] leading-[3rem] mt-[3.125rem] opacity-0 mb-7">
                       {item.title}
-                    </div>
-                    {item.keyword.map((it) => {
-                      return (
-                        <span class="item-keyword opacity-0 border border-blue-04 rounded-[2.25rem] h-8 px-6 py-2 text-xs text-blue-02 mr-3 inline-block mb-4">
-                          {it}
-                        </span>
-                      );
-                    })}
+                    </h3>
+                    <ul class="p-0">
+                      {item.keyword.map((it) => {
+                        return (
+                          <li class="list-none inline-block">
+                            <span class="item-keyword opacity-0 border border-blue-04 rounded-[2.25rem] h-8 px-6 py-2 text-xs text-blue-02 mr-3 inline-block mb-4">
+                              {it}
+                            </span>
+                          </li>
+                        );
+                      })}
+                    </ul>
                   </div>
                   <div class="button opacity-0 mx-auto mb-[3.75rem]">
                     <Button size="large" class="rounded-3xl" href={src}>
