@@ -499,7 +499,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/list'
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/list'
+curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/self/health'
 ```
 
 * 返回示例
