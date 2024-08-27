@@ -8,16 +8,17 @@ const t = useTranslations(Astro);
 const { stargazers_count=0, forks_count=0 }:StarAndForkT = await sendFetch("https://api.github.com/repos/alibaba/nacos");
 ---
 
+<earth-background>
 <div class="earth-background w-full h-[45rem]">
     <div class="relative w-full earth-background-cover">
         <div class="absolute top-[10rem] pt-[4rem] w-full text-center earth-background-cover-pre">
             <img
-                class="h-[50px]"
-                src="https://img.alicdn.com/imgextra/i4/O1CN01rW3vAB1FDWKSOiFf0_!!6000000000453-2-tps-204-40.png"
+                class="h-[50px] earth-background-logo"
+                src="https://img.alicdn.com/imgextra/i3/O1CN01ZvHnbg29VwowXGiKM_!!6000000008074-2-tps-8001-1562.png"
                 alt="nacos-log"
             />
 
-            <p class="earth-background-title text-lg text-center text-gray-01 mt-[2rem] leading-[1.5rem] px-2">
+            <p class="earth-background-title text-center text-gray-01 mt-[2rem] leading-[1.5rem] px-2 text-[23px]">
                 {t('home.introduce.title')}
             </p>
 
@@ -56,9 +57,34 @@ const { stargazers_count=0, forks_count=0 }:StarAndForkT = await sendFetch("http
         <div class="absolute w-full earth-background-cover-img"></div>
     </div>
 </div>
+</earth-background>
+
+<script>
+  class EarthBackground extends HTMLElement {
+    constructor() {
+        super();
+        const enReg = /^(\/en).+/;
+        const titleElement = document.querySelector('.earth-background-title');
+        
+        if (enReg.test(window?.location?.pathname)) {
+            if(titleElement) {
+                titleElement.classList.remove("text-[23px]");
+                titleElement.classList.add("text-lg");
+            };
+        } else {
+            if(titleElement) {
+                titleElement.classList.remove("text-lg");
+                titleElement.classList.add("text-[23px]");
+            };
+        };
+    }
+  }
+  customElements.define('earth-background', EarthBackground);
+</script>
 
 <style is:global>
     .earth-background {
+        user-select: none;
         min-height: calc(100vh - 4rem);
         transition: all 2s;
         background: url('https://img.alicdn.com/imgextra/i1/O1CN01bK8pUi1qbStG6nCiT_!!6000000005514-0-tps-5760-2724.jpg') no-repeat;
@@ -79,19 +105,49 @@ const { stargazers_count=0, forks_count=0 }:StarAndForkT = await sendFetch("http
             opacity: 0;
             z-index: 0;
         }
-
         .earth-background-cover-pre {
             z-index: 1;
         }
         .earth-background-cover-pre:hover+.earth-background-cover-img{
             opacity: 1;
         }
-
+        .earth-background-logo {
+            user-select: none;
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -ms-user-drag: none;
+        }
         .earth-background-title {
             opacity: 0.7;
             font-family: Roboto;
             font-weight: normal;
             letter-spacing: 0em;
+        }
+    }
+
+    @media (min-height: 40rem) and (max-height: 50rem) {
+        .earth-background-cover-pre {
+            top: 8rem!important;
+        }
+        .earth-background-cover{
+            min-height: calc(100vh - 4rem);
+            transition: all 2s;
+            background: url('https://img.alicdn.com/imgextra/i1/O1CN01bK8pUi1qbStG6nCiT_!!6000000005514-0-tps-5760-2724.jpg') no-repeat;
+            background-size: auto calc(100vh - 4rem)!important;
+            background-position: -10rem 0!important;
+            
+        }
+        .earth-background-cover-img {
+            top: 0;
+            left: 0;
+            min-height: calc(100vh - 4rem);
+            transition: all 2s;
+            background: url('https://img.alicdn.com/imgextra/i2/O1CN01RFd3Zh263940RBbkw_!!6000000007605-0-tps-5760-2724.jpg') no-repeat;
+            background-size: auto calc(100vh - 4rem)!important;
+            background-position: -10rem 0!important;
+            opacity: 0;
+            z-index: 0;
         }
     }
 
@@ -112,7 +168,7 @@ const { stargazers_count=0, forks_count=0 }:StarAndForkT = await sendFetch("http
             min-height: calc(100vh - 4rem);
             transition: all 2s;
             background: url('https://img.alicdn.com/imgextra/i1/O1CN01bK8pUi1qbStG6nCiT_!!6000000005514-0-tps-5760-2724.jpg') no-repeat;
-            background-size: cover;
+            background-size: cover!important;
             background-position: -15rem -5rem!important;
             
         }
@@ -122,7 +178,7 @@ const { stargazers_count=0, forks_count=0 }:StarAndForkT = await sendFetch("http
             min-height: calc(100vh - 4rem);
             transition: all 2s;
             background: url('https://img.alicdn.com/imgextra/i2/O1CN01RFd3Zh263940RBbkw_!!6000000007605-0-tps-5760-2724.jpg') no-repeat;
-            background-size: cover;
+            background-size: cover!important;
             background-position: -15rem -5rem!important;
             opacity: 0;
             z-index: 0;
