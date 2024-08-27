@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-import HomeIntroduce from '@components/home/HomeIntroduce.astro';
+// import HomeIntroduce from '@components/home/HomeIntroduce.astro';
+import EarthBackground from '@components/home/EarthBackground.astro';
 import ChooseReason from '@components/home/ChooseReason.astro';
 import NacosEBook from '@components/home/NacosEBook.astro';
 import ExploreFeatures from '@components/home/ExploreFeatures.astro';
 import UseCompanies from '@components/home/UseCompanies.astro';
+import NewUseCompanies from '@components/home/NewUseCompanies.astro';
 import Contributors from '@components/home/Contributors.astro';
 import HomeSolutionsCard from '@components/home/HomeSolutionsCard.astro';
 import HomeFooter from '@components/common/Footer.astro';
@@ -19,11 +21,13 @@ const t = useTranslations(Astro);
   description={t('home.description')}
 >
   <home-body>
-    <HomeIntroduce />
+    <EarthBackground />
+    <NewUseCompanies />
+    <!-- <HomeIntroduce /> -->
     <ChooseReason />
     <NacosEBook />
     <ExploreFeatures />
-    <UseCompanies />
+    <!-- <UseCompanies /> -->
     <OverviewImage />
     <HomeCardPlayer/>
     <Contributors />
