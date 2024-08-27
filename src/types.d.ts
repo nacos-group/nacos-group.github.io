@@ -14,4 +14,5 @@ export interface Post {
 export interface StarAndForkT {
   stargazers_count?: number;
   forks_count?: number;
+  forkText?: string;
 };

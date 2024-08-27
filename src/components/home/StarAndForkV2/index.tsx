@@ -51,7 +51,7 @@ const StarAndForkV2 = (props:StarAndForkT) =>{
 				<Start />
 				{/* <Fork />  */}
 				
-				<span class="ml-2">快速开始</span>
+				<span class="ml-2">{props.forkText || "快速开始"}</span>
 			</Button>
         </star-and-fork>
 	);
