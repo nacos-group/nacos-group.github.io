@@ -128,7 +128,7 @@ const { stargazers_count=0, forks_count=0 }:StarAndForkT = await sendFetch("http
 
     @media (min-height: 40rem) and (max-height: 50rem) {
         .earth-background-cover-pre {
-            top: 12rem!important;
+            top: 10rem!important;
         }
         .earth-background-cover{
             min-height: calc(100vh - 4rem);
@@ -164,6 +164,9 @@ const { stargazers_count=0, forks_count=0 }:StarAndForkT = await sendFetch("http
     }
 
     @media (max-width: 50rem) {
+        .earth-background-cover-pre {
+            top: 10rem!important;
+        }
         .earth-background-cover{
             min-height: calc(100vh - 4rem);
             transition: all 2s;
@@ -182,6 +185,16 @@ const { stargazers_count=0, forks_count=0 }:StarAndForkT = await sendFetch("http
             background-position: -15rem -5rem!important;
             opacity: 0;
             z-index: 0;
+        }
+    }
+    @media (max-width: 50rem) and (max-height: 50rem) {
+        .earth-background-cover-pre {
+            top: 6rem!important;
+        }
+    }
+    @media (max-width: 50rem) and (max-height: 40rem) {
+        .earth-background-cover-pre {
+            top: 4rem!important;
         }
     }
 </style>
