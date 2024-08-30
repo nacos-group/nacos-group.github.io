@@ -6,6 +6,7 @@ const t = useTranslations(Astro);
 
 ---
 
+{MEDIARESOURCE&&MEDIARESOURCE.length?
 <card-player class="card-player block bg-gray-02 p-10">
   <div class="top-title w-full flex flex-col items-center mb-20 mt-16">
     <h2 class="font-light text-gray-10 text-xs mb-6">{t('home.card.player.voice')}</h2>
@@ -90,6 +91,7 @@ const t = useTranslations(Astro);
     }
   </div>
 </card-player>
+:null}
 
 <script>
   class HomeCardPlayer extends HTMLElement {
