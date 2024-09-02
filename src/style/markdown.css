@@ -135,3 +135,6 @@
 .sl-markdown-content h2{
 	line-height: 3.5rem;
 }
+.sl-markdown-table > table {
+	text-align: center;
+}
