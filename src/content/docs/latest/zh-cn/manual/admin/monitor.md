@@ -14,7 +14,7 @@ Nacos 支持通过暴露metrics数据接入第三方监控系统监控Nacos运�
 
 ### 1.1. 开启Nacos集群metrics数据暴露
 
-按照[部署文档](./deployment/deployment-overview.md)搭建好Nacos集群后，需要在Nacos集群的每个节点上修改如下参数：
+按照[部署文档](./deployment/deployment-overview.mdx)搭建好Nacos集群后，需要在Nacos集群的每个节点上修改如下参数：
 
 `application.properties`文件，暴露metrics数据
 

@@ -2,6 +2,8 @@
 title: Java SDK Properties
 keywords: [ Java,SDK,Properties ]
 description: This document introduces the list of configuration parameters currently supported by the Nacos Java SDK (nacos-client), and provides a brief explanation of the principles behind how the Nacos Java SDK reads these configuration parameters.
+sidebar:
+  order: 2
 ---
 
 # Java SDK 配置参数

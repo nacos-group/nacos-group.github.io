@@ -25,7 +25,7 @@ Maven 坐标
 ```xml
     <properties>
         <!-- 2.1.2版本以上支持纯净版客户端 -->
-        <nacos.version>2.4.0</nacos.version>
+        <nacos.version>2.4.2</nacos.version>
     </properties>
 
     <dependencies>

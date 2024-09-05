@@ -12,7 +12,7 @@ Nacos as Dubbo ecosystems important registry implementation, including [`dubbo-r
 
 ## Preparatory work
 
-When you put [`dubbo-registry-nacos`](https://github.com/apache/dubbo/tree/master/dubbo-registry/dubbo-registry-nacos) integrated into your dubbo project before, please make sure the background nacos service has started. If you are still not familiar with the basic use of Nacos, reference [Quick Start for Nacos](../quickstart/quick-start.md).
+When you put [`dubbo-registry-nacos`](https://github.com/apache/dubbo/tree/master/dubbo-registry/dubbo-registry-nacos) integrated into your dubbo project before, please make sure the background nacos service has started. If you are still not familiar with the basic use of Nacos, reference [Quick Start for Nacos](../quickstart/quick-start.mdx).
 
 ## Quick Start
 

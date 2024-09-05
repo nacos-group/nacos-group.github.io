@@ -65,7 +65,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/loader/current'
       "connectType": "GRPC",
       "clientIp": "127.0.0.1",
       "localPort": 9849,
-      "version": "Nacos-Java-Client:v2.4.0",
+      "version": "Nacos-Java-Client:v2.4.2",
       "connectionId": "1709273546779_127.0.0.1_35042",
       "createTime": "2024-03-01T14:12:26.800+08:00",
       "lastActiveTime": 1710754816373,
@@ -331,7 +331,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/self'
       },
       "raftPort": "7848",
       "readyToUpgrade": true,
-      "version": "2.4.0"
+      "version": "2.4.2"
     },
     "address": "nacos-node-0:8848",
     "failAccessCnt": 0,
@@ -423,7 +423,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/list'
       },
       "raftPort": "7848",
       "readyToUpgrade": true,
-      "version": "2.4.0"
+      "version": "2.4.2"
     },
     "address": "nacos-node-0:8848",
     "failAccessCnt": 0,

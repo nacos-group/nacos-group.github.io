@@ -73,7 +73,7 @@ Nacos 的关键特性包括:
 
 * [Spring Cloud](./ecology/use-nacos-with-spring-cloud.md)
 * [Apache Dubbo and Dubbo Mesh](./ecology/use-nacos-with-dubbo.md)
-* [Kubernetes and CNCF](./quickstart/quick-start-kubernetes.md)
+* [Kubernetes and CNCF](./quickstart/quick-start-kubernetes.mdx)
 
 使用 Nacos 简化服务发现、配置管理、服务治理及管理的解决方案，让微服务的发现、管理、共享、组合更加容易。
 
@@ -81,14 +81,14 @@ Nacos 的关键特性包括:
 
 [Nacos与Spring Cloud一起使用](./ecology/use-nacos-with-spring-cloud.md)
 
-[Nacos与Kubernetes一起使用](./quickstart/quick-start-kubernetes.md)
+[Nacos与Kubernetes一起使用](./quickstart/quick-start-kubernetes.mdx)
 
 [Nacos与Dubbo一起使用](./ecology/use-nacos-with-dubbo.md)
 
 
 ## 下一步
 
-继续阅读 [快速开始](./quickstart/quick-start.md) 以快速上手 Nacos。
+继续阅读 [快速开始](./quickstart/quick-start.mdx) 以快速上手 Nacos。
 
 
 

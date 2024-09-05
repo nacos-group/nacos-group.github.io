@@ -79,7 +79,7 @@ As the figure above shows, Nacos seamlessly supports open source ecologies inclu
 
 * [Spring Cloud](./ecology/use-nacos-with-spring-cloud.md)
 * [Apache Dubbo and Dubbo Mesh](./ecology/use-nacos-with-dubbo.md)
-* [Kubernetes and CNCF](./quickstart/quick-start-kubernetes.md)
+* [Kubernetes and CNCF](./quickstart/quick-start-kubernetes.mdx)
 
 Use Nacos to simplify your solutions in service discovery, configuration management, and service governance and management. With Nacos, microservices management in open source system is easy.
 
@@ -87,10 +87,10 @@ For more information about how to use Nacos with other open source projects, see
 
 [Use Nacos with Spring Cloud](./ecology/use-nacos-with-spring-cloud.md)
 
-[Use Nacos with Kubernetes](./quickstart/quick-start-kubernetes.md)
+[Use Nacos with Kubernetes](./quickstart/quick-start-kubernetes.mdx)
 
 [Use Nacos with Dubbo](./ecology/use-nacos-with-dubbo.md)
 
 ## What’s next
 
-Continue with [quick start](./quickstart/quick-start.md) to get started with Nacos.
+Continue with [quick start](./quickstart/quick-start.mdx) to get started with Nacos.

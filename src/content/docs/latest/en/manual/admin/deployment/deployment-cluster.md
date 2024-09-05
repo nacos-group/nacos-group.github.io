@@ -158,7 +158,7 @@ Nacos提供了丰富的可配置项，帮助您调整Nacos的性能、控制Naco
 
 ### 2.1. 使用MySQL数据库（推荐）
 
-参考[快速开始 Docker](../../../quickstart/quick-start-docker.md)中，进行`nacos-docker`项目的下载，然后执行如下命令，即可启动Nacos集群。
+参考[快速开始 Docker](../../../quickstart/quick-start-docker.mdx)中，进行`nacos-docker`项目的下载，然后执行如下命令，即可启动Nacos集群。
 
 ```powershell
 docker-compose -f example/cluster-hostname.yaml up 
@@ -168,7 +168,7 @@ docker-compose -f example/cluster-hostname.yaml up
 
 > 注意：Derby数据库为本地内置数据库，本身不支持集群模式，Nacos通过Raft协议将各个节点的Derby数据库组成逻辑集群，因此使用此模式部署集群模式的Nacos是，需要对Raft协议较为熟悉，能够进行问题排查、恢复等，建议使用MySQL数据库进行部署。
 
-参考[快速开始 Docker](../../../quickstart/quick-start-docker.md)中，进行`nacos-docker`项目的下载，然后执行如下命令，即可启动Nacos集群。
+参考[快速开始 Docker](../../../quickstart/quick-start-docker.mdx)中，进行`nacos-docker`项目的下载，然后执行如下命令，即可启动Nacos集群。
 
 ```powershell
 docker-compose -f example/cluster-embedded.yaml up 
@@ -192,7 +192,7 @@ docker run --name nacos-cluster -e MODE=cluster -v /path/application.properties:
 
 ## 3. Kubernetes部署
 
-通过[快速开始 Kubernetes](../../../quickstart/quick-start-kubernetes.md)文档，已经能够部署使用MySQL数据库的Nacos的集群模式。
+通过[快速开始 Kubernetes](../../../quickstart/quick-start-kubernetes.mdx)文档，已经能够部署使用MySQL数据库的Nacos的集群模式。
 
 但快速开始所部署的Nacos集群没有使用持久化卷的,可能存在数据丢失风险；因此推荐使用PVC持久卷方式进行部署，本例中将使用的是NFS来使用PVC。
 

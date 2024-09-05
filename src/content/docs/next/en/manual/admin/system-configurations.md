@@ -109,32 +109,34 @@ Nacos从1.3版本开始使用HikariCP连接池，但在1.4.1版本前，连接�
 |nacos.core.protocol.raft.max_body_size|Raft协议发送日志的最大 body 大小|正整数| 512 * 1024|
 |nacos.core.protocol.raft.max_append_buffer_size|Raft协议日志存储缓冲区最大大小|正整数| 256 * 1024|
 |nacos.core.protocol.raft.max_election_delay_ms|Raft协议选举的最大随机间隔，选举定时器间隔会在指定时间之外随机的最大范围|正整数| 1000|
+|nacos.core.protocol.raft.strict_mode|从`2.4.2`版本开始支持，Raft的启动校验是否采用严格模式，开启后，当raft无法选举时，引擎的readiness接口将返回500 | true/false | false |
 
 ### 1.4. Naming模块
 
-|参数名	|含义	 |     可选值	 |     默认值| 
-|------|------|-----------|-----------------|
-|nacos.naming.expireInstance| 是否自动摘除临时实例 | true/false | true |
-|nacos.naming.clean.empty-service.interval| Naming模块的空服务清理间隔，单位毫秒 | 正整数 | 60 * 1000 |
-|nacos.naming.clean.empty-service.expired-time| Naming模块的空服务过期时间，过期的空服务会被清理，单位毫秒 | 正整数 | 60 * 1000 |
-|nacos.naming.clean.expired-metadata.interval| Naming模块的元数据清理间隔，单位毫秒 | 正整数 | 5000 |
-|nacos.naming.clean.expired-metadata.expired-time| Naming模块的元数据过期时间，过期的元数据会被清理，单位毫秒 | 正整数 | 60 * 1000 |
+|参数名	| 含义	                                                                                             |     可选值	 | 默认值           | 
+|------|-------------------------------------------------------------------------------------------------|-----------|---------------|
+|nacos.naming.expireInstance| 是否自动摘除临时实例                                                                                      | true/false | true          |
+|nacos.naming.data.warmup| 从`2.4.2`版本开始支持，是否在启动时校验数据是否预热，开启可能造成Server的readiness接口返回500，需要等待预热完成，启动时间变长                     | true/false | false         |
+|nacos.naming.clean.empty-service.interval| Naming模块的空服务清理间隔，单位毫秒                                                                           | 正整数 | 60 * 1000     |
+|nacos.naming.clean.empty-service.expired-time| Naming模块的空服务过期时间，过期的空服务会被清理，单位毫秒                                                                | 正整数 | 60 * 1000     |
+|nacos.naming.clean.expired-metadata.interval| Naming模块的元数据清理间隔，单位毫秒                                                                           | 正整数 | 5000          |
+|nacos.naming.clean.expired-metadata.expired-time| Naming模块的元数据过期时间，过期的元数据会被清理，单位毫秒                                                                | 正整数 | 60 * 1000     |
 |nacos.naming.client.expired.time| 临时Client对应数据的过期时间，当Distro协议停止对该Client的数据进行续约且时间超过该值时，该Client数据将被删除，主要应对Nacos Server之间断网的场景，单位毫秒 | 正整数 | 3 * 60 * 1000 |
-|nacos.naming.push.pushTaskDelay|服务数据推送的延迟时间，同一个人服务处于延迟时间内多次变更时，会被合并为一次推送，单位为毫秒| 正整数 | 500 |
-|nacos.naming.push.pushTaskTimeout|服务数据推送的超时时间，超过该时间未收到客户端的确认，将延迟后重试，单位为毫秒 | 正整数 | 5000 |
-|nacos.naming.push.pushTaskRetryDelay|服务数据推送失败后的重试间隔时间，单位为毫秒 | 正整数 | 1000 |
+|nacos.naming.push.pushTaskDelay| 服务数据推送的延迟时间，同一个人服务处于延迟时间内多次变更时，会被合并为一次推送，单位为毫秒                                                  | 正整数 | 500           |
+|nacos.naming.push.pushTaskTimeout| 服务数据推送的超时时间，超过该时间未收到客户端的确认，将延迟后重试，单位为毫秒                                                         | 正整数 | 5000          |
+|nacos.naming.push.pushTaskRetryDelay| 服务数据推送失败后的重试间隔时间，单位为毫秒                                                                          | 正整数 | 1000          |
 
 ### 1.5. Config模块
 
-|参数名	| 含义	                                                                  |     可选值	 | 默认值   |
-|------|----------------------------------------------------------------------|-----------|-------|
-|nacos.config.push.maxRetryTime| 配置变更数据推送的延迟时间，同一个人配置处于延迟时间内多次变更时，会被合并为一次推送，单位为毫秒                     | 正整数 | 50    |
-|nacos.config.retention.days| Nacos配置中心配置变更历史保留天数，超过该时间的配置变更历史会被删除                                 | 正整数 | 30    | 
-|nacos.config.search.max_capacity| Nacos配置中心，根据配置内容查找配置功能的最大队列个数，由于基于内容的检索十分消耗性能，因此对该功能的并发进行限制，最大不可超过32 | 0～32 | 4     | 
-|nacos.config.search.max_thread| 根据配置内容查找配置功能的最大线程数，最大并发数，最大不可超过16                                    | 0～16 | 2     | 
-|nacos.config.search.wait_timeout| 根据配置内容查找配置功能的等待超时时间，超过等待时间的查找任务会直接失败丢弃，单位毫秒                          | 正整数 | 8000  | 
-|nacos.config.derby.ops.enabled| 当使用derby数据库作为存储时，是否开启derby的相关运维接口                                    | true/false | false |
-|nacos.persistence.sql.derby.limit.enabled| 当使用derby数据库作为存储时,限制derby数据库可执行的SQL范围为DML和部分DDL，从`2.4.1`版本开始支持        | true/false | true |
+|参数名	|含义	 |     可选值	 | 默认值   |
+|------|------|-----------|-------|
+|nacos.config.push.maxRetryTime|配置变更数据推送的延迟时间，同一个人配置处于延迟时间内多次变更时，会被合并为一次推送，单位为毫秒| 正整数 | 50    |
+|nacos.config.retention.days|Nacos配置中心配置变更历史保留天数，超过该时间的配置变更历史会被删除| 正整数 | 30    | 
+|nacos.config.search.max_capacity|Nacos配置中心，根据配置内容查找配置功能的最大队列个数，由于基于内容的检索十分消耗性能，因此对该功能的并发进行限制，最大不可超过32| 0～32 | 4     | 
+|nacos.config.search.max_thread|根据配置内容查找配置功能的最大线程数，最大并发数，最大不可超过16| 0～16 | 2     | 
+|nacos.config.search.wait_timeout|根据配置内容查找配置功能的等待超时时间，超过等待时间的查找任务会直接失败丢弃，单位毫秒| 正整数 | 8000  | 
+|nacos.config.derby.ops.enabled|当使用derby数据库作为存储时，是否开启derby的相关运维接口| true/false | false |
+|nacos.persistence.sql.derby.limit.enabled|当使用derby数据库作为存储时,限制derby数据库可执行的SQL范围为DML和部分DDL，从`2.4.1`版本开始支持| true/false | true |
 
 ### 1.6. CMDB模块
 

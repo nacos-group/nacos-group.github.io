@@ -12,7 +12,7 @@ Nacos 作为 Dubbo 生态系统中重要的注册中心实现，本文将会介�
 
 ## 预备工作
 
-请确保后台已经启动 Nacos 服务，可先行参考 [Nacos 快速入门](../quickstart/quick-start.md)。 
+请确保后台已经启动 Nacos 服务，可先行参考 [Nacos 快速入门](../quickstart/quick-start.mdx)。 
 
 ## 快速上手
 
