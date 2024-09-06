@@ -1,90 +1,114 @@
 ---
-import type { z } from 'astro/zod';
-import config from 'virtual:starlight/user-config';
-import type { HeadConfigSchema } from '@starlight/schemas/head';
-import { fileWithBase } from '@starlight/utils/base';
-import { createHead } from '@starlight/utils/head';
-import { localizedUrl } from '@starlight/utils/localizedUrl';
-import type { Props } from '@starlight/props';
-import get from 'lodash.get';
-import { ViewTransitions } from 'astro:transitions';
+import type { z } from "astro/zod";
+import config from "virtual:starlight/user-config";
+import type { HeadConfigSchema } from "@starlight/schemas/head";
+import { fileWithBase } from "@starlight/utils/base";
+import { createHead } from "@starlight/utils/head";
+import { localizedUrl } from "@starlight/utils/localizedUrl";
+import type { Props } from "@starlight/props";
+import get from "lodash.get";
+import { ViewTransitions } from "astro:transitions";
 
 const { entry, lang } = Astro.props;
 const { data } = entry;
 
-const canonical = Astro.site
+let canonical = Astro.site
   ? new URL(Astro.url.pathname, Astro.site)
   : undefined;
+
+if (canonical && Astro.url.pathname.includes("/docs/")) {
+  // 对于多版本文档来说，canonical需要改为latest的链接
+  const versionList = ["v1", "v2", "next", "v2.3"];
+  const pathname = Astro.url.pathname;
+  try {
+    const version = pathname.split("/docs/")[1].split("/")[0];
+    if (versionList.includes(version)) {
+      const fileLang = lang ==='en' ? 'en/' : '';
+      const tempPath = pathname.startsWith('/') ?  pathname.slice(1) : pathname;
+      const result = await fetch(`${Astro.site.origin}/${fileLang}${tempPath}`)
+      if(result.status === 200 && result.url === `${Astro.site.origin}/${fileLang}${tempPath}`){
+        // 判断下latest版本是否存在相关的文档，如果有则替换canlnical
+        canonical = new URL(pathname.replace(version,'latest'),Astro.site)
+      }
+    }
+  } catch (e) {
+    console.error('e',e)
+  }
+}
+
 const description = data.description || config.description;
-const originKeywords = get(data, 'keywords', description);
+const originKeywords = get(data, "keywords", description);
 const keywords = Array.isArray(originKeywords)
-  ? originKeywords.join(',')
+  ? originKeywords.join(",")
   : originKeywords;
 
 const headDefaults: z.input<ReturnType<typeof HeadConfigSchema>> = [
-  { tag: 'meta', attrs: { name: 'aplus-core', content: 'aplus.js' } },
-  { tag: 'meta', attrs: { charset: 'utf-8' } },
+  { tag: "meta", attrs: { name: "aplus-core", content: "aplus.js" } },
+  { tag: "meta", attrs: { charset: "utf-8" } },
   {
-    tag: 'meta',
+    tag: "meta",
     attrs: {
-      name: 'viewport',
-      content: 'width=device-width, initial-scale=1',
+      name: "viewport",
+      content: "width=device-width, initial-scale=1",
     },
   },
   {
-    tag: 'title',
+    tag: "title",
     content: `${data.title} ${config.titleDelimiter} ${config.title}`,
   },
-  { tag: 'link', attrs: { rel: 'canonical', href: canonical?.href } },
+  { tag: "link", attrs: { rel: "canonical", href: canonical?.href } },
   {
-    tag: 'link',
+    tag: "link",
     attrs: {
-      rel: 'shortcut icon',
+      rel: "shortcut icon",
       href: fileWithBase(config.favicon.href),
       type: config.favicon.type,
     },
   },
   // OpenGraph Tags
-  { tag: 'meta', attrs: { property: 'og:title', content: data.title } },
-  { tag: 'meta', attrs: { property: 'og:type', content: 'article' } },
-  { tag: 'meta', attrs: { property: 'og:url', content: canonical?.href } },
-  { tag: 'meta', attrs: { property: 'og:locale', content: lang } },
+  { tag: "meta", attrs: { property: "og:title", content: data.title } },
+  { tag: "meta", attrs: { property: "og:type", content: "article" } },
+  { tag: "meta", attrs: { property: "og:url", content: canonical?.href } },
+  { tag: "meta", attrs: { property: "og:locale", content: lang } },
 
-  { tag: 'meta', attrs: { property: 'og:site_name', content: config.title } },
+  { tag: "meta", attrs: { property: "og:site_name", content: config.title } },
   // Keywords
 
   // Twitter Tags
   {
-    tag: 'meta',
-    attrs: { name: 'twitter:card', content: 'summary_large_image' },
+    tag: "meta",
+    attrs: { name: "twitter:card", content: "summary_large_image" },
   },
-  { tag: 'meta', attrs: { name: 'twitter:title', content: data.title } },
-  { tag: 'meta', attrs: { name: 'twitter:description', content: description } },
+  { tag: "meta", attrs: { name: "twitter:title", content: data.title } },
+  { tag: "meta", attrs: { name: "twitter:description", content: description } },
   {
-    tag: 'meta',
-    attrs: { name: 'baidu-site-verification', content: 'code-wzq5sw7io3' },
+    tag: "meta",
+    attrs: { name: "baidu-site-verification", content: "code-wzq5sw7io3" },
   },
   {
-    tag: 'meta',
-    attrs: { name: 'msvalidate.01', content: '163AF92978FAA79FC0EF301039463525' },
+    tag: "meta",
+    attrs: {
+      name: "msvalidate.01",
+      content: "163AF92978FAA79FC0EF301039463525",
+    },
   },
 ];
 
 if (description) {
   headDefaults.push({
-    tag: 'meta',
-    attrs: { name: 'description', content: description },
+    tag: "meta",
+    attrs: { name: "description", content: description },
   });
   headDefaults.push({
-    tag: 'meta',
-    attrs: { property: 'og:description', content: description },
+    tag: "meta",
+    attrs: { property: "og:description", content: description },
   });
 }
 
 if (keywords) {
   headDefaults.push({
-    tag: 'meta',
-    attrs: { property: 'keywords', content: keywords },
+    tag: "meta",
+    attrs: { property: "keywords", content: keywords },
   });
 }
 
@@ -94,9 +118,9 @@ if (canonical && config.isMultilingual) {
     const localeOpts = config.locales[locale];
     if (!localeOpts) continue;
     headDefaults.push({
-      tag: 'link',
+      tag: "link",
       attrs: {
-        rel: 'alternate',
+        rel: "alternate",
         hreflang: localeOpts.lang,
         href: localizedUrl(canonical, locale).href,
       },
@@ -107,10 +131,10 @@ if (canonical && config.isMultilingual) {
 // Link to sitemap, but only when `site` is set.
 if (Astro.site) {
   headDefaults.push({
-    tag: 'link',
+    tag: "link",
     attrs: {
-      rel: 'sitemap',
-      href: fileWithBase('/sitemap-index.xml'),
+      rel: "sitemap",
+      href: fileWithBase("/sitemap-index.xml"),
     },
   });
 }
@@ -118,9 +142,9 @@ if (Astro.site) {
 // Link to Twitter account if set in Starlight config.
 if (config.social?.twitter) {
   headDefaults.push({
-    tag: 'meta',
+    tag: "meta",
     attrs: {
-      name: 'twitter:site',
+      name: "twitter:site",
       content: new URL(config.social.twitter.url).pathname,
     },
   });
@@ -143,32 +167,32 @@ const head = createHead(headDefaults, config.head, data.head);
     var f = d.getElementsByTagName(s)[0],
       j = d.createElement(s);
     j.async = true;
-    j.id = 'beacon-aplus';
-    j.setAttribute('exparams', 'userid=&aplus&sidx=aplusSidex&ckx=aplusCkx');
-    j.src = '//g.alicdn.com/alilog/mlog/aplus_v2.js';
-    j.crossorigin = 'anonymous';
+    j.id = "beacon-aplus";
+    j.setAttribute("exparams", "userid=&aplus&sidx=aplusSidex&ckx=aplusCkx");
+    j.src = "//g.alicdn.com/alilog/mlog/aplus_v2.js";
+    j.crossorigin = "anonymous";
     f.parentNode.insertBefore(j, f);
-  })(window, document, 'script', 'aplus_queue');
+  })(window, document, "script", "aplus_queue");
 
   (function (d) {
-    var t = d.createElement('script');
-    t.type = 'text/javascript';
+    var t = d.createElement("script");
+    t.type = "text/javascript";
     t.async = true;
     t.src =
-      '//g.alicdn.com/aes/??tracker/3.3.4/index.js,tracker-plugin-pv/3.0.5/index.js,tracker-plugin-event/3.0.0/index.js,tracker-plugin-autolog/3.0.3/index.js,tracker-plugin-survey/3.0.3/index.js,tracker-plugin-jserror/3.0.3/index.js,tracker-plugin-resourceError/3.0.3/index.js,tracker-plugin-api/3.0.3/index.js,tracker-plugin-perf/3.0.3/index.js,tracker-plugin-longtask/3.0.1/index.js,tracker-plugin-eventTiming/3.0.0/index.js';
+      "//g.alicdn.com/aes/??tracker/3.3.4/index.js,tracker-plugin-pv/3.0.5/index.js,tracker-plugin-event/3.0.0/index.js,tracker-plugin-autolog/3.0.3/index.js,tracker-plugin-survey/3.0.3/index.js,tracker-plugin-jserror/3.0.3/index.js,tracker-plugin-resourceError/3.0.3/index.js,tracker-plugin-api/3.0.3/index.js,tracker-plugin-perf/3.0.3/index.js,tracker-plugin-longtask/3.0.1/index.js,tracker-plugin-eventTiming/3.0.0/index.js";
     t.onload = function () {
-      if (window.location.hostname !== 'nacos.io') {
+      if (window.location.hostname !== "nacos.io") {
         return;
       }
       window.AES_CONFIG = window.AES_CONFIG || {
         // 判断当前环境
-        env: 'prod',
+        env: "prod",
       };
       window.aes = new AES({
-        pid: 'e7WQkK',
+        pid: "e7WQkK",
         user_type: 6,
       });
-      window.AESPluginAutologConfig = { exposure: 'auto' };
+      window.AESPluginAutologConfig = { exposure: "auto" };
       window.AEMPluginInstances = [
         aes.use(
           AESPluginPV,
@@ -182,11 +206,11 @@ const head = createHead(headDefaults, config.head, data.head);
         aes.use(AESPluginAPI, window.AESPluginAPI || {}),
         aes.use(AESPluginPerf, window.AESPluginPerf || {}),
         aes.use(AESPluginLongTask, window.AESPluginLongTask || {}),
-        aes.use(AESPluginEventTiming, window.AESPluginEventTiming || {})
+        aes.use(AESPluginEventTiming, window.AESPluginEventTiming || {}),
       ];
     };
     setTimeout(function () {
-      d.getElementsByTagName('body')[0].appendChild(t);
+      d.getElementsByTagName("body")[0].appendChild(t);
     }, 800);
   })(document);
 </script>
@@ -194,9 +218,9 @@ const head = createHead(headDefaults, config.head, data.head);
 <script>
   var _hmt = _hmt || [];
   (function () {
-    var hm = document.createElement('script');
-    hm.src = 'https://hm.baidu.com/hm.js?e3a5cec56ef8619cf9d7c2abebd509e3';
-    var s = document.getElementsByTagName('script')[0];
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?e3a5cec56ef8619cf9d7c2abebd509e3";
+    var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(hm, s);
   })();
 </script>
@@ -210,7 +234,7 @@ const head = createHead(headDefaults, config.head, data.head);
   function gtag() {
     dataLayer.push(arguments);
   }
-  gtag('js', new Date());
+  gtag("js", new Date());
 
-  gtag('config', 'G-0YDFJ7LX7F');
+  gtag("config", "G-0YDFJ7LX7F");
 </script>

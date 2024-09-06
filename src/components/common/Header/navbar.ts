@@ -61,7 +61,7 @@ export default [
     route: "http://console.nacos.io/nacos/index.html",
   },
   {
-    label: "答疑样例",
+    label: "专家答疑",
     translations: {
       en: "FAQ",
     },
