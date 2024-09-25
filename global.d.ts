@@ -2,9 +2,13 @@
 interface Window {
     gUid: string;
     CNPilot?: any;
+    dataLayer?: any;
+    aes?: any;
+    AESPluginEvent?: any;
 }
-
-// 或者
+interface PerformanceEntry {
+    type?: any;
+}
 interface GlobalThis {
     gUid: string;
 }
