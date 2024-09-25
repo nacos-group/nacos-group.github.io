@@ -165,11 +165,16 @@ let height,
     document.body.append(copilotJSScript);
   }
 
-  const htmlElement = document.documentElement;
-  const computedStyle = window.getComputedStyle(htmlElement);
-  const rootFontSize = parseFloat(computedStyle.fontSize);
-  const htmlWidthInPixels = htmlElement.clientWidth;
-  const htmlWidthInRem = htmlWidthInPixels / rootFontSize;
+  let htmlWidthInRem = 100;
+  try {
+    const htmlElement = document.documentElement;
+    const computedStyle = window.getComputedStyle(htmlElement);
+    const rootFontSize = parseFloat(computedStyle.fontSize);
+    const htmlWidthInPixels = htmlElement.clientWidth;
+    htmlWidthInRem = htmlWidthInPixels / rootFontSize;
+  } catch(err) {
+    console.info('err', err);
+  };
   // 30rem
   if(htmlWidthInRem > 30) {
     addCopilot();
