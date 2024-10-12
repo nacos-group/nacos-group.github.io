@@ -95,6 +95,10 @@ const t = useTranslations(Astro);
 
 <script>
   class HomeCardPlayer extends HTMLElement {
+    currentId: any;
+    flagState: any;
+    cardSolution: any;
+    videoPlayButtons: any;
     constructor() {
       super();
       // 初始化时不要访问 DOM 或设置属性
@@ -187,7 +191,11 @@ const t = useTranslations(Astro);
         if (video.paused) {
           // 在播放当前视频前，先暂停其他所有视频
           this.pauseOtherVideos(videoId);
-          video.play();
+          video.play().catch(error => {
+              // 播放时发生错误: AbortError: The play() request was interrupted by a new load request.
+              // 第一次播放失败时，可以尝试重新加载视频；
+              video.play();
+          });
           this.onPlay(e);
         } else {
           video.pause();
@@ -254,8 +262,7 @@ const t = useTranslations(Astro);
 
 
 <script>
-  // Lazy loading using IntersectionObserver
-  document.addEventListener('DOMContentLoaded', () => {
+  const bindEvent = () => {
   const lazyVideos = document.querySelectorAll('.lazy-video');
 
   if ('IntersectionObserver' in window) {
@@ -284,8 +291,10 @@ const t = useTranslations(Astro);
       video.load(); // Optionally, start loading the video
     });
   }
-});
-
+}
+  // Lazy loading using IntersectionObserver
+  document.addEventListener('DOMContentLoaded', bindEvent);
+  document.addEventListener("astro:after-swap", bindEvent);
 </script>
 
 <style is:global>
