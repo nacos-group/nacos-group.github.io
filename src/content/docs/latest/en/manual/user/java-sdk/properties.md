@@ -155,6 +155,7 @@ String value = properties2.getProperty("global-key1");
 | clientWorkerMaxThreadCount | CLIENT_WORKER_MAX_THREAD_COUNT | 自动计算配置中心ConfigService进行配置监听时的最大线程池个数                             | >=2 的int值 | CPU个数                                          |
 | clientWorkerThreadCount    | CLIENT_WORKER_THREAD_COUNT     | 指定配置中心ConfigService进行配置监听时的线程池个数，优先级高于clientWorkerMaxThreadCount | >=2 的int值 | Max(2, Min(clientWorkerMaxThreadCount, CPU个数)) |
 | enableRemoteSyncConfig     | ENABLE_REMOTE_SYNC_CONFIG      | 配置中心ConfigService进行配置监听时立刻对监听的配置进行和服务端的同步和通知，开启可能影响启动监听的速度       | boolean   | false                                          |
+| configRequestTimeout       | CONFIG_REQUEST_TIMEOUT         | 指定配置中心ConfigService发起rpc请求超时时间, 默认不启用, 使用RpcClientConfig通用配置的超时时间               | >=0 的long值 | -1                                             |
 | ~~configRetryTime~~        | ~~CONFIG_RETRY_TIME~~          | 旧版本配置中心使用长轮询重试间隔时间，已废弃                                           | 任意int     | 2000                                           |
 | ~~configLongPollTimeout~~  | ~~CONFIG_LONG_POLL_TIMEOUT~~   | 旧版本配置中心使用长轮询超时时间，已废弃                                             | 任意int     | 30000                                          |
 | ~~maxRetry~~               | ~~MAX_RETRY~~                  | 旧版本配置中心使用的最大重试次数参数，已废弃                                           | 任意int     | 3                                              |
@@ -163,18 +164,19 @@ String value = properties2.getProperty("global-key1");
 
 仅在初始化注册中心`NamingServie`时生效：
 
-| 参数名                              | PropertyKeyConst的Key                 | 含义                                                                | 可选值       | 默认值                                             | 
-|----------------------------------|--------------------------------------|-------------------------------------------------------------------|-----------|-------------------------------------------------|
-| namingLoadCacheAtStart           | NAMING_LOAD_CACHE_AT_START           | 注册中心NamingService在启动时读取本地磁盘缓存来初始化数据                               | boolean   | false                                           |
-| namingCacheRegistryDir           | NAMING_CACHE_REGISTRY_DIR            | 注册中心NamingService的本地磁盘缓存目录名拓展名，用于同一节点中区分多个NamingService实例         | 任意字符串     | 空字符串                                            |
-| namingAsyncQuerySubscribeService | NAMING_ASYNC_QUERY_SUBSCRIBE_SERVICE | 注册中心NamingService开启异步查询订阅服务的功能，作为数据推送链路异常时的兜底辅助                   | boolean   | false                                           |
-| namingPollingMaxThreadCount      | NAMING_POLLING_MAX_THREAD_COUNT      | 自动计算注册中心NamingService异步查询订阅服务的最大线程个数                              | >=1 的int值 | CPU个数                                           |
+| 参数名                              | PropertyKeyConst的Key                 | 含义                                                              | 可选值       | 默认值                                             | 
+|----------------------------------|--------------------------------------|-----------------------------------------------------------------|-----------|-------------------------------------------------|
+| namingLoadCacheAtStart           | NAMING_LOAD_CACHE_AT_START           | 注册中心NamingService在启动时读取本地磁盘缓存来初始化数据                             | boolean   | false                                           |
+| namingCacheRegistryDir           | NAMING_CACHE_REGISTRY_DIR            | 注册中心NamingService的本地磁盘缓存目录名拓展名，用于同一节点中区分多个NamingService实例       | 任意字符串     | 空字符串                                            |
+| namingAsyncQuerySubscribeService | NAMING_ASYNC_QUERY_SUBSCRIBE_SERVICE | 注册中心NamingService开启异步查询订阅服务的功能，作为数据推送链路异常时的兜底辅助                 | boolean   | false                                           |
+| namingPollingMaxThreadCount      | NAMING_POLLING_MAX_THREAD_COUNT      | 自动计算注册中心NamingService异步查询订阅服务的最大线程个数                            | >=1 的int值 | CPU个数                                           |
 | namingPollingThreadCount         | NAMING_POLLING_THREAD_COUNT          | 指定注册中心NamingService异步查询订阅服务的线程个数，优先级高于namingPollingMaxThreadCount | >=1 的int值 | Max(2, Min(namingPollingMaxThreadCount, CPU个数)) |
 | namingRequestDomainMaxRetryCount | NAMING_REQUEST_DOMAIN_RETRY_COUNT    | 当初始化注册中心NamingService`serverAddr`仅有一个地址时，请求Nacos Server失败后的最大重试次数 | 任意int值    | 3                                               |
-| namingPushEmptyProtection        | NAMING_PUSH_EMPTY_PROTECTION         | 注册中心NamingService开启推空保护功能，当订阅服务时发现服务地址列表为0时，忽略此地址列表               | boolean   | false                                           |
-| redoDelayTime                    | REDO_DELAY_TIME                      | 注册中心NamingService与Nacos Server链接断开后，间隔多长时间检查并进行redo操作，单位毫秒        | 任意long值   | 3000                                            |
-| redoDelayThreadCount             | REDO_DELAY_THREAD_COUNT              | 注册中心NamingService执行redo操作的线程数                                     | 任意int值    | 1                                               |
-| ~~namingClientBeatThreadCount~~  | ~~NAMING_CLIENT_BEAT_THREAD_COUNT~~  | 注册中心NamingService旧版本使用的，用于发送所注册服务实例心跳的线程数，已废弃                     | 任意int值    | 无                                               |
+| namingPushEmptyProtection        | NAMING_PUSH_EMPTY_PROTECTION         | 注册中心NamingService开启推空保护功能，当订阅服务时发现服务地址列表为0时，忽略此地址列表             | boolean   | false                                           |
+| redoDelayTime                    | REDO_DELAY_TIME                      | 注册中心NamingService与Nacos Server链接断开后，间隔多长时间检查并进行redo操作，单位毫秒      | 任意long值   | 3000                                            |
+| redoDelayThreadCount             | REDO_DELAY_THREAD_COUNT              | 注册中心NamingService执行redo操作的线程数                                   | 任意int值    | 1                                               |
+| namingRequestTimeout             | NAMING_REQUEST_TIMEOUT               | 注册中心NamingService发起rpc请求超时时间, 默认不启用, 使用RpcClientConfig通用配置的超时时间 | >=0 的long值 | -1                                              |
+| ~~namingClientBeatThreadCount~~  | ~~NAMING_CLIENT_BEAT_THREAD_COUNT~~  | 注册中心NamingService旧版本使用的，用于发送所注册服务实例心跳的线程数，已废弃                   | 任意int值    | 无                                               |
 
 ### 2.4. 连接相关
 
