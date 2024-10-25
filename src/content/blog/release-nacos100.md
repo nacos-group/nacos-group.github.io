@@ -3,7 +3,7 @@ title: Nacos 1.0.0 发布，正式大规模生产可用
 keywords: [nacos1.0，nacos1.0.0，nacos]
 description: Nacos 1.0.0是正式GA的版本，在架构、功能和API设计上进行了全方位的重构和升级，在经过3个RC版本的社区体验之后正式发布，1.0.0版本标志着Nacos已经可以大规模在生产环境使用。
 date: "2019-04-10"
-category: release
+category: announcement
 ---
 
 # Nacos 发布 1.0.0 版本，可大规模投入到生产环境中

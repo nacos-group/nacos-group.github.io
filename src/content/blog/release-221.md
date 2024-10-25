@@ -3,7 +3,7 @@ title: Nacos 多个新版本发布，rust-sdk完全适配完成
 keywords: [2.2.1, Go 2.2.0, Rust 0.2.3]
 description: Nacos 多个新版本发布，rust-sdk完全适配完成
 date: "2023-03-20"
-category: release
+category: announcement
 ---
 # Nacos 多个新版本发布，rust-sdk完全适配完成
 

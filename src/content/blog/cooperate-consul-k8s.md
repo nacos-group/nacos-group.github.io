@@ -3,7 +3,7 @@ title: Consul与kubernetes整合公告[翻译]
 keywords: [Consul, kubernetes]
 description: Consul与kubernetes整合公告[翻译]
 date: "2018-09-02"
-category: cooperate
+category: announcement
 ---
 
 # Consul与kubernetes整合公告[翻译]

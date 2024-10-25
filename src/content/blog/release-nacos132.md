@@ -3,7 +3,7 @@ title: Nacos 两周年献礼，Nacos 1.3.2 + Go SDK 1.0.0发布
 keywords: [开源, 1.3.2, Go 1.0.0]
 description: Nacos 两周年献礼，Nacos 1.3.2 + Go SDK 1.0.0发布
 date: "2020-08-05"
-category: release
+category: announcement
 ---
 
 # Nacos 两周年献礼，Nacos 1.3.2 + Go SDK 1.0.0发布

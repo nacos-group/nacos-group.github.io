@@ -3,7 +3,7 @@ title: Nacos-sdk-csharp 0.5.0正式发布，功能与Java版本对齐！
 keywords: [csharp, sdk]
 description: Nacos-sdk-csharp 0.5.0正式发布，功能与Java版本对齐！
 date: "2020-09-03"
-category: release
+category: announcement
 ---
 
 # nacos-sdk-csharp 0.5.0版本已经发布了！

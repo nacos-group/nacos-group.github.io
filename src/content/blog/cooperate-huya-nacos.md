@@ -3,7 +3,7 @@ title: 虎牙直播共建Nacos生态
 keywords: [虎牙直播, nacos]
 description: 虎牙直播共建Nacos生态
 date: "2019-01-10"
-category: cooperate
+category: community
 ---
 
 # 虎牙直播共建Nacos生态

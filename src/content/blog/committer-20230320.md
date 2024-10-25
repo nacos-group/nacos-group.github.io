@@ -3,7 +3,7 @@ title: Nacos 社区又迎来3位Committer
 keywords: [Committer晋升, shenkonghui, CherishCai, The-Gamer-01]
 description: Nacos 社区又迎来3位Committer， 其中还有第一位来自开源之夏的Committer同学，感谢他们的贡献！
 date: "2023-03-20"
-category: committer
+category: community
 ---
 # Nacos 社区又迎来3位Committer
 

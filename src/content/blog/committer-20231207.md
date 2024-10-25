@@ -3,7 +3,7 @@ title: Nacos 新晋两位Committer，又一位来自开源之夏的Committer同�
 keywords: [Committer晋升, Karsonto, Daydreamer-ia]
 description: Nacos 新晋两位Committer，Karsonto和Daydreamer-ia，感谢他们的贡献！
 date: "2023-12-07"
-category: committer
+category: community
 ---
 # Nacos 新晋两位Committer，又一位来自开源之夏的Committer同学
 

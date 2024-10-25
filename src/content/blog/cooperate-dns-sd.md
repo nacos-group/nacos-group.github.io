@@ -3,7 +3,7 @@ title: 微服务架构中基于DNS的服务注册与发现
 keywords: [微服务, DNS]
 description: 微服务架构中基于DNS的服务注册与发现
 date: "2018-06-02"
-category: cooperate
+category: article
 ---
 
 # 微服务架构中基于DNS的服务注册与发现

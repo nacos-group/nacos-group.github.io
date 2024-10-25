@@ -3,7 +3,7 @@ title: Nacos0.5发布，支持DNS-based Service Discovery，JAVA 11
 keywords: [nacos0.5, DNS-based Service Discovery, JAVA 11]
 description: Nacos0.5发布，支持DNS-based Service Discovery，JAVA 11
 date: "2018-11-25"
-category: release
+category: announcement
 ---
 # Nacos 0.5版本发布，支持DNS-SD、JAVA 11
 > Authors: 坤宇，敦谷

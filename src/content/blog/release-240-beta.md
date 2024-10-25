@@ -3,7 +3,7 @@ title: 2.4.0-BETA发布，欢迎试用
 keywords: [2.4.0, BETA]
 description: 2.4.0-BETA发布，欢迎试用
 date: "2024-06-13"
-category: release
+category: announcement
 ---
 # 2.4.0-BETA发布，欢迎试用
 

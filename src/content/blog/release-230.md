@@ -3,7 +3,7 @@ title: Nacos 2.3.0 正式版发布、 Nacos Controller 项目开源
 keywords: [2.3.0]
 description: Nacos 2.3.0 正式版发布、 Nacos Controller 项目开源。
 date: "2023-12-07"
-category: release
+category: announcement
 ---
 # Nacos 2.3.0 正式版发布、 Nacos Controller 项目开源
 

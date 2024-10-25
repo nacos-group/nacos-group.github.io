@@ -3,7 +3,7 @@ title: 使用Nacos实现Spring Cloud Zuul的动态路由
 keywords: [nacos]
 description: 使用Nacos实现Spring Cloud Zuul的动态路由
 date: "2018-11-29"
-category: cooperate
+category: article
 ---
 
 # 使用Nacos实现Spring Cloud Zuul的动态路由

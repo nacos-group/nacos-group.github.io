@@ -3,7 +3,7 @@ title: Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署
 keywords: [nacos0.6, dubbo, docker]
 description: Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署
 date: "2018-11-29"
-category: release
+category: announcement
 ---
 
 # Nacos 0.6版本发布，支持Dubbo生态并且支持Docker部署

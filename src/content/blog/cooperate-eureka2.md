@@ -3,7 +3,7 @@ title: Eureka 2.0 开源工作宣告停止？别担心，ANS 即将 C位强势�
 keywords: [Eureka 2.0]
 description: Eureka 2.0 开源工作宣告停止？别担心，ANS 即将 C位强势出道！
 date: "2019-08-22"
-category: cooperate
+category: article
 ---
 
 # Eureka 2.0 开源工作宣告停止？别担心，ANS 即将 C位强势出道！

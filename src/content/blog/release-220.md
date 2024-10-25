@@ -3,7 +3,7 @@ title: Nacos 2.2.0 版本发布，新增多种插件支持
 keywords: [2.2.0, plugins]
 description: Nacos 2.2.0 版本发布，新增多种插件支持！
 date: "2022-12-16"
-category: release
+category: announcement
 ---
 # Nacos 2.2.0 版本发布，新增多种插件支持
 

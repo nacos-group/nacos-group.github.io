@@ -3,7 +3,7 @@ title: 恭喜 godhth 同学晋升 Nacos Committer.
 keywords: [Committer晋升, godhth]
 description: 恭喜 godhth 同学晋升 Nacos Committer，感谢他的贡献！
 date: "2024-08-05"
-category: committer
+category: community
 ---
 # 恭喜 godhth 同学晋升 Nacos Committer
 

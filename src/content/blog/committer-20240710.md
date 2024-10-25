@@ -3,7 +3,7 @@ title: Nacos 新晋两位Committer,shalk 和 heqingpan
 keywords: [Committer晋升, shalk, heqingpan]
 description: Nacos 新晋两位Committer，shalk和heqingpan，感谢他们的贡献！
 date: "2024-07-10"
-category: committer
+category: community
 ---
 # Nacos 新晋两位Committer
 

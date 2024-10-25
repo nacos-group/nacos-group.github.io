@@ -3,7 +3,7 @@ title: Nacos 2.0.1 + 1.4.2 Release正式发布，业界率先支持MCP-OVER-XDS�
 keywords: [2.0.1, 1.4.2]
 description: Nacos 2.0.1 + 1.4.2 同时正式发布，业界率先支持MCP-OVER-XDS协议。
 date: "2021-05-10"
-category: release
+category: announcement
 ---
 
 # Nacos 2.0.1 + 1.4.2 Release正式发布，业界率先支持MCP-OVER-XDS协议

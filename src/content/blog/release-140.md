@@ -3,7 +3,7 @@ title: 双十一购物节，Nacos 1.4.0 + Go SDK 1.0.1发布
 keywords: [开源, 1.4.0, Go 1.0.1]
 description: 双十一购物节，Nacos 1.4.0 + Go SDK 1.0.1发布
 date: "2020-11-02"
-category: release
+category: announcement
 ---
 
 # 双十一购物节，Nacos 1.4.0 + Go SDK 1.0.1发布

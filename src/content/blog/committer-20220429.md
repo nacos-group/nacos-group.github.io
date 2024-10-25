@@ -3,7 +3,7 @@ title: sanxun0325同学晋升为社区PMC，同时MajorHe1同学和hujun-w-2同�
 keywords: [PMC晋升, Committer晋升, sanxun0325, MajorHe1, hujun-w-2]
 description: 恭喜sanxun0325同学晋升为社区PMC，同时MajorHe1同学和hujun-w-2同学晋升为社区Committer，感谢他们的贡献。
 date: "2022-04-29"
-category: committer
+category: community
 ---
 # sanxun0325同学晋升为社区PMC，同时MajorHe1同学和hujun-w-2同学晋升为社区Committer
 

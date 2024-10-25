@@ -3,7 +3,7 @@ title: 关于Nacos镜像无法从DockerHub进行下载的临时解决方案
 keywords: [nacos, docker, dockerhub, download]
 description: 关于Nacos镜像无法从DockerHub进行下载的临时解决方案公告
 date: "2024-06-13"
-category: announcement
+category: community
 ---
 
 # 关于Nacos镜像无法从DockerHub进行下载的临时解决方案

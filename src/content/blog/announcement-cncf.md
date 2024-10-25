@@ -3,7 +3,7 @@ title: Nacos 进入CNCF landscape
 keywords: [nacos, cncf, alibaba, landscape]
 description: Nacos 进入CNCF landscape
 date: "2018-10-28"
-category: announcement
+category: community
 ---
 
 # Nacos 进入CNCF landscape

@@ -3,7 +3,7 @@ title: Nacos 1.1.4发布，业界率先支持Istio MCP协议
 keywords: [Nacos 1.1.4, nacos]
 description: Nacos是阿里巴巴开源的服务发现与配置管理项目，本次发布的1.1.4版本，主要带来的是与Istio的对接功能，使用的是Istio最新的MCP协议。
 date: "2019-10-24"
-category: release
+category: announcement
 ---
 
 # Nacos 1.1.4发布，业界率先支持Istio MCP协议

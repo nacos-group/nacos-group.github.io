@@ -3,7 +3,7 @@ title: haoyann同学 晋升为社区Committer
 keywords: [Nacos, Committer晋升, haoyann]
 description: 恭喜haoyann晋升为社区Committer，感谢他的贡献。
 date: "2021-05-10"
-category: committer
+category: community
 ---
 
 # haoyann同学 晋升为社区Committer

@@ -3,7 +3,7 @@ title: 中间件开发者 MeetUp顺利举行，贡献者激励活动礼物发放
 keywords: [中间件开发者 MeetUp, 贡献者激励活动]
 description: 中间件开发者 MeetUp顺利举行，贡献者激励活动礼物发放。
 date: "2022-08-10"
-category: activity-detail
+category: community
 ---
 # 中间件开发者 MeetUp顺利举行，贡献者激励活动礼物发放
 

@@ -3,7 +3,7 @@ title: Nacos 1.1.0发布，支持灰度配置和地址服务器模块
 keywords: [Nacos 1.1.0, nacos]
 description: Nacos 是阿里巴巴开源的配置中心和服务发现产品，开源距今已经超过一年的时间。本次1.1.0的发布，带来了许多重量级的特性更新，包括灰度配置等社区呼声很高的特性。
 date: "2019-07-10"
-category: release
+category: announcement
 ---
 
 # Nacos 1.1.0发布，支持灰度配置和地址服务器模式

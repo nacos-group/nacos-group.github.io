@@ -3,7 +3,7 @@ title: onewe同学和chenhao26-nineteen同学 晋升为社区Committer
 keywords: [Committer晋升, onewe, chenhao26-nineteen]
 description: 恭喜onewe同学和chenhao26-nineteen同学晋升为社区Committer，感谢他们的贡献。
 date: "2022-10-28"
-category: committer
+category: community
 ---
 
 # onewe同学和chenhao26-nineteen同学 晋升为社区Committer

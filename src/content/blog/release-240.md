@@ -3,7 +3,7 @@ title: Nacos 2.4.0 正式版发布，支持初始化指定密码，默认关闭d
 keywords: [2.4.0, Python-SDK, Go-SDK]
 description: Nacos 2.4.0 正式版发布，支持初始化指定密码，默认关闭derby运维接口
 date: "2024-07-24"
-category: release
+category: announcement
 ---
 # Nacos 2.4.0 正式版发布，支持初始化指定密码，默认关闭derby运维接口
 

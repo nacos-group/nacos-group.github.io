@@ -3,7 +3,7 @@ title: Nacos 2.2.2发布，优化启动体验和鉴权提示
 keywords: [2.2.2, auth]
 description: Nacos 2.2.2发布，优化启动体验和鉴权提示
 date: "2023-04-11"
-category: release
+category: announcement
 ---
 # Nacos 2.2.2发布，优化启动体验和鉴权提示
 

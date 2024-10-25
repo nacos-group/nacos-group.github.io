@@ -3,7 +3,7 @@ title: Maijh97同学 和 wangweizZZ同学 晋升为社区Committer
 keywords: [Nacos, Committer晋升, Maijh97, wangweizZZ]
 description: 恭喜Maijh97和wangweizZZ晋升为社区Committer，感谢他们的贡献。
 date: "2020-11-02"
-category: committer
+category: community
 ---
 
 # Maijh97同学 和 wangweizZZ同学 晋升为社区Committer

@@ -3,7 +3,7 @@ title: Apache APISIX 社区与Nacos社区，Dubbo社区合作，打造一站式�
 keywords: [Apache APISIX]
 description: Apache APISIX 社区与Nacos社区，Dubbo社区合作，打造一站式解决方案
 date: "2022-02-22"
-category: cooperate
+category: community
 ---
 
 # Apache APISIX 社区与Nacos社区，Dubbo社区合作，打造一站式解决方案

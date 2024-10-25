@@ -3,7 +3,7 @@ title: Nacos社区 编程之夏以及开源之夏2022，圆满结束
 keywords: [开源之夏, 编程之夏]
 description: Nacos社区 编程之夏以及开源之夏2022，圆满结束
 date: "2022-10-28"
-category: activity-detail
+category: community
 ---
 
 # Nacos社区 编程之夏以及开源之夏2022，圆满结束

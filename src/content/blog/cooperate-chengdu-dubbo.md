@@ -3,7 +3,7 @@ title: Nacos 计划发布v0.2版本，进一步融合Dubbo和SpringCloud生态
 keywords: [nacos, nacos0.2, alibaba, 邢学超, Aliware Open Source, spring cloud]
 description: Nacos 计划发布v0.2版本，进一步融合Dubbo和SpringCloud生态
 date: "2018-09-21"
-category: cooperate
+category: announcement
 ---
 
 # Nacos 计划发布v0.2版本，进一步融合Dubbo和SpringCloud生态

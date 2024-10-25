@@ -3,7 +3,7 @@ title: Nacos 0.8.0版本进行发布
 keywords: [nacos0.8, nacos0.8.0, nacos 发布]
 description: Nacos 0.8.0版本进行发布
 date: "2019-01-20"
-category: release
+category: announcement
 ---
 
 # Dubbo Nacos 发布 v0.8.0 PRE-GA版本，安全稳定上生产

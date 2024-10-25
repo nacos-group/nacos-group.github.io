@@ -3,7 +3,7 @@ title: Nacos 2.1.0版本发布，支持鉴权及加解密插件
 keywords: [2.1.0]
 description: Nacos 2.1.0版本发布，支持鉴权及加解密插件
 date: "2022-04-29"
-category: release
+category: announcement
 ---
 # Nacos 2.1.0版本发布，支持鉴权及加解密插件
 

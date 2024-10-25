@@ -2,7 +2,7 @@
 title: "Star 3w+，向更安全、更泛化、更云原生的 Nacos3.0 演进"
 description: "Star 3w+，向更安全、更泛化、更云原生的 Nacos3.0 演进"
 date: "2024-09-26"
-category: "announcement"
+category: "article"
 keywords: ["Nacos"]
 authors: "阿里云高级工程师"
 ---

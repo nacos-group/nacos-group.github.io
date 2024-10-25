@@ -3,7 +3,7 @@ title: Nacos 开源之夏2023及编程夏令营顺利结束，荣获GLCC优秀�
 keywords: [优秀社区, 编程夏令营, 开源之夏]
 description: Nacos 开源之夏2023及编程夏令营顺利结束，荣获GLCC优秀社区。
 date: "2023-10-24"
-category: activity-detail
+category: community
 ---
 # Nacos 开源之夏2023及编程夏令营顺利结束，荣获GLCC优秀社区。
 

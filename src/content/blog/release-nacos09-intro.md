@@ -3,7 +3,7 @@ title: Nacos 0.9.0版本进行发布
 keywords: [nacos0.9, nacos0.9.0, nacos 发布]
 description: Nacos 0.9.0版本进行发布
 date: "2019-02-28"
-category: release
+category: announcement
 ---
 # Nacos 0.9.0版本发布啦
 

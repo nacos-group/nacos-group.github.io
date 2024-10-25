@@ -3,7 +3,7 @@ title: 2.3.0-BETA发布，欢迎试用
 keywords: [2.3.0]
 description: 2.3.0-BETA发布，欢迎试用
 date: "2023-10-24"
-category: release
+category: announcement
 ---
 # 2.3.0-BETA发布，欢迎试用
 

@@ -3,7 +3,7 @@ title: Nacos 0.9.0版本进行发布
 keywords: [nacos0.9，nacos0.9.0，nacos]
 description: Nacos 0.9.0版本进行发布
 date: "2019-03-07"
-category: release
+category: announcement
 ---
 # Nacos 0.9.0 发布，稳定的快速迭代
 天下武功，唯快不破，Nacos一直秉承着稳定性和快速迭代，Nacos 0.9.0版本于上周正式发布release，功能围绕着，Nacos-Sync的稳定性、Server功能拆分部署、Nacos python语言体系的支持，并且在此基础之上，Nacos首次发布核心团队人员，并在持续招募中。

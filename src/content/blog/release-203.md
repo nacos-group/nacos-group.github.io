@@ -3,7 +3,7 @@ title: Nacos 2.0.3版本发布，继续提升集群稳定性及升级稳定性
 keywords: [2.0.3]
 description: Nacos 2.0.3版本发布，继续提升集群稳定性及升级稳定性
 date: "2021-07-29"
-category: release
+category: announcement
 ---
 
 # Nacos 2.0.3版本发布，继续提升集群稳定性及升级稳定性

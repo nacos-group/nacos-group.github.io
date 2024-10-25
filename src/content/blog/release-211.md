@@ -3,7 +3,7 @@ title: Nacos 四周年，2.1.1 及 1.4.4 版本同时发布
 keywords: [2.1.1, 1.4.4]
 description: 为了庆祝 Nacos 开源四周年，我们同时推出 2.1.1 和 1.4.4 两个新版本，回馈小伙伴们的信任！
 date: "2022-08-10"
-category: release
+category: announcement
 ---
 # Nacos 四周年，2.1.1 及 1.4.4 版本同时发布
 
