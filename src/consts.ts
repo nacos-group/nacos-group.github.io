@@ -105,21 +105,21 @@ export const BLOG_CATEGORY = [
         title: '公告',
         href: '/blog/announcement'
     },
-    {
-        type: 'customer',
-        title: '客户',
-        href: '/blog/customer'
-    },
+    // {
+    //     type: 'customer',
+    //     title: '客户',
+    //     href: '/blog/customer'
+    // },
     {
         type: 'community',
         title: '社区',
         href: '/blog/community'
     },
-    {
-        type: 'other',
-        title: '其他',
-        href: '/blog/other'
-    },
+    // {
+    //     type: 'other',
+    //     title: '其他',
+    //     href: '/blog/other'
+    // },
 ];
 
 export const WUYI_CATEGORY = [
