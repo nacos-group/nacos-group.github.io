@@ -6,9 +6,9 @@ export const SITE_DESCRIPTION = 'Welcome to my website!';
 
 // 吊顶提示文案
 export const TOPBAR = {
-    "text": "云栖回顾 | 2024 云栖大会微服务和网关相关演讲材料",
-    "mobileText": "云栖回顾 | 2024 云栖大会微服务和网关相关演讲材料",
-    "link": "https://developer.aliyun.com/ebook/8379",
+    "text": "云原生开源开发者沙龙 | AI 应用工程化专场杭州站邀您参会",
+    "mobileText": "云原生开源开发者沙龙 | AI 应用工程化专场杭州站邀您参会",
+    "link": "https://nacos.io/blog/nacos-gvr7dx_awbbpb_ghknwrgwcl15ho3z/?source=activity_activity-preview/",
     "target": "_blank",
     "display": true
 }
