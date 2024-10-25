@@ -1,9 +1,9 @@
 ---
 title: Console API Guide
-keywords: [Console API, Guide]
+keywords: [Console API,Guide]
 description: Console API Guide
 sidebar:
-order: 8
+    order: 8
 ---
 
 # Console API Guide
