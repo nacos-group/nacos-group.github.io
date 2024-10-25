@@ -48,7 +48,11 @@ export const i18nMap = {
         article: 'blog.article.technical',
         case: 'blog.article.case.best.practices',
         ecosystem: 'blog.article.ecosystem.articles',
-        all: 'blog.all.articles'
+        all: 'blog.all.articles',
+        announcement: 'blog.activity.community.announcement',
+        customer: 'blog.article.customer',
+        community: 'blog.article.community',
+        other: 'blog.article.other',
     },
     "news": {
         announcement: 'blog.activity.community.announcement',
@@ -75,21 +79,46 @@ export const BLOG_CATEGORY = [
         title: '全部文章',
         href: '/blog'
     },
+    // {
+    //     type: 'article',
+    //     title: '技术文章',
+    //     href: '/blog/article'
+    // },
+
+    // {
+    //     type: 'ecosystem',
+    //     title: '生态文章',
+    //     href: '/blog/ecosystem'
+    // },
+    // {
+    //     type: 'case',
+    //     title: '最佳实践',
+    //     href: '/blog/case'
+    // },
     {
         type: 'article',
-        title: '技术文章',
+        title: '技术',
         href: '/blog/article'
     },
-
     {
-        type: 'ecosystem',
-        title: '生态文章',
-        href: '/blog/ecosystem'
+        type: 'announcement',
+        title: '公告',
+        href: '/blog/announcement'
     },
     {
-        type: 'case',
-        title: '最佳实践',
-        href: '/blog/case'
+        type: 'customer',
+        title: '客户',
+        href: '/blog/customer'
+    },
+    {
+        type: 'community',
+        title: '社区',
+        href: '/blog/community'
+    },
+    {
+        type: 'other',
+        title: '其他',
+        href: '/blog/other'
     },
 ];
 

@@ -10,93 +10,109 @@ const ifzh = isChinese(Astro);
 
 export const communityItems = [
   {
-    label: "社区",
+    label: "博客",
+    target: "_self",
+    link: "/blog/",
     translations: {
-      en: "COMMUNITY",
+      en: "Blog",
     },
-    children: [
-      {
-        label: "报告文档问题",
-        target: "_blank",
-        link: "https://github.com/nacos-group/nacos-group.github.io/issues",
-        translations: {
-          en: "Report a doc issue",
-        },
-      },
-      {
-        label: "贡献社区",
-        target: "_blank",
-        link: "https://github.com/alibaba/nacos/pulls",
-        translations: {
-          en: "Contribute community",
-        },
-      },
-      {
-        label: "贡献者",
-        target: "_blank",
-        link: "https://github.com/alibaba/nacos/graphs/contributors",
-        translations: {
-          en: "Contributors",
-        },
-      },
-    ],
   },
   {
-    label: "事件",
+    label: "电子书",
+    target: "_self",
+    link: "/docs/ebook/kbyo6n/",
     translations: {
-      en: "Events",
+      en: "E-book",
     },
-    children: [
-      {
-        label: "新闻",
-        target: "_self",
-        link: "/news/",
-        translations: {
-          en: "News",
-        },
-      },
-      {
-        label: "活动",
-        target: "_self",
-        link: "/activity/",
-        translations: {
-          en: "Activity",
-        },
-      },
-    ],
   },
-  {
-    label: "资源",
-    translations: {
-      en: "Resources",
-    },
-    children: [
-      {
-        label: "博客",
-        target: "_self",
-        link: "/blog/",
-        translations: {
-          en: "Blog",
-        },
-      },
-      {
-        label: "电子书",
-        target: "_self",
-        link: "/docs/ebook/kbyo6n/",
-        translations: {
-          en: "E-book",
-        },
-      },
-      {
-        label: "版本下载",
-        target: "_self",
-        link: "/download/nacos-server/",
-        translations: {
-          en: "Download",
-        },
-      },
-    ],
-  },
+  // {
+  //   label: "社区",
+  //   translations: {
+  //     en: "COMMUNITY",
+  //   },
+  //   children: [
+  //     {
+  //       label: "报告文档问题",
+  //       target: "_blank",
+  //       link: "https://github.com/nacos-group/nacos-group.github.io/issues",
+  //       translations: {
+  //         en: "Report a doc issue",
+  //       },
+  //     },
+  //     {
+  //       label: "贡献社区",
+  //       target: "_blank",
+  //       link: "https://github.com/alibaba/nacos/pulls",
+  //       translations: {
+  //         en: "Contribute community",
+  //       },
+  //     },
+  //     {
+  //       label: "贡献者",
+  //       target: "_blank",
+  //       link: "https://github.com/alibaba/nacos/graphs/contributors",
+  //       translations: {
+  //         en: "Contributors",
+  //       },
+  //     },
+  //   ],
+  // },
+  // {
+  //   label: "事件",
+  //   translations: {
+  //     en: "Events",
+  //   },
+  //   children: [
+  //     {
+  //       label: "新闻",
+  //       target: "_self",
+  //       link: "/news/",
+  //       translations: {
+  //         en: "News",
+  //       },
+  //     },
+  //     {
+  //       label: "活动",
+  //       target: "_self",
+  //       link: "/activity/",
+  //       translations: {
+  //         en: "Activity",
+  //       },
+  //     },
+  //   ],
+  // },
+  // {
+  //   label: "资源",
+  //   translations: {
+  //     en: "Resources",
+  //   },
+  //   children: [
+  //     {
+  //       label: "博客",
+  //       target: "_self",
+  //       link: "/blog/",
+  //       translations: {
+  //         en: "Blog",
+  //       },
+  //     },
+  //     {
+  //       label: "电子书",
+  //       target: "_self",
+  //       link: "/docs/ebook/kbyo6n/",
+  //       translations: {
+  //         en: "E-book",
+  //       },
+  //     },
+  //     {
+  //       label: "版本下载",
+  //       target: "_self",
+  //       link: "/download/nacos-server/",
+  //       translations: {
+  //         en: "Download",
+  //       },
+  //     },
+  //   ],
+  // },
 ];
 
 const categoryMap = {
@@ -130,11 +146,11 @@ const posts = await getEntries(simplifiedPosts as any);
         <div class="flex">
           <!-- 社区label -->
           <div class="border-l border-gray-12 flex flex-col px-7 min-w-[12rem]">
-            <span class="text-xs text-gray-10 mb-2"
-              >{ifzh ? comt.label : comt.translations?.en}</span
-            >
+            <span class="text-xs text-gray-10 mb-2">
+              {ifzh ? comt.label : comt.translations?.en}
+            </span>
             {
-              comt.children.map((menu) => {
+              comt.children && comt.children.map((menu) => {
                 const { label, translations, link, target = "_self" } = menu;
                 return (
                   <LinkText
@@ -150,7 +166,7 @@ const posts = await getEntries(simplifiedPosts as any);
           </div>
 
           <!-- 事件、资源label -->
-          <div
+          <!-- <div
             class:list={[
               "border-l",
               "border-gray-12",
@@ -194,7 +210,7 @@ const posts = await getEntries(simplifiedPosts as any);
                 );
               })
             }
-          </div>
+          </div> -->
         </div>
 
         <!-- 卡片 -->
