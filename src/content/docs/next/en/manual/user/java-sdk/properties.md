@@ -217,3 +217,4 @@ Nacos Java SDK 中有部分参数对运行时期的影响较小，且需要全�
 | nacos.env.first           | Nacos JAVA SDK 的 `NacosClientProperties` 配置搜索顺序。详情见[1.3.1. 优先级](#131-优先级)                                          | PROPERTIES/JVM/ENV | PROPERTIES        |
 | project.name              | 该SDK所归属的应用名，可在服务订阅者列表和配置订阅者列表中使用，仅作为参考字段使用                                                                         | 任意字符串              | unknown           |
 | ~~NACOS.CONNECT.TIMEOUT~~ | 连接服务时的连接超时时间，旧版本Http使用，已废弃                                                                                         | 任意int              | 1000              |
+| NACOS.READ.TIMEOUT | 连接服务时的读取超时时间，旧版本Http使用                                                                                         | 任意int              | 3000              |
