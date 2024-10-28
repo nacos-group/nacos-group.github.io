@@ -135,7 +135,7 @@ let height,
   function addCopilot() {
     const copilotJSScript = document.createElement("script");
     copilotJSScript.type = "text/javascript";
-    copilotJSScript.src = "https://g.alicdn.com/cm-design/copilot-booter/0.0.26/copilot-booter.js";
+    copilotJSScript.src = "https://g.alicdn.com/cm-design/copilot-booter/0.0.27/copilot-booter.js";
     copilotJSScript.addEventListener("load", function () {
       if (window.CNPilot) {
         window.CNPilot.mounted({
@@ -146,13 +146,31 @@ let height,
             top: "64px",
           },
           entryIconProps: {
-            "position-type": "updown",
-            "icon-hover-text": "专家答疑",
-            "icon-style": {
-                color: "red", 
-                background: "white", 
-                border: "2px solid red", 
-                borderRadius: "20px"
+            'position-type':'updown',
+            'icon-hover-text':'专家答疑',
+            'icon-url':'https://img.alicdn.com/imgextra/i3/O1CN013gOExm1X2g7hKMTjC_!!6000000002866-2-tps-92-92.png',
+            'icon-style': { 
+              color:'white', 
+              width: '80px',
+              height: '80px',
+              background: '#3D57DA',
+              border:'none',
+              paddingTop: '12px'
+            },
+            'image-style': {
+              width: '46px',
+              height: '46px',
+              borderRadius: '16px',
+            },
+            'icon-text': {
+              color: '#F4F4F6',
+              width: '100%',
+              fontSize: '10px',
+              fontFamily: " Source Han Sans",
+              fontWeight: "normal",
+              lineHeight: "normal",
+              textAlign: "center",
+              letterSpacing: "0em"
             }
           },
           headerProps: {
