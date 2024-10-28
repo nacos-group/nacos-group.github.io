@@ -571,5 +571,3 @@ The `GroupkeyListenserStatus` object contains the following fields:
     }
   }
   ```
-
----

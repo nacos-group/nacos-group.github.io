@@ -3,7 +3,7 @@ title: Console API 指南
 keywords: [Console API,指南]
 description: Console API 指南
 sidebar:
-order: 8
+    order: 8
 ---
 
 # Console API 指南
@@ -2259,6 +2259,4 @@ curl -X GET 'http://127.0.0.1:8848/v3/console/core/cluster/nodes?keyword=127.0.0
   ]
 }
 ```
-
----
 
