@@ -6,7 +6,7 @@ description: What is Nacos
 
 # What is Nacos
 
-> Document optimizing...
+> This document will be deprecated soon. It is recommended to refer to [Nacos Overview](./overview.md).
 
 ## Overview
 
