@@ -78,6 +78,13 @@
                     "en": "Parameters Check"
                 },
                 "link": "docs/manual/user/parameters-check"
+            },
+            {
+                "label": "寻址说明",
+                "translations": {
+                    "en": "Addressing"
+                },
+                "link": "docs/manual/user/addressing"
             }
         ]
     },
