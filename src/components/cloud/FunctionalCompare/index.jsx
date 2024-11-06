@@ -79,7 +79,7 @@ const FunctionalCompare = (props) => {
               <div class='h-20 text-gray-08 text-xs mb-1'>
                 <p class='mb-1'>目录价：118元/月起</p>
                 <p class='mb-1'>折扣价：47.2元/月起</p>
-                <p class='mb-1'>折扣详情：月包7折，年包4折，新老同享</p>
+                <p class='mb-1'>折扣详情：月包6折，年包4折，新老同享</p>
               </div>
 
             </th>
