@@ -1,5 +1,5 @@
 ---
-title: Go SDK Usage
+title: Nacos Go SDK Usage
 keywords: [Go,SDK,Usage]
 description: This document introduces the usage of Nacos's Go SDK (nacos-sdk-go)
 sidebar:

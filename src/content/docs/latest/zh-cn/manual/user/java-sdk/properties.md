@@ -1,5 +1,5 @@
 ---
-title: Java SDK 配置参数
+title: Nacos Java SDK 配置参数
 keywords: [ Java,SDK,配置参数 ]
 description: 本文档介绍了Nacos的Java SDK(nacos-client)目前所支持的配置参数列表,以及对Nacos Java SDK读取配置参数的原理做简要介绍。
 sidebar:

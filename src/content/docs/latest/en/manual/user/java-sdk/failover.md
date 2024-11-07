@@ -1,5 +1,5 @@
 ---
-title: Java SDK Failover
+title: Nacos Java SDK Failover
 keywords: [Failover]
 description: Java SDL Failover manual
 sidebar:

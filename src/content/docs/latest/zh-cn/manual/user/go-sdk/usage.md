@@ -1,5 +1,5 @@
 ---
-title: Go SDK 使用手册
+title: Nacos Go SDK 使用手册
 keywords: [Go,SDK,使用手册]
 description: 本文档介绍了Nacos的Go SDK(nacos-sdk-go)的使用方式
 sidebar:
