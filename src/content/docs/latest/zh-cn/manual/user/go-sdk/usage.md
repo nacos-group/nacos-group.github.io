@@ -6,7 +6,7 @@ sidebar:
     order: 5
 ---
 
-# Go SDK 使用手册
+# Nacos Go SDK 使用手册
 
 
 ## 使用限制

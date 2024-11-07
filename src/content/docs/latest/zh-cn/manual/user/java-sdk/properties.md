@@ -6,7 +6,7 @@ sidebar:
   order: 3
 ---
 
-# Java SDK 配置参数
+# Nacos Java SDK 配置参数
 
 ## 1. Java SDK 读取参数配置
 
