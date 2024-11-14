@@ -220,134 +220,6 @@ export const ALGOLIA_CONFIG = {
 }
 
 export const versionDataSource = [
-    { title: "易用性", data:[
-        {
-            name: {
-                title: '自动化运维',
-            },
-            free: {
-                checked: false,
-                des: ''
-            },
-            develop: {
-                checked: true,
-                des: ''
-            },
-            speciality: {
-                checked: true,
-                des: ''
-            },
-            serverless: {
-                checked: '',
-                des: '免运维'
-            },
-        },
-        {
-            name: {
-                title: '域名自动绑定',
-            },
-            free: {
-                checked: false,
-                des: ''
-            },
-            develop: {
-                checked: true,
-                des: ''
-            },
-            speciality: {
-                checked: true,
-                des: ''
-            },
-            serverless: {
-                checked: true,
-                des: ''
-            },
-        },
-        {
-            name: {
-                title: '故障节点自动摘除',
-            },
-            free: {
-                checked: false,
-                des: ''
-            },
-            develop: {
-                checked: true,
-                des: ''
-            },
-            speciality: {
-                checked: true,
-                des: ''
-            },
-            serverless: {
-                checked: true,
-                des: '',
-            },
-        },
-        {
-            name: {
-                title: '云原生网关、治理深度集成',
-            },
-            free: {
-                checked: false,
-                des: ''
-            },
-            develop: {
-                checked: true,
-                des: ''
-            },
-            speciality: {
-                checked: true,
-                des: ''
-            },
-            serverless: {
-                checked: true,
-                des: ''
-            },
-        },
-        {
-            name: {
-                title: '平滑迁移工具',
-            },
-            free: {
-                checked: false,
-                des: ''
-            },
-            develop: {
-                checked: true,
-                des: ''
-            },
-            speciality: {
-                checked: true,
-                des: ''
-            },
-            serverless: {
-                checked: true,
-                des: ''
-            },
-        },
-        {
-            name: {
-                title: 'Eureka 协议兼容',
-            },
-            free: {
-                checked: false,
-                des: ''
-            },
-            develop: {
-                checked: true,
-                des: ''
-            },
-            speciality: {
-                checked: true,
-                des: ''
-            },
-            serverless: {
-                checked: true,
-                des: ''
-            },
-        },
-    ] },
     { title: "可用性", data: [
         {
             name: {
@@ -585,7 +457,135 @@ export const versionDataSource = [
         },
         {
             name: {
-                title: 'KMS 存储加密，自定义轮转， 变更实时生效',
+                title: 'KMS 配置存储加密，自定义轮转， 变更实时生效',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
+        },
+    ] },
+    { title: "易用性", data:[
+        {
+            name: {
+                title: '自动化运维',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: '',
+                des: '免运维'
+            },
+        },
+        {
+            name: {
+                title: '域名自动绑定',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
+        },
+        {
+            name: {
+                title: '故障节点自动摘除',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: '',
+            },
+        },
+        {
+            name: {
+                title: '云原生网关、治理深度集成',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
+        },
+        {
+            name: {
+                title: '平滑迁移工具',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
+        },
+        {
+            name: {
+                title: 'Eureka 协议兼容',
             },
             free: {
                 checked: false,
@@ -616,7 +616,7 @@ export const versionDataSource = [
             },
             develop: {
                 checked: '',
-                des: '持平',
+                des: '和社区版持平',
             },
             speciality: {
                 checked: '',
@@ -637,7 +637,7 @@ export const versionDataSource = [
             },
             develop:  {
                 checked: '',
-                des: '持平',
+                des: '和社区版持平',
             },
             speciality:{
                 checked: '',
