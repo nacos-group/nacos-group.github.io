@@ -54,6 +54,7 @@ export default {
 	'home.title': 'Nacos Website | Nacos Registration Configuration Center | Nacos Download | Nacos Official Community',
 	'home.description': 'Nacos provides dynamic service discovery, configuration, and management, helping users quickly build and deliver microservice platforms in private, hybrid, and public clouds, enhancing service reuse and innovation delivery speed to gain market competitiveness.',
 	'home.introduce.about': 'ABOUT NACOS',
+	'home.introduce.website': 'Nacos Website',
 	'home.introduce.title': 'An easy-to-use dynamic service discovery, configuration and service management platform for building cloud native applications',
 	'home.introduce.nacos.code': 'VIEW ON GITHUB',
 	'home.introduce.nacos.manual': 'MANUAL',

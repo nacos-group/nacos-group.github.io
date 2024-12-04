@@ -52,6 +52,7 @@ export default {
 
 	'home.title': 'Nacos官网| Nacos 配置中心 | Nacos 下载| Nacos 官方社区',
 	'home.description': 'Nacos 提供动态服务发现、配置和管理，助力用户在私有云、混合云、公有云等环境中快速构建和交付微服务平台，提升业务复用和创新交付速度，为用户赢得市场竞争力。',
+	'home.introduce.website': 'Nacos官网',
 	'home.introduce.about': '关于 NACOS',
 	'home.introduce.title': ' 一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台',
 	'home.introduce.nacos.code': '前往 GitHub',
