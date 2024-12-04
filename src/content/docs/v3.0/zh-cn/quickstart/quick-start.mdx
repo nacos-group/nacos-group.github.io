@@ -13,13 +13,15 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。
 
 :::note
-- 快速开始旨在帮助您快速上手安装、部署及入门使用Nacos，本快速开始所生产出的Nacos服务为**单机模式**及**未开启鉴权**，建议仅在测试中使用，若在实际生产环境中部署，请部署**集群模式**并**开启鉴权**，以避免存在**稳定性和安全性**的风险。
+- 快速开始旨在帮助您快速上手安装、部署及入门使用Nacos，本快速开始所生产出的Nacos服务为**单机模式**及**未开启客户端访问鉴权**，建议仅在测试中使用，若在实际生产环境中部署，请部署**集群模式**并**开启鉴权**，以避免存在**稳定性和安全性**的风险。
 - Nacos定义为一个IDC内部应用组件，并非面向公网环境的产品，建议在内部隔离网络环境中部署，**强烈不建议**部署在公共网络环境。
 :::
 
 ## 0. 版本选择
 
-您可以通过Nacos的[版本下载页面](/download/nacos-server/)、[release notes](https://github.com/alibaba/nacos/releases) 及 [发布声明](/news/release/)中找到每个版本支持的功能的介绍，当前推荐的稳定版本为`2.4.3`.
+您可以通过Nacos的[版本下载页面](/download/nacos-server/)、[release notes](https://github.com/alibaba/nacos/releases) 及 [发布声明](/news/release/)中找到每个版本支持的功能的介绍，`3.0.0`还处于Alpha阶段，推荐在测试环境中使用，生产环境当前推荐的稳定版本为`2.4.3`.
+
+> 注意：Nacos 3.0.0-ALPHA 版本暂不支持从旧版本升级，升级会导致旧配置无法获取和查看。
 
 ## 1. 预备环境准备
 
@@ -51,7 +53,21 @@ Nacos 依赖 [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_j
   cd nacos/bin
 ```
 
-## 4.启动服务器
+## 4. 修改鉴权配置
+
+启动之前需要修改鉴权相关的配置，否则无法顺利启动或Nacos控制台将无法使用，在`conf`目录下，修改`application.properties`文件
+
+```
+### 用于生成JWT令牌的密钥(Base64 String):
+### 推荐设置为Base64编码的字符串，且原始密钥长度不得低于32字符
+nacos.core.auth.default.token.secret.key=$custom_base64_token_secret_key
+
+### 配置自定义身份识别的key（不可为空）和value（不可为空）
+nacos.core.auth.server.identity.key=$custom_server_identity_key
+nacos.core.auth.server.identity.value=$custom_server_identity_value
+```
+
+## 5.启动服务器
 
 * 注：Nacos的运行建议至少在2C4G 60G的机器配置下运行。
 
@@ -70,7 +86,7 @@ Nacos 依赖 [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_j
   </TabItem>
 </Tabs>
 
-## 5.验证Nacos服务是否启动成功
+## 6.验证Nacos服务是否启动成功
 
 进入`${nacos.home}/logs/` 目录下， 使用`tail -f start.out` 查看日志，如果看到如下日志，说明服务启动成功。
 
@@ -80,33 +96,35 @@ Nacos started successfully in stand alone mode. use embedded storage
 
 可以通过下列服务，快速检验Nacos的功能。
 
-### 5.1. 服务注册
+### 6.1. 服务注册
 
 `curl -X POST 'http://127.0.0.1:8848/nacos/v1/ns/instance?serviceName=nacos.naming.serviceName&ip=20.18.7.10&port=8080'`
 
-### 5.2. 服务发现
+### 6.2. 服务发现
 
 `curl -X GET 'http://127.0.0.1:8848/nacos/v1/ns/instance/list?serviceName=nacos.naming.serviceName'`
 
-### 5.3. 发布配置
+### 6.3. 发布配置
 
 `curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test&content=HelloWorld"`
 
-### 5.4. 获取配置
+### 6.4. 获取配置
 
 `curl -X GET "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&group=test"`
 
-### 5.5. Nacos控制台页面
+### 6.5. Nacos控制台页面
 
 打开任意浏览器，输入地址：`http://127.0.0.1:8848/nacos`，即可进入Nacos控制台页面。
 
-## 6.关闭服务器
+> 注意：首次打开会要求初始化管理员用户`nacos`的密码。
 
-### 6.1. Linux/Unix/Mac 
+## 7.关闭服务器
+
+### 7.1. Linux/Unix/Mac
 
 `sh shutdown.sh`
 
-### 6.2. Windows
+### 7.2. Windows
 
 `shutdown.cmd`
 

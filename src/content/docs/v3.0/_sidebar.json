@@ -1,224 +1,256 @@
 [
-    {
-        "label": "概览",
-        "link": "docs/overview/",
-        "translations": {
-            "en": "Overview"
-        }
-    },
-    {
+  {
+    "label": "概览",
+    "link": "docs/overview/",
+    "translations": {
+      "en": "Overview"
+    }
+  },
+  {
     "label": "快速开始",
     "translations": {
-        "en": "Quick Start"
+      "en": "Quick Start"
     },
     "collapsed": false,
     "items": [
-        {
+      {
         "label": "Nacos",
         "link": "docs/quickstart/quick-start/",
         "translations": {
-            "en": "Nacos"
+          "en": "Nacos"
         }
-        },
-        {
+      },
+      {
         "label": "Nacos Docker",
         "link": "docs/quickstart/quick-start-docker/",
         "translations": {
-            "en": "Nacos Docker"
+          "en": "Nacos Docker"
         }
-        },
-        {
+      },
+      {
         "label": "Nacos Kubernetes",
         "link": "docs/quickstart/quick-start-kubernetes/",
         "translations": {
-            "en": "Nacos Kubernetes"
+          "en": "Nacos Kubernetes"
         }
-        }
+      }
     ]
+  },
+  {
+    "label": "用户手册",
+    "translations": {
+      "en": "User Manual"
     },
-    {
-        "label": "用户手册",
+    "items": [
+      {
+        "label": "概览",
+        "autogenerate": {
+          "directory": "manual/user/overview"
+        }
+      },
+      {
+        "label": "JAVA SDK",
+        "autogenerate": {
+          "directory": "manual/user/java-sdk"
+        }
+      },
+      {
+        "label": "Golang SDK",
+        "autogenerate": {
+          "directory": "manual/user/go-sdk"
+        }
+      },
+      {
+        "label": "Python SDK",
+        "autogenerate": {
+          "directory": "manual/user/python-sdk"
+        }
+      },
+      {
+        "label": "Open API 手册",
         "translations": {
-            "en": "User Manual"
+          "en": "Open API Manual"
         },
-        "items": [
-            {
-                "label": "概览",
-                "autogenerate": { "directory": "manual/user/overview" }
-            },
-            {
-                "label": "JAVA SDK",
-                "autogenerate": { "directory": "manual/user/java-sdk" }
-            },
-            {
-                "label": "Golang SDK",
-                "autogenerate": { "directory": "manual/user/go-sdk" }
-            },
-            {
-                "label": "Python SDK",
-                "autogenerate": { "directory": "manual/user/python-sdk" }
-            },
-            {
-                "label": "Open API 手册",
-                "translations": {
-                    "en": "Open API Manual"
-                },
-                "link": "docs/manual/user/open-api"
-            },
-            {
-                "label": "配置鉴权",
-                "translations": {
-                    "en": "Authorization"
-                },
-                "link": "docs/manual/user/auth"
-            },
-            {
-                "label": "参数校验",
-                "translations": {
-                    "en": "Parameters Check"
-                },
-                "link": "docs/manual/user/parameters-check"
-            },
-            {
-                "label": "寻址说明",
-                "translations": {
-                    "en": "Addressing"
-                },
-                "link": "docs/manual/user/addressing"
-            }
-        ]
-    },
-    {
-        "label": "运维手册",
+        "link": "docs/manual/user/open-api"
+      },
+      {
+        "label": "配置鉴权",
         "translations": {
-            "en": "Admin Manual"
+          "en": "Authorization"
         },
-        "items": [
-            {
-                "label": "部署手册",
-                "translations": {
-                    "en": "Deploy Manual"
-                },
-                "autogenerate": { "directory": "manual/admin/deployment" }
-            },
-            {
-                "label": "系统参数",
-                "translations": {
-                    "en": "Nacos Configuration"
-                },
-                "link": "docs/manual/admin/system-configurations"
-            },
-            {
-                "label": "运维API",
-                "translations": {
-                    "en": "Management API"
-                },
-                "link": "docs/manual/admin/admin-api"
-            },
-            {
-                "label": "鉴权手册",
-                "translations": {
-                    "en": "Authorization Manual"
-                },
-                "link": "docs/manual/admin/auth"
-            },
-            {
-                "label": "升级手册",
-                "translations": {
-                    "en": "Upgrading Manual"
-                },
-                "link": "docs/manual/admin/upgrading"
-            },
-            {
-                "label": "监控手册",
-                "translations": {
-                    "en": "Monitor Manual"
-                },
-                "link": "docs/manual/admin/monitor"
-            }
-        ,
-            {
-                "label": "控制台手册",
-                "translations": {
-                    "en": "Console Manual"
-                },
-                "link": "docs/manual/admin/console"
-            }
-        ]
-    },
-    {
-        "label": "插件",
+        "link": "docs/manual/user/auth"
+      },
+      {
+        "label": "参数校验",
         "translations": {
-            "en": "Plugin"
+          "en": "Parameters Check"
         },
-        "autogenerate": { "directory": "plugin" }
-    },
-    {
-        "label": "测试手册",
+        "link": "docs/manual/user/parameters-check"
+      },
+      {
+        "label": "寻址说明",
         "translations": {
-            "en": "Test Manual"
+          "en": "Addressing"
         },
-        "autogenerate": { "directory": "manual/test" }
+        "link": "docs/manual/user/addressing"
+      }
+    ]
+  },
+  {
+    "label": "运维手册",
+    "translations": {
+      "en": "Admin Manual"
     },
-    {
-        "label": "生态融合",
+    "items": [
+      {
+        "label": "部署手册",
         "translations": {
-            "en": "Ecology"
+          "en": "Deploy Manual"
         },
-        "autogenerate": { "directory": "ecology" }
-    },
-    {
-        "label": "开源共建",
+        "autogenerate": {
+          "directory": "manual/admin/deployment"
+        }
+      },
+      {
+        "label": "系统参数",
         "translations": {
-            "en": "Contributor Guide"
+          "en": "Nacos Configuration"
         },
-        "autogenerate": { "directory": "contribution" }
-    },
-    {
-        "label": "社区",
+        "link": "docs/manual/admin/system-configurations"
+      },
+      {
+        "label": "运维API",
         "translations": {
-            "en": "Community"
+          "en": "Management API"
         },
-        "autogenerate": { "directory": "community" }
-    },
-    {
-        "label": "将归档",
+        "link": "docs/manual/admin/admin-api"
+      },
+      {
+        "label": "鉴权手册",
         "translations": {
-            "en": "Archiving"
+          "en": "Authorization Manual"
+        },
+        "link": "docs/manual/admin/auth"
+      },
+      {
+        "label": "升级手册",
+        "translations": {
+          "en": "Upgrading Manual"
+        },
+        "link": "docs/manual/admin/upgrading"
+      },
+      {
+        "label": "监控手册",
+        "translations": {
+          "en": "Monitor Manual"
+        },
+        "link": "docs/manual/admin/monitor"
+      },
+      {
+        "label": "控制台手册",
+        "translations": {
+          "en": "Console Manual"
+        },
+        "link": "docs/manual/admin/console"
+      },
+      {
+        "label": "控制台API",
+        "translations": {
+          "en": "Console API"
+        },
+        "link": "docs/manual/admin/console-api"
+      }
+    ]
+  },
+  {
+    "label": "插件",
+    "translations": {
+      "en": "Plugin"
+    },
+    "autogenerate": {
+      "directory": "plugin"
+    }
+  },
+  {
+    "label": "测试手册",
+    "translations": {
+      "en": "Test Manual"
+    },
+    "autogenerate": {
+      "directory": "manual/test"
+    }
+  },
+  {
+    "label": "生态融合",
+    "translations": {
+      "en": "Ecology"
+    },
+    "autogenerate": {
+      "directory": "ecology"
+    }
+  },
+  {
+    "label": "开源共建",
+    "translations": {
+      "en": "Contributor Guide"
+    },
+    "autogenerate": {
+      "directory": "contribution"
+    }
+  },
+  {
+    "label": "社区",
+    "translations": {
+      "en": "Community"
+    },
+    "autogenerate": {
+      "directory": "community"
+    }
+  },
+  {
+    "label": "将归档",
+    "translations": {
+      "en": "Archiving"
+    },
+    "collapsed": true,
+    "items": [
+      {
+        "label": "什么是 Nacos",
+        "translations": {
+          "en": "What is Nacos"
+        },
+        "link": "docs/what-is-nacos"
+      },
+      {
+        "label": "升级",
+        "translations": {
+          "en": "Upgrading"
         },
         "collapsed": true,
-        "items": [
-            {
-                "label": "什么是 Nacos",
-                "translations": {
-                    "en": "What is Nacos"
-                },
-                "link": "docs/what-is-nacos"
-            },
-            {
-                "label": "升级",
-                "translations": {
-                    "en": "Upgrading"
-                },
-                "collapsed": true,
-                "autogenerate": { "directory": "upgrading" }
-            },
-            {
-                "label": "用户指南",
-                "translations": {
-                    "en": "User Guide"
-                },
-                "collapsed": true,
-                "autogenerate": { "directory": "guide/user" }
-            },
-            {
-                "label": "运维指南",
-                "translations": {
-                    "en": "Admin Guide"
-                },
-                "collapsed": true,
-                "autogenerate": { "directory": "guide/admin" }
-            }
-        ]
-    }
+        "autogenerate": {
+          "directory": "upgrading"
+        }
+      },
+      {
+        "label": "用户指南",
+        "translations": {
+          "en": "User Guide"
+        },
+        "collapsed": true,
+        "autogenerate": {
+          "directory": "guide/user"
+        }
+      },
+      {
+        "label": "运维指南",
+        "translations": {
+          "en": "Admin Guide"
+        },
+        "collapsed": true,
+        "autogenerate": {
+          "directory": "guide/admin"
+        }
+      }
+    ]
+  }
 ]

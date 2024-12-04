@@ -1,9 +1,9 @@
 ---
-title: Cluster Deployment
-keywords: [Nacos,Deployment,Cluster mode]
-description: Nacos Cluster Deployment Guide, This document provides references for deploying Nacos in cluster mode using various methods.
+title: 集群模式部署
+keywords: [Nacos,部署,集群模式]
+description: Nacos集群模式部署手册，参考本文档可进行Nacos集群模式多种方式部署。
 sidebar:
-  order: 3
+    order: 3
 ---
 
 # Nacos集群模式
@@ -61,14 +61,19 @@ db.user=${mysql_user}
 db.password=${mysql_password}
 ```
 
-##### 1.1.3.1. 开启默认鉴权插件（可选，推荐）
+##### 1.1.3.1. 开启默认鉴权插件
+
+> 自3.0.0版本开始，Nacos控制台默认开启访问鉴权，所以鉴权相关配置必须进行配置。
 
 修改`conf`目录下的`application.properties`文件。
 
 设置其中
 
 ```properties
+## 开启客户端访问鉴权，默认为关闭，可选
 nacos.core.auth.enabled=true
+## 开启控制台访问鉴权，默认为开启
+nacos.core.auth.console.enabled=true
 nacos.core.auth.system.type=nacos
 nacos.core.auth.plugin.nacos.token.secret.key=${自定义，保证所有节点一致}
 nacos.core.auth.server.identity.key=${自定义，保证所有节点一致}
@@ -114,14 +119,19 @@ startup.cmd
 200.8.9.18:8848
 ```
 
-#### 1.2.3. 开启默认鉴权插件（可选，推荐）
+#### 1.2.3. 开启默认鉴权插件
+
+> 自3.0.0版本开始，Nacos控制台默认开启访问鉴权，所以鉴权相关配置必须进行配置。
 
 修改`conf`目录下的`application.properties`文件。
 
 设置其中
 
 ```properties
+## 开启客户端访问鉴权，默认为关闭，可选
 nacos.core.auth.enabled=true
+## 开启控制台访问鉴权，默认为开启
+nacos.core.auth.console.enabled=true
 nacos.core.auth.system.type=nacos
 nacos.core.auth.plugin.nacos.token.secret.key=${自定义，保证所有节点一致}
 nacos.core.auth.server.identity.key=${自定义，保证所有节点一致}

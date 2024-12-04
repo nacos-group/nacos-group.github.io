@@ -1,69 +1,68 @@
 ---
-title: Nacos Native Quick Start
-keywords: [Nacos,Quick Start]
-description: This quick start guide is designed to help you quickly download, install, and use Nacos on your computer.
+title: Nacos Native 快速开始
+keywords: [Nacos,快速开始]
+description: 这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。
 sidebar:
     order: 1
+    hidden: true
 ---
 
-import { Tabs, TabItem } from '@astrojs/starlight/components';
+# Nacos 快速开始
 
-# Nacos Quick Start
-
-This quick start guide is designed to help you quickly download, install, and use Nacos on your computer.
+这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。
 
 :::note
-- The quick start guide is intended to assist you in quickly setting up, deploying, and getting started with Nacos. The Nacos service set up via this guide operates in **standalone mode** without **authentication enabled**, and is recommended for testing purposes only. For production environments, it's advised to deploy Nacos in **cluster mode** with **authentication enabled** to mitigate **stability and security risks**.
-- Nacos is intended to be used as an internal data center (IDC) application component, not a publicly facing product. It is highly recommended to deploy Nacos within an isolated internal network. **It is strongly discouraged** to deploy Nacos in public network environments.
+- 快速开始旨在帮助您快速上手安装、部署及入门使用Nacos，本快速开始所生产出的Nacos服务为**单机模式**及**未开启鉴权**，建议仅在测试中使用，若在实际生产环境中部署，请部署**集群模式**并**开启鉴权**，以避免存在**稳定性和安全性**的风险。
+- Nacos定义为一个IDC内部应用组件，并非面向公网环境的产品，建议在内部隔离网络环境中部署，**强烈不建议**部署在公共网络环境。
 :::
 
-## System Requirements
-Nacos Native is a version of Nacos built using the GraalVM, and it no longer depends on a separate JDK installation. Nacos Native currently provides executable files for Linux (GNU) and macOS. The current version of Nacos Native corresponds to Java Nacos version 2.4.0. Executable binaries can be downloaded from the corresponding release page. It is recommended to run Nacos Native on a complete 64-bit operating system that includes the `libstdc++` library.
+## 环境需求
+Nacos Native 是 Nacos 源码基于 GraalVM 打包而成，其运行不再依赖系统中单独的 JDK 程序。Nacos Native 目前提供了 Linux(GNU)、MacOS 三类操作系统所对应的可执行程序，当前 Nacos Native 对应的 Java Nacos 版本为 2.4.0，可执行程序可以在对应的 release 页面下进行下载。推荐使用完备（包含完备的 libstdc++ 库）的 64bit 的操作系统来运行 Nacos Native。
 
-## Download and Extract the Package
-After downloading the program package from the appropriate page, extract it and verify the files:
+## 下载安装包
+在对应页面下载得到程序包后进行解压，解压后检视文件是否完备：
 
-1. On Linux operating systems, the extracted files should include the `nacos-server` binary, the `libinstrument.so` symlink, and other related configurations.
-2. On macOS, the extracted files should include the `nacos-server` binary and other related configurations.
+1. 在 Linux 操作系统中应当包含 nacos-server 二进制程序、libinstrument.so 链接文件与相关其他配置。
+2. 在 MacOS 操作系统中应当包含 nacos-server 二进制程序与相关其他配置。
 
-If a Nacos Native version for other operating systems is not available, you can manually compile the source code on that operating system to obtain the Nacos Native binary package.
+对于其他操作系统未发布的 Nacos Native 版本，您可以选择在该操作系统上手动进行源码编译得到 Nacos Native 二进制程序包。
 
-## Starting the Server
-It is recommended to run Nacos Native on a machine with at least 1 CPU core, 2 GB of RAM, and 60 GB of storage. On Linux/Unix/macOS, you can start Nacos Native using the following command:
+## 启动服务器
+Nacos Native 的运行建议至少在 1C2G 60G 的机器配置下运行。对于 Linux/Unix/Mac 操作系统，启动命令为：
 
 ```shell
-# standalone means running in single-node mode, not cluster mode
+# standalone 代表着单机模式运行，非集群模式
 sh startup.sh -m standalone
 ```
 
-If you want to start Nacos Native in cluster mode, make sure to have a `cluster.conf` file in the `conf` directory. This process is the same as with Java Nacos. After starting Nacos Native in cluster mode, it will automatically scan and retrieve the cluster IP addresses.
+若要启动 Nacos Native 集群，则需要在相应的 `conf` 文件夹位置下包含对应的 `cluster.conf` 文件，该步骤与 Java Nacos 保持一致，在启动 Nacos Native 集群后会自动扫描并获取集群 IP。
 
-## Stopping the Server
-To stop the Nacos Native server on Linux/Unix/macOS, use the following command:
+## 关闭服务器
+对于 Linux/Unix/Mac 操作系统，关闭命令为：
 
 ```shell
 sh shutdown.sh
 ```
 
-## Viewing Logs
-For Linux/Unix operating systems, Nacos Native's runtime logs are recorded in the `/root/nacos/logs` directory. The log structure is consistent with that of Java Nacos.
+## 日志检视
+以 Linux/Unix 操作系统为例，Nacos Native 的运行日志会被记录在 `/root/nacos/logs` 目录中，其日志结构与 Java Nacos 保持一致。
 
-## Building Native Nacos
-Nacos Native provides build configurations for different operating systems. You can quickly build the Nacos Native executable for a specific OS using Maven. Follow the instructions below to build Nacos Native:
+## 构建原生Nacos
+Nacos Native 提供了不同操作系统对应的构建配置，通过 Maven 可以快速构建对应操作系统下的原生 Nacos 程序。参考构建指令进行构建：
 
 ```shell
-# Build Native Nacos for Windows x64
+# 在 win x64 环境下构建 Native Nacos
 mvn clean install -DskipTests=true -Pnative -Pnative-win64
-# Build Native Nacos for macOS x86_64
+# 在 macos x86_64 环境下构建 Native Nacos
 mvn clean install -DskipTests=true -Pnative -Pnative-osx-x86_64
-# Build Native Nacos for Linux x64
+# 在 linux x64 环境下构建 Native Nacos
 mvn clean install -DskipTests=true -Pnative -Pnative-linux64
 ```
 
-The `-Pnative` configuration provides the basic native build settings, while `-Pnative-<os type>` specifies the operating system type. This configuration ensures that the RocksDB library is correctly packaged into Nacos Native. It's important to note that while Nacos Native offers a `musl`-based build configuration, GraalVM itself still requires compilation on a GNU-supported operating system, so using `musl` for compilation is not recommended.
+其中 `-Pnative` 配置为基本 native 构建配置，`-Pnative-<os type>` 为操作系统类型，改配置主要引导 rocksdb 库能够正确地被 Nacos Native 打包。值得注意的是，虽然 Nacos Native 提供了 musl 类型的打包配置，但 GraalVM 本身仍然需要在支持 GNU 的操作系统下进行编译，因此与 musl 相关的编译不推荐使用。
 
-After a successful build, the relevant files will be published in the `/console/target` directory. You can refer to the "Download and Extract the Package" section to verify the completeness of the build and retrieve the compiled files.
+编译成功后，相关文件会发布在 `/console/target` 目录下，根据“下载安装包”中对应的文件完备性检视引导取用编译文件即可。
 
-## Related Projects
+## 相关项目
 
 * [Nacos](https://github.com/alibaba/nacos)

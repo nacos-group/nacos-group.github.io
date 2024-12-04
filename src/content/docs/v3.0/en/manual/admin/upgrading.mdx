@@ -12,14 +12,11 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## 1. 升级版本兼容性
 
-当前文档所对应的版本为2.4.X，所有Nacos版本可升级到该版本的兼容性如下：
+当前文档所对应的版本为3.0.0，所有Nacos版本可升级到该版本的兼容性如下：
 
-| Nacos版本 | 是否支持升级到当前版本 | 备注 |
-|----------|--------------------|------|
-| 0.X ～ 1.1.X | 不支持 | 0.X ~ 1.1.X 版本需要先升级到1.2以上的，然后参考[Nacos2.0升级文档](https://nacos.io/docs/v2/upgrading/200-upgrading/) 先升级到2.0或2.1版本后再进行升级 |
-| 1.2.X ~ 1.4.X | 不支持 | 2.4.X版本不支持从 1.2.X ~ 1.4.X 之间的版本直接升级，请参考[Nacos2.0升级文档](https://nacos.io/docs/v2/upgrading/200-upgrading/) 先升级到2.0或2.1版本后再进行升级 |
-| 2.0.X | 支持 | 2.4.X版本支持从 2.0.X 升级到 2.4.X， 但数据库表结构有发生变化，请升级前对比[mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)文件，并应用新的表结构后进行升级 |
-| 2.1.X ~ 2.3.X | 支持 | 2.4.X版本支持从 2.1.X ~ 2.3.X 升级到 2.4.X |
+:::note
+3.0.0-ALPHA版本暂不支持从2.X版本升级，升级会导致记录在Nacos中的配置内容无法读取和查看，后续版本会支持升级。
+:::
 
 ## 2. 升级步骤
 
