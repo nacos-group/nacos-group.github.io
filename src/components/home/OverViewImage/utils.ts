@@ -125,13 +125,13 @@ export const hoverHigressData = {
       apiLink: "https://git-proxy-test-git-proxy-ieeqhwptvv.cn-hongkong.fcapp.run/api/alibaba/higress",
     },
     官网: {
-      link: "https://higress.io/",
+      link: "https://higress.cn/",
     },
     最新版本: {
       link: "https://github.com/alibaba/higress/releases/tag/v0.5.0",
     },
     快速入门: {
-      link: "https://higress.io/zh-cn/docs/overview/what-is-higress.html",
+      link: "https://higress.cn/zh-cn/docs/overview/what-is-higress.html",
     },
   },
 };

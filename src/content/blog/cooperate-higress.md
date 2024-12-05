@@ -42,7 +42,7 @@ Higress 提出了将安全、流量、微服务网关三合一的概念，首先
 通过 Higress 将网关合并作为向 DevSecOps 演进的抓手，是一个明智的选择。
 ## 参与 Higress 社区
 Higress 开源贡献小组正在火热招募贡献者。如果您有时间，有热情，有意愿，欢迎联系社区加入开源贡献小组，一起共同完善 Higress，一起主导下一代云原生网关的设计和实现。
-社区官网（点击“阅读原文”跳转）: [https://higress.io](https://higress.io)
+社区官网（点击“阅读原文”跳转）: [https://higress.cn](https://higress.cn)
 社区开发者群：
 ![image.png](https://img.alicdn.com/imgextra/i1/O1CN01Zc7yGt1p0zYq3OCwj_!!6000000005299-2-tps-979-1280.png)
 社区交流群：
