@@ -127,6 +127,7 @@ for (let i = 0; i < dataSource.length; i++) {
     toggleExpanded() {
       // document.body.classList.toggle('overflow-hidden');
       this.setExpanded(this.getAttribute("aria-expanded") !== "true");
+      window.scroll(0, 0);
     }
 
     closeOnEscape(e: KeyboardEvent,menuButton) {
