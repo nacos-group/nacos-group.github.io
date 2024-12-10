@@ -220,7 +220,9 @@ export const ALGOLIA_CONFIG = {
 }
 
 export const versionDataSource = [
-    { title: "可用性", data: [
+    { 
+        title: "可用性", 
+        data: [
         {
             name: {
                 title: 'SLA',
@@ -239,7 +241,70 @@ export const versionDataSource = [
             },
             serverless: {
                 checked: '',
-                des: '99.95%'
+                des: '99.99%'
+            },
+        },
+        {
+            name: {
+                title: '风险自动扫描管理',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
+        },
+        {
+            name: {
+                title: '异常节点自愈',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
+        },
+        {
+            name: {
+                title: '配置标签灰度',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
             },
         },
         {
@@ -287,28 +352,7 @@ export const versionDataSource = [
         },
         {
             name: {
-                title: '全局风险自动识别管理',
-            },
-            free: {
-                checked: false,
-                des: ''
-            },
-            develop: {
-                checked: true,
-                des: ''
-            },
-            speciality: {
-                checked: true,
-                des: ''
-            },
-            serverless: {
-                checked: true,
-                des: ''
-            },
-        },
-        {
-            name: {
-                title: '注册中心推空保护',
+                title: '推空保护',
             },
             free: {
                 checked: false,
@@ -329,7 +373,49 @@ export const versionDataSource = [
         },
         {
             name: {
-                title: '无损上下线能力',
+                title: '流量防护',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: false,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
+        },
+        {
+            name: {
+                title: '配额管理',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: false,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
+        },
+        {
+            name: {
+                title: '无损变更能力',
             },
             free: {
                 checked: false,
@@ -361,7 +447,7 @@ export const versionDataSource = [
                 des: ''
             },
             speciality: {
-                checked: true,
+                checked: false,
                 des: ''
             },
             serverless: {
@@ -415,7 +501,7 @@ export const versionDataSource = [
         },
         {
             name: {
-                title: 'ACL 控制',
+                title: 'ACL 白名单访问控制',
             },
             free: {
                 checked: false,
@@ -458,6 +544,27 @@ export const versionDataSource = [
         {
             name: {
                 title: 'KMS 配置存储加密，自定义轮转， 变更实时生效',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
+        },
+        {
+            name: {
+                title: '漏洞热修复能力（无感知、不重启）',
             },
             free: {
                 checked: false,
@@ -522,7 +629,7 @@ export const versionDataSource = [
         },
         {
             name: {
-                title: '故障节点自动摘除',
+                title: '故障节点自愈（无需人工干预）',
             },
             free: {
                 checked: false,
@@ -538,12 +645,12 @@ export const versionDataSource = [
             },
             serverless: {
                 checked: true,
-                des: '',
+                des: ''
             },
         },
         {
             name: {
-                title: '云原生网关、治理深度集成',
+                title: '网关、服务治理等默认集成',
             },
             free: {
                 checked: false,
@@ -604,8 +711,113 @@ export const versionDataSource = [
                 des: ''
             },
         },
+        {
+            name: {
+                title: '事件中心',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
+        },
+        {
+            name: {
+                title: '默认集成grafana监控大盘（30+监控项）',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: '只提供业务监控指标，用于自动弹性伸缩'
+            },
+        },
+        {
+            name: {
+                title: '默认配置监控告警（可丰富自定义）',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: true,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: '只提供业务监控指标，用于自动弹性伸缩'
+            },
+        },
+        {
+            name: {
+                title: '高级监控（服务推送轨迹、配置推送轨迹等）',
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: false,
+                des: ''
+            },
+            speciality: {
+                checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
+        },
     ] },
     { title: "性能", data: [
+        {
+            name: {
+                title: '推送性能提升',
+            },
+            free: {
+                checked: '',
+                des: '自行调优',
+            },
+            develop: {
+                checked: '',
+                des: '和社区版持平',
+            },
+            speciality: {
+                checked: '',
+                des: '202%',
+            },
+            serverless: {
+                checked: '',
+                des: '202%'
+            },
+        },
         {
             name: {
                 title: 'TPS 性能提升',
@@ -646,52 +858,6 @@ export const versionDataSource = [
             serverless: {
                 checked: '',
                 des: '55%',
-            },
-        },
-    ] },
-    { title: "可观测性", data: [
-        {
-            name: {
-                title: '基础监控告警',
-                des: '（注册中心、配置中心、资源用量等）'
-            },
-            free: {
-                checked: false,
-                des: ''
-            },
-            develop: {
-                checked: true,
-                des: ''
-            },
-            speciality: {
-                checked: true,
-                des: ''
-            },
-            serverless: {
-                checked: true,
-                des: '只提供业务监控指标，用于自动弹性伸缩'
-            },
-        },
-        {
-            name: {
-                title: '高级监控',
-                des: '（服务推送轨迹、配置推送轨迹等）'
-            },
-            free: {
-                checked: false,
-                des: ''
-            },
-            develop: {
-                checked: false,
-                des: ''
-            },
-            speciality: {
-                checked: true,
-                des: ''
-            },
-            serverless: {
-                checked: '',
-                des: '免运维'
             },
         },
     ] },
