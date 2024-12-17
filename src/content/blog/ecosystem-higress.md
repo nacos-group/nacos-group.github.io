@@ -4,7 +4,7 @@ keywords: [higress, higress nacos]
 description: Higress：Nacos的最佳拍档
 author: 澄潭
 date: "2023-01-10"
-category: ecosystem
+category: article
 ---
 
 # 前言

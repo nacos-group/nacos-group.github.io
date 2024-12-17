@@ -3,7 +3,7 @@ title: 在 Rainbond 中一键安装高可用 Nacos 集群
 keywords: [nacos, kubernetes, rainbond, 云原生]
 description: 当前文档描述如何通过云原生应用管理平台 Rainbond 一键安装高可用 Nacos 集群。
 date: "2022-03-16"
-category: ecosystem
+category: article
 ---
 
 # Rainbond Nacos

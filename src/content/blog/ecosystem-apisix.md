@@ -3,7 +3,7 @@ title: Apache APISIX 基于 Nacos 实现服务发现
 keywords: [Apache APISIX]
 description: 本文为您介绍 Apache APISIX、Nacos 基本概念以及注册中心的作用，并为您展示了 Apache APISIX 基于 Nacos 实现服务发现的具体操作
 date: "2022-02-22"
-category: ecosystem
+category: article
 ---
 
 # 背景信息

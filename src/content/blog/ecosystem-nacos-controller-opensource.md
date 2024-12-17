@@ -3,7 +3,7 @@ title: Nacos Controller 项目开源，支持与Kubernetes互通配置
 keywords: [Nacos Controller, Kubernetes, Helm, Configuration]
 description: Nacos Controller 项目开源，支持与Kubernetes互通配置
 date: "2023-12-07"
-category: ecosystem
+category: article
 ---
 # Nacos 2.3.0 正式版发布、 Nacos Controller 项目开源
 
