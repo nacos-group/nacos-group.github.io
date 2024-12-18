@@ -202,7 +202,7 @@ ServerListProvider的相应接口如果：
 |getServerName|无|String|获取`ServerListProvider`所对应的服务端名称，用于标记地址列表所对应的服务端名称|
 |getNamespace|无|String|获取`ServerListProvider`所归属的命名空间，也即此Nacos客户端所归属的命名空间|
 |getContextPath|无|String|获取`ServerListProvider`所对应的服务端上下文路径，当Nacos服务端配置了上下文路径时，需要此上下文路径，以便于Nacos客户端访问服务端|
-|getOrder|无|int|获取`ServerListProvider`的优先级，数字越大优先级越高，`EndpointServerListProvider`的优先级为`500`,`PropertiesServerListProvider`的优先级为499|
+|getOrder|无|int|获取`ServerListProvider`的优先级，数字越大优先级越高，`EndpointServerListProvider`的优先级为`500`,`PropertiesServerListProvider`的优先级为`499`|
 |match|NacosClientProperties|boolean|判断当前`ServerListProvider`是否匹配当前Nacos客户端的配置，如果匹配，则Nacos客户端会调用`init`对此`ServerListProvider`进行初始化|
 |isFixed|无|boolean|判断当前`ServerListProvider`是否所提供的地址列表是否为固定的，比如`EndpointServerListProvider`是可变的，`PropertiesServerListProvider`是固定的|
 |getAddressSource|无|String|获取`ServerListProvider`的地址列表来源地址，比如`EndpointServerListProvider`返回是`Endpoint`的地址，`PropertiesServerListProvider`是``（空字符串）|
