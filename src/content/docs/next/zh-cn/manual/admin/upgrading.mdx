@@ -40,7 +40,7 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 若文件中表结构存在变化，请先进行数据库变更，例如：
 
 ```SQL
--- 从 2.0.X 升级时需要执行下列所有SQL, 从2.1.X之后版本升级仅需执行最后两行。
+-- 从 2.0.X 升级时需要执行下列所有SQL, 从2.1.X之后版本升级仅需执行最后三行。
 ALTER TABLE `config_info` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
 ALTER TABLE `config_info_gray` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
 ALTER TABLE `config_info_beta` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
