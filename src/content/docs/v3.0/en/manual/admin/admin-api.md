@@ -10,6 +10,12 @@ sidebar:
 
 Nacos默认搭载了一整套专为管理控制台和运维人员设计的运维API，赋予运维专家更多的配置权限、更广阔的数据检索能力等。这些API为Nacos的运维团队提供了方便，使他们能够高效地处理故障、排查问题，以确保系统的稳定运行。
 
+## 统一返回体格式
+
+自3.0版本开始，OpenAPI/AdminAPI/ConsoleAPI均使用相同的返回体格式。
+
+完整的返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，本文档中所有的API返回数据只阐述`data`字段中的返回参数。
+
 ## 1. Nacos Core 运维 API
 
 ### 1.1. 获取当前节点连接
@@ -24,7 +30,7 @@ Nacos默认搭载了一整套专为管理控制台和运维人员设计的运维
 
 #### 请求URL
 
-`/nacos/v2/core/loader/current`
+`/nacos/v3/admin/core/loader/current`
 
 #### 请求参数
 
@@ -51,7 +57,7 @@ Nacos默认搭载了一整套专为管理控制台和运维人员设计的运维
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/loader/current'
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/current'
 ```
 
 * 返回示例
@@ -100,7 +106,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/loader/current'
 
 #### 请求URL
 
-`/nacos/v2/core/loader/reloadCurrent`
+`/nacos/v3/admin/core/loader/reloadCurrent`
 
 #### 请求参数
 
@@ -118,7 +124,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/loader/current'
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/loader/reloadCurrent?count=100'
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/reloadCurrent?count=100'
 ```
 
 * 返回示例
@@ -131,7 +137,7 @@ success
 
 #### 接口描述
 
-通过该接口，可以指定某一条的连接到当前Nacos Server节点中的gRPC连接，将该连接断开后迁移到其他Nacos Server节点中。
+通过该接口，可以将指定的客户端连接(gRPC连接)迁移到其他Nacos Server节点中。
 
 #### 请求方式
 
@@ -139,14 +145,14 @@ success
 
 #### 请求URL
 
-`/nacos/v2/core/loader/reloadClient`
+`/nacos/v3/admin/core/loader/reloadClient`
 
 #### 请求参数
 
-| 参数名        | 类型     | 必填   | 参数描述                     |
-|---------------|----------|--------|--------------------------|
+| 参数名        | 类型     | 必填   | 参数描述                 |
+|---------------|----------|--------|----------------------|
 | `connectionId` | `String` |  **是**     | 需要均衡的连接Id |
-| `redirectAddress`  | `String` | 否 | 预期均衡的Nacos Server目标，仅提供给客户端参考。 |
+| `redirectAddress`  | `String` | 否 | 预期均衡的Nacos Server目标。 |
 
 #### 返回数据
 
@@ -157,13 +163,27 @@ success
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/loader/reloadClient?connectionId=1709273546779_127.0.0.1_35042'
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/reloadClient?connectionId=1709273546779_127.0.0.1_35042'
 ```
 
 * 返回示例
 
-```text
-success
+成功则返回:
+```json
+{
+    "code": 0,
+    "message": "success",
+    "data": null
+}
+```
+
+失败则返回：
+```json
+{
+    "code": 30000,
+    "message": "server error",
+    "data": null
+}
 ```
 
 ### 1.4. 获取集群连接概览信息
@@ -178,7 +198,7 @@ success
 
 #### 请求URL
 
-`/nacos/v2/core/loader/cluster`
+`/nacos/v3/admin/core/loader/cluster`
 
 #### 请求参数
 
@@ -206,46 +226,54 @@ success
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/loader/cluster'
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/cluster'
 ```
 
 * 返回示例
 
 ```json
 {
-  "total": 0,
-  "min": 0,
-  "avg": 0,
-  "max": 0,
-  "memberCount": 3,
-  "metricsCount": 3,
-  "threshold": 0.0,
-  "detail": [{
-    "address": "nacos-node1:8848",
-    "metric": {
-      "load": "0.0",
-      "sdkConCount": "0",
-      "cpu": "0.0",
-      "conCount": "2"
-    }
-  }, {
-    "address": "nacos-node2:8848",
-    "metric": {
-      "load": "0.03",
-      "sdkConCount": "0",
-      "cpu": "-1.0",
-      "conCount": "2"
-    }
-  }, {
-    "address": "nacos-node3:8848",
-    "metric": {
-      "load": "0.0",
-      "sdkConCount": "0",
-      "cpu": "-1.0",
-      "conCount": "2"
-    }
-  }],
-  "completed": true
+  "code": 0,
+  "message": "success",
+  "data": {
+    "total": 0,
+    "min": 0,
+    "avg": 0,
+    "max": 0,
+    "memberCount": 3,
+    "metricsCount": 3,
+    "threshold": 0.0,
+    "detail": [
+      {
+        "address": "nacos-node1:8848",
+        "metric": {
+          "load": "0.0",
+          "sdkConCount": "0",
+          "cpu": "0.0",
+          "conCount": "2"
+        }
+      },
+      {
+        "address": "nacos-node2:8848",
+        "metric": {
+          "load": "0.03",
+          "sdkConCount": "0",
+          "cpu": "-1.0",
+          "conCount": "2"
+        }
+      },
+      {
+        "address": "nacos-node3:8848",
+        "metric": {
+          "load": "0.0",
+          "sdkConCount": "0",
+          "cpu": "-1.0",
+          "conCount": "2"
+        }
+      }
+    ],
+    "completed": true
+  }
 }
 ```
 
@@ -261,7 +289,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/loader/cluster'
 
 #### 请求URL
 
-`/nacos/v2/core/cluster/node/self`
+`/nacos/v3/admin/core/cluster/node/self`
 
 #### 请求参数
 
@@ -271,26 +299,29 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/loader/cluster'
 
 返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
-| 参数名        | 参数类型 | 描述     |
-|--------|----------|----------|
-|`ip`|`String` | 节点IP |
-|`port`|`Integer` | 节点端口 |
-|`state`|`String` | 节点状态，可选值为`UP`、`DOWN`、`SUSPICIOUS` |
-|`extendInfo`|`jsonObject` | 节点扩展信息，具体字段见下表 |
-|`extendInfo.lastRefreshTime`|`Long` | 节点上一次更新时间戳，单位毫秒 |
-|`extendInfo.raftMetaData`|`jsonObject` | 节点的Raft元数据， 包含每个Raft Group的 `leader`， `term`等字段 |
-|`extendInfo.raftPort`|`Integer` | 节点的Raft端口 |
-|`extendInfo.version`|`String` | 节点的版本 |
-|`address`|`String` | 节点地址，格式为`ip:port` |
-|`abilities`|`jsonObject` | 该节点所支持的能力 |
-|~~extendInfo.readyToUpgrade~~|`Boolean` | 是否ready升级到Nacos2.0，于2.2版本后废弃，即将移除 |
+| 参数名                           | 参数类型         | 描述                                              |
+|-------------------------------|--------------|-------------------------------------------------|
+| `ip`                          | `String`     | 节点IP                                            |
+| `port`                        | `Integer`    | 节点端口                                            |
+| `state`                       | `String`     | 节点状态，可选值为`UP`、`DOWN`、`SUSPICIOUS`               |
+| `extendInfo`                  | `jsonObject` | 节点扩展信息，具体字段见下表                                  |
+| `extendInfo.lastRefreshTime`  | `Long`       | 节点上一次更新时间戳，单位毫秒                                 |
+| `extendInfo.raftMetaData`     | `jsonObject` | 节点的Raft元数据， 包含每个Raft Group的 `leader`， `term`等字段 |
+| `extendInfo.raftPort`         | `Integer`    | 节点的Raft端口                                       |
+| ~~extendInfo.readyToUpgrade~~ | `Boolean`    | 是否ready升级到Nacos2.0，于2.2版本后废弃，即将移除               |
+| `extendInfo.supportGrayModel` | `Boolean`    | 是否支持灰度模型                                        |
+| `extendInfo.version`          | `String`     | 节点的版本                                           |
+| `address`                     | `String`     | 节点地址，格式为`ip:port`                               |
+| `failAccessCnt`               | `Integer`    | 待补充                                             |
+| `abilities`                   | `jsonObject` | 该节点所支持的能力                                       |
+| `grpcReportEnabled`           | `Boolean`    | 待补充                                             |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/self'
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/self'
 ```
 
 * 返回示例
@@ -364,14 +395,14 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/self'
 
 #### 请求URL
 
-`/nacos/v2/core/cluster/node/list`
+`/nacos/v3/admin/core/cluster/node/list`
 
 #### 请求参数
 
-| 参数名        | 类型     | 必填   | 参数描述                     |
-|---------------|----------|--------|--------------------------|
-|`address`|`String`|否|过滤的节点地址，支持前缀匹配，不输入时返回所有节点信息|
-|`nodeState`|`String`|否|返回的节点状态，可选值为`UP`、`DOWN`、`SUSPICIOUS`，不输入时返回所有节点信息|
+| 参数名       | 类型       | 必填 | 参数描述                                              |
+|-----------|----------|----|---------------------------------------------------|
+| `address` | `String` | 否  | 过滤的节点地址，支持前缀匹配，不输入时返回所有节点信息                       |
+| `state`   | `String` | 否  | 返回的节点状态，可选值为`UP`、`DOWN`、`SUSPICIOUS`，不输入时返回所有节点信息 |
 
 #### 返回数据
 
@@ -382,7 +413,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/self'
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/list'
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/list'
 ```
 
 * 返回示例
@@ -423,7 +454,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/list'
       },
       "raftPort": "7848",
       "readyToUpgrade": true,
-      "version": "2.4.2"
+      "supportGrayModel": true,
+      "version": "3.0.0-ALPHA"
     },
     "address": "nacos-node-0:8848",
     "failAccessCnt": 0,
@@ -480,7 +512,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/list'
 
 #### 请求URL
 
-`/nacos/v2/core/cluster/node/self/health`
+`/nacos/v3/admin/core/cluster/node/self/health`
 
 #### 请求参数
 
@@ -490,16 +522,16 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/list'
 
 返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)。
 
-| 参数名        | 参数类型 | 描述     |
-|--------|----------|----------|
-|`data`|`String`|`UP`表示节点健康，`DOWN`表示节点不健康，`SUSPICIOUS`表示节点疑似不健康|
+| 参数名    | 参数类型     | 描述                                             |
+|--------|----------|------------------------------------------------|
+| `data` | `String` | `UP`表示节点健康，`DOWN`表示节点不健康，`SUSPICIOUS`表示节点疑似不健康 |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/list'
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/self/health'
 ```
 
 * 返回示例
@@ -524,28 +556,28 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/cluster/node/list'
 
 #### 请求URL
 
-`/nacos/v2/core/cluster/lookup`
+`/nacos/v3/admin/core/cluster/lookup`
 
 #### 请求参数
 
-| 参数名        | 类型     | 必填   | 参数描述                     |
-|---------------|----------|--------|--------------------------|
-|`type`|`String`|是|切换到的地址发现方式，可选值为`file`和`address-server`|
+| 参数名    | 类型       | 必填 | 参数描述                                  |
+|--------|----------|----|---------------------------------------|
+| `type` | `String` | 是  | 切换到地址发现方式，可选值为`file`和`address-server` |
 
 #### 返回数据
 
 返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)。
 
-| 参数名        | 参数类型 | 描述     |
-|--------|----------|----------|
-|`data`|`Boolean`|`true`表示更新成功，`false`表示更新失败。|
+| 参数名    | 参数类型      | 描述                          |
+|--------|-----------|-----------------------------|
+| `data` | `Boolean` | `true`表示更新成功，`false`表示更新失败。 |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8848/nacos/v2/core/cluster/lookup?type=file'
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/lookup?type=file'
 ```
 
 * 返回示例
@@ -570,48 +602,48 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v2/core/cluster/lookup?type=file'
 
 #### 请求URL
 
-`/nacos/v2/core/ops/raft`
+`/nacos/v3/admin/core/ops/raft`
 
 #### 请求参数
 
 该API需要以Json的方式，将请求参数放在请求体中，请求体格式如下：
 
-| 参数名        | 类型     | 必填   | 参数描述                     |
-|---------------|----------|--------|--------------------------|
-|`command` |`String`|**是**|Raft运维操作指令，具体的命令请参考下表。|
-|`value`|`String`|**是**|命令的参数，具体的命令内容请参考下表。|
-|`groupId` |`String`|否|Raft集群的groupId，如果不输入则对所有Raft Group生效|
+| 参数名       | 类型       | 必填    | 参数描述                                 |
+|-----------|----------|-------|--------------------------------------|
+| `command` | `String` | **是** | Raft运维操作指令，具体的命令请参考下表。               |
+| `value`   | `String` | **是** | 命令的参数，具体的命令内容请参考下表。                  |
+| `groupId` | `String` | 否     | Raft集群的groupId，如果不输入则对所有Raft Group生效 |
 
-|command|value|说明|
-|---------------|----------|--------|
-|`doSnapshot`|`${nacos-server-address}:${raft-port}`|执行快照，参数为要执行快照的节点地址。|
-|`transferLeader`|`${nacos-server-address}:${raft-port}`|主动选主，参数为要期望的Leader的节点地址。|
-|`restRaftCluster`|`${nacos-server-address}:${raft-port}[,${nacos-server-address}:${raft-port}]`|重置集群状态，参数为要重置节点地址列表，','分割。|
-|`removePeer`|`${nacos-server-address}:${raft-port}`|移除Raft Member节点，参数为要移除的节点地址。|
-|`removePeers`|`${nacos-server-address}:${raft-port}[,${nacos-server-address}:${raft-port}]`|批量移除Raft Member节点，参数为要批量移除的节点地址列表，','分割。|
-|`changePeers`|`${nacos-server-address}:${raft-port}[,${nacos-server-address}:${raft-port}]`|修改Raft Member节点，参数为要修改后的节点地址列表，','分割。|
+| command           | value                                                                         | 说明                                       |
+|-------------------|-------------------------------------------------------------------------------|------------------------------------------|
+| `doSnapshot`      | `${nacos-server-address}:${raft-port}`                                        | 执行快照，参数为要执行快照的节点地址。                      |
+| `transferLeader`  | `${nacos-server-address}:${raft-port}`                                        | 主动选主，参数为要期望的Leader的节点地址。                 |
+| `restRaftCluster` | `${nacos-server-address}:${raft-port}[,${nacos-server-address}:${raft-port}]` | 重置集群状态，参数为要重置节点地址列表，','分割。               |
+| `removePeer`      | `${nacos-server-address}:${raft-port}`                                        | 移除Raft Member节点，参数为要移除的节点地址。             |
+| `removePeers`     | `${nacos-server-address}:${raft-port}[,${nacos-server-address}:${raft-port}]` | 批量移除Raft Member节点，参数为要批量移除的节点地址列表，','分割。 |
+| `changePeers`     | `${nacos-server-address}:${raft-port}[,${nacos-server-address}:${raft-port}]` | 修改Raft Member节点，参数为要修改后的节点地址列表，','分割。    |
 
 #### 返回数据
 
 返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)。
 
-| 参数名        | 参数类型 | 描述     |
-|--------|----------|----------|
-|`data`|`String`|固定为`null`。|
+| 参数名    | 参数类型     | 描述         |
+|--------|----------|------------|
+| `data` | `String` | 固定为`null`。 |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X POST -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v2/core/ops/raft' -d '{"command":"doSnapshot","value":"nacos-node-0:7848"}'
+curl -X POST -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/admin/core/ops/raft' -d '{"command":"doSnapshot","value":"nacos-node-0:7848"}'
 ```
 
 * 返回示例
 
 ```json
 {
-  "code": 200,
+  "code": 0,
   "message": null,
   "data": null
 }
@@ -629,31 +661,31 @@ curl -X POST -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v2/
 
 #### 请求URL
 
-`/nacos/v2/core/ops/log`
+`/nacos/v3/admin/core/ops/log`
 
 #### 请求参数
 
 该API需要以Json的方式，将请求参数放在请求体中，请求体格式如下：
 
-| 参数名        | 类型     | 必填   | 参数描述                     |
-|---------------|----------|--------|--------------------------|
-|`logName` |`String`|**是**|具体的日志文件的名称，具体支持的日志名称见下表。|
-|`logLevel`|`String`|**是**|日志的级别，可选值为`ALL`、`TRACE`、`DEBUG`、`INFO`、`WARN`、`ERROR`、`OFF`。|
+| 参数名        | 类型       | 必填    | 参数描述                                                         |
+|------------|----------|-------|--------------------------------------------------------------|
+| `logName`  | `String` | **是** | 具体的日志文件的名称，具体支持的日志名称见下表。                                     |
+| `logLevel` | `String` | **是** | 日志的级别，可选值为`ALL`、`TRACE`、`DEBUG`、`INFO`、`WARN`、`ERROR`、`OFF`。 |
 
-|logName|对应的具体日志文件|
-|---------------|----------|
-|`core-auth`|`core-auth.log`|
-|`core-raft`|`protocol-raft.log`|
-|`core-distro`|`protocol-distro.log`|
-|`core-cluster`|`nacos-cluster.log`|
+| logName        | 对应的具体日志文件             |
+|----------------|-----------------------|
+| `core-auth`    | `core-auth.log`       |
+| `core-raft`    | `protocol-raft.log`   |
+| `core-distro`  | `protocol-distro.log` |
+| `core-cluster` | `nacos-cluster.log`   |
 
 #### 返回数据
 
 返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)。
 
-| 参数名        | 参数类型 | 描述     |
-|--------|----------|----------|
-|`data`|`String`|固定为`null`。|
+| 参数名    | 参数类型     | 描述         |
+|--------|----------|------------|
+| `data` | `String` | 固定为`null`。 |
 
 #### 示例
 
@@ -667,10 +699,137 @@ curl -X PUT -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v2/c
 
 ```json
 {
-  "code": 200,
-  "message": null,
+  "code": 0,
+  "message": "success",
   "data": null
 }
+```
+
+### 1.11 自动均衡指定数量的连接
+
+#### 接口描述
+
+通过该接口，可以根据负载因子(loaderFactor)自动均衡整个集群的客户端连接。
+
+自动均衡逻辑：
+1. 根据整个集群的客户端连接数和Nacos Server节点数量计算平均连接数`avg`、节点连接数下限阈值`lowLimitCount`(=avg * (1-loaderFactor))、节点连接数上限阈值`overLimitCount`(=avg * (1+loaderFactor))
+2. 将高负载节点的部分客户端连接重定向到低负载节点。
+
+#### 请求方式
+
+`GET`
+
+#### 请求URL
+
+`/nacos/v3/admin/core/loader/smartReloadCluster`
+
+#### 请求参数
+
+| 参数名            | 类型       | 必填 | 参数描述         |
+|----------------|----------|----|--------------|
+| `loaderFactor` | `String` | 否  | 负载因子，必须是一个数字 |
+
+#### 返回数据
+
+成功则返回:
+```json
+{
+    "code": 0,
+    "message": "success",
+    "data": null
+}
+```
+
+失败则返回：
+```json
+{
+    "code": 30000,
+    "message": "server error",
+    "data": null
+}
+```
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/smartReloadCluster?loaderFactor=1.2'
+```
+
+* 返回示例
+
+```text
+success
+```
+
+### 1.12 获取ID生成器信息
+
+#### 接口描述
+
+通过该接口，获取ID生成器的当前ID,workerId. 只有使用内置数据库时该接口才会返回有效数据.
+
+#### 请求方式
+
+`GET`
+
+#### 请求URL
+
+`/nacos/v3/admin/core/ops/ids`
+
+#### 请求参数
+
+无
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)。
+
+| 参数名              | 参数类型     | 描述       |
+|------------------|----------|----------|
+| `resource`       | `String` | 生产器名称    |
+| `info`           | `Object` | 生产器详情    |
+| `info.currentId` | `int64`  | 当前ID     |
+| `info.workerId`  | `int64`  | workerID |
+
+成功则返回:
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": [
+    {
+      "resource": "resourceName",
+      "info": {
+        "currentId": 1,
+        "workerId": 2
+      }
+    }
+  ]
+}
+```
+
+失败则返回：
+```json
+{
+    "code": 30000,
+    "message": "server error",
+    "data": null
+}
+```
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v2/core/loader/reloadCurrent?count=100'
+```
+
+* 返回示例
+
+```text
+success
 ```
 
 ## 2. Nacos Naming 运维 API
