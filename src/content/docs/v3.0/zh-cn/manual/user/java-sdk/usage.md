@@ -1042,7 +1042,7 @@ System.out.println(result.getData());
 
 #### 描述
 
-获取当前客户端所的所有服务列表
+获取当前客户端所监听的所有服务列表
 
 ```java
 List<ServiceInfo> getSubscribeServices() throws NacosException;
