@@ -61,7 +61,7 @@ String serverAddr = "localhost:8848";
 # 初始化配置中心的Nacos Java SDK
 ConfigService configService = NacosFactory.createConfigService(serverAddr);
 
-# 初始化配置中心的Nacos Java SDK
+# 初始化注册中心的Nacos Java SDK
 NamingService namingService = NacosFactory.createNamingService(serverAddr);
 ```
 
@@ -78,7 +78,7 @@ properties.setProperty(PropertyKeyConst.NAMESPACE, "${namespaceId}");
 # 初始化配置中心的Nacos Java SDK
 ConfigService configService = NacosFactory.createConfigService(properties);
 
-# 初始化配置中心的Nacos Java SDK
+# 初始化注册中心的Nacos Java SDK
 NamingService namingService = NacosFactory.createNamingService(properties);
 ```
 
