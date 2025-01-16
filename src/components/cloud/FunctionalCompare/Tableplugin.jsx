@@ -7,13 +7,13 @@ import "./style.tableplugin.css";
 
 
 const Tableplugin = (props) => {
-  const { dataSource, title, isHead = false } = props;
+  const { dataSource, title, isHead = false, isFold = false } = props;
   const totalRows = dataSource.length;
 
   return (
     <div class="overflow-x-auto rounded-2xl mb-6">
       {
-        isHead && (
+        isHead && !isFold && (
           <table class="table table-fixed sticky-table-top">
             <tr>
               <th class="col1 border-0" />

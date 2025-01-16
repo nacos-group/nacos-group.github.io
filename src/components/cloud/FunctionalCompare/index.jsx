@@ -28,9 +28,10 @@ const FunctionalCompare = (props) => {
 
   const handleScroll = () => {
     const wrapper = functionalCompareWrapperRef.current;
+    const rem_4 = 180; // 简略版表格头的高度
     if (wrapper) {
-      const distanceFromTop = wrapper.getBoundingClientRect().top;
-      setIsSticky(distanceFromTop < 0); // 当距离顶部大于0时展示元素
+      const distanceFromTop = wrapper.getBoundingClientRect();
+      setIsSticky(distanceFromTop.top < 0 && (distanceFromTop.bottom - rem_4) > 0); // 当距离顶部大于0时展示元素
     }
   };
 
@@ -47,6 +48,32 @@ const FunctionalCompare = (props) => {
   }, []);
 
   return (
+    <>
+    {
+      // 简略版表格头 top: 4rem
+      isSticky && isCollapsed && (
+        <table class="table table-fixed sticky-title-top bg-gray-02">
+          <tr>
+            <th class="col1 border-0" />
+            <th class="col2 overflow-hidden">
+              <p class="mb-6 text-2xl font-normal">各个版本能力对比</p>
+            </th>
+            <th class="col3 overflow-hidden">
+              <p class="mb-6 text-2xl font-normal">社区版</p>
+            </th>
+            <th class="col4">
+              <p class="mb-6 text-2xl font-normal">MSE Nacos 开发版</p>
+            </th>
+            <th class="col5">
+              <p class="mb-6 text-2xl font-normal">MSE Nacos 专业版</p>
+            </th>
+            <th class="col6">
+              <p class="mb-6 text-2xl font-normal">MSE Nacos Serverless 版</p>
+            </th>
+          </tr>
+        </table>
+      )
+    }
     <functional-compare
       ref={functionalCompareWrapperRef}
       class="functional-compare-wrapper top-[100px] flex flex-col justify-center items-center mt-10"
@@ -55,17 +82,22 @@ const FunctionalCompare = (props) => {
       {
           !isSafariBrowser && (<input type="checkbox" checked={isCollapsed} onChange={() => setIsCollapsed(!isCollapsed)} />)
         } 
-        <div class="collapse-title text-2xl font-normal">不同版本功能对比</div>
+        <div class="collapse-title text-2xl font-normal">各个版本能力对比</div>
         <div class={`${!isSafariBrowser && 'collapse-content'}`}>
           {versionDataSource.map((item, index) => {
             return (
-              <Tableplugin dataSource={item.data} title={item.title} isHead={index == 0} />
+              <Tableplugin 
+                dataSource={item.data} 
+                title={item.title} 
+                isHead={index == 0} 
+                isFold={isSticky && isCollapsed}
+              />
             )
           })}
         </div>
       </div>
       {/* <!-- 吸底 --> */}
-      {isSticky && isCollapsed && <div id='sticky-table-bottom' class='table table-fixed bg-gray-02 mt-6 px-4'>
+      {/* {isSticky && isCollapsed && <div id='sticky-table-bottom' class='table table-fixed bg-gray-02 mt-6 px-4'>
         <table class='w-full'>
           <tr>
             <th class="col1 border-0" />
@@ -113,7 +145,7 @@ const FunctionalCompare = (props) => {
           </tr>
         </table>
       </div>
-      }
+      } */}
 
       {/* <!-- 移动端 --> */}
       <div class="mobile-content">
@@ -162,6 +194,7 @@ const FunctionalCompare = (props) => {
         </div>
       </div>
     </functional-compare>
+    </>
   );
 };
 

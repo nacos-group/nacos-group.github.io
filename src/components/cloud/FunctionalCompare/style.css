@@ -1,3 +1,21 @@
+.sticky-title-top {
+  width: 85.125rem;
+  margin: auto;
+  position: sticky;
+  top: 4rem;
+  z-index: 1000;
+}
+@media (max-width: 50rem) {
+  .sticky-title-top {
+    display: none;
+  }
+}
+@media (min-width: 50rem) and (max-width: 86rem) {
+  .sticky-title-top {
+    width: 100%;
+  }
+}
+
 functional-compare {
 
   #collapse-fold,

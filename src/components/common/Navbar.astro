@@ -4,7 +4,7 @@ import { isChinese } from "@i18n/util";
 import cloneDeep from "lodash.clonedeep";
 import dataSource from "@components/common/Header/navbar.ts";
 import { docsItems } from "@components/common/Header/DocsMenu.astro";
-import Flames from '../icon/Flames.astro';
+// import Flames from '../icon/Flames.astro';
 const ifzh = isChinese(Astro);
 
 interface Props {
@@ -94,7 +94,8 @@ const ifactive = (toggle) => {
           // const component = slot && await import(slot);
           const active = ifactive(toggle);
           const newFlames = {
-            aftericon: route == "/wuyi/"? <Flames /> : "",
+            // aftericon: route == "/wuyi/"? <Flames /> : "",
+            aftericon: route == "/cloud/"? <span class="bg-[red] text-white absolute top-0 right-[-15px] text-xs inline-block px-[4px] rounded-lg">HOT</span> : "",
           };
           const targetRoute = target == "_self" && route? `${ifzh? "" : "/en"}${route}`: route;
           return (

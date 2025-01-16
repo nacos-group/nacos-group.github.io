@@ -1,5 +1,5 @@
 import DocsMenu from "./DocsMenu.astro";
-import CommunityMenu from "./CommunityMenu.astro";
+// import CommunityMenu from "./CommunityMenu.astro";
 import Resources from "./Resources.astro";
 
 export default [
