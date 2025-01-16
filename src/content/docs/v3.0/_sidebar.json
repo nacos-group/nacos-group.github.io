@@ -222,16 +222,6 @@
         "link": "docs/what-is-nacos"
       },
       {
-        "label": "升级",
-        "translations": {
-          "en": "Upgrading"
-        },
-        "collapsed": true,
-        "autogenerate": {
-          "directory": "upgrading"
-        }
-      },
-      {
         "label": "用户指南",
         "translations": {
           "en": "User Guide"
