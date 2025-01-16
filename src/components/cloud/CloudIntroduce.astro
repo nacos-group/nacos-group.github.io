@@ -89,7 +89,10 @@ const introduceData = [
             <div class="card-package cursor-pointer bg-gray-14 border-[.0313rem] hover:border border-text-gray-06 rounded-2xl flex-1 text-center p-8">
               <div class="package h-16">
                 <div class="title text-gray-03 text-2xl font-sans font-medium">
-                  {item?.title}
+                  <span class="relative">
+                    {item?.title}
+                    {index == 2 ? <span class="bg-[red] text-white absolute top-[-10px] right-[-40px] text-sm inline-block px-[5px] rounded-lg">HOT</span>: null}
+                  </span>
                 </div>
               </div>
               <div class="price-content pt-4 border-b border-t border-gray-12 h-32">
@@ -178,21 +181,25 @@ const introduceData = [
     }
     .bottom-package .card-package:first-child {
       margin-left: 0;
+      /* background-color: theme("colors.blue.01"); */
+    }
+    .bottom-package .card-package:nth-child(3) {
       background-color: theme("colors.blue.01");
     }
-    .bottom-package .card-package:first-child .package .title {
+
+    .bottom-package .card-package:nth-child(3) .package .title {
       color: theme("colors.gray.14");
     }
-    .bottom-package .card-package:first-child .price-content {
+    .bottom-package .card-package:nth-child(3) .price-content {
       border-color: theme("colors.gray.03");
     }
-    .bottom-package .card-package:first-child .price-content .price {
+    .bottom-package .card-package:nth-child(3) .price-content .price {
       color: theme("colors.gray.14");
     }
-    .bottom-package .card-package:first-child .price-content .description {
+    .bottom-package .card-package:nth-child(3) .price-content .description {
       color: theme("colors.gray.14");
     }
-    .bottom-package .card-package:first-child .feature {
+    .bottom-package .card-package:nth-child(3) .feature {
       color: theme("colors.gray.08");
     }
     .bottom-package .card-package:last-child {
@@ -212,7 +219,7 @@ const introduceData = [
     }
 
     .bottom-package
-      .card-package:first-child
+      .card-package:nth-child(3)
       .subscribe
       .button-transform:hover {
       color: theme("colors.gray.03");
