@@ -8,7 +8,8 @@ sidebar:
 
 # Open API 手册
 
-Nacos 2.X 版本兼容 Nacos1.X 版本的OpenAPI, 请参考文档[Nacos1.X OpenAPI](https://nacos.io/docs/v1/open-api)使用。
+> Nacos 3.X 版本将不再兼容1.X版本的OpenAPI，同时不再兼容2.X版本的HTTP OpenAPI，请使用Nacos 3.X版本的OpenAPI进行替换。
+> Nacos 3.X 的HTTP OpenAPI 正在建设中，将在3.0.0-BETA版本中完成。
 
 ## 1. 文档规定
 
