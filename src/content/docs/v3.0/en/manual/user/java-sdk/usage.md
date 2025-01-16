@@ -10,7 +10,11 @@ sidebar:
 
 ## 1. 引用概述
 
-Maven 坐标
+### 1.1. Java 版本依赖
+
+Nacos 的 Java SDK（或称Nacos-Java-Client）需要 JDK 1.8 及以上版本的Java运行环境。
+
+### 1.2. Maven 坐标
 ```
 <dependency>
     <groupId>com.alibaba.nacos</groupId>
@@ -19,13 +23,15 @@ Maven 坐标
 </dependency>
 ```
 
+#### 1.2.1. 纯净版 Java SDK
+
 > 注意：由于Nacos Java SDK在2.0版本后引入了gRPC，为了避免用户业务引入的gRPC版本不同导致冲突，使用了shaded技术将部分依赖直接封装进nacos-client中，导致nacos-client较大。
 > 如果用户未自行引入gRPC或确认版本无冲突，希望使用纯净版的nacos-client以减小依赖，可以使用classifier来指定使用纯净版。
 
 ```xml
     <properties>
         <!-- 2.1.2版本以上支持纯净版客户端 -->
-        <nacos.version>2.4.2</nacos.version>
+        <nacos.version>3.0.0-ALPHA.2</nacos.version>
     </properties>
 
     <dependencies>
