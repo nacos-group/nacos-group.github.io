@@ -448,6 +448,180 @@ try {
 
 读取配置超时或网络异常，抛出 NacosException 异常。
 
+
+
+### 3.8. 配置模糊订阅
+
+#### 描述
+
+通过fuzzyWatch接口可以对指定分组group和配置dataId规则的配置进行批量订阅，
+可通过*进行前缀模糊，后缀模糊，双边模糊匹配。
+<br/>模糊订阅功能仅会推送配置的新增以及删除事件，并不会直接推送配置变更的内容，可在配置模糊订阅的监听器中结合addListener接口实现配置内容的变更监听。<br/>
+处于稳定性考虑，Nacos对模糊订阅的规则数量以及单个规则匹配的配置数量有上限保护。具体参照配置模糊订阅容量保护机制一节。
+
+```java
+
+/**
+ * 订阅当前命名空间下指定分组group规则及dataId规则下所有配置的变更事件
+ * 模糊订阅的列表将以异步的方式通过watcher回调
+ * @param dataIdPattern dataId匹配规则
+ * @param groupNamePattern 分组匹配规则
+ * @param watcher  模糊订阅监听器
+ */
+void fuzzyWatch(String dataIdPattern, String groupNamePattern, FuzzyWatchEventWatcher watcher);
+
+/**
+ * 订阅当前命名空间下指定分组group规则及dataId规则下所有配置的变更事件,并以Future模式获取规则当前匹配的配置列表
+ * 模糊订阅的列表将以异步的方式通过watcher回调
+ * @param dataIdPattern dataId匹配规则
+ * @param groupNamePattern 分组group匹配规则
+ * @param watcher  模糊订阅监听器
+ * @return Future 可通过future等待配置异步推送结果                
+ */
+Future<Set<String>> fuzzyWatchWithGroupKeys(String dataIdPattern, String groupNamePattern,
+		FuzzyWatchEventWatcher watcher) throws NacosException;
+
+
+/**
+ * 取消订阅当前命名空间下指定分组group规则及dataId规则下所有配置的变更事件
+ * @param dataIdPattern   dataId匹配规则
+ * @param groupNamePattern 分组group匹配规则
+ * @param watcher      需要移除的模糊订阅watcher
+ */
+void cancelFuzzyWatch(String dataIdPattern, String groupNamePattern, FuzzyWatchEventWatcher watcher);
+
+
+/**
+ * 订阅当前命名空间下指定分组group规则下所有配置的变更事件
+ *
+ * @param groupNamePattern 分组匹配规则
+ * @param watcher  模糊订阅监听器
+ */
+void fuzzyWatch(String groupNamePattern, FuzzyWatchEventWatcher watcher) throws NacosException;
+
+/**
+ * 订阅当前命名空间下指定分组group规则下所有配置的变更事件，可通过Future获取当前匹配的所有配置列表
+ *
+ * @param groupNamePattern 分组group匹配规则
+ * @param watcher  模糊订阅监听器
+ * @return Future 可通过future等待配置异步推送结果
+ */
+Future<Set<String>> fuzzyWatchWithGroupKeys(String groupNamePattern,
+		FuzzyWatchEventWatcher watcher) throws NacosException;
+
+/**
+ * 取消订阅当前命名空间下指定分组group规则及dataId规则下所有配置的变更事件
+ *
+ * @param groupNamePattern 分组group匹配规则
+ * @param watcher    需要移除的模糊订阅watcher
+ */
+void cancelFuzzyWatch(String groupNamePattern, FuzzyWatchEventWatcher watcher) ;
+
+
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述                                                                              |
+| :--- | :--- |:--------------------------------------------------------------------------------|
+| dataIdPattern | string | 配置ID匹配规则，支持a.前缀模糊匹配(如,mydataId\*) b.后缀模糊匹配(如*mydatdId)，c.双边模糊匹配(如\*mydatadId\*) |
+| groupNamePattern | string | 配置分组匹配规则，支持a.前缀模糊匹配(如 mygroup*) b.后缀模糊匹配(如 \*mygroup)，c.双边模糊匹配(如 \*mygroup\*)        |      |
+| watcher | FuzzyWatchEventWatcher | 模糊订阅监听器                                                                         |
+
+
+#### FuzzyWatchEventWatcher模糊订阅监听器
+| 方法名 | 方法参数类型 | 描述                                                                      |
+| :--- | :--- |:------------------------------------------------------------------------|
+| onEvent | ConfigFuzzyWatchChangeEvent | 模糊订阅回调事件对象 |
+| getExecutor | void | 可指定执行回调事件的线程池，如果为空，将以nacos推送线程中执行回调  |      |
+
+#### ConfigFuzzyWatchChangeEvent模糊订阅事件
+| 参数名         | 参数类型   | 描述                                                                                                              |
+|:------------|:-------|:----------------------------------------------------------------------------------------------------------------|
+| dataId      | string | 变更的配置dataId                                                                                                     |
+| group       | string | 变更的配置分组group                                                                                                    |      |
+| namespace   | string | 变更的配命名空间                                                                                                        |
+| changedType | string | 变更类型，表示客户端接收到的配置变更类型，包含ADD_CONFIG-新增配置，DELETE_CONFIG-移除配置                                                       |
+| syncType    | string | 触发变更的类型，包含FUZZY_WATCH_INIT_NOTIFY-初始化推送，FUZZY_WATCH_DIFF_SYNC_NOTIFY-变更对账触发，FUZZY_WATCH_RESOURCE_CHANGED-配置变更推送 |
+
+
+
+#### 返回参数
+
+| 参数类型 | 描述                                                                                         |
+| :--- |:-------------------------------------------------------------------------------------------|
+| Future<Set<String>> | 返可获取当前匹配的配置列表的future对象，当规则匹配的配置列表已经推送到客户端时，可通过future对象获取配置列表<br/>*注意：当触发容量保护时，返回的配置列表可能不全 |
+```java
+//返回的参数为groupKey列表，可通过GroupKey工具类获取dataId，group及namespace
+String[] groupKeyItems = GroupKey.parseKey(String groupKey);
+String dataId=groupKeyItems[0];
+String group=groupKeyItems[1];
+String namespace=groupKeyItems[2];
+```
+#### 3.8.1 配置模糊订阅容量保护机制
+
+处于稳定性角度考虑，避免过多的规则及规则匹配的配置数量导致服务端内存压力以及对客户端造成推送风暴，Nacos在两个层面对模糊订阅功能设计了容量保护机制，当超过上限时，模糊订阅的推送将被抑制。<br/>
+1. 模糊订阅规则数量上限保护 ,默认的模糊订阅规则数量上限为20,可通过参数nacos.config.fuzzy.watch.max.pattern.count调整上限。
+2. 单个模糊订阅规则匹配的配置数量上限保护， 默认单个模糊订阅规则匹配的配置数量上限为500，可通过nacos.config.fuzzy.watch.max.pattern.match.config.count调整上限。
+
+在fuzzyWatch接口中注册模糊订阅监听器可同时实现FuzzyWatchLoadWatcher负载监听器感知容量保护机制的发生。
+#### FuzzyWatchLoadWatcher模糊订阅负载监听器
+| 方法名  | 描述                                |
+| :--- |:----------------------------------|
+| onPatternOverLimit | 当前模糊订阅规则因超过上限，推送被抑制时触发            |
+| onConfigReachUpLimit | 当前模糊订阅规则匹配的配置数量达到上限，推送被抑制时触发      |
+
+*注意：
+1.  当触发容量保护时，通过fuzzyWatchWithGroupKeys返回的配置列表可能不是完整的配置列表。
+2.  当触发配置数量上限保护时，配置删除的事件也可能因保护机制而导致无法推送。
+
+
+#### 请求示例
+
+```java
+try {
+    // 初始化配置服务，控制台通过示例代码自动获取下面参数
+    String serverAddr = "{serverAddr}";
+    String dataIdPattern = "testDataId*";
+    String groupPattern = "group*";
+    Properties properties = new Properties();
+    properties.put("serverAddr", serverAddr);
+    properties.put("namespace", "mynamespaceId");
+
+    ConfigService configService = NacosFactory.createConfigService(properties);
+    Future<Set<String>> fuzzyWatchFuture = configService.fuzzyWatchWithGroupKeys(dataIdPattern, groupPattern, new AbstractFuzzyWatchEventWatcher() {
+                        @Override
+                        public void onEvent(ConfigFuzzyWatchChangeEvent event) {
+                            String changedType= event.getChangedType();
+                            String syncType= event.getChangedType();
+                            String groupChanged = event.getGroup();
+                            String dataIdChanged = event.getDataId();
+                            String namespace = event.getNamespace();
+                            //do something
+                        }
+
+                        @Override
+                        public void onPatternOverLimit() {
+			    System.out.println("pattern count over limit");
+			    //do something...
+                        }
+
+                        @Override
+                        public void onConfigReachUpLimit() {
+			    System.out.println("pattern match config count reach to up limit");
+			    //do something...
+                        }
+    });
+
+    Set<String> matchGroupKeys = fuzzyWatchFuture.get();
+    System.out.println("get group keys count:"+matchGroupKeys.size());
+
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+
 ## 4. 服务发现API
 ### 4.1. 注册实例
 #### 描述
@@ -1065,6 +1239,168 @@ List<ServiceInfo> getSubscribeServices() throws NacosException;
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 System.out.println(naming.getSubscribeServices());
+```
+
+
+
+### 4.14. 服务模糊订阅
+
+#### 描述
+
+通过fuzzyWatch接口可以对符指定group和serviceName规则的服务进行批量订阅， 可通过*进行前缀模糊，后缀模糊，双边模糊匹配。
+<br/>模糊订阅功能仅会推送服务的新增以及删除事件，并不会直接推送服务下实例列表，可在服务模糊订阅的监听器中结合subscribe接口实现服务下实例列表的变更监听。<br/>
+处于稳定性考虑，Nacos对模糊订阅的规则数量以及单个规则匹配的服务数量有上限保护。具体参照服务模糊容量保护机制一节。
+
+```java
+
+/**
+ * 订阅当前命名空间下指定分组group规则及服务名规则下所有服务的变更事件
+ *
+ * @param serviceNamePattern 服务名匹配规则
+ * @param groupNamePattern 分组匹配规则
+ * @param watcher  模糊订阅监听器
+ */
+void fuzzyWatch(String serviceNamePattern, String groupNamePattern, FuzzyWatchEventWatcher watcher)
+		throws NacosException;
+
+/**
+ * 订阅当前命名空间下指定分组group规则及服务serviceName规则下所有服务的变更事件,并以Future模式获取规则当前匹配的服务列表
+ * 模糊订阅的列表将以异步的方式通过watcher回调
+ * @param serviceNamePattern 服务serviceName匹配规则
+ * @param groupNamePattern 分组group匹配规则
+ * @param watcher  模糊订阅监听器
+ * @return Future 可通过future等待配置异步推送结果                
+ */
+Future<ListView<String>> fuzzyWatchWithServiceKeys(String serviceNamePattern, String groupNamePattern,
+		FuzzyWatchEventWatcher watcher) throws NacosException;
+
+
+/**
+ * 取消订阅当前命名空间下指定分组group规则下所有服务的变更事件
+ * @param serviceNamePattern   服务匹配规则
+ * @param groupNamePattern 分组group匹配规则
+ * @param watcher      需要移除的模糊订阅watcher
+ */
+void cancelFuzzyWatch(String serviceNamePattern, String groupNamePattern, FuzzyWatchEventWatcher watcher);
+
+
+/**
+ * 订阅当前命名空间下指定分组group规则下所有服务的变更事件
+ *
+ * @param groupNamePattern 分组匹配规则
+ * @param watcher  模糊订阅监听器
+ */
+void fuzzyWatch(String groupNamePattern, FuzzyWatchEventWatcher watcher) throws NacosException;
+
+/**
+ * 订阅当前命名空间下指定分组group规则下所有服务的变更事件，可通过Future获取当前匹配的所有服务列表
+ *
+ * @param groupNamePattern 分组group匹配规则
+ * @param watcher  模糊订阅监听器
+ * @return Future 可通过future等待配置异步推送结果
+ */
+Future<ListView<String>> fuzzyWatchWithServiceKeys(String groupNamePattern,
+		FuzzyWatchEventWatcher watcher) throws NacosException;
+
+/**
+ * 取消订阅当前命名空间下指定分组group规则及服务规则下所有配置的服务事件
+ *
+ * @param groupNamePattern 分组group匹配规则
+ * @param watcher    需要移除的模糊订阅watcher
+ */
+void cancelFuzzyWatch(String groupNamePattern, FuzzyWatchEventWatcher watcher) ;
+
+
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述                                                                           |
+| :--- | :--- |:-----------------------------------------------------------------------------|
+| serviceNamePattern | string | 服务名匹配规则，支持a.前缀模糊匹配(如,myservice*) b.后缀模糊匹配(如\*service)，c.双边模糊匹配(如\*service\*) |
+| groupNamePattern | string | 配置分组匹配规则，支持a.前缀模糊匹配(如 mygroup*) b.后缀模糊匹配(如 \*mygroup)，c.双边模糊匹配(如 \*mygroup\*)     |      |
+| watcher | FuzzyWatchEventWatcher | 模糊订阅监听器                                                                      |
+
+
+#### FuzzyWatchEventWatcher模糊订阅监听器
+| 方法名 | 方法参数类型 | 描述                                                                      |
+| :--- | :--- |:------------------------------------------------------------------------|
+| onEvent | FuzzyWatchChangeEvent | 模糊订阅回调事件对象 |
+| getExecutor | void | 可指定执行回调事件的线程池，如果为空，将以nacos推送线程中执行回调  |      |
+
+#### FuzzyWatchChangeEvent模糊订阅事件
+| 参数名         | 参数类型   | 描述                                                                                                                      |
+|:------------|:-------|:------------------------------------------------------------------------------------------------------------------------|
+| serviceName | string | 变更的服务名                                                                                                                  |
+| groupName   | string | 变更的服务分组group                                                                                                            |      |
+| namespace   | string | 变更的命名空间                                                                                                                 |
+| changedType | string | 变更类型，表示客户端接收到的服务变更类型，包含ADD_SERVICE-新增服务，DELETE_SERVICE-移除服务                                                             |
+| syncType    | string | 触发变更的类型，包含FUZZY_WATCH_INIT_NOTIFY-初始化推送已存在的服务列表，FUZZY_WATCH_DIFF_SYNC_NOTIFY-变更对账触发，FUZZY_WATCH_RESOURCE_CHANGED-服务变更推送 |
+
+
+
+#### 返回参数
+
+| 参数类型 | 描述                                                                                      |
+| :--- |:----------------------------------------------------------------------------------------|
+| Future<ListView<String>> | 返回当前匹配的服务列表的future对象，当规则匹配的服务列表已经推送到客户端时，可通过future对象获取服务列表<br/>*注意：当触发容量保护时，返回的服务列表可能不全 |
+```java
+//返回的参数为serviceKey列表，可通过NamingUtils工具类获取serviceName，groupName及namespace
+ String[] serviceKeyItems = NamingUtils.parseServiceKey(serviceKey);
+ String namespace = serviceKeyItems[0];
+ String groupName = serviceKeyItems[1];
+ String serviceName = serviceKeyItems[2];
+```
+#### 服务模糊订阅容量保护机制
+
+处于稳定性角度考虑，避免过多的规则及规则匹配的服务数量导致服务端内存压力以及对客户端造成推送风暴，Nacos在两个层面对模糊订阅功能设计了容量保护机制，当超过上限时，模糊订阅的推送将被抑制。<br/>
+1. 模糊订阅规则数量上限保护 ,默认的模糊订阅规则数量上限为20,可通过参数nacos.naming.fuzzy.watch.max.pattern.count调整上限。
+2. 单个模糊订阅规则匹配的服务数量上限保护， 默认单个模糊订阅规则匹配的配置数量上限为500，可通过nacos.naming.fuzzy.watch.max.pattern.match.service.count调整上限。
+
+在fuzzyWatch接口中注册模糊订阅监听器可同时实现FuzzyWatchLoadWatcher负载监听器感知容量保护机制的发生。
+#### FuzzyWatchLoadWatcher模糊订阅负载监听器
+| 方法名  | 描述                           |
+| :--- |:-----------------------------|
+| onPatternOverLimit | 当前模糊订阅规则因超过上限，推送被抑制时触发       |
+| onServiceReachUpLimit | 当前模糊订阅规则匹配的服务数量达到上限，推送被抑制时触发 |
+
+*注意：
+1.  当触发容量保护时，通过fuzzyWatchWithServiceKeys返回的服务列表可能不是完整的服务列表。
+2.  当触发服务数量上限保护时，服务下线的事件也可能因保护机制而导致无法推送。
+
+
+#### 请求示例
+
+```java
+try {
+        // 初始化配置服务，控制台通过示例代码自动获取下面参数
+        String serverAddr = "{serverAddr}";
+        String serviceNamePattern = "service*";
+        String groupPattern = "group*";
+        Properties properties = new Properties();
+        properties.put("serverAddr", serverAddr);
+        properties.put("namespace", "mynamespaceId");
+
+        Future<ListView<String>> future = namingService.fuzzyWatchWithServiceKeys(serviceNamePattern, groupPattern, new AbstractFuzzyWatchEventWatcher() {
+@Override
+public void onEvent(FuzzyWatchChangeEvent event) {
+        System.out.println(event.toString());
+        }
+
+@Override
+public void onPatternOverLimit() {
+        System.out.println("pattern service over limit ");
+
+        }
+
+@Override
+public void onServiceReachUpLimit() {
+        System.out.println("pattern service over limit ");
+        }
+        });
+        } catch (NacosException e) {
+        e.printStackTrace();
+        }
 ```
 
 ## 5. Java SDK的生命周期
