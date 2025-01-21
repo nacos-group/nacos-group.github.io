@@ -2,7 +2,7 @@
 title: Nacos 2.5.0、3.0.0-ALPHA.2、Python-SDK 2.0 正式发布
 keywords: [2.5.0, 3.0.0, Alpha.2, Nacos-Python-SDK]
 description: Nacos 2.5.0、3.0.0-ALPHA.2、Python-SDK 2.0 正式发布
-date: "2025-01-25"
+date: "2025-01-21"
 category: announcement
 ---
 # Nacos 2.5.0、3.0.0-ALPHA.2、Python-SDK 2.0 正式发布
@@ -19,7 +19,7 @@ Nacos 从1.0版本开始支持用户通过`Beta发布`功能，指定部分配�
 
 因此Nacos社区课题[ISSUE#12217](https://github.com/alibaba/nacos/issues/12217)的优化，在2.5.0版本支持了对`Beta`灰度发布的历史记录，方便用户在配置灰度变更后，能够查询到之前停止或已灰度的配置变更历史记录和内容。
 
-:::warning
+:::note
 该功能依赖 `his_config_info`表结构的变更，因此在从**旧版本进行升级**时，需要先对数据库表结构进行变更，详情请查看文档[升级手册](../docs/latest/manual/admin/upgrading/?spm=5238cd80.2ef5001f.0.0.3f613b7cbOnGYk)。
 :::
 
@@ -59,7 +59,7 @@ Nacos社区向用户征集了他们对Nacos 3.0的期望功能，其中支持分
 
 支持配置和服务的模糊订阅也是Nacos 3.0的期望功能中呼声最高之一，该功能原计划在Nacos3.1版本中支持，但由于社区同学的给力贡献，模糊订阅的功能已经基本完成，因此在Nacos 3.0.0 ALPHA.2 中，模糊订阅的功能提前作为实验性功能加入。用户可以通过`fuzzyWatch`接口可以使用一定的表达式，对指定分组、服务和配置进行批量订阅；目前支持通过`*`进行前缀模糊，后缀模糊，双边模糊匹配。欢迎大家试用并反馈使用中的问题。
 
-:::warning
+:::note
 模糊订阅功能仅会推送服务、配置的新增以及删除事件，并不会直接推送服务下实例列表，可在服务模糊订阅的监听器中结合subscribe接口实现服务下实例列表的变更监听。
 
 出于稳定性考虑，Nacos对模糊订阅的规则数量以及单个规则匹配的服务数量有上限保护。具体请参考[使用手册](../docs/v3.0/manual/user/java-sdk/usage/?spm=5238cd80.2ef5001f.0.0.3f613b7cEikFoW)。
@@ -95,7 +95,7 @@ Nacos Console的默认端口为`8080`，可以使用`nacos.console.port`参数�
 
 更多内容，请查看[运维API](../docs/v3.0/manual/admin/admin-api/)。
 
-:::warning
+:::note
 由于目前版本还处于ALPHA测试阶段，Admin API在后续版本中可能会新增或移除一些重复API，少量API或许会存在一定的调整，目前不推荐在生产环境中使用。
 :::
 
