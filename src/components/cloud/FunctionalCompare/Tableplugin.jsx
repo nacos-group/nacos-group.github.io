@@ -15,6 +15,7 @@ const Tableplugin = (props) => {
       {
         isHead && !isFold && (
           <table class="table table-fixed sticky-table-top">
+            <thead>
             <tr>
               <th class="col1 border-0" />
               <th class="col2 border-0" />
@@ -59,10 +60,12 @@ const Tableplugin = (props) => {
                 </div>
               </th>
             </tr>
+            </thead>
           </table>
         )
       }
       <table class="table bg-gray-01 rounded-2xl table-fixed">
+        <tbody>
         {
           dataSource.map((item, index) => {
             return (
@@ -116,6 +119,7 @@ const Tableplugin = (props) => {
             );
           })
         }
+        </tbody>
       </table>
     </div>
   );

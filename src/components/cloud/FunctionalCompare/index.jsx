@@ -53,6 +53,7 @@ const FunctionalCompare = (props) => {
       // 简略版表格头 top: 4rem
       isSticky && isCollapsed && (
         <table class="table table-fixed sticky-title-top bg-gray-02">
+          <thead>
           <tr>
             <th class="col1 border-0" />
             <th class="col2 overflow-hidden">
@@ -71,6 +72,7 @@ const FunctionalCompare = (props) => {
               <p class="mb-6 text-2xl font-normal">MSE Nacos Serverless 版</p>
             </th>
           </tr>
+          </thead>
         </table>
       )
     }

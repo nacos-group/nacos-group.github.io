@@ -15,6 +15,10 @@
     width: 100%;
   }
 }
+.sticky-table-top p, .sticky-title-top p{
+  word-wrap: break-word;
+  white-space: normal;
+}
 
 functional-compare {
 

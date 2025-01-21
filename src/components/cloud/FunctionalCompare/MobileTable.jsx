@@ -1,4 +1,3 @@
-import { useEffect, useState } from "preact/hooks";
 import Correct from "./Correct";
 import False from "./False";
 
@@ -8,6 +7,7 @@ const MobileTable = (props) => {
   return (
     <div class="overflow-x-auto rounded-2xl mb-6">
       <table class="table bg-gray-01 rounded-2xl table-fixed">
+        <tbody>
         {
           dataSource.map((item, index) => {
             return (
@@ -37,6 +37,7 @@ const MobileTable = (props) => {
             );
           })
         }
+        </tbody>
       </table>
     </div>
   );
