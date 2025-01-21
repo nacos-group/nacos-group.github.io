@@ -17,16 +17,12 @@ jobs:
         run: |
           npm install && npm i @swc/core@1.6.0
       - name: Build
+        run: npm run build
+      - name: Install Aliyun CLI
         run: |
-          npm run build && mkdir deploy-dist && cp -R dist/* deploy-dist/
-      - run: npm i @serverless-devs/s -g  --registry=https://registry.npmmirror.com
-      - run: s config add --AccountID ${{secrets.ACCOUNT_ID}}  --AccessKeyID ${{secrets.ACCESS_KEYID}}  --AccessKeySecret ${{secrets.ACCESS_KEYSECRET}} -a nacos -f
-      - name: Deploy
-        run: s deploy --use-local -y
-      - name: Update Cache-Control
-        uses: doggycool/ossutil-github-action@master
-        with:
-          ossArgs: 'set-meta oss://nacos-website-cn-hongkong/ Cache-Control:no-cache -rf'
-          accessKey: ${{ secrets.ACCESS_KEYID }}
-          accessSecret: ${{ secrets.ACCESS_KEYSECRET }}
-          endpoint: oss-cn-hongkong.aliyuncs.com
+          curl -O https://aliyuncli.alicdn.com/aliyun-cli-linux-latest-amd64.tgz
+          tar -xzf aliyun-cli-linux-latest-amd64.tgz
+          chmod +x aliyun
+          ./aliyun version
+      - name: Sync to OSS
+        run: ./aliyun oss cp ./dist oss://nacos-website-cn-hongkong/ --meta Cache-Control:"max-age=3600" -r -f -e oss-cn-hongkong.aliyuncs.com --access-key-id ${{ secrets.ACCESS_KEYID }} --access-key-secret ${{ secrets.ACCESS_KEYSECRET }} --region cn-hongkong
