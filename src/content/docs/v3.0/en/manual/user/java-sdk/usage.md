@@ -3,7 +3,7 @@ title: Java SDK Usage
 keywords: [Java,SDK,Usage]
 description: This document introduces the usage of Nacos's Java SDK (nacos-client), including how to configure the Nacos Client, how to use the Nacos Client, and how to utilize the Nacos Client's API.
 sidebar:
-  order: 2
+    order: 2
 ---
 
 # Java SDK 使用手册
@@ -457,7 +457,7 @@ try {
 通过fuzzyWatch接口可以对指定分组group和配置dataId规则的配置进行批量订阅，
 可通过*进行前缀模糊，后缀模糊，双边模糊匹配。
 <br/>模糊订阅功能仅会推送配置的新增以及删除事件，并不会直接推送配置变更的内容，可在配置模糊订阅的监听器中结合addListener接口实现配置内容的变更监听。<br/>
-处于稳定性考虑，Nacos对模糊订阅的规则数量以及单个规则匹配的配置数量有上限保护。具体参照配置模糊订阅容量保护机制一节。
+处于稳定性考虑，Nacos对模糊订阅的规则数量以及单个规则匹配的配置数量有上限保护。具体参照[配置模糊订阅容量保护机制](#配置模糊订阅容量保护机制)一节。
 
 ```java
 
@@ -558,7 +558,7 @@ String dataId=groupKeyItems[0];
 String group=groupKeyItems[1];
 String namespace=groupKeyItems[2];
 ```
-#### 3.8.1 配置模糊订阅容量保护机制
+#### 配置模糊订阅容量保护机制
 
 处于稳定性角度考虑，避免过多的规则及规则匹配的配置数量导致服务端内存压力以及对客户端造成推送风暴，Nacos在两个层面对模糊订阅功能设计了容量保护机制，当超过上限时，模糊订阅的推送将被抑制。<br/>
 1. 模糊订阅规则数量上限保护 ,默认的模糊订阅规则数量上限为20,可通过参数nacos.config.fuzzy.watch.max.pattern.count调整上限。
@@ -1249,7 +1249,7 @@ System.out.println(naming.getSubscribeServices());
 
 通过fuzzyWatch接口可以对符指定group和serviceName规则的服务进行批量订阅， 可通过*进行前缀模糊，后缀模糊，双边模糊匹配。
 <br/>模糊订阅功能仅会推送服务的新增以及删除事件，并不会直接推送服务下实例列表，可在服务模糊订阅的监听器中结合subscribe接口实现服务下实例列表的变更监听。<br/>
-处于稳定性考虑，Nacos对模糊订阅的规则数量以及单个规则匹配的服务数量有上限保护。具体参照服务模糊容量保护机制一节。
+处于稳定性考虑，Nacos对模糊订阅的规则数量以及单个规则匹配的服务数量有上限保护。具体参照[服务模糊容量保护机制](#服务模糊订阅容量保护机制)一节。
 
 ```java
 
@@ -1373,34 +1373,34 @@ void cancelFuzzyWatch(String groupNamePattern, FuzzyWatchEventWatcher watcher) ;
 
 ```java
 try {
-        // 初始化配置服务，控制台通过示例代码自动获取下面参数
-        String serverAddr = "{serverAddr}";
-        String serviceNamePattern = "service*";
-        String groupPattern = "group*";
-        Properties properties = new Properties();
-        properties.put("serverAddr", serverAddr);
-        properties.put("namespace", "mynamespaceId");
+		// 初始化配置服务，控制台通过示例代码自动获取下面参数
+		String serverAddr = "{serverAddr}";
+		String serviceNamePattern = "service*";
+		String groupPattern = "group*";
+		Properties properties = new Properties();
+		properties.put("serverAddr", serverAddr);
+		properties.put("namespace", "mynamespaceId");
 
-        Future<ListView<String>> future = namingService.fuzzyWatchWithServiceKeys(serviceNamePattern, groupPattern, new AbstractFuzzyWatchEventWatcher() {
+		Future<ListView<String>> future = namingService.fuzzyWatchWithServiceKeys(serviceNamePattern, groupPattern, new AbstractFuzzyWatchEventWatcher() {
 @Override
 public void onEvent(FuzzyWatchChangeEvent event) {
-        System.out.println(event.toString());
-        }
+		System.out.println(event.toString());
+		}
 
 @Override
 public void onPatternOverLimit() {
-        System.out.println("pattern service over limit ");
+		System.out.println("pattern service over limit ");
 
-        }
+		}
 
 @Override
 public void onServiceReachUpLimit() {
-        System.out.println("pattern service over limit ");
-        }
-        });
-        } catch (NacosException e) {
-        e.printStackTrace();
-        }
+		System.out.println("pattern service over limit ");
+		}
+		});
+		} catch (NacosException e) {
+		e.printStackTrace();
+		}
 ```
 
 ## 5. Java SDK的生命周期
