@@ -1,12 +1,12 @@
 ---
-title: Nacos Java SDK 使用手册
+title: Java SDK 使用手册
 keywords: [Java,SDK,使用手册]
 description: 本文档介绍了Nacos的Java SDK(nacos-client)的使用方式，包括如何配置Nacos Client、如何使用Nacos Client、如何使用Nacos Client的API。
 sidebar:
     order: 2
 ---
 
-# Nacos Java SDK 使用手册
+# Java SDK 使用手册
 
 ## 1. 引用概述
 

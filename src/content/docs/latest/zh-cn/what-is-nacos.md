@@ -6,7 +6,7 @@ description: Nacos 配置中心简介，Nacos 是什么
 
 # 什么是 Nacos
 
-> 文档优化中......
+> 该文档即将废弃，推荐查看[Nacos 概览](./overview.md).
 
 ## 概览
 

@@ -1,12 +1,12 @@
 ---
-title: Nacos Python SDK Usage
+title: Python SDK Usage
 keywords: [Python,SDK,Usage]
 description: This document introduces the usage of Nacos's Python SDK (nacos-sdk-python)
 sidebar:
   order: 6
 ---
 
-# Nacos Python SDK Usage
+# Python SDK Usage
 
 
 ### Supported Python version：

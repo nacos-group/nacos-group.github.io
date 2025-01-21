@@ -19,9 +19,17 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 | 0.X ～ 1.1.X | 不支持 | 0.X ~ 1.1.X 版本需要先升级到1.2以上的，然后参考[Nacos2.0升级文档](https://nacos.io/docs/v2/upgrading/200-upgrading/) 先升级到2.0或2.1版本后再进行升级 |
 | 1.2.X ~ 1.4.X | 不支持 | 2.4.X版本不支持从 1.2.X ~ 1.4.X 之间的版本直接升级，请参考[Nacos2.0升级文档](https://nacos.io/docs/v2/upgrading/200-upgrading/) 先升级到2.0或2.1版本后再进行升级 |
 | 2.0.X | 支持 | 2.4.X版本支持从 2.0.X 升级到 2.4.X， 但数据库表结构有发生变化，请升级前对比[mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)文件，并应用新的表结构后进行升级 |
-| 2.1.X ~ 2.3.X | 支持 | 2.4.X版本支持从 2.1.X ~ 2.3.X 升级到 2.4.X |
+| 2.1.X ~ 2.4.X | 支持 | 2.5.X版本支持从 2.1.X ~ 2.4.X 升级到 2.5.X，但数据库表结构有发生变化，请升级前对比[mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)文件，并应用新的表结构后进行升级 |
 
 ## 2. 升级步骤
+
+:::note
+2.5.X 版本中对配置的灰度功能进行了一定程度的重构和优化，支持配置灰度的历史变化记录；这会导致表结构出现一定变化，同时在首次启动时会对存量数据进行升级，如果升级的集群正在使用老版本的`BETA发布`功能，可能会导致新版本节点首次启动时启动较慢。
+
+若需要加速数据升级的过程，可以在配置文件`application.properties`中增加数据升级到线程池比例参数`nacos.gray.migrate.executor.multi`，默认值为4，即启动`CPU核心数 * 4`个线程进行数据升级操作。
+
+若您确认没有使用`BETA发布`功能，可以忽略此步骤。
+:::
 
 ### 2.1. 发行版升级
 
@@ -32,7 +40,14 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 若文件中表结构存在变化，请先进行数据库变更，例如：
 
 ```SQL
-ALTER TABLE `config_info` ADD COLUMN `encrypted_data_key` varchar(255) NOT NULL COMMENT '密钥',
+-- 从 2.0.X 升级时需要执行下列所有SQL, 从2.1.X之后版本升级仅需执行最后三行。
+ALTER TABLE `config_info` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
+ALTER TABLE `config_info_gray` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
+ALTER TABLE `config_info_beta` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
+ALTER TABLE `his_config_info` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
+ALTER TABLE `his_config_info` ADD COLUMN `publish_type` varchar(50)  DEFAULT 'formal' COMMENT 'publish type gray or formal';
+ALTER TABLE `his_config_info` ADD COLUMN `gray_name` varchar(50)  DEFAULT NULL COMMENT 'gray name';
+ALTER TABLE `his_config_info` ADD COLUMN `ext_info`  longtext DEFAULT NULL COMMENT 'ext info';
 ```
 
 #### 2.1.2. 下载新版本
@@ -102,7 +117,14 @@ ${nacos.home}/bin/startup.cmd
 若文件中表结构存在变化，请先进行数据库变更，例如：
 
 ```SQL
-ALTER TABLE `config_info` ADD COLUMN `encrypted_data_key` varchar(255) NOT NULL COMMENT '密钥',
+-- 从 2.0.X 升级时需要执行下列所有SQL, 从2.1.X之后版本升级仅需执行最后三行。
+ALTER TABLE `config_info` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
+ALTER TABLE `config_info_gray` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
+ALTER TABLE `config_info_beta` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
+ALTER TABLE `his_config_info` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
+ALTER TABLE `his_config_info` ADD COLUMN `publish_type` varchar(50)  DEFAULT 'formal' COMMENT 'publish type gray or formal';
+ALTER TABLE `his_config_info` ADD COLUMN `gray_name` varchar(50)  DEFAULT NULL COMMENT 'gray name';
+ALTER TABLE `his_config_info` ADD COLUMN `ext_info`  longtext DEFAULT NULL COMMENT 'ext info';
 ```
 
 #### 2.2.2. 确认环境变量

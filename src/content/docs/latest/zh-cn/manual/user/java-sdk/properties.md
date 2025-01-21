@@ -1,12 +1,12 @@
 ---
-title: Nacos Java SDK 配置参数
+title: Java SDK 配置参数
 keywords: [ Java,SDK,配置参数 ]
 description: 本文档介绍了Nacos的Java SDK(nacos-client)目前所支持的配置参数列表,以及对Nacos Java SDK读取配置参数的原理做简要介绍。
 sidebar:
   order: 3
 ---
 
-# Nacos Java SDK 配置参数
+# Java SDK 配置参数
 
 ## 1. Java SDK 读取参数配置
 
@@ -127,56 +127,59 @@ String value = properties2.getProperty("global-key1");
 
 通用参数为初始化注册中心`NamingService`和配置中心`ConfigServie`时均生效的参数：
 
-| 参数名                 | PropertyKeyConst的Key  | 含义                                                                                                           | 可选值                                               | 默认值                      |
-|---------------------|-----------------------|--------------------------------------------------------------------------------------------------------------|---------------------------------------------------|--------------------------|
-| serverAddr          | SERVER_ADDR           | Nacos Server的地址列表，即此JAVA SDK访问哪个Nacos Server                                                                 | 任意域名或IP，多个地址通过英文逗号`,`分割，多个地址必须属于同一个Nacos Server集群 | 无                        |
-| contextPath         | CONTEXT_PATH          | Nacos Server OpenAPI 的 context path，对应Nacos Server 的`server.servlet.context-path`  参数                        | 任意URL支持的path                                      | nacos                    |
-| endpoint            | ENDPOINT              | Nacos Server的地址获取接入点，Java SDK或通过该接入点查询Nacos Server的实际域名或IP地址                                                 | 任意域名或IP                                           | 无                        |
-| endpointPort        | ENDPOINT_PORT         | Nacos Server的地址获取接入点的端口，配合endpoint使用，即请求${endpoint}:${endpointPort}/nacos/serverlist                         | 0~65535                                           | 8080                     |
-| endpointContextPath | ENDPOINT_CONTEXT_PATH | Nacos Server的地址获取接入点的context path，配合endpoint使用，${endpoint}:${endpointPort}/${endpointContextPath}/serverlist | 任意URL支持的path                                      | nacos                    |
-| clusterName         | CLUSTER_NAME          | Nacos Server在接入点中的集群名，配合endpoint使用，${endpoint}:${endpointPort}/${endpointContextPath}/${clusterName}         | 任意URL支持的path                                      | serverlist               |
-| endpointQueryParams | ENDPOINT_QUERY_PARAMS | Nacos Server的地址获取接入点的请求参数，用于接入点服务扩展自定义逻辑，格式key=value                                                         | 任意URL参数，key=value                                 | 无                        |
-| namespace           | NAMESPACE             | 该 JAVA SDK 所归属的命名空间Id， 设置后该SDK只能访问该命名空间的资源（配置或服务）                                                            | 命名空间Id                                            | 空字符串``                   |
-| username            | USERNAME              | 开启鉴权功能后，访问Nacos Server所使用的用户名                                                                                | 任意字符串                                             | 无                        |
-| password            | PASSWORD              | 开启鉴权功能后，访问Nacos Server所使用的用户名对应的密码                                                                           | 任意字符串                                             | 无                        |
-| accessKey           | ACCESS_KEY            | 使用阿里云RAM鉴权时需要使用的accessKey                                                                                    | 任意字符串                                             | 无                        |
-| secretKey           | SECRET_KEY            | 使用阿里云RAM鉴权时需要使用的secretKey                                                                                    | 任意字符串                                             | 无                        | |
-| ramRoleName         | RAM_ROLE_NAME         | 使用阿里云RAM鉴权时需要使用的ramRoleName                                                                                  | 任意字符串                                             | 无                        |
-| signatureRegionId   | SIGNATURE_REGION_ID   | 使用阿里云RAM鉴权时，需要使用的signatureRegionId                                                                           | 任意字符串                                             | 无                        |
-| logAllProperties    | LOG_ALL_PROPERTIES    | 启动Java SDK时，是否打印全量参数，包含自定义properties、JVM和环境变量，主要用户调试和问题排查。                                                   | boolean                                           | false                    |
-| ~~serverName~~      | ~~SERVER_NAME~~       | 该 JAVA SDK 的名称，目前仅在访问endpoint时使用，由于使用率低且命名不合理，将废弃                                                            | 任意字符串                                             | 由serverAddr/endpoint自动拼接 |
+| 参数名                            | PropertyKeyConst的Key              | 含义                                                                                                           | 可选值                                               | 默认值                      |
+|--------------------------------|-----------------------------------|--------------------------------------------------------------------------------------------------------------|---------------------------------------------------|--------------------------|
+| serverAddr                     | SERVER_ADDR                       | Nacos Server的地址列表，即此JAVA SDK访问哪个Nacos Server                                                                 | 任意域名或IP，多个地址通过英文逗号`,`分割，多个地址必须属于同一个Nacos Server集群 | 无                        |
+| contextPath                    | CONTEXT_PATH                      | Nacos Server OpenAPI 的 context path，对应Nacos Server 的`server.servlet.context-path`  参数                        | 任意URL支持的path                                      | nacos                    |
+| endpoint                       | ENDPOINT                          | Nacos Server的地址获取接入点，Java SDK或通过该接入点查询Nacos Server的实际域名或IP地址                                                 | 任意域名或IP                                           | 无                        |
+| endpointPort                   | ENDPOINT_PORT                     | Nacos Server的地址获取接入点的端口，配合endpoint使用，即请求${endpoint}:${endpointPort}/nacos/serverlist                         | 0~65535                                           | 8080                     |
+| endpointContextPath            | ENDPOINT_CONTEXT_PATH             | Nacos Server的地址获取接入点的context path，配合endpoint使用，${endpoint}:${endpointPort}/${endpointContextPath}/serverlist | 任意URL支持的path                                      | nacos                    |
+| endPointClusterName            | ENDPOINT_CLUSTER_NAME             | Nacos Server在接入点中的集群名，配合endpoint使用，${endpoint}:${endpointPort}/${endpointContextPath}/${endPointClusterName} | 任意URL支持的path                                      | serverlist               |
+| endpointQueryParams            | ENDPOINT_QUERY_PARAMS             | Nacos Server的地址获取接入点的请求参数，用于接入点服务扩展自定义逻辑，格式key=value                                                         | 任意URL参数，key=value                                 | 无                        |
+| endpointRefreshIntervalSeconds | ENDPOINT_REFRESH_INTERVAL_SECONDS | Nacos Server定期从地址获取接入点重新获取地址列表的间隔时间，单位为秒                                                                     | 任意正整数                                             | 30                       |
+| namespace                      | NAMESPACE                         | 该 JAVA SDK 所归属的命名空间Id， 设置后该SDK只能访问该命名空间的资源（配置或服务）                                                            | 命名空间Id                                            | 空字符串``                   |
+| username                       | USERNAME                          | 开启鉴权功能后，访问Nacos Server所使用的用户名                                                                                | 任意字符串                                             | 无                        |
+| password                       | PASSWORD                          | 开启鉴权功能后，访问Nacos Server所使用的用户名对应的密码                                                                           | 任意字符串                                             | 无                        |
+| accessKey                      | ACCESS_KEY                        | 使用阿里云RAM鉴权时需要使用的accessKey                                                                                    | 任意字符串                                             | 无                        |
+| secretKey                      | SECRET_KEY                        | 使用阿里云RAM鉴权时需要使用的secretKey                                                                                    | 任意字符串                                             | 无                        | |
+| ramRoleName                    | RAM_ROLE_NAME                     | 使用阿里云RAM鉴权时需要使用的ramRoleName                                                                                  | 任意字符串                                             | 无                        |
+| signatureRegionId              | SIGNATURE_REGION_ID               | 使用阿里云RAM鉴权时，需要使用的signatureRegionId                                                                           | 任意字符串                                             | 无                        |
+| logAllProperties               | LOG_ALL_PROPERTIES                | 启动Java SDK时，是否打印全量参数，包含自定义properties、JVM和环境变量，主要用户调试和问题排查。                                                   | boolean                                           | false                    |
+| ~~clusterName~~                | ~~CLUSTER_NAME~~                  | 由于和服务实例的ClusterName名称相同，容易造成混淆，该参数已废弃，请使用`endPointClusterName`                                               | 任意URL支持的path                                      | serverlist               |
+| ~~isAdaptClusterNameUsage~~    | ~~IS_ADAPT_CLUSTER_NAME_USAGE~~   | 是否兼容通过`clusterName`的方式设置`endPointClusterName`，让升级兼容性更好                                                       | boolean                                           | false                    |
+| ~~serverName~~                 | ~~SERVER_NAME~~                   | 该 JAVA SDK 的名称，目前仅在访问endpoint时使用，由于使用率低且命名不合理，将废弃                                                            | 任意字符串                                             | 由serverAddr/endpoint自动拼接 |
 
 ### 2.2. 配置中心相关参数
 
 仅在初始化配置中心`ConfigServie`时生效：
 
-| 参数名                        | PropertyKeyConst的Key           | 含义                                                              | 可选值        | 默认值                                            | 
-|----------------------------|--------------------------------|-----------------------------------------------------------------|------------|------------------------------------------------|
-| clientWorkerMaxThreadCount | CLIENT_WORKER_MAX_THREAD_COUNT | 自动计算配置中心ConfigService进行配置监听时的最大线程池个数                            | >=2 的int值  | CPU个数                                          |
-| clientWorkerThreadCount    | CLIENT_WORKER_THREAD_COUNT     | 指定配置中心ConfigService进行配置监听时的线程池个数，优先级高于clientWorkerMaxThreadCount | >=2 的int值  | Max(2, Min(clientWorkerMaxThreadCount, CPU个数)) |
-| enableRemoteSyncConfig     | ENABLE_REMOTE_SYNC_CONFIG      | 配置中心ConfigService进行配置监听时立刻对监听的配置进行和服务端的同步和通知，开启可能影响启动监听的速度      | boolean    | false                                          |
-| configRequestTimeout       | CONFIG_REQUEST_TIMEOUT         | 指定配置中心ConfigService发起rpc请求超时时间, 默认不启用, 使用RpcClientConfig通用配置的超时时间               | >=0 的long值 | -1                                             |
-| ~~configRetryTime~~        | ~~CONFIG_RETRY_TIME~~          | 旧版本配置中心使用长轮询重试间隔时间，已废弃                                          | 任意int      | 2000                                           |
-| ~~configLongPollTimeout~~  | ~~CONFIG_LONG_POLL_TIMEOUT~~   | 旧版本配置中心使用长轮询超时时间，已废弃                                            | 任意int      | 30000                                          |
-| ~~maxRetry~~               | ~~MAX_RETRY~~                  | 旧版本配置中心使用的最大重试次数参数，已废弃                                          | 任意int      | 3                                              |
+| 参数名                        | PropertyKeyConst的Key           | 含义                                                                | 可选值        | 默认值                                            | 
+|----------------------------|--------------------------------|-------------------------------------------------------------------|------------|------------------------------------------------|
+| clientWorkerMaxThreadCount | CLIENT_WORKER_MAX_THREAD_COUNT | 自动计算配置中心ConfigService进行配置监听时的最大线程池个数                              | >=2 的int值  | CPU个数                                          |
+| clientWorkerThreadCount    | CLIENT_WORKER_THREAD_COUNT     | 指定配置中心ConfigService进行配置监听时的线程池个数，优先级高于clientWorkerMaxThreadCount  | >=2 的int值  | Max(2, Min(clientWorkerMaxThreadCount, CPU个数)) |
+| enableRemoteSyncConfig     | ENABLE_REMOTE_SYNC_CONFIG      | 配置中心ConfigService进行配置监听时立刻对监听的配置进行和服务端的同步和通知，开启可能影响启动监听的速度        | boolean    | false                                          |
+| configRequestTimeout       | CONFIG_REQUEST_TIMEOUT         | 指定配置中心ConfigService发起rpc请求超时时间, 默认不启用, 使用RpcClientConfig通用配置的超时时间 | >=0 的long值 | -1                                             |
+| ~~configRetryTime~~        | ~~CONFIG_RETRY_TIME~~          | 旧版本配置中心使用长轮询重试间隔时间，已废弃                                            | 任意int      | 2000                                           |
+| ~~configLongPollTimeout~~  | ~~CONFIG_LONG_POLL_TIMEOUT~~   | 旧版本配置中心使用长轮询超时时间，已废弃                                              | 任意int      | 30000                                          |
+| ~~maxRetry~~               | ~~MAX_RETRY~~                  | 旧版本配置中心使用的最大重试次数参数，已废弃                                            | 任意int      | 3                                              |
 
 ### 2.3. 注册中心相关参数
 
 仅在初始化注册中心`NamingServie`时生效：
 
-| 参数名                              | PropertyKeyConst的Key                 | 含义                                                                      | 可选值       | 默认值                                             | 
-|----------------------------------|--------------------------------------|-------------------------------------------------------------------------|-----------|-------------------------------------------------|
-| namingLoadCacheAtStart           | NAMING_LOAD_CACHE_AT_START           | 注册中心NamingService在启动时读取本地磁盘缓存来初始化数据                                     | boolean   | false                                           |
-| namingCacheRegistryDir           | NAMING_CACHE_REGISTRY_DIR            | 注册中心NamingService的本地磁盘缓存目录名拓展名，用于同一节点中区分多个NamingService实例               | 任意字符串     | 空字符串                                            |
-| namingAsyncQuerySubscribeService | NAMING_ASYNC_QUERY_SUBSCRIBE_SERVICE | 注册中心NamingService开启异步查询订阅服务的功能，作为数据推送链路异常时的兜底辅助                         | boolean   | false                                           |
-| namingPollingMaxThreadCount      | NAMING_POLLING_MAX_THREAD_COUNT      | 自动计算注册中心NamingService异步查询订阅服务的最大线程个数                                    | >=1 的int值 | CPU个数                                           |
-| namingPollingThreadCount         | NAMING_POLLING_THREAD_COUNT          | 指定注册中心NamingService异步查询订阅服务的线程个数，优先级高于namingPollingMaxThreadCount       | >=1 的int值 | Max(2, Min(namingPollingMaxThreadCount, CPU个数)) |
-| namingRequestDomainMaxRetryCount | NAMING_REQUEST_DOMAIN_RETRY_COUNT    | 当初始化注册中心NamingService`serverAddr`仅有一个地址时，请求Nacos Server失败后的最大重试次数       | 任意int值    | 3                                               |
-| namingPushEmptyProtection        | NAMING_PUSH_EMPTY_PROTECTION         | 注册中心NamingService开启推空保护功能，当订阅服务时发现服务地址列表为0时，忽略此地址列表                     | boolean   | false                                           |
-| redoDelayTime                    | REDO_DELAY_TIME                      | 注册中心NamingService与Nacos Server链接断开后，间隔多长时间检查并进行redo操作，单位毫秒              | 任意long值   | 3000                                            |
-| redoDelayThreadCount             | REDO_DELAY_THREAD_COUNT              | 注册中心NamingService执行redo操作的线程数                                           | 任意int值    | 1                                               |
-| namingRequestTimeout             | NAMING_REQUEST_TIMEOUT               | 注册中心NamingService发起rpc请求超时时间, 默认不启用, 使用RpcClientConfig通用配置的超时时间 | >=0 的long值 | -1                                              |
-| ~~namingClientBeatThreadCount~~  | ~~NAMING_CLIENT_BEAT_THREAD_COUNT~~  | 注册中心NamingService旧版本使用的，用于发送所注册服务实例心跳的线程数，已废弃                           | 任意int值    | 无                                               |
+| 参数名                              | PropertyKeyConst的Key                 | 含义                                                                | 可选值        | 默认值                                             | 
+|----------------------------------|--------------------------------------|-------------------------------------------------------------------|------------|-------------------------------------------------|
+| namingLoadCacheAtStart           | NAMING_LOAD_CACHE_AT_START           | 注册中心NamingService在启动时读取本地磁盘缓存来初始化数据                               | boolean    | false                                           |
+| namingCacheRegistryDir           | NAMING_CACHE_REGISTRY_DIR            | 注册中心NamingService的本地磁盘缓存目录名拓展名，用于同一节点中区分多个NamingService实例         | 任意字符串      | 空字符串                                            |
+| namingAsyncQuerySubscribeService | NAMING_ASYNC_QUERY_SUBSCRIBE_SERVICE | 注册中心NamingService开启异步查询订阅服务的功能，作为数据推送链路异常时的兜底辅助                   | boolean    | false                                           |
+| namingPollingMaxThreadCount      | NAMING_POLLING_MAX_THREAD_COUNT      | 自动计算注册中心NamingService异步查询订阅服务的最大线程个数                              | >=1 的int值  | CPU个数                                           |
+| namingPollingThreadCount         | NAMING_POLLING_THREAD_COUNT          | 指定注册中心NamingService异步查询订阅服务的线程个数，优先级高于namingPollingMaxThreadCount | >=1 的int值  | Max(2, Min(namingPollingMaxThreadCount, CPU个数)) |
+| namingRequestDomainMaxRetryCount | NAMING_REQUEST_DOMAIN_RETRY_COUNT    | 当初始化注册中心NamingService`serverAddr`仅有一个地址时，请求Nacos Server失败后的最大重试次数 | 任意int值     | 3                                               |
+| namingPushEmptyProtection        | NAMING_PUSH_EMPTY_PROTECTION         | 注册中心NamingService开启推空保护功能，当订阅服务时发现服务地址列表为0时，忽略此地址列表               | boolean    | false                                           |
+| redoDelayTime                    | REDO_DELAY_TIME                      | 注册中心NamingService与Nacos Server链接断开后，间隔多长时间检查并进行redo操作，单位毫秒        | 任意long值    | 3000                                            |
+| redoDelayThreadCount             | REDO_DELAY_THREAD_COUNT              | 注册中心NamingService执行redo操作的线程数                                     | 任意int值     | 1                                               |
+| namingRequestTimeout             | NAMING_REQUEST_TIMEOUT               | 注册中心NamingService发起rpc请求超时时间, 默认不启用, 使用RpcClientConfig通用配置的超时时间   | >=0 的long值 | -1                                              |
+| ~~namingClientBeatThreadCount~~  | ~~NAMING_CLIENT_BEAT_THREAD_COUNT~~  | 注册中心NamingService旧版本使用的，用于发送所注册服务实例心跳的线程数，已废弃                     | 任意int值     | 无                                               |
 
 ### 2.4. 连接相关
 
@@ -217,3 +220,4 @@ Nacos Java SDK 中有部分参数对运行时期的影响较小，且需要全�
 | nacos.env.first           | Nacos JAVA SDK 的 `NacosClientProperties` 配置搜索顺序。详情见[1.3.1. 优先级](#131-优先级)                                          | PROPERTIES/JVM/ENV | PROPERTIES        |
 | project.name              | 该SDK所归属的应用名，可在服务订阅者列表和配置订阅者列表中使用，仅作为参考字段使用                                                                         | 任意字符串              | unknown           |
 | ~~NACOS.CONNECT.TIMEOUT~~ | 连接服务时的连接超时时间，旧版本Http使用，已废弃                                                                                         | 任意int              | 1000              |
+| NACOS.READ.TIMEOUT | 连接服务时的读取超时时间，旧版本Http使用                                                                                         | 任意int              | 3000              |

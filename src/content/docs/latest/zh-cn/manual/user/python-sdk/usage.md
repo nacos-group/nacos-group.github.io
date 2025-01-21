@@ -6,7 +6,7 @@ sidebar:
     order: 6
 ---
 
-# Nacos Python SDK 使用手册
+# Python SDK 使用手册
 
 
 ### 支持 Python 版本

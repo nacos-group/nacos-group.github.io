@@ -93,7 +93,7 @@ Restart nacos cluster, and after any request, some logs can be saw in `${nacos-s
 
 ### Use the default Nacos authentication plugin
 
-Nacos provides a simple authentication plugin. It is a weak authentication system to prevent business misuse, not a strong authentication system to prevent malicious attacks. The usage detail see [User Guide-Authentication](../guide/user/auth.md).
+Nacos provides a simple authentication plugin. It is a weak authentication system to prevent business misuse, not a strong authentication system to prevent malicious attacks. The usage detail see [Admin Manual-Authentication](../manual/admin/auth.mdx).
 
 ## Client Plugin
 

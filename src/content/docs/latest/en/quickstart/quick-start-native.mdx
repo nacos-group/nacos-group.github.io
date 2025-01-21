@@ -1,0 +1,69 @@
+---
+title: Nacos Native Quick Start
+keywords: [Nacos,Quick Start]
+description: This quick start guide is designed to help you quickly download, install, and use Nacos on your computer.
+sidebar:
+    order: 1
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+# Nacos Quick Start
+
+This quick start guide is designed to help you quickly download, install, and use Nacos on your computer.
+
+:::note
+- The quick start guide is intended to assist you in quickly setting up, deploying, and getting started with Nacos. The Nacos service set up via this guide operates in **standalone mode** without **authentication enabled**, and is recommended for testing purposes only. For production environments, it's advised to deploy Nacos in **cluster mode** with **authentication enabled** to mitigate **stability and security risks**.
+- Nacos is intended to be used as an internal data center (IDC) application component, not a publicly facing product. It is highly recommended to deploy Nacos within an isolated internal network. **It is strongly discouraged** to deploy Nacos in public network environments.
+:::
+
+## System Requirements
+Nacos Native is a version of Nacos built using the GraalVM, and it no longer depends on a separate JDK installation. Nacos Native currently provides executable files for Linux (GNU) and macOS. The current version of Nacos Native corresponds to Java Nacos version 2.4.0. Executable binaries can be downloaded from the corresponding release page. It is recommended to run Nacos Native on a complete 64-bit operating system that includes the `libstdc++` library.
+
+## Download and Extract the Package
+After downloading the program package from the appropriate page, extract it and verify the files:
+
+1. On Linux operating systems, the extracted files should include the `nacos-server` binary, the `libinstrument.so` symlink, and other related configurations.
+2. On macOS, the extracted files should include the `nacos-server` binary and other related configurations.
+
+If a Nacos Native version for other operating systems is not available, you can manually compile the source code on that operating system to obtain the Nacos Native binary package.
+
+## Starting the Server
+It is recommended to run Nacos Native on a machine with at least 1 CPU core, 2 GB of RAM, and 60 GB of storage. On Linux/Unix/macOS, you can start Nacos Native using the following command:
+
+```shell
+# standalone means running in single-node mode, not cluster mode
+sh startup.sh -m standalone
+```
+
+If you want to start Nacos Native in cluster mode, make sure to have a `cluster.conf` file in the `conf` directory. This process is the same as with Java Nacos. After starting Nacos Native in cluster mode, it will automatically scan and retrieve the cluster IP addresses.
+
+## Stopping the Server
+To stop the Nacos Native server on Linux/Unix/macOS, use the following command:
+
+```shell
+sh shutdown.sh
+```
+
+## Viewing Logs
+For Linux/Unix operating systems, Nacos Native's runtime logs are recorded in the `/root/nacos/logs` directory. The log structure is consistent with that of Java Nacos.
+
+## Building Native Nacos
+Nacos Native provides build configurations for different operating systems. You can quickly build the Nacos Native executable for a specific OS using Maven. Follow the instructions below to build Nacos Native:
+
+```shell
+# Build Native Nacos for Windows x64
+mvn clean install -DskipTests=true -Pnative -Pnative-win64
+# Build Native Nacos for macOS x86_64
+mvn clean install -DskipTests=true -Pnative -Pnative-osx-x86_64
+# Build Native Nacos for Linux x64
+mvn clean install -DskipTests=true -Pnative -Pnative-linux64
+```
+
+The `-Pnative` configuration provides the basic native build settings, while `-Pnative-<os type>` specifies the operating system type. This configuration ensures that the RocksDB library is correctly packaged into Nacos Native. It's important to note that while Nacos Native offers a `musl`-based build configuration, GraalVM itself still requires compilation on a GNU-supported operating system, so using `musl` for compilation is not recommended.
+
+After a successful build, the relevant files will be published in the `/console/target` directory. You can refer to the "Download and Extract the Package" section to verify the completeness of the build and retrieve the compiled files.
+
+## Related Projects
+
+* [Nacos](https://github.com/alibaba/nacos)

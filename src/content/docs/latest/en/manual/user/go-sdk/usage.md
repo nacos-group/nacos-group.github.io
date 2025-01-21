@@ -1,12 +1,12 @@
 ---
-title: Nacos Go SDK Usage
+title: Go SDK Usage
 keywords: [Go,SDK,Usage]
 description: This document introduces the usage of Nacos's Go SDK (nacos-sdk-go)
 sidebar:
   order: 5
 ---
 
-# Nacos Go SDK Usage
+# Go SDK Usage
 
 
 ## 使用限制
@@ -375,6 +375,35 @@ Nacos产品了解可以查看 [Nacos website](https://nacos.io/en-us/docs/what-i
 
 ## 贡献代码
 我们非常欢迎大家为Nacos-sdk-go贡献代码. 贡献前请查看[CONTRIBUTING.md](./CONTRIBUTING.md)
+
+## 监控Nacos Go SDK
+推荐使用 [Alibaba Go Agent](https://github.com/alibaba/opentelemetry-go-auto-instrumentation)对使用Nacos Go SDK进行无侵入的插桩埋点，该方案无需更改任何业务代码，即可将以下监控指标以OpenTelemetry规范上报到任意指标存储后端中。
+|  指标名   | 指标类型  | 指标含义 |
+|  ----  | ----  | ----  |
+| nacos.client.serviceinfo.size  | Gague | 订阅的服务数 |
+| nacos.client.configinfo.size  | Gague | 监听的配置数 |
+| nacos.client.dombeat.size  | Gague | 发布的服务数 |
+| nacos.client.config.request.duration  | Histogram | 配置中心相关请求耗时 |
+| nacos.client.naming.request.duration  | Histogram | 服务发现相关请求耗时 |
+
+本节简单演示如何通过[Alibaba Go Agent](https://github.com/alibaba/opentelemetry-go-auto-instrumentation)上报Nacos Go Agent中的关键指标并通过Prometheus展示：
+
+1. 首先根据[文档](https://github.com/alibaba/opentelemetry-go-auto-instrumentation/blob/main/README.md)编译出[Alibaba Go Agent](https://github.com/alibaba/opentelemetry-go-auto-instrumentation)的二进制包
+```
+make clean && make install
+```
+2. 使用Agent编译Nacos Go SDK相关程序，得到对应的二进制程序：
+```
+otel go build .
+```
+3. 根据[文档](https://github.com/alibaba/opentelemetry-go-auto-instrumentation/blob/main/example/metrics/otlp-exporter/README.md)启动`otel collector`以及`prometheus`
+4. 启动步骤3中得到的二进制程序：
+```
+OTEL_EXPORTER_OTLP_ENDPOINT="http://127.0.0.1:4318" OTEL_EXPORTER_OTLP_INSECURE=true OTEL_SERVICE_NAME=${替换为你的真实的应用名} ./${替换为你的二进制程序名}
+```
+5. 前往prometheus，查看nacos相关的指标数据
+![image1](https://img.alicdn.com/imgextra/i1/O1CN01o8hHXr1v1LmPA0tC8_!!6000000006112-0-tps-3022-984.jpg)
+![image2](https://img.alicdn.com/imgextra/i4/O1CN01gUd3CR1iBLPvMeFAi_!!6000000004374-0-tps-3024-860.jpg)
 
 ## 联系我们
 * 加入Nacos-sdk-go钉钉群(23191211).
