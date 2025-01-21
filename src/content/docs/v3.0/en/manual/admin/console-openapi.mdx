@@ -1,0 +1,15 @@
+---
+title: 控制台SwaggerAPI
+keywords: [ Nacos,控制台API ]
+description: Nacos 控制台的一些API，如果您需要自定义开发Nacos对应的控制台UI，可以使用这些API进行数据的获取。
+sidebar:
+  order: 11
+---
+
+import Swagger from "@components/common/OpenApi/Swagger";
+import { console_yaml } from '@components/common/OpenApi/consts.ts';
+
+<Swagger 
+  client:load 
+  specContent={console_yaml}
+/>
