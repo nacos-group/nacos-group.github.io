@@ -13,6 +13,23 @@ Server节点中的数据，从而实现自定义的Nacos控制台UI界面。
 
 同时配合关闭Nacos 默认控制台UI来使用自定义UI，相关详情请参考[控制台手册-关闭默认控制台](./console/#33-关闭默认控制台)
 
+## 0. 控制台API 相关说明
+
+Nacos的控制台 API，使用统一的Path格式进行的规范。格式为`[/$nacos.console.contextPath]/v3/console/[module]/[subPath]...`,
+其中
+
+- `$nacos.console.contextPath`：控制台的根路径，默认为``，可以通过`nacos.console.contextPath`配置项进行修改。
+- `module`：控制台的模块名称，例如`server`、`cs`、`ns`、`core`等。
+- `subPath`：控制台的子路径，例如`state`、`namespace`、`config`等， 可能有多层子路径。
+
+下列列出的控制台API，采用默认`$nacos.console.contextPath`的情况进行展示，若已修改部署环境中的`$nacos.console.contextPath`
+配置项，请自行修改调用API时的请求URL。
+
+同时下列列出的控制台API样例中，均采用默认Nacos Console的端口进行展示，若已修改部署环境中的`$nacos.console.port`
+配置项，请自行修改调用API时的请求URL。
+
+另外，Nacos的控制台 API默认启用鉴权认证，除少量被标记为`公开接口`的API外，请在调用API时，携带正确的身份信息，否则请求将会被拦截。
+
 ## 1. Nacos 基础控制台API
 
 基础控制台API提供了Nacos 集群的基础信息，例如集群信息、命名空间信息等。
@@ -33,7 +50,7 @@ Server节点中的数据，从而实现自定义的Nacos控制台UI界面。
 
 #### 请求URL
 
-`/nacos/v3/console/server/state`
+`/v3/console/server/state`
 
 #### 请求参数
 
@@ -70,7 +87,7 @@ Server节点中的数据，从而实现自定义的Nacos控制台UI界面。
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/server/state'
+curl -X GET 'http://127.0.0.1:8080/v3/console/server/state'
 ```
 
 * 返回示例
@@ -120,7 +137,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/server/state'
 
 #### 请求URL
 
-`/nacos/v3/console/server/announcement`
+`/v3/console/server/announcement`
 
 #### 请求参数
 
@@ -141,7 +158,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/server/state'
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/server/announcement?language=zh-CN'
+curl -X GET 'http://127.0.0.1:8080/v3/console/server/announcement?language=zh-CN'
 ```
 
 * 返回示例
@@ -170,7 +187,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/server/announcement?language
 
 #### 请求URL
 
-`/nacos/v3/console/server/guide`
+`/v3/console/server/guide`
 
 #### 请求参数
 
@@ -189,7 +206,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/server/announcement?language
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/server/guide'
+curl -X GET 'http://127.0.0.1:8080/v3/console/server/guide'
 ```
 
 * 返回示例
@@ -218,7 +235,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/server/guide'
 
 #### 请求URL
 
-`/nacos/v3/console/health/liveness`
+`/v3/console/health/liveness`
 
 #### 请求参数
 
@@ -237,7 +254,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/server/guide'
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/health/liveness'
+curl -X GET 'http://127.0.0.1:8080/v3/console/health/liveness'
 ```
 
 * 返回示例
@@ -266,7 +283,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/health/liveness'
 
 #### 请求URL
 
-`/nacos/v3/console/health/readiness`
+`/v3/console/health/readiness`
 
 #### 请求参数
 
@@ -285,7 +302,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/health/liveness'
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/health/readiness'
+curl -X GET 'http://127.0.0.1:8080/v3/console/health/readiness'
 ```
 
 * 返回示例
@@ -314,7 +331,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/health/readiness'
 
 #### 请求URL
 
-`/nacos/v3/console/core/cluster/nodes`
+`/v3/console/core/cluster/nodes`
 
 #### 请求参数
 
@@ -334,7 +351,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/health/readiness'
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/core/cluster/nodes'
+curl -X GET 'http://127.0.0.1:8080/v3/console/core/cluster/nodes'
 ```
 
 * 返回示例
@@ -425,7 +442,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/core/cluster/nodes'
 
 #### 请求URL
 
-`/nacos/v3/console/core/namespace/list`
+`/v3/console/core/namespace/list`
 
 #### 请求参数
 
@@ -449,7 +466,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/core/cluster/nodes'
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/core/namespace/list'
+curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/list'
 ```
 
 * 返回示例
@@ -487,7 +504,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/core/namespace/list'
 
 #### 请求URL
 
-`/nacos/v3/console/core/namespace`
+`/v3/console/core/namespace`
 
 #### 请求参数
 
@@ -513,7 +530,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/core/namespace/list'
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/core/namespace?namespaceId=public'
+curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace?namespaceId=public'
 ```
 
 * 返回示例
@@ -549,14 +566,14 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/core/namespace?namespaceId=p
 
 #### 请求URL
 
-`/nacos/v3/console/core/namespace`
+`/v3/console/core/namespace`
 
 #### 请求参数
 
 | 参数名                 | 类型       | 必填 | 参数描述                     |
 |---------------------|----------|----|--------------------------|
 | `customNamespaceId` | `String` | 否  | 命名空间id，未填入时将会使用UUID生成ID。 |
-| `namespaceShowName` | `String` | 是  | 命名空间名称。                  |
+| `namespaceName`     | `String` | 是  | 命名空间名称。                  |
 | `namespaceDesc`     | `String` | 是  | 命名空间描述。                  |
 
 #### 返回数据
@@ -572,7 +589,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/core/namespace?namespaceId=p
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8848/nacos/v3/console/core/namespace' -d 'namespaceShowName=test&namespaceDesc=test'
+curl -X POST 'http://127.0.0.1:8080/v3/console/core/namespace' -d 'namespaceName=test&namespaceDesc=test'
 ```
 
 * 返回示例
@@ -601,15 +618,15 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/console/core/namespace' -d 'namespa
 
 #### 请求URL
 
-`/nacos/v3/console/core/namespace`
+`/v3/console/core/namespace`
 
 #### 请求参数
 
-| 参数名                 | 类型       | 必填 | 参数描述    |
-|---------------------|----------|----|---------|
-| `namespaceId`       | `String` | 是  | 命名空间ID  |
-| `namespaceShowName` | `String` | 是  | 命名空间名称。 |
-| `namespaceDesc`     | `String` | 否  | 命名空间描述。 |
+| 参数名             | 类型       | 必填 | 参数描述    |
+|-----------------|----------|----|---------|
+| `namespaceId`   | `String` | 是  | 命名空间ID  |
+| `namespaceName` | `String` | 是  | 命名空间名称。 |
+| `namespaceDesc` | `String` | 否  | 命名空间描述。 |
 
 #### 返回数据
 
@@ -624,7 +641,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/console/core/namespace' -d 'namespa
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8848/nacos/v3/console/core/namespace' -d 'namespaceId=test&namespaceShowName=test&namespaceDesc=test'
+curl -X PUT 'http://127.0.0.1:8080/v3/console/core/namespace' -d 'namespaceId=test&namespaceName=test&namespaceDesc=test'
 ```
 
 * 返回示例
@@ -653,7 +670,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/console/core/namespace' -d 'namespac
 
 #### 请求URL
 
-`/nacos/v3/console/core/namespace`
+`/v3/console/core/namespace`
 
 #### 请求参数
 
@@ -674,7 +691,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/console/core/namespace' -d 'namespac
 * 请求示例
 
 ```shell
-curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/console/core/namespace?namespaceId=test'
+curl -X DELETE 'http://127.0.0.1:8080/v3/console/core/namespace?namespaceId=test'
 ```
 
 * 返回示例
@@ -703,7 +720,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/console/core/namespace?namespaceI
 
 #### 请求URL
 
-`/nacos/v3/console/core/namespace/exist`
+`/v3/console/core/namespace/exist`
 
 #### 请求参数
 
@@ -724,7 +741,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/console/core/namespace?namespaceI
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/core/namespace/exist?customNamespaceId=test'
+curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/exist?customNamespaceId=test'
 ```
 
 * 返回示例
@@ -755,7 +772,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/core/namespace/exist?customN
 
 #### 请求URL
 
-`/nacos/nacos/v3/console/config`
+`/v3/console/cs/config`
 
 #### 请求参数
 
@@ -773,8 +790,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/core/namespace/exist?customN
 |--------------------|----------|----------------------------|
 | `id`               | `String` | 配置在存储系统中的ID，一般为Long类型的字符串。 |
 | `dataId`           | `String` | 配置ID。                      |
-| `group`            | `String` | 配置分组。                      |
-| `tenant`           | `String` | 命名空间ID。                    |
+| `groupName`        | `String` | 配置分组。                      |
+| `namespaceId`      | `String` | 命名空间ID。                    |
 | `content`          | `String` | 配置内容。                      |
 | `desc`             | `String` | 配置描述。                      |
 | `md5`              | `String` | 配置内容的MD5值。                 |
@@ -786,16 +803,13 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/core/namespace/exist?customN
 | `modifyTime`       | `Long`   | 配置修改时间。                    |
 | `createUser`       | `String` | 配置创建人。                     |
 | `createIp`         | `String` | 配置创建IP。                    |
-| ~~use~~            | `String` | 配置的用途，已废弃，请使用`desc`代替。     |
-| ~~effect~~         | `String` | 配置的生效方式，已废弃，请使用`type`代替。   |
-| ~~schema~~         | `String` | 配置的Schema，未启用，已废弃。         |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/nacos/v3/console/config?dataId=test&groupName=test'
+curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName=test'
 ```
 
 * 返回示例
@@ -805,24 +819,21 @@ curl -X GET 'http://127.0.0.1:8848/nacos/nacos/v3/console/config?dataId=test&gro
   "code": 0,
   "message": "success",
   "data": {
-    "id": "838015099401670656",
-    "dataId": "test",
-    "group": "DEFAULT_GROUP",
-    "content": "test",
-    "md5": "098f6bcd4621d373cade4e832627b4f6",
-    "encryptedDataKey": "",
-    "tenant": "",
     "appName": "",
-    "type": "text",
-    "createTime": 1733280178255,
-    "modifyTime": 1733280178255,
+    "configTags": null,
+    "content": "test",
+    "createIp": "127.0.0.1",
+    "createTime": 1741681316620,
     "createUser": "nacos",
-    "createIp": "0:0:0:0:0:0:0:1",
-    "desc": "test",
-    "use": null,
-    "effect": null,
-    "schema": null,
-    "configTags": null
+    "dataId": "test",
+    "desc": null,
+    "encryptedDataKey": "",
+    "groupName": "test",
+    "id": "873472517803610112",
+    "md5": "098f6bcd4621d373cade4e832627b4f6",
+    "modifyTime": 1741681316620,
+    "namespaceId": "public",
+    "type": "text"
   }
 }
 ```
@@ -843,7 +854,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/nacos/v3/console/config?dataId=test&gro
 
 #### 请求URL
 
-`/nacos/nacos/v3/console/config`
+`/v3/console/cs/config`
 
 #### 请求参数
 
@@ -874,7 +885,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/nacos/v3/console/config?dataId=test&gro
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8848/nacos/nacos/v3/console/config' -d 'dataId=test&groupName=test&namespaceId=public&content=test'
+curl -X POST 'http://127.0.0.1:8080/v3/console/cs/config' -d 'dataId=test&groupName=test&namespaceId=public&content=test'
 ```
 
 * 返回示例
@@ -903,7 +914,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/nacos/v3/console/config' -d 'dataId=te
 
 #### 请求URL
 
-`/nacos/nacos/v3/console/config`
+`/v3/console/cs/config`
 
 #### 请求参数
 
@@ -926,7 +937,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/nacos/v3/console/config' -d 'dataId=te
 * 请求示例
 
 ```shell
-curl -X DELETE 'http://127.0.0.1:8848/nacos/nacos/v3/console/config?dataId=test&groupName=test'
+curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName=test'
 ```
 
 * 返回示例
@@ -955,7 +966,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/nacos/v3/console/config?dataId=test&
 
 #### 请求URL
 
-`/nacos/nacos/v3/console/config/batchDelete`
+`/v3/console/cs/config/batchDelete`
 
 #### 请求参数
 
@@ -976,7 +987,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/nacos/v3/console/config?dataId=test&
 * 请求示例
 
 ```shell
-curl -X DELETE 'http://127.0.0.1:8848/nacos/nacos/v3/console/config/batchDelete?ids=838025461287096320,838025489170829312'
+curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config/batchDelete?ids=838025461287096320,838025489170829312'
 ```
 
 * 返回示例
@@ -1005,7 +1016,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/nacos/v3/console/config/batchDelete?
 
 #### 请求URL
 
-`/nacos/nacos/v3/console/configs`
+`/v3/console/cs/config/list`
 
 #### 请求参数
 
@@ -1025,24 +1036,28 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/nacos/v3/console/config/batchDelete?
 
 返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
-| 参数名                | 参数类型     | 描述                         |
-|--------------------|----------|----------------------------|
-| `id`               | `String` | 配置在存储系统中的ID，一般为Long类型的字符串。 |
-| `dataId`           | `String` | 配置ID。                      |
-| `group`            | `String` | 配置分组。                      |
-| `tenant`           | `String` | 命名空间ID。                    |
-| `content`          | `String` | 配置内容。                      |
-| `md5`              | `String` | 配置内容的MD5值。                 |
-| `encryptedDataKey` | `String` | 加密配置内容的密钥，使用配置加密插件时存在。     |
-| `appName`          | `String` | 配置所属的应用名称。                 |
-| `type`             | `String` | 配置类型。                      |
+| 参数名                          | 参数类型     | 描述                         |
+|------------------------------|----------|----------------------------|
+| `totalCount`                 | `int`    | 符合规则的配置总数。                 |
+| `pagesAvailable`             | `int`    | 可用页码总数。                    |
+| `pageNumber`                 | `int`    | 当前页码。                      |
+| `pageItems`                  | `List`   | 符合规则的配置列表。                 |
+| `pageItems`[i].`id`          | `String` | 配置在存储系统中的ID，一般为Long类型的字符串。 |
+| `pageItems`[i].`dataId`      | `String` | 配置ID。                      |
+| `pageItems`[i].`groupName`   | `String` | 配置分组。                      |
+| `pageItems`[i].`namespaceId` | `String` | 命名空间ID。                    |
+| `pageItems`[i].`md5`         | `String` | 配置内容的MD5值。                 |
+| `pageItems`[i].`appName`     | `String` | 配置所属的应用名称。                 |
+| `pageItems`[i].`type`        | `String` | 配置类型。                      |
+| `pageItems`[i].`createTime`  | `Long`   | 配置创建时间。                    |
+| `pageItems`[i].`modifyTime`  | `Long`   | 配置修改时间。                    |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/cs/config/list?dataId=&groupName=&appName=&configTags=&pageNo=1&pageSize=10&namespaceId=&type=&search=blur'
+curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/list?dataId=&groupName=&appName=&configTags=&pageNo=1&pageSize=10&namespaceId=&type=&search=blur'
 ```
 
 * 返回示例
@@ -1052,22 +1067,33 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/cs/config/list?dataId=&group
   "code": 0,
   "message": "success",
   "data": {
-    "totalCount": 1,
-    "pageNumber": 1,
-    "pagesAvailable": 1,
     "pageItems": [
       {
-        "id": "838029534438625280",
-        "dataId": "111",
-        "group": "DEFAULT_GROUP",
-        "content": "111",
-        "md5": null,
-        "encryptedDataKey": "",
-        "tenant": "",
         "appName": "",
+        "createTime": 0,
+        "dataId": "aaa",
+        "groupName": "DEFAULT_GROUP",
+        "id": "873471898128748544",
+        "md5": null,
+        "modifyTime": 0,
+        "namespaceId": "public",
+        "type": "text"
+      },
+      {
+        "appName": "",
+        "createTime": 0,
+        "dataId": "bbb",
+        "groupName": "DEFAULT_GROUP",
+        "id": "873473460813172736",
+        "md5": null,
+        "modifyTime": 0,
+        "namespaceId": "public",
         "type": "text"
       }
-    ]
+    ],
+    "pageNumber": 1,
+    "pagesAvailable": 1,
+    "totalCount": 2
   }
 }
 ```
@@ -1092,7 +1118,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/cs/config/list?dataId=&group
 
 #### 请求URL
 
-`/nacos/nacos/v3/console/config/searchDetail`
+`/v3/console/cs/config/searchDetail`
 
 #### 请求参数
 
@@ -1113,24 +1139,28 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/cs/config/list?dataId=&group
 
 返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
-| 参数名                | 参数类型     | 描述                         |
-|--------------------|----------|----------------------------|
-| `id`               | `String` | 配置在存储系统中的ID，一般为Long类型的字符串。 |
-| `dataId`           | `String` | 配置ID。                      |
-| `group`            | `String` | 配置分组。                      |
-| `tenant`           | `String` | 命名空间ID。                    |
-| `content`          | `String` | 配置内容。                      |
-| `md5`              | `String` | 配置内容的MD5值。                 |
-| `encryptedDataKey` | `String` | 加密配置内容的密钥，使用配置加密插件时存在。     |
-| `appName`          | `String` | 配置所属的应用名称。                 |
-| `type`             | `String` | 配置类型。                      |
+| 参数名                          | 参数类型     | 描述                         |
+|------------------------------|----------|----------------------------|
+| `totalCount`                 | `int`    | 符合规则的配置总数。                 |
+| `pagesAvailable`             | `int`    | 可用页码总数。                    |
+| `pageNumber`                 | `int`    | 当前页码。                      |
+| `pageItems`                  | `List`   | 符合规则的配置列表。                 |
+| `pageItems`[i].`id`          | `String` | 配置在存储系统中的ID，一般为Long类型的字符串。 |
+| `pageItems`[i].`dataId`      | `String` | 配置ID。                      |
+| `pageItems`[i].`groupName`   | `String` | 配置分组。                      |
+| `pageItems`[i].`namespaceId` | `String` | 命名空间ID。                    |
+| `pageItems`[i].`md5`         | `String` | 配置内容的MD5值。                 |
+| `pageItems`[i].`appName`     | `String` | 配置所属的应用名称。                 |
+| `pageItems`[i].`type`        | `String` | 配置类型。                      |
+| `pageItems`[i].`createTime`  | `Long`   | 配置创建时间。                    |
+| `pageItems`[i].`modifyTime`  | `Long`   | 配置修改时间。                    |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/cs/config/searchDetail?dataId=&groupName=&appName=&configTags=&pageNo=1&pageSize=10&namespaceId=&type=&search=blur&configDetail=*11*'
+curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/searchDetail?dataId=&groupName=&appName=&configTags=&pageNo=1&pageSize=10&namespaceId=&type=&search=blur&configDetail=*11*'
 ```
 
 * 返回示例
@@ -1140,22 +1170,22 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/cs/config/searchDetail?dataI
   "code": 0,
   "message": "success",
   "data": {
-    "totalCount": 1,
-    "pageNumber": 1,
-    "pagesAvailable": 1,
     "pageItems": [
       {
-        "id": "838029534438625280",
-        "dataId": "111",
-        "group": "DEFAULT_GROUP",
-        "content": "111",
-        "md5": null,
-        "encryptedDataKey": "",
-        "tenant": "",
         "appName": "",
+        "createTime": 0,
+        "dataId": "111",
+        "groupName": "DEFAULT_GROUP",
+        "id": "873475812546842624",
+        "md5": null,
+        "modifyTime": 0,
+        "namespaceId": "public",
         "type": "text"
       }
-    ]
+    ],
+    "pageNumber": 1,
+    "pagesAvailable": 1,
+    "totalCount": 1
   }
 }
 ```
@@ -1176,7 +1206,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/cs/config/searchDetail?dataI
 
 #### 请求URL
 
-`/nacos/nacos/v3/console/config/listener`
+`/v3/console/cs/config/listener`
 
 #### 请求参数
 
@@ -1190,17 +1220,17 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/cs/config/searchDetail?dataI
 
 返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
-| 参数名                       | 参数类型                  | 描述                                    |
-|---------------------------|-----------------------|---------------------------------------|
-| `collectStatus`           | `Integer`             | 订阅者查询状态，成功固定为`200`。                   |
-| `lisentersGroupkeyStatus` | `Map<String, String>` | 订阅者列表，key为订阅者IP，value为订阅者订阅当前配置的MD5值。 |
+| 参数名               | 参数类型                  | 描述                                    |
+|-------------------|-----------------------|---------------------------------------|
+| `queryType`       | `String`              | 订阅者查询类型，该接口为`config`。                 |
+| `listenersStatus` | `Map<String, String>` | 订阅者列表，key为订阅者IP，value为订阅者订阅当前配置的MD5值。 |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/config/listener?dataId=test&groupName=test'
+curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener?dataId=test&groupName=test'
 ```
 
 * 返回示例
@@ -1210,10 +1240,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/config/listener?dataId=test&
   "code": 0,
   "message": "success",
   "data": {
-    "collectStatus": 200,
-    "lisentersGroupkeyStatus": {
-      "127.0.0.1": "85424d0a03cf406cc4b7438c350f667e"
-    }
+    "listenersStatus": {
+      "127.0.0.1": "32cacc65accfdab47954de3fc781e938"
+    },
+    "queryType": "config"
   }
 }
 ```
@@ -1234,7 +1264,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/config/listener?dataId=test&
 
 #### 请求URL
 
-`/nacos/nacos/v3/console/config/listener/ip`
+`/v3/console/cs/config/listener/ip`
 
 #### 请求参数
 
@@ -1247,17 +1277,17 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/config/listener?dataId=test&
 
 返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
-| 参数名                       | 参数类型                  | 描述                                                              |
-|---------------------------|-----------------------|-----------------------------------------------------------------|
-| `collectStatus`           | `Integer`             | 订阅者查询状态，成功固定为`200`。                                             |
-| `lisentersGroupkeyStatus` | `Map<String, String>` | 订阅者列表，key为订阅的配置信息，格式为`dataId`+`groupName`，value为订阅者订阅当前配置的MD5值。 |
+| 参数名               | 参数类型                  | 描述                                                                            |
+|-------------------|-----------------------|-------------------------------------------------------------------------------|
+| `queryType`       | `String`              | 订阅者查询类型，该接口为`ip`。                                                             |
+| `listenersStatus` | `Map<String, String>` | 订阅者列表，key为订阅的配置信息，格式为`dataId`+`groupName`+`namespaceId`，value为订阅者订阅当前配置的MD5值。 |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/config/listener/ip?ip=127.0.0.1'
+curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener/ip?ip=127.0.0.1'
 ```
 
 * 返回示例
@@ -1267,20 +1297,15 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/config/listener/ip?ip=127.0.
   "code": 0,
   "message": "success",
   "data": {
-    "collectStatus": 200,
-    "lisentersGroupkeyStatus": {
-      "qtc-user.yaml+DEFAULT_GROUP": "85424d0a03cf406cc4b7438c350f667e"
-    }
+    "listenersStatus": {
+      "qtc-user.yaml+DEFAULT_GROUP+public": "32cacc65accfdab47954de3fc781e938"
+    },
+    "queryType": "ip"
   }
 }
 ```
 
-### 2.9. 导出配置（旧版本格式）
-
-:::note
-该接口会导出所选或所查询的配置，导出的配置为旧版本格式的zip文件，后续版本可能会移除对旧版本格式导入导出配置的支持，请谨慎使用，建议使用新的[导出配置](#210-导出配置)
-接口代替。
-:::
+### 2.9. 导出配置
 
 #### 接口描述
 
@@ -1296,7 +1321,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/console/config/listener/ip?ip=127.0.
 
 #### 请求URL
 
-`/nacos/nacos/v3/console/config/export`
+`/v3/console/cs/config/export2`
 
 #### 请求参数
 
@@ -1320,59 +1345,7 @@ attachment模式，导出失败时返回体遵循[Nacos open API 统一返回体
 * 请求示例
 
 ```shell
-curl -X GET "http://127.0.0.1:8848/nacos/v3/console/cs/config/export?dataId=&groupId=&ids=" --output ~/test.zip
-```
-
-* 返回示例
-
-```shell
-unzip ~/test.zip
-> Archive:  /path/to/test.zip
->  inflating: DEFAULT_GROUP/111
->  inflating: DEFAULT_GROUP/qtc-user.yaml
-```
-
-### 2.10. 导出配置
-
-#### 接口描述
-
-通过该接口，可以将所选或所查询的配置，导出的配置为zip文件，进行备份或导入到其他Nacos集群。
-
-#### 请求方式
-
-`GET`
-
-#### 鉴权状态
-
-需要具有对应`命名空间读取`权限的用户身份。
-
-#### 请求URL
-
-`/nacos/nacos/v3/console/config/export2`
-
-#### 请求参数
-
-| 参数名           | 类型       | 必填 | 参数描述                         |
-|---------------|----------|----|------------------------------|
-| `dataId`      | `String` | 是  | 需要导出的配置ID的pattern，例如`test*`。 |
-| `groupName`   | `String` | 是  | 需要导出的配置分组的pattern，例如`test*`。 |
-| `ids`         | `String` | 是  | 需要导出的配置的存储ID，多个ID用英文逗号分隔。    |
-| `namespaceId` | `String` | 否  | 命名空间ID，默认值为`public`。         |
-| `appName`     | `String` | 否  | 需要导出的配置所属的应用名称。              |
-
-> 使用时建议分开使用 `ids` 和 `dataId` + `groupName` 的组合，只选择一种方式，另一类传入空字符串，否则可能导致导出文件为空内容。
-
-#### 返回数据
-
-导出成功是为byte数组的file
-attachment模式，导出失败时返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)。
-
-#### 示例
-
-* 请求示例
-
-```shell
-curl -X GET "http://127.0.0.1:8848/nacos/v3/console/cs/config/export2?dataId=&groupId=&ids=" --output ~/test.zip
+curl -X GET "http://127.0.0.1:8080/v3/console/cs/config/export2?dataId=&groupId=&ids=" --output ~/test.zip
 ```
 
 * 返回示例
@@ -1385,7 +1358,7 @@ unzip ~/test.zip
 >   inflating: .metadata.yml
 ```
 
-### 2.11. 导入配置
+### 2.10. 导入配置
 
 :::note
 目前导入配置接口能够同时支持旧版本导出的zip文件和新版本导出的zip文件，但后续版本可能会移除对旧版本格式导入导出配置的支持，建议使用新的[导出配置](#210-导出配置)
@@ -1406,7 +1379,7 @@ unzip ~/test.zip
 
 #### 请求URL
 
-`/nacos/nacos/v3/console/config/import`
+`/v3/console/cs/config/import`
 
 #### 请求参数
 
@@ -1430,7 +1403,7 @@ unzip ~/test.zip
 * 请求示例
 
 ```shell
-curl -vX POST "http://127.0.0.1:8848/nacos/v3/console/cs/config/import?namespaceId=test" -F "file=@/path/to/test.zip"
+curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import?namespaceId=test" -F "file=@/path/to/test.zip"
 ```
 
 * 返回示例
@@ -1446,7 +1419,7 @@ curl -vX POST "http://127.0.0.1:8848/nacos/v3/console/cs/config/import?namespace
 }
 ```
 
-### 2.12. 克隆配置
+### 2.11. 克隆配置
 
 #### 接口描述
 
@@ -1462,7 +1435,7 @@ curl -vX POST "http://127.0.0.1:8848/nacos/v3/console/cs/config/import?namespace
 
 #### 请求URL
 
-`/nacos/nacos/v3/console/config/clone`
+`/v3/console/cs/config/clone`
 
 #### 请求参数
 
@@ -1489,7 +1462,7 @@ curl -vX POST "http://127.0.0.1:8848/nacos/v3/console/cs/config/import?namespace
 * 请求示例
 
 ```shell
-curl -H "Content-Type: application/json" -X POST  "http://127.0.0.1:8848/nacos/v3/console/cs/config/clone?targetNamespaceId=test&policy=ABORT" -d "[{\"cfgId\":\"838029534438625280\",\"dataId\":\"111\",\"group\":\"DEFAULT_GROUP\"},{\"cfgId\":\"838033747294031872\",\"dataId\":\"qtc-user.yaml\",\"group\":\"DEFAULT_GROUP\"}]"
+curl -H "Content-Type: application/json" -X POST  "http://127.0.0.1:8080/v3/console/cs/config/clone?targetNamespaceId=test&policy=ABORT" -d "[{\"cfgId\":\"838029534438625280\",\"dataId\":\"111\",\"group\":\"DEFAULT_GROUP\"},{\"cfgId\":\"838033747294031872\",\"dataId\":\"qtc-user.yaml\",\"group\":\"DEFAULT_GROUP\"}]"
 ```
 
 * 返回示例
@@ -1505,7 +1478,7 @@ curl -H "Content-Type: application/json" -X POST  "http://127.0.0.1:8848/nacos/v
 }
 ```
 
-### 2.13. 停止配置BETA发布
+### 2.12. 停止配置BETA发布
 
 :::note
 只有在[发布配置](#22-发布配置)时设置了`Header`的`betaIps`后，将配置变更为BETA发布中的状态，调用此接口才能停止BETA发布状态。
@@ -1525,7 +1498,7 @@ curl -H "Content-Type: application/json" -X POST  "http://127.0.0.1:8848/nacos/v
 
 #### 请求URL
 
-`/nacos/nacos/v3/console/config/beta`
+`/v3/console/cs/config/beta`
 
 #### 请求参数
 
@@ -1547,7 +1520,7 @@ curl -H "Content-Type: application/json" -X POST  "http://127.0.0.1:8848/nacos/v
 * 请求示例
 
 ```shell
-curl -X DELETE "http://127.0.0.1:8848/nacos/v3/console/config/beta?dataId=test&groupName=DEFAULT_GROUP"
+curl -X DELETE "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=test&groupName=DEFAULT_GROUP"
 ```
 
 * 返回示例
@@ -1560,7 +1533,7 @@ curl -X DELETE "http://127.0.0.1:8848/nacos/v3/console/config/beta?dataId=test&g
 }
 ```
 
-### 2.14. 查询配置Beta发布状态
+### 2.13. 查询配置Beta发布状态
 
 :::note
 只有在[发布配置](#22-发布配置)时设置了`Header`的`betaIps`后，将配置变更为BETA发布中的状态，调用此接口才能获取到配置详情。
@@ -1580,7 +1553,7 @@ curl -X DELETE "http://127.0.0.1:8848/nacos/v3/console/config/beta?dataId=test&g
 
 #### 请求URL
 
-`/nacos/nacos/v3/console/config/beta`
+`/v3/console/cs/config/beta`
 
 #### 请求参数
 
@@ -1594,26 +1567,31 @@ curl -X DELETE "http://127.0.0.1:8848/nacos/v3/console/config/beta?dataId=test&g
 
 返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
-| 参数名                | 参数类型     | 描述                   |
-|--------------------|----------|----------------------|
-| `id`               | `String` | beta配置的存储ID。         |
-| `dataId`           | `String` | 配置的dataId。           |
-| `group`            | `String` | 配置的groupName。        |
-| `tenant`           | `String` | 配置所属的命名空间。           |
-| `content`          | `String` | 配置的beta内容。           |
-| `md5`              | `String` | 配置的md5。              |
-| `encryptedDataKey` | `String` | 配置的密钥，仅在使用配置加密插件时存在。 |
-| `appName`          | `String` | 配置所属的appName。        |
-| `type`             | `String` | 配置的类型。               |
-| `betaIps`          | `String` | beta发布状态的IP列表。       |
-| `lastModified`     | `long`   | 配置的修改时间戳。            |
+| 参数名                | 参数类型     | 描述                                  |
+|--------------------|----------|-------------------------------------|
+| `id`               | `String` | beta配置的存储ID。                        |
+| `dataId`           | `String` | 配置的dataId。                          |
+| `groupName`        | `String` | 配置的groupName。                       |
+| `namespaceId`      | `String` | 配置所属的命名空间。                          |
+| `desc`             | `String` | 配置描述。                               |
+| `md5`              | `String` | 配置内容的MD5值。                          |
+| `configTags`       | `String` | 配置的标签。                              |
+| `encryptedDataKey` | `String` | 加密配置内容的密钥，使用配置加密插件时存在。              |
+| `appName`          | `String` | 配置所属的应用名称。                          |
+| `type`             | `String` | 配置类型。                               |
+| `createTime`       | `Long`   | 配置创建时间。                             |
+| `modifyTime`       | `Long`   | 配置修改时间。                             |
+| `createUser`       | `String` | 配置创建人。                              |
+| `createIp`         | `String` | 配置创建IP。                             |
+| `grayName`         | `String` | 灰度发布规则名称, 固定为`beta`。                |
+| `grayRule`         | `String` | 灰度发布规则，格式为JSON，其中的`expr`为beta的ip列表。 |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl "http://127.0.0.1:8848/nacos/v3/console/config/beta?dataId=111&groupName=DEFAULT_GROUP"
+curl "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=111&groupName=DEFAULT_GROUP"
 ```
 
 * 返回示例
@@ -1623,22 +1601,28 @@ curl "http://127.0.0.1:8848/nacos/v3/console/config/beta?dataId=111&groupName=DE
   "code": 0,
   "message": "success",
   "data": {
-    "id": "1",
-    "dataId": "111",
-    "group": "DEFAULT_GROUP",
-    "content": "111",
-    "md5": null,
-    "encryptedDataKey": "",
-    "tenant": "",
     "appName": "",
-    "type": null,
-    "betaIps": "127.0.0.1",
-    "lastModified": 1733295041406
+    "configTags": null,
+    "content": "bbb11xxccc",
+    "createIp": null,
+    "createTime": 0,
+    "createUser": "nacos",
+    "dataId": "111",
+    "desc": null,
+    "encryptedDataKey": null,
+    "grayName": "beta",
+    "grayRule": "{\"type\":\"beta\",\"version\":\"1.0.0\",\"expr\":\"1.1.1.1\",\"priority\":2147483647}",
+    "groupName": "DEFAULT_GROUP",
+    "id": "873481464488923136",
+    "md5": "2f080e5e21ba12bb8ca6894ac0fc5862",
+    "modifyTime": 1741683449619,
+    "namespaceId": "public",
+    "type": null
   }
 }
 ```
 
-### 2.15. 查询配置发布历史
+### 2.14. 查询配置发布历史
 
 #### 接口描述
 
@@ -1654,7 +1638,7 @@ curl "http://127.0.0.1:8848/nacos/v3/console/config/beta?dataId=111&groupName=DE
 
 #### 请求URL
 
-`/nacos/v3/console/cs/history/list`
+`/v3/console/cs/history/list`
 
 #### 请求参数
 
@@ -1691,7 +1675,7 @@ curl "http://127.0.0.1:8848/nacos/v3/console/config/beta?dataId=111&groupName=DE
 * 请求示例
 
 ```shell
-curl "http://127.0.0.1:8848/nacos/v3/console/config/list?pageNo=1&pageSize=10&dataId=111&groupName=DEFAULT_GROUP"
+curl "http://127.0.0.1:8080/v3/console/cs/config/list?pageNo=1&pageSize=10&dataId=111&groupName=DEFAULT_GROUP"
 ```
 
 * 返回示例
@@ -1782,7 +1766,7 @@ curl "http://127.0.0.1:8848/nacos/v3/console/config/list?pageNo=1&pageSize=10&da
 }
 ```
 
-### 2.16. 查询配置的某次历史变更记录
+### 2.15. 查询配置的某次历史变更记录
 
 #### 接口描述
 
@@ -1798,7 +1782,7 @@ curl "http://127.0.0.1:8848/nacos/v3/console/config/list?pageNo=1&pageSize=10&da
 
 #### 请求URL
 
-`/nacos/v3/console/cs/history`
+`/v3/console/cs/history`
 
 #### 请求参数
 
@@ -1830,7 +1814,7 @@ curl "http://127.0.0.1:8848/nacos/v3/console/config/list?pageNo=1&pageSize=10&da
 * 请求示例
 
 ```shell
-curl "http://127.0.0.1:8848/nacos/v3/console/cs/history?dataId=111&groupName=DEFAULT_GROUP&nid=13"
+curl "http://127.0.0.1:8080/v3/console/cs/history?dataId=111&groupName=DEFAULT_GROUP&nid=13"
 ```
 
 * 返回示例
@@ -1860,7 +1844,7 @@ curl "http://127.0.0.1:8848/nacos/v3/console/cs/history?dataId=111&groupName=DEF
 }
 ```
 
-### 2.17. 查询配置最新状态的前一次变更历史
+### 2.16. 查询配置最新状态的前一次变更历史
 
 #### 接口描述
 
@@ -1876,7 +1860,7 @@ curl "http://127.0.0.1:8848/nacos/v3/console/cs/history?dataId=111&groupName=DEF
 
 #### 请求URL
 
-`/nacos/v3/console/cs/history/previous`
+`/v3/console/cs/history/previous`
 
 #### 请求参数
 
@@ -1908,7 +1892,7 @@ curl "http://127.0.0.1:8848/nacos/v3/console/cs/history?dataId=111&groupName=DEF
 * 请求示例
 
 ```shell
-curl "http://127.0.0.1:8848/nacos/v3/console/cs/history/previous?id=838029534438625280&dataId=111&groupName=DEFAULT_GROUP"
+curl "http://127.0.0.1:8080/v3/console/cs/history/previous?id=838029534438625280&dataId=111&groupName=DEFAULT_GROUP"
 ```
 
 * 返回示例
@@ -1938,7 +1922,7 @@ curl "http://127.0.0.1:8848/nacos/v3/console/cs/history/previous?id=838029534438
 }
 ```
 
-### 2.18. 查询命名空间下的配置列表
+### 2.17. 查询命名空间下的配置列表
 
 #### 接口描述
 
@@ -1954,7 +1938,7 @@ curl "http://127.0.0.1:8848/nacos/v3/console/cs/history/previous?id=838029534438
 
 #### 请求URL
 
-`/nacos/v3/console/cs/history/configs`
+`/v3/console/cs/history/configs`
 
 #### 请求参数
 
@@ -1978,7 +1962,7 @@ curl "http://127.0.0.1:8848/nacos/v3/console/cs/history/previous?id=838029534438
 * 请求示例
 
 ```shell
-curl "http://127.0.0.1:8848/nacos/v3/console/cs/history/configs&namespaceId=public"
+curl "http://127.0.0.1:8080/v3/console/cs/history/configs&namespaceId=public"
 ```
 
 * 返回示例
@@ -2034,7 +2018,7 @@ curl "http://127.0.0.1:8848/nacos/v3/console/cs/history/configs&namespaceId=publ
 
 #### 请求URL
 
-`/nacos/v3/console/ns/service`
+`/v3/console/ns/service`
 
 #### 请求参数
 
@@ -2061,7 +2045,7 @@ curl "http://127.0.0.1:8848/nacos/v3/console/cs/history/configs&namespaceId=publ
 * 请求示例
 
 ```shell
-curl -X POST "http://127.0.0.1:8848/nacos/v3/console/ns/service?serviceName=test&groupName=DEFAULT_GROUP&namespaceId=public"
+curl -X POST "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test&groupName=DEFAULT_GROUP&namespaceId=public"
 ```
 
 * 返回示例
@@ -2094,7 +2078,7 @@ curl -X POST "http://127.0.0.1:8848/nacos/v3/console/ns/service?serviceName=test
 
 #### 请求URL
 
-`/nacos/v3/console/ns/service`
+`/v3/console/ns/service`
 
 #### 请求参数
 
@@ -2117,7 +2101,7 @@ curl -X POST "http://127.0.0.1:8848/nacos/v3/console/ns/service?serviceName=test
 * 请求示例
 
 ```shell
-curl -X DELETE "http://127.0.0.1:8848/nacos/v3/console/ns/service?serviceName=test&groupName=DEFAULT_GROUP&namespaceId=public"
+curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test&groupName=DEFAULT_GROUP&namespaceId=public"
 ```
 
 * 返回示例
@@ -2147,7 +2131,7 @@ curl -X DELETE "http://127.0.0.1:8848/nacos/v3/console/ns/service?serviceName=te
 
 #### 请求URL
 
-`/nacos/v3/console/ns/service`
+`/v3/console/ns/service`
 
 #### 请求参数
 
@@ -2173,7 +2157,7 @@ curl -X DELETE "http://127.0.0.1:8848/nacos/v3/console/ns/service?serviceName=te
 * 请求示例
 
 ```shell
-curl -X PUT "http://127.0.0.1:8848/nacos/v3/console/ns/service?serviceName=test&groupName=DEFAULT_GROUP&namespaceId=public" -d "protectThreshold=0"
+curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test&groupName=DEFAULT_GROUP&namespaceId=public" -d "protectThreshold=0"
 ```
 
 * 返回示例
@@ -2202,7 +2186,7 @@ curl -X PUT "http://127.0.0.1:8848/nacos/v3/console/ns/service?serviceName=test&
 
 #### 请求URL
 
-`/nacos/v3/console/ns/service/selector/types`
+`/v3/console/ns/service/selector/types`
 
 #### 请求参数
 
@@ -2222,7 +2206,7 @@ curl -X PUT "http://127.0.0.1:8848/nacos/v3/console/ns/service?serviceName=test&
 * 请求示例
 
 ```shell
-curl -X GET "http://127.0.0.1:8848/nacos/v3/console/ns/service/selector/types"
+curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/selector/types"
 ```
 
 * 返回示例
@@ -2254,7 +2238,7 @@ curl -X GET "http://127.0.0.1:8848/nacos/v3/console/ns/service/selector/types"
 
 #### 请求URL
 
-`/nacos/v3/console/ns/service/list`
+`/v3/console/ns/service/list`
 
 #### 请求参数
 
@@ -2280,7 +2264,7 @@ curl -X GET "http://127.0.0.1:8848/nacos/v3/console/ns/service/selector/types"
 * 请求示例
 
 ```shell
-curl -X GET "http://127.0.0.1:8848/nacos/v3/console/ns/service/list?pageNo=1&pageSize=10&namespaceId=public"
+curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/list?pageNo=1&pageSize=10&namespaceId=public"
 ```
 
 * 返回示例
@@ -2321,7 +2305,7 @@ curl -X GET "http://127.0.0.1:8848/nacos/v3/console/ns/service/list?pageNo=1&pag
 
 #### 请求URL
 
-`/nacos/v3/console/ns/service/subscribers`
+`/v3/console/ns/service/subscribers`
 
 #### 请求参数
 
@@ -2355,7 +2339,7 @@ curl -X GET "http://127.0.0.1:8848/nacos/v3/console/ns/service/list?pageNo=1&pag
 * 请求示例
 
 ```shell
-curl -X GET "http://127.0.0.1:8848/nacos/v3/console/ns/service/subscribers?pageNo=1&pageSize=10&serviceName=test&groupName=DEFAULT_GROUP"
+curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/subscribers?pageNo=1&pageSize=10&serviceName=test&groupName=DEFAULT_GROUP"
 ```
 
 * 返回示例
@@ -2398,7 +2382,7 @@ curl -X GET "http://127.0.0.1:8848/nacos/v3/console/ns/service/subscribers?pageN
 
 #### 请求URL
 
-`/nacos/v3/console/ns/service`
+`/v3/console/ns/service`
 
 #### 请求参数
 
@@ -2434,7 +2418,7 @@ curl -X GET "http://127.0.0.1:8848/nacos/v3/console/ns/service/subscribers?pageN
 * 请求示例
 
 ```shell
-curl -X GET "http://127.0.0.1:8848/nacos/v3/console/ns/service?serviceName=test"
+curl -X GET "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test"
 ```
 
 * 返回示例
@@ -2487,7 +2471,7 @@ curl -X GET "http://127.0.0.1:8848/nacos/v3/console/ns/service?serviceName=test"
 
 #### 请求URL
 
-`/nacos/v3/console/ns/service/cluster`
+`/v3/console/ns/service/cluster`
 
 #### 请求参数
 
@@ -2521,7 +2505,7 @@ curl -X GET "http://127.0.0.1:8848/nacos/v3/console/ns/service?serviceName=test"
 * 请求示例
 
 ```shell
-curl -X PUT "http://127.0.0.1:8848/nacos/v3/console/ns/service/cluster" -d "serviceName=test&clusterName=TEST&checkPort=80&useIPPort4Check=true&healthChecker={\"type\":\"none\"}&useInstancePort4Check=false"
+curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service/cluster" -d "serviceName=test&clusterName=TEST&checkPort=80&useIPPort4Check=true&healthChecker={\"type\":\"none\"}&useInstancePort4Check=false"
 ```
 
 * 返回示例
@@ -2550,7 +2534,7 @@ curl -X PUT "http://127.0.0.1:8848/nacos/v3/console/ns/service/cluster" -d "serv
 
 #### 请求URL
 
-`/nacos/v3/console/ns/instance/list`
+`/v3/console/ns/instance/list`
 
 #### 请求参数
 
@@ -2593,7 +2577,7 @@ curl -X PUT "http://127.0.0.1:8848/nacos/v3/console/ns/service/cluster" -d "serv
 * 请求示例
 
 ```shell
-curl -X GET "http://127.0.0.1:8848/nacos/v3/console/ns/instance/list?&serviceName=test&clusterName=TEST&groupName=DEFAULT_GROUP&pageSize=10&pageNo=1"
+curl -X GET "http://127.0.0.1:8080/v3/console/ns/instance/list?&serviceName=test&clusterName=TEST&groupName=DEFAULT_GROUP&pageSize=10&pageNo=1"
 ```
 
 * 返回示例
@@ -2646,7 +2630,7 @@ curl -X GET "http://127.0.0.1:8848/nacos/v3/console/ns/instance/list?&serviceNam
 
 #### 请求URL
 
-`/nacos/v3/console/ns/instance`
+`/v3/console/ns/instance`
 
 #### 请求参数
 
@@ -2676,7 +2660,7 @@ curl -X GET "http://127.0.0.1:8848/nacos/v3/console/ns/instance/list?&serviceNam
 * 请求示例
 
 ```shell
-curl -X PUT "http://127.0.0.1:8848/nacos/v3/console/ns/instance" -d "serviceName=test&clusterName=TEST&groupName=DEFAULT_GROUP&ip=1.1.1.1&port=8888&ephemeral=true&weight=100&enabled=false&metadata={\"preserved.heart.beat.timeout\":\"60000\",\"preserved.ip.delete.timeout\":\"120000\",\"啦啦啦&啵啵啵\":\"xxx\",\"preserved.heart.beat.interval\":\"30000\"}"
+curl -X PUT "http://127.0.0.1:8080/v3/console/ns/instance" -d "serviceName=test&clusterName=TEST&groupName=DEFAULT_GROUP&ip=1.1.1.1&port=8888&ephemeral=true&weight=100&enabled=false&metadata={\"preserved.heart.beat.timeout\":\"60000\",\"preserved.ip.delete.timeout\":\"120000\",\"啦啦啦&啵啵啵\":\"xxx\",\"preserved.heart.beat.interval\":\"30000\"}"
 ```
 
 * 返回示例
