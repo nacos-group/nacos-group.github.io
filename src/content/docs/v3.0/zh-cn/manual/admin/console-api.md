@@ -1662,20 +1662,22 @@ curl "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=111&groupName=DEFAU
 | `pageItems`                  | `List`   | 历史记录列表。                           |
 | `pageItems`[i].`id`          | `String` | 历史记录的ID。                          |
 | `pageItems`[i].`dataId`      | `String` | 配置的dataId。                        |
-| `pageItems`[i].`group`       | `String` | 配置的groupName。                     |
-| `pageItems`[i].`tenant`      | `String` | 配置所属的命名空间。                        |
+| `pageItems`[i].`groupName`   | `String` | 配置的groupName。                     |
+| `pageItems`[i].`namespaceId` | `String` | 配置所属的命名空间。                        |
 | `pageItems`[i].`appName`     | `String` | 配置所属的appName。                     |
 | `pageItems`[i].`opType`      | `String` | 操作类型，`I`为插入、`U`为更新、`D`为删除。        |
 | `pageItems`[i].`publishType` | `String` | 发布类型，`formal`为普通发布，`gray`为beta发布。 |
-
-> 其他字段暂时未启用，为预留字段。
+| `pageItems`[i].`srcIp`       | `String` | 发布的来源IP。                          |
+| `pageItems`[i].`srcUser`     | `String` | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。       |
+| `pageItems`[i].`createTime`  | `Long`   | 配置创建时间。                           |
+| `pageItems`[i].`modifyTime`  | `Long`   | 配置修改时间。                           |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl "http://127.0.0.1:8080/v3/console/cs/config/list?pageNo=1&pageSize=10&dataId=111&groupName=DEFAULT_GROUP"
+curl "http://127.0.0.1:8080/v3/console/cs/history/list?pageNo=1&pageSize=10&dataId=111&groupName=DEFAULT_GROUP"
 ```
 
 * 返回示例
@@ -1685,83 +1687,56 @@ curl "http://127.0.0.1:8080/v3/console/cs/config/list?pageNo=1&pageSize=10&dataI
   "code": 0,
   "message": "success",
   "data": {
-    "totalCount": 4,
-    "pageNumber": 1,
-    "pagesAvailable": 1,
     "pageItems": [
       {
-        "id": "13",
-        "lastId": -1,
-        "dataId": "111",
-        "group": "DEFAULT_GROUP",
-        "tenant": "",
         "appName": "",
+        "createTime": 1272988800000,
+        "dataId": "111",
+        "groupName": "DEFAULT_GROUP",
+        "id": "18",
         "md5": null,
-        "content": null,
-        "srcIp": "0:0:0:0:0:0:0:1",
+        "modifyTime": 1741683760489,
+        "namespaceId": "public",
+        "opType": "D         ",
+        "publishType": "gray",
+        "srcIp": "127.0.0.1",
         "srcUser": "nacos",
+        "type": null
+      },
+      {
+        "appName": "",
+        "createTime": 1272988800000,
+        "dataId": "111",
+        "groupName": "DEFAULT_GROUP",
+        "id": "17",
+        "md5": null,
+        "modifyTime": 1741683449619,
+        "namespaceId": "public",
         "opType": "I         ",
         "publishType": "gray",
-        "extInfo": "{\"gray_name\":\"beta\",\"src_user\":\"nacos\",\"gray_rule\":\"{\\\"type\\\":\\\"beta\\\",\\\"expr\\\":\\\"127.0.0.1\\\",\\\"version\\\":\\\"1.0.0\\\",\\\"priority\\\":\\\"2147483647\\\"}\"}",
-        "createdTime": "2010-05-05T00:00:00.000+08:00",
-        "lastModifiedTime": "2024-12-04T14:50:41.442+08:00",
-        "encryptedDataKey": null
+        "srcIp": "0:0:0:0:0:0:0:1",
+        "srcUser": "nacos",
+        "type": null
       },
       {
+        "appName": "",
+        "createTime": 1272988800000,
+        "dataId": "111",
+        "groupName": "DEFAULT_GROUP",
         "id": "7",
-        "lastId": -1,
-        "dataId": "111",
-        "group": "DEFAULT_GROUP",
-        "tenant": "",
-        "appName": "",
         "md5": null,
-        "content": null,
-        "srcIp": "0:0:0:0:0:0:0:1",
-        "srcUser": "nacos",
+        "modifyTime": 1741682102157,
+        "namespaceId": "public",
         "opType": "I         ",
         "publishType": "formal",
-        "extInfo": "{\"src_user\":\"nacos\",\"type\":\"text\",\"c_desc\":\"111\"}",
-        "createdTime": "2010-05-05T00:00:00.000+08:00",
-        "lastModifiedTime": "2024-12-04T11:40:19.841+08:00",
-        "encryptedDataKey": null
-      },
-      {
-        "id": "5",
-        "lastId": -1,
-        "dataId": "111",
-        "group": "DEFAULT_GROUP",
-        "tenant": "",
-        "appName": "",
-        "md5": null,
-        "content": null,
         "srcIp": "0:0:0:0:0:0:0:1",
         "srcUser": "nacos",
-        "opType": "D         ",
-        "publishType": "formal",
-        "extInfo": "{\"type\":\"text\",\"src_user\":\"nacos\",\"c_desc\":\"11\"}",
-        "createdTime": "2010-05-05T00:00:00.000+08:00",
-        "lastModifiedTime": "2024-12-04T11:24:22.513+08:00",
-        "encryptedDataKey": null
-      },
-      {
-        "id": "3",
-        "lastId": -1,
-        "dataId": "111",
-        "group": "DEFAULT_GROUP",
-        "tenant": "",
-        "appName": "",
-        "md5": null,
-        "content": null,
-        "srcIp": "0:0:0:0:0:0:0:1",
-        "srcUser": "nacos",
-        "opType": "I         ",
-        "publishType": "formal",
-        "extInfo": "{\"src_user\":\"nacos\",\"type\":\"text\",\"c_desc\":\"11\"}",
-        "createdTime": "2010-05-05T00:00:00.000+08:00",
-        "lastModifiedTime": "2024-12-04T11:24:08.714+08:00",
-        "encryptedDataKey": null
+        "type": null
       }
-    ]
+    ],
+    "pageNumber": 1,
+    "pagesAvailable": 1,
+    "totalCount": 3
   }
 }
 ```
@@ -1797,24 +1772,29 @@ curl "http://127.0.0.1:8080/v3/console/cs/config/list?pageNo=1&pageSize=10&dataI
 
 返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
-| 参数名           | 参数类型     | 描述                                |
-|---------------|----------|-----------------------------------|
-| `id`          | `String` | 历史记录的ID。                          |
-| `dataId`      | `String` | 配置的dataId。                        |
-| `group`       | `String` | 配置的groupName。                     |
-| `tenant`      | `String` | 配置所属的命名空间。                        |
-| `appName`     | `String` | 配置所属的appName。                     |
-| `opType`      | `String` | 操作类型，`I`为插入、`U`为更新、`D`为删除。        |
-| `publishType` | `String` | 发布类型，`formal`为普通发布，`gray`为beta发布。 |
-
-> 其他字段暂时未启用，为预留字段。
+| 参数名           | 参数类型         | 描述                                                                          |
+|---------------|--------------|-----------------------------------------------------------------------------|
+| `id`          | `String`     | 历史记录的ID。                                                                    |
+| `dataId`      | `String`     | 配置的dataId。                                                                  |
+| `groupName`   | `String`     | 配置的groupName。                                                               |
+| `namespaceId` | `String`     | 配置所属的命名空间。                                                                  |
+| `content`     | `String`     |
+| `appName`     | `String`     | 配置所属的appName。                                                               |
+| `opType`      | `String`     | 操作类型，`I`为插入、`U`为更新、`D`为删除。                                                  |
+| `publishType` | `String`     | 发布类型，`formal`为普通发布，`gray`为beta发布。                                           |
+| `srcIp`       | `String`     | 发布的来源IP。                                                                    |
+| `srcUser`     | `String`     | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。                                                 |
+| `createTime`  | `Long`       | 配置创建时间。                                                                     |
+| `modifyTime`  | `Long`       | 配置修改时间。                                                                     |
+| `grayName`    | `String`     | 灰度发布规则名称, 固定为`beta`。                                                        |
+| `extInfo`     | `JsonString` | 扩展信息，目前包括`src_user`、`type`、`c_desc`，若`publishType`为`gray`, 其中还包括`grayRule`。 |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl "http://127.0.0.1:8080/v3/console/cs/history?dataId=111&groupName=DEFAULT_GROUP&nid=13"
+curl "http://127.0.0.1:8080/v3/console/cs/history?dataId=111&groupName=DEFAULT_GROUP&nid=7"
 ```
 
 * 返回示例
@@ -1824,22 +1804,23 @@ curl "http://127.0.0.1:8080/v3/console/cs/history?dataId=111&groupName=DEFAULT_G
   "code": 0,
   "message": "success",
   "data": {
-    "id": "13",
-    "lastId": -1,
-    "dataId": "111",
-    "group": "DEFAULT_GROUP",
-    "tenant": "",
     "appName": "",
-    "md5": "698d51a19d8a121ce581499d7b701668",
-    "content": "111",
+    "content": "bbb11xx",
+    "createTime": 1272988800000,
+    "dataId": "111",
+    "encryptedDataKey": "",
+    "extInfo": "{\"src_user\":\"nacos\",\"type\":\"text\",\"c_desc\":\"111\"}",
+    "grayName": "",
+    "groupName": "DEFAULT_GROUP",
+    "id": "7",
+    "md5": "7d37afdb0b04d958d529bcb6de44fa71",
+    "modifyTime": 1741682102157,
+    "namespaceId": "public",
+    "opType": "I         ",
+    "publishType": "formal",
     "srcIp": "0:0:0:0:0:0:0:1",
     "srcUser": "nacos",
-    "opType": "I         ",
-    "publishType": "gray",
-    "extInfo": "{\"gray_name\":\"beta\",\"src_user\":\"nacos\",\"gray_rule\":\"{\\\"type\\\":\\\"beta\\\",\\\"expr\\\":\\\"127.0.0.1\\\",\\\"version\\\":\\\"1.0.0\\\",\\\"priority\\\":\\\"2147483647\\\"}\"}",
-    "createdTime": "2010-05-05T00:00:00.000+08:00",
-    "lastModifiedTime": "2024-12-04T14:50:41.442+08:00",
-    "encryptedDataKey": ""
+    "type": null
   }
 }
 ```
@@ -1875,17 +1856,22 @@ curl "http://127.0.0.1:8080/v3/console/cs/history?dataId=111&groupName=DEFAULT_G
 
 返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
-| 参数名           | 参数类型     | 描述                                |
-|---------------|----------|-----------------------------------|
-| `id`          | `String` | 历史记录的ID。                          |
-| `dataId`      | `String` | 配置的dataId。                        |
-| `group`       | `String` | 配置的groupName。                     |
-| `tenant`      | `String` | 配置所属的命名空间。                        |
-| `appName`     | `String` | 配置所属的appName。                     |
-| `opType`      | `String` | 操作类型，`I`为插入、`U`为更新、`D`为删除。        |
-| `publishType` | `String` | 发布类型，`formal`为普通发布，`gray`为beta发布。 |
-
-> 其他字段暂时未启用，为预留字段。
+| 参数名           | 参数类型         | 描述                                                                          |
+|---------------|--------------|-----------------------------------------------------------------------------|
+| `id`          | `String`     | 历史记录的ID。                                                                    |
+| `dataId`      | `String`     | 配置的dataId。                                                                  |
+| `groupName`   | `String`     | 配置的groupName。                                                               |
+| `namespaceId` | `String`     | 配置所属的命名空间。                                                                  |
+| `content`     | `String`     |
+| `appName`     | `String`     | 配置所属的appName。                                                               |
+| `opType`      | `String`     | 操作类型，`I`为插入、`U`为更新、`D`为删除。                                                  |
+| `publishType` | `String`     | 发布类型，`formal`为普通发布，`gray`为beta发布。                                           |
+| `srcIp`       | `String`     | 发布的来源IP。                                                                    |
+| `srcUser`     | `String`     | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。                                                 |
+| `createTime`  | `Long`       | 配置创建时间。                                                                     |
+| `modifyTime`  | `Long`       | 配置修改时间。                                                                     |
+| `grayName`    | `String`     | 灰度发布规则名称, 固定为`beta`。                                                        |
+| `extInfo`     | `JsonString` | 扩展信息，目前包括`src_user`、`type`、`c_desc`，若`publishType`为`gray`, 其中还包括`grayRule`。 |
 
 #### 示例
 
@@ -1902,22 +1888,23 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/previous?id=838029534438625280
   "code": 0,
   "message": "success",
   "data": {
-    "id": "7",
-    "lastId": -1,
-    "dataId": "111",
-    "group": "DEFAULT_GROUP",
-    "tenant": "",
     "appName": "",
-    "md5": "698d51a19d8a121ce581499d7b701668",
-    "content": "111",
-    "srcIp": "0:0:0:0:0:0:0:1",
-    "srcUser": "nacos",
+    "content": "bbb11xx",
+    "createTime": 1272988800000,
+    "dataId": "111",
+    "encryptedDataKey": "",
+    "extInfo": "{\"src_user\":\"nacos\",\"type\":\"text\",\"c_desc\":\"111\"}",
+    "grayName": "",
+    "groupName": "DEFAULT_GROUP",
+    "id": "7",
+    "md5": "7d37afdb0b04d958d529bcb6de44fa71",
+    "modifyTime": 1741682102157,
+    "namespaceId": "public",
     "opType": "I         ",
     "publishType": "formal",
-    "extInfo": "{\"src_user\":\"nacos\",\"type\":\"text\",\"c_desc\":\"111\"}",
-    "createdTime": "2010-05-05T00:00:00.000+08:00",
-    "lastModifiedTime": "2024-12-04T11:40:19.841+08:00",
-    "encryptedDataKey": ""
+    "srcIp": "0:0:0:0:0:0:0:1",
+    "srcUser": "nacos",
+    "type": null
   }
 }
 ```
@@ -1950,10 +1937,10 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/previous?id=838029534438625280
 
 返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
-| 参数名      | 参数类型     | 描述            |
-|----------|----------|---------------|
-| `dataId` | `String` | 配置的dataId。    |
-| `group`  | `String` | 配置的groupName。 |
+| 参数名         | 参数类型     | 描述            |
+|-------------|----------|---------------|
+| `dataId`    | `String` | 配置的dataId。    |
+| `groupName` | `String` | 配置的groupName。 |
 
 > 其他字段均无用。
 
@@ -1962,7 +1949,7 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/previous?id=838029534438625280
 * 请求示例
 
 ```shell
-curl "http://127.0.0.1:8080/v3/console/cs/history/configs&namespaceId=public"
+curl "http://127.0.0.1:8080/v3/console/cs/history/configs?namespaceId=public"
 ```
 
 * 返回示例
@@ -1973,28 +1960,26 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/configs&namespaceId=public"
   "message": "success",
   "data": [
     {
-      "id": "0",
-      "dataId": "111",
-      "group": "DEFAULT_GROUP",
-      "content": null,
-      "md5": null,
-      "encryptedDataKey": null,
-      "tenant": "",
       "appName": "",
-      "type": "text",
-      "lastModified": 1733283619848
+      "createTime": 0,
+      "dataId": "111",
+      "groupName": "DEFAULT_GROUP",
+      "id": "0",
+      "md5": null,
+      "modifyTime": 1741682102161,
+      "namespaceId": "public",
+      "type": "text"
     },
     {
-      "id": "0",
-      "dataId": "qtc-user.yaml",
-      "group": "DEFAULT_GROUP",
-      "content": null,
-      "md5": null,
-      "encryptedDataKey": null,
-      "tenant": "",
       "appName": "",
-      "type": "text",
-      "lastModified": 1733284624232
+      "createTime": 0,
+      "dataId": "qtc-user.yaml",
+      "groupName": "DEFAULT_GROUP",
+      "id": "0",
+      "md5": null,
+      "modifyTime": 1741682291519,
+      "namespaceId": "public",
+      "type": "text"
     }
   ]
 }
