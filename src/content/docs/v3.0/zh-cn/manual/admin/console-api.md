@@ -2227,22 +2227,32 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/selector/types"
 
 #### 请求参数
 
-| 参数名                | 类型        | 必填 | 参数描述                              |
-|--------------------|-----------|----|-----------------------------------|
-| `pageNo`           | `Integer` | 是  | 页码，起始为`1`。                        |
-| `pageSize`         | `Integer` | 是  | 每页显示条数。                           |
-| `serviceNameParam` | `String`  | 否  | 服务名的pattern，为空时查询所有服务。            |
-| `groupNameParam`   | `String`  | 否  | 服务所属的groupName的pattern，为空时查询所有服务。 |
-| `namespaceId`      | `String`  | 否  | 服务所属的命名空间ID。                      |
-| `hasIpCount`       | `Boolean` | 否  | 是否仅返回有实例的服务，默认为`false`，即查询空服务。    |
-| `withInstances`    | `Boolean` | 否  | 是否只返回服务的实例详情，默认为`false`。          |
+| 参数名                  | 类型        | 必填 | 参数描述                              |
+|----------------------|-----------|----|-----------------------------------|
+| `pageNo`             | `Integer` | 是  | 页码，起始为`1`。                        |
+| `pageSize`           | `Integer` | 是  | 每页显示条数。                           |
+| `serviceNameParam`   | `String`  | 否  | 服务名的pattern，为空时查询所有服务。            |
+| `groupNameParam`     | `String`  | 否  | 服务所属的groupName的pattern，为空时查询所有服务。 |
+| `namespaceId`        | `String`  | 否  | 服务所属的命名空间ID。                      |
+| `ignoreEmptyService` | `Boolean` | 否  | 是否仅返回有实例的服务，默认为`false`，即查询空服务。    |
+| `withInstances`      | `Boolean` | 否  | 是否返回服务的实例详情，默认为`false`。           |
 
 #### 返回数据
 
 返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
-| 参数名 | 参数类型 | 描述 |
-|-----|------|----|
+| 参数名                                   | 参数类型     | 描述           |
+|---------------------------------------|----------|--------------|
+| `totalCount`                          | `int`    | 符合条件的服务的总数。  |
+| `pageNumber`                          | `int`    | 当前页码，起始为`1`。 |
+| `pagesAvailable`                      | `int`    | 可用页码。        |
+| `pageItems`                           | `List`   | 服务列表。        |
+| `pageItems`[i].`name`                 | `String` | 服务名。         |
+| `pageItems`[i].`groupName`            | `String` | 服务的分组名。      |
+| `pageItems`[i].`clusterCount`         | `String` | 服务下的集群数量。    |
+| `pageItems`[i].`ipCount`              | `String` | 服务下的实例数量。    |
+| `pageItems`[i].`healthyInstanceCount` | `String` | 服务下的健康实例数量。  |
+| `pageItems`[i].`triggerFlag`          | `String` | 是否触发了服务的保护。  |
 
 #### 示例
 
@@ -2259,17 +2269,27 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/list?pageNo=1&pageSize=
   "code": 0,
   "message": "success",
   "data": {
-    "count": 1,
-    "serviceList": [
+    "pageItems": [
       {
-        "name": "test",
+        "clusterCount": 1,
         "groupName": "DEFAULT_GROUP",
-        "clusterCount": 0,
-        "ipCount": 0,
-        "healthyInstanceCount": 0,
+        "healthyInstanceCount": 1,
+        "ipCount": 1,
+        "name": "com.test.SyncCallbackService",
         "triggerFlag": "false"
+      },
+      {
+        "clusterCount": 1,
+        "groupName": "DEFAULT_GROUP",
+        "healthyInstanceCount": 0,
+        "ipCount": 1,
+        "name": "test",
+        "triggerFlag": "true"
       }
-    ]
+    ],
+    "pageNumber": 1,
+    "pagesAvailable": 1,
+    "totalCount": 2
   }
 }
 ```
@@ -2306,18 +2326,20 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/list?pageNo=1&pageSize=
 
 返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
-| 参数名                            | 参数类型      | 描述                                     |
-|--------------------------------|-----------|----------------------------------------|
-| `count`                        | `Integer` | 订阅者总数。                                 |
-| `subscribers`                  | `List`    | 订阅者列表。                                 |
-| `subscribers`[i].`ip`          | `String`  | 订阅者IP。                                 |
-| `subscribers`[i].`port`        | `Integer` | 订阅者端口。                                 |
-| `subscribers`[i].`addrStr`     | `String`  | 订阅者地址, 一般为`ip:port`。                   | 
-| `subscribers`[i].`agent`       | `String`  | 订阅者客户端版本。                              |
-| `subscribers`[i].`app`         | `String`  | 订阅者所属应用。                               |
-| `subscribers`[i].`cluster`     | `String`  | 订阅者所属集群。                               |
-| `subscribers`[i].`namespaceId` | `String`  | 订阅者所属命名空间。                             |
-| `subscribers`[i].`serviceName` | `String`  | 订阅的服务名， 格式为`groupName`@@`serviceName`。 |
+| 参数名                          | 参数类型      | 描述                   |
+|------------------------------|-----------|----------------------|
+| `totalCount`                 | `int`     | 符合条件的服务的总数。          |
+| `pageNumber`                 | `int`     | 当前页码，起始为`1`。         |
+| `pagesAvailable`             | `int`     | 可用页码。                |
+| `pageItems`                  | `List`    | 服务列表。                |
+| `pageItems`[i].`ip`          | `String`  | 订阅者IP。               |
+| `pageItems`[i].`port`        | `Integer` | 订阅者端口。               |
+| `pageItems`[i].`address`     | `String`  | 订阅者地址, 一般为`ip:port`。 | 
+| `pageItems`[i].`agent`       | `String`  | 订阅者客户端版本。            |
+| `pageItems`[i].`appName`     | `String`  | 订阅者所属应用。             |
+| `pageItems`[i].`namespaceId` | `String`  | 订阅者所属命名空间。           |
+| `pageItems`[i].`groupName`   | `String`  | 订阅的分组名。              |
+| `pageItems`[i].`serviceName` | `String`  | 订阅的服务名。              |
 
 #### 示例
 
@@ -2332,22 +2354,24 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/subscribers?pageNo=1&pa
 ```json
 {
   "code": 0,
-  "message": "success",
   "data": {
-    "subscribers": [
+    "pageItems": [
       {
-        "addrStr": "127.0.0.1",
-        "agent": "Nacos-Java-Client:v2.2.1",
-        "app": "-",
+        "address": "127.0.0.1:0",
+        "agent": "Nacos-Java-Client:v3.0.0-BETA",
+        "appName": "unknown",
+        "groupName": "DEFAULT_GROUP",
         "ip": "127.0.0.1",
-        "port": 0,
         "namespaceId": "public",
-        "serviceName": "DEFAULT_GROUP@@test",
-        "cluster": "TEST"
+        "port": 0,
+        "serviceName": "test"
       }
     ],
-    "count": 1
-  }
+    "pageNumber": 1,
+    "pagesAvailable": 1,
+    "totalCount": 1
+  },
+  "message": "success"
 }
 ```
 
@@ -2381,22 +2405,21 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/subscribers?pageNo=1&pa
 
 返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
-| 参数名                              | 参数类型         | 描述                                        |
-|----------------------------------|--------------|-------------------------------------------|
-| `service`                        | `jsonObject` | 服务详情。                                     |
-| `service`.`name`                 | `String`     | 服务名。                                      |
-| `service`.`groupName`            | `String`     | 服务所属的groupName。                           |
-| `service`.`protectThreshold`     | `Double`     | 服务防护阈值。                                   |
-| `service`.`selector`             | `jsonObject` | 服务选择器。                                    |
-| `service`.`metadata`             | `jsonObject` | 服务元数据。                                    |
-| `clusters`                       | `List`       | 服务集群列表。                                   |
-| `clusters`[i].`name`             | `String`     | 集群名。                                      |
-| `clusters`[i].`serviceName`      | `String`     | 服务名，格式为`groupName`@@`serviceName`。        |
-| `clusters`[i].`healthChecker`    | `jsonObject` | 健康检查器。                                    |
-| `clusters`[i].`defaultCheckPort` | `int`        | 健康检查端口。                                   |
-| `clusters`[i].`useIPPort4Check`  | `Boolean`    | 是否使用所注册的实例的`IP:Port`进行健康检查。               |
-| `clusters`[i].`metadata`         | `jsonObject` | 集群元数据。                                    |
-| ~~`clusters`[i].`defaultPort`~~  | `int`        | 健康检查端口，已废弃，请使用`defaultCheckPort`，固定为`80`。 |
+| 参数名                                                 | 参数类型         | 描述                                   |
+|-----------------------------------------------------|--------------|--------------------------------------|
+| `namespaceId`                                       | `String`     | 服务所属的namespaceId。                    |
+| `groupName`                                         | `String`     | 服务所属的groupName。                      |
+| `serviceName`                                       | `String`     | 服务名。                                 |
+| `ephemeral`                                         | `boolean`    | 服务的持久化属性，`true`为临时服务，`false`为持久化服务。  |
+| `protectThreshold`                                  | `Double`     | 服务防护阈值。                              |
+| `selector`                                          | `jsonObject` | 服务选择器。                               |
+| `metadata`                                          | `jsonObject` | 服务元数据。                               |
+| `clusterMap`                                        | `jsonObject` | 服务集群列表, key为cluster的名称，value为集群详细信息。 |
+| `clusterMap`.$ClusterName.`clusterName`             | `String`     | 集群名。                                 |
+| `clusterMap`.$ClusterName.`healthChecker`           | `jsonObject` | 健康检查器。                               |
+| `clusterMap`.$ClusterName.`healthyCheckPort`        | `int`        | 健康检查端口。                              |
+| `clusterMap`.$ClusterName.`useInstancePortForCheck` | `Boolean`    | 是否使用所注册的实例的`IP:Port`进行健康检查。          |
+| `clusterMap`.$ClusterName.`metadata`                | `jsonObject` | 集群元数据。                               |
 
 #### 示例
 
@@ -2413,29 +2436,28 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test"
   "code": 0,
   "message": "success",
   "data": {
-    "service": {
-      "name": "test",
-      "groupName": "DEFAULT_GROUP",
-      "protectThreshold": 0.0,
-      "selector": {
-        "type": "none",
-        "contextType": "NONE"
-      },
-      "metadata": {}
-    },
-    "clusters": [
-      {
-        "serviceName": "DEFAULT_GROUP@@test",
-        "name": "TEST",
+    "clusterMap": {
+      "DEFAULT": {
+        "clusterName": "DEFAULT",
         "healthChecker": {
           "type": "TCP"
         },
-        "defaultPort": 80,
-        "defaultCheckPort": 80,
-        "useIPPort4Check": true,
-        "metadata": {}
+        "healthyCheckPort": 80,
+        "hosts": null,
+        "metadata": {},
+        "useInstancePortForCheck": true
       }
-    ]
+    },
+    "ephemeral": false,
+    "groupName": "DEFAULT_GROUP",
+    "metadata": {},
+    "namespaceId": "public",
+    "protectThreshold": 0.0,
+    "selector": {
+      "contextType": "NONE",
+      "type": "none"
+    },
+    "serviceName": "test"
   }
 }
 ```
@@ -2460,16 +2482,16 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test"
 
 #### 请求参数
 
-| 参数名               | 类型                    | 必填 | 参数描述                                |
-|-------------------|-----------------------|----|-------------------------------------|
-| `clusterName`     | `String`              | 是  | 集群名。                                |
-| `serviceName`     | `String`              | 是  | 服务名。                                |
-| `checkPort`       | `int`                 | 是  | 健康检查端口。                             |
-| `useIPPort4Check` | `Boolean`             | 是  | 是否使用所注册的实例的`IP:Port`进行健康检查。         |
-| `healthChecker`   | `jsonString`          | 是  | 健康检查器。                              |
-| `groupName`       | `String`              | 否  | 服务所属的groupName，默认值为`DEFAULT_GROUP`。 |
-| `namespaceId`     | `String`              | 否  | 服务所属的命名空间ID，默认值为`public`。           |
-| `metadata`        | `Map<String, String>` | 否  | 服务元数据。                              |
+| 参数名                     | 类型                    | 必填 | 参数描述                                |
+|-------------------------|-----------------------|----|-------------------------------------|
+| `clusterName`           | `String`              | 是  | 集群名。                                |
+| `serviceName`           | `String`              | 是  | 服务名。                                |
+| `checkPort`             | `int`                 | 是  | 健康检查端口。                             |
+| `useInstancePort4Check` | `Boolean`             | 是  | 是否使用所注册的实例的`IP:Port`进行健康检查。         |
+| `healthChecker`         | `jsonString`          | 是  | 健康检查器。                              |
+| `groupName`             | `String`              | 否  | 服务所属的groupName，默认值为`DEFAULT_GROUP`。 |
+| `namespaceId`           | `String`              | 否  | 服务所属的命名空间ID，默认值为`public`。           |
+| `metadata`              | `Map<String, String>` | 否  | 服务元数据。                              |
 
 > `healthChecker`参数为健康检查器的JSON字符串，目前支持三种健康检查器：
 > 1. `None`: 无健康检查，`{"type":"NONE"}`
@@ -2490,7 +2512,7 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test"
 * 请求示例
 
 ```shell
-curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service/cluster" -d "serviceName=test&clusterName=TEST&checkPort=80&useIPPort4Check=true&healthChecker={\"type\":\"none\"}&useInstancePort4Check=false"
+curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service/cluster" -d "serviceName=test&clusterName=DEFAULT&checkPort=80&useInstancePort4Check=true&healthChecker={\"type\":\"none\"}"
 ```
 
 * 返回示例
@@ -2539,18 +2561,20 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service/cluster" -d "serviceNam
 
 | 参数名                          | 参数类型                  | 描述                                    |
 |------------------------------|-----------------------|---------------------------------------|
-| `count`                      | `int`                 | 实例总数。                                 |
-| `instances`                  | `List<Instance>`      | 实例列表。                                 |
-| `instances`[i].`instanceId`  | `String`              | 实例ID。                                 |
-| `instances`[i].`ip`          | `String`              | 实例IP。                                 |
-| `instances`[i].`port`        | `int`                 | 实例端口。                                 |
-| `instances`[i].`weight`      | `double`              | 实例权重。                                 |
-| `instances`[i].`healthy`     | `Boolean`             | 实例是否健康。                               |
-| `instances`[i].`enabled`     | `Boolean`             | 实例是否已上线。                              |
-| `instances`[i].`ephemeral`   | `Boolean`             | 实例是否临时。                               |
-| `instances`[i].`clusterName` | `String`              | 实例所属集群。                               |
-| `instances`[i].`serviceName` | `String`              | 实例所属服务，格式为`groupName`@@`serviceName`。 |
-| `instances`[i].`metadata`    | `Map<String, String>` | 实例元数据。                                |
+| `totalCount`                 | `int`                 | 符合条件的实例的总数。                           |
+| `pageNumber`                 | `int`                 | 当前页码，起始为`1`。                          |
+| `pagesAvailable`             | `int`                 | 可用页码。                                 |
+| `pageItems`                  | `List`                | 实例列表。                                 |
+| `pageItems`[i].`instanceId`  | `String`              | 实例ID。                                 |
+| `pageItems`[i].`ip`          | `String`              | 实例IP。                                 |
+| `pageItems`[i].`port`        | `int`                 | 实例端口。                                 |
+| `pageItems`[i].`weight`      | `double`              | 实例权重。                                 |
+| `pageItems`[i].`healthy`     | `Boolean`             | 实例是否健康。                               |
+| `pageItems`[i].`enabled`     | `Boolean`             | 实例是否已上线。                              |
+| `pageItems`[i].`ephemeral`   | `Boolean`             | 实例是否临时。                               |
+| `pageItems`[i].`clusterName` | `String`              | 实例所属集群。                               |
+| `pageItems`[i].`serviceName` | `String`              | 实例所属服务，格式为`groupName`@@`serviceName`。 |
+| `pageItems`[i].`metadata`    | `Map<String, String>` | 实例元数据。                                |
 
 :::note
 关于心跳的参数`instanceHeartBeatInterval`, `instanceHeartBeatTimeOut`和`ipDeleteTimeout`
@@ -2562,7 +2586,7 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service/cluster" -d "serviceNam
 * 请求示例
 
 ```shell
-curl -X GET "http://127.0.0.1:8080/v3/console/ns/instance/list?&serviceName=test&clusterName=TEST&groupName=DEFAULT_GROUP&pageSize=10&pageNo=1"
+curl -X GET "http://127.0.0.1:8080/v3/console/ns/instance/list?&serviceName=test&clusterName=DEFAULT&groupName=DEFAULT_GROUP&pageSize=10&pageNo=1"
 ```
 
 * 返回示例
@@ -2572,29 +2596,27 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/instance/list?&serviceName=test
   "code": 0,
   "message": "success",
   "data": {
-    "instances": [
+    "pageItems": [
       {
-        "instanceId": "1.1.1.1#8888#TEST#DEFAULT_GROUP@@test",
-        "ip": "1.1.1.1",
-        "port": 8888,
-        "weight": 100.0,
-        "healthy": true,
+        "clusterName": "DEFAULT",
         "enabled": true,
-        "ephemeral": true,
-        "clusterName": "TEST",
+        "ephemeral": false,
+        "healthy": false,
+        "instanceHeartBeatInterval": 5000,
+        "instanceHeartBeatTimeOut": 15000,
+        "instanceId": "1.1.1.1#3306#DEFAULT#DEFAULT_GROUP@@test",
+        "instanceIdGenerator": "simple",
+        "ip": "1.1.1.1",
+        "ipDeleteTimeout": 30000,
+        "metadata": {},
+        "port": 3306,
         "serviceName": "DEFAULT_GROUP@@test",
-        "metadata": {
-          "preserved.heart.beat.timeout": "60000",
-          "preserved.ip.delete.timeout": "120000",
-          "啦啦啦&啵啵啵": "xxx",
-          "preserved.heart.beat.interval": "30000"
-        },
-        "instanceHeartBeatInterval": 30000,
-        "instanceHeartBeatTimeOut": 60000,
-        "ipDeleteTimeout": 120000
+        "weight": 1.0
       }
     ],
-    "count": 1
+    "pageNumber": 1,
+    "pagesAvailable": 1,
+    "totalCount": 1
   }
 }
 ```
@@ -2645,7 +2667,7 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/instance/list?&serviceName=test
 * 请求示例
 
 ```shell
-curl -X PUT "http://127.0.0.1:8080/v3/console/ns/instance" -d "serviceName=test&clusterName=TEST&groupName=DEFAULT_GROUP&ip=1.1.1.1&port=8888&ephemeral=true&weight=100&enabled=false&metadata={\"preserved.heart.beat.timeout\":\"60000\",\"preserved.ip.delete.timeout\":\"120000\",\"啦啦啦&啵啵啵\":\"xxx\",\"preserved.heart.beat.interval\":\"30000\"}"
+curl -X PUT "http://127.0.0.1:8080/v3/console/ns/instance" -d 'serviceName=test&clusterName=DEFAULT&groupName=DEFAULT_GROUP&ip=1.1.1.1&port=3306&ephemeral=true&weight=100&enabled=false&metadata=%7B%22%E5%95%A6%E5%95%A6%E5%95%A6%26%E5%95%B5%E5%95%B5%E5%95%B5%22%3A%22xxx%22%7D'
 ```
 
 * 返回示例
