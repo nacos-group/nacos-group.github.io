@@ -190,6 +190,18 @@ docker run --name nacos-cluster -e MODE=cluster -v /path/application.properties:
 
 如果仍然无法满足自定义需求，可以基于nacos-docker项目中的`Dockerfile`自行构建镜像。
 
+### 2.4 在云托管的k8s中部署集群版时需注意的踩坑点
+* 集群节点存在DOWN状态的节点
+    * 是因为`StatefulSet`服务中`spec.serviceName`的值跟`nacos headless`服务的名称不一致，需配置与`nacos headless`服务的名称一致
+* 个别rpc服务注册不上
+    * 是因为集群元数据不正常，需正确配置环境变量: `NACOS_SERVERS`，值必须为headless服务的全限定名(带`svc.cluster.local`的那种)
+* 集群节点跟预期不符(设置的3个pod，却有4个节点数据)
+    * 是因为nacos默认使用的ip模式，需`PREFER_HOST_MODE=hostname`
+* 新建的配置，重启nacos pod后数据丢失
+    * 是因为没有使用mysql，需设置环境变量: `SPRING_DATASOURCE_PLATFORM=mysql`
+
+其他详细信息参考[#13084](https://github.com/alibaba/nacos/issues/13084)
+
 ## 3. Kubernetes部署
 
 通过[快速开始 Kubernetes](../../../quickstart/quick-start-kubernetes.mdx)文档，已经能够部署使用MySQL数据库的Nacos的集群模式。
