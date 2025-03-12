@@ -4431,20 +4431,20 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/metrics/ip?ip=127.0.0.1&dat
 
 ```json
 {
-   "code": 0,
-   "message": "success",
-   "data": {
-      "a981e0a8-f394-425c-ac2a-ab753586428b": {
-         "isFixedServer": true,
-         "snapshotDir": "/path/to/nacos/config",
-         "clientVersion": "Nacos-Java-Client:v2.1.0",
-         "serverUrls": "http://127.0.0.1:8848",
-         "listenConfigSize": 1,
-         "metricValues": {
-            "cacheData": "asdasd:a8f5f167f44f4964e6c998dee827110c",
-            "snapshotData": "asdasd:a8f5f167f44f4964e6c998dee827110c"
-         }
+  "code": 0,
+  "message": "success",
+  "data": {
+    "a981e0a8-f394-425c-ac2a-ab753586428b": {
+      "isFixedServer": true,
+      "snapshotDir": "/path/to/nacos/config",
+      "clientVersion": "Nacos-Java-Client:v2.1.0",
+      "serverUrls": "http://127.0.0.1:8848",
+      "listenConfigSize": 1,
+      "metricValues": {
+        "cacheData": "asdasd:a8f5f167f44f4964e6c998dee827110c",
+        "snapshotData": "asdasd:a8f5f167f44f4964e6c998dee827110c"
       }
-   }
+    }
+  }
 }
 ```
