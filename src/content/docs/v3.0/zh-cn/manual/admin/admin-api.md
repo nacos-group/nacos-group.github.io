@@ -12,8 +12,6 @@ sidebar:
 >
 > 若必须要使用1.X和2.X的Admin API，需要在配置文件中设置`nacos.core.auth.admin.enabled=true`开启，但此兼容也将在未来版本中移除，建议使用Nacos
 > 3.X版本的AdminAPI进行替换。
->
-> Nacos 3.X 版本的Admin API默认需要鉴权，请在请求时使用管理员用户`nacos`（使用默认鉴权插件时）。
 
 Nacos默认搭载了一整套专为管理控制台和运维人员设计的运维API，赋予运维专家更多的配置权限、更广阔的数据检索能力等。这些API为Nacos的运维团队提供了方便，使他们能够高效地处理故障、排查问题，以确保系统的稳定运行。
 
@@ -40,6 +38,12 @@ Nacos的运维API，使用统一的Path格式进行的规范。格式为`[/$naco
 
 同时下列列出的运维API样例中，均采用默认Nacos Web Server的端口进行展示，若已修改部署环境中的`$nacos.server.main.port`
 配置项，请自行修改调用API时的请求URL。
+
+### 0.3 鉴权认证
+
+Nacos 3.X 版本的Admin API默认需要鉴权，请在请求时使用管理员用户`nacos`（使用默认鉴权插件时）。
+
+若想要关闭鉴权，请设置`nacos.core.auth.admin.enabled=false`，然后重启Nacos Server。
 
 ## 1. Nacos Core 运维 API
 
