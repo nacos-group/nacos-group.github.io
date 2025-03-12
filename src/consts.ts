@@ -6,9 +6,9 @@ export const SITE_DESCRIPTION = 'Welcome to my website!';
 
 // 吊顶提示文案
 export const TOPBAR = {
-    "text": "铭师堂的云原生升级实践",
-    "mobileText": "铭师堂的云原生升级实践",
-    "link": "https://nacos.io/blog/nacos-gvr7dx_awbbpb_rcexb7h4kq8u9ei9/?spm=5238cd80.66ce2cd4.0.0.237cf2120E3Lm5",
+    "text": "大促采购季，新用户首购低至5折",
+    "mobileText": "大促采购季，新用户首购低至5折",
+    "link": "https://www.aliyun.com/activity/purchase/mseapiwg20251",
     "target": "_blank",
     "display": true
 }
