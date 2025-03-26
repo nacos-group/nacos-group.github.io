@@ -69,6 +69,8 @@ ConfigService configService = NacosFactory.createConfigService(serverAddr);
 
 # 初始化配置中心的Nacos Java SDK
 NamingService namingService = NacosFactory.createNamingService(serverAddr);
+
+# 分布式锁的Nacos Java SDK不支持仅传入serverAddr进行初始化，请使用Properties进行。
 ```
 
 如果初始化SDK时，还需要配置一些参数，可以使用 `Properties` 类进行配置：
@@ -86,6 +88,9 @@ ConfigService configService = NacosFactory.createConfigService(properties);
 
 # 初始化配置中心的Nacos Java SDK
 NamingService namingService = NacosFactory.createNamingService(properties);
+
+# 初始化分布式锁的Nacos Java SDK
+LockService lockService = NacosLockFactory.createLockService(properties);
 ```
 
 更多初始化时所涉及的参数配置，请参考[Java SDK 配置参数](./properties.md)。
@@ -1403,8 +1408,119 @@ public void onServiceReachUpLimit() {
 		}
 ```
 
-## 5. Java SDK的生命周期
+## 5. 分布式锁API
+
+:::note
+分布式锁功能于3.0版本中添加，目前功能还处于实验性阶段，功能生态还未完善，可能存在一定的问题，请谨慎使用。
+:::
+
+> 分布式锁功能目前版本还缺少对应的运维API和监听对应锁的API，将在后续版本中添加支持。
+
+### 5.1. 获取分布式锁
+
+#### 描述
+
+通过此接口可以尝试获取分布式锁，如果获取失败，则返回false，如果获取成功，则返回true。
+
+```java
+Boolean lock(LockInstance instance) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称       | 类型           | 描述         | 默认值  |
+|:---------|:-------------|------------|------|
+| instance | LockInstance | 分布式锁的锁对象实例 | 无，必填 |
+
+LockInstance对象中包含如下参数：
+
+| 名称          | 类型                 | 描述                                               | 默认值  |
+|:------------|:-------------------|--------------------------------------------------|------|
+| key         | String             | 分布式锁的唯一key，同一类型的锁若key相同时，则认为期望获取同一把锁             | 无，必填 |
+| expiredTime | long               | 分布式锁的过期时间，单位为毫秒，0表示取到锁后立刻释放，若设置的值小于0，将使用默认值30000 | 0    |
+| params      | Map<String,String> | 自定义参数，用于扩展锁的自定义属性                                | 无    |
+| lockType    | String             | 分布式锁类型，目前仅支持"NACOS_LOCK"                         | 无    |
+
+> Nacos 目前提供一个默认实现的锁类型，即"NACOS_LOCK"，可通过`new NLock()`进行快速创建，后续会支持更多类型的锁。
+
+#### 返回参数
+
+获取锁的结果`Boolean`，如果获取锁成功，则返回`true`，否则返回`false`。
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+LockService lockService = NacosLockFactory.createLockService(properties);
+NLock nLock = new NLock("testLock", 5000L);
+try {
+     if (lockService.lock(nLock)) {
+        System.out.printf("try to lock `testLock` successfully.");
+     } else {
+        System.out.printf("try to lock `testLock` failed, please retry later.");
+     } 
+} catch (NacosException e) {
+    e.printStackTrace();
+} finally {
+    System.out.printf("try to unlock `testLock`, result: " + lockService.unLock(nLock));
+}
+```
+
+### 5.2. 释放分布式锁
+
+#### 描述
+
+通过此接口可以释放获取到的分布式锁，如果释放成功，则返回true，否则返回false。
+
+```java
+Boolean unLock(LockInstance instance) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称       | 类型           | 描述         | 默认值  |
+|:---------|:-------------|------------|------|
+| instance | LockInstance | 分布式锁的锁对象实例 | 无，必填 |
+
+LockInstance对象中包含如下参数：
+
+| 名称          | 类型                 | 描述                                               | 默认值  |
+|:------------|:-------------------|--------------------------------------------------|------|
+| key         | String             | 分布式锁的唯一key，同一类型的锁若key相同时，则认为期望获取同一把锁             | 无，必填 |
+| expiredTime | long               | 分布式锁的过期时间，单位为毫秒，0表示取到锁后立刻释放，若设置的值小于0，将使用默认值30000 | 0    |
+| params      | Map<String,String> | 自定义参数，用于扩展锁的自定义属性                                | 无    |
+| lockType    | String             | 分布式锁类型，目前仅支持"NACOS_LOCK"                         | 无    |
+
+> Nacos 目前提供一个默认实现的锁类型，即"NACOS_LOCK"，可通过`new NLock()`进行快速创建，后续会支持更多类型的锁。
+
+#### 返回参数
+
+释放锁的结果`Boolean`，如果获取锁成功，则返回`true`，否则返回`false`。
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+LockService lockService = NacosLockFactory.createLockService(properties);
+NLock nLock = new NLock("testLock", 5000L);
+try {
+     if (lockService.lock(nLock)) {
+        System.out.printf("try to lock `testLock` successfully.");
+     } else {
+        System.out.printf("try to lock `testLock` failed, please retry later.");
+     } 
+} catch (NacosException e) {
+    e.printStackTrace();
+} finally {
+    System.out.printf("try to unlock `testLock`, result: " + lockService.unLock(nLock));
+}
+```
+
+## 6. Java SDK的生命周期
 
 Nacos的Java SDK 生命周期从创建时开始，到调用`shutdown()`方法时结束，期间对应创建的线程池、连接等均会始终保留，及时连接断开，也会不断重试重新建立连接。
 
-因此在使用时需要注意应用中创建的Nacos Java SDK的实例个数，避免造成线程池和连接的泄漏，在更换Nacos Java SDK实例时，切记调用`shutdown()`方法，同时在应用中应尽量复用同一个Nacos Java SDK实例，避免频繁的初始化实例。
+因此在使用时需要注意应用中创建的Nacos Java SDK的实例个数，避免造成线程池和连接的泄漏，在更换Nacos Java
+SDK实例时，切记调用`shutdown()`方法，同时在应用中应尽量复用同一个Nacos Java SDK实例，避免频繁的初始化实例。
