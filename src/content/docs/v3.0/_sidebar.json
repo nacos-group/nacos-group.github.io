@@ -119,13 +119,6 @@
         "link": "docs/manual/admin/system-configurations"
       },
       {
-        "label": "运维API",
-        "translations": {
-          "en": "Management API"
-        },
-        "link": "docs/manual/admin/admin-api"
-      },
-      {
         "label": "鉴权手册",
         "translations": {
           "en": "Authorization Manual"
@@ -145,6 +138,20 @@
           "en": "Monitor Manual"
         },
         "link": "docs/manual/admin/monitor"
+      },
+      {
+        "label": "运维API",
+        "translations": {
+          "en": "Admin API"
+        },
+        "link": "docs/manual/admin/admin-api"
+      },
+      {
+        "label": "运维SDK",
+        "translations": {
+          "en": "Maintainer SDK"
+        },
+        "link": "docs/manual/admin/maintainer-sdk"
       },
       {
         "label": "控制台手册",

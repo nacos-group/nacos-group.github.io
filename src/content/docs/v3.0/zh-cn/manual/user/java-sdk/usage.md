@@ -8,11 +8,17 @@ sidebar:
 
 # Java SDK 使用手册
 
+Nacos 的 Java SDK（或称Nacos-Java-Client），是一个针对 Nacos 配置中心、服务注册中心、分布式锁等场景的 Java SDK。旨在为Java的微服务或分布式应用提供稳定易用的配置中心、服务注册中心、分布式锁等功能，方便开发者访问Nacos进行配置、服务和分布式锁的操作。
+
+因为Nacos-Java-Client的定位，所以Nacos-Java-Client会提供配置、服务实例的`发布`，`删除`,`获取`,`订阅`以及分布式锁的获取和释放，但不提供大范围的数据获取，如`列举命名空间下所有配置列表`, `列举命名空间下所有服务列表`等操作。
+
+如果需要大范围的获取数据，或者需要具有更高优先级的更新数据等`运维能力`，您需要使用Nacos的`运维SDK`。
+
 ## 1. 引用概述
 
 ### 1.1. Java 版本依赖
 
-Nacos 的 Java SDK（或称Nacos-Java-Client）需要 JDK 1.8 及以上版本的Java运行环境。
+Nacos 的 Java SDK需要 JDK 1.8 及以上版本的Java运行环境。
 
 ### 1.2. Maven 坐标
 ```

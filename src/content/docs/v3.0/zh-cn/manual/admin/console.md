@@ -3,7 +3,7 @@ title: 控制台手册
 keywords: [控制台,手册]
 description: Nacos 控制台主要旨在于增强对于服务列表，健康状态管理，服务治理，分布式配置管理等方面的管控能力。
 sidebar:
-    order: 11
+    order: 12
 ---
 
 # 控制台手册

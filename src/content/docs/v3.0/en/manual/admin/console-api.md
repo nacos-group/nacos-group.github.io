@@ -1,9 +1,9 @@
 ---
-title: 控制台API
-keywords: [ Nacos,控制台API ]
-description: Nacos 控制台的一些API，如果您需要自定义开发Nacos对应的控制台UI，可以使用这些API进行数据的获取。
+title: Console API
+keywords: [ Nacos,Console API ]
+description: The Nacos Console provides some APIs that you can use to retrieve data when custom-developing a UI for the Nacos Console.
 sidebar:
-  order: 12
+  order: 13
 ---
 
 # 控制台API

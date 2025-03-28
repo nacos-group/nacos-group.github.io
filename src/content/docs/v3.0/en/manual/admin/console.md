@@ -1,9 +1,9 @@
 ---
-title: 控制台手册
-keywords: [控制台,手册]
-description: Nacos 控制台主要旨在于增强对于服务列表，健康状态管理，服务治理，分布式配置管理等方面的管控能力。
+title: Console Usage
+keywords: [Console,Usage]
+description: The Nacos Console is primarily designed to enhance control and management capabilities in areas such as service list management, health status monitoring, service governance, and distributed configuration management.
 sidebar:
-    order: 11
+    order: 12
 ---
 
 # 控制台手册

@@ -1,9 +1,9 @@
 ---
-title: 运维API
-keywords: [ Nacos,运维API ]
-description: Nacos Server的一些运维API，一般给予控制台使用或需要进行自定义Nacos运维工具开发的相关程序和人员使用。
+title: Admin API
+keywords: [ Nacos,Admin PI ]
+description: The following are some operations APIs for Nacos Server, intended for use with the console or for programs and personnel developing custom Nacos operations tools.
 sidebar:
-  order: 7
+  order: 10
 ---
 
 # 运维API
