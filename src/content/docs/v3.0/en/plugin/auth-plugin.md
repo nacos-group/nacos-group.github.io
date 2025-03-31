@@ -23,9 +23,9 @@ IdentityContext is the abstraction of the request originator in the Nacos authen
 
 IdentityContext must include:
 
-|Field Name|Description|
-|-----|---|
-|remote_ip|source ip of request|
+| Field Name | Description          |
+|------------|----------------------|
+| remote_ip  | source ip of request |
 
 ### Resource
 
@@ -33,13 +33,13 @@ Resource is the abstraction of the object operated by the request in the Nacos a
 
 Resource mainly consists of the following:
 
-|Field Name|Description|
-|-----|---|
-|namespaceId|Namespace ID of the requested resource, some interfaces may not have this value|
-|group| The group name of the requested resource, some interfaces may not have this value|
-|name | The resource name of the requested resource, such as the service name or the configuration dataId, some interfaces may be defined special values, such as `nacos/admin`|
-|type | The type of the requested resource, which may be an enumeration value in `SignType`, which mainly represents the module related to the resource |
-|properties| The extended configuration of the requested resource, which does not belong to the above-mentioned resource-related information, will be placed in properties, such as the Request name of the Grpc request or the tags on the `@Secured` annotation, etc. |
+| Field Name  | Description                                                                                                                                                                                                                                                |
+|-------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| namespaceId | Namespace ID of the requested resource, some interfaces may not have this value                                                                                                                                                                            |
+| group       | The group name of the requested resource, some interfaces may not have this value                                                                                                                                                                          |
+| name        | The resource name of the requested resource, such as the service name or the configuration dataId, some interfaces may be defined special values, such as `nacos/admin`                                                                                    |
+| type        | The type of the requested resource, which may be an enumeration value in `SignType`, which mainly represents the module related to the resource                                                                                                            |
+| properties  | The extended configuration of the requested resource, which does not belong to the above-mentioned resource-related information, will be placed in properties, such as the Request name of the Grpc request or the tags on the `@Secured` annotation, etc. |
 
 ### Action
 
@@ -63,13 +63,13 @@ Then implement interface `com.alibaba.nacos.plugin.auth.spi.server.AuthPluginSer
 
 The methods of interface in following:
 
-|method name|parameters|returns|description|
-|-----|-----|-----|---|
-|getAuthServiceName|void|String|The name of the plugin. When the name is the same, the plugin loaded later will overwrite the plugin loaded first.|
-|identityNames|void|Collection&lt;String>|The identity context keywords of the plugin. Nacos will obtain the parameters with these keywords as the key from the request and inject them into the IdentityContext.|
-|enableAuth|ActionTypes,SignType|boolean|Called before `validateIdentity` and `validateAuthority`, the plugin can decide whether to authenticate this type of operation or this type of module.|
-|validateIdentity|IdentityContext, Resource|boolean|Validate identity, called before `validateAuthority`|
-|validateAuthority|IdentityContext, Permission|boolean|Validate permissions, called when `validateIdentity` returns `true`|
+| method name        | parameters                  | returns               | description                                                                                                                                                             |
+|--------------------|-----------------------------|-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| getAuthServiceName | void                        | String                | The name of the plugin. When the name is the same, the plugin loaded later will overwrite the plugin loaded first.                                                      |
+| identityNames      | void                        | Collection&lt;String> | The identity context keywords of the plugin. Nacos will obtain the parameters with these keywords as the key from the request and inject them into the IdentityContext. |
+| enableAuth         | ActionTypes,SignType        | boolean               | Called before `validateIdentity` and `validateAuthority`, the plugin can decide whether to authenticate this type of operation or this type of module.                  |
+| validateIdentity   | IdentityContext, Resource   | AuthResult            | Validate identity, called before `validateAuthority`                                                                                                                    |
+| validateAuthority  | IdentityContext, Permission | AuthResult            | Validate permissions, called when `validateIdentity` returns `true`                                                                                                     |
 
 ### Load Server Plugin
 
@@ -137,15 +137,15 @@ The plugin will generate signatures by `accessKey`, `secretKey` and the request 
 
 The identity context may be different for the different request resource:
 
-|Type|Identity keys|description|
-|-----|-----|-----|
-|NamingService|ak|accessKey|
-|NamingService|signature|naming signature|
-|NamingService|data|signature datum, include timestamp|
-|ConfigService|Spas-AccessKey|accessKey|
-|ConfigService|Spas-Signature|config signature|
-|ConfigService|Timestamp|request timestamp|
-|ConfigService|Spas-SecurityToken|Temporary token (used when Alibaba Cloud STS function is enabled)|
+| Type          | Identity keys      | description                                                       |
+|---------------|--------------------|-------------------------------------------------------------------|
+| NamingService | ak                 | accessKey                                                         |
+| NamingService | signature          | naming signature                                                  |
+| NamingService | data               | signature datum, include timestamp                                |
+| ConfigService | Spas-AccessKey     | accessKey                                                         |
+| ConfigService | Spas-Signature     | config signature                                                  |
+| ConfigService | Timestamp          | request timestamp                                                 |
+| ConfigService | Spas-SecurityToken | Temporary token (used when Alibaba Cloud STS function is enabled) |
 
 Developers can validate authentication and authorization in the server plugin based on the above information.
 
@@ -169,12 +169,12 @@ Then implement interface `com.alibaba.nacos.plugin.auth.spi.client.ClientAuthSer
 
 The methods of interface in following:
 
-|method name|parameters|returns|description|
-|-----|-----|-----|---|
-|setServerList|List&lt;String>,Nacos server address list|void|Called during initialization, to inject the Nacos service list, which is convenient for plugins to access the nacos server, such as calling the login interface, etc.|
-|setNacosRestTemplate|NacosRestTemplate,http client for Nacos|void|Called during initialization, to inject Nacos' http client, which is convenient for plugins to access the nacos server, such as calling the login interface, etc.|
-|login|Properties,properties of initialization|boolean|mainly performs the conversion of identity context, such as `username`, `password` is converted to `accessToken`|
-|getLoginIdentityContext|Resource|IdentityContext|Get the identity context converted by the login interface, and the client will inject all the content of the returned object into the request|
+| method name             | parameters                                | returns         | description                                                                                                                                                           |
+|-------------------------|-------------------------------------------|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| setServerList           | List&lt;String>,Nacos server address list | void            | Called during initialization, to inject the Nacos service list, which is convenient for plugins to access the nacos server, such as calling the login interface, etc. |
+| setNacosRestTemplate    | NacosRestTemplate,http client for Nacos   | void            | Called during initialization, to inject Nacos' http client, which is convenient for plugins to access the nacos server, such as calling the login interface, etc.     |
+| login                   | Properties,properties of initialization   | boolean         | mainly performs the conversion of identity context, such as `username`, `password` is converted to `accessToken`                                                      |
+| getLoginIdentityContext | Resource                                  | IdentityContext | Get the identity context converted by the login interface, and the client will inject all the content of the returned object into the request                         |
 
 Developers can choose to inherit `com.alibaba.nacos.plugin.auth.spi.client.AbstractClientAuthService`, which implements `setServerList` and `setNacosRestTemplate`.
 
