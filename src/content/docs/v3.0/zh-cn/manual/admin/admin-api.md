@@ -17,14 +17,14 @@ Nacos默认搭载了一整套专为管理控制台和运维人员设计的运维
 
 ## 0. 运维API 相关说明
 
-### 0.1 统一返回体格式
+### 0.1. 统一返回体格式
 
 自3.0版本开始，OpenAPI/AdminAPI/ConsoleAPI均使用相同的返回体格式。
 
 完整的返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)
 ，本文档中所有的API返回数据只阐述`data`字段中的返回参数。
 
-### 0.2 统一路径格式
+### 0.2. 统一路径格式
 
 Nacos的运维API，使用统一的Path格式进行的规范。格式为`[/$nacos.server.contextPath]/v3/admin/[module]/[subPath]...`,
 其中
@@ -39,11 +39,15 @@ Nacos的运维API，使用统一的Path格式进行的规范。格式为`[/$naco
 同时下列列出的运维API样例中，均采用默认Nacos Web Server的端口进行展示，若已修改部署环境中的`$nacos.server.main.port`
 配置项，请自行修改调用API时的请求URL。
 
-### 0.3 鉴权认证
+### 0.3. 鉴权认证
 
 Nacos 3.X 版本的Admin API默认需要鉴权，请在请求时使用管理员用户`nacos`（使用默认鉴权插件时）。
 
 若想要关闭鉴权，请设置`nacos.core.auth.admin.enabled=false`，然后重启Nacos Server。
+
+### 0.4. Swagger 类型文档
+
+Nacos 3.X 的运维 API 也提供了Swagger风格的文档，您可以通过访问[Nacos Swagger运维 API](/swagger/admin/)查看。
 
 ## 1. Nacos Core 运维 API
 
@@ -592,55 +596,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/list'
 }
 ```
 
-### 1.7. 快速查询本节点健康状态
-
-#### 接口描述
-
-通过该接口，可以快速查询本节点健康状态。
-
-#### 请求方式
-
-`GET`
-
-#### 鉴权状态
-
-需管理员权限
-
-#### 请求URL
-
-`/nacos/v3/admin/core/cluster/node/self/health`
-
-#### 请求参数
-
-无
-
-#### 返回数据
-
-返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)。
-
-| 参数名    | 参数类型     | 描述                                             |
-|--------|----------|------------------------------------------------|
-| `data` | `String` | `UP`表示节点健康，`DOWN`表示节点不健康，`SUSPICIOUS`表示节点疑似不健康 |
-
-#### 示例
-
-* 请求示例
-
-```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/self/health'
-```
-
-* 返回示例
-
-```json
-{
-  "code": 0,
-  "message": "success",
-  "data": "UP"
-}
-```
-
-### 1.8. 动态修改Server集群地址发现方式
+### 1.7. 动态修改Server集群地址发现方式
 
 #### 接口描述
 
@@ -691,7 +647,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/lookup?type=file'
 }
 ```
 
-### 1.9. Raft 相关操作
+### 1.8. Raft 相关操作
 
 #### 接口描述
 
@@ -754,7 +710,7 @@ curl -X POST -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/
 }
 ```
 
-### 1.10. 动态修改Nacos Core相关日志级别
+### 1.9. 动态修改Nacos Core相关日志级别
 
 #### 接口描述
 
@@ -814,7 +770,7 @@ curl -X PUT -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/a
 }
 ```
 
-### 1.11 自动均衡指定数量的连接
+### 1.10. 自动均衡指定数量的连接
 
 #### 接口描述
 
@@ -880,7 +836,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/smartReloadCluster
 success
 ```
 
-### 1.12 获取ID生成器信息
+### 1.11. 获取ID生成器信息
 
 #### 接口描述
 

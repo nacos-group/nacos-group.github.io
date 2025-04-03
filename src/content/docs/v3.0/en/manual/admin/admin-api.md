@@ -17,14 +17,14 @@ Nacos默认搭载了一整套专为管理控制台和运维人员设计的运维
 
 ## 0. 运维API 相关说明
 
-### 0.1 统一返回体格式
+### 0.1. 统一返回体格式
 
 自3.0版本开始，OpenAPI/AdminAPI/ConsoleAPI均使用相同的返回体格式。
 
 完整的返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)
 ，本文档中所有的API返回数据只阐述`data`字段中的返回参数。
 
-### 0.2 统一路径格式
+### 0.2. 统一路径格式
 
 Nacos的运维API，使用统一的Path格式进行的规范。格式为`[/$nacos.server.contextPath]/v3/admin/[module]/[subPath]...`,
 其中
@@ -39,11 +39,15 @@ Nacos的运维API，使用统一的Path格式进行的规范。格式为`[/$naco
 同时下列列出的运维API样例中，均采用默认Nacos Web Server的端口进行展示，若已修改部署环境中的`$nacos.server.main.port`
 配置项，请自行修改调用API时的请求URL。
 
-### 0.3 鉴权认证
+### 0.3. 鉴权认证
 
 Nacos 3.X 版本的Admin API默认需要鉴权，请在请求时使用管理员用户`nacos`（使用默认鉴权插件时）。
 
 若想要关闭鉴权，请设置`nacos.core.auth.admin.enabled=false`，然后重启Nacos Server。
+
+### 0.4. Swagger 类型文档
+
+Nacos 3.X 的运维 API 也提供了Swagger风格的文档，您可以通过访问[Nacos Swagger Admin API](/en/swagger/admin/)查看。
 
 ## 1. Nacos Core 运维 API
 
@@ -98,55 +102,55 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/current'
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "1741687438640_127.0.0.1_58856": {
-      "abilityTable": {
-        "fuzzyWatch": true,
-        "lock": true
-      },
-      "appLabels": {
-        "AppName": "unknown",
-        "ClientVersion": "Nacos-Java-Client:v3.0.0-BETA"
-      },
-      "connected": true,
-      "labels": {
-        "AppName": "unknown",
-        "module": "naming",
-        "source": "sdk",
-        "tls.enable": "false"
-      },
-      "metaInfo": {
-        "appLabels": {
-          "AppName": "unknown",
-          "ClientVersion": "Nacos-Java-Client:v3.0.0-BETA"
-        },
-        "appName": "unknown",
-        "clientIp": "30.221.148.39",
-        "clusterSource": false,
-        "connectType": "GRPC",
-        "connectionId": "1741687438640_127.0.0.1_58856",
-        "createTime": "2025-03-11T10:03:58.731+00:00",
-        "labels": {
-          "AppName": "unknown",
-          "module": "naming",
-          "source": "sdk",
-          "tls.enable": "false"
-        },
-        "lastActiveTime": 1741745293704,
-        "localPort": 9848,
-        "namespaceId": null,
-        "remoteIp": "127.0.0.1",
-        "remotePort": 58856,
-        "sdkSource": true,
-        "tag": null,
-        "tlsProtected": false,
-        "version": "Nacos-Java-Client:v3.0.0-BETA"
-      },
-      "traced": false
-    }
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "1741687438640_127.0.0.1_58856": {
+         "abilityTable": {
+            "fuzzyWatch": true,
+            "lock": true
+         },
+         "appLabels": {
+            "AppName": "unknown",
+            "ClientVersion": "Nacos-Java-Client:v3.0.0-BETA"
+         },
+         "connected": true,
+         "labels": {
+            "AppName": "unknown",
+            "module": "naming",
+            "source": "sdk",
+            "tls.enable": "false"
+         },
+         "metaInfo": {
+            "appLabels": {
+               "AppName": "unknown",
+               "ClientVersion": "Nacos-Java-Client:v3.0.0-BETA"
+            },
+            "appName": "unknown",
+            "clientIp": "30.221.148.39",
+            "clusterSource": false,
+            "connectType": "GRPC",
+            "connectionId": "1741687438640_127.0.0.1_58856",
+            "createTime": "2025-03-11T10:03:58.731+00:00",
+            "labels": {
+               "AppName": "unknown",
+               "module": "naming",
+               "source": "sdk",
+               "tls.enable": "false"
+            },
+            "lastActiveTime": 1741745293704,
+            "localPort": 9848,
+            "namespaceId": null,
+            "remoteIp": "127.0.0.1",
+            "remotePort": 58856,
+            "sdkSource": true,
+            "tag": null,
+            "tlsProtected": false,
+            "version": "Nacos-Java-Client:v3.0.0-BETA"
+         },
+         "traced": false
+      }
+   }
 }
 ```
 
@@ -236,9 +240,9 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/reloadClient?conne
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": null
+   "code": 0,
+   "message": "success",
+   "data": null
 }
 ```
 
@@ -246,9 +250,9 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/reloadClient?conne
 
 ```json
 {
-  "code": 30000,
-  "message": "server error",
-  "data": null
+   "code": 30000,
+   "message": "server error",
+   "data": null
 }
 ```
 
@@ -305,27 +309,27 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/cluster'
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "avg": 1,
-    "completed": true,
-    "detail": [
-      {
-        "address": "127.0.0.1:8848",
-        "conCount": 1,
-        "cpu": "0.0",
-        "load": "2.3842773",
-        "sdkConCount": 1
-      }
-    ],
-    "max": 1,
-    "memberCount": 1,
-    "metricsCount": 1,
-    "min": 1,
-    "threshold": "1.1",
-    "total": 1
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "avg": 1,
+      "completed": true,
+      "detail": [
+         {
+            "address": "127.0.0.1:8848",
+            "conCount": 1,
+            "cpu": "0.0",
+            "load": "2.3842773",
+            "sdkConCount": 1
+         }
+      ],
+      "max": 1,
+      "memberCount": 1,
+      "metricsCount": 1,
+      "min": 1,
+      "threshold": "1.1",
+      "total": 1
+   }
 }
 ```
 
@@ -380,74 +384,74 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/self'
 
 ```json
 {
-  "code": 0,
-  "data": {
-    "abilities": {
-      "configAbility": {
-        "supportRemoteMetrics": false
+   "code": 0,
+   "data": {
+      "abilities": {
+         "configAbility": {
+            "supportRemoteMetrics": false
+         },
+         "namingAbility": {
+            "supportJraft": true
+         },
+         "remoteAbility": {
+            "grpcReportEnabled": true,
+            "supportRemoteConnection": true
+         }
       },
-      "namingAbility": {
-        "supportJraft": true
+      "address": "127.0.0.1:8848",
+      "extendInfo": {
+         "lastRefreshTime": 1741678398775,
+         "raftMetaData": {
+            "metaDataMap": {
+               "lock_acquire_service_v2": {
+                  "leader": "127.0.0.1:7848",
+                  "raftGroupMember": [
+                     "127.0.0.1:7848"
+                  ],
+                  "term": 109
+               },
+               "naming_instance_metadata": {
+                  "leader": "127.0.0.1:7848",
+                  "raftGroupMember": [
+                     "127.0.0.1:7848"
+                  ],
+                  "term": 391
+               },
+               "naming_persistent_service": {
+                  "leader": "127.0.0.1:7848",
+                  "raftGroupMember": [
+                     "127.0.0.1:7848"
+                  ],
+                  "term": 387
+               },
+               "naming_persistent_service_v2": {
+                  "leader": "127.0.0.1:7848",
+                  "raftGroupMember": [
+                     "127.0.0.1:7848"
+                  ],
+                  "term": 391
+               },
+               "naming_service_metadata": {
+                  "leader": "127.0.0.1:7848",
+                  "raftGroupMember": [
+                     "127.0.0.1:7848"
+                  ],
+                  "term": 391
+               }
+            }
+         },
+         "raftPort": "7848",
+         "readyToUpgrade": true,
+         "supportGrayModel": true,
+         "version": "3.0.0-BETA"
       },
-      "remoteAbility": {
-        "grpcReportEnabled": true,
-        "supportRemoteConnection": true
-      }
-    },
-    "address": "127.0.0.1:8848",
-    "extendInfo": {
-      "lastRefreshTime": 1741678398775,
-      "raftMetaData": {
-        "metaDataMap": {
-          "lock_acquire_service_v2": {
-            "leader": "127.0.0.1:7848",
-            "raftGroupMember": [
-              "127.0.0.1:7848"
-            ],
-            "term": 109
-          },
-          "naming_instance_metadata": {
-            "leader": "127.0.0.1:7848",
-            "raftGroupMember": [
-              "127.0.0.1:7848"
-            ],
-            "term": 391
-          },
-          "naming_persistent_service": {
-            "leader": "127.0.0.1:7848",
-            "raftGroupMember": [
-              "127.0.0.1:7848"
-            ],
-            "term": 387
-          },
-          "naming_persistent_service_v2": {
-            "leader": "127.0.0.1:7848",
-            "raftGroupMember": [
-              "127.0.0.1:7848"
-            ],
-            "term": 391
-          },
-          "naming_service_metadata": {
-            "leader": "127.0.0.1:7848",
-            "raftGroupMember": [
-              "127.0.0.1:7848"
-            ],
-            "term": 391
-          }
-        }
-      },
-      "raftPort": "7848",
-      "readyToUpgrade": true,
-      "supportGrayModel": true,
-      "version": "3.0.0-BETA"
-    },
-    "failAccessCnt": 0,
-    "grpcReportEnabled": true,
-    "ip": "127.0.0.1",
-    "port": 8848,
-    "state": "UP"
-  },
-  "message": "success"
+      "failAccessCnt": 0,
+      "grpcReportEnabled": true,
+      "ip": "127.0.0.1",
+      "port": 8848,
+      "state": "UP"
+   },
+   "message": "success"
 }
 ```
 
@@ -492,155 +496,107 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/list'
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": [
-    {
-      "ip": "nacos-node-0",
-      "port": 8848,
-      "state": "UP",
-      "extendInfo": {
-        "lastRefreshTime": 1709273550501,
-        "raftMetaData": {
-          "metaDataMap": {
-            "naming_instance_metadata": {
-              "leader": "nacos-node-2:7848",
-              "raftGroupMember": [
-                "nacos-node-2:7848",
-                "nacos-node-1:7848",
-                "nacos-node-0:7848"
-              ],
-              "term": 3
+   "code": 0,
+   "message": "success",
+   "data": [
+      {
+         "ip": "nacos-node-0",
+         "port": 8848,
+         "state": "UP",
+         "extendInfo": {
+            "lastRefreshTime": 1709273550501,
+            "raftMetaData": {
+               "metaDataMap": {
+                  "naming_instance_metadata": {
+                     "leader": "nacos-node-2:7848",
+                     "raftGroupMember": [
+                        "nacos-node-2:7848",
+                        "nacos-node-1:7848",
+                        "nacos-node-0:7848"
+                     ],
+                     "term": 3
+                  },
+                  "naming_persistent_service": {
+                     "leader": "nacos-node-1:7848",
+                     "raftGroupMember": [
+                        "nacos-node-2:7848",
+                        "nacos-node-1:7848",
+                        "nacos-node-0:7848"
+                     ],
+                     "term": 3
+                  },
+                  "naming_persistent_service_v2": {
+                     "leader": "nacos-node-2:7848",
+                     "raftGroupMember": [
+                        "nacos-node-2:7848",
+                        "nacos-node-1:7848",
+                        "nacos-node-0:7848"
+                     ],
+                     "term": 2
+                  },
+                  "naming_service_metadata": {
+                     "leader": "nacos-node-2:7848",
+                     "raftGroupMember": [
+                        "nacos-node-2:7848",
+                        "nacos-node-1:7848",
+                        "nacos-node-0:7848"
+                     ],
+                     "term": 3
+                  }
+               }
             },
-            "naming_persistent_service": {
-              "leader": "nacos-node-1:7848",
-              "raftGroupMember": [
-                "nacos-node-2:7848",
-                "nacos-node-1:7848",
-                "nacos-node-0:7848"
-              ],
-              "term": 3
+            "raftPort": "7848",
+            "readyToUpgrade": true,
+            "supportGrayModel": true,
+            "version": "3.0.0-ALPHA"
+         },
+         "address": "nacos-node-0:8848",
+         "failAccessCnt": 0,
+         "abilities": {
+            "remoteAbility": {
+               "supportRemoteConnection": true,
+               "grpcReportEnabled": true
             },
-            "naming_persistent_service_v2": {
-              "leader": "nacos-node-2:7848",
-              "raftGroupMember": [
-                "nacos-node-2:7848",
-                "nacos-node-1:7848",
-                "nacos-node-0:7848"
-              ],
-              "term": 2
+            "configAbility": {
+               "supportRemoteMetrics": false
             },
-            "naming_service_metadata": {
-              "leader": "nacos-node-2:7848",
-              "raftGroupMember": [
-                "nacos-node-2:7848",
-                "nacos-node-1:7848",
-                "nacos-node-0:7848"
-              ],
-              "term": 3
+            "namingAbility": {
+               "supportJraft": true
             }
-          }
-        },
-        "raftPort": "7848",
-        "readyToUpgrade": true,
-        "supportGrayModel": true,
-        "version": "3.0.0-ALPHA"
+         },
+         "grpcReportEnabled": true
       },
-      "address": "nacos-node-0:8848",
-      "failAccessCnt": 0,
-      "abilities": {
-        "remoteAbility": {
-          "supportRemoteConnection": true,
-          "grpcReportEnabled": true
-        },
-        "configAbility": {
-          "supportRemoteMetrics": false
-        },
-        "namingAbility": {
-          "supportJraft": true
-        }
+      {
+         "ip": "nacos-node-2",
+         "port": 8848,
+         "state": "UP",
+         "extendInfo": {
+            "lastRefreshTime": 1710813796567,
+            "raftMetaData": {
+               ....
+            },
+            ....
+         },
+         ....
       },
-      "grpcReportEnabled": true
-    },
-    {
-      "ip": "nacos-node-2",
-      "port": 8848,
-      "state": "UP",
-      "extendInfo": {
-        "lastRefreshTime": 1710813796567,
-        "raftMetaData": {
-          ....
-        },
-        ....
-      },
-      ....
-    },
-    {
-      "ip": "nacos-node-1",
-      "port": 8848,
-      "state": "UP",
-      "extendInfo": {
-        "lastRefreshTime": 1710813796567,
-        "raftMetaData": {
-          ....
-        },
-        ....
-      },
-      ....
-    }
-  ]
+      {
+         "ip": "nacos-node-1",
+         "port": 8848,
+         "state": "UP",
+         "extendInfo": {
+            "lastRefreshTime": 1710813796567,
+            "raftMetaData": {
+               ....
+            },
+            ....
+         },
+         ....
+      }
+   ]
 }
 ```
 
-### 1.7. 快速查询本节点健康状态
-
-#### 接口描述
-
-通过该接口，可以快速查询本节点健康状态。
-
-#### 请求方式
-
-`GET`
-
-#### 鉴权状态
-
-需管理员权限
-
-#### 请求URL
-
-`/nacos/v3/admin/core/cluster/node/self/health`
-
-#### 请求参数
-
-无
-
-#### 返回数据
-
-返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)。
-
-| 参数名    | 参数类型     | 描述                                             |
-|--------|----------|------------------------------------------------|
-| `data` | `String` | `UP`表示节点健康，`DOWN`表示节点不健康，`SUSPICIOUS`表示节点疑似不健康 |
-
-#### 示例
-
-* 请求示例
-
-```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/self/health'
-```
-
-* 返回示例
-
-```json
-{
-  "code": 0,
-  "message": "success",
-  "data": "UP"
-}
-```
-
-### 1.8. 动态修改Server集群地址发现方式
+### 1.7. 动态修改Server集群地址发现方式
 
 #### 接口描述
 
@@ -691,7 +647,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/lookup?type=file'
 }
 ```
 
-### 1.9. Raft 相关操作
+### 1.8. Raft 相关操作
 
 #### 接口描述
 
@@ -754,7 +710,7 @@ curl -X POST -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/
 }
 ```
 
-### 1.10. 动态修改Nacos Core相关日志级别
+### 1.9. 动态修改Nacos Core相关日志级别
 
 #### 接口描述
 
@@ -814,7 +770,7 @@ curl -X PUT -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/a
 }
 ```
 
-### 1.11 自动均衡指定数量的连接
+### 1.10. 自动均衡指定数量的连接
 
 #### 接口描述
 
@@ -880,7 +836,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/smartReloadCluster
 success
 ```
 
-### 1.12 获取ID生成器信息
+### 1.11. 获取ID生成器信息
 
 #### 接口描述
 
@@ -917,17 +873,17 @@ success
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": [
-    {
-      "resource": "resourceName",
-      "info": {
-        "currentId": 1,
-        "workerId": 2
+   "code": 0,
+   "message": "success",
+   "data": [
+      {
+         "resource": "resourceName",
+         "info": {
+            "currentId": 1,
+            "workerId": 2
+         }
       }
-    }
-  ]
+   ]
 }
 ```
 
@@ -935,9 +891,9 @@ success
 
 ```json
 {
-  "code": 30000,
-  "message": "server error",
-  "data": null
+   "code": 30000,
+   "message": "server error",
+   "data": null
 }
 ```
 
@@ -1009,56 +965,56 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/switches'
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "adWeightMap": {},
-    "autoChangeHealthCheckEnabled": true,
-    "checkTimes": 3,
-    "checksum": null,
-    "clientBeatInterval": 5000,
-    "defaultCacheMillis": 3000,
-    "defaultInstanceEphemeral": true,
-    "defaultPushCacheMillis": 10000,
-    "disableAddIP": false,
-    "distroEnabled": true,
-    "distroServerExpiredMillis": 10000,
-    "distroThreshold": 0.7,
-    "enableAuthentication": false,
-    "enableStandalone": true,
-    "healthCheckEnabled": true,
-    "healthCheckWhiteList": [],
-    "httpHealthParams": {
-      "factor": 0.85,
-      "max": 5000,
-      "min": 500
-    },
-    "incrementalList": [],
-    "lightBeatEnabled": true,
-    "limitedUrlMap": {},
-    "masters": null,
-    "mysqlHealthParams": {
-      "factor": 0.65,
-      "max": 3000,
-      "min": 2000
-    },
-    "name": "00-00---000-NACOS_SWITCH_DOMAIN-000---00-00",
-    "overriddenServerStatus": null,
-    "pushCSharpVersion": "0.9.0",
-    "pushCVersion": "1.0.12",
-    "pushEnabled": true,
-    "pushGoVersion": "0.1.0",
-    "pushJavaVersion": "0.1.0",
-    "pushPythonVersion": "0.4.3",
-    "sendBeatOnly": false,
-    "serverStatusSynchronizationPeriodMillis": 2000,
-    "serviceStatusSynchronizationPeriodMillis": 5000,
-    "tcpHealthParams": {
-      "factor": 0.75,
-      "max": 5000,
-      "min": 1000
-    }
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "adWeightMap": {},
+      "autoChangeHealthCheckEnabled": true,
+      "checkTimes": 3,
+      "checksum": null,
+      "clientBeatInterval": 5000,
+      "defaultCacheMillis": 3000,
+      "defaultInstanceEphemeral": true,
+      "defaultPushCacheMillis": 10000,
+      "disableAddIP": false,
+      "distroEnabled": true,
+      "distroServerExpiredMillis": 10000,
+      "distroThreshold": 0.7,
+      "enableAuthentication": false,
+      "enableStandalone": true,
+      "healthCheckEnabled": true,
+      "healthCheckWhiteList": [],
+      "httpHealthParams": {
+         "factor": 0.85,
+         "max": 5000,
+         "min": 500
+      },
+      "incrementalList": [],
+      "lightBeatEnabled": true,
+      "limitedUrlMap": {},
+      "masters": null,
+      "mysqlHealthParams": {
+         "factor": 0.65,
+         "max": 3000,
+         "min": 2000
+      },
+      "name": "00-00---000-NACOS_SWITCH_DOMAIN-000---00-00",
+      "overriddenServerStatus": null,
+      "pushCSharpVersion": "0.9.0",
+      "pushCVersion": "1.0.12",
+      "pushEnabled": true,
+      "pushGoVersion": "0.1.0",
+      "pushJavaVersion": "0.1.0",
+      "pushPythonVersion": "0.4.3",
+      "sendBeatOnly": false,
+      "serverStatusSynchronizationPeriodMillis": 2000,
+      "serviceStatusSynchronizationPeriodMillis": 5000,
+      "tcpHealthParams": {
+         "factor": 0.75,
+         "max": 5000,
+         "min": 1000
+      }
+   }
 }
 ```
 
@@ -1106,9 +1062,9 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/switches?entry=pushEnab
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": "ok"
+   "code": 0,
+   "message": "success",
+   "data": "ok"
 }
 ```
 
@@ -1166,19 +1122,19 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/metrics?onlyStatus=fals
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "clientCount": 3,
-    "connectionBasedClientCount": 1,
-    "ephemeralIpPortClientCount": 0,
-    "instanceCount": 2,
-    "persistentIpPortClientCount": 2,
-    "responsibleClientCount": 3,
-    "serviceCount": 2,
-    "status": "UP",
-    "subscribeCount": 1
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "clientCount": 3,
+      "connectionBasedClientCount": 1,
+      "ephemeralIpPortClientCount": 0,
+      "instanceCount": 2,
+      "persistentIpPortClientCount": 2,
+      "responsibleClientCount": 3,
+      "serviceCount": 2,
+      "status": "UP",
+      "subscribeCount": 1
+   }
 }
 ```
 
@@ -1225,9 +1181,9 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/log?logName=com.example
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": "ok"
+   "code": 0,
+   "message": "success",
+   "data": "ok"
 }
 ```
 
@@ -1269,13 +1225,13 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/list'
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": [
-    "127.0.0.1:8080#false",
-    "1741748952410_127.0.0.1_53863",
-    "1.1.1.1:3306#false"
-  ]
+   "code": 0,
+   "message": "success",
+   "data": [
+      "127.0.0.1:8080#false",
+      "1741748952410_127.0.0.1_53863",
+      "1.1.1.1:3306#false"
+   ]
 }
 ```
 
@@ -1331,19 +1287,19 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client?clientId=17417489524
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "appName": "unknown",
-    "clientId": "1741748952410_127.0.0.1_53863",
-    "clientIp": "127.0.0.1",
-    "clientPort": 53863,
-    "clientType": "connection",
-    "connectType": "GRPC",
-    "ephemeral": true,
-    "lastUpdatedTime": 1741748954789,
-    "version": "Nacos-Java-Client:v3.0.0-BETA"
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "appName": "unknown",
+      "clientId": "1741748952410_127.0.0.1_53863",
+      "clientIp": "127.0.0.1",
+      "clientPort": 53863,
+      "clientType": "connection",
+      "connectType": "GRPC",
+      "ephemeral": true,
+      "lastUpdatedTime": 1741748954789,
+      "version": "Nacos-Java-Client:v3.0.0-BETA"
+   }
 }
 ```
 
@@ -1351,19 +1307,19 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client?clientId=17417489524
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "appName": null,
-    "clientId": "1.1.1.1:3306#false",
-    "clientIp": null,
-    "clientPort": 0,
-    "clientType": "ipPort",
-    "connectType": null,
-    "ephemeral": false,
-    "lastUpdatedTime": 1741748950046,
-    "version": null
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "appName": null,
+      "clientId": "1.1.1.1:3306#false",
+      "clientIp": null,
+      "clientPort": 0,
+      "clientType": "ipPort",
+      "connectType": null,
+      "ephemeral": false,
+      "lastUpdatedTime": 1741748950046,
+      "version": null
+   }
 }
 ```
 
@@ -1417,22 +1373,22 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/publish/list?clientI
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": [
-    {
-      "groupName": "DEFAULT_GROUP",
-      "namespaceId": "public",
-      "publisherInfo": {
-        "clientId": null,
-        "clusterName": "DEFAULT",
-        "ip": "1.1.1.1",
-        "port": 3306
-      },
-      "serviceName": "test",
-      "subscriberInfo": null
-    }
-  ]
+   "code": 0,
+   "message": "success",
+   "data": [
+      {
+         "groupName": "DEFAULT_GROUP",
+         "namespaceId": "public",
+         "publisherInfo": {
+            "clientId": null,
+            "clusterName": "DEFAULT",
+            "ip": "1.1.1.1",
+            "port": 3306
+         },
+         "serviceName": "test",
+         "subscriberInfo": null
+      }
+   ]
 }
 ```
 
@@ -1486,22 +1442,22 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/subscribe/list?clien
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": [
-    {
-      "groupName": "DEFAULT_GROUP",
-      "namespaceId": "public",
-      "publisherInfo": null,
-      "serviceName": "com.test.SyncCallbackService",
-      "subscriberInfo": {
-        "address": "127.0.0.1",
-        "agent": "Nacos-Java-Client:v3.0.0-BETA",
-        "appName": "unknown",
-        "clientId": null
+   "code": 0,
+   "message": "success",
+   "data": [
+      {
+         "groupName": "DEFAULT_GROUP",
+         "namespaceId": "public",
+         "publisherInfo": null,
+         "serviceName": "com.test.SyncCallbackService",
+         "subscriberInfo": {
+            "address": "127.0.0.1",
+            "agent": "Nacos-Java-Client:v3.0.0-BETA",
+            "appName": "unknown",
+            "clientId": null
+         }
       }
-    }
-  ]
+   ]
 }
 ```
 
@@ -1557,16 +1513,16 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/service/publisher/li
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": [
-    {
-      "clientId": "1.1.1.1:3306#false",
-      "clusterName": "DEFAULT",
-      "ip": "1.1.1.1",
-      "port": 3306
-    }
-  ]
+   "code": 0,
+   "message": "success",
+   "data": [
+      {
+         "clientId": "1.1.1.1:3306#false",
+         "clusterName": "DEFAULT",
+         "ip": "1.1.1.1",
+         "port": 3306
+      }
+   ]
 }
 ```
 
@@ -1622,16 +1578,16 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/service/subscriber/l
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": [
-    {
-      "address": "127.0.0.1",
-      "agent": "Nacos-Java-Client:v3.0.0-BETA",
-      "appName": "unknown",
-      "clientId": "1741748952410_127.0.0.1_53863"
-    }
-  ]
+   "code": 0,
+   "message": "success",
+   "data": [
+      {
+         "address": "127.0.0.1",
+         "agent": "Nacos-Java-Client:v3.0.0-BETA",
+         "appName": "unknown",
+         "clientId": "1741748952410_127.0.0.1_53863"
+      }
+   ]
 }
 ```
 
@@ -1682,11 +1638,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/distro?ip=127.0.0.1&
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "responsibleServer": "127.0.0.1:8848"
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "responsibleServer": "127.0.0.1:8848"
+   }
 }
 ```
 
@@ -1738,9 +1694,9 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/cluster' -d 'serviceName=te
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": "ok"
+   "code": 0,
+   "message": "success",
+   "data": "ok"
 }
 ```
 
@@ -1795,9 +1751,9 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/health/instance' -d 'namesp
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": "ok"
+   "code": 0,
+   "message": "success",
+   "data": "ok"
 }
 ```
 
@@ -1841,22 +1797,22 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/health/checkers'
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "HTTP": {
-      "expectedResponseCode": 200,
-      "headers": "",
-      "path": ""
-    },
-    "MYSQL": {
-      "cmd": null,
-      "pwd": null,
-      "user": null
-    },
-    "NONE": {},
-    "TCP": {}
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "HTTP": {
+         "expectedResponseCode": 200,
+         "headers": "",
+         "path": ""
+      },
+      "MYSQL": {
+         "cmd": null,
+         "pwd": null,
+         "user": null
+      },
+      "NONE": {},
+      "TCP": {}
+   }
 }
 ```
 
@@ -1913,9 +1869,9 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance' \
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": "ok"
+   "code": 0,
+   "message": "success",
+   "data": "ok"
 }
 ```
 
@@ -1967,9 +1923,9 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance?namespaceId=pub
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": "ok"
+   "code": 0,
+   "message": "success",
+   "data": "ok"
 }
 ```
 
@@ -2035,9 +1991,9 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance' \
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": "ok"
+   "code": 0,
+   "message": "success",
+   "data": "ok"
 }
 ```
 
@@ -2089,13 +2045,13 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/metadata/batch' \
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "updated": [
-      "127.0.0.1:8080:unknown:DEFAULT:ephemeral"
-    ]
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "updated": [
+         "127.0.0.1:8080:unknown:DEFAULT:ephemeral"
+      ]
+   }
 }
 ```
 
@@ -2147,13 +2103,13 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/metadata/batch?
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "updated": [
-      "127.0.0.1:8080:unknown:DEFAULT:ephemeral"
-    ]
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "updated": [
+         "127.0.0.1:8080:unknown:DEFAULT:ephemeral"
+      ]
+   }
 }
 ```
 
@@ -2209,9 +2165,9 @@ curl -X PUT "http://localhost:8848/nacos/v3/admin/ns/instance/partial" -d 'names
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": "ok"
+   "code": 0,
+   "message": "success",
+   "data": "ok"
 }
 ```
 
@@ -2277,27 +2233,27 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/list?namespaceId=p
 
 ```json
 {
-  "code": 0,
-  "data": [
-    {
-      "clusterName": "DEFAULT",
-      "enabled": true,
-      "ephemeral": false,
-      "healthy": false,
-      "instanceHeartBeatInterval": 5000,
-      "instanceHeartBeatTimeOut": 15000,
-      "instanceId": "1.1.1.1#3306#DEFAULT#DEFAULT_GROUP@@service1",
-      "ip": "1.1.1.1",
-      "ipDeleteTimeout": 30000,
-      "metadata": {
-        "key": "value"
-      },
-      "port": 3306,
-      "serviceName": "DEFAULT_GROUP@@service1",
-      "weight": 1.0
-    }
-  ],
-  "message": "success"
+   "code": 0,
+   "data": [
+      {
+         "clusterName": "DEFAULT",
+         "enabled": true,
+         "ephemeral": false,
+         "healthy": false,
+         "instanceHeartBeatInterval": 5000,
+         "instanceHeartBeatTimeOut": 15000,
+         "instanceId": "1.1.1.1#3306#DEFAULT#DEFAULT_GROUP@@service1",
+         "ip": "1.1.1.1",
+         "ipDeleteTimeout": 30000,
+         "metadata": {
+            "key": "value"
+         },
+         "port": 3306,
+         "serviceName": "DEFAULT_GROUP@@service1",
+         "weight": 1.0
+      }
+   ],
+   "message": "success"
 }
 ```
 
@@ -2362,27 +2318,27 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance?namespaceId=public
 
 ```json
 {
-  "code": 0,
-  "data": [
-    {
-      "clusterName": "DEFAULT",
-      "enabled": true,
-      "ephemeral": false,
-      "healthy": false,
-      "instanceHeartBeatInterval": 5000,
-      "instanceHeartBeatTimeOut": 15000,
-      "instanceId": "1.1.1.1#3306#DEFAULT#DEFAULT_GROUP@@service1",
-      "ip": "1.1.1.1",
-      "ipDeleteTimeout": 30000,
-      "metadata": {
-        "key": "value"
-      },
-      "port": 3306,
-      "serviceName": "DEFAULT_GROUP@@service1",
-      "weight": 1.0
-    }
-  ],
-  "message": "success"
+   "code": 0,
+   "data": [
+      {
+         "clusterName": "DEFAULT",
+         "enabled": true,
+         "ephemeral": false,
+         "healthy": false,
+         "instanceHeartBeatInterval": 5000,
+         "instanceHeartBeatTimeOut": 15000,
+         "instanceId": "1.1.1.1#3306#DEFAULT#DEFAULT_GROUP@@service1",
+         "ip": "1.1.1.1",
+         "ipDeleteTimeout": 30000,
+         "metadata": {
+            "key": "value"
+         },
+         "port": 3306,
+         "serviceName": "DEFAULT_GROUP@@service1",
+         "weight": 1.0
+      }
+   ],
+   "message": "success"
 }
 ```
 
@@ -2437,9 +2393,9 @@ curl -d 'serviceName=nacos.test.1' \
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": true
+   "code": 0,
+   "message": "success",
+   "data": true
 }
 ```
 
@@ -2487,9 +2443,9 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ns/service?serviceName=naco
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": true
+   "code": 0,
+   "message": "success",
+   "data": true
 }
 ```
 
@@ -2551,32 +2507,32 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service?serviceName=nacos.t
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "clusterMap": {
-      "DEFAULT": {
-        "clusterName": "DEFAULT",
-        "healthChecker": {
-          "type": "NONE"
-        },
-        "healthyCheckPort": 80,
-        "hosts": null,
-        "metadata": {},
-        "useInstancePortForCheck": true
-      }
-    },
-    "ephemeral": false,
-    "groupName": "DEFAULT_GROUP",
-    "metadata": {},
-    "namespaceId": "public",
-    "protectThreshold": 0.0,
-    "selector": {
-      "contextType": "NONE",
-      "type": "none"
-    },
-    "serviceName": "test"
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "clusterMap": {
+         "DEFAULT": {
+            "clusterName": "DEFAULT",
+            "healthChecker": {
+               "type": "NONE"
+            },
+            "healthyCheckPort": 80,
+            "hosts": null,
+            "metadata": {},
+            "useInstancePortForCheck": true
+         }
+      },
+      "ephemeral": false,
+      "groupName": "DEFAULT_GROUP",
+      "metadata": {},
+      "namespaceId": "public",
+      "protectThreshold": 0.0,
+      "selector": {
+         "contextType": "NONE",
+         "type": "none"
+      },
+      "serviceName": "test"
+   }
 }
 ```
 
@@ -2637,31 +2593,31 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service/list'
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "pageItems": [
-      {
-        "clusterCount": 1,
-        "groupName": "DEFAULT_GROUP",
-        "healthyInstanceCount": 1,
-        "ipCount": 1,
-        "name": "com.test.SyncCallbackService",
-        "triggerFlag": "false"
-      },
-      {
-        "clusterCount": 1,
-        "groupName": "DEFAULT_GROUP",
-        "healthyInstanceCount": 0,
-        "ipCount": 1,
-        "name": "test",
-        "triggerFlag": "true"
-      }
-    ],
-    "pageNumber": 1,
-    "pagesAvailable": 1,
-    "totalCount": 2
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "pageItems": [
+         {
+            "clusterCount": 1,
+            "groupName": "DEFAULT_GROUP",
+            "healthyInstanceCount": 1,
+            "ipCount": 1,
+            "name": "com.test.SyncCallbackService",
+            "triggerFlag": "false"
+         },
+         {
+            "clusterCount": 1,
+            "groupName": "DEFAULT_GROUP",
+            "healthyInstanceCount": 0,
+            "ipCount": 1,
+            "name": "test",
+            "triggerFlag": "true"
+         }
+      ],
+      "pageNumber": 1,
+      "pagesAvailable": 1,
+      "totalCount": 2
+   }
 }
 ```
 
@@ -2717,9 +2673,9 @@ curl -d 'serviceName=nacos.test.1' \
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": true
+   "code": 0,
+   "message": "success",
+   "data": true
 }
 ```
 
@@ -2783,25 +2739,25 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service/subscribers?namespa
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "pageItems": [
-      {
-        "address": "127.0.0.1:0",
-        "agent": "Nacos-Java-Client:v3.0.0-BETA",
-        "appName": "unknown",
-        "groupName": "DEFAULT_GROUP",
-        "ip": "127.0.0.1",
-        "namespaceId": "public",
-        "port": 0,
-        "serviceName": "service1"
-      }
-    ],
-    "pageNumber": 1,
-    "pagesAvailable": 1,
-    "totalCount": 1
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "pageItems": [
+         {
+            "address": "127.0.0.1:0",
+            "agent": "Nacos-Java-Client:v3.0.0-BETA",
+            "appName": "unknown",
+            "groupName": "DEFAULT_GROUP",
+            "ip": "127.0.0.1",
+            "namespaceId": "public",
+            "port": 0,
+            "serviceName": "service1"
+         }
+      ],
+      "pageNumber": 1,
+      "pagesAvailable": 1,
+      "totalCount": 1
+   }
 }
 ```
 
@@ -2845,12 +2801,12 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service/selector/types'
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": [
-    "none",
-    "label"
-  ]
+   "code": 0,
+   "message": "success",
+   "data": [
+      "none",
+      "label"
+   ]
 }
 ```
 
@@ -2916,25 +2872,25 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=nacos.example
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "appName": "",
-    "configTags": null,
-    "content": "contentTest",
-    "createIp": "127.0.0.1",
-    "createTime": 1741761841327,
-    "createUser": "nacos",
-    "dataId": "nacos.example",
-    "desc": null,
-    "encryptedDataKey": "",
-    "groupName": "DEFAULT_GROUP",
-    "id": "873810262413545472",
-    "md5": "9f67e6977b100e00cab385a75597db58",
-    "modifyTime": 1741761841327,
-    "namespaceId": "public",
-    "type": "text"
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "appName": "",
+      "configTags": null,
+      "content": "contentTest",
+      "createIp": "127.0.0.1",
+      "createTime": 1741761841327,
+      "createUser": "nacos",
+      "dataId": "nacos.example",
+      "desc": null,
+      "encryptedDataKey": "",
+      "groupName": "DEFAULT_GROUP",
+      "id": "873810262413545472",
+      "md5": "9f67e6977b100e00cab385a75597db58",
+      "modifyTime": 1741761841327,
+      "namespaceId": "public",
+      "type": "text"
+   }
 }
 ```
 
@@ -2994,9 +2950,9 @@ curl -d 'dataId=nacos.example' \
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": true
+   "code": 0,
+   "message": "success",
+   "data": true
 }
 ```
 
@@ -3044,9 +3000,9 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=nacos.exam
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": true
+   "code": 0,
+   "message": "success",
+   "data": true
 }
 ```
 
@@ -3092,9 +3048,9 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/batch?ids=1,2,3'
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": true
+   "code": 0,
+   "message": "success",
+   "data": true
 }
 ```
 
@@ -3146,14 +3102,14 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/listener?namespaceId
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "listenersStatus": {
-      "127.0.0.1": "32cacc65accfdab47954de3fc781e938"
-    },
-    "queryType": "config"
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "listenersStatus": {
+         "127.0.0.1": "32cacc65accfdab47954de3fc781e938"
+      },
+      "queryType": "config"
+   }
 }
 ```
 
@@ -3222,37 +3178,37 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/list?pageNo=1&pageSi
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "pageItems": [
-      {
-        "appName": "",
-        "createTime": 0,
-        "dataId": "111",
-        "groupName": "DEFAULT_GROUP",
-        "id": "873475812546842624",
-        "md5": null,
-        "modifyTime": 0,
-        "namespaceId": "public",
-        "type": "text"
-      },
-      {
-        "appName": "",
-        "createTime": 0,
-        "dataId": "qtc-user.yaml",
-        "groupName": "DEFAULT_GROUP",
-        "id": "873476606771859456",
-        "md5": null,
-        "modifyTime": 0,
-        "namespaceId": "public",
-        "type": "text"
-      }
-    ],
-    "pageNumber": 1,
-    "pagesAvailable": 1,
-    "totalCount": 2
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "pageItems": [
+         {
+            "appName": "",
+            "createTime": 0,
+            "dataId": "111",
+            "groupName": "DEFAULT_GROUP",
+            "id": "873475812546842624",
+            "md5": null,
+            "modifyTime": 0,
+            "namespaceId": "public",
+            "type": "text"
+         },
+         {
+            "appName": "",
+            "createTime": 0,
+            "dataId": "qtc-user.yaml",
+            "groupName": "DEFAULT_GROUP",
+            "id": "873476606771859456",
+            "md5": null,
+            "modifyTime": 0,
+            "namespaceId": "public",
+            "type": "text"
+         }
+      ],
+      "pageNumber": 1,
+      "pagesAvailable": 1,
+      "totalCount": 2
+   }
 }
 ```
 
@@ -3302,9 +3258,9 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/beta?namespaceId=
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": true
+   "code": 0,
+   "message": "success",
+   "data": true
 }
 ```
 
@@ -3371,27 +3327,27 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/beta?namespaceId=pub
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "appName": "",
-    "configTags": null,
-    "content": "bbb11xxccc",
-    "createIp": null,
-    "createTime": 0,
-    "createUser": "nacos",
-    "dataId": "example",
-    "desc": null,
-    "encryptedDataKey": null,
-    "grayName": "beta",
-    "grayRule": "{\"type\":\"beta\",\"version\":\"1.0.0\",\"expr\":\"1.1.1.1\",\"priority\":2147483647}",
-    "groupName": "DEFAULT_GROUP",
-    "id": "873481464488923136",
-    "md5": "2f080e5e21ba12bb8ca6894ac0fc5862",
-    "modifyTime": 1741683449619,
-    "namespaceId": "public",
-    "type": null
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "appName": "",
+      "configTags": null,
+      "content": "bbb11xxccc",
+      "createIp": null,
+      "createTime": 0,
+      "createUser": "nacos",
+      "dataId": "example",
+      "desc": null,
+      "encryptedDataKey": null,
+      "grayName": "beta",
+      "grayRule": "{\"type\":\"beta\",\"version\":\"1.0.0\",\"expr\":\"1.1.1.1\",\"priority\":2147483647}",
+      "groupName": "DEFAULT_GROUP",
+      "id": "873481464488923136",
+      "md5": "2f080e5e21ba12bb8ca6894ac0fc5862",
+      "modifyTime": 1741683449619,
+      "namespaceId": "public",
+      "type": null
+   }
 }
 ```
 
@@ -3443,12 +3399,12 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/import' \
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "succCount": 10,
-    "skipCount": 2
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "succCount": 10,
+      "skipCount": 2
+   }
 }
 ```
 
@@ -3543,12 +3499,12 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/clone?namespaceId=t
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "succCount": 2,
-    "skipCount": 0
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "succCount": 2,
+      "skipCount": 0
+   }
 }
 ```
 
@@ -3614,45 +3570,45 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/list?dataId=nacos.e
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "pageItems": [
-      {
-        "appName": "",
-        "createTime": 1272988800000,
-        "dataId": "nacos.example",
-        "groupName": "DEFAULT_GROUP",
-        "id": "102",
-        "md5": null,
-        "modifyTime": 1741762032116,
-        "namespaceId": "public",
-        "opType": "D         ",
-        "publishType": "formal",
-        "srcIp": "127.0.0.1",
-        "srcUser": "nacos",
-        "type": null
-      },
-      {
-        "appName": "",
-        "createTime": 1272988800000,
-        "dataId": "nacos.example",
-        "groupName": "DEFAULT_GROUP",
-        "id": "101",
-        "md5": null,
-        "modifyTime": 1741761841295,
-        "namespaceId": "public",
-        "opType": "I         ",
-        "publishType": "formal",
-        "srcIp": "127.0.0.1",
-        "srcUser": "nacos",
-        "type": null
-      }
-    ],
-    "pageNumber": 1,
-    "pagesAvailable": 1,
-    "totalCount": 2
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "pageItems": [
+         {
+            "appName": "",
+            "createTime": 1272988800000,
+            "dataId": "nacos.example",
+            "groupName": "DEFAULT_GROUP",
+            "id": "102",
+            "md5": null,
+            "modifyTime": 1741762032116,
+            "namespaceId": "public",
+            "opType": "D         ",
+            "publishType": "formal",
+            "srcIp": "127.0.0.1",
+            "srcUser": "nacos",
+            "type": null
+         },
+         {
+            "appName": "",
+            "createTime": 1272988800000,
+            "dataId": "nacos.example",
+            "groupName": "DEFAULT_GROUP",
+            "id": "101",
+            "md5": null,
+            "modifyTime": 1741761841295,
+            "namespaceId": "public",
+            "opType": "I         ",
+            "publishType": "formal",
+            "srcIp": "127.0.0.1",
+            "srcUser": "nacos",
+            "type": null
+         }
+      ],
+      "pageNumber": 1,
+      "pagesAvailable": 1,
+      "totalCount": 2
+   }
 }
 ```
 
@@ -3716,27 +3672,27 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/??dataId=111&groupN
 
 ```json
 {
-  "code": 0,
-  "data": {
-    "appName": "",
-    "content": "bbb11xx",
-    "createTime": 1272988800000,
-    "dataId": "111",
-    "encryptedDataKey": "",
-    "extInfo": "{\"src_user\":\"nacos\",\"type\":\"text\",\"c_desc\":\"111\"}",
-    "grayName": "",
-    "groupName": "DEFAULT_GROUP",
-    "id": "7",
-    "md5": "7d37afdb0b04d958d529bcb6de44fa71",
-    "modifyTime": 1741682102157,
-    "namespaceId": "public",
-    "opType": "I         ",
-    "publishType": "formal",
-    "srcIp": "0:0:0:0:0:0:0:1",
-    "srcUser": "nacos",
-    "type": null
-  },
-  "message": "success"
+   "code": 0,
+   "data": {
+      "appName": "",
+      "content": "bbb11xx",
+      "createTime": 1272988800000,
+      "dataId": "111",
+      "encryptedDataKey": "",
+      "extInfo": "{\"src_user\":\"nacos\",\"type\":\"text\",\"c_desc\":\"111\"}",
+      "grayName": "",
+      "groupName": "DEFAULT_GROUP",
+      "id": "7",
+      "md5": "7d37afdb0b04d958d529bcb6de44fa71",
+      "modifyTime": 1741682102157,
+      "namespaceId": "public",
+      "opType": "I         ",
+      "publishType": "formal",
+      "srcIp": "0:0:0:0:0:0:0:1",
+      "srcUser": "nacos",
+      "type": null
+   },
+   "message": "success"
 }
 ```
 
@@ -3800,27 +3756,27 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/previous?id=101&dat
 
 ```json
 {
-  "code": 0,
-  "data": {
-    "appName": "",
-    "content": "bbb11xx",
-    "createTime": 1272988800000,
-    "dataId": "nacos.example",
-    "encryptedDataKey": "",
-    "extInfo": "{\"src_user\":\"nacos\",\"type\":\"text\",\"c_desc\":\"111\"}",
-    "grayName": "",
-    "groupName": "DEFAULT_GROUP",
-    "id": "7",
-    "md5": "7d37afdb0b04d958d529bcb6de44fa71",
-    "modifyTime": 1741682102157,
-    "namespaceId": "public",
-    "opType": "I         ",
-    "publishType": "formal",
-    "srcIp": "0:0:0:0:0:0:0:1",
-    "srcUser": "nacos",
-    "type": null
-  },
-  "message": "success"
+   "code": 0,
+   "data": {
+      "appName": "",
+      "content": "bbb11xx",
+      "createTime": 1272988800000,
+      "dataId": "nacos.example",
+      "encryptedDataKey": "",
+      "extInfo": "{\"src_user\":\"nacos\",\"type\":\"text\",\"c_desc\":\"111\"}",
+      "grayName": "",
+      "groupName": "DEFAULT_GROUP",
+      "id": "7",
+      "md5": "7d37afdb0b04d958d529bcb6de44fa71",
+      "modifyTime": 1741682102157,
+      "namespaceId": "public",
+      "opType": "I         ",
+      "publishType": "formal",
+      "srcIp": "0:0:0:0:0:0:0:1",
+      "srcUser": "nacos",
+      "type": null
+   },
+   "message": "success"
 }
 ```
 
@@ -3871,32 +3827,32 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/configs?namespaceId
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": [
-    {
-      "appName": "",
-      "createTime": 0,
-      "dataId": "111",
-      "groupName": "DEFAULT_GROUP",
-      "id": "0",
-      "md5": null,
-      "modifyTime": 1741682102161,
-      "namespaceId": "public",
-      "type": "text"
-    },
-    {
-      "appName": "",
-      "createTime": 0,
-      "dataId": "qtc-user.yaml",
-      "groupName": "DEFAULT_GROUP",
-      "id": "0",
-      "md5": null,
-      "modifyTime": 1741682291519,
-      "namespaceId": "public",
-      "type": "text"
-    }
-  ]
+   "code": 0,
+   "message": "success",
+   "data": [
+      {
+         "appName": "",
+         "createTime": 0,
+         "dataId": "111",
+         "groupName": "DEFAULT_GROUP",
+         "id": "0",
+         "md5": null,
+         "modifyTime": 1741682102161,
+         "namespaceId": "public",
+         "type": "text"
+      },
+      {
+         "appName": "",
+         "createTime": 0,
+         "dataId": "qtc-user.yaml",
+         "groupName": "DEFAULT_GROUP",
+         "id": "0",
+         "md5": null,
+         "modifyTime": 1741682291519,
+         "namespaceId": "public",
+         "type": "text"
+      }
+   ]
 }
 ```
 
@@ -3956,19 +3912,19 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/capacity?namespaceId=public
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "gmtCreate": null,
-    "gmtModified": null,
-    "id": "1",
-    "maxAggrCount": 10000,
-    "maxAggrSize": 1024,
-    "maxSize": 102400,
-    "namespaceId": "public",
-    "quota": 200,
-    "usage": 2
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "gmtCreate": null,
+      "gmtModified": null,
+      "id": "1",
+      "maxAggrCount": 10000,
+      "maxAggrSize": 1024,
+      "maxSize": 102400,
+      "namespaceId": "public",
+      "quota": 200,
+      "usage": 2
+   }
 }
 ```
 
@@ -4017,9 +3973,9 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/capacity' -d 'namespaceId=
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": true
+   "code": 0,
+   "message": "success",
+   "data": true
 }
 ```
 
@@ -4063,9 +4019,9 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/localCache'
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": "Local cache updated from store successfully!"
+   "code": 0,
+   "message": "success",
+   "data": "Local cache updated from store successfully!"
 }
 ```
 
@@ -4112,9 +4068,9 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/log?logName=config-serv
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": "Log level updated successfully! Module: com.alibaba.nacos, Log Level: DEBUG"
+   "code": 0,
+   "message": "success",
+   "data": "Log level updated successfully! Module: com.alibaba.nacos, Log Level: DEBUG"
 }
 ```
 
@@ -4162,29 +4118,29 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/derby?sql=SELECT%20*%20
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": [
-    {
-      "APP_NAME": "",
-      "CONTENT": "bbb11xx",
-      "C_DESC": "111",
-      "C_SCHEMA": null,
-      "C_USE": null,
-      "DATA_ID": "111",
-      "EFFECT": null,
-      "ENCRYPTED_DATA_KEY": "",
-      "GMT_CREATE": "2025-03-11T08:35:02.161+00:00",
-      "GMT_MODIFIED": "2025-03-11T08:35:02.161+00:00",
-      "GROUP_ID": "DEFAULT_GROUP",
-      "ID": 873475812546842624,
-      "MD5": "7d37afdb0b04d958d529bcb6de44fa71",
-      "SRC_IP": "0:0:0:0:0:0:0:1",
-      "SRC_USER": "nacos",
-      "TENANT_ID": "public",
-      "TYPE": "text"
-    }
-  ]
+   "code": 0,
+   "message": "success",
+   "data": [
+      {
+         "APP_NAME": "",
+         "CONTENT": "bbb11xx",
+         "C_DESC": "111",
+         "C_SCHEMA": null,
+         "C_USE": null,
+         "DATA_ID": "111",
+         "EFFECT": null,
+         "ENCRYPTED_DATA_KEY": "",
+         "GMT_CREATE": "2025-03-11T08:35:02.161+00:00",
+         "GMT_MODIFIED": "2025-03-11T08:35:02.161+00:00",
+         "GROUP_ID": "DEFAULT_GROUP",
+         "ID": 873475812546842624,
+         "MD5": "7d37afdb0b04d958d529bcb6de44fa71",
+         "SRC_IP": "0:0:0:0:0:0:0:1",
+         "SRC_USER": "nacos",
+         "TENANT_ID": "public",
+         "TYPE": "text"
+      }
+   ]
 }
 ```
 
@@ -4192,9 +4148,9 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/derby?sql=SELECT%20*%20
 
 ```json
 {
-  "code": 30000,
-  "data": null,
-  "message": "Derby ops is disabled, please set `nacos.config.derby.ops.enabled=true` to enabled this feature."
+   "code": 30000,
+   "data": null,
+   "message": "Derby ops is disabled, please set `nacos.config.derby.ops.enabled=true` to enabled this feature."
 }
 ```
 
@@ -4244,9 +4200,9 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/derby/import' \
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": "Data imported successfully!"
+   "code": 0,
+   "message": "success",
+   "data": "Data imported successfully!"
 }
 ```
 
@@ -4298,14 +4254,14 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/listener?ip=127.0.0.1&names
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "listenersStatus": {
-      "qtc-user.yaml+DEFAULT_GROUP+public": "32cacc65accfdab47954de3fc781e938"
-    },
-    "queryType": "ip"
-  }
+   "code": 0,
+   "message": "success",
+   "data": {
+      "listenersStatus": {
+         "qtc-user.yaml+DEFAULT_GROUP+public": "32cacc65accfdab47954de3fc781e938"
+      },
+      "queryType": "ip"
+   }
 }
 ```
 
@@ -4363,21 +4319,21 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/metrics/cluster?ip=127.0.0.
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "a981e0a8-f394-425c-ac2a-ab753586428b": {
-      "isFixedServer": true,
-      "snapshotDir": "/path/to/nacos/config",
-      "clientVersion": "Nacos-Java-Client:v2.1.0",
-      "serverUrls": "http://127.0.0.1:8848",
-      "listenConfigSize": 1,
-      "metricValues": {
-        "cacheData": "asdasd:a8f5f167f44f4964e6c998dee827110c",
-        "snapshotData": "asdasd:a8f5f167f44f4964e6c998dee827110c"
+   "code": 0,
+   "message": "success",
+   "data": {
+      "a981e0a8-f394-425c-ac2a-ab753586428b": {
+         "isFixedServer": true,
+         "snapshotDir": "/path/to/nacos/config",
+         "clientVersion": "Nacos-Java-Client:v2.1.0",
+         "serverUrls": "http://127.0.0.1:8848",
+         "listenConfigSize": 1,
+         "metricValues": {
+            "cacheData": "asdasd:a8f5f167f44f4964e6c998dee827110c",
+            "snapshotData": "asdasd:a8f5f167f44f4964e6c998dee827110c"
+         }
       }
-    }
-  }
+   }
 }
 ```
 
@@ -4435,20 +4391,20 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/metrics/ip?ip=127.0.0.1&dat
 
 ```json
 {
-  "code": 0,
-  "message": "success",
-  "data": {
-    "a981e0a8-f394-425c-ac2a-ab753586428b": {
-      "isFixedServer": true,
-      "snapshotDir": "/path/to/nacos/config",
-      "clientVersion": "Nacos-Java-Client:v2.1.0",
-      "serverUrls": "http://127.0.0.1:8848",
-      "listenConfigSize": 1,
-      "metricValues": {
-        "cacheData": "asdasd:a8f5f167f44f4964e6c998dee827110c",
-        "snapshotData": "asdasd:a8f5f167f44f4964e6c998dee827110c"
+   "code": 0,
+   "message": "success",
+   "data": {
+      "a981e0a8-f394-425c-ac2a-ab753586428b": {
+         "isFixedServer": true,
+         "snapshotDir": "/path/to/nacos/config",
+         "clientVersion": "Nacos-Java-Client:v2.1.0",
+         "serverUrls": "http://127.0.0.1:8848",
+         "listenConfigSize": 1,
+         "metricValues": {
+            "cacheData": "asdasd:a8f5f167f44f4964e6c998dee827110c",
+            "snapshotData": "asdasd:a8f5f167f44f4964e6c998dee827110c"
+         }
       }
-    }
-  }
+   }
 }
 ```

@@ -15,14 +15,14 @@ Server节点中的数据，从而实现自定义的Nacos控制台UI界面。
 
 ## 0. 控制台API 相关说明
 
-### 0.1 统一返回体格式
+### 0.1. 统一返回体格式
 
 自3.0版本开始，OpenAPI/AdminAPI/ConsoleAPI均使用相同的返回体格式。
 
 完整的返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)
 ，本文档中所有的API返回数据只阐述`data`字段中的返回参数。
 
-### 0.2 统一路径格式
+### 0.2. 统一路径格式
 
 Nacos的控制台 API，使用统一的Path格式进行的规范。格式为`[/$nacos.console.contextPath]/v3/console/[module]/[subPath]...`,
 其中
@@ -37,11 +37,15 @@ Nacos的控制台 API，使用统一的Path格式进行的规范。格式为`[/$
 同时下列列出的控制台API样例中，均采用默认Nacos Console的端口进行展示，若已修改部署环境中的`$nacos.console.port`
 配置项，请自行修改调用API时的请求URL。
 
-### 0.3 鉴权认证
+### 0.3. 鉴权认证
 
 Nacos 3.X 的控制台 API默认启用鉴权认证，除少量被标记为`公开接口`的API外，请在调用API时，携带正确的身份信息，否则请求将会被拦截。
 
 若想要关闭鉴权，请设置`nacos.core.auth.console.enabled=false`，然后重启Nacos 控制台。
+
+### 0.4. Swagger 类型文档
+
+Nacos 3.X 的控制台 API 也提供了Swagger风格的文档，您可以通过访问[Nacos Swagger Console API](/en/swagger/console/)查看。
 
 ## 1. Nacos 基础控制台API
 

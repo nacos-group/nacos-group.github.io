@@ -19,6 +19,10 @@ Nacos 3.X 的 HTTP OpenAPI **主要面向不支持 gRPC 的编程语言开发客
 如有`管控类`和`网关类`的应用需求，需要使用范围型数据操作接口，请使用[Admin API](../admin/admin-api.md)。
 :::
 
+## 0. Swagger 类型文档
+
+Nacos 3.X 的客户端 Open API 也提供了Swagger风格的文档，您可以通过访问[Nacos Swagger HTTP 客户端 API](/swagger/client/)查看。
+
 ## 1. 文档规定
 
 ### 1.1. API 统一返回体格式
