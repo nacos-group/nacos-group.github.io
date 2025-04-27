@@ -4,13 +4,9 @@ order: 0
 ---
 # Nacos Server Download
 :::tip
-Nacos Server **2.5.1** has been officially released. Fix some bugs  and do some enhancement in `2.5.0`.
+Nacos Server **3.0.0** has been officially released. Support independent deployment console and auth, support mcp registry and management and support more features, welcome to try it out.
 
 Feel free to [download and try it out](#stable-versions).
-
-Nacos Server **3.0.0-BETA** has also been officially released.
-
-[download and try 3.0.0-BETA](#snapshot-versions).
 
 :::
 ## System Requirements
@@ -25,19 +21,22 @@ The following are the minimum system requirements for deploying Nacos Server. If
 | **Hard disk** | No minimum requirement, adjust according to log retention |
 | **Operating system** | Linux, Mac OS X, Windows |
 ## Stable Versions
+
+### 3.x
+| Version | Binary Package Download                                                  | Docker Image                                                 | MD5                         | Release Notes                                    | Reference Documentation                                  |
+| ------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------------------- | ------------------------------------------------ | ------------------------------------------------ |
+| 3.0.0   | [3.0.0.zip](https://download.nacos.io/nacos-server/nacos-server-3.0.0.zip) | [nacos/nacos-server\:v3.0.0](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=3.0.0) | 7a1b1a7e0c2b567ad49d2874cdb04e0a | [Release Notes](https://github.com/alibaba/nacos/releases/tag/3.0.0)      | [Quick Start](/docs/v3.0/quickstart/quick-start/)      |
+
+
 ### 2.x
 | Version | Binary Package Download                                                  | Docker Image                                                 | MD5                         | Release Notes                                    | Reference Documentation                                  |
 | ------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------------------- | ------------------------------------------------ | ------------------------------------------------ |
 | 2.5.1   | [2.5.1.zip](https://download.nacos.io/nacos-server/nacos-server-2.5.1.zip) | [nacos/nacos-server\:v2.5.1](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=2.5.1) | 11c15731f40894da23562a38a0cc9b70 | [Release Notes](https://github.com/alibaba/nacos/releases/tag/2.5.1)      | [Quick Start](/docs/latest/quickstart/quick-start/)      |
 
-### 1.x
-Support for Nacos 1.x has stopped, please upgrade to version 2.x as soon as possible.
-| Version | Binary Package Download                                                | Docker Image                                                 | MD5                         | Release Notes                                     | Reference Documentation                                  |
-| ------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------------------- | ------------------------------------------------ | ------------------------------------------------ |
-| 1.4.8   | [1.4.8.zip](https://download.nacos.io/nacos-server/nacos-server-1.4.8.zip) | [nacos/nacos-server\:v1.4.8](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=1.4.8) | 875ee403d0008c1ecafe721dfb85bed6 | [Release Notes](https://github.com/alibaba/nacos/releases/tag/1.4.8)      | [Quick Start](/docs/v1/quick-start)      |
- - Upgrade to the latest released version as much as possible. For version upgrades, refer to the [upgrade guide](/docs/v2/upgrading/version2-upgrading)
+
  - For more historical version downloads, refer to the [release history](/download/release-history/)
  - Distributed under the [Apache License v2.0](https://www.apache.org/licenses/).
+
 ## Snapshot Versions
 Snapshot versions are still in development. We encourage you to try them out and provide feedback, but it is not recommended for production use.
 | Version | Binary Package Download                                                | Docker Image                                                 | MD5                         | Release Notes                                     | Reference Documentation                                  |
