@@ -12,8 +12,9 @@ sidebar:
 
 :::note
 - [控制台样例](http://console.nacos.io/index.html)的默认用户名密码为`nacos/nacos`。
-- 此控制台样例仅用于展示控制台，不提供OpenAPI访问，且未开启鉴权，如需测试OpenAPI，请参考[文档](../../quickstart/quick-start.mdx)部署。
-- 此控制台样例仅用于展示控制台，不支持修改用户名密码。
+- 此控制台样例仅用于展示控制台使用，为公开DEMO，请勿将敏感数据及生产环境相关内容写入其中。
+- 此控制台样例仅用于展示控制台使用，不提供OpenAPI访问，且未开启鉴权，如需测试OpenAPI，请参考[文档](../../quickstart/quick-start.mdx)部署。
+- 此控制台样例仅用于展示控制台使用，不支持修改用户名密码。
 :::
 
 * 服务管理
