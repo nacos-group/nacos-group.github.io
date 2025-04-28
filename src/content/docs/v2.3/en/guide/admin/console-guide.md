@@ -6,7 +6,7 @@ description: The Nacos console is designed to enhance microservices management, 
 
 # Control Panel Manual
 
-The [Nacos Control Panel](http://console.nacos.io/nacos/index.html) primarily focuses on augmenting control capabilities in areas such as service listings, health status management, service governance, and distributed configuration management, further assisting users in lowering the costs associated with managing microservice architectures. It offers fundamental functions including:
+The [Nacos Control Panel](http://console.nacos.io/index.html) primarily focuses on augmenting control capabilities in areas such as service listings, health status management, service governance, and distributed configuration management, further assisting users in lowering the costs associated with managing microservice architectures. It offers fundamental functions including:
 
 - **Service Management**
   - Display of service lists and health statuses.

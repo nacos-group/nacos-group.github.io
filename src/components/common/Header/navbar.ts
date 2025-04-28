@@ -49,7 +49,7 @@ export default [
     },
     trigger: "click",
     target: "_blank",
-    route: "http://console.nacos.io/nacos/index.html",
+    route: "http://console.nacos.io/index.html",
   },
   {
     label: "专家答疑",

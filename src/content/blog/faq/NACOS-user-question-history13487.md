@@ -21,7 +21,7 @@ Nacos控制台的默认访问地址通常是 `http://localhost:8848/nacos`。这
 请注意，根据实际情况调整地址，并确保网络配置允许您访问该地址。如果遇到访问问题或需要更深入的配置调整，请查阅Nacos官方文档或相关社区资源以获取帮助。
 
 参考资料：
-- [Nacos 控制台手册](http://console.nacos.io/nacos/index.html)
+- [Nacos 控制台手册](http://console.nacos.io/index.html)
 - [Nacos鉴权插件及控制台手册相关章节](../admin/console-guide.md#1.1)
 
 

@@ -8,7 +8,7 @@ sidebar:
 
 # Console Guide
 
-[Nacos console](http://console.nacos.io/nacos/index.html) aims to enhance the console for service list, health management, service management, a distributed configuration management control ability, in order to help users reduce the cost of micro management service application architecture, will provide basic functions include the following:
+[Nacos console](http://console.nacos.io/index.html) aims to enhance the console for service list, health management, service management, a distributed configuration management control ability, in order to help users reduce the cost of micro management service application architecture, will provide basic functions include the following:
 
 * Service management
     * Service list and health status display

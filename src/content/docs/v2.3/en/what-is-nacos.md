@@ -40,7 +40,7 @@ Key Nacos features include:
 
   Centralized configuration management simplifies stateless service implementation and facilitates elastic scaling.
 
-  Nacos provides a straightforward UI ([Control Panel Demo](http://console.nacos.io/nacos/index.html)) for managing all service and application configurations. It also includes out-of-the-box features such as version tracking, Canary releases, one-click rollback, and client update status tracking for safer production environment configuration changes.
+  Nacos provides a straightforward UI ([Control Panel Demo](http://console.nacos.io/index.html)) for managing all service and application configurations. It also includes out-of-the-box features such as version tracking, Canary releases, one-click rollback, and client update status tracking for safer production environment configuration changes.
 
 - **Dynamic DNS Service**
 
