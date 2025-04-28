@@ -19,7 +19,7 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## 0. 版本选择
 
-您可以通过Nacos的[版本下载页面](/download/nacos-server/)、[release notes](https://github.com/alibaba/nacos/releases) 及 [发布声明](/news/release/)中找到每个版本支持的功能的介绍，`3.0.0`还处于Beta阶段，推荐在测试环境中使用，生产环境当前推荐的稳定版本为`2.5.1`.
+您可以通过Nacos的[版本下载页面](/download/nacos-server/)、[release notes](https://github.com/alibaba/nacos/releases) 及 [发布声明](/news/release/)中找到每个版本支持的功能的介绍，生产环境当前推荐的稳定版本为`3.0.0`.
 
 ## 1. 预备环境准备
 
@@ -70,10 +70,10 @@ Nacos 依赖 [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_j
   </TabItem>
 </Tabs>
 
-随后启动程序会提示您输入`3个`鉴权相关配置
+随后启动程序会提示您输入`3个`鉴权相关配置（Nacos从3.0.0版本开始默认启用控制台鉴权功能，因此如下3个鉴权相关配置必须填写）如下所示：
 
 ```
-`nacos.core.auth.plugin.nacos.token.secret.key` is missing, please set: ${your_input_token_secret_key}
+`nacos.core.auth.plugin.nacos.token.secret.key` is missing, please set with Base64 string: ${your_input_token_secret_key}
 nacos.core.auth.plugin.nacos.token.secret.key` Updated:
 ----------------------------------
 `nacos.core.auth.server.identity.key` is missing, please set: ${your_input_server_identity_key}
@@ -84,7 +84,7 @@ nacos.core.auth.plugin.nacos.token.secret.key` Updated:
 ----------------------------------
 ```
 
-::: note
+:::note
 若您已经在 `conf/application.properties` 中设置过这3个配置，则不会提示您输入。
 :::
 
@@ -98,27 +98,36 @@ Nacos started successfully in stand alone mode. use embedded storage
 
 可以通过下列服务，快速检验Nacos的功能。
 
-### 5.1. 服务注册
-
-`curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance?serviceName=quickstart.test.service&ip=127.0.0.1&port=8080'`
-
-### 5.2. 服务发现
-
-`curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/list?serviceName=quickstart.test.service'`
-
-### 5.3. 发布配置
-
-`curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=quickstart.test.config&groupName=test&content=HelloWorld'`
-
-### 5.4. 获取配置
-
-`curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=quickstart.test.config&groupName=test'`
-
-### 5.5. Nacos控制台页面
+### 5.1. Nacos控制台页面
 
 打开任意浏览器，输入地址：`http://127.0.0.1:8080/index.html`, 即可进入Nacos控制台页面。
 
 > 注意：首次打开会要求初始化管理员用户`nacos`的密码。
+
+### 5.2. 服务注册
+
+`curl -X POST 'http://127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=quickstart.test.service&ip=127.0.0.1&port=8080'`
+
+### 5.3. 服务发现
+
+`curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=quickstart.test.service'`
+
+### 5.4. 发布配置
+
+```shell
+# 登陆获取access token
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/auth/user/login' -d 'username=nacos' -d 'password=${your_password}'
+# 使用access token，创建配置
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=quickstart.test.config&groupName=test&content=HelloWorld' -H "accessToken:${your_access_token}"
+```
+
+:::note
+访问Admin API，默认需要使用access token, access token可通过`POST /nacos/v3/auth/user/login`接口获得
+:::
+
+### 5.5. 获取配置
+
+`curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/cs/config?dataId=quickstart.test.config&groupName=test'`
 
 ## 6.关闭服务器
 
