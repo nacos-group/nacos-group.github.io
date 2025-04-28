@@ -4408,3 +4408,336 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/metrics/ip?ip=127.0.0.1&dat
   }
 }
 ```
+## 4. MCP 管理
+
+### 4.1. 查询MCP服务的服务列表
+
+#### 接口描述
+
+通过该接口，可以查询托管在Nacos上的MCP服务的服务列表。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限。
+
+#### 请求URL
+
+`/v3/admin/ai/mcp/list`
+
+#### 请求参数
+
+| 参数名           | 参数类型     | 是否必填  | 描述                                                     |
+|---------------|----------|-------|--------------------------------------------------------|
+| `pageNo`      | `int`    | **是** | 当前页，默认为`1`                                             |
+| `pageSize`    | `int`    | **是** | 页条目数，默认为`20`，最大为`500`                                  |
+| `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`nacos-default-mcp`                    |
+| `mcpName`     | `null`   | 否     | MCP服务的名字模版，为空时查询所有MCP服务，当`search`为`blur`时，可使用`*`进行模糊搜索 |
+| `search`      | `string` | 否     | 搜索的类型，可选之`blur`和`accurate`，默认为`blur`。                  |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名                                 | 参数类型                  | 描述                                                  |
+|-------------------------------------|-----------------------|-----------------------------------------------------|
+| `totalCount`                        | `int`                 | 符合条件的服务的总数。                                         |
+| `pageNumber`                        | `int`                 | 当前页码，起始为`1`。                                        |
+| `pagesAvailable`                    | `int`                 | 可用页码。                                               |
+| `pageItems`                         | `List`                | 服务列表。                                               |
+| `pageItems`[i].`name`               | `String`              | MCP服务名。                                             |
+| `pageItems`[i].`protocol`           | `String`              | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
+| `pageItems`[i].`description`        | `String`              | MCP服务的描述。                                           |
+| `pageItems`[i].`version`            | `String`              | MCP服务的版本。                                           |
+| `pageItems`[i].`localServerConfig`  | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。            |
+| `pageItems`[i].`remoteServerConfig` | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。               |
+| `pageItems`[i].`credentials`        | `List`                | MCP服务若类型为**非stdio**，存在此信息，记录访问远端服务的身份敏感信息。          |
+| `pageItems`[i].`enabled`            | `boolean`             | MCP服务是否启用。                                          |
+| `pageItems`[i].`capabilities`       | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。           |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp/list?pageNo=1&pageSize=100&namespaceId=nacos-default-mcp&search=blur'
+```
+* 返回示例
+
+```json
+{
+   "code": 0,
+   "message": "success",
+   "data": {
+      "totalCount": 1,
+      "pageNumber": 1,
+      "pagesAvailable": 1,
+      "pageItems": [
+         {
+            "name": "test",
+            "protocol": "stdio",
+            "description": "test",
+            "version": "1.0.0",
+            "remoteServerConfig": null,
+            "localServerConfig": {
+               "test": {
+                  "description": "test",
+                  "command": "uvx",
+                  "args": [
+                     "test"
+                  ]
+               }
+            },
+            "credentials": {},
+            "enabled": true,
+            "capabilities": []
+         }
+      ]
+   }
+}
+```
+
+### 4.2. 查询MCP服务的详情
+
+#### 接口描述
+
+通过该接口，可以查询托管在Nacos上指定MCP服务的服务的详细信息。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限。
+
+#### 请求URL
+
+`/v3/admin/ai/mcp`
+
+#### 请求参数
+
+| 参数名           | 参数类型     | 是否必填  | 描述                                  |
+|---------------|----------|-------|-------------------------------------|
+| `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`nacos-default-mcp` |
+| `mcpName`     | `null`   | **是** | MCP服务的名字模版                          |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名                  | 参数类型                  | 描述                                                  |
+|----------------------|-----------------------|-----------------------------------------------------|
+| `name`               | `String`              | MCP服务名。                                             |
+| `protocol`           | `String`              | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
+| `description`        | `String`              | MCP服务的描述。                                           |
+| `version`            | `String`              | MCP服务的版本。                                           |
+| `localServerConfig`  | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。            |
+| `remoteServerConfig` | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。               |
+| `credentials`        | `List`                | MCP服务若类型为**非stdio**，存在此信息，记录访问远端服务的身份敏感信息。          |
+| `enabled`            | `boolean`             | MCP服务是否启用。                                          |
+| `capabilities`       | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。           |
+| `backendEndpoints`   | `List`                | MCP服务若类型为**非stdio**，存在此信息，记录访问远端服务的具体地址信息。          |
+| `toolSpec`           | `Map<String, Object>` | MCP服务支持的能力类型包含`TOOL`时，存在此信息，记录工具的详细配置信息。            |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=nacos-default-mcp&mcpName=test'
+```
+* 返回示例
+
+```json
+{
+   "code": 0,
+   "message": "success",
+   "data": {
+      "name": "test",
+      "protocol": "stdio",
+      "description": "test",
+      "version": "1.0.0",
+      "remoteServerConfig": null,
+      "localServerConfig": {
+         "test": {
+            "description": "test",
+            "command": "uvx",
+            "args": [
+               "test"
+            ]
+         }
+      },
+      "credentials": {},
+      "enabled": true,
+      "capabilities": [],
+      "backendEndpoints": null,
+      "toolSpec": null
+   }
+}
+```
+
+### 4.3. 更新MCP服务
+
+#### 接口描述
+
+通过该接口，可以更新托管在Nacos上的MCP服务。
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需管理员权限。
+
+#### 请求URL
+
+`/v3/admin/ai/mcp`
+
+#### 请求参数
+
+| 参数名                     | 参数类型         | 是否必填  | 描述                                  |
+|-------------------------|--------------|-------|-------------------------------------|
+| `namespaceId`           | `string`     | 否     | MCP服务的命名空间ID，默认为`nacos-default-mcp` |
+| `mcpName`               | `null`       | **是** | MCP服务的名字模版                          |
+| `serverSpecification`   | `jsonString` | **是** | MCP服务的描述详情                          |
+| `toolSpecification`     | `jsonString` | 否     | MCP服务的工具描述详情                        |
+| `endpointSpecification` | `jsonString` | 否     | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效      |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名    | 参数类型     | 描述         |
+|--------|----------|------------|
+| `data` | `String` | MCP服务更新结果。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
+-d 'namespaceId=nacos-default-mcp' \
+-d 'mcpName=test' \
+-d 'serverSpecification={"protocol":"stdio","name":"test","description":"test","version":"1.0.0","enabled":true,"localServerConfig":{"test":{"description":"test","command":"uvx","args":["test"]}}}'
+```
+* 返回示例
+
+```json
+{
+  "code" : 0,
+  "message" : "success",
+  "data" : "ok"
+}
+```
+
+### 4.4. 创建MCP服务
+
+#### 接口描述
+
+通过该接口，可以创建托管在Nacos上的MCP服务，可以是存量API转换的MCP服务，也可以是MCP市场中的MCP服务。
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限。
+
+#### 请求URL
+
+`/v3/admin/ai/mcp`
+
+#### 请求参数
+
+| 参数名                     | 参数类型         | 是否必填  | 描述                                  |
+|-------------------------|--------------|-------|-------------------------------------|
+| `namespaceId`           | `string`     | 否     | MCP服务的命名空间ID，默认为`nacos-default-mcp` |
+| `mcpName`               | `null`       | **是** | MCP服务的名字模版                          |
+| `serverSpecification`   | `jsonString` | **是** | MCP服务的描述详情                          |
+| `toolSpecification`     | `jsonString` | 否     | MCP服务的工具描述详情                        |
+| `endpointSpecification` | `jsonString` | 否     | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效      |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名    | 参数类型     | 描述         |
+|--------|----------|------------|
+| `data` | `String` | MCP服务创建结果。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
+-d 'namespaceId=nacos-default-mcp' \
+-d 'mcpName=test' \
+-d 'serverSpecification={"protocol":"stdio","name":"test","description":"test","version":"1.0.0","enabled":true,"localServerConfig":{"test":{"description":"test","command":"uvx","args":["test"]}}}'
+```
+* 返回示例
+
+```json
+{
+  "code" : 0,
+  "message" : "success",
+  "data" : "ok"
+}
+```
+
+### 4.5. 删除MCP服务
+
+#### 接口描述
+
+通过该接口，可以删除托管在Nacos上的MCP服务。
+
+#### 请求方式
+
+`DELETE`
+
+#### 鉴权状态
+
+需管理员权限。
+
+#### 请求URL
+
+`/v3/admin/ai/mcp`
+
+#### 请求参数
+
+| 参数名           | 参数类型     | 是否必填  | 描述                                  |
+|---------------|----------|-------|-------------------------------------|
+| `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`nacos-default-mcp` |
+| `mcpName`     | `null`   | **是** | MCP服务的名字模版                          |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名    | 参数类型     | 描述         |
+|--------|----------|------------|
+| `data` | `String` | MCP服务删除结果。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X DELETE '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=nacos-default-mcp&mcpName=test'
+```
+* 返回示例
+
+```json
+{
+  "code" : 0,
+  "message" : "success",
+  "data" : "ok"
+}
+```
