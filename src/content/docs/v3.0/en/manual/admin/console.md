@@ -11,7 +11,7 @@ sidebar:
 [Nacos 控制台](http://console.nacos.io/index.html)主要旨在于增强对于服务列表，健康状态管理，服务治理，分布式配置管理等方面的管控能力，以便进一步帮助用户降低管理微服务应用架构的成本，将提供包括下列基本功能:
 
 :::note
-- [控制台样例](http://console.nacos.io/index.html)的默认用户名密码为`nacos/nacos`。
+- [控制台样例](http://console.nacos.io/index.html)的默认用户名密码为`nacos/nacos@demo`。
 - 此控制台样例仅用于展示控制台使用，为公开DEMO，请勿将敏感数据及生产环境相关内容写入其中。
 - 此控制台样例仅用于展示控制台使用，不提供OpenAPI访问，且未开启鉴权，如需测试OpenAPI，请参考[文档](../../quickstart/quick-start.mdx)部署。
 - 此控制台样例仅用于展示控制台使用，不支持修改用户名密码。
