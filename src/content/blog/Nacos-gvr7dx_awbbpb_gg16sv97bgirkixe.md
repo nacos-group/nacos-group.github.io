@@ -235,6 +235,40 @@ NACOS_AUTH_IDENTITY_VALUE：Nacos Server端之间 Inner API的身份标识的Val
 
 ```
 
+如果出现依赖无法下载的情况，请在pom.xml中配置以下仓库：
+```xml
+<repositories>
+   <repository>
+      <id>spring-milestones</id>
+      <name>Spring Milestones</name>
+      <url>https://repo.spring.io/milestone</url>
+      <snapshots>
+         <enabled>false</enabled>
+      </snapshots>
+   </repository>
+   <repository>
+      <id>spring-snapshots</id>
+      <name>Spring Snapshots</name>
+      <url>https://repo.spring.io/snapshot</url>
+      <releases>
+         <enabled>false</enabled>
+      </releases>
+   </repository>
+   <repository>
+      <id>sonatype-nexus-snapshots</id>
+      <name>Sonatype Nexus Snapshots</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <releases>
+         <enabled>false</enabled>
+      </releases>
+      <snapshots>
+         <enabled>true</enabled>
+      </snapshots>
+   </repository>
+</repositories>
+
+```
+
 
 
 配置文件application.yml：
