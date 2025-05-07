@@ -943,7 +943,7 @@ success
 |--------------------------|-----------|---------------------------------------------------------------------------------------------------------|
 | `clientBeatInterval`     | `int`     | Nacos1.X客户端的默认心跳间隔                                                                                      |
 | `defaultCacheMillis`     | `int`     | 客户端订阅的服务列表的默认缓存时间                                                                                       |
-| `defaultPushCacheMillis` | `int`     | 推送的服务列表的默认缓存时间，优先级高于`defaultCacheMillis`                                                                |
+| `pushCacheMillis`        | `int`     | 推送的服务列表的默认缓存时间，优先级高于`defaultCacheMillis`                                                                |
 | `distroEnabled`          | `boolean` | 是否开启`Distro`协议同步，仅当集群压力过大，影响到集群稳定性时，临时修改为`false`缓解，改为`false`后可能导致部分数据不一致，需要尽快恢复                         |
 | `healthCheckEnabled`     | `boolean` | 是否开启健康检查，仅当集群压力过大，影响到集群稳定性时，临时修改为`false`缓解，改为`false`后不会因为心跳过期，tcp/http探测超时而修改实例的健康状态，以及不会因过期删除实例，需要尽快恢复 |
 | `lightBeatEnabled`       | `boolean` | 是否开启轻量心跳，针对Nacos`1.2.X~1.4.X版本`客户端生效，修改为`false`后，`Nacos1.2.X~1.4.X`版本客户端将使用全量心跳进行续约                     |

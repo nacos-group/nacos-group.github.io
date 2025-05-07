@@ -697,17 +697,17 @@ curl -X PUT -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v2/c
 
 返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，返回数据`data`字段为json格式，展示各个开关的和配置的具体内容：
 
-| 参数名        | 参数类型 | 描述     |
-|--------|----------|----------|
-|`clientBeatInterval`|`int`|Nacos1.X客户端的默认心跳间隔|
-|`defaultCacheMillis`|`int`|客户端订阅的服务列表的默认缓存时间|
-|`defaultPushCacheMillis`|`int`|推送的服务列表的默认缓存时间，优先级高于`defaultCacheMillis`|
-|`distroEnabled` |`boolean`|是否开启`Distro`协议同步，仅当集群压力过大，影响到集群稳定性时，临时修改为`false`缓解，改为`false`后可能导致部分数据不一致，需要尽快恢复|
-|`healthCheckEnabled`|`boolean`|是否开启健康检查，仅当集群压力过大，影响到集群稳定性时，临时修改为`false`缓解，改为`false`后不会因为心跳过期，tcp/http探测超时而修改实例的健康状态，以及不会因过期删除实例，需要尽快恢复|
-|`lightBeatEnabled` |`boolean`|是否开启轻量心跳，针对Nacos`1.2.X~1.4.X版本`客户端生效，修改为`false`后，`Nacos1.2.X~1.4.X`版本客户端将使用全量心跳进行续约|
-|`pushEnabled`|`boolean`|是否开启推送功能，仅当集群压力过大，影响到集群稳定性时，临时修改为`false`，改为`false`后，Nacos客户端将不再收到服务端的主动推送|
-|`push${Language}Version`|`String`|可支持推送的最小客户端版本，当不希望针对小于某些版本进行数据推送时，可以修改该值，比如修改pushJavaVersion为`2.0.0`，则小于2.0.0的Java客户端将不会收到推送数据|
-|`${type}HealthParams`|`json`|健康检查参数，设置健康检查的最大/最小间隔，随机间隔系数等，健康检查时将根据这几个值进行下一次健康检查流量的打散。|
+| 参数名                      | 参数类型      | 描述                                                                                                      |
+|--------------------------|-----------|---------------------------------------------------------------------------------------------------------|
+| `clientBeatInterval`     | `int`     | Nacos1.X客户端的默认心跳间隔                                                                                      |
+| `defaultCacheMillis`     | `int`     | 客户端订阅的服务列表的默认缓存时间                                                                                       |
+| `pushCacheMillis`        | `int`     | 推送的服务列表的默认缓存时间，优先级高于`defaultCacheMillis`                                                                |
+| `distroEnabled`          | `boolean` | 是否开启`Distro`协议同步，仅当集群压力过大，影响到集群稳定性时，临时修改为`false`缓解，改为`false`后可能导致部分数据不一致，需要尽快恢复                         |
+| `healthCheckEnabled`     | `boolean` | 是否开启健康检查，仅当集群压力过大，影响到集群稳定性时，临时修改为`false`缓解，改为`false`后不会因为心跳过期，tcp/http探测超时而修改实例的健康状态，以及不会因过期删除实例，需要尽快恢复 |
+| `lightBeatEnabled`       | `boolean` | 是否开启轻量心跳，针对Nacos`1.2.X~1.4.X版本`客户端生效，修改为`false`后，`Nacos1.2.X~1.4.X`版本客户端将使用全量心跳进行续约                     |
+| `pushEnabled`            | `boolean` | 是否开启推送功能，仅当集群压力过大，影响到集群稳定性时，临时修改为`false`，改为`false`后，Nacos客户端将不再收到服务端的主动推送                               |
+| `push${Language}Version` | `String`  | 可支持推送的最小客户端版本，当不希望针对小于某些版本进行数据推送时，可以修改该值，比如修改pushJavaVersion为`2.0.0`，则小于2.0.0的Java客户端将不会收到推送数据          |
+| `${type}HealthParams`    | `json`    | 健康检查参数，设置健康检查的最大/最小间隔，随机间隔系数等，健康检查时将根据这几个值进行下一次健康检查流量的打散。                                               |
 
 > 注意： 其余未列出的参数，均为Nacos旧版本的开关或配置内容，已废弃或即将废弃，请谨慎使用。
 
