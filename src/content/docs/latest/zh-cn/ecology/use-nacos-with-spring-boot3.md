@@ -62,7 +62,7 @@ public class ConfigController {
 	@Value("${plainKey}")
 	String testKey;
 	
-	@NacosConfig(dataId = "routeconfig",group = "config",key = "rate")
+	@NacosConfig(dataId = "routeconfig", group = "config", key = "rate")
 	String rate;
 
 	@RequestMapping("/testPlainKey")
@@ -80,7 +80,7 @@ public class ConfigController {
 **注意**：@Value和@NacosConfig都可以将nacos的属性注入到Spring Bean的字段中，两者的区别在于：
 
 * @Value是Spring提供的注解，nacos中的属性源是众多属性源之一，通过@Value引用配置值会收到其他属性源的影响，优先级为JVM>ENV>Nacos
-* 在SpringBoot应用中，@Value无法支持运行期动态更新，@NacosConfig支持运行期动态更新。。
+* 在SpringBoot应用中，@Value不支持运行期动态更新，@NacosConfig支持运行期动态更新。。
 * @NacosConfig需要设置目标的dataId和group以及配置中的指定key，准确性更高。
 * @NacosConfig支持复杂对象的注入，如自定义JavaBean以及其集合类型，如Set List及Map
 * @NacosConfig可以作用于SpringBean，类似@ConfigurationProperties。
