@@ -107,6 +107,8 @@ public class MyRateConfigService {
 
 6. 在Nacos控制台中修改配置，刷新页面，查看最新值，并且观察控制台输出确认变更回调方法是否执行。
 
+关于@NacosConfig及@NacosConfigListener注解更多详细的用法，请参考：[Spring Nacos Config配置中心注解](../../../../blog/Nacos-gvr7dx_awbbpb_mmufdmayp5dfozci.md)
+
 
 ## 相关项目
 * [Nacos](https://github.com/alibaba/nacos)
