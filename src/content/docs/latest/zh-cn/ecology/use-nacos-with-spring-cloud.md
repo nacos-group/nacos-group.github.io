@@ -39,7 +39,6 @@ sidebar:
 2. 在 `application.properties` 中配置 Nacos server 的地址：
 
 ```
-spring.application.name=springclouddemo2023x
 spring.config.import[0]=nacos:springclouddemo2023x.properties?group=DEFAULT_GROUP
 spring.cloud.nacos.config.server-addr=127.0.0.1:8848
 ```
@@ -50,7 +49,7 @@ spring.config.import[0]=nacos:springclouddemo2023x.properties?group=DEFAULT_GROU
 spring.config.import[1]=nacos:{dataId1}?group={group1}
 spring.config.import[2]=nacos:{dataId2}?group={group2}
 ```
-通过spring.cloud.nacos.config.server-addr指定nacos的地址
+通过spring.nacos.config.server-addr指定nacos的地址
 
 3. 通过 Spring 的 `@Value` 以及 `@NacosConfig` 注解设置属性值。
 
@@ -79,7 +78,7 @@ public class ConfigController {
 **注意**：@Value和@NacosConfig都可以将nacos的属性注入到Spring Bean的字段中，两者的区别在于：
 
 * @Value是Spring提供的注解，nacos中的属性源是众多属性源之一，通过@Value引用配置值会收到其他属性源的影响，优先级为JVM>ENV>Nacos
-* @Value默认不支持运行期动态更新，需要结合@RefreshScope注解实现动态刷新，@NacosConfig默认支持运行期动态更新。。
+* @Value默认无法支持运行期动态更新，需要结合@RefreshScope注解实现动态刷新，@NacosConfig默认支持运行期动态更新。。
 * @NacosConfig需要设置目标的dataId和group以及配置中的指定key，准确性更高。
 * @NacosConfig支持复杂对象的注入，如自定义JavaBean以及其集合类型，如Set List及Map
 * @NacosConfig可以作用于SpringBean，类似@ConfigurationProperties。
@@ -113,8 +112,6 @@ public class MyRateConfigService {
 * 2022.x 系列需升级版本至 2022.0.0.2
 * 2021.x 系列需升级版本至 2021.0.6.2
 * 2.2.x 系列需升级至 2.2.11
-
-关于注解更多详细的用法，请参考：[Spring Nacos Config配置中心注解](../../../../blog/Nacos-gvr7dx_awbbpb_mmufdmayp5dfozci.md)
 
 ## 启动服务发现
 

@@ -14,6 +14,7 @@ sidebar:
   * * 将nacos中的配置作为Spring环境上下文属性源至一，可以通过@Value和@ConfigrationProperties引用属性，也可以通过Environment#getProperty()获取属性值。
   * * 通过@NacosConfig注解将nacos中的配置值直接注入到一个SpringBean的属性中，支持基础类型，对象类型以及集合类型。
   * * 通过@NacosConfigListener注解接收nacos中配置的变更时间，在回调方法中进行自定义业务逻辑。
+* 通过 Nacos Server 和 nacos-discovery-spring-boot-starter 实现服务的注册与发现。
 
 SpringBoot2及以下的应用请参考旧版本 [Nacos 融合 Spring Boot(Deprated)](use-nacos-with-spring-boot.md)，旧版本已经不在更新演进，建议升级至SpringBoot3.
  
@@ -39,14 +40,13 @@ spring-alibaba-nacos-config组件从Spring Cloud Alibaba内部孵化而来，可
 2. 在 `application.properties` 中配置 Nacos server 的地址：
 
 ```
-spring.application.name=springboot3x
-spring.config.import[0]=nacos:springboot3x.properties?group=DEFAULT_GROUP
+spring.config.import[0]=nacos:springclouddemo2023x.properties?group=DEFAULT_GROUP
 spring.nacos.config.server-addr=127.0.0.1:8848
 ```
-通过spring.config.import将  `dataId` 为 `springboot3x.properties` ，`group`=`DEFAULT_GROUP`的配置作为配置源。
+通过spring.config.import将  `dataId` 为 `springclouddemo2023x.properties` ，`group`=`DEFAULT_GROUP`的配置作为配置源。
 如果需要指定多个nacos配置作为属性源，可以通过以下形式添加多个属性源
 ```
-spring.config.import[0]=nacos:springboot3x.properties?group=DEFAULT_GROUP
+spring.config.import[0]=nacos:springclouddemo2023x.properties?group=DEFAULT_GROUP
 spring.config.import[1]=nacos:{dataId1}?group={group1}
 spring.config.import[2]=nacos:{dataId2}?group={group2}
 ```
@@ -62,7 +62,7 @@ public class ConfigController {
 	@Value("${plainKey}")
 	String testKey;
 	
-	@NacosConfig(dataId = "routeconfig", group = "config", key = "rate")
+	@NacosConfig(dataId = "routeconfig",group = "config",key = "rate")
 	String rate;
 
 	@RequestMapping("/testPlainKey")
@@ -80,7 +80,7 @@ public class ConfigController {
 **注意**：@Value和@NacosConfig都可以将nacos的属性注入到Spring Bean的字段中，两者的区别在于：
 
 * @Value是Spring提供的注解，nacos中的属性源是众多属性源之一，通过@Value引用配置值会收到其他属性源的影响，优先级为JVM>ENV>Nacos
-* 在SpringBoot应用中，@Value不支持运行期动态更新，@NacosConfig支持运行期动态更新。。
+* 在SpringBoot应用中，@Value无法支持运行期动态更新，@NacosConfig支持运行期动态更新。。
 * @NacosConfig需要设置目标的dataId和group以及配置中的指定key，准确性更高。
 * @NacosConfig支持复杂对象的注入，如自定义JavaBean以及其集合类型，如Set List及Map
 * @NacosConfig可以作用于SpringBean，类似@ConfigurationProperties。
@@ -105,8 +105,6 @@ public class MyRateConfigService {
 5. 启动应用，在浏览器中输入 `http://localhost:8080/testPlainKey` 和 `http://localhost:8080/rate` , 可以获取配置值。
 
 6. 在Nacos控制台中修改配置，刷新页面，查看最新值，并且观察控制台输出确认变更回调方法是否执行。
-
-关于@NacosConfig及@NacosConfigListener注解更多详细的用法，请参考：[Spring Nacos Config配置中心注解](../../../../blog/Nacos-gvr7dx_awbbpb_mmufdmayp5dfozci.md)
 
 
 ## 相关项目

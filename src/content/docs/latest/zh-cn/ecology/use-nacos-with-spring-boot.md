@@ -7,7 +7,7 @@ sidebar:
     hidden: true
 ---
 
-# [Deprecated]Nacos 融合 Spring Boot，成为注册配置中心
+# Nacos 融合 Spring Boot，成为注册配置中心(Deprated)
 
 本文主要面向 Spring Boot2及以下的使用者，SpringBoot3及以上的用户请参照[Nacos 融合 Spring Boot3，成为注册配置中心
 ](use-nacos-with-spring-boot3.md)。
