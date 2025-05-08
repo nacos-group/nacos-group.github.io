@@ -3,16 +3,17 @@ title: Nacos 融合 Spring Cloud，成为注册配置中心
 keywords: [Nacos,Spring Cloud]
 description: 本文主要面向 Spring Cloud 的使用者，通过示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现
 sidebar:
-    order: 4
+  order: 4
 ---
 
 # Nacos 融合 Spring Cloud，成为注册配置中心
 
 本文主要面向 [Spring Cloud](https://spring.io/projects/spring-cloud) 的使用者，通过两个示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务注册发现。
 
-关于 Nacos Spring Cloud 的详细文档请参看：[Nacos Config](https://github.com/spring-cloud-incubator/spring-cloud-alibaba/wiki/Nacos-config) 和 [Nacos Discovery](https://github.com/spring-cloud-incubator/spring-cloud-alibaba/wiki/Nacos-discovery)。
-
 * 通过 Nacos Server 和 spring-cloud-starter-alibaba-nacos-config 实现配置的动态变更。
+    * 将nacos中的配置作为Spring环境上下文属性源至一，可以通过@Value和@ConfigrationProperties引用属性，也可以通过Environment#getProperty()获取属性值。
+    * 通过@NacosConfig注解将nacos中的配置值直接注入到一个SpringBean的属性中，支持基础类型，对象类型以及集合类型。
+    * 通过@NacosConfigListener注解接收nacos中配置的变更时间，在回调方法中进行自定义业务逻辑。
 * 通过 Nacos Server 和 spring-cloud-starter-alibaba-nacos-discovery 实现服务的注册与发现。
 
 ## 前提条件
@@ -21,77 +22,99 @@ sidebar:
 
 ## 启动配置管理
 
-启动了 Nacos server 后，您就可以参考以下示例代码，为您的 Spring Cloud 应用启动 Nacos 配置管理服务了。完整示例代码请参考：[nacos-spring-cloud-config-example](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-cloud-example/nacos-spring-cloud-config-example)
+启动了 Nacos server 后，您就可以参考以下示例代码，为您的 Spring Cloud 应用启动 Nacos 配置管理服务了。
 
-1. 添加依赖：
+1. 添加依赖。
 
 ```
 <dependency>
     <groupId>com.alibaba.cloud</groupId>
     <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-    <version>${latest.version}</version>
+    <version>2023.0.3.2</version>
 </dependency>
 ```
+您可以在Spring Cloud Alibaba官网查看版本关系说明，建议您使用最新的2023.x版本。
+：[版本说明 ](https://sca.aliyun.com/docs/2023/overview/version-explain/)
 
-**注意**：版本 [2.1.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-config) 对应的是 Spring Boot 2.1.x 版本。版本 [2.0.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-config) 对应的是 Spring Boot 2.0.x 版本，版本 [1.5.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-config) 对应的是 Spring Boot 1.5.x 版本。
-
-更多版本对应关系参考：[版本说明 Wiki](https://github.com/spring-cloud-incubator/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)
-
-2. 在 `bootstrap.properties` 中配置 Nacos server 的地址和应用名
+2. 在 `application.properties` 中配置 Nacos server 的地址：
 
 ```
+spring.application.name=springclouddemo2023x
+spring.config.import[0]=nacos:springclouddemo2023x.properties?group=DEFAULT_GROUP
 spring.cloud.nacos.config.server-addr=127.0.0.1:8848
-
-spring.application.name=example
 ```
-
-说明：之所以需要配置 `spring.application.name` ，是因为它是构成 Nacos 配置管理 `dataId`字段的一部分。
-
-在 Nacos Spring Cloud 中，`dataId` 的完整格式如下：
-
-```plain
-${prefix}-${spring.profiles.active}.${file-extension}
+通过spring.config.import将  `dataId` 为 `springclouddemo2023x.properties` ，`group`=`DEFAULT_GROUP`的配置作为配置源。
+如果需要指定多个nacos配置作为属性源，可以通过以下形式添加多个属性源
 ```
+spring.config.import[0]=nacos:springclouddemo2023x.properties?group=DEFAULT_GROUP
+spring.config.import[1]=nacos:{dataId1}?group={group1}
+spring.config.import[2]=nacos:{dataId2}?group={group2}
+```
+通过spring.cloud.nacos.config.server-addr指定nacos的地址
 
-* `prefix` 默认为 `spring.application.name` 的值，也可以通过配置项 `spring.cloud.nacos.config.prefix`来配置。
-* `spring.profiles.active` 即为当前环境对应的 profile，详情可以参考 [Spring Boot文档](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-profiles.html#boot-features-profiles)。
-    **注意：当 `spring.profiles.active` 为空时，对应的连接符 `-` 也将不存在，dataId 的拼接格式变成 `${prefix}.${file-extension}`**
-* `file-exetension` 为配置内容的数据格式，可以通过配置项 `spring.cloud.nacos.config.file-extension` 来配置。目前只支持 `properties` 和 `yaml` 类型。
-
-4. 通过 Spring Cloud 原生注解 `@RefreshScope` 实现配置自动更新：
+3. 通过 Spring 的 `@Value` 以及 `@NacosConfig` 注解设置属性值。
 
 ```
 @RestController
-@RequestMapping("/config")
-@RefreshScope
 public class ConfigController {
 
-    @Value("${useLocalCache:false}")
-    private boolean useLocalCache;
+	@Value("${plainKey}")
+	String testKey;
+	
+	@NacosConfig(dataId = "routeconfig",group = "config",key = "rate")
+	String rate;
 
-    @RequestMapping("/get")
-    public boolean get() {
-        return useLocalCache;
-    }
+	@RequestMapping("/testPlainKey")
+	public String test() {
+		return testKey;
+	}
+
+	@RequestMapping("/rate")
+	public String rate() {
+		return rate;
+	}
+
+}
+```
+**注意**：@Value和@NacosConfig都可以将nacos的属性注入到Spring Bean的字段中，两者的区别在于：
+
+* @Value是Spring提供的注解，nacos中的属性源是众多属性源之一，通过@Value引用配置值会收到其他属性源的影响，优先级为JVM>ENV>Nacos
+* @Value默认不支持运行期动态更新，需要结合@RefreshScope注解实现动态刷新，@NacosConfig默认支持运行期动态更新。。
+* @NacosConfig需要设置目标的dataId和group以及配置中的指定key，准确性更高。
+* @NacosConfig支持复杂对象的注入，如自定义JavaBean以及其集合类型，如Set List及Map
+* @NacosConfig可以作用于SpringBean，类似@ConfigurationProperties。
+
+
+
+4. 通过  `@NacosConfigListener` 接收配置变更回调事件。
+
+```
+@Service
+public class MyRateConfigService {
+
+	@NacosConfigListener(dataId = "routeconfig",group = "config")
+	public void rate(String rateConfig) {
+		System.out.println("receiveRateConfig:"+rateConfig);
+	}
+
 }
 ```
 
+**注意**：@NacosConfigListener默认不会进行回调初始值，如果需要收到初始值，可以通过指定initNotify=true
 
-5. 首先通过调用 [Nacos Open API](../guide/user/open-api.md) 向 Nacos Server 发布配置：dataId 为`example.properties`，内容为`useLocalCache=true`
 
-```
-curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example.properties&group=DEFAULT_GROUP&content=useLocalCache=true"
-```
 
-6. 运行 `NacosConfigApplication`，调用 `curl http://localhost:8080/config/get`，返回内容是 `true`。
+5. 启动应用，在浏览器中输入 `http://localhost:8080/testPlainKey` 和 `http://localhost:8080/rate` , 可以获取配置值。
 
-7. 再次调用 [Nacos Open API](../guide/user/open-api.md) 向 Nacos server 发布配置：dataId 为`example.properties`，内容为`useLocalCache=false`
+6. 在Nacos控制台中修改配置，刷新页面，查看最新值，并且观察控制台输出确认变更回调方法是否执行。
 
-```
-curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example.properties&group=DEFAULT_GROUP&content=useLocalCache=false"
-```
+7. **注意**：@NacosConfig以及@NacosConfigListener是SpringCloudAlibaba新版本提供的功能，在各系列的最新版本中都已支持
+* 2023.x 系列需升级版本至 2023.0.3.2
+* 2022.x 系列需升级版本至 2022.0.0.2
+* 2021.x 系列需升级版本至 2021.0.6.2
+* 2.2.x 系列需升级至 2.2.11
 
-8. 再次访问 `http://localhost:8080/config/get`，此时返回内容为`false`，说明程序中的`useLocalCache`值已经被动态更新了。
+关于注解更多详细的用法，请参考：[Spring Nacos Config配置中心注解](../../../../blog/Nacos-gvr7dx_awbbpb_mmufdmayp5dfozci.md)
 
 ## 启动服务发现
 
@@ -107,17 +130,15 @@ curl -X POST "http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=example.propertie
 <dependency>
     <groupId>com.alibaba.cloud</groupId>
     <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-    <version>${latest.version}</version>
+    <version>2023.0.3.2</version>
 </dependency>
 ```
-
-**注意**：版本 [2.1.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-discovery) 对应的是 Spring Boot 2.1.x 版本。版本 [2.0.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-discovery) 对应的是 Spring Boot 2.0.x 版本，版本 [1.5.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-discovery) 对应的是 Spring Boot 1.5.x 版本。
-
-更多版本对应关系参考：[版本说明 Wiki](https://github.com/spring-cloud-incubator/spring-cloud-alibaba/wiki/%E7%89%88%E6%9C%AC%E8%AF%B4%E6%98%8E)
+您可以在Spring Cloud Alibaba官网查看版本关系说明，建议您使用最新的2023.x版本。
+：[版本说明 ](https://sca.aliyun.com/docs/2023/overview/version-explain/)
 
 2. 配置服务提供者，从而服务提供者可以通过 Nacos 的服务注册发现功能将其服务注册到 Nacos server 上。
 
- i. 在 `application.properties` 中配置 Nacos server 的地址：
+i. 在 `application.properties` 中配置 Nacos server 的地址：
 
 ```
 server.port=8070
