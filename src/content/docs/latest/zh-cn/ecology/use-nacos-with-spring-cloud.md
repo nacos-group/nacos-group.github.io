@@ -39,6 +39,7 @@ sidebar:
 2. 在 `application.properties` 中配置 Nacos server 的地址：
 
 ```
+spring.application.name=springclouddemo2023x
 spring.config.import[0]=nacos:springclouddemo2023x.properties?group=DEFAULT_GROUP
 spring.cloud.nacos.config.server-addr=127.0.0.1:8848
 ```

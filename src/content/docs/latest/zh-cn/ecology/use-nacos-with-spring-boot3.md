@@ -40,13 +40,14 @@ spring-alibaba-nacos-config组件从Spring Cloud Alibaba内部孵化而来，可
 2. 在 `application.properties` 中配置 Nacos server 的地址：
 
 ```
-spring.config.import[0]=nacos:springclouddemo2023x.properties?group=DEFAULT_GROUP
+spring.application.name=springboot3x
+spring.config.import[0]=nacos:springboot3x.properties?group=DEFAULT_GROUP
 spring.nacos.config.server-addr=127.0.0.1:8848
 ```
-通过spring.config.import将  `dataId` 为 `springclouddemo2023x.properties` ，`group`=`DEFAULT_GROUP`的配置作为配置源。
+通过spring.config.import将  `dataId` 为 `springboot3x.properties` ，`group`=`DEFAULT_GROUP`的配置作为配置源。
 如果需要指定多个nacos配置作为属性源，可以通过以下形式添加多个属性源
 ```
-spring.config.import[0]=nacos:springclouddemo2023x.properties?group=DEFAULT_GROUP
+spring.config.import[0]=nacos:springboot3x.properties?group=DEFAULT_GROUP
 spring.config.import[1]=nacos:{dataId1}?group={group1}
 spring.config.import[2]=nacos:{dataId2}?group={group2}
 ```
