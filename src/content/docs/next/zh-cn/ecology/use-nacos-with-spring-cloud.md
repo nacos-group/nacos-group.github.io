@@ -11,9 +11,9 @@ sidebar:
 本文主要面向 [Spring Cloud](https://spring.io/projects/spring-cloud) 的使用者，通过两个示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务注册发现。
 
 * 通过 Nacos Server 和 spring-cloud-starter-alibaba-nacos-config 实现配置的动态变更。
-    * 将nacos中的配置作为Spring环境上下文属性源至一，可以通过@Value和@ConfigrationProperties引用属性，也可以通过Environment#getProperty()获取属性值。
+    * 将nacos中的配置作为Spring环境上下文属性源之一，可以通过@Value和@ConfigrationProperties引用属性，也可以通过Environment#getProperty()获取属性值。
     * 通过@NacosConfig注解将nacos中的配置值直接注入到一个SpringBean的属性中，支持基础类型，对象类型以及集合类型。
-    * 通过@NacosConfigListener注解接收nacos中配置的变更时间，在回调方法中进行自定义业务逻辑。
+    * 通过@NacosConfigListener注解接收nacos中配置的变更事件，在回调方法中进行自定义业务逻辑。
 * 通过 Nacos Server 和 spring-cloud-starter-alibaba-nacos-discovery 实现服务的注册与发现。
 
 ## 前提条件
@@ -80,8 +80,8 @@ public class ConfigController {
 
 * @Value是Spring提供的注解，nacos中的属性源是众多属性源之一，通过@Value引用配置值会收到其他属性源的影响，优先级为JVM>ENV>Nacos
 * @Value默认不支持运行期动态更新，需要结合@RefreshScope注解实现动态刷新，@NacosConfig默认支持运行期动态更新。。
-* @NacosConfig需要设置目标的dataId和group以及配置中的指定key，准确性更高。
-* @NacosConfig支持复杂对象的注入，如自定义JavaBean以及其集合类型，如Set List及Map
+* @NacosConfig需要设置目标的dataId和group以及配置中的指定key，不受其他属性源影响，准确性更高。
+* @NacosConfig支持复杂对象的注入，如自定义JavaBean以及其集合类型，如Set List及Map。
 * @NacosConfig可以作用于SpringBean，类似@ConfigurationProperties。
 
 

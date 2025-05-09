@@ -3,20 +3,20 @@ title: Nacos 融合 Spring Boot3，成为注册配置中心
 keywords: [Nacos,Spring Boot3]
 description: 本文主要面向 Spring Boot3 的使用者，通过示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现。
 sidebar:
-    order: 3
+  order: 3
 ---
 
 # Nacos 融合 Spring Boot3，成为注册配置中心
 
-本文主要面向 Spring Boot3 的使用者，通过两个示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现。
+本文主要面向 Spring Boot3 的使用者，通过示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现。
 
 * 通过 Nacos Server 和 spring-alibaba-nacos-config 实现配置的动态变更；
-  * * 将nacos中的配置作为Spring环境上下文属性源至一，可以通过@Value和@ConfigrationProperties引用属性，也可以通过Environment#getProperty()获取属性值。
+  * * 将nacos中的配置作为Spring环境上下文属性源之一，可以通过@Value和@ConfigrationProperties引用属性，也可以通过Environment#getProperty()获取属性值。
   * * 通过@NacosConfig注解将nacos中的配置值直接注入到一个SpringBean的属性中，支持基础类型，对象类型以及集合类型。
-  * * 通过@NacosConfigListener注解接收nacos中配置的变更时间，在回调方法中进行自定义业务逻辑。
+  * * 通过@NacosConfigListener注解接收nacos中配置的变更事件，在回调方法中进行自定义业务逻辑。
 
-SpringBoot2及以下的应用请参考旧版本 [Nacos 融合 Spring Boot(Deprated)](use-nacos-with-spring-boot.md)，旧版本已经不在更新演进，建议升级至SpringBoot3.
- 
+SpringBoot2及以下的应用请参考旧版本 [Nacos 融合 Spring Boot(Deprated)](use-nacos-with-spring-boot.md)，旧版本已经不再更新演进，建议升级至SpringBoot3.
+
 ## 前提条件
 
 您需要先下载 Nacos 并启动 Nacos server。操作步骤参见 [Nacos 快速入门](../quickstart/quick-start.mdx)。
@@ -79,11 +79,11 @@ public class ConfigController {
 ```
 **注意**：@Value和@NacosConfig都可以将nacos的属性注入到Spring Bean的字段中，两者的区别在于：
 
-* @Value是Spring提供的注解，nacos中的属性源是众多属性源之一，通过@Value引用配置值会收到其他属性源的影响，优先级为JVM>ENV>Nacos
-* 在SpringBoot应用中，@Value不支持运行期动态更新，@NacosConfig支持运行期动态更新。。
-* @NacosConfig需要设置目标的dataId和group以及配置中的指定key，准确性更高。
-* @NacosConfig支持复杂对象的注入，如自定义JavaBean以及其集合类型，如Set List及Map
-* @NacosConfig可以作用于SpringBean，类似@ConfigurationProperties。
+* @Value是Spring提供的注解，nacos中的属性源是众多属性源之一，通过@Value引用配置值会受到其他属性源的影响，优先级为JVM>ENV>Nacos
+* 在SpringBoot应用中，@Value不支持运行期动态更新，@NacosConfig支持运行期动态更新。
+* @NacosConfig需要设置目标的dataId和group以及配置中的指定key，不受其他属性源影响，准确性更高。
+* @NacosConfig支持复杂对象的注入，如自定义JavaBean以及其集合类型，如Set，List及Map。
+* @NacosConfig可以直接作用于SpringBean，类似@ConfigurationProperties。
 
 
 4. 通过  `@NacosConfigListener` 接收配置变更回调事件。
@@ -100,11 +100,11 @@ public class MyRateConfigService {
 }
 ```
 
-**注意**：@NacosConfigListener默认不会进行回调初始值，如果需要收到初始值，可以通过指定initNotify=true
+**注意**：@NacosConfigListener默认不会进行回调初始值，如果需要收到初始值，可以通过指定initNotify=true在启动时接收一次当前配置
 
 5. 启动应用，在浏览器中输入 `http://localhost:8080/testPlainKey` 和 `http://localhost:8080/rate` , 可以获取配置值。
 
-6. 在Nacos控制台中修改配置，刷新页面，查看最新值，并且观察控制台输出确认变更回调方法是否执行。
+6. 在Nacos控制台中修改配置，刷新页面，查看最新值，并且观察应用控制台输出确认变更回调方法是否执行。
 
 关于@NacosConfig及@NacosConfigListener注解更多详细的用法，请参考：[Spring Nacos Config配置中心注解](../../../../blog/Nacos-gvr7dx_awbbpb_mmufdmayp5dfozci.md)
 
