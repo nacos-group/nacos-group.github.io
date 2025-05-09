@@ -1,14 +1,14 @@
 ---
 title: Nacos 融合 Spring Boot3，成为注册配置中心
 keywords: [Nacos,Spring Boot3]
-description: 本文主要面向 Spring Boot3 的使用者，通过示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现。
+description: 本文主要面向 Spring Boot3 的使用者，通过示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理。
 sidebar:
     order: 3
 ---
 
 # Nacos 融合 Spring Boot3，成为注册配置中心
 
-本文主要面向 Spring Boot3 的使用者，通过示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现。
+本文主要面向 Spring Boot3 的使用者，通过示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理。
 
 * 通过 Nacos Server 和 spring-alibaba-nacos-config 实现配置的动态变更；
   * * 将nacos中的配置作为Spring环境上下文属性源之一，可以通过@Value和@ConfigrationProperties引用属性，也可以通过Environment#getProperty()获取属性值。
