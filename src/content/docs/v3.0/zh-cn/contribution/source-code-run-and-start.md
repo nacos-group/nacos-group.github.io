@@ -27,6 +27,7 @@ sidebar:
 git clone https://github.com/alibaba/nacos.git
 cd nacos
 ```
+
 ### 步骤二：构建必备的环境
 
 构建Nacos3.0的必要环境包括：
@@ -67,6 +68,7 @@ cd myjar
 # 查看目录结构（`-l` 显示详细信息，`-d` 仅显示目录）
 ls -ld BOOT-INF
 ```
+
 ### 步骤五：以merged模式启动Nacos-bootstrap
 
 在`Nacos/bootstrap/src/main/resources/application.properties`文件中添加如下配置：
