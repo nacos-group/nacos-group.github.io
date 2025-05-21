@@ -364,7 +364,7 @@ uv 安装方法参考：[https://docs.astral.sh/uv/getting-started/installation/
       "command": "uvx",
       "args":
       [
-        "nacos_mcp_router@latest"
+        "nacos-mcp-router@latest"
       ],
       "env":
       {
