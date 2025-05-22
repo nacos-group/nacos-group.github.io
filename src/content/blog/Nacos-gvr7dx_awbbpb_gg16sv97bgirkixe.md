@@ -163,7 +163,7 @@ NACOS_AUTH_IDENTITY_VALUE：Nacos Server端之间 Inner API的身份标识的Val
 
 也可以通过 下载 Nacos 安装包进行部署 Nacos ，注意 JDK17+ 要求，除了密钥信息必填，Nacos 3.0 的部署流程和 Nacos2.X 基本保持一致。
 
-关于下载、安装等详细信息，这里不进行详细展开，可以查看 Nacos 官网文档[快速开始](https://nacos.io/docs/v3.0/quickstart/quick-start/?spm=5238cd80.2ef5001f.0.0.3f613b7c62sgI9) 。
+关于下载、安装等详细信息，这里不进行详细展开，可以查看 Nacos 官网文档[快速开始](https://nacos.io/docs/latest/quickstart/quick-start/?spm=5238cd80.2ef5001f.0.0.3f613b7c62sgI9) 。
 
 ## 注册 MCP Server ，变更 MCP 信息动态生效
 
@@ -192,7 +192,7 @@ NACOS_AUTH_IDENTITY_VALUE：Nacos Server端之间 Inner API的身份标识的Val
 
 ![](https://intranetproxy.alipay.com/skylark/lark/0/2025/png/17056839/1745739618373-f6275da3-ed9e-4c64-86ed-2468ac610612.png)
 
-这里需要根据方法的参数信息配置参数映射模版，如果使用 Higress 作为 MCP 协议暴露，则需要配置 Higress  REST-to-MCP 模版数据，模版配置的具体参数参考[文档](https://nacos.io/docs/v3.0/manual/user/mcp-template/)
+这里需要根据方法的参数信息配置参数映射模版，如果使用 Higress 作为 MCP 协议暴露，则需要配置 Higress  REST-to-MCP 模版数据，模版配置的具体参数参考[文档](https://nacos.io/docs/latest/manual/user/mcp-template/)
 
 配置完成之后，根据[文档](https://higress.cn/ai/mcp-quick-start/?spm=36971b57.31888769.0.0.559550f86sCJw2#%E9%85%8D%E7%BD%AE-nacos-mcp-registry)配置 Higress 连接到 Nacos 进行自动的 MCP 服务发现。
 
@@ -488,7 +488,7 @@ Nacos 社区向用户征集了他们对 Nacos 3.0 的期望功能，其中支持
 :::warning
 模糊订阅功能仅会推送服务、配置的新增以及删除事件，并不会直接推送服务下实例列表，可在服务模糊订阅的监听器中结合subscribe接口实现服务下实例列表的变更监听。
 
-出于稳定性考虑，Nacos对模糊订阅的规则数量以及单个规则匹配的服务数量有上限保护。具体请参考[使用手册](https://nacos.io/docs/v3.0/manual/user/java-sdk/usage/?spm=5238cd80.2ef5001f.0.0.3f613b7cEikFoW)。
+出于稳定性考虑，Nacos对模糊订阅的规则数量以及单个规则匹配的服务数量有上限保护。具体请参考[使用手册](https://nacos.io/docs/latest/manual/user/java-sdk/usage/?spm=5238cd80.2ef5001f.0.0.3f613b7cEikFoW)。
 
 :::
 

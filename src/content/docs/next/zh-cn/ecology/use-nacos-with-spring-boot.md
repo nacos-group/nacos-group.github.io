@@ -3,8 +3,8 @@ title: Nacos 融合 Spring Boot，成为注册配置中心
 keywords: [Nacos,Spring Boot]
 description: 本文主要面向 Spring Boot 的使用者，通过示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务发现。
 sidebar:
-  order: 3
-  hidden: true
+    order: 3
+    hidden: true
 ---
 
 # [Deprecated]Nacos 融合 Spring Boot，成为注册配置中心

@@ -1,33 +1,32 @@
 ---
-title: Nacos push xDS with Istio
-keywords: [Istio,xDs,Envoy]
-description: Nacos push xDS with Istio
+title: Nacos 融合Istio 下发xDS协议
+keywords: [ Istio,xDs,Envoy ]
+description: Nacos 融合Istio 下发xDS协议
 ---
-# Istio Guide
 
-It supports CDS and EDS in xDS protocol, and realizes incremental push for EDS and MCP. Users can use Envoy or other XDS protocol-enabled clients to dock with Nacos for service discovery.
+# Istio 指南
 
-## Configuration
+支持了 xDS 协议中的 CDS、EDS 服务，并为 EDS 以及 MCP 实现了增量推送。用户可以使用 Envoy 或其他支持 xDS 协议的客户端与 Nacos
+进行对接，实现服务发现功能。
 
-### Server
+## 配置
 
-For distribution packages:
+### 服务端
 
-modify `nacos.istio.mcp.server.enabled` in `nacos/conf/application.properties` to true.
+对于发行包，修改 `nacos/conf/application.properties` 中的 `nacos.istio.mcp.server.enabled`
+和`nacos.extension.naming.istio.enabled` 为 true；
 
-For source code:
+对于源码，修改 `nacos/distribution/conf/application.properties` 中的 `nacos.istio.mcp.server.enabled`
+和`nacos.extension.naming.istio.enabled` 为 true 。
 
-modify `nacos.istio.mcp.server.enabled`  in `nacos/distribution/conf/application.properties` to true.
+若要使用 MCP 增量服务，除上述配置需修改外，还需修改 `nacos/istio/misc/IstioConfig` 中的 `nacos.istio.server.full` 为
+false。
 
-For incremental MCP:
+### 客户端
 
-modify `nacos.istio.server.full ` in  `nacos/istio/misc/IstioConfig`  to false in addition to the above configuration.
+关于客户端，下面示例中使用的是 Envoy，可直接下载 Envoy 或创建镜像并将下述配置文件进行挂载即可。
 
-### Client
-
-In the following example, using Envoy, you can download the Envoy directly or create a mirror and mount the following configuration file.
-
-**Config** : the port number used can be changed on demand.
+**Config**：其中使用的端口号根据需求可自行更改
 
 ```yaml
 node:
@@ -43,95 +42,93 @@ dynamic_resources:
     api_type: GRPC
     transport_api_version: V3
     grpc_services:
-    - envoy_grpc:
-        cluster_name: nacos_xds
+      - envoy_grpc:
+          cluster_name: nacos_xds
   cds_config:
-    ads: {}
+    ads: { }
   lds_config:
     path: /etc/envoy/lds.yaml
   # ads: {}
 
 static_resources:
   clusters:
-  - type: STATIC
-    connect_timeout: 1s
-    typed_extension_protocol_options:
-      envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
-        "@type": type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions
-        explicit_http_config:
-          http2_protocol_options: {}
-    name: nacos_xds 
-    load_assignment:
-      cluster_name: nacos_xds 
-      endpoints:
-      - lb_endpoints:
-        - endpoint:
-            address:
-              socket_address:
-                address: 127.0.0.1 
-                port_value: 18848
+    - type: STATIC
+      connect_timeout: 1s
+      typed_extension_protocol_options:
+        envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
+          "@type": type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions
+          explicit_http_config:
+            http2_protocol_options: { }
+      name: nacos_xds
+      load_assignment:
+        cluster_name: nacos_xds
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address:
+                      address: 127.0.0.1
+                      port_value: 18848
 ```
 
-**lds** : when Envoy acquires a listening service, it automatically acquires EDS from the server. The listening service can change as needed.
+**lds**：对于监听的服务获取 CDS 后会主动向服务端获取 EDS，监听的服务可自行更改
 
 ```yaml
 resources:
-- "@type": type.googleapis.com/envoy.config.listener.v3.Listener
-  name: listener_0
-  address:
-    socket_address: { address: 0.0.0.0, port_value: 80 }
-  # listener_filters:
-  # - name: "envoy.filters.listener.tls_inspector"
-  filter_chains:
-  - filters:
-    - name: envoy.filters.network.http_connection_manager
-      typed_config:
-        "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
-        stat_prefix: ingress_http
-        access_log:
-        - name: envoy.access_loggers.stdout
-          typed_config:
-            "@type": type.googleapis.com/envoy.extensions.access_loggers.stream.v3.StdoutAccessLog
-        codec_type: AUTO
-        route_config:
-          name: local_route
-          virtual_hosts:
-          - name: local_service
-            domains: ["*"]
-            routes:
-            - match: { prefix: "/" }
-              name: test
-              route:
-                cluster: outbound|8071||service-provider.DEFAULT-GROUP.e77d7925-1c90-4fa9-93cb-83153a099636.nacos
-        http_filters:
-        - name: envoy.filters.http.router
+  - "@type": type.googleapis.com/envoy.config.listener.v3.Listener
+    name: listener_0
+    address:
+      socket_address: { address: 0.0.0.0, port_value: 80 }
+    # listener_filters:
+    # - name: "envoy.filters.listener.tls_inspector"
+    filter_chains:
+      - filters:
+          - name: envoy.filters.network.http_connection_manager
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+              stat_prefix: ingress_http
+              access_log:
+                - name: envoy.access_loggers.stdout
+                  typed_config:
+                    "@type": type.googleapis.com/envoy.extensions.access_loggers.stream.v3.StdoutAccessLog
+              codec_type: AUTO
+              route_config:
+                name: local_route
+                virtual_hosts:
+                  - name: local_service
+                    domains: [ "*" ]
+                    routes:
+                      - match: { prefix: "/" }
+                        name: test
+                        route:
+                          cluster: outbound|8071||service-provider.DEFAULT-GROUP.e77d7925-1c90-4fa9-93cb-83153a099636.nacos
+              http_filters:
+                - name: envoy.filters.http.router
 ```
 
-## RUN
+## 运行
 
-Note: each instance of the same service should use the same protocol, EDS default to use incremental push.
+注：同一服务下的各个实例使用的协议需一致，EDS 默认使用增量推送。
 
-1. Deploy Nacos, [ deployment reference ](https://nacos.io/en/docs/latest/quickstart/quick-start/);
-
-2. Modify the configuration in accordance with the above requirements;
-
-3. Start the server, the detailed start command can be seen in the above deployment reference;
+1. 部署 Nacos，[部署参考](https://nacos.io/docs/next/quickstart/quick-start/)；
+2. 按上述要求修改配置；
+3. 启动服务器，详细的启动命令可在上述部署参考中查看；
 
    ```bash
    bash startup.sh -m standalone -p embedded
    ```
 
-4. Start the client.
+4. 启动客户端。
 
    ```bash
    docker start envoy
    ```
 
-## CDS Example
+## CDS 示例
 
-Note: The logs are viewed in nacos/logs/istio-main.log
+注：日志在 nacos/logs/istio-main.log 查看
 
-The service configuration registered in the example is as follows, [ example reference ](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-cloud-example/nacos-spring-cloud-discovery-example ).
+示例中注册的服务配置如下，[示例参考](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-cloud-example/nacos-spring-cloud-discovery-example)。
 
 ```properties
 server.port=8071
@@ -142,15 +139,15 @@ spring.cloud.nacos.discovery.server-addr=127.0.0.1:8848
 
 ![CDS](https://cdn.nlark.com/yuque/0/2022/png/28990648/1666247341241-4e9b2dde-55c7-43ae-af1e-dc081565ab72.png)
 
-## EDS Example
+## EDS 示例
 
-The service is configured as above.
+服务配置如上
 
 ![EDS](https://cdn.nlark.com/yuque/0/2022/png/28990648/1666247341176-fe312687-6488-41c2-bdd1-346d7a344bd2.png)
 
-## Full CDS Example
+## 全量 CDS 示例
 
-The services are registered with the following configurations:
+现注册两个服务，其配置分别如下：
 
 ```properties
 #service-provider
@@ -158,19 +155,18 @@ server.port=8071
 spring.application.name=service-provider
 spring.cloud.nacos.discovery.namespace=e77d7925-1c90-4fa9-93cb-83153a099636
 spring.cloud.nacos.discovery.server-addr=127.0.0.1:8848
-
 #service-consumer
 server.port=8080
 spring.application.name=service-consumer
 spring.cloud.nacos.discovery.server-addr=127.0.0.1:8848
 ```
 
-In the console, modify only the service-consumer service configuration, push as follows:
+在控制台仅修改 service-consumer 服务配置，推送如下：
 
 ![Full CDS](https://cdn.nlark.com/yuque/0/2022/png/28990648/1666247341233-bc35de56-5653-4d5f-a510-819180dfe7f0.png)
 
-## Incremental EDS Example
+## 增量 EDS 示例
 
-In the console, modify only the service-consumer instance configuration, push as follows:
+在控制台仅修改 service-consumer 实例配置，推送如下：
 
 ![Incremental EDS](https://cdn.nlark.com/yuque/0/2022/png/28990648/1666247341234-aa195810-c76d-4ff5-977a-55626775e697.png)

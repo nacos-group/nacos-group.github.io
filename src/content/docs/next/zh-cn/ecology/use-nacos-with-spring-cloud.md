@@ -11,9 +11,9 @@ sidebar:
 本文主要面向 [Spring Cloud](https://spring.io/projects/spring-cloud) 的使用者，通过两个示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理和服务注册发现。
 
 * 通过 Nacos Server 和 spring-cloud-starter-alibaba-nacos-config 实现配置的动态变更。
-    * 将nacos中的配置作为Spring环境上下文属性源之一，可以通过@Value和@ConfigrationProperties引用属性，也可以通过Environment#getProperty()获取属性值。
-    * 通过@NacosConfig注解将nacos中的配置值直接注入到一个SpringBean的属性中，支持基础类型，对象类型以及集合类型。
-    * 通过@NacosConfigListener注解接收nacos中配置的变更事件，在回调方法中进行自定义业务逻辑。
+  * 将nacos中的配置作为Spring环境上下文属性源之一，可以通过@Value和@ConfigrationProperties引用属性，也可以通过Environment#getProperty()获取属性值。
+  * 通过@NacosConfig注解将nacos中的配置值直接注入到一个SpringBean的属性中，支持基础类型，对象类型以及集合类型。
+  * 通过@NacosConfigListener注解接收nacos中配置的变更事件，在回调方法中进行自定义业务逻辑。
 * 通过 Nacos Server 和 spring-cloud-starter-alibaba-nacos-discovery 实现服务的注册与发现。
 
 ## 前提条件
