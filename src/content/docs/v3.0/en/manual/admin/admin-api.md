@@ -4434,7 +4434,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/metrics/ip?ip=127.0.0.1&dat
 |---------------|----------|-------|--------------------------------------------------------|
 | `pageNo`      | `int`    | **是** | 当前页，默认为`1`                                             |
 | `pageSize`    | `int`    | **是** | 页条目数，默认为`20`，最大为`500`                                  |
-| `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`nacos-default-mcp`                    |
+| `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`public`                    |
 | `mcpName`     | `null`   | 否     | MCP服务的名字模版，为空时查询所有MCP服务，当`search`为`blur`时，可使用`*`进行模糊搜索 |
 | `search`      | `string` | 否     | 搜索的类型，可选之`blur`和`accurate`，默认为`blur`。                  |
 
@@ -4442,28 +4442,34 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/metrics/ip?ip=127.0.0.1&dat
 
 返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
-| 参数名                                 | 参数类型                  | 描述                                                  |
-|-------------------------------------|-----------------------|-----------------------------------------------------|
-| `totalCount`                        | `int`                 | 符合条件的服务的总数。                                         |
-| `pageNumber`                        | `int`                 | 当前页码，起始为`1`。                                        |
-| `pagesAvailable`                    | `int`                 | 可用页码。                                               |
-| `pageItems`                         | `List`                | 服务列表。                                               |
-| `pageItems`[i].`name`               | `String`              | MCP服务名。                                             |
-| `pageItems`[i].`protocol`           | `String`              | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
-| `pageItems`[i].`description`        | `String`              | MCP服务的描述。                                           |
-| `pageItems`[i].`version`            | `String`              | MCP服务的版本。                                           |
-| `pageItems`[i].`localServerConfig`  | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。            |
-| `pageItems`[i].`remoteServerConfig` | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。               |
-| `pageItems`[i].`credentials`        | `List`                | MCP服务若类型为**非stdio**，存在此信息，记录访问远端服务的身份敏感信息。          |
-| `pageItems`[i].`enabled`            | `boolean`             | MCP服务是否启用。                                          |
-| `pageItems`[i].`capabilities`       | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。           |
+| 参数名                                           | 参数类型                  | 描述                                                                                              |
+|-----------------------------------------------|-----------------------|-------------------------------------------------------------------------------------------------|
+| `totalCount`                                  | `int`                 | 符合条件的服务的总数。                                                                                     |
+| `pageNumber`                                  | `int`                 | 当前页码，起始为`1`。                                                                                    |
+| `pagesAvailable`                              | `int`                 | 可用页码。                                                                                           |
+| `pageItems`                                   | `List`                | 服务列表。                                                                                           |
+| `pageItems`[i].`id`                           | `String`              | MCP服务的ID，一般为UUID。                                                                               |
+| `pageItems`[i].`name`                         | `String`              | MCP服务名。                                                                                         |
+| `pageItems`[i].`protocol`                     | `String`              | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
+| `pageItems`[i].`frontProtocol`                | `String`              | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
+| `pageItems`[i].`description`                  | `String`              | MCP服务的描述。                                                                                       |
+| `pageItems`[i].`repository`                   | `String`              | MCP服务的存储仓库。                                                                                     |                                                                                          |
+| `pageItems`[i].`versionDetail`                | `Object`              | MCP服务的版本信息。                                                                                     |
+| `pageItems`[i].`versionDetail`.`version`      | `String`              | MCP服务的版本号。                                                                                      |
+| `pageItems`[i].`versionDetail`.`release_date` | `String`              | MCP服务的版本发布时间。                                                                                   |
+| `pageItems`[i].`versionDetail`.`is_latest`    | `boolean`             | MCP服务的版本是否为最新版本。                                                                                |
+| `pageItems`[i].`localServerConfig`            | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
+| `pageItems`[i].`remoteServerConfig`           | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
+| `pageItems`[i].`latestPublishedVersion`       | `String`              | MCP服务最新版本的版本号。                                                                                  |
+| `pageItems`[i].`versionDetails`               | `List<versionDetail>` | MCP服务版本详情的列表。                                                                                   |
+| `pageItems`[i].`capabilities`                 | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp/list?pageNo=1&pageSize=100&namespaceId=nacos-default-mcp&search=blur'
+curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp/list?pageNo=1&pageSize=100&namespaceId=public&search=blur'
 ```
 * 返回示例
 
@@ -4477,23 +4483,29 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp/list?pageNo=1&pageSize=100&nam
       "pagesAvailable": 1,
       "pageItems": [
          {
+            "id": "d7a64724-a556-4fe4-82fa-e806d43e00dc",
             "name": "test",
             "protocol": "stdio",
-            "description": "test",
-            "version": "1.0.0",
-            "remoteServerConfig": null,
-            "localServerConfig": {
-               "test": {
-                  "description": "test",
-                  "command": "uvx",
-                  "args": [
-                     "test"
-                  ]
-               }
+            "frontProtocol": "stdio",
+            "description": "ceshi",
+            "repository": null,
+            "versionDetail": {
+               "version": "1.0.0",
+               "release_date": "2025-05-22T06:40:37Z",
+               "is_latest": null
             },
-            "credentials": {},
+            "remoteServerConfig": null,
+            "localServerConfig": null,
             "enabled": true,
-            "capabilities": []
+            "capabilities": null,
+            "latestPublishedVersion": "1.0.0",
+            "versionDetails": [
+               {
+                  "version": "1.0.0",
+                  "release_date": "2025-05-22T06:40:37Z",
+                  "is_latest": null
+               }
+            ]
          }
       ]
    }
@@ -4520,35 +4532,43 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp/list?pageNo=1&pageSize=100&nam
 
 #### 请求参数
 
-| 参数名           | 参数类型     | 是否必填  | 描述                                  |
-|---------------|----------|-------|-------------------------------------|
-| `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`nacos-default-mcp` |
-| `mcpName`     | `null`   | **是** | MCP服务的名字模版                          |
+| 参数名           | 参数类型     | 是否必填  | 描述                       |
+|---------------|----------|-------|--------------------------|
+| `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`public` |
+| `mcpId`       | `string` | **是** | MCP服务的ID，一般为UUID         |
+| `mcpName`     | `string` | **是** | MCP服务的名字模版               |
+| `version`     | `string` | 否     | MCP服务的版本，未传入是返回最新版本      |
 
 #### 返回数据
 
 返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
-| 参数名                  | 参数类型                  | 描述                                                  |
-|----------------------|-----------------------|-----------------------------------------------------|
-| `name`               | `String`              | MCP服务名。                                             |
-| `protocol`           | `String`              | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
-| `description`        | `String`              | MCP服务的描述。                                           |
-| `version`            | `String`              | MCP服务的版本。                                           |
-| `localServerConfig`  | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。            |
-| `remoteServerConfig` | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。               |
-| `credentials`        | `List`                | MCP服务若类型为**非stdio**，存在此信息，记录访问远端服务的身份敏感信息。          |
-| `enabled`            | `boolean`             | MCP服务是否启用。                                          |
-| `capabilities`       | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。           |
-| `backendEndpoints`   | `List`                | MCP服务若类型为**非stdio**，存在此信息，记录访问远端服务的具体地址信息。          |
-| `toolSpec`           | `Map<String, Object>` | MCP服务支持的能力类型包含`TOOL`时，存在此信息，记录工具的详细配置信息。            |
+| 参数名                            | 参数类型                  | 描述                                                                                              |
+|--------------------------------|-----------------------|-------------------------------------------------------------------------------------------------|
+| `id`                           | `String`              | MCP服务的ID，一般为UUID。                                                                               |
+| `name`                         | `String`              | MCP服务名。                                                                                         |
+| `protocol`                     | `String`              | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
+| `frontProtocol`                | `String`              | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
+| `description`                  | `String`              | MCP服务的描述。                                                                                       |
+| `repository`                   | `String`              | MCP服务的存储仓库。                                                                                     |                                                                                          |
+| `versionDetail`                | `Object`              | MCP服务的版本信息。                                                                                     |
+| `versionDetail`.`version`      | `String`              | MCP服务的版本号。                                                                                      |
+| `versionDetail`.`release_date` | `String`              | MCP服务的版本发布时间。                                                                                   |
+| `versionDetail`.`is_latest`    | `boolean`             | MCP服务的版本是否为最新版本。                                                                                |
+| `localServerConfig`            | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
+| `remoteServerConfig`           | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
+| `credentials`                  | `List`                | MCP服务若类型为**非stdio**，存在此信息，记录访问远端服务的身份敏感信息。                                                      |
+| `enabled`                      | `boolean`             | MCP服务是否启用。                                                                                      |
+| `capabilities`                 | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
+| `backendEndpoints`             | `List`                | MCP服务若类型为**非stdio**，存在此信息，记录访问远端服务的具体地址信息。                                                      |
+| `toolSpec`                     | `Map<String, Object>` | MCP服务支持的能力类型包含`TOOL`时，存在此信息，记录工具的详细配置信息。                                                        |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=nacos-default-mcp&mcpName=test'
+curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=test&mcpId=d7a64724-a556-4fe4-82fa-e806d43e00dc'
 ```
 * 返回示例
 
@@ -4557,25 +4577,33 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=nacos-default-mcp&
    "code": 0,
    "message": "success",
    "data": {
+      "id": "",
       "name": "test",
       "protocol": "stdio",
-      "description": "test",
-      "version": "1.0.0",
+      "frontProtocol": "stdio",
+      "description": "ceshi",
+      "repository": null,
+      "versionDetail": {
+         "version": "1.0.0",
+         "release_date": "2025-05-22T06:40:37Z",
+         "is_latest": true
+      },
       "remoteServerConfig": null,
       "localServerConfig": {
-         "test": {
-            "description": "test",
-            "command": "uvx",
-            "args": [
-               "test"
-            ]
-         }
+         "test": {}
       },
-      "credentials": {},
       "enabled": true,
       "capabilities": [],
       "backendEndpoints": null,
-      "toolSpec": null
+      "toolSpec": null,
+      "allVersions": [
+         {
+            "version": "1.0.0",
+            "release_date": "2025-05-22T06:40:37Z",
+            "is_latest": true
+         }
+      ],
+      "namespaceId": "public"
    }
 }
 ```
@@ -4602,8 +4630,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=nacos-default-mcp&
 
 | 参数名                     | 参数类型         | 是否必填  | 描述                                  |
 |-------------------------|--------------|-------|-------------------------------------|
-| `namespaceId`           | `string`     | 否     | MCP服务的命名空间ID，默认为`nacos-default-mcp` |
-| `mcpName`               | `null`       | **是** | MCP服务的名字模版                          |
+| `namespaceId`           | `string`     | 否     | MCP服务的命名空间ID，默认为`public` |
 | `serverSpecification`   | `jsonString` | **是** | MCP服务的描述详情                          |
 | `toolSpecification`     | `jsonString` | 否     | MCP服务的工具描述详情                        |
 | `endpointSpecification` | `jsonString` | 否     | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效      |
@@ -4622,9 +4649,9 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=nacos-default-mcp&
 
 ```shell
 curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
--d 'namespaceId=nacos-default-mcp' \
+-d 'namespaceId=public' \
 -d 'mcpName=test' \
--d 'serverSpecification={"protocol":"stdio","name":"test","description":"test","version":"1.0.0","enabled":true,"localServerConfig":{"test":{"description":"test","command":"uvx","args":["test"]}}}'
+-d 'serverSpecification={"protocol":"stdio","frontProtocol":"stdio","name":"test","id":"d7a64724-a556-4fe4-82fa-e806d43e00dc","description":"ceshi","versionDetail":{"version":"1.0.0"},"enabled":true,"localServerConfig":{"test":{}}}'
 ```
 * 返回示例
 
@@ -4658,8 +4685,7 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 
 | 参数名                     | 参数类型         | 是否必填  | 描述                                  |
 |-------------------------|--------------|-------|-------------------------------------|
-| `namespaceId`           | `string`     | 否     | MCP服务的命名空间ID，默认为`nacos-default-mcp` |
-| `mcpName`               | `null`       | **是** | MCP服务的名字模版                          |
+| `namespaceId`           | `string`     | 否     | MCP服务的命名空间ID，默认为`public` |
 | `serverSpecification`   | `jsonString` | **是** | MCP服务的描述详情                          |
 | `toolSpecification`     | `jsonString` | 否     | MCP服务的工具描述详情                        |
 | `endpointSpecification` | `jsonString` | 否     | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效      |
@@ -4678,9 +4704,9 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 
 ```shell
 curl -X POST '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
--d 'namespaceId=nacos-default-mcp' \
+-d 'namespaceId=public' \
 -d 'mcpName=test' \
--d 'serverSpecification={"protocol":"stdio","name":"test","description":"test","version":"1.0.0","enabled":true,"localServerConfig":{"test":{"description":"test","command":"uvx","args":["test"]}}}'
+-d 'serverSpecification={"protocol":"stdio","frontProtocol":"stdio","name":"test","id":"","description":"ceshi","versionDetail":{"version":"1.0.0"},"enabled":true,"localServerConfig":{"test":{}}}'
 ```
 * 返回示例
 
@@ -4712,10 +4738,12 @@ curl -X POST '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 
 #### 请求参数
 
-| 参数名           | 参数类型     | 是否必填  | 描述                                  |
-|---------------|----------|-------|-------------------------------------|
-| `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`nacos-default-mcp` |
-| `mcpName`     | `null`   | **是** | MCP服务的名字模版                          |
+| 参数名           | 参数类型     | 是否必填  | 描述                       |
+|---------------|----------|-------|--------------------------|
+| `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`public` |
+| `mcpId`       | `string` | **是** | MCP服务的ID，一般为UUID         |
+| `mcpName`     | `string` | **是** | MCP服务的名字模版               |
+| `version`     | `string` | 否     | MCP服务的版本，未传入是为最新版本       |
 
 #### 返回数据
 
@@ -4730,7 +4758,7 @@ curl -X POST '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 * 请求示例
 
 ```shell
-curl -X DELETE '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=nacos-default-mcp&mcpName=test'
+curl -X DELETE '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=test&mcpId=d7a64724-a556-4fe4-82fa-e806d43e00dc'
 ```
 * 返回示例
 
