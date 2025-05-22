@@ -141,6 +141,16 @@ Nacos 3.0 中对于配置中心的`空命名空间`和`public命名空间`进行
 nacos.namespace.migrate.batch.size=100
 ```
 
+#### 2.1.8. 迁移MCP服务（可选）
+
+若您是从3.0.0版本进行升级，且您的集群中存在MCP服务，由于官方社区MCP Registry API标准的改动， MCP Server定义的元数据存在一定的变化， 这部分变化将会导致一定的数据结构不兼容，从3.0.0版本升级到3.0.1及以上版本之后会导致控制台无法读取到旧版本MCP Server数据，因此需要使用[MCP迁移工具](https://download.nacos.io/nacos-server/mcp-migration-tool.jar) 对3.0.0版本的存量MCP服务数据进行迁移。
+
+```shell
+# java- jar ./mcp-migration-tool.jar ${nacos-server-host}:${nacos-server-port} ${username} ${password}
+# 示例
+java -jar ./mcp-migration-tool.jar localhost:8848 nacos ${your_password}
+```
+
 ###  2.2. Docker/Kubernetes升级
 
 > 3.0.0-BETA 版本暂时未提供docker镜像，以下内容仍然为旧版，将在3.0.0 正式发布后更新。
