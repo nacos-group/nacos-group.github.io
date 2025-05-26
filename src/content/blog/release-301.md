@@ -70,7 +70,7 @@ Nacos `3.0.1`版本中， 允许MCP自由的注册到任意命名空间中，如
 
 ![](https://cdn.nlark.com/yuque/0/2025/png/1577777/1748239386108-81af0ada-6b47-44d3-91f9-93c8c548e3cf.png)
 
-## 2. Nacos-MCP-Router升级，支持sse、steamable
+## 2. Nacos-MCP-Router支持docker部署，支持sse、steamable协议以及转换
 
 Nacos-MCP-Router是一个基于MCP官方标准SDK实现的的MCP Server，提供MCP Server推荐、分发、安装及代理其他MCP Server的功能，帮助用户更方便的使用MCP Server服务。Nacos-MCP-Router支持暴露为stdio、sse、streamable HTTP协议，同时支持docker部署。此外，Nacos-MCP-Router支持proxy模式，只需简单几个环境变量就能快速把原来stdio、sse协议的MCP Server转换为streamableHTTP协议MCP server。其使用方式主要有3种：
 
