@@ -10,7 +10,7 @@ interface Props {
 
 export const docsItems = [
     {
-        label: "最新版（Latest）",
+        label: "最新版",
         target: "_self",
         link: "/docs/latest/overview/",
         translations: {
@@ -28,12 +28,12 @@ export const docsItems = [
         }
     },
     {
-      label: "3.0",
+      label: "2.5",
       target: "_self",
-      link: "/docs/v3.0/overview/",
+      link: "/docs/v2.5/overview/",
       translations: {
-          en: "3.0",
-          link: "/en/docs/v3.0/overview/",
+          en: "2.5",
+          link: "/en/docs/v2.4/overview/",
       }
     },
     {
@@ -107,7 +107,7 @@ const ifactive = (link) => {
               class="inline-block w-full p-2 no-underline text-inherit text-gray-02" 
             >
               {ifzh ? label : item.translations?.en}
-              { label === "3.0"? <span class="inline-block  px-2 py-1 rounded-full h-[18px] leading-3 bg-gradient-to-r from-[#262CF4] via-[#262CF4] to-[#7140FF] opacity-100 text-white text-sm">New</span> :null}
+              { label === "最新版" || label === "Latest" ? <span class="inline-block  px-2 py-1 rounded-full h-[18px] leading-3 bg-gradient-to-r from-[#262CF4] via-[#262CF4] to-[#7140FF] opacity-100 text-white text-sm">3.0</span> :null}
             </a>
           </li>
         )

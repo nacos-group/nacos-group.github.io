@@ -6,9 +6,9 @@ export const SITE_DESCRIPTION = 'Welcome to my website!';
 
 // 吊顶提示文案
 export const TOPBAR = {
-    "text": "Nacos 3.0 正式发布：MCP Registry、安全零信任、链接更多生态",
-    "mobileText": "Nacos 3.0 正式发布：MCP Registry、安全零信任、链接更多生态",
-    "link": "https://nacos.io/blog/nacos-gvr7dx_awbbpb_gg16sv97bgirkixe/",
+    "text": "开启报名｜Nacos3.0 开源开发者沙龙 Agent\u0026MCP 专场",
+    "mobileText": "开启报名｜Nacos3.0 开源开发者沙龙 Agent\u0026MCP 专场",
+    "link": "https://nacos.io/blog/nacos-gvr7dx_awbbpb_to2k53t2lzzkmqw8/",
     "target": "_blank",
     "display": true
 }

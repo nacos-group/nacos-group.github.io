@@ -1,14 +1,21 @@
 ---
-title: 控制台手册
-keywords: [控制台,手册]
-description: Nacos 控制台主要旨在于增强对于服务列表，健康状态管理，服务治理，分布式配置管理等方面的管控能力。
+title: Console Usage
+keywords: [Console,Usage]
+description: The Nacos Console is primarily designed to enhance control and management capabilities in areas such as service list management, health status monitoring, service governance, and distributed configuration management.
 sidebar:
-    order: 9
+    order: 12
 ---
 
 # 控制台手册
 
 [Nacos 控制台](http://console.nacos.io/index.html)主要旨在于增强对于服务列表，健康状态管理，服务治理，分布式配置管理等方面的管控能力，以便进一步帮助用户降低管理微服务应用架构的成本，将提供包括下列基本功能:
+
+:::note
+- [控制台样例](http://console.nacos.io/index.html)的默认用户名密码为`nacos/nacos@demo`。
+- 此控制台样例仅用于展示控制台使用，为公开DEMO，请勿将敏感数据及生产环境相关内容写入其中。
+- 此控制台样例仅用于展示控制台使用，不提供OpenAPI访问，且未开启鉴权，如需测试OpenAPI，请参考[文档](../../quickstart/quick-start.mdx)部署。
+- 此控制台样例仅用于展示控制台使用，不支持修改用户名密码。
+:::
 
 * 服务管理
   * 服务列表及服务健康状态展示
@@ -23,6 +30,7 @@ sidebar:
   * 配置版本及一键回滚
 * 命名空间
 * 登录管理
+* MCP管理
 
 ## 1. 特性详解
 
@@ -174,4 +182,4 @@ Nacos默认控制台在`2.2.2`版本前，无论是否开启[鉴权](../../manua
 * [Nacos Spring Boot](https://github.com/nacos-group/nacos-spring-boot-project)
 * [Spring Cloud Alibaba](https://github.com/alibaba/spring-cloud-alibaba)
 * [Dubbo](https://github.com/apache/dubbo)
-* [Sentinel](https://github.com/alibaba/Sentinel)
+* [Sentinel](https://github.com/alibaba/Sentinel

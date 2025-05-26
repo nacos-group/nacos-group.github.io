@@ -61,14 +61,19 @@ db.user=${mysql_user}
 db.password=${mysql_password}
 ```
 
-##### 1.1.3.1. 开启默认鉴权插件（可选，推荐）
+##### 1.1.3.1. 开启默认鉴权插件
+
+> 自3.0.0版本开始，Nacos控制台默认开启访问鉴权，所以鉴权相关配置必须进行配置。
 
 修改`conf`目录下的`application.properties`文件。
 
 设置其中
 
 ```properties
+## 开启客户端访问鉴权，默认为关闭，可选
 nacos.core.auth.enabled=true
+## 开启控制台访问鉴权，默认为开启
+nacos.core.auth.console.enabled=true
 nacos.core.auth.system.type=nacos
 nacos.core.auth.plugin.nacos.token.secret.key=${自定义，保证所有节点一致}
 nacos.core.auth.server.identity.key=${自定义，保证所有节点一致}
@@ -95,6 +100,24 @@ bash startup.sh
 startup.cmd
 ```
 
+随后启动程序会提示您输入`3个`鉴权相关配置
+
+```
+`nacos.core.auth.plugin.nacos.token.secret.key` is missing, please set: ${your_input_token_secret_key}
+nacos.core.auth.plugin.nacos.token.secret.key` Updated:
+----------------------------------
+`nacos.core.auth.server.identity.key` is missing, please set: ${your_input_server_identity_key}
+`nacos.core.auth.server.identity.key` Updated:
+----------------------------------
+`nacos.core.auth.server.identity.value` is missing, please set: ${your_input_server_identity_key}
+`nacos.core.auth.server.identity.value` Updated:
+----------------------------------
+```
+
+::: note
+若您已经在[修改配置文件](#1131-开启默认鉴权插件)步骤中设置过这3个配置，则不会提示您输入。
+:::
+
 ### 1.2. 使用Derby数据库
 
 > 注意：Derby数据库为本地内置数据库，本身不支持集群模式，Nacos通过Raft协议将各个节点的Derby数据库组成逻辑集群，因此使用此模式部署集群模式的Nacos是，需要对Raft协议较为熟悉，能够进行问题排查、恢复等，建议使用MySQL数据库进行部署。
@@ -114,14 +137,19 @@ startup.cmd
 200.8.9.18:8848
 ```
 
-#### 1.2.3. 开启默认鉴权插件（可选，推荐）
+#### 1.2.3. 开启默认鉴权插件
+
+> 自3.0.0版本开始，Nacos控制台默认开启访问鉴权，所以鉴权相关配置必须进行配置。
 
 修改`conf`目录下的`application.properties`文件。
 
 设置其中
 
 ```properties
+## 开启客户端访问鉴权，默认为关闭，可选
 nacos.core.auth.enabled=true
+## 开启控制台访问鉴权，默认为开启
+nacos.core.auth.console.enabled=true
 nacos.core.auth.system.type=nacos
 nacos.core.auth.plugin.nacos.token.secret.key=${自定义，保证所有节点一致}
 nacos.core.auth.server.identity.key=${自定义，保证所有节点一致}
@@ -189,18 +217,6 @@ docker run --name nacos-cluster -e MODE=cluster -v /path/application.properties:
 ```
 
 如果仍然无法满足自定义需求，可以基于nacos-docker项目中的`Dockerfile`自行构建镜像。
-
-### 2.4 在云托管的k8s中部署集群版时需注意的踩坑点
-* 集群节点存在DOWN状态的节点
-    * 是因为`StatefulSet`服务中`spec.serviceName`的值跟`nacos headless`服务的名称不一致，需配置与`nacos headless`服务的名称一致
-* 个别rpc服务注册不上
-    * 是因为集群元数据不正常，需正确配置环境变量: `NACOS_SERVERS`，值必须为headless服务的全限定名(带`svc.cluster.local`的那种)
-* 集群节点跟预期不符(设置的3个pod，却有4个节点数据)
-    * 是因为nacos默认使用的ip模式，需`PREFER_HOST_MODE=hostname`
-* 新建的配置，重启nacos pod后数据丢失
-    * 是因为没有使用mysql，需设置环境变量: `SPRING_DATASOURCE_PLATFORM=mysql`
-
-其他详细信息参考[#13084](https://github.com/alibaba/nacos/issues/13084)
 
 ## 3. Kubernetes部署
 

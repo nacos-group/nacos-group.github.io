@@ -96,7 +96,7 @@ Nacos提供了一个简单的默认鉴权实现，当服务端通过[运维手�
 首先需要使用用户名和密码登陆nacos。
 
 ```powershell
-curl -X POST '127.0.0.1:8848/nacos/v1/auth/login' -d 'username=nacos&password=nacos'
+curl -X POST '127.0.0.1:8848/nacos/v3/auth/user/login' -d 'username=nacos&password=nacos'
 ```
 
 若用户名和密码正确,返回信息例如:

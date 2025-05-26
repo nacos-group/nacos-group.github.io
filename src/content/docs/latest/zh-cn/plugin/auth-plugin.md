@@ -23,9 +23,9 @@ Nacos从2.1.0版本开始，支持通过[SPI](https://docs.oracle.com/javase/tut
 
 其中必定会包含的内容有：
 
-|字段名|描述|
-|-----|---|
-|remote_ip|请求来源ip|
+| 字段名       | 描述     |
+|-----------|--------|
+| remote_ip | 请求来源ip |
 
 ### 资源 Resource
 
@@ -33,13 +33,13 @@ Nacos从2.1.0版本开始，支持通过[SPI](https://docs.oracle.com/javase/tut
 
 资源(Resource)主要由以下内容组成：
 
-|字段名|描述|
-|-----|---|
-|namespaceId|请求资源的命名空间ID，部分接口可能没有该值|
-|group| 请求资源的分组名，部分接口可能没有该值|
-|name | 请求资源的资源名，如服务名或配置的dataId，部分接口可能是定义的特殊值，如`nacos/admin`|
-|type | 请求资源的类型，可能取值为`SignType`中的枚举值，主要表示该资源所相关的模块 |
-|properties| 请求资源的扩展配置，不属于上述的资源相关信息，会被放如properties中，比如Grpc请求的Request名称或`@Secured`注解上的tags等 |
+| 字段名         | 描述                                                                            |
+|-------------|-------------------------------------------------------------------------------|
+| namespaceId | 请求资源的命名空间ID，部分接口可能没有该值                                                        |
+| group       | 请求资源的分组名，部分接口可能没有该值                                                           |
+| name        | 请求资源的资源名，如服务名或配置的dataId，部分接口可能是定义的特殊值，如`nacos/admin`                          |
+| type        | 请求资源的类型，可能取值为`SignType`中的枚举值，主要表示该资源所相关的模块                                    |
+| properties  | 请求资源的扩展配置，不属于上述的资源相关信息，会被放如properties中，比如Grpc请求的Request名称或`@Secured`注解上的tags等 |
 
 ### 操作类型 Action
 
@@ -63,14 +63,14 @@ Nacos从2.1.0版本开始，支持通过[SPI](https://docs.oracle.com/javase/tut
 
 接口中需要实现的方法如下：
 
-|方法名|入参内容|返回内容|描述|
-|-----|-----|-----|---|
-|getAuthServiceName|void|String|插件的名称，当名字相同时，后加载的插件会覆盖先加载的插件。|
-|identityNames|void|Collection&lt;String>|插件的身份信息关键字，Nacos会从请求中获取以这些关键字为key的参数，并注入到IdentityContext中。|
-|enableAuth|ActionTypes,SignType|boolean|在调用`validateIdentity`和`validateAuthority`前调用，插件可自行判断是否对此类型的操作或此类型的模块进行鉴权。|
-|validateIdentity|IdentityContext, Resource|boolean|对身份信息进行验证，在`validateAuthority`前调用|
-|validateAuthority|IdentityContext, Permission|boolean|对权限进行验证，在`validateIdentity`返回为`true`时调用|
-|isLoginEnabled|void|boolean|是否该插件开启开源控制台登录页，返回`true`时，访问开源控制台将需要通过登录页登录|
+| 方法名                | 入参内容                        | 返回内容                  | 描述                                                                        |
+|--------------------|-----------------------------|-----------------------|---------------------------------------------------------------------------|
+| getAuthServiceName | void                        | String                | 插件的名称，当名字相同时，后加载的插件会覆盖先加载的插件。                                             |
+| identityNames      | void                        | Collection&lt;String> | 插件的身份信息关键字，Nacos会从请求中获取以这些关键字为key的参数，并注入到IdentityContext中。                |
+| enableAuth         | ActionTypes,SignType        | boolean               | 在调用`validateIdentity`和`validateAuthority`前调用，插件可自行判断是否对此类型的操作或此类型的模块进行鉴权。 |
+| validateIdentity   | IdentityContext, Resource   | AuthResult            | 对身份信息进行验证，在`validateAuthority`前调用，返回结果中应包含是否成功，若失败需要设置失败的原因。              |
+| validateAuthority  | IdentityContext, Permission | AuthResult            | 对权限进行验证，在`validateIdentity`返回为`true`时调用，返回结果中应包含是否成功，若失败需要设置失败的原因。        |
+| isLoginEnabled     | void                        | boolean               | 是否该插件开启开源控制台登录页，返回`true`时，访问开源控制台将需要通过登录页登录                               |
 
 ### 加载服务端插件
 
@@ -134,15 +134,15 @@ ConfigFactory.createConfigService(properties);
 
 该插件会根据`accessKey`和`secretKey`以及请求的资源内容，自动生成对应的请求签名，并注入到请求中，根据资源类型的不同，请求中的身份信息关键字可能不同：
 
-|类型|身份关键字|描述|
-|-----|-----|-----|
-|NamingService|ak|accessKey|
-|NamingService|signature|注册中心模块的签名信息|
-|NamingService|data|签名数据，主要是时间戳|
-|ConfigService|Spas-AccessKey|accessKey|
-|ConfigService|Spas-Signature|配置中心模块的签名信息|
-|ConfigService|Timestamp|请求的时间戳|
-|ConfigService|Spas-SecurityToken|临时token（启用阿里云STS功能时使用）|
+| 类型            | 身份关键字              | 描述                     |
+|---------------|--------------------|------------------------|
+| NamingService | ak                 | accessKey              |
+| NamingService | signature          | 注册中心模块的签名信息            |
+| NamingService | data               | 签名数据，主要是时间戳            |
+| ConfigService | Spas-AccessKey     | accessKey              |
+| ConfigService | Spas-Signature     | 配置中心模块的签名信息            |
+| ConfigService | Timestamp          | 请求的时间戳                 |
+| ConfigService | Spas-SecurityToken | 临时token（启用阿里云STS功能时使用） |
 
 开发者可以根据以上信息，在实现的服务端插件中进行身份验证及后续的权限验证。
 
@@ -166,12 +166,12 @@ ConfigFactory.createConfigService(properties);
 
 接口中需要实现的方法如下：
 
-|方法名|入参内容|返回内容|描述|
-|-----|-----|-----|---|
-|setServerList|List&lt;String>，Nacos服务端地址列表|void|初始化时会调用此接口注入Nacos的服务列表，方便插件访问nacos服务端，如调用登录接口等|
-|setNacosRestTemplate|NacosRestTemplate，Nacos的http客户端|void|初始化时会调用此接口注入Nacos的http客户端，方便插件访问nacos服务端，如调用登录接口等|
-|login|Properties，即初始化Nacos客户端时传入的参数|boolean|登录接口，主要执行的是身份信息的转换工作，如`username`，`password`转换为`accessToken`|
-|getLoginIdentityContext|Resource|IdentityContext|获取经过登录接口转换后的身份信息，客户端会将该返回对象的内容全部注入到请求中|
+| 方法名                     | 入参内容                            | 返回内容            | 描述                                                          |
+|-------------------------|---------------------------------|-----------------|-------------------------------------------------------------|
+| setServerList           | List&lt;String>，Nacos服务端地址列表    | void            | 初始化时会调用此接口注入Nacos的服务列表，方便插件访问nacos服务端，如调用登录接口等              |
+| setNacosRestTemplate    | NacosRestTemplate，Nacos的http客户端 | void            | 初始化时会调用此接口注入Nacos的http客户端，方便插件访问nacos服务端，如调用登录接口等           |
+| login                   | Properties，即初始化Nacos客户端时传入的参数   | boolean         | 登录接口，主要执行的是身份信息的转换工作，如`username`，`password`转换为`accessToken` |
+| getLoginIdentityContext | Resource                        | IdentityContext | 获取经过登录接口转换后的身份信息，客户端会将该返回对象的内容全部注入到请求中                      |
 
 您也可以选择继承`com.alibaba.nacos.plugin.auth.spi.client.AbstractClientAuthService`，该父类默认实现了`setServerList`和`setNacosRestTemplate`。
 

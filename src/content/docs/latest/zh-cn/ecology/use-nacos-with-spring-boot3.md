@@ -3,7 +3,7 @@ title: Nacos 融合 Spring Boot3，成为注册配置中心
 keywords: [Nacos,Spring Boot3]
 description: 本文主要面向 Spring Boot3 的使用者，通过示例来介绍如何使用 Nacos 来实现分布式环境下的配置管理。
 sidebar:
-    order: 3
+  order: 3
 ---
 
 # Nacos 融合 Spring Boot3，成为注册配置中心
@@ -16,7 +16,7 @@ sidebar:
   * * 通过@NacosConfigListener注解接收nacos中配置的变更事件，在回调方法中进行自定义业务逻辑。
 
 SpringBoot2及以下的应用请参考旧版本 [Nacos 融合 Spring Boot(Deprated)](use-nacos-with-spring-boot.md)，旧版本已经不再更新演进，建议升级至SpringBoot3.
- 
+
 ## 前提条件
 
 您需要先下载 Nacos 并启动 Nacos server。操作步骤参见 [Nacos 快速入门](../quickstart/quick-start.mdx)。
