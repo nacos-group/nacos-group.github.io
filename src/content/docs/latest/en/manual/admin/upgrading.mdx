@@ -153,8 +153,6 @@ java -jar ./mcp-migration-tool.jar localhost:8848 nacos ${your_password}
 
 ###  2.2. Docker/Kubernetes升级
 
-> 3.0.0-BETA 版本暂时未提供docker镜像，以下内容仍然为旧版，将在3.0.0 正式发布后更新。
-
 #### 2.2.1 确认表结构
 
 先对比部署的旧版本Nacos版本的mysql-schema.sql文件和将升级版本的mysql-schema.sql文件，确认表结构是否有变化。
@@ -162,12 +160,27 @@ java -jar ./mcp-migration-tool.jar localhost:8848 nacos ${your_password}
 若文件中表结构存在变化，请先进行数据库变更，例如：
 
 ```SQL
-ALTER TABLE `config_info` ADD COLUMN `encrypted_data_key` varchar(255) NOT NULL COMMENT '密钥',
+-- 从 2.0.X 升级时需要执行下列所有SQL, 从2.1.X之后版本升级仅需执行最后三行。
+ALTER TABLE `config_info` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
+ALTER TABLE `config_info_gray` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
+ALTER TABLE `config_info_beta` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
+ALTER TABLE `his_config_info` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
+ALTER TABLE `his_config_info` ADD COLUMN `publish_type` varchar(50)  DEFAULT 'formal' COMMENT 'publish type gray or formal';
+ALTER TABLE `his_config_info` ADD COLUMN `gray_name` varchar(50)  DEFAULT NULL COMMENT 'gray name';
+ALTER TABLE `his_config_info` ADD COLUMN `ext_info`  longtext DEFAULT NULL COMMENT 'ext info';
 ```
 
 #### 2.2.2. 确认环境变量
 
 可以对比当前部署版本的环境变量与[系统参数-镜像环境变量](./system-configurations/#2-镜像环境变量)中的环境变量是否有变化，如有，需要修改Docker的环境变量文件或Kubernetes的regcenter中的环境变量。
+
+例如, 添加如下环境变量：
+
+```
+NACOS_AUTH_TOKEN=${长度32位以上的自定义字符串，进行base64编码后的token}
+NACOS_AUTH_IDENTITY_KEY=${任意字符串}
+NACOS_AUTH_IDENTITY_VALUE=${任意字符串}
+```
 
 #### 2.2.3. 修改镜像版本
 
@@ -176,20 +189,20 @@ ALTER TABLE `config_info` ADD COLUMN `encrypted_data_key` varchar(255) NOT NULL 
     首先修改docker compose所对应的文件中的Nacos版本，例如[Nacos Docker](https://github.com/nacos-group/nacos-docker)项目下的standalone-mysql-8.yaml中的
     ```yaml
     services:
-        nacos:
-            image:
-                nacos/nacos-server:${target_version}
+    nacos:
+    image:
+    nacos/nacos-server:${target_version}
     ```
     然后执行如下命令进行升级
     ```bash
-      docker-compose pull
-      docker-compose up -d --remove-orphans
+    docker-compose pull
+    docker-compose up -d --remove-orphans
     ```
   </TabItem>
   <TabItem label="Kubernetes">
     通过kubectl set image 命令更新版本，如：
     ```bash
-        kubectl set image deployment/nacos-deployment ${container_name}=nacos/nacos-server:${target_version}
+    kubectl set image deployment/nacos-deployment ${container_name}=nacos/nacos-server:${target_version}
     ```
   </TabItem>
 </Tabs>

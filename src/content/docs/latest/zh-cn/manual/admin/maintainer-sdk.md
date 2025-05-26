@@ -3317,3 +3317,368 @@ try {
 #### 异常说明
 
 读取配置超时或网络异常，抛出 NacosException 异常。
+
+## 6. MCP 服务
+
+### 6.1. 获取MCP服务列表
+
+#### 描述
+
+通过mcpName，精确获取MCP服务列表，若传入的mcpName为空，则返回所有MCP服务列表。
+
+```java
+Page<McpServerBasicInfo> listMcpServer() throws NacosException;
+
+Page<McpServerBasicInfo> listMcpServer(int pageNo, int pageSize) throws NacosException;
+
+Page<McpServerBasicInfo> listMcpServer(String mcpName, int pageNo, int pageSize) throws NacosException;
+
+Page<McpServerBasicInfo> listMcpServer(String namespaceId, String mcpName, int pageNo, int pageSize) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型   | 描述                                     |
+|:------------|:-------|:---------------------------------------|
+| pageNo      | int    | MCP服务列表的分页页码，默认为1。                     |
+| pageSize    | int    | MCP服务的分页大小，默认为100。                     |
+| mcpName     | String | MCP服务的准确名字，若传入的mcpName为空，则返回所有MCP服务列表。 |
+| namespaceId | String | MCP服务所属的命名空间id， 默认为`public`。           |
+
+#### 返回参数
+
+| 参数类型                      | 描述           |
+|:--------------------------|:-------------|
+| Page\<McpServerBasicInfo> | MCP服务列表的分页结果 |
+
+#### 请求示例
+
+```java
+try {
+    Page<McpServerBasicInfo> result = aiMaintainerService.listMcpServer();
+    result = aiMaintainerService.listMcpServer(1, 100);
+    result = aiMaintainerService.listMcpServer("", 1, 100);
+    result = aiMaintainerService.listMcpServer("public", "", 1, 100);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+读取配置超时或网络异常，抛出 NacosException 异常。
+
+### 6.2. 搜索MCP服务列表
+
+#### 描述
+
+通过mcpName，模糊搜索MCP服务列表，若传入的mcpName为空，则返回所有MCP服务列表。
+
+```java
+Page<McpServerBasicInfo> searchMcpServer(String mcpName) throws NacosException;
+
+Page<McpServerBasicInfo> searchMcpServer(String mcpName, int pageNo, int pageSize) throws NacosException;
+
+Page<McpServerBasicInfo> searchMcpServer(String namespaceId, String mcpName, int pageNo, int pageSize) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型   | 描述                                     |
+|:------------|:-------|:---------------------------------------|
+| pageNo      | int    | MCP服务列表的分页页码，默认为1。                     |
+| pageSize    | int    | MCP服务的分页大小，默认为100。                     |
+| mcpName     | String | MCP服务的准确名字，若传入的mcpName为空，则返回所有MCP服务列表。 |
+| namespaceId | String | MCP服务所属的命名空间id， 默认为`public`。           |
+
+#### 返回参数
+
+| 参数类型                      | 描述           |
+|:--------------------------|:-------------|
+| Page\<McpServerBasicInfo> | MCP服务列表的分页结果 |
+
+#### 请求示例
+
+```java
+try {
+    Page<McpServerBasicInfo> result = aiMaintainerService.searchMcpServer("");
+    result = aiMaintainerService.searchMcpServer("", 1, 100);
+    result = aiMaintainerService.searchMcpServer("public", "", 1, 100);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+读取配置超时或网络异常，抛出 NacosException 异常。
+
+### 6.3. 获取MCP服务详情
+
+#### 描述
+
+通过mcpName，获取详细的MCP服务信息。
+
+```java
+McpServerDetailInfo getMcpServerDetail(String mcpName) throws NacosException;
+
+McpServerDetailInfo getMcpServerDetail(String mcpName, String version) throws NacosException;
+
+McpServerDetailInfo getMcpServerDetail(String namespaceId, String mcpName, String version) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型   | 描述                           |
+|:------------|:-------|:-----------------------------|
+| mcpName     | String | MCP服务的准确名字                   |
+| version     | String | MCP服务的版本号，不指定时默认返回最新版本。      |
+| namespaceId | String | MCP服务所属的命名空间id， 默认为`public`。 |
+
+#### 返回参数
+
+| 参数类型    | 描述                           |
+|:--------|:-----------------------------|
+
+#### 请求示例
+
+```java
+try {
+    McpServerDetailInfo result = aiMaintainerService.getMcpServerDetail("test");
+    result = aiMaintainerService.getMcpServerDetail("test", "1.0.0");
+    result = aiMaintainerService.getMcpServerDetail("public", "test", "1.0.0");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+读取配置超时或网络异常，抛出 NacosException 异常。
+
+### 6.4. 创建Local(stdio)类型的MCP服务
+
+#### 描述
+
+创建类型为Local(stdio)的MCP服务。
+
+```java
+boolean createLocalMcpServer(String mcpName, String version) throws NacosException;
+
+boolean createLocalMcpServer(String mcpName, String version, String description) throws NacosException;
+
+boolean createLocalMcpServer(String mcpName, String version, String description, McpToolSpecification toolSpec) throws NacosException;
+
+boolean createLocalMcpServer(String mcpName, String version, String description, Map<String, Object> localServerConfig, McpToolSpecification toolSpec) throws NacosException;
+
+boolean createLocalMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名               | 参数类型                 | 描述                                                                                                   |
+|:------------------|:---------------------|:-----------------------------------------------------------------------------------------------------|
+| mcpName           | String               | 创建的MCP服务的名字                                                                                          | 
+| version           | String               | 创建的MCP服务的版本                                                                                          |
+| description       | String               | MCP服务的描述                                                                                             |
+| localServerConfig | Map<String, Object>  | stdio类型的MCP服务配置信息，可参考此MCP服务的启动配置进行配置                                                                 |
+| toolSpec          | McpToolSpecification | MCP服务所支持的工具定义内容                                                                                      |
+| serverSpec        | McpServerBasicInfo   | MCP服务的定义内容，可由`mcpName`, `version`,`description`,`localServerConfig`组成，也可以自行创建详细的`McpServerBasicInfo` |
+
+#### 返回参数
+
+| 参数类型    | 描述                     |
+|:--------|:-----------------------|
+| boolean | 创建成功为`true`，其他为`false` |
+
+#### 请求示例
+
+```java
+try {
+    boolean result = aiMaintainerService.createLocalMcpServer("test", "1.0.0");
+    result = aiMaintainerService.createLocalMcpServer("test", "1.0.0", "test for mcp server");
+    result = aiMaintainerService.createLocalMcpServer("test", "1.0.0", "test for mcp server", null);
+    result = aiMaintainerService.createLocalMcpServer("test", "1.0.0", "test for mcp server", Collections.emptyMap(), null);
+    McpServerBasicInfo mcpSpec = new McpServerBasicInfo();
+    mcpSpec.setName("test");
+    mcpSpec.setProtocol(AiConstants.Mcp.MCP_PROTOCOL_STDIO);
+    mcpSpec.setDescription("test for mcp server");
+    mcpSpec.setLocalServerConfig(Collections.emptyMap());
+    ServerVersionDetail versionDetail = new ServerVersionDetail();
+    versionDetail.setVersion("1.0.0");
+    mcpSpec.setVersionDetail(versionDetail);
+    result = aiMaintainerService.createLocalMcpServer("test", mcpSpec, null);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+读取配置超时或网络异常，抛出 NacosException 异常。
+
+### 6.5. 创建Remote(sse, streamable等)类型的MCP服务
+
+#### 描述
+
+创建类型为Remote(sse, streamable等)的MCP服务。
+
+```java
+boolean createRemoteMcpServer(String mcpName, String version, String protocol, McpEndpointSpec endpointSpec) throws NacosException;
+
+boolean createRemoteMcpServer(String mcpName, String version, String protocol, McpServerRemoteServiceConfig remoteServiceConfig, McpEndpointSpec endpointSpec) throws NacosException;
+
+boolean createRemoteMcpServer(String mcpName, String version, String description, String protocol, McpServerRemoteServiceConfig remoteServiceConfig, McpEndpointSpec endpointSpec) throws NacosException;
+
+boolean createRemoteMcpServer(String mcpName, String version, String description, String protocol, McpServerRemoteServiceConfig remoteServiceConfig, McpEndpointSpec endpointSpec, McpToolSpecification toolSpec) throws NacosException;
+
+boolean createRemoteMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpEndpointSpec endpointSpec) throws NacosException;
+
+boolean createRemoteMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名                 | 参数类型                         | 描述                                                                                                   |
+|:--------------------|:-----------------------------|:-----------------------------------------------------------------------------------------------------|
+| mcpName             | String                       | 创建的MCP服务的名字                                                                                          | 
+| version             | String                       | 创建的MCP服务的版本                                                                                          |
+| description         | String                       | MCP服务的描述                                                                                             |
+| protocol            | String                       | MCP服务所支持的协议类型，目前支持sse, streamable等协议                                                                 |   
+| endpointSpec        | McpEndpointSpec              | MCP服务Remote Endpoint定义内容，可选`REF`或`DIRECT`类型进行配置。                                                     |
+| remoteServiceConfig | McpServerRemoteServiceConfig | sse或streamable类型的MCP服务配置信息，可参考此MCP服务的启动配置进行配置                                                        |
+| toolSpec            | McpToolSpecification         | MCP服务所支持的工具定义内容                                                                                      |
+| serverSpec          | McpServerBasicInfo           | MCP服务的定义内容，可由`mcpName`, `version`,`description`,`localServerConfig`组成，也可以自行创建详细的`McpServerBasicInfo` |
+
+#### 返回参数
+
+| 参数类型    | 描述                     |
+|:--------|:-----------------------|
+| boolean | 创建成功为`true`，其他为`false` |
+
+#### 请求示例
+
+```java
+try {
+    McpEndpointSpec mcpEndpointSpec = new McpEndpointSpec();
+    mcpEndpointSpec.setType(AiConstants.Mcp.MCP_ENDPOINT_TYPE_DIRECT);
+    mcpEndpointSpec.getData().put("address", "127.0.0.1");
+    mcpEndpointSpec.getData().put("port", "8080");
+    boolean result = aiMaintainerService.createRemoteMcpServer("test", "1.0.0", AiConstants.Mcp.MCP_PROTOCOL_SSE, mcpEndpointSpec);
+    result = aiMaintainerService.createRemoteMcpServer("test", "1.0.0", AiConstants.Mcp.MCP_PROTOCOL_SSE, new McpServerRemoteServiceConfig(), mcpEndpointSpec);
+    result = aiMaintainerService.createRemoteMcpServer("test", "1.0.0", "test for mcp server", AiConstants.Mcp.MCP_PROTOCOL_SSE, new McpServerRemoteServiceConfig(), mcpEndpointSpec);
+    result = aiMaintainerService.createRemoteMcpServer("test", "1.0.0", "test for mcp server", AiConstants.Mcp.MCP_PROTOCOL_SSE, new McpServerRemoteServiceConfig(), mcpEndpointSpec, null);
+    McpServerBasicInfo mcpSpec = new McpServerBasicInfo();
+    mcpSpec.setName("test");
+    mcpSpec.setDescription("test for mcp server");
+    mcpSpec.setProtocol(AiConstants.Mcp.MCP_PROTOCOL_SSE);
+    mcpSpec.setRemoteServerConfig(new McpServerRemoteServiceConfig());
+    ServerVersionDetail versionDetail = new ServerVersionDetail();
+    versionDetail.setVersion("1.0.0");
+    mcpSpec.setVersionDetail(versionDetail);
+    result = aiMaintainerService.createRemoteMcpServer("test", mcpSpec, mcpEndpointSpec);
+    result = aiMaintainerService.createRemoteMcpServer("test", mcpSpec, null, mcpEndpointSpec);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+读取配置超时或网络异常，抛出 NacosException 异常。
+
+### 6.6. 更新MCP服务
+
+#### 描述
+
+更新指定的MCP服务。
+
+```java
+boolean updateMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec) throws NacosException;
+
+boolean updateMcpServer(String mcpName, boolean isLatest, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec) throws NacosException;
+
+boolean updateMcpServer(String namespaceId, String mcpName, boolean isLatest, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名          | 参数类型                 | 描述                          |
+|:-------------|:---------------------|:----------------------------|
+| mcpName      | String               | MCP服务的名称                    |
+| namespaceId  | String               | MCP服务所属的命名空间ID，默认为`public`  |
+| isLatest     | boolean              | 更新的MCP服务版本是否为最新版本，默认为`true` |
+| serverSpec   | McpServerBasicInfo   | 新版本的MCP服务的服务定义内容            |
+| toolSpec     | McpToolSpecification | 新版本的MCP服务的工具定义内容            |
+| endpointSpec | McpEndpointSpec      | 新版本的MCP服务的Endpoint定义内容      | 
+
+#### 返回参数
+
+| 参数类型    | 描述                     |
+|:--------|:-----------------------|
+| boolean | 更新成功为`true`，其他为`false` |
+
+#### 请求示例
+
+```java
+try {
+    McpServerBasicInfo mcpSpec = new McpServerBasicInfo();
+    mcpSpec.setName("test");
+    mcpSpec.setDescription("test for mcp server");
+    mcpSpec.setProtocol(AiConstants.Mcp.MCP_PROTOCOL_STDIO);
+    Map<String, Object> localServerConfig = Collections.singletonMap("test", new HashMap<>());
+    mcpSpec.setLocalServerConfig(localServerConfig);
+    ServerVersionDetail versionDetail = new ServerVersionDetail();
+    versionDetail.setVersion("1.0.1");
+    mcpSpec.setVersionDetail(versionDetail);
+    boolean result = aiMaintainerService.updateMcpServer("test", mcpSpec, null, null);
+    result = aiMaintainerService.updateMcpServer("test", true, null, null, null);
+    result = aiMaintainerService.updateMcpServer("public", "test", true, null, null, null);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+读取配置超时或网络异常，抛出 NacosException 异常。
+
+### 6.7. 删除MCP服务
+
+#### 描述
+
+删除指定的MCP服务。
+
+```java
+boolean deleteMcpServer(String mcpName) throws NacosException;
+
+boolean deleteMcpServer(String namespaceId, String mcpName) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型   | 描述                         |
+|:------------|:-------|:---------------------------|
+| mcpName     | String | MCP服务的名称                   |
+| namespaceId | String | MCP服务所属的命名空间ID，默认为`public` |
+
+#### 返回参数
+
+| 参数类型    | 描述                     |
+|:--------|:-----------------------|
+| boolean | 删除成功为`true`，其他为`false` |
+
+#### 请求示例
+
+```java
+try {
+    boolean result = aiMaintainerService.deleteMcpServer("test");
+    result = aiMaintainerService.deleteMcpServer("public", "test");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+读取配置超时或网络异常，抛出 NacosException 异常。

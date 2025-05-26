@@ -20,8 +20,8 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 |参数名|默认值|对应docker镜像环境变量|说明|
 |-----|------|------|----|
 |nacos.core.auth.enabled|false|NACOS_AUTH_ENABLE|是否开启Nacos客户端访问鉴权功能|
-|nacos.core.auth.admin.enabled|true|(TODO，将在3.0.0正式发布时添加)|是否开启Nacos Admin API访问鉴权功能|
-|nacos.core.auth.console.enabled|true|(TODO，将在3.0.0正式发布时添加)|是否开启Nacos控制台访问鉴权功能|
+|nacos.core.auth.admin.enabled|true|NACOS_AUTH_ADMIN_ENABLE|是否开启Nacos Admin API访问鉴权功能|
+|nacos.core.auth.console.enabled|true|NACOS_AUTH_CONSOLE_ENABLE|是否开启Nacos控制台访问鉴权功能|
 |nacos.core.auth.system.type|nacos|NACOS_AUTH_SYSTEM_TYPE|鉴权类型|
 |nacos.core.auth.plugin.nacos.token.secret.key|无默认值|NACOS_AUTH_TOKEN|默认鉴权插件用于生成用户登陆临时accessToken所使用的密钥，**使用老版本默认值有安全风险**|
 |nacos.core.auth.plugin.nacos.token.expire.seconds|18000|NACOS_AUTH_TOKEN_EXPIRE_SECONDS|用户登陆临时accessToken的过期时间|
