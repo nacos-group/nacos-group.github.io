@@ -2719,36 +2719,42 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/instance" -d 'serviceName=test&
 
 #### 请求参数
 
-| 参数名           | 参数类型     | 是否必填  | 描述                       |
-|---------------|----------|-------|--------------------------|
-| `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`public` |
-| `mcpId`       | `string` | **是** | MCP服务的ID，一般为UUID         |
-| `mcpName`     | `string` | **是** | MCP服务的名字模版               |
-| `version`     | `string` | 否     | MCP服务的版本，未传入是返回最新版本      |
+| 参数名           | 参数类型     | 是否必填  | 描述                                       |
+|---------------|----------|-------|------------------------------------------|
+| `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`public`                 |
+| `mcpId`       | `string` | **是** | MCP服务的ID，一般为UUID，与`mcpName`二选一输入，建议传入此值。 |
+| `mcpName`     | `string` | **是** | MCP服务的名字模版，与`mcpId`二选一输入，建议传入`mcpId`。    |
+| `version`     | `string` | 否     | MCP服务的版本，未传入是返回最新版本                      |
 
 #### 返回数据
 
 返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
-| 参数名                            | 参数类型                  | 描述                                                                                              |
-|--------------------------------|-----------------------|-------------------------------------------------------------------------------------------------|
-| `id`                           | `String`              | MCP服务的ID，一般为UUID。                                                                               |
-| `name`                         | `String`              | MCP服务名。                                                                                         |
-| `protocol`                     | `String`              | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
-| `frontProtocol`                | `String`              | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
-| `description`                  | `String`              | MCP服务的描述。                                                                                       |
-| `repository`                   | `String`              | MCP服务的存储仓库。                                                                                     |                                                                                          |
-| `versionDetail`                | `Object`              | MCP服务的版本信息。                                                                                     |
-| `versionDetail`.`version`      | `String`              | MCP服务的版本号。                                                                                      |
-| `versionDetail`.`release_date` | `String`              | MCP服务的版本发布时间。                                                                                   |
-| `versionDetail`.`is_latest`    | `boolean`             | MCP服务的版本是否为最新版本。                                                                                |
-| `localServerConfig`            | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
-| `remoteServerConfig`           | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
-| `credentials`                  | `List`                | MCP服务若类型为**非stdio**，存在此信息，记录访问远端服务的身份敏感信息。                                                      |
-| `enabled`                      | `boolean`             | MCP服务是否启用。                                                                                      |
-| `capabilities`                 | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
-| `backendEndpoints`             | `List`                | MCP服务若类型为**非stdio**，存在此信息，记录访问远端服务的具体地址信息。                                                      |
-| `toolSpec`                     | `Map<String, Object>` | MCP服务支持的能力类型包含`TOOL`时，存在此信息，记录工具的详细配置信息。                                                        |
+| 参数名                  | 参数类型                  | 描述                                                                                              |
+|----------------------|-----------------------|-------------------------------------------------------------------------------------------------|
+| `id`                 | `String`              | MCP服务的ID，一般为UUID。                                                                               |
+| `name`               | `String`              | MCP服务名。                                                                                         |
+| `namespaceId`        | `String`              | MCP服务所属的命名空间ID。                                                                                 |
+| `protocol`           | `String`              | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
+| `frontProtocol`      | `String`              | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
+| `description`        | `String`              | MCP服务的描述。                                                                                       |
+| `repository`         | `String`              | MCP服务的存储仓库。                                                                                     |                                                                                          |
+| `versionDetail`      | `VersionDetail`       | MCP服务所查询的版本信息。                                                                                  |
+| `localServerConfig`  | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
+| `remoteServerConfig` | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
+| `enabled`            | `boolean`             | MCP服务是否启用。                                                                                      |
+| `capabilities`       | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
+| `backendEndpoints`   | `List`                | MCP服务若类型为**非stdio**，存在此信息，记录访问远端服务的具体地址信息。                                                      |
+| `toolSpec`           | `Map<String, Object>` | MCP服务支持的能力类型包含`TOOL`时，存在此信息，记录工具的详细配置信息。                                                        |
+| `allVersions`        | `List<VersionDetail>` | MCP服务的所有版本详情的列表。                                                                                |
+
+其中`VersionDetail`结构如下：
+
+| 参数名            | 参数类型      | 描述               |
+|----------------|-----------|------------------|
+| `version`      | `String`  | MCP服务的版本号。       |
+| `release_date` | `String`  | MCP服务的版本发布时间。    |
+| `is_latest`    | `boolean` | MCP服务的版本是否为最新版本。 |
 
 #### 示例
 
@@ -2815,12 +2821,69 @@ curl -X GET '127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=test&mc
 
 #### 请求参数
 
-| 参数名                     | 参数类型         | 是否必填  | 描述                                  |
-|-------------------------|--------------|-------|-------------------------------------|
-| `namespaceId`           | `string`     | 否     | MCP服务的命名空间ID，默认为`public` |
-| `serverSpecification`   | `jsonString` | **是** | MCP服务的描述详情                          |
-| `toolSpecification`     | `jsonString` | 否     | MCP服务的工具描述详情                        |
-| `endpointSpecification` | `jsonString` | 否     | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效      |
+| 参数名                     | 参数类型         | 是否必填  | 描述                             |
+|-------------------------|--------------|-------|--------------------------------|
+| `namespaceId`           | `string`     | 否     | MCP服务的命名空间ID，默认为`public`       |
+| `serverSpecification`   | `jsonString` | **是** | MCP服务的描述详情                     |
+| `toolSpecification`     | `jsonString` | 否     | MCP服务的工具描述详情                   |
+| `endpointSpecification` | `jsonString` | 否     | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效 |
+
+其中`serverSpecification`、`toolSpecification`、`endpointSpecification`参数的详细内容如下：
+
+> serverSpecification
+
+| 参数名                  | 参数类型                  | 描述                                                                                              |
+|----------------------|-----------------------|-------------------------------------------------------------------------------------------------|
+| `id`                 | `String`              | MCP服务的ID，一般为UUID，必须传入，用于定位待更新的MCP服务。                                                            |
+| `name`               | `String`              | MCP服务名。                                                                                         |
+| `protocol`           | `String`              | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
+| `frontProtocol`      | `String`              | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
+| `description`        | `String`              | MCP服务的描述。                                                                                       |
+| `repository`         | `String`              | MCP服务的存储仓库。                                                                                     |    |
+| `versionDetail`      | `VersionDetail`       | MCP服务的版本信息。                                                                                     |
+| `version`            | `String`              | MCP服务的简易版本版本信息，主要用于兼容，若已设置`versionDetail`,则该字段无效。                                               |    |
+| `localServerConfig`  | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
+| `remoteServerConfig` | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
+| `enabled`            | `boolean`             | MCP服务是否启用。                                                                                      |
+| `capabilities`       | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
+
+其中`VersionDetail`结构如下：
+
+| 参数名            | 参数类型      | 描述               |
+|----------------|-----------|------------------|
+| `version`      | `String`  | MCP服务的版本号。       |
+| `release_date` | `String`  | MCP服务的版本发布时间。    |
+| `is_latest`    | `boolean` | MCP服务的版本是否为最新版本。 |
+
+> toolSpecification
+
+| 参数名         | 参数类型                       | 描述                                                                                      |
+|-------------|----------------------------|-----------------------------------------------------------------------------------------|
+| `tools`     | `List<McpTool>`            | 该MCP Server所提供的工具列表，参考标准MCP协议中对于MCP Tool的定义                                             |
+| `toolsMeta` | `Map<String, McpToolMeta>` | 该MCP Server所提供的工具的额外元数据信息，可用于扩展标准MCP协议中未定义但又使用中需要的信息。key为`McpTool`的`name`, value为拓展元数据。 |
+
+其中`McpTool`结构如下：
+
+| 参数名           | 参数类型                  | 描述                                            |
+|---------------|-----------------------|-----------------------------------------------|
+| `name`        | `String`              | MCP 工具的名称                                     |
+| `description` | `String`              | MCP 工具的描述                                     |
+| `inputSchema` | `Map<String, Object>` | MCP工具的入参描述，参考标准MCP协议，主要包含，`类型`,`是否必须`,`描述` 等。 |
+
+其中`McpToolMeta` 结构如下：
+
+| 参数名             | 参数类型                  | 描述                             |
+|-----------------|-----------------------|--------------------------------|
+| `invokeContext` | `Map<String, String>` | MCP 工具调用时的上下文信息，如后端服务的`Path`等。 |
+| `enabled`       | `boolean`             | MCP工具是否启用。                     |
+| `templates`     | `Map<String, String>` | MCP工具的模板信息。用于进行协议转换时进行参数的映射。   |
+
+> endpointSpecification
+
+| 参数名    | 参数类型                  | 描述                                                                                                                               |
+|--------|-----------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| `type` | `String`              | MCP endpoint的后端服务类型，可选值`REF`和`DIRECT`.                                                                                           |
+| `data` | `Map<String, String>` | MCP endpoint的后端服务的实际数据， 根据`type`的不同，传入的参数不同，如`REF`传入的为`namespaceId`, `groupName` 和 `serviceName`；`DIRECT`传入的为`address` 和 `port`。 |
 
 #### 返回数据
 
@@ -2870,12 +2933,69 @@ curl -X PUT '127.0.0.1:8080/v3/console/ai/mcp' \
 
 #### 请求参数
 
-| 参数名                     | 参数类型         | 是否必填  | 描述                                  |
-|-------------------------|--------------|-------|-------------------------------------|
-| `namespaceId`           | `string`     | 否     | MCP服务的命名空间ID，默认为`public` |
-| `serverSpecification`   | `jsonString` | **是** | MCP服务的描述详情                          |
-| `toolSpecification`     | `jsonString` | 否     | MCP服务的工具描述详情                        |
-| `endpointSpecification` | `jsonString` | 否     | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效      |
+| 参数名                     | 参数类型         | 是否必填  | 描述                             |
+|-------------------------|--------------|-------|--------------------------------|
+| `namespaceId`           | `string`     | 否     | MCP服务的命名空间ID，默认为`public`       |
+| `serverSpecification`   | `jsonString` | **是** | MCP服务的描述详情                     |
+| `toolSpecification`     | `jsonString` | 否     | MCP服务的工具描述详情                   |
+| `endpointSpecification` | `jsonString` | 否     | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效 |
+
+其中`serverSpecification`、`toolSpecification`、`endpointSpecification`参数的详细内容如下：
+
+> serverSpecification
+
+| 参数名                  | 参数类型                  | 描述                                                                                              |
+|----------------------|-----------------------|-------------------------------------------------------------------------------------------------|
+| `id`                 | `String`              | MCP服务的ID，一般为UUID，无需传入，系统自动生成。                                                                   |
+| `name`               | `String`              | MCP服务名。                                                                                         |
+| `protocol`           | `String`              | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
+| `frontProtocol`      | `String`              | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
+| `description`        | `String`              | MCP服务的描述。                                                                                       |
+| `repository`         | `String`              | MCP服务的存储仓库。                                                                                     |    |
+| `versionDetail`      | `VersionDetail`       | MCP服务的版本信息。                                                                                     |
+| `version`            | `String`              | MCP服务的简易版本版本信息，主要用于兼容，若已设置`versionDetail`,则该字段无效。                                               |    |
+| `localServerConfig`  | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
+| `remoteServerConfig` | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
+| `enabled`            | `boolean`             | MCP服务是否启用。                                                                                      |
+| `capabilities`       | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
+
+其中`VersionDetail`结构如下：
+
+| 参数名            | 参数类型      | 描述               |
+|----------------|-----------|------------------|
+| `version`      | `String`  | MCP服务的版本号。       |
+| `release_date` | `String`  | MCP服务的版本发布时间。    |
+| `is_latest`    | `boolean` | MCP服务的版本是否为最新版本。 |
+
+> toolSpecification
+
+| 参数名         | 参数类型                       | 描述                                                                                      |
+|-------------|----------------------------|-----------------------------------------------------------------------------------------|
+| `tools`     | `List<McpTool>`            | 该MCP Server所提供的工具列表，参考标准MCP协议中对于MCP Tool的定义                                             |
+| `toolsMeta` | `Map<String, McpToolMeta>` | 该MCP Server所提供的工具的额外元数据信息，可用于扩展标准MCP协议中未定义但又使用中需要的信息。key为`McpTool`的`name`, value为拓展元数据。 |
+
+其中`McpTool`结构如下：
+
+| 参数名           | 参数类型                  | 描述                                            |
+|---------------|-----------------------|-----------------------------------------------|
+| `name`        | `String`              | MCP 工具的名称                                     |
+| `description` | `String`              | MCP 工具的描述                                     |
+| `inputSchema` | `Map<String, Object>` | MCP工具的入参描述，参考标准MCP协议，主要包含，`类型`,`是否必须`,`描述` 等。 |
+
+其中`McpToolMeta` 结构如下：
+
+| 参数名             | 参数类型                  | 描述                             |
+|-----------------|-----------------------|--------------------------------|
+| `invokeContext` | `Map<String, String>` | MCP 工具调用时的上下文信息，如后端服务的`Path`等。 |
+| `enabled`       | `boolean`             | MCP工具是否启用。                     |
+| `templates`     | `Map<String, String>` | MCP工具的模板信息。用于进行协议转换时进行参数的映射。   |
+
+> endpointSpecification
+
+| 参数名    | 参数类型                  | 描述                                                                                                                               |
+|--------|-----------------------|----------------------------------------------------------------------------------------------------------------------------------|
+| `type` | `String`              | MCP endpoint的后端服务类型，可选值`REF`和`DIRECT`.                                                                                           |
+| `data` | `Map<String, String>` | MCP endpoint的后端服务的实际数据， 根据`type`的不同，传入的参数不同，如`REF`传入的为`namespaceId`, `groupName` 和 `serviceName`；`DIRECT`传入的为`address` 和 `port`。 |
 
 #### 返回数据
 
@@ -2925,12 +3045,12 @@ curl -X POST '127.0.0.1:8080/v3/console/ai/mcp' \
 
 #### 请求参数
 
-| 参数名           | 参数类型     | 是否必填  | 描述                       |
-|---------------|----------|-------|--------------------------|
-| `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`public` |
-| `mcpId`       | `string` | **是** | MCP服务的ID，一般为UUID         |
-| `mcpName`     | `string` | **是** | MCP服务的名字模版               |
-| `version`     | `string` | 否     | MCP服务的版本，未传入是为最新版本       |
+| 参数名           | 参数类型     | 是否必填  | 描述                                       |
+|---------------|----------|-------|------------------------------------------|
+| `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`public`                 |
+| `mcpId`       | `string` | **是** | MCP服务的ID，一般为UUID，与`mcpName`二选一输入，建议传入此值。 |
+| `mcpName`     | `string` | **是** | MCP服务的名字模版，与`mcpId`二选一输入，建议传入`mcpId`。    |
+| `version`     | `string` | 否     | MCP服务的版本，未传入是为最新版本                       |
 
 
 #### 返回数据
@@ -3002,15 +3122,20 @@ curl -X DELETE '127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=test
 | `pageItems`[i].`frontProtocol`                | `String`              | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
 | `pageItems`[i].`description`                  | `String`              | MCP服务的描述。                                                                                       |
 | `pageItems`[i].`repository`                   | `String`              | MCP服务的存储仓库。                                                                                     |                                                                                          |
-| `pageItems`[i].`versionDetail`                | `Object`              | MCP服务的版本信息。                                                                                     |
-| `pageItems`[i].`versionDetail`.`version`      | `String`              | MCP服务的版本号。                                                                                      |
-| `pageItems`[i].`versionDetail`.`release_date` | `String`              | MCP服务的版本发布时间。                                                                                   |
-| `pageItems`[i].`versionDetail`.`is_latest`    | `boolean`             | MCP服务的版本是否为最新版本。                                                                                |
+| `pageItems`[i].`versionDetail`                | `VersionDetail`       | MCP服务当前最新的版本信息。                                                                                 |
 | `pageItems`[i].`localServerConfig`            | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
 | `pageItems`[i].`remoteServerConfig`           | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
 | `pageItems`[i].`latestPublishedVersion`       | `String`              | MCP服务最新版本的版本号。                                                                                  |
-| `pageItems`[i].`versionDetails`               | `List<versionDetail>` | MCP服务版本详情的列表。                                                                                   |
+| `pageItems`[i].`versionDetails`               | `List<VersionDetail>` | MCP服务版本详情的列表。                                                                                   |
 | `pageItems`[i].`capabilities`                 | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
+
+其中`VersionDetail`结构如下：
+
+| 参数名            | 参数类型      | 描述               |
+|----------------|-----------|------------------|
+| `version`      | `String`  | MCP服务的版本号。       |
+| `release_date` | `String`  | MCP服务的版本发布时间。    |
+| `is_latest`    | `boolean` | MCP服务的版本是否为最新版本。 |
 
 #### 示例
 
