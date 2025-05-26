@@ -145,7 +145,6 @@ String value = properties2.getProperty("global-key1");
 | ramRoleName                    | RAM_ROLE_NAME                     | 使用阿里云RAM鉴权时需要使用的ramRoleName                                                                                  | 任意字符串                                             | 无                        |
 | signatureRegionId              | SIGNATURE_REGION_ID               | 使用阿里云RAM鉴权时，需要使用的signatureRegionId                                                                           | 任意字符串                                             | 无                        |
 | logAllProperties               | LOG_ALL_PROPERTIES                | 启动Java SDK时，是否打印全量参数，包含自定义properties、JVM和环境变量，主要用户调试和问题排查。                                                   | boolean                                           | false                    |
-| enableClientMetrics             | ENABLE_CLIENT_METRICS              | 是否启用 Java SDK 的 Metrics 功能 | boolean     | true                  |
 | ~~clusterName~~                | ~~CLUSTER_NAME~~                  | 由于和服务实例的ClusterName名称相同，容易造成混淆，该参数已废弃，请使用`endPointClusterName`                                               | 任意URL支持的path                                      | serverlist               |
 | ~~isAdaptClusterNameUsage~~    | ~~IS_ADAPT_CLUSTER_NAME_USAGE~~   | 是否兼容通过`clusterName`的方式设置`endPointClusterName`，让升级兼容性更好                                                       | boolean                                           | false                    |
 | ~~serverName~~                 | ~~SERVER_NAME~~                   | 该 JAVA SDK 的名称，目前仅在访问endpoint时使用，由于使用率低且命名不合理，将废弃                                                            | 任意字符串                                             | 由serverAddr/endpoint自动拼接 |
@@ -184,7 +183,7 @@ String value = properties2.getProperty("global-key1");
 
 ### 2.4. 连接相关
 
-Nacos Java SDK 连接Nacos Server时，可以设置一系列的参数
+Nacos Java SDK 连接Nacos Server时，可以设置一系列的参数，来提升针对网络抖动时的容错能力
 
 | 参数名                                                             | 含义                                                                                 | 可选值     | 默认值           | 
 |-----------------------------------------------------------------|------------------------------------------------------------------------------------|---------|---------------|
@@ -204,16 +203,6 @@ Nacos Java SDK 连接Nacos Server时，可以设置一系列的参数
 | nacos.remote.client.grpc.channel.keep.alive                     | 该Nacos Java SDK的GRPC连接对应的TCP Channel的Keep Alive时间，此时间应该大于`connect.keep.alive`,单位毫秒 | 任意int值  | 6 * 60 * 1000 |
 | nacos.remote.client.grpc.channel.keep.alive.timeout             | 该Nacos Java SDK的GRPC连接对应的TCP Channel的Keep Alive超时时间，单位毫秒                           | 任意Long值 | 20 * 1000     |
 | nacos.remote.client.grpc.channel.capability.negotiation.timeout | 该Nacos Java SDK的GRPC连接对应的TLS握手超时时间                                                 | 任意Long值 | 5000          |
-| nacos.remote.client.rpc.tls.enable                              | 是否启用TLS加密                                                                                          | 布尔值                       | false         |
-| nacos.remote.client.rpc.tls.provider                            | TLS提供者                                                                                                | OPENSSL，JDK，OPENSSL_REFCNT | 无            |
-| nacos.remote.client.rpc.tls.mutualAuth                          | 是否启用双向认证                                                                                         | 布尔值                       | false         |
-| nacos.remote.client.rpc.tls.protocols                           | TLS协议版本，多个版本用逗号分隔                                                                          | TLSv1，TLSv1.1，TLSv1.2      | 无            |
-| nacos.remote.client.rpc.tls.ciphers                             | 加密套件列表，多个套件用逗号分隔                                                                         | 任意字符串                   | 无            |
-| nacos.remote.client.rpc.tls.certChainFile                       | 证书文件路径                                                                                             | 任意字符串                   | 无            |
-| nacos.remote.client.rpc.tls.certPrivateKey                      | 私钥文件路径                                                                                             | 任意字符串                   | 无            |
-| nacos.remote.client.rpc.tls.certPrivateKeyPassword              | 如果私钥文件被密码保护，则需要在此指定该密码                                                             | 任意字符串                   | 无            |
-| nacos.remote.client.rpc.tls.trustCollectionChainPath            | 包含所有受信任CA证书的文件路径                                                                           | 任意字符串                   | 无            |
-| nacos.remote.client.rpc.tls.trustAll                            | 是否忽略所有证书的有效性检查                                                                             | 布尔值                       | false         |
 
 ### 2.5. 其他参数
 

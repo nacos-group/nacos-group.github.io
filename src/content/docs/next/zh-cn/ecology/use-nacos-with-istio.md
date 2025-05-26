@@ -1,21 +1,26 @@
 ---
 title: Nacos 融合Istio 下发xDS协议
-keywords: [Istio,xDs,Envoy]
+keywords: [ Istio,xDs,Envoy ]
 description: Nacos 融合Istio 下发xDS协议
 ---
+
 # Istio 指南
 
-支持了 xDS 协议中的 CDS、EDS 服务，并为 EDS 以及 MCP 实现了增量推送。用户可以使用 Envoy 或其他支持 xDS 协议的客户端与 Nacos 进行对接，实现服务发现功能。
+支持了 xDS 协议中的 CDS、EDS 服务，并为 EDS 以及 MCP 实现了增量推送。用户可以使用 Envoy 或其他支持 xDS 协议的客户端与 Nacos
+进行对接，实现服务发现功能。
 
 ## 配置
 
 ### 服务端
 
-对于发行包，修改 `nacos/conf/application.properties` 中的 `nacos.istio.mcp.server.enabled` 为 true；
+对于发行包，修改 `nacos/conf/application.properties` 中的 `nacos.istio.mcp.server.enabled`
+和`nacos.extension.naming.istio.enabled` 为 true；
 
-对于源码，修改 `nacos/distribution/conf/application.properties` 中的 `nacos.istio.mcp.server.enabled` 为 true 。
+对于源码，修改 `nacos/distribution/conf/application.properties` 中的 `nacos.istio.mcp.server.enabled`
+和`nacos.extension.naming.istio.enabled` 为 true 。
 
-若要使用 MCP 增量服务，除上述配置需修改外，还需修改 `nacos/istio/misc/IstioConfig` 中的 `nacos.istio.server.full` 为 false。
+若要使用 MCP 增量服务，除上述配置需修改外，还需修改 `nacos/istio/misc/IstioConfig` 中的 `nacos.istio.server.full` 为
+false。
 
 ### 客户端
 
@@ -37,68 +42,68 @@ dynamic_resources:
     api_type: GRPC
     transport_api_version: V3
     grpc_services:
-    - envoy_grpc:
-        cluster_name: nacos_xds
+      - envoy_grpc:
+          cluster_name: nacos_xds
   cds_config:
-    ads: {}
+    ads: { }
   lds_config:
     path: /etc/envoy/lds.yaml
   # ads: {}
 
 static_resources:
   clusters:
-  - type: STATIC
-    connect_timeout: 1s
-    typed_extension_protocol_options:
-      envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
-        "@type": type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions
-        explicit_http_config:
-          http2_protocol_options: {}
-    name: nacos_xds 
-    load_assignment:
-      cluster_name: nacos_xds 
-      endpoints:
-      - lb_endpoints:
-        - endpoint:
-            address:
-              socket_address:
-                address: 127.0.0.1 
-                port_value: 18848
+    - type: STATIC
+      connect_timeout: 1s
+      typed_extension_protocol_options:
+        envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
+          "@type": type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions
+          explicit_http_config:
+            http2_protocol_options: { }
+      name: nacos_xds
+      load_assignment:
+        cluster_name: nacos_xds
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address:
+                      address: 127.0.0.1
+                      port_value: 18848
 ```
 
 **lds**：对于监听的服务获取 CDS 后会主动向服务端获取 EDS，监听的服务可自行更改
 
 ```yaml
 resources:
-- "@type": type.googleapis.com/envoy.config.listener.v3.Listener
-  name: listener_0
-  address:
-    socket_address: { address: 0.0.0.0, port_value: 80 }
-  # listener_filters:
-  # - name: "envoy.filters.listener.tls_inspector"
-  filter_chains:
-  - filters:
-    - name: envoy.filters.network.http_connection_manager
-      typed_config:
-        "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
-        stat_prefix: ingress_http
-        access_log:
-        - name: envoy.access_loggers.stdout
-          typed_config:
-            "@type": type.googleapis.com/envoy.extensions.access_loggers.stream.v3.StdoutAccessLog
-        codec_type: AUTO
-        route_config:
-          name: local_route
-          virtual_hosts:
-          - name: local_service
-            domains: ["*"]
-            routes:
-            - match: { prefix: "/" }
-              name: test
-              route:
-                cluster: outbound|8071||service-provider.DEFAULT-GROUP.e77d7925-1c90-4fa9-93cb-83153a099636.nacos
-        http_filters:
-        - name: envoy.filters.http.router
+  - "@type": type.googleapis.com/envoy.config.listener.v3.Listener
+    name: listener_0
+    address:
+      socket_address: { address: 0.0.0.0, port_value: 80 }
+    # listener_filters:
+    # - name: "envoy.filters.listener.tls_inspector"
+    filter_chains:
+      - filters:
+          - name: envoy.filters.network.http_connection_manager
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+              stat_prefix: ingress_http
+              access_log:
+                - name: envoy.access_loggers.stdout
+                  typed_config:
+                    "@type": type.googleapis.com/envoy.extensions.access_loggers.stream.v3.StdoutAccessLog
+              codec_type: AUTO
+              route_config:
+                name: local_route
+                virtual_hosts:
+                  - name: local_service
+                    domains: [ "*" ]
+                    routes:
+                      - match: { prefix: "/" }
+                        name: test
+                        route:
+                          cluster: outbound|8071||service-provider.DEFAULT-GROUP.e77d7925-1c90-4fa9-93cb-83153a099636.nacos
+              http_filters:
+                - name: envoy.filters.http.router
 ```
 
 ## 运行
@@ -150,7 +155,6 @@ server.port=8071
 spring.application.name=service-provider
 spring.cloud.nacos.discovery.namespace=e77d7925-1c90-4fa9-93cb-83153a099636
 spring.cloud.nacos.discovery.server-addr=127.0.0.1:8848
-
 #service-consumer
 server.port=8080
 spring.application.name=service-consumer
