@@ -46,7 +46,7 @@ Nacos`3.0.1`版本发布了，在`3.0.0`版本的基础上， 主要支持了`MC
 
 ### MCP Registry API
 
-[MCP Registry API](https://github.com/modelcontextprotocol/registry/blob/main/api/openapi.yaml) 是 [MCP官方社区](https://github.com/modelcontextprotocol) 所提出的一个用于统一各个MCP发布市场的一种OpenAPI。它被设计为<font style="color:rgb(13, 18, 57);">集中管理公开可用的MCP服务器元数据的REST API，允许MCP服务器创建者以标准化格式提交和维护其服务器的元数据。该API使MCP客户端应用（如Clause，Cline等）和“服务器聚合器”类型消费者能够发现并安装MCP服务器。类似于提供了一个MCP服务的一个</font>`<font style="color:rgb(13, 18, 57);">Maven中央元数据仓库</font>`<font style="color:rgb(13, 18, 57);">。</font>
+[MCP Registry API](https://github.com/modelcontextprotocol/registry/blob/main/api/openapi.yaml) 是 [MCP官方社区](https://github.com/modelcontextprotocol) 所提出的一个用于统一各个MCP发布市场的一种OpenAPI。它被设计为<font style="color:rgb(13, 18, 57);">集中管理公开可用的MCP服务器元数据的REST API，允许MCP服务器创建者以标准化格式提交和维护其服务器的元数据。该API使MCP客户端应用（如Clause，Cline等）和“服务器聚合器”类型消费者能够发现并安装MCP服务器。类似于提供了一个MCP服务的一个`Maven中央元数据仓库`。
 
 [MCP官方社区](https://github.com/modelcontextprotocol)不提供MCP Registry的私有化部署支持，这对于一些不希望将自身MCP服务暴露在公开环境中的服务提供方来说，就需要自行适配MCP Registry API 并提供相应的管理功能。
 
