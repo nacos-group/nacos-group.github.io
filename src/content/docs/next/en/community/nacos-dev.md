@@ -97,6 +97,7 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [godhth](https://github.com/godhth)                                 | Tianhui Huang | CE Cloud                           | Committer  | 1165559068@qq.com            |
 | [kiko-cyy](https://github.com/kiko-cyy)                             | Yinyin Cao    | Alibaba Cloud                      | Committer  | caoyinyin_cyy@163.com        |
 | [Wuyunfan-BUPT](https://github.com/Wuyunfan-BUPT)                   | Yunfan Wu     | Alibaba Cloud                      | Committer  | wyf_mohen@163.com            |
+| [KiteSoar](https://github.com/KiteSoar) | Shihao Hu | Beijing University of Posts and Telecommunications | Committer | hushihao2020x@163.com |
 
 ### Contributors
 
