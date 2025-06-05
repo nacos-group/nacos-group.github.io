@@ -1,14 +1,15 @@
 ---
-title: Nacos MCP Router 用户手册
-keywords: [Nacos MCP Router,MCP,用户手册]
-description: Nacos MCP Router 用户手册
+title: Nacos MCP Router 使用手册
+keywords: [Nacos MCP Router,MCP,使用手册]
+description: Nacos MCP Router 使用手册
 sidebar:
     order: 9
 ---
 
 ## 概述
 Nacos MCP Router是一个基于MCP官方标准SDK实现的的MCP Server。它提供了一组工具，提供MCP Server推荐、分发、安装及代理其他MCP Server的功能，帮助用户更方便的使用MCP Server服务， 其主要架构如下：
-![alt text](./img/router-architecture.png)
+    
+![alt text](/public/img/doc/ecology/nacos-mcp-router/router-architecture.png)
 
 ## 功能介绍
 Nacos MCP Router 有两种工作模式：
@@ -43,7 +44,7 @@ Nacos MCP Router 使用Nacos 作为MCP Registry，请请确保后台已经启动
 ### router模式
 1. 注册MCP Server
 在Nacos控制台注册可能要用到的MCP Server，并设置MCP Server的配置, 以高德地图为例。
-![alt text](./img/mcp-register.png)
+![alt text](/public/img/doc/ecology/nacos-mcp-router/mcp-register.png)
 2. 启动Nacos MCP Router
     - stdio模式启动，stdio模式需直接配置在Claude、Clineor CherryStudio中。
         * uvx启动
@@ -146,8 +147,7 @@ Nacos MCP Router 使用Nacos 作为MCP Registry，请请确保后台已经启动
         }
     ```
 4. 体验Nacos MCP Router
-    ![alt text](./img/router-weather-question.png)
-
+    ![alt text](/public/img/doc/ecology/nacos-mcp-router/router-weather-question.png)
 
 
 ### proxy模式
@@ -159,7 +159,21 @@ docker run -i --rm --network host -e NACOS_ADDR=$NACOS_ADDR -e NACOS_USERNAME=$N
 ```
 
 启动成功后，设置CherryStudio MCP的配置项,即可看到被代理的MCP工具列表。
-![alt text](./img/router-proxy-cherry-studio.png)
+![alt text](/public/img/doc/ecology/nacos-mcp-router/router-proxy-cherry-studio.png)
 
-![alt text](./img/router-proxy-cherry-studio-tools.png)
+![alt text](/public/img/doc/ecology/nacos-mcp-router/router-proxy-cherry-studio-tools.png)
 
+
+## 环境变量配置
+
+|    |               |                |      |                                           |
+|----|---------------|----------------|------|-------------------------------------------|
+|  参数 | 描述            | 默认值            | 是否必填 | 备注                                        |
+| NACOS_ADDR | Nacos 服务器地址   | 127.0.0.1:8848 | 否    | 填写 Nacos 服务器的地址，如 192.168.1.1:8848，注意要写端口 |
+| NACOS_USERNAME | Nacos 用户名     | nacos          | 否    | 填写 Nacos 用户名，如 nacos                      |
+| NACOS_PASSWORD | Nacos 密码      | 密码             | 是    | 填写 Nacos 密码，如 nacos                       |
+|NACOS_NAMESPACE| Nacos命名空间     | public         | 否    | Nacos命名空间，如 public                        |
+| TRANSPORT_TYPE | 传输协议类型        | stdio          | 否    | 填写传输协议类型，可选值：stdio、sse、streamable_http    |
+| PROXIED_MCP_NAME | 代理的 MCP 服务器名称 | -              | 否    | proxy模式下需要被转换的 MCP 服务器名称，需要先注册到Nacos      |
+| MODE | 工作模式          | router         | 否    | 可选的值：router、proxy                         |
+| PORT | 服务端口          | 8000           | 否    | 协议类型为sse或streamable时使用                    |
