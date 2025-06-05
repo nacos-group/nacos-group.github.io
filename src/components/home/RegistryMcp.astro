@@ -1,0 +1,144 @@
+---
+import { useTranslations, isChinese } from "@i18n/util";
+const t = useTranslations(Astro);
+const ifzh = isChinese(Astro);
+
+---
+
+<div class="choose-reason-wrapper">
+  <div
+    class="choose-reason block bg-gary-01 py-10 flex flex-col justify-center items-center"
+  >
+    <div class="top-title flex flex-col items-center mb-20 mt-10">
+      <b class="title text-gray-14 text-[2.5rem] leading-[3.5rem] font-medium">
+        Nacos AI Registry
+      </b>
+    </div>
+    <div class="registry-image-wrapper">
+      <img 
+        src={
+          ifzh?
+          "https://img.alicdn.com/imgextra/i3/O1CN01vhc9Dx1kQZrCyVSHb_!!6000000004678-2-tps-4064-1272.png": 
+          "https://img.alicdn.com/imgextra/i3/O1CN01vhc9Dx1kQZrCyVSHb_!!6000000004678-2-tps-4064-1272.png"
+        }
+        alt="Nacos AI Registry"
+        class="maintain-ratio no-drag"
+      />
+    </div>
+
+
+    <div class="top-title flex flex-col items-center mt-20">
+      <b class="title text-gray-14 text-[2.5rem] leading-[3.5rem] font-medium text-center">
+        {t("home.nacos.mcp.title")}
+      </b>
+      <h3 class="font-light text-gray-10 text-xs mb-6 tracking-[0.15em] mt-2 text-center">
+        {t("home.nacos.mcp.descript")}
+      </h3>
+
+      <div class="registry-image-wrapper mt-20">
+        <img
+          src={ifzh?
+            "https://img.alicdn.com/imgextra/i3/O1CN01AaGjo51z4nFv3ID7X_!!6000000006661-2-tps-5440-3432.png":
+            "https://img.alicdn.com/imgextra/i3/O1CN01AaGjo51z4nFv3ID7X_!!6000000006661-2-tps-5440-3432.png"
+          }
+          alt="Nacos AI Registry"
+          class="maintain-registry no-drag"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  .choose-reason-wrapper {
+    .top-title,
+    .bottom-card {
+      width: 85.125rem;
+    }
+    .bottom-card .item {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex: 0 0 25%;
+      border-left: 1px solid theme("colors.gray.03");
+    }
+    .registry-image-wrapper {
+      max-width: 85.125rem;
+      .maintain-ratio {
+        aspect-ratio: 1016 / 318;
+        width: 100%;
+        height: auto;
+        max-width: 64rem;
+        object-fit: cover;
+      }
+
+      .maintain-registry {
+        aspect-ratio: 1360 / 858;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+    }
+
+    /* 小于50rem  小于 800px */
+    @media (max-width: 50rem) {
+      .choose-reason {
+        padding: 1.5rem;
+      }
+      .top-title,
+      .bottom-card {
+        width: 100%;
+      }
+      .top-title {
+        margin-top: 2.5rem;
+        margin-bottom: 2.5rem;
+      }
+      .top-title .title {
+        font-size: 1.125rem; /* 18px */
+        line-height: 1.75rem; /* 28px */
+      }
+      .bottom-card .item {
+        flex: 0 0 100%;
+        border-left: none;
+        padding: 1.25rem 0;
+        border-bottom: 1px solid theme("colors.gray.03");
+      }
+      .bottom-card .item .transfrom-header {
+        display: flex;
+      }
+      .transfrom-header div:last-child {
+        margin-left: 1rem;
+      }
+    }
+
+    /* 大于50rem 小于 72rem  800px < width < 1152 */
+    @media (min-width: 50rem) and (max-width: 86rem) {
+      .choose-reason {
+        padding: 2.5rem;
+      }
+      .top-title,
+      .bottom-card {
+        width: 100%;
+      }
+      .bottom-card .item {
+        flex: 0 0 50%;
+        border-left: none;
+        padding-bottom: 1.25rem;
+      }
+      .bottom-card .item:first-child {
+        border-right: 1px solid theme("colors.gray.03");
+        border-bottom: 1px solid theme("colors.gray.03");
+      }
+      .bottom-card .item:nth-child(2) {
+        border-bottom: 1px solid theme("colors.gray.03");
+      }
+      .bottom-card .item:nth-child(3) {
+        border-right: 1px solid theme("colors.gray.03");
+        padding-top: 1.25rem;
+      }
+      .bottom-card .item:last-child {
+        padding-top: 1.25rem;
+      }
+    }
+  }
+</style>
