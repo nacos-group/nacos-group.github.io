@@ -24,14 +24,32 @@ export default [
     activePath: ["/cloud"],
   },
   {
-    label: "资源",
+    label: "MCP",
     translations: {
-      en: "RESOURCES",
+      en: "MCP",
     },
-    trigger: "hover",
-    slot: Resources,
-    position: "absolute",
-    activePath: ["/news", "/activity", "/blog", "/docs/ebook/", "/download", '/blog', ],
+    trigger: "click",
+    target: "_blank",
+    route: "https://mcp.nacos.io/",
+  },
+  {
+      label: "博客",
+      translations: {
+          en: "BLOG",
+          link: "/en/blog/",
+      },
+      target: "_self",
+      route: "/blog/",
+      activePath: ["/news", "/activity", "/blog", "/docs/ebook/", "/download", '/blog', ],
+  },
+  {
+      label: "电子书",
+      target: "_self",
+      translations: {
+          en: "E-book",
+          link: "/en/docs/ebook/kbyo6n/",
+      },
+      route: "/docs/ebook/kbyo6n/",
   },
   {
     label: "下载",
