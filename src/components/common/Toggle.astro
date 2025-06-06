@@ -14,6 +14,7 @@ interface Props {
   top?: "4rem" | "3.5rem";
   showArrow?: boolean;
   hotIcon?: HTMLElement;
+  flameIcon?: HTMLElement;
 }
 
 const {
@@ -28,6 +29,7 @@ const {
   top = "4rem",
   relativePosition = 'parent',
   hotIcon = '',
+  flameIcon = '',
 } = Astro.props;
 
 // 父组件的定位方式
@@ -70,6 +72,7 @@ const Component = slot;
             >
               {title}
               {hotIcon}
+              {flameIcon}
             </a>
           )
         }
