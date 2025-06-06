@@ -94,8 +94,9 @@ const ifactive = (toggle) => {
           // const component = slot && await import(slot);
           const active = ifactive(toggle);
           const newFlames = {
-            // flame: label == "MCP"? <Flames classes='icon ml-1' /> : "",
-            aftericon: route == "/cloud/"? <span class="bg-[red] text-white absolute top-[-4px] right-[-15px] text-xs inline-block px-[4px] rounded-lg">HOT</span> : "",
+            flame: label == "MCP"? <Flames classes='icon ml-1' /> : "",
+            aftericon: route == "/cloud/"? <Flames classes='icon ml-1' /> : "",
+            // aftericon: route == "/cloud/"? <span class="bg-[red] text-white absolute top-[-4px] right-[-15px] text-xs inline-block px-[4px] rounded-lg">HOT</span> : "",
           };
           const targetRoute = target == "_self" && route? `${ifzh? "" : "/en"}${route}`: route;
           return (
@@ -111,7 +112,7 @@ const ifactive = (toggle) => {
               relativePosition = {relativePosition}
               class={`item ${index === lastIdx ? "item-last-child" : ""} text-base`}
               hotIcon={newFlames.aftericon}
-              // flameIcon={newFlames.flame}
+              flameIcon={newFlames.flame}
             ></Toggle>
           );
         })
