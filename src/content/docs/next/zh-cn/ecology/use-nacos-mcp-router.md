@@ -9,7 +9,7 @@ sidebar:
 ## 概述
 Nacos MCP Router是一个基于MCP官方标准SDK实现的的MCP Server。它提供了一组工具，提供MCP Server推荐、分发、安装及代理其他MCP Server的功能，帮助用户更方便的使用MCP Server服务， 其主要架构如下：
     
-![alt text](/public/img/doc/ecology/nacos-mcp-router/router-architecture.png)
+![alt text](/img/doc/ecology/nacos-mcp-router/router-architecture.png)
 
 ## 功能介绍
 Nacos MCP Router 有两种工作模式：
@@ -44,7 +44,7 @@ Nacos MCP Router 使用Nacos 作为MCP Registry，请请确保后台已经启动
 ### router模式
 1. 注册MCP Server
 在Nacos控制台注册可能要用到的MCP Server，并设置MCP Server的配置, 以高德地图为例。
-![alt text](/public/img/doc/ecology/nacos-mcp-router/mcp-register.png)
+![alt text](/img/doc/ecology/nacos-mcp-router/mcp-register.png)
 2. 启动Nacos MCP Router
     - stdio模式启动，stdio模式需直接配置在Claude、Clineor CherryStudio中。
         * uvx启动
@@ -147,7 +147,7 @@ Nacos MCP Router 使用Nacos 作为MCP Registry，请请确保后台已经启动
         }
     ```
 4. 体验Nacos MCP Router
-    ![alt text](/public/img/doc/ecology/nacos-mcp-router/router-weather-question.png)
+    ![alt text](/img/doc/ecology/nacos-mcp-router/router-weather-question.png)
 
 
 ### proxy模式
@@ -159,9 +159,9 @@ docker run -i --rm --network host -e NACOS_ADDR=$NACOS_ADDR -e NACOS_USERNAME=$N
 ```
 
 启动成功后，设置CherryStudio MCP的配置项,即可看到被代理的MCP工具列表。
-![alt text](/public/img/doc/ecology/nacos-mcp-router/router-proxy-cherry-studio.png)
+![alt text](/img/doc/ecology/nacos-mcp-router/router-proxy-cherry-studio.png)
 
-![alt text](/public/img/doc/ecology/nacos-mcp-router/router-proxy-cherry-studio-tools.png)
+![alt text](/img/doc/ecology/nacos-mcp-router/router-proxy-cherry-studio-tools.png)
 
 
 ## 环境变量配置
