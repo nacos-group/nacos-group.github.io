@@ -44,6 +44,9 @@
     "items": [
       {
         "label": "概览",
+        "translations": {
+          "en": "Manual Overview"
+        },
         "autogenerate": {
           "directory": "manual/user/overview"
         }
