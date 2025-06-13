@@ -1,5 +1,5 @@
 ---
-title: Nacos MCP Router手册
+title: Nacos MCP Router
 keywords: [Nacos MCP Router,MCP,使用手册]
 description: Nacos MCP Router 使用手册
 sidebar:

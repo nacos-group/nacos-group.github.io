@@ -70,6 +70,12 @@
         }
       },
       {
+        "label": "MCP",
+        "autogenerate": {
+          "directory": "manual/user/ai"
+        }
+      },
+      {
         "label": "客户端API",
         "translations": {
           "en": "Client API"
@@ -96,13 +102,6 @@
           "en": "Addressing"
         },
         "link": "docs/manual/user/addressing"
-      },
-      {
-        "label": "MCP模版配置",
-        "translations": {
-          "en": "Mcp Template Config"
-        },
-        "link": "docs/manual/user/mcp-template"
       }
     ]
   },
