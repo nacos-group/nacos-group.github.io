@@ -1,3 +1,10 @@
+---
+title: MCP Server 自动注册至 Nacos 
+keywords: [MCP Server Register,MCP,使用手册]
+description: MCP Server 自动注册至 Nacos 使用手册
+sidebar:
+    order: 9
+---
 通过使用Spring AI Alibaba 框架 或者 Nacos MCP Wrapper Python 开发 MCP Server, 可以在 MCP Server启动后动态注册至 Nacos，并支持以下能力：
 
 + **MCP Server 服务动态管理**：通过 MCP 服务列表增删改查服务信息
