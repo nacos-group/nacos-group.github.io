@@ -76,7 +76,7 @@ Nacos MCP Router 使用Nacos 作为MCP Registry，请请确保后台已经启动
                 "nacos-mcp-router": {
                 "command": "docker",
                 "args": [
-                    "run", "-i", "--rm", "--network", "host",  "-e", "NACOS_ADDR=<NACOS-ADDR>", "-e",  "NACOS_USERNAME=<NACOS-USERNAME>", "-e", "NACOS_PASSWORD=<NACOS-PASSWORD>" ,"-e", "TRANSPORT_TYPE=stdio", "nacos-mcp-router:latest"
+                    "run", "-i", "--rm", "--network", "host",  "-e", "NACOS_ADDR=<NACOS-ADDR>", "-e",  "NACOS_USERNAME=<NACOS-USERNAME>", "-e", "NACOS_PASSWORD=<NACOS-PASSWORD>" ,"-e", "TRANSPORT_TYPE=stdio", "nacos/nacos-mcp-router:latest"
                     ]
                 }
             }
@@ -95,7 +95,7 @@ Nacos MCP Router 使用Nacos 作为MCP Registry，请请确保后台已经启动
         ```
         * docker启动
         ```shell
-        docker run -i --rm --network host -e NACOS_ADDR=$NACOS_ADDR -e NACOS_USERNAME=$NACOS_USERNAME -e NACOS_PASSWORD=$NACOS_PASSWORD -e TRANSPORT_TYPE=sse nacos-mcp-router:latest
+        docker run -i --rm --network host -e NACOS_ADDR=$NACOS_ADDR -e NACOS_USERNAME=$NACOS_USERNAME -e NACOS_PASSWORD=$NACOS_PASSWORD -e TRANSPORT_TYPE=sse nacos/nacos-mcp-router:latest
 
     - streamableHTTP模式启动
         * uvx启动
@@ -108,7 +108,7 @@ Nacos MCP Router 使用Nacos 作为MCP Registry，请请确保后台已经启动
         ```
         * docker启动
         ```shell
-        docker run -i --rm --network host -e NACOS_ADDR=$NACOS_ADDR -e NACOS_USERNAME=$NACOS_USERNAME -e NACOS_PASSWORD=$NACOS_PASSWORD -e TRANSPORT_TYPE=streamable_http nacos-mcp-router:latest
+        docker run -i --rm --network host -e NACOS_ADDR=$NACOS_ADDR -e NACOS_USERNAME=$NACOS_USERNAME -e NACOS_PASSWORD=$NACOS_PASSWORD -e TRANSPORT_TYPE=streamable_http nacos/nacos-mcp-router:latest
         ```
 3. 使用Claude、Cline、CherryStudio等App测试，以CherryStudio为例，MCP配置如下
     * stdio模式配置
@@ -118,7 +118,7 @@ Nacos MCP Router 使用Nacos 作为MCP Registry，请请确保后台已经启动
                 "nacos-mcp-router": {
                 "command": "docker",
                 "args": [
-                    "run", "-i", "--rm", "--network", "host",  "-e", "NACOS_ADDR=<NACOS-ADDR>", "-e",  "NACOS_USERNAME=<NACOS-USERNAME>", "-e", "NACOS_PASSWORD=<NACOS-PASSWORD>" ,"-e", "TRANSPORT_TYPE=stdio", "nacos-mcp-router:latest"
+                    "run", "-i", "--rm", "--network", "host",  "-e", "NACOS_ADDR=<NACOS-ADDR>", "-e",  "NACOS_USERNAME=<NACOS-USERNAME>", "-e", "NACOS_PASSWORD=<NACOS-PASSWORD>" ,"-e", "TRANSPORT_TYPE=stdio", "nacos/nacos-mcp-router:latest"
                     ]
                 }
             }
@@ -155,7 +155,7 @@ proxy模式诞生的初衷是帮助存量stdio、sse协议的MCP Server转换为
 
 proxy模式下，需设置环境变量MODE=proxy和PROXIED_MCP_NAME， 示例如下
 ```bash
-docker run -i --rm --network host -e NACOS_ADDR=$NACOS_ADDR -e NACOS_USERNAME=$NACOS_USERNAME -e NACOS_PASSWORD=$NACOS_PASSWORD -e TRANSPORT_TYPE=streamable_http -e MODE=proxy -e PROXIED_MCP_NAME=$PROXIED_MCP_NAME  nacos-mcp-router:latest
+docker run -i --rm --network host -e NACOS_ADDR=$NACOS_ADDR -e NACOS_USERNAME=$NACOS_USERNAME -e NACOS_PASSWORD=$NACOS_PASSWORD -e TRANSPORT_TYPE=streamable_http -e MODE=proxy -e PROXIED_MCP_NAME=$PROXIED_MCP_NAME  nacos/nacos-mcp-router:latest
 ```
 
 启动成功后，设置CherryStudio MCP的配置项,即可看到被代理的MCP工具列表。
