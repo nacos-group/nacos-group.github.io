@@ -1,7 +1,7 @@
 ---
-title: 控制台独立部署
-keywords: [ Nacos,独立部署,控制台 ]
-description: Nacos控制台独立部署手册，介绍Nacos控制台和Nacos服务如何独立部署。
+title: Independent Console
+keywords: [ Nacos,independent deployment,console ]
+description: The Manual fo Nacos independent deployment for Nacos Console and Nacos Engine.
 sidebar:
   order: 4
 ---

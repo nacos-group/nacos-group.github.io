@@ -45,7 +45,7 @@
       {
         "label": "概览",
         "translations": {
-          "en": "Manual Overview"
+          "en": "Overview"
         },
         "autogenerate": {
           "directory": "manual/user/overview"
@@ -70,9 +70,15 @@
         }
       },
       {
-        "label": "Open API 手册",
+        "label": "MCP",
+        "autogenerate": {
+          "directory": "manual/user/ai"
+        }
+      },
+      {
+        "label": "客户端API",
         "translations": {
-          "en": "Open API Manual"
+          "en": "Client API"
         },
         "link": "docs/manual/user/open-api"
       },
@@ -96,13 +102,6 @@
           "en": "Addressing"
         },
         "link": "docs/manual/user/addressing"
-      },
-      {
-        "label": "MCP模版配置",
-        "translations": {
-          "en": "Mcp Template Config"
-        },
-        "link": "docs/manual/user/mcp-template"
       }
     ]
   },

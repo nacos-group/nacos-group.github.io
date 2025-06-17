@@ -1,7 +1,7 @@
 ---
-title: 部署手册概览
-keywords: [ Nacos,部署模式 ]
-description: Nacos支持三种部署模式
+title: Deployment Overview
+keywords: [ Nacos, Deployment mode ]
+description: Nacos Support three types of deployments.
 sidebar:
   order: 1
 ---

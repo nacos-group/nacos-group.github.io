@@ -15,14 +15,7 @@ Server节点中的数据，从而实现自定义的Nacos控制台UI界面。
 
 ## 0. 控制台API 相关说明
 
-### 0.1. 统一返回体格式
-
-自3.0版本开始，OpenAPI/AdminAPI/ConsoleAPI均使用相同的返回体格式。
-
-完整的返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)
-，本文档中所有的API返回数据只阐述`data`字段中的返回参数。
-
-### 0.2. 统一路径格式
+### 0.1. 统一路径格式
 
 Nacos的控制台 API，使用统一的Path格式进行的规范。格式为`[/$nacos.console.contextPath]/v3/console/[module]/[subPath]...`,
 其中
@@ -37,13 +30,13 @@ Nacos的控制台 API，使用统一的Path格式进行的规范。格式为`[/$
 同时下列列出的控制台API样例中，均采用默认Nacos Console的端口进行展示，若已修改部署环境中的`$nacos.console.port`
 配置项，请自行修改调用API时的请求URL。
 
-### 0.3. 鉴权认证
+### 0.2. 鉴权认证
 
 Nacos 3.X 的控制台 API默认启用鉴权认证，除少量被标记为`公开接口`的API外，请在调用API时，携带正确的身份信息，否则请求将会被拦截。
 
 若想要关闭鉴权，请设置`nacos.core.auth.console.enabled=false`，然后重启Nacos 控制台。
 
-### 0.4. Swagger 类型文档
+### 0.3. Swagger 类型文档
 
 Nacos 3.X 的控制台 API 也提供了Swagger风格的文档，您可以通过访问[Nacos Swagger控制台 API](/swagger/console/)查看。
 
@@ -164,7 +157,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/state'
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名    | 参数类型     | 描述      |
 |--------|----------|---------|
@@ -212,7 +205,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/announcement?language=zh-CN
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名    | 参数类型     | 描述      |
 |--------|----------|---------|
@@ -260,7 +253,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/guide'
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名    | 参数类型     | 描述      |
 |--------|----------|---------|
@@ -308,7 +301,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/health/liveness'
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名    | 参数类型     | 描述                               |
 |--------|----------|----------------------------------|
@@ -358,7 +351,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/health/readiness'
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名 | 参数类型 | 描述 |
 |-----|------|----|
@@ -467,7 +460,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/cluster/nodes'
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名                 | 参数类型      | 描述                                           |
 |---------------------|-----------|----------------------------------------------|
@@ -531,7 +524,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/list'
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名                 | 参数类型      | 描述                                           |
 |---------------------|-----------|----------------------------------------------|
@@ -595,7 +588,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace?namespaceId=public'
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名    | 参数类型      | 描述          |
 |--------|-----------|-------------|
@@ -647,7 +640,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/core/namespace' -d 'namespaceName
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名    | 参数类型      | 描述          |
 |--------|-----------|-------------|
@@ -697,7 +690,7 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/core/namespace' -d 'namespaceId=te
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名    | 参数类型      | 描述          |
 |--------|-----------|-------------|
@@ -747,7 +740,7 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/core/namespace?namespaceId=test
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名    | 参数类型      | 描述                             |
 |--------|-----------|--------------------------------|
@@ -801,7 +794,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/exist?customNamespa
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名                | 参数类型     | 描述                         |
 |--------------------|----------|----------------------------|
@@ -891,7 +884,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName=te
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名    | 参数类型      | 描述        |
 |--------|-----------|-----------|
@@ -943,7 +936,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/cs/config' -d 'dataId=test&groupN
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名    | 参数类型      | 描述        |
 |--------|-----------|-----------|
@@ -993,7 +986,7 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名    | 参数类型      | 描述        |
 |--------|-----------|-----------|
@@ -1051,7 +1044,7 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config/batchDelete?ids=83802
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名                          | 参数类型     | 描述                         |
 |------------------------------|----------|----------------------------|
@@ -1154,7 +1147,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/list?dataId=&groupName=&
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名                          | 参数类型     | 描述                         |
 |------------------------------|----------|----------------------------|
@@ -1235,7 +1228,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/searchDetail?dataId=&gro
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名               | 参数类型                  | 描述                                    |
 |-------------------|-----------------------|---------------------------------------|
@@ -1292,7 +1285,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener?dataId=test&gro
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名               | 参数类型                  | 描述                                                                            |
 |-------------------|-----------------------|-------------------------------------------------------------------------------|
@@ -1355,7 +1348,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener/ip?ip=127.0.0.1
 #### 返回数据
 
 导出成功是为byte数组的file
-attachment模式，导出失败时返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)。
+attachment模式，导出失败时返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
 
 #### 示例
 
@@ -1408,7 +1401,7 @@ unzip ~/test.zip
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名         | 参数类型  | 描述         |
 |-------------|-------|------------|
@@ -1467,7 +1460,7 @@ curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import?namespaceId=tes
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名         | 参数类型  | 描述         |
 |-------------|-------|------------|
@@ -1527,7 +1520,7 @@ curl -H "Content-Type: application/json" -X POST  "http://127.0.0.1:8080/v3/cons
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名 | 参数类型 | 描述 |
 |-----|------|----|
@@ -1582,7 +1575,7 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=test&grou
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名                | 参数类型     | 描述                                  |
 |--------------------|----------|-------------------------------------|
@@ -1669,7 +1662,7 @@ curl "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=111&groupName=DEFAU
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名                          | 参数类型     | 描述                                |
 |------------------------------|----------|-----------------------------------|
@@ -1787,7 +1780,7 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/list?pageNo=1&pageSize=10&data
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名           | 参数类型         | 描述                                                                          |
 |---------------|--------------|-----------------------------------------------------------------------------|
@@ -1871,7 +1864,7 @@ curl "http://127.0.0.1:8080/v3/console/cs/history?dataId=111&groupName=DEFAULT_G
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名           | 参数类型         | 描述                                                                          |
 |---------------|--------------|-----------------------------------------------------------------------------|
@@ -1952,7 +1945,7 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/previous?id=838029534438625280
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名         | 参数类型     | 描述            |
 |-------------|----------|---------------|
@@ -2036,7 +2029,7 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/configs?namespaceId=public"
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名    | 参数类型     | 描述             |
 |--------|----------|----------------|
@@ -2092,7 +2085,7 @@ curl -X POST "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test&group
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名    | 参数类型     | 描述             |
 |--------|----------|----------------|
@@ -2148,7 +2141,7 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test&gro
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名    | 参数类型     | 描述             |
 |--------|----------|----------------|
@@ -2196,7 +2189,7 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test&groupN
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名     | 参数类型     | 描述                  |
 |---------|----------|---------------------|
@@ -2256,7 +2249,7 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/selector/types"
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名                                   | 参数类型     | 描述           |
 |---------------------------------------|----------|--------------|
@@ -2341,7 +2334,7 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/list?pageNo=1&pageSize=
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名                          | 参数类型      | 描述                   |
 |------------------------------|-----------|----------------------|
@@ -2420,7 +2413,7 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/subscribers?pageNo=1&pa
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名                                                 | 参数类型         | 描述                                   |
 |-----------------------------------------------------|--------------|--------------------------------------|
@@ -2518,7 +2511,7 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test"
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名    | 参数类型     | 描述             |
 |--------|----------|----------------|
@@ -2574,7 +2567,7 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service/cluster" -d "serviceNam
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名                          | 参数类型                  | 描述                                    |
 |------------------------------|-----------------------|---------------------------------------|
@@ -2673,7 +2666,7 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/instance/list?&serviceName=test
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/open-api/#11-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名    | 参数类型     | 描述             |
 |--------|----------|----------------|
@@ -2728,7 +2721,7 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/instance" -d 'serviceName=test&
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名                  | 参数类型                  | 描述                                                                                              |
 |----------------------|-----------------------|-------------------------------------------------------------------------------------------------|
@@ -2887,7 +2880,7 @@ curl -X GET '127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=test&mc
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名    | 参数类型     | 描述         |
 |--------|----------|------------|
@@ -2999,7 +2992,7 @@ curl -X PUT '127.0.0.1:8080/v3/console/ai/mcp' \
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名    | 参数类型     | 描述         |
 |--------|----------|------------|
@@ -3055,7 +3048,7 @@ curl -X POST '127.0.0.1:8080/v3/console/ai/mcp' \
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名    | 参数类型     | 描述         |
 |--------|----------|------------|
@@ -3108,7 +3101,7 @@ curl -X DELETE '127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=test
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
 | 参数名                                           | 参数类型                  | 描述                                                                                              |
 |-----------------------------------------------|-----------------------|-------------------------------------------------------------------------------------------------|
