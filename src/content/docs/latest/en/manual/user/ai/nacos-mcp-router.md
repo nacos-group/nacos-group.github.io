@@ -9,7 +9,7 @@ sidebar:
 ## 功能介绍
 Nacos MCP Router 有两种工作模式：
 1. router模式：默认模式，通过MCP Server推荐、安装及代理其他MCP Server的功能，帮助用户更方便的使用MCP Server服务。
-2. prroxy模式：使用环境变量MODE=proxy指定，通过简单配置可以把sse、stdio协议MCP Server转换为streamableHTTP协议MCP Server。
+2. proxy模式：使用环境变量MODE=proxy指定，通过简单配置可以把sse、stdio协议MCP Server转换为streamableHTTP协议MCP Server。
 
 在router 模式下，Nacos MCP Router 作为一个标准MCP Server，提供MCP Server推荐、分发、安装及代理其他MCP Server的功能。其主要工具列表为
 1. `search_mcp_server`
