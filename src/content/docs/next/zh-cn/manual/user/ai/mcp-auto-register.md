@@ -59,8 +59,8 @@ spring:
           namespace: public    # Nacos 命名空间 ID（默认为public）
           username:           # 开源控制台用户名 
           password:           # 开源控制台密码
-            registry:
-              enabled: true   # 是否开启服务注册
+          registry:
+            enabled: true   # 是否开启服务注册
 ```
 
 ### 4.服务启动
