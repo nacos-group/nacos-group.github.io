@@ -1,10 +1,7 @@
 
-import { useEffect, useState } from "preact/hooks";
 import Correct from "./Correct";
 import False from "./False";
 import "./style.tableplugin.css";
-
-
 
 const Tableplugin = (props) => {
   const { dataSource, title, isHead = false, isFold = false } = props;
@@ -49,13 +46,13 @@ const Tableplugin = (props) => {
 
               </th>
               <th class="col6">
-                <p class="mb-6 text-2xl font-normal">MSE Nacos Serverless 版</p>
+                <p class="mb-6 text-2xl font-normal">MSE Nacos 企业版</p>
                 <div class='lg:h-60 xl:h-40 text-gray-08 text-xs'>
-                  <p class='mb-1'>目录价：0.16元/10个连接起</p>
-                  <p class='mb-1'>折扣价：0.15元/10个连接起</p>
-                  <p class='mb-2'>折扣详情：节省计划9.5折，新老同享</p>
-                  <p class='mb-2'>版本描述：兼容开源能力，综合能力接近专业版，提供自动弹性的免运维服务</p>
-                  <p class='mb-2'>适用场景：适用于所有环境（开发、测试、生产），在每日流量波动大或者是小流量场景，性价比比专业版更高</p>
+                  <p class='mb-1'>目录价：2172元/月起</p>
+                  <p class='mb-1'>折扣价：1086元/月起</p>
+                  <p class='mb-2'>折扣详情：首购5折</p>
+                  <p class='mb-2'>版本描述：兼容 Nacos3.0，稳定性 99.99%，提供云盘加密提升安全性，比开源自建高300%+推送性能，提供 MCP Router 和 Registry 能力。</p>
+                  <p class='mb-2'>适用场景：适用于所有环境（开发、测试、生产）</p>
                 </div>
               </th>
             </tr>

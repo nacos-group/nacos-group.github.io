@@ -221,6 +221,49 @@ export const ALGOLIA_CONFIG = {
 
 export const versionDataSource = [
     { 
+        title: "AI 能力", 
+        data: [
+            {
+                name: { title: 'MCP Router' },
+                free: {
+                    checked: false,
+                    des: ''
+                },
+                develop: {
+                    checked: false,
+                    des: ''
+                },
+                speciality: {
+                    checked: false,
+                    des: ''
+                },
+                serverless: {
+                    checked: true,
+                    des: ''
+                },
+            },
+            {
+                name: { title: 'MCP Registry' },
+                free: {
+                    checked: false,
+                    des: ''
+                },
+                develop: {
+                    checked: false,
+                    des: ''
+                },
+                speciality: {
+                    checked: false,
+                    des: ''
+                },
+                serverless: {
+                    checked: true,
+                    des: ''
+                },
+            },
+        ]
+    },
+    { 
         title: "可用性", 
         data: [
         {
@@ -451,8 +494,8 @@ export const versionDataSource = [
                 des: ''
             },
             serverless: {
-                checked: true,
-                des: '内置扩容上限，避免恶意攻击导致资损'
+                checked: false,
+                des: ''
             },
         },
     ] },
@@ -602,8 +645,8 @@ export const versionDataSource = [
                 des: ''
             },
             serverless: {
-                checked: '',
-                des: '免运维'
+                checked: true,
+                des: ''
             },
         },
         {
@@ -750,7 +793,7 @@ export const versionDataSource = [
             },
             serverless: {
                 checked: true,
-                des: '只提供业务监控指标，用于自动弹性伸缩'
+                des: ''
             },
         },
         {
@@ -771,7 +814,7 @@ export const versionDataSource = [
             },
             serverless: {
                 checked: true,
-                des: '只提供业务监控指标，用于自动弹性伸缩'
+                des: ''
             },
         },
         {
@@ -815,7 +858,7 @@ export const versionDataSource = [
             },
             serverless: {
                 checked: '',
-                des: '202%'
+                des: '300%'
             },
         },
         {
@@ -836,7 +879,7 @@ export const versionDataSource = [
             },
             serverless: {
                 checked: '',
-                des: '40%'
+                des: '60%'
             },
         },
         {
@@ -857,7 +900,7 @@ export const versionDataSource = [
             },
             serverless: {
                 checked: '',
-                des: '55%',
+                des: '83%',
             },
         },
     ] },
