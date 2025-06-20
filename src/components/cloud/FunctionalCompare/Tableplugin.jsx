@@ -4,7 +4,7 @@ import False from "./False";
 import "./style.tableplugin.css";
 
 const Tableplugin = (props) => {
-  const { dataSource, title, isHead = false, isFold = false } = props;
+  const { dataSource, title, isHead = false, isFold = false, t = () => {} } = props;
   const totalRows = dataSource.length;
 
   return (
@@ -16,43 +16,43 @@ const Tableplugin = (props) => {
               <th class="col1 border-0" />
               <th class="col2 border-0" />
               <th class="col3 overflow-hidden">
-                <p class="mb-6 text-2xl font-normal">社区版</p>
-                <div class='h-40 text-gray-08 text-xs mb-1'>
-                  <p class='mb-2'>免费</p>
-                  <p class='mb-2'>版本描述：完全可控，定制性好，但需要使用者需要有一定的 Nacos 开发运维经验</p>
-                  <p class='mb-2'>适用场景：可在公共云、专有云、以及其他私有化部署</p>
+                <p class="mb-6 text-2xl font-normal">{t('cloud.introduce.community.edition')}</p>
+                <div class='min-h-40 text-gray-08 text-xs mb-1'>
+                  <p class='mb-2'>{t('cloud.introduce.community.edition.1')}</p>
+                  <p class='mb-2'>{t('cloud.introduce.version_description')}{t('cloud.introduce.full_control')}</p>
+                  <p class='mb-2'>{t('cloud.introduce.application_scenarios')}{t('cloud.introduce.deployment_environments')}</p>
                 </div>
               </th>
               <th class="col4">
-                <p class="mb-6 text-2xl font-normal">MSE Nacos 开发版</p>
-                <div class='h-40 text-gray-08 text-xs mb-1'>
-                  <p class='mb-1'>目录价：118元/月起</p>
-                  <p class='mb-1'>折扣价：47.2元/月起</p>
-                  <p class='mb-2'>折扣详情：月包7折，年包4折，新老同享</p>
-                  <p class='mb-2'>版本描述：兼容开源能力，提供默认安全、一定可观测能力、更易用的自动化运维服务</p>
-                  <p class='mb-2'>适用场景：适用于开发和测试环境（不能升级到专业版，仅用于试用和测试）</p>
+                <p class="mb-6 text-2xl font-normal">{t('cloud.introduce.develop.pkg')}</p>
+                <div class='min-h-40 text-gray-08 text-xs mb-1'>
+                  <p class='mb-1'>{t('cloud.introduce.catalog_price')}{t('cloud.introduce.price_118')}</p>
+                  <p class='mb-1'>{t('cloud.introduce.discount_price')}{t('cloud.introduce.price_47_2')}</p>
+                  <p class='mb-2'>{t('cloud.introduce.discount_details')}{t('cloud.introduce.discount_monthly_annual')}</p>
+                  <p class='mb-2'>{t('cloud.introduce.version_description')}{t('cloud.introduce.compatible_open_source_1')}</p>
+                  <p class='mb-2'>{t('cloud.introduce.application_scenarios')}{t('cloud.introduce.dev_test_environment')}</p>
                 </div>
 
               </th>
               <th class="col5">
-                <p class="mb-6 text-2xl font-normal">MSE Nacos 专业版</p>
-                <div class='h-40 text-gray-08 text-xs'>
-                  <p class='mb-1'>目录价：498元/月起</p>
-                  <p class='mb-1'>折扣价：209.2元/月起</p>
-                  <p class='mb-2'>折扣详情：首购4.2折</p>
-                  <p class='mb-2'>版本描述：兼容开源能力，提供高可用，默认安全、最高性能、完整可观测能力、更易用的自动化运维服务</p>
-                  <p class='mb-2'>适用场景：适用于所有环境（开发、测试、生产）</p>
+                <p class="mb-6 text-2xl font-normal">{t('cloud.introduce.regular.pkg')}</p>
+                <div class='min-h-40 text-gray-08 text-xs'>
+                  <p class='mb-1'>{t('cloud.introduce.catalog_price')}{t('cloud.introduce.price_498')}</p>
+                  <p class='mb-1'>{t('cloud.introduce.discount_price')}{t('cloud.introduce.price_209_2')}</p>
+                  <p class='mb-2'>{t('cloud.introduce.discount_details')}{t('cloud.introduce.discount_first_purchase')}</p>
+                  <p class='mb-2'>{t('cloud.introduce.version_description')}{t('cloud.introduce.compatible_open_source_2')}</p>
+                  <p class='mb-2'>{t('cloud.introduce.application_scenarios')}{t('cloud.introduce.all_environments_1')}</p>
                 </div>
 
               </th>
               <th class="col6">
-                <p class="mb-6 text-2xl font-normal">MSE Nacos 企业版</p>
-                <div class='lg:h-60 xl:h-40 text-gray-08 text-xs'>
-                  <p class='mb-1'>目录价：2172元/月起</p>
-                  <p class='mb-1'>折扣价：1086元/月起</p>
-                  <p class='mb-2'>折扣详情：首购5折</p>
-                  <p class='mb-2'>版本描述：兼容 Nacos3.0，稳定性 99.99%，提供云盘加密提升安全性，比开源自建高300%+推送性能，提供 MCP Router 和 Registry 能力。</p>
-                  <p class='mb-2'>适用场景：适用于所有环境（开发、测试、生产）</p>
+                <p class="mb-6 text-2xl font-normal">{t('cloud.introduce.serverless.pkg')}</p>
+                <div class='min-h-40 text-gray-08 text-xs'>
+                  <p class='mb-1'>{t('cloud.introduce.catalog_price')}{t('cloud.introduce.price_0_16')}</p>
+                  <p class='mb-1'>{t('cloud.introduce.discount_price')}{t('cloud.introduce.price_0_15')}</p>
+                  <p class='mb-2'>{t('cloud.introduce.discount_details')}{t('cloud.introduce.discount_saving_plan')}</p>
+                  <p class='mb-2'>{t('cloud.introduce.version_description')}{t('cloud.introduce.compatible_open_source_3')}</p>
+                  <p class='mb-2'>{t('cloud.introduce.application_scenarios')}{t('cloud.introduce.all_environments_1')}</p>
                 </div>
               </th>
             </tr>

@@ -6,6 +6,7 @@ import CompaniesFeedback from '@components/cloud/CompaniesFeedback.astro';
 import CloudFooter from '@components/common/Footer.astro';
 import { useTranslations } from "@i18n/util";
 const t = useTranslations(Astro);
+const url = Astro.url;
 ---
 
 <BaseLayout 
@@ -15,7 +16,7 @@ const t = useTranslations(Astro);
   <CloudIntroduce />
 
   <cloud-body>
-    <FunctionalCompare client:load/> 
+    <FunctionalCompare client:load url={url}/> 
     <CompaniesFeedback />
   </cloud-body>
 
