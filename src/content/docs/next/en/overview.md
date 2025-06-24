@@ -52,25 +52,27 @@ Nacos 支持几乎所有主流类型的 **“服务”** 的发现、配置和�
 
 * **MCP服务管理和转化**
 
-  Nacos 能让您快速的将存量的微服务API，通过简单的声明方式，快速实现0代码改动转化成MCP服务；同时能够从MCP服务平台的视角，进行MCP服务相关描述，工具，Prompt等内容的管理。
+  Nacos 能让您快速的将存量的微服务API，通过简单的声明方式，快速实现0代码改动转化成MCP服务；
+  另外也能使用[Spring AI Alibaba](https://java2ai.com/?spm=5176.29160081.0.0.74805c721TR9E4),[nacos-mcp-wrapper-python](https://github.com/nacos-group/nacos-mcp-wrapper-python)及[Nacos-MCP-Router](https://github.com/nacos-group/nacos-mcp-router)进行MCP服务的自动注册及发现，就像使用微服务一样使用MCP服务。
+  同时能够从MCP服务平台的视角，进行MCP服务相关描述，工具，Prompt等内容的管理，并对MCP服务的版本进行管理。
 
 ### 产品优势
 
 - **易于使用**
-  
+
   Nacos经历几万人使用反馈优化，提供统一的服务发现和配置管理功能，通过直观的 Web 界面和简洁的 API，为开发和运维人员在云原生环境中带来了便捷的服务注册、发现和配置更新操作。
   面向AI、云原生应用的动态配置管理、服务发现的一站式解决方案，20多种开箱即用的以 AI 服务为中心的架构特性，轻量级易用管控界面, 快速构建AI应用。
-  
+
 - **特性丰富**
 
   Nacos提供了包括服务发现、配置管理、动态 DNS 服务、服务元数据管理、流量管理、服务监控、服务治理等在内的一系列特性，帮助您在云原生时代，更轻松的构建、交付和管理微服务。支持 Prompt、MCP、A2A 等 AI Registry 场景。直接支持或稍作扩展即可支持大量有用的互联网、AI应用场景流量调度和服务治理，支持限流、大促销预案和异地多活。
-  
+
 - **极致性能**
 
   Nacos经过阿里双十一超快伸缩场景的锤炼，提供高性能的服务注册和发现能力，以及低延迟的配置更新响应，确保在大规模分布式系统中的高效率和稳定运行。
-  
+
 - **超大容量**
-  
+
   Nacos诞生自阿里的百万实例规模，造就支持海量服务和配置的管理，能够满足大型分布式系统对高并发和高可用性的需求。
 
 - **稳定可用**
@@ -90,7 +92,7 @@ Nacos希望帮助用户在AI时代，在私有云、混合云或者公有云等�
 
 ![设计理念简图](/img/doc/overview/design-philosophy-with-ai.svg)
 
-#### 易于使用 
+#### 易于使用
 
 易于使用是 Nacos 的一个核心理念，它通过提供用户友好的 Web 界面和简洁的 API 来简化服务的注册、发现和配置管理过程。开发者可以轻松集成 Nacos 到他们的应用中，无需投入大量时间在复杂的设置和学习上。
 
@@ -112,9 +114,43 @@ Nacos 还注重易于扩展，它采用了模块化的设计使得各个组件�
 
 通过上述设计理念的实现，Nacos 为用户提供了一个强大而灵活的平台，以支持不断变化的业务需求，加速业务创新和数字转型，最终帮助用户在竞争激烈的市场中占据有利地位。
 
+## 技术架构
+
+![Nacos架构图](/img/doc/overview/3.0_overview.svg)
+
+Nacos3.0的整体架构以一致性协议，通信模块，其他核心基础功能模块为基座，承载出注册中心、配置中心、AI Registry、协议增强等功能；同时通过各类多语言SDK，桥接各个生态组件。
+
+架构的左右两侧，分别是Nacos的插件以及Nacos的一些拓展组件，他们一起构成了Nacos3.0的整体架构。
+
+### 数据模型
+
+Nacos 数据模型 由三元组唯一确定, 分别是命名空间（Namespace），分组（Group）和资源名；其中 资源名按照功能模块的不同，可以分为服务名（ServiceName），配置名（DataId）和MCP服务（McpName）
+
+![Nacos数据模型图](/img/doc/overview/data-model.svg)
+
+### MCP Registry
+
+Nacos 3.0 最主要的能力就是作为MCP Registry，支持了MCP服务的注册，管理，和发现的能力。
+
+![MCP Registry架构图](/img/doc/overview/mcp-registry-overview.svg)
+
+Nacos MCP Registry支持三类MCP 服务的注册方式，
+
+第一类是将存量HTTP或RPC的服务，通过声明自动转化为MCP服务，配合Higress的协议转换能力， 实现0代码改造成MCP服务协议，如何将存量API转化为MCP服务，详情可参见[MCP快速开始](TODO)。
+
+第二类就是新构建的MCP服务注册， 配合Spring AI等AI Agent应用框架和Nacos-MCP的sdk，能够做到像微服务一样自动注册到Nacos中进行统一的管理和维护，如何通过Spring AI或Nacos-MCP的sdk进行MCP服务的自动注册与发现，请参见[MCP快速开始](TODO)。
+
+第三类就是已经构建好的或其他供应商提供的MCP服务，可以导入到Nacos中，进行其描述、工具列表、工具Schema等内容的动态修改和维护，让调试MCP服务变得更加简单。
+
+### Nacos MCP Router
+
+Nacos MCP Router是一个基于MCP官方SDK开发的标准MCP Server，为MCP Client提供MCP Server的`智能搜索`、`安装`、`代理`等功能， **极大地简化了**MCP服务的使用流程。 同时，Nacos MCP Router跟Nacos MCP Registry结合，可以实现MCP Server治理，如MCP Server及工具可见性、版本管理等。
+
+![MCP Router架构图](/img/doc/overview/ai-mcp-router-struncture.svg)
+
 ## 部署模式
 
-Nacos 提供了两种两种部署运行模式：`单机模式`和`集群模式`
+Nacos 提供了两种部署运行模式：`单机模式`和`集群模式`
 
 ![Nacos部署模式图](/img/doc/overview/deploy-structure.svg)
 
