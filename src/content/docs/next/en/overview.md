@@ -136,9 +136,9 @@ Nacos 3.0 最主要的能力就是作为MCP Registry，支持了MCP服务的注�
 
 Nacos MCP Registry支持三类MCP 服务的注册方式，
 
-第一类是将存量HTTP或RPC的服务，通过声明自动转化为MCP服务，配合Higress的协议转换能力， 实现0代码改造成MCP服务协议，如何将存量API转化为MCP服务，详情可参见[MCP快速开始](TODO)。
+第一类是将存量HTTP或RPC的服务，通过声明自动转化为MCP服务，配合Higress的协议转换能力， 实现0代码改造成MCP服务协议，如何将存量API转化为MCP服务，详情可参见[存量API转换MCP手册](./manual/user/ai/api-to-mcp.md)。
 
-第二类就是新构建的MCP服务注册， 配合Spring AI等AI Agent应用框架和Nacos-MCP的sdk，能够做到像微服务一样自动注册到Nacos中进行统一的管理和维护，如何通过Spring AI或Nacos-MCP的sdk进行MCP服务的自动注册与发现，请参见[MCP快速开始](TODO)。
+第二类就是新构建的MCP服务注册， 配合Spring AI等AI Agent应用框架和Nacos-MCP的sdk，能够做到像微服务一样自动注册到Nacos中进行统一的管理和维护，如何通过Spring AI或Nacos-MCP的sdk进行MCP服务的自动注册与发现，请参见[MCP Server自动注册手册](./manual/user/ai/mcp-auto-register.md)。
 
 第三类就是已经构建好的或其他供应商提供的MCP服务，可以导入到Nacos中，进行其描述、工具列表、工具Schema等内容的动态修改和维护，让调试MCP服务变得更加简单。
 
@@ -147,6 +147,8 @@ Nacos MCP Registry支持三类MCP 服务的注册方式，
 Nacos MCP Router是一个基于MCP官方SDK开发的标准MCP Server，为MCP Client提供MCP Server的`智能搜索`、`安装`、`代理`等功能， **极大地简化了**MCP服务的使用流程。 同时，Nacos MCP Router跟Nacos MCP Registry结合，可以实现MCP Server治理，如MCP Server及工具可见性、版本管理等。
 
 ![MCP Router架构图](/img/doc/overview/ai-mcp-router-struncture.svg)
+
+具体Nacos MCP Router的使用，请参见[Nacos MCP Router手册](./manual/user/ai/nacos-mcp-router.md)
 
 ## 部署模式
 
