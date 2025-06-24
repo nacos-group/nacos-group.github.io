@@ -6,6 +6,10 @@ sidebar:
     order: 3
 ---
 
+Nacos MCP Router是一个基于MCP官方SDK开发的标准MCP Server，为MCP Client提供MCP Server的`智能搜索`、`安装`、`代理`等功能， **极大地简化了**MCP服务的使用流程。 同时，Nacos MCP Router跟Nacos MCP Registry结合，可以实现MCP Server治理，如MCP Server及工具可见性、版本管理等。
+
+![MCP Router架构图](/img/doc/overview/ai-mcp-router-struncture.svg)
+
 ## 功能介绍
 Nacos MCP Router 有两种工作模式：
 1. router模式：默认模式，通过MCP Server推荐、安装及代理其他MCP Server的功能，帮助用户更方便的使用MCP Server服务。
