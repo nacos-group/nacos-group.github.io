@@ -44,6 +44,73 @@ export const getDataSource = (t) => {
         ]
     },
     { 
+        title: t('cloud.introduce.feature.performance'), 
+        data: [
+        {
+            name: {
+                title: t('cloud.introduce.feature.push_performance_improvement'),
+            },
+            free: {
+                checked: '',
+                des: t('cloud.introduce.feature.self_tuning'),
+            },
+            develop: {
+                checked: '',
+                des: t('cloud.introduce.feature.same_as_community'),
+            },
+            speciality: {
+                checked: '',
+                des: '202%',
+            },
+            serverless: {
+                checked: '',
+                des: '300%'
+            },
+        },
+        {
+            name: {
+                title: t('cloud.introduce.feature.tps_performance_improvement'),
+            },
+            free: {
+                checked: '',
+                des: t('cloud.introduce.feature.self_tuning'),
+            },
+            develop: {
+                checked: '',
+                des: t('cloud.introduce.feature.same_as_community'),
+            },
+            speciality: {
+                checked: '',
+                des: '40%',
+            },
+            serverless: {
+                checked: '',
+                des: '60%'
+            },
+        },
+        {
+            name: {
+                title: t('cloud.introduce.feature.qps_performance_improvement'),
+            },
+            free: {
+                checked: '',
+                des: t('cloud.introduce.feature.self_tuning'),
+            },
+            develop:  {
+                checked: '',
+                des: t('cloud.introduce.feature.same_as_community'),
+            },
+            speciality:{
+                checked: '',
+                des: '55%',
+            },
+            serverless: {
+                checked: '',
+                des: '83%',
+            },
+        },
+    ] },
+    { 
         title: t('cloud.introduce.feature.availability'), 
         data: [
         {
@@ -257,27 +324,27 @@ export const getDataSource = (t) => {
                 des: ''
             },
         },
-        {
-            name: {
-                title: t('cloud.introduce.feature.auto_scaling'),
-            },
-            free: {
-                checked: false,
-                des: ''
-            },
-            develop: {
-                checked: false,
-                des: ''
-            },
-            speciality: {
-                checked: false,
-                des: ''
-            },
-            serverless: {
-                checked: false,
-                des: ''
-            },
-        },
+        // {
+        //     name: {
+        //         title: t('cloud.introduce.feature.auto_scaling'),
+        //     },
+        //     free: {
+        //         checked: false,
+        //         des: ''
+        //     },
+        //     develop: {
+        //         checked: false,
+        //         des: ''
+        //     },
+        //     speciality: {
+        //         checked: false,
+        //         des: ''
+        //     },
+        //     serverless: {
+        //         checked: false,
+        //         des: ''
+        //     },
+        // },
     ] },
     { 
         title: t('cloud.introduce.feature.security'), 
@@ -359,6 +426,27 @@ export const getDataSource = (t) => {
             },
             speciality: {
                 checked: true,
+                des: ''
+            },
+            serverless: {
+                checked: true,
+                des: ''
+            },
+        },
+        {
+            name: {
+                title: t('cloud.introduce.feature.data_source_management'),
+            },
+            free: {
+                checked: false,
+                des: ''
+            },
+            develop: {
+                checked: false,
+                des: ''
+            },
+            speciality: {
+                checked: false,
                 des: ''
             },
             serverless: {
@@ -620,73 +708,6 @@ export const getDataSource = (t) => {
             serverless: {
                 checked: true,
                 des: ''
-            },
-        },
-    ] },
-    { 
-        title: t('cloud.introduce.feature.performance'), 
-        data: [
-        {
-            name: {
-                title: t('cloud.introduce.feature.push_performance_improvement'),
-            },
-            free: {
-                checked: '',
-                des: t('cloud.introduce.feature.self_tuning'),
-            },
-            develop: {
-                checked: '',
-                des: t('cloud.introduce.feature.same_as_community'),
-            },
-            speciality: {
-                checked: '',
-                des: '202%',
-            },
-            serverless: {
-                checked: '',
-                des: '300%'
-            },
-        },
-        {
-            name: {
-                title: t('cloud.introduce.feature.tps_performance_improvement'),
-            },
-            free: {
-                checked: '',
-                des: t('cloud.introduce.feature.self_tuning'),
-            },
-            develop: {
-                checked: '',
-                des: t('cloud.introduce.feature.same_as_community'),
-            },
-            speciality: {
-                checked: '',
-                des: '40%',
-            },
-            serverless: {
-                checked: '',
-                des: '60%'
-            },
-        },
-        {
-            name: {
-                title: t('cloud.introduce.feature.qps_performance_improvement'),
-            },
-            free: {
-                checked: '',
-                des: t('cloud.introduce.feature.self_tuning'),
-            },
-            develop:  {
-                checked: '',
-                des: t('cloud.introduce.feature.same_as_community'),
-            },
-            speciality:{
-                checked: '',
-                des: '55%',
-            },
-            serverless: {
-                checked: '',
-                des: '83%',
             },
         },
     ] },

@@ -203,6 +203,7 @@ export default {
 	'cloud.introduce.feature.access_mode_without_ak': 'Access Mode without AK',
 	'cloud.introduce.feature.acl_whitelist_access_control': 'ACL Whitelist Access Control',
 	'cloud.introduce.feature.tls_transmission_encryption': 'TLS Transmission Encryption with Real-time Change Effect',
+	'cloud.introduce.feature.data_source_management': 'Data Source Management, Encrypted Hosting of Account Credentials & Lossless Rotation at Runtime',
 	'cloud.introduce.feature.kms_config_storage_encryption': 'KMS Configuration Storage Encryption with Custom Rotation and Real-time Change Effect',
 	'cloud.introduce.feature.vulnerability_hot_fix': 'Vulnerability Hotfix Capability (Seamless, No Restart)',
 	'cloud.introduce.feature.ease_of_use': 'Ease of Use',

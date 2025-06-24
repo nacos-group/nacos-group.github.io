@@ -169,6 +169,7 @@ export default {
 	'cloud.introduce.feature.access_mode_without_ak': '无 AK 的 访问模式',
 	'cloud.introduce.feature.acl_whitelist_access_control': 'ACL 白名单访问控制',
 	'cloud.introduce.feature.tls_transmission_encryption': 'TLS 传输加密，变更实时生效',
+	'cloud.introduce.feature.data_source_management': '数据源管理，账号密码加密托管&运行时无损轮转',
 	'cloud.introduce.feature.kms_config_storage_encryption': 'KMS 配置存储加密，自定义轮转， 变更实时生效',
 	'cloud.introduce.feature.vulnerability_hot_fix': '漏洞热修复能力（无感知、不重启）',
 	'cloud.introduce.feature.ease_of_use': '易用性',
