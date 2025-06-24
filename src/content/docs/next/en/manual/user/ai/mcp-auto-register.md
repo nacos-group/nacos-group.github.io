@@ -12,6 +12,8 @@ By developing an MCP Server using the **Spring AI Alibaba framework** or the **N
 + **Dynamic On/Off for MCP Server Tools**: Enable or disable tools at runtime without restarting the service
 + **Full-Stack Integration**: Service registration information is automatically synchronized to the Nacos configuration center and service discovery module, adapting to AI Agent invocation requirements
 
+![Auto-register](/img/doc/manual/user/ai/ai-mcp-auto-register.svg)
+
 ## Developing an MCP Server Using Spring AI Alibaba Nacos MCP Framework
 
 ### 1. Dependency Configuration
