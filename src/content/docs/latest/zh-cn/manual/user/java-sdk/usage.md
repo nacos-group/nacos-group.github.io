@@ -37,7 +37,7 @@ Nacos 的 Java SDK需要 JDK 1.8 及以上版本的Java运行环境。
 ```xml
     <properties>
         <!-- 2.1.2版本以上支持纯净版客户端 -->
-        <nacos.version>3.0.1</nacos.version>
+        <nacos.version>3.0.2</nacos.version>
     </properties>
 
     <dependencies>
