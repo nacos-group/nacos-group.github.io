@@ -9,10 +9,7 @@ sidebar:
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 # Nacos MCP 存量服务模版配置
-通过Nacos控制台MCP管理创建一个基于存量服务的MCP服务，创建完成之后，编辑服务，增加新的Tool，配置Tool的参数信息以及模版信息。
-模版信息配置。模版信息包含模版名称以及模版内容，当前仅支持Higress提供的`json-go-template`模版。配置方法：
-+ 点击要配置模版的Tool，点击编辑
-+ 找到模版，点击新增，在key中填写 `json-go-template`, value 中填写模版配置。
+在添加tool的时候通过协议转化配置配置网关的模版
 
 ## 模版配置说明
 模版是一个JSON配置，有如下的字段
@@ -52,22 +49,20 @@ Higress 支持配置参数的位置信息，我们通过通过argsPosition支持
 }
 ```
 
-## 引用服务绑定的Credential
-创建和编辑的服务的时候允许选择可用的Credential的集合，这些Credential将会被Higress渲染到MCP服务信息的字段中，可供模版中进行值引用。
-Credential的集合将会被渲染到Higress REST-to-MCP插件的 `server.config.credentials` 字段中，key 为 credential的 id， value为credential的内容。
-例如一个 credential id 为 `api_key` 的credential, 内容为 `{"data": "keyxxxxx"}`，并且在MCP服务中引用的这个credential，最终在 Higress 中 Server 的配置中会有以下内容
-```yaml
-server:
-  config:
-    credentials:
-      api_key:
-        data: keyxxxxx
-```
-在模版中引用Credential中的值
+## 在模版中直接引用nacos配置
+可以在模版中直接引用同命名空间下的nacos配置，作为模版的值，引用的语法为`${nacos.dataId/group}`
+
+例如要引用的配置的dataid 为 appCode， 分组为 data，则模版中nacos配置引用的写法为`${nacos.appCode/data}`
+
+如果配置本身是json格式，则可以使用jsonpath引用配置中具体的json object的属性值，例如 appCode/data 的值为 `{"a": "b"}`则可以通过 `{{ ${nacos.appCode/data}.a }}` 引用appCode中的a的值 `b`
+
+如果配置本身不是json格式，则会将整个配置的值作为string填充到引用处。
+
+例如对amap的key进行引用，首先创建一个配置存储amap的key，例如存储在 dataId 为appKey， 分组为amap的配置中，配置内容为 `{"data": "xxxx"}`，则可以通过一下例子使用对应的key
 ```json
 {
   "requestTemplate": {
-    "url": "/v3/weather/weatherInfo?key={{ .config.credentials.api_key.data }}",
+    "url": "/v3/weather/weatherInfo?key={{ ${nacos.appKey/amap}.data }}",
     "argsToUrlParam": true,
     "method": "GET"
   },
@@ -75,4 +70,4 @@ server:
     "body": "response value {{ .value }}"
   }
 }
-```
+``` 
