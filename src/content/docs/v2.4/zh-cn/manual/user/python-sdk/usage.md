@@ -6,18 +6,14 @@ sidebar:
     order: 6
 ---
 
-# Nacos Python SDK 使用手册
+# Python SDK 使用手册
 
 
 ### 支持 Python 版本
-
-- Python 2.7
-- Python 3.6+
+- Python 3.7+
 
 ### 支持 Nacos 服务端版本
-- Nacos 0.8.0+
-- Nacos 1.x
-- Nacos 2.x with http protocol
+- Nacos 2.x
 
 
 ## 安装依赖
@@ -27,213 +23,315 @@ pip install nacos-sdk-python
 
 ## 开始
 ```python
-import nacos
-
-# Both HTTP/HTTPS protocols are supported, if not set protocol prefix default is HTTP, and HTTPS with no ssl check(verify=False)
-# "192.168.3.4:8848" or "https://192.168.3.4:443" or "http://192.168.3.4:8848,192.168.3.5:8848" or "https://192.168.3.4:443,https://192.168.3.5:443"
-SERVER_ADDRESSES = "server addresses split by comma"
-NAMESPACE = "namespace id"
-
-# no auth mode
-client = nacos.NacosClient(SERVER_ADDRESSES, namespace=NAMESPACE)
-# auth mode
-#client = nacos.NacosClient(SERVER_ADDRESSES, namespace=NAMESPACE, ak="{ak}", sk="{sk}")
-
-# get config
-data_id = "config.nacos"
-group = "group"
-print(client.get_config(data_id, group))
-```
-
-## 客户端配置
-```
-client = NacosClient(server_addresses, namespace=your_ns, ak=your_ak, sk=your_sk)
-```
-
-* *server_addresses* - **required**  - Nacos server address, comma separated if more than 1.
-* *namespace* - Namespace. | default: `None`
-* *ak* - The accessKey to authenticate. | default: null
-* *sk* - The secretKey to authentication. | default: null
-* *log_level* - Log level. | default: null
-* *log_rotation_backup_count* - The number of log files to keep. | default: `7`
-
-#### 额外配置
-Extra option can be set by `set_options`, as following:
-
-```
-client.set_options({key}={value})
-# client.set_options(proxies={"http":"192.168.3.50:809"})
-```
-
-Configurable options are:
-
-* *default_timeout* - Default timeout for get config from server in seconds.
-* *pulling_timeout* - Long polling timeout in seconds.
-* *pulling_config_size* - Max config items number listened by one polling process.
-* *callback_thread_num* - Concurrency for invoking callback.
-* *failover_base* - Dir to store failover config files.
-* *snapshot_base* - Dir to store snapshot config files.
-* *no_snapshot* - To disable default snapshot behavior, this can be overridden by param *no_snapshot* in *get* method.
-* *proxies* - Dict proxy mapping, some environments require proxy access, so you can set this parameter, this way http requests go through the proxy.
-
-## API 列表
- 
-### 获取配置
->`NacosClient.get_config(data_id, group, timeout, no_snapshot)`
-
-* `param` *data_id* Data id.
-* `param` *group* Group, use `DEFAULT_GROUP` if no group specified.
-* `param` *timeout* Timeout for requesting server in seconds.
-* `param` *no_snapshot* Whether to use local snapshot while server is unavailable.
-* `return` 
-W
-Get value of one config item following priority:
-
-* Step 1 - Get from local failover dir(default: `${cwd}/nacos-data/data`).
-  * Failover dir can be manually copied from snapshot dir(default: `${cwd}/nacos-data/snapshot`) in advance.
-  * This helps to suppress the effect of known server failure.
+from v2.nacos import NacosNamingService, ClientConfigBuilder, GRPCConfig, Instance, SubscribeServiceParam, \
+    RegisterInstanceParam, DeregisterInstanceParam, BatchRegisterInstanceParam, GetServiceParam, ListServiceParam, \
+    ListInstanceParam, NacosConfigService, ConfigParam
     
-* Step 2 - Get from one server until value is got or all servers tried.
-  * Content will be save to snapshot dir after got from server.
+client_config = (ClientConfigBuilder()
+                 .access_key(os.getenv('NACOS_ACCESS_KEY'))
+                 .secret_key(os.getenv('NACOS_SECRET_KEY'))
+                 .server_address(os.getenv('NACOS_SERVER_ADDR', 'localhost:8848'))
+                 .log_level('INFO')
+                 .grpc_config(GRPCConfig(grpc_timeout=5000))
+                 .build())
+```
+### 参数说明
+* *server_address* - **必填**  - Nacos 服务端地址
+* *access_key* - 阿里云访问密钥ID
+* *secret_key* - 阿里云访问密钥
+* *credentials_provider* - 自定义访问密钥管理器
+* *username* - 认证用户名
+* *password* - 认证密码
+* *log_level* - 日志级别 | 默认: `logging.INFO`
+* *cache_dir* - 缓存目录路径 | 默认: `~/nacos/cache`
+* *log_dir* - 日志目录路径 | 默认: `~/logs/nacos`
+* *namespace_id* - 命名空间ID | 默认: 空字符串
+* *grpc_config* - gRPC配置
+  * *max_receive_message_length* - 最大接收消息长度 | 默认: 100 * 1024 * 1024
+  * *max_keep_alive_ms* - 最大连接保活时间 | 默认: 60 * 1000
+  * *initial_window_size* - 初始窗口大小 | 默认: 10 * 1024 * 1024
+  * *initial_conn_window_size* - 初始连接窗口大小 | 默认: 10 * 1024 * 1024
+  * *grpc_timeout* - gRPC超时时间(毫秒) | 默认: 3000
+* *tls_config* - TLS配置
+  * *enabled* - 是否启用TLS
+  * *ca_file* - CA证书文件路径
+  * *cert_file* - 客户端证书文件路径
+  * *key_file* - 客户端私钥文件路径
+* *kms_config* - 阿里云KMS配置
+  * *enabled* - 是否启用阿里云KMS
+  * *endpoint* - 阿里云KMS服务地址
+  * *access_key* - 阿里云访问密钥ID
+  * *secret_key* - 阿里云访问密钥
+  * *password* - 阿里云KMS密码
 
-* Step 3 - Get from snapshot dir.
+## 配置中心 API 列表
 
-### 增加配置监听
->`NacosClient.add_config_watchers(data_id, group, cb_list)`
+### 初始化客户端
 
-* `param` *data_id* Data id.
-* `param` *group* Group, use `DEFAULT_GROUP` if no group specified.
-* `param` *cb_list* List of callback functions to add.
+```python
+config_client = await NacosConfigService.create_config_service(client_config)
+```
+
+### 获取配置
+
+```python
+content = await config_client.get_config(ConfigParam(
+            data_id=data_id,
+            group=group
+        ))
+```
+
+* `param` *data_id* 配置的Data ID
+* `param` *group* 配置分组名称，默认为`DEFAULT_GROUP`
+* `return` 成功返回配置内容，失败抛出异常
+
+获取配置项的优先级策略：
+
+* 步骤1 - 从本地failover目录读取
+* 步骤2 - 从服务端逐个尝试获取
+  * 成功获取后保存到快照目录
+* 步骤3 - 从快照目录读取
+
+### 监听配置
+
+```
+async def config_listener(tenant, data_id, group, content):
+    print("listen, tenant:{} data_id:{} group:{} content:{}".format(tenant, data_id, group, content))
+
+await config_client.add_listener(data_id=data_id, group=group, listener=config_listener)
+```
+
+* `param` *data_id* 配置DataID
+* `param` *group* 分组名称，默认`DEFAULT_GROUP`
+* `listener` *listener* 配置监听回调函数，由命名空间ID、分组、DataID和内容定义
 * `return`
 
-Add watchers to a specified config item.
-* Once changes or deletion of the item happened, callback functions will be invoked.
-* If the item is already exists in server, callback functions will be invoked for once.
-* Multiple callbacks on one item is allowed and all callback functions are invoked concurrently by `threading.Thread`.
-* Callback functions are invoked from current process.
+监听特定配置
+- 配置变更或删除时触发回调
+- 若配置已存在则立即触发一次回调
+- 回调在当前进程执行
 
-### 移除配置监听
->`NacosClient.remove_config_watcher(data_id, group, cb, remove_all)`
+### 取消监听
 
-* `param` *data_id* Data id.
-* `param` *group* Group, use "DEFAULT_GROUP" if no group specified.
-* `param` *cb* Callback function to delete.
-* `param` *remove_all* Whether to remove all occurrence of the callback or just once.
-* `return`
+```
+await client.remove_listener(data_id=dataID, group=groupName, listener=config_listener)
+```
 
-Remove watcher from specified key.
+* `param` *data_id* 配置DataID
+* `param` *group* 分组名称，默认`DEFAULT_GROUP`
+* `listener` *listener* 配置监听回调函数，由命名空间ID、分组、DataID和内容定义
+* `return` 成功返回True，失败抛出异常
+
+移除指定配置的监听回调
 
 ### 发布配置
->`NacosClient.publish_config(data_id, group, content, timeout)`
 
-* `param` *data_id* Data id.
-* `param` *group* Group, use "DEFAULT_GROUP" if no group specified.
-* `param` *content* Config value.
-* `param` *timeout* Timeout for requesting server in seconds.
-* `return` True if success or an exception will be raised.
+```
+res = await client.publish_config(ConfigParam(
+            data_id=dataID,
+            group=groupName,
+            content="Hello world")
+        )
+```
 
-Publish one data item to Nacos.
-* If the data key is not exist, create one first.
-* If the data key is exist, update to the content specified.
-* Content can not be set to None, if there is need to delete config item, use function **remove** instead.
+* `param` *data_id* 配置DataID
+* `param` *group* 分组名称，默认`DEFAULT_GROUP`
+* `param` *content* 配置内容
+* `return` 成功返回True，失败抛出异常
+
+向Nacos发布配置：
+- 若配置不存在则创建
+- 若存在则更新内容
+- 删除配置请使用remove方法
 
 ### 删除配置
->`NacosClient.remove_config(data_id, group, timeout)`
-* `param` *data_id* Data id.
-* `param` *group* Group, use "DEFAULT_GROUP" if no group specified.
-* `param` *timeout* Timeout for requesting server in seconds.
-* `return` True if success or an exception will be raised.
 
-Remove one data item from Nacos.
+```
+res = await client.remove_config(ConfigParam(
+            data_id=dataID,
+            group=groupName
+        ))
+```
+* `param` *ConfigParam* 配置参数，需指定data_id和group
+* `return` 成功返回True，失败抛出异常
+
+从Nacos删除配置项
+
+### 销毁配置中心连接
+
+```
+await client.shutdown()
+```
+
+## 注册中心 API 列表
+
+### 初始化客户端
+
+```python
+naming_client = await NacosNamingService.create_naming_service(client_config)
+```
 
 ### 服务实例注册
->`NacosClient.add_naming_instance(service_name, ip, port, cluster_name, weight, metadata, enable, healthy,ephemeral,group_name,heartbeat_interval)`
-* `param` *service_name*  **required** Service name to register to.
-* `param` *ip*  **required** IP of the instance.
-* `param` *port* **required** Port of the instance.
-* `param` *cluster_name* Cluster to register to.
-* `param` *weight* A float number for load balancing weight.
-* `param` *metadata* Extra info in JSON string format or dict format
-* `param` *enable* A bool value to determine whether instance is enabled or not.
-* `param` *healthy* A bool value to determine whether instance is healthy or not.
-* `param` *ephemeral* A bool value to determine whether instance is ephemeral or not.
-* `param` *heartbeat_interval* Auto daemon heartbeat interval in seconds.
-* `return` True if success or an exception will be raised.
+```python
+response = await client.register_instance(
+            request=RegisterInstanceParam(service_name='nacos.test.1', group_name='DEFAULT_GROUP', ip='1.1.1.1',
+                port=7001, weight=1.0, cluster_name='c1', metadata={'a': 'b'},
+                enabled=True,
+                healthy=True, ephemeral=True))
+```
+* `param` *service_name*  **必填** 服务名称
+* `param` *group_name* 分组名称
+* `param` *ip*  **必填** 实例IP
+* `param` *port* **必填** 实例端口
+* `param` *cluster_name* 集群名称
+* `param` *weight* 负载权重（浮点数）
+* `param` *metadata* 元数据（JSON字符串或字典格式）
+* `param` *enable* 实例是否启用
+* `param` *healthy* 实例健康状态
+* `param` *ephemeral* 是否为临时实例
+* `return` 成功返回True，失败抛出异常
 
-### 服务实例取消注册
->`NacosClient.remove_naming_instance(service_name, ip, port, cluster_name)`
-* `param` *service_name*  **required** Service name to deregister from.
-* `param` *ip*  **required** IP of the instance.
-* `param` *port* **required** Port of the instance.
-* `param` *cluster_name* Cluster to deregister from.
-* `param` *ephemeral* A bool value to determine whether instance is ephemeral or not.
-* `return` True if success or an exception will be raised.
+### 批量注册实例
 
-### 修改服务实例
->`NacosClient.modify_naming_instance(service_name, ip, port, cluster_name, weight, metadata, enable)`
-* `param` *service_name*  **required** Service name.
-* `param` *ip*  **required** IP of the instance.
-* `param` *port* **required** Port of the instance.
-* `param` *cluster_name* Cluster name.
-* `param` *weight* A float number for load balancing weight.
-* `param` *metadata* Extra info in JSON string format or dict format.
-* `param` *enable* A bool value to determine whether instance is enabled or not.
-* `param` *ephemeral* A bool value to determine whether instance is ephemeral or not.
-* `return` True if success or an exception will be raised.
+```python
+param1 = RegisterInstanceParam(service_name='nacos.test.1',
+                                       group_name='DEFAULT_GROUP',
+                                       ip='1.1.1.1',
+                                       port=7001,
+                                       weight=1.0,
+                                       cluster_name='c1',
+                                       metadata={'a': 'b'},
+                                       enabled=True,
+                                       healthy=True,
+                                       ephemeral=True
+                                       )
+param2 = RegisterInstanceParam(service_name='nacos.test.1',
+                               group_name='DEFAULT_GROUP',
+                               ip='1.1.1.1',
+                               port=7002,
+                               weight=1.0,
+                               cluster_name='c1',
+                               metadata={'a': 'b'},
+                               enabled=True,
+                               healthy=True,
+                               ephemeral=True
+                               )
+param3 = RegisterInstanceParam(service_name='nacos.test.1',
+                               group_name='DEFAULT_GROUP',
+                               ip='1.1.1.1',
+                               port=7003,
+                               weight=1.0,
+                               cluster_name='c1',
+                               metadata={'a': 'b'},
+                               enabled=True,
+                               healthy=False,
+                               ephemeral=True
+                               )
+response = await client.batch_register_instances(
+    request=BatchRegisterInstanceParam(service_name='nacos.test.1', group_name='DEFAULT_GROUP',
+                                       instances=[param1, param2, param3]))
+```
+* `param` *service_name*  **必填** 服务名称
+* `param` *group_name* 分组名称
+* `param` *ip*  **必填** 实例IP
+* `param` *port* **必填** 实例端口
+* `param` *cluster_name* 集群名称
+* `param` *weight* 负载权重（浮点数）
+* `param` *metadata* 元数据（JSON字符串或字典格式）
+* `param` *enable* 实例是否启用
+* `param` *healthy* 实例健康状态
+* `param` *ephemeral* 是否为临时实例
+* `return` 成功返回True，失败抛出异常
+
+### 注销服务实例
+```python
+response = await client.deregister_instance(
+          request=DeregisterInstanceParam(service_name='nacos.test.1', group_name='DEFAULT_GROUP', ip='1.1.1.1',
+                                          port=7001, cluster_name='c1', ephemeral=True)
+      )
+```
+* `param` *service_name*  **必填** 服务名称
+* `param` *group_name* 分组名称
+* `param` *ip*  **必填** 实例IP
+* `param` *port* **必填** 实例端口
+* `param` *cluster_name* 集群名称
+* `param` *ephemeral* 是否为临时实例
+* `return` 成功返回True，失败抛出异常
+
+### 更新服务实例
+```python
+response = await client.update_instance(
+            request=RegisterInstanceParam(service_name='nacos.test.1', group_name='DEFAULT_GROUP', ip='1.1.1.1',
+                                          port=7001, weight=2.0, cluster_name='c1', metadata={'a': 'b'},
+                                          enabled=True,
+                                          healthy=True, ephemeral=True))
+```
+* `param` *service_name*  **必填** 服务名称
+* `param` *group_name* 分组名称
+* `param` *ip*  **必填** 实例IP
+* `param` *port* **必填** 实例端口
+* `param` *cluster_name* 集群名称
+* `param` *weight* 负载权重（浮点数）
+* `param` *metadata* 元数据（JSON字符串或字典格式）
+* `param` *enable* 实例是否启用
+* `param` *ephemeral* 是否为临时实例
+* `return` 成功返回True，失败抛出异常
+
+### 查询服务列表
+```python
+
+service_list = await naming_client.list_services(ListServiceParam(
+            namespace_id="public",
+            group_name="DEFAULT_GROUP"
+    ))
+
+```
+
+* `param` *namespace_id* 命名空间ID
+* `param` *group_name* 分组名称
+* `return` 服务列表
 
 ### 查询服务实例列表
->`NacosClient.list_naming_instance(service_name, clusters, namespace_id, group_name, healthy_only)`
-* `param` *service_name*  **required** Service name to query.
-* `param` *clusters* Cluster names separated by comma.
-* `param` *namespace_id* Customized group name, default `blank`.
-* `param` *group_name* Customized group name , default `DEFAULT_GROUP`.
-* `param` *healthy_only* A bool value for querying healthy instances or not.
-* `return` Instance info list if success or an exception will be raised.
-
-### 查询服务实例详情
->`NacosClient.get_naming_instance(service_name, ip, port, cluster_name)`
-* `param` *service_name*  **required** Service name.
-* `param` *ip*  **required** IP of the instance.
-* `param` *port* **required** Port of the instance.
-* `param` *cluster_name* Cluster name.
-* `return` Instance info if success or an exception will be raised.
-
-### 主动发送心跳
->`NacosClient.send_heartbeat(service_name, ip, port, cluster_name, weight, metadata)`
-* `param` *service_name*  **required** Service name.
-* `param` *ip*  **required** IP of the instance.
-* `param` *port* **required** Port of the instance.
-* `param` *cluster_name* Cluster to register to.
-* `param` *weight* A float number for load balancing weight.
-* `param` *ephemeral* A bool value to determine whether instance is ephemeral or not.
-* `param` *metadata* Extra info in JSON string format or dict format.
-* `return` A JSON object include server recommended beat interval if success or an exception will be raised.
-
-### 服务实例监听
->`NacosClient.subscribe(listener_fn, listener_interval=7, *args, **kwargs)`
-* `param` *listener_fn*  **required** Customized listener function.
-* `param` *listener_interval*  Listen interval , default 7 second.
-* `param` *service_name*  **required** Service name which subscribes.
-* `param` *clusters* Cluster names separated by comma.
-* `param` *namespace_id* Customized group name, default `blank`.
-* `param` *group_name* Customized group name , default `DEFAULT_GROUP`.
-* `param` *healthy_only* A bool value for querying healthy instances or not.
-* `return`
-
-### 服务实例取消监听
->`NacosClient.unsubscribe(service_name, listener_name)`
-* `param` *service_name*  **required** Service name to subscribed.
-* `param` *listener_name*  listener_name which is customized.
-* `return`
-
-### 停止所有服务监听 
->`NacosClient.stop_subscribe()`
-* `return`
-
-## 调试模式
-Debugging mode if useful for getting more detailed log on console.
-
-Debugging mode can be set by:
+```python
+instance_list = await naming_client.list_instances(ListInstanceParam(
+        service_name="nacos.test.1",
+        group_name="DEFAULT_GROUP",
+        healthy_only=True,
+        subscribe=True,
+        clusters=["CLUSTERA"]
+    ))
 ```
-client = nacos.NacosClient(SERVER_ADDRESSES, namespace=NAMESPACE, username=USERNAME, password=PASSWORD,log_level="DEBUG")
+* `param` *service_name*  **必填** 服务名称
+* `param` *group_name* 分组名称
+* `param` *clusters* 集群名称列表
+* `param` *group_name* 自定义分组名称，默认`DEFAULT_GROUP`
+* `param` *healthy_only* 是否仅查询健康实例
+* `param` *subscribe* 是否订阅该服务
+* `return` 实例信息列表或异常
+
+### 监听服务
+```python
+async def cb(instance_list: List[Instance]):
+  print('received subscribe callback', str(instance_list))
+
+await client.subscribe(
+  SubscribeServiceParam(service_name='nacos.test.1', group_name='DEFAULT_GROUP', subscribe_callback=cb))
 ```
+* `param` *service_name*  **必填** 服务名称
+* `param` *clusters* 集群名称列表
+* `param` *group_name* 自定义分组名称，默认`DEFAULT_GROUP`
+* `param` *subscribe_callback* 服务变更时的回调函数
+
+
+### 取消监听服务
+```python
+async def cb(instance_list: List[Instance]):
+  print('received subscribe callback', str(instance_list))
+
+await client.unsubscribe(
+            SubscribeServiceParam(service_name='nacos.test.1', group_name='DEFAULT_GROUP', subscribe_callback=cb))
+```
+* `param` *service_name*  **必填** 服务名称
+* `param` *clusters* 集群名称列表
+* `param` *group_name* 自定义分组名称，默认`DEFAULT_GROUP`
+* `param` *subscribe_callback* 需取消订阅的回调函数
