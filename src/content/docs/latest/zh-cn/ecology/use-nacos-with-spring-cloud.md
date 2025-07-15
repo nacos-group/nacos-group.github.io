@@ -78,7 +78,7 @@ public class ConfigController {
 ```
 **注意**：@Value和@NacosConfig都可以将nacos的属性注入到Spring Bean的字段中，两者的区别在于：
 
-* @Value是Spring提供的注解，nacos中的属性源是众多属性源之一，通过@Value引用配置值会收到其他属性源的影响，优先级为JVM>ENV>Nacos
+* @Value是Spring提供的注解，nacos中的属性源是众多属性源之一，通过@Value引用配置值会受到其他属性源的影响，优先级为JVM>ENV>Nacos
 * @Value默认不支持运行期动态更新，需要结合@RefreshScope注解实现动态刷新，@NacosConfig默认支持运行期动态更新。。
 * @NacosConfig需要设置目标的dataId和group以及配置中的指定key，不受其他属性源影响，准确性更高。
 * @NacosConfig支持复杂对象的注入，如自定义JavaBean以及其集合类型，如Set List及Map。
