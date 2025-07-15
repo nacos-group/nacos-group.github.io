@@ -17,43 +17,43 @@ const Tableplugin = (props) => {
               <th class="col2 border-0" />
               <th class="col3 overflow-hidden">
                 <p class="mb-6 text-2xl font-normal">{t('cloud.introduce.community.edition')}</p>
-                <div class='min-h-40 text-gray-08 text-xs mb-1'>
+                {/* <div class='min-h-40 text-gray-08 text-xs mb-1'>
                   <p class='mb-2'>{t('cloud.introduce.community.edition.1')}</p>
                   <p class='mb-2'>{t('cloud.introduce.version_description')}{t('cloud.introduce.full_control')}</p>
                   <p class='mb-2'>{t('cloud.introduce.application_scenarios')}{t('cloud.introduce.deployment_environments')}</p>
-                </div>
+                </div> */}
               </th>
               <th class="col4">
                 <p class="mb-6 text-2xl font-normal">{t('cloud.introduce.develop.pkg')}</p>
-                <div class='min-h-40 text-gray-08 text-xs mb-1'>
+                {/* <div class='min-h-40 text-gray-08 text-xs mb-1'>
                   <p class='mb-1'>{t('cloud.introduce.catalog_price')}{t('cloud.introduce.price_118')}</p>
                   <p class='mb-1'>{t('cloud.introduce.discount_price')}{t('cloud.introduce.price_47_2')}</p>
                   <p class='mb-2'>{t('cloud.introduce.discount_details')}{t('cloud.introduce.discount_monthly_annual')}</p>
                   <p class='mb-2'>{t('cloud.introduce.version_description')}{t('cloud.introduce.compatible_open_source_1')}</p>
                   <p class='mb-2'>{t('cloud.introduce.application_scenarios')}{t('cloud.introduce.dev_test_environment')}</p>
-                </div>
+                </div> */}
 
               </th>
               <th class="col5">
                 <p class="mb-6 text-2xl font-normal">{t('cloud.introduce.regular.pkg')}</p>
-                <div class='min-h-40 text-gray-08 text-xs'>
+                {/* <div class='min-h-40 text-gray-08 text-xs'>
                   <p class='mb-1'>{t('cloud.introduce.catalog_price')}{t('cloud.introduce.price_498')}</p>
                   <p class='mb-1'>{t('cloud.introduce.discount_price')}{t('cloud.introduce.price_209_2')}</p>
                   <p class='mb-2'>{t('cloud.introduce.discount_details')}{t('cloud.introduce.discount_first_purchase')}</p>
                   <p class='mb-2'>{t('cloud.introduce.version_description')}{t('cloud.introduce.compatible_open_source_2')}</p>
                   <p class='mb-2'>{t('cloud.introduce.application_scenarios')}{t('cloud.introduce.all_environments_1')}</p>
-                </div>
+                </div> */}
 
               </th>
               <th class="col6">
                 <p class="mb-6 text-2xl font-normal">{t('cloud.introduce.serverless.pkg')}</p>
-                <div class='min-h-40 text-gray-08 text-xs'>
+                {/* <div class='min-h-40 text-gray-08 text-xs'>
                   <p class='mb-1'>{t('cloud.introduce.catalog_price')}{t('cloud.introduce.price_0_16')}</p>
                   <p class='mb-1'>{t('cloud.introduce.discount_price')}{t('cloud.introduce.price_0_15')}</p>
                   <p class='mb-2'>{t('cloud.introduce.discount_details')}{t('cloud.introduce.discount_saving_plan')}</p>
                   <p class='mb-2'>{t('cloud.introduce.version_description')}{t('cloud.introduce.compatible_open_source_3')}</p>
                   <p class='mb-2'>{t('cloud.introduce.application_scenarios')}{t('cloud.introduce.all_environments_1')}</p>
-                </div>
+                </div> */}
               </th>
             </tr>
           </table>

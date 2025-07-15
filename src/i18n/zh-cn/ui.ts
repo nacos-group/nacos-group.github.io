@@ -186,7 +186,7 @@ export default {
 	'cloud.introduce.feature.performance': '性能',
 	'cloud.introduce.feature.push_performance_improvement': '推送性能提升',
 	'cloud.introduce.feature.self_tuning': '自行调优',
-	'cloud.introduce.feature.same_as_community': '和社区版持平',
+	'cloud.introduce.feature.same_as_community': '持平',
 	'cloud.introduce.feature.tps_performance_improvement': 'TPS 性能提升',
 	'cloud.introduce.feature.qps_performance_improvement': 'QPS 性能提升',
 	'cloud.introduce.feature.observability_chinese': '可观测中文',
