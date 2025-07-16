@@ -19,40 +19,55 @@ const introduceData = [
   },
   {
     title: t("cloud.introduce.develop.pkg"),
-    price: t("cloud.introduce.develop.price"),
+    price: "82.6",
     priceDesc: t("cloud.introduce.develop.feature"),
-    priceSupply: t("cloud.introduce.develop.price_supply"),
+    priceSupply: "元/月起",
     unit: "/MONTH",
+    payPrice: "0.252",
+    payPriceSupply: "/小时起",
     linkName: t("cloud.introduce.learn.more"),
     link: "https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0",
     feature: [
       t("cloud.introduce.develop.discount.1"),
       t("cloud.introduce.develop.discount.2"),
     ],
+    payFeature: [
+      t("cloud.introduce.develop.discount.2"),
+    ],
   },
   {
     title: t("cloud.introduce.regular.pkg"),
     priceDesc: t("cloud.introduce.regular.feature"),
-    price: t("cloud.introduce.regular.price"),
-    priceSupply: t("cloud.introduce.regular.price_supply"),
+    price: '298.8',
+    priceSupply: '元/月起',
     unit: "/MONTH",
+    payPrice: "1.059",
+    payPriceSupply: "/小时起",
     linkName: t("cloud.introduce.learn.more"),
     link: "https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0",
     feature: [
       t("cloud.introduce.regular.discount.1"),
       t("cloud.introduce.regular.discount.2"),
     ],
+    payFeature: [
+      t("cloud.introduce.regular.discount.2"),
+    ],
   },
   {
     title: t("cloud.introduce.serverless.pkg"),
     priceDesc: t("cloud.introduce.serverless.feature"),
-    price: t("cloud.introduce.serverless.price"),
-    priceSupply: t("cloud.introduce.serverless.price_supply"),
+    price: '1086',
+    priceSupply: '元/月起',
     unit: "/HOUR",
+    payPrice: "4.530",
+    payPriceSupply: "/小时起",
     linkName: t("cloud.introduce.learn.more"),
     link: "https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0",
     feature: [
       t("cloud.introduce.serverless.discount.1"),
+      t("cloud.introduce.serverless.discount.2"),
+    ],
+    payFeature: [
       t("cloud.introduce.serverless.discount.2"),
     ],
   },
@@ -107,7 +122,7 @@ const privateData = [
     <div role="tablist" class="tabs tabs-boxed bg-transparent mt-9">
       <input
         type="radio"
-        name="my_tabs_3"
+        name="my_tabs_0"
         role="tab"
         class="tab"
         aria-label="公共云"
@@ -121,67 +136,144 @@ const privateData = [
             introduceData.map((item, index) => {
               return (
                 <div class="card-package cursor-pointer bg-gray-14 border-[.0313rem] hover:border border-text-gray-06 rounded-2xl flex-1 text-center p-8">
-                  <div class="package h-16">
+                  <div class="package h-10">
                     <div class="title text-gray-03 text-2xl font-sans font-medium">
                       <span class="relative">
                         {item?.title}
                         {/* {index == 2 ? (
-                          <span class="bg-[red] text-white absolute top-[-10px] right-[-40px] text-sm inline-block px-[5px] rounded-lg">
-                            HOT
-                          </span>
-                        ) : null} */}
+                          <span class="bg-[red] text-white absolute top-[-10px] right-[-40px] text-sm inline-block px-[5px] rounded-lg">HOT) : null} */}
                       </span>
                     </div>
+                  </div>
+                  {index > 0 && (
                     <div
                       role="tablist"
-                      class="tabs_buy tabs-boxed_buy bg-transparent mt-9"
+                      class="tabs tabs-boxed bg-transparent mt-9 w-[152px] left-[50px]"
                     >
                       <input
                         type="radio"
-                        name="my_tabs_4"
+                        name={`my_tabs_${index + 1}`}
                         role="tab"
-                        class="tab_buy"
+                        class="tab text-[12px]"
                         aria-label="按量付费"
                         checked="checked"
                       />
-                      <div role="tabpanel" class="tab-content_buy" />
+                      <div
+                        role="tabpanel"
+                        class="tab-content max-w-[328px] absolute left-[-85px] top-2"
+                      >
+                        <div class="price-content max-w-[328px] pt-4 border-b border-t border-gray-12 h-32">
+                          <span class="price text-[2.75rem] leading-[3rem] font-bold text-gray-03">
+                            {item?.payPrice}
+                          </span>
+                          <span class="price font-bold text-gray-08">
+                            {item?.payPriceSupply}
+                          </span>
+                          <div class="description font-sans pt-4 text-xs text-gray-08 line-clamp-2">
+                            {item?.priceDesc}
+                          </div>
+                        </div>
+                        <div class="pl-2 h-16 flex justify-center flex-col items-center">
+                          {item?.payFeature?.map((el, i) => {
+                            return (
+                              <div class="feature text-left text-xs text-gray-07 mt-4 line-clamp-2">
+                                {el}
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <div class="subscribe text-center mt-6 mb-2">
+                          <a
+                            href={item?.link}
+                            target="_blank"
+                            name="introduce-data"
+                          >
+                            <button class="btn button-transform rounded-full w-full bg-gray-14 text-gray-03 hover:bg-gray-12">
+                              {item?.linkName}
+                            </button>
+                          </a>
+                        </div>
+                      </div>
                       <input
                         type="radio"
-                        name="my_tabs_4"
+                        name={`my_tabs_${index + 1}`}
                         role="tab"
-                        class="tab_buy"
+                        class="tab text-[12px]"
                         aria-label="包年包月"
                       />
-                      <div role="tabpanel" class="tab-content_buy" />
-                    </div>
-                  </div>
-                  <div class="price-content pt-4 border-b border-t border-gray-12 h-32">
-                    <span class="price text-[2.75rem] leading-[3rem] font-bold text-gray-03">
-                      {item?.price}
-                    </span>
-                    <span class="price font-bold text-gray-08">
-                      {item?.priceSupply}
-                    </span>
-                    <div class="description font-sans pt-4 text-xs text-gray-08 line-clamp-2">
-                      {item?.priceDesc}
-                    </div>
-                  </div>
-                  <div class="pl-2 h-16">
-                    {item?.feature?.map((el, i) => {
-                      return (
-                        <div class="feature text-left text-xs text-gray-07 mt-4 line-clamp-2">
-                          {el}
+                      <div
+                        role="tabpanel"
+                        class="tab-content max-w-[328px] absolute left-[-85px] top-2"
+                      >
+                        <div class="price-content max-w-[328px] pt-4 border-b border-t border-gray-12 h-32">
+                          <span class="price text-[2.75rem] leading-[3rem] font-bold text-gray-03">
+                            {item?.price}
+                          </span>
+                          <span class="price font-bold text-gray-08">
+                            {item?.priceSupply}
+                          </span>
+                          <div class="description font-sans pt-4 text-xs text-gray-08 line-clamp-2">
+                            {item?.priceDesc}
+                          </div>
                         </div>
-                      );
-                    })}
-                  </div>
-                  <div class="subscribe text-center mt-6 mb-2">
-                    <a href={item?.link} target="_blank" name="introduce-data">
-                      <button class="btn button-transform rounded-full w-full bg-gray-14 text-gray-03 hover:bg-gray-12">
-                        {item?.linkName}
-                      </button>
-                    </a>
-                  </div>
+                        <div class="pl-2 h-16 flex justify-center flex-col items-center">
+                          {item?.feature?.map((el, i) => {
+                            return (
+                              <div class="feature text-left text-xs text-gray-07 mt-4 line-clamp-2">
+                                {el}
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <div class="subscribe text-center mt-6 mb-2">
+                          <a
+                            href={item?.link}
+                            target="_blank"
+                            name="introduce-data"
+                          >
+                            <button class="btn button-transform rounded-full w-full bg-gray-14 text-gray-03 hover:bg-gray-12">
+                              {item?.linkName}
+                            </button>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {index == 0 && (
+                    <div class="mt-11">
+                      <div class="price-content pt-4 border-b border-t border-gray-12 h-32">
+                        <span class="price text-[2.75rem] leading-[3rem] font-bold text-gray-03">
+                          {item?.price}
+                        </span>
+                        <span class="price font-bold text-gray-08">
+                          {item?.priceSupply}
+                        </span>
+                        <div class="description font-sans pt-4 text-xs text-gray-08 line-clamp-2">
+                          {item?.priceDesc}
+                        </div>
+                      </div>
+                      <div class="pl-2 h-16">
+                        {item?.feature?.map((el, i) => {
+                          return (
+                            <div class="feature text-left text-xs text-gray-07 mt-4 line-clamp-2">
+                              {el}
+                            </div>
+                          );
+                        })}
+                      </div>
+                      <div class="subscribe text-center mt-6 mb-2">
+                        <a
+                          href={item?.link}
+                          target="_blank"
+                          name="introduce-data"
+                        >
+                          <button class="btn button-transform rounded-full w-full bg-gray-14 text-gray-03 hover:bg-gray-12">
+                            {item?.linkName}
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+                  )}
                 </div>
               );
             })
@@ -190,7 +282,7 @@ const privateData = [
       </div>
       <input
         type="radio"
-        name="my_tabs_3"
+        name="my_tabs_0"
         role="tab"
         class="tab"
         aria-label="专有云"
@@ -311,35 +403,6 @@ const privateData = [
       width: 168px;
       height: 40px;
       background-color: theme("colors.gray.13");
-      pointer-events: none;
-      border-radius: 20px;
-    }
-    .tab-content_buy {
-      width: 328px;
-      padding-left: 16px;
-    }
-    .tab_buy:is(input[type="radio"]) {
-      width: 80px;
-      border-radius: 20px;
-      color: theme("colors.gray.06");
-    }
-    .tabs-boxed_buy .tab-active:not(.tab-disabled):not([disabled]),
-    .tabs-boxed-buy :is(input:checked) {
-      background-color: theme("colors.gray.12");
-      color: theme("colors.gray.01");
-    }
-    .tabs_buy {
-      position: relative;
-      margin-top: 4px;
-    }
-    .tabs_buy::before {
-      content: "";
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      width: 154px;
-      height: 40px;
-      background-color: theme("colors.gray.14");
       pointer-events: none;
       border-radius: 20px;
     }
