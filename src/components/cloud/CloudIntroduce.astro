@@ -31,15 +31,13 @@ const introduceData = [
       t("cloud.introduce.develop.discount.1"),
       t("cloud.introduce.develop.discount.2"),
     ],
-    payFeature: [
-      t("cloud.introduce.develop.discount.2"),
-    ],
+    payFeature: [t("cloud.introduce.develop.discount.2")],
   },
   {
     title: t("cloud.introduce.regular.pkg"),
     priceDesc: t("cloud.introduce.regular.feature"),
-    price: '298.8',
-    priceSupply: '元/月起',
+    price: "298.8",
+    priceSupply: "元/月起",
     unit: "/MONTH",
     payPrice: "1.059",
     payPriceSupply: "/小时起",
@@ -49,15 +47,13 @@ const introduceData = [
       t("cloud.introduce.regular.discount.1"),
       t("cloud.introduce.regular.discount.2"),
     ],
-    payFeature: [
-      t("cloud.introduce.regular.discount.2"),
-    ],
+    payFeature: [t("cloud.introduce.regular.discount.2")],
   },
   {
     title: t("cloud.introduce.serverless.pkg"),
     priceDesc: t("cloud.introduce.serverless.feature"),
-    price: '1086',
-    priceSupply: '元/月起',
+    price: "1086",
+    priceSupply: "元/月起",
     unit: "/HOUR",
     payPrice: "4.530",
     payPriceSupply: "/小时起",
@@ -67,9 +63,7 @@ const introduceData = [
       t("cloud.introduce.serverless.discount.1"),
       t("cloud.introduce.serverless.discount.2"),
     ],
-    payFeature: [
-      t("cloud.introduce.serverless.discount.2"),
-    ],
+    payFeature: [t("cloud.introduce.serverless.discount.2")],
   },
 ];
 const privateData = [
@@ -127,6 +121,7 @@ const privateData = [
         class="tab"
         aria-label="公共云"
         checked="checked"
+        data-type="public"
       />
       <div role="tabpanel" class="tab-content">
         <BaseContainer
@@ -286,6 +281,7 @@ const privateData = [
         role="tab"
         class="tab"
         aria-label="专有云"
+        data-type="private"
       />
       <div role="tabpanel" class="tab-content">
         <BaseContainer
@@ -365,6 +361,25 @@ const privateData = [
   });
   document.addEventListener("astro:before-swap", (ev) => {
     replaceUrl(ev.newDocument);
+  });
+  // 监听标签页切换
+  document.addEventListener("DOMContentLoaded", () => {
+    const tabInputs = document.querySelectorAll('input[name="my_tabs_0"]');
+
+    tabInputs.forEach((input) => {
+      input.addEventListener("change", (e) => {
+        const target = e.target as HTMLInputElement;
+        if (target.checked) {
+          const tabType = target.dataset.type;
+          // 发送自定义事件到 FunctionalCompare
+          window.dispatchEvent(
+            new CustomEvent("tabChange", {
+              detail: { tabType },
+            }),
+          );  
+        }
+      });
+    });
   });
 </script>
 
