@@ -13,11 +13,14 @@ const tabType = signal("public"); // 默认公共云
 const FunctionalCompare = ({ url }) => {
   const t = useTranslations({ url });
   const versionDataSource = getDataSource(t);
-  const dataVersion = [
+  const dataVersion = tabType.value === 'public' ? [
     { key: "1", label: t('cloud.introduce.community.edition') },
     { key: "2", label: t('cloud.introduce.develop.pkg') },
     { key: "3", label: t('cloud.introduce.regular.pkg') },
     { key: "4", label: t('cloud.introduce.serverless.pkg') },
+  ] : [
+    { key: "1", label: t('cloud.introduce.community.edition') },
+    { key: "5", label: t('cloud.introduce.fly_unicorn'), }
   ];
   const getLabel = (key) => {
     return dataVersion.find(item => item.key === key)?.label;
@@ -28,6 +31,7 @@ const FunctionalCompare = ({ url }) => {
     '2': 'develop',
     '3': 'speciality',
     '4': 'serverless',
+    '5': 'exclusive', // 飞天专属版
   }
   const [isSafariBrowser, setIsSafariBrowser] = useState(true);
   const [version, setVersion] = useState("1");

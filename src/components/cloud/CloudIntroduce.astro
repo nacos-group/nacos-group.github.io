@@ -19,12 +19,12 @@ const introduceData = [
   },
   {
     title: t("cloud.introduce.develop.pkg"),
-    price: "82.6",
+    price: "¥82.6",
     priceDesc: t("cloud.introduce.develop.feature"),
-    priceSupply: "元/月起",
+    priceSupply: t('cloud.introduce.monthly_annual_supply'),
     unit: "/MONTH",
-    payPrice: "0.252",
-    payPriceSupply: "/小时起",
+    payPrice: "¥0.252",
+    payPriceSupply: t('cloud.introduce.pay_hour'),
     linkName: t("cloud.introduce.learn.more"),
     link: "https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0",
     feature: [
@@ -36,11 +36,11 @@ const introduceData = [
   {
     title: t("cloud.introduce.regular.pkg"),
     priceDesc: t("cloud.introduce.regular.feature"),
-    price: "298.8",
-    priceSupply: "元/月起",
+    price: "¥298.8",
+    priceSupply: t('cloud.introduce.monthly_annual_supply'),
     unit: "/MONTH",
-    payPrice: "1.059",
-    payPriceSupply: "/小时起",
+    payPrice: "¥1.059",
+    payPriceSupply: t('cloud.introduce.pay_hour'),
     linkName: t("cloud.introduce.learn.more"),
     link: "https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0",
     feature: [
@@ -52,11 +52,11 @@ const introduceData = [
   {
     title: t("cloud.introduce.serverless.pkg"),
     priceDesc: t("cloud.introduce.serverless.feature"),
-    price: "1086",
-    priceSupply: "元/月起",
+    price: "¥1086",
+    priceSupply: t('cloud.introduce.monthly_annual_supply'),
     unit: "/HOUR",
-    payPrice: "4.530",
-    payPriceSupply: "/小时起",
+    payPrice: "¥4.530",
+    payPriceSupply: t('cloud.introduce.pay_hour'),
     linkName: t("cloud.introduce.learn.more"),
     link: "https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0",
     feature: [
@@ -80,15 +80,15 @@ const privateData = [
     ],
   },
   {
-    title: "飞天专属版",
-    price: "尊享服务",
+    title: t('cloud.introduce.fly_unicorn'),
+    price: t('cloud.introduce.premium'),
     unit: "",
-    priceDesc: "适用于企业本地化部署",
-    linkName: "联系我们",
+    priceDesc: t('cloud.introduce.localization'),
+    linkName: t("page.team.introduction.contact"),
     link: "https://survey.aliyun.com/apps/zhiliao/r4XOKJLjZ",
     feature: [
-      "性能与资源：匹配业务规模，弹性可伸缩",
-      "SLA：按需协商，极致保障",
+      t('cloud.introduce.performance_resource'),
+      t('cloud.introduce.sla_guarantee'),
     ],
   },
 ];
@@ -118,8 +118,8 @@ const privateData = [
         type="radio"
         name="my_tabs_0"
         role="tab"
-        class="tab"
-        aria-label="公共云"
+        class="tab primary-tab"
+        aria-label={t('cloud.introduce.public')}
         checked="checked"
         data-type="public"
       />
@@ -130,7 +130,7 @@ const privateData = [
           {
             introduceData.map((item, index) => {
               return (
-                <div class="card-package cursor-pointer bg-gray-14 border-[.0313rem] hover:border border-text-gray-06 rounded-2xl flex-1 text-center p-8">
+                <div class="card-package cursor-pointer bg-gray-13 hover:border border-text-gray-06 rounded-2xl flex-1 text-center p-8">
                   <div class="package h-10">
                     <div class="title text-gray-03 text-2xl font-sans font-medium">
                       <span class="relative">
@@ -143,14 +143,14 @@ const privateData = [
                   {index > 0 && (
                     <div
                       role="tablist"
-                      class="tabs tabs-boxed bg-transparent mt-9 w-[152px] left-[50px]"
+                      class="tabs tabs-boxed secondary-tabs bg-transparent mt-9 w-[152px] left-[50px]"
                     >
                       <input
                         type="radio"
                         name={`my_tabs_${index + 1}`}
                         role="tab"
-                        class="tab text-[12px]"
-                        aria-label="按量付费"
+                        class="tab secondary-tab text-[12px]"
+                        aria-label={t('cloud.introduce.pay')}
                         checked="checked"
                       />
                       <div
@@ -161,7 +161,7 @@ const privateData = [
                           <span class="price text-[2.75rem] leading-[3rem] font-bold text-gray-03">
                             {item?.payPrice}
                           </span>
-                          <span class="price font-bold text-gray-08">
+                          <span class="price price_supply font-bold text-gray-08">
                             {item?.payPriceSupply}
                           </span>
                           <div class="description font-sans pt-4 text-xs text-gray-08 line-clamp-2">
@@ -193,8 +193,8 @@ const privateData = [
                         type="radio"
                         name={`my_tabs_${index + 1}`}
                         role="tab"
-                        class="tab text-[12px]"
-                        aria-label="包年包月"
+                        class="tab secondary-tab text-[12px]"
+                        aria-label={t('cloud.introduce.monthly_annual')}
                       />
                       <div
                         role="tabpanel"
@@ -279,8 +279,8 @@ const privateData = [
         type="radio"
         name="my_tabs_0"
         role="tab"
-        class="tab"
-        aria-label="专有云"
+        class="tab primary-tab"
+        aria-label={t("cloud.introduce.private")}
         data-type="private"
       />
       <div role="tabpanel" class="tab-content">
@@ -376,7 +376,7 @@ const privateData = [
             new CustomEvent("tabChange", {
               detail: { tabType },
             }),
-          );  
+          );
         }
       });
     });
@@ -402,9 +402,13 @@ const privateData = [
       color: theme("colors.gray.06");
     }
     .tabs-boxed .tab-active:not(.tab-disabled):not([disabled]),
-    .tabs-boxed :is(input:checked) {
+    .primary-tab:checked {
       background-color: theme("colors.blue.01");
-      color: theme("colors.gray.14");
+      color: theme("colors.gray.14") !important;
+    }
+    .secondary-tab:checked {
+      background-color: theme("colors.gray.12");
+      color: theme("colors.gray.01") !important;
     }
     .tabs {
       position: relative;
@@ -418,6 +422,17 @@ const privateData = [
       width: 168px;
       height: 40px;
       background-color: theme("colors.gray.13");
+      pointer-events: none;
+      border-radius: 20px;
+    }
+    .secondary-tabs::before {
+      content: "";
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 168px;
+      height: 40px;
+      background-color: theme("colors.gray.14");
       pointer-events: none;
       border-radius: 20px;
     }
@@ -495,7 +510,8 @@ const privateData = [
         padding: 1.5rem;
       }
       .tab-content {
-        width: 100%;
+        /* width: 100%; */
+        max-width: 328px;
       }
       .top-introduce {
         width: 100%;
@@ -523,11 +539,18 @@ const privateData = [
       .bottom-package .card-package:last-child {
         margin-bottom: 0;
       }
+      .card-package {
+        height: 398px;
+      }
 
       /* 手机端卡片样式单独设置 */
       .price-content .price {
         font-size: 1.875rem; /* 30px */
         line-height: 2.25rem; /* 36px */
+      }
+      .price_supply {
+        font-size: 14px !important;
+        font-weight: normal;
       }
       .subscribe {
         margin-bottom: 0;
