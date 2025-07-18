@@ -15,7 +15,7 @@ jobs:
           node-version: 18.x
       - name: Install
         run: |
-          npm install && npm i @swc/core@1.6.0
+          npm config set registry https://registry.npmjs.org/ && npm install && npm i @swc/core@1.6.0
       - name: Build
         run: npm run build
       - name: Install Aliyun CLI
