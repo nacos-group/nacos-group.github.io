@@ -21,10 +21,10 @@ const introduceData = [
     title: t("cloud.introduce.develop.pkg"),
     price: "¥82.6",
     priceDesc: t("cloud.introduce.develop.feature"),
-    priceSupply: t('cloud.introduce.monthly_annual_supply'),
+    priceSupply: t("cloud.introduce.monthly_annual_supply"),
     unit: "/MONTH",
     payPrice: "¥0.252",
-    payPriceSupply: t('cloud.introduce.pay_hour'),
+    payPriceSupply: t("cloud.introduce.pay_hour"),
     linkName: t("cloud.introduce.learn.more"),
     link: "https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0",
     feature: [
@@ -37,10 +37,10 @@ const introduceData = [
     title: t("cloud.introduce.regular.pkg"),
     priceDesc: t("cloud.introduce.regular.feature"),
     price: "¥298.8",
-    priceSupply: t('cloud.introduce.monthly_annual_supply'),
+    priceSupply: t("cloud.introduce.monthly_annual_supply"),
     unit: "/MONTH",
     payPrice: "¥1.059",
-    payPriceSupply: t('cloud.introduce.pay_hour'),
+    payPriceSupply: t("cloud.introduce.pay_hour"),
     linkName: t("cloud.introduce.learn.more"),
     link: "https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0",
     feature: [
@@ -53,10 +53,10 @@ const introduceData = [
     title: t("cloud.introduce.serverless.pkg"),
     priceDesc: t("cloud.introduce.serverless.feature"),
     price: "¥1086",
-    priceSupply: t('cloud.introduce.monthly_annual_supply'),
+    priceSupply: t("cloud.introduce.monthly_annual_supply"),
     unit: "/HOUR",
     payPrice: "¥4.530",
-    payPriceSupply: t('cloud.introduce.pay_hour'),
+    payPriceSupply: t("cloud.introduce.pay_hour"),
     linkName: t("cloud.introduce.learn.more"),
     link: "https://www.aliyun.com/product/aliware/mse?spm=nacos.cloud.topbar.0.0.0",
     feature: [
@@ -80,15 +80,15 @@ const privateData = [
     ],
   },
   {
-    title: t('cloud.introduce.fly_unicorn'),
-    price: t('cloud.introduce.premium'),
+    title: t("cloud.introduce.fly_unicorn"),
+    price: t("cloud.introduce.premium"),
     unit: "",
-    priceDesc: t('cloud.introduce.localization'),
+    priceDesc: t("cloud.introduce.localization"),
     linkName: t("page.team.introduction.contact"),
     link: "https://survey.aliyun.com/apps/zhiliao/r4XOKJLjZ",
     feature: [
-      t('cloud.introduce.performance_resource'),
-      t('cloud.introduce.sla_guarantee'),
+      t("cloud.introduce.performance_resource"),
+      t("cloud.introduce.sla_guarantee"),
     ],
   },
 ];
@@ -119,7 +119,7 @@ const privateData = [
         name="my_tabs_0"
         role="tab"
         class="tab primary-tab"
-        aria-label={t('cloud.introduce.public')}
+        aria-label={t("cloud.introduce.public")}
         checked="checked"
         data-type="public"
       />
@@ -150,7 +150,7 @@ const privateData = [
                         name={`my_tabs_${index + 1}`}
                         role="tab"
                         class="tab secondary-tab text-[12px]"
-                        aria-label={t('cloud.introduce.pay')}
+                        aria-label={t("cloud.introduce.pay")}
                         checked="checked"
                       />
                       <div
@@ -194,7 +194,7 @@ const privateData = [
                         name={`my_tabs_${index + 1}`}
                         role="tab"
                         class="tab secondary-tab text-[12px]"
-                        aria-label={t('cloud.introduce.monthly_annual')}
+                        aria-label={t("cloud.introduce.monthly_annual")}
                       />
                       <div
                         role="tabpanel"
@@ -363,9 +363,8 @@ const privateData = [
     replaceUrl(ev.newDocument);
   });
   // 监听标签页切换
-  document.addEventListener("DOMContentLoaded", () => {
+  if (document.readyState !== "loading") {
     const tabInputs = document.querySelectorAll('input[name="my_tabs_0"]');
-
     tabInputs.forEach((input) => {
       input.addEventListener("change", (e) => {
         const target = e.target as HTMLInputElement;
@@ -380,7 +379,25 @@ const privateData = [
         }
       });
     });
-  });
+  } else {
+    document.addEventListener("DOMContentLoaded", () => {
+      const tabInputs = document.querySelectorAll('input[name="my_tabs_0"]');
+      tabInputs.forEach((input) => {
+        input.addEventListener("change", (e) => {
+          const target = e.target as HTMLInputElement;
+          if (target.checked) {
+            const tabType = target.dataset.type;
+            // 发送自定义事件到 FunctionalCompare
+            window.dispatchEvent(
+              new CustomEvent("tabChange", {
+                detail: { tabType },
+              }),
+            );
+          }
+        });
+      });
+    });
+  };
 </script>
 
 <style is:global>
