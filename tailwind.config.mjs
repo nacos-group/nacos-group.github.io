@@ -78,7 +78,6 @@ export default {
 			},
 			fontFamily: {
 				sans: ["Roboto","SourceHanSans","sans-serif"],
-				mono: ["Roboto","SourceHanSans","sans-serif"],
 			},
 			screens: {
 				'ssm': '450px',
