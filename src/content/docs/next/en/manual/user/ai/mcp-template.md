@@ -6,8 +6,6 @@ sidebar:
     order: 4
 ---
 
-import { Tabs, TabItem } from '@astrojs/starlight/components';
-
 # Nacos MCP Existing Service Template Configuration
 When adding a tool, use protocol-conversion settings to configure the gateway template.
 

@@ -6,8 +6,6 @@ sidebar:
     order: 4
 ---
 
-import { Tabs, TabItem } from '@astrojs/starlight/components';
-
 # Nacos MCP 存量服务模版配置
 在添加tool的时候通过协议转化配置配置网关的模版
 
