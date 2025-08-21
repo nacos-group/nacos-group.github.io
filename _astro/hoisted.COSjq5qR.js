@@ -1,0 +1,1 @@
+import"./hoisted.B7kTf-Cs.js";import"./hoisted.AL9c6bJK.js";import"./Tabs.astro_astro_type_script_index_0_lang.BqK4QFew.js";import"./index.CTbVEFV3.js";import"./preload-helper.CLcXU_4U.js";class o extends HTMLElement{constructor(){super()}}customElements.define("cloud-body",o);
