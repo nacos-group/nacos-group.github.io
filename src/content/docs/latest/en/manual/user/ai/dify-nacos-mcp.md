@@ -10,7 +10,8 @@ sidebar:
 [Nacos MCP](https://marketplace.dify.ai/plugins/nacos/nacos_mcp) plugin supports converting SSE/Streamable HTTP-type MCP Server services registered in Nacos into Dify-compatible tool calls.
 Through the Nacos MCP plugin, Dify applications can dynamically discover SSE/Streamable HTTP-type MCP Server services registered in Nacos. The plugin assists models in dynamically selecting and routing MCP services based on demand, effectively reducing token consumption during model invocations.
 
-### Step 1 Set up MCP Server in Nacos.
+
+### Step 1 Set up MCP Server in Nacos. 
 Create SSE/Streamable HTTP MCP Server in Nacos through manual
 creation, [Spring AI Alibaba Mcp Nacos](https://github.com/alibaba/spring-ai-alibaba/tree/main/spring-ai-alibaba-mcp/spring-ai-alibaba-mcp-nacos)
 automatic registration, and [Nacos MCP Wrapper Python](https://github.com/nacos-group/nacos-mcp-wrapper-python)
@@ -65,3 +66,13 @@ A: Ensure that the Nacos Server version is 3.0.1 or higher, and verify that the 
 Q: The model fails to find the correct MCP Server or invoke the correct tool
 
 A: Make sure the descriptions of the corresponding MCP Server and its tools in Nacos are accurate. Well-written descriptions help the model better identify and use the appropriate MCP Servers and tools.
+
+
+
+
+
+
+
+
+
+

@@ -169,33 +169,33 @@ MCP Server 自动注册到 Nacos 之后，可以在控制台上动态变更 MCP 
 </dependency>
 
 <dependency>
-<groupId>org.springframework.ai</groupId>
-<artifactId>spring-ai-autoconfigure-model-chat-client</artifactId>
-<version>{1.0.0及以上版本}</version>
+    <groupId>org.springframework.ai</groupId>
+    <artifactId>spring-ai-autoconfigure-model-chat-client</artifactId>
+    <version>{1.0.0及以上版本}</version>
 </dependency>
 
 <dependency>
-<groupId>com.alibaba.cloud.ai</groupId>
-<artifactId>spring-ai-alibaba-starter-mcp-registry</artifactId>
-<version>{1.0.0.3及以上版本}</version>
+    <groupId>com.alibaba.cloud.ai</groupId>
+    <artifactId>spring-ai-alibaba-starter-mcp-registry</artifactId>
+    <version>{1.0.0.3及以上版本}</version>
 </dependency>
 
 <dependency>
-<groupId>org.springframework.ai</groupId>
-<artifactId>spring-ai-starter-mcp-client-webflux</artifactId>
-<version>{1.0.0及以上版本}</version>
+    <groupId>org.springframework.ai</groupId>
+    <artifactId>spring-ai-starter-mcp-client-webflux</artifactId>
+    <version>{1.0.0及以上版本}</version>
 </dependency>
 ```
 
 #### 2.创建 Async 或者 Sync MCP Client
 ```java
     @Autowired
-private List<LoadbalancedMcpSyncClient> loadbalancedMcpSyncClients;
+    private List<LoadbalancedMcpSyncClient> loadbalancedMcpSyncClients;
 ```
 or
 ```java
     @Autowired
-private List<LoadbalancedMcpAsyncClient> loadbalancedMcpAsyncClients;
+    private List<LoadbalancedMcpAsyncClient> loadbalancedMcpAsyncClients;
 ```
 或者使用 提供的ToolCallbackProvider
 ```java
@@ -248,21 +248,21 @@ spring:
 ```java
 @SpringBootApplication
 public class NacosMcpDiscoveryClientApplication {
-    
-    
+
+
     public static void main(String[] args) {
         SpringApplication.run(NacosMcpDiscoveryClientApplication.class, args);
     }
-    
+
     @Bean
     public CommandLineRunner predefinedQuestionsDemo(ChatClient.Builder chatClientBuilder, @Qualifier("loadbalancedMcpAsyncToolCallbacks") ToolCallbackProvider tools,
-            ConfigurableApplicationContext context) {
-        
+                                                 ConfigurableApplicationContext context) {
+
         return args -> {
             var chatClient = chatClientBuilder
                     .defaultToolCallbacks(tools.getToolCallbacks())
                     .build();
-            
+
             Scanner scanner = new Scanner(System.in);
             while (true) {
                 System.out.print("\n>>> QUESTION: ");

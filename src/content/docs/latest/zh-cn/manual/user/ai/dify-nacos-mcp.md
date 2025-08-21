@@ -1,6 +1,6 @@
 ---
 title: Dify 发现 Nacos MCP 服务
-keywords: [MCP,Dify ]
+keywords: [MCP,Dify]
 description: Dify 发现 Nacos MCP 服务
 sidebar:
   order: 7
