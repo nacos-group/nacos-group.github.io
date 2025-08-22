@@ -23,7 +23,7 @@ sidebar:
 ```xml
 <dependency>
     <groupId>com.alibaba.cloud.ai</groupId>
-    <artifactId>spring-ai-alibaba-starter-nacos-mcp-registry</artifactId>
+    <artifactId>spring-ai-alibaba-starter-mcp-registry</artifactId>
     <version>{1.0.0.3及以上版本}</version>
 </dependency>
 
