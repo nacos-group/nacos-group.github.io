@@ -39,9 +39,9 @@ constant.ClientConfig{
   Username             string // Nacos服务端的API鉴权Username
   Password             string // Nacos服务端的API鉴权Password
   LogDir               string // 日志存储路径
-  RotateTime           string // 日志轮转周期，比如：30m, 1h, 24h, 默认是24h
-  MaxAge               int64  // 日志最大文件数，默认3
   LogLevel             string // 日志默认级别，值必须是：debug,info,warn,error，默认值是info
+  LogSampling          *ClientLogSamplingConfig // 日志采样配置
+  LogRollingConfig     *ClientLogRollingConfig  // 日志归档配置
 }
 ```
 
