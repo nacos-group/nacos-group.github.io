@@ -604,7 +604,7 @@ try {
                         @Override
                         public void onEvent(ConfigFuzzyWatchChangeEvent event) {
                             String changedType= event.getChangedType();
-                            String syncType= event.getChangedType();
+                            String syncType= event.getSyncType();
                             String groupChanged = event.getGroup();
                             String dataIdChanged = event.getDataId();
                             String namespace = event.getNamespace();
