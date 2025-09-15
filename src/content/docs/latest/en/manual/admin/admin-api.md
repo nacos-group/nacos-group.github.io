@@ -4669,10 +4669,11 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=tes
 
 > toolSpecification
 
-| 参数名         | 参数类型                       | 描述                                                                                      |
-|-------------|----------------------------|-----------------------------------------------------------------------------------------|
-| `tools`     | `List<McpTool>`            | 该MCP Server所提供的工具列表，参考标准MCP协议中对于MCP Tool的定义                                             |
-| `toolsMeta` | `Map<String, McpToolMeta>` | 该MCP Server所提供的工具的额外元数据信息，可用于扩展标准MCP协议中未定义但又使用中需要的信息。key为`McpTool`的`name`, value为拓展元数据。 |
+| 参数名               | 参数类型                       | 描述                                                                                      |
+|-------------------|----------------------------|-----------------------------------------------------------------------------------------|
+| `tools`           | `List<McpTool>`            | 该MCP Server所提供的工具列表，参考标准MCP协议中对于MCP Tool的定义                                             |
+| `toolsMeta`       | `Map<String, McpToolMeta>` | 该MCP Server所提供的工具的额外元数据信息，可用于扩展标准MCP协议中未定义但又使用中需要的信息。key为`McpTool`的`name`, value为拓展元数据。 |
+| `securitySchemes` | `List<SecurityScheme>`     | MCP工具的安全方案，参考标准MCP协议。                                                                   |
 
 其中`McpTool`结构如下：
 
@@ -4689,6 +4690,17 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=tes
 | `invokeContext` | `Map<String, String>` | MCP 工具调用时的上下文信息，如后端服务的`Path`等。 |
 | `enabled`       | `boolean`             | MCP工具是否启用。                     |
 | `templates`     | `Map<String, String>` | MCP工具的模板信息。用于进行协议转换时进行参数的映射。   |
+
+其中`SecurityScheme` 结构如下：
+
+| 参数名                 | 参数类型     | 描述                                                                                |
+|---------------------|----------|-----------------------------------------------------------------------------------|
+| `id`                | `String` | 安全方案的ID，将被MCP工具使用和引用。。                                                            |
+| `type`              | `String` | 安全方案的类型。可能的值包括：`http`、`apiKey`、`localEnv`或其他自定义扩展。                                |
+| `scheme`            | `String` | 安全方案的子方案类型。当 `type` 为 `http` 时使用。可能的值包括：`basic` 或 `bearer`。                       |
+| `in`                | `String` | 安全方案的位置。可能的值有：`query`、`header`。                                                   |
+| `name`              | `String` | 安全方案的名称。当 `type` 为 `apiKey` 或 `localEnv` 时使用。例如，`apiKey` 的密钥名称或 `localEnv` 的环境名称。 |
+| `defaultCredential` | `String` | 当配置参数中未输入身份时的默认凭证。可选。                                                             |
 
 > endpointSpecification
 
@@ -4781,10 +4793,11 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 
 > toolSpecification
 
-| 参数名         | 参数类型                       | 描述                                                                                      |
-|-------------|----------------------------|-----------------------------------------------------------------------------------------|
-| `tools`     | `List<McpTool>`            | 该MCP Server所提供的工具列表，参考标准MCP协议中对于MCP Tool的定义                                             |
-| `toolsMeta` | `Map<String, McpToolMeta>` | 该MCP Server所提供的工具的额外元数据信息，可用于扩展标准MCP协议中未定义但又使用中需要的信息。key为`McpTool`的`name`, value为拓展元数据。 |
+| 参数名               | 参数类型                       | 描述                                                                                      |
+|-------------------|----------------------------|-----------------------------------------------------------------------------------------|
+| `tools`           | `List<McpTool>`            | 该MCP Server所提供的工具列表，参考标准MCP协议中对于MCP Tool的定义                                             |
+| `toolsMeta`       | `Map<String, McpToolMeta>` | 该MCP Server所提供的工具的额外元数据信息，可用于扩展标准MCP协议中未定义但又使用中需要的信息。key为`McpTool`的`name`, value为拓展元数据。 |
+| `securitySchemes` | `List<SecurityScheme>`     | MCP工具的安全方案，参考标准MCP协议。                                                                   |
 
 其中`McpTool`结构如下：
 
@@ -4801,6 +4814,17 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 | `invokeContext` | `Map<String, String>` | MCP 工具调用时的上下文信息，如后端服务的`Path`等。 |
 | `enabled`       | `boolean`             | MCP工具是否启用。                     |
 | `templates`     | `Map<String, String>` | MCP工具的模板信息。用于进行协议转换时进行参数的映射。   |
+
+其中`SecurityScheme` 结构如下：
+
+| 参数名                 | 参数类型     | 描述                                                                                |
+|---------------------|----------|-----------------------------------------------------------------------------------|
+| `id`                | `String` | 安全方案的ID，将被MCP工具使用和引用。。                                                            |
+| `type`              | `String` | 安全方案的类型。可能的值包括：`http`、`apiKey`、`localEnv`或其他自定义扩展。                                |
+| `scheme`            | `String` | 安全方案的子方案类型。当 `type` 为 `http` 时使用。可能的值包括：`basic` 或 `bearer`。                       |
+| `in`                | `String` | 安全方案的位置。可能的值有：`query`、`header`。                                                   |
+| `name`              | `String` | 安全方案的名称。当 `type` 为 `apiKey` 或 `localEnv` 时使用。例如，`apiKey` 的密钥名称或 `localEnv` 的环境名称。 |
+| `defaultCredential` | `String` | 当配置参数中未输入身份时的默认凭证。可选。                                                             |
 
 > endpointSpecification
 
