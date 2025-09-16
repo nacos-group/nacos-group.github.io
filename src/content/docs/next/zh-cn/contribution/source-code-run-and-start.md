@@ -46,56 +46,44 @@ mysql -V
 
 ### 步骤三：打包Nacos3.0
 
-进入Nacos项目的bootstrap目录下执行Maven命令编译并打包Nacos的console和server端的代码。这将会生成一个可执行的jar包（`nacos-server.jar`）在`bootstrap/target`目录下。
+进入Nacos项目的根目录下执行Maven命令编译并打包Nacos的console和server端的代码。
 
 具体命令如下：
 
 ```bash
-cd nacos/bootstrap
-mvn clean package -Prelease-nacos
+cd nacos
+mvn clean install -Prelease-nacos
 ```
 
-### 步骤四：验证jar包是否正确
+打包完成后会在`distribution/target`目录下生成nacos-server-${version}的`目录`、`tar.gz`和`zip`的文件，分别用于直接运行和部署。
 
-解压`nacos-server.jar`可以看到`BOOT-INF`目录则说明该jar包为可执行jar包
+### 步骤四：以merged模式启动Nacos-bootstrap
 
-```bash
-# 解压 JAR 包到指定目录
-mkdir myjar && cd myjar
-jar xvf ../nacos-server.jar
-# 进入解压后的目录
-cd myjar
-# 查看目录结构（`-l` 显示详细信息，`-d` 仅显示目录）
-ls -ld BOOT-INF
-```
-
-### 步骤五：以merged模式启动Nacos-bootstrap
-
-在`Nacos/bootstrap/src/main/resources/application.properties`文件中添加如下配置：
+在`Nacos/distribution/target/nacos-server-${version}/nacos/conf/application.properties`文件中添加如下配置：
 
 ```properties
 spring.sql.init.platform=mysql
- db.num=1
- db.url.0=jdbc:mysql://127.0.0.1:3306/nacos?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
- db.user=${MYSQL_USERNAME}
- db.password=${MYSQL_PASSWORD}
+db.num=1
+db.url.0=jdbc:mysql://127.0.0.1:3306/nacos?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+db.user=${MYSQL_USERNAME}
+db.password=${MYSQL_PASSWORD}
 ```
 
 启动`Nacos-bootstrap`，并指定`nacos.deployment.type`参数为`merged`，启动命令如下：
 
 ```bash
-java -jar target/nacos-server.jar --nacos.mode=standalone --nacos.core.auth.server.identity.key=${key} --nacos.core.auth.server.identity.value=${value} --nacos.core.auth.plugin.nacos.token.secret.key=${secret_key}
+distribution/target/nacos-server-${version}/nacos/bin/startup.sh -m standalone
 ```
 
-其中`${key}`和`${value}`为服务端身份认证的参数，`${secret_key}`为自定义的token，token为用户名密码生成JWT Token的密钥（原串要32位以上，之后做base64格式化）。
+> 首次启动会引导填写鉴权相关的一些配置参数，`nacos.core.auth.plugin.nacos.token.secret.key`, `nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value`, 请按照引导进行填写.
 
-### 步骤六：验证Nacos-bootstrap是否启动成功
+### 步骤五：验证Nacos-bootstrap是否启动成功
 
 在浏览器中访问`http://127.0.0.1:8080`，如果出现登录页面面则说明Nacos-bootstrap启动成功。
 
 ### 解释
 
-上述步骤从拉取Nacos源码开始，到打包`Nacos-bootstrap`并启动`nacos-server.jar`。整个过程中，我们遵循了开源协议的要求，未对原始版权信息做出任何修改或删除。通过直接运行打包好的jar文件，可以方便地启动`Nacos Server`,`Nacos console`进行测试或部署。
+上述步骤从拉取Nacos源码开始，到打包`Nacos-bootstrap`并启动`nacos-server`。整个过程中，我们遵循了开源协议的要求，未对原始版权信息做出任何修改或删除。通过直接运行打包好的jar文件，可以方便地启动`Nacos Server`,`Nacos console`进行测试或部署。
 
 值得提一下的是，在实际操作过程中您可能要根据自己的需求适当更改命令和配置文件中内容（如本文外联的mysql数据库地址、用户名、密码等）
 

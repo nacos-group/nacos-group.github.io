@@ -46,32 +46,20 @@ mysql -V
 
 ### Step 3: Package Nacos 3.0
 
-Navigate to the `bootstrap` directory of the Nacos project and execute the Maven command to compile and package the code for the console and server of Nacos. This will generate an executable JAR file (`nacos-server.jar`) in the `bootstrap/target` directory.
+Navigate to the `root directory` of the Nacos project and execute the Maven command to compile and package the console and server-side code of Nacos.
 
 The specific command is as follows:
 
 ```bash
-cd nacos/bootstrap
-mvn clean package -Prelease-nacos
+cd nacos
+mvn clean install -Prelease-nacos
 ```
 
-### Step 4: Verify the JAR File
+After packaging, the `distribution/target` directory will contain the nacos-server-${version} `directory`, `tar.gz`, and `zip` files, used for direct execution and deployment respectively.
 
-If you can see the `BOOT-INF` directory after unpacking the `nacos-server.jar`, it means that the JAR file is an executable JAR file.
+### Step 4: Start Nacos-Bootstrap in Merged Mode
 
-```bash
-# Unpack the JAR file to a specified directory
-mkdir myjar && cd myjar
-jar xvf ../nacos-server.jar
-# Navigate to the unpacked directory
-cd myjar
-# View the directory structure (`-l` to display detailed information, `-d` to display only directories)
-ls -ld BOOT-INF
-```
-
-### Step 5: Start Nacos-Bootstrap in Merged Mode
-
-Add the following configuration to the `Nacos/bootstrap/src/main/resources/application.properties` file:
+Add the following configuration to the `Nacos/distribution/target/nacos-server-${version}/nacos/conf/application.properties` file:
 
 ```properties
 spring.sql.init.platform=mysql
@@ -84,12 +72,12 @@ db.password=${MYSQL_PASSWORD}
 Start `Nacos-bootstrap` and specify the `nacos.deployment.type` parameter as `merged`. The startup command is as follows:
 
 ```bash
-java -jar target/nacos-server.jar --nacos.mode=standalone --nacos.core.auth.server.identity.key=${key} --nacos.core.auth.server.identity.value=${value} --nacos.core.auth.plugin.nacos.token.secret.key=${secret_key}
+distribution/target/nacos-server-${version}/nacos/bin/startup.sh -m standalone
 ```
 
-Here, `${key}` and `${value}` are parameters for server identity authentication, and `${secret_key}` is a custom token. The token is the secret key for generating a JWT Token from the username and password (the original string should be more than 32 characters long and then formatted in Base64).
+> On first launch, the system will prompt you to configure authentication parameters such as `nacos.core.auth.plugin.nacos.token.secret.key`, `nacos.core.auth.server.identity.key`, and `nacos.core.auth.server.identity.value`. Follow the instructions to complete them.
 
-### Step 6: Verify Whether Nacos-Bootstrap Has Started Successfully
+### Step 5: Verify Whether Nacos-Bootstrap Has Started Successfully
 
 Access `http://127.0.0.1:8080` in your browser. If a login page appears, it means that Nacos-Bootstrap has started successfully.
 
