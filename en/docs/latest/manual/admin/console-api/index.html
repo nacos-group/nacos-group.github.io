@@ -3973,7 +3973,12 @@ attachment模式，导出失败时返回体遵循<a href="../../user/overview/ap
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">tools</code></td><td><code dir="auto">List&#x3C;McpTool></code></td><td>该MCP Server所提供的工具列表，参考标准MCP协议中对于MCP Tool的定义</td></tr><tr><td><code dir="auto">toolsMeta</code></td><td><code dir="auto">Map&#x3C;String, McpToolMeta></code></td><td>该MCP Server所提供的工具的额外元数据信息，可用于扩展标准MCP协议中未定义但又使用中需要的信息。key为<code dir="auto">McpTool</code>的<code dir="auto">name</code>, value为拓展元数据。</td></tr></tbody></table>
+
+
+
+
+
+<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">tools</code></td><td><code dir="auto">List&#x3C;McpTool></code></td><td>该MCP Server所提供的工具列表，参考标准MCP协议中对于MCP Tool的定义</td></tr><tr><td><code dir="auto">toolsMeta</code></td><td><code dir="auto">Map&#x3C;String, McpToolMeta></code></td><td>该MCP Server所提供的工具的额外元数据信息，可用于扩展标准MCP协议中未定义但又使用中需要的信息。key为<code dir="auto">McpTool</code>的<code dir="auto">name</code>, value为拓展元数据。</td></tr><tr><td><code dir="auto">securitySchemes</code></td><td><code dir="auto">List&#x3C;SecurityScheme></code></td><td>MCP工具的安全方案，参考标准MCP协议。</td></tr></tbody></table>
 <p>其中<code dir="auto">McpTool</code>结构如下：</p>
 
 
@@ -4028,6 +4033,48 @@ attachment模式，导出失败时返回体遵循<a href="../../user/overview/ap
 
 
 <table><thead><tr><th>参数名</th><th>参数类型</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">invokeContext</code></td><td><code dir="auto">Map&#x3C;String, String></code></td><td>MCP 工具调用时的上下文信息，如后端服务的<code dir="auto">Path</code>等。</td></tr><tr><td><code dir="auto">enabled</code></td><td><code dir="auto">boolean</code></td><td>MCP工具是否启用。</td></tr><tr><td><code dir="auto">templates</code></td><td><code dir="auto">Map&#x3C;String, String></code></td><td>MCP工具的模板信息。用于进行协议转换时进行参数的映射。</td></tr></tbody></table>
+<p>其中<code dir="auto">SecurityScheme</code> 结构如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">id</code></td><td><code dir="auto">String</code></td><td>安全方案的ID，将被MCP工具使用和引用。。</td></tr><tr><td><code dir="auto">type</code></td><td><code dir="auto">String</code></td><td>安全方案的类型。可能的值包括：<code dir="auto">http</code>、<code dir="auto">apiKey</code>、<code dir="auto">localEnv</code>或其他自定义扩展。</td></tr><tr><td><code dir="auto">scheme</code></td><td><code dir="auto">String</code></td><td>安全方案的子方案类型。当 <code dir="auto">type</code> 为 <code dir="auto">http</code> 时使用。可能的值包括：<code dir="auto">basic</code> 或 <code dir="auto">bearer</code>。</td></tr><tr><td><code dir="auto">in</code></td><td><code dir="auto">String</code></td><td>安全方案的位置。可能的值有：<code dir="auto">query</code>、<code dir="auto">header</code>。</td></tr><tr><td><code dir="auto">name</code></td><td><code dir="auto">String</code></td><td>安全方案的名称。当 <code dir="auto">type</code> 为 <code dir="auto">apiKey</code> 或 <code dir="auto">localEnv</code> 时使用。例如，<code dir="auto">apiKey</code> 的密钥名称或 <code dir="auto">localEnv</code> 的环境名称。</td></tr><tr><td><code dir="auto">defaultCredential</code></td><td><code dir="auto">String</code></td><td>当配置参数中未输入身份时的默认凭证。可选。</td></tr></tbody></table>
 <blockquote>
 <p>endpointSpecification</p>
 </blockquote>
@@ -4250,7 +4297,12 @@ attachment模式，导出失败时返回体遵循<a href="../../user/overview/ap
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">tools</code></td><td><code dir="auto">List&#x3C;McpTool></code></td><td>该MCP Server所提供的工具列表，参考标准MCP协议中对于MCP Tool的定义</td></tr><tr><td><code dir="auto">toolsMeta</code></td><td><code dir="auto">Map&#x3C;String, McpToolMeta></code></td><td>该MCP Server所提供的工具的额外元数据信息，可用于扩展标准MCP协议中未定义但又使用中需要的信息。key为<code dir="auto">McpTool</code>的<code dir="auto">name</code>, value为拓展元数据。</td></tr></tbody></table>
+
+
+
+
+
+<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">tools</code></td><td><code dir="auto">List&#x3C;McpTool></code></td><td>该MCP Server所提供的工具列表，参考标准MCP协议中对于MCP Tool的定义</td></tr><tr><td><code dir="auto">toolsMeta</code></td><td><code dir="auto">Map&#x3C;String, McpToolMeta></code></td><td>该MCP Server所提供的工具的额外元数据信息，可用于扩展标准MCP协议中未定义但又使用中需要的信息。key为<code dir="auto">McpTool</code>的<code dir="auto">name</code>, value为拓展元数据。</td></tr><tr><td><code dir="auto">securitySchemes</code></td><td><code dir="auto">List&#x3C;SecurityScheme></code></td><td>MCP工具的安全方案，参考标准MCP协议。</td></tr></tbody></table>
 <p>其中<code dir="auto">McpTool</code>结构如下：</p>
 
 
@@ -4305,6 +4357,48 @@ attachment模式，导出失败时返回体遵循<a href="../../user/overview/ap
 
 
 <table><thead><tr><th>参数名</th><th>参数类型</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">invokeContext</code></td><td><code dir="auto">Map&#x3C;String, String></code></td><td>MCP 工具调用时的上下文信息，如后端服务的<code dir="auto">Path</code>等。</td></tr><tr><td><code dir="auto">enabled</code></td><td><code dir="auto">boolean</code></td><td>MCP工具是否启用。</td></tr><tr><td><code dir="auto">templates</code></td><td><code dir="auto">Map&#x3C;String, String></code></td><td>MCP工具的模板信息。用于进行协议转换时进行参数的映射。</td></tr></tbody></table>
+<p>其中<code dir="auto">SecurityScheme</code> 结构如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">id</code></td><td><code dir="auto">String</code></td><td>安全方案的ID，将被MCP工具使用和引用。。</td></tr><tr><td><code dir="auto">type</code></td><td><code dir="auto">String</code></td><td>安全方案的类型。可能的值包括：<code dir="auto">http</code>、<code dir="auto">apiKey</code>、<code dir="auto">localEnv</code>或其他自定义扩展。</td></tr><tr><td><code dir="auto">scheme</code></td><td><code dir="auto">String</code></td><td>安全方案的子方案类型。当 <code dir="auto">type</code> 为 <code dir="auto">http</code> 时使用。可能的值包括：<code dir="auto">basic</code> 或 <code dir="auto">bearer</code>。</td></tr><tr><td><code dir="auto">in</code></td><td><code dir="auto">String</code></td><td>安全方案的位置。可能的值有：<code dir="auto">query</code>、<code dir="auto">header</code>。</td></tr><tr><td><code dir="auto">name</code></td><td><code dir="auto">String</code></td><td>安全方案的名称。当 <code dir="auto">type</code> 为 <code dir="auto">apiKey</code> 或 <code dir="auto">localEnv</code> 时使用。例如，<code dir="auto">apiKey</code> 的密钥名称或 <code dir="auto">localEnv</code> 的环境名称。</td></tr><tr><td><code dir="auto">defaultCredential</code></td><td><code dir="auto">String</code></td><td>当配置参数中未输入身份时的默认凭证。可选。</td></tr></tbody></table>
 <blockquote>
 <p>endpointSpecification</p>
 </blockquote>
