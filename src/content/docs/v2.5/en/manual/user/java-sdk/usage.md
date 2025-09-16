@@ -1063,6 +1063,6 @@ System.out.println(naming.getSubscribeServices());
 
 ## 5. Java SDK的生命周期
 
-Nacos的Java SDK 生命周期从创建时开始，到调用`shutdown()`方法时结束，期间对应创建的线程池、连接等均会始终保留，及时连接断开，也会不断重试重新建立连接。
+Nacos的Java SDK 生命周期从创建时开始，到调用`shutdown()`方法时结束，期间对应创建的线程池、连接等均会始终保留，即使连接断开，也会不断重试重新建立连接。
 
 因此在使用时需要注意应用中创建的Nacos Java SDK的实例个数，避免造成线程池和连接的泄漏，在更换Nacos Java SDK实例时，切记调用`shutdown()`方法，同时在应用中应尽量复用同一个Nacos Java SDK实例，避免频繁的初始化实例。
