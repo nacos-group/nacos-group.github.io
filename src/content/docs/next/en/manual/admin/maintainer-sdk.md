@@ -1,7 +1,7 @@
 ---
-title: 运维SDK
-keywords: [ Java,运维,Maintainer,SDK,使用手册 ]
-description: 本文档介绍了Nacos的运维SDK(nacos-maintainer-sdk)的使用方式，包括如何配置Nacos运维SDK、如何使用Nacos运维SDK的API。
+title: Maintainer SDK
+keywords: [ Java,Admin,Maintainer,SDK,Manual ]
+description: This document describes the usage of the Nacos Operations and Maintenance SDK (nacos-maintainer-sdk), including how to configure the SDK and utilize its APIs.
 sidebar:
   order: 11
 ---
@@ -770,9 +770,9 @@ ConfigGrayInfo queryBeta(String dataId, String groupName, String namespaceId) th
 
 #### 返回参数
 
-| 参数类型                   | 描述      |
-|:-----------------------|:--------|
-|   ConfigGrayInfo                     | 灰度配置的信息 |
+| 参数类型           | 描述      |
+|:---------------|:--------|
+| ConfigGrayInfo | 灰度配置的信息 |
 
 其中ConfigGrayInfo的内容如下：
 
@@ -1062,6 +1062,51 @@ String setLogLevel(String logName, String logLevel) throws NacosException;
 #### 请求示例
 
 ```java
+try {
+    configMaintainerService.setLogLevel("config-server", "DEBUG");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+读取配置超时或网络异常，抛出 NacosException 异常。
+
+### 3.19. 更新配置的元数据
+
+#### 描述
+
+更新配置的元数据，如配置的描述和标签信息
+
+```java
+boolean updateConfigMetadata(String dataId, String groupName, String namespaceId, String description, String configTags) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型   | 描述                                                  |
+|:------------|:-------|:----------------------------------------------------|
+| dataId      | string | 配置 ID。只允许英字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
+| groupName   | string | 配置分组。只允许英字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 128 字节。  |
+| namespaceId | string | 配置所属的命名空间ID。                                        |
+| description | string | 配置的描述信息                                             |
+| configTags  | string | 此配置的标签，多个标签用逗号`,`分隔。                                |
+
+#### 返回参数
+
+| 参数类型    | 描述     |
+|:--------|:-------|
+| boolean | 是否更新成功 |
+
+#### 请求示例
+
+```java
+try {
+    configMaintainerService.updateConfigMetadata("maintain.client.test", "DEFAULT_GROUP", "public", "this is a description", "tag1,tag2");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
 ```
 
 #### 异常说明
@@ -3463,15 +3508,15 @@ try {
 创建类型为Local(stdio)的MCP服务。
 
 ```java
-boolean createLocalMcpServer(String mcpName, String version) throws NacosException;
+String createLocalMcpServer(String mcpName, String version) throws NacosException;
 
-boolean createLocalMcpServer(String mcpName, String version, String description) throws NacosException;
+String createLocalMcpServer(String mcpName, String version, String description) throws NacosException;
 
-boolean createLocalMcpServer(String mcpName, String version, String description, McpToolSpecification toolSpec) throws NacosException;
+String createLocalMcpServer(String mcpName, String version, String description, McpToolSpecification toolSpec) throws NacosException;
 
-boolean createLocalMcpServer(String mcpName, String version, String description, Map<String, Object> localServerConfig, McpToolSpecification toolSpec) throws NacosException;
+String createLocalMcpServer(String mcpName, String version, String description, Map<String, Object> localServerConfig, McpToolSpecification toolSpec) throws NacosException;
 
-boolean createLocalMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec) throws NacosException;
+String createLocalMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec) throws NacosException;
 ```
 
 #### 请求参数
@@ -3495,7 +3540,7 @@ boolean createLocalMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpT
 
 ```java
 try {
-    boolean result = aiMaintainerService.createLocalMcpServer("test", "1.0.0");
+    String result = aiMaintainerService.createLocalMcpServer("test", "1.0.0");
     result = aiMaintainerService.createLocalMcpServer("test", "1.0.0", "test for mcp server");
     result = aiMaintainerService.createLocalMcpServer("test", "1.0.0", "test for mcp server", null);
     result = aiMaintainerService.createLocalMcpServer("test", "1.0.0", "test for mcp server", Collections.emptyMap(), null);
@@ -3524,17 +3569,17 @@ try {
 创建类型为Remote(sse, streamable等)的MCP服务。
 
 ```java
-boolean createRemoteMcpServer(String mcpName, String version, String protocol, McpEndpointSpec endpointSpec) throws NacosException;
+String createRemoteMcpServer(String mcpName, String version, String protocol, McpEndpointSpec endpointSpec) throws NacosException;
 
-boolean createRemoteMcpServer(String mcpName, String version, String protocol, McpServerRemoteServiceConfig remoteServiceConfig, McpEndpointSpec endpointSpec) throws NacosException;
+String createRemoteMcpServer(String mcpName, String version, String protocol, McpServerRemoteServiceConfig remoteServiceConfig, McpEndpointSpec endpointSpec) throws NacosException;
 
-boolean createRemoteMcpServer(String mcpName, String version, String description, String protocol, McpServerRemoteServiceConfig remoteServiceConfig, McpEndpointSpec endpointSpec) throws NacosException;
+String createRemoteMcpServer(String mcpName, String version, String description, String protocol, McpServerRemoteServiceConfig remoteServiceConfig, McpEndpointSpec endpointSpec) throws NacosException;
 
-boolean createRemoteMcpServer(String mcpName, String version, String description, String protocol, McpServerRemoteServiceConfig remoteServiceConfig, McpEndpointSpec endpointSpec, McpToolSpecification toolSpec) throws NacosException;
+String createRemoteMcpServer(String mcpName, String version, String description, String protocol, McpServerRemoteServiceConfig remoteServiceConfig, McpEndpointSpec endpointSpec, McpToolSpecification toolSpec) throws NacosException;
 
-boolean createRemoteMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpEndpointSpec endpointSpec) throws NacosException;
+String createRemoteMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpEndpointSpec endpointSpec) throws NacosException;
 
-boolean createRemoteMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec) throws NacosException;
+String createRemoteMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec) throws NacosException;
 ```
 
 #### 请求参数
@@ -3564,7 +3609,7 @@ try {
     mcpEndpointSpec.setType(AiConstants.Mcp.MCP_ENDPOINT_TYPE_DIRECT);
     mcpEndpointSpec.getData().put("address", "127.0.0.1");
     mcpEndpointSpec.getData().put("port", "8080");
-    boolean result = aiMaintainerService.createRemoteMcpServer("test", "1.0.0", AiConstants.Mcp.MCP_PROTOCOL_SSE, mcpEndpointSpec);
+    String result = aiMaintainerService.createRemoteMcpServer("test", "1.0.0", AiConstants.Mcp.MCP_PROTOCOL_SSE, mcpEndpointSpec);
     result = aiMaintainerService.createRemoteMcpServer("test", "1.0.0", AiConstants.Mcp.MCP_PROTOCOL_SSE, new McpServerRemoteServiceConfig(), mcpEndpointSpec);
     result = aiMaintainerService.createRemoteMcpServer("test", "1.0.0", "test for mcp server", AiConstants.Mcp.MCP_PROTOCOL_SSE, new McpServerRemoteServiceConfig(), mcpEndpointSpec);
     result = aiMaintainerService.createRemoteMcpServer("test", "1.0.0", "test for mcp server", AiConstants.Mcp.MCP_PROTOCOL_SSE, new McpServerRemoteServiceConfig(), mcpEndpointSpec, null);
@@ -3674,6 +3719,333 @@ boolean deleteMcpServer(String namespaceId, String mcpName) throws NacosExceptio
 try {
     boolean result = aiMaintainerService.deleteMcpServer("test");
     result = aiMaintainerService.deleteMcpServer("public", "test");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+读取配置超时或网络异常，抛出 NacosException 异常。
+
+## 7. A2A 注册中心
+
+### 7.1. 发布AgentCard
+
+#### 描述
+
+发布AgentCard到指定的命名空间下。
+
+```java
+boolean registerAgent(AgentCard agentCard) throws NacosException;
+
+boolean registerAgent(AgentCard agentCard, String namespaceId) throws NacosException;
+
+boolean registerAgent(AgentCard agentCard, String namespaceId, String registrationType) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名              | 参数类型      | 描述                                                                                                                     |
+|:-----------------|:----------|:-----------------------------------------------------------------------------------------------------------------------|
+| agentCard        | AgentCard | AgentCard对象                                                                                                            |
+| namespaceId      | String    | AgentCard所属的命名空间ID，默认为`public`                                                                                         |
+| registrationType | String    | 注册方式，可选值为`URL`和`SERVICE`，默认为`URL`，设置此AgentCard默认的`url`获取方式，`URL`代表直接读取注册时的`url`，`SERVICE`代表根据注册在Nacos中的endpoint生成`url` |
+
+#### 返回参数
+
+| 参数类型    | 描述                     |
+|:--------|:-----------------------|
+| boolean | 注册成功为`true`，其他为`false` |
+
+#### 请求示例
+
+```java
+try {
+    AgentCard agentCard = new AgentCard();
+    agentCard.setName("test");
+    agentCard.setDescription("test for agent card");
+    agentCard.setUrl("http://localhost:8848");
+    agentCard.setVersion("1.0.0");
+    agentCard.setProtocolVersion("0.3.0");
+    boolean result = aiMaintainerService.registerAgent(agentCard);
+    result = aiMaintainerService.registerAgent(agentCard, "public");
+    result = aiMaintainerService.registerAgent(agentCard, "public", "URL");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+读取配置超时或网络异常，抛出 NacosException 异常。
+
+### 7.2. 查询AgentCard
+
+#### 描述
+
+查询指定命名空间下的AgentCard。
+
+```java
+AgentCardDetailInfo getAgentCard(String agentName) throws NacosException;
+
+AgentCardDetailInfo getAgentCard(String agentName, String namespaceId) throws NacosException;
+
+AgentCardDetailInfo getAgentCard(String agentName, String namespaceId, String registrationType) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名              | 参数类型   | 描述                                                                                      |
+|:-----------------|:-------|:----------------------------------------------------------------------------------------|
+| agentName        | String | AgentCard的名称                                                                            |
+| namespaceId      | String | AgentCard所属的命名空间ID，默认为`public`                                                          |
+| registrationType | String | 注册方式，可选值为`URL`和`SERVICE`，默认为`URL`，可选，若为空，则根据注册此AgentCard时设置的`registrationType`自动选择`url` |
+
+#### 返回参数
+
+| 参数类型                | 描述            |
+|:--------------------|:--------------|
+| AgentCardDetailInfo | AgentCard详情对象 |
+
+#### 请求示例
+
+```java
+try {
+    AgentCardDetailInfo result = aiMaintainerService.getAgentCard("test");
+    result = aiMaintainerService.getAgentCard("test", "public");
+    result = aiMaintainerService.getAgentCard("test", "public", "URL");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+读取配置超时或网络异常，抛出 NacosException 异常。
+
+### 7.3. 更新AgentCard
+
+#### 描述
+
+更新指定命名空间下的AgentCard。
+
+```java
+boolean updateAgentCard(AgentCard agentCard) throws NacosException;
+
+boolean updateAgentCard(AgentCard agentCard, String namespaceId) throws NacosException;
+
+boolean updateAgentCard(AgentCard agentCard, String namespaceId, boolean setAsLatest) throws NacosException;
+
+boolean updateAgentCard(AgentCard agentCard, String namespaceId, boolean setAsLatest, String registrationType) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名              | 参数类型      | 描述                                                                                                                     |
+|:-----------------|:----------|:-----------------------------------------------------------------------------------------------------------------------|
+| agentCard        | AgentCard | AgentCard对象                                                                                                            |
+| namespaceId      | String    | AgentCard所属的命名空间ID，默认为`public`                                                                                         |
+| setAsLatest      | boolean   | 是否将此AgentCard设置为最新版本                                                                                                   |
+| registrationType | String    | 注册方式，可选值为`URL`和`SERVICE`，默认为`URL`，设置此AgentCard默认的`url`获取方式，`URL`代表直接读取注册时的`url`，`SERVICE`代表根据注册在Nacos中的endpoint生成`url` |
+
+#### 返回参数
+
+| 参数类型    | 描述                     |
+|:--------|:-----------------------|
+| boolean | 更新成功为`true`，其他为`false` |
+
+#### 请求示例
+
+```java
+try {
+    AgentCard agentCard = new AgentCard();
+    agentCard.setName("test");
+    agentCard.setDescription("test for agent card");
+    agentCard.setUrl("http://localhost:8848");
+    agentCard.setVersion("1.0.0");
+    agentCard.setProtocolVersion("0.3.0");
+    boolean result = aiMaintainerService.updateAgentCard(agentCard);
+    result = aiMaintainerService.updateAgentCard(agentCard, "public");
+    result = aiMaintainerService.updateAgentCard(agentCard, "public", true);
+    result = aiMaintainerService.updateAgentCard(agentCard, "public", true, "URL");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+读取配置超时或网络异常，抛出 NacosException 异常。
+
+### 7.4. 删除AgentCard
+
+#### 描述
+
+删除指定命名空间下的AgentCard。
+
+```java
+boolean deleteAgent(String agentName) throws NacosException;
+
+boolean deleteAgent(String agentName, String namespaceId) throws NacosException;
+
+boolean deleteAgent(String agentName, String namespaceId, String version) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型   | 描述                             |
+|:------------|:-------|:-------------------------------|
+| agentName   | String | AgentCard的名称                   |
+| namespaceId | String | AgentCard所属的命名空间ID，默认为`public` |
+| version     | String | AgentCard的版本，若为空，则删除所有版本       |
+
+#### 返回参数
+
+| 参数类型    | 描述                     |
+|:--------|:-----------------------|
+| boolean | 删除成功为`true`，其他为`false` |
+
+#### 请求示例
+
+```java
+try {
+    boolean result = aiMaintainerService.deleteAgent("test");
+    result = aiMaintainerService.deleteAgent("test", "public");
+    result = aiMaintainerService.deleteAgent("test", "public", "");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+读取配置超时或网络异常，抛出 NacosException 异常。
+
+### 7.5. 查询指定AgentCard的所有版本
+
+#### 描述
+
+查询指定命名空间下的指定AgentCard的所有版本。
+
+```java
+List<AgentVersionDetail> listAllVersionOfAgent(String agentName) throws NacosException;
+
+List<AgentVersionDetail> listAllVersionOfAgent(String agentName, String namespaceId) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型   | 描述                             |
+|:------------|:-------|:-------------------------------|
+| agentName   | String | AgentCard的名称                   |
+| namespaceId | String | AgentCard所属的命名空间ID，默认为`public` |
+
+#### 返回参数
+
+| 参数类型                     | 描述               |
+|:-------------------------|:-----------------|
+| List<AgentVersionDetail> | AgentCard的所有版本列表 |
+
+#### 请求示例
+
+```java
+try {
+    List<AgentVersionDetail> result = aiMaintainerService.listAllVersionOfAgent("test");
+    result = aiMaintainerService.listAllVersionOfAgent("test", "public");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+读取配置超时或网络异常，抛出 NacosException 异常。
+
+### 7.6. 根据AgentCard名称搜索AgentCard
+
+#### 描述
+
+根据AgentCard名称搜索AgentCard。每次仅能搜索单个命名空间下的AgentCard。
+
+```java
+Page<AgentCardVersionInfo> searchAgentCardsByName(String agentNamePattern) throws NacosException;
+
+default Page<AgentCardVersionInfo> searchAgentCardsByName(String agentNamePattern, int pageNo, int pageSize) throws NacosException;
+
+Page<AgentCardVersionInfo> searchAgentCardsByName(String namespaceId, String agentNamePattern, int pageNo, int pageSize) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名              | 参数类型   | 描述                             |
+|:-----------------|:-------|:-------------------------------|
+| agentNamePattern | String | AgentCard的名称的格式匹配字符串           |
+| namespaceId      | String | AgentCard所属的命名空间ID，默认为`public` |
+| pageNo           | int    | 页码，默认为1                        |
+| pageSize         | int    | 每页大小，默认为100                    |
+
+#### 返回参数
+
+| 参数类型                       | 描述      |
+|:---------------------------|:--------|
+| Page<AgentCardVersionInfo> | 搜索的分页结果 |
+
+#### 请求示例
+
+```java
+try {
+    Page<AgentCardVersionInfo> result = aiMaintainerService.searchAgentCardsByName("test");
+    result = aiMaintainerService.searchAgentCardsByName("test", 1, 100);
+    result = aiMaintainerService.searchAgentCardsByName("test", "public", 1, 100);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+读取配置超时或网络异常，抛出 NacosException 异常。
+
+### 7.7. 分页查询AgentCard列表
+
+#### 描述
+
+分页查询AgentCard列表。每次仅能查询单个命名空间下的AgentCard。
+
+```java
+Page<AgentCardVersionInfo> listAgentCards() throws NacosException;
+
+Page<AgentCardVersionInfo> listAgentCards(int pageNo, int pageSize) throws NacosException;
+
+Page<AgentCardVersionInfo> listAgentCards(String namespaceId, int pageNo, int pageSize) throws NacosException;
+
+Page<AgentCardVersionInfo> listAgentCards(String namespaceId, String agentName, int pageNo, int pageSize) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型   | 描述                                   |
+|:------------|:-------|:-------------------------------------|
+| namespaceId | String | AgentCard所属的命名空间ID，默认为`public`       |
+| pageNo      | int    | 页码，默认为1                              |
+| pageSize    | int    | 每页大小，默认为100                          |
+| agentName   | String | AgentCard的名称，精确匹配，若为空，则查询所有AgentCard |
+
+#### 返回参数
+
+| 参数类型                       | 描述      |
+|:---------------------------|:--------|
+| Page<AgentCardVersionInfo> | 查询的分页结果 |
+
+#### 请求示例
+
+```java
+try {
+    Page<AgentCardVersionInfo> result = aiMaintainerService.listAgentCards();
+    result = aiMaintainerService.listAgentCards(1, 100);
+    result = aiMaintainerService.listAgentCards("public", 1, 100);
+    result = aiMaintainerService.listAgentCards("test", "public", 1, 100);
 } catch (NacosException e) {
     e.printStackTrace();
 }
