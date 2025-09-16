@@ -97,7 +97,7 @@ startup.cmd
 
 ### 1.2. 使用Derby数据库
 
-> 注意：Derby数据库为本地内置数据库，本身不支持集群模式，Nacos通过Raft协议将各个节点的Derby数据库组成逻辑集群，因此使用此模式部署集群模式的Nacos是，需要对Raft协议较为熟悉，能够进行问题排查、恢复等，建议使用MySQL数据库进行部署。
+> 注意：Derby数据库为本地内置数据库，本身不支持集群模式，Nacos通过Raft协议将各个节点的Derby数据库组成逻辑集群，因此使用此模式部署集群模式的Nacos时，需要对Raft协议较为熟悉，能够进行问题排查、恢复等，建议使用MySQL数据库进行部署。
 
 #### 1.2.1. 环境准备
 
@@ -166,7 +166,7 @@ docker-compose -f example/cluster-hostname.yaml up
 
 ### 2.2. 使用Derby数据库
 
-> 注意：Derby数据库为本地内置数据库，本身不支持集群模式，Nacos通过Raft协议将各个节点的Derby数据库组成逻辑集群，因此使用此模式部署集群模式的Nacos是，需要对Raft协议较为熟悉，能够进行问题排查、恢复等，建议使用MySQL数据库进行部署。
+> 注意：Derby数据库为本地内置数据库，本身不支持集群模式，Nacos通过Raft协议将各个节点的Derby数据库组成逻辑集群，因此使用此模式部署集群模式的Nacos时，需要对Raft协议较为熟悉，能够进行问题排查、恢复等，建议使用MySQL数据库进行部署。
 
 参考[快速开始 Docker](../../../quickstart/quick-start-docker.mdx)中，进行`nacos-docker`项目的下载，然后执行如下命令，即可启动Nacos集群。
 
