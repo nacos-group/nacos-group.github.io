@@ -1524,7 +1524,88 @@ try {
 }
 ```
 
-## 6. Java SDK的生命周期
+## 6. MCP 服务
+
+### 6.1. 查询MCP 服务
+
+#### 描述
+
+通过此接口可以查询指定的MCP服务详细信息，其中包含了MCP服务的元信息和可调用的Endpoint信息
+
+```java
+McpServerDetailInfo getMcpServer(String mcpName) throws NacosException;
+
+McpServerDetailInfo getMcpServer(String mcpName, String version) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称      | 类型     | 描述      | 默认值             |
+|:--------|:-------|---------|-----------------|
+| mcpName | String | MCP服务名称 | 无，必填            |
+| version | String | MCP服务版本 | 空，当填入为空时，查询最新版本 |
+
+#### 返回参数
+
+MCP服务详细信息 `McpServerDetailInfo` 
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    McpServerDetailInfo detailInfo = aiService.getMcpServer(mcpName, null);
+    System.out.println(JacksonUtils.toJson(detailInfo));
+} catch (Exception e) {
+    e.printStackTrace();
+}
+```
+
+### 6.2. 发布新版本MCP服务
+
+#### 描述
+
+通过此接口可以发布新的MCP服务版本，若MCP服务为首次发布，则会创建新的MCP服务。
+
+当MCP服务及指定版本已存在时，会抛出MCP服务版本已存在的异常。
+
+
+```java
+String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecification toolSpecification) throws NacosException;
+
+String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecification toolSpecification, McpEndpointSpec endpointSpecification) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称                    | 类型                   | 描述              | 默认值  |
+|:----------------------|:---------------------|-----------------|------|
+| serverSpecification   | McpServerBasicInfo   | MCP服务基本信息       | 无，必填 |
+| toolSpecification     | McpToolSpecification | MCP服务工具信息       | 无，必填 |
+| endpointSpecification | McpEndpointSpec      | MCP服务Endpoint信息 | 无，可选 |
+
+#### 返回参数
+
+MCP服务的ID `String`.
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    McpServerBasicInfo serverSpecification = buildMcpSeverSpec(mcpName, version, isLatest);
+    McpToolSpecification toolSpecification = buildTools();
+    System.out.println(aiService.releaseMcpServer(serverSpecification, toolSpecification));
+} catch (Exception e) {
+    e.printStackTrace();
+}
+```
+
+## 7. Java SDK的生命周期
 
 Nacos的Java SDK 生命周期从创建时开始，到调用`shutdown()`方法时结束，期间对应创建的线程池、连接等均会始终保留，即使连接断开，也会不断重试重新建立连接。
 

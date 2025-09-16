@@ -3463,15 +3463,15 @@ try {
 创建类型为Local(stdio)的MCP服务。
 
 ```java
-boolean createLocalMcpServer(String mcpName, String version) throws NacosException;
+String createLocalMcpServer(String mcpName, String version) throws NacosException;
 
-boolean createLocalMcpServer(String mcpName, String version, String description) throws NacosException;
+String createLocalMcpServer(String mcpName, String version, String description) throws NacosException;
 
-boolean createLocalMcpServer(String mcpName, String version, String description, McpToolSpecification toolSpec) throws NacosException;
+String createLocalMcpServer(String mcpName, String version, String description, McpToolSpecification toolSpec) throws NacosException;
 
-boolean createLocalMcpServer(String mcpName, String version, String description, Map<String, Object> localServerConfig, McpToolSpecification toolSpec) throws NacosException;
+String createLocalMcpServer(String mcpName, String version, String description, Map<String, Object> localServerConfig, McpToolSpecification toolSpec) throws NacosException;
 
-boolean createLocalMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec) throws NacosException;
+String createLocalMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec) throws NacosException;
 ```
 
 #### 请求参数
@@ -3495,7 +3495,7 @@ boolean createLocalMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpT
 
 ```java
 try {
-    boolean result = aiMaintainerService.createLocalMcpServer("test", "1.0.0");
+    String result = aiMaintainerService.createLocalMcpServer("test", "1.0.0");
     result = aiMaintainerService.createLocalMcpServer("test", "1.0.0", "test for mcp server");
     result = aiMaintainerService.createLocalMcpServer("test", "1.0.0", "test for mcp server", null);
     result = aiMaintainerService.createLocalMcpServer("test", "1.0.0", "test for mcp server", Collections.emptyMap(), null);
@@ -3524,17 +3524,17 @@ try {
 创建类型为Remote(sse, streamable等)的MCP服务。
 
 ```java
-boolean createRemoteMcpServer(String mcpName, String version, String protocol, McpEndpointSpec endpointSpec) throws NacosException;
+String createRemoteMcpServer(String mcpName, String version, String protocol, McpEndpointSpec endpointSpec) throws NacosException;
 
-boolean createRemoteMcpServer(String mcpName, String version, String protocol, McpServerRemoteServiceConfig remoteServiceConfig, McpEndpointSpec endpointSpec) throws NacosException;
+String createRemoteMcpServer(String mcpName, String version, String protocol, McpServerRemoteServiceConfig remoteServiceConfig, McpEndpointSpec endpointSpec) throws NacosException;
 
-boolean createRemoteMcpServer(String mcpName, String version, String description, String protocol, McpServerRemoteServiceConfig remoteServiceConfig, McpEndpointSpec endpointSpec) throws NacosException;
+String createRemoteMcpServer(String mcpName, String version, String description, String protocol, McpServerRemoteServiceConfig remoteServiceConfig, McpEndpointSpec endpointSpec) throws NacosException;
 
-boolean createRemoteMcpServer(String mcpName, String version, String description, String protocol, McpServerRemoteServiceConfig remoteServiceConfig, McpEndpointSpec endpointSpec, McpToolSpecification toolSpec) throws NacosException;
+String createRemoteMcpServer(String mcpName, String version, String description, String protocol, McpServerRemoteServiceConfig remoteServiceConfig, McpEndpointSpec endpointSpec, McpToolSpecification toolSpec) throws NacosException;
 
-boolean createRemoteMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpEndpointSpec endpointSpec) throws NacosException;
+String createRemoteMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpEndpointSpec endpointSpec) throws NacosException;
 
-boolean createRemoteMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec) throws NacosException;
+String createRemoteMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec) throws NacosException;
 ```
 
 #### 请求参数
@@ -3564,7 +3564,7 @@ try {
     mcpEndpointSpec.setType(AiConstants.Mcp.MCP_ENDPOINT_TYPE_DIRECT);
     mcpEndpointSpec.getData().put("address", "127.0.0.1");
     mcpEndpointSpec.getData().put("port", "8080");
-    boolean result = aiMaintainerService.createRemoteMcpServer("test", "1.0.0", AiConstants.Mcp.MCP_PROTOCOL_SSE, mcpEndpointSpec);
+    String result = aiMaintainerService.createRemoteMcpServer("test", "1.0.0", AiConstants.Mcp.MCP_PROTOCOL_SSE, mcpEndpointSpec);
     result = aiMaintainerService.createRemoteMcpServer("test", "1.0.0", AiConstants.Mcp.MCP_PROTOCOL_SSE, new McpServerRemoteServiceConfig(), mcpEndpointSpec);
     result = aiMaintainerService.createRemoteMcpServer("test", "1.0.0", "test for mcp server", AiConstants.Mcp.MCP_PROTOCOL_SSE, new McpServerRemoteServiceConfig(), mcpEndpointSpec);
     result = aiMaintainerService.createRemoteMcpServer("test", "1.0.0", "test for mcp server", AiConstants.Mcp.MCP_PROTOCOL_SSE, new McpServerRemoteServiceConfig(), mcpEndpointSpec, null);
