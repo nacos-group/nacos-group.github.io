@@ -5390,7 +5390,7 @@ curl -X POST '127.0.0.1:8848/nacos/v3/admin/ai/a2a' \
 }
 ```
 
-### 删除AgentCard
+### 5.6. 删除AgentCard
 
 #### 接口描述
 

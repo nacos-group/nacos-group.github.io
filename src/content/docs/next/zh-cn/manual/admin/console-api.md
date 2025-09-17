@@ -3765,7 +3765,7 @@ curl -X GET '127.0.0.1:8848/v3/console/ai/a2a?namespaceId=public&agentName=GeoSp
 }
 ```
 
-### 更新AgentCard
+### 5.4. 更新AgentCard
 
 #### 接口描述
 
@@ -3822,7 +3822,7 @@ curl -X PUT '127.0.0.1:8848/v3/console/ai/a2a' \
 }
 ```
 
-### 创建AgentCard
+### 5.5. 创建AgentCard
 
 #### 接口描述
 
@@ -3876,7 +3876,7 @@ curl -X POST '127.0.0.1:8848/v3/console/ai/a2a' \
 }
 ```
 
-### 删除AgentCard
+### 5.6. 删除AgentCard
 
 #### 接口描述
 
