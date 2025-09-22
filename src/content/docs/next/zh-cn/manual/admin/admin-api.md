@@ -4443,7 +4443,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/metrics/ip?ip=127.0.0.1&dat
 * 请求示例
 
 ```shell
-curl -X POST '127.0.0.1:8848/v3/admin/cs/config/metadata' \
+curl -X PUT '127.0.0.1:8848/v3/admin/cs/config/metadata' \
 -d 'namespaceId=public' \
 -d 'groupName=DEFAULT_GROUP' \
 -d 'dataId=test' \
