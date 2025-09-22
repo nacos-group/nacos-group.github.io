@@ -8,11 +8,17 @@ sidebar:
 
 # Java SDK 使用手册
 
+Nacos 的 Java SDK（或称Nacos-Java-Client），是一个针对 Nacos 配置中心、服务注册中心、分布式锁等场景的 Java SDK。旨在为Java的微服务或分布式应用提供稳定易用的配置中心、服务注册中心、分布式锁等功能，方便开发者访问Nacos进行配置、服务和分布式锁的操作。
+
+因为Nacos-Java-Client的定位，所以Nacos-Java-Client会提供配置、服务实例的`发布`，`删除`,`获取`,`订阅`以及分布式锁的获取和释放，但不提供大范围的数据获取，如`列举命名空间下所有配置列表`, `列举命名空间下所有服务列表`等操作。
+
+如果需要大范围的获取数据，或者需要具有更高优先级的更新数据等`运维能力`，您需要使用Nacos的`运维SDK`。
+
 ## 1. 引用概述
 
 ### 1.1. Java 版本依赖
 
-Nacos 的 Java SDK（或称Nacos-Java-Client）需要 JDK 1.8 及以上版本的Java运行环境。
+Nacos 的 Java SDK需要 JDK 1.8 及以上版本的Java运行环境。
 
 ### 1.2. Maven 坐标
 ```
@@ -31,7 +37,7 @@ Nacos 的 Java SDK（或称Nacos-Java-Client）需要 JDK 1.8 及以上版本的
 ```xml
     <properties>
         <!-- 2.1.2版本以上支持纯净版客户端 -->
-        <nacos.version>3.0.0-ALPHA.2</nacos.version>
+        <nacos.version>3.1.0</nacos.version>
     </properties>
 
     <dependencies>
@@ -1518,7 +1524,552 @@ try {
 }
 ```
 
-## 6. Java SDK的生命周期
+## 6. MCP 服务
+
+### 6.1. 查询MCP 服务
+
+#### 描述
+
+通过此接口可以查询指定的MCP服务详细信息，其中包含了MCP服务的元信息和可调用的Endpoint信息
+
+```java
+McpServerDetailInfo getMcpServer(String mcpName) throws NacosException;
+
+McpServerDetailInfo getMcpServer(String mcpName, String version) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称      | 类型     | 描述      | 默认值             |
+|:--------|:-------|---------|-----------------|
+| mcpName | String | MCP服务名称 | 无，必填            |
+| version | String | MCP服务版本 | 空，当填入为空时，查询最新版本 |
+
+#### 返回参数
+
+MCP服务详细信息 `McpServerDetailInfo` 
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    McpServerDetailInfo detailInfo = aiService.getMcpServer(mcpName, null);
+    System.out.println(JacksonUtils.toJson(detailInfo));
+} catch (Exception e) {
+    e.printStackTrace();
+}
+```
+
+### 6.2. 发布新版本MCP服务
+
+#### 描述
+
+通过此接口可以发布新的MCP服务版本，若MCP服务为首次发布，则会创建新的MCP服务。
+
+当MCP服务及指定版本已存在时，会抛出MCP服务版本已存在的异常。
+
+
+```java
+String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecification toolSpecification) throws NacosException;
+
+String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecification toolSpecification, McpEndpointSpec endpointSpecification) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称                    | 类型                   | 描述              | 默认值  |
+|:----------------------|:---------------------|-----------------|------|
+| serverSpecification   | McpServerBasicInfo   | MCP服务基本信息       | 无，必填 |
+| toolSpecification     | McpToolSpecification | MCP服务工具信息       | 无，必填 |
+| endpointSpecification | McpEndpointSpec      | MCP服务Endpoint信息 | 无，可选 |
+
+#### 返回参数
+
+MCP服务的ID `String`.
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    McpServerBasicInfo serverSpecification = buildMcpSeverSpec(mcpName, version, isLatest);
+    McpToolSpecification toolSpecification = buildTools();
+    System.out.println(aiService.releaseMcpServer(serverSpecification, toolSpecification));
+} catch (Exception e) {
+    e.printStackTrace();
+}
+```
+
+### 6.3. 注册MCP服务的Endpoint
+
+#### 描述
+
+注册MCP服务Endpoint到指定MCP服务版本中。
+
+当注册的MCP服务不存在时，会抛出服务不存在的异常。
+
+```java
+void registerMcpServerEndpoint(String mcpName, String address, int port) throws NacosException;
+
+void registerMcpServerEndpoint(String mcpName, String address, int port, String version) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称      | 类型     | 描述              | 默认值                      |
+|:--------|:-------|-----------------|--------------------------|
+| mcpName | String | MCP服务名称         | 无，必填                     |
+| address | String | MCP服务Endpoint地址 | 无，必填                     |
+| port    | int    | MCP服务Endpoint端口 | 无，必填                     |
+| version | String | MCP服务版本         | 空，当填入为空时，注册Endpoint到最新版本 |
+
+#### 返回参数
+
+无
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    aiService.registerMcpServerEndpoint(mcpName, "127.0.0.1", 8848, version);
+} catch (Exception e) {
+    e.printStackTrace();
+}
+```
+
+### 6.4. 注销MCP服务的Endpoint
+
+#### 描述
+
+注销MCP服务Endpoint到指定MCP服务版本中。
+
+```java
+void deregisterMcpServerEndpoint(String mcpName, String address, int port) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称      | 类型     | 描述              | 默认值  |
+|:--------|:-------|-----------------|------|
+| mcpName | String | MCP服务名称         | 无，必填 |
+| address | String | MCP服务Endpoint地址 | 无，必填 |
+| port    | int    | MCP服务Endpoint端口 | 无，必填 |
+
+#### 返回参数
+
+无
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    aiService.deregisterMcpServerEndpoint(mcpName, "127.0.0.1", 8848);
+} catch (Exception e) {
+    e.printStackTrace();
+}
+```
+
+### 6.5. 订阅MCP 服务
+
+#### 描述
+
+订阅MCP服务，当MCP服务发布新版本时，会收到通知。
+
+> 当前版本的订阅是通过轮询查询实现的，可能通知有一定的延迟，可以通过配置`nacosAiMcpServerCacheUpdateInterval`参数来调整查询间隔，默认为10000ms。
+
+```java
+McpServerDetailInfo subscribeMcpServer(String mcpName, AbstractNacosMcpServerListener mcpServerListener) throws NacosException;
+
+McpServerDetailInfo subscribeMcpServer(String mcpName, String version, AbstractNacosMcpServerListener mcpServerListener) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称       | 类型                             | 描述       | 默认值             |
+|:---------|:-------------------------------|----------|-----------------|
+| mcpName  | String                         | MCP服务名称  | 无，必填            |
+| version  | String                         | MCP服务版本  | 空，当填入为空时，订阅最新版本 |
+| listener | AbstractNacosMcpServerListener | MCP服务监听器 | 无，必填            |
+
+#### 返回参数
+
+订阅成功时，返回当前MCP服务详细信息 `McpServerDetailInfo`.
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    ExampleListener listener = new ExampleListener(i);
+    aiService.subscribeMcpServer(mcpName, listener);
+} catch (Exception e) {
+    e.printStackTrace();
+}
+```
+
+```java
+private static class ExampleListener extends AbstractNacosMcpServerListener {
+    
+    private final int id;
+    
+    private ExampleListener(int id) {
+        this.id = id;
+    }
+    
+    @Override
+    public void onEvent(NacosMcpServerEvent event) {
+        System.out.printf("---------------mcp server listener %s called start---------------%n", id);
+        System.out.printf("mcp server namespaceId: %s, mcpId: %s, mcpName: %s%n", event.getNamespaceId(),
+                event.getMcpId(), event.getMcpName());
+        System.out.println("mcp server endpoint: " + JacksonUtils.toJson(
+                event.getMcpServerDetailInfo().getBackendEndpoints()));
+        System.out.println(
+                "mcp server tools size: " + event.getMcpServerDetailInfo().getToolSpec().getTools().size());
+        System.out.println("mcp server version: " + event.getMcpServerDetailInfo().getVersionDetail().getVersion());
+        System.out.printf("---------------mcp server listener %s called end---------------%n", id);
+    }
+}
+```
+
+### 6.6. 取消订阅MCP 服务
+
+#### 描述
+
+取消订阅MCP服务。取消订阅时传入的监听器`mcpServerListener`必须和订阅时一致，否则会导致取消订阅失败。
+
+```java
+void unsubscribeMcpServer(String mcpName, AbstractNacosMcpServerListener mcpServerListener) throws NacosException;
+
+void unsubscribeMcpServer(String mcpName, String version, AbstractNacosMcpServerListener mcpServerListener) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称       | 类型                             | 描述       | 默认值               |
+|:---------|:-------------------------------|----------|-------------------|
+| mcpName  | String                         | MCP服务名称  | 无，必填              |
+| version  | String                         | MCP服务版本  | 空，当填入为空时，取消订阅最新版本 |
+| listener | AbstractNacosMcpServerListener | MCP服务监听器 | 无，必填              |
+
+#### 返回参数
+
+无
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    ExampleListener listener = new ExampleListener(i);
+    aiService.subscribeMcpServer(mcpName, listener);
+    aiService.unsubscribeMcpServer(mcpName, listener);
+} catch (Exception e) {
+    e.printStackTrace();
+}
+```
+
+## 7. A2A 注册中心
+
+### 7.1. 查询AgentCard
+
+#### 描述
+
+查询AgentCard。
+
+```java
+AgentCardDetailInfo getAgentCard(String agentName) throws NacosException;
+
+AgentCardDetailInfo getAgentCard(String agentName, String version) throws NacosException;
+
+AgentCardDetailInfo getAgentCard(String agentName, String version, String registrationType) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称               | 类型     | 描述      | 默认值                                          |
+|:-----------------|:-------|---------|----------------------------------------------|
+| agentName        | String | Agent名称 | 无，必填                                         |
+| version          | String | Agent版本 | 空，当填入为空时，查询最新版本                              |
+| registrationType | String | 注册方式    | 空，当填入为空时，根据注册时的`registrationType`自动进行`url`装填 |
+
+#### 返回参数
+
+查询成功时，返回当前AgentCard详细信息 `AgentCardDetailInfo`.
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    AgentCardDetailInfo result = aiService.getAgentCard(agentName);
+    result = aiService.getAgentCard(agentName, "1.0.0");
+    result = aiService.getAgentCard(agentName, "1.0.0", "url");
+} catch (Exception e) {
+    e.printStackTrace();
+}
+```
+
+### 7.2. 发布新版本AgentCard
+
+#### 描述
+
+发布新版本AgentCard。发布失败时抛出异常。
+
+```java
+void releaseAgentCard(AgentCard agentCard) throws NacosException;
+
+void releaseAgentCard(AgentCard agentCard, String registrationType) throws NacosException;
+
+void releaseAgentCard(AgentCard agentCard, String registrationType, boolean setAsLatest) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称               | 类型        | 描述                                                                                                                     | 默认值       |
+|:-----------------|:----------|------------------------------------------------------------------------------------------------------------------------|-----------|
+| agentCard        | AgentCard | AgentCard信息                                                                                                            | 无，必填      |
+| registrationType | String    | 注册方式，可选值为`URL`和`SERVICE`，默认为`URL`，设置此AgentCard默认的`url`获取方式，`URL`代表直接读取注册时的`url`，`SERVICE`代表根据注册在Nacos中的endpoint生成`url` | `SERVICE` |
+| setAsLatest      | boolean   | 是否设置此AgentCard为最新版本                                                                                                    | `false`   |
+
+
+#### 返回参数
+
+无
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    AgentCard agentCard = new AgentCard();
+    agentCard.setName("test");
+    agentCard.setDescription("test for agent card");
+    agentCard.setUrl("http://localhost:8848");
+    agentCard.setVersion("1.0.0");
+    agentCard.setProtocolVersion("0.3.0");
+    aiService.releaseAgentCard(agentCard);
+    aiService.releaseAgentCard(agentCard, "SERVICE");
+    aiService.releaseAgentCard(agentCard, "SERVICE", false);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+### 7.3. 注册Agent的Endpoint
+
+#### 描述
+
+注册Endpoint到AgentCard下。
+
+```java
+void registerAgentEndpoint(String agentName, String version, String address, int port) throws NacosException;
+
+void registerAgentEndpoint(String agentName, String version, String address, int port, String transport) throws NacosException;
+
+void registerAgentEndpoint(String agentName, String version, String address, int port, String transport, String path) throws NacosException;
+
+void registerAgentEndpoint(String agentName, String version, String address, int port, String transport, String path, boolean supportTls) throws NacosException;
+
+void registerAgentEndpoint(String agentName, AgentEndpoint endpoint) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称         | 类型            | 描述                                           | 默认值       |
+|:-----------|:--------------|----------------------------------------------|-----------|
+| agentName  | String        | Agent名称                                      | 无，必填      |
+| version    | String        | Agent版本                                      | 无，必填      |
+| address    | String        | Agent的IP地址                                   | 无，必填      |
+| port       | int           | Agent的端口号                                    | 无，必填      |
+| transport  | String        | 该endpoint的传输方式`JSONRPC`, `GRPC`, `HTTP+JSON` | `JSONRPC` |
+| path       | String        | 该endpoint的访问路径                               | 空字符串      |
+| supportTls | boolean       | 是否支持TLS                                      | `false`   |
+| endpoint   | AgentEndpoint | AgentEndpoint                                | 无，必填      |
+
+#### 返回参数
+
+ 无
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    aiService.registerAgentEndpoint("test", "1.0.0", "127.0.0.1", 8848);
+    aiService.registerAgentEndpoint("test", "1.0.0", "127.0.0.1", 8848, "JSONRPC");
+    aiService.registerAgentEndpoint("test", "1.0.0", "127.0.0.1", 8848, "JSONRPC", "");
+    aiService.registerAgentEndpoint("test", "1.0.0", "127.0.0.1", 8848, "JSONRPC", "", false);
+    AgentEndpoint endpoint = new AgentEndpoint();
+    endpoint.setAddress("127.0.0.1");
+    endpoint.setPort(8848);
+    endpoint.setTransport("JSONRPC");
+    endpoint.setPath("");
+    endpoint.setSupportTls(false);
+    endpoint.setVersion("1.0.0");
+    aiService.registerAgentEndpoint("test", endpoint);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+### 7.4. 注销Agent的Endpoint
+
+#### 描述
+
+从AgentCard中注销Endpoint。
+
+```java
+void deregisterAgentEndpoint(String agentName, String version, String address, int port) throws NacosException;
+
+void deregisterAgentEndpoint(String agentName, AgentEndpoint endpoint) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称        | 类型            | 描述            | 默认值  |
+|:----------|:--------------|---------------|------|
+| agentName | String        | Agent名称       | 无，必填 |
+| version   | String        | Agent版本       | 无，必填 |
+| address   | String        | Agent的IP地址    | 无，必填 |
+| port      | int           | Agent的端口号     | 无，必填 |
+| endpoint  | AgentEndpoint | AgentEndpoint | 无，必填 |
+
+#### 返回参数
+
+ 无
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    aiService.deregisterAgentEndpoint("test", "1.0.0", "127.0.0.1", 8848);
+    AgentEndpoint endpoint = new AgentEndpoint();
+    endpoint.setAddress("127.0.0.1");
+    endpoint.setPort(8848);
+    endpoint.setVersion("1.0.0");
+    aiService.deregisterAgentEndpoint("test", endpoint);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+### 7.5. 订阅AgentCard
+
+#### 描述
+
+订阅AgentCard，当AgentCard发布新版本时，会收到通知。
+
+> 当前版本的订阅是通过轮询查询实现的，可能通知有一定的延迟，可以通过配置`nacosAiAgentCardCacheUpdateInterval`参数来调整查询间隔，默认为10000ms。
+
+```java
+AgentCardDetailInfo subscribeAgentCard(String agentName, AbstractNacosAgentCardListener agentCardListener) throws NacosException;
+
+AgentCardDetailInfo subscribeAgentCard(String agentName, String version, AbstractNacosAgentCardListener agentCardListener) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称        | 类型                             | 描述      | 默认值         |
+|:----------|:-------------------------------|---------|-------------|
+| agentName | String                         | Agent名称 | 无，必填        |
+| version   | String                         | Agent版本 | 当为空时，订阅最新版本 |
+| listener  | AbstractNacosAgentCardListener | 监听器     | 无，必填        |
+
+#### 返回参数
+
+订阅成功时，返回当前AgentCard详细信息 `AgentCardDetailInfo`.
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    aiService.subscribeAgentCard("test", new AbstractNacosAgentCardListener() {
+        @Override
+        public void onEvent(NacosAgentCardEvent event) {
+            System.out.println("---------------agent card listener called start---------------");
+            System.out.println(JacksonUtils.toJson(event.getAgentCard()));
+            System.out.println("---------------agent card listener called end---------------");
+        }
+    });
+    aiService.subscribeAgentCard("test", "", new AbstractNacosAgentCardListener() {
+        @Override
+        public void onEvent(NacosAgentCardEvent event) {
+            System.out.println("---------------agent card listener called start---------------");
+            System.out.println(JacksonUtils.toJson(event.getAgentCard()));
+            System.out.println("---------------agent card listener called end---------------");
+        }
+    });
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+### 7.6. 取消订阅AgentCard
+
+取消订阅MCP服务。取消订阅时传入的监听器`agentCardListener`必须和订阅时一致，否则会导致取消订阅失败。
+
+#### 描述
+
+```java
+void unsubscribeAgentCard(String agentName, AbstractNacosAgentCardListener agentCardListener) throws NacosException;
+
+void unsubscribeAgentCard(String agentName, String version, AbstractNacosAgentCardListener agentCardListener) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称        | 类型                             | 描述      | 默认值           |
+|:----------|:-------------------------------|---------|---------------|
+| agentName | String                         | Agent名称 | 无，必填          |
+| version   | String                         | Agent版本 | 当为空时，取消订阅最新版本 |
+| listener  | AbstractNacosAgentCardListener | 监听器     | 无，必填          |
+
+#### 返回参数
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+AbstractNacosAgentCardListener listener = new AbstractNacosAgentCardListener() {};
+try {
+    aiService.subscribeAgentCard("test", listener);
+    aiService.unsubscribeAgentCard("test", listener);
+    aiService.unsubscribeAgentCard("test", "", listener);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+## 8. Java SDK的生命周期
 
 Nacos的Java SDK 生命周期从创建时开始，到调用`shutdown()`方法时结束，期间对应创建的线程池、连接等均会始终保留，即使连接断开，也会不断重试重新建立连接。
 

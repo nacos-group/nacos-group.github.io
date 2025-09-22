@@ -1192,7 +1192,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/log?logName=com.example
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -1240,7 +1240,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/list'
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -1328,7 +1328,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client?clientId=17417489524
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -1397,7 +1397,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/publish/list?clientI
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -1466,7 +1466,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/subscribe/list?clien
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -1531,7 +1531,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/service/publisher/li
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -1651,7 +1651,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/distro?ip=127.0.0.1&
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`写`权限
 
 #### 请求URL
 
@@ -1708,7 +1708,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/cluster' -d 'serviceName=te
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`写`权限
 
 #### 请求URL
 
@@ -1762,7 +1762,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/health/instance' -d 'namesp
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`写`权限
 
 #### 请求URL
 
@@ -1821,7 +1821,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/health/checkers'
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`写`权限
 
 #### 请求URL
 
@@ -1880,7 +1880,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance' \
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`写`权限
 
 #### 请求URL
 
@@ -1943,7 +1943,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance?namespaceId=pub
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`写`权限
 
 #### 请求URL
 
@@ -2002,7 +2002,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance' \
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`写`权限
 
 #### 请求URL
 
@@ -2060,7 +2060,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/metadata/batch' \
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`写`权限
 
 #### 请求URL
 
@@ -2121,7 +2121,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/metadata/batch?
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`写`权限
 
 #### 请求URL
 
@@ -2176,7 +2176,7 @@ curl -X PUT "http://localhost:8848/nacos/v3/admin/ns/instance/partial" -d 'names
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -2262,7 +2262,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/list?namespaceId=p
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -2347,7 +2347,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance?namespaceId=public
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`写`权限
 
 #### 请求URL
 
@@ -2404,7 +2404,7 @@ curl -d 'serviceName=nacos.test.1' \
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`写`权限
 
 #### 请求URL
 
@@ -2454,7 +2454,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ns/service?serviceName=naco
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -2541,7 +2541,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service?serviceName=nacos.t
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -2629,7 +2629,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service/list'
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`写`权限
 
 #### 请求URL
 
@@ -2684,7 +2684,7 @@ curl -d 'serviceName=nacos.test.1' \
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -2766,7 +2766,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service/subscribers?namespa
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -2817,7 +2817,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service/selector/types'
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -2901,7 +2901,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=nacos.example
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`写`权限
 
 #### 请求URL
 
@@ -2961,7 +2961,7 @@ curl -d 'dataId=nacos.example' \
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`写`权限
 
 #### 请求URL
 
@@ -3011,7 +3011,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=nacos.exam
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`写`权限
 
 #### 请求URL
 
@@ -3059,7 +3059,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/batch?ids=1,2,3'
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -3118,7 +3118,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/listener?namespaceId
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -3219,7 +3219,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/list?pageNo=1&pageSi
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`写`权限
 
 #### 请求URL
 
@@ -3271,7 +3271,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/beta?namespaceId=
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -3356,7 +3356,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/beta?namespaceId=pub
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`写`权限
 
 #### 请求URL
 
@@ -3413,7 +3413,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/import' \
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -3454,7 +3454,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/export?namespaceId=p
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`写`权限
 
 #### 请求URL
 
@@ -3513,7 +3513,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/clone?namespaceId=t
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -3617,7 +3617,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/list?dataId=nacos.e
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -3701,7 +3701,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/??dataId=111&groupN
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -3785,7 +3785,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/previous?id=101&dat
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -4211,7 +4211,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/derby/import' \
 
 #### 鉴权状态
 
-需管理员权限
+需对应命名空间的`读`权限
 
 #### 请求URL
 
@@ -4402,6 +4402,64 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/metrics/ip?ip=127.0.0.1&dat
 }
 ```
 
+### 3.25. 更新配置元数据
+
+#### 接口描述
+
+通过该接口，可以更新配置的元数据信息：仅能更新`描述`和`标签`。
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/nacos/v3/admin/cs/config/metadata`
+
+#### 请求参数
+
+| **参数名**       | **参数类型** | **是否必填** | **默认值**  | **描述** |
+|---------------|----------|----------|----------|--------|
+| `dataId`      | `String` | **是**    | 无        | 配置ID   |
+| `groupName`   | `String` | **是**    | 无        | 分组名称   |
+| `namespaceId` | `String` | 否        | `public` | 命名空间   |
+| `desc`        | `string` | 否        | null     | 配置的新描述 |
+| `configTags`  | `string` | 否        | null     | 配置的新标签 |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名    | 参数类型      | 描述   |
+|--------|-----------|------|
+| `data` | `Boolean` | 操作结果 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST '127.0.0.1:8848/v3/admin/cs/config/metadata' \
+-d 'namespaceId=public' \
+-d 'groupName=DEFAULT_GROUP' \
+-d 'dataId=test' \
+-d 'desc=testDesc' \
+-d 'configTags=customTag'
+```
+* 返回示例
+
+```json
+{
+  "code" : 0,
+  "message" : "success",
+  "data" : true
+}
+```
+
 ## 4. MCP 管理
 
 ### 4.1. 查询MCP服务的服务列表
@@ -4416,11 +4474,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/metrics/ip?ip=127.0.0.1&dat
 
 #### 鉴权状态
 
-需管理员权限。
+需对应命名空间的`读`权限
 
 #### 请求URL
 
-`/v3/admin/ai/mcp/list`
+`/nacos/v3/admin/ai/mcp/list`
 
 #### 请求参数
 
@@ -4523,11 +4581,11 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp/list?pageNo=1&pageSize=100&nam
 
 #### 鉴权状态
 
-需管理员权限。
+需对应命名空间的`读`权限
 
 #### 请求URL
 
-`/v3/admin/ai/mcp`
+`/nacos/v3/admin/ai/mcp`
 
 #### 请求参数
 
@@ -4625,11 +4683,11 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=tes
 
 #### 鉴权状态
 
-需管理员权限。
+需对应命名空间的`写`权限
 
 #### 请求URL
 
-`/v3/admin/ai/mcp`
+`/nacos/v3/admin/ai/mcp`
 
 #### 请求参数
 
@@ -4749,11 +4807,11 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 
 #### 鉴权状态
 
-需管理员权限。
+需对应命名空间的`写`权限
 
 #### 请求URL
 
-`/v3/admin/ai/mcp`
+`/nacos/v3/admin/ai/mcp`
 
 #### 请求参数
 
@@ -4874,11 +4932,11 @@ curl -X POST '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 
 #### 鉴权状态
 
-需管理员权限。
+需对应命名空间的`写`权限
 
 #### 请求URL
 
-`/v3/admin/ai/mcp`
+`/nacos/v3/admin/ai/mcp`
 
 #### 请求参数
 
@@ -4913,3 +4971,473 @@ curl -X DELETE '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=
    "data" : "ok"
 }
 ```
+
+## 5. A2A注册中心
+
+### 5.1. 查询指定AgentCard的版本列表
+
+#### 接口描述
+
+通过该接口，可以查询指定托管在Nacos上的AgentCard的版本列表。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需对应命名空间的`读`权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/a2a/version/list`
+
+#### 请求参数
+
+| 参数名           | 参数类型     | 是否必填  | 描述                          |
+|---------------|----------|-------|-----------------------------|
+| `namespaceId` | `string` | 否     | AgentCard所属的命名空间，默认`public` |
+| `agentName`   | `string` | **是** | AgentCard的名称                |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名                   | 参数类型      | 描述              |
+|-----------------------|-----------|-----------------|
+| `data`[i].`version`   | `String`  | AgentCard的版本号。  |
+| `data`[i].`createdAt` | `String`  | 该版本的创建时间。       |
+| `data`[i].`updatedAt` | `String`  | 该版本的最后更新时间。     |
+| `data`[i].`latest`    | `Boolean` | 该版本是否标记为最新发布版本。 |
+
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a/version/list?namespaceId=public&agentName=GeoSpatial+Route+Planner+Agent'
+```
+* 返回示例
+
+```json
+{
+  "code" : 0,
+  "message" : "success",
+  "data" : [ {
+    "version" : "1.2.0",
+    "createdAt" : "2025-09-12T03:33:51Z",
+    "updatedAt" : "2025-09-12T07:21:49Z",
+    "latest" : true
+  } ]
+}
+```
+
+### 5.2. 查询AgentCard的列表
+
+#### 接口描述
+
+通过该接口，可以查询托管在Nacos上的AgentCard的列表。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需对应命名空间的`读`权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/a2a/list`
+
+#### 请求参数
+
+| 参数名           | 参数类型     | 是否必填  | 描述                                              |
+|---------------|----------|-------|-------------------------------------------------|
+| `pageNo`      | `int`    | **是** | 当前页，默认为`1`                                      |
+| `pageSize`    | `int`    | **是** | 页条目数，默认为`100`                                   |
+| `namespaceId` | `string` | 否     | AgentCard的命名空间ID，默认为`public`                    |
+| `agentName`   | `string` | 否     | AgentCard的名称，为空是查询所有AgentCard                   |
+| `search`      | `string` | **是** | AgentCard名称的匹配模式，可选之`blur`和`accurate`，默认为`blur` |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名                                     | 参数类型                       | 描述                                                                                                     |
+|-----------------------------------------|----------------------------|--------------------------------------------------------------------------------------------------------|
+| `totalCount`                            | `int`                      | 符合条件的服务的总数。                                                                                            |
+| `pageNumber`                            | `int`                      | 当前页码，起始为`1`。                                                                                           |
+| `pagesAvailable`                        | `int`                      | 可用页码。                                                                                                  |
+| `pageItems`                             | `List`                     | 服务列表。                                                                                                  |
+| `pageItems`[i].`protocolVersion`        | `String`                   | AgentCard的A2A协议版本。                                                                                     |
+| `pageItems`[i].`name`                   | `String`                   | AgentCard的名称。                                                                                          |
+| `pageItems`[i].`description`            | `String`                   | AgentCard的描述。                                                                                          |
+| `pageItems`[i].`version`                | `String`                   | AgentCard的版本号。                                                                                         |
+| `pageItems`[i].`iconUrl`                | `String`                   | AgentCard的iconURL。                                                                                     |
+| `pageItems`[i].`capabilities`           | `AgentCapability`          | AgentCard的能力，匹配[A2A标准能力](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object)。 |
+| `pageItems`[i].`skills`                 | `List<AgentSkill>`         | AgentCard的技能列表,匹配[A2A标准技能](https://a2a-protocol.org/latest/specification/#554-agentskill-object)。      |
+| `pageItems`[i].`latestPublishedVersion` | `String`                   | AgentCard的最新发布版本。                                                                                      |
+| `pageItems`[i].`versionDetails`         | `List<AgentVersionDetail>` | AgentCard的所有版本详情。                                                                                      |
+| `pageItems`[i].`registrationType`       | `String`                   | AgentCard的默认注册类型，可选`URL`和`SERVICE`。                                                                    |
+
+其中`AgentVersionDetail`包含内容如下：
+
+| 参数名         | 参数类型      | 描述              |
+|-------------|-----------|-----------------|
+| `version`   | `String`  | AgentCard的版本号。  |
+| `createdAt` | `String`  | 该版本的创建时间。       |
+| `updatedAt` | `String`  | 该版本的最后更新时间。     |
+| `latest`    | `Boolean` | 该版本是否标记为最新发布版本。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a/list?pageNo=1&pageSize=100&namespaceId=public&search=blur'
+```
+* 返回示例
+
+```json
+{
+  "code" : 0,
+  "message" : "success",
+  "data" : {
+    "totalCount" : 1,
+    "pageNumber" : 1,
+    "pagesAvailable" : 1,
+    "pageItems" : [ {
+      "protocolVersion" : "0.2.9",
+      "name" : "GeoSpatial Route Planner Agent",
+      "description" : "Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.",
+      "version" : "1.2.0",
+      "iconUrl" : "https://georoute-agent.example.com/icon.png",
+      "capabilities" : {
+        "streaming" : true,
+        "pushNotifications" : true,
+        "stateTransitionHistory" : false,
+        "extensions" : null
+      },
+      "skills" : [ {
+        "id" : "route-optimizer-traffic",
+        "name" : "Traffic-Aware Route Optimizer",
+        "description" : "Calculates the optimal driving route between two or more locations, taking into account real-time traffic conditions, road closures, and user preferences (e.g., avoid tolls, prefer highways).",
+        "tags" : [ "maps", "routing", "navigation", "directions", "traffic" ],
+        "examples" : [ "Plan a route from '1600 Amphitheatre Parkway, Mountain View, CA' to 'San Francisco International Airport' avoiding tolls.", "{\"origin\": {\"lat\": 37.422, \"lng\": -122.084}, \"destination\": {\"lat\": 37.7749, \"lng\": -122.4194}, \"preferences\": [\"avoid_ferries\"]}" ],
+        "inputModes" : [ "application/json", "text/plain" ],
+        "outputModes" : [ "application/json", "application/vnd.geo+json", "text/html" ]
+      }, {
+        "id" : "custom-map-generator",
+        "name" : "Personalized Map Generator",
+        "description" : "Creates custom map images or interactive map views based on user-defined points of interest, routes, and style preferences. Can overlay data layers.",
+        "tags" : [ "maps", "customization", "visualization", "cartography" ],
+        "examples" : [ "Generate a map of my upcoming road trip with all planned stops highlighted.", "Show me a map visualizing all coffee shops within a 1-mile radius of my current location." ],
+        "inputModes" : [ "application/json" ],
+        "outputModes" : [ "image/png", "image/jpeg", "application/json", "text/html" ]
+      } ],
+      "latestPublishedVersion" : "1.2.0",
+      "versionDetails" : [ {
+        "version" : "1.2.0",
+        "createdAt" : "2025-09-12T03:33:51Z",
+        "updatedAt" : "2025-09-12T07:21:49Z",
+        "latest" : true
+      } ],
+      "registrationType" : "URL"
+    } ]
+  }
+}
+```
+
+### 5.3. 查询AgentCard的详情
+
+#### 接口描述
+
+通过该接口，可以查询托管在Nacos上指定AgentCard的详细信息。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需对应命名空间的`读`权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/a2a`
+
+#### 请求参数
+
+| 参数名                | 参数类型     | 是否必填  | 描述                                                                                 |
+|--------------------|----------|-------|------------------------------------------------------------------------------------|
+| `namespaceId`      | `string` | 否     | AgentCard所属的命名空间，默认`public`                                                        |
+| `agentName`        | `string` | **是** | AgentCard的名称                                                                       |
+| `version`          | `string` | 否     | AgentCard的版本号，为空时返回最新版本详情                                                          |
+| `registrationType` | `string` | 否     | AgentCard的默认注册类型，可选`URL`和`SERVICE`。未填写时根据此AgentCard的默认`registrationType`进行`url`的生成 |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名                                 | 参数类型                              | 描述                                                                                                       |
+|-------------------------------------|-----------------------------------|----------------------------------------------------------------------------------------------------------|
+| `protocolVersion`                   | `String`                          | AgentCard的A2A协议版本。                                                                                       |
+| `name`                              | `String`                          | AgentCard的名称。                                                                                            |
+| `description`                       | `String`                          | AgentCard的描述。                                                                                            |
+| `version`                           | `String`                          | AgentCard的版本号。                                                                                           |
+| `iconUrl`                           | `String`                          | AgentCard的iconURL。                                                                                       |
+| `capabilities`                      | `AgentCapability`                 | AgentCard的能力，匹配[A2A标准能力](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object)。   |
+| `skills`                            | `List<AgentSkill>`                | AgentCard的技能列表,匹配[A2A标准技能](https://a2a-protocol.org/latest/specification/#554-agentskill-object)。        |
+| `url`                               | `String`                          | AgentCard的默认访问的URL。                                                                                      |
+| `preferredTransport`                | `String`                          | AgentCard的默认访问URL的传输协议，应该为`JSONRPC`,`GRPC`,`HTTP+JSON`。                                                  |
+| `additionalInterfaces`              | `List<AgentInterface>`            | AgentCard的所有可访问接口列表,匹配[A2A标准](https://a2a-protocol.org/latest/specification/#555-agentinterface-object)。 |
+| `provider`                          | `AgentProvider`                   | AgentCard的提供商信息，匹配[A2A标准](https://a2a-protocol.org/latest/specification/#551-agentprovider-object)。      |
+| `documentationUrl`                  | `String`                          | AgentCard的文档 URL。                                                                                        |
+| `securitySchemes`                   | `Map<String, SecurityScheme>`     | AgentCard的安全配置定义。匹配[A2A标准](https://a2a-protocol.org/latest/specification/#553-securityscheme-object)     |
+| `security`                          | `List<Map<String, List<String>>>` | AgentCard的所有安全要求对象列表。                                                                                    |
+| `defaultInputModes`                 | `List<String>`                    | AgentCard的所有默认输入模式。                                                                                      |
+| `defaultOutputModes`                | `List<String>`                    | AgentCard的所有默认输出模式。                                                                                      |
+| `supportsAuthenticatedExtendedCard` | `String`                          | AgentCard是否支持认证的扩展卡。                                                                                     |
+| `registrationType`                  | `String`                          | AgentCard的默认注册类型，可选`URL`和`SERVICE`。                                                                      |
+| `latestVersion`                     | `String`                          | AgentCard当前版本时否为最新版本。                                                                                    |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a?namespaceId=public&agentName=GeoSpatial Route Planner Agent&version=1.0.0&registrationType=SERVICE'
+```
+* 返回示例
+
+```json
+{
+  "code" : 0,
+  "message" : "success",
+  "data" : {
+    "protocolVersion" : "0.2.9",
+    "name" : "GeoSpatial Route Planner Agent",
+    "description" : "Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.",
+    "version" : "1.2.0",
+    "iconUrl" : "https://georoute-agent.example.com/icon.png",
+    "capabilities" : {
+      "streaming" : true,
+      "pushNotifications" : true,
+      "stateTransitionHistory" : false,
+      "extensions" : null
+    },
+    "skills" : [ {
+      "id" : "route-optimizer-traffic",
+      "name" : "Traffic-Aware Route Optimizer",
+      "description" : "Calculates the optimal driving route between two or more locations, taking into account real-time traffic conditions, road closures, and user preferences (e.g., avoid tolls, prefer highways).",
+      "tags" : [ "maps", "routing", "navigation", "directions", "traffic" ],
+      "examples" : [ "Plan a route from '1600 Amphitheatre Parkway, Mountain View, CA' to 'San Francisco International Airport' avoiding tolls.", "{\"origin\": {\"lat\": 37.422, \"lng\": -122.084}, \"destination\": {\"lat\": 37.7749, \"lng\": -122.4194}, \"preferences\": [\"avoid_ferries\"]}" ],
+      "inputModes" : [ "application/json", "text/plain" ],
+      "outputModes" : [ "application/json", "application/vnd.geo+json", "text/html" ]
+    }, {
+      "id" : "custom-map-generator",
+      "name" : "Personalized Map Generator",
+      "description" : "Creates custom map images or interactive map views based on user-defined points of interest, routes, and style preferences. Can overlay data layers.",
+      "tags" : [ "maps", "customization", "visualization", "cartography" ],
+      "examples" : [ "Generate a map of my upcoming road trip with all planned stops highlighted.", "Show me a map visualizing all coffee shops within a 1-mile radius of my current location." ],
+      "inputModes" : [ "application/json" ],
+      "outputModes" : [ "image/png", "image/jpeg", "application/json", "text/html" ]
+    } ],
+    "url" : "https://georoute-agent.example.com/a2a/v1",
+    "preferredTransport" : "JSONRPC",
+    "additionalInterfaces" : [ {
+      "url" : "https://georoute-agent.example.com/a2a/v1",
+      "transport" : "JSONRPC"
+    }, {
+      "url" : "https://georoute-agent.example.com/a2a/grpc",
+      "transport" : "GRPC"
+    }, {
+      "url" : "https://georoute-agent.example.com/a2a/json",
+      "transport" : "HTTP+JSON"
+    } ],
+    "provider" : {
+      "organization" : "Example Geo Services Inc.",
+      "url" : "https://www.examplegeoservices.com"
+    },
+    "documentationUrl" : "https://docs.examplegeoservices.com/georoute-agent/api",
+    "securitySchemes" : {
+      "google" : {
+        "type" : "openIdConnect",
+        "openIdConnectUrl" : "https://accounts.google.com/.well-known/openid-configuration"
+      }
+    },
+    "security" : [ {
+      "google" : [ "openid", "profile", "email" ]
+    } ],
+    "defaultInputModes" : [ "application/json", "text/plain" ],
+    "defaultOutputModes" : [ "application/json", "image/png" ],
+    "supportsAuthenticatedExtendedCard" : true,
+    "registrationType" : "URL",
+    "latestVersion" : true
+  }
+}
+```
+
+### 5.4. 更新AgentCard
+
+#### 接口描述
+
+通过该接口，可以更新托管在Nacos上的AgentCard。
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需对应命名空间的`写`权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/a2a`
+
+#### 请求参数
+
+| 参数名                | 参数类型        | 是否必填  | 描述                                                                                                              |
+|--------------------|-------------|-------|-----------------------------------------------------------------------------------------------------------------|
+| `namespaceId`      | `string`    | 否     | AgentCard所属的命名空间，默认`public`                                                                                     |
+| `agentCard`        | `AgentCard` | **是** | AgentCard的完整对象，详情请参考[标准AgentCard](https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure) |
+| `registrationType` | `string`    | 否     | AgentCard的默认注册类型，可选`URL`和`SERVICE`。未填写时根据此AgentCard的默认`registrationType`进行`url`的生成                              |
+| `setAsLatest`      | `boolean`   | 否     | 是否设置此版本为最新发布版本，默认为false                                                                                         |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名    | 参数类型     | 描述               |
+|--------|----------|------------------|
+| `data` | `String` | AgentCard服务更新结果。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/a2a' \
+-d 'namespaceId=public' \
+-d 'agentCard={"protocolVersion":"0.2.9","name":"GeoSpatial Route Planner Agent","description":"Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.","url":"https://georoute-agent.example.com/a2a/v1","preferredTransport":"JSONRPC","additionalInterfaces":[{"url":"https://georoute-agent.example.com/a2a/v1","transport":"JSONRPC"},{"url":"https://georoute-agent.example.com/a2a/grpc","transport":"GRPC"},{"url":"https://georoute-agent.example.com/a2a/json","transport":"HTTP+JSON"}],"provider":{"organization":"Example Geo Services Inc.","url":"https://www.examplegeoservices.com"},"iconUrl":"https://georoute-agent.example.com/icon.png","version":"1.2.0","documentationUrl":"https://docs.examplegeoservices.com/georoute-agent/api","capabilities":{"streaming":true,"pushNotifications":true,"stateTransitionHistory":false},"securitySchemes":{"google":{"type":"openIdConnect","openIdConnectUrl":"https://accounts.google.com/.well-known/openid-configuration"}},"security":[{"google":["openid","profile","email"]}],"defaultInputModes":["application/json","text/plain"],"defaultOutputModes":["application/json","image/png"],"skills":[{"id":"route-optimizer-traffic","name":"Traffic-Aware Route Optimizer","description":"Calculates the optimal driving route between two or more locations, taking into account real-time traffic conditions, road closures, and user preferences (e.g., avoid tolls, prefer highways).","tags":["maps","routing","navigation","directions","traffic"],"examples":["Plan a route from '1600 Amphitheatre Parkway, Mountain View, CA' to 'San Francisco International Airport' avoiding tolls.","{\"origin\": {\"lat\": 37.422, \"lng\": -122.084}, \"destination\": {\"lat\": 37.7749, \"lng\": -122.4194}, \"preferences\": [\"avoid_ferries\"]}"],"inputModes":["application/json","text/plain"],"outputModes":["application/json","application/vnd.geo+json","text/html"]},{"id":"custom-map-generator","name":"Personalized Map Generator","description":"Creates custom map images or interactive map views based on user-defined points of interest, routes, and style preferences. Can overlay data layers.","tags":["maps","customization","visualization","cartography"],"examples":["Generate a map of my upcoming road trip with all planned stops highlighted.","Show me a map visualizing all coffee shops within a 1-mile radius of my current location."],"inputModes":["application/json"],"outputModes":["image/png","image/jpeg","application/json","text/html"]}],"supportsAuthenticatedExtendedCard":true,"signatures":[{"protected":"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJrZXktMSIsImprdSI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYWdlbnQvandrcy5qc29uIn0","signature":"QFdkNLNszlGj3z3u0YQGt_T9LixY3qtdQpZmsTdDHDe3fXV9y9-B3m2-XgCpzuhiLt8E0tV6HXoZKHv4GtHgKQ"}]}' \
+-d 'registrationType=SERVICE' \
+-d 'setAsLatest=true'
+```
+* 返回示例
+
+```json
+{
+  "code" : 0,
+  "message" : "success",
+  "data" : "ok"
+}
+```
+
+### 5.5. 创建AgentCard
+
+#### 接口描述
+
+通过该接口，可以创建托管在Nacos上的AgentCard。
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需对应命名空间的`写`权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/a2a`
+
+#### 请求参数
+
+| 参数名                | 参数类型        | 是否必填  | 描述                                                                                                              |
+|--------------------|-------------|-------|-----------------------------------------------------------------------------------------------------------------|
+| `namespaceId`      | `string`    | 否     | AgentCard所属的命名空间，默认`public`                                                                                     |
+| `agentCard`        | `AgentCard` | **是** | AgentCard的完整对象，详情请参考[标准AgentCard](https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure) |
+| `registrationType` | `string`    | 否     | AgentCard的默认注册类型，可选`URL`和`SERVICE`。未填写时根据此AgentCard的默认`registrationType`进行`url`的生成, 默认值为`URL`                   |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名    | 参数类型     | 描述             |
+|--------|----------|----------------|
+| `data` | `String` | AgentCard发布结果。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST '127.0.0.1:8848/nacos/v3/admin/ai/a2a' \
+-d 'namespaceId=public' \
+-d 'agentCard={"protocolVersion":"0.2.9","name":"GeoSpatial Route Planner Agent","description":"Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.","url":"https://georoute-agent.example.com/a2a/v1","preferredTransport":"JSONRPC","additionalInterfaces":[{"url":"https://georoute-agent.example.com/a2a/v1","transport":"JSONRPC"},{"url":"https://georoute-agent.example.com/a2a/grpc","transport":"GRPC"},{"url":"https://georoute-agent.example.com/a2a/json","transport":"HTTP+JSON"}],"provider":{"organization":"Example Geo Services Inc.","url":"https://www.examplegeoservices.com"},"iconUrl":"https://georoute-agent.example.com/icon.png","version":"1.2.0","documentationUrl":"https://docs.examplegeoservices.com/georoute-agent/api","capabilities":{"streaming":true,"pushNotifications":true,"stateTransitionHistory":false},"securitySchemes":{"google":{"type":"openIdConnect","openIdConnectUrl":"https://accounts.google.com/.well-known/openid-configuration"}},"security":[{"google":["openid","profile","email"]}],"defaultInputModes":["application/json","text/plain"],"defaultOutputModes":["application/json","image/png"],"skills":[{"id":"route-optimizer-traffic","name":"Traffic-Aware Route Optimizer","description":"Calculates the optimal driving route between two or more locations, taking into account real-time traffic conditions, road closures, and user preferences (e.g., avoid tolls, prefer highways).","tags":["maps","routing","navigation","directions","traffic"],"examples":["Plan a route from '1600 Amphitheatre Parkway, Mountain View, CA' to 'San Francisco International Airport' avoiding tolls.","{\"origin\": {\"lat\": 37.422, \"lng\": -122.084}, \"destination\": {\"lat\": 37.7749, \"lng\": -122.4194}, \"preferences\": [\"avoid_ferries\"]}"],"inputModes":["application/json","text/plain"],"outputModes":["application/json","application/vnd.geo+json","text/html"]},{"id":"custom-map-generator","name":"Personalized Map Generator","description":"Creates custom map images or interactive map views based on user-defined points of interest, routes, and style preferences. Can overlay data layers.","tags":["maps","customization","visualization","cartography"],"examples":["Generate a map of my upcoming road trip with all planned stops highlighted.","Show me a map visualizing all coffee shops within a 1-mile radius of my current location."],"inputModes":["application/json"],"outputModes":["image/png","image/jpeg","application/json","text/html"]}],"supportsAuthenticatedExtendedCard":true,"signatures":[{"protected":"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJrZXktMSIsImprdSI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYWdlbnQvandrcy5qc29uIn0","signature":"QFdkNLNszlGj3z3u0YQGt_T9LixY3qtdQpZmsTdDHDe3fXV9y9-B3m2-XgCpzuhiLt8E0tV6HXoZKHv4GtHgKQ"}]}' \
+-d 'registrationType=SERVICE'
+```
+* 返回示例
+
+```json
+{
+  "code" : 0,
+  "message" : "success",
+  "data" : "ok"
+}
+```
+
+### 5.6. 删除AgentCard
+
+#### 接口描述
+
+通过该接口，可以删除托管在Nacos上的AgentCard。
+
+#### 请求方式
+
+`DELETE`
+
+#### 鉴权状态
+
+需对应命名空间的`写`权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/a2a`
+
+#### 请求参数
+
+| 参数名           | 参数类型     | 是否必填  | 描述                          |
+|---------------|----------|-------|-----------------------------|
+| `namespaceId` | `string` | 否     | AgentCard所属的命名空间，默认`public` |
+| `agentName`   | `string` | **是** | AgentCard的名称                |
+| `version`     | `string` | 否     | AgentCard的版本号，为空时返回最新版本详情   |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名    | 参数类型     | 描述             |
+|--------|----------|----------------|
+| `data` | `String` | AgentCard删除结果。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X DELETE '127.0.0.1:8848/nacos/v3/admin/ai/a2a?namespaceId=public&agentName=GeoSpatial Route Planner Agent&version=1.0.0'
+```
+* 返回示例
+
+```json
+{
+  "code" : 0,
+  "message" : "success",
+  "data" : "ok"
+}
+```
+
