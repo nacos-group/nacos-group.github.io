@@ -3617,7 +3617,7 @@ curl -X GET '127.0.0.1:8848/v3/console/ai/a2a/list?pageNo=1&pageSize=100&namespa
 * 请求示例
 
 ```shell
-curl -X GET '127.0.0.1:8848/v3/console/ai/a2a/version/list?namespaceId=public&agentName=GeoSpatial Route Planner Agent'
+curl -X GET '127.0.0.1:8848/v3/console/ai/a2a/version/list?namespaceId=public&agentName=GeoSpatial+Route+Planner+Agent'
 ```
 * 返回示例
 
@@ -3693,7 +3693,7 @@ curl -X GET '127.0.0.1:8848/v3/console/ai/a2a/version/list?namespaceId=public&ag
 * 请求示例
 
 ```shell
-curl -X GET '127.0.0.1:8848/v3/console/ai/a2a?namespaceId=public&agentName=GeoSpatial Route Planner Agent&version=1.0.0&registrationType=SERVICE'
+curl -X GET '127.0.0.1:8848/v3/console/ai/a2a?namespaceId=public&agentName=GeoSpatial+Route+Planner+Agent&version=1.0.0&registrationType=SERVICE'
 ```
 * 返回示例
 
@@ -3915,7 +3915,7 @@ curl -X POST '127.0.0.1:8848/v3/console/ai/a2a' \
 * 请求示例
 
 ```shell
-curl -X DELETE '127.0.0.1:8848/v3/console/ai/a2a?namespaceId=public&agentName=GeoSpatial Route Planner Agent&version=1.0.0'
+curl -X DELETE '127.0.0.1:8848/v3/console/ai/a2a?namespaceId=public&agentName=GeoSpatial+Route+Planner+Agent&version=1.0.0'
 ```
 * 返回示例
 

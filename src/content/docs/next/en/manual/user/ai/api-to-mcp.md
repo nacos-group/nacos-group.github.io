@@ -3,7 +3,7 @@ title: Existing API Migration to MCP Manual
 keywords: [ MCP Server Register,MCP,Existing API,Migration to MCP]
 description: 如何通过Nacos，将已经注册在Nacos上的存量微服务API，转化成为MCP服务
 sidebar:
-  order: 2
+  order: 3
 ---
 
 # 存量API转换MCP手册

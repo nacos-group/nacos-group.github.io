@@ -3,7 +3,7 @@ title: Nacos MCP Router
 keywords: [Nacos MCP Router,MCP,使用手册]
 description: Nacos MCP Router 使用手册
 sidebar:
-    order: 3
+    order: 4
 ---
 
 Nacos MCP Router是一个基于MCP官方SDK开发的标准MCP Server，为MCP Client提供MCP Server的`智能搜索`、`安装`、`代理`等功能， **极大地简化了**MCP服务的使用流程。 同时，Nacos MCP Router跟Nacos MCP Registry结合，可以实现MCP Server治理，如MCP Server及工具可见性、版本管理等。

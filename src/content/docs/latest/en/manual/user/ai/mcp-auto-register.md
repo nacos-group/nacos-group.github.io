@@ -3,7 +3,7 @@ title: MCP Server auto-registers Manual
 keywords: [MCP Server Register,MCP,User Guide]
 description: MCP Server Auto-Registration to Nacos User Guide
 sidebar:
-    order: 1
+    order: 2
 ---
 By developing an MCP Server using the **Spring AI Alibaba framework** or the **Nacos MCP Wrapper Python**, the server can be dynamically registered into Nacos after startup and supports the following capabilities:
 

@@ -3,7 +3,7 @@ title: MCP模版配置手册
 keywords: [MCP, HTTP]
 description: Nacos 与 Higress 存量 HTTP 服务转化的模板配置说明
 sidebar:
-    order: 4
+    order: 5
 ---
 
 # Nacos MCP 存量服务模版配置
