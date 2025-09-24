@@ -102,7 +102,7 @@ Nacos 3.1.0首次引入**A2A注册中心**功能，为AI代理框架（如`Sprin
 ## 2. Nacos + Spring AI Alibaba 快速开发分布式Agent应用
 随着**Nacos 3.1.0**及**Spring AI Alibaba**的新版本发布，能够支持快速开发简单的Agent并暴露A2A协议服务，同时注册到Nacos上并让上有Agent应用发现且能够进行远程调用，实现Agent的分布式部署。接下来以`Nacos问答助手`为例，手把手带您实现基于**Nacos 3.1.0**与**Spring AI Alibaba**的分布式AI Agent系统：
 
-> 样例工程已发布至 [nacos-group/nacos-spring-ai-alibaba-example](https://github.com/nacos-group/nacos-spring-ai-alibaba-example/tree/a2a-example-develop/a2a-example)，欢迎尝试。
+> 样例工程已发布至 [nacos-group/nacos-spring-ai-alibaba-example](https://github.com/nacos-group/nacos-spring-ai-alibaba-example)，欢迎尝试。
 >
 
 | ![](https://intranetproxy.alipay.com/skylark/lark/0/2025/png/297800/1758678429423-d9f581c6-3da2-49c8-83e7-62c468e80135.png) |
