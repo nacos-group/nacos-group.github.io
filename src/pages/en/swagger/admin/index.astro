@@ -19,6 +19,15 @@
       window.ui = SwaggerUIBundle({
         url:'/swagger/admin/en/api.json',
         dom_id:'#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        plugins: [
+          SwaggerUIBundle.plugins.DownloadUrl
+        ],
+        layout: "StandaloneLayout"
       });
     };
   </script>
