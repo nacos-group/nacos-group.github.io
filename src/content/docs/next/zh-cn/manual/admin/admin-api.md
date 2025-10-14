@@ -4697,6 +4697,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=tes
 | `serverSpecification`   | `jsonString` | **是** | MCP服务的描述详情                     |
 | `toolSpecification`     | `jsonString` | 否     | MCP服务的工具描述详情                   |
 | `endpointSpecification` | `jsonString` | 否     | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效 |
+| `overrideExisting `    | `boolean`     | 否     | MCP服务更新时是否覆盖原endpointSpecification，默认不覆盖，仅在非`stdio`协议时生效 |
 
 其中`serverSpecification`、`toolSpecification`、`endpointSpecification`参数的详细内容如下：
 
@@ -4898,7 +4899,7 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 
 | 参数名    | 参数类型     | 描述         |
 |--------|----------|------------|
-| `data` | `String` | MCP服务创建结果。 |
+| `data` | `String` | 新建MCP服务的id。 |
 
 #### 示例
 
@@ -4916,7 +4917,7 @@ curl -X POST '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 {
   "code" : 0,
   "message" : "success",
-  "data" : "ok"
+  "data" : "58e5b430-b16d-4f28-9334-edb64303dc23"
 }
 ```
 
