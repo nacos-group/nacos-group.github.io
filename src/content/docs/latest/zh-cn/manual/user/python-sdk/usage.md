@@ -95,7 +95,7 @@ content = await config_client.get_config(ConfigParam(
 ### 监听配置
 
 ```
-async def config_listener(tenant, data_id, group, content):
+async def config_listener(tenant, group, data_id, content):
     print("listen, tenant:{} data_id:{} group:{} content:{}".format(tenant, data_id, group, content))
 
 await config_client.add_listener(data_id=data_id, group=group, listener=config_listener)
