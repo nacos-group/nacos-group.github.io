@@ -179,7 +179,7 @@ Automated publishing of custom Agent programs requires using the `SDK (Nacos-Cli
 ```xml
 <!-- Nacos Client version upper 3.1.0 -->
 <properties>
-    <nacos.client.version>3.1.0</nacos.client.version>
+    <nacos.client.version>3.1.1</nacos.client.version>
 </properties>
 
 <dependencies>
@@ -366,7 +366,7 @@ Automated query and subscribe of custom Agent programs requires using the `SDK (
 ```xml
 <!-- Nacos Client version upper 3.1.0 -->
 <properties>
-    <nacos.client.version>3.1.0</nacos.client.version>
+    <nacos.client.version>3.1.1</nacos.client.version>
 </properties>
 
 <dependencies>

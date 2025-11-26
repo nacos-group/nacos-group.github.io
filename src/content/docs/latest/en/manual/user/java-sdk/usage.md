@@ -37,7 +37,7 @@ Nacos 的 Java SDK需要 JDK 1.8 及以上版本的Java运行环境。
 ```xml
     <properties>
         <!-- 2.1.2版本以上支持纯净版客户端 -->
-        <nacos.version>3.1.0</nacos.version>
+        <nacos.version>3.1.1</nacos.version>
     </properties>
 
     <dependencies>
@@ -2053,6 +2053,8 @@ void unsubscribeAgentCard(String agentName, String version, AbstractNacosAgentCa
 
 #### 返回参数
 
+无
+
 #### 请求示例
 
 ```java
@@ -2064,6 +2066,63 @@ try {
     aiService.subscribeAgentCard("test", listener);
     aiService.unsubscribeAgentCard("test", listener);
     aiService.unsubscribeAgentCard("test", "", listener);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+### 7.7. 批量注册Agent的Endpoint
+
+批量注册多个Endpoint到AgentCard下。
+
+> 同一个Client只能向一个AgentCard注册一份Endpoints， 因此此API和[注册Agent的Endpoint](#73-注册agent的endpoint)API存在冲突，即此接口批量注册的Endpoint会覆盖之前注册的Endpoint（针对同一个Agent）。
+> 若同个Client注册多个不同AgentCard的Endpoints，则不会互相覆盖。
+
+> 该API的起始版本为3.1.1。
+
+#### 描述
+
+```java
+void registerAgentEndpoint(String agentName, Collection<AgentEndpoint> endpoints) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称        | 类型                        | 描述                | 默认值       |
+|:----------|:--------------------------|-------------------|-----------|
+| agentName | String                    | Agent名称           | 无，必填      |
+| endpoints | Collection<AgentEndpoint> | Agent Endpoint 集合 | 无，必填      |
+
+> 注意：endpoints中的所有AgentEndpoint的version应该不为空且相同。
+
+#### 返回参数
+
+无
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    AgentEndpoint endpoint1 = new AgentEndpoint();
+    endpoint1.setAddress("127.0.0.1");
+    endpoint1.setPort(8848);
+    endpoint1.setTransport("JSONRPC");
+    endpoint1.setPath("");
+    endpoint1.setSupportTls(false);
+    endpoint1.setVersion("1.0.0");
+
+    AgentEndpoint endpoint2 = new AgentEndpoint();
+    endpoint2.setAddress("127.0.0.1");
+    endpoint2.setPort(8848);
+    endpoint2.setTransport("JSONRPC");
+    endpoint2.setPath("");
+    endpoint2.setSupportTls(false);
+    endpoint2.setVersion("1.0.0");
+    
+    aiService.registerAgentEndpoint("test", List.of(endpoint1, endpoint2));
 } catch (NacosException e) {
     e.printStackTrace();
 }

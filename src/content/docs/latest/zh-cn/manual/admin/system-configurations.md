@@ -232,16 +232,16 @@ driver支持mysql5.x)
 
 Nacos 中存在部分用于兼容旧版本或平滑升级使用的参数配置，在对应版本中有效，在未来版本中会移除，请根据版本进行配置。
 
-| 参数名	                                         | 含义	                                                                                                       | 计划版本        | 可选值	       | 默认值   | 
-|----------------------------------------------|-----------------------------------------------------------------------------------------------------------|-------------|------------|-------|
-| nacos.core.api.compatibility.client.enabled  | Nacos Client API（OpenAPI） 是否开启兼容模式，开启时将允许使用老版本Client API（OpenAPI），建议暂时打开，并尽快推动客户端版本升级到2.X以上               | 3.0.0~3.1.0 | true/false | true  |
-| nacos.core.api.compatibility.admin.enabled   | Nacos Admin API（OpenAPI） 是否开启兼容模式，开启时将允许使用老版本Admin API（OpenAPI），不建议打开                                     | 3.0.0~3.1.0 | true/false | false |
-| nacos.core.api.compatibility.console.enabled | Nacos Console API（OpenAPI） 是否开启兼容模式，开启时将允许使用老版本Console API（OpenAPI）），不建议打开                                | 3.0.0~3.1.0 | true/false | false |
-| nacos.config.gray.compatible.model           | Nacos Beta灰度配置是否使用兼容模式，开启时将对beta灰度配置进行双写兼容和迁移，`2.5.0`版本开始支持。关闭后对Beta灰度配置的性能和启动速度有大幅提升，建议升级时打开，稳定后关闭       | 2.5.0~3.1.0 | true/false | true  |
-| nacos.gray.migrate.executor.multi            | Nacos 灰度配置迁移线程池大小。在`nacos.config.gray.compatible.model=true`时有效，用于启动时迁移Beta灰度配置到新版本灰度配置的线程数，越高效率好，启动速度越快。 | 2.5.0~3.1.0 | 任意正整数      | 8     |
-| nacos.config.namespace.compatible.mode       | Nacos 命名空间兼容模式，开启时，Nacos会自动将`namespaceId=""`的配置，自动迁移到`namespaceId="public"`下。建议升级时打开，稳定后关闭                | 3.0.0~3.1.0 | true/false | true  |
-| nacos.namespace.migrate.retry.times          | Nacos 命名空间迁移重试次数，避免因网络抖动等问题导致迁移失败，在`nacos.namespace.compatible.mode=true`时有效                              | 3.0.0~3.1.0 | 任意正整数      | 3     |
-| nacos.namespace.migrate.batch.size           | Nacos 命名空间迁移一次批量迁移的配置数量，在`nacos.namespace.compatible.mode=true`时有效，值越大效率越高，但对数据库的压力也越大                    | 3.0.0~3.1.0 | 任意正整数      | 100   |
+| 参数名	                                         | 含义	                                                                                                       | 计划版本         | 可选值	       | 默认值   | 
+|----------------------------------------------|-----------------------------------------------------------------------------------------------------------|--------------|------------|-------|
+| nacos.core.api.compatibility.client.enabled  | Nacos Client API（OpenAPI） 是否开启兼容模式，开启时将允许使用老版本Client API（OpenAPI），建议暂时打开，并尽快推动客户端版本升级到2.X以上               | 3.0.0~latest | true/false | true  |
+| nacos.core.api.compatibility.admin.enabled   | Nacos Admin API（OpenAPI） 是否开启兼容模式，开启时将允许使用老版本Admin API（OpenAPI），不建议打开                                     | 3.0.0~latest | true/false | false |
+| nacos.core.api.compatibility.console.enabled | Nacos Console API（OpenAPI） 是否开启兼容模式，开启时将允许使用老版本Console API（OpenAPI）），不建议打开                                | 3.0.0~latest | true/false | false |
+| nacos.config.gray.compatible.model           | Nacos Beta灰度配置是否使用兼容模式，开启时将对beta灰度配置进行双写兼容和迁移，`2.5.0`版本开始支持。关闭后对Beta灰度配置的性能和启动速度有大幅提升，建议升级时打开，稳定后关闭       | 2.5.0~latest | true/false | true  |
+| nacos.gray.migrate.executor.multi            | Nacos 灰度配置迁移线程池大小。在`nacos.config.gray.compatible.model=true`时有效，用于启动时迁移Beta灰度配置到新版本灰度配置的线程数，越高效率好，启动速度越快。 | 2.5.0~latest | 任意正整数      | 8     |
+| nacos.config.namespace.compatible.mode       | Nacos 命名空间兼容模式，开启时，Nacos会自动将`namespaceId=""`的配置，自动迁移到`namespaceId="public"`下。建议升级时打开，稳定后关闭                | 3.0.0~latest | true/false | true  |
+| nacos.namespace.migrate.retry.times          | Nacos 命名空间迁移重试次数，避免因网络抖动等问题导致迁移失败，在`nacos.namespace.compatible.mode=true`时有效                              | 3.0.0~latest | 任意正整数      | 3     |
+| nacos.namespace.migrate.batch.size           | Nacos 命名空间迁移一次批量迁移的配置数量，在`nacos.namespace.compatible.mode=true`时有效，值越大效率越高，但对数据库的压力也越大                    | 3.0.0~latest | 任意正整数      | 100   |
 
 ## 2. 镜像环境变量
 
