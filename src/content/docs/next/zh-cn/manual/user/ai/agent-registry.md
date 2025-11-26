@@ -157,7 +157,7 @@ spring:
 ```xml
 <!-- Nacos Client 3.1.0及以上版本 -->
 <properties>
-    <nacos.client.version>3.1.0</nacos.client.version>
+    <nacos.client.version>3.1.1</nacos.client.version>
 </properties>
 
 <dependencies>
@@ -342,7 +342,7 @@ public class TestController {
 ```xml
 <!-- Nacos Client 3.1.0及以上版本 -->
 <properties>
-    <nacos.client.version>3.1.0</nacos.client.version>
+    <nacos.client.version>3.1.1</nacos.client.version>
 </properties>
 
 <dependencies>
