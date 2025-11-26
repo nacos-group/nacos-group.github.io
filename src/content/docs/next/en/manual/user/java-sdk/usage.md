@@ -2071,7 +2071,7 @@ try {
 }
 ```
 
-### 7.7. 批量注册注册Agent的Endpoint
+### 7.7. 批量注册Agent的Endpoint
 
 批量注册多个Endpoint到AgentCard下。
 
