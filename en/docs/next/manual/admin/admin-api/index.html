@@ -6298,7 +6298,13 @@ starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astr
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>是否必填</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>否</td><td>MCP服务的命名空间ID，默认为<code dir="auto">public</code></td></tr><tr><td><code dir="auto">serverSpecification</code></td><td><code dir="auto">jsonString</code></td><td><strong>是</strong></td><td>MCP服务的描述详情</td></tr><tr><td><code dir="auto">toolSpecification</code></td><td><code dir="auto">jsonString</code></td><td>否</td><td>MCP服务的工具描述详情</td></tr><tr><td><code dir="auto">endpointSpecification</code></td><td><code dir="auto">jsonString</code></td><td>否</td><td>MCP服务的远端服务地址详情，仅在非<code dir="auto">stdio</code>协议时生效</td></tr></tbody></table>
+
+
+
+
+
+
+<table><thead><tr><th>参数名</th><th>参数类型</th><th>是否必填</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>否</td><td>MCP服务的命名空间ID，默认为<code dir="auto">public</code></td></tr><tr><td><code dir="auto">serverSpecification</code></td><td><code dir="auto">jsonString</code></td><td><strong>是</strong></td><td>MCP服务的描述详情</td></tr><tr><td><code dir="auto">toolSpecification</code></td><td><code dir="auto">jsonString</code></td><td>否</td><td>MCP服务的工具描述详情</td></tr><tr><td><code dir="auto">endpointSpecification</code></td><td><code dir="auto">jsonString</code></td><td>否</td><td>MCP服务的远端服务地址详情，仅在非<code dir="auto">stdio</code>协议时生效</td></tr><tr><td><code dir="auto">overrideExisting </code></td><td><code dir="auto">boolean</code></td><td>否</td><td>MCP服务更新时是否覆盖原endpointSpecification，默认不覆盖，仅在非<code dir="auto">stdio</code>协议时生效</td></tr></tbody></table>
 <p>其中<code dir="auto">serverSpecification</code>、<code dir="auto">toolSpecification</code>、<code dir="auto">endpointSpecification</code>参数的详细内容如下：</p>
 <blockquote>
 <p>serverSpecification</p>
@@ -6891,7 +6897,7 @@ starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astr
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">data</code></td><td><code dir="auto">String</code></td><td>MCP服务创建结果。</td></tr></tbody></table>
+<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">data</code></td><td><code dir="auto">String</code></td><td>新建MCP服务的id。</td></tr></tbody></table>
 <h4 id="示例-68">示例</h4>
 <ul>
 <li>请求示例</li>
@@ -6900,7 +6906,7 @@ starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astr
 <ul>
 <li>返回示例</li>
 </ul>
-<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#E1E4E8">{</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"code"</span><span style="--0:#E1E4E8"> : </span><span style="--0:#79B8FF">0</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"message"</span><span style="--0:#E1E4E8"> : </span><span style="--0:#9ECBFF">"success"</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"data"</span><span style="--0:#E1E4E8"> : </span><span style="--0:#9ECBFF">"ok"</span></div><div class="ec-line"><span style="--0:#E1E4E8">}</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="{  &#x22;code&#x22; : 0,  &#x22;message&#x22; : &#x22;success&#x22;,  &#x22;data&#x22; : &#x22;ok&#x22;}"><div></div></button></div></figure></div>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#E1E4E8">{</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"code"</span><span style="--0:#E1E4E8"> : </span><span style="--0:#79B8FF">0</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"message"</span><span style="--0:#E1E4E8"> : </span><span style="--0:#9ECBFF">"success"</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"data"</span><span style="--0:#E1E4E8"> : </span><span style="--0:#9ECBFF">"58e5b430-b16d-4f28-9334-edb64303dc23"</span></div><div class="ec-line"><span style="--0:#E1E4E8">}</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="{  &#x22;code&#x22; : 0,  &#x22;message&#x22; : &#x22;success&#x22;,  &#x22;data&#x22; : &#x22;58e5b430-b16d-4f28-9334-edb64303dc23&#x22;}"><div></div></button></div></figure></div>
 <h3 id="45-删除mcp服务">4.5. 删除MCP服务</h3>
 <h4 id="接口描述-69">接口描述</h4>
 <p>通过该接口，可以删除托管在Nacos上的MCP服务。</p>
