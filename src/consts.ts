@@ -6,9 +6,9 @@ export const SITE_DESCRIPTION = 'Welcome to my website!';
 
 // 吊顶提示文案
 export const TOPBAR = {
-    "text": "AgentScope Java v1.0 重磅发布",
-    "mobileText": "AgentScope Java v1.0 重磅发布",
-    "link": "https://nacos.io/blog/nacos-gvr7dx_awbbpb_ghgh5gf3bfnh1unp",
+    "text": "下载量破万，《AI 原生应用架构白皮书》免费下载",
+    "mobileText": "下载量破万，《AI 原生应用架构白皮书》免费下载",
+    "link": "https://developer.aliyun.com/ebook/8479",
     "target": "_blank",
     "display": true
 }
