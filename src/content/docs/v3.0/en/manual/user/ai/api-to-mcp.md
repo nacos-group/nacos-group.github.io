@@ -130,7 +130,7 @@ data:
 
 将Nacos作为MCP Registry 服务来源进行配置，配置完毕后可在`Higress的控制台-服务列表`中查看到所有通过MCP协议暴露的存量服务的服务名称。
 
-同时使用`curl http://${higress_ai_host}:${higress_ai_port}/mcp/${your_mcp_server_name}/see`
+同时使用`curl http://${higress_ai_host}:${higress_ai_port}/mcp/${your_mcp_server_name}/sse`
 可连接MCP服务，查看到连接MCP服务的sessionId，并定时能看到心跳响应。
 
 如，我的MCP服务名称为`restToMcp`：
