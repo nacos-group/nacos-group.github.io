@@ -6,9 +6,9 @@ export const SITE_DESCRIPTION = 'Welcome to my website!';
 
 // 吊顶提示文案
 export const TOPBAR = {
-    "text": "下载量破万，《AI 原生应用架构白皮书》免费下载",
-    "mobileText": "下载量破万，《AI 原生应用架构白皮书》免费下载",
-    "link": "https://developer.aliyun.com/ebook/8479",
+    "text": "Nacos A2A 注册中心，AgentScope 实现跨语言、跨框架互通",
+    "mobileText": "Nacos A2A 注册中心，AgentScope 实现跨语言、跨框架互通",
+    "link": "https://nacos.io/blog/nacos-gvr7dx_awbbpb_zlhpgqczcvzzkvmy/",
     "target": "_blank",
     "display": true
 }
