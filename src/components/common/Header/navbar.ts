@@ -30,7 +30,7 @@ export default [
     },
     trigger: "click",
     target: "_blank",
-    route: "https://mcp.nacos.io/",
+    route: "https://ai.nacos.io/",
   },
   {
       label: "博客",
