@@ -53,16 +53,16 @@ starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astr
 ，以及其他 <code dir="auto">非管控类</code> 和 <code dir="auto">非网关类</code> 应用提供配置获取、服务注册与发现的功能支持。</p><p>该接口仅提供单服务或单配置级别的数据操作能力（例如对单个服务或配置项的增删改查），不支持范围型聚合操作（如查询全部服务列表、配置列表等批量数据接口）。</p><p>如有<code dir="auto">管控类</code>和<code dir="auto">网关类</code>的应用需求，需要使用范围型数据操作接口，请使用<a href="../../admin/admin-api/" referrerpolicy="unsafe-url">Admin API</a>。</p></section></aside>
 <h2 id="0-客户端api-相关说明">0. 客户端API 相关说明</h2>
 <h3 id="01-统一路径格式">0.1. 统一路径格式</h3>
-<p>Nacos的运维API，使用统一的Path格式进行的规范。格式为<code dir="auto">[/$nacos.server.contextPath]/v3/client/[module]/[subPath]...</code>,
+<p>Nacos的客户端API，使用统一的Path格式进行的规范。格式为<code dir="auto">[/$nacos.server.contextPath]/v3/client/[module]/[subPath]...</code>,
 其中</p>
 <ul>
-<li><code dir="auto">$nacos.server.contextPath</code>：运维API的根路径，默认为<code dir="auto">/nacos</code>，可以通过<code dir="auto">nacos.server.contextPath</code>配置项进行修改。</li>
-<li><code dir="auto">module</code>：运维API模块名称，例如<code dir="auto">server</code>、<code dir="auto">cs</code>、<code dir="auto">ns</code>、<code dir="auto">core</code>等。</li>
-<li><code dir="auto">subPath</code>：运维API的子路径，例如<code dir="auto">state</code>、<code dir="auto">namespace</code>、<code dir="auto">config</code>等， 可能有多层子路径。</li>
+<li><code dir="auto">$nacos.server.contextPath</code>：客户端API的根路径，默认为<code dir="auto">/nacos</code>，可以通过<code dir="auto">nacos.server.contextPath</code>配置项进行修改。</li>
+<li><code dir="auto">module</code>：客户端API模块名称，例如<code dir="auto">server</code>、<code dir="auto">cs</code>、<code dir="auto">ns</code>、<code dir="auto">core</code>等。</li>
+<li><code dir="auto">subPath</code>：客户端API的子路径，例如<code dir="auto">state</code>、<code dir="auto">namespace</code>、<code dir="auto">config</code>等， 可能有多层子路径。</li>
 </ul>
-<p>下列列出的运维API，采用默认<code dir="auto">$nacos.server.contextPath</code>的情况进行展示，若已修改部署环境中的<code dir="auto">$nacos.server.contextPath</code>
+<p>下列列出的客户端API，采用默认<code dir="auto">$nacos.server.contextPath</code>的情况进行展示，若已修改部署环境中的<code dir="auto">$nacos.server.contextPath</code>
 配置项，请自行修改调用API时的请求URL。</p>
-<p>同时下列列出的运维API样例中，均采用默认Nacos Web Server的端口进行展示，若已修改部署环境中的<code dir="auto">$nacos.server.main.port</code>
+<p>同时下列列出的客户端API样例中，均采用默认Nacos Web Server的端口进行展示，若已修改部署环境中的<code dir="auto">$nacos.server.main.port</code>
 配置项，请自行修改调用API时的请求URL。</p>
 <h3 id="02-swagger-类型文档">0.2. Swagger 类型文档</h3>
 <p>Nacos 3.X 的客户端 Open API 也提供了Swagger风格的文档，您可以通过访问<a href="/swagger/client/" referrerpolicy="unsafe-url">Nacos Swagger HTTP 客户端 API</a>查看。</p>
