@@ -206,3 +206,133 @@ NACOS_AUTH_IDENTITY_VALUE=${任意字符串}
     ```
   </TabItem>
 </Tabs>
+
+## 3. 旧版HTTP API移除说明 (Nacos 3.2.0+)
+
+### 3.1 API移除通知
+
+:::caution[重大变更]
+从 **Nacos 3.2.0** 开始,旧版 v1 和 v2 HTTP API 已从 Nacos 主仓库中**移除**。
+:::
+
+旧版的 v1 和 v2 HTTP API 不再包含在默认的 Nacos server 发行版中。这些 API 已迁移到单独的旧版适配器模块中。
+
+**受影响的API:**
+- 所有 v1 REST APIs (例如: `/nacos/v1/ns/instance`, `/nacos/v1/cs/configs`)
+- 所有 v2 REST APIs
+
+### 3.2 迁移选项
+
+您有两个选择:
+
+#### 选项 1: 迁移到新API和客户端 (推荐)
+- 使用新的 v3 API
+  - [v3 Admin API 文档](./admin-api)
+  - [v3 Console API 文档](./console-api)
+- 升级到最新的 Nacos 客户端 SDK
+  - [Nacos 客户端文档](../user/overview/other-language)
+
+#### 选项 2: 使用旧版API适配器 (临时方案)
+如果您需要时间进行迁移,可以临时使用旧版适配器恢复旧API。
+
+### 3.3 安装旧版API适配器
+
+:::danger[重要警告]
+- 旧版API适配器**不保证**在未来的Nacos版本中继续支持
+- 该模块**没有社区长期维护计划**
+- 这只是**临时解决方案**,仅用于紧急迁移场景
+- **强烈建议尽快迁移到 v3 API 和新客户端**
+:::
+
+#### 步骤 1: 构建或下载适配器
+
+**方式 A: 从 Release 下载**
+```bash
+# 从 GitHub releases 下载
+wget https://github.com/nacos-group/nacos-api-legacy-adapter/releases/download/v${version}/nacos-api-legacy-adapter-${version}.jar
+```
+
+**方式 B: 从源码构建**
+```bash
+git clone https://github.com/nacos-group/nacos-api-legacy-adapter.git
+cd nacos-api-legacy-adapter
+mvn clean install
+# 输出: target/nacos-api-legacy-adapter-${version}.jar
+```
+
+**环境要求:**
+- JDK 17+
+- Maven 3.6+
+- `nacos.version` 必须与目标 Nacos server 版本匹配
+
+#### 步骤 2: 安装适配器
+
+**对于 Nacos Server 部署:**
+
+1. 将 JAR 文件放入 Nacos `plugins` 目录:
+```bash
+cp nacos-api-legacy-adapter-${version}.jar ${NACOS_HOME}/plugins/
+```
+
+2. 重启 Nacos server:
+```bash
+sh ${NACOS_HOME}/bin/shutdown.sh
+sh ${NACOS_HOME}/bin/startup.sh -m standalone  # 单机模式
+# 或
+sh ${NACOS_HOME}/bin/startup.sh                # 集群模式
+```
+
+3. 当 JAR 文件在 classpath 中时,适配器将自动加载。
+
+**对于嵌入式/自定义应用:**
+
+添加 Maven 依赖:
+```xml
+<dependency>
+    <groupId>com.alibaba.nacos</groupId>
+    <artifactId>nacos-api-legacy-adapter</artifactId>
+    <version>${nacos.version}</version>
+</dependency>
+```
+
+#### 步骤 3: 验证安装
+
+检查 Nacos server 日志以确认:
+```bash
+tail -f ${NACOS_HOME}/logs/nacos.log
+```
+
+查找表明旧版适配器已加载的日志消息。
+
+#### 步骤 4: 测试旧版API
+
+测试您的旧 v1/v2 API 调用是否再次工作:
+```bash
+curl -X GET "http://localhost:8848/nacos/v1/ns/instance/list?serviceName=test"
+```
+
+### 3.4 版本兼容性
+
+| Nacos版本 | 适配器版本 | 兼容性 |
+|----------|----------|--------|
+| 3.2.0    | 3.2.0    | ✅ 兼容 |
+| 3.3.0+   | 匹配Nacos版本 | ⚠️ 请检查兼容性 |
+
+**重要提示:** 适配器版本必须与您的 Nacos server 版本匹配。
+
+### 3.5 规划您的迁移
+
+在使用旧版适配器的同时,请规划您的迁移:
+
+1. **审计您的API使用** - 识别所有 v1/v2 API 调用
+2. **查看新的 v3 API** - 了解新的 API 结构
+3. **更新客户端** - 升级到最新的 Nacos 客户端 SDK
+4. **充分测试** - 在预发环境中测试
+5. **逐步迁移** - 使用功能开关或金丝雀部署
+6. **移除适配器** - 迁移完成后,移除适配器 JAR
+
+### 3.6 获取帮助
+
+- 旧版适配器仓库: https://github.com/nacos-group/nacos-api-legacy-adapter
+- Nacos 主仓库: https://github.com/alibaba/nacos
+- 社区支持: [Nacos 社区](https://nacos.io/community/)
