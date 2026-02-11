@@ -23,17 +23,17 @@ Nacos 3.X 的 HTTP OpenAPI **主要面向不支持 gRPC 的编程语言开发客
 
 ### 0.1. 统一路径格式
 
-Nacos的运维API，使用统一的Path格式进行的规范。格式为`[/$nacos.server.contextPath]/v3/client/[module]/[subPath]...`,
+Nacos的客户端API，使用统一的Path格式进行的规范。格式为`[/$nacos.server.contextPath]/v3/client/[module]/[subPath]...`,
 其中
 
-- `$nacos.server.contextPath`：运维API的根路径，默认为`/nacos`，可以通过`nacos.server.contextPath`配置项进行修改。
-- `module`：运维API模块名称，例如`server`、`cs`、`ns`、`core`等。
-- `subPath`：运维API的子路径，例如`state`、`namespace`、`config`等， 可能有多层子路径。
+- `$nacos.server.contextPath`：客户端API的根路径，默认为`/nacos`，可以通过`nacos.server.contextPath`配置项进行修改。
+- `module`：客户端API模块名称，例如`server`、`cs`、`ns`、`core`等。
+- `subPath`：客户端API的子路径，例如`state`、`namespace`、`config`等， 可能有多层子路径。
 
-下列列出的运维API，采用默认`$nacos.server.contextPath`的情况进行展示，若已修改部署环境中的`$nacos.server.contextPath`
+下列列出的客户端API，采用默认`$nacos.server.contextPath`的情况进行展示，若已修改部署环境中的`$nacos.server.contextPath`
 配置项，请自行修改调用API时的请求URL。
 
-同时下列列出的运维API样例中，均采用默认Nacos Web Server的端口进行展示，若已修改部署环境中的`$nacos.server.main.port`
+同时下列列出的客户端API样例中，均采用默认Nacos Web Server的端口进行展示，若已修改部署环境中的`$nacos.server.main.port`
 配置项，请自行修改调用API时的请求URL。
 
 ### 0.2. Swagger 类型文档
