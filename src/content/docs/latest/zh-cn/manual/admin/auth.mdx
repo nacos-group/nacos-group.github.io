@@ -51,14 +51,14 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
       ```properties
       ### 用于生成JWT令牌的密钥(Base64 String):
-      nacos.core.auth.default.token.secret.key=$custom_base64_token_secret_key
+      nacos.core.auth.plugin.nacos.token.secret.key=$custom_base64_token_secret_key
       ```
 
     - 配置`server.identity`
 
       开启鉴权之前，还需要配置用于服务端之间请求的身份识别信息，在application.properties中的配置信息：
 
-      > 注意：身份识别信息保持节点间一致，长时间不一致可能导致节点见数据不一致。
+      > 注意：身份识别信息保持节点间一致，长时间不一致可能导致节点间数据不一致。
 
       ```properties
       ### 配置自定义身份识别的key（不可为空）和value（不可为空）

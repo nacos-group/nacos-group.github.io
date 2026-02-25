@@ -28,14 +28,14 @@ Dubbo 融合 Nacos 成为注册中心的操作步骤非常简单，大致步骤�
     ...
 
     <dependency>
-        <groupId>com.alibaba</groupId>
+        <groupId>org.apache.dubbo</groupId>
         <artifactId>dubbo</artifactId>
         <version>3.0.5</version>
     </dependency>
 
     <!-- Dubbo Nacos registry dependency -->
     <dependency>
-        <groupId>com.alibaba</groupId>
+        <groupId>org.apache.dubbo</groupId>
         <artifactId>dubbo-registry-nacos</artifactId>
         <version>3.0.5</version>
     </dependency>
