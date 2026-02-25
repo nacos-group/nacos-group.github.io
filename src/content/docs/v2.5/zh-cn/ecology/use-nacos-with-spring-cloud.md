@@ -114,7 +114,7 @@ public class MyRateConfigService {
 * 2021.x 系列需升级版本至 2021.0.6.2
 * 2.2.x 系列需升级至 2.2.11
 
-关于注解更多详细的用法，请参考：[Spring Nacos Config配置中心注解](../../../../blog/Nacos-gvr7dx_awbbpb_mmufdmayp5dfozci.md)
+关于注解更多详细的用法，请参考：[Spring Nacos Config配置中心注解](../../../../blog/nacos-gvr7dx_awbbpb_mmufdmayp5dfozci.md)
 
 ## 启动服务发现
 
