@@ -443,6 +443,9 @@ try {
 读取配置超时或网络异常，抛出 NacosException 异常。
 
 ## 4. 服务发现API
+
+> **Tip for learning**: When you register an instance using the Service Discovery API, the instance will be removed from Nacos once the client process exits, so you won't see it in the Nacos console. For learning or debugging, you can keep the process running after registration (e.g. with `Thread.sleep()`) so you can verify in the Nacos console that the instance was registered successfully.
+
 ### 4.1. 注册实例
 #### 描述
 注册一个实例到服务。
@@ -492,6 +495,9 @@ instance.setPort(8848);
 instance.setClusterName("DEFAULT");
 naming.registerInstance("nacos.test.service", instance);
 naming.registerInstance("nacos.test.service", "DEFAULT_GROUP", instance);
+
+// Keep the process running so you can see the registered instance in the Nacos console (for learning/debugging)
+Thread.sleep(300000); // e.g. keep for 5 minutes
 ```
 
 ### 4.2. 注销实例

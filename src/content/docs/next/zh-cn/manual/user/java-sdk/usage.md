@@ -640,6 +640,9 @@ try {
 
 
 ## 4. 服务发现API
+
+> **学习提示**：使用服务发现 API 注册实例时，客户端进程退出后 Nacos 会将该实例摘除，控制台将看不到刚注册的实例。学习或调试时可在注册后使用 `Thread.sleep()` 等方式保持进程运行，以便在 Nacos 控制台确认注册是否成功。
+
 ### 4.1. 注册实例
 #### 描述
 注册一个实例到服务。
@@ -689,6 +692,9 @@ instance.setPort(8848);
 instance.setClusterName("DEFAULT");
 naming.registerInstance("nacos.test.service", instance);
 naming.registerInstance("nacos.test.service", "DEFAULT_GROUP", instance);
+
+// 保持进程不退出，便于在 Nacos 控制台查看已注册的实例（学习/调试用）
+Thread.sleep(300000); // 例如保持 5 分钟
 ```
 
 ### 4.2. 注销实例
