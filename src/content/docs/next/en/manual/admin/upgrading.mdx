@@ -12,15 +12,26 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## 1. 升级版本兼容性
 
-当前文档所对应的版本为3.0.1，所有Nacos版本可升级到该版本的兼容性如下：
+当前文档所对应的版本为3.2.0（开发版本），所有Nacos版本可升级到该版本的兼容性如下：
 
 | Nacos版本 | 是否支持升级到当前版本 | 备注 |
 |----------|--------------------|------|
 | 0.X ～ 1.X | 不支持 | 0.X ~ 1.X 版本需要先升级到2.0以上的版本，请参考[Nacos2.0升级文档](https://nacos.io/docs/v2/upgrading/200-upgrading/) 先升级到2.0或2.1版本后再进行升级 |
-| 2.0.X | 支持 | 3.0.X版本支持从 2.0.X 升级到 3.0.X， 但数据库表结构有发生变化，请升级前对比[mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)文件，并应用新的表结构后进行升级 |
-| 2.1.X ~ 2.4.X | 支持 | 3.0.X版本支持从 2.1.X ~ 2.4.X 升级到 3.0.X，但数据库表结构有发生变化，请升级前对比[mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)文件，并应用新的表结构后进行升级 |
-| 2.5.X | 支持 | 3.0.X版本支持从 2.5.X 升级到 3.0.X |
+| 2.0.X | 支持 | 3.2.X版本支持从 2.0.X 升级到 3.2.X， 但数据库表结构有发生变化，请升级前对比[mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)文件，并应用新的表结构后进行升级 |
+| 2.1.X ~ 2.4.X | 支持 | 3.2.X版本支持从 2.1.X ~ 2.4.X 升级到 3.2.X，但数据库表结构有发生变化，请升级前对比[mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)文件，并应用新的表结构后进行升级 |
+| 2.5.X | 支持 | 3.2.X版本支持从 2.5.X 升级到 3.2.X |
+| 3.0.X ~ 3.1.X | 支持 | 3.2.X版本支持从 3.0.X ~ 3.1.X 升级到 3.2.X |
 
+### 1.1 Client Compatibility
+
+Compatibility between Nacos 3.x server and client versions is as follows:
+
+| Client Version | Compatible | Remarks |
+|----------------|------------|---------|
+| 0.x | No | - |
+| 1.x | No | To continue using 1.x clients, please integrate [nacos-api-legacy-adapter](https://github.com/nacos-group/nacos-api-legacy-adapter) yourself. |
+| 2.x | Yes | - |
+| 3.x | Yes | - |
 
 ## 2. 升级步骤
 
