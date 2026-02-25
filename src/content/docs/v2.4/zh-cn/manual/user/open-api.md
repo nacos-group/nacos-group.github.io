@@ -10,6 +10,8 @@ sidebar:
 
 Nacos 2.X 版本兼容 Nacos1.X 版本的OpenAPI, 请参考文档[Nacos1.X OpenAPI](https://nacos.io/docs/v1/open-api)使用。
 
+> 使用默认鉴权插件时如何获取和配置访问凭据，请参见 [OpenAPI 如何配置鉴权信息](./auth.md#2-openapi如何配置鉴权信息)。
+
 ## 1. 文档规定
 
 ### 1.1. API 统一返回体格式
