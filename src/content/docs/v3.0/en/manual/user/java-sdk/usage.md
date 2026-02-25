@@ -73,7 +73,7 @@ String serverAddr = "localhost:8848";
 // 初始化配置中心的Nacos Java SDK
 ConfigService configService = NacosFactory.createConfigService(serverAddr);
 
-// 初始化配置中心的Nacos Java SDK
+// 初始化注册中心的Nacos Java SDK
 NamingService namingService = NacosFactory.createNamingService(serverAddr);
 
 // 分布式锁的Nacos Java SDK不支持仅传入serverAddr进行初始化，请使用Properties进行。
@@ -92,7 +92,7 @@ properties.setProperty(PropertyKeyConst.NAMESPACE, "${namespaceId}");
 // 初始化配置中心的Nacos Java SDK
 ConfigService configService = NacosFactory.createConfigService(properties);
 
-// 初始化配置中心的Nacos Java SDK
+// 初始化注册中心的Nacos Java SDK
 NamingService namingService = NacosFactory.createNamingService(properties);
 
 // 初始化分布式锁的Nacos Java SDK
