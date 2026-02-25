@@ -29,14 +29,14 @@ First, you need to `dubbo-registry-nacos`Maven dependent on added to your projec
     
     <!-- Dubbo dependency -->
     <dependency>
-        <groupId>com.alibaba</groupId>
+        <groupId>org.apache.dubbo</groupId>
         <artifactId>dubbo</artifactId>
         <version>3.0.5</version>
     </dependency>
 
     <!-- Dubbo Nacos registry dependency -->
     <dependency>
-        <groupId>com.alibaba</groupId>
+        <groupId>org.apache.dubbo</groupId>
         <artifactId>dubbo-registry-nacos</artifactId>
         <version>3.0.5</version>
     </dependency>
