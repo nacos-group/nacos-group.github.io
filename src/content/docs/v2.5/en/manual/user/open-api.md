@@ -10,6 +10,8 @@ sidebar:
 
 Nacos 2.X 版本兼容 Nacos1.X 版本的OpenAPI, 请参考文档[Nacos1.X OpenAPI](https://nacos.io/docs/v1/open-api)使用。
 
+> For how to obtain and configure access credentials when using the default auth plugin, see [How to configure auth for OpenAPI](./auth.md#2-openapi如何配置鉴权信息).
+
 ## 1. 文档规定
 
 ### 1.1. API 统一返回体格式

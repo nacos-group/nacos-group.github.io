@@ -19,6 +19,8 @@ Nacos 3.X 的 HTTP OpenAPI **主要面向不支持 gRPC 的编程语言开发客
 如有`管控类`和`网关类`的应用需求，需要使用范围型数据操作接口，请使用[Admin API](../admin/admin-api.md)。
 :::
 
+> For how to obtain and configure access credentials when using the default auth plugin, see [How to configure auth for OpenAPI](./auth.md#2-openapi如何配置鉴权信息).
+
 ## 0. 客户端API 相关说明
 
 ### 0.1. 统一路径格式
