@@ -56,6 +56,12 @@ Nacos 的 Java SDK（或称Nacos-Java-Client）需要 JDK 1.8 及以上版本的
     </dependencies>
 ```
 
+### 1.3. Upgrade Compatibility
+
+In 3.x the default namespace ID was changed from empty string to `public` (see [issue #9846](https://github.com/alibaba/nacos/issues/9846)). The 3.0 client uses `public` by default, so it is incompatible with older servers when using the default namespace.
+
+Before upgrading, ensure that **the server is already 3.0 or above**, or **you are not using the config center in the default namespace**.
+
 ## 2. 初始化SDK
 
 Nacos 初始化SDK仅需要使用 `NacosFactory` 类进行不同模块的创建即可：

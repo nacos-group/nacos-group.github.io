@@ -21,6 +21,16 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 | 2.1.X ~ 2.4.X | 支持 | 3.0.X版本支持从 2.1.X ~ 2.4.X 升级到 3.0.X，但数据库表结构有发生变化，请升级前对比[mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)文件，并应用新的表结构后进行升级 |
 | 2.5.X | 支持 | 3.0.X版本支持从 2.5.X 升级到 3.0.X |
 
+### 1.1 Client Compatibility
+
+Compatibility between Nacos 3.x server and client versions is as follows:
+
+| Client Version | Compatible | Remarks |
+|----------------|------------|---------|
+| 0.x | No | - |
+| 1.x | Yes | Support will be removed after v3.2. Please upgrade to 2.x or 3.x client as soon as possible. See [issue #12922](https://github.com/alibaba/nacos/issues/12922) |
+| 2.x | Yes | - |
+| 3.x | Yes | - |
 
 ## 2. 升级步骤
 

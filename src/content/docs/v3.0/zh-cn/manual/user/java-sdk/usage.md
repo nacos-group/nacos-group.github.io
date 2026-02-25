@@ -62,6 +62,12 @@ Nacos 的 Java SDK需要 JDK 1.8 及以上版本的Java运行环境。
     </dependencies>
 ```
 
+### 1.3. 升级兼容性
+
+3.x 将默认命名空间 ID 从空字符串改为 `public`（参见 [issue #9846](https://github.com/alibaba/nacos/issues/9846)）。3.0 客户端默认使用 `public`，在默认命名空间下连接老版本服务端时会不兼容。
+
+升级前请确认：**服务端已升级至 3.0 及以上**，或**未在默认命名空间下使用配置中心**。
+
 ## 2. 初始化SDK
 
 Nacos 初始化SDK仅需要使用 `NacosFactory` 类进行不同模块的创建即可：
