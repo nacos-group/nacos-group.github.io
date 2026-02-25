@@ -34,7 +34,7 @@ Nacos 3.0 主要支持两种访问协议， 分别为 [gRPC](https://www.grpc.io
 | `resultCode` |  int   | API调用的结果码，`200`代表执行成功，`500`代表执行失败。                           |
 | `errorCode`  |  int   | API调用的错误码，若状态码为`500`时存在此值，具体错误码请参考[API 错误码汇总](#33-api-错误码汇总) |
 |  `message`   | string | API调用的信息，若状态码为`500`时存在此值，描述错误的具体信息                           |
-| `requestId`  | string | API调用的请求I。                                                   |
+| `requestId`  | string | API调用的请求ID。                                                   |
 
 ### 3.2. HTTP API 统一返回体格式
 
