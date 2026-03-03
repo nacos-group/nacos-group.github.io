@@ -24,8 +24,9 @@ Nacos从2.2.0版本开始,可通过SPI机制注入多数据源实现插件,并�
 
 # 如何使用
 1. 用户查询当前Nacos是否支持所需数据源，Nacos默认提供Derby以及MySQL的实现，若暂未支持可参考下面插件编写者如何开发步骤开发插件自己使用或贡献；
-2. 在`application.properties`配置文件中将`spring.datasource.platform`修改为对应的数据源名称，并配置数据源相关参数；
+2. 在`application.properties`配置文件中将`spring.datasource.platform`修改为对应的数据源名称，同时配置`db.pool.config.driverClassName`数据库驱动，并配置数据源相关参数；
 3. 然后编译运行则可支持此数据源；
+4. 将编译后插件放入Nacos根目录的`plugins`目录下，Nacos启动时会自动加载(如果在其它文件夹需修改启动命令中的`-Dloader.path={TARGET_PATH}`追加文件夹)。
 
 # 插件编写者如何开发
 1. 引入`nacos-datasource-plugin`依赖
@@ -35,9 +36,11 @@ Nacos从2.2.0版本开始,可通过SPI机制注入多数据源实现插件,并�
 | ----------- | ----------- |
 |config_info_aggr| ConfigInfoAggrMapper      |
 |config_info_beta| ConfigInfoBetaMapper        |
+|config_info_gray|ConfigInfoGrayMapper|
 |config_info|ConfigInfoMapper|
 |config_info_tag|ConfigInfoTagMapper|
 |config_tags_relation|ConfigTagsRelationMapper|
+|group_capacity|GroupCapacityMapper|
 |his_config_info|HistoryConfigInfoMapper|
 
 3. 编写SPI配置文件，其名字为`com.alibaba.nacos.plugin.datasource.mapper.Mapper`，写入实现Mapper接口的类，可参考config模块中Derby与MySQL配置文件。
