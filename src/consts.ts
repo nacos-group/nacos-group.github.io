@@ -6,9 +6,9 @@ export const SITE_DESCRIPTION = 'Welcome to my website!';
 
 // 吊顶提示文案
 export const TOPBAR = {
-    "text": "Nacos A2A 注册中心，AgentScope 实现跨语言、跨框架互通",
-    "mobileText": "Nacos A2A 注册中心，AgentScope 实现跨语言、跨框架互通",
-    "link": "https://nacos.io/blog/nacos-gvr7dx_awbbpb_zlhpgqczcvzzkvmy/",
+    "text": "Team 版 OpenClaw：HiClaw 开源，5 分钟完成本地安装",
+    "mobileText": "Team 版 OpenClaw：HiClaw 开源，5 分钟完成本地安装",
+    "link": "https://nacos.io/blog/nacos-gvr7dx_awbbpb_moxr0vmuf1yfxw8m/",
     "target": "_blank",
     "display": true
 }
