@@ -345,9 +345,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/health/readiness'
 
 #### 请求参数
 
-| 参数名         | 类型       | 必填 | 参数描述                 |
-|-------------|----------|----|----------------------|
-| `ipKeyWord` | `String` | 否  | 节点ip的过滤关键字，支持前缀模糊匹配。 |
+无。
 
 #### 返回数据
 
@@ -584,7 +582,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace?namespaceId=public'
 |---------------------|----------|----|--------------------------|
 | `customNamespaceId` | `String` | 否  | 命名空间id，未填入时将会使用UUID生成ID。 |
 | `namespaceName`     | `String` | 是  | 命名空间名称。                  |
-| `namespaceDesc`     | `String` | 是  | 命名空间描述。                  |
+| `namespaceDesc`     | `String` | 否  | 命名空间描述。                  |
 
 #### 返回数据
 
@@ -761,6 +759,274 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/exist?customNamespa
   "code": 0,
   "message": "success",
   "data": false
+}
+```
+
+### 1.13. 获取插件详情
+
+#### 接口描述
+
+通过该接口，可以按类型和名称获取指定插件的详情信息。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/plugin`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `pluginType` | `object` | **是** | 插件类型，如 `auth`（鉴权）、`control`（控制）、`datasource`（数据源）等。 |
+| `pluginName` | `object` | **是** | 插件名称，如 `nacos-default-auth-plugin`。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.pluginId | `string` | 插件唯一标识。 |
+| data.pluginType | `string` | 插件类型。 |
+| data.pluginName | `string` | 插件名称。 |
+| data.enabled | `boolean` | 当前是否已启用。 |
+| data.critical | `boolean` | 是否为关键插件（关键插件不可被禁用）。 |
+| data.configurable | `boolean` | 是否支持控制台动态配置。 |
+| data.config | `object` | 插件当前配置项。 |
+| data.configDefinitions | `array` | 插件配置项定义列表，用于渲染配置表单。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/plugin?pluginType=auth&pluginName=nacos-default-auth-plugin'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "name": "nacos-default-auth-plugin",
+    "type": "auth",
+    "enabled": true,
+    "config": {}
+  }
+}
+```
+
+### 1.14. 查询插件在集群节点上的可用性
+
+#### 接口描述
+
+通过该接口，可以获取指定插件在各集群节点上的可用情况。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/plugin/availability`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `pluginType` | `object` | **是** | 插件类型，如 `auth`、`control`、`datasource` 等。 |
+| `pluginName` | `object` | **是** | 插件名称。 |
+
+#### 返回数据
+
+返回 data 为 Map&lt;节点地址, 是否可用&gt;，键为 Nacos 节点地址（如 `127.0.0.1:8848`），值为该节点上该插件是否可用。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/availability?pluginType=auth&pluginName=nacos-default-auth-plugin'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "127.0.0.1:8848": true
+  }
+}
+```
+
+### 1.15. 更新插件配置
+
+#### 接口描述
+
+通过该接口，可以更新插件的配置。需要提供插件类型、名称及配置内容。
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/plugin/config`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `pluginType` | `object` | **是** | 插件类型。 |
+| `pluginName` | `object` | **是** | 插件名称。 |
+| `config` | `object` | 否 | 插件配置内容，JSON 对象，具体字段由插件定义。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data | `string` | 操作结果描述信息。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/config' \
+  -d 'pluginType=auth' \
+  -d 'pluginName=nacos-default-auth-plugin' \
+  -d 'config={}'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": "Plugin configuration updated successfully"
+}
+```
+
+### 1.16. 获取插件列表
+
+#### 接口描述
+
+通过该接口，可以获取插件列表，可按插件类型筛选。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/plugin/list`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `pluginType` | `object` | 否 | 插件类型；不传则返回所有类型的插件列表。 |
+
+#### 返回数据
+
+返回 data 为插件信息数组，每项包含插件名称、类型、是否启用等。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/list?pluginType=auth'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": [
+    {
+      "name": "nacos-default-auth-plugin",
+      "type": "auth",
+      "enabled": true
+    }
+  ]
+}
+```
+
+### 1.17. 启用或禁用插件
+
+#### 接口描述
+
+通过该接口，可以更新插件的启用状态（启用或禁用）。
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/plugin/status`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `pluginType` | `object` | **是** | 插件类型。 |
+| `pluginName` | `object` | **是** | 插件名称。 |
+| `enabled` | `object` | **是** | 是否启用，`true` 启用、`false` 禁用。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data | `string` | 操作结果描述信息。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/status' \
+  -d 'pluginType=auth' \
+  -d 'pluginName=nacos-default-auth-plugin' \
+  -d 'enabled=True'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": "Plugin status updated successfully"
 }
 ```
 
@@ -1142,8 +1408,8 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/list?dataId=&groupName=&
 | `groupName`   | `String`  | 否  | 配置分组，当`search`为`blur`时，可使用`*`进行模糊搜索，例如`test*`，当值为``或缺失时，查询全部符合`dataId`条件的配置。    |
 | `appName`     | `String`  | 否  | 配置所属应用名称，默认为空，传入时过滤归属于此应用的配置，值为空时查询所有应用的配置。                                     |
 | `configTags`  | `String`  | 否  | 配置标签，多个标签之间用英文逗号分隔，默认为空，传入时过滤拥有此tag的配置，值为空时查询所有tag的配置。                          |
-| `type`        | `String`  | 否  | 配置的类型，默认值为空，传入时过滤此类型的配置，值为空时查询所有类型的配置。                                          |
-| `content`     | `String`  | 否  | 配置内容，默认值为空，传入时过滤包含此内容的配置，值为空时查询所有内容的配置。                                         |
+| `type`         | `String`  | 否  | 配置的类型，默认值为空，传入时过滤此类型的配置，值为空时查询所有类型的配置。                                          |
+| `configDetail` | `String`  | 是  | 配置内容检索条件，用于按配置内容过滤，支持模糊匹配（如 `*11*`）。                                         |
 
 #### 返回数据
 
@@ -1225,6 +1491,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/searchDetail?dataId=&gro
 | `dataId`      | `String` | 是  | 配置ID。                |
 | `groupName`   | `String` | 是  | 配置分组。                |
 | `namespaceId` | `String` | 否  | 命名空间ID，默认值为`public`。 |
+| `aggregation` | `String` | 否  | 是否聚合查询。             |
 
 #### 返回数据
 
@@ -1282,6 +1549,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener?dataId=test&gro
 |---------------|----------|----|----------------------|
 | `ip`          | `String` | 是  | 订阅者IP。               |
 | `namespaceId` | `String` | 否  | 命名空间ID，默认值为`public`。 |
+| `aggregation` | `String` | 否  | 是否聚合查询。             |
 
 #### 返回数据
 
@@ -1337,9 +1605,9 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener/ip?ip=127.0.0.1
 
 | 参数名           | 类型       | 必填 | 参数描述                         |
 |---------------|----------|----|------------------------------|
-| `dataId`      | `String` | 是  | 需要导出的配置ID的pattern，例如`test*`。 |
-| `groupName`   | `String` | 是  | 需要导出的配置分组的pattern，例如`test*`。 |
-| `ids`         | `String` | 是  | 需要导出的配置的存储ID，多个ID用英文逗号分隔。    |
+| `dataId`      | `String` | 否  | 需要导出的配置ID的pattern，例如`test*`。 |
+| `groupName`   | `String` | 否  | 需要导出的配置分组的pattern，例如`test*`。 |
+| `ids`         | `String` | 否  | 需要导出的配置的存储ID，多个ID用英文逗号分隔。    |
 | `namespaceId` | `String` | 否  | 命名空间ID，默认值为`public`。         |
 | `appName`     | `String` | 否  | 需要导出的配置所属的应用名称。              |
 
@@ -1398,6 +1666,7 @@ unzip ~/test.zip
 | `file`        | `MultipartFile`    | 是  | 导入的zip文件。                                                                                                          |
 | `namespaceId` | `String`           | 否  | 导入的配置所属的命名空间ID，默认值为`public`。                                                                                       |
 | `policy`      | `SameConfigPolicy` | 否  | 导入策略，当导入的配置`dataId`和`groupName`相同，存在冲突时，所进行的导入策略。可选值有`ABORT(终止导入)`,`SKIP(跳过冲突配置)`,`OVERWRITE(覆盖冲突配置)`。默认值为`ABORT`。 |
+| `src_user`    | `String`           | 否  | 导入操作来源用户标识。                                                                                                       |
 
 #### 返回数据
 
@@ -1453,6 +1722,7 @@ curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import?namespaceId=tes
 |---------------------|--------------------------------------|----|--------------------------------------------------------------------------------------------------------------------|
 | `targetNamespaceId` | `String`                             | 是  | 目标命名空间ID。                                                                                                          |
 | `policy`            | `SameConfigPolicy`                   | 否  | 克隆策略，当导入的配置`dataId`和`groupName`相同，存在冲突时，所进行的克隆策略。可选值有`ABORT(终止克隆)`,`SKIP(跳过冲突配置)`,`OVERWRITE(覆盖冲突配置)`。默认值为`ABORT`. |
+| `srcUser`           | `String`                             | 否  | 克隆操作来源用户标识。                                                                                                        |
 | `body`              | `List<SameNamespaceCloneConfigBean>` | 是  | `body`内容为HTTP请求的body，类型为`application/json`, 需要克隆的配置列表。                                                             |
 | `body`[i].`cfgId`   | `String`                             | 是  | 待克隆配置的存储ID。                                                                                                        |
 | `body`[i].`dataId`  | `String`                             | 是  | 待克隆配置的目标`dataId`，即克隆后，配置在新命名空间中的`dataId`。                                                                          |
@@ -2136,6 +2406,7 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test&gro
 | `groupName`        | `String`              | 否  | 服务所属的groupName，默认值为`DEFAULT_GROUP`。                    |
 | `namespaceId`      | `String`              | 否  | 服务所属的命名空间ID，默认值为`public`。                              |
 | `protectThreshold` | `String`              | 否  | 服务的防护阈值，默认值为`0.0`。                                     |
+| `ephemeral`        | `String`              | 否  | 是否临时实例，如 `true`/`false`。                                  |
 | `selector`         | `jsonString`          | 否  | 服务的路由选择器，默认值为`{"type":"none"}`，无选择器，另外还支持通过label 进行路由。 |
 | `metadata`         | `Map<String, String>` | 否  | 服务的元数据，默认值为`{}`。                                       |
 
@@ -2328,9 +2599,10 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/list?pageNo=1&pageSize=
 |---------------|-----------|----|-------------------------------------|
 | `pageNo`      | `Integer` | 是  | 页码，起始为`1`。                          |
 | `pageSize`    | `Integer` | 是  | 每页显示条数。                             |
-| `serviceName` | `String`  | 是  | 服务名。                                |
-| `groupName`   | `String`  | 否  | 服务所属的groupName，默认值为`DEFAULT_GROUP`。 |
-| `namespaceId` | `String`  | 否  | 服务所属的命名空间ID，默认值为`public`。           |
+| `serviceName`  | `String`  | 是  | 服务名。                                |
+| `groupName`    | `String`  | 否  | 服务所属的groupName，默认值为`DEFAULT_GROUP`。 |
+| `namespaceId`  | `String`  | 否  | 服务所属的命名空间ID，默认值为`public`。           |
+| `aggregation`  | `String`  | 否  | 是否聚合查询。                             |
 
 #### 返回数据
 
@@ -2561,9 +2833,8 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service/cluster" -d "serviceNam
 | `pageSize`    | `int`     | 是  | 每页记录数。                              |
 | `serviceName` | `String`  | 是  | 服务名。                                |
 | `groupName`   | `String`  | 否  | 服务所属的groupName，默认值为`DEFAULT_GROUP`。 |
-| `namespaceId` | `String`  | 否  | 服务所属的命名空间ID，默认值为`public`。           |
-| `healthyOnly` | `Boolean` | 否  | 是否只返回健康实例。                          |
-| `enabledOnly` | `Boolean` | 否  | 是否只返回未下线实例。                         |
+| `namespaceId`  | `String`  | 否  | 服务所属的命名空间ID，默认值为`public`。           |
+| `clusterName`  | `String`  | 否  | 集群名，不传则查询所有集群的实例。                      |
 
 #### 返回数据
 
@@ -2661,6 +2932,7 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/instance/list?&serviceName=test
 | `clusterName` | `String`              | 否  | 实例所属集群, 默认值为`DEFAULT`。              |
 | `ephemeral`   | `Boolean`             | 否  | 实例是否临时，默认值为`true`。                  |
 | `weight`      | `double`              | 否  | 实例权重。                               |
+| `healthy`     | `Boolean`             | 否  | 实例健康状态。                             |
 | `enabled`     | `Boolean`             | 否  | 实例是否已上线。                            |
 | `metadata`    | `Map<String, String>` | 否  | 实例元数据。                              |
 
@@ -2715,8 +2987,8 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/instance" -d 'serviceName=test&
 | 参数名           | 参数类型     | 是否必填  | 描述                                       |
 |---------------|----------|-------|------------------------------------------|
 | `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`public`                 |
-| `mcpId`       | `string` | **是** | MCP服务的ID，一般为UUID，与`mcpName`二选一输入，建议传入此值。 |
-| `mcpName`     | `string` | **是** | MCP服务的名字模版，与`mcpId`二选一输入，建议传入`mcpId`。    |
+| `mcpId`       | `string` | One of two required | MCP service ID (usually UUID). One of `mcpId` and `mcpName` must be provided (OpenAPI cannot express this constraint; at least one is required in practice). Prefer `mcpId`. |
+| `mcpName`     | `string` | One of two required | MCP service name template. One of `mcpId` and `mcpName` must be provided; prefer `mcpId`.    |
 | `version`     | `string` | 否     | MCP服务的版本，未传入是返回最新版本                      |
 
 #### 返回数据
@@ -2754,7 +3026,7 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/instance" -d 'serviceName=test&
 * 请求示例
 
 ```shell
-curl -X GET '127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=test&mcpId=d7a64724-a556-4fe4-82fa-e806d43e00dc'
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=test&mcpId=d7a64724-a556-4fe4-82fa-e806d43e00dc'
 ```
 * 返回示例
 
@@ -2817,6 +3089,7 @@ curl -X GET '127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=test&mc
 | 参数名                     | 参数类型         | 是否必填  | 描述                                                      |
 |-------------------------|--------------|-------|---------------------------------------------------------|
 | `namespaceId`           | `string`     | 否     | MCP服务的命名空间ID，默认为`public`                                |
+| `latest`                | `string`     | 否     | 是否按最新版本更新，如 `true`。                                      |
 | `serverSpecification`   | `jsonString` | **是** | MCP服务的描述详情                                              |
 | `toolSpecification`     | `jsonString` | 否     | MCP服务的工具描述详情                                            |
 | `endpointSpecification` | `jsonString` | 否     | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效                          |
@@ -2904,7 +3177,7 @@ curl -X GET '127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=test&mc
 * 请求示例
 
 ```shell
-curl -X PUT '127.0.0.1:8080/v3/console/ai/mcp' \
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 -d 'namespaceId=public' \
 -d 'mcpName=test' \
 -d 'serverSpecification={"protocol":"stdio","frontProtocol":"stdio","name":"test","id":"d7a64724-a556-4fe4-82fa-e806d43e00dc","description":"ceshi","versionDetail":{"version":"1.0.0"},"enabled":true,"localServerConfig":{"test":{}}}'
@@ -3028,7 +3301,7 @@ curl -X PUT '127.0.0.1:8080/v3/console/ai/mcp' \
 * 请求示例
 
 ```shell
-curl -X POST '127.0.0.1:8080/v3/console/ai/mcp' \
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 -d 'namespaceId=public' \
 -d 'mcpName=test' \
 -d 'serverSpecification={"protocol":"stdio","frontProtocol":"stdio","name":"test","id":"","description":"ceshi","versionDetail":{"version":"1.0.0"},"enabled":true,"localServerConfig":{"test":{}}}'
@@ -3066,8 +3339,8 @@ curl -X POST '127.0.0.1:8080/v3/console/ai/mcp' \
 | 参数名           | 参数类型     | 是否必填  | 描述                                       |
 |---------------|----------|-------|------------------------------------------|
 | `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`public`                 |
-| `mcpId`       | `string` | **是** | MCP服务的ID，一般为UUID，与`mcpName`二选一输入，建议传入此值。 |
-| `mcpName`     | `string` | **是** | MCP服务的名字模版，与`mcpId`二选一输入，建议传入`mcpId`。    |
+| `mcpId`       | `string` | One of two required | MCP service ID (usually UUID). One of `mcpId` and `mcpName` must be provided (OpenAPI cannot express this constraint; at least one is required in practice). Prefer `mcpId`. |
+| `mcpName`     | `string` | One of two required | MCP service name template. One of `mcpId` and `mcpName` must be provided; prefer `mcpId`.    |
 | `version`     | `string` | 否     | MCP服务的版本，未传入是为最新版本                       |
 
 
@@ -3084,7 +3357,7 @@ curl -X POST '127.0.0.1:8080/v3/console/ai/mcp' \
 * 请求示例
 
 ```shell
-curl -X DELETE '127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=test&mcpId=d7a64724-a556-4fe4-82fa-e806d43e00dc'
+curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=test&mcpId=d7a64724-a556-4fe4-82fa-e806d43e00dc'
 ```
 * 返回示例
 
@@ -3108,7 +3381,7 @@ curl -X DELETE '127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=test
 
 #### 鉴权状态
 
-需要具有对应`命名空间写入`权限的用户身份。
+需要具有对应`命名空间读取`权限的用户身份。
 
 #### 请求URL
 
@@ -3160,7 +3433,7 @@ curl -X DELETE '127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=test
 * 请求示例
 
 ```shell
-curl -X GET '127.0.0.1:8080/v3/console/ai/mcp/list?pageNo=1&pageSize=100&namespaceId=public&search=blur'
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/list?pageNo=1&pageSize=100&namespaceId=public&search=blur'
 ```
 * 返回示例
 
@@ -3215,7 +3488,7 @@ curl -X GET '127.0.0.1:8080/v3/console/ai/mcp/list?pageNo=1&pageSize=100&namespa
 
 #### 鉴权状态
 
-需要具有对应`命名空间写入`权限的用户身份。
+需要具有对应`命名空间读取`权限的用户身份。
 
 #### 请求URL
 
@@ -3243,7 +3516,7 @@ curl -X GET '127.0.0.1:8080/v3/console/ai/mcp/list?pageNo=1&pageSize=100&namespa
 * 请求示例
 
 ```shell
-curl -X GET '127.0.0.1:8848/v3/console/ai/mcp/importToolsFromMcp?transportType=mcp-sse&baseUrl=%2Fsse&endpoint=http%3A%2F%2Flocalhost'
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/importToolsFromMcp?transportType=mcp-sse&baseUrl=%2Fsse&endpoint=http%3A%2F%2Flocalhost'
 ```
 * 返回示例
 
@@ -3327,7 +3600,7 @@ curl -X GET '127.0.0.1:8848/v3/console/ai/mcp/importToolsFromMcp?transportType=m
 * 请求示例
 
 ```shell
-curl -X POST '127.0.0.1:8848/v3/console/ai/mcp/import/validate' \
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/validate' \
 -d 'namespaceId=public' \
 -d 'importType=url' \
 -d 'data=' \
@@ -3424,7 +3697,7 @@ curl -X POST '127.0.0.1:8848/v3/console/ai/mcp/import/validate' \
 * 请求示例
 
 ```shell
-curl -X POST '127.0.0.1:8848/v3/console/ai/mcp/import/execute' \
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/execute' \
 -d 'namespaceId=public' \
 -d 'importType=url' \
 -d 'data=' \
@@ -3472,7 +3745,7 @@ curl -X POST '127.0.0.1:8848/v3/console/ai/mcp/import/execute' \
 
 #### 鉴权状态
 
-需要具有对应`命名空间写入`权限的用户身份。
+需要具有对应`命名空间读取`权限的用户身份。
 
 #### 请求URL
 
@@ -3523,7 +3796,7 @@ curl -X POST '127.0.0.1:8848/v3/console/ai/mcp/import/execute' \
 * 请求示例
 
 ```shell
-curl -X GET '127.0.0.1:8848/v3/console/ai/a2a/list?pageNo=1&pageSize=100&namespaceId=public&search=blur'
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a/list?pageNo=1&pageSize=100&namespaceId=public&search=blur'
 ```
 * 返回示例
 
@@ -3589,7 +3862,7 @@ curl -X GET '127.0.0.1:8848/v3/console/ai/a2a/list?pageNo=1&pageSize=100&namespa
 
 #### 鉴权状态
 
-需要具有对应`命名空间写入`权限的用户身份。
+需要具有对应`命名空间读取`权限的用户身份。
 
 #### 请求URL
 
@@ -3618,7 +3891,7 @@ curl -X GET '127.0.0.1:8848/v3/console/ai/a2a/list?pageNo=1&pageSize=100&namespa
 * 请求示例
 
 ```shell
-curl -X GET '127.0.0.1:8848/v3/console/ai/a2a/version/list?namespaceId=public&agentName=GeoSpatial+Route+Planner+Agent'
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a/version/list?namespaceId=public&agentName=GeoSpatial+Route+Planner+Agent'
 ```
 * 返回示例
 
@@ -3647,7 +3920,7 @@ curl -X GET '127.0.0.1:8848/v3/console/ai/a2a/version/list?namespaceId=public&ag
 
 #### 鉴权状态
 
-需要具有对应`命名空间写入`权限的用户身份。
+需要具有对应`命名空间读取`权限的用户身份。
 
 #### 请求URL
 
@@ -3694,7 +3967,7 @@ curl -X GET '127.0.0.1:8848/v3/console/ai/a2a/version/list?namespaceId=public&ag
 * 请求示例
 
 ```shell
-curl -X GET '127.0.0.1:8848/v3/console/ai/a2a?namespaceId=public&agentName=GeoSpatial+Route+Planner+Agent&version=1.0.0&registrationType=SERVICE'
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a?namespaceId=public&agentName=GeoSpatial+Route+Planner+Agent&version=1.0.0&registrationType=SERVICE'
 ```
 * 返回示例
 
@@ -3807,7 +4080,7 @@ curl -X GET '127.0.0.1:8848/v3/console/ai/a2a?namespaceId=public&agentName=GeoSp
 * 请求示例
 
 ```shell
-curl -X PUT '127.0.0.1:8848/v3/console/ai/a2a' \
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/a2a' \
 -d 'namespaceId=public' \
 -d 'agentCard={"protocolVersion":"0.2.9","name":"GeoSpatial Route Planner Agent","description":"Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.","url":"https://georoute-agent.example.com/a2a/v1","preferredTransport":"JSONRPC","additionalInterfaces":[{"url":"https://georoute-agent.example.com/a2a/v1","transport":"JSONRPC"},{"url":"https://georoute-agent.example.com/a2a/grpc","transport":"GRPC"},{"url":"https://georoute-agent.example.com/a2a/json","transport":"HTTP+JSON"}],"provider":{"organization":"Example Geo Services Inc.","url":"https://www.examplegeoservices.com"},"iconUrl":"https://georoute-agent.example.com/icon.png","version":"1.2.0","documentationUrl":"https://docs.examplegeoservices.com/georoute-agent/api","capabilities":{"streaming":true,"pushNotifications":true,"stateTransitionHistory":false},"securitySchemes":{"google":{"type":"openIdConnect","openIdConnectUrl":"https://accounts.google.com/.well-known/openid-configuration"}},"security":[{"google":["openid","profile","email"]}],"defaultInputModes":["application/json","text/plain"],"defaultOutputModes":["application/json","image/png"],"skills":[{"id":"route-optimizer-traffic","name":"Traffic-Aware Route Optimizer","description":"Calculates the optimal driving route between two or more locations, taking into account real-time traffic conditions, road closures, and user preferences (e.g., avoid tolls, prefer highways).","tags":["maps","routing","navigation","directions","traffic"],"examples":["Plan a route from '1600 Amphitheatre Parkway, Mountain View, CA' to 'San Francisco International Airport' avoiding tolls.","{\"origin\": {\"lat\": 37.422, \"lng\": -122.084}, \"destination\": {\"lat\": 37.7749, \"lng\": -122.4194}, \"preferences\": [\"avoid_ferries\"]}"],"inputModes":["application/json","text/plain"],"outputModes":["application/json","application/vnd.geo+json","text/html"]},{"id":"custom-map-generator","name":"Personalized Map Generator","description":"Creates custom map images or interactive map views based on user-defined points of interest, routes, and style preferences. Can overlay data layers.","tags":["maps","customization","visualization","cartography"],"examples":["Generate a map of my upcoming road trip with all planned stops highlighted.","Show me a map visualizing all coffee shops within a 1-mile radius of my current location."],"inputModes":["application/json"],"outputModes":["image/png","image/jpeg","application/json","text/html"]}],"supportsAuthenticatedExtendedCard":true,"signatures":[{"protected":"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJrZXktMSIsImprdSI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYWdlbnQvandrcy5qc29uIn0","signature":"QFdkNLNszlGj3z3u0YQGt_T9LixY3qtdQpZmsTdDHDe3fXV9y9-B3m2-XgCpzuhiLt8E0tV6HXoZKHv4GtHgKQ"}]}' \
 -d 'registrationType=SERVICE' \
@@ -3862,7 +4135,7 @@ curl -X PUT '127.0.0.1:8848/v3/console/ai/a2a' \
 * 请求示例
 
 ```shell
-curl -X POST '127.0.0.1:8848/v3/console/ai/a2a' \
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/a2a' \
 -d 'namespaceId=public' \
 -d 'agentCard={"protocolVersion":"0.2.9","name":"GeoSpatial Route Planner Agent","description":"Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.","url":"https://georoute-agent.example.com/a2a/v1","preferredTransport":"JSONRPC","additionalInterfaces":[{"url":"https://georoute-agent.example.com/a2a/v1","transport":"JSONRPC"},{"url":"https://georoute-agent.example.com/a2a/grpc","transport":"GRPC"},{"url":"https://georoute-agent.example.com/a2a/json","transport":"HTTP+JSON"}],"provider":{"organization":"Example Geo Services Inc.","url":"https://www.examplegeoservices.com"},"iconUrl":"https://georoute-agent.example.com/icon.png","version":"1.2.0","documentationUrl":"https://docs.examplegeoservices.com/georoute-agent/api","capabilities":{"streaming":true,"pushNotifications":true,"stateTransitionHistory":false},"securitySchemes":{"google":{"type":"openIdConnect","openIdConnectUrl":"https://accounts.google.com/.well-known/openid-configuration"}},"security":[{"google":["openid","profile","email"]}],"defaultInputModes":["application/json","text/plain"],"defaultOutputModes":["application/json","image/png"],"skills":[{"id":"route-optimizer-traffic","name":"Traffic-Aware Route Optimizer","description":"Calculates the optimal driving route between two or more locations, taking into account real-time traffic conditions, road closures, and user preferences (e.g., avoid tolls, prefer highways).","tags":["maps","routing","navigation","directions","traffic"],"examples":["Plan a route from '1600 Amphitheatre Parkway, Mountain View, CA' to 'San Francisco International Airport' avoiding tolls.","{\"origin\": {\"lat\": 37.422, \"lng\": -122.084}, \"destination\": {\"lat\": 37.7749, \"lng\": -122.4194}, \"preferences\": [\"avoid_ferries\"]}"],"inputModes":["application/json","text/plain"],"outputModes":["application/json","application/vnd.geo+json","text/html"]},{"id":"custom-map-generator","name":"Personalized Map Generator","description":"Creates custom map images or interactive map views based on user-defined points of interest, routes, and style preferences. Can overlay data layers.","tags":["maps","customization","visualization","cartography"],"examples":["Generate a map of my upcoming road trip with all planned stops highlighted.","Show me a map visualizing all coffee shops within a 1-mile radius of my current location."],"inputModes":["application/json"],"outputModes":["image/png","image/jpeg","application/json","text/html"]}],"supportsAuthenticatedExtendedCard":true,"signatures":[{"protected":"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJrZXktMSIsImprdSI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYWdlbnQvandrcy5qc29uIn0","signature":"QFdkNLNszlGj3z3u0YQGt_T9LixY3qtdQpZmsTdDHDe3fXV9y9-B3m2-XgCpzuhiLt8E0tV6HXoZKHv4GtHgKQ"}]}' \
 -d 'registrationType=SERVICE'
@@ -3916,7 +4189,7 @@ curl -X POST '127.0.0.1:8848/v3/console/ai/a2a' \
 * 请求示例
 
 ```shell
-curl -X DELETE '127.0.0.1:8848/v3/console/ai/a2a?namespaceId=public&agentName=GeoSpatial+Route+Planner+Agent&version=1.0.0'
+curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/a2a?namespaceId=public&agentName=GeoSpatial+Route+Planner+Agent&version=1.0.0'
 ```
 * 返回示例
 
@@ -3927,3 +4200,1156 @@ curl -X DELETE '127.0.0.1:8848/v3/console/ai/a2a?namespaceId=public&agentName=Ge
   "data" : "ok"
 }
 ```
+
+## 6. Prompt 管理
+
+Prompt 管理 API 提供 Prompt 的发布、查询、标签绑定与版本管理能力。
+
+### 6.1. 发布Prompt
+
+#### 接口描述
+
+通过该接口，可以发布新版本的Prompt。
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `promptKey` | `object` | **是** | Prompt 的唯一键/标识。 |
+| `version` | `object` | **是** | 版本号，如 `1.0.0`。 |
+| `template` | `object` | **是** | Prompt 模板正文内容。 |
+| `commitMsg` | `object` | 否 | 本次发布的提交说明。 |
+| `description` | `object` | 否 | Prompt 的描述信息。 |
+| `bizTags` | `object` | 否 | 业务标签，用于分类检索，多个标签可逗号分隔。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data | `boolean` | 是否发布成功。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt' \
+  -d 'namespaceId=public' \
+  -d 'promptKey=my-prompt' \
+  -d 'version=1.0.0' \
+  -d 'template=' \
+  -d 'commitMsg=' \
+  -d 'description=' \
+  -d 'bizTags='
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": true
+}
+```
+
+### 6.2. 删除Prompt
+
+#### 接口描述
+
+通过该接口，可以删除指定Prompt。
+
+#### 请求方式
+
+`DELETE`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `promptKey` | `object` | **是** | 要删除的 Prompt 的唯一键。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data | `boolean` | 是否删除成功。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/prompt?namespaceId=public&promptKey=my-prompt'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": true
+}
+```
+
+### 6.3. 查询Prompt详情
+
+#### 接口描述
+
+通过该接口，可按标签/版本/最新优先查询Prompt详情。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt/detail`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `promptKey` | `object` | **是** | Prompt 的唯一键。 |
+| `version` | `object` | 否 | 指定版本号；不传时与 `label`、`md5` 一起决定返回版本（标签或最新等）。 |
+| `label` | `object` | 否 | 标签名，如 `stable`、`latest`，返回该标签指向的版本。 |
+| `md5` | `object` | 否 | 内容 MD5，用于精确匹配某一版本。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.promptKey | `string` | Prompt 唯一键。 |
+| data.version | `string` | 版本号。 |
+| data.commitMsg | `string` | 该版本的提交说明。 |
+| data.srcUser | `string` | 发布该版本的用户。 |
+| data.gmtModified | `integer` | 最后修改时间戳。 |
+| data.template | `string` | Prompt 模板正文。 |
+| data.md5 | `string` | 内容 MD5。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/detail?namespaceId=public&promptKey=my-prompt&version=1.0.0&label=&md5='
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "version": "1.0.0",
+    "template": "",
+    "commitMsg": ""
+  }
+}
+```
+
+### 6.4. 绑定标签
+
+#### 接口描述
+
+通过该接口，可将标签绑定到指定Prompt版本。
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt/label`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `promptKey` | `object` | **是** | Prompt 的唯一键。 |
+| `label` | `object` | **是** | 标签名，如 `stable`、`latest`。 |
+| `version` | `object` | **是** | 要绑定到的版本号。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data | `boolean` | 是否绑定成功。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/label' \
+  -d 'namespaceId=public' \
+  -d 'promptKey=my-prompt' \
+  -d 'label=stable' \
+  -d 'version=1.0.0'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": true
+}
+```
+
+### 6.5. 解绑标签
+
+#### 接口描述
+
+通过该接口，可解绑Prompt的标签。
+
+#### 请求方式
+
+`DELETE`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt/label`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `promptKey` | `object` | **是** | Prompt 的唯一键。 |
+| `label` | `object` | **是** | 要解绑的标签名。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data | `boolean` | 是否解绑成功。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/prompt/label?namespaceId=public&promptKey=my-prompt&label=stable'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": true
+}
+```
+
+### 6.6. 查询Prompt列表
+
+#### 接口描述
+
+通过该接口，可以分页查询Prompt列表。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt/list`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `pageNo` | `object` | **是** | 页码，从 1 开始。 |
+| `pageSize` | `object` | **是** | 每页条数。 |
+| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `promptKey` | `object` | 否 | 按 Prompt 键过滤，支持模糊或精确（由 `search` 决定）。 |
+| `search` | `object` | 否 | 搜索模式：`blur` 模糊匹配，`accurate` 精确匹配。 |
+| `bizTags` | `object` | 否 | 按业务标签过滤。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| totalCount | `int` | 总条数。 |
+| pageNumber | `int` | 当前页码。 |
+| pagesAvailable | `int` | 总页数。 |
+| pageItems | `List` | 当前页的 Prompt 摘要列表。 |
+| pageItems[i].schemaVersion | `integer` | 元数据 schema 版本。 |
+| pageItems[i].promptKey | `string` | Prompt 唯一键。 |
+| pageItems[i].description | `string` | 描述。 |
+| pageItems[i].bizTags | `array` | 业务标签。 |
+| pageItems[i].latestVersion | `string` | 最新版本号。 |
+| pageItems[i].gmtModified | `integer` | 最后修改时间戳。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/list?pageNo=1&pageSize=10&namespaceId=public&promptKey=&search=blur&bizTags='
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "totalCount": 1,
+    "pageNumber": 1,
+    "pagesAvailable": 1,
+    "pageItems": [
+      {
+        "promptKey": "my-prompt",
+        "description": ""
+      }
+    ]
+  }
+}
+```
+
+### 6.7. 查询Prompt元数据
+
+#### 接口描述
+
+通过该接口，可以查询指定Prompt的元数据信息。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt/metadata`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `promptKey` | `object` | **是** | Prompt 的唯一键。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.schemaVersion | `integer` | 元数据 schema 版本。 |
+| data.promptKey | `string` | Prompt 唯一键。 |
+| data.description | `string` | 描述。 |
+| data.bizTags | `array` | 业务标签。 |
+| data.latestVersion | `string` | 最新版本号。 |
+| data.gmtModified | `integer` | 最后修改时间戳。 |
+| data.versions | `array` | 版本列表摘要。 |
+| data.labels | `object` | 标签与版本号的映射。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/metadata?namespaceId=public&promptKey=my-prompt'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "promptKey": "my-prompt",
+    "description": "",
+    "bizTags": ""
+  }
+}
+```
+
+### 6.8. 更新Prompt元数据
+
+#### 接口描述
+
+通过该接口，可更新Prompt的元数据（如描述、业务标签）。
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt/metadata`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `promptKey` | `object` | **是** | Prompt 的唯一键。 |
+| `description` | `object` | 否 | 更新后的描述。 |
+| `bizTags` | `object` | 否 | 更新后的业务标签。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data | `boolean` | 是否更新成功。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/metadata' \
+  -d 'namespaceId=public' \
+  -d 'promptKey=my-prompt' \
+  -d 'description=' \
+  -d 'bizTags='
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": true
+}
+```
+
+### 6.9. 查询Prompt版本列表
+
+#### 接口描述
+
+通过该接口，可以分页查询指定Prompt的版本列表。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt/versions`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `promptKey` | `object` | **是** | Prompt 的唯一键。 |
+| `pageNo` | `object` | **是** | 页码，从 1 开始。 |
+| `pageSize` | `object` | **是** | 每页条数。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| totalCount | `int` | 总条数。 |
+| pageNumber | `int` | 当前页码。 |
+| pagesAvailable | `int` | 总页数。 |
+| pageItems | `List` | 当前页的版本列表。 |
+| pageItems[i].promptKey | `string` | Prompt 唯一键。 |
+| pageItems[i].version | `string` | 版本号。 |
+| pageItems[i].commitMsg | `string` | 该版本的提交说明。 |
+| pageItems[i].srcUser | `string` | 发布该版本的用户。 |
+| pageItems[i].gmtModified | `integer` | 最后修改时间戳。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/versions?namespaceId=public&promptKey=my-prompt&pageNo=1&pageSize=10'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "totalCount": 1,
+    "pageNumber": 1,
+    "pagesAvailable": 1,
+    "pageItems": [
+      {
+        "version": "1.0.0",
+        "commitMsg": ""
+      }
+    ]
+  }
+}
+```
+
+## 7. Skills 管理
+
+Skills 管理 API 提供 Skill 的注册、查询、更新、删除及列表、ZIP 上传能力。
+
+### 7.1. 查询Skill详情
+
+#### 接口描述
+
+通过该接口，可以查询托管在Nacos上指定Skill的详细信息。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/skills`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `skillName` | `object` | **是** | Skill 名称/唯一标识。 |
+| `version` | `object` | 否 | 版本号；不传则返回最新版本。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.namespaceId | `string` | 所属命名空间 ID。 |
+| data.name | `string` | Skill 名称。 |
+| data.description | `string` | Skill 描述。 |
+| data.instruction | `string` | Skill 使用说明/指令。 |
+| data.resource | `object` | Skill 关联资源信息。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills?namespaceId=public&skillName=my-skill&version=1.0.0'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "name": "my-skill",
+    "description": "",
+    "instruction": "",
+    "resource": {},
+    "versionDetail": {
+      "version": "1.0.0"
+    }
+  }
+}
+```
+
+### 7.2. 更新Skill
+
+#### 接口描述
+
+通过该接口，可以更新托管在Nacos上的Skill。
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/skills`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `skillCard` | `object` | **是** | Skill 卡片 JSON，符合 Skill 定义结构，包含 name、description、instruction 等。 |
+| `skillName` | `object` | 否 | 要更新的 Skill 名称；可从 skillCard 中解析时可省略。 |
+| `version` | `object` | 否 | 要更新的版本号；不传则更新最新版本。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data | `string` | 操作结果，成功时为 `ok`。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills' \
+  -d 'namespaceId=public' \
+  -d 'skillCard=' \
+  -d 'skillName=' \
+  -d 'version='
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": "ok"
+}
+```
+
+### 7.3. 注册Skill
+
+#### 接口描述
+
+通过该接口，可以注册托管在Nacos上的Skill。
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/skills`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `skillCard` | `object` | **是** | Skill 卡片 JSON，符合 Skill 定义结构。 |
+| `skillName` | `object` | 否 | 指定 Skill 名称；可从 skillCard 中解析时可省略。 |
+| `version` | `object` | 否 | 版本号，如 `1.0.0`；不传可由服务端生成。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data | `string` | 操作结果，成功时为 `ok`。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills' \
+  -d 'namespaceId=public' \
+  -d 'skillCard=' \
+  -d 'skillName=' \
+  -d 'version='
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": "ok"
+}
+```
+
+### 7.4. 删除Skill
+
+#### 接口描述
+
+通过该接口，可以删除托管在Nacos上的Skill。
+
+#### 请求方式
+
+`DELETE`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/skills`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `skillName` | `object` | **是** | 要删除的 Skill 名称。 |
+| `version` | `object` | 否 | 版本号；不传则删除该 Skill 下所有版本（或按实现语义）。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data | `string` | 操作结果，成功时为 `ok`。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/skills?namespaceId=public&skillName=my-skill&version=1.0.0'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": "ok"
+}
+```
+
+### 7.5. 查询Skill列表
+
+#### 接口描述
+
+通过该接口，可以查询托管在Nacos上的Skill列表。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/skills/list`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `pageNo` | `object` | **是** | 页码，从 1 开始。 |
+| `pageSize` | `object` | **是** | 每页条数。 |
+| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `skillName` | `object` | 否 | 按 Skill 名称过滤，支持模糊或精确（由 `search` 决定）。 |
+| `search` | `object` | 否 | 搜索模式：`blur` 模糊匹配，`accurate` 精确匹配。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| totalCount | `int` | 总条数。 |
+| pageNumber | `int` | 当前页码。 |
+| pagesAvailable | `int` | 总页数。 |
+| pageItems | `List` | 当前页的 Skill 摘要列表。 |
+| pageItems[i].namespaceId | `string` | 所属命名空间 ID。 |
+| pageItems[i].name | `string` | Skill 名称。 |
+| pageItems[i].description | `string` | 描述。 |
+| pageItems[i].updateTime | `integer` | 最后更新时间戳。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/list?pageNo=1&pageSize=100&namespaceId=public&skillName=&search=blur'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "totalCount": 1,
+    "pageNumber": 1,
+    "pagesAvailable": 1,
+    "pageItems": [
+      {
+        "name": "my-skill",
+        "description": "",
+        "versionDetail": {
+          "version": "1.0.0"
+        }
+      }
+    ]
+  }
+}
+```
+
+### 7.6. 上传Skill（ZIP）
+
+#### 接口描述
+
+通过该接口，可通过ZIP文件上传Skill。
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/skills/upload`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `file` | `file` | **是** | 上传的 ZIP 文件（multipart/form-data），ZIP 内需包含符合规范的 Skill 定义文件。 |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data | `string` | 解析并注册后的 Skill 名称。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload' \
+  -d 'file=' \
+  -d 'namespaceId=public'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": "my-skill"
+}
+```
+
+## 8. Copilot
+
+Copilot 相关 API 提供配置获取/保存、Prompt 调试与优化、Skill 生成与优化等能力（部分接口为 SSE 流式返回）。
+
+### 8.1. 获取Copilot配置
+
+#### 接口描述
+
+获取当前Copilot配置，仅返回apiKey、model、studioUrl、studioProject。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/copilot/config`
+
+#### 请求参数
+
+无
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.enabled | `boolean` | Copilot 功能是否启用。 |
+| data.defaultNamespace | `string` | 默认使用的命名空间 ID。 |
+| data.apiKey | `string` | 调用大模型等外部服务的 API Key（脱敏或原文由实现决定）。 |
+| data.model | `string` | 默认使用的模型标识。 |
+| data.studioUrl | `string` | 关联的 Studio 服务地址。 |
+| data.studioProject | `string` | 关联的 Studio 项目标识。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/copilot/config'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "apiKey": "",
+    "model": "",
+    "studioUrl": "",
+    "studioProject": ""
+  }
+}
+```
+
+### 8.2. 保存Copilot配置
+
+#### 接口描述
+
+创建或更新Copilot配置，仅接受apiKey、model、studioUrl、studioProject，其他字段使用默认值。
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/copilot/config`
+
+#### 请求参数
+
+无（请求体可传 apiKey、model、studioUrl、studioProject 等字段，具体以实际接口为准）。
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data | `boolean` | 是否保存成功。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/config'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": true
+}
+```
+
+### 8.3. 流式调试Prompt
+
+#### 接口描述
+
+通过该接口，可使用用户输入流式调试Prompt并返回模型响应，返回SSE流。
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/copilot/prompt/debug`
+
+#### 请求参数
+
+无
+
+#### 返回数据
+
+无（SSE 流式返回）
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/debug'
+```
+
+* 返回示例
+
+```json
+{}
+```
+
+### 8.4. 流式优化Prompt
+
+#### 接口描述
+
+通过该接口，可流式优化Prompt，返回SSE流。
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/copilot/prompt/optimize`
+
+#### 请求参数
+
+无
+
+#### 返回数据
+
+无（SSE 流式返回）
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/optimize'
+```
+
+* 返回示例
+
+```json
+{}
+```
+
+### 8.5. 流式生成Skill
+
+#### 接口描述
+
+通过该接口，可基于背景信息流式生成Skill，返回SSE流。
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/copilot/skill/generate`
+
+#### 请求参数
+
+无
+
+#### 返回数据
+
+无（SSE 流式返回）
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/generate'
+```
+
+* 返回示例
+
+```json
+{}
+```
+
+### 8.6. 流式优化Skill
+
+#### 接口描述
+
+通过该接口，可基于目标与对话历史流式优化Skill，返回SSE流。
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/copilot/skill/optimize`
+
+#### 请求参数
+
+无
+
+#### 返回数据
+
+无（SSE 流式返回）
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/optimize'
+```
+
+* 返回示例
+
+```json
+{}
+```
+
