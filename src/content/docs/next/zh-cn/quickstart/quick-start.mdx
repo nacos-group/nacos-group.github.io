@@ -1,9 +1,9 @@
 ---
 title: Nacos 快速开始
-keywords: [Nacos,快速开始]
+keywords: [Nacos, 快速开始]
 description: 这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。
 sidebar:
-    order: 1
+  order: 1
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -28,7 +28,44 @@ Nacos 依赖 [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_j
 1. 64 bit OS，支持 Linux/Unix/Mac/Windows，推荐选用 Linux/Unix/Mac。
 2. 64 bit JDK 17+；[下载](https://www.oracle.com/java/technologies/downloads/#java17) & [配置](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/)。
 
-## 2. 下载安装包
+## 2. 下载并启动Nacos服务
+
+### 2.1. 使用 nacos-setup 一键部署（推荐）
+
+[nacos-setup](https://github.com/nacos-group/nacos-setup) 提供一键自动化部署，自动处理下载、鉴权配置、端口检测和 Java 环境验证等操作。
+
+安装 nacos-setup：
+
+<Tabs>
+  <TabItem label="Linux/macOS">
+    `curl -fsSL https://nacos.io/nacos-installer.sh | sudo bash`
+  </TabItem>
+  <TabItem label="Windows（PowerShell）">
+    `powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -UseBasicParsing https://nacos.io/nacos-installer.ps1 | iex"`
+  </TabItem>
+</Tabs>
+
+启动 Nacos 服务：
+
+```bash
+# 本地一键部署一个最新版本的单机 Nacos
+nacos-setup
+
+# 本地一键部署指定版本的单机 Nacos
+nacos-setup -v 3.1.1
+
+# 本地一键部署一个最新版本的集群 Nacos
+nacos-setup -c cluster
+
+# 全局配置使用外置存储，输入数据库地址端口账号密码，配置完成后重新运行 nacos-setup
+nacos-setup --datasource-conf
+```
+
+> 更多用法请参考 [使用 nacos-setup 一键部署](https://nacos.io/docs/latest/manual/admin/deployment/deployment-nacos-setup/)。
+
+### 2.2. 手动下载发行包部署
+
+#### 2.2.1. 下载安装包
 
 你可以通过Nacos官网网站及Github两种方式来获取 **Nacos 发行包** 。
 
@@ -43,7 +80,7 @@ Nacos 依赖 [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_j
   </TabItem>
 </Tabs>
 
-## 3. 解压缩Nacos 发行包
+#### 2.2.2. 解压缩Nacos 发行包
 
 ```bash
   unzip nacos-server-$version.zip 
@@ -51,7 +88,7 @@ Nacos 依赖 [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_j
   cd nacos/bin
 ```
 
-## 4.启动服务器
+#### 2.2.3. 启动服务器
 
 * 注：Nacos的运行建议至少在2C4G 60G的机器配置下运行。
 
@@ -88,7 +125,7 @@ nacos.core.auth.plugin.nacos.token.secret.key` Updated:
 若您已经在 `conf/application.properties` 中设置过这3个配置，则不会提示您输入。
 :::
 
-## 5.验证Nacos服务是否启动成功
+## 3.验证Nacos服务是否启动成功
 
 进入`${nacos.home}/logs/` 目录下， 使用`tail -f start.out` 查看日志，如果看到如下日志，说明服务启动成功。
 
@@ -98,21 +135,21 @@ Nacos started successfully in stand alone mode. use embedded storage
 
 可以通过下列服务，快速检验Nacos的功能。
 
-### 5.1. Nacos控制台页面
+### 3.1. Nacos控制台页面
 
 打开任意浏览器，输入地址：`http://127.0.0.1:8080/index.html`, 即可进入Nacos控制台页面。
 
 > 注意：首次打开会要求初始化管理员用户`nacos`的密码。
 
-### 5.2. 服务注册
+### 3.2. 服务注册
 
 `curl -X POST 'http://127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=quickstart.test.service&ip=127.0.0.1&port=8080'`
 
-### 5.3. 服务发现
+### 3.3. 服务发现
 
 `curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=quickstart.test.service'`
 
-### 5.4. 发布配置
+### 3.4. 发布配置
 
 ```shell
 # 登陆获取access token
@@ -125,17 +162,17 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=quickstart.t
 访问Admin API，默认需要使用access token, access token可通过`POST /nacos/v3/auth/user/login`接口获得
 :::
 
-### 5.5. 获取配置
+### 3.5. 获取配置
 
 `curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/cs/config?dataId=quickstart.test.config&groupName=test'`
 
-## 6.关闭服务器
+## 4.关闭服务器
 
-### 6.1. Linux/Unix/Mac
+### 4.1. Linux/Unix/Mac
 
 `sh shutdown.sh`
 
-### 6.2. Windows
+### 4.2. Windows
 
 `shutdown.cmd`
 
@@ -144,3 +181,4 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=quickstart.t
 ## 相关项目
 
 * [Nacos](https://github.com/alibaba/nacos)
+* [nacos-setup](https://github.com/nacos-group/nacos-setup)
