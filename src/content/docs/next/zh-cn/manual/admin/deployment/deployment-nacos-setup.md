@@ -1,6 +1,6 @@
 ---
 title: 使用nacos-setup一键部署
-keywords: [Nacos,部署,Nacos Setup]
+keywords: [Nacos, 部署, Nacos Setup]
 description: Nacos Setup手册，介绍如何使用 nacos-setup 一键部署 Nacos 服务端。
 sidebar:
   order: 5

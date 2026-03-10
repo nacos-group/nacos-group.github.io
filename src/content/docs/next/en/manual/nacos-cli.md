@@ -1,6 +1,6 @@
 ---
 title: Nacos CLI User Guide
-keywords: [ Nacos, nacos-cli ]
+keywords: [ Nacos, Nacos CLI ]
 description: Nacos CLI User Guide, introducing how to install and use Nacos CLI for configuration management, AI skill management, and interactive terminal operations.
 sidebar:
   order: 14
