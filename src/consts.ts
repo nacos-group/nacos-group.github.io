@@ -6,9 +6,9 @@ export const SITE_DESCRIPTION = 'Welcome to my website!';
 
 // 吊顶提示文案
 export const TOPBAR = {
-    "text": "Team 版 OpenClaw：HiClaw 开源，5 分钟完成本地安装",
-    "mobileText": "Team 版 OpenClaw：HiClaw 开源，5 分钟完成本地安装",
-    "link": "https://nacos.io/blog/nacos-gvr7dx_awbbpb_moxr0vmuf1yfxw8m/",
+    "text": "OpenClaw 不踩坑恶意 Skills ，企业需 Skills Registry：Nacos 3.2 发布",
+    "mobileText": "OpenClaw 不踩坑恶意 Skills ，企业需 Skills Registry：Nacos 3.2 发布",
+    "link": "https://nacos.io/blog/nacos-gvr7dx_awbbpb_eerxlks19kgclceq/",
     "target": "_blank",
     "display": true
 }
