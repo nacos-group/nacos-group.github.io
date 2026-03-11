@@ -25,3 +25,6 @@ pnpm-debug.log*
 # IDEs and editors
 .idea/
 
+# Python bytecode (e.g. from skill scripts)
+__pycache__/
+*.pyc
