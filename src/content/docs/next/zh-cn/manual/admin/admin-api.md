@@ -181,7 +181,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/current'
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/reloadCurrent?count=100'
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/reloadCurrent' -d "count=100"
 ```
 
 * 返回示例
@@ -224,7 +224,7 @@ success
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/reloadClient?connectionId=1709273546779_127.0.0.1_35042'
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/reloadClient' -d "connectionId=1709273546779_127.0.0.1_35042"
 ```
 
 * 返回示例
@@ -468,10 +468,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/self'
 
 #### 请求参数
 
-| 参数名       | 类型       | 必填 | 参数描述                                              |
-|-----------|----------|----|---------------------------------------------------|
-| `address` | `String` | 否  | 过滤的节点地址，支持前缀匹配，不输入时返回所有节点信息                       |
-| `state`   | `String` | 否  | 返回的节点状态，可选值为`UP`、`DOWN`、`SUSPICIOUS`，不输入时返回所有节点信息 |
+无
 
 #### 返回数据
 
@@ -627,7 +624,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/list'
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/lookup?type=file'
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/lookup' -d "type=file"
 ```
 
 * 返回示例
@@ -820,7 +817,7 @@ curl -X PUT -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/a
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/smartReloadCluster?loaderFactorStr=0.1'
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/smartReloadCluster' -d "loaderFactorStr=0.1"
 ```
 
 * 返回示例
@@ -1763,7 +1760,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/switches'
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/switches?entry=pushEnabled&value=false'
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/switches' -d "entry=pushEnabled&value=false"
 ```
 
 * 返回示例
@@ -1882,7 +1879,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/metrics?onlyStatus=fals
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/log?logName=com.example.Logger&logLevel=DEBUG'
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/log' -d "logName=com.example.Logger&logLevel=DEBUG"
 ```
 
 * 返回示例
@@ -4198,7 +4195,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/export?namespaceId=p
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/clone?namespaceId=test&policy=ABORT' \
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/clone' -d "namespaceId=test&policy=ABORT" \
 -H 'Content-Type: application/json' \
 -d "[{\"cfgId\":\"838029534438625280\",\"dataId\":\"111\",\"group\":\"DEFAULT_GROUP\"},{\"cfgId\":\"838033747294031872\",\"dataId\":\"qtc-user.yaml\",\"group\":\"DEFAULT_GROUP\"}]"
 ```
@@ -4241,8 +4238,8 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/clone?namespaceId=t
 | `namespaceId` | `String` | 否     | `public`        | 命名空间  |
 | `groupName`   | `String` | **是** | 无               | 配置分组名 |
 | `dataId`      | `String` | **是** | 无               | 配置名   |
-| `pageNo`      | `int`    | 否     | `1`             | 当前页   |
-| `pageSize`    | `int`    | 否     | `100`（最大为`500`） | 页条目数  |
+| `pageNo`      | `int`    | **是** | `1`             | 当前页   |
+| `pageSize`    | `int`    | **是** | `100`（最大为`500`） | 页条目数  |
 
 #### 返回数据
 
@@ -4271,7 +4268,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/clone?namespaceId=t
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/list?dataId=nacos.example&groupName=DEFAULT_GROUP&namespaceId=public'
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/list?dataId=nacos.example&groupName=DEFAULT_GROUP&namespaceId=public&pageNo=1&pageSize=100'
 ```
 
 * 返回示例
@@ -4510,7 +4507,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/previous?id=101&dat
 
 | 参数名         | 类型       | 必填    | 默认值 | 参数描述 |
 |-------------|----------|-------|-----|------|
-| namespaceId | `String` | **是** | 无   | 命名空间 |
+| namespaceId | `String` | 否     | 无   | 命名空间 |
 
 #### 返回数据
 
@@ -4769,7 +4766,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/localCache'
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/log?logName=config-server&logLevel=DEBUG'
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/log' -d "logName=config-server&logLevel=DEBUG"
 ```
 
 * 返回示例
@@ -5307,8 +5304,8 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp/list?pageNo=1&pageSize=100&nam
 | 参数名           | 参数类型     | 是否必填  | 描述                                       |
 |---------------|----------|-------|------------------------------------------|
 | `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`public`                 |
-| `mcpId`       | `string` | **是** | MCP服务的ID，一般为UUID，与`mcpName`二选一输入，建议传入此值。 |
-| `mcpName`     | `string` | **是** | MCP服务的名字模版，与`mcpId`二选一输入，建议传入`mcpId`。    |
+| `mcpId`       | `string` | 否     | MCP服务的ID，一般为UUID，与`mcpName`二选一输入，建议传入此值。 |
+| `mcpName`     | `string` | 否     | MCP服务的名字模版，与`mcpId`二选一输入，建议传入`mcpId`。    |
 | `version`     | `string` | 否     | MCP服务的版本，未传入是返回最新版本                      |
 
 #### 返回数据
@@ -5659,8 +5656,8 @@ curl -X POST '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 | 参数名           | 参数类型     | 是否必填  | 描述                                       |
 |---------------|----------|-------|------------------------------------------|
 | `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`public`                 |
-| `mcpId`       | `string` | **是** | MCP服务的ID，一般为UUID，与`mcpName`二选一输入，建议传入此值。 |
-| `mcpName`     | `string` | **是** | MCP服务的名字模版，与`mcpId`二选一输入，建议传入`mcpId`。    |
+| `mcpId`       | `string` | 否     | MCP服务的ID，一般为UUID，与`mcpName`二选一输入，建议传入此值。 |
+| `mcpName`     | `string` | 否     | MCP服务的名字模版，与`mcpId`二选一输入，建议传入`mcpId`。    |
 | `version`     | `string` | 否     | MCP服务的版本，未传入是为最新版本                       |
 
 #### 返回数据
@@ -6913,8 +6910,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/list?pageNo=1&pageSi
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `String` | 否 | 命名空间 |
 | `file` | `File` | **是** | 技能包 ZIP 文件（multipart/form-data） |
+| `namespaceId` | `String` | 否 | 命名空间 |
 
 #### 返回数据
 
@@ -6926,7 +6923,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/list?pageNo=1&pageSi
 
 ```shell
 curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/upload' \
-  -F 'namespaceId=public' -F 'file=@skill.zip'
+  -F "file=@skill.zip" -F "namespaceId=public"
 ```
 
 * 返回示例

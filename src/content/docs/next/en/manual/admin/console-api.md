@@ -1300,10 +1300,10 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config/batchDelete?ids=83802
 |---------------|-----------|----|---------------------------------------------------------------------------------|
 | `pageNo`      | `Integer` | 是  | 当前页码，起始值为1。                                                                     |
 | `pageSize`    | `Integer` | 是  | 每页显示的配置数量。                                                                      |
+| `dataId`      | `String`  | **是** | 配置ID，当`search`为`blur`时，可使用`*`进行模糊搜索，例如`test*`，当值为``或缺失时，查询全部符合`groupName`条件的配置。 |
+| `groupName`   | `String`  | **是** | 配置分组，当`search`为`blur`时，可使用`*`进行模糊搜索，例如`test*`，当值为``或缺失时，查询全部符合`dataId`条件的配置。    |
 | `search`      | `String`  | 否  | 查询模式，支持`blur`和`accurate`，分别对应模糊搜索和精确搜索，默认值`accurate`                            |
 | `namespaceId` | `String`  | 否  | 命名空间ID，默认值为`public`。                                                            |
-| `dataId`      | `String`  | 否  | 配置ID，当`search`为`blur`时，可使用`*`进行模糊搜索，例如`test*`，当值为``或缺失时，查询全部符合`groupName`条件的配置。 |
-| `groupName`   | `String`  | 否  | 配置分组，当`search`为`blur`时，可使用`*`进行模糊搜索，例如`test*`，当值为``或缺失时，查询全部符合`dataId`条件的配置。    |
 | `appName`     | `String`  | 否  | 配置所属应用名称，默认为空，传入时过滤归属于此应用的配置，值为空时查询所有应用的配置。                                     |
 | `configTags`  | `String`  | 否  | 配置标签，多个标签之间用英文逗号分隔，默认为空，传入时过滤拥有此tag的配置，值为空时查询所有tag的配置。                          |
 | `type`        | `String`  | 否  | 配置的类型，默认值为空，传入时过滤此类型的配置，值为空时查询所有类型的配置。                                          |
@@ -1682,7 +1682,7 @@ unzip ~/test.zip
 * 请求示例
 
 ```shell
-curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import?namespaceId=test" -F "file=@/path/to/test.zip"
+curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import" -F "file=@/path/to/test.zip" -F "namespaceId=test"
 ```
 
 * 返回示例
@@ -1718,15 +1718,22 @@ curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import?namespaceId=tes
 
 #### 请求参数
 
-| 参数名                 | 类型                                   | 必填 | 参数描述                                                                                                               |
-|---------------------|--------------------------------------|----|--------------------------------------------------------------------------------------------------------------------|
-| `targetNamespaceId` | `String`                             | 是  | 目标命名空间ID。                                                                                                          |
-| `policy`            | `SameConfigPolicy`                   | 否  | 克隆策略，当导入的配置`dataId`和`groupName`相同，存在冲突时，所进行的克隆策略。可选值有`ABORT(终止克隆)`,`SKIP(跳过冲突配置)`,`OVERWRITE(覆盖冲突配置)`。默认值为`ABORT`. |
-| `srcUser`           | `String`                             | 否  | 克隆操作来源用户标识。                                                                                                        |
-| `body`              | `List<SameNamespaceCloneConfigBean>` | 是  | `body`内容为HTTP请求的body，类型为`application/json`, 需要克隆的配置列表。                                                             |
-| `body`[i].`cfgId`   | `String`                             | 是  | 待克隆配置的存储ID。                                                                                                        |
-| `body`[i].`dataId`  | `String`                             | 是  | 待克隆配置的目标`dataId`，即克隆后，配置在新命名空间中的`dataId`。                                                                          |
-| `body`[i].`group`   | `String`                             | 是  | 待克隆配置的目标分组，即克隆后，配置在新命名空间中的`groupName`。                                                                             |
+| 参数名       | 类型                 | 必填 | 参数描述                                                                                                               |
+|-----------|--------------------|----|--------------------------------------------------------------------------------------------------------------------|
+| `policy`  | `SameConfigPolicy`  | **是** | 克隆策略，当导入的配置`dataId`和`groupName`相同，存在冲突时，所进行的克隆策略。可选值有`ABORT(终止克隆)`,`SKIP(跳过冲突配置)`,`OVERWRITE(覆盖冲突配置)`。默认值为`ABORT`. |
+| `srcUser` | `String`           | 否  | 克隆操作来源用户标识。                                                                                                        |
+
+#### 请求参数
+
+请求体类型为`application/json`，需包含目标命名空间及待克隆配置列表（如通过 OpenAPI 调用，可同时传 query 参数 `policy`、`srcUser` 与 body）。
+
+| 参数名 / Body 内容     | 类型                                   | 必填 | 参数描述                                                                     |
+|---------------------|--------------------------------------|----|--------------------------------------------------------------------------|
+| `targetNamespaceId` | `String`                             | 是  | 目标命名空间ID。                                                              |
+| 配置列表             | `List<SameNamespaceCloneConfigBean>` | 是  | 需要克隆的配置列表。                                                           |
+| 配置列表[i].`cfgId`  | `String`                             | 是  | 待克隆配置的存储ID。                                                           |
+| 配置列表[i].`dataId` | `String`                             | 是  | 待克隆配置的目标`dataId`，即克隆后，配置在新命名空间中的`dataId`。                           |
+| 配置列表[i].`group`  | `String`                             | 是  | 待克隆配置的目标分组，即克隆后，配置在新命名空间中的`groupName`。                              |
 
 #### 返回数据
 
@@ -1742,7 +1749,7 @@ curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import?namespaceId=tes
 * 请求示例
 
 ```shell
-curl -H "Content-Type: application/json" -X POST  "http://127.0.0.1:8080/v3/console/cs/config/clone?targetNamespaceId=test&policy=ABORT" -d "[{\"cfgId\":\"838029534438625280\",\"dataId\":\"111\",\"group\":\"DEFAULT_GROUP\"},{\"cfgId\":\"838033747294031872\",\"dataId\":\"qtc-user.yaml\",\"group\":\"DEFAULT_GROUP\"}]"
+curl -H "Content-Type: application/json" -X POST "http://127.0.0.1:8080/v3/console/cs/config/clone?policy=ABORT" -d "[{\"cfgId\":\"838029534438625280\",\"dataId\":\"111\",\"group\":\"DEFAULT_GROUP\"},{\"cfgId\":\"838033747294031872\",\"dataId\":\"qtc-user.yaml\",\"group\":\"DEFAULT_GROUP\"}]"
 ```
 
 * 返回示例
@@ -2310,7 +2317,7 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/configs?namespaceId=public"
 * 请求示例
 
 ```shell
-curl -X POST "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test&groupName=DEFAULT_GROUP&namespaceId=public"
+curl -X POST "http://127.0.0.1:8080/v3/console/ns/service" -d "serviceName=test&groupName=DEFAULT_GROUP&namespaceId=public"
 ```
 
 * 返回示例
@@ -2423,7 +2430,7 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test&gro
 * 请求示例
 
 ```shell
-curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test&groupName=DEFAULT_GROUP&namespaceId=public" -d "protectThreshold=0"
+curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service" -d "serviceName=test&groupName=DEFAULT_GROUP&namespaceId=public&protectThreshold=0"
 ```
 
 * 返回示例
@@ -5056,10 +5063,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/list?pageNo=1&pageSize=1
 
 #### 请求参数
 
-| 参数名 | 类型 | 必填 | 参数描述 |
-|--------|------|------|----------|
-| `file` | `file` | **是** | 上传的 ZIP 文件（multipart/form-data），ZIP 内需包含符合规范的 Skill 定义文件。 |
-| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| 参数名         | 类型     | 必填 | 参数描述                                                                 |
+|-------------|--------|----|----------------------------------------------------------------------|
+| `file`      | `file`  | **是** | 上传的 ZIP 文件（multipart/form-data），ZIP 内需包含符合规范的 Skill 定义文件。           |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。                                            |
 
 #### 返回数据
 
@@ -5073,8 +5080,8 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/list?pageNo=1&pageSize=1
 
 ```shell
 curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload' \
-  -d 'file=' \
-  -d 'namespaceId=public'
+  -F "file=@/path/to/skill.zip" \
+  -F "namespaceId=public"
 ```
 
 * 返回示例
@@ -5213,7 +5220,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/config'
 
 #### 请求参数
 
-无
+| 参数名       | 类型     | 必填 | 参数描述     |
+|-----------|--------|----|----------|
+| `userInput` | `string` | - | 用户输入内容。 |
+| `prompt`    | `string` | - | 待调试的 Prompt。 |
 
 #### 返回数据
 
@@ -5224,7 +5234,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/config'
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/debug'
+curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/debug' -H 'Content-Type: application/json' -d '{"userInput":"","prompt":""}'
 ```
 
 * 返回示例
@@ -5253,7 +5263,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/debug'
 
 #### 请求参数
 
-无
+| 参数名              | 类型     | 必填 | 参数描述        |
+|------------------|--------|----|-------------|
+| `optimizationGoal` | `string` | - | 优化目标。       |
+| `prompt`           | `string` | - | 待优化的 Prompt。 |
 
 #### 返回数据
 
@@ -5264,7 +5277,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/debug'
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/optimize'
+curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/optimize' -H 'Content-Type: application/json' -d '{"optimizationGoal":"","prompt":""}'
 ```
 
 * 返回示例
@@ -5293,7 +5306,11 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/optimize'
 
 #### 请求参数
 
-无
+| 参数名                | 类型     | 必填 | 参数描述           |
+|--------------------|--------|----|----------------|
+| `backgroundInfo`     | `string` | - | 背景信息。           |
+| `selectedMcpTools`   | `string` | - | 选中的 MCP 工具。      |
+| `conversationHistory` | `string` | - | 对话历史。           |
 
 #### 返回数据
 
@@ -5304,7 +5321,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/optimize'
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/generate'
+curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/generate' -H 'Content-Type: application/json' -d '{"backgroundInfo":"","selectedMcpTools":"","conversationHistory":""}'
 ```
 
 * 返回示例
@@ -5333,7 +5350,13 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/generate'
 
 #### 请求参数
 
-无
+| 参数名                | 类型     | 必填 | 参数描述           |
+|--------------------|--------|----|----------------|
+| `conversationHistory` | `string` | - | 对话历史。           |
+| `targetFileName`      | `string` | - | 目标文件名。          |
+| `optimizationGoal`    | `string` | - | 优化目标。           |
+| `skill`               | `string` | - | 待优化的 Skill 内容。   |
+| `selectedMcpTools`   | `string` | - | 选中的 MCP 工具。      |
 
 #### 返回数据
 
@@ -5344,7 +5367,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/generate'
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/optimize'
+curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/optimize' -H 'Content-Type: application/json' -d '{"conversationHistory":"","targetFileName":"","optimizationGoal":"","skill":"","selectedMcpTools":""}'
 ```
 
 * 返回示例
