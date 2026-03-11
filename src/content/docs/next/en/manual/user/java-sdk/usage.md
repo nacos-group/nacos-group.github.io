@@ -638,6 +638,120 @@ try {
 }
 ```
 
+### 3.9. Get config with result object
+
+#### Description
+
+Get configuration from Nacos and receive a result object containing content and metadata (e.g. MD5) for use in CAS publish and similar operations. This API is available since 3.0.
+
+```java
+ConfigQueryResult getConfigWithResult(String dataId, String group, long timeoutMs) throws NacosException;
+```
+
+#### Request parameters
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| dataId | string | Configuration ID; use a package.class-style name; only letters and 4 special chars (".", ":", "-", "_"); max 256 bytes. |
+| group | string | Configuration group; recommend product:module; only letters and 4 special chars; max 128 bytes. |
+| timeoutMs | long | Read timeout in ms; recommend 3000. |
+
+#### Return value
+
+| Type | Description |
+| :--- | :--- |
+| ConfigQueryResult | Contains content, md5, etc.; can be used with [CAS publish config](#37-publish-config-with-compare-and-swap-cas). |
+
+#### Request example
+
+```java
+try {
+    String serverAddr = "{serverAddr}";
+    String dataId = "{dataId}";
+    String group = "{group}";
+    Properties properties = new Properties();
+    properties.put("serverAddr", serverAddr);
+    ConfigService configService = NacosFactory.createConfigService(properties);
+    ConfigQueryResult result = configService.getConfigWithResult(dataId, group, 5000);
+    String content = result.getContent();
+    String md5 = result.getMd5();
+    System.out.println(content);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception
+
+NacosException on read timeout or network error.
+
+### 3.10. Get server status
+
+#### Description
+
+Get the current config server status.
+
+```java
+String getServerStatus();
+```
+
+#### Request parameters
+
+None.
+
+#### Return value
+
+| Type | Description |
+| :--- | :--- |
+| String | Server status. |
+
+#### Request example
+
+```java
+ConfigService configService = NacosFactory.createConfigService("{serverAddr}");
+String status = configService.getServerStatus();
+System.out.println(status);
+```
+
+### 3.11. Add config filter
+
+#### Description
+
+Add a config filter for request/response filtering when getting or publishing config. Prefer extending `com.alibaba.nacos.api.config.filter.AbstractConfigFilter`. This API is available since 2.3.0.
+
+```java
+void addConfigFilter(IConfigFilter configFilter);
+```
+
+#### Request parameters
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| configFilter | IConfigFilter | Filter instance; recommend using an AbstractConfigFilter subclass. |
+
+#### Return value
+
+None.
+
+#### Request example
+
+```java
+ConfigService configService = NacosFactory.createConfigService("{serverAddr}");
+configService.addConfigFilter(new AbstractConfigFilter() {
+    @Override
+    public void init(Properties properties) {}
+    @Override
+    public void doFilter(IConfigRequest request, IConfigResponse response, IConfigFilterChain chain) throws NacosException {
+        // filter logic
+        chain.doFilter(request, response);
+    }
+    @Override
+    public int getOrder() { return 0; }
+    @Override
+    public String getFilterName() { return "myFilter"; }
+});
+```
+
 
 ## 4. 服务发现API
 
@@ -1211,7 +1325,7 @@ naming.unsubscribe("nacos.test.service", "DEFAULT_GROUP", selector, serviceListe
 
 #### 描述
 
-通过分页的方式获取当前客户端所在命名空间的服务列表
+Get the list of services in the current client namespace with pagination.
 
 ```java
 ListView<String> getServicesOfServer(int pageNo, int pageSize) throws NacosException;
@@ -1219,7 +1333,7 @@ ListView<String> getServicesOfServer(int pageNo, int pageSize) throws NacosExcep
 ListView<String> getServicesOfServer(int pageNo, int pageSize, String groupName) throws NacosException;
 ```
 
-> 注意，使用`AbstractSelector`的`getServicesOfServer`方法已废弃，请勿继续使用。
+> **Note**: The `getServicesOfServer` overloads that take `AbstractSelector` are **deprecated** and should not be used; they are not listed in this document. They will be marked with `@Deprecated` in the API in a future release. Use only the two-parameter or three-parameter overloads above.
 
 #### 请求参数
 
@@ -1424,6 +1538,34 @@ public void onServiceReachUpLimit() {
 		} catch (NacosException e) {
 		e.printStackTrace();
 		}
+```
+
+### 4.15. Get server status
+
+#### Description
+
+Get the current naming server status.
+
+```java
+String getServerStatus();
+```
+
+#### Request parameters
+
+None.
+
+#### Return value
+
+| Type | Description |
+| :--- | :--- |
+| String | Server status. |
+
+#### Request example
+
+```java
+NamingService naming = NacosFactory.createNamingService("{serverAddr}");
+String status = naming.getServerStatus();
+System.out.println(status);
 ```
 
 ## 5. 分布式锁API
@@ -2140,7 +2282,329 @@ try {
 }
 ```
 
-## 8. Java SDK的生命周期
+## 8. Skill 能力
+
+### 8.1. Load Skill
+
+#### 描述
+
+Load the complete Skill object by skill name, including main configuration and all resource configurations.
+
+```java
+Skill loadSkill(String skillName) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称       | 类型     | 描述                    | 默认值  |
+|:---------|:-------|-----------------------|------|
+| skillName | String | Skill name (unique identifier) | 无，必填 |
+
+#### 返回参数
+
+| 参数类型 | 描述        |
+| :--- | :--- |
+| Skill | Complete Skill object with all resources |
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    Skill skill = aiService.loadSkill("{skillName}");
+    System.out.println(JacksonUtils.toJson(skill));
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+Throws NacosException when skill not found or query error.
+
+### 8.2. Subscribe Skill
+
+#### 描述
+
+Subscribe to a skill; the listener is invoked when the skill configuration changes.
+
+```java
+Skill subscribeSkill(String skillName, AbstractNacosSkillListener skillListener) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称           | 类型                         | 描述                | 默认值  |
+|:-------------|:---------------------------|-------------------|------|
+| skillName    | String                     | Skill name           | 无，必填 |
+| skillListener | AbstractNacosSkillListener | Callback listener for skill changes     | 无，必填 |
+
+#### 返回参数
+
+| 参数类型 | 描述              |
+| :--- | :--- |
+| Skill | Current Skill at subscribe time, or null if not found |
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    Skill skill = aiService.subscribeSkill("{skillName}", new AbstractNacosSkillListener() {
+        @Override
+        public void onEvent(NacosSkillEvent event) {
+            System.out.println("skill changed: " + event.getSkillName());
+        }
+    });
+    System.out.println(JacksonUtils.toJson(skill));
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+Throws NacosException when parameters are invalid or on handle error.
+
+### 8.3. Unsubscribe Skill
+
+#### 描述
+
+Unsubscribe from a skill. The listener must be the same instance used when subscribing, otherwise unsubscribe may fail.
+
+```java
+void unsubscribeSkill(String skillName, AbstractNacosSkillListener skillListener) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称           | 类型                         | 描述            | 默认值  |
+|:-------------|:---------------------------|---------------|------|
+| skillName    | String                     | Skill name       | 无，必填 |
+| skillListener | AbstractNacosSkillListener | Listener used when subscribing   | 无，必填 |
+
+#### 返回参数
+
+无
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+AbstractNacosSkillListener listener = new AbstractNacosSkillListener() {};
+try {
+    aiService.subscribeSkill("{skillName}", listener);
+    aiService.unsubscribeSkill("{skillName}", listener);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+## 9. Prompt 能力
+
+### 9.1. Get Prompt
+
+#### 描述
+
+Get the Prompt object for the current version by prompt key.
+
+```java
+Prompt getPrompt(String promptKey) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称        | 类型     | 描述              | 默认值  |
+|:----------|:-------|-----------------|------|
+| promptKey | String | Prompt key (unique identifier) | 无，必填 |
+
+#### 返回参数
+
+| 参数类型 | 描述          |
+| :--- | :--- |
+| Prompt | Prompt object for current version |
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    Prompt prompt = aiService.getPrompt("{promptKey}");
+    System.out.println(JacksonUtils.toJson(prompt));
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+Throws NacosException when prompt not found or query error.
+
+### 9.2. Get Prompt by Version
+
+#### 描述
+
+Get the Prompt object by prompt key and version. Returns latest version when version is null.
+
+```java
+Prompt getPromptByVersion(String promptKey, String version) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称        | 类型     | 描述                    | 默认值  |
+|:----------|:-------|-----------------------|------|
+| promptKey | String | Prompt key (unique identifier)     | 无，必填 |
+| version   | String | Target version; null for latest     | 无      |
+
+#### 返回参数
+
+| 参数类型 | 描述            |
+| :--- | :--- |
+| Prompt | Prompt object for the specified version |
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    Prompt prompt = aiService.getPromptByVersion("{promptKey}", "1.0.0");
+    System.out.println(JacksonUtils.toJson(prompt));
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+### 9.3. Get Prompt by Label
+
+#### 描述
+
+Get the Prompt object by prompt key and label.
+
+```java
+Prompt getPromptByLabel(String promptKey, String label) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称        | 类型     | 描述                | 默认值  |
+|:----------|:-------|-------------------|------|
+| promptKey | String | Prompt key (unique identifier) | 无，必填 |
+| label     | String | Target label              | 无，必填 |
+
+#### 返回参数
+
+| 参数类型 | 描述            |
+| :--- | :--- |
+| Prompt | Prompt object for that label |
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    Prompt prompt = aiService.getPromptByLabel("{promptKey}", "{label}");
+    System.out.println(JacksonUtils.toJson(prompt));
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+### 9.4. Subscribe Prompt
+
+#### 描述
+
+Subscribe to prompt changes; the listener is invoked when prompt configuration changes. version and label are optional to narrow the subscription.
+
+```java
+Prompt subscribePrompt(String promptKey, String version, String label, AbstractNacosPromptListener promptListener) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称             | 类型                         | 描述              | 默认值  |
+|:---------------|:---------------------------|-----------------|------|
+| promptKey      | String                     | Prompt key      | 无，必填 |
+| version        | String                     | Target version, optional        | 无      |
+| label          | String                     | Target label, optional        | 无      |
+| promptListener | AbstractNacosPromptListener | Callback listener for prompt changes | 无，必填 |
+
+#### 返回参数
+
+| 参数类型 | 描述                    |
+| :--- | :--- |
+| Prompt | Current Prompt on subscribe success, or null if not found |
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    Prompt prompt = aiService.subscribePrompt("{promptKey}", null, null, new AbstractNacosPromptListener() {
+        @Override
+        public void onEvent(NacosPromptEvent event) {
+            System.out.println("prompt changed: " + event.getPromptKey());
+        }
+    });
+    System.out.println(JacksonUtils.toJson(prompt));
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+### 9.5. Unsubscribe Prompt
+
+#### 描述
+
+Unsubscribe from prompt changes. version, label, and listener must match those used when subscribing.
+
+```java
+void unsubscribePrompt(String promptKey, String version, String label, AbstractNacosPromptListener promptListener) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称             | 类型                         | 描述          | 默认值  |
+|:---------------|:---------------------------|-------------|------|
+| promptKey      | String                     | Prompt key | 无，必填 |
+| version        | String                     | Target version, optional    | 无      |
+| label          | String                     | Target label, optional    | 无      |
+| promptListener | AbstractNacosPromptListener | Listener used when subscribing | 无，必填 |
+
+#### 返回参数
+
+无
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+AbstractNacosPromptListener listener = new AbstractNacosPromptListener() {};
+try {
+    aiService.subscribePrompt("{promptKey}", null, null, listener);
+    aiService.unsubscribePrompt("{promptKey}", null, null, listener);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+## 10. Java SDK的生命周期
 
 Nacos的Java SDK 生命周期从创建时开始，到调用`shutdown()`方法时结束，期间对应创建的线程池、连接等均会始终保留，即使连接断开，也会不断重试重新建立连接。
 
