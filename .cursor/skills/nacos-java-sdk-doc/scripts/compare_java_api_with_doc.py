@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Compare Nacos Java Client API (ConfigService, NamingService, AiService, A2aService)
+Compare Nacos Java Client API (ConfigService, NamingService, LockService, AiService, A2aService)
 with usage.md and output: new APIs, new overloads to add, and removed overloads to delete/annotate.
 **Does NOT modify any file.** Use report to update docs per reference.md.
 
@@ -21,10 +21,11 @@ import sys
 from pathlib import Path
 
 # Interface -> doc chapter mapping (reference.md)
-# 已有模块保持原序；新增能力（Skill、Prompt）在 A2A 后追加：6 MCP, 7 A2A, 8 Skill, 9 Prompt, 10 生命周期
+# 已有模块保持原序：3 配置, 4 服务发现, 5 分布式锁, 6 MCP, 7 A2A, 8 Skill, 9 Prompt, 10 生命周期
 INTERFACE_CHAPTER = {
     "ConfigService": 3,   # 配置管理 API
     "NamingService": 4,   # 服务发现API
+    "LockService": 5,     # 分布式锁API
     "AiService": 6,       # MCP 服务（Skill 第 8 章、Prompt 第 9 章，shutdown 在生命周期章不单独列）
     "A2aService": 7,      # A2A 注册中心
 }
@@ -33,6 +34,7 @@ INTERFACE_CHAPTER = {
 CHAPTER_TO_SOURCE = {
     "3": "ConfigService",
     "4": "NamingService",
+    "5": "LockService",
     "6": "AiService",
     "7": "A2aService",
     "8": "AiService",
@@ -100,7 +102,7 @@ def parse_usage_md(content: str) -> dict:
 
 
 def load_java_api(nacos_api_dir: str) -> list:
-    """Load parsed methods from ConfigService, NamingService, AiService, A2aService."""
+    """Load parsed methods from ConfigService, NamingService, LockService, AiService, A2aService."""
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     from parse_java_interface import parse_java_interface  # noqa: E402
 
@@ -114,6 +116,7 @@ def load_java_api(nacos_api_dir: str) -> list:
     interfaces = [
         ("ConfigService", api_root / "config/ConfigService.java"),
         ("NamingService", api_root / "naming/NamingService.java"),
+        ("LockService", api_root / "lock/LockService.java"),
         ("AiService", api_root / "ai/AiService.java"),
         ("A2aService", api_root / "ai/A2aService.java"),
     ]

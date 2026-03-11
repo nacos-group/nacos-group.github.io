@@ -119,7 +119,7 @@
 
 ## 9. 与 Java 接口的同步（本 skill 扩展）
 
-- 新增/变更内容应来自 Nacos Java Client 接口：`ConfigService`、`NamingService`、`AiService`、`A2aService`（见 SKILL.md 中的「Java Client API 定义来源」）。AiService 的 Skill、Prompt 为新增能力，排在 A2A 后，分别对应第 8、9 章；`shutdown` 在生命周期章说明，不单独成 API 小节。
+- 新增/变更内容应来自 Nacos Java Client 接口：`ConfigService`、`NamingService`、`LockService`、`AiService`、`A2aService`（见 SKILL.md 中的「Java Client API 定义来源」）。LockService 对应第 5 章分布式锁 API；AiService 的 Skill、Prompt 为新增能力，排在 A2A 后，分别对应第 8、9 章；`shutdown` 在生命周期章说明，不单独成 API 小节。
 - 使用脚本 `scripts/compare_java_api_with_doc.py` 对比接口与 usage.md，可得到**新增 API**（需整条补全）、**新增重载**（在已有小节中补充签名/参数/示例）与**已删除重载**（在已有小节中删除或标注该重载）。**Nacos 项目路径由使用者提供**（`--nacos-api-dir`），skill 中不写死路径。
 - 补全或修改时仍按本文档第 3、4、5、6 节的格式执行，并保持中英文结构一致。
 - 修改过程中若有**不明确**之处（含义歧义、与接口不一致原因不明等），**暂不修改**，将该条列入修改报告的「待确认内容」，待确认后再改。修改完成后须生成修改报告；报告**不写入文档**，在对话中输出或由执行者自行保存，格式与类型说明见 SKILL.md。
