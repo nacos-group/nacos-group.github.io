@@ -177,6 +177,11 @@ def main() -> None:
         doc_q = parse_doc_table(params_block) if params_block and "|" in params_block and "无" not in params_block[:10] else []
         doc_b = parse_doc_table(body_block) if body_block and "|" in body_block else []
 
+        # 文档仅有一个请求参数表且 api 无 query 仅有 body 时，将该表视为 body（与现有文档风格一致，不要求写「无 Query 参数」）
+        if not doc_b and not q_api and b_api and params_block and "|" in params_block and "无" not in params_block[:10]:
+            doc_q = []
+            doc_b = parse_doc_table(params_block)
+
         issues = []
         issues.extend(compare_params(q_api, doc_q, "query"))
         issues.extend(compare_params(b_api, doc_b, "body"))

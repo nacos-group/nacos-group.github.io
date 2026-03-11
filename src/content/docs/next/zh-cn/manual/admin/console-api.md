@@ -1407,7 +1407,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/list?dataId=&groupName=&
 | `dataId`      | `String`  | 否  | 配置ID，当`search`为`blur`时，可使用`*`进行模糊搜索，例如`test*`，当值为``或缺失时，查询全部符合`groupName`条件的配置。 |
 | `groupName`   | `String`  | 否  | 配置分组，当`search`为`blur`时，可使用`*`进行模糊搜索，例如`test*`，当值为``或缺失时，查询全部符合`dataId`条件的配置。    |
 | `appName`     | `String`  | 否  | 配置所属应用名称，默认为空，传入时过滤归属于此应用的配置，值为空时查询所有应用的配置。                                     |
-| `configTags`   | `String`  | 否  | 配置标签，多个标签之间用英文逗号分隔，默认为空，传入时过滤拥有此tag的配置，值为空时查询所有tag的配置。                          |
+| `configTags`  | `String`  | 否  | 配置标签，多个标签之间用英文逗号分隔，默认为空，传入时过滤拥有此tag的配置，值为空时查询所有tag的配置。                          |
 | `type`         | `String`  | 否  | 配置的类型，默认值为空，传入时过滤此类型的配置，值为空时查询所有类型的配置。                                          |
 | `configDetail` | `String`  | 是  | 配置内容检索条件，用于按配置内容过滤，支持模糊匹配（如 `*11*`）。                                         |
 
@@ -2604,8 +2604,8 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/list?pageNo=1&pageSize=
 
 | 参数名           | 类型        | 必填 | 参数描述                                |
 |---------------|-----------|----|-------------------------------------|
-| `pageNo`       | `Integer` | 是  | 页码，起始为`1`。                          |
-| `pageSize`     | `Integer` | 是  | 每页显示条数。                             |
+| `pageNo`      | `Integer` | 是  | 页码，起始为`1`。                          |
+| `pageSize`    | `Integer` | 是  | 每页显示条数。                             |
 | `serviceName`  | `String`  | 是  | 服务名。                                |
 | `groupName`    | `String`  | 否  | 服务所属的groupName，默认值为`DEFAULT_GROUP`。 |
 | `namespaceId`  | `String`  | 否  | 服务所属的命名空间ID，默认值为`public`。           |
@@ -2836,10 +2836,10 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service/cluster" -d "serviceNam
 
 | 参数名           | 类型        | 必填 | 参数描述                                |
 |---------------|-----------|----|-------------------------------------|
-| `pageNo`       | `int`     | 是  | 页码，起始为1。                            |
-| `pageSize`     | `int`     | 是  | 每页记录数。                              |
-| `serviceName`  | `String`  | 是  | 服务名。                                |
-| `groupName`    | `String`  | 否  | 服务所属的groupName，默认值为`DEFAULT_GROUP`。 |
+| `pageNo`      | `int`     | 是  | 页码，起始为1。                            |
+| `pageSize`    | `int`     | 是  | 每页记录数。                              |
+| `serviceName` | `String`  | 是  | 服务名。                                |
+| `groupName`   | `String`  | 否  | 服务所属的groupName，默认值为`DEFAULT_GROUP`。 |
 | `namespaceId`  | `String`  | 否  | 服务所属的命名空间ID，默认值为`public`。           |
 | `clusterName`  | `String`  | 否  | 集群名，不传则查询所有集群的实例。                      |
 
@@ -3083,8 +3083,6 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=
 
 `PUT`
 
-请求体类型：`application/json` 或 form，参数见下方请求参数。
-
 #### 鉴权状态
 
 需要具有对应`命名空间写入`权限的用户身份。
@@ -3095,13 +3093,13 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=
 
 #### 请求参数
 
-| 参数名                     | 参数类型         | 是否必填  | 描述                             |
-|-------------------------|--------------|-------|--------------------------------|
-| `namespaceId`           | `string`     | 否     | MCP服务的命名空间ID，默认为`public`       |
-| `latest`                | `string`     | 否     | 是否按最新版本更新，如 `true`。              |
-| `serverSpecification`   | `jsonString` | **是** | MCP服务的描述详情                     |
-| `toolSpecification`     | `jsonString` | 否     | MCP服务的工具描述详情                   |
-| `endpointSpecification` | `jsonString` | 否     | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效 |
+| 参数名                     | 参数类型         | 是否必填  | 描述                                                      |
+|-------------------------|--------------|-------|---------------------------------------------------------|
+| `namespaceId`           | `string`     | 否     | MCP服务的命名空间ID，默认为`public`                                |
+| `latest`                | `string`     | 否     | 是否按最新版本更新，如 `true`。                                      |
+| `serverSpecification`   | `jsonString` | **是** | MCP服务的描述详情                                              |
+| `toolSpecification`     | `jsonString` | 否     | MCP服务的工具描述详情                                            |
+| `endpointSpecification` | `jsonString` | 否     | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效                          |
 | `overrideExisting `    | `boolean`     | 否     | MCP服务更新时是否覆盖原endpointSpecification，默认不覆盖，仅在非`stdio`协议时生效 |
 
 其中`serverSpecification`、`toolSpecification`、`endpointSpecification`参数的详细内容如下：
@@ -3211,8 +3209,6 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 
 `POST`
 
-请求体类型：`application/json` 或 form，参数见下方请求参数。
-
 #### 鉴权状态
 
 需要具有对应`命名空间写入`权限的用户身份。
@@ -3303,8 +3299,8 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 
 返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
 
-| 参数名    | 参数类型     | 描述          |
-|--------|----------|-------------|
+| 参数名    | 参数类型     | 描述         |
+|--------|----------|------------|
 | `data` | `String` | 新建MCP服务的id。 |
 
 #### 示例
@@ -3350,8 +3346,8 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 | 参数名           | 参数类型     | 是否必填  | 描述                                       |
 |---------------|----------|-------|------------------------------------------|
 | `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`public`                 |
-| `mcpId`       | `string` | 二选一必填 | MCP服务的ID，一般为UUID。与`mcpName`二者必须填其一（因 OpenAPI 规范限制，无法在文档中表达“二选一必填”，实际调用时需至少传其中一个）。建议传入`mcpId`。 |
-| `mcpName`     | `string` | 二选一必填 | MCP服务的名字模版。与`mcpId`二者必须填其一，建议传入`mcpId`。    |
+| `mcpId`       | `string` | One of two required | MCP service ID (usually UUID). One of `mcpId` and `mcpName` must be provided (OpenAPI cannot express this constraint; at least one is required in practice). Prefer `mcpId`. |
+| `mcpName`     | `string` | One of two required | MCP service name template. One of `mcpId` and `mcpName` must be provided; prefer `mcpId`.    |
 | `version`     | `string` | 否     | MCP服务的版本，未传入是为最新版本                       |
 
 
@@ -5071,8 +5067,13 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/list?pageNo=1&pageSize=1
 
 | 参数名         | 类型     | 必填 | 参数描述                                                                 |
 |-------------|--------|----|----------------------------------------------------------------------|
-| `file`      | `file`  | 否  | 上传的 ZIP 文件（multipart/form-data），ZIP 内需包含符合规范的 Skill 定义文件。           |
-| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。                                            |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`（Query 参数）。                                            |
+
+#### 请求参数
+
+| 参数名         | 类型     | 必填 | 参数描述                                                                 |
+|-------------|--------|----|----------------------------------------------------------------------|
+| `file`      | `file`  | 否  | 上传的 ZIP 文件，ZIP 内需包含符合规范的 Skill 定义文件。           |
 
 #### 返回数据
 

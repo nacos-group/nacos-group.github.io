@@ -31,7 +31,8 @@
 - **请求参数表**：表头为 `| 参数名 | 类型 | 必填 | 参数描述 |`，类型与必填与 api.json 一致（必填可用 **是**）。
 - **返回数据表**：表头为 `| 参数名 | 参数类型 | 描述 |`（或 `| 参数名 | 参数类型 | 描述 |`），描述来自 schema/description。
 - **示例**：* 请求示例 / * 返回示例，请求示例使用 shell + curl；**POST/PUT 请求尽量使用 `-d` 包装请求参数**（如 `-d "key=value"` 或 `-d '{"key":"value"}'`），返回示例使用 json 代码块。
-- **非 form 的请求体**：大部分 API 使用 form 表单（`application/x-www-form-urlencoded`）。若 API 使用 **application/json** 或 **multipart/form-data**（如文件上传），需在「请求方式」中通过引用或说明标注请求体类型，并在请求示例中用 `-H 'Content-Type: application/json'` 或 `-F` 明确指定；脚本 `swagger_to_md.py` 会根据 `requestBody.content` 自动识别并生成对应说明与 curl 示例。
+- **非 form 的请求体**：大部分 API 使用 form 表单（`application/x-www-form-urlencoded`）。若 API 使用 **application/json** 或 **multipart/form-data**（如文件上传），**仅在「请求方式」**中标注请求体类型（如「请求体类型：`application/json`」），并在请求示例中用 `-H 'Content-Type: application/json'` 或 `-F` 明确指定；**不要在「请求参数」下重复写「请求体为 xxx」**。脚本 `swagger_to_md.py` 已在请求方式下输出该说明，与现有文档一致。
+- **请求参数结构**：若接口仅有 body 参数（无 query），请求参数下**只保留一个参数表**即可，**不要**添加「无（Query 参数）」或额外「请求参数」小节；请求体类型已在请求方式中说明。对比脚本 `compare_doc_with_swagger.py` 会按「单表且 api 无 query 仅有 body 时将该表视为 body」规则识别。
 - 脚本生成内容应与 api.json 的 parameters/requestBody/response schema 一致，避免文档多出或漏掉参数。
 
 ## 脚本用法

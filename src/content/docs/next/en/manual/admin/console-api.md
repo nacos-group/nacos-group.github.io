@@ -3083,8 +3083,6 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=
 
 `PUT`
 
-请求体类型：`application/json` 或 form，参数见下方请求参数。
-
 #### 鉴权状态
 
 需要具有对应`命名空间写入`权限的用户身份。
@@ -3210,8 +3208,6 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 #### 请求方式
 
 `POST`
-
-请求体类型：`application/json` 或 form，参数见下方请求参数。
 
 #### 鉴权状态
 
