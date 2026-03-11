@@ -16,7 +16,7 @@ Nacos CLI is a command-line tool for Nacos configuration center, supporting conf
 2. Nacos Server 2.x or 3.x
 
 ### 1.2. Ensure Nacos Server is Running
-Before using Nacos CLI, please ensure your Nacos server is running properly. If you haven't installed Nacos yet, please refer to [Nacos Quick Start](../../../quickstart/quick-start.mdx) for installation and startup.
+Before using Nacos CLI, please ensure your Nacos server is running properly. If you haven't installed Nacos yet, please refer to [Nacos Quick Start](../../quickstart/quick-start.mdx) for installation and startup.
 
 ## 2. Install Nacos CLI
 ### 2.1. Install via Official Script (Recommended)
@@ -458,4 +458,4 @@ The CLI automatically detects the server version and selects the appropriate API
 + [Nacos GitHub](https://github.com/alibaba/nacos)
 + [Nacos CLI GitHub](https://github.com/nacos-group/nacos-cli)
 + [Nacos Official Website](https://nacos.io/)
-+ [Nacos Quick Start](../../../quickstart/quick-start.mdx)
++ [Nacos Quick Start](../../quickstart/quick-start.mdx)
