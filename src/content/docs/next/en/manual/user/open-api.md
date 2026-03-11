@@ -158,8 +158,6 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 
 `POST`
 
-`Content-Type:application/x-www-form-urlencoded`
-
 #### 请求URL
 
 `/nacos/v3/client/ns/instance`
@@ -171,7 +169,7 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 | `User-Agent`     | `String` | 否    | 用户代理，默认为空，通常为`Nacos-${program-language}-Client:v${version}  |
 | `Client-Version` | `String` | 否    | 客户端版本，默认为空，通常为`Nacos-${program-language}-Client:v${version} |
 
-#### 请求Body
+#### 请求参数
 
 | 参数名           | 参数类型           | 是否必填  | 描述说明                   |
 |---------------|----------------|-------|------------------------|
@@ -179,14 +177,13 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 | `groupName`   | `String`       | 否     | 分组名，默认为`DEFAULT_GROUP` |
 | `serviceName` | `String`       | **是** | 服务名                    |
 | `ip`          | `String`       | **是** | `IP`地址                 |
-| `port`        | `int`          | **是** | 端口号                    |
+| `port`        | `string`       | **是** | 端口号                    |
 | `clusterName` | `String`       | 否     | 集群名称，默认为`DEFAULT`      |
-| `healthy`     | `boolean`      | 否     | 是否只查找健康实例，默认为`true`    |
-| `weight`      | `double`       | 否     | 实例权重，默认为`1.0`          |
-| `enabled`     | `boolean`      | 否     | 是否可用，默认为`true`         |
-| `metadata`    | `JSON格式String` | 否     | 实例元数据                  |
-| `ephemeral`   | `boolean`      | 否     | 是否为临时实例                |
-| `heartBeat`   | `boolean`      | 否     | 是否为续约请求，默认为`false`     |
+| `healthy`     | `string`       | 否     | 是否只查找健康实例，默认为`true`    |
+| `weight`      | `string`       | 否     | 实例权重，默认为`1.0`          |
+| `enabled`     | `string`       | 否     | 是否可用，默认为`true`         |
+| `metadata`    | `string`       | 否     | 实例元数据                  |
+| `heartBeat`   | `string`       | 否     | 是否为续约请求，默认为`false`     |
 
 #### 返回数据
 
@@ -201,10 +198,10 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 * 请求示例
 
 ```shell
-# 注册实例
+# Register instance
 curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&ip=127.0.0.1&port=3306"
 
-# 续约实例
+# Renew instance
 curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&ip=127.0.0.1&port=3306&heartBeat=true"
 ```
 
@@ -228,8 +225,6 @@ curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&
 
 `DELETE`
 
-`Content-Type:application/x-www-form-urlencoded`
-
 #### 请求URL
 
 `/nacos/v3/client/ns/instance`
@@ -241,17 +236,16 @@ curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&
 | `User-Agent`     | `String` | 否    | 用户代理，默认为空，通常为`Nacos-${program-language}-Client:v${version}  |
 | `Client-Version` | `String` | 否    | 客户端版本，默认为空，通常为`Nacos-${program-language}-Client:v${version} |
 
-#### 请求Body
+#### 请求参数
 
-| 参数名           | 参数类型      | 是否必填  | 描述说明                   |
+| 参数名           | 参数类型      | 必填    | 参数描述                   |
 |---------------|-----------|-------|------------------------|
 | `namespaceId` | `String`  | 否     | 命名空间`Id`，默认为`public`   |
 | `groupName`   | `String`  | 否     | 分组名，默认为`DEFAULT_GROUP` |
 | `serviceName` | `String`  | **是** | 服务名                    |
 | `ip`          | `String`  | **是** | `IP`地址                 |
-| `port`        | `int`     | **是** | 端口号                    |
+| `port`        | `string`  | **是** | 端口号                    |
 | `clusterName` | `String`  | 否     | 集群名称，默认为`DEFAULT`      |
-| `ephemeral`   | `boolean` | 否     | 是否为临时实例                |
 
 #### 返回数据
 
@@ -312,7 +306,6 @@ curl -X DELETE "127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=test1&ip=
 | `groupName`   | `String`  | 否     | 分组名，默认为`DEFAULT_GROUP`  |
 | `serviceName` | `String`  | **是** | 服务名                     |
 | `clusterName` | `String`  | 否     | 集群名称，默认为`DEFAULT`       |
-| `healthyOnly` | `boolean` | 否     | 是否只获取健康实例，默认为`false`    |
 
 #### 返回数据
 
@@ -365,5 +358,65 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=test1'
       "instanceHeartBeatTimeOut": 15000
     }
   ]
+}
+```
+
+## 3. AI 相关
+
+### 3.1. 查询 Prompt
+
+#### 接口描述
+
+Query Prompt by label, version or latest (priority: label > version > latest); supports md5 for 304 conditional response.
+
+#### 请求方式
+
+`GET`
+
+#### 请求URL
+
+`/nacos/v3/client/ai/prompt`
+
+#### 请求参数
+
+| 参数名           | 类型       | 必填    | 参数描述                     |
+|---------------|----------|-------|--------------------------|
+| `namespaceId` | `String` | 否     | 命名空间，默认为`public`           |
+| `promptKey`   | `String` | **是** | Prompt key                  |
+| `version`     | `String` | 否     | Version (one of version, label, latest)     |
+| `label`       | `String` | 否     | Label (one of version, label, latest)    |
+| `md5`         | `String` | 否     | If matches server, response is 304            |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名                | 参数类型      | 描述           |
+|--------------------|-----------|--------------|
+| `promptKey`        | `String`  | Prompt key    |
+| `version`          | `String`  | Version       |
+| `template`         | `String`  | Prompt template content   |
+| `md5`              | `String`  | Content md5 for 304       |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/prompt?promptKey=myPrompt'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "promptKey": "myPrompt",
+    "version": "1.0",
+    "template": "You are a helpful assistant.",
+    "md5": "..."
+  }
 }
 ```

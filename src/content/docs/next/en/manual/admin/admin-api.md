@@ -155,7 +155,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/current'
 
 #### 请求方式
 
-`GET`
+`POST`
 
 #### 鉴权状态
 
@@ -181,7 +181,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/current'
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/reloadCurrent?count=100'
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/reloadCurrent' -d "count=100"
 ```
 
 * 返回示例
@@ -198,7 +198,7 @@ success
 
 #### 请求方式
 
-`GET`
+`POST`
 
 #### 鉴权状态
 
@@ -224,7 +224,7 @@ success
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/reloadClient?connectionId=1709273546779_127.0.0.1_35042'
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/reloadClient' -d "connectionId=1709273546779_127.0.0.1_35042"
 ```
 
 * 返回示例
@@ -468,10 +468,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/self'
 
 #### 请求参数
 
-| 参数名       | 类型       | 必填 | 参数描述                                              |
-|-----------|----------|----|---------------------------------------------------|
-| `address` | `String` | 否  | 过滤的节点地址，支持前缀匹配，不输入时返回所有节点信息                       |
-| `state`   | `String` | 否  | 返回的节点状态，可选值为`UP`、`DOWN`、`SUSPICIOUS`，不输入时返回所有节点信息 |
+无
 
 #### 返回数据
 
@@ -627,7 +624,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/list'
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/lookup?type=file'
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/lookup' -d "type=file"
 ```
 
 * 返回示例
@@ -650,6 +647,8 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/lookup?type=file'
 
 `POST`
 
+请求体类型：`application/json`，参数放在请求体中。
+
 #### 鉴权状态
 
 需管理员权限
@@ -659,8 +658,6 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/lookup?type=file'
 `/nacos/v3/admin/core/ops/raft`
 
 #### 请求参数
-
-该API需要以Json的方式，将请求参数放在请求体中，请求体格式如下：
 
 | 参数名       | 类型       | 必填    | 参数描述                                 |
 |-----------|----------|-------|--------------------------------------|
@@ -713,6 +710,8 @@ curl -X POST -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/
 
 `PUT`
 
+请求体类型：`application/json`，参数放在请求体中。
+
 #### 鉴权状态
 
 需管理员权限
@@ -722,8 +721,6 @@ curl -X POST -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/
 `/nacos/v3/admin/core/ops/log`
 
 #### 请求参数
-
-该API需要以Json的方式，将请求参数放在请求体中，请求体格式如下：
 
 | 参数名        | 类型       | 必填    | 参数描述                                                         |
 |------------|----------|-------|--------------------------------------------------------------|
@@ -777,7 +774,7 @@ curl -X PUT -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/a
 
 #### 请求方式
 
-`GET`
+`POST`
 
 #### 鉴权状态
 
@@ -789,9 +786,9 @@ curl -X PUT -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/a
 
 #### 请求参数
 
-| 参数名            | 类型       | 必填 | 参数描述         |
-|----------------|----------|----|--------------|
-| `loaderFactor` | `String` | 否  | 负载因子，必须是一个数字 |
+| 参数名                | 类型       | 必填    | 参数描述           |
+|--------------------|----------|-------|----------------|
+| `loaderFactorStr`  | `String` | **是** | 负载因子，必须是一个数字。 |
 
 #### 返回数据
 
@@ -820,7 +817,7 @@ curl -X PUT -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/a
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/smartReloadCluster?loaderFactor=1.2'
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/smartReloadCluster' -d "loaderFactorStr=0.1"
 ```
 
 * 返回示例
@@ -902,6 +899,739 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/ops/ids'
 
 ```text
 success
+```
+
+### 1.12. 更新集群节点信息
+
+#### 接口描述
+
+通过该接口，可以更新当前节点中的Nacos节点列表的详细信息。**注意：** 该接口会覆盖当前节点中列表中的详细信息，仅更新传入的节点中存在于集群中的节点，并`不能`通过此接口添加和减少集群中的节点。同时，Nacos自身的健康探测`report`任务也会对当前节点中列表中的节点进行健康探测及更新详细信息，若调用此接口后，探测任务发现节点信息有变更，则任务也会覆盖当前节点中列表中的节点信息。
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/core/cluster/node/list`
+
+#### 请求参数
+
+请求体为 JSON 数组，数组元素为节点信息（Member），包含 ip、port、state、extendInfo 等字段。
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| Body   | `Array` | **是** | 节点信息列表，每个元素为 Member 对象（含 ip、port、state、address、extendInfo 等） |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data | `boolean` | 是否更新成功 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/list' \
+  -H 'Content-Type: application/json' \
+  -d '[{"ip":"127.0.0.1","port":8848,"state":"UP","address":"127.0.0.1:8848"}]'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": true
+}
+```
+
+### 1.13. 获取命名空间详情
+
+#### 接口描述
+
+通过该接口，可以获取指定命名空间的详情。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/core/namespace`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `String` | **是** | 命名空间 ID |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| namespace | `String` | 命名空间 ID |
+| namespaceShowName | `String` | 命名空间展示名 |
+| namespaceDesc | `String` | 命名空间描述 |
+| quota | `Integer` | 配置数量配额 |
+| configCount | `Integer` | 当前配置数量 |
+| type | `Integer` | 类型 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace?namespaceId=public'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "namespace": "public",
+    "namespaceShowName": "public",
+    "namespaceDesc": "Default Namespace",
+    "quota": 200,
+    "configCount": 0,
+    "type": 0
+  }
+}
+```
+
+### 1.14. 更新命名空间
+
+#### 接口描述
+
+通过该接口，可以更新命名空间的信息，无法更新命名空间ID，仅能更新命名空间的名称和描述。
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/core/namespace`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `String` | **是** | 命名空间 ID |
+| `namespaceName` | `String` | **是** | 命名空间展示名 |
+| `namespaceDesc` | `String` | 否 | 命名空间描述 |
+
+#### 返回数据
+
+成功则返回统一返回体，`data` 为 `true` 表示成功；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace' \
+  -d 'namespaceId=test' -d 'namespaceName=test' -d 'namespaceDesc=test'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": true
+}
+```
+
+### 1.15. 创建新命名空间
+
+#### 接口描述
+
+通过该接口，可以创建新的命名空间。
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/core/namespace`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `String` | 否 | 命名空间 ID，不传则由服务端生成 |
+| `namespaceName` | `String` | **是** | 命名空间展示名 |
+| `namespaceDesc` | `String` | 否 | 命名空间描述 |
+
+#### 返回数据
+
+成功则返回统一返回体，`data` 为 `true` 表示成功；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace' \
+  -d 'namespaceName=test' -d 'namespaceDesc=test'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": true
+}
+```
+
+### 1.16. 删除命名空间
+
+#### 接口描述
+
+通过该接口，可以删除命名空间。默认命名空间`public`无法被删除。
+
+#### 请求方式
+
+`DELETE`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/core/namespace`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `String` | **是** | 命名空间 ID |
+
+#### 返回数据
+
+成功则返回统一返回体，`data` 为 `true` 表示成功；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace?namespaceId=test'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": true
+}
+```
+
+### 1.17. 检查命名空间是否存在
+
+#### 接口描述
+
+通过该接口，可以检查命名空间ID是否存在。应该在创建命名空间前调用，确认自定义的命名空间ID是否已经存在，以防冲突。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/core/namespace/check`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `customNamespaceId` | `String` | **是** | 待检查的命名空间 ID |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，`data` 为 `true` 表示已存在，`false` 表示不存在。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace/check?customNamespaceId=public'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": false
+}
+```
+
+### 1.18. 获取Nacos命名空间列表
+
+#### 接口描述
+
+通过该接口，可以获取当前Nacos集群的命名空间列表。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/core/namespace/list`
+
+#### 请求参数
+
+无
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。`data` 为命名空间对象数组，每项包含 namespace、namespaceShowName、namespaceDesc、quota、configCount、type 等字段。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace/list'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": [
+    {
+      "namespace": "public",
+      "namespaceShowName": "public",
+      "namespaceDesc": "Default Namespace",
+      "quota": 200,
+      "configCount": 0,
+      "type": 0
+    }
+  ]
+}
+```
+
+### 1.19. 获取Nacos集群状态信息
+
+#### 接口描述
+
+通过该接口，可以获取到Nacos 集群的基础状态和开关信息，例如：版本号，运行模式，鉴权是否开启等；该接口不会返回Nacos 集群的节点信息。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+公开接口，无需身份信息。
+
+#### 请求URL
+
+`/nacos/v3/admin/core/state`
+
+#### 请求参数
+
+无
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，`data` 为键值对，包含版本号（version）、运行模式（startup_mode）、鉴权开关（auth_enabled）等集群状态与配置项。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state'
+```
+
+* 返回示例
+
+```json
+{
+  "defaultMaxSize": "102400",
+  "auth_system_type": "nacos",
+  "auth_enabled": "false",
+  "version": "3.0.0-SNAPSHOT",
+  "startup_mode": "standalone",
+  "server_port": "8848"
+}
+```
+
+### 1.20. 获取Nacos集群的存活状态
+
+#### 接口描述
+
+通过该接口，可以获取Nacos集群的存活状态，Nacos集群是否可正常接受和响应请求。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+公开接口，无需身份信息。
+
+#### 请求URL
+
+`/nacos/v3/admin/core/state/liveness`
+
+#### 请求参数
+
+无
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data | `String` | 存活状态，如 "ok" |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state/liveness'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": "ok"
+}
+```
+
+### 1.21. 获取Nacos集群的可读状态
+
+#### 接口描述
+
+通过该接口，可以获取Nacos集群的是否处于可读取状态，即Nacos集群是否可以读取到数据。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+公开接口，无需身份信息。
+
+#### 请求URL
+
+`/nacos/v3/admin/core/state/readiness`
+
+#### 请求参数
+
+无
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data | `String` | 可读状态，如 "ok" |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state/readiness'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": "ok"
+}
+```
+
+### 1.22. 更新插件配置
+
+#### 接口描述
+
+通过该接口，可以更新插件的配置。需要提供插件类型、名称及配置内容。支持 localOnly 仅作用于当前节点。
+
+#### 请求方式
+
+`PUT`
+
+请求体类型：`application/json`。
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/core/plugin/config`
+
+#### 请求参数
+
+请求体为 JSON，包含以下字段：
+
+| 参数名         | 类型       | 必填 | 参数描述           |
+|-------------|----------|----|----------------|
+| `pluginType` | `String` | **是** | 插件类型，如 auth。   |
+| `pluginName` | `String` | **是** | 插件名称。          |
+| `config`     | `Object` | 否  | 插件配置项。         |
+| `localOnly`  | `Boolean`| 否  | 是否仅写本地，不持久化。 |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，`data` 为字符串表示操作结果。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/config' \
+  -H 'Content-Type: application/json' -d '{}'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": "Plugin configuration updated successfully"
+}
+```
+
+### 1.23. 获取插件详情
+
+#### 接口描述
+
+通过该接口，可以按类型和名称获取指定插件的详情信息。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/core/plugin/detail`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `pluginType` | `String` | **是** | 插件类型，如 auth |
+| `pluginName` | `String` | **是** | 插件名称 |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| pluginId | `String` | 插件 ID |
+| pluginType | `String` | 插件类型 |
+| pluginName | `String` | 插件名称 |
+| enabled | `boolean` | 是否启用 |
+| critical | `boolean` | 是否关键插件 |
+| configurable | `boolean` | 是否可配置 |
+| config | `Object` | 配置内容 |
+| configDefinitions | `Array` | 配置定义列表 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/detail?pluginType=auth&pluginName=nacos-default-auth-plugin'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "pluginId": "auth:nacos-default-auth-plugin",
+    "pluginType": "auth",
+    "pluginName": "nacos-default-auth-plugin",
+    "enabled": true,
+    "critical": true,
+    "configurable": true,
+    "config": {},
+    "configDefinitions": []
+  }
+}
+```
+
+### 1.24. 获取插件列表
+
+#### 接口描述
+
+通过该接口，可以获取所有插件列表，可按插件类型筛选。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/core/plugin/list`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `pluginType` | `String` | 否 | 插件类型，不传则返回全部 |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，`data` 为插件对象数组。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/list?pluginType=auth'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": [
+    {
+      "pluginId": "auth:nacos-default-auth-plugin",
+      "pluginType": "auth",
+      "pluginName": "nacos-default-auth-plugin",
+      "enabled": true,
+      "critical": true,
+      "configurable": true,
+      "exclusive": true
+    }
+  ]
+}
+```
+
+### 1.25. 启用或禁用插件
+
+#### 接口描述
+
+通过该接口，可以更新插件的启用状态（启用或禁用）。支持 localOnly 仅作用于当前节点。
+
+#### 请求方式
+
+`PUT`
+
+请求体类型：`application/json`。
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/core/plugin/status`
+
+#### 请求参数
+
+请求体为 JSON，包含以下字段：
+
+| 参数名         | 类型        | 必填 | 参数描述       |
+|-------------|-----------|----|------------|
+| `pluginType` | `String`  | **是** | 插件类型。     |
+| `pluginName` | `String`  | **是** | 插件名称。     |
+| `enabled`    | `Boolean` | **是** | 是否启用。     |
+| `localOnly`  | `Boolean` | 否  | 是否仅写本地。   |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，`data` 为字符串表示操作结果。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/status' \
+  -H 'Content-Type: application/json' -d '{}'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": "Plugin status updated successfully"
+}
 ```
 
 ## 2. Nacos Naming 运维 API
@@ -1048,7 +1778,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/switches'
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/switches?entry=pushEnabled&value=false'
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/switches' -d "entry=pushEnabled&value=false"
 ```
 
 * 返回示例
@@ -1141,6 +1871,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/metrics?onlyStatus=fals
 
 `PUT`
 
+请求体类型：`application/json`。
+
 #### 鉴权状态
 
 需管理员权限
@@ -1151,10 +1883,16 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/metrics?onlyStatus=fals
 
 #### 请求参数
 
-| 参数名        | 类型       | 必填    | 参数描述      |
-|------------|----------|-------|-----------|
-| `logName`  | `String` | **是** | 需要修改的日志名称 |
-| `logLevel` | `String` | **是** | 日志级别的新值   |
+| 参数名   | 类型       | 必填 | 参数描述        |
+|-------|----------|---|-------------|
+| `value` | `String` | 否  | 日志级别新值（可选）。 |
+
+请求体字段：
+
+| 参数名       | 类型       | 必填    | 参数描述      |
+|-----------|----------|-------|-----------|
+| `logName`  | `String` | **是** | 需要修改的日志名称。 |
+| `logLevel` | `String` | **是** | 日志级别的新值。   |
 
 #### 返回数据
 
@@ -1167,7 +1905,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/metrics?onlyStatus=fals
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/log?logName=com.example.Logger&logLevel=DEBUG'
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/log' -H 'Content-Type: application/json' -d '{"logName":"com.example.Logger","logLevel":"DEBUG"}'
 ```
 
 * 返回示例
@@ -1250,7 +1988,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/list'
 
 | 参数名        | 参数类型     | 是否必填  | 描述    |
 |------------|----------|-------|-------|
-| `clientId` | `String` | **是** | 客户端ID |
+| `clientId` | `String` | 否 | 客户端ID |
 
 #### 返回数据
 
@@ -1338,7 +2076,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client?clientId=17417489524
 
 | 参数名        | 参数类型     | 是否必填  | 描述    |
 |------------|----------|-------|-------|
-| `clientId` | `String` | **是** | 客户端ID |
+| `clientId` | `String` | 否 | 客户端ID |
 
 #### 返回数据
 
@@ -3354,6 +4092,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/beta?namespaceId=pub
 
 `POST`
 
+请求体类型：`multipart/form-data`。
+
 #### 鉴权状态
 
 需对应命名空间的`写`权限
@@ -3364,12 +4104,12 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/beta?namespaceId=pub
 
 #### 请求参数
 
-| 参数名           | 参数类型               | 是否必填  | 默认值      | 描述     |
-|---------------|--------------------|-------|----------|--------|
-| `namespaceId` | `String`           | 否     | `public` | 命名空间   |
-| `src_user`    | `String`           | 否     | 无        | 操作用户   |
-| `policy`      | `SameConfigPolicy` | 否     | `ABORT`  | 冲突处理策略 |
-| `file`        | `MultipartFile`    | **是** | 无        | 配置文件   |
+| 参数名           | 参数类型               | 是否必填 | 默认值      | 描述     |
+|---------------|--------------------|------|----------|--------|
+| `namespaceId` | `String`           | 否    | `public` | 命名空间   |
+| `src_user`    | `String`           | 否    | 无        | 操作用户   |
+| `policy`      | `SameConfigPolicy` | 否    | `ABORT`  | 冲突处理策略 |
+| `file`        | `MultipartFile`    | 否    | 无        | 配置文件   |
 
 #### 返回数据
 
@@ -3462,12 +4202,15 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/export?namespaceId=p
 
 #### 请求参数
 
-| 参数名               | 参数类型                                 | 是否必填  | 默认值      | 描述       |
-|-------------------|--------------------------------------|-------|----------|----------|
-| `namespaceId`     | `String`                             | **是** | `public` | 命名空间ID   |
-| `src_user`        | `String`                             | 否     | 无        | 操作用户     |
-| `configBeansList` | `List<SameNamespaceCloneConfigBean>` | **是** | 无        | 配置克隆参数列表 |
-| `policy`          | `SameConfigPolicy`                   | 否     | `ABORT`  | 冲突处理策略   |
+| 参数名       | 参数类型               | 是否必填 | 默认值     | 描述       |
+|-----------|--------------------|------|---------|----------|
+| `namespaceId` | `String`           | 否    | `public` | 目标命名空间ID。 |
+| `srcUser`     | `String`           | 否    | 无       | 操作用户。     |
+| `policy`      | `SameConfigPolicy` | **是** | `ABORT` | 冲突处理策略。   |
+
+#### 请求参数
+
+请求体类型为 `application/json`，为配置列表数组，每项为 `SameNamespaceCloneConfigBean`（`cfgId`、`dataId`、`group`）。
 
 #### 返回数据
 
@@ -3483,7 +4226,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/export?namespaceId=p
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/clone?namespaceId=test&policy=ABORT' \
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/clone' -d "namespaceId=test&policy=ABORT" \
 -H 'Content-Type: application/json' \
 -d "[{\"cfgId\":\"838029534438625280\",\"dataId\":\"111\",\"group\":\"DEFAULT_GROUP\"},{\"cfgId\":\"838033747294031872\",\"dataId\":\"qtc-user.yaml\",\"group\":\"DEFAULT_GROUP\"}]"
 ```
@@ -3526,8 +4269,8 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/clone?namespaceId=t
 | `namespaceId` | `String` | 否     | `public`        | 命名空间  |
 | `groupName`   | `String` | **是** | 无               | 配置分组名 |
 | `dataId`      | `String` | **是** | 无               | 配置名   |
-| `pageNo`      | `int`    | 否     | `1`             | 当前页   |
-| `pageSize`    | `int`    | 否     | `100`（最大为`500`） | 页条目数  |
+| `pageNo`      | `int`    | **是** | `1`             | 当前页   |
+| `pageSize`    | `int`    | **是** | `100`（最大为`500`） | 页条目数  |
 
 #### 返回数据
 
@@ -3556,7 +4299,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/clone?namespaceId=t
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/list?dataId=nacos.example&groupName=DEFAULT_GROUP&namespaceId=public'
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/list?dataId=nacos.example&groupName=DEFAULT_GROUP&namespaceId=public&pageNo=1&pageSize=100'
 ```
 
 * 返回示例
@@ -3795,7 +4538,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/previous?id=101&dat
 
 | 参数名         | 类型       | 必填    | 默认值 | 参数描述 |
 |-------------|----------|-------|-----|------|
-| namespaceId | `String` | **是** | 无   | 命名空间 |
+| namespaceId | `String` | 否     | 无   | 命名空间 |
 
 #### 返回数据
 
@@ -4054,7 +4797,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/localCache'
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/log?logName=config-server&logLevel=DEBUG'
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/log' -d "logName=config-server&logLevel=DEBUG"
 ```
 
 * 返回示例
@@ -4159,6 +4902,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/derby?sql=SELECT%20*%20
 
 `POST`
 
+请求体类型：`multipart/form-data`。
+
 #### 鉴权状态
 
 需管理员权限
@@ -4169,9 +4914,9 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/derby?sql=SELECT%20*%20
 
 #### 请求参数
 
-| 参数名    | 参数类型            | 是否必填  | 默认值 | 描述           |
-|--------|-----------------|-------|-----|--------------|
-| `file` | `MultipartFile` | **是** | 无   | 导入文件（SQL 文件） |
+| 参数名    | 参数类型            | 是否必填 | 默认值 | 描述           |
+|--------|-----------------|------|-----|--------------|
+| `file` | `MultipartFile` | 否    | 无   | 导入文件（SQL 文件）。 |
 
 #### 返回数据
 
@@ -4592,8 +5337,8 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp/list?pageNo=1&pageSize=100&nam
 | 参数名           | 参数类型     | 是否必填  | 描述                                       |
 |---------------|----------|-------|------------------------------------------|
 | `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`public`                 |
-| `mcpId`       | `string` | **是** | MCP服务的ID，一般为UUID，与`mcpName`二选一输入，建议传入此值。 |
-| `mcpName`     | `string` | **是** | MCP服务的名字模版，与`mcpId`二选一输入，建议传入`mcpId`。    |
+| `mcpId`       | `string` | 否     | MCP服务的ID，一般为UUID，与`mcpName`二选一输入，建议传入此值。 |
+| `mcpName`     | `string` | 否     | MCP服务的名字模版，与`mcpId`二选一输入，建议传入`mcpId`。    |
 | `version`     | `string` | 否     | MCP服务的版本，未传入是返回最新版本                      |
 
 #### 返回数据
@@ -4944,8 +5689,8 @@ curl -X POST '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 | 参数名           | 参数类型     | 是否必填  | 描述                                       |
 |---------------|----------|-------|------------------------------------------|
 | `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`public`                 |
-| `mcpId`       | `string` | **是** | MCP服务的ID，一般为UUID，与`mcpName`二选一输入，建议传入此值。 |
-| `mcpName`     | `string` | **是** | MCP服务的名字模版，与`mcpId`二选一输入，建议传入`mcpId`。    |
+| `mcpId`       | `string` | 否     | MCP服务的ID，一般为UUID，与`mcpName`二选一输入，建议传入此值。 |
+| `mcpName`     | `string` | 否     | MCP服务的名字模版，与`mcpId`二选一输入，建议传入`mcpId`。    |
 | `version`     | `string` | 否     | MCP服务的版本，未传入是为最新版本                       |
 
 #### 返回数据
@@ -5439,6 +6184,790 @@ curl -X DELETE '127.0.0.1:8848/nacos/v3/admin/ai/a2a?namespaceId=public&agentNam
   "code" : 0,
   "message" : "success",
   "data" : "ok"
+}
+```
+
+## 6. AI Prompt 管理
+
+### 6.1. 发布 Prompt
+
+#### 接口描述
+
+通过该接口，可以发布新版本的 Prompt。
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `String` | 否 | 命名空间，默认 public |
+| `promptKey` | `String` | **是** | Prompt 键 |
+| `version` | `String` | **是** | 版本号 |
+| `template` | `String` | **是** | 模板内容 |
+| `commitMsg` | `String` | 否 | 提交说明 |
+| `description` | `String` | 否 | 描述 |
+| `bizTags` | `String` | 否 | 业务标签 |
+
+#### 返回数据
+
+成功则返回统一返回体，`data` 为 `true` 表示成功；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt' \
+  -d 'namespaceId=public' -d 'promptKey=my-prompt' -d 'version=1.0.0' -d 'template=hello'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": true
+}
+```
+
+### 6.2. 删除 Prompt
+
+#### 接口描述
+
+通过该接口，可以删除指定 Prompt。
+
+#### 请求方式
+
+`DELETE`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `String` | 否 | 命名空间 |
+| `promptKey` | `String` | **是** | Prompt 键 |
+
+#### 返回数据
+
+成功则返回统一返回体，`data` 为 `true` 表示成功；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt?namespaceId=public&promptKey=my-prompt'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": true
+}
+```
+
+### 6.3. 查询 Prompt 详情
+
+#### 接口描述
+
+通过该接口，可按版本或标签查询 Prompt 详情。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/detail`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `String` | 否 | 命名空间 |
+| `promptKey` | `String` | **是** | Prompt 键 |
+| `version` | `String` | 否 | 版本号 |
+| `label` | `String` | 否 | 标签 |
+| `md5` | `String` | 否 | 内容 MD5 |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，`data` 含 promptKey、version、template、commitMsg、md5 等字段。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/detail?namespaceId=public&promptKey=my-prompt&version=1.0.0'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "version": "1.0.0",
+    "template": "",
+    "commitMsg": ""
+  }
+}
+```
+
+### 6.4. 绑定标签
+
+#### 接口描述
+
+通过该接口，可将标签绑定到指定 Prompt 版本。
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/label`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `String` | 否 | 命名空间 |
+| `promptKey` | `String` | **是** | Prompt 键 |
+| `label` | `String` | **是** | 标签名 |
+| `version` | `String` | **是** | 版本号 |
+
+#### 返回数据
+
+成功则返回统一返回体，`data` 为 `true` 表示成功；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/label' \
+  -d 'namespaceId=public' -d 'promptKey=my-prompt' -d 'label=stable' -d 'version=1.0.0'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": true
+}
+```
+
+### 6.5. 解绑标签
+
+#### 接口描述
+
+通过该接口，可解绑 Prompt 的标签。
+
+#### 请求方式
+
+`DELETE`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/label`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `String` | 否 | 命名空间 |
+| `promptKey` | `String` | **是** | Prompt 键 |
+| `label` | `String` | **是** | 标签名 |
+
+#### 返回数据
+
+成功则返回统一返回体，`data` 为 `true` 表示成功；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/label?namespaceId=public&promptKey=my-prompt&label=stable'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": true
+}
+```
+
+### 6.6. 查询 Prompt 列表
+
+#### 接口描述
+
+通过该接口，可以分页查询 Prompt 列表。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/list`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `pageNo` | `Integer` | **是** | 页码 |
+| `pageSize` | `Integer` | **是** | 每页条数 |
+| `namespaceId` | `String` | 否 | 命名空间 |
+| `promptKey` | `String` | 否 | Prompt 键过滤 |
+| `search` | `String` | 否 | 搜索模式：blur 或 accurate |
+| `bizTags` | `String` | 否 | 业务标签 |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，`data` 为分页结构，包含 totalCount、pageNumber、pagesAvailable、pageItems 等字段。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/list?pageNo=1&pageSize=10&namespaceId=public&search=blur'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "totalCount": 1,
+    "pageNumber": 1,
+    "pagesAvailable": 1,
+    "pageItems": [
+      {
+        "promptKey": "my-prompt",
+        "description": ""
+      }
+    ]
+  }
+}
+```
+
+### 6.7. 查询 Prompt 元数据
+
+#### 接口描述
+
+通过该接口，可以查询指定 Prompt 的元数据信息。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/metadata`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `String` | 否 | 命名空间 |
+| `promptKey` | `String` | **是** | Prompt 键 |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，`data` 包含 promptKey、description、bizTags、latestVersion、versions、labels 等字段。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/metadata?namespaceId=public&promptKey=my-prompt'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "promptKey": "my-prompt",
+    "description": "",
+    "bizTags": ""
+  }
+}
+```
+
+### 6.8. 更新 Prompt 元数据
+
+#### 接口描述
+
+通过该接口，可更新 Prompt 的元数据（如描述、业务标签）。
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/metadata`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `String` | 否 | 命名空间 |
+| `promptKey` | `String` | **是** | Prompt 键 |
+| `description` | `String` | 否 | 描述 |
+| `bizTags` | `String` | 否 | 业务标签 |
+
+#### 返回数据
+
+成功则返回统一返回体，`data` 为 `true` 表示成功；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/metadata' \
+  -d 'namespaceId=public' -d 'promptKey=my-prompt' -d 'description=desc'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": true
+}
+```
+
+### 6.9. 查询 Prompt 版本列表
+
+#### 接口描述
+
+通过该接口，可以分页查询指定 Prompt 的版本列表。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/versions`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `String` | 否 | 命名空间 |
+| `promptKey` | `String` | **是** | Prompt 键 |
+| `pageNo` | `Integer` | **是** | 页码 |
+| `pageSize` | `Integer` | **是** | 每页条数 |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，`data` 为分页结构，包含 totalCount、pageNumber、pagesAvailable、pageItems（每项含 version、commitMsg、gmtModified 等）。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/versions?namespaceId=public&promptKey=my-prompt&pageNo=1&pageSize=10'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "totalCount": 1,
+    "pageNumber": 1,
+    "pagesAvailable": 1,
+    "pageItems": [
+      {
+        "version": "1.0.0",
+        "commitMsg": ""
+      }
+    ]
+  }
+}
+```
+
+## 7. AI Skills 管理
+
+### 7.1. 获取技能详情
+
+#### 接口描述
+
+通过该接口，按命名空间和技能名称获取指定技能的详情信息。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/skills`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `String` | **是** | 命名空间 |
+| `skillName` | `String` | **是** | 技能名称 |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，`data` 包含 name、description、instruction、resource、version、inputModes、outputModes 等字段。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills?namespaceId=public&skillName=my-skill'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "name": "my-skill",
+    "description": "",
+    "version": "1.0.0",
+    "inputModes": [],
+    "outputModes": []
+  }
+}
+```
+
+### 7.2. 更新技能
+
+#### 接口描述
+
+通过该接口，更新 Nacos 中已有的 AI 技能。
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/skills`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `String` | 否 | 命名空间 |
+| `skillCard` | `String` | **是** | 技能卡片 JSON 字符串，包含完整技能信息 |
+
+#### 返回数据
+
+成功则返回统一返回体，`data` 为字符串表示操作结果（如 "ok"）；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills' \
+  -d 'namespaceId=public' -d 'skillCard={}'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": "ok"
+}
+```
+
+### 7.3. 注册技能
+
+#### 接口描述
+
+通过该接口，使用技能详情表单在 Nacos 中注册新的 AI 技能。
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/skills`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `String` | 否 | 命名空间 |
+| `skillCard` | `String` | **是** | 技能卡片 JSON 字符串，包含完整技能信息 |
+
+#### 返回数据
+
+成功则返回统一返回体，`data` 为注册后的技能名称；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills' \
+  -d 'namespaceId=public' -d 'skillCard={}'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": "my-skill"
+}
+```
+
+### 7.4. 删除技能
+
+#### 接口描述
+
+通过该接口，按命名空间和技能名称从 Nacos 删除技能。
+
+#### 请求方式
+
+`DELETE`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/skills`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `String` | **是** | 命名空间 |
+| `skillName` | `String` | **是** | 技能名称 |
+
+#### 返回数据
+
+成功则返回统一返回体，`data` 为字符串表示操作结果（如 "ok"）；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills?namespaceId=public&skillName=my-skill'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": "ok"
+}
+```
+
+### 7.5. 查询技能列表
+
+#### 接口描述
+
+通过该接口，可按条件筛选和分页查询技能列表。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/skills/list`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `pageNo` | `Integer` | **是** | 页码 |
+| `pageSize` | `Integer` | **是** | 每页条数 |
+| `namespaceId` | `String` | 否 | 命名空间 |
+| `skillName` | `String` | 否 | 技能名称过滤 |
+| `search` | `String` | 否 | 搜索模式：accurate 或 blur |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，`data` 为分页结构，包含 totalCount、pageNumber、pagesAvailable、pageItems（每项含 name、description、updateTime 等）。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/list?pageNo=1&pageSize=100&namespaceId=public&search=blur'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "totalCount": 1,
+    "pageNumber": 1,
+    "pagesAvailable": 1,
+    "pageItems": [
+      {
+        "name": "my-skill",
+        "description": "",
+        "version": "1.0.0"
+      }
+    ]
+  }
+}
+```
+
+### 7.6. 从 ZIP 文件上传技能
+
+#### 接口描述
+
+通过该接口，以 multipart/form-data 方式上传 ZIP 包并注册技能。文件须为合法的技能包。
+
+#### 请求方式
+
+`POST`
+
+请求体类型：`multipart/form-data`。
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/skills/upload`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `file` | `File` | 否 | 技能包 ZIP 文件（multipart/form-data）。 |
+| `namespaceId` | `String` | 否 | 命名空间。 |
+
+#### 返回数据
+
+成功则返回统一返回体，`data` 为上传后的技能名称；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/upload' \
+  -F "file=@skill.zip" -F "namespaceId=public"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": "uploaded-skill-name"
 }
 ```
 
