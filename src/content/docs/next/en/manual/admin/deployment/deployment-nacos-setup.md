@@ -6,7 +6,7 @@ sidebar:
   order: 5
 ---
 
-# Nacos Setup Quick Start
+# One-Click Deployment with nacos-setup
 
 This Quick Start Guide helps you quickly deploy Nacos Server on your machine using nacos-setup.
 
@@ -352,7 +352,7 @@ tail -f ~/ai-infra/nacos/cluster/CLUSTER_ID/*/logs/start.out
 ## Related Links
 
 - [Nacos Official Website](https://nacos.io)
-- [Nacos Quick Start](https://nacos.io/docs/latest/quickstart/quick-start/)
-- [Nacos Deployment Guide](https://nacos.io/docs/latest/manual/admin/deployment/deployment-overview/)
+- [Nacos Quick Start](../../../quickstart/quick-start.mdx)
+- [Nacos Deployment Guide](./deployment-overview.md)
 - [Nacos GitHub](https://github.com/alibaba/nacos)
 - [Nacos Setup GitHub](https://github.com/nacos-group/nacos-setup)

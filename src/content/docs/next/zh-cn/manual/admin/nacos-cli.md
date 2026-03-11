@@ -16,7 +16,7 @@ Nacos CLI 是一个面向 Nacos 配置中心的命令行工具，支持配置管
 2. Nacos Server 2.x 或 3.x
 
 ### 1.2. 确保 Nacos Server 已启动
-在使用 Nacos CLI 之前，请确保您的 Nacos 服务器已经正常运行。如果还没有安装 Nacos，请参考 [Nacos 快速开始](https://nacos.io/docs/latest/quickstart/quick-start/) 进行安装和启动。
+在使用 Nacos CLI 之前，请确保您的 Nacos 服务器已经正常运行。如果还没有安装 Nacos，请参考 [Nacos 快速开始](../../../quickstart/quick-start.mdx) 进行安装和启动。
 
 ## 2. 安装 Nacos CLI
 ### 2.1. 通过官方安装脚本安装（推荐）
@@ -458,4 +458,4 @@ CLI 会自动检测服务器版本并选择合适的 API 版本，无需用户�
 + [Nacos GitHub](https://github.com/alibaba/nacos)
 + [Nacos CLI GitHub](https://github.com/nacos-group/nacos-cli)
 + [Nacos 官网](https://nacos.io/)
-+ [Nacos 快速开始](https://nacos.io/docs/latest/quickstart/quick-start/)
++ [Nacos 快速开始](../../../quickstart/quick-start.mdx)

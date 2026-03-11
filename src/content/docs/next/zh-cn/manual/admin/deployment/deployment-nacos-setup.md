@@ -6,7 +6,7 @@ sidebar:
   order: 5
 ---
 
-# Nacos Setup 快速开始
+# 使用nacos-setup一键部署
 
 这个快速开始手册是帮忙您快速在您的电脑上，使用 nacos-setup 一键部署 Nacos 服务端。
 
@@ -352,7 +352,7 @@ tail -f ~/ai-infra/nacos/cluster/CLUSTER_ID/*/logs/start.out
 ## 相关链接
 
 - [Nacos 官网](https://nacos.io)
-- [Nacos 快速开始](https://nacos.io/docs/latest/quickstart/quick-start/)
-- [Nacos 部署手册](https://nacos.io/docs/latest/manual/admin/deployment/deployment-overview/)
+- [Nacos 快速开始](../../../quickstart/quick-start.mdx)
+- [Nacos 部署手册](./deployment-overview.mdx)
 - [Nacos GitHub](https://github.com/alibaba/nacos)
 - [Nacos Setup GitHub](https://github.com/nacos-group/nacos-setup)
