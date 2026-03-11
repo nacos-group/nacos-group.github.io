@@ -34,6 +34,7 @@
 |------------------|----------|------|
 | `com.alibaba.nacos.api.config.ConfigService` | 第 3 章 配置管理 API | 配置中心 |
 | `com.alibaba.nacos.api.naming.NamingService` | 第 4 章 服务发现API | 注册中心 |
+| `com.alibaba.nacos.api.lock.LockService` | 第 5 章 分布式锁API | lock、unLock 等 |
 | `com.alibaba.nacos.api.ai.AiService`（MCP 相关方法） | 第 6 章 MCP 服务 | 查询/发布/注册/订阅 MCP 等 |
 | `com.alibaba.nacos.api.ai.A2aService` | 第 7 章 A2A 注册中心 | AgentCard 等，AiService 继承此接口 |
 | `com.alibaba.nacos.api.ai.AiService`（Skill 相关方法） | 第 8 章 Skill 能力 | loadSkill、subscribeSkill、unsubscribeSkill（新增能力，排在 A2A 后） |
@@ -69,7 +70,7 @@ python .cursor/skills/nacos-java-sdk-doc/scripts/compare_java_api_with_doc.py \
 
 ### 2. 按 reference.md 补全与修改
 
-1. 根据对比结果，对 **NEW APIs** 在对应大章下新增小节（如 3.x、4.x、6.x、7.x、8.x、9.x），按 reference.md 的「单条 API 的固定结构」书写：描述、方法签名、请求参数、返回值/返回参数、请求示例、异常说明（可选）。AiService 的 `shutdown` 不单独成节，已在第 10 章「Java SDK 的生命周期」中说明。
+1. 根据对比结果，对 **NEW APIs** 在对应大章下新增小节（如 3.x、4.x、5.x、6.x、7.x、8.x、9.x），按 reference.md 的「单条 API 的固定结构」书写：描述、方法签名、请求参数、返回值/返回参数、请求示例、异常说明（可选）。AiService 的 `shutdown` 不单独成节，已在第 10 章「Java SDK 的生命周期」中说明。
 2. 对 **NEW OVERLOADS**，在已有 API 小节中**补充**该重载的签名、参数表与示例，不新增小节编号。
 3. 对 **REMOVED OVERLOADS**，在已有 API 小节中**删除**该重载的签名、参数与示例；若需保留历史说明可改为标注「已废弃」等，以与当前接口一致。
 4. 若某旧 API 的**签名或行为**有变更（除新增/删除重载外），在对比报告中可能不会逐条标出，需结合接口 Javadoc 与实现人工核对并修改描述/参数/示例。
