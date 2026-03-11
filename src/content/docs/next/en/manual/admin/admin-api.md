@@ -647,6 +647,8 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/lookup' -d "type=
 
 `POST`
 
+请求体类型：`application/json`，参数放在请求体中。
+
 #### 鉴权状态
 
 需管理员权限
@@ -656,8 +658,6 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/lookup' -d "type=
 `/nacos/v3/admin/core/ops/raft`
 
 #### 请求参数
-
-该API需要以Json的方式，将请求参数放在请求体中，请求体格式如下：
 
 | 参数名       | 类型       | 必填    | 参数描述                                 |
 |-----------|----------|-------|--------------------------------------|
@@ -710,6 +710,8 @@ curl -X POST -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/
 
 `PUT`
 
+请求体类型：`application/json`，参数放在请求体中。
+
 #### 鉴权状态
 
 需管理员权限
@@ -719,8 +721,6 @@ curl -X POST -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/
 `/nacos/v3/admin/core/ops/log`
 
 #### 请求参数
-
-该API需要以Json的方式，将请求参数放在请求体中，请求体格式如下：
 
 | 参数名        | 类型       | 必填    | 参数描述                                                         |
 |------------|----------|-------|--------------------------------------------------------------|
@@ -1413,6 +1413,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state/readiness'
 
 `PUT`
 
+请求体类型：`application/json`。
+
 #### 鉴权状态
 
 需管理员权限
@@ -1423,7 +1425,14 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state/readiness'
 
 #### 请求参数
 
-请求体为 JSON，包含插件类型、名称及配置内容等字段，具体以 Swagger 或实际请求体为准。
+请求体为 JSON，包含以下字段：
+
+| 参数名         | 类型       | 必填 | 参数描述           |
+|-------------|----------|----|----------------|
+| `pluginType` | `String` | **是** | 插件类型，如 auth。   |
+| `pluginName` | `String` | **是** | 插件名称。          |
+| `config`     | `Object` | 否  | 插件配置项。         |
+| `localOnly`  | `Boolean`| 否  | 是否仅写本地，不持久化。 |
 
 #### 返回数据
 
@@ -1581,6 +1590,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/list?pluginType=au
 
 `PUT`
 
+请求体类型：`application/json`。
+
 #### 鉴权状态
 
 需管理员权限
@@ -1591,7 +1602,14 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/list?pluginType=au
 
 #### 请求参数
 
-请求体为 JSON，包含插件类型、名称及启用状态等字段，具体以 Swagger 或实际请求体为准。
+请求体为 JSON，包含以下字段：
+
+| 参数名         | 类型        | 必填 | 参数描述       |
+|-------------|-----------|----|------------|
+| `pluginType` | `String`  | **是** | 插件类型。     |
+| `pluginName` | `String`  | **是** | 插件名称。     |
+| `enabled`    | `Boolean` | **是** | 是否启用。     |
+| `localOnly`  | `Boolean` | 否  | 是否仅写本地。   |
 
 #### 返回数据
 
@@ -1853,6 +1871,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/metrics?onlyStatus=fals
 
 `PUT`
 
+请求体类型：`application/json`。
+
 #### 鉴权状态
 
 需管理员权限
@@ -1863,10 +1883,16 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/metrics?onlyStatus=fals
 
 #### 请求参数
 
-| 参数名        | 类型       | 必填    | 参数描述      |
-|------------|----------|-------|-----------|
-| `logName`  | `String` | **是** | 需要修改的日志名称 |
-| `logLevel` | `String` | **是** | 日志级别的新值   |
+| 参数名   | 类型       | 必填 | 参数描述        |
+|-------|----------|---|-------------|
+| `value` | `String` | 否  | 日志级别新值（可选）。 |
+
+请求体字段：
+
+| 参数名       | 类型       | 必填    | 参数描述      |
+|-----------|----------|-------|-----------|
+| `logName`  | `String` | **是** | 需要修改的日志名称。 |
+| `logLevel` | `String` | **是** | 日志级别的新值。   |
 
 #### 返回数据
 
@@ -1879,7 +1905,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/metrics?onlyStatus=fals
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/log' -d "logName=com.example.Logger&logLevel=DEBUG"
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/log' -H 'Content-Type: application/json' -d '{"logName":"com.example.Logger","logLevel":"DEBUG"}'
 ```
 
 * 返回示例
@@ -1962,7 +1988,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/list'
 
 | 参数名        | 参数类型     | 是否必填  | 描述    |
 |------------|----------|-------|-------|
-| `clientId` | `String` | **是** | 客户端ID |
+| `clientId` | `String` | 否 | 客户端ID |
 
 #### 返回数据
 
@@ -2050,7 +2076,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client?clientId=17417489524
 
 | 参数名        | 参数类型     | 是否必填  | 描述    |
 |------------|----------|-------|-------|
-| `clientId` | `String` | **是** | 客户端ID |
+| `clientId` | `String` | 否 | 客户端ID |
 
 #### 返回数据
 
@@ -4066,6 +4092,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/beta?namespaceId=pub
 
 `POST`
 
+请求体类型：`multipart/form-data`。
+
 #### 鉴权状态
 
 需对应命名空间的`写`权限
@@ -4076,12 +4104,12 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/beta?namespaceId=pub
 
 #### 请求参数
 
-| 参数名           | 参数类型               | 是否必填  | 默认值      | 描述     |
-|---------------|--------------------|-------|----------|--------|
-| `namespaceId` | `String`           | 否     | `public` | 命名空间   |
-| `src_user`    | `String`           | 否     | 无        | 操作用户   |
-| `policy`      | `SameConfigPolicy` | 否     | `ABORT`  | 冲突处理策略 |
-| `file`        | `MultipartFile`    | **是** | 无        | 配置文件   |
+| 参数名           | 参数类型               | 是否必填 | 默认值      | 描述     |
+|---------------|--------------------|------|----------|--------|
+| `namespaceId` | `String`           | 否    | `public` | 命名空间   |
+| `src_user`    | `String`           | 否    | 无        | 操作用户   |
+| `policy`      | `SameConfigPolicy` | 否    | `ABORT`  | 冲突处理策略 |
+| `file`        | `MultipartFile`    | 否    | 无        | 配置文件   |
 
 #### 返回数据
 
@@ -4174,12 +4202,15 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/export?namespaceId=p
 
 #### 请求参数
 
-| 参数名               | 参数类型                                 | 是否必填  | 默认值      | 描述       |
-|-------------------|--------------------------------------|-------|----------|----------|
-| `namespaceId`     | `String`                             | **是** | `public` | 命名空间ID   |
-| `src_user`        | `String`                             | 否     | 无        | 操作用户     |
-| `configBeansList` | `List<SameNamespaceCloneConfigBean>` | **是** | 无        | 配置克隆参数列表 |
-| `policy`          | `SameConfigPolicy`                   | 否     | `ABORT`  | 冲突处理策略   |
+| 参数名       | 参数类型               | 是否必填 | 默认值     | 描述       |
+|-----------|--------------------|------|---------|----------|
+| `namespaceId` | `String`           | 否    | `public` | 目标命名空间ID。 |
+| `srcUser`     | `String`           | 否    | 无       | 操作用户。     |
+| `policy`      | `SameConfigPolicy` | **是** | `ABORT` | 冲突处理策略。   |
+
+#### 请求参数
+
+请求体类型为 `application/json`，为配置列表数组，每项为 `SameNamespaceCloneConfigBean`（`cfgId`、`dataId`、`group`）。
 
 #### 返回数据
 
@@ -4871,6 +4902,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/derby?sql=SELECT%20*%20
 
 `POST`
 
+请求体类型：`multipart/form-data`。
+
 #### 鉴权状态
 
 需管理员权限
@@ -4881,9 +4914,9 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/derby?sql=SELECT%20*%20
 
 #### 请求参数
 
-| 参数名    | 参数类型            | 是否必填  | 默认值 | 描述           |
-|--------|-----------------|-------|-----|--------------|
-| `file` | `MultipartFile` | **是** | 无   | 导入文件（SQL 文件） |
+| 参数名    | 参数类型            | 是否必填 | 默认值 | 描述           |
+|--------|-----------------|------|-----|--------------|
+| `file` | `MultipartFile` | 否    | 无   | 导入文件（SQL 文件）。 |
 
 #### 返回数据
 
@@ -6898,6 +6931,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/list?pageNo=1&pageSi
 
 `POST`
 
+请求体类型：`multipart/form-data`。
+
 #### 鉴权状态
 
 需管理员权限
@@ -6910,8 +6945,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/list?pageNo=1&pageSi
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `file` | `File` | **是** | 技能包 ZIP 文件（multipart/form-data） |
-| `namespaceId` | `String` | 否 | 命名空间 |
+| `file` | `File` | 否 | 技能包 ZIP 文件（multipart/form-data）。 |
+| `namespaceId` | `String` | 否 | 命名空间。 |
 
 #### 返回数据
 

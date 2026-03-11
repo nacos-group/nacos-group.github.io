@@ -1651,6 +1651,8 @@ unzip ~/test.zip
 
 `POST`
 
+请求体类型：`multipart/form-data`。
+
 #### 鉴权状态
 
 需要具有对应`命名空间写入`权限的用户身份。
@@ -1663,7 +1665,7 @@ unzip ~/test.zip
 
 | 参数名           | 类型                 | 必填 | 参数描述                                                                                                               |
 |---------------|--------------------|----|--------------------------------------------------------------------------------------------------------------------|
-| `file`        | `MultipartFile`    | 是  | 导入的zip文件。                                                                                                          |
+| `file`        | `MultipartFile`    | 否  | 导入的zip文件。                                                                                                          |
 | `namespaceId` | `String`           | 否  | 导入的配置所属的命名空间ID，默认值为`public`。                                                                                       |
 | `policy`      | `SameConfigPolicy` | 否  | 导入策略，当导入的配置`dataId`和`groupName`相同，存在冲突时，所进行的导入策略。可选值有`ABORT(终止导入)`,`SKIP(跳过冲突配置)`,`OVERWRITE(覆盖冲突配置)`。默认值为`ABORT`。 |
 | `src_user`    | `String`           | 否  | 导入操作来源用户标识。                                                                                                       |
@@ -1708,6 +1710,8 @@ curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import" -F "file=@/pat
 
 `POST`
 
+请求体类型：`application/json`，为配置列表数组。
+
 #### 鉴权状态
 
 需要具有对应`命名空间写入`权限的用户身份。
@@ -1720,20 +1724,16 @@ curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import" -F "file=@/pat
 
 | 参数名       | 类型                 | 必填 | 参数描述                                                                                                               |
 |-----------|--------------------|----|--------------------------------------------------------------------------------------------------------------------|
-| `policy`  | `SameConfigPolicy`  | **是** | 克隆策略，当导入的配置`dataId`和`groupName`相同，存在冲突时，所进行的克隆策略。可选值有`ABORT(终止克隆)`,`SKIP(跳过冲突配置)`,`OVERWRITE(覆盖冲突配置)`。默认值为`ABORT`. |
+| `policy`  | `SameConfigPolicy`  | **是** | 克隆策略，当导入的配置`dataId`和`groupName`相同，存在冲突时，所进行的克隆策略。可选值有`ABORT(终止克隆)`,`SKIP(跳过冲突配置)`,`OVERWRITE(覆盖冲突配置)`。默认值为`ABORT`。 |
 | `srcUser` | `String`           | 否  | 克隆操作来源用户标识。                                                                                                        |
 
-#### 请求参数
+请求体为配置列表数组，每项为 `SameNamespaceCloneConfigBean`，字段如下：
 
-请求体类型为`application/json`，需包含目标命名空间及待克隆配置列表（如通过 OpenAPI 调用，可同时传 query 参数 `policy`、`srcUser` 与 body）。
-
-| 参数名 / Body 内容     | 类型                                   | 必填 | 参数描述                                                                     |
-|---------------------|--------------------------------------|----|--------------------------------------------------------------------------|
-| `targetNamespaceId` | `String`                             | 是  | 目标命名空间ID。                                                              |
-| 配置列表             | `List<SameNamespaceCloneConfigBean>` | 是  | 需要克隆的配置列表。                                                           |
-| 配置列表[i].`cfgId`  | `String`                             | 是  | 待克隆配置的存储ID。                                                           |
-| 配置列表[i].`dataId` | `String`                             | 是  | 待克隆配置的目标`dataId`，即克隆后，配置在新命名空间中的`dataId`。                           |
-| 配置列表[i].`group`  | `String`                             | 是  | 待克隆配置的目标分组，即克隆后，配置在新命名空间中的`groupName`。                              |
+| 参数名 / Body 数组元素     | 类型     | 必填 | 参数描述                                                                     |
+|---------------------|--------|----|--------------------------------------------------------------------------|
+| `cfgId`             | `String` | 是  | 待克隆配置的存储ID。                                                           |
+| `dataId`            | `String` | 是  | 待克隆配置的目标`dataId`，即克隆后，配置在新命名空间中的`dataId`。                           |
+| `group`             | `String` | 是  | 待克隆配置的目标分组，即克隆后，配置在新命名空间中的`groupName`。                              |
 
 #### 返回数据
 
@@ -3083,6 +3083,8 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=
 
 `PUT`
 
+请求体类型：`application/json` 或 form，参数见下方请求参数。
+
 #### 鉴权状态
 
 需要具有对应`命名空间写入`权限的用户身份。
@@ -3208,6 +3210,8 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 #### 请求方式
 
 `POST`
+
+请求体类型：`application/json` 或 form，参数见下方请求参数。
 
 #### 鉴权状态
 
@@ -5053,6 +5057,8 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/list?pageNo=1&pageSize=1
 
 `POST`
 
+请求体类型：`multipart/form-data`。
+
 #### 鉴权状态
 
 需要具有对应`命名空间写入`权限的用户身份。
@@ -5065,7 +5071,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/list?pageNo=1&pageSize=1
 
 | 参数名         | 类型     | 必填 | 参数描述                                                                 |
 |-------------|--------|----|----------------------------------------------------------------------|
-| `file`      | `file`  | **是** | 上传的 ZIP 文件（multipart/form-data），ZIP 内需包含符合规范的 Skill 定义文件。           |
+| `file`      | `file`  | 否  | 上传的 ZIP 文件（multipart/form-data），ZIP 内需包含符合规范的 Skill 定义文件。           |
 | `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。                                            |
 
 #### 返回数据
@@ -5210,6 +5216,8 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/config'
 
 `POST`
 
+请求体类型：`application/json`。
+
 #### 鉴权状态
 
 需要具有对应`命名空间写入`权限的用户身份。
@@ -5222,8 +5230,8 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/config'
 
 | 参数名       | 类型     | 必填 | 参数描述     |
 |-----------|--------|----|----------|
-| `userInput` | `string` | - | 用户输入内容。 |
-| `prompt`    | `string` | - | 待调试的 Prompt。 |
+| `userInput` | `string` | 否 | 用户输入内容。 |
+| `prompt`    | `string` | 否 | 待调试的 Prompt。 |
 
 #### 返回数据
 
@@ -5253,6 +5261,8 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/debug' -H 'Content
 
 `POST`
 
+请求体类型：`application/json`。
+
 #### 鉴权状态
 
 需要具有对应`命名空间写入`权限的用户身份。
@@ -5265,8 +5275,8 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/debug' -H 'Content
 
 | 参数名              | 类型     | 必填 | 参数描述        |
 |------------------|--------|----|-------------|
-| `optimizationGoal` | `string` | - | 优化目标。       |
-| `prompt`           | `string` | - | 待优化的 Prompt。 |
+| `optimizationGoal` | `string` | 否 | 优化目标。       |
+| `prompt`           | `string` | 否 | 待优化的 Prompt。 |
 
 #### 返回数据
 
@@ -5296,6 +5306,8 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/optimize' -H 'Cont
 
 `POST`
 
+请求体类型：`application/json`。
+
 #### 鉴权状态
 
 需要具有对应`命名空间写入`权限的用户身份。
@@ -5308,9 +5320,9 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/optimize' -H 'Cont
 
 | 参数名                | 类型     | 必填 | 参数描述           |
 |--------------------|--------|----|----------------|
-| `backgroundInfo`     | `string` | - | 背景信息。           |
-| `selectedMcpTools`   | `string` | - | 选中的 MCP 工具。      |
-| `conversationHistory` | `string` | - | 对话历史。           |
+| `backgroundInfo`     | `string` | 否 | 背景信息。           |
+| `selectedMcpTools`   | `string` | 否 | 选中的 MCP 工具。      |
+| `conversationHistory` | `string` | 否 | 对话历史。           |
 
 #### 返回数据
 
@@ -5340,6 +5352,8 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/generate' -H 'Conte
 
 `POST`
 
+请求体类型：`application/json`。
+
 #### 鉴权状态
 
 需要具有对应`命名空间写入`权限的用户身份。
@@ -5352,11 +5366,11 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/generate' -H 'Conte
 
 | 参数名                | 类型     | 必填 | 参数描述           |
 |--------------------|--------|----|----------------|
-| `conversationHistory` | `string` | - | 对话历史。           |
-| `targetFileName`      | `string` | - | 目标文件名。          |
-| `optimizationGoal`    | `string` | - | 优化目标。           |
-| `skill`               | `string` | - | 待优化的 Skill 内容。   |
-| `selectedMcpTools`   | `string` | - | 选中的 MCP 工具。      |
+| `conversationHistory` | `string` | 否 | 对话历史。           |
+| `targetFileName`      | `string` | 否 | 目标文件名。          |
+| `optimizationGoal`    | `string` | 否 | 优化目标。           |
+| `skill`               | `string` | 否 | 待优化的 Skill 内容。   |
+| `selectedMcpTools`   | `string` | 否 | 选中的 MCP 工具。      |
 
 #### 返回数据
 
