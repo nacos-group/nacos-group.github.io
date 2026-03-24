@@ -2927,7 +2927,7 @@ curl -X PUT "http://localhost:8848/nacos/v3/admin/ns/instance/partial" -d 'names
 | `namespaceId` | `String`  | 否        | 命名空间ID，默认`public`       |
 | `groupName`   | `String`  | 否        | 分组名称，默认为`DEFAULT_GROUP` |
 | `serviceName` | `String`  | **是**    | 服务名称                    |
-| `clusterName` | `String`  | 否        | 集群名称，默认为`""`            |
+| `clusterName` | `String`  | 否        | Cluster name. If not provided, instances of all clusters will be returned.      |
 | `ip`          | `String`  | **是**    | 实例IP                    |
 | `port`        | `Integer` | **是**    | 实例端口                    |
 | `healthyOnly` | `Boolean` | 否        | 是否只返回健康实例，默认为`false`    |
