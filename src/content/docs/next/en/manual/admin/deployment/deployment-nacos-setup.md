@@ -186,7 +186,7 @@ nacos-setup -p 18848
 
 Open any browser and enter the address:
 
-- Nacos 3.x: http://127.0.0.1:8080/index.html
+- Nacos 3.x: http://127.0.0.1:8080
 - Nacos 2.x: http://127.0.0.1:8848/nacos/index.html
 
 > Note: The first time you open it, you will be asked to initialize the password for the admin user nacos. The password will be displayed during installation.

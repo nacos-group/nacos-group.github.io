@@ -186,7 +186,7 @@ nacos-setup -p 18848
 
 打开任意浏览器，输入地址：
 
-- Nacos 3.x: http://127.0.0.1:8080/index.html
+- Nacos 3.x: http://127.0.0.1:8080
 - Nacos 2.x: http://127.0.0.1:8848/nacos/index.html
 
 > 注意：首次打开会要求初始化管理员用户 nacos 的密码。密码会在安装时显示。
