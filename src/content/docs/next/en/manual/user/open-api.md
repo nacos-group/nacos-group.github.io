@@ -177,13 +177,13 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 | `groupName`   | `string` | 否     | 分组名，默认为`DEFAULT_GROUP` |
 | `serviceName` | `string` | **是** | 服务名                    |
 | `ip`          | `string` | **是** | `IP`地址                 |
-| `port`        | `string` | **是** | 端口号                    |
+| `port`        | `integer` | **是** | 端口号                    |
 | `clusterName` | `string` | 否     | 集群名称，默认为`DEFAULT`      |
-| `healthy`     | `string` | 否     | 是否只查找健康实例，默认为`true`    |
-| `weight`      | `string` | 否     | 实例权重，默认为`1.0`          |
-| `enabled`     | `string` | 否     | 是否可用，默认为`true`         |
+| `healthy`     | `boolean` | 否     | 是否只查找健康实例，默认为`true`    |
+| `weight`      | `number` | 否     | 实例权重，默认为`1.0`          |
+| `enabled`     | `boolean` | 否     | 是否可用，默认为`true`         |
 | `metadata`    | `string` | 否     | 实例元数据                  |
-| `heartBeat`   | `string` | 否     | 是否为续约请求，默认为`false`     |
+| `heartBeat`   | `boolean` | 否     | 是否为续约请求，默认为`false`     |
 
 #### 返回数据
 
@@ -244,7 +244,7 @@ curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&
 | `groupName`   | `string` | 否     | 分组名，默认为`DEFAULT_GROUP` |
 | `serviceName` | `string` | **是** | 服务名                    |
 | `ip`          | `string` | **是** | `IP`地址                 |
-| `port`        | `string` | **是** | 端口号                    |
+| `port`        | `integer` | **是** | 端口号                    |
 | `clusterName` | `string` | 否     | 集群名称，默认为`DEFAULT`      |
 
 #### 返回数据
@@ -418,5 +418,149 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/prompt?promptKey=myPrompt'
     "template": "You are a helpful assistant.",
     "md5": "..."
   }
+}
+```
+
+### 3.2. Get AgentSpec
+
+#### 接口描述
+
+This interface allows getting an AgentSpec detail by namespace, name, version, or label.
+
+#### 请求方式
+
+`GET`
+
+#### 请求URL
+
+`/nacos/v3/client/ai/agentspecs`
+
+#### 请求参数
+
+| 参数名           | 类型       | 必填    | 参数描述                              |
+|---------------|----------|-------|-----------------------------------|
+| `namespaceId` | `string` | 否     | Namespace ID, default is `public` |
+| `name`        | `string` | **是** | AgentSpec name                    |
+| `version`     | `string` | 否     | AgentSpec version                 |
+| `label`       | `string` | 否     | AgentSpec label                   |
+
+#### 返回数据
+
+Return body follows [Nacos open API common response format](overview/api-overview.md#32-http-api-统一返回体格式); this table describes fields in `data`.
+
+| 参数名          | 参数类型      | 描述说明                      |
+|--------------|-----------|---------------------------|
+| `namespaceId` | `string` | Namespace of the AgentSpec |
+| `name`        | `string` | AgentSpec name             |
+| `description` | `string` | AgentSpec description      |
+| `bizTags`     | `string` | AgentSpec business tags    |
+| `content`     | `string` | AgentSpec content          |
+| `resource`    | `object` | AgentSpec resource info    |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs?name=my-agent'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+### 3.3. Search AgentSpecs
+
+#### 接口描述
+
+This interface allows paginated searching of AgentSpecs by namespace and keyword.
+
+#### 请求方式
+
+`GET`
+
+#### 请求URL
+
+`/nacos/v3/client/ai/agentspecs/search`
+
+#### 请求参数
+
+| 参数名           | 类型       | 必填    | 参数描述                              |
+|---------------|----------|-------|-----------------------------------|
+| `namespaceId` | `string` | 否     | Namespace ID, default is `public` |
+| `keyword`     | `string` | 否     | Search keyword                    |
+| `pageNo`      | `integer` | **是** | Page number, typically starts from `1` |
+| `pageSize`    | `integer` | **是** | Number of records per page        |
+
+#### 返回数据
+
+Return body follows [Nacos open API common response format](overview/api-overview.md#32-http-api-统一返回体格式); this table describes fields in `data`.
+
+| 参数名    | 参数类型     | 描述说明                                              |
+|--------|----------|---------------------------------------------------|
+| `data` | `string` | AgentSpec search result (paginated object, actual fields depend on runtime response) |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs/search?keyword=agent&pageNo=1&pageSize=10'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+### 3.4. Download Skill
+
+#### 接口描述
+
+This interface allows downloading a Skill ZIP file by namespace, name, version, or label.
+
+#### 请求方式
+
+`GET`
+
+#### 请求URL
+
+`/nacos/v3/client/ai/skills`
+
+#### 请求参数
+
+| 参数名           | 类型       | 必填    | 参数描述                              |
+|---------------|----------|-------|-----------------------------------|
+| `namespaceId` | `string` | 否     | Namespace ID, default is `public` |
+| `name`        | `string` | **是** | Skill name                        |
+| `version`     | `string` | 否     | Skill version                     |
+| `label`       | `string` | 否     | Skill label                       |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/skills?name=my-skill'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
 }
 ```

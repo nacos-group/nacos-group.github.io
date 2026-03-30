@@ -177,13 +177,13 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 | `groupName`   | `string` | 否     | 分组名，默认为`DEFAULT_GROUP` |
 | `serviceName` | `string` | **是** | 服务名                    |
 | `ip`          | `string` | **是** | `IP`地址                 |
-| `port`        | `string` | **是** | 端口号                    |
+| `port`        | `integer` | **是** | 端口号                    |
 | `clusterName` | `string` | 否     | 集群名称，默认为`DEFAULT`      |
-| `healthy`     | `string` | 否     | 是否只查找健康实例，默认为`true`    |
-| `weight`      | `string` | 否     | 实例权重，默认为`1.0`          |
-| `enabled`     | `string` | 否     | 是否可用，默认为`true`         |
+| `healthy`     | `boolean` | 否     | 是否只查找健康实例，默认为`true`    |
+| `weight`      | `number` | 否     | 实例权重，默认为`1.0`          |
+| `enabled`     | `boolean` | 否     | 是否可用，默认为`true`         |
 | `metadata`    | `string` | 否     | 实例元数据                  |
-| `heartBeat`   | `string` | 否     | 是否为续约请求，默认为`false`     |
+| `heartBeat`   | `boolean` | 否     | 是否为续约请求，默认为`false`     |
 
 #### 返回数据
 
@@ -244,7 +244,7 @@ curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&
 | `groupName`   | `string` | 否     | 分组名，默认为`DEFAULT_GROUP` |
 | `serviceName` | `string` | **是** | 服务名                    |
 | `ip`          | `string` | **是** | `IP`地址                 |
-| `port`        | `string` | **是** | 端口号                    |
+| `port`        | `integer` | **是** | 端口号                    |
 | `clusterName` | `string` | 否     | 集群名称，默认为`DEFAULT`      |
 
 #### 返回数据
@@ -418,5 +418,149 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/prompt?promptKey=myPrompt'
     "template": "You are a helpful assistant.",
     "md5": "..."
   }
+}
+```
+
+### 3.2. 获取 AgentSpec
+
+#### 接口描述
+
+通过该接口，可按命名空间、名称、版本号或 label 获取指定 AgentSpec 详情。
+
+#### 请求方式
+
+`GET`
+
+#### 请求URL
+
+`/nacos/v3/client/ai/agentspecs`
+
+#### 请求参数
+
+| 参数名           | 类型       | 必填    | 参数描述                    |
+|---------------|----------|-------|-------------------------|
+| `namespaceId` | `string` | 否     | 命名空间，默认为`public`          |
+| `name`        | `string` | **是** | AgentSpec 名称            |
+| `version`     | `string` | 否     | AgentSpec 版本号           |
+| `label`       | `string` | 否     | AgentSpec 标签            |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名          | 参数类型      | 描述说明               |
+|--------------|-----------|--------------------|
+| `namespaceId` | `string` | AgentSpec 所属命名空间   |
+| `name`        | `string` | AgentSpec 名称       |
+| `description` | `string` | AgentSpec 描述       |
+| `bizTags`     | `string` | AgentSpec 业务标签      |
+| `content`     | `string` | AgentSpec 内容        |
+| `resource`    | `object` | AgentSpec 资源信息      |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs?name=my-agent'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+### 3.3. 搜索 AgentSpec
+
+#### 接口描述
+
+通过该接口，可按命名空间和关键词分页搜索 AgentSpec。
+
+#### 请求方式
+
+`GET`
+
+#### 请求URL
+
+`/nacos/v3/client/ai/agentspecs/search`
+
+#### 请求参数
+
+| 参数名           | 类型       | 必填    | 参数描述                      |
+|---------------|----------|-------|---------------------------|
+| `namespaceId` | `string` | 否     | 命名空间，默认为`public`            |
+| `keyword`     | `string` | 否     | 搜索关键字                      |
+| `pageNo`      | `integer` | **是** | 页码，通常从 `1` 开始               |
+| `pageSize`    | `integer` | **是** | 每页返回条数                     |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名    | 参数类型     | 描述说明                     |
+|--------|----------|--------------------------|
+| `data` | `string` | AgentSpec 搜索结果（分页结构，具体字段以实际返回为准） |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs/search?keyword=agent&pageNo=1&pageSize=10'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+### 3.4. 下载 Skill
+
+#### 接口描述
+
+通过该接口，可按命名空间、名称、版本号或 label 下载 Skill ZIP 文件。
+
+#### 请求方式
+
+`GET`
+
+#### 请求URL
+
+`/nacos/v3/client/ai/skills`
+
+#### 请求参数
+
+| 参数名           | 类型       | 必填    | 参数描述                    |
+|---------------|----------|-------|-------------------------|
+| `namespaceId` | `string` | 否     | 命名空间，默认为`public`          |
+| `name`        | `string` | **是** | Skill 名称                |
+| `version`     | `string` | 否     | Skill 版本号               |
+| `label`       | `string` | 否     | Skill 标签                |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/skills?name=my-skill'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
 }
 ```
