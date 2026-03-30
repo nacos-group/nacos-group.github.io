@@ -784,8 +784,8 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/exist?customNamespa
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `pluginType` | `object` | **是** | 插件类型，如 `auth`（鉴权）、`control`（控制）、`datasource`（数据源）等。 |
-| `pluginName` | `object` | **是** | 插件名称，如 `nacos-default-auth-plugin`。 |
+| `pluginType` | `string` | **是** | 插件类型，如 `auth`（鉴权）、`control`（控制）、`datasource`（数据源）等。 |
+| `pluginName` | `string` | **是** | 插件名称，如 `nacos-default-auth-plugin`。 |
 
 #### 返回数据
 
@@ -845,8 +845,8 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin?pluginType=auth&pluginName=
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `pluginType` | `object` | **是** | 插件类型，如 `auth`、`control`、`datasource` 等。 |
-| `pluginName` | `object` | **是** | 插件名称。 |
+| `pluginType` | `string` | **是** | 插件类型，如 `auth`、`control`、`datasource` 等。 |
+| `pluginName` | `string` | **是** | 插件名称。 |
 
 #### 返回数据
 
@@ -894,9 +894,9 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/availability?pluginType=aut
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `pluginType` | `object` | **是** | 插件类型。 |
-| `pluginName` | `object` | **是** | 插件名称。 |
-| `config` | `object` | 否 | 插件配置内容，JSON 对象，具体字段由插件定义。 |
+| `pluginType` | `string` | **是** | 插件类型。 |
+| `pluginName` | `string` | **是** | 插件名称。 |
+| `config` | `string` | 否 | 插件配置内容，JSON 对象，具体字段由插件定义。 |
 
 #### 返回数据
 
@@ -947,7 +947,7 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/config' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `pluginType` | `object` | 否 | 插件类型；不传则返回所有类型的插件列表。 |
+| `pluginType` | `string` | 否 | 插件类型；不传则返回所有类型的插件列表。 |
 
 #### 返回数据
 
@@ -999,9 +999,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/list?pluginType=auth'
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `pluginType` | `object` | **是** | 插件类型。 |
-| `pluginName` | `object` | **是** | 插件名称。 |
-| `enabled` | `object` | **是** | 是否启用，`true` 启用、`false` 禁用。 |
+| `pluginType` | `string` | **是** | 插件类型。 |
+| `pluginName` | `string` | **是** | 插件名称。 |
+| `enabled` | `boolean` | **是** | 是否启用，`true` 启用、`false` 禁用。 |
+| `localOnly` | `boolean` | 否 | 是否仅更新本地节点插件状态。 |
 
 #### 返回数据
 
@@ -1491,7 +1492,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/searchDetail?dataId=&gro
 | `dataId`      | `string` | 是  | 配置ID。                |
 | `groupName`   | `string` | 是  | 配置分组。                |
 | `namespaceId` | `string` | 否  | 命名空间ID，默认值为`public`。 |
-| `aggregation` | `string` | 否  | 是否聚合查询。             |
+| `aggregation` | `boolean` | 否  | 是否聚合查询。             |
 
 #### 返回数据
 
@@ -1548,8 +1549,9 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener?dataId=test&gro
 | 参数名           | 类型       | 必填 | 参数描述                 |
 |---------------|----------|----|----------------------|
 | `ip`          | `string` | 是  | 订阅者IP。               |
+| `all`         | `boolean` | 否  | 是否查询全部订阅数据。         |
 | `namespaceId` | `string` | 否  | 命名空间ID，默认值为`public`。 |
-| `aggregation` | `string` | 否  | 是否聚合查询。             |
+| `aggregation` | `boolean` | 否  | 是否聚合查询。             |
 
 #### 返回数据
 
@@ -1667,7 +1669,7 @@ unzip ~/test.zip
 |---------------|--------------------|----|--------------------------------------------------------------------------------------------------------------------|
 | `file`        | `MultipartFile`    | 否  | 导入的zip文件。                                                                                                          |
 | `namespaceId` | `string` | 否  | 导入的配置所属的命名空间ID，默认值为`public`。                                                                                       |
-| `policy`      | `SameConfigPolicy` | 否  | 导入策略，当导入的配置`dataId`和`groupName`相同，存在冲突时，所进行的导入策略。可选值有`ABORT(终止导入)`,`SKIP(跳过冲突配置)`,`OVERWRITE(覆盖冲突配置)`。默认值为`ABORT`。 |
+| `policy`      | `string` | 否  | 导入策略，当导入的配置`dataId`和`groupName`相同，存在冲突时，所进行的导入策略。可选值有`ABORT(终止导入)`,`SKIP(跳过冲突配置)`,`OVERWRITE(覆盖冲突配置)`。默认值为`ABORT`。 |
 | `src_user`    | `string` | 否  | 导入操作来源用户标识。                                                                                                       |
 
 #### 返回数据
@@ -1722,18 +1724,11 @@ curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import" -F "file=@/pat
 
 #### 请求参数
 
-| 参数名       | 类型                 | 必填 | 参数描述                                                                                                               |
-|-----------|--------------------|----|--------------------------------------------------------------------------------------------------------------------|
-| `policy`  | `SameConfigPolicy`  | **是** | 克隆策略，当导入的配置`dataId`和`groupName`相同，存在冲突时，所进行的克隆策略。可选值有`ABORT(终止克隆)`,`SKIP(跳过冲突配置)`,`OVERWRITE(覆盖冲突配置)`。默认值为`ABORT`。 |
-| `srcUser` | `string` | 否  | 克隆操作来源用户标识。                                                                                                        |
-
-请求体为配置列表数组，每项为 `SameNamespaceCloneConfigBean`，字段如下：
-
-| 参数名 / Body 数组元素     | 类型     | 必填 | 参数描述                                                                     |
-|---------------------|--------|----|--------------------------------------------------------------------------|
-| `cfgId`             | `string` | 是  | 待克隆配置的存储ID。                                                           |
-| `dataId`            | `string` | 是  | 待克隆配置的目标`dataId`，即克隆后，配置在新命名空间中的`dataId`。                           |
-| `group`             | `string` | 是  | 待克隆配置的目标分组，即克隆后，配置在新命名空间中的`groupName`。                              |
+| 参数名              | 类型       | 必填    | 参数描述                                                                                                               |
+|------------------|----------|-------|--------------------------------------------------------------------------------------------------------------------|
+| `srcUser`        | `string` | 否     | 克隆操作来源用户标识。                                                                                                        |
+| `targetNamespaceId` | `string` | **是** | 目标命名空间ID。                                                                                                           |
+| `policy`         | `string` | 否     | 克隆策略，当导入的配置`dataId`和`groupName`相同，存在冲突时，所进行的克隆策略。可选值有`ABORT(终止克隆)`,`SKIP(跳过冲突配置)`,`OVERWRITE(覆盖冲突配置)`。默认值为`ABORT`。 |
 
 #### 返回数据
 
@@ -1749,7 +1744,7 @@ curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import" -F "file=@/pat
 * 请求示例
 
 ```shell
-curl -H "Content-Type: application/json" -X POST "http://127.0.0.1:8080/v3/console/cs/config/clone?policy=ABORT" -d "[{\"cfgId\":\"838029534438625280\",\"dataId\":\"111\",\"group\":\"DEFAULT_GROUP\"},{\"cfgId\":\"838033747294031872\",\"dataId\":\"qtc-user.yaml\",\"group\":\"DEFAULT_GROUP\"}]"
+curl -H "Content-Type: application/json" -X POST "http://127.0.0.1:8080/v3/console/cs/config/clone?targetNamespaceId=public&policy=ABORT" -d "[{\"cfgId\":838029534438625280,\"dataId\":\"111\",\"group\":\"DEFAULT_GROUP\"},{\"cfgId\":838033747294031872,\"dataId\":\"qtc-user.yaml\",\"group\":\"DEFAULT_GROUP\"}]"
 ```
 
 * 返回示例
@@ -2050,7 +2045,7 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/list?pageNo=1&pageSize=10&data
 
 | 参数名           | 类型       | 必填 | 参数描述                      |
 |---------------|----------|----|---------------------------|
-| `nid`         | `string` | 是  | 历史记录的ID。                  |
+| `nid`         | `integer` | 是  | 历史记录的ID。                  |
 | `dataId`      | `string` | 是  | 配置的dataId。                
 | `groupName`   | `string` | 是  | 配置的groupName。             |
 | `namespaceId` | `string` | 否  | 配置所属的命名空间ID，默认值为`public`。 |
@@ -2134,7 +2129,7 @@ curl "http://127.0.0.1:8080/v3/console/cs/history?dataId=111&groupName=DEFAULT_G
 
 | 参数名           | 类型       | 必填 | 参数描述                      |
 |---------------|----------|----|---------------------------|
-| `id`          | `string` | 是  | 配置的存储ID。                  |
+| `id`          | `integer` | 是  | 配置的存储ID。                  |
 | `dataId`      | `string` | 是  | 配置的dataId。                |
 | `groupName`   | `string` | 是  | 配置的groupName。             |
 | `namespaceId` | `string` | 否  | 配置所属的命名空间ID，默认值为`public`。 |
@@ -2218,7 +2213,7 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/previous?id=838029534438625280
 
 | 参数名           | 类型       | 必填 | 参数描述                      |
 |---------------|----------|----|---------------------------|
-| `namespaceId` | `string` | 否  | 配置所属的命名空间ID，默认值为`public`。 |
+| `namespaceId` | `string` | **是** | 配置所属的命名空间ID，默认值为`public`。 |
 
 #### 返回数据
 
@@ -2299,9 +2294,9 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/configs?namespaceId=public"
 | `serviceName`      | `string` | 是  | 服务名。                                                   |
 | `groupName`        | `string` | 否  | 服务所属的groupName，默认值为`DEFAULT_GROUP`。                    |
 | `namespaceId`      | `string` | 否  | 服务所属的命名空间ID，默认值为`public`。                              |
-| `protectThreshold` | `string` | 否  | 服务的防护阈值，默认值为`0.0`。                                     |
-| `selector`         | `jsonString`          | 否  | 服务的路由选择器，默认值为`{"type":"none"}`，无选择器，另外还支持通过label 进行路由。 |
-| `metadata`         | `map<string, string>` | 否  | 服务的元数据，默认值为`{}`。                                       |
+| `protectThreshold` | `number` | 否  | 服务的防护阈值，默认值为`0.0`。                                     |
+| `selector`         | `string` | 否  | 服务的路由选择器，默认值为`{"type":"none"}`，无选择器，另外还支持通过label 进行路由。 |
+| `metadata`         | `string` | 否  | 服务的元数据，默认值为`{}`。                                       |
 | `ephemeral`        | `boolean` | 否  | 服务是否临时，默认值为`false`即持久化服务。                              |
 
 #### 返回数据
@@ -2412,10 +2407,10 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test&gro
 | `serviceName`      | `string` | 是  | 服务名。                                                   |
 | `groupName`        | `string` | 否  | 服务所属的groupName，默认值为`DEFAULT_GROUP`。                    |
 | `namespaceId`      | `string` | 否  | 服务所属的命名空间ID，默认值为`public`。                              |
-| `protectThreshold` | `string` | 否  | 服务的防护阈值，默认值为`0.0`。                                     |
-| `ephemeral`        | `string` | 否  | 是否临时实例，如 `true`/`false`。                                  |
-| `selector`         | `jsonString`          | 否  | 服务的路由选择器，默认值为`{"type":"none"}`，无选择器，另外还支持通过label 进行路由。 |
-| `metadata`         | `map<string, string>` | 否  | 服务的元数据，默认值为`{}`。                                       |
+| `protectThreshold` | `number` | 否  | 服务的防护阈值，默认值为`0.0`。                                     |
+| `ephemeral`        | `boolean` | 否  | 是否临时实例，如 `true`/`false`。                                  |
+| `selector`         | `string` | 否  | 服务的路由选择器，默认值为`{"type":"none"}`，无选择器，另外还支持通过label 进行路由。 |
+| `metadata`         | `string` | 否  | 服务的元数据，默认值为`{}`。                                       |
 
 #### 返回数据
 
@@ -2517,13 +2512,13 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/selector/types"
 
 | 参数名                  | 类型        | 必填 | 参数描述                              |
 |----------------------|-----------|----|-----------------------------------|
-| `pageNo`             | `integer` | 是  | 页码，起始为`1`。                        |
-| `pageSize`           | `integer` | 是  | 每页显示条数。                           |
+| `pageNo`             | `string` | 是  | 页码，起始为`1`。                        |
+| `pageSize`           | `string` | 是  | 每页显示条数。                           |
 | `serviceNameParam`   | `string` | 否  | 服务名的pattern，为空时查询所有服务。            |
 | `groupNameParam`     | `string` | 否  | 服务所属的groupName的pattern，为空时查询所有服务。 |
 | `namespaceId`        | `string` | 否  | 服务所属的命名空间ID。                      |
-| `ignoreEmptyService` | `boolean` | 否  | 是否仅返回有实例的服务，默认为`false`，即查询空服务。    |
-| `withInstances`      | `boolean` | 否  | 是否返回服务的实例详情，默认为`false`。           |
+| `ignoreEmptyService` | `string` | 否  | 是否仅返回有实例的服务，默认为`false`，即查询空服务。    |
+| `withInstances`      | `string` | 否  | 是否返回服务的实例详情，默认为`false`。           |
 
 #### 返回数据
 
@@ -2604,8 +2599,8 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/list?pageNo=1&pageSize=
 
 | 参数名           | 类型        | 必填 | 参数描述                                |
 |---------------|-----------|----|-------------------------------------|
-| `pageNo`      | `integer` | 是  | 页码，起始为`1`。                          |
-| `pageSize`    | `integer` | 是  | 每页显示条数。                             |
+| `pageNo`      | `string` | 是  | 页码，起始为`1`。                          |
+| `pageSize`    | `string` | 是  | 每页显示条数。                             |
 | `serviceName`  | `string` | 是  | 服务名。                                |
 | `groupName`    | `string` | 否  | 服务所属的groupName，默认值为`DEFAULT_GROUP`。 |
 | `namespaceId`  | `string` | 否  | 服务所属的命名空间ID，默认值为`public`。           |
@@ -2775,12 +2770,12 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test"
 |-------------------------|-----------------------|----|-------------------------------------|
 | `clusterName`           | `string` | 是  | 集群名。                                |
 | `serviceName`           | `string` | 是  | 服务名。                                |
-| `checkPort`             | `integer` | 是  | 健康检查端口。                             |
-| `useInstancePort4Check` | `boolean` | 是  | 是否使用所注册的实例的`IP:Port`进行健康检查。         |
-| `healthChecker`         | `jsonString`          | 是  | 健康检查器。                              |
+| `checkPort`             | `string` | 是  | 健康检查端口。                             |
+| `useInstancePort4Check` | `string` | 是  | 是否使用所注册的实例的`IP:Port`进行健康检查。         |
+| `healthChecker`         | `string` | 是  | 健康检查器。                              |
 | `groupName`             | `string` | 否  | 服务所属的groupName，默认值为`DEFAULT_GROUP`。 |
 | `namespaceId`           | `string` | 否  | 服务所属的命名空间ID，默认值为`public`。           |
-| `metadata`              | `map<string, string>` | 否  | 服务元数据。                              |
+| `metadata`              | `string` | 否  | 服务元数据。                              |
 
 > `healthChecker`参数为健康检查器的JSON字符串，目前支持三种健康检查器：
 > 1. `None`: 无健康检查，`{"type":"NONE"}`
@@ -2941,7 +2936,7 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/instance/list?&serviceName=test
 | `weight`      | `number` | 否  | 实例权重。                               |
 | `healthy`     | `boolean` | 否  | 实例健康状态。                             |
 | `enabled`     | `boolean` | 否  | 实例是否已上线。                            |
-| `metadata`    | `map<string, string>` | 否  | 实例元数据。                              |
+| `metadata`    | `string` | 否  | 实例元数据。                              |
 
 #### 返回数据
 
@@ -3401,7 +3396,7 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpNa
 | `pageNo`      | `integer` | **是** | 当前页，默认为`1`                                             |
 | `pageSize`    | `integer` | **是** | 页条目数，默认为`20`，最大为`500`                                  |
 | `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`public`                               |
-| `mcpName`     | `null`   | 否     | MCP服务的名字模版，为空时查询所有MCP服务，当`search`为`blur`时，可使用`*`进行模糊搜索 |
+| `mcpName`     | `string`   | 否     | MCP服务的名字模版，为空时查询所有MCP服务，当`search`为`blur`时，可使用`*`进行模糊搜索 |
 | `search`      | `string` | 否     | 搜索的类型，可选之`blur`和`accurate`，默认为`blur`。                  |
 
 #### 返回数据
@@ -3576,7 +3571,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/importToolsFromMcp?transpor
 | `data`        | `string` | **是** | 导入数据的内容                                 |
 | `cursor`      | `string` | 否     | 分页的起始索引                                 |                         |
 | `limit`       | `integer` | 否     | 分页的页大小                                  |
-| `search`      | `null`   | 否     | 导入列表的可选模糊搜索关键字。仅当 importType 为`url`时使用。 |
+| `search`      | `string`   | 否     | 导入列表的可选模糊搜索关键字。仅当 importType 为`url`时使用。 |
 
 #### 返回数据
 
@@ -3670,7 +3665,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/validate' \
 | `data`             | `string` | **是** | 导入数据的内容                                 |
 | `cursor`           | `string` | 否     | 分页的起始索引                                 |                         |
 | `limit`            | `integer` | 否     | 分页的页大小                                  |
-| `search`           | `null`    | 否     | 导入列表的可选模糊搜索关键字。仅当 importType 为`url`时使用。 |
+| `search`           | `string`    | 否     | 导入列表的可选模糊搜索关键字。仅当 importType 为`url`时使用。 |
 | `overrideExisting` | `boolean` | 否     | 导入时若服务已存在时是否覆盖。默认为`false`。              |                                    |
 | `skipInvalid`      | `boolean` | 否     | 导入时是否忽略错误无效的服务。默认为`false`。              |
 | `selectedServers`  | `string` | 否     | 选择部分服务进行导入,为空时导入所有                      |
@@ -4234,13 +4229,13 @@ Prompt 管理 API 提供 Prompt 的发布、查询、标签绑定与版本管理
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `promptKey` | `object` | **是** | Prompt 的唯一键/标识。 |
-| `version` | `object` | **是** | 版本号，如 `1.0.0`。 |
-| `template` | `object` | **是** | Prompt 模板正文内容。 |
-| `commitMsg` | `object` | 否 | 本次发布的提交说明。 |
-| `description` | `object` | 否 | Prompt 的描述信息。 |
-| `bizTags` | `object` | 否 | 业务标签，用于分类检索，多个标签可逗号分隔。 |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `promptKey` | `string` | **是** | Prompt 的唯一键/标识。 |
+| `version` | `string` | **是** | 版本号，如 `1.0.0`。 |
+| `template` | `string` | **是** | Prompt 模板正文内容。 |
+| `commitMsg` | `string` | 否 | 本次发布的提交说明。 |
+| `description` | `string` | 否 | Prompt 的描述信息。 |
+| `bizTags` | `string` | 否 | 业务标签，用于分类检索，多个标签可逗号分隔。 |
 
 #### 返回数据
 
@@ -4295,8 +4290,8 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `promptKey` | `object` | **是** | 要删除的 Prompt 的唯一键。 |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `promptKey` | `string` | **是** | 要删除的 Prompt 的唯一键。 |
 
 #### 返回数据
 
@@ -4344,11 +4339,11 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/prompt?namespaceId=public&pr
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `promptKey` | `object` | **是** | Prompt 的唯一键。 |
-| `version` | `object` | 否 | 指定版本号；不传时与 `label`、`md5` 一起决定返回版本（标签或最新等）。 |
-| `label` | `object` | 否 | 标签名，如 `stable`、`latest`，返回该标签指向的版本。 |
-| `md5` | `object` | 否 | 内容 MD5，用于精确匹配某一版本。 |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `promptKey` | `string` | **是** | Prompt 的唯一键。 |
+| `version` | `string` | 否 | 指定版本号；不传时与 `label`、`md5` 一起决定返回版本（标签或最新等）。 |
+| `label` | `string` | 否 | 标签名，如 `stable`、`latest`，返回该标签指向的版本。 |
+| `md5` | `string` | 否 | 内容 MD5，用于精确匹配某一版本。 |
 
 #### 返回数据
 
@@ -4406,10 +4401,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/detail?namespaceId=publi
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `promptKey` | `object` | **是** | Prompt 的唯一键。 |
-| `label` | `object` | **是** | 标签名，如 `stable`、`latest`。 |
-| `version` | `object` | **是** | 要绑定到的版本号。 |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `promptKey` | `string` | **是** | Prompt 的唯一键。 |
+| `label` | `string` | **是** | 标签名，如 `stable`、`latest`。 |
+| `version` | `string` | **是** | 要绑定到的版本号。 |
 
 #### 返回数据
 
@@ -4461,9 +4456,9 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/label' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `promptKey` | `object` | **是** | Prompt 的唯一键。 |
-| `label` | `object` | **是** | 要解绑的标签名。 |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `promptKey` | `string` | **是** | Prompt 的唯一键。 |
+| `label` | `string` | **是** | 要解绑的标签名。 |
 
 #### 返回数据
 
@@ -4511,12 +4506,12 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/prompt/label?namespaceId=pub
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `pageNo` | `object` | **是** | 页码，从 1 开始。 |
-| `pageSize` | `object` | **是** | 每页条数。 |
-| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `promptKey` | `object` | 否 | 按 Prompt 键过滤，支持模糊或精确（由 `search` 决定）。 |
-| `search` | `object` | 否 | 搜索模式：`blur` 模糊匹配，`accurate` 精确匹配。 |
-| `bizTags` | `object` | 否 | 按业务标签过滤。 |
+| `pageNo` | `integer` | **是** | 页码，从 1 开始。 |
+| `pageSize` | `integer` | **是** | 每页条数。 |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `promptKey` | `string` | 否 | 按 Prompt 键过滤，支持模糊或精确（由 `search` 决定）。 |
+| `search` | `string` | 否 | 搜索模式：`blur` 模糊匹配，`accurate` 精确匹配。 |
+| `bizTags` | `string` | 否 | 按业务标签过滤。 |
 
 #### 返回数据
 
@@ -4583,8 +4578,8 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/list?pageNo=1&pageSize=1
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `promptKey` | `object` | **是** | Prompt 的唯一键。 |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `promptKey` | `string` | **是** | Prompt 的唯一键。 |
 
 #### 返回数据
 
@@ -4643,10 +4638,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/metadata?namespaceId=pub
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `promptKey` | `object` | **是** | Prompt 的唯一键。 |
-| `description` | `object` | 否 | 更新后的描述。 |
-| `bizTags` | `object` | 否 | 更新后的业务标签。 |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `promptKey` | `string` | **是** | Prompt 的唯一键。 |
+| `description` | `string` | 否 | 更新后的描述。 |
+| `bizTags` | `string` | 否 | 更新后的业务标签。 |
 
 #### 返回数据
 
@@ -4698,10 +4693,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/metadata' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `promptKey` | `object` | **是** | Prompt 的唯一键。 |
-| `pageNo` | `object` | **是** | 页码，从 1 开始。 |
-| `pageSize` | `object` | **是** | 每页条数。 |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `promptKey` | `string` | **是** | Prompt 的唯一键。 |
+| `pageNo` | `integer` | **是** | 页码，从 1 开始。 |
+| `pageSize` | `integer` | **是** | 每页条数。 |
 
 #### 返回数据
 
@@ -4771,9 +4766,9 @@ Skills 管理 API 提供 Skill 的注册、查询、更新、删除及列表、Z
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `skillName` | `object` | **是** | Skill 名称/唯一标识。 |
-| `version` | `object` | 否 | 版本号；不传则返回最新版本。 |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `skillName` | `string` | **是** | Skill 名称/唯一标识。 |
+| `version` | `string` | 否 | 版本号；不传则返回最新版本。 |
 
 #### 返回数据
 
@@ -4833,10 +4828,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills?namespaceId=public&skill
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
 | `skillCard` | `object` | **是** | Skill 卡片 JSON，符合 Skill 定义结构，包含 name、description、instruction 等。 |
-| `skillName` | `object` | 否 | 要更新的 Skill 名称；可从 skillCard 中解析时可省略。 |
-| `version` | `object` | 否 | 要更新的版本号；不传则更新最新版本。 |
+| `skillName` | `string` | 否 | 要更新的 Skill 名称；可从 skillCard 中解析时可省略。 |
+| `version` | `string` | 否 | 要更新的版本号；不传则更新最新版本。 |
 
 #### 返回数据
 
@@ -4888,10 +4883,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
 | `skillCard` | `object` | **是** | Skill 卡片 JSON，符合 Skill 定义结构。 |
-| `skillName` | `object` | 否 | 指定 Skill 名称；可从 skillCard 中解析时可省略。 |
-| `version` | `object` | 否 | 版本号，如 `1.0.0`；不传可由服务端生成。 |
+| `skillName` | `string` | 否 | 指定 Skill 名称；可从 skillCard 中解析时可省略。 |
+| `version` | `string` | 否 | 版本号，如 `1.0.0`；不传可由服务端生成。 |
 
 #### 返回数据
 
@@ -4943,9 +4938,9 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `skillName` | `object` | **是** | 要删除的 Skill 名称。 |
-| `version` | `object` | 否 | 版本号；不传则删除该 Skill 下所有版本（或按实现语义）。 |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `skillName` | `string` | **是** | 要删除的 Skill 名称。 |
+| `version` | `string` | 否 | 版本号；不传则删除该 Skill 下所有版本（或按实现语义）。 |
 
 #### 返回数据
 
@@ -4993,11 +4988,11 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/skills?namespaceId=public&sk
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `pageNo` | `object` | **是** | 页码，从 1 开始。 |
-| `pageSize` | `object` | **是** | 每页条数。 |
-| `namespaceId` | `object` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `skillName` | `object` | 否 | 按 Skill 名称过滤，支持模糊或精确（由 `search` 决定）。 |
-| `search` | `object` | 否 | 搜索模式：`blur` 模糊匹配，`accurate` 精确匹配。 |
+| `pageNo` | `integer` | **是** | 页码，从 1 开始。 |
+| `pageSize` | `integer` | **是** | 每页条数。 |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `skillName` | `string` | 否 | 按 Skill 名称过滤，支持模糊或精确（由 `search` 决定）。 |
+| `search` | `string` | 否 | 搜索模式：`blur` 模糊匹配，`accurate` 精确匹配。 |
 
 #### 返回数据
 
