@@ -5437,7 +5437,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=tes
 | `serverSpecification`   | `jsonString` | **是** | MCP服务的描述详情                     |
 | `toolSpecification`     | `jsonString` | 否     | MCP服务的工具描述详情                   |
 | `endpointSpecification` | `jsonString` | 否     | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效 |
-| `overrideExisting `    | `boolean` | 否     | MCP服务更新时是否覆盖原endpointSpecification，默认不覆盖，仅在非`stdio`协议时生效 |
+| `overrideExisting`    | `string` | 否     | MCP服务更新时是否覆盖原 endpointSpecification，仅在非`stdio`协议时生效 |
 | `latest` | `string` | 否 | - |
 
 其中`serverSpecification`、`toolSpecification`、`endpointSpecification`参数的详细内容如下：
@@ -6214,6 +6214,7 @@ curl -X DELETE '127.0.0.1:8848/nacos/v3/admin/ai/a2a?namespaceId=public&agentNam
 | `commitMsg` | `string` | 否 | 提交说明 |
 | `description` | `string` | 否 | 描述 |
 | `bizTags` | `string` | 否 | 业务标签 |
+| `variables` | `string` | 否 | Prompt 模板变量定义（JSON 字符串） |
 
 #### 返回数据
 
@@ -6713,15 +6714,15 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills?namespaceId=public&s
 }
 ```
 
-### 7.2. 更新技能
+### 7.2. 创建技能草稿版本
 
 #### 接口描述
 
-通过该接口，更新 Nacos 中已有的 AI 技能。
+通过该接口，可基于已有版本或全新 SkillCard 创建技能草稿版本。
 
 #### 请求方式
 
-`PUT`
+`POST`
 
 #### 鉴权状态
 
@@ -6729,26 +6730,29 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills?namespaceId=public&s
 
 #### 请求URL
 
-`/nacos/v3/admin/ai/skills`
+`/nacos/v3/admin/ai/skills/draft`
 
 #### 请求参数
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | 命名空间 |
-| `skillCard` | `string` | **是** | 技能卡片 JSON 字符串，包含完整技能信息 |
+| `skillName` | `string` | 否 | 技能名称 |
+| `basedOnVersion` | `string` | 否 | 基于该版本创建草稿 |
+| `targetVersion` | `string` | 否 | 目标版本 |
+| `skillCard` | `string` | 否 | 技能卡片 JSON 字符串，未指定 `basedOnVersion` 时需提供 |
 
 #### 返回数据
 
-成功则返回统一返回体，`data` 为字符串表示操作结果（如 "ok"）；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+成功则返回统一返回体，`data` 为字符串（草稿创建结果）；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills' \
-  -d 'namespaceId=public' -d 'skillCard={}'
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/draft' \
+  -d 'namespaceId=public' -d 'skillName=my-skill' -d 'basedOnVersion=1.0.0'
 ```
 
 * 返回示例
@@ -6761,15 +6765,15 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills' \
 }
 ```
 
-### 7.3. 注册技能
+### 7.3. 更新技能草稿内容
 
 #### 接口描述
 
-通过该接口，使用技能详情表单在 Nacos 中注册新的 AI 技能。
+通过该接口，可更新当前技能草稿版本的 SkillCard 内容。
 
 #### 请求方式
 
-`POST`
+`PUT`
 
 #### 鉴权状态
 
@@ -6777,7 +6781,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills' \
 
 #### 请求URL
 
-`/nacos/v3/admin/ai/skills`
+`/nacos/v3/admin/ai/skills/draft`
 
 #### 请求参数
 
@@ -6785,18 +6789,19 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills' \
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | 命名空间 |
 | `skillCard` | `string` | **是** | 技能卡片 JSON 字符串，包含完整技能信息 |
+| `skillName` | `string` | **是** | 技能名称 |
 
 #### 返回数据
 
-成功则返回统一返回体，`data` 为注册后的技能名称；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+成功则返回统一返回体，`data` 为字符串（草稿更新结果）；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills' \
-  -d 'namespaceId=public' -d 'skillCard={}'
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/draft' \
+  -d 'namespaceId=public' -d 'skillName=my-skill' -d 'skillCard={}'
 ```
 
 * 返回示例
@@ -6805,7 +6810,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills' \
 {
   "code": 0,
   "message": "success",
-  "data": "my-skill"
+  "data": "ok"
 }
 ```
 
@@ -6967,4 +6972,199 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/upload' \
   "data": "uploaded-skill-name"
 }
 ```
+
+### 7.7. 删除技能草稿版本
+
+#### 接口描述
+
+通过该接口，可删除指定技能的当前草稿版本。
+
+#### 请求方式
+
+`DELETE`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/skills/draft`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | 命名空间 |
+| `skillName` | `string` | **是** | 技能名称 |
+
+### 7.8. 更新技能业务标签
+
+#### 接口描述
+
+通过该接口，可更新技能的业务标签列表，无需变更版本状态。
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/skills/biz-tags`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | 命名空间 |
+| `skillName` | `string` | **是** | 技能名称 |
+| `bizTags` | `string` | **是** | 业务标签 |
+
+### 7.9. 更新技能版本标签
+
+#### 接口描述
+
+通过该接口，可更新技能的版本路由标签（如 latest）。
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/skills/labels`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | 命名空间 |
+| `skillName` | `string` | **是** | 技能名称 |
+| `labels` | `string` | **是** | 标签 JSON 字符串 |
+
+### 7.10. 上下线与发布技能版本
+
+#### 接口描述
+
+以下接口用于技能版本发布流程控制。
+
+#### 请求参数
+
+| 请求方式 | 请求URL | 关键参数 |
+|--------|----------|----------|
+| `POST` | `/nacos/v3/admin/ai/skills/offline` | `namespaceId`、`skillName`、`scope`、`version` |
+| `POST` | `/nacos/v3/admin/ai/skills/online` | `namespaceId`、`skillName`、`scope`、`version` |
+| `POST` | `/nacos/v3/admin/ai/skills/publish` | `namespaceId`、`skillName`、`version`、`updateLatestLabel` |
+| `PUT` | `/nacos/v3/admin/ai/skills/scope` | `namespaceId`、`skillName`、`scope` |
+| `POST` | `/nacos/v3/admin/ai/skills/submit` | `namespaceId`、`skillName`、`version` |
+
+### 7.11. 查询技能版本详情
+
+#### 请求方式
+
+`GET`
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/skills/version`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | 命名空间 |
+| `skillName` | `string` | **是** | 技能名称 |
+| `version` | `string` | 否 | 版本号 |
+
+### 7.12. 下载技能版本 ZIP 包
+
+#### 请求方式
+
+`GET`
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/skills/version/download`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | 命名空间 |
+| `skillName` | `string` | **是** | 技能名称 |
+| `version` | `string` | 否 | 版本号 |
+
+## 8. AgentSpec 管理
+
+### 8.1. AgentSpec 读写接口
+
+| 请求方式 | 请求URL | 功能 |
+|--------|----------|------|
+| `GET` | `/nacos/v3/admin/ai/agentspecs` | 查询指定 AgentSpec |
+| `DELETE` | `/nacos/v3/admin/ai/agentspecs` | 删除 AgentSpec |
+| `GET` | `/nacos/v3/admin/ai/agentspecs/list` | 分页查询 AgentSpec 列表 |
+| `GET` | `/nacos/v3/admin/ai/agentspecs/version` | 查询指定版本详情 |
+| `POST` | `/nacos/v3/admin/ai/agentspecs/upload` | 上传 ZIP 包导入 AgentSpec |
+
+### 8.2. AgentSpec 草稿与发布流程
+
+| 请求方式 | 请求URL | 功能 |
+|--------|----------|------|
+| `POST` | `/nacos/v3/admin/ai/agentspecs/draft` | 创建草稿版本 |
+| `PUT` | `/nacos/v3/admin/ai/agentspecs/draft` | 更新草稿内容 |
+| `DELETE` | `/nacos/v3/admin/ai/agentspecs/draft` | 删除草稿版本 |
+| `POST` | `/nacos/v3/admin/ai/agentspecs/submit` | 提交审核 |
+| `POST` | `/nacos/v3/admin/ai/agentspecs/publish` | 发布版本 |
+| `POST` | `/nacos/v3/admin/ai/agentspecs/offline` | 下线版本或资源 |
+| `POST` | `/nacos/v3/admin/ai/agentspecs/online` | 上线版本或资源 |
+| `PUT` | `/nacos/v3/admin/ai/agentspecs/scope` | 更新可见范围 |
+| `PUT` | `/nacos/v3/admin/ai/agentspecs/labels` | 更新版本标签 |
+| `PUT` | `/nacos/v3/admin/ai/agentspecs/biz-tags` | 更新业务标签 |
+
+## 9. Pipeline 执行记录
+
+### 9.1. 查询 Pipeline 执行记录列表
+
+#### 请求方式
+
+`GET`
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/pipelines`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `resourceType` | `string` | **是** | 资源类型 |
+| `resourceName` | `string` | 否 | 资源名称 |
+| `namespaceId` | `string` | 否 | 命名空间 |
+| `version` | `string` | 否 | 资源版本 |
+| `pageNo` | `string` | **是** | 页码 |
+| `pageSize` | `string` | **是** | 每页条数 |
+
+### 9.2. 查询 Pipeline 执行记录详情
+
+#### 请求方式
+
+`GET`
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/pipelines/{pipelineId}`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `pipelineId` | `string` | **是** | Pipeline ID |
 
