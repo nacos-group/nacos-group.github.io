@@ -7360,32 +7360,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/submit' -d "namespa
 
 ## 8. AgentSpec 管理
 
-### 8.1. AgentSpec 读写接口
-
-| 请求方式 | 请求URL | 功能 |
-|--------|----------|------|
-| `GET` | `/nacos/v3/admin/ai/agentspecs` | 查询指定 AgentSpec |
-| `DELETE` | `/nacos/v3/admin/ai/agentspecs` | 删除 AgentSpec |
-| `GET` | `/nacos/v3/admin/ai/agentspecs/list` | 分页查询 AgentSpec 列表 |
-| `GET` | `/nacos/v3/admin/ai/agentspecs/version` | 查询指定版本详情 |
-| `POST` | `/nacos/v3/admin/ai/agentspecs/upload` | 上传 ZIP 包导入 AgentSpec |
-
-### 8.2. AgentSpec 草稿与发布流程
-
-| 请求方式 | 请求URL | 功能 |
-|--------|----------|------|
-| `POST` | `/nacos/v3/admin/ai/agentspecs/draft` | 创建草稿版本 |
-| `PUT` | `/nacos/v3/admin/ai/agentspecs/draft` | 更新草稿内容 |
-| `DELETE` | `/nacos/v3/admin/ai/agentspecs/draft` | 删除草稿版本 |
-| `POST` | `/nacos/v3/admin/ai/agentspecs/submit` | 提交审核 |
-| `POST` | `/nacos/v3/admin/ai/agentspecs/publish` | 发布版本 |
-| `POST` | `/nacos/v3/admin/ai/agentspecs/offline` | 下线版本或资源 |
-| `POST` | `/nacos/v3/admin/ai/agentspecs/online` | 上线版本或资源 |
-| `PUT` | `/nacos/v3/admin/ai/agentspecs/scope` | 更新可见范围 |
-| `PUT` | `/nacos/v3/admin/ai/agentspecs/labels` | 更新版本标签 |
-| `PUT` | `/nacos/v3/admin/ai/agentspecs/biz-tags` | 更新业务标签 |
-
-### 8.3. 查询 AgentSpec
+### 8.1. 查询 AgentSpec
 #### 接口描述
 通过该接口，可按命名空间和名称查询 AgentSpec 的最新已发布版本。
 
@@ -7446,7 +7421,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs?namespaceId=publ
 }
 ```
 
-### 8.4. 删除 AgentSpec
+### 8.2. 删除 AgentSpec
 #### 接口描述
 通过该接口，可删除指定命名空间和名称下的 AgentSpec 及其所有版本。
 
@@ -7494,7 +7469,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs?namespaceId=p
 }
 ```
 
-### 8.5. 更新 AgentSpec 业务标签
+### 8.3. 更新 AgentSpec 业务标签
 #### 接口描述
 通过该接口，可更新 AgentSpec 的业务标签列表，无需变更版本状态。
 
@@ -7543,7 +7518,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/biz-tags' -d "na
 }
 ```
 
-### 8.6. 创建 AgentSpec 草稿版本
+### 8.4. 创建 AgentSpec 草稿版本
 #### 接口描述
 通过该接口，可基于某一已有版本创建 AgentSpec 草稿版本。
 
@@ -7592,7 +7567,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/draft' -d "name
 }
 ```
 
-### 8.7. 更新 AgentSpec 草稿内容
+### 8.5. 更新 AgentSpec 草稿内容
 #### 接口描述
 通过该接口，可更新当前 AgentSpec 草稿版本的卡片内容。
 
@@ -7641,7 +7616,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/draft' -d "names
 }
 ```
 
-### 8.8. 删除 AgentSpec 草稿版本
+### 8.6. 删除 AgentSpec 草稿版本
 #### 接口描述
 通过该接口，可删除指定 AgentSpec 的当前草稿版本。
 
@@ -7689,7 +7664,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/draft?namespa
 }
 ```
 
-### 8.9. 更新 AgentSpec 版本标签
+### 8.7. 更新 AgentSpec 版本标签
 #### 接口描述
 通过该接口，可更新 AgentSpec 的版本路由标签（如 latest 标签），无需变更版本状态。
 
@@ -7738,7 +7713,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/labels' -d "name
 }
 ```
 
-### 8.10. 查询 AgentSpec 列表
+### 8.8. 查询 AgentSpec 列表
 #### 接口描述
 通过该接口，可按命名空间和名称分页查询 AgentSpec 列表。
 
@@ -7789,7 +7764,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/list?pageNo=1&pa
 }
 ```
 
-### 8.11. 下线 AgentSpec
+### 8.9. 下线 AgentSpec
 #### 接口描述
 通过该接口，可对指定版本或整个 AgentSpec 执行下线操作，使其不可被调用。
 
@@ -7839,7 +7814,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/offline' -d "na
 }
 ```
 
-### 8.12. 上线 AgentSpec
+### 8.10. 上线 AgentSpec
 #### 接口描述
 通过该接口，可对指定版本或整个 AgentSpec 执行上线操作，使其可被调用。
 
@@ -7889,7 +7864,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/online' -d "nam
 }
 ```
 
-### 8.13. 发布 AgentSpec 版本
+### 8.11. 发布 AgentSpec 版本
 #### 接口描述
 通过该接口，可将审核通过的 AgentSpec 版本正式发布。
 
@@ -7939,7 +7914,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/publish' -d "na
 }
 ```
 
-### 8.14. 更新 AgentSpec 可见范围
+### 8.12. 更新 AgentSpec 可见范围
 #### 接口描述
 通过该接口，可将 AgentSpec 的可见范围设置为 PUBLIC（公开）或 PRIVATE（私有）。
 
@@ -7988,7 +7963,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/scope' -d "names
 }
 ```
 
-### 8.15. 提交 AgentSpec 版本审核
+### 8.13. 提交 AgentSpec 版本审核
 #### 接口描述
 通过该接口，可将 AgentSpec 草稿版本提交至流水线进行审核。
 
@@ -8037,7 +8012,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/submit' -d "nam
 }
 ```
 
-### 8.16. 上传 AgentSpec
+### 8.14. 上传 AgentSpec
 #### 接口描述
 通过该接口，可上传 ZIP 格式的 AgentSpec 包，自动解析并创建或更新 AgentSpec。
 
@@ -8089,7 +8064,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/upload' -F "fil
 }
 ```
 
-### 8.17. 查询 AgentSpec 版本
+### 8.15. 查询 AgentSpec 版本
 #### 接口描述
 通过该接口，可按命名空间、名称和版本号查询指定版本的 AgentSpec 详情。
 
