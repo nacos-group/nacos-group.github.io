@@ -1,0 +1,14 @@
+---
+description: Enforce single request-params table for API docs
+alwaysApply: true
+---
+
+# Nacos API Doc Request Parameters Structure
+
+When updating API docs under `src/content/docs/next/**/manual/**/**/*-api.md`:
+
+- Keep exactly one `#### 请求参数` section per API.
+- If an API has both query and body parameters, merge them into one parameter table.
+- Do not add a second `#### 请求参数` heading for body/query separation.
+- In merged table descriptions, annotate parameter source when needed (for example: `Query 参数` / `Body 参数`), but keep one table only.
+- Preserve existing manual descriptions and examples; only adjust fields required by swagger alignment.

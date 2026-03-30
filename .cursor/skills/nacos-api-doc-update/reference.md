@@ -53,6 +53,8 @@
 - **路径**：`.cursor/skills/nacos-api-doc-update/scripts/compare_doc_with_swagger.py`
 - **作用**：对比已有文档与 api.json，输出差异报告（参数缺/多、必填不一致、curl 占位符等），**不修改任何文件**。可用于快速定位需要人工针对性修改的接口。
 - **用法**：`python .cursor/skills/nacos-api-doc-update/scripts/compare_doc_with_swagger.py --json public/swagger/console/zh/api.json --doc-type console --doc-file src/content/docs/next/zh-cn/manual/admin/console-api.md`
+- **豁免项（可选）**：对已确认的 Swagger 限制/bug，可使用 `--exemptions-file` 传入豁免文件（JSON），按 endpoint 精确忽略对应 issue。  
+  admin 推荐文件：`.cursor/skills/nacos-api-doc-update/exemptions/admin-api-exemptions.json`
 - **禁止**：任何会批量替换文档内容的脚本（如已禁止的 sync_doc_from_swagger.py）。
 
 ## 更新方式：对比后针对性更新

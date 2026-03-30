@@ -13,9 +13,57 @@ import json
 import re
 import sys
 from pathlib import Path
+from typing import Optional
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from swagger_to_md import parse_parameters  # noqa: E402
+
+
+def load_exemptions(exemptions_file: Optional[str], doc_type: str) -> dict:
+    """Load optional exemptions json and return endpoint-level rules."""
+    if not exemptions_file:
+        return {}
+    p = Path(exemptions_file)
+    if not p.exists():
+        return {}
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    if not isinstance(data, dict):
+        return {}
+    root = data.get("doc_types", data) if isinstance(data.get("doc_types", data), dict) else {}
+    scoped = root.get(doc_type, {})
+    if not isinstance(scoped, dict):
+        return {}
+    return scoped
+
+
+def apply_issue_exemptions(endpoint_key: str, issues: list[str], exemptions: dict) -> list[str]:
+    if not exemptions:
+        return issues
+    ep_rule = exemptions.get(endpoint_key, {})
+    if not isinstance(ep_rule, dict):
+        return issues
+    ignore_exact = set(ep_rule.get("ignore_issues", []) or [])
+    ignore_prefix = ep_rule.get("ignore_prefixes", []) or []
+    out = []
+    for i in issues:
+        if i in ignore_exact:
+            continue
+        if any(i.startswith(pfx) for pfx in ignore_prefix):
+            continue
+        out.append(i)
+    return out
+
+
+def is_api_only_exempt(endpoint_key: str, exemptions: dict) -> bool:
+    if not exemptions:
+        return False
+    ep_rule = exemptions.get(endpoint_key, {})
+    if not isinstance(ep_rule, dict):
+        return False
+    return bool(ep_rule.get("ignore_api_only"))
 
 
 def load_spec(json_path: str) -> dict:
@@ -66,7 +114,8 @@ def parse_doc_table(text: str) -> list[dict]:
                 continue
             typ = parts[1].strip("`") if len(parts) > 1 else ""
             req = "**是**" in (parts[2] if len(parts) > 2 else "") or "是" in (parts[2] if len(parts) > 2 else "")
-            rows.append({"name": name, "type": typ, "required": req})
+            desc = parts[3] if len(parts) > 3 else ""
+            rows.append({"name": name, "type": typ, "required": req, "description": desc})
     return rows
 
 
@@ -112,20 +161,64 @@ def extract_sections(content: str):
 
 
 def compare_params(api_params: dict, doc_rows: list[dict], kind: str) -> list[str]:
+    def normalize_type(t: str) -> str:
+        t = (t or "").strip().strip("`").lower()
+        t = re.sub(r"\s+", "", t)
+        # normalize frequent renderings for file upload fields and base scalar aliases
+        t = t.replace("string(binary)", "file").replace("string<binary>", "file")
+        aliases = {
+            "int": "integer",
+            "integer": "integer",
+            "int32": "integer",
+            "int64": "integer",
+            "long": "integer",
+            "float": "number",
+            "double": "number",
+            "number": "number",
+            "bool": "boolean",
+            "boollean": "boolean",
+            "string": "string",
+            "array": "array",
+            "object": "object",
+            "map<string,string>": "map<string, string>",
+            "binary": "file",
+            "multipartfile": "file",
+            "multiplefile": "file",
+        }
+        return aliases.get(t, t)
+
+    def normalize_desc(d: str) -> str:
+        d = (d or "").strip()
+        d = re.sub(r"`", "", d)
+        d = re.sub(r"\*\*", "", d)
+        d = re.sub(r"\s+", " ", d)
+        if d in {"-", "—", "无", "暂无", "N/A", "n/a"}:
+            return "-"
+        return d
+
     api_names = set(api_params.keys())
     doc_names = {r["name"] for r in doc_rows}
     doc_by_name = {r["name"]: r for r in doc_rows}
     issues = []
-    for n in api_names - doc_names:
+    for n in sorted(api_names - doc_names):
         issues.append(f"  [doc 缺少] {kind} 参数: {n}")
-    for n in doc_names - api_names:
+    for n in sorted(doc_names - api_names):
         issues.append(f"  [api 已无] {kind} 参数: {n}")
-    for n in api_names & doc_names:
+    for n in sorted(api_names & doc_names):
         api_p = api_params[n]
         doc_p = doc_by_name.get(n)
         if doc_p:
             if doc_p.get("required") != api_p["required"]:
                 issues.append(f"  [必填不一致] {kind}.{n}: api required={api_p['required']}, doc={doc_p.get('required')}")
+            api_t = normalize_type(api_p.get("type") or "")
+            doc_t = normalize_type(doc_p.get("type") or "")
+            if api_t and doc_t and api_t != doc_t:
+                issues.append(f"  [类型不一致] {kind}.{n}: api type={api_p.get('type')}, doc={doc_p.get('type')}")
+            api_d = normalize_desc(api_p.get("description") or "")
+            doc_d = normalize_desc(doc_p.get("description") or "")
+            # 仅当双方都提供了非占位描述时才比较，避免因空描述引入噪音
+            if api_d != "-" and doc_d != "-" and api_d != doc_d:
+                issues.append(f"  [描述不一致] {kind}.{n}")
     return issues
 
 
@@ -148,12 +241,14 @@ def main() -> None:
     parser.add_argument("--doc-type", required=True, choices=["console", "admin", "client"])
     parser.add_argument("--doc-file", required=True, help="Path to .md doc file")
     parser.add_argument("--filter-path", default="", help="Regex to filter paths (optional)")
+    parser.add_argument("--exemptions-file", default="", help="Optional exemptions json file")
     args = parser.parse_args()
 
     spec = load_spec(args.json)
     api_map = build_api_map(spec)
     doc_content = Path(args.doc_file).read_text(encoding="utf-8")
     pattern = re.compile(args.filter_path) if args.filter_path else None
+    exemptions = load_exemptions(args.exemptions_file or None, args.doc_type)
 
     doc_apis = set()
     total_issues = 0
@@ -161,13 +256,18 @@ def main() -> None:
 
     for path, method, params_block, body_block, curl in extract_sections(doc_content):
         key = (path, method)
+        endpoint_key = f"{method} {path}"
         doc_apis.add(key)
         if pattern and not pattern.search(path):
             continue
         if key not in api_map:
-            print(f"## {method} {path}")
-            print("  [api.json 中无此 path+method]\n")
-            total_issues += 1
+            issues = apply_issue_exemptions(endpoint_key, ["  [api.json 中无此 path+method]"], exemptions)
+            if issues:
+                print(f"## {method} {path}")
+                for i in issues:
+                    print(i)
+                print()
+                total_issues += len(issues)
             continue
 
         spec_entry = api_map[key]
@@ -188,6 +288,7 @@ def main() -> None:
         if curl and curl_has_placeholders(curl):
             issues.append("  [curl 示例] 使用占位符 (param=paramName)，建议改为实际示例值")
 
+        issues = apply_issue_exemptions(endpoint_key, issues, exemptions)
         if issues:
             print(f"## {method} {path}")
             for i in issues:
@@ -201,8 +302,11 @@ def main() -> None:
         for path, method in sorted(only_in_api):
             if pattern and not pattern.search(path):
                 continue
+            endpoint_key = f"{method} {path}"
+            if is_api_only_exempt(endpoint_key, exemptions):
+                continue
             print(f"  {method} {path}")
-        total_issues += len(only_in_api)
+            total_issues += 1
 
     print(f"\n--- 合计差异/问题数: {total_issues} ---")
     sys.exit(0)

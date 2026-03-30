@@ -1,0 +1,74 @@
+{
+  "doc_types": {
+    "admin": {
+      "POST /v3/admin/core/ops/raft": {
+        "ignore_issues": [
+          "  [api 已无] body 参数: changePeers",
+          "  [api 已无] body 参数: doSnapshot",
+          "  [api 已无] body 参数: removePeer",
+          "  [api 已无] body 参数: removePeers",
+          "  [api 已无] body 参数: restRaftCluster",
+          "  [api 已无] body 参数: transferLeader"
+        ]
+      },
+      "PUT /v3/admin/ai/mcp": {
+        "ignore_issues": [
+          "  [api 已无] query 参数: capabilities",
+          "  [api 已无] query 参数: data",
+          "  [api 已无] query 参数: defaultCredential",
+          "  [api 已无] query 参数: description",
+          "  [api 已无] query 参数: enabled",
+          "  [api 已无] query 参数: frontProtocol",
+          "  [api 已无] query 参数: id",
+          "  [api 已无] query 参数: in",
+          "  [api 已无] query 参数: inputSchema",
+          "  [api 已无] query 参数: invokeContext",
+          "  [api 已无] query 参数: is_latest",
+          "  [api 已无] query 参数: localServerConfig",
+          "  [api 已无] query 参数: name",
+          "  [api 已无] query 参数: protocol",
+          "  [api 已无] query 参数: release_date",
+          "  [api 已无] query 参数: remoteServerConfig",
+          "  [api 已无] query 参数: repository",
+          "  [api 已无] query 参数: scheme",
+          "  [api 已无] query 参数: securitySchemes",
+          "  [api 已无] query 参数: templates",
+          "  [api 已无] query 参数: tools",
+          "  [api 已无] query 参数: toolsMeta",
+          "  [api 已无] query 参数: type",
+          "  [api 已无] query 参数: version",
+          "  [api 已无] query 参数: versionDetail"
+        ]
+      },
+      "POST /v3/admin/ai/mcp": {
+        "ignore_issues": [
+          "  [api 已无] query 参数: capabilities",
+          "  [api 已无] query 参数: data",
+          "  [api 已无] query 参数: defaultCredential",
+          "  [api 已无] query 参数: description",
+          "  [api 已无] query 参数: enabled",
+          "  [api 已无] query 参数: frontProtocol",
+          "  [api 已无] query 参数: id",
+          "  [api 已无] query 参数: in",
+          "  [api 已无] query 参数: inputSchema",
+          "  [api 已无] query 参数: invokeContext",
+          "  [api 已无] query 参数: is_latest",
+          "  [api 已无] query 参数: localServerConfig",
+          "  [api 已无] query 参数: name",
+          "  [api 已无] query 参数: protocol",
+          "  [api 已无] query 参数: release_date",
+          "  [api 已无] query 参数: remoteServerConfig",
+          "  [api 已无] query 参数: repository",
+          "  [api 已无] query 参数: scheme",
+          "  [api 已无] query 参数: securitySchemes",
+          "  [api 已无] query 参数: templates",
+          "  [api 已无] query 参数: tools",
+          "  [api 已无] query 参数: toolsMeta",
+          "  [api 已无] query 参数: type",
+          "  [api 已无] query 参数: version",
+          "  [api 已无] query 参数: versionDetail"
+        ]
+      }
+    }
+  }
+}

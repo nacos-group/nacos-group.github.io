@@ -61,6 +61,20 @@ def get_schema_ref(schema: dict) -> Optional[str]:
 
 
 def parse_parameters(op: dict, components: dict) -> list[dict]:
+    def infer_param_type(schema_obj: dict, media_type: str = "") -> str:
+        ptype = "string"
+        if isinstance(schema_obj, dict):
+            ptype = schema_obj.get("type") or "string"
+            fmt = (schema_obj.get("format") or "").lower()
+            # OpenAPI commonly models file upload fields as string(binary).
+            if fmt == "binary" or ptype == "file":
+                return "file"
+            if media_type.startswith("multipart/") and ptype == "string" and "file" in fmt:
+                return "file"
+            if "oneOf" in schema_obj or "anyOf" in schema_obj:
+                return "object"
+        return ptype
+
     params = []
     for p in op.get("parameters") or []:
         p = resolve_ref(p, components)
@@ -70,11 +84,7 @@ def parse_parameters(op: dict, components: dict) -> list[dict]:
         if not name:
             continue
         schema = p.get("schema") or resolve_ref(p.get("schema") or {}, components)
-        ptype = "string"
-        if isinstance(schema, dict):
-            ptype = schema.get("type") or "string"
-            if "oneOf" in schema or "anyOf" in schema:
-                ptype = "object"
+        ptype = infer_param_type(schema)
         required = p.get("required", False)
         if isinstance(required, list):
             required = name in required
@@ -91,6 +101,7 @@ def parse_parameters(op: dict, components: dict) -> list[dict]:
         content = (body or {}).get("content") or {}
         for ct, media in content.items():
             if "json" in ct or "schema" in media:
+                media_type = ct.split(";")[0].strip().lower()
                 schema = (media.get("schema") or {})
                 schema = resolve_ref(schema, components)
                 if schema.get("type") == "object" and "properties" in schema:
@@ -100,7 +111,7 @@ def parse_parameters(op: dict, components: dict) -> list[dict]:
                         params.append({
                             "name": prop_name,
                             "in": "body",
-                            "type": (prop_schema.get("type") or "string") if isinstance(prop_schema, dict) else "string",
+                            "type": infer_param_type(prop_schema, media_type) if isinstance(prop_schema, dict) else "string",
                             "required": prop_name in req_list,
                             "description": (prop_schema.get("description") or "-").strip() if isinstance(prop_schema, dict) else "-",
                         })
