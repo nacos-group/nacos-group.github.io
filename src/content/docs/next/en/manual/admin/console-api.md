@@ -3091,11 +3091,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=
 | 参数名                     | 参数类型         | 是否必填  | 描述                                                      |
 |-------------------------|--------------|-------|---------------------------------------------------------|
 | `namespaceId`           | `string` | 否     | MCP服务的命名空间ID，默认为`public`                                |
-| `latest`                | `string` | 否     | 是否按最新版本更新，如 `true`。                                      |
-| `serverSpecification`   | `jsonString` | **是** | MCP服务的描述详情                                              |
-| `toolSpecification`     | `jsonString` | 否     | MCP服务的工具描述详情                                            |
+| `latest`                | `boolean` | 否     | 是否按最新版本更新，如 `true`。                                      |
+| `serverSpecification`   | `string` | **是** | MCP服务的描述详情                                              |
+| `toolSpecification`     | `string` | 否     | MCP服务的工具描述详情                                            |
 | `endpointSpecification` | `string` | 否     | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效                          |
-| `overrideExisting `    | `boolean` | 否     | MCP服务更新时是否覆盖原endpointSpecification，默认不覆盖，仅在非`stdio`协议时生效 |
+| `overrideExisting`      | `boolean` | 否     | MCP服务更新时是否覆盖原endpointSpecification，默认不覆盖，仅在非`stdio`协议时生效 |
 
 其中`serverSpecification`、`toolSpecification`、`endpointSpecification`参数的详细内容如下：
 
@@ -3217,8 +3217,8 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 | 参数名                     | 参数类型         | 是否必填  | 描述                             |
 |-------------------------|--------------|-------|--------------------------------|
 | `namespaceId`           | `string` | 否     | MCP服务的命名空间ID，默认为`public`       |
-| `serverSpecification`   | `jsonString` | **是** | MCP服务的描述详情                     |
-| `toolSpecification`     | `jsonString` | 否     | MCP服务的工具描述详情                   |
+| `serverSpecification`   | `string` | **是** | MCP服务的描述详情                     |
+| `toolSpecification`     | `string` | 否     | MCP服务的工具描述详情                   |
 | `endpointSpecification` | `string` | 否     | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效 |
 
 其中`serverSpecification`、`toolSpecification`、`endpointSpecification`参数的详细内容如下：
@@ -3501,9 +3501,9 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/list?pageNo=1&pageSize=100&
 | 参数名             | 参数类型     | 是否必填  | 描述                                      |
 |-----------------|----------|-------|-----------------------------------------|
 | `transportType` | `string` | **是** | MCP服务的传输协议类型，`mcp-sse`或`mcp-streamable` |
-| `baseUrl`       | `null`   | **是** | MCP服务的baseURL                           |
-| `endpoint`      | `null`   | **是** | MCP服务的可访问端点                             |
-| `authToken`     | `null`   | 否     | MCP服务访问的身份Token                         |
+| `baseUrl`       | `string` | **是** | MCP服务的baseURL                           |
+| `endpoint`      | `string` | **是** | MCP服务的可访问端点                             |
+| `authToken`     | `string` | 否     | MCP服务访问的身份Token                         |
 
 #### 返回数据
 
@@ -4064,7 +4064,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a?namespaceId=public&agentNam
 | 参数名                | 参数类型        | 是否必填  | 描述                                                                                                              |
 |--------------------|-------------|-------|-----------------------------------------------------------------------------------------------------------------|
 | `namespaceId`      | `string` | 否     | AgentCard所属的命名空间，默认`public`                                                                                     |
-| `agentCard`        | `AgentCard` | **是** | AgentCard的完整对象，详情请参考[标准AgentCard](https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure) |
+| `agentCard`        | `string` | **是** | AgentCard的完整对象，详情请参考[标准AgentCard](https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure) |
 | `registrationType` | `string` | 否     | AgentCard的默认注册类型，可选`URL`和`SERVICE`。未填写时根据此AgentCard的默认`registrationType`进行`url`的生成                              |
 | `setAsLatest`      | `boolean` | 否     | 是否设置此版本为最新发布版本，默认为false                                                                                         |
 
@@ -4121,7 +4121,7 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/a2a' \
 | 参数名                | 参数类型        | 是否必填  | 描述                                                                                                              |
 |--------------------|-------------|-------|-----------------------------------------------------------------------------------------------------------------|
 | `namespaceId`      | `string` | 否     | AgentCard所属的命名空间，默认`public`                                                                                     |
-| `agentCard`        | `AgentCard` | **是** | AgentCard的完整对象，详情请参考[标准AgentCard](https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure) |
+| `agentCard`        | `string` | **是** | AgentCard的完整对象，详情请参考[标准AgentCard](https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure) |
 | `registrationType` | `string` | 否     | AgentCard的默认注册类型，可选`URL`和`SERVICE`。未填写时根据此AgentCard的默认`registrationType`进行`url`的生成, 默认值为`URL`                   |
 
 #### 返回数据
@@ -4806,117 +4806,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills?namespaceId=public&skill
 }
 ```
 
-### 7.2. 更新Skill
-
-#### 接口描述
-
-通过该接口，可以更新托管在Nacos上的Skill。
-
-#### 请求方式
-
-`PUT`
-
-#### 鉴权状态
-
-需要具有对应`命名空间写入`权限的用户身份。
-
-#### 请求URL
-
-`/v3/console/ai/skills`
-
-#### 请求参数
-
-| 参数名 | 类型 | 必填 | 参数描述 |
-|--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `skillCard` | `object` | **是** | Skill 卡片 JSON，符合 Skill 定义结构，包含 name、description、instruction 等。 |
-| `skillName` | `string` | 否 | 要更新的 Skill 名称；可从 skillCard 中解析时可省略。 |
-| `version` | `string` | 否 | 要更新的版本号；不传则更新最新版本。 |
-
-#### 返回数据
-
-| 参数名 | 参数类型 | 描述 |
-|--------|----------|------|
-| data | `string` | 操作结果，成功时为 `ok`。 |
-
-#### 示例
-
-* 请求示例
-
-```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills' \
-  -d 'namespaceId=public' \
-  -d 'skillCard=' \
-  -d 'skillName=' \
-  -d 'version='
-```
-
-* 返回示例
-
-```json
-{
-  "code": 0,
-  "message": "success",
-  "data": "ok"
-}
-```
-
-### 7.3. 注册Skill
-
-#### 接口描述
-
-通过该接口，可以注册托管在Nacos上的Skill。
-
-#### 请求方式
-
-`POST`
-
-#### 鉴权状态
-
-需要具有对应`命名空间写入`权限的用户身份。
-
-#### 请求URL
-
-`/v3/console/ai/skills`
-
-#### 请求参数
-
-| 参数名 | 类型 | 必填 | 参数描述 |
-|--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `skillCard` | `object` | **是** | Skill 卡片 JSON，符合 Skill 定义结构。 |
-| `skillName` | `string` | 否 | 指定 Skill 名称；可从 skillCard 中解析时可省略。 |
-| `version` | `string` | 否 | 版本号，如 `1.0.0`；不传可由服务端生成。 |
-
-#### 返回数据
-
-| 参数名 | 参数类型 | 描述 |
-|--------|----------|------|
-| data | `string` | 操作结果，成功时为 `ok`。 |
-
-#### 示例
-
-* 请求示例
-
-```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills' \
-  -d 'namespaceId=public' \
-  -d 'skillCard=' \
-  -d 'skillName=' \
-  -d 'version='
-```
-
-* 返回示例
-
-```json
-{
-  "code": 0,
-  "message": "success",
-  "data": "ok"
-}
-```
-
-### 7.4. 删除Skill
+### 7.2. 删除Skill
 
 #### 接口描述
 
@@ -4966,7 +4856,7 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/skills?namespaceId=public&sk
 }
 ```
 
-### 7.5. 查询Skill列表
+### 7.3. 查询Skill列表
 
 #### 接口描述
 
@@ -5038,7 +4928,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/list?pageNo=1&pageSize=1
 }
 ```
 
-### 7.6. 上传Skill（ZIP）
+### 7.4. 上传Skill（ZIP）
 
 #### 接口描述
 
@@ -5062,8 +4952,9 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/list?pageNo=1&pageSize=1
 
 | 参数名         | 类型     | 必填 | 参数描述                                                                 |
 |-------------|--------|----|----------------------------------------------------------------------|
-| `file`      | `file` | 否  | 上传的 ZIP 文件（multipart/form-data），ZIP 内需包含符合规范的 Skill 定义文件。           |
-| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。                                            |
+| `file`      | `file` | 否  | 包含 Skill 定义的 ZIP 文件。                                                          |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。                                                |
+| `overwrite` | `boolean` | 否 | 导入时若 Skill 已存在是否覆盖，默认 `false`。                                           |
 
 #### 返回数据
 
@@ -5312,8 +5203,8 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/optimize' -H 'Cont
 | 参数名                | 类型     | 必填 | 参数描述           |
 |--------------------|--------|----|----------------|
 | `backgroundInfo`     | `string` | 否 | 背景信息。           |
-| `selectedMcpTools`   | `string` | 否 | 选中的 MCP 工具。      |
-| `conversationHistory` | `string` | 否 | 对话历史。           |
+| `selectedMcpTools`   | `array` | 否 | 选中的 MCP 工具。      |
+| `conversationHistory` | `object` | 否 | 对话历史。           |
 
 #### 返回数据
 
@@ -5357,11 +5248,11 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/generate' -H 'Conte
 
 | 参数名                | 类型     | 必填 | 参数描述           |
 |--------------------|--------|----|----------------|
-| `conversationHistory` | `string` | 否 | 对话历史。           |
+| `conversationHistory` | `object` | 否 | 对话历史。           |
 | `targetFileName`      | `string` | 否 | 目标文件名。          |
 | `optimizationGoal`    | `string` | 否 | 优化目标。           |
 | `skill`               | `string` | 否 | 待优化的 Skill 内容。   |
-| `selectedMcpTools`   | `string` | 否 | 选中的 MCP 工具。      |
+| `selectedMcpTools`   | `array` | 否 | 选中的 MCP 工具。      |
 
 #### 返回数据
 
