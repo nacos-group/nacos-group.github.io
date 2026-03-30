@@ -12,15 +12,15 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## 1. 升级版本兼容性
 
-当前文档所对应的版本为3.1.1，所有Nacos版本可升级到该版本的兼容性如下：
+当前文档所对应的版本为3.2.0（开发版本），所有Nacos版本可升级到该版本的兼容性如下：
 
 | Nacos版本 | 是否支持升级到当前版本 | 备注 |
 |----------|--------------------|------|
 | 0.X ～ 1.X | 不支持 | 0.X ~ 1.X 版本需要先升级到2.0以上的版本，请参考[Nacos2.0升级文档](https://nacos.io/docs/v2/upgrading/200-upgrading/) 先升级到2.0或2.1版本后再进行升级 |
-| 2.0.X | 支持 | 3.1.X版本支持从 2.0.X 升级到 3.1.X， 但数据库表结构有发生变化，请升级前对比[mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)文件，并应用新的表结构后进行升级 |
-| 2.1.X ~ 2.4.X | 支持 | 3.1.X版本支持从 2.1.X ~ 2.4.X 升级到 3.1.X，但数据库表结构有发生变化，请升级前对比[mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)文件，并应用新的表结构后进行升级 |
-| 2.5.X | 支持 | 3.1.X版本支持从 2.5.X 升级到 3.1.X |
-| 3.0.X | 支持 | 3.1.X版本支持从 3.0.X 升级到 3.1.X |
+| 2.0.X | 支持 | 3.2.X版本支持从 2.0.X 升级到 3.2.X， 但数据库表结构有发生变化，请升级前对比[mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)文件，并应用新的表结构后进行升级 |
+| 2.1.X ~ 2.4.X | 支持 | 3.2.X版本支持从 2.1.X ~ 2.4.X 升级到 3.2.X，但数据库表结构有发生变化，请升级前对比[mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)文件，并应用新的表结构后进行升级 |
+| 2.5.X | 支持 | 3.2.X版本支持从 2.5.X 升级到 3.2.X |
+| 3.0.X ~ 3.1.X | 支持 | 3.2.X版本支持从 3.0.X ~ 3.1.X 升级到 3.2.X |
 
 ### 1.1 Client Compatibility
 
@@ -29,7 +29,7 @@ Compatibility between Nacos 3.x server and client versions is as follows:
 | Client Version | Compatible | Remarks |
 |----------------|------------|---------|
 | 0.x | No | - |
-| 1.x | Yes | Support will be removed after v3.2. Please upgrade to 2.x or 3.x client as soon as possible. See [issue #12922](https://github.com/alibaba/nacos/issues/12922) |
+| 1.x | No | To continue using 1.x clients, please integrate [nacos-api-legacy-adapter](https://github.com/nacos-group/nacos-api-legacy-adapter) yourself. |
 | 2.x | Yes | - |
 | 3.x | Yes | - |
 
@@ -217,3 +217,133 @@ NACOS_AUTH_IDENTITY_VALUE=${任意字符串}
     ```
   </TabItem>
 </Tabs>
+
+## 3. Legacy HTTP API Removal (Nacos 3.2.0+)
+
+### 3.1 API Removal Notice
+
+:::caution[Breaking Change]
+Starting from **Nacos 3.2.0**, the legacy v1 and v2 HTTP APIs have been **removed** from the main Nacos repository.
+:::
+
+The old v1 and v2 HTTP APIs are no longer included in the default Nacos server distribution. These APIs have been migrated to a separate legacy adapter module.
+
+**Affected APIs:**
+- All v1 REST APIs (e.g., `/nacos/v1/ns/instance`, `/nacos/v1/cs/configs`)
+- All v2 REST APIs
+
+### 3.2 Migration Options
+
+You have two options:
+
+#### Option 1: Migrate to New APIs and Clients (Recommended)
+- Use the new v3 APIs
+  - [v3 Admin API Documentation](./admin-api)
+  - [v3 Console API Documentation](./console-api)
+- Upgrade to the latest Nacos client SDK
+  - [Nacos Client Documentation](../user/overview/other-language)
+
+#### Option 2: Use Legacy API Adapter (Temporary Solution)
+If you need time to migrate, you can temporarily restore the old APIs using the legacy adapter.
+
+### 3.3 Installing the Legacy API Adapter
+
+:::danger[Important Warnings]
+- The legacy adapter is **NOT guaranteed** to be supported in future Nacos versions
+- This module is **NOT actively maintained** by the community
+- This is a **temporary solution** only for urgent migration scenarios
+- **We strongly recommend migrating to v3 APIs and new clients as soon as possible**
+:::
+
+#### Step 1: Build or Download the Adapter
+
+**Option A: Download from Release**
+```bash
+# Download from GitHub releases
+wget https://github.com/nacos-group/nacos-api-legacy-adapter/releases/download/v${version}/nacos-api-legacy-adapter-${version}.jar
+```
+
+**Option B: Build from Source**
+```bash
+git clone https://github.com/nacos-group/nacos-api-legacy-adapter.git
+cd nacos-api-legacy-adapter
+mvn clean install
+# Output: target/nacos-api-legacy-adapter-${version}.jar
+```
+
+**Requirements:**
+- JDK 17+
+- Maven 3.6+
+- The `nacos.version` in `pom.xml` must match the target Nacos server version
+
+#### Step 2: Install the Adapter
+
+**For Nacos Server Deployment:**
+
+1. Place the JAR file in the Nacos `plugins` directory:
+```bash
+cp nacos-api-legacy-adapter-${version}.jar ${NACOS_HOME}/plugins/
+```
+
+2. Restart Nacos server:
+```bash
+sh ${NACOS_HOME}/bin/shutdown.sh
+sh ${NACOS_HOME}/bin/startup.sh -m standalone  # Standalone mode
+# or
+sh ${NACOS_HOME}/bin/startup.sh                # Cluster mode
+```
+
+3. The adapter will automatically load when the JAR is in the classpath.
+
+**For Embedded/Custom Applications:**
+
+Add the Maven dependency:
+```xml
+<dependency>
+    <groupId>com.alibaba.nacos</groupId>
+    <artifactId>nacos-api-legacy-adapter</artifactId>
+    <version>${nacos.version}</version>
+</dependency>
+```
+
+#### Step 3: Verify Installation
+
+Check Nacos server logs for confirmation:
+```bash
+tail -f ${NACOS_HOME}/logs/nacos.log
+```
+
+Look for log messages indicating the legacy adapter has loaded.
+
+#### Step 4: Test Legacy APIs
+
+Test that your old v1/v2 API calls work again:
+```bash
+curl -X GET "http://localhost:8848/nacos/v1/ns/instance/list?serviceName=test"
+```
+
+### 3.4 Version Compatibility
+
+| Nacos Version | Legacy Adapter Version | Compatibility |
+|--------------|----------------------|---------------|
+| 3.2.0        | 3.2.0               | ✅ Compatible  |
+| 3.3.0+       | Match Nacos version | ⚠️ Check compatibility |
+
+**Important:** The adapter version must match your Nacos server version.
+
+### 3.5 Planning Your Migration
+
+While using the legacy adapter, plan your migration:
+
+1. **Audit your API usage** - Identify all v1/v2 API calls
+2. **Review new v3 APIs** - Understand the new API structure
+3. **Update clients** - Upgrade to latest Nacos client SDKs
+4. **Test thoroughly** - Test in staging environment
+5. **Migrate gradually** - Use feature flags or canary deployments
+6. **Remove adapter** - Once migration is complete, remove the adapter JAR
+
+### 3.6 Getting Help
+
+- Legacy Adapter Repository: https://github.com/nacos-group/nacos-api-legacy-adapter
+- Nacos Main Repository: https://github.com/alibaba/nacos
+- Community Support: [Nacos Community](https://nacos.io/community/)

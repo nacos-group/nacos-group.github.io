@@ -87,6 +87,10 @@ Add VM options
 
 ```
 -Dnacos.standalone=true -Dnacos.deployment.type=merged
+-Dspring.profiles.active=dev
+--add-opens=java.base/java.lang=ALL-UNNAMED
+--add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+--add-opens=java.base/java.util=ALL-UNNAMED
 ```
 
 ![img.png](/img/local-idea-start.png)

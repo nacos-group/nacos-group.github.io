@@ -175,6 +175,13 @@
           "en": "Console API"
         },
         "link": "docs/manual/admin/console-api"
+      },
+      {
+        "label": "Nacos CLI 使用指南",
+        "translations": {
+          "en": "Nacos CLI User Guide"
+        },
+        "link": "docs/manual/admin/nacos-cli"
       }
     ]
   },

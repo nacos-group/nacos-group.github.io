@@ -121,6 +121,6 @@ nacos.core.auth.plugin.nacos.token.secret.key` Updated:
 
 ### 3.6. 进入Nacos 控制台
 
-启动完成后，您可以在浏览器中访问`http://{ip}:{port}/index.html`，其中`{ip}`为Nacos 控制台的ip地址，`{port}`为Nacos 控制台的端口，默认为`8080`。
+启动完成后，您可以在浏览器中访问`http://{ip}:{port}`，其中`{ip}`为Nacos 控制台的ip地址，`{port}`为Nacos 控制台的端口，默认为`8080`。
 
 Nacos控制台的使用，请参考文档[控制台手册](../console.md)

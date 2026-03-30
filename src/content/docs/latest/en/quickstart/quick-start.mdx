@@ -3,74 +3,111 @@ title: Nacos Quick Start
 keywords: [Nacos, Quick Start]
 description: This Quick Start Guide helps you quickly download, install, and use Nacos on your computer.
 sidebar:
-    order: 1
+  order: 1
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# Nacos 快速开始
+# Nacos Quick Start
 
-这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。
+This Quick Start Guide helps you quickly download, install, and use Nacos on your computer.
 
 :::note
-- 快速开始旨在帮助您快速上手安装、部署及入门使用Nacos，本快速开始所生产出的Nacos服务为**单机模式**及**未开启客户端访问鉴权**，建议仅在测试中使用，若在实际生产环境中部署，请部署**集群模式**并**开启鉴权**，以避免存在**稳定性和安全性**的风险。
-- Nacos定义为一个IDC内部应用组件，并非面向公网环境的产品，建议在内部隔离网络环境中部署，**强烈不建议**部署在公共网络环境。
+- The Quick Start is designed to help you quickly get started with installing, deploying, and using Nacos. The Nacos service produced by this Quick Start runs in **standalone mode** without **client access authentication** enabled. It is recommended for testing purposes only. For production environments, please deploy in **cluster mode** with **authentication enabled** to avoid **stability and security** risks.
+- Nacos is designed as an internal IDC application component, not a product for public network environments. It is recommended to deploy in an isolated internal network environment. It is **strongly discouraged** to deploy in public network environments.
 :::
 
-## 0. 版本选择
+## 0. Version Selection
 
-您可以通过Nacos的[版本下载页面](/download/nacos-server/)、[release notes](https://github.com/alibaba/nacos/releases) 及 [发布声明](/news/release/)中找到每个版本支持的功能的介绍，生产环境当前推荐的稳定版本为`3.1.1`.
+You can find the features supported by each version through Nacos's [version download page](/download/nacos-server/), [release notes](https://github.com/alibaba/nacos/releases), and [release announcements](/news/release/). The currently recommended stable version for production environments is `3.2.0`.
 
-## 1. 预备环境准备
+## 1. Prerequisites
 
-Nacos 依赖 [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/) 环境来运行，请确保是在以下版本环境中安装使用:
+Nacos relies on a [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/) environment to run. Please ensure you have the following environment set up:
 
-1. 64 bit OS，支持 Linux/Unix/Mac/Windows，推荐选用 Linux/Unix/Mac。
-2. 64 bit JDK 17+；[下载](https://www.oracle.com/java/technologies/downloads/#java17) & [配置](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/)。
+1. 64-bit OS, supporting Linux/Unix/Mac/Windows. Linux/Unix/Mac is recommended.
+2. 64-bit JDK 17+; [Download](https://www.oracle.com/java/technologies/downloads/#java17) & [Configure](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/).
 
-## 2. 下载安装包
+## 2. Download and Start Nacos
 
-你可以通过Nacos官网网站及Github两种方式来获取 **Nacos 发行包** 。
+### 2.1. One-Click Deployment with nacos-setup (Recommended)
+
+[nacos-setup](https://github.com/nacos-group/nacos-setup) provides one-click automated deployment, automatically handling download, authentication configuration, port detection, and Java environment verification.
+
+Install nacos-setup:
 
 <Tabs>
-  <TabItem label="官网">
-    进入Nacos官网[版本下载页面](/download/nacos-server/)，选择 [稳定版本](/download/nacos-server/#稳定版本)， 然后点击`二进制包下载`列中的`${nacos.version}.zip`进行下载。
-
-    > 注意：有时大量用户同时进行下载时，可能会遇到下载限流失败的情况，若出现下载限流失败，请稍等后重试，或采用`从 Github 下载方式`。
+  <TabItem label="Linux/macOS">
+    `curl -fsSL https://nacos.io/nacos-installer.sh | sudo bash`
   </TabItem>
-  <TabItem label="Github">
-    进入Nacos Github 的 [最新稳定版本](https://github.com/alibaba/nacos/releases) ，选择需要下载的Nacos版本，在`Assets`中点击下载 `nacos-server-$version.zip` 包。
+  <TabItem label="Windows (PowerShell)">
+    `powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -UseBasicParsing https://nacos.io/nacos-installer.ps1 | iex"`
   </TabItem>
 </Tabs>
 
-## 3. 解压缩Nacos 发行包
+Start Nacos:
+
+```bash
+# One-click deploy the latest standalone Nacos
+nacos-setup
+
+# One-click deploy a specific version of standalone Nacos
+nacos-setup -v 3.2.0
+
+# One-click deploy the latest Nacos cluster
+nacos-setup -c cluster
+
+# Configure external storage globally, enter database address, port, username and password, then re-run nacos-setup
+nacos-setup --datasource-conf
+```
+
+> For more usage, please refer to [One-Click Deployment with nacos-setup](../manual/admin/deployment/deployment-nacos-setup.md).
+
+### 2.2. Manual Download and Deployment
+
+#### 2.2.1. Download the Package
+
+You can obtain the **Nacos distribution package** through the Nacos official website or Github.
+
+<Tabs>
+  <TabItem label="Official Website">
+    Go to the Nacos official [version download page](/download/nacos-server/), select a [stable version](/download/nacos-server/#stable-version), and click `${nacos.version}.zip` in the `Binary Package Download` column to download.
+
+    > Note: When many users are downloading simultaneously, you may encounter download rate limiting. If this happens, please wait and try again, or use the `Github download method`.
+  </TabItem>
+  <TabItem label="Github">
+    Go to the Nacos Github [latest stable release](https://github.com/alibaba/nacos/releases), select the desired Nacos version, and click to download the `nacos-server-$version.zip` package from `Assets`.
+  </TabItem>
+</Tabs>
+
+#### 2.2.2. Extract the Nacos Distribution Package
 
 ```bash
   unzip nacos-server-$version.zip 
-  # 或者 tar -xvf nacos-server-$version.tar.gz
+  # or tar -xvf nacos-server-$version.tar.gz
   cd nacos/bin
 ```
 
-## 4.启动服务器
+#### 2.2.3. Start the Server
 
-* 注：Nacos的运行建议至少在2C4G 60G的机器配置下运行。
+* Note: Nacos is recommended to run on machines with at least 2 CPU cores, 4GB RAM, and 60GB disk space.
 
 <Tabs>
   <TabItem label="Linux/Unix/Mac">
-    启动命令(standalone代表着单机模式运行，非集群模式):
+    Start command (standalone means running in standalone mode, not cluster mode):
 
     `sh startup.sh -m standalone`
 
-    如果您使用的是ubuntu系统，或者运行脚本报错提示[[符号找不到，可尝试如下运行：`bash startup.sh -m standalone`
+    If you are using Ubuntu, or the script reports an error about the `[[` symbol not found, try running: `bash startup.sh -m standalone`
   </TabItem>
   <TabItem label="Windows">
-    启动命令(standalone代表着单机模式运行，非集群模式):
+    Start command (standalone means running in standalone mode, not cluster mode):
 
     `startup.cmd -m standalone`
   </TabItem>
 </Tabs>
 
-随后启动程序会提示您输入`3个`鉴权相关配置（Nacos从3.0.0版本开始默认启用控制台鉴权功能，因此如下3个鉴权相关配置必须填写）如下所示：
+The startup program will then prompt you to enter `3` authentication-related configurations (since Nacos 3.0.0, console authentication is enabled by default, so the following 3 authentication configurations must be filled in):
 
 ```
 `nacos.core.auth.plugin.nacos.token.secret.key` is missing, please set with Base64 string: ${your_input_token_secret_key}
@@ -85,62 +122,63 @@ nacos.core.auth.plugin.nacos.token.secret.key` Updated:
 ```
 
 :::note
-若您已经在 `conf/application.properties` 中设置过这3个配置，则不会提示您输入。
+If you have already set these 3 configurations in `conf/application.properties`, you will not be prompted.
 :::
 
-## 5.验证Nacos服务是否启动成功
+## 3. Verify Nacos Service Started Successfully
 
-进入`${nacos.home}/logs/` 目录下， 使用`tail -f start.out` 查看日志，如果看到如下日志，说明服务启动成功。
+Navigate to the `${nacos.home}/logs/` directory and use `tail -f start.out` to view the logs. If you see the following log, the service has started successfully.
 
 ```
 Nacos started successfully in stand alone mode. use embedded storage
 ```
 
-可以通过下列服务，快速检验Nacos的功能。
+You can use the following services to quickly verify Nacos functionality.
 
-### 5.1. Nacos控制台页面
+### 3.1. Nacos Console Page
 
-打开任意浏览器，输入地址：`http://127.0.0.1:8080/index.html`, 即可进入Nacos控制台页面。
+Open any browser and enter the address: `http://127.0.0.1:8080` to access the Nacos console page.
 
-> 注意：首次打开会要求初始化管理员用户`nacos`的密码。
+> Note: The first time you open it, you will be asked to initialize the password for the admin user `nacos`.
 
-### 5.2. 服务注册
+### 3.2. Service Registration
 
 `curl -X POST 'http://127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=quickstart.test.service&ip=127.0.0.1&port=8080'`
 
-### 5.3. 服务发现
+### 3.3. Service Discovery
 
 `curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=quickstart.test.service'`
 
-### 5.4. 发布配置
+### 3.4. Publish Configuration
 
 ```shell
-# 登陆获取access token
+# Login to obtain access token
 curl -X POST 'http://127.0.0.1:8848/nacos/v3/auth/user/login' -d 'username=nacos' -d 'password=${your_password}'
-# 使用access token，创建配置
+# Use access token to create configuration
 curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=quickstart.test.config&groupName=test&content=HelloWorld' -H "accessToken:${your_access_token}"
 ```
 
 :::note
-访问Admin API，默认需要使用access token, access token可通过`POST /nacos/v3/auth/user/login`接口获得
+Accessing Admin API requires an access token by default. The access token can be obtained through the `POST /nacos/v3/auth/user/login` endpoint.
 :::
 
-### 5.5. 获取配置
+### 3.5. Get Configuration
 
 `curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/cs/config?dataId=quickstart.test.config&groupName=test'`
 
-## 6.关闭服务器
+## 4. Shutdown Server
 
-### 6.1. Linux/Unix/Mac
+### 4.1. Linux/Unix/Mac
 
 `sh shutdown.sh`
 
-### 6.2. Windows
+### 4.2. Windows
 
 `shutdown.cmd`
 
-或者双击shutdown.cmd运行文件。
+Or double-click the shutdown.cmd file to run it.
 
-## 相关项目
+## Related Projects
 
 * [Nacos](https://github.com/alibaba/nacos)
+* [nacos-setup](https://github.com/nacos-group/nacos-setup)
