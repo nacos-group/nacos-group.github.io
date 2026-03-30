@@ -74,14 +74,14 @@ Nacos 3.X 的运维 API 也提供了Swagger风格的文档，您可以通过访�
 |-----------------------------------------|--------------|-----------------------------------------------------------------------------------------|
 | ${connectionId}                         | `jsonString` | 每条gRPC连接的连接id                                                                           |
 | ${connectionId}.abilityTable            | `jsonString` | 该gRPC连接（即客户端）支持的能力列表                                                                    |
-| ${connectionId}.metaInfo.clientIp       | `String`     | 该gRPC连接的来源IP                                                                            |
-| ${connectionId}.metaInfo.localPort      | `int`        | 该Nacos Server的gRPC端口                                                                    |
-| ${connectionId}.metaInfo.version        | `String`     | 该gRPC连接（即客户端）的版本                                                                        |
-| ${connectionId}.metaInfo.createTime     | `String`     | 该gRPC连接的连接时间                                                                            |
+| ${connectionId}.metaInfo.clientIp       | `string` | 该gRPC连接的来源IP                                                                            |
+| ${connectionId}.metaInfo.localPort      | `integer` | 该Nacos Server的gRPC端口                                                                    |
+| ${connectionId}.metaInfo.version        | `string` | 该gRPC连接（即客户端）的版本                                                                        |
+| ${connectionId}.metaInfo.createTime     | `string` | 该gRPC连接的连接时间                                                                            |
 | ${connectionId}.metaInfo.lastActiveTime | `timestamp`  | 该gRPC连接的最后一次的心跳时间                                                                       |
-| ${connectionId}.metaInfo.labels.source  | `String`     | 该gRPC连接的模块，可选值为`naming`,`config`和`cluster`分别代表注册中心、配置中心以及集群间的连接                         |
-| ${connectionId}.metaInfo.clusterSource  | `boolean`    | 该gRPC连接的是否为集群间连接，为`true`时，`${connectionId}.metaInfo.labels.source`为 `cluster`           |
-| ${connectionId}.metaInfo.sdkSource      | `boolean`    | 该gRPC连接的是否为客户端来源连接，为`true`时，`${connectionId}.metaInfo.labels.source`为 `naming`或`config` |
+| ${connectionId}.metaInfo.labels.source  | `string` | 该gRPC连接的模块，可选值为`naming`,`config`和`cluster`分别代表注册中心、配置中心以及集群间的连接                         |
+| ${connectionId}.metaInfo.clusterSource  | `boolean` | 该gRPC连接的是否为集群间连接，为`true`时，`${connectionId}.metaInfo.labels.source`为 `cluster`           |
+| ${connectionId}.metaInfo.sdkSource      | `boolean` | 该gRPC连接的是否为客户端来源连接，为`true`时，`${connectionId}.metaInfo.labels.source`为 `naming`或`config` |
 
 #### 示例
 
@@ -169,8 +169,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/current'
 
 | 参数名               | 类型        | 必填    | 参数描述                           |
 |-------------------|-----------|-------|--------------------------------|
-| `count`           | `Integer` | **是** | 需要均衡的连接个数                      |
-| `redirectAddress` | `String`  | 否     | 预期均衡的Nacos Server目标，仅提供给客户端参考。 |
+| `count`           | `integer` | **是** | 需要均衡的连接个数                      |
+| `redirectAddress` | `string` | 否     | 预期均衡的Nacos Server目标，仅提供给客户端参考。 |
 
 #### 返回数据
 
@@ -212,8 +212,8 @@ success
 
 | 参数名               | 类型       | 必填    | 参数描述                 |
 |-------------------|----------|-------|----------------------|
-| `connectionId`    | `String` | **是** | 需要均衡的连接Id            |
-| `redirectAddress` | `String` | 否     | 预期均衡的Nacos Server目标。 |
+| `connectionId`    | `string` | **是** | 需要均衡的连接Id            |
+| `redirectAddress` | `string` | 否     | 预期均衡的Nacos Server目标。 |
 
 #### 返回数据
 
@@ -277,18 +277,18 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/reloadClient' -d 
 
 | 参数名                           | 参数类型        | 描述                        |
 |-------------------------------|-------------|---------------------------|
-| `total`                       | `Integer`   | 该集群中所有节点的连接数总和            |
-| `min`                         | `Integer`   | 该集群中所有节点的最小连接数            |
-| `avg`                         | `Integer`   | 该集群中所有节点的平均连接数            |
-| `max`                         | `Integer`   | 该集群中所有节点的最大连接数            |
-| `memberCount`                 | `Integer`   | 该集群中所有节点的个数               |
-| `metricsCount`                | `Integer`   | 该集群中已统计到概览信息的节点个数         |
+| `total`                       | `integer` | 该集群中所有节点的连接数总和            |
+| `min`                         | `integer` | 该集群中所有节点的最小连接数            |
+| `avg`                         | `integer` | 该集群中所有节点的平均连接数            |
+| `max`                         | `integer` | 该集群中所有节点的最大连接数            |
+| `memberCount`                 | `integer` | 该集群中所有节点的个数               |
+| `metricsCount`                | `integer` | 该集群中已统计到概览信息的节点个数         |
 | `detail`                      | `jsonArray` | 该集群中所有节点的概览信息，格式见下表       |
-| `detail[].address`            | `String`    | 节点地址                      |
-| `detail[].metric.load`        | `Double`    | 节点的负载率，主要对应节点的Load指标，参考值  |
-| `detail[].metric.sdkConCount` | `Integer`   | 连接到该节点的SDK连接数，主要对应客户端连接数  |
-| `detail[].metric.conCount`    | `Integer`   | 连接到该节点的总连接数，包含了SDK和集群间的连接 |
-| `detail[].metric.cpu`         | `Double`    | 节点的CPU使用率，参考值             |
+| `detail[].address`            | `string` | 节点地址                      |
+| `detail[].metric.load`        | `number` | 节点的负载率，主要对应节点的Load指标，参考值  |
+| `detail[].metric.sdkConCount` | `integer` | 连接到该节点的SDK连接数，主要对应客户端连接数  |
+| `detail[].metric.conCount`    | `integer` | 连接到该节点的总连接数，包含了SDK和集群间的连接 |
+| `detail[].metric.cpu`         | `number` | 节点的CPU使用率，参考值             |
 
 #### 示例
 
@@ -350,20 +350,20 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/cluster'
 
 | 参数名                           | 参数类型         | 描述                                             |
 |-------------------------------|--------------|------------------------------------------------|
-| `ip`                          | `String`     | 节点IP                                           |
-| `port`                        | `Integer`    | 节点端口                                           |
-| `state`                       | `String`     | 节点状态，可选值为`UP`、`DOWN`、`SUSPICIOUS`              |
+| `ip`                          | `string` | 节点IP                                           |
+| `port`                        | `integer` | 节点端口                                           |
+| `state`                       | `string` | 节点状态，可选值为`UP`、`DOWN`、`SUSPICIOUS`              |
 | `extendInfo`                  | `jsonObject` | 节点扩展信息，具体字段见下表                                 |
-| `extendInfo.lastRefreshTime`  | `Long`       | 节点上一次更新时间戳，单位毫秒                                |
+| `extendInfo.lastRefreshTime`  | `integer` | 节点上一次更新时间戳，单位毫秒                                |
 | `extendInfo.raftMetaData`     | `jsonObject` | 节点的Raft元数据， 包含每个Raft Group的`leader`， `term`等字段 |
-| `extendInfo.raftPort`         | `Integer`    | 节点的Raft端口                                      |
-| `extendInfo.supportGrayModel` | `Boolean`    | 是否支持灰度模型                                       |
-| `extendInfo.version`          | `String`     | 节点的版本                                          |
-| `address`                     | `String`     | 节点地址，格式为`ip:port`                              |
-| `failAccessCnt`               | `Integer`    | 探测失败的次数，及report失败的次数，超过一定次数`state`会被改为`DOWN`   |
+| `extendInfo.raftPort`         | `integer` | 节点的Raft端口                                      |
+| `extendInfo.supportGrayModel` | `boolean` | 是否支持灰度模型                                       |
+| `extendInfo.version`          | `string` | 节点的版本                                          |
+| `address`                     | `string` | 节点地址，格式为`ip:port`                              |
+| `failAccessCnt`               | `integer` | 探测失败的次数，及report失败的次数，超过一定次数`state`会被改为`DOWN`   |
 | `abilities`                   | `jsonObject` | 该节点所支持的能力                                      |
-| `grpcReportEnabled`           | `Boolean`    | 标记节点是否支持grpc上报心跳能力，用于适配老版本升级，后续将移除             |
-| ~~extendInfo.readyToUpgrade~~ | `Boolean`    | 是否ready升级到Nacos2.0，于2.2版本后废弃，即将移除              |
+| `grpcReportEnabled`           | `boolean` | 标记节点是否支持grpc上报心跳能力，用于适配老版本升级，后续将移除             |
+| ~~extendInfo.readyToUpgrade~~ | `boolean` | 是否ready升级到Nacos2.0，于2.2版本后废弃，即将移除              |
 
 #### 示例
 
@@ -609,7 +609,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/list'
 
 | 参数名    | 类型       | 必填 | 参数描述                                  |
 |--------|----------|----|---------------------------------------|
-| `type` | `String` | 是  | 切换到地址发现方式，可选值为`file`和`address-server` |
+| `type` | `string` | 是  | 切换到地址发现方式，可选值为`file`和`address-server` |
 
 #### 返回数据
 
@@ -617,7 +617,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/list'
 
 | 参数名    | 参数类型      | 描述                          |
 |--------|-----------|-----------------------------|
-| `data` | `Boolean` | `true`表示更新成功，`false`表示更新失败。 |
+| `data` | `boolean` | `true`表示更新成功，`false`表示更新失败。 |
 
 #### 示例
 
@@ -661,9 +661,9 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/lookup' -d "type=
 
 | 参数名       | 类型       | 必填    | 参数描述                                 |
 |-----------|----------|-------|--------------------------------------|
-| `command` | `String` | **是** | Raft运维操作指令，具体的命令请参考下表。               |
-| `value`   | `String` | **是** | 命令的参数，具体的命令内容请参考下表。                  |
-| `groupId` | `String` | 否     | Raft集群的groupId，如果不输入则对所有Raft Group生效 |
+| `command` | `string` | 否     | Raft运维操作指令，具体的命令请参考下表。               |
+| `value`   | `string` | 否     | 命令的参数，具体的命令内容请参考下表。                  |
+| `groupId` | `string` | 否     | Raft集群的groupId，如果不输入则对所有Raft Group生效 |
 
 | command           | value                                                                         | 说明                                       |
 |-------------------|-------------------------------------------------------------------------------|------------------------------------------|
@@ -680,7 +680,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/lookup' -d "type=
 
 | 参数名    | 参数类型     | 描述         |
 |--------|----------|------------|
-| `data` | `String` | 固定为`null`。 |
+| `data` | `string` | 固定为`null`。 |
 
 #### 示例
 
@@ -724,8 +724,8 @@ curl -X POST -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/
 
 | 参数名        | 类型       | 必填    | 参数描述                                                         |
 |------------|----------|-------|--------------------------------------------------------------|
-| `logName`  | `String` | **是** | 具体的日志文件的名称，具体支持的日志名称见下表。                                     |
-| `logLevel` | `String` | **是** | 日志的级别，可选值为`ALL`、`TRACE`、`DEBUG`、`INFO`、`WARN`、`ERROR`、`OFF`。 |
+| `logName`  | `string` | 否     | 具体的日志文件的名称，具体支持的日志名称见下表。                                     |
+| `logLevel` | `string` | 否     | 日志的级别，可选值为`ALL`、`TRACE`、`DEBUG`、`INFO`、`WARN`、`ERROR`、`OFF`。 |
 
 | logName        | 对应的具体日志文件             |
 |----------------|-----------------------|
@@ -740,7 +740,7 @@ curl -X POST -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/
 
 | 参数名    | 参数类型     | 描述         |
 |--------|----------|------------|
-| `data` | `String` | 固定为`null`。 |
+| `data` | `string` | 固定为`null`。 |
 
 #### 示例
 
@@ -788,7 +788,7 @@ curl -X PUT -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/a
 
 | 参数名                | 类型       | 必填    | 参数描述           |
 |--------------------|----------|-------|----------------|
-| `loaderFactorStr`  | `String` | **是** | 负载因子，必须是一个数字。 |
+| `loaderFactorStr`  | `string` | **是** | 负载因子，必须是一个数字。 |
 
 #### 返回数据
 
@@ -854,10 +854,10 @@ success
 
 | 参数名              | 参数类型     | 描述       |
 |------------------|----------|----------|
-| `resource`       | `String` | 生产器名称    |
-| `info`           | `Object` | 生产器详情    |
-| `info.currentId` | `int64`  | 当前ID     |
-| `info.workerId`  | `int64`  | workerID |
+| `resource`       | `string` | 生产器名称    |
+| `info`           | `object` | 生产器详情    |
+| `info.currentId` | `integer` | 当前ID     |
+| `info.workerId`  | `integer` | workerID |
 
 成功则返回:
 
@@ -923,10 +923,6 @@ success
 
 请求体为 JSON 数组，数组元素为节点信息（Member），包含 ip、port、state、extendInfo 等字段。
 
-| 参数名 | 类型 | 必填 | 参数描述 |
-|--------|------|------|----------|
-| Body   | `Array` | **是** | 节点信息列表，每个元素为 Member 对象（含 ip、port、state、address、extendInfo 等） |
-
 #### 返回数据
 
 返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
@@ -977,7 +973,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/list' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `String` | **是** | 命名空间 ID |
+| `namespaceId` | `string` | **是** | 命名空间 ID |
 
 #### 返回数据
 
@@ -985,12 +981,12 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/list' \
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| namespace | `String` | 命名空间 ID |
-| namespaceShowName | `String` | 命名空间展示名 |
-| namespaceDesc | `String` | 命名空间描述 |
-| quota | `Integer` | 配置数量配额 |
-| configCount | `Integer` | 当前配置数量 |
-| type | `Integer` | 类型 |
+| namespace | `string` | 命名空间 ID |
+| namespaceShowName | `string` | 命名空间展示名 |
+| namespaceDesc | `string` | 命名空间描述 |
+| quota | `integer` | 配置数量配额 |
+| configCount | `integer` | 当前配置数量 |
+| type | `integer` | 类型 |
 
 #### 示例
 
@@ -1039,9 +1035,9 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace?namespaceId=pub
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `String` | **是** | 命名空间 ID |
-| `namespaceName` | `String` | **是** | 命名空间展示名 |
-| `namespaceDesc` | `String` | 否 | 命名空间描述 |
+| `namespaceId` | `string` | **是** | 命名空间 ID |
+| `namespaceName` | `string` | **是** | 命名空间展示名 |
+| `namespaceDesc` | `string` | 否 | 命名空间描述 |
 
 #### 返回数据
 
@@ -1088,9 +1084,9 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `String` | 否 | 命名空间 ID，不传则由服务端生成 |
-| `namespaceName` | `String` | **是** | 命名空间展示名 |
-| `namespaceDesc` | `String` | 否 | 命名空间描述 |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传则由服务端生成 |
+| `namespaceName` | `string` | **是** | 命名空间展示名 |
+| `namespaceDesc` | `string` | 否 | 命名空间描述 |
 
 #### 返回数据
 
@@ -1137,7 +1133,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `String` | **是** | 命名空间 ID |
+| `namespaceId` | `string` | **是** | 命名空间 ID |
 
 #### 返回数据
 
@@ -1183,7 +1179,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace?namespaceId=
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `customNamespaceId` | `String` | **是** | 待检查的命名空间 ID |
+| `customNamespaceId` | `string` | **是** | 待检查的命名空间 ID |
 
 #### 返回数据
 
@@ -1335,7 +1331,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state'
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data | `String` | 存活状态，如 "ok" |
+| data | `string` | 存活状态，如 "ok" |
 
 #### 示例
 
@@ -1383,7 +1379,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state/liveness'
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data | `String` | 可读状态，如 "ok" |
+| data | `string` | 可读状态，如 "ok" |
 
 #### 示例
 
@@ -1429,10 +1425,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state/readiness'
 
 | 参数名         | 类型       | 必填 | 参数描述           |
 |-------------|----------|----|----------------|
-| `pluginType` | `String` | **是** | 插件类型，如 auth。   |
-| `pluginName` | `String` | **是** | 插件名称。          |
-| `config`     | `Object` | 否  | 插件配置项。         |
-| `localOnly`  | `Boolean`| 否  | 是否仅写本地，不持久化。 |
+| `pluginType` | `string` | 否 | 插件类型，如 auth。   |
+| `pluginName` | `string` | 否 | 插件名称。          |
+| `config`     | `object` | 否  | 插件配置项。         |
+| `localOnly`  | `boolean` | 否  | 是否仅写本地，不持久化。 |
 
 #### 返回数据
 
@@ -1479,8 +1475,8 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/config' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `pluginType` | `String` | **是** | 插件类型，如 auth |
-| `pluginName` | `String` | **是** | 插件名称 |
+| `pluginType` | `string` | **是** | 插件类型，如 auth |
+| `pluginName` | `string` | **是** | 插件名称 |
 
 #### 返回数据
 
@@ -1488,14 +1484,14 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/config' \
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| pluginId | `String` | 插件 ID |
-| pluginType | `String` | 插件类型 |
-| pluginName | `String` | 插件名称 |
+| pluginId | `string` | 插件 ID |
+| pluginType | `string` | 插件类型 |
+| pluginName | `string` | 插件名称 |
 | enabled | `boolean` | 是否启用 |
 | critical | `boolean` | 是否关键插件 |
 | configurable | `boolean` | 是否可配置 |
-| config | `Object` | 配置内容 |
-| configDefinitions | `Array` | 配置定义列表 |
+| config | `object` | 配置内容 |
+| configDefinitions | `array` | 配置定义列表 |
 
 #### 示例
 
@@ -1546,7 +1542,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/detail?pluginType=
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `pluginType` | `String` | 否 | 插件类型，不传则返回全部 |
+| `pluginType` | `string` | 否 | 插件类型，不传则返回全部 |
 
 #### 返回数据
 
@@ -1606,10 +1602,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/list?pluginType=au
 
 | 参数名         | 类型        | 必填 | 参数描述       |
 |-------------|-----------|----|------------|
-| `pluginType` | `String`  | **是** | 插件类型。     |
-| `pluginName` | `String`  | **是** | 插件名称。     |
-| `enabled`    | `Boolean` | **是** | 是否启用。     |
-| `localOnly`  | `Boolean` | 否  | 是否仅写本地。   |
+| `pluginType` | `string` | 否 | 插件类型。     |
+| `pluginName` | `string` | 否 | 插件名称。     |
+| `enabled`    | `boolean` | 否 | 是否启用。     |
+| `localOnly`  | `boolean` | 否  | 是否仅写本地。   |
 
 #### 返回数据
 
@@ -1664,14 +1660,14 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/status' \
 
 | 参数名                      | 参数类型      | 描述                                                                                                      |
 |--------------------------|-----------|---------------------------------------------------------------------------------------------------------|
-| `clientBeatInterval`     | `int`     | Nacos1.X客户端的默认心跳间隔                                                                                      |
-| `defaultCacheMillis`     | `int`     | 客户端订阅的服务列表的默认缓存时间                                                                                       |
-| `pushCacheMillis`        | `int`     | 推送的服务列表的默认缓存时间，优先级高于`defaultCacheMillis`                                                                |
+| `clientBeatInterval`     | `integer` | Nacos1.X客户端的默认心跳间隔                                                                                      |
+| `defaultCacheMillis`     | `integer` | 客户端订阅的服务列表的默认缓存时间                                                                                       |
+| `pushCacheMillis`        | `integer` | 推送的服务列表的默认缓存时间，优先级高于`defaultCacheMillis`                                                                |
 | `distroEnabled`          | `boolean` | 是否开启`Distro`协议同步，仅当集群压力过大，影响到集群稳定性时，临时修改为`false`缓解，改为`false`后可能导致部分数据不一致，需要尽快恢复                         |
 | `healthCheckEnabled`     | `boolean` | 是否开启健康检查，仅当集群压力过大，影响到集群稳定性时，临时修改为`false`缓解，改为`false`后不会因为心跳过期，tcp/http探测超时而修改实例的健康状态，以及不会因过期删除实例，需要尽快恢复 |
 | `lightBeatEnabled`       | `boolean` | 是否开启轻量心跳，针对Nacos`1.2.X~1.4.X版本`客户端生效，修改为`false`后，`Nacos1.2.X~1.4.X`版本客户端将使用全量心跳进行续约                     |
 | `pushEnabled`            | `boolean` | 是否开启推送功能，仅当集群压力过大，影响到集群稳定性时，临时修改为`false`，改为`false`后，Nacos客户端将不再收到服务端的主动推送                               |
-| `push${Language}Version` | `String`  | 可支持推送的最小客户端版本，当不希望针对小于某些版本进行数据推送时，可以修改该值，比如修改pushJavaVersion为`2.0.0`，则小于2.0.0的Java客户端将不会收到推送数据          |
+| `push${Language}Version` | `string` | 可支持推送的最小客户端版本，当不希望针对小于某些版本进行数据推送时，可以修改该值，比如修改pushJavaVersion为`2.0.0`，则小于2.0.0的Java客户端将不会收到推送数据          |
 | `${type}HealthParams`    | `json`    | 健康检查参数，设置健康检查的最大/最小间隔，随机间隔系数等，健康检查时将根据这几个值进行下一次健康检查流量的打散。                                               |
 
 > 注意： 其余未列出的参数，均为Nacos旧版本的开关或配置内容，已废弃或即将废弃，请谨慎使用。
@@ -1763,15 +1759,15 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/switches'
 
 | 参数名     | 类型        | 必填    | 参数描述                                              |
 |---------|-----------|-------|---------------------------------------------------|
-| `entry` | `String`  | **是** | 修改的开关或配置名称                                        |
-| `value` | `Object`  | **是** | 开关或配置的新值，不同的开关或配置的类型不同，具体请参考[开关和配置参数](#返回数据-10)   |
+| `entry` | `string` | **是** | 修改的开关或配置名称                                        |
+| `value` | `object` | **是** | 开关或配置的新值，不同的开关或配置的类型不同，具体请参考[开关和配置参数](#返回数据-10)   |
 | `debug` | `boolean` | 否     | 是否开启调试模式，开启后，修改的配置不会同步到集群其他节点中，仅在本节点生效，默认为`false` |
 
 #### 返回数据
 
 | 参数名    | 参数类型     | 描述      |
 |--------|----------|---------|
-| `data` | `String` | 成功为`ok` |
+| `data` | `string` | 成功为`ok` |
 
 #### 示例
 
@@ -1823,15 +1819,15 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/switches' -d "entry=pus
 
 | 参数名                           | 参数类型     | 描述说明    |
 |-------------------------------|----------|---------|
-| `status`                      | `String` | 系统状态    |
-| `serviceCount`                | `int`    | 服务数量    |
-| `instanceCount`               | `int`    | 实例数量    |
-| `subscribeCount`              | `int`    | 订阅数量    |
-| `clientCount`                 | `int`    | 客户端数量   |
-| `connectionBasedClientCount`  | `int`    | 连接数量    |
-| `ephemeralIpPortClientCount`  | `int`    | 临时客户端数量 |
-| `persistentIpPortClientCount` | `int`    | 持久客户端数量 |
-| `responsibleClientCount`      | `int`    | 响应客户端数  |
+| `status`                      | `string` | 系统状态    |
+| `serviceCount`                | `integer` | 服务数量    |
+| `instanceCount`               | `integer` | 实例数量    |
+| `subscribeCount`              | `integer` | 订阅数量    |
+| `clientCount`                 | `integer` | 客户端数量   |
+| `connectionBasedClientCount`  | `integer` | 连接数量    |
+| `ephemeralIpPortClientCount`  | `integer` | 临时客户端数量 |
+| `persistentIpPortClientCount` | `integer` | 持久客户端数量 |
+| `responsibleClientCount`      | `integer` | 响应客户端数  |
 
 #### 示例
 
@@ -1885,20 +1881,20 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/metrics?onlyStatus=fals
 
 | 参数名   | 类型       | 必填 | 参数描述        |
 |-------|----------|---|-------------|
-| `value` | `String` | 否  | 日志级别新值（可选）。 |
+| `value` | `string` | **是** | 日志级别新值（可选）。 |
 
 请求体字段：
 
 | 参数名       | 类型       | 必填    | 参数描述      |
 |-----------|----------|-------|-----------|
-| `logName`  | `String` | **是** | 需要修改的日志名称。 |
-| `logLevel` | `String` | **是** | 日志级别的新值。   |
+| `logName`  | `string` | **是** | 需要修改的日志名称。 |
+| `logLevel` | `string` | **是** | 日志级别的新值。   |
 
 #### 返回数据
 
 | 参数名    | 参数类型     | 描述      |
 |--------|----------|---------|
-| `data` | `String` | 成功为`ok` |
+| `data` | `string` | 成功为`ok` |
 
 #### 示例
 
@@ -1988,7 +1984,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/list'
 
 | 参数名        | 参数类型     | 是否必填  | 描述    |
 |------------|----------|-------|-------|
-| `clientId` | `String` | 否 | 客户端ID |
+| `clientId` | `string` | 否 | 客户端ID |
 
 #### 返回数据
 
@@ -1996,15 +1992,15 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/list'
 
 | 参数名               | 参数类型      | 描述                 |
 |-------------------|-----------|--------------------|
-| `clientId`        | `String`  | 客户端的唯一 ID。         |
+| `clientId`        | `string` | 客户端的唯一 ID。         |
 | `ephemeral`       | `boolean` | 客户端是否为临时客户端        |
-| `lastUpdatedTime` | `long`    | 客户端的最后更新时间（时间戳）    |
-| `clientType`      | `String`  | 客户端类型              |
-| `connectType`     | `String`  | 连接类型（仅适用于 2.x 客户端） |
-| `appName`         | `String`  | 客户端所属的应用名称         |
-| `version`         | `String`  | 客户端的版本号            |
-| `clientIp`        | `String`  | 客户端的 IP 地址         |
-| `clientPort`      | `String`  | 客户端的端口号            |
+| `lastUpdatedTime` | `integer` | 客户端的最后更新时间（时间戳）    |
+| `clientType`      | `string` | 客户端类型              |
+| `connectType`     | `string` | 连接类型（仅适用于 2.x 客户端） |
+| `appName`         | `string` | 客户端所属的应用名称         |
+| `version`         | `string` | 客户端的版本号            |
+| `clientIp`        | `string` | 客户端的 IP 地址         |
+| `clientPort`      | `string` | 客户端的端口号            |
 
 #### 示例
 
@@ -2076,7 +2072,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client?clientId=17417489524
 
 | 参数名        | 参数类型     | 是否必填  | 描述    |
 |------------|----------|-------|-------|
-| `clientId` | `String` | 否 | 客户端ID |
+| `clientId` | `string` | 否 | 客户端ID |
 
 #### 返回数据
 
@@ -2084,13 +2080,13 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client?clientId=17417489524
 
 | 参数名                         | 参数类型     | 描述说明      |
 |-----------------------------|----------|-----------|
-| `namespaceId`               | `String` | 命名空间      |
-| `groupName`                 | `String` | 分组名       |
-| `serviceName`               | `String` | 服务名       |
-| `publisherInfo`             | `Object` | 该服务下注册的实例 |
-| `publisherInfo.ip`          | `String` | `IP`地址    |
-| `publisherInfo.port`        | `int`    | 端口号       |
-| `publisherInfo.clusterName` | `String` | 集群名       |
+| `namespaceId`               | `string` | 命名空间      |
+| `groupName`                 | `string` | 分组名       |
+| `serviceName`               | `string` | 服务名       |
+| `publisherInfo`             | `object` | 该服务下注册的实例 |
+| `publisherInfo.ip`          | `string` | `IP`地址    |
+| `publisherInfo.port`        | `integer` | 端口号       |
+| `publisherInfo.clusterName` | `string` | 集群名       |
 
 #### 示例
 
@@ -2145,7 +2141,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/publish/list?clientI
 
 | 参数名        | 参数类型     | 是否必填 | 描述    |
 |------------|----------|------|-------|
-| `clientId` | `String` | 是    | 客户端ID |
+| `clientId` | `string` | 是    | 客户端ID |
 
 #### 返回数据
 
@@ -2153,13 +2149,13 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/publish/list?clientI
 
 | 参数名                      | 参数类型     | 描述说明  |
 |--------------------------|----------|-------|
-| `namespaceId`            | `String` | 命名空间  |
-| `groupName`              | `String` | 分组名   |
-| `serviceName`            | `String` | 服务名   |
-| `subscriberInfo`         | `Object` | 订阅信息  |
-| `subscriberInfo.appName` | `String` | 应用    |
-| `subscriberInfo.agent`   | `String` | 客户端信息 |
-| `subscriberInfo.address` | `String` | 地址    |
+| `namespaceId`            | `string` | 命名空间  |
+| `groupName`              | `string` | 分组名   |
+| `serviceName`            | `string` | 服务名   |
+| `subscriberInfo`         | `object` | 订阅信息  |
+| `subscriberInfo.appName` | `string` | 应用    |
+| `subscriberInfo.agent`   | `string` | 客户端信息 |
+| `subscriberInfo.address` | `string` | 地址    |
 
 #### 示例
 
@@ -2214,12 +2210,12 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/subscribe/list?clien
 
 | 参数名           | 参数类型      | 是否必填  | 默认值               | 描述说明                     |
 |---------------|-----------|-------|-------------------|--------------------------|
-| `namespaceId` | `String`  | 否     | `"public"`        | 命名空间                     |
-| `groupName`   | `String`  | 否     | `"DEFAULT_GROUP"` | 分组名                      |
-| `serviceName` | `String`  | **是** | 无                 | 服务名                      |
+| `namespaceId` | `string` | 否     | `"public"`        | 命名空间                     |
+| `groupName`   | `string` | 否     | `"DEFAULT_GROUP"` | 分组名                      |
+| `serviceName` | `string` | **是** | 无                 | 服务名                      |
 | `ephemeral`   | `boolean` | 否     | `true`            | 是否为临时实例。                 |
-| `ip`          | `String`  | 否     | 无                 | `IP`地址，默认为空，表示不限制`IP`地址。 |
-| `port`        | `int`     | 否     | 无                 | 端口号，默认为空，表示不限制端口号。       |
+| `ip`          | `string` | 否     | 无                 | `IP`地址，默认为空，表示不限制`IP`地址。 |
+| `port`        | `integer` | 否     | 无                 | 端口号，默认为空，表示不限制端口号。       |
 
 #### 返回数据
 
@@ -2227,10 +2223,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/subscribe/list?clien
 
 | 参数名           | 参数类型     | 描述说明    |
 |---------------|----------|---------|
-| `clientId`    | `String` | 客户端`id` |
-| `ip`          | `String` | 实例的`IP` |
-| `port`        | `int`    | 实例的端口   |
-| `clusterName` | `String` | 实例的集群名  |
+| `clientId`    | `string` | 客户端`id` |
+| `ip`          | `string` | 实例的`IP` |
+| `port`        | `integer` | 实例的端口   |
+| `clusterName` | `string` | 实例的集群名  |
 
 #### 示例
 
@@ -2279,12 +2275,12 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/service/publisher/li
 
 | 参数名           | 参数类型      | 是否必填  | 默认值               | 描述说明                     |
 |---------------|-----------|-------|-------------------|--------------------------|
-| `namespaceId` | `String`  | 否     | `"public"`        | 命名空间                     |
-| `groupName`   | `String`  | 否     | `"DEFAULT_GROUP"` | 分组名                      |
-| `serviceName` | `String`  | **是** | 无                 | 服务名                      |
+| `namespaceId` | `string` | 否     | `"public"`        | 命名空间                     |
+| `groupName`   | `string` | 否     | `"DEFAULT_GROUP"` | 分组名                      |
+| `serviceName` | `string` | **是** | 无                 | 服务名                      |
 | `ephemeral`   | `boolean` | 否     | `true`            | 是否为临时实例。                 |
-| `ip`          | `String`  | 否     | 无                 | `IP`地址，默认为空，表示不限制`IP`地址。 |
-| `port`        | `int`     | 否     | 无                 | 端口号，默认为空，表示不限制端口号。       |
+| `ip`          | `string` | 否     | 无                 | `IP`地址，默认为空，表示不限制`IP`地址。 |
+| `port`        | `integer` | 否     | 无                 | 端口号，默认为空，表示不限制端口号。       |
 
 #### 返回数据
 
@@ -2292,10 +2288,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/service/publisher/li
 
 | 参数名        | 参数类型     | 描述说明                             |
 |------------|----------|----------------------------------|
-| `clientId` | `String` | 客户端`id`                          |
-| `address`  | `String` | 订阅者客户端的`IP`                      |
-| `agent`    | `String` | 订阅者客户端的版本                        |
-| `appName`  | `String` | 订阅者客户端的应用名，`unknown`表示未配置或客户端不支持 |
+| `clientId` | `string` | 客户端`id`                          |
+| `address`  | `string` | 订阅者客户端的`IP`                      |
+| `agent`    | `string` | 订阅者客户端的版本                        |
+| `appName`  | `string` | 订阅者客户端的应用名，`unknown`表示未配置或客户端不支持 |
 
 #### 示例
 
@@ -2346,8 +2342,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/service/subscriber/l
 
 | 参数名    | 参数类型     | 是否必填  | 描述    |
 |--------|----------|-------|-------|
-| `ip`   | `String` | **是** | 客户端IP |
-| `port` | `String` | **是** | 客户端端口 |
+| `ip`   | `string` | **是** | 客户端IP |
+| `port` | `string` | **是** | 客户端端口 |
 
 #### 返回数据
 
@@ -2355,7 +2351,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/service/subscriber/l
 
 | 参数名                 | 参数类型     | 描述       |
 |---------------------|----------|----------|
-| `responsibleServer` | `String` | 负责的服务器信息 |
+| `responsibleServer` | `string` | 负责的服务器信息 |
 
 #### 示例
 
@@ -2399,19 +2395,19 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/distro?ip=127.0.0.1&
 
 | 参数名                     | 参数类型                  | 是否必填  | 描述                |
 |-------------------------|-----------------------|-------|-------------------|
-| `namespaceId`           | `String`              | 否     | 命名空间ID            |
-| `serviceName`           | `String`              | **是** | 服务名称              |
-| `clusterName`           | `String`              | **是** | 集群名称              |
-| `checkPort`             | `Integer`             | **是** | 健康检查端口            |
-| `useInstancePort4Check` | `Boolean`             | **是** | 是否使用实例端口进行健康检查    |
-| `healthChecker`         | `String`              | **是** | 健康检查器配置（JSON 字符串） |
-| `metadata`              | `Map<String, String>` | 否     | 集群的扩展元数据，默认为`""`  |
+| `namespaceId`           | `string` | 否     | 命名空间ID            |
+| `serviceName`           | `string` | **是** | 服务名称              |
+| `clusterName`           | `string` | **是** | 集群名称              |
+| `checkPort`             | `integer` | **是** | 健康检查端口            |
+| `useInstancePort4Check` | `boolean` | **是** | 是否使用实例端口进行健康检查    |
+| `healthChecker`         | `string` | **是** | 健康检查器配置（JSON 字符串） |
+| `metadata`              | `map<string, string>` | 否     | 集群的扩展元数据，默认为`""`  |
 
 #### 返回数据
 
 | 参数名    | 参数类型     | 描述     |
 |--------|----------|--------|
-| `data` | `String` | 操作结果信息 |
+| `data` | `string` | 操作结果信息 |
 
 #### 示例
 
@@ -2456,19 +2452,19 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/cluster' -d 'serviceName=te
 
 | 参数名           | 参数类型      | 是否必填  | 描述                      |
 |---------------|-----------|-------|-------------------------|
-| `namespaceId` | `String`  | 否     | 命名空间ID，默认为`public`      |
-| `serviceName` | `String`  | **是** | 服务名称                    |
-| `groupName`   | `String`  | 否     | 分组名称，默认为`DEFAULT_GROUP` |
-| `clusterName` | `String`  | 否     | 集群名称，默认`DEFAULT`        |
-| `ip`          | `String`  | **是** | 实例IP                    |
-| `port`        | `Integer` | **是** | 实例端口                    |
-| `healthy`     | `Boolean` | **是** | 健康状态（`true` 为健康）        |
+| `namespaceId` | `string` | 否     | 命名空间ID，默认为`public`      |
+| `serviceName` | `string` | **是** | 服务名称                    |
+| `groupName`   | `string` | 否     | 分组名称，默认为`DEFAULT_GROUP` |
+| `clusterName` | `string` | 否     | 集群名称，默认`DEFAULT`        |
+| `ip`          | `string` | **是** | 实例IP                    |
+| `port`        | `integer` | **是** | 实例端口                    |
+| `healthy`     | `boolean` | **是** | 健康状态（`true` 为健康）        |
 
 #### 返回数据
 
 | 参数名    | 参数类型     | 描述     |
 |--------|----------|--------|
-| `data` | `String` | 操作结果信息 |
+| `data` | `string` | 操作结果信息 |
 
 #### 示例
 
@@ -2569,23 +2565,23 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/health/checkers'
 
 | 参数名           | 参数类型                  | 是否必填  | 描述                      |
 |---------------|-----------------------|-------|-------------------------|
-| `namespaceId` | `String`              | 否     | 命名空间ID，默认为`public`      |
-| `serviceName` | `String`              | **是** | 服务名称                    |
-| `groupName`   | `String`              | 否     | 分组名称，默认为`DEFAULT_GROUP` |
-| `clusterName` | `String`              | 否     | 集群名称，默认为`DEFAULT`       |
-| `ip`          | `String`              | **是** | 实例IP                    |
-| `port`        | `Integer`             | **是** | 实例端口                    |
-| `weight`      | `Double`              | 否     | 实例权重，默认为`1.0`           |
-| `healthy`     | `Boolean`             | 否     | 健康状态，默认为`true`          |
-| `enabled`     | `Boolean`             | 否     | 是否启用，默认为`true`          |
-| `metadata`    | `Map<String, String>` | 否     | 实例元数据                   |
-| `ephemeral`   | `Boolean`             | 否     | 是否临时实例                  |
+| `namespaceId` | `string` | 否     | 命名空间ID，默认为`public`      |
+| `serviceName` | `string` | **是** | 服务名称                    |
+| `groupName`   | `string` | 否     | 分组名称，默认为`DEFAULT_GROUP` |
+| `clusterName` | `string` | 否     | 集群名称，默认为`DEFAULT`       |
+| `ip`          | `string` | **是** | 实例IP                    |
+| `port`        | `integer` | **是** | 实例端口                    |
+| `weight`      | `number` | 否     | 实例权重，默认为`1.0`           |
+| `healthy`     | `boolean` | 否     | 健康状态，默认为`true`          |
+| `enabled`     | `boolean` | 否     | 是否启用，默认为`true`          |
+| `metadata`    | `map<string, string>` | 否     | 实例元数据                   |
+| `ephemeral`   | `boolean` | 否     | 是否临时实例                  |
 
 #### 返回数据
 
 | 参数名    | 参数类型     | 描述     |
 |--------|----------|--------|
-| `data` | `String` | 操作结果信息 |
+| `data` | `string` | 操作结果信息 |
 
 #### 示例
 
@@ -2628,19 +2624,19 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance' \
 
 | 参数名           | 参数类型      | 是否必填  | 描述                      |
 |---------------|-----------|-------|-------------------------|
-| `namespaceId` | `String`  | 否     | 命名空间ID，默认为`public`      |
-| `serviceName` | `String`  | **是** | 服务名称                    |
-| `groupName`   | `String`  | 否     | 分组名称，默认为`DEFAULT_GROUP` |
-| `clusterName` | `String`  | 否     | 集群名称，默认为`DEFAULT`       |
-| `ip`          | `String`  | **是** | 实例IP                    |
-| `port`        | `Integer` | **是** | 实例端口                    |
-| `ephemeral`   | `Boolean` | 否     | 是否临时实例                  |
+| `namespaceId` | `string` | 否     | 命名空间ID，默认为`public`      |
+| `serviceName` | `string` | **是** | 服务名称                    |
+| `groupName`   | `string` | 否     | 分组名称，默认为`DEFAULT_GROUP` |
+| `clusterName` | `string` | 否     | 集群名称，默认为`DEFAULT`       |
+| `ip`          | `string` | **是** | 实例IP                    |
+| `port`        | `integer` | **是** | 实例端口                    |
+| `ephemeral`   | `boolean` | 否     | 是否临时实例                  |
 
 #### 返回数据
 
 | 参数名    | 参数类型     | 描述     |
 |--------|----------|--------|
-| `data` | `String` | 操作结果信息 |
+| `data` | `string` | 操作结果信息 |
 
 #### 示例
 
@@ -2691,23 +2687,23 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance?namespaceId=pub
 
 | 参数名           | 参数类型                  | 是否必填  | 描述                      |
 |---------------|-----------------------|-------|-------------------------|
-| `namespaceId` | `String`              | 否     | 命名空间ID，默认为`public`      |
-| `serviceName` | `String`              | **是** | 服务名称                    |
-| `groupName`   | `String`              | 否     | 分组名称，默认为`DEFAULT_GROUP` |
-| `clusterName` | `String`              | 否     | 集群名称，默认为`DEFAULT`       |
-| `ip`          | `String`              | **是** | 实例IP                    |
-| `port`        | `Integer`             | **是** | 实例端口                    |
-| `weight`      | `Double`              | 否     | 实例权重，默认为`1.0`           |
-| `healthy`     | `Boolean`             | 否     | 健康状态，默认为`true`          |
-| `enabled`     | `Boolean`             | 否     | 是否启用，默认为`true`          |
-| `metadata`    | `Map<String, String>` | 否     | 实例元数据                   |
-| `ephemeral`   | `Boolean`             | 否     | 是否临时实例                  |
+| `namespaceId` | `string` | 否     | 命名空间ID，默认为`public`      |
+| `serviceName` | `string` | **是** | 服务名称                    |
+| `groupName`   | `string` | 否     | 分组名称，默认为`DEFAULT_GROUP` |
+| `clusterName` | `string` | 否     | 集群名称，默认为`DEFAULT`       |
+| `ip`          | `string` | **是** | 实例IP                    |
+| `port`        | `integer` | **是** | 实例端口                    |
+| `weight`      | `number` | 否     | 实例权重，默认为`1.0`           |
+| `healthy`     | `boolean` | 否     | 健康状态，默认为`true`          |
+| `enabled`     | `boolean` | 否     | 是否启用，默认为`true`          |
+| `metadata`    | `map<string, string>` | 否     | 实例元数据                   |
+| `ephemeral`   | `boolean` | 否     | 是否临时实例                  |
 
 #### 返回数据
 
 | 参数名    | 参数类型     | 描述     |
 |--------|----------|--------|
-| `data` | `String` | 操作结果信息 |
+| `data` | `string` | 操作结果信息 |
 
 #### 示例
 
@@ -2750,12 +2746,12 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance' \
 
 | 参数名               | 参数类型                  | 是否必填  | 描述                                                                                           |
 |-------------------|-----------------------|-------|----------------------------------------------------------------------------------------------|
-| `namespaceId`     | `String`              | 否     | 命名空间ID，默认为`public`                                                                           |
-| `serviceName`     | `String`              | **是** | 服务名称                                                                                         |
-| `groupName`       | `String`              | 否     | 分组名称，默认为`DEFAULT_GROUP`                                                                      |
-| `instances`       | `String`              | 否     | 实例列表（JSON数组 字符串）默认为`""`表示所有实例更新；若指定时，每个元素代表一个需要更新的实例，必须需要包含`ip`和`port`字段，`clusterName`字段为可选, |
-| `metadata`        | `Map<String, String>` | **是** | 元数据                                                                                          |
-| `consistencyType` | `String`              | 否     | 一致性类型`ephemeral`和`persist`，对应服务的`ephemeral`，默认为`ephemeral`                                   |
+| `namespaceId`     | `string` | 否     | 命名空间ID，默认为`public`                                                                           |
+| `serviceName`     | `string` | **是** | 服务名称                                                                                         |
+| `groupName`       | `string` | 否     | 分组名称，默认为`DEFAULT_GROUP`                                                                      |
+| `instances`       | `string` | 否     | 实例列表（JSON数组 字符串）默认为`""`表示所有实例更新；若指定时，每个元素代表一个需要更新的实例，必须需要包含`ip`和`port`字段，`clusterName`字段为可选, |
+| `metadata`        | `map<string, string>` | **是** | 元数据                                                                                          |
+| `consistencyType` | `string` | 否     | 一致性类型`ephemeral`和`persist`，对应服务的`ephemeral`，默认为`ephemeral`                                   |
 
 #### 返回数据
 
@@ -2808,12 +2804,12 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/metadata/batch' \
 
 | 参数名               | 参数类型                  | 是否必填  | 描述                      |
 |-------------------|-----------------------|-------|-------------------------|
-| `namespaceId`     | `String`              | 否     | 命名空间ID，默认为`public`      |
-| `serviceName`     | `String`              | **是** | 服务名称                    |
-| `groupName`       | `String`              | 否     | 分组名称，默认为`DEFAULT_GROUP` |
-| `instances`       | `String`              | 否     | 实例列表（JSON 字符串），默认为`""`  |
-| `metadata`        | `Map<String, String>` | **是** | 元数据                     |
-| `consistencyType` | `String`              | 否     | 一致性类型，默认为`""`           |
+| `namespaceId`     | `string` | 否     | 命名空间ID，默认为`public`      |
+| `serviceName`     | `string` | **是** | 服务名称                    |
+| `groupName`       | `string` | 否     | 分组名称，默认为`DEFAULT_GROUP` |
+| `instances`       | `string` | 否     | 实例列表（JSON 字符串），默认为`""`  |
+| `metadata`        | `map<string, string>` | **是** | 元数据                     |
+| `consistencyType` | `string` | 否     | 一致性类型，默认为`""`           |
 
 #### 返回数据
 
@@ -2869,20 +2865,20 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/metadata/batch?
 
 | **参数名**       | **参数类型**  | **是否必填** | **描述**             |
 |---------------|-----------|----------|--------------------|
-| `namespaceId` | `String`  | 否        | 命名空间ID，默认为`public` |
-| `serviceName` | `String`  | **是**    | 服务名称               |
-| `ip`          | `String`  | **是**    | 实例IP               |
-| `port`        | `Integer` | **是**    | 实例端口               |
-| `clusterName` | `String`  | 否        | 集群名称，默认为`DEFAULT`  |
-| `weight`      | `Double`  | 否        | 实例权重，默认为1.0        |
-| `enabled`     | `Boolean` | 否        | 是否启用，默认启用          |
-| `metadata`    | `String`  | 否        | 实例元数据（JSON 字符串）    |
+| `namespaceId` | `string` | 否        | 命名空间ID，默认为`public` |
+| `serviceName` | `string` | **是**    | 服务名称               |
+| `ip`          | `string` | **是**    | 实例IP               |
+| `port`        | `integer` | **是**    | 实例端口               |
+| `clusterName` | `string` | 否        | 集群名称，默认为`DEFAULT`  |
+| `weight`      | `number` | 否        | 实例权重，默认为1.0        |
+| `enabled`     | `boolean` | 否        | 是否启用，默认启用          |
+| `metadata`    | `string` | 否        | 实例元数据（JSON 字符串）    |
 
 #### 返回数据
 
 | 参数名    | 参数类型     | 描述     |
 |--------|----------|--------|
-| `data` | `String` | 操作结果信息 |
+| `data` | `string` | 操作结果信息 |
 
 #### 示例
 
@@ -2924,13 +2920,13 @@ curl -X PUT "http://localhost:8848/nacos/v3/admin/ns/instance/partial" -d 'names
 
 | **参数名**       | **参数类型**  | **是否必填** | **描述**                  |
 |---------------|-----------|----------|-------------------------|
-| `namespaceId` | `String`  | 否        | 命名空间ID，默认`public`       |
-| `groupName`   | `String`  | 否        | 分组名称，默认为`DEFAULT_GROUP` |
-| `serviceName` | `String`  | **是**    | 服务名称                    |
-| `clusterName` | `String`  | 否        | 集群名称，默认为`""`            |
-| `ip`          | `String`  | **是**    | 实例IP                    |
-| `port`        | `Integer` | **是**    | 实例端口                    |
-| `healthyOnly` | `Boolean` | 否        | 是否只返回健康实例，默认为`false`    |
+| `namespaceId` | `string` | 否        | 命名空间ID，默认`public`       |
+| `groupName`   | `string` | 否        | 分组名称，默认为`DEFAULT_GROUP` |
+| `serviceName` | `string` | **是**    | 服务名称                    |
+| `clusterName` | `string` | 否        | 集群名称，默认为`""`            |
+| `ip`          | `string` | **是**    | 实例IP                    |
+| `port`        | `integer` | **是**    | 实例端口                    |
+| `healthyOnly` | `boolean` | 否        | 是否只返回健康实例，默认为`false`    |
 
 #### 返回数据
 
@@ -2938,16 +2934,16 @@ curl -X PUT "http://localhost:8848/nacos/v3/admin/ns/instance/partial" -d 'names
 
 | 参数名           | 参数类型      | 描述说明                              |
 |---------------|-----------|-----------------------------------|
-| `serviceName` | `String`  | 服务名,格式为`groupName`@@`serviceName` |
-| `clusterName` | `String`  | 实例所在的集群名称                         |
-| `ip`          | `String`  | 实例`IP`                            |
-| `port`        | `int`     | 实例端口号                             |
-| `weight`      | `double`  | 实例权重                              |
+| `serviceName` | `string` | 服务名,格式为`groupName`@@`serviceName` |
+| `clusterName` | `string` | 实例所在的集群名称                         |
+| `ip`          | `string` | 实例`IP`                            |
+| `port`        | `integer` | 实例端口号                             |
+| `weight`      | `number` | 实例权重                              |
 | `healthy`     | `boolean` | 实例是否健康                            |
 | `enabled`     | `boolean` | 实例是否可用                            |
 | `ephemeral`   | `boolean` | 是否为临时实例                           |
 | `metadata`    | `map`     | 实例元数据                             |
-| `instanceId`  | `String`  | 实例Id                              |
+| `instanceId`  | `string` | 实例Id                              |
 
 > 关于心跳的参数`instanceHeartBeatInterval`, `instanceHeartBeatTimeOut`和`ipDeleteTimeout`
 > 用于兼容1.X客户端的心跳模式数据，后续版本可能会移除对1.X客户端的支持，届时这3个参数将被废弃。
@@ -3010,12 +3006,12 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/list?namespaceId=p
 
 | **参数名**       | **参数类型** | **是否必填** | **描述说明**               |
 |---------------|----------|----------|------------------------|
-| `namespaceId` | `String` | 否        | 命名空间Id，默认为`public`     |
-| `groupName`   | `String` | **否**    | 分组名，默认为`DEFAULT_GROUP` |
-| `serviceName` | `String` | **是**    | 服务名                    |
-| `clusterName` | `String` | 否        | 集群名称，默认为`DEFAULT`      |
-| `ip`          | `String` | **是**    | `IP`地址                 |
-| `port`        | `int`    | **是**    | 端口号                    |
+| `namespaceId` | `string` | 否        | 命名空间Id，默认为`public`     |
+| `groupName`   | `string` | **否**    | 分组名，默认为`DEFAULT_GROUP` |
+| `serviceName` | `string` | **是**    | 服务名                    |
+| `clusterName` | `string` | 否        | 集群名称，默认为`DEFAULT`      |
+| `ip`          | `string` | **是**    | `IP`地址                 |
+| `port`        | `integer` | **是**    | 端口号                    |
 
 #### 返回数据
 
@@ -3023,16 +3019,16 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/list?namespaceId=p
 
 | 参数名           | 参数类型      | 描述说明                              |
 |---------------|-----------|-----------------------------------|
-| `serviceName` | `String`  | 服务名,格式为`groupName`@@`serviceName` |
-| `clusterName` | `String`  | 实例所在的集群名称                         |
-| `ip`          | `String`  | 实例`IP`                            |
-| `port`        | `int`     | 实例端口号                             |
-| `weight`      | `double`  | 实例权重                              |
+| `serviceName` | `string` | 服务名,格式为`groupName`@@`serviceName` |
+| `clusterName` | `string` | 实例所在的集群名称                         |
+| `ip`          | `string` | 实例`IP`                            |
+| `port`        | `integer` | 实例端口号                             |
+| `weight`      | `number` | 实例权重                              |
 | `healthy`     | `boolean` | 实例是否健康                            |
 | `enabled`     | `boolean` | 实例是否可用                            |
 | `ephemeral`   | `boolean` | 是否为临时实例                           |
 | `metadata`    | `map`     | 实例元数据                             |
-| `instanceId`  | `String`  | 实例Id                              |
+| `instanceId`  | `string` | 实例Id                              |
 
 > 关于心跳的参数`instanceHeartBeatInterval`, `instanceHeartBeatTimeOut`和`ipDeleteTimeout`
 > 用于兼容1.X客户端的心跳模式数据，后续版本可能会移除对1.X客户端的支持，届时这3个参数将被废弃。
@@ -3095,12 +3091,12 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance?namespaceId=public
 
 | 参数名                | 参数类型           | 是否必填  | 描述说明                   |
 |--------------------|----------------|-------|------------------------|
-| `namespaceId`      | `String`       | 否     | 命名空间`Id`，默认为`public`   |
-| `groupName`        | `String`       | 否     | 分组名，默认为`DEFAULT_GROUP` |
-| `serviceName`      | `String`       | **是** | 服务名                    |
+| `namespaceId`      | `string` | 否     | 命名空间`Id`，默认为`public`   |
+| `groupName`        | `string` | 否     | 分组名，默认为`DEFAULT_GROUP` |
+| `serviceName`      | `string` | **是** | 服务名                    |
 | `metadata`         | `JSON格式String` | 否     | 服务元数据，默认为空             |
-| `ephemeral`        | `boolean`      | 否     | 是否为临时实例，默认为`false`     |
-| `protectThreshold` | `float`        | 否     | 保护阈值，默认为`0`            |
+| `ephemeral`        | `boolean` | 否     | 是否为临时实例，默认为`false`     |
+| `protectThreshold` | `number` | 否     | 保护阈值，默认为`0`            |
 | `selector`         | `JSON格式String` | 否     | 访问策略，默认为空              |
 
 #### 返回数据
@@ -3152,9 +3148,9 @@ curl -d 'serviceName=nacos.test.1' \
 
 | 参数名           | 参数类型     | 是否必填  | 描述说明                   |
 |---------------|----------|-------|------------------------|
-| `namespaceId` | `String` | 否     | 命名空间`Id`，默认为`public`   |
-| `groupName`   | `String` | 否     | 分组名，默认为`DEFAULT_GROUP` |
-| `serviceName` | `String` | **是** | 服务名                    |
+| `namespaceId` | `string` | 否     | 命名空间`Id`，默认为`public`   |
+| `groupName`   | `string` | 否     | 分组名，默认为`DEFAULT_GROUP` |
+| `serviceName` | `string` | **是** | 服务名                    |
 
 #### 返回数据
 
@@ -3202,9 +3198,9 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ns/service?serviceName=naco
 
 | 参数名           | 参数类型     | 是否必填  | 描述说明                   |
 |---------------|----------|-------|------------------------|
-| `namespaceId` | `String` | 否     | 命名空间`Id`，默认为`public`   |
-| `groupName`   | `String` | 否     | 分组名，默认为`DEFAULT_GROUP` |
-| `serviceName` | `String` | **是** | 服务名                    |
+| `namespaceId` | `string` | 否     | 命名空间`Id`，默认为`public`   |
+| `groupName`   | `string` | 否     | 分组名，默认为`DEFAULT_GROUP` |
+| `serviceName` | `string` | **是** | 服务名                    |
 
 #### 返回数据
 
@@ -3212,18 +3208,18 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ns/service?serviceName=naco
 
 | 参数名                                                 | 参数类型         | 描述                                   |
 |-----------------------------------------------------|--------------|--------------------------------------|
-| `namespaceId`                                       | `String`     | 服务所属的namespaceId。                    |
-| `groupName`                                         | `String`     | 服务所属的groupName。                      |
-| `serviceName`                                       | `String`     | 服务名。                                 |
-| `ephemeral`                                         | `boolean`    | 服务的持久化属性，`true`为临时服务，`false`为持久化服务。  |
-| `protectThreshold`                                  | `Double`     | 服务防护阈值。                              |
+| `namespaceId`                                       | `string` | 服务所属的namespaceId。                    |
+| `groupName`                                         | `string` | 服务所属的groupName。                      |
+| `serviceName`                                       | `string` | 服务名。                                 |
+| `ephemeral`                                         | `boolean` | 服务的持久化属性，`true`为临时服务，`false`为持久化服务。  |
+| `protectThreshold`                                  | `number` | 服务防护阈值。                              |
 | `selector`                                          | `jsonObject` | 服务选择器。                               |
 | `metadata`                                          | `jsonObject` | 服务元数据。                               |
 | `clusterMap`                                        | `jsonObject` | 服务集群列表, key为cluster的名称，value为集群详细信息。 |
-| `clusterMap`.$ClusterName.`clusterName`             | `String`     | 集群名。                                 |
+| `clusterMap`.$ClusterName.`clusterName`             | `string` | 集群名。                                 |
 | `clusterMap`.$ClusterName.`healthChecker`           | `jsonObject` | 健康检查器。                               |
-| `clusterMap`.$ClusterName.`healthyCheckPort`        | `int`        | 健康检查端口。                              |
-| `clusterMap`.$ClusterName.`useInstancePortForCheck` | `Boolean`    | 是否使用所注册的实例的`IP:Port`进行健康检查。          |
+| `clusterMap`.$ClusterName.`healthyCheckPort`        | `integer` | 健康检查端口。                              |
+| `clusterMap`.$ClusterName.`useInstancePortForCheck` | `boolean` | 是否使用所注册的实例的`IP:Port`进行健康检查。          |
 | `clusterMap`.$ClusterName.`metadata`                | `jsonObject` | 集群元数据。                               |
 
 #### 示例
@@ -3289,11 +3285,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service?serviceName=nacos.t
 
 | 参数名           | 参数类型           | 是否必填  | 描述说明                   |
 |---------------|----------------|-------|------------------------|
-| `namespaceId` | `String`       | 否     | 命名空间`Id`，默认为`public`   |
-| `groupName`   | `String`       | 否     | 分组名，默认为`DEFAULT_GROUP` |
+| `namespaceId` | `string` | 否     | 命名空间`Id`，默认为`public`   |
+| `groupName`   | `string` | 否     | 分组名，默认为`DEFAULT_GROUP` |
 | `selector`    | `JSON格式String` | **是** | 访问策略                   |
-| `pageNo`      | `int`          | 否     | 当前页，默认为`1`             |
-| `pageSize`    | `int`          | 否     | 页条目数，默认为`20`，最大为`500`  |
+| `pageNo`      | `integer` | 否     | 当前页，默认为`1`             |
+| `pageSize`    | `integer` | 否     | 页条目数，默认为`20`，最大为`500`  |
 
 #### 返回数据
 
@@ -3301,16 +3297,16 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service?serviceName=nacos.t
 
 | 参数名                                   | 参数类型     | 描述说明         |
 |---------------------------------------|----------|--------------|
-| `totalCount`                          | `int`    | 符合条件的服务的总数。  |
-| `pageNumber`                          | `int`    | 当前页码，起始为`1`。 |
-| `pagesAvailable`                      | `int`    | 可用页码。        |
+| `totalCount`                          | `integer` | 符合条件的服务的总数。  |
+| `pageNumber`                          | `integer` | 当前页码，起始为`1`。 |
+| `pagesAvailable`                      | `integer` | 可用页码。        |
 | `pageItems`                           | `List`   | 服务列表。        |
-| `pageItems`[i].`name`                 | `String` | 服务名。         |
-| `pageItems`[i].`groupName`            | `String` | 服务的分组名。      |
-| `pageItems`[i].`clusterCount`         | `String` | 服务下的集群数量。    |
-| `pageItems`[i].`ipCount`              | `String` | 服务下的实例数量。    |
-| `pageItems`[i].`healthyInstanceCount` | `String` | 服务下的健康实例数量。  |
-| `pageItems`[i].`triggerFlag`          | `String` | 是否触发了服务的保护。  |
+| `pageItems`[i].`name`                 | `string` | 服务名。         |
+| `pageItems`[i].`groupName`            | `string` | 服务的分组名。      |
+| `pageItems`[i].`clusterCount`         | `string` | 服务下的集群数量。    |
+| `pageItems`[i].`ipCount`              | `string` | 服务下的实例数量。    |
+| `pageItems`[i].`healthyInstanceCount` | `string` | 服务下的健康实例数量。  |
+| `pageItems`[i].`triggerFlag`          | `string` | 是否触发了服务的保护。  |
 
 #### 示例
 
@@ -3377,11 +3373,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service/list'
 
 | 参数名                | 参数类型           | 是否必填  | 描述说明                   |
 |--------------------|----------------|-------|------------------------|
-| `namespaceId`      | `String`       | 否     | 命名空间`Id`，默认为`public`   |
-| `groupName`        | `String`       | 否     | 分组名，默认为`DEFAULT_GROUP` |
-| `serviceName`      | `String`       | **是** | 服务名                    |
+| `namespaceId`      | `string` | 否     | 命名空间`Id`，默认为`public`   |
+| `groupName`        | `string` | 否     | 分组名，默认为`DEFAULT_GROUP` |
+| `serviceName`      | `string` | **是** | 服务名                    |
 | `metadata`         | `JSON格式String` | 否     | 服务元数据，默认为空             |
-| `protectThreshold` | `float`        | 否     | 保护阈值，默认为`0`            |
+| `protectThreshold` | `number` | 否     | 保护阈值，默认为`0`            |
 | `selector`         | `JSON格式String` | 否     | 访问策略，默认为空              |
 
 #### 返回数据
@@ -3432,12 +3428,12 @@ curl -d 'serviceName=nacos.test.1' \
 
 | **参数名**       | **参数类型**  | **是否必填** | **描述**                  |
 |---------------|-----------|----------|-------------------------|
-| `namespaceId` | `String`  | 否        | 命名空间ID，默认为`public`      |
-| `serviceName` | `String`  | **是**    | 服务名称                    |
-| `groupName`   | `String`  | 否        | 分组名称，默认是`DEFAULT_GROUP` |
-| `pageNo`      | `Integer` | 否        | 页码                      |
-| `pageSize`    | `Integer` | 否        | 每页大小                    |
-| `aggregation` | `Boolean` | 否        | 是否聚合,默认为`true`          |
+| `namespaceId` | `string` | 否        | 命名空间ID，默认为`public`      |
+| `serviceName` | `string` | **是**    | 服务名称                    |
+| `groupName`   | `string` | 否        | 分组名称，默认是`DEFAULT_GROUP` |
+| `pageNo`      | `integer` | 否        | 页码                      |
+| `pageSize`    | `integer` | 否        | 每页大小                    |
+| `aggregation` | `boolean` | 否        | 是否聚合,默认为`true`          |
 
 #### 返回数据
 
@@ -3445,18 +3441,18 @@ curl -d 'serviceName=nacos.test.1' \
 
 | 参数名                          | 参数类型      | 描述                   |
 |------------------------------|-----------|----------------------|
-| `totalCount`                 | `int`     | 符合条件的服务的总数。          |
-| `pageNumber`                 | `int`     | 当前页码，起始为`1`。         |
-| `pagesAvailable`             | `int`     | 可用页码。                |
+| `totalCount`                 | `integer` | 符合条件的服务的总数。          |
+| `pageNumber`                 | `integer` | 当前页码，起始为`1`。         |
+| `pagesAvailable`             | `integer` | 可用页码。                |
 | `pageItems`                  | `List`    | 服务列表。                |
-| `pageItems`[i].`ip`          | `String`  | 订阅者IP。               |
-| `pageItems`[i].`port`        | `Integer` | 订阅者端口。               |
-| `pageItems`[i].`address`     | `String`  | 订阅者地址, 一般为`ip:port`。 | 
-| `pageItems`[i].`agent`       | `String`  | 订阅者客户端版本。            |
-| `pageItems`[i].`appName`     | `String`  | 订阅者所属应用。             |
-| `pageItems`[i].`namespaceId` | `String`  | 订阅者所属命名空间。           |
-| `pageItems`[i].`groupName`   | `String`  | 订阅的分组名。              |
-| `pageItems`[i].`serviceName` | `String`  | 订阅的服务名。              |
+| `pageItems`[i].`ip`          | `string` | 订阅者IP。               |
+| `pageItems`[i].`port`        | `integer` | 订阅者端口。               |
+| `pageItems`[i].`address`     | `string` | 订阅者地址, 一般为`ip:port`。 | 
+| `pageItems`[i].`agent`       | `string` | 订阅者客户端版本。            |
+| `pageItems`[i].`appName`     | `string` | 订阅者所属应用。             |
+| `pageItems`[i].`namespaceId` | `string` | 订阅者所属命名空间。           |
+| `pageItems`[i].`groupName`   | `string` | 订阅的分组名。              |
+| `pageItems`[i].`serviceName` | `string` | 订阅的服务名。              |
 
 #### 示例
 
@@ -3565,9 +3561,9 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service/selector/types'
 
 | **参数名**       | **类型**   | **必填** | **默认值**  | **参数描述** |
 |---------------|----------|--------|----------|----------|
-| `namespaceId` | `String` | 否      | `public` | 命名空间     |
-| `groupName`   | `String` | **是**  | 无        | 配置分组名    |
-| `dataId`      | `String` | **是**  | 无        | 配置名      |
+| `namespaceId` | `string` | 否      | `public` | 命名空间     |
+| `groupName`   | `string` | **是**  | 无        | 配置分组名    |
+| `dataId`      | `string` | **是**  | 无        | 配置名      |
 
 #### 返回数据
 
@@ -3575,21 +3571,21 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service/selector/types'
 
 | 参数名                | 参数类型     | 描述                         |
 |--------------------|----------|----------------------------|
-| `id`               | `String` | 配置在存储系统中的ID，一般为Long类型的字符串。 |
-| `dataId`           | `String` | 配置ID。                      |
-| `groupName`        | `String` | 配置分组。                      |
-| `namespaceId`      | `String` | 命名空间ID。                    |
-| `content`          | `String` | 配置内容。                      |
-| `desc`             | `String` | 配置描述。                      |
-| `md5`              | `String` | 配置内容的MD5值。                 |
-| `configTags`       | `String` | 配置的标签。                     |
-| `encryptedDataKey` | `String` | 加密配置内容的密钥，使用配置加密插件时存在。     |
-| `appName`          | `String` | 配置所属的应用名称。                 |
-| `type`             | `String` | 配置类型。                      |
-| `createTime`       | `Long`   | 配置创建时间。                    |
-| `modifyTime`       | `Long`   | 配置修改时间。                    |
-| `createUser`       | `String` | 配置创建人。                     |
-| `createIp`         | `String` | 配置创建IP。                    |
+| `id`               | `string` | 配置在存储系统中的ID，一般为Long类型的字符串。 |
+| `dataId`           | `string` | 配置ID。                      |
+| `groupName`        | `string` | 配置分组。                      |
+| `namespaceId`      | `string` | 命名空间ID。                    |
+| `content`          | `string` | 配置内容。                      |
+| `desc`             | `string` | 配置描述。                      |
+| `md5`              | `string` | 配置内容的MD5值。                 |
+| `configTags`       | `string` | 配置的标签。                     |
+| `encryptedDataKey` | `string` | 加密配置内容的密钥，使用配置加密插件时存在。     |
+| `appName`          | `string` | 配置所属的应用名称。                 |
+| `type`             | `string` | 配置类型。                      |
+| `createTime`       | `integer` | 配置创建时间。                    |
+| `modifyTime`       | `integer` | 配置修改时间。                    |
+| `createUser`       | `string` | 配置创建人。                     |
+| `createIp`         | `string` | 配置创建IP。                    |
 
 #### 示例
 
@@ -3649,15 +3645,14 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=nacos.example
 
 | 参数名           | 类型       | 必填    | 默认值      | 参数描述            |
 |---------------|----------|-------|----------|-----------------|
-| `namespaceId` | `String` | 否     | `public` | 命名空间            |
-| `groupName`   | `String` | **是** | 无        | 配置组名            |
-| `dataId`      | `String` | **是** | 无        | 配置名             |
-| `content`     | `String` | **是** | 无        | 配置内容            |
-| `appName`     | `String` | 否     | 无        | 应用名             |
-| `srcUser`     | `String` | 否     | 无        | 源用户             |
-| `configTags`  | `String` | 否     | 无        | 配置标签列表，可多个，逗号分隔 |
-| `desc`        | `String` | 否     | 无        | 配置描述            |
-| `type`        | `String` | 否     | 无        | 配置类型            |
+| `namespaceId` | `string` | 否     | `public` | 命名空间            |
+| `groupName`   | `string` | **是** | 无        | 配置组名            |
+| `dataId`      | `string` | **是** | 无        | 配置名             |
+| `content`     | `string` | **是** | 无        | 配置内容            |
+| `appName`     | `string` | 否     | 无        | 应用名             |
+| `configTags`  | `string` | 否     | 无        | 配置标签列表，可多个，逗号分隔 |
+| `desc`        | `string` | 否     | 无        | 配置描述            |
+| `type`        | `string` | 否     | 无        | 配置类型            |
 
 #### 返回数据
 
@@ -3709,9 +3704,9 @@ curl -d 'dataId=nacos.example' \
 
 | 参数名           | 类型       | 必填    | 默认值      | 参数描述  |
 |---------------|----------|-------|----------|-------|
-| `namespaceId` | `String` | 否     | `public` | 命名空间  |
-| `groupName`   | `String` | **是** | 无        | 配置分组名 |
-| `dataId`      | `String` | **是** | 无        | 配置名   |
+| `namespaceId` | `string` | 否     | `public` | 命名空间  |
+| `groupName`   | `string` | **是** | 无        | 配置分组名 |
+| `dataId`      | `string` | **是** | 无        | 配置名   |
 
 #### 返回数据
 
@@ -3765,7 +3760,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=nacos.exam
 
 | 参数名    | 参数类型      | 描述   |
 |--------|-----------|------|
-| `data` | `Boolean` | 操作结果 |
+| `data` | `boolean` | 操作结果 |
 
 #### 示例
 
@@ -3807,10 +3802,10 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/batch?ids=1,2,3'
 
 | 参数名           | 参数类型      | 是否必填  | 默认值      | 描述        |
 |---------------|-----------|-------|----------|-----------|
-| `namespaceId` | `String`  | 否     | `public` | 命名空间      |
-| `dataId`      | `String`  | **是** | 无        | 配置ID      |
-| `groupName`   | `String`  | **是** | 无        | 分组名称      |
-| `aggregation` | `Boolean` | **否** | `true`   | 是否从其他节点聚合 |
+| `namespaceId` | `string` | 否     | `public` | 命名空间      |
+| `dataId`      | `string` | **是** | 无        | 配置ID      |
+| `groupName`   | `string` | **是** | 无        | 分组名称      |
+| `aggregation` | `boolean` | **否** | `true`   | 是否从其他节点聚合 |
 
 #### 返回数据
 
@@ -3818,8 +3813,8 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/batch?ids=1,2,3'
 
 | 参数名               | 参数类型                  | 描述                                    |
 |-------------------|-----------------------|---------------------------------------|
-| `queryType`       | `String`              | 订阅者查询类型，该接口为`config`。                 |
-| `listenersStatus` | `Map<String, String>` | 订阅者列表，key为订阅者IP，value为订阅者订阅当前配置的MD5值。 |
+| `queryType`       | `string` | 订阅者查询类型，该接口为`config`。                 |
+| `listenersStatus` | `map<string, string>` | 订阅者列表，key为订阅者IP，value为订阅者订阅当前配置的MD5值。 |
 
 #### 示例
 
@@ -3866,16 +3861,16 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/listener?namespaceId
 
 | 参数名            | 参数类型      | 是否必填  | 默认值      | 描述                                                     |
 |----------------|-----------|-------|----------|--------------------------------------------------------|
-| `pageNo`       | `Integer` | **是** | 1        | 页码                                                     |
-| `pageSize`     | `Integer` | **是** | 100      | 每页大小                                                   |
-| `namespaceId`  | `String`  | 否     | `public` | 配置所属命名空间                                               |
-| `dataId`       | `String`  | 否     | `""`     | 配置的data ID, 当使用`blur`模式时，可使用`*`进行模糊匹配，如`example*`      |
-| `groupName`    | `String`  | 否     | `""`     | 配置的分组名称, 当使用`blur`模式时，可使用`*`进行模糊匹配，如`example*`         |
-| `appName`      | `String`  | 否     |          | 配置所属应用名称，默认为空，传入时过滤归属于此应用的配置，值为空时查询所有应用的配置。            |
-| `configTags`   | `String`  | 否     |          | 配置标签，多个标签之间用英文逗号分隔，默认为空，传入时过滤拥有此tag的配置，值为空时查询所有tag的配置。 |
-| `type`         | `String`  | 否     |          | 配置的类型，默认值为空，传入时过滤此类型的配置，值为空时查询所有类型的配置。                 |
-| `configDetail` | `String`  | 否     |          | 搜索的配置详情                                                |
-| `search`       | `String`  | 否     | `blur`   | 搜索模式（`blur` 或 `exact`）                                 |
+| `pageNo`       | `integer` | **是** | 1        | 页码                                                     |
+| `pageSize`     | `integer` | **是** | 100      | 每页大小                                                   |
+| `namespaceId`  | `string` | 否     | `public` | 配置所属命名空间                                               |
+| `dataId`       | `string` | 否     | `""`     | 配置的data ID, 当使用`blur`模式时，可使用`*`进行模糊匹配，如`example*`      |
+| `groupName`    | `string` | 否     | `""`     | 配置的分组名称, 当使用`blur`模式时，可使用`*`进行模糊匹配，如`example*`         |
+| `appName`      | `string` | 否     |          | 配置所属应用名称，默认为空，传入时过滤归属于此应用的配置，值为空时查询所有应用的配置。            |
+| `configTags`   | `string` | 否     |          | 配置标签，多个标签之间用英文逗号分隔，默认为空，传入时过滤拥有此tag的配置，值为空时查询所有tag的配置。 |
+| `type`         | `string` | 否     |          | 配置的类型，默认值为空，传入时过滤此类型的配置，值为空时查询所有类型的配置。                 |
+| `configDetail` | `string` | 否     |          | 搜索的配置详情                                                |
+| `search`       | `string` | 否     | `blur`   | 搜索模式（`blur` 或 `exact`）                                 |
 
 #### 返回数据
 
@@ -3883,19 +3878,19 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/listener?namespaceId
 
 | 参数名                          | 参数类型     | 描述                         |
 |------------------------------|----------|----------------------------|
-| `totalCount`                 | `int`    | 符合规则的配置总数。                 |
-| `pagesAvailable`             | `int`    | 可用页码总数。                    |
-| `pageNumber`                 | `int`    | 当前页码。                      |
+| `totalCount`                 | `integer` | 符合规则的配置总数。                 |
+| `pagesAvailable`             | `integer` | 可用页码总数。                    |
+| `pageNumber`                 | `integer` | 当前页码。                      |
 | `pageItems`                  | `List`   | 符合规则的配置列表。                 |
-| `pageItems`[i].`id`          | `String` | 配置在存储系统中的ID，一般为Long类型的字符串。 |
-| `pageItems`[i].`dataId`      | `String` | 配置ID。                      |
-| `pageItems`[i].`groupName`   | `String` | 配置分组。                      |
-| `pageItems`[i].`namespaceId` | `String` | 命名空间ID。                    |
-| `pageItems`[i].`md5`         | `String` | 配置内容的MD5值。                 |
-| `pageItems`[i].`appName`     | `String` | 配置所属的应用名称。                 |
-| `pageItems`[i].`type`        | `String` | 配置类型。                      |
-| `pageItems`[i].`createTime`  | `Long`   | 配置创建时间。                    |
-| `pageItems`[i].`modifyTime`  | `Long`   | 配置修改时间。                    |
+| `pageItems`[i].`id`          | `string` | 配置在存储系统中的ID，一般为Long类型的字符串。 |
+| `pageItems`[i].`dataId`      | `string` | 配置ID。                      |
+| `pageItems`[i].`groupName`   | `string` | 配置分组。                      |
+| `pageItems`[i].`namespaceId` | `string` | 命名空间ID。                    |
+| `pageItems`[i].`md5`         | `string` | 配置内容的MD5值。                 |
+| `pageItems`[i].`appName`     | `string` | 配置所属的应用名称。                 |
+| `pageItems`[i].`type`        | `string` | 配置类型。                      |
+| `pageItems`[i].`createTime`  | `integer` | 配置创建时间。                    |
+| `pageItems`[i].`modifyTime`  | `integer` | 配置修改时间。                    |
 
 #### 示例
 
@@ -3967,15 +3962,15 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/list?pageNo=1&pageSi
 
 | 参数名           | 参数类型     | 是否必填  | 默认值      | 描述   |
 |---------------|----------|-------|----------|------|
-| `namespaceId` | `String` | 否     | `public` | 命名空间 |
-| `dataId`      | `String` | **是** | 无        | 配置ID |
-| `groupName`   | `String` | **是** | 无        | 分组名称 |
+| `namespaceId` | `string` | 否     | `public` | 命名空间 |
+| `dataId`      | `string` | **是** | 无        | 配置ID |
+| `groupName`   | `string` | **是** | 无        | 分组名称 |
 
 #### 返回数据
 
 | 参数名    | 参数类型      | 描述   |
 |--------|-----------|------|
-| `data` | `Boolean` | 操作结果 |
+| `data` | `boolean` | 操作结果 |
 
 #### 示例
 
@@ -4019,9 +4014,9 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/beta?namespaceId=
 
 | 参数名           | 参数类型     | 是否必填  | 默认值      | 描述   |
 |---------------|----------|-------|----------|------|
-| `namespaceId` | `String` | 否     | `public` | 命名空间 |
-| `dataId`      | `String` | **是** | 无        | 配置ID |
-| `groupName`   | `String` | **是** | 无        | 分组名称 |
+| `namespaceId` | `string` | 否     | `public` | 命名空间 |
+| `dataId`      | `string` | **是** | 无        | 配置ID |
+| `groupName`   | `string` | **是** | 无        | 分组名称 |
 
 #### 返回数据
 
@@ -4029,22 +4024,22 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/beta?namespaceId=
 
 | 参数名                | 参数类型     | 描述                                  |
 |--------------------|----------|-------------------------------------|
-| `id`               | `String` | beta配置的存储ID。                        |
-| `dataId`           | `String` | 配置的dataId。                          |
-| `groupName`        | `String` | 配置的groupName。                       |
-| `namespaceId`      | `String` | 配置所属的命名空间。                          |
-| `desc`             | `String` | 配置描述。                               |
-| `md5`              | `String` | 配置内容的MD5值。                          |
-| `configTags`       | `String` | 配置的标签。                              |
-| `encryptedDataKey` | `String` | 加密配置内容的密钥，使用配置加密插件时存在。              |
-| `appName`          | `String` | 配置所属的应用名称。                          |
-| `type`             | `String` | 配置类型。                               |
-| `createTime`       | `Long`   | 配置创建时间。                             |
-| `modifyTime`       | `Long`   | 配置修改时间。                             |
-| `createUser`       | `String` | 配置创建人。                              |
-| `createIp`         | `String` | 配置创建IP。                             |
-| `grayName`         | `String` | 灰度发布规则名称, 固定为`beta`。                |
-| `grayRule`         | `String` | 灰度发布规则，格式为JSON，其中的`expr`为beta的ip列表。 |
+| `id`               | `string` | beta配置的存储ID。                        |
+| `dataId`           | `string` | 配置的dataId。                          |
+| `groupName`        | `string` | 配置的groupName。                       |
+| `namespaceId`      | `string` | 配置所属的命名空间。                          |
+| `desc`             | `string` | 配置描述。                               |
+| `md5`              | `string` | 配置内容的MD5值。                          |
+| `configTags`       | `string` | 配置的标签。                              |
+| `encryptedDataKey` | `string` | 加密配置内容的密钥，使用配置加密插件时存在。              |
+| `appName`          | `string` | 配置所属的应用名称。                          |
+| `type`             | `string` | 配置类型。                               |
+| `createTime`       | `integer` | 配置创建时间。                             |
+| `modifyTime`       | `integer` | 配置修改时间。                             |
+| `createUser`       | `string` | 配置创建人。                              |
+| `createIp`         | `string` | 配置创建IP。                             |
+| `grayName`         | `string` | 灰度发布规则名称, 固定为`beta`。                |
+| `grayRule`         | `string` | 灰度发布规则，格式为JSON，其中的`expr`为beta的ip列表。 |
 
 #### 示例
 
@@ -4106,8 +4101,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/beta?namespaceId=pub
 
 | 参数名           | 参数类型               | 是否必填 | 默认值      | 描述     |
 |---------------|--------------------|------|----------|--------|
-| `namespaceId` | `String`           | 否    | `public` | 命名空间   |
-| `src_user`    | `String`           | 否    | 无        | 操作用户   |
+| `namespaceId` | `string` | 否    | `public` | 命名空间   |
+| `src_user`    | `string` | 否    | 无        | 操作用户   |
 | `policy`      | `SameConfigPolicy` | 否    | `ABORT`  | 冲突处理策略 |
 | `file`        | `MultipartFile`    | 否    | 无        | 配置文件   |
 
@@ -4116,8 +4111,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/beta?namespaceId=pub
 | 参数名              | 参数类型                  | 描述     |
 |------------------|-----------------------|--------|
 | `data`           | `Map<String, Object>` | 导入结果   |
-| `data.succCount` | `Integer`             | 成功导入数量 |
-| `data.skipCount` | `Integer`             | 跳过导入数量 |
+| `data.succCount` | `integer` | 成功导入数量 |
+| `data.skipCount` | `integer` | 跳过导入数量 |
 
 #### 示例
 
@@ -4163,9 +4158,9 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/import' \
 
 | 参数名           | 参数类型         | 是否必填 | 默认值      | 描述     |
 |---------------|--------------|------|----------|--------|
-| `namespaceId` | `String`     | 否    | `public` | 命名空间   |
-| `groupName`   | `String`     | 否    | `""`     | 配置分组   |
-| `dataId`      | `String`     | 否    | `""`     | 配置ID   |
+| `namespaceId` | `string` | 否    | `public` | 命名空间   |
+| `groupName`   | `string` | 否    | `""`     | 配置分组   |
+| `dataId`      | `string` | 否    | `""`     | 配置ID   |
 | `ids`         | `List<Long>` | 否    | 无        | 配置ID列表 |
 
 > 使用时建议分开使用 `ids` 和 `dataId` + `groupName` 的组合，只选择一种方式，另一类传入空字符串，否则可能导致导出文件为空内容。
@@ -4204,8 +4199,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/export?namespaceId=p
 
 | 参数名       | 参数类型               | 是否必填 | 默认值     | 描述       |
 |-----------|--------------------|------|---------|----------|
-| `namespaceId` | `String`           | 否    | `public` | 目标命名空间ID。 |
-| `srcUser`     | `String`           | 否    | 无       | 操作用户。     |
+| `namespaceId` | `string` | 否    | `public` | 目标命名空间ID。 |
+| `srcUser`     | `string` | 否    | 无       | 操作用户。     |
 | `policy`      | `SameConfigPolicy` | **是** | `ABORT` | 冲突处理策略。   |
 
 #### 请求参数
@@ -4218,8 +4213,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/export?namespaceId=p
 
 | 参数名         | 参数类型      | 描述     |
 |-------------|-----------|--------|
-| `succCount` | `Integer` | 成功导入数量 |
-| `skipCount` | `Integer` | 跳过导入数量 |
+| `succCount` | `integer` | 成功导入数量 |
+| `skipCount` | `integer` | 跳过导入数量 |
 
 #### 示例
 
@@ -4266,11 +4261,11 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/clone' -d "namespac
 
 | 参数名           | 类型       | 必填    | 默认值             | 参数描述  |
 |---------------|----------|-------|-----------------|-------|
-| `namespaceId` | `String` | 否     | `public`        | 命名空间  |
-| `groupName`   | `String` | **是** | 无               | 配置分组名 |
-| `dataId`      | `String` | **是** | 无               | 配置名   |
-| `pageNo`      | `int`    | **是** | `1`             | 当前页   |
-| `pageSize`    | `int`    | **是** | `100`（最大为`500`） | 页条目数  |
+| `namespaceId` | `string` | 否     | `public`        | 命名空间  |
+| `groupName`   | `string` | **是** | 无               | 配置分组名 |
+| `dataId`      | `string` | **是** | 无               | 配置名   |
+| `pageNo`      | `integer` | **是** | `1`             | 当前页   |
+| `pageSize`    | `integer` | **是** | `100`（最大为`500`） | 页条目数  |
 
 #### 返回数据
 
@@ -4278,21 +4273,21 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/clone' -d "namespac
 
 | 参数名                          | 参数类型     | 描述                                |
 |------------------------------|----------|-----------------------------------|
-| `totalCount`                 | `int`    | 历史记录的总数。                          |
-| `pageNumber`                 | `int`    | 当前页码，起始为`1`。                      |
-| `pagesAvailable`             | `int`    | 可用页码。                             |
+| `totalCount`                 | `integer` | 历史记录的总数。                          |
+| `pageNumber`                 | `integer` | 当前页码，起始为`1`。                      |
+| `pagesAvailable`             | `integer` | 可用页码。                             |
 | `pageItems`                  | `List`   | 历史记录列表。                           |
-| `pageItems`[i].`id`          | `String` | 历史记录的ID。                          |
-| `pageItems`[i].`dataId`      | `String` | 配置的dataId。                        |
-| `pageItems`[i].`groupName`   | `String` | 配置的groupName。                     |
-| `pageItems`[i].`namespaceId` | `String` | 配置所属的命名空间。                        |
-| `pageItems`[i].`appName`     | `String` | 配置所属的appName。                     |
-| `pageItems`[i].`opType`      | `String` | 操作类型，`I`为插入、`U`为更新、`D`为删除。        |
-| `pageItems`[i].`publishType` | `String` | 发布类型，`formal`为普通发布，`gray`为beta发布。 |
-| `pageItems`[i].`srcIp`       | `String` | 发布的来源IP。                          |
-| `pageItems`[i].`srcUser`     | `String` | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。       |
-| `pageItems`[i].`createTime`  | `Long`   | 配置创建时间。                           |
-| `pageItems`[i].`modifyTime`  | `Long`   | 配置修改时间。                           |
+| `pageItems`[i].`id`          | `string` | 历史记录的ID。                          |
+| `pageItems`[i].`dataId`      | `string` | 配置的dataId。                        |
+| `pageItems`[i].`groupName`   | `string` | 配置的groupName。                     |
+| `pageItems`[i].`namespaceId` | `string` | 配置所属的命名空间。                        |
+| `pageItems`[i].`appName`     | `string` | 配置所属的appName。                     |
+| `pageItems`[i].`opType`      | `string` | 操作类型，`I`为插入、`U`为更新、`D`为删除。        |
+| `pageItems`[i].`publishType` | `string` | 发布类型，`formal`为普通发布，`gray`为beta发布。 |
+| `pageItems`[i].`srcIp`       | `string` | 发布的来源IP。                          |
+| `pageItems`[i].`srcUser`     | `string` | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。       |
+| `pageItems`[i].`createTime`  | `integer` | 配置创建时间。                           |
+| `pageItems`[i].`modifyTime`  | `integer` | 配置修改时间。                           |
 
 #### 示例
 
@@ -4370,10 +4365,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/list?dataId=nacos.e
 
 | 参数名         | 类型       | 必填    | 默认值      | 参数描述   |
 |-------------|----------|-------|----------|--------|
-| namespaceId | `String` | 否     | `public` | 命名空间   |
-| groupName   | `String` | **是** | 无        | 配置分组名  |
-| dataId      | `String` | **是** | 无        | 配置名    |
-| nid         | `long`   | **是** | 无        | 配置历史Id |
+| namespaceId | `string` | 否     | `public` | 命名空间   |
+| groupName   | `string` | **是** | 无        | 配置分组名  |
+| dataId      | `string` | **是** | 无        | 配置名    |
+| nid         | `integer` | **是** | 无        | 配置历史Id |
 
 #### 返回数据
 
@@ -4381,19 +4376,19 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/list?dataId=nacos.e
 
 | 参数名           | 参数类型         | 描述                                                                          |
 |---------------|--------------|-----------------------------------------------------------------------------|
-| `id`          | `String`     | 历史记录的ID。                                                                    |
-| `dataId`      | `String`     | 配置的dataId。                                                                  |
-| `groupName`   | `String`     | 配置的groupName。                                                               |
-| `namespaceId` | `String`     | 配置所属的命名空间。                                                                  |
-| `content`     | `String`     |
-| `appName`     | `String`     | 配置所属的appName。                                                               |
-| `opType`      | `String`     | 操作类型，`I`为插入、`U`为更新、`D`为删除。                                                  |
-| `publishType` | `String`     | 发布类型，`formal`为普通发布，`gray`为beta发布。                                           |
-| `srcIp`       | `String`     | 发布的来源IP。                                                                    |
-| `srcUser`     | `String`     | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。                                                 |
-| `createTime`  | `Long`       | 配置创建时间。                                                                     |
-| `modifyTime`  | `Long`       | 配置修改时间。                                                                     |
-| `grayName`    | `String`     | 灰度发布规则名称, 固定为`beta`。                                                        |
+| `id`          | `string` | 历史记录的ID。                                                                    |
+| `dataId`      | `string` | 配置的dataId。                                                                  |
+| `groupName`   | `string` | 配置的groupName。                                                               |
+| `namespaceId` | `string` | 配置所属的命名空间。                                                                  |
+| `content`     | `string`     |
+| `appName`     | `string` | 配置所属的appName。                                                               |
+| `opType`      | `string` | 操作类型，`I`为插入、`U`为更新、`D`为删除。                                                  |
+| `publishType` | `string` | 发布类型，`formal`为普通发布，`gray`为beta发布。                                           |
+| `srcIp`       | `string` | 发布的来源IP。                                                                    |
+| `srcUser`     | `string` | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。                                                 |
+| `createTime`  | `integer` | 配置创建时间。                                                                     |
+| `modifyTime`  | `integer` | 配置修改时间。                                                                     |
+| `grayName`    | `string` | 灰度发布规则名称, 固定为`beta`。                                                        |
 | `extInfo`     | `JsonString` | 扩展信息，目前包括`src_user`、`type`、`c_desc`，若`publishType`为`gray`, 其中还包括`grayRule`。 |
 
 #### 示例
@@ -4454,10 +4449,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/??dataId=111&groupN
 
 | 参数名         | 类型       | 必填    | 默认值      | 参数描述  |
 |-------------|----------|-------|----------|-------|
-| namespaceId | `String` | 否     | `public` | 命名空间  |
-| groupName   | `String` | **是** | 无        | 配置分组名 |
-| dataId      | `String` | **是** | 无        | 配置名   |
-| id          | `long`   | **是** | 无        | 配置Id  |
+| namespaceId | `string` | 否     | `public` | 命名空间  |
+| groupName   | `string` | **是** | 无        | 配置分组名 |
+| dataId      | `string` | **是** | 无        | 配置名   |
+| id          | `integer` | **是** | 无        | 配置Id  |
 
 #### 返回数据
 
@@ -4465,19 +4460,19 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/??dataId=111&groupN
 
 | 参数名           | 参数类型         | 描述                                                                          |
 |---------------|--------------|-----------------------------------------------------------------------------|
-| `id`          | `String`     | 历史记录的ID。                                                                    |
-| `dataId`      | `String`     | 配置的dataId。                                                                  |
-| `groupName`   | `String`     | 配置的groupName。                                                               |
-| `namespaceId` | `String`     | 配置所属的命名空间。                                                                  |
-| `content`     | `String`     |
-| `appName`     | `String`     | 配置所属的appName。                                                               |
-| `opType`      | `String`     | 操作类型，`I`为插入、`U`为更新、`D`为删除。                                                  |
-| `publishType` | `String`     | 发布类型，`formal`为普通发布，`gray`为beta发布。                                           |
-| `srcIp`       | `String`     | 发布的来源IP。                                                                    |
-| `srcUser`     | `String`     | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。                                                 |
-| `createTime`  | `Long`       | 配置创建时间。                                                                     |
-| `modifyTime`  | `Long`       | 配置修改时间。                                                                     |
-| `grayName`    | `String`     | 灰度发布规则名称, 固定为`beta`。                                                        |
+| `id`          | `string` | 历史记录的ID。                                                                    |
+| `dataId`      | `string` | 配置的dataId。                                                                  |
+| `groupName`   | `string` | 配置的groupName。                                                               |
+| `namespaceId` | `string` | 配置所属的命名空间。                                                                  |
+| `content`     | `string`     |
+| `appName`     | `string` | 配置所属的appName。                                                               |
+| `opType`      | `string` | 操作类型，`I`为插入、`U`为更新、`D`为删除。                                                  |
+| `publishType` | `string` | 发布类型，`formal`为普通发布，`gray`为beta发布。                                           |
+| `srcIp`       | `string` | 发布的来源IP。                                                                    |
+| `srcUser`     | `string` | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。                                                 |
+| `createTime`  | `integer` | 配置创建时间。                                                                     |
+| `modifyTime`  | `integer` | 配置修改时间。                                                                     |
+| `grayName`    | `string` | 灰度发布规则名称, 固定为`beta`。                                                        |
 | `extInfo`     | `JsonString` | 扩展信息，目前包括`src_user`、`type`、`c_desc`，若`publishType`为`gray`, 其中还包括`grayRule`。 |
 
 #### 示例
@@ -4538,7 +4533,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/previous?id=101&dat
 
 | 参数名         | 类型       | 必填    | 默认值 | 参数描述 |
 |-------------|----------|-------|-----|------|
-| namespaceId | `String` | 否     | 无   | 命名空间 |
+| namespaceId | `string` | 否     | 无   | 命名空间 |
 
 #### 返回数据
 
@@ -4546,8 +4541,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/previous?id=101&dat
 
 | 参数名         | 参数类型     | 描述            |
 |-------------|----------|---------------|
-| `dataId`    | `String` | 配置的dataId。    |
-| `groupName` | `String` | 配置的groupName。 |
+| `dataId`    | `string` | 配置的dataId。    |
+| `groupName` | `string` | 配置的groupName。 |
 
 > 其他字段均无用。
 
@@ -4614,8 +4609,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/configs?namespaceId
 
 | 参数名           | 参数类型     | 是否必填 | 默认值 | 描述     |
 |---------------|----------|------|-----|--------|
-| `groupName`   | `String` | 否    | 无   | 分组名称   |
-| `namespaceId` | `String` | 否    | 无   | 命名空间ID |
+| `groupName`   | `string` | 否    | 无   | 分组名称   |
+| `namespaceId` | `string` | 否    | 无   | 命名空间ID |
 
 **注意** ：`groupName` 和 `namespaceId` 至少需要提供一个。
 
@@ -4625,16 +4620,16 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/configs?namespaceId
 
 | 参数名                | 参数类型      | 描述         |
 |--------------------|-----------|------------|
-| `id`               | `Long`    | 容量信息的唯一ID  |
-| `groupName`        | `String`  | 分组名称       |
-| `namespaceId`      | `String`  | 命名空间ID     |
-| `quota`            | `Integer` | 配额         |
-| `usage`            | `Integer` | 当前使用量      |
-| `maxSize`          | `Integer` | 最大单配置大小    |
-| ~~`gmtCreate`~~    | `String`  | 创建时间，将废弃   |
-| ~~`gmtModified`~~  | `String`  | 最后修改时间，将废弃 |
-| ~~`maxAggrCount`~~ | `Integer` | 未使用，将废弃    |
-| ~~`maxAggrSize`~~  | `Integer` | 未使用，将废弃    |
+| `id`               | `integer` | 容量信息的唯一ID  |
+| `groupName`        | `string` | 分组名称       |
+| `namespaceId`      | `string` | 命名空间ID     |
+| `quota`            | `integer` | 配额         |
+| `usage`            | `integer` | 当前使用量      |
+| `maxSize`          | `integer` | 最大单配置大小    |
+| ~~`gmtCreate`~~    | `string` | 创建时间，将废弃   |
+| ~~`gmtModified`~~  | `string` | 最后修改时间，将废弃 |
+| ~~`maxAggrCount`~~ | `integer` | 未使用，将废弃    |
+| ~~`maxAggrSize`~~  | `integer` | 未使用，将废弃    |
 
 #### 示例
 
@@ -4686,16 +4681,16 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/capacity?namespaceId=public
 
 | 参数名           | 参数类型      | 是否必填  | 描述                   |
 |---------------|-----------|-------|----------------------|
-| `groupName`   | `String`  | 否     | 分组名称，与命名空间ID 两者必须有其一 |
-| `namespaceId` | `String`  | 否     | 命名空间ID，与分组名称 两者必须有其一 |
-| `quota`       | `Integer` | **是** | 配额                   |
-| `maxSize`     | `Integer` | **是** | 最大大小                 |
+| `groupName`   | `string` | 否     | 分组名称，与命名空间ID 两者必须有其一 |
+| `namespaceId` | `string` | 否     | 命名空间ID，与分组名称 两者必须有其一 |
+| `quota`       | `integer` | **是** | 配额                   |
+| `maxSize`     | `integer` | **是** | 最大大小                 |
 
 #### 返回数据
 
 | 参数名    | 参数类型      | 描述   |
 |--------|-----------|------|
-| `data` | `Boolean` | 操作结果 |
+| `data` | `boolean` | 操作结果 |
 
 #### 示例
 
@@ -4741,7 +4736,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/capacity' -d 'namespaceId=
 
 | 参数名    | 参数类型     | 描述   |
 |--------|----------|------|
-| `data` | `String` | 操作结果 |
+| `data` | `string` | 操作结果 |
 
 #### 示例
 
@@ -4783,14 +4778,14 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/localCache'
 
 | 参数名        | 参数类型     | 是否必填  | 默认值 | 描述                    |
 |------------|----------|-------|-----|-----------------------|
-| `logName`  | `String` | **是** | 无   | 模块名称                  |
-| `logLevel` | `String` | **是** | 无   | 日志级别（如`INFO`、`DEBUG`） |
+| `logName`  | `string` | **是** | 无   | 模块名称                  |
+| `logLevel` | `string` | **是** | 无   | 日志级别（如`INFO`、`DEBUG`） |
 
 #### 返回数据
 
 | 参数名    | 参数类型     | 描述   |
 |--------|----------|------|
-| `data` | `String` | 操作结果 |
+| `data` | `string` | 操作结果 |
 
 #### 示例
 
@@ -4834,7 +4829,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/log' -d "logName=config
 
 | 参数名   | 参数类型     | 是否必填  | 默认值 | 描述       |
 |-------|----------|-------|-----|----------|
-| `sql` | `String` | **是** | 无   | SQL 查询语句 |
+| `sql` | `string` | **是** | 无   | SQL 查询语句 |
 
 #### 返回数据
 
@@ -4922,7 +4917,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/derby?sql=SELECT%20*%20
 
 | 参数名    | 参数类型     | 描述     |
 |--------|----------|--------|
-| `data` | `String` | 导入结果信息 |
+| `data` | `string` | 导入结果信息 |
 
 #### 示例
 
@@ -4966,10 +4961,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/derby/import' \
 
 | 参数名           | 参数类型      | 是否必填  | 默认值      | 描述         |
 |---------------|-----------|-------|----------|------------|
-| `ip`          | `String`  | **是** | 无        | 客户端 IP 地址  |
-| `all`         | `Boolean` | 否     | `false`  | 是否返回所有配置信息 |
-| `namespaceId` | `String`  | 否     | `public` | 命名空间ID     |
-| `aggregation` | `Boolean` | 否     | `true`   | 是否从其他节点聚合  |
+| `ip`          | `string` | **是** | 无        | 客户端 IP 地址  |
+| `all`         | `boolean` | 否     | `false`  | 是否返回所有配置信息 |
+| `namespaceId` | `string` | 否     | `public` | 命名空间ID     |
+| `aggregation` | `boolean` | 否     | `true`   | 是否从其他节点聚合  |
 
 #### 返回数据
 
@@ -4977,8 +4972,8 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/derby/import' \
 
 | 参数名               | 参数类型                  | 描述                                                                            |
 |-------------------|-----------------------|-------------------------------------------------------------------------------|
-| `queryType`       | `String`              | 订阅者查询类型，该接口为`ip`。                                                             |
-| `listenersStatus` | `Map<String, String>` | 订阅者列表，key为订阅的配置信息，格式为`dataId`+`groupName`+`namespaceId`，value为订阅者订阅当前配置的MD5值。 |
+| `queryType`       | `string` | 订阅者查询类型，该接口为`ip`。                                                             |
+| `listenersStatus` | `map<string, string>` | 订阅者列表，key为订阅的配置信息，格式为`dataId`+`groupName`+`namespaceId`，value为订阅者订阅当前配置的MD5值。 |
 
 #### 示例
 
@@ -5025,10 +5020,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/listener?ip=127.0.0.1&names
 
 | **参数名**       | **参数类型** | **是否必填** | **默认值**  | **描述**    |
 |---------------|----------|----------|----------|-----------|
-| `ip`          | `String` | **是**    | 无        | 客户端 IP 地址 |
-| `dataId`      | `String` | 否        | 无        | 配置ID      |
-| `groupName`   | `String` | 否        | 无        | 分组名称      |
-| `namespaceId` | `String` | 否        | `public` | 命名空间ID    |
+| `ip`          | `string` | **是**    | 无        | 客户端 IP 地址 |
+| `dataId`      | `string` | 否        | 无        | 配置ID      |
+| `groupName`   | `string` | 否        | 无        | 分组名称      |
+| `namespaceId` | `string` | 否        | `public` | 命名空间ID    |
 
 #### 返回数据
 
@@ -5037,13 +5032,13 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/listener?ip=127.0.0.1&names
 | 参数名                                            | 参数类型      | 描述说明     |
 |------------------------------------------------|-----------|----------|
 | `data`                                         |           | 服务信息     |
-| `data.{namespaceId}.isFixedServer`             | `Boolean` | 是否固定服务器  |
-| `data.{namespaceId}.snapshotDir`               | `String`  | 快照目录路径   |
-| `data.{namespaceId}.clientVersion`             | `String`  | 客户端版本    |
-| `data.{namespaceId}.serverUrls`                | `String`  | 服务器URL列表 |
-| `data.{namespaceId}.listenConfigSize`          | `Integer` | 监听配置大小   |
-| `data.{namespaceId}.metricValues.cacheData`    | `String`  | 缓存数据md5值 |
-| `data.{namespaceId}.metricValues.snapshotData` | `String`  | 快照数据md5值 |
+| `data.{namespaceId}.isFixedServer`             | `boolean` | 是否固定服务器  |
+| `data.{namespaceId}.snapshotDir`               | `string` | 快照目录路径   |
+| `data.{namespaceId}.clientVersion`             | `string` | 客户端版本    |
+| `data.{namespaceId}.serverUrls`                | `string` | 服务器URL列表 |
+| `data.{namespaceId}.listenConfigSize`          | `integer` | 监听配置大小   |
+| `data.{namespaceId}.metricValues.cacheData`    | `string` | 缓存数据md5值 |
+| `data.{namespaceId}.metricValues.snapshotData` | `string` | 快照数据md5值 |
 
 #### 示例
 
@@ -5097,10 +5092,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/metrics/cluster?ip=127.0.0.
 
 | **参数名**       | **参数类型** | **是否必填** | **默认值**  | **描述**    |
 |---------------|----------|----------|----------|-----------|
-| `ip`          | `String` | **是**    | 无        | 客户端 IP 地址 |
-| `dataId`      | `String` | 否        | 无        | 配置ID      |
-| `groupName`   | `String` | 否        | 无        | 分组名称      |
-| `namespaceId` | `String` | 否        | `public` | 命名空间      |
+| `ip`          | `string` | **是**    | 无        | 客户端 IP 地址 |
+| `dataId`      | `string` | 否        | 无        | 配置ID      |
+| `groupName`   | `string` | 否        | 无        | 分组名称      |
+| `namespaceId` | `string` | 否        | `public` | 命名空间      |
 
 #### 返回数据
 
@@ -5109,13 +5104,13 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/metrics/cluster?ip=127.0.0.
 | 参数名                                            | 参数类型      | 描述说明     |
 |------------------------------------------------|-----------|----------|
 | `data`                                         |           | 服务信息     |
-| `data.{namespaceId}.isFixedServer`             | `Boolean` | 是否固定服务器  |
-| `data.{namespaceId}.snapshotDir`               | `String`  | 快照目录路径   |
-| `data.{namespaceId}.clientVersion`             | `String`  | 客户端版本    |
-| `data.{namespaceId}.serverUrls`                | `String`  | 服务器URL列表 |
-| `data.{namespaceId}.listenConfigSize`          | `Integer` | 监听配置大小   |
-| `data.{namespaceId}.metricValues.cacheData`    | `String`  | 缓存数据md5值 |
-| `data.{namespaceId}.metricValues.snapshotData` | `String`  | 快照数据md5值 |
+| `data.{namespaceId}.isFixedServer`             | `boolean` | 是否固定服务器  |
+| `data.{namespaceId}.snapshotDir`               | `string` | 快照目录路径   |
+| `data.{namespaceId}.clientVersion`             | `string` | 客户端版本    |
+| `data.{namespaceId}.serverUrls`                | `string` | 服务器URL列表 |
+| `data.{namespaceId}.listenConfigSize`          | `integer` | 监听配置大小   |
+| `data.{namespaceId}.metricValues.cacheData`    | `string` | 缓存数据md5值 |
+| `data.{namespaceId}.metricValues.snapshotData` | `string` | 快照数据md5值 |
 
 #### 示例
 
@@ -5169,9 +5164,9 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/metrics/ip?ip=127.0.0.1&dat
 
 | **参数名**       | **参数类型** | **是否必填** | **默认值**  | **描述** |
 |---------------|----------|----------|----------|--------|
-| `dataId`      | `String` | **是**    | 无        | 配置ID   |
-| `groupName`   | `String` | **是**    | 无        | 分组名称   |
-| `namespaceId` | `String` | 否        | `public` | 命名空间   |
+| `dataId`      | `string` | **是**    | 无        | 配置ID   |
+| `groupName`   | `string` | **是**    | 无        | 分组名称   |
+| `namespaceId` | `string` | 否        | `public` | 命名空间   |
 | `desc`        | `string` | 否        | null     | 配置的新描述 |
 | `configTags`  | `string` | 否        | null     | 配置的新标签 |
 
@@ -5181,7 +5176,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/metrics/ip?ip=127.0.0.1&dat
 
 | 参数名    | 参数类型      | 描述   |
 |--------|-----------|------|
-| `data` | `Boolean` | 操作结果 |
+| `data` | `boolean` | 操作结果 |
 
 #### 示例
 
@@ -5229,8 +5224,8 @@ curl -X PUT '127.0.0.1:8848/v3/admin/cs/config/metadata' \
 
 | 参数名           | 参数类型     | 是否必填  | 描述                                                     |
 |---------------|----------|-------|--------------------------------------------------------|
-| `pageNo`      | `int`    | **是** | 当前页，默认为`1`                                             |
-| `pageSize`    | `int`    | **是** | 页条目数，默认为`20`，最大为`500`                                  |
+| `pageNo`      | `integer` | **是** | 当前页，默认为`1`                                             |
+| `pageSize`    | `integer` | **是** | 页条目数，默认为`20`，最大为`500`                                  |
 | `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`public`                               |
 | `mcpName`     | `null`   | 否     | MCP服务的名字模版，为空时查询所有MCP服务，当`search`为`blur`时，可使用`*`进行模糊搜索 |
 | `search`      | `string` | 否     | 搜索的类型，可选之`blur`和`accurate`，默认为`blur`。                  |
@@ -5241,20 +5236,20 @@ curl -X PUT '127.0.0.1:8848/v3/admin/cs/config/metadata' \
 
 | 参数名                                           | 参数类型                  | 描述                                                                                              |
 |-----------------------------------------------|-----------------------|-------------------------------------------------------------------------------------------------|
-| `totalCount`                                  | `int`                 | 符合条件的服务的总数。                                                                                     |
-| `pageNumber`                                  | `int`                 | 当前页码，起始为`1`。                                                                                    |
-| `pagesAvailable`                              | `int`                 | 可用页码。                                                                                           |
+| `totalCount`                                  | `integer` | 符合条件的服务的总数。                                                                                     |
+| `pageNumber`                                  | `integer` | 当前页码，起始为`1`。                                                                                    |
+| `pagesAvailable`                              | `integer` | 可用页码。                                                                                           |
 | `pageItems`                                   | `List`                | 服务列表。                                                                                           |
-| `pageItems`[i].`id`                           | `String`              | MCP服务的ID，一般为UUID。                                                                               |
-| `pageItems`[i].`name`                         | `String`              | MCP服务名。                                                                                         |
-| `pageItems`[i].`protocol`                     | `String`              | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
-| `pageItems`[i].`frontProtocol`                | `String`              | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
-| `pageItems`[i].`description`                  | `String`              | MCP服务的描述。                                                                                       |
-| `pageItems`[i].`repository`                   | `String`              | MCP服务的存储仓库。                                                                                     |                                                                                          |
+| `pageItems`[i].`id`                           | `string` | MCP服务的ID，一般为UUID。                                                                               |
+| `pageItems`[i].`name`                         | `string` | MCP服务名。                                                                                         |
+| `pageItems`[i].`protocol`                     | `string` | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
+| `pageItems`[i].`frontProtocol`                | `string` | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
+| `pageItems`[i].`description`                  | `string` | MCP服务的描述。                                                                                       |
+| `pageItems`[i].`repository`                   | `string` | MCP服务的存储仓库。                                                                                     |                                                                                          |
 | `pageItems`[i].`versionDetail`                | `VersionDetail`       | MCP服务当前最新的版本信息。                                                                                 |
 | `pageItems`[i].`localServerConfig`            | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
 | `pageItems`[i].`remoteServerConfig`           | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
-| `pageItems`[i].`latestPublishedVersion`       | `String`              | MCP服务最新版本的版本号。                                                                                  |
+| `pageItems`[i].`latestPublishedVersion`       | `string` | MCP服务最新版本的版本号。                                                                                  |
 | `pageItems`[i].`versionDetails`               | `List<VersionDetail>` | MCP服务版本详情的列表。                                                                                   |
 | `pageItems`[i].`capabilities`                 | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
 
@@ -5262,8 +5257,8 @@ curl -X PUT '127.0.0.1:8848/v3/admin/cs/config/metadata' \
 
 | 参数名            | 参数类型      | 描述               |
 |----------------|-----------|------------------|
-| `version`      | `String`  | MCP服务的版本号。       |
-| `release_date` | `String`  | MCP服务的版本发布时间。    |
+| `version`      | `string` | MCP服务的版本号。       |
+| `release_date` | `string` | MCP服务的版本发布时间。    |
 | `is_latest`    | `boolean` | MCP服务的版本是否为最新版本。 |
 
 #### 示例
@@ -5347,17 +5342,17 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp/list?pageNo=1&pageSize=100&nam
 
 | 参数名                  | 参数类型                  | 描述                                                                                              |
 |----------------------|-----------------------|-------------------------------------------------------------------------------------------------|
-| `id`                 | `String`              | MCP服务的ID，一般为UUID。                                                                               |
-| `name`               | `String`              | MCP服务名。                                                                                         |
-| `namespaceId`        | `String`              | MCP服务所属的命名空间ID。                                                                                 |
-| `protocol`           | `String`              | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
-| `frontProtocol`      | `String`              | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
-| `description`        | `String`              | MCP服务的描述。                                                                                       |
-| `repository`         | `String`              | MCP服务的存储仓库。                                                                                     |                                                                                          |
+| `id`                 | `string` | MCP服务的ID，一般为UUID。                                                                               |
+| `name`               | `string` | MCP服务名。                                                                                         |
+| `namespaceId`        | `string` | MCP服务所属的命名空间ID。                                                                                 |
+| `protocol`           | `string` | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
+| `frontProtocol`      | `string` | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
+| `description`        | `string` | MCP服务的描述。                                                                                       |
+| `repository`         | `string` | MCP服务的存储仓库。                                                                                     |                                                                                          |
 | `versionDetail`      | `VersionDetail`       | MCP服务所查询的版本信息。                                                                                  |
 | `localServerConfig`  | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
 | `remoteServerConfig` | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
-| `enabled`            | `boolean`             | MCP服务是否启用。                                                                                      |
+| `enabled`            | `boolean` | MCP服务是否启用。                                                                                      |
 | `capabilities`       | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
 | `backendEndpoints`   | `List`                | MCP服务若类型为**非stdio**，存在此信息，记录访问远端服务的具体地址信息。                                                      |
 | `toolSpec`           | `Map<String, Object>` | MCP服务支持的能力类型包含`TOOL`时，存在此信息，记录工具的详细配置信息。                                                        |
@@ -5367,8 +5362,8 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp/list?pageNo=1&pageSize=100&nam
 
 | 参数名            | 参数类型      | 描述               |
 |----------------|-----------|------------------|
-| `version`      | `String`  | MCP服务的版本号。       |
-| `release_date` | `String`  | MCP服务的版本发布时间。    |
+| `version`      | `string` | MCP服务的版本号。       |
+| `release_date` | `string` | MCP服务的版本发布时间。    |
 | `is_latest`    | `boolean` | MCP服务的版本是否为最新版本。 |
 
 #### 示例
@@ -5438,11 +5433,12 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=tes
 
 | 参数名                     | 参数类型         | 是否必填  | 描述                             |
 |-------------------------|--------------|-------|--------------------------------|
-| `namespaceId`           | `string`     | 否     | MCP服务的命名空间ID，默认为`public`       |
+| `namespaceId`           | `string` | 否     | MCP服务的命名空间ID，默认为`public`       |
 | `serverSpecification`   | `jsonString` | **是** | MCP服务的描述详情                     |
 | `toolSpecification`     | `jsonString` | 否     | MCP服务的工具描述详情                   |
 | `endpointSpecification` | `jsonString` | 否     | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效 |
-| `overrideExisting `    | `boolean`     | 否     | MCP服务更新时是否覆盖原endpointSpecification，默认不覆盖，仅在非`stdio`协议时生效 |
+| `overrideExisting `    | `boolean` | 否     | MCP服务更新时是否覆盖原endpointSpecification，默认不覆盖，仅在非`stdio`协议时生效 |
+| `latest` | `string` | 否 | - |
 
 其中`serverSpecification`、`toolSpecification`、`endpointSpecification`参数的详细内容如下：
 
@@ -5450,25 +5446,25 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=tes
 
 | 参数名                  | 参数类型                  | 描述                                                                                              |
 |----------------------|-----------------------|-------------------------------------------------------------------------------------------------|
-| `id`                 | `String`              | MCP服务的ID，一般为UUID，必须传入，用于定位待更新的MCP服务。                                                            |
-| `name`               | `String`              | MCP服务名。                                                                                         |
-| `protocol`           | `String`              | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
-| `frontProtocol`      | `String`              | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
-| `description`        | `String`              | MCP服务的描述。                                                                                       |
-| `repository`         | `String`              | MCP服务的存储仓库。                                                                                     |    |
+| `id`                 | `string` | MCP服务的ID，一般为UUID，必须传入，用于定位待更新的MCP服务。                                                            |
+| `name`               | `string` | MCP服务名。                                                                                         |
+| `protocol`           | `string` | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
+| `frontProtocol`      | `string` | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
+| `description`        | `string` | MCP服务的描述。                                                                                       |
+| `repository`         | `string` | MCP服务的存储仓库。                                                                                     |    |
 | `versionDetail`      | `VersionDetail`       | MCP服务的版本信息。                                                                                     |
-| `version`            | `String`              | MCP服务的简易版本版本信息，主要用于兼容，若已设置`versionDetail`,则该字段无效。                                               |    |
+| `version`            | `string` | MCP服务的简易版本版本信息，主要用于兼容，若已设置`versionDetail`,则该字段无效。                                               |    |
 | `localServerConfig`  | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
 | `remoteServerConfig` | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
-| `enabled`            | `boolean`             | MCP服务是否启用。                                                                                      |
+| `enabled`            | `boolean` | MCP服务是否启用。                                                                                      |
 | `capabilities`       | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
 
 其中`VersionDetail`结构如下：
 
 | 参数名            | 参数类型      | 描述               |
 |----------------|-----------|------------------|
-| `version`      | `String`  | MCP服务的版本号。       |
-| `release_date` | `String`  | MCP服务的版本发布时间。    |
+| `version`      | `string` | MCP服务的版本号。       |
+| `release_date` | `string` | MCP服务的版本发布时间。    |
 | `is_latest`    | `boolean` | MCP服务的版本是否为最新版本。 |
 
 > toolSpecification
@@ -5483,35 +5479,35 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=tes
 
 | 参数名           | 参数类型                  | 描述                                            |
 |---------------|-----------------------|-----------------------------------------------|
-| `name`        | `String`              | MCP 工具的名称                                     |
-| `description` | `String`              | MCP 工具的描述                                     |
+| `name`        | `string` | MCP 工具的名称                                     |
+| `description` | `string` | MCP 工具的描述                                     |
 | `inputSchema` | `Map<String, Object>` | MCP工具的入参描述，参考标准MCP协议，主要包含，`类型`,`是否必须`,`描述` 等。 |
 
 其中`McpToolMeta` 结构如下：
 
 | 参数名             | 参数类型                  | 描述                             |
 |-----------------|-----------------------|--------------------------------|
-| `invokeContext` | `Map<String, String>` | MCP 工具调用时的上下文信息，如后端服务的`Path`等。 |
-| `enabled`       | `boolean`             | MCP工具是否启用。                     |
-| `templates`     | `Map<String, String>` | MCP工具的模板信息。用于进行协议转换时进行参数的映射。   |
+| `invokeContext` | `map<string, string>` | MCP 工具调用时的上下文信息，如后端服务的`Path`等。 |
+| `enabled`       | `boolean` | MCP工具是否启用。                     |
+| `templates`     | `map<string, string>` | MCP工具的模板信息。用于进行协议转换时进行参数的映射。   |
 
 其中`SecurityScheme` 结构如下：
 
 | 参数名                 | 参数类型     | 描述                                                                                |
 |---------------------|----------|-----------------------------------------------------------------------------------|
-| `id`                | `String` | 安全方案的ID，将被MCP工具使用和引用。。                                                            |
-| `type`              | `String` | 安全方案的类型。可能的值包括：`http`、`apiKey`、`localEnv`或其他自定义扩展。                                |
-| `scheme`            | `String` | 安全方案的子方案类型。当 `type` 为 `http` 时使用。可能的值包括：`basic` 或 `bearer`。                       |
-| `in`                | `String` | 安全方案的位置。可能的值有：`query`、`header`。                                                   |
-| `name`              | `String` | 安全方案的名称。当 `type` 为 `apiKey` 或 `localEnv` 时使用。例如，`apiKey` 的密钥名称或 `localEnv` 的环境名称。 |
-| `defaultCredential` | `String` | 当配置参数中未输入身份时的默认凭证。可选。                                                             |
+| `id`                | `string` | 安全方案的ID，将被MCP工具使用和引用。。                                                            |
+| `type`              | `string` | 安全方案的类型。可能的值包括：`http`、`apiKey`、`localEnv`或其他自定义扩展。                                |
+| `scheme`            | `string` | 安全方案的子方案类型。当 `type` 为 `http` 时使用。可能的值包括：`basic` 或 `bearer`。                       |
+| `in`                | `string` | 安全方案的位置。可能的值有：`query`、`header`。                                                   |
+| `name`              | `string` | 安全方案的名称。当 `type` 为 `apiKey` 或 `localEnv` 时使用。例如，`apiKey` 的密钥名称或 `localEnv` 的环境名称。 |
+| `defaultCredential` | `string` | 当配置参数中未输入身份时的默认凭证。可选。                                                             |
 
 > endpointSpecification
 
 | 参数名    | 参数类型                  | 描述                                                                                                                               |
 |--------|-----------------------|----------------------------------------------------------------------------------------------------------------------------------|
-| `type` | `String`              | MCP endpoint的后端服务类型，可选值`REF`和`DIRECT`.                                                                                           |
-| `data` | `Map<String, String>` | MCP endpoint的后端服务的实际数据， 根据`type`的不同，传入的参数不同，如`REF`传入的为`namespaceId`, `groupName` 和 `serviceName`；`DIRECT`传入的为`address` 和 `port`。 |
+| `type` | `string` | MCP endpoint的后端服务类型，可选值`REF`和`DIRECT`.                                                                                           |
+| `data` | `map<string, string>` | MCP endpoint的后端服务的实际数据， 根据`type`的不同，传入的参数不同，如`REF`传入的为`namespaceId`, `groupName` 和 `serviceName`；`DIRECT`传入的为`address` 和 `port`。 |
 
 #### 返回数据
 
@@ -5519,7 +5515,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=tes
 
 | 参数名    | 参数类型     | 描述         |
 |--------|----------|------------|
-| `data` | `String` | MCP服务更新结果。 |
+| `data` | `string` | MCP服务更新结果。 |
 
 #### 示例
 
@@ -5563,7 +5559,7 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 
 | 参数名                     | 参数类型         | 是否必填  | 描述                             |
 |-------------------------|--------------|-------|--------------------------------|
-| `namespaceId`           | `string`     | 否     | MCP服务的命名空间ID，默认为`public`       |
+| `namespaceId`           | `string` | 否     | MCP服务的命名空间ID，默认为`public`       |
 | `serverSpecification`   | `jsonString` | **是** | MCP服务的描述详情                     |
 | `toolSpecification`     | `jsonString` | 否     | MCP服务的工具描述详情                   |
 | `endpointSpecification` | `jsonString` | 否     | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效 |
@@ -5574,25 +5570,25 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 
 | 参数名                  | 参数类型                  | 描述                                                                                              |
 |----------------------|-----------------------|-------------------------------------------------------------------------------------------------|
-| `id`                 | `String`              | MCP服务的ID，一般为UUID，无需传入，系统自动生成。                                                                   |
-| `name`               | `String`              | MCP服务名。                                                                                         |
-| `protocol`           | `String`              | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
-| `frontProtocol`      | `String`              | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
-| `description`        | `String`              | MCP服务的描述。                                                                                       |
-| `repository`         | `String`              | MCP服务的存储仓库。                                                                                     |    |
+| `id`                 | `string` | MCP服务的ID，一般为UUID，无需传入，系统自动生成。                                                                   |
+| `name`               | `string` | MCP服务名。                                                                                         |
+| `protocol`           | `string` | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
+| `frontProtocol`      | `string` | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
+| `description`        | `string` | MCP服务的描述。                                                                                       |
+| `repository`         | `string` | MCP服务的存储仓库。                                                                                     |    |
 | `versionDetail`      | `VersionDetail`       | MCP服务的版本信息。                                                                                     |
-| `version`            | `String`              | MCP服务的简易版本版本信息，主要用于兼容，若已设置`versionDetail`,则该字段无效。                                               |    |
+| `version`            | `string` | MCP服务的简易版本版本信息，主要用于兼容，若已设置`versionDetail`,则该字段无效。                                               |    |
 | `localServerConfig`  | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
 | `remoteServerConfig` | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
-| `enabled`            | `boolean`             | MCP服务是否启用。                                                                                      |
+| `enabled`            | `boolean` | MCP服务是否启用。                                                                                      |
 | `capabilities`       | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
 
 其中`VersionDetail`结构如下：
 
 | 参数名            | 参数类型      | 描述               |
 |----------------|-----------|------------------|
-| `version`      | `String`  | MCP服务的版本号。       |
-| `release_date` | `String`  | MCP服务的版本发布时间。    |
+| `version`      | `string` | MCP服务的版本号。       |
+| `release_date` | `string` | MCP服务的版本发布时间。    |
 | `is_latest`    | `boolean` | MCP服务的版本是否为最新版本。 |
 
 > toolSpecification
@@ -5607,35 +5603,35 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 
 | 参数名           | 参数类型                  | 描述                                            |
 |---------------|-----------------------|-----------------------------------------------|
-| `name`        | `String`              | MCP 工具的名称                                     |
-| `description` | `String`              | MCP 工具的描述                                     |
+| `name`        | `string` | MCP 工具的名称                                     |
+| `description` | `string` | MCP 工具的描述                                     |
 | `inputSchema` | `Map<String, Object>` | MCP工具的入参描述，参考标准MCP协议，主要包含，`类型`,`是否必须`,`描述` 等。 |
 
 其中`McpToolMeta` 结构如下：
 
 | 参数名             | 参数类型                  | 描述                             |
 |-----------------|-----------------------|--------------------------------|
-| `invokeContext` | `Map<String, String>` | MCP 工具调用时的上下文信息，如后端服务的`Path`等。 |
-| `enabled`       | `boolean`             | MCP工具是否启用。                     |
-| `templates`     | `Map<String, String>` | MCP工具的模板信息。用于进行协议转换时进行参数的映射。   |
+| `invokeContext` | `map<string, string>` | MCP 工具调用时的上下文信息，如后端服务的`Path`等。 |
+| `enabled`       | `boolean` | MCP工具是否启用。                     |
+| `templates`     | `map<string, string>` | MCP工具的模板信息。用于进行协议转换时进行参数的映射。   |
 
 其中`SecurityScheme` 结构如下：
 
 | 参数名                 | 参数类型     | 描述                                                                                |
 |---------------------|----------|-----------------------------------------------------------------------------------|
-| `id`                | `String` | 安全方案的ID，将被MCP工具使用和引用。。                                                            |
-| `type`              | `String` | 安全方案的类型。可能的值包括：`http`、`apiKey`、`localEnv`或其他自定义扩展。                                |
-| `scheme`            | `String` | 安全方案的子方案类型。当 `type` 为 `http` 时使用。可能的值包括：`basic` 或 `bearer`。                       |
-| `in`                | `String` | 安全方案的位置。可能的值有：`query`、`header`。                                                   |
-| `name`              | `String` | 安全方案的名称。当 `type` 为 `apiKey` 或 `localEnv` 时使用。例如，`apiKey` 的密钥名称或 `localEnv` 的环境名称。 |
-| `defaultCredential` | `String` | 当配置参数中未输入身份时的默认凭证。可选。                                                             |
+| `id`                | `string` | 安全方案的ID，将被MCP工具使用和引用。。                                                            |
+| `type`              | `string` | 安全方案的类型。可能的值包括：`http`、`apiKey`、`localEnv`或其他自定义扩展。                                |
+| `scheme`            | `string` | 安全方案的子方案类型。当 `type` 为 `http` 时使用。可能的值包括：`basic` 或 `bearer`。                       |
+| `in`                | `string` | 安全方案的位置。可能的值有：`query`、`header`。                                                   |
+| `name`              | `string` | 安全方案的名称。当 `type` 为 `apiKey` 或 `localEnv` 时使用。例如，`apiKey` 的密钥名称或 `localEnv` 的环境名称。 |
+| `defaultCredential` | `string` | 当配置参数中未输入身份时的默认凭证。可选。                                                             |
 
 > endpointSpecification
 
 | 参数名    | 参数类型                  | 描述                                                                                                                               |
 |--------|-----------------------|----------------------------------------------------------------------------------------------------------------------------------|
-| `type` | `String`              | MCP endpoint的后端服务类型，可选值`REF`和`DIRECT`.                                                                                           |
-| `data` | `Map<String, String>` | MCP endpoint的后端服务的实际数据， 根据`type`的不同，传入的参数不同，如`REF`传入的为`namespaceId`, `groupName` 和 `serviceName`；`DIRECT`传入的为`address` 和 `port`。 |
+| `type` | `string` | MCP endpoint的后端服务类型，可选值`REF`和`DIRECT`.                                                                                           |
+| `data` | `map<string, string>` | MCP endpoint的后端服务的实际数据， 根据`type`的不同，传入的参数不同，如`REF`传入的为`namespaceId`, `groupName` 和 `serviceName`；`DIRECT`传入的为`address` 和 `port`。 |
 
 
 #### 返回数据
@@ -5644,7 +5640,7 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 
 | 参数名    | 参数类型     | 描述         |
 |--------|----------|------------|
-| `data` | `String` | 新建MCP服务的id。 |
+| `data` | `string` | 新建MCP服务的id。 |
 
 #### 示例
 
@@ -5699,7 +5695,7 @@ curl -X POST '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 
 | 参数名    | 参数类型     | 描述         |
 |--------|----------|------------|
-| `data` | `String` | MCP服务删除结果。 |
+| `data` | `string` | MCP服务删除结果。 |
 
 #### 示例
 
@@ -5751,10 +5747,10 @@ curl -X DELETE '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=
 
 | 参数名                   | 参数类型      | 描述              |
 |-----------------------|-----------|-----------------|
-| `data`[i].`version`   | `String`  | AgentCard的版本号。  |
-| `data`[i].`createdAt` | `String`  | 该版本的创建时间。       |
-| `data`[i].`updatedAt` | `String`  | 该版本的最后更新时间。     |
-| `data`[i].`latest`    | `Boolean` | 该版本是否标记为最新发布版本。 |
+| `data`[i].`version`   | `string` | AgentCard的版本号。  |
+| `data`[i].`createdAt` | `string` | 该版本的创建时间。       |
+| `data`[i].`updatedAt` | `string` | 该版本的最后更新时间。     |
+| `data`[i].`latest`    | `boolean` | 该版本是否标记为最新发布版本。 |
 
 
 #### 示例
@@ -5801,8 +5797,8 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a/version/list?namespaceId=publi
 
 | 参数名           | 参数类型     | 是否必填  | 描述                                              |
 |---------------|----------|-------|-------------------------------------------------|
-| `pageNo`      | `int`    | **是** | 当前页，默认为`1`                                      |
-| `pageSize`    | `int`    | **是** | 页条目数，默认为`100`                                   |
+| `pageNo`      | `integer` | **是** | 当前页，默认为`1`                                      |
+| `pageSize`    | `integer` | **是** | 页条目数，默认为`100`                                   |
 | `namespaceId` | `string` | 否     | AgentCard的命名空间ID，默认为`public`                    |
 | `agentName`   | `string` | 否     | AgentCard的名称，为空是查询所有AgentCard                   |
 | `search`      | `string` | **是** | AgentCard名称的匹配模式，可选之`blur`和`accurate`，默认为`blur` |
@@ -5813,29 +5809,29 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a/version/list?namespaceId=publi
 
 | 参数名                                     | 参数类型                       | 描述                                                                                                     |
 |-----------------------------------------|----------------------------|--------------------------------------------------------------------------------------------------------|
-| `totalCount`                            | `int`                      | 符合条件的服务的总数。                                                                                            |
-| `pageNumber`                            | `int`                      | 当前页码，起始为`1`。                                                                                           |
-| `pagesAvailable`                        | `int`                      | 可用页码。                                                                                                  |
+| `totalCount`                            | `integer` | 符合条件的服务的总数。                                                                                            |
+| `pageNumber`                            | `integer` | 当前页码，起始为`1`。                                                                                           |
+| `pagesAvailable`                        | `integer` | 可用页码。                                                                                                  |
 | `pageItems`                             | `List`                     | 服务列表。                                                                                                  |
-| `pageItems`[i].`protocolVersion`        | `String`                   | AgentCard的A2A协议版本。                                                                                     |
-| `pageItems`[i].`name`                   | `String`                   | AgentCard的名称。                                                                                          |
-| `pageItems`[i].`description`            | `String`                   | AgentCard的描述。                                                                                          |
-| `pageItems`[i].`version`                | `String`                   | AgentCard的版本号。                                                                                         |
-| `pageItems`[i].`iconUrl`                | `String`                   | AgentCard的iconURL。                                                                                     |
+| `pageItems`[i].`protocolVersion`        | `string` | AgentCard的A2A协议版本。                                                                                     |
+| `pageItems`[i].`name`                   | `string` | AgentCard的名称。                                                                                          |
+| `pageItems`[i].`description`            | `string` | AgentCard的描述。                                                                                          |
+| `pageItems`[i].`version`                | `string` | AgentCard的版本号。                                                                                         |
+| `pageItems`[i].`iconUrl`                | `string` | AgentCard的iconURL。                                                                                     |
 | `pageItems`[i].`capabilities`           | `AgentCapability`          | AgentCard的能力，匹配[A2A标准能力](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object)。 |
 | `pageItems`[i].`skills`                 | `List<AgentSkill>`         | AgentCard的技能列表,匹配[A2A标准技能](https://a2a-protocol.org/latest/specification/#554-agentskill-object)。      |
-| `pageItems`[i].`latestPublishedVersion` | `String`                   | AgentCard的最新发布版本。                                                                                      |
+| `pageItems`[i].`latestPublishedVersion` | `string` | AgentCard的最新发布版本。                                                                                      |
 | `pageItems`[i].`versionDetails`         | `List<AgentVersionDetail>` | AgentCard的所有版本详情。                                                                                      |
-| `pageItems`[i].`registrationType`       | `String`                   | AgentCard的默认注册类型，可选`URL`和`SERVICE`。                                                                    |
+| `pageItems`[i].`registrationType`       | `string` | AgentCard的默认注册类型，可选`URL`和`SERVICE`。                                                                    |
 
 其中`AgentVersionDetail`包含内容如下：
 
 | 参数名         | 参数类型      | 描述              |
 |-------------|-----------|-----------------|
-| `version`   | `String`  | AgentCard的版本号。  |
-| `createdAt` | `String`  | 该版本的创建时间。       |
-| `updatedAt` | `String`  | 该版本的最后更新时间。     |
-| `latest`    | `Boolean` | 该版本是否标记为最新发布版本。 |
+| `version`   | `string` | AgentCard的版本号。  |
+| `createdAt` | `string` | 该版本的创建时间。       |
+| `updatedAt` | `string` | 该版本的最后更新时间。     |
+| `latest`    | `boolean` | 该版本是否标记为最新发布版本。 |
 
 #### 示例
 
@@ -5929,25 +5925,25 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a/list?pageNo=1&pageSize=100&nam
 
 | 参数名                                 | 参数类型                              | 描述                                                                                                       |
 |-------------------------------------|-----------------------------------|----------------------------------------------------------------------------------------------------------|
-| `protocolVersion`                   | `String`                          | AgentCard的A2A协议版本。                                                                                       |
-| `name`                              | `String`                          | AgentCard的名称。                                                                                            |
-| `description`                       | `String`                          | AgentCard的描述。                                                                                            |
-| `version`                           | `String`                          | AgentCard的版本号。                                                                                           |
-| `iconUrl`                           | `String`                          | AgentCard的iconURL。                                                                                       |
+| `protocolVersion`                   | `string` | AgentCard的A2A协议版本。                                                                                       |
+| `name`                              | `string` | AgentCard的名称。                                                                                            |
+| `description`                       | `string` | AgentCard的描述。                                                                                            |
+| `version`                           | `string` | AgentCard的版本号。                                                                                           |
+| `iconUrl`                           | `string` | AgentCard的iconURL。                                                                                       |
 | `capabilities`                      | `AgentCapability`                 | AgentCard的能力，匹配[A2A标准能力](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object)。   |
 | `skills`                            | `List<AgentSkill>`                | AgentCard的技能列表,匹配[A2A标准技能](https://a2a-protocol.org/latest/specification/#554-agentskill-object)。        |
-| `url`                               | `String`                          | AgentCard的默认访问的URL。                                                                                      |
-| `preferredTransport`                | `String`                          | AgentCard的默认访问URL的传输协议，应该为`JSONRPC`,`GRPC`,`HTTP+JSON`。                                                  |
+| `url`                               | `string` | AgentCard的默认访问的URL。                                                                                      |
+| `preferredTransport`                | `string` | AgentCard的默认访问URL的传输协议，应该为`JSONRPC`,`GRPC`,`HTTP+JSON`。                                                  |
 | `additionalInterfaces`              | `List<AgentInterface>`            | AgentCard的所有可访问接口列表,匹配[A2A标准](https://a2a-protocol.org/latest/specification/#555-agentinterface-object)。 |
 | `provider`                          | `AgentProvider`                   | AgentCard的提供商信息，匹配[A2A标准](https://a2a-protocol.org/latest/specification/#551-agentprovider-object)。      |
-| `documentationUrl`                  | `String`                          | AgentCard的文档 URL。                                                                                        |
+| `documentationUrl`                  | `string` | AgentCard的文档 URL。                                                                                        |
 | `securitySchemes`                   | `Map<String, SecurityScheme>`     | AgentCard的安全配置定义。匹配[A2A标准](https://a2a-protocol.org/latest/specification/#553-securityscheme-object)     |
 | `security`                          | `List<Map<String, List<String>>>` | AgentCard的所有安全要求对象列表。                                                                                    |
 | `defaultInputModes`                 | `List<String>`                    | AgentCard的所有默认输入模式。                                                                                      |
 | `defaultOutputModes`                | `List<String>`                    | AgentCard的所有默认输出模式。                                                                                      |
-| `supportsAuthenticatedExtendedCard` | `String`                          | AgentCard是否支持认证的扩展卡。                                                                                     |
-| `registrationType`                  | `String`                          | AgentCard的默认注册类型，可选`URL`和`SERVICE`。                                                                      |
-| `latestVersion`                     | `String`                          | AgentCard当前版本时否为最新版本。                                                                                    |
+| `supportsAuthenticatedExtendedCard` | `string` | AgentCard是否支持认证的扩展卡。                                                                                     |
+| `registrationType`                  | `string` | AgentCard的默认注册类型，可选`URL`和`SERVICE`。                                                                      |
+| `latestVersion`                     | `string` | AgentCard当前版本时否为最新版本。                                                                                    |
 
 #### 示例
 
@@ -6048,10 +6044,10 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a?namespaceId=public&agentName=G
 
 | 参数名                | 参数类型        | 是否必填  | 描述                                                                                                              |
 |--------------------|-------------|-------|-----------------------------------------------------------------------------------------------------------------|
-| `namespaceId`      | `string`    | 否     | AgentCard所属的命名空间，默认`public`                                                                                     |
+| `namespaceId`      | `string` | 否     | AgentCard所属的命名空间，默认`public`                                                                                     |
 | `agentCard`        | `AgentCard` | **是** | AgentCard的完整对象，详情请参考[标准AgentCard](https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure) |
-| `registrationType` | `string`    | 否     | AgentCard的默认注册类型，可选`URL`和`SERVICE`。未填写时根据此AgentCard的默认`registrationType`进行`url`的生成                              |
-| `setAsLatest`      | `boolean`   | 否     | 是否设置此版本为最新发布版本，默认为false                                                                                         |
+| `registrationType` | `string` | 否     | AgentCard的默认注册类型，可选`URL`和`SERVICE`。未填写时根据此AgentCard的默认`registrationType`进行`url`的生成                              |
+| `setAsLatest`      | `boolean` | 否     | 是否设置此版本为最新发布版本，默认为false                                                                                         |
 
 #### 返回数据
 
@@ -6059,7 +6055,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a?namespaceId=public&agentName=G
 
 | 参数名    | 参数类型     | 描述               |
 |--------|----------|------------------|
-| `data` | `String` | AgentCard服务更新结果。 |
+| `data` | `string` | AgentCard服务更新结果。 |
 
 #### 示例
 
@@ -6104,9 +6100,9 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/a2a' \
 
 | 参数名                | 参数类型        | 是否必填  | 描述                                                                                                              |
 |--------------------|-------------|-------|-----------------------------------------------------------------------------------------------------------------|
-| `namespaceId`      | `string`    | 否     | AgentCard所属的命名空间，默认`public`                                                                                     |
+| `namespaceId`      | `string` | 否     | AgentCard所属的命名空间，默认`public`                                                                                     |
 | `agentCard`        | `AgentCard` | **是** | AgentCard的完整对象，详情请参考[标准AgentCard](https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure) |
-| `registrationType` | `string`    | 否     | AgentCard的默认注册类型，可选`URL`和`SERVICE`。未填写时根据此AgentCard的默认`registrationType`进行`url`的生成, 默认值为`URL`                   |
+| `registrationType` | `string` | 否     | AgentCard的默认注册类型，可选`URL`和`SERVICE`。未填写时根据此AgentCard的默认`registrationType`进行`url`的生成, 默认值为`URL`                   |
 
 #### 返回数据
 
@@ -6114,7 +6110,7 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/a2a' \
 
 | 参数名    | 参数类型     | 描述             |
 |--------|----------|----------------|
-| `data` | `String` | AgentCard发布结果。 |
+| `data` | `string` | AgentCard发布结果。 |
 
 #### 示例
 
@@ -6168,7 +6164,7 @@ curl -X POST '127.0.0.1:8848/nacos/v3/admin/ai/a2a' \
 
 | 参数名    | 参数类型     | 描述             |
 |--------|----------|----------------|
-| `data` | `String` | AgentCard删除结果。 |
+| `data` | `string` | AgentCard删除结果。 |
 
 #### 示例
 
@@ -6211,13 +6207,13 @@ curl -X DELETE '127.0.0.1:8848/nacos/v3/admin/ai/a2a?namespaceId=public&agentNam
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `String` | 否 | 命名空间，默认 public |
-| `promptKey` | `String` | **是** | Prompt 键 |
-| `version` | `String` | **是** | 版本号 |
-| `template` | `String` | **是** | 模板内容 |
-| `commitMsg` | `String` | 否 | 提交说明 |
-| `description` | `String` | 否 | 描述 |
-| `bizTags` | `String` | 否 | 业务标签 |
+| `namespaceId` | `string` | 否 | 命名空间，默认 public |
+| `promptKey` | `string` | **是** | Prompt 键 |
+| `version` | `string` | **是** | 版本号 |
+| `template` | `string` | **是** | 模板内容 |
+| `commitMsg` | `string` | 否 | 提交说明 |
+| `description` | `string` | 否 | 描述 |
+| `bizTags` | `string` | 否 | 业务标签 |
 
 #### 返回数据
 
@@ -6264,8 +6260,8 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `String` | 否 | 命名空间 |
-| `promptKey` | `String` | **是** | Prompt 键 |
+| `namespaceId` | `string` | 否 | 命名空间 |
+| `promptKey` | `string` | **是** | Prompt 键 |
 
 #### 返回数据
 
@@ -6311,11 +6307,11 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt?namespaceId=publi
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `String` | 否 | 命名空间 |
-| `promptKey` | `String` | **是** | Prompt 键 |
-| `version` | `String` | 否 | 版本号 |
-| `label` | `String` | 否 | 标签 |
-| `md5` | `String` | 否 | 内容 MD5 |
+| `namespaceId` | `string` | 否 | 命名空间 |
+| `promptKey` | `string` | **是** | Prompt 键 |
+| `version` | `string` | 否 | 版本号 |
+| `label` | `string` | 否 | 标签 |
+| `md5` | `string` | 否 | 内容 MD5 |
 
 #### 返回数据
 
@@ -6365,10 +6361,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/detail?namespaceId=p
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `String` | 否 | 命名空间 |
-| `promptKey` | `String` | **是** | Prompt 键 |
-| `label` | `String` | **是** | 标签名 |
-| `version` | `String` | **是** | 版本号 |
+| `namespaceId` | `string` | 否 | 命名空间 |
+| `promptKey` | `string` | **是** | Prompt 键 |
+| `label` | `string` | **是** | 标签名 |
+| `version` | `string` | **是** | 版本号 |
 
 #### 返回数据
 
@@ -6415,9 +6411,9 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/label' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `String` | 否 | 命名空间 |
-| `promptKey` | `String` | **是** | Prompt 键 |
-| `label` | `String` | **是** | 标签名 |
+| `namespaceId` | `string` | 否 | 命名空间 |
+| `promptKey` | `string` | **是** | Prompt 键 |
+| `label` | `string` | **是** | 标签名 |
 
 #### 返回数据
 
@@ -6463,12 +6459,12 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/label?namespaceId
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `pageNo` | `Integer` | **是** | 页码 |
-| `pageSize` | `Integer` | **是** | 每页条数 |
-| `namespaceId` | `String` | 否 | 命名空间 |
-| `promptKey` | `String` | 否 | Prompt 键过滤 |
-| `search` | `String` | 否 | 搜索模式：blur 或 accurate |
-| `bizTags` | `String` | 否 | 业务标签 |
+| `pageNo` | `integer` | **是** | 页码 |
+| `pageSize` | `integer` | **是** | 每页条数 |
+| `namespaceId` | `string` | 否 | 命名空间 |
+| `promptKey` | `string` | 否 | Prompt 键过滤 |
+| `search` | `string` | 否 | 搜索模式：blur 或 accurate |
+| `bizTags` | `string` | 否 | 业务标签 |
 
 #### 返回数据
 
@@ -6524,8 +6520,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/list?pageNo=1&pageSi
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `String` | 否 | 命名空间 |
-| `promptKey` | `String` | **是** | Prompt 键 |
+| `namespaceId` | `string` | 否 | 命名空间 |
+| `promptKey` | `string` | **是** | Prompt 键 |
 
 #### 返回数据
 
@@ -6575,10 +6571,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/metadata?namespaceId
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `String` | 否 | 命名空间 |
-| `promptKey` | `String` | **是** | Prompt 键 |
-| `description` | `String` | 否 | 描述 |
-| `bizTags` | `String` | 否 | 业务标签 |
+| `namespaceId` | `string` | 否 | 命名空间 |
+| `promptKey` | `string` | **是** | Prompt 键 |
+| `description` | `string` | 否 | 描述 |
+| `bizTags` | `string` | 否 | 业务标签 |
 
 #### 返回数据
 
@@ -6625,10 +6621,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/metadata' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `String` | 否 | 命名空间 |
-| `promptKey` | `String` | **是** | Prompt 键 |
-| `pageNo` | `Integer` | **是** | 页码 |
-| `pageSize` | `Integer` | **是** | 每页条数 |
+| `namespaceId` | `string` | 否 | 命名空间 |
+| `promptKey` | `string` | **是** | Prompt 键 |
+| `pageNo` | `integer` | **是** | 页码 |
+| `pageSize` | `integer` | **是** | 每页条数 |
 
 #### 返回数据
 
@@ -6686,8 +6682,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/versions?namespaceId
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `String` | **是** | 命名空间 |
-| `skillName` | `String` | **是** | 技能名称 |
+| `namespaceId` | `string` | **是** | 命名空间 |
+| `skillName` | `string` | **是** | 技能名称 |
 
 #### 返回数据
 
@@ -6739,8 +6735,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills?namespaceId=public&s
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `String` | 否 | 命名空间 |
-| `skillCard` | `String` | **是** | 技能卡片 JSON 字符串，包含完整技能信息 |
+| `namespaceId` | `string` | 否 | 命名空间 |
+| `skillCard` | `string` | **是** | 技能卡片 JSON 字符串，包含完整技能信息 |
 
 #### 返回数据
 
@@ -6787,8 +6783,8 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `String` | 否 | 命名空间 |
-| `skillCard` | `String` | **是** | 技能卡片 JSON 字符串，包含完整技能信息 |
+| `namespaceId` | `string` | 否 | 命名空间 |
+| `skillCard` | `string` | **是** | 技能卡片 JSON 字符串，包含完整技能信息 |
 
 #### 返回数据
 
@@ -6835,8 +6831,8 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `String` | **是** | 命名空间 |
-| `skillName` | `String` | **是** | 技能名称 |
+| `namespaceId` | `string` | **是** | 命名空间 |
+| `skillName` | `string` | **是** | 技能名称 |
 
 #### 返回数据
 
@@ -6882,11 +6878,11 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills?namespaceId=publi
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `pageNo` | `Integer` | **是** | 页码 |
-| `pageSize` | `Integer` | **是** | 每页条数 |
-| `namespaceId` | `String` | 否 | 命名空间 |
-| `skillName` | `String` | 否 | 技能名称过滤 |
-| `search` | `String` | 否 | 搜索模式：accurate 或 blur |
+| `pageNo` | `integer` | **是** | 页码 |
+| `pageSize` | `integer` | **是** | 每页条数 |
+| `namespaceId` | `string` | 否 | 命名空间 |
+| `skillName` | `string` | 否 | 技能名称过滤 |
+| `search` | `string` | 否 | 搜索模式：accurate 或 blur |
 
 #### 返回数据
 
@@ -6945,8 +6941,9 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/list?pageNo=1&pageSi
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `file` | `File` | 否 | 技能包 ZIP 文件（multipart/form-data）。 |
-| `namespaceId` | `String` | 否 | 命名空间。 |
+| `namespaceId` | `string` | 否 | 命名空间。 |
+| `overwrite` | `boolean` | 否 | - |
+| `file` | `file` | 否 | ZIP file containing skill package |
 
 #### 返回数据
 

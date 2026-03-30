@@ -66,7 +66,8 @@ def parse_doc_table(text: str) -> list[dict]:
                 continue
             typ = parts[1].strip("`") if len(parts) > 1 else ""
             req = "**是**" in (parts[2] if len(parts) > 2 else "") or "是" in (parts[2] if len(parts) > 2 else "")
-            rows.append({"name": name, "type": typ, "required": req})
+            desc = parts[3] if len(parts) > 3 else ""
+            rows.append({"name": name, "type": typ, "required": req, "description": desc})
     return rows
 
 
@@ -112,20 +113,64 @@ def extract_sections(content: str):
 
 
 def compare_params(api_params: dict, doc_rows: list[dict], kind: str) -> list[str]:
+    def normalize_type(t: str) -> str:
+        t = (t or "").strip().strip("`").lower()
+        t = re.sub(r"\s+", "", t)
+        # normalize frequent renderings for file upload fields and base scalar aliases
+        t = t.replace("string(binary)", "file").replace("string<binary>", "file")
+        aliases = {
+            "int": "integer",
+            "integer": "integer",
+            "int32": "integer",
+            "int64": "integer",
+            "long": "integer",
+            "float": "number",
+            "double": "number",
+            "number": "number",
+            "bool": "boolean",
+            "boollean": "boolean",
+            "string": "string",
+            "array": "array",
+            "object": "object",
+            "map<string,string>": "map<string, string>",
+            "binary": "file",
+            "multipartfile": "file",
+            "multiplefile": "file",
+        }
+        return aliases.get(t, t)
+
+    def normalize_desc(d: str) -> str:
+        d = (d or "").strip()
+        d = re.sub(r"`", "", d)
+        d = re.sub(r"\*\*", "", d)
+        d = re.sub(r"\s+", " ", d)
+        if d in {"-", "—", "无", "暂无", "N/A", "n/a"}:
+            return "-"
+        return d
+
     api_names = set(api_params.keys())
     doc_names = {r["name"] for r in doc_rows}
     doc_by_name = {r["name"]: r for r in doc_rows}
     issues = []
-    for n in api_names - doc_names:
+    for n in sorted(api_names - doc_names):
         issues.append(f"  [doc 缺少] {kind} 参数: {n}")
-    for n in doc_names - api_names:
+    for n in sorted(doc_names - api_names):
         issues.append(f"  [api 已无] {kind} 参数: {n}")
-    for n in api_names & doc_names:
+    for n in sorted(api_names & doc_names):
         api_p = api_params[n]
         doc_p = doc_by_name.get(n)
         if doc_p:
             if doc_p.get("required") != api_p["required"]:
                 issues.append(f"  [必填不一致] {kind}.{n}: api required={api_p['required']}, doc={doc_p.get('required')}")
+            api_t = normalize_type(api_p.get("type") or "")
+            doc_t = normalize_type(doc_p.get("type") or "")
+            if api_t and doc_t and api_t != doc_t:
+                issues.append(f"  [类型不一致] {kind}.{n}: api type={api_p.get('type')}, doc={doc_p.get('type')}")
+            api_d = normalize_desc(api_p.get("description") or "")
+            doc_d = normalize_desc(doc_p.get("description") or "")
+            # 仅当双方都提供了非占位描述时才比较，避免因空描述引入噪音
+            if api_d != "-" and doc_d != "-" and api_d != doc_d:
+                issues.append(f"  [描述不一致] {kind}.{n}")
     return issues
 
 
