@@ -13,9 +13,57 @@ import json
 import re
 import sys
 from pathlib import Path
+from typing import Optional
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from swagger_to_md import parse_parameters  # noqa: E402
+
+
+def load_exemptions(exemptions_file: Optional[str], doc_type: str) -> dict:
+    """Load optional exemptions json and return endpoint-level rules."""
+    if not exemptions_file:
+        return {}
+    p = Path(exemptions_file)
+    if not p.exists():
+        return {}
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    if not isinstance(data, dict):
+        return {}
+    root = data.get("doc_types", data) if isinstance(data.get("doc_types", data), dict) else {}
+    scoped = root.get(doc_type, {})
+    if not isinstance(scoped, dict):
+        return {}
+    return scoped
+
+
+def apply_issue_exemptions(endpoint_key: str, issues: list[str], exemptions: dict) -> list[str]:
+    if not exemptions:
+        return issues
+    ep_rule = exemptions.get(endpoint_key, {})
+    if not isinstance(ep_rule, dict):
+        return issues
+    ignore_exact = set(ep_rule.get("ignore_issues", []) or [])
+    ignore_prefix = ep_rule.get("ignore_prefixes", []) or []
+    out = []
+    for i in issues:
+        if i in ignore_exact:
+            continue
+        if any(i.startswith(pfx) for pfx in ignore_prefix):
+            continue
+        out.append(i)
+    return out
+
+
+def is_api_only_exempt(endpoint_key: str, exemptions: dict) -> bool:
+    if not exemptions:
+        return False
+    ep_rule = exemptions.get(endpoint_key, {})
+    if not isinstance(ep_rule, dict):
+        return False
+    return bool(ep_rule.get("ignore_api_only"))
 
 
 def load_spec(json_path: str) -> dict:
@@ -193,12 +241,14 @@ def main() -> None:
     parser.add_argument("--doc-type", required=True, choices=["console", "admin", "client"])
     parser.add_argument("--doc-file", required=True, help="Path to .md doc file")
     parser.add_argument("--filter-path", default="", help="Regex to filter paths (optional)")
+    parser.add_argument("--exemptions-file", default="", help="Optional exemptions json file")
     args = parser.parse_args()
 
     spec = load_spec(args.json)
     api_map = build_api_map(spec)
     doc_content = Path(args.doc_file).read_text(encoding="utf-8")
     pattern = re.compile(args.filter_path) if args.filter_path else None
+    exemptions = load_exemptions(args.exemptions_file or None, args.doc_type)
 
     doc_apis = set()
     total_issues = 0
@@ -206,13 +256,18 @@ def main() -> None:
 
     for path, method, params_block, body_block, curl in extract_sections(doc_content):
         key = (path, method)
+        endpoint_key = f"{method} {path}"
         doc_apis.add(key)
         if pattern and not pattern.search(path):
             continue
         if key not in api_map:
-            print(f"## {method} {path}")
-            print("  [api.json 中无此 path+method]\n")
-            total_issues += 1
+            issues = apply_issue_exemptions(endpoint_key, ["  [api.json 中无此 path+method]"], exemptions)
+            if issues:
+                print(f"## {method} {path}")
+                for i in issues:
+                    print(i)
+                print()
+                total_issues += len(issues)
             continue
 
         spec_entry = api_map[key]
@@ -233,6 +288,7 @@ def main() -> None:
         if curl and curl_has_placeholders(curl):
             issues.append("  [curl 示例] 使用占位符 (param=paramName)，建议改为实际示例值")
 
+        issues = apply_issue_exemptions(endpoint_key, issues, exemptions)
         if issues:
             print(f"## {method} {path}")
             for i in issues:
@@ -246,8 +302,11 @@ def main() -> None:
         for path, method in sorted(only_in_api):
             if pattern and not pattern.search(path):
                 continue
+            endpoint_key = f"{method} {path}"
+            if is_api_only_exempt(endpoint_key, exemptions):
+                continue
             print(f"  {method} {path}")
-        total_issues += len(only_in_api)
+            total_issues += 1
 
     print(f"\n--- 合计差异/问题数: {total_issues} ---")
     sys.exit(0)
