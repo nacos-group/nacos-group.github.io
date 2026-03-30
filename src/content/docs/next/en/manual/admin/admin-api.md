@@ -352,7 +352,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/cluster'
 |-------------------------------|--------------|------------------------------------------------|
 | `ip`                          | `string` | 节点IP                                           |
 | `port`                        | `integer` | 节点端口                                           |
-| `state`                       | `string` | 节点状态，可选值为`UP`、`DOWN`、`SUSPICIOUS`              |
+| `state`                       | `string` | Node state: UP/DOWN/SUSPICIOUS |
 | `extendInfo`                  | `jsonObject` | 节点扩展信息，具体字段见下表                                 |
 | `extendInfo.lastRefreshTime`  | `integer` | 节点上一次更新时间戳，单位毫秒                                |
 | `extendInfo.raftMetaData`     | `jsonObject` | 节点的Raft元数据， 包含每个Raft Group的`leader`， `term`等字段 |
@@ -471,7 +471,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/self'
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
 | `address` | `string` | 否 | 节点地址，支持按地址过滤。 |
-| `state` | `string` | 否 | 节点状态过滤，如 `UP`、`DOWN`。 |
+| `state` | `string` | 否 | Node state: UP/DOWN/SUSPICIOUS |
 
 #### 返回数据
 
@@ -612,7 +612,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/list'
 
 | 参数名    | 类型       | 必填 | 参数描述                                  |
 |--------|----------|----|---------------------------------------|
-| `type` | `string` | 是 | 切换到地址发现方式，可选值为`file`和`address-server` |
+| `type` | `string` | 是 | address-server/file/standalone |
 
 #### 返回数据
 
@@ -1986,7 +1986,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/list'
 
 | 参数名        | 参数类型     | 是否必填  | 描述    |
 |------------|----------|-------|-------|
-| `clientId` | `string` | 否 | 客户端ID |
+| `clientId` | `string` | **是** | 客户端ID |
 
 #### 返回数据
 
@@ -2074,7 +2074,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client?clientId=17417489524
 
 | 参数名        | 参数类型     | 是否必填  | 描述    |
 |------------|----------|-------|-------|
-| `clientId` | `string` | 否 | 客户端ID |
+| `clientId` | `string` | **是** | 客户端ID |
 
 #### 返回数据
 
@@ -2143,7 +2143,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/publish/list?clientI
 
 | 参数名        | 参数类型     | 是否必填 | 描述    |
 |------------|----------|------|-------|
-| `clientId` | `string` | 否 | 客户端ID |
+| `clientId` | `string` | **是** | 客户端ID |
 
 #### 返回数据
 
@@ -2459,7 +2459,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/cluster' -d 'serviceName=te
 | `clusterName` | `string` | 否 | 集群名称，默认`DEFAULT` |
 | `ip` | `string` | **是** | 实例IP |
 | `port` | `integer` | **是** | 实例端口 |
-| `healthy` | `boolean` | 否 | 健康状态（`true` 为健康） |
+| `healthy` | `boolean` | **是** | 健康状态（`true` 为健康） |
 
 #### 返回数据
 
@@ -3877,7 +3877,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/listener?namespaceId
 | `configTags` | `string` | 否 |  |
 | `type` | `string` | 否 |  |
 | `configDetail` | `string` | **是** |  |
-| `search` | `string` | 否 | `blur` |
+| `search` | `string` | 否 | blur or accurate |
 
 #### 返回数据
 
@@ -4111,7 +4111,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/beta?namespaceId=pub
 | `namespaceId` | `string` | 否 | `public` |
 | `src_user` | `string` | 否 | 无 |
 | `policy` | `string` | 否 | `ABORT` |
-| `file` | `MultipartFile` | 否 | 无 |
+| `file` | `MultipartFile` | 否 | ZIP file containing skill package |
 
 #### 返回数据
 
@@ -4907,7 +4907,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/derby?sql=SELECT%20*%20
 
 `POST`
 
-请求体类型：`multipart/form-data`。
+请求体类型：`multipart/form-data`，参数放在请求体中。
 
 #### 鉴权状态
 
@@ -5238,7 +5238,7 @@ curl -X PUT '127.0.0.1:8848/v3/admin/cs/config/metadata' \
 | `pageSize` | `integer` | **是** | 页条目数，默认为`20`，最大为`500` |
 | `namespaceId` | `string` | 否 | MCP服务的命名空间ID，默认为`public` |
 | `mcpName` | `string` | 否 | MCP服务的名字模版，为空时查询所有MCP服务，当`search`为`blur`时，可使用`*`进行模糊搜索 |
-| `search` | `string` | 否 | 搜索的类型，可选之`blur`和`accurate`，默认为`blur`。 |
+| `search` | `string` | 否 | blur or accurate |
 
 #### 返回数据
 
@@ -5809,7 +5809,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a/version/list?namespaceId=publi
 | `pageSize` | `integer` | **是** | 页条目数，默认为`100` |
 | `namespaceId` | `string` | 否 | AgentCard的命名空间ID，默认为`public` |
 | `agentName` | `string` | 否 | AgentCard的名称，为空是查询所有AgentCard |
-| `search` | `string` | 否 | AgentCard名称的匹配模式，可选之`blur`和`accurate`，默认为`blur` |
+| `search` | `string` | 否 | blur or accurate |
 
 #### 返回数据
 
@@ -6472,7 +6472,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/label?namespaceId
 | `pageSize` | `integer` | **是** | 每页条数 |
 | `namespaceId` | `string` | 否 | 命名空间 |
 | `promptKey` | `string` | 否 | Prompt 键过滤 |
-| `search` | `string` | 否 | 搜索模式：blur 或 accurate |
+| `search` | `string` | 否 | blur or accurate |
 | `bizTags` | `string` | 否 | 业务标签 |
 
 #### 返回数据
@@ -6748,7 +6748,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills?namespaceId=public&s
 | `skillName` | `string` | 否 | 技能名称 |
 | `basedOnVersion` | `string` | 否 | 基于该版本创建草稿 |
 | `targetVersion` | `string` | 否 | 目标版本 |
-| `skillCard` | `string` | 否 | 技能卡片 JSON 字符串，未指定 `basedOnVersion` 时需提供 |
+| `skillCard` | `string` | 否 | Skill card JSON; required if basedOnVersion is not set |
 
 #### 返回数据
 
@@ -6796,7 +6796,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/draft' \
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | 命名空间 |
-| `skillCard` | `string` | **是** | 技能卡片 JSON 字符串，包含完整技能信息 |
+| `skillCard` | `string` | **是** | Skill card JSON string containing complete Skill information |
 | `skillName` | `string` | **是** | 技能名称 |
 
 #### 返回数据
@@ -6895,7 +6895,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills?namespaceId=publi
 | `pageSize` | `integer` | **是** | 每页条数 |
 | `namespaceId` | `string` | 否 | 命名空间 |
 | `skillName` | `string` | 否 | 技能名称过滤 |
-| `search` | `string` | 否 | 搜索模式：accurate 或 blur |
+| `search` | `string` | 否 | Search mode: accurate or blur |
 
 #### 返回数据
 
@@ -6940,7 +6940,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/list?pageNo=1&pageSi
 
 `POST`
 
-请求体类型：`multipart/form-data`。
+请求体类型：`multipart/form-data`，参数放在请求体中。
 
 #### 鉴权状态
 
@@ -6956,6 +6956,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/list?pageNo=1&pageSi
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | 命名空间。 |
 | `overwrite` | `boolean` | 否 | Whether to overwrite an existing skill with the same name. |
+| `file` | `file` | 否 | ZIP file containing skill package |
 
 #### 返回数据
 
@@ -7432,7 +7433,7 @@ This interface allows getting the latest published version of an AgentSpec by na
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs?namespaceId=namespaceId&agentSpecName=agentSpecName'
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs?namespaceId=public&agentSpecName=my-agentspec'
 ```
 
 * 返回示例
@@ -7480,7 +7481,7 @@ This interface allows deleting an AgentSpec and all its versions by namespace an
 * 请求示例
 
 ```shell
-curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs?namespaceId=namespaceId&agentSpecName=agentSpecName'
+curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs?namespaceId=public&agentSpecName=my-agentspec'
 ```
 
 * 返回示例
@@ -7675,7 +7676,7 @@ This interface allows deleting the current draft version of a specified AgentSpe
 * 请求示例
 
 ```shell
-curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/draft?namespaceId=namespaceId&agentSpecName=agentSpecName'
+curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/draft?namespaceId=public&agentSpecName=my-agentspec'
 ```
 
 * 返回示例
@@ -7775,7 +7776,7 @@ This interface allows paginated listing of AgentSpecs by namespace and name.
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/list?pageNo=pageNo&pageSize=pageSize&namespaceId=namespaceId&agentSpecName=agentSpecName&search=search'
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/list?pageNo=1&pageSize=20&namespaceId=public&agentSpecName=my-agentspec&search=accurate'
 ```
 
 * 返回示例
@@ -8044,7 +8045,7 @@ This interface allows uploading a ZIP-packaged AgentSpec; the package is parsed 
 
 `POST`
 
-请求体类型：`multipart/form-data`（如文件上传），参数放在请求体中，请求示例中需使用 `-F` 或 `-H 'Content-Type: multipart/form-data'`。
+请求体类型：`multipart/form-data`，参数放在请求体中。
 
 #### 鉴权状态
 
@@ -8061,6 +8062,7 @@ This interface allows uploading a ZIP-packaged AgentSpec; the package is parsed 
 | `namespaceId` | `string` | 否 | Namespace ID, default is `public`. |
 | `overwrite` | `boolean` | 否 | Whether to overwrite an existing resource with the same name. |
 | `file` | `file` | 否 | ZIP file containing agentspec package |
+
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
@@ -8128,7 +8130,7 @@ This interface allows getting a specific version of an AgentSpec by namespace, n
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/version?namespaceId=namespaceId&agentSpecName=agentSpecName&version=version'
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/version?namespaceId=public&agentSpecName=my-agentspec&version=1.0.0'
 ```
 
 * 返回示例
