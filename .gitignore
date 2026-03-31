@@ -28,5 +28,3 @@ pnpm-debug.log*
 # Python bytecode (e.g. from skill scripts)
 __pycache__/
 *.pyc
-.qoder
-.cursor
