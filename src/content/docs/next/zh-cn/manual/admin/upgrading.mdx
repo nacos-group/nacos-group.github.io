@@ -17,10 +17,7 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 | Nacos版本 | 是否支持升级到当前版本 | 备注 |
 |----------|--------------------|------|
 | 0.X ～ 1.X | 不支持 | 0.X ~ 1.X 版本需要先升级到2.0以上的版本，请参考[Nacos2.0升级文档](https://nacos.io/docs/v2/upgrading/200-upgrading/) 先升级到2.0或2.1版本后再进行升级 |
-| 2.0.X | 支持 | 3.2.X版本支持从 2.0.X 升级到 3.2.X， 但数据库表结构有发生变化，请升级前对比[mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)文件，并应用新的表结构后进行升级 |
-| 2.1.X ~ 2.4.X | 支持 | 3.2.X版本支持从 2.1.X ~ 2.4.X 升级到 3.2.X，但数据库表结构有发生变化，请升级前对比[mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)文件，并应用新的表结构后进行升级 |
-| 2.5.X | 支持 | 3.2.X版本支持从 2.5.X 升级到 3.2.X |
-| 3.0.X ~ 3.1.X | 支持 | 3.2.X版本支持从 3.0.X ~ 3.1.X 升级到 3.2.X |
+| 2.0.X ~ 3.1.X | 支持 | 3.2.X版本支持从 2.0.X ~ 3.1.X 升级到 3.2.X，但数据库表结构有发生变化，请升级前对比[mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)文件，并应用新的表结构后进行升级 |
 
 ### 1.1 客户端兼容性
 
@@ -54,6 +51,68 @@ ALTER TABLE `his_config_info` ADD COLUMN `gray_name` varchar(50)  DEFAULT NULL C
 ALTER TABLE `his_config_info` ADD COLUMN `ext_info`  longtext DEFAULT NULL COMMENT 'ext info';
 ```
 
+3.2.0 版本新增了AI相关的表，所有版本升级到 3.2.X 均需创建以下表：
+
+```SQL
+CREATE TABLE IF NOT EXISTS `pipeline_execution` (
+    `execution_id`  varchar(64)  NOT NULL COMMENT '执行ID',
+    `resource_type` varchar(32)  NOT NULL COMMENT '资源类型',
+    `resource_name` varchar(256) NOT NULL COMMENT '资源名称',
+    `namespace_id`  varchar(128) DEFAULT NULL COMMENT '命名空间ID',
+    `version`       varchar(64)  DEFAULT NULL COMMENT '版本',
+    `status`        varchar(32)  NOT NULL COMMENT '执行状态',
+    `pipeline`      longtext     NOT NULL COMMENT 'pipeline节点结果JSON',
+    `create_time`   bigint(20)   NOT NULL COMMENT '创建时间',
+    `update_time`   bigint(20)   NOT NULL COMMENT '修改时间',
+    PRIMARY KEY (`execution_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI资源发布审核Pipeline执行记录';
+
+CREATE TABLE IF NOT EXISTS `ai_resource` (
+    `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+    `name` varchar(256) NOT NULL COMMENT '资源名称',
+    `type` varchar(32) NOT NULL COMMENT '资源类型',
+    `c_desc` varchar(2048) DEFAULT NULL COMMENT '资源描述',
+    `status` varchar(32) DEFAULT NULL COMMENT '资源状态',
+    `namespace_id` varchar(128) NOT NULL DEFAULT '' COMMENT '命名空间ID',
+    `biz_tags` varchar(1024) DEFAULT NULL COMMENT '业务标签',
+    `ext` longtext DEFAULT NULL COMMENT '扩展信息(JSON)',
+    `c_from` varchar(256) NOT NULL DEFAULT 'local' COMMENT '来源标识(导入/同步来源)',
+    `version_info` longtext DEFAULT NULL COMMENT '版本信息(JSON)',
+    `meta_version` bigint(20) NOT NULL DEFAULT 1 COMMENT '元数据版本(乐观锁)',
+    `scope` varchar(16) NOT NULL DEFAULT 'PRIVATE' COMMENT '可见性: PUBLIC/PRIVATE',
+    `owner` varchar(128) NOT NULL DEFAULT '' COMMENT '创建者用户名',
+    `download_count` bigint(20) NOT NULL DEFAULT 0 COMMENT '下载次数',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_ai_resource_ns_name_type` (`namespace_id`,`name`,`type`,`c_from`),
+    KEY `idx_ai_resource_name` (`name`),
+    KEY `idx_ai_resource_type` (`type`),
+    KEY `idx_ai_resource_gmt_modified` (`gmt_modified`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI资源元数据表';
+
+CREATE TABLE IF NOT EXISTS `ai_resource_version` (
+    `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+    `type` varchar(32) NOT NULL COMMENT '资源类型',
+    `author` varchar(128) DEFAULT NULL COMMENT '作者',
+    `name` varchar(256) NOT NULL COMMENT '资源名称',
+    `c_desc` varchar(2048) DEFAULT NULL COMMENT '版本描述',
+    `status` varchar(32) NOT NULL COMMENT '版本状态',
+    `version` varchar(64) NOT NULL COMMENT '版本号',
+    `namespace_id` varchar(128) NOT NULL DEFAULT '' COMMENT '命名空间ID',
+    `storage` longtext DEFAULT NULL COMMENT '存储信息(JSON)',
+    `publish_pipeline_info` longtext DEFAULT NULL COMMENT '发布流水线信息(JSON)',
+    `download_count` bigint(20) NOT NULL DEFAULT 0 COMMENT '下载次数',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_ai_resource_ver_ns_name_type_ver` (`namespace_id`,`name`,`type`,`version`),
+    KEY `idx_ai_resource_ver_name` (`name`),
+    KEY `idx_ai_resource_ver_status` (`status`),
+    KEY `idx_ai_resource_ver_gmt_modified` (`gmt_modified`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI资源版本表';
+```
+
 #### 2.1.2. 下载新版本
 
 <Tabs>
@@ -76,7 +135,7 @@ ALTER TABLE `his_config_info` ADD COLUMN `ext_info`  longtext DEFAULT NULL COMME
   # 或者 tar -xvf nacos-server-$version.tar.gz
 ```
 
-然后 找到`nacos/targer/nacos-server.jar` 将该jar包替换到旧的发行版中，例如：
+然后 找到`nacos/target/nacos-server.jar` 将该jar包替换到旧的发行版中，例如：
 
 ```bash
 cp nacos/target/nacos-server.jar ${old.nacos.home}/target/
@@ -124,12 +183,12 @@ Nacos 3.0 中对于配置中心的`空命名空间`和`public命名空间`进行
 命名空间的兼容模式默认为`开启`状态，可以通过`nacos.config.namespace.compatible.mode`配置项关闭。
 
 :::note
-注意，关闭命名空间兼容模式后无法在进行平滑降级，请先确认关闭前集群正确运行。
+注意，关闭命名空间兼容模式后无法再进行平滑降级，请先确认关闭前集群正确运行。
 :::
 
 ##### 2.1.7.1. 如何确认配置命名空间迁移已经完成
 
-首先查看nacos目录下 `logs/start.out`或`logs/nacos.log` 观察到nacos启动成功的日志，如 `Nacos started successfully in cluster mode. use xxx storage` 说明程序已启动成功。
+首先查看nacos目录下 `logs/startup.log`或`logs/nacos.log` 观察到nacos启动成功的日志，如 `Nacos started successfully in cluster mode. use xxx storage` 说明程序已启动成功。
 
 如果观察到`[migrate] config_info namespace migrate insert failed` 日志，则说明数据库中`namespaceId="public"`的命名空间和`namespaceId=""`的命名空间下存在配置数据冲突的情况，即存在`dataId`、`group`相同，但是namespaceId分别为`空`和`public`的两份配置，请删除其中一份配置数据后再尝试启动节点。
 如果观察到`[migrate] config_info_gray namespace migrate insert failed`日志，则说明数据库中`namespaceId="public"`的命名空间和`namespaceId=""`的命名空间下存在灰度配置数据冲突的情况，即存在`dataId`、`group`、`grayName`相同，但是namespaceId分别为`空`和`public`的两份配置，请删除其中一份灰度配置数据后再尝试启动节点。
@@ -157,7 +216,7 @@ nacos.namespace.migrate.batch.size=100
 若您是从3.0.0版本进行升级，且您的集群中存在MCP服务，由于官方社区MCP Registry API标准的改动， MCP Server定义的元数据存在一定的变化， 这部分变化将会导致一定的数据结构不兼容，从3.0.0版本升级到3.0.1及以上版本之后会导致控制台无法读取到旧版本MCP Server数据，因此需要使用[MCP迁移工具](https://download.nacos.io/nacos-server/mcp-migration-tool.jar) 对3.0.0版本的存量MCP服务数据进行迁移。
 
 ```shell
-# java- jar ./mcp-migration-tool.jar ${nacos-server-host}:${nacos-server-port} ${username} ${password}
+# java -jar ./mcp-migration-tool.jar ${nacos-server-host}:${nacos-server-port} ${username} ${password}
 # 示例
 java -jar ./mcp-migration-tool.jar localhost:8848 nacos ${your_password}
 ```
@@ -166,20 +225,7 @@ java -jar ./mcp-migration-tool.jar localhost:8848 nacos ${your_password}
 
 #### 2.2.1 确认表结构
 
-先对比部署的旧版本Nacos版本的mysql-schema.sql文件和将升级版本的mysql-schema.sql文件，确认表结构是否有变化。
-
-若文件中表结构存在变化，请先进行数据库变更，例如：
-
-```SQL
--- 从 2.0.X 升级时需要执行下列所有SQL, 从2.1.X之后版本升级仅需执行最后三行。
-ALTER TABLE `config_info` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
-ALTER TABLE `config_info_gray` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
-ALTER TABLE `config_info_beta` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
-ALTER TABLE `his_config_info` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
-ALTER TABLE `his_config_info` ADD COLUMN `publish_type` varchar(50)  DEFAULT 'formal' COMMENT 'publish type gray or formal';
-ALTER TABLE `his_config_info` ADD COLUMN `gray_name` varchar(50)  DEFAULT NULL COMMENT 'gray name';
-ALTER TABLE `his_config_info` ADD COLUMN `ext_info`  longtext DEFAULT NULL COMMENT 'ext info';
-```
+请参考 [2.1.1 确认表结构](#211-确认表结构)，对比并应用数据库表结构变更。
 
 #### 2.2.2. 确认环境变量
 
