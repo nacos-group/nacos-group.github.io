@@ -41,9 +41,9 @@ skill-sample/
 - **Flexible Distribution**: Discover and install Skills via CLI, API, and SDK
 - **Visibility Control**: Support PUBLIC / PRIVATE visibility modes to control Skill access scope as needed
 
-## 2. Core Concepts
+## 2. Skill Management
 
-### 2.1. Lifecycle and States
+### 2.1. Lifecycle
 
 Each Skill version has four states that form a complete lifecycle:
 
@@ -64,38 +64,9 @@ draft ──> reviewing ──> online ──> offline
 
 > **Constraint**: Only one draft or reviewing version can exist for the same Skill at any time.
 
-### 2.2. Versions and Labels
-
-Skills use **Semantic Versioning** (SemVer), e.g. `1.0.0`, `1.1.2`. When creating a new draft, the version number auto-increments or can be manually specified (must be greater than the baseline version).
-
-**Labels** are label → version mappings that assign semantic aliases to versions:
-
-| Label | Example | Purpose |
-|-------|---------|---------|
-| `latest` | `latest → 1.2.0` | Default version fetched by clients |
-| `stable` | `stable → 1.1.0` | Marks a verified stable version |
-| Custom | `canary → 1.3.0` | Custom routing labels as needed |
-
-When querying a Skill, clients can retrieve a specific version by label name, defaulting to the `latest` label.
-
-### 2.3. Visibility
-
-Each Skill has a `scope` attribute controlling its visibility:
-
-| Scope | Description |
-|-------|-------------|
-| **PUBLIC** | Visible and downloadable by all users within the namespace |
-| **PRIVATE** | Visible only to the Owner (creator) and authorized users |
-
-Visibility affects list queries, detail viewing, and download operations. Write operations (edit, publish, delete, etc.) require Owner identity or explicit write permissions.
-
-## 3. Skill Management
-
-### 3.1. Lifecycle
-
 A Skill goes through the following complete workflow from creation to use:
 
-#### 3.1.1. Creation
+#### 2.1.1. Creation
 
 Three creation methods are supported:
 
@@ -105,7 +76,7 @@ Three creation methods are supported:
 | **ZIP Upload** | Upload a ZIP package containing SKILL.md; the system automatically parses and creates the Skill |
 | **AI Generation** | Provide a background description and let Copilot automatically generate the complete Skill content |
 
-#### 3.1.2. Draft
+#### 2.1.2. Draft
 
 - **New Draft**: Create a brand new Skill or create a new version draft for an existing Skill
 - **Fork Draft**: Create a draft based on a published version, automatically inheriting content with an incremented version number
@@ -114,14 +85,14 @@ Three creation methods are supported:
 
 > Only one draft or reviewing version is allowed per Skill at a time. You must wait for the current working version to be processed before creating a new draft.
 
-#### 3.1.3. Submit for Review
+#### 2.1.3. Submit for Review
 
 Submit a draft version for review. After submission, the version state changes to `reviewing`:
 
 - **With Pipeline configured**: Triggers the publishing pipeline for security scanning and other checks
 - **Without Pipeline configured**: Directly publishes to online state
 
-#### 3.1.4. Publishing Pipeline
+#### 2.1.4. Publishing Pipeline
 
 The Pipeline is a configurable review process that performs automated checks before Skill publication. **The Pipeline is disabled by default**; when disabled, submitting for review will directly publish to online state.
 
@@ -152,12 +123,12 @@ Pipeline execution results:
 | **APPROVED** | Version remains in `reviewing` state, awaiting manual publish |
 | **REJECTED** | Version reverts to `draft`, can be modified and resubmitted |
 
-#### 3.1.5. Publish
+#### 2.1.5. Publish
 
 - **Normal Publish**: After Pipeline approval, publish the `reviewing` version as `online`, with the option to update the `latest` label
 - **Force Publish**: Administrator privilege operation that bypasses Pipeline validation for direct publishing. When the Pipeline rejects a publish but the situation requires an emergency release, global administrators can force publish from the console. This operation is recorded in the audit log
 
-#### 3.1.6. Online / Offline
+#### 2.1.6. Online / Offline
 
 Two granularities of online/offline operations are supported:
 
@@ -166,19 +137,37 @@ Two granularities of online/offline operations are supported:
 | **Version Level** | Perform online / offline operations on individual versions |
 | **Skill Level** | Globally enable / disable the entire Skill, affecting the discoverability of all versions |
 
-### 3.2. Visibility Management
+### 2.2. Versions and Labels
 
-- Toggle the Skill's `scope` (PUBLIC ↔ PRIVATE) at any time from the detail page
-- After switching to PRIVATE, non-Owner users will no longer see the Skill in the list
-- Only the Owner or users with explicit write permissions can modify visibility
+Skills use **Semantic Versioning** (SemVer), e.g. `1.0.0`, `1.1.2`. When creating a new draft, the version number auto-increments or can be manually specified (must be greater than the baseline version).
 
-### 3.3. Version Label Management
+**Labels** are label → version mappings that assign semantic aliases to versions:
+
+| Label | Example | Purpose |
+|-------|---------|---------|
+| `latest` | `latest → 1.2.0` | Default version fetched by clients |
+| `stable` | `stable → 1.1.0` | Marks a verified stable version |
+| Custom | `canary → 1.3.0` | Custom routing labels as needed |
+
+When querying a Skill, clients can retrieve a specific version by label name, defaulting to the `latest` label.
+
+Label management operations:
 
 - Optionally auto-update the `latest` label to point to the new version when publishing
 - Manually bind/unbind custom labels (e.g. `stable`, `canary`) in the version timeline
-- The `latest` label serves as the default version resolution basis for client queries
 
-### 3.4. Business Tag Management
+### 2.3. Visibility
+
+Each Skill has a `scope` attribute controlling its visibility:
+
+| Scope | Description |
+|-------|-------------|
+| **PUBLIC** | Visible and downloadable by all users within the namespace |
+| **PRIVATE** | Visible only to the Owner (creator) and authorized users |
+
+Visibility affects list queries, detail viewing, and download operations. Write operations (edit, publish, delete, etc.) require Owner identity or explicit write permissions. Toggle the Skill's `scope` (PUBLIC ↔ PRIVATE) at any time from the detail page; after switching to PRIVATE, non-Owner users will no longer see the Skill in the list.
+
+### 2.4. Business Tags
 
 Business tags (Biz Tags) are used to categorize Skills by business domain, e.g. `["retail", "finance"]`.
 
@@ -186,11 +175,11 @@ Business tags (Biz Tags) are used to categorize Skills by business domain, e.g. 
 - Tags are stored in JSON array format
 - Can be used for filtering and categorized display on the list page
 
-## 4. Management Console
+## 3. Management Console
 
 The Nacos console provides a complete Skill management interface, located under **AI Registry > Skill Management**.
 
-### 4.1. Skill List Page
+### 3.1. Skill List Page
 
 The list page displays all Skills in card format with the following features:
 
@@ -200,11 +189,11 @@ The list page displays all Skills in card format with the following features:
 - **Batch Operations**: Multi-select for batch deletion
 - **Quick Actions**: Upload ZIP, create new Skill
 
-### 4.2. Skill Detail Page
+### 3.2. Skill Detail Page
 
 The detail page provides a comprehensive management view of a Skill, including basic info, version management, content editing, Pipeline status, CLI command card, and more.
 
-#### 4.2.1. Version Management
+#### 3.2.1. Version Management
 
 The right side of the detail page displays all versions in a timeline, supporting version switching and the following operations:
 
@@ -217,21 +206,21 @@ The right side of the detail page displays all versions in a timeline, supportin
 | **Publish** | Publish as online after Pipeline approval, with the option to auto-update the `latest` label |
 | **Force Publish** | Visible to administrators only; bypasses Pipeline validation when it rejects |
 
-#### 4.2.2. Online / Offline Management
+#### 3.2.2. Online / Offline Management
 
 - **Version Level**: Perform online / offline on individual versions from the version timeline or action area
 - **Skill Level**: The enable toggle at the top of the detail page controls the discoverability of the entire Skill; when disabled, all versions become invisible to clients
 
-#### 4.2.3. Visibility Management
+#### 3.2.3. Visibility Management
 
 A visibility toggle at the top of the detail page supports switching between PUBLIC ↔ PRIVATE. After switching to PRIVATE, non-Owner users will not be able to discover the Skill.
 
-#### 4.2.4. Label Management
+#### 3.2.4. Label Management
 
 - **Version Labels**: Bind / unbind custom labels (e.g. `stable`, `canary`) from the version timeline or sidebar card; only online / offline versions can be operated on
 - **Business Tags (Biz Tags)**: Add or remove business category tags from the sidebar card, used for filtering and categorized display on the list page
 
-### 4.3. Skill Creation and Upload
+### 3.3. Skill Creation and Upload
 
 Three methods are available to create a new Skill:
 
@@ -239,7 +228,7 @@ Three methods are available to create a new Skill:
 - **AI Generation**: Enter a background description, optionally associate MCP tools and conversation history, and let Copilot generate the complete Skill via streaming
 - **ZIP Upload**: Upload a Skill ZIP package directly; the system automatically parses the SKILL.md and resource files and creates a new version
 
-### 4.4. Skill Optimization
+### 3.4. Skill Optimization
 
 AI-assisted optimization is available for existing Skills from the detail page:
 
@@ -248,17 +237,17 @@ AI-assisted optimization is available for existing Skills from the detail page:
 - Optionally associate MCP tools and conversation history as optimization context
 - Copilot streams the optimized content, with one-click apply support
 
-> The AI generation in section 4.3 and AI optimization in section 4.4 are powered by Copilot. Before using them, you need to configure a large model API Key via the `COPILOT_API_KEY` environment variable (recommended) or through the **Settings Center** page in the console.
+> The AI generation in section 3.3 and AI optimization in section 3.4 are powered by Copilot. Before using them, you need to configure a large model API Key via the `COPILOT_API_KEY` environment variable (recommended) or through the **Settings Center** page in the console.
 
-## 5. CLI / API / SDK Reference
+## 4. CLI / API / SDK Reference
 
 Skill Registry provides multiple access methods. Refer to the respective documentation for detailed usage.
 
-### 5.1. nacos-cli
+### 4.1. nacos-cli
 
 [nacos-cli](../../admin/nacos-cli.md) is the command-line tool for Skill Registry, providing Skill search, installation, upload, and sync capabilities. For detailed installation and Skill management commands, see [Nacos CLI User Guide - AI Skill Management](../../admin/nacos-cli.md#51-ai-技能管理-).
 
-### 5.2. REST API
+### 4.2. REST API
 
 Skill Registry provides three layers of REST APIs:
 
@@ -268,7 +257,7 @@ Skill Registry provides three layers of REST APIs:
 | **Console API** | Console management operations (requires login authentication) | [Console API - Skills Management](../../admin/console-api.md#7-skills-管理) |
 | **Admin API** | Cluster internal management interface | [Admin API - AI Skills Management](../../admin/admin-api.md#7-ai-skills-管理) |
 
-### 5.3. Java SDK
+### 4.3. Java SDK
 
 Nacos provides two Java SDKs for programmatic Skill management:
 
