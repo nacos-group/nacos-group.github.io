@@ -3,7 +3,7 @@ title: Dify Discovers Nacos MCP Server
 keywords: [MCP,Dify]
 description: Dify Discovers Nacos MCP Server
 sidebar:
-  order: 7
+  order: 6
 ---
 
 ## Dify Discovers Nacos MCP Server
