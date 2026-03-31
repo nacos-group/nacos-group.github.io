@@ -62,7 +62,9 @@ draft ──> reviewing ──> online ──> offline
 | `online` | Published and available |
 | `offline` | Taken offline, no longer available |
 
-> **Constraint**: Only one draft or reviewing version can exist for the same Skill at any time.
+> **Constraints**:
+> - Only one draft or reviewing version can exist for the same Skill at any time.
+> - Once a version is published (online), its content cannot be modified. To make changes, create a new draft based on that version, then submit it for review and publish.
 
 A Skill goes through the following complete workflow from creation to use:
 

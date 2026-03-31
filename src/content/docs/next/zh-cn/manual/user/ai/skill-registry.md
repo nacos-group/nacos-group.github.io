@@ -62,7 +62,9 @@ draft ──> reviewing ──> online ──> offline
 | `online` | 已发布上线，对外可用 |
 | `offline` | 已下线，不再对外提供 |
 
-> **约束**：同一个 Skill 同时只能有一个 draft 或 reviewing 状态的版本。
+> **约束**：
+> - 同一个 Skill 同时只能有一个 draft 或 reviewing 状态的版本。
+> - 版本一旦发布（online）后内容不可修改，如需变更请基于该版本新建草稿，修改后重新提交审核并发布。
 
 Skill 从创建到使用，经历以下完整流程：
 
