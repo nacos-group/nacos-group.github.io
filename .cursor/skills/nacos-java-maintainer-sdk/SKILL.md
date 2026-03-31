@@ -37,8 +37,9 @@
 | `CoreMaintainerService` | 第 5 章 其他Nacos核心运维API | Nacos 核心通用 |
 | `McpMaintainerService`（由 `AiMaintainerService` 继承） | 第 6 章 MCP 服务 | Ai 相关 - MCP |
 | `A2aMaintainerService`（由 `AiMaintainerService` 继承） | 第 7 章 A2A 注册中心 | Ai 相关 - A2A |
-| `PromptMaintainerService`（由 `AiMaintainerService` 继承） | 第 8 章（若文档已增加） | Ai 相关 - Prompt |
-| `SkillMaintainerService`（由 `AiMaintainerService` 继承） | 第 9 章（若文档已增加） | Ai 相关 - Skill |
+| `PromptMaintainerService`（由 `AiMaintainerService.prompt()` 代理） | 第 8 章（若文档已增加） | Ai 相关 - Prompt |
+| `SkillMaintainerService`（由 `AiMaintainerService.skill()` 代理） | 第 9 章（若文档已增加） | Ai 相关 - Skill |
+| `AgentSpecMaintainerService`（由 `AiMaintainerService.agentSpec()` 代理） | 第 10 章（若文档已增加） | Ai 相关 - AgentSpec |
 
 接口在 nacos 仓库中的路径：`maintainer-client/src/main/java/com/alibaba/nacos/maintainer/client/` 下对应包名（`config/`、`naming/`、`core/`、`ai/`）。因此 `--nacos-maintainer-dir` 应指向 **nacos 仓库根目录下的 `maintainer-client/src/main/java`**（或任一包含 `com/alibaba/nacos/maintainer/client` 的父目录）。
 

@@ -93,12 +93,13 @@
 | 7 | A2A 注册中心 | registerAgent、getAgentCard、updateAgentCard、deleteAgent、版本与搜索、分页等 |
 | 8 | （若已增加）Prompt 能力 | listPrompts、getPromptMeta、版本与标签、删除等 |
 | 9 | （若已增加）Skill 能力 | registerSkill、getSkillDetail、updateSkill、deleteSkill、列表与分页等 |
+| 10 | （若已增加）AgentSpec 能力 | getAgentSpecDetail、getAgentSpecAdminDetail、getAgentSpecVersionDetail、deleteAgentSpec、listAgentSpecs、listAgentSpecAdminItems、uploadAgentSpecFromZip、草稿/提交流程、labels/bizTags/scope 等 |
 
 ---
 
 ## 8. 与 Java 接口的同步（本 skill 扩展）
 
-- 新增/变更内容应来自 Nacos Maintainer Client 接口（见 SKILL.md「Maintainer API 定义来源与章节」）。**存在多层继承**：ConfigMaintainerService 继承 CoreMaintainerService、BetaConfigMaintainerService、ConfigHistoryMaintainerService、ConfigOpsMaintainerService；NamingMaintainerService 继承 CoreMaintainerService、ServiceMaintainerService、InstanceMaintainerService、NamingClientMaintainerService；AiMaintainerService 继承 McpMaintainerService、A2aMaintainerService、PromptMaintainerService、SkillMaintainerService。解析时需展开继承链，并按「声明接口」归属到对应章节（第 3 章不包含 Core 方法，第 4 章不包含 Core 方法，第 5 章仅 Core 方法）。
+- 新增/变更内容应来自 Nacos Maintainer Client 接口（见 SKILL.md「Maintainer API 定义来源与章节」）。**存在多层继承**：ConfigMaintainerService 继承 CoreMaintainerService、BetaConfigMaintainerService、ConfigHistoryMaintainerService、ConfigOpsMaintainerService；NamingMaintainerService 继承 CoreMaintainerService、ServiceMaintainerService、InstanceMaintainerService、NamingClientMaintainerService；AiMaintainerService 继承 McpMaintainerService、A2aMaintainerService，并通过 `agentSpec()/prompt()/skill()` 代理到对应维护接口。解析时需展开继承链，并按「声明接口」归属到对应章节（第 3 章不包含 Core 方法，第 4 章不包含 Core 方法，第 5 章仅 Core 方法，第 10 章为 AgentSpec 接口能力）。
 - 使用脚本 `scripts/compare_maintainer_api_with_doc.py` 对比接口与 maintainer-sdk.md，可得到**新增 API**（需整条补全）、**新增重载**（在已有小节中补充签名/参数/示例）与**已删除重载**（在已有小节中删除或标注该重载）。**Nacos 项目路径由使用者提供**（`--nacos-maintainer-dir`），skill 中不写死路径。
 - 补全或修改时仍按本文档第 3、4、5、6 节的格式执行，并保持中英文结构一致。
 - 修改过程中若有**不明确**之处，**暂不修改**，将该条列入修改报告的「待确认内容」，待确认后再改。修改完成后须生成修改报告；报告**不写入文档**，在对话中输出或由执行者自行保存。
