@@ -32,6 +32,7 @@ INTERFACE_TO_SUBDIR = {
     "A2aMaintainerService": "ai",
     "PromptMaintainerService": "ai",
     "SkillMaintainerService": "ai",
+    "AgentSpecMaintainerService": "ai",
     "AiMaintainerService": "ai",
 }
 
@@ -44,6 +45,7 @@ CHAPTER_INTERFACES = {
     7: ["A2aMaintainerService"],
     8: ["PromptMaintainerService"],
     9: ["SkillMaintainerService"],
+    10: ["AgentSpecMaintainerService"],
 }
 
 
@@ -248,7 +250,7 @@ def get_all_methods_by_chapter(base_dir: Path):
     So we parse ConfigMaintainerService (gets Config+Beta+History+Ops+Core), then filter source in ch3.
     For ch4 we parse NamingMaintainerService and filter source in ch4.
     For ch5 we parse CoreMaintainerService (all methods are Core).
-    For ch6,7,8,9 we parse Mcp, A2a, Prompt, Skill and take all.
+    For ch6,7,8,9,10 we parse Mcp, A2a, Prompt, Skill, AgentSpec and take all.
     """
     by_chapter = {}
     parsed_cache = {}

@@ -1678,6 +1678,80 @@ try {
 }
 ```
 
+### 5.3. 远程尝试获取分布式锁
+
+#### 描述
+
+通过此接口可以直接发起远程加锁请求尝试获取分布式锁，语义与`lock`一致，获取成功返回`true`，否则返回`false`。
+
+```java
+Boolean remoteTryLock(LockInstance instance) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称       | 类型           | 描述         | 默认值  |
+|:---------|:-------------|------------|------|
+| instance | LockInstance | 分布式锁的锁对象实例 | 无，必填 |
+
+#### 返回参数
+
+远程尝试加锁结果`Boolean`，获取成功返回`true`，否则返回`false`。
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+LockService lockService = NacosLockFactory.createLockService(properties);
+NLock nLock = new NLock("testLock", 5000L);
+try {
+    Boolean lockResult = lockService.remoteTryLock(nLock);
+    System.out.printf("remote try lock result: " + lockResult);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+### 5.4. 远程释放分布式锁
+
+#### 描述
+
+通过此接口可以直接发起远程解锁请求释放分布式锁，释放成功返回`true`，否则返回`false`。
+
+```java
+Boolean remoteReleaseLock(LockInstance instance) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称       | 类型           | 描述         | 默认值  |
+|:---------|:-------------|------------|------|
+| instance | LockInstance | 分布式锁的锁对象实例 | 无，必填 |
+
+#### 返回参数
+
+远程解锁结果`Boolean`，释放成功返回`true`，否则返回`false`。
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+LockService lockService = NacosLockFactory.createLockService(properties);
+NLock nLock = new NLock("testLock", 5000L);
+try {
+    Boolean lockResult = lockService.remoteTryLock(nLock);
+    if (lockResult) {
+        System.out.printf("remote try lock success, begin release.");
+        Boolean releaseResult = lockService.remoteReleaseLock(nLock);
+        System.out.printf("remote release result: " + releaseResult);
+    }
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
 ## 6. MCP 服务
 
 ### 6.1. 查询MCP 服务
@@ -2406,6 +2480,110 @@ try {
 }
 ```
 
+### 8.4. 下载 Skill ZIP
+
+#### 描述
+
+根据 Skill 名称下载最新版本的 Skill ZIP 压缩包（字节数组）。
+
+```java
+byte[] downloadSkillZip(String skillName) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称       | 类型     | 描述                    | 默认值  |
+|:---------|:-------|-----------------------|------|
+| skillName | String | Skill 名称（唯一标识）        | 无，必填 |
+
+#### 返回参数
+
+Skill ZIP 压缩包字节数组 `byte[]`。
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    byte[] skillZip = aiService.downloadSkillZip("{skillName}");
+    System.out.println("skill zip bytes: " + skillZip.length);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+### 8.5. 按版本下载 Skill ZIP
+
+#### 描述
+
+根据 Skill 名称和目标版本下载对应版本的 Skill ZIP 压缩包（字节数组）。
+
+```java
+byte[] downloadSkillZipByVersion(String skillName, String version) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称       | 类型     | 描述                       | 默认值  |
+|:---------|:-------|--------------------------|------|
+| skillName | String | Skill 名称（唯一标识）           | 无，必填 |
+| version   | String | 目标 Skill 版本，空时获取最新版本    | 无     |
+
+#### 返回参数
+
+Skill ZIP 压缩包字节数组 `byte[]`。
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    byte[] skillZip = aiService.downloadSkillZipByVersion("{skillName}", "1.0.0");
+    System.out.println("skill zip bytes: " + skillZip.length);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+### 8.6. 按标签下载 Skill ZIP
+
+#### 描述
+
+根据 Skill 名称和标签下载对应标签的 Skill ZIP 压缩包（字节数组）。
+
+```java
+byte[] downloadSkillZipByLabel(String skillName, String label) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称       | 类型     | 描述                         | 默认值  |
+|:---------|:-------|----------------------------|------|
+| skillName | String | Skill 名称（唯一标识）             | 无，必填 |
+| label     | String | 目标标签（例如：`latest`、`stable`） | 无，必填 |
+
+#### 返回参数
+
+Skill ZIP 压缩包字节数组 `byte[]`。
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    byte[] skillZip = aiService.downloadSkillZipByLabel("{skillName}", "{label}");
+    System.out.println("skill zip bytes: " + skillZip.length);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
 ## 9. Prompt 能力
 
 ### 9.1. 获取 Prompt
@@ -2604,7 +2782,121 @@ try {
 }
 ```
 
-## 10. Java SDK的生命周期
+## 10. AgentSpec 能力
+
+### 10.1. 查询 AgentSpec
+
+#### 描述
+
+根据 AgentSpec 名称查询完整的 AgentSpec 对象，包含主配置及全部资源配置。
+
+```java
+AgentSpec loadAgentSpec(String agentSpecName) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称         | 类型     | 描述                     | 默认值  |
+|:-----------|:-------|------------------------|------|
+| agentSpecName | String | AgentSpec 名称（唯一标识） | 无，必填 |
+
+#### 返回参数
+
+查询成功时，返回 AgentSpec 对象 `AgentSpec`.
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    AgentSpec agentSpec = aiService.loadAgentSpec("{agentSpecName}");
+    System.out.println(JacksonUtils.toJson(agentSpec));
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+### 10.2. 订阅 AgentSpec
+
+#### 描述
+
+订阅指定 AgentSpec，当 AgentSpec 配置发生变更时通过监听器回调。
+
+```java
+AgentSpec subscribeAgentSpec(String agentSpecName, AbstractNacosAgentSpecListener agentSpecListener)
+        throws NacosException;
+```
+
+#### 请求参数
+
+| 名称           | 类型                               | 描述                      | 默认值  |
+|:-------------|:---------------------------------|-------------------------|------|
+| agentSpecName | String                           | AgentSpec 名称              | 无，必填 |
+| agentSpecListener | AbstractNacosAgentSpecListener | AgentSpec 变更回调监听器        | 无，必填 |
+
+#### 返回参数
+
+订阅成功时，返回当前 AgentSpec 对象 `AgentSpec`，未找到时可为 null。
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    AgentSpec agentSpec = aiService.subscribeAgentSpec("{agentSpecName}", new AbstractNacosAgentSpecListener() {
+        @Override
+        public void onEvent(NacosAgentSpecEvent event) {
+            System.out.println("agent spec changed: " + event.getAgentSpecName());
+        }
+    });
+    System.out.println(JacksonUtils.toJson(agentSpec));
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+### 10.3. 取消订阅 AgentSpec
+
+#### 描述
+
+取消对指定 AgentSpec 的订阅。取消时传入的监听器必须与订阅时一致，否则可能导致取消失败。
+
+```java
+void unsubscribeAgentSpec(String agentSpecName, AbstractNacosAgentSpecListener agentSpecListener)
+        throws NacosException;
+```
+
+#### 请求参数
+
+| 名称           | 类型                               | 描述                  | 默认值  |
+|:-------------|:---------------------------------|---------------------|------|
+| agentSpecName | String                           | AgentSpec 名称          | 无，必填 |
+| agentSpecListener | AbstractNacosAgentSpecListener | 订阅时使用的监听器          | 无，必填 |
+
+#### 返回参数
+
+无
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+AbstractNacosAgentSpecListener listener = new AbstractNacosAgentSpecListener() {};
+try {
+    aiService.subscribeAgentSpec("{agentSpecName}", listener);
+    aiService.unsubscribeAgentSpec("{agentSpecName}", listener);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+## 11. Java SDK的生命周期
 
 Nacos的Java SDK 生命周期从创建时开始，到调用`shutdown()`方法时结束，期间对应创建的线程池、连接等均会始终保留，即使连接断开，也会不断重试重新建立连接。
 

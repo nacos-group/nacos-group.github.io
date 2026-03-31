@@ -1,3 +1,8 @@
+---
+name: nacos-java-maintainer-sdk
+description: Updates Nacos Maintainer SDK documentation by comparing Maintainer Client interfaces with maintainer-sdk.md, then adding/removing APIs and overloads while preserving existing descriptions and examples.
+---
+
 # Nacos 运维 SDK（Maintainer SDK）文档格式与 API 同步
 
 编写或更新 **运维 SDK 使用手册**（`manual/admin/maintainer-sdk.md`）时，请严格遵循本 skill 下的格式说明；**通过解析 Nacos Maintainer Client 的接口定义（含多层继承）与 maintainer-sdk.md 对比，补全新增 API、标出新增重载、并标出接口中已删除的重载（文档需同步移除或标注）**。
@@ -37,8 +42,9 @@
 | `CoreMaintainerService` | 第 5 章 其他Nacos核心运维API | Nacos 核心通用 |
 | `McpMaintainerService`（由 `AiMaintainerService` 继承） | 第 6 章 MCP 服务 | Ai 相关 - MCP |
 | `A2aMaintainerService`（由 `AiMaintainerService` 继承） | 第 7 章 A2A 注册中心 | Ai 相关 - A2A |
-| `PromptMaintainerService`（由 `AiMaintainerService` 继承） | 第 8 章（若文档已增加） | Ai 相关 - Prompt |
-| `SkillMaintainerService`（由 `AiMaintainerService` 继承） | 第 9 章（若文档已增加） | Ai 相关 - Skill |
+| `PromptMaintainerService`（由 `AiMaintainerService.prompt()` 代理） | 第 8 章（若文档已增加） | Ai 相关 - Prompt |
+| `SkillMaintainerService`（由 `AiMaintainerService.skill()` 代理） | 第 9 章（若文档已增加） | Ai 相关 - Skill |
+| `AgentSpecMaintainerService`（由 `AiMaintainerService.agentSpec()` 代理） | 第 10 章（若文档已增加） | Ai 相关 - AgentSpec |
 
 接口在 nacos 仓库中的路径：`maintainer-client/src/main/java/com/alibaba/nacos/maintainer/client/` 下对应包名（`config/`、`naming/`、`core/`、`ai/`）。因此 `--nacos-maintainer-dir` 应指向 **nacos 仓库根目录下的 `maintainer-client/src/main/java`**（或任一包含 `com/alibaba/nacos/maintainer/client` 的父目录）。
 
