@@ -3,7 +3,7 @@ title: Skill Registry
 keywords: [Nacos Skill Registry, Skill Management, AI Skill, Agent Skill]
 description: This document describes the Nacos Skill Registry, including Skill creation, version management, security review, publishing, and distribution.
 sidebar:
-    order: 6
+    order: 7
 ---
 
 # Skill Registry
@@ -123,9 +123,23 @@ Submit a draft version for review. After submission, the version state changes t
 
 #### 3.1.4. Publishing Pipeline
 
-The Pipeline is a configurable review process that performs automated checks before Skill publication.
+The Pipeline is a configurable review process that performs automated checks before Skill publication. **The Pipeline is disabled by default**; when disabled, submitting for review will directly publish to online state.
 
-Built-in check nodes include **skill-scanner security scanning** (based on [Cisco AI Defense skill-scanner](https://github.com/cisco-ai-defense/skill-scanner)), which detects the following risks:
+The Pipeline uses a plugin-based architecture, loading check nodes via Java SPI. A built-in **skill-scanner** plugin is provided (based on [Cisco AI Defense skill-scanner](https://github.com/cisco-ai-defense/skill-scanner)). Users can also implement the `PublishPipelineServiceBuilder` interface to develop custom plugins and register them via SPI. Multiple plugins are executed serially in order of `getPreferOrder()`, with each plugin proceeding only after the previous one passes.
+
+To enable the Pipeline, configure in `application.properties`:
+
+```properties
+# Enable Pipeline and specify check nodes
+nacos.plugin.ai-pipeline.enabled=true
+nacos.plugin.ai-pipeline.type=skill-scanner
+
+# Check node configuration (skill-scanner example)
+nacos.plugin.ai-pipeline.skill-scanner.enabled=true
+nacos.plugin.ai-pipeline.skill-scanner.command=/path/to/skill-scanner
+```
+
+The skill-scanner plugin detects the following risks:
 
 - Prompt injection attacks
 - Data leakage risks
@@ -141,7 +155,7 @@ Pipeline execution results:
 #### 3.1.5. Publish
 
 - **Normal Publish**: After Pipeline approval, publish the `reviewing` version as `online`, with the option to update the `latest` label
-- **Force Publish**: Administrator privilege operation that bypasses Pipeline validation for direct publishing, suitable for emergency situations
+- **Force Publish**: Administrator privilege operation that bypasses Pipeline validation for direct publishing. When the Pipeline rejects a publish but the situation requires an emergency release, global administrators can force publish from the console. This operation is recorded in the audit log
 
 #### 3.1.6. Online / Offline
 
@@ -188,26 +202,44 @@ The list page displays all Skills in card format with the following features:
 
 ### 4.2. Skill Detail Page
 
-The detail page provides a comprehensive management view of a Skill:
+The detail page provides a comprehensive management view of a Skill, including basic info, version management, content editing, Pipeline status, CLI command card, and more.
 
-- **Basic Info**: Name, description, enable/disable toggle, visibility toggle (PUBLIC / PRIVATE), online version count, download count, update time, source info
-- **Version Selection**: Dropdown to switch between versions, displaying status indicators for each (Draft / Reviewing / Pending Publish / Online / Offline)
-- **SKILL.md View/Edit**: View mode renders Markdown; Draft mode provides an online Markdown editor
-- **Resource File Management**: View and manage resource files associated with the Skill
-- **Version Action Buttons**: Dynamically display available actions based on the current version state (submit for review, publish, force publish, online/offline, create new draft, etc.)
-- **Version Timeline**: Sidebar displaying a timeline of all versions, supporting version switching, label binding, and downloads
-- **Pipeline Status**: Display the execution status and detailed checkpoint results of the review pipeline
-- **CLI Command Card**: Display the nacos-cli command to install the Skill
-- **Business tag and version label management**
+#### 4.2.1. Version Management
 
-### 4.3. Skill Creation
+The right side of the detail page displays all versions in a timeline, supporting version switching and the following operations:
 
-The creation dialog provides two modes:
+| Operation | Description |
+|-----------|-------------|
+| **Create Draft** | Create a new draft based on an existing version; only one draft or reviewing version is allowed at a time |
+| **Edit Draft** | Edit SKILL.md content, description, and resource files online with auto-save |
+| **Delete Draft** | Discard the current draft and release the working slot |
+| **Submit for Review** | Submit the draft as reviewing; description and SKILL.md content must not be empty |
+| **Publish** | Publish as online after Pipeline approval, with the option to auto-update the `latest` label |
+| **Force Publish** | Visible to administrators only; bypasses Pipeline validation when it rejects |
 
-- **Manual Creation**: Fill in the Skill name, description, and SKILL.md content
-- **AI Generation**: Enter a background description, optionally associate MCP tools and conversation history, and let Copilot generate the complete Skill via streaming (including thinking process display)
+#### 4.2.2. Online / Offline Management
 
-### 4.4. Skill Optimization (AI Copilot)
+- **Version Level**: Perform online / offline on individual versions from the version timeline or action area
+- **Skill Level**: The enable toggle at the top of the detail page controls the discoverability of the entire Skill; when disabled, all versions become invisible to clients
+
+#### 4.2.3. Visibility Management
+
+A visibility toggle at the top of the detail page supports switching between PUBLIC ↔ PRIVATE. After switching to PRIVATE, non-Owner users will not be able to discover the Skill.
+
+#### 4.2.4. Label Management
+
+- **Version Labels**: Bind / unbind custom labels (e.g. `stable`, `canary`) from the version timeline or sidebar card; only online / offline versions can be operated on
+- **Business Tags (Biz Tags)**: Add or remove business category tags from the sidebar card, used for filtering and categorized display on the list page
+
+### 4.3. Skill Creation and Upload
+
+Three methods are available to create a new Skill:
+
+- **Manual Creation**: Fill in the Skill name, description, and SKILL.md content through the creation dialog
+- **AI Generation**: Enter a background description, optionally associate MCP tools and conversation history, and let Copilot generate the complete Skill via streaming
+- **ZIP Upload**: Upload a Skill ZIP package directly; the system automatically parses the SKILL.md and resource files and creates a new version
+
+### 4.4. Skill Optimization
 
 AI-assisted optimization is available for existing Skills from the detail page:
 
@@ -216,7 +248,9 @@ AI-assisted optimization is available for existing Skills from the detail page:
 - Optionally associate MCP tools and conversation history as optimization context
 - Copilot streams the optimized content, with one-click apply support
 
-## 5. API / SDK / CLI Reference
+> The AI generation in section 4.3 and AI optimization in section 4.4 are powered by Copilot. Before using them, you need to configure a large model API Key via the `COPILOT_API_KEY` environment variable (recommended) or through the **Settings Center** page in the console.
+
+## 5. CLI / API / SDK Reference
 
 Skill Registry provides multiple access methods. Refer to the respective documentation for detailed usage.
 

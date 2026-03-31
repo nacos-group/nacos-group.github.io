@@ -123,9 +123,23 @@ Skill 从创建到使用，经历以下完整流程：
 
 #### 3.1.4. 发布流水线（Pipeline）
 
-Pipeline 是可配置的审核流程，在 Skill 发布前进行自动化检查。
+Pipeline 是可配置的审核流程，在 Skill 发布前进行自动化检查。**Pipeline 默认关闭**，关闭时提交审核会直接发布为 online 状态。
 
-内置支持的检查节点包括 **skill-scanner 安全扫描**（基于 [Cisco AI Defense skill-scanner](https://github.com/cisco-ai-defense/skill-scanner)），检测以下风险：
+Pipeline 采用插件化架构，通过 Java SPI 机制加载检查节点。内置提供 **skill-scanner** 插件（基于 [Cisco AI Defense skill-scanner](https://github.com/cisco-ai-defense/skill-scanner)），用户也可以实现 `PublishPipelineServiceBuilder` 接口开发自定义插件，并通过 SPI 注册到 Pipeline 中。多个插件按 `getPreferOrder()` 排序串行执行，前一个通过后才执行下一个。
+
+开启 Pipeline 需要在 `application.properties` 中配置：
+
+```properties
+# 启用 Pipeline 并指定检查节点
+nacos.plugin.ai-pipeline.enabled=true
+nacos.plugin.ai-pipeline.type=skill-scanner
+
+# 检查节点配置（以 skill-scanner 为例）
+nacos.plugin.ai-pipeline.skill-scanner.enabled=true
+nacos.plugin.ai-pipeline.skill-scanner.command=/path/to/skill-scanner
+```
+
+skill-scanner 插件检测以下风险：
 
 - Prompt 注入攻击
 - 数据泄露风险
@@ -141,7 +155,7 @@ Pipeline 执行结果：
 #### 3.1.5. 发布（Publish）
 
 - **正常发布**：Pipeline 审核通过后，将 `reviewing` 版本发布为 `online`，可选择是否更新 `latest` 标签
-- **强制发布**：管理员特权操作，绕过 Pipeline 校验直接发布，适用于紧急情况
+- **强制发布**：管理员特权操作，绕过 Pipeline 校验直接发布。当 Pipeline 拒绝发布但实际情况需要紧急上线时，全局管理员可在控制台执行强制发布，该操作会记录审计日志
 
 #### 3.1.6. 上下线
 
@@ -188,26 +202,44 @@ Nacos 控制台提供了完整的 Skill 管理界面，位于 **AI 注册中心 
 
 ### 4.2. Skill 详情页
 
-详情页提供 Skill 的完整管理视图：
+详情页提供 Skill 的完整管理视图，包括基本信息、版本管理、内容编辑、Pipeline 状态、CLI 命令卡片等。
 
-- **基本信息**：名称、描述、启用状态开关、可见性开关（PUBLIC / PRIVATE）、在线版本数、下载量、更新时间、来源信息
-- **版本选择**：下拉切换不同版本，显示各版本状态标识（Draft / Reviewing / Pending Publish / Online / Offline）
-- **SKILL.md 查看/编辑**：查看模式渲染 Markdown，Draft 模式提供在线 Markdown 编辑器
-- **资源文件管理**：查看和管理 Skill 关联的资源文件
-- **版本操作按钮**：根据当前版本状态动态展示可用操作（提交审核、发布、强制发布、上下线、创建新草稿等）
-- **版本时间线**：侧边栏展示所有版本的时间线，支持版本切换、标签绑定、下载等操作
-- **Pipeline 状态**：展示审核流水线的执行状态和详细检查点结果
-- **CLI 命令卡片**：展示安装该 Skill 的 nacos-cli 命令
-- **业务标签和版本标签管理**
+#### 4.2.1. 版本管理
 
-### 4.3. Skill 创建
+详情页右侧以版本时间线展示所有版本，支持版本切换和以下操作：
 
-创建对话框提供两种模式：
+| 操作 | 说明 |
+|------|------|
+| **创建草稿** | 基于已有版本创建新草稿，同一时刻只允许存在一个 draft 或 reviewing 版本 |
+| **编辑草稿** | 在线编辑 SKILL.md 内容、描述信息和资源文件，实时保存 |
+| **删除草稿** | 放弃当前草稿，释放工作位 |
+| **提交审核** | 将 draft 提交为 reviewing，提交前需确保描述和 SKILL.md 内容不为空 |
+| **发布** | Pipeline 通过后发布为 online，可选择自动更新 `latest` 标签 |
+| **强制发布** | 仅管理员可见，Pipeline 拒绝时可绕过校验直接发布 |
 
-- **手动创建**：填写 Skill 名称、描述和 SKILL.md 内容
-- **AI 生成**：输入背景描述，可选择关联 MCP 工具和对话历史，由 Copilot 流式生成完整 Skill（包含思考过程展示）
+#### 4.2.2. 上下线管理
 
-### 4.4. Skill 优化（AI Copilot）
+- **版本级别**：在版本时间线或操作区对单个版本执行 online / offline
+- **Skill 级别**：详情页顶部的启用开关控制整个 Skill 的可发现性，禁用后所有版本对客户端不可见
+
+#### 4.2.3. 可见性管理
+
+详情页顶部提供可见性开关，支持 PUBLIC ↔ PRIVATE 切换。切换为 PRIVATE 后，非 Owner 用户将无法发现该 Skill。
+
+#### 4.2.4. 标签管理
+
+- **版本标签（Labels）**：在版本时间线或侧边栏卡片中绑定 / 解绑自定义标签（如 `stable`、`canary`），仅 online / offline 版本可操作
+- **业务标签（Biz Tags）**：在侧边栏卡片中添加或移除业务分类标签，用于列表页的筛选和分类展示
+
+### 4.3. Skill 创建与上传
+
+提供三种方式新建 Skill：
+
+- **手动创建**：通过创建对话框填写 Skill 名称、描述和 SKILL.md 内容
+- **AI 生成**：输入背景描述，可关联 MCP 工具和对话历史，由 Copilot 流式生成完整 Skill
+- **上传 ZIP**：直接上传 Skill ZIP 包，系统自动解析其中的 SKILL.md 和资源文件，创建为新版本
+
+### 4.4. Skill 优化
 
 在详情页可对已有 Skill 进行 AI 辅助优化：
 
@@ -216,7 +248,9 @@ Nacos 控制台提供了完整的 Skill 管理界面，位于 **AI 注册中心 
 - 可关联 MCP 工具和对话历史作为优化上下文
 - Copilot 流式输出优化后的内容，支持一键应用
 
-## 5. API / SDK / CLI 参考
+> 4.3 的 AI 生成和 4.4 的 AI 优化功能由 Copilot 提供支持，使用前需配置大模型 API Key。可通过环境变量 `COPILOT_API_KEY`（推荐）或在控制台 **设置中心** 页面配置。
+
+## 5. CLI / API / SDK 参考
 
 Skill Registry 提供多种接入方式，详细用法请参考各自的专项文档。
 
