@@ -21,7 +21,7 @@ import sys
 from pathlib import Path
 
 # Interface -> doc chapter mapping (reference.md)
-# 已有模块保持原序：3 配置, 4 服务发现, 5 分布式锁, 6 MCP, 7 A2A, 8 Skill, 9 Prompt, 10 生命周期
+# 已有模块保持原序：3 配置, 4 服务发现, 5 分布式锁, 6 MCP, 7 A2A, 8 Skill, 9 Prompt, 10 AgentSpec, 11 生命周期
 INTERFACE_CHAPTER = {
     "ConfigService": 3,   # 配置管理 API
     "NamingService": 4,   # 服务发现API
@@ -39,7 +39,54 @@ CHAPTER_TO_SOURCE = {
     "7": "A2aService",
     "8": "AiService",
     "9": "AiService",
+    "10": "AiService",
 }
+
+
+def _count_top_level_params(param_text: str) -> int:
+    """
+    Count top-level parameters in a parameter list string.
+    Handles generics/nested structures like:
+    - Map<String, String>
+    - List<Map<String, Integer>>
+    - method calls in examples with nested parentheses
+    """
+    s = (param_text or "").strip()
+    if not s:
+        return 0
+    depth_angle = 0
+    depth_paren = 0
+    depth_bracket = 0
+    count = 0
+    has_token = False
+    for ch in s:
+        if ch == "<":
+            depth_angle += 1
+            has_token = True
+        elif ch == ">":
+            depth_angle = max(0, depth_angle - 1)
+            has_token = True
+        elif ch == "(":
+            depth_paren += 1
+            has_token = True
+        elif ch == ")":
+            depth_paren = max(0, depth_paren - 1)
+            has_token = True
+        elif ch == "[":
+            depth_bracket += 1
+            has_token = True
+        elif ch == "]":
+            depth_bracket = max(0, depth_bracket - 1)
+            has_token = True
+        elif ch == "," and depth_angle == 0 and depth_paren == 0 and depth_bracket == 0:
+            if has_token:
+                count += 1
+                has_token = False
+        elif not ch.isspace():
+            has_token = True
+    if has_token:
+        count += 1
+    return count
 
 
 def parse_usage_md(content: str) -> dict:
@@ -63,35 +110,33 @@ def parse_usage_md(content: str) -> dict:
             code_block = code_m.group(1)
             # Track (name, param_count) so we record all overloads in the same block
             seen_in_block = set()
+            # Parse declaration-style signatures from whole block to support multi-line declarations.
+            decl_re = re.compile(
+                r"(?m)^\s*(?:public\s+)?(?:default\s+|static\s+)?[\w<>,\s\[\].?]+\s+(\w+)\s*\((.*?)\)\s*(?:throws\s+[^;{]+)?\s*;?\s*$",
+                re.DOTALL,
+            )
+            for decl in decl_re.finditer(code_block):
+                name = decl.group(1)
+                if name in ("if", "for", "while", "switch", "return", "new", "try", "catch"):
+                    continue
+                params = decl.group(2)
+                param_count = _count_top_level_params(params)
+                key = (name, param_count)
+                if key in seen_in_block:
+                    continue
+                seen_in_block.add(key)
+                doc_methods.setdefault(name, []).append((section_id, param_count))
+
+            # Also parse call-style usage in the same code block (usually examples)
             for line in code_block.split("\n"):
                 line = line.strip()
-                # Strip "public " prefix often used in doc
-                if line.startswith("public "):
-                    line = line[7:].strip()
-                # Method declaration: ReturnType methodName( params ) [throws ...] [;]
-                decl = re.match(
-                    r"^(?:[\w<>,\s\[\].]+\s+)(\w+)\s*\([^)]*\)\s*(?:throws\s+[^;]+)?\s*;?\s*$",
-                    line,
-                )
-                if decl:
-                    name = decl.group(1)
-                    if name in ("if", "for", "while", "switch", "return", "new", "try", "catch"):
-                        continue
-                    paren = line.find("(")
-                    close = line.find(")", paren) if paren != -1 else -1
-                    param_count = len([p for p in line[paren + 1 : close].split(",") if p.strip()]) if close != -1 else None
-                    key = (name, param_count)
-                    if key in seen_in_block:
-                        continue
-                    seen_in_block.add(key)
-                    doc_methods.setdefault(name, []).append((section_id, param_count))
                 # Call style: configService.getConfig( or naming.registerInstance(
                 call = re.search(r"(?:configService|ConfigService|naming|namingService|lockService|aiService|AiService)\.(\w+)\s*\(", line)
                 if call:
                     name = call.group(1)
                     paren = line.find("(", line.find(name))
                     close = line.find(")", paren) if paren != -1 else -1
-                    param_count = len([p for p in line[paren + 1 : close].split(",") if p.strip()]) if close != -1 else None
+                    param_count = _count_top_level_params(line[paren + 1 : close]) if close != -1 else None
                     key = (name, param_count)
                     if key not in seen_in_block:
                         seen_in_block.add(key)

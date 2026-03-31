@@ -96,9 +96,10 @@
 | 7 | A2A 注册中心 | AgentCard 查询/发布、Endpoint 注册/注销、订阅/取消订阅、批量注册 Endpoint |
 | 8 | Skill 能力 | loadSkill、subscribeSkill、unsubscribeSkill（新增能力，排在 A2A 后） |
 | 9 | Prompt 能力 | getPrompt、getPromptByVersion、getPromptByLabel、subscribePrompt、unsubscribePrompt（新增能力，排在 A2A 后） |
-| 10 | Java SDK的生命周期 | 创建、shutdown（含 AiService.shutdown 等）、实例复用与资源释放；**shutdown 类 API 不单独成节** |
+| 10 | AgentSpec 能力 | loadAgentSpec、subscribeAgentSpec、unsubscribeAgentSpec（新增能力，排在 Prompt 后） |
+| 11 | Java SDK的生命周期 | 创建、shutdown（含 AiService.shutdown 等）、实例复用与资源释放；**shutdown 类 API 不单独成节** |
 
-- **说明**：已有模块（MCP、A2A）保持原有顺序；新增大模块（如 Skill、Prompt）在 A2A 之后、生命周期之前依次追加，后续新增能力也向后添加。`shutdown` 在生命周期章统一说明，不再单独列为 API 小节。
+- **说明**：已有模块（MCP、A2A）保持原有顺序；新增大模块（如 Skill、Prompt、AgentSpec）在 A2A 之后、生命周期之前依次追加，后续新增能力也向后添加。`shutdown` 在生命周期章统一说明，不再单独列为 API 小节。
 
 ---
 
@@ -119,7 +120,7 @@
 
 ## 9. 与 Java 接口的同步（本 skill 扩展）
 
-- 新增/变更内容应来自 Nacos Java Client 接口：`ConfigService`、`NamingService`、`LockService`、`AiService`、`A2aService`（见 SKILL.md 中的「Java Client API 定义来源」）。LockService 对应第 5 章分布式锁 API；AiService 的 Skill、Prompt 为新增能力，排在 A2A 后，分别对应第 8、9 章；`shutdown` 在生命周期章说明，不单独成 API 小节。
+- 新增/变更内容应来自 Nacos Java Client 接口：`ConfigService`、`NamingService`、`LockService`、`AiService`、`A2aService`（见 SKILL.md 中的「Java Client API 定义来源」）。LockService 对应第 5 章分布式锁 API；AiService 的 Skill、Prompt、AgentSpec 为新增能力，排在 A2A 后，分别对应第 8、9、10 章；`shutdown` 在生命周期章说明，不单独成 API 小节。
 - 使用脚本 `scripts/compare_java_api_with_doc.py` 对比接口与 usage.md，可得到**新增 API**（需整条补全）、**新增重载**（在已有小节中补充签名/参数/示例）与**已删除重载**（在已有小节中删除或标注该重载）。**Nacos 项目路径由使用者提供**（`--nacos-api-dir`），skill 中不写死路径。
 - 补全或修改时仍按本文档第 3、4、5、6 节的格式执行，并保持中英文结构一致。
 - 修改过程中若有**不明确**之处（含义歧义、与接口不一致原因不明等），**暂不修改**，将该条列入修改报告的「待确认内容」，待确认后再改。修改完成后须生成修改报告；报告**不写入文档**，在对话中输出或由执行者自行保存，格式与类型说明见 SKILL.md。
