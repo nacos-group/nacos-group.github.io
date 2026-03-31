@@ -1,3 +1,8 @@
+---
+name: nacos-java-sdk-doc
+description: Updates Nacos Java SDK usage documentation by comparing Java Client interfaces with usage.md, then adding/removing APIs and overloads while preserving existing descriptions and examples.
+---
+
 # Nacos Java SDK 文档格式与 API 同步
 
 编写或更新 **nacos-java-client 使用手册**（`manual/user/java-sdk/usage.md`）时，请严格遵循本 skill 下的格式说明；**通过解析 Nacos Java Client 的接口定义与 usage.md 对比，补全新增 API、标出新增重载、并标出接口中已删除的重载（文档需同步移除或标注）**。

@@ -1,3 +1,8 @@
+---
+name: nacos-java-maintainer-sdk
+description: Updates Nacos Maintainer SDK documentation by comparing Maintainer Client interfaces with maintainer-sdk.md, then adding/removing APIs and overloads while preserving existing descriptions and examples.
+---
+
 # Nacos 运维 SDK（Maintainer SDK）文档格式与 API 同步
 
 编写或更新 **运维 SDK 使用手册**（`manual/admin/maintainer-sdk.md`）时，请严格遵循本 skill 下的格式说明；**通过解析 Nacos Maintainer Client 的接口定义（含多层继承）与 maintainer-sdk.md 对比，补全新增 API、标出新增重载、并标出接口中已删除的重载（文档需同步移除或标注）**。
