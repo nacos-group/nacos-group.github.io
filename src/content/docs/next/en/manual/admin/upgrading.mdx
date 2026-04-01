@@ -17,7 +17,7 @@ This document corresponds to version 3.2.0. The compatibility of upgrading from 
 | Nacos Version | Upgrade Supported | Remarks |
 |---------------|-------------------|---------|
 | 0.X ~ 1.X | No | 0.X ~ 1.X versions must first be upgraded to 2.0 or above. Please refer to the [Nacos 2.0 Upgrade Guide](https://nacos.io/docs/v2/upgrading/200-upgrading/) to upgrade to 2.0 or 2.1 before proceeding. |
-| 2.0.X ~ 3.1.X | Yes | Upgrading from 2.0.X ~ 3.1.X to 3.2.X is supported, but the database schema has changed. Please compare the [mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql) file before upgrading and apply the new schema. |
+| 2.0.X ~ 3.1.X | Yes | Upgrading from 2.0.X ~ 3.1.X to 3.2.X is supported, but the database schema has changed. Please compare the [mysql-schema.sql](https://github.com/alibaba/nacos/blob/develop/plugin-default-impl/nacos-default-datasource-plugin/nacos-datasource-plugin-mysql/src/main/resources/META-INF/mysql-schema.sql) file before upgrading and apply the new schema. |
 
 ### 1.1 Client Compatibility
 
@@ -38,7 +38,7 @@ Compatibility between Nacos 3.x server and client versions is as follows:
 
 Compare the `mysql-schema.sql` file of your currently deployed Nacos version with that of the target version to check for schema changes.
 
-If there are schema changes, apply the database alterations first. For example:
+If there are schema changes, apply the database alterations first (MySQL example):
 
 ```SQL
 -- 从 2.0.X 升级时需要执行下列所有SQL, 从2.1.X之后版本升级仅需执行最后三行。
