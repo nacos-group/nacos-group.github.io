@@ -4,7 +4,7 @@ Compare existing API doc with api.json and output a diff report only.
 **Does NOT modify any file.** Use this to find what to fix manually (per skill: no batch replace).
 
 Usage (run from repo root):
-  python .cursor/skills/nacos-api-doc-update/scripts/compare_doc_with_swagger.py \\
+  python .agents/skills/nacos-api-doc-update/scripts/compare_doc_with_swagger.py \\
     --json public/swagger/console/zh/api.json --doc-type console \\
     --doc-file src/content/docs/next/zh-cn/manual/admin/console-api.md
 """

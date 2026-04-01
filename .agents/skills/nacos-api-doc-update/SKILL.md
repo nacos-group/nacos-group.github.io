@@ -92,34 +92,34 @@ curl "http://localhost:8848/nacos/v3/api-docs/client-api" -H "accept-language:en
 ### 豁免项记录（Swagger 已知限制/临时 Bug）
 
 - 对于已确认的 Swagger 暂不支持项或临时 bug，不应在每次扫描中重复报错。
-- 统一记录到：`.cursor/skills/nacos-api-doc-update/exemptions/admin-api-exemptions.json`
+- 统一记录到：`.agents/skills/nacos-api-doc-update/exemptions/admin-api-exemptions.json`
 - 运行对比脚本时加参数：
 
 ```bash
-python .cursor/skills/nacos-api-doc-update/scripts/compare_doc_with_swagger.py \
+python .agents/skills/nacos-api-doc-update/scripts/compare_doc_with_swagger.py \
   --json public/swagger/admin/zh/api.json \
   --doc-type admin \
   --doc-file src/content/docs/next/zh-cn/manual/admin/admin-api.md \
-  --exemptions-file .cursor/skills/nacos-api-doc-update/exemptions/admin-api-exemptions.json
+  --exemptions-file .agents/skills/nacos-api-doc-update/exemptions/admin-api-exemptions.json
 ```
 
 - 豁免仅用于“已确认且有追踪”的差异，需在文件内写清 endpoint + 精确 issue 文案，避免误伤真实回归。
 
 **重要：参数与 api.json 同步**。对**每个**已在文档中的接口，用 api.json 的 `parameters` / `requestBody` 与文档中的「请求参数」或「请求Body」表逐项对比：若文档里写了某参数而 api.json 中该 path+method 下已**没有**该参数，应在文档中**删除**该参数行；若 api.json 有而文档没有，应**补上**该参数行。脚本输出是“以 api.json 为准”的参考，用于**对比后在已有文档上做针对性修改**，保留文档中已有的描述与示例。
 
-**脚本路径**：`.cursor/skills/nacos-api-doc-update/scripts/swagger_to_md.py`。在文档仓库根目录下执行，例如：
+**脚本路径**：`.agents/skills/nacos-api-doc-update/scripts/swagger_to_md.py`。在文档仓库根目录下执行，例如：
 
 ```bash
 # console 文档（中文）
-python .cursor/skills/nacos-api-doc-update/scripts/swagger_to_md.py \
+python .agents/skills/nacos-api-doc-update/scripts/swagger_to_md.py \
   --json public/swagger/console/zh/api.json --doc-type console --locale zh-cn
 
 # admin 文档（中文）
-python .cursor/skills/nacos-api-doc-update/scripts/swagger_to_md.py \
+python .agents/skills/nacos-api-doc-update/scripts/swagger_to_md.py \
   --json public/swagger/admin/zh/api.json --doc-type admin --locale zh-cn
 
 # client 文档（中文）
-python .cursor/skills/nacos-api-doc-update/scripts/swagger_to_md.py \
+python .agents/skills/nacos-api-doc-update/scripts/swagger_to_md.py \
   --json public/swagger/client/zh/api.json --doc-type client --locale zh-cn
 ```
 

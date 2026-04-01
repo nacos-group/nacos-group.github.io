@@ -66,7 +66,7 @@ description: Updates Nacos Maintainer SDK documentation by comparing Maintainer 
 
 ```bash
 # 将 YOUR_NACOS_REPO 替换为本机 nacos 仓库路径
-python .cursor/skills/nacos-java-maintainer-sdk/scripts/compare_maintainer_api_with_doc.py \
+ python .agents/skills/nacos-java-maintainer-sdk/scripts/compare_maintainer_api_with_doc.py \
   --nacos-maintainer-dir YOUR_NACOS_REPO/maintainer-client/src/main/java \
   --maintainer-md src/content/docs/next/zh-cn/manual/admin/maintainer-sdk.md
 ```
@@ -103,7 +103,7 @@ python .cursor/skills/nacos-java-maintainer-sdk/scripts/compare_maintainer_api_w
 仅列出接口中的方法签名（含继承展开），不对比文档。同样需要**传入你本机的 nacos 路径**：
 
 ```bash
-python .cursor/skills/nacos-java-maintainer-sdk/scripts/parse_maintainer_interface.py \
+ python .agents/skills/nacos-java-maintainer-sdk/scripts/parse_maintainer_interface.py \
   --dir YOUR_NACOS_REPO/maintainer-client/src/main/java
 ```
 
