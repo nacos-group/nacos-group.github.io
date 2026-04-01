@@ -2,7 +2,7 @@
 """
 Generate Nacos API markdown from Swagger/OpenAPI 3 api.json.
 Usage: run from repo root, e.g.
-  python .cursor/skills/nacos-api-doc-update/scripts/swagger_to_md.py \\
+  python .agents/skills/nacos-api-doc-update/scripts/swagger_to_md.py \\
     --json public/swagger/console/zh/api.json --doc-type console --locale zh-cn
 """
 import argparse

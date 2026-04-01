@@ -6,7 +6,7 @@ with usage.md and output: new APIs, new overloads to add, and removed overloads 
 **Does NOT modify any file.** Use report to update docs per reference.md.
 
 Usage (nacos repo root for --nacos-api-dir; doc repo for --usage-md):
-  python .cursor/skills/nacos-java-sdk-doc/scripts/compare_java_api_with_doc.py \\
+  python .agents/skills/nacos-java-sdk-doc/scripts/compare_java_api_with_doc.py \\
     --nacos-api-dir /path/to/nacos/api/src/main/java \\
     --usage-md src/content/docs/next/zh-cn/manual/user/java-sdk/usage.md
 
@@ -318,7 +318,7 @@ def main():
     else:
         print("--- No removed overloads. ---\n")
 
-    print("Update usage.md per .cursor/skills/nacos-java-sdk-doc/reference.md (sections, tables, examples).")
+    print("Update usage.md per .agents/skills/nacos-java-sdk-doc/reference.md (sections, tables, examples).")
 
 
 if __name__ == "__main__":

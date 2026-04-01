@@ -58,7 +58,7 @@ description: Updates Nacos Java SDK usage documentation by comparing Java Client
 
 ```bash
 # 将 YOUR_NACOS_REPO 替换为本机 nacos 仓库路径，例如 ../nacos 或 /Users/xxx/nacos
-python .cursor/skills/nacos-java-sdk-doc/scripts/compare_java_api_with_doc.py \
+ python .agents/skills/nacos-java-sdk-doc/scripts/compare_java_api_with_doc.py \
   --nacos-api-dir YOUR_NACOS_REPO/api/src/main/java \
   --usage-md src/content/docs/next/zh-cn/manual/user/java-sdk/usage.md
 ```
@@ -109,7 +109,7 @@ python .cursor/skills/nacos-java-sdk-doc/scripts/compare_java_api_with_doc.py \
 
 ```bash
 # 将 YOUR_NACOS_REPO 替换为本机 nacos 仓库路径
-python .cursor/skills/nacos-java-sdk-doc/scripts/parse_java_interface.py --dir YOUR_NACOS_REPO/api/src/main/java
+ python .agents/skills/nacos-java-sdk-doc/scripts/parse_java_interface.py --dir YOUR_NACOS_REPO/api/src/main/java
 ```
 
 单文件解析：`--file path/to/ConfigService.java`（路径任意）。输出 JSON：`--json`。

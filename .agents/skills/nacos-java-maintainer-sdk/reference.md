@@ -106,4 +106,4 @@
 
 ---
 
-**引用方式**：在 skill 或规则中说明「编写/更新运维 SDK 使用手册时，请遵循 `.cursor/skills/nacos-java-maintainer-sdk/reference.md` 中的格式与结构约定」。
+**引用方式**：在 skill 或规则中说明「编写/更新运维 SDK 使用手册时，请遵循 `.agents/skills/nacos-java-maintainer-sdk/reference.md` 中的格式与结构约定」。

@@ -6,7 +6,7 @@ with maintainer-sdk.md and output: new APIs, new overloads to add, and removed o
 **Does NOT modify any file.** Use report to update docs per reference.md.
 
 Usage (doc repo root):
-  python .cursor/skills/nacos-java-maintainer-sdk/scripts/compare_maintainer_api_with_doc.py \\
+  python .agents/skills/nacos-java-maintainer-sdk/scripts/compare_maintainer_api_with_doc.py \\
     --nacos-maintainer-dir /path/to/nacos/maintainer-client/src/main/java \\
     --maintainer-md src/content/docs/next/zh-cn/manual/admin/maintainer-sdk.md
 
@@ -322,7 +322,7 @@ def main():
             print(f"  - {w}")
         print()
 
-    print("Update maintainer-sdk.md per .cursor/skills/nacos-java-maintainer-sdk/reference.md (sections, tables, examples).")
+    print("Update maintainer-sdk.md per .agents/skills/nacos-java-maintainer-sdk/reference.md (sections, tables, examples).")
 
 
 if __name__ == "__main__":
