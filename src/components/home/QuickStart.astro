@@ -70,14 +70,16 @@ const t = useTranslations(Astro);
         <!-- Docker Panel -->
         <div class="tab-panel" data-panel="docker">
           <p class="text-sm text-gray-08 mb-5">{t('home.quickstart.docker.desc')}</p>
-          <div class="code-block" data-code={'docker run --name nacos-standalone \\\n    -e MODE=standalone \\\n    -e NACOS_AUTH_TOKEN={your_token_secret_key} \\\n    -e NACOS_AUTH_IDENTITY_KEY={your_identity_key} \\\n    -e NACOS_AUTH_IDENTITY_VALUE={your_identity_value} \\\n    -p 8080:8080 -p 8848:8848 -p 9848:9848 \\\n    -d nacos/nacos-server:latest'}>
+          <div class="code-block" data-code={'docker run --name nacos-standalone \\\n    -e MODE=standalone \\\n    -e NACOS_AUTH_TOKEN={your_token_secret_key} \\\n    -e NACOS_AUTH_IDENTITY_KEY={your_identity_key} \\\n    -e NACOS_AUTH_IDENTITY_VALUE={your_identity_value} \\\n    -p 8080:8080 \\\n    -p 8848:8848 \\\n    -p 9848:9848 \\\n    -d nacos/nacos-server:latest'}>
             <div class="code-lines">
               <div class="code-line"><span class="prompt">$</span><code>docker run --name nacos-standalone \</code></div>
               <div class="code-line"><code>    -e MODE=standalone \</code></div>
               <div class="code-line"><code>    -e NACOS_AUTH_TOKEN=&#123;your_token_secret_key&#125; \</code></div>
               <div class="code-line"><code>    -e NACOS_AUTH_IDENTITY_KEY=&#123;your_identity_key&#125; \</code></div>
               <div class="code-line"><code>    -e NACOS_AUTH_IDENTITY_VALUE=&#123;your_identity_value&#125; \</code></div>
-              <div class="code-line"><code>    -p 8080:8080 -p 8848:8848 -p 9848:9848 \</code></div>
+              <div class="code-line"><code>    -p 8080:8080 \</code></div>
+              <div class="code-line"><code>    -p 8848:8848 \</code></div>
+              <div class="code-line"><code>    -p 9848:9848 \</code></div>
               <div class="code-line"><code>    -d nacos/nacos-server:latest</code></div>
             </div>
             <button class="copy-btn" aria-label="Copy">
