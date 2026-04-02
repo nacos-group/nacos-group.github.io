@@ -7,7 +7,8 @@ const t = useTranslations(Astro);
 ---
 
 {MEDIARESOURCE&&MEDIARESOURCE.length?
-<card-player class="card-player block bg-gray-02 p-10">
+<card-player class="card-player block bg-gray-02 p-10 flex flex-col justify-center items-center">
+  <div class="card-player-content">
   <div class="top-title w-full flex flex-col items-center mb-20 mt-16">
     <h2 class="font-light text-gray-10 text-xs mb-6">{t('home.card.player.voice')}</h2>
     <b class="title text-gray-14 text-4xl font-medium">{t('home.card.player.tutorials')}</b>
@@ -16,7 +17,7 @@ const t = useTranslations(Astro);
   <div
     class="bottom-media-card block w-full flex items-center justify-center h-fit"
   >
-    <div class="media-container h-[23rem] w-fit flex flex-nowrap justify-start ">
+    <div class="media-container h-[23rem] w-full flex flex-nowrap justify-start ">
   {
         MEDIARESOURCE.map((item, index) => {
           const { src,cover } = item;
@@ -89,6 +90,7 @@ const t = useTranslations(Astro);
         );
       })
     }
+  </div>
   </div>
 </card-player>
 :null}
@@ -299,6 +301,10 @@ const t = useTranslations(Astro);
 
 <style is:global>
   .card-player {
+    .card-player-content {
+      width: 85.125rem;
+    }
+
     .card {
       /* 默认宽度 */
       width: 9.75rem;
@@ -330,7 +336,7 @@ const t = useTranslations(Astro);
       display: none;
     }
     input:checked + label {
-      width: 42rem;
+      flex: 1;
     }
     input:checked + label video {
       display:inline-block
@@ -347,6 +353,9 @@ const t = useTranslations(Astro);
     /* 小于50rem  小于 800px */
     @media (max-width: 50rem) {
       padding: 1.5rem;
+      .card-player-content {
+        width: 100%;
+      }
       .top-title {
         margin-top: 2.5rem;
         margin-bottom: 2.5rem;
@@ -372,11 +381,8 @@ const t = useTranslations(Astro);
 
     /* 大于50rem 小于 72rem  800px < width < 1152 */
     @media (min-width: 50rem) and (max-width: 72rem) {
-      .media-container {
+      .card-player-content {
         width: 100%;
-      }
-      input:checked + label {
-        flex: 1;
       }
     }
   }

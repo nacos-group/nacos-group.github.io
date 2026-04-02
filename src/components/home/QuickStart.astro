@@ -3,8 +3,8 @@ import { useTranslations } from "@i18n/util";
 const t = useTranslations(Astro);
 ---
 
-<quickstart-section id="quickstart" class="quickstart-section block w-full py-16">
-  <div class="max-w-[1200px] mx-auto px-4">
+<quickstart-section id="quickstart" class="quickstart-section block w-full py-16 flex flex-col justify-center items-center">
+  <div class="quickstart-content px-4">
     <div class="top-title flex flex-col items-center mb-12">
       <h3 class="font-light text-gray-10 text-xs mb-6 tracking-[0.15em]">
         {t('home.quickstart.title')}
@@ -14,7 +14,7 @@ const t = useTranslations(Astro);
       </b>
     </div>
 
-    <div class="quickstart-tabs max-w-[800px] mx-auto">
+    <div class="quickstart-tabs mx-auto">
       <!-- Tab Buttons -->
       <div class="tab-buttons flex">
         <button class="tab-btn active" data-tab="unix">
@@ -120,6 +120,10 @@ const t = useTranslations(Astro);
 <style is:global>
   .quickstart-section {
     scroll-margin-top: 4rem;
+  }
+
+  .quickstart-content {
+    width: 85.125rem;
   }
 
   /* QuickStart button arrow-down animation */
@@ -246,6 +250,9 @@ const t = useTranslations(Astro);
   }
 
   @media (max-width: 640px) {
+    .quickstart-content {
+      width: 100%;
+    }
     .tab-btn span {
       display: none;
     }
@@ -265,6 +272,12 @@ const t = useTranslations(Astro);
     .quickstart-section .top-title b {
       font-size: 1.5rem;
       line-height: 2rem;
+    }
+  }
+
+  @media (min-width: 640px) and (max-width: 86rem) {
+    .quickstart-content {
+      width: 100%;
     }
   }
 </style>
