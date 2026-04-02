@@ -61,6 +61,7 @@ const StarAndForkV2 = (props:StarAndForkT) =>{
 					onClick={scrollToQuickStart}
 				>
 					<span class="button-primary flex items-center justify-center no-underline xp-large h-large rounded-3xl quickstart-btn">
+						<Start />
 						<span class="ml-2">{props.forkText || "快速开始"}</span>
 						<span class="arrow-down-icon">
 							<ArrowDown />
