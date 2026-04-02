@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import EarthBackground from '@components/home/EarthBackground.astro';
+import QuickStart from '@components/home/QuickStart.astro';
 import ChooseReason from '@components/home/ChooseReason.astro';
 import RegistryMcp from '@components/home/RegistryMcp.astro';
 import NacosEBook from '@components/home/NacosEBook.astro';
@@ -22,6 +23,7 @@ const t = useTranslations(Astro);
 >
   <home-body>
     <EarthBackground />
+    <QuickStart />
     <NewUseCompanies />
     <ChooseReason />
     <RegistryMcp />
@@ -37,3 +39,10 @@ const t = useTranslations(Astro);
     <HomeSolutionsCard slot="after-footer" />
   </HomeFooter>
 </BaseLayout>
+
+<style is:global>
+  home-body {
+    display: block;
+    background: linear-gradient(to bottom, #FFFFFF 0%, #F4F4F6 30%, #EBECEF 100%);
+  }
+</style>

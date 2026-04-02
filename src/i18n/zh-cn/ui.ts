@@ -120,6 +120,15 @@ export default {
 	'home.card.player.voice':'社区声音',
 	'home.card.player.tutorials':'社区教程',
 
+	'home.quickstart.title': '快速开始',
+	'home.quickstart.subtitle': '选择适合您的方式，几分钟内启动 Nacos 服务',
+	'home.quickstart.unix.desc': '使用 nacos-setup 一键自动化部署，自动处理下载、鉴权配置和环境验证',
+	'home.quickstart.windows.desc': '通过 PowerShell 安装 nacos-setup，一键部署 Nacos 服务',
+	'home.quickstart.docker.desc': '使用 Docker 镜像快速部署，支持鉴权配置',
+	'home.quickstart.install.nacos.setup': '安装 nacos-setup',
+	'home.quickstart.start.nacos': '一键部署 Nacos',
+	'home.quickstart.view.full': '查看完整文档',
+
 	'cloud.title': 'Nacos Cloud',
 	'cloud.description': 'Nacos Cloud 专为云原生应用设计，提供强大的服务发现、动态配置管理和服务管理功能，支持高效的应用开发和运维。',
 	'cloud.introduce.about': '关于 Nacos',

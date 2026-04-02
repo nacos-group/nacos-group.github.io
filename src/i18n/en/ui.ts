@@ -121,6 +121,15 @@ export default {
 	'home.card.player.voice':'COMMUNITY VOICE',
 	'home.card.player.tutorials':'Tutorials from Community',
 
+	'home.quickstart.title': 'Quick Start',
+	'home.quickstart.subtitle': 'Choose your preferred way to start Nacos in minutes',
+	'home.quickstart.unix.desc': 'Use nacos-setup for one-click automated deployment with auto download, auth config and environment validation',
+	'home.quickstart.windows.desc': 'Install nacos-setup via PowerShell for one-click Nacos deployment',
+	'home.quickstart.docker.desc': 'Deploy quickly with Docker image, with auth configuration support',
+	'home.quickstart.install.nacos.setup': 'Install nacos-setup',
+	'home.quickstart.start.nacos': 'Deploy Nacos with one click',
+	'home.quickstart.view.full': 'View full documentation',
+
 	'cloud.title': 'Nacos Cloud',
 	'cloud.description': 'Nacos Cloud is specifically designed for cloud-native applications, providing powerful features for service discovery, dynamic configuration management, and service management. It supports efficient application development and operations.',
 	'cloud.introduce.about': 'About Nacos',

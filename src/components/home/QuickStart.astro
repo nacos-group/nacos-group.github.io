@@ -1,0 +1,374 @@
+---
+import { useTranslations } from "@i18n/util";
+const t = useTranslations(Astro);
+---
+
+<quickstart-section id="quickstart" class="quickstart-section block w-full py-16 flex flex-col justify-center items-center">
+  <div class="quickstart-content px-4">
+    <div class="top-title flex flex-col items-center mb-12">
+      <h3 class="font-light text-gray-10 text-xs mb-6 tracking-[0.15em]">
+        {t('home.quickstart.title')}
+      </h3>
+      <b class="title text-gray-14 text-[2.5rem] leading-[3.5rem] font-medium">
+        {t('home.quickstart.subtitle')}
+      </b>
+    </div>
+
+    <div class="quickstart-tabs mx-auto">
+      <!-- Tab Buttons -->
+      <div class="tab-buttons flex">
+        <button class="tab-btn active" data-tab="unix">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+          </svg>
+          <span>macOS / Linux</span>
+        </button>
+        <button class="tab-btn" data-tab="windows">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 12V6.75l6-1.32v6.48L3 12zm17-9v8.75l-10 .15V5.21L20 3zM3 13l6 .09v6.81l-6-1.15V13zm17 .25V22l-10-1.91V13.1l10 .15z"/>
+          </svg>
+          <span>Windows (PowerShell)</span>
+        </button>
+        <button class="tab-btn" data-tab="docker">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21.81 10.25c-.06-.04-.56-.43-1.64-.43-.28 0-.56.03-.84.08-.21-1.4-1.38-2.11-1.43-2.14l-.29-.17-.18.27c-.24.36-.43.77-.51 1.19-.21.97-.08 1.88.38 2.65-.57.32-1.48.4-1.67.41H2.12c-.23 0-.42.17-.46.4C1.48 13.63 1.5 15.09 2.09 16.37c.7 1.52 1.89 2.56 3.54 3.08.89.28 1.87.42 2.9.42.56 0 1.13-.04 1.71-.13 1.05-.16 2.07-.51 3.02-1.04.79-.44 1.5-1 2.12-1.67 1.05-1.13 1.68-2.46 2.12-3.6h.18c1.13 0 1.83-.45 2.21-.83.25-.25.45-.55.57-.87l.07-.22-.23-.15zM3.5 11.36h1.97c.1 0 .17-.08.17-.17V9.43c0-.1-.08-.17-.17-.17H3.5c-.1 0-.17.08-.17.17v1.76c0 .1.08.17.17.17zm2.8 0h1.97c.1 0 .17-.08.17-.17V9.43c0-.1-.08-.17-.17-.17H6.3c-.1 0-.17.08-.17.17v1.76c0 .1.08.17.17.17zm2.83 0h1.97c.1 0 .17-.08.17-.17V9.43c0-.1-.08-.17-.17-.17H9.13c-.1 0-.17.08-.17.17v1.76c0 .1.08.17.17.17zm2.85 0h1.97c.1 0 .17-.08.17-.17V9.43c0-.1-.08-.17-.17-.17h-1.97c-.1 0-.17.08-.17.17v1.76c0 .1.08.17.17.17zM6.3 8.55h1.97c.1 0 .17-.08.17-.17V6.62c0-.1-.08-.17-.17-.17H6.3c-.1 0-.17.08-.17.17v1.76c0 .1.08.17.17.17zm2.83 0h1.97c.1 0 .17-.08.17-.17V6.62c0-.1-.08-.17-.17-.17H9.13c-.1 0-.17.08-.17.17v1.76c0 .1.08.17.17.17zm2.85 0h1.97c.1 0 .17-.08.17-.17V6.62c0-.1-.08-.17-.17-.17h-1.97c-.1 0-.17.08-.17.17v1.76c0 .1.08.17.17.17zm0-2.81h1.97c.1 0 .17-.08.17-.17V3.81c0-.1-.08-.17-.17-.17h-1.97c-.1 0-.17.08-.17.17v1.76c0 .1.08.17.17.17z"/>
+          </svg>
+          <span>Docker</span>
+        </button>
+      </div>
+
+      <!-- Tab Panels -->
+      <div class="tab-panels">
+        <!-- macOS/Linux Panel -->
+        <div class="tab-panel active" data-panel="unix">
+          <p class="text-sm text-gray-08 mb-5">{t('home.quickstart.unix.desc')}</p>
+          <div class="code-block" data-code="curl -fsSL https://nacos.io/nacos-installer.sh | sudo bash">
+            <div class="code-lines">
+              <div class="code-line"><span class="prompt">$</span><code>curl -fsSL https://nacos.io/nacos-installer.sh | sudo bash</code></div>
+            </div>
+            <button class="copy-btn" aria-label="Copy">
+              <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Windows Panel -->
+        <div class="tab-panel" data-panel="windows">
+          <p class="text-sm text-gray-08 mb-5">{t('home.quickstart.windows.desc')}</p>
+          <div class="code-block" data-code={'powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -UseBasicParsing https://nacos.io/nacos-installer.ps1 | iex"'}>
+            <div class="code-lines">
+              <div class="code-line"><span class="prompt">&gt;</span><code>powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -UseBasicParsing https://nacos.io/nacos-installer.ps1 | iex"</code></div>
+            </div>
+            <button class="copy-btn" aria-label="Copy">
+              <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Docker Panel -->
+        <div class="tab-panel" data-panel="docker">
+          <p class="text-sm text-gray-08 mb-5">{t('home.quickstart.docker.desc')}</p>
+          <div class="code-block" data-code={'docker run --name nacos-standalone \\\n    -e MODE=standalone \\\n    -e NACOS_AUTH_TOKEN={your_token_secret_key} \\\n    -e NACOS_AUTH_IDENTITY_KEY={your_identity_key} \\\n    -e NACOS_AUTH_IDENTITY_VALUE={your_identity_value} \\\n    -p 8080:8080 \\\n    -p 8848:8848 \\\n    -p 9848:9848 \\\n    -d nacos/nacos-server:latest'}>
+            <div class="code-lines">
+              <div class="code-line"><span class="prompt">$</span><code>docker run --name nacos-standalone \</code></div>
+              <div class="code-line"><code>    -e MODE=standalone \</code></div>
+              <div class="code-line"><code>    -e NACOS_AUTH_TOKEN=&#123;your_token_secret_key&#125; \</code></div>
+              <div class="code-line"><code>    -e NACOS_AUTH_IDENTITY_KEY=&#123;your_identity_key&#125; \</code></div>
+              <div class="code-line"><code>    -e NACOS_AUTH_IDENTITY_VALUE=&#123;your_identity_value&#125; \</code></div>
+              <div class="code-line"><code>    -p 8080:8080 \</code></div>
+              <div class="code-line"><code>    -p 8848:8848 \</code></div>
+              <div class="code-line"><code>    -p 9848:9848 \</code></div>
+              <div class="code-line"><code>    -d nacos/nacos-server:latest</code></div>
+            </div>
+            <button class="copy-btn" aria-label="Copy">
+              <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-8">
+      <a
+        href="/docs/latest/quickstart/quick-start/"
+        class="inline-flex items-center gap-2 text-sm text-gray-08 hover:text-gray-11 transition-colors no-underline"
+      >
+        {t('home.quickstart.view.full')}
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</quickstart-section>
+
+<script>
+  class QuickStartSection extends HTMLElement {
+    constructor() {
+      super();
+
+      // Tab switching
+      const tabBtns = this.querySelectorAll<HTMLButtonElement>('.tab-btn');
+      const tabPanels = this.querySelectorAll<HTMLElement>('.tab-panel');
+
+      tabBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const tabId = btn.dataset.tab;
+
+          tabBtns.forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          tabPanels.forEach((panel) => {
+            if (panel.dataset.panel === tabId) {
+              panel.classList.add('active');
+            } else {
+              panel.classList.remove('active');
+            }
+          });
+        });
+      });
+
+      // Copy buttons
+      this.querySelectorAll<HTMLButtonElement>('.copy-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const codeBlock = btn.closest('.code-block') as HTMLElement;
+          const code = codeBlock?.dataset.code || '';
+          navigator.clipboard.writeText(code).then(() => {
+            btn.classList.add('copied');
+            setTimeout(() => btn.classList.remove('copied'), 2000);
+          });
+        });
+      });
+    }
+  }
+  customElements.define('quickstart-section', QuickStartSection);
+</script>
+
+<style is:global>
+  .quickstart-section {
+    scroll-margin-top: 4rem;
+  }
+
+  .quickstart-content {
+    width: 85.125rem;
+  }
+
+  /* QuickStart button arrow-down animation */
+  .quickstart-btn {
+    cursor: pointer;
+  }
+  .quickstart-btn .arrow-down-icon {
+    opacity: 0;
+    width: 0;
+    margin-left: 0;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    transition:
+      width 0.3s ease,
+      opacity 0.3s ease,
+      margin-left 0.3s ease;
+  }
+  .quickstart-btn:hover .arrow-down-icon {
+    opacity: 1;
+    width: 14px;
+    margin-left: 0.5rem;
+  }
+
+  .quickstart-tabs {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+  }
+
+  .tab-buttons {
+    display: flex;
+    gap: 0;
+    background: #fafafa;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .tab-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .tab-btn:hover {
+    color: #333;
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .tab-btn.active {
+    color: #1677ff;
+    border-bottom-color: #1677ff;
+    background: #fff;
+  }
+
+  .tab-btn.active svg {
+    color: #1677ff;
+  }
+
+  .tab-panels {
+    position: relative;
+  }
+
+  .tab-panel {
+    display: none;
+    padding: 24px;
+    animation: tabFadeIn 0.3s ease;
+  }
+
+  .tab-panel.active {
+    display: block;
+  }
+
+  @keyframes tabFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .code-block {
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 20px 24px;
+    overflow-x: auto;
+    border: 1px solid #e8e8e8;
+    position: relative;
+  }
+
+  .code-block .code-lines {
+    padding-right: 40px;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease, background 0.2s ease;
+  }
+
+  .code-block:hover .copy-btn {
+    opacity: 1;
+  }
+
+  .copy-btn:hover {
+    background: #f0f0f0;
+  }
+
+  .copy-btn svg {
+    width: 16px;
+    height: 16px;
+    color: #666;
+  }
+
+  .copy-btn .check-icon {
+    display: none;
+    color: #52c41a;
+  }
+
+  .copy-btn.copied .copy-icon {
+    display: none;
+  }
+
+  .copy-btn.copied .check-icon {
+    display: block;
+  }
+
+  .copy-btn.copied {
+    border-color: #b7eb8f;
+    background: #f6ffed;
+  }
+
+  .code-line {
+    display: flex;
+    align-items: flex-start;
+    line-height: 1.8;
+    font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+    font-size: 13px;
+  }
+
+  .code-line .prompt {
+    color: #6a9955;
+    user-select: none;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+
+  .code-line code {
+    color: #333;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  .code-line .comment {
+    color: #6a9955;
+    font-style: italic;
+    font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+    font-size: 13px;
+  }
+
+  @media (max-width: 640px) {
+    .quickstart-content {
+      width: 100%;
+    }
+    .tab-btn span {
+      display: none;
+    }
+    .tab-btn {
+      padding: 12px 16px;
+    }
+    .tab-btn svg {
+      width: 24px;
+      height: 24px;
+    }
+    .code-block {
+      padding: 16px;
+    }
+    .code-line {
+      font-size: 12px;
+    }
+    .quickstart-section .top-title b {
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+  }
+
+  @media (min-width: 640px) and (max-width: 86rem) {
+    .quickstart-content {
+      width: 100%;
+    }
+  }
+</style>

@@ -2,10 +2,15 @@ import Button from './Button.jsx';
 import Star from "./Star.jsx";
 import Fork from "./Fork.jsx"
 import Start from "./Start.jsx"
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useState, useCallback } from "preact/hooks";
 import useCustomSWR from "@/utils/useCustomSWR";
 import type { StarAndForkT } from 'src/types';
 
+const ArrowDown = () => (
+	<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+		<path d="M12 5v14M19 12l-7 7-7-7"/>
+	</svg>
+);
 
 const StarAndForkV2 = (props:StarAndForkT) =>{
 	const { swrData={}, fetchData } = useCustomSWR("https://git-proxy-test-git-proxy-ieeqhwptvv.cn-hongkong.fcapp.run/api/alibaba/nacos");
@@ -29,6 +34,15 @@ const StarAndForkV2 = (props:StarAndForkT) =>{
 			fetchData()
 	},[]);
 
+	const scrollToQuickStart = useCallback((e: Event) => {
+		e.preventDefault();
+		e.stopPropagation();
+		const el = document.getElementById('quickstart');
+		if (el) {
+			el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		}
+	}, []);
+
 	return (
         <star-and-fork class="shortcut flex">
             <Button 
@@ -41,18 +55,20 @@ const StarAndForkV2 = (props:StarAndForkT) =>{
                 <span class="text-[0.875rem] leading-4 ml-2">{startCount}</span>
 			</Button>
 
-            <Button 
-				size="large"
-				type="primary"
-				class="rounded-3xl"
-				href="/docs/latest/quickstart/quick-start/"
-				target="_self"
-			>
-				<Start />
-				{/* <Fork />  */}
-				
-				<span class="ml-2">{props.forkText || "快速开始"}</span>
-			</Button>
+            <span class="button-div">
+				<button
+					class="button w-fit p-0 bg-transparent"
+					onClick={scrollToQuickStart}
+				>
+					<span class="button-primary flex items-center justify-center no-underline xp-large h-large rounded-3xl quickstart-btn">
+						<Start />
+						<span class="ml-2">{props.forkText || "快速开始"}</span>
+						<span class="arrow-down-icon">
+							<ArrowDown />
+						</span>
+					</span>
+				</button>
+			</span>
         </star-and-fork>
 	);
 };

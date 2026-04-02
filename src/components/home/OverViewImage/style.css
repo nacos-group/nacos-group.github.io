@@ -28,16 +28,14 @@
 /* TODO: 设置移动端时为图片样式 */
 #overview-image-root {
   height: auto;
-  width: 85.125rem;
+  width: 100%;
 
   @media (max-width: 50rem) {
-    padding: 1.5rem;
-    width: 100%;
+    padding: 1rem;
   }
 
   /* 大于50rem 小于 72rem  800px < width < 1152 */
   @media (min-width: 50rem) and (max-width: 86rem) {
-    padding: 2.5rem;
-    width: 100%;
+    padding: 1rem;
   }
 }

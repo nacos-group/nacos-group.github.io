@@ -4,8 +4,10 @@ import { useTranslations } from "@i18n/util";
 const t = useTranslations(Astro);
 ---
 
-<div class="overview-image-wrapper">
-    <div class="top-title w-full flex flex-col items-center mb-[10px] pt-16">
+<div class="overview-image-wrapper flex flex-col justify-center items-center py-10">
+    <div class="overview-image-content">
+    <div class="overview-image-card bg-gray-03 rounded-2xl p-9">
+    <div class="top-title w-full flex flex-col items-center mb-[10px]">
         <h2 class="font-light text-gray-10 text-xs mb-6">
             {t("home.overviewcard.about")}
         </h2>
@@ -28,18 +30,39 @@ const t = useTranslations(Astro);
         }}
         className="mx-auto"
     />
+    </div>
+    </div>
 </div>
 
 <style is:global>
     .overview-image-wrapper {
+        .overview-image-content {
+            width: 85.125rem;
+        }
+
         /* 小于50rem  小于 800px */
         @media (max-width: 50rem) {
+            padding: 1.5rem;
+            .overview-image-content {
+                width: 100%;
+            }
+            .overview-image-card {
+                padding: 1.5rem;
+            }
             .top-title {
                 margin-bottom: 2.5rem;
             }
             .top-title .title {
                 font-size: 1.125rem; /* 18px */
                 line-height: 1.75rem; /* 28px */
+            }
+        }
+
+        /* 大于50rem 小于 86rem */
+        @media (min-width: 50rem) and (max-width: 86rem) {
+            padding: 2.5rem;
+            .overview-image-content {
+                width: 100%;
             }
         }
     }
