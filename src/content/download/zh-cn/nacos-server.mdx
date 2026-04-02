@@ -3,6 +3,7 @@ title: Nacos Server 下载
 order: 0
 ---
 
+import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 # Nacos Server 下载
 
@@ -30,6 +31,25 @@ Nacos Server **3.2.0** 已发布。本版本重点增强插件架构与 AI Regis
 | **内存** | 2G及以上 |
 | **硬盘** | 无最小要求，根据保留日志自行调整|
 | **操作系统** | Linux, Mac OS X, Windows |
+
+## 一键安装（推荐）
+
+[nacos-setup](https://github.com/nacos-group/nacos-setup) 提供一键自动化部署，自动处理下载、鉴权配置、端口检测和 Java 环境验证等操作。
+
+<Tabs>
+  <TabItem label="Linux/macOS">
+    ```bash
+    curl -fsSL https://nacos.io/nacos-installer.sh | sudo bash
+    ```
+  </TabItem>
+  <TabItem label="Windows（PowerShell）">
+    ```powershell
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -UseBasicParsing https://nacos.io/nacos-installer.ps1 | iex"
+    ```
+  </TabItem>
+</Tabs>
+
+安装完成后将自动部署 Nacos 服务。更多用法请参考[使用 nacos-setup 一键部署](/docs/latest/manual/admin/deployment/deployment-nacos-setup/)。
 
 ## 稳定版本
 

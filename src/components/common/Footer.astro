@@ -47,7 +47,7 @@ const friendLinks = [
 ---
 
 <footer-layout
-  class="home-footer w-full bg-gray-14 flex flex-col items-center py-10"
+  class="home-footer w-full flex flex-col items-center py-10"
 >
   <slot name="after-footer" />
   <div
@@ -271,6 +271,10 @@ const friendLinks = [
 </footer-layout>
 
 <style is:global>
+  footer-layout.home-footer {
+    background: linear-gradient(to bottom, #EBECEF 0%, #121316 clamp(200px, 25vw, 400px));
+  }
+
   footer-layout {
     a {
       text-decoration: none; /* 清除下划线等默认样式 */

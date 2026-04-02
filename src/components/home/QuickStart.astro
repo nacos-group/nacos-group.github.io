@@ -27,7 +27,7 @@ const t = useTranslations(Astro);
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
             <path d="M3 12V6.75l6-1.32v6.48L3 12zm17-9v8.75l-10 .15V5.21L20 3zM3 13l6 .09v6.81l-6-1.15V13zm17 .25V22l-10-1.91V13.1l10 .15z"/>
           </svg>
-          <span>Windows</span>
+          <span>Windows (PowerShell)</span>
         </button>
         <button class="tab-btn" data-tab="docker">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -42,32 +42,48 @@ const t = useTranslations(Astro);
         <!-- macOS/Linux Panel -->
         <div class="tab-panel active" data-panel="unix">
           <p class="text-sm text-gray-08 mb-5">{t('home.quickstart.unix.desc')}</p>
-          <div class="code-block">
-            <div class="code-line"><span class="prompt">$</span><code>curl -L https://github.com/alibaba/nacos/releases/download/3.2.0/nacos-server-3.2.0.tar.gz -o nacos-server.tar.gz</code></div>
-            <div class="code-line"><span class="prompt">$</span><code>tar -xzf nacos-server.tar.gz</code></div>
-            <div class="code-line"><span class="prompt">$</span><code>cd nacos/bin</code></div>
-            <div class="code-line"><span class="prompt">$</span><code>sh startup.sh -m standalone</code></div>
+          <div class="code-block" data-code="curl -fsSL https://nacos.io/nacos-installer.sh | sudo bash">
+            <div class="code-lines">
+              <div class="code-line"><span class="prompt">$</span><code>curl -fsSL https://nacos.io/nacos-installer.sh | sudo bash</code></div>
+            </div>
+            <button class="copy-btn" aria-label="Copy">
+              <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            </button>
           </div>
         </div>
 
         <!-- Windows Panel -->
         <div class="tab-panel" data-panel="windows">
           <p class="text-sm text-gray-08 mb-5">{t('home.quickstart.windows.desc')}</p>
-          <div class="code-block">
-            <div class="code-line"><span class="prompt">&gt;</span><code>unzip nacos-server-3.2.0.zip</code></div>
-            <div class="code-line"><span class="prompt">&gt;</span><code>cd nacos\bin</code></div>
-            <div class="code-line"><span class="prompt">&gt;</span><code>startup.cmd -m standalone</code></div>
+          <div class="code-block" data-code={'powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -UseBasicParsing https://nacos.io/nacos-installer.ps1 | iex"'}>
+            <div class="code-lines">
+              <div class="code-line"><span class="prompt">&gt;</span><code>powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -UseBasicParsing https://nacos.io/nacos-installer.ps1 | iex"</code></div>
+            </div>
+            <button class="copy-btn" aria-label="Copy">
+              <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            </button>
           </div>
         </div>
 
         <!-- Docker Panel -->
         <div class="tab-panel" data-panel="docker">
           <p class="text-sm text-gray-08 mb-5">{t('home.quickstart.docker.desc')}</p>
-          <div class="code-block">
-            <div class="code-line"><span class="prompt">$</span><code>docker run -d \</code></div>
-            <div class="code-line"><code>    -p 8848:8848 \</code></div>
-            <div class="code-line"><code>    -e MODE=standalone \</code></div>
-            <div class="code-line"><code>    nacos/nacos-server:v3.2.0</code></div>
+          <div class="code-block" data-code={'docker run --name nacos-standalone \\\n    -e MODE=standalone \\\n    -e NACOS_AUTH_TOKEN={your_token_secret_key} \\\n    -e NACOS_AUTH_IDENTITY_KEY={your_identity_key} \\\n    -e NACOS_AUTH_IDENTITY_VALUE={your_identity_value} \\\n    -p 8080:8080 -p 8848:8848 -p 9848:9848 \\\n    -d nacos/nacos-server:latest'}>
+            <div class="code-lines">
+              <div class="code-line"><span class="prompt">$</span><code>docker run --name nacos-standalone \</code></div>
+              <div class="code-line"><code>    -e MODE=standalone \</code></div>
+              <div class="code-line"><code>    -e NACOS_AUTH_TOKEN=&#123;your_token_secret_key&#125; \</code></div>
+              <div class="code-line"><code>    -e NACOS_AUTH_IDENTITY_KEY=&#123;your_identity_key&#125; \</code></div>
+              <div class="code-line"><code>    -e NACOS_AUTH_IDENTITY_VALUE=&#123;your_identity_value&#125; \</code></div>
+              <div class="code-line"><code>    -p 8080:8080 -p 8848:8848 -p 9848:9848 \</code></div>
+              <div class="code-line"><code>    -d nacos/nacos-server:latest</code></div>
+            </div>
+            <button class="copy-btn" aria-label="Copy">
+              <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            </button>
           </div>
         </div>
       </div>
@@ -109,6 +125,18 @@ const t = useTranslations(Astro);
             } else {
               panel.classList.remove('active');
             }
+          });
+        });
+      });
+
+      // Copy buttons
+      this.querySelectorAll<HTMLButtonElement>('.copy-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const codeBlock = btn.closest('.code-block') as HTMLElement;
+          const code = codeBlock?.dataset.code || '';
+          navigator.clipboard.writeText(code).then(() => {
+            btn.classList.add('copied');
+            setTimeout(() => btn.classList.remove('copied'), 2000);
           });
         });
       });
@@ -226,6 +254,60 @@ const t = useTranslations(Astro);
     padding: 20px 24px;
     overflow-x: auto;
     border: 1px solid #e8e8e8;
+    position: relative;
+  }
+
+  .code-block .code-lines {
+    padding-right: 40px;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease, background 0.2s ease;
+  }
+
+  .code-block:hover .copy-btn {
+    opacity: 1;
+  }
+
+  .copy-btn:hover {
+    background: #f0f0f0;
+  }
+
+  .copy-btn svg {
+    width: 16px;
+    height: 16px;
+    color: #666;
+  }
+
+  .copy-btn .check-icon {
+    display: none;
+    color: #52c41a;
+  }
+
+  .copy-btn.copied .copy-icon {
+    display: none;
+  }
+
+  .copy-btn.copied .check-icon {
+    display: block;
+  }
+
+  .copy-btn.copied {
+    border-color: #b7eb8f;
+    background: #f6ffed;
   }
 
   .code-line {
@@ -247,6 +329,13 @@ const t = useTranslations(Astro);
     color: #333;
     white-space: pre-wrap;
     word-break: break-all;
+  }
+
+  .code-line .comment {
+    color: #6a9955;
+    font-style: italic;
+    font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+    font-size: 13px;
   }
 
   @media (max-width: 640px) {

@@ -122,9 +122,11 @@ export default {
 
 	'home.quickstart.title': '快速开始',
 	'home.quickstart.subtitle': '选择适合您的方式，几分钟内启动 Nacos 服务',
-	'home.quickstart.unix.desc': '使用 curl 下载并解压，一键启动单机模式',
-	'home.quickstart.windows.desc': '下载 ZIP 包解压后，使用 CMD 启动',
-	'home.quickstart.docker.desc': '使用 Docker 镜像，快速运行容器化服务',
+	'home.quickstart.unix.desc': '使用 nacos-setup 一键自动化部署，自动处理下载、鉴权配置和环境验证',
+	'home.quickstart.windows.desc': '通过 PowerShell 安装 nacos-setup，一键部署 Nacos 服务',
+	'home.quickstart.docker.desc': '使用 Docker 镜像快速部署，支持鉴权配置',
+	'home.quickstart.install.nacos.setup': '安装 nacos-setup',
+	'home.quickstart.start.nacos': '一键部署 Nacos',
 	'home.quickstart.view.full': '查看完整文档',
 
 	'cloud.title': 'Nacos Cloud',

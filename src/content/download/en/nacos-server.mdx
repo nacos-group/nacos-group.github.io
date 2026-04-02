@@ -2,6 +2,9 @@
 title: Nacos Server Download
 order: 0
 ---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
 # Nacos Server Download
 :::tip
 Nacos Server **3.2.0** has been released. This version delivers major plugin architecture and AI Registry upgrades, including Skill/Prompt Registry, along with console modernization and OIDC/OAuth2 security enhancements.
@@ -20,6 +23,26 @@ The following are the minimum system requirements for deploying Nacos Server. If
 | **Memory** | 2G or more |
 | **Hard disk** | No minimum requirement, adjust according to log retention |
 | **Operating system** | Linux, Mac OS X, Windows |
+
+## One-Click Installation (Recommended)
+
+[nacos-setup](https://github.com/nacos-group/nacos-setup) provides one-click automated deployment, handling download, auth configuration, port detection and Java environment validation automatically.
+
+<Tabs>
+  <TabItem label="Linux/macOS">
+    ```bash
+    curl -fsSL https://nacos.io/nacos-installer.sh | sudo bash
+    ```
+  </TabItem>
+  <TabItem label="Windows (PowerShell)">
+    ```powershell
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -UseBasicParsing https://nacos.io/nacos-installer.ps1 | iex"
+    ```
+  </TabItem>
+</Tabs>
+
+Nacos will be automatically deployed after installation. For more usage, refer to [Deploy with nacos-setup](/docs/latest/manual/admin/deployment/deployment-nacos-setup/).
+
 ## Stable Versions
 
 ### 3.x
