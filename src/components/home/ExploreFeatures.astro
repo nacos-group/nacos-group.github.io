@@ -4,7 +4,8 @@ const t = useTranslations(Astro);
 ---
 
 <span class="explore-feature-wrapper">
-  <explore-features class="explore-features block bg-gary-02 p-10">
+  <explore-features class="explore-features block p-10 flex flex-col justify-center items-center">
+    <div class="explore-features-content">
     <div class="top-title w-full flex flex-col items-center mb-20 mt-16">
       <h2 class="font-light text-gray-10 text-xs mb-6">
         {t("home.features.about")}
@@ -33,7 +34,7 @@ const t = useTranslations(Astro);
           </div>
         </li>
 
-        <li class="transfrom-split w-4"></li>
+        <li class="transfrom-split w-4 flex-shrink-0"></li>
         <li
           class="discovery relative item flex flex-col items-center cursor-pointer bg-blue-08 rounded-3xl p-6"
         >
@@ -71,6 +72,7 @@ const t = useTranslations(Astro);
         </div>
       </div>
     </div>
+    </div>
   </explore-features>
 </span>
 
@@ -85,15 +87,19 @@ const t = useTranslations(Astro);
 
 <style is:global>
   .explore-feature-wrapper {
+    .explore-features-content {
+      width: 85.125rem;
+    }
+
     .item {
-      width: 31.25rem;
+      flex: 1;
       height: 31.25rem;
       overflow: hidden;
     }
 
     .black-item {
-      width: 63.5rem;
-      /* 给固定高度防止给固定高度防止hover时高度发生变化抖动 */
+      width: 100%;
+      /* 给固定高度防止hover时高度发生变化抖动 */
       height: 14rem;
     }
     .item .hover-title {
@@ -169,6 +175,9 @@ const t = useTranslations(Astro);
 
     /* 小于50rem  小于 800px */
     @media (max-width: 50rem) {
+      .explore-features-content {
+        width: 100%;
+      }
       .explore-features {
         padding: 1.5rem;
       }
@@ -238,6 +247,9 @@ const t = useTranslations(Astro);
 
     /* 大于50rem 小于 72rem  800px < width < 1152 */
     @media (min-width: 50rem) and (max-width: 72rem) {
+      .explore-features-content {
+        width: 100%;
+      }
       .bottom-features .transfrom-split {
         height: 100%;
         width: 1rem;

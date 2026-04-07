@@ -2,11 +2,14 @@
 title: Nacos Server Download
 order: 0
 ---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
 # Nacos Server Download
 :::tip
-Nacos Server **3.2.0-BETA** has been released. This release focuses on plugin architecture enhancement, API modernization, AI Registry expansion (Skill Registry, Prompt Registry, Nacos Copilot), and code quality improvements.
+Nacos Server **3.2.0** has been released. This version delivers major plugin architecture and AI Registry upgrades, including Skill/Prompt Registry, along with console modernization and OIDC/OAuth2 security enhancements.
 
-Feel free to [download and try it out](#snapshot-versions).
+Feel free to [download and try it out](#stable-versions).
 
 :::
 ## System Requirements
@@ -20,12 +23,32 @@ The following are the minimum system requirements for deploying Nacos Server. If
 | **Memory** | 2G or more |
 | **Hard disk** | No minimum requirement, adjust according to log retention |
 | **Operating system** | Linux, Mac OS X, Windows |
+
+## One-Click Installation (Recommended)
+
+[nacos-setup](https://github.com/nacos-group/nacos-setup) provides one-click automated deployment, handling download, auth configuration, port detection and Java environment validation automatically.
+
+<Tabs>
+  <TabItem label="Linux/macOS">
+    ```bash
+    curl -fsSL https://nacos.io/nacos-installer.sh | sudo bash
+    ```
+  </TabItem>
+  <TabItem label="Windows (PowerShell)">
+    ```powershell
+    powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -UseBasicParsing https://nacos.io/nacos-installer.ps1 | iex"
+    ```
+  </TabItem>
+</Tabs>
+
+Nacos will be automatically deployed after installation. For more usage, refer to [Deploy with nacos-setup](/docs/latest/manual/admin/deployment/deployment-nacos-setup/).
+
 ## Stable Versions
 
 ### 3.x
 | Version | Binary Package Download                                                  | Docker Image                                                 | MD5                         | Release Notes                                    | Reference Documentation                                  |
 | ------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------------------- | ------------------------------------------------ | ------------------------------------------------ |
-| 3.1.1   | [3.1.1.zip](https://download.nacos.io/nacos-server/nacos-server-3.1.1.zip) | [nacos/nacos-server\:v3.1.1](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=3.1.1) | 97bb14ee564017ad60b562a56391e729 | [Release Notes](https://github.com/alibaba/nacos/releases/tag/3.1.1)      | [Quick Start](/docs/latest/quickstart/quick-start/)      |
+| 3.2.0   | [3.2.0.zip](https://download.nacos.io/nacos-server/nacos-server-3.2.0.zip) | [nacos/nacos-server\:v3.2.0](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=3.2.0) | 2775e9032a66db16dd7999cc6623d4fc | [Release Notes](https://github.com/alibaba/nacos/releases/tag/3.2.0)      | [Quick Start](/docs/latest/quickstart/quick-start/)      |
 
 ### 2.x
 | Version | Binary Package Download                                                  | Docker Image                                                 | MD5                         | Release Notes                                    | Reference Documentation                                  |
@@ -40,4 +63,3 @@ The following are the minimum system requirements for deploying Nacos Server. If
 Snapshot versions are still in development. We encourage you to try them out and provide feedback, but it is not recommended for production use.
 | Version | Binary Package Download                                                | Docker Image                                                 | MD5                         | Release Notes                                     | Reference Documentation                                  |
 | ---- | ---- | ---- | ---- | ---- | ---- |
-| 3.2.0-BETA | [3.2.0-BETA.zip](https://download.nacos.io/nacos-server/nacos-server-3.2.0-BETA.zip) | Snapshots do not provide images. For images, it is recommended to use the stable version: [nacos/nacos-server:latest](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=latest) | 732708b9e599eb09dcc160e73a3c4190 | [Release Notes](https://github.com/alibaba/nacos/releases/tag/3.2.0-BETA) | [Quick Start](/docs/next/quickstart/quick-start/) |
