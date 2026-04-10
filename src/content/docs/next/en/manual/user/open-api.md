@@ -305,7 +305,7 @@ curl -X DELETE "127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=test1&ip=
 | `namespaceId` | `string` | 否     | 命名空间`Id`，默认为`public`    |
 | `groupName`   | `string` | 否     | 分组名，默认为`DEFAULT_GROUP`  |
 | `serviceName` | `string` | **是** | 服务名                     |
-| `clusterName` | `string` | 否     | 集群名称，默认为`DEFAULT`       |
+| `clusterName` | `string` | 否     | Cluster name. If not provided, instances of all clusters will be returned.       |
 
 #### 返回数据
 
