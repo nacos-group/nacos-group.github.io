@@ -135,6 +135,13 @@
         "link": "docs/manual/admin/auth"
       },
       {
+        "label": "OIDC 认证",
+        "translations": {
+          "en": "OIDC Authentication"
+        },
+        "link": "docs/manual/admin/oidc-auth"
+      },
+      {
         "label": "升级手册",
         "translations": {
           "en": "Upgrading Manual"
