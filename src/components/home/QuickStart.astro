@@ -42,9 +42,9 @@ const t = useTranslations(Astro);
         <!-- macOS/Linux Panel -->
         <div class="tab-panel active" data-panel="unix">
           <p class="text-sm text-gray-08 mb-5">{t('home.quickstart.unix.desc')}</p>
-          <div class="code-block" data-code="curl -fsSL https://nacos.io/nacos-installer.sh | sudo bash">
+          <div class="code-block" data-code="curl -fsSL https://nacos.io/nacos-installer.sh | bash">
             <div class="code-lines">
-              <div class="code-line"><span class="prompt">$</span><code>curl -fsSL https://nacos.io/nacos-installer.sh | sudo bash</code></div>
+              <div class="code-line"><span class="prompt">$</span><code>curl -fsSL https://nacos.io/nacos-installer.sh | bash</code></div>
             </div>
             <button class="copy-btn" aria-label="Copy">
               <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
@@ -56,9 +56,9 @@ const t = useTranslations(Astro);
         <!-- Windows Panel -->
         <div class="tab-panel" data-panel="windows">
           <p class="text-sm text-gray-08 mb-5">{t('home.quickstart.windows.desc')}</p>
-          <div class="code-block" data-code={'powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -UseBasicParsing https://nacos.io/nacos-installer.ps1 | iex"'}>
+          <div class="code-block" data-code="iwr -UseBasicParsing https://nacos.io/nacos-installer.ps1 | iex">
             <div class="code-lines">
-              <div class="code-line"><span class="prompt">&gt;</span><code>powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -UseBasicParsing https://nacos.io/nacos-installer.ps1 | iex"</code></div>
+              <div class="code-line"><span class="prompt">&gt;</span><code>iwr -UseBasicParsing https://nacos.io/nacos-installer.ps1 | iex</code></div>
             </div>
             <button class="copy-btn" aria-label="Copy">
               <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
