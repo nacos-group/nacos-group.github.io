@@ -85,8 +85,8 @@ CREATE TABLE IF NOT EXISTS `ai_resource` (
     `owner` varchar(128) NOT NULL DEFAULT '' COMMENT '创建者用户名',
     `download_count` bigint(20) NOT NULL DEFAULT 0 COMMENT '下载次数',
     PRIMARY KEY (`id`),
-    UNIQUE KEY `uk_ai_resource_ns_name_type` (`namespace_id`,`name`,`type`,`c_from`),
-    KEY `idx_ai_resource_name` (`name`),
+    UNIQUE KEY `uk_ai_resource_ns_name_type` (`namespace_id`(128),`name`(191),`type`(32),`c_from`(191)),
+    KEY `idx_ai_resource_name` (`name`(191)),
     KEY `idx_ai_resource_type` (`type`),
     KEY `idx_ai_resource_gmt_modified` (`gmt_modified`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI资源元数据表';
@@ -106,8 +106,8 @@ CREATE TABLE IF NOT EXISTS `ai_resource_version` (
     `publish_pipeline_info` longtext DEFAULT NULL COMMENT '发布流水线信息(JSON)',
     `download_count` bigint(20) NOT NULL DEFAULT 0 COMMENT '下载次数',
     PRIMARY KEY (`id`),
-    UNIQUE KEY `uk_ai_resource_ver_ns_name_type_ver` (`namespace_id`,`name`,`type`,`version`),
-    KEY `idx_ai_resource_ver_name` (`name`),
+    UNIQUE KEY `uk_ai_resource_ver_ns_name_type_ver` (`namespace_id`(128),`name`(191),`type`(32),`version`(64)),
+    KEY `idx_ai_resource_ver_name` (`name`(191)),
     KEY `idx_ai_resource_ver_status` (`status`),
     KEY `idx_ai_resource_ver_gmt_modified` (`gmt_modified`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI资源版本表';
