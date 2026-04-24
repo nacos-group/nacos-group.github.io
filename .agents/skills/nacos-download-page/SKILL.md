@@ -80,6 +80,28 @@ Stable download links use `https://download.nacos.io/nacos-server/nacos-server-{
 - **Other locales**: Apply the **same structural edits** (tables, new row, release-history row, “latest version” text). **Translate** only the tip summary and any locale-specific strings (e.g. “已发布” → “has been released”, “欢迎下载和试用” → “Feel free to download and try it out”).
 - Ensure every locale under `src/content/download/` (e.g. `en`) gets the same table and link updates; only the tip and intro texts are translated.
 
+## 7. Homepage Release Info (Stable-Only by Default)
+
+When updating release download info, also check homepage release info:
+
+- `src/components/home/EarthBackground.astro` (latest release note link)
+- `src/i18n/zh-cn/ui.ts`:
+  - `home.introduce.nacos.notes`
+  - `home.introduce.nacos.release.note.1`
+  - `home.introduce.nacos.release.note.1.mobile`
+- `src/i18n/en/ui.ts`:
+  - `home.introduce.nacos.notes`
+  - `home.introduce.nacos.release.note.1`
+  - `home.introduce.nacos.release.note.1.mobile`
+
+### Update policy
+
+- **Default**: Update homepage release info **only for stable GA releases** (for example `3.2.1`).
+- **Do NOT update homepage by default** for pre-release/non-GA versions such as:
+  - versions containing suffixes like `-ALPHA`, `-BETA`, `-RC` (case-insensitive),
+  - date-suffixed tags/versions like `-20260423` or other `-<date>` style suffixes.
+- For those pre-release/non-GA versions, update homepage release info **only when explicitly requested by the user/developer**.
+
 ## Checklist
 
 - [ ] Fetched version, release date, zip MD5, and release notes from the GitHub release.
@@ -88,6 +110,7 @@ Stable download links use `https://download.nacos.io/nacos-server/nacos-server-{
 - [ ] If stable: moved previous stable row to release-history.mdx and added new row; updated “latest version” in release-history intro.
 - [ ] Updated the top tip with new version and 1–2 sentence summary in nacos-server.mdx.
 - [ ] Applied all edits to en (and any other locale) with translated tip/intro.
+- [ ] Updated homepage release info for GA releases only; skipped pre-release homepage updates unless explicitly requested.
 
 ## Reference
 
