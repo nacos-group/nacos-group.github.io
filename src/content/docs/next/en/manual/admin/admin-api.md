@@ -6956,6 +6956,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/list?pageNo=1&pageSi
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | 命名空间。 |
 | `overwrite` | `boolean` | 否 | Whether to overwrite an existing skill with the same name. |
+| `targetVersion` | `string` | 否 | Target version of the skill to create, e.g. `1.0.0`. Resolution order: frontmatter `metadata.version` in `SKILL.md` → `meta.json` in ZIP → this `targetVersion` parameter → default `0.0.1`. |
 | `file` | `file` | 否 | ZIP file containing skill package |
 
 #### 返回数据
@@ -6968,7 +6969,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/list?pageNo=1&pageSi
 
 ```shell
 curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/upload' \
-  -F "file=@skill.zip" -F "namespaceId=public"
+  -F "file=@skill.zip" -F "namespaceId=public" -F "targetVersion=1.0.0"
 ```
 
 * 返回示例
