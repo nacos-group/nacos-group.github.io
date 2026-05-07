@@ -4952,9 +4952,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/list?pageNo=1&pageSize=1
 
 | 参数名         | 类型     | 必填 | 参数描述                                                                 |
 |-------------|--------|----|----------------------------------------------------------------------|
-| `file`      | `file` | 否  | 包含 Skill 定义的 ZIP 文件。                                                          |
-| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。                                                |
-| `overwrite` | `boolean` | 否 | 导入时若 Skill 已存在是否覆盖，默认 `false`。                                           |
+| `file`      | `file` | 否  | 包含 Skill 定义的 ZIP 文件。                                                  |
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。                                                 |
+| `overwrite` | `boolean` | 否 | 导入时若 Skill 已存在是否覆盖，默认 `false`。                                          |
+| `targetVersion` | `string` | 否 | 要创建的 Skill 版本号，例如 `1.0.0`。版本解析优先级：`SKILL.md` 中 frontmatter 的 `metadata.version` → ZIP 包中的 `meta.json` → 该 `targetVersion` 参数 → 默认 `0.0.1`。 |
 
 #### 返回数据
 
@@ -4969,7 +4970,8 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/list?pageNo=1&pageSize=1
 ```shell
 curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload' \
   -F "file=@/path/to/skill.zip" \
-  -F "namespaceId=public"
+  -F "namespaceId=public" \
+  -F "targetVersion=1.0.0"
 ```
 
 * 返回示例

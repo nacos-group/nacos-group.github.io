@@ -6956,6 +6956,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/list?pageNo=1&pageSi
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | 命名空间。 |
 | `overwrite` | `boolean` | 否 | 是否覆盖同名技能；默认不覆盖。 |
+| `targetVersion` | `string` | 否 | 要创建的技能版本号，例如 `1.0.0`。版本解析优先级：`SKILL.md` 中 frontmatter 的 `metadata.version` → ZIP 包中的 `meta.json` → 该 `targetVersion` 参数 → 默认 `0.0.1`。 |
 | `file` | `file` | 否 | 包含技能内容的 ZIP 包文件。 |
 
 #### 返回数据
@@ -6968,7 +6969,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/list?pageNo=1&pageSi
 
 ```shell
 curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/upload' \
-  -F "file=@skill.zip" -F "namespaceId=public"
+  -F "file=@skill.zip" -F "namespaceId=public" -F "targetVersion=1.0.0"
 ```
 
 * 返回示例
