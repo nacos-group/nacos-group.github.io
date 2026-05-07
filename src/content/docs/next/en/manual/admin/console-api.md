@@ -2964,6 +2964,62 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/instance" -d 'serviceName=test&
 }
 ```
 
+### 3.11. 删除持久化实例
+
+#### 接口描述
+
+通过该接口，可以删除指定服务下的**持久化实例**。该接口仅支持删除`ephemeral=false`的实例，不支持删除临时实例。
+
+#### 请求方式
+
+`DELETE`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ns/instance`
+
+#### 请求参数
+
+| 参数名        | 类型      | 必填 | 参数描述                                       |
+| ------------- | --------- | ---- | ---------------------------------------------- |
+| `serviceName` | `string`  | 是   | 服务名。                                       |
+| `ip`          | `string`  | 是   | 实例IP。                                       |
+| `port`        | `integer` | 是   | 实例端口。                                     |
+| `groupName`   | `string`  | 否   | 服务所属的groupName，默认值为`DEFAULT_GROUP`。 |
+| `namespaceId` | `string`  | 否   | 服务所属的命名空间ID，默认值为`public`。       |
+| `clusterName` | `string`  | 否   | 实例所属集群, 默认值为`DEFAULT`。              |
+| `ephemeral`   | `boolean` | 否   | 实例是否临时，仅支持传入`false`，默认值为`false`。 |
+
+#### 返回数据
+
+返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+
+| 参数名 | 参数类型 | 描述                     |
+| ------ | -------- | ------------------------ |
+| `data` | `string` | 删除成功时，固定为`ok`。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/instance?serviceName=test&clusterName=DEFAULT&groupName=DEFAULT_GROUP&ip=1.1.1.1&port=3306&ephemeral=false"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": "ok"
+}
+```
+
 ## 4. MCP 管理
 
 ### 4.1. 查询MCP服务的详情
