@@ -66,7 +66,7 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [fangjian0423](https://github.com/fangjian0423) | Jian Fang    | Alibaba      | Committer  | fangjian.fj@alibaba-inc.com                                  |
 | [wyp12](https://github.com/wyp12)               | Yuanpiao Wu  | Alibaba      | Committer  | caogu.wyp@antfin.com                                         |
 | [TsingLiang](https://github.com/TsingLiang)     | Liang qing   | Alibaba      | Committer  | qingliang.ql@alibaba-inc.com                                 |
-| [caojiele](https://github.com/caojiele)         | Jiele Cao    | Sinocare     | Committer  | caojiele1225@126.com                                         | 
+| [caojiele](https://github.com/caojiele)         | Jiele Cao    | Sinocare     | Committer  | caojiele1225@126.com                                         |
 | [KeRan213539](https://github.com/KeRan213539)   | Ying Xie     | ShengDa      | Committer  | 213539@qq.com                                                |
 | [zongtanghu](https://github.com/zongtanghu)     | Zongtang Hu  | China Mobile Cloud Centre | Committer | zongtanghu@hotmail.com                           |
 | [Maijh97](https://github.com/Maijh97)           | Jianhui Mai  | Yunliuchain  | Committer | xiaomai_h@163.com                                             |
@@ -79,13 +79,25 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [JackSun-Developer](https://github.com/JackSun-Developer) | Li Sun | Alibaba  | Committer | yongyue.sl@alibaba-inc.com |
 | [brotherlu-xcq](https://github.com/brotherlu-xcq) | Lu Cheng | KuJiaLe | Committer | 1285823170@qq.com |
 | [li-xiao-shuang](https://github.com/li-xiao-shuang) | XiaoShuang Li | DiDi | Committer | 644968328@qq.com |
-| [MajorHe1](https://github.com/MajorHe1)         | Fan He       | WeBank       | Committer | 601023364@qq.com | 
+| [MajorHe1](https://github.com/MajorHe1)         | Fan He       | WeBank       | Committer | 601023364@qq.com |
 | [hujun-w-2](https://github.com/hujun-w-2)       | Jun Hu       | Xiaomi       | Committer | 510830970@qq.com |
 | [onewe](https://github.com/onewe)               | Wenchao Mao | Independent developer| Committer | 2583021406@qq.com |
 | [chenhao26-nineteen](https://github.com/chenhao26-nineteen)|Hao Chen| Xiaomi | Committer | hashmap2018@163.com |
 | [shenkonghui](https://github.com/shenkonghui)   | Konghui Shen | Harmony Cloud| Committer | shenkh1992@gmail.com |
 | [CherishCai](https://github.com/CherishCai)     | Hongwen Cai | Ant Financial| Committer | 785427346@qq.com ｜
 | [The-Gamer-01](https://github.com/The-Gamer-01) | Yixuan Huang | Jishou University | Committer | 19974361760@163.com ｜
+| [Karsonto](https://github.com/karsonto) | Karson | ICBC (Asia) | Committer | karsontao@hotmail.com |
+| [Daydreamer-ia](https://github.com/Daydreamer-ia) | Yiqin Chen | Guangdong University of Technology | Committer | 2296032269@qq.com |
+| [shalk](https://github.com/shalk) | Kun Xiao | NASDAQ：TIGR | Committer | xshalk@163.com |
+| [heqingpan](https://github.com/heqingpan) | Qingpan He | Aicheng Technology | Committer | heqingpan@126.com |
+| [godhth](https://github.com/godhth) | Tianhui Huang | CE Cloud | Committer | 1165559068@qq.com |
+| [kiko-cyy](https://github.com/kiko-cyy) | Yinyin Cao | Alibaba Cloud | Committer | caoyinyin_cyy@163.com |
+| [Wuyunfan-BUPT](https://github.com/Wuyunfan-BUPT) | Yunfan Wu | Alibaba Cloud | Committer | wyf_mohen@163.com |
+| [KiteSoar](https://github.com/KiteSoar) | Shihao Hu | Beijing University of Posts and Telecommunications | Committer | hushihao2020x@163.com |
+| [luoxiner](https://github.com/luoxiner) | Xin Luo | Aliyun | Committer | luoxiner527@gmail.com |
+| [Sunrisea](https://github.com/Sunrisea) | Tong Zhu | Aliyun | Committer | szzhutong@gmail.com |
+| [cxhello](https://github.com/cxhello) | Xiaohui Cai | Lenztech | Committer | caixiaohuichn@gmail.com |
+| [WangzJi](https://github.com/WangzJi) | Jian Wang | Independent developer | Committer | wangjian@apache.org |
 
 ### Contributors
 

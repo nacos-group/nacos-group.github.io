@@ -90,6 +90,16 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [The-Gamer-01](https://github.com/The-Gamer-01) | Yixuan Huang | Jishou University | Committer | 19974361760@163.com |
 | [Karsonto](https://github.com/karsonto)         | Karson | ICBC (Asia) | Committer | karsontao@hotmail.com |
 | [Daydreamer-ia](https://github.com/Daydreamer-ia) | Yiqin Chen | Guangdong University of Technology | Committer | 2296032269@qq.com  |
+| [shalk](https://github.com/shalk) | Kun Xiao | NASDAQ：TIGR | Committer | xshalk@163.com |
+| [heqingpan](https://github.com/heqingpan) | Qingpan He | Aicheng Technology | Committer | heqingpan@126.com |
+| [godhth](https://github.com/godhth) | Tianhui Huang | CE Cloud | Committer | 1165559068@qq.com |
+| [kiko-cyy](https://github.com/kiko-cyy) | Yinyin Cao | Alibaba Cloud | Committer | caoyinyin_cyy@163.com |
+| [Wuyunfan-BUPT](https://github.com/Wuyunfan-BUPT) | Yunfan Wu | Alibaba Cloud | Committer | wyf_mohen@163.com |
+| [KiteSoar](https://github.com/KiteSoar) | Shihao Hu | Beijing University of Posts and Telecommunications | Committer | hushihao2020x@163.com |
+| [luoxiner](https://github.com/luoxiner) | Xin Luo | Aliyun | Committer | luoxiner527@gmail.com |
+| [Sunrisea](https://github.com/Sunrisea) | Tong Zhu | Aliyun | Committer | szzhutong@gmail.com |
+| [cxhello](https://github.com/cxhello) | Xiaohui Cai | Lenztech | Committer | caixiaohuichn@gmail.com |
+| [WangzJi](https://github.com/WangzJi) | Jian Wang | Independent developer | Committer | wangjian@apache.org |
 
 ### Contributors
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Nacos Committer Update"
+  short_description: "Add committer announcements and sync developer lists"
+  default_prompt: "Use $nacos-committer-update to add a Nacos committer announcement and synchronize all developer lists."
