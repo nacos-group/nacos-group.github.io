@@ -41,7 +41,7 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 
 本页面展示了Nacos的开发团队，并且还在持续扩充中。
 
-### 
+###
 
  Github 账号                                     | 名字    | 组织     | 角色       | 邮箱                                                         |
 | ----------------------------------------------- | ------ | --------| --------- | ------------------------------------------------------------ |
@@ -78,13 +78,25 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 | [JackSun-Developer](https://github.com/JackSun-Developer) | 孙立 | 阿里巴巴 | Committer | yongyue.sl@alibaba-inc.com |
 | [brotherlu-xcq](https://github.com/brotherlu-xcq) | 程露 | 杭州群核信息技术有限公司(酷家乐) | Committer | 1285823170@qq.com |
 | [li-xiao-shuang](https://github.com/li-xiao-shuang) | 李晓双 | 滴滴出行 | Committer | 644968328@qq.com |
-| [MajorHe1](https://github.com/MajorHe1)         | 贺繁   | 微众银行 | Committer | 601023364@qq.com | 
+| [MajorHe1](https://github.com/MajorHe1)         | 贺繁   | 微众银行 | Committer | 601023364@qq.com |
 | [hujun-w-2](https://github.com/hujun-w-2)       | 胡俊   | 小米科技 | Committer | 510830970@qq.com |
 | [onewe](https://github.com/onewe)               | 毛文超 | 自由开发者| Committer | 2583021406@qq.com |
 | [chenhao26-nineteen](https://github.com/chenhao26-nineteen)|陈浩| 小米科技 | Committer | hashmap2018@163.com |
 | [shenkonghui](https://github.com/shenkonghui)   | 沈孔辉 | 杭州谐云科技有限公司| Committer | shenkh1992@gmail.com |
 | [CherishCai](https://github.com/CherishCai)     | 蔡鸿文 | 蚂蚁金服 | Committer | 785427346@qq.com ｜
 | [The-Gamer-01](https://github.com/The-Gamer-01) | 黄乙轩 | 吉首大学 | Committer | 19974361760@163.com ｜
+| [Karsonto](https://github.com/karsonto) | 陶健敏 | 中国工商银行（亚洲） | Committer | karsontao@hotmail.com |
+| [Daydreamer-ia](https://github.com/Daydreamer-ia) | 陈亿钦 | 广东工业大学 | Committer | 2296032269@qq.com |
+| [shalk](https://github.com/shalk) | 肖焜 | 老虎证券 | Committer | xshalk@163.com |
+| [heqingpan](https://github.com/heqingpan) | 何庆攀 | 爱橙科技 | Committer | heqingpan@126.com |
+| [godhth](https://github.com/godhth) | 黄天辉 | 中电云计算技术有限公司 | Committer | 1165559068@qq.com |
+| [kiko-cyy](https://github.com/kiko-cyy) | 曹茵茵 | 阿里云智能集团 | Committer | caoyinyin_cyy@163.com |
+| [Wuyunfan-BUPT](https://github.com/Wuyunfan-BUPT) | 吴云凡 | 阿里云智能集团 | Committer | wyf_mohen@163.com |
+| [KiteSoar](https://github.com/KiteSoar) | 胡世豪 | 北京邮电大学 | Committer | hushihao2020x@163.com |
+| [luoxiner](https://github.com/luoxiner) | 罗鑫 | 阿里云飞天信息技术有限公司 | Committer | luoxiner527@gmail.com |
+| [Sunrisea](https://github.com/Sunrisea) | 朱桐 | 阿里云飞天信息技术有限公司 | Committer | szzhutong@gmail.com |
+| [cxhello](https://github.com/cxhello) | 蔡晓慧 | 北京朗镜科技有限责任公司 | Committer | caixiaohuichn@gmail.com |
+| [WangzJi](https://github.com/WangzJi) | 王健 | 自由开发者 | Committer | wangjian@apache.org |
 
 ### 活跃贡献者
 

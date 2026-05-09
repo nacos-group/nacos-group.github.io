@@ -98,6 +98,10 @@ This page shows Nacos developers and continues to expand. The list is not priori
 | [kiko-cyy](https://github.com/kiko-cyy)                             | Yinyin Cao    | Alibaba Cloud                      | Committer  | caoyinyin_cyy@163.com        |
 | [Wuyunfan-BUPT](https://github.com/Wuyunfan-BUPT)                   | Yunfan Wu     | Alibaba Cloud                      | Committer  | wyf_mohen@163.com            |
 | [KiteSoar](https://github.com/KiteSoar) | Shihao Hu | Beijing University of Posts and Telecommunications | Committer | hushihao2020x@163.com |
+| [luoxiner](https://github.com/luoxiner) | Xin Luo | Aliyun | Committer | luoxiner527@gmail.com |
+| [Sunrisea](https://github.com/Sunrisea) | Tong Zhu | Aliyun | Committer | szzhutong@gmail.com |
+| [cxhello](https://github.com/cxhello) | Xiaohui Cai | Lenztech | Committer | caixiaohuichn@gmail.com |
+| [WangzJi](https://github.com/WangzJi) | Jian Wang | Independent developer | Committer | wangjian@apache.org |
 
 ### Contributors
 

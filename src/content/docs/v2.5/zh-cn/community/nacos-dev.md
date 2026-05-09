@@ -94,6 +94,11 @@ Contributor是对Nacos项目有贡献的个人，标准为：
 | [godhth](https://github.com/godhth) | 黄天辉 | 中电云计算技术有限公司       | Committer | 1165559068@qq.com            |
 | [kiko-cyy](https://github.com/kiko-cyy) | 曹茵茵 | 阿里云智能集团 | Committer | caoyinyin_cyy@163.com |
 | [Wuyunfan-BUPT](https://github.com/Wuyunfan-BUPT) | 吴云凡 | 阿里云智能集团 | Committer | wyf_mohen@163.com |
+| [KiteSoar](https://github.com/KiteSoar) | 胡世豪 | 北京邮电大学 | Committer | hushihao2020x@163.com |
+| [luoxiner](https://github.com/luoxiner) | 罗鑫 | 阿里云飞天信息技术有限公司 | Committer | luoxiner527@gmail.com |
+| [Sunrisea](https://github.com/Sunrisea) | 朱桐 | 阿里云飞天信息技术有限公司 | Committer | szzhutong@gmail.com |
+| [cxhello](https://github.com/cxhello) | 蔡晓慧 | 北京朗镜科技有限责任公司 | Committer | caixiaohuichn@gmail.com |
+| [WangzJi](https://github.com/WangzJi) | 王健 | 自由开发者 | Committer | wangjian@apache.org |
 
 ### 活跃贡献者
 
