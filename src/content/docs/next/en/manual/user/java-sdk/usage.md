@@ -2356,133 +2356,13 @@ try {
 }
 ```
 
-## 8. Skill 能力
+## 8. Skill Capabilities
 
-### 8.1. Load Skill
+> Skills are distributed via the Java SDK as ZIP packages containing SKILL.md and all resource files (binary resources are decoded from Base64 back to raw bytes). The SDK currently exposes three download variants: by name, by version, and by label.
 
-#### 描述
+### 8.1. Download Skill ZIP
 
-Load the complete Skill object by skill name, including main configuration and all resource configurations.
-
-```java
-Skill loadSkill(String skillName) throws NacosException;
-```
-
-#### 请求参数
-
-| 名称       | 类型     | 描述                    | 默认值  |
-|:---------|:-------|-----------------------|------|
-| skillName | String | Skill name (unique identifier) | 无，必填 |
-
-#### 返回参数
-
-| 参数类型 | 描述        |
-| :--- | :--- |
-| Skill | Complete Skill object with all resources |
-
-#### 请求示例
-
-```java
-Properties properties = new Properties();
-properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
-AiService aiService = AiFactory.createAiService(properties);
-try {
-    Skill skill = aiService.loadSkill("{skillName}");
-    System.out.println(JacksonUtils.toJson(skill));
-} catch (NacosException e) {
-    e.printStackTrace();
-}
-```
-
-#### 异常说明
-
-Throws NacosException when skill not found or query error.
-
-### 8.2. Subscribe Skill
-
-#### 描述
-
-Subscribe to a skill; the listener is invoked when the skill configuration changes.
-
-```java
-Skill subscribeSkill(String skillName, AbstractNacosSkillListener skillListener) throws NacosException;
-```
-
-#### 请求参数
-
-| 名称           | 类型                         | 描述                | 默认值  |
-|:-------------|:---------------------------|-------------------|------|
-| skillName    | String                     | Skill name           | 无，必填 |
-| skillListener | AbstractNacosSkillListener | Callback listener for skill changes     | 无，必填 |
-
-#### 返回参数
-
-| 参数类型 | 描述              |
-| :--- | :--- |
-| Skill | Current Skill at subscribe time, or null if not found |
-
-#### 请求示例
-
-```java
-Properties properties = new Properties();
-properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
-AiService aiService = AiFactory.createAiService(properties);
-try {
-    Skill skill = aiService.subscribeSkill("{skillName}", new AbstractNacosSkillListener() {
-        @Override
-        public void onEvent(NacosSkillEvent event) {
-            System.out.println("skill changed: " + event.getSkillName());
-        }
-    });
-    System.out.println(JacksonUtils.toJson(skill));
-} catch (NacosException e) {
-    e.printStackTrace();
-}
-```
-
-#### 异常说明
-
-Throws NacosException when parameters are invalid or on handle error.
-
-### 8.3. Unsubscribe Skill
-
-#### 描述
-
-Unsubscribe from a skill. The listener must be the same instance used when subscribing, otherwise unsubscribe may fail.
-
-```java
-void unsubscribeSkill(String skillName, AbstractNacosSkillListener skillListener) throws NacosException;
-```
-
-#### 请求参数
-
-| 名称           | 类型                         | 描述            | 默认值  |
-|:-------------|:---------------------------|---------------|------|
-| skillName    | String                     | Skill name       | 无，必填 |
-| skillListener | AbstractNacosSkillListener | Listener used when subscribing   | 无，必填 |
-
-#### 返回参数
-
-无
-
-#### 请求示例
-
-```java
-Properties properties = new Properties();
-properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
-AiService aiService = AiFactory.createAiService(properties);
-AbstractNacosSkillListener listener = new AbstractNacosSkillListener() {};
-try {
-    aiService.subscribeSkill("{skillName}", listener);
-    aiService.unsubscribeSkill("{skillName}", listener);
-} catch (NacosException e) {
-    e.printStackTrace();
-}
-```
-
-### 8.4. Download Skill ZIP
-
-#### 描述
+#### Description
 
 Download the latest Skill ZIP package (byte array) by skill name.
 
@@ -2490,17 +2370,17 @@ Download the latest Skill ZIP package (byte array) by skill name.
 byte[] downloadSkillZip(String skillName) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称       | 类型     | 描述                    | 默认值  |
-|:---------|:-------|-----------------------|------|
-| skillName | String | Skill name (unique identifier) | 无，必填 |
+| Name      | Type   | Description                    | Default     |
+|:----------|:-------|--------------------------------|-------------|
+| skillName | String | Skill name (unique identifier) | — required  |
 
-#### 返回参数
+#### Response
 
-Skill ZIP bytes `byte[]`.
+Skill ZIP bytes `byte[]` containing SKILL.md and all resource files.
 
-#### 请求示例
+#### Example
 
 ```java
 Properties properties = new Properties();
@@ -2514,28 +2394,32 @@ try {
 }
 ```
 
-### 8.5. Download Skill ZIP by Version
+#### Exceptions
 
-#### 描述
+Throws NacosException when the skill is not found or on query error.
 
-Download a specific version of Skill ZIP package (byte array) by skill name and version.
+### 8.2. Download Skill ZIP by Version
+
+#### Description
+
+Download a specific version of the Skill ZIP package (byte array) by skill name and version.
 
 ```java
 byte[] downloadSkillZipByVersion(String skillName, String version) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称       | 类型     | 描述                       | 默认值  |
-|:---------|:-------|--------------------------|------|
-| skillName | String | Skill name (unique identifier) | 无，必填 |
-| version   | String | Target skill version; latest when null | 无      |
+| Name      | Type   | Description                              | Default     |
+|:----------|:-------|------------------------------------------|-------------|
+| skillName | String | Skill name (unique identifier)           | — required  |
+| version   | String | Target skill version; latest when null   | —           |
 
-#### 返回参数
+#### Response
 
 Skill ZIP bytes `byte[]`.
 
-#### 请求示例
+#### Example
 
 ```java
 Properties properties = new Properties();
@@ -2549,9 +2433,13 @@ try {
 }
 ```
 
-### 8.6. Download Skill ZIP by Label
+#### Exceptions
 
-#### 描述
+Throws NacosException when the skill or specified version is not found, or on query error.
+
+### 8.3. Download Skill ZIP by Label
+
+#### Description
 
 Download a labeled Skill ZIP package (byte array) by skill name and label.
 
@@ -2559,18 +2447,18 @@ Download a labeled Skill ZIP package (byte array) by skill name and label.
 byte[] downloadSkillZipByLabel(String skillName, String label) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称       | 类型     | 描述                         | 默认值  |
-|:---------|:-------|----------------------------|------|
-| skillName | String | Skill name (unique identifier) | 无，必填 |
-| label     | String | Target label (for example: `latest`, `stable`) | 无，必填 |
+| Name      | Type   | Description                                    | Default     |
+|:----------|:-------|------------------------------------------------|-------------|
+| skillName | String | Skill name (unique identifier)                 | — required  |
+| label     | String | Target label (for example: `latest`, `stable`) | — required  |
 
-#### 返回参数
+#### Response
 
 Skill ZIP bytes `byte[]`.
 
-#### 请求示例
+#### Example
 
 ```java
 Properties properties = new Properties();
@@ -2583,6 +2471,10 @@ try {
     e.printStackTrace();
 }
 ```
+
+#### Exceptions
+
+Throws NacosException when the skill or specified label is not found, or on query error.
 
 ## 9. Prompt 能力
 
