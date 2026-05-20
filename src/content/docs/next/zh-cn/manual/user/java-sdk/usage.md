@@ -2358,129 +2358,9 @@ try {
 
 ## 8. Skill 能力
 
-### 8.1. 加载 Skill
+> Skill 在 Java SDK 中以 ZIP 压缩包的形式分发，包含 SKILL.md 和全部资源文件（二进制资源会从 Base64 自动解码为原始字节）。SDK 当前提供按名称、按版本、按标签三种下载方式。
 
-#### 描述
-
-根据 Skill 名称加载完整的 Skill 对象，包含主配置及全部资源配置。
-
-```java
-Skill loadSkill(String skillName) throws NacosException;
-```
-
-#### 请求参数
-
-| 名称       | 类型     | 描述                    | 默认值  |
-|:---------|:-------|-----------------------|------|
-| skillName | String | Skill 名称（唯一标识）       | 无，必填 |
-
-#### 返回参数
-
-| 参数类型 | 描述        |
-| :--- | :--- |
-| Skill | 包含全部资源的完整 Skill 对象 |
-
-#### 请求示例
-
-```java
-Properties properties = new Properties();
-properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
-AiService aiService = AiFactory.createAiService(properties);
-try {
-    Skill skill = aiService.loadSkill("{skillName}");
-    System.out.println(JacksonUtils.toJson(skill));
-} catch (NacosException e) {
-    e.printStackTrace();
-}
-```
-
-#### 异常说明
-
-Skill 不存在或查询异常时，抛出 NacosException。
-
-### 8.2. 订阅 Skill
-
-#### 描述
-
-订阅指定 Skill，当 Skill 配置发生变更时通过监听器回调。
-
-```java
-Skill subscribeSkill(String skillName, AbstractNacosSkillListener skillListener) throws NacosException;
-```
-
-#### 请求参数
-
-| 名称           | 类型                         | 描述                | 默认值  |
-|:-------------|:---------------------------|-------------------|------|
-| skillName    | String                     | Skill 名称           | 无，必填 |
-| skillListener | AbstractNacosSkillListener | Skill 变更回调监听器     | 无，必填 |
-
-#### 返回参数
-
-| 参数类型 | 描述              |
-| :--- | :--- |
-| Skill | 订阅成功时返回当前 Skill 对象，未找到可为 null |
-
-#### 请求示例
-
-```java
-Properties properties = new Properties();
-properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
-AiService aiService = AiFactory.createAiService(properties);
-try {
-    Skill skill = aiService.subscribeSkill("{skillName}", new AbstractNacosSkillListener() {
-        @Override
-        public void onEvent(NacosSkillEvent event) {
-            System.out.println("skill changed: " + event.getSkillName());
-        }
-    });
-    System.out.println(JacksonUtils.toJson(skill));
-} catch (NacosException e) {
-    e.printStackTrace();
-}
-```
-
-#### 异常说明
-
-参数无效或处理异常时，抛出 NacosException。
-
-### 8.3. 取消订阅 Skill
-
-#### 描述
-
-取消对指定 Skill 的订阅。取消时传入的监听器必须与订阅时一致，否则可能导致取消失败。
-
-```java
-void unsubscribeSkill(String skillName, AbstractNacosSkillListener skillListener) throws NacosException;
-```
-
-#### 请求参数
-
-| 名称           | 类型                         | 描述            | 默认值  |
-|:-------------|:---------------------------|---------------|------|
-| skillName    | String                     | Skill 名称       | 无，必填 |
-| skillListener | AbstractNacosSkillListener | 订阅时使用的监听器   | 无，必填 |
-
-#### 返回参数
-
-无
-
-#### 请求示例
-
-```java
-Properties properties = new Properties();
-properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
-AiService aiService = AiFactory.createAiService(properties);
-AbstractNacosSkillListener listener = new AbstractNacosSkillListener() {};
-try {
-    aiService.subscribeSkill("{skillName}", listener);
-    aiService.unsubscribeSkill("{skillName}", listener);
-} catch (NacosException e) {
-    e.printStackTrace();
-}
-```
-
-### 8.4. 下载 Skill ZIP
+### 8.1. 下载 Skill ZIP
 
 #### 描述
 
@@ -2498,7 +2378,7 @@ byte[] downloadSkillZip(String skillName) throws NacosException;
 
 #### 返回参数
 
-Skill ZIP 压缩包字节数组 `byte[]`。
+Skill ZIP 压缩包字节数组 `byte[]`，包含 SKILL.md 与全部资源文件。
 
 #### 请求示例
 
@@ -2514,7 +2394,11 @@ try {
 }
 ```
 
-### 8.5. 按版本下载 Skill ZIP
+#### 异常说明
+
+Skill 不存在或查询异常时，抛出 NacosException。
+
+### 8.2. 按版本下载 Skill ZIP
 
 #### 描述
 
@@ -2529,7 +2413,7 @@ byte[] downloadSkillZipByVersion(String skillName, String version) throws NacosE
 | 名称       | 类型     | 描述                       | 默认值  |
 |:---------|:-------|--------------------------|------|
 | skillName | String | Skill 名称（唯一标识）           | 无，必填 |
-| version   | String | 目标 Skill 版本，空时获取最新版本    | 无     |
+| version   | String | 目标 Skill 版本，为 null 时获取最新版本 | 无     |
 
 #### 返回参数
 
@@ -2549,7 +2433,11 @@ try {
 }
 ```
 
-### 8.6. 按标签下载 Skill ZIP
+#### 异常说明
+
+Skill 或指定版本不存在、查询异常时，抛出 NacosException。
+
+### 8.3. 按标签下载 Skill ZIP
 
 #### 描述
 
@@ -2583,6 +2471,10 @@ try {
     e.printStackTrace();
 }
 ```
+
+#### 异常说明
+
+Skill 或指定标签不存在、查询异常时，抛出 NacosException。
 
 ## 9. Prompt 能力
 

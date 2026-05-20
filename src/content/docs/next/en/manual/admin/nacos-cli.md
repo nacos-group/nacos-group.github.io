@@ -1,14 +1,14 @@
 ---
 title: Nacos CLI User Guide
 keywords: [ Nacos, Nacos CLI ]
-description: Nacos CLI User Guide, introducing how to install and use Nacos CLI for configuration management, AI skill management, and interactive terminal operations.
+description: Nacos CLI User Guide, introducing how to install and use Nacos CLI for configuration management, full lifecycle management of AI Skills and AgentSpecs, and interactive terminal operations.
 sidebar:
   order: 14
 ---
 
 # Nacos CLI User Guide
 
-Nacos CLI is a command-line tool for Nacos configuration center, supporting configuration management, AI skill management, and interactive terminal mode.
+Nacos CLI is a command-line tool for Nacos configuration center, supporting configuration management, full lifecycle management of AI Skills and AgentSpecs (upload → review → release), and interactive terminal mode.
 
 ## 1. Prerequisites
 ### 1.1. Runtime Requirements
@@ -25,7 +25,7 @@ This is the simplest installation method. After installation, configure the Naco
 **Linux / macOS:**
 
 ```bash
-curl -fsSL https://nacos.io/nacos-installer.sh | sudo bash -s -- --cli
+curl -fsSL https://nacos.io/nacos-installer.sh | bash -s -- --cli
 ```
 
 **Windows (PowerShell):**
@@ -52,81 +52,180 @@ nacos-cli --help
 ```
 
 ## 3. Authentication Configuration
-Nacos CLI supports two authentication methods:
+Nacos CLI supports the following authentication methods:
 
-### 3.1. Configuration File (Recommended)
-To avoid entering authentication information every time, using a configuration file is recommended.
+- `none`: no authentication
+- `nacos`: username / password
+- `aliyun`: Alibaba Cloud AccessKey / SecretKey (for Alibaba Cloud MSE Nacos)
+- `sts-hiclaw`: STS temporary credentials (resolved dynamically from the `HICLAW_CONTROLLER_URL` and `HICLAW_AUTH_TOKEN_FILE` environment variables)
+
+### 3.1. Profile-Based Configuration (Recommended)
+Nacos CLI stores per-environment connection settings as profiles. Each profile maps to a YAML file at `~/.nacos-cli/<profile>.conf`. The default profile is named `default`, stored at `~/.nacos-cli/default.conf`.
+
+> **First run**: Just execute `nacos-cli`. When no profile exists, the CLI launches an interactive wizard that walks you through host, port, authType, username, password, etc., and saves the result to `~/.nacos-cli/default.conf` for future reuse.
+
+#### 3.1.1. Create / Edit a Profile
+`nacos-cli profile edit` enters an interactive editor. Existing values are shown as defaults — press Enter to keep them.
 
 ```bash
-# Create configuration file
-cat > local.conf << EOF
-host: <your_nacos_host>
-port: <your_nacos_port>
-username: <your_username>
-password: <your_password>
-namespace: ""
-EOF
+# Create / edit the default profile (saved to ~/.nacos-cli/default.conf)
+nacos-cli profile edit
 
-# Use configuration file
-nacos-cli --config ./local.conf skill-list
+# Create / edit the dev profile (saved to ~/.nacos-cli/dev.conf)
+nacos-cli profile edit dev
+
+# Create / edit the prod profile
+nacos-cli profile edit prod
 ```
 
-**Configuration File Format** (YAML):
+After editing, the CLI asks whether to log in immediately and enter the interactive terminal — pressing Enter accepts.
+
+#### 3.1.2. Show a Profile
+```bash
+# Show the default profile
+nacos-cli profile show
+
+# Show the dev profile
+nacos-cli profile show dev
+```
+
+Sample output (passwords / secret keys are masked):
+```plain
+Profile: dev
+Config file: /Users/<user>/.nacos-cli/dev.conf
+─────────────────────────────────────────
+host:           127.0.0.1
+port:           8848
+auth-type:      nacos
+username:       nacos
+password:       ******
+namespace:      (public)
+```
+
+#### 3.1.3. Switch Profiles
+The `default` profile is loaded automatically. Use `--profile` to switch:
+
+```bash
+# Use the default profile (equivalent to omitting --profile)
+nacos-cli skill-list
+
+# Use the dev profile (loads ~/.nacos-cli/dev.conf)
+nacos-cli --profile dev skill-list
+
+# Use the prod profile
+nacos-cli --profile prod config-list
+```
+
+#### 3.1.4. Configuration File Format
+Profile files are YAML (note: fields use camelCase):
 
 ```yaml
-# Nacos server address
+# Nacos server host
 host: <your_nacos_host>
 
 # Nacos server port
 port: <your_nacos_port>
 
-# Authentication type: nacos or aliyun
-auth_type: nacos
+# Authentication type: none | nacos | aliyun | sts-hiclaw
+authType: nacos
 
-# Nacos authentication
+# Nacos authentication (used when authType=nacos)
 username: <your_username>
 password: <your_password>
 
-# Alibaba Cloud authentication (optional)
-access_key: ""
-secret_key: ""
+# Alibaba Cloud authentication (used when authType=aliyun)
+accessKey: ""
+secretKey: ""
+
+# STS SecurityToken (legacy)
+securityToken: ""
 
 # Namespace ID (optional, leave empty for public)
 namespace: ""
 ```
 
-### 3.2. Command-Line Parameters
-#### 3.2.1. Nacos Authentication (Username/Password)
+> **Note**: When `authType=sts-hiclaw`, do not store credentials in the profile file. The CLI resolves them dynamically from the `HICLAW_CONTROLLER_URL` and `HICLAW_AUTH_TOKEN_FILE` environment variables.
+
+### 3.2. Explicit Configuration File (`--config`)
+You can also point the CLI at any config file path with `--config`, which is convenient when checking config into a project repo or wiring up a script environment:
+
+```bash
+nacos-cli --config /path/to/custom.conf skill-list
+```
+
+`--config` overrides profile resolution: when set, both `--profile` and the files under `~/.nacos-cli/` are ignored.
+
+### 3.3. Command-Line Parameters
+You can also provide everything via command-line flags, with no config file at all:
+
+#### 3.3.1. Nacos Authentication (Username/Password)
 ```bash
 nacos-cli --host <host> --port <port> -u <username> -p <password>
 ```
 
-#### 3.2.2. Alibaba Cloud Authentication (AccessKey/SecretKey)
-If you are using Alibaba Cloud MSE Nacos, you can use AK/SK for authentication:
-
+#### 3.3.2. Alibaba Cloud Authentication (AccessKey/SecretKey)
 ```bash
 nacos-cli --host <host> --port <port> --auth-type aliyun --access-key <your_ak> --secret-key <your_sk>
 ```
 
-### 3.3. Configuration Priority
-Configuration values are applied in the following priority order:
+#### 3.3.3. STS (sts-hiclaw) Authentication
+```bash
+export HICLAW_CONTROLLER_URL=https://<controller-host>
+export HICLAW_AUTH_TOKEN_FILE=/path/to/token
 
-1. **Command-line parameters** (highest priority)
-2. **Configuration file**
-3. **Default values** (lowest priority)
+nacos-cli --host <host> --port <port> --auth-type sts-hiclaw
+```
 
-Example:
+### 3.4. Environment Variables
+You can also provide Nacos connection information via environment variables:
 
 ```bash
-# Use configuration file but override host
-nacos-cli --config ./local.conf --host <another_host> skill-list
+export NACOS_HOST=127.0.0.1
+export NACOS_PORT=8848
+export NACOS_NAMESPACE=xxx
+export NACOS_AUTH_TYPE=nacos
+```
 
-# Use configuration file entirely
-nacos-cli --config ./local.conf skill-list
+`sts-hiclaw` additionally requires:
+
+```bash
+export HICLAW_CONTROLLER_URL=https://<controller-host>
+export HICLAW_AUTH_TOKEN_FILE=/path/to/token
+```
+
+### 3.5. Configuration Priority
+Configuration values are applied in the following priority order (highest to lowest):
+
+1. **Command-line parameters** (highest priority)
+2. **Configuration file specified by `--config`**
+3. **Profile selected by `--profile` (defaults to `default`)**
+4. **Environment variables** (`NACOS_HOST` / `NACOS_PORT` / `NACOS_NAMESPACE` / `NACOS_AUTH_TYPE`)
+5. **Default values** (lowest priority)
+
+Examples:
+
+```bash
+# Use the dev profile, but override host via command line
+nacos-cli --profile dev --host 10.0.0.1 skill-list
+
+# Explicit config file
+nacos-cli --config /path/to/custom.conf skill-list
+
+# Use environment variables (when command line, --config, and profile all do not provide a value)
+NACOS_HOST=127.0.0.1 NACOS_PORT=8848 NACOS_NAMESPACE=xxx nacos-cli skill-list
+
+# Without any arguments, the CLI runs the interactive wizard to create the default profile, then connects to that server
+nacos-cli
+
+# When only --host is provided, port defaults to 8848
+nacos-cli --host 127.0.0.1
+
+# When only --port is provided, host defaults to 127.0.0.1
+nacos-cli --port 8849
 ```
 
 ## 4. Quick Start
-> **Tip**: The following examples assume a configuration file has been set up. See [3.1 Configuration File](#31-configuration-file-recommended) for details.
+> **Tip**: The following examples assume the default profile has been configured via `nacos-cli profile edit`. See [3.1 Profile-Based Configuration](#31-profile-based-configuration-recommended) for details.
 >
 
 ### 4.1. CLI Mode
@@ -163,10 +262,13 @@ nacos> help
 
 ### 5.1. AI Skill Management ✅
 
-Nacos CLI provides complete AI skill lifecycle management, including listing, downloading, uploading, and real-time synchronization.
+Skills follow a three-stage lifecycle aligned with the server:
+`upload` (editing) → `review` (reviewing → reviewed) → `release` (online).
+
+Nacos CLI provides complete Skill lifecycle management: list, describe, get, upload, review, release, plus real-time synchronization.
 
 #### 5.1.1. List Skills
-Get the list of AI skills stored in Nacos. By default, skill descriptions are displayed (truncated to 50 characters).
+Get the list of AI skills stored in Nacos. By default, skill descriptions are displayed (truncated to 50 characters). Supports script-friendly JSON output.
 
 **Command Format**
 ```bash
@@ -180,6 +282,7 @@ nacos-cli skill-list [flags]
 | --name |  |  | Filter by skill name |
 | --page |  | 1 | Page number |
 | --size |  | 10 | Page size |
+| --output |  | pretty | Output format: `pretty` (default) or `json` (machine-readable for scripting) |
 
 **Usage Examples**
 ```bash
@@ -187,16 +290,37 @@ nacos-cli skill-list [flags]
 nacos-cli skill-list
 
 # Filter by name
-nacos-cli skill-list --name <skill-name>
+nacos-cli skill-list --name <skill-name> --page 1 --size 20
+
+# Machine-readable JSON output
+nacos-cli skill-list --output json
 
 # Interactive mode
 nacos> skill-list
 nacos> skill-list --name <skill-name> --page 2
+nacos> skill-list --output json
 ```
 
-#### 5.1.2. Get/Download Skills
+#### 5.1.2. Describe Skill
+Show detail and version history of the specified skill (latest / editing / reviewing / online, plus per-version status).
 
-Download skills from Nacos to a local directory, including skill metadata (SKILL.md) and all resource files.
+**Command Format**
+```bash
+nacos-cli skill-describe <skill-name> [flags]
+```
+
+**Usage Examples**
+```bash
+nacos-cli skill-describe <skill-name>
+nacos-cli skill-describe <skill-name> --output json
+
+# Interactive mode
+nacos> skill-describe <skill-name>
+```
+
+#### 5.1.3. Get/Download Skill
+
+Download a skill from Nacos to a local directory, including skill metadata (SKILL.md) and all resource files.
 
 **Command Format**
 ```bash
@@ -233,9 +357,9 @@ The downloaded skill directory structure is as follows:
     └── init_skill.py
 ```
 
-#### 5.1.3. Upload Skills
+#### 5.1.4. Upload Skill
 
-Upload local skills to Nacos, supporting single or batch uploads.
+Upload a local skill to Nacos (creates or updates the `editing` version), supporting single or batch uploads.
 
 **Command Format**
 ```bash
@@ -246,7 +370,7 @@ nacos-cli skill-upload <path> [flags]
 
 | Parameter | Default | Description |
 | --- | --- | --- |
-| --all | false | Batch upload all skills in the directory |
+| --all | false | Batch upload all skills under the directory |
 
 **Usage Examples**
 ```bash
@@ -261,11 +385,58 @@ nacos> skill-upload /path/to/skill
 nacos> skill-upload --all /path/to/skills
 ```
 
-#### 5.1.4. Real-time Skill Synchronization
+#### 5.1.5. Review Skill
 
-Listen for skill changes in Nacos and automatically sync to the local directory. When a skill is updated in Nacos, local files are automatically updated.
+Submit the current `editing` version for review (editing → reviewing). The server-side review pipeline runs asynchronously and eventually marks the version as `reviewed`.
 
-> **Note**: `skill-sync` is only available in CLI mode and does not support interactive terminal mode.
+**Command Format**
+```bash
+nacos-cli skill-review <skill-name>
+```
+
+**Usage Examples**
+```bash
+nacos-cli skill-review <skill-name>
+
+# Interactive mode
+nacos> skill-review <skill-name>
+```
+
+#### 5.1.6. Release Skill
+
+Publish an approved (`reviewed`) version online.
+
+**Command Format**
+```bash
+nacos-cli skill-release <skill-name> --version <version> [flags]
+```
+
+**Usage Examples**
+```bash
+nacos-cli skill-release <skill-name> --version 0.0.2
+nacos-cli skill-release <skill-name> --version 0.0.2 --update-latest=false
+
+# Interactive mode
+nacos> skill-release <skill-name> --version 0.0.2
+```
+
+> **Note**: If `skill-release` fails with `HTTP 400 parameter validate error` immediately after `skill-review`, the async review pipeline most likely hasn't marked the version as `reviewed` yet. The CLI prints a hint suggesting to wait a few seconds, re-check the status via `skill-describe`, and retry once `STATUS=reviewed`.
+
+#### 5.1.7. Publish Skill (deprecated)
+
+`skill-publish` is kept as a backward-compatible shortcut that runs `upload` + `review` in sequence and prints a deprecation warning. It will be removed in a future release — prefer the explicit lifecycle commands above.
+
+```bash
+# Legacy shortcut (deprecated)
+nacos-cli skill-publish /path/to/skill
+nacos-cli skill-publish --all /path/to/skills/folder
+```
+
+#### 5.1.8. Real-time Skill Synchronization
+
+Listen for skill changes in Nacos and automatically sync to the local directory. When a skill is updated in Nacos, local files are updated automatically.
+
+> **Note**: `skill-sync` is only available in CLI mode and is not supported in interactive terminal mode.
 
 **Command Format**
 ```bash
@@ -293,11 +464,119 @@ nacos-cli skill-sync --all
 # Press Ctrl+C to stop syncing
 ```
 
-### 5.2. Configuration Management ✅
+### 5.2. AgentSpec Management ✅
+
+AgentSpecs follow the same three-stage lifecycle as Skills:
+`upload` (editing) → `review` (reviewing → reviewed) → `release` (online).
+
+#### 5.2.1. List AgentSpecs
+
+```bash
+# CLI mode (pretty output by default)
+nacos-cli agentspec-list
+
+# With filters
+nacos-cli agentspec-list --name <agentspec-name> --page 1 --size 20
+
+# Machine-readable JSON output
+nacos-cli agentspec-list --output json
+
+# Interactive mode
+nacos> agentspec-list
+nacos> agentspec-list --name <agentspec-name> --page 2
+nacos> agentspec-list --output json
+```
+
+#### 5.2.2. Describe AgentSpec
+
+Show detail and version history (latest / editing / reviewing / online, plus per-version status):
+
+```bash
+nacos-cli agentspec-describe <agentspec-name>
+nacos-cli agentspec-describe <agentspec-name> --output json
+
+# Interactive mode
+nacos> agentspec-describe <agentspec-name>
+```
+
+#### 5.2.3. Get/Download AgentSpec
+
+Download an AgentSpec to a local directory (default: `~/.agentspecs`):
+
+```bash
+# CLI mode
+nacos-cli agentspec-get <agentspec-name>
+nacos-cli agentspec-get <agentspec-name> -o /custom/path
+
+# Download a specific version
+nacos-cli agentspec-get <agentspec-name> --version v1
+
+# Download by route label
+nacos-cli agentspec-get <agentspec-name> --label latest
+
+# Download multiple AgentSpecs
+nacos-cli agentspec-get spec1 spec2 spec3
+
+# Interactive mode
+nacos> agentspec-get <agentspec-name>
+```
+
+#### 5.2.4. Upload AgentSpec
+
+Upload an AgentSpec from a local directory (creates or updates the `editing` version):
+
+```bash
+# Upload a single AgentSpec
+nacos-cli agentspec-upload /path/to/agentspec
+
+# Batch upload all AgentSpecs in a directory
+nacos-cli agentspec-upload --all /path/to/agentspecs/folder
+
+# Interactive mode
+nacos> agentspec-upload /path/to/agentspec
+nacos> agentspec-upload --all /path/to/agentspecs
+```
+
+#### 5.2.5. Review AgentSpec
+
+Submit the current `editing` version for review (editing → reviewing). The server-side review pipeline runs asynchronously and eventually marks the version as `reviewed`.
+
+```bash
+nacos-cli agentspec-review <agentspec-name>
+
+# Interactive mode
+nacos> agentspec-review <agentspec-name>
+```
+
+#### 5.2.6. Release AgentSpec
+
+Publish an approved (`reviewed`) version online:
+
+```bash
+nacos-cli agentspec-release <agentspec-name> --version 0.0.2
+nacos-cli agentspec-release <agentspec-name> --version 0.0.2 --update-latest=false
+
+# Interactive mode
+nacos> agentspec-release <agentspec-name> --version 0.0.2
+```
+
+> **Note**: If `agentspec-release` fails with `HTTP 400 parameter validate error` immediately after `agentspec-review`, the async review pipeline most likely hasn't marked the version as `reviewed` yet. The CLI prints a hint suggesting to wait a few seconds, re-check the status via `agentspec-describe`, and retry once `STATUS=reviewed`.
+
+#### 5.2.7. Publish AgentSpec (deprecated)
+
+`agentspec-publish` is kept as a backward-compatible shortcut that runs `upload` + `review` in sequence and prints a deprecation warning. It will be removed in a future release — prefer the explicit lifecycle commands above.
+
+```bash
+# Legacy shortcut (deprecated)
+nacos-cli agentspec-publish /path/to/agentspec
+nacos-cli agentspec-publish --all /path/to/agentspecs/folder
+```
+
+### 5.3. Configuration Management ✅
 
 Provides configuration list queries and configuration content retrieval for the configuration center.
 
-#### 5.2.1. List Configurations
+#### 5.3.1. List Configurations
 
 Get the configuration list from the Nacos configuration center, supporting filtering by dataId and group.
 
@@ -331,7 +610,7 @@ nacos> config-list
 nacos> config-list --data-id <dataId> --page 2
 ```
 
-#### 5.2.2. Get Configuration
+#### 5.3.2. Get Configuration
 
 Get the configuration content for a specified dataId and group.
 
@@ -356,7 +635,7 @@ nacos-cli config-get <dataId> <group>
 nacos> config-get <dataId> <group>
 ```
 
-### 5.3. Service Registration (Naming) ❌
+### 5.4. Service Registration (Naming) ❌
 
 Service registration and discovery features are not yet implemented, including:
 
@@ -366,14 +645,14 @@ Service registration and discovery features are not yet implemented, including:
 - `instance-register` - Register service instance
 - `instance-deregister` - Deregister service instance
 
-### 5.4. Distributed Lock (Lock) ❌
+### 5.5. Distributed Lock (Lock) ❌
 
 Distributed lock features are not yet implemented, including:
 
 - `lock-acquire` - Acquire distributed lock
 - `lock-release` - Release distributed lock
 
-### 5.5. Contribution Guide
+### 5.6. Contribution Guide
 
 We welcome community developers to participate in building Nacos CLI! Feel free to submit Issues or Pull Requests on [GitHub](https://github.com/nacos-group/nacos-cli).
 
@@ -404,18 +683,22 @@ nacos> quit           # Exit
 ## 7. Global Parameters
 The following parameters apply to all commands:
 
-| Parameter | Short | Description |
-| --- | --- | --- |
-| --host |  | Nacos server address |
-| --port |  | Nacos server port |
-| --username | -u | Username (Nacos authentication) |
-| --password | -p | Password (Nacos authentication) |
-| --auth-type |  | Authentication type: nacos or aliyun |
-| --access-key |  | AccessKey (Alibaba Cloud authentication) |
-| --secret-key |  | SecretKey (Alibaba Cloud authentication) |
-| --namespace | -n | Namespace ID |
-| --config | -c | Configuration file path |
-| --help | -h | Show help information |
+| Parameter | Short | Default | Description |
+| --- | --- | --- | --- |
+| --host |  | `market.hiclaw.io` when both `--host` and `--port` are omitted; `127.0.0.1` when only `--port` is provided | Nacos server address |
+| --port |  | `80` when both `--host` and `--port` are omitted; `8848` when only `--host` is provided | Nacos server port |
+| --server | -s | `market.hiclaw.io:80` when no host/port is provided | Nacos server address (deprecated, use `--host` and `--port`) |
+| --profile |  | default | Profile name; loads `~/.nacos-cli/<profile>.conf` |
+| --config | -c |  | Explicit configuration file path; overrides `--profile` |
+| --username | -u |  | Username (authType=nacos) |
+| --password | -p |  | Password (authType=nacos) |
+| --auth-type |  |  | Authentication type: none / nacos / aliyun / sts-hiclaw |
+| --access-key |  |  | AccessKey (authType=aliyun) |
+| --secret-key |  |  | SecretKey (authType=aliyun) |
+| --security-token |  |  | STS SecurityToken (legacy) |
+| --namespace | -n | (empty/public) | Namespace ID |
+| --verbose |  | false | Print debug output |
+| --help | -h |  | Show help information |
 
 
 ## 8. API Compatibility
@@ -453,6 +736,15 @@ The CLI automatically detects the server version and selects the appropriate API
 1. Use the `ns` command to check the current namespace
 2. Confirm the namespace ID is correct in the Nacos console
 3. Note: The namespace ID is not the namespace name
+
+### 9.4. HTTP 400 parameter validate error on release
+**Problem**: Running `*-release` immediately after `skill-review` / `agentspec-review` fails with `HTTP 400 parameter validate error`
+
+**Solution**:
+
+1. The server-side review pipeline runs asynchronously and may not have updated the version status to `reviewed` yet
+2. Wait a few seconds and re-check the status via `skill-describe` / `agentspec-describe`
+3. Retry `*-release` once `STATUS=reviewed`
 
 ## 10. Related Resources
 + [Nacos GitHub](https://github.com/alibaba/nacos)
