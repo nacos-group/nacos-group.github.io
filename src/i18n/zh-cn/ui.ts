@@ -128,6 +128,12 @@ export default {
 	'home.quickstart.install.nacos.setup': '安装 nacos-setup',
 	'home.quickstart.start.nacos': '一键部署 Nacos',
 	'home.quickstart.view.full': '查看完整文档',
+	'home.nacoscli.title': '使用 Nacos CLI',
+	'home.nacoscli.tab.agent': 'Agent',
+	'home.nacoscli.tab.user': '用户',
+	'home.nacoscli.agent.prompt': 'Read this Skill and use it when working with Nacos CLI:',
+	'home.nacoscli.user.text': '查看安装、配置和常用命令',
+	'home.nacoscli.user.link': 'Nacos CLI 文档',
 
 	'cloud.title': 'Nacos Cloud',
 	'cloud.description': 'Nacos Cloud 专为云原生应用设计，提供强大的服务发现、动态配置管理和服务管理功能，支持高效的应用开发和运维。',

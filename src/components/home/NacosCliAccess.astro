@@ -1,0 +1,471 @@
+---
+import { useTranslations } from "@i18n/util";
+
+const t = useTranslations(Astro);
+const isEn = Astro.url.pathname.startsWith('/en');
+const skillUrl = 'https://nacos.io/SKILL.md';
+const agentPrompt = `${t('home.nacoscli.agent.prompt')}\n${skillUrl}`;
+const cliDocHref = isEn ? '/en/docs/latest/manual/admin/nacos-cli/' : '/docs/latest/manual/admin/nacos-cli/';
+const cliInstallUnix = 'curl -fsSL https://nacos.io/nacos-installer.sh | sudo bash -s -- --cli';
+const cliInstallWindows = 'iwr -UseBasicParsing https://nacos.io/nacos-installer.ps1 -OutFile $env:TEMP\\nacos-installer.ps1; & $env:TEMP\\nacos-installer.ps1 -cli; Remove-Item $env:TEMP\\nacos-installer.ps1';
+---
+
+<nacos-cli-access class="nacos-cli-section block w-full pt-4 pb-6">
+  <div class="nacos-cli-content px-4 mx-auto">
+    <div class="nacos-cli-heading">
+      <h3>{t('home.nacoscli.title')}</h3>
+      <a class="nacos-cli-doc-link" href={cliDocHref}>
+        <span>{t('home.nacoscli.user.link')}</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 12h14M12 5l7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+
+    <div class="nacos-cli-tabs">
+      <div class="nacos-cli-tab-buttons" role="tablist" aria-label="Nacos CLI access">
+        <button class="nacos-cli-tab active" type="button" role="tab" aria-selected="true" data-tab="agent">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2.5l1.72 5.04 5.28.04-4.25 3.13 1.6 5.09L12 12.77 7.65 15.8l1.6-5.09L5 7.58l5.28-.04L12 2.5z"/>
+            <path d="M4.5 16.5l.7 2.05 2.05.02-1.65 1.2.62 1.98-1.72-1.18-1.72 1.18.62-1.98-1.65-1.2 2.05-.02.7-2.05z"/>
+            <path d="M19.5 16.5l.7 2.05 2.05.02-1.65 1.2.62 1.98-1.72-1.18-1.72 1.18.62-1.98-1.65-1.2 2.05-.02.7-2.05z"/>
+          </svg>
+          <span>{t('home.nacoscli.tab.agent')}</span>
+        </button>
+        <button class="nacos-cli-tab" type="button" role="tab" aria-selected="false" data-tab="user">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 4.75A2.75 2.75 0 016.75 2h11.5A1.75 1.75 0 0120 3.75v15.5A2.75 2.75 0 0117.25 22H6.75A2.75 2.75 0 014 19.25V4.75zm3 .75v12h10v-12H7zm1.5 3h7v1.5h-7V8.5zm0 3h7v1.5h-7v-1.5zm0 3h4.5V16H8.5v-1.5z"/>
+          </svg>
+          <span>{t('home.nacoscli.tab.user')}</span>
+        </button>
+      </div>
+
+      <div class="nacos-cli-panels">
+        <div class="nacos-cli-panel active" role="tabpanel" data-panel="agent">
+          <div class="nacos-cli-code" data-code={agentPrompt}>
+            <pre><code>{agentPrompt}</code></pre>
+            <button class="nacos-cli-copy" type="button" aria-label="Copy">
+              <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+              </svg>
+              <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20 6L9 17l-5-5"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="nacos-cli-panel" role="tabpanel" data-panel="user">
+          <div class="nacos-cli-install-tabs">
+            <div class="nacos-cli-install-tab-buttons" role="tablist" aria-label="Nacos CLI install commands">
+              <button
+                class="nacos-cli-install-tab active"
+                type="button"
+                role="tab"
+                aria-selected="true"
+                data-install-tab="unix"
+              >
+                Linux / macOS
+              </button>
+              <button
+                class="nacos-cli-install-tab"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                data-install-tab="windows"
+              >
+                Windows (PowerShell)
+              </button>
+            </div>
+
+            <div class="nacos-cli-install-panels">
+              <div class="nacos-cli-install-panel active" role="tabpanel" data-install-panel="unix">
+                <div class="nacos-cli-code" data-code={cliInstallUnix}>
+                  <pre><code>{cliInstallUnix}</code></pre>
+                  <button class="nacos-cli-copy" type="button" aria-label="Copy">
+                    <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true">
+                      <rect x="9" y="9" width="13" height="13" rx="2"/>
+                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                    </svg>
+                    <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M20 6L9 17l-5-5"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="nacos-cli-install-panel" role="tabpanel" data-install-panel="windows">
+                <div class="nacos-cli-code" data-code={cliInstallWindows}>
+                  <pre><code>{cliInstallWindows}</code></pre>
+                  <button class="nacos-cli-copy" type="button" aria-label="Copy">
+                    <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true">
+                      <rect x="9" y="9" width="13" height="13" rx="2"/>
+                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                    </svg>
+                    <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M20 6L9 17l-5-5"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nacos-cli-access>
+
+<script>
+  class NacosCliAccess extends HTMLElement {
+    constructor() {
+      super();
+
+      const tabButtons = this.querySelectorAll<HTMLButtonElement>('.nacos-cli-tab');
+      const tabPanels = this.querySelectorAll<HTMLElement>('.nacos-cli-panel');
+      const installTabButtons = this.querySelectorAll<HTMLButtonElement>('.nacos-cli-install-tab');
+      const installTabPanels = this.querySelectorAll<HTMLElement>('.nacos-cli-install-panel');
+
+      tabButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const tabId = button.dataset.tab;
+
+          tabButtons.forEach((tabButton) => {
+            const isActive = tabButton === button;
+            tabButton.classList.toggle('active', isActive);
+            tabButton.setAttribute('aria-selected', String(isActive));
+          });
+
+          tabPanels.forEach((panel) => {
+            panel.classList.toggle('active', panel.dataset.panel === tabId);
+          });
+        });
+      });
+
+      installTabButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const tabId = button.dataset.installTab;
+
+          installTabButtons.forEach((tabButton) => {
+            const isActive = tabButton === button;
+            tabButton.classList.toggle('active', isActive);
+            tabButton.setAttribute('aria-selected', String(isActive));
+          });
+
+          installTabPanels.forEach((panel) => {
+            panel.classList.toggle('active', panel.dataset.installPanel === tabId);
+          });
+        });
+      });
+
+      this.querySelectorAll<HTMLButtonElement>('.nacos-cli-copy').forEach((button) => {
+        button.addEventListener('click', () => {
+          const codeBlock = button.closest('.nacos-cli-code') as HTMLElement;
+          const code = codeBlock?.dataset.code || '';
+          navigator.clipboard.writeText(code).then(() => {
+            button.classList.add('copied');
+            setTimeout(() => button.classList.remove('copied'), 2000);
+          });
+        });
+      });
+    }
+  }
+
+  customElements.define('nacos-cli-access', NacosCliAccess);
+</script>
+
+<style is:global>
+  .nacos-cli-section {
+    margin-top: 0;
+    scroll-margin-top: 4rem;
+  }
+
+  .nacos-cli-content {
+    width: 85.125rem;
+  }
+
+  .nacos-cli-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .nacos-cli-heading h3 {
+    margin: 0;
+    color: #1f2937;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 500;
+  }
+
+  .nacos-cli-doc-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: #8c8c8c;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .nacos-cli-doc-link:hover {
+    color: #1677ff;
+  }
+
+  .nacos-cli-doc-link svg {
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .nacos-cli-tabs {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+  }
+
+  .nacos-cli-tab-buttons {
+    display: flex;
+    background: #fafafa;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .nacos-cli-tab {
+    flex: 1;
+    min-height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    color: #666;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+  }
+
+  .nacos-cli-tab:hover {
+    color: #333;
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .nacos-cli-tab.active {
+    color: #1677ff;
+    background: #fff;
+    border-bottom-color: #1677ff;
+  }
+
+  .nacos-cli-tab svg {
+    width: 1rem;
+    height: 1rem;
+    fill: currentColor;
+    flex-shrink: 0;
+  }
+
+  .nacos-cli-panel {
+    display: none;
+    padding: 1rem 1.5rem;
+    animation: nacosCliFadeIn 0.3s ease;
+  }
+
+  .nacos-cli-panel.active {
+    display: block;
+  }
+
+  .nacos-cli-install-tabs {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .nacos-cli-install-tab-buttons {
+    display: inline-flex;
+    width: auto;
+    margin: 0.75rem 1rem 0;
+    padding: 0.1875rem;
+    background: #f5f5f5;
+    border: 1px solid #e8e8e8;
+    border-radius: 7px;
+  }
+
+  .nacos-cli-install-tab {
+    min-width: 7.5rem;
+    min-height: 2rem;
+    padding: 0.375rem 0.75rem;
+    color: #666;
+    background: transparent;
+    border: 0;
+    border-radius: 5px;
+    font-size: 0.8125rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .nacos-cli-install-tab.active {
+    color: #1677ff;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  }
+
+  .nacos-cli-install-panels {
+    padding: 0.875rem 1rem 1rem;
+  }
+
+  .nacos-cli-install-panel {
+    display: none;
+    animation: nacosCliFadeIn 0.2s ease;
+  }
+
+  .nacos-cli-install-panel.active {
+    display: block;
+  }
+
+  .nacos-cli-code {
+    position: relative;
+    padding: 0.875rem 3.25rem 0.875rem 1rem;
+    background: #f5f5f5;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+
+  .nacos-cli-code pre {
+    margin: 0;
+  }
+
+  .nacos-cli-code code {
+    color: #333;
+    font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, Consolas, monospace;
+    font-size: 0.8125rem;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  .nacos-cli-copy {
+    position: absolute;
+    top: 0.625rem;
+    right: 0.75rem;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .nacos-cli-code:hover .nacos-cli-copy,
+  .nacos-cli-copy:focus-visible {
+    opacity: 1;
+  }
+
+  .nacos-cli-copy:hover {
+    background: #f0f0f0;
+  }
+
+  .nacos-cli-copy svg {
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    color: #666;
+  }
+
+  .nacos-cli-copy .check-icon {
+    display: none;
+    color: #52c41a;
+  }
+
+  .nacos-cli-copy.copied {
+    background: #f6ffed;
+    border-color: #b7eb8f;
+  }
+
+  .nacos-cli-copy.copied .copy-icon {
+    display: none;
+  }
+
+  .nacos-cli-copy.copied .check-icon {
+    display: block;
+  }
+
+  @keyframes nacosCliFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .nacos-cli-section {
+      padding-bottom: 1.5rem;
+    }
+
+    .nacos-cli-content {
+      width: 100%;
+    }
+
+    .nacos-cli-heading h3 {
+      font-size: 1.125rem;
+      line-height: 1.5rem;
+    }
+
+    .nacos-cli-heading {
+      flex-wrap: wrap;
+      row-gap: 0.5rem;
+    }
+
+    .nacos-cli-panel {
+      padding: 1rem;
+    }
+
+    .nacos-cli-install-tab {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .nacos-cli-code {
+      padding: 1rem 3rem 1rem 1rem;
+    }
+
+    .nacos-cli-code code {
+      font-size: 0.75rem;
+    }
+  }
+
+  @media (min-width: 640px) and (max-width: 86rem) {
+    .nacos-cli-content {
+      width: 100%;
+    }
+  }
+</style>

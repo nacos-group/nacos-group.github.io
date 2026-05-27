@@ -129,6 +129,12 @@ export default {
 	'home.quickstart.install.nacos.setup': 'Install nacos-setup',
 	'home.quickstart.start.nacos': 'Deploy Nacos with one click',
 	'home.quickstart.view.full': 'View full documentation',
+	'home.nacoscli.title': 'Use Nacos CLI',
+	'home.nacoscli.tab.agent': 'Agent',
+	'home.nacoscli.tab.user': 'User',
+	'home.nacoscli.agent.prompt': 'Read this Skill and use it when working with Nacos CLI:',
+	'home.nacoscli.user.text': 'Install, configure, and use common commands',
+	'home.nacoscli.user.link': 'Nacos CLI docs',
 
 	'cloud.title': 'Nacos Cloud',
 	'cloud.description': 'Nacos Cloud is specifically designed for cloud-native applications, providing powerful features for service discovery, dynamic configuration management, and service management. It supports efficient application development and operations.',
