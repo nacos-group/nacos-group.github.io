@@ -50,6 +50,10 @@ Nacos 3.X 的运维 API 也提供了Swagger风格的文档，您可以通过访�
 
 通过该接口，可以获取连接到当前Nacos Server节点中的gRPC连接详情。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -153,6 +157,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/current'
 
 通过该接口，可以指定一定数量的连接到当前Nacos Server节点中的gRPC连接，将这部分连接断开后迁移到其他Nacos Server节点中。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -195,6 +203,10 @@ success
 #### 接口描述
 
 通过该接口，可以将指定的客户端连接(gRPC连接)迁移到其他Nacos Server节点中。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -254,6 +266,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/reloadClient' -d 
 #### 接口描述
 
 通过该接口，查看Nacos Server集群中各节点的连接数概览。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -331,6 +347,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/cluster'
 #### 接口描述
 
 通过该接口，可以获取Nacos Server集群当前节点的详细信息。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -453,6 +473,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/self'
 #### 接口描述
 
 通过该接口，可以获取Nacos Server集群中所有节点的详细信息。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -596,6 +620,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/list'
 通过该接口，可以在不重启Nacos Server的情况下，动态切换Nacos Server集群地址发现的方式，目前支持两种方式：`file`
 和`address-server`。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `PUT`
@@ -645,6 +673,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/lookup' -d "type=
 #### 接口描述
 
 通过该接口，可以对Nacos Server集群中的Raft协议进行部分运维操作，如执行快照，主动选主等。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -708,6 +740,10 @@ curl -X POST -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/
 #### 接口描述
 
 通过该接口，可以在不重启Nacos Server的情况下，动态修改Nacos Core相关日志级别的配置。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -775,6 +811,10 @@ curl -X PUT -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/a
    1-loaderFactor))、节点连接数上限阈值`overLimitCount`(=avg * (1+loaderFactor))
 2. 将高负载节点的部分客户端连接重定向到低负载节点。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -834,6 +874,10 @@ success
 #### 接口描述
 
 通过该接口，获取ID生成器的当前ID,workerId. 只有使用内置数据库时该接口才会返回有效数据.
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -910,6 +954,10 @@ success
 
 通过该接口，可以更新当前节点中的Nacos节点列表的详细信息。**注意：** 该接口会覆盖当前节点中列表中的详细信息，仅更新传入的节点中存在于集群中的节点，并`不能`通过此接口添加和减少集群中的节点。同时，Nacos自身的健康探测`report`任务也会对当前节点中列表中的节点进行健康探测及更新详细信息，若调用此接口后，探测任务发现节点信息有变更，则任务也会覆盖当前节点中列表中的节点信息。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `PUT`
@@ -959,6 +1007,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/list' \
 #### 接口描述
 
 通过该接口，可以获取指定命名空间的详情。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -1022,6 +1074,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace?namespaceId=pub
 
 通过该接口，可以更新命名空间的信息，无法更新命名空间ID，仅能更新命名空间的名称和描述。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `PUT`
@@ -1070,6 +1126,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace' \
 #### 接口描述
 
 通过该接口，可以创建新的命名空间。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -1120,6 +1180,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace' \
 
 通过该接口，可以删除命名空间。默认命名空间`public`无法被删除。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `DELETE`
@@ -1166,6 +1230,10 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace?namespaceId=
 
 通过该接口，可以检查命名空间ID是否存在。应该在创建命名空间前调用，确认自定义的命名空间ID是否已经存在，以防冲突。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -1211,6 +1279,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace/check?namespace
 #### 接口描述
 
 通过该接口，可以获取当前Nacos集群的命名空间列表。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -1265,6 +1337,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace/list'
 
 通过该接口，可以获取到Nacos 集群的基础状态和开关信息，例如：版本号，运行模式，鉴权是否开启等；该接口不会返回Nacos 集群的节点信息。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -1311,6 +1387,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state'
 #### 接口描述
 
 通过该接口，可以获取Nacos集群的存活状态，Nacos集群是否可正常接受和响应请求。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -1360,6 +1440,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state/liveness'
 
 通过该接口，可以获取Nacos集群的是否处于可读取状态，即Nacos集群是否可以读取到数据。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -1407,6 +1491,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state/readiness'
 #### 接口描述
 
 通过该接口，可以更新插件的配置。需要提供插件类型、名称及配置内容。支持 localOnly 仅作用于当前节点。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -1461,6 +1549,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/config' \
 #### 接口描述
 
 通过该接口，可以按类型和名称获取指定插件的详情信息。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -1529,6 +1621,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/detail?pluginType=
 
 通过该接口，可以获取所有插件列表，可按插件类型筛选。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -1585,6 +1681,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/list?pluginType=au
 
 通过该接口，可以更新插件的启用状态（启用或禁用）。支持 localOnly 仅作用于当前节点。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `PUT`
@@ -1640,6 +1740,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/status' \
 #### 接口描述
 
 通过该接口，可以查看Nacos Naming模块的相关开关。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -1746,6 +1850,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/switches'
 
 通过该接口，可以修改Nacos Naming模块的相关开关。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `PUT`
@@ -1795,6 +1903,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/switches' -d "entry=pus
 #### 接口描述
 
 通过该接口，可以查询系统当前数据指标。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -1866,6 +1978,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/metrics?onlyStatus=fals
 
 通过该接口，可以动态修改指定日志的级别。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `PUT`
@@ -1922,6 +2038,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/log' -H 'Content-Type: 
 
 查询所有客户端的列表。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -1969,6 +2089,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/list'
 #### 接口描述
 
 根据客户端ID查询客户端的详细信息。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -2058,6 +2182,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client?clientId=17417489524
 
 查询指定客户端注册的服务列表。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -2126,6 +2254,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/publish/list?clientI
 #### 接口描述
 
 查询指定客户端订阅的服务列表。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -2196,6 +2328,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/subscribe/list?clien
 
 查询注册指定服务的客户端列表。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -2259,6 +2395,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/service/publisher/li
 #### 接口描述
 
 查询订阅指定服务的客户端列表。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -2326,6 +2466,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/service/subscriber/l
 
 > 对于使用1.X客户端注册的实例也适用此接口， 但1.X客户端将在未来版本不再支持。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -2378,6 +2522,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/distro?ip=127.0.0.1&
 #### 接口描述
 
 更新指定集群的元数据信息。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -2437,6 +2585,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/cluster' -d 'serviceName=te
 > 仅对持久化服务的实例有效， 且该服务的健康检查方式为`NONE`。
 > 临时实例的健康状态由连接（客户端）维护，其他健康检查类型的持久化服务，健康检查任务会自动维护健康状态，即使更新成功了，也很快会被健康检查任务重制。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `PUT`
@@ -2490,6 +2642,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/health/instance' -d 'namesp
 #### 接口描述
 
 获取系统中支持的所有健康检查器类型及其配置。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -2550,6 +2706,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/health/checkers'
 
 注册一个新的实例到指定服务。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -2608,6 +2768,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance' \
 #### 接口描述
 
 从指定服务中注销一个实例。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -2671,6 +2835,10 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance?namespaceId=pub
 > 同时该接口将会完全覆盖之前更新过的元数据信息，例如，先使用`k1=v1`更新元数据，再使用`k2=v2`
 > 更新元数据，此时读取到的元数据为`k2=v2`，而不是`k1=v1,k2=v2`。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `PUT`
@@ -2730,6 +2898,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance' \
 
 批量更新指定实例的元数据。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `PUT`
@@ -2787,6 +2959,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/metadata/batch' \
 #### 接口描述
 
 批量删除指定实例的元数据。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -2849,6 +3025,10 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/metadata/batch?
 > 不同于[更新实例](#217-更新实例)，该接口支持部分更新实例信息，例如：先使用`k1=v1`更新元数据，再使用`k2=v2`
 > 更新元数据，此时读取到的元数据为`k1=v1,k2=v2`。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `PUT`
@@ -2906,6 +3086,10 @@ curl -X PUT "http://127.0.0.1:8848/nacos/v3/admin/ns/instance/partial" -d 'names
 #### 接口描述
 
 查询指定服务的所有实例列表。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -2990,6 +3174,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/list?namespaceId=p
 #### 接口描述
 
 查询指定实例的详细信息。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -3076,6 +3264,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance?namespaceId=public
 
 创建一个新的持久化服务。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -3133,6 +3325,10 @@ curl -d 'serviceName=nacos.test.1' \
 
 删除指定服务
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `DELETE`
@@ -3182,6 +3378,10 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ns/service?serviceName=naco
 #### 接口描述
 
 查询指定服务的详细信息
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -3269,6 +3469,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service?serviceName=nacos.t
 #### 接口描述
 
 查询所有服务的列表，支持分页和条件过滤。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -3360,6 +3564,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service/list'
 > 该接口将会完全覆盖之前更新过的元数据信息，例如，先使用`k1=v1`更新元数据，再使用`k2=v2`
 > 更新元数据，此时读取到的元数据为`k2=v2`，而不是`k1=v1,k2=v2`。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `PUT`
@@ -3415,6 +3623,10 @@ curl -d 'serviceName=nacos.test.1' \
 #### 接口描述
 
 查询指定服务的订阅者列表。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -3498,6 +3710,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service/subscribers?namespa
 
 查询系统中支持的所有选择器类型。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -3548,6 +3764,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service/selector/types'
 #### 接口描述
 
 获取指定配置
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -3633,6 +3853,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=nacos.example
 
 > 当配置已存在时，则对配置进行更新
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -3695,6 +3919,10 @@ curl -d 'dataId=nacos.example' \
 
 删除指定配置
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `DELETE`
@@ -3745,6 +3973,10 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=nacos.exam
 
 根据配置ID批量删除配置
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `DELETE`
@@ -3792,6 +4024,10 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/batch?ids=1,2,3'
 #### 接口描述
 
 查询指定配置的监听者信息
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -3851,6 +4087,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/listener?namespaceId
 #### 接口描述
 
 根据配置详情（如内容、标签等）搜索配置。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -3953,6 +4193,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/list?pageNo=1&pageSi
 
 > 只有在[发布配置](#32-发布配置)时设置了`Header`的`betaIps`后，将配置变更为BETA发布中的状态，调用此接口才能停止BETA发布状态。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `DELETE`
@@ -4004,6 +4248,10 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/beta?namespaceId=
 查询指定配置的Beta配置
 
 > 只有在[发布配置](#32-发布配置)时设置了`Header`的`betaIps`后，将配置变更为BETA发布中的状态，调用此接口才能停止BETA发布状态。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -4090,6 +4338,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/beta?namespaceId=pub
 
 导入配置并发布到指定命名空间
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -4149,6 +4401,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/import' \
 
 导出指定配置为ZIP文件。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -4190,6 +4446,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/export?namespaceId=p
 #### 接口描述
 
 克隆配置到指定命名空间
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -4252,6 +4512,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/clone' -d "namespac
 #### 接口描述
 
 获取指定配置的历史版本列表
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -4357,6 +4621,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/list?dataId=nacos.e
 
 通过该接口，可以查询配置的某次历史变更记录。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -4440,6 +4708,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/??dataId=111&groupN
 #### 接口描述
 
 获取指定配置的上一版本
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -4525,6 +4797,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/previous?id=101&dat
 
 获取指定命名空间下的配置信息列表
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -4601,6 +4877,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/configs?namespaceId
 
 查询指定分组或命名空间的容量信息
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -4673,6 +4953,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/capacity?namespaceId=public
 
 更新指定分组或命名空间的容量信息。如果容量信息未初始化，则会自动初始化
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -4726,6 +5010,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/capacity' -d 'namespaceId=
 
 手动触发从存储中加载所有配置数据到本地缓存。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -4771,6 +5059,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/localCache'
 #### 接口描述
 
 动态设置指定模块的日志级别
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -4822,6 +5114,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/log' -d "logName=config
 执行Derby数据库的查询操作（仅支持 `SELECT` 语句）
 
 > **注意** 此接口需要开启`nacos.config.derby.ops.enabled`配置，且数据库为`Derby` 时才可使用，仅提供给运维人员进行Derby数据库排查数据问题时使用。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -4903,6 +5199,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/derby?sql=SELECT%20*%20
 
 > **注意** 此接口需要开启`nacos.config.derby.ops.enabled`配置，且数据库为`Derby` 时才可使用，仅提供给运维人员进行Derby数据库排查数据问题时使用。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -4954,6 +5254,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/derby/import' \
 #### 接口描述
 
 获取指定 IP 客户端的订阅配置信息
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -5013,6 +5317,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/listener?ip=127.0.0.1&names
 #### 接口描述
 
 获取集群中指定 IP 客户端的配置指标信息
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -5086,6 +5394,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/metrics/cluster?ip=127.0.0.
 
 获取本地机器上指定 IP 客户端指标信息
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -5158,6 +5470,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/metrics/ip?ip=127.0.0.1&dat
 
 通过该接口，可以更新配置的元数据信息：仅能更新`描述`和`标签`。
 
+#### 起始版本
+
+`3.1.0`
+
 #### 请求方式
 
 `PUT`
@@ -5216,6 +5532,10 @@ curl -X PUT '127.0.0.1:8848/v3/admin/cs/config/metadata' \
 
 This interface retrieves the details of a specified gray configuration.
 
+#### 起始版本
+
+`3.2.2`
+
 #### 请求方式
 
 `GET`
@@ -5271,6 +5591,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/gray?namespaceId=pub
 #### 接口描述
 
 This interface publishes a gray configuration using tagv2 gray matching rules.
+
+#### 起始版本
+
+`3.2.2`
 
 #### 请求方式
 
@@ -5340,6 +5664,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/gray' \
 
 This interface deletes a specified gray configuration.
 
+#### 起始版本
+
+`3.2.2`
+
 #### 请求方式
 
 `DELETE`
@@ -5392,6 +5720,10 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/gray?namespaceId=
 #### 接口描述
 
 通过该接口，可以查询托管在Nacos上的MCP服务的服务列表。
+
+#### 起始版本
+
+`3.0.1`
 
 #### 请求方式
 
@@ -5500,6 +5832,10 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp/list?pageNo=1&pageSize=100&nam
 
 通过该接口，可以查询托管在Nacos上指定MCP服务的服务的详细信息。
 
+#### 起始版本
+
+`3.0.1`
+
 #### 请求方式
 
 `GET`
@@ -5601,6 +5937,10 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=tes
 #### 接口描述
 
 通过该接口，可以更新托管在Nacos上的MCP服务。
+
+#### 起始版本
+
+`3.0.1`
 
 #### 请求方式
 
@@ -5728,6 +6068,10 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 
 通过该接口，可以创建托管在Nacos上的MCP服务，可以是存量API转换的MCP服务，也可以是MCP市场中的MCP服务。
 
+#### 起始版本
+
+`3.0.1`
+
 #### 请求方式
 
 `POST`
@@ -5852,6 +6196,10 @@ curl -X POST '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 
 通过该接口，可以删除托管在Nacos上的MCP服务。
 
+#### 起始版本
+
+`3.0.1`
+
 #### 请求方式
 
 `DELETE`
@@ -5905,6 +6253,10 @@ curl -X DELETE '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=
 #### 接口描述
 
 通过该接口，可以查询指定托管在Nacos上的AgentCard的版本列表。
+
+#### 起始版本
+
+`3.1.0`
 
 #### 请求方式
 
@@ -5963,6 +6315,10 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a/version/list?namespaceId=publi
 #### 接口描述
 
 通过该接口，可以查询托管在Nacos上的AgentCard的列表。
+
+#### 起始版本
+
+`3.1.0`
 
 #### 请求方式
 
@@ -6080,6 +6436,10 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a/list?pageNo=1&pageSize=100&nam
 #### 接口描述
 
 通过该接口，可以查询托管在Nacos上指定AgentCard的详细信息。
+
+#### 起始版本
+
+`3.1.0`
 
 #### 请求方式
 
@@ -6211,6 +6571,10 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a?namespaceId=public&agentName=G
 
 通过该接口，可以更新托管在Nacos上的AgentCard。
 
+#### 起始版本
+
+`3.1.0`
+
 #### 请求方式
 
 `PUT`
@@ -6267,6 +6631,10 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/a2a' \
 
 通过该接口，可以创建托管在Nacos上的AgentCard。
 
+#### 起始版本
+
+`3.1.0`
+
 #### 请求方式
 
 `POST`
@@ -6321,6 +6689,10 @@ curl -X POST '127.0.0.1:8848/nacos/v3/admin/ai/a2a' \
 
 通过该接口，可以删除托管在Nacos上的AgentCard。
 
+#### 起始版本
+
+`3.1.0`
+
 #### 请求方式
 
 `DELETE`
@@ -6373,6 +6745,10 @@ curl -X DELETE '127.0.0.1:8848/nacos/v3/admin/ai/a2a?namespaceId=public&agentNam
 #### 接口描述
 
 This API publishes a new Prompt version.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6428,6 +6804,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt' \
 
 This API deletes the specified Prompt.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `DELETE`
@@ -6474,6 +6854,10 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt?namespaceId=publi
 #### 接口描述
 
 This API queries Prompt details by version or label.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6529,6 +6913,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/detail?namespaceId=p
 
 This API binds a label to the specified Prompt version.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `PUT`
@@ -6579,6 +6967,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/label' \
 
 This API unbinds a label from a Prompt.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `DELETE`
@@ -6626,6 +7018,10 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/label?namespaceId
 #### 接口描述
 
 This API queries Prompts by page.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6688,6 +7084,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/list?pageNo=1&pageSi
 
 This API queries metadata of the specified Prompt.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -6739,6 +7139,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/metadata?namespaceId
 
 This API updates Prompt metadata, such as description and business tags.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `PUT`
@@ -6788,6 +7192,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/metadata' \
 #### 接口描述
 
 This API queries versions of the specified Prompt by page.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6848,6 +7256,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/versions?namespaceId
 
 This API updates Prompt business tags.
 
+#### 起始版本
+
+`3.2.1`
+
 #### 请求方式
 
 `PUT`
@@ -6874,6 +7286,10 @@ This API updates Prompt business tags.
 
 This API updates the Prompt description.
 
+#### 起始版本
+
+`3.2.1`
+
 #### 请求方式
 
 `PUT`
@@ -6899,6 +7315,10 @@ This API updates the Prompt description.
 #### 接口描述
 
 This API creates a Prompt draft version, or recreates a draft from an existing version.
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -6932,6 +7352,10 @@ This API creates a Prompt draft version, or recreates a draft from an existing v
 
 This API updates the current Prompt draft content.
 
+#### 起始版本
+
+`3.2.1`
+
 #### 请求方式
 
 `PUT`
@@ -6960,6 +7384,10 @@ This API updates the current Prompt draft content.
 
 This API deletes the current Prompt draft version.
 
+#### 起始版本
+
+`3.2.1`
+
 #### 请求方式
 
 `DELETE`
@@ -6984,6 +7412,10 @@ This API deletes the current Prompt draft version.
 #### 接口描述
 
 This API force-publishes a Prompt version while bypassing pipeline validation.
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -7012,6 +7444,10 @@ This API force-publishes a Prompt version while bypassing pipeline validation.
 
 This API retrieves Prompt metadata, version governance information, and version summaries.
 
+#### 起始版本
+
+`3.2.1`
+
 #### 请求方式
 
 `GET`
@@ -7036,6 +7472,10 @@ This API retrieves Prompt metadata, version governance information, and version 
 #### 接口描述
 
 This API updates the runtime routing labels of a Prompt.
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -7063,6 +7503,10 @@ This API updates the runtime routing labels of a Prompt.
 
 This API takes a specified Prompt version offline.
 
+#### 起始版本
+
+`3.2.1`
+
 #### 请求方式
 
 `POST`
@@ -7089,6 +7533,10 @@ This API takes a specified Prompt version offline.
 
 This API brings a specified Prompt version online.
 
+#### 起始版本
+
+`3.2.1`
+
 #### 请求方式
 
 `POST`
@@ -7114,6 +7562,10 @@ This API brings a specified Prompt version online.
 #### 接口描述
 
 This API publishes an approved Prompt version.
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -7142,6 +7594,10 @@ This API publishes an approved Prompt version.
 
 This API converts a reviewed Prompt version back to a draft.
 
+#### 起始版本
+
+`3.2.2`
+
 #### 请求方式
 
 `POST`
@@ -7167,6 +7623,10 @@ This API converts a reviewed Prompt version back to a draft.
 #### 接口描述
 
 This API submits a Prompt version to the pipeline for review.
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -7194,6 +7654,10 @@ This API submits a Prompt version to the pipeline for review.
 
 This API retrieves details of a specified Prompt version.
 
+#### 起始版本
+
+`3.2.1`
+
 #### 请求方式
 
 `GET`
@@ -7219,6 +7683,10 @@ This API retrieves details of a specified Prompt version.
 #### 接口描述
 
 This API downloads a specified Prompt version as a Markdown file.
+
+#### 起始版本
+
+`3.2.2`
 
 #### 请求方式
 
@@ -7247,6 +7715,10 @@ This API downloads a specified Prompt version as a Markdown file.
 #### 接口描述
 
 This API obtains the details of a specified skill by namespace and skill name.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -7301,6 +7773,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills?namespaceId=public&s
 
 This API creates a draft version of a skill based on an existing version or a new SkillCard.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `POST`
@@ -7352,6 +7828,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/draft' \
 
 This API updates the SkillCard content of the current skill draft version.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `PUT`
@@ -7401,6 +7881,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/draft' \
 
 This API deletes a skill from Nacos by namespace and skill name.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `DELETE`
@@ -7447,6 +7931,10 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills?namespaceId=publi
 #### 接口描述
 
 This API filters and paginates the skill list by query conditions.
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -7510,6 +7998,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/list?pageNo=1&pageSi
 
 This API uploads a ZIP package in multipart/form-data format and registers the skill. The file must be a valid skill package.
 
+#### 起始版本
+
+`3.2.2`
+
 #### 请求方式
 
 `POST`
@@ -7563,6 +8055,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/upload' \
 
 This API deletes the current draft version of a specified skill.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `DELETE`
@@ -7587,6 +8083,10 @@ This API deletes the current draft version of a specified skill.
 #### 接口描述
 
 This API updates the business tag list of a skill without changing the version status.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -7613,6 +8113,10 @@ This API updates the business tag list of a skill without changing the version s
 #### 接口描述
 
 This API updates the version routing labels of a skill, such as latest.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -7652,6 +8156,10 @@ The following APIs are used to control the skill version publishing workflow.
 
 ### 7.11. Get Skill Version Details
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -7669,6 +8177,10 @@ The following APIs are used to control the skill version publishing workflow.
 | `version` | `string` | 否 | Version number. |
 
 ### 7.12. Download Skill Version ZIP Package
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -7689,6 +8201,10 @@ The following APIs are used to control the skill version publishing workflow.
 ### 7.13. Offline Skill
 #### 接口描述
 This interface allows executing an offline operation on a specific version or the entire skill, making it not callable.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -7741,6 +8257,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/offline' -d "namesp
 #### 接口描述
 This interface allows executing an online operation on a specific version or the entire skill, making it callable.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `POST`
@@ -7790,6 +8310,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/online' -d "namespa
 ### 7.15. Publish Skill Version
 #### 接口描述
 This interface allows publishing an approved skill version.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -7841,6 +8365,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/publish' -d "namesp
 #### 接口描述
 This interface allows setting the visibility scope of a skill to PUBLIC or PRIVATE.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `PUT`
@@ -7889,6 +8417,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/scope' -d "namespace
 ### 7.17. Submit Skill Version for Review
 #### 接口描述
 This interface allows submitting a skill draft version to the pipeline for review.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -7941,6 +8473,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/submit' -d "namespa
 
 This API force-publishes a Skill version while bypassing pipeline validation.
 
+#### 起始版本
+
+`3.2.1`
+
 #### 请求方式
 
 `POST`
@@ -7968,6 +8504,10 @@ This API force-publishes a Skill version while bypassing pipeline validation.
 
 This API converts a reviewed Skill version back to a draft.
 
+#### 起始版本
+
+`3.2.2`
+
 #### 请求方式
 
 `POST`
@@ -7993,6 +8533,10 @@ This API converts a reviewed Skill version back to a draft.
 #### 接口描述
 
 This API batch uploads Skills from a ZIP file that contains multiple Skill subdirectories.
+
+#### 起始版本
+
+`3.2.2`
 
 #### 请求方式
 
@@ -8030,6 +8574,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/upload/batch' \
 ### 8.1. Get AgentSpec
 #### 接口描述
 This interface allows getting the latest published version of an AgentSpec by namespace and name.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -8092,6 +8640,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs?namespaceId=publ
 #### 接口描述
 This interface allows deleting an AgentSpec and all its versions by namespace and name.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `DELETE`
@@ -8139,6 +8691,10 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs?namespaceId=p
 ### 8.3. Update AgentSpec Business Tags
 #### 接口描述
 This interface allows updating the business tag list of an AgentSpec without changing version status.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -8189,6 +8745,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/biz-tags' -d "na
 #### 接口描述
 This interface allows creating an AgentSpec draft version based on an existing version.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `POST`
@@ -8237,6 +8797,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/draft' -d "name
 ### 8.5. Update AgentSpec Draft Content
 #### 接口描述
 This interface allows updating the card content of the current AgentSpec draft version.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -8287,6 +8851,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/draft' -d "names
 #### 接口描述
 This interface allows deleting the current draft version of a specified AgentSpec.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `DELETE`
@@ -8334,6 +8902,10 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/draft?namespa
 ### 8.7. Update AgentSpec Version Labels
 #### 接口描述
 This interface allows updating AgentSpec version routing labels (e.g. latest label) without changing version status.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -8383,6 +8955,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/labels' -d "name
 ### 8.8. List AgentSpecs
 #### 接口描述
 This interface allows paginated listing of AgentSpecs by namespace and name.
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -8436,6 +9012,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/list?pageNo=1&pa
 #### 接口描述
 This interface allows executing an offline operation on a specific version or the entire AgentSpec, making it not callable.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `POST`
@@ -8485,6 +9065,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/offline' -d "na
 ### 8.10. Online AgentSpec
 #### 接口描述
 This interface allows executing an online operation on a specific version or the entire AgentSpec, making it callable.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -8536,6 +9120,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/online' -d "nam
 #### 接口描述
 This interface allows publishing an approved AgentSpec version.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `POST`
@@ -8586,6 +9174,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/publish' -d "na
 #### 接口描述
 This interface allows setting the visibility scope of an AgentSpec to PUBLIC or PRIVATE.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `PUT`
@@ -8635,6 +9227,10 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/scope' -d "names
 #### 接口描述
 This interface allows submitting an AgentSpec draft version to the pipeline for review.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `POST`
@@ -8683,6 +9279,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/submit' -d "nam
 ### 8.14. Upload AgentSpec
 #### 接口描述
 This interface allows uploading a ZIP-packaged AgentSpec; the package is parsed and the AgentSpec is created or updated.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -8735,6 +9335,10 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/upload' -F "fil
 ### 8.15. Get AgentSpec Version
 #### 接口描述
 This interface allows getting a specific version of an AgentSpec by namespace, name, and version.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -8792,6 +9396,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/version?namespac
 
 This API force-publishes an AgentSpec version while bypassing pipeline validation.
 
+#### 起始版本
+
+`3.2.1`
+
 #### 请求方式
 
 `POST`
@@ -8819,6 +9427,10 @@ This API force-publishes an AgentSpec version while bypassing pipeline validatio
 
 This API converts a reviewed AgentSpec version back to a draft.
 
+#### 起始版本
+
+`3.2.2`
+
 #### 请求方式
 
 `POST`
@@ -8844,6 +9456,10 @@ This API converts a reviewed AgentSpec version back to a draft.
 #### 接口描述
 
 This API retrieves metadata for a specified AgentSpec version without reading resource file content.
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -8872,6 +9488,10 @@ This API retrieves metadata for a specified AgentSpec version without reading re
 #### 接口描述
 
 This API lists Pipeline execution records by resource type, resource name, namespace, and version with pagination.
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -8927,6 +9547,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/pipelines?resourceType=agen
 #### 接口描述
 
 This API retrieves Pipeline execution record details by Pipeline ID.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -8986,6 +9610,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/pipelines/pipeline-001'
 
 This API lists Pipeline execution records by resource type, resource name, namespace, and version with pagination.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -9040,6 +9668,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/pipelines/list?resourceType
 #### 接口描述
 
 This API retrieves Pipeline execution record details by Pipeline ID.
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -9101,6 +9733,10 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/pipelines/detail?pipelineId
 
 This API lists the currently configured AI resource import sources.
 
+#### 起始版本
+
+`3.2.2`
+
 #### 请求方式
 
 `GET`
@@ -9124,6 +9760,10 @@ This API lists the currently configured AI resource import sources.
 #### 接口描述
 
 This API searches importable external AI resources from a specified import source.
+
+#### 起始版本
+
+`3.2.2`
 
 #### 请求方式
 
@@ -9155,6 +9795,10 @@ This API searches importable external AI resources from a specified import sourc
 
 This API validates whether selected external AI resources can be imported.
 
+#### 起始版本
+
+`3.2.2`
+
 #### 请求方式
 
 `POST`
@@ -9183,6 +9827,10 @@ This API validates whether selected external AI resources can be imported.
 #### 接口描述
 
 This API imports the selected external AI resources.
+
+#### 起始版本
+
+`3.2.2`
 
 #### 请求方式
 
