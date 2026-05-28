@@ -182,7 +182,7 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 | `healthy`     | `boolean` | 否     | 是否只查找健康实例，默认为`true`    |
 | `weight`      | `number` | 否     | 实例权重，默认为`1.0`          |
 | `enabled`     | `boolean` | 否     | 是否可用，默认为`true`         |
-| `metadata`    | `string` | 否     | 实例元数据                  |
+| `metadata`    | `string` | 否     | 实例元数据，JSON 对象字符串        |
 | `heartBeat`   | `boolean` | 否     | 是否为续约请求，默认为`false`     |
 
 #### 返回数据
@@ -367,7 +367,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=test1'
 
 #### 接口描述
 
-通过该接口，可按 label、version 或 latest 查询 Prompt，优先级 label > version > latest；支持 md5 条件返回 304。
+通过该接口，可按 version、label 或 latest 查询 Prompt，优先级 version > label > latest；支持 md5 条件返回 304。
 
 #### 请求方式
 

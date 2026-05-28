@@ -172,7 +172,7 @@ Calling the registration request repeatedly can also renew the instance, but it 
 | `healthy`     | `boolean` | 否     | Whether the instance is healthy. Defaults to `true`. |
 | `weight`      | `number` | 否     | Instance weight. Defaults to `1.0`. |
 | `enabled`     | `boolean` | 否     | Whether the instance is enabled. Defaults to `true`. |
-| `metadata`    | `string` | 否     | Instance metadata. |
+| `metadata`    | `string` | 否     | Instance metadata as a JSON object string. |
 | `heartBeat`   | `boolean` | 否     | Whether this is a renewal request. Defaults to `false`. |
 
 #### 返回数据
@@ -357,7 +357,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=test1'
 
 #### 接口描述
 
-Query Prompt by label, version or latest (priority: label > version > latest); supports md5 for 304 conditional response.
+Query Prompt by version, label, or latest (priority: version > label > latest); supports md5 for 304 conditional response.
 
 #### 请求方式
 
