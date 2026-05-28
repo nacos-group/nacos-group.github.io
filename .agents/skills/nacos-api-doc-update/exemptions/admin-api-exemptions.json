@@ -11,6 +11,21 @@
           "  [api 已无] body 参数: transferLeader"
         ]
       },
+      "GET /v3/admin/core/cluster/node/list": {
+        "ignore_issues": [
+          "  [描述不一致] query.state"
+        ]
+      },
+      "PUT /v3/admin/core/cluster/lookup": {
+        "ignore_issues": [
+          "  [描述不一致] query.type"
+        ]
+      },
+      "GET /v3/admin/cs/config/list": {
+        "ignore_issues": [
+          "  [描述不一致] query.search"
+        ]
+      },
       "PUT /v3/admin/ai/mcp": {
         "ignore_issues": [
           "  [api 已无] query 参数: capabilities",
@@ -38,6 +53,102 @@
           "  [api 已无] query 参数: type",
           "  [api 已无] query 参数: version",
           "  [api 已无] query 参数: versionDetail"
+        ]
+      },
+      "GET /v3/admin/ai/mcp/list": {
+        "ignore_issues": [
+          "  [描述不一致] query.search"
+        ]
+      },
+      "GET /v3/admin/ai/a2a/list": {
+        "ignore_issues": [
+          "  [描述不一致] query.search"
+        ]
+      },
+      "GET /v3/admin/ai/prompt/list": {
+        "ignore_issues": [
+          "  [描述不一致] query.search"
+        ]
+      },
+      "POST /v3/admin/ai/skills/draft": {
+        "ignore_issues": [
+          "  [描述不一致] query.skillCard"
+        ]
+      },
+      "PUT /v3/admin/ai/skills/draft": {
+        "ignore_issues": [
+          "  [描述不一致] query.skillCard"
+        ]
+      },
+      "GET /v3/admin/ai/skills/list": {
+        "ignore_issues": [
+          "  [描述不一致] query.search"
+        ]
+      },
+      "POST /v3/admin/ai/skills/upload": {
+        "ignore_issues": [
+          "  [api 已无] query 参数: file",
+          "  [doc 缺少] body 参数: commitMsg",
+          "  [doc 缺少] body 参数: file",
+          "  [doc 缺少] body 参数: namespaceId",
+          "  [doc 缺少] body 参数: overwrite",
+          "  [doc 缺少] body 参数: targetVersion"
+        ]
+      },
+      "POST /v3/admin/ai/skills/offline": {
+        "ignore_issues": [
+          "  [描述不一致] query.scope"
+        ]
+      },
+      "POST /v3/admin/ai/skills/online": {
+        "ignore_issues": [
+          "  [描述不一致] query.scope"
+        ]
+      },
+      "PUT /v3/admin/ai/skills/scope": {
+        "ignore_issues": [
+          "  [描述不一致] query.scope"
+        ]
+      },
+      "POST /v3/admin/ai/skills/upload/batch": {
+        "ignore_issues": [
+          "  [api 已无] query 参数: file",
+          "  [doc 缺少] body 参数: file",
+          "  [doc 缺少] body 参数: namespaceId",
+          "  [doc 缺少] body 参数: overwrite"
+        ]
+      },
+      "PUT /v3/admin/ai/agentspecs/draft": {
+        "ignore_issues": [
+          "  [描述不一致] query.agentSpecCard"
+        ]
+      },
+      "GET /v3/admin/ai/agentspecs/list": {
+        "ignore_issues": [
+          "  [描述不一致] query.search"
+        ]
+      },
+      "POST /v3/admin/ai/agentspecs/offline": {
+        "ignore_issues": [
+          "  [描述不一致] query.scope"
+        ]
+      },
+      "POST /v3/admin/ai/agentspecs/online": {
+        "ignore_issues": [
+          "  [描述不一致] query.scope"
+        ]
+      },
+      "PUT /v3/admin/ai/agentspecs/scope": {
+        "ignore_issues": [
+          "  [描述不一致] query.scope"
+        ]
+      },
+      "POST /v3/admin/ai/agentspecs/upload": {
+        "ignore_issues": [
+          "  [api 已无] query 参数: file",
+          "  [doc 缺少] body 参数: file",
+          "  [doc 缺少] body 参数: namespaceId",
+          "  [doc 缺少] body 参数: overwrite"
         ]
       },
       "POST /v3/admin/ai/mcp": {

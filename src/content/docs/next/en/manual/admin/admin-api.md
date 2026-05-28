@@ -72,16 +72,16 @@ Nacos 3.X 的运维 API 也提供了Swagger风格的文档，您可以通过访�
 
 | 参数名                                     | 参数类型         | 描述                                                                                      |
 |-----------------------------------------|--------------|-----------------------------------------------------------------------------------------|
-| ${connectionId}                         | `jsonString` | 每条gRPC连接的连接id                                                                           |
-| ${connectionId}.abilityTable            | `jsonString` | 该gRPC连接（即客户端）支持的能力列表                                                                    |
-| ${connectionId}.metaInfo.clientIp       | `string` | 该gRPC连接的来源IP                                                                            |
-| ${connectionId}.metaInfo.localPort      | `integer` | 该Nacos Server的gRPC端口                                                                    |
-| ${connectionId}.metaInfo.version        | `string` | 该gRPC连接（即客户端）的版本                                                                        |
-| ${connectionId}.metaInfo.createTime     | `string` | 该gRPC连接的连接时间                                                                            |
-| ${connectionId}.metaInfo.lastActiveTime | `timestamp`  | 该gRPC连接的最后一次的心跳时间                                                                       |
-| ${connectionId}.metaInfo.labels.source  | `string` | 该gRPC连接的模块，可选值为`naming`,`config`和`cluster`分别代表注册中心、配置中心以及集群间的连接                         |
-| ${connectionId}.metaInfo.clusterSource  | `boolean` | 该gRPC连接的是否为集群间连接，为`true`时，`${connectionId}.metaInfo.labels.source`为 `cluster`           |
-| ${connectionId}.metaInfo.sdkSource      | `boolean` | 该gRPC连接的是否为客户端来源连接，为`true`时，`${connectionId}.metaInfo.labels.source`为 `naming`或`config` |
+| ${connectionId}                         | `object` | 每条 gRPC connection ID. |
+| ${connectionId}.abilityTable            | `object` | Capability list supported by the gRPC connection, namely the client. |
+| ${connectionId}.metaInfo.clientIp       | `string` | Source IP of the gRPC connection. |
+| ${connectionId}.metaInfo.localPort      | `integer` | gRPC port of this Nacos Server. |
+| ${connectionId}.metaInfo.version        | `string` | Version of the gRPC connection, namely the client. |
+| ${connectionId}.metaInfo.createTime     | `string` | Creation time of the gRPC connection. |
+| ${connectionId}.metaInfo.lastActiveTime | `integer`  | Last heartbeat time of the gRPC connection. |
+| ${connectionId}.metaInfo.labels.source  | `string` | Module of the gRPC connection. Optional values are `naming`, `config`, and `cluster`, representing registry, configuration, and inter-cluster connections respectively. |
+| ${connectionId}.metaInfo.clusterSource  | `boolean` | Whether the gRPC connection is an inter-cluster connection. When `true`, `${connectionId}.metaInfo.labels.source` is `cluster`. |
+| ${connectionId}.metaInfo.sdkSource      | `boolean` | Whether the gRPC connection comes from a client. When `true`, `${connectionId}.metaInfo.labels.source` is `naming` or `config`. |
 
 #### 示例
 
@@ -283,7 +283,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/reloadClient' -d 
 | `max`                         | `integer` | 该集群中所有节点的最大连接数            |
 | `memberCount`                 | `integer` | 该集群中所有节点的个数               |
 | `metricsCount`                | `integer` | 该集群中已统计到概览信息的节点个数         |
-| `detail`                      | `jsonArray` | 该集群中所有节点的概览信息，格式见下表       |
+| `detail`                      | `array` | Overview information of all nodes in the cluster. See the following fields. |
 | `detail[].address`            | `string` | 节点地址                      |
 | `detail[].metric.load`        | `number` | 节点的负载率，主要对应节点的Load指标，参考值  |
 | `detail[].metric.sdkConCount` | `integer` | 连接到该节点的SDK连接数，主要对应客户端连接数  |
@@ -353,15 +353,15 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/cluster'
 | `ip`                          | `string` | 节点IP                                           |
 | `port`                        | `integer` | 节点端口                                           |
 | `state`                       | `string` | Node state: UP/DOWN/SUSPICIOUS |
-| `extendInfo`                  | `jsonObject` | 节点扩展信息，具体字段见下表                                 |
+| `extendInfo`                  | `object` | Extended node information. See the following fields. |
 | `extendInfo.lastRefreshTime`  | `integer` | 节点上一次更新时间戳，单位毫秒                                |
-| `extendInfo.raftMetaData`     | `jsonObject` | 节点的Raft元数据， 包含每个Raft Group的`leader`， `term`等字段 |
+| `extendInfo.raftMetaData`     | `object` | Raft metadata of the node, including fields such as `leader` and `term` for each Raft Group. |
 | `extendInfo.raftPort`         | `integer` | 节点的Raft端口                                      |
 | `extendInfo.supportGrayModel` | `boolean` | 是否支持灰度模型                                       |
 | `extendInfo.version`          | `string` | 节点的版本                                          |
 | `address`                     | `string` | 节点地址，格式为`ip:port`                              |
 | `failAccessCnt`               | `integer` | 探测失败的次数，及report失败的次数，超过一定次数`state`会被改为`DOWN`   |
-| `abilities`                   | `jsonObject` | 该节点所支持的能力                                      |
+| `abilities`                   | `object` | Capabilities supported by the node. |
 | `grpcReportEnabled`           | `boolean` | 标记节点是否支持grpc上报心跳能力，用于适配老版本升级，后续将移除             |
 | ~~extendInfo.readyToUpgrade~~ | `boolean` | 是否ready升级到Nacos2.0，于2.2版本后废弃，即将移除              |
 
@@ -820,7 +820,7 @@ curl -X PUT -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/a
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/smartReloadCluster' -d "loaderFactorStr=0.1"
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/smartReloadCluster' -d "loaderFactor=0.1"
 ```
 
 * 返回示例
@@ -1193,7 +1193,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace?namespaceId=
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace/check?customNamespaceId=public'
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace/check?namespaceId=public'
 ```
 
 * 返回示例
@@ -1671,7 +1671,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/status' \
 | `lightBeatEnabled`       | `boolean` | 是否开启轻量心跳，针对Nacos`1.2.X~1.4.X版本`客户端生效，修改为`false`后，`Nacos1.2.X~1.4.X`版本客户端将使用全量心跳进行续约                     |
 | `pushEnabled`            | `boolean` | 是否开启推送功能，仅当集群压力过大，影响到集群稳定性时，临时修改为`false`，改为`false`后，Nacos客户端将不再收到服务端的主动推送                               |
 | `push${Language}Version` | `string` | 可支持推送的最小客户端版本，当不希望针对小于某些版本进行数据推送时，可以修改该值，比如修改pushJavaVersion为`2.0.0`，则小于2.0.0的Java客户端将不会收到推送数据          |
-| `${type}HealthParams`    | `json`    | 健康检查参数，设置健康检查的最大/最小间隔，随机间隔系数等，健康检查时将根据这几个值进行下一次健康检查流量的打散。                                               |
+| `${type}HealthParams`    | `object`    | Health check parameters, including the maximum and minimum check intervals and random interval factor. These values are used to spread the next round of health check traffic. |
 
 > 注意： 其余未列出的参数，均为Nacos旧版本的开关或配置内容，已废弃或即将废弃，请谨慎使用。
 
@@ -1942,7 +1942,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/log' -H 'Content-Type: 
 
 | 参数名    | 参数类型           | 描述      |
 |--------|----------------|---------|
-| `data` | `List<String>` | 客户端ID列表 |
+| `data` | `array` | Client ID list. |
 
 #### 示例
 
@@ -2216,7 +2216,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/subscribe/list?clien
 | `groupName` | `string` | 否 | `"DEFAULT_GROUP"` |
 | `serviceName` | `string` | **是** | 无 |
 | `ip` | `string` | 否 | 无 |
-| `port` | `string` | 否 | 无 |
+| `port` | `integer` | 否 | None |
 
 #### 返回数据
 
@@ -2280,7 +2280,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/service/publisher/li
 | `groupName` | `string` | 否 | `"DEFAULT_GROUP"` |
 | `serviceName` | `string` | **是** | 无 |
 | `ip` | `string` | 否 | 无 |
-| `port` | `string` | 否 | 无 |
+| `port` | `integer` | 否 | None |
 
 #### 返回数据
 
@@ -2343,7 +2343,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/service/subscriber/l
 | 参数名    | 参数类型     | 是否必填  | 描述    |
 |--------|----------|-------|-------|
 | `ip`   | `string` | **是** | 客户端IP |
-| `port` | `string` | **是** | 客户端端口 |
+| `port` | `integer` | **是** | Client port. |
 
 #### 返回数据
 
@@ -2757,7 +2757,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance' \
 
 | **参数名**   | **参数类型**       | **描述**  |
 |-----------|----------------|---------|
-| `updated` | `List<String>` | 更新的实例列表 |
+| `updated` | `array` | Updated instance list. |
 
 #### 示例
 
@@ -2816,7 +2816,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/metadata/batch' \
 | **参数名**        | **参数类型**                           | **描述**  |
 |----------------|------------------------------------|---------|
 | `data`         | `InstanceMetadataBatchOperationVo` | 操作结果信息  |
-| `data.updated` | `List<String>`                     | 更新的实例列表 |
+| `data.updated` | `array`                     | Updated instance list. |
 
 #### 示例
 
@@ -2888,7 +2888,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/metadata/batch?
 * 请求示例
 
 ```shell
-curl -X PUT "http://localhost:8848/nacos/v3/admin/ns/instance/partial" -d 'namespaceId=public&serviceName=example-service&ip=127.0.0.1&clusterName=DEFAULT&port=8080&weight=1.0&enabled=true&metadata={"key":"value"}'
+curl -X PUT "http://127.0.0.1:8848/nacos/v3/admin/ns/instance/partial" -d 'namespaceId=public&serviceName=example-service&ip=127.0.0.1&clusterName=DEFAULT&port=8080&weight=1.0&enabled=true&metadata={"key":"value"}'
 ```
 
 * 返回示例
@@ -2943,7 +2943,7 @@ curl -X PUT "http://localhost:8848/nacos/v3/admin/ns/instance/partial" -d 'names
 | `healthy`     | `boolean` | 实例是否健康                            |
 | `enabled`     | `boolean` | 实例是否可用                            |
 | `ephemeral`   | `boolean` | 是否为临时实例                           |
-| `metadata`    | `map`     | 实例元数据                             |
+| `metadata`    | `map<string, string>`     | Instance metadata. |
 | `instanceId`  | `string` | 实例Id                              |
 
 > 关于心跳的参数`instanceHeartBeatInterval`, `instanceHeartBeatTimeOut`和`ipDeleteTimeout`
@@ -3008,7 +3008,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/list?namespaceId=p
 | **参数名**       | **参数类型** | **是否必填** | **描述说明**               |
 |---------------|----------|----------|------------------------|
 | `namespaceId` | `string` | 否        | 命名空间Id，默认为`public`     |
-| `groupName`   | `string` | **否**    | 分组名，默认为`DEFAULT_GROUP` |
+| `groupName`   | `string` | 否    | Group name. Defaults to `DEFAULT_GROUP`. |
 | `serviceName` | `string` | **是**    | 服务名                    |
 | `clusterName` | `string` | 否        | 集群名称，默认为`DEFAULT`      |
 | `ip`          | `string` | **是**    | `IP`地址                 |
@@ -3028,7 +3028,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/list?namespaceId=p
 | `healthy`     | `boolean` | 实例是否健康                            |
 | `enabled`     | `boolean` | 实例是否可用                            |
 | `ephemeral`   | `boolean` | 是否为临时实例                           |
-| `metadata`    | `map`     | 实例元数据                             |
+| `metadata`    | `map<string, string>`     | Instance metadata. |
 | `instanceId`  | `string` | 实例Id                              |
 
 > 关于心跳的参数`instanceHeartBeatInterval`, `instanceHeartBeatTimeOut`和`ipDeleteTimeout`
@@ -3214,14 +3214,14 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ns/service?serviceName=naco
 | `serviceName`                                       | `string` | 服务名。                                 |
 | `ephemeral`                                         | `boolean` | 服务的持久化属性，`true`为临时服务，`false`为持久化服务。  |
 | `protectThreshold`                                  | `number` | 服务防护阈值。                              |
-| `selector`                                          | `jsonObject` | 服务选择器。                               |
-| `metadata`                                          | `jsonObject` | 服务元数据。                               |
-| `clusterMap`                                        | `jsonObject` | 服务集群列表, key为cluster的名称，value为集群详细信息。 |
+| `selector`                                          | `object` | Service selector. |
+| `metadata`                                          | `object` | Service metadata. |
+| `clusterMap`                                        | `object` | Service cluster map. The key is the cluster name and the value is the cluster details. |
 | `clusterMap`.$ClusterName.`clusterName`             | `string` | 集群名。                                 |
-| `clusterMap`.$ClusterName.`healthChecker`           | `jsonObject` | 健康检查器。                               |
+| `clusterMap`.$ClusterName.`healthChecker`           | `object` | Health checker. |
 | `clusterMap`.$ClusterName.`healthyCheckPort`        | `integer` | 健康检查端口。                              |
 | `clusterMap`.$ClusterName.`useInstancePortForCheck` | `boolean` | 是否使用所注册的实例的`IP:Port`进行健康检查。          |
-| `clusterMap`.$ClusterName.`metadata`                | `jsonObject` | 集群元数据。                               |
+| `clusterMap`.$ClusterName.`metadata`                | `map<string, string>` | Cluster metadata. |
 
 #### 示例
 
@@ -3303,7 +3303,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service?serviceName=nacos.t
 | `totalCount`                          | `integer` | 符合条件的服务的总数。  |
 | `pageNumber`                          | `integer` | 当前页码，起始为`1`。 |
 | `pagesAvailable`                      | `integer` | 可用页码。        |
-| `pageItems`                           | `List`   | 服务列表。        |
+| `pageItems`                           | `array`   | Service list.        |
 | `pageItems`[i].`name`                 | `string` | 服务名。         |
 | `pageItems`[i].`groupName`            | `string` | 服务的分组名。      |
 | `pageItems`[i].`clusterCount`         | `string` | 服务下的集群数量。    |
@@ -3448,7 +3448,7 @@ curl -d 'serviceName=nacos.test.1' \
 | `totalCount`                 | `integer` | 符合条件的服务的总数。          |
 | `pageNumber`                 | `integer` | 当前页码，起始为`1`。         |
 | `pagesAvailable`             | `integer` | 可用页码。                |
-| `pageItems`                  | `List`    | 服务列表。                |
+| `pageItems`                  | `array`    | Service list.                |
 | `pageItems`[i].`ip`          | `string` | 订阅者IP。               |
 | `pageItems`[i].`port`        | `integer` | 订阅者端口。               |
 | `pageItems`[i].`address`     | `string` | 订阅者地址, 一般为`ip:port`。 | 
@@ -3518,7 +3518,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service/subscribers?namespa
 
 | 参数名    | 参数类型           | 描述      |
 |--------|----------------|---------|
-| `data` | `List<String>` | 选择器类型列表 |
+| `data` | `array` | Selector type list. |
 
 #### 示例
 
@@ -3761,7 +3761,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=nacos.exam
 
 | 参数名   | 参数类型         | 是否必填  | 描述     |
 |-------|--------------|-------|--------|
-| `ids` | `string` | **是** | 配置ID列表 |
+| `ids` | `array` | **是** | Config ID list. Separate multiple IDs with commas. |
 
 #### 返回数据
 
@@ -3812,7 +3812,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/batch?ids=1,2,3'
 | `namespaceId` | `string` | 否     | `public` | 命名空间      |
 | `dataId`      | `string` | **是** | 无        | 配置ID      |
 | `groupName`   | `string` | **是** | 无        | 分组名称      |
-| `aggregation` | `boolean` | **否** | `true`   | 是否从其他节点聚合 |
+| `aggregation` | `boolean` | 否 | `true`   | Whether to aggregate data from other nodes. |
 
 #### 返回数据
 
@@ -3877,7 +3877,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/listener?namespaceId
 | `configTags` | `string` | 否 |  |
 | `type` | `string` | 否 |  |
 | `configDetail` | `string` | **是** |  |
-| `search` | `string` | 否 | blur or accurate |
+| `search` | `string` | 否 | Search mode: `blur` or `accurate`. Defaults to `blur`. |
 
 #### 返回数据
 
@@ -3888,7 +3888,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/listener?namespaceId
 | `totalCount`                 | `integer` | 符合规则的配置总数。                 |
 | `pagesAvailable`             | `integer` | 可用页码总数。                    |
 | `pageNumber`                 | `integer` | 当前页码。                      |
-| `pageItems`                  | `List`   | 符合规则的配置列表。                 |
+| `pageItems`                  | `array`   | Configurations matching the query criteria. |
 | `pageItems`[i].`id`          | `string` | 配置在存储系统中的ID，一般为Long类型的字符串。 |
 | `pageItems`[i].`dataId`      | `string` | 配置ID。                      |
 | `pageItems`[i].`groupName`   | `string` | 配置分组。                      |
@@ -4094,7 +4094,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/beta?namespaceId=pub
 
 `POST`
 
-请求体类型：`multipart/form-data`，参数放在请求体中。
+Request body type: `multipart/form-data`. Parameters are sent in the request body.
 
 #### 鉴权状态
 
@@ -4117,7 +4117,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/beta?namespaceId=pub
 
 | 参数名              | 参数类型                  | 描述     |
 |------------------|-----------------------|--------|
-| `data`           | `Map<String, Object>` | 导入结果   |
+| `data`           | `map<string, object>` | Import result. |
 | `data.succCount` | `integer` | 成功导入数量 |
 | `data.skipCount` | `integer` | 跳过导入数量 |
 
@@ -4168,7 +4168,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/import' \
 | `namespaceId` | `string` | 否 | `public` |
 | `groupName` | `string` | 否 | `""` |
 | `dataId` | `string` | 否 | `""` |
-| `ids` | `string` | 否 | 无 |
+| `ids` | `array` | 否 | None |
 | `appName` | `string` | 否 | - |
 
 > 使用时建议分开使用 `ids` 和 `dataId` + `groupName` 的组合，只选择一种方式，另一类传入空字符串，否则可能导致导出文件为空内容。
@@ -4284,7 +4284,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/clone' -d "namespac
 | `totalCount`                 | `integer` | 历史记录的总数。                          |
 | `pageNumber`                 | `integer` | 当前页码，起始为`1`。                      |
 | `pagesAvailable`             | `integer` | 可用页码。                             |
-| `pageItems`                  | `List`   | 历史记录列表。                           |
+| `pageItems`                  | `array`   | History record list. |
 | `pageItems`[i].`id`          | `string` | 历史记录的ID。                          |
 | `pageItems`[i].`dataId`      | `string` | 配置的dataId。                        |
 | `pageItems`[i].`groupName`   | `string` | 配置的groupName。                     |
@@ -4397,7 +4397,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/list?dataId=nacos.e
 | `createTime`  | `integer` | 配置创建时间。                                                                     |
 | `modifyTime`  | `integer` | 配置修改时间。                                                                     |
 | `grayName`    | `string` | 灰度发布规则名称, 固定为`beta`。                                                        |
-| `extInfo`     | `JsonString` | 扩展信息，目前包括`src_user`、`type`、`c_desc`，若`publishType`为`gray`, 其中还包括`grayRule`。 |
+| `extInfo`     | `string` | Extended information. It currently includes `src_user`, `type`, and `c_desc`; when `publishType` is `gray`, it also includes `grayRule`. |
 
 #### 示例
 
@@ -4481,7 +4481,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/??dataId=111&groupN
 | `createTime`  | `integer` | 配置创建时间。                                                                     |
 | `modifyTime`  | `integer` | 配置修改时间。                                                                     |
 | `grayName`    | `string` | 灰度发布规则名称, 固定为`beta`。                                                        |
-| `extInfo`     | `JsonString` | 扩展信息，目前包括`src_user`、`type`、`c_desc`，若`publishType`为`gray`, 其中还包括`grayRule`。 |
+| `extInfo`     | `string` | Extended information. It currently includes `src_user`, `type`, and `c_desc`; when `publishType` is `gray`, it also includes `grayRule`. |
 
 #### 示例
 
@@ -4845,7 +4845,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/log' -d "logName=config
 
 | 参数名    | 参数类型                        | 描述   |
 |--------|-----------------------------|------|
-| `data` | `List<Map<String, Object>>` | 查询结果 |
+| `data` | `array` | Query result. |
 
 #### 示例
 
@@ -5238,7 +5238,7 @@ curl -X PUT '127.0.0.1:8848/v3/admin/cs/config/metadata' \
 | `pageSize` | `integer` | **是** | 页条目数，默认为`20`，最大为`500` |
 | `namespaceId` | `string` | 否 | MCP服务的命名空间ID，默认为`public` |
 | `mcpName` | `string` | 否 | MCP服务的名字模版，为空时查询所有MCP服务，当`search`为`blur`时，可使用`*`进行模糊搜索 |
-| `search` | `string` | 否 | blur or accurate |
+| `search` | `string` | 否 | Search mode: `blur` or `accurate`. Defaults to `blur`. |
 
 #### 返回数据
 
@@ -5249,27 +5249,27 @@ curl -X PUT '127.0.0.1:8848/v3/admin/cs/config/metadata' \
 | `totalCount`                                  | `integer` | 符合条件的服务的总数。                                                                                     |
 | `pageNumber`                                  | `integer` | 当前页码，起始为`1`。                                                                                    |
 | `pagesAvailable`                              | `integer` | 可用页码。                                                                                           |
-| `pageItems`                                   | `List`                | 服务列表。                                                                                           |
-| `pageItems`[i].`id`                           | `string` | MCP服务的ID，一般为UUID。                                                                               |
-| `pageItems`[i].`name`                         | `string` | MCP服务名。                                                                                         |
-| `pageItems`[i].`protocol`                     | `string` | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
-| `pageItems`[i].`frontProtocol`                | `string` | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
-| `pageItems`[i].`description`                  | `string` | MCP服务的描述。                                                                                       |
-| `pageItems`[i].`repository`                   | `string` | MCP服务的存储仓库。                                                                                     |                                                                                          |
-| `pageItems`[i].`versionDetail`                | `VersionDetail`       | MCP服务当前最新的版本信息。                                                                                 |
-| `pageItems`[i].`localServerConfig`            | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
-| `pageItems`[i].`remoteServerConfig`           | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
-| `pageItems`[i].`latestPublishedVersion`       | `string` | MCP服务最新版本的版本号。                                                                                  |
-| `pageItems`[i].`versionDetails`               | `List<VersionDetail>` | MCP服务版本详情的列表。                                                                                   |
-| `pageItems`[i].`capabilities`                 | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
+| `pageItems`                                   | `array`               | Service list.                                                                                       |
+| `pageItems`[i].`id`                           | `string` | MCP service ID, usually a UUID.                                                                      |
+| `pageItems`[i].`name`                         | `string` | MCP service name.                                                                                    |
+| `pageItems`[i].`protocol`                     | `string` | MCP protocol, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`.                               |
+| `pageItems`[i].`frontProtocol`                | `string` | Frontend protocol exposed by the MCP service, usually for protocol converters such as gateways. If no converter is used, it is the same as `protocol`. |
+| `pageItems`[i].`description`                  | `string` | MCP service description.                                                                             |
+| `pageItems`[i].`repository`                   | `string` | MCP service repository.                                                                               |
+| `pageItems`[i].`versionDetail`                | `object`              | Latest version information of the MCP service.                                                        |
+| `pageItems`[i].`localServerConfig`            | `map<string, object>` | Startup information for a local MCP service when the MCP service type is **stdio**.                    |
+| `pageItems`[i].`remoteServerConfig`           | `object`              | Remote service information when the MCP service type is **not stdio**.                                |
+| `pageItems`[i].`latestPublishedVersion`       | `string` | Latest published version of the MCP service.                                                          |
+| `pageItems`[i].`versionDetails`               | `array`               | MCP service version details.                                                                          |
+| `pageItems`[i].`capabilities`                 | `array`               | Capability types supported by the MCP service, such as `TOOL`, `PROMPT`, and `RESOURCE`.              |
 
 其中`VersionDetail`结构如下：
 
 | 参数名            | 参数类型      | 描述               |
 |----------------|-----------|------------------|
-| `version`      | `string` | MCP服务的版本号。       |
-| `release_date` | `string` | MCP服务的版本发布时间。    |
-| `is_latest`    | `boolean` | MCP服务的版本是否为最新版本。 |
+| `version`      | `string` | MCP service version.       |
+| `release_date` | `string` | MCP service release time.  |
+| `is_latest`    | `boolean` | Whether this is the latest version of the MCP service. |
 
 #### 示例
 
@@ -5359,22 +5359,22 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp/list?pageNo=1&pageSize=100&nam
 | `frontProtocol`      | `string` | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
 | `description`        | `string` | MCP服务的描述。                                                                                       |
 | `repository`         | `string` | MCP服务的存储仓库。                                                                                     |                                                                                          |
-| `versionDetail`      | `VersionDetail`       | MCP服务所查询的版本信息。                                                                                  |
-| `localServerConfig`  | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
-| `remoteServerConfig` | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
+| `versionDetail`      | `object`              | Queried version information of the MCP service.                                                        |
+| `localServerConfig`  | `map<string, object>` | Startup information for a local MCP service when the MCP service type is **stdio**.                    |
+| `remoteServerConfig` | `object`              | Remote service information when the MCP service type is **not stdio**.                                |
 | `enabled`            | `boolean` | MCP服务是否启用。                                                                                      |
-| `capabilities`       | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
-| `backendEndpoints`   | `List`                | MCP服务若类型为**非stdio**，存在此信息，记录访问远端服务的具体地址信息。                                                      |
-| `toolSpec`           | `Map<String, Object>` | MCP服务支持的能力类型包含`TOOL`时，存在此信息，记录工具的详细配置信息。                                                        |
-| `allVersions`        | `List<VersionDetail>` | MCP服务的所有版本详情的列表。                                                                                |
+| `capabilities`       | `array`               | Capability types supported by the MCP service, such as `TOOL`, `PROMPT`, and `RESOURCE`.              |
+| `backendEndpoints`   | `array`               | Backend endpoint details when the MCP service type is **not stdio**.                                  |
+| `toolSpec`           | `map<string, object>` | Tool details when the MCP service supports the `TOOL` capability.                                    |
+| `allVersions`        | `array`               | All version details of the MCP service.                                                              |
 
 其中`VersionDetail`结构如下：
 
 | 参数名            | 参数类型      | 描述               |
 |----------------|-----------|------------------|
-| `version`      | `string` | MCP服务的版本号。       |
-| `release_date` | `string` | MCP服务的版本发布时间。    |
-| `is_latest`    | `boolean` | MCP服务的版本是否为最新版本。 |
+| `version`      | `string` | MCP service version.       |
+| `release_date` | `string` | MCP service release time.  |
+| `is_latest`    | `boolean` | Whether this is the latest version of the MCP service. |
 
 #### 示例
 
@@ -5462,12 +5462,12 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=tes
 | `frontProtocol`      | `string` | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
 | `description`        | `string` | MCP服务的描述。                                                                                       |
 | `repository`         | `string` | MCP服务的存储仓库。                                                                                     |    |
-| `versionDetail`      | `VersionDetail`       | MCP服务的版本信息。                                                                                     |
+| `versionDetail`      | `object`              | MCP service version information.                                                                      |
 | `version`            | `string` | MCP服务的简易版本版本信息，主要用于兼容，若已设置`versionDetail`,则该字段无效。                                               |    |
-| `localServerConfig`  | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
-| `remoteServerConfig` | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
+| `localServerConfig`  | `map<string, object>` | Startup information for a local MCP service when the MCP service type is **stdio**.                    |
+| `remoteServerConfig` | `object`              | Remote service information when the MCP service type is **not stdio**.                                |
 | `enabled`            | `boolean` | MCP服务是否启用。                                                                                      |
-| `capabilities`       | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
+| `capabilities`       | `array`               | Capability types supported by the MCP service, such as `TOOL`, `PROMPT`, and `RESOURCE`.              |
 
 其中`VersionDetail`结构如下：
 
@@ -5481,9 +5481,9 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=tes
 
 | 参数名               | 参数类型                       | 描述                                                                                      |
 |-------------------|----------------------------|-----------------------------------------------------------------------------------------|
-| `tools`           | `List<McpTool>`            | 该MCP Server所提供的工具列表，参考标准MCP协议中对于MCP Tool的定义                                             |
-| `toolsMeta`       | `Map<String, McpToolMeta>` | 该MCP Server所提供的工具的额外元数据信息，可用于扩展标准MCP协议中未定义但又使用中需要的信息。key为`McpTool`的`name`, value为拓展元数据。 |
-| `securitySchemes` | `List<SecurityScheme>`     | MCP工具的安全方案，参考标准MCP协议。                                                                   |
+| `tools`           | `array`                   | Tool list provided by the MCP Server. See the standard MCP protocol definition of MCP Tool. |
+| `toolsMeta`       | `map<string, object>`     | Extra metadata for tools provided by the MCP Server. This can extend information not defined in the standard MCP protocol. The key is the `name` of `McpTool`, and the value is the extended metadata. |
+| `securitySchemes` | `array`                   | MCP tool security schemes. See the standard MCP protocol. |
 
 其中`McpTool`结构如下：
 
@@ -5491,7 +5491,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=tes
 |---------------|-----------------------|-----------------------------------------------|
 | `name`        | `string` | MCP 工具的名称                                     |
 | `description` | `string` | MCP 工具的描述                                     |
-| `inputSchema` | `Map<String, Object>` | MCP工具的入参描述，参考标准MCP协议，主要包含，`类型`,`是否必须`,`描述` 等。 |
+| `inputSchema` | `map<string, object>` | MCP tool input schema. See the standard MCP protocol; it mainly includes type, required flag, and description. |
 
 其中`McpToolMeta` 结构如下：
 
@@ -5586,12 +5586,12 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 | `frontProtocol`      | `string` | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
 | `description`        | `string` | MCP服务的描述。                                                                                       |
 | `repository`         | `string` | MCP服务的存储仓库。                                                                                     |    |
-| `versionDetail`      | `VersionDetail`       | MCP服务的版本信息。                                                                                     |
+| `versionDetail`      | `object`              | MCP service version information.                                                                      |
 | `version`            | `string` | MCP服务的简易版本版本信息，主要用于兼容，若已设置`versionDetail`,则该字段无效。                                               |    |
-| `localServerConfig`  | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
-| `remoteServerConfig` | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
+| `localServerConfig`  | `map<string, object>` | Startup information for a local MCP service when the MCP service type is **stdio**.                    |
+| `remoteServerConfig` | `object`              | Remote service information when the MCP service type is **not stdio**.                                |
 | `enabled`            | `boolean` | MCP服务是否启用。                                                                                      |
-| `capabilities`       | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
+| `capabilities`       | `array`               | Capability types supported by the MCP service, such as `TOOL`, `PROMPT`, and `RESOURCE`.              |
 
 其中`VersionDetail`结构如下：
 
@@ -5605,9 +5605,9 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 
 | 参数名               | 参数类型                       | 描述                                                                                      |
 |-------------------|----------------------------|-----------------------------------------------------------------------------------------|
-| `tools`           | `List<McpTool>`            | 该MCP Server所提供的工具列表，参考标准MCP协议中对于MCP Tool的定义                                             |
-| `toolsMeta`       | `Map<String, McpToolMeta>` | 该MCP Server所提供的工具的额外元数据信息，可用于扩展标准MCP协议中未定义但又使用中需要的信息。key为`McpTool`的`name`, value为拓展元数据。 |
-| `securitySchemes` | `List<SecurityScheme>`     | MCP工具的安全方案，参考标准MCP协议。                                                                   |
+| `tools`           | `array`                   | Tool list provided by the MCP Server. See the standard MCP protocol definition of MCP Tool. |
+| `toolsMeta`       | `map<string, object>`     | Extra metadata for tools provided by the MCP Server. This can extend information not defined in the standard MCP protocol. The key is the `name` of `McpTool`, and the value is the extended metadata. |
+| `securitySchemes` | `array`                   | MCP tool security schemes. See the standard MCP protocol. |
 
 其中`McpTool`结构如下：
 
@@ -5615,7 +5615,7 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 |---------------|-----------------------|-----------------------------------------------|
 | `name`        | `string` | MCP 工具的名称                                     |
 | `description` | `string` | MCP 工具的描述                                     |
-| `inputSchema` | `Map<String, Object>` | MCP工具的入参描述，参考标准MCP协议，主要包含，`类型`,`是否必须`,`描述` 等。 |
+| `inputSchema` | `map<string, object>` | MCP tool input schema. See the standard MCP protocol; it mainly includes type, required flag, and description. |
 
 其中`McpToolMeta` 结构如下：
 
@@ -5820,26 +5820,26 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a/version/list?namespaceId=publi
 | `totalCount`                            | `integer` | 符合条件的服务的总数。                                                                                            |
 | `pageNumber`                            | `integer` | 当前页码，起始为`1`。                                                                                           |
 | `pagesAvailable`                        | `integer` | 可用页码。                                                                                                  |
-| `pageItems`                             | `List`                     | 服务列表。                                                                                                  |
-| `pageItems`[i].`protocolVersion`        | `string` | AgentCard的A2A协议版本。                                                                                     |
-| `pageItems`[i].`name`                   | `string` | AgentCard的名称。                                                                                          |
-| `pageItems`[i].`description`            | `string` | AgentCard的描述。                                                                                          |
-| `pageItems`[i].`version`                | `string` | AgentCard的版本号。                                                                                         |
-| `pageItems`[i].`iconUrl`                | `string` | AgentCard的iconURL。                                                                                     |
-| `pageItems`[i].`capabilities`           | `AgentCapability`          | AgentCard的能力，匹配[A2A标准能力](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object)。 |
-| `pageItems`[i].`skills`                 | `List<AgentSkill>`         | AgentCard的技能列表,匹配[A2A标准技能](https://a2a-protocol.org/latest/specification/#554-agentskill-object)。      |
-| `pageItems`[i].`latestPublishedVersion` | `string` | AgentCard的最新发布版本。                                                                                      |
-| `pageItems`[i].`versionDetails`         | `List<AgentVersionDetail>` | AgentCard的所有版本详情。                                                                                      |
-| `pageItems`[i].`registrationType`       | `string` | AgentCard的默认注册类型，可选`URL`和`SERVICE`。                                                                    |
+| `pageItems`                             | `array`                    | Service list.                                                                                              |
+| `pageItems`[i].`protocolVersion`        | `string` | A2A protocol version of the AgentCard.                                                                      |
+| `pageItems`[i].`name`                   | `string` | AgentCard name.                                                                                           |
+| `pageItems`[i].`description`            | `string` | AgentCard description.                                                                                    |
+| `pageItems`[i].`version`                | `string` | AgentCard version.                                                                                        |
+| `pageItems`[i].`iconUrl`                | `string` | AgentCard icon URL.                                                                                       |
+| `pageItems`[i].`capabilities`           | `object`                   | AgentCard capabilities, matching [A2A standard capabilities](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object). |
+| `pageItems`[i].`skills`                 | `array`                    | AgentCard skill list, matching [A2A standard skill](https://a2a-protocol.org/latest/specification/#554-agentskill-object). |
+| `pageItems`[i].`latestPublishedVersion` | `string` | Latest published version of the AgentCard.                                                                 |
+| `pageItems`[i].`versionDetails`         | `array`                    | All version details of the AgentCard.                                                                      |
+| `pageItems`[i].`registrationType`       | `string` | Default registration type of the AgentCard. Optional values are `URL` and `SERVICE`.                       |
 
 其中`AgentVersionDetail`包含内容如下：
 
 | 参数名         | 参数类型      | 描述              |
 |-------------|-----------|-----------------|
-| `version`   | `string` | AgentCard的版本号。  |
-| `createdAt` | `string` | 该版本的创建时间。       |
-| `updatedAt` | `string` | 该版本的最后更新时间。     |
-| `latest`    | `boolean` | 该版本是否标记为最新发布版本。 |
+| `version`   | `string` | AgentCard version. |
+| `createdAt` | `string` | Creation time of this version. |
+| `updatedAt` | `string` | Last update time of this version. |
+| `latest`    | `boolean` | Whether this version is marked as the latest published version. |
 
 #### 示例
 
@@ -5938,17 +5938,17 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a/list?pageNo=1&pageSize=100&nam
 | `description`                       | `string` | AgentCard的描述。                                                                                            |
 | `version`                           | `string` | AgentCard的版本号。                                                                                           |
 | `iconUrl`                           | `string` | AgentCard的iconURL。                                                                                       |
-| `capabilities`                      | `AgentCapability`                 | AgentCard的能力，匹配[A2A标准能力](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object)。   |
-| `skills`                            | `List<AgentSkill>`                | AgentCard的技能列表,匹配[A2A标准技能](https://a2a-protocol.org/latest/specification/#554-agentskill-object)。        |
+| `capabilities`                      | `object`                         | AgentCard capabilities, matching [A2A standard capabilities](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object). |
+| `skills`                            | `array`                          | AgentCard skill list, matching [A2A standard skill](https://a2a-protocol.org/latest/specification/#554-agentskill-object). |
 | `url`                               | `string` | AgentCard的默认访问的URL。                                                                                      |
 | `preferredTransport`                | `string` | AgentCard的默认访问URL的传输协议，应该为`JSONRPC`,`GRPC`,`HTTP+JSON`。                                                  |
-| `additionalInterfaces`              | `List<AgentInterface>`            | AgentCard的所有可访问接口列表,匹配[A2A标准](https://a2a-protocol.org/latest/specification/#555-agentinterface-object)。 |
-| `provider`                          | `AgentProvider`                   | AgentCard的提供商信息，匹配[A2A标准](https://a2a-protocol.org/latest/specification/#551-agentprovider-object)。      |
+| `additionalInterfaces`              | `array`                          | All accessible interfaces of the AgentCard, matching the [A2A standard](https://a2a-protocol.org/latest/specification/#555-agentinterface-object). |
+| `provider`                          | `object`                         | AgentCard provider information, matching the [A2A standard](https://a2a-protocol.org/latest/specification/#551-agentprovider-object). |
 | `documentationUrl`                  | `string` | AgentCard的文档 URL。                                                                                        |
-| `securitySchemes`                   | `Map<String, SecurityScheme>`     | AgentCard的安全配置定义。匹配[A2A标准](https://a2a-protocol.org/latest/specification/#553-securityscheme-object)     |
-| `security`                          | `List<Map<String, List<String>>>` | AgentCard的所有安全要求对象列表。                                                                                    |
-| `defaultInputModes`                 | `List<String>`                    | AgentCard的所有默认输入模式。                                                                                      |
-| `defaultOutputModes`                | `List<String>`                    | AgentCard的所有默认输出模式。                                                                                      |
+| `securitySchemes`                   | `map<string, object>`             | AgentCard security scheme definitions, matching the [A2A standard](https://a2a-protocol.org/latest/specification/#553-securityscheme-object). |
+| `security`                          | `array`                          | All security requirement objects of the AgentCard. |
+| `defaultInputModes`                 | `array`                          | All default input modes of the AgentCard. |
+| `defaultOutputModes`                | `array`                          | All default output modes of the AgentCard. |
 | `supportsAuthenticatedExtendedCard` | `string` | AgentCard是否支持认证的扩展卡。                                                                                     |
 | `registrationType`                  | `string` | AgentCard的默认注册类型，可选`URL`和`SERVICE`。                                                                      |
 | `latestVersion`                     | `string` | AgentCard当前版本时否为最新版本。                                                                                    |
@@ -6191,13 +6191,13 @@ curl -X DELETE '127.0.0.1:8848/nacos/v3/admin/ai/a2a?namespaceId=public&agentNam
 }
 ```
 
-## 6. AI Prompt 管理
+## 6. AI Prompt Management
 
-### 6.1. 发布 Prompt
+### 6.1. Publish Prompt
 
 #### 接口描述
 
-通过该接口，可以发布新版本的 Prompt。
+This API publishes a new Prompt version.
 
 #### 请求方式
 
@@ -6215,18 +6215,18 @@ curl -X DELETE '127.0.0.1:8848/nacos/v3/admin/ai/a2a?namespaceId=public&agentNam
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间，默认 public |
-| `promptKey` | `string` | **是** | Prompt 键 |
-| `version` | `string` | **是** | 版本号 |
-| `template` | `string` | **是** | 模板内容 |
-| `commitMsg` | `string` | 否 | 提交说明 |
-| `description` | `string` | 否 | 描述 |
-| `bizTags` | `string` | 否 | 业务标签 |
-| `variables` | `string` | 否 | Prompt 模板变量定义（JSON 字符串） |
+| `namespaceId` | `string` | 否 | Namespace. Defaults to `public`. |
+| `promptKey` | `string` | **是** | Prompt key. |
+| `version` | `string` | **是** | Version. |
+| `template` | `string` | 否 | Template content. |
+| `commitMsg` | `string` | 否 | Commit message. |
+| `description` | `string` | 否 | Description. |
+| `bizTags` | `string` | 否 | Business tags. |
+| `variables` | `string` | 否 | Prompt template variable definitions as a JSON string. |
 
 #### 返回数据
 
-成功则返回统一返回体，`data` 为 `true` 表示成功；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+On success, the API returns the common response body with `data` set to `true`; on failure, it returns the [Nacos OpenAPI common response format](../user/overview/api-overview.md#32-http-api-统一返回体格式).
 
 #### 示例
 
@@ -6247,11 +6247,11 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt' \
 }
 ```
 
-### 6.2. 删除 Prompt
+### 6.2. Delete Prompt
 
 #### 接口描述
 
-通过该接口，可以删除指定 Prompt。
+This API deletes the specified Prompt.
 
 #### 请求方式
 
@@ -6269,12 +6269,12 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 |
-| `promptKey` | `string` | **是** | Prompt 键 |
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
 
 #### 返回数据
 
-成功则返回统一返回体，`data` 为 `true` 表示成功；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+On success, the API returns the common response body with `data` set to `true`; on failure, it returns the [Nacos OpenAPI common response format](../user/overview/api-overview.md#32-http-api-统一返回体格式).
 
 #### 示例
 
@@ -6294,11 +6294,11 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt?namespaceId=publi
 }
 ```
 
-### 6.3. 查询 Prompt 详情
+### 6.3. Get Prompt Detail
 
 #### 接口描述
 
-通过该接口，可按版本或标签查询 Prompt 详情。
+This API queries Prompt details by version or label.
 
 #### 请求方式
 
@@ -6316,15 +6316,15 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt?namespaceId=publi
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 |
-| `promptKey` | `string` | **是** | Prompt 键 |
-| `version` | `string` | 否 | 版本号 |
-| `label` | `string` | 否 | 标签 |
-| `md5` | `string` | 否 | 内容 MD5 |
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+| `version` | `string` | 否 | Version. |
+| `label` | `string` | 否 | Label. |
+| `md5` | `string` | 否 | Content MD5. |
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，`data` 含 promptKey、version、template、commitMsg、md5 等字段。
+The response body follows the [Nacos OpenAPI common response format](../user/overview/api-overview.md#32-http-api-统一返回体格式). `data` contains fields such as `promptKey`, `version`, `template`, `commitMsg`, and `md5`.
 
 #### 示例
 
@@ -6348,11 +6348,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/detail?namespaceId=p
 }
 ```
 
-### 6.4. 绑定标签
+### 6.4. Bind Label
 
 #### 接口描述
 
-通过该接口，可将标签绑定到指定 Prompt 版本。
+This API binds a label to the specified Prompt version.
 
 #### 请求方式
 
@@ -6370,14 +6370,14 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/detail?namespaceId=p
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 |
-| `promptKey` | `string` | **是** | Prompt 键 |
-| `label` | `string` | **是** | 标签名 |
-| `version` | `string` | **是** | 版本号 |
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+| `label` | `string` | **是** | Label name. |
+| `version` | `string` | **是** | Version. |
 
 #### 返回数据
 
-成功则返回统一返回体，`data` 为 `true` 表示成功；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+On success, the API returns the common response body with `data` set to `true`; on failure, it returns the [Nacos OpenAPI common response format](../user/overview/api-overview.md#32-http-api-统一返回体格式).
 
 #### 示例
 
@@ -6398,11 +6398,11 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/label' \
 }
 ```
 
-### 6.5. 解绑标签
+### 6.5. Unbind Label
 
 #### 接口描述
 
-通过该接口，可解绑 Prompt 的标签。
+This API unbinds a label from a Prompt.
 
 #### 请求方式
 
@@ -6420,13 +6420,13 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/label' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 |
-| `promptKey` | `string` | **是** | Prompt 键 |
-| `label` | `string` | **是** | 标签名 |
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+| `label` | `string` | **是** | Label name. |
 
 #### 返回数据
 
-成功则返回统一返回体，`data` 为 `true` 表示成功；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+On success, the API returns the common response body with `data` set to `true`; on failure, it returns the [Nacos OpenAPI common response format](../user/overview/api-overview.md#32-http-api-统一返回体格式).
 
 #### 示例
 
@@ -6446,11 +6446,11 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/label?namespaceId
 }
 ```
 
-### 6.6. 查询 Prompt 列表
+### 6.6. List Prompts
 
 #### 接口描述
 
-通过该接口，可以分页查询 Prompt 列表。
+This API queries Prompts by page.
 
 #### 请求方式
 
@@ -6468,16 +6468,16 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/label?namespaceId
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `pageNo` | `integer` | **是** | 页码 |
-| `pageSize` | `integer` | **是** | 每页条数 |
-| `namespaceId` | `string` | 否 | 命名空间 |
-| `promptKey` | `string` | 否 | Prompt 键过滤 |
-| `search` | `string` | 否 | blur or accurate |
-| `bizTags` | `string` | 否 | 业务标签 |
+| `pageNo` | `integer` | **是** | Page number. |
+| `pageSize` | `integer` | **是** | Number of records per page. |
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | 否 | Prompt key filter. |
+| `search` | `string` | 否 | Search mode: `blur` or `accurate`. |
+| `bizTags` | `string` | 否 | Business tags. |
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，`data` 为分页结构，包含 totalCount、pageNumber、pagesAvailable、pageItems 等字段。
+The response body follows the [Nacos OpenAPI common response format](../user/overview/api-overview.md#32-http-api-统一返回体格式). `data` is a paginated object that contains fields such as `totalCount`, `pageNumber`, `pagesAvailable`, and `pageItems`.
 
 #### 示例
 
@@ -6507,11 +6507,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/list?pageNo=1&pageSi
 }
 ```
 
-### 6.7. 查询 Prompt 元数据
+### 6.7. Get Prompt Metadata
 
 #### 接口描述
 
-通过该接口，可以查询指定 Prompt 的元数据信息。
+This API queries metadata of the specified Prompt.
 
 #### 请求方式
 
@@ -6529,12 +6529,12 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/list?pageNo=1&pageSi
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 |
-| `promptKey` | `string` | **是** | Prompt 键 |
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，`data` 包含 promptKey、description、bizTags、latestVersion、versions、labels 等字段。
+The response body follows the [Nacos OpenAPI common response format](../user/overview/api-overview.md#32-http-api-统一返回体格式). `data` contains fields such as `promptKey`, `description`, `bizTags`, `latestVersion`, `versions`, and `labels`.
 
 #### 示例
 
@@ -6558,11 +6558,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/metadata?namespaceId
 }
 ```
 
-### 6.8. 更新 Prompt 元数据
+### 6.8. Update Prompt Metadata
 
 #### 接口描述
 
-通过该接口，可更新 Prompt 的元数据（如描述、业务标签）。
+This API updates Prompt metadata, such as description and business tags.
 
 #### 请求方式
 
@@ -6580,14 +6580,14 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/metadata?namespaceId
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 |
-| `promptKey` | `string` | **是** | Prompt 键 |
-| `description` | `string` | 否 | 描述 |
-| `bizTags` | `string` | 否 | 业务标签 |
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+| `description` | `string` | 否 | Description. |
+| `bizTags` | `string` | 否 | Business tags. |
 
 #### 返回数据
 
-成功则返回统一返回体，`data` 为 `true` 表示成功；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+On success, the API returns the common response body with `data` set to `true`; on failure, it returns the [Nacos OpenAPI common response format](../user/overview/api-overview.md#32-http-api-统一返回体格式).
 
 #### 示例
 
@@ -6608,11 +6608,11 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/metadata' \
 }
 ```
 
-### 6.9. 查询 Prompt 版本列表
+### 6.9. List Prompt Versions
 
 #### 接口描述
 
-通过该接口，可以分页查询指定 Prompt 的版本列表。
+This API queries versions of the specified Prompt by page.
 
 #### 请求方式
 
@@ -6630,14 +6630,14 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/metadata' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 |
-| `promptKey` | `string` | **是** | Prompt 键 |
-| `pageNo` | `integer` | **是** | 页码 |
-| `pageSize` | `integer` | **是** | 每页条数 |
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+| `pageNo` | `integer` | **是** | Page number. |
+| `pageSize` | `integer` | **是** | Number of records per page. |
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，`data` 为分页结构，包含 totalCount、pageNumber、pagesAvailable、pageItems（每项含 version、commitMsg、gmtModified 等）。
+The response body follows the [Nacos OpenAPI common response format](../user/overview/api-overview.md#32-http-api-统一返回体格式). `data` is a paginated object that contains `totalCount`, `pageNumber`, `pagesAvailable`, and `pageItems`; each item contains fields such as `version`, `commitMsg`, and `gmtModified`.
 
 #### 示例
 
@@ -6667,13 +6667,411 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/versions?namespaceId
 }
 ```
 
-## 7. AI Skills 管理
-
-### 7.1. 获取技能详情
+### 6.10. Update Prompt Business Tags
 
 #### 接口描述
 
-通过该接口，按命名空间和技能名称获取指定技能的详情信息。
+This API updates Prompt business tags.
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/biz-tags`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+| `bizTags` | `string` | 否 | Business tags. |
+
+### 6.11. Update Prompt Description
+
+#### 接口描述
+
+This API updates the Prompt description.
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/description`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+| `description` | `string` | **是** | Description. |
+
+### 6.12. Create Prompt Draft
+
+#### 接口描述
+
+This API creates a Prompt draft version, or recreates a draft from an existing version.
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/draft`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+| `basedOnVersion` | `string` | 否 | Version to base the draft on. |
+| `targetVersion` | `string` | 否 | Target version. |
+| `template` | `string` | 否 | Template content. |
+| `variables` | `string` | 否 | Prompt template variable definitions as a JSON string. |
+| `commitMsg` | `string` | 否 | Commit message. |
+| `description` | `string` | 否 | Description. |
+| `bizTags` | `string` | 否 | Business tags. |
+
+### 6.13. Update Prompt Draft
+
+#### 接口描述
+
+This API updates the current Prompt draft content.
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/draft`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+| `template` | `string` | **是** | Template content. |
+| `variables` | `string` | 否 | Prompt template variable definitions as a JSON string. |
+| `commitMsg` | `string` | 否 | Commit message. |
+
+### 6.14. Delete Prompt Draft
+
+#### 接口描述
+
+This API deletes the current Prompt draft version.
+
+#### 请求方式
+
+`DELETE`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/draft`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+
+### 6.15. Force Publish Prompt Version
+
+#### 接口描述
+
+This API force-publishes a Prompt version while bypassing pipeline validation.
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/force-publish`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+| `version` | `string` | **是** | Version number. |
+| `updateLatestLabel` | `boolean` | 否 | Whether to update the `latest` label after publishing. |
+
+### 6.16. Get Prompt Governance Details
+
+#### 接口描述
+
+This API retrieves Prompt metadata, version governance information, and version summaries.
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/governance`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+
+### 6.17. Update Prompt Labels
+
+#### 接口描述
+
+This API updates the runtime routing labels of a Prompt.
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/labels`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+| `labels` | `string` | **是** | Label JSON string. |
+
+### 6.18. Offline Prompt Version
+
+#### 接口描述
+
+This API takes a specified Prompt version offline.
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/offline`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+| `version` | `string` | **是** | Version number. |
+
+### 6.19. Online Prompt Version
+
+#### 接口描述
+
+This API brings a specified Prompt version online.
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/online`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+| `version` | `string` | **是** | Version number. |
+
+### 6.20. Publish Prompt Version
+
+#### 接口描述
+
+This API publishes an approved Prompt version.
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/publish`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+| `version` | `string` | **是** | Version number. |
+| `updateLatestLabel` | `boolean` | 否 | Whether to update the `latest` label after publishing. |
+
+### 6.21. Redraft Prompt Version
+
+#### 接口描述
+
+This API converts a reviewed Prompt version back to a draft.
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/redraft`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+| `version` | `string` | **是** | Version number. |
+
+### 6.22. Submit Prompt Version for Review
+
+#### 接口描述
+
+This API submits a Prompt version to the pipeline for review.
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/submit`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+| `version` | `string` | 否 | Version number. |
+
+### 6.23. Get Prompt Version Details
+
+#### 接口描述
+
+This API retrieves details of a specified Prompt version.
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/version`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+| `version` | `string` | 否 | Version number. |
+
+### 6.24. Download Prompt Version
+
+#### 接口描述
+
+This API downloads a specified Prompt version as a Markdown file.
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/prompt/version/download`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `promptKey` | `string` | **是** | Prompt key. |
+| `version` | `string` | 否 | Version number. |
+
+## 7. AI Skills Management
+
+### 7.1. Get Skill Details
+
+#### 接口描述
+
+This API obtains the details of a specified skill by namespace and skill name.
 
 #### 请求方式
 
@@ -6691,12 +7089,12 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/prompt/versions?namespaceId
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 |
-| `skillName` | `string` | **是** | 技能名称 |
+| `namespaceId` | `string` | 否 | Namespace. |
+| `skillName` | `string` | **是** | Skill name. |
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，`data` 包含 name、description、instruction、resource、version、inputModes、outputModes 等字段。
+The response follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-统一返回体格式). `data` contains fields such as name, description, instruction, resource, version, inputModes, and outputModes.
 
 #### 示例
 
@@ -6722,11 +7120,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills?namespaceId=public&s
 }
 ```
 
-### 7.2. 创建技能草稿版本
+### 7.2. Create Skill Draft Version
 
 #### 接口描述
 
-通过该接口，可基于已有版本或全新 SkillCard 创建技能草稿版本。
+This API creates a draft version of a skill based on an existing version or a new SkillCard.
 
 #### 请求方式
 
@@ -6744,15 +7142,15 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills?namespaceId=public&s
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 |
-| `skillName` | `string` | 否 | 技能名称 |
-| `basedOnVersion` | `string` | 否 | 基于该版本创建草稿 |
-| `targetVersion` | `string` | 否 | 目标版本 |
+| `namespaceId` | `string` | 否 | Namespace. |
+| `skillName` | `string` | 否 | Skill name. |
+| `basedOnVersion` | `string` | 否 | Create the draft based on this version. |
+| `targetVersion` | `string` | 否 | Target version. |
 | `skillCard` | `string` | 否 | Skill card JSON; required if basedOnVersion is not set |
 
 #### 返回数据
 
-成功则返回统一返回体，`data` 为字符串（草稿创建结果）；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+On success, returns the unified response body with `data` as a string indicating the draft creation result. On failure, returns the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-统一返回体格式).
 
 #### 示例
 
@@ -6773,11 +7171,11 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/draft' \
 }
 ```
 
-### 7.3. 更新技能草稿内容
+### 7.3. Update Skill Draft Content
 
 #### 接口描述
 
-通过该接口，可更新当前技能草稿版本的 SkillCard 内容。
+This API updates the SkillCard content of the current skill draft version.
 
 #### 请求方式
 
@@ -6795,13 +7193,13 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/draft' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 |
+| `namespaceId` | `string` | 否 | Namespace. |
 | `skillCard` | `string` | **是** | Skill card JSON string containing complete Skill information |
-| `skillName` | `string` | **是** | 技能名称 |
+| `skillName` | `string` | **是** | Skill name. |
 
 #### 返回数据
 
-成功则返回统一返回体，`data` 为字符串（草稿更新结果）；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+On success, returns the unified response body with `data` as a string indicating the draft update result. On failure, returns the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-统一返回体格式).
 
 #### 示例
 
@@ -6822,11 +7220,11 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/draft' \
 }
 ```
 
-### 7.4. 删除技能
+### 7.4. Delete Skill
 
 #### 接口描述
 
-通过该接口，按命名空间和技能名称从 Nacos 删除技能。
+This API deletes a skill from Nacos by namespace and skill name.
 
 #### 请求方式
 
@@ -6844,12 +7242,12 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/draft' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 |
-| `skillName` | `string` | **是** | 技能名称 |
+| `namespaceId` | `string` | 否 | Namespace. |
+| `skillName` | `string` | **是** | Skill name. |
 
 #### 返回数据
 
-成功则返回统一返回体，`data` 为字符串表示操作结果（如 "ok"）；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+On success, returns the unified response body with `data` as a string indicating the operation result, such as "ok". On failure, returns the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-统一返回体格式).
 
 #### 示例
 
@@ -6869,11 +7267,11 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills?namespaceId=publi
 }
 ```
 
-### 7.5. 查询技能列表
+### 7.5. List Skills
 
 #### 接口描述
 
-通过该接口，可按条件筛选和分页查询技能列表。
+This API filters and paginates the skill list by query conditions.
 
 #### 请求方式
 
@@ -6891,15 +7289,16 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills?namespaceId=publi
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `pageNo` | `integer` | **是** | 页码 |
-| `pageSize` | `integer` | **是** | 每页条数 |
-| `namespaceId` | `string` | 否 | 命名空间 |
-| `skillName` | `string` | 否 | 技能名称过滤 |
+| `pageNo` | `integer` | **是** | Page number. |
+| `pageSize` | `integer` | **是** | Page size. |
+| `filterableForm` | `string` | **是** | Filter condition form. |
+| `namespaceId` | `string` | 否 | Namespace. |
+| `skillName` | `string` | 否 | Skill name filter. |
 | `search` | `string` | 否 | Search mode: accurate or blur |
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)，`data` 为分页结构，包含 totalCount、pageNumber、pagesAvailable、pageItems（每项含 name、description、updateTime 等）。
+The response follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-统一返回体格式). `data` is a pagination structure containing totalCount, pageNumber, pagesAvailable, and pageItems. Each item includes fields such as name, description, and updateTime.
 
 #### 示例
 
@@ -6930,11 +7329,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/list?pageNo=1&pageSi
 }
 ```
 
-### 7.6. 从 ZIP 文件上传技能
+### 7.6. Upload Skill from ZIP File
 
 #### 接口描述
 
-通过该接口，以 multipart/form-data 方式上传 ZIP 包并注册技能。文件须为合法的技能包。
+This API uploads a ZIP package in multipart/form-data format and registers the skill. The file must be a valid skill package.
 
 #### 请求方式
 
@@ -6954,14 +7353,15 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/list?pageNo=1&pageSi
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间。 |
+| `namespaceId` | `string` | 否 | Namespace ID. Defaults to `public`. |
 | `overwrite` | `boolean` | 否 | Whether to overwrite an existing skill with the same name. |
-| `targetVersion` | `string` | 否 | Target version of the skill to create, e.g. `1.0.0`. Resolution order: frontmatter `metadata.version` in `SKILL.md` → `meta.json` in ZIP → this `targetVersion` parameter → default `0.0.1`. |
-| `file` | `file` | 否 | ZIP file containing skill package |
+| `targetVersion` | `string` | 否 | Target version after upload. |
+| `commitMsg` | `string` | 否 | Commit message. |
+| `file` | `file` | 否 | ZIP file containing skill package. |
 
 #### 返回数据
 
-成功则返回统一返回体，`data` 为上传后的技能名称；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+On success, returns the unified response body with `data` as the uploaded skill name. On failure, returns the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-统一返回体格式).
 
 #### 示例
 
@@ -6969,7 +7369,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/list?pageNo=1&pageSi
 
 ```shell
 curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/upload' \
-  -F "file=@skill.zip" -F "namespaceId=public" -F "targetVersion=1.0.0"
+  -F "file=@skill.zip" -F "namespaceId=public" -F "overwrite=false" -F "targetVersion=1.0.0" -F "commitMsg=initial"
 ```
 
 * 返回示例
@@ -6982,11 +7382,11 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/upload' \
 }
 ```
 
-### 7.7. 删除技能草稿版本
+### 7.7. Delete Skill Draft Version
 
 #### 接口描述
 
-通过该接口，可删除指定技能的当前草稿版本。
+This API deletes the current draft version of a specified skill.
 
 #### 请求方式
 
@@ -7004,14 +7404,14 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/upload' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 |
-| `skillName` | `string` | **是** | 技能名称 |
+| `namespaceId` | `string` | 否 | Namespace. |
+| `skillName` | `string` | **是** | Skill name. |
 
-### 7.8. 更新技能业务标签
+### 7.8. Update Skill Business Tags
 
 #### 接口描述
 
-通过该接口，可更新技能的业务标签列表，无需变更版本状态。
+This API updates the business tag list of a skill without changing the version status.
 
 #### 请求方式
 
@@ -7029,15 +7429,15 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/upload' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 |
-| `skillName` | `string` | **是** | 技能名称 |
-| `bizTags` | `string` | **是** | 业务标签 |
+| `namespaceId` | `string` | 否 | Namespace. |
+| `skillName` | `string` | **是** | Skill name. |
+| `bizTags` | `string` | **是** | Business tags. |
 
-### 7.9. 更新技能版本标签
+### 7.9. Update Skill Version Labels
 
 #### 接口描述
 
-通过该接口，可更新技能的版本路由标签（如 latest）。
+This API updates the version routing labels of a skill, such as latest.
 
 #### 请求方式
 
@@ -7055,19 +7455,19 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/upload' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 |
-| `skillName` | `string` | **是** | 技能名称 |
-| `labels` | `string` | **是** | 标签 JSON 字符串 |
+| `namespaceId` | `string` | 否 | Namespace. |
+| `skillName` | `string` | **是** | Skill name. |
+| `labels` | `string` | **是** | Label JSON string. |
 
-### 7.10. 上下线与发布技能版本
+### 7.10. Skill Version Online, Offline, and Publish Operations
 
 #### 接口描述
 
-以下接口用于技能版本发布流程控制。
+The following APIs are used to control the skill version publishing workflow.
 
 #### 请求参数
 
-| 请求方式 | 请求URL | 关键参数 |
+| Method | Request URL | Key parameters |
 |--------|----------|----------|
 | `POST` | `/nacos/v3/admin/ai/skills/offline` | `namespaceId`、`skillName`、`scope`、`version` |
 | `POST` | `/nacos/v3/admin/ai/skills/online` | `namespaceId`、`skillName`、`scope`、`version` |
@@ -7075,7 +7475,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/upload' \
 | `PUT` | `/nacos/v3/admin/ai/skills/scope` | `namespaceId`、`skillName`、`scope` |
 | `POST` | `/nacos/v3/admin/ai/skills/submit` | `namespaceId`、`skillName`、`version` |
 
-### 7.11. 查询技能版本详情
+### 7.11. Get Skill Version Details
 
 #### 请求方式
 
@@ -7089,11 +7489,11 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/upload' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 |
-| `skillName` | `string` | **是** | 技能名称 |
-| `version` | `string` | 否 | 版本号 |
+| `namespaceId` | `string` | 否 | Namespace. |
+| `skillName` | `string` | **是** | Skill name. |
+| `version` | `string` | 否 | Version number. |
 
-### 7.12. 下载技能版本 ZIP 包
+### 7.12. Download Skill Version ZIP Package
 
 #### 请求方式
 
@@ -7107,9 +7507,9 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/upload' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 |
-| `skillName` | `string` | **是** | 技能名称 |
-| `version` | `string` | 否 | 版本号 |
+| `namespaceId` | `string` | 否 | Namespace. |
+| `skillName` | `string` | **是** | Skill name. |
+| `version` | `string` | 否 | Version number. |
 
 ### 7.13. Offline Skill
 #### 接口描述
@@ -7160,6 +7560,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/offline' -d "namesp
   "data": {}
 }
 ```
+
 
 ### 7.14. Online Skill
 #### 接口描述
@@ -7359,7 +7760,97 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/submit' -d "namespa
 }
 ```
 
-## 8. AgentSpec 管理
+### 7.18. Force Publish Skill Version
+
+#### 接口描述
+
+This API force-publishes a Skill version while bypassing pipeline validation.
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/skills/force-publish`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `skillName` | `string` | **是** | Skill name. |
+| `version` | `string` | **是** | Version number. |
+| `updateLatestLabel` | `boolean` | 否 | Whether to update the `latest` label after publishing. |
+
+### 7.19. Redraft Skill Version
+
+#### 接口描述
+
+This API converts a reviewed Skill version back to a draft.
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/skills/redraft`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `skillName` | `string` | **是** | Skill name. |
+| `version` | `string` | **是** | Version number. |
+
+### 7.20. Batch Upload Skills
+
+#### 接口描述
+
+This API batch uploads Skills from a ZIP file that contains multiple Skill subdirectories.
+
+#### 请求方式
+
+`POST`
+
+Request body type: `multipart/form-data`. Parameters are sent in the request body.
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/skills/upload/batch`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `overwrite` | `boolean` | 否 | Whether to overwrite existing skills with the same names. |
+| `file` | `file` | 否 | ZIP package containing multiple Skill subdirectories. |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/upload/batch' \
+  -F "file=@skills.zip" -F "namespaceId=public" -F "overwrite=false"
+```
+
+## 8. AgentSpec Management
 
 ### 8.1. Get AgentSpec
 #### 接口描述
@@ -7506,7 +7997,7 @@ This interface allows updating the business tag list of an AgentSpec without cha
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/biz-tags' -d "namespaceId=namespaceId&agentSpecName=agentSpecName&bizTags=bizTags"
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/biz-tags' -d "namespaceId=public&agentSpecName=my-agentspec&bizTags=demo"
 ```
 
 * 返回示例
@@ -7555,7 +8046,7 @@ This interface allows creating an AgentSpec draft version based on an existing v
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/draft' -d "namespaceId=namespaceId&agentSpecName=agentSpecName&basedOnVersion=basedOnVersion"
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/draft' -d "namespaceId=public&agentSpecName=my-agentspec&basedOnVersion=1.0.0"
 ```
 
 * 返回示例
@@ -7604,7 +8095,7 @@ This interface allows updating the card content of the current AgentSpec draft v
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/draft' -d "namespaceId=namespaceId&agentSpecName=agentSpecName&agentSpecCard=agentSpecCard"
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/draft' -d "namespaceId=public&agentSpecName=my-agentspec&agentSpecCard={}"
 ```
 
 * 返回示例
@@ -7701,7 +8192,7 @@ This interface allows updating AgentSpec version routing labels (e.g. latest lab
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/labels' -d "namespaceId=namespaceId&agentSpecName=agentSpecName&labels=labels"
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/labels' -d "namespaceId=public&agentSpecName=my-agentspec&labels={\"latest\":\"1.0.0\"}"
 ```
 
 * 返回示例
@@ -7736,9 +8227,10 @@ This interface allows paginated listing of AgentSpecs by namespace and name.
 |--------|------|------|----------|
 | `pageNo` | `integer` | **是** | Page number, starting from 1. |
 | `pageSize` | `integer` | **是** | Number of items per page. |
+| `filterableForm` | `string` | **是** | Filter condition form. |
 | `namespaceId` | `string` | 否 | Namespace ID, default is `public`. |
 | `agentSpecName` | `string` | 否 | AgentSpec name. |
-| `search` | `string` | 否 | Search mode: accurate or blur |
+| `search` | `string` | 否 | Search mode: `accurate` or `blur`. |
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
@@ -7802,7 +8294,7 @@ This interface allows executing an offline operation on a specific version or th
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/offline' -d "namespaceId=namespaceId&agentSpecName=agentSpecName&scope=scope&version=version"
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/offline' -d "namespaceId=public&agentSpecName=my-agentspec&scope=agentspec&version=1.0.0"
 ```
 
 * 返回示例
@@ -7852,7 +8344,7 @@ This interface allows executing an online operation on a specific version or the
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/online' -d "namespaceId=namespaceId&agentSpecName=agentSpecName&scope=scope&version=version"
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/online' -d "namespaceId=public&agentSpecName=my-agentspec&scope=agentspec&version=1.0.0"
 ```
 
 * 返回示例
@@ -7902,7 +8394,7 @@ This interface allows publishing an approved AgentSpec version.
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/publish' -d "namespaceId=namespaceId&agentSpecName=agentSpecName&version=version&updateLatestLabel=updateLatestLabel"
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/publish' -d "namespaceId=public&agentSpecName=my-agentspec&version=1.0.0&updateLatestLabel=true"
 ```
 
 * 返回示例
@@ -7951,7 +8443,7 @@ This interface allows setting the visibility scope of an AgentSpec to PUBLIC or 
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/scope' -d "namespaceId=namespaceId&agentSpecName=agentSpecName&scope=scope"
+curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/scope' -d "namespaceId=public&agentSpecName=my-agentspec&scope=PUBLIC"
 ```
 
 * 返回示例
@@ -8000,7 +8492,7 @@ This interface allows submitting an AgentSpec draft version to the pipeline for 
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/submit' -d "namespaceId=namespaceId&agentSpecName=agentSpecName&version=version"
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/submit' -d "namespaceId=public&agentSpecName=my-agentspec&version=1.0.0"
 ```
 
 * 返回示例
@@ -8021,7 +8513,7 @@ This interface allows uploading a ZIP-packaged AgentSpec; the package is parsed 
 
 `POST`
 
-请求体类型：`multipart/form-data`，参数放在请求体中。
+Request body type: `multipart/form-data`. Parameters are sent in the request body.
 
 #### 鉴权状态
 
@@ -8037,7 +8529,7 @@ This interface allows uploading a ZIP-packaged AgentSpec; the package is parsed 
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | Namespace ID, default is `public`. |
 | `overwrite` | `boolean` | 否 | Whether to overwrite an existing resource with the same name. |
-| `file` | `file` | 否 | ZIP file containing agentspec package |
+| `file` | `file` | 否 | ZIP file containing AgentSpec package. |
 
 #### 返回数据
 
@@ -8119,13 +8611,100 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/version?namespac
 }
 ```
 
-## 9. Pipeline 执行记录
+### 8.16. Force Publish AgentSpec Version
 
-### 9.1. 查询 Pipeline 执行记录列表
+#### 接口描述
+
+This API force-publishes an AgentSpec version while bypassing pipeline validation.
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/agentspecs/force-publish`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace ID, default is `public`. |
+| `agentSpecName` | `string` | **是** | AgentSpec name. |
+| `version` | `string` | **是** | Version number. |
+| `updateLatestLabel` | `boolean` | 否 | Whether to update the `latest` label after publishing. |
+
+### 8.17. Redraft AgentSpec Version
+
+#### 接口描述
+
+This API converts a reviewed AgentSpec version back to a draft.
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/agentspecs/redraft`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace ID, default is `public`. |
+| `agentSpecName` | `string` | **是** | AgentSpec name. |
+| `version` | `string` | **是** | Version number. |
+
+### 8.18. Get AgentSpec Version Metadata
+
+#### 接口描述
+
+This API retrieves metadata for a specified AgentSpec version without reading resource file content.
 
 #### 请求方式
 
 `GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/agentspecs/version/meta`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace ID, default is `public`. |
+| `agentSpecName` | `string` | **是** | AgentSpec name. |
+| `version` | `string` | 否 | Version number. |
+
+## 9. Pipeline Execution Records
+
+### 9.1. List Pipeline Execution Records
+
+#### 接口描述
+
+This API lists Pipeline execution records by resource type, resource name, namespace, and version with pagination.
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
 
 #### 请求URL
 
@@ -8135,18 +8714,52 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/version?namespac
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `resourceType` | `string` | **是** | 资源类型 |
-| `resourceName` | `string` | 否 | 资源名称 |
-| `namespaceId` | `string` | 否 | 命名空间 |
-| `version` | `string` | 否 | 资源版本 |
-| `pageNo` | `integer` | **是** | 页码 |
-| `pageSize` | `integer` | **是** | 每页条数 |
+| `resourceType` | `string` | **是** | Resource type. |
+| `resourceName` | `string` | 否 | Resource name. |
+| `namespaceId` | `string` | 否 | Namespace. |
+| `version` | `string` | 否 | Resource version. |
+| `pageNo` | `integer` | **是** | Page number. |
+| `pageSize` | `integer` | **是** | Page size. |
 
-### 9.2. 查询 Pipeline 执行记录详情
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | Response code. |
+| data.message | `string` | Response message. |
+| data.data | `string` | Paginated Pipeline execution records. |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/pipelines?resourceType=agentspec&resourceName=my-agentspec&namespaceId=public&version=1.0.0&pageNo=1&pageSize=20'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+### 9.2. Get Pipeline Execution Record Details
+
+#### 接口描述
+
+This API retrieves Pipeline execution record details by Pipeline ID.
 
 #### 请求方式
 
 `GET`
+
+#### 鉴权状态
+
+需管理员权限
 
 #### 请求URL
 
@@ -8156,4 +8769,267 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/agentspecs/version?namespac
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `pipelineId` | `string` | **是** | Pipeline ID |
+| `pipelineId` | `string` | **是** | Pipeline ID. |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | Response code. |
+| data.message | `string` | Response message. |
+| data.data.executionId | `string` | Pipeline execution ID. |
+| data.data.resourceType | `string` | Resource type. |
+| data.data.resourceName | `string` | Resource name. |
+| data.data.namespaceId | `string` | Namespace. |
+| data.data.version | `string` | Resource version. |
+| data.data.status | `string` | Execution status. |
+| data.data.pipeline | `array` | Pipeline stage information. |
+| data.data.createTime | `integer` | Creation time. |
+| data.data.updateTime | `integer` | Update time. |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/pipelines/pipeline-001'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+### 9.3. List Pipeline Execution Records
+
+#### 接口描述
+
+This API lists Pipeline execution records by resource type, resource name, namespace, and version with pagination.
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/pipelines/list`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `resourceType` | `string` | **是** | Resource type. |
+| `resourceName` | `string` | 否 | Resource name. |
+| `namespaceId` | `string` | 否 | Namespace. |
+| `version` | `string` | 否 | Resource version. |
+| `pageNo` | `integer` | **是** | Page number. |
+| `pageSize` | `integer` | **是** | Page size. |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | Response code. |
+| data.message | `string` | Response message. |
+| data.data | `string` | Paginated Pipeline execution records. |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/pipelines/list?resourceType=agentspec&resourceName=my-agentspec&namespaceId=public&version=1.0.0&pageNo=1&pageSize=20'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+### 9.4. Get Pipeline Execution Record Details
+
+#### 接口描述
+
+This API retrieves Pipeline execution record details by Pipeline ID.
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/pipelines/detail`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `pipelineId` | `string` | **是** | Pipeline ID. |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | Response code. |
+| data.message | `string` | Response message. |
+| data.data.executionId | `string` | Pipeline execution ID. |
+| data.data.resourceType | `string` | Resource type. |
+| data.data.resourceName | `string` | Resource name. |
+| data.data.namespaceId | `string` | Namespace. |
+| data.data.version | `string` | Resource version. |
+| data.data.status | `string` | Execution status. |
+| data.data.pipeline | `array` | Pipeline stage information. |
+| data.data.createTime | `integer` | Creation time. |
+| data.data.updateTime | `integer` | Update time. |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/pipelines/detail?pipelineId=pipeline-001'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+## 10. AI Resource Import
+
+### 10.1. List AI Resource Import Sources
+
+#### 接口描述
+
+This API lists the currently configured AI resource import sources.
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/import/sources`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `resourceType` | `string` | 否 | Resource type. |
+
+### 10.2. Search External AI Resources
+
+#### 接口描述
+
+This API searches importable external AI resources from a specified import source.
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/import/search`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `resourceType` | `string` | **是** | Resource type. |
+| `sourceId` | `string` | **是** | Import source ID. |
+| `query` | `string` | 否 | Search keyword. |
+| `cursor` | `string` | 否 | Pagination cursor. |
+| `limit` | `integer` | 否 | Result limit. |
+| `options` | `string` | 否 | Extension options as a JSON string. |
+
+### 10.3. Validate AI Resource Import Items
+
+#### 接口描述
+
+This API validates whether selected external AI resources can be imported.
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/import/validate`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `resourceType` | `string` | **是** | Resource type. |
+| `sourceId` | `string` | **是** | Import source ID. |
+| `selectedItems` | `string` | **是** | Resource items to validate as a JSON string. |
+| `overwriteExisting` | `boolean` | 否 | Whether to overwrite existing resources. |
+| `options` | `string` | 否 | Extension options as a JSON string. |
+
+### 10.4. Execute AI Resource Import
+
+#### 接口描述
+
+This API imports the selected external AI resources.
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/ai/import/execute`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace. |
+| `resourceType` | `string` | **是** | Resource type. |
+| `sourceId` | `string` | **是** | Import source ID. |
+| `selectedItems` | `string` | **是** | Resource items to import as a JSON string. |
+| `overwriteExisting` | `boolean` | 否 | Whether to overwrite existing resources. |
+| `skipInvalid` | `boolean` | 否 | Whether to skip invalid resource items. |
+| `validationToken` | `string` | 否 | Validation token. |
+| `options` | `string` | 否 | Extension options as a JSON string. |
