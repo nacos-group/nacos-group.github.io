@@ -50,6 +50,10 @@ Nacos 3.X 的控制台 API 也提供了Swagger风格的文档，您可以通过�
 
 通过该接口，可以获取到Nacos 集群的基础状态和开关信息，例如：版本号，运行模式，鉴权是否开启等；该接口不会返回Nacos 集群的节点信息。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -137,6 +141,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/state'
 
 通过该接口，可以获取到Nacos 控制台希望在浏览器中显示的公告信息。Nacos默认控制台UI会在未开启鉴权时调用此接口，返回集群未开启鉴权的提示。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -187,6 +195,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/announcement?language=zh-CN
 
 通过该接口，可以获取Nacos控制台的引导信息。Nacos默认控制台UI会在关闭Nacos控制台UI时调用，以获取引导信息，相关详情请参考[控制台手册-关闭默认控制台](./console/#33-关闭默认控制台)。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -234,6 +246,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/guide'
 #### 接口描述
 
 通过该接口，可以获取Nacos控制台的存活状态，Nacos控制台是否可正常接受和响应请求。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -283,6 +299,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/health/liveness'
 
 通过该接口，可以获取Nacos控制台的是否处于可读取状态，即Nacos控制台是否可以读取到数据。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -330,6 +350,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/health/readiness'
 #### 接口描述
 
 通过该接口，可以获取Nacos节点运行信息，包括节点ip，节点运行状态，节点元数据等。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -438,6 +462,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/cluster/nodes'
 
 通过该接口，可以获取当前Nacos集群的命名空间列表。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -502,6 +530,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/list'
 
 通过该接口，可以获取指定命名空间的详情。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -564,6 +596,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace?namespaceId=public'
 
 通过该接口，可以创建新的命名空间。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -615,6 +651,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/core/namespace' -d 'namespaceName
 #### 接口描述
 
 通过该接口，可以更新命名空间的信息，无法更新命名空间ID，仅能更新命名空间的名称和描述。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -668,6 +708,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/core/namespace' -d 'namespaceId=te
 
 通过该接口，可以删除命名空间。默认命名空间`public`无法被删除。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `DELETE`
@@ -718,6 +762,10 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/core/namespace?namespaceId=test
 
 通过该接口，可以检查命名空间ID是否存在。默认控制台ID将在创建命名空间前调用，确认自定义的命名空间ID是否已经存在，以防冲突。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -767,6 +815,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/exist?customNamespa
 #### 接口描述
 
 通过该接口，可以按类型和名称获取指定插件的详情信息。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -829,6 +881,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin?pluginType=auth&pluginName=
 
 通过该接口，可以获取指定插件在各集群节点上的可用情况。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -877,6 +933,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/availability?pluginType=aut
 #### 接口描述
 
 通过该接口，可以更新插件的配置。需要提供插件类型、名称及配置内容。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -931,6 +991,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/config' \
 
 通过该接口，可以获取插件列表，可按插件类型筛选。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -982,6 +1046,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/list?pluginType=auth'
 #### 接口描述
 
 通过该接口，可以更新插件的启用状态（启用或禁用）。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -1038,6 +1106,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/status' \
 #### 接口描述
 
 通过该接口，可以获取指定配置的详情。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -1121,6 +1193,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName=te
 
 通过该接口，可以创建新的配置或更新已有配置。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -1181,6 +1257,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/cs/config' -d 'dataId=test&groupN
 
 通过该接口，可以删除指定配置。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `DELETE`
@@ -1233,6 +1313,10 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName
 
 通过该接口，可以批量删除指定配置。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `DELETE`
@@ -1282,6 +1366,10 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config/batchDelete?ids=83802
 #### 接口描述
 
 通过该接口，可以查询指定命名空间下的配置列表。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -1385,6 +1473,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/list?dataId=&groupName=&
 
 通过该接口，可以通过配置内容查询对应配置的列表。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -1473,6 +1565,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/searchDetail?dataId=&gro
 
 通过该接口，可以查询指定配置的监听者列表。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -1531,6 +1627,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener?dataId=test&gro
 #### 接口描述
 
 通过该接口，可以查询某个订阅者IP订阅了哪些配置。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -1591,6 +1691,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener/ip?ip=127.0.0.1
 
 通过该接口，可以将所选或所查询的配置，导出的配置为zip文件，进行备份或导入到其他Nacos集群。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -1648,6 +1752,10 @@ unzip ~/test.zip
 #### 接口描述
 
 通过该接口，可以将从Nacos导出的zip文件导入到Nacos的指定命名空间中
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -1707,6 +1815,10 @@ curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import" -F "file=@/pat
 #### 接口描述
 
 通过该接口，可以将所选或所查询的配置克隆到其他命名空间。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -1770,6 +1882,10 @@ curl -H "Content-Type: application/json" -X POST "http://127.0.0.1:8080/v3/conso
 
 通过该接口，可以将配置从BETA发布状态停止，即回滚配置的Beta发布状态。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `DELETE`
@@ -1824,6 +1940,10 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=test&grou
 #### 接口描述
 
 通过该接口，可以查询配置的BETA发布状态。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -1909,6 +2029,10 @@ curl "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=111&groupName=DEFAU
 #### 接口描述
 
 通过该接口，可以查询配置的发布历史。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -2029,6 +2153,10 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/list?pageNo=1&pageSize=10&data
 
 通过该接口，可以查询配置的某次历史变更记录。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -2112,6 +2240,10 @@ curl "http://127.0.0.1:8080/v3/console/cs/history?dataId=111&groupName=DEFAULT_G
 #### 接口描述
 
 通过该接口，可以查询配置最新状态的前一次变更历史。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -2197,6 +2329,10 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/previous?id=838029534438625280
 
 通过该接口，可以查询命名空间下的配置列表，仅查询dataId和groupName，用于配置历史UI的下拉选择。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -2275,6 +2411,10 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/configs?namespaceId=public"
 
 通过该接口，可以创建一个空服务。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -2335,6 +2475,10 @@ curl -X POST "http://127.0.0.1:8080/v3/console/ns/service" -d "serviceName=test&
 
 通过该接口，可以删除一个服务。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `DELETE`
@@ -2387,6 +2531,10 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test&gro
 
 通过该接口，可以更新一个服务的元数据。仅能更新服务的元数据，如`metadata`、`selector`
 等。服务的serviceName、groupName、namespaceId等不能更新。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -2444,6 +2592,10 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service" -d "serviceName=test&g
 
 通过该接口，可以获取支持的服务路由选择器类型列表，用于控制台UI在创建和更新服务时，选择对应的路由选择器类型的下拉选择框。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -2495,6 +2647,10 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/selector/types"
 #### 接口描述
 
 通过该接口，可以查询指定命名空间下的服务列表。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -2583,6 +2739,10 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/list?pageNo=1&pageSize=
 
 通过该接口，可以查询指定服务下的订阅者列表。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -2664,6 +2824,10 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/subscribers?pageNo=1&pa
 #### 接口描述
 
 通过该接口，可以查询指定服务详情。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -2752,6 +2916,10 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test"
 
 通过该接口，可以更新指定服务集群的元数据。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `PUT`
@@ -2814,6 +2982,10 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service/cluster" -d "serviceNam
 #### 接口描述
 
 通过该接口，可以查询指定服务的实例列表。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -2910,6 +3082,10 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/instance/list?&serviceName=test
 
 通过该接口，可以更新指定服务的实例元数据，包括权重和上下线状态；无法更新实例的服务名、分组名、命名空间、IP及端口。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `PUT`
@@ -2969,6 +3145,10 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/instance" -d 'serviceName=test&
 #### 接口描述
 
 通过该接口，可以删除指定服务下的**持久化实例**。该接口仅支持删除`ephemeral=false`的实例，不支持删除临时实例。
+
+#### 起始版本
+
+`3.2.2`
 
 #### 请求方式
 
@@ -3031,6 +3211,10 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/instance?serviceName=test&cl
 #### 接口描述
 
 通过该接口，可以查询托管在Nacos上指定MCP服务的服务的详细信息。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -3133,6 +3317,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=
 #### 接口描述
 
 通过该接口，可以更新托管在Nacos上的MCP服务。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -3260,6 +3448,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 
 通过该接口，可以创建托管在Nacos上的MCP服务，可以是存量API转换的MCP服务，也可以是MCP市场中的MCP服务。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -3384,6 +3576,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 
 通过该接口，可以删除托管在Nacos上的MCP服务。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `DELETE`
@@ -3436,6 +3632,10 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpNa
 #### 接口描述
 
 通过该接口，可以查询托管在Nacos上的MCP服务的服务列表。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -3544,6 +3744,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/list?pageNo=1&pageSize=100&
 
 通过该接口，可以通过指定MCP`URL`的方式直接获取MCP工具并导入，避免逐个填写。
 
+#### 起始版本
+
+`3.0.3`
+
 #### 请求方式
 
 `GET`
@@ -3609,6 +3813,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/importToolsFromMcp?transpor
 #### 接口描述
 
 通过该接口，可以验证当前待导入的MCP服务内容是否符合规则，返回的内容中包含有效个数和无效个数，无效的服务在对应字段中有错误信息。
+
+#### 起始版本
+
+`3.1.0`
 
 #### 请求方式
 
@@ -3703,6 +3911,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/validate' \
 #### 接口描述
 
 通过该接口，可以通过`文件`,`JSON`和指定MCP`URL`的方式直接导入MCP服务，避免逐个填写。
+
+#### 起始版本
+
+`3.1.0`
 
 #### 请求方式
 
@@ -3800,6 +4012,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/execute' \
 #### 接口描述
 
 通过该接口，可以查询托管在Nacos上的AgentCard的列表。
+
+#### 起始版本
+
+`3.1.0`
 
 #### 请求方式
 
@@ -3918,6 +4134,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a/list?pageNo=1&pageSize=100&
 
 通过该接口，可以查询指定托管在Nacos上的AgentCard的版本列表。
 
+#### 起始版本
+
+`3.1.0`
+
 #### 请求方式
 
 `GET`
@@ -3975,6 +4195,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a/version/list?namespaceId=pu
 #### 接口描述
 
 通过该接口，可以查询托管在Nacos上指定AgentCard的详细信息。
+
+#### 起始版本
+
+`3.1.0`
 
 #### 请求方式
 
@@ -4107,6 +4331,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a?namespaceId=public&agentNam
 
 通过该接口，可以更新托管在Nacos上的AgentCard。
 
+#### 起始版本
+
+`3.1.0`
+
 #### 请求方式
 
 `PUT`
@@ -4164,6 +4392,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/a2a' \
 
 通过该接口，可以创建托管在Nacos上的AgentCard。
 
+#### 起始版本
+
+`3.1.0`
+
 #### 请求方式
 
 `POST`
@@ -4218,6 +4450,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/a2a' \
 
 通过该接口，可以删除托管在Nacos上的AgentCard。
 
+#### 起始版本
+
+`3.1.0`
+
 #### 请求方式
 
 `DELETE`
@@ -4271,6 +4507,10 @@ Prompt 管理 API 提供 Prompt 的草稿、发布、上下线、治理查询、
 #### 接口描述
 通过该接口，可以删除指定Prompt。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `DELETE`
@@ -4320,6 +4560,10 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/prompt?namespaceId=public&pr
 ### 6.2. 更新 Prompt 业务标签
 #### 接口描述
 通过该接口，可更新 Prompt 业务标签。
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -4372,6 +4616,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/biz-tags' -d "namespaceI
 #### 接口描述
 通过该接口，可更新 Prompt 描述。
 
+#### 起始版本
+
+`3.2.1`
+
 #### 请求方式
 
 `PUT`
@@ -4422,6 +4670,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/description' -d "namespa
 ### 6.4. 创建 Prompt 草稿
 #### 接口描述
 通过该接口，可创建 Prompt 草稿版本，或基于已有版本重新创建草稿。
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -4480,6 +4732,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/draft' -d "namespaceId=
 #### 接口描述
 通过该接口，可更新当前 Prompt 草稿内容。
 
+#### 起始版本
+
+`3.2.1`
+
 #### 请求方式
 
 `PUT`
@@ -4533,6 +4789,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/draft' -d "namespaceId=n
 #### 接口描述
 通过该接口，可删除当前 Prompt 草稿版本。
 
+#### 起始版本
+
+`3.2.1`
+
 #### 请求方式
 
 `DELETE`
@@ -4582,6 +4842,10 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/prompt/draft?namespaceId=pub
 ### 6.7. 强制发布 Prompt 版本
 #### 接口描述
 通过该接口，可绕过流水线校验强制发布 Prompt 版本。
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -4634,6 +4898,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/force-publish' -d "name
 ### 6.8. 查询 Prompt 治理详情
 #### 接口描述
 通过该接口，可查询 Prompt 元数据、版本治理信息和版本摘要。
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -4698,6 +4966,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/governance?namespaceId=p
 #### 接口描述
 通过该接口，可更新 Prompt 的运行时路由标签。
 
+#### 起始版本
+
+`3.2.1`
+
 #### 请求方式
 
 `PUT`
@@ -4748,6 +5020,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/labels' -d "namespaceId=
 ### 6.10. 查询Prompt列表
 #### 接口描述
 通过该接口，可以分页查询Prompt列表。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -4803,6 +5079,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/list?pageNo=1&pageSize=1
 #### 接口描述
 通过该接口，可下线指定 Prompt 版本。
 
+#### 起始版本
+
+`3.2.1`
+
 #### 请求方式
 
 `POST`
@@ -4854,6 +5134,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/offline' -d "namespaceI
 #### 接口描述
 通过该接口，可上线指定 Prompt 版本。
 
+#### 起始版本
+
+`3.2.1`
+
 #### 请求方式
 
 `POST`
@@ -4904,6 +5188,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/online' -d "namespaceId
 ### 6.13. 发布 Prompt 版本
 #### 接口描述
 通过该接口，可发布已通过评审的 Prompt 版本。
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -4957,6 +5245,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/publish' -d "namespaceI
 #### 接口描述
 通过该接口，可将已评审的 Prompt 版本重新转为草稿。
 
+#### 起始版本
+
+`3.2.2`
+
 #### 请求方式
 
 `POST`
@@ -5008,6 +5300,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/redraft' -d "namespaceI
 #### 接口描述
 通过该接口，可提交 Prompt 版本进入流水线评审。
 
+#### 起始版本
+
+`3.2.1`
+
 #### 请求方式
 
 `POST`
@@ -5058,6 +5354,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/submit' -d "namespaceId
 ### 6.16. 查询 Prompt 版本详情
 #### 接口描述
 通过该接口，可查询指定 Prompt 版本详情。
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -5120,6 +5420,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/version?namespaceId=publ
 #### 接口描述
 通过该接口，可将指定 Prompt 版本下载为 Markdown 文件。
 
+#### 起始版本
+
+`3.2.2`
+
 #### 请求方式
 
 `GET`
@@ -5162,6 +5466,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/version/download?namespa
 ### 6.18. 查询Prompt版本列表
 #### 接口描述
 通过该接口，可以分页查询指定Prompt的版本列表。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5217,6 +5525,10 @@ Skills 管理 API 提供 Skill 的查询、草稿、发布、上下线、版本�
 ### 7.1. 查询Skill详情
 #### 接口描述
 通过该接口，可以查询托管在Nacos上指定Skill的详细信息。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5283,6 +5595,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills?namespaceId=public&skill
 #### 接口描述
 通过该接口，可以删除托管在Nacos上的Skill。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `DELETE`
@@ -5334,6 +5650,10 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/skills?namespaceId=public&sk
 #### 接口描述
 通过该接口，可更新Skill的业务标签列表，无需变更版本状态。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `PUT`
@@ -5384,6 +5704,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/biz-tags' -d "namespaceI
 ### 7.4. 创建Skill草稿版本
 #### 接口描述
 通过该接口，可基于某一已有版本或全新 SkillCard 创建草稿版本。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5438,6 +5762,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=
 #### 接口描述
 通过该接口，可更新当前草稿版本的 SkillCard 内容。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `PUT`
@@ -5489,6 +5817,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=p
 #### 接口描述
 通过该接口，可删除指定Skill的当前草稿版本。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `DELETE`
@@ -5538,6 +5870,10 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/skills/draft?namespaceId=pub
 ### 7.7. 强制发布 Skill 版本
 #### 接口描述
 通过该接口，可绕过流水线校验强制发布 Skill 版本。
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -5591,6 +5927,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/force-publish' -d "name
 #### 接口描述
 通过该接口，可更新Skill的版本路由标签（如 latest 标签），无需变更版本状态。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `PUT`
@@ -5641,6 +5981,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/labels' -d "namespaceId=
 ### 7.9. 查询Skill列表
 #### 接口描述
 通过该接口，可以查询托管在Nacos上的Skill列表。
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -5696,6 +6040,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/list?filterableForm=true
 #### 接口描述
 通过该接口，可对指定版本或整个Skill执行下线操作，使其不可被调用。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `POST`
@@ -5747,6 +6095,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/offline' -d "namespaceI
 ### 7.11. 上线Skill
 #### 接口描述
 通过该接口，可对指定版本或整个Skill执行上线操作，使其可被调用。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5800,6 +6152,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/online' -d "namespaceId
 #### 接口描述
 通过该接口，可将审核通过的Skill版本正式发布。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `POST`
@@ -5852,6 +6208,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/publish' -d "namespaceI
 #### 接口描述
 通过该接口，可将已评审的 Skill 版本重新转为草稿。
 
+#### 起始版本
+
+`3.2.2`
+
 #### 请求方式
 
 `POST`
@@ -5902,6 +6262,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/redraft' -d "namespaceI
 ### 7.14. 更新Skill可见范围
 #### 接口描述
 通过该接口，可将Skill的可见范围设置为 PUBLIC（公开）或 PRIVATE（私有）。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5954,6 +6318,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/scope' -d "namespaceId=p
 #### 接口描述
 通过该接口，可将Skill草稿版本提交至流水线进行审核。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `POST`
@@ -6004,6 +6372,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/submit' -d "namespaceId
 ### 7.16. 上传Skill（ZIP）
 #### 接口描述
 通过该接口，可通过ZIP文件上传Skill。
+
+#### 起始版本
+
+`3.2.2`
 
 #### 请求方式
 
@@ -6067,6 +6439,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload?namespaceId=publ
 #### 接口描述
 通过该接口，可从包含多个 Skill 子目录的 ZIP 文件批量上传 Skill。
 
+#### 起始版本
+
+`3.2.2`
+
 #### 请求方式
 
 `POST`
@@ -6126,6 +6502,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload/batch?namespaceI
 #### 接口描述
 通过该接口，可按命名空间、Skill名称和版本号查询指定版本的 Skill 详情。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -6181,6 +6561,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/version?namespaceId=publ
 #### 接口描述
 通过该接口，可下载指定版本的 Skill ZIP 包。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -6226,6 +6610,10 @@ AgentSpec 管理 API 提供 AgentSpec 的查询、草稿、发布、上下线、
 ### 8.1. 查询 AgentSpec
 #### 接口描述
 通过该接口，可按命名空间和名称查询 AgentSpec 的最新已发布版本。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6291,6 +6679,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs?namespaceId=public&a
 #### 接口描述
 通过该接口，可删除指定命名空间和名称下的 AgentSpec 及其所有版本。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `DELETE`
@@ -6340,6 +6732,10 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agentspecs?namespaceId=publi
 ### 8.3. 更新 AgentSpec 业务标签
 #### 接口描述
 通过该接口，可更新 AgentSpec 的业务标签列表，无需变更版本状态。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6392,6 +6788,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/biz-tags' -d "namesp
 #### 接口描述
 通过该接口，可基于某一已有版本创建 AgentSpec 草稿版本。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `POST`
@@ -6442,6 +6842,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespac
 ### 8.5. 更新 AgentSpec 草稿内容
 #### 接口描述
 通过该接口，可更新当前 AgentSpec 草稿版本的卡片内容。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6494,6 +6898,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespace
 #### 接口描述
 通过该接口，可删除指定 AgentSpec 的当前草稿版本。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `DELETE`
@@ -6543,6 +6951,10 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft?namespaceId
 ### 8.7. 强制发布 AgentSpec 版本
 #### 接口描述
 通过该接口，可绕过流水线校验强制发布 AgentSpec 版本。
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -6596,6 +7008,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/force-publish' -d "
 #### 接口描述
 通过该接口，可更新 AgentSpec 的版本路由标签（如 latest 标签），无需变更版本状态。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `PUT`
@@ -6646,6 +7062,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/labels' -d "namespac
 ### 8.9. 查询 AgentSpec 列表
 #### 接口描述
 通过该接口，可按命名空间和名称分页查询 AgentSpec 列表。
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -6701,6 +7121,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs/list?filterableForm=
 #### 接口描述
 通过该接口，可对指定版本或整个 AgentSpec 执行下线操作，使其不可被调用。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `POST`
@@ -6752,6 +7176,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/offline' -d "namesp
 ### 8.11. 上线 AgentSpec
 #### 接口描述
 通过该接口，可对指定版本或整个 AgentSpec 执行上线操作，使其可被调用。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6805,6 +7233,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/online' -d "namespa
 #### 接口描述
 通过该接口，可将审核通过的 AgentSpec 版本正式发布。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `POST`
@@ -6857,6 +7289,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/publish' -d "namesp
 #### 接口描述
 通过该接口，可将已评审的 AgentSpec 版本重新转为草稿。
 
+#### 起始版本
+
+`3.2.2`
+
 #### 请求方式
 
 `POST`
@@ -6907,6 +7343,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/redraft' -d "namesp
 ### 8.14. 更新 AgentSpec 可见范围
 #### 接口描述
 通过该接口，可将 AgentSpec 的可见范围设置为 PUBLIC（公开）或 PRIVATE（私有）。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6959,6 +7399,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/scope' -d "namespace
 #### 接口描述
 通过该接口，可将 AgentSpec 草稿版本提交至流水线进行审核。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `POST`
@@ -7009,6 +7453,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/submit' -d "namespa
 ### 8.16. 上传 AgentSpec
 #### 接口描述
 通过该接口，可上传 ZIP 格式的 AgentSpec 包，自动解析并创建或更新 AgentSpec。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -7067,6 +7515,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/upload?namespaceId=
 ### 8.17. 查询 AgentSpec 版本
 #### 接口描述
 通过该接口，可按命名空间、名称和版本号查询指定版本的 AgentSpec 详情。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -7127,6 +7579,10 @@ Pipeline 管理 API 提供 Pipeline 执行记录列表、详情与实例查询�
 #### 接口描述
 通过该接口，可按资源类型、资源名称、命名空间和版本分页查询 Pipeline 执行记录。
 
+#### 起始版本
+
+`3.2.1`
+
 #### 请求方式
 
 `GET`
@@ -7180,6 +7636,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines?resourceType=skill&re
 ### 9.2. 查询 Pipeline 执行记录
 #### 接口描述
 通过该接口，可按 Pipeline ID 查询 Pipeline 执行记录详情。
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -7238,6 +7698,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines/detail?pipelineId=pip
 #### 接口描述
 通过该接口，可按资源类型、资源名称、命名空间和版本分页查询 Pipeline 执行记录。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -7291,6 +7755,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines/list?resourceType=ski
 ### 9.4. 查询 Pipeline 执行记录
 #### 接口描述
 通过该接口，可按 Pipeline ID 查询 Pipeline 执行记录详情。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -7351,6 +7819,10 @@ AI 资源导入 API 提供外部 AI 资源导入源查询、搜索、校验与�
 ### 10.1. 执行 AI 资源导入
 #### 接口描述
 通过该接口，可导入选中的外部 AI 资源。
+
+#### 起始版本
+
+`3.2.2`
 
 #### 请求方式
 
@@ -7413,6 +7885,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/import/execute' -d "namespaceI
 #### 接口描述
 通过该接口，可从指定导入源搜索可导入的外部 AI 资源。
 
+#### 起始版本
+
+`3.2.2`
+
 #### 请求方式
 
 `POST`
@@ -7472,6 +7948,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/import/search' -d "namespaceId
 #### 接口描述
 通过该接口，可查询当前配置的 AI 资源导入源。
 
+#### 起始版本
+
+`3.2.2`
+
 #### 请求方式
 
 `GET`
@@ -7520,6 +8000,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/import/sources?resourceType=ski
 ### 10.4. 校验 AI 资源导入项
 #### 接口描述
 通过该接口，可校验选中的外部 AI 资源是否可导入。
+
+#### 起始版本
+
+`3.2.2`
 
 #### 请求方式
 
@@ -7583,6 +8067,10 @@ Copilot 相关 API 提供配置获取/保存、Prompt 调试与优化、Skill �
 
 获取当前Copilot配置，仅返回apiKey、model、studioUrl、studioProject。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -7639,6 +8127,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/copilot/config'
 
 创建或更新Copilot配置，仅接受apiKey、model、studioUrl、studioProject，其他字段使用默认值。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `POST`
@@ -7685,6 +8177,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/config'
 
 通过该接口，可使用用户输入流式调试Prompt并返回模型响应，返回SSE流。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `POST`
@@ -7729,6 +8225,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/debug' -H 'Content
 #### 接口描述
 
 通过该接口，可流式优化Prompt，返回SSE流。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -7775,6 +8275,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/optimize' -H 'Cont
 
 通过该接口，可基于背景信息流式生成Skill，返回SSE流。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `POST`
@@ -7820,6 +8324,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/generate' -H 'Conte
 #### 接口描述
 
 通过该接口，可基于目标与对话历史流式优化Skill，返回SSE流。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
