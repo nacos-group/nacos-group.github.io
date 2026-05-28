@@ -38,15 +38,15 @@ const companiesLogos = companiesLogosTop.concat(companiesLogosBottom);
 
 <span class="new-companies-wrapper">
   <use-companies
-    class="use-companies flex flex-col items-center pt-10 pb-4"
+    class="use-companies flex flex-col items-center pt-2 pb-3"
   >
-    <div class="top-title flex flex-col items-center mb-10 mt-12">
+    <div class="top-title flex flex-col items-center mb-4 mt-0">
       <span class="text-gray-10 text-xs w-full max-w-[63.5rem] text-center">
         {t("home.use.companies.about")}
       </span>
     </div>
 
-    <div class="bottom-silder mt-1">
+    <div class="bottom-silder mt-0">
       <ul class="slider">
         {
           companiesLogos.map((logo, index) => (
@@ -205,11 +205,11 @@ const companiesLogos = companiesLogosTop.concat(companiesLogosBottom);
 
     @media (max-width: 50rem) {
       .use-companies {
-        padding: 1.5rem;
+        padding: 1rem;
       }
       .top-title {
         width: 100%;
-        margin-top: 2.5rem;
+        margin-top: 0;
       }
       .bottom-silder {
         width: 100%;
@@ -238,7 +238,7 @@ const companiesLogos = companiesLogosTop.concat(companiesLogosBottom);
 
     @media (min-width: 50rem) and (max-width: 86rem) {
       .use-companies {
-        padding: 2.5rem;
+        padding: 1.5rem 2.5rem;
       }
       .top-title,
       .bottom-silder {

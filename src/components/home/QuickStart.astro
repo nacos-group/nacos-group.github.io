@@ -1,17 +1,25 @@
 ---
 import { useTranslations } from "@i18n/util";
 const t = useTranslations(Astro);
+const isEn = Astro.url.pathname.startsWith('/en');
+const quickStartDocHref = isEn ? '/en/docs/latest/quickstart/quick-start/' : '/docs/latest/quickstart/quick-start/';
 ---
 
-<quickstart-section id="quickstart" class="quickstart-section block w-full py-16 flex flex-col justify-center items-center">
+<quickstart-section id="quickstart" class="quickstart-section block w-full pt-12 pb-3 flex flex-col justify-center items-center">
   <div class="quickstart-content px-4">
-    <div class="top-title flex flex-col items-center mb-12">
-      <h3 class="font-light text-gray-10 text-xs mb-6 tracking-[0.15em]">
-        {t('home.quickstart.title')}
-      </h3>
+    <div class="top-title flex flex-col items-center mb-7">
       <b class="title text-gray-14 text-[2.5rem] leading-[3.5rem] font-medium">
         {t('home.quickstart.subtitle')}
       </b>
+      <a
+        href={quickStartDocHref}
+        class="quickstart-doc-link inline-flex items-center gap-2 text-sm text-gray-08 hover:text-gray-11 transition-colors no-underline mt-3"
+      >
+        {t('home.quickstart.view.full')}
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
     </div>
 
     <div class="quickstart-tabs mx-auto">
@@ -91,17 +99,6 @@ const t = useTranslations(Astro);
       </div>
     </div>
 
-    <div class="text-center mt-8">
-      <a
-        href="/docs/latest/quickstart/quick-start/"
-        class="inline-flex items-center gap-2 text-sm text-gray-08 hover:text-gray-11 transition-colors no-underline"
-      >
-        {t('home.quickstart.view.full')}
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
-      </a>
-    </div>
   </div>
 </quickstart-section>
 
