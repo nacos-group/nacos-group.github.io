@@ -29,6 +29,7 @@ description: Updates Nacos API documentation from Swagger api.json. **Must try t
 2. **对比**「生成的片段」与「已有文档」中对应接口（按 #### 请求URL + 请求方式 匹配）。
 3. **在已有文档上做针对性更新**（直接编辑对应的 `.md` 文件）：
    - **与 api.json 对齐**：参数表增删（文档多出的参数删掉、缺失的参数补上）、类型/必填与 api.json 一致；请求 URL、请求方式、鉴权状态按需修正；curl 示例中的 URL/参数名与 api.json 一致。
+   - **起始版本同步（强制）**：每个 Swagger operation 若包含 `x-nacos-api-since.version`，文档中对应 API 小节必须在「接口描述」之后、「请求方式」之前增加或更新 `#### 起始版本`，内容为反引号包裹的版本号，如 `` `3.2.0` ``。若已有起始版本与 api.json 不一致，以 api.json 为准更新。新增 API 小节也必须包含该字段。
    - **保留已有内容**：已有文档中的**参数描述**、**返回字段描述**、**请求示例 / 返回示例**（含手写示例）应尽量保留；仅当某参数已从 api 移除时删掉该参数行，仅当缺少某参数时补上一行（描述可先来自生成片段或简写，后续再润色）。
    - **手写增强内容保护（强制）**：对文档中已有的手写增强内容（如参数说明扩展表、命令映射表、注意事项）即使 swagger 中无对应字段，也**不得删除**。这类内容默认视为高优先级人工补充，除非用户明确要求移除。
    - **空描述补全（强制）**：对“新增参数但描述为空/占位符（如 `-`）”的情况，必须结合接口描述、参数名、上下文给出可读描述；不要直接保留空描述。已有参数描述除非明显错误，否则保持原文。
@@ -86,7 +87,7 @@ curl "http://localhost:8848/nacos/v3/api-docs/client-api" -H "accept-language:en
 
 - 读取 `api.json`（`paths`、`components/schemas`）与对应的 `*.md`。
 - 通过 path + method 对齐已有文档中的接口（如 `#### 请求URL` 后的 path 或标题）。
-- 找出**新增**或**发生变更**的 API（path/method/参数/返回结构变化）。
+- 找出**新增**或**发生变更**的 API（path/method/参数/返回结构/`x-nacos-api-since.version` 起始版本变化）。
 - 使用本 skill 自带的 **Python 脚本**（仅 `swagger_to_md.py`）生成符合现有 api.md 风格的 Markdown 片段，**作为对比参考**，不要用任何 sync 脚本把生成内容整段写回文档。
 
 ### 豁免项记录（Swagger 已知限制/临时 Bug）
@@ -106,6 +107,8 @@ python .agents/skills/nacos-api-doc-update/scripts/compare_doc_with_swagger.py \
 - 豁免仅用于“已确认且有追踪”的差异，需在文件内写清 endpoint + 精确 issue 文案，避免误伤真实回归。
 
 **重要：参数与 api.json 同步**。对**每个**已在文档中的接口，用 api.json 的 `parameters` / `requestBody` 与文档中的「请求参数」或「请求Body」表逐项对比：若文档里写了某参数而 api.json 中该 path+method 下已**没有**该参数，应在文档中**删除**该参数行；若 api.json 有而文档没有，应**补上**该参数行。脚本输出是“以 api.json 为准”的参考，用于**对比后在已有文档上做针对性修改**，保留文档中已有的描述与示例。
+
+**重要：起始版本与 api.json 同步**。对**每个**已在文档中的接口，读取 Swagger operation 的 `x-nacos-api-since.version`，并与文档小节中的 `#### 起始版本` 对比；缺失则补充，不一致则更新。若 operation 暂无该 extension，不要凭空编造版本号。
 
 **脚本路径**：`.agents/skills/nacos-api-doc-update/scripts/swagger_to_md.py`。在文档仓库根目录下执行，例如：
 

@@ -180,6 +180,17 @@ def get_response_example(op: dict) -> Optional[str]:
     return None
 
 
+def get_api_since(op: dict) -> Optional[str]:
+    since = op.get("x-nacos-api-since")
+    if isinstance(since, dict):
+        version = since.get("version")
+        if version:
+            return str(version).strip()
+    if isinstance(since, str) and since.strip():
+        return since.strip()
+    return None
+
+
 def build_curl(
     method: str, path: str, params: list[dict], doc_type: str, request_media_type: Optional[str] = None
 ) -> str:
@@ -261,6 +272,10 @@ def render_one_api(
     blocks.append(f"### {section_num}. {summary}\n")
     blocks.append("#### 接口描述\n")
     blocks.append(description + "\n\n")
+    api_since = get_api_since(op)
+    if api_since:
+        blocks.append("#### 起始版本\n\n")
+        blocks.append(f"`{api_since}`\n\n")
     blocks.append("#### 请求方式\n\n")
     blocks.append(f"`{method.upper()}`\n\n")
     if request_media_type and request_media_type != "application/x-www-form-urlencoded":

@@ -58,6 +58,10 @@ Nacos 3.X 的HTTP OpenAPI 不提供配置的发布和删除接口，`普通应�
 
 获取指定配置
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -154,6 +158,10 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 若连续调用注册请求，也可以起到`续约实例`的作用，但是是通过`更新实例`的方式进行续约，会耗费更多的性能，因此请在注册成功后进行续约操作而非继续进行注册更新。
 :::
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -221,6 +229,10 @@ curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&
 
 注销指定实例
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `DELETE`
@@ -282,6 +294,10 @@ curl -X DELETE "127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=test1&ip=
 :::note
 由于Nacos3.X即将移除UDP类型的推送支持，因此对于不支持Grpc长连接推送的客户端，需要定期进行一次实例列表的拉取，以保证客户端能及时感知到实例列表的变化，以实现订阅服务的功能。
 :::
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -369,6 +385,10 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=test1'
 
 通过该接口，可按 version、label 或 latest 查询 Prompt，优先级 version > label > latest；支持 md5 条件返回 304。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -428,6 +448,10 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/prompt?promptKey=myPrompt'
 
 通过该接口，可按命名空间、名称、版本号或 label 获取指定 AgentSpec 详情。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -483,6 +507,10 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs?name=my-agent'
 
 通过该接口，可按命名空间和关键词分页搜索 AgentSpec。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -531,6 +559,10 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs/search?keyword=agent&p
 #### 接口描述
 
 通过该接口，可按命名空间、名称、版本号或 label 下载 Skill ZIP 文件。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 

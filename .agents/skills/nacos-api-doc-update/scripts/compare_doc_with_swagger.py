@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Optional
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from swagger_to_md import parse_parameters  # noqa: E402
+from swagger_to_md import get_api_since, parse_parameters  # noqa: E402
 
 
 def load_exemptions(exemptions_file: Optional[str], doc_type: str) -> dict:
@@ -86,6 +86,7 @@ def build_api_map(spec: dict) -> dict:
             api_map[(path_key, method.upper())] = {
                 "query_params": {p["name"]: p for p in query_params},
                 "body_params": {p["name"]: p for p in body_params},
+                "since": get_api_since(op),
             }
     return api_map
 
@@ -127,7 +128,7 @@ def extract_curl(section: str) -> str:
 
 
 def extract_sections(content: str):
-    """Yield (path, method, params_block, body_block, curl) for each API section."""
+    """Yield (path, method, since, params_block, body_block, curl) for each API section."""
     # 兼容两种小节标题：### 3.16. 与 ### 3.16 （无点），均视为新小节起始
     sections = re.split(r"(?=^### \d+\.\d+(?:\.|\s))", content, flags=re.MULTILINE)
     for block in sections:
@@ -139,6 +140,8 @@ def extract_sections(content: str):
             continue
         path = normalize_doc_path(url_m.group(1))
         method = method_m.group(1).upper()
+        since_m = re.search(r"#### 起始版本\n+\s*`?([^`\n]+)`?", block)
+        since = since_m.group(1).strip() if since_m else ""
 
         params_block = ""
         body_block = ""
@@ -157,7 +160,7 @@ def extract_sections(content: str):
                 body_block = m.group(1).strip()
 
         curl = extract_curl(block)
-        yield path, method, params_block, body_block, curl
+        yield path, method, since, params_block, body_block, curl
 
 
 def compare_params(api_params: dict, doc_rows: list[dict], kind: str) -> list[str]:
@@ -254,7 +257,7 @@ def main() -> None:
     total_issues = 0
     print(f"# 对比报告: {args.doc_file} vs {args.json}\n")
 
-    for path, method, params_block, body_block, curl in extract_sections(doc_content):
+    for path, method, since, params_block, body_block, curl in extract_sections(doc_content):
         key = (path, method)
         endpoint_key = f"{method} {path}"
         doc_apis.add(key)
@@ -273,6 +276,7 @@ def main() -> None:
         spec_entry = api_map[key]
         q_api = spec_entry["query_params"]
         b_api = spec_entry["body_params"]
+        api_since = spec_entry.get("since") or ""
 
         doc_q = parse_doc_table(params_block) if params_block and "|" in params_block and "无" not in params_block[:10] else []
         doc_b = parse_doc_table(body_block) if body_block and "|" in body_block else []
@@ -283,6 +287,11 @@ def main() -> None:
             doc_b = parse_doc_table(params_block)
 
         issues = []
+        if api_since:
+            if not since:
+                issues.append(f"  [doc 缺少] 起始版本: {api_since}")
+            elif since != api_since:
+                issues.append(f"  [起始版本不一致] api since={api_since}, doc={since}")
         issues.extend(compare_params(q_api, doc_q, "query"))
         issues.extend(compare_params(b_api, doc_b, "body"))
         if curl and curl_has_placeholders(curl):

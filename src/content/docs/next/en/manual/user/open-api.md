@@ -52,6 +52,10 @@ In addition, Nacos 3.X will remove long-polling based configuration listening an
 
 Get the specified configuration.
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -144,6 +148,10 @@ If a renewal request returns error code `21003`, the instance has expired and be
 Calling the registration request repeatedly can also renew the instance, but it renews by updating the instance and consumes more resources. Therefore, after registration succeeds, use renewal instead of repeated registration updates.
 :::
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -211,6 +219,10 @@ curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&
 
 Deregister the specified instance.
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `DELETE`
@@ -272,6 +284,10 @@ Query the detailed instance list under the specified service.
 :::note
 Because Nacos 3.X will remove UDP-based push support, clients that do not support gRPC long-lived push connections need to periodically pull the instance list so that they can detect instance changes in time and implement service subscription.
 :::
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -359,6 +375,10 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=test1'
 
 Query Prompt by version, label, or latest (priority: version > label > latest); supports md5 for 304 conditional response.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -418,6 +438,10 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/prompt?promptKey=myPrompt'
 
 This interface allows getting an AgentSpec detail by namespace, name, version, or label.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -473,6 +497,10 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs?name=my-agent'
 
 This interface allows paginated searching of AgentSpecs by namespace and keyword.
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -521,6 +549,10 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs/search?keyword=agent&p
 #### 接口描述
 
 This interface allows downloading a Skill ZIP file by namespace, name, version, or label.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
