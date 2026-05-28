@@ -91,7 +91,7 @@ Nacos 3.X 的HTTP OpenAPI 不提供配置的发布和删除接口，`普通应�
 | `encryptedDataKey` | `string` | 配置的加解密密钥，仅在使用配置加解密插件时有此值 |
 | `contentType`      | `string` | 配置的类型，如`TEXT`,`JSON`等    |
 | `md5`              | `string` | 配置的md5值                  |
-| `lastModified`     | `string` | 配置的最后修改时间                |
+| `lastModified`     | `integer` | 配置的最后修改时间                |
 | `beta`             | `boolean` | 配置是否有灰度配置                |
 
 其他字段为预留字段，暂时无用，忽略即可。
@@ -313,7 +313,7 @@ curl -X DELETE "127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=test1&ip=
 
 | 参数名                                  | 参数类型       | 描述说明      |
 |--------------------------------------|------------|-----------|
-| `data`                               | `Object[]` | 实例列表      |
+| `data`                               | `array` | 实例列表      |
 | `data.[i].ip`                        | `string` | 实例`IP`    |
 | `data.[i].port`                      | `integer` | 实例端口号     |
 | `data.[i].weight`                    | `number` | 实例权重      |
@@ -322,7 +322,7 @@ curl -X DELETE "127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=test1&ip=
 | `data.[i].ephemeral`                 | `boolean` | 是否为临时实例   |
 | `data.[i].clusterName`               | `string` | 实例所在的集群名称 |
 | `data.[i].serviceName`               | `string` | 服务名       |
-| `data.[i].metadata`                  | `map`      | 实例元数据     |
+| `data.[i].metadata`                  | `map<string, string>` | 实例元数据     |
 | `data.[i].instanceHeartBeatTimeOut`  | `integer` | 实例心跳超时时间  |
 | `data.[i].ipDeleteTimeout`           | `integer` | 实例删除超时时间  |
 | `data.[i].instanceHeartBeatInterval` | `integer` | 实例心跳间隔    |
@@ -397,6 +397,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=test1'
 | `version`          | `string` | 版本号          |
 | `template`         | `string` | Prompt 模板内容   |
 | `md5`              | `string` | 内容 md5，用于 304 判断 |
+| `variables`        | `array` | Prompt 变量列表   |
 
 #### 示例
 

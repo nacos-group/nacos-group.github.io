@@ -1,62 +1,56 @@
 ---
-title: 客户端API
-keywords: [ Open API,手册 ]
-description: Open API 手册
+title: Client API
+keywords: [ Open API, Manual ]
+description: Open API Manual
 sidebar:
   order: 7
 ---
 
-# 客户端API
+# Client API
 
 :::note
-Nacos 3.X 版本将不再兼容1.X版本的OpenAPI，同时不再兼容2.X版本的HTTP OpenAPI，请使用Nacos 3.X版本的OpenAPI进行替换。
+Nacos 3.X is no longer compatible with the OpenAPI of Nacos 1.X or the HTTP OpenAPI of Nacos 2.X. Please migrate to the OpenAPI of Nacos 3.X.
 
-Nacos 3.X 的 HTTP OpenAPI **主要面向不支持 gRPC 的编程语言开发客户端使用**，其设计目的是为`普通应用`、`微服务应用`
-，以及其他 `非管控类` 和 `非网关类` 应用提供配置获取、服务注册与发现的功能支持。
+The HTTP OpenAPI in Nacos 3.X is **mainly intended for clients written in programming languages that do not support gRPC**. It provides configuration retrieval, service registration, and service discovery capabilities for `regular applications`, `microservice applications`, and other `non-control-plane` or `non-gateway` applications.
 
-该接口仅提供单服务或单配置级别的数据操作能力（例如对单个服务或配置项的增删改查），不支持范围型聚合操作（如查询全部服务列表、配置列表等批量数据接口）。
+These APIs only provide data operations at the single-service or single-configuration level, such as reading or updating an individual service or configuration item. They do not support range-based aggregate operations, such as querying all services or all configurations.
 
-如有`管控类`和`网关类`的应用需求，需要使用范围型数据操作接口，请使用[Admin API](../admin/admin-api.md)。
+For `control-plane` or `gateway` applications that require range-based data operations, use the [Admin API](../admin/admin-api.md).
 :::
 
 > For how to obtain and configure access credentials when using the default auth plugin, see [How to configure auth for OpenAPI](./auth.md#2-openapi如何配置鉴权信息).
 
-## 0. 客户端API 相关说明
+## 0. Client API Notes
 
-### 0.1. 统一路径格式
+### 0.1. Unified Path Format
 
-Nacos的客户端API，使用统一的Path格式进行的规范。格式为`[/$nacos.server.contextPath]/v3/client/[module]/[subPath]...`,
-其中
+Nacos client APIs use a unified path format: `[/$nacos.server.contextPath]/v3/client/[module]/[subPath]...`.
 
-- `$nacos.server.contextPath`：客户端API的根路径，默认为`/nacos`，可以通过`nacos.server.contextPath`配置项进行修改。
-- `module`：客户端API模块名称，例如`server`、`cs`、`ns`、`core`等。
-- `subPath`：客户端API的子路径，例如`state`、`namespace`、`config`等， 可能有多层子路径。
+- `$nacos.server.contextPath`: Root path of the client APIs. The default value is `/nacos`, and it can be changed with the `nacos.server.contextPath` configuration item.
+- `module`: Client API module name, such as `server`, `cs`, `ns`, or `core`.
+- `subPath`: Client API subpath, such as `state`, `namespace`, or `config`. It may contain multiple path levels.
 
-下列列出的客户端API，采用默认`$nacos.server.contextPath`的情况进行展示，若已修改部署环境中的`$nacos.server.contextPath`
-配置项，请自行修改调用API时的请求URL。
+The client APIs listed below use the default `$nacos.server.contextPath`. If the deployment changes `$nacos.server.contextPath`, update the request URL accordingly when calling the API.
 
-同时下列列出的客户端API样例中，均采用默认Nacos Web Server的端口进行展示，若已修改部署环境中的`$nacos.server.main.port`
-配置项，请自行修改调用API时的请求URL。
+The examples below also use the default Nacos Web Server port. If the deployment changes `$nacos.server.main.port`, update the request URL accordingly when calling the API.
 
-### 0.2. Swagger 类型文档
+### 0.2. Swagger Documentation
 
-Nacos 3.X 的客户端 Open API 也提供了Swagger风格的文档，您可以通过访问[Nacos Swagger HTTP 客户端 API](/swagger/client/)查看。
+Nacos 3.X client OpenAPI also provides Swagger-style documentation. You can view it at [Nacos Swagger HTTP Client API](/swagger/client/).
 
-## 1. 配置管理
+## 1. Configuration Management
 
 :::note
-Nacos 3.X 的HTTP OpenAPI 不提供配置的发布和删除接口，`普通应用`、`微服务应用`，以及其他 `非管控类` 和 `非网关类` 应用*应该*
-为配置的使用方而非发布方；若需要进行配置发布和删除操作，请使用[运维 API](../admin/admin-api.md)。
+The HTTP OpenAPI in Nacos 3.X does not provide APIs for publishing or deleting configurations. `Regular applications`, `microservice applications`, and other `non-control-plane` or `non-gateway` applications should consume configurations rather than publish them. To publish or delete configurations, use the [Admin API](../admin/admin-api.md).
 
-另外，由于Nacos 3.X 即将移除配置长轮询监听相关的功能，仅保留通过长连接进行配置监听，因此Nacos 3.X 的HTTP OpenAPI
-不提供配置的监听接口。您可以通过轮询`获取配置`，比对前后的`md5`来判断是否需要更新配置。
+In addition, Nacos 3.X will remove long-polling based configuration listening and keep configuration listening over long-lived connections only. Therefore, the HTTP OpenAPI in Nacos 3.X does not provide configuration listening APIs. You can poll `Get Configuration` and compare the `md5` value to determine whether the configuration needs to be updated.
 :::
 
-### 1.1. 获取配置
+### 1.1. Get Configuration
 
 #### 接口描述
 
-获取指定配置
+Get the specified configuration.
 
 #### 请求方式
 
@@ -70,31 +64,31 @@ Nacos 3.X 的HTTP OpenAPI 不提供配置的发布和删除接口，`普通应�
 
 | 参数名              | 参数类型     | 是否必填 | 描述说明                                                        |
 |------------------|----------|------|-------------------------------------------------------------|
-| `User-Agent`     | `string` | 否    | 用户代理，默认为空，通常为`Nacos-${program-language}-Client:v${version}  |
-| `Client-Version` | `string` | 否    | 客户端版本，默认为空，通常为`Nacos-${program-language}-Client:v${version} |
+| `User-Agent`     | `string` | 否    | User agent. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
+| `Client-Version` | `string` | 否    | Client version. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
 
 #### 请求参数
 
 | 参数名           | 类型       | 必填    | 参数描述                     |
 |---------------|----------|-------|--------------------------|
-| `namespaceId` | `string` | 否     | 命名空间，默认为`public`与 `''`相同 |
-| `groupName`   | `string` | **是** | 配置分组名                    |
-| `dataId`      | `string` | **是** | 配置名                      |
+| `namespaceId` | `string` | 否     | Namespace. Defaults to `public`, which is equivalent to `''`. |
+| `groupName`   | `string` | **是** | Configuration group name. |
+| `dataId`      | `string` | **是** | Configuration name. |
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-统一返回体格式). The following table describes only the fields in `data`.
 
 | 参数名                | 参数类型      | 描述                       |
 |--------------------|-----------|--------------------------|
-| `content`          | `string` | 配置内容                     |
-| `encryptedDataKey` | `string` | 配置的加解密密钥，仅在使用配置加解密插件时有此值 |
-| `contentType`      | `string` | 配置的类型，如`TEXT`,`JSON`等    |
-| `md5`              | `string` | 配置的md5值                  |
-| `lastModified`     | `string` | 配置的最后修改时间                |
-| `beta`             | `boolean` | 配置是否有灰度配置                |
+| `content`          | `string` | Configuration content. |
+| `encryptedDataKey` | `string` | Encryption/decryption key of the configuration. This value exists only when a configuration encryption plugin is used. |
+| `contentType`      | `string` | Configuration type, such as `TEXT` or `JSON`. |
+| `md5`              | `string` | MD5 value of the configuration. |
+| `lastModified`     | `integer` | Last modification time of the configuration. |
+| `beta`             | `boolean` | Whether the configuration has a beta configuration. |
 
-其他字段为预留字段，暂时无用，忽略即可。
+Other fields are reserved and currently unused. You can ignore them.
 
 #### 示例
 
@@ -127,31 +121,27 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/cs/config?dataId=test&groupName=test
 }
 ```
 
-## 2. 服务发现
+## 2. Service Discovery
 
 :::note
-Nacos 3.X 的HTTP OpenAPI 不提供查询所有服务列表等接口，`普通应用`、`微服务应用`，以及其他 `非管控类` 和 `非网关类` 应用
-*应该*仅需要注册为某一服务的实例，或从某一服务中注销自身，亦或获取已知的下游服务的实例列表进行实际的业务调用，不应该获取所有注册中心中的服务列表。
+The HTTP OpenAPI in Nacos 3.X does not provide APIs such as querying the full service list. `Regular applications`, `microservice applications`, and other `non-control-plane` or `non-gateway` applications should only need to register themselves as instances of a service, deregister themselves from a service, or get the instance list of a known downstream service for business calls. They should not retrieve all services in the registry.
 
-若需要获取所有服务列表，请使用[运维 API](../admin/admin-api.md)。
+To get the full service list, use the [Admin API](../admin/admin-api.md).
 :::
 
-### 2.1. 注册实例/续约实例
+### 2.1. Register/Renew Instance
 
 #### 接口描述
 
-注册或续约一个实例
+Register or renew an instance.
 
 :::note
-当通过HTTP OpenAPI注册的实例为**临时实例**时，需要定期对实例进行续约，在Nacos3.X的HTTP
-OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过参数`heartBeat`进行区分。
+When an instance registered through the HTTP OpenAPI is an **ephemeral instance**, it must be renewed periodically. In the HTTP OpenAPI of Nacos 3.X, the renewal API and registration API are merged and distinguished by the `heartBeat` parameter.
 
-当为续约请求时， Nacos不会对请求中的元数据等内容进行解析，即续约请求将会忽略传入的`healthy`,`weight`,`enabled`,`metadata`
-字段。
-当续约请求返回的错误码为`21003`
-时，说明该实例已过期被移除，需要重新进行注册，此时客户端应带上完整的信息，同时设置`heartBeat=false`进行重新注册，重新注册成功后再进行续约请求。
+For renewal requests, Nacos does not parse metadata and related fields in the request. In other words, renewal requests ignore the `healthy`, `weight`, `enabled`, and `metadata` fields.
+If a renewal request returns error code `21003`, the instance has expired and been removed. The client should re-register the instance with complete information and set `heartBeat=false`, then continue renewal requests after registration succeeds.
 
-若连续调用注册请求，也可以起到`续约实例`的作用，但是是通过`更新实例`的方式进行续约，会耗费更多的性能，因此请在注册成功后进行续约操作而非继续进行注册更新。
+Calling the registration request repeatedly can also renew the instance, but it renews by updating the instance and consumes more resources. Therefore, after registration succeeds, use renewal instead of repeated registration updates.
 :::
 
 #### 请求方式
@@ -166,32 +156,32 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 
 | 参数名              | 参数类型     | 是否必填 | 描述说明                                                        |
 |------------------|----------|------|-------------------------------------------------------------|
-| `User-Agent`     | `string` | 否    | 用户代理，默认为空，通常为`Nacos-${program-language}-Client:v${version}  |
-| `Client-Version` | `string` | 否    | 客户端版本，默认为空，通常为`Nacos-${program-language}-Client:v${version} |
+| `User-Agent`     | `string` | 否    | User agent. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
+| `Client-Version` | `string` | 否    | Client version. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
 
 #### 请求参数
 
 | 参数名           | 参数类型           | 是否必填  | 描述说明                   |
 |---------------|----------------|-------|------------------------|
-| `namespaceId` | `string` | 否     | 命名空间`Id`，默认为`public`   |
-| `groupName`   | `string` | 否     | 分组名，默认为`DEFAULT_GROUP` |
-| `serviceName` | `string` | **是** | 服务名                    |
-| `ip`          | `string` | **是** | `IP`地址                 |
-| `port`        | `integer` | **是** | 端口号                    |
-| `clusterName` | `string` | 否     | 集群名称，默认为`DEFAULT`      |
-| `healthy`     | `boolean` | 否     | 是否只查找健康实例，默认为`true`    |
-| `weight`      | `number` | 否     | 实例权重，默认为`1.0`          |
-| `enabled`     | `boolean` | 否     | 是否可用，默认为`true`         |
-| `metadata`    | `string` | 否     | 实例元数据                  |
-| `heartBeat`   | `boolean` | 否     | 是否为续约请求，默认为`false`     |
+| `namespaceId` | `string` | 否     | Namespace ID. Defaults to `public`. |
+| `groupName`   | `string` | 否     | Group name. Defaults to `DEFAULT_GROUP`. |
+| `serviceName` | `string` | **是** | Service name. |
+| `ip`          | `string` | **是** | IP address. |
+| `port`        | `integer` | **是** | Port. |
+| `clusterName` | `string` | 否     | Cluster name. Defaults to `DEFAULT`. |
+| `healthy`     | `boolean` | 否     | Whether the instance is healthy. Defaults to `true`. |
+| `weight`      | `number` | 否     | Instance weight. Defaults to `1.0`. |
+| `enabled`     | `boolean` | 否     | Whether the instance is enabled. Defaults to `true`. |
+| `metadata`    | `string` | 否     | Instance metadata. |
+| `heartBeat`   | `boolean` | 否     | Whether this is a renewal request. Defaults to `false`. |
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-统一返回体格式). The following table describes only the fields in `data`.
 
 | 参数名    | 参数类型     | 描述                             |
 |--------|----------|--------------------------------|
-| `data` | `string` | 是否注册、续约成功，成功时返回`ok`，失败时返回失败原因。 |
+| `data` | `string` | Whether registration or renewal succeeded. Returns `ok` on success, or the failure reason on failure. |
 
 #### 示例
 
@@ -215,11 +205,11 @@ curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&
 }
 ```
 
-### 2.2. 注销实例
+### 2.2. Deregister Instance
 
 #### 接口描述
 
-注销指定实例
+Deregister the specified instance.
 
 #### 请求方式
 
@@ -233,27 +223,27 @@ curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&
 
 | 参数名              | 参数类型     | 是否必填 | 描述说明                                                        |
 |------------------|----------|------|-------------------------------------------------------------|
-| `User-Agent`     | `string` | 否    | 用户代理，默认为空，通常为`Nacos-${program-language}-Client:v${version}  |
-| `Client-Version` | `string` | 否    | 客户端版本，默认为空，通常为`Nacos-${program-language}-Client:v${version} |
+| `User-Agent`     | `string` | 否    | User agent. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
+| `Client-Version` | `string` | 否    | Client version. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
 
 #### 请求参数
 
 | 参数名           | 参数类型      | 必填    | 参数描述                   |
 |---------------|-----------|-------|------------------------|
-| `namespaceId` | `string` | 否     | 命名空间`Id`，默认为`public`   |
-| `groupName`   | `string` | 否     | 分组名，默认为`DEFAULT_GROUP` |
-| `serviceName` | `string` | **是** | 服务名                    |
-| `ip`          | `string` | **是** | `IP`地址                 |
-| `port`        | `integer` | **是** | 端口号                    |
-| `clusterName` | `string` | 否     | 集群名称，默认为`DEFAULT`      |
+| `namespaceId` | `string` | 否     | Namespace ID. Defaults to `public`. |
+| `groupName`   | `string` | 否     | Group name. Defaults to `DEFAULT_GROUP`. |
+| `serviceName` | `string` | **是** | Service name. |
+| `ip`          | `string` | **是** | IP address. |
+| `port`        | `integer` | **是** | Port. |
+| `clusterName` | `string` | 否     | Cluster name. Defaults to `DEFAULT`. |
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-统一返回体格式). The following table describes only the fields in `data`.
 
 | 参数名    | 参数类型     | 描述                          |
 |--------|----------|-----------------------------|
-| `data` | `string` | 是否注销成功，成功时返回`ok`，失败时返回失败原因。 |
+| `data` | `string` | Whether deregistration succeeded. Returns `ok` on success, or the failure reason on failure. |
 
 #### 示例
 
@@ -273,14 +263,14 @@ curl -X DELETE "127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=test1&ip=
 }
 ```
 
-### 2.3. 查询指定服务的实例列表
+### 2.3. List Instances of a Service
 
 #### 接口描述
 
-查询指定服务下的实例详情信息列表
+Query the detailed instance list under the specified service.
 
 :::note
-由于Nacos3.X即将移除UDP类型的推送支持，因此对于不支持Grpc长连接推送的客户端，需要定期进行一次实例列表的拉取，以保证客户端能及时感知到实例列表的变化，以实现订阅服务的功能。
+Because Nacos 3.X will remove UDP-based push support, clients that do not support gRPC long-lived push connections need to periodically pull the instance list so that they can detect instance changes in time and implement service subscription.
 :::
 
 #### 请求方式
@@ -295,37 +285,37 @@ curl -X DELETE "127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=test1&ip=
 
 | 参数名              | 参数类型     | 是否必填 | 描述说明                                                        |
 |------------------|----------|------|-------------------------------------------------------------|
-| `User-Agent`     | `string` | 否    | 用户代理，默认为空，通常为`Nacos-${program-language}-Client:v${version}  |
-| `Client-Version` | `string` | 否    | 客户端版本，默认为空，通常为`Nacos-${program-language}-Client:v${version} |
+| `User-Agent`     | `string` | 否    | User agent. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
+| `Client-Version` | `string` | 否    | Client version. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
 
 #### 请求参数
 
 | 参数名           | 参数类型      | 是否必填  | 描述说明                    |
 |---------------|-----------|-------|-------------------------|
-| `namespaceId` | `string` | 否     | 命名空间`Id`，默认为`public`    |
-| `groupName`   | `string` | 否     | 分组名，默认为`DEFAULT_GROUP`  |
-| `serviceName` | `string` | **是** | 服务名                     |
+| `namespaceId` | `string` | 否     | Namespace ID. Defaults to `public`. |
+| `groupName`   | `string` | 否     | Group name. Defaults to `DEFAULT_GROUP`. |
+| `serviceName` | `string` | **是** | Service name. |
 | `clusterName` | `string` | 否     | Cluster name. If not provided, instances of all clusters will be returned.       |
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-统一返回体格式). The following table describes only the fields in `data`.
 
 | 参数名                                  | 参数类型       | 描述说明      |
 |--------------------------------------|------------|-----------|
-| `data`                               | `Object[]` | 实例列表      |
-| `data.[i].ip`                        | `string` | 实例`IP`    |
-| `data.[i].port`                      | `integer` | 实例端口号     |
-| `data.[i].weight`                    | `number` | 实例权重      |
-| `data.[i].healthy`                   | `boolean` | 实例是否健康    |
-| `data.[i].enabled`                   | `boolean` | 实例是否可用    |
-| `data.[i].ephemeral`                 | `boolean` | 是否为临时实例   |
-| `data.[i].clusterName`               | `string` | 实例所在的集群名称 |
-| `data.[i].serviceName`               | `string` | 服务名       |
-| `data.[i].metadata`                  | `map`      | 实例元数据     |
-| `data.[i].instanceHeartBeatTimeOut`  | `integer` | 实例心跳超时时间  |
-| `data.[i].ipDeleteTimeout`           | `integer` | 实例删除超时时间  |
-| `data.[i].instanceHeartBeatInterval` | `integer` | 实例心跳间隔    |
+| `data`                               | `array` | Instance list. |
+| `data.[i].ip`                        | `string` | Instance IP. |
+| `data.[i].port`                      | `integer` | Instance port. |
+| `data.[i].weight`                    | `number` | Instance weight. |
+| `data.[i].healthy`                   | `boolean` | Whether the instance is healthy. |
+| `data.[i].enabled`                   | `boolean` | Whether the instance is enabled. |
+| `data.[i].ephemeral`                 | `boolean` | Whether the instance is ephemeral. |
+| `data.[i].clusterName`               | `string` | Cluster name of the instance. |
+| `data.[i].serviceName`               | `string` | Service name. |
+| `data.[i].metadata`                  | `map<string, string>` | Instance metadata. |
+| `data.[i].instanceHeartBeatTimeOut`  | `integer` | Instance heartbeat timeout. |
+| `data.[i].ipDeleteTimeout`           | `integer` | Instance deletion timeout. |
+| `data.[i].instanceHeartBeatInterval` | `integer` | Instance heartbeat interval. |
 
 #### 示例
 
@@ -361,9 +351,9 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=test1'
 }
 ```
 
-## 3. AI 相关
+## 3. AI
 
-### 3.1. 查询 Prompt
+### 3.1. Query Prompt
 
 #### 接口描述
 
@@ -381,7 +371,7 @@ Query Prompt by label, version or latest (priority: label > version > latest); s
 
 | 参数名           | 类型       | 必填    | 参数描述                     |
 |---------------|----------|-------|--------------------------|
-| `namespaceId` | `string` | 否     | 命名空间，默认为`public`           |
+| `namespaceId` | `string` | 否     | Namespace ID. Defaults to `public`. |
 | `promptKey`   | `string` | **是** | Prompt key                  |
 | `version`     | `string` | 否     | Version (one of version, label, latest)     |
 | `label`       | `string` | 否     | Label (one of version, label, latest)    |
@@ -389,7 +379,7 @@ Query Prompt by label, version or latest (priority: label > version > latest); s
 
 #### 返回数据
 
-返回体遵循[Nacos open API 统一返回体格式](overview/api-overview.md#32-http-api-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-统一返回体格式). The following table describes only the fields in `data`.
 
 | 参数名                | 参数类型      | 描述           |
 |--------------------|-----------|--------------|
@@ -397,6 +387,7 @@ Query Prompt by label, version or latest (priority: label > version > latest); s
 | `version`          | `string` | Version       |
 | `template`         | `string` | Prompt template content   |
 | `md5`              | `string` | Content md5 for 304       |
+| `variables`        | `array` | Prompt variable list      |
 
 #### 示例
 
