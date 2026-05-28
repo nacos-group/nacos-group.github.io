@@ -434,6 +434,7 @@ This interface allows getting an AgentSpec detail by namespace, name, version, o
 | `name`        | `string` | **是** | AgentSpec name                    |
 | `version`     | `string` | 否     | AgentSpec version                 |
 | `label`       | `string` | 否     | AgentSpec label                   |
+| `md5`         | `string` | 否     | AgentSpec content MD5 for exact version matching |
 
 #### 返回数据
 
@@ -537,6 +538,7 @@ This interface allows downloading a Skill ZIP file by namespace, name, version, 
 | `name`        | `string` | **是** | Skill name                        |
 | `version`     | `string` | 否     | Skill version                     |
 | `label`       | `string` | 否     | Skill label                       |
+| `md5`         | `string` | 否     | Skill content MD5 for exact version matching |
 
 #### 示例
 

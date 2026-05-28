@@ -5210,6 +5210,181 @@ curl -X PUT '127.0.0.1:8848/v3/admin/cs/config/metadata' \
 }
 ```
 
+### 3.26. Get Gray Configuration
+
+#### 接口描述
+
+This interface retrieves the details of a specified gray configuration.
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/cs/config/gray`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace ID. Defaults to `public` when omitted. |
+| `groupName` | `string` | **是** | Configuration group name. |
+| `dataId` | `string` | **是** | Configuration ID. |
+| `grayName` | `string` | **是** | Gray configuration name. |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.dataId | `string` | Configuration ID. |
+| data.groupName | `string` | Configuration group name. |
+| data.namespaceId | `string` | Namespace ID. |
+| data.content | `string` | Gray configuration content. |
+| data.grayName | `string` | Gray configuration name. |
+| data.grayRule | `string` | Gray matching rule. |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/gray?namespaceId=public&groupName=DEFAULT_GROUP&dataId=example&grayName=gray'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+### 3.27. Publish Gray Configuration
+
+#### 接口描述
+
+This interface publishes a gray configuration using tagv2 gray matching rules.
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/cs/config/gray`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace ID. Defaults to `public` when omitted. |
+| `groupName` | `string` | **是** | Configuration group name. |
+| `dataId` | `string` | **是** | Configuration ID. |
+| `content` | `string` | **是** | Gray configuration content. |
+| `grayName` | `string` | **是** | Gray configuration name. |
+| `grayType` | `string` | 否 | Gray rule type. |
+| `grayMatchRuleExp` | `string` | **是** | Gray matching rule expression. |
+| `grayVersion` | `string` | **是** | Gray version. |
+| `grayPriority` | `integer` | 否 | Gray rule priority. |
+| `type` | `string` | 否 | Configuration type. |
+| `srcUser` | `string` | 否 | Operator username. |
+| `encryptedDataKey` | `string` | 否 | Data key for encrypted configuration content. |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data | `boolean` | Whether the gray configuration was published successfully. |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/gray' \
+  -d 'namespaceId=public' \
+  -d 'groupName=DEFAULT_GROUP' \
+  -d 'dataId=example' \
+  -d 'content=gray-content' \
+  -d 'grayName=gray' \
+  -d 'grayType=tagv2' \
+  -d 'grayMatchRuleExp=tag=gray' \
+  -d 'grayVersion=1' \
+  -d 'grayPriority=1'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": true
+}
+```
+
+### 3.28. Delete Gray Configuration
+
+#### 接口描述
+
+This interface deletes a specified gray configuration.
+
+#### 请求方式
+
+`DELETE`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/cs/config/gray`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Namespace ID. Defaults to `public` when omitted. |
+| `groupName` | `string` | **是** | Configuration group name. |
+| `dataId` | `string` | **是** | Configuration ID. |
+| `grayName` | `string` | **是** | Gray configuration name. |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data | `boolean` | Whether the gray configuration was deleted successfully. |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/gray?namespaceId=public&groupName=DEFAULT_GROUP&dataId=example&grayName=gray'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": true
+}
+```
+
 ## 4. MCP 管理
 
 ### 4.1. 查询MCP服务的服务列表

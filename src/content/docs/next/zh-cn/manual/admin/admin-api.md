@@ -5210,6 +5210,181 @@ curl -X PUT '127.0.0.1:8848/v3/admin/cs/config/metadata' \
 }
 ```
 
+### 3.26. 查询灰度配置
+
+#### 接口描述
+
+通过该接口，可以查询指定灰度配置的详情。
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/cs/config/gray`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `groupName` | `string` | **是** | 配置分组名称。 |
+| `dataId` | `string` | **是** | 配置 ID。 |
+| `grayName` | `string` | **是** | 灰度配置名称。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.dataId | `string` | 配置 ID。 |
+| data.groupName | `string` | 配置分组名称。 |
+| data.namespaceId | `string` | 命名空间 ID。 |
+| data.content | `string` | 灰度配置内容。 |
+| data.grayName | `string` | 灰度配置名称。 |
+| data.grayRule | `string` | 灰度匹配规则。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/gray?namespaceId=public&groupName=DEFAULT_GROUP&dataId=example&grayName=gray'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+### 3.27. 发布灰度配置
+
+#### 接口描述
+
+通过该接口，可以使用 tagv2 灰度匹配规则发布灰度配置。
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/cs/config/gray`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `groupName` | `string` | **是** | 配置分组名称。 |
+| `dataId` | `string` | **是** | 配置 ID。 |
+| `content` | `string` | **是** | 灰度配置内容。 |
+| `grayName` | `string` | **是** | 灰度配置名称。 |
+| `grayType` | `string` | 否 | 灰度规则类型。 |
+| `grayMatchRuleExp` | `string` | **是** | 灰度匹配规则表达式。 |
+| `grayVersion` | `string` | **是** | 灰度版本。 |
+| `grayPriority` | `integer` | 否 | 灰度规则优先级。 |
+| `type` | `string` | 否 | 配置类型。 |
+| `srcUser` | `string` | 否 | 操作用户。 |
+| `encryptedDataKey` | `string` | 否 | 加密配置的数据密钥。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data | `boolean` | 是否发布成功。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/gray' \
+  -d 'namespaceId=public' \
+  -d 'groupName=DEFAULT_GROUP' \
+  -d 'dataId=example' \
+  -d 'content=gray-content' \
+  -d 'grayName=gray' \
+  -d 'grayType=tagv2' \
+  -d 'grayMatchRuleExp=tag=gray' \
+  -d 'grayVersion=1' \
+  -d 'grayPriority=1'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": true
+}
+```
+
+### 3.28. 删除灰度配置
+
+#### 接口描述
+
+通过该接口，可以删除指定灰度配置。
+
+#### 请求方式
+
+`DELETE`
+
+#### 鉴权状态
+
+需管理员权限
+
+#### 请求URL
+
+`/nacos/v3/admin/cs/config/gray`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
+| `groupName` | `string` | **是** | 配置分组名称。 |
+| `dataId` | `string` | **是** | 配置 ID。 |
+| `grayName` | `string` | **是** | 灰度配置名称。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data | `boolean` | 是否删除成功。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/gray?namespaceId=public&groupName=DEFAULT_GROUP&dataId=example&grayName=gray'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": true
+}
+```
+
 ## 4. MCP 管理
 
 ### 4.1. 查询MCP服务的服务列表

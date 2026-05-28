@@ -444,6 +444,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/prompt?promptKey=myPrompt'
 | `name`        | `string` | **是** | AgentSpec 名称            |
 | `version`     | `string` | 否     | AgentSpec 版本号           |
 | `label`       | `string` | 否     | AgentSpec 标签            |
+| `md5`         | `string` | 否     | AgentSpec 内容 MD5，用于精确匹配指定版本 |
 
 #### 返回数据
 
@@ -547,6 +548,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs/search?keyword=agent&p
 | `name`        | `string` | **是** | Skill 名称                |
 | `version`     | `string` | 否     | Skill 版本号               |
 | `label`       | `string` | 否     | Skill 标签                |
+| `md5`         | `string` | 否     | Skill 内容 MD5，用于精确匹配指定版本 |
 
 #### 示例
 
