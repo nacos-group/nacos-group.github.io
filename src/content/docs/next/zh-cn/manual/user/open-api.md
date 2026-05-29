@@ -58,6 +58,10 @@ Nacos 3.X 的HTTP OpenAPI 不提供配置的发布和删除接口，`普通应�
 
 获取指定配置
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -91,7 +95,7 @@ Nacos 3.X 的HTTP OpenAPI 不提供配置的发布和删除接口，`普通应�
 | `encryptedDataKey` | `string` | 配置的加解密密钥，仅在使用配置加解密插件时有此值 |
 | `contentType`      | `string` | 配置的类型，如`TEXT`,`JSON`等    |
 | `md5`              | `string` | 配置的md5值                  |
-| `lastModified`     | `string` | 配置的最后修改时间                |
+| `lastModified`     | `integer` | 配置的最后修改时间                |
 | `beta`             | `boolean` | 配置是否有灰度配置                |
 
 其他字段为预留字段，暂时无用，忽略即可。
@@ -154,6 +158,10 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 若连续调用注册请求，也可以起到`续约实例`的作用，但是是通过`更新实例`的方式进行续约，会耗费更多的性能，因此请在注册成功后进行续约操作而非继续进行注册更新。
 :::
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -182,7 +190,7 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 | `healthy`     | `boolean` | 否     | 是否只查找健康实例，默认为`true`    |
 | `weight`      | `number` | 否     | 实例权重，默认为`1.0`          |
 | `enabled`     | `boolean` | 否     | 是否可用，默认为`true`         |
-| `metadata`    | `string` | 否     | 实例元数据                  |
+| `metadata`    | `string` | 否     | 实例元数据，JSON 对象字符串        |
 | `heartBeat`   | `boolean` | 否     | 是否为续约请求，默认为`false`     |
 
 #### 返回数据
@@ -220,6 +228,10 @@ curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&
 #### 接口描述
 
 注销指定实例
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -283,6 +295,10 @@ curl -X DELETE "127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=test1&ip=
 由于Nacos3.X即将移除UDP类型的推送支持，因此对于不支持Grpc长连接推送的客户端，需要定期进行一次实例列表的拉取，以保证客户端能及时感知到实例列表的变化，以实现订阅服务的功能。
 :::
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -313,7 +329,7 @@ curl -X DELETE "127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=test1&ip=
 
 | 参数名                                  | 参数类型       | 描述说明      |
 |--------------------------------------|------------|-----------|
-| `data`                               | `Object[]` | 实例列表      |
+| `data`                               | `array` | 实例列表      |
 | `data.[i].ip`                        | `string` | 实例`IP`    |
 | `data.[i].port`                      | `integer` | 实例端口号     |
 | `data.[i].weight`                    | `number` | 实例权重      |
@@ -322,7 +338,7 @@ curl -X DELETE "127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=test1&ip=
 | `data.[i].ephemeral`                 | `boolean` | 是否为临时实例   |
 | `data.[i].clusterName`               | `string` | 实例所在的集群名称 |
 | `data.[i].serviceName`               | `string` | 服务名       |
-| `data.[i].metadata`                  | `map`      | 实例元数据     |
+| `data.[i].metadata`                  | `map<string, string>` | 实例元数据     |
 | `data.[i].instanceHeartBeatTimeOut`  | `integer` | 实例心跳超时时间  |
 | `data.[i].ipDeleteTimeout`           | `integer` | 实例删除超时时间  |
 | `data.[i].instanceHeartBeatInterval` | `integer` | 实例心跳间隔    |
@@ -367,7 +383,11 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=test1'
 
 #### 接口描述
 
-通过该接口，可按 label、version 或 latest 查询 Prompt，优先级 label > version > latest；支持 md5 条件返回 304。
+通过该接口，可按 version、label 或 latest 查询 Prompt，优先级 version > label > latest；支持 md5 条件返回 304。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -397,6 +417,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=test1'
 | `version`          | `string` | 版本号          |
 | `template`         | `string` | Prompt 模板内容   |
 | `md5`              | `string` | 内容 md5，用于 304 判断 |
+| `variables`        | `array` | Prompt 变量列表   |
 
 #### 示例
 
@@ -427,6 +448,10 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/prompt?promptKey=myPrompt'
 
 通过该接口，可按命名空间、名称、版本号或 label 获取指定 AgentSpec 详情。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -443,6 +468,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/prompt?promptKey=myPrompt'
 | `name`        | `string` | **是** | AgentSpec 名称            |
 | `version`     | `string` | 否     | AgentSpec 版本号           |
 | `label`       | `string` | 否     | AgentSpec 标签            |
+| `md5`         | `string` | 否     | AgentSpec 内容 MD5，用于精确匹配指定版本 |
 
 #### 返回数据
 
@@ -480,6 +506,10 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs?name=my-agent'
 #### 接口描述
 
 通过该接口，可按命名空间和关键词分页搜索 AgentSpec。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -530,6 +560,10 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs/search?keyword=agent&p
 
 通过该接口，可按命名空间、名称、版本号或 label 下载 Skill ZIP 文件。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -546,6 +580,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs/search?keyword=agent&p
 | `name`        | `string` | **是** | Skill 名称                |
 | `version`     | `string` | 否     | Skill 版本号               |
 | `label`       | `string` | 否     | Skill 标签                |
+| `md5`         | `string` | 否     | Skill 内容 MD5，用于精确匹配指定版本 |
 
 #### 示例
 

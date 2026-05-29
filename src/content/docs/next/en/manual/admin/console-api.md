@@ -50,6 +50,10 @@ Nacos 3.X 的控制台 API 也提供了Swagger风格的文档，您可以通过�
 
 通过该接口，可以获取到Nacos 集群的基础状态和开关信息，例如：版本号，运行模式，鉴权是否开启等；该接口不会返回Nacos 集群的节点信息。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -137,6 +141,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/state'
 
 通过该接口，可以获取到Nacos 控制台希望在浏览器中显示的公告信息。Nacos默认控制台UI会在未开启鉴权时调用此接口，返回集群未开启鉴权的提示。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -187,6 +195,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/announcement?language=zh-CN
 
 通过该接口，可以获取Nacos控制台的引导信息。Nacos默认控制台UI会在关闭Nacos控制台UI时调用，以获取引导信息，相关详情请参考[控制台手册-关闭默认控制台](./console/#33-关闭默认控制台)。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -234,6 +246,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/guide'
 #### 接口描述
 
 通过该接口，可以获取Nacos控制台的存活状态，Nacos控制台是否可正常接受和响应请求。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -283,6 +299,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/health/liveness'
 
 通过该接口，可以获取Nacos控制台的是否处于可读取状态，即Nacos控制台是否可以读取到数据。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -330,6 +350,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/health/readiness'
 #### 接口描述
 
 通过该接口，可以获取Nacos节点运行信息，包括节点ip，节点运行状态，节点元数据等。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -438,6 +462,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/cluster/nodes'
 
 通过该接口，可以获取当前Nacos集群的命名空间列表。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -502,6 +530,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/list'
 
 通过该接口，可以获取指定命名空间的详情。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -564,6 +596,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace?namespaceId=public'
 
 通过该接口，可以创建新的命名空间。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -615,6 +651,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/core/namespace' -d 'namespaceName
 #### 接口描述
 
 通过该接口，可以更新命名空间的信息，无法更新命名空间ID，仅能更新命名空间的名称和描述。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -668,6 +708,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/core/namespace' -d 'namespaceId=te
 
 通过该接口，可以删除命名空间。默认命名空间`public`无法被删除。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `DELETE`
@@ -718,6 +762,10 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/core/namespace?namespaceId=test
 
 通过该接口，可以检查命名空间ID是否存在。默认控制台ID将在创建命名空间前调用，确认自定义的命名空间ID是否已经存在，以防冲突。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -767,6 +815,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/exist?customNamespa
 #### 接口描述
 
 通过该接口，可以按类型和名称获取指定插件的详情信息。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -829,6 +881,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin?pluginType=auth&pluginName=
 
 通过该接口，可以获取指定插件在各集群节点上的可用情况。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -877,6 +933,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/availability?pluginType=aut
 #### 接口描述
 
 通过该接口，可以更新插件的配置。需要提供插件类型、名称及配置内容。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -931,6 +991,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/config' \
 
 通过该接口，可以获取插件列表，可按插件类型筛选。
 
+#### 起始版本
+
+`3.2.0`
+
 #### 请求方式
 
 `GET`
@@ -982,6 +1046,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/list?pluginType=auth'
 #### 接口描述
 
 通过该接口，可以更新插件的启用状态（启用或禁用）。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -1038,6 +1106,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/status' \
 #### 接口描述
 
 通过该接口，可以获取指定配置的详情。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -1121,6 +1193,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName=te
 
 通过该接口，可以创建新的配置或更新已有配置。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -1181,6 +1257,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/cs/config' -d 'dataId=test&groupN
 
 通过该接口，可以删除指定配置。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `DELETE`
@@ -1233,6 +1313,10 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName
 
 通过该接口，可以批量删除指定配置。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `DELETE`
@@ -1249,7 +1333,7 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName
 
 | 参数名   | 类型       | 必填 | 参数描述                                  |
 |-------|----------|----|---------------------------------------|
-| `ids` | `string` | 是  | 配置的存储ID列表，并非`dataId`列表，多个ID之间用英文逗号分隔。 |
+| `ids` | `array` | 是  | Configuration storage ID list, not a `dataId` list. Separate multiple IDs with commas. |
 
 #### 返回数据
 
@@ -1282,6 +1366,10 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config/batchDelete?ids=83802
 #### 接口描述
 
 通过该接口，可以查询指定命名空间下的配置列表。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -1385,6 +1473,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/list?dataId=&groupName=&
 
 通过该接口，可以通过配置内容查询对应配置的列表。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -1473,6 +1565,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/searchDetail?dataId=&gro
 
 通过该接口，可以查询指定配置的监听者列表。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -1531,6 +1627,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener?dataId=test&gro
 #### 接口描述
 
 通过该接口，可以查询某个订阅者IP订阅了哪些配置。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -1591,6 +1691,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener/ip?ip=127.0.0.1
 
 通过该接口，可以将所选或所查询的配置，导出的配置为zip文件，进行备份或导入到其他Nacos集群。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -1609,7 +1713,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener/ip?ip=127.0.0.1
 |---------------|----------|----|------------------------------|
 | `dataId`      | `string` | 否  | 需要导出的配置ID的pattern，例如`test*`。 |
 | `groupName`   | `string` | 否  | 需要导出的配置分组的pattern，例如`test*`。 |
-| `ids`         | `string` | 否  | 需要导出的配置的存储ID，多个ID用英文逗号分隔。    |
+| `ids`         | `array` | 否  | Configuration storage ID list. Separate multiple IDs with commas.    |
 | `namespaceId` | `string` | 否  | 命名空间ID，默认值为`public`。         |
 | `appName`     | `string` | 否  | 需要导出的配置所属的应用名称。              |
 
@@ -1648,6 +1752,10 @@ unzip ~/test.zip
 #### 接口描述
 
 通过该接口，可以将从Nacos导出的zip文件导入到Nacos的指定命名空间中
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -1707,6 +1815,10 @@ curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import" -F "file=@/pat
 #### 接口描述
 
 通过该接口，可以将所选或所查询的配置克隆到其他命名空间。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -1770,6 +1882,10 @@ curl -H "Content-Type: application/json" -X POST "http://127.0.0.1:8080/v3/conso
 
 通过该接口，可以将配置从BETA发布状态停止，即回滚配置的Beta发布状态。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `DELETE`
@@ -1824,6 +1940,10 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=test&grou
 #### 接口描述
 
 通过该接口，可以查询配置的BETA发布状态。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -1909,6 +2029,10 @@ curl "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=111&groupName=DEFAU
 #### 接口描述
 
 通过该接口，可以查询配置的发布历史。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -2029,6 +2153,10 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/list?pageNo=1&pageSize=10&data
 
 通过该接口，可以查询配置的某次历史变更记录。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -2112,6 +2240,10 @@ curl "http://127.0.0.1:8080/v3/console/cs/history?dataId=111&groupName=DEFAULT_G
 #### 接口描述
 
 通过该接口，可以查询配置最新状态的前一次变更历史。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -2197,6 +2329,10 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/previous?id=838029534438625280
 
 通过该接口，可以查询命名空间下的配置列表，仅查询dataId和groupName，用于配置历史UI的下拉选择。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -2275,6 +2411,10 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/configs?namespaceId=public"
 
 通过该接口，可以创建一个空服务。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -2335,6 +2475,10 @@ curl -X POST "http://127.0.0.1:8080/v3/console/ns/service" -d "serviceName=test&
 
 通过该接口，可以删除一个服务。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `DELETE`
@@ -2387,6 +2531,10 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test&gro
 
 通过该接口，可以更新一个服务的元数据。仅能更新服务的元数据，如`metadata`、`selector`
 等。服务的serviceName、groupName、namespaceId等不能更新。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -2444,6 +2592,10 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service" -d "serviceName=test&g
 
 通过该接口，可以获取支持的服务路由选择器类型列表，用于控制台UI在创建和更新服务时，选择对应的路由选择器类型的下拉选择框。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -2496,6 +2648,10 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/selector/types"
 
 通过该接口，可以查询指定命名空间下的服务列表。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -2512,13 +2668,13 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/selector/types"
 
 | 参数名                  | 类型        | 必填 | 参数描述                              |
 |----------------------|-----------|----|-----------------------------------|
-| `pageNo`             | `string` | 是  | 页码，起始为`1`。                        |
-| `pageSize`           | `string` | 是  | 每页显示条数。                           |
+| `pageNo`             | `integer` | 是  | Page number, starting from `1`. |
+| `pageSize`           | `integer` | 是  | Page size. |
 | `serviceNameParam`   | `string` | 否  | 服务名的pattern，为空时查询所有服务。            |
 | `groupNameParam`     | `string` | 否  | 服务所属的groupName的pattern，为空时查询所有服务。 |
 | `namespaceId`        | `string` | 否  | 服务所属的命名空间ID。                      |
-| `ignoreEmptyService` | `string` | 否  | 是否仅返回有实例的服务，默认为`false`，即查询空服务。    |
-| `withInstances`      | `string` | 否  | 是否返回服务的实例详情，默认为`false`。           |
+| `ignoreEmptyService` | `boolean` | 否  | Whether to return only services with instances. Defaults to `false`, meaning empty services are included. |
+| `withInstances`      | `boolean` | 否  | Whether to return service instance details. Defaults to `false`. |
 
 #### 返回数据
 
@@ -2583,6 +2739,10 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/list?pageNo=1&pageSize=
 
 通过该接口，可以查询指定服务下的订阅者列表。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -2599,12 +2759,12 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/list?pageNo=1&pageSize=
 
 | 参数名           | 类型        | 必填 | 参数描述                                |
 |---------------|-----------|----|-------------------------------------|
-| `pageNo`      | `string` | 是  | 页码，起始为`1`。                          |
-| `pageSize`    | `string` | 是  | 每页显示条数。                             |
+| `pageNo`      | `integer` | 是  | Page number, starting from `1`. |
+| `pageSize`    | `integer` | 是  | Page size. |
 | `serviceName`  | `string` | 是  | 服务名。                                |
 | `groupName`    | `string` | 否  | 服务所属的groupName，默认值为`DEFAULT_GROUP`。 |
 | `namespaceId`  | `string` | 否  | 服务所属的命名空间ID，默认值为`public`。           |
-| `aggregation`  | `string` | 否  | 是否聚合查询。                             |
+| `aggregation`  | `boolean` | 否  | Whether to aggregate the query. |
 
 #### 返回数据
 
@@ -2664,6 +2824,10 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/subscribers?pageNo=1&pa
 #### 接口描述
 
 通过该接口，可以查询指定服务详情。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -2752,6 +2916,10 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test"
 
 通过该接口，可以更新指定服务集群的元数据。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `PUT`
@@ -2770,8 +2938,8 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test"
 |-------------------------|-----------------------|----|-------------------------------------|
 | `clusterName`           | `string` | 是  | 集群名。                                |
 | `serviceName`           | `string` | 是  | 服务名。                                |
-| `checkPort`             | `string` | 是  | 健康检查端口。                             |
-| `useInstancePort4Check` | `string` | 是  | 是否使用所注册的实例的`IP:Port`进行健康检查。         |
+| `checkPort`             | `integer` | 是  | Health check port. |
+| `useInstancePort4Check` | `boolean` | 是  | Whether to use the registered instance `IP:Port` for health checks. |
 | `healthChecker`         | `string` | 是  | 健康检查器。                              |
 | `groupName`             | `string` | 否  | 服务所属的groupName，默认值为`DEFAULT_GROUP`。 |
 | `namespaceId`           | `string` | 否  | 服务所属的命名空间ID，默认值为`public`。           |
@@ -2814,6 +2982,10 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service/cluster" -d "serviceNam
 #### 接口描述
 
 通过该接口，可以查询指定服务的实例列表。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -2910,6 +3082,10 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/instance/list?&serviceName=test
 
 通过该接口，可以更新指定服务的实例元数据，包括权重和上下线状态；无法更新实例的服务名、分组名、命名空间、IP及端口。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `PUT`
@@ -2970,6 +3146,10 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/instance" -d 'serviceName=test&
 
 通过该接口，可以删除指定服务下的**持久化实例**。该接口仅支持删除`ephemeral=false`的实例，不支持删除临时实例。
 
+#### 起始版本
+
+`3.2.2`
+
 #### 请求方式
 
 `DELETE`
@@ -2993,6 +3173,10 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/instance" -d 'serviceName=test&
 | `namespaceId` | `string`  | 否   | 服务所属的命名空间ID，默认值为`public`。       |
 | `clusterName` | `string`  | 否   | 实例所属集群, 默认值为`DEFAULT`。              |
 | `ephemeral`   | `boolean` | 否   | 实例是否临时，仅支持传入`false`，默认值为`false`。 |
+| `healthy`     | `boolean` | 否   | Whether the instance is healthy. |
+| `weight`      | `number`  | 否   | Instance weight. |
+| `enabled`     | `boolean` | 否   | Whether the instance is enabled. |
+| `metadata`    | `string`  | 否   | Instance metadata as a JSON object string. |
 
 #### 返回数据
 
@@ -3027,6 +3211,10 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/instance?serviceName=test&cl
 #### 接口描述
 
 通过该接口，可以查询托管在Nacos上指定MCP服务的服务的详细信息。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -3129,6 +3317,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=
 #### 接口描述
 
 通过该接口，可以更新托管在Nacos上的MCP服务。
+
+#### 起始版本
+
+`3.0.0`
 
 #### 请求方式
 
@@ -3256,6 +3448,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 
 通过该接口，可以创建托管在Nacos上的MCP服务，可以是存量API转换的MCP服务，也可以是MCP市场中的MCP服务。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `POST`
@@ -3380,6 +3576,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 
 通过该接口，可以删除托管在Nacos上的MCP服务。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `DELETE`
@@ -3433,6 +3633,10 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpNa
 
 通过该接口，可以查询托管在Nacos上的MCP服务的服务列表。
 
+#### 起始版本
+
+`3.0.0`
+
 #### 请求方式
 
 `GET`
@@ -3453,7 +3657,7 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpNa
 | `pageSize`    | `integer` | **是** | 页条目数，默认为`20`，最大为`500`                                  |
 | `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`public`                               |
 | `mcpName`     | `string`   | 否     | MCP服务的名字模版，为空时查询所有MCP服务，当`search`为`blur`时，可使用`*`进行模糊搜索 |
-| `search`      | `string` | 否     | 搜索的类型，可选之`blur`和`accurate`，默认为`blur`。                  |
+| `search`      | `string` | 否     | blur or accurate                  |
 
 #### 返回数据
 
@@ -3540,6 +3744,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/list?pageNo=1&pageSize=100&
 
 通过该接口，可以通过指定MCP`URL`的方式直接获取MCP工具并导入，避免逐个填写。
 
+#### 起始版本
+
+`3.0.3`
+
 #### 请求方式
 
 `GET`
@@ -3606,6 +3814,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/importToolsFromMcp?transpor
 
 通过该接口，可以验证当前待导入的MCP服务内容是否符合规则，返回的内容中包含有效个数和无效个数，无效的服务在对应字段中有错误信息。
 
+#### 起始版本
+
+`3.1.0`
+
 #### 请求方式
 
 `POST`
@@ -3623,11 +3835,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/importToolsFromMcp?transpor
 | 参数名           | 参数类型     | 是否必填  | 描述                                      |
 |---------------|----------|-------|-----------------------------------------|
 | `namespaceId` | `string` | 否     | MCP服务的命名空间ID                            |
-| `importType`  | `string` | **是** | 导入的类型，可选值有`file`,`json`和`url`           |
+| `importType`  | `string` | **是** | enum of `file`, `json`, `url`           |
 | `data`        | `string` | **是** | 导入数据的内容                                 |
-| `cursor`      | `string` | 否     | 分页的起始索引                                 |                         |
+| `cursor`      | `string` | 否     | Optional start cursor for URL-based import pagination. |
 | `limit`       | `integer` | 否     | 分页的页大小                                  |
-| `search`      | `string`   | 否     | 导入列表的可选模糊搜索关键字。仅当 importType 为`url`时使用。 |
+| `search`      | `string`   | 否     | Optional fuzzy search keyword for registry import listing. Only used when importType is 'url'. |
 
 #### 返回数据
 
@@ -3700,6 +3912,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/validate' \
 
 通过该接口，可以通过`文件`,`JSON`和指定MCP`URL`的方式直接导入MCP服务，避免逐个填写。
 
+#### 起始版本
+
+`3.1.0`
+
 #### 请求方式
 
 `POST`
@@ -3717,14 +3933,14 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/validate' \
 | 参数名                | 参数类型      | 是否必填  | 描述                                      |
 |--------------------|-----------|-------|-----------------------------------------|
 | `namespaceId`      | `string` | 否     | MCP服务的命名空间ID                            |
-| `importType`       | `string` | **是** | 导入的类型，可选值有`file`,`json`和`url`           |
+| `importType`       | `string` | **是** | enum of `file`, `json`, `url`           |
 | `data`             | `string` | **是** | 导入数据的内容                                 |
-| `cursor`           | `string` | 否     | 分页的起始索引                                 |                         |
+| `cursor`           | `string` | 否     | Optional start cursor for URL-based import pagination. |
 | `limit`            | `integer` | 否     | 分页的页大小                                  |
-| `search`           | `string`    | 否     | 导入列表的可选模糊搜索关键字。仅当 importType 为`url`时使用。 |
+| `search`           | `string`    | 否     | Optional fuzzy search keyword for registry import listing. Only used when importType is 'url'. |
 | `overrideExisting` | `boolean` | 否     | 导入时若服务已存在时是否覆盖。默认为`false`。              |                                    |
 | `skipInvalid`      | `boolean` | 否     | 导入时是否忽略错误无效的服务。默认为`false`。              |
-| `selectedServers`  | `string` | 否     | 选择部分服务进行导入,为空时导入所有                      |
+| `selectedServers`  | `array` | 否     | Selected services to import. Empty means importing all services. |
 
 
 #### 返回数据
@@ -3797,6 +4013,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/execute' \
 
 通过该接口，可以查询托管在Nacos上的AgentCard的列表。
 
+#### 起始版本
+
+`3.1.0`
+
 #### 请求方式
 
 `GET`
@@ -3817,7 +4037,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/execute' \
 | `pageSize`    | `integer` | **是** | 页条目数，默认为`100`                                   |
 | `namespaceId` | `string` | 否     | AgentCard的命名空间ID，默认为`public`                    |
 | `agentName`   | `string` | 否     | AgentCard的名称，为空是查询所有AgentCard                   |
-| `search`      | `string` | **是** | AgentCard名称的匹配模式，可选之`blur`和`accurate`，默认为`blur` |
+| `search`      | `string` | **是** | blur or accurate |
 
 #### 返回数据
 
@@ -3914,6 +4134,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a/list?pageNo=1&pageSize=100&
 
 通过该接口，可以查询指定托管在Nacos上的AgentCard的版本列表。
 
+#### 起始版本
+
+`3.1.0`
+
 #### 请求方式
 
 `GET`
@@ -3971,6 +4195,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a/version/list?namespaceId=pu
 #### 接口描述
 
 通过该接口，可以查询托管在Nacos上指定AgentCard的详细信息。
+
+#### 起始版本
+
+`3.1.0`
 
 #### 请求方式
 
@@ -4103,6 +4331,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a?namespaceId=public&agentNam
 
 通过该接口，可以更新托管在Nacos上的AgentCard。
 
+#### 起始版本
+
+`3.1.0`
+
 #### 请求方式
 
 `PUT`
@@ -4160,6 +4392,10 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/a2a' \
 
 通过该接口，可以创建托管在Nacos上的AgentCard。
 
+#### 起始版本
+
+`3.1.0`
+
 #### 请求方式
 
 `POST`
@@ -4214,6 +4450,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/a2a' \
 
 通过该接口，可以删除托管在Nacos上的AgentCard。
 
+#### 起始版本
+
+`3.1.0`
+
 #### 请求方式
 
 `DELETE`
@@ -4259,76 +4499,17 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/a2a?namespaceId=public&agent
 }
 ```
 
-## 6. Prompt 管理
+## 6. Prompt Management
 
-Prompt 管理 API 提供 Prompt 的发布、查询、标签绑定与版本管理能力。
+Prompt 管理 API 提供 Prompt 的草稿、发布、上下线、治理查询、版本查询与下载能力。
 
-### 6.1. 发布Prompt
-
+### 6.1. Delete Prompt
 #### 接口描述
+This interface allows deleting a specific Prompt.
 
-通过该接口，可以发布新版本的Prompt。
+#### 起始版本
 
-#### 请求方式
-
-`POST`
-
-#### 鉴权状态
-
-需要具有对应`命名空间写入`权限的用户身份。
-
-#### 请求URL
-
-`/v3/console/ai/prompt`
-
-#### 请求参数
-
-| 参数名 | 类型 | 必填 | 参数描述 |
-|--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `promptKey` | `string` | **是** | Prompt 的唯一键/标识。 |
-| `version` | `string` | **是** | 版本号，如 `1.0.0`。 |
-| `template` | `string` | **是** | Prompt 模板正文内容。 |
-| `commitMsg` | `string` | 否 | 本次发布的提交说明。 |
-| `description` | `string` | 否 | Prompt 的描述信息。 |
-| `bizTags` | `string` | 否 | 业务标签，用于分类检索，多个标签可逗号分隔。 |
-
-#### 返回数据
-
-| 参数名 | 参数类型 | 描述 |
-|--------|----------|------|
-| data | `boolean` | 是否发布成功。 |
-
-#### 示例
-
-* 请求示例
-
-```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt' \
-  -d 'namespaceId=public' \
-  -d 'promptKey=my-prompt' \
-  -d 'version=1.0.0' \
-  -d 'template=' \
-  -d 'commitMsg=' \
-  -d 'description=' \
-  -d 'bizTags='
-```
-
-* 返回示例
-
-```json
-{
-  "code": 0,
-  "message": "success",
-  "data": true
-}
-```
-
-### 6.2. 删除Prompt
-
-#### 接口描述
-
-通过该接口，可以删除指定Prompt。
+`3.2.0`
 
 #### 请求方式
 
@@ -4346,14 +4527,16 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `promptKey` | `string` | **是** | 要删除的 Prompt 的唯一键。 |
+| `namespaceId` | `string` | 否 | - |
+| `promptKey` | `string` | **是** | - |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data | `boolean` | 是否删除成功。 |
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `boolean` | - |
 
 #### 示例
 
@@ -4369,77 +4552,18 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/prompt?namespaceId=public&pr
 {
   "code": 0,
   "message": "success",
-  "data": true
+  "data": {}
 }
 ```
 
-### 6.3. 查询Prompt详情
 
+### 6.2. Update Prompt Biz Tags
 #### 接口描述
+This interface updates Prompt biz tags.
 
-通过该接口，可按标签/版本/最新优先查询Prompt详情。
+#### 起始版本
 
-#### 请求方式
-
-`GET`
-
-#### 鉴权状态
-
-需要具有对应`命名空间读取`权限的用户身份。
-
-#### 请求URL
-
-`/v3/console/ai/prompt/detail`
-
-#### 请求参数
-
-| 参数名 | 类型 | 必填 | 参数描述 |
-|--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `promptKey` | `string` | **是** | Prompt 的唯一键。 |
-| `version` | `string` | 否 | 指定版本号；不传时与 `label`、`md5` 一起决定返回版本（标签或最新等）。 |
-| `label` | `string` | 否 | 标签名，如 `stable`、`latest`，返回该标签指向的版本。 |
-| `md5` | `string` | 否 | 内容 MD5，用于精确匹配某一版本。 |
-
-#### 返回数据
-
-| 参数名 | 参数类型 | 描述 |
-|--------|----------|------|
-| data.promptKey | `string` | Prompt 唯一键。 |
-| data.version | `string` | 版本号。 |
-| data.commitMsg | `string` | 该版本的提交说明。 |
-| data.srcUser | `string` | 发布该版本的用户。 |
-| data.gmtModified | `integer` | 最后修改时间戳。 |
-| data.template | `string` | Prompt 模板正文。 |
-| data.md5 | `string` | 内容 MD5。 |
-
-#### 示例
-
-* 请求示例
-
-```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/detail?namespaceId=public&promptKey=my-prompt&version=1.0.0&label=&md5='
-```
-
-* 返回示例
-
-```json
-{
-  "code": 0,
-  "message": "success",
-  "data": {
-    "version": "1.0.0",
-    "template": "",
-    "commitMsg": ""
-  }
-}
-```
-
-### 6.4. 绑定标签
-
-#### 接口描述
-
-通过该接口，可将标签绑定到指定Prompt版本。
+`3.2.1`
 
 #### 请求方式
 
@@ -4451,33 +4575,30 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/detail?namespaceId=publi
 
 #### 请求URL
 
-`/v3/console/ai/prompt/label`
+`/v3/console/ai/prompt/biz-tags`
 
 #### 请求参数
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `promptKey` | `string` | **是** | Prompt 的唯一键。 |
-| `label` | `string` | **是** | 标签名，如 `stable`、`latest`。 |
-| `version` | `string` | **是** | 要绑定到的版本号。 |
+| `namespaceId` | `string` | 否 | - |
+| `promptKey` | `string` | **是** | - |
+| `bizTags` | `string` | 否 | - |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data | `boolean` | 是否绑定成功。 |
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/label' \
-  -d 'namespaceId=public' \
-  -d 'promptKey=my-prompt' \
-  -d 'label=stable' \
-  -d 'version=1.0.0'
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/biz-tags' -d "namespaceId=namespaceId&promptKey=promptKey&bizTags=bizTags"
 ```
 
 * 返回示例
@@ -4486,15 +4607,191 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/label' \
 {
   "code": 0,
   "message": "success",
-  "data": true
+  "data": {}
 }
 ```
 
-### 6.5. 解绑标签
 
+### 6.3. Update Prompt Description
 #### 接口描述
+This interface updates the Prompt description.
 
-通过该接口，可解绑Prompt的标签。
+#### 起始版本
+
+`3.2.1`
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt/description`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `promptKey` | `string` | **是** | - |
+| `description` | `string` | **是** | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/description' -d "namespaceId=namespaceId&promptKey=promptKey&description=description"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 6.4. Create Prompt Draft
+#### 接口描述
+This interface creates a Prompt draft version or forks a draft from an existing version.
+
+#### 起始版本
+
+`3.2.1`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt/draft`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `promptKey` | `string` | **是** | - |
+| `basedOnVersion` | `string` | 否 | - |
+| `targetVersion` | `string` | 否 | - |
+| `template` | `string` | 否 | - |
+| `variables` | `string` | 否 | - |
+| `commitMsg` | `string` | 否 | - |
+| `description` | `string` | 否 | - |
+| `bizTags` | `string` | 否 | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/draft' -d "namespaceId=namespaceId&promptKey=promptKey&basedOnVersion=basedOnVersion&targetVersion=targetVersion&template=template&variables=variables&commitMsg=commitMsg&description=description&bizTags=bizTags"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 6.5. Update Prompt Draft
+#### 接口描述
+This interface updates the current Prompt draft content.
+
+#### 起始版本
+
+`3.2.1`
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt/draft`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `promptKey` | `string` | **是** | - |
+| `template` | `string` | **是** | - |
+| `variables` | `string` | 否 | - |
+| `commitMsg` | `string` | 否 | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/draft' -d "namespaceId=namespaceId&promptKey=promptKey&template=template&variables=variables&commitMsg=commitMsg"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 6.6. Delete Prompt Draft
+#### 接口描述
+This interface deletes the current Prompt draft version.
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -4506,28 +4803,29 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/label' \
 
 #### 请求URL
 
-`/v3/console/ai/prompt/label`
+`/v3/console/ai/prompt/draft`
 
 #### 请求参数
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `promptKey` | `string` | **是** | Prompt 的唯一键。 |
-| `label` | `string` | **是** | 要解绑的标签名。 |
+| `namespaceId` | `string` | 否 | - |
+| `promptKey` | `string` | **是** | - |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data | `boolean` | 是否解绑成功。 |
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/prompt/label?namespaceId=public&promptKey=my-prompt&label=stable'
+curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/prompt/draft?namespaceId=public&promptKey=my-prompt'
 ```
 
 * 返回示例
@@ -4536,15 +4834,196 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/prompt/label?namespaceId=pub
 {
   "code": 0,
   "message": "success",
-  "data": true
+  "data": {}
 }
 ```
 
-### 6.6. 查询Prompt列表
 
+### 6.7. Force Publish Prompt Version
 #### 接口描述
+This interface force-publishes a Prompt version by bypassing pipeline validation.
 
-通过该接口，可以分页查询Prompt列表。
+#### 起始版本
+
+`3.2.1`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt/force-publish`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `promptKey` | `string` | **是** | - |
+| `version` | `string` | **是** | - |
+| `updateLatestLabel` | `boolean` | 否 | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/force-publish' -d "namespaceId=namespaceId&promptKey=promptKey&version=version&updateLatestLabel=updateLatestLabel"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 6.8. Get Prompt Governance Detail
+#### 接口描述
+This interface retrieves Prompt metadata, version governance information, and version summaries.
+
+#### 起始版本
+
+`3.2.1`
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt/governance`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `promptKey` | `string` | **是** | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data.schemaVersion | `integer` | - |
+| data.data.promptKey | `string` | - |
+| data.data.description | `string` | - |
+| data.data.bizTags | `array` | - |
+| data.data.bizTagsStr | `string` | - |
+| data.data.latestVersion | `string` | - |
+| data.data.gmtModified | `integer` | - |
+| data.data.editingVersion | `string` | - |
+| data.data.reviewingVersion | `string` | - |
+| data.data.onlineCnt | `integer` | - |
+| data.data.labels | `object` | - |
+| data.data.downloadCount | `integer` | - |
+| data.data.versions | `array` | - |
+| data.data.versionDetails | `array` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/governance?namespaceId=public&promptKey=my-prompt'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 6.9. Update Prompt Labels
+#### 接口描述
+This interface updates runtime routing labels of a Prompt.
+
+#### 起始版本
+
+`3.2.1`
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt/labels`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `promptKey` | `string` | **是** | - |
+| `labels` | `string` | **是** | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/labels' -d "namespaceId=namespaceId&promptKey=promptKey&labels=labels"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 6.10. List Prompts
+#### 接口描述
+This interface allows listing Prompts with pagination.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -4562,34 +5041,27 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/prompt/label?namespaceId=pub
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `pageNo` | `integer` | **是** | 页码，从 1 开始。 |
-| `pageSize` | `integer` | **是** | 每页条数。 |
-| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `promptKey` | `string` | 否 | 按 Prompt 键过滤，支持模糊或精确（由 `search` 决定）。 |
-| `search` | `string` | 否 | 搜索模式：`blur` 模糊匹配，`accurate` 精确匹配。 |
-| `bizTags` | `string` | 否 | 按业务标签过滤。 |
+| `pageNo` | `integer` | **是** | - |
+| `pageSize` | `integer` | **是** | - |
+| `namespaceId` | `string` | 否 | - |
+| `promptKey` | `string` | 否 | - |
+| `search` | `string` | 否 | blur or accurate |
+| `bizTags` | `string` | 否 | - |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| totalCount | `integer` | 总条数。 |
-| pageNumber | `integer` | 当前页码。 |
-| pagesAvailable | `integer` | 总页数。 |
-| pageItems | `List` | 当前页的 Prompt 摘要列表。 |
-| pageItems[i].schemaVersion | `integer` | 元数据 schema 版本。 |
-| pageItems[i].promptKey | `string` | Prompt 唯一键。 |
-| pageItems[i].description | `string` | 描述。 |
-| pageItems[i].bizTags | `array` | 业务标签。 |
-| pageItems[i].latestVersion | `string` | 最新版本号。 |
-| pageItems[i].gmtModified | `integer` | 最后修改时间戳。 |
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/list?pageNo=1&pageSize=10&namespaceId=public&promptKey=&search=blur&bizTags='
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/list?pageNo=1&pageSize=10&namespaceId=public&promptKey=my-prompt&search=blur&bizTags=tag-a'
 ```
 
 * 返回示例
@@ -4598,25 +5070,294 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/list?pageNo=1&pageSize=1
 {
   "code": 0,
   "message": "success",
-  "data": {
-    "totalCount": 1,
-    "pageNumber": 1,
-    "pagesAvailable": 1,
-    "pageItems": [
-      {
-        "promptKey": "my-prompt",
-        "description": ""
-      }
-    ]
-  }
+  "data": {}
 }
 ```
 
-### 6.7. 查询Prompt元数据
 
+### 6.11. Offline Prompt Version
 #### 接口描述
+This interface takes a specified Prompt version offline.
 
-通过该接口，可以查询指定Prompt的元数据信息。
+#### 起始版本
+
+`3.2.1`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt/offline`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `promptKey` | `string` | **是** | - |
+| `version` | `string` | **是** | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/offline' -d "namespaceId=namespaceId&promptKey=promptKey&version=version"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 6.12. Online Prompt Version
+#### 接口描述
+This interface brings a specified Prompt version online.
+
+#### 起始版本
+
+`3.2.1`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt/online`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `promptKey` | `string` | **是** | - |
+| `version` | `string` | **是** | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/online' -d "namespaceId=namespaceId&promptKey=promptKey&version=version"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 6.13. Publish Prompt Version
+#### 接口描述
+This interface publishes an approved Prompt version.
+
+#### 起始版本
+
+`3.2.1`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt/publish`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `promptKey` | `string` | **是** | - |
+| `version` | `string` | **是** | - |
+| `updateLatestLabel` | `boolean` | 否 | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/publish' -d "namespaceId=namespaceId&promptKey=promptKey&version=version&updateLatestLabel=updateLatestLabel"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 6.14. Redraft Prompt Version
+#### 接口描述
+This interface transitions a reviewed Prompt version back to draft.
+
+#### 起始版本
+
+`3.2.2`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt/redraft`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `promptKey` | `string` | **是** | - |
+| `version` | `string` | **是** | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/redraft' -d "namespaceId=namespaceId&promptKey=promptKey&version=version"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 6.15. Submit Prompt Version
+#### 接口描述
+This interface submits a Prompt version for pipeline review.
+
+#### 起始版本
+
+`3.2.1`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/prompt/submit`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `promptKey` | `string` | **是** | - |
+| `version` | `string` | 否 | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/submit' -d "namespaceId=namespaceId&promptKey=promptKey&version=version"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 6.16. Get Prompt Version Detail
+#### 接口描述
+This interface retrieves details of a specified Prompt version.
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -4628,34 +5369,40 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/list?pageNo=1&pageSize=1
 
 #### 请求URL
 
-`/v3/console/ai/prompt/metadata`
+`/v3/console/ai/prompt/version`
 
 #### 请求参数
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `promptKey` | `string` | **是** | Prompt 的唯一键。 |
+| `namespaceId` | `string` | 否 | - |
+| `promptKey` | `string` | **是** | - |
+| `version` | `string` | 否 | - |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.schemaVersion | `integer` | 元数据 schema 版本。 |
-| data.promptKey | `string` | Prompt 唯一键。 |
-| data.description | `string` | 描述。 |
-| data.bizTags | `array` | 业务标签。 |
-| data.latestVersion | `string` | 最新版本号。 |
-| data.gmtModified | `integer` | 最后修改时间戳。 |
-| data.versions | `array` | 版本列表摘要。 |
-| data.labels | `object` | 标签与版本号的映射。 |
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data.promptKey | `string` | - |
+| data.data.version | `string` | - |
+| data.data.status | `string` | - |
+| data.data.commitMsg | `string` | - |
+| data.data.srcUser | `string` | - |
+| data.data.gmtModified | `integer` | - |
+| data.data.publishPipelineInfo | `string` | - |
+| data.data.downloadCount | `integer` | - |
+| data.data.template | `string` | - |
+| data.data.md5 | `string` | - |
+| data.data.variables | `array` | - |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/metadata?namespaceId=public&promptKey=my-prompt'
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/version?namespaceId=public&promptKey=my-prompt&version=1.0.0'
 ```
 
 * 返回示例
@@ -4664,57 +5411,45 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/metadata?namespaceId=pub
 {
   "code": 0,
   "message": "success",
-  "data": {
-    "promptKey": "my-prompt",
-    "description": "",
-    "bizTags": ""
-  }
+  "data": {}
 }
 ```
 
-### 6.8. 更新Prompt元数据
 
+### 6.17. Download Prompt Version
 #### 接口描述
+This interface downloads a specified Prompt version as a Markdown file.
 
-通过该接口，可更新Prompt的元数据（如描述、业务标签）。
+#### 起始版本
+
+`3.2.2`
 
 #### 请求方式
 
-`PUT`
+`GET`
 
 #### 鉴权状态
 
-需要具有对应`命名空间写入`权限的用户身份。
+需要具有对应`命名空间读取`权限的用户身份。
 
 #### 请求URL
 
-`/v3/console/ai/prompt/metadata`
+`/v3/console/ai/prompt/version/download`
 
 #### 请求参数
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `promptKey` | `string` | **是** | Prompt 的唯一键。 |
-| `description` | `string` | 否 | 更新后的描述。 |
-| `bizTags` | `string` | 否 | 更新后的业务标签。 |
-
-#### 返回数据
-
-| 参数名 | 参数类型 | 描述 |
-|--------|----------|------|
-| data | `boolean` | 是否更新成功。 |
+| `namespaceId` | `string` | 否 | - |
+| `promptKey` | `string` | **是** | - |
+| `version` | `string` | 否 | - |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/metadata' \
-  -d 'namespaceId=public' \
-  -d 'promptKey=my-prompt' \
-  -d 'description=' \
-  -d 'bizTags='
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/version/download?namespaceId=public&promptKey=my-prompt&version=1.0.0'
 ```
 
 * 返回示例
@@ -4723,15 +5458,18 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/metadata' \
 {
   "code": 0,
   "message": "success",
-  "data": true
+  "data": {}
 }
 ```
 
-### 6.9. 查询Prompt版本列表
 
+### 6.18. List Prompt Versions
 #### 接口描述
+This interface allows listing versions of a specific Prompt with pagination.
 
-通过该接口，可以分页查询指定Prompt的版本列表。
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -4749,24 +5487,18 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/metadata' \
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `promptKey` | `string` | **是** | Prompt 的唯一键。 |
-| `pageNo` | `integer` | **是** | 页码，从 1 开始。 |
-| `pageSize` | `integer` | **是** | 每页条数。 |
+| `namespaceId` | `string` | 否 | - |
+| `promptKey` | `string` | **是** | - |
+| `pageNo` | `integer` | **是** | - |
+| `pageSize` | `integer` | **是** | - |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| totalCount | `integer` | 总条数。 |
-| pageNumber | `integer` | 当前页码。 |
-| pagesAvailable | `integer` | 总页数。 |
-| pageItems | `List` | 当前页的版本列表。 |
-| pageItems[i].promptKey | `string` | Prompt 唯一键。 |
-| pageItems[i].version | `string` | 版本号。 |
-| pageItems[i].commitMsg | `string` | 该版本的提交说明。 |
-| pageItems[i].srcUser | `string` | 发布该版本的用户。 |
-| pageItems[i].gmtModified | `integer` | 最后修改时间戳。 |
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
 
 #### 示例
 
@@ -4782,29 +5514,21 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/versions?namespaceId=pub
 {
   "code": 0,
   "message": "success",
-  "data": {
-    "totalCount": 1,
-    "pageNumber": 1,
-    "pagesAvailable": 1,
-    "pageItems": [
-      {
-        "version": "1.0.0",
-        "commitMsg": ""
-      }
-    ]
-  }
+  "data": {}
 }
 ```
 
 ## 7. Skills 管理
 
-Skills 管理 API 提供 Skill 的注册、查询、更新、删除及列表、ZIP 上传能力。
+Skills 管理 API 提供 Skill 的查询、草稿、发布、上下线、版本管理与 ZIP 上传能力。
 
-### 7.1. 查询Skill详情
-
+### 7.1. Get Skill Details
 #### 接口描述
+This interface allows retrieving detailed information of a specific Skill hosted on Nacos.
 
-通过该接口，可以查询托管在Nacos上指定Skill的详细信息。
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -4822,19 +5546,31 @@ Skills 管理 API 提供 Skill 的注册、查询、更新、删除及列表、Z
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `skillName` | `string` | **是** | Skill 名称/唯一标识。 |
-| `version` | `string` | 否 | 版本号；不传则返回最新版本。 |
+| `namespaceId` | `string` | 否 | - |
+| `skillName` | `string` | **是** | - |
+| `version` | `string` | 否 | - |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.namespaceId | `string` | 所属命名空间 ID。 |
-| data.name | `string` | Skill 名称。 |
-| data.description | `string` | Skill 描述。 |
-| data.instruction | `string` | Skill 使用说明/指令。 |
-| data.resource | `object` | Skill 关联资源信息。 |
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data.namespaceId | `string` | - |
+| data.data.name | `string` | - |
+| data.data.description | `string` | - |
+| data.data.updateTime | `integer` | - |
+| data.data.owner | `string` | - |
+| data.data.enable | `boolean` | - |
+| data.data.bizTags | `string` | - |
+| data.data.from | `string` | - |
+| data.data.scope | `string` | - |
+| data.data.labels | `object` | - |
+| data.data.editingVersion | `string` | - |
+| data.data.reviewingVersion | `string` | - |
+| data.data.onlineCnt | `integer` | - |
+| data.data.downloadCount | `integer` | - |
+| data.data.versions | `array` | - |
 
 #### 示例
 
@@ -4850,23 +5586,18 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills?namespaceId=public&skill
 {
   "code": 0,
   "message": "success",
-  "data": {
-    "name": "my-skill",
-    "description": "",
-    "instruction": "",
-    "resource": {},
-    "versionDetail": {
-      "version": "1.0.0"
-    }
-  }
+  "data": {}
 }
 ```
 
-### 7.2. 删除Skill
 
+### 7.2. Delete Skill
 #### 接口描述
+This interface allows deleting a Skill hosted on Nacos.
 
-通过该接口，可以删除托管在Nacos上的Skill。
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -4884,15 +5615,17 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills?namespaceId=public&skill
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `skillName` | `string` | **是** | 要删除的 Skill 名称。 |
-| `version` | `string` | 否 | 版本号；不传则删除该 Skill 下所有版本（或按实现语义）。 |
+| `namespaceId` | `string` | 否 | - |
+| `skillName` | `string` | **是** | - |
+| `version` | `string` | 否 | - |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data | `string` | 操作结果，成功时为 `ok`。 |
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
 
 #### 示例
 
@@ -4908,141 +5641,18 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/skills?namespaceId=public&sk
 {
   "code": 0,
   "message": "success",
-  "data": "ok"
+  "data": {}
 }
 ```
 
-### 7.3. 查询Skill列表
 
-#### 接口描述
-
-通过该接口，可以查询托管在Nacos上的Skill列表。
-
-#### 请求方式
-
-`GET`
-
-#### 鉴权状态
-
-需要具有对应`命名空间读取`权限的用户身份。
-
-#### 请求URL
-
-`/v3/console/ai/skills/list`
-
-#### 请求参数
-
-| 参数名 | 类型 | 必填 | 参数描述 |
-|--------|------|------|----------|
-| `pageNo` | `integer` | **是** | 页码，从 1 开始。 |
-| `pageSize` | `integer` | **是** | 每页条数。 |
-| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。 |
-| `skillName` | `string` | 否 | 按 Skill 名称过滤，支持模糊或精确（由 `search` 决定）。 |
-| `search` | `string` | 否 | 搜索模式：`blur` 模糊匹配，`accurate` 精确匹配。 |
-
-#### 返回数据
-
-| 参数名 | 参数类型 | 描述 |
-|--------|----------|------|
-| totalCount | `integer` | 总条数。 |
-| pageNumber | `integer` | 当前页码。 |
-| pagesAvailable | `integer` | 总页数。 |
-| pageItems | `List` | 当前页的 Skill 摘要列表。 |
-| pageItems[i].namespaceId | `string` | 所属命名空间 ID。 |
-| pageItems[i].name | `string` | Skill 名称。 |
-| pageItems[i].description | `string` | 描述。 |
-| pageItems[i].updateTime | `integer` | 最后更新时间戳。 |
-
-#### 示例
-
-* 请求示例
-
-```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/list?pageNo=1&pageSize=100&namespaceId=public&skillName=&search=blur'
-```
-
-* 返回示例
-
-```json
-{
-  "code": 0,
-  "message": "success",
-  "data": {
-    "totalCount": 1,
-    "pageNumber": 1,
-    "pagesAvailable": 1,
-    "pageItems": [
-      {
-        "name": "my-skill",
-        "description": "",
-        "versionDetail": {
-          "version": "1.0.0"
-        }
-      }
-    ]
-  }
-}
-```
-
-### 7.4. 上传Skill（ZIP）
-
-#### 接口描述
-
-通过该接口，可通过ZIP文件上传Skill。
-
-#### 请求方式
-
-`POST`
-
-请求体类型：`multipart/form-data`。
-
-#### 鉴权状态
-
-需要具有对应`命名空间写入`权限的用户身份。
-
-#### 请求URL
-
-`/v3/console/ai/skills/upload`
-
-#### 请求参数
-
-| 参数名         | 类型     | 必填 | 参数描述                                                                 |
-|-------------|--------|----|----------------------------------------------------------------------|
-| `file`      | `file` | 否  | 包含 Skill 定义的 ZIP 文件。                                                  |
-| `namespaceId` | `string` | 否 | 命名空间 ID，不传默认为 `public`。                                                 |
-| `overwrite` | `boolean` | 否 | 导入时若 Skill 已存在是否覆盖，默认 `false`。                                          |
-| `targetVersion` | `string` | 否 | 要创建的 Skill 版本号，例如 `1.0.0`。版本解析优先级：`SKILL.md` 中 frontmatter 的 `metadata.version` → ZIP 包中的 `meta.json` → 该 `targetVersion` 参数 → 默认 `0.0.1`。 |
-
-#### 返回数据
-
-| 参数名 | 参数类型 | 描述 |
-|--------|----------|------|
-| data | `string` | 解析并注册后的 Skill 名称。 |
-
-#### 示例
-
-* 请求示例
-
-```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload' \
-  -F "file=@/path/to/skill.zip" \
-  -F "namespaceId=public" \
-  -F "targetVersion=1.0.0"
-```
-
-* 返回示例
-
-```json
-{
-  "code": 0,
-  "message": "success",
-  "data": "my-skill"
-}
-```
-
-### 7.5. Update Skill Business Tags
+### 7.3. Update Skill Business Tags
 #### 接口描述
 This interface allows updating the business tag list of a skill without changing version status.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5077,7 +5687,7 @@ This interface allows updating the business tag list of a skill without changing
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/biz-tags' -d "namespaceId=namespaceId&skillName=skillName&bizTags=bizTags"
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/biz-tags' -d "namespaceId=public&skillName=my-skill&bizTags=bizTags"
 ```
 
 * 返回示例
@@ -5090,58 +5700,14 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/biz-tags' -d "namespaceI
 }
 ```
 
-### 7.6. Delete Skill Draft Version
-#### 接口描述
-This interface allows deleting the current draft version of a specified skill.
 
-#### 请求方式
-
-`DELETE`
-
-#### 鉴权状态
-
-需要具有对应`命名空间写入`权限的用户身份。
-
-#### 请求URL
-
-`/v3/console/ai/skills/draft`
-
-#### 请求参数
-
-| 参数名 | 类型 | 必填 | 参数描述 |
-|--------|------|------|----------|
-| `namespaceId` | `string` | 否 | - |
-| `skillName` | `string` | **是** | - |
-
-#### 返回数据
-
-| 参数名 | 参数类型 | 描述 |
-|--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
-
-#### 示例
-
-* 请求示例
-
-```shell
-curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/skills/draft?namespaceId=namespaceId&skillName=skillName'
-```
-
-* 返回示例
-
-```json
-{
-  "code": 0,
-  "message": "success",
-  "data": {}
-}
-```
-
-### 7.7. Create Skill Draft Version
+### 7.4. Create Skill Draft Version
 #### 接口描述
 This interface allows creating a draft version based on an existing version or a brand-new SkillCard.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5178,7 +5744,7 @@ This interface allows creating a draft version based on an existing version or a
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=namespaceId&skillName=skillName&basedOnVersion=basedOnVersion&targetVersion=targetVersion&skillCard=skillCard"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=public&skillName=my-skill&basedOnVersion=basedOnVersion&targetVersion=targetVersion&skillCard=skillCard"
 ```
 
 * 返回示例
@@ -5191,9 +5757,14 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=
 }
 ```
 
-### 7.8. Update Skill Draft Content
+
+### 7.5. Update Skill Draft Content
 #### 接口描述
 This interface allows updating the SkillCard content of the current draft version.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5228,7 +5799,7 @@ This interface allows updating the SkillCard content of the current draft versio
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=namespaceId&skillName=skillName&skillCard=skillCard"
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=public&skillName=my-skill&skillCard=skillCard"
 ```
 
 * 返回示例
@@ -5241,9 +5812,124 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=n
 }
 ```
 
-### 7.9. Update Skill Version Labels
+
+### 7.6. Delete Skill Draft Version
+#### 接口描述
+This interface allows deleting the current draft version of a specified skill.
+
+#### 起始版本
+
+`3.2.0`
+
+#### 请求方式
+
+`DELETE`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/skills/draft`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `skillName` | `string` | **是** | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/skills/draft?namespaceId=public&skillName=my-skill'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 7.7. Force Publish Skill Version
+#### 接口描述
+This interface force-publishes a Skill version by bypassing pipeline validation.
+
+#### 起始版本
+
+`3.2.1`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/skills/force-publish`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `skillName` | `string` | **是** | - |
+| `version` | `string` | **是** | - |
+| `updateLatestLabel` | `boolean` | 否 | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/force-publish' -d "namespaceId=public&skillName=my-skill&version=version&updateLatestLabel=updateLatestLabel"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 7.8. Update Skill Version Labels
 #### 接口描述
 This interface allows updating skill version routing labels (e.g. latest label) without changing version status.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5278,7 +5964,7 @@ This interface allows updating skill version routing labels (e.g. latest label) 
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/labels' -d "namespaceId=namespaceId&skillName=skillName&labels=labels"
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/labels' -d "namespaceId=public&skillName=my-skill&labels=labels"
 ```
 
 * 返回示例
@@ -5291,9 +5977,72 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/labels' -d "namespaceId=
 }
 ```
 
+
+### 7.9. List Skills
+#### 接口描述
+This interface allows querying the list of Skills hosted on Nacos.
+
+#### 起始版本
+
+`3.2.1`
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/skills/list`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `filterableForm` | `string` | **是** | - |
+| `pageNo` | `integer` | **是** | - |
+| `pageSize` | `integer` | **是** | - |
+| `namespaceId` | `string` | 否 | - |
+| `skillName` | `string` | 否 | - |
+| `search` | `string` | 否 | blur or accurate |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/list?filterableForm=true&pageNo=1&pageSize=10&namespaceId=public&skillName=my-skill&search=blur'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
 ### 7.10. Offline Skill
 #### 接口描述
 This interface allows executing an offline operation on a specific version or the entire skill, making it not callable.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5329,7 +6078,7 @@ This interface allows executing an offline operation on a specific version or th
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/offline' -d "namespaceId=namespaceId&skillName=skillName&scope=scope&version=version"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/offline' -d "namespaceId=public&skillName=my-skill&scope=scope&version=version"
 ```
 
 * 返回示例
@@ -5342,9 +6091,14 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/offline' -d "namespaceI
 }
 ```
 
+
 ### 7.11. Online Skill
 #### 接口描述
 This interface allows executing an online operation on a specific version or the entire skill, making it callable.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5380,7 +6134,7 @@ This interface allows executing an online operation on a specific version or the
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/online' -d "namespaceId=namespaceId&skillName=skillName&scope=scope&version=version"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/online' -d "namespaceId=public&skillName=my-skill&scope=scope&version=version"
 ```
 
 * 返回示例
@@ -5393,9 +6147,14 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/online' -d "namespaceId
 }
 ```
 
+
 ### 7.12. Publish Skill Version
 #### 接口描述
 This interface allows publishing an approved skill version.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5431,7 +6190,7 @@ This interface allows publishing an approved skill version.
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/publish' -d "namespaceId=namespaceId&skillName=skillName&version=version&updateLatestLabel=updateLatestLabel"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/publish' -d "namespaceId=public&skillName=my-skill&version=version&updateLatestLabel=updateLatestLabel"
 ```
 
 * 返回示例
@@ -5444,9 +6203,69 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/publish' -d "namespaceI
 }
 ```
 
-### 7.13. Update Skill Visibility Scope
+
+### 7.13. Redraft Skill Version
+#### 接口描述
+This interface transitions a reviewed Skill version back to draft.
+
+#### 起始版本
+
+`3.2.2`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/skills/redraft`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `skillName` | `string` | **是** | - |
+| `version` | `string` | **是** | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/redraft' -d "namespaceId=public&skillName=my-skill&version=version"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 7.14. Update Skill Visibility Scope
 #### 接口描述
 This interface allows setting the visibility scope of a skill to PUBLIC or PRIVATE.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5481,7 +6300,7 @@ This interface allows setting the visibility scope of a skill to PUBLIC or PRIVA
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/scope' -d "namespaceId=namespaceId&skillName=skillName&scope=scope"
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/scope' -d "namespaceId=public&skillName=my-skill&scope=scope"
 ```
 
 * 返回示例
@@ -5494,9 +6313,14 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/scope' -d "namespaceId=n
 }
 ```
 
-### 7.14. Submit Skill Version for Review
+
+### 7.15. Submit Skill Version for Review
 #### 接口描述
 This interface allows submitting a skill draft version to the pipeline for review.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5531,7 +6355,7 @@ This interface allows submitting a skill draft version to the pipeline for revie
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/submit' -d "namespaceId=namespaceId&skillName=skillName&version=version"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/submit' -d "namespaceId=public&skillName=my-skill&version=version"
 ```
 
 * 返回示例
@@ -5544,9 +6368,143 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/submit' -d "namespaceId
 }
 ```
 
-### 7.15. Get Skill Version Detail
+
+### 7.16. Upload Skill (ZIP)
+#### 接口描述
+This interface allows uploading a Skill from a ZIP file.
+
+#### 起始版本
+
+`3.2.2`
+
+#### 请求方式
+
+`POST`
+
+请求体类型：`multipart/form-data`（如文件上传），请求示例中需使用 `-F` 或 `-H 'Content-Type: multipart/form-data'`。
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/skills/upload`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `overwrite` | `boolean` | 否 | - |
+| `targetVersion` | `string` | 否 | - |
+| `commitMsg` | `string` | 否 | - |
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `file` | `file` | 否 | ZIP file containing skill |
+| `overwrite` | `boolean` | 否 | - |
+| `namespaceId` | `string` | 否 | - |
+| `targetVersion` | `string` | 否 | - |
+| `commitMsg` | `string` | 否 | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload?namespaceId=public&overwrite=false&targetVersion=1.0.0&commitMsg=init' -F "file=@/path/to/skill.zip" -F "overwrite=false" -F "namespaceId=public" -F "targetVersion=1.0.0" -F "commitMsg=init"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 7.17. Batch Upload Skills
+#### 接口描述
+This interface uploads multiple Skills from a ZIP file that contains one-level Skill subdirectories.
+
+#### 起始版本
+
+`3.2.2`
+
+#### 请求方式
+
+`POST`
+
+请求体类型：`multipart/form-data`（如文件上传），请求示例中需使用 `-F` 或 `-H 'Content-Type: multipart/form-data'`。
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/skills/upload/batch`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `overwrite` | `boolean` | 否 | - |
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `overwrite` | `boolean` | 否 | - |
+| `file` | `file` | 否 | ZIP file containing skill directories |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data.succeeded | `array` | - |
+| data.data.failed | `array` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload/batch?namespaceId=public&overwrite=false' -F "namespaceId=public" -F "overwrite=false" -F "file=@/path/to/skills.zip"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 7.18. Get Skill Version Detail
 #### 接口描述
 This interface allows querying the detail of a specific Skill version by namespace, skill name, and version number.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5585,7 +6543,7 @@ This interface allows querying the detail of a specific Skill version by namespa
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/version?namespaceId=namespaceId&skillName=skillName&version=version'
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/version?namespaceId=public&skillName=my-skill&version=1.0.0'
 ```
 
 * 返回示例
@@ -5598,9 +6556,14 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/version?namespaceId=name
 }
 ```
 
-### 7.16. Download Skill Version ZIP
+
+### 7.19. Download Skill Version ZIP
 #### 接口描述
 This interface allows downloading the ZIP package of a specific Skill version.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5627,7 +6590,7 @@ This interface allows downloading the ZIP package of a specific Skill version.
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/version/download?namespaceId=namespaceId&skillName=skillName&version=version'
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/version/download?namespaceId=public&skillName=my-skill&version=1.0.0'
 ```
 
 * 返回示例
@@ -5642,60 +6605,15 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/version/download?namespa
 
 ## 8. AgentSpec 管理
 
-AgentSpec 管理 API 提供 AgentSpec 的查询、草稿、发布、上下线及 ZIP 上传等能力。
+AgentSpec 管理 API 提供 AgentSpec 的查询、草稿、发布、上下线、版本管理与 ZIP 上传能力。
 
-### 8.1. Delete AgentSpec
-#### 接口描述
-This interface allows deleting an AgentSpec and all its versions by namespace and name.
-
-#### 请求方式
-
-`DELETE`
-
-#### 鉴权状态
-
-需要具有对应`命名空间写入`权限的用户身份。
-
-#### 请求URL
-
-`/v3/console/ai/agentspecs`
-
-#### 请求参数
-
-| 参数名 | 类型 | 必填 | 参数描述 |
-|--------|------|------|----------|
-| `namespaceId` | `string` | 否 | - |
-| `agentSpecName` | `string` | **是** | - |
-
-#### 返回数据
-
-| 参数名 | 参数类型 | 描述 |
-|--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
-
-#### 示例
-
-* 请求示例
-
-```shell
-curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agentspecs?namespaceId=namespaceId&agentSpecName=agentSpecName'
-```
-
-* 返回示例
-
-```json
-{
-  "code": 0,
-  "message": "success",
-  "data": {}
-}
-```
-
-### 8.2. Get AgentSpec
+### 8.1. Get AgentSpec
 #### 接口描述
 This interface allows getting the latest published version of an AgentSpec by namespace and name.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5743,7 +6661,7 @@ This interface allows getting the latest published version of an AgentSpec by na
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs?namespaceId=namespaceId&agentSpecName=agentSpecName&version=version'
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs?namespaceId=public&agentSpecName=my-agent&version=1.0.0'
 ```
 
 * 返回示例
@@ -5756,9 +6674,68 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs?namespaceId=namespac
 }
 ```
 
+
+### 8.2. Delete AgentSpec
+#### 接口描述
+This interface allows deleting an AgentSpec and all its versions by namespace and name.
+
+#### 起始版本
+
+`3.2.0`
+
+#### 请求方式
+
+`DELETE`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agentspecs`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `agentSpecName` | `string` | **是** | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agentspecs?namespaceId=public&agentSpecName=my-agent'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
 ### 8.3. Update AgentSpec Business Tags
 #### 接口描述
 This interface allows updating the business tag list of an AgentSpec without changing version status.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5793,7 +6770,7 @@ This interface allows updating the business tag list of an AgentSpec without cha
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/biz-tags' -d "namespaceId=namespaceId&agentSpecName=agentSpecName&bizTags=bizTags"
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/biz-tags' -d "namespaceId=public&agentSpecName=my-agent&bizTags=bizTags"
 ```
 
 * 返回示例
@@ -5806,58 +6783,14 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/biz-tags' -d "namesp
 }
 ```
 
-### 8.4. Delete AgentSpec Draft Version
-#### 接口描述
-This interface allows deleting the current draft version of a specified AgentSpec.
 
-#### 请求方式
-
-`DELETE`
-
-#### 鉴权状态
-
-需要具有对应`命名空间写入`权限的用户身份。
-
-#### 请求URL
-
-`/v3/console/ai/agentspecs/draft`
-
-#### 请求参数
-
-| 参数名 | 类型 | 必填 | 参数描述 |
-|--------|------|------|----------|
-| `namespaceId` | `string` | 否 | - |
-| `agentSpecName` | `string` | **是** | - |
-
-#### 返回数据
-
-| 参数名 | 参数类型 | 描述 |
-|--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
-
-#### 示例
-
-* 请求示例
-
-```shell
-curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft?namespaceId=namespaceId&agentSpecName=agentSpecName'
-```
-
-* 返回示例
-
-```json
-{
-  "code": 0,
-  "message": "success",
-  "data": {}
-}
-```
-
-### 8.5. Create AgentSpec Draft Version
+### 8.4. Create AgentSpec Draft Version
 #### 接口描述
 This interface allows creating an AgentSpec draft version based on an existing version.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5892,7 +6825,7 @@ This interface allows creating an AgentSpec draft version based on an existing v
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespaceId=namespaceId&agentSpecName=agentSpecName&basedOnVersion=basedOnVersion"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespaceId=public&agentSpecName=my-agent&basedOnVersion=basedOnVersion"
 ```
 
 * 返回示例
@@ -5905,9 +6838,14 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespac
 }
 ```
 
-### 8.6. Update AgentSpec Draft Content
+
+### 8.5. Update AgentSpec Draft Content
 #### 接口描述
 This interface allows updating the card content of the current AgentSpec draft version.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5942,7 +6880,7 @@ This interface allows updating the card content of the current AgentSpec draft v
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespaceId=namespaceId&agentSpecName=agentSpecName&agentSpecCard=agentSpecCard"
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespaceId=public&agentSpecName=my-agent&agentSpecCard=agentSpecCard"
 ```
 
 * 返回示例
@@ -5955,9 +6893,124 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespace
 }
 ```
 
-### 8.7. Update AgentSpec Version Labels
+
+### 8.6. Delete AgentSpec Draft Version
+#### 接口描述
+This interface allows deleting the current draft version of a specified AgentSpec.
+
+#### 起始版本
+
+`3.2.0`
+
+#### 请求方式
+
+`DELETE`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agentspecs/draft`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `agentSpecName` | `string` | **是** | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft?namespaceId=public&agentSpecName=my-agent'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 8.7. Force Publish AgentSpec Version
+#### 接口描述
+This interface force-publishes an AgentSpec version by bypassing pipeline validation.
+
+#### 起始版本
+
+`3.2.1`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agentspecs/force-publish`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `agentSpecName` | `string` | **是** | - |
+| `version` | `string` | **是** | - |
+| `updateLatestLabel` | `boolean` | 否 | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/force-publish' -d "namespaceId=public&agentSpecName=my-agent&version=version&updateLatestLabel=updateLatestLabel"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 8.8. Update AgentSpec Version Labels
 #### 接口描述
 This interface allows updating AgentSpec version routing labels (e.g. latest label) without changing version status.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -5992,7 +7045,7 @@ This interface allows updating AgentSpec version routing labels (e.g. latest lab
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/labels' -d "namespaceId=namespaceId&agentSpecName=agentSpecName&labels=labels"
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/labels' -d "namespaceId=public&agentSpecName=my-agent&labels=labels"
 ```
 
 * 返回示例
@@ -6005,9 +7058,14 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/labels' -d "namespac
 }
 ```
 
-### 8.8. List AgentSpecs
+
+### 8.9. List AgentSpecs
 #### 接口描述
 This interface allows paginated listing of AgentSpecs by namespace and name.
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -6025,6 +7083,7 @@ This interface allows paginated listing of AgentSpecs by namespace and name.
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
+| `filterableForm` | `string` | **是** | - |
 | `pageNo` | `integer` | **是** | - |
 | `pageSize` | `integer` | **是** | - |
 | `namespaceId` | `string` | 否 | - |
@@ -6044,7 +7103,7 @@ This interface allows paginated listing of AgentSpecs by namespace and name.
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs/list?pageNo=pageNo&pageSize=pageSize&namespaceId=namespaceId&agentSpecName=agentSpecName&search=search'
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs/list?filterableForm=true&pageNo=1&pageSize=10&namespaceId=public&agentSpecName=my-agent&search=blur'
 ```
 
 * 返回示例
@@ -6057,9 +7116,14 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs/list?pageNo=pageNo&p
 }
 ```
 
-### 8.9. Offline AgentSpec
+
+### 8.10. Offline AgentSpec
 #### 接口描述
 This interface allows executing an offline operation on a specific version or the entire AgentSpec, making it not callable.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6095,7 +7159,7 @@ This interface allows executing an offline operation on a specific version or th
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/offline' -d "namespaceId=namespaceId&agentSpecName=agentSpecName&scope=scope&version=version"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/offline' -d "namespaceId=public&agentSpecName=my-agent&scope=scope&version=version"
 ```
 
 * 返回示例
@@ -6108,9 +7172,14 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/offline' -d "namesp
 }
 ```
 
-### 8.10. Online AgentSpec
+
+### 8.11. Online AgentSpec
 #### 接口描述
 This interface allows executing an online operation on a specific version or the entire AgentSpec, making it callable.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6146,7 +7215,7 @@ This interface allows executing an online operation on a specific version or the
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/online' -d "namespaceId=namespaceId&agentSpecName=agentSpecName&scope=scope&version=version"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/online' -d "namespaceId=public&agentSpecName=my-agent&scope=scope&version=version"
 ```
 
 * 返回示例
@@ -6159,9 +7228,14 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/online' -d "namespa
 }
 ```
 
-### 8.11. Publish AgentSpec Version
+
+### 8.12. Publish AgentSpec Version
 #### 接口描述
 This interface allows publishing an approved AgentSpec version.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6197,7 +7271,7 @@ This interface allows publishing an approved AgentSpec version.
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/publish' -d "namespaceId=namespaceId&agentSpecName=agentSpecName&version=version&updateLatestLabel=updateLatestLabel"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/publish' -d "namespaceId=public&agentSpecName=my-agent&version=version&updateLatestLabel=updateLatestLabel"
 ```
 
 * 返回示例
@@ -6210,9 +7284,69 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/publish' -d "namesp
 }
 ```
 
-### 8.12. Update AgentSpec Visibility Scope
+
+### 8.13. Redraft AgentSpec Version
+#### 接口描述
+This interface transitions a reviewed AgentSpec version back to draft.
+
+#### 起始版本
+
+`3.2.2`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agentspecs/redraft`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `agentSpecName` | `string` | **是** | - |
+| `version` | `string` | **是** | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/redraft' -d "namespaceId=public&agentSpecName=my-agent&version=version"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 8.14. Update AgentSpec Visibility Scope
 #### 接口描述
 This interface allows setting the visibility scope of an AgentSpec to PUBLIC or PRIVATE.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6247,7 +7381,7 @@ This interface allows setting the visibility scope of an AgentSpec to PUBLIC or 
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/scope' -d "namespaceId=namespaceId&agentSpecName=agentSpecName&scope=scope"
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/scope' -d "namespaceId=public&agentSpecName=my-agent&scope=scope"
 ```
 
 * 返回示例
@@ -6260,9 +7394,14 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/scope' -d "namespace
 }
 ```
 
-### 8.13. Submit AgentSpec Version for Review
+
+### 8.15. Submit AgentSpec Version for Review
 #### 接口描述
 This interface allows submitting an AgentSpec draft version to the pipeline for review.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6297,7 +7436,7 @@ This interface allows submitting an AgentSpec draft version to the pipeline for 
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/submit' -d "namespaceId=namespaceId&agentSpecName=agentSpecName&version=version"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/submit' -d "namespaceId=public&agentSpecName=my-agent&version=version"
 ```
 
 * 返回示例
@@ -6310,9 +7449,14 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/submit' -d "namespa
 }
 ```
 
-### 8.14. Upload AgentSpec
+
+### 8.16. Upload AgentSpec
 #### 接口描述
 This interface allows uploading a ZIP-packaged AgentSpec; the package is parsed and the AgentSpec is created or updated.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6354,7 +7498,7 @@ This interface allows uploading a ZIP-packaged AgentSpec; the package is parsed 
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/upload?namespaceId=namespaceId&overwrite=overwrite' -F "namespaceId=" -F "overwrite=" -F "file="
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/upload?namespaceId=public&overwrite=false' -F "namespaceId=public" -F "overwrite=false" -F "file=@/path/to/skills.zip"
 ```
 
 * 返回示例
@@ -6367,9 +7511,14 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/upload?namespaceId=
 }
 ```
 
-### 8.15. Get AgentSpec Version
+
+### 8.17. Get AgentSpec Version
 #### 接口描述
 This interface allows getting a specific version of an AgentSpec by namespace, name, and version.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6409,7 +7558,7 @@ This interface allows getting a specific version of an AgentSpec by namespace, n
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs/version?namespaceId=namespaceId&agentSpecName=agentSpecName&version=version'
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs/version?namespaceId=public&agentSpecName=my-agent&version=1.0.0'
 ```
 
 * 返回示例
@@ -6424,11 +7573,15 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs/version?namespaceId=
 
 ## 9. Pipeline 管理
 
-Pipeline 管理 API 提供执行记录查询能力。
+Pipeline 管理 API 提供 Pipeline 执行记录列表、详情与实例查询能力。
 
 ### 9.1. List Pipeline Executions
 #### 接口描述
 This interface allows paginated listing of Pipeline execution records by resource type, name, namespace, and version.
+
+#### 起始版本
+
+`3.2.1`
 
 #### 请求方式
 
@@ -6466,7 +7619,7 @@ This interface allows paginated listing of Pipeline execution records by resourc
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines?resourceType=resourceType&resourceName=resourceName&namespaceId=namespaceId&version=version&pageNo=pageNo&pageSize=pageSize'
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines?resourceType=skill&resourceName=my-skill&namespaceId=public&version=1.0.0&pageNo=1&pageSize=10'
 ```
 
 * 返回示例
@@ -6479,9 +7632,133 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines?resourceType=resource
 }
 ```
 
+
 ### 9.2. Get Pipeline Execution
 #### 接口描述
 This interface allows retrieving a Pipeline execution record by pipeline ID.
+
+#### 起始版本
+
+`3.2.1`
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/pipelines/detail`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `pipelineId` | `string` | **是** | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data.executionId | `string` | - |
+| data.data.resourceType | `string` | - |
+| data.data.resourceName | `string` | - |
+| data.data.namespaceId | `string` | - |
+| data.data.version | `string` | - |
+| data.data.status | `string` | - |
+| data.data.pipeline | `array` | - |
+| data.data.createTime | `integer` | - |
+| data.data.updateTime | `integer` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines/detail?pipelineId=pipeline-001'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 9.3. List Pipeline Executions
+#### 接口描述
+This interface allows paginated listing of Pipeline execution records by resource type, name, namespace, and version.
+
+#### 起始版本
+
+`3.2.0`
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/pipelines/list`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `resourceType` | `string` | **是** | - |
+| `resourceName` | `string` | 否 | - |
+| `namespaceId` | `string` | 否 | - |
+| `version` | `string` | 否 | - |
+| `pageNo` | `integer` | **是** | - |
+| `pageSize` | `integer` | **是** | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `string` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines/list?resourceType=skill&resourceName=my-skill&namespaceId=public&version=1.0.0&pageNo=1&pageSize=10'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 9.4. Get Pipeline Execution
+#### 接口描述
+This interface allows retrieving a Pipeline execution record by pipeline ID.
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6535,15 +7812,264 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines/{pipelineId}'
 }
 ```
 
-## 10. Copilot
+## 10. AI 资源导入
+
+AI 资源导入 API 提供外部 AI 资源导入源查询、搜索、校验与执行能力。
+
+### 10.1. Execute AI Resource Import
+#### 接口描述
+This interface imports selected external AI resources.
+
+#### 起始版本
+
+`3.2.2`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/import/execute`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `resourceType` | `string` | **是** | - |
+| `sourceId` | `string` | **是** | - |
+| `selectedItems` | `string` | **是** | - |
+| `overwriteExisting` | `boolean` | 否 | - |
+| `skipInvalid` | `boolean` | 否 | - |
+| `validationToken` | `string` | 否 | - |
+| `options` | `string` | 否 | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data.success | `boolean` | - |
+| data.data.totalCount | `integer` | - |
+| data.data.successCount | `integer` | - |
+| data.data.failedCount | `integer` | - |
+| data.data.skippedCount | `integer` | - |
+| data.data.results | `array` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/import/execute' -d "namespaceId=namespaceId&resourceType=resourceType&sourceId=sourceId&selectedItems=selectedItems&overwriteExisting=overwriteExisting&skipInvalid=skipInvalid&validationToken=validationToken&options=options"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 10.2. Search External AI Resources
+#### 接口描述
+This interface searches importable external AI resources from a specified source.
+
+#### 起始版本
+
+`3.2.2`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/import/search`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `resourceType` | `string` | **是** | - |
+| `sourceId` | `string` | **是** | - |
+| `query` | `string` | 否 | - |
+| `cursor` | `string` | 否 | - |
+| `limit` | `integer` | 否 | - |
+| `options` | `string` | 否 | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data.sourceId | `string` | - |
+| data.data.resourceType | `string` | - |
+| data.data.nextCursor | `string` | - |
+| data.data.hasMore | `boolean` | - |
+| data.data.items | `array` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/import/search' -d "namespaceId=namespaceId&resourceType=resourceType&sourceId=sourceId&query=query&cursor=cursor&limit=limit&options=options"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 10.3. List AI Resource Import Sources
+#### 接口描述
+This interface lists configured AI resource import sources.
+
+#### 起始版本
+
+`3.2.2`
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/import/sources`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `resourceType` | `string` | 否 | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data | `array` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/import/sources?resourceType=skill'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+
+### 10.4. Validate AI Resource Import Items
+#### 接口描述
+This interface validates selected external AI resources before import.
+
+#### 起始版本
+
+`3.2.2`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/import/validate`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | - |
+| `resourceType` | `string` | **是** | - |
+| `sourceId` | `string` | **是** | - |
+| `selectedItems` | `string` | **是** | - |
+| `overwriteExisting` | `boolean` | 否 | - |
+| `options` | `string` | 否 | - |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| data.code | `integer` | - |
+| data.message | `string` | - |
+| data.data.sourceId | `string` | - |
+| data.data.resourceType | `string` | - |
+| data.data.validationToken | `string` | - |
+| data.data.items | `array` | - |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/import/validate' -d "namespaceId=namespaceId&resourceType=resourceType&sourceId=sourceId&selectedItems=selectedItems&overwriteExisting=overwriteExisting&options=options"
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {}
+}
+```
+
+## 11. Copilot
 
 Copilot 相关 API 提供配置获取/保存、Prompt 调试与优化、Skill 生成与优化等能力（部分接口为 SSE 流式返回）。
 
-### 10.1. 获取Copilot配置
+### 11.1. 获取Copilot配置
 
 #### 接口描述
 
 获取当前Copilot配置，仅返回apiKey、model、studioUrl、studioProject。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6595,11 +8121,15 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/copilot/config'
 }
 ```
 
-### 10.2. 保存Copilot配置
+### 11.2. 保存Copilot配置
 
 #### 接口描述
 
 创建或更新Copilot配置，仅接受apiKey、model、studioUrl、studioProject，其他字段使用默认值。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6641,11 +8171,15 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/config'
 }
 ```
 
-### 10.3. 流式调试Prompt
+### 11.3. 流式调试Prompt
 
 #### 接口描述
 
 通过该接口，可使用用户输入流式调试Prompt并返回模型响应，返回SSE流。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6686,11 +8220,15 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/debug' -H 'Content
 {}
 ```
 
-### 10.4. 流式优化Prompt
+### 11.4. 流式优化Prompt
 
 #### 接口描述
 
 通过该接口，可流式优化Prompt，返回SSE流。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6731,11 +8269,15 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/optimize' -H 'Cont
 {}
 ```
 
-### 10.5. 流式生成Skill
+### 11.5. 流式生成Skill
 
 #### 接口描述
 
 通过该接口，可基于背景信息流式生成Skill，返回SSE流。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
@@ -6777,11 +8319,15 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/generate' -H 'Conte
 {}
 ```
 
-### 10.6. 流式优化Skill
+### 11.6. 流式优化Skill
 
 #### 接口描述
 
 通过该接口，可基于目标与对话历史流式优化Skill，返回SSE流。
+
+#### 起始版本
+
+`3.2.0`
 
 #### 请求方式
 
