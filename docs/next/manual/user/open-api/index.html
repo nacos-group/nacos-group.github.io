@@ -76,6 +76,8 @@ starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astr
 <h3 id="11-获取配置">1.1. 获取配置</h3>
 <h4 id="接口描述">接口描述</h4>
 <p>获取指定配置</p>
+<h4 id="起始版本">起始版本</h4>
+<p><code dir="auto">3.0.0</code></p>
 <h4 id="请求方式">请求方式</h4>
 <p><code dir="auto">GET</code></p>
 <h4 id="请求url">请求URL</h4>
@@ -178,7 +180,7 @@ starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astr
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">content</code></td><td><code dir="auto">string</code></td><td>配置内容</td></tr><tr><td><code dir="auto">encryptedDataKey</code></td><td><code dir="auto">string</code></td><td>配置的加解密密钥，仅在使用配置加解密插件时有此值</td></tr><tr><td><code dir="auto">contentType</code></td><td><code dir="auto">string</code></td><td>配置的类型，如<code dir="auto">TEXT</code>,<code dir="auto">JSON</code>等</td></tr><tr><td><code dir="auto">md5</code></td><td><code dir="auto">string</code></td><td>配置的md5值</td></tr><tr><td><code dir="auto">lastModified</code></td><td><code dir="auto">string</code></td><td>配置的最后修改时间</td></tr><tr><td><code dir="auto">beta</code></td><td><code dir="auto">boolean</code></td><td>配置是否有灰度配置</td></tr></tbody></table>
+<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">content</code></td><td><code dir="auto">string</code></td><td>配置内容</td></tr><tr><td><code dir="auto">encryptedDataKey</code></td><td><code dir="auto">string</code></td><td>配置的加解密密钥，仅在使用配置加解密插件时有此值</td></tr><tr><td><code dir="auto">contentType</code></td><td><code dir="auto">string</code></td><td>配置的类型，如<code dir="auto">TEXT</code>,<code dir="auto">JSON</code>等</td></tr><tr><td><code dir="auto">md5</code></td><td><code dir="auto">string</code></td><td>配置的md5值</td></tr><tr><td><code dir="auto">lastModified</code></td><td><code dir="auto">integer</code></td><td>配置的最后修改时间</td></tr><tr><td><code dir="auto">beta</code></td><td><code dir="auto">boolean</code></td><td>配置是否有灰度配置</td></tr></tbody></table>
 <p>其他字段为预留字段，暂时无用，忽略即可。</p>
 <h4 id="示例">示例</h4>
 <ul>
@@ -200,6 +202,8 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 字段。
 当续约请求返回的错误码为<code dir="auto">21003</code>
 时，说明该实例已过期被移除，需要重新进行注册，此时客户端应带上完整的信息，同时设置<code dir="auto">heartBeat=false</code>进行重新注册，重新注册成功后再进行续约请求。</p><p>若连续调用注册请求，也可以起到<code dir="auto">续约实例</code>的作用，但是是通过<code dir="auto">更新实例</code>的方式进行续约，会耗费更多的性能，因此请在注册成功后进行续约操作而非继续进行注册更新。</p></section></aside>
+<h4 id="起始版本-1">起始版本</h4>
+<p><code dir="auto">3.0.0</code></p>
 <h4 id="请求方式-1">请求方式</h4>
 <p><code dir="auto">POST</code></p>
 <h4 id="请求url-1">请求URL</h4>
@@ -307,7 +311,7 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>必填</th><th>参数描述</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>否</td><td>命名空间<code dir="auto">Id</code>，默认为<code dir="auto">public</code></td></tr><tr><td><code dir="auto">groupName</code></td><td><code dir="auto">string</code></td><td>否</td><td>分组名，默认为<code dir="auto">DEFAULT_GROUP</code></td></tr><tr><td><code dir="auto">serviceName</code></td><td><code dir="auto">string</code></td><td><strong>是</strong></td><td>服务名</td></tr><tr><td><code dir="auto">ip</code></td><td><code dir="auto">string</code></td><td><strong>是</strong></td><td><code dir="auto">IP</code>地址</td></tr><tr><td><code dir="auto">port</code></td><td><code dir="auto">integer</code></td><td><strong>是</strong></td><td>端口号</td></tr><tr><td><code dir="auto">clusterName</code></td><td><code dir="auto">string</code></td><td>否</td><td>集群名称，默认为<code dir="auto">DEFAULT</code></td></tr><tr><td><code dir="auto">healthy</code></td><td><code dir="auto">boolean</code></td><td>否</td><td>是否只查找健康实例，默认为<code dir="auto">true</code></td></tr><tr><td><code dir="auto">weight</code></td><td><code dir="auto">number</code></td><td>否</td><td>实例权重，默认为<code dir="auto">1.0</code></td></tr><tr><td><code dir="auto">enabled</code></td><td><code dir="auto">boolean</code></td><td>否</td><td>是否可用，默认为<code dir="auto">true</code></td></tr><tr><td><code dir="auto">metadata</code></td><td><code dir="auto">string</code></td><td>否</td><td>实例元数据</td></tr><tr><td><code dir="auto">heartBeat</code></td><td><code dir="auto">boolean</code></td><td>否</td><td>是否为续约请求，默认为<code dir="auto">false</code></td></tr></tbody></table>
+<table><thead><tr><th>参数名</th><th>参数类型</th><th>必填</th><th>参数描述</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>否</td><td>命名空间<code dir="auto">Id</code>，默认为<code dir="auto">public</code></td></tr><tr><td><code dir="auto">groupName</code></td><td><code dir="auto">string</code></td><td>否</td><td>分组名，默认为<code dir="auto">DEFAULT_GROUP</code></td></tr><tr><td><code dir="auto">serviceName</code></td><td><code dir="auto">string</code></td><td><strong>是</strong></td><td>服务名</td></tr><tr><td><code dir="auto">ip</code></td><td><code dir="auto">string</code></td><td><strong>是</strong></td><td><code dir="auto">IP</code>地址</td></tr><tr><td><code dir="auto">port</code></td><td><code dir="auto">integer</code></td><td><strong>是</strong></td><td>端口号</td></tr><tr><td><code dir="auto">clusterName</code></td><td><code dir="auto">string</code></td><td>否</td><td>集群名称，默认为<code dir="auto">DEFAULT</code></td></tr><tr><td><code dir="auto">healthy</code></td><td><code dir="auto">boolean</code></td><td>否</td><td>是否只查找健康实例，默认为<code dir="auto">true</code></td></tr><tr><td><code dir="auto">weight</code></td><td><code dir="auto">number</code></td><td>否</td><td>实例权重，默认为<code dir="auto">1.0</code></td></tr><tr><td><code dir="auto">enabled</code></td><td><code dir="auto">boolean</code></td><td>否</td><td>是否可用，默认为<code dir="auto">true</code></td></tr><tr><td><code dir="auto">metadata</code></td><td><code dir="auto">string</code></td><td>否</td><td>实例元数据，JSON 对象字符串</td></tr><tr><td><code dir="auto">heartBeat</code></td><td><code dir="auto">boolean</code></td><td>否</td><td>是否为续约请求，默认为<code dir="auto">false</code></td></tr></tbody></table>
 <h4 id="返回数据-1">返回数据</h4>
 <p>返回体遵循<a href="../overview/api-overview/#32-http-api-%E7%BB%9F%E4%B8%80%E8%BF%94%E5%9B%9E%E4%BD%93%E6%A0%BC%E5%BC%8F" referrerpolicy="unsafe-url">Nacos open API 统一返回体格式</a>，下表只阐述<code dir="auto">data</code>字段中的返回参数。</p>
 
@@ -339,6 +343,8 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 <h3 id="22-注销实例">2.2. 注销实例</h3>
 <h4 id="接口描述-2">接口描述</h4>
 <p>注销指定实例</p>
+<h4 id="起始版本-2">起始版本</h4>
+<p><code dir="auto">3.0.0</code></p>
 <h4 id="请求方式-2">请求方式</h4>
 <p><code dir="auto">DELETE</code></p>
 <h4 id="请求url-2">请求URL</h4>
@@ -448,6 +454,8 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 <h4 id="接口描述-3">接口描述</h4>
 <p>查询指定服务下的实例详情信息列表</p>
 <aside aria-label="注意" class="starlight-aside starlight-aside--note"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 11C11.7348 11 11.4804 11.1054 11.2929 11.2929C11.1054 11.4804 11 11.7348 11 12V16C11 16.2652 11.1054 16.5196 11.2929 16.7071C11.4804 16.8946 11.7348 17 12 17C12.2652 17 12.5196 16.8946 12.7071 16.7071C12.8946 16.5196 13 16.2652 13 16V12C13 11.7348 12.8946 11.4804 12.7071 11.2929C12.5196 11.1054 12.2652 11 12 11ZM12.38 7.08C12.1365 6.97998 11.8635 6.97998 11.62 7.08C11.4973 7.12759 11.3851 7.19896 11.29 7.29C11.2017 7.3872 11.1306 7.49882 11.08 7.62C11.024 7.73868 10.9966 7.86882 11 8C10.9992 8.13161 11.0245 8.26207 11.0742 8.38391C11.124 8.50574 11.1973 8.61656 11.29 8.71C11.3872 8.79833 11.4988 8.86936 11.62 8.92C11.7715 8.98224 11.936 9.00632 12.099 8.99011C12.2619 8.97391 12.4184 8.91792 12.5547 8.82707C12.691 8.73622 12.8029 8.61328 12.8805 8.46907C12.9582 8.32486 12.9992 8.16378 13 8C12.9963 7.73523 12.8927 7.48163 12.71 7.29C12.6149 7.19896 12.5028 7.12759 12.38 7.08ZM12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 10.6868 21.7413 9.38642 21.2388 8.17317C20.7363 6.95991 19.9997 5.85752 19.0711 4.92893C18.1425 4.00035 17.0401 3.26375 15.8268 2.7612C14.6136 2.25866 13.3132 2 12 2ZM12 20C10.4178 20 8.87104 19.5308 7.55544 18.6518C6.23985 17.7727 5.21447 16.5233 4.60897 15.0615C4.00347 13.5997 3.84504 11.9911 4.15372 10.4393C4.4624 8.88743 5.22433 7.46197 6.34315 6.34315C7.46197 5.22433 8.88743 4.4624 10.4393 4.15372C11.9911 3.84504 13.5997 4.00346 15.0615 4.60896C16.5233 5.21447 17.7727 6.23984 18.6518 7.55544C19.5308 8.87103 20 10.4177 20 12C20 14.1217 19.1572 16.1566 17.6569 17.6569C16.1566 19.1571 14.1217 20 12 20Z"></path></svg>注意</p><section class="starlight-aside__content"><p>由于Nacos3.X即将移除UDP类型的推送支持，因此对于不支持Grpc长连接推送的客户端，需要定期进行一次实例列表的拉取，以保证客户端能及时感知到实例列表的变化，以实现订阅服务的功能。</p></section></aside>
+<h4 id="起始版本-3">起始版本</h4>
+<p><code dir="auto">3.0.0</code></p>
 <h4 id="请求方式-3">请求方式</h4>
 <p><code dir="auto">GET</code></p>
 <h4 id="请求url-3">请求URL</h4>
@@ -591,7 +599,7 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述说明</th></tr></thead><tbody><tr><td><code dir="auto">data</code></td><td><code dir="auto">Object[]</code></td><td>实例列表</td></tr><tr><td><code dir="auto">data.[i].ip</code></td><td><code dir="auto">string</code></td><td>实例<code dir="auto">IP</code></td></tr><tr><td><code dir="auto">data.[i].port</code></td><td><code dir="auto">integer</code></td><td>实例端口号</td></tr><tr><td><code dir="auto">data.[i].weight</code></td><td><code dir="auto">number</code></td><td>实例权重</td></tr><tr><td><code dir="auto">data.[i].healthy</code></td><td><code dir="auto">boolean</code></td><td>实例是否健康</td></tr><tr><td><code dir="auto">data.[i].enabled</code></td><td><code dir="auto">boolean</code></td><td>实例是否可用</td></tr><tr><td><code dir="auto">data.[i].ephemeral</code></td><td><code dir="auto">boolean</code></td><td>是否为临时实例</td></tr><tr><td><code dir="auto">data.[i].clusterName</code></td><td><code dir="auto">string</code></td><td>实例所在的集群名称</td></tr><tr><td><code dir="auto">data.[i].serviceName</code></td><td><code dir="auto">string</code></td><td>服务名</td></tr><tr><td><code dir="auto">data.[i].metadata</code></td><td><code dir="auto">map</code></td><td>实例元数据</td></tr><tr><td><code dir="auto">data.[i].instanceHeartBeatTimeOut</code></td><td><code dir="auto">integer</code></td><td>实例心跳超时时间</td></tr><tr><td><code dir="auto">data.[i].ipDeleteTimeout</code></td><td><code dir="auto">integer</code></td><td>实例删除超时时间</td></tr><tr><td><code dir="auto">data.[i].instanceHeartBeatInterval</code></td><td><code dir="auto">integer</code></td><td>实例心跳间隔</td></tr></tbody></table>
+<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述说明</th></tr></thead><tbody><tr><td><code dir="auto">data</code></td><td><code dir="auto">array</code></td><td>实例列表</td></tr><tr><td><code dir="auto">data.[i].ip</code></td><td><code dir="auto">string</code></td><td>实例<code dir="auto">IP</code></td></tr><tr><td><code dir="auto">data.[i].port</code></td><td><code dir="auto">integer</code></td><td>实例端口号</td></tr><tr><td><code dir="auto">data.[i].weight</code></td><td><code dir="auto">number</code></td><td>实例权重</td></tr><tr><td><code dir="auto">data.[i].healthy</code></td><td><code dir="auto">boolean</code></td><td>实例是否健康</td></tr><tr><td><code dir="auto">data.[i].enabled</code></td><td><code dir="auto">boolean</code></td><td>实例是否可用</td></tr><tr><td><code dir="auto">data.[i].ephemeral</code></td><td><code dir="auto">boolean</code></td><td>是否为临时实例</td></tr><tr><td><code dir="auto">data.[i].clusterName</code></td><td><code dir="auto">string</code></td><td>实例所在的集群名称</td></tr><tr><td><code dir="auto">data.[i].serviceName</code></td><td><code dir="auto">string</code></td><td>服务名</td></tr><tr><td><code dir="auto">data.[i].metadata</code></td><td><code dir="auto">map&#x3C;string, string></code></td><td>实例元数据</td></tr><tr><td><code dir="auto">data.[i].instanceHeartBeatTimeOut</code></td><td><code dir="auto">integer</code></td><td>实例心跳超时时间</td></tr><tr><td><code dir="auto">data.[i].ipDeleteTimeout</code></td><td><code dir="auto">integer</code></td><td>实例删除超时时间</td></tr><tr><td><code dir="auto">data.[i].instanceHeartBeatInterval</code></td><td><code dir="auto">integer</code></td><td>实例心跳间隔</td></tr></tbody></table>
 <h4 id="示例-3">示例</h4>
 <ul>
 <li>请求示例</li>
@@ -604,7 +612,9 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 <h2 id="3-ai-相关">3. AI 相关</h2>
 <h3 id="31-查询-prompt">3.1. 查询 Prompt</h3>
 <h4 id="接口描述-4">接口描述</h4>
-<p>通过该接口，可按 label、version 或 latest 查询 Prompt，优先级 label > version > latest；支持 md5 条件返回 304。</p>
+<p>通过该接口，可按 version、label 或 latest 查询 Prompt，优先级 version > label > latest；支持 md5 条件返回 304。</p>
+<h4 id="起始版本-4">起始版本</h4>
+<p><code dir="auto">3.2.0</code></p>
 <h4 id="请求方式-4">请求方式</h4>
 <p><code dir="auto">GET</code></p>
 <h4 id="请求url-4">请求URL</h4>
@@ -684,7 +694,12 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">promptKey</code></td><td><code dir="auto">string</code></td><td>Prompt 键名</td></tr><tr><td><code dir="auto">version</code></td><td><code dir="auto">string</code></td><td>版本号</td></tr><tr><td><code dir="auto">template</code></td><td><code dir="auto">string</code></td><td>Prompt 模板内容</td></tr><tr><td><code dir="auto">md5</code></td><td><code dir="auto">string</code></td><td>内容 md5，用于 304 判断</td></tr></tbody></table>
+
+
+
+
+
+<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">promptKey</code></td><td><code dir="auto">string</code></td><td>Prompt 键名</td></tr><tr><td><code dir="auto">version</code></td><td><code dir="auto">string</code></td><td>版本号</td></tr><tr><td><code dir="auto">template</code></td><td><code dir="auto">string</code></td><td>Prompt 模板内容</td></tr><tr><td><code dir="auto">md5</code></td><td><code dir="auto">string</code></td><td>内容 md5，用于 304 判断</td></tr><tr><td><code dir="auto">variables</code></td><td><code dir="auto">array</code></td><td>Prompt 变量列表</td></tr></tbody></table>
 <h4 id="示例-4">示例</h4>
 <ul>
 <li>请求示例</li>
@@ -697,6 +712,8 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 <h3 id="32-获取-agentspec">3.2. 获取 AgentSpec</h3>
 <h4 id="接口描述-5">接口描述</h4>
 <p>通过该接口，可按命名空间、名称、版本号或 label 获取指定 AgentSpec 详情。</p>
+<h4 id="起始版本-5">起始版本</h4>
+<p><code dir="auto">3.2.0</code></p>
 <h4 id="请求方式-5">请求方式</h4>
 <p><code dir="auto">GET</code></p>
 <h4 id="请求url-5">请求URL</h4>
@@ -737,7 +754,13 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 
 
 
-<table><thead><tr><th>参数名</th><th>类型</th><th>必填</th><th>参数描述</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>否</td><td>命名空间，默认为<code dir="auto">public</code></td></tr><tr><td><code dir="auto">name</code></td><td><code dir="auto">string</code></td><td><strong>是</strong></td><td>AgentSpec 名称</td></tr><tr><td><code dir="auto">version</code></td><td><code dir="auto">string</code></td><td>否</td><td>AgentSpec 版本号</td></tr><tr><td><code dir="auto">label</code></td><td><code dir="auto">string</code></td><td>否</td><td>AgentSpec 标签</td></tr></tbody></table>
+
+
+
+
+
+
+<table><thead><tr><th>参数名</th><th>类型</th><th>必填</th><th>参数描述</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>否</td><td>命名空间，默认为<code dir="auto">public</code></td></tr><tr><td><code dir="auto">name</code></td><td><code dir="auto">string</code></td><td><strong>是</strong></td><td>AgentSpec 名称</td></tr><tr><td><code dir="auto">version</code></td><td><code dir="auto">string</code></td><td>否</td><td>AgentSpec 版本号</td></tr><tr><td><code dir="auto">label</code></td><td><code dir="auto">string</code></td><td>否</td><td>AgentSpec 标签</td></tr><tr><td><code dir="auto">md5</code></td><td><code dir="auto">string</code></td><td>否</td><td>AgentSpec 内容 MD5，用于精确匹配指定版本</td></tr></tbody></table>
 <h4 id="返回数据-5">返回数据</h4>
 <p>返回体遵循<a href="../overview/api-overview/#32-http-api-%E7%BB%9F%E4%B8%80%E8%BF%94%E5%9B%9E%E4%BD%93%E6%A0%BC%E5%BC%8F" referrerpolicy="unsafe-url">Nacos open API 统一返回体格式</a>，下表只阐述<code dir="auto">data</code>字段中的返回参数。</p>
 
@@ -793,6 +816,8 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 <h3 id="33-搜索-agentspec">3.3. 搜索 AgentSpec</h3>
 <h4 id="接口描述-6">接口描述</h4>
 <p>通过该接口，可按命名空间和关键词分页搜索 AgentSpec。</p>
+<h4 id="起始版本-6">起始版本</h4>
+<p><code dir="auto">3.2.0</code></p>
 <h4 id="请求方式-6">请求方式</h4>
 <p><code dir="auto">GET</code></p>
 <h4 id="请求url-6">请求URL</h4>
@@ -864,6 +889,8 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 <h3 id="34-下载-skill">3.4. 下载 Skill</h3>
 <h4 id="接口描述-7">接口描述</h4>
 <p>通过该接口，可按命名空间、名称、版本号或 label 下载 Skill ZIP 文件。</p>
+<h4 id="起始版本-7">起始版本</h4>
+<p><code dir="auto">3.2.0</code></p>
 <h4 id="请求方式-7">请求方式</h4>
 <p><code dir="auto">GET</code></p>
 <h4 id="请求url-7">请求URL</h4>
@@ -904,7 +931,13 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 
 
 
-<table><thead><tr><th>参数名</th><th>类型</th><th>必填</th><th>参数描述</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>否</td><td>命名空间，默认为<code dir="auto">public</code></td></tr><tr><td><code dir="auto">name</code></td><td><code dir="auto">string</code></td><td><strong>是</strong></td><td>Skill 名称</td></tr><tr><td><code dir="auto">version</code></td><td><code dir="auto">string</code></td><td>否</td><td>Skill 版本号</td></tr><tr><td><code dir="auto">label</code></td><td><code dir="auto">string</code></td><td>否</td><td>Skill 标签</td></tr></tbody></table>
+
+
+
+
+
+
+<table><thead><tr><th>参数名</th><th>类型</th><th>必填</th><th>参数描述</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>否</td><td>命名空间，默认为<code dir="auto">public</code></td></tr><tr><td><code dir="auto">name</code></td><td><code dir="auto">string</code></td><td><strong>是</strong></td><td>Skill 名称</td></tr><tr><td><code dir="auto">version</code></td><td><code dir="auto">string</code></td><td>否</td><td>Skill 版本号</td></tr><tr><td><code dir="auto">label</code></td><td><code dir="auto">string</code></td><td>否</td><td>Skill 标签</td></tr><tr><td><code dir="auto">md5</code></td><td><code dir="auto">string</code></td><td>否</td><td>Skill 内容 MD5，用于精确匹配指定版本</td></tr></tbody></table>
 <h4 id="示例-7">示例</h4>
 <ul>
 <li>请求示例</li>
