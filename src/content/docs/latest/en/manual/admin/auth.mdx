@@ -101,7 +101,42 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
   </TabItem>
 </Tabs>
 
-### 3.1. 设置管理员密码
+### 3.1. LDAP auth deployment
+
+When `nacos.core.auth.system.type=ldap` is enabled, the default distribution now ships the LDAP auth plugin jar by default:
+
+- `nacos-ldap-auth-plugin-<version>.jar` is included in `plugins/`
+- `org.springframework.ldap:spring-ldap-core` is **not** included in `plugins/` by default
+
+Before enabling LDAP auth, manually add the required `spring-ldap-core` jar into the Nacos `plugins/` directory.
+
+Example:
+
+```properties
+nacos.core.auth.system.type=ldap
+nacos.core.auth.enabled=true
+nacos.core.auth.admin.enabled=true
+nacos.core.auth.console.enabled=true
+```
+
+:::note
+If LDAP auth is enabled without `spring-ldap-core` in `plugins/`, the LDAP plugin will not be fully available. Add the dependency jar first, then start or restart Nacos.
+:::
+
+<Tabs>
+  <TabItem label="Non-Docker deployment">
+
+    Copy `spring-ldap-core-*.jar` into `${nacos.home}/plugins/`.
+
+  </TabItem>
+  <TabItem label="Docker deployment">
+
+    The official image does not bundle `spring-ldap-core` by default. Mount or copy the required jar into the container `plugins/` directory before enabling LDAP auth.
+
+  </TabItem>
+</Tabs>
+
+### 3.2. 设置管理员密码
 
 自2.4.0版本开始，Nacos构建时不再提供管理员用户`nacos`的默认密码，需要在首次开启鉴权后，通过API或Nacos控制台进行管理员用户`nacos`的密码初始化步骤，具体操作如下：
 
@@ -132,11 +167,11 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
   </TabItem>
 </Tabs>
 
-### 3.2. 密码强度注意事项
+### 3.3. 密码强度注意事项
 
 > 重要：在Nacos在初始化管理员用户`nacos`、创建或用户密码更新操作期间不强制执行特定密码长度。Nacos集群管理员有责任对自行构建的密码强度进行控制。为了避免与密码强度相关的安全风险，强烈建议初始化时使用强度较高的密码。
 
-### 3.3. 升级集群注意事项
+### 3.4. 升级集群注意事项
 
 > 若Nacos集群升级自旧版本的Nacos，Nacos会认为当前已经存在管理员用户`nacos`，因此并不会要求进行管理员用户`nacos`的初始化流程，管理员用户`nacos`的密码仍然会保留旧版本时所使用的密码；因此若是使用旧版本时未修改过管理员用户`nacos`的默认密码，强烈建议升级后尽快修改管理员用户`nacos`的密码。
 
