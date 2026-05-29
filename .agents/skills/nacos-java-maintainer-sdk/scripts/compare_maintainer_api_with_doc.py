@@ -220,16 +220,20 @@ def main():
     doc_methods = parse_maintainer_md(usage_content)
     structure_warnings = detect_structure_warnings(usage_content)
 
-    doc_method_set = set()
+    doc_chapter_method_set = set()
     for name, entries in doc_methods.items():
-        for _ in entries:
-            doc_method_set.add(name)
+        for section_id, _ in entries:
+            chapter = section_id.split(".")[0]
+            if chapter.isdigit():
+                doc_chapter_method_set.add((int(chapter), name))
 
-    doc_name_param_set = set()
+    doc_chapter_name_param_set = set()
     for name, entries in doc_methods.items():
-        for _, pc in entries:
+        for section_id, pc in entries:
             if pc is not None:
-                doc_name_param_set.add((name, pc))
+                chapter = section_id.split(".")[0]
+                if chapter.isdigit():
+                    doc_chapter_name_param_set.add((int(chapter), name, pc))
 
     # Methods that exist in interface but should NOT be documented (design decision)
     SKIP_NEW_API = {"fillAllPattern"}  # ConfigMaintainerService: utility for * pattern, not a capability API
@@ -237,14 +241,15 @@ def main():
     # New APIs: in Java (any chapter) but method name not in doc
     new_by_chapter = {}
     for m in java_methods:
-        if m["name"] not in doc_method_set and m["name"] not in SKIP_NEW_API:
+        if (m["chapter"], m["name"]) not in doc_chapter_method_set and m["name"] not in SKIP_NEW_API:
             ch = m["chapter"]
             new_by_chapter.setdefault(ch, []).append(m)
 
     # New overloads: method name is documented but this (name, param_count) is not
     new_overloads = [
         m for m in java_methods
-        if m["name"] in doc_method_set and (m["name"], m["param_count"]) not in doc_name_param_set
+        if (m["chapter"], m["name"]) in doc_chapter_method_set
+        and (m["chapter"], m["name"], m["param_count"]) not in doc_chapter_name_param_set
     ]
 
     # Removed overloads: (method_name, param_count) in doc but not in interface for that chapter
