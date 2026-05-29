@@ -163,7 +163,9 @@ def parse_java_interface_content(content: str, source_name: str):
             if not re.match(r"^(default\s+|static\s+)?[\w<>,\s\[\]]+\s+\w+\s*\(", line):
                 continue
             acc = [line]
-            if ")" in line and " {" in line and re.search(r"\)\s+.*\{\s*$", line):
+            if re.search(r"\)\s*;", line) or re.search(r"\)\s*throws\s+[^;]+;\s*$", line):
+                pass
+            elif ")" in line and " {" in line and re.search(r"\)\s+.*\{\s*$", line):
                 acc = [re.sub(r"\s*\{.*", "", line).strip()]
                 depth = 1
                 while i < len(lines) and depth > 0:

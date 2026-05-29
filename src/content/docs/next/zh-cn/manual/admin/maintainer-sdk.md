@@ -4738,6 +4738,507 @@ try {
 
 操作失败时抛出 NacosException 异常。
 
+### 8.10. 获取 Prompt 治理详情
+
+#### 描述
+
+根据命名空间与 promptKey 获取 Prompt 治理详情，包含版本治理信息与所有版本摘要。
+
+```java
+PromptMetaInfo getPromptGovernanceDetail(String namespaceId, String promptKey) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型   | 描述           |
+|:------------|:-------|:-------------|
+| namespaceId | string | 命名空间ID。      |
+| promptKey   | string | Prompt 的 key。 |
+
+#### 返回参数
+
+| 参数类型           | 描述              |
+|:---------------|:----------------|
+| PromptMetaInfo | Prompt 治理详情。    |
+
+#### 请求示例
+
+```java
+try {
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    PromptMetaInfo detail = promptMaintainerService.getPromptGovernanceDetail("public", "my-prompt");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+操作失败时抛出 NacosException 异常。
+
+### 8.11. 获取 Prompt 指定版本详情
+
+#### 描述
+
+根据命名空间、promptKey 与版本号获取 Prompt 指定版本详情。
+
+```java
+PromptVersionInfo getVersionDetail(String namespaceId, String promptKey, String version) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型   | 描述           |
+|:------------|:-------|:-------------|
+| namespaceId | string | 命名空间ID。      |
+| promptKey   | string | Prompt 的 key。 |
+| version     | string | Prompt 版本。    |
+
+#### 返回参数
+
+| 参数类型              | 描述                |
+|:------------------|:------------------|
+| PromptVersionInfo | Prompt 指定版本详情。   |
+
+#### 请求示例
+
+```java
+try {
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    PromptVersionInfo detail = promptMaintainerService.getVersionDetail("public", "my-prompt", "1.0.0");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+操作失败时抛出 NacosException 异常。
+
+### 8.12. 创建 Prompt 草稿
+
+#### 描述
+
+创建 Prompt 草稿版本，可基于已有版本 fork，并可指定目标草稿版本、模板、变量、提交说明、描述与业务标签。
+
+```java
+String createDraft(String namespaceId, String promptKey, String basedOnVersion, String targetVersion, String template, String variables, String commitMsg, String description, String bizTags) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名            | 参数类型   | 描述                         |
+|:---------------|:-------|:---------------------------|
+| namespaceId    | string | 命名空间ID。                    |
+| promptKey      | string | Prompt 的 key。               |
+| basedOnVersion | string | fork 基于的版本（可选）。           |
+| targetVersion  | string | 目标草稿版本（可选）。               |
+| template       | string | Prompt 模板内容。               |
+| variables      | string | 变量定义 JSON（可选）。             |
+| commitMsg      | string | 提交说明（可选）。                  |
+| description    | string | Prompt 描述（首次创建时可选）。        |
+| bizTags        | string | 业务标签 JSON（首次创建时可选）。        |
+
+#### 返回参数
+
+| 参数类型   | 描述          |
+|:-------|:------------|
+| String | 创建出的草稿版本号。 |
+
+#### 请求示例
+
+```java
+try {
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    String version = promptMaintainerService.createDraft("public", "my-prompt", "1.0.0", "1.0.1-draft",
+            "Hello {{name}}", "{\"name\":\"string\"}", "update prompt", "desc", "[\"ai\"]");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+操作失败时抛出 NacosException 异常。
+
+### 8.13. 更新 Prompt 草稿
+
+#### 描述
+
+更新当前 Prompt 草稿内容。
+
+```java
+void updateDraft(String namespaceId, String promptKey, String template, String variables, String commitMsg) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型   | 描述              |
+|:------------|:-------|:----------------|
+| namespaceId | string | 命名空间ID。         |
+| promptKey   | string | Prompt 的 key。    |
+| template    | string | 更新后的模板内容。       |
+| variables   | string | 变量定义 JSON（可选）。  |
+| commitMsg   | string | 提交说明（可选）。       |
+
+#### 返回参数
+
+无
+
+#### 请求示例
+
+```java
+try {
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    promptMaintainerService.updateDraft("public", "my-prompt", "Hello {{name}}", "{\"name\":\"string\"}", "update template");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+操作失败时抛出 NacosException 异常。
+
+### 8.14. 删除 Prompt 草稿
+
+#### 描述
+
+删除指定 Prompt 的当前草稿版本。
+
+```java
+void deleteDraft(String namespaceId, String promptKey) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型   | 描述           |
+|:------------|:-------|:-------------|
+| namespaceId | string | 命名空间ID。      |
+| promptKey   | string | Prompt 的 key。 |
+
+#### 返回参数
+
+无
+
+#### 请求示例
+
+```java
+try {
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    promptMaintainerService.deleteDraft("public", "my-prompt");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+操作失败时抛出 NacosException 异常。
+
+### 8.15. 提交 Prompt 版本审核
+
+#### 描述
+
+提交 Prompt 指定版本进入发布审核流程。
+
+```java
+String submit(String namespaceId, String promptKey, String version) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型   | 描述                     |
+|:------------|:-------|:-----------------------|
+| namespaceId | string | 命名空间ID。                |
+| promptKey   | string | Prompt 的 key。           |
+| version     | string | 版本号（可选，服务端可自动选择当前草稿）。 |
+
+#### 返回参数
+
+| 参数类型   | 描述          |
+|:-------|:------------|
+| String | 提交后的版本号。    |
+
+#### 请求示例
+
+```java
+try {
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    String version = promptMaintainerService.submit("public", "my-prompt", "1.0.1");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+操作失败时抛出 NacosException 异常。
+
+### 8.16. 发布 Prompt 版本
+
+#### 描述
+
+发布审核通过的 Prompt 版本，可选择是否更新 latest 标签。
+
+```java
+void publish(String namespaceId, String promptKey, String version, Boolean updateLatestLabel) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名               | 参数类型    | 描述                 |
+|:------------------|:--------|:-------------------|
+| namespaceId       | string  | 命名空间ID。            |
+| promptKey         | string  | Prompt 的 key。       |
+| version           | string  | 待发布版本。             |
+| updateLatestLabel | boolean | 是否更新 latest 标签。     |
+
+#### 返回参数
+
+无
+
+#### 请求示例
+
+```java
+try {
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    promptMaintainerService.publish("public", "my-prompt", "1.0.1", true);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+操作失败时抛出 NacosException 异常。
+
+### 8.17. 强制发布 Prompt 版本
+
+#### 描述
+
+跳过审核流程强制发布 Prompt 版本，可选择是否更新 latest 标签。
+
+```java
+void forcePublish(String namespaceId, String promptKey, String version, Boolean updateLatestLabel) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名               | 参数类型    | 描述                 |
+|:------------------|:--------|:-------------------|
+| namespaceId       | string  | 命名空间ID。            |
+| promptKey         | string  | Prompt 的 key。       |
+| version           | string  | 待发布版本。             |
+| updateLatestLabel | boolean | 是否更新 latest 标签。     |
+
+#### 返回参数
+
+无
+
+#### 请求示例
+
+```java
+try {
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    promptMaintainerService.forcePublish("public", "my-prompt", "1.0.1", true);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+操作失败时抛出 NacosException 异常。
+
+### 8.18. 重新编辑 Prompt 版本
+
+#### 描述
+
+将已审核的 Prompt 版本重新转回草稿状态，以便继续编辑。
+
+```java
+boolean redraft(String namespaceId, String promptKey, String version) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型   | 描述           |
+|:------------|:-------|:-------------|
+| namespaceId | string | 命名空间ID。      |
+| promptKey   | string | Prompt 的 key。 |
+| version     | string | 需要重新编辑的版本。  |
+
+#### 返回参数
+
+| 参数类型    | 描述            |
+|:--------|:--------------|
+| boolean | 重新转草稿是否成功。   |
+
+#### 请求示例
+
+```java
+try {
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    boolean ok = promptMaintainerService.redraft("public", "my-prompt", "1.0.1");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+操作失败时抛出 NacosException 异常。
+
+### 8.19. 变更 Prompt 上下线状态
+
+#### 描述
+
+对 Prompt 指定版本进行上线或下线操作。
+
+```java
+void changeOnlineStatus(String namespaceId, String promptKey, String version, boolean online) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型    | 描述                |
+|:------------|:--------|:------------------|
+| namespaceId | string  | 命名空间ID。           |
+| promptKey   | string  | Prompt 的 key。      |
+| version     | string  | 版本号。              |
+| online      | boolean | `true` 上线，`false` 下线。 |
+
+#### 返回参数
+
+无
+
+#### 请求示例
+
+```java
+try {
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    promptMaintainerService.changeOnlineStatus("public", "my-prompt", "1.0.1", true);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+操作失败时抛出 NacosException 异常。
+
+### 8.20. 更新 Prompt 标签
+
+#### 描述
+
+更新 Prompt 的 labels JSON，用于维护标签与版本的映射。
+
+```java
+void updateLabels(String namespaceId, String promptKey, String labels) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型   | 描述           |
+|:------------|:-------|:-------------|
+| namespaceId | string | 命名空间ID。      |
+| promptKey   | string | Prompt 的 key。 |
+| labels      | string | labels JSON。  |
+
+#### 返回参数
+
+无
+
+#### 请求示例
+
+```java
+try {
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    promptMaintainerService.updateLabels("public", "my-prompt", "{\"latest\":\"1.0.1\"}");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+操作失败时抛出 NacosException 异常。
+
+### 8.21. 更新 Prompt 描述
+
+#### 描述
+
+更新 Prompt 的描述信息。
+
+```java
+void updateDescription(String namespaceId, String promptKey, String description) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型   | 描述           |
+|:------------|:-------|:-------------|
+| namespaceId | string | 命名空间ID。      |
+| promptKey   | string | Prompt 的 key。 |
+| description | string | 新描述。         |
+
+#### 返回参数
+
+无
+
+#### 请求示例
+
+```java
+try {
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    promptMaintainerService.updateDescription("public", "my-prompt", "new desc");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+操作失败时抛出 NacosException 异常。
+
+### 8.22. 更新 Prompt 业务标签
+
+#### 描述
+
+更新 Prompt 的业务标签（bizTags JSON）。
+
+```java
+void updateBizTags(String namespaceId, String promptKey, String bizTags) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型   | 描述             |
+|:------------|:-------|:---------------|
+| namespaceId | string | 命名空间ID。        |
+| promptKey   | string | Prompt 的 key。   |
+| bizTags     | string | bizTags JSON。   |
+
+#### 返回参数
+
+无
+
+#### 请求示例
+
+```java
+try {
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    promptMaintainerService.updateBizTags("public", "my-prompt", "[\"ai\",\"ops\"]");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+操作失败时抛出 NacosException 异常。
+
 ## 9. Skill 能力
 
 ### 9.1. 注册 Skill
@@ -4911,9 +5412,13 @@ try {
 按命名空间、名称模式、搜索模式分页查询 Skill 列表。
 
 ```java
-Page<SkillBasicInfo> listSkills(String namespaceId, String skillName, String search, int pageNo, int pageSize) throws NacosException;
+Page<SkillSummary> listSkills(String namespaceId, String skillName, String search, int pageNo, int pageSize) throws NacosException;
 
-Page<SkillBasicInfo> listSkills(String skillName, int pageNo, int pageSize) throws NacosException;
+Page<SkillSummary> listSkills(String namespaceId, String skillName, String search, String orderBy, String owner, String scope, int pageNo, int pageSize) throws NacosException;
+
+Page<SkillSummary> listSkills(String namespaceId, String skillName, String search, String orderBy, String owner, String scope, String bizTag, int pageNo, int pageSize) throws NacosException;
+
+Page<SkillSummary> listSkills(String skillName, int pageNo, int pageSize) throws NacosException;
 ```
 
 #### 请求参数
@@ -4923,6 +5428,10 @@ Page<SkillBasicInfo> listSkills(String skillName, int pageNo, int pageSize) thro
 | namespaceId | string | 命名空间ID。                      |
 | skillName   | string | Skill 名称模式过滤。                 |
 | search      | string | 搜索模式：`accurate` 精确 或 `blur` 模糊。 |
+| orderBy     | string | 排序字段（可选）。                    |
+| owner       | string | 资源所有者过滤（可选）。                 |
+| scope       | string | 可见范围过滤（可选）。                  |
+| bizTag      | string | 业务标签过滤（可选）。                  |
 | pageNo      | int    | 页码。                          |
 | pageSize    | int    | 每页条数。                        |
 
@@ -4930,14 +5439,17 @@ Page<SkillBasicInfo> listSkills(String skillName, int pageNo, int pageSize) thro
 
 | 参数类型                   | 描述         |
 |:-----------------------|:-----------|
-| Page\<SkillBasicInfo>   | Skill 分页列表。 |
+| Page\<SkillSummary>   | Skill 分页列表。 |
 
 #### 请求示例
 
 ```java
 try {
-    Page<SkillBasicInfo> result = aiMaintainerService.listSkills("public", "my-skill", "blur", 1, 100);
-    result = aiMaintainerService.listSkills("my-skill", 1, 100);
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    Page<SkillSummary> result = skillMaintainerService.listSkills("public", "my-skill", "blur", 1, 100);
+    result = skillMaintainerService.listSkills("public", "my-skill", "blur", "download_count", "nacos", "PUBLIC", 1, 100);
+    result = skillMaintainerService.listSkills("public", "my-skill", "blur", "download_count", "nacos", "PUBLIC", "ops", 1, 100);
+    result = skillMaintainerService.listSkills("my-skill", 1, 100);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -4956,6 +5468,10 @@ try {
 ```java
 String uploadSkillFromZip(String namespaceId, byte[] zipBytes, boolean overwrite) throws NacosException;
 
+String uploadSkillFromZip(String namespaceId, byte[] zipBytes, boolean overwrite, String targetVersion) throws NacosException;
+
+String uploadSkillFromZip(String namespaceId, byte[] zipBytes, boolean overwrite, String targetVersion, String commitMsg) throws NacosException;
+
 String uploadSkillFromZip(String namespaceId, byte[] zipBytes) throws NacosException;
 
 String uploadSkillFromZip(byte[] zipBytes) throws NacosException;
@@ -4968,6 +5484,8 @@ String uploadSkillFromZip(byte[] zipBytes) throws NacosException;
 | namespaceId | string  | 命名空间ID。     |
 | zipBytes    | byte[]  | Skill 的 ZIP 包字节。 |
 | overwrite   | boolean | Skill 已存在时是否覆盖当前可编辑草稿。 |
+| targetVersion | string | 目标版本（可选，当 ZIP 中未包含版本时作为兜底）。 |
+| commitMsg   | string  | 版本提交说明（可选）。 |
 
 #### 返回参数
 
@@ -4979,10 +5497,13 @@ String uploadSkillFromZip(byte[] zipBytes) throws NacosException;
 
 ```java
 try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
     byte[] zipBytes = Files.readAllBytes(Paths.get("my-skill.zip"));
-    String name = aiMaintainerService.uploadSkillFromZip("public", zipBytes, true);
-    String name = aiMaintainerService.uploadSkillFromZip("public", zipBytes);
-    name = aiMaintainerService.uploadSkillFromZip(zipBytes);
+    String name = skillMaintainerService.uploadSkillFromZip("public", zipBytes, true);
+    name = skillMaintainerService.uploadSkillFromZip("public", zipBytes, true, "1.0.1");
+    name = skillMaintainerService.uploadSkillFromZip("public", zipBytes, true, "1.0.1", "upload skill");
+    name = skillMaintainerService.uploadSkillFromZip("public", zipBytes);
+    name = skillMaintainerService.uploadSkillFromZip(zipBytes);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -5087,6 +5608,8 @@ String createDraft(String namespaceId, String skillName, String basedOnVersion) 
 String createDraft(String namespaceId, String skillName, String basedOnVersion, String targetVersion) throws NacosException;
 
 String createDraft(String namespaceId, String skillName, String basedOnVersion, String targetVersion, String skillCard) throws NacosException;
+
+String createDraft(String namespaceId, String skillName, String basedOnVersion, String targetVersion, String skillCard, String commitMsg) throws NacosException;
 ```
 
 #### 请求参数
@@ -5098,6 +5621,7 @@ String createDraft(String namespaceId, String skillName, String basedOnVersion, 
 | basedOnVersion | string | fork 基于的版本（可选）。                |
 | targetVersion | string | 目标草稿版本（可选）。                    |
 | skillCard    | string | Skill 完整 JSON（非 fork 场景通常必填）。   |
+| commitMsg    | string | 版本提交说明（可选）。                    |
 
 #### 返回参数
 
@@ -5109,10 +5633,12 @@ String createDraft(String namespaceId, String skillName, String basedOnVersion, 
 
 ```java
 try {
-    String version = aiMaintainerService.createDraft("public", "{\"name\":\"my-skill\"}");
-    version = aiMaintainerService.createDraft("public", "my-skill", "1.0.0");
-    version = aiMaintainerService.createDraft("public", "my-skill", "1.0.0", "1.0.1-draft");
-    version = aiMaintainerService.createDraft("public", "my-skill", "1.0.0", "1.0.1-draft", "{\"name\":\"my-skill\"}");
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    String version = skillMaintainerService.createDraft("public", "{\"name\":\"my-skill\"}");
+    version = skillMaintainerService.createDraft("public", "my-skill", "1.0.0");
+    version = skillMaintainerService.createDraft("public", "my-skill", "1.0.0", "1.0.1-draft");
+    version = skillMaintainerService.createDraft("public", "my-skill", "1.0.0", "1.0.1-draft", "{\"name\":\"my-skill\"}");
+    version = skillMaintainerService.createDraft("public", "my-skill", "1.0.0", "1.0.1-draft", "{\"name\":\"my-skill\"}", "update skill");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -5130,6 +5656,8 @@ try {
 
 ```java
 boolean updateDraft(String namespaceId, String skillCard, Boolean setAsLatest) throws NacosException;
+
+boolean updateDraft(String namespaceId, String skillCard, Boolean setAsLatest, String commitMsg) throws NacosException;
 ```
 
 #### 请求参数
@@ -5139,6 +5667,7 @@ boolean updateDraft(String namespaceId, String skillCard, Boolean setAsLatest) t
 | namespaceId | string  | 命名空间ID。                 |
 | skillCard   | string  | Skill 完整 JSON。          |
 | setAsLatest | boolean | 是否设为 latest 标签（可选）。     |
+| commitMsg   | string  | 版本提交说明（可选）。             |
 
 #### 返回参数
 
@@ -5150,7 +5679,9 @@ boolean updateDraft(String namespaceId, String skillCard, Boolean setAsLatest) t
 
 ```java
 try {
-    boolean ok = aiMaintainerService.updateDraft("public", "{\"name\":\"my-skill\"}", true);
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    boolean ok = skillMaintainerService.updateDraft("public", "{\"name\":\"my-skill\"}", true);
+    ok = skillMaintainerService.updateDraft("public", "{\"name\":\"my-skill\"}", true, "update skill");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -5468,6 +5999,88 @@ try {
 
 操作失败时抛出 NacosException 异常。
 
+### 9.19. 批量从 ZIP 上传 Skill
+
+#### 描述
+
+从包含多个 Skill 目录的 ZIP 包中批量上传 Skill。
+
+```java
+BatchUploadResult batchUploadSkillsFromZip(byte[] zipBytes) throws NacosException;
+
+BatchUploadResult batchUploadSkillsFromZip(String namespaceId, byte[] zipBytes, boolean overwrite) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型    | 描述                |
+|:------------|:--------|:------------------|
+| namespaceId | string  | 命名空间ID。           |
+| zipBytes    | byte[]  | 包含多个 Skill 目录的 ZIP 包字节。 |
+| overwrite   | boolean | 是否覆盖已存在的草稿。      |
+
+#### 返回参数
+
+| 参数类型              | 描述             |
+|:------------------|:---------------|
+| BatchUploadResult | 批量上传成功与失败结果。 |
+
+#### 请求示例
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    byte[] zipBytes = Files.readAllBytes(Paths.get("skills.zip"));
+    BatchUploadResult result = skillMaintainerService.batchUploadSkillsFromZip(zipBytes);
+    result = skillMaintainerService.batchUploadSkillsFromZip("public", zipBytes, true);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+操作失败时抛出 NacosException 异常。
+
+### 9.20. 重新编辑 Skill 版本
+
+#### 描述
+
+将已审核的 Skill 版本重新转回草稿状态，以便继续编辑。
+
+```java
+boolean redraft(String namespaceId, String skillName, String version) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名         | 参数类型   | 描述          |
+|:------------|:-------|:------------|
+| namespaceId | string | 命名空间ID。     |
+| skillName   | string | Skill 名称。   |
+| version     | string | 需要重新编辑的版本。 |
+
+#### 返回参数
+
+| 参数类型    | 描述            |
+|:--------|:--------------|
+| boolean | 重新转草稿是否成功。   |
+
+#### 请求示例
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    boolean ok = skillMaintainerService.redraft("public", "my-skill", "1.0.1");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+操作失败时抛出 NacosException 异常。
+
 ## 10. AgentSpec 能力
 
 ### 10.1. 查询 AgentSpec 详情
@@ -5660,6 +6273,8 @@ try {
 
 ```java
 Page<AgentSpecSummary> listAgentSpecAdminItems(String namespaceId, String agentSpecName, String search, int pageNo, int pageSize) throws NacosException;
+
+Page<AgentSpecSummary> listAgentSpecAdminItems(String namespaceId, String agentSpecName, String search, String orderBy, String owner, String scope, int pageNo, int pageSize) throws NacosException;
 ```
 
 #### 请求参数
@@ -5669,6 +6284,9 @@ Page<AgentSpecSummary> listAgentSpecAdminItems(String namespaceId, String agentS
 | namespaceId | string | 命名空间ID。 |
 | agentSpecName | string | AgentSpec 名称模式。 |
 | search | string | 搜索模式：`accurate` 或 `blur`。 |
+| orderBy | string | 排序字段（可选）。 |
+| owner | string | 资源所有者过滤（可选）。 |
+| scope | string | 可见范围过滤（可选）。 |
 | pageNo | int | 页码。 |
 | pageSize | int | 每页条数。 |
 
@@ -5684,6 +6302,7 @@ Page<AgentSpecSummary> listAgentSpecAdminItems(String namespaceId, String agentS
 try {
     AgentSpecMaintainerService agentSpecMaintainerService = aiMaintainerService.agentSpec();
     Page<AgentSpecSummary> adminList = agentSpecMaintainerService.listAgentSpecAdminItems("public", "test-agent-spec", "blur", 1, 100);
+    adminList = agentSpecMaintainerService.listAgentSpecAdminItems("public", "test-agent-spec", "blur", "download_count", "nacos", "PUBLIC", 1, 100);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -5737,6 +6356,8 @@ try {
 
 ```java
 String createDraft(String namespaceId, String agentSpecName, String basedOnVersion) throws NacosException;
+
+String createDraft(String namespaceId, String agentSpecName, String basedOnVersion, String targetVersion) throws NacosException;
 ```
 
 #### 请求参数
@@ -5746,6 +6367,7 @@ String createDraft(String namespaceId, String agentSpecName, String basedOnVersi
 | namespaceId | string | 命名空间ID。 |
 | agentSpecName | string | AgentSpec 名称。 |
 | basedOnVersion | string | 基于版本（可选）。 |
+| targetVersion | string | 目标草稿版本（可选，空时自动递增）。 |
 
 #### 返回参数
 
@@ -5759,6 +6381,7 @@ String createDraft(String namespaceId, String agentSpecName, String basedOnVersi
 try {
     AgentSpecMaintainerService agentSpecMaintainerService = aiMaintainerService.agentSpec();
     String version = agentSpecMaintainerService.createDraft("public", "test-agent-spec", "1.0.0");
+    version = agentSpecMaintainerService.createDraft("public", "test-agent-spec", "1.0.0", "1.0.1-draft");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -6078,6 +6701,78 @@ boolean updateScope(String namespaceId, String agentSpecName, String scope) thro
 try {
     AgentSpecMaintainerService agentSpecMaintainerService = aiMaintainerService.agentSpec();
     boolean ok = agentSpecMaintainerService.updateScope("public", "test-agent-spec", "PUBLIC");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+### 10.18. 查询 AgentSpec 指定版本元信息
+
+#### 描述
+
+查询 AgentSpec 指定版本元信息，返回主配置及仅包含名称和类型的资源列表，避免读取完整资源内容。
+
+```java
+AgentSpec getAgentSpecVersionMeta(String namespaceId, String agentSpecName, String version) throws NacosException;
+AgentSpec getAgentSpecVersionMeta(String agentSpecName, String version) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|:---|:---|:---|
+| namespaceId | string | 命名空间ID。 |
+| agentSpecName | string | AgentSpec 名称。 |
+| version | string | AgentSpec 版本。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|:---|:---|
+| AgentSpec | AgentSpec 指定版本元信息。 |
+
+#### 请求示例
+
+```java
+try {
+    AgentSpecMaintainerService agentSpecMaintainerService = aiMaintainerService.agentSpec();
+    AgentSpec meta = agentSpecMaintainerService.getAgentSpecVersionMeta("public", "test-agent-spec", "1.0.0");
+    meta = agentSpecMaintainerService.getAgentSpecVersionMeta("test-agent-spec", "1.0.0");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+### 10.19. 重新编辑 AgentSpec 版本
+
+#### 描述
+
+将已审核的 AgentSpec 版本重新转回草稿状态，以便继续编辑。
+
+```java
+boolean redraft(String namespaceId, String agentSpecName, String version) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|:---|:---|:---|
+| namespaceId | string | 命名空间ID。 |
+| agentSpecName | string | AgentSpec 名称。 |
+| version | string | 需要重新编辑的版本。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|:---|:---|
+| boolean | 重新转草稿是否成功。 |
+
+#### 请求示例
+
+```java
+try {
+    AgentSpecMaintainerService agentSpecMaintainerService = aiMaintainerService.agentSpec();
+    boolean ok = agentSpecMaintainerService.redraft("public", "test-agent-spec", "1.0.1");
 } catch (NacosException e) {
     e.printStackTrace();
 }

@@ -1803,16 +1803,21 @@ try {
 ```java
 String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecification toolSpecification) throws NacosException;
 
+String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecification toolSpecification, McpResourceSpecification resourceSpecification) throws NacosException;
+
 String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecification toolSpecification, McpEndpointSpec endpointSpecification) throws NacosException;
+
+String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecification toolSpecification, McpResourceSpecification resourceSpecification, McpEndpointSpec endpointSpecification) throws NacosException;
 ```
 
 #### 请求参数
 
-| 名称                    | 类型                   | 描述              | 默认值  |
-|:----------------------|:---------------------|-----------------|------|
-| serverSpecification   | McpServerBasicInfo   | MCP服务基本信息       | 无，必填 |
-| toolSpecification     | McpToolSpecification | MCP服务工具信息       | 无，必填 |
-| endpointSpecification | McpEndpointSpec      | MCP服务Endpoint信息 | 无，可选 |
+| 名称                    | 类型                       | 描述                  | 默认值  |
+|:----------------------|:-------------------------|---------------------|------|
+| serverSpecification   | McpServerBasicInfo       | MCP service basic information | 无，必填 |
+| toolSpecification     | McpToolSpecification     | MCP service tool information | 无，必填 |
+| resourceSpecification | McpResourceSpecification | MCP service resource and resource template information | 无，可选 |
+| endpointSpecification | McpEndpointSpec          | MCP service Endpoint information | 无，可选 |
 
 #### 返回参数
 
@@ -1828,6 +1833,9 @@ try {
     McpServerBasicInfo serverSpecification = buildMcpSeverSpec(mcpName, version, isLatest);
     McpToolSpecification toolSpecification = buildTools();
     System.out.println(aiService.releaseMcpServer(serverSpecification, toolSpecification));
+
+    McpResourceSpecification resourceSpecification = buildResources();
+    System.out.println(aiService.releaseMcpServer(serverSpecification, toolSpecification, resourceSpecification, null));
 } catch (Exception e) {
     e.printStackTrace();
 }
@@ -2358,7 +2366,7 @@ try {
 
 ## 8. Skill Capabilities
 
-> Skills are distributed via the Java SDK as ZIP packages containing SKILL.md and all resource files (binary resources are decoded from Base64 back to raw bytes). The SDK currently exposes three download variants: by name, by version, and by label.
+> Skills are distributed via the Java SDK as ZIP packages containing SKILL.md and all resource files (binary resources are decoded from Base64 back to raw bytes). The SDK currently exposes three download variants: by name, by version, and by label, and also supports subscribing to Skill changes.
 
 ### 8.1. Download Skill ZIP
 
@@ -2475,6 +2483,96 @@ try {
 #### Exceptions
 
 Throws NacosException when the skill or specified label is not found, or on query error.
+
+### 8.4. Subscribe Skill
+
+#### Description
+
+Subscribe to Skill changes; the listener is invoked when the Skill ZIP content changes. version and label are optional to narrow the subscription.
+
+```java
+byte[] subscribeSkill(String skillName, String version, String label, AbstractNacosSkillListener skillListener) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name          | Type                       | Description                          | Default     |
+|:--------------|:---------------------------|--------------------------------------|-------------|
+| skillName     | String                     | Skill name                           | — required  |
+| version       | String                     | Target skill version, optional       | —           |
+| label         | String                     | Target label, optional               | —           |
+| skillListener | AbstractNacosSkillListener | Callback listener for Skill changes  | — required  |
+
+#### Response
+
+Returns current Skill ZIP bytes `byte[]` when subscribed successfully; may be null if the skill is not found.
+
+#### Example
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    byte[] skillZip = aiService.subscribeSkill("{skillName}", null, "{label}", new AbstractNacosSkillListener() {
+        @Override
+        public void onEvent(NacosSkillEvent event) {
+            System.out.println("skill changed: " + event.getSkillName());
+            System.out.println("resolved version: " + event.getResolvedVersion());
+            System.out.println("md5: " + event.getMd5());
+        }
+    });
+    System.out.println("skill zip bytes: " + (skillZip != null ? skillZip.length : 0));
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exceptions
+
+Throws NacosException when request parameters are invalid or subscription processing fails.
+
+### 8.5. Unsubscribe Skill
+
+#### Description
+
+Unsubscribe from Skill changes. skillName, version, label, and listener must match those used when subscribing.
+
+```java
+void unsubscribeSkill(String skillName, String version, String label, AbstractNacosSkillListener skillListener) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name          | Type                       | Description                       | Default     |
+|:--------------|:---------------------------|-----------------------------------|-------------|
+| skillName     | String                     | Skill name                        | — required  |
+| version       | String                     | Target version, optional          | —           |
+| label         | String                     | Target label, optional            | —           |
+| skillListener | AbstractNacosSkillListener | Listener used when subscribing    | — required  |
+
+#### Response
+
+None.
+
+#### Example
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+AbstractNacosSkillListener listener = new AbstractNacosSkillListener() {};
+try {
+    aiService.subscribeSkill("{skillName}", null, "{label}", listener);
+    aiService.unsubscribeSkill("{skillName}", null, "{label}", listener);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exceptions
+
+Throws NacosException when request parameters are invalid or unsubscribe processing fails.
 
 ## 9. Prompt 能力
 

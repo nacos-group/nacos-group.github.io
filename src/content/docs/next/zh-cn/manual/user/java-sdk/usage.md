@@ -1803,16 +1803,21 @@ try {
 ```java
 String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecification toolSpecification) throws NacosException;
 
+String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecification toolSpecification, McpResourceSpecification resourceSpecification) throws NacosException;
+
 String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecification toolSpecification, McpEndpointSpec endpointSpecification) throws NacosException;
+
+String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecification toolSpecification, McpResourceSpecification resourceSpecification, McpEndpointSpec endpointSpecification) throws NacosException;
 ```
 
 #### 请求参数
 
-| 名称                    | 类型                   | 描述              | 默认值  |
-|:----------------------|:---------------------|-----------------|------|
-| serverSpecification   | McpServerBasicInfo   | MCP服务基本信息       | 无，必填 |
-| toolSpecification     | McpToolSpecification | MCP服务工具信息       | 无，必填 |
-| endpointSpecification | McpEndpointSpec      | MCP服务Endpoint信息 | 无，可选 |
+| 名称                    | 类型                       | 描述                  | 默认值  |
+|:----------------------|:-------------------------|---------------------|------|
+| serverSpecification   | McpServerBasicInfo       | MCP服务基本信息           | 无，必填 |
+| toolSpecification     | McpToolSpecification     | MCP服务工具信息           | 无，必填 |
+| resourceSpecification | McpResourceSpecification | MCP服务资源和资源模板信息      | 无，可选 |
+| endpointSpecification | McpEndpointSpec          | MCP服务Endpoint信息     | 无，可选 |
 
 #### 返回参数
 
@@ -1828,6 +1833,9 @@ try {
     McpServerBasicInfo serverSpecification = buildMcpSeverSpec(mcpName, version, isLatest);
     McpToolSpecification toolSpecification = buildTools();
     System.out.println(aiService.releaseMcpServer(serverSpecification, toolSpecification));
+
+    McpResourceSpecification resourceSpecification = buildResources();
+    System.out.println(aiService.releaseMcpServer(serverSpecification, toolSpecification, resourceSpecification, null));
 } catch (Exception e) {
     e.printStackTrace();
 }
@@ -2358,7 +2366,7 @@ try {
 
 ## 8. Skill 能力
 
-> Skill 在 Java SDK 中以 ZIP 压缩包的形式分发，包含 SKILL.md 和全部资源文件（二进制资源会从 Base64 自动解码为原始字节）。SDK 当前提供按名称、按版本、按标签三种下载方式。
+> Skill 在 Java SDK 中以 ZIP 压缩包的形式分发，包含 SKILL.md 和全部资源文件（二进制资源会从 Base64 自动解码为原始字节）。SDK 当前提供按名称、按版本、按标签三种下载方式，并支持订阅 Skill 变更。
 
 ### 8.1. 下载 Skill ZIP
 
@@ -2475,6 +2483,96 @@ try {
 #### 异常说明
 
 Skill 或指定标签不存在、查询异常时，抛出 NacosException。
+
+### 8.4. 订阅 Skill
+
+#### 描述
+
+订阅 Skill 变更，当 Skill ZIP 内容变化时通过监听器回调。version、label 可选，用于限定订阅范围。
+
+```java
+byte[] subscribeSkill(String skillName, String version, String label, AbstractNacosSkillListener skillListener) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称            | 类型                       | 描述              | 默认值  |
+|:--------------|:-------------------------|-----------------|------|
+| skillName     | String                   | Skill 名称        | 无，必填 |
+| version       | String                   | 目标 Skill 版本，可选 | 无     |
+| label         | String                   | 目标标签，可选        | 无     |
+| skillListener | AbstractNacosSkillListener | Skill 变更回调监听器  | 无，必填 |
+
+#### 返回参数
+
+订阅成功时返回当前 Skill ZIP 压缩包字节数组 `byte[]`，未找到时可为 null。
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    byte[] skillZip = aiService.subscribeSkill("{skillName}", null, "{label}", new AbstractNacosSkillListener() {
+        @Override
+        public void onEvent(NacosSkillEvent event) {
+            System.out.println("skill changed: " + event.getSkillName());
+            System.out.println("resolved version: " + event.getResolvedVersion());
+            System.out.println("md5: " + event.getMd5());
+        }
+    });
+    System.out.println("skill zip bytes: " + (skillZip != null ? skillZip.length : 0));
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+请求参数不合法或订阅处理异常时，抛出 NacosException。
+
+### 8.5. 取消订阅 Skill
+
+#### 描述
+
+取消对 Skill 的订阅。取消时传入的 skillName、version、label、listener 需与订阅时一致。
+
+```java
+void unsubscribeSkill(String skillName, String version, String label, AbstractNacosSkillListener skillListener) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称            | 类型                       | 描述          | 默认值  |
+|:--------------|:-------------------------|-------------|------|
+| skillName     | String                   | Skill 名称    | 无，必填 |
+| version       | String                   | 目标版本，可选    | 无     |
+| label         | String                   | 目标标签，可选    | 无     |
+| skillListener | AbstractNacosSkillListener | 订阅时使用的监听器 | 无，必填 |
+
+#### 返回参数
+
+无
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AiService aiService = AiFactory.createAiService(properties);
+AbstractNacosSkillListener listener = new AbstractNacosSkillListener() {};
+try {
+    aiService.subscribeSkill("{skillName}", null, "{label}", listener);
+    aiService.unsubscribeSkill("{skillName}", null, "{label}", listener);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+请求参数不合法或取消订阅处理异常时，抛出 NacosException。
 
 ## 9. Prompt 能力
 
