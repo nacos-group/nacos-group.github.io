@@ -70,7 +70,10 @@
         }
       },
       {
-        "label": "AI",
+        "label": "AI 管理中心",
+        "translations": {
+          "en": "AI Registry"
+        },
         "autogenerate": {
           "directory": "manual/user/ai"
         }

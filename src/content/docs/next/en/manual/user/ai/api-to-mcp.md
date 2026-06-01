@@ -3,7 +3,7 @@ title: Existing API Migration to MCP Manual
 keywords: [ MCP Server Register,MCP,Existing API,Migration to MCP]
 description: 如何通过Nacos，将已经注册在Nacos上的存量微服务API，转化成为MCP服务
 sidebar:
-  order: 3
+  order: 5
 ---
 
 # 存量API转换MCP手册
@@ -34,7 +34,7 @@ Nacos 能够通过和 [Higress](https://higress.ai) 等AI网关的结合，**0�
 
 > 首次打开可能需要进行管理员密码的初始化工作，请参考[Nacos控制台手册](../../admin/console.md#3-登录管理)。
 
-点击左侧`MCP管理` -> `MCP列表`进入MCP管理页面
+点击左侧 `MCP Registry` -> `MCP List` 进入 MCP Registry 页面
 
 在页面左上角点击`创建MCP Server`，在创建MCP Server页面中填写必要信息，如：
 
@@ -54,7 +54,7 @@ Nacos 能够通过和 [Higress](https://higress.ai) 等AI网关的结合，**0�
 
 打开Nacos控制台`http://${nacos_console_host}:${nacos_console_port}` 如 `http://127.0.0.1:8080`.
 
-点击左侧`MCP管理` -> `MCP列表`进入MCP管理页面
+点击左侧 `MCP Registry` -> `MCP List` 进入 MCP Registry 页面
 
 在列表中找到[上一步骤](#1-将存量服务声明成mcp服务)中创建的MCP服务，在列表的`操作`列中点击`编辑`。
 
@@ -83,7 +83,7 @@ Nacos 能够通过和 [Higress](https://higress.ai) 等AI网关的结合，**0�
 | 名称     | MCP Tools的输入参数名称，用于区分不同参数                                                                                              |
 | 类型     | MCP Tools的输入参数类型，支持`string`、`number`、`integer`、`boolean`、`array`、`object`                                              |
 | 描述     | MCP Tools的输入参数描述，自定义描述此MCP服务Tool参数描述信息                                                                                 |                                                                          |
-| 协议转化配置 | 提供给AI网关或协议转换代理的协议转化配置，用于提供给给AI网关或协议转化代理，此工具实际映射的存量服务的API信息，如`url`，`参数映射关系`等，具体配置细节，请参见[MCP模版配置手册](./mcp-template.mdx)。 |
+| 协议转化配置 | 提供给AI网关或协议转换代理的协议转化配置，用于提供给给AI网关或协议转化代理，此工具实际映射的存量服务的API信息，如`url`，`参数映射关系`等，具体配置细节，请参见[MCP模版配置手册](./mcp-template.md)。 |
 
 所有Tool的输入参数编辑完成后， 点击`确定`进行保存，之后重复添加其他的Tool信息后，点击页面右上角`发布为最新版本`。
 

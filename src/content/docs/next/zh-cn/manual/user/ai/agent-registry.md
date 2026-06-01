@@ -1,17 +1,17 @@
 ---
-title: Agent 注册中心
+title: Agent 管理
 keywords: [ Agent Register,A2A Registry,Agent2Agent Registry ]
-description: 本文档介绍了Nacos作为A2A（Agent注册中心）如何进行注册、发现和管理Agent
+description: 本文档介绍 Nacos Agent 管理（A2A Registry）如何注册、发现和管理 Agent
 sidebar:
-  order: 1
+  order: 3
 ---
 
-# Agent 注册中心
+# Agent 管理
 
 [Agent2Agent (A2A)](https://a2a-protocol.org/latest/) 协议是由 Google 开发并捐赠给 Linux 基金会的一项开放标准，旨在实现
 AI Agent之间的无缝通信与协作，从而解决multi-agent数量增加时导致的运维、管理、部署成本过高的问题，实现像使用微服务一样使用multi-agent。
 
-为了管理这些Agent，Nacos 从`3.1.0` 版本开始，提供了 Agent 注册中心（A2A Registry），实现Agent的注册、发现、命名空间隔离、版本管理等功能。
+为了管理这些 Agent，Nacos 从 `3.1.0` 版本开始，提供了 Agent 管理（A2A Registry），实现 Agent 的注册、发现、命名空间隔离、版本管理等功能。
 
 ## 1. Nacos 中的 Agent（AgentCard)
 
@@ -42,7 +42,7 @@ Agent（AgentCard）的上游使用者（如Agent或其他应用）在获取Agen
 
 ## 2. 发布Agent（AgentCard）
 
-Nacos作为Agent 注册中心（A2A Registry），提供了基于[HTTP的API](../../admin/admin-api.md#5-a2a注册中心)
+Nacos 作为 Agent 管理（A2A Registry），提供了基于[HTTP的API](../../admin/admin-api.md#5-a2a注册中心)
 以及基于[gRPC的SDK](../java-sdk/usage.md#7-a2a-注册中心)帮助A2A Server及Agent提供方发布Agent（AgentCard）。
 
 同时Nacos与[Spring AI Alibaba](https://java2ai.com/)开发框架深度集成，帮助开发者快速开发Agent应用并通过A2A协议暴露Agent。
@@ -227,7 +227,7 @@ curl -X POST '127.0.0.1:8848/nacos/v3/admin/ai/a2a' \
 
 ## 3. 查询/获取Agent
 
-Nacos作为Agent 注册中心（A2A Registry），提供了基于[HTTP的API](../../admin/admin-api.md#5-a2a注册中心)
+Nacos 作为 Agent 管理（A2A Registry），提供了基于[HTTP的API](../../admin/admin-api.md#5-a2a注册中心)
 以及基于[gRPC的SDK](../java-sdk/usage.md#7-a2a-注册中心)帮助A2A Client及Agent使用方查询和订阅Agent（AgentCard）。
 
 同时Nacos与[Spring AI Alibaba](https://java2ai.com/)开发框架深度集成，帮助开发者快速开发Agent应用并通过A2A协议访问远端Agent。
@@ -414,7 +414,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a/list?pageNo=1&pageSize=100&age
 - 在`Agent名称`的输入框中填写Agent名称，点击`搜索`按钮，即可看到模糊匹配的Agent列表。
 - 在`Agent列表`页面，点击表格中最右一列`操作`中的`详情`，即可进入`Agent详情`页，查看Agent的详细信息。
 
-## 4. Agent 注册中心的RoadMap
+## 4. Agent 管理 RoadMap
 
 ### 4.1. 多语言客户端支持
 
@@ -430,4 +430,3 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a/list?pageNo=1&pageSize=100&age
 Protocol正在社区进行[讨论](https://github.com/a2aproject/A2A/discussions/741).
 
 Nacos社区会紧密参与讨论且关注此标准的A2A Registry Protocol的定义和发布，待标准发布后，Nacos社区会开始尽快适配及实现此标准。
-
