@@ -3,7 +3,7 @@ title: Agent 注册中心
 keywords: [ Agent Register,A2A Registry,Agent2Agent Registry ]
 description: 本文档介绍了Nacos作为A2A（Agent注册中心）如何进行注册、发现和管理Agent
 sidebar:
-  order: 1
+  order: 3
 ---
 
 # Agent 注册中心
@@ -430,4 +430,3 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a/list?pageNo=1&pageSize=100&age
 Protocol正在社区进行[讨论](https://github.com/a2aproject/A2A/discussions/741).
 
 Nacos社区会紧密参与讨论且关注此标准的A2A Registry Protocol的定义和发布，待标准发布后，Nacos社区会开始尽快适配及实现此标准。
-

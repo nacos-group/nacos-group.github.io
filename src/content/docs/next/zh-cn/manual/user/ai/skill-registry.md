@@ -3,7 +3,7 @@ title: Skill 管理中心
 keywords: [Nacos Skill Registry, Skill 管理, AI Skill, Agent Skill]
 description: 本文档介绍了Nacos Skill Registry（Skill管理中心），包括Skill的创建、版本管理、安全审核、发布和分发等功能
 sidebar:
-    order: 7
+    order: 10
 ---
 
 # Skill 管理中心

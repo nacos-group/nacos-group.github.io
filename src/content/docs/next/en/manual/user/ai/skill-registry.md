@@ -3,7 +3,7 @@ title: Skill Registry
 keywords: [Nacos Skill Registry, Skill Management, AI Skill, Agent Skill]
 description: This document describes the Nacos Skill Registry, including Skill creation, version management, security review, publishing, and distribution.
 sidebar:
-    order: 7
+    order: 10
 ---
 
 # Skill Registry

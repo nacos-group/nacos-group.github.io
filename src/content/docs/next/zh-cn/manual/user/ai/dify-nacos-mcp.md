@@ -3,7 +3,7 @@ title: Dify 发现 Nacos MCP 服务
 keywords: [MCP,Dify]
 description: Dify 发现 Nacos MCP 服务
 sidebar:
-  order: 6
+  order: 9
 ---
 
 ## Dify 发现 Nacos MCP 服务
@@ -68,7 +68,6 @@ A: 请确保 Nacos Server 版本在 3.0.1 及以上，并检查 Nacos Server 地
 Q: 模型无法找到正确的MCP Server 及调用正确的工具
 
 A: 请确保 Nacos 中对应的 MCP Server 的描述及对应tools的描述准确。优秀的描述能够帮助模型更好的调用 MCP Server 及工具。
-
 
 
 

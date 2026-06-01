@@ -3,7 +3,7 @@ title: MCP Template Configuration Manual
 keywords: [MCP, HTTP]
 description: Template configuration for converting existing HTTP services to MCP with Nacos and Higress
 sidebar:
-    order: 5
+    order: 8
 ---
 
 # Nacos MCP Existing Service Template Configuration

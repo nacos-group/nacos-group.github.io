@@ -3,7 +3,7 @@ title: A2A Registry
 keywords: [ Agent Register,A2A Registry,Agent2Agent Registry ]
 description: This document describes how Nacos, as an A2A (Agent Registration Center), registers, discovers, and manages Agents.
 sidebar:
-  order: 1
+  order: 3
 ---
 
 # A2A Registry
