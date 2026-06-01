@@ -1,16 +1,16 @@
 ---
-title: Skill 管理中心
+title: Skill 管理
 keywords: [Nacos Skill Registry, Skill 管理, AI Skill, Agent Skill]
-description: 本文档介绍了Nacos Skill Registry（Skill管理中心），包括Skill的创建、版本管理、安全审核、发布和分发等功能
+description: 本文档介绍 Nacos Skill 管理（Skill Registry），包括 Skill 的创建、版本管理、安全审核、发布和分发等功能
 sidebar:
-    order: 10
+    order: 2
 ---
 
-# Skill 管理中心
+# Skill 管理
 
-Skill Registry 是 Nacos 提供的 Skill 管理中心，作为团队和组织的**私有 Skill 仓库**。它将 Skill 的存储、版本管理、安全审核和分发集中在一个平台上，让团队成员可以方便地发现、安装和共享 Skill。
+Skill 管理（Skill Registry）是 Nacos 提供的私有 Skill 仓库能力。它将 Skill 的存储、版本管理、安全审核和分发集中在一个平台上，让团队成员可以方便地发现、安装和共享 Skill。
 
-Nacos 从 `3.2.0` 版本开始，提供了 Skill 管理中心（Skill Registry），支持 Skill 的创建、版本管理、安全审核、发布和分发等功能。
+Nacos 从 `3.2.0` 版本开始，提供了 Skill 管理能力，支持 Skill 的创建、版本管理、安全审核、发布和分发。
 
 ## 1. Nacos 中的 Skill
 
@@ -33,7 +33,7 @@ skill-sample/
 └── assets/           # Optional: templates, resources
 ```
 
-### 1.2. Skill Registry 的核心价值
+### 1.2. Skill 管理的核心价值
 
 - **团队共享**：将团队积累的最佳实践沉淀为 Skill，一次创建，团队共用
 - **版本管控**：完整的版本生命周期管理，支持草稿、审核、发布、上下线
@@ -243,15 +243,15 @@ Nacos 控制台提供了完整的 Skill 管理界面，位于 **AI 注册中心 
 
 ## 4. CLI / API / SDK 参考
 
-Skill Registry 提供多种接入方式，详细用法请参考各自的专项文档。
+Skill 管理提供多种接入方式，详细用法请参考各自的专项文档。
 
 ### 4.1. nacos-cli
 
-[nacos-cli](../../admin/nacos-cli.md) 是 Skill Registry 的命令行工具，提供 Skill 的搜索、安装、上传和同步功能。详细的安装配置和 Skill 管理命令请参考 [Nacos CLI 使用指南 - AI 技能管理](../../admin/nacos-cli.md#51-ai-技能管理-)。
+[nacos-cli](../../admin/nacos-cli.md) 是 Skill 管理的命令行工具，提供 Skill 的搜索、安装、上传和同步功能。详细的安装配置和 Skill 管理命令请参考 [Nacos CLI 使用指南 - AI 技能管理](../../admin/nacos-cli.md#51-ai-技能管理-)。
 
 ### 4.2. REST API
 
-Skill Registry 提供三层 REST API：
+Skill 管理提供三层 REST API：
 
 | API 层 | 说明 | 文档链接 |
 |--------|------|----------|

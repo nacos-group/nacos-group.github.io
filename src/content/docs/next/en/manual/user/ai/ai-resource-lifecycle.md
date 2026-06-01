@@ -3,7 +3,7 @@ title: AI Resource Lifecycle
 keywords: [Nacos AI Registry, AI Resource Lifecycle, Prompt, Skill, AgentSpec]
 description: Understand draft, review, publish, online, and offline flows for versioned AI Registry resources.
 sidebar:
-  order: 2
+  order: 11
 ---
 
 # AI Resource Lifecycle

@@ -1,12 +1,12 @@
 ---
-title: A2A Registry
+title: Agent Registry
 keywords: [ Agent Register,A2A Registry,Agent2Agent Registry ]
-description: This document describes how Nacos, as an A2A (Agent Registration Center), registers, discovers, and manages Agents.
+description: This document describes how Nacos Agent Registry (A2A Registry) registers, discovers, and manages Agents.
 sidebar:
   order: 3
 ---
 
-# A2A Registry
+# Agent Registry
 
 > translated by `Qwen`
 
@@ -15,7 +15,7 @@ Foundation. It aims to enable seamless communication and collaboration between A
 excessive operation, management, and deployment costs caused by the increasing number of multi-agents. This protocol
 allows using multi-agents like microservices.
 
-To manage these Agents, Nacos has introduced the Agent Registry (A2A Registry) starting from version `3.1.0`, providing
+To manage these Agents, Nacos has introduced Agent Registry (A2A Registry) starting from version `3.1.0`, providing
 functionalities including:
 
 - Agent registration and discovery
@@ -60,7 +60,7 @@ number.
 
 ## 2. Publish Agent（AgentCard）
 
-Nacos, serving as an A2A Registry, offers:
+Nacos, serving as Agent Registry (A2A Registry), offers:
 
 - [HTTP-based API](../../admin/admin-api.md#5-a2a注册中心)
 - [gRPC-based SDK](../java-sdk/usage.md#7-a2a-注册中心)
@@ -224,7 +224,7 @@ Certain Agents (AgentCards) provided by external providers should be published v
 
 ### 2.3.1. Publishing External Provider Agents via Nacos Console
 
-- Log in to the Nacos Console and navigate to `Agent Management` → `Agent List`.
+- Log in to the Nacos Console and navigate to `Agent Registry` -> `Agent List`.
 - Click the `Create Agent` button and fill in the AgentCard information.
 - Click the `Create` button in the top-right corner to complete the AgentCard creation.
 
@@ -247,7 +247,7 @@ curl -X POST '127.0.0.1:8848/nacos/v3/admin/ai/a2a' \
 
 ## 3. Query Agent
 
-Nacos, serving as an A2A Registry, offers:
+Nacos, serving as Agent Registry (A2A Registry), offers:
 
 - [HTTP-based API](../../admin/admin-api.md#5-a2a注册中心)
 - [gRPC-based SDK](../java-sdk/usage.md#7-a2a-注册中心)
@@ -433,11 +433,11 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a/list?pageNo=1&pageSize=100&age
 
 ### 3.4. Retrieve and View Agents via Console
 
-- Log in to the Nacos console, enter the `Agent Management` -> `Agent List` page to view all Agents under the current namespace.
+- Log in to the Nacos console, enter the `Agent Registry` -> `Agent List` page to view all Agents under the current namespace.
 - Fill in the Agent name in the `Agent Name` input field and click the `Search` button to view the list of fuzzy-matched Agents.
 - On the `Agent List` page, click Details in the rightmost `Operations` column to navigate to the `Agent Details` page and view detailed information about the Agent.
 
-## 4. Roadmap of Nacos A2A Registry
+## 4. Roadmap of Nacos Agent Registry
 
 ### 4.1. Multi-Language Client Support
 

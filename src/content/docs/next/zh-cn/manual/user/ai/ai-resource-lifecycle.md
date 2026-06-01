@@ -1,14 +1,14 @@
 ---
 title: AI 资源生命周期
-keywords: [Nacos AI Registry, AI Resource Lifecycle, Prompt, Skill, AgentSpec]
-description: 了解 AI Registry 中版本化资源的草稿、审核、发布、上线和下线流程。
+keywords: [Nacos AI 管理中心, AI 资源生命周期, Prompt, Skill, AgentSpec]
+description: 了解 AI 管理中心中版本化资源的草稿、审核、发布、上线和下线流程。
 sidebar:
-  order: 2
+  order: 11
 ---
 
 # AI 资源生命周期
 
-AI Registry 中的很多资源都需要版本管理。比如 Prompt 需要保留不同模板版本，Skill 需要管理不同包版本，AgentSpec 需要分发不同规范版本。
+AI 管理中心中的很多资源都需要版本管理。比如 Prompt 需要保留不同模板版本，Skill 需要管理不同包版本，AgentSpec 需要分发不同规范版本。
 
 生命周期文档帮助你理解这些资源从创建到上线的共同规则。具体字段和 API 可能因资源类型不同而略有差异，但核心概念是一致的。
 
@@ -87,7 +87,7 @@ namespaceId -> resourceType -> resourceName
 
 ## 可见性和权限
 
-AI Registry 的查询结果会受到可见性和鉴权影响。一个资源即使处于 `online` 状态，也可能因为调用者没有权限而不可见。
+AI 管理中心的查询结果会受到可见性和鉴权影响。一个资源即使处于 `online` 状态，也可能因为调用者没有权限而不可见。
 
 平台管理员需要同时关注三件事：
 

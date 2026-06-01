@@ -7,7 +7,7 @@ sidebar:
 ---
 By developing an MCP Server using the **Spring AI Alibaba framework** or the **Nacos MCP Wrapper Python**, the server can be dynamically registered into Nacos after startup and supports the following capabilities:
 
-+ **Dynamic MCP Server Management**: Add, delete, update, and query service information via the MCP service list
++ **Dynamic MCP Server Registry**: Add, delete, update, and query service information via the MCP service list
 + **Dynamic Description Updates**: Tool descriptions and parameter definitions support runtime hot updates without requiring a service restart
 + **Dynamic On/Off for MCP Server Tools**: Enable or disable tools at runtime without restarting the service
 + **Full-Stack Integration**: Service registration information is automatically synchronized to the Nacos configuration center and service discovery module, adapting to AI Agent invocation requirements

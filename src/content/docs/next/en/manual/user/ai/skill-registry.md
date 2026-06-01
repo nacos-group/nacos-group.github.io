@@ -1,16 +1,16 @@
 ---
 title: Skill Registry
-keywords: [Nacos Skill Registry, Skill Management, AI Skill, Agent Skill]
-description: This document describes the Nacos Skill Registry, including Skill creation, version management, security review, publishing, and distribution.
+keywords: [Nacos Skill Registry, AI Skill, Agent Skill]
+description: This document describes Nacos Skill Registry, including Skill creation, version management, security review, publishing, and distribution.
 sidebar:
-    order: 10
+    order: 2
 ---
 
 # Skill Registry
 
-Skill Registry is a Skill management center provided by Nacos, serving as a **private Skill repository** for teams and organizations. It centralizes Skill storage, version management, security review, and distribution on a single platform, making it easy for team members to discover, install, and share Skills.
+Skill Registry is the private Skill repository capability provided by Nacos. It centralizes Skill storage, version management, security review, and distribution on a single platform, making it easy for team members to discover, install, and share Skills.
 
-Starting from version `3.2.0`, Nacos provides the Skill Registry, supporting Skill creation, version management, security review, publishing, and distribution.
+Starting from version `3.2.0`, Nacos provides Skill Registry, supporting Skill creation, version management, security review, publishing, and distribution.
 
 ## 1. Skill in Nacos
 
@@ -41,7 +41,7 @@ skill-sample/
 - **Flexible Distribution**: Discover and install Skills via CLI, API, and SDK
 - **Visibility Control**: Support PUBLIC / PRIVATE visibility modes to control Skill access scope as needed
 
-## 2. Skill Management
+## 2. Skill Lifecycle
 
 ### 2.1. Lifecycle
 
@@ -177,9 +177,9 @@ Business tags (Biz Tags) are used to categorize Skills by business domain, e.g. 
 - Tags are stored in JSON array format
 - Can be used for filtering and categorized display on the list page
 
-## 3. Management Console
+## 3. Console
 
-The Nacos console provides a complete Skill management interface, located under **AI Registry > Skill Management**.
+The Nacos console provides a complete Skill registry interface, located under **AI Registry > Skill Registry**.
 
 ### 3.1. Skill List Page
 
@@ -195,7 +195,7 @@ The list page displays all Skills in card format with the following features:
 
 The detail page provides a comprehensive management view of a Skill, including basic info, version management, content editing, Pipeline status, CLI command card, and more.
 
-#### 3.2.1. Version Management
+#### 3.2.1. Versions
 
 The right side of the detail page displays all versions in a timeline, supporting version switching and the following operations:
 
@@ -208,16 +208,16 @@ The right side of the detail page displays all versions in a timeline, supportin
 | **Publish** | Publish as online after Pipeline approval, with the option to auto-update the `latest` label |
 | **Force Publish** | Visible to administrators only; bypasses Pipeline validation when it rejects |
 
-#### 3.2.2. Online / Offline Management
+#### 3.2.2. Online / Offline
 
 - **Version Level**: Perform online / offline on individual versions from the version timeline or action area
 - **Skill Level**: The enable toggle at the top of the detail page controls the discoverability of the entire Skill; when disabled, all versions become invisible to clients
 
-#### 3.2.3. Visibility Management
+#### 3.2.3. Visibility
 
 A visibility toggle at the top of the detail page supports switching between PUBLIC ↔ PRIVATE. After switching to PRIVATE, non-Owner users will not be able to discover the Skill.
 
-#### 3.2.4. Label Management
+#### 3.2.4. Labels
 
 - **Version Labels**: Bind / unbind custom labels (e.g. `stable`, `canary`) from the version timeline or sidebar card; only online / offline versions can be operated on
 - **Business Tags (Biz Tags)**: Add or remove business category tags from the sidebar card, used for filtering and categorized display on the list page
@@ -247,7 +247,7 @@ Skill Registry provides multiple access methods. Refer to the respective documen
 
 ### 4.1. nacos-cli
 
-[nacos-cli](../../admin/nacos-cli.md) is the command-line tool for Skill Registry, providing Skill search, installation, upload, and sync capabilities. For detailed installation and Skill management commands, see [Nacos CLI User Guide - AI Skill Management](../../admin/nacos-cli.md#51-ai-技能管理-).
+[nacos-cli](../../admin/nacos-cli.md) is the command-line tool for Skill Registry, providing Skill search, installation, upload, and sync capabilities. For detailed installation and Skill commands, see [Nacos CLI User Guide - AI Skill commands](../../admin/nacos-cli.md#51-ai-技能管理-).
 
 ### 4.2. REST API
 
@@ -256,8 +256,8 @@ Skill Registry provides three layers of REST APIs:
 | API Layer | Description | Documentation |
 |-----------|-------------|---------------|
 | **Client API** | Client runtime query/download Skills (supports anonymous access) | [Client API - Download Skill](../open-api.md#34-下载-skill) |
-| **Console API** | Console management operations (requires login authentication) | [Console API - Skills Management](../../admin/console-api.md#7-skills-管理) |
-| **Admin API** | Cluster internal management interface | [Admin API - AI Skills Management](../../admin/admin-api.md#7-ai-skills-管理) |
+| **Console API** | Console operations (requires login authentication) | [Console API - Skills](../../admin/console-api.md#7-skills-管理) |
+| **Admin API** | Cluster internal management interface | [Admin API - AI Skills](../../admin/admin-api.md#7-ai-skills-管理) |
 
 ### 4.3. Java SDK
 

@@ -1,14 +1,14 @@
 ---
-title: Prompt Management
-keywords: [Nacos Prompt Registry, Prompt Management, AI Prompt]
+title: Prompt Registry
+keywords: [Nacos Prompt Registry, AI Prompt]
 description: Use Nacos to manage Prompt templates, variables, versions, labels, and publish flows.
 sidebar:
-  order: 6
+  order: 9
 ---
 
-# Prompt Management
+# Prompt Registry
 
-Prompt Management centralizes the Prompt templates used by AI applications. It is useful when Prompts change often, need version control, or must be reviewed before production use.
+Prompt Registry centralizes the Prompt templates used by AI applications. It is useful when Prompts change often, need version control, or must be reviewed before production use.
 
 By storing Prompts in Nacos, applications can fetch updated Prompts without being redeployed. Teams can also manage Prompt versions, labels, and publish flows in one place.
 
@@ -30,9 +30,9 @@ namespaceId -> prompt -> promptKey
 
 `promptKey` is the Prompt name. Use a stable and readable name that describes the business purpose, such as `order-summary` or `risk-check`.
 
-## When To Use Prompt Management
+## When To Use Prompt Registry
 
-Use Prompt Management when:
+Use Prompt Registry when:
 
 - Multiple applications reuse the same Prompt.
 - A Prompt changes often, but the application should not be redeployed each time.

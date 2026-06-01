@@ -83,7 +83,7 @@ Nacos 能够通过和 [Higress](https://higress.ai) 等AI网关的结合，**0�
 | 名称     | MCP Tools的输入参数名称，用于区分不同参数                                                                                              |
 | 类型     | MCP Tools的输入参数类型，支持`string`、`number`、`integer`、`boolean`、`array`、`object`                                              |
 | 描述     | MCP Tools的输入参数描述，自定义描述此MCP服务Tool参数描述信息                                                                                 |                                                                          |
-| 协议转化配置 | 提供给AI网关或协议转换代理的协议转化配置，用于提供给给AI网关或协议转化代理，此工具实际映射的存量服务的API信息，如`url`，`参数映射关系`等，具体配置细节，请参见[MCP模版配置手册](./mcp-template.mdx)。 |
+| 协议转化配置 | 提供给AI网关或协议转换代理的协议转化配置，用于提供给给AI网关或协议转化代理，此工具实际映射的存量服务的API信息，如`url`，`参数映射关系`等，具体配置细节，请参见[MCP模版配置手册](./mcp-template.md)。 |
 
 所有Tool的输入参数编辑完成后， 点击`确定`进行保存，之后重复添加其他的Tool信息后，点击页面右上角`发布为最新版本`。
 
@@ -124,11 +124,11 @@ data:
       ...
 ```
 
-### 3.2. 配置 Nacos 作为 Higress-AI的 MCP Registry
+### 3.2. 配置 Nacos 作为 Higress-AI 的 MCP 管理服务来源
 
-参考[Higress 配置 Nacos MCP Registry](https://higress.cn/ai/mcp-quick-start_docker/#configmap-%E5%85%A8%E5%B1%80%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE)
+参考[Higress 配置 Nacos MCP 管理服务来源](https://higress.cn/ai/mcp-quick-start_docker/#configmap-%E5%85%A8%E5%B1%80%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE)
 
-将Nacos作为MCP Registry 服务来源进行配置，配置完毕后可在`Higress的控制台-服务列表`中查看到所有通过MCP协议暴露的存量服务的服务名称。
+将 Nacos 作为 MCP 管理服务来源进行配置，配置完毕后可在 `Higress 的控制台-服务列表` 中查看到所有通过 MCP 协议暴露的存量服务的服务名称。
 
 同时使用`curl http://${higress_ai_host}:${higress_ai_port}/mcp/${your_mcp_server_name}/sse`
 可连接MCP服务，查看到连接MCP服务的sessionId，并定时能看到心跳响应。

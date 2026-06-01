@@ -1,9 +1,9 @@
 ---
 title: Prompt 管理
-keywords: [Nacos Prompt Registry, Prompt 管理, AI Prompt]
+keywords: [Nacos Prompt 管理, AI Prompt]
 description: 使用 Nacos 管理 Prompt 模板、变量、版本、标签和发布流程。
 sidebar:
-  order: 6
+  order: 9
 ---
 
 # Prompt 管理
@@ -14,7 +14,7 @@ Prompt 管理用于集中维护 AI 应用使用的提示词模板。它适合管
 
 ## Prompt 是什么
 
-在 AI Registry 中，一个 Prompt 是一个版本化资源。它通常包含：
+在 AI 管理中心中，一个 Prompt 是一个版本化资源。它通常包含：
 
 - Prompt 模板内容。
 - 模板变量定义。
@@ -91,7 +91,7 @@ namespaceId -> prompt -> promptKey
 
 ## 相关文档
 
-- [AI Registry 概览](./ai-registry-overview.md)
+- [AI 管理中心概述](./ai-registry-overview.md)
 - [AI 资源生命周期](./ai-resource-lifecycle.md)
 - [客户端 API](../open-api.md#3-ai-相关)
 - [运维 API](../../admin/admin-api.md#6-ai-prompt-管理)

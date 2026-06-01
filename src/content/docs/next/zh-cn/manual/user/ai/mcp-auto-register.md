@@ -12,7 +12,7 @@ sidebar:
 + **MCP Server Tools 动态开关**：支持 MCP Server 服务 Tools 运行时动态开启和关闭，无需重启服务。
 + **全链路集成**：服务注册信息自动同步至 Nacos 配置中心与服务发现模块，适配 AI Agent 调用需求
 
-注册到 Nacos MCP Registry 中的服务，可以通过 Spring AI Alibaba 框架 或者 Nacos MCP Router 进行发现和调用，或者对接 Higress 网关，实现全链路集成。
+注册到 Nacos MCP 管理中的服务，可以通过 Spring AI Alibaba 框架或者 Nacos MCP Router 进行发现和调用，也可以对接 Higress 网关，实现全链路集成。
 
 ![Auto-register](/img/doc/manual/user/ai/ai-mcp-auto-register.svg)
 
