@@ -6,6 +6,8 @@ sidebar:
     order: 5
 ---
 
+> This document is kept for compatibility and will be deprecated. For server-side auth setup, see [Admin Manual - Authorization](../../manual/admin/auth.mdx). For SDK and OpenAPI credentials, see [User Manual - Configure Access Credentials](../../manual/user/auth.mdx).
+
 > Attention
 > - Nacos is an internal micro service component, which needs to run in a trusted internal network. It can not be exposed to the public network environment to prevent security risks.
 > - Nacos provides a simple authentication implementation. It is a weak authentication system to prevent business misuse, not a strong authentication system to prevent malicious attacks.

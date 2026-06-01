@@ -1,114 +1,256 @@
 ---
 title: 鉴权插件
-keywords: [鉴权, 插件]
-description: 本文描述如何开发及使用Nacos的鉴权插件
+keywords: [鉴权, 插件, RBAC, LDAP, OIDC, OAuth2]
+description: 本文介绍 Nacos 鉴权插件的工作模型、内置实现、默认鉴权实现提供的 v3 Auth API，以及自定义插件开发方式。
 sidebar:
     order: 1
 ---
 
 # 鉴权插件
 
-Nacos从2.1.0版本开始，支持通过[SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html)的方式注入鉴权相关插件，并在`application.properties`配置文件中选择某一种插件实现作为实际鉴权服务。本文档会详细介绍如何实现一个鉴权插件和如何使其生效。
+Nacos 从 2.1.0 开始支持通过 [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html) 扩展鉴权能力。服务端会根据 `application.properties` 中的 `nacos.core.auth.system.type` 选择一个鉴权插件，用它完成身份认证和权限校验。
 
-> 注意：
-> 目前鉴权插件还处于Beta测试的阶段，其API及接口定义可能会随后续版本升级而有所修改，请注意您的插件适用版本。
+鉴权插件回答的问题是：**当前请求是谁发起的，它是否可以对目标资源执行这个操作**。
+
+```text
+IdentityContext + Resource + Action -> 允许或拒绝
+```
+
+如果你只是想开启 Nacos 自带的鉴权能力，请先阅读[运维手册 - 权限校验](../manual/admin/auth.mdx)。如果你要接入企业身份系统，请阅读 [OIDC/OAuth2 认证](../manual/admin/oidc-auth.md)。本文更关注插件模型、内置插件边界和扩展开发。
 
 ## 鉴权插件中的概念
 
-鉴权，通俗的表达就是，验证 **谁** 是否能够对 **某个东西** 进行 **某种操作** ，因此Nacos在设计鉴权插件时，将鉴权信息主要抽象为`身份信息`，`资源`和`操作类型`3类主要概念。
-
 ### 身份信息 IdentityContext
 
-身份信息(IdentityContext)是请求发起主体在Nacos鉴权插件中的抽象。由于不同的插件实现，身份信息可能不同，较为灵活；比如用户名和密码是一种身份信息，accessToken又是另一种身份信息。因此身份信息(IdentityContext)并没有限制具体的个数和名字，插件实现可以自定义任意个数和身份关键字，Nacos将会从请求中自动获取插件实现定义的身份关键字及其对应的值注入到身份信息(IdentityContext)中，供插件使用。
+`IdentityContext` 是请求发起方在鉴权插件中的身份描述。不同插件可以使用不同的身份材料。
 
-其中必定会包含的内容有：
+常见身份材料包括：
 
-| 字段名       | 描述     |
-|-----------|--------|
-| remote_ip | 请求来源ip |
+| 身份材料 | 典型来源 |
+| --- | --- |
+| `username`、`password` | 默认 Nacos 鉴权登录 |
+| `accessToken` | 默认 Nacos 鉴权或兼容 token 传递 |
+| `Authorization: Bearer ...` | OIDC/OAuth2、默认 Nacos token |
+| access key、signature | RAM 或自定义签名类插件 |
+| `remote_ip` | 请求来源地址，Nacos 会默认注入 |
+
+插件通过 `identityNames()` 声明自己需要从请求中提取哪些身份字段。服务端会把这些字段放入 `IdentityContext`，再交给插件判断。
 
 ### 资源 Resource
 
-资源(Resource)是请求所操作对象在Nacos鉴权插件中的抽象。它主要由Nacos来定义，具体可以是某个配置，某个服务，或者某个分组。
+`Resource` 是请求要操作的对象。资源由 Nacos 的控制器、协议层和资源解析器生成，鉴权插件不应该重新定义 Nacos 的资源模型。
 
-资源(Resource)主要由以下内容组成：
+常见字段如下：
 
-| 字段名         | 描述                                                                            |
-|-------------|-------------------------------------------------------------------------------|
-| namespaceId | 请求资源的命名空间ID，部分接口可能没有该值                                                        |
-| group       | 请求资源的分组名，部分接口可能没有该值                                                           |
-| name        | 请求资源的资源名，如服务名或配置的dataId，部分接口可能是定义的特殊值，如`nacos/admin`                          |
-| type        | 请求资源的类型，可能取值为`SignType`中的枚举值，主要表示该资源所相关的模块                                    |
-| properties  | 请求资源的扩展配置，不属于上述的资源相关信息，会被放如properties中，比如Grpc请求的Request名称或`@Secured`注解上的tags等 |
+| 字段 | 说明 |
+| --- | --- |
+| `namespaceId` | 资源所在命名空间。部分全局接口可能为空。 |
+| `group` | 配置分组或服务分组。部分接口可能为空。 |
+| `name` | 资源名，例如配置 `dataId`、服务名，或控制台资源名。 |
+| `type` | 资源类型，对应模块或显式资源类型。 |
+| `properties` | 额外信息，例如 gRPC 请求名、`@Secured` 标签等。 |
 
-### 操作类型 Action
+### 操作 Action
 
-操作类型(Action)是请求操作在Nacos鉴权插件中的抽象，主要有读操作`R`和写操作`W`，详情查看`ActionTypes`枚举。
+Nacos 当前主要使用两类操作：
 
-## 服务端插件
+| 操作 | 说明 |
+| --- | --- |
+| `r` | 读、查询、列表、订阅等读操作。 |
+| `w` | 创建、更新、删除、发布等写操作。 |
 
-开发Nacos服务端鉴权插件，首先需要依赖鉴权插件的相关API
+## 内置鉴权实现
 
-```xml
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-auth-plugin</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-```
+Nacos 3.2 提供以下内置鉴权实现。它们都通过同一套鉴权 SPI 接入，但身份来源和权限模型不同。
 
-`${project.version}` 为您开发插件所对应的Nacos版本
+| 插件类型 | 适用场景 | 说明 |
+| --- | --- | --- |
+| `nacos` | 默认用户名、密码、token 和 RBAC | Nacos 自带的默认实现。适合可信内网中的基础访问控制。 |
+| `ldap` | 已有 LDAP 用户体系 | LDAP 负责身份认证，Nacos 继续负责 token、角色和权限。3.2 起 LDAP 作为独立可选插件提供。 |
+| `oidc` | 企业 SSO、OAuth2/OIDC IdP | 通过 OIDC/OAuth2 接入 Keycloak、Okta、Auth0、Microsoft Entra ID 等身份提供方。 |
+| 自定义类型 | 企业自定义安全体系 | 由用户实现 `AuthPluginService` 并放入服务端 classpath。 |
 
-随后实现`com.alibaba.nacos.plugin.auth.spi.server.AuthPluginService`接口， 并将您的实现添加到SPI的services当中。
+:::note
+默认 `nacos` 鉴权实现是一个面向可信内网的基础实现，主要防止业务误用。它不是面向公网攻击场景的强鉴权系统。生产环境不要把 Nacos 直接暴露到公网。
+:::
 
-接口中需要实现的方法如下：
+### 默认 Nacos 鉴权实现
 
-| 方法名                | 入参内容                        | 返回内容                  | 描述                                                                        |
-|--------------------|-----------------------------|-----------------------|---------------------------------------------------------------------------|
-| getAuthServiceName | void                        | String                | 插件的名称，当名字相同时，后加载的插件会覆盖先加载的插件。                                             |
-| identityNames      | void                        | Collection&lt;String> | 插件的身份信息关键字，Nacos会从请求中获取以这些关键字为key的参数，并注入到IdentityContext中。                |
-| enableAuth         | ActionTypes,SignType        | boolean               | 在调用`validateIdentity`和`validateAuthority`前调用，插件可自行判断是否对此类型的操作或此类型的模块进行鉴权。 |
-| validateIdentity   | IdentityContext, Resource   | AuthResult            | 对身份信息进行验证，在`validateAuthority`前调用，返回结果中应包含是否成功，若失败需要设置失败的原因。              |
-| validateAuthority  | IdentityContext, Permission | AuthResult            | 对权限进行验证，在`validateIdentity`返回为`true`时调用，返回结果中应包含是否成功，若失败需要设置失败的原因。        |
-| isLoginEnabled     | void                        | boolean               | 是否该插件开启开源控制台登录页，返回`true`时，访问开源控制台将需要通过登录页登录                               |
+默认 Nacos 鉴权实现的插件类型是 `nacos`。它提供用户名密码登录、JWT token、用户管理、角色管理、权限管理，以及默认 AI 资源可见性实现。
 
-### 加载服务端插件
-
-插件开发完成后，需要打包成jar/zip，放置到nacos服务端的classpath中，如果您不知道如何修改classpath，请直接放置到`${nacos-server.path}/plugins`下
-
-放置后，需要修改`${nacos-server.path}/conf/application.properties`中的以下配置
+开启时通常需要配置：
 
 ```properties
-### 所启用的Nacos的鉴权插件的名称，与`com.alibaba.nacos.plugin.auth.spi.server.AuthPluginService`的`getAuthServiceName`返回值对应
-nacos.core.auth.system.type=${authServiceName}
+nacos.core.auth.system.type=nacos
+nacos.core.auth.enabled=true
+nacos.core.auth.admin.enabled=true
+nacos.core.auth.console.enabled=true
+nacos.core.auth.server.identity.key=${custom_server_identity_key}
+nacos.core.auth.server.identity.value=${custom_server_identity_value}
+nacos.core.auth.plugin.nacos.token.secret.key=${custom_base64_token_secret_key}
+```
 
-### 开启鉴权功能
+默认实现使用 RBAC 模型：
+
+| 对象 | 说明 |
+| --- | --- |
+| User | Nacos 本地用户。 |
+| Role | 绑定到用户的角色。 |
+| Permission | 绑定到角色的资源和操作。 |
+
+`ROLE_ADMIN` 是全局管理员角色。拥有该角色的用户可以访问所有资源和控制台管理功能。
+
+默认资源权限通常使用以下格式：
+
+```text
+{namespaceId}:{group}:{signType}/{resourceName}
+```
+
+例如：
+
+| 资源 | 示例 |
+| --- | --- |
+| 配置 | `public:DEFAULT_GROUP:config/example.properties` |
+| 服务 | `public:DEFAULT_GROUP:naming/com.example.Service` |
+| 控制台用户管理 | `console/users` |
+| 控制台角色管理 | `console/roles` |
+| 控制台权限管理 | `console/permissions` |
+| 可见性显式授权 | `@@visibility/public/skill/example-skill` |
+
+#### 默认鉴权实现提供的 v3 Auth API
+
+`/v3/auth/*` 这组 API 不是 Nacos Core 的通用 API，而是默认 Nacos 鉴权实现提供的插件 API。文档和使用时都应该把它们归在默认鉴权实现下面。
+
+| API | 方法 | 说明 | 鉴权状态 |
+| --- | --- | --- | --- |
+| `/v3/auth/user/login` | `POST` | 使用用户名和密码登录，返回 `accessToken`。`nacos` 和 `ldap` 类型支持该接口。 | 公开登录接口。 |
+| `/v3/auth/user/admin` | `POST` | 初始化管理员用户 `nacos`。仅在还没有全局管理员时可用。 | 初始化入口，用后即关闭。 |
+| `/v3/auth/user` | `POST` | 创建本地用户。 | 需要 `console/users` 写权限。 |
+| `/v3/auth/user` | `PUT` | 修改用户密码。管理员可改任意用户，普通用户只能改自己。 | 需要身份校验。 |
+| `/v3/auth/user` | `DELETE` | 删除本地用户，不能删除全局管理员。 | 需要 `console/users` 写权限。 |
+| `/v3/auth/user/list` | `GET` | 分页查询用户。 | 需要 `console/users` 读权限。 |
+| `/v3/auth/user/search` | `GET` | 按用户名模糊搜索。 | 需要 `console/users` 写权限。 |
+| `/v3/auth/role` | `POST` | 创建角色或给用户绑定角色。 | 需要 `console/roles` 写权限。 |
+| `/v3/auth/role` | `DELETE` | 删除角色，或移除用户上的某个角色。 | 需要 `console/roles` 写权限。 |
+| `/v3/auth/role/list` | `GET` | 分页查询角色。 | 需要 `console/roles` 读权限。 |
+| `/v3/auth/role/search` | `GET` | 按角色名模糊搜索。 | 需要 `console/roles` 读权限。 |
+| `/v3/auth/permission` | `POST` | 给角色添加权限。 | 需要 `console/permissions` 写权限。 |
+| `/v3/auth/permission` | `DELETE` | 删除角色上的权限。 | 需要 `console/permissions` 写权限。 |
+| `/v3/auth/permission/list` | `GET` | 分页查询权限。 | 需要 `console/permissions` 读权限。 |
+| `/v3/auth/permission` | `GET` | 判断权限是否重复。 | 需要 `console/permissions` 读权限。 |
+
+:::note
+OIDC/OAuth2 模式下，用户、角色、密码和权限通常由外部 IdP 或外部授权服务管理。此时不要把默认鉴权实现的用户和权限 API 当作 OIDC/OAuth2 的管理接口。
+:::
+
+### LDAP 鉴权插件
+
+LDAP 插件类型是 `ldap`。Nacos 3.2 起，LDAP 插件从默认鉴权实现中分离为独立可选插件。
+
+LDAP 插件的边界是：
+
+- LDAP 负责校验用户名和密码。
+- Nacos 仍然签发登录 token。
+- Nacos 仍然使用本地角色和权限做授权。
+- 登录接口仍然使用 `/v3/auth/user/login`。
+
+启用示例：
+
+```properties
+nacos.core.auth.system.type=ldap
+nacos.core.auth.enabled=true
+nacos.core.auth.admin.enabled=true
+nacos.core.auth.console.enabled=true
+
+nacos.core.auth.ldap.url=ldap://localhost:389
+nacos.core.auth.ldap.basedc=dc=example,dc=org
+nacos.core.auth.ldap.userDn=cn=admin,${nacos.core.auth.ldap.basedc}
+nacos.core.auth.ldap.password=admin
+nacos.core.auth.ldap.userdn=cn={0},dc=example,dc=org
+nacos.core.auth.ldap.filter.prefix=uid
+```
+
+部署时请确认：
+
+- `nacos-ldap-auth-plugin-<version>.jar` 已在 Nacos 的 `plugins/` 目录或 classpath 中。
+- `org.springframework.ldap:spring-ldap-core` 相关 jar 已放入 `plugins/` 目录。
+
+### OIDC/OAuth2 鉴权插件
+
+OIDC/OAuth2 插件类型是 `oidc`。它面向企业 SSO 和外部身份提供方，支持通过 OIDC Discovery 接入 Keycloak、Okta、Auth0、Microsoft Entra ID 等 IdP。
+
+它和默认 Nacos 鉴权的差异是：
+
+- 身份认证由外部 IdP 完成。
+- 控制台登录使用 `/v1/auth/oidc/*` 兼容接口完成浏览器跳转和回调。
+- Java SDK 可以使用 OAuth2 Client Credentials flow 获取 bearer token。
+- Nacos 本地用户、角色、权限和密码管理不再是身份源。
+- 默认 `/v3/auth/user/login` 不适用于 `oidc` 类型。
+- 如果未配置外部授权端点，当前实现会默认放行非管理员授权判断。
+
+启用示例：
+
+```properties
+nacos.core.auth.system.type=oidc
+nacos.core.auth.enabled=true
+nacos.core.auth.admin.enabled=true
+nacos.core.auth.console.enabled=true
+
+nacos.core.auth.plugin.oidc.issuer-uri=https://idp.example.com/realms/nacos
+nacos.core.auth.plugin.oidc.client-id=nacos-server
+nacos.core.auth.plugin.oidc.client-secret=${client_secret}
+nacos.core.auth.plugin.oidc.scope=openid profile email
+```
+
+详细配置、Keycloak 示例和排查方法请参考[运维手册 - OIDC/OAuth2 认证](../manual/admin/oidc-auth.md)。
+
+## 服务端插件开发
+
+开发服务端鉴权插件时，需要依赖鉴权插件 API：
+
+```xml
+<dependency>
+    <groupId>com.alibaba.nacos</groupId>
+    <artifactId>nacos-auth-plugin</artifactId>
+    <version>${project.version}</version>
+</dependency>
+```
+
+随后实现 `com.alibaba.nacos.plugin.auth.spi.server.AuthPluginService`，并通过 Java SPI 注册。
+
+| 方法 | 说明 |
+| --- | --- |
+| `getAuthServiceName()` | 返回插件名，需要和 `nacos.core.auth.system.type` 对应。 |
+| `identityNames()` | 声明插件需要从请求中提取的身份字段。 |
+| `enableAuth(action, type)` | 判断指定操作和资源类型是否需要鉴权。 |
+| `validateIdentity(identityContext, resource)` | 校验身份，并把已认证用户等信息写入 `IdentityContext`。 |
+| `validateAuthority(identityContext, permission)` | 校验身份是否拥有目标资源的目标操作权限。 |
+| `isLoginEnabled()` | 判断控制台是否展示插件提供的登录能力。 |
+| `isAdminRequest()` | 判断当前请求是否属于管理员初始化流程。 |
+
+插件打包后放入 `${nacos-server.path}/plugins`，并配置：
+
+```properties
+nacos.core.auth.system.type=${authServiceName}
 nacos.core.auth.enabled=true
 ```
 
-随后重启nacos集群，在有请求访问到nacos节点后，可以从`${nacos-server.path}/logs/nacos.log`中看到如下日志：
+重启后，可以在 `${nacos-server.path}/logs/nacos.log` 中查看插件加载日志。
 
-```text
-[AuthPluginManager] Load AuthPluginService(xxxx) AuthServiceName(xxx) successfully.
-```
+## 客户端鉴权插件
 
-### 使用Nacos自带的鉴权插件
+客户端鉴权插件负责把身份材料注入到请求中。服务端仍然由当前选中的鉴权插件做最终判断。
 
-Nacos默认带有一个鉴权的简易实现，主要是为防止业务错用的弱鉴权体系，不是防止恶意攻击的强鉴权体系。开启和使用方式请查看文档[运维手册-鉴权鉴权](../manual/admin/auth.mdx).
+Java 客户端内置了几类常用实现：
 
-## 客户端插件
+| 客户端实现 | 身份材料 | 说明 |
+| --- | --- | --- |
+| 默认 Nacos 实现 | `username`、`password`、`accessToken` | 对接服务端默认 `nacos` 或 `ldap` 登录接口。 |
+| RAM 实现 | `accessKey`、`secretKey`、签名 | 面向阿里云 RAM 兼容场景。 |
+| OIDC/OAuth2 实现 | `Authorization: Bearer ...`、`accessToken` | 使用 OAuth2 Client Credentials flow 获取 token。 |
 
-Nacos的客户端鉴权插件主要工作为将鉴权相关的身份信息，注入到请求中，让每个请求都能够被对应的服务端鉴权插件识别。
+默认 Nacos 客户端示例：
 
-在Nacos的Java客户端默认自带两个实现：
-
-- 使用`username`，`password`和`accessToken`的简易鉴权实现；
-- 使用`accessKey`和`secretKey`的阿里云鉴权实现；
-
-### Nacos简易鉴权实现
-
-当构造客户端实例时传入的properties中带有`username`，`password`时，客户端会使用简易鉴权实现插件注入身份信息；
-如：
 ```java
 Properties properties = new Properties();
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "localhost:8848");
@@ -118,65 +260,34 @@ NamingFactory.createNamingService(properties);
 ConfigFactory.createConfigService(properties);
 ```
 
-该插件会异步地通过`username`，`password`进行登录，获取登录成功后的`accessToken`，并将`accessToken`注入到所有客户端请求中，开发者可以根据`accessToken`在实现的服务端插件中进行身份验证及后续的权限验证。
+OIDC/OAuth2 客户端示例：
 
-### 阿里云鉴权实现
-
-当properties中带有`accessKey`和`secretKey`时，则会使用阿里云鉴权实现注入身份信息，如：
- ```java
- Properties properties = new Properties();
- properties.setProperty(PropertyKeyConst.SERVER_ADDR, "localhost:8848");
- properties.setProperty(PropertyKeyConst.ACCESS_KEY, "nacos");
- properties.setProperty(PropertyKeyConst.SECRET_KEY, "nacos");
- NamingFactory.createNamingService(properties);
- ConfigFactory.createConfigService(properties);
- ```
-
-该插件会根据`accessKey`和`secretKey`以及请求的资源内容，自动生成对应的请求签名，并注入到请求中，根据资源类型的不同，请求中的身份信息关键字可能不同：
-
-| 类型            | 身份关键字              | 描述                     |
-|---------------|--------------------|------------------------|
-| NamingService | ak                 | accessKey              |
-| NamingService | signature          | 注册中心模块的签名信息            |
-| NamingService | data               | 签名数据，主要是时间戳            |
-| ConfigService | Spas-AccessKey     | accessKey              |
-| ConfigService | Spas-Signature     | 配置中心模块的签名信息            |
-| ConfigService | Timestamp          | 请求的时间戳                 |
-| ConfigService | Spas-SecurityToken | 临时token（启用阿里云STS功能时使用） |
-
-开发者可以根据以上信息，在实现的服务端插件中进行身份验证及后续的权限验证。
-
-### 其他自定义插件
-
-考虑到开发者的鉴权插件可能有自定义的身份信息关键字，因此Nacos的Java客户端同样可以使用SPI方式注入对应的插件实现。
-
-开发Nacos客户端鉴权插件，首先需要依赖鉴权插件的相关API
-
-```xml
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-auth-plugin</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "localhost:8848");
+properties.setProperty("nacos.client.auth.oidc.issuer-uri", "https://idp.example.com/realms/nacos");
+properties.setProperty("nacos.client.auth.oidc.client-id", "nacos-client");
+properties.setProperty("nacos.client.auth.oidc.client-secret", "${client_secret}");
+properties.setProperty("nacos.client.auth.oidc.scope", "openid");
+NamingFactory.createNamingService(properties);
+ConfigFactory.createConfigService(properties);
 ```
 
-`${project.version}` 为您开发插件所对应的Nacos版本
+自定义 Java 客户端鉴权插件需要实现 `com.alibaba.nacos.plugin.auth.spi.client.ClientAuthService`，或继承 `com.alibaba.nacos.plugin.auth.spi.client.AbstractClientAuthService`。
 
-随后实现`com.alibaba.nacos.plugin.auth.spi.client.ClientAuthService`接口， 并将您的实现添加到SPI的services当中。
+| 方法 | 说明 |
+| --- | --- |
+| `login(properties)` | 初始化或刷新身份材料。 |
+| `setServerList(serverList)` | 获取客户端当前服务端地址列表。 |
+| `setNacosRestTemplate(template)` | 获取 Nacos HTTP 客户端，便于执行登录或刷新。 |
+| `getLoginIdentityContext(resource)` | 返回需要注入到请求中的身份材料。 |
+| `shutdown()` | 释放插件资源。 |
 
-接口中需要实现的方法如下：
+## 与可见性插件的关系
 
-| 方法名                     | 入参内容                            | 返回内容            | 描述                                                          |
-|-------------------------|---------------------------------|-----------------|-------------------------------------------------------------|
-| setServerList           | List&lt;String>，Nacos服务端地址列表    | void            | 初始化时会调用此接口注入Nacos的服务列表，方便插件访问nacos服务端，如调用登录接口等              |
-| setNacosRestTemplate    | NacosRestTemplate，Nacos的http客户端 | void            | 初始化时会调用此接口注入Nacos的http客户端，方便插件访问nacos服务端，如调用登录接口等           |
-| login                   | Properties，即初始化Nacos客户端时传入的参数   | boolean         | 登录接口，主要执行的是身份信息的转换工作，如`username`，`password`转换为`accessToken` |
-| getLoginIdentityContext | Resource                        | IdentityContext | 获取经过登录接口转换后的身份信息，客户端会将该返回对象的内容全部注入到请求中                      |
+鉴权和可见性经常一起出现，但它们解决的问题不同：
 
-您也可以选择继承`com.alibaba.nacos.plugin.auth.spi.client.AbstractClientAuthService`，该父类默认实现了`setServerList`和`setNacosRestTemplate`。
+- 鉴权判断当前身份是否能访问一个指定资源。
+- 可见性判断一个资源是否应该出现在详情、列表或搜索结果中。
 
-将开发完成的客户端插件打包成jar/zip，放入到您应用的classpath中即可自动生效。
-
-### 其他语言客户端鉴权插件
-
-待社区贡献。
+可见性插件可以复用鉴权插件做显式授权判断，例如默认实现会使用 `@@visibility/{namespaceId}/{resourceType}/{resourceName}` 这类资源名向当前鉴权插件查询权限。更多说明请参考[可见性插件](./visibility-plugin.md)。

@@ -1,113 +1,254 @@
 ---
-title: Authorization Plugin
-keywords: [Authorization, Plugin]
-description: This article describes how to develop and use Nacos' authentication plugin.
+title: Auth Plugin
+keywords: [Auth, Plugin, RBAC, LDAP, OIDC, OAuth2]
+description: Learn how Nacos auth plugins work, what built-in implementations are available, which v3 Auth APIs belong to the default auth plugin, and how to build custom plugins.
 sidebar:
     order: 1
 ---
 
-# Authorization Plugin
+# Auth Plugin
 
-Since version 2.1.0, Nacos support to inject authentication plugins through [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html), and select a plugin implementation in the configuration file `application.properties ` as the actual authentication service. This document will describe how to implement an authentication plugin and how to make it work.
+Since 2.1.0, Nacos can load auth implementations through [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html). The server selects one auth plugin through `nacos.core.auth.system.type` in `application.properties`.
 
-> Attention: 
-> At present, the authentication plugin is still in the beta stage, and its API and interface definitions maybe modified with version upgrades. Please pay attention to the applicable version of your plugin.
+An auth plugin answers one question: **who is calling, and can that caller perform this action on this resource**.
 
-## Concepts in Authentication Plugins
+```text
+IdentityContext + Resource + Action -> allow or reject
+```
 
-Authentication, the common expression is to verify whether **who** can perform **some operation** on **something**. So when Nacos designs the authentication plugin, the authentication information abstracted as three main concepts: `identity context`, `resource` and `action type`.
+If you only need to enable the built-in auth capability, start with [Admin Manual - Authorization](../manual/admin/auth.mdx). If you need enterprise SSO or an external identity provider, see [OIDC/OAuth2 Authentication](../manual/admin/oidc-auth.md). This page focuses on the plugin model, built-in implementation boundaries, and custom extension.
+
+## Concepts
 
 ### IdentityContext
 
-IdentityContext is the abstraction of the request originator in the Nacos authentication plugin. Due to different plugin implementations, the identity context may be different, for example, username and password are one type of identity information, and accessToken is another type of identity information. Therefore, the IdentityContext does not limit the specific size and key. The plugin implementation can customize any size and keywords. Nacos will automatically obtain the identity keywords defined by the plugin implementation and their corresponding value from the request and inject them into IdentityContext which will be used in plugins.
+`IdentityContext` describes the caller. Different plugins can use different identity material.
 
-IdentityContext must include:
+Common identity fields include:
 
-| Field Name | Description          |
-|------------|----------------------|
-| remote_ip  | source ip of request |
+| Identity material | Typical source |
+| --- | --- |
+| `username`, `password` | Default Nacos login |
+| `accessToken` | Default Nacos token or compatibility token passing |
+| `Authorization: Bearer ...` | OIDC/OAuth2 or default Nacos token |
+| access key, signature | RAM or custom signing plugin |
+| `remote_ip` | Request source address injected by Nacos |
+
+A plugin declares the fields it needs through `identityNames()`. Nacos extracts those fields from the request, puts them into `IdentityContext`, and passes the context to the selected plugin.
 
 ### Resource
 
-Resource is the abstraction of the object operated by the request in the Nacos authentication plugin. It is mainly defined by Nacos, which can be a configuration, a service, or a group.
+`Resource` is the object being accessed. Nacos controllers, protocol filters, and resource parsers create it. Auth plugins should consume this model instead of redefining Nacos resource semantics.
 
-Resource mainly consists of the following:
-
-| Field Name  | Description                                                                                                                                                                                                                                                |
-|-------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| namespaceId | Namespace ID of the requested resource, some interfaces may not have this value                                                                                                                                                                            |
-| group       | The group name of the requested resource, some interfaces may not have this value                                                                                                                                                                          |
-| name        | The resource name of the requested resource, such as the service name or the configuration dataId, some interfaces may be defined special values, such as `nacos/admin`                                                                                    |
-| type        | The type of the requested resource, which may be an enumeration value in `SignType`, which mainly represents the module related to the resource                                                                                                            |
-| properties  | The extended configuration of the requested resource, which does not belong to the above-mentioned resource-related information, will be placed in properties, such as the Request name of the Grpc request or the tags on the `@Secured` annotation, etc. |
+| Field | Description |
+| --- | --- |
+| `namespaceId` | Resource namespace. Some global APIs may leave it empty. |
+| `group` | Config group or service group. Some APIs may leave it empty. |
+| `name` | Resource name, such as config `dataId`, service name, or console resource name. |
+| `type` | Resource type or explicit resource type. |
+| `properties` | Extra request metadata, such as gRPC request name or `@Secured` tags. |
 
 ### Action
 
-Action is the abstraction of the request operation in the Nacos authentication plugin, mainly include the read operation `R` and write operation `W`. For details, see the `ActionTypes` enumeration.
+Nacos mainly uses two actions:
 
-## Server Plugin
+| Action | Description |
+| --- | --- |
+| `r` | Read, query, list, subscribe, or similar read operations. |
+| `w` | Create, update, delete, publish, or similar write operations. |
 
-To develop a Nacos server-side authentication plugin, developer first need to depend on the relevant API of the authentication plugin.
+## Built-In Auth Implementations
 
-```xml
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-auth-plugin</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-```
+Nacos 3.2 provides the following built-in auth implementations. They share the same auth SPI, but their identity source and permission model are different.
 
-`${project.version}` is the version of Nacos for your development plugin.
+| Plugin type | Best fit | Notes |
+| --- | --- | --- |
+| `nacos` | Default username, password, token, and RBAC | Built-in default implementation for basic access control in trusted internal networks. |
+| `ldap` | Existing LDAP user directory | LDAP authenticates users. Nacos still issues tokens and uses local roles and permissions. Since 3.2, LDAP is a standalone optional plugin. |
+| `oidc` | Enterprise SSO and OAuth2/OIDC IdP | Integrates with Keycloak, Okta, Auth0, Microsoft Entra ID, and similar providers through OIDC/OAuth2. |
+| Custom type | Enterprise-specific security system | Implement `AuthPluginService` and add it to the server classpath. |
 
-Then implement interface `com.alibaba.nacos.plugin.auth.spi.server.AuthPluginService`, and put your implementation into services of SPI.
+:::note
+The default `nacos` auth implementation is designed for trusted internal networks and basic misuse prevention. It is not a strong-auth boundary for public hostile networks. Do not expose Nacos directly to the public Internet.
+:::
 
-The methods of interface in following:
+### Default Nacos Auth Implementation
 
-| method name        | parameters                  | returns               | description                                                                                                                                                             |
-|--------------------|-----------------------------|-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| getAuthServiceName | void                        | String                | The name of the plugin. When the name is the same, the plugin loaded later will overwrite the plugin loaded first.                                                      |
-| identityNames      | void                        | Collection&lt;String> | The identity context keywords of the plugin. Nacos will obtain the parameters with these keywords as the key from the request and inject them into the IdentityContext. |
-| enableAuth         | ActionTypes,SignType        | boolean               | Called before `validateIdentity` and `validateAuthority`, the plugin can decide whether to authenticate this type of operation or this type of module.                  |
-| validateIdentity   | IdentityContext, Resource   | AuthResult            | Validate identity, called before `validateAuthority`                                                                                                                    |
-| validateAuthority  | IdentityContext, Permission | AuthResult            | Validate permissions, called when `validateIdentity` returns `true`                                                                                                     |
+The default Nacos auth implementation uses plugin type `nacos`. It provides username/password login, JWT tokens, user management, role management, permission management, and the default AI resource visibility integration.
 
-### Load Server Plugin
-
-After the plugin finished, it needs to be packaged into jar/zip and places in the classpath of the nacos server. If you don't know how to add plugins into the classpath, please place plugins under `${nacos-server.path}/plugins` directly.
-
-After Adding plugins into classpath, also need to modify some configuration in `${nacos-server.path}/conf/application.properties`.
+Typical configuration:
 
 ```properties
-### The plugin name nacos using，should be same as the return value of  `com.alibaba.nacos.plugin.auth.spi.server.AuthPluginService#getAuthServiceName`
-nacos.core.auth.system.type=${authServiceName}
+nacos.core.auth.system.type=nacos
+nacos.core.auth.enabled=true
+nacos.core.auth.admin.enabled=true
+nacos.core.auth.console.enabled=true
+nacos.core.auth.server.identity.key=${custom_server_identity_key}
+nacos.core.auth.server.identity.value=${custom_server_identity_value}
+nacos.core.auth.plugin.nacos.token.secret.key=${custom_base64_token_secret_key}
+```
 
-### open authorization
+The default implementation uses an RBAC model:
+
+| Object | Description |
+| --- | --- |
+| User | Local Nacos user. |
+| Role | Role bound to a user. |
+| Permission | Resource and action bound to a role. |
+
+`ROLE_ADMIN` is the global administrator role. Users with this role can access all resources and console management features.
+
+Default permission resources usually use this format:
+
+```text
+{namespaceId}:{group}:{signType}/{resourceName}
+```
+
+Examples:
+
+| Resource | Example |
+| --- | --- |
+| Config | `public:DEFAULT_GROUP:config/example.properties` |
+| Service | `public:DEFAULT_GROUP:naming/com.example.Service` |
+| Console user management | `console/users` |
+| Console role management | `console/roles` |
+| Console permission management | `console/permissions` |
+| Explicit visibility grant | `@@visibility/public/skill/example-skill` |
+
+#### v3 Auth APIs Owned By The Default Implementation
+
+The `/v3/auth/*` API family is provided by the default Nacos auth plugin. It is not a generic Nacos Core API surface, so it should be documented and used as part of the default auth implementation.
+
+| API | Method | Purpose | Auth state |
+| --- | --- | --- | --- |
+| `/v3/auth/user/login` | `POST` | Log in with username and password and return `accessToken`. Supported by `nacos` and `ldap`. | Public login endpoint. |
+| `/v3/auth/user/admin` | `POST` | Initialize the `nacos` administrator when no global admin exists. | Bootstrap endpoint, rejected after initialization. |
+| `/v3/auth/user` | `POST` | Create a local user. | Requires `console/users` write permission. |
+| `/v3/auth/user` | `PUT` | Update a user password. Admins can update any user. Normal users can update only themselves. | Requires identity validation. |
+| `/v3/auth/user` | `DELETE` | Delete a local user. Global admins cannot be deleted. | Requires `console/users` write permission. |
+| `/v3/auth/user/list` | `GET` | List users with pagination. | Requires `console/users` read permission. |
+| `/v3/auth/user/search` | `GET` | Fuzzy search usernames. | Requires `console/users` write permission. |
+| `/v3/auth/role` | `POST` | Create a role or bind a role to a user. | Requires `console/roles` write permission. |
+| `/v3/auth/role` | `DELETE` | Delete a role or remove a role from a user. | Requires `console/roles` write permission. |
+| `/v3/auth/role/list` | `GET` | List roles with pagination. | Requires `console/roles` read permission. |
+| `/v3/auth/role/search` | `GET` | Fuzzy search role names. | Requires `console/roles` read permission. |
+| `/v3/auth/permission` | `POST` | Add a permission to a role. | Requires `console/permissions` write permission. |
+| `/v3/auth/permission` | `DELETE` | Delete a permission from a role. | Requires `console/permissions` write permission. |
+| `/v3/auth/permission/list` | `GET` | List permissions with pagination. | Requires `console/permissions` read permission. |
+| `/v3/auth/permission` | `GET` | Check whether a permission already exists. | Requires `console/permissions` read permission. |
+
+:::note
+In OIDC/OAuth2 mode, users, roles, passwords, and permissions are usually managed by the external IdP or an external authorization service. Do not treat the default auth user and permission APIs as OIDC/OAuth2 management APIs.
+:::
+
+### LDAP Auth Plugin
+
+The LDAP plugin type is `ldap`. Since Nacos 3.2, LDAP is separated from the default auth implementation and provided as a standalone optional plugin.
+
+LDAP plugin boundaries:
+
+- LDAP authenticates usernames and passwords.
+- Nacos still issues login tokens.
+- Nacos still uses local roles and permissions for authorization.
+- Login still uses `/v3/auth/user/login`.
+
+Example:
+
+```properties
+nacos.core.auth.system.type=ldap
+nacos.core.auth.enabled=true
+nacos.core.auth.admin.enabled=true
+nacos.core.auth.console.enabled=true
+
+nacos.core.auth.ldap.url=ldap://localhost:389
+nacos.core.auth.ldap.basedc=dc=example,dc=org
+nacos.core.auth.ldap.userDn=cn=admin,${nacos.core.auth.ldap.basedc}
+nacos.core.auth.ldap.password=admin
+nacos.core.auth.ldap.userdn=cn={0},dc=example,dc=org
+nacos.core.auth.ldap.filter.prefix=uid
+```
+
+Before enabling LDAP, check that:
+
+- `nacos-ldap-auth-plugin-<version>.jar` is available in the Nacos `plugins/` directory or classpath.
+- `org.springframework.ldap:spring-ldap-core` related jars are available in the `plugins/` directory.
+
+### OIDC/OAuth2 Auth Plugin
+
+The OIDC/OAuth2 plugin type is `oidc`. It is designed for enterprise SSO and external identity providers. It supports Keycloak, Okta, Auth0, Microsoft Entra ID, and similar providers through OIDC Discovery.
+
+Differences from the default Nacos auth implementation:
+
+- Authentication is delegated to the external IdP.
+- Console login uses compatibility endpoints under `/v1/auth/oidc/*` for browser redirect and callback.
+- The Java SDK can use the OAuth2 Client Credentials flow to obtain bearer tokens.
+- Local Nacos user, role, permission, and password management are no longer the identity source of truth.
+- `/v3/auth/user/login` does not apply to plugin type `oidc`.
+- If no external authorization endpoint is configured, the current implementation allows non-admin authorization decisions by default.
+
+Example:
+
+```properties
+nacos.core.auth.system.type=oidc
+nacos.core.auth.enabled=true
+nacos.core.auth.admin.enabled=true
+nacos.core.auth.console.enabled=true
+
+nacos.core.auth.plugin.oidc.issuer-uri=https://idp.example.com/realms/nacos
+nacos.core.auth.plugin.oidc.client-id=nacos-server
+nacos.core.auth.plugin.oidc.client-secret=${client_secret}
+nacos.core.auth.plugin.oidc.scope=openid profile email
+```
+
+For detailed setup, Keycloak examples, and troubleshooting, see [Admin Manual - OIDC/OAuth2 Authentication](../manual/admin/oidc-auth.md).
+
+## Server Plugin Development
+
+To build a server-side auth plugin, depend on the auth plugin API:
+
+```xml
+<dependency>
+    <groupId>com.alibaba.nacos</groupId>
+    <artifactId>nacos-auth-plugin</artifactId>
+    <version>${project.version}</version>
+</dependency>
+```
+
+Then implement `com.alibaba.nacos.plugin.auth.spi.server.AuthPluginService` and register it with Java SPI.
+
+| Method | Description |
+| --- | --- |
+| `getAuthServiceName()` | Return the plugin name selected by `nacos.core.auth.system.type`. |
+| `identityNames()` | Declare identity fields that should be extracted from requests. |
+| `enableAuth(action, type)` | Decide whether the action and resource type require auth. |
+| `validateIdentity(identityContext, resource)` | Authenticate the caller and enrich `IdentityContext`. |
+| `validateAuthority(identityContext, permission)` | Authorize the caller for the target resource and action. |
+| `isLoginEnabled()` | Declare whether the console should expose plugin-provided login. |
+| `isAdminRequest()` | Declare whether the request is an administrator bootstrap flow. |
+
+Package the plugin and place it under `${nacos-server.path}/plugins`, then configure:
+
+```properties
+nacos.core.auth.system.type=${authServiceName}
 nacos.core.auth.enabled=true
 ```
 
-Restart nacos cluster, and after any request, some logs can be saw in `${nacos-server.path}/logs/core-auth.log`:
+After restart, check `${nacos-server.path}/logs/nacos.log` for plugin loading logs.
 
-```text
-[AuthPluginManager] Load AuthPluginService(xxxx) AuthServiceName(xxx) successfully.
-```
+## Client Auth Plugins
 
-### Use the default Nacos authentication plugin
+Client auth plugins inject identity material into requests. The selected server-side auth plugin still makes the final decision.
 
-Nacos provides a simple authentication plugin. It is a weak authentication system to prevent business misuse, not a strong authentication system to prevent malicious attacks. The usage detail see [Admin Manual-Authentication](../manual/admin/auth.mdx).
+The Java client includes these common implementations:
 
-## Client Plugin
+| Client implementation | Identity material | Notes |
+| --- | --- | --- |
+| Default Nacos | `username`, `password`, `accessToken` | Integrates with the default `nacos` or `ldap` login API. |
+| RAM | `accessKey`, `secretKey`, signature | For Alibaba Cloud RAM-compatible scenarios. |
+| OIDC/OAuth2 | `Authorization: Bearer ...`, `accessToken` | Uses the OAuth2 Client Credentials flow. |
 
-The authentication plugin for Nacos Client is to inject authentication-related identity context into the request so that each request can be recognized by the server authentication plugin.
+Default Nacos client example:
 
-The Java client of Nacos comes with two implementations by default:
-
-- A default implementation using `username`,`password` and `accessToken`;
-- An Aliyun implementation using `accessKey` and `secretKey`.
-
-### Default implementation
-
-When `username`, `password` are included in the properties passed into a nacos client instance, the nacos client will use the simple authentication plugin to inject identity context;
-e.g.:
 ```java
 Properties properties = new Properties();
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "localhost:8848");
@@ -117,69 +258,34 @@ NamingFactory.createNamingService(properties);
 ConfigFactory.createConfigService(properties);
 ```
 
-The plugin will login through `username` and `password` asynchronously, and obtain the `accessToken` after the login is successful. Finally, the plugin will inject the `accessToken` into all requests, which make the server plugins can validate identity and permission according to `accessToken`.
+OIDC/OAuth2 client example:
 
-### Aliyun implementation
-
-When `accessKey` and `secretKey` are included in the properties, the nacos client will use the aliyun authentication plugin to inject identity context.
-
-e.g.:
- ```java
- Properties properties = new Properties();
- properties.setProperty(PropertyKeyConst.SERVER_ADDR, "localhost:8848");
- properties.setProperty(PropertyKeyConst.ACCESS_KEY, "nacos");
- properties.setProperty(PropertyKeyConst.SECRET_KEY, "nacos");
- NamingFactory.createNamingService(properties);
- ConfigFactory.createConfigService(properties);
- ```
-
-The plugin will generate signatures by `accessKey`, `secretKey` and the request resource, and inject into the request.
-
-The identity context may be different for the different request resource:
-
-| Type          | Identity keys      | description                                                       |
-|---------------|--------------------|-------------------------------------------------------------------|
-| NamingService | ak                 | accessKey                                                         |
-| NamingService | signature          | naming signature                                                  |
-| NamingService | data               | signature datum, include timestamp                                |
-| ConfigService | Spas-AccessKey     | accessKey                                                         |
-| ConfigService | Spas-Signature     | config signature                                                  |
-| ConfigService | Timestamp          | request timestamp                                                 |
-| ConfigService | Spas-SecurityToken | Temporary token (used when Alibaba Cloud STS function is enabled) |
-
-Developers can validate authentication and authorization in the server plugin based on the above information.
-
-### Custom Plugin
-
-Considering that the developer's authentication plugin may have custom identity keywords, the Java client of Nacos can also use the SPI to inject the plugin implementation.
-
-To develop a Nacos client authentication plugin, developers first need to depend on the relevant API of the authentication plugin.
-
-```xml
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-auth-plugin</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "localhost:8848");
+properties.setProperty("nacos.client.auth.oidc.issuer-uri", "https://idp.example.com/realms/nacos");
+properties.setProperty("nacos.client.auth.oidc.client-id", "nacos-client");
+properties.setProperty("nacos.client.auth.oidc.client-secret", "${client_secret}");
+properties.setProperty("nacos.client.auth.oidc.scope", "openid");
+NamingFactory.createNamingService(properties);
+ConfigFactory.createConfigService(properties);
 ```
 
-`${project.version}` is the version of Nacos for your development plugin.
+Custom Java client auth plugins should implement `com.alibaba.nacos.plugin.auth.spi.client.ClientAuthService`, or extend `com.alibaba.nacos.plugin.auth.spi.client.AbstractClientAuthService`.
 
-Then implement interface `com.alibaba.nacos.plugin.auth.spi.client.ClientAuthService`, and put your implementation into services of SPI.
+| Method | Description |
+| --- | --- |
+| `login(properties)` | Initialize or refresh identity material. |
+| `setServerList(serverList)` | Receive the current client-side server list. |
+| `setNacosRestTemplate(template)` | Receive the HTTP client used for login or refresh calls. |
+| `getLoginIdentityContext(resource)` | Return identity material to inject into requests. |
+| `shutdown()` | Release plugin-owned resources. |
 
-The methods of interface in following:
+## Relationship With Visibility Plugins
 
-| method name             | parameters                                | returns         | description                                                                                                                                                           |
-|-------------------------|-------------------------------------------|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| setServerList           | List&lt;String>,Nacos server address list | void            | Called during initialization, to inject the Nacos service list, which is convenient for plugins to access the nacos server, such as calling the login interface, etc. |
-| setNacosRestTemplate    | NacosRestTemplate,http client for Nacos   | void            | Called during initialization, to inject Nacos' http client, which is convenient for plugins to access the nacos server, such as calling the login interface, etc.     |
-| login                   | Properties,properties of initialization   | boolean         | mainly performs the conversion of identity context, such as `username`, `password` is converted to `accessToken`                                                      |
-| getLoginIdentityContext | Resource                                  | IdentityContext | Get the identity context converted by the login interface, and the client will inject all the content of the returned object into the request                         |
+Auth and visibility often appear together, but they answer different questions:
 
-Developers can choose to inherit `com.alibaba.nacos.plugin.auth.spi.client.AbstractClientAuthService`, which implements `setServerList` and `setNacosRestTemplate`.
+- Auth decides whether the current identity can access one target resource.
+- Visibility decides whether a resource should appear in detail, list, or search results.
 
-Then package the developed client plugin into jar/zip and put it into the classpath of your application and take effect automatically.
-
-### Plugin for other programming language
-
-TODO
+A visibility plugin may delegate explicit permission checks to the selected auth plugin. For example, the default implementation checks resources such as `@@visibility/{namespaceId}/{resourceType}/{resourceName}` through the current auth plugin. See [Visibility Plugin](./visibility-plugin.md) for details.
