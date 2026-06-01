@@ -1,18 +1,20 @@
 ---
-title: OIDC Authentication
+title: OIDC/OAuth2 Authentication
 keywords: [OIDC, OAuth2, SSO, Keycloak, Single Sign-On]
-description: Guide for configuring the Nacos OIDC authentication plugin to integrate with Keycloak, Okta, Auth0, and other identity providers for SSO.
+description: Guide for configuring the Nacos OIDC/OAuth2 auth plugin to integrate with Keycloak, Okta, Auth0, and other identity providers for SSO and bearer token access.
 sidebar:
     order: 8
 ---
 
-# OIDC Authentication
+# OIDC/OAuth2 Authentication
 
 ## Overview
 
-The Nacos OIDC authentication plugin provides OpenID Connect 1.0 / OAuth2 based authentication for the Nacos console, allowing Nacos to delegate user authentication and authorization to an external Identity Provider (IdP).
+The Nacos OIDC/OAuth2 auth plugin uses plugin type `oidc`. It provides OpenID Connect 1.0 / OAuth2 based authentication for the Nacos console, allowing Nacos to delegate user authentication to an external Identity Provider (IdP).
 
 When the OIDC plugin is enabled, the Nacos console login page displays a **"Sign in with SSO"** button. Users click the button to be redirected to the IdP for authentication, and are automatically returned to the Nacos console upon successful login.
+
+The Java SDK can also use the OAuth2 Client Credentials flow to obtain bearer tokens and inject them into requests. Console SSO and SDK bearer tokens are different entry points, but the server validates both through the `oidc` auth plugin.
 
 ### Use Cases
 
@@ -116,10 +118,10 @@ curl http://localhost:8081/realms/nacos/.well-known/openid-configuration
 
 Edit `<NACOS_HOME>/conf/application.properties`.
 
-### 3.1 Switch Auth System to OIDC
+### 3.1 Switch Auth System To OIDC/OAuth2
 
 ```properties
-### Enable OIDC authentication
+### Enable OIDC/OAuth2 auth
 nacos.core.auth.system.type=oidc
 
 ### Enable authentication
@@ -162,15 +164,42 @@ nacos.core.auth.plugin.oidc.username-claim=preferred_username
 
 | Property | Default | Description |
 |----------|---------|-------------|
-| `nacos.core.auth.plugin.oidc.token-validation-method` | `jwt` | Token validation: `jwt` (local JWKS) or `introspection` (IdP endpoint) |
+| `nacos.core.auth.plugin.oidc.token-validation-method` | `jwt` | Token validation method. The current implementation validates JWTs through JWKS. `introspection` is reserved and should not be documented as a supported runtime path yet |
 | `nacos.core.auth.plugin.oidc.jwks-cache-ttl-seconds` | `3600` | JWKS public key cache TTL (seconds) |
 | `nacos.core.auth.plugin.oidc.roles-claim` | `roles` | Claim name for roles in ID Token |
 | `nacos.core.auth.plugin.oidc.admin-role` | `nacos-admin` | Admin role name |
 | `nacos.core.auth.plugin.oidc.auto-create-user` | `true` | Auto-create user on first login |
-| `nacos.core.auth.plugin.oidc.authorization-endpoint` | (empty) | External authorization decision endpoint |
+| `nacos.core.auth.plugin.oidc.authorization-endpoint` | (empty) | External authorization decision endpoint. When empty, the current implementation allows non-admin authorization decisions |
 | `nacos.core.auth.plugin.oidc.authorization-timeout-ms` | `5000` | Authorization request timeout (ms) |
-| `nacos.core.auth.plugin.oidc.strict-nonce-validation` | `false` | Enable strict nonce validation |
-| `nacos.core.auth.plugin.oidc.strict-audience-validation` | `false` | Enable strict audience validation |
+| `nacos.core.auth.plugin.oidc.strict-nonce-validation` | `true` | Enable strict nonce validation |
+| `nacos.core.auth.plugin.oidc.strict-audience-validation` | `true` | Enable strict audience validation |
+
+:::note
+`strict-nonce-validation` and `strict-audience-validation` are enabled by default when not explicitly configured. Disable them only temporarily during development or IdP integration debugging, and turn them back on before production.
+:::
+
+:::caution
+If production needs permission isolation by namespace, config, service, or AI resource, configure `nacos.core.auth.plugin.oidc.authorization-endpoint`, or provide a stricter authorization implementation. In the current implementation, an empty endpoint allows non-admin authorization decisions by default.
+:::
+
+### 3.5 Java SDK OAuth2 Client Credentials
+
+The Java SDK OIDC/OAuth2 client auth uses the OAuth2 Client Credentials flow. It is intended for service-to-service access.
+
+```properties
+nacos.client.auth.oidc.issuer-uri=https://idp.example.com/realms/nacos
+nacos.client.auth.oidc.client-id=nacos-client
+nacos.client.auth.oidc.client-secret=${client_secret}
+nacos.client.auth.oidc.scope=openid
+```
+
+If the IdP does not support Discovery, or if you want to skip Discovery, set the token endpoint directly:
+
+```properties
+nacos.client.auth.oidc.token-endpoint=https://idp.example.com/realms/nacos/protocol/openid-connect/token
+```
+
+The SDK refreshes the token before expiration and injects both `Authorization: Bearer ...` and `accessToken`.
 
 ---
 
@@ -296,7 +325,7 @@ nacos.core.auth.server.identity.value=security
 **Steps**:
 1. Verify `issuer-uri` matches the IdP's actual issuer (no trailing slash)
 2. Check `logs/nacos.log` for detailed errors
-3. Temporarily disable strict validation: `strict-audience-validation=false`
+3. During development, temporarily disable strict audience validation: `nacos.core.auth.plugin.oidc.strict-audience-validation=false`
 4. Verify the IdP's JWKS endpoint is accessible
 
 ### 7.5 Auto-login after logout
@@ -312,5 +341,7 @@ This is standard OIDC SSO behavior. The IdP's SSO session is still valid, so the
 | User storage | Nacos built-in DB | LDAP server | IdP |
 | Password management | Nacos console | LDAP server | IdP |
 | Single Sign-On | No | No | **Yes** |
+| SDK OAuth2 Client Credentials | No | No | **Yes** |
 | Multi-Factor Auth | No | Depends on LDAP | **Yes** |
+| Authorization source | Local Nacos permissions | Local Nacos permissions | IdP roles or external authorization endpoint |
 | Use case | Small standalone deployments | Enterprises with LDAP | Modern enterprise SSO |

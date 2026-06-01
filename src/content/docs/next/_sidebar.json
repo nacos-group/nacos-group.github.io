@@ -86,9 +86,9 @@
         "link": "docs/manual/user/open-api"
       },
       {
-        "label": "配置鉴权",
+        "label": "访问凭据",
         "translations": {
-          "en": "Authorization"
+          "en": "Access Credentials"
         },
         "link": "docs/manual/user/auth"
       },
@@ -138,9 +138,9 @@
         "link": "docs/manual/admin/auth"
       },
       {
-        "label": "OIDC 认证",
+        "label": "OIDC/OAuth2 认证",
         "translations": {
-          "en": "OIDC Authentication"
+          "en": "OIDC/OAuth2 Authentication"
         },
         "link": "docs/manual/admin/oidc-auth"
       },

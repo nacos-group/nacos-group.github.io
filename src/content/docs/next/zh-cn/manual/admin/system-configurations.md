@@ -169,21 +169,30 @@ driver支持mysql5.x)
 
 #### 1.8.1. 鉴权插件
 
-关于如何开发鉴权插件，请参考[鉴权插件](../../plugin/auth-plugin.md)
+关于如何开启鉴权，请参考[权限校验](./auth.mdx)。关于如何开发鉴权插件，请参考[鉴权插件](../../plugin/auth-plugin.md)。
 
 | 参数名	                                      | 含义	                                                                                | 可选值	               | 默认值   | 
 |-------------------------------------------|------------------------------------------------------------------------------------|--------------------|-------|
-| nacos.core.auth.enabled                   | Nacos是否开启Client API鉴权                                                              | true/false         | false |
+| nacos.core.auth.enabled                   | Nacos是否开启Open API、SDK和gRPC请求鉴权                                                       | true/false         | true |
 | nacos.core.auth.admin.enabled             | Nacos是否开启Admin API鉴权                                                               | true/false         | true  |
 | nacos.core.auth.console.enabled           | Nacos是否开启Console API鉴权                                                             | true/false         | true  |
-| nacos.core.auth.system.type               | Nacos鉴权插件的类型                                                                       | nacos/ldap/自定义插件类型 | nacos |
+| nacos.core.auth.system.type               | Nacos鉴权插件的类型                                                                       | nacos/ldap/oidc/自定义插件类型 | nacos |
 | nacos.core.auth.server.identity.key       | Nacos Server节点身份信息的key，用户Server节点之间通信的识别，当开启鉴权时为必填项                                | 字符串                | null  |
 | nacos.core.auth.server.identity.value     | Nacos Server节点身份信息的value，用户Server节点之间通信的识别，当开启鉴权时为必填项                              | 字符串                | null  |
-| nacos.core.auth.enable.userAgentAuthWhite | Nacos Server使用UserAgent来进行Server节点之间通信的识别，在1.4.1版本后仅作为升级时的兼容，开启后会存在安全问题，后续版本将移除该参数 | true/false         | false |
+| nacos.core.auth.caching.enabled           | Nacos是否缓存用户、角色和权限信息，开启后权限更新可能存在约15秒延迟                                             | true/false         | true |
 
-同时对于Nacos默认鉴权插件的使用及更多默认鉴权插件的配置项，请参考[权限校验](../../guide/user/auth/#相关参数)
+`ldap` 插件在 Nacos 3.2 起作为独立可选插件提供。`oidc` 插件用于接入 OIDC/OAuth2 身份提供方，详细配置请参考[OIDC/OAuth2 认证](./oidc-auth.md)。
 
-#### 1.8.2. 数据源插件
+#### 1.8.2. 可见性插件
+
+关于可见性插件和鉴权插件的关系，请参考[可见性插件](../../plugin/visibility-plugin.md)。
+
+| 参数名 | 含义 | 可选值 | 默认值 |
+| --- | --- | --- | --- |
+| nacos.plugin.visibility.enabled | Nacos是否开启资源可见性插件 | true/false | true |
+| nacos.plugin.visibility.type | Nacos使用的可见性插件类型 | nacos/自定义插件类型 | nacos |
+
+#### 1.8.3. 数据源插件
 
 其他和数据库相关的开发，请参考[全局参数-数据库](#112-数据库)
 
@@ -192,7 +201,7 @@ driver支持mysql5.x)
 | spring.sql.init.platform            | Nacos Server 使用的数据库类型                                                     | mysql/空，指定为空时会根据`nacos.standalone`判断使用derby数据库还是mysql数据库；在使用[数据源插件](../../plugin/datasource-plugin.md)时，可以指定为插件对应的数据库值，比如oracle或postgresql | null  |
 | nacos.plugin.datasource.log.enabled | Nacos Server 是否开启SQL日志打印，开启后会打印每一次执行的SQL，方便进行插件开发时的问题排查，但是较为损耗性能，日常状态建议关闭 | true/false                                                                                                                                 | false |
 
-#### 1.8.3. 环境变量插件
+#### 1.8.4. 环境变量插件
 
 关于如何开发环境变量插件，请参考[环境变量插件](../../plugin/custom-environment-plugin.md)
 
@@ -200,7 +209,7 @@ driver支持mysql5.x)
 |----------------------------------|-------------------------|------------|-------|
 | nacos.custom.environment.enabled | Nacos Server 是否开启环境变量插件 | true/false | false |
 
-#### 1.8.4. 反脆弱插件
+#### 1.8.5. 反脆弱插件
 
 反脆弱插件的开发，请参考[反脆弱插件](../../plugin/control-plugin.md)
 

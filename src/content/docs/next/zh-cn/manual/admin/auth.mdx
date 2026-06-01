@@ -1,7 +1,7 @@
 ---
 title: 权限校验
-keywords: [Authorization]
-description: 本文介绍了如何开启Nacos的鉴权（访问控制）功能，及一些示例。
+keywords: [鉴权, 认证, 授权, RBAC, LDAP, OIDC, OAuth2]
+description: 本文介绍 Nacos 鉴权能力的启用方式、内置鉴权插件、默认管理员初始化、LDAP 和 OIDC/OAuth2 接入，以及可见性插件的关联配置。
 sidebar:
     order: 7
 ---
@@ -15,223 +15,256 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 > - Nacos提供简单的鉴权实现，为防止业务错用的弱鉴权体系，不是防止恶意攻击的强鉴权体系。
 > - 如果运行在不可信的网络环境或者有强鉴权诉求，请参考官方简单实现做进行[自定义插件开发](../../plugin/auth-plugin.md)。
 
-## 1. 相关参数说明
+Nacos 的鉴权能力由鉴权插件提供。Nacos 3.2 内置了默认 Nacos 鉴权、LDAP 鉴权和 OIDC/OAuth2 鉴权。不同插件使用同一套开关，但身份来源和权限模型不同。
 
-|参数名|默认值|对应docker镜像环境变量|说明|
-|-----|------|------|----|
-|nacos.core.auth.enabled|false|NACOS_AUTH_ENABLE|是否开启Nacos客户端访问鉴权功能|
-|nacos.core.auth.admin.enabled|true|NACOS_AUTH_ADMIN_ENABLE|是否开启Nacos Admin API访问鉴权功能|
-|nacos.core.auth.console.enabled|true|NACOS_AUTH_CONSOLE_ENABLE|是否开启Nacos控制台访问鉴权功能|
-|nacos.core.auth.system.type|nacos|NACOS_AUTH_SYSTEM_TYPE|鉴权类型|
-|nacos.core.auth.plugin.nacos.token.secret.key|无默认值|NACOS_AUTH_TOKEN|默认鉴权插件用于生成用户登陆临时accessToken所使用的密钥，**使用老版本默认值有安全风险**|
-|nacos.core.auth.plugin.nacos.token.expire.seconds|18000|NACOS_AUTH_TOKEN_EXPIRE_SECONDS|用户登陆临时accessToken的过期时间|
-|nacos.core.auth.server.identity.key|无默认值|NACOS_AUTH_IDENTITY_KEY|用于服务端之间请求的身份识别key，**使用老版本默认值有安全风险**|
-|nacos.core.auth.server.identity.value|无默认值|NACOS_AUTH_IDENTITY_VALUE|用于服务端之间请求的身份识别value，**使用老版本默认值有安全风险**|
-|nacos.core.auth.plugin.nacos.token.cache.enable|false|NACOS_AUTH_CACHE_ENABLE|是否开启Token缓存，默认关闭，开启后accessToken会缓存到内存中，但权限更新时可能存在15s左右的延迟。|
+## 选择鉴权模式
 
-## 2. 默认控制台登录页
+| 模式 | 配置值 | 适合场景 | 说明 |
+| --- | --- | --- | --- |
+| 默认 Nacos 鉴权 | `nacos` | 小型部署、内网基础 RBAC | Nacos 本地用户、角色、权限和 token。 |
+| LDAP 鉴权 | `ldap` | 企业已有 LDAP 用户目录 | LDAP 认证用户，Nacos 继续管理角色和权限。3.2 起 LDAP 是独立可选插件。 |
+| OIDC/OAuth2 鉴权 | `oidc` | 企业 SSO、统一身份、MFA | 通过 IdP 完成认证，可结合外部授权服务。 |
+| 自定义鉴权 | 自定义值 | 企业专有安全体系 | 需要实现鉴权插件 SPI。 |
 
-在用户开启鉴权后，控制台才需要进行登录访问。 同时针对不同的鉴权插件，提供新的接口方法，用于提示控制台是否开启登录页；同时Nacos支持关闭开源控制台，并引导到用户自定义的Nacos控制台，详情可查看[Nacos鉴权插件-服务端插件](../../plugin/auth-plugin.md)及[控制台手册-关闭登录功能](./console.md#32-关闭登录功能)
+更多插件边界和开发方式请参考[鉴权插件](../../plugin/auth-plugin.md)。
 
-## 3. 服务端如何开启鉴权
+## 核心配置
+
+| 配置项 | 默认配置 | 说明 |
+| --- | --- | --- |
+| `nacos.core.auth.system.type` | `nacos` | 当前使用的鉴权插件类型。支持 `nacos`、`ldap`、`oidc` 或自定义类型。 |
+| `nacos.core.auth.enabled` | `true` | 是否开启 Open API、SDK 和 gRPC 请求鉴权。 |
+| `nacos.core.auth.admin.enabled` | `true` | 是否开启 Admin API 鉴权。 |
+| `nacos.core.auth.console.enabled` | `true` | 是否开启 Console API 和默认控制台登录鉴权。 |
+| `nacos.core.auth.server.identity.key` | 空 | Nacos Server 节点间通信的身份 key。开启鉴权的集群部署必须配置。 |
+| `nacos.core.auth.server.identity.value` | 空 | Nacos Server 节点间通信的身份 value。开启鉴权的集群部署必须配置。 |
+| `nacos.core.auth.caching.enabled` | `true` | 是否缓存用户、角色、权限信息。权限变更可能存在约 15 秒延迟。 |
+| `nacos.core.auth.plugin.nacos.token.secret.key` | 空 | 默认 Nacos token 签名密钥。建议配置为 Base64 字符串，原始密钥长度不少于 32 字符。 |
+| `nacos.core.auth.plugin.nacos.token.expire.seconds` | `18000` | 默认 Nacos token 有效期，单位秒。 |
+| `nacos.core.auth.plugin.nacos.token.cache.enable` | `false` | 是否缓存已签发 token 的解析和校验结果。 |
 
 :::note
-从Nacos3.0.0版本开始，Nacos的控制台访问默认开启鉴权。
+如果你从旧版本升级，实际配置可能保留旧值。请以当前集群的 `application.properties`、环境变量和启动参数为准。
 :::
 
+## 开启默认 Nacos 鉴权
+
+默认 Nacos 鉴权使用本地用户、角色、权限和 token。它提供 `/v3/auth/user`、`/v3/auth/role`、`/v3/auth/permission` 等 v3 Auth API。这些 API 属于默认鉴权插件，不是所有鉴权插件都支持。
+
 <Tabs>
-  <TabItem label="非Docker镜像部署">
-    - 配置`token.secret.key`
+  <TabItem label="非 Docker 部署">
 
-      开启鉴权之前，你需要配置自定义的用于生成JWT令牌的密钥，在application.properties中的配置信息，自定义密钥时，推荐将配置项设置为**Base64编码**的字符串，且**原始密钥长度不得低于32字符**：
+    修改 `${nacos.home}/conf/application.properties`：
 
-      > 注意：
-      > 1. 密钥需要保持节点间一致，长时间不一致可能导致403 invalid token错误。
-      > 2. 修改`token.secret.key`时，请确保token是有效的，如果修改成无效值，会导致后续无法登录，请求访问异常。
+    ```properties
+    nacos.core.auth.system.type=nacos
+    nacos.core.auth.enabled=true
+    nacos.core.auth.admin.enabled=true
+    nacos.core.auth.console.enabled=true
 
-      ```properties
-      ### 用于生成JWT令牌的密钥(Base64 String):
-      nacos.core.auth.plugin.nacos.token.secret.key=$custom_base64_token_secret_key
-      ```
+    nacos.core.auth.server.identity.key=${custom_server_identity_key}
+    nacos.core.auth.server.identity.value=${custom_server_identity_value}
+    nacos.core.auth.plugin.nacos.token.secret.key=${custom_base64_token_secret_key}
+    ```
 
-    - 配置`server.identity`
-
-      开启鉴权之前，还需要配置用于服务端之间请求的身份识别信息，在application.properties中的配置信息：
-
-      > 注意：身份识别信息保持节点间一致，长时间不一致可能导致节点间数据不一致。
-
-      ```properties
-      ### 配置自定义身份识别的key（不可为空）和value（不可为空）
-      nacos.core.auth.server.identity.key=$custom_server_identity_key
-      nacos.core.auth.server.identity.value=$custom_server_identity_value
-      ```
-
-    - 打开鉴权开关
-
-      开启鉴权开关，需要修改application.properties中的配置信息为：
-      ```properties
-      ### If turn on auth system:
-      nacos.core.auth.system.type=nacos
-      ### 开启Nacos客户端访问鉴权
-      nacos.core.auth.enabled=true
-      ### 开启Nacos Admin API访问鉴权，默认为开启
-      nacos.core.auth.admin.enabled=true
-      ### 开启Nacos控制台访问鉴权，默认为开启
-      nacos.core.auth.console.enabled=true
-      ```
-
-      > 注意：鉴权开关是修改之后立马生效的，不需要重启服务端。
+    集群模式下，各节点的 `server.identity` 和 `token.secret.key` 必须保持一致。
 
   </TabItem>
-  <TabItem label="Docker镜像部署">
+  <TabItem label="Docker 部署">
 
-    使用官方镜像，请在启动docker容器时，添加如下环境变量：
+    启动容器时传入环境变量：
+
     ```powershell
     NACOS_AUTH_ENABLE=true
+    NACOS_AUTH_ADMIN_ENABLE=true
+    NACOS_AUTH_CONSOLE_ENABLE=true
+    NACOS_AUTH_SYSTEM_TYPE=nacos
     NACOS_AUTH_TOKEN=${custom_base64_token_secret_key}
-    NACOS_AUTH_IDENTITY_KEY=$custom_server_identity_key
-    NACOS_AUTH_IDENTITY_VALUE=$custom_server_identity_value
+    NACOS_AUTH_IDENTITY_KEY=${custom_server_identity_key}
+    NACOS_AUTH_IDENTITY_VALUE=${custom_server_identity_value}
     ```
 
-    例如，可以通过如下命令运行开启了鉴权的容器:
+    示例：
 
     ```powershell
-    docker run --env PREFER_HOST_MODE=hostname --env MODE=standalone --env NACOS_AUTH_ENABLE=true --env NACOS_AUTH_TOKEN=$custom_base64_token_secret_key --env NACOS_AUTH_IDENTITY_KEY=$custom_server_identity_key --env NACOS_AUTH_IDENTITY_VALUE=$custom_server_identity_value -p 8848:8848 -p 9848:9848 nacos/nacos-server
+    docker run --env PREFER_HOST_MODE=hostname \
+      --env MODE=standalone \
+      --env NACOS_AUTH_ENABLE=true \
+      --env NACOS_AUTH_SYSTEM_TYPE=nacos \
+      --env NACOS_AUTH_TOKEN=${custom_base64_token_secret_key} \
+      --env NACOS_AUTH_IDENTITY_KEY=${custom_server_identity_key} \
+      --env NACOS_AUTH_IDENTITY_VALUE=${custom_server_identity_value} \
+      -p 8848:8848 -p 9848:9848 nacos/nacos-server
     ```
+
   </TabItem>
 </Tabs>
 
-### 3.1. LDAP 鉴权部署说明
+### 初始化管理员密码
 
-当启用 `nacos.core.auth.system.type=ldap` 时，默认发行包的行为如下：
+自 2.4.0 起，Nacos 不再内置管理员用户 `nacos` 的默认密码。首次开启默认 Nacos 鉴权后，需要初始化管理员密码。
 
-- `plugins/` 目录默认包含 `nacos-ldap-auth-plugin-<version>.jar`
-- 默认**不会**包含 `org.springframework.ldap:spring-ldap-core`
+<Tabs>
+  <TabItem label="API">
 
-因此，在开启 LDAP 鉴权前，需要手动将 `spring-ldap-core` 相关 jar 放入 Nacos 的 `plugins/` 目录。
+    ```powershell
+    curl -X POST 'http://$nacos_server_host:$nacos_server_port/nacos/v3/auth/user/admin' \
+      -d 'password=$your_password'
+    ```
 
-示例配置：
+    如果不传 `password` 或传入空值，Nacos 会生成随机密码。请保存返回结果：
+
+    ```json
+    {"username":"nacos","password":"$your_password"}
+    ```
+
+  </TabItem>
+  <TabItem label="Nacos 控制台">
+
+    访问控制台时，如果集群已开启鉴权且还没有管理员用户，控制台会进入管理员初始化页面。
+
+    输入自定义密码后提交即可。如果密码为空，Nacos 会生成随机密码。初始化成功后请保存页面展示的密码。
+
+  </TabItem>
+</Tabs>
+
+:::caution
+Nacos 不会强制管理员密码复杂度。生产环境请使用足够强的密码，并妥善保管。
+:::
+
+## 启用 LDAP 鉴权
+
+LDAP 插件类型是 `ldap`。Nacos 3.2 起，LDAP 插件从默认鉴权实现中分离为独立可选插件。
+
+LDAP 的工作边界是：
+
+- LDAP 校验用户名和密码。
+- Nacos 签发访问 token。
+- Nacos 本地角色和权限仍负责授权。
+- `/v3/auth/user/login` 仍可用于登录。
+
+配置示例：
 
 ```properties
 nacos.core.auth.system.type=ldap
 nacos.core.auth.enabled=true
 nacos.core.auth.admin.enabled=true
 nacos.core.auth.console.enabled=true
+
+nacos.core.auth.ldap.url=ldap://localhost:389
+nacos.core.auth.ldap.basedc=dc=example,dc=org
+nacos.core.auth.ldap.userDn=cn=admin,${nacos.core.auth.ldap.basedc}
+nacos.core.auth.ldap.password=admin
+nacos.core.auth.ldap.userdn=cn={0},dc=example,dc=org
+nacos.core.auth.ldap.filter.prefix=uid
+nacos.core.auth.ldap.case.sensitive=true
+nacos.core.auth.ldap.ignore.partial.result.exception=false
 ```
 
-:::note
-如果开启 LDAP 鉴权时 `plugins/` 目录中没有 `spring-ldap-core`，LDAP 插件将无法完整生效。请先补充依赖 jar，再启动或重启 Nacos。
+启用前请确认：
+
+- `nacos-ldap-auth-plugin-<version>.jar` 已在 `plugins/` 目录或服务端 classpath 中。
+- `org.springframework.ldap:spring-ldap-core` 相关 jar 已放入 `plugins/` 目录。
+
+如果缺少 `spring-ldap-core`，LDAP 插件无法完整工作。补齐依赖后重启 Nacos。
+
+## 启用 OIDC/OAuth2 鉴权
+
+OIDC/OAuth2 插件类型是 `oidc`。它通过外部 IdP 完成身份认证，适合企业 SSO、MFA 和集中账号治理。
+
+基础配置示例：
+
+```properties
+nacos.core.auth.system.type=oidc
+nacos.core.auth.enabled=true
+nacos.core.auth.admin.enabled=true
+nacos.core.auth.console.enabled=true
+
+nacos.core.auth.server.identity.key=${custom_server_identity_key}
+nacos.core.auth.server.identity.value=${custom_server_identity_value}
+nacos.core.auth.plugin.nacos.token.secret.key=${custom_base64_token_secret_key}
+
+nacos.core.auth.plugin.oidc.issuer-uri=https://idp.example.com/realms/nacos
+nacos.core.auth.plugin.oidc.client-id=nacos-server
+nacos.core.auth.plugin.oidc.client-secret=${client_secret}
+nacos.core.auth.plugin.oidc.scope=openid profile email
+```
+
+OIDC/OAuth2 模式下，控制台登录走 `/v1/auth/oidc/*` 兼容接口。Java SDK 可通过 OAuth2 Client Credentials flow 获取 bearer token。
+
+:::caution
+如果生产环境需要按资源做权限隔离，请配置 OIDC 插件的外部授权端点。当前实现中 `nacos.core.auth.plugin.oidc.authorization-endpoint` 为空时，非管理员授权判断会默认放行。
 :::
 
-<Tabs>
-  <TabItem label="非 Docker 部署">
+详细配置、Keycloak 示例、外部授权接口和排查方式请参考 [OIDC/OAuth2 认证](./oidc-auth.md)。
 
-    将 `spring-ldap-core-*.jar` 复制到 `${nacos.home}/plugins/`。
+## 配置资源可见性
 
-  </TabItem>
-  <TabItem label="Docker 镜像部署">
+可见性插件控制资源是否应出现在详情、列表和搜索结果中。它和鉴权相关，但职责不同：
 
-    官方镜像默认不会携带 `spring-ldap-core`。开启 LDAP 鉴权前，请先通过挂载或复制的方式，将所需 jar 放入容器内的 `plugins/` 目录。
+- 鉴权判断身份是否拥有目标资源的读写权限。
+- 可见性判断资源是否应该被当前身份看到。
 
-  </TabItem>
-</Tabs>
+默认配置：
 
-### 3.2. 设置管理员密码
-
-自2.4.0版本开始，Nacos构建时不再提供管理员用户`nacos`的默认密码，需要在首次开启鉴权后，通过API或Nacos控制台进行管理员用户`nacos`的密码初始化步骤，具体操作如下：
-
-<Tabs>
-  <TabItem label="API">
-    通过Admin API，指定或随机生成一个管理员用户`nacos`的密码，当密码指定或生成后，该API将无法再进行调用。
-
-    ```powelshell
-    curl -X POST 'http://$nacos_server_host:$nacos_server_port/nacos/v1/auth/users/admin' -d 'password=$your_password'
-    ```
-
-    > 注意：若输入的`$your_password`为空字符串，或未带有`password`参数，Nacos将会生成随机密码，请保存好生成的随机密码。
-
-    此时若指定或生成随机密码成功后，会返回如下：
-
-    ```json
-    {"username":"nacos", "password":"$your_password"}
-    ```
-
-  </TabItem>
-  <TabItem label="Nacos控制台">
-    当Nacos集群开启鉴权后访问Nacos控制台时，会校验是否已经初始化过管理员用户`nacos`的密码，若发现未初始化密码时，则会跳转至初始化密码的页面进行初始化。在该页面密码文本框内输入自定义密码，然后点击提交即可；
-
-    > 注意：若密码文本框内未输入自定义密码或输入空白密码，Nacos将会生成随机密码，请保存好生成的随机密码。
-
-    初始化成功后会弹窗提示初始化成功，并展示指定的密码或随机生成的密码，请保存好此密码。
-
-  </TabItem>
-</Tabs>
-
-### 3.3. 密码强度注意事项
-
-> 重要：在Nacos在初始化管理员用户`nacos`、创建或用户密码更新操作期间不强制执行特定密码长度。Nacos集群管理员有责任对自行构建的密码强度进行控制。为了避免与密码强度相关的安全风险，强烈建议初始化时使用强度较高的密码。
-
-### 3.4. 升级集群注意事项
-
-> 若Nacos集群升级自旧版本的Nacos，Nacos会认为当前已经存在管理员用户`nacos`，因此并不会要求进行管理员用户`nacos`的初始化流程，管理员用户`nacos`的密码仍然会保留旧版本时所使用的密码；因此若是使用旧版本时未修改过管理员用户`nacos`的默认密码，强烈建议升级后尽快修改管理员用户`nacos`的密码。
-
-## 4. 客户端如何进行鉴权
-
-请参考[用户手册-配置鉴权](../user/auth.mdx)
-
-## 5. 开启Token缓存功能
-
-无论是客户端SDK还是OpenAPI，在调用login接口获取accessToken之后，携带accessToken访问服务端，服务端解析Token进行鉴权。解析的动作比较耗时，如果想要提升接口的性能，可以考虑开启缓存Token的功能，用字符串比较代替Token解析。
-
-默认鉴权插件模块支持token缓存功能，可参见[ISSUE #9906](https://github.com/alibaba/nacos/issues/9906)
-
-### 5.1. 开启方式
-
-<Tabs>
-  <TabItem label="非Docker镜像部署">
-
-    在application.properties中的配置信息：
-    ```properties
-    nacos.core.auth.plugin.nacos.token.cache.enable=true
-    ```
-  </TabItem>
-  <TabItem label="Docker镜像部署">
-
-    镜像暂不支持该功能
-
-  </TabItem>
-</Tabs>
-
-### 5.2. 注意事项
-在开启Token缓存功能之前，服务端对每一个携带用户名密码访问login接口的请求都会生成新的token，接口的返回值中的tokenTtl字段跟服务端配置文件中设置的值相等，配置如下：
+```properties
+nacos.plugin.visibility.enabled=true
+nacos.plugin.visibility.type=nacos
 ```
-nacos.core.auth.plugin.nacos.token.expire.seconds=18000
-// 对应的Docker镜像变量为NACOS_AUTH_TOKEN_EXPIRE_SECONDS
+
+默认 `nacos` 可见性实现复用默认鉴权中的用户信息，当前主要服务于 AI 管理中心资源。更多说明请参考[可见性插件](../../plugin/visibility-plugin.md)。
+
+## 客户端和 OpenAPI 如何携带身份
+
+默认 Nacos 鉴权和 LDAP 鉴权可以通过用户名、密码登录，获取 `accessToken` 后访问 OpenAPI。
+
+```powershell
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/auth/user/login' \
+  -d 'username=nacos&password=${password}'
 ```
-在开启Token缓存功能之后，服务端对每一个携带用户名密码访问login接口的请求，会先检查缓存中是否存在该用户名对应的token。若不存在，生成新的Token，插入缓存再返回；若存在，返回该token，此时tokenTtl字段的值为配置文件中设置的值减去该Token在缓存中存留的时长。
-如果Token在缓存中存留的时长超过配置文件设置的值的90%，当login接口收到请求时，尽管缓存中存在该用户名对应的Token，服务端会重新生成Token返回给请求方，并更新缓存。因此，最差情况下，请求方收到的tokenTtl只有配置文件设置的值的10%。
 
-## 6. 关闭Nacos控制台鉴权
+返回示例：
 
-从Nacos3.0.0版本开始，Nacos的控制台访问默认开启鉴权，若您需要关闭Nacos的控制台访问鉴权，可以通过如下方式关闭：
+```json
+{
+  "accessToken": "eyJhbGciOiJIUzI1NiJ9...",
+  "tokenTtl": 18000,
+  "globalAdmin": true,
+  "username": "nacos"
+}
+```
 
-:::note
-Nacos 控制台访问鉴权关闭后，Nacos 控制台将不需要登陆即可访问，可能导致数据安全风险，请仅在安全环境或本地开发环境中进行。
+客户端 SDK 配置方式请参考[用户手册 - 配置鉴权](../user/auth.mdx)。
+
+## 开启 token 缓存
+
+默认 Nacos 鉴权支持 token 缓存。开启后，服务端会缓存 token 解析和校验结果，减少频繁解析 JWT 的开销。
+
+```properties
+nacos.core.auth.plugin.nacos.token.cache.enable=true
+```
+
+注意事项：
+
+- 权限更新后，缓存可能带来短时间延迟。
+- 当缓存中的 token 接近过期时，登录接口会重新签发 token。
+- Docker 镜像是否暴露对应环境变量，请以当前镜像版本说明为准。
+
+## 关闭控制台鉴权
+
+从 Nacos 3.0 起，控制台访问默认开启鉴权。如果只在本地开发或受控环境中临时关闭，可以设置：
+
+```properties
+nacos.core.auth.console.enabled=false
+```
+
+:::caution
+关闭控制台鉴权后，访问控制台不再需要登录，存在数据泄露和误操作风险。生产环境不要关闭。
 :::
 
-<Tabs>
-  <TabItem label="非Docker镜像部署">
+## 升级注意事项
 
-    修改application.properties中的配置信息为：
-    ```properties
-    ### If turn on auth system:
-    nacos.core.auth.system.type=nacos
-
-    ### 关闭Nacos控制台访问鉴权，默认为开启
-    nacos.core.auth.console.enabled=false
-    ```
-
-    > 注意：鉴权开关是修改之后立马生效的，不需要重启服务端。
-
-  </TabItem>
-</Tabs>
+- 从旧版本升级时，如果已经存在管理员用户 `nacos`，Nacos 不会重新要求初始化管理员密码。
+- 如果旧集群仍使用默认或弱密码，升级后请尽快修改。
+- 如果从旧 LDAP 配置升级到 3.2，请确认 LDAP 插件 jar 和 `spring-ldap-core` 依赖都已放入 `plugins/`。
+- 如果切换到 `oidc`，请同步调整控制台使用习惯：用户、角色、密码和权限通常由外部 IdP 或外部授权服务维护。

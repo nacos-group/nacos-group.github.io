@@ -18,7 +18,7 @@ These APIs only provide data operations at the single-service or single-configur
 For `control-plane` or `gateway` applications that require range-based data operations, use the [Admin API](../admin/admin-api.md).
 :::
 
-> For how to obtain and configure access credentials when using the default auth plugin, see [How to configure auth for OpenAPI](./auth.md#2-openapi如何配置鉴权信息).
+> For how to obtain and configure access credentials when using the default auth plugin, see [Configure Access Credentials](./auth.mdx).
 
 ## 0. Client API Notes
 

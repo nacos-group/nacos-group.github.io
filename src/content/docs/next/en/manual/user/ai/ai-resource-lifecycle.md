@@ -89,6 +89,8 @@ Offline does not mean deleted. An offline version can still be kept for audit, r
 
 AI Registry query results are affected by visibility and authentication. A resource can be `online` but still invisible to a caller that has no permission.
 
+Visibility decides whether a resource should appear in detail, list, or search results. Auth decides whether the current identity can read or write the target resource. They work together, but they have different responsibilities. For details, see [Visibility Plugin](../../../plugin/visibility-plugin.md).
+
 Platform administrators should check three things:
 
 - Whether the resource is enabled.
