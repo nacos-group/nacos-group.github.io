@@ -1,199 +1,143 @@
 ---
 title: 轨迹追踪
-keywords: [轨迹追踪,推送轨迹,变更轨迹]
-description: Nacos 支持轨迹追踪插件，可自定义扩展制作推送轨迹等功能，帮助运维人员快速定位问题。
+keywords: [轨迹追踪, 操作审计, 诊断, Trace Plugin]
+description: 本文介绍 Nacos Trace 插件的事件模型、适用场景、开发方式和稳定性建议。
 sidebar:
-    order: 5
+    order: 7
 ---
 
 # 轨迹追踪插件
 
-Nacos从2.2.0版本开始，可通过[SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html)机制注入轨迹追踪实现插件，在插件中订阅并处理追踪事件，并按照您期望的方式进行处理（如打日志，写入存储等）。本文档详细介绍一个轨迹追踪插件如何实现以及如何使其生效。
+Nacos Trace 插件用于订阅 Nacos 内部资源操作事件，帮助运维人员做审计、排障和诊断。它记录的是 Nacos 领域事件，例如服务注册、服务推送、实例健康状态变化、AI 资源操作等。
 
-> 注意:
-> 目前轨迹追踪插件处于Beta测试阶段,其API及接口方法定义可能会在后续版本升级而有较大修改，请注意您的插件适用版本。
->
-> Nacos 的轨迹追踪不同于一般意义的链路追踪， 主要目的是追踪和记录一些Nacos的相关操作，如服务注册、注销、推送、状态变更等，并非追踪微服务间的相互访问链路，如需要监控追踪服务间的相互访问，请使用对应的链路追踪项目。
+它不是应用服务之间的分布式链路追踪。如果需要观察业务服务之间的调用链，请使用 OpenTelemetry、SkyWalking、Zipkin 等链路追踪体系。
 
-## 轨迹追踪插件中的概念
+## 适用场景
 
-### 追踪事件 TraceEvent
+- 记录服务注册、注销、订阅、推送等 Naming 事件。
+- 记录实例健康状态变化原因，辅助排查实例上下线抖动。
+- 将 Nacos 资源操作写入日志、审计系统或观测平台。
+- 订阅 AI 资源生命周期事件，保留资源发布、上线、下线、删除等审计记录。
 
-Nacos 在关键操作的链路中进行了埋点，定义了一系列的追踪事件`TraceEvent`， 将多个针对相同资源（如服务，配置等）的追踪事件串起来之后，便得到了该资源的轨迹。
+## 工作模型
 
-在追踪事件`TraceEvent`中，会包含如下内容：
+Trace 插件实现 `NacosTraceSubscriber`。Nacos 启动时通过 SPI 加载订阅者，并按订阅者声明的事件类型分发事件。
 
-|字段名|描述|
-|-----|---|
-|type|事件的类型，由具体事件定义|
-|eventTime|事件发生的时间|
-|namespaceId|事件对应资源的命名空间ID|
-|group| 事件对应资源的分组名|
-|name | 事件对应资源的资源名，如服务名或配置的dataId|
+| 概念 | 说明 |
+|-----|------|
+| `TraceEvent` | Trace 基础事件，包含事件类型、发生时间、命名空间、分组和资源名。 |
+| 领域事件 | `TraceEvent` 的子类，例如 Naming 事件和 AI 资源事件。 |
+| 订阅者 | 插件实现的事件消费者，只会收到自己订阅的事件类型。 |
+| `executor()` | 可选执行器。返回非空值时，Nacos 使用该执行器调用 `onEvent()`。 |
 
-目前Nacos中已经定义的子追踪事件类型有：
+:::note
+Trace 插件属于观测扩展，不应拥有主业务决策权。插件失败不能影响 Nacos 核心数据变更和请求处理。
+:::
 
-|事件名|描述|详情|
-|-----|---|---|
-|RegisterInstanceTraceEvent|服务实例注册事件，主要发生于注册服务提供者时|[事件详情](#1.1)|
-|DeregisterInstanceTraceEvent|服务实例注销事件，主要发生于注销服务提供者时|[事件详情](#1.2)|
-|RegisterServiceTraceEvent|服务注册事件，不同于`服务实例注册事件`，主要发生于创建空服务时|[事件详情](#1.3)|
-|DeregisterServiceTraceEvent|服务注销事件，不同于`服务实例注销事件`，主要发生于删除空服务时|[事件详情](#1.4)|
-|SubscribeServiceTraceEvent|服务订阅事件，主要发生于订阅服务时|[事件详情](#1.5)|
-|UnsubscribeServiceTraceEvent|取消服务订阅事件，主要发生于取消订阅服务时|[事件详情](#1.6)|
-|PushServiceTraceEvent|服务推送事件，主要发生于发生服务推送时|[事件详情](#1.7)|
-|HealthStateChangeTraceEvent|服务实例健康状态变更事件，主要发生于实例因心跳/健康检查而导致实例健康状态变化时|[事件详情](#1.8)|
+## 当前事件类型
 
-## 插件开发
+Naming 相关事件：
 
-开发Nacos服务端轨迹追踪插件，首先需要依赖轨迹追踪插件的相关API
+| 事件类 | Event type | 含义 |
+|--------|------------|------|
+| `RegisterInstanceTraceEvent` | `REGISTER_INSTANCE_TRACE_EVENT` | 实例注册。 |
+| `BatchRegisterInstanceTraceEvent` | `BATCH_REGISTER_INSTANCE_TRACE_EVENT` | 批量实例注册。 |
+| `DeregisterInstanceTraceEvent` | `DEREGISTER_INSTANCE_TRACE_EVENT` | 实例注销。 |
+| `RegisterServiceTraceEvent` | `REGISTER_SERVICE_TRACE_EVENT` | 空服务创建。 |
+| `DeregisterServiceTraceEvent` | `DEREGISTER_SERVICE_TRACE_EVENT` | 空服务删除。 |
+| `UpdateInstanceTraceEvent` | `UPDATE_INSTANCE_TRACE_EVENT` | 实例元数据或状态更新。 |
+| `UpdateServiceTraceEvent` | `UPDATE_SERVICE_TRACE_EVENT` | 服务元数据更新。 |
+| `SubscribeServiceTraceEvent` | `SUBSCRIBE_SERVICE_TRACE_EVENT` | 服务订阅。 |
+| `UnsubscribeServiceTraceEvent` | `UNSUBSCRIBE_SERVICE_TRACE_EVENT` | 取消服务订阅。 |
+| `PushServiceTraceEvent` | `PUSH_SERVICE_TRACE_EVENT` | 向订阅者推送服务数据。 |
+| `HealthStateChangeTraceEvent` | `HEALTH_STATE_CHANGE_TRACE_EVENT` | 实例健康状态变化。 |
 
-```xml
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-trace-plugin</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+AI 资源相关事件：
+
+| 事件类 | Event type | 含义 |
+|--------|------------|------|
+| `AiResourceTraceEvent` | `AI_RESOURCE_TRACE_EVENT` | AI 资源生命周期操作，例如创建、评审、发布、上线、下线、删除、标签更新和 scope 更新。 |
+
+`DeregisterInstanceTraceEvent` 会携带注销原因。常见值包括 `REQUEST`、`NATIVE_DISCONNECTED`、`SYNCED_DISCONNECTED` 和 `HEARTBEAT_EXPIRE`。
+
+Nacos 默认提供了 AI 资源 Trace 日志订阅者，会将 `AiResourceTraceEvent` 写入 `ai-resource-trace.log`，用于兼容 AI 资源审计日志。
+
+## 启用插件
+
+将插件 JAR 放入 `${nacos.home}/plugins`，或加入 Nacos Server 启动 classpath。插件实现需要通过 `META-INF/services/com.alibaba.nacos.plugin.trace.spi.NacosTraceSubscriber` 声明。
+
+启动后，可在 `${nacos.home}/logs/nacos.log` 中查看加载日志：
+
+```text
+[TracePluginManager] Load NacosTraceSubscriber(...) name(...) successfully.
 ```
 
-`${project.version}` 为您开发插件所对应的Nacos版本
+Nacos 3.2 起，Trace 插件也会暴露给统一插件管理，插件类型为 `trace`。如果关闭了某个 Trace 插件，Nacos 不会再向该订阅者分发事件。
 
-随后实现`com.alibaba.nacos.plugin.trace.spi.NacosTraceSubscriber`接口， 并将您的实现添加到SPI的services当中。
+## 开发插件
 
-接口中需要实现的方法如下：
+插件依赖：
 
-|方法名|入参内容|返回内容|描述|
-|-----|-----|-----|---|
-|getName|void|String|插件的名称，当名字相同时，后加载的插件会覆盖先加载的插件。|
-|subscribeTypes|void|List<Class<? extends TraceEvent>>|该插件期望订阅的事件类型，返回空列表是不订阅。|
-|onEvent|TraceEvent|void|处理事件的具体逻辑，输入的具体事件类型由`subscribeTypes`接口定义|
-|executor|void|Executor|当返回不为`null`时，将使用该Executor进行`onEvent`调用，否则将使用事件分发线程进行调用|
+```xml
+<dependency>
+    <groupId>com.alibaba.nacos</groupId>
+    <artifactId>nacos-trace-plugin</artifactId>
+    <version>${project.version}</version>
+</dependency>
+```
 
-> 注意:
-> 建议插件实现时使用独立Executor，如插件实现中有存在阻塞的IO操作，当存在IO异常时将阻塞其他事件的onEvent调用，导致积压问题。
+实现 `com.alibaba.nacos.plugin.trace.spi.NacosTraceSubscriber`：
 
-在[nacos-group/nacos-plugin](https://github.com/nacos-group/nacos-plugin)中，有一个demo的轨迹追踪插件实现，该demo插件订阅了注册及注销实例的事件，并打印到日志中。
+| 方法 | 说明 |
+|-----|------|
+| `getName()` | 稳定订阅者名称。重复名称会被后加载的实现覆盖。 |
+| `subscribeTypes()` | 返回希望订阅的事件类列表。 |
+| `onEvent(event)` | 处理事件。 |
+| `executor()` | 可选执行器。涉及慢 IO 时建议返回独立线程池。 |
 
-## 轨迹追踪插件的降级
+最小示例：
 
-由于轨迹追踪插件增强监控类别的插件，不会对Nacos的数据造成影响，因此当轨迹追踪插件出现问题时，因尽量不影响Nacos主要链路。
+```java
+public class NamingAuditTraceSubscriber implements NacosTraceSubscriber {
 
-因此建议插件实现时使用独立Executor，如插件实现中有存在阻塞的IO操作，当存在IO异常时将阻塞其他事件的onEvent调用，导致积压问题。
+    @Override
+    public String getName() {
+        return "naming-audit";
+    }
 
-如果不幸发生积压，轨迹追踪插件的事件队列达到上限时，会自动丢弃后来的事件，以保证系统整体稳定性。
+    @Override
+    public List<Class<? extends TraceEvent>> subscribeTypes() {
+        return Collections.singletonList(RegisterInstanceTraceEvent.class);
+    }
 
-发生丢弃时能从`nacos.log`中看到`Trace Event Publish failed, event : {}, publish queue size : {}`字样。
+    @Override
+    public void onEvent(TraceEvent event) {
+        // Write audit log or send to an observability backend.
+    }
+}
+```
 
-## 附录：子追踪事件详情
+## 降级和稳定性
 
-<h3 id="1.1">服务实例注册事件 RegisterInstanceTraceEvent</h3>
+Trace publisher 使用队列分发事件。队列压力过大时，Nacos 可以丢弃新的 Trace 事件以保护服务端稳定性。发生丢弃时，日志中会出现类似信息：
 
-> 2.2.0版本开始支持。
+```text
+Trace Event Publish failed, event : ..., publish queue size : ...
+```
 
-type: `REGISTER_INSTANCE_TRACE_EVENT`
+生产建议：
 
-额外内容：
+- 写远端系统、文件、数据库或消息队列时，使用独立 `Executor`。
+- 为外部 sink 设置超时、限流和失败重试策略。
+- 不要在 `onEvent()` 中修改 Nacos 资源。
+- 不要把敏感信息写入 Trace 日志。
+- 事件丢弃代表观测数据不完整，不代表 Nacos 主流程失败。
 
-|字段名|描述|
-|-----|---|
-|clientIp|注册服务实例请求的来源IP，可能为null|
-|rpc|来源是否为gRPC，`true`时为gRPC注册，`false`时为HTTP注册|
-|instanceIp|所注册实例的地址IP/HOST|
-|instancePort|所注册实例的端口PORT|
+## 排查
 
-<h3 id="1.2">服务实例注销事件 DeregisterInstanceTraceEvent</h3>
-
-> 2.2.0版本开始支持。
-
-type: `DEREGISTER_INSTANCE_TRACE_EVENT`
-
-额外内容：
-
-|字段名|描述|
-|-----|---|
-|clientIp|注销服务实例请求的来源IP，可能为null|
-|reason|注销服务实例的原因，详情见[服务实例注销原因](#1.2.1)|
-|rpc|来源是否为gRPC，`true`时为gRPC注册，`false`时为HTTP注册|
-|instanceIp|所注销实例的地址IP/HOST|
-|instancePort|所注销实例的端口PORT|
-
-<h4 id="1.2.1"> 服务实例注销原因 DeregisterInstanceReason </h4>
-
-|原因|描述|
-|-----|---|
-|REQUEST|注销来自于客户端请求，即由用户发起的注销|
-|NATIVE_DISCONNECTED|注销来自于客户端链接断开|
-|SYNCED_DISCONNECTED|注销来自于客户端链接断开，但该客户端链接是与集群其他的节点，断开后同步到本节点的|
-|HEARTBEAT_EXPIRE|注销来自于客户端心跳请求超时，适用于1.X版本的客户端|
-
-<h3 id="1.3">服务注册事件 RegisterServiceTraceEvent</h3>
-
-> 2.2.0版本开始支持。
-
-type: `REGISTER_SERVICE_TRACE_EVENT`
-
-额外内容：无
-
-<h3 id="1.4">服务注销事件 DeregisterServiceTraceEvent</h3>
-
-> 2.2.0版本开始支持。
-
-type: `DEREGISTER_SERVICE_TRACE_EVENT`
-
-额外内容：无
-
-<h3 id="1.5">服务订阅事件 SubscribeServiceTraceEvent</h3>
-
-> 2.2.0版本开始支持。
-
-type: `SUBSCRIBE_SERVICE_TRACE_EVENT`
-
-额外内容：
-
-|字段名|描述|
-|-----|---|
-|clientIp|订阅者IP|
-
-<h3 id="1.6">取消服务订阅事件 UnsubscribeServiceTraceEvent</h3>
-
-> 2.2.0版本开始支持。
-
-type: `UNSUBSCRIBE_SERVICE_TRACE_EVENT`
-
-额外内容：
-
-|字段名|描述|
-|-----|---|
-|clientIp|订阅者IP|
-
-<h3 id="1.7">服务推送事件 PushServiceTraceEvent</h3>
-
-> 2.2.0版本开始支持。
-
-type: `PUSH_SERVICE_TRACE_EVENT`
-
-额外内容：
-
-|字段名|描述|
-|-----|---|
-|clientIp|订阅者IP|
-|instanceSize|本次推送的提供者数量|
-|pushCostTimeForAll|本次推送总耗时，定义为开始发起推送到推送结束时的耗时，包含了在聚合队列中的等待时间以及执行推送的时间|
-|pushCostTimeForNetWork|本次推送的网络耗时，定义为执行推送到推送结束的耗时，仅包含了网络耗时|
-|serviceLevelAgreementTime|本次推送的实际生效耗时，定义为服务变更到推送结束时的耗时，粗略值|
-
-<h3 id="1.8">服务实例健康状态变更事件 HealthStateChangeTraceEvent</h3>
-
-> 2.2.0版本开始支持。
-
-type: `HEALTH_STATE_CHANGE_TRACE_EVENT`
-
-额外内容：
-
-|字段名|描述|
-|-----|---|
-|instanceIp|实例的地址IP/HOST|
-|instancePort|实例的端口PORT|
-|isHealthy|变更结果是否为健康|
-|healthCheckType|健康检查的类型|
-|healthStateChangeReason|健康状态发生的原因|
+| 现象 | 排查方向 |
+|-----|---------|
+| 插件没有收到事件 | 检查 JAR、`META-INF/services`、`getName()` 和 `subscribeTypes()`。 |
+| 事件处理阻塞 | 检查是否在 `onEvent()` 中执行慢 IO，必要时实现 `executor()`。 |
+| 日志出现 Trace Event Publish failed | 说明 Trace 队列压力过大，检查订阅者处理速度和外部 sink。 |
+| 同名插件行为异常 | 检查是否有多个订阅者返回相同 `getName()`。 |

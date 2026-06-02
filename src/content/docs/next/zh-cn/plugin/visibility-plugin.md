@@ -3,7 +3,7 @@ title: 可见性插件
 keywords: [可见性, 插件, 鉴权, AI 管理中心]
 description: 本文介绍 Nacos 可见性插件的用途、默认实现、配置方式，以及它和鉴权插件的关系。
 sidebar:
-    order: 2
+    order: 3
 ---
 
 # 可见性插件

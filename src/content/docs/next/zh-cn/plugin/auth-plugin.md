@@ -3,7 +3,7 @@ title: 鉴权插件
 keywords: [鉴权, 插件, RBAC, LDAP, OIDC, OAuth2]
 description: 本文介绍 Nacos 鉴权插件的工作模型、内置实现、默认鉴权实现提供的 v3 Auth API，以及自定义插件开发方式。
 sidebar:
-    order: 1
+    order: 2
 ---
 
 # 鉴权插件

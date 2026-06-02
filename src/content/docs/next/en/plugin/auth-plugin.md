@@ -3,7 +3,7 @@ title: Auth Plugin
 keywords: [Auth, Plugin, RBAC, LDAP, OIDC, OAuth2]
 description: Learn how Nacos auth plugins work, what built-in implementations are available, which v3 Auth APIs belong to the default auth plugin, and how to build custom plugins.
 sidebar:
-    order: 1
+    order: 2
 ---
 
 # Auth Plugin
