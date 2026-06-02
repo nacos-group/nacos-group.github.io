@@ -59,9 +59,12 @@ Nacos 插件大多基于 Java SPI 加载。插件 JAR 中需要在 `META-INF/ser
 | [自定义环境变量插件](./custom-environment-plugin.md) | 在 Nacos 读取配置项时做自定义转换，例如数据库密码解密。 |
 | [流量防护插件](./control-plugin.md) | 对连接数、TPS 等访问流量进行限制，保护服务端稳定性。 |
 | [集群寻址机制](./address-plugin.md) | 配置 Nacos Server 集群成员发现方式，例如 `file` 和 `address-server`。 |
+| [AI 发布 Pipeline 插件](./ai-pipeline-plugin.md) | 在 Skill、Prompt、MCP、AgentSpec 等 AI 资源发布前接入审核、扫描或拦截。 |
+| [AI 资源导入插件](./ai-resource-import-plugin.md) | 从 MCP registry、Skill 市场或企业内部资源库导入 AI 资源。 |
+| [AI 存储插件](./ai-storage-plugin.md) | 为 AI 资源版本内容接入自定义存储 provider。 |
 
 ## 关联建议
 
-如果你只是部署和运维 Nacos，建议优先阅读鉴权、可见性、多数据源、配置加密、流量防护和集群寻址机制。它们直接影响生产环境的安全边界、数据存储和稳定性。
+如果你只是部署和运维 Nacos，建议优先阅读鉴权、可见性、多数据源、配置加密、流量防护、集群寻址机制和 AI 资源导入。它们直接影响生产环境的安全边界、数据存储、稳定性和资源来源。
 
 如果你需要开发插件，建议先读本页，再阅读目标插件的 SPI、加载方式和故障降级说明。不同插件接入点不同，不建议照搬另一个插件的配置项或生命周期。

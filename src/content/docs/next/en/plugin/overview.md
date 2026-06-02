@@ -59,9 +59,12 @@ When developing a plugin, follow these principles:
 | [Custom Environment Plugin](./custom-environment-plugin.md) | Transform server configuration values when Nacos reads them, such as decrypting database passwords. |
 | [Traffic Control](./control-plugin.md) | Limit connection count and TPS to protect Nacos Server stability. |
 | [Cluster Addressing](./address-plugin.md) | Configure how Nacos Server discovers cluster members, such as `file` and `address-server`. |
+| [AI Publish Pipeline](./ai-pipeline-plugin.md) | Run review, scanning, or blocking logic before publishing Skills, Prompts, MCP Servers, AgentSpecs, and other AI resources. |
+| [AI Resource Import](./ai-resource-import-plugin.md) | Import AI resources from MCP registries, Skill marketplaces, or internal catalogs. |
+| [AI Storage](./ai-storage-plugin.md) | Connect custom storage providers for AI resource version content. |
 
 ## Reading Guidance
 
-For deployment and operations, start with auth, visibility, datasource, configuration encryption, traffic control, and cluster addressing. These topics directly affect production security boundaries, storage, and stability.
+For deployment and operations, start with auth, visibility, datasource, configuration encryption, traffic control, cluster addressing, and AI resource import. These topics directly affect production security boundaries, storage, stability, and resource sources.
 
 For plugin development, start with this page, then read the SPI, loading, and failure fallback sections in the target plugin document. Each plugin has a different integration point, so do not copy configuration or lifecycle assumptions from another plugin type.

@@ -110,7 +110,7 @@ If you operate a platform:
 
 - To govern Prompt, Skill, and AgentSpec versions, start with [AI Resource Lifecycle](./ai-resource-lifecycle.md).
 - To manage MCP, Prompt, Skill, AgentSpec, or external AI resource import, see [Admin API](../../admin/admin-api.md) and [Console API](../../admin/console-api.md).
-- To add release checks, security scans, or external resource import, look at Pipeline, import, and visibility capabilities.
+- To add release checks, security scans, or external resource import, start with [AI Publish Pipeline Plugin](../../../plugin/ai-pipeline-plugin.md), [AI Resource Import Plugin](../../../plugin/ai-resource-import-plugin.md), and [Visibility Plugin](../../../plugin/visibility-plugin.md).
 
 ## Resource Lifecycle
 

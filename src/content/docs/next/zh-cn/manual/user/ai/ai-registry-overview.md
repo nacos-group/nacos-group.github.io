@@ -110,7 +110,7 @@ AI 管理中心不是把 AI 资源简单地当成配置或服务。
 
 - 想治理 Prompt、Skill、AgentSpec 的版本，先看 [AI 资源生命周期](./ai-resource-lifecycle.md)。
 - 想管理 MCP、Prompt、Skill、AgentSpec 或导入外部 AI 资源，参考 [运维 API](../../admin/admin-api.md) 和 [控制台 API](../../admin/console-api.md)。
-- 想接入发布审核、安全扫描或外部资源导入，优先关注 Pipeline、导入和可见性相关能力。
+- 想接入发布审核、安全扫描或外部资源导入，优先关注 [AI 发布 Pipeline 插件](../../../plugin/ai-pipeline-plugin.md)、[AI 资源导入插件](../../../plugin/ai-resource-import-plugin.md) 和 [可见性插件](../../../plugin/visibility-plugin.md)。
 
 ## 资源生命周期
 
