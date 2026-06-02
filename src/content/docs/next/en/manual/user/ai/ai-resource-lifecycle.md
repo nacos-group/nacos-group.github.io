@@ -99,7 +99,7 @@ Platform administrators should check three things:
 
 ## Suggestions For Platform Teams
 
-- Enable publish Pipelines for production resources.
+- Enable publish Pipelines for production resources. For setup and extension details, see [AI Publish Pipeline Plugin](../../../plugin/ai-pipeline-plugin.md).
 - Require review or audit notes for force publish.
 - Use namespaces to separate environments.
 - Clean up unused drafts and long-offline versions regularly.

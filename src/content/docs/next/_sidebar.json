@@ -79,6 +79,24 @@
         }
       },
       {
+        "label": "配置管理",
+        "translations": {
+          "en": "Configuration Management"
+        },
+        "autogenerate": {
+          "directory": "manual/user/config"
+        }
+      },
+      {
+        "label": "服务发现",
+        "translations": {
+          "en": "Service Discovery"
+        },
+        "autogenerate": {
+          "directory": "manual/user/naming"
+        }
+      },
+      {
         "label": "客户端API",
         "translations": {
           "en": "Client API"
