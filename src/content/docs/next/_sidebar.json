@@ -47,27 +47,7 @@
         "translations": {
           "en": "Overview"
         },
-        "autogenerate": {
-          "directory": "manual/user/overview"
-        }
-      },
-      {
-        "label": "JAVA SDK",
-        "autogenerate": {
-          "directory": "manual/user/java-sdk"
-        }
-      },
-      {
-        "label": "Golang SDK",
-        "autogenerate": {
-          "directory": "manual/user/go-sdk"
-        }
-      },
-      {
-        "label": "Python SDK",
-        "autogenerate": {
-          "directory": "manual/user/python-sdk"
-        }
+        "link": "docs/manual/user/overview"
       },
       {
         "label": "AI 管理中心",
@@ -79,22 +59,84 @@
         }
       },
       {
-        "label": "配置管理",
+        "label": "配置中心",
         "translations": {
-          "en": "Configuration Management"
+          "en": "Configuration Center"
         },
+        "collapsed": true,
         "autogenerate": {
           "directory": "manual/user/config"
         }
       },
       {
-        "label": "服务发现",
+        "label": "注册中心",
         "translations": {
-          "en": "Service Discovery"
+          "en": "Service Registry"
         },
+        "collapsed": true,
         "autogenerate": {
           "directory": "manual/user/naming"
         }
+      },
+      {
+        "label": "SDK",
+        "translations": {
+          "en": "SDK"
+        },
+        "collapsed": false,
+        "items": [
+          {
+            "label": "SDK 概览",
+            "translations": {
+              "en": "SDK Overview"
+            },
+            "link": "docs/manual/user/overview/other-language"
+          },
+          {
+            "label": "SDK 运行时",
+            "translations": {
+              "en": "SDK Runtime"
+            },
+            "link": "docs/manual/user/sdk/runtime-guide"
+          },
+          {
+            "label": "JAVA SDK",
+            "translations": {
+              "en": "Java SDK"
+            },
+            "collapsed": true,
+            "autogenerate": {
+              "directory": "manual/user/java-sdk"
+            }
+          },
+          {
+            "label": "GO SDK",
+            "translations": {
+              "en": "Go SDK"
+            },
+            "collapsed": true,
+            "autogenerate": {
+              "directory": "manual/user/go-sdk"
+            }
+          },
+          {
+            "label": "PYTHON SDK",
+            "translations": {
+              "en": "Python SDK"
+            },
+            "collapsed": true,
+            "autogenerate": {
+              "directory": "manual/user/python-sdk"
+            }
+          }
+        ]
+      },
+      {
+        "label": "OpenAPI 概览",
+        "translations": {
+          "en": "OpenAPI Overview"
+        },
+        "link": "docs/manual/user/overview/api-overview"
       },
       {
         "label": "客户端API",
