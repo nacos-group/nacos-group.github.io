@@ -3,7 +3,7 @@ title: 流量防护
 keywords: [流量防护, 限流, 连接数限制, TPS, Control Plugin]
 description: 本文介绍 Nacos 流量防护插件的能力、默认实现、规则配置和自定义扩展方式。
 sidebar:
-    order: 7
+    order: 9
 ---
 
 # 流量防护插件

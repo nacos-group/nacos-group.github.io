@@ -3,7 +3,7 @@ title: 配置加密
 keywords: [AES, encryption, 配置加密, 加密插件]
 description: 本文介绍 Nacos 配置加密插件的工作方式、使用步骤、数据表要求和自定义扩展方式。
 sidebar:
-    order: 3
+    order: 5
 ---
 
 # 配置加密插件

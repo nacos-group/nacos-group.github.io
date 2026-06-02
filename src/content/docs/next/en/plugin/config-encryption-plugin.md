@@ -3,7 +3,7 @@ title: Configuration Encryption
 keywords: [AES, encryption, configuration encryption, encryption plugin]
 description: This guide explains how Nacos configuration encryption works, how to use encryption plugins, which schema changes are required, and how to develop a custom plugin.
 sidebar:
-    order: 3
+    order: 5
 ---
 
 # Configuration Encryption Plugin

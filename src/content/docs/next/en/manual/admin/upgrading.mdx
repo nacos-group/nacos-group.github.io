@@ -12,12 +12,12 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## 1. Version Upgrade Compatibility
 
-This document corresponds to version 3.2.0. The compatibility of upgrading from all Nacos versions to this version is as follows:
+This document corresponds to Nacos 3.2.x. Upgrade compatibility for Nacos 3.2.x is as follows:
 
 | Nacos Version | Upgrade Supported | Remarks |
 |---------------|-------------------|---------|
 | 0.X ~ 1.X | No | 0.X ~ 1.X versions must first be upgraded to 2.0 or above. Please refer to the [Nacos 2.0 Upgrade Guide](https://nacos.io/docs/v2/upgrading/200-upgrading/) to upgrade to 2.0 or 2.1 before proceeding. |
-| 2.0.X ~ 3.1.X | Yes | Upgrading from 2.0.X ~ 3.1.X to 3.2.X is supported, but the database schema has changed. Please compare the [mysql-schema.sql](https://github.com/alibaba/nacos/blob/develop/plugin-default-impl/nacos-default-datasource-plugin/nacos-datasource-plugin-mysql/src/main/resources/META-INF/mysql-schema.sql) file before upgrading and apply the new schema. |
+| 2.0.X ~ 3.2.X | Yes | Upgrading from 2.0.X or later to 3.2.X is supported, but the database schema has changed. Compare the schema file for your target database before upgrading and apply the required schema changes first. |
 
 ### 1.1 Client Compatibility
 
@@ -36,9 +36,9 @@ Compatibility between Nacos 3.x server and client versions is as follows:
 
 #### 2.1.1 Verify Database Schema
 
-Compare the `mysql-schema.sql` file of your currently deployed Nacos version with that of the target version to check for schema changes.
+Compare the schema file of your currently deployed Nacos version with the schema file for the target version and target database.
 
-If there are schema changes, apply the database alterations first (MySQL example):
+If there are schema changes, apply the database alterations first. MySQL example:
 
 ```SQL
 -- 从 2.0.X 升级时需要执行下列所有SQL, 从2.1.X之后版本升级仅需执行最后三行。
@@ -111,6 +111,38 @@ CREATE TABLE IF NOT EXISTS `ai_resource_version` (
     KEY `idx_ai_resource_ver_status` (`status`),
     KEY `idx_ai_resource_ver_gmt_modified` (`gmt_modified`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI资源版本表';
+```
+
+If you use PostgreSQL and upgrade from 3.2.1 or earlier to 3.2.2, check whether `tenant_id` in the config-related tables is already `NOT NULL DEFAULT ''` before the upgrade. Nacos 3.2.2 validates the PostgreSQL schema during startup. If older tables still allow `tenant_id` to be null, the server may fail to start. See [alibaba/nacos#15275](https://github.com/alibaba/nacos/issues/15275) for the related discussion.
+
+Before running the migration, check whether `config_info` contains duplicate logical config rows. If multiple rows with the same `data_id` and `group_id` have `tenant_id IS NULL`, clean the conflict first, then run the migration SQL.
+
+```SQL
+SELECT data_id, group_id, COUNT(*)
+FROM config_info
+WHERE tenant_id IS NULL
+GROUP BY data_id, group_id
+HAVING COUNT(*) > 1;
+```
+
+After confirming there is no conflict, run `pg-upgrade-null-tenant-id.sql` from the target Nacos source. The SQL is:
+
+```SQL
+ALTER TABLE config_info ALTER COLUMN tenant_id SET DEFAULT '';
+UPDATE config_info SET tenant_id = '' WHERE tenant_id IS NULL;
+ALTER TABLE config_info ALTER COLUMN tenant_id SET NOT NULL;
+
+ALTER TABLE config_info_gray ALTER COLUMN tenant_id SET DEFAULT '';
+UPDATE config_info_gray SET tenant_id = '' WHERE tenant_id IS NULL;
+ALTER TABLE config_info_gray ALTER COLUMN tenant_id SET NOT NULL;
+
+ALTER TABLE config_tags_relation ALTER COLUMN tenant_id SET DEFAULT '';
+UPDATE config_tags_relation SET tenant_id = '' WHERE tenant_id IS NULL;
+ALTER TABLE config_tags_relation ALTER COLUMN tenant_id SET NOT NULL;
+
+ALTER TABLE his_config_info ALTER COLUMN tenant_id SET DEFAULT '';
+UPDATE his_config_info SET tenant_id = '' WHERE tenant_id IS NULL;
+ALTER TABLE his_config_info ALTER COLUMN tenant_id SET NOT NULL;
 ```
 
 #### 2.1.2. Download the New Version

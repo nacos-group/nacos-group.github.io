@@ -3,7 +3,7 @@ title: Traffic Control
 keywords: [traffic control, rate limit, connection limit, TPS, Control Plugin]
 description: This guide explains how the Nacos control plugin protects the server with connection and TPS limits, and how to configure or extend it.
 sidebar:
-    order: 7
+    order: 9
 ---
 
 # Traffic Control Plugin

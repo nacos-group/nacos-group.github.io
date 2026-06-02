@@ -3,7 +3,7 @@ title: Visibility Plugin
 keywords: [Visibility, Plugin, Auth, AI Registry]
 description: Learn what the Nacos visibility plugin does, how the default implementation works, how to configure it, and how it relates to auth plugins.
 sidebar:
-    order: 2
+    order: 3
 ---
 
 # Visibility Plugin
