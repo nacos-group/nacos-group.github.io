@@ -78,6 +78,8 @@ Nacos 3.0 版本开始，Nacos支持将控制台进行独立部署，通过进�
 
 Nacos控制台独立部署参考文档: [控制台独立部署](./deployment-independent.md)
 
+Before going to production, continue with [Deployment Best Practices](./deployment-best-practices.md) to check internal network boundaries, independent console deployment, external database storage, authentication, visibility, traffic control, configuration encryption, and rollback plans.
+
 ## 4. 多网卡IP选择
 
 当本地环境比较复杂的时候，Nacos服务在启动的时候需要选择运行时使用的IP或者网卡。Nacos从多网卡获取IP参考Spring

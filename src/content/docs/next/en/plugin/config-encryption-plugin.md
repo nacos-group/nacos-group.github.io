@@ -1,82 +1,143 @@
 ---
-title: CONFIGURE ENCRYPTION
-keywords: [AES,ENCRYPTION,CONFIGURE ENCRYPTION]
-description: CONFIGURE ENCRYPTION
+title: Configuration Encryption
+keywords: [AES, encryption, configuration encryption, encryption plugin]
+description: This guide explains how Nacos configuration encryption works, how to use encryption plugins, which schema changes are required, and how to develop a custom plugin.
 sidebar:
     order: 3
 ---
 
-> To ensure the security of users' sensitive configuration data, Nacos provides a new feature of configuration encryption. The risk of user usage is reduced, and the configuration is no longer required to be encrypted separately.
+# Configuration Encryption Plugin
 
-# Preconditions
+Configuration encryption protects sensitive configuration content stored in Nacos. When enabled for a config item, Nacos writes ciphertext to the database and stores the data key in `encrypted_data_key`.
 
-**Version:**
+Configuration encryption does not replace authentication, network isolation, TLS, or an enterprise key management system. It only prevents sensitive configuration content from being stored and exposed as plain text in Nacos storage and selected transfer paths.
 
-The old version is temporarily incompatible. Currently, it is only based on the 2.x version. The recommended version is > 2.0.4.
+## How It Works
 
-**Embedded database startup:**
+Nacos decides whether a config item needs encryption by checking the `dataId` prefix:
 
-The database table config_info, config_info_beta, his_config_info needs to add a new field `encrypted_data_key` to store the key used for encryption of each configuration item. This field has been added to the sql of the new version of the default table creation.
-
-If you have used the single-machine mode of the embedded database before, you need to delete the nacos/data folder, and the table will be recreated after restarting.
-
-**MySQL start:**
-
-The database table config_info, config_info_beta, his_config_info needs to add a new field `encrypted_data_key` to store the key used for encryption of each configuration item. This field has been added to the sql of the new version of the default table creation.
-
-> For the currently built Nacos, use the following sql to add fields to the corresponding table:
->
-> ``ALTER TABLE table_name ADD COLUMN `encrypted_data_key` text  NOT NULL COMMENT '秘钥'``
-
-# Plug-in implementation
-
-![](https://tva1.sinaimg.cn/large/008i3skNly1gvsu112vnnj314b0u0764.jpg)
-
-The operations of encryption and decryption are abstracted through the SPI mechanism, and Nacos provides the implementation of `AES` by default. Users can also customize the implementation of encryption and decryption. The specific implementation is in the [nacos-plugin](https://github.com/nacos-group/nacos-plugin) repository.
-
-When the Nacos server starts, all dependent encryption and decryption algorithms will be loaded, and then by publishing the prefix of the configured `dataId` to match whether encryption and decryption are required and the encryption and decryption algorithms used.
-
-The configuration published by the client will be encrypted and decrypted by the filter on the client side, that is, the configuration is in cipher text during the transmission process. The configuration published by the console will be processed on the server side.
-
-# How to use
-
-The Nacos encryption and decryption plug-in is pluggable, and it does not affect the operation of the core functions of Nacos. If you want to use the configuration encryption and decryption functions of Naocs, you need to refer to the implementation of the encryption algorithm separately. Both the client and the server use the AES encryption and decryption algorithm by adding the following dependencies. The server is recommended to add it to the config module.
-
+```text
+cipher-${algorithmName}-${realDataId}
 ```
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-aes-encryption-plugin</artifactId>
-            <version>${nacos-aes-encryption-plugin.version}</version>
-        </dependency>
+
+Example:
+
+```text
+cipher-aes-application-prod.yaml
 ```
-${nacos-aes-encryption-plugin.version} Get the latest version of the plugin。
 
-> The plugin doesn't upload to Maven Central Repository, you need to compile it by yourslfe
+The flow is:
 
-# How to compile
+1. When a config item is published, Nacos parses the algorithm name from `dataId`, such as `aes`.
+2. Nacos looks for an `EncryptionPluginService` with the same algorithm name.
+3. If found, the plugin generates a data key, encrypts the content, and Nacos stores both ciphertext and `encrypted_data_key`.
+4. When the config item is queried, Nacos uses `encrypted_data_key` and the same plugin to decrypt the content.
+5. If `dataId` does not start with `cipher-`, the config item is handled as a normal plain-text config.
 
-You need to compile `nacos` and install to your local repository,before all the things.
+If `dataId` starts with `cipher-` but the matching plugin is not loaded on the server or client, Nacos logs a warning and keeps processing the original content. In production, verify plugin loading before publishing encrypted configs.
 
-1. `git clone git@github.com:alibaba/nacos.git`
-2. `cd nacos && mvn -B clean package install -Dmaven.test.skip=true`
+## Schema Requirements
 
-> if during this time occur an error that maven can't resolve `${revision}`, you may need to update maven version to latest.
+Configuration encryption depends on the `encrypted_data_key` column. The current default schemas already include this column in:
 
-3. `git clone git@github.com:nacos-group/nacos-plugin.git`
-4. `mvn install`
+- `config_info`
+- `config_info_beta`
+- `config_info_gray`
+- `his_config_info`
 
-Done, enjoy it!
+When upgrading from an older version, compare the schema of your current Nacos version first and add the missing columns before the upgrade. Column types differ across databases, so prefer the schema shipped with the target Nacos version.
 
-Suggestion: upload to your company repository if you can
+## AES Plugin
 
-# Create encryption configuration
+The community plugin repository [nacos-group/nacos-plugin](https://github.com/nacos-group/nacos-plugin) provides an AES encryption plugin:
 
-- Open the Nacos console and click New Configuration.
+```text
+nacos-encryption-plugin-ext/nacos-aes-encryption-plugin
+```
 
-  ![](https://tva1.sinaimg.cn/large/e6c9d24ely1h0cxaklw10j21g20u0ac8.jpg)
-- The configuration prefix uses cipher-[encryption algorithm name]-dataId to identify that the configuration needs to be encrypted, and the system will automatically identify and encrypt it. For example use the AES algorithm to decrypt the configuration: cipher-aes-application-dev.yml.
+The algorithm name is `aes`, so encrypted config `dataId` values use the `cipher-aes-` prefix.
 
-  ![](https://tva1.sinaimg.cn/large/e6c9d24ely1h0cxs40s2tj21b40u0whw.jpg)
-- Click Save to view the database
+## Usage
 
-  ![](https://tva1.sinaimg.cn/large/e6c9d24ely1h0cxwhdc77j21xm0bumz2.jpg)
+### 1. Prepare The Schema
+
+For new deployments, use the schema shipped with the current Nacos version.
+
+For existing clusters, check whether `encrypted_data_key` exists. MySQL example:
+
+```sql
+ALTER TABLE config_info ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
+ALTER TABLE config_info_beta ADD COLUMN `encrypted_data_key` varchar(256) NOT NULL DEFAULT '' COMMENT 'encrypted_data_key';
+ALTER TABLE config_info_gray ADD COLUMN `encrypted_data_key` varchar(256) NOT NULL DEFAULT '' COMMENT 'encrypted_data_key';
+ALTER TABLE his_config_info ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
+```
+
+Back up the database before applying schema changes, and use the official schema of the target Nacos version as the source of truth.
+
+### 2. Deploy The Encryption Plugin
+
+Build or download an encryption plugin JAR that matches your Nacos version, then put it into the server plugin directory:
+
+```bash
+cp nacos-aes-encryption-plugin-*.jar ${nacos.home}/plugins/
+```
+
+If Java SDK applications need to publish or read encrypted configs, make sure those applications also load the same encryption plugin. Otherwise, the client may receive ciphertext or fail to generate the correct `encryptedDataKey` when publishing.
+
+### 3. Publish An Encrypted Config
+
+Create a config item with the `cipher-${algorithmName}-` prefix. AES example:
+
+```text
+Data ID: cipher-aes-application-prod.yaml
+Group: DEFAULT_GROUP
+Content: password: nacos-secret
+```
+
+When publishing from the console, the server handles encryption. When publishing from the Java SDK, the client-side config filter handles encryption first and submits `encryptedDataKey` together with the content.
+
+### 4. Verify The Result
+
+After publishing, verify that:
+
+- The `content` column in the database is not the original plain text.
+- `encrypted_data_key` is not empty.
+- SDK or console queries with the same plugin return the decrypted plain text.
+- Clients without the matching plugin are not used to consume encrypted configs.
+
+## Develop A Custom Encryption Plugin
+
+Implement:
+
+```text
+com.alibaba.nacos.plugin.encryption.spi.EncryptionPluginService
+```
+
+Important methods:
+
+| Method | Description |
+| --- | --- |
+| `algorithmName()` | Returns the stable algorithm name used in `cipher-${algorithmName}-`. |
+| `generateSecretKey()` | Generates the data key for one config item. |
+| `encrypt(secretKey, content)` | Encrypts config content. |
+| `decrypt(secretKey, content)` | Decrypts config content. |
+| `encryptSecretKey(secretKey)` | Encrypts or wraps the data key. |
+| `decryptSecretKey(secretKey)` | Decrypts or unwraps the data key. |
+
+Register the implementation through SPI:
+
+```text
+META-INF/services/com.alibaba.nacos.plugin.encryption.spi.EncryptionPluginService
+```
+
+If your organization uses KMS or HSM, integrate with that system in the custom plugin. Do not hard-code master keys in plugin code.
+
+## Troubleshooting
+
+| Symptom | What to check |
+| --- | --- |
+| Config is not encrypted | Check whether `dataId` starts with `cipher-`, and whether the algorithm name matches plugin `algorithmName()`. |
+| Server logs say the algorithm is not found | Check whether the server loaded the plugin JAR and whether the plugin version matches Nacos. |
+| SDK receives ciphertext | Check whether the client application loaded the same algorithm plugin. |
+| Publish fails after upgrade | Check whether the tables contain `encrypted_data_key`. |
+| Existing plain-text config needs encryption | Create or rename it with the `cipher-${algorithmName}-` prefix, republish it, and make consumers use the new `dataId`. |

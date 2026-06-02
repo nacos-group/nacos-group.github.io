@@ -43,30 +43,21 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 | spring.config.additional-location       | Nacos Server 的额外配置文件路径，除`{nacos.home}/conf/application.properties`外，用户可以添加额外的配置文件          | 文件路径，多个文件路径用逗号分隔 | null       | 
 | nacos.remote.grpc.listen.ip(-D)         | Nacos Server Grpc Port LISTEN IP，Nacos 服务端 Grpc 监听IP，默认绑定全零IP                              | 本机IP             | null       |
 
-#### 1.1.2. 数据库
+#### 1.1.2. Database
 
-| 参数名	                     | 含义	                                                                                                        | 可选值	                                                                                                                                       | 默认值             | 
-|--------------------------|------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|-----------------|
-| spring.sql.init.platform | Nacos Server 使用的数据库类型                                                                                      | mysql/空，指定为空时会根据`nacos.standalone`判断使用derby数据库还是mysql数据库；在使用[数据源插件](../../plugin/datasource-plugin.md)时，可以指定为插件对应的数据库值，比如oracle或postgresql | null            |
-| db.num                   | 数据库数目                                                                                                      | 正整数                                                                                                                                        | 0               |
-| db.url.0                 | 第一个数据库的URL                                                                                                 | 字符串                                                                                                                                        | 空               |
-| db.url.1                 | 第二个数据库的URL，当db.num=2时生效                                                                                    | 字符串                                                                                                                                        | 空               | 
-| db.user                  | 数据库连接的用户名                                                                                                  | 字符串                                                                                                                                        | 空               | 
-| db.password              | 数据库连接的密码                                                                                                   | 字符串                                                                                                                                        | 空               | 
-| db.pool.config.xxx       | 数据库连接池参数，使用的是hikari连接池，参数与hikari连接池相同，如`db.pool.config.connectionTimeout`或`db.pool.config.maximumPoolSize` | 字符串                                                                                                                                        | 同hikariCp对应默认配置 |
+| Property | Meaning | Values | Default |
+| --- | --- | --- | --- |
+| spring.sql.init.platform | Database type used by Nacos Server | `derby`, `mysql`, `postgresql`, `oracle`, empty, or a custom datasource plugin type. `oracle` requires Oracle 12c or later. If empty, Nacos chooses Derby or external storage based on `nacos.standalone`. | null |
+| db.num | Number of database connections | positive integer | 0 |
+| db.url.0 | JDBC URL of the first database connection | string | empty |
+| db.url.1 | JDBC URL of the second database connection, used when `db.num=2` | string | empty |
+| db.user | Database username shared by all connections when indexed usernames are not configured | string | empty |
+| db.password | Database password shared by all connections when indexed passwords are not configured | string | empty |
+| db.pool.config.xxx | HikariCP pool properties, such as `db.pool.config.connectionTimeout` or `db.pool.config.maximumPoolSize` | string | HikariCP defaults |
 
-当前数据库配置支持多数据源。通过`db.num`来指定数据源个数，`db.url.index`为对应的数据库的链接。`db.user`以及`db.password`
-没有设置`index`时,所有的链接都以`db.user`和`db.password`
-用作认证。如果不同数据源的用户名称或者用户密码不一样时，可以通过符号`,`
-来进行切割，或者指定`db.user.index`,`db.user.password`来设置对应数据库链接的用户或者密码。需要注意的是，当`db.user`
-和`db.password`没有指定下标时，因为当前机制会根据`,`进行切割。所以当用户名或者密码存在`,`时，会把`,`
-切割后前面的值当成最后的值进行认证，会导致认证失败。
+The database configuration supports multiple connection URLs within the same database type. Use `db.num` to set the number of connections, and `db.url.0`, `db.url.1`, and so on for JDBC URLs. If `db.user` and `db.password` are not indexed, all connections use the same credentials. If each connection has different credentials, use `db.user.0`, `db.password.0`, `db.user.1`, `db.password.1`, and so on. For database dialects and more database types, see [Datasource Plugin](../../plugin/datasource-plugin.md).
 
-Nacos从1.3版本开始使用HikariCP连接池，但在1.4.1版本前，连接池配置由系统默认值定义，无法自定义配置。在1.4.1后，提供了一个方法能够配置HikariCP连接池。
-`db.pool.config`为配置前缀，`xxx`为实际的hikariCP配置，如`db.pool.config.connectionTimeout`
-或`db.pool.config.maximumPoolSize`等。更多hikariCP的配置请查看[HikariCP](https://github.com/brettwooldridge/HikariCP)
-需要注意的是，url,user,password会由`db.url.n`,`db.user`,`db.password`覆盖，driverClassName则是默认的MySQL8 driver（该版本mysql
-driver支持mysql5.x)
+Nacos uses HikariCP as the connection pool. `db.pool.config` is the prefix for HikariCP properties. If `db.pool.config.driverClassName` is not configured, the default driver class is the MySQL 8 driver.
 
 #### 1.1.2. Remoting
 
@@ -192,41 +183,41 @@ For the relationship between visibility and auth, see [Visibility Plugin](../../
 | nacos.plugin.visibility.enabled | Enable the resource visibility plugin | true/false | true |
 | nacos.plugin.visibility.type | Selected visibility plugin type | nacos/custom plugin type | nacos |
 
-#### 1.8.3. 数据源插件
+#### 1.8.3. Datasource plugin
 
-其他和数据库相关的开发，请参考[全局参数-数据库](#112-数据库)
+For database configuration and datasource plugin details, see [Database](#112-database) and [Datasource Plugin](../../plugin/datasource-plugin.md).
 
-| 参数名	                                | 含义	                                                                       | 可选值	                                                                                                                                       | 默认值   |
-|-------------------------------------|---------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|-------|
-| spring.sql.init.platform            | Nacos Server 使用的数据库类型                                                     | mysql/空，指定为空时会根据`nacos.standalone`判断使用derby数据库还是mysql数据库；在使用[数据源插件](../../plugin/datasource-plugin.md)时，可以指定为插件对应的数据库值，比如oracle或postgresql | null  |
-| nacos.plugin.datasource.log.enabled | Nacos Server 是否开启SQL日志打印，开启后会打印每一次执行的SQL，方便进行插件开发时的问题排查，但是较为损耗性能，日常状态建议关闭 | true/false                                                                                                                                 | false |
+| Property | Meaning | Values | Default |
+| --- | --- | --- | --- |
+| spring.sql.init.platform | Database type used by Nacos Server | `derby`, `mysql`, `postgresql`, `oracle`, empty, or a custom datasource plugin type. `oracle` requires Oracle 12c or later | null |
+| nacos.plugin.datasource.log.enabled | Whether to print SQL logs. Useful for plugin development and troubleshooting, but expensive for daily production use | true/false | false |
 
-#### 1.8.4. 环境变量插件
+#### 1.8.4. Environment plugin
 
-关于如何开发环境变量插件，请参考[环境变量插件](../../plugin/custom-environment-plugin.md)
+For development details, see [Custom Environment Plugin](../../plugin/custom-environment-plugin.md).
 
-| 参数名	                             | 含义	                     | 可选值	       | 默认值   |
-|----------------------------------|-------------------------|------------|-------|
-| nacos.custom.environment.enabled | Nacos Server 是否开启环境变量插件 | true/false | false |
+| Property | Meaning | Values | Default |
+| --- | --- | --- | --- |
+| nacos.custom.environment.enabled | Enable the custom environment plugin | true/false | false |
 
 #### 1.8.5. Control plugin
 
-The control plugin protects the server with request-rate and connection-count limits. The English plugin guide is not available yet.
+The control plugin protects the server with request-rate and connection-count limits. For details, see [Traffic Control Plugin](../../plugin/control-plugin.md).
 
-| 参数名	                                       | 含义	                           | 可选值	            | 默认值                 | 
-|--------------------------------------------|-------------------------------|-----------------|---------------------|
-| nacos.plugin.control.manager.type          | Nacos反脆弱插件的类型                 | nacos/其他自定义插件类型 | null                |
-| nacos.plugin.control.rule.external.storage | Nacos反脆弱插件，反脆弱规则外部存储类型，需要自行实现 | 字符串             | null                |
-| nacos.plugin.control.rule.local.basedir    | Nacos反脆弱插件，反脆弱规则本地存储目录        | 文件路径            | ${nacos.home}/data/ |
+| Property | Meaning | Values | Default |
+| --- | --- | --- | --- |
+| nacos.plugin.control.manager.type | Selected traffic control plugin type | `nacos` or a custom plugin type | null |
+| nacos.plugin.control.rule.external.storage | External rule storage type. Requires a custom implementation | string | null |
+| nacos.plugin.control.rule.local.basedir | Base directory for local traffic control rules. Rules are stored under `data/connection` and `data/tps` in this directory | file path | `${nacos.home}` |
 
-#### 1.8.5. 配置变更插件
+#### 1.8.6. Config change plugin
 
-反脆弱插件的开发，请参考[配置变更插件](../../plugin/config-change-plugin.md)
+For development details, see [Config Change Plugin](../../plugin/config-change-plugin.md).
 
-| 参数名	                                                                               | 含义	                     | 可选值	       | 默认值   | 
-|------------------------------------------------------------------------------------|-------------------------|------------|-------|
-| nacos.core.config.plugin.${configChangePluginName}.enabled=true                    | Nacos Server 是否开启配置变更插件 | true/false | false |
-| nacos.core.config.plugin.${configChangePluginName}.${propertyKey}=${propertyValue} | 配置变更插件的配置项              | 插件自定义      | 插件自定义 |
+| Property | Meaning | Values | Default |
+| --- | --- | --- | --- |
+| nacos.core.config.plugin.${configChangePluginName}.enabled=true | Enable a config change plugin | true/false | false |
+| nacos.core.config.plugin.${configChangePluginName}.${propertyKey}=${propertyValue} | Plugin-specific configuration | plugin-specific | plugin-specific |
 
 ### 1.9. 控制台
 
