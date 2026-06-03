@@ -1,60 +1,108 @@
 ---
-title: 使用Nacos作为Prometheus SD协议提供方
-keywords: [Nacos, Prometheus, Service Discovery]
-description: 本文简单介绍Nacos如何作为Prometheus SD协议提供方
+title: 使用 Nacos 提供 Prometheus 服务发现
+keywords: [Nacos, Prometheus, Service Discovery, HTTP SD]
+description: 了解如何让 Prometheus 通过 Nacos 服务发现动态获取业务应用抓取目标。
 sidebar:
     order: 11
 ---
 
-# 使用Nacos作为Prometheus SD协议提供方
+# 使用 Nacos 提供 Prometheus 服务发现
 
-Nacos 支持提供特定 [Prometheus SD](https://prometheus.io/docs/prometheus/latest/http_sd/) 协议的HTTP API，让Prometheus能够自动发现注册在Nacos上的微服务端点，并通过此端点自动获取对应的metrics数据。
+Nacos 可以把服务发现中的实例列表转换为 Prometheus 可读取的 HTTP Service Discovery 数据。这样 Prometheus 不需要静态维护每个业务应用实例地址，可以定期从 Nacos 获取最新 target。
 
-关于如何在Prometheus上配置SD协议，请查询[Prometheus SD](https://prometheus.io/docs/prometheus/latest/http_sd/)相关文档，本文档不再赘述，本文档仅介绍Nacos所提供的HTTP SD API及注意事项。
+:::note
+本文说明的是“Prometheus 如何发现注册在 Nacos 上的业务应用实例”。它不是 Nacos Server 自身监控指标的开启方式。采集 Nacos Server 指标请阅读[监控手册](../manual/admin/monitor.md)。
+:::
 
-## 开启Nacos 的 Prometheus SD 支持
+## 使用前确认
 
-Nacos的Prometheus SD 支持是**默认关闭**的， 当需要使用时，修改配置文件`application.properties`，将`nacos.prometheus.metrics.enabled`设置为`true`后重新启动Nacos Server即可。
+- 业务应用已经注册到 Nacos 服务发现。
+- Prometheus 能访问 Nacos Server 的 HTTP 端口。
+- 业务应用自身已经暴露 Prometheus 可抓取的 metrics 端口和路径。
+- Nacos Server 与 Prometheus 都运行在可信内部网络中。
 
-> 注意，默认情况下，Nacos的Prometheus SD HTTP API 是**不鉴权**的，即所有请求都允许访问，请参考[Nacos 的 Prometheus SD HTTP API 的鉴权](#nacos-的-prometheus-sd-http-api-的鉴权)开启鉴权或自行限制可访此地址的网络范围。
+## 开启能力
 
-## Nacos 的 Prometheus SD HTTP API 
+Nacos 的 Prometheus 服务发现能力默认关闭。需要在 `application.properties` 中开启：
 
-Nacos的Prometheus SD HTTP API 提供了以下三个接口：
+```properties
+nacos.prometheus.metrics.enabled=true
+```
 
-- `GET ${nacos.server.contextPath}/prometheus`
-  - 获取当前集群中所有命名空间下的所有服务实例信息
-- `GET ${nacos.server.contextPath}/prometheus/namespaceId/${namespaceId}`
-  - 获取指定命名空间下的所有服务实例信息
-- `GET ${nacos.server.contextPath}/prometheus/namespaceId/{namespaceId}/service/{service}`
-  - 获取指定命名空间下的指定服务实例信息 
+修改后重启 Nacos Server。
 
-其中，`${nacos.server.contextPath}`为Nacos Server的访问路径，默认为`/nacos`。
+这个配置只影响 Prometheus 服务发现接口，不会开启 `/actuator/prometheus`。如果你要采集 Nacos Server 自身指标，需要配置：
 
-接口的返回内容遵循[Prometheus SD](https://prometheus.io/docs/prometheus/latest/http_sd/)协议，大致内容如下:
+```properties
+management.endpoints.web.exposure.include=prometheus
+```
+
+## 接口列表
+
+`${nacos.server.contextPath}` 为 Nacos Server 的访问路径，默认是 `/nacos`。
+
+| 接口 | 说明 |
+| --- | --- |
+| `GET ${nacos.server.contextPath}/prometheus` | 返回当前集群中全部命名空间下的服务实例。 |
+| `GET ${nacos.server.contextPath}/prometheus/namespaceId/{namespaceId}` | 返回指定命名空间下的服务实例。 |
+| `GET ${nacos.server.contextPath}/prometheus/namespaceId/{namespaceId}/service/{service}` | 返回指定命名空间和服务下的服务实例。 |
+
+返回内容是 Prometheus HTTP Service Discovery 格式：
 
 ```json
 [
   {
     "targets": [
-      "127.0.0.1:9999"
+      "127.0.0.1:8080"
     ],
     "labels": {
       "__meta_clusterName": "DEFAULT",
-      "__custom_metadata": "false"
+      "env": "prod",
+      "version": "1.0.0"
     }
   }
 ]
 ```
 
-其中`__meta_clusterName` 为实例的集群名称，`__custom_metadata` 为是否自定义元数据，即注册服务实例时填写的实例元数据。
+`targets` 来自 Nacos 实例的 `ip` 和 `port`。`labels` 中包含实例集群名 `__meta_clusterName`，也会包含实例元数据。元数据 key 中的 `.` 和 `-` 会被转换为 `_`，以便符合 Prometheus label 命名习惯。
 
-## Nacos 的 Prometheus SD HTTP API 的鉴权
+## Prometheus 配置示例
 
-Nacos 的 Prometheus SD HTTP API被定义为`Client`类型的业务API，此类型API默认情况下**不开启鉴权**，需参考[鉴权文档](../manual/admin/auth.mdx) 开启鉴权。
+下面示例让 Prometheus 从 Nacos 获取指定命名空间中的业务应用实例：
 
-开启鉴权后，需通过`Basic Auth`方案进行身份信息的传递, 如：
+```yaml
+scrape_configs:
+  - job_name: nacos-services
+    http_sd_configs:
+      - url: http://127.0.0.1:8848/nacos/prometheus/namespaceId/public
+        refresh_interval: 30s
+```
+
+如果业务应用的 metrics 路径不是 Prometheus 默认路径，需要在 Prometheus 中继续配置 `metrics_path` 或 relabel 规则。
+
+## 鉴权和网络边界
+
+默认情况下，不应把 Prometheus 服务发现接口暴露给公网。请通过内网、网关、网络策略或防火墙限制访问来源。
+
+开启 Nacos 鉴权后，受保护的 Prometheus 服务发现接口需要使用 Basic Auth 传递身份信息：
 
 ```shell
-curl "localhost:8848/nacos/prometheus" -H "Authorization: Basic [base64_encode(username:password)]"
+curl "http://127.0.0.1:8848/nacos/prometheus" \
+  -H "Authorization: Basic ${base64_encode_username_password}"
 ```
+
+鉴权配置请阅读[鉴权手册](../manual/admin/auth.mdx)。
+
+## 常见问题
+
+**开启 `nacos.prometheus.metrics.enabled=true` 后，为什么没有 Nacos Server 指标？**
+
+这是预期行为。该配置只开启 Prometheus 服务发现接口。Nacos Server 自身指标请阅读[监控手册](../manual/admin/monitor.md)。
+
+**Prometheus 能拿到 target，但抓取失败怎么办？**
+
+检查业务应用实例的 `ip`、`port`、metrics 路径和网络连通性。Nacos 只提供服务发现中的实例地址，不会替业务应用暴露 metrics。
+
+**返回结果为空怎么办？**
+
+检查命名空间、服务名、实例是否已注册，以及 Prometheus 访问的 Nacos Server 是否连接到同一个集群。
