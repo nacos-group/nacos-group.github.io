@@ -283,6 +283,16 @@
     }
   },
   {
+    "label": "实验性功能",
+    "translations": {
+      "en": "Experimental Features"
+    },
+    "collapsed": true,
+    "autogenerate": {
+      "directory": "experimental"
+    }
+  },
+  {
     "label": "开源共建",
     "translations": {
       "en": "Contributor Guide"
