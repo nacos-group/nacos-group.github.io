@@ -70,38 +70,38 @@ The response fields are described below:
 
 The following table summarizes common error codes and messages:
 
-| 错误码     | 提示信息                         | 含义                 |
-|---------|------------------------------|--------------------|
-| `0`     | `success`                    | 成功执行               |
-| `10000` | `parameter missing`          | 参数缺失               |
-| `10001` | `access denied`              | 访问拒绝               |
-| `10002` | `data access error`          | 数据访问错误             |
-| `20001` | `'tenant' parameter error`   | `tenant`参数错误       |
-| `20002` | `parameter validate error`   | 参数验证错误             |
-| `20003` | `MediaType Error`            | 请求的`MediaType`错误   |
-| `20004` | `resource not found`         | 资源未找到              |
-| `20005` | `resource conflict`          | 资源访问冲突             |
-| `20006` | `config listener is null`    | 监听配置为空             |
-| `20007` | `config listener error`      | 监听配置错误             |
-| `20008` | `invalid dataId`             | 无效的`dataId`（鉴权失败）  |
-| `20009` | `parameter mismatch`         | 请求参数不匹配            |
-| `21000` | `service name error`         | `serviceName`服务名错误 |
-| `21001` | `weight error`               | `weight`权重参数错误     |
-| `21002` | `instance metadata error`    | 实例`metadata`元数据错误  |
-| `21003` | `instance not found`         | `instance`实例不存在    |
-| `21004` | `instance error`             | `instance`实例信息错误   |
-| `21005` | `service metadata error`     | 服务`metadata`元数据错误  |
-| `21006` | `selector error`             | 访问策略`selector`错误   |
-| `21007` | `service already exist`      | 服务已存在              |
-| `21008` | `service not exist`          | 服务不存在              |
-| `21009` | `service delete failure`     | 存在服务实例，服务删除失败      |
-| `21010` | `healthy param miss`         | `healthy`参数缺失      |
-| `21011` | `health check still running` | 健康检查仍在运行           |
-| `22000` | `illegal namespace`          | 命名空间`namespace`不合法 |
-| `22001` | `namespace not exist`        | 命名空间不存在            |
-| `22002` | `namespace already exist`    | 命名空间已存在            |
-| `23000` | `illegal state`              | 状态`state`不合法       |
-| `23001` | `node info error`            | 节点信息错误             |
-| `23002` | `node down failure`          | 节点离线操作出错           |
+| Error Code | Message                      | Meaning                                      |
+|------------|------------------------------|----------------------------------------------|
+| `0`        | `success`                    | The operation succeeded.                     |
+| `10000`    | `parameter missing`          | A required parameter is missing.             |
+| `10001`    | `access denied`              | Access is denied.                            |
+| `10002`    | `data access error`          | A data access error occurred.                |
+| `20001`    | `'tenant' parameter error`   | The `tenant` parameter is invalid.           |
+| `20002`    | `parameter validate error`   | Parameter validation failed.                 |
+| `20003`    | `MediaType Error`            | The request `MediaType` is invalid.          |
+| `20004`    | `resource not found`         | The resource was not found.                  |
+| `20005`    | `resource conflict`          | A resource conflict occurred.                |
+| `20006`    | `config listener is null`    | The configuration listener is empty.         |
+| `20007`    | `config listener error`      | A configuration listener error occurred.     |
+| `20008`    | `invalid dataId`             | The `dataId` is invalid, often due to auth failure. |
+| `20009`    | `parameter mismatch`         | Request parameters do not match.             |
+| `21000`    | `service name error`         | The `serviceName` parameter is invalid.      |
+| `21001`    | `weight error`               | The `weight` parameter is invalid.           |
+| `21002`    | `instance metadata error`    | Instance `metadata` is invalid.              |
+| `21003`    | `instance not found`         | The `instance` does not exist.               |
+| `21004`    | `instance error`             | Instance information is invalid.             |
+| `21005`    | `service metadata error`     | Service `metadata` is invalid.               |
+| `21006`    | `selector error`             | The access policy `selector` is invalid.     |
+| `21007`    | `service already exist`      | The service already exists.                  |
+| `21008`    | `service not exist`          | The service does not exist.                  |
+| `21009`    | `service delete failure`     | Service deletion failed because instances still exist. |
+| `21010`    | `healthy param miss`         | The `healthy` parameter is missing.          |
+| `21011`    | `health check still running` | The health check is still running.           |
+| `22000`    | `illegal namespace`          | The `namespace` is invalid.                  |
+| `22001`    | `namespace not exist`        | The namespace does not exist.                |
+| `22002`    | `namespace already exist`    | The namespace already exists.                |
+| `23000`    | `illegal state`              | The `state` is invalid.                      |
+| `23001`    | `node info error`            | Node information is invalid.                 |
+| `23002`    | `node down failure`          | The node offline operation failed.           |
 | ...     | ...                          | ...                |
-| `30000` | `server error`               | 其他内部错误             |
+| `30000`    | `server error`               | Other internal server errors.                |
