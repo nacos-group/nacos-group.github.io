@@ -11,11 +11,23 @@ sidebar:
 Nacos 提供了若干开放的控制台API，当您有自定义开发Nacos对应的控制台UI需求时，您可以通过这些API，获取Nacos
 Server节点中的数据，从而实现自定义的Nacos控制台UI界面。
 
-同时配合关闭Nacos 默认控制台UI来使用自定义UI，相关详情请参考[控制台手册-关闭默认控制台](./console/#33-关闭默认控制台)
+如果需要关闭默认控制台 UI 并接入自定义 UI，请先阅读[控制台手册](./console.md)，确认控制台入口、端口和 UI 开关配置。
 
 ## 0. 控制台API 相关说明
 
-### 0.1. 统一路径格式
+### 0.1. 适用边界
+
+控制台 API 面向 Nacos 控制台和自定义控制台 UI。它服务于页面展示、表单提交和控制台交互流程。
+
+| 适合使用 | 不适合使用 |
+| --- | --- |
+| 自定义 Nacos 控制台 UI。 | 业务应用运行时访问配置和服务。 |
+| 对接默认控制台已有的页面数据和交互流程。 | 构建发布平台、审计平台或运维自动化脚本。 |
+| 在关闭默认控制台 UI 后，为自定义 UI 提供服务端数据。 | 替代 Admin API 做通用管理面集成。 |
+
+业务应用请使用 SDK 或[客户端 API](../user/open-api.md)。运维平台、发布平台和自动化脚本请优先使用[运维 API](./admin-api.md)或[运维 SDK](./maintainer-sdk.md)。
+
+### 0.2. 统一路径格式
 
 Nacos的控制台 API，使用统一的Path格式进行的规范。格式为`[/$nacos.console.contextPath]/v3/console/[module]/[subPath]...`,
 其中
@@ -30,13 +42,13 @@ Nacos的控制台 API，使用统一的Path格式进行的规范。格式为`[/$
 同时下列列出的控制台API样例中，均采用默认Nacos Console的端口进行展示，若已修改部署环境中的`$nacos.console.port`
 配置项，请自行修改调用API时的请求URL。
 
-### 0.2. 鉴权认证
+### 0.3. 鉴权认证
 
 Nacos 3.X 的控制台 API默认启用鉴权认证，除少量被标记为`公开接口`的API外，请在调用API时，携带正确的身份信息，否则请求将会被拦截。
 
 若想要关闭鉴权，请设置`nacos.core.auth.console.enabled=false`，然后重启Nacos 控制台。
 
-### 0.3. Swagger 类型文档
+### 0.4. Swagger 类型文档
 
 Nacos 3.X 的控制台 API 也提供了Swagger风格的文档，您可以通过访问[Nacos Swagger控制台 API](/swagger/console/)查看。
 

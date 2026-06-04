@@ -1,60 +1,108 @@
 ---
-title: 使用Nacos作为Prometheus SD协议提供方
-keywords: [Nacos, Prometheus, Service Discovery]
-description: 本文简单介绍Nacos如何作为Prometheus SD协议提供方
+title: Use Nacos For Prometheus Service Discovery
+keywords: [Nacos, Prometheus, Service Discovery, HTTP SD]
+description: Learn how Prometheus can use Nacos service discovery to dynamically obtain scrape targets for business applications.
 sidebar:
     order: 11
 ---
 
-# 使用Nacos作为Prometheus SD协议提供方
+# Use Nacos For Prometheus Service Discovery
 
-Nacos 支持提供特定 [Prometheus SD](https://prometheus.io/docs/prometheus/latest/http_sd/) 协议的HTTP API，让Prometheus能够自动发现注册在Nacos上的微服务端点，并通过此端点自动获取对应的metrics数据。
+Nacos can convert service instances in service discovery into HTTP Service Discovery data that Prometheus can read. Prometheus can then obtain the latest targets from Nacos instead of maintaining every business application instance statically.
 
-关于如何在Prometheus上配置SD协议，请查询[Prometheus SD](https://prometheus.io/docs/prometheus/latest/http_sd/)相关文档，本文档不再赘述，本文档仅介绍Nacos所提供的HTTP SD API及注意事项。
+:::note
+This page explains how Prometheus discovers business application instances registered in Nacos. It is not the way to enable Nacos Server monitoring metrics. To collect Nacos Server metrics, read the [Monitoring Manual](../manual/admin/monitor.md).
+:::
 
-## 开启Nacos 的 Prometheus SD 支持
+## Before you start
 
-Nacos的Prometheus SD 支持是**默认关闭**的， 当需要使用时，修改配置文件`application.properties`，将`nacos.prometheus.metrics.enabled`设置为`true`后重新启动Nacos Server即可。
+- Business applications have registered instances in Nacos service discovery.
+- Prometheus can access the HTTP port of Nacos Server.
+- Business applications expose metrics ports and paths that Prometheus can scrape.
+- Nacos Server and Prometheus run in a trusted internal network.
 
-> 注意，默认情况下，Nacos的Prometheus SD HTTP API 是**不鉴权**的，即所有请求都允许访问，请参考[Nacos 的 Prometheus SD HTTP API 的鉴权](#nacos-的-prometheus-sd-http-api-的鉴权)开启鉴权或自行限制可访此地址的网络范围。
+## Enable the capability
 
-## Nacos 的 Prometheus SD HTTP API 
+Prometheus service discovery support in Nacos is disabled by default. Enable it in `application.properties`:
 
-Nacos的Prometheus SD HTTP API 提供了以下三个接口：
+```properties
+nacos.prometheus.metrics.enabled=true
+```
 
-- `GET ${nacos.server.contextPath}/prometheus`
-  - 获取当前集群中所有命名空间下的所有服务实例信息
-- `GET ${nacos.server.contextPath}/prometheus/namespaceId/${namespaceId}`
-  - 获取指定命名空间下的所有服务实例信息
-- `GET ${nacos.server.contextPath}/prometheus/namespaceId/{namespaceId}/service/{service}`
-  - 获取指定命名空间下的指定服务实例信息 
+Restart Nacos Server after the change.
 
-其中，`${nacos.server.contextPath}`为Nacos Server的访问路径，默认为`/nacos`。
+This configuration only affects Prometheus service discovery endpoints. It does not enable `/actuator/prometheus`. To collect Nacos Server metrics, configure:
 
-接口的返回内容遵循[Prometheus SD](https://prometheus.io/docs/prometheus/latest/http_sd/)协议，大致内容如下:
+```properties
+management.endpoints.web.exposure.include=prometheus
+```
+
+## Endpoints
+
+`${nacos.server.contextPath}` is the Nacos Server context path. The default value is `/nacos`.
+
+| Endpoint | Description |
+| --- | --- |
+| `GET ${nacos.server.contextPath}/prometheus` | Return service instances from all namespaces in the current cluster. |
+| `GET ${nacos.server.contextPath}/prometheus/namespaceId/{namespaceId}` | Return service instances from a namespace. |
+| `GET ${nacos.server.contextPath}/prometheus/namespaceId/{namespaceId}/service/{service}` | Return service instances from a namespace and service. |
+
+The response follows the Prometheus HTTP Service Discovery format:
 
 ```json
 [
   {
     "targets": [
-      "127.0.0.1:9999"
+      "127.0.0.1:8080"
     ],
     "labels": {
       "__meta_clusterName": "DEFAULT",
-      "__custom_metadata": "false"
+      "env": "prod",
+      "version": "1.0.0"
     }
   }
 ]
 ```
 
-其中`__meta_clusterName` 为实例的集群名称，`__custom_metadata` 为是否自定义元数据，即注册服务实例时填写的实例元数据。
+`targets` are built from the Nacos instance `ip` and `port`. `labels` include the instance cluster name `__meta_clusterName` and instance metadata. Metadata keys containing `.` or `-` are converted to `_` to match Prometheus label naming conventions.
 
-## Nacos 的 Prometheus SD HTTP API 的鉴权
+## Prometheus configuration example
 
-Nacos 的 Prometheus SD HTTP API被定义为`Client`类型的业务API，此类型API默认情况下**不开启鉴权**，需参考[鉴权文档](../manual/admin/auth.mdx) 开启鉴权。
+The following example lets Prometheus obtain business application instances from a namespace in Nacos:
 
-开启鉴权后，需通过`Basic Auth`方案进行身份信息的传递, 如：
+```yaml
+scrape_configs:
+  - job_name: nacos-services
+    http_sd_configs:
+      - url: http://127.0.0.1:8848/nacos/prometheus/namespaceId/public
+        refresh_interval: 30s
+```
+
+If business applications use a metrics path other than the Prometheus default path, configure `metrics_path` or relabeling rules in Prometheus.
+
+## Authentication and network boundary
+
+Do not expose Prometheus service discovery endpoints to the public Internet. Restrict access by internal network, gateway, network policy, or firewall.
+
+After Nacos authentication is enabled, protected Prometheus service discovery endpoints need Basic Auth credentials:
 
 ```shell
-curl "localhost:8848/nacos/prometheus" -H "Authorization: Basic [base64_encode(username:password)]"
+curl "http://127.0.0.1:8848/nacos/prometheus" \
+  -H "Authorization: Basic ${base64_encode_username_password}"
 ```
+
+For authentication configuration, read the [Authorization Manual](../manual/admin/auth.mdx).
+
+## FAQ
+
+**Why are Nacos Server metrics still unavailable after `nacos.prometheus.metrics.enabled=true` is enabled?**
+
+This is expected. That configuration only enables Prometheus service discovery endpoints. For Nacos Server metrics, read the [Monitoring Manual](../manual/admin/monitor.md).
+
+**Prometheus gets targets, but scraping fails. What should I check?**
+
+Check the business application instance `ip`, `port`, metrics path, and network connectivity. Nacos only provides instance addresses from service discovery. It does not expose metrics for business applications.
+
+**The response is empty. What should I check?**
+
+Check the namespace, service name, instance registration state, and whether the Nacos Server accessed by Prometheus belongs to the expected cluster.

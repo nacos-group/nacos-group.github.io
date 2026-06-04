@@ -1,58 +1,117 @@
 ---
-title: CustomEnvironment
-keywords: [CustomEnvironment,CustomConfiguration,DatabasePasswordencryption]
-description: Nacos Custom environment variable plugin, can customize the extension server configuration and other functions, such as database password encryption.
+title: Custom Environment Plugin
+keywords: [Custom Environment, custom configuration, database password encryption, Environment Plugin]
+description: Learn how the Nacos custom environment plugin transforms server configuration values during startup.
 sidebar:
-    order: 6
+    order: 8
 ---
 
-# CustomEnvironmentPlugins
+# Custom Environment Plugin
 
-Since version 2.2.0, Nacos support to inject custom environment plugins through [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html),to customize the configuration of nacos in the plugin and do it the way you expect (such as database password encryption).
-This document will describe how to implement a custom environment plugin and how to make it work.
-> Attention:
-> At present, the track tracing plugin is still in the beta stage, and its API and interface definitions maybe modified with version upgrades. Please pay attention to the applicable version of your plugin.
+The custom environment plugin transforms selected Nacos Server configuration values before Nacos consumes them. Typical use cases include decrypting database passwords, adapting deployment-specific variables, and converting secrets from an enterprise key system into startup configuration values that Nacos can read.
 
-## Plugin Development
+It works on **Nacos Server startup configuration**. It does not encrypt or transform business configurations stored in the Nacos configuration center. For business config encryption, see [Configuration Encryption](./config-encryption-plugin.md).
 
-To develop a Nacos custom environment plugin, developer first need to depend on the relevant API of the custom environment plugin.
+:::note
+The custom environment plugin is mainly for deployment-time adaptation. Plugin APIs may evolve with Nacos versions, so use a plugin version that matches your target Nacos version.
+:::
 
-```xml
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-custom-environment-plugin</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-```
+## How It Works
 
-`${project.version}` is the version of Nacos for your development plugin.
+A plugin declares the configuration keys it wants to process. During startup, if `nacos.custom.environment.enabled=true`, Nacos collects the original values of these keys, passes them to the plugin, and adds the converted values back as a higher-priority configuration source.
 
-Then implement interface `com.alibaba.nacos.plugin.environment.spi.CustomEnvironmentPluginService`, and put your implementation into services of SPI.
+Rules:
 
-The methods of interface in following:
+- A plugin can read and return only the keys declared by `propertyKey()`.
+- Returned keys that are not declared by the plugin are removed.
+- Returned entries with `null` values are removed and do not override original configuration.
+- When multiple plugins process the same key, they run by `order()` in ascending order. Later values override earlier values, so a larger `order()` has higher final priority.
 
-| method name         | parameters                  | returns                  | description                                                                                                                                                                                                                    |
-|-------------|-----------------------|-----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| pluginName  | `void`                | `String`              | The name of the plugin.                                                                                                                                                                                               |
-| propertyKey | `void`                | `Set<String>`         | Specifies the name of the configuration item that you want to customize for the server.                                                                                                                               |
-| order       | `void`                | `Integer`             | The higher the number, the higher the priority of the plugin. Multiple plugins customize the same configuration item at the same time. The plugin with a higher priority overwrites the plugin with a lower priority. |
-| customValue | `Map<String, Object>` | `Map<String, Object>` | The entry parameter is the value of the configuration item corresponding to propertyKey, and the exit parameter is the value of the self-defined configuration item.                                                  |
-
-In [nacos-group/nacos-plugin](https://github.com/nacos-group/nacos-plugin)，providing a demo implementation for custom environment plugin. This demo implements the database password Base64 decryption,
-So,you can set the ciphertext database password instead of the plaintext password in the `application.properties` configuration file.
-
-# How to use
-After the plugin finished, it needs to be packaged into jar/zip and places in the classpath of the nacos server. If you don't know how to add plugins into the classpath, please place plugins under `${nacos-server.path}/plugins` directly.
-
-After Adding plugins into classpath, also need to modify some configuration in `${nacos-server.path}/conf/application.properties`.
+For example, a plugin can declare `db.password.0` and convert an encrypted value in `application.properties` into the plain database password required by the datasource initialization logic:
 
 ```properties
-### open custom environment
+nacos.custom.environment.enabled=true
+db.password.0=ENC(base64-or-kms-value)
+```
+
+## Enable the Plugin
+
+Put the plugin JAR under `${nacos.home}/plugins`, or add it to the Nacos Server startup classpath. The plugin implementation must be declared in `META-INF/services/com.alibaba.nacos.plugin.environment.spi.CustomEnvironmentPluginService`.
+
+Then enable the feature in `${nacos.home}/conf/application.properties`:
+
+```properties
 nacos.custom.environment.enabled=true
 ```
 
-Restart nacos cluster, some logs can be saw in `${nacos-server.path}/logs/core-auth.log`:
+After startup, check `${nacos.home}/logs/nacos.log` for the loading log:
 
 ```text
-[CustomEnvironmentPluginManager] Load customEnvironmentPluginService(xxx) customEnvironmentPluginName(xxx) successfully..
+[CustomEnvironmentPluginManager] Load customEnvironmentPluginService(...) customEnvironmentPluginName(...) successfully.
 ```
+
+## Develop a Plugin
+
+Add the dependency:
+
+```xml
+<dependency>
+    <groupId>com.alibaba.nacos</groupId>
+    <artifactId>nacos-custom-environment-plugin</artifactId>
+    <version>${project.version}</version>
+</dependency>
+```
+
+Implement `com.alibaba.nacos.plugin.environment.spi.CustomEnvironmentPluginService`:
+
+| Method | Description |
+|--------|-------------|
+| `pluginName()` | Stable plugin name used by logs and plugin state identification. |
+| `propertyKey()` | Configuration keys transformed by this plugin. |
+| `order()` | Override order. Larger values have higher final priority. |
+| `customValue(property)` | Input contains original values for declared keys. Return converted key-value pairs. |
+
+Minimal example:
+
+```java
+public class DemoEnvironmentPlugin implements CustomEnvironmentPluginService {
+
+    @Override
+    public Set<String> propertyKey() {
+        return Collections.singleton("db.password.0");
+    }
+
+    @Override
+    public Map<String, Object> customValue(Map<String, Object> property) {
+        String encrypted = (String) property.get("db.password.0");
+        return Collections.singletonMap("db.password.0", decrypt(encrypted));
+    }
+
+    @Override
+    public Integer order() {
+        return 0;
+    }
+
+    @Override
+    public String pluginName() {
+        return "demo-environment";
+    }
+}
+```
+
+## Production Advice
+
+- List the exact configuration keys handled by the plugin. Avoid modifying unrelated startup parameters.
+- If decryption fails, fail fast with clear logs instead of letting Nacos start with an invalid password.
+- Do not hard-code secrets in plugin code. Use environment variables, KMS, HSM, or your enterprise key service.
+- If the plugin calls an external key service, configure timeouts and failure behavior so startup does not wait forever.
+- All nodes should use the same plugin JAR and dependency versions.
+
+## Troubleshooting
+
+| Symptom | What to check |
+|---------|---------------|
+| Plugin does not take effect | Check whether `nacos.custom.environment.enabled` is `true` and whether the JAR is on the classpath. |
+| No loading log appears | Check the `META-INF/services` file and whether `pluginName()` returns a non-empty value. |
+| Converted value is not used | Check whether the key is declared by `propertyKey()` and returned with the same key. |
+| Multiple plugins override the same key | Check `order()` values. The larger value wins in the final configuration. |

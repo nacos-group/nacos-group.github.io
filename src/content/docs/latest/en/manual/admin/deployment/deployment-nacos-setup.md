@@ -134,7 +134,7 @@ bash bin/shutdown.sh
 
 ### 3.3. Configure External Database
 
-The built-in Derby database is used by default. For production environments, it is recommended to configure an external MySQL/PostgreSQL.
+The built-in Derby database is used by default. For production environments, configure an external MySQL, PostgreSQL, or Oracle 12c or later database. For more database types and community plugins, see [Datasource Plugin](../../../plugin/datasource-plugin.md).
 
 Run the configuration wizard:
 
@@ -143,7 +143,7 @@ nacos-setup --datasource-conf
 ```
 
 Enter database information as prompted:
-- Database type (MySQL/PostgreSQL)
+- Database type (MySQL/PostgreSQL/Oracle 12c+)
 - Host address
 - Port
 - Database name

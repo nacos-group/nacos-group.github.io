@@ -8,16 +8,27 @@ sidebar:
 
 # 运维API
 
-> Nacos 3.X 版本将不再兼容1.X版本 和 2.X版本的 AdminAPI，请使用Nacos 3.X版本的AdminAPI进行替换。
+> Nacos 3.x 的标准运维 API 使用 `/v3/admin/*` 路径。当前版本已移除 v1/v2 Admin API，请使用 Nacos 3.x 运维 API 替换。
 >
-> 若必须要使用1.X和2.X的Admin API，需要在配置文件中设置`nacos.core.auth.admin.enabled=true`开启，但此兼容也将在未来版本中移除，建议使用Nacos
-> 3.X版本的AdminAPI进行替换。
+> 若迁移期间仍需临时使用 v1/v2 Admin API，请先阅读[兼容与废弃](./compatibility-and-deprecation.md)，并按升级手册中的 legacy adapter 方案评估兼容风险。
 
 Nacos默认搭载了一整套专为管理控制台和运维人员设计的运维API，赋予运维专家更多的配置权限、更广阔的数据检索能力等。这些API为Nacos的运维团队提供了方便，使他们能够高效地处理故障、排查问题，以确保系统的稳定运行。
 
 ## 0. 运维API 相关说明
 
-### 0.1 统一路径格式
+### 0.1. 适用边界
+
+运维 API 面向管理员、运维平台、发布平台、审计工具和自动化脚本。它提供范围型查询、批量管理、服务端状态查看和资源治理能力。
+
+| 适合使用 | 不适合使用 |
+| --- | --- |
+| 发布、删除、导入、导出和查询配置。 | 业务应用运行时高频读取配置。 |
+| 管理命名空间、服务、实例、集群、健康状态和元数据。 | 业务应用注册自身实例或订阅下游服务。 |
+| 管理插件、节点状态、AI 资源和运维诊断信息。 | 自定义控制台 UI 的页面级交互。 |
+
+业务应用请优先使用 [Java SDK](../user/java-sdk/usage.md)、其他语言 SDK 或[客户端 API](../user/open-api.md)。自定义控制台 UI 请优先使用[控制台 API](./console-api.md)。
+
+### 0.2. 统一路径格式
 
 Nacos的运维API，使用统一的Path格式进行的规范。格式为`[/$nacos.server.contextPath]/v3/admin/[module]/[subPath]...`,
 其中
@@ -32,13 +43,13 @@ Nacos的运维API，使用统一的Path格式进行的规范。格式为`[/$naco
 同时下列列出的运维API样例中，均采用默认Nacos Web Server的端口进行展示，若已修改部署环境中的`$nacos.server.main.port`
 配置项，请自行修改调用API时的请求URL。
 
-### 0.2. 鉴权认证
+### 0.3. 鉴权认证
 
 Nacos 3.X 版本的Admin API默认需要鉴权，请在请求时使用管理员用户`nacos`（使用默认鉴权插件时）。
 
 若想要关闭鉴权，请设置`nacos.core.auth.admin.enabled=false`，然后重启Nacos Server。
 
-### 0.3. Swagger 类型文档
+### 0.4. Swagger 类型文档
 
 Nacos 3.X 的运维 API 也提供了Swagger风格的文档，您可以通过访问[Nacos Swagger运维 API](/swagger/admin/)查看。
 

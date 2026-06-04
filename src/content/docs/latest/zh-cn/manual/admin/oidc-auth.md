@@ -1,18 +1,20 @@
 ---
-title: OIDC 认证
+title: OIDC/OAuth2 认证
 keywords: [OIDC, OAuth2, SSO, Keycloak, 单点登录]
-description: Nacos OIDC 认证插件配置与使用指南，支持与 Keycloak、Okta、Auth0 等 IdP 集成实现单点登录。
+description: Nacos OIDC/OAuth2 鉴权插件配置与使用指南，支持与 Keycloak、Okta、Auth0 等 IdP 集成实现单点登录和 bearer token 访问。
 sidebar:
     order: 8
 ---
 
-# OIDC 认证
+# OIDC/OAuth2 认证
 
 ## 概述
 
-Nacos OIDC 认证插件为 Nacos 控制台提供基于 OpenID Connect 1.0 / OAuth2 的认证能力，使 Nacos 能够将用户的身份认证与授权工作完全委托给外部身份提供商（IdP）。
+Nacos OIDC/OAuth2 鉴权插件的插件类型是 `oidc`。它为 Nacos 控制台提供基于 OpenID Connect 1.0 / OAuth2 的认证能力，使 Nacos 能够将用户认证委托给外部身份提供商（IdP）。
 
 启用 OIDC 插件后，Nacos 控制台登录页会显示 **"使用 SSO 登录"** 按钮，用户点击后跳转到 IdP 完成认证，登录成功后自动回到 Nacos 控制台。
+
+Java SDK 也可以使用 OAuth2 Client Credentials flow 获取 bearer token，并把 token 注入到请求中。控制台 SSO 和 SDK bearer token 是两个入口，但都由 `oidc` 鉴权插件在服务端校验。
 
 ### 适用场景
 
@@ -116,10 +118,10 @@ curl http://localhost:8081/realms/nacos/.well-known/openid-configuration
 
 修改文件 `<NACOS_HOME>/conf/application.properties`。
 
-### 3.1 切换认证系统类型为 OIDC
+### 3.1 切换鉴权系统类型为 OIDC/OAuth2
 
 ```properties
-### 启用 OIDC 认证系统
+### 启用 OIDC/OAuth2 鉴权系统
 nacos.core.auth.system.type=oidc
 
 ### 启用认证
@@ -162,15 +164,42 @@ nacos.core.auth.plugin.oidc.username-claim=preferred_username
 
 | 配置项 | 默认值 | 说明 |
 |--------|-------|------|
-| `nacos.core.auth.plugin.oidc.token-validation-method` | `jwt` | Token 校验方式：`jwt` 本地 JWKS 校验 / `introspection` 调用 IdP introspection 端点 |
+| `nacos.core.auth.plugin.oidc.token-validation-method` | `jwt` | Token 校验方式。当前实现按 `jwt` / JWKS 校验；`introspection` 仅是预留配置，不应作为已支持能力使用 |
 | `nacos.core.auth.plugin.oidc.jwks-cache-ttl-seconds` | `3600` | JWKS 公钥缓存 TTL（秒） |
 | `nacos.core.auth.plugin.oidc.roles-claim` | `roles` | ID Token 中读取角色的 claim 名 |
 | `nacos.core.auth.plugin.oidc.admin-role` | `nacos-admin` | 管理员角色名 |
 | `nacos.core.auth.plugin.oidc.auto-create-user` | `true` | 首次登录时是否自动创建用户 |
-| `nacos.core.auth.plugin.oidc.authorization-endpoint` | （空） | 外部授权决策端点 |
+| `nacos.core.auth.plugin.oidc.authorization-endpoint` | （空） | 外部授权决策端点。为空时，当前实现会放行非管理员授权判断 |
 | `nacos.core.auth.plugin.oidc.authorization-timeout-ms` | `5000` | 授权请求超时时间（毫秒） |
-| `nacos.core.auth.plugin.oidc.strict-nonce-validation` | `false` | 是否启用严格 nonce 校验 |
-| `nacos.core.auth.plugin.oidc.strict-audience-validation` | `false` | 是否启用严格 audience 校验 |
+| `nacos.core.auth.plugin.oidc.strict-nonce-validation` | `true` | 是否启用严格 nonce 校验 |
+| `nacos.core.auth.plugin.oidc.strict-audience-validation` | `true` | 是否启用严格 audience 校验 |
+
+:::note
+`strict-nonce-validation` 和 `strict-audience-validation` 未显式配置时默认开启。仅在开发联调或 IdP 暂时不满足校验要求时，才建议临时关闭，并在生产前恢复。
+:::
+
+:::caution
+如果生产环境需要按命名空间、配置、服务或 AI 资源做权限隔离，请配置 `nacos.core.auth.plugin.oidc.authorization-endpoint`，或提供更严格的授权实现。当前实现中该配置为空时，非管理员授权判断会默认放行。
+:::
+
+### 3.5 Java SDK OAuth2 Client Credentials 配置
+
+Java SDK 的 OIDC/OAuth2 客户端鉴权使用 OAuth2 Client Credentials flow，适合服务到服务访问。
+
+```properties
+nacos.client.auth.oidc.issuer-uri=https://idp.example.com/realms/nacos
+nacos.client.auth.oidc.client-id=nacos-client
+nacos.client.auth.oidc.client-secret=${client_secret}
+nacos.client.auth.oidc.scope=openid
+```
+
+如果 IdP 不支持 Discovery，或希望跳过 Discovery，可以直接配置 token endpoint：
+
+```properties
+nacos.client.auth.oidc.token-endpoint=https://idp.example.com/realms/nacos/protocol/openid-connect/token
+```
+
+SDK 会在 token 过期前刷新，并向请求注入 `Authorization: Bearer ...` 和 `accessToken`。
 
 ---
 
@@ -296,7 +325,7 @@ nacos.core.auth.server.identity.value=security
 **排查**：
 1. 检查 `issuer-uri` 是否正确（注意末尾不要带斜杠）
 2. 查看 `logs/nacos.log` 中的错误详情
-3. 临时关闭严格校验：`strict-audience-validation=false`
+3. 开发联调时可临时关闭严格 audience 校验：`nacos.core.auth.plugin.oidc.strict-audience-validation=false`
 4. 确认 IdP 的 JWKS 端点可访问
 
 ### 7.5 登出后立即被自动登入
@@ -312,5 +341,7 @@ nacos.core.auth.server.identity.value=security
 | 用户存储 | Nacos 内置数据库 | LDAP 服务器 | IdP |
 | 密码管理 | Nacos 控制台 | LDAP 服务器 | IdP |
 | 单点登录（SSO） | 否 | 否 | **是** |
+| SDK OAuth2 Client Credentials | 否 | 否 | **是** |
 | 多因素认证（MFA） | 否 | 取决于 LDAP | **是** |
+| 授权来源 | Nacos 本地权限 | Nacos 本地权限 | IdP 角色或外部授权端点 |
 | 适用场景 | 单机/小型部署 | 已有 LDAP 的企业 | 现代化企业 SSO |

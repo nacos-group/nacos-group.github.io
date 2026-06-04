@@ -3,7 +3,7 @@ title: MCP Server 自动注册与发现手册
 keywords: [MCP Server Register,MCP,使用手册]
 description: MCP Server 自动注册至 Nacos 使用手册
 sidebar:
-    order: 2
+    order: 4
 ---
 除了在控制台手动注册 MCP Server 服务以外，通过使用Spring AI Alibaba 框架 或者 Nacos MCP Wrapper Python 开发 MCP Server, 可以在 MCP Server启动后动态注册至 Nacos，并对齐进统一管理，支持以下能力：
 
@@ -12,7 +12,7 @@ sidebar:
 + **MCP Server Tools 动态开关**：支持 MCP Server 服务 Tools 运行时动态开启和关闭，无需重启服务。
 + **全链路集成**：服务注册信息自动同步至 Nacos 配置中心与服务发现模块，适配 AI Agent 调用需求
 
-注册到 Nacos MCP Registry 中的服务，可以通过 Spring AI Alibaba 框架 或者 Nacos MCP Router 进行发现和调用，或者对接 Higress 网关，实现全链路集成。
+注册到 Nacos MCP 管理中的服务，可以通过 Spring AI Alibaba 框架或者 Nacos MCP Router 进行发现和调用，也可以对接 Higress 网关，实现全链路集成。
 
 ![Auto-register](/img/doc/manual/user/ai/ai-mcp-auto-register.svg)
 

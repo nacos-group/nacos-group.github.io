@@ -12,12 +12,12 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## 1. 升级版本兼容性
 
-当前文档所对应的版本为3.2.0，所有Nacos版本可升级到该版本的兼容性如下：
+当前文档所对应的版本为 3.2.x，所有 Nacos 版本升级到 3.2.x 的兼容性如下：
 
 | Nacos版本 | 是否支持升级到当前版本 | 备注 |
 |----------|--------------------|------|
 | 0.X ～ 1.X | 不支持 | 0.X ~ 1.X 版本需要先升级到2.0以上的版本，请参考[Nacos2.0升级文档](https://nacos.io/docs/v2/upgrading/200-upgrading/) 先升级到2.0或2.1版本后再进行升级 |
-| 2.0.X ~ 3.1.X | 支持 | 3.2.X版本支持从 2.0.X ~ 3.1.X 升级到 3.2.X，但数据库表结构有发生变化，请升级前对比[mysql-schema.sql](https://github.com/alibaba/nacos/blob/develop/plugin-default-impl/nacos-default-datasource-plugin/nacos-datasource-plugin-mysql/src/main/resources/META-INF/mysql-schema.sql)文件，并应用新的表结构后进行升级 |
+| 2.0.X ~ 3.2.X | 支持 | 3.2.X 版本支持从 2.0.X 及以上版本升级到 3.2.X，但数据库表结构有发生变化，请升级前对比目标版本对应数据库的 schema 文件，并应用新的表结构后进行升级 |
 
 ### 1.1 客户端兼容性
 
@@ -36,9 +36,9 @@ Nacos 3.x 服务端与各版本客户端的兼容性如下：
 
 #### 2.1.1 确认表结构
 
-先对比部署的旧版本Nacos版本的mysql-schema.sql文件和将升级版本的mysql-schema.sql文件，确认表结构是否有变化。
+先对比部署的旧版本 Nacos schema 文件和目标版本对应数据库的 schema 文件，确认表结构是否有变化。
 
-若文件中表结构存在变化，请先进行数据库变更（以MySQL为例）：
+若文件中表结构存在变化，请先进行数据库变更。以 MySQL 为例：
 
 ```SQL
 -- 从 2.0.X 升级时需要执行下列所有SQL, 从2.1.X之后版本升级仅需执行最后三行。
@@ -111,6 +111,38 @@ CREATE TABLE IF NOT EXISTS `ai_resource_version` (
     KEY `idx_ai_resource_ver_status` (`status`),
     KEY `idx_ai_resource_ver_gmt_modified` (`gmt_modified`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI资源版本表';
+```
+
+如果使用 PostgreSQL，并且从 3.2.1 或更早版本升级到 3.2.2，请在升级前确认配置相关表的 `tenant_id` 字段是否已经是 `NOT NULL DEFAULT ''`。3.2.2 会在启动时校验 PostgreSQL schema；如果旧数据表中仍允许 `tenant_id` 为空，服务端可能会启动失败。相关讨论见 [alibaba/nacos#15275](https://github.com/alibaba/nacos/issues/15275)。
+
+执行迁移前，建议先检查 `config_info` 中是否存在重复的逻辑配置。若同一 `data_id` 和 `group_id` 下存在多条 `tenant_id IS NULL` 记录，请先清理冲突数据，再执行迁移 SQL。
+
+```SQL
+SELECT data_id, group_id, COUNT(*)
+FROM config_info
+WHERE tenant_id IS NULL
+GROUP BY data_id, group_id
+HAVING COUNT(*) > 1;
+```
+
+确认没有冲突后，执行目标版本源码中的 `pg-upgrade-null-tenant-id.sql`。SQL 内容如下：
+
+```SQL
+ALTER TABLE config_info ALTER COLUMN tenant_id SET DEFAULT '';
+UPDATE config_info SET tenant_id = '' WHERE tenant_id IS NULL;
+ALTER TABLE config_info ALTER COLUMN tenant_id SET NOT NULL;
+
+ALTER TABLE config_info_gray ALTER COLUMN tenant_id SET DEFAULT '';
+UPDATE config_info_gray SET tenant_id = '' WHERE tenant_id IS NULL;
+ALTER TABLE config_info_gray ALTER COLUMN tenant_id SET NOT NULL;
+
+ALTER TABLE config_tags_relation ALTER COLUMN tenant_id SET DEFAULT '';
+UPDATE config_tags_relation SET tenant_id = '' WHERE tenant_id IS NULL;
+ALTER TABLE config_tags_relation ALTER COLUMN tenant_id SET NOT NULL;
+
+ALTER TABLE his_config_info ALTER COLUMN tenant_id SET DEFAULT '';
+UPDATE his_config_info SET tenant_id = '' WHERE tenant_id IS NULL;
+ALTER TABLE his_config_info ALTER COLUMN tenant_id SET NOT NULL;
 ```
 
 #### 2.1.2. 下载新版本

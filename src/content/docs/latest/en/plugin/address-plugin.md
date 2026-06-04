@@ -1,96 +1,105 @@
 ---
-title: Addressing Plugin
-keywords: [Addressing, Plugin]
-description: This article describes how to develop and use Nacos' addressing plugin.
+title: Cluster Addressing
+keywords: [Addressing, cluster members, address-server, cluster.conf]
+description: Learn how Nacos Server discovers cluster members with file and address-server modes.
 sidebar:
-    order: 2
-    hidden: true
+    order: 10
 ---
 
-# Addressing Plugin
+# Cluster Addressing
 
-Since version 2.3.0, Nacos support to inject addressing plugins through [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html), and select a plugin implementation in the configuration file `application.properties ` as the actual addressing service. This document will describe how to implement an addressing plugin and how to make it work.
+Cluster addressing tells each Nacos Server node which nodes belong to the current cluster. After startup, the node builds the member list from the addressing result and uses it for internal communication, health checks, Raft/Distro coordination, and other cluster work.
 
-> Attention: 
-> At present, the addressing plugin is still in the beta stage, and its API and interface definitions maybe modified with version upgrades. Please pay attention to the applicable version of your plugin.
+Nacos 3.x mainly supports two cluster addressing modes:
 
-## Overview Of Addressing Plugin
+| Mode | Value | When to use it |
+|------|-------|----------------|
+| File addressing | `file` | Cluster nodes are relatively stable and are configured through `cluster.conf` or `nacos.member.list`. |
+| Address server | `address-server` | An external address server centrally provides the Nacos Server member list. |
 
-At present, there are three addressing modes for Nacos cluster addressing: stand-alone addressing, profile addressing and address server addressing. Through the addressing plugin, users can write their own addressing logic.
+:::note
+This page describes the Nacos Server cluster member discovery mechanism. In the current Nacos 3.x source code, cluster addressing is not a general SPI plugin type managed by the unified plugin system. Do not use the old `AddressPlugin` interface as the development contract for new custom addressing plugins.
+:::
 
-## Develop Nacos Server Addressing Plugin
+## Select Addressing Mode
 
-To develop a Nacos server-side addressing plugin, developer first need to depend on the relevant API of the address plugin.
-
-```xml
-        <dependency>
-            <groupId>com.alibaba.nacos</groupId>
-            <artifactId>nacos-address-plugin</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-```
-
-`${project.version}` is the version of Nacos for your development plugin.
-
-Then implement interface`com.alibaba.nacos.plugin.address.spi.AddressPlugin`, and put your implementation into services of SPI.
-
-The methods of interface in following:
-
-|method name|parameters|returns|description|
-|-----|-----|-----|---|
-|start|void|String|Start the addressing function of the plugin.|
-|getServerList|void|List&lt;String>|Returns the addresses of all Nacos cluster nodes. The address format is`IP: Port`.|
-|getPluginName|void|String|The name of the plugin. When the name is the same, the plugin loaded later will overwrite the plugin loaded first.|
-|registerListener|Consumer&lt;List&lt;String>>|AddressPlugin|Register the listener and call the listener when the cluster address changes|
-|shutdown|void|void|Shutdown plugin|
-
-This interface is defined by `com.alibaba.nacos.plugin.address.spi.AbstractAddressPlugin`.The abstract class implements`getServerList`, `registerListener` and `shutdown` methods by default, Users can inherit AbstractAddressPlugin to implement other methods when actually writing plugins. AbstractAddressPlugin has a List&lt;String>member variable named serverList, that is, the cluster address collection. The user needs to maintain this variable.
-When users need to configure plugin related parameters in the configuration file, they need to configure keys starting with `address.plugin` in the property configuration file. In this case, the corresponding parameters can be obtained through the `com.alibaba.nacos.plugin.address.common.AddressProperties` singleton class
-```properties
-address.plugin.$ {key} = ${val}
-```
-After configuration, users can write plugins through the
-```java
-AddressProperties.getProperty(${key})
-```
-To get the parameters.
-
-### Use Server Plugin
-
-After the plugin finished, it needs to be packaged into jar/zip and places in the classpath of the nacos server. If you don't know how to add plugins into the classpath, please place plugins under `${nacos-server.path}/plugins` directly.
-
-After Adding plugins into classpath, also need to modify some configuration in `${nacos-server.path}/conf/application.properties`.
+Use `nacos.core.member.lookup.type` to select the addressing mode:
 
 ```properties
-### The plugin name nacos using，should be same as the return value of `com.alibaba.nacos.plugin.address.spi.AddressPlugin#getPluginName`
-nacos.core.member.lookup.type=${addressPluginName}
+nacos.core.member.lookup.type=file
 ```
 
-Restart nacos cluster, and after any request, some logs can be saw in `${nacos-server.path}/logs/nacos-cluster.log`:
+Available values:
+
+- `file`: use `cluster.conf` or `nacos.member.list`.
+- `address-server`: pull the member list from an address server.
+
+If `nacos.core.member.lookup.type` is not set, Nacos selects the mode in this order:
+
+1. If `${nacos.home}/conf/cluster.conf` exists, use `file`.
+2. If `nacos.member.list` is configured, use `file`.
+3. Otherwise, use `address-server`.
+
+Standalone mode uses standalone addressing and does not require a cluster member list.
+
+## File Addressing
+
+File addressing is the most common production deployment mode. Put all Nacos Server nodes in `${nacos.home}/conf/cluster.conf`, one node per line:
 
 ```text
-[AddressPluginManager] Load AddressPlugin(xxxx) PluginName(xxx) successfully.
+10.0.0.11:8848
+10.0.0.12:8848
+10.0.0.13:8848
 ```
 
-### Use the default Nacos addressing plugin
+You can also configure the member list with `nacos.member.list`:
 
-In order to be compatible with the addressing of the old version, when the user does not use the custom plug-in, the configuration is the same as the original, or the configuration item `nacos.core.member.lookup.type=[file, address server]`.
-
-## Client Plugin
-
-### Use Custom Plugins
-The implementation of custom plugins is the same as that of the server. When users need to use custom plugins, they inherit `com.alibaba.nacos.plugin.address.spi.AbstractAddressPlugin` or implement `com.alibaba.nacos.plugin.address.spi.AddressPlugin`, package the developed client plug-in into jar/zip, and put it into your application's classpath to automatically take effect. When initializing `NacosConfigService` or `NacosNamingService`, the key passed in the `Properties` object is `addressPluginName`, and val is the parameter returned by the plugin `getPluginName`.
-for example:
-```java
- Properties properties = new Properties();
- properties.put("addressPluginName", ${addressPluginName});
- ConfigService configService = NacosFactory.createConfigService(properties);
- String content = configService.getConfig(dataId, group, 5000);
+```properties
+nacos.core.member.lookup.type=file
+nacos.member.list=10.0.0.11:8848,10.0.0.12:8848,10.0.0.13:8848
 ```
 
-### Use the default Nacos addressing plugin
-The Java client plug-in of Nacos is adapted to the old version. If the customized plug-in is not applicable, the use of the client is the same as before.
+When using file addressing, keep `cluster.conf` consistent on all nodes. Nacos watches `cluster.conf` and reloads it after changes, but production changes should still go through a controlled release process so nodes do not see different member lists.
 
-### Plugin for other programming language
+## Address Server
 
-TODO
+Address server mode is useful when an external system manages the Nacos Server list. During startup, Nacos pulls the member list from the address server and refreshes it periodically.
+
+Common configuration:
+
+```properties
+nacos.core.member.lookup.type=address-server
+address.server.domain=address-server.example.com
+address.server.port=8080
+address.server.url=/serverlist
+nacos.core.address-server.retry=5
+```
+
+Configuration reference:
+
+| Configuration | Description | Default |
+|---------------|-------------|---------|
+| `address.server.domain` | Address server domain. You can also set `address_server_domain` as an environment variable. | `jmenv.tbsite.net` |
+| `address.server.port` | Address server port. You can also set `address_server_port` as an environment variable. | `8080` |
+| `address.server.url` | Path for pulling the member list. You can also set `address_server_url` as an environment variable. | `${nacos.server.contextPath}/serverlist` |
+| `nacos.core.address-server.retry` | Startup retry count for pulling the member list. | `5` |
+| `maxHealthCheckFailCount` | Mark the address server unhealthy after this many consecutive failures. | `12` |
+
+The address server response must be parseable as a Nacos cluster member list. It is usually a multi-line `ip:port` list.
+
+## Operational Advice
+
+- In production, prefer `file` or a platform-managed `address-server`. Avoid manually writing different member lists on different nodes.
+- Before changing cluster members, confirm that old and new nodes use compatible versions, ports, network rules, and datasource configuration.
+- If you use `address-server`, monitor it. Address server failures affect member list refresh and may also cause startup failure.
+- When troubleshooting member list issues, check `${nacos.home}/logs/nacos-cluster.log` and `${nacos.home}/logs/nacos.log` first.
+- If the member list comes from `cluster.conf`, verify the file content, mount path, and actual file inside containers.
+
+## Troubleshooting
+
+| Symptom | What to check |
+|---------|---------------|
+| A node cannot see other members after startup | Check `nacos.core.member.lookup.type`, `cluster.conf`, and `nacos.member.list`. |
+| Different nodes see different member lists | Check `cluster.conf` on each node and the configuration release process. |
+| Startup fails with address server mode | Check whether `address.server.domain`, `address.server.port`, and `address.server.url` are reachable, and whether the response format is valid. |
+| Address server is intermittently unhealthy | Check `nacos.core.address-server.retry`, `maxHealthCheckFailCount`, address server monitoring, and the network path. |

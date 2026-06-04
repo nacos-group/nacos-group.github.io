@@ -3,7 +3,7 @@ title: Dify Discovers Nacos MCP Server
 keywords: [MCP,Dify]
 description: Dify Discovers Nacos MCP Server
 sidebar:
-  order: 6
+  order: 8
 ---
 
 ## Dify Discovers Nacos MCP Server
@@ -66,8 +66,6 @@ A: Ensure that the Nacos Server version is 3.0.1 or higher, and verify that the 
 Q: The model fails to find the correct MCP Server or invoke the correct tool
 
 A: Make sure the descriptions of the corresponding MCP Server and its tools in Nacos are accurate. Well-written descriptions help the model better identify and use the appropriate MCP Servers and tools.
-
-
 
 
 

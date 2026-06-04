@@ -1,170 +1,177 @@
 ---
-title: Monitor Manual
-keywords: [Nacos,Monitor]
-description: How to enabled and deployment with Nacos monitor
+title: Monitoring Manual
+keywords: [Nacos, Monitoring, Prometheus, Grafana, Metrics]
+description: Learn how to expose Nacos 3.x metrics, scrape them with Prometheus, use health checks, and design basic alerts.
 sidebar:
     order: 9
 ---
 
-# 监控手册
+# Monitoring Manual
 
-## 1. Nacos 集群监控
+Nacos monitoring focuses on two kinds of information:
 
-Nacos 支持通过暴露metrics数据接入第三方监控系统监控Nacos运行状态，目前支持prometheus、elastic search和influxdb，下面结合prometheus和grafana为例，介绍如何监控Nacos。与elastic search和influxdb结合可自己查找相关资料。
+- Nacos Server metrics, such as JVM, HTTP, gRPC, configuration management, and service discovery metrics.
+- Health check endpoints, such as liveness and readiness.
 
-### 1.1. 开启Nacos集群metrics数据暴露
+## Expose Nacos Server metrics
 
-按照[部署文档](./deployment/deployment-overview.mdx)搭建好Nacos集群后，需要在Nacos集群的每个节点上修改如下参数：
+Nacos exposes Prometheus metrics through Spring Boot Actuator. In the default configuration file, this capability is commented out. Enable it on every Nacos Server node:
 
-`application.properties`文件，暴露metrics数据
-
-```
+```properties
 management.endpoints.web.exposure.include=prometheus
 ```
 
-重启后，访问`{ip}:8848/nacos/actuator/prometheus`，即可访问到Nacos集群的metrics数据。
+If you already expose other Actuator endpoints, add `prometheus` to that list.
 
-### 1.2. 搭建prometheus采集Nacos metrics数据
+After restarting the node, visit:
 
-请参考[FIRST STEPS WITH PROMETHEUS](https://prometheus.io/docs/introduction/first_steps/)部署prometheus
-
-其中，需要将prometheus的配置文件`prometheus.yml`关于采集目标相关的配置，修改为如下内容
+```text
+http://{nacos-server-host}:8848/nacos/actuator/prometheus
 ```
-    metrics_path: '/nacos/actuator/prometheus'
+
+The `/nacos` prefix comes from the default `nacos.server.contextPath`. If you change the server context path, adjust the URL accordingly.
+
+:::caution
+Nacos is an internal microservice component and should not be exposed to the public Internet. `/actuator/**` is usually used by monitoring systems. Keep it in a trusted internal network, and restrict access by network policy, gateway, or Prometheus scrape source.
+:::
+
+## Prometheus scrape example
+
+Prometheus can scrape every Nacos Server node directly:
+
+```yaml
+scrape_configs:
+  - job_name: nacos
+    metrics_path: /nacos/actuator/prometheus
     static_configs:
-      - targets: ['{nacos.ip1}:8848','{nacos.ip2}:8848','{nacos.ip3}:8848',...]
+      - targets:
+          - 10.0.0.1:8848
+          - 10.0.0.2:8848
+          - 10.0.0.3:8848
 ```
 
-搭建并启动完成prometheus后，即可通过浏览器访问`http://{prometheus_ip}:9090/graph`可以看到prometheus的采集数据，在搜索栏搜索nacos_monitor可以搜索到Nacos数据说明采集数据成功。
+If Nacos Server uses a different port or context path, change `targets` and `metrics_path`.
 
-### 1.3. 搭建grafana图形化展示Nacos metrics数据
+Grafana can use Prometheus as the datasource. Community dashboard templates are available in [nacos-template](https://github.com/nacos-group/nacos-template).
 
-参考[Install Grafana](https://grafana.com/docs/grafana/latest/setup-grafana/installation/) 部署grafana。
+## Health checks
 
-之后在浏览器中访问 `http://{grafana_ip}:3000`
+Nacos 3.x provides v3 health check endpoints. They are suitable for load balancers, Kubernetes probes, or inspection systems.
 
-然后参考[Configure Prometheus](https://grafana.com/docs/grafana/latest/datasources/prometheus/configure-prometheus-data-source/)，将刚才部署的prometheus作为Grafana的数据源。
+| Target | Endpoint |
+| --- | --- |
+| Nacos Server state | `/nacos/v3/admin/core/state` |
+| Nacos Server liveness | `/nacos/v3/admin/core/state/liveness` |
+| Nacos Server readiness | `/nacos/v3/admin/core/state/readiness` |
+| Independent console liveness | `/v3/console/health/liveness` |
+| Independent console readiness | `/v3/console/health/readiness` |
 
-随后参考[Import dashboards](https://grafana.com/docs/grafana/latest/dashboards/build-dashboards/import-dashboards/)导入Nacos grafana监控[模版](https://github.com/nacos-group/nacos-template/blob/master/nacos-grafana-upper-2.4.json)
+If you change `nacos.server.contextPath` or `nacos.console.contextPath`, add the corresponding context path to the endpoint URL.
 
-导入后可看见Nacos监控模版，Nacos监控主要分为三个模块:
+## Key metrics
 
-1. nacos overview: 展示Nacos集群当前的概览信息，如节点个数，服务数，服务提供者数、配置数、连接数，CPU使用率等。
-![nacos overview](/img/doc/manual/admin/monitor-overview.jpg)
-   
-2. nacos core monitor: 展示Nacos集群核心的监控指标，如服务提供者数，配置数，ops，rt等，并能够查看一定时间内的变化趋势。
-![nacos core monitor](/img/doc/manual/admin/monitor-core-monitor.jpg)
+Prometheus metric names may include suffixes based on Micrometer type. For example, timers usually export series such as `_seconds_count` and `_seconds_sum`. When troubleshooting, search the base name first, then inspect its labels.
 
-3. nacos basic monitor: 展示Nacos集群基础的监控指标，如CPU使用率，内存使用率，线程池使用情况等，并能够查看一定时间内的变化趋势。
-![nacos basic monitor](/img/doc/manual/admin/monitor-basic-monitor.jpg)
-   
-### 1.4. 配置Nacos集群告警
+### Basic resource and request metrics
 
-#### 1.4.1. 配置Grafana告警
+| Metric | Description |
+| --- | --- |
+| `system_cpu_usage` | System CPU usage. |
+| `system_load_average_1m` | System load average over 1 minute. |
+| `jvm_memory_used_bytes` | JVM used memory. |
+| `jvm_memory_max_bytes` | JVM max memory. |
+| `jvm_gc_pause_seconds` | GC count and duration. |
+| `jvm_threads_daemon` | JVM daemon thread count. |
+| `http_server_requests_seconds` | HTTP request count and latency. |
+| `grpc_server_requests` | gRPC request latency with labels such as `requestClass`, `success`, `errorCode`, and `module`. |
+| `grpc_server_executor` | gRPC server executor status, including active count, pool size, and queued tasks. |
 
-可以参考[Configure Grafana-managed alert rules](https://grafana.com/docs/grafana-cloud/alerting-and-irm/alerting/alerting-rules/create-grafana-managed-rule/)，配置自定义的Nacos相关告警。
+### Core metrics
 
-也可以通过大盘中的对应指标内容，快速配置告警：
+| Metric | Description |
+| --- | --- |
+| `nacos_monitor{module="core",name="longConnection"}` | Long connection count by module. |
+| `nacos_monitor_summary` | Summary metrics for Raft read index, leader read, apply log, and apply read. |
 
-1. 选择需要配置告警的指标，例如`cpu usage`;
-2. 在指标的右上角，点击`Menu`（展示为竖直的3个`.`)，选择`编辑（Edit）`;
-   ![nacos grafana edit](/img/doc/manual/admin/monitor-fast-alert-edit.jpg)
-3. 在Panel页面中，选择`Alert`，点击`New alert rule`，配置告警规则。
-   ![nacos grafana alert](/img/doc/manual/admin/monitor-fast-alert-new.jpg)
-4. 之后同样参考[Configure Grafana-managed alert rules](https://grafana.com/docs/grafana-cloud/alerting-and-irm/alerting/alerting-rules/create-grafana-managed-rule/)，配置自定义的Nacos相关告警。
+### Configuration management metrics
 
-#### 1.4.2. 配置Grafana告警通知
+| Metric | Description |
+| --- | --- |
+| `nacos_monitor{module="config",name="getConfig"}` | Config query statistics. |
+| `nacos_monitor{module="config",name="publish"}` | Config publish statistics. |
+| `nacos_monitor{module="config",name="longPolling"}` | Config long polling count. |
+| `nacos_monitor{module="config",name="configCount"}` | Config count. |
+| `nacos_monitor{module="config",name="notifyTask"}` | Config notify task backlog. |
+| `nacos_monitor{module="config",name="notifyClientTask"}` | Client notify task backlog. |
+| `nacos_monitor{module="config",name="dumpTask"}` | Config dump task backlog. |
+| `nacos_monitor{module="config",name="fuzzySearch"}` | Fuzzy search statistics. |
+| `nacos_config_subscriber{version="v1"}` / `nacos_config_subscriber{version="v2"}` | Config listener count. |
+| `nacos_timer{module="config",name="readConfigRt"}` | Read config latency. |
+| `nacos_timer{module="config",name="writeConfigRt"}` | Write config latency. |
+| `nacos_timer{module="config",name="notifyRt"}` | Notify latency. |
+| `nacos_timer{module="config",name="dumpRt"}` | Dump latency. |
+| `nacos_exception{module="config",name="illegalArgument"}` | Config illegal argument exception statistics. |
+| `config_change_count` | TopN config change statistics. |
 
-参考[Configure contact points](https://grafana.com/docs/grafana-cloud/alerting-and-irm/alerting/configure-notifications/manage-contact-points/) 来配置Grafana告警时的通知方式。例如配置邮件通知、钉钉WebHook通知等。
+### Service discovery metrics
 
-### 1.5. Nacos 指标含义
+| Metric | Description |
+| --- | --- |
+| `nacos_monitor{module="naming",name="serviceCount"}` | Service count. |
+| `nacos_monitor{module="naming",name="ipCount"}` | Instance count. |
+| `nacos_monitor{module="naming",name="subscriberCount"}` | Subscriber count. |
+| `nacos_monitor{module="naming",name="totalPush"}` | Total push count. |
+| `nacos_monitor{module="naming",name="failedPush"}` | Failed push count. |
+| `nacos_monitor{module="naming",name="emptyPush"}` | Empty push count. |
+| `nacos_monitor{module="naming",name="avgPushCost"}` | Average push latency. |
+| `nacos_monitor{module="naming",name="maxPushCost"}` | Maximum push latency. |
+| `nacos_monitor{module="naming",name="leaderStatus"}` | Leader state of the service discovery module. |
+| `nacos_monitor{module="naming",name="serviceSubscribedEventQueueSize"}` | Service subscribed event queue size. |
+| `nacos_monitor{module="naming",name="serviceChangedEventQueueSize"}` | Service changed event queue size. |
+| `nacos_monitor{module="naming",name="pushPendingTaskCount"}` | Pending push task count. |
+| `nacos_naming_subscriber{version="v1"}` / `nacos_naming_subscriber{version="v2"}` | Service subscriber count. |
+| `nacos_naming_publisher{version="v1"}` / `nacos_naming_publisher{version="v2"}` | Service provider count. |
+| `service_change_count` | TopN service change statistics. |
 
-#### 1.5.1. Nacos 系统基础资源指标
+### Experimental distributed lock metrics
 
-指标|含义
----|---
-system_cpu_usage|CPU使用率
-system_load_average_1m|load
-jvm_memory_used_bytes|JVM内存使用字节，包含各种内存区
-jvm_memory_max_bytes|JVM内存最大字节，包含各种内存区
-jvm_gc_pause_seconds_count|gc次数，包含各种gc
-jvm_gc_pause_seconds_sum|gc耗时，包含各种gc
-jvm_threads_daemon|线程数
+Distributed Lock is an [experimental feature](../../experimental/distributed-lock.md). If you use it, watch these metrics:
 
-#### 1.5.2. Nacos 集群应用指标
+| Metric | Description |
+| --- | --- |
+| `nacos_monitor{module="lock",name="grpcLockTotal"}` | Total gRPC lock requests. |
+| `nacos_monitor{module="lock",name="grpcLockSuccess"}` | Successful gRPC lock requests. |
+| `nacos_monitor{module="lock",name="grpcUnLockTotal"}` | Total gRPC unlock requests. |
+| `nacos_monitor{module="lock",name="grpcUnLockSuccess"}` | Successful gRPC unlock requests. |
+| `nacos_monitor{module="lock",name="aliveLockCount"}` | Current alive lock count. |
+| `nacos_timer{module="lock",name="lockHandlerRt"}` | Lock request handling latency. |
 
-指标|含义
----|---
-http_server_requests_seconds_count|http请求次数，包括多种(url,方法,code)
-http_server_requests_seconds_sum|http请求总耗时，包括多种(url,方法,code)
-grpc_server_requests_seconds_count|Nacos grpc请求次数，包括多种（requestClass,code)
-grpc_server_requests_seconds_sum|Nacos grpc请求总耗时，包括多种（requestClass,code)
-nacos_timer_seconds_sum|Nacos config水平通知耗时
-nacos_timer_seconds_count|Nacos config水平通知次数
-grpc_server_executor{name='maximumPoolSize'}|Nacos grpc服务器线程池的最大线程数
-grpc_server_executor{name='corePoolSize'}|Nacos grpc服务器线程池的核心线程数
-grpc_server_executor{name='taskCount'}|Nacos grpc服务器线程池的任务数量
-grpc_server_executor{name='poolSize'}|Nacos grpc服务器线程池当前线程数量
-grpc_server_executor{name='activeCount'}|Nacos grpc服务器线程池当前活跃的线程数量
-grpc_server_executor{name='completedTaskCount'}|Nacos grpc服务器线程池完成的任务数量
-grpc_server_executor{name='inQueueTaskCount'}|Nacos grpc服务器线程池在任务队列中的任务数量
-nacos_monitor{name='longPolling'}|Nacos config长连接数
-nacos_monitor{name='configCount'}|Nacos config配置个数
-nacos_monitor{name='dumpTask'}|Nacos config配置落盘任务堆积数
-nacos_monitor{name='notifyTask'}|Nacos config配置水平通知任务堆积数
-nacos_monitor{name='getConfig'}|Nacos config读配置统计数
-nacos_monitor{name='publish'}|Nacos config写配置统计数
-nacos_monitor{name='ipCount'}|Nacos naming ip个数
-nacos_monitor{name='serviceCount'}|Nacos naming域名个数
-nacos_monitor{name='failedPush'}|Nacos naming推送失败数
-nacos_monitor{name='avgPushCost'}|Nacos naming平均推送耗时(ms)
-nacos_monitor{name='leaderStatus'}|Nacos naming角色状态
-nacos_monitor{name='maxPushCost'}|Nacos naming最大推送耗时(ms)
-nacos_monitor{name='mysqlhealthCheck'}|Nacos naming mysql健康检查次数
-nacos_monitor{name='httpHealthCheck'}|Nacos naming http健康检查次数
-nacos_monitor{name='tcpHealthCheck'}|Nacos naming tcp健康检查次数
-nacos_monitor{name='longConnection'}|Nacos基于模块划分的连接数量
-nacos_naming_subscriber{version='v1/v2'}|Nacos naming服务订阅者数量，v1/v2表示订阅者的客户端版本
-nacos_config_subscriber{version='v1/v2'}|Nacos config配置监听者数量，v1/v2表示订阅者的客户端版本
-nacos_naming_publisher{version='v1/v2'}|Nacos naming服务提供者数量，v1/v2表示订阅者的客户端版本
+## Alert suggestions
 
-## 2. Nacos-Sync监控
+| Scenario | Watch |
+| --- | --- |
+| Node unavailable | Readiness failure, HTTP/gRPC request error rate, JVM resources, process liveness. |
+| gRPC backlog | `grpc_server_executor` active count, queue, and completed task changes. |
+| Config push delay | `notifyTask`, `notifyClientTask`, `notifyRt`, and `dumpTask`. |
+| Config publish exception | `publish`, `writeConfigRt`, and `nacos_exception{module="config"}`. |
+| Service push exception | `failedPush`, `pushPendingTaskCount`, `avgPushCost`, and `maxPushCost`. |
+| Abnormal connection change | `longConnection`, `nacos_config_subscriber`, and `nacos_naming_subscriber`. |
+| Lock usage exception | Lock success rate, unlock success rate, and `aliveLockCount`. |
 
-Nacos-Sync 同样支持了第三方监控系统，能通过metrics数据观察Nacos-Sync服务的运行状态，提升了Nacos-Sync的在生产环境的监控能力。
-整体的监控体系的搭建参考上文的[Nacos 集群监控](#1-nacos-集群监控)，进行prometheus和grafana的部署即可。
+## Troubleshooting
 
-### 2.1. grafana监控Nacos-Sync
-和Nacos监控一样，Nacos-Sync也提供了监控模版，导入监控[模版](https://github.com/nacos-group/nacos-template/blob/master/nacos-sync-grafana)
+**`/actuator/prometheus` returns 404 or no data**
 
-Nacos-Sync监控同样也分为三个模块:
-- nacos-sync monitor展示核心监控项
-  ![monitor](https://img.alicdn.com/tfs/TB1GeNWKmzqK1RjSZFHXXb3CpXa-2834-1588.png)
-- nacos-sync detail和alert展示监控曲线和告警
-  ![detail](https://img.alicdn.com/tfs/TB1kP8UKbvpK1RjSZPiXXbmwXXa-2834-1570.png)
+Check whether `management.endpoints.web.exposure.include` contains `prometheus`, confirm that the node has been restarted, and verify `nacos.server.contextPath`.
 
-### 2.2. Nacos-Sync 指标含义
+**`nacos.prometheus.metrics.enabled=true` is configured, but Nacos Server metrics are still unavailable**
 
-Nacos-Sync的metrics分为jvm层和应用层
+This is expected. That configuration belongs to the [Prometheus service discovery ecology document](../../ecology/use-nacos-prometheus-sd.md). It does not enable Nacos Server metrics.
 
-#### 2.2.1. jvm 指标
+**Prometheus fails to scrape some nodes**
 
-指标|含义
----|---
-system_cpu_usage|CPU使用率
-system_load_average_1m|load
-jvm_memory_used_bytes|内存使用字节，包含各种内存区
-jvm_memory_max_bytes|内存最大字节，包含各种内存区
-jvm_gc_pause_seconds_count|gc次数，包含各种gc
-jvm_gc_pause_seconds_sum|gc耗时，包含各种gc
-jvm_threads_daemon|线程数
+Check node ports, context path, network policy, and Prometheus scrape configuration. Every cluster node must expose metrics and be scraped separately.
 
-#### 2.2.2. 应用层 指标
+**A module metric is missing**
 
-指标|含义
----|---
-nacosSync_task_size|同步任务数
-nacosSync_cluster_size|集群数
-nacosSync_add_task_rt|同步任务执行耗时
-nacosSync_delete_task_rt|删除任务耗时
-nacosSync_dispatcher_task|从数据库中分发任务
-nacosSync_sync_task_error|所有同步执行时的异常
+Confirm whether the corresponding module is enabled. For example, if only the configuration module is started, service discovery metrics will not be complete. Experimental distributed lock metrics are meaningful only when the related capability is used.
