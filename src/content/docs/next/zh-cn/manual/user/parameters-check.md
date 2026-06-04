@@ -1,235 +1,91 @@
 ---
 title: 参数校验
-keywords: [参数校验,使用规则]
-description: 参数校验
+keywords: [Nacos, 参数校验, 参数规则]
+description: 了解 Nacos 服务端参数校验的开关、默认规则和常见错误。
 sidebar:
     order: 9
 ---
 
 # 参数校验
 
-2.3.0版本之前的Nacos的参数校验逻辑分散，由各类请求的处理方法单独进行校验，难以更改维护，经常出现参数校验的遗漏，参数校验的规则也没有明确统一；这使得用户使用时经常会因为一些特殊字符导致功能不符合预期或出现漏洞，甚至导致大量推送，导致带宽打满，内存占用过多，导致应用出现故障。
-
-在2.3.0之后的版本中，Nacos明确了参数校验规则，在服务端实现了统一的参数校验逻辑并添加了参数校验层，根据校验规则对客户端向服务端发送的请求进行校验。
-
-用户可以选择开启参数校验功能，开启后Nacos将会对客户端向服务端发送的请求中的部分参数进行参数校验，确保参数的合法性，避免由于错误使用，导致的不符合预期以及性能问题。
-
-## 1. 参数校验开关
-
-服务端的参数校验功能**默认开启**，用户可以通过设置`${nacos.home}/conf`目录下的`application.properties`文件中的`nacos.core.param.check.enabled`值选择开启或者关闭服务端参数校验功能。
-
-`nacos.core.param.check.enabled=true`时开启Nacos服务端参数校验，`false`关闭服务端参数校验
-
-## 2. 参数校验规则
-
-开启参数校验后OpenAPI文档 和 SDK文档中的所有接口中的相关参数都会接受格式校验，现对相关参数以及校验规则进行说明：
-
-|参数描述|最大字符长度|校验规则|
-|-----|-----|-----|
-|命名空间名称|256|禁止`@#$%^&*`，对应正则表达式：`[^@#$%^&*]+$`|
-|命名空间ID|64|只允许字母数字下划线以及"-"字符，对应正则表达式：`^[\w-]+`｜
-|配置名称|256|只允许字母数字以及`_-.:`，对应正则表达式：`^[a-zA-Z0-9-_:\.]*$`|
-|服务名称|512|禁止中文和`@@`且禁止以`@`开头，禁止空白字符，对应正则表达式`^(?!@).((?!@@)[^\u4E00-\u9FA5])*$`|
-|分组名称|128|只允许字母数字以及`_-.:`，对应正则表达式：`^[a-zA-Z0-9-_:\.]*$`|
-|集群名称|64|只允许数字字母和`-_`，对应正则表达式`^[0-9a-zA-Z-_]+$`|
-|IP地址|128|禁止中文字符和空白字符，对应正则表达式为`^[^\u4E00-\u9FA5]*$`|
-|端口号|-|取值范围为`0～65535`|
-|实例元数据|1024|字段名加字段值的默认总长度小于1024个字符，可使用环境变量`NACOS_NAMING_SERVICE_METADATA_LENGTH=`进行动态调整|
-
-### 2.1. namespaceShowName
-
-#### 参数描述
-
-命名空间名称
-
-#### 校验规则
-
-字符长度最大为256，禁止`@#$%^&*`,对应正则表达式：`[^@#$%^&*]+$`
-
-#### OpenAPI示例
-
-- [创建命名空间](./open-api.md#43-创建命名空间)
-
-#### 校验失败报错信息
-
-- 超出长度：`Param 'namespaceShowName' is illegal, the param length should not exceed 256.`
-- 非法字符：`Param 'namespaceShowName' is illegal, illegal characters should not appear in the param.`
-
-### 2.2. namespaceId/tenant/namespace
-
-#### 参数描述
-
-命名空间ID（租户空间）
-
-#### 校验规则
-
-字符长度最大为64，只允许字母数字下划线以及"-"字符，对应正则表达式：`^[\w-]+`
-
-#### OpenAPI示例
-
-- [获取配置](./open-api.md#21-获取配置)
-- [注册实例](./open-api.md#31-注册实例)
-
-#### 校验失败报错信息
-
-- 超出长度：`Param 'namespaceId/tenant' is illegal, the param length should not exceed 64.`
-- 非法字符：`Param 'namespaceId/tenant' is illegal, illegal characters should not appear in the param.`
-
-### 2.3. dataId
-
-#### 参数描述
-
-配置名称
-
-#### 校验规则
-
-字符长度最大为256，只允许字母数字以及`_-.:`，对应正则表达式：`^[a-zA-Z0-9-_:\.]*$`
-
-#### OpenAPI示例
-
-[发布配置](./open-api.md#22-发布配置)
-
-#### Java SDK示例
-
-监听配置：`public void addListener(String dataId, String group, Listener listener) `
-
-#### 校验失败报错信息
-
-- 超出长度：`Param 'dataId' is illegal, the param length should not exceed 512.`
-- 非法字符：`Param 'dataId' is illegal, illegal characters should not appear in the param.`
-
-### 2.4. service/serviceName
-
-#### 参数描述
-
-服务名称
-
-#### 校验规则
-
-字符长度最大为512，禁止中文和`@@`且禁止以`@`开头，对应正则表达式`^(?!@).((?!@@)[^\u4E00-\u9FA5])*$`
-
-#### OpenAPI示例
-
-[注册实例](./open-api.md#31-注册实例)
-
-#### Java SDK示例
-
-注册实例：`void registerInstance(String serviceName, String ip, int port) throws NacosException; `
-
-#### 校验失败报错信息
-
-- 超出长度：`Param 'serviceName' is illegal, the param length should not exceed 512.`
-- 非法字符：`Param 'serviceName' is illegal, illegal characters should not appear in the param.`
-
-### 2.5. group/groupName
-
-#### 参数描述
-
-分组名称
-
-#### 校验规则
-
-字符长度最大为128，只允许字母数字以及`_-.:`，对应正则表达式：`^[a-zA-Z0-9-_:\.]*$`
-
-#### OpenAPI示例
-
-[查询实例列表](./open-api.md#35-查询指定服务的实例列表)
-
-#### Java SDK示例
-
-删除配置：`public boolean removeConfig(String dataId, String group) throws NacosException `
-
-#### 校验失败报错信息
-
-- 超出长度：`Param 'group' is illegal, the param length should not exceed 512.`
-- 非法字符：`Param 'group' is illegal, illegal characters should not appear in the param.`
-
-### 2.6. cluster/clusterName
-
-#### 参数描述
-
-集群名称
-
-#### 校验规则
-
-字符长度最大为64，只允许数字字母和`-_`，对应正则表达式`^[0-9a-zA-Z-_]+$`
-
-#### OpenAPI示例
-
-[更新实例](./open-api.md#33-更新实例)
-
-#### Java SDK示例
-
-获取全部实例：`List<Instance> getAllInstances(String serviceName, List<String> clusters) throws NacosException;`
-
-#### 校验失败报错信息
-
-- 超出长度：`Param 'cluster' is illegal, the param length should not exceed 64.`
-- 非法字符：`Param 'cluster' is illegal, illegal characters should not appear in the param.`
-
-### 2.7. ip
-
-#### 参数描述
-
-IP地址
-
-#### 校验规则
-
-字符长度最大为128，禁止中文字符，对应正则表达式为`^[^\u4E00-\u9FA5]*$`
-
-#### OpenAPI示例
-
-[更新实例](./open-api.md#33-更新实例)
-
-#### Java SDK示例
-
-注销实例：`void deregisterInstance(String serviceName, String ip, int port, String clusterName) throws NacosException;`
-
-#### 校验失败报错信息
-
-- 超出长度：`Param 'ip' is illegal, the param length should not exceed 128.`
-- 非法字符：`Param 'ip' is illegal, illegal characters should not appear in the param.`
-
-### 2.8. port
-
-#### 参数描述
-
-端口号
-
-#### 校验规则
-
-取值范围为0～65535
-
-#### OpenAPI示例
-
-[更新实例](./open-api.md#33-更新实例)
-
-#### Java SDK示例
-
-注销实例：`void deregisterInstance(String serviceName, String ip, int port, String clusterName) throws NacosException;`
-
-#### 校验失败报错信息
-
-端口取值超出范围：`Param 'port' is illegal, the value should be between 0 and 65535`
-
-### 2.9. metadata
-
-#### 参数描述
-
-实例元数据
-
-#### 校验规则
-
-字段名加字段值的总长度小于1024个字符
-
-#### OpenAPI示例
-
-[更新实例](./open-api.md#33-更新实例)
-
-#### Java SDK示例
-
-注册实例：`void registerInstance(String serviceName, Instance instance) throws NacosException;`
-
-#### 校验失败报错信息
-
-实例总长度超出范围：`Param 'Metadata' is illegal, the param length should not exceed %d.`
+Nacos 会在服务端对部分请求参数做统一格式校验。这个能力用于减少错误参数、特殊字符和异常长度带来的资源异常、推送异常或不可预期行为。
+
+参数校验不替代业务语义校验。比如某个接口要求 `dataId` 必填，仍由对应接口逻辑判断；统一参数校验主要判断“传入的值格式是否合法”。
+
+## 开关
+
+服务端参数校验默认开启：
+
+```properties
+nacos.core.param.check.enabled=true
+```
+
+关闭后，统一格式校验不会执行，但各业务模块仍可能保留自己的必要校验。生产环境不建议关闭。
+
+默认校验器为 `default`。如果通过扩展方式提供了新的校验器，可以使用：
+
+```properties
+nacos.core.param.check.checker=default
+```
+
+## 默认规则
+
+下面是当前默认校验器的主要规则。空值通常不会被统一格式校验拦截，但接口本身可能仍要求必填。
+
+| 参数 | 最大长度 | 规则 |
+| --- | --- | --- |
+| `namespaceShowName` | 256 | 不允许出现 `@#$%^&*`。 |
+| `namespaceId` / `tenant` / `namespace` | 64 | 只允许字母、数字、下划线和短横线。 |
+| `dataId` | 256 | 只允许字母、数字、`_`、`-`、`.`、`:`。 |
+| `serviceName` / `service` | 512 | 不能以 `@` 开头；不能包含中文、空白字符或连续 `@@`。 |
+| `group` / `groupName` | 128 | 只允许字母、数字、`_`、`-`、`.`、`:`。 |
+| `cluster` / `clusterName` | 64 | 只允许字母、数字、`-`、`_`。多个集群用逗号分隔时，每个集群都按此规则校验。 |
+| `ip` | 128 | 不能包含中文或空白字符。 |
+| `port` | - | 必须是 `0` 到 `65535` 之间的整数。 |
+| 实例 `metadata` | 1024 | 所有 key 和 value 的字符长度总和不能超过上限。 |
+| `mcpName` | 128 | 只允许字母、数字、`-`、`_`、`/`、`.`。 |
+| `agentName` | 64 | 只允许可打印 ASCII 字符。 |
+| `skillName` | 64 | 只允许小写字母、数字和短横线；不能以短横线开头或结尾；不能包含连续 `--`。 |
+
+实例元数据长度上限可以通过以下配置覆盖：
+
+```properties
+nacos.naming.service.metadata.length=1024
+```
+
+也可以通过环境变量覆盖：
+
+```bash
+NACOS_NAMING_SERVICE_METADATA_LENGTH=1024
+```
+
+## 常见错误
+
+| 错误信息 | 常见原因 |
+| --- | --- |
+| `Param 'namespaceShowName' is illegal, the param length should not exceed 256.` | 命名空间名称超过长度上限。 |
+| `Param 'namespaceId/tenant' is illegal, illegal characters should not appear in the param.` | 命名空间 ID 包含除字母、数字、下划线、短横线之外的字符。 |
+| `Param 'dataId' is illegal, the param length should not exceed 256.` | `dataId` 超过长度上限。 |
+| `Param 'group' is illegal, the param length should not exceed 128.` | `group` 超过长度上限。 |
+| `Param 'serviceName' is illegal, illegal characters should not appear in the param.` | 服务名包含中文、空白字符、连续 `@@`，或以 `@` 开头。 |
+| `Param 'cluster' is illegal, illegal characters should not appear in the param.` | 集群名包含除字母、数字、短横线、下划线之外的字符。 |
+| `Param 'ip' is illegal, illegal characters should not appear in the param.` | IP 参数包含中文或空白字符。 |
+| `Param 'port' is illegal, the value should be between 0 and 65535.` | 端口不是整数，或超出范围。 |
+| `Param 'Metadata' is illegal, the param length should not exceed 1024.` | 实例元数据 key/value 总长度超过上限。 |
+| `Skill name must be 1-64 characters` | Skill 名称超过长度上限。 |
+| `Skill name may only contain lowercase letters, numbers, and hyphens, and must not start or end with a hyphen` | Skill 名称格式不符合规则。 |
+| `Skill name must not contain consecutive hyphens (--)` | Skill 名称包含连续短横线。 |
+
+## 使用建议
+
+- 配置管理场景中，优先使用简短稳定的 `dataId` 和 `group`。
+- 服务发现中，不要把环境、版本、地域等复杂信息塞进服务名。更适合放到命名空间、分组、集群或元数据中。
+- 元数据适合表达少量键值信息，不适合存放大段 JSON、证书、脚本或配置正文。
+- 如果升级后出现参数校验错误，先修正调用方参数。只有在紧急迁移窗口期内，才考虑临时关闭统一参数校验。
+
+## 相关文档
+
+- [配置管理概览](./config/overview.md)
+- [服务发现概览](./naming/overview.md)
+- [AI 管理中心概述](./ai/ai-registry-overview.md)
+- [系统参数](../admin/system-configurations.md)
