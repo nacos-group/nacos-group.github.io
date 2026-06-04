@@ -212,6 +212,13 @@
         "link": "docs/manual/admin/upgrading"
       },
       {
+        "label": "兼容与废弃",
+        "translations": {
+          "en": "Compatibility And Deprecation"
+        },
+        "link": "docs/manual/admin/compatibility-and-deprecation"
+      },
+      {
         "label": "监控手册",
         "translations": {
           "en": "Monitor Manual"

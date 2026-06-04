@@ -1,235 +1,91 @@
 ---
-title: 参数校验
-keywords: [参数校验,使用规则]
-description: 参数校验
+title: Parameter Validation
+keywords: [Nacos, Parameter Validation, Parameter Rules]
+description: Learn the Nacos server-side parameter validation switch, default rules, and common errors.
 sidebar:
     order: 9
 ---
 
-# 参数校验
+# Parameter Validation
 
-2.3.0版本之前的Nacos的参数校验逻辑分散，由各类请求的处理方法单独进行校验，难以更改维护，经常出现参数校验的遗漏，参数校验的规则也没有明确统一；这使得用户使用时经常会因为一些特殊字符导致功能不符合预期或出现漏洞，甚至导致大量推送，导致带宽打满，内存占用过多，导致应用出现故障。
+Nacos validates some request parameters on the server side. This reduces unexpected behavior caused by invalid characters, abnormal length, or malformed resource names.
 
-在2.3.0之后的版本中，Nacos明确了参数校验规则，在服务端实现了统一的参数校验逻辑并添加了参数校验层，根据校验规则对客户端向服务端发送的请求进行校验。
+Parameter validation does not replace business semantic validation. For example, if an API requires `dataId`, the API logic still checks that requirement. The unified validator mainly checks whether a provided value has a valid format.
 
-用户可以选择开启参数校验功能，开启后Nacos将会对客户端向服务端发送的请求中的部分参数进行参数校验，确保参数的合法性，避免由于错误使用，导致的不符合预期以及性能问题。
+## Switch
 
-## 1. 参数校验开关
+Server-side parameter validation is enabled by default:
 
-服务端的参数校验功能**默认开启**，用户可以通过设置`${nacos.home}/conf`目录下的`application.properties`文件中的`nacos.core.param.check.enabled`值选择开启或者关闭服务端参数校验功能。
+```properties
+nacos.core.param.check.enabled=true
+```
 
-`nacos.core.param.check.enabled=true`时开启Nacos服务端参数校验，`false`关闭服务端参数校验
+When it is disabled, unified format validation is skipped, but each business module may still keep its required checks. Disabling it in production is not recommended.
 
-## 2. 参数校验规则
+The default checker is `default`. If you provide another checker through extension, configure:
 
-开启参数校验后OpenAPI文档 和 SDK文档中的所有接口中的相关参数都会接受格式校验，现对相关参数以及校验规则进行说明：
+```properties
+nacos.core.param.check.checker=default
+```
 
-|参数描述|最大字符长度|校验规则|
-|-----|-----|-----|
-|命名空间名称|256|禁止`@#$%^&*`，对应正则表达式：`[^@#$%^&*]+$`|
-|命名空间ID|64|只允许字母数字下划线以及"-"字符，对应正则表达式：`^[\w-]+`｜
-|配置名称|256|只允许字母数字以及`_-.:`，对应正则表达式：`^[a-zA-Z0-9-_:\.]*$`|
-|服务名称|512|禁止中文和`@@`且禁止以`@`开头，禁止空白字符，对应正则表达式`^(?!@).((?!@@)[^\u4E00-\u9FA5])*$`|
-|分组名称|128|只允许字母数字以及`_-.:`，对应正则表达式：`^[a-zA-Z0-9-_:\.]*$`|
-|集群名称|64|只允许数字字母和`-_`，对应正则表达式`^[0-9a-zA-Z-_]+$`|
-|IP地址|128|禁止中文字符和空白字符，对应正则表达式为`^[^\u4E00-\u9FA5]*$`|
-|端口号|-|取值范围为`0～65535`|
-|实例元数据|1024|字段名加字段值的总长度小于1024个字符|
+## Default rules
 
-### 2.1. namespaceShowName
+The following table lists the main rules of the current default checker. Empty values are usually not blocked by the unified format validator, but an API may still require them.
 
-#### 参数描述
+| Parameter | Max length | Rule |
+| --- | --- | --- |
+| `namespaceShowName` | 256 | Must not contain `@#$%^&*`. |
+| `namespaceId` / `tenant` / `namespace` | 64 | Allows letters, digits, underscores, and hyphens. |
+| `dataId` | 256 | Allows letters, digits, `_`, `-`, `.`, and `:`. |
+| `serviceName` / `service` | 512 | Must not start with `@`; must not contain Chinese characters, whitespace, or consecutive `@@`. |
+| `group` / `groupName` | 128 | Allows letters, digits, `_`, `-`, `.`, and `:`. |
+| `cluster` / `clusterName` | 64 | Allows letters, digits, `-`, and `_`. When multiple clusters are separated by commas, each cluster is validated with this rule. |
+| `ip` | 128 | Must not contain Chinese characters or whitespace. |
+| `port` | - | Must be an integer between `0` and `65535`. |
+| Instance `metadata` | 1024 | Total character length of all keys and values must not exceed the limit. |
+| `mcpName` | 128 | Allows letters, digits, `-`, `_`, `/`, and `.`. |
+| `agentName` | 64 | Allows printable ASCII characters. |
+| `skillName` | 64 | Allows lowercase letters, digits, and hyphens; must not start or end with a hyphen; must not contain consecutive `--`. |
 
-命名空间名称
+The metadata length limit can be overridden with:
 
-#### 校验规则
+```properties
+nacos.naming.service.metadata.length=1024
+```
 
-字符长度最大为256，禁止`@#$%^&*`,对应正则表达式：`[^@#$%^&*]+$`
+It can also be overridden with an environment variable:
 
-#### OpenAPI示例
+```bash
+NACOS_NAMING_SERVICE_METADATA_LENGTH=1024
+```
 
-- [创建命名空间](./open-api.md#43-创建命名空间)
+## Common errors
 
-#### 校验失败报错信息
+| Error message | Common cause |
+| --- | --- |
+| `Param 'namespaceShowName' is illegal, the param length should not exceed 256.` | The namespace display name exceeds the length limit. |
+| `Param 'namespaceId/tenant' is illegal, illegal characters should not appear in the param.` | The namespace ID contains characters other than letters, digits, underscores, or hyphens. |
+| `Param 'dataId' is illegal, the param length should not exceed 256.` | `dataId` exceeds the length limit. |
+| `Param 'group' is illegal, the param length should not exceed 128.` | `group` exceeds the length limit. |
+| `Param 'serviceName' is illegal, illegal characters should not appear in the param.` | The service name contains Chinese characters, whitespace, consecutive `@@`, or starts with `@`. |
+| `Param 'cluster' is illegal, illegal characters should not appear in the param.` | The cluster name contains characters other than letters, digits, hyphens, or underscores. |
+| `Param 'ip' is illegal, illegal characters should not appear in the param.` | The IP parameter contains Chinese characters or whitespace. |
+| `Param 'port' is illegal, the value should be between 0 and 65535.` | The port is not an integer or is out of range. |
+| `Param 'Metadata' is illegal, the param length should not exceed 1024.` | The total length of metadata keys and values exceeds the limit. |
+| `Skill name must be 1-64 characters` | The Skill name exceeds the length limit. |
+| `Skill name may only contain lowercase letters, numbers, and hyphens, and must not start or end with a hyphen` | The Skill name format is invalid. |
+| `Skill name must not contain consecutive hyphens (--)` | The Skill name contains consecutive hyphens. |
 
-- 超出长度：`Param 'namespaceShowName' is illegal, the param length should not exceed 256.`
-- 非法字符：`Param 'namespaceShowName' is illegal, illegal characters should not appear in the param.`
+## Suggestions
 
-### 2.2. namespaceId/tenant/namespace
+- In configuration management, use short and stable `dataId` and `group` values.
+- In service discovery, do not put environment, version, region, or other complex information into the service name. Namespace, group, cluster, or metadata is usually more suitable.
+- Metadata is suitable for a small number of key-value pairs. Do not use it to store large JSON payloads, certificates, scripts, or configuration content.
+- If validation errors appear after an upgrade, fix caller parameters first. Temporarily disabling unified validation should be limited to an emergency migration window.
 
-#### 参数描述
+## Related documents
 
-命名空间ID（租户空间）
-
-#### 校验规则
-
-字符长度最大为64，只允许字母数字下划线以及"-"字符，对应正则表达式：`^[\w-]+`
-
-#### OpenAPI示例
-
-- [获取配置](./open-api.md#21-获取配置)
-- [注册实例](./open-api.md#31-注册实例)
-
-#### 校验失败报错信息
-
-- 超出长度：`Param 'namespaceId/tenant' is illegal, the param length should not exceed 64.`
-- 非法字符：`Param 'namespaceId/tenant' is illegal, illegal characters should not appear in the param.`
-
-### 2.3. dataId
-
-#### 参数描述
-
-配置名称
-
-#### 校验规则
-
-字符长度最大为256，只允许字母数字以及`_-.:`，对应正则表达式：`^[a-zA-Z0-9-_:\.]*$`
-
-#### OpenAPI示例
-
-[发布配置](./open-api.md#22-发布配置)
-
-#### Java SDK示例
-
-监听配置：`public void addListener(String dataId, String group, Listener listener) `
-
-#### 校验失败报错信息
-
-- 超出长度：`Param 'dataId' is illegal, the param length should not exceed 512.`
-- 非法字符：`Param 'dataId' is illegal, illegal characters should not appear in the param.`
-
-### 2.4. service/serviceName
-
-#### 参数描述
-
-服务名称
-
-#### 校验规则
-
-字符长度最大为512，禁止中文和`@@`且禁止以`@`开头，对应正则表达式`^(?!@).((?!@@)[^\u4E00-\u9FA5])*$`
-
-#### OpenAPI示例
-
-[注册实例](./open-api.md#31-注册实例)
-
-#### Java SDK示例
-
-注册实例：`void registerInstance(String serviceName, String ip, int port) throws NacosException; `
-
-#### 校验失败报错信息
-
-- 超出长度：`Param 'serviceName' is illegal, the param length should not exceed 512.`
-- 非法字符：`Param 'serviceName' is illegal, illegal characters should not appear in the param.`
-
-### 2.5. group/groupName
-
-#### 参数描述
-
-分组名称
-
-#### 校验规则
-
-字符长度最大为128，只允许字母数字以及`_-.:`，对应正则表达式：`^[a-zA-Z0-9-_:\.]*$`
-
-#### OpenAPI示例
-
-[查询实例列表](./open-api.md#35-查询指定服务的实例列表)
-
-#### Java SDK示例
-
-删除配置：`public boolean removeConfig(String dataId, String group) throws NacosException `
-
-#### 校验失败报错信息
-
-- 超出长度：`Param 'group' is illegal, the param length should not exceed 512.`
-- 非法字符：`Param 'group' is illegal, illegal characters should not appear in the param.`
-
-### 2.6. cluster/clusterName
-
-#### 参数描述
-
-集群名称
-
-#### 校验规则
-
-字符长度最大为64，只允许数字字母和`-_`，对应正则表达式`^[0-9a-zA-Z-_]+$`
-
-#### OpenAPI示例
-
-[更新实例](./open-api.md#33-更新实例)
-
-#### Java SDK示例
-
-获取全部实例：`List<Instance> getAllInstances(String serviceName, List<String> clusters) throws NacosException;`
-
-#### 校验失败报错信息
-
-- 超出长度：`Param 'cluster' is illegal, the param length should not exceed 64.`
-- 非法字符：`Param 'cluster' is illegal, illegal characters should not appear in the param.`
-
-### 2.7. ip
-
-#### 参数描述
-
-IP地址
-
-#### 校验规则
-
-字符长度最大为128，禁止中文字符，对应正则表达式为`^[^\u4E00-\u9FA5]*$`
-
-#### OpenAPI示例
-
-[更新实例](./open-api.md#33-更新实例)
-
-#### Java SDK示例
-
-注销实例：`void deregisterInstance(String serviceName, String ip, int port, String clusterName) throws NacosException;`
-
-#### 校验失败报错信息
-
-- 超出长度：`Param 'ip' is illegal, the param length should not exceed 128.`
-- 非法字符：`Param 'ip' is illegal, illegal characters should not appear in the param.`
-
-### 2.8. port
-
-#### 参数描述
-
-端口号
-
-#### 校验规则
-
-取值范围为0～65535
-
-#### OpenAPI示例
-
-[更新实例](./open-api.md#33-更新实例)
-
-#### Java SDK示例
-
-注销实例：`void deregisterInstance(String serviceName, String ip, int port, String clusterName) throws NacosException;`
-
-#### 校验失败报错信息
-
-端口取值超出范围：`Param 'port' is illegal, the value should be between 0 and 65535`
-
-### 2.9. metadata
-
-#### 参数描述
-
-实例元数据
-
-#### 校验规则
-
-字段名加字段值的总长度小于1024个字符
-
-#### OpenAPI示例
-
-[更新实例](./open-api.md#33-更新实例)
-
-#### Java SDK示例
-
-注册实例：`void registerInstance(String serviceName, Instance instance) throws NacosException;`
-
-#### 校验失败报错信息
-
-实例总长度超出范围：`Param 'Metadata' is illegal, the param length should not exceed %d.`
+- [Configuration Overview](./config/overview.md)
+- [Service Discovery Overview](./naming/overview.md)
+- [AI Registry Overview](./ai/ai-registry-overview.md)
+- [System Configurations](../admin/system-configurations.md)
