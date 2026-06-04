@@ -23,7 +23,19 @@ Nacos 3.X 的 HTTP OpenAPI **主要面向不支持 gRPC 的编程语言开发客
 
 ## 0. 客户端API 相关说明
 
-### 0.1. 统一路径格式
+### 0.1. 适用边界
+
+客户端 API 面向应用运行时和自定义客户端。调用者通常已经知道要访问的 `namespaceId`、`groupName`、`dataId`、`serviceName` 或实例信息。
+
+| 适合使用 | 不适合使用 |
+| --- | --- |
+| 查询单个已知配置。 | 发布、删除、导入、导出配置。 |
+| 注册、注销、查询和发现已知服务或实例。 | 查询全量配置列表、全量服务列表、订阅者列表等范围型数据。 |
+| 在缺少合适 SDK 的语言中，通过 HTTP 完成少量运行时访问。 | 构建发布平台、运维平台、网关管控面或审计工具。 |
+
+业务应用优先使用 [SDK](./overview/other-language.md)。需要范围型管理能力时，请使用[运维 API](../admin/admin-api.md)或[运维 SDK](../admin/maintainer-sdk.md)。
+
+### 0.2. 统一路径格式
 
 Nacos的客户端API，使用统一的Path格式进行的规范。格式为`[/$nacos.server.contextPath]/v3/client/[module]/[subPath]...`,
 其中
@@ -38,7 +50,7 @@ Nacos的客户端API，使用统一的Path格式进行的规范。格式为`[/$n
 同时下列列出的客户端API样例中，均采用默认Nacos Web Server的端口进行展示，若已修改部署环境中的`$nacos.server.main.port`
 配置项，请自行修改调用API时的请求URL。
 
-### 0.2. Swagger 类型文档
+### 0.3. Swagger 类型文档
 
 Nacos 3.X 的客户端 Open API 也提供了Swagger风格的文档，您可以通过访问[Nacos Swagger HTTP 客户端 API](/swagger/client/)查看。
 

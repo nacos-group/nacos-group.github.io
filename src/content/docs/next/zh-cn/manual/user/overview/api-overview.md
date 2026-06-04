@@ -8,13 +8,21 @@ sidebar:
 
 # Nacos Open API 概览
 
-## 1. Nacos Open API 分类
+Nacos Open API 按调用者和使用场景分为 Client Open API、Admin Open API 和 Console Open API。本页用于帮助你先选对 API 类型，并了解统一返回体、错误码等公共约定。
 
-Nacos 3.0 为了匹配不同使用场景，同时也为了能够让不同类型的API实施不同的安全认证机制，将Open API进行了多维度的分类：
+如果已经确定要调用哪一类 API，请直接阅读对应 API 页中的“0. 相关说明”。那里会说明该类 API 的路径前缀、端口、鉴权和 Swagger 入口。
 
-- **Client Open API** : 用于客户端和应用程序的OpenAPI，客户端和应用程序通过OpenAPI与Nacos进行数据交互，主要为微服务类型、普通应用程序及AI Agent应用提供精确的数据数据访问能力，这类应用的主要特点是对于需要访问的资源有着较高的确定性，同时对此类API的性能及响应速度要求较高。
-- **Admin Open API** : 用于运维人员和管理平面的OpenAPI，管理平面通过OpenAPI与Nacos进行数据交互，主要为运维人员、监控人员、审计人员及各种运维工具提供大范围的数据检索访问能力，这类应用或调用者的主要特点是可能需要对不确定性或大访问的数据进行检索，但调用次数及频率相对较低，并且对响应时间的要求也相对较低。
-- **Console Open API** : 用于控制台的OpenAPI，控制台通过OpenAPI与Nacos进行数据交互，主要为控制台提供数据检索及数据修改的能力，此类应用或调用者的主要特点是需要与`Admin Open API`相似，但更关注`数据`类型的API，对控制`Nacos`本身的的要求相对较低。
+## 1. 先选择 API 类型
+
+| API 类型 | 面向对象 | 适合做什么 | 文档入口 |
+| --- | --- | --- | --- |
+| Client Open API | 普通应用、微服务应用、AI Agent 应用、自定义客户端 | 查询已知配置，注册、注销、查询和发现已知服务。它面向确定资源，范围要小，调用频率可能较高。 | [客户端 API](../open-api.md) |
+| Admin Open API | 运维平台、发布平台、审计工具、自动化脚本、管理员 | 发布和管理配置，管理服务、命名空间、插件、节点状态和 AI 资源。它面向管理面，允许范围查询和批量管理。 | [运维 API](../../admin/admin-api.md) |
+| Console Open API | Nacos 控制台、自定义控制台 UI | 支撑控制台页面的数据读取和交互。它和 Admin API 有重叠，但更贴近控制台展示和操作流程。 | [控制台 API](../../admin/console-api.md) |
+
+业务应用优先使用 Client SDK。只有在语言运行时暂时没有合适 SDK，或者只需要少量 HTTP 调用时，才建议直接使用 Client Open API。
+
+不要把 Console Open API 当成通用运维接口。自定义控制台可以使用 Console Open API；运维自动化、发布平台和审计工具应优先使用 Admin Open API 或 Maintainer SDK。
 
 ## 2. Nacos Open API 访问协议
 
