@@ -8,10 +8,9 @@ sidebar:
 
 # 运维API
 
-> Nacos 3.X 版本将不再兼容1.X版本 和 2.X版本的 AdminAPI，请使用Nacos 3.X版本的AdminAPI进行替换。
+> Nacos 3.x 的标准运维 API 使用 `/v3/admin/*` 路径。当前版本已移除 v1/v2 Admin API，请使用 Nacos 3.x 运维 API 替换。
 >
-> 若必须要使用1.X和2.X的Admin API，需要在配置文件中设置`nacos.core.auth.admin.enabled=true`开启，但此兼容也将在未来版本中移除，建议使用Nacos
-> 3.X版本的AdminAPI进行替换。
+> 若迁移期间仍需临时使用 v1/v2 Admin API，请先阅读[兼容与废弃](./compatibility-and-deprecation.md)，并按升级手册中的 legacy adapter 方案评估兼容风险。
 
 Nacos默认搭载了一整套专为管理控制台和运维人员设计的运维API，赋予运维专家更多的配置权限、更广阔的数据检索能力等。这些API为Nacos的运维团队提供了方便，使他们能够高效地处理故障、排查问题，以确保系统的稳定运行。
 
