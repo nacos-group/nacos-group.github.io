@@ -1,303 +1,373 @@
 ---
-title: 系统参数
-keywords: [ Nacos,系统参数 ]
-description: Nacos系统参数介绍
+title: System Parameters
+keywords: [Nacos, system parameters, configuration, application.properties]
+description: Common system parameters for Nacos Server, Console, plugins, AI Registry, and compatibility capabilities.
 sidebar:
   order: 6
 ---
 
-# Nacos 系统参数介绍
+# System Parameters
 
-## 1. Nacos Server
+This page summarizes common Nacos 3.2.x server-side parameters. The main source is `${nacos.home}/conf/application.properties` in the Nacos distribution, with extra notes from current configuration code.
 
-对于Server端来说，一般是设置在`{nacos.home}/conf/application.properties`里，如果参数名后标注了(-D)的，则表示是 JVM
-的参数，需要在`{nacos.home}/bin/startup.sh`里进行相应的设置。例如像设置 nacos.home
-的值，可以在`{nacos.home}/bin/startup.sh`进行如下设置：
+For production deployments, read [Deployment Best Practices](./deployment/deployment-best-practices.md) first, then use this page to confirm specific properties.
 
+## Where to Configure
+
+The main Nacos Server configuration file is `${nacos.home}/conf/application.properties`. The startup script also adds:
+
+```shell
+--spring.config.additional-location=file:${BASE_DIR}/conf/
 ```
-JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
-```
 
-若没有标注(-D)的参数，则同时可以在`{nacos.home}/conf/application.properties`
-里和JVM参数中配置，如果同时配置了JVM参数和`{nacos.home}/conf/application.properties`，那么JVM参数的优先级更高。
+The same property can come from the configuration file, JVM `-D` options, or the startup script. In general, JVM options have higher priority than the configuration file. Properties marked with `(-D)` are usually set through the startup script or JVM options.
 
-### 1.1. 全局参数
+:::caution
+Nacos is an internal microservice component and should not be exposed to the public Internet. Console, auth, metrics, plugins, and AI Registry features should also run inside trusted internal networks with network isolation, access control, and audit protection.
+:::
 
-#### 1.1.1. 基础参数
+## Basic Startup
 
-| 参数名	                                    | 含义	                                                                                        | 可选值	             | 默认值        | 
-|-----------------------------------------|--------------------------------------------------------------------------------------------|------------------|------------|
-| nacos.home(-D)                          | Nacos的根目录                                                                                  | 目录路径             | Nacos安装的目录 | 
-| nacos.standalone(-D)                    | 是否在单机模式                                                                                    | true/false       | false      |
-| nacos.functionMode(-D)                  | 启动模式，支持只启动某一个模块，不设置时所有模块都会启动                                                               | config/naming/空  | 空          | 
-| nacos.server.ip(-D)                     | Nacos服务端的IP，优先级比`nacos.inetutils.ip-address`更高，如果配置了该参数，则`nacos.inetutils.ip-address`不再生效  | 本机IP             | null       |
-| nacos.inetutils.prefer-hostname-over-ip | 节点优先使用hostname作为本机ip，若为`true`时，`cluster.conf`里是否应该填`hostname`                              | true/false       | false      | 
-| nacos.inetutils.ip-address              | 本机IP，该参数设置后，将会使用这个IP去`cluster.conf`里进行匹配，请确保这个IP的值在`cluster.conf`里是存在的                     | 本机IP             | null       |
-| nacos.core.sys.basic.processors         | 指定服务端的处理器个数，用于部分虚拟化场景，防止读取CPU个数时读取到错误的值，导致线程数过多或过少                                         | 正整数              | CPU个数      |
-| nacos.core.monitor.topn.enabled         | Nacos Server topN 监控统计能力开关                                                                 | true/false       | true       |
-| nacos.core.monitor.topn.count           | Nacos Server topN 监控统计 top的个数，如如配置为10，表示top10的配置和服务                                        | 正整数              | 10         |
-| nacos.core.snowflake.worker-id          | Nacos Server 的snowflake workerId                                                           | 正整数              | -1         |
-| nacos.core.param.check.enabled          | Nacos Server 参数校验能力开关，开启后将会校验请求时的参数是否符合规范，不符合将被拦截，详情查看 [参数校验](../user/parameters-check.md) | true/false       | true       |
-| nacos.server.main.port                  | Nacos Server 的端口，替代之前的`server.port`                                                        | 正整数              | 8848       |
-| nacos.server.contextPath                | Nacos Server 的Web Servlet上下文路径, 替代之前的`server.servlet.context-path`                         | 任意路径             | /nacos     |
-| spring.config.additional-location       | Nacos Server 的额外配置文件路径，除`{nacos.home}/conf/application.properties`外，用户可以添加额外的配置文件          | 文件路径，多个文件路径用逗号分隔 | null       | 
-| nacos.remote.grpc.listen.ip(-D)         | Nacos Server Grpc Port LISTEN IP，Nacos 服务端 Grpc 监听IP，默认绑定全零IP                              | 本机IP             | null       |
+| Property | Description | Default |
+| --- | --- | --- |
+| `nacos.home(-D)` | Nacos home directory. | installation directory |
+| `nacos.standalone(-D)` | Whether to start in standalone mode. `startup.sh -m standalone` sets this property. | `false` |
+| `nacos.functionMode(-D)` | Function mode. `all` starts all modules. The startup script also supports `config`, `naming`, `microservice`, and `ai`. | `all` |
+| `nacos.deployment.type(-D)` | Deployment type. The startup script uses `merged` by default. | `merged` |
+| `nacos.server.main.port` | Main Nacos Server port. | `8848` |
+| `nacos.server.contextPath` | HTTP context path of Nacos Server. | `/nacos` |
+| `spring.config.additional-location` | Extra configuration file locations. Separate multiple locations with commas. | `${nacos.home}/conf/` |
+| `server.error.include-message` | Whether Spring Boot error responses include the message field. | `ALWAYS` |
+| `server.max-http-request-header-size` | HTTP request header size limit set by the startup script. | `524288` |
 
-#### 1.1.2. 数据库
+## Network and Node Address
 
-| 参数名	                     | 含义	                                                                                                        | 可选值	                                                                                                                                       | 默认值             | 
-|--------------------------|------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|-----------------|
-| spring.sql.init.platform | Nacos Server 使用的数据库类型                                                                                      | mysql/空，指定为空时会根据`nacos.standalone`判断使用derby数据库还是mysql数据库；在使用[数据源插件](../../plugin/datasource-plugin.md)时，可以指定为插件对应的数据库值，比如oracle或postgresql | null            |
-| db.num                   | 数据库数目                                                                                                      | 正整数                                                                                                                                        | 0               |
-| db.url.0                 | 第一个数据库的URL                                                                                                 | 字符串                                                                                                                                        | 空               |
-| db.url.1                 | 第二个数据库的URL，当db.num=2时生效                                                                                    | 字符串                                                                                                                                        | 空               | 
-| db.user                  | 数据库连接的用户名                                                                                                  | 字符串                                                                                                                                        | 空               | 
-| db.password              | 数据库连接的密码                                                                                                   | 字符串                                                                                                                                        | 空               | 
-| db.pool.config.xxx       | 数据库连接池参数，使用的是hikari连接池，参数与hikari连接池相同，如`db.pool.config.connectionTimeout`或`db.pool.config.maximumPoolSize` | 字符串                                                                                                                                        | 同hikariCp对应默认配置 |
+| Property | Description | Default |
+| --- | --- | --- |
+| `nacos.server.ip(-D)` | Explicit local server IP. It has higher priority than auto detection and `nacos.inetutils.ip-address`. | empty |
+| `nacos.inetutils.ip-address` | Explicit local IP, commonly used in multi-NIC or container environments. | empty |
+| `nacos.inetutils.prefer-hostname-over-ip` | Prefer hostname as node address. If enabled, `cluster.conf` should also use resolvable hostnames. | `false` |
+| `nacos.remote.grpc.listen.ip(-D)` | Listen IP for gRPC ports. If unset, gRPC usually listens on all interfaces. | empty |
 
-当前数据库配置支持多数据源。通过`db.num`来指定数据源个数，`db.url.index`为对应的数据库的链接。`db.user`以及`db.password`
-没有设置`index`时,所有的链接都以`db.user`和`db.password`
-用作认证。如果不同数据源的用户名称或者用户密码不一样时，可以通过符号`,`
-来进行切割，或者指定`db.user.index`,`db.user.password`来设置对应数据库链接的用户或者密码。需要注意的是，当`db.user`
-和`db.password`没有指定下标时，因为当前机制会根据`,`进行切割。所以当用户名或者密码存在`,`时，会把`,`
-切割后前面的值当成最后的值进行认证，会导致认证失败。
+## Database
 
-Nacos从1.3版本开始使用HikariCP连接池，但在1.4.1版本前，连接池配置由系统默认值定义，无法自定义配置。在1.4.1后，提供了一个方法能够配置HikariCP连接池。
-`db.pool.config`为配置前缀，`xxx`为实际的hikariCP配置，如`db.pool.config.connectionTimeout`
-或`db.pool.config.maximumPoolSize`等。更多hikariCP的配置请查看[HikariCP](https://github.com/brettwooldridge/HikariCP)
-需要注意的是，url,user,password会由`db.url.n`,`db.user`,`db.password`覆盖，driverClassName则是默认的MySQL8 driver（该版本mysql
-driver支持mysql5.x)
+Nacos supports Derby, MySQL, PostgreSQL, Oracle, and custom database types through datasource dialect plugins. For setup, community plugins, and Oracle version requirements, see [Datasource Plugin](../../plugin/datasource-plugin.md).
 
-#### 1.1.2. Remoting
+| Property | Description | Default |
+| --- | --- | --- |
+| `spring.sql.init.platform` | Database type. Supported values include `derby`, `mysql`, `postgresql`, `oracle`, or a custom dialect plugin type. `oracle` requires Oracle 12c or later. | empty |
+| `db.num` | Number of database URLs. | `0` |
+| `db.url.0`, `db.url.1` | JDBC URLs. Use indexes for multiple URLs. | empty |
+| `db.user`, `db.password` | Shared database credentials for all URLs. | empty |
+| `db.user.0`, `db.password.0` | Credentials for a specific indexed URL. Use them when different URLs need different credentials. | empty |
+| `db.pool.config.*` | HikariCP properties, such as `db.pool.config.connectionTimeout`. | HikariCP defaults |
+| `nacos.plugin.datasource.log.enabled` | Whether to print datasource plugin logs. | `true` |
 
-| 参数名	                                                      | 含义	                                       | 可选值	       | 默认值              | 
-|-----------------------------------------------------------|-------------------------------------------|------------|------------------|
-| nacos.remote.server.grpc.sdk.max-inbound-message-size     | Nacos Server gRPC 能接收的单次最大客户端请求大小，单位byte  | 正整数        | 10 * 1024 * 1024 |
-| nacos.remote.server.grpc.cluster.max-inbound-message-size | Nacos Server gRPC 能接收的单次最大集群间请求大小，单位byte  | 正整数        | 10 * 1024 * 1024 |
-| nacos.metric.grpc.server.executor.enabled                 | Nacos Server gRPC线程池 监控能力开关               | true/false | true             |
-| nacos.metric.grpc.server.executor.interval                | Nacos Server gRPC线程池的间隔时间，单位为毫秒           | 正整数        | 15000            |
-| nacos.metric.grpc.server.connection.enabled               | Nacos Server gRPC长连接 监控能力开关               | true/false | true             |
-| nacos.metric.grpc.server.connection.interval              | Nacos Server gRPC长连接的间隔时间，单位为**秒**        | 正整数        | 15               |
-| remote.executor.times.of.processors(-D)                   | 服务端，处理请求的线程池大小的倍数, 例如配置为2，表示线程池大小为2 * CPU | 正整数        | 16               |
-| remote.executor.queue.size(-D)                            | 服务端，处理请求的线程池队列大小                          | 正整数        | 16384            |
+:::note
+`spring.datasource.platform` is a legacy compatibility property. New deployments should use `spring.sql.init.platform`.
+:::
 
-#### 1.1.3. 集群列表
+## Web and Console
 
-| 参数名	                                 | 含义	                                                                                                         | 可选值	                  | 默认值              | 
-|--------------------------------------|-------------------------------------------------------------------------------------------------------------|-----------------------|------------------|
-| nacos.member.list                    | Nacos Server 地址列表，在`cluster.conf`不存在时生效                                                                     | `ip1:port1,ip2:port2` | null             |
-| nacos.member-change-event.queue.size | Nacos Server 集群节点变更事件队列的大小，当集群节点通过`cluster.conf`或地址服务器变更时，会将变更事件放入该队列，该队列会异步通知Server中的一些机制，比如Distro/Raft协议。 | 正整数                   | 128              |
-| nacos.core.member.lookup.type        | Nacos Server 集群节点的发现方式，支持配置文件`cluster.conf`和地址服务器模式                                                         | file/address-server   | file             |
-| nacos.core.address-server.retry      | 当`nacos.core.member.lookup.type`指定为`address-server`时生效，请求地址服务器的重试次数，超过重试次数后不再尝试从地址服务器获取NacosServer的集群列表     | 正整数                   | 5                |
-| address.server.domain                | 当`nacos.core.member.lookup.type`指定为`address-server`时生效，地址服务器的域名                                             | 域名                    | jmenv.tbsite.net |
-| address.server.port                  | 当`nacos.core.member.lookup.type`指定为`address-server`时生效，地址服务器的端口                                             | 0～65535               | 8080             |
-| address.server.url                   | 当`nacos.core.member.lookup.type`指定为`address-server`时生效，地址服务器的url                                            | 字符串                   | /serverlist      |
+Nacos 3.x separates the Server and Console ports by default. Server APIs use `8848` by default, and the new Console uses `8080`. See [Console Manual](./console.md) for usage.
 
-### 1.2. Distro 协议
+| Property | Description | Default |
+| --- | --- | --- |
+| `nacos.console.port` | Console port. | `8080` |
+| `nacos.console.contextPath` | Console context path. | empty |
+| `nacos.console.remote.server.context-path` | Server context path used by an independent Console deployment. | `/nacos` |
+| `nacos.console.ui.enabled` | Whether to enable Console UI. | `true` |
+| `nacos.console.ui.default` | Default Console UI. Valid values are `next` and `legacy`. | `next` |
+| `spring.servlet.multipart.max-file-size` | Single upload file size limit for Console, such as Skill zip files. | `10MB` |
+| `spring.servlet.multipart.max-request-size` | Total upload request size limit for Console. | `10MB` |
+| `server.servlet.encoding.charset` | Servlet encoding. | `UTF-8` |
 
-| 参数名	                                              | 含义	                                                          | 可选值	 | 默认值   | 
-|---------------------------------------------------|--------------------------------------------------------------|------|-------|
-| nacos.core.protocol.distro.data.sync.delayMs      | Distro协议同步数据的延迟时间，同一份数据处于延迟时间内多次变更时，会被合并为一次同步，单位为毫秒          | 正整数  | 1000  |
-| nacos.core.protocol.distro.data.sync.timeoutMs    | Distro协议同步数据的超时时间，同步到目标节点时超过该时间，则会认为同步失败，进行延迟后重试，单位为毫秒       | 正整数  | 3000  |
-| nacos.core.protocol.distro.data.sync.retryDelayMs | Distro协议同步数据的重试间隔，当数据同步到目标节点失败时，进行该值时间的延迟后再重试，避免同步重试风暴，单位为毫秒 | 正整数  | 3000  |
-| nacos.core.protocol.distro.data.verify.intervalMs | Distro协议数据验证的间隔，已经同步过的数据，会定期进行数据有效性验证，验证失败会重新发起该数据的同步，单位为毫秒  | 正整数  | 5000  | 
-| nacos.core.protocol.distro.data.verify.timeoutMs  | Distro协议数据验证的超时时间，单位为毫秒                                      | 正整数  | 3000  |
-| nacos.core.protocol.distro.data.load.retryDelayMs | Distro协议快照数据加载的重试间隔，在节点刚启动时生效，单位为毫秒                          | 正整数  | 30000 |
-| nacos.core.protocol.distro.data.load.timeoutMs    | Distro协议快照数据加载的超时时间，超过该时间未读取到其他节点的快照数据，则认为加载快照失败，单位为毫秒       | 正整数  | 30000 |
+### Console CORS
 
-### 1.3 Raft 协议
+| Property | Description | Default |
+| --- | --- | --- |
+| `nacos.console.cors.allow-credentials` | Whether credentials such as cookies, Authorization headers, and TLS client certificates are allowed. | `true` |
+| `nacos.console.cors.allowed-headers` | Allowed headers. Empty means all headers are allowed. | empty |
+| `nacos.console.cors.max-age` | CORS preflight cache time in seconds. | `18000` |
+| `nacos.console.cors.allowed-methods` | Allowed HTTP methods. Empty means all methods are allowed. | empty |
+| `nacos.console.cors.allowed-origins` | Allowed origins. Empty means all origin patterns are allowed. | empty |
 
-| 参数名	                                            | 含义	                                                                  | 可选值	       | 默认值        | 
-|-------------------------------------------------|----------------------------------------------------------------------|------------|------------|
-| nacos.core.protocol.raft.election_timeout_ms    | Raft协议选举超时时间，单位ms                                                    | 正整数        | 5000       |
-| nacos.core.protocol.raft.snapshot_interval_secs | Raft协议快照写入间隔时间，单位s                                                   | 正整数        | 3600       |
-| nacos.core.protocol.raft.core_thread_num        | Raft协议的核心线程数，用于处理Raft同步的请求线程数                                        | 正整数        | 8          |
-| nacos.core.protocol.raft.cli_service_thread_num | Raft协议的核心线程数，用于发起Raft同步数据的请求线程数                                      | 正整数        | 4          |
-| nacos.core.protocol.raft.rpc_request_timeout_ms | Raft协议请求的超时时间，单位ms                                                   | 正整数        | 5000       |
-| nacos.core.protocol.raft.max_byte_count_per_rpc | Raft协议单次请求最大字节数                                                      | 正整数        | 128 * 1024 |
-| nacos.core.protocol.raft.max_entries_size       | Raft协议单个日志的最大个数                                                      | 正整数        | 1024       |
-| nacos.core.protocol.raft.max_body_size          | Raft协议发送日志的最大 body 大小                                                | 正整数        | 512 * 1024 |
-| nacos.core.protocol.raft.max_append_buffer_size | Raft协议日志存储缓冲区最大大小                                                    | 正整数        | 256 * 1024 |
-| nacos.core.protocol.raft.max_election_delay_ms  | Raft协议选举的最大随机间隔，选举定时器间隔会在指定时间之外随机的最大范围                               | 正整数        | 1000       |
-| nacos.core.protocol.raft.strict_mode            | 从`2.4.2`版本开始支持，Raft的启动校验是否采用严格模式，开启后，当raft无法选举时，引擎的readiness接口将返回500 | true/false | false      |
+## Access Log and Metrics
 
-### 1.4. Naming模块
+For metrics exposure and alerting suggestions, see [Monitoring Manual](./monitor.md).
 
-| 参数名	                                             | 含义	                                                                                             | 可选值	       | 默认值           | 
-|--------------------------------------------------|-------------------------------------------------------------------------------------------------|------------|---------------|
-| nacos.naming.expireInstance                      | 是否自动摘除临时实例                                                                                      | true/false | true          |
-| nacos.naming.data.warmup                         | 从`2.4.2`版本开始支持，是否在启动时校验数据是否预热，开启可能造成Server的readiness接口返回500，需要等待预热完成，启动时间变长                     | true/false | false         |
-| nacos.naming.clean.empty-service.interval        | Naming模块的空服务清理间隔，单位毫秒                                                                           | 正整数        | 60 * 1000     |
-| nacos.naming.clean.empty-service.expired-time    | Naming模块的空服务过期时间，过期的空服务会被清理，单位毫秒                                                                | 正整数        | 60 * 1000     |
-| nacos.naming.clean.expired-metadata.interval     | Naming模块的元数据清理间隔，单位毫秒                                                                           | 正整数        | 5000          |
-| nacos.naming.clean.expired-metadata.expired-time | Naming模块的元数据过期时间，过期的元数据会被清理，单位毫秒                                                                | 正整数        | 60 * 1000     |
-| nacos.naming.client.expired.time                 | 临时Client对应数据的过期时间，当Distro协议停止对该Client的数据进行续约且时间超过该值时，该Client数据将被删除，主要应对Nacos Server之间断网的场景，单位毫秒 | 正整数        | 3 * 60 * 1000 |
-| nacos.naming.push.pushTaskDelay                  | 服务数据推送的延迟时间，同一个人服务处于延迟时间内多次变更时，会被合并为一次推送，单位为毫秒                                                  | 正整数        | 500           |
-| nacos.naming.push.pushTaskTimeout                | 服务数据推送的超时时间，超过该时间未收到客户端的确认，将延迟后重试，单位为毫秒                                                         | 正整数        | 5000          |
-| nacos.naming.push.pushTaskRetryDelay             | 服务数据推送失败后的重试间隔时间，单位为毫秒                                                                          | 正整数        | 1000          |
+| Property | Description | Default |
+| --- | --- | --- |
+| `server.tomcat.accesslog.enabled` | Whether to enable access logs. | `true` |
+| `server.tomcat.accesslog.max-days` | Access log retention days. | `30` |
+| `server.tomcat.accesslog.pattern` | Access log pattern. | distribution default |
+| `server.tomcat.basedir` | Tomcat working directory and access log base directory. | `file:.` |
+| `management.endpoints.web.exposure.include` | Exposed Actuator endpoints. Add `prometheus` to expose Prometheus metrics. | empty |
+| `management.metrics.export.elastic.enabled` | Whether to enable the Elastic metrics exporter. | `false` |
+| `management.metrics.export.influx.enabled` | Whether to enable the Influx metrics exporter. | `false` |
+| `nacos.core.monitor.topn.enabled` | Whether to enable TopN metrics. | `true` |
+| `nacos.core.monitor.topn.count` | TopN item count. | `10` |
+| `nacos.core.monitor.topn.internalMs` | TopN collection interval in milliseconds. | `60000` |
 
-### 1.5. Config模块
+## Cluster Member Discovery
 
-| 参数名	                                      | 含义	                                                                  | 可选值	       | 默认值   |
-|-------------------------------------------|----------------------------------------------------------------------|------------|-------|
-| nacos.config.push.maxRetryTime            | 配置变更数据推送的延迟时间，同一个人配置处于延迟时间内多次变更时，会被合并为一次推送，单位为毫秒                     | 正整数        | 50    |
-| nacos.config.retention.days               | Nacos配置中心配置变更历史保留天数，超过该时间的配置变更历史会被删除                                 | 正整数        | 30    | 
-| nacos.config.search.max_capacity          | Nacos配置中心，根据配置内容查找配置功能的最大队列个数，由于基于内容的检索十分消耗性能，因此对该功能的并发进行限制，最大不可超过32 | 0～32       | 4     | 
-| nacos.config.search.max_thread            | 根据配置内容查找配置功能的最大线程数，最大并发数，最大不可超过16                                    | 0～16       | 2     | 
-| nacos.config.search.wait_timeout          | 根据配置内容查找配置功能的等待超时时间，超过等待时间的查找任务会直接失败丢弃，单位毫秒                          | 正整数        | 8000  | 
-| nacos.config.derby.ops.enabled            | 当使用derby数据库作为存储时，是否开启derby的相关运维接口                                    | true/false | false |
-| nacos.persistence.sql.derby.limit.enabled | 当使用derby数据库作为存储时,限制derby数据库可执行的SQL范围为DML和部分DDL，从`2.4.1`版本开始支持        | true/false | true  |
+| Property | Description | Default |
+| --- | --- | --- |
+| `nacos.member.list(-D)` | Cluster member list. The startup script `-c` option sets this JVM property. It can be used when `cluster.conf` does not exist. | empty |
+| `nacos.member-change-event.queue.size` | Queue size for cluster member change events. | `128` |
+| `nacos.core.member.lookup.type` | Member lookup type. Valid values are `file` and `address-server`. | `file` |
+| `nacos.core.address-server.retry` | Retry count when initializing from the address server. | `5` |
+| `address.server.domain` | Address server domain. | `jmenv.tbsite.net` |
+| `address.server.port` | Address server port. | `8080` |
+| `address.server.url` | Address server request path. | `/nacos/serverlist` |
+| `nacos.core.member.meta.site` | Node site metadata. | empty |
+| `nacos.core.member.meta.adweight` | Node weight metadata. | empty |
+| `nacos.core.member.meta.weight` | Node weight metadata. | empty |
 
-### 1.6. CMDB模块
+## gRPC
 
-| 参数名	                         | 含义	            | 可选值	       | 默认值   | 
-|------------------------------|----------------|------------|-------|
-| nacos.cmdb.loadDataAtStart   | 是否打开CMDB       | true/false | false |
-| nacos.cmdb.dumpTaskInterval  | 全量dump的间隔，单位为秒 | 正整数        | 3600  | 
-| nacos.cmdb.eventTaskInterval | 变更事件的拉取间隔，单位为秒 | 正整数        | 10    | 
-| nacos.cmdb.labelTaskInterval | 标签集合的拉取间隔，单位为秒 | 正整数        | 300   | 
+| Property | Description | Default |
+| --- | --- | --- |
+| `nacos.remote.server.grpc.sdk.max-inbound-message-size` | Maximum inbound SDK gRPC request size in bytes. | `10485760` |
+| `nacos.remote.server.grpc.sdk.keep-alive-time` | SDK gRPC keepalive interval in milliseconds. | `7200000` |
+| `nacos.remote.server.grpc.sdk.keep-alive-timeout` | SDK gRPC keepalive timeout in milliseconds. | `20000` |
+| `nacos.remote.server.grpc.sdk.permit-keep-alive-time` | Minimum keepalive interval clients are permitted to configure, in milliseconds. | `300000` |
+| `nacos.remote.server.grpc.cluster.max-inbound-message-size` | Maximum inbound cluster gRPC request size in bytes. | `10485760` |
+| `nacos.remote.server.grpc.cluster.keep-alive-time` | Cluster gRPC keepalive interval in milliseconds. | `7200000` |
+| `nacos.remote.server.grpc.cluster.keep-alive-timeout` | Cluster gRPC keepalive timeout in milliseconds. | `20000` |
+| `nacos.remote.server.grpc.cluster.permit-keep-alive-time` | Minimum keepalive interval for cluster gRPC, in milliseconds. | `300000` |
+| `remote.executor.times.of.processors(-D)` | Multiplier of CPU cores for the server request executor size. | `16` |
+| `remote.executor.queue.size(-D)` | Queue size of the server request executor. | `16384` |
 
-### 1.7. Istio模块
+## Distro and Raft
 
-| 参数名	                                 | 含义	             | 可选值	       | 默认值   | 
-|--------------------------------------|-----------------|------------|-------|
-| nacos.extension.naming.istio.enabled | 是否加载istio模块     | true/false | false |
-| nacos.istio.mcp.server.enabled       | 是否开启Istio MCP协议 | true/false | false |
-| nacos.istio.mcp.server.port          | Istio MCP协议监听端口 | 正整数        | 18848 |
+Distro and Raft are internal consistency protocol parameters. Do not tune them in production unless you have diagnosed a protocol bottleneck or have maintainer guidance.
 
-### 1.8. 插件
+### Distro
 
-#### 1.8.1. 鉴权插件
+| Property | Description | Default |
+| --- | --- | --- |
+| `nacos.core.protocol.distro.data.sync.delayMs` | Data sync delay in milliseconds. Updates for the same data key are merged within the delay window. | `1000` |
+| `nacos.core.protocol.distro.data.sync.timeoutMs` | Timeout for one data sync in milliseconds. | `3000` |
+| `nacos.core.protocol.distro.data.sync.retryDelayMs` | Retry delay after sync failure in milliseconds. | `3000` |
+| `nacos.core.protocol.distro.data.verify.intervalMs` | Verification interval for synced data in milliseconds. | `5000` |
+| `nacos.core.protocol.distro.data.verify.timeoutMs` | Timeout for one data verification in milliseconds. | `3000` |
+| `nacos.core.protocol.distro.data.load.retryDelayMs` | Retry delay after snapshot load failure during startup in milliseconds. | `30000` |
 
-关于如何开发鉴权插件，请参考[鉴权插件](../../plugin/auth-plugin.md)
+### Raft
 
-| 参数名	                                      | 含义	                                                                                | 可选值	               | 默认值   | 
-|-------------------------------------------|------------------------------------------------------------------------------------|--------------------|-------|
-| nacos.core.auth.enabled                   | Nacos是否开启Client API鉴权                                                              | true/false         | false |
-| nacos.core.auth.admin.enabled             | Nacos是否开启Admin API鉴权                                                               | true/false         | true  |
-| nacos.core.auth.console.enabled           | Nacos是否开启Console API鉴权                                                             | true/false         | true  |
-| nacos.core.auth.system.type               | Nacos鉴权插件的类型                                                                       | nacos/ldap/自定义插件类型 | nacos |
-| nacos.core.auth.server.identity.key       | Nacos Server节点身份信息的key，用户Server节点之间通信的识别，当开启鉴权时为必填项                                | 字符串                | null  |
-| nacos.core.auth.server.identity.value     | Nacos Server节点身份信息的value，用户Server节点之间通信的识别，当开启鉴权时为必填项                              | 字符串                | null  |
-| nacos.core.auth.enable.userAgentAuthWhite | Nacos Server使用UserAgent来进行Server节点之间通信的识别，在1.4.1版本后仅作为升级时的兼容，开启后会存在安全问题，后续版本将移除该参数 | true/false         | false |
+Raft properties use `nacos.core.protocol.raft.data.*`. The `data` segment is the current `RaftConfig` map field and should not be omitted.
 
-同时对于Nacos默认鉴权插件的使用及更多默认鉴权插件的配置项，请参考[权限校验](../../guide/user/auth/#相关参数)
+| Property | Description | Default |
+| --- | --- | --- |
+| `nacos.core.protocol.raft.data.election_timeout_ms` | Election timeout in milliseconds. | `5000` |
+| `nacos.core.protocol.raft.data.snapshot_interval_secs` | Snapshot interval in seconds. | `1800` |
+| `nacos.core.protocol.raft.data.core_thread_num` | Internal Raft worker thread count. | `8` |
+| `nacos.core.protocol.raft.data.cli_service_thread_num` | Raft business request thread count. | `4` |
+| `nacos.core.protocol.raft.data.read_index_type` | Linear read strategy. | `ReadOnlySafe` |
+| `nacos.core.protocol.raft.data.rpc_request_timeout_ms` | Raft RPC request timeout in milliseconds. | `5000` |
+| `nacos.core.protocol.raft.data.max_byte_count_per_rpc` | Maximum bytes for one snapshot copy RPC. | `131072` |
+| `nacos.core.protocol.raft.data.max_entries_size` | Maximum log entries sent from leader to follower in one batch. | `1024` |
+| `nacos.core.protocol.raft.data.max_body_size` | Maximum body size for sending logs. | `524288` |
+| `nacos.core.protocol.raft.data.max_append_buffer_size` | Append buffer size for logs. | `262144` |
+| `nacos.core.protocol.raft.data.max_election_delay_ms` | Maximum random election delay in milliseconds. | `1000` |
+| `nacos.core.protocol.raft.strict-mode` | Strict startup validation. If enabled, readiness fails when Raft cannot elect a leader. | `false` |
 
-#### 1.8.2. 数据源插件
+## Config
 
-其他和数据库相关的开发，请参考[全局参数-数据库](#112-数据库)
+For daily usage, see [Config Center Manual](../user/config/overview.md).
 
-| 参数名	                                | 含义	                                                                       | 可选值	                                                                                                                                       | 默认值   |
-|-------------------------------------|---------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|-------|
-| spring.sql.init.platform            | Nacos Server 使用的数据库类型                                                     | mysql/空，指定为空时会根据`nacos.standalone`判断使用derby数据库还是mysql数据库；在使用[数据源插件](../../plugin/datasource-plugin.md)时，可以指定为插件对应的数据库值，比如oracle或postgresql | null  |
-| nacos.plugin.datasource.log.enabled | Nacos Server 是否开启SQL日志打印，开启后会打印每一次执行的SQL，方便进行插件开发时的问题排查，但是较为损耗性能，日常状态建议关闭 | true/false                                                                                                                                 | false |
+| Property | Description | Default |
+| --- | --- | --- |
+| `nacos.config.push.maxRetryTime` | Maximum retry count for config change push. | `50` |
+| `nacos.config.retention.days` | Config history retention days. | `30` |
+| `nacos.config.search.max_capacity` | Queue capacity for content search tasks. | `4` |
+| `nacos.config.search.max_thread` | Thread count limit for content search. | `2` |
+| `nacos.config.search.wait_timeout` | Content search wait timeout in milliseconds. | `8000` |
+| `nacos.config.derby.ops.enabled` | Whether Derby ops APIs are enabled when Derby is used. | `false` |
+| `nacos.persistence.sql.derby.limit.enabled` | Whether SQL execution is limited when Derby is used. | `true` |
+| `nacos.config.cache.type` | Config cache implementation type. | `nacos` |
+| `nacos.config.history.clear.name` | Config history cleaner implementation name. | `nacos` |
 
-#### 1.8.3. 环境变量插件
+## Naming
 
-关于如何开发环境变量插件，请参考[环境变量插件](../../plugin/custom-environment-plugin.md)
+For daily usage, see [Naming Manual](../user/naming/overview.md).
 
-| 参数名	                             | 含义	                     | 可选值	       | 默认值   |
-|----------------------------------|-------------------------|------------|-------|
-| nacos.custom.environment.enabled | Nacos Server 是否开启环境变量插件 | true/false | false |
+| Property | Description | Default |
+| --- | --- | --- |
+| `nacos.naming.data.warmup` | Whether to wait for naming data warmup during startup. Readiness may fail until warmup is complete. | `false` |
+| `nacos.naming.expireInstance` | Whether expired ephemeral instances are removed automatically. | `true` |
+| `nacos.naming.empty-service.auto-clean` | Whether empty services are cleaned automatically. | `true` |
+| `nacos.naming.empty-service.clean.initial-delay-ms` | Initial delay for empty service cleanup in milliseconds. | `50000` |
+| `nacos.naming.empty-service.clean.period-time-ms` | Empty service cleanup period in milliseconds. | `30000` |
+| `nacos.naming.clean.empty-service.interval` | Empty service cleanup interval in milliseconds. | `60000` |
+| `nacos.naming.clean.empty-service.expired-time` | Empty service expiration time in milliseconds. | `60000` |
+| `nacos.naming.clean.expired-metadata.interval` | Expired metadata cleanup interval in milliseconds. | `5000` |
+| `nacos.naming.clean.expired-metadata.expired-time` | Expired metadata retention time in milliseconds. | `60000` |
+| `nacos.naming.client.expired.time` | Ephemeral client data expiration time in milliseconds. | `180000` |
+| `nacos.naming.push.pushTaskDelay` | Naming push delay in milliseconds. | `500` |
+| `nacos.naming.push.pushTaskTimeout` | Naming push execution timeout in milliseconds. | `5000` |
+| `nacos.naming.push.pushTaskRetryDelay` | Retry delay after naming push failure in milliseconds. | `1000` |
+| `nacos.naming.service.metadata.length` | Total service metadata length limit. | `1024` |
 
-#### 1.8.4. 反脆弱插件
+## Parameter Validation
 
-反脆弱插件的开发，请参考[反脆弱插件](../../plugin/control-plugin.md)
+| Property | Description | Default |
+| --- | --- | --- |
+| `nacos.core.param.check.enabled` | Whether server-side parameter validation is enabled. See [Parameter Validation](../user/parameters-check.md). | `true` |
+| `nacos.core.param.check.checker` | Parameter checker name. The built-in checker is used by default. | `default` |
 
-| 参数名	                                       | 含义	                           | 可选值	            | 默认值                 | 
-|--------------------------------------------|-------------------------------|-----------------|---------------------|
-| nacos.plugin.control.manager.type          | Nacos反脆弱插件的类型                 | nacos/其他自定义插件类型 | null                |
-| nacos.plugin.control.rule.external.storage | Nacos反脆弱插件，反脆弱规则外部存储类型，需要自行实现 | 字符串             | null                |
-| nacos.plugin.control.rule.local.basedir    | Nacos反脆弱插件，反脆弱规则本地存储目录        | 文件路径            | ${nacos.home}/data/ |
+## Auth and Visibility
 
-#### 1.8.5. 配置变更插件
+For auth setup, read [Authorization](./auth.mdx) and [OIDC/OAuth2 Authentication](./oidc-auth.md). For visibility, see [Visibility Plugin](../../plugin/visibility-plugin.md).
 
-反脆弱插件的开发，请参考[配置变更插件](../../plugin/config-change-plugin.md)
+| Property | Description | Default |
+| --- | --- | --- |
+| `nacos.core.auth.system.type` | Auth plugin type. The default implementation is `nacos`. LDAP, OIDC/OAuth2, and custom plugins can also be used. | `nacos` |
+| `nacos.core.auth.enabled` | Whether SDK/gRPC request authentication is enabled. | `false` |
+| `nacos.core.auth.admin.enabled` | Whether `/v3/admin/*` Admin API authentication is enabled. | `true` |
+| `nacos.core.auth.console.enabled` | Whether `/v3/console/*` Console API and login authentication are enabled. | `true` |
+| `nacos.core.auth.caching.enabled` | Whether auth information is cached. Permission updates may have a short delay when enabled. | `true` |
+| `nacos.core.auth.server.identity.key` | Server-to-server identity key. Required when auth is enabled. | empty |
+| `nacos.core.auth.server.identity.value` | Server-to-server identity value. Required when auth is enabled. | empty |
+| `nacos.security.ignore.urls` | Auth ignored URLs. This is a legacy compatibility property and may be deprecated in the future. | distribution default |
+| `nacos.core.auth.plugin.nacos.token.cache.enable` | Whether the default auth plugin caches tokens. | `false` |
+| `nacos.core.auth.plugin.nacos.token.expire.seconds` | Token expiration time for the default auth plugin, in seconds. | `18000` |
+| `nacos.core.auth.plugin.nacos.token.secret.key` | JWT signing secret for the default auth plugin. Use a Base64 string from an original secret of at least 32 characters. | empty |
+| `nacos.core.auth.nacos.anonymous.ai.enabled` | Whether anonymous AI resource reads are allowed. Currently mainly applies to Skill and AgentSpec. | `false` |
+| `nacos.plugin.visibility.enabled` | Whether the visibility plugin is enabled. | `true` |
+| `nacos.plugin.visibility.type` | Visibility plugin type. The default `nacos` implementation reuses default auth plugin user information. | `nacos` |
 
-| 参数名	                                                                               | 含义	                     | 可选值	       | 默认值   | 
-|------------------------------------------------------------------------------------|-------------------------|------------|-------|
-| nacos.core.config.plugin.${configChangePluginName}.enabled=true                    | Nacos Server 是否开启配置变更插件 | true/false | false |
-| nacos.core.config.plugin.${configChangePluginName}.${propertyKey}=${propertyValue} | 配置变更插件的配置项              | 插件自定义      | 插件自定义 |
+### LDAP, OIDC, and OAuth2
 
-### 1.9. 控制台
+LDAP is maintained as an optional plugin starting from Nacos 3.2. OIDC/OAuth2 is also plugin based. Before using these properties, confirm that the corresponding plugin is included in the distribution or placed in the plugin directory.
 
-| 参数名	                                     | 含义	                                                                             | 可选值	                | 默认值      | 
-|------------------------------------------|---------------------------------------------------------------------------------|---------------------|----------|
-| nacos.console.port                       | Nacos 控制台端口                                                                     | 端口号                 | 8080     |
-| nacos.console.contextPath                | Nacos 控制台上下文路径                                                                  | 上下文路径               | ""       |
-| nacos.console.remote.server.context-path | Nacos 控制台访问的远程Nacos服务上下文路径，仅在`console`独立控制台部署模式下有效，对应`nacos.server.contextPath` | Nacos 服务的 Web，上下文路径 | "/nacos" |
-| nacos.console.ui.enabled                 | 控制台是否开启UI界面                                                                     | true/false          | true     |
-| nacos.console.cors.allow-credentials     | 控制台CORS是否允许凭据（cookies、authorization headers、TLS client certificates）            | true/false          | true     |
-| nacos.console.cors.allowed-headers       | 控制台CORS允许的请求头，逗号分隔。留空表示允许所有请求头(*)                                               | 请求头列表               | ""       |
-| nacos.console.cors.max-age               | 控制台CORS预检请求缓存最大时间(秒)                                                            | 正整数                 | 18000    |
-| nacos.console.cors.allowed-methods       | 控制台CORS允许的HTTP方法，逗号分隔。留空表示允许所有方法(*)                                             | 方法列表                | ""       |
-| nacos.console.cors.allowed-origins       | 控制台CORS允许的来源，逗号分隔。留空表示允许所有来源模式(*)。例如: http://localhost:8080,https://example.com | 来源列表                | ""       |
+| Property | Description | Default |
+| --- | --- | --- |
+| `nacos.core.auth.ldap.url` | LDAP server URL. | empty |
+| `nacos.core.auth.ldap.basedc` | LDAP base DN. | empty |
+| `nacos.core.auth.ldap.userDn` | LDAP admin user DN. | empty |
+| `nacos.core.auth.ldap.password` | LDAP admin password. | empty |
+| `nacos.core.auth.ldap.userdn` | Login user DN template. `{0}` is replaced with the username. | empty |
+| `nacos.core.auth.ldap.filter.prefix` | User filter prefix. | `uid` |
+| `nacos.core.auth.ldap.case.sensitive` | Whether usernames are case-sensitive. | `true` |
+| `nacos.core.auth.ldap.ignore.partial.result.exception` | Whether LDAP partial result exceptions are ignored. | `false` |
+| `nacos.core.auth.plugin.oidc.issuer-uri` | OIDC issuer URI for auto-discovery. | empty |
+| `nacos.core.auth.plugin.oidc.client-id` | OIDC client id. | empty |
+| `nacos.core.auth.plugin.oidc.client-secret` | OIDC client secret. | empty |
+| `nacos.core.auth.plugin.oidc.scope` | OIDC scopes. | `openid` |
+| `nacos.core.auth.plugin.oidc.token-validation-method` | Token validation method. Valid values include `jwt` and `introspection`. | empty |
+| `nacos.core.auth.plugin.oidc.jwks-cache-ttl-seconds` | JWKS cache TTL in seconds. | empty |
+| `nacos.core.auth.plugin.oidc.username-claim` | Username claim. | `sub` |
+| `nacos.core.auth.plugin.oidc.roles-claim` | Roles claim. | empty |
+| `nacos.core.auth.plugin.oidc.admin-role` | Admin role name. | empty |
+| `nacos.core.auth.plugin.oidc.auto-create-user` | Whether to auto-create users on first login. | `true` |
+| `nacos.core.auth.plugin.oidc.authorization-endpoint` | External authorization endpoint. | empty |
+| `nacos.core.auth.plugin.authorization-timeout-ms` | External authorization request timeout in milliseconds. | empty |
+| `nacos.core.auth.plugin.oidc.strict-nonce-validation` | Whether strict nonce validation is enforced. | `false` |
+| `nacos.core.auth.plugin.oidc.strict-audience-validation` | Whether strict audience validation is enforced. | `false` |
 
-### 1.10. AI模块
+## Plugin Parameters
 
-| 参数名	                          | 含义	                                                                                | 可选值	       | 默认值   | 
-|-------------------------------|------------------------------------------------------------------------------------|------------|-------|
-| nacos.extension.ai.enabled    | 是否启用Nacos AI模块，默认为true。AI模块需要同时启用配置模块和服务模块，启用后可以使用MCP注册中心和A2A注册中心。                 | true/false | true  |
-| nacos.ai.mcp.registry.enabled | 是否启用官方MCP Registry协议适配，默认为false。当设置为true时，Nacos将启动一个独立的端口，且暴露官方MCP Registry协议和API。 | true/false | false |
-| nacos.ai.mcp.registry.port    | Nacos 官方MCP Registry API的端口，仅在`nacos.ai.mcp.registry.enabled`为true时生效              | 端口号        | 9080  |
+For the plugin system, see [Plugin Overview](../../plugin/overview.md).
 
-### 1.11. 其他短期参数
+| Property | Description | Default |
+| --- | --- | --- |
+| `nacos.custom.environment.enabled` | Whether the custom environment plugin is enabled. | `false` |
+| `nacos.plugin.control.manager.type` | Traffic control plugin type. Set to `nacos` to use the default implementation. | empty |
+| `nacos.plugin.control.rule.local.basedir` | Local directory for traffic control rules. | `${nacos.home}` |
+| `nacos.plugin.control.rule.external.storage` | External rule storage type. Requires a custom implementation. | empty |
+| `nacos.core.config.plugin.webhook.enabled` | Whether the config change webhook plugin is enabled. | `false` |
+| `nacos.core.config.plugin.webhook.url` | Webhook URL. | empty |
+| `nacos.core.config.plugin.webhook.contentMaxCapacity` | Maximum webhook payload size in bytes. | `102400` |
+| `nacos.core.config.plugin.whitelist.enabled` | Whether the config import suffix whitelist plugin is enabled. | `false` |
+| `nacos.core.config.plugin.whitelist.suffixs` | Allowed config import file suffixes. | `xml,text,properties,yaml,html` |
+| `nacos.core.config.plugin.fileformatcheck.enabled` | Whether the imported file format check plugin is enabled. | `false` |
 
-Nacos 中存在部分用于兼容旧版本或平滑升级使用的参数配置，在对应版本中有效，在未来版本中会移除，请根据版本进行配置。
+## Istio and Prometheus Service Discovery
 
-| 参数名	                                         | 含义	                                                                                                       | 计划版本         | 可选值	       | 默认值   | 
-|----------------------------------------------|-----------------------------------------------------------------------------------------------------------|--------------|------------|-------|
-| nacos.core.api.compatibility.client.enabled  | Nacos Client API（OpenAPI） 是否开启兼容模式，开启时将允许使用老版本Client API（OpenAPI），建议暂时打开，并尽快推动客户端版本升级到2.X以上               | 3.0.0~latest | true/false | true  |
-| nacos.core.api.compatibility.admin.enabled   | Nacos Admin API（OpenAPI） 是否开启兼容模式，开启时将允许使用老版本Admin API（OpenAPI），不建议打开                                     | 3.0.0~latest | true/false | false |
-| nacos.core.api.compatibility.console.enabled | Nacos Console API（OpenAPI） 是否开启兼容模式，开启时将允许使用老版本Console API（OpenAPI）），不建议打开                                | 3.0.0~latest | true/false | false |
-| nacos.config.gray.compatible.model           | Nacos Beta灰度配置是否使用兼容模式，开启时将对beta灰度配置进行双写兼容和迁移，`2.5.0`版本开始支持。关闭后对Beta灰度配置的性能和启动速度有大幅提升，建议升级时打开，稳定后关闭       | 2.5.0~latest | true/false | true  |
-| nacos.gray.migrate.executor.multi            | Nacos 灰度配置迁移线程池大小。在`nacos.config.gray.compatible.model=true`时有效，用于启动时迁移Beta灰度配置到新版本灰度配置的线程数，越高效率好，启动速度越快。 | 2.5.0~latest | 任意正整数      | 8     |
-| nacos.config.namespace.compatible.mode       | Nacos 命名空间兼容模式，开启时，Nacos会自动将`namespaceId=""`的配置，自动迁移到`namespaceId="public"`下。建议升级时打开，稳定后关闭                | 3.0.0~latest | true/false | true  |
-| nacos.namespace.migrate.retry.times          | Nacos 命名空间迁移重试次数，避免因网络抖动等问题导致迁移失败，在`nacos.namespace.compatible.mode=true`时有效                              | 3.0.0~latest | 任意正整数      | 3     |
-| nacos.namespace.migrate.batch.size           | Nacos 命名空间迁移一次批量迁移的配置数量，在`nacos.namespace.compatible.mode=true`时有效，值越大效率越高，但对数据库的压力也越大                    | 3.0.0~latest | 任意正整数      | 100   |
+These are long-standing ecology integration capabilities. See [Ecology Overview](../../ecology/overview.md).
 
-## 2. 镜像环境变量
+| Property | Description | Default |
+| --- | --- | --- |
+| `nacos.extension.naming.istio.enabled` | Whether to load the Istio module. | `false` |
+| `nacos.istio.mcp.server.enabled` | Whether to enable the Istio MCP server. | `false` |
+| `nacos.istio.mcp.server.port` | Istio MCP server port. | `18848` |
+| `nacos.istio.server.full` | Whether to use full push. | `true` |
+| `nacos.istio.debounce.max` | Maximum debounce wait time for Istio push in milliseconds. | `5000` |
+| `nacos.istio.debounce.after` | Debounce wait time for Istio push in milliseconds. | `100` |
+| `nacos.istio.domain.suffix` | Istio domain suffix. | `nacos` |
+| `nacos.prometheus.metrics.enabled` | Whether to enable the Prometheus service discovery helper API. | `false` |
 
-属性配置列表
+## AI Registry
 
-| 属性名称                                    | 描述                                                     | 选项                                                                                                                                                                                    |
-|-----------------------------------------|--------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| MODE                                    | 系统启动方式: 集群/单机，对应`nacos.standalone`                     | cluster/standalone 默认 **cluster**                                                                                                                                                     |
-| NACOS_SERVERS                           | 集群地址，对应`nacos.member.list`                             | p1:port1空格ip2:port2 空格ip3:port3                                                                                                                                                       |
-| PREFER_HOST_MODE                        | 支持IP还是域名模式，对应`nacos.inetutils.prefer-hostname-over-ip` | hostname/ip 默认**IP**                                                                                                                                                                  |
-| NACOS_SERVER_PORT                       | Nacos 运行端口，对应`server.port`                             | 默认**8848**                                                                                                                                                                            |
-| NACOS_SERVER_IP                         | 多网卡模式下可以指定IP，对应`nacos.server.ip`                       |                                                                                                                                                                                       |
-| SPRING_DATASOURCE_PLATFORM              | 单机模式下支持MYSQL数据库，对应`spring.sql.init.platform`           | mysql / 空 默认:空                                                                                                                                                                        |
-| MYSQL_SERVICE_HOST                      | 数据库 连接地址                                               |                                                                                                                                                                                       |
-| MYSQL_SERVICE_PORT                      | 数据库端口                                                  | 默认 : **3306**                                                                                                                                                                         |
-| MYSQL_SERVICE_DB_NAME                   | 数据库库名                                                  |                                                                                                                                                                                       |
-| MYSQL_SERVICE_USER                      | 数据库用户名                                                 |                                                                                                                                                                                       |
-| MYSQL_SERVICE_PASSWORD                  | 数据库用户密码                                                |                                                                                                                                                                                       |
-| MYSQL_SERVICE_DB_PARAM                  | 数据库连接参数                                                | 默认:**characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false**                                                                                  |
-| MYSQL_DATABASE_NUM                      | 数据库个数                                                  | 默认:**1**                                                                                                                                                                              |
-| JVM_XMS                                 | -Xms                                                   | 默认 :1g                                                                                                                                                                                |
-| JVM_XMX                                 | -Xmx                                                   | 默认 :1g                                                                                                                                                                                |
-| JVM_XMN                                 | -Xmn                                                   | 512m                                                                                                                                                                                  |
-| JVM_MS                                  | - XX:MetaspaceSize                                     | 默认 :128m                                                                                                                                                                              |
-| JVM_MMS                                 | -XX:MaxMetaspaceSize                                   | 默认 :320m                                                                                                                                                                              |
-| NACOS_DEBUG                             | 是否开启远程DEBUG                                            | y/n 默认 :n                                                                                                                                                                             |
-| TOMCAT_ACCESSLOG_ENABLED                | `server.tomcat.accesslog.enabled`                      | 默认 :false                                                                                                                                                                             |
-| NACOS_AUTH_SYSTEM_TYPE                  | 权限系统类型选择,目前只支持nacos类型                                  | 默认 :nacos                                                                                                                                                                             |
-| NACOS_AUTH_ENABLE                       | 是否开启权限系统，对应`nacos.core.auth.enabled`                   | 默认 :false                                                                                                                                                                             |
-| NACOS_AUTH_TOKEN_EXPIRE_SECONDS         | token 失效时间                                             | 默认 :18000                                                                                                                                                                             |
-| NACOS_AUTH_TOKEN                        | token                                                  | `注意：该环境变量的默认值在Nacos 2.2.1版本中已移除，开启鉴权时需要指定`                                                                                                                                            |
-| NACOS_AUTH_CACHE_ENABLE                 | 权限缓存开关 ,开启后权限缓存的更新默认有15秒的延迟                            | 默认 : false                                                                                                                                                                            |
-| MEMBER_LIST                             | 通过环境变量的方式设置集群地址                                        | 例子:192.168.16.101:8847?raft_port=8807,192.168.16.101?raft_port=8808,192.168.16.101:8849?raft_port=8809                                                                                |
-| EMBEDDED_STORAGE                        | 是否开启集群嵌入式存储模式                                          | `embedded`  默认 : none                                                                                                                                                                 |
-| NACOS_AUTH_CACHE_ENABLE                 | nacos.core.auth.caching.enabled                        | default : false                                                                                                                                                                       |
-| NACOS_AUTH_USER_AGENT_AUTH_WHITE_ENABLE | nacos.core.auth.enable.userAgentAuthWhite              | default : false                                                                                                                                                                       |
-| NACOS_AUTH_IDENTITY_KEY                 | nacos.core.auth.server.identity.key                    | `注意：该环境变量的默认值在Nacos 2.2.1版本中已移除，开启鉴权时需要指定`                                                                                                                                            |
-| NACOS_AUTH_IDENTITY_VALUE               | nacos.core.auth.server.identity.value                  | `注意：该环境变量的默认值在Nacos 2.2.1版本中已移除，开启鉴权时需要指定`                                                                                                                                            |
-| NACOS_SECURITY_IGNORE_URLS              | nacos.security.ignore.urls                             | default : `/,/error,/**/*.css,/**/*.js,/**/*.html,/**/*.map,/**/*.svg,/**/*.png,/**/*.ico,/console-fe/public/**,/v1/auth/**,/v1/console/health/**,/actuator/**,/v1/console/server/**` |
-| DB_POOL_CONNECTION_TIMEOUT              | 数据库连接池超时时间，单位为毫秒                                       | 默认 : **30000**                                                                                                                                                                        |
-| NACOS_CONSOLE_UI_ENABLED                | nacos.console.ui.enabled                               | default : `true`                                                                                                                                                                      |
-| NACOS_CORE_PARAM_CHECK_ENABLED          | nacos.core.param.check.enabled                         | default : `true`                                                                                                                                                                      |
-| NACOS_AUTH_ADMIN_ENABLE                 | nacos.core.auth.admin.enable                           | default : `true`                                                                                                                                                                      |
-| NACOS_AUTH_CONSOLE_ENABLE               | nacos.core.auth.console.enable                         | default : `true`                                                                                                                                                                      |
-| NACOS_CONSOLE_PORT                      | nacos.console.port                                     | default : `8080`                                                                                                                                                                      |
-| NACOS_CONSOLE_CONTEXTPATH               | nacos.console.contextPath                              | default : ``                                                                                                                                                                          |
+For usage, see [AI Registry Overview](../user/ai/ai-registry-overview.md). The properties below control module switches, protocol adapters, importers, and publish pipelines.
+
+| Property | Description | Default |
+| --- | --- | --- |
+| `nacos.extension.ai.enabled` | Whether the AI module is enabled. The AI module requires both config and naming modules. | `true` |
+| `nacos.ai.mcp.registry.enabled` | Whether the official MCP Registry protocol adapter is enabled. When enabled, it exposes an independent port through `nacos.ai.registry.port`. | `false` |
+| `nacos.ai.skill.registry.enabled` | Whether the Skill Registry protocol adapter is enabled. When enabled, it exposes an independent port through `nacos.ai.registry.port`. | `false` |
+| `nacos.ai.registry.port` | AI Registry protocol adapter port. | `9080` |
+| `nacos.ai.mcp.registry.port` | Legacy property name. Deprecated. Use `nacos.ai.registry.port` instead. | `9080` |
+| `nacos.plugin.ai-pipeline.enabled` | Whether AI publish pipeline is enabled. If unset, it does not actively disable the pipeline, but no pipeline runs when `type` is empty. | empty |
+| `nacos.plugin.ai-pipeline.type` | Pipeline node type, such as `skill-scanner`. Separate multiple types with commas. | empty |
+| `nacos.plugin.ai-pipeline.skill-scanner.enabled` | Enablement property passed to the built-in `skill-scanner` node. | empty |
+| `nacos.plugin.ai-pipeline.skill-scanner.command` | External Skill scanner command path. | empty |
+| `nacos.ai.skill.auto-publish-after-review.enabled` | Whether Skill versions are automatically published after approval. | `false` |
+| `nacos.ai.resource.import.enabled` | Whether explicitly configured AI resource import sources are enabled. | `false` |
+| `nacos.ai.resource.import.legacy-mcp-api-enabled` | Whether deprecated MCP import APIs are temporarily reopened. | `false` |
+| `nacos.ai.resource.import.allow-user-url` | Whether deprecated MCP import APIs can fetch user-provided URLs after being reopened. | `false` |
+| `nacos.plugin.ai.importer.mcp.official.enabled` | Whether the built-in official MCP Registry import source is enabled. | `true` |
+| `nacos.plugin.ai.importer.skills.well-known.enabled` | Whether the Skill well-known import source is enabled. | `false` |
+| `nacos.plugin.ai.importer.skills.well-known.url` | Skill well-known registry root URL. | empty |
+| `nacos.plugin.ai.importer.skills.skills-sh.enabled` | Whether the `skills.sh` import source is enabled. | `true` |
+| `nacos.plugin.ai.importer.<preset>.allow-http` | Whether non-HTTPS endpoints are allowed for a source. Enable only in controlled environments. | `false` |
+| `nacos.plugin.ai.importer.<preset>.allow-private-network` | Whether private-network or localhost endpoints are allowed for a source. Enable only in controlled environments. | `false` |
+
+## Experimental Features
+
+Experimental features do not promise long-term stable behavior. Read [Experimental Features Overview](../../experimental/overview.md) before using them.
+
+| Property | Description | Default |
+| --- | --- | --- |
+| `nacos.k8s.sync.enabled` | Whether the built-in K8s sync experimental capability is enabled. | `false` |
+| `nacos.k8s.sync.outsideCluster` | Whether the Kubernetes API Server is accessed from outside the cluster. | `false` |
+| `nacos.k8s.sync.kubeConfig` | Kubeconfig path used for access outside the cluster. | `/.kube/config` |
+
+## Compatibility and Migration
+
+These properties are used for upgrades, migration, or legacy compatibility. They are not the recommended model for new systems. See [Compatibility and Deprecation](./compatibility-and-deprecation.md) for more context.
+
+| Property | Description | Default |
+| --- | --- | --- |
+| `nacos.core.api.compatibility.client.enabled` | Whether client API compatibility is enabled. | `true` |
+| `nacos.core.api.compatibility.admin.enabled` | Whether Admin API compatibility is enabled. | `false` |
+| `nacos.core.api.compatibility.console.enabled` | Whether Console API compatibility is enabled. | `false` |
+| `nacos.config.gray.compatible.model` | Whether Beta/Tag gray-release compatibility and migration to the new gray model is enabled. | `true` |
+| `nacos.gray.migrate.executor.multi` | Thread count for gray config migration. | `8` |
+| `nacos.config.namespace.compatible.mode` | Whether empty namespace IDs are migrated to `public`. | `true` |
+| `nacos.namespace.migrate.retry.times` | Retry count for namespace migration failures. | `3` |
+| `nacos.namespace.migrate.batch.size` | Namespace migration batch size. | `100` |
+
+:::note
+Auth switches and API compatibility switches are different. `nacos.core.auth.admin.enabled` controls whether Admin API authentication is enabled. `nacos.core.api.compatibility.admin.enabled` controls whether Admin API compatibility behavior accepts requests. Legacy v1/v2 HTTP APIs were removed from the main distribution starting from Nacos 3.2.0. Migrate to v3 APIs or temporarily use the legacy adapter.
+:::
+
+## Startup Script and Image Variables
+
+The distribution `startup.sh` supports these common options:
+
+| Option | Description | Related property |
+| --- | --- | --- |
+| `-m standalone` | Start in standalone mode. | `nacos.standalone=true` |
+| `-m cluster` | Start in cluster mode. | `nacos.standalone=false` |
+| `-f config` | Start config-related modules only. | `nacos.functionMode=config` |
+| `-f naming` | Start naming-related modules only. | `nacos.functionMode=naming` |
+| `-f microservice` | Start microservice-related modules. | `nacos.functionMode=microservice` |
+| `-f ai` | Start AI-related modules. | `nacos.functionMode=ai` |
+| `-c` | Set the cluster member list. | `nacos.member.list` |
+| `-p embedded` | Use embedded storage in cluster mode. | `embeddedStorage=true` |
+| `-d` | Set the deployment type. | `nacos.deployment.type` |
+
+When using the official container image, common environment variables include `MODE`, `NACOS_SERVERS`, `PREFER_HOST_MODE`, `NACOS_AUTH_ENABLE`, `NACOS_AUTH_ADMIN_ENABLE`, `NACOS_AUTH_CONSOLE_ENABLE`, `NACOS_AUTH_TOKEN`, `NACOS_AUTH_IDENTITY_KEY`, `NACOS_AUTH_IDENTITY_VALUE`, and `NACOS_CONSOLE_PORT`. Different image versions may have different conversion scripts. For production deployments, mount a complete `application.properties` and treat the image repository or Helm Chart documentation as the source of truth.

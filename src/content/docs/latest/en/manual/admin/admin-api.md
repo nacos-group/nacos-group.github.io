@@ -6,41 +6,49 @@ sidebar:
   order: 10
 ---
 
-# 运维API
+# Admin API
 
-> Nacos 3.X 版本将不再兼容1.X版本 和 2.X版本的 AdminAPI，请使用Nacos 3.X版本的AdminAPI进行替换。
+> Standard Nacos 3.x Admin APIs use the `/v3/admin/*` path. The current version has removed v1/v2 Admin APIs. Use Nacos 3.x Admin APIs instead.
 >
-> 若必须要使用1.X和2.X的Admin API，需要在配置文件中设置`nacos.core.auth.admin.enabled=true`开启，但此兼容也将在未来版本中移除，建议使用Nacos
-> 3.X版本的AdminAPI进行替换。
+> If you still need v1/v2 Admin APIs temporarily during migration, read [Compatibility and Deprecation](./compatibility-and-deprecation.md) first, and evaluate the legacy adapter approach described in the upgrading manual.
 
-Nacos默认搭载了一整套专为管理控制台和运维人员设计的运维API，赋予运维专家更多的配置权限、更广阔的数据检索能力等。这些API为Nacos的运维团队提供了方便，使他们能够高效地处理故障、排查问题，以确保系统的稳定运行。
+Nacos provides Admin APIs for administrators, operations platforms, release platforms, audit tools, and automation scripts. These APIs expose broader management capabilities than runtime client APIs, including range queries, resource management, server state inspection, and operational diagnostics.
 
-## 0. 运维API 相关说明
+## 0. Admin API Notes
 
-### 0.1 统一路径格式
+### 0.1. Scope
 
-Nacos的运维API，使用统一的Path格式进行的规范。格式为`[/$nacos.server.contextPath]/v3/admin/[module]/[subPath]...`,
-其中
+Admin APIs are intended for management-plane callers. They are suitable for operations platforms, release platforms, audit tools, automation scripts, and administrators.
 
-- `$nacos.server.contextPath`：运维API的根路径，默认为`/nacos`，可以通过`nacos.server.contextPath`配置项进行修改。
-- `module`：运维API模块名称，例如`server`、`cs`、`ns`、`core`等。
-- `subPath`：运维API的子路径，例如`state`、`namespace`、`config`等， 可能有多层子路径。
+| Good Fit | Not a Good Fit |
+| --- | --- |
+| Publishing, deleting, importing, exporting, and querying configurations. | High-frequency runtime configuration reads from business applications. |
+| Managing namespaces, services, instances, clusters, health state, and metadata. | Business applications registering their own instances or subscribing to downstream services. |
+| Managing plugins, server state, AI resources, and operational diagnostics. | Page-level interactions for custom console UI. |
 
-下列列出的运维API，采用默认`$nacos.server.contextPath`的情况进行展示，若已修改部署环境中的`$nacos.server.contextPath`
-配置项，请自行修改调用API时的请求URL。
+Business applications should prefer [Java SDK](../user/java-sdk/usage.md), other language SDKs, or [Client API](../user/open-api.md). Custom console UI should prefer [Console API](./console-api.md).
 
-同时下列列出的运维API样例中，均采用默认Nacos Web Server的端口进行展示，若已修改部署环境中的`$nacos.server.main.port`
-配置项，请自行修改调用API时的请求URL。
+### 0.2. Unified Path Format
 
-### 0.2. 鉴权认证
+Nacos Admin APIs use a unified path format: `[/$nacos.server.contextPath]/v3/admin/[module]/[subPath]...`.
 
-Nacos 3.X 版本的Admin API默认需要鉴权，请在请求时使用管理员用户`nacos`（使用默认鉴权插件时）。
+- `$nacos.server.contextPath`: Root path of Admin APIs. The default value is `/nacos`, and it can be changed with the `nacos.server.contextPath` configuration item.
+- `module`: Admin API module name, such as `server`, `cs`, `ns`, or `core`.
+- `subPath`: Admin API subpath, such as `state`, `namespace`, or `config`. It may contain multiple path levels.
 
-若想要关闭鉴权，请设置`nacos.core.auth.admin.enabled=false`，然后重启Nacos Server。
+The Admin APIs listed below use the default `$nacos.server.contextPath`. If the deployment changes `$nacos.server.contextPath`, update the request URL accordingly when calling the API.
 
-### 0.3. Swagger 类型文档
+The examples below also use the default Nacos Web Server port. If the deployment changes `$nacos.server.main.port`, update the request URL accordingly when calling the API.
 
-Nacos 3.X 的运维 API 也提供了Swagger风格的文档，您可以通过访问[Nacos Swagger运维 API](/swagger/admin/)查看。
+### 0.3. Authentication
+
+Nacos 3.X Admin APIs require authentication by default. When using the default auth plugin, use an administrator identity such as `nacos`.
+
+To disable Admin API authentication, set `nacos.core.auth.admin.enabled=false` and restart Nacos Server.
+
+### 0.4. Swagger Documentation
+
+Nacos 3.X Admin APIs also provide Swagger-style documentation. You can view it at [Nacos Swagger Admin API](/swagger/admin/).
 
 ## 1. Nacos Core 运维 API
 

@@ -134,7 +134,7 @@ bash bin/shutdown.sh
 
 ### 3.3. 配置外部数据库
 
-默认使用内置 Derby 数据库。生产环境建议配置外部 MySQL/PostgreSQL。
+默认使用内置 Derby 数据库。生产环境建议配置外置 MySQL、PostgreSQL 或 Oracle 12c 及以上版本。更多数据库类型和社区插件请参考[多数据源插件](../../../plugin/datasource-plugin.md)。
 
 运行配置向导：
 
@@ -143,7 +143,7 @@ nacos-setup --datasource-conf
 ```
 
 按提示输入数据库信息：
-- 数据库类型（MySQL/PostgreSQL）
+- 数据库类型（MySQL/PostgreSQL/Oracle 12c+）
 - 主机地址
 - 端口
 - 数据库名
@@ -353,6 +353,6 @@ tail -f ~/ai-infra/nacos/cluster/CLUSTER_ID/*/logs/start.out
 
 - [Nacos 官网](https://nacos.io)
 - [Nacos 快速开始](../../../quickstart/quick-start.mdx)
-- [Nacos 部署手册](./deployment-overview.mdx)
+- [Nacos 部署手册](./deployment-overview.md)
 - [Nacos GitHub](https://github.com/alibaba/nacos)
 - [Nacos Setup GitHub](https://github.com/nacos-group/nacos-setup)

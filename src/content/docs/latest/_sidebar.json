@@ -47,33 +47,96 @@
         "translations": {
           "en": "Overview"
         },
-        "autogenerate": {
-          "directory": "manual/user/overview"
-        }
+        "link": "docs/manual/user/overview"
       },
       {
-        "label": "JAVA SDK",
-        "autogenerate": {
-          "directory": "manual/user/java-sdk"
-        }
-      },
-      {
-        "label": "Golang SDK",
-        "autogenerate": {
-          "directory": "manual/user/go-sdk"
-        }
-      },
-      {
-        "label": "Python SDK",
-        "autogenerate": {
-          "directory": "manual/user/python-sdk"
-        }
-      },
-      {
-        "label": "AI",
+        "label": "AI 管理中心",
+        "translations": {
+          "en": "AI Registry"
+        },
         "autogenerate": {
           "directory": "manual/user/ai"
         }
+      },
+      {
+        "label": "配置中心",
+        "translations": {
+          "en": "Configuration Center"
+        },
+        "collapsed": true,
+        "autogenerate": {
+          "directory": "manual/user/config"
+        }
+      },
+      {
+        "label": "注册中心",
+        "translations": {
+          "en": "Service Registry"
+        },
+        "collapsed": true,
+        "autogenerate": {
+          "directory": "manual/user/naming"
+        }
+      },
+      {
+        "label": "SDK",
+        "translations": {
+          "en": "SDK"
+        },
+        "collapsed": false,
+        "items": [
+          {
+            "label": "SDK 概览",
+            "translations": {
+              "en": "SDK Overview"
+            },
+            "link": "docs/manual/user/overview/other-language"
+          },
+          {
+            "label": "SDK 运行时",
+            "translations": {
+              "en": "SDK Runtime"
+            },
+            "link": "docs/manual/user/sdk/runtime-guide"
+          },
+          {
+            "label": "JAVA SDK",
+            "translations": {
+              "en": "Java SDK"
+            },
+            "collapsed": true,
+            "autogenerate": {
+              "directory": "manual/user/java-sdk"
+            }
+          },
+          {
+            "label": "GO SDK",
+            "translations": {
+              "en": "Go SDK"
+            },
+            "collapsed": true,
+            "autogenerate": {
+              "directory": "manual/user/go-sdk"
+            }
+          },
+          {
+            "label": "PYTHON SDK",
+            "translations": {
+              "en": "Python SDK"
+            },
+            "collapsed": true,
+            "autogenerate": {
+              "directory": "manual/user/python-sdk"
+            }
+          }
+        ]
+      },
+      {
+        "label": "OpenAPI 概览",
+        "translations": {
+          "en": "OpenAPI Overview"
+        },
+        "link": "docs/manual/user/overview/api-overview"
       },
       {
         "label": "客户端API",
@@ -83,9 +146,9 @@
         "link": "docs/manual/user/open-api"
       },
       {
-        "label": "配置鉴权",
+        "label": "访问凭据",
         "translations": {
-          "en": "Authorization"
+          "en": "Access Credentials"
         },
         "link": "docs/manual/user/auth"
       },
@@ -135,9 +198,9 @@
         "link": "docs/manual/admin/auth"
       },
       {
-        "label": "OIDC 认证",
+        "label": "OIDC/OAuth2 认证",
         "translations": {
-          "en": "OIDC Authentication"
+          "en": "OIDC/OAuth2 Authentication"
         },
         "link": "docs/manual/admin/oidc-auth"
       },
@@ -147,6 +210,13 @@
           "en": "Upgrading Manual"
         },
         "link": "docs/manual/admin/upgrading"
+      },
+      {
+        "label": "兼容与废弃",
+        "translations": {
+          "en": "Compatibility And Deprecation"
+        },
+        "link": "docs/manual/admin/compatibility-and-deprecation"
       },
       {
         "label": "监控手册",
@@ -217,6 +287,16 @@
     },
     "autogenerate": {
       "directory": "ecology"
+    }
+  },
+  {
+    "label": "实验性功能",
+    "translations": {
+      "en": "Experimental Features"
+    },
+    "collapsed": true,
+    "autogenerate": {
+      "directory": "experimental"
     }
   },
   {
