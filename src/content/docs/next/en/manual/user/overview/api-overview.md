@@ -6,39 +6,47 @@ sidebar:
     order: 2
 ---
 
-# Nacos Open API 概览
+# Nacos Open API Overview
 
-## 1. Nacos Open API 分类
+Nacos Open APIs are divided into Client Open API, Admin Open API, and Console Open API according to caller type and usage scenario. This page helps you choose the right API type and understand common conventions such as response formats and error codes.
 
-Nacos 3.0 为了匹配不同使用场景，同时也为了能够让不同类型的API实施不同的安全认证机制，将Open API进行了多维度的分类：
+If you already know which API type to use, read the "0. Notes" section in the corresponding API page. It explains the path prefix, port, authentication behavior, and Swagger entry for that API type.
 
-- **Client Open API** : 用于客户端和应用程序的OpenAPI，客户端和应用程序通过OpenAPI与Nacos进行数据交互，主要为微服务类型、普通应用程序及AI Agent应用提供精确的数据数据访问能力，这类应用的主要特点是对于需要访问的资源有着较高的确定性，同时对此类API的性能及响应速度要求较高。
-- **Admin Open API** : 用于运维人员和管理平面的OpenAPI，管理平面通过OpenAPI与Nacos进行数据交互，主要为运维人员、监控人员、审计人员及各种运维工具提供大范围的数据检索访问能力，这类应用或调用者的主要特点是可能需要对不确定性或大访问的数据进行检索，但调用次数及频率相对较低，并且对响应时间的要求也相对较低。
-- **Console Open API** : 用于控制台的OpenAPI，控制台通过OpenAPI与Nacos进行数据交互，主要为控制台提供数据检索及数据修改的能力，此类应用或调用者的主要特点是需要与`Admin Open API`相似，但更关注`数据`类型的API，对控制`Nacos`本身的的要求相对较低。
+## 1. Choose the API Type First
 
-## 2. Nacos Open API 访问协议
+| API Type | Caller | Best For | Document |
+| --- | --- | --- | --- |
+| Client Open API | Regular applications, microservice applications, AI Agent applications, and custom clients. | Reading known configurations and registering, deregistering, querying, or discovering known services. It targets specific resources and may be called frequently at runtime. | [Client API](../open-api.md) |
+| Admin Open API | Operations platforms, release platforms, audit tools, automation scripts, and administrators. | Publishing and managing configurations, services, namespaces, plugins, server state, and AI resources. It is a management-plane API and supports range queries and batch management. | [Admin API](../../admin/admin-api.md) |
+| Console Open API | The Nacos console and custom console UI. | Supporting console page data and interactions. It overlaps with Admin API in some areas but follows console display and interaction flows. | [Console API](../../admin/console-api.md) |
 
-Nacos 3.0 主要支持两种访问协议， 分别为 [gRPC](https://www.grpc.io) 和 [HTTP 1.1](https://datatracker.ietf.org/doc/html/rfc7230)（下文简称HTTP）。根据不同的Nacos Open API分类的特点，分别使用不同的协议进行。
+Business applications should prefer Client SDKs. Use Client Open API directly only when a language runtime does not have a suitable SDK, or when you only need a small number of HTTP calls.
 
-- **Client Open API** : 主要使用 [gRPC](https://www.grpc.io)协议进行访问，相比与[HTTP 1.1](https://datatracker.ietf.org/doc/html/rfc7230)， gRPC基于性能更高的 HTTP 2协议进行构建， 同时使用了多语言通用的protobuf序列化能力，能够快速构建多种编程语言的通信协议客户端，更能满足**Client Open API**对于高吞吐及响应速度的要求。考虑到部分编程语言可能未提供稳定的gRPC能力，**Client Open API**也提供HTTP 1.1协议的部分接口，允许开发者选择适合自己的编程语言进行开发。
-- **Admin Open API** 和 **Console Open API** : 使用[HTTP 1.1](https://datatracker.ietf.org/doc/html/rfc7230)协议进行访问，允许开发者使用任何编程语言进行开发，同时对浏览器UI等有更好的兼容性。
+Do not use Console Open API as a general operations interface. Custom console UI can use Console Open API. Operations automation, release platforms, and audit tools should prefer Admin Open API or Maintainer SDK.
 
-## 3. Nacos Open API 定义规范
+## 2. Nacos Open API Access Protocols
 
-### 3.1. gRPC API 统一返回体格式
+Nacos 3.0 mainly supports two access protocols: [gRPC](https://www.grpc.io) and [HTTP 1.1](https://datatracker.ietf.org/doc/html/rfc7230). Different API types use different protocols according to their runtime characteristics.
 
-3.0版本的gRPC Open API，所有接口请求的响应均通过[proto文件](https://github.com/alibaba/nacos/blob/develop/api/src/main/proto/nacos_grpc_service.proto)中的`Payload`承载，必然包含字段如下
+- **Client Open API** mainly uses [gRPC](https://www.grpc.io). gRPC is built on HTTP/2 and uses protobuf for multi-language communication, which better matches the high-throughput and low-latency requirements of runtime clients. Some Client Open APIs also provide HTTP 1.1 endpoints for languages or environments that do not have stable gRPC support.
+- **Admin Open API** and **Console Open API** use [HTTP 1.1](https://datatracker.ietf.org/doc/html/rfc7230), which is easier to call from operations tools, automation scripts, and browser-based UI.
 
-|      名称      |   类型   | 描述                                                           |
+## 3. Nacos Open API Conventions
+
+### 3.1. gRPC API Response Format
+
+In Nacos 3.0 gRPC Open API, responses are carried by `Payload` in the [proto file](https://github.com/alibaba/nacos/blob/develop/api/src/main/proto/nacos_grpc_service.proto). The response contains the following fields:
+
+|      Name      |   Type   | Description                                                           |
 |:------------:|:------:|:-------------------------------------------------------------
-| `resultCode` |  int   | API调用的结果码，`200`代表执行成功，`500`代表执行失败。                           |
-| `errorCode`  |  int   | API调用的错误码，若状态码为`500`时存在此值，具体错误码请参考[API 错误码汇总](#33-api-错误码汇总) |
-|  `message`   | string | API调用的信息，若状态码为`500`时存在此值，描述错误的具体信息                           |
-| `requestId`  | string | API调用的请求ID。                                                   |
+| `resultCode` |  int   | API result code. `200` means success, and `500` means failure.                           |
+| `errorCode`  |  int   | API error code. It is present when the status is `500`. For details, see [API Error Codes](#33-api-error-codes). |
+|  `message`   | string | API message. When the status is `500`, it describes the error detail.                           |
+| `requestId`  | string | API request ID.                                                   |
 
-### 3.2. HTTP API 统一返回体格式
+### 3.2. HTTP API Response Format
 
-3.0版本HTTP Open API，所有接口请求的响应均为`json`类型的返回体，返回体具有相同的格式
+In Nacos 3.0 HTTP Open API, all responses use JSON and share the same response structure:
 
 ```json
 {
@@ -48,19 +56,19 @@ Nacos 3.0 主要支持两种访问协议， 分别为 [gRPC](https://www.grpc.io
 }
 ```
 
-返回体中各字段的含义如下表所示
+The response fields are described below:
 
-|    名称     |    类型    | 描述                             |
+|    Name     |    Type    | Description                             |
 |:---------:|:--------:|--------------------------------|
-|  `code `  |  `int`   | 错误码，`0`代表执行成功，非`0`代表执行失败的某一种情况 |
-| `message` | `String` | 错误码提示信息，执行成功为"`success`"       |
-|  `data`   |   任意类型   | 返回数据，执行失败时为详细出错信息              |
+|  `code `  |  `int`   | Error code. `0` means success, and non-zero values indicate failure. |
+| `message` | `String` | Error message. It is `"success"` when the request succeeds. |
+|  `data`   |   Any   | Response data. When the request fails, it contains detailed error information. |
 
-> 由于执行成功的情况下code字段与message字段相同，后续在介绍接口的返回结果时，只介绍返回数据的data字段
+> Because successful responses share the same `code` and `message` values, later API sections only describe the `data` field.
 
-### 3.3. API 错误码汇总
+### 3.3. API Error Codes
 
-API接口返回体中的错误码及对应提示信息汇总见下表
+The following table summarizes common error codes and messages:
 
 | 错误码     | 提示信息                         | 含义                 |
 |---------|------------------------------|--------------------|

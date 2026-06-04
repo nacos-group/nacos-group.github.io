@@ -6,39 +6,47 @@ sidebar:
   order: 13
 ---
 
-# 控制台API
+# Console API
 
-Nacos 提供了若干开放的控制台API，当您有自定义开发Nacos对应的控制台UI需求时，您可以通过这些API，获取Nacos
-Server节点中的数据，从而实现自定义的Nacos控制台UI界面。
+Nacos provides Console APIs for the built-in Nacos console and custom console UI implementations. These APIs expose the data and interactions needed by console pages.
 
-同时配合关闭Nacos 默认控制台UI来使用自定义UI，相关详情请参考[控制台手册-关闭默认控制台](./console/#33-关闭默认控制台)
+If you want to disable the default Nacos console UI and use a custom UI, read [Console Manual](./console.md) first to confirm the console entry, port, and UI switch configurations.
 
-## 0. 控制台API 相关说明
+## 0. Console API Notes
 
-### 0.1. 统一路径格式
+### 0.1. Scope
 
-Nacos的控制台 API，使用统一的Path格式进行的规范。格式为`[/$nacos.console.contextPath]/v3/console/[module]/[subPath]...`,
-其中
+Console APIs are intended for the Nacos console and custom console UI. They serve page rendering, form submission, and console interaction flows.
 
-- `$nacos.console.contextPath`：控制台的根路径，默认为``，可以通过`nacos.console.contextPath`配置项进行修改。
-- `module`：控制台的模块名称，例如`server`、`cs`、`ns`、`core`等。
-- `subPath`：控制台的子路径，例如`state`、`namespace`、`config`等， 可能有多层子路径。
+| Good Fit | Not a Good Fit |
+| --- | --- |
+| Custom Nacos console UI. | Runtime access to configurations and services from business applications. |
+| Integrating with page data and interaction flows already used by the default console. | Building release platforms, audit platforms, or operations automation scripts. |
+| Providing server-side data for a custom UI after disabling the default console UI. | Replacing Admin API as a general management-plane integration. |
 
-下列列出的控制台API，采用默认`$nacos.console.contextPath`的情况进行展示，若已修改部署环境中的`$nacos.console.contextPath`
-配置项，请自行修改调用API时的请求URL。
+Business applications should use SDKs or [Client API](../user/open-api.md). Operations platforms, release platforms, and automation scripts should prefer [Admin API](./admin-api.md) or [Maintainer SDK](./maintainer-sdk.md).
 
-同时下列列出的控制台API样例中，均采用默认Nacos Console的端口进行展示，若已修改部署环境中的`$nacos.console.port`
-配置项，请自行修改调用API时的请求URL。
+### 0.2. Unified Path Format
 
-### 0.2. 鉴权认证
+Nacos Console APIs use a unified path format: `[/$nacos.console.contextPath]/v3/console/[module]/[subPath]...`.
 
-Nacos 3.X 的控制台 API默认启用鉴权认证，除少量被标记为`公开接口`的API外，请在调用API时，携带正确的身份信息，否则请求将会被拦截。
+- `$nacos.console.contextPath`: Root path of the console. The default value is empty, and it can be changed with the `nacos.console.contextPath` configuration item.
+- `module`: Console module name, such as `server`, `cs`, `ns`, or `core`.
+- `subPath`: Console subpath, such as `state`, `namespace`, or `config`. It may contain multiple path levels.
 
-若想要关闭鉴权，请设置`nacos.core.auth.console.enabled=false`，然后重启Nacos 控制台。
+The Console APIs listed below use the default `$nacos.console.contextPath`. If the deployment changes `$nacos.console.contextPath`, update the request URL accordingly when calling the API.
 
-### 0.3. Swagger 类型文档
+The examples below also use the default Nacos Console port. If the deployment changes `$nacos.console.port`, update the request URL accordingly when calling the API.
 
-Nacos 3.X 的控制台 API 也提供了Swagger风格的文档，您可以通过访问[Nacos Swagger控制台 API](/swagger/console/)查看。
+### 0.3. Authentication
+
+Nacos 3.X Console APIs enable authentication by default. Except for a small number of APIs marked as public, callers must provide valid identity information.
+
+To disable Console API authentication, set `nacos.core.auth.console.enabled=false` and restart Nacos Console.
+
+### 0.4. Swagger Documentation
+
+Nacos 3.X Console APIs also provide Swagger-style documentation. You can view it at [Nacos Swagger Console API](/swagger/console/).
 
 ## 1. Nacos 基础控制台API
 

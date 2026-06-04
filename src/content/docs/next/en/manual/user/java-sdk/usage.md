@@ -6,21 +6,47 @@ sidebar:
     order: 2
 ---
 
-# Java SDK 使用手册
+# Java SDK Usage
 
-Nacos 的 Java SDK（或称Nacos-Java-Client），是一个针对 Nacos 配置中心、服务注册中心、分布式锁等场景的 Java SDK。旨在为Java的微服务或分布式应用提供稳定易用的配置中心、服务注册中心、分布式锁等功能，方便开发者访问Nacos进行配置、服务和分布式锁的操作。
+Nacos Java SDK, also known as Nacos Java Client, provides Java access to Nacos configuration management, service discovery, AI Registry, and distributed lock capabilities.
 
-因为Nacos-Java-Client的定位，所以Nacos-Java-Client会提供配置、服务实例的`发布`，`删除`,`获取`,`订阅`以及分布式锁的获取和释放，但不提供大范围的数据获取，如`列举命名空间下所有配置列表`, `列举命名空间下所有服务列表`等操作。
+The Java SDK is intended for application runtime access. It provides APIs to publish, delete, read, and listen to configurations; register, deregister, query, and subscribe to service instances; access AI resources; and acquire or release distributed locks.
 
-如果需要大范围的获取数据，或者需要具有更高优先级的更新数据等`运维能力`，您需要使用Nacos的`运维SDK`。
+It does not provide broad management operations such as listing all configurations or all services in a namespace. For range-based queries, higher-priority updates, or operational management, use the Nacos Maintainer SDK or Admin API.
 
-## 1. 引用概述
+## 0. Before You Start
 
-### 1.1. Java 版本依赖
+### 0.1. Choose the Right Access Method
 
-Nacos 的 Java SDK需要 JDK 1.8 及以上版本的Java运行环境。
+| What You Need | Recommended Entry |
+| --- | --- |
+| Read and listen to configurations, register instances, and subscribe to services in a Java application. | Use the Java SDK described in this page. |
+| Query or subscribe to AI resources such as MCP, Agent, Skill, Prompt, and AgentSpec in a Java application. | Use the AI sections in this page, and read [AI Registry Overview](../ai/ai-registry-overview.md) first. |
+| Access Nacos from Go, Python, or another language. | Read [SDK Overview](../overview/other-language.md) and choose the SDK for that language. |
+| Understand connections, reconnects, local cache, failover, and lifecycle behavior. | Read [SDK Runtime](../sdk/runtime-guide.md). |
+| Query a small number of known configurations or services through HTTP. | Use [Client API](../open-api.md). |
+| Publish configurations, query lists, manage namespaces, manage services, or perform operations tasks. | Use [Admin API](../../admin/admin-api.md) or [Maintainer SDK](../../admin/maintainer-sdk.md). |
 
-### 1.2. Maven 坐标
+The Java SDK maintains connections, listeners, subscriptions, local cache, and reconnect recovery. Business applications should prefer SDK capabilities instead of manually composing internal requests or depending on Console APIs.
+
+### 0.2. Usage Principles
+
+- One SDK instance belongs to one namespace. Create separate instances when accessing multiple namespaces.
+- Reuse SDK instances inside an application. Frequent client creation wastes connections and thread resources.
+- Call `shutdown()` when the application exits, reloads, or replaces a client instance.
+- A configuration listener receives a change notification. The application should read the configuration content again and refresh its own state.
+- A service subscription returns a runtime discovery view. It may be affected by health state, weight, protection threshold, cluster, selector, and other factors.
+- AI resources are affected by namespace, version, label, publish state, and visibility. In production, when using MCP, Agent, Skill, Prompt, or other resources that support versions or labels, specify the expected version or label when possible, and handle missing, invisible, or changed resources.
+- An AI resource subscription receives a change notification. The application should read the MCP, Agent, Skill, Prompt, or AgentSpec content again and refresh or degrade according to its own runtime model.
+- Distributed lock is experimental. Before production use, read [Distributed Lock](../../../experimental/distributed-lock.md) and validate the behavior carefully.
+
+## 1. Dependency Overview
+
+### 1.1. Java Version
+
+Nacos Java SDK requires JDK 1.8 or later.
+
+### 1.2. Maven Coordinates
 ```
 <dependency>
     <groupId>com.alibaba.nacos</groupId>
@@ -29,10 +55,10 @@ Nacos 的 Java SDK需要 JDK 1.8 及以上版本的Java运行环境。
 </dependency>
 ```
 
-#### 1.2.1. 纯净版 Java SDK
+#### 1.2.1. Pure Java SDK
 
-> 注意：由于Nacos Java SDK在2.0版本后引入了gRPC，为了避免用户业务引入的gRPC版本不同导致冲突，使用了shaded技术将部分依赖直接封装进nacos-client中，导致nacos-client较大。
-> 如果用户未自行引入gRPC或确认版本无冲突，希望使用纯净版的nacos-client以减小依赖，可以使用classifier来指定使用纯净版。
+> Note: Since Nacos Java SDK 2.0 introduced gRPC, some dependencies are shaded into `nacos-client` to avoid conflicts with gRPC versions introduced by user applications. This makes `nacos-client` larger.
+> If your application does not introduce gRPC by itself, or you have confirmed that there is no version conflict, you can use the pure client classifier to reduce dependency size.
 
 ```xml
     <properties>

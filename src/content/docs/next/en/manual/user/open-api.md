@@ -22,7 +22,19 @@ For `control-plane` or `gateway` applications that require range-based data oper
 
 ## 0. Client API Notes
 
-### 0.1. Unified Path Format
+### 0.1. Scope
+
+Client APIs are intended for application runtime access and custom clients. Callers usually already know the `namespaceId`, `groupName`, `dataId`, `serviceName`, or instance information they need to access.
+
+| Good Fit | Not a Good Fit |
+| --- | --- |
+| Querying a single known configuration. | Publishing, deleting, importing, or exporting configurations. |
+| Registering, deregistering, querying, and discovering known services or instances. | Querying full configuration lists, full service lists, subscriber lists, or other range-based data. |
+| Using HTTP for a small amount of runtime access when no suitable SDK is available. | Building release platforms, operations platforms, gateway control planes, or audit tools. |
+
+Business applications should prefer [SDKs](./overview/other-language.md). For range-based management capabilities, use [Admin API](../admin/admin-api.md) or [Maintainer SDK](../admin/maintainer-sdk.md).
+
+### 0.2. Unified Path Format
 
 Nacos client APIs use a unified path format: `[/$nacos.server.contextPath]/v3/client/[module]/[subPath]...`.
 
@@ -34,7 +46,7 @@ The client APIs listed below use the default `$nacos.server.contextPath`. If the
 
 The examples below also use the default Nacos Web Server port. If the deployment changes `$nacos.server.main.port`, update the request URL accordingly when calling the API.
 
-### 0.2. Swagger Documentation
+### 0.3. Swagger Documentation
 
 Nacos 3.X client OpenAPI also provides Swagger-style documentation. You can view it at [Nacos Swagger HTTP Client API](/swagger/client/).
 
