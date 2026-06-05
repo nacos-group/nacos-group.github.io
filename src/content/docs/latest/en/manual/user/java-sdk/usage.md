@@ -62,7 +62,7 @@ Nacos Java SDK requires JDK 1.8 or later.
 
 ```xml
     <properties>
-        <!-- 2.1.2版本以上支持纯净版客户端 -->
+        <!-- The pure client is supported since 2.1.2. -->
         <nacos.version>3.2.0</nacos.version>
     </properties>
 
@@ -71,10 +71,10 @@ Nacos Java SDK requires JDK 1.8 or later.
             <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-client</artifactId>
             <version>${nacos.version}</version>
-            <!-- 指定纯净版SDK -->
+            <!-- Specify the pure SDK. -->
             <classifier>pure</classifier>
         </dependency>
-        <!-- 使用纯净版时必须要引入同版本nacos-api和nacos-common，否则可能出现运行时找不到类的问题 -->
+        <!-- When using the pure client, introduce nacos-api and nacos-common of the same version. Otherwise, runtime class-not-found errors may occur. -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>nacos-common</artifactId>
@@ -94,73 +94,73 @@ In 3.x the default namespace ID was changed from empty string to `public` (see [
 
 Before upgrading, ensure that **the server is already 3.0 or above**, or **you are not using the config center in the default namespace**.
 
-## 2. 初始化SDK
+## 2. Initialize the SDK
 
-Nacos 初始化SDK仅需要使用 `NacosFactory` 类进行不同模块的创建即可：
+To initialize the Nacos SDK, use the `NacosFactory` class to create clients for different modules:
 
 ```java
 
 String serverAddr = "localhost:8848";
 
-// 初始化配置中心的Nacos Java SDK
+// Initialize the Nacos Java SDK for the config center.
 ConfigService configService = NacosFactory.createConfigService(serverAddr);
 
-// 初始化注册中心的Nacos Java SDK
+// Initialize the Nacos Java SDK for the registry.
 NamingService namingService = NacosFactory.createNamingService(serverAddr);
 
-// 分布式锁的Nacos Java SDK不支持仅传入serverAddr进行初始化，请使用Properties进行。
+// The Nacos Java SDK for distributed lock does not support initialization with only serverAddr. Use Properties instead.
 ```
 
-如果初始化SDK时，还需要配置一些参数，可以使用 `Properties` 类进行配置：
+If you need to configure additional parameters during SDK initialization, use the `Properties` class:
 
 ```java
 
 Properties properties = new Properties();
-// 指定Nacos-Server的地址
+// Specify the Nacos Server address.
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "localhost:8848");
-// 指定Nacos-SDK的命名空间
+// Specify the namespace of the Nacos SDK.
 properties.setProperty(PropertyKeyConst.NAMESPACE, "${namespaceId}");
 
-// 初始化配置中心的Nacos Java SDK
+// Initialize the Nacos Java SDK for the config center.
 ConfigService configService = NacosFactory.createConfigService(properties);
 
-// 初始化注册中心的Nacos Java SDK
+// Initialize the Nacos Java SDK for the registry.
 NamingService namingService = NacosFactory.createNamingService(properties);
 
-// 初始化分布式锁的Nacos Java SDK
+// Initialize the Nacos Java SDK for distributed lock.
 LockService lockService = NacosLockFactory.createLockService(properties);
 ```
 
-更多初始化时所涉及的参数配置，请参考[Java SDK 配置参数](./properties.md)。
+For more parameters involved in initialization, see [Java SDK Properties](./properties.md).
 
-> 注意：一个Nacos Java SDK实例只能用于获取同一个命名空间下的配置和服务，如果要获取不同的命名空间下的配置或服务，需要创建不同的Nacos Java SDK实例。
+> Note: A Nacos Java SDK instance can access only configurations and services in the same namespace. To access configurations or services in different namespaces, create different Nacos Java SDK instances.
 
-## 3. 配置管理 API
-### 3.1. 获取配置
-#### 描述
+## 3. Configuration Management API
+### 3.1. Get Config
+#### Description
 
-用于服务启动的时候从 Nacos 获取配置。
+Gets configuration from Nacos when a service starts.
 ```java
 public String getConfig(String dataId, String group, long timeoutMs) throws NacosException
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter | Type | Description |
 | :--- | :--- | :--- |
-| dataId | string | 配置 ID，采用类似 package.class（如com.taobao.tc.refund.log.level）的命名规则保证全局唯一性，class 部分建议是配置的业务含义。全部字符小写。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| group | string | 配置分组，建议填写产品名:模块名（Nacos:Test）保证唯一性，只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。 |
-| timeout | long | 读取配置超时时间，单位 ms，推荐值 3000。 |
+| dataId | string | Configuration ID. Use a naming rule similar to `package.class`, such as `com.taobao.tc.refund.log.level`, to ensure global uniqueness. The `class` part should describe the business meaning of the configuration. Use lowercase characters only. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 256 bytes. |
+| group | string | Configuration group. We recommend using `product:module`, such as `Nacos:Test`, to ensure uniqueness. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 128 bytes. |
+| timeout | long | Timeout for reading the configuration, in milliseconds. The recommended value is 3000. |
 
 
-#### 返回值
+#### Return Value
 
-| 参数类型 | 描述 |
+| Type | Description |
 | :--- | :--- |
-| string | 配置值 |
+| string | Configuration value |
 
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -177,35 +177,35 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exceptions
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+If reading the configuration times out or a network error occurs, a `NacosException` is thrown.
 
-### 3.2. 监听配置
-#### 描述
+### 3.2. Listen to Config
+#### Description
 
-如果希望 Nacos 推送配置变更，可以使用 Nacos 动态监听配置接口来实现。
+If you want Nacos to push configuration changes, use the Nacos dynamic configuration listener API.
 
 ```java
 public void addListener(String dataId, String group, Listener listener) 
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述                                                                                                                                             |
+| Parameter | Type | Description |
 | :--- | :--- |:-----------------------------------------------------------------------------------------------------------------------------------------------|
-| dataId | string | 配置 ID，采用类似 package.class（如com.taobao.tc.refund.log.level）的命名规则保证全局唯一性，class 部分建议是配置的业务含义。全部字符小写。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| group | string | 配置分组，建议填写**产品名:模块名**（Nacos:Test）保证唯一性，只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。                                                               |
-| listener | Listener | 监听器，配置变更进入监听器的回调函数。                                                                                                                            |
+| dataId | string | Configuration ID. Use a naming rule similar to `package.class`, such as `com.taobao.tc.refund.log.level`, to ensure global uniqueness. The `class` part should describe the business meaning of the configuration. Use lowercase characters only. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 256 bytes. |
+| group | string | Configuration group. We recommend using **product:module**, such as `Nacos:Test`, to ensure uniqueness. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 128 bytes. |
+| listener | Listener | Listener callback invoked when the configuration changes. |
 
-#### 返回值
+#### Return Value
 
-| 参数类型 | 描述 |
+| Type | Description |
 | :--- | :--- |
-| string | 配置值，初始化或者配置变更的时候通过回调函数返回该值。 |
+| string | Configuration value, returned through the callback during initialization or configuration changes. |
 
 
-#### 请求示例
+#### Request Example
 
 ```java
 String serverAddr = "{serverAddr}";
@@ -227,7 +227,8 @@ configService.addListener(dataId, group, new Listener() {
     }
 });
 
-// 测试让主线程不退出，因为订阅配置是守护线程，主线程退出守护线程就会退出。 正式代码中无需下面代码
+// Keep the main thread alive for testing because configuration subscription uses daemon threads.
+// This code is not required in production.
 while (true) {
     try {
         Thread.sleep(1000);
@@ -237,25 +238,25 @@ while (true) {
 }
 ```
 
-### 3.3. 删除监听
-#### 描述
+### 3.3. Remove Listener
+#### Description
 
-取消监听配置，取消监听后配置不会再推送。
+Cancels the configuration listener. After the listener is removed, configuration changes are no longer pushed.
 
 ```java
 public void removeListener(String dataId, String group, Listener listener)
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter | Type | Description |
 | :--- | :--- | :--- |
-| dataId | string | 配置 ID，采用类似 package.class（如com.taobao.tc.refund.log.level）的命名规则保证全局唯一性，class 部分建议是配置的业务含义。全部字符小写。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| group | string | 配置分组 |
-| listener | ConfigChangeListenerAdapter | 监听器，配置变更进入监听器的回调函数。 |
+| dataId | string | Configuration ID. Use a naming rule similar to `package.class`, such as `com.taobao.tc.refund.log.level`, to ensure global uniqueness. The `class` part should describe the business meaning of the configuration. Use lowercase characters only. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 256 bytes. |
+| group | string | Configuration group |
+| listener | ConfigChangeListenerAdapter | Listener callback invoked when the configuration changes. |
 
 
-#### 使用示例
+#### Usage Example
 
 ```java
 String serverAddr = "{serverAddr}";
@@ -267,12 +268,12 @@ ConfigService configService = NacosFactory.createConfigService(properties);
 configService.removeListener(dataId, group, yourListener);
 ```
 
-### 3.4. 发布配置
-#### 描述
+### 3.4. Publish Config
+#### Description
 
-用于通过程序自动发布 Nacos 配置，以便通过自动化手段降低运维成本。
+Publishes Nacos configurations automatically from a program to reduce operations costs through automation.
 
-注意：创建和修改配置时使用的同一个发布接口，当配置不存在时会创建配置，当配置已存在时会更新配置。
+Note: The same publish API is used to create and update configurations. If the configuration does not exist, it is created. If the configuration already exists, it is updated.
 
 ```java
 public boolean publishConfig(String dataId, String group, String content) throws NacosException;
@@ -281,28 +282,28 @@ public boolean publishConfig(String dataId, String group, String content, String
 
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter | Type | Description |
 | :--- | :--- | :--- |
-| dataId | string | 配置 ID，采用类似 `package.class`（如 `com.taobao.tc.refund.log.level`）的命名规则保证全局唯一性。建议根据配置的业务含义来定义 class 部分。全部字符均为小写。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 256 字节。 |
-| group | string | 配置分组，建议填写`产品名:模块名`（如 Nacos`:Test`）来保证唯一性。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 128 字节。 |
-| content | string | 配置内容，不超过 100K 字节。 |
-| type | string | @Since 1.4.1. 配置类型，见 `com.alibaba.nacos.api.config.ConfigType`，默认为TEXT |
+| dataId | string | Configuration ID. Use a naming rule similar to `package.class`, such as `com.taobao.tc.refund.log.level`, to ensure global uniqueness. We recommend defining the `class` part according to the business meaning of the configuration. Use lowercase characters only. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 256 bytes. |
+| group | string | Configuration group. We recommend using `product:module`, such as `Nacos:Test`, to ensure uniqueness. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 128 bytes. |
+| content | string | Configuration content. The maximum size is 100 KB. |
+| type | string | @Since 1.4.1. Configuration type. See `com.alibaba.nacos.api.config.ConfigType`. The default value is `TEXT`. |
 
 
-#### 返回参数
+#### Return Parameters
 
-| 参数类型 | 描述 |
+| Type | Description |
 | :--- | :--- |
-| boolean | 是否发布成功 |
+| boolean | Whether the publish operation succeeded |
 
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    // 初始化配置服务，控制台通过示例代码自动获取下面参数
+    // Initialize the configuration service. The console automatically obtains the following parameters through the sample code.
     String serverAddr = "{serverAddr}";
     String dataId = "{dataId}";
     String group = "{group}";
@@ -316,16 +317,16 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exceptions
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+If reading the configuration times out or a network error occurs, a `NacosException` is thrown.
 
-### 3.5. 删除配置
-#### 描述
+### 3.5. Delete Config
+#### Description
 
-用于通过程序自动删除 Nacos 配置，以便通过自动化手段降低运维成本。
+Deletes Nacos configurations automatically from a program to reduce operations costs through automation.
 
->注意: 当配置已存在时会删除该配置，当配置不存在时会直接返回成功消息。
+> Note: If the configuration exists, it is deleted. If the configuration does not exist, a success message is returned directly.
 
 
 ```java
@@ -333,26 +334,26 @@ public boolean removeConfig(String dataId, String group) throws NacosException
 
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter | Type | Description |
 | :--- | :--- | :--- |
-| dataId | string | 配置 ID |
-| group | string | 配置分组 |
+| dataId | string | Configuration ID |
+| group | string | Configuration group |
 
 
-#### 返回参数
+#### Return Parameters
 
-| 参数类型 | 描述 |
+| Type | Description |
 | :--- | :--- |
-| boolean | 是否删除成功 |
+| boolean | Whether the deletion succeeded |
 
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    // 初始化配置服务，控制台通过示例代码自动获取下面参数
+    // Initialize the configuration service. The console automatically obtains the following parameters through the sample code.
     String serverAddr = "{serverAddr}";
     String dataId = "{dataId}";
     String group = "{group}";
@@ -367,39 +368,39 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exceptions
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+If reading the configuration times out or a network error occurs, a `NacosException` is thrown.
 
-### 3.6. 带监听器的获取配置
+### 3.6. Get Config with Listener
 
-#### 描述
+#### Description
 
-如果希望在程序首次启动获取配置时自行注册的Listener用于以后配置更新，建议您直接使用该接口。
+If you want to register a listener when the program obtains the configuration for the first time so that the listener can be used for subsequent configuration updates, use this API directly.
 
-> 该接口等价于先使用`getConfig`之后再使用`addListener`。
+> This API is equivalent to calling `getConfig` first and then calling `addListener`.
 
 ```java
 String getConfigAndSignListener(String dataId, String group, long timeoutMs, Listener listener) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter | Type | Description |
 | :--- | :--- | :--- |
-| dataId | string | 配置 ID，采用类似 package.class（如com.taobao.tc.refund.log.level）的命名规则保证全局唯一性，class 部分建议是配置的业务含义。全部字符小写。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| group | string | 配置分组，建议填写产品名:模块名（Nacos:Test）保证唯一性，只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。 |
-| timeout | long | 读取配置超时时间，单位 ms，推荐值 3000。 |
-| listener | Listener | 监听器，配置变更进入监听器的回调函数。                                                                                                                            |
+| dataId | string | Configuration ID. Use a naming rule similar to `package.class`, such as `com.taobao.tc.refund.log.level`, to ensure global uniqueness. The `class` part should describe the business meaning of the configuration. Use lowercase characters only. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 256 bytes. |
+| group | string | Configuration group. We recommend using `product:module`, such as `Nacos:Test`, to ensure uniqueness. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 128 bytes. |
+| timeout | long | Timeout for reading the configuration, in milliseconds. The recommended value is 3000. |
+| listener | Listener | Listener callback invoked when the configuration changes. |
 
-#### 返回值
+#### Return Value
 
-| 参数类型 | 描述 |
+| Type | Description |
 | :--- | :--- |
-| string | 配置值 |
+| string | Configuration value |
 
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -425,17 +426,17 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exceptions
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+If reading the configuration times out or a network error occurs, a `NacosException` is thrown.
 
-### 3.7. 带Compare-And-Swap（CAS）的发布配置
+### 3.7. Publish Config with Compare-And-Swap (CAS)
 
-#### 描述
+#### Description
 
-直接使用`publishConfig`进行配置发布时，可能存在不同进程间并发的配置覆盖问题，此时可以使用带Compare-And-Swap（CAS）的发布配置API，来保证不会此类情形。
+When `publishConfig` is used directly to publish configurations, concurrent updates from different processes may overwrite each other. In this case, use the configuration publish API with Compare-And-Swap (CAS) to prevent this situation.
 
-注意：创建和修改配置时使用的同一个发布接口，当配置不存在时会创建配置，当配置已存在时会更新配置。
+Note: The same publish API is used to create and update configurations. If the configuration does not exist, it is created. If the configuration already exists, it is updated.
 
 ```java
 boolean publishConfigCas(String dataId, String group, String content, String casMd5) throws NacosException;
@@ -443,28 +444,28 @@ boolean publishConfigCas(String dataId, String group, String content, String cas
 boolean publishConfigCas(String dataId, String group, String content, String casMd5, String type) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述                                                                                                                                                         |
+| Parameter | Type | Description |
 | :--- | :--- |:-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| dataId | string | 配置 ID，采用类似 `package.class`（如 `com.taobao.tc.refund.log.level`）的命名规则保证全局唯一性。建议根据配置的业务含义来定义 class 部分。全部字符均为小写。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 256 字节。 |
-| group | string | 配置分组，建议填写`产品名:模块名`（如 Nacos`:Test`）来保证唯一性。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 128 字节。                                                                    |
-| content | string | 配置内容，不超过 100K 字节。                                                                                                                                          |
-| casMd5 | string | 前配置内容的md5                                                                                                                                                  |
-| type | string | 配置类型，见 `com.alibaba.nacos.api.config.ConfigType`，默认为TEXT                                                                                                   |
+| dataId | string | Configuration ID. Use a naming rule similar to `package.class`, such as `com.taobao.tc.refund.log.level`, to ensure global uniqueness. We recommend defining the `class` part according to the business meaning of the configuration. Use lowercase characters only. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 256 bytes. |
+| group | string | Configuration group. We recommend using `product:module`, such as `Nacos:Test`, to ensure uniqueness. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 128 bytes. |
+| content | string | Configuration content. The maximum size is 100 KB. |
+| casMd5 | string | MD5 of the previous configuration content |
+| type | string | Configuration type. See `com.alibaba.nacos.api.config.ConfigType`. The default value is `TEXT`. |
 
-#### 返回参数
+#### Return Parameters
 
-| 参数类型 | 描述 |
+| Type | Description |
 | :--- | :--- |
-| boolean | 是否发布成功 |
+| boolean | Whether the publish operation succeeded |
 
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    // 初始化配置服务，控制台通过示例代码自动获取下面参数
+    // Initialize the configuration service. The console automatically obtains the following parameters through the sample code.
     String serverAddr = "{serverAddr}";
     String dataId = "{dataId}";
     String group = "{group}";
@@ -473,13 +474,13 @@ try {
     Properties properties = new Properties();
     properties.put("serverAddr", serverAddr);
     ConfigService configService = NacosFactory.createConfigService(properties);
-    // 首次发布，casMd5传入null。
+    // For the first publish, pass null as casMd5.
     boolean isPublishOk = configService.publishConfigCas(dataId, group, oldContent, null);
     System.out.println(isPublishOk);
-    // old Md5 正确，变成成功
+    // The old MD5 is correct, so the update succeeds.
     isPublishOk = configService.publishConfigCas(dataId, group, "newContent", oldContentMd5);
     System.out.println(isPublishOk);
-    // old Md5 错误，变成失败
+    // The old MD5 is incorrect, so the update fails.
     isPublishOk = configService.publishConfigCas(dataId, group, "newContent2", oldContentMd5);
     System.out.println(isPublishOk);
 } catch (NacosException e) {
@@ -487,143 +488,144 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exceptions
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+If reading the configuration times out or a network error occurs, a `NacosException` is thrown.
 
 
 
-### 3.8. 配置模糊订阅
+### 3.8. Fuzzy Watch Config
 
-#### 描述
+#### Description
 
-通过fuzzyWatch接口可以对指定分组group和配置dataId规则的配置进行批量订阅，
-可通过*进行前缀模糊，后缀模糊，双边模糊匹配。
-<br/>模糊订阅功能仅会推送配置的新增以及删除事件，并不会直接推送配置变更的内容，可在配置模糊订阅的监听器中结合addListener接口实现配置内容的变更监听。<br/>
-处于稳定性考虑，Nacos对模糊订阅的规则数量以及单个规则匹配的配置数量有上限保护。具体参照[配置模糊订阅容量保护机制](#配置模糊订阅容量保护机制)一节。
+The `fuzzyWatch` API can batch-subscribe to configurations that match the specified group rule and configuration `dataId` rule. Use `*` for prefix fuzzy matching, suffix fuzzy matching, or bilateral fuzzy matching.
+<br/>Fuzzy watch pushes only configuration add and delete events. It does not directly push the content of configuration changes. In a fuzzy watch listener, you can use the `addListener` API together with fuzzy watch to listen for configuration content changes.<br/>
+For stability, Nacos applies upper-limit protection to the number of fuzzy watch rules and the number of configurations matched by a single rule. For details, see [Fuzzy Watch Capacity Protection](#fuzzy-watch-capacity-protection).
 
 ```java
 
 /**
- * 订阅当前命名空间下指定分组group规则及dataId规则下所有配置的变更事件
- * 模糊订阅的列表将以异步的方式通过watcher回调
- * @param dataIdPattern dataId匹配规则
- * @param groupNamePattern 分组匹配规则
- * @param watcher  模糊订阅监听器
+ * Subscribes to change events for all configurations in the current namespace that match the specified group rule and dataId rule.
+ * The fuzzy watch list is asynchronously returned through the watcher callback.
+ * @param dataIdPattern dataId matching rule
+ * @param groupNamePattern group matching rule
+ * @param watcher fuzzy watch listener
  */
 void fuzzyWatch(String dataIdPattern, String groupNamePattern, FuzzyWatchEventWatcher watcher);
 
 /**
- * 订阅当前命名空间下指定分组group规则及dataId规则下所有配置的变更事件,并以Future模式获取规则当前匹配的配置列表
- * 模糊订阅的列表将以异步的方式通过watcher回调
- * @param dataIdPattern dataId匹配规则
- * @param groupNamePattern 分组group匹配规则
- * @param watcher  模糊订阅监听器
- * @return Future 可通过future等待配置异步推送结果                
+ * Subscribes to change events for all configurations in the current namespace that match the specified group rule and dataId rule,
+ * and obtains the current matched configuration list in Future mode.
+ * The fuzzy watch list is asynchronously returned through the watcher callback.
+ * @param dataIdPattern dataId matching rule
+ * @param groupNamePattern group matching rule
+ * @param watcher fuzzy watch listener
+ * @return Future that can be used to wait for the asynchronous configuration push result
  */
 Future<Set<String>> fuzzyWatchWithGroupKeys(String dataIdPattern, String groupNamePattern,
 		FuzzyWatchEventWatcher watcher) throws NacosException;
 
 
 /**
- * 取消订阅当前命名空间下指定分组group规则及dataId规则下所有配置的变更事件
- * @param dataIdPattern   dataId匹配规则
- * @param groupNamePattern 分组group匹配规则
- * @param watcher      需要移除的模糊订阅watcher
+ * Cancels the subscription to change events for all configurations in the current namespace that match the specified group rule and dataId rule.
+ * @param dataIdPattern dataId matching rule
+ * @param groupNamePattern group matching rule
+ * @param watcher fuzzy watch listener to remove
  */
 void cancelFuzzyWatch(String dataIdPattern, String groupNamePattern, FuzzyWatchEventWatcher watcher);
 
 
 /**
- * 订阅当前命名空间下指定分组group规则下所有配置的变更事件
+ * Subscribes to change events for all configurations in the current namespace that match the specified group rule.
  *
- * @param groupNamePattern 分组匹配规则
- * @param watcher  模糊订阅监听器
+ * @param groupNamePattern group matching rule
+ * @param watcher fuzzy watch listener
  */
 void fuzzyWatch(String groupNamePattern, FuzzyWatchEventWatcher watcher) throws NacosException;
 
 /**
- * 订阅当前命名空间下指定分组group规则下所有配置的变更事件，可通过Future获取当前匹配的所有配置列表
+ * Subscribes to change events for all configurations in the current namespace that match the specified group rule.
+ * A Future can be used to obtain the current matched configuration list.
  *
- * @param groupNamePattern 分组group匹配规则
- * @param watcher  模糊订阅监听器
- * @return Future 可通过future等待配置异步推送结果
+ * @param groupNamePattern group matching rule
+ * @param watcher fuzzy watch listener
+ * @return Future that can be used to wait for the asynchronous configuration push result
  */
 Future<Set<String>> fuzzyWatchWithGroupKeys(String groupNamePattern,
 		FuzzyWatchEventWatcher watcher) throws NacosException;
 
 /**
- * 取消订阅当前命名空间下指定分组group规则及dataId规则下所有配置的变更事件
+ * Cancels the subscription to change events for all configurations in the current namespace that match the specified group rule.
  *
- * @param groupNamePattern 分组group匹配规则
- * @param watcher    需要移除的模糊订阅watcher
+ * @param groupNamePattern group matching rule
+ * @param watcher fuzzy watch listener to remove
  */
 void cancelFuzzyWatch(String groupNamePattern, FuzzyWatchEventWatcher watcher) ;
 
 
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述                                                                              |
+| Parameter | Type | Description |
 | :--- | :--- |:--------------------------------------------------------------------------------|
-| dataIdPattern | string | 配置ID匹配规则，支持a.前缀模糊匹配(如,mydataId\*) b.后缀模糊匹配(如*mydatdId)，c.双边模糊匹配(如\*mydatadId\*) |
-| groupNamePattern | string | 配置分组匹配规则，支持a.前缀模糊匹配(如 mygroup*) b.后缀模糊匹配(如 \*mygroup)，c.双边模糊匹配(如 \*mygroup\*)        |      |
-| watcher | FuzzyWatchEventWatcher | 模糊订阅监听器                                                                         |
+| dataIdPattern | string | Configuration ID matching rule. Supports prefix fuzzy matching, such as `mydataId*`; suffix fuzzy matching, such as `*mydatdId`; and bilateral fuzzy matching, such as `*mydatadId*`. |
+| groupNamePattern | string | Configuration group matching rule. Supports prefix fuzzy matching, such as `mygroup*`; suffix fuzzy matching, such as `*mygroup`; and bilateral fuzzy matching, such as `*mygroup*`. |
+| watcher | FuzzyWatchEventWatcher | Fuzzy watch listener |
 
 
-#### FuzzyWatchEventWatcher模糊订阅监听器
-| 方法名 | 方法参数类型 | 描述                                                                      |
+#### FuzzyWatchEventWatcher Fuzzy Watch Listener
+| Method | Parameter Type | Description |
 | :--- | :--- |:------------------------------------------------------------------------|
-| onEvent | ConfigFuzzyWatchChangeEvent | 模糊订阅回调事件对象 |
-| getExecutor | void | 可指定执行回调事件的线程池，如果为空，将以nacos推送线程中执行回调  |      |
+| onEvent | ConfigFuzzyWatchChangeEvent | Fuzzy watch callback event object |
+| getExecutor | void | Specifies the thread pool used to execute callback events. If it is empty, callbacks are executed in the Nacos push thread. |
 
-#### ConfigFuzzyWatchChangeEvent模糊订阅事件
-| 参数名         | 参数类型   | 描述                                                                                                              |
+#### ConfigFuzzyWatchChangeEvent Fuzzy Watch Event
+| Parameter   | Type   | Description |
 |:------------|:-------|:----------------------------------------------------------------------------------------------------------------|
-| dataId      | string | 变更的配置dataId                                                                                                     |
-| group       | string | 变更的配置分组group                                                                                                    |      |
-| namespace   | string | 变更的配命名空间                                                                                                        |
-| changedType | string | 变更类型，表示客户端接收到的配置变更类型，包含ADD_CONFIG-新增配置，DELETE_CONFIG-移除配置                                                       |
-| syncType    | string | 触发变更的类型，包含FUZZY_WATCH_INIT_NOTIFY-初始化推送，FUZZY_WATCH_DIFF_SYNC_NOTIFY-变更对账触发，FUZZY_WATCH_RESOURCE_CHANGED-配置变更推送 |
+| dataId      | string | `dataId` of the changed configuration |
+| group       | string | Group of the changed configuration |
+| namespace   | string | Namespace of the changed configuration |
+| changedType | string | Change type received by the client, including `ADD_CONFIG` for added configurations and `DELETE_CONFIG` for removed configurations |
+| syncType    | string | Type that triggered the change, including `FUZZY_WATCH_INIT_NOTIFY` for initial push, `FUZZY_WATCH_DIFF_SYNC_NOTIFY` for change reconciliation, and `FUZZY_WATCH_RESOURCE_CHANGED` for configuration change push |
 
 
 
-#### 返回参数
+#### Return Parameters
 
-| 参数类型 | 描述                                                                                         |
+| Type | Description |
 | :--- |:-------------------------------------------------------------------------------------------|
-| Future<Set<String>> | 返可获取当前匹配的配置列表的future对象，当规则匹配的配置列表已经推送到客户端时，可通过future对象获取配置列表<br/>*注意：当触发容量保护时，返回的配置列表可能不全 |
+| Future<Set<String>> | A Future object that can obtain the current matched configuration list. After the list of configurations matched by the rule is pushed to the client, you can obtain the list through the Future object.<br/>*Note: When capacity protection is triggered, the returned configuration list may be incomplete. |
 ```java
-//返回的参数为groupKey列表，可通过GroupKey工具类获取dataId，group及namespace
+// The returned parameter is a groupKey list. You can use the GroupKey utility class to obtain dataId, group, and namespace.
 String[] groupKeyItems = GroupKey.parseKey(String groupKey);
 String dataId=groupKeyItems[0];
 String group=groupKeyItems[1];
 String namespace=groupKeyItems[2];
 ```
-#### 配置模糊订阅容量保护机制
+#### Fuzzy Watch Capacity Protection
 
-处于稳定性角度考虑，避免过多的规则及规则匹配的配置数量导致服务端内存压力以及对客户端造成推送风暴，Nacos在两个层面对模糊订阅功能设计了容量保护机制，当超过上限时，模糊订阅的推送将被抑制。<br/>
-1. 模糊订阅规则数量上限保护 ,默认的模糊订阅规则数量上限为20,可通过参数nacos.config.fuzzy.watch.max.pattern.count调整上限。
-2. 单个模糊订阅规则匹配的配置数量上限保护， 默认单个模糊订阅规则匹配的配置数量上限为500，可通过nacos.config.fuzzy.watch.max.pattern.match.config.count调整上限。
+For stability, to avoid server memory pressure and client push storms caused by too many rules or too many configurations matched by rules, Nacos provides capacity protection for fuzzy watch at two levels. When an upper limit is exceeded, fuzzy watch pushes are suppressed.<br/>
+1. Upper-limit protection for the number of fuzzy watch rules. The default upper limit is 20 and can be adjusted by the `nacos.config.fuzzy.watch.max.pattern.count` parameter.
+2. Upper-limit protection for the number of configurations matched by a single fuzzy watch rule. The default upper limit is 500 and can be adjusted by the `nacos.config.fuzzy.watch.max.pattern.match.config.count` parameter.
 
-在fuzzyWatch接口中注册模糊订阅监听器可同时实现FuzzyWatchLoadWatcher负载监听器感知容量保护机制的发生。
-#### FuzzyWatchLoadWatcher模糊订阅负载监听器
-| 方法名  | 描述                                |
+When registering a fuzzy watch listener in the `fuzzyWatch` API, the listener can also implement `FuzzyWatchLoadWatcher` to perceive capacity protection events.
+#### FuzzyWatchLoadWatcher Fuzzy Watch Load Listener
+| Method | Description |
 | :--- |:----------------------------------|
-| onPatternOverLimit | 当前模糊订阅规则因超过上限，推送被抑制时触发            |
-| onConfigReachUpLimit | 当前模糊订阅规则匹配的配置数量达到上限，推送被抑制时触发      |
+| onPatternOverLimit | Triggered when pushes for the current fuzzy watch rule are suppressed because the rule count exceeds the upper limit |
+| onConfigReachUpLimit | Triggered when pushes for the current fuzzy watch rule are suppressed because the number of matched configurations reaches the upper limit |
 
-*注意：
-1.  当触发容量保护时，通过fuzzyWatchWithGroupKeys返回的配置列表可能不是完整的配置列表。
-2.  当触发配置数量上限保护时，配置删除的事件也可能因保护机制而导致无法推送。
+*Note:
+1. When capacity protection is triggered, the configuration list returned by `fuzzyWatchWithGroupKeys` may be incomplete.
+2. When configuration-count upper-limit protection is triggered, configuration deletion events may also fail to be pushed because of the protection mechanism.
 
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    // 初始化配置服务，控制台通过示例代码自动获取下面参数
+    // Initialize the configuration service. The console automatically obtains the following parameters through the sample code.
     String serverAddr = "{serverAddr}";
     String dataIdPattern = "testDataId*";
     String groupPattern = "group*";
@@ -640,19 +642,19 @@ try {
                             String groupChanged = event.getGroup();
                             String dataIdChanged = event.getDataId();
                             String namespace = event.getNamespace();
-                            //do something
+                            // Do something.
                         }
 
                         @Override
                         public void onPatternOverLimit() {
 			    System.out.println("pattern count over limit");
-			    //do something...
+			    // Do something.
                         }
 
                         @Override
                         public void onConfigReachUpLimit() {
 			    System.out.println("pattern match config count reach to up limit");
-			    //do something...
+			    // Do something.
                         }
     });
 
@@ -779,16 +781,16 @@ configService.addConfigFilter(new AbstractConfigFilter() {
 ```
 
 
-## 4. 服务发现API
+## 4. Service Discovery API
 
 > **Tip for learning**: When you register an instance using the Service Discovery API, the instance will be removed from Nacos once the client process exits, so you won't see it in the Nacos console. For learning or debugging, you can keep the process running after registration (e.g. with `Thread.sleep()`) so you can verify in the Nacos console that the instance was registered successfully.
 
-### 4.1. 注册实例
-#### 描述
-注册一个实例到服务。
+### 4.1. Register Instance
+#### Description
+Registers an instance to a service.
 
-> 由于同一个Nacos Client实例，仅能向一个服务注册一个实例；若同一个Nacos Client实例多次向同一个服务注册实例，后注册的实例将会覆盖先注册的实例。
-> 若有存在代理注册的场景，请使用[批量注册服务实例](#48-批量注册服务实例)
+> Because the same Nacos Client instance can register only one instance to a service, if the same Nacos Client instance registers instances to the same service multiple times, the later instance overwrites the earlier one.
+> For proxy registration scenarios, use [Batch Register Service Instances](#48-batch-register-service-instances).
 
 ```java
 void registerInstance(String serviceName, String ip, int port) throws NacosException;
@@ -804,24 +806,25 @@ void registerInstance(String serviceName, Instance instance) throws NacosExcepti
 void registerInstance(String serviceName, String groupName, Instance instance) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称          | 类型     | 描述       | 默认值           |
+| Name        | Type | Description | Default Value |
 |:------------|:-------|----------|---------------|
-| serviceName | 字符串    | 服务名      | 无，必填          |
-| groupName   | 字符串    | 分组名      | DEFAULT_GROUP |
-| ip          | 字符串    | 服务实例IP   | 无，必填          |
-| port        | int    | 服务实例port | 无，必填          |
-| clusterName | 字符串    | 集群名      | DEFAULT       |
-| instance    | 参见代码注释 | 实例属性     | 无，必填          |
+| serviceName | string | Service name | None, required |
+| groupName   | string | Group name | DEFAULT_GROUP |
+| ip          | string | Service instance IP | None, required |
+| port        | int | Service instance port | None, required |
+| clusterName | string | Cluster name | DEFAULT |
+| instance    | See code comments | Instance properties | None, required |
 
-#### 返回参数
-无
-#### 请求示例
+#### Return Parameters
+None.
+#### Request Example
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 
-// 以下注册请求所造成的结果均一致, 注册分组名为`DEFAULT_GROUP`, 服务名为`nacos.test.service`的实例，实例的ip为`127.0.0.1`, port为`8848`, clusterName为`DEFAULT`.
+// The following registration requests have the same result: they register an instance in group `DEFAULT_GROUP`
+// for service `nacos.test.service` with IP `127.0.0.1`, port `8848`, and clusterName `DEFAULT`.
 naming.registerInstance("nacos.test.service", "127.0.0.1", 8848);
 naming.registerInstance("nacos.test.service", "DEFAULT_GROUP", "127.0.0.1", 8848);
 naming.registerInstance("nacos.test.service", "127.0.0.1", 8848, "DEFAULT");
@@ -837,12 +840,12 @@ naming.registerInstance("nacos.test.service", "DEFAULT_GROUP", instance);
 Thread.sleep(300000); // e.g. keep for 5 minutes
 ```
 
-### 4.2. 注销实例
-#### 描述
-删除服务下的一个实例。
+### 4.2. Deregister Instance
+#### Description
+Deletes an instance from a service.
 
-> 若该服务是通过[批量注册服务实例](#48-批量注册服务实例)进行注册，使用注销实例进行注销时，将注销所有批量注册的实例。
-> 若仅希望注销部分批量注册的实例，请使用[批量注销服务实例](#49-批量注销服务实例)
+> If the service is registered through [Batch Register Service Instances](#48-batch-register-service-instances), using deregister instance will deregister all batch-registered instances.
+> To deregister only some batch-registered instances, use [Batch Deregister Service Instances](#49-batch-deregister-service-instances).
 
 ```java
 void deregisterInstance(String serviceName, String ip, int port) throws NacosException;
@@ -858,23 +861,24 @@ void deregisterInstance(String serviceName, Instance instance) throws NacosExcep
 void deregisterInstance(String serviceName, String groupName, Instance instance);
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称          | 类型     | 描述       | 默认值           |
+| Name        | Type | Description | Default Value |
 |:------------|:-------|----------|---------------|
-| serviceName | 字符串    | 服务名      | 无，必填          |
-| groupName   | 字符串    | 分组名      | DEFAULT_GROUP |
-| ip          | 字符串    | 服务实例IP   | 无，必填          |
-| port        | int    | 服务实例port | 无，必填          |
-| clusterName | 字符串    | 集群名      | DEFAULT       |
-| instance    | 参见代码注释 | 实例属性     | 无，必填          |
+| serviceName | string | Service name | None, required |
+| groupName   | string | Group name | DEFAULT_GROUP |
+| ip          | string | Service instance IP | None, required |
+| port        | int | Service instance port | None, required |
+| clusterName | string | Cluster name | DEFAULT |
+| instance    | See code comments | Instance properties | None, required |
 
-#### 返回参数
-无
-#### 请求示例
+#### Return Parameters
+None.
+#### Request Example
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
-// 以下注销请求所造成的结果均一致, 注销分组名为`DEFAULT_GROUP`, 服务名为`nacos.test.service`的实例，实例的ip为`127.0.0.1`, port为`8848`, clusterName为`DEFAULT`.
+// The following deregistration requests have the same result: they deregister an instance in group `DEFAULT_GROUP`
+// for service `nacos.test.service` with IP `127.0.0.1`, port `8848`, and clusterName `DEFAULT`.
 naming.deregisterInstance("nacos.test.service", "127.0.0.1", 8848);
 naming.deregisterInstance("nacos.test.service", "DEFAULT_GROUP", "127.0.0.1", 8848);
 naming.deregisterInstance("nacos.test.service", "127.0.0.1", 8848, "DEFAULT");
@@ -887,9 +891,9 @@ naming.deregisterInstance("nacos.test.service", instance);
 naming.deregisterInstance("nacos.test.service", "DEFAULT_GROUP", instance);
 ```
 
-### 4.3. 获取全部实例
-#### 描述
-获取服务下的所有实例。
+### 4.3. Get All Instances
+#### Description
+Gets all instances under a service.
 ```java
 List<Instance> getAllInstances(String serviceName) throws NacosException;
 
@@ -908,21 +912,21 @@ List<Instance> getAllInstances(String serviceName, List<String> clusters, boolea
 List<Instance> getAllInstances(String serviceName, String groupName, List<String> clusters, boolean subscribe) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称          | 类型      | 描述                                                         | 默认值           |
+| Name        | Type | Description | Default Value |
 |:------------|:--------|------------------------------------------------------------|---------------|
-| serviceName | 字符串     | 服务名                                                        | 无，必填          |
-| groupName   | 字符串     | 分组名                                                        | DEFAULT_GROUP |
-| subscribe   | Boolean | 是否订阅服务，为true时将会订阅该服务，同时查询优先通过内存缓存；为false时将直接查询Nacos Server | true          |
-| clusters    | 字符串列表   | 实例的clusterName，空列表时将查询所有实例。                                | 空列表           |
+| serviceName | string | Service name | None, required |
+| groupName   | string | Group name | DEFAULT_GROUP |
+| subscribe   | Boolean | Whether to subscribe to the service. If `true`, the service is subscribed to and queries prefer the in-memory cache. If `false`, queries are sent directly to Nacos Server. | true |
+| clusters    | List of strings | Instance `clusterName`. If the list is empty, all instances are queried. | Empty list |
 
-#### 返回参数
-List&lt;Instance> 实例列表。
-#### 请求示例
+#### Return Parameters
+`List<Instance>` instance list.
+#### Request Example
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
-// 以下查询请求所造成的结果均一致.
+// The following query requests have the same result.
 System.out.println(naming.getAllInstances("nacos.test.service"));
 System.out.println(naming.getAllInstances("nacos.test.service", "DEFAULT_GROUP"));
 System.out.println(naming.getAllInstances("nacos.test.service", true));
@@ -933,9 +937,9 @@ System.out.println(naming.getAllInstances("nacos.test.service", new ArrayList<>(
 System.out.println(naming.getAllInstances("nacos.test.service", "DEFAULT_GROUP", new ArrayList<>(), true));
 ```
 
-### 4.4. 获取健康或不健康实例列表
-#### 描述
-根据条件获取过滤后的实例列表。
+### 4.4. Get Healthy or Unhealthy Instances
+#### Description
+Gets a filtered instance list based on conditions.
 ```java
 List<Instance> selectInstances(String serviceName, boolean healthy) throws NacosException;
 
@@ -954,22 +958,22 @@ List<Instance> selectInstances(String serviceName, List<String> clusters, boolea
 List<Instance> selectInstances(String serviceName, String groupName, List<String> clusters, boolean healthy, boolean subscribe) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称          | 类型      | 描述                                                         | 默认值           |
+| Name        | Type | Description | Default Value |
 |:------------|:--------|------------------------------------------------------------|---------------|
-| serviceName | 字符串     | 服务名                                                        | 无，必填          |
-| groupName   | 字符串     | 分组名                                                        | DEFAULT_GROUP |
-| subscribe   | Boolean | 是否订阅服务，为true时将会订阅该服务，同时查询优先通过内存缓存；为false时将直接查询Nacos Server | true          |
-| clusters    | 字符串列表   | 实例的clusterName，空列表时将查询所有实例。                                | 空列表           |
-| healthy     | boolean | 是否健康，为true时仅会返回健康的实例列表，反之则返回不健康的实例列表。                      | true          |
+| serviceName | string | Service name | None, required |
+| groupName   | string | Group name | DEFAULT_GROUP |
+| subscribe   | Boolean | Whether to subscribe to the service. If `true`, the service is subscribed to and queries prefer the in-memory cache. If `false`, queries are sent directly to Nacos Server. | true |
+| clusters    | List of strings | Instance `clusterName`. If the list is empty, all instances are queried. | Empty list |
+| healthy     | boolean | Whether the instances are healthy. If `true`, only healthy instances are returned. Otherwise, unhealthy instances are returned. | true |
 
-#### 返回参数
-List&lt;Instance> 实例列表。
-#### 请求示例
+#### Return Parameters
+`List<Instance>` instance list.
+#### Request Example
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
-// 以下查询请求所造成的结果均一致.
+// The following query requests have the same result.
 System.out.println(naming.selectInstances("nacos.test.service", true));
 System.out.println(naming.selectInstances("nacos.test.service", "DEFAULT_GROUP", true));
 System.out.println(naming.selectInstances("nacos.test.service", true, true));
@@ -980,9 +984,9 @@ System.out.println(naming.selectInstances("nacos.test.service", new ArrayList<>(
 System.out.println(naming.selectInstances("nacos.test.service", "DEFAULT_GROUP", new ArrayList<>(), true, true));
 ```
 
-### 4.5. 获取一个健康实例
-#### 描述
-根据负载均衡算法随机获取一个健康实例。
+### 4.5. Select One Healthy Instance
+#### Description
+Randomly selects one healthy instance based on the load-balancing algorithm.
 ```java
 Instance selectOneHealthyInstance(String serviceName) throws NacosException;
 
@@ -1001,23 +1005,23 @@ Instance selectOneHealthyInstance(String serviceName, List<String> clusters, boo
 Instance selectOneHealthyInstance(String serviceName, String groupName, List<String> clusters, boolean subscribe) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称          | 类型      | 描述                                                         | 默认值           |
+| Name        | Type | Description | Default Value |
 |:------------|:--------|------------------------------------------------------------|---------------|
-| serviceName | 字符串     | 服务名                                                        | 无，必填          |
-| groupName   | 字符串     | 分组名                                                        | DEFAULT_GROUP |
-| subscribe   | Boolean | 是否订阅服务，为true时将会订阅该服务，同时查询优先通过内存缓存；为false时将直接查询Nacos Server | true          |
-| clusters    | 字符串列表   | 实例的clusterName，空列表时将查询所有实例。                                | 空列表           |
+| serviceName | string | Service name | None, required |
+| groupName   | string | Group name | DEFAULT_GROUP |
+| subscribe   | Boolean | Whether to subscribe to the service. If `true`, the service is subscribed to and queries prefer the in-memory cache. If `false`, queries are sent directly to Nacos Server. | true |
+| clusters    | List of strings | Instance `clusterName`. If the list is empty, all instances are queried. | Empty list |
 
 
-#### 返回参数
-Instance 实例。
+#### Return Parameters
+`Instance` instance.
 
-#### 请求示例
+#### Request Example
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
-// 以下查询请求所造成的结果均一致.
+// The following query requests have the same result.
 System.out.println(naming.selectOneHealthyInstance("nacos.test.service"));
 System.out.println(naming.selectOneHealthyInstance("nacos.test.service", "DEFAULT_GROUP"));
 System.out.println(naming.selectOneHealthyInstance("nacos.test.service", true));
@@ -1028,9 +1032,9 @@ System.out.println(naming.selectOneHealthyInstance("nacos.test.service", new Arr
 System.out.println(naming.selectOneHealthyInstance("nacos.test.service", "DEFAULT_GROUP", new ArrayList<>(), true));
 ```
 
-### 4.6. 监听服务
-#### 描述
-监听服务下的实例列表变化。
+### 4.6. Subscribe to Service
+#### Description
+Listens for changes in the instance list under a service.
 ```java
 void subscribe(String serviceName, EventListener listener) throws NacosException;
 
@@ -1041,19 +1045,19 @@ void subscribe(String serviceName, List<String> clusters, EventListener listener
 void subscribe(String serviceName, String groupName, List<String> clusters, EventListener listener) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称          | 类型            | 描述                          | 默认值           |
+| Name        | Type | Description | Default Value |
 |:------------|:--------------|-----------------------------|---------------|
-| serviceName | 字符串           | 服务名                         | 无，必填          |
-| groupName   | 字符串           | 分组名                         | DEFAULT_GROUP |
-| clusters    | 字符串列表         | 实例的clusterName，空列表时将查询所有实例。 | 空列表           |
-| listener    | EventListener | 回调listener                  | 无，必填          |
+| serviceName | string | Service name | None, required |
+| groupName   | string | Group name | DEFAULT_GROUP |
+| clusters    | List of strings | Instance `clusterName`. If the list is empty, all instances are queried. | Empty list |
+| listener    | EventListener | Callback listener | None, required |
 
-#### 返回参数
-无
+#### Return Parameters
+None.
 
-#### 请求示例
+#### Request Example
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 EventListener serviceListener = event -> {
@@ -1068,9 +1072,9 @@ naming.subscribe("nacos.test.service", new ArrayList<>(), serviceListener);
 naming.subscribe("nacos.test.service", "DEFAULT_GROUP", new ArrayList<>(), serviceListener);
 ```
 
-#### 使用自定义线程池进行异步监听
+#### Use a Custom Thread Pool for Asynchronous Listening
 
-Nacos 支持使用自定义线程池进行异步监听回调，只需要将`EventListener`更换为`AbstractEventListener`，并实现`Executor getExecutor()`方法来返回自定义的线程池，Nacos Client将在服务发生变更时使用该线程池进行异步回调。
+Nacos supports asynchronous listener callbacks with a custom thread pool. Replace `EventListener` with `AbstractEventListener` and implement the `Executor getExecutor()` method to return the custom thread pool. Nacos Client uses this thread pool for asynchronous callbacks when the service changes.
 
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
@@ -1092,11 +1096,11 @@ EventListener serviceListener = new AbstractEventListener() {
 naming.subscribe("nacos.test.service", serviceListener);
 ```
 
-#### 监听服务变化的差值
+#### Listen to Service Change Diffs
 
-Nacos 从2.4.0版本你开始，支持监听服务变化的差值，即和之前相比，有哪些实例被新增，移除和修改，只需要将`EventListener`更换为`AbstractNamingChangeListener`，实现`onChange`方法即可。`onChange`中会传入`NamingChangeEvent`,其中`InstancesDiff`记录了此次通知和之前相比的实例变化。
+Starting from Nacos 2.4.0, Nacos supports listening to service change diffs, including which instances are added, removed, or modified compared with the previous notification. Replace `EventListener` with `AbstractNamingChangeListener` and implement the `onChange` method. A `NamingChangeEvent` is passed to `onChange`, and `InstancesDiff` records the instance changes in this notification compared with the previous one.
 
-同时为了防止差值的错误和异常，`NamingChangeEvent`仍然可以通过`getInstances`方法获取最终的服务实例列表。
+To avoid issues caused by incorrect or abnormal diffs, `NamingChangeEvent` can still obtain the final service instance list through the `getInstances` method.
 
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
@@ -1123,9 +1127,9 @@ EventListener serviceListener = new AbstractNamingChangeListener() {
 naming.subscribe("nacos.test.service", serviceListener);
 ```
 
-### 4.7. 取消监听服务
-#### 描述
-取消监听服务下的实例列表变化。
+### 4.7. Unsubscribe from Service
+#### Description
+Cancels listening for changes in the instance list under a service.
 ```java
 void unsubscribe(String serviceName, EventListener listener) throws NacosException;
 
@@ -1136,21 +1140,21 @@ void unsubscribe(String serviceName, List<String> clusters, EventListener listen
 void unsubscribe(String serviceName, String groupName, List<String> clusters, EventListener listener) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称          | 类型            | 描述                          | 默认值           |
+| Name        | Type | Description | Default Value |
 |:------------|:--------------|-----------------------------|---------------|
-| serviceName | 字符串           | 服务名                         | 无，必填          |
-| groupName   | 字符串           | 分组名                         | DEFAULT_GROUP |
-| clusters    | 字符串列表         | 实例的clusterName，空列表时将查询所有实例。 | 空列表           |
-| listener    | EventListener | 回调listener                  | 无，必填          |
+| serviceName | string | Service name | None, required |
+| groupName   | string | Group name | DEFAULT_GROUP |
+| clusters    | List of strings | Instance `clusterName`. If the list is empty, all instances are queried. | Empty list |
+| listener    | EventListener | Callback listener | None, required |
 
-> 注意：取消监听服务时，需要使用进行订阅时的`listener`进行取消监听，否则可能造成取消监听失败。
+> Note: When unsubscribing from a service, use the same `listener` that was used for subscription. Otherwise, unsubscription may fail.
 
-#### 返回参数
-无
+#### Return Parameters
+None.
 
-#### 请求示例
+#### Request Example
 ```java
 
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
@@ -1162,30 +1166,30 @@ naming.unsubscribe("nacos.test.service", new ArrayList<>(), serviceListener);
 naming.unsubscribe("nacos.test.service", "DEFAULT_GROUP", new ArrayList<>(), serviceListener);
 ```
 
-### 4.8. 批量注册服务实例
+### 4.8. Batch Register Service Instances
 
-#### 描述
+#### Description
 
-注册一系列实例到指定服务。
+Registers a series of instances to a specified service.
 
-> 由于同一个Nacos Client实例，仅能向一个服务注册一个实例；若同一个Nacos Client实例多次向同一个服务注册实例，后注册的实例将会覆盖先注册的实例。
-> 考虑到社区存在代理注册的场景：如Nacos-Sync， Proxy-Registry等，需要在一个客户端中注册同一个服务的不同实例，社区新增了批量注册服务实例的功能。
+> Because the same Nacos Client instance can register only one instance to a service, if the same Nacos Client instance registers instances to the same service multiple times, the later instance overwrites the earlier one.
+> To support proxy registration scenarios in the community, such as Nacos-Sync and Proxy-Registry, where different instances of the same service need to be registered from one client, the community added the batch registration capability.
 
 ```java
 void batchRegisterInstance(String serviceName, String groupName, List<Instance> instances) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称          | 类型            | 描述     | 默认值           |
+| Name        | Type | Description | Default Value |
 |:------------|:--------------|--------|---------------|
-| serviceName | 字符串           | 服务名    | 无，必填          |
-| groupName   | 字符串           | 分组名    | DEFAULT_GROUP |
-| instances   | Instance的List | 服务实例列表 | 无，必填          |
+| serviceName | string | Service name | None, required |
+| groupName   | string | Group name | DEFAULT_GROUP |
+| instances   | List of `Instance` | Service instance list | None, required |
 
-#### 返回参数
-无
-#### 请求示例
+#### Return Parameters
+None.
+#### Request Example
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 
@@ -1206,29 +1210,29 @@ instances.add(instance2);
 naming.batchRegisterInstance("nacos.test.service", "DEFAULT_GROUP", instances);
 ```
 
-### 4.9. 批量注销服务实例
+### 4.9. Batch Deregister Service Instances
 
-#### 描述
+#### Description
 
-从指定服务中注销一系列实例。
+Deregisters a series of instances from a specified service.
 
-> 针对使用了批量注册服务实例的用户设计，允许用户选择一部分或全部批量注册的实例进行注销。
+> This API is designed for users who use batch registration. It allows users to deregister some or all batch-registered instances.
 
 ```java
 void batchDeregisterInstance(String serviceName, String groupName, List<Instance> instances) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称          | 类型            | 描述     | 默认值           |
+| Name        | Type | Description | Default Value |
 |:------------|:--------------|--------|---------------|
-| serviceName | 字符串           | 服务名    | 无，必填          |
-| groupName   | 字符串           | 分组名    | DEFAULT_GROUP |
-| instances   | Instance的List | 服务实例列表 | 无，必填          |
+| serviceName | string | Service name | None, required |
+| groupName   | string | Group name | DEFAULT_GROUP |
+| instances   | List of `Instance` | Service instance list | None, required |
 
-#### 返回参数
-无
-#### 请求示例
+#### Return Parameters
+None.
+#### Request Example
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 
@@ -1250,11 +1254,11 @@ naming.batchRegisterInstance("nacos.test.service", "DEFAULT_GROUP", instances);
 naming.batchDeregisterInstance("nacos.test.service", "DEFAULT_GROUP", instances);
 ```
 
-### 4.10. 带选择器的监听服务
+### 4.10. Subscribe to Service with Selector
 
-#### 描述
+#### Description
 
-使用自定义逻辑的选择器，监听服务下的实例列表变化，当服务列表发生变化时，会使用自定义的选择器进行过滤，当过滤后的数据仍然有变化时，才会进行回调通知。
+Uses a selector with custom logic to listen for changes in the instance list under a service. When the service list changes, the custom selector filters the data. A callback notification is sent only when the filtered data still changes.
 
 ```java
 void subscribe(String serviceName, NamingSelector selector, EventListener listener) throws NacosException;
@@ -1262,20 +1266,20 @@ void subscribe(String serviceName, NamingSelector selector, EventListener listen
 void subscribe(String serviceName, String groupName, NamingSelector selector, EventListener listener) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称          | 类型             | 描述                          | 默认值           |
+| Name        | Type | Description | Default Value |
 |:------------|:---------------|-----------------------------|---------------|
-| serviceName | 字符串            | 服务名                         | 无，必填          |
-| groupName   | 字符串            | 分组名                         | DEFAULT_GROUP |
-| clusters    | 字符串列表          | 实例的clusterName，空列表时将查询所有实例。 | 空列表           |
-| selector    | NamingSelector | 自定义的数据选择器                   | 无，必填          |
-| listener    | EventListener  | 回调listener                  | 无，必填          |
+| serviceName | string | Service name | None, required |
+| groupName   | string | Group name | DEFAULT_GROUP |
+| clusters    | List of strings | Instance `clusterName`. If the list is empty, all instances are queried. | Empty list |
+| selector    | NamingSelector | Custom data selector | None, required |
+| listener    | EventListener  | Callback listener | None, required |
 
-#### 返回参数
-无
+#### Return Parameters
+None.
 
-#### 请求示例
+#### Request Example
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 EventListener serviceListener = event -> {
@@ -1284,33 +1288,33 @@ EventListener serviceListener = event -> {
         System.out.println(((NamingEvent) event).getInstances());
     }
 };
-// 只会选择订阅ip为`127.0`开头的实例。
+// Selects only subscribed instances whose IP starts with `127.0`.
 NamingSelector selector = NamingSelectorFactory.newIpSelector("127.0.*");
 naming.subscribe("nacos.test.service", "DEFAULT_GROUP", selector, serviceListener);
 
 ```
 
-#### 预设提供的数据选择器
+#### Built-in Data Selectors
 
-Nacos Client 提供了预设的多种数据选择器以供默认场景下使用：
-1. Cluster选择器，`NamingSelectorFactory.newClusterSelector(Collection<String> clusters)`, 当订阅服务时传入了`clusters`参数，Nacos Client将自动使用该数据选择器。
-2. Ip选择器，`NamingSelectorFactory.newClusterSelector(String ipRegex)`，当实例的ip满足传入的ipRegex时，才会被通知回调。
-3. 元数据选择器，`NamingSelectorFactory.newMetadataSelector(Map<String, String> metadata)`，当实例的元数据包含**所有**传入选择器的metadata时，才会被通知回调。
-4. 任意元数据选择器，`NamingSelectorFactory.newMetadataSelector(Map<String, String> metadata, false)`,当实例的元数据包含**任意一对**传入选择器的metadata时，才会被通知回调。
+Nacos Client provides multiple built-in data selectors for default scenarios:
+1. Cluster selector: `NamingSelectorFactory.newClusterSelector(Collection<String> clusters)`. When the `clusters` parameter is passed during service subscription, Nacos Client automatically uses this data selector.
+2. IP selector: `NamingSelectorFactory.newClusterSelector(String ipRegex)`. A callback is notified only when an instance IP matches the passed `ipRegex`.
+3. Metadata selector: `NamingSelectorFactory.newMetadataSelector(Map<String, String> metadata)`. A callback is notified only when the instance metadata contains **all** metadata entries passed to the selector.
+4. Any metadata selector: `NamingSelectorFactory.newMetadataSelector(Map<String, String> metadata, false)`. A callback is notified when the instance metadata contains **any one pair** of metadata entries passed to the selector.
 
-#### 开发自定义数据选择器
+#### Develop a Custom Data Selector
 
-多数情况下， 开发自定义数据选择器只需要创建`DefaultNamingSelector`即可，在构建时传入一个`Predicate<Instance> filter`作为单个实例是否满足您过滤条件的结果，类似Java中stream的filter方法，如此您仅需要考虑单个实例的过滤条件即可。
+In most cases, creating a custom data selector only requires creating `DefaultNamingSelector`. During construction, pass a `Predicate<Instance> filter` as the result that determines whether a single instance meets your filtering conditions. This is similar to the `filter` method in Java streams, so you only need to consider the filtering condition for a single instance.
 
-若是`DefaultNamingSelector`无法满足需求，您需要实现`NamingSelector`接口，根据传入的`NamingContext`进行复杂的逻辑校验，最后输出`NamingResult`给Nacos Client。
+If `DefaultNamingSelector` cannot meet your requirements, implement the `NamingSelector` interface, perform complex logic validation based on the passed `NamingContext`, and finally output `NamingResult` to Nacos Client.
 
-### 4.11. 取消带选择器的监听服务
+### 4.11. Unsubscribe from Service with Selector
 
-#### 描述
+#### Description
 
-使用自定义逻辑的选择器进行监听服务下的实例列表变化，那么在取消监听时需要使用`取消带选择器的监听服务`的API才能正确取消监听。
+If you use a selector with custom logic to listen for changes in the instance list under a service, use the `unsubscribe from service with selector` API to correctly cancel the listener.
 
-> 注意：取消监听时需要传入监听时使用的selector和listener，否则可能导致取消监听失败。
+> Note: When unsubscribing, pass the same selector and listener used for subscription. Otherwise, unsubscription may fail.
 
 ```java
 void unsubscribe(String serviceName, NamingSelector selector, EventListener listener) throws NacosException;
@@ -1318,20 +1322,20 @@ void unsubscribe(String serviceName, NamingSelector selector, EventListener list
 void unsubscribe(String serviceName, String groupName, NamingSelector selector, EventListener listener) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称          | 类型             | 描述                          | 默认值           |
+| Name        | Type | Description | Default Value |
 |:------------|:---------------|-----------------------------|---------------|
-| serviceName | 字符串            | 服务名                         | 无，必填          |
-| groupName   | 字符串            | 分组名                         | DEFAULT_GROUP |
-| clusters    | 字符串列表          | 实例的clusterName，空列表时将查询所有实例。 | 空列表           |
-| selector    | NamingSelector | 自定义的数据选择器                   | 无，必填          |
-| listener    | EventListener  | 回调listener                  | 无，必填          |
+| serviceName | string | Service name | None, required |
+| groupName   | string | Group name | DEFAULT_GROUP |
+| clusters    | List of strings | Instance `clusterName`. If the list is empty, all instances are queried. | Empty list |
+| selector    | NamingSelector | Custom data selector | None, required |
+| listener    | EventListener  | Callback listener | None, required |
 
-#### 返回参数
-无
+#### Return Parameters
+None.
 
-#### 请求示例
+#### Request Example
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 EventListener serviceListener = event -> {
@@ -1340,16 +1344,16 @@ EventListener serviceListener = event -> {
         System.out.println(((NamingEvent) event).getInstances());
     }
 };
-// 只会选择订阅ip为`127.0`开头的实例。
+// Selects only subscribed instances whose IP starts with `127.0`.
 NamingSelector selector = NamingSelectorFactory.newIpSelector("127.0.*");
 naming.subscribe("nacos.test.service", "DEFAULT_GROUP", selector, serviceListener);
 naming.unsubscribe("nacos.test.service", "DEFAULT_GROUP", selector, serviceListener);
 
 ```
 
-### 4.12. 分页获取服务列表
+### 4.12. Get Services with Pagination
 
-#### 描述
+#### Description
 
 Get the list of services in the current client namespace with pagination.
 
@@ -1361,44 +1365,44 @@ ListView<String> getServicesOfServer(int pageNo, int pageSize, String groupName)
 
 > **Note**: The `getServicesOfServer` overloads that take `AbstractSelector` are **deprecated** and should not be used; they are not listed in this document. They will be marked with `@Deprecated` in the API in a future release. Use only the two-parameter or three-parameter overloads above.
 
-#### 请求参数
+#### Request Parameters
 
-| 名称        | 类型  | 描述         | 默认值           |
+| Name      | Type | Description | Default Value |
 |:----------|:----|------------|---------------|
-| pageNo    | int | 分页序号       | 无，必填          |
-| pageSize  | int | 分页中每页的服务个数 | 无，必填          |
-| groupName | 字符串 | 分组名        | DEFAULT_GROUP |
+| pageNo    | int | Page number | None, required |
+| pageSize  | int | Number of services per page | None, required |
+| groupName | string | Group name | DEFAULT_GROUP |
 
-#### 返回参数
-服务名列表: ListView<String>
+#### Return Parameters
+Service name list: `ListView<String>`.
 
-#### 请求示例
+#### Request Example
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
-// 等价于`naming.getServicesOfServer(1, 10, "DEFAULT_GROUP");`
+// Equivalent to `naming.getServicesOfServer(1, 10, "DEFAULT_GROUP");`
 ListView<String> result = naming.getServicesOfServer(1, 10);
 System.out.println(result.getCount());
 System.out.println(result.getData());
 ```
 
-### 4.13. 获取当前客户端所监听的服务列表
+### 4.13. Get Services Subscribed by the Current Client
 
-#### 描述
+#### Description
 
-获取当前客户端所的所有服务列表
+Gets all services subscribed to by the current client.
 
 ```java
 List<ServiceInfo> getSubscribeServices() throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-无
+None.
 
-#### 返回参数
-服务列表: List<ServiceInfo>
+#### Return Parameters
+Service list: `List<ServiceInfo>`.
 
-#### 请求示例
+#### Request Example
 ```java
 NamingService naming = NamingFactory.createNamingService(System.getProperty("serveAddr"));
 System.out.println(naming.getSubscribeServices());
@@ -1406,137 +1410,139 @@ System.out.println(naming.getSubscribeServices());
 
 
 
-### 4.14. 服务模糊订阅
+### 4.14. Fuzzy Watch Service
 
-#### 描述
+#### Description
 
-通过fuzzyWatch接口可以对符指定group和serviceName规则的服务进行批量订阅， 可通过*进行前缀模糊，后缀模糊，双边模糊匹配。
-<br/>模糊订阅功能仅会推送服务的新增以及删除事件，并不会直接推送服务下实例列表，可在服务模糊订阅的监听器中结合subscribe接口实现服务下实例列表的变更监听。<br/>
-处于稳定性考虑，Nacos对模糊订阅的规则数量以及单个规则匹配的服务数量有上限保护。具体参照[服务模糊容量保护机制](#服务模糊订阅容量保护机制)一节。
+The `fuzzyWatch` API can batch-subscribe to services that match the specified group rule and `serviceName` rule. Use `*` for prefix fuzzy matching, suffix fuzzy matching, or bilateral fuzzy matching.
+<br/>Fuzzy watch pushes only service add and delete events. It does not directly push the instance list under a service. In a service fuzzy watch listener, you can use the `subscribe` API together with fuzzy watch to listen for changes in the instance list under a service.<br/>
+For stability, Nacos applies upper-limit protection to the number of fuzzy watch rules and the number of services matched by a single rule. For details, see [Fuzzy Watch Service Capacity Protection](#fuzzy-watch-service-capacity-protection).
 
 ```java
 
 /**
- * 订阅当前命名空间下指定分组group规则及服务名规则下所有服务的变更事件
+ * Subscribes to change events for all services in the current namespace that match the specified group rule and service name rule.
  *
- * @param serviceNamePattern 服务名匹配规则
- * @param groupNamePattern 分组匹配规则
- * @param watcher  模糊订阅监听器
+ * @param serviceNamePattern service name matching rule
+ * @param groupNamePattern group matching rule
+ * @param watcher fuzzy watch listener
  */
 void fuzzyWatch(String serviceNamePattern, String groupNamePattern, FuzzyWatchEventWatcher watcher)
 		throws NacosException;
 
 /**
- * 订阅当前命名空间下指定分组group规则及服务serviceName规则下所有服务的变更事件,并以Future模式获取规则当前匹配的服务列表
- * 模糊订阅的列表将以异步的方式通过watcher回调
- * @param serviceNamePattern 服务serviceName匹配规则
- * @param groupNamePattern 分组group匹配规则
- * @param watcher  模糊订阅监听器
- * @return Future 可通过future等待配置异步推送结果                
+ * Subscribes to change events for all services in the current namespace that match the specified group rule and serviceName rule,
+ * and obtains the current matched service list in Future mode.
+ * The fuzzy watch list is asynchronously returned through the watcher callback.
+ * @param serviceNamePattern serviceName matching rule
+ * @param groupNamePattern group matching rule
+ * @param watcher fuzzy watch listener
+ * @return Future that can be used to wait for the asynchronous service push result
  */
 Future<ListView<String>> fuzzyWatchWithServiceKeys(String serviceNamePattern, String groupNamePattern,
 		FuzzyWatchEventWatcher watcher) throws NacosException;
 
 
 /**
- * 取消订阅当前命名空间下指定分组group规则下所有服务的变更事件
- * @param serviceNamePattern   服务匹配规则
- * @param groupNamePattern 分组group匹配规则
- * @param watcher      需要移除的模糊订阅watcher
+ * Cancels the subscription to change events for all services in the current namespace that match the specified group rule.
+ * @param serviceNamePattern service matching rule
+ * @param groupNamePattern group matching rule
+ * @param watcher fuzzy watch listener to remove
  */
 void cancelFuzzyWatch(String serviceNamePattern, String groupNamePattern, FuzzyWatchEventWatcher watcher);
 
 
 /**
- * 订阅当前命名空间下指定分组group规则下所有服务的变更事件
+ * Subscribes to change events for all services in the current namespace that match the specified group rule.
  *
- * @param groupNamePattern 分组匹配规则
- * @param watcher  模糊订阅监听器
+ * @param groupNamePattern group matching rule
+ * @param watcher fuzzy watch listener
  */
 void fuzzyWatch(String groupNamePattern, FuzzyWatchEventWatcher watcher) throws NacosException;
 
 /**
- * 订阅当前命名空间下指定分组group规则下所有服务的变更事件，可通过Future获取当前匹配的所有服务列表
+ * Subscribes to change events for all services in the current namespace that match the specified group rule.
+ * A Future can be used to obtain the current matched service list.
  *
- * @param groupNamePattern 分组group匹配规则
- * @param watcher  模糊订阅监听器
- * @return Future 可通过future等待配置异步推送结果
+ * @param groupNamePattern group matching rule
+ * @param watcher fuzzy watch listener
+ * @return Future that can be used to wait for the asynchronous service push result
  */
 Future<ListView<String>> fuzzyWatchWithServiceKeys(String groupNamePattern,
 		FuzzyWatchEventWatcher watcher) throws NacosException;
 
 /**
- * 取消订阅当前命名空间下指定分组group规则及服务规则下所有配置的服务事件
+ * Cancels the subscription to service events for all services in the current namespace that match the specified group rule and service rule.
  *
- * @param groupNamePattern 分组group匹配规则
- * @param watcher    需要移除的模糊订阅watcher
+ * @param groupNamePattern group matching rule
+ * @param watcher fuzzy watch listener to remove
  */
 void cancelFuzzyWatch(String groupNamePattern, FuzzyWatchEventWatcher watcher) ;
 
 
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述                                                                           |
+| Parameter | Type | Description |
 | :--- | :--- |:-----------------------------------------------------------------------------|
-| serviceNamePattern | string | 服务名匹配规则，支持a.前缀模糊匹配(如,myservice*) b.后缀模糊匹配(如\*service)，c.双边模糊匹配(如\*service\*) |
-| groupNamePattern | string | 配置分组匹配规则，支持a.前缀模糊匹配(如 mygroup*) b.后缀模糊匹配(如 \*mygroup)，c.双边模糊匹配(如 \*mygroup\*)     |      |
-| watcher | FuzzyWatchEventWatcher | 模糊订阅监听器                                                                      |
+| serviceNamePattern | string | Service name matching rule. Supports prefix fuzzy matching, such as `myservice*`; suffix fuzzy matching, such as `*service`; and bilateral fuzzy matching, such as `*service*`. |
+| groupNamePattern | string | Configuration group matching rule. Supports prefix fuzzy matching, such as `mygroup*`; suffix fuzzy matching, such as `*mygroup`; and bilateral fuzzy matching, such as `*mygroup*`. |
+| watcher | FuzzyWatchEventWatcher | Fuzzy watch listener |
 
 
-#### FuzzyWatchEventWatcher模糊订阅监听器
-| 方法名 | 方法参数类型 | 描述                                                                      |
+#### FuzzyWatchEventWatcher Fuzzy Watch Listener
+| Method | Parameter Type | Description |
 | :--- | :--- |:------------------------------------------------------------------------|
-| onEvent | FuzzyWatchChangeEvent | 模糊订阅回调事件对象 |
-| getExecutor | void | 可指定执行回调事件的线程池，如果为空，将以nacos推送线程中执行回调  |      |
+| onEvent | FuzzyWatchChangeEvent | Fuzzy watch callback event object |
+| getExecutor | void | Specifies the thread pool used to execute callback events. If it is empty, callbacks are executed in the Nacos push thread. |
 
-#### FuzzyWatchChangeEvent模糊订阅事件
-| 参数名         | 参数类型   | 描述                                                                                                                      |
+#### FuzzyWatchChangeEvent Fuzzy Watch Event
+| Parameter   | Type   | Description |
 |:------------|:-------|:------------------------------------------------------------------------------------------------------------------------|
-| serviceName | string | 变更的服务名                                                                                                                  |
-| groupName   | string | 变更的服务分组group                                                                                                            |      |
-| namespace   | string | 变更的命名空间                                                                                                                 |
-| changedType | string | 变更类型，表示客户端接收到的服务变更类型，包含ADD_SERVICE-新增服务，DELETE_SERVICE-移除服务                                                             |
-| syncType    | string | 触发变更的类型，包含FUZZY_WATCH_INIT_NOTIFY-初始化推送已存在的服务列表，FUZZY_WATCH_DIFF_SYNC_NOTIFY-变更对账触发，FUZZY_WATCH_RESOURCE_CHANGED-服务变更推送 |
+| serviceName | string | Changed service name |
+| groupName   | string | Group of the changed service |
+| namespace   | string | Namespace of the changed service |
+| changedType | string | Change type received by the client, including `ADD_SERVICE` for added services and `DELETE_SERVICE` for removed services |
+| syncType    | string | Type that triggered the change, including `FUZZY_WATCH_INIT_NOTIFY` for initial push of the existing service list, `FUZZY_WATCH_DIFF_SYNC_NOTIFY` for change reconciliation, and `FUZZY_WATCH_RESOURCE_CHANGED` for service change push |
 
 
 
-#### 返回参数
+#### Return Parameters
 
-| 参数类型 | 描述                                                                                      |
+| Type | Description |
 | :--- |:----------------------------------------------------------------------------------------|
-| Future<ListView<String>> | 返回当前匹配的服务列表的future对象，当规则匹配的服务列表已经推送到客户端时，可通过future对象获取服务列表<br/>*注意：当触发容量保护时，返回的服务列表可能不全 |
+| Future<ListView<String>> | A Future object for the current matched service list. After the list of services matched by the rule is pushed to the client, you can obtain the list through the Future object.<br/>*Note: When capacity protection is triggered, the returned service list may be incomplete. |
 ```java
-//返回的参数为serviceKey列表，可通过NamingUtils工具类获取serviceName，groupName及namespace
+// The returned parameter is a serviceKey list. You can use the NamingUtils utility class to obtain serviceName, groupName, and namespace.
  String[] serviceKeyItems = NamingUtils.parseServiceKey(serviceKey);
  String namespace = serviceKeyItems[0];
  String groupName = serviceKeyItems[1];
  String serviceName = serviceKeyItems[2];
 ```
-#### 服务模糊订阅容量保护机制
+#### Fuzzy Watch Service Capacity Protection
 
-处于稳定性角度考虑，避免过多的规则及规则匹配的服务数量导致服务端内存压力以及对客户端造成推送风暴，Nacos在两个层面对模糊订阅功能设计了容量保护机制，当超过上限时，模糊订阅的推送将被抑制。<br/>
-1. 模糊订阅规则数量上限保护 ,默认的模糊订阅规则数量上限为20,可通过参数nacos.naming.fuzzy.watch.max.pattern.count调整上限。
-2. 单个模糊订阅规则匹配的服务数量上限保护， 默认单个模糊订阅规则匹配的配置数量上限为500，可通过nacos.naming.fuzzy.watch.max.pattern.match.service.count调整上限。
+For stability, to avoid server memory pressure and client push storms caused by too many rules or too many services matched by rules, Nacos provides capacity protection for fuzzy watch at two levels. When an upper limit is exceeded, fuzzy watch pushes are suppressed.<br/>
+1. Upper-limit protection for the number of fuzzy watch rules. The default upper limit is 20 and can be adjusted by the `nacos.naming.fuzzy.watch.max.pattern.count` parameter.
+2. Upper-limit protection for the number of services matched by a single fuzzy watch rule. The default upper limit is 500 and can be adjusted by the `nacos.naming.fuzzy.watch.max.pattern.match.service.count` parameter.
 
-在fuzzyWatch接口中注册模糊订阅监听器可同时实现FuzzyWatchLoadWatcher负载监听器感知容量保护机制的发生。
-#### FuzzyWatchLoadWatcher模糊订阅负载监听器
-| 方法名  | 描述                           |
+When registering a fuzzy watch listener in the `fuzzyWatch` API, the listener can also implement `FuzzyWatchLoadWatcher` to perceive capacity protection events.
+#### FuzzyWatchLoadWatcher Fuzzy Watch Load Listener
+| Method | Description |
 | :--- |:-----------------------------|
-| onPatternOverLimit | 当前模糊订阅规则因超过上限，推送被抑制时触发       |
-| onServiceReachUpLimit | 当前模糊订阅规则匹配的服务数量达到上限，推送被抑制时触发 |
+| onPatternOverLimit | Triggered when pushes for the current fuzzy watch rule are suppressed because the rule count exceeds the upper limit |
+| onServiceReachUpLimit | Triggered when pushes for the current fuzzy watch rule are suppressed because the number of matched services reaches the upper limit |
 
-*注意：
-1.  当触发容量保护时，通过fuzzyWatchWithServiceKeys返回的服务列表可能不是完整的服务列表。
-2.  当触发服务数量上限保护时，服务下线的事件也可能因保护机制而导致无法推送。
+*Note:
+1. When capacity protection is triggered, the service list returned by `fuzzyWatchWithServiceKeys` may be incomplete.
+2. When service-count upper-limit protection is triggered, service offline events may also fail to be pushed because of the protection mechanism.
 
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-		// 初始化配置服务，控制台通过示例代码自动获取下面参数
+		// Initialize the configuration service. The console automatically obtains the following parameters through the sample code.
 		String serverAddr = "{serverAddr}";
 		String serviceNamePattern = "service*";
 		String groupPattern = "group*";
@@ -1594,46 +1600,46 @@ String status = naming.getServerStatus();
 System.out.println(status);
 ```
 
-## 5. 分布式锁API
+## 5. Distributed Lock API
 
 :::note
-分布式锁功能于3.0版本中添加，目前功能还处于实验性阶段，功能生态还未完善，可能存在一定的问题，请谨慎使用。
+The distributed lock capability was added in version 3.0. It is still experimental, and its ecosystem is not yet complete. There may be issues, so use it with caution.
 :::
 
-> 分布式锁功能目前版本还缺少对应的运维API和监听对应锁的API，将在后续版本中添加支持。
+> The current version of distributed lock does not yet provide the corresponding operations API or lock listener API. Support will be added in later versions.
 
-### 5.1. 获取分布式锁
+### 5.1. Acquire Distributed Lock
 
-#### 描述
+#### Description
 
-通过此接口可以尝试获取分布式锁，如果获取失败，则返回false，如果获取成功，则返回true。
+This API attempts to acquire a distributed lock. It returns `false` if acquisition fails and `true` if acquisition succeeds.
 
 ```java
 Boolean lock(LockInstance instance) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称       | 类型           | 描述         | 默认值  |
+| Name     | Type | Description | Default Value |
 |:---------|:-------------|------------|------|
-| instance | LockInstance | 分布式锁的锁对象实例 | 无，必填 |
+| instance | LockInstance | Lock object instance for the distributed lock | None, required |
 
-LockInstance对象中包含如下参数：
+The `LockInstance` object contains the following parameters:
 
-| 名称          | 类型                 | 描述                                               | 默认值  |
+| Name        | Type | Description | Default Value |
 |:------------|:-------------------|--------------------------------------------------|------|
-| key         | String             | 分布式锁的唯一key，同一类型的锁若key相同时，则认为期望获取同一把锁             | 无，必填 |
-| expiredTime | long               | 分布式锁的过期时间，单位为毫秒，0表示取到锁后立刻释放，若设置的值小于0，将使用默认值30000 | 0    |
-| params      | Map<String,String> | 自定义参数，用于扩展锁的自定义属性                                | 无    |
-| lockType    | String             | 分布式锁类型，目前仅支持"NACOS_LOCK"                         | 无    |
+| key         | String | Unique key of the distributed lock. For locks of the same type, the same key means the same lock is expected. | None, required |
+| expiredTime | long | Expiration time of the distributed lock, in milliseconds. `0` means the lock is released immediately after it is acquired. If the configured value is less than 0, the default value `30000` is used. | 0 |
+| params      | Map<String,String> | Custom parameters used to extend custom lock attributes | None |
+| lockType    | String | Distributed lock type. Currently, only `"NACOS_LOCK"` is supported. | None |
 
-> Nacos 目前提供一个默认实现的锁类型，即"NACOS_LOCK"，可通过`new NLock()`进行快速创建，后续会支持更多类型的锁。
+> Nacos currently provides one default lock type implementation, `"NACOS_LOCK"`, which can be quickly created through `new NLock()`. More lock types will be supported later.
 
-#### 返回参数
+#### Return Parameters
 
-获取锁的结果`Boolean`，如果获取锁成功，则返回`true`，否则返回`false`。
+Lock acquisition result `Boolean`. Returns `true` if the lock is acquired; otherwise returns `false`.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -1653,38 +1659,38 @@ try {
 }
 ```
 
-### 5.2. 释放分布式锁
+### 5.2. Release Distributed Lock
 
-#### 描述
+#### Description
 
-通过此接口可以释放获取到的分布式锁，如果释放成功，则返回true，否则返回false。
+This API releases an acquired distributed lock. It returns `true` if release succeeds; otherwise returns `false`.
 
 ```java
 Boolean unLock(LockInstance instance) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称       | 类型           | 描述         | 默认值  |
+| Name     | Type | Description | Default Value |
 |:---------|:-------------|------------|------|
-| instance | LockInstance | 分布式锁的锁对象实例 | 无，必填 |
+| instance | LockInstance | Lock object instance for the distributed lock | None, required |
 
-LockInstance对象中包含如下参数：
+The `LockInstance` object contains the following parameters:
 
-| 名称          | 类型                 | 描述                                               | 默认值  |
+| Name        | Type | Description | Default Value |
 |:------------|:-------------------|--------------------------------------------------|------|
-| key         | String             | 分布式锁的唯一key，同一类型的锁若key相同时，则认为期望获取同一把锁             | 无，必填 |
-| expiredTime | long               | 分布式锁的过期时间，单位为毫秒，0表示取到锁后立刻释放，若设置的值小于0，将使用默认值30000 | 0    |
-| params      | Map<String,String> | 自定义参数，用于扩展锁的自定义属性                                | 无    |
-| lockType    | String             | 分布式锁类型，目前仅支持"NACOS_LOCK"                         | 无    |
+| key         | String | Unique key of the distributed lock. For locks of the same type, the same key means the same lock is expected. | None, required |
+| expiredTime | long | Expiration time of the distributed lock, in milliseconds. `0` means the lock is released immediately after it is acquired. If the configured value is less than 0, the default value `30000` is used. | 0 |
+| params      | Map<String,String> | Custom parameters used to extend custom lock attributes | None |
+| lockType    | String | Distributed lock type. Currently, only `"NACOS_LOCK"` is supported. | None |
 
-> Nacos 目前提供一个默认实现的锁类型，即"NACOS_LOCK"，可通过`new NLock()`进行快速创建，后续会支持更多类型的锁。
+> Nacos currently provides one default lock type implementation, `"NACOS_LOCK"`, which can be quickly created through `new NLock()`. More lock types will be supported later.
 
-#### 返回参数
+#### Return Parameters
 
-释放锁的结果`Boolean`，如果获取锁成功，则返回`true`，否则返回`false`。
+Lock release result `Boolean`. Returns `true` if the lock is released; otherwise returns `false`.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -1706,7 +1712,7 @@ try {
 
 ### 5.3. Remote Try Lock
 
-#### 描述
+#### Description
 
 Use this API to directly send a remote lock request. The semantics are the same as `lock`: returns `true` on success and `false` on failure.
 
@@ -1714,17 +1720,17 @@ Use this API to directly send a remote lock request. The semantics are the same 
 Boolean remoteTryLock(LockInstance instance) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称       | 类型           | 描述         | 默认值  |
+| Name     | Type | Description | Default Value |
 |:---------|:-------------|------------|------|
-| instance | LockInstance | 分布式锁的锁对象实例 | 无，必填 |
+| instance | LockInstance | Lock object instance for the distributed lock | None, required |
 
-#### 返回参数
+#### Return Parameters
 
 Remote lock result `Boolean`: returns `true` if lock is acquired, otherwise `false`.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -1741,7 +1747,7 @@ try {
 
 ### 5.4. Remote Release Lock
 
-#### 描述
+#### Description
 
 Use this API to directly send a remote unlock request to release the distributed lock. Returns `true` on success and `false` on failure.
 
@@ -1749,17 +1755,17 @@ Use this API to directly send a remote unlock request to release the distributed
 Boolean remoteReleaseLock(LockInstance instance) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称       | 类型           | 描述         | 默认值  |
+| Name     | Type | Description | Default Value |
 |:---------|:-------------|------------|------|
-| instance | LockInstance | 分布式锁的锁对象实例 | 无，必填 |
+| instance | LockInstance | Lock object instance for the distributed lock | None, required |
 
-#### 返回参数
+#### Return Parameters
 
 Remote unlock result `Boolean`: returns `true` if lock is released, otherwise `false`.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -1778,13 +1784,13 @@ try {
 }
 ```
 
-## 6. MCP 服务
+## 6. MCP Service
 
-### 6.1. 查询MCP 服务
+### 6.1. Query MCP Service
 
-#### 描述
+#### Description
 
-通过此接口可以查询指定的MCP服务详细信息，其中包含了MCP服务的元信息和可调用的Endpoint信息
+This API queries the details of a specified MCP service, including the metadata of the MCP service and callable endpoint information.
 
 ```java
 McpServerDetailInfo getMcpServer(String mcpName) throws NacosException;
@@ -1792,18 +1798,18 @@ McpServerDetailInfo getMcpServer(String mcpName) throws NacosException;
 McpServerDetailInfo getMcpServer(String mcpName, String version) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称      | 类型     | 描述      | 默认值             |
+| Name    | Type | Description | Default Value |
 |:--------|:-------|---------|-----------------|
-| mcpName | String | MCP服务名称 | 无，必填            |
-| version | String | MCP服务版本 | 空，当填入为空时，查询最新版本 |
+| mcpName | String | MCP service name | None, required |
+| version | String | MCP service version | Empty. When empty, the latest version is queried. |
 
-#### 返回参数
+#### Return Parameters
 
-MCP服务详细信息 `McpServerDetailInfo` 
+MCP service details: `McpServerDetailInfo`.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -1817,13 +1823,13 @@ try {
 }
 ```
 
-### 6.2. 发布新版本MCP服务
+### 6.2. Release New MCP Service Version
 
-#### 描述
+#### Description
 
-通过此接口可以发布新的MCP服务版本，若MCP服务为首次发布，则会创建新的MCP服务。
+This API releases a new MCP service version. If the MCP service is released for the first time, a new MCP service is created.
 
-当MCP服务及指定版本已存在时，会抛出MCP服务版本已存在的异常。
+If the MCP service and specified version already exist, an exception indicating that the MCP service version already exists is thrown.
 
 
 ```java
@@ -1836,20 +1842,20 @@ String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecifica
 String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecification toolSpecification, McpResourceSpecification resourceSpecification, McpEndpointSpec endpointSpecification) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称                    | 类型                       | 描述                  | 默认值  |
+| Name                  | Type | Description | Default Value |
 |:----------------------|:-------------------------|---------------------|------|
-| serverSpecification   | McpServerBasicInfo       | MCP service basic information | 无，必填 |
-| toolSpecification     | McpToolSpecification     | MCP service tool information | 无，必填 |
-| resourceSpecification | McpResourceSpecification | MCP service resource and resource template information | 无，可选 |
-| endpointSpecification | McpEndpointSpec          | MCP service Endpoint information | 无，可选 |
+| serverSpecification   | McpServerBasicInfo | MCP service basic information | None, required |
+| toolSpecification     | McpToolSpecification | MCP service tool information | None, required |
+| resourceSpecification | McpResourceSpecification | MCP service resource and resource template information | None, optional |
+| endpointSpecification | McpEndpointSpec | MCP service endpoint information | None, optional |
 
-#### 返回参数
+#### Return Parameters
 
-MCP服务的ID `String`.
+MCP service ID: `String`.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -1867,13 +1873,13 @@ try {
 }
 ```
 
-### 6.3. 注册MCP服务的Endpoint
+### 6.3. Register MCP Service Endpoint
 
-#### 描述
+#### Description
 
-注册MCP服务Endpoint到指定MCP服务版本中。
+Registers an MCP service endpoint to the specified MCP service version.
 
-当注册的MCP服务不存在时，会抛出服务不存在的异常。
+If the registered MCP service does not exist, a service-not-found exception is thrown.
 
 ```java
 void registerMcpServerEndpoint(String mcpName, String address, int port) throws NacosException;
@@ -1881,20 +1887,20 @@ void registerMcpServerEndpoint(String mcpName, String address, int port) throws 
 void registerMcpServerEndpoint(String mcpName, String address, int port, String version) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称      | 类型     | 描述              | 默认值                      |
+| Name    | Type | Description | Default Value |
 |:--------|:-------|-----------------|--------------------------|
-| mcpName | String | MCP服务名称         | 无，必填                     |
-| address | String | MCP服务Endpoint地址 | 无，必填                     |
-| port    | int    | MCP服务Endpoint端口 | 无，必填                     |
-| version | String | MCP服务版本         | 空，当填入为空时，注册Endpoint到最新版本 |
+| mcpName | String | MCP service name | None, required |
+| address | String | MCP service endpoint address | None, required |
+| port    | int | MCP service endpoint port | None, required |
+| version | String | MCP service version | Empty. When empty, the endpoint is registered to the latest version. |
 
-#### 返回参数
+#### Return Parameters
 
-无
+None.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -1907,29 +1913,29 @@ try {
 }
 ```
 
-### 6.4. 注销MCP服务的Endpoint
+### 6.4. Deregister MCP Service Endpoint
 
-#### 描述
+#### Description
 
-注销MCP服务Endpoint到指定MCP服务版本中。
+Deregisters an MCP service endpoint from the specified MCP service version.
 
 ```java
 void deregisterMcpServerEndpoint(String mcpName, String address, int port) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称      | 类型     | 描述              | 默认值  |
+| Name    | Type | Description | Default Value |
 |:--------|:-------|-----------------|------|
-| mcpName | String | MCP服务名称         | 无，必填 |
-| address | String | MCP服务Endpoint地址 | 无，必填 |
-| port    | int    | MCP服务Endpoint端口 | 无，必填 |
+| mcpName | String | MCP service name | None, required |
+| address | String | MCP service endpoint address | None, required |
+| port    | int | MCP service endpoint port | None, required |
 
-#### 返回参数
+#### Return Parameters
 
-无
+None.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -1942,13 +1948,13 @@ try {
 }
 ```
 
-### 6.5. 订阅MCP 服务
+### 6.5. Subscribe to MCP Service
 
-#### 描述
+#### Description
 
-订阅MCP服务，当MCP服务发布新版本时，会收到通知。
+Subscribes to an MCP service. When the MCP service releases a new version, a notification is received.
 
-> 当前版本的订阅是通过轮询查询实现的，可能通知有一定的延迟，可以通过配置`nacosAiMcpServerCacheUpdateInterval`参数来调整查询间隔，默认为10000ms。
+> In the current version, subscription is implemented through polling queries, so notifications may have some delay. You can configure the `nacosAiMcpServerCacheUpdateInterval` parameter to adjust the query interval. The default value is 10000 ms.
 
 ```java
 McpServerDetailInfo subscribeMcpServer(String mcpName, AbstractNacosMcpServerListener mcpServerListener) throws NacosException;
@@ -1956,19 +1962,19 @@ McpServerDetailInfo subscribeMcpServer(String mcpName, AbstractNacosMcpServerLis
 McpServerDetailInfo subscribeMcpServer(String mcpName, String version, AbstractNacosMcpServerListener mcpServerListener) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称       | 类型                             | 描述       | 默认值             |
+| Name     | Type | Description | Default Value |
 |:---------|:-------------------------------|----------|-----------------|
-| mcpName  | String                         | MCP服务名称  | 无，必填            |
-| version  | String                         | MCP服务版本  | 空，当填入为空时，订阅最新版本 |
-| listener | AbstractNacosMcpServerListener | MCP服务监听器 | 无，必填            |
+| mcpName  | String | MCP service name | None, required |
+| version  | String | MCP service version | Empty. When empty, the latest version is subscribed to. |
+| listener | AbstractNacosMcpServerListener | MCP service listener | None, required |
 
-#### 返回参数
+#### Return Parameters
 
-订阅成功时，返回当前MCP服务详细信息 `McpServerDetailInfo`.
+When subscription succeeds, the current MCP service details `McpServerDetailInfo` are returned.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -2006,11 +2012,11 @@ private static class ExampleListener extends AbstractNacosMcpServerListener {
 }
 ```
 
-### 6.6. 取消订阅MCP 服务
+### 6.6. Unsubscribe from MCP Service
 
-#### 描述
+#### Description
 
-取消订阅MCP服务。取消订阅时传入的监听器`mcpServerListener`必须和订阅时一致，否则会导致取消订阅失败。
+Unsubscribes from an MCP service. The `mcpServerListener` passed during unsubscription must be the same as the one used during subscription. Otherwise, unsubscription may fail.
 
 ```java
 void unsubscribeMcpServer(String mcpName, AbstractNacosMcpServerListener mcpServerListener) throws NacosException;
@@ -2018,19 +2024,19 @@ void unsubscribeMcpServer(String mcpName, AbstractNacosMcpServerListener mcpServ
 void unsubscribeMcpServer(String mcpName, String version, AbstractNacosMcpServerListener mcpServerListener) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称       | 类型                             | 描述       | 默认值               |
+| Name     | Type | Description | Default Value |
 |:---------|:-------------------------------|----------|-------------------|
-| mcpName  | String                         | MCP服务名称  | 无，必填              |
-| version  | String                         | MCP服务版本  | 空，当填入为空时，取消订阅最新版本 |
-| listener | AbstractNacosMcpServerListener | MCP服务监听器 | 无，必填              |
+| mcpName  | String | MCP service name | None, required |
+| version  | String | MCP service version | Empty. When empty, the latest version is unsubscribed from. |
+| listener | AbstractNacosMcpServerListener | MCP service listener | None, required |
 
-#### 返回参数
+#### Return Parameters
 
-无
+None.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -2045,13 +2051,13 @@ try {
 }
 ```
 
-## 7. A2A 注册中心
+## 7. A2A Registry
 
-### 7.1. 查询AgentCard
+### 7.1. Query AgentCard
 
-#### 描述
+#### Description
 
-查询AgentCard。
+Queries an AgentCard.
 
 ```java
 AgentCardDetailInfo getAgentCard(String agentName) throws NacosException;
@@ -2061,19 +2067,19 @@ AgentCardDetailInfo getAgentCard(String agentName, String version) throws NacosE
 AgentCardDetailInfo getAgentCard(String agentName, String version, String registrationType) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称               | 类型     | 描述      | 默认值                                          |
+| Name             | Type | Description | Default Value |
 |:-----------------|:-------|---------|----------------------------------------------|
-| agentName        | String | Agent名称 | 无，必填                                         |
-| version          | String | Agent版本 | 空，当填入为空时，查询最新版本                              |
-| registrationType | String | 注册方式    | 空，当填入为空时，根据注册时的`registrationType`自动进行`url`装填 |
+| agentName        | String | Agent name | None, required |
+| version          | String | Agent version | Empty. When empty, the latest version is queried. |
+| registrationType | String | Registration type | Empty. When empty, `url` is automatically filled based on the `registrationType` used during registration. |
 
-#### 返回参数
+#### Return Parameters
 
-查询成功时，返回当前AgentCard详细信息 `AgentCardDetailInfo`.
+When the query succeeds, the current AgentCard details `AgentCardDetailInfo` are returned.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -2088,11 +2094,11 @@ try {
 }
 ```
 
-### 7.2. 发布新版本AgentCard
+### 7.2. Release New AgentCard Version
 
-#### 描述
+#### Description
 
-发布新版本AgentCard。发布失败时抛出异常。
+Releases a new AgentCard version. If release fails, an exception is thrown.
 
 ```java
 void releaseAgentCard(AgentCard agentCard) throws NacosException;
@@ -2102,20 +2108,20 @@ void releaseAgentCard(AgentCard agentCard, String registrationType) throws Nacos
 void releaseAgentCard(AgentCard agentCard, String registrationType, boolean setAsLatest) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称               | 类型        | 描述                                                                                                                     | 默认值       |
+| Name             | Type | Description | Default Value |
 |:-----------------|:----------|------------------------------------------------------------------------------------------------------------------------|-----------|
-| agentCard        | AgentCard | AgentCard信息                                                                                                            | 无，必填      |
-| registrationType | String    | 注册方式，可选值为`URL`和`SERVICE`，默认为`URL`，设置此AgentCard默认的`url`获取方式，`URL`代表直接读取注册时的`url`，`SERVICE`代表根据注册在Nacos中的endpoint生成`url` | `SERVICE` |
-| setAsLatest      | boolean   | 是否设置此AgentCard为最新版本                                                                                                    | `false`   |
+| agentCard        | AgentCard | AgentCard information | None, required |
+| registrationType | String | Registration type. Optional values are `URL` and `SERVICE`. The default value is `URL`. It sets the default way to obtain the `url` of this AgentCard. `URL` means reading the `url` directly from registration, and `SERVICE` means generating the `url` based on the endpoint registered in Nacos. | `SERVICE` |
+| setAsLatest      | boolean | Whether to set this AgentCard as the latest version | `false` |
 
 
-#### 返回参数
+#### Return Parameters
 
-无
+None.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -2136,11 +2142,11 @@ try {
 }
 ```
 
-### 7.3. 注册Agent的Endpoint
+### 7.3. Register Agent Endpoint
 
-#### 描述
+#### Description
 
-注册Endpoint到AgentCard下。
+Registers an endpoint under an AgentCard.
 
 ```java
 void registerAgentEndpoint(String agentName, String version, String address, int port) throws NacosException;
@@ -2154,24 +2160,24 @@ void registerAgentEndpoint(String agentName, String version, String address, int
 void registerAgentEndpoint(String agentName, AgentEndpoint endpoint) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称         | 类型            | 描述                                           | 默认值       |
+| Name       | Type | Description | Default Value |
 |:-----------|:--------------|----------------------------------------------|-----------|
-| agentName  | String        | Agent名称                                      | 无，必填      |
-| version    | String        | Agent版本                                      | 无，必填      |
-| address    | String        | Agent的IP地址                                   | 无，必填      |
-| port       | int           | Agent的端口号                                    | 无，必填      |
-| transport  | String        | 该endpoint的传输方式`JSONRPC`, `GRPC`, `HTTP+JSON` | `JSONRPC` |
-| path       | String        | 该endpoint的访问路径                               | 空字符串      |
-| supportTls | boolean       | 是否支持TLS                                      | `false`   |
-| endpoint   | AgentEndpoint | AgentEndpoint                                | 无，必填      |
+| agentName  | String | Agent name | None, required |
+| version    | String | Agent version | None, required |
+| address    | String | Agent IP address | None, required |
+| port       | int | Agent port | None, required |
+| transport  | String | Transport method of the endpoint: `JSONRPC`, `GRPC`, or `HTTP+JSON` | `JSONRPC` |
+| path       | String | Access path of the endpoint | Empty string |
+| supportTls | boolean | Whether TLS is supported | `false` |
+| endpoint   | AgentEndpoint | AgentEndpoint | None, required |
 
-#### 返回参数
+#### Return Parameters
 
- 无
+None.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -2195,11 +2201,11 @@ try {
 }
 ```
 
-### 7.4. 注销Agent的Endpoint
+### 7.4. Deregister Agent Endpoint
 
-#### 描述
+#### Description
 
-从AgentCard中注销Endpoint。
+Deregisters an endpoint from an AgentCard.
 
 ```java
 void deregisterAgentEndpoint(String agentName, String version, String address, int port) throws NacosException;
@@ -2207,21 +2213,21 @@ void deregisterAgentEndpoint(String agentName, String version, String address, i
 void deregisterAgentEndpoint(String agentName, AgentEndpoint endpoint) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称        | 类型            | 描述            | 默认值  |
+| Name      | Type | Description | Default Value |
 |:----------|:--------------|---------------|------|
-| agentName | String        | Agent名称       | 无，必填 |
-| version   | String        | Agent版本       | 无，必填 |
-| address   | String        | Agent的IP地址    | 无，必填 |
-| port      | int           | Agent的端口号     | 无，必填 |
-| endpoint  | AgentEndpoint | AgentEndpoint | 无，必填 |
+| agentName | String | Agent name | None, required |
+| version   | String | Agent version | None, required |
+| address   | String | Agent IP address | None, required |
+| port      | int | Agent port | None, required |
+| endpoint  | AgentEndpoint | AgentEndpoint | None, required |
 
-#### 返回参数
+#### Return Parameters
 
- 无
+None.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -2239,13 +2245,13 @@ try {
 }
 ```
 
-### 7.5. 订阅AgentCard
+### 7.5. Subscribe to AgentCard
 
-#### 描述
+#### Description
 
-订阅AgentCard，当AgentCard发布新版本时，会收到通知。
+Subscribes to an AgentCard. When the AgentCard releases a new version, a notification is received.
 
-> 当前版本的订阅是通过轮询查询实现的，可能通知有一定的延迟，可以通过配置`nacosAiAgentCardCacheUpdateInterval`参数来调整查询间隔，默认为10000ms。
+> In the current version, subscription is implemented through polling queries, so notifications may have some delay. You can configure the `nacosAiAgentCardCacheUpdateInterval` parameter to adjust the query interval. The default value is 10000 ms.
 
 ```java
 AgentCardDetailInfo subscribeAgentCard(String agentName, AbstractNacosAgentCardListener agentCardListener) throws NacosException;
@@ -2253,19 +2259,19 @@ AgentCardDetailInfo subscribeAgentCard(String agentName, AbstractNacosAgentCardL
 AgentCardDetailInfo subscribeAgentCard(String agentName, String version, AbstractNacosAgentCardListener agentCardListener) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称        | 类型                             | 描述      | 默认值         |
+| Name      | Type | Description | Default Value |
 |:----------|:-------------------------------|---------|-------------|
-| agentName | String                         | Agent名称 | 无，必填        |
-| version   | String                         | Agent版本 | 当为空时，订阅最新版本 |
-| listener  | AbstractNacosAgentCardListener | 监听器     | 无，必填        |
+| agentName | String | Agent name | None, required |
+| version   | String | Agent version | When empty, the latest version is subscribed to. |
+| listener  | AbstractNacosAgentCardListener | Listener | None, required |
 
-#### 返回参数
+#### Return Parameters
 
-订阅成功时，返回当前AgentCard详细信息 `AgentCardDetailInfo`.
+When subscription succeeds, the current AgentCard details `AgentCardDetailInfo` are returned.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -2293,11 +2299,11 @@ try {
 }
 ```
 
-### 7.6. 取消订阅AgentCard
+### 7.6. Unsubscribe from AgentCard
 
-取消订阅MCP服务。取消订阅时传入的监听器`agentCardListener`必须和订阅时一致，否则会导致取消订阅失败。
+Unsubscribes from an AgentCard. The `agentCardListener` passed during unsubscription must be the same as the one used during subscription. Otherwise, unsubscription may fail.
 
-#### 描述
+#### Description
 
 ```java
 void unsubscribeAgentCard(String agentName, AbstractNacosAgentCardListener agentCardListener) throws NacosException;
@@ -2305,19 +2311,19 @@ void unsubscribeAgentCard(String agentName, AbstractNacosAgentCardListener agent
 void unsubscribeAgentCard(String agentName, String version, AbstractNacosAgentCardListener agentCardListener) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称        | 类型                             | 描述      | 默认值           |
+| Name      | Type | Description | Default Value |
 |:----------|:-------------------------------|---------|---------------|
-| agentName | String                         | Agent名称 | 无，必填          |
-| version   | String                         | Agent版本 | 当为空时，取消订阅最新版本 |
-| listener  | AbstractNacosAgentCardListener | 监听器     | 无，必填          |
+| agentName | String | Agent name | None, required |
+| version   | String | Agent version | When empty, the latest version is unsubscribed from. |
+| listener  | AbstractNacosAgentCardListener | Listener | None, required |
 
-#### 返回参数
+#### Return Parameters
 
-无
+None.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -2333,35 +2339,35 @@ try {
 }
 ```
 
-### 7.7. 批量注册Agent的Endpoint
+### 7.7. Batch Register Agent Endpoints
 
-批量注册多个Endpoint到AgentCard下。
+Batch-registers multiple endpoints under an AgentCard.
 
-> 同一个Client只能向一个AgentCard注册一份Endpoints， 因此此API和[注册Agent的Endpoint](#73-注册agent的endpoint)API存在冲突，即此接口批量注册的Endpoint会覆盖之前注册的Endpoint（针对同一个Agent）。
-> 若同个Client注册多个不同AgentCard的Endpoints，则不会互相覆盖。
+> The same client can register only one set of endpoints to one AgentCard. Therefore, this API conflicts with [Register Agent Endpoint](#73-register-agent-endpoint): endpoints batch-registered by this API overwrite the previously registered endpoints for the same Agent.
+> If the same client registers endpoints for multiple different AgentCards, they do not overwrite each other.
 
-> 该API的起始版本为3.1.1。
+> This API is available since version 3.1.1.
 
-#### 描述
+#### Description
 
 ```java
 void registerAgentEndpoint(String agentName, Collection<AgentEndpoint> endpoints) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称        | 类型                        | 描述                | 默认值       |
+| Name      | Type | Description | Default Value |
 |:----------|:--------------------------|-------------------|-----------|
-| agentName | String                    | Agent名称           | 无，必填      |
-| endpoints | Collection<AgentEndpoint> | Agent Endpoint 集合 | 无，必填      |
+| agentName | String | Agent name | None, required |
+| endpoints | Collection<AgentEndpoint> | Agent endpoint collection | None, required |
 
-> 注意：endpoints中的所有AgentEndpoint的version应该不为空且相同。
+> Note: The `version` of all `AgentEndpoint` objects in `endpoints` should be non-empty and the same.
 
-#### 返回参数
+#### Return Parameters
 
-无
+None.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -2600,11 +2606,11 @@ try {
 
 Throws NacosException when request parameters are invalid or unsubscribe processing fails.
 
-## 9. Prompt 能力
+## 9. Prompt Capabilities
 
 ### 9.1. Get Prompt
 
-#### 描述
+#### Description
 
 Get the Prompt object for the current version by prompt key.
 
@@ -2612,19 +2618,19 @@ Get the Prompt object for the current version by prompt key.
 Prompt getPrompt(String promptKey) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称        | 类型     | 描述              | 默认值  |
+| Name      | Type | Description | Default Value |
 |:----------|:-------|-----------------|------|
-| promptKey | String | Prompt key (unique identifier) | 无，必填 |
+| promptKey | String | Prompt key (unique identifier) | None, required |
 
-#### 返回参数
+#### Return Parameters
 
-| 参数类型 | 描述          |
+| Type | Description |
 | :--- | :--- |
 | Prompt | Prompt object for current version |
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -2638,13 +2644,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exceptions
 
 Throws NacosException when prompt not found or query error.
 
 ### 9.2. Get Prompt by Version
 
-#### 描述
+#### Description
 
 Get the Prompt object by prompt key and version. Returns latest version when version is null.
 
@@ -2652,20 +2658,20 @@ Get the Prompt object by prompt key and version. Returns latest version when ver
 Prompt getPromptByVersion(String promptKey, String version) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称        | 类型     | 描述                    | 默认值  |
+| Name      | Type | Description | Default Value |
 |:----------|:-------|-----------------------|------|
-| promptKey | String | Prompt key (unique identifier)     | 无，必填 |
-| version   | String | Target version; null for latest     | 无      |
+| promptKey | String | Prompt key (unique identifier) | None, required |
+| version   | String | Target version. `null` means latest. | None |
 
-#### 返回参数
+#### Return Parameters
 
-| 参数类型 | 描述            |
+| Type | Description |
 | :--- | :--- |
 | Prompt | Prompt object for the specified version |
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -2681,7 +2687,7 @@ try {
 
 ### 9.3. Get Prompt by Label
 
-#### 描述
+#### Description
 
 Get the Prompt object by prompt key and label.
 
@@ -2689,20 +2695,20 @@ Get the Prompt object by prompt key and label.
 Prompt getPromptByLabel(String promptKey, String label) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称        | 类型     | 描述                | 默认值  |
+| Name      | Type | Description | Default Value |
 |:----------|:-------|-------------------|------|
-| promptKey | String | Prompt key (unique identifier) | 无，必填 |
-| label     | String | Target label              | 无，必填 |
+| promptKey | String | Prompt key (unique identifier) | None, required |
+| label     | String | Target label | None, required |
 
-#### 返回参数
+#### Return Parameters
 
-| 参数类型 | 描述            |
+| Type | Description |
 | :--- | :--- |
 | Prompt | Prompt object for that label |
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -2718,7 +2724,7 @@ try {
 
 ### 9.4. Subscribe Prompt
 
-#### 描述
+#### Description
 
 Subscribe to prompt changes; the listener is invoked when prompt configuration changes. version and label are optional to narrow the subscription.
 
@@ -2726,22 +2732,22 @@ Subscribe to prompt changes; the listener is invoked when prompt configuration c
 Prompt subscribePrompt(String promptKey, String version, String label, AbstractNacosPromptListener promptListener) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称             | 类型                         | 描述              | 默认值  |
+| Name           | Type | Description | Default Value |
 |:---------------|:---------------------------|-----------------|------|
-| promptKey      | String                     | Prompt key      | 无，必填 |
-| version        | String                     | Target version, optional        | 无      |
-| label          | String                     | Target label, optional        | 无      |
-| promptListener | AbstractNacosPromptListener | Callback listener for prompt changes | 无，必填 |
+| promptKey      | String | Prompt key | None, required |
+| version        | String | Target version, optional | None |
+| label          | String | Target label, optional | None |
+| promptListener | AbstractNacosPromptListener | Callback listener for prompt changes | None, required |
 
-#### 返回参数
+#### Return Parameters
 
-| 参数类型 | 描述                    |
+| Type | Description |
 | :--- | :--- |
 | Prompt | Current Prompt on subscribe success, or null if not found |
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -2762,7 +2768,7 @@ try {
 
 ### 9.5. Unsubscribe Prompt
 
-#### 描述
+#### Description
 
 Unsubscribe from prompt changes. version, label, and listener must match those used when subscribing.
 
@@ -2770,20 +2776,20 @@ Unsubscribe from prompt changes. version, label, and listener must match those u
 void unsubscribePrompt(String promptKey, String version, String label, AbstractNacosPromptListener promptListener) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称             | 类型                         | 描述          | 默认值  |
+| Name           | Type | Description | Default Value |
 |:---------------|:---------------------------|-------------|------|
-| promptKey      | String                     | Prompt key | 无，必填 |
-| version        | String                     | Target version, optional    | 无      |
-| label          | String                     | Target label, optional    | 无      |
-| promptListener | AbstractNacosPromptListener | Listener used when subscribing | 无，必填 |
+| promptKey      | String | Prompt key | None, required |
+| version        | String | Target version, optional | None |
+| label          | String | Target label, optional | None |
+| promptListener | AbstractNacosPromptListener | Listener used when subscribing | None, required |
 
-#### 返回参数
+#### Return Parameters
 
-无
+None.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -2802,7 +2808,7 @@ try {
 
 ### 10.1. Load AgentSpec
 
-#### 描述
+#### Description
 
 Load the complete AgentSpec object by AgentSpec name, including main configuration and all resource configurations.
 
@@ -2810,17 +2816,17 @@ Load the complete AgentSpec object by AgentSpec name, including main configurati
 AgentSpec loadAgentSpec(String agentSpecName) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称         | 类型     | 描述                     | 默认值  |
+| Name          | Type | Description | Default Value |
 |:-----------|:-------|------------------------|------|
-| agentSpecName | String | AgentSpec name (unique identifier) | 无，必填 |
+| agentSpecName | String | AgentSpec name (unique identifier) | None, required |
 
-#### 返回参数
+#### Return Parameters
 
 Returns AgentSpec object `AgentSpec` on success.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -2836,7 +2842,7 @@ try {
 
 ### 10.2. Subscribe AgentSpec
 
-#### 描述
+#### Description
 
 Subscribe to a specific AgentSpec. The listener is invoked when the AgentSpec configuration changes.
 
@@ -2845,18 +2851,18 @@ AgentSpec subscribeAgentSpec(String agentSpecName, AbstractNacosAgentSpecListene
         throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称           | 类型                               | 描述                      | 默认值  |
+| Name          | Type | Description | Default Value |
 |:-------------|:---------------------------------|-------------------------|------|
-| agentSpecName | String                           | AgentSpec name           | 无，必填 |
-| agentSpecListener | AbstractNacosAgentSpecListener | Callback listener for AgentSpec changes | 无，必填 |
+| agentSpecName | String | AgentSpec name | None, required |
+| agentSpecListener | AbstractNacosAgentSpecListener | Callback listener for AgentSpec changes | None, required |
 
-#### 返回参数
+#### Return Parameters
 
 Returns current AgentSpec `AgentSpec` when subscribed successfully; may be null if not found.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -2877,7 +2883,7 @@ try {
 
 ### 10.3. Unsubscribe AgentSpec
 
-#### 描述
+#### Description
 
 Unsubscribe from a specific AgentSpec. The listener must be the same instance used during subscription.
 
@@ -2886,18 +2892,18 @@ void unsubscribeAgentSpec(String agentSpecName, AbstractNacosAgentSpecListener a
         throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 名称           | 类型                               | 描述                  | 默认值  |
+| Name          | Type | Description | Default Value |
 |:-------------|:---------------------------------|---------------------|------|
-| agentSpecName | String                           | AgentSpec name       | 无，必填 |
-| agentSpecListener | AbstractNacosAgentSpecListener | Listener used when subscribing | 无，必填 |
+| agentSpecName | String | AgentSpec name | None, required |
+| agentSpecListener | AbstractNacosAgentSpecListener | Listener used when subscribing | None, required |
 
-#### 返回参数
+#### Return Parameters
 
-无
+None.
 
-#### 请求示例
+#### Request Example
 
 ```java
 Properties properties = new Properties();
@@ -2912,9 +2918,8 @@ try {
 }
 ```
 
-## 11. Java SDK的生命周期
+## 11. Java SDK Lifecycle
 
-Nacos的Java SDK 生命周期从创建时开始，到调用`shutdown()`方法时结束，期间对应创建的线程池、连接等均会始终保留，即使连接断开，也会不断重试重新建立连接。
+The lifecycle of the Nacos Java SDK starts when the SDK instance is created and ends when the `shutdown()` method is called. During this period, the corresponding thread pools, connections, and other resources remain reserved. Even if the connection is disconnected, the SDK keeps retrying to re-establish the connection.
 
-因此在使用时需要注意应用中创建的Nacos Java SDK的实例个数，避免造成线程池和连接的泄漏，在更换Nacos Java
-SDK实例时，切记调用`shutdown()`方法，同时在应用中应尽量复用同一个Nacos Java SDK实例，避免频繁的初始化实例。
+Therefore, pay attention to the number of Nacos Java SDK instances created in your application to avoid thread pool and connection leaks. When replacing a Nacos Java SDK instance, remember to call the `shutdown()` method. In an application, reuse the same Nacos Java SDK instance as much as possible and avoid frequent initialization.

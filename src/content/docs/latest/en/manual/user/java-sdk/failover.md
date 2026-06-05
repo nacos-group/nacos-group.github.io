@@ -1,71 +1,71 @@
 ---
 title: Java SDK Failover
 keywords: [Failover]
-description: Java SDL Failover manual
+description: Java SDK failover manual
 sidebar:
   order: 4
 ---
 
-# Java SDK 容灾
+# Java SDK Failover
 
-我们可以在客户端开启本地容灾，用来应对Nacos服务端出现问题时，保证客户端的数据和接口稳定性。
+You can enable local failover on the client side to keep client data and API behavior stable when the Nacos server has problems.
 
-这里有两个使用场景：
+There are two typical scenarios:
 
-1. 在Nacos服务端发布的时候，我们主动把容灾打开，这样客户端只使用本地容灾数据，Nacos服务的数据抖动或者数据错误都不会影响客户端，我们在Nacos服务端升级完成并且数据验证没问题后再关闭容灾；
-2. 在Nacos运行期间，突然出现接口不可用或者数据异常，我们可以快速的开启容灾，让客户端使用容灾数据，减小服务受影响的窗口，等Nacos服务端恢复后再关闭容灾；
+1. During a Nacos server release, proactively enable failover so clients use only local failover data. Data fluctuation or incorrect data from the Nacos server will not affect clients. Disable failover after the Nacos server upgrade is complete and the data has been verified.
+2. During Nacos runtime, if APIs suddenly become unavailable or data becomes abnormal, quickly enable failover so clients use failover data. This reduces the impact window. Disable failover after the Nacos server recovers.
 
-具体方案可以参考：https://github.com/alibaba/nacos/issues/11053
+For the detailed proposal, see https://github.com/alibaba/nacos/issues/11053.
 
-## 1. 流程简介
+## 1. Process Overview
 
 <img width="1000" alt="image" src="https://github.com/alibaba/nacos/assets/4593375/f9011075-11b8-401b-9dbb-1366347a9a44" />
 
-如上图所示，客户端的查询请求都会先经过FailoverReactor，如果FailoverReactor有数据，则直接使用，从而忽略掉Nacos Server返回的数据；如果FailoverReactor里面没有数据，则走正常流程，从ServiceInfoHolder里读取缓存；
+As shown above, client query requests first pass through `FailoverReactor`. If `FailoverReactor` has data, the client uses it directly and ignores data returned by Nacos Server. If `FailoverReactor` has no data, the client follows the normal flow and reads cached data from `ServiceInfoHolder`.
 
-## 2. 磁盘容灾
+## 2. Disk Failover
 
-FailoverReactor里的数据可以使用不同的数据源，默认的数据源为磁盘。
+Data in `FailoverReactor` can come from different data sources. The default data source is disk.
 
-### 2.1. 磁盘容灾文件目录
+### 2.1. Disk Failover File Directory
 
-默认的磁盘容灾文件目录为：
+The default disk failover file directory is:
 
 ```
 {user.home}/nacos/naming/{namespace}/failover
 ```
 
-这个目录可以定制，如果设置了-D参数：
+You can customize this directory by setting the `-D` parameter:
 
 ```
 -DJM.SNAPSHOT.PATH=/mypath
 ```
 
-则容灾磁盘文件目录变为：
+Then the failover disk file directory becomes:
 
 ```
 /mypath/nacos/naming/{namespace}/failover
 ```
 
-### 2.2. 磁盘容灾开关
+### 2.2. Disk Failover Switch
 
-容灾开关存放在磁盘容灾文件目录下的一个文件里，具体文件名为：
+The failover switch is stored in a file under the disk failover directory. The file name is:
 
 ```
 00-00---000-VIPSRV_FAILOVER_SWITCH-000---00-00
 ```
 
-文件里存放一个数字0或者1，0代表关闭容灾，1代表打开容灾
+The file stores `0` or `1`. `0` means failover is disabled, and `1` means failover is enabled.
 
-### 2.3. 磁盘容灾数据
+### 2.3. Disk Failover Data
 
-容灾的数据分成多个文件，都是存放在磁盘容灾文件目录下，每一个文件存储一个单独的服务的容灾数据，每个文件的文件名格式如下：
+Failover data is split into multiple files under the disk failover directory. Each file stores failover data for one service. The file name format is:
 
 ```
 {group.name}%40%40{service.name}
 ```
 
-里面的内容为客户端的ServiceInfo类的JSON序列化字符串，例如：
+The file content is a JSON-serialized string of the client's `ServiceInfo` class. Example:
 
 ```
 {
@@ -100,13 +100,13 @@ FailoverReactor里的数据可以使用不同的数据源，默认的数据源�
 }
 ```
 
-## 3. 扩展容灾数据源
+## 3. Extend the Failover Data Source
 
-磁盘容灾不需要外部依赖，逻辑比较简单，但是管理起来不太方便。因此我们也支持使用SPI来扩展容灾数据源，使用磁盘以外的存储。以下是扩展的步骤。
+Disk failover does not require external dependencies and has simple logic, but it can be inconvenient to manage. Nacos also supports extending failover data sources through SPI so you can use storage other than disk.
 
-### 3.1. 开发自己的容灾数据源类
+### 3.1. Develop a Custom Failover Data Source
 
-编写一个类，实现接口com.alibaba.nacos.client.naming.backups.FailoverDataSource：
+Write a class that implements `com.alibaba.nacos.client.naming.backups.FailoverDataSource`:
 
 ```
 public class MyFailoverDataSource implements FailoverDataSource {
@@ -126,17 +126,17 @@ public class MyFailoverDataSource implements FailoverDataSource {
 }
 ```
 
-### 3.2. 配置容灾数据源类
+### 3.2. Configure the Failover Data Source
 
-在资源目录下新建文件：
+Create the following file under the resource directory:
 
 ```
 {resource.root}/META-INF/services/com.alibaba.nacos.client.naming.backups.FailoverDataSource
 ```
 
-{resource.root}的一个例子是src/main/resources。
+An example of `{resource.root}` is `src/main/resources`.
 
-文件内容为：
+The file content is:
 
 ```
 your.package.MyFailoverDataSource
