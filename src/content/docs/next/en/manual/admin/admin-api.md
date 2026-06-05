@@ -690,7 +690,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/lookup' -d "type=
 
 `POST`
 
-请求体Type：`application/json`，参数放在请求体中。
+请求体类型：`application/json`，参数放在请求体中。
 
 #### Authorization
 
@@ -757,7 +757,7 @@ curl -X POST -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/
 
 `PUT`
 
-请求体Type：`application/json`，参数放在请求体中。
+请求体类型：`application/json`，参数放在请求体中。
 
 #### Authorization
 
@@ -1046,7 +1046,7 @@ Administrator permissions required.
 |--------|----------|------|
 | namespace | `string` | 命名空间 ID |
 | namespaceShowName | `string` | 命名空间展示名 |
-| namespaceDesc | `string` | 命名空间Description |
+| namespaceDesc | `string` | 命名空间描述 |
 | quota | `integer` | 配置数量配额 |
 | configCount | `integer` | 当前配置数量 |
 | type | `integer` | Type |
@@ -1104,7 +1104,7 @@ Administrator permissions required.
 |--------|------|------|----------|
 | `namespaceId` | `string` | **Yes** | 命名空间 ID |
 | `namespaceName` | `string` | **Yes** | 命名空间展示名 |
-| `namespaceDesc` | `string` | No | 命名空间Description |
+| `namespaceDesc` | `string` | No | 命名空间描述 |
 
 #### Response Data
 
@@ -1157,7 +1157,7 @@ Administrator permissions required.
 |--------|------|------|----------|
 | `namespaceId` | `string` | No | 命名空间 ID，不传则由服务端生成 |
 | `namespaceName` | `string` | **Yes** | 命名空间展示名 |
-| `namespaceDesc` | `string` | No | 命名空间Description |
+| `namespaceDesc` | `string` | No | 命名空间描述 |
 
 #### Response Data
 
@@ -1498,7 +1498,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state/readiness'
 
 #### Description
 
-通过该接口，可以更新插件的配置。需要提供插件Type、Name及配置内容。支持 localOnly 仅作用于当前节点。
+通过该接口，可以更新插件的配置。需要提供插件类型、名称及配置内容。支持 localOnly 仅作用于当前节点。
 
 #### Since
 
@@ -1508,7 +1508,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state/readiness'
 
 `PUT`
 
-请求体Type：`application/json`。
+请求体类型：`application/json`。
 
 #### Authorization
 
@@ -1524,8 +1524,8 @@ Administrator permissions required.
 
 | Name         | Type       | Required | Description           |
 |-------------|----------|----|----------------|
-| `pluginType` | `string` | **Yes** | 插件Type，如 auth。 |
-| `pluginName` | `string` | **Yes** | 插件Name。 |
+| `pluginType` | `string` | **Yes** | 插件类型，如 auth。 |
+| `pluginName` | `string` | **Yes** | 插件名称。 |
 | `config` | `string` | **Yes** | 插件配置项。 |
 | `localOnly` | `boolean` | No | 是否仅写本地，不持久化。 |
 
@@ -1556,7 +1556,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/config' \
 
 #### Description
 
-通过该接口，可以按Type和Name获取指定插件的详情信息。
+通过该接口，可以按类型和名称获取指定插件的详情信息。
 
 #### Since
 
@@ -1578,8 +1578,8 @@ Administrator permissions required.
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `pluginType` | `string` | **Yes** | 插件Type，如 auth |
-| `pluginName` | `string` | **Yes** | 插件Name |
+| `pluginType` | `string` | **Yes** | 插件类型，如 auth |
+| `pluginName` | `string` | **Yes** | 插件名称 |
 
 #### Response Data
 
@@ -1588,8 +1588,8 @@ Administrator permissions required.
 | Name | Type | Description |
 |--------|----------|------|
 | pluginId | `string` | 插件 ID |
-| pluginType | `string` | 插件Type |
-| pluginName | `string` | 插件Name |
+| pluginType | `string` | 插件类型 |
+| pluginName | `string` | 插件名称 |
 | enabled | `boolean` | 是否启用 |
 | critical | `boolean` | 是否关键插件 |
 | configurable | `boolean` | 是否可配置 |
@@ -1627,7 +1627,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/detail?pluginType=
 
 #### Description
 
-通过该接口，可以获取所有插件列表，可按插件Type筛选。
+通过该接口，可以获取所有插件列表，可按插件类型筛选。
 
 #### Since
 
@@ -1649,7 +1649,7 @@ Administrator permissions required.
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `pluginType` | `string` | No | 插件Type，不传则返回全部 |
+| `pluginType` | `string` | No | 插件类型，不传则返回全部 |
 
 #### Response Data
 
@@ -1697,7 +1697,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/list?pluginType=au
 
 `PUT`
 
-请求体Type：`application/json`。
+请求体类型：`application/json`。
 
 #### Authorization
 
@@ -1713,8 +1713,8 @@ Administrator permissions required.
 
 | Name         | Type        | Required | Description       |
 |-------------|-----------|----|------------|
-| `pluginType` | `string` | **Yes** | 插件Type。 |
-| `pluginName` | `string` | **Yes** | 插件Name。 |
+| `pluginType` | `string` | **Yes** | 插件类型。 |
+| `pluginName` | `string` | **Yes** | 插件名称。 |
 | `enabled` | `boolean` | **Yes** | 是否启用。 |
 | `localOnly` | `boolean` | No | 是否仅写本地。 |
 
@@ -1792,7 +1792,7 @@ Administrator permissions required.
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/switches' 
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/switches'
 ```
 
 * Response example
@@ -1994,7 +1994,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/ops/metrics?onlyStatus=fals
 
 `PUT`
 
-请求体Type：`application/json`。
+请求体类型：`application/json`。
 
 #### Authorization
 
@@ -2131,7 +2131,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/list'
 | `lastUpdatedTime` | `integer` | 客户端的最后更新时间（时间戳）    |
 | `clientType`      | `string` | 客户端Type              |
 | `connectType`     | `string` | 连接Type（仅适用于 2.x 客户端） |
-| `appName`         | `string` | 客户端所属的应用Name         |
+| `appName`         | `string` | 客户端所属的应用名称         |
 | `version`         | `string` | 客户端的版本号            |
 | `clientIp`        | `string` | 客户端的 IP 地址         |
 | `clientPort`      | `string` | 客户端的端口号            |
@@ -2552,7 +2552,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/client/distro?ip=127.0.0.1&
 | Name                     | Type                  | Required  | Description                |
 |-------------------------|-----------------------|-------|-------------------|
 | `namespaceId` | `string` | No | 命名空间ID |
-| `serviceName` | `string` | **Yes** | 服务Name |
+| `serviceName` | `string` | **Yes** | 服务名称 |
 | `clusterName` | `string` | **Yes** | 集群Name |
 | `checkPort` | `integer` | No | 健康检查端口 |
 | `useInstancePort4Check` | `boolean` | No | 是否使用实例端口进行健康检查 |
@@ -2614,7 +2614,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/cluster' -d 'serviceName=te
 | Name           | Type      | Required  | Description                      |
 |---------------|-----------|-------|-------------------------|
 | `namespaceId` | `string` | No | 命名空间ID，默认为`public` |
-| `serviceName` | `string` | **Yes** | 服务Name |
+| `serviceName` | `string` | **Yes** | 服务名称 |
 | `groupName` | `string` | No | 分组Name，默认为`DEFAULT_GROUP` |
 | `clusterName` | `string` | No | 集群Name，默认`DEFAULT` |
 | `ip` | `string` | **Yes** | 实例IP |
@@ -2735,7 +2735,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/health/checkers'
 | Name           | Type                  | Required  | Description                      |
 |---------------|-----------------------|-------|-------------------------|
 | `namespaceId` | `string` | No | 命名空间ID，默认为`public` |
-| `serviceName` | `string` | **Yes** | 服务Name |
+| `serviceName` | `string` | **Yes** | 服务名称 |
 | `groupName` | `string` | No | 分组Name，默认为`DEFAULT_GROUP` |
 | `clusterName` | `string` | No | 集群Name，默认为`DEFAULT` |
 | `ip` | `string` | **Yes** | 实例IP |
@@ -2798,7 +2798,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance' \
 | Name           | Type      | Required  | Description                      |
 |---------------|-----------|-------|-------------------------|
 | `namespaceId` | `string` | No | 命名空间ID，默认为`public` |
-| `serviceName` | `string` | **Yes** | 服务Name |
+| `serviceName` | `string` | **Yes** | 服务名称 |
 | `groupName` | `string` | No | 分组Name，默认为`DEFAULT_GROUP` |
 | `clusterName` | `string` | No | 集群Name，默认为`DEFAULT` |
 | `ip` | `string` | **Yes** | 实例IP |
@@ -2864,7 +2864,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance?namespaceId=pub
 | Name           | Type                  | Required  | Description                      |
 |---------------|-----------------------|-------|-------------------------|
 | `namespaceId` | `string` | No | 命名空间ID，默认为`public` |
-| `serviceName` | `string` | **Yes** | 服务Name |
+| `serviceName` | `string` | **Yes** | 服务名称 |
 | `groupName` | `string` | No | 分组Name，默认为`DEFAULT_GROUP` |
 | `clusterName` | `string` | No | 集群Name，默认为`DEFAULT` |
 | `ip` | `string` | **Yes** | 实例IP |
@@ -2927,7 +2927,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance' \
 | Name               | Type                  | Required  | Description                                                                                           |
 |-------------------|-----------------------|-------|----------------------------------------------------------------------------------------------|
 | `namespaceId` | `string` | No | 命名空间ID，默认为`public` |
-| `serviceName` | `string` | **Yes** | 服务Name |
+| `serviceName` | `string` | **Yes** | 服务名称 |
 | `groupName` | `string` | No | 分组Name，默认为`DEFAULT_GROUP` |
 | `instances` | `string` | No | 实例列表（JSON数组 字符串）默认为`""`表示所有实例更新；若指定时，每个元素代表一个需要更新的实例，必须需要包含`ip`和`port`字段，`clusterName`字段为可选, |
 | `metadata` | `string` | **Yes** | 元数据 |
@@ -2989,7 +2989,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/metadata/batch' \
 | Name               | Type                  | Required  | Description                      |
 |-------------------|-----------------------|-------|-------------------------|
 | `namespaceId` | `string` | No | 命名空间ID，默认为`public` |
-| `serviceName` | `string` | **Yes** | 服务Name |
+| `serviceName` | `string` | **Yes** | 服务名称 |
 | `groupName` | `string` | No | 分组Name，默认为`DEFAULT_GROUP` |
 | `instances` | `string` | No | 实例列表（JSON 字符串），默认为`""` |
 | `metadata` | `string` | **Yes** | 元数据 |
@@ -3054,7 +3054,7 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/ns/instance/metadata/batch?
 | **Name**       | **Type**  | **Required** | **Description**             |
 |---------------|-----------|----------|--------------------|
 | `namespaceId` | `string` | No | 命名空间ID，默认为`public` |
-| `serviceName` | `string` | **Yes** | 服务Name |
+| `serviceName` | `string` | **Yes** | 服务名称 |
 | `ip` | `string` | **Yes** | 实例IP |
 | `port` | `integer` | **Yes** | 实例端口 |
 | `clusterName` | `string` | No | 集群Name，默认为`DEFAULT` |
@@ -3117,7 +3117,7 @@ curl -X PUT "http://127.0.0.1:8848/nacos/v3/admin/ns/instance/partial" -d 'names
 |---------------|-----------|----------|-------------------------|
 | `namespaceId` | `string` | No | 命名空间ID，默认`public` |
 | `groupName` | `string` | No | 分组Name，默认为`DEFAULT_GROUP` |
-| `serviceName` | `string` | **Yes** | 服务Name |
+| `serviceName` | `string` | **Yes** | 服务名称 |
 | `clusterName` | `string` | No | Cluster name. If not provided, instances of all clusters will be returned. |
 | `healthyOnly` | `boolean` | No | 是否只返回健康实例，默认为`false` |
 
@@ -3653,7 +3653,7 @@ curl -d 'serviceName=nacos.test.1' \
 | **Name**       | **Type**  | **Required** | **Description**                  |
 |---------------|-----------|----------|-------------------------|
 | `namespaceId` | `string` | No | 命名空间ID，默认为`public` |
-| `serviceName` | `string` | **Yes** | 服务Name |
+| `serviceName` | `string` | **Yes** | 服务名称 |
 | `groupName` | `string` | No | 分组Name，默认是`DEFAULT_GROUP` |
 | `pageNo` | `integer` | **Yes** | 页码 |
 | `pageSize` | `integer` | **Yes** | 每页大小 |
@@ -3671,7 +3671,7 @@ curl -d 'serviceName=nacos.test.1' \
 | `pageItems`                  | `array`    | Service list.                |
 | `pageItems`[i].`ip`          | `string` | 订阅者IP。               |
 | `pageItems`[i].`port`        | `integer` | 订阅者端口。               |
-| `pageItems`[i].`address`     | `string` | 订阅者地址, 一般为`ip:port`。 | 
+| `pageItems`[i].`address`     | `string` | 订阅者地址, 一般为`ip:port`。 |
 | `pageItems`[i].`agent`       | `string` | 订阅者客户端版本。            |
 | `pageItems`[i].`appName`     | `string` | 订阅者所属应用。             |
 | `pageItems`[i].`namespaceId` | `string` | 订阅者所属命名空间。           |
@@ -3803,17 +3803,17 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ns/service/selector/types'
 
 | Name                | Type     | Description                         |
 |--------------------|----------|----------------------------|
-| `id`               | `string` | 配置在存储系统中的ID，一般为LongType的字符串。 |
+| `id`               | `string` | 配置在存储系统中的ID，一般为Long 类型的字符串。 |
 | `dataId`           | `string` | 配置ID。                      |
 | `groupName`        | `string` | 配置分组。                      |
 | `namespaceId`      | `string` | 命名空间ID。                    |
 | `content`          | `string` | 配置内容。                      |
-| `desc`             | `string` | 配置Description。                      |
+| `desc`             | `string` | 配置描述。                      |
 | `md5`              | `string` | 配置内容的MD5值。                 |
 | `configTags`       | `string` | 配置的标签。                     |
 | `encryptedDataKey` | `string` | 加密配置内容的密钥，使用配置加密插件时存在。     |
-| `appName`          | `string` | 配置所属的应用Name。                 |
-| `type`             | `string` | 配置Type。                      |
+| `appName`          | `string` | 配置所属的应用名称。                 |
+| `type`             | `string` | 配置类型。                      |
 | `createTime`       | `integer` | 配置创建时间。                    |
 | `modifyTime`       | `integer` | 配置修改时间。                    |
 | `createUser`       | `string` | 配置创建人。                     |
@@ -4137,13 +4137,13 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/listener?namespaceId
 | `pagesAvailable`             | `integer` | 可用页码总数。                    |
 | `pageNumber`                 | `integer` | 当前页码。                      |
 | `pageItems`                  | `array`   | Configurations matching the query criteria. |
-| `pageItems`[i].`id`          | `string` | 配置在存储系统中的ID，一般为LongType的字符串。 |
+| `pageItems`[i].`id`          | `string` | 配置在存储系统中的ID，一般为Long 类型的字符串。 |
 | `pageItems`[i].`dataId`      | `string` | 配置ID。                      |
 | `pageItems`[i].`groupName`   | `string` | 配置分组。                      |
 | `pageItems`[i].`namespaceId` | `string` | 命名空间ID。                    |
 | `pageItems`[i].`md5`         | `string` | 配置内容的MD5值。                 |
-| `pageItems`[i].`appName`     | `string` | 配置所属的应用Name。                 |
-| `pageItems`[i].`type`        | `string` | 配置Type。                      |
+| `pageItems`[i].`appName`     | `string` | 配置所属的应用名称。                 |
+| `pageItems`[i].`type`        | `string` | 配置类型。                      |
 | `pageItems`[i].`createTime`  | `integer` | 配置创建时间。                    |
 | `pageItems`[i].`modifyTime`  | `integer` | 配置修改时间。                    |
 
@@ -4291,17 +4291,17 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/beta?namespaceId=
 | `dataId`           | `string` | 配置的dataId。                          |
 | `groupName`        | `string` | 配置的groupName。                       |
 | `namespaceId`      | `string` | 配置所属的命名空间。                          |
-| `desc`             | `string` | 配置Description。                               |
+| `desc`             | `string` | 配置描述。                               |
 | `md5`              | `string` | 配置内容的MD5值。                          |
 | `configTags`       | `string` | 配置的标签。                              |
 | `encryptedDataKey` | `string` | 加密配置内容的密钥，使用配置加密插件时存在。              |
-| `appName`          | `string` | 配置所属的应用Name。                          |
-| `type`             | `string` | 配置Type。                               |
+| `appName`          | `string` | 配置所属的应用名称。                          |
+| `type`             | `string` | 配置类型。                               |
 | `createTime`       | `integer` | 配置创建时间。                             |
 | `modifyTime`       | `integer` | 配置修改时间。                             |
 | `createUser`       | `string` | 配置创建人。                              |
 | `createIp`         | `string` | 配置创建IP。                             |
-| `grayName`         | `string` | 灰度发布规则Name, 固定为`beta`。                |
+| `grayName`         | `string` | 灰度发布规则名称, 固定为`beta`。                |
 | `grayRule`         | `string` | 灰度发布规则，格式为JSON，其中的`expr`为beta的ip列表。 |
 
 #### Examples
@@ -4481,7 +4481,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/export?namespaceId=p
 
 #### Request Parameters
 
-请求体Type为 `application/json`，为配置列表数组，每项为 `SameNamespaceCloneConfigBean`（`cfgId`、`dataId`、`group`）。
+请求体类型为 `application/json`，为配置列表数组，每项为 `SameNamespaceCloneConfigBean`（`cfgId`、`dataId`、`group`）。
 
 #### Response Data
 
@@ -4562,8 +4562,8 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config/clone' -d "namespac
 | `pageItems`[i].`groupName`   | `string` | 配置的groupName。                     |
 | `pageItems`[i].`namespaceId` | `string` | 配置所属的命名空间。                        |
 | `pageItems`[i].`appName`     | `string` | 配置所属的appName。                     |
-| `pageItems`[i].`opType`      | `string` | 操作Type，`I`为插入、`U`为更新、`D`为删除。        |
-| `pageItems`[i].`publishType` | `string` | 发布Type，`formal`为普通发布，`gray`为beta发布。 |
+| `pageItems`[i].`opType`      | `string` | 操作类型，`I`为插入、`U`为更新、`D`为删除。        |
+| `pageItems`[i].`publishType` | `string` | 发布类型，`formal`为普通发布，`gray`为beta发布。 |
 | `pageItems`[i].`srcIp`       | `string` | 发布的来源IP。                          |
 | `pageItems`[i].`srcUser`     | `string` | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。       |
 | `pageItems`[i].`createTime`  | `integer` | 配置创建时间。                           |
@@ -4666,13 +4666,13 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/list?dataId=nacos.e
 | `namespaceId` | `string` | 配置所属的命名空间。                                                                  |
 | `content`     | `string`     |
 | `appName`     | `string` | 配置所属的appName。                                                               |
-| `opType`      | `string` | 操作Type，`I`为插入、`U`为更新、`D`为删除。                                                  |
-| `publishType` | `string` | 发布Type，`formal`为普通发布，`gray`为beta发布。                                           |
+| `opType`      | `string` | 操作类型，`I`为插入、`U`为更新、`D`为删除。                                                  |
+| `publishType` | `string` | 发布类型，`formal`为普通发布，`gray`为beta发布。                                           |
 | `srcIp`       | `string` | 发布的来源IP。                                                                    |
 | `srcUser`     | `string` | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。                                                 |
 | `createTime`  | `integer` | 配置创建时间。                                                                     |
 | `modifyTime`  | `integer` | 配置修改时间。                                                                     |
-| `grayName`    | `string` | 灰度发布规则Name, 固定为`beta`。                                                        |
+| `grayName`    | `string` | 灰度发布规则名称, 固定为`beta`。                                                        |
 | `extInfo`     | `string` | Extended information. It currently includes `src_user`, `type`, and `c_desc`; when `publishType` is `gray`, it also includes `grayRule`. |
 
 #### Examples
@@ -4754,13 +4754,13 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/history/??dataId=111&groupN
 | `namespaceId` | `string` | 配置所属的命名空间。                                                                  |
 | `content`     | `string`     |
 | `appName`     | `string` | 配置所属的appName。                                                               |
-| `opType`      | `string` | 操作Type，`I`为插入、`U`为更新、`D`为删除。                                                  |
-| `publishType` | `string` | 发布Type，`formal`为普通发布，`gray`为beta发布。                                           |
+| `opType`      | `string` | 操作类型，`I`为插入、`U`为更新、`D`为删除。                                                  |
+| `publishType` | `string` | 发布类型，`formal`为普通发布，`gray`为beta发布。                                           |
 | `srcIp`       | `string` | 发布的来源IP。                                                                    |
 | `srcUser`     | `string` | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。                                                 |
 | `createTime`  | `integer` | 配置创建时间。                                                                     |
 | `modifyTime`  | `integer` | 配置修改时间。                                                                     |
-| `grayName`    | `string` | 灰度发布规则Name, 固定为`beta`。                                                        |
+| `grayName`    | `string` | 灰度发布规则名称, 固定为`beta`。                                                        |
 | `extInfo`     | `string` | Extended information. It currently includes `src_user`, `type`, and `c_desc`; when `publishType` is `gray`, it also includes `grayRule`. |
 
 #### Examples
@@ -5215,7 +5215,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/cs/ops/derby?sql=SELECT%20*%20
 
 `POST`
 
-请求体Type：`multipart/form-data`，参数放在请求体中。
+请求体类型：`multipart/form-data`，参数放在请求体中。
 
 #### Authorization
 
@@ -5876,7 +5876,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp/list?pageNo=1&pageSize=100&nam
 | `namespaceId`        | `string` | MCP服务所属的命名空间ID。                                                                                 |
 | `protocol`           | `string` | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
 | `frontProtocol`      | `string` | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
-| `description`        | `string` | MCP服务的Description。                                                                                       |
+| `description`        | `string` | MCP服务的描述。                                                                                       |
 | `repository`         | `string` | MCP服务的存储仓库。                                                                                     |                                                                                          |
 | `versionDetail`      | `object`              | Queried version information of the MCP service.                                                        |
 | `localServerConfig`  | `map<string, object>` | Startup information for a local MCP service when the MCP service type is **stdio**.                    |
@@ -5967,8 +5967,8 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=tes
 | Name                     | Type         | Required  | Description                             |
 |-------------------------|--------------|-------|--------------------------------|
 | `namespaceId` | `string` | No | MCP服务的命名空间ID，默认为`public` |
-| `serverSpecification` | `string` | **Yes** | MCP服务的Description详情 |
-| `toolSpecification` | `string` | No | MCP服务的工具Description详情 |
+| `serverSpecification` | `string` | **Yes** | MCP服务的描述详情 |
+| `toolSpecification` | `string` | No | MCP服务的工具描述详情 |
 | `endpointSpecification` | `string` | No | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效 |
 | `overrideExisting` | `boolean` | No | MCP服务更新时是否覆盖原 endpointSpecification，仅在非`stdio`协议时生效 |
 | `latest` | `boolean` | No | - |
@@ -5983,7 +5983,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=tes
 | `name`               | `string` | MCP服务名。                                                                                         |
 | `protocol`           | `string` | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
 | `frontProtocol`      | `string` | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
-| `description`        | `string` | MCP服务的Description。                                                                                       |
+| `description`        | `string` | MCP服务的描述。                                                                                       |
 | `repository`         | `string` | MCP服务的存储仓库。                                                                                     |    |
 | `versionDetail`      | `object`              | MCP service version information.                                                                      |
 | `version`            | `string` | MCP服务的简易版本版本信息，主要用于兼容，若已设置`versionDetail`,则该字段无效。                                               |    |
@@ -6012,8 +6012,8 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=tes
 
 | Name           | Type                  | Description                                            |
 |---------------|-----------------------|-----------------------------------------------|
-| `name`        | `string` | MCP 工具的Name                                     |
-| `description` | `string` | MCP 工具的Description                                     |
+| `name`        | `string` | MCP 工具的名称                                     |
+| `description` | `string` | MCP 工具的描述                                     |
 | `inputSchema` | `map<string, object>` | MCP tool input schema. See the standard MCP protocol; it mainly includes type, required flag, and description. |
 
 其中`McpToolMeta` 结构如下：
@@ -6029,17 +6029,17 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=tes
 | Name                 | Type     | Description                                                                                |
 |---------------------|----------|-----------------------------------------------------------------------------------|
 | `id`                | `string` | 安全方案的ID，将被MCP工具使用和引用。。                                                            |
-| `type`              | `string` | 安全方案的Type。可能的值包括：`http`、`apiKey`、`localEnv`或其他自定义扩展。                                |
-| `scheme`            | `string` | 安全方案的子方案Type。当 `type` 为 `http` 时使用。可能的值包括：`basic` 或 `bearer`。                       |
+| `type`              | `string` | 安全方案的类型。可能的值包括：`http`、`apiKey`、`localEnv`或其他自定义扩展。                                |
+| `scheme`            | `string` | 安全方案的子方案类型。当 `type` 为 `http` 时使用。可能的值包括：`basic` 或 `bearer`。                       |
 | `in`                | `string` | 安全方案的位置。可能的值有：`query`、`header`。                                                   |
-| `name`              | `string` | 安全方案的Name。当 `type` 为 `apiKey` 或 `localEnv` 时使用。例如，`apiKey` 的密钥Name或 `localEnv` 的环境Name。 |
+| `name`              | `string` | 安全方案的名称。当 `type` 为 `apiKey` 或 `localEnv` 时使用。例如，`apiKey` 的密钥名称或 `localEnv` 的环境名称。 |
 | `defaultCredential` | `string` | 当配置参数中未输入身份时的默认凭证。可选。                                                             |
 
 > endpointSpecification
 
 | Name    | Type                  | Description                                                                                                                               |
 |--------|-----------------------|----------------------------------------------------------------------------------------------------------------------------------|
-| `type` | `string` | MCP endpoint的后端服务Type，可选值`REF`和`DIRECT`.                                                                                           |
+| `type` | `string` | MCP endpoint的后端服务类型，可选值`REF`和`DIRECT`.                                                                                           |
 | `data` | `map<string, string>` | MCP endpoint的后端服务的实际数据， 根据`type`的不同，传入的参数不同，如`REF`传入的为`namespaceId`, `groupName` 和 `serviceName`；`DIRECT`传入的为`address` 和 `port`。 |
 
 #### Response Data
@@ -6097,8 +6097,8 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 | Name                     | Type         | Required  | Description                             |
 |-------------------------|--------------|-------|--------------------------------|
 | `namespaceId` | `string` | No | MCP服务的命名空间ID，默认为`public` |
-| `serverSpecification` | `string` | **Yes** | MCP服务的Description详情 |
-| `toolSpecification` | `string` | No | MCP服务的工具Description详情 |
+| `serverSpecification` | `string` | **Yes** | MCP服务的描述详情 |
+| `toolSpecification` | `string` | No | MCP服务的工具描述详情 |
 | `endpointSpecification` | `string` | No | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效 |
 
 其中`serverSpecification`、`toolSpecification`、`endpointSpecification`参数的详细内容如下：
@@ -6111,7 +6111,7 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 | `name`               | `string` | MCP服务名。                                                                                         |
 | `protocol`           | `string` | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
 | `frontProtocol`      | `string` | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
-| `description`        | `string` | MCP服务的Description。                                                                                       |
+| `description`        | `string` | MCP服务的描述。                                                                                       |
 | `repository`         | `string` | MCP服务的存储仓库。                                                                                     |    |
 | `versionDetail`      | `object`              | MCP service version information.                                                                      |
 | `version`            | `string` | MCP服务的简易版本版本信息，主要用于兼容，若已设置`versionDetail`,则该字段无效。                                               |    |
@@ -6140,8 +6140,8 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 
 | Name           | Type                  | Description                                            |
 |---------------|-----------------------|-----------------------------------------------|
-| `name`        | `string` | MCP 工具的Name                                     |
-| `description` | `string` | MCP 工具的Description                                     |
+| `name`        | `string` | MCP 工具的名称                                     |
+| `description` | `string` | MCP 工具的描述                                     |
 | `inputSchema` | `map<string, object>` | MCP tool input schema. See the standard MCP protocol; it mainly includes type, required flag, and description. |
 
 其中`McpToolMeta` 结构如下：
@@ -6157,17 +6157,17 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/mcp' \
 | Name                 | Type     | Description                                                                                |
 |---------------------|----------|-----------------------------------------------------------------------------------|
 | `id`                | `string` | 安全方案的ID，将被MCP工具使用和引用。。                                                            |
-| `type`              | `string` | 安全方案的Type。可能的值包括：`http`、`apiKey`、`localEnv`或其他自定义扩展。                                |
-| `scheme`            | `string` | 安全方案的子方案Type。当 `type` 为 `http` 时使用。可能的值包括：`basic` 或 `bearer`。                       |
+| `type`              | `string` | 安全方案的类型。可能的值包括：`http`、`apiKey`、`localEnv`或其他自定义扩展。                                |
+| `scheme`            | `string` | 安全方案的子方案类型。当 `type` 为 `http` 时使用。可能的值包括：`basic` 或 `bearer`。                       |
 | `in`                | `string` | 安全方案的位置。可能的值有：`query`、`header`。                                                   |
-| `name`              | `string` | 安全方案的Name。当 `type` 为 `apiKey` 或 `localEnv` 时使用。例如，`apiKey` 的密钥Name或 `localEnv` 的环境Name。 |
+| `name`              | `string` | 安全方案的名称。当 `type` 为 `apiKey` 或 `localEnv` 时使用。例如，`apiKey` 的密钥名称或 `localEnv` 的环境名称。 |
 | `defaultCredential` | `string` | 当配置参数中未输入身份时的默认凭证。可选。                                                             |
 
 > endpointSpecification
 
 | Name    | Type                  | Description                                                                                                                               |
 |--------|-----------------------|----------------------------------------------------------------------------------------------------------------------------------|
-| `type` | `string` | MCP endpoint的后端服务Type，可选值`REF`和`DIRECT`.                                                                                           |
+| `type` | `string` | MCP endpoint的后端服务类型，可选值`REF`和`DIRECT`.                                                                                           |
 | `data` | `map<string, string>` | MCP endpoint的后端服务的实际数据， 根据`type`的不同，传入的参数不同，如`REF`传入的为`namespaceId`, `groupName` 和 `serviceName`；`DIRECT`传入的为`address` 和 `port`。 |
 
 #### Response Data
@@ -6283,7 +6283,7 @@ curl -X DELETE '127.0.0.1:8848/nacos/v3/admin/ai/mcp?namespaceId=public&mcpName=
 | Name           | Type     | Required  | Description                          |
 |---------------|----------|-------|-----------------------------|
 | `namespaceId` | `string` | No     | AgentCard所属的命名空间，默认`public` |
-| `agentName`   | `string` | **Yes** | AgentCard的Name                |
+| `agentName`   | `string` | **Yes** | AgentCard的名称                |
 
 #### Response Data
 
@@ -6347,7 +6347,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a/version/list?namespaceId=publi
 | `pageNo` | `integer` | **Yes** | 当前页，默认为`1` |
 | `pageSize` | `integer` | **Yes** | 页条目数，默认为`100` |
 | `namespaceId` | `string` | No | AgentCard的命名空间ID，默认为`public` |
-| `agentName` | `string` | No | AgentCard的Name，为空是查询所有AgentCard |
+| `agentName` | `string` | No | AgentCard的名称，为空是查询所有AgentCard |
 | `search` | `string` | No | blur or accurate |
 
 #### Response Data
@@ -6466,9 +6466,9 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a/list?pageNo=1&pageSize=100&nam
 | Name                | Type     | Required  | Description                                                                                 |
 |--------------------|----------|-------|------------------------------------------------------------------------------------|
 | `namespaceId`      | `string` | No     | AgentCard所属的命名空间，默认`public`                                                        |
-| `agentName`        | `string` | **Yes** | AgentCard的Name                                                                       |
+| `agentName`        | `string` | **Yes** | AgentCard的名称                                                                       |
 | `version`          | `string` | No     | AgentCard的版本号，为空时返回最新版本详情                                                          |
-| `registrationType` | `string` | No     | AgentCard的默认注册Type，可选`URL`和`SERVICE`。未填写时根据此AgentCard的默认`registrationType`进行`url`的生成 |
+| `registrationType` | `string` | No     | AgentCard的默认注册类型，可选`URL`和`SERVICE`。未填写时根据此AgentCard的默认`registrationType`进行`url`的生成 |
 
 #### Response Data
 
@@ -6477,8 +6477,8 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a/list?pageNo=1&pageSize=100&nam
 | Name                                 | Type                              | Description                                                                                                       |
 |-------------------------------------|-----------------------------------|----------------------------------------------------------------------------------------------------------|
 | `protocolVersion`                   | `string` | AgentCard的A2A协议版本。                                                                                       |
-| `name`                              | `string` | AgentCard的Name。                                                                                            |
-| `description`                       | `string` | AgentCard的Description。                                                                                            |
+| `name`                              | `string` | AgentCard的名称。                                                                                            |
+| `description`                       | `string` | AgentCard的描述。                                                                                            |
 | `version`                           | `string` | AgentCard的版本号。                                                                                           |
 | `iconUrl`                           | `string` | AgentCard的iconURL。                                                                                       |
 | `capabilities`                      | `object`                         | AgentCard capabilities, matching [A2A standard capabilities](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object). |
@@ -6493,7 +6493,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a/list?pageNo=1&pageSize=100&nam
 | `defaultInputModes`                 | `array`                          | All default input modes of the AgentCard. |
 | `defaultOutputModes`                | `array`                          | All default output modes of the AgentCard. |
 | `supportsAuthenticatedExtendedCard` | `string` | AgentCard是否支持认证的扩展卡。                                                                                     |
-| `registrationType`                  | `string` | AgentCard的默认注册Type，可选`URL`和`SERVICE`。                                                                      |
+| `registrationType`                  | `string` | AgentCard的默认注册类型，可选`URL`和`SERVICE`。                                                                      |
 | `latestVersion`                     | `string` | AgentCard当前版本时否为最新版本。                                                                                    |
 
 #### Examples
@@ -6601,7 +6601,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a?namespaceId=public&agentName=G
 |--------------------|-------------|-------|-----------------------------------------------------------------------------------------------------------------|
 | `namespaceId` | `string` | No | AgentCard所属的命名空间，默认`public` |
 | `agentCard` | `string` | **Yes** | AgentCard的完整对象，详情请参考[标准AgentCard](https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure) |
-| `registrationType` | `string` | No | AgentCard的默认注册Type，可选`URL`和`SERVICE`。未填写时根据此AgentCard的默认`registrationType`进行`url`的生成 |
+| `registrationType` | `string` | No | AgentCard的默认注册类型，可选`URL`和`SERVICE`。未填写时根据此AgentCard的默认`registrationType`进行`url`的生成 |
 | `setAsLatest` | `boolean` | No | 是否设置此版本为最新发布版本，默认为false |
 
 #### Response Data
@@ -6619,7 +6619,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a?namespaceId=public&agentName=G
 ```shell
 curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/a2a' \
 -d 'namespaceId=public' \
--d 'agentCard={"protocolVersion":"0.2.9","name":"GeoSpatial Route Planner Agent","description":"Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.","url":"https://georoute-agent.example.com/a2a/v1","preferredTransport":"JSONRPC","additionalInterfaces":[{"url":"https://georoute-agent.example.com/a2a/v1","transport":"JSONRPC"},{"url":"https://georoute-agent.example.com/a2a/grpc","transport":"GRPC"},{"url":"https://georoute-agent.example.com/a2a/json","transport":"HTTP+JSON"}],"provider":{"organization":"Example Geo Services Inc.","url":"https://www.examplegeoservices.com"},"iconUrl":"https://georoute-agent.example.com/icon.png","version":"1.2.0","documentationUrl":"https://docs.examplegeoservices.com/georoute-agent/api","capabilities":{"streaming":true,"pushNotifications":true,"stateTransitionHistory":false},"securitySchemes":{"google":{"type":"openIdConnect","openIdConnectUrl":"https://accounts.google.com/.well-known/openid-configuration"}},"security":[{"google":["openid","profile","email"]}],"defaultInputModes":["application/json","text/plain"],"defaultOutputModes":["application/json","image/png"],"skills":[{"id":"route-optimizer-traffic","name":"Traffic-Aware Route Optimizer","description":"Calculates the optimal driving route between two or more locations, taking into account real-time traffic conditions, road closures, and user preferences (e.g., avoid tolls, prefer highways).","tags":["maps","routing","navigation","directions","traffic"],"examples":["Plan a route from '\''1600 Amphitheatre Parkway, Mountain View, CA'\'' to '\''San Francisco International Airport'\'' avoiding tolls.","{\"origin\": {\"lat\": 37.422, \"lng\": -122.084}, \"destination\": {\"lat\": 37.7749, \"lng\": -122.4194}, \"preferences\": [\"avoid_ferries\"]}"],"inputModes":["application/json","text/plain"],"outputModes":["application/json","application/vnd.geo+json","text/html"]},{"id":"custom-map-generator","name":"Personalized Map Generator","description":"Creates custom map images or interactive map views based on user-defined points of interest, routes, and style preferences. Can overlay data layers.","tags":["maps","customization","visualization","cartography"],"examples":["Generate a map of my upcoming road trip with all planned stops highlighted.","Show me a map visualizing all coffee shops within a 1-mile radius of my current location."],"inputModes":["application/json"],"outputModes":["image/png","image/jpeg","application/json","text/html"]}],"supportsAuthenticatedExtendedCard":true,"signatures":[{"protected":"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJrZXktMSIsImprdSI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYWdlbnQvandrcy5qc29uIn0","signature":"QFdkNLNszlGj3z3u0YQGt_T9LixY3qtdQpZmsTdDHDe3fXV9y9-B3m2-XgCpzuhiLt8E0tV6HXoZKHv4GtHgKQ"}]}' \ 
+-d 'agentCard={"protocolVersion":"0.2.9","name":"GeoSpatial Route Planner Agent","description":"Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.","url":"https://georoute-agent.example.com/a2a/v1","preferredTransport":"JSONRPC","additionalInterfaces":[{"url":"https://georoute-agent.example.com/a2a/v1","transport":"JSONRPC"},{"url":"https://georoute-agent.example.com/a2a/grpc","transport":"GRPC"},{"url":"https://georoute-agent.example.com/a2a/json","transport":"HTTP+JSON"}],"provider":{"organization":"Example Geo Services Inc.","url":"https://www.examplegeoservices.com"},"iconUrl":"https://georoute-agent.example.com/icon.png","version":"1.2.0","documentationUrl":"https://docs.examplegeoservices.com/georoute-agent/api","capabilities":{"streaming":true,"pushNotifications":true,"stateTransitionHistory":false},"securitySchemes":{"google":{"type":"openIdConnect","openIdConnectUrl":"https://accounts.google.com/.well-known/openid-configuration"}},"security":[{"google":["openid","profile","email"]}],"defaultInputModes":["application/json","text/plain"],"defaultOutputModes":["application/json","image/png"],"skills":[{"id":"route-optimizer-traffic","name":"Traffic-Aware Route Optimizer","description":"Calculates the optimal driving route between two or more locations, taking into account real-time traffic conditions, road closures, and user preferences (e.g., avoid tolls, prefer highways).","tags":["maps","routing","navigation","directions","traffic"],"examples":["Plan a route from '\''1600 Amphitheatre Parkway, Mountain View, CA'\'' to '\''San Francisco International Airport'\'' avoiding tolls.","{\"origin\": {\"lat\": 37.422, \"lng\": -122.084}, \"destination\": {\"lat\": 37.7749, \"lng\": -122.4194}, \"preferences\": [\"avoid_ferries\"]}"],"inputModes":["application/json","text/plain"],"outputModes":["application/json","application/vnd.geo+json","text/html"]},{"id":"custom-map-generator","name":"Personalized Map Generator","description":"Creates custom map images or interactive map views based on user-defined points of interest, routes, and style preferences. Can overlay data layers.","tags":["maps","customization","visualization","cartography"],"examples":["Generate a map of my upcoming road trip with all planned stops highlighted.","Show me a map visualizing all coffee shops within a 1-mile radius of my current location."],"inputModes":["application/json"],"outputModes":["image/png","image/jpeg","application/json","text/html"]}],"supportsAuthenticatedExtendedCard":true,"signatures":[{"protected":"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJrZXktMSIsImprdSI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYWdlbnQvandrcy5qc29uIn0","signature":"QFdkNLNszlGj3z3u0YQGt_T9LixY3qtdQpZmsTdDHDe3fXV9y9-B3m2-XgCpzuhiLt8E0tV6HXoZKHv4GtHgKQ"}]}' \
 -d 'registrationType=SERVICE' \
 -d 'setAsLatest=true'
 ```
@@ -6661,7 +6661,7 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/a2a' \
 |--------------------|-------------|-------|-----------------------------------------------------------------------------------------------------------------|
 | `namespaceId` | `string` | No | AgentCard所属的命名空间，默认`public` |
 | `agentCard` | `string` | **Yes** | AgentCard的完整对象，详情请参考[标准AgentCard](https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure) |
-| `registrationType` | `string` | No | AgentCard的默认注册Type，可选`URL`和`SERVICE`。未填写时根据此AgentCard的默认`registrationType`进行`url`的生成, Default为`URL` |
+| `registrationType` | `string` | No | AgentCard的默认注册类型，可选`URL`和`SERVICE`。未填写时根据此AgentCard的默认`registrationType`进行`url`的生成, 默认为`URL` |
 
 #### Response Data
 
@@ -6678,7 +6678,7 @@ curl -X PUT '127.0.0.1:8848/nacos/v3/admin/ai/a2a' \
 ```shell
 curl -X POST '127.0.0.1:8848/nacos/v3/admin/ai/a2a' \
 -d 'namespaceId=public' \
--d 'agentCard={"protocolVersion":"0.2.9","name":"GeoSpatial Route Planner Agent","description":"Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.","url":"https://georoute-agent.example.com/a2a/v1","preferredTransport":"JSONRPC","additionalInterfaces":[{"url":"https://georoute-agent.example.com/a2a/v1","transport":"JSONRPC"},{"url":"https://georoute-agent.example.com/a2a/grpc","transport":"GRPC"},{"url":"https://georoute-agent.example.com/a2a/json","transport":"HTTP+JSON"}],"provider":{"organization":"Example Geo Services Inc.","url":"https://www.examplegeoservices.com"},"iconUrl":"https://georoute-agent.example.com/icon.png","version":"1.2.0","documentationUrl":"https://docs.examplegeoservices.com/georoute-agent/api","capabilities":{"streaming":true,"pushNotifications":true,"stateTransitionHistory":false},"securitySchemes":{"google":{"type":"openIdConnect","openIdConnectUrl":"https://accounts.google.com/.well-known/openid-configuration"}},"security":[{"google":["openid","profile","email"]}],"defaultInputModes":["application/json","text/plain"],"defaultOutputModes":["application/json","image/png"],"skills":[{"id":"route-optimizer-traffic","name":"Traffic-Aware Route Optimizer","description":"Calculates the optimal driving route between two or more locations, taking into account real-time traffic conditions, road closures, and user preferences (e.g., avoid tolls, prefer highways).","tags":["maps","routing","navigation","directions","traffic"],"examples":["Plan a route from '\''1600 Amphitheatre Parkway, Mountain View, CA'\'' to '\''San Francisco International Airport'\'' avoiding tolls.","{\"origin\": {\"lat\": 37.422, \"lng\": -122.084}, \"destination\": {\"lat\": 37.7749, \"lng\": -122.4194}, \"preferences\": [\"avoid_ferries\"]}"],"inputModes":["application/json","text/plain"],"outputModes":["application/json","application/vnd.geo+json","text/html"]},{"id":"custom-map-generator","name":"Personalized Map Generator","description":"Creates custom map images or interactive map views based on user-defined points of interest, routes, and style preferences. Can overlay data layers.","tags":["maps","customization","visualization","cartography"],"examples":["Generate a map of my upcoming road trip with all planned stops highlighted.","Show me a map visualizing all coffee shops within a 1-mile radius of my current location."],"inputModes":["application/json"],"outputModes":["image/png","image/jpeg","application/json","text/html"]}],"supportsAuthenticatedExtendedCard":true,"signatures":[{"protected":"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJrZXktMSIsImprdSI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYWdlbnQvandrcy5qc29uIn0","signature":"QFdkNLNszlGj3z3u0YQGt_T9LixY3qtdQpZmsTdDHDe3fXV9y9-B3m2-XgCpzuhiLt8E0tV6HXoZKHv4GtHgKQ"}]}' \ 
+-d 'agentCard={"protocolVersion":"0.2.9","name":"GeoSpatial Route Planner Agent","description":"Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.","url":"https://georoute-agent.example.com/a2a/v1","preferredTransport":"JSONRPC","additionalInterfaces":[{"url":"https://georoute-agent.example.com/a2a/v1","transport":"JSONRPC"},{"url":"https://georoute-agent.example.com/a2a/grpc","transport":"GRPC"},{"url":"https://georoute-agent.example.com/a2a/json","transport":"HTTP+JSON"}],"provider":{"organization":"Example Geo Services Inc.","url":"https://www.examplegeoservices.com"},"iconUrl":"https://georoute-agent.example.com/icon.png","version":"1.2.0","documentationUrl":"https://docs.examplegeoservices.com/georoute-agent/api","capabilities":{"streaming":true,"pushNotifications":true,"stateTransitionHistory":false},"securitySchemes":{"google":{"type":"openIdConnect","openIdConnectUrl":"https://accounts.google.com/.well-known/openid-configuration"}},"security":[{"google":["openid","profile","email"]}],"defaultInputModes":["application/json","text/plain"],"defaultOutputModes":["application/json","image/png"],"skills":[{"id":"route-optimizer-traffic","name":"Traffic-Aware Route Optimizer","description":"Calculates the optimal driving route between two or more locations, taking into account real-time traffic conditions, road closures, and user preferences (e.g., avoid tolls, prefer highways).","tags":["maps","routing","navigation","directions","traffic"],"examples":["Plan a route from '\''1600 Amphitheatre Parkway, Mountain View, CA'\'' to '\''San Francisco International Airport'\'' avoiding tolls.","{\"origin\": {\"lat\": 37.422, \"lng\": -122.084}, \"destination\": {\"lat\": 37.7749, \"lng\": -122.4194}, \"preferences\": [\"avoid_ferries\"]}"],"inputModes":["application/json","text/plain"],"outputModes":["application/json","application/vnd.geo+json","text/html"]},{"id":"custom-map-generator","name":"Personalized Map Generator","description":"Creates custom map images or interactive map views based on user-defined points of interest, routes, and style preferences. Can overlay data layers.","tags":["maps","customization","visualization","cartography"],"examples":["Generate a map of my upcoming road trip with all planned stops highlighted.","Show me a map visualizing all coffee shops within a 1-mile radius of my current location."],"inputModes":["application/json"],"outputModes":["image/png","image/jpeg","application/json","text/html"]}],"supportsAuthenticatedExtendedCard":true,"signatures":[{"protected":"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJrZXktMSIsImprdSI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYWdlbnQvandrcy5qc29uIn0","signature":"QFdkNLNszlGj3z3u0YQGt_T9LixY3qtdQpZmsTdDHDe3fXV9y9-B3m2-XgCpzuhiLt8E0tV6HXoZKHv4GtHgKQ"}]}' \
 -d 'registrationType=SERVICE'
 ```
 * Response example
@@ -6718,7 +6718,7 @@ curl -X POST '127.0.0.1:8848/nacos/v3/admin/ai/a2a' \
 | Name           | Type     | Required  | Description                          |
 |---------------|----------|-------|-----------------------------|
 | `namespaceId` | `string` | No     | AgentCard所属的命名空间，默认`public` |
-| `agentName`   | `string` | **Yes** | AgentCard的Name                |
+| `agentName`   | `string` | **Yes** | AgentCard的名称                |
 | `version`     | `string` | No     | AgentCard的版本号，为空时返回最新版本详情   |
 
 #### Response Data
@@ -8014,7 +8014,7 @@ This API uploads a ZIP package in multipart/form-data format and registers the s
 
 `POST`
 
-请求体Type：`multipart/form-data`，参数放在请求体中。
+请求体类型：`multipart/form-data`，参数放在请求体中。
 
 #### Authorization
 
