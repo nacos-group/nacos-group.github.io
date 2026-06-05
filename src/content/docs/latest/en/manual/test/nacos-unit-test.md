@@ -6,39 +6,39 @@ sidebar:
     order: 1
 ---
 
-# Nacos 单元测试
+# Nacos Unit Tests
 
-Nacos 单元测试主要指的是Nacos 核心仓库[`alibaba/nacos`](https://github.com/alibaba/nacos)中的最基本的单元测试，用于测试各个最小测试单元（一般是Class）的逻辑正确性及改动正确性。
+Nacos unit tests mainly refer to the most basic unit tests in the Nacos core repository [`alibaba/nacos`](https://github.com/alibaba/nacos). They are used to verify the logic correctness of each smallest test unit, usually a class, and the correctness of changes.
 
-该文档将介绍Nacos 单元测试的规范，以及运行单元测试的步骤，帮助开发者快速了解在修改功能代码后如何撰写并贡献对应的单元测试代码。
+This document describes the Nacos unit test specifications and the steps to run unit tests, helping developers quickly understand how to write and contribute corresponding unit test code after modifying feature code.
 
-## 1. Nacos 单元测试准备工作
+## 1. Prepare for Nacos Unit Tests
 
-- 可参考[Nacos 贡献流程](../../contribution/contributing-flow.md)的前3个步骤，进行仓库克隆、和本地Git的设置。
-- 安装JDK1.8+ 以上版本
-- 安装Maven3.2.5 以上版本。
+- Refer to the first three steps in [Nacos Contribution Process](../../contribution/contributing-flow.md) to clone the repository and configure local Git.
+- Install JDK 1.8 or later.
+- Install Maven 3.2.5 or later.
 
-## 2. 新增Nacos 单元测试用例
+## 2. Add Nacos Unit Test Cases
 
-Nacos 的单元测试基于`junit5`,`mockito`两个测试框架，详细使用方法请参考[JUnit5](https://junit.org/junit5/docs/current/user-guide/)和[Mockito](https://site.mockito.org/#features)。
+Nacos unit tests are based on the `junit5` and `mockito` test frameworks. For detailed usage, see [JUnit5](https://junit.org/junit5/docs/current/user-guide/) and [Mockito](https://site.mockito.org/#features).
 
-新建的单元测试用例类需尽量与所测试类的模块、包名一致；若已经存在单元测试类，请尽量在原有测试类中添加测试用例，不要新建测试类，部分情况为避免用例互相干扰，可以新增单元测试类，但需要在新类名中进行说明和表达。
+The newly created unit test class should be in the same module and package as the class being tested whenever possible. If a unit test class already exists, add test cases to the existing test class instead of creating a new one. In some cases, to avoid interference between test cases, you can create a new unit test class, but the new class name should clearly explain the scenario.
 
-新增的单元测试类需要遵循如下规范：
+New unit test classes must follow these specifications:
 
-### 2.1. Nacos 单元测试规范
+### 2.1. Nacos Unit Test Specifications
 
-1. 单元测试类必须以`Test`结尾，前面的类名必须与测试类名一致；如：类名为`NacosNamingService`，则单元测试类名为`NacosNamingServiceTest`。
-2. 单元测试的用例必须以`test`开头，后接需要测试的方法名，以驼峰命名法命名测试用例，如：`testRegisterInstance`。
-3. 单元测试用例中必须存在断言。
-4. 单元测试中不允许依赖外部资源，如：数据库, 若有需要，请使用Mockito进行模拟。
-5. 单元测试的用例若遇到所测试方法存在多个分支和测试用例的情况，请创建多个用例，且通过`For`,`With`,`Without`等描述测试用例场景，如：`DefaultParamCheckerTest`的`testCheckParamInfoForNamespaceShowName`、`testCheckParamInfoForNamespaceId`等。
-6. 单元测试用例中如果存在设置 static 变量，请使用 `@AfterAll` 或 `@AfterEach` 注解在用例结束后进行回滚，避免影响其他测试用例。
-7. 单元测试用例中所需要的依赖尽量使用`@Mock`注解进行模拟，需要用到的前置设置和初始化，尽量在`@BeforeAll` 和 `@BeforeEach`注解中完成，避免大量重复初始化代码。
-8. 单元测试若需要测试异步方法，尽量使用mock的线程池进行，若无法使用mock线程池，可以尝试控制线程池的启动时间和间隔周期，避免单元测试运行时间过长。
-9. 单元测试代码同样需要遵循[Nacos代码规范](https://github.com/alibaba/nacos/blob/develop/style/codeStyle.md)。
+1. The unit test class name must end with `Test`, and the preceding class name must match the class under test. For example, if the class name is `NacosNamingService`, the unit test class name should be `NacosNamingServiceTest`.
+2. Unit test case names must start with `test`, followed by the method name to be tested, and use camel case, such as `testRegisterInstance`.
+3. Assertions must exist in unit test cases.
+4. Unit tests must not depend on external resources, such as databases. Use Mockito to mock them if needed.
+5. If the method under test has multiple branches and test scenarios, create multiple test cases and use words such as `For`, `With`, and `Without` to describe the scenario, such as `testCheckParamInfoForNamespaceShowName` and `testCheckParamInfoForNamespaceId` in `DefaultParamCheckerTest`.
+6. If a unit test case sets static variables, use `@AfterAll` or `@AfterEach` to roll them back after the case ends to avoid affecting other test cases.
+7. Use the `@Mock` annotation to mock dependencies required by unit test cases whenever possible. Complete required setup and initialization in `@BeforeAll` and `@BeforeEach` whenever possible to avoid large amounts of repeated initialization code.
+8. If a unit test needs to test asynchronous methods, use a mocked thread pool whenever possible. If a mocked thread pool cannot be used, try to control the thread pool startup time and interval to avoid long unit test execution time.
+9. Unit test code must also follow the [Nacos Code Style](https://github.com/alibaba/nacos/blob/develop/style/codeStyle.md).
 
-### 2.2. Nacos 单元测试示例
+### 2.2. Nacos Unit Test Example
 
 ```java
 
@@ -101,39 +101,41 @@ public class YourClassTest {
 }
 ```
 
-## 3. 运行Nacos 单元测试
+## 3. Run Nacos Unit Tests
 
-在Nacos 仓库根目录下执行`mvn -Prelease-nacos clean test -DtrimStackTrace=false -e -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn`命令即可运行单元测试。
+Run the following command in the root directory of the Nacos repository to execute unit tests:
 
-测试运行完成后，终端中会显示测试结果，同时在各自模块下，会通过`jacoco`插件生成当前模块的测试覆盖率文件，如`api/target/site/jacoco/jacoco.xml`。
+`mvn -Prelease-nacos clean test -DtrimStackTrace=false -e -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn`
 
-## 4. 提交Nacos 单元测试
+After the tests complete, the terminal displays the test results. In each module, the `jacoco` plugin also generates the test coverage file for the current module, such as `api/target/site/jacoco/jacoco.xml`.
 
-+ **提交代码**：将你的更改提交到本地仓库。
+## 4. Submit Nacos Unit Tests
+
++ **Commit code**: Commit your changes to the local repository.
 
 ```shell
 git add .
 git commit -m "Add new unit test for class/packages/modules"
 ```
 
-+ **推送到远程仓库**：将更改推送到你的 GitHub 仓库。
++ **Push to the remote repository**: Push the changes to your GitHub repository.
 
 ```shell
 git push origin $your_branch_name
 ```
 
-## 5. 创建 Pull Request
+## 5. Create a Pull Request
 
-+ **创建 PR**：回到 GitHub 页面，点击 "New pull request" 按钮，选择你的分支与 `alibaba/nacos` 的主分支(一般为`develop`)进行比较，然后创建 Pull Request。
-+ **等待审查**：PR中会通过`Github Action`对您提交的单元测试及其他修改进行一系列的检查工作，同时项目维护者会对你的 PR 进行审查，可能会提出一些修改意见。根据运行结果和反馈进行相应的调整。
-+ **合并**：一旦 PR 被批准，它会被合并到主分支中。
++ **Create a PR**: Return to the GitHub page, click the "New pull request" button, select your branch and compare it with the main branch of `alibaba/nacos`, usually `develop`, and then create the pull request.
++ **Wait for review**: The PR uses `Github Action` to run a series of checks on the submitted unit tests and other changes. Project maintainers also review your PR and may request changes. Adjust your changes based on the results and feedback.
++ **Merge**: Once the PR is approved, it is merged into the main branch.
 
-通过以上步骤，你就可以成功地向 `alibaba/nacos` 项目中新增测试用例了。
+With these steps, you can successfully add test cases to the `alibaba/nacos` project.
 
-## 6. 测试报告
+## 6. Test Reports
 
-在PR中以及PR被合并后的`Github Action`中，会对运行之后的单元测试报告，提交到[CodeCov](https://app.codecov.io/gh/alibaba/nacos/)上进行统计和分析，可以查看到测试覆盖率情况。
+In the PR and in `Github Action` after the PR is merged, the generated unit test reports are submitted to [CodeCov](https://app.codecov.io/gh/alibaba/nacos/) for statistics and analysis, where you can view test coverage.
 
-同时在PR中, 会有`Coverage`的简略报告，评论在PR中，原则上在测试覆盖率出现降低时，社区维护人员可能会选择不进行PR的合并，并在评论中提醒您补充单元测试。
+At the same time, the PR contains a brief `Coverage` report as a comment. In principle, when test coverage decreases, community maintainers may choose not to merge the PR and remind you in the comment to add unit tests.
 
-> 当前部分模块的测试覆盖率还有待提高，欢迎社区同学贡献测试代码。
+> The test coverage of some modules still needs improvement. Community contributions to test code are welcome.
