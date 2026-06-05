@@ -247,7 +247,7 @@ Skill Registry provides multiple access methods. Refer to the respective documen
 
 ### 4.1. nacos-cli
 
-[nacos-cli](../../admin/nacos-cli.md) is the command-line tool for Skill Registry, providing Skill search, installation, upload, and sync capabilities. For detailed installation and Skill commands, see [Nacos CLI User Guide - AI Skill commands](../../admin/nacos-cli.md#51-ai-技能管理-).
+[nacos-cli](../../admin/nacos-cli.md) is the command-line tool for Skill Registry, providing Skill search, installation, upload, and sync capabilities. For detailed installation and Skill commands, see [Nacos CLI User Guide - AI Skill commands](../../admin/nacos-cli.md).
 
 ### 4.2. REST API
 
@@ -255,9 +255,9 @@ Skill Registry provides three layers of REST APIs:
 
 | API Layer | Description | Documentation |
 |-----------|-------------|---------------|
-| **Client API** | Client runtime query/download Skills (supports anonymous access) | [Client API - Download Skill](../open-api.md#34-下载-skill) |
-| **Console API** | Console operations (requires login authentication) | [Console API - Skills](../../admin/console-api.md#7-skills-管理) |
-| **Admin API** | Cluster internal management interface | [Admin API - AI Skills](../../admin/admin-api.md#7-ai-skills-管理) |
+| **Client API** | Client runtime query/download Skills (supports anonymous access) | [Client API - Download Skill](../open-api.md) |
+| **Console API** | Console operations (requires login authentication) | [Console API - Skills](../../admin/console-api.md) |
+| **Admin API** | Cluster internal management interface | [Admin API - AI Skills](../../admin/admin-api.md) |
 
 ### 4.3. Java SDK
 
@@ -265,5 +265,5 @@ Nacos provides two Java SDKs for programmatic Skill management:
 
 | SDK | Use Case | Documentation |
 |-----|----------|---------------|
-| **nacos-client** | Client runtime Skill loading and subscription | [Java SDK - Skill](../java-sdk/usage.md#8-skill-能力) |
-| **nacos-maintainer-client** | Operations management (create, publish, online/offline, etc.), suitable for automation and CI/CD | [Maintainer SDK - Skill](../../admin/maintainer-sdk.md#9-skill-能力) |
+| **nacos-client** | Client runtime Skill loading and subscription | [Java SDK - Skill](../java-sdk/usage.md) |
+| **nacos-maintainer-client** | Operations management (create, publish, online/offline, etc.), suitable for automation and CI/CD | [Maintainer SDK - Skill](../../admin/maintainer-sdk.md) |

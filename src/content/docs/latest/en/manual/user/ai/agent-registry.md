@@ -62,8 +62,8 @@ number.
 
 Nacos, serving as Agent Registry (A2A Registry), offers:
 
-- [HTTP-based API](../../admin/admin-api.md#5-a2a注册中心)
-- [gRPC-based SDK](../java-sdk/usage.md#7-a2a-注册中心)
+- [HTTP-based API](../../admin/admin-api.md)
+- [gRPC-based SDK](../java-sdk/usage.md)
 
 to assist A2A servers and agent providers in publishing Agents (AgentCards).
 
@@ -235,7 +235,7 @@ Certain Agents (AgentCards) provided by external providers should be published v
 
 ### 2.3.2. Publishing External Provider Agents via Nacos HTTP API
 
-For scenarios where the console is unavailable, use the [Nacos Create Agent HTTP API](../../admin/admin-api.md#55-创建agentcard).
+For scenarios where the console is unavailable, use the [Nacos Create Agent HTTP API](../../admin/admin-api.md).
 
 Example: Importing the [A2A official sample AgentCard](https://a2a-protocol.org/latest/specification/#57-sample-agent-card):
 
@@ -249,8 +249,8 @@ curl -X POST '127.0.0.1:8848/nacos/v3/admin/ai/a2a' \
 
 Nacos, serving as Agent Registry (A2A Registry), offers:
 
-- [HTTP-based API](../../admin/admin-api.md#5-a2a注册中心)
-- [gRPC-based SDK](../java-sdk/usage.md#7-a2a-注册中心)
+- [HTTP-based API](../../admin/admin-api.md)
+- [gRPC-based SDK](../java-sdk/usage.md)
 
 to assist A2A clients and agent consumers in query Agents (AgentCards).
 
@@ -411,13 +411,13 @@ try {
 
 ### 3.3. Query Agent
 
-Nacos also supports retrieving AgentCard information exactly by Agent name via [HTTP APIs](../../admin/admin-api.md#5-a2a注册中心), and performing fuzzy searches for AgentCard information by Agent name.
+Nacos also supports retrieving AgentCard information exactly by Agent name via [HTTP APIs](../../admin/admin-api.md), and performing fuzzy searches for AgentCard information by Agent name.
 
 > The capability for fuzzy searches based on skills, tags, and descriptions is currently under development.
 
 #### 3.3.1. Query Agent detail information by Name
 
-Through [Query HTTP的API](../../admin/admin-api.md#53-查询agentcard的详情), Query the detail information of an Agent by Agent name. Such as：
+Use the [Query Agent HTTP API](../../admin/admin-api.md) to query the detail information of an Agent by Agent name. Such as:
 
 ```bash
 curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a?namespaceId=public&agentName=GeoSpatial+Route+Planner+Agent'
@@ -425,7 +425,7 @@ curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a?namespaceId=public&agentName=G
 
 #### 3.3.2. Search Agent list by Name
 
-Through[Search HTTP的API](../../admin/admin-api.md#52-查询agentcard的列表)，Search the list of AgentCards by Agent name. Such as：
+Use the [Search Agent HTTP API](../../admin/admin-api.md) to search the list of AgentCards by Agent name. Such as:
 
 ```shell
 curl -X GET '127.0.0.1:8848/nacos/v3/admin/ai/a2a/list?pageNo=1&pageSize=100&agentName=Planner&namespaceId=public&search=blur'
