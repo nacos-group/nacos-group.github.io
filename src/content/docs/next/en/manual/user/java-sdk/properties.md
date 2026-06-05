@@ -6,71 +6,64 @@ sidebar:
   order: 3
 ---
 
-# Java SDK 配置参数
+# Java SDK Properties
 
-## 1. Java SDK 读取参数配置
+## 1. How the Java SDK Reads Configuration
 
-### 1.1. 介绍
+### 1.1. Introduction
 
-Nacos Java SDK 通过 `NacosClientProperties`, 一个类似于 `Spring Environment`用来统一管理客户端的各种配置项。
+The Nacos Java SDK uses `NacosClientProperties` to manage client configuration items in a unified way. Its role is similar to `Spring Environment`.
 
-### 1.2. 特点
+### 1.2. Features
 
-- 统一管理 Properties、命令行参数、环境变量和默认值
-- 提供优先级搜索功能, 默认搜索顺序 `properties -> 命令行参数 -> 环境参数 -> 默认值`, 可通过调整优先级来调整搜索顺序,
-  默认是 `properties` 优先
-- 配置隔离, 每个 `NacosClientProperties` 对象,除去全局性的配置互不影响.
+- Unified management of `Properties`, JVM parameters, environment variables, and default values.
+- Priority-based lookup. The default lookup order is `properties -> JVM parameters -> environment variables -> default values`. You can adjust the priority order. By default, `properties` has the highest priority.
+- Configuration isolation. Except for global configuration sources, each `NacosClientProperties` object is isolated from the others.
 
-### 1.3. 如何使用
+### 1.3. Usage
 
-#### 1.3.1. 优先级
+#### 1.3.1. Priority
 
-默认优先级是 `properties`, 可通过以下2种方式来调整:
+The default priority is `properties`. You can adjust it in either of the following ways:
 
 ```
-- (命令行参数)-Dnacos.env.first=PROPERTIES|JVM|ENV
-- (环境变量)NACOS_ENV_FIRST=PROPERTIES|JVM|ENV
+- (JVM parameter) -Dnacos.env.first=PROPERTIES|JVM|ENV
+- (environment variable) NACOS_ENV_FIRST=PROPERTIES|JVM|ENV
 ```
 
-默认情况相当于`-Dnacos.env.first=PROPERTIES`.
+The default behavior is equivalent to `-Dnacos.env.first=PROPERTIES`.
 
-以上2种方式都指定的情况下,客户端优先使用命令行参数的方式获取优先级参数,若是通过命令行参数的方式没有获取到优先级参数则使用环境变量的方式获取优先级参数.如果以上2种方式都未指定优先级参数默认优先级为`properties`
+If both methods are configured, the client first reads the priority setting from the JVM parameter. If the JVM parameter is not found, it reads the setting from the environment variable. If neither method specifies a priority, the default priority is `properties`.
 
-默认优先级:
+Default priority:
 ![default_order.png](/img/nacos_client_properties_default_order.png)
 
-优先级: PROPERTIES
+Priority: PROPERTIES
 ![default_order.png](/img/nacos_client_properties_default_order.png)
 
-优先级: JVM
+Priority: JVM
 ![jvm_order.png](/img/nacos_client_properties_jvm_order.png)
 
-优先级: ENV
+Priority: ENV
 ![jvm_order.png](/img/nacos_client_properties_env_order.png)
 
-#### 1.3.2. 搜索
+#### 1.3.2. Lookup
 
-`NacosClientProperties` 会按照指定优先级进行搜索配置, 以默认优先级(`PROPERTIES`)为例, 如果要获取一个 key 为
-`key1`的值, 查找顺序如下:
+`NacosClientProperties` searches configuration by the specified priority. Using the default priority (`PROPERTIES`) as an example, if you want to obtain the value of a key named `key1`, the lookup order is as follows:
 
 ![search_order.png](/img/nacos_client_properties_search_order.png)
 
-`NacosClientProperties` 会按照上图顺序搜索,直到查询到为止.
+`NacosClientProperties` searches in the order shown above until it finds a value.
 
-#### 1.3.3. 配置隔离
+#### 1.3.3. Configuration Isolation
 
-为了应对多注册中心,多配置中心的场景, `NacosClientProperties` 引入配置隔离的概念. 在 `NacosClientProperties` 中总共有4个取值源,
-分别是: 用户自定义的properties、命令行参数、 环境变量和默认值, 其中 `命令行参数、 环境变量和默认值`
-这3个是全局共享的无法做到隔离, 那么只剩下用户自定义的properties对象是可以进行隔离的, 每个 `NacosClientProperties`
-对象中包含不同的 `Properties` 对象, 通过这种方法做到配置互不影响.
+To support scenarios with multiple registries or multiple config centers, `NacosClientProperties` introduces configuration isolation. `NacosClientProperties` has four value sources: user-defined properties, JVM parameters, environment variables, and default values. Among them, `JVM parameters`, `environment variables`, and `default values` are shared globally and cannot be isolated. Therefore, only the user-defined `Properties` object can be isolated. Each `NacosClientProperties` object contains a different `Properties` object, so configurations do not affect each other.
 
-> 注意: 全局共享的配置: 命令行参数、 环境参数和默认值 一旦初始化完毕,后续使用无法更改,使用 `setProperty`
-> 方法,也无法修改. `setProperty` 只能修改`NacosClientProperties` 对象中包含的 `Properties` 对象中的值
+> Note: Globally shared configuration, including JVM parameters, environment variables, and default values, cannot be changed after initialization. The `setProperty` method cannot modify them. `setProperty` only modifies values in the `Properties` object contained by the current `NacosClientProperties` object.
 
-#### 1.3.4. 配置派生
+#### 1.3.4. Configuration Derivation
 
-在配置隔离的概念之上又引入了配置派生的概念, 其目的是让配置能够继承.所有 `NacosClientProperties`
-对象都是由 `NacosClientProperties.PROTOTYPE` 对象派生而来. 无法通过其他方式创建 `NacosClientProperties` 对象
+Configuration derivation is introduced on top of configuration isolation so that configuration can be inherited. All `NacosClientProperties` objects are derived from the `NacosClientProperties.PROTOTYPE` object. There is no other way to create a `NacosClientProperties` object.
 
 ```java
 // global properties
@@ -89,10 +82,10 @@ properties2.
 setProperty("properties2-key1","properties2-value1");
 ```
 
-以上代码如下图所示:
+The preceding code is shown in the following diagram:
 ![derive.png](/img/nacos_client_properties_derive.png)
 
-那么搜索会怎么搜索呢? 以默认优先级(PROPERTIES)为例:
+How does lookup work in this case? Using the default priority (`PROPERTIES`) as an example:
 
 ```java
 // value == global-value1
@@ -104,119 +97,119 @@ String value = properties2.getProperty("global-key1");
 
 #### 1.3.5. API
 
-| 方法名           | 入参内容                          | 返回内容                  | 描述                                                                                  |
+| Method        | Input                         | Return                | Description                                                                                                  |
 |---------------|-------------------------------|-----------------------|-------------------------------------------------------------------------------------|
-| getProperty   | key: String                   | String                | 获取 key 对应的 value 值, 不存在返回 null                                                      |
-| getProperty   | key: String, default: String  | String                | 获取 key 对应的 value 值, 不存在返回默认值                                                        |
-| getBoolean    | key: String                   | Boolean               | 获取 key 对应的 Boolean 值, 不存在则返回 null                                                   |
-| getBoolean    | key: String, default: Boolean | Boolean               | 获取 key 对应的 Boolean 值, 不存在返回默认值                                                      |
-| getInteger    | key: String                   | Integer               | 获取 key 对应的 Integer 值, 不存在返回 null                                                    |
-| getInteger    | key: String, default: Integer | Integer               | 获取 key 对应的 Integer 值, 不存在返回默认值                                                      |
-| getLong       | key: String                   | Long                  | 获取 key 对应的 Long 值, 不存在返回 null                                                       |
-| getLong       | key: String, default: Long    | Long                  | 获取 key 对应的 Long 值, 不存在返回默认值                                                         |
-| setProperty   | key: String, value: String    | void                  | 设置 key-value 到 NacosClientProperties 对象中,已存的值会被覆盖                                   |
-| addProperties | properties: Properties        | void                  | 添加 Properties 到 NacosClientProperties 对象中,已存在到值会被覆盖                                 |
-| containsKey   | key: String                   | boolean               | 判断是否包含指定 key 的值, 包含返回 true 否则 false                                                 |
-| asProperties  | void                          | Properties            | 将 NacosClientProperties 对象转换为 Properties 对象                                         |
-| derive        | void                          | NacosClientProperties | 创建一个继承父 NacosClientProperties 所有配置的 NacosClientProperties 对象, 内部包含一个空 Properties    |
-| derive        | Properties                    | NacosClientProperties | 创建一个继承父 NacosClientProperties 所有配置的 NacosClientProperties 对象, 内部包含指定的 Properties 对象 |
+| getProperty   | key: String                   | String                | Gets the value for the specified key. Returns `null` if the key does not exist.                               |
+| getProperty   | key: String, default: String  | String                | Gets the value for the specified key. Returns the default value if the key does not exist.                    |
+| getBoolean    | key: String                   | Boolean               | Gets the Boolean value for the specified key. Returns `null` if the key does not exist.                      |
+| getBoolean    | key: String, default: Boolean | Boolean               | Gets the Boolean value for the specified key. Returns the default value if the key does not exist.            |
+| getInteger    | key: String                   | Integer               | Gets the Integer value for the specified key. Returns `null` if the key does not exist.                      |
+| getInteger    | key: String, default: Integer | Integer               | Gets the Integer value for the specified key. Returns the default value if the key does not exist.            |
+| getLong       | key: String                   | Long                  | Gets the Long value for the specified key. Returns `null` if the key does not exist.                         |
+| getLong       | key: String, default: Long    | Long                  | Gets the Long value for the specified key. Returns the default value if the key does not exist.               |
+| setProperty   | key: String, value: String    | void                  | Sets the key-value pair in the `NacosClientProperties` object. Existing values are overwritten.               |
+| addProperties | properties: Properties        | void                  | Adds `Properties` to the `NacosClientProperties` object. Existing values are overwritten.                     |
+| containsKey   | key: String                   | boolean               | Checks whether the specified key exists. Returns `true` if it exists; otherwise returns `false`.              |
+| asProperties  | void                          | Properties            | Converts the `NacosClientProperties` object to a `Properties` object.                                        |
+| derive        | void                          | NacosClientProperties | Creates a `NacosClientProperties` object that inherits all configuration from its parent and contains empty `Properties`. |
+| derive        | Properties                    | NacosClientProperties | Creates a `NacosClientProperties` object that inherits all configuration from its parent and contains the specified `Properties`. |
 
-## 2. Java SDK 配置参数列表
+## 2. Java SDK Configuration Parameter List
 
-### 2.1. 通用参数
+### 2.1. Common Parameters
 
-通用参数为初始化注册中心`NamingService`和配置中心`ConfigServie`时均生效的参数：
+Common parameters take effect when initializing both the registry `NamingService` and the config center `ConfigServie`:
 
-| 参数名                            | PropertyKeyConst的Key              | 含义                                                                                                           | 可选值                                               | 默认值                      |
+| Parameter                       | PropertyKeyConst Key              | Meaning                                                                                                      | Optional Values                                    | Default Value            |
 |--------------------------------|-----------------------------------|--------------------------------------------------------------------------------------------------------------|---------------------------------------------------|--------------------------|
-| serverAddr                     | SERVER_ADDR                       | Nacos Server的地址列表，即此JAVA SDK访问哪个Nacos Server                                                                 | 任意域名或IP，多个地址通过英文逗号`,`分割，多个地址必须属于同一个Nacos Server集群 | 无                        |
-| contextPath                    | CONTEXT_PATH                      | Nacos Server OpenAPI 的 context path，对应Nacos Server 的`server.servlet.context-path`  参数                        | 任意URL支持的path                                      | nacos                    |
-| endpoint                       | ENDPOINT                          | Nacos Server的地址获取接入点，Java SDK或通过该接入点查询Nacos Server的实际域名或IP地址                                                 | 任意域名或IP                                           | 无                        |
-| endpointPort                   | ENDPOINT_PORT                     | Nacos Server的地址获取接入点的端口，配合endpoint使用，即请求${endpoint}:${endpointPort}/nacos/serverlist                         | 0~65535                                           | 8080                     |
-| endpointContextPath            | ENDPOINT_CONTEXT_PATH             | Nacos Server的地址获取接入点的context path，配合endpoint使用，${endpoint}:${endpointPort}/${endpointContextPath}/serverlist | 任意URL支持的path                                      | nacos                    |
-| endPointClusterName            | ENDPOINT_CLUSTER_NAME             | Nacos Server在接入点中的集群名，配合endpoint使用，${endpoint}:${endpointPort}/${endpointContextPath}/${endPointClusterName} | 任意URL支持的path                                      | serverlist               |
-| endpointQueryParams            | ENDPOINT_QUERY_PARAMS             | Nacos Server的地址获取接入点的请求参数，用于接入点服务扩展自定义逻辑，格式key=value                                                         | 任意URL参数，key=value                                 | 无                        |
-| endpointRefreshIntervalSeconds | ENDPOINT_REFRESH_INTERVAL_SECONDS | Nacos Server定期从地址获取接入点重新获取地址列表的间隔时间，单位为秒                                                                     | 任意正整数                                             | 30                       |
-| namespace                      | NAMESPACE                         | 该 JAVA SDK 所归属的命名空间Id， 设置后该SDK只能访问该命名空间的资源（配置或服务）                                                            | 命名空间Id                                            | 空字符串``                   |
-| username                       | USERNAME                          | 开启鉴权功能后，访问Nacos Server所使用的用户名                                                                                | 任意字符串                                             | 无                        |
-| password                       | PASSWORD                          | 开启鉴权功能后，访问Nacos Server所使用的用户名对应的密码                                                                           | 任意字符串                                             | 无                        |
-| accessKey                      | ACCESS_KEY                        | 使用阿里云RAM鉴权时需要使用的accessKey                                                                                    | 任意字符串                                             | 无                        |
-| secretKey                      | SECRET_KEY                        | 使用阿里云RAM鉴权时需要使用的secretKey                                                                                    | 任意字符串                                             | 无                        | |
-| ramRoleName                    | RAM_ROLE_NAME                     | 使用阿里云RAM鉴权时需要使用的ramRoleName                                                                                  | 任意字符串                                             | 无                        |
-| signatureRegionId              | SIGNATURE_REGION_ID               | 使用阿里云RAM鉴权时，需要使用的signatureRegionId                                                                           | 任意字符串                                             | 无                        |
-| logAllProperties               | LOG_ALL_PROPERTIES                | 启动Java SDK时，是否打印全量参数，包含自定义properties、JVM和环境变量，主要用户调试和问题排查。                                                   | boolean                                           | false                    |
-| ~~clusterName~~                | ~~CLUSTER_NAME~~                  | 由于和服务实例的ClusterName名称相同，容易造成混淆，该参数已废弃，请使用`endPointClusterName`                                               | 任意URL支持的path                                      | serverlist               |
-| ~~isAdaptClusterNameUsage~~    | ~~IS_ADAPT_CLUSTER_NAME_USAGE~~   | 是否兼容通过`clusterName`的方式设置`endPointClusterName`，让升级兼容性更好                                                       | boolean                                           | false                    |
-| ~~serverName~~                 | ~~SERVER_NAME~~                   | 该 JAVA SDK 的名称，目前仅在访问endpoint时使用，由于使用率低且命名不合理，将废弃                                                            | 任意字符串                                             | 由serverAddr/endpoint自动拼接 |
+| serverAddr                     | SERVER_ADDR                       | The address list of Nacos Server, which specifies the Nacos Server accessed by this Java SDK.                | Any domain name or IP address. Separate multiple addresses with commas (`,`). All addresses must belong to the same Nacos Server cluster. | None |
+| contextPath                    | CONTEXT_PATH                      | The context path of the Nacos Server OpenAPI, corresponding to the Nacos Server `server.servlet.context-path` parameter. | Any URL-supported path | nacos |
+| endpoint                       | ENDPOINT                          | The endpoint used to obtain Nacos Server addresses. The Java SDK queries the actual domain names or IP addresses of Nacos Server through this endpoint. | Any domain name or IP address | None |
+| endpointPort                   | ENDPOINT_PORT                     | The port of the endpoint used to obtain Nacos Server addresses. Used together with `endpoint`, for example, `${endpoint}:${endpointPort}/nacos/serverlist`. | 0~65535 | 8080 |
+| endpointContextPath            | ENDPOINT_CONTEXT_PATH             | The context path of the endpoint used to obtain Nacos Server addresses. Used together with `endpoint`, for example, `${endpoint}:${endpointPort}/${endpointContextPath}/serverlist`. | Any URL-supported path | nacos |
+| endPointClusterName            | ENDPOINT_CLUSTER_NAME             | The cluster name of Nacos Server in the endpoint. Used together with `endpoint`, for example, `${endpoint}:${endpointPort}/${endpointContextPath}/${endPointClusterName}`. | Any URL-supported path | serverlist |
+| endpointQueryParams            | ENDPOINT_QUERY_PARAMS             | Request parameters for the endpoint used to obtain Nacos Server addresses. They are used to extend custom logic in the endpoint service and use the `key=value` format. | Any URL parameter in `key=value` format | None |
+| endpointRefreshIntervalSeconds | ENDPOINT_REFRESH_INTERVAL_SECONDS | The interval at which Nacos Server periodically obtains the address list again from the endpoint, in seconds. | Any positive integer | 30 |
+| namespace                      | NAMESPACE                         | The namespace ID to which this Java SDK belongs. After it is set, the SDK can access only resources (configuration or services) in this namespace. | Namespace ID | Empty string `` |
+| username                       | USERNAME                          | The username used to access Nacos Server after authentication is enabled.                                    | Any string | None |
+| password                       | PASSWORD                          | The password that corresponds to the username used to access Nacos Server after authentication is enabled.   | Any string | None |
+| accessKey                      | ACCESS_KEY                        | The access key required when Alibaba Cloud RAM authentication is used.                                      | Any string | None |
+| secretKey                      | SECRET_KEY                        | The secret key required when Alibaba Cloud RAM authentication is used.                                      | Any string | None |
+| ramRoleName                    | RAM_ROLE_NAME                     | The RAM role name required when Alibaba Cloud RAM authentication is used.                                  | Any string | None |
+| signatureRegionId              | SIGNATURE_REGION_ID               | The signature region ID required when Alibaba Cloud RAM authentication is used.                            | Any string | None |
+| logAllProperties               | LOG_ALL_PROPERTIES                | Whether to print all parameters when the Java SDK starts, including custom properties, JVM parameters, and environment variables. It is mainly used for debugging and troubleshooting. | boolean | false |
+| ~~clusterName~~                | ~~CLUSTER_NAME~~                  | Deprecated because it can be confused with the service instance `ClusterName`. Use `endPointClusterName` instead. | Any URL-supported path | serverlist |
+| ~~isAdaptClusterNameUsage~~    | ~~IS_ADAPT_CLUSTER_NAME_USAGE~~   | Whether to support setting `endPointClusterName` through `clusterName` for better upgrade compatibility.    | boolean | false |
+| ~~serverName~~                 | ~~SERVER_NAME~~                   | The name of this Java SDK. It is currently used only when accessing the endpoint. This parameter will be deprecated because it is rarely used and the name is unreasonable. | Any string | Automatically concatenated from `serverAddr` or `endpoint` |
 
-### 2.2. 配置中心相关参数
+### 2.2. Config Center Parameters
 
-仅在初始化配置中心`ConfigServie`时生效：
+The following parameters take effect only when initializing the config center `ConfigServie`:
 
-| 参数名                        | PropertyKeyConst的Key           | 含义                                                                | 可选值        | 默认值                                            | 
+| Parameter                   | PropertyKeyConst Key           | Meaning                                                            | Optional Values | Default Value                                  |
 |----------------------------|--------------------------------|-------------------------------------------------------------------|------------|------------------------------------------------|
-| clientWorkerMaxThreadCount | CLIENT_WORKER_MAX_THREAD_COUNT | 自动计算配置中心ConfigService进行配置监听时的最大线程池个数                              | >=2 的int值  | CPU个数                                          |
-| clientWorkerThreadCount    | CLIENT_WORKER_THREAD_COUNT     | 指定配置中心ConfigService进行配置监听时的线程池个数，优先级高于clientWorkerMaxThreadCount  | >=2 的int值  | Max(2, Min(clientWorkerMaxThreadCount, CPU个数)) |
-| enableRemoteSyncConfig     | ENABLE_REMOTE_SYNC_CONFIG      | 配置中心ConfigService进行配置监听时立刻对监听的配置进行和服务端的同步和通知，开启可能影响启动监听的速度        | boolean    | false                                          |
-| configRequestTimeout       | CONFIG_REQUEST_TIMEOUT         | 指定配置中心ConfigService发起rpc请求超时时间, 默认不启用, 使用RpcClientConfig通用配置的超时时间 | >=0 的long值 | -1                                             |
-| ~~configRetryTime~~        | ~~CONFIG_RETRY_TIME~~          | 旧版本配置中心使用长轮询重试间隔时间，已废弃                                            | 任意int      | 2000                                           |
-| ~~configLongPollTimeout~~  | ~~CONFIG_LONG_POLL_TIMEOUT~~   | 旧版本配置中心使用长轮询超时时间，已废弃                                              | 任意int      | 30000                                          |
-| ~~maxRetry~~               | ~~MAX_RETRY~~                  | 旧版本配置中心使用的最大重试次数参数，已废弃                                            | 任意int      | 3                                              |
+| clientWorkerMaxThreadCount | CLIENT_WORKER_MAX_THREAD_COUNT | Automatically calculates the maximum thread pool size used by the config center `ConfigService` for configuration listeners. | int value >= 2 | Number of CPUs |
+| clientWorkerThreadCount    | CLIENT_WORKER_THREAD_COUNT     | Specifies the thread pool size used by the config center `ConfigService` for configuration listeners. This has a higher priority than `clientWorkerMaxThreadCount`. | int value >= 2 | Max(2, Min(clientWorkerMaxThreadCount, number of CPUs)) |
+| enableRemoteSyncConfig     | ENABLE_REMOTE_SYNC_CONFIG      | Immediately synchronizes and notifies listened configurations with the server when the config center `ConfigService` listens to configurations. Enabling this may slow down listener startup. | boolean | false |
+| configRequestTimeout       | CONFIG_REQUEST_TIMEOUT         | Specifies the RPC request timeout for the config center `ConfigService`. It is disabled by default and uses the common timeout configured in `RpcClientConfig`. | long value >= 0 | -1 |
+| ~~configRetryTime~~        | ~~CONFIG_RETRY_TIME~~          | Deprecated. The long-polling retry interval used by the old config center implementation. | Any int | 2000 |
+| ~~configLongPollTimeout~~  | ~~CONFIG_LONG_POLL_TIMEOUT~~   | Deprecated. The long-polling timeout used by the old config center implementation. | Any int | 30000 |
+| ~~maxRetry~~               | ~~MAX_RETRY~~                  | Deprecated. The maximum retry count used by the old config center implementation. | Any int | 3 |
 
-### 2.3. 注册中心相关参数
+### 2.3. Registry Parameters
 
-仅在初始化注册中心`NamingServie`时生效：
+The following parameters take effect only when initializing the registry `NamingServie`:
 
-| 参数名                              | PropertyKeyConst的Key                 | 含义                                                                | 可选值        | 默认值                                             | 
+| Parameter                         | PropertyKeyConst Key                 | Meaning                                                           | Optional Values | Default Value                                  |
 |----------------------------------|--------------------------------------|-------------------------------------------------------------------|------------|-------------------------------------------------|
-| namingLoadCacheAtStart           | NAMING_LOAD_CACHE_AT_START           | 注册中心NamingService在启动时读取本地磁盘缓存来初始化数据                               | boolean    | false                                           |
-| namingCacheRegistryDir           | NAMING_CACHE_REGISTRY_DIR            | 注册中心NamingService的本地磁盘缓存目录名拓展名，用于同一节点中区分多个NamingService实例         | 任意字符串      | 空字符串                                            |
-| namingAsyncQuerySubscribeService | NAMING_ASYNC_QUERY_SUBSCRIBE_SERVICE | 注册中心NamingService开启异步查询订阅服务的功能，作为数据推送链路异常时的兜底辅助                   | boolean    | false                                           |
-| namingPollingMaxThreadCount      | NAMING_POLLING_MAX_THREAD_COUNT      | 自动计算注册中心NamingService异步查询订阅服务的最大线程个数                              | >=1 的int值  | CPU个数                                           |
-| namingPollingThreadCount         | NAMING_POLLING_THREAD_COUNT          | 指定注册中心NamingService异步查询订阅服务的线程个数，优先级高于namingPollingMaxThreadCount | >=1 的int值  | Max(2, Min(namingPollingMaxThreadCount, CPU个数)) |
-| namingRequestDomainMaxRetryCount | NAMING_REQUEST_DOMAIN_RETRY_COUNT    | 当初始化注册中心NamingService`serverAddr`仅有一个地址时，请求Nacos Server失败后的最大重试次数 | 任意int值     | 3                                               |
-| namingPushEmptyProtection        | NAMING_PUSH_EMPTY_PROTECTION         | 注册中心NamingService开启推空保护功能，当订阅服务时发现服务地址列表为0时，忽略此地址列表               | boolean    | false                                           |
-| redoDelayTime                    | REDO_DELAY_TIME                      | 注册中心NamingService与Nacos Server链接断开后，间隔多长时间检查并进行redo操作，单位毫秒        | 任意long值    | 3000                                            |
-| redoDelayThreadCount             | REDO_DELAY_THREAD_COUNT              | 注册中心NamingService执行redo操作的线程数                                     | 任意int值     | 1                                               |
-| namingRequestTimeout             | NAMING_REQUEST_TIMEOUT               | 注册中心NamingService发起rpc请求超时时间, 默认不启用, 使用RpcClientConfig通用配置的超时时间   | >=0 的long值 | -1                                              |
-| ~~namingClientBeatThreadCount~~  | ~~NAMING_CLIENT_BEAT_THREAD_COUNT~~  | 注册中心NamingService旧版本使用的，用于发送所注册服务实例心跳的线程数，已废弃                     | 任意int值     | 无                                               |
+| namingLoadCacheAtStart           | NAMING_LOAD_CACHE_AT_START           | Whether the registry `NamingService` reads the local disk cache to initialize data during startup. | boolean | false |
+| namingCacheRegistryDir           | NAMING_CACHE_REGISTRY_DIR            | The extension of the local disk cache directory name for the registry `NamingService`. It is used to distinguish multiple `NamingService` instances on the same node. | Any string | Empty string |
+| namingAsyncQuerySubscribeService | NAMING_ASYNC_QUERY_SUBSCRIBE_SERVICE | Whether the registry `NamingService` enables asynchronous query subscription as a fallback when the data push link is abnormal. | boolean | false |
+| namingPollingMaxThreadCount      | NAMING_POLLING_MAX_THREAD_COUNT      | Automatically calculates the maximum number of threads used by the registry `NamingService` for asynchronous query subscription. | int value >= 1 | Number of CPUs |
+| namingPollingThreadCount         | NAMING_POLLING_THREAD_COUNT          | Specifies the number of threads used by the registry `NamingService` for asynchronous query subscription. This has a higher priority than `namingPollingMaxThreadCount`. | int value >= 1 | Max(2, Min(namingPollingMaxThreadCount, number of CPUs)) |
+| namingRequestDomainMaxRetryCount | NAMING_REQUEST_DOMAIN_RETRY_COUNT    | The maximum retry count after a request to Nacos Server fails when the registry `NamingService` is initialized with only one address in `serverAddr`. | Any int value | 3 |
+| namingPushEmptyProtection        | NAMING_PUSH_EMPTY_PROTECTION         | Whether the registry `NamingService` enables empty push protection. When the subscribed service address list is empty, the client ignores the address list. | boolean | false |
+| redoDelayTime                    | REDO_DELAY_TIME                      | The interval, in milliseconds, at which the registry `NamingService` checks and performs redo operations after the connection to Nacos Server is disconnected. | Any long value | 3000 |
+| redoDelayThreadCount             | REDO_DELAY_THREAD_COUNT              | The number of threads used by the registry `NamingService` to perform redo operations. | Any int value | 1 |
+| namingRequestTimeout             | NAMING_REQUEST_TIMEOUT               | Specifies the RPC request timeout for the registry `NamingService`. It is disabled by default and uses the common timeout configured in `RpcClientConfig`. | long value >= 0 | -1 |
+| ~~namingClientBeatThreadCount~~  | ~~NAMING_CLIENT_BEAT_THREAD_COUNT~~  | Deprecated. The number of threads used by the old registry `NamingService` implementation to send heartbeats for registered service instances. | Any int value | None |
 
-### 2.4. 连接相关
+### 2.4. Connection Parameters
 
-Nacos Java SDK 连接Nacos Server时，可以设置一系列的参数，来提升针对网络抖动时的容错能力
+When the Nacos Java SDK connects to Nacos Server, you can configure a set of parameters to improve fault tolerance during network jitter.
 
-| 参数名                                                             | 含义                                                                                 | 可选值     | 默认值           | 
+| Parameter                                                       | Meaning                                                                            | Optional Values | Default Value |
 |-----------------------------------------------------------------|------------------------------------------------------------------------------------|---------|---------------|
-| nacos.server.grpc.port.offset                                   | Nacos Server GRPC端口相对主端口的偏移量                                                       | 任意int值  | 1000          |
-| nacos.remote.client.grpc.name                                   | 该Nacos Java SDK的GRPC连接的名字                                                          | 任意字符串   | null          |
-| nacos.remote.client.grpc.connect.keep.alive                     | 该Nacos Java SDK的GRPC连接的Keep Alive                                                  | 任意Long值 | 5000          |
-| nacos.remote.client.grpc.retry.times                            | 该Nacos Java SDK的GRPC连接发起请求时的最大重试次数                                                 | 任意int值  | 3             |
-| nacos.remote.client.grpc.timeout                                | 该Nacos Java SDK的GRPC连接发起请求时的请求超时时间                                                 | 任意Long值 | 3000          |
-| nacos.remote.client.grpc.pool.alive                             | 该Nacos Java SDK的GRPC连接所使用的线程池的线程Keep Alive时间，单位毫秒                                  | 任意Long值 | 10000         |
-| nacos.remote.client.grpc.pool.core.size                         | 该Nacos Java SDK的GRPC连接所使用的线程池的最小大小                                                 | 任意int值  | CPU个数*2       |
-| nacos.remote.client.grpc.pool.max.size                          | 该Nacos Java SDK的GRPC连接所使用的线程池的最大大小                                                 | 任意int值  | CPU个数*8       |
-| nacos.remote.client.grpc.server.check.timeout                   | 该Nacos Java SDK的GRPC连接刚连接上服务端时，进行连接注册的超时时间                                         | 任意Long值 | 3000          |
-| nacos.remote.client.grpc.queue.size                             | 该Nacos Java SDK的GRPC连接的请求队列长度                                                      | 任意int值  | 10000         |
-| nacos.remote.client.grpc.health.retry                           | 该Nacos Java SDK的GRPC连接的健康检查重试次数，达到这个次数健康检查失败的连接会被客户端强制关闭，进行重连                      | 任意int值  | 3             |
-| nacos.remote.client.grpc.health.timeout                         | 该Nacos Java SDK的GRPC连接的健康检查超时时间                                                    | 任意Long值 | 3000          |
-| nacos.remote.client.grpc.maxinbound.message.size                | 该Nacos Java SDK的GRPC连接单次请求的Request的最大大小，单位byte                                     | 任意int值  | 10M           |
-| nacos.remote.client.grpc.channel.keep.alive                     | 该Nacos Java SDK的GRPC连接对应的TCP Channel的Keep Alive时间，此时间应该大于`connect.keep.alive`,单位毫秒 | 任意int值  | 6 * 60 * 1000 |
-| nacos.remote.client.grpc.channel.keep.alive.timeout             | 该Nacos Java SDK的GRPC连接对应的TCP Channel的Keep Alive超时时间，单位毫秒                           | 任意Long值 | 20 * 1000     |
-| nacos.remote.client.grpc.channel.capability.negotiation.timeout | 该Nacos Java SDK的GRPC连接对应的TLS握手超时时间                                                 | 任意Long值 | 5000          |
+| nacos.server.grpc.port.offset                                   | The offset of the Nacos Server gRPC port relative to the main port.                           | Any int value | 1000 |
+| nacos.remote.client.grpc.name                                   | The name of the gRPC connection for this Nacos Java SDK.                                      | Any string | null |
+| nacos.remote.client.grpc.connect.keep.alive                     | The keep-alive interval of the gRPC connection for this Nacos Java SDK.                       | Any long value | 5000 |
+| nacos.remote.client.grpc.retry.times                            | The maximum retry count when the gRPC connection of this Nacos Java SDK initiates a request.  | Any int value | 3 |
+| nacos.remote.client.grpc.timeout                                | The request timeout when the gRPC connection of this Nacos Java SDK initiates a request.      | Any long value | 3000 |
+| nacos.remote.client.grpc.pool.alive                             | The thread keep-alive time of the thread pool used by the gRPC connection of this Nacos Java SDK, in milliseconds. | Any long value | 10000 |
+| nacos.remote.client.grpc.pool.core.size                         | The minimum size of the thread pool used by the gRPC connection of this Nacos Java SDK.       | Any int value | Number of CPUs * 2 |
+| nacos.remote.client.grpc.pool.max.size                          | The maximum size of the thread pool used by the gRPC connection of this Nacos Java SDK.       | Any int value | Number of CPUs * 8 |
+| nacos.remote.client.grpc.server.check.timeout                   | The timeout for connection registration when the gRPC connection of this Nacos Java SDK has just connected to the server. | Any long value | 3000 |
+| nacos.remote.client.grpc.queue.size                             | The request queue length of the gRPC connection for this Nacos Java SDK.                      | Any int value | 10000 |
+| nacos.remote.client.grpc.health.retry                           | The retry count for gRPC connection health checks. If health checks fail this many times, the client forcibly closes the connection and reconnects. | Any int value | 3 |
+| nacos.remote.client.grpc.health.timeout                         | The timeout for gRPC connection health checks.                                                | Any long value | 3000 |
+| nacos.remote.client.grpc.maxinbound.message.size                | The maximum size, in bytes, of a single request for the gRPC connection of this Nacos Java SDK. | Any int value | 10M |
+| nacos.remote.client.grpc.channel.keep.alive                     | The keep-alive interval of the TCP channel corresponding to the gRPC connection of this Nacos Java SDK. This value should be greater than `connect.keep.alive`, in milliseconds. | Any int value | 6 * 60 * 1000 |
+| nacos.remote.client.grpc.channel.keep.alive.timeout             | The keep-alive timeout of the TCP channel corresponding to the gRPC connection of this Nacos Java SDK, in milliseconds. | Any long value | 20 * 1000 |
+| nacos.remote.client.grpc.channel.capability.negotiation.timeout | The TLS handshake timeout of the TCP channel corresponding to the gRPC connection of this Nacos Java SDK. | Any long value | 5000 |
 
-### 2.5. 其他参数
+### 2.5. Other Parameters
 
-Nacos Java SDK 中有部分参数对运行时期的影响较小，且需要全局一致，因此此类参数目前需要通过JVM参数（-D）或环境变量进行设置，一般使用时使用默认值即可，仅在遇到一些特殊场景时才需要设置。
+Some parameters in the Nacos Java SDK have little impact at runtime and must remain globally consistent. Therefore, these parameters currently need to be set through JVM parameters (`-D`) or environment variables. In most cases, use the default values and configure them only for special scenarios.
 
-| 参数名                       | 含义                                                                                                                 | 可选值                | 默认值               | 
+| Parameter                 | Meaning                                                                                                             | Optional Values     | Default Value     |
 |---------------------------|--------------------------------------------------------------------------------------------------------------------|--------------------|-------------------|
-| PER_TASK_CONFIG_SIZE      | 每个`ConfigService`可监听的最大配置数                                                                                         | 任意int              | 3000              |
-| JM.SNAPSHOT.PATH          | Nacos Java SDK的本地快照根目录，根目录下会创建`naming`和`config`两个目录用于存放订阅的服务和配置的缓存信息                                               | 任意目录               | ${user.home}      |
-| JM.LOG.PATH               | Nacos Java SDK的日志输出目录，正常情况下Nacos Java SDK的日志会输出到该目录下，部分特殊的场景和版本，可能会输出到业务日志中（如使用了log4j1.0的版本，或使用Spring Cloud重载了日志配置 | 任意目录               | ${user.home}/logs |
-| nacos.server.port         | 默认的Nacos Server**配置中心和鉴权login**的端口，当传入的`serverAddr`参数中不带有端口号时，使用此设置的端口连接Nacos Server，建议统一通过`serverAddr`参数设置端口      | 0～65535            | 8848              |
-| nacos.naming.exposed.port | 默认的Nacos Server**注册中心**的端口，当传入的`serverAddr`参数中不带有端口号时，使用此设置的端口连接Nacos Server，建议统一通过`serverAddr`参数设置端口              | 0～65535            | 8848              |
-| nacos.client.contextPath  | 默认的Nacos Server contentPath，`contextPath`和`endpointContextPath` 未传入时使用                                             | 任意URL支持的path       | nacos             |
-| nacos.env.first           | Nacos JAVA SDK 的 `NacosClientProperties` 配置搜索顺序。详情见[1.3.1. 优先级](#131-优先级)                                          | PROPERTIES/JVM/ENV | PROPERTIES        |
-| project.name              | 该SDK所归属的应用名，可在服务订阅者列表和配置订阅者列表中使用，仅作为参考字段使用                                                                         | 任意字符串              | unknown           |
-| ~~NACOS.CONNECT.TIMEOUT~~ | 连接服务时的连接超时时间，旧版本Http使用，已废弃                                                                                         | 任意int              | 1000              |
-| NACOS.READ.TIMEOUT | 连接服务时的读取超时时间，旧版本Http使用                                                                                         | 任意int              | 3000              |
+| PER_TASK_CONFIG_SIZE      | The maximum number of configurations that each `ConfigService` can listen to.                                      | Any int | 3000 |
+| JM.SNAPSHOT.PATH          | The local snapshot root directory of the Nacos Java SDK. The `naming` and `config` directories are created under the root directory to store cache information for subscribed services and configurations. | Any directory | ${user.home} |
+| JM.LOG.PATH               | The log output directory of the Nacos Java SDK. Normally, Nacos Java SDK logs are written to this directory. In some special scenarios and versions, logs may be written to business logs, such as when log4j 1.0 is used or Spring Cloud reloads the logging configuration. | Any directory | ${user.home}/logs |
+| nacos.server.port         | The default port for the Nacos Server **config center and authentication login**. When the `serverAddr` parameter does not contain a port, the SDK uses this port to connect to Nacos Server. We recommend setting the port uniformly through the `serverAddr` parameter. | 0~65535 | 8848 |
+| nacos.naming.exposed.port | The default port for the Nacos Server **registry**. When the `serverAddr` parameter does not contain a port, the SDK uses this port to connect to Nacos Server. We recommend setting the port uniformly through the `serverAddr` parameter. | 0~65535 | 8848 |
+| nacos.client.contextPath  | The default Nacos Server `contentPath`. It is used when `contextPath` and `endpointContextPath` are not provided. | Any URL-supported path | nacos |
+| nacos.env.first           | The configuration lookup order of `NacosClientProperties` in the Nacos Java SDK. For details, see [1.3.1. Priority](#131-priority). | PROPERTIES/JVM/ENV | PROPERTIES |
+| project.name              | The application name to which this SDK belongs. It can be used in the service subscriber list and configuration subscriber list as a reference field only. | Any string | unknown |
+| ~~NACOS.CONNECT.TIMEOUT~~ | Deprecated. The connection timeout used by the old HTTP implementation when connecting to a service. | Any int | 1000 |
+| NACOS.READ.TIMEOUT        | The read timeout used by the old HTTP implementation when connecting to a service. | Any int | 3000 |
