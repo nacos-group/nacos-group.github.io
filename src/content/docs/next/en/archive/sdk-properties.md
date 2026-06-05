@@ -1,10 +1,10 @@
 ---
-title: Nacos 客户端初始化说明
-keywords: [Nacos,客户端,初始化]
-description: Nacos 客户端初始化说明
+title: Nacos Client Initialization
+keywords: [Nacos,client,initialization]
+description: Nacos client initialization.
 ---
 
-Nacos 客户端初始化说明
+Nacos Client Initialization
 
 ```
 	public final static String ENDPOINT = "endpoint";
@@ -17,34 +17,34 @@ Nacos 客户端初始化说明
 	public final static String ENCODE = "encode";
 
 ```
-一、客户端可以通过两种方式初始化（二选一，必传）
+I. The client can be initialized in either of the following two ways. Choose one; it is required.
 
-1. 通过直接传入Nacos server端信息（ip:port，或者域名）方式
+1. Pass Nacos Server information directly, such as `ip:port` or a domain name.
 
 	``
-	SERVER_ADDR server地址，格式为“ip1:port,ip2.port”
+	SERVER_ADDR server address, in the format "ip1:port,ip2:port"
 	``
-2. 通过接入点进行接入获取环境信息
+2. Use an endpoint to access and obtain environment information.
 
 	```
-	ENDPOINT 接入点
-	CLUSTER_NAME 集群名字
+	ENDPOINT endpoint
+	CLUSTER_NAME cluster name
 	```
 
-二、链接的server的路径（非必传）
+II. Server path for the connection (optional)
 
 ```
-CONTEXT_PATH server根路径 （默认值 nacos）
+CONTEXT_PATH server root path (default value: nacos)
 ```
-三、区域隔离（非必传）
+III. Namespace isolation (optional)
 
 ```
-NAMESPACE 名称区域
+NAMESPACE namespace
 ```
 
-四、鉴权参数（非必传）
+IV. Authentication parameters (optional)
 
 ```
-ACCESS_KEY 公钥
-SECRET_KEY 私钥
+ACCESS_KEY public key
+SECRET_KEY private key
 ```
