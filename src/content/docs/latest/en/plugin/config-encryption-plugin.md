@@ -66,10 +66,10 @@ For new deployments, use the schema shipped with the current Nacos version.
 For existing clusters, check whether `encrypted_data_key` exists. MySQL example:
 
 ```sql
-ALTER TABLE config_info ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
+ALTER TABLE config_info ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT 'secret key';
 ALTER TABLE config_info_beta ADD COLUMN `encrypted_data_key` varchar(256) NOT NULL DEFAULT '' COMMENT 'encrypted_data_key';
 ALTER TABLE config_info_gray ADD COLUMN `encrypted_data_key` varchar(256) NOT NULL DEFAULT '' COMMENT 'encrypted_data_key';
-ALTER TABLE his_config_info ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
+ALTER TABLE his_config_info ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT 'secret key';
 ```
 
 Back up the database before applying schema changes, and use the official schema of the target Nacos version as the source of truth.
