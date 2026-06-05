@@ -1,44 +1,44 @@
 ---
-title: 使用Nacos Controller同步k8s服务到Nacos
-keywords: [Nacos Controller,使用手册]
-description: Nacos Controller 使用手册
+title: Use Nacos Controller to Sync Kubernetes Services to Nacos
+keywords: [Nacos Controller, User Guide]
+description: Nacos Controller User Guide
 sidebar:
     order: 10
 ---
 
-# 使用Nacos Controller同步k8s服务到Nacos
+# Use Nacos Controller to Sync Kubernetes Services to Nacos
 
-## 概述
+## Overview
 
-Nacos Controller支持k8s配置双向同步及服务同步到Nacos。本文讲述如何使用Nacos Controller同步k8s服务到Nacos。
+Nacos Controller supports bidirectional synchronization of Kubernetes configurations and synchronization of Kubernetes services to Nacos. This document describes how to use Nacos Controller to sync Kubernetes services to Nacos.
 
-## 前置条件
+## Prerequisites
 
-*   安装[kubectl](https://kubernetes.io/zh-cn/docs/tasks/tools/)、[helm](https://helm.sh/zh/docs/intro/install/)
+*   Install [kubectl](https://kubernetes.io/docs/tasks/tools/) and [helm](https://helm.sh/docs/intro/install/).
     
 
-## 部署自定义资源
+## Deploy Custom Resources
 
 ```shell
-#克隆仓库
+# Clone the repository
 git clone https://github.com/nacos-group/nacos-controller.git
 cd nacos-controller/charts/nacos-controller
-#导出k8s集群配置文件路径
+# Export the Kubernetes cluster configuration file path
 export KUBECONFIG=/path/to/your/kubeconfig/file
-# 创建CRD安装的命名空间
+# Create the namespace for CRD installation
 kubectl create ns nacos
-# 安装CRD
+# Install the CRD
 helm install -n nacos nacos-controller .
 ```
 
-安装成功后，使用"kubectl get crd  | grep nacos" 检查结果，如下结果表示正常：
+After installation succeeds, run `kubectl get crd | grep nacos` to check the result. The following output indicates that the CRDs are installed correctly:
 
 ![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/Pd6l2Z7XEAxGMl7M/img/ea77285e-8fc2-4ea3-b89f-064c8844f693.png)
 
-## 创建Secret
+## Create a Secret
 
-创建Nacos鉴权使用的Secret，包括Nacos用户名、密码。如果使用了MSE Nacos，并且开启了鉴权，还需要配置AK、SK。**注意：参数值为base64编码之后的值。**
-* 创建secret配置文件
+Create a Secret for Nacos authentication, including the Nacos username and password. If you use MSE Nacos with authentication enabled, you must also configure the access key and secret key. **Note: parameter values must be base64-encoded.**
+* Create a Secret configuration file.
 
   ```yaml
   apiVersion: v1
@@ -51,13 +51,13 @@ helm install -n nacos nacos-controller .
       username: <base64 your-nacos-username>
       password: <base64 your-nacos-password>
   ```
-* 创建secret
+* Create the Secret.
   ```shell
   kubectl apply -f secret.yaml -n nacoskubectl 
   ```
 
-## 创建ServiceDiscovery
-* 创建ServiceDiscovery配置文件
+## Create ServiceDiscovery
+* Create a ServiceDiscovery configuration file.
   ```yaml
   apiVersion: nacos.io/v1
   kind: ServiceDiscovery
@@ -65,26 +65,26 @@ helm install -n nacos nacos-controller .
     name: sd-demo
   spec:
     nacosServer:
-        # serverAddr: Nacos地址
+        # serverAddr: Nacos address
         serverAddr: <nacos-addr>
-        # namespace: 需要把k8s服务同步到Nacos的命名空间Id
+        # namespace: namespace ID used to sync Kubernetes services to Nacos
         namespace: <nacos-namespace-id>
-        # authRef: 包含 Nacos 客户端认证凭据的 Secret（支持用户名/密码或 AK/SK；如果 Nacos 服务器认证已禁用则可省略
+        # authRef: Secret that contains Nacos client credentials (username/password or AK/SK). It can be omitted if authentication is disabled on the Nacos server.
         authRef:
           apiVersion: v1
           kind: Secret
           name: nacos-auth
-    # 需要同步的服务列表，如果需要同步全量服务则可忽略
-    services: ["my-nginx"，"test1"]
+    # Service list to sync. Omit this field to sync all services.
+    services: ["my-nginx", "test1"]
   ```
-* 创建 Service Discovery
+* Create ServiceDiscovery.
   ```yaml
   kubectl apply -f sd.yaml -n nacos
   ```
 
-## 创建Deployment
+## Create a Deployment
 
-* 以nginx为例创建deployment配置文件
+* Create a Deployment configuration file. The following example uses nginx.
 
 ```yaml
 apiVersion: apps/v1
@@ -111,9 +111,9 @@ spec:
 kubectl apply -f nginx-deployment.yaml -n nacos
 ```
 
-## 创建Service
+## Create a Service
 
-* 创建yaml文件
+* Create a YAML file.
   ```yaml
   apiVersion: v1
   kind: Service
@@ -129,19 +129,19 @@ kubectl apply -f nginx-deployment.yaml -n nacos
       app: nginx-test
   ```
 
-* 部署Service
+* Deploy the Service.
     
   ```shell
   kubectl apply -f nginx-service.yaml -n nacos
   ```
 
-* 查看Service endpoint
+* View the Service endpoint.
   ```shell
   kubectl describe svc my-nginx -n nacos
   ```
   ![image.png](https://alidocs.oss-cn-zhangjiakou.aliyuncs.com/res/Pd6l2Z7XEAxGMl7M/img/b3c62ce8-e7e2-4672-bcf5-885c45b92678.png)
 
-## 查看同步结果
+## View the Synchronization Result
   ```shell
   curl "$NACOS_ADDR/nacos/v3/admin/ns/instance/list?serviceName=my-nginx' -H "userName:$USER_NAME" -H "password:$PASSWORD"
   ```

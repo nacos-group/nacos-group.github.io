@@ -98,10 +98,10 @@ Similarly, suppose you Dubbo applications using Nacos as registry, and the serve
     xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
     xsi:schemaLocation="http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd        http://dubbo.apache.org/schema/dubbo        http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
  
-    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <!-- Provider application information, used to calculate dependencies -->
     <dubbo:application name="dubbo-provider-xml-demo"  />
  
-    <!-- 使用 Nacos 注册中心 -->
+    <!-- Use the Nacos registry -->
     <dubbo:registry address="nacos://10.20.153.10:8848" />
      <!-- If you want to use your own namespace, you can use the following configuration -->
     <!-- <dubbo:registry address="nacos://10.20.153.10:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932" /> -->
@@ -343,21 +343,21 @@ The Spring XML configuration driven programming model is a traditional Spring as
        xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd        http://dubbo.apache.org/schema/dubbo        http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
 
-    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <!-- Provider application information, used to calculate dependencies -->
     <dubbo:application name="dubbo-provider-xml-demo"/>
 
-    <!-- 使用 Nacos 注册中心 -->
+    <!-- Use the Nacos registry -->
     <dubbo:registry address="nacos://127.0.0.1:8848"/>
     <!-- If you want to use your own namespace, you can use the following configuration -->
     <!-- <dubbo:registry address="nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932" /> -->
 
-    <!-- 用dubbo协议在随机端口暴露服务 -->
+    <!-- Expose the service on a random port through the Dubbo protocol -->
     <dubbo:protocol name="dubbo" port="-1"/>
 
-    <!-- 声明需要暴露的服务接口 -->
+    <!-- Declare the service interface to expose -->
     <dubbo:service interface="com.alibaba.nacos.example.dubbo.service.DemoService" ref="demoService" version="2.0.0"/>
 
-    <!-- 和本地bean一样实现服务 -->
+    <!-- Implement the service in the same way as a local bean -->
     <bean id="demoService" class="com.alibaba.nacos.example.dubbo.service.DefaultService"/>
 </beans>
 ```
@@ -398,15 +398,15 @@ public class DemoServiceProviderXmlBootstrap {
        xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
        xsi:schemaLocation="http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd        http://dubbo.apache.org/schema/dubbo        http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
 
-    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <!-- Provider application information, used to calculate dependencies -->
     <dubbo:application name="dubbo-consumer-xml-demo"/>
 
-    <!-- 使用 Nacos 注册中心 -->
+    <!-- Use the Nacos registry -->
     <dubbo:registry address="nacos://127.0.0.1:8848"/>
     <!-- If you want to use your own namespace, you can use the following configuration -->
     <!-- <dubbo:registry address="nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932" /> -->
 
-    <!-- 引用服务接口 -->
+    <!-- Reference the service interface -->
     <dubbo:reference id="demoService" interface="com.alibaba.nacos.example.dubbo.service.DemoService" version="2.0.0"/>
 
 </beans>
@@ -468,6 +468,6 @@ Results also runs and load balancing is normal, but because the current sample h
 
 If your attention or love Dubbo and Nacos open source project, as well as for their points of "star", related links:
 
-- Apache Dubbo：https://github.com/apache/dubbo
-- Dubbo Nacos Registry：https://github.com/apache/dubbo/tree/master/dubbo-registry/dubbo-registry-nacos
-- Alibaba Nacos：https://github.com/alibaba/nacos
+- Apache Dubbo: https://github.com/apache/dubbo
+- Dubbo Nacos Registry: https://github.com/apache/dubbo/tree/master/dubbo-registry/dubbo-registry-nacos
+- Alibaba Nacos: https://github.com/alibaba/nacos
