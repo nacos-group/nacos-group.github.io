@@ -1,32 +1,28 @@
 ---
-title: Nacos 融合Istio 下发xDS协议
+title: Use Nacos with Istio to Deliver the xDS Protocol
 keywords: [ Istio,xDs,Envoy ]
-description: Nacos 融合Istio 下发xDS协议
+description: Use Nacos with Istio to Deliver the xDS Protocol
 ---
 
-# Istio 指南
+# Istio Guide
 
-支持了 xDS 协议中的 CDS、EDS 服务，并为 EDS 以及 MCP 实现了增量推送。用户可以使用 Envoy 或其他支持 xDS 协议的客户端与 Nacos
-进行对接，实现服务发现功能。
+Nacos supports the CDS and EDS services in the xDS protocol and implements incremental push for EDS and MCP. You can connect Envoy or any other xDS-compatible client to Nacos to implement service discovery.
 
-## 配置
+## Configuration
 
-### 服务端
+### Server
 
-对于发行包，修改 `nacos/conf/application.properties` 中的 `nacos.istio.mcp.server.enabled`
-和`nacos.extension.naming.istio.enabled` 为 true；
+For a release package, set `nacos.istio.mcp.server.enabled` and `nacos.extension.naming.istio.enabled` in `nacos/conf/application.properties` to `true`.
 
-对于源码，修改 `nacos/distribution/conf/application.properties` 中的 `nacos.istio.mcp.server.enabled`
-和`nacos.extension.naming.istio.enabled` 为 true 。
+For source code, set `nacos.istio.mcp.server.enabled` and `nacos.extension.naming.istio.enabled` in `nacos/distribution/conf/application.properties` to `true`.
 
-若要使用 MCP 增量服务，除上述配置需修改外，还需修改 `nacos/istio/misc/IstioConfig` 中的 `nacos.istio.server.full` 为
-false。
+To use the MCP incremental service, in addition to the preceding settings, set `nacos.istio.server.full` in `nacos/istio/misc/IstioConfig` to `false`.
 
-### 客户端
+### Client
 
-关于客户端，下面示例中使用的是 Envoy，可直接下载 Envoy 或创建镜像并将下述配置文件进行挂载即可。
+The following client example uses Envoy. You can download Envoy directly, or build an image and mount the following configuration files.
 
-**Config**：其中使用的端口号根据需求可自行更改
+**Config**: You can change the port numbers as needed.
 
 ```yaml
 node:
@@ -71,7 +67,7 @@ static_resources:
                       port_value: 18848
 ```
 
-**lds**：对于监听的服务获取 CDS 后会主动向服务端获取 EDS，监听的服务可自行更改
+**lds**: After the listened service obtains CDS, it actively obtains EDS from the server. You can change the listened service as needed.
 
 ```yaml
 resources:
@@ -106,29 +102,29 @@ resources:
                 - name: envoy.filters.http.router
 ```
 
-## 运行
+## Run
 
-注：同一服务下的各个实例使用的协议需一致，EDS 默认使用增量推送。
+Note: instances under the same service must use the same protocol. EDS uses incremental push by default.
 
-1. 部署 Nacos，[部署参考](https://nacos.io/docs/next/quickstart/quick-start/)；
-2. 按上述要求修改配置；
-3. 启动服务器，详细的启动命令可在上述部署参考中查看；
+1. Deploy Nacos. For deployment details, see the [deployment reference](https://nacos.io/docs/next/quickstart/quick-start/).
+2. Modify the configuration as described above.
+3. Start the server. For detailed startup commands, see the deployment reference above.
 
    ```bash
    bash startup.sh -m standalone -p embedded
    ```
 
-4. 启动客户端。
+4. Start the client.
 
    ```bash
    docker start envoy
    ```
 
-## CDS 示例
+## CDS Example
 
-注：日志在 nacos/logs/istio-main.log 查看
+Note: view logs in `nacos/logs/istio-main.log`.
 
-示例中注册的服务配置如下，[示例参考](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-cloud-example/nacos-spring-cloud-discovery-example)。
+The service registered in this example uses the following configuration. For more information, see the [example reference](https://github.com/nacos-group/nacos-examples/tree/master/nacos-spring-cloud-example/nacos-spring-cloud-discovery-example).
 
 ```properties
 server.port=8071
@@ -139,15 +135,15 @@ spring.cloud.nacos.discovery.server-addr=127.0.0.1:8848
 
 ![CDS](https://cdn.nlark.com/yuque/0/2022/png/28990648/1666247341241-4e9b2dde-55c7-43ae-af1e-dc081565ab72.png)
 
-## EDS 示例
+## EDS Example
 
-服务配置如上
+The service configuration is the same as above.
 
 ![EDS](https://cdn.nlark.com/yuque/0/2022/png/28990648/1666247341176-fe312687-6488-41c2-bdd1-346d7a344bd2.png)
 
-## 全量 CDS 示例
+## Full CDS Example
 
-现注册两个服务，其配置分别如下：
+Register two services with the following configurations:
 
 ```properties
 #service-provider
@@ -161,12 +157,12 @@ spring.application.name=service-consumer
 spring.cloud.nacos.discovery.server-addr=127.0.0.1:8848
 ```
 
-在控制台仅修改 service-consumer 服务配置，推送如下：
+Only modify the `service-consumer` service configuration in the console. The push result is as follows:
 
 ![Full CDS](https://cdn.nlark.com/yuque/0/2022/png/28990648/1666247341233-bc35de56-5653-4d5f-a510-819180dfe7f0.png)
 
-## 增量 EDS 示例
+## Incremental EDS Example
 
-在控制台仅修改 service-consumer 实例配置，推送如下：
+Only modify the `service-consumer` instance configuration in the console. The push result is as follows:
 
 ![Incremental EDS](https://cdn.nlark.com/yuque/0/2022/png/28990648/1666247341234-aa195810-c76d-4ff5-977a-55626775e697.png)
