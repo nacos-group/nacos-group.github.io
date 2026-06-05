@@ -6,40 +6,40 @@ sidebar:
     order: 3
 ---
 
-# Nacos Kubernetes 快速开始
+# Nacos Kubernetes Quick Start
 
-这个快速开始手册是帮忙您快速在通过Nacos的Docker镜像，在Kubernetes中部署并使用 Nacos。
+This quick start guide helps you quickly deploy and use Nacos in Kubernetes through the Nacos Docker image.
 
 :::note
-- 快速开始旨在帮助您快速上手安装、部署及入门使用Nacos，本快速开始所生产出的Nacos服务为**未开启客户端访问鉴权**，建议仅在测试中使用，若在实际生产环境中部署，请部署**开启鉴权**，以避免存在**安全性**的风险。
-- 快速开始旨在帮助您快速上手安装、部署及入门使用Nacos，本快速开始为方便快速在kubernetes环境中部署Nacos，连接数据库时使用了**默认的数据库配置**，建议仅在测试中使用，在实际生产环境部署时，请**务必**修改部署的数据库配置信息，以避免存在**安全性**的风险。
-- Nacos定义为一个IDC内部应用组件，并非面向公网环境的产品，建议在内部隔离网络环境中部署，**强烈不建议**部署在公共网络环境。
+- This quick start is intended to help you quickly install, deploy, and get started with Nacos. The Nacos service created by this quick start **does not enable client access authentication**. We recommend using it only for testing. For production deployment, **enable authentication** to avoid **security** risks.
+- This quick start is intended to help you quickly install, deploy, and get started with Nacos. To make it convenient to quickly deploy Nacos in a Kubernetes environment, this quick start uses **default database configuration** when connecting to the database. We recommend using it only for testing. For production deployment, **be sure to modify the deployed database configuration** to avoid **security** risks.
+- Nacos is positioned as an internal IDC application component, not a product for public network environments. We recommend deploying it in an isolated internal network environment and **strongly discourage** deployment in public network environments.
 :::
 
-## 1. 环境准备
+## 1. Prepare the Environment
 
-使用此快速开始方法进行Nacos安装及部署，需要安装[Kubernetes](https://kubernetes.io/)。
+To install and deploy Nacos using this quick start method, install [Kubernetes](https://kubernetes.io/).
 
-## 2. 下载 nacos-k8s 项目
+## 2. Download the nacos-k8s Project
 
 ```shell
 git clone https://github.com/nacos-group/nacos-k8s.git
 cd nacos-k8s
 ```
 
-## 3. 快速启动
+## 3. Quick Start
 
-> 使用此方式快速启动,请注意这是没有使用持久化卷的,可能存在数据丢失风险:
+> When using this method to start quickly, note that persistent volumes are not used, so there may be a risk of data loss.
 
-### 3.1. 编辑部署配置文件， 添加鉴权相关配置
+### 3.1. Edit the Deployment Configuration File and Add Authentication Configuration
 
-编辑`/deploy/nacos/nacos-quick-start.yaml`文件，添加如下3个环境变量：
+Edit the `/deploy/nacos/nacos-quick-start.yaml` file and add the following three environment variables:
 
-- NACOS_AUTH_TOKEN: Nacos 用于生成JWT Token的密钥，使用长度大于32字符的字符串，再经过Base64编码。
-- NACOS_AUTH_IDENTITY_KEY: Nacos Server端之间 Inner API的身份标识的Key，必填。
-- NACOS_AUTH_IDENTITY_VALUE: Nacos Server端之间 Inner API的身份标识的Value，必填。
+- NACOS_AUTH_TOKEN: The secret key used by Nacos to generate JWT tokens. Use a string longer than 32 characters and encode it with Base64.
+- NACOS_AUTH_IDENTITY_KEY: The identity key for Inner APIs between Nacos Servers. Required.
+- NACOS_AUTH_IDENTITY_VALUE: The identity value for Inner APIs between Nacos Servers. Required.
 
-如：
+Example:
 
 ```yaml
 ---
@@ -62,7 +62,7 @@ metadata:
       app: nacos
 ```
 
-### 3.2. 执行快速开始脚本，启动Nacos
+### 3.2. Run the Quick Start Script to Start Nacos
 
 ```shell
 cd nacos-k8s
@@ -70,48 +70,48 @@ chmod +x quick-startup.sh
 ./quick-startup.sh
 ```
 
-## 4. 验证Nacos服务是否启动成功
+## 4. Verify Whether Nacos Started Successfully
 
-通过`kubectl logs -f $pod_name`命令，查看Nacos服务启动日志，如果看到如下日志，说明服务启动成功。
+Run `kubectl logs -f $pod_name` to view the Nacos startup logs. If you see the following log, the service has started successfully.
 
 ```
 Nacos started successfully in xxxx mode. use xxxx storage
 ```
 
-可以通过下列服务，快速检验Nacos的功能。
+You can quickly verify Nacos features with the following services.
 
-### 4.1. Nacos控制台页面
+### 4.1. Nacos Console Page
 
-打开任意浏览器，输入地址：`http://127.0.0.1:8080`, 即可进入Nacos控制台页面。
+Open any browser and enter `http://127.0.0.1:8080` to access the Nacos console page.
 
-> 注意：首次打开会要求初始化管理员用户`nacos`的密码。
+> Note: The first time you open the console, you are asked to initialize the password for the administrator user `nacos`.
 
-### 4.2. 服务注册
+### 4.2. Service Registration
 
 `curl -X POST 'http://127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=quickstart.test.service&ip=127.0.0.1&port=8080'`
 
-### 4.3. 服务发现
+### 4.3. Service Discovery
 
 `curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=quickstart.test.service'`
 
-### 4.4. 发布配置
+### 4.4. Publish Configuration
 
 ```shell
-# 登陆获取access token
+# Log in to obtain an access token.
 curl -X POST 'http://127.0.0.1:8848/nacos/v3/auth/user/login' -d 'username=nacos' -d 'password=${your_password}'
-# 使用access token，创建配置
+# Use the access token to create a configuration.
 curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=quickstart.test.config&groupName=test&content=HelloWorld' -H "accessToken:${your_access_token}"
 ```
 
 :::note
-访问Admin API，默认需要使用access token, access token可通过`POST /nacos/v3/auth/user/login`接口获得
+Accessing Admin APIs requires an access token by default. You can obtain an access token through the `POST /nacos/v3/auth/user/login` API.
 :::
 
-### 4.5. 获取配置
+### 4.5. Get Configuration
 
 `curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/cs/config?dataId=quickstart.test.config&groupName=test'`
 
-## 相关项目
+## Related Projects
 
 * [Nacos](https://github.com/alibaba/nacos)
 * [Nacos Docker](https://github.com/nacos-group/nacos-k8s)

@@ -6,22 +6,22 @@ sidebar:
     order: 2
 ---
 
-# Nacos Docker 快速开始
+# Nacos Docker Quick Start
 
-这个快速开始手册是帮忙您快速在通过Nacos的Docker镜像，在Docker容器中部署并使用 Nacos。
+This quick start guide helps you quickly deploy and use Nacos in a Docker container through the Nacos Docker image.
 
 :::note
-- 快速开始旨在帮助您快速上手安装、部署及入门使用Nacos，本快速开始所生产出的Nacos服务为**单机模式**及**未开启客户端访问鉴权**，建议仅在测试中使用，若在实际生产环境中部署，请部署**集群模式**并**开启鉴权**，以避免存在**稳定性和安全性**的风险。
-- Nacos定义为一个IDC内部应用组件，并非面向公网环境的产品，建议在内部隔离网络环境中部署，**强烈不建议**部署在公共网络环境。
+- This quick start is intended to help you quickly install, deploy, and get started with Nacos. The Nacos service created by this quick start runs in **standalone mode** and **does not enable client access authentication**. We recommend using it only for testing. For production deployment, deploy **cluster mode** and **enable authentication** to avoid **stability and security** risks.
+- Nacos is positioned as an internal IDC application component, not a product for public network environments. We recommend deploying it in an isolated internal network environment and **strongly discourage** deployment in public network environments.
 :::
 
-## 1. 环境准备
+## 1. Prepare the Environment
 
-使用此快速开始方法进行Nacos安装及部署，需要安装[Docker](https://www.docker.com/)。
+To install and deploy Nacos using this quick start method, install [Docker](https://www.docker.com/).
 
-## 2. 启动Nacos
+## 2. Start Nacos
 
-> 首次执行命令时，会自动下载所需的相关Docker镜像，需要等待的时长取决于网络速度。您也可以提前下载好相关镜像，以缩短执行部署命令的等待时间。
+> When this command is executed for the first time, the required Docker images are automatically downloaded. The waiting time depends on your network speed. You can also download the images in advance to reduce the waiting time when running the deployment command.
 
 ```powershell
 docker run --name nacos-standalone-derby \
@@ -36,87 +36,87 @@ docker run --name nacos-standalone-derby \
 ```
 
 :::note
-- NACOS_AUTH_TOKEN: Nacos 用于生成JWT Token的密钥，使用长度大于32字符的字符串，再经过Base64编码。
-- NACOS_AUTH_IDENTITY_KEY: Nacos Server端之间 Inner API的身份标识的Key，必填。
-- NACOS_AUTH_IDENTITY_VALUE: Nacos Server端之间 Inner API的身份标识的Value，必填。
+- NACOS_AUTH_TOKEN: The secret key used by Nacos to generate JWT tokens. Use a string longer than 32 characters and encode it with Base64.
+- NACOS_AUTH_IDENTITY_KEY: The identity key for Inner APIs between Nacos Servers. Required.
+- NACOS_AUTH_IDENTITY_VALUE: The identity value for Inner APIs between Nacos Servers. Required.
 :::
 
-## 3. 验证Nacos服务是否启动成功
+## 3. Verify Whether Nacos Started Successfully
 
-通过`docker logs -f $container_id`命令，查看Nacos服务启动日志，如果看到如下日志，说明服务启动成功。
+Run `docker logs -f $container_id` to view the Nacos startup logs. If you see the following log, the service has started successfully.
 
 ```
 Nacos started successfully in xxxx mode. use xxxx storage
 ```
 
-可以通过下列服务，快速检验Nacos的功能。
+You can quickly verify Nacos features with the following services.
 
-### 3.1. Nacos控制台页面
+### 3.1. Nacos Console Page
 
-打开任意浏览器，输入地址：`http://127.0.0.1:8080`, 即可进入Nacos控制台页面。
+Open any browser and enter `http://127.0.0.1:8080` to access the Nacos console page.
 
-> 注意：首次打开会要求初始化管理员用户`nacos`的密码。
+> Note: The first time you open the console, you are asked to initialize the password for the administrator user `nacos`.
 
-### 3.2. 服务注册
+### 3.2. Service Registration
 
 `curl -X POST 'http://127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=quickstart.test.service&ip=127.0.0.1&port=8080'`
 
-### 3.3. 服务发现
+### 3.3. Service Discovery
 
 `curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=quickstart.test.service'`
 
-### 3.4. 发布配置
+### 3.4. Publish Configuration
 
 ```shell
-# 登陆获取access token
+# Log in to obtain an access token.
 curl -X POST 'http://127.0.0.1:8848/nacos/v3/auth/user/login' -d 'username=nacos' -d 'password=${your_password}'
-# 使用access token，创建配置
+# Use the access token to create a configuration.
 curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=quickstart.test.config&groupName=test&content=HelloWorld' -H "accessToken:${your_access_token}"
 ```
 
 :::note
-访问Admin API，默认需要使用access token, access token可通过`POST /nacos/v3/auth/user/login`接口获得
+Accessing Admin APIs requires an access token by default. You can obtain an access token through the `POST /nacos/v3/auth/user/login` API.
 :::
 
-### 3.5. 获取配置
+### 3.5. Get Configuration
 
 `curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/cs/config?dataId=quickstart.test.config&groupName=test'`
 
-## 4. 更多Nacos docker使用用例
+## 4. More Nacos Docker Use Cases
 
-Nacos 社区提供了一系列的docker compose文件，您可以参考这些文件进行更多场景的Nacos部署。
+The Nacos community provides a series of Docker Compose files. You can refer to these files to deploy Nacos in more scenarios.
 
-使用此快速开始方法进行Nacos安装及部署[Docker Compose](https://docs.docker.com/compose/)。
+To install and deploy Nacos using this quick start method, use [Docker Compose](https://docs.docker.com/compose/).
 
-### 4.1. 下载 nacos-docker 项目
+### 4.1. Download the nacos-docker Project
 
 ```powershell
 git clone https://github.com/nacos-group/nacos-docker.git
 cd nacos-docker
 ```
-### 4.2 使用docker-compose命令，启动Nacos服务
+### 4.2. Use docker-compose to Start Nacos
 
-> 首次执行命令时，会自动下载所需的相关Docker镜像，需要等待的时长取决于网络速度。您也可以提前下载好相关镜像，以缩短执行部署命令的等待时间。
+> When this command is executed for the first time, the required Docker images are automatically downloaded. The waiting time depends on your network speed. You can also download the images in advance to reduce the waiting time when running the deployment command.
 
 ```powershell
 docker-compose -f example/standalone-derby.yaml up
 ```
 
-或
+Or
 
 ```powershell
 cd example
 ./mysql-init.sh && docker-compose -f standalone-mysql.yaml up
 ```
 
-其他`example`目录下的文件，可参考[Nacos Docker](https://github.com/nacos-group/nacos-docker/tree/master/example)
+For other files in the `example` directory, see [Nacos Docker](https://github.com/nacos-group/nacos-docker/tree/master/example).
 
 ## Nacos + Grafana + Prometheus
-参考：[Nacos监控指南](../guide/admin/monitor-guide.md)
+Reference: [Nacos Monitoring Guide](../guide/admin/monitor-guide.md)
 
-**Note**:  grafana创建一个新数据源时，数据源地址必须是 **http://prometheus:9090**
+**Note**: When Grafana creates a new data source, the data source address must be **http://prometheus:9090**.
 
-## 相关项目
+## Related Projects
 
 * [Nacos](https://github.com/alibaba/nacos)
 * [Nacos Docker](https://github.com/nacos-group/nacos-docker)
