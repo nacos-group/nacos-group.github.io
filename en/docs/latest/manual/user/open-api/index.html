@@ -93,15 +93,15 @@ starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astr
 <h2 id="1-configuration-management">1. Configuration Management</h2>
 <aside aria-label="注意" class="starlight-aside starlight-aside--note"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 11C11.7348 11 11.4804 11.1054 11.2929 11.2929C11.1054 11.4804 11 11.7348 11 12V16C11 16.2652 11.1054 16.5196 11.2929 16.7071C11.4804 16.8946 11.7348 17 12 17C12.2652 17 12.5196 16.8946 12.7071 16.7071C12.8946 16.5196 13 16.2652 13 16V12C13 11.7348 12.8946 11.4804 12.7071 11.2929C12.5196 11.1054 12.2652 11 12 11ZM12.38 7.08C12.1365 6.97998 11.8635 6.97998 11.62 7.08C11.4973 7.12759 11.3851 7.19896 11.29 7.29C11.2017 7.3872 11.1306 7.49882 11.08 7.62C11.024 7.73868 10.9966 7.86882 11 8C10.9992 8.13161 11.0245 8.26207 11.0742 8.38391C11.124 8.50574 11.1973 8.61656 11.29 8.71C11.3872 8.79833 11.4988 8.86936 11.62 8.92C11.7715 8.98224 11.936 9.00632 12.099 8.99011C12.2619 8.97391 12.4184 8.91792 12.5547 8.82707C12.691 8.73622 12.8029 8.61328 12.8805 8.46907C12.9582 8.32486 12.9992 8.16378 13 8C12.9963 7.73523 12.8927 7.48163 12.71 7.29C12.6149 7.19896 12.5028 7.12759 12.38 7.08ZM12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 10.6868 21.7413 9.38642 21.2388 8.17317C20.7363 6.95991 19.9997 5.85752 19.0711 4.92893C18.1425 4.00035 17.0401 3.26375 15.8268 2.7612C14.6136 2.25866 13.3132 2 12 2ZM12 20C10.4178 20 8.87104 19.5308 7.55544 18.6518C6.23985 17.7727 5.21447 16.5233 4.60897 15.0615C4.00347 13.5997 3.84504 11.9911 4.15372 10.4393C4.4624 8.88743 5.22433 7.46197 6.34315 6.34315C7.46197 5.22433 8.88743 4.4624 10.4393 4.15372C11.9911 3.84504 13.5997 4.00346 15.0615 4.60896C16.5233 5.21447 17.7727 6.23984 18.6518 7.55544C19.5308 8.87103 20 10.4177 20 12C20 14.1217 19.1572 16.1566 17.6569 17.6569C16.1566 19.1571 14.1217 20 12 20Z"></path></svg>注意</p><section class="starlight-aside__content"><p>The HTTP OpenAPI in Nacos 3.X does not provide APIs for publishing or deleting configurations. <code dir="auto">Regular applications</code>, <code dir="auto">microservice applications</code>, and other <code dir="auto">non-control-plane</code> or <code dir="auto">non-gateway</code> applications should consume configurations rather than publish them. To publish or delete configurations, use the <a href="../../admin/admin-api/" referrerpolicy="unsafe-url">Admin API</a>.</p><p>In addition, Nacos 3.X will remove long-polling based configuration listening and keep configuration listening over long-lived connections only. Therefore, the HTTP OpenAPI in Nacos 3.X does not provide configuration listening APIs. You can poll <code dir="auto">Get Configuration</code> and compare the <code dir="auto">md5</code> value to determine whether the configuration needs to be updated.</p></section></aside>
 <h3 id="11-get-configuration">1.1. Get Configuration</h3>
-<h4 id="接口描述">接口描述</h4>
+<h4 id="description">Description</h4>
 <p>Get the specified configuration.</p>
-<h4 id="起始版本">起始版本</h4>
+<h4 id="since">Since</h4>
 <p><code dir="auto">3.0.0</code></p>
-<h4 id="请求方式">请求方式</h4>
+<h4 id="request-method">Request Method</h4>
 <p><code dir="auto">GET</code></p>
-<h4 id="请求url">请求URL</h4>
+<h4 id="request-url">Request URL</h4>
 <p><code dir="auto">/nacos/v3/client/cs/config</code></p>
-<h4 id="请求头">请求头</h4>
+<h4 id="request-headers">Request Headers</h4>
 
 
 
@@ -125,8 +125,8 @@ starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astr
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>是否必填</th><th>描述说明</th></tr></thead><tbody><tr><td><code dir="auto">User-Agent</code></td><td><code dir="auto">string</code></td><td>否</td><td>User agent. It is empty by default and is usually <code dir="auto">Nacos-${program-language}-Client:v${version}</code>.</td></tr><tr><td><code dir="auto">Client-Version</code></td><td><code dir="auto">string</code></td><td>否</td><td>Client version. It is empty by default and is usually <code dir="auto">Nacos-${program-language}-Client:v${version}</code>.</td></tr></tbody></table>
-<h4 id="请求参数">请求参数</h4>
+<table><thead><tr><th>Name</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">User-Agent</code></td><td><code dir="auto">string</code></td><td>No</td><td>User agent. It is empty by default and is usually <code dir="auto">Nacos-${program-language}-Client:v${version}</code>.</td></tr><tr><td><code dir="auto">Client-Version</code></td><td><code dir="auto">string</code></td><td>No</td><td>Client version. It is empty by default and is usually <code dir="auto">Nacos-${program-language}-Client:v${version}</code>.</td></tr></tbody></table>
+<h4 id="request-parameters">Request Parameters</h4>
 
 
 
@@ -156,9 +156,9 @@ starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astr
 
 
 
-<table><thead><tr><th>参数名</th><th>类型</th><th>必填</th><th>参数描述</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>否</td><td>Namespace. Defaults to <code dir="auto">public</code>, which is equivalent to <code dir="auto">''</code>.</td></tr><tr><td><code dir="auto">groupName</code></td><td><code dir="auto">string</code></td><td><strong>是</strong></td><td>Configuration group name.</td></tr><tr><td><code dir="auto">dataId</code></td><td><code dir="auto">string</code></td><td><strong>是</strong></td><td>Configuration name.</td></tr></tbody></table>
-<h4 id="返回数据">返回数据</h4>
-<p>The response body follows the <a href="../overview/api-overview/#32-http-api-%E7%BB%9F%E4%B8%80%E8%BF%94%E5%9B%9E%E4%BD%93%E6%A0%BC%E5%BC%8F" referrerpolicy="unsafe-url">Nacos OpenAPI common response format</a>. The following table describes only the fields in <code dir="auto">data</code>.</p>
+<table><thead><tr><th>Name</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>No</td><td>Namespace. Defaults to <code dir="auto">public</code>, which is equivalent to <code dir="auto">''</code>.</td></tr><tr><td><code dir="auto">groupName</code></td><td><code dir="auto">string</code></td><td><strong>Yes</strong></td><td>Configuration group name.</td></tr><tr><td><code dir="auto">dataId</code></td><td><code dir="auto">string</code></td><td><strong>Yes</strong></td><td>Configuration name.</td></tr></tbody></table>
+<h4 id="response-data">Response Data</h4>
+<p>The response body follows the <a href="../overview/api-overview/#32-http-api-response-format" referrerpolicy="unsafe-url">Nacos OpenAPI common response format</a>. The following table describes only the fields in <code dir="auto">data</code>.</p>
 
 
 
@@ -199,31 +199,31 @@ starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astr
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">content</code></td><td><code dir="auto">string</code></td><td>Configuration content.</td></tr><tr><td><code dir="auto">encryptedDataKey</code></td><td><code dir="auto">string</code></td><td>Encryption/decryption key of the configuration. This value exists only when a configuration encryption plugin is used.</td></tr><tr><td><code dir="auto">contentType</code></td><td><code dir="auto">string</code></td><td>Configuration type, such as <code dir="auto">TEXT</code> or <code dir="auto">JSON</code>.</td></tr><tr><td><code dir="auto">md5</code></td><td><code dir="auto">string</code></td><td>MD5 value of the configuration.</td></tr><tr><td><code dir="auto">lastModified</code></td><td><code dir="auto">integer</code></td><td>Last modification time of the configuration.</td></tr><tr><td><code dir="auto">beta</code></td><td><code dir="auto">boolean</code></td><td>Whether the configuration has a beta configuration.</td></tr></tbody></table>
+<table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">content</code></td><td><code dir="auto">string</code></td><td>Configuration content.</td></tr><tr><td><code dir="auto">encryptedDataKey</code></td><td><code dir="auto">string</code></td><td>Encryption/decryption key of the configuration. This value exists only when a configuration encryption plugin is used.</td></tr><tr><td><code dir="auto">contentType</code></td><td><code dir="auto">string</code></td><td>Configuration type, such as <code dir="auto">TEXT</code> or <code dir="auto">JSON</code>.</td></tr><tr><td><code dir="auto">md5</code></td><td><code dir="auto">string</code></td><td>MD5 value of the configuration.</td></tr><tr><td><code dir="auto">lastModified</code></td><td><code dir="auto">integer</code></td><td>Last modification time of the configuration.</td></tr><tr><td><code dir="auto">beta</code></td><td><code dir="auto">boolean</code></td><td>Whether the configuration has a beta configuration.</td></tr></tbody></table>
 <p>Other fields are reserved and currently unused. You can ignore them.</p>
-<h4 id="示例">示例</h4>
+<h4 id="examples">Examples</h4>
 <ul>
-<li>请求示例</li>
+<li>Request example</li>
 </ul>
 <div class="expressive-code"><link rel="stylesheet" href="/_astro/ec.n9pre.css"><script type="module" src="/_astro/ec.sgewm.js"></script><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#B392F0">curl</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">-X</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">GET</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">'127.0.0.1:8848/nacos/v3/client/cs/config?dataId=test&#x26;groupName=test'</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="curl -X GET &#x27;127.0.0.1:8848/nacos/v3/client/cs/config?dataId=test&#x26;groupName=test&#x27;"><div></div></button></div></figure></div>
 <ul>
-<li>返回示例</li>
+<li>Response example</li>
 </ul>
 <div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#E1E4E8">{</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"code"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">0</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"message"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"success"</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"data"</span><span style="--0:#E1E4E8">: {</span></div><div class="ec-line"><span style="--0:#E1E4E8">    </span><span style="--0:#79B8FF">"resultCode"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">200</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">    </span><span style="--0:#79B8FF">"errorCode"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">0</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">    </span><span style="--0:#79B8FF">"message"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">null</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">    </span><span style="--0:#79B8FF">"requestId"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">null</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">    </span><span style="--0:#79B8FF">"content"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"test"</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">    </span><span style="--0:#79B8FF">"encryptedDataKey"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">null</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">    </span><span style="--0:#79B8FF">"contentType"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"text"</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">    </span><span style="--0:#79B8FF">"md5"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"098f6bcd4621d373cade4e832627b4f6"</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">    </span><span style="--0:#79B8FF">"lastModified"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">1743151634823</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">    </span><span style="--0:#79B8FF">"tag"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">null</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">    </span><span style="--0:#79B8FF">"beta"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">false</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">    </span><span style="--0:#79B8FF">"success"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">true</span></div><div class="ec-line"><span style="--0:#E1E4E8">  }</span></div><div class="ec-line"><span style="--0:#E1E4E8">}</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="{  &#x22;code&#x22;: 0,  &#x22;message&#x22;: &#x22;success&#x22;,  &#x22;data&#x22;: {    &#x22;resultCode&#x22;: 200,    &#x22;errorCode&#x22;: 0,    &#x22;message&#x22;: null,    &#x22;requestId&#x22;: null,    &#x22;content&#x22;: &#x22;test&#x22;,    &#x22;encryptedDataKey&#x22;: null,    &#x22;contentType&#x22;: &#x22;text&#x22;,    &#x22;md5&#x22;: &#x22;098f6bcd4621d373cade4e832627b4f6&#x22;,    &#x22;lastModified&#x22;: 1743151634823,    &#x22;tag&#x22;: null,    &#x22;beta&#x22;: false,    &#x22;success&#x22;: true  }}"><div></div></button></div></figure></div>
 <h2 id="2-service-discovery">2. Service Discovery</h2>
 <aside aria-label="注意" class="starlight-aside starlight-aside--note"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 11C11.7348 11 11.4804 11.1054 11.2929 11.2929C11.1054 11.4804 11 11.7348 11 12V16C11 16.2652 11.1054 16.5196 11.2929 16.7071C11.4804 16.8946 11.7348 17 12 17C12.2652 17 12.5196 16.8946 12.7071 16.7071C12.8946 16.5196 13 16.2652 13 16V12C13 11.7348 12.8946 11.4804 12.7071 11.2929C12.5196 11.1054 12.2652 11 12 11ZM12.38 7.08C12.1365 6.97998 11.8635 6.97998 11.62 7.08C11.4973 7.12759 11.3851 7.19896 11.29 7.29C11.2017 7.3872 11.1306 7.49882 11.08 7.62C11.024 7.73868 10.9966 7.86882 11 8C10.9992 8.13161 11.0245 8.26207 11.0742 8.38391C11.124 8.50574 11.1973 8.61656 11.29 8.71C11.3872 8.79833 11.4988 8.86936 11.62 8.92C11.7715 8.98224 11.936 9.00632 12.099 8.99011C12.2619 8.97391 12.4184 8.91792 12.5547 8.82707C12.691 8.73622 12.8029 8.61328 12.8805 8.46907C12.9582 8.32486 12.9992 8.16378 13 8C12.9963 7.73523 12.8927 7.48163 12.71 7.29C12.6149 7.19896 12.5028 7.12759 12.38 7.08ZM12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 10.6868 21.7413 9.38642 21.2388 8.17317C20.7363 6.95991 19.9997 5.85752 19.0711 4.92893C18.1425 4.00035 17.0401 3.26375 15.8268 2.7612C14.6136 2.25866 13.3132 2 12 2ZM12 20C10.4178 20 8.87104 19.5308 7.55544 18.6518C6.23985 17.7727 5.21447 16.5233 4.60897 15.0615C4.00347 13.5997 3.84504 11.9911 4.15372 10.4393C4.4624 8.88743 5.22433 7.46197 6.34315 6.34315C7.46197 5.22433 8.88743 4.4624 10.4393 4.15372C11.9911 3.84504 13.5997 4.00346 15.0615 4.60896C16.5233 5.21447 17.7727 6.23984 18.6518 7.55544C19.5308 8.87103 20 10.4177 20 12C20 14.1217 19.1572 16.1566 17.6569 17.6569C16.1566 19.1571 14.1217 20 12 20Z"></path></svg>注意</p><section class="starlight-aside__content"><p>The HTTP OpenAPI in Nacos 3.X does not provide APIs such as querying the full service list. <code dir="auto">Regular applications</code>, <code dir="auto">microservice applications</code>, and other <code dir="auto">non-control-plane</code> or <code dir="auto">non-gateway</code> applications should only need to register themselves as instances of a service, deregister themselves from a service, or get the instance list of a known downstream service for business calls. They should not retrieve all services in the registry.</p><p>To get the full service list, use the <a href="../../admin/admin-api/" referrerpolicy="unsafe-url">Admin API</a>.</p></section></aside>
 <h3 id="21-registerrenew-instance">2.1. Register/Renew Instance</h3>
-<h4 id="接口描述-1">接口描述</h4>
+<h4 id="description-1">Description</h4>
 <p>Register or renew an instance.</p>
 <aside aria-label="注意" class="starlight-aside starlight-aside--note"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 11C11.7348 11 11.4804 11.1054 11.2929 11.2929C11.1054 11.4804 11 11.7348 11 12V16C11 16.2652 11.1054 16.5196 11.2929 16.7071C11.4804 16.8946 11.7348 17 12 17C12.2652 17 12.5196 16.8946 12.7071 16.7071C12.8946 16.5196 13 16.2652 13 16V12C13 11.7348 12.8946 11.4804 12.7071 11.2929C12.5196 11.1054 12.2652 11 12 11ZM12.38 7.08C12.1365 6.97998 11.8635 6.97998 11.62 7.08C11.4973 7.12759 11.3851 7.19896 11.29 7.29C11.2017 7.3872 11.1306 7.49882 11.08 7.62C11.024 7.73868 10.9966 7.86882 11 8C10.9992 8.13161 11.0245 8.26207 11.0742 8.38391C11.124 8.50574 11.1973 8.61656 11.29 8.71C11.3872 8.79833 11.4988 8.86936 11.62 8.92C11.7715 8.98224 11.936 9.00632 12.099 8.99011C12.2619 8.97391 12.4184 8.91792 12.5547 8.82707C12.691 8.73622 12.8029 8.61328 12.8805 8.46907C12.9582 8.32486 12.9992 8.16378 13 8C12.9963 7.73523 12.8927 7.48163 12.71 7.29C12.6149 7.19896 12.5028 7.12759 12.38 7.08ZM12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 10.6868 21.7413 9.38642 21.2388 8.17317C20.7363 6.95991 19.9997 5.85752 19.0711 4.92893C18.1425 4.00035 17.0401 3.26375 15.8268 2.7612C14.6136 2.25866 13.3132 2 12 2ZM12 20C10.4178 20 8.87104 19.5308 7.55544 18.6518C6.23985 17.7727 5.21447 16.5233 4.60897 15.0615C4.00347 13.5997 3.84504 11.9911 4.15372 10.4393C4.4624 8.88743 5.22433 7.46197 6.34315 6.34315C7.46197 5.22433 8.88743 4.4624 10.4393 4.15372C11.9911 3.84504 13.5997 4.00346 15.0615 4.60896C16.5233 5.21447 17.7727 6.23984 18.6518 7.55544C19.5308 8.87103 20 10.4177 20 12C20 14.1217 19.1572 16.1566 17.6569 17.6569C16.1566 19.1571 14.1217 20 12 20Z"></path></svg>注意</p><section class="starlight-aside__content"><p>When an instance registered through the HTTP OpenAPI is an <strong>ephemeral instance</strong>, it must be renewed periodically. In the HTTP OpenAPI of Nacos 3.X, the renewal API and registration API are merged and distinguished by the <code dir="auto">heartBeat</code> parameter.</p><p>For renewal requests, Nacos does not parse metadata and related fields in the request. In other words, renewal requests ignore the <code dir="auto">healthy</code>, <code dir="auto">weight</code>, <code dir="auto">enabled</code>, and <code dir="auto">metadata</code> fields.
 If a renewal request returns error code <code dir="auto">21003</code>, the instance has expired and been removed. The client should re-register the instance with complete information and set <code dir="auto">heartBeat=false</code>, then continue renewal requests after registration succeeds.</p><p>Calling the registration request repeatedly can also renew the instance, but it renews by updating the instance and consumes more resources. Therefore, after registration succeeds, use renewal instead of repeated registration updates.</p></section></aside>
-<h4 id="起始版本-1">起始版本</h4>
+<h4 id="since-1">Since</h4>
 <p><code dir="auto">3.0.0</code></p>
-<h4 id="请求方式-1">请求方式</h4>
+<h4 id="request-method-1">Request Method</h4>
 <p><code dir="auto">POST</code></p>
-<h4 id="请求url-1">请求URL</h4>
+<h4 id="request-url-1">Request URL</h4>
 <p><code dir="auto">/nacos/v3/client/ns/instance</code></p>
-<h4 id="请求头-1">请求头</h4>
+<h4 id="request-headers-1">Request Headers</h4>
 
 
 
@@ -247,8 +247,8 @@ If a renewal request returns error code <code dir="auto">21003</code>, the insta
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>是否必填</th><th>描述说明</th></tr></thead><tbody><tr><td><code dir="auto">User-Agent</code></td><td><code dir="auto">string</code></td><td>否</td><td>User agent. It is empty by default and is usually <code dir="auto">Nacos-${program-language}-Client:v${version}</code>.</td></tr><tr><td><code dir="auto">Client-Version</code></td><td><code dir="auto">string</code></td><td>否</td><td>Client version. It is empty by default and is usually <code dir="auto">Nacos-${program-language}-Client:v${version}</code>.</td></tr></tbody></table>
-<h4 id="请求参数-1">请求参数</h4>
+<table><thead><tr><th>Name</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">User-Agent</code></td><td><code dir="auto">string</code></td><td>No</td><td>User agent. It is empty by default and is usually <code dir="auto">Nacos-${program-language}-Client:v${version}</code>.</td></tr><tr><td><code dir="auto">Client-Version</code></td><td><code dir="auto">string</code></td><td>No</td><td>Client version. It is empty by default and is usually <code dir="auto">Nacos-${program-language}-Client:v${version}</code>.</td></tr></tbody></table>
+<h4 id="request-parameters-1">Request Parameters</h4>
 
 
 
@@ -326,9 +326,9 @@ If a renewal request returns error code <code dir="auto">21003</code>, the insta
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>是否必填</th><th>描述说明</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>否</td><td>Namespace ID. Defaults to <code dir="auto">public</code>.</td></tr><tr><td><code dir="auto">groupName</code></td><td><code dir="auto">string</code></td><td>否</td><td>Group name. Defaults to <code dir="auto">DEFAULT_GROUP</code>.</td></tr><tr><td><code dir="auto">serviceName</code></td><td><code dir="auto">string</code></td><td><strong>是</strong></td><td>Service name.</td></tr><tr><td><code dir="auto">ip</code></td><td><code dir="auto">string</code></td><td><strong>是</strong></td><td>IP address.</td></tr><tr><td><code dir="auto">port</code></td><td><code dir="auto">integer</code></td><td><strong>是</strong></td><td>Port.</td></tr><tr><td><code dir="auto">clusterName</code></td><td><code dir="auto">string</code></td><td>否</td><td>Cluster name. Defaults to <code dir="auto">DEFAULT</code>.</td></tr><tr><td><code dir="auto">healthy</code></td><td><code dir="auto">boolean</code></td><td>否</td><td>Whether the instance is healthy. Defaults to <code dir="auto">true</code>.</td></tr><tr><td><code dir="auto">weight</code></td><td><code dir="auto">number</code></td><td>否</td><td>Instance weight. Defaults to <code dir="auto">1.0</code>.</td></tr><tr><td><code dir="auto">enabled</code></td><td><code dir="auto">boolean</code></td><td>否</td><td>Whether the instance is enabled. Defaults to <code dir="auto">true</code>.</td></tr><tr><td><code dir="auto">metadata</code></td><td><code dir="auto">string</code></td><td>否</td><td>Instance metadata as a JSON object string.</td></tr><tr><td><code dir="auto">heartBeat</code></td><td><code dir="auto">boolean</code></td><td>否</td><td>Whether this is a renewal request. Defaults to <code dir="auto">false</code>.</td></tr></tbody></table>
-<h4 id="返回数据-1">返回数据</h4>
-<p>The response body follows the <a href="../overview/api-overview/#32-http-api-%E7%BB%9F%E4%B8%80%E8%BF%94%E5%9B%9E%E4%BD%93%E6%A0%BC%E5%BC%8F" referrerpolicy="unsafe-url">Nacos OpenAPI common response format</a>. The following table describes only the fields in <code dir="auto">data</code>.</p>
+<table><thead><tr><th>Name</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>No</td><td>Namespace ID. Defaults to <code dir="auto">public</code>.</td></tr><tr><td><code dir="auto">groupName</code></td><td><code dir="auto">string</code></td><td>No</td><td>Group name. Defaults to <code dir="auto">DEFAULT_GROUP</code>.</td></tr><tr><td><code dir="auto">serviceName</code></td><td><code dir="auto">string</code></td><td><strong>Yes</strong></td><td>Service name.</td></tr><tr><td><code dir="auto">ip</code></td><td><code dir="auto">string</code></td><td><strong>Yes</strong></td><td>IP address.</td></tr><tr><td><code dir="auto">port</code></td><td><code dir="auto">integer</code></td><td><strong>Yes</strong></td><td>Port.</td></tr><tr><td><code dir="auto">clusterName</code></td><td><code dir="auto">string</code></td><td>No</td><td>Cluster name. Defaults to <code dir="auto">DEFAULT</code>.</td></tr><tr><td><code dir="auto">healthy</code></td><td><code dir="auto">boolean</code></td><td>No</td><td>Whether the instance is healthy. Defaults to <code dir="auto">true</code>.</td></tr><tr><td><code dir="auto">weight</code></td><td><code dir="auto">number</code></td><td>No</td><td>Instance weight. Defaults to <code dir="auto">1.0</code>.</td></tr><tr><td><code dir="auto">enabled</code></td><td><code dir="auto">boolean</code></td><td>No</td><td>Whether the instance is enabled. Defaults to <code dir="auto">true</code>.</td></tr><tr><td><code dir="auto">metadata</code></td><td><code dir="auto">string</code></td><td>No</td><td>Instance metadata as a JSON object string.</td></tr><tr><td><code dir="auto">heartBeat</code></td><td><code dir="auto">boolean</code></td><td>No</td><td>Whether this is a renewal request. Defaults to <code dir="auto">false</code>.</td></tr></tbody></table>
+<h4 id="response-data-1">Response Data</h4>
+<p>The response body follows the <a href="../overview/api-overview/#32-http-api-response-format" referrerpolicy="unsafe-url">Nacos OpenAPI common response format</a>. The following table describes only the fields in <code dir="auto">data</code>.</p>
 
 
 
@@ -344,27 +344,27 @@ If a renewal request returns error code <code dir="auto">21003</code>, the insta
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">data</code></td><td><code dir="auto">string</code></td><td>Whether registration or renewal succeeded. Returns <code dir="auto">ok</code> on success, or the failure reason on failure.</td></tr></tbody></table>
-<h4 id="示例-1">示例</h4>
+<table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">data</code></td><td><code dir="auto">string</code></td><td>Whether registration or renewal succeeded. Returns <code dir="auto">ok</code> on success, or the failure reason on failure.</td></tr></tbody></table>
+<h4 id="examples-1">Examples</h4>
 <ul>
-<li>请求示例</li>
+<li>Request example</li>
 </ul>
 <div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#99A0A6"># Register instance</span></div><div class="ec-line"><span style="--0:#B392F0">curl</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">-X</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">POST</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">"127.0.0.1:8848/nacos/v3/client/ns/instance"</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">-d</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">"serviceName=test1&#x26;ip=127.0.0.1&#x26;port=3306"</span></div><div class="ec-line">
 </div><div class="ec-line"><span style="--0:#99A0A6"># Renew instance</span></div><div class="ec-line"><span style="--0:#B392F0">curl</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">-X</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">POST</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">"127.0.0.1:8848/nacos/v3/client/ns/instance"</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">-d</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">"serviceName=test1&#x26;ip=127.0.0.1&#x26;port=3306&#x26;heartBeat=true"</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="curl -X POST &#x22;127.0.0.1:8848/nacos/v3/client/ns/instance&#x22; -d &#x22;serviceName=test1&#x26;ip=127.0.0.1&#x26;port=3306&#x22;curl -X POST &#x22;127.0.0.1:8848/nacos/v3/client/ns/instance&#x22; -d &#x22;serviceName=test1&#x26;ip=127.0.0.1&#x26;port=3306&#x26;heartBeat=true&#x22;"><div></div></button></div></figure></div>
 <ul>
-<li>返回示例</li>
+<li>Response example</li>
 </ul>
 <div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#E1E4E8">{</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"code"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">0</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"message"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"success"</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"data"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"ok"</span></div><div class="ec-line"><span style="--0:#E1E4E8">}</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="{  &#x22;code&#x22;: 0,  &#x22;message&#x22;: &#x22;success&#x22;,  &#x22;data&#x22;: &#x22;ok&#x22;}"><div></div></button></div></figure></div>
 <h3 id="22-deregister-instance">2.2. Deregister Instance</h3>
-<h4 id="接口描述-2">接口描述</h4>
+<h4 id="description-2">Description</h4>
 <p>Deregister the specified instance.</p>
-<h4 id="起始版本-2">起始版本</h4>
+<h4 id="since-2">Since</h4>
 <p><code dir="auto">3.0.0</code></p>
-<h4 id="请求方式-2">请求方式</h4>
+<h4 id="request-method-2">Request Method</h4>
 <p><code dir="auto">DELETE</code></p>
-<h4 id="请求url-2">请求URL</h4>
+<h4 id="request-url-2">Request URL</h4>
 <p><code dir="auto">/nacos/v3/client/ns/instance</code></p>
-<h4 id="请求头-2">请求头</h4>
+<h4 id="request-headers-2">Request Headers</h4>
 
 
 
@@ -388,8 +388,8 @@ If a renewal request returns error code <code dir="auto">21003</code>, the insta
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>是否必填</th><th>描述说明</th></tr></thead><tbody><tr><td><code dir="auto">User-Agent</code></td><td><code dir="auto">string</code></td><td>否</td><td>User agent. It is empty by default and is usually <code dir="auto">Nacos-${program-language}-Client:v${version}</code>.</td></tr><tr><td><code dir="auto">Client-Version</code></td><td><code dir="auto">string</code></td><td>否</td><td>Client version. It is empty by default and is usually <code dir="auto">Nacos-${program-language}-Client:v${version}</code>.</td></tr></tbody></table>
-<h4 id="请求参数-2">请求参数</h4>
+<table><thead><tr><th>Name</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">User-Agent</code></td><td><code dir="auto">string</code></td><td>No</td><td>User agent. It is empty by default and is usually <code dir="auto">Nacos-${program-language}-Client:v${version}</code>.</td></tr><tr><td><code dir="auto">Client-Version</code></td><td><code dir="auto">string</code></td><td>No</td><td>Client version. It is empty by default and is usually <code dir="auto">Nacos-${program-language}-Client:v${version}</code>.</td></tr></tbody></table>
+<h4 id="request-parameters-2">Request Parameters</h4>
 
 
 
@@ -437,9 +437,9 @@ If a renewal request returns error code <code dir="auto">21003</code>, the insta
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>必填</th><th>参数描述</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>否</td><td>Namespace ID. Defaults to <code dir="auto">public</code>.</td></tr><tr><td><code dir="auto">groupName</code></td><td><code dir="auto">string</code></td><td>否</td><td>Group name. Defaults to <code dir="auto">DEFAULT_GROUP</code>.</td></tr><tr><td><code dir="auto">serviceName</code></td><td><code dir="auto">string</code></td><td><strong>是</strong></td><td>Service name.</td></tr><tr><td><code dir="auto">ip</code></td><td><code dir="auto">string</code></td><td><strong>是</strong></td><td>IP address.</td></tr><tr><td><code dir="auto">port</code></td><td><code dir="auto">integer</code></td><td><strong>是</strong></td><td>Port.</td></tr><tr><td><code dir="auto">clusterName</code></td><td><code dir="auto">string</code></td><td>否</td><td>Cluster name. Defaults to <code dir="auto">DEFAULT</code>.</td></tr></tbody></table>
-<h4 id="返回数据-2">返回数据</h4>
-<p>The response body follows the <a href="../overview/api-overview/#32-http-api-%E7%BB%9F%E4%B8%80%E8%BF%94%E5%9B%9E%E4%BD%93%E6%A0%BC%E5%BC%8F" referrerpolicy="unsafe-url">Nacos OpenAPI common response format</a>. The following table describes only the fields in <code dir="auto">data</code>.</p>
+<table><thead><tr><th>Name</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>No</td><td>Namespace ID. Defaults to <code dir="auto">public</code>.</td></tr><tr><td><code dir="auto">groupName</code></td><td><code dir="auto">string</code></td><td>No</td><td>Group name. Defaults to <code dir="auto">DEFAULT_GROUP</code>.</td></tr><tr><td><code dir="auto">serviceName</code></td><td><code dir="auto">string</code></td><td><strong>Yes</strong></td><td>Service name.</td></tr><tr><td><code dir="auto">ip</code></td><td><code dir="auto">string</code></td><td><strong>Yes</strong></td><td>IP address.</td></tr><tr><td><code dir="auto">port</code></td><td><code dir="auto">integer</code></td><td><strong>Yes</strong></td><td>Port.</td></tr><tr><td><code dir="auto">clusterName</code></td><td><code dir="auto">string</code></td><td>No</td><td>Cluster name. Defaults to <code dir="auto">DEFAULT</code>.</td></tr></tbody></table>
+<h4 id="response-data-2">Response Data</h4>
+<p>The response body follows the <a href="../overview/api-overview/#32-http-api-response-format" referrerpolicy="unsafe-url">Nacos OpenAPI common response format</a>. The following table describes only the fields in <code dir="auto">data</code>.</p>
 
 
 
@@ -455,27 +455,27 @@ If a renewal request returns error code <code dir="auto">21003</code>, the insta
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">data</code></td><td><code dir="auto">string</code></td><td>Whether deregistration succeeded. Returns <code dir="auto">ok</code> on success, or the failure reason on failure.</td></tr></tbody></table>
-<h4 id="示例-2">示例</h4>
+<table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">data</code></td><td><code dir="auto">string</code></td><td>Whether deregistration succeeded. Returns <code dir="auto">ok</code> on success, or the failure reason on failure.</td></tr></tbody></table>
+<h4 id="examples-2">Examples</h4>
 <ul>
-<li>请求示例</li>
+<li>Request example</li>
 </ul>
 <div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#B392F0">curl</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">-X</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">DELETE</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">"127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=test1&#x26;ip=127.0.0.1&#x26;port=3306"</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="curl -X DELETE &#x22;127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=test1&#x26;ip=127.0.0.1&#x26;port=3306&#x22;"><div></div></button></div></figure></div>
 <ul>
-<li>返回示例</li>
+<li>Response example</li>
 </ul>
 <div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#E1E4E8">{</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"code"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">0</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"message"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"success"</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"data"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"ok"</span></div><div class="ec-line"><span style="--0:#E1E4E8">}</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="{  &#x22;code&#x22;: 0,  &#x22;message&#x22;: &#x22;success&#x22;,  &#x22;data&#x22;: &#x22;ok&#x22;}"><div></div></button></div></figure></div>
 <h3 id="23-list-instances-of-a-service">2.3. List Instances of a Service</h3>
-<h4 id="接口描述-3">接口描述</h4>
+<h4 id="description-3">Description</h4>
 <p>Query the detailed instance list under the specified service.</p>
 <aside aria-label="注意" class="starlight-aside starlight-aside--note"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 11C11.7348 11 11.4804 11.1054 11.2929 11.2929C11.1054 11.4804 11 11.7348 11 12V16C11 16.2652 11.1054 16.5196 11.2929 16.7071C11.4804 16.8946 11.7348 17 12 17C12.2652 17 12.5196 16.8946 12.7071 16.7071C12.8946 16.5196 13 16.2652 13 16V12C13 11.7348 12.8946 11.4804 12.7071 11.2929C12.5196 11.1054 12.2652 11 12 11ZM12.38 7.08C12.1365 6.97998 11.8635 6.97998 11.62 7.08C11.4973 7.12759 11.3851 7.19896 11.29 7.29C11.2017 7.3872 11.1306 7.49882 11.08 7.62C11.024 7.73868 10.9966 7.86882 11 8C10.9992 8.13161 11.0245 8.26207 11.0742 8.38391C11.124 8.50574 11.1973 8.61656 11.29 8.71C11.3872 8.79833 11.4988 8.86936 11.62 8.92C11.7715 8.98224 11.936 9.00632 12.099 8.99011C12.2619 8.97391 12.4184 8.91792 12.5547 8.82707C12.691 8.73622 12.8029 8.61328 12.8805 8.46907C12.9582 8.32486 12.9992 8.16378 13 8C12.9963 7.73523 12.8927 7.48163 12.71 7.29C12.6149 7.19896 12.5028 7.12759 12.38 7.08ZM12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 10.6868 21.7413 9.38642 21.2388 8.17317C20.7363 6.95991 19.9997 5.85752 19.0711 4.92893C18.1425 4.00035 17.0401 3.26375 15.8268 2.7612C14.6136 2.25866 13.3132 2 12 2ZM12 20C10.4178 20 8.87104 19.5308 7.55544 18.6518C6.23985 17.7727 5.21447 16.5233 4.60897 15.0615C4.00347 13.5997 3.84504 11.9911 4.15372 10.4393C4.4624 8.88743 5.22433 7.46197 6.34315 6.34315C7.46197 5.22433 8.88743 4.4624 10.4393 4.15372C11.9911 3.84504 13.5997 4.00346 15.0615 4.60896C16.5233 5.21447 17.7727 6.23984 18.6518 7.55544C19.5308 8.87103 20 10.4177 20 12C20 14.1217 19.1572 16.1566 17.6569 17.6569C16.1566 19.1571 14.1217 20 12 20Z"></path></svg>注意</p><section class="starlight-aside__content"><p>Because Nacos 3.X will remove UDP-based push support, clients that do not support gRPC long-lived push connections need to periodically pull the instance list so that they can detect instance changes in time and implement service subscription.</p></section></aside>
-<h4 id="起始版本-3">起始版本</h4>
+<h4 id="since-3">Since</h4>
 <p><code dir="auto">3.0.0</code></p>
-<h4 id="请求方式-3">请求方式</h4>
+<h4 id="request-method-3">Request Method</h4>
 <p><code dir="auto">GET</code></p>
-<h4 id="请求url-3">请求URL</h4>
+<h4 id="request-url-3">Request URL</h4>
 <p><code dir="auto">/nacos/v3/client/ns/instance/list</code></p>
-<h4 id="请求头-3">请求头</h4>
+<h4 id="request-headers-3">Request Headers</h4>
 
 
 
@@ -499,8 +499,8 @@ If a renewal request returns error code <code dir="auto">21003</code>, the insta
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>是否必填</th><th>描述说明</th></tr></thead><tbody><tr><td><code dir="auto">User-Agent</code></td><td><code dir="auto">string</code></td><td>否</td><td>User agent. It is empty by default and is usually <code dir="auto">Nacos-${program-language}-Client:v${version}</code>.</td></tr><tr><td><code dir="auto">Client-Version</code></td><td><code dir="auto">string</code></td><td>否</td><td>Client version. It is empty by default and is usually <code dir="auto">Nacos-${program-language}-Client:v${version}</code>.</td></tr></tbody></table>
-<h4 id="请求参数-3">请求参数</h4>
+<table><thead><tr><th>Name</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">User-Agent</code></td><td><code dir="auto">string</code></td><td>No</td><td>User agent. It is empty by default and is usually <code dir="auto">Nacos-${program-language}-Client:v${version}</code>.</td></tr><tr><td><code dir="auto">Client-Version</code></td><td><code dir="auto">string</code></td><td>No</td><td>Client version. It is empty by default and is usually <code dir="auto">Nacos-${program-language}-Client:v${version}</code>.</td></tr></tbody></table>
+<h4 id="request-parameters-3">Request Parameters</h4>
 
 
 
@@ -536,9 +536,9 @@ If a renewal request returns error code <code dir="auto">21003</code>, the insta
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>是否必填</th><th>描述说明</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>否</td><td>Namespace ID. Defaults to <code dir="auto">public</code>.</td></tr><tr><td><code dir="auto">groupName</code></td><td><code dir="auto">string</code></td><td>否</td><td>Group name. Defaults to <code dir="auto">DEFAULT_GROUP</code>.</td></tr><tr><td><code dir="auto">serviceName</code></td><td><code dir="auto">string</code></td><td><strong>是</strong></td><td>Service name.</td></tr><tr><td><code dir="auto">clusterName</code></td><td><code dir="auto">string</code></td><td>否</td><td>Cluster name. If not provided, instances of all clusters will be returned.</td></tr></tbody></table>
-<h4 id="返回数据-3">返回数据</h4>
-<p>The response body follows the <a href="../overview/api-overview/#32-http-api-%E7%BB%9F%E4%B8%80%E8%BF%94%E5%9B%9E%E4%BD%93%E6%A0%BC%E5%BC%8F" referrerpolicy="unsafe-url">Nacos OpenAPI common response format</a>. The following table describes only the fields in <code dir="auto">data</code>.</p>
+<table><thead><tr><th>Name</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>No</td><td>Namespace ID. Defaults to <code dir="auto">public</code>.</td></tr><tr><td><code dir="auto">groupName</code></td><td><code dir="auto">string</code></td><td>No</td><td>Group name. Defaults to <code dir="auto">DEFAULT_GROUP</code>.</td></tr><tr><td><code dir="auto">serviceName</code></td><td><code dir="auto">string</code></td><td><strong>Yes</strong></td><td>Service name.</td></tr><tr><td><code dir="auto">clusterName</code></td><td><code dir="auto">string</code></td><td>No</td><td>Cluster name. If not provided, instances of all clusters will be returned.</td></tr></tbody></table>
+<h4 id="response-data-3">Response Data</h4>
+<p>The response body follows the <a href="../overview/api-overview/#32-http-api-response-format" referrerpolicy="unsafe-url">Nacos OpenAPI common response format</a>. The following table describes only the fields in <code dir="auto">data</code>.</p>
 
 
 
@@ -614,27 +614,27 @@ If a renewal request returns error code <code dir="auto">21003</code>, the insta
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述说明</th></tr></thead><tbody><tr><td><code dir="auto">data</code></td><td><code dir="auto">array</code></td><td>Instance list.</td></tr><tr><td><code dir="auto">data.[i].ip</code></td><td><code dir="auto">string</code></td><td>Instance IP.</td></tr><tr><td><code dir="auto">data.[i].port</code></td><td><code dir="auto">integer</code></td><td>Instance port.</td></tr><tr><td><code dir="auto">data.[i].weight</code></td><td><code dir="auto">number</code></td><td>Instance weight.</td></tr><tr><td><code dir="auto">data.[i].healthy</code></td><td><code dir="auto">boolean</code></td><td>Whether the instance is healthy.</td></tr><tr><td><code dir="auto">data.[i].enabled</code></td><td><code dir="auto">boolean</code></td><td>Whether the instance is enabled.</td></tr><tr><td><code dir="auto">data.[i].ephemeral</code></td><td><code dir="auto">boolean</code></td><td>Whether the instance is ephemeral.</td></tr><tr><td><code dir="auto">data.[i].clusterName</code></td><td><code dir="auto">string</code></td><td>Cluster name of the instance.</td></tr><tr><td><code dir="auto">data.[i].serviceName</code></td><td><code dir="auto">string</code></td><td>Service name.</td></tr><tr><td><code dir="auto">data.[i].metadata</code></td><td><code dir="auto">map&#x3C;string, string></code></td><td>Instance metadata.</td></tr><tr><td><code dir="auto">data.[i].instanceHeartBeatTimeOut</code></td><td><code dir="auto">integer</code></td><td>Instance heartbeat timeout.</td></tr><tr><td><code dir="auto">data.[i].ipDeleteTimeout</code></td><td><code dir="auto">integer</code></td><td>Instance deletion timeout.</td></tr><tr><td><code dir="auto">data.[i].instanceHeartBeatInterval</code></td><td><code dir="auto">integer</code></td><td>Instance heartbeat interval.</td></tr></tbody></table>
-<h4 id="示例-3">示例</h4>
+<table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">data</code></td><td><code dir="auto">array</code></td><td>Instance list.</td></tr><tr><td><code dir="auto">data.[i].ip</code></td><td><code dir="auto">string</code></td><td>Instance IP.</td></tr><tr><td><code dir="auto">data.[i].port</code></td><td><code dir="auto">integer</code></td><td>Instance port.</td></tr><tr><td><code dir="auto">data.[i].weight</code></td><td><code dir="auto">number</code></td><td>Instance weight.</td></tr><tr><td><code dir="auto">data.[i].healthy</code></td><td><code dir="auto">boolean</code></td><td>Whether the instance is healthy.</td></tr><tr><td><code dir="auto">data.[i].enabled</code></td><td><code dir="auto">boolean</code></td><td>Whether the instance is enabled.</td></tr><tr><td><code dir="auto">data.[i].ephemeral</code></td><td><code dir="auto">boolean</code></td><td>Whether the instance is ephemeral.</td></tr><tr><td><code dir="auto">data.[i].clusterName</code></td><td><code dir="auto">string</code></td><td>Cluster name of the instance.</td></tr><tr><td><code dir="auto">data.[i].serviceName</code></td><td><code dir="auto">string</code></td><td>Service name.</td></tr><tr><td><code dir="auto">data.[i].metadata</code></td><td><code dir="auto">map&#x3C;string, string></code></td><td>Instance metadata.</td></tr><tr><td><code dir="auto">data.[i].instanceHeartBeatTimeOut</code></td><td><code dir="auto">integer</code></td><td>Instance heartbeat timeout.</td></tr><tr><td><code dir="auto">data.[i].ipDeleteTimeout</code></td><td><code dir="auto">integer</code></td><td>Instance deletion timeout.</td></tr><tr><td><code dir="auto">data.[i].instanceHeartBeatInterval</code></td><td><code dir="auto">integer</code></td><td>Instance heartbeat interval.</td></tr></tbody></table>
+<h4 id="examples-3">Examples</h4>
 <ul>
-<li>请求示例</li>
+<li>Request example</li>
 </ul>
 <div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#B392F0">curl</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">-X</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">GET</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">'127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=test1'</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="curl -X GET &#x27;127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=test1&#x27;"><div></div></button></div></figure></div>
 <ul>
-<li>返回示例</li>
+<li>Response example</li>
 </ul>
 <div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#E1E4E8">{</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"code"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">0</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"message"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"success"</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"data"</span><span style="--0:#E1E4E8">: [</span></div><div class="ec-line"><span style="--0:#E1E4E8">    {</span></div><div class="ec-line"><span style="--0:#E1E4E8">      </span><span style="--0:#79B8FF">"ip"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"127.0.0.1"</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">      </span><span style="--0:#79B8FF">"port"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">3306</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">      </span><span style="--0:#79B8FF">"weight"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">1.0</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">      </span><span style="--0:#79B8FF">"healthy"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">true</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">      </span><span style="--0:#79B8FF">"enabled"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">true</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">      </span><span style="--0:#79B8FF">"ephemeral"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">true</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">      </span><span style="--0:#79B8FF">"clusterName"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"DEFAULT"</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">      </span><span style="--0:#79B8FF">"serviceName"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"DEFAULT_GROUP@@test1"</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">      </span><span style="--0:#79B8FF">"metadata"</span><span style="--0:#E1E4E8">: {},</span></div><div class="ec-line"><span style="--0:#E1E4E8">      </span><span style="--0:#79B8FF">"ipDeleteTimeout"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">30000</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">      </span><span style="--0:#79B8FF">"instanceIdGenerator"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"simple"</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">      </span><span style="--0:#79B8FF">"instanceHeartBeatInterval"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">5000</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">      </span><span style="--0:#79B8FF">"instanceHeartBeatTimeOut"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">15000</span></div><div class="ec-line"><span style="--0:#E1E4E8">    }</span></div><div class="ec-line"><span style="--0:#E1E4E8">  ]</span></div><div class="ec-line"><span style="--0:#E1E4E8">}</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="{  &#x22;code&#x22;: 0,  &#x22;message&#x22;: &#x22;success&#x22;,  &#x22;data&#x22;: [    {      &#x22;ip&#x22;: &#x22;127.0.0.1&#x22;,      &#x22;port&#x22;: 3306,      &#x22;weight&#x22;: 1.0,      &#x22;healthy&#x22;: true,      &#x22;enabled&#x22;: true,      &#x22;ephemeral&#x22;: true,      &#x22;clusterName&#x22;: &#x22;DEFAULT&#x22;,      &#x22;serviceName&#x22;: &#x22;DEFAULT_GROUP@@test1&#x22;,      &#x22;metadata&#x22;: {},      &#x22;ipDeleteTimeout&#x22;: 30000,      &#x22;instanceIdGenerator&#x22;: &#x22;simple&#x22;,      &#x22;instanceHeartBeatInterval&#x22;: 5000,      &#x22;instanceHeartBeatTimeOut&#x22;: 15000    }  ]}"><div></div></button></div></figure></div>
 <h2 id="3-ai">3. AI</h2>
 <h3 id="31-query-prompt">3.1. Query Prompt</h3>
-<h4 id="接口描述-4">接口描述</h4>
+<h4 id="description-4">Description</h4>
 <p>Query Prompt by version, label, or latest (priority: version > label > latest); supports md5 for 304 conditional response.</p>
-<h4 id="起始版本-4">起始版本</h4>
+<h4 id="since-4">Since</h4>
 <p><code dir="auto">3.2.0</code></p>
-<h4 id="请求方式-4">请求方式</h4>
+<h4 id="request-method-4">Request Method</h4>
 <p><code dir="auto">GET</code></p>
-<h4 id="请求url-4">请求URL</h4>
+<h4 id="request-url-4">Request URL</h4>
 <p><code dir="auto">/nacos/v3/client/ai/prompt</code></p>
-<h4 id="请求参数-4">请求参数</h4>
+<h4 id="request-parameters-4">Request Parameters</h4>
 
 
 
@@ -676,9 +676,9 @@ If a renewal request returns error code <code dir="auto">21003</code>, the insta
 
 
 
-<table><thead><tr><th>参数名</th><th>类型</th><th>必填</th><th>参数描述</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>否</td><td>Namespace ID. Defaults to <code dir="auto">public</code>.</td></tr><tr><td><code dir="auto">promptKey</code></td><td><code dir="auto">string</code></td><td><strong>是</strong></td><td>Prompt key</td></tr><tr><td><code dir="auto">version</code></td><td><code dir="auto">string</code></td><td>否</td><td>Version (one of version, label, latest)</td></tr><tr><td><code dir="auto">label</code></td><td><code dir="auto">string</code></td><td>否</td><td>Label (one of version, label, latest)</td></tr><tr><td><code dir="auto">md5</code></td><td><code dir="auto">string</code></td><td>否</td><td>If matches server, response is 304</td></tr></tbody></table>
-<h4 id="返回数据-4">返回数据</h4>
-<p>The response body follows the <a href="../overview/api-overview/#32-http-api-%E7%BB%9F%E4%B8%80%E8%BF%94%E5%9B%9E%E4%BD%93%E6%A0%BC%E5%BC%8F" referrerpolicy="unsafe-url">Nacos OpenAPI common response format</a>. The following table describes only the fields in <code dir="auto">data</code>.</p>
+<table><thead><tr><th>Name</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>No</td><td>Namespace ID. Defaults to <code dir="auto">public</code>.</td></tr><tr><td><code dir="auto">promptKey</code></td><td><code dir="auto">string</code></td><td><strong>Yes</strong></td><td>Prompt key</td></tr><tr><td><code dir="auto">version</code></td><td><code dir="auto">string</code></td><td>No</td><td>Version (one of version, label, latest)</td></tr><tr><td><code dir="auto">label</code></td><td><code dir="auto">string</code></td><td>No</td><td>Label (one of version, label, latest)</td></tr><tr><td><code dir="auto">md5</code></td><td><code dir="auto">string</code></td><td>No</td><td>If matches server, response is 304</td></tr></tbody></table>
+<h4 id="response-data-4">Response Data</h4>
+<p>The response body follows the <a href="../overview/api-overview/#32-http-api-response-format" referrerpolicy="unsafe-url">Nacos OpenAPI common response format</a>. The following table describes only the fields in <code dir="auto">data</code>.</p>
 
 
 
@@ -714,26 +714,26 @@ If a renewal request returns error code <code dir="auto">21003</code>, the insta
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述</th></tr></thead><tbody><tr><td><code dir="auto">promptKey</code></td><td><code dir="auto">string</code></td><td>Prompt key</td></tr><tr><td><code dir="auto">version</code></td><td><code dir="auto">string</code></td><td>Version</td></tr><tr><td><code dir="auto">template</code></td><td><code dir="auto">string</code></td><td>Prompt template content</td></tr><tr><td><code dir="auto">md5</code></td><td><code dir="auto">string</code></td><td>Content md5 for 304</td></tr><tr><td><code dir="auto">variables</code></td><td><code dir="auto">array</code></td><td>Prompt variable list</td></tr></tbody></table>
-<h4 id="示例-4">示例</h4>
+<table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">promptKey</code></td><td><code dir="auto">string</code></td><td>Prompt key</td></tr><tr><td><code dir="auto">version</code></td><td><code dir="auto">string</code></td><td>Version</td></tr><tr><td><code dir="auto">template</code></td><td><code dir="auto">string</code></td><td>Prompt template content</td></tr><tr><td><code dir="auto">md5</code></td><td><code dir="auto">string</code></td><td>Content md5 for 304</td></tr><tr><td><code dir="auto">variables</code></td><td><code dir="auto">array</code></td><td>Prompt variable list</td></tr></tbody></table>
+<h4 id="examples-4">Examples</h4>
 <ul>
-<li>请求示例</li>
+<li>Request example</li>
 </ul>
 <div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#B392F0">curl</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">-X</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">GET</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">'127.0.0.1:8848/nacos/v3/client/ai/prompt?promptKey=myPrompt'</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="curl -X GET &#x27;127.0.0.1:8848/nacos/v3/client/ai/prompt?promptKey=myPrompt&#x27;"><div></div></button></div></figure></div>
 <ul>
-<li>返回示例</li>
+<li>Response example</li>
 </ul>
 <div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#E1E4E8">{</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"code"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">0</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"message"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"success"</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"data"</span><span style="--0:#E1E4E8">: {</span></div><div class="ec-line"><span style="--0:#E1E4E8">    </span><span style="--0:#79B8FF">"promptKey"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"myPrompt"</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">    </span><span style="--0:#79B8FF">"version"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"1.0"</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">    </span><span style="--0:#79B8FF">"template"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"You are a helpful assistant."</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">    </span><span style="--0:#79B8FF">"md5"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"..."</span></div><div class="ec-line"><span style="--0:#E1E4E8">  }</span></div><div class="ec-line"><span style="--0:#E1E4E8">}</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="{  &#x22;code&#x22;: 0,  &#x22;message&#x22;: &#x22;success&#x22;,  &#x22;data&#x22;: {    &#x22;promptKey&#x22;: &#x22;myPrompt&#x22;,    &#x22;version&#x22;: &#x22;1.0&#x22;,    &#x22;template&#x22;: &#x22;You are a helpful assistant.&#x22;,    &#x22;md5&#x22;: &#x22;...&#x22;  }}"><div></div></button></div></figure></div>
 <h3 id="32-get-agentspec">3.2. Get AgentSpec</h3>
-<h4 id="接口描述-5">接口描述</h4>
+<h4 id="description-5">Description</h4>
 <p>This interface allows getting an AgentSpec detail by namespace, name, version, or label.</p>
-<h4 id="起始版本-5">起始版本</h4>
+<h4 id="since-5">Since</h4>
 <p><code dir="auto">3.2.0</code></p>
-<h4 id="请求方式-5">请求方式</h4>
+<h4 id="request-method-5">Request Method</h4>
 <p><code dir="auto">GET</code></p>
-<h4 id="请求url-5">请求URL</h4>
+<h4 id="request-url-5">Request URL</h4>
 <p><code dir="auto">/nacos/v3/client/ai/agentspecs</code></p>
-<h4 id="请求参数-5">请求参数</h4>
+<h4 id="request-parameters-5">Request Parameters</h4>
 
 
 
@@ -775,9 +775,9 @@ If a renewal request returns error code <code dir="auto">21003</code>, the insta
 
 
 
-<table><thead><tr><th>参数名</th><th>类型</th><th>必填</th><th>参数描述</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>否</td><td>Namespace ID, default is <code dir="auto">public</code></td></tr><tr><td><code dir="auto">name</code></td><td><code dir="auto">string</code></td><td><strong>是</strong></td><td>AgentSpec name</td></tr><tr><td><code dir="auto">version</code></td><td><code dir="auto">string</code></td><td>否</td><td>AgentSpec version</td></tr><tr><td><code dir="auto">label</code></td><td><code dir="auto">string</code></td><td>否</td><td>AgentSpec label</td></tr><tr><td><code dir="auto">md5</code></td><td><code dir="auto">string</code></td><td>否</td><td>AgentSpec content MD5 for exact version matching</td></tr></tbody></table>
-<h4 id="返回数据-5">返回数据</h4>
-<p>Return body follows <a href="../overview/api-overview/#32-http-api-%E7%BB%9F%E4%B8%80%E8%BF%94%E5%9B%9E%E4%BD%93%E6%A0%BC%E5%BC%8F" referrerpolicy="unsafe-url">Nacos open API common response format</a>; this table describes fields in <code dir="auto">data</code>.</p>
+<table><thead><tr><th>Name</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>No</td><td>Namespace ID, default is <code dir="auto">public</code></td></tr><tr><td><code dir="auto">name</code></td><td><code dir="auto">string</code></td><td><strong>Yes</strong></td><td>AgentSpec name</td></tr><tr><td><code dir="auto">version</code></td><td><code dir="auto">string</code></td><td>No</td><td>AgentSpec version</td></tr><tr><td><code dir="auto">label</code></td><td><code dir="auto">string</code></td><td>No</td><td>AgentSpec label</td></tr><tr><td><code dir="auto">md5</code></td><td><code dir="auto">string</code></td><td>No</td><td>AgentSpec content MD5 for exact version matching</td></tr></tbody></table>
+<h4 id="response-data-5">Response Data</h4>
+<p>Return body follows <a href="../overview/api-overview/#32-http-api-response-format" referrerpolicy="unsafe-url">Nacos open API common response format</a>; this table describes fields in <code dir="auto">data</code>.</p>
 
 
 
@@ -818,26 +818,26 @@ If a renewal request returns error code <code dir="auto">21003</code>, the insta
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述说明</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>Namespace of the AgentSpec</td></tr><tr><td><code dir="auto">name</code></td><td><code dir="auto">string</code></td><td>AgentSpec name</td></tr><tr><td><code dir="auto">description</code></td><td><code dir="auto">string</code></td><td>AgentSpec description</td></tr><tr><td><code dir="auto">bizTags</code></td><td><code dir="auto">string</code></td><td>AgentSpec business tags</td></tr><tr><td><code dir="auto">content</code></td><td><code dir="auto">string</code></td><td>AgentSpec content</td></tr><tr><td><code dir="auto">resource</code></td><td><code dir="auto">object</code></td><td>AgentSpec resource info</td></tr></tbody></table>
-<h4 id="示例-5">示例</h4>
+<table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>Namespace of the AgentSpec</td></tr><tr><td><code dir="auto">name</code></td><td><code dir="auto">string</code></td><td>AgentSpec name</td></tr><tr><td><code dir="auto">description</code></td><td><code dir="auto">string</code></td><td>AgentSpec description</td></tr><tr><td><code dir="auto">bizTags</code></td><td><code dir="auto">string</code></td><td>AgentSpec business tags</td></tr><tr><td><code dir="auto">content</code></td><td><code dir="auto">string</code></td><td>AgentSpec content</td></tr><tr><td><code dir="auto">resource</code></td><td><code dir="auto">object</code></td><td>AgentSpec resource info</td></tr></tbody></table>
+<h4 id="examples-5">Examples</h4>
 <ul>
-<li>请求示例</li>
+<li>Request example</li>
 </ul>
 <div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#B392F0">curl</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">-X</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">GET</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">'127.0.0.1:8848/nacos/v3/client/ai/agentspecs?name=my-agent'</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="curl -X GET &#x27;127.0.0.1:8848/nacos/v3/client/ai/agentspecs?name=my-agent&#x27;"><div></div></button></div></figure></div>
 <ul>
-<li>返回示例</li>
+<li>Response example</li>
 </ul>
 <div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#E1E4E8">{</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"code"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">0</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"message"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"success"</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"data"</span><span style="--0:#E1E4E8">: {}</span></div><div class="ec-line"><span style="--0:#E1E4E8">}</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="{  &#x22;code&#x22;: 0,  &#x22;message&#x22;: &#x22;success&#x22;,  &#x22;data&#x22;: {}}"><div></div></button></div></figure></div>
 <h3 id="33-search-agentspecs">3.3. Search AgentSpecs</h3>
-<h4 id="接口描述-6">接口描述</h4>
+<h4 id="description-6">Description</h4>
 <p>This interface allows paginated searching of AgentSpecs by namespace and keyword.</p>
-<h4 id="起始版本-6">起始版本</h4>
+<h4 id="since-6">Since</h4>
 <p><code dir="auto">3.2.0</code></p>
-<h4 id="请求方式-6">请求方式</h4>
+<h4 id="request-method-6">Request Method</h4>
 <p><code dir="auto">GET</code></p>
-<h4 id="请求url-6">请求URL</h4>
+<h4 id="request-url-6">Request URL</h4>
 <p><code dir="auto">/nacos/v3/client/ai/agentspecs/search</code></p>
-<h4 id="请求参数-6">请求参数</h4>
+<h4 id="request-parameters-6">Request Parameters</h4>
 
 
 
@@ -873,9 +873,9 @@ If a renewal request returns error code <code dir="auto">21003</code>, the insta
 
 
 
-<table><thead><tr><th>参数名</th><th>类型</th><th>必填</th><th>参数描述</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>否</td><td>Namespace ID, default is <code dir="auto">public</code></td></tr><tr><td><code dir="auto">keyword</code></td><td><code dir="auto">string</code></td><td>否</td><td>Search keyword</td></tr><tr><td><code dir="auto">pageNo</code></td><td><code dir="auto">integer</code></td><td><strong>是</strong></td><td>Page number, typically starts from <code dir="auto">1</code></td></tr><tr><td><code dir="auto">pageSize</code></td><td><code dir="auto">integer</code></td><td><strong>是</strong></td><td>Number of records per page</td></tr></tbody></table>
-<h4 id="返回数据-6">返回数据</h4>
-<p>Return body follows <a href="../overview/api-overview/#32-http-api-%E7%BB%9F%E4%B8%80%E8%BF%94%E5%9B%9E%E4%BD%93%E6%A0%BC%E5%BC%8F" referrerpolicy="unsafe-url">Nacos open API common response format</a>; this table describes fields in <code dir="auto">data</code>.</p>
+<table><thead><tr><th>Name</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>No</td><td>Namespace ID, default is <code dir="auto">public</code></td></tr><tr><td><code dir="auto">keyword</code></td><td><code dir="auto">string</code></td><td>No</td><td>Search keyword</td></tr><tr><td><code dir="auto">pageNo</code></td><td><code dir="auto">integer</code></td><td><strong>Yes</strong></td><td>Page number, typically starts from <code dir="auto">1</code></td></tr><tr><td><code dir="auto">pageSize</code></td><td><code dir="auto">integer</code></td><td><strong>Yes</strong></td><td>Number of records per page</td></tr></tbody></table>
+<h4 id="response-data-6">Response Data</h4>
+<p>Return body follows <a href="../overview/api-overview/#32-http-api-response-format" referrerpolicy="unsafe-url">Nacos open API common response format</a>; this table describes fields in <code dir="auto">data</code>.</p>
 
 
 
@@ -891,26 +891,26 @@ If a renewal request returns error code <code dir="auto">21003</code>, the insta
 
 
 
-<table><thead><tr><th>参数名</th><th>参数类型</th><th>描述说明</th></tr></thead><tbody><tr><td><code dir="auto">data</code></td><td><code dir="auto">string</code></td><td>AgentSpec search result (paginated object, actual fields depend on runtime response)</td></tr></tbody></table>
-<h4 id="示例-6">示例</h4>
+<table><thead><tr><th>Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">data</code></td><td><code dir="auto">string</code></td><td>AgentSpec search result (paginated object, actual fields depend on runtime response)</td></tr></tbody></table>
+<h4 id="examples-6">Examples</h4>
 <ul>
-<li>请求示例</li>
+<li>Request example</li>
 </ul>
 <div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#B392F0">curl</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">-X</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">GET</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">'127.0.0.1:8848/nacos/v3/client/ai/agentspecs/search?keyword=agent&#x26;pageNo=1&#x26;pageSize=10'</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="curl -X GET &#x27;127.0.0.1:8848/nacos/v3/client/ai/agentspecs/search?keyword=agent&#x26;pageNo=1&#x26;pageSize=10&#x27;"><div></div></button></div></figure></div>
 <ul>
-<li>返回示例</li>
+<li>Response example</li>
 </ul>
 <div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#E1E4E8">{</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"code"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">0</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"message"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"success"</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"data"</span><span style="--0:#E1E4E8">: {}</span></div><div class="ec-line"><span style="--0:#E1E4E8">}</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="{  &#x22;code&#x22;: 0,  &#x22;message&#x22;: &#x22;success&#x22;,  &#x22;data&#x22;: {}}"><div></div></button></div></figure></div>
 <h3 id="34-download-skill">3.4. Download Skill</h3>
-<h4 id="接口描述-7">接口描述</h4>
+<h4 id="description-7">Description</h4>
 <p>This interface allows downloading a Skill ZIP file by namespace, name, version, or label.</p>
-<h4 id="起始版本-7">起始版本</h4>
+<h4 id="since-7">Since</h4>
 <p><code dir="auto">3.2.0</code></p>
-<h4 id="请求方式-7">请求方式</h4>
+<h4 id="request-method-7">Request Method</h4>
 <p><code dir="auto">GET</code></p>
-<h4 id="请求url-7">请求URL</h4>
+<h4 id="request-url-7">Request URL</h4>
 <p><code dir="auto">/nacos/v3/client/ai/skills</code></p>
-<h4 id="请求参数-7">请求参数</h4>
+<h4 id="request-parameters-7">Request Parameters</h4>
 
 
 
@@ -952,13 +952,13 @@ If a renewal request returns error code <code dir="auto">21003</code>, the insta
 
 
 
-<table><thead><tr><th>参数名</th><th>类型</th><th>必填</th><th>参数描述</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>否</td><td>Namespace ID, default is <code dir="auto">public</code></td></tr><tr><td><code dir="auto">name</code></td><td><code dir="auto">string</code></td><td><strong>是</strong></td><td>Skill name</td></tr><tr><td><code dir="auto">version</code></td><td><code dir="auto">string</code></td><td>否</td><td>Skill version</td></tr><tr><td><code dir="auto">label</code></td><td><code dir="auto">string</code></td><td>否</td><td>Skill label</td></tr><tr><td><code dir="auto">md5</code></td><td><code dir="auto">string</code></td><td>否</td><td>Skill content MD5 for exact version matching</td></tr></tbody></table>
-<h4 id="示例-7">示例</h4>
+<table><thead><tr><th>Name</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code dir="auto">namespaceId</code></td><td><code dir="auto">string</code></td><td>No</td><td>Namespace ID, default is <code dir="auto">public</code></td></tr><tr><td><code dir="auto">name</code></td><td><code dir="auto">string</code></td><td><strong>Yes</strong></td><td>Skill name</td></tr><tr><td><code dir="auto">version</code></td><td><code dir="auto">string</code></td><td>No</td><td>Skill version</td></tr><tr><td><code dir="auto">label</code></td><td><code dir="auto">string</code></td><td>No</td><td>Skill label</td></tr><tr><td><code dir="auto">md5</code></td><td><code dir="auto">string</code></td><td>No</td><td>Skill content MD5 for exact version matching</td></tr></tbody></table>
+<h4 id="examples-7">Examples</h4>
 <ul>
-<li>请求示例</li>
+<li>Request example</li>
 </ul>
 <div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#B392F0">curl</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">-X</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">GET</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">'127.0.0.1:8848/nacos/v3/client/ai/skills?name=my-skill'</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="curl -X GET &#x27;127.0.0.1:8848/nacos/v3/client/ai/skills?name=my-skill&#x27;"><div></div></button></div></figure></div>
 <ul>
-<li>返回示例</li>
+<li>Response example</li>
 </ul>
 <div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#E1E4E8">{</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"code"</span><span style="--0:#E1E4E8">: </span><span style="--0:#79B8FF">0</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"message"</span><span style="--0:#E1E4E8">: </span><span style="--0:#9ECBFF">"success"</span><span style="--0:#E1E4E8">,</span></div><div class="ec-line"><span style="--0:#E1E4E8">  </span><span style="--0:#79B8FF">"data"</span><span style="--0:#E1E4E8">: {}</span></div><div class="ec-line"><span style="--0:#E1E4E8">}</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="{  &#x22;code&#x22;: 0,  &#x22;message&#x22;: &#x22;success&#x22;,  &#x22;data&#x22;: {}}"><div></div></button></div></figure></div> </div> <footer class="astro-3yyafb3n"> <div class="meta sl-flex astro-3yyafb3n"> <a href="https://github.com/nacos-group/nacos-group.github.io/tree/develop-astro-nacos/src/content/docs/latest/en/manual/user/open-api.md" class="sl-flex astro-eez2twj6"><svg aria-hidden="true" class="astro-eez2twj6 astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.2em;"><path d="M22 7.24a1 1 0 0 0-.29-.71l-4.24-4.24a1 1 0 0 0-1.1-.22 1 1 0 0 0-.32.22l-2.83 2.83L2.29 16.05a1 1 0 0 0-.29.71V21a1 1 0 0 0 1 1h4.24a1 1 0 0 0 .76-.29l10.87-10.93L21.71 8c.1-.1.17-.2.22-.33a1 1 0 0 0 0-.24v-.14l.07-.05ZM6.83 20H4v-2.83l9.93-9.93 2.83 2.83L6.83 20ZM18.17 8.66l-2.83-2.83 1.42-1.41 2.82 2.82-1.41 1.42Z"/></svg> Edit page</a>  </div> <div class="pagination-links-wrapper" dir="ltr"> <a href="/en/docs/latest/manual/user/overview/api-overview/" rel="prev"> <svg aria-hidden="true" class=" astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg>  <span> Previous <br> <span class="link-title">OpenAPI Overview</span> </span> </a> <a href="/en/docs/latest/manual/user/auth/" rel="next"> <svg aria-hidden="true" class=" astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg>  <span> Next <br> <span class="link-title">Access Credentials</span> </span> </a> </div>  </footer>  </div> </div>   </main> </div> </div>  </div> </div>  </body></html>
