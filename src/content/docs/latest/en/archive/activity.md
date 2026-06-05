@@ -19,7 +19,7 @@ description: Nacos award activity
 
 ## II. Activity participation method
 
-* Scan "超哥" WeChat 2 microcode, let "超哥"" help join "Nacos community exchange group"
+* Scan Chao's WeChat QR code and ask Chao to help you join the "Nacos community exchange group".
 
 
 
@@ -47,4 +47,3 @@ description: Nacos award activity
 
 * We are not sure that every proposal will be adopted in the end, but we will try to explain what kind of consideration we are based on, and we did not recommend your proposal.
 * Try to report problems by mailing list or report issue instead of reporting on WeChat group to document and facilitate our communication process.
-

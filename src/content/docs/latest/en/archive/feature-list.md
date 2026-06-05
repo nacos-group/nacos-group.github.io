@@ -1,203 +1,203 @@
 ---
-title: Nacos功能和需求列表
-keywords: [Nacos,功能]
-description: Nacos功能和需求列表
+title: Nacos Feature and Requirement List
+keywords: [Nacos,features]
+description: Nacos feature and requirement list.
 ---
 
-# Nacos功能和需求列表
+# Nacos Feature and Requirement List
 
-本文列举了目前Nacos支持的主要功能和一些还未支持的需求排期，方便读者了解目前Nacos已经支持和计划支持的能力，同时所有计划支持的能力都开放给开发者进行认领，本文末有详细的认领教程。
+This document lists the main features currently supported by Nacos and the schedule for some requirements that are not yet supported. It helps readers understand the capabilities that Nacos already supports and plans to support. All planned capabilities are open for developers to claim, and detailed claiming instructions are provided at the end of this document.
 
-在下面的表格中，每个需求都有一个状态的标志，包含若干种取值，各种取值的含义如下：
+In the following tables, each requirement has a status flag. The status values have the following meanings:
 
-1. 状态的取值：
-  1. 不支持：该功能还不支持，且没有在现在的时间表里有任何排期；
-  1. 排期中：该功能还不支持，但是已经放到了时间表里，有希望在后面的某个版本支持；
-  1. 设计中：表示该功能正在方案设计中，方案的草稿和终稿都会开放访问，供大家讨论；
-  1. 开发中：表示该功能设计方案已经确定，正在有对应的开发者进行开发，会在接下来的某个版本正式发布；
-  1. beta：该功能已经发布，但是未经过大规模的用户验证，还不能确保稳定性；
-  1. 稳定：表示已经迭代至少4个版本，目前没有反馈重大缺陷；
+1. Status values:
+  1. Not supported: The feature is not supported and is not currently scheduled.
+  1. Scheduled: The feature is not supported yet, but it has been put on the schedule and may be supported in a later version.
+  1. Designing: The feature is being designed. Draft and final design documents are open for discussion.
+  1. Developing: The design has been finalized and corresponding developers are working on it. It will be officially released in a later version.
+  1. Beta: The feature has been released but has not been validated by large-scale users, so stability is not yet guaranteed.
+  1. Stable: The feature has gone through at least four iterations and no major defects have been reported.
 
 
 <a name="rchXu"></a>
-# 服务发现
-代码地址：[https://github.com/alibaba/nacos/tree/develop/naming](https://github.com/alibaba/nacos/tree/develop/naming)
+# Service Discovery
+Code repository: [https://github.com/alibaba/nacos/tree/develop/naming](https://github.com/alibaba/nacos/tree/develop/naming)
 
-| 描述 | 主要开发者 | 状态 | 排期 |
+| Description | Main Developer | Status | Schedule |
 | :---: | --- | --- | --- |
-| 服务注册与发现 | nkorange | 稳定 | 0.1.0 |
-| 健康检查（服务端探测、客户端心跳） | xuanyin | 稳定 | 0.1.0 |
-| 路由策略（权重、保护阈值、就近访问） | wangjianwei | 稳定 | 0.1.0 |
+| Service registration and discovery | nkorange | Stable | 0.1.0 |
+| Health check (server-side probing and client heartbeat) | xuanyin | Stable | 0.1.0 |
+| Routing policy (weight, protection threshold, and proximity access) | wangjianwei | Stable | 0.1.0 |
 |  |  |  |  |
 
 
 <a name="VqAeY"></a>
-# 配置管理
-代码地址：[https://github.com/alibaba/nacos/tree/develop/config](https://github.com/alibaba/nacos/tree/develop/config)
+# Configuration Management
+Code repository: [https://github.com/alibaba/nacos/tree/develop/config](https://github.com/alibaba/nacos/tree/develop/config)
 
-| 描述 | 主要开发者 | 状态 | 排期 |
+| Description | Main Developer | Status | Schedule |
 | :---: | --- | --- | --- |
-| 配置管理（发布、修改、查询、监听配置） | yanlinly | 稳定 | 0.1.0 |
-| 灰度配置 | yanlinly | 稳定 | 1.1.0 |
-| 加密配置 |  | 不支持 |  |
+| Configuration management (publish, modify, query, and listen to configurations) | yanlinly | Stable | 0.1.0 |
+| Gray configuration | yanlinly | Stable | 1.1.0 |
+| Encrypted configuration |  | Not supported |  |
 
 
 <a name="H9PtL"></a>
-# 元数据管理
-代码地址：[https://github.com/alibaba/nacos/tree/develop/cmdb](https://github.com/alibaba/nacos/tree/develop/cmdb)
+# Metadata Management
+Code repository: [https://github.com/alibaba/nacos/tree/develop/cmdb](https://github.com/alibaba/nacos/tree/develop/cmdb)
 
-| 描述 | 主要开发者 | 状态 | 排期 |
+| Description | Main Developer | Status | Schedule |
 | :---: | --- | --- | --- |
-| 对接第三方CMDB | nkorange | beta | 0.7.0 |
+| Integrate with third-party CMDB | nkorange | beta | 0.7.0 |
 
 
 <a name="iIIII"></a>
-# 地址服务器
-代码地址：[https://github.com/alibaba/nacos/tree/develop/address](https://github.com/alibaba/nacos/tree/develop/address)
+# Address Server
+Code repository: [https://github.com/alibaba/nacos/tree/develop/address](https://github.com/alibaba/nacos/tree/develop/address)
 
-| 描述 | 主要开发者 | 状态 | 排期 |
+| Description | Main Developer | Status | Schedule |
 | :---: | --- | --- | --- |
-| 支持Nacos寻址 | pbting | beta | 1.1.0 |
+| Support Nacos addressing | pbting | beta | 1.1.0 |
 
 
 <a name="zaOdN"></a>
-# Nacos内核
-代码地址：[https://github.com/alibaba/nacos/tree/develop/core](https://github.com/alibaba/nacos/tree/develop/core)
+# Nacos Kernel
+Code repository: [https://github.com/alibaba/nacos/tree/develop/core](https://github.com/alibaba/nacos/tree/develop/core)
 
-| 描述 | 主要开发者 | 状态 | 排期 |
+| Description | Main Developer | Status | Schedule |
 | :---: | --- | --- | --- |
-| 去除MySQL依赖 | chuntaojun | 设计中 |  |
-| Raft协议替换成JRaft | chuntaojun | 稳定 | 1.4.1 |
-| 异步通知机制统一 | wfnuser | 设计中 |  |
-| 线程模块统一 |  | 排期中 |  |
-| 传输通道统一 | nkorange | 设计中 |  |
-| 推送模块统一 | satjd | 设计中 |  |
-| 启动模块统一 |  | 排期中 |  |
+| Remove MySQL dependency | chuntaojun | Designing |  |
+| Replace Raft protocol with JRaft | chuntaojun | Stable | 1.4.1 |
+| Unify asynchronous notification mechanism | wfnuser | Designing |  |
+| Unify thread modules |  | Scheduled |  |
+| Unify transmission channels | nkorange | Designing |  |
+| Unify push modules | satjd | Designing |  |
+| Unify startup modules |  | Scheduled |  |
 
 
 <a name="JiVAL"></a>
-# 安全与稳定性
-代码地址：[https://github.com/alibaba/nacos](https://github.com/alibaba/nacos)
+# Security and Stability
+Code repository: [https://github.com/alibaba/nacos](https://github.com/alibaba/nacos)
 
-| 描述 | 主要开发者 | 状态 | 排期 |
+| Description | Main Developer | Status | Schedule |
 | :---: | --- | --- | --- |
-| 命名空间模块下沉为公共模块 |  | 排期中 |  |
-| 权限控制，包括认证与鉴权 | nkorange | 开发中 | 1.2.0 |
-| 操作审计与记录 |  | 排期中 |  |
-| 支持加密传输 |  | 排期中 |  |
-| OpenTracing对接 |  | 排期中 |  |
-| metrics收集 | TsingLiang | 稳定 | 0.8.0 |
-| 缓存容灾机制统一 |  | 排期中 |  |
-| 支持命令行运维 |  | 排期中 |  |
-| 数据自动备份 |  | 排期中 |  |
-| 限流模块 |  | 排期中 |  |
-| 容量管理 |  | 排期中 |  |
+| Move namespace module down to a common module |  | Scheduled |  |
+| Permission control, including authentication and authorization | nkorange | Developing | 1.2.0 |
+| Operation audit and records |  | Scheduled |  |
+| Support encrypted transmission |  | Scheduled |  |
+| OpenTracing integration |  | Scheduled |  |
+| Metrics collection | TsingLiang | Stable | 0.8.0 |
+| Unify cache disaster recovery mechanism |  | Scheduled |  |
+| Support command-line operations |  | Scheduled |  |
+| Automatic data backup |  | Scheduled |  |
+| Rate limiting module |  | Scheduled |  |
+| Capacity management |  | Scheduled |  |
 
 
 <a name="YmLFu"></a>
-# 代码质量
-代码地址：[https://github.com/alibaba/nacos](https://github.com/alibaba/nacos)
+# Code Quality
+Code repository: [https://github.com/alibaba/nacos](https://github.com/alibaba/nacos)
 
-| 描述 | 主要开发者 | 状态 | 排期 |
+| Description | Main Developer | Status | Schedule |
 | :---: | --- | --- | --- |
-| 工具类模块统一 |  | 排期中 |  |
-| 常量定义统一 |  | 排期中 |  |
-| 异常处理模块统一 |  | 排期中 |  |
-| 日志模块统一 |  | 排期中 |  |
-| 系统参数模块统一 |  | 排期中 |  |
-| 依赖统一 |  | 排期中 |  |
-| 状态码模块统一 | KeRan213539 | 设计中 |  |
+| Unify utility modules |  | Scheduled |  |
+| Unify constant definitions |  | Scheduled |  |
+| Unify exception handling modules |  | Scheduled |  |
+| Unify logging modules |  | Scheduled |  |
+| Unify system parameter modules |  | Scheduled |  |
+| Unify dependencies |  | Scheduled |  |
+| Unify status code modules | KeRan213539 | Designing |  |
 
 
 <a name="OUg7P"></a>
-# 云原生
-| 描述 | 主要开发者 | 状态 | 排期 |
+# Cloud Native
+| Description | Main Developer | Status | Schedule |
 | :---: | --- | --- | --- |
-| 对接Istio | nkorange | beta | 1.1.4 |
-| 对接ConfigMap |  | 排期中 |  |
-| [对接CoreDNS](https://github.com/nacos-group/nacos-coredns-plugin) | JianweiWang | beta | 0.1.0 |
-| 对接SPIFFE |  | 排期中 |  |
+| Integrate with Istio | nkorange | beta | 1.1.4 |
+| Integrate with ConfigMap |  | Scheduled |  |
+| [Integrate with CoreDNS](https://github.com/nacos-group/nacos-coredns-plugin) | JianweiWang | beta | 0.1.0 |
+| Integrate with SPIFFE |  | Scheduled |  |
 
 
 <a name="nJ4NC"></a>
-# 客户端
-客户端支持包含了目前已知的Nacos多语言客户端及Spring生态的相关客户端，除了Java客户端和Go客户端，其他均为社区热心贡献者开发，如果您有新的语言的客户端，或者有目前已经支持的语言的客户端的另外一个实现，欢迎在github上留言进行登记。
+# Clients
+Client support includes currently known Nacos multi-language clients and Spring ecosystem clients. Except for the Java client and Go client, the others are developed by enthusiastic community contributors. If you have a client for a new language, or another implementation for a language that is already supported, you are welcome to leave a message on GitHub for registration.
 
-| 描述 | 主要开发者 | 状态 |
+| Description | Main Developer | Status |
 | :---: | --- | --- |
-| [Java客户端](https://github.com/alibaba/nacos/tree/develop/client) | Nacos | 稳定 |
-| [Go客户端](https://github.com/nacos-group/nacos-sdk-go) | atlanssia, lzp0412 | 稳定 |
-| [Node.js客户端](https://github.com/nacos-group/nacos-sdk-nodejs) | czy88840616, gxcsoccer | 稳定 |
-| [Python客户端](https://github.com/nacos-group/nacos-sdk-python) | sanwei | beta |
-| [C#客户端](https://github.com/catcherwong/nacos-sdk-csharp) | catcherwong | 推荐 |
-| C++客户端 |  |  |
-| PHP客户端 |  |  |
-| [Spring客户端](https://github.com/nacos-group/nacos-spring-project) | chuntaojun | 稳定 |
-| [SpringBoot客户端](https://github.com/nacos-group/nacos-spring-boot-project) | chuntaojun | 稳定 |
+| [Java client](https://github.com/alibaba/nacos/tree/develop/client) | Nacos | Stable |
+| [Go client](https://github.com/nacos-group/nacos-sdk-go) | atlanssia, lzp0412 | Stable |
+| [Node.js client](https://github.com/nacos-group/nacos-sdk-nodejs) | czy88840616, gxcsoccer | Stable |
+| [Python client](https://github.com/nacos-group/nacos-sdk-python) | sanwei | beta |
+| [C# client](https://github.com/catcherwong/nacos-sdk-csharp) | catcherwong | Recommended |
+| C++ client |  |  |
+| PHP client |  |  |
+| [Spring client](https://github.com/nacos-group/nacos-spring-project) | chuntaojun | Stable |
+| [SpringBoot client](https://github.com/nacos-group/nacos-spring-boot-project) | chuntaojun | Stable |
 
 
 <a name="o6JMC"></a>
 # Nacos-Docker
-代码地址：[https://github.com/nacos-group/nacos-docker](https://github.com/nacos-group/nacos-docker)
+Code repository: [https://github.com/nacos-group/nacos-docker](https://github.com/nacos-group/nacos-docker)
 
-| 描述 | 主要开发者 | 状态 | 排期 |
+| Description | Main Developer | Status | Schedule |
 | :---: | --- | --- | --- |
-| Docker部署Nacos Server | paderlol | 稳定 | 0.1.0 |
+| Deploy Nacos Server with Docker | paderlol | Stable | 0.1.0 |
 
 
 <a name="UofM8"></a>
 # Nacos-K8s
-代码地址：[https://github.com/nacos-group/nacos-k8s](https://github.com/nacos-group/nacos-k8s)
+Code repository: [https://github.com/nacos-group/nacos-k8s](https://github.com/nacos-group/nacos-k8s)
 
-| 描述 | 主要开发者 | 状态 | 排期 |
+| Description | Main Developer | Status | Schedule |
 | :---: | --- | --- | --- |
-| K8s部署Nacos Server | paderlol | 稳定 | 0.1.0 |
+| Deploy Nacos Server with K8s | paderlol | Stable | 0.1.0 |
 
 
 <a name="FPPSf"></a>
 # Nacos-Sync
-代码地址：[https://github.com/nacos-group/nacos-sync](https://github.com/nacos-group/nacos-sync)
+Code repository: [https://github.com/nacos-group/nacos-sync](https://github.com/nacos-group/nacos-sync)
 
-| 描述 | 主要开发者 | 状态 | 排期 |
+| Description | Main Developer | Status | Schedule |
 | :---: | --- | --- | --- |
-| Nacos与Nacos服务双向同步 | paderlol | 稳定 | 0.1.0 |
-| Nacos与Zookeeper服务双向同步 | paderlol | 稳定 | 0.3.0 |
-| Nacos与Eureka服务双向同步 | paderlol | 稳定 | 0.3.0 |
-| Nacos与Consul服务双向同步 | paderlol | 稳定 | 0.3.0 |
+| Bidirectional synchronization between Nacos and Nacos services | paderlol | Stable | 0.1.0 |
+| Bidirectional synchronization between Nacos and Zookeeper services | paderlol | Stable | 0.3.0 |
+| Bidirectional synchronization between Nacos and Eureka services | paderlol | Stable | 0.3.0 |
+| Bidirectional synchronization between Nacos and Consul services | paderlol | Stable | 0.3.0 |
 
 
 <a name="sM3KF"></a>
-# Nacos官网
-代码地址：[https://github.com/nacos-group/nacos-group.github.io](https://github.com/nacos-group/nacos-group.github.io)
+# Nacos Website
+Code repository: [https://github.com/nacos-group/nacos-group.github.io](https://github.com/nacos-group/nacos-group.github.io)
 
-| 描述 | 主要开发者 | 状态 | 排期 |
+| Description | Main Developer | Status | Schedule |
 | :---: | --- | --- | --- |
-| 支持页面内锚链接 |  | 不支持 |  |
+| Support in-page anchor links |  | Not supported |  |
 
 
 
 <a name="mIQnp"></a>
-# 参与共建
+# Join the Community Build
 <a name="zjUdC"></a>
-### 参与共建能得到什么？
-参与Nacos共建，你将有机会让你的代码被全中国甚至全世界的用户阅读并使用，同时在成为Nacos Committer后（如何成为Nacos Committer可以参考[手册](https://github.com/alibaba/nacos/blob/develop/CONTRIBUTING.md)），还可以有以下福利：
+### What can you get by joining the community build?
+By joining the Nacos community build, you will have the opportunity to make your code read and used by users across China and even around the world. After becoming a Nacos Committer (see the [manual](https://github.com/alibaba/nacos/blob/develop/CONTRIBUTING.md) for how to become a Nacos Committer), you can also receive the following benefits:
 
-- 在Nacos官网[团队页](https://nacos.io/docs/latest/community/nacos-dev/)留名；
-- 收到我们带Nacos logo的小礼物，有T恤、水杯、帽衫等等；
-- 代表Nacos参加各种线上线下活动，与更多小伙伴交流；
-- 更多我们还在筹划中的福利；
+- Have your name listed on the [team page](https://nacos.io/docs/latest/community/nacos-dev/) of the Nacos website.
+- Receive small gifts with the Nacos logo, such as T-shirts, cups, hoodies, and more.
+- Represent Nacos in various online and offline events and communicate with more community members.
+- More benefits are still being planned.
 
 <a name="9eqix"></a>
-### 如何共建
-除了在上面列举的功能和需求，其他的在github仓库上打上了[contribution welcome](https://github.com/alibaba/nacos/issues?q=is%3Aopen+is%3Aissue+label%3A%22contribution+welcome%22)或者[help wanted](https://github.com/alibaba/nacos/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22)标签的issue，也非常欢迎大家提交代码贡献。加入Nacos 社区核心贡献小组钉钉群23335652，联系群管理员认领需求。
+### How to contribute
+In addition to the features and requirements listed above, issues labeled [contribution welcome](https://github.com/alibaba/nacos/issues?q=is%3Aopen+is%3Aissue+label%3A%22contribution+welcome%22) or [help wanted](https://github.com/alibaba/nacos/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22) in the GitHub repository are also very welcome for code contributions. Join the Nacos community core contributor DingTalk group 23335652 and contact the group administrator to claim requirements.
 
-大家提PR的时候有几点需要注意下：
+Please note the following points when submitting PRs:
 
-1. 比较重大的特性需要有方案文档：[https://github.com/alibaba/nacos/issues/858](https://github.com/alibaba/nacos/issues/858)
-1. 已经阅读并遵守共建规范： [https://github.com/alibaba/nacos/blob/master/CONTRIBUTING.md](https://github.com/alibaba/nacos/blob/master/CONTRIBUTING.md)
-1. 使用github账户提交代码，这样大家才会在contributor列表看到自己的名字；
-1. commit信息要带上issue id，这样才能在issue里看到PR的进度；
-1. 代码中不要出现中文注释，提交前要格式化，并添加必要的集成测试用例和单元测试用例；
-1. 提PR前运行mvn -Prelease-nacos clean install -U和mvn clean install -Pit-test成功；
+1. Major features require a design document: [https://github.com/alibaba/nacos/issues/858](https://github.com/alibaba/nacos/issues/858)
+1. Read and follow the contribution guidelines: [https://github.com/alibaba/nacos/blob/master/CONTRIBUTING.md](https://github.com/alibaba/nacos/blob/master/CONTRIBUTING.md)
+1. Submit code with your GitHub account so that your name appears in the contributor list.
+1. Include the issue ID in commit messages so that PR progress can be seen in the issue.
+1. Do not include Chinese comments in code. Format the code before submitting, and add necessary integration test cases and unit test cases.
+1. Before submitting a PR, successfully run `mvn -Prelease-nacos clean install -U` and `mvn clean install -Pit-test`.
 
-任务认领原则：每人一次最多领取两个任务，任务PR合并后，即可开始认领下个任务。
+Task claiming rule: Each person can claim at most two tasks at a time. After the task PR is merged, you can start claiming the next task.
