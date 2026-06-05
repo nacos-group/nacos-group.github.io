@@ -6,58 +6,58 @@ sidebar:
     order: 2
 ---
 
-# Nacos E2E 测试
+# Nacos E2E Tests
 
-[`nacos-group/nacos-e2e`](https://github.com/nacos-group/nacos-e2e) 项目是 Nacos 的端到端测试项目，用于验证 Nacos 在不同场景下的功能正确性。如果你想要向这个项目中新增测试用例，可以按照以下步骤进行：
+The [`nacos-group/nacos-e2e`](https://github.com/nacos-group/nacos-e2e) project is the end-to-end testing project for Nacos. It verifies the functional correctness of Nacos in different scenarios. To add test cases to this project, follow these steps:
 
-## 1. 准备工作
+## 1. Preparation
 
-+ **Fork 仓库**：首先你需要在 GitHub 上 Fork `nacos-group/nacos-e2e` 仓库到你自己的账号下。
-+ **克隆仓库**：将 Fork 后的仓库克隆到本地。
++ **Fork the repository**: First, fork the `nacos-group/nacos-e2e` repository to your own GitHub account.
++ **Clone the repository**: Clone the forked repository locally.
 
 ```shell
 git clone https://github.com/your-username/nacos-e2e.git
 cd nacos-e2e
 ```
 
-+**设置上游仓库**：为了能够拉取官方最新的更新，建议设置上游仓库。
++ **Set the upstream repository**: To pull the latest official updates, set the upstream repository.
 
 ```shell
 git remote add upstream https://github.com/nacos-group/nacos-e2e.git
 ```
 
-## 2. 理解现有结构
+## 2. Understand the Existing Structure
 
-查看项目的目录结构，目前主要按客户端测试语言类型和CI部署Nacos的依赖区分，其中java按客户端版本范围和鉴权用例区分
+View the project directory structure. It is mainly organized by client test language type and dependencies used by CI to deploy Nacos. The Java directory is further organized by client version range and authentication test cases.
 
-+ cicd，build目录包含docker相关文件、构建脚本和Nacos部署的配置文件；helm目录包含Kubernetes 的包管理器，它简化了在 Kubernetes 集群上部署应用程序的过程
-+ cpp，用C++语言编写的用例，测试C++客户端
-+ csharp，用csharp语言编写的用例，测试csharp客户端
-+ golang，用golang语言编写的用例，测试go客户端
-+ java，用java语言编写的用例，测试java客户端，其中4个目录分别验证：
-    - auth，部署单例模式的Nacos，验证开启鉴权后的场景
-    - nacos-1X，1.X客户端在1.3版本以上及2.0版本以下时的测试场景
-    - nacos-1X-1.3down，1.X客户端在1.3及以下版本时的测试场景
-    - nacos-2X，2.X客户在2.0及以上版本时的测试场景
-+ nodejs，用nodejs语言编写的用例，测试nodejs客户端
-+ python，用python语言编写的用例，测试python客户端
++ `cicd`: The `build` directory contains Docker-related files, build scripts, and Nacos deployment configuration files. The `helm` directory contains the Kubernetes package manager content, which simplifies application deployment on Kubernetes clusters.
++ `cpp`: Test cases written in C++ to test the C++ client.
++ `csharp`: Test cases written in C# to test the C# client.
++ `golang`: Test cases written in Go to test the Go client.
++ `java`: Test cases written in Java to test the Java client. The four directories verify the following scenarios:
+    - `auth`: Deploys Nacos in standalone mode and verifies scenarios after authentication is enabled.
+    - `nacos-1X`: Test scenarios for 1.x clients with versions later than 1.3 and earlier than 2.0.
+    - `nacos-1X-1.3down`: Test scenarios for 1.x clients with version 1.3 or earlier.
+    - `nacos-2X`: Test scenarios for 2.x clients with version 2.0 or later.
++ `nodejs`: Test cases written in Node.js to test the Node.js client.
++ `python`: Test cases written in Python to test the Python client.
 
-## 3. 新增测试用例
+## 3. Add Test Cases
 
-下面以在`java/nacos-2X`目录下新增一个配置中心相关用例举例：
+The following example shows how to add a config center-related test case under the `java/nacos-2X` directory:
 
-+ **选择合适的包**：根据你要测试的客户端语言和客户端版本，选择或创建一个合适的包（例如 `/nacos-e2e/java/nacos-2X/src/test/java/com/alibaba/nacos/config`）。
-+ **编写测试类**：在选定的包下创建一个新的测试类，例如 `YourFeatureTest.java`。
-    - 每个目录下会继承一个测试基类，如此配置继承ConfigBase基类，此基类进行配置测试用到的常量声明以及在@BeforeAll  @AfterAll 中定义在所有测试方法执行之前或之后运行的方法
-    - ConfigBase基类继承BaseOperate，定义一些通用的操作，比如配置中心和服务中心初始化连接时用到的Properties
-    - BaseOperate继承ResourceInit，定义初始化时用到的变量（从环境变量或者本地文件中获取到的变量）、所有用例启动前服务端的数据写入，初始化一些必要数据（比如命名空间），获取当前服务端客户端的数据（服务端版本、客户端版本等）
-+ **配置依赖**：如果需要引入新的依赖，请修改 `pom.xml` 或其他构建文件。
-+ **测试类规范**：
-    - @BeforeEach 注解的方法中对每个用例数据进行随机初始化和配置
-    - @AfterEach 注解的方法中对每个用例写入数据进行删除等操作清理
-    - @Test 注解的方法中进行用例逻辑编写，在@DisplayName 中描述当前用例测试的场景
++ **Choose a suitable package**: Based on the client language and client version you want to test, choose or create a suitable package, such as `/nacos-e2e/java/nacos-2X/src/test/java/com/alibaba/nacos/config`.
++ **Write a test class**: Create a new test class under the selected package, such as `YourFeatureTest.java`.
+    - Each directory inherits from a test base class. For example, config tests inherit from the `ConfigBase` base class. This base class declares constants used by config tests and defines methods annotated with `@BeforeAll` and `@AfterAll` that run before or after all test methods.
+    - The `ConfigBase` base class inherits from `BaseOperate`, which defines common operations, such as the `Properties` used to initialize config center and service center connections.
+    - `BaseOperate` inherits from `ResourceInit`, which defines variables used during initialization, obtained from environment variables or local files, writes server-side data before all cases start, initializes necessary data such as namespaces, and obtains current server and client data such as server version and client version.
++ **Configure dependencies**: If new dependencies are required, modify `pom.xml` or other build files.
++ **Test class specifications**:
+    - Methods annotated with `@BeforeEach` randomly initialize and configure data for each test case.
+    - Methods annotated with `@AfterEach` delete or otherwise clean up data written by each test case.
+    - Methods annotated with `@Test` contain the test case logic, and `@DisplayName` describes the scenario tested by the current case.
 
-示例代码：
+Example code:
 
 ```java
 package com.alibaba.nacos.config;
@@ -115,49 +115,48 @@ public class YourFeatureTest extends ConfigBase{
 
 ```
 
-## 4. 运行测试
+## 4. Run Tests
 
-java目录下的用例，修改每个module的daily.conf文件中serverList变量为指定服务端IP:Port，或者在执行命令中传入，亦或本地编译器中执行
+For cases under the `java` directory, modify the `serverList` variable in the `daily.conf` file of each module to the specified server `IP:Port`, pass it in the command, or run the tests in a local IDE.
 
-+ **用例执行命令：**
++ **Test case execution command:**
 
 ```shell
 mvn clean test -B -Dtest=YourFeatureTest -DserverList=127.0.0.1
 ```
 
-其他语言下的用例执行，可以参考每种语言的module下bin目录的run.sh文件，在语言环境具备情况下，安装必要的包和设置环境变量后执行，亦或安装相应的编译器本地执行
+For cases in other languages, refer to the `run.sh` file in the `bin` directory of each language module. After the language environment is ready, install the required packages and set environment variables before running the tests, or install the corresponding IDE and run them locally.
 
-## 5. 提交更改
+## 5. Submit Changes
 
-+ **提交代码**：将你的更改提交到本地仓库。
++ **Commit code**: Commit your changes to the local repository.
 
 ```shell
 git add .
 git commit -m "Add new e2e test for your feature"
 ```
 
-+ **推送到远程仓库**：将更改推送到你的 GitHub 仓库。
++ **Push to the remote repository**: Push the changes to your GitHub repository.
 
 ```shell
 git push origin main
 ```
 
-## 6. 创建 Pull Request
+## 6. Create a Pull Request
 
-+ **创建 PR**：回到 GitHub 页面，点击 "New pull request" 按钮，选择你的分支与 `nacos-group/nacos-e2e` 的主分支进行比较，然后创建 Pull Request。
-+ **等待审查**：项目维护者会对你的 PR 进行审查，可能会提出一些修改意见。根据反馈进行相应的调整。
++ **Create a PR**: Return to the GitHub page, click the "New pull request" button, select your branch and compare it with the main branch of `nacos-group/nacos-e2e`, and then create the pull request.
++ **Wait for review**: Project maintainers review your PR and may request changes. Adjust your changes based on the feedback.
 
-## 7. 合并 PR
+## 7. Merge the PR
 
-+ **合并**：一旦 PR 被批准，它会被合并到主分支中。
++ **Merge**: Once the PR is approved, it is merged into the main branch.
 
-通过以上步骤，你就可以成功地向 `nacos-group/nacos-e2e` 项目中新增测试用例了。
+With these steps, you can successfully add test cases to the `nacos-group/nacos-e2e` project.
 
-## 8. Nacos主仓库CI能力
+## 8. CI Capabilities in the Main Nacos Repository
 
-1. 成功地向 `nacos-group/nacos-e2e` 项目中新增测试用例后，用例最终在`alibaba/nacos` 仓库的actions中触发运行。
-2. CI通过使用阿里云ASK能力为每次PUSH和PR提供一个独立的Nacos环境进行E2E测试，部署使用nacos-group/nacos-e2e仓库中的helm chart(nacos-e2e/cicd)，镜像为当次提交的代码。
-3. 由于安全性考虑，将PR和PUSH动作的CI分离为两个流水线。PR触发E2E测试后回写评论至PR中，可以关联跳转到对应的测试报告。
-4. 测试报告可视化，每次E2E测试的报告在CI当次执行页面上可视化展示，无需查看日志，方便排查。
-5. 支持兼容性测试，并发执行多OS和JDK版本的测试。
-
+1. After test cases are successfully added to the `nacos-group/nacos-e2e` project, they are eventually triggered and run in the actions of the `alibaba/nacos` repository.
+2. CI uses Alibaba Cloud ASK capabilities to provide an independent Nacos environment for each push and PR for E2E testing. Deployment uses the Helm chart in the `nacos-group/nacos-e2e` repository (`nacos-e2e/cicd`), and the image is built from the code of the current commit.
+3. For security reasons, CI for PR and push events is separated into two pipelines. After a PR triggers E2E testing, a comment is written back to the PR and can link to the corresponding test report.
+4. Test reports are visualized. The report for each E2E test is displayed visually on the CI execution page, so you do not need to inspect logs, making troubleshooting easier.
+5. Compatibility testing is supported, with tests for multiple OS and JDK versions executed concurrently.
