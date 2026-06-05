@@ -60,42 +60,42 @@ In addition, Nacos 3.X will remove long-polling based configuration listening an
 
 ### 1.1. Get Configuration
 
-#### 接口描述
+#### Description
 
 Get the specified configuration.
 
-#### 起始版本
+#### Since
 
 `3.0.0`
 
-#### 请求方式
+#### Request Method
 
 `GET`
 
-#### 请求URL
+#### Request URL
 
 `/nacos/v3/client/cs/config`
 
-#### 请求头
+#### Request Headers
 
-| 参数名              | 参数类型     | 是否必填 | 描述说明                                                        |
+| Name              | Type     | Required | Description                                                        |
 |------------------|----------|------|-------------------------------------------------------------|
-| `User-Agent`     | `string` | 否    | User agent. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
-| `Client-Version` | `string` | 否    | Client version. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
+| `User-Agent`     | `string` | No    | User agent. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
+| `Client-Version` | `string` | No    | Client version. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名           | 类型       | 必填    | 参数描述                     |
+| Name           | Type       | Required    | Description                     |
 |---------------|----------|-------|--------------------------|
-| `namespaceId` | `string` | 否     | Namespace. Defaults to `public`, which is equivalent to `''`. |
-| `groupName`   | `string` | **是** | Configuration group name. |
-| `dataId`      | `string` | **是** | Configuration name. |
+| `namespaceId` | `string` | No     | Namespace. Defaults to `public`, which is equivalent to `''`. |
+| `groupName`   | `string` | **Yes** | Configuration group name. |
+| `dataId`      | `string` | **Yes** | Configuration name. |
 
-#### 返回数据
+#### Response Data
 
-The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-统一返回体格式). The following table describes only the fields in `data`.
+The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-response-format). The following table describes only the fields in `data`.
 
-| 参数名                | 参数类型      | 描述                       |
+| Name                | Type      | Description                       |
 |--------------------|-----------|--------------------------|
 | `content`          | `string` | Configuration content. |
 | `encryptedDataKey` | `string` | Encryption/decryption key of the configuration. This value exists only when a configuration encryption plugin is used. |
@@ -106,15 +106,15 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 
 Other fields are reserved and currently unused. You can ignore them.
 
-#### 示例
+#### Examples
 
-* 请求示例
+* Request example
 
 ```shell
 curl -X GET '127.0.0.1:8848/nacos/v3/client/cs/config?dataId=test&groupName=test' 
 ```
 
-* 返回示例
+* Response example
 
 ```json
 {
@@ -147,7 +147,7 @@ To get the full service list, use the [Admin API](../admin/admin-api.md).
 
 ### 2.1. Register/Renew Instance
 
-#### 接口描述
+#### Description
 
 Register or renew an instance.
 
@@ -160,52 +160,52 @@ If a renewal request returns error code `21003`, the instance has expired and be
 Calling the registration request repeatedly can also renew the instance, but it renews by updating the instance and consumes more resources. Therefore, after registration succeeds, use renewal instead of repeated registration updates.
 :::
 
-#### 起始版本
+#### Since
 
 `3.0.0`
 
-#### 请求方式
+#### Request Method
 
 `POST`
 
-#### 请求URL
+#### Request URL
 
 `/nacos/v3/client/ns/instance`
 
-#### 请求头
+#### Request Headers
 
-| 参数名              | 参数类型     | 是否必填 | 描述说明                                                        |
+| Name              | Type     | Required | Description                                                        |
 |------------------|----------|------|-------------------------------------------------------------|
-| `User-Agent`     | `string` | 否    | User agent. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
-| `Client-Version` | `string` | 否    | Client version. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
+| `User-Agent`     | `string` | No    | User agent. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
+| `Client-Version` | `string` | No    | Client version. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名           | 参数类型           | 是否必填  | 描述说明                   |
+| Name           | Type           | Required  | Description                   |
 |---------------|----------------|-------|------------------------|
-| `namespaceId` | `string` | 否     | Namespace ID. Defaults to `public`. |
-| `groupName`   | `string` | 否     | Group name. Defaults to `DEFAULT_GROUP`. |
-| `serviceName` | `string` | **是** | Service name. |
-| `ip`          | `string` | **是** | IP address. |
-| `port`        | `integer` | **是** | Port. |
-| `clusterName` | `string` | 否     | Cluster name. Defaults to `DEFAULT`. |
-| `healthy`     | `boolean` | 否     | Whether the instance is healthy. Defaults to `true`. |
-| `weight`      | `number` | 否     | Instance weight. Defaults to `1.0`. |
-| `enabled`     | `boolean` | 否     | Whether the instance is enabled. Defaults to `true`. |
-| `metadata`    | `string` | 否     | Instance metadata as a JSON object string. |
-| `heartBeat`   | `boolean` | 否     | Whether this is a renewal request. Defaults to `false`. |
+| `namespaceId` | `string` | No     | Namespace ID. Defaults to `public`. |
+| `groupName`   | `string` | No     | Group name. Defaults to `DEFAULT_GROUP`. |
+| `serviceName` | `string` | **Yes** | Service name. |
+| `ip`          | `string` | **Yes** | IP address. |
+| `port`        | `integer` | **Yes** | Port. |
+| `clusterName` | `string` | No     | Cluster name. Defaults to `DEFAULT`. |
+| `healthy`     | `boolean` | No     | Whether the instance is healthy. Defaults to `true`. |
+| `weight`      | `number` | No     | Instance weight. Defaults to `1.0`. |
+| `enabled`     | `boolean` | No     | Whether the instance is enabled. Defaults to `true`. |
+| `metadata`    | `string` | No     | Instance metadata as a JSON object string. |
+| `heartBeat`   | `boolean` | No     | Whether this is a renewal request. Defaults to `false`. |
 
-#### 返回数据
+#### Response Data
 
-The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-统一返回体格式). The following table describes only the fields in `data`.
+The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-response-format). The following table describes only the fields in `data`.
 
-| 参数名    | 参数类型     | 描述                             |
+| Name    | Type     | Description                             |
 |--------|----------|--------------------------------|
 | `data` | `string` | Whether registration or renewal succeeded. Returns `ok` on success, or the failure reason on failure. |
 
-#### 示例
+#### Examples
 
-* 请求示例
+* Request example
 
 ```shell
 # Register instance
@@ -215,7 +215,7 @@ curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&
 curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&ip=127.0.0.1&port=3306&heartBeat=true"
 ```
 
-* 返回示例
+* Response example
 
 ```json
 {
@@ -227,57 +227,57 @@ curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&
 
 ### 2.2. Deregister Instance
 
-#### 接口描述
+#### Description
 
 Deregister the specified instance.
 
-#### 起始版本
+#### Since
 
 `3.0.0`
 
-#### 请求方式
+#### Request Method
 
 `DELETE`
 
-#### 请求URL
+#### Request URL
 
 `/nacos/v3/client/ns/instance`
 
-#### 请求头
+#### Request Headers
 
-| 参数名              | 参数类型     | 是否必填 | 描述说明                                                        |
+| Name              | Type     | Required | Description                                                        |
 |------------------|----------|------|-------------------------------------------------------------|
-| `User-Agent`     | `string` | 否    | User agent. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
-| `Client-Version` | `string` | 否    | Client version. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
+| `User-Agent`     | `string` | No    | User agent. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
+| `Client-Version` | `string` | No    | Client version. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名           | 参数类型      | 必填    | 参数描述                   |
+| Name           | Type      | Required    | Description                   |
 |---------------|-----------|-------|------------------------|
-| `namespaceId` | `string` | 否     | Namespace ID. Defaults to `public`. |
-| `groupName`   | `string` | 否     | Group name. Defaults to `DEFAULT_GROUP`. |
-| `serviceName` | `string` | **是** | Service name. |
-| `ip`          | `string` | **是** | IP address. |
-| `port`        | `integer` | **是** | Port. |
-| `clusterName` | `string` | 否     | Cluster name. Defaults to `DEFAULT`. |
+| `namespaceId` | `string` | No     | Namespace ID. Defaults to `public`. |
+| `groupName`   | `string` | No     | Group name. Defaults to `DEFAULT_GROUP`. |
+| `serviceName` | `string` | **Yes** | Service name. |
+| `ip`          | `string` | **Yes** | IP address. |
+| `port`        | `integer` | **Yes** | Port. |
+| `clusterName` | `string` | No     | Cluster name. Defaults to `DEFAULT`. |
 
-#### 返回数据
+#### Response Data
 
-The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-统一返回体格式). The following table describes only the fields in `data`.
+The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-response-format). The following table describes only the fields in `data`.
 
-| 参数名    | 参数类型     | 描述                          |
+| Name    | Type     | Description                          |
 |--------|----------|-----------------------------|
 | `data` | `string` | Whether deregistration succeeded. Returns `ok` on success, or the failure reason on failure. |
 
-#### 示例
+#### Examples
 
-* 请求示例
+* Request example
 
 ```shell
 curl -X DELETE "127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=test1&ip=127.0.0.1&port=3306"
 ```
 
-* 返回示例
+* Response example
 
 ```json
 {
@@ -289,7 +289,7 @@ curl -X DELETE "127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=test1&ip=
 
 ### 2.3. List Instances of a Service
 
-#### 接口描述
+#### Description
 
 Query the detailed instance list under the specified service.
 
@@ -297,39 +297,39 @@ Query the detailed instance list under the specified service.
 Because Nacos 3.X will remove UDP-based push support, clients that do not support gRPC long-lived push connections need to periodically pull the instance list so that they can detect instance changes in time and implement service subscription.
 :::
 
-#### 起始版本
+#### Since
 
 `3.0.0`
 
-#### 请求方式
+#### Request Method
 
 `GET`
 
-#### 请求URL
+#### Request URL
 
 `/nacos/v3/client/ns/instance/list`
 
-#### 请求头
+#### Request Headers
 
-| 参数名              | 参数类型     | 是否必填 | 描述说明                                                        |
+| Name              | Type     | Required | Description                                                        |
 |------------------|----------|------|-------------------------------------------------------------|
-| `User-Agent`     | `string` | 否    | User agent. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
-| `Client-Version` | `string` | 否    | Client version. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
+| `User-Agent`     | `string` | No    | User agent. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
+| `Client-Version` | `string` | No    | Client version. It is empty by default and is usually `Nacos-${program-language}-Client:v${version}`. |
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名           | 参数类型      | 是否必填  | 描述说明                    |
+| Name           | Type      | Required  | Description                    |
 |---------------|-----------|-------|-------------------------|
-| `namespaceId` | `string` | 否     | Namespace ID. Defaults to `public`. |
-| `groupName`   | `string` | 否     | Group name. Defaults to `DEFAULT_GROUP`. |
-| `serviceName` | `string` | **是** | Service name. |
-| `clusterName` | `string` | 否     | Cluster name. If not provided, instances of all clusters will be returned.       |
+| `namespaceId` | `string` | No     | Namespace ID. Defaults to `public`. |
+| `groupName`   | `string` | No     | Group name. Defaults to `DEFAULT_GROUP`. |
+| `serviceName` | `string` | **Yes** | Service name. |
+| `clusterName` | `string` | No     | Cluster name. If not provided, instances of all clusters will be returned.       |
 
-#### 返回数据
+#### Response Data
 
-The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-统一返回体格式). The following table describes only the fields in `data`.
+The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-response-format). The following table describes only the fields in `data`.
 
-| 参数名                                  | 参数类型       | 描述说明      |
+| Name                                  | Type       | Description      |
 |--------------------------------------|------------|-----------|
 | `data`                               | `array` | Instance list. |
 | `data.[i].ip`                        | `string` | Instance IP. |
@@ -345,15 +345,15 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 | `data.[i].ipDeleteTimeout`           | `integer` | Instance deletion timeout. |
 | `data.[i].instanceHeartBeatInterval` | `integer` | Instance heartbeat interval. |
 
-#### 示例
+#### Examples
 
-* 请求示例
+* Request example
 
 ```shell
 curl -X GET '127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=test1'
 ```
 
-* 返回示例
+* Response example
 
 ```json
 {
@@ -383,37 +383,37 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=test1'
 
 ### 3.1. Query Prompt
 
-#### 接口描述
+#### Description
 
 Query Prompt by version, label, or latest (priority: version > label > latest); supports md5 for 304 conditional response.
 
-#### 起始版本
+#### Since
 
 `3.2.0`
 
-#### 请求方式
+#### Request Method
 
 `GET`
 
-#### 请求URL
+#### Request URL
 
 `/nacos/v3/client/ai/prompt`
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名           | 类型       | 必填    | 参数描述                     |
+| Name           | Type       | Required    | Description                     |
 |---------------|----------|-------|--------------------------|
-| `namespaceId` | `string` | 否     | Namespace ID. Defaults to `public`. |
-| `promptKey`   | `string` | **是** | Prompt key                  |
-| `version`     | `string` | 否     | Version (one of version, label, latest)     |
-| `label`       | `string` | 否     | Label (one of version, label, latest)    |
-| `md5`         | `string` | 否     | If matches server, response is 304            |
+| `namespaceId` | `string` | No     | Namespace ID. Defaults to `public`. |
+| `promptKey`   | `string` | **Yes** | Prompt key                  |
+| `version`     | `string` | No     | Version (one of version, label, latest)     |
+| `label`       | `string` | No     | Label (one of version, label, latest)    |
+| `md5`         | `string` | No     | If matches server, response is 304            |
 
-#### 返回数据
+#### Response Data
 
-The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-统一返回体格式). The following table describes only the fields in `data`.
+The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-response-format). The following table describes only the fields in `data`.
 
-| 参数名                | 参数类型      | 描述           |
+| Name                | Type      | Description           |
 |--------------------|-----------|--------------|
 | `promptKey`        | `string` | Prompt key    |
 | `version`          | `string` | Version       |
@@ -421,15 +421,15 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 | `md5`              | `string` | Content md5 for 304       |
 | `variables`        | `array` | Prompt variable list      |
 
-#### 示例
+#### Examples
 
-* 请求示例
+* Request example
 
 ```shell
 curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/prompt?promptKey=myPrompt'
 ```
 
-* 返回示例
+* Response example
 
 ```json
 {
@@ -446,37 +446,37 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/prompt?promptKey=myPrompt'
 
 ### 3.2. Get AgentSpec
 
-#### 接口描述
+#### Description
 
 This interface allows getting an AgentSpec detail by namespace, name, version, or label.
 
-#### 起始版本
+#### Since
 
 `3.2.0`
 
-#### 请求方式
+#### Request Method
 
 `GET`
 
-#### 请求URL
+#### Request URL
 
 `/nacos/v3/client/ai/agentspecs`
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名           | 类型       | 必填    | 参数描述                              |
+| Name           | Type       | Required    | Description                              |
 |---------------|----------|-------|-----------------------------------|
-| `namespaceId` | `string` | 否     | Namespace ID, default is `public` |
-| `name`        | `string` | **是** | AgentSpec name                    |
-| `version`     | `string` | 否     | AgentSpec version                 |
-| `label`       | `string` | 否     | AgentSpec label                   |
-| `md5`         | `string` | 否     | AgentSpec content MD5 for exact version matching |
+| `namespaceId` | `string` | No     | Namespace ID, default is `public` |
+| `name`        | `string` | **Yes** | AgentSpec name                    |
+| `version`     | `string` | No     | AgentSpec version                 |
+| `label`       | `string` | No     | AgentSpec label                   |
+| `md5`         | `string` | No     | AgentSpec content MD5 for exact version matching |
 
-#### 返回数据
+#### Response Data
 
-Return body follows [Nacos open API common response format](overview/api-overview.md#32-http-api-统一返回体格式); this table describes fields in `data`.
+Return body follows [Nacos open API common response format](overview/api-overview.md#32-http-api-response-format); this table describes fields in `data`.
 
-| 参数名          | 参数类型      | 描述说明                      |
+| Name          | Type      | Description                      |
 |--------------|-----------|---------------------------|
 | `namespaceId` | `string` | Namespace of the AgentSpec |
 | `name`        | `string` | AgentSpec name             |
@@ -485,15 +485,15 @@ Return body follows [Nacos open API common response format](overview/api-overvie
 | `content`     | `string` | AgentSpec content          |
 | `resource`    | `object` | AgentSpec resource info    |
 
-#### 示例
+#### Examples
 
-* 请求示例
+* Request example
 
 ```shell
 curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs?name=my-agent'
 ```
 
-* 返回示例
+* Response example
 
 ```json
 {
@@ -505,48 +505,48 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs?name=my-agent'
 
 ### 3.3. Search AgentSpecs
 
-#### 接口描述
+#### Description
 
 This interface allows paginated searching of AgentSpecs by namespace and keyword.
 
-#### 起始版本
+#### Since
 
 `3.2.0`
 
-#### 请求方式
+#### Request Method
 
 `GET`
 
-#### 请求URL
+#### Request URL
 
 `/nacos/v3/client/ai/agentspecs/search`
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名           | 类型       | 必填    | 参数描述                              |
+| Name           | Type       | Required    | Description                              |
 |---------------|----------|-------|-----------------------------------|
-| `namespaceId` | `string` | 否     | Namespace ID, default is `public` |
-| `keyword`     | `string` | 否     | Search keyword                    |
-| `pageNo`      | `integer` | **是** | Page number, typically starts from `1` |
-| `pageSize`    | `integer` | **是** | Number of records per page        |
+| `namespaceId` | `string` | No     | Namespace ID, default is `public` |
+| `keyword`     | `string` | No     | Search keyword                    |
+| `pageNo`      | `integer` | **Yes** | Page number, typically starts from `1` |
+| `pageSize`    | `integer` | **Yes** | Number of records per page        |
 
-#### 返回数据
+#### Response Data
 
-Return body follows [Nacos open API common response format](overview/api-overview.md#32-http-api-统一返回体格式); this table describes fields in `data`.
+Return body follows [Nacos open API common response format](overview/api-overview.md#32-http-api-response-format); this table describes fields in `data`.
 
-| 参数名    | 参数类型     | 描述说明                                              |
+| Name    | Type     | Description                                              |
 |--------|----------|---------------------------------------------------|
 | `data` | `string` | AgentSpec search result (paginated object, actual fields depend on runtime response) |
 
-#### 示例
+#### Examples
 
-* 请求示例
+* Request example
 
 ```shell
 curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs/search?keyword=agent&pageNo=1&pageSize=10'
 ```
 
-* 返回示例
+* Response example
 
 ```json
 {
@@ -558,41 +558,41 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs/search?keyword=agent&p
 
 ### 3.4. Download Skill
 
-#### 接口描述
+#### Description
 
 This interface allows downloading a Skill ZIP file by namespace, name, version, or label.
 
-#### 起始版本
+#### Since
 
 `3.2.0`
 
-#### 请求方式
+#### Request Method
 
 `GET`
 
-#### 请求URL
+#### Request URL
 
 `/nacos/v3/client/ai/skills`
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名           | 类型       | 必填    | 参数描述                              |
+| Name           | Type       | Required    | Description                              |
 |---------------|----------|-------|-----------------------------------|
-| `namespaceId` | `string` | 否     | Namespace ID, default is `public` |
-| `name`        | `string` | **是** | Skill name                        |
-| `version`     | `string` | 否     | Skill version                     |
-| `label`       | `string` | 否     | Skill label                       |
-| `md5`         | `string` | 否     | Skill content MD5 for exact version matching |
+| `namespaceId` | `string` | No     | Namespace ID, default is `public` |
+| `name`        | `string` | **Yes** | Skill name                        |
+| `version`     | `string` | No     | Skill version                     |
+| `label`       | `string` | No     | Skill label                       |
+| `md5`         | `string` | No     | Skill content MD5 for exact version matching |
 
-#### 示例
+#### Examples
 
-* 请求示例
+* Request example
 
 ```shell
 curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/skills?name=my-skill'
 ```
 
-* 返回示例
+* Response example
 
 ```json
 {
