@@ -1,45 +1,45 @@
 ---
 title: Cluster Deployment
-keywords: [Nacos,Deployment,Cluster]
-description: The Manual fo Nacos cluster deployment.
+keywords: [Nacos, Deployment, Cluster]
+description: The manual for Nacos cluster deployment.
 sidebar:
     order: 3
 ---
 
-# Nacos集群模式
+# Nacos Cluster Mode
 
-本部署手册是帮忙您快速在你的电脑上，下载安装并使用Nacos，部署生产使用的集群模式。
+This deployment guide helps you quickly download, install, and use Nacos on your computer, and deploy cluster mode for production use.
 
-### 集群部署架构图
+### Cluster Deployment Architecture
 
-无论采用何种部署方式，推荐用户把Nacos集群中所有服务节点放到一个vip下面，然后挂到一个域名下面。
+Regardless of the deployment method, we recommend placing all service nodes in the Nacos cluster behind one VIP and then binding the VIP to a domain name.
 
-`<http://ip1:port/openAPI>`  直连ip模式，机器挂则需要修改ip才可以使用。
+`<http://ip1:port/openAPI>` Direct IP mode. If the machine fails, you must modify the IP address before the endpoint can be used again.
 
-`<http://SLB:port/openAPI>`  挂载SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，直连SLB即可，下面挂server真实ip，可读性不好。
+`<http://SLB:port/openAPI>` SLB mode. Use an internal SLB and do not expose it to the public network to avoid security risks. Clients connect directly to the SLB, and real server IPs are mounted behind it, which is less readable.
 
-`<http://nacos.com:port/openAPI>`  域名 + SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，可读性好，而且换ip方便，推荐模式
+`<http://nacos.com:port/openAPI>` Domain name plus SLB mode. Use an internal SLB and do not expose it to the public network to avoid security risks. This mode is readable and makes IP replacement easier. It is the recommended mode.
 
 ![deployDnsVipMode.jpg](/img/doc/manual/admin/deployment/deploy-dns-vip-mode.svg)
 
-在使用VIP时，需要开放Nacos服务的主端口(默认8848)以及gRPC端口(默认9848)、同时如果对Nacos的主端口有所修改的话，需要对vip中的端口映射作出配置，具体端口的映射方式参考[部署手册概览-Nacos部署架构](./deployment-overview/#1-Nacos部署架构)
+When using a VIP, open the main Nacos service port (default `8848`) and the gRPC port (default `9848`). If you change the main Nacos port, configure the corresponding port mapping in the VIP. For port mapping details, see [Deployment Overview - Nacos Deployment Architecture](./deployment-overview/#1-nacos-deployment-architecture).
 
-## 1. 发行版部署
+## 1. Release Package Deployment
 
-### 1.1. 使用MySQL数据库（推荐）
+### 1.1. Use MySQL Database (Recommended)
 
-#### 1.1.1. 环境准备
+#### 1.1.1. Environment Preparation
 
-参考[快速开始](../../../quickstart/quick-start.mdx)中，进行Nacos的环境准备、发行版的下载等。
+Refer to [Quick Start](../../../quickstart/quick-start.mdx) to prepare the Nacos environment and download the release package.
 
-同时在使用MySQL数据源部署Nacos单机模式时，需要自行准备MySQL数据库：
+When deploying Nacos cluster mode with a MySQL data source, prepare the MySQL database yourself:
 
-- 1.安装数据库，版本要求：5.6.5+
-- 2.初始化mysql数据库，数据库初始化文件：[mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)
+- 1. Install the database. The required version is 5.6.5 or later.
+- 2. Initialize the MySQL database. Database initialization file: [mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql).
 
-#### 1.1.2. 配置集群配置文件
+#### 1.1.2. Configure the Cluster Configuration File
 
-在nacos的解压目录nacos/的conf目录下，有配置文件cluster.conf，请每行配置成ip:port。（请配置3个或3个以上节点）
+In the `conf` directory under the Nacos decompression directory `nacos/`, configure the `cluster.conf` file with one `ip:port` entry per line. Configure three or more nodes.
 
 ```plain
 # ip:port
@@ -48,9 +48,9 @@ sidebar:
 200.8.9.18:8848
 ```
 
-#### 1.1.3. 修改配置文件
+#### 1.1.3. Modify Configuration Files
 
-然后修改`${nacos.home}/conf/application.properties`文件，增加支持MySQL数据源配置，添加MySQL数据源的url、用户名和密码。
+Then modify `${nacos.home}/conf/application.properties`, add the MySQL data source configuration, and configure the MySQL data source URL, username, and password.
 
 ```
 spring.sql.init.platform=mysql
@@ -61,32 +61,32 @@ db.user=${mysql_user}
 db.password=${mysql_password}
 ```
 
-##### 1.1.3.1. 开启默认鉴权插件
+##### 1.1.3.1. Enable the Default Authentication Plugin
 
-> 自3.0.0版本开始，Nacos控制台默认开启访问鉴权，所以鉴权相关配置必须进行配置。
+> Since Nacos 3.0.0, console access authentication is enabled by default, so authentication-related configurations must be configured.
 
-修改`conf`目录下的`application.properties`文件。
+Modify `application.properties` in the `conf` directory.
 
-设置其中
+Set the following items:
 
 ```properties
-## 开启客户端访问鉴权，默认为关闭，可选
+## Enable client access authentication. Disabled by default and optional.
 nacos.core.auth.enabled=true
-## 开启控制台访问鉴权，默认为开启
+## Enable console access authentication. Enabled by default.
 nacos.core.auth.console.enabled=true
 nacos.core.auth.system.type=nacos
-nacos.core.auth.plugin.nacos.token.secret.key=${自定义，保证所有节点一致}
-nacos.core.auth.server.identity.key=${自定义，保证所有节点一致}
-nacos.core.auth.server.identity.value=${自定义，保证所有节点一致}
+nacos.core.auth.plugin.nacos.token.secret.key=${custom_value_same_on_all_nodes}
+nacos.core.auth.server.identity.key=${custom_value_same_on_all_nodes}
+nacos.core.auth.server.identity.value=${custom_value_same_on_all_nodes}
 ```
 
-上述内容详情可查看[权限认证](../../../plugin/auth-plugin.md).
+For details, see [Authentication](../../../plugin/auth-plugin.md).
 
-> 注意，文档中的默认值`SecretKey012345678901234567890123456789012345678901234567890123456789`和`VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=`为公开默认值，可用于临时测试，实际使用时请**务必**更换为自定义的其他有效值。
+> Note: the default values `SecretKey012345678901234567890123456789012345678901234567890123456789` and `VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=` in the documentation are public default values and can be used only for temporary testing. In actual use, **replace them with other custom valid values**.
 
-#### 1.1.4. 启动Nacos集群
+#### 1.1.4. Start the Nacos Cluster
 
-在每个部署节点上，执行如下命名，逐台或同时启动Nacos节点。
+On each deployment node, run the following commands to start Nacos nodes one by one or at the same time.
 
 ```bash
 # Linux/Unix/Mac 
@@ -100,7 +100,7 @@ bash startup.sh
 startup.cmd
 ```
 
-随后启动程序会提示您输入`3个`鉴权相关配置
+The startup program then prompts you to enter the following `3` authentication-related configurations:
 
 ```
 `nacos.core.auth.plugin.nacos.token.secret.key` is missing, please set: ${your_input_token_secret_key}
@@ -115,20 +115,20 @@ nacos.core.auth.plugin.nacos.token.secret.key` Updated:
 ```
 
 ::: note
-若您已经在[修改配置文件](#1131-开启默认鉴权插件)步骤中设置过这3个配置，则不会提示您输入。
+If you have configured these `3` settings in [Modify Configuration Files](#1131-enable-the-default-authentication-plugin), you will not be prompted to enter them.
 :::
 
-### 1.2. 使用Derby数据库
+### 1.2. Use Derby Database
 
-> 注意：Derby数据库为本地内置数据库，本身不支持集群模式，Nacos通过Raft协议将各个节点的Derby数据库组成逻辑集群，因此使用此模式部署集群模式的Nacos时，需要对Raft协议较为熟悉，能够进行问题排查、恢复等，建议使用MySQL数据库进行部署。
+> Note: Derby is a local built-in database and does not support cluster mode by itself. Nacos uses the Raft protocol to form a logical cluster from the Derby databases of each node. Therefore, when deploying Nacos cluster mode with this mode, you must be familiar with the Raft protocol and be able to troubleshoot and recover issues. We recommend deploying with a MySQL database.
 
-#### 1.2.1. 环境准备
+#### 1.2.1. Environment Preparation
 
-参考[快速开始](../../../quickstart/quick-start.mdx)中，进行Nacos的环境准备、发行版的下载等。
+Refer to [Quick Start](../../../quickstart/quick-start.mdx) to prepare the Nacos environment and download the release package.
 
-#### 1.2.2. 配置集群配置文件
+#### 1.2.2. Configure the Cluster Configuration File
 
-在nacos的解压目录nacos/的conf目录下，有配置文件cluster.conf，请每行配置成ip:port。（请配置3个或3个以上节点）
+In the `conf` directory under the Nacos decompression directory `nacos/`, configure the `cluster.conf` file with one `ip:port` entry per line. Configure three or more nodes.
 
 ```plain
 # ip:port
@@ -137,32 +137,32 @@ nacos.core.auth.plugin.nacos.token.secret.key` Updated:
 200.8.9.18:8848
 ```
 
-#### 1.2.3. 开启默认鉴权插件
+#### 1.2.3. Enable the Default Authentication Plugin
 
-> 自3.0.0版本开始，Nacos控制台默认开启访问鉴权，所以鉴权相关配置必须进行配置。
+> Since Nacos 3.0.0, console access authentication is enabled by default, so authentication-related configurations must be configured.
 
-修改`conf`目录下的`application.properties`文件。
+Modify `application.properties` in the `conf` directory.
 
-设置其中
+Set the following items:
 
 ```properties
-## 开启客户端访问鉴权，默认为关闭，可选
+## Enable client access authentication. Disabled by default and optional.
 nacos.core.auth.enabled=true
-## 开启控制台访问鉴权，默认为开启
+## Enable console access authentication. Enabled by default.
 nacos.core.auth.console.enabled=true
 nacos.core.auth.system.type=nacos
-nacos.core.auth.plugin.nacos.token.secret.key=${自定义，保证所有节点一致}
-nacos.core.auth.server.identity.key=${自定义，保证所有节点一致}
-nacos.core.auth.server.identity.value=${自定义，保证所有节点一致}
+nacos.core.auth.plugin.nacos.token.secret.key=${custom_value_same_on_all_nodes}
+nacos.core.auth.server.identity.key=${custom_value_same_on_all_nodes}
+nacos.core.auth.server.identity.value=${custom_value_same_on_all_nodes}
 ```
 
-上述内容详情可查看[权限认证](../../../plugin/auth-plugin.md).
+For details, see [Authentication](../../../plugin/auth-plugin.md).
 
-> 注意，文档中的默认值`SecretKey012345678901234567890123456789012345678901234567890123456789`和`VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=`为公开默认值，可用于临时测试，实际使用时请**务必**更换为自定义的其他有效值。
+> Note: the default values `SecretKey012345678901234567890123456789012345678901234567890123456789` and `VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=` in the documentation are public default values and can be used only for temporary testing. In actual use, **replace them with other custom valid values**.
 
-#### 1.2.4. 启动Nacos集群
+#### 1.2.4. Start the Nacos Cluster
 
-在每个部署节点上，执行如下命名，逐台或同时启动Nacos节点。
+On each deployment node, run the following commands to start Nacos nodes one by one or at the same time.
 
 ```bash
 # Linux/Unix/Mac 
@@ -176,67 +176,67 @@ bash startup.sh -p embedded
 startup.cmd -p embedded
 ```
 
-### 1.3. 高级使用
+### 1.3. Advanced Usage
 
-#### 1.3.1. 自定义配置
+#### 1.3.1. Custom Configuration
 
-Nacos提供了丰富的可配置项，帮助您调整Nacos的性能、控制Nacos提供的功能能力，例如鉴权、监控、数据库、连接、日志等；详情请参考[系统参数](../system-configurations.md)。
+Nacos provides rich configuration items that help you tune Nacos performance and control Nacos features, such as authentication, monitoring, databases, connections, and logs. For details, see [System Parameters](../system-configurations.md).
 
-## 2. Docker部署
+## 2. Docker Deployment
 
-### 2.1. 使用MySQL数据库（推荐）
+### 2.1. Use MySQL Database (Recommended)
 
-参考[快速开始 Docker](../../../quickstart/quick-start-docker.mdx)中，进行`nacos-docker`项目的下载，然后执行如下命令，即可启动Nacos集群。
+Refer to [Quick Start Docker](../../../quickstart/quick-start-docker.mdx) to download the `nacos-docker` project, and then run the following command to start the Nacos cluster.
 
 ```powershell
 docker-compose -f example/cluster-hostname.yaml up 
 ```
 
-### 2.2. 使用Derby数据库
+### 2.2. Use Derby Database
 
-> 注意：Derby数据库为本地内置数据库，本身不支持集群模式，Nacos通过Raft协议将各个节点的Derby数据库组成逻辑集群，因此使用此模式部署集群模式的Nacos时，需要对Raft协议较为熟悉，能够进行问题排查、恢复等，建议使用MySQL数据库进行部署。
+> Note: Derby is a local built-in database and does not support cluster mode by itself. Nacos uses the Raft protocol to form a logical cluster from the Derby databases of each node. Therefore, when deploying Nacos cluster mode with this mode, you must be familiar with the Raft protocol and be able to troubleshoot and recover issues. We recommend deploying with a MySQL database.
 
-参考[快速开始 Docker](../../../quickstart/quick-start-docker.mdx)中，进行`nacos-docker`项目的下载，然后执行如下命令，即可启动Nacos集群。
+Refer to [Quick Start Docker](../../../quickstart/quick-start-docker.mdx) to download the `nacos-docker` project, and then run the following command to start the Nacos cluster.
 
 ```powershell
 docker-compose -f example/cluster-embedded.yaml up 
 ```
 
-### 2.3 高级配置
+### 2.3 Advanced Configuration
 
-如果你有很多自定义配置的需求，可以通过指定[系统参数-镜像环境变量](../system-configurations/#2-镜像环境变量)的方式进行配置，例如需要开启鉴权时：
+If you need many custom configurations, you can configure them by specifying [System Parameters - Image Environment Variables](../system-configurations/#2-image-environment-variables). For example, to enable authentication:
 
 ```powershell
 docker run --name nacos-cluster-auth -e MODE=cluster -e NACOS_AUTH_ENABLE=true -e NACOS_AUTH_TOKEN=${customToken} -e NACOS_AUTH_IDENTITY_KEY=${customKey} NACOS_AUTH_IDENTITY_VALUE=${customValue} -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest
 ```
 
-同时，可以通过对application.properties文件进行挂卷定义的方式，将更多复杂的自定义配置导入Nacos容器中，强烈建议在生产环境中使用方式，例如：
+You can also mount the `application.properties` file to import more complex custom configurations into the Nacos container. This method is strongly recommended for production environments. Example:
 
 ```powershell
 docker run --name nacos-cluster -e MODE=cluster -v /path/application.properties:/home/nacos/conf/application.properties -v /path/cluster.conf:/home/nacos/conf/cluster.conf -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest
 ```
 
-如果仍然无法满足自定义需求，可以基于nacos-docker项目中的`Dockerfile`自行构建镜像。
+If this still cannot meet your customization requirements, you can build an image based on the `Dockerfile` in the `nacos-docker` project.
 
-## 3. Kubernetes部署
+## 3. Kubernetes Deployment
 
-通过[快速开始 Kubernetes](../../../quickstart/quick-start-kubernetes.mdx)文档，已经能够部署使用MySQL数据库的Nacos的集群模式。
+[Quick Start Kubernetes](../../../quickstart/quick-start-kubernetes.mdx) can deploy Nacos cluster mode with a MySQL database.
 
-但快速开始所部署的Nacos集群没有使用持久化卷的,可能存在数据丢失风险；因此推荐使用PVC持久卷方式进行部署，本例中将使用的是NFS来使用PVC。
+However, the Nacos cluster deployed by the quick start does not use persistent volumes and may have data loss risks. Therefore, we recommend deploying with PVC persistent volumes. This example uses NFS with PVC.
 
 #### Tips
 
-* 推荐使用[Nacos Operator](https://github.com/nacos-group/nacos-k8s/blob/master/operator/README-CN.md)在Kubernetes部署Nacos Server.
+* We recommend using [Nacos Operator](https://github.com/nacos-group/nacos-k8s/blob/master/operator/README-CN.md) to deploy Nacos Server on Kubernetes.
 
-### 3.1. 部署 NFS
+### 3.1. Deploy NFS
 
-* 创建角色
+* Create roles.
 
 ```shell
 kubectl create -f deploy/nfs/rbac.yaml
 ```
 
-> 如果的K8S命名空间不是**default**，请在部署RBAC之前执行以下脚本:
+> If the Kubernetes namespace is not **default**, run the following script before deploying RBAC:
 
 ```shell
 # Set the subject of the RBAC objects to the current namespace where the provisioner is being deployed
@@ -246,25 +246,25 @@ $ sed -i'' "s/namespace:.*/namespace: $NAMESPACE/g" ./deploy/nfs/rbac.yaml
 
 ```
 
-* 创建 `ServiceAccount` 和部署 `NFS-Client Provisioner`
+* Create the `ServiceAccount` and deploy `NFS-Client Provisioner`.
 
 ```shell
 kubectl create -f deploy/nfs/deployment.yaml
 ```
 
-* 创建 NFS StorageClass
+* Create the NFS StorageClass.
 
 ```shell
 kubectl create -f deploy/nfs/class.yaml
 ```
 
-* 验证NFS部署成功
+* Verify that NFS is deployed successfully.
 
 ```shell
 kubectl get pod -l app=nfs-client-provisioner
 ```
 
-### 3.2. 部署数据库
+### 3.2. Deploy Database
 
 ```shell
 
@@ -273,7 +273,7 @@ cd nacos-k8s
 kubectl create -f deploy/mysql/mysql-nfs.yaml
 ```
 
-* 验证数据库是否正常工作
+* Verify that the database works properly.
 
 ```shell
 
@@ -282,30 +282,30 @@ NAME                         READY   STATUS    RESTARTS   AGE
 mysql-gf2vd                        1/1     Running   0          111m
 
 ```
-### 3.3. 执行数据库初始化语句
+### 3.3. Execute Database Initialization Statements
 
-数据库初始化语句位置 [mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)
+Database initialization statements are located in [mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql).
 
-### 3.4. 部署Nacos
+### 3.4. Deploy Nacos
 
-* 修改  **deploy/nacos/nacos-pvc-nfs.yaml**
+* Modify **deploy/nacos/nacos-pvc-nfs.yaml**.
 
 ```yaml
 data:
-  mysql.host: "数据库地址"
-  mysql.db.name: "数据库名称"
-  mysql.port: "端口"
-  mysql.user: "用户名"
-  mysql.password: "密码"
+  mysql.host: "database address"
+  mysql.db.name: "database name"
+  mysql.port: "port"
+  mysql.user: "username"
+  mysql.password: "password"
 ```
 
-* 创建 Nacos
+* Create Nacos.
 
 ``` shell
 kubectl create -f nacos-k8s/deploy/nacos/nacos-pvc-nfs.yaml
 ```
 
-* 验证Nacos节点启动成功
+* Verify that Nacos nodes start successfully.
 
 ```shell
 kubectl get pod -l app=nacos
@@ -317,19 +317,19 @@ nacos-1   1/1     Running   0          19h
 nacos-2   1/1     Running   0          19h
 ```
 
-### 3.5. 扩容测试
+### 3.5. Scale-Out Test
 
-* 在扩容前，使用 [`kubectl exec`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec)获取在pod中的Nacos集群配置文件信息
+* Before scaling out, use [`kubectl exec`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec) to obtain the Nacos cluster configuration file information in the pods.
 
 ```powershell
 for i in 0 1; do echo nacos-$i; kubectl exec nacos-$i cat conf/cluster.conf; done
 ```
 
-StatefulSet控制器根据其序数索引为每个Pod提供唯一的主机名。 主机名采用<statefulset name />  -  <ordinal index />的形式。 因为nacos StatefulSet的副本字段设置为2，所以当前集群文件中只有两个Nacos节点地址
+The StatefulSet controller provides a unique hostname for each pod based on its ordinal index. The hostname format is `<statefulset name>-<ordinal index>`. Because the `replicas` field of the Nacos StatefulSet is set to `2`, the current cluster file contains only two Nacos node addresses.
 
 ![k8s](https://cdn.nlark.com/yuque/0/2019/gif/338441/1562846123635-e361d2b5-4bbe-4347-acad-8f11f75e6d38.gif)
 
-* 使用kubectl scale 对Nacos动态扩容
+* Use `kubectl scale` to dynamically scale out Nacos.
 
 ```bash
 kubectl scale sts nacos --replicas=3
@@ -337,7 +337,7 @@ kubectl scale sts nacos --replicas=3
 
 ![scale](https://cdn.nlark.com/yuque/0/2019/gif/338441/1562846139093-7a79b709-9afa-448a-b7d6-f57571d3a902.gif)
 
-* 在扩容后，使用 [`kubectl exec`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec)获取在pod中的Nacos集群配置文件信息
+* After scaling out, use [`kubectl exec`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec) to obtain the Nacos cluster configuration file information in the pods.
 
 ```bash
 for i in 0 1 2; do echo nacos-$i; kubectl exec nacos-$i cat conf/cluster.conf; done
@@ -345,49 +345,49 @@ for i in 0 1 2; do echo nacos-$i; kubectl exec nacos-$i cat conf/cluster.conf; d
 
 ![get_cluster_after](https://cdn.nlark.com/yuque/0/2019/gif/338441/1562846177553-c1c7f379-1b41-4026-9f0b-23e15dde02a8.gif)
 
-* 使用 [`kubectl exec`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec)执行Nacos API 在每台节点上获取当前**Leader**是否一致
+* Use [`kubectl exec`](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands/#exec) to call the Nacos API on each node and check whether the current **Leader** is consistent.
 
 ```bash
 for i in 0 1 2; do echo nacos-$i; kubectl exec nacos-$i curl -X GET "http://localhost:8848/nacos/v1/ns/raft/state"; done
 ```
 
-到这里你可以发现新节点已经正常加入Nacos集群当中。
+At this point, the new node has joined the Nacos cluster successfully.
 
-### 3.6. 配置属性
+### 3.6. Configuration Properties
 
 * `nacos-pvc-nfs.yaml` or `nacos-quick-start.yaml`
 
-| 名称                     | 必要 | 描述                                    |
-| ----------------------- | -------- | --------------------------------------- |
-| `mysql.host`            | Y       | 自建数据库地址,使用外部数据库时必须指定                      |
-| `mysql.db.name`         | Y       | 数据库名称                      |
-| `mysql.port`            | N       | 数据库端口                        |
-| `mysql.user`            | Y       | 数据库用户名(请不要含有符号```,```)     |
-| `mysql.password`        | Y       | 数据库密码(请不要含有符号```,```)                     |
-| `SPRING_DATASOURCE_PLATFORM`        | Y       |   数据库类型,默认为embedded嵌入式数据库,参数只支持mysql或embedded	                   |
-| `NACOS_REPLICAS`        | N      | 确定执行Nacos启动节点数量,如果不适用动态扩容插件,就必须配置这个属性，否则使用扩容插件后不会生效 |
-| `NACOS_SERVER_PORT`     | N       | Nacos 端口 为peer_finder插件提供端口|
-| `NACOS_APPLICATION_PORT`     | N       | Nacos 端口|
-| `PREFER_HOST_MODE`      | Y       | 启动Nacos集群按域名解析 |
+| Name | Required | Description |
+| ---- | -------- | ----------- |
+| `mysql.host` | Y | Self-managed database address. Required when an external database is used. |
+| `mysql.db.name` | Y | Database name. |
+| `mysql.port` | N | Database port. |
+| `mysql.user` | Y | Database username. Do not include the `,` character. |
+| `mysql.password` | Y | Database password. Do not include the `,` character. |
+| `SPRING_DATASOURCE_PLATFORM` | Y | Database type. The default value is `embedded`, which means the embedded database. Only `mysql` and `embedded` are supported. |
+| `NACOS_REPLICAS` | N | Determines the number of Nacos startup nodes. If you do not use the dynamic scale-out plugin, configure this property. After the scale-out plugin is used, this property does not take effect. |
+| `NACOS_SERVER_PORT` | N | Nacos port provided to the `peer_finder` plugin. |
+| `NACOS_APPLICATION_PORT` | N | Nacos port. |
+| `PREFER_HOST_MODE` | Y | Starts the Nacos cluster with domain-name resolution. |
 
 * **nfs** `deployment.yaml`
 
-| 名称          | 必要 | 描述                     |
-| ------------ | --------| ------------------------ |
-| `NFS_SERVER` | Y       | NFS 服务端地址         |
-| `NFS_PATH`   | Y       | NFS 共享目录 |
-| `server`     | Y       | NFS 服务端地址  |
-| `path`       | Y       | NFS 共享目录 |
+| Name | Required | Description |
+| ---- | -------- | ----------- |
+| `NFS_SERVER` | Y | NFS server address. |
+| `NFS_PATH` | Y | NFS shared directory. |
+| `server` | Y | NFS server address. |
+| `path` | Y | NFS shared directory. |
 
 * mysql
 
-| 名称                     | 必要 | 描述                                                      |
-| -------------------------- | -------- | ----------------------------------------------------------- |
-| `MYSQL_ROOT_PASSWORD`        | N       | ROOT 密码                                                    |
-| `MYSQL_DATABASE`             | Y       | 数据库名称                                   |
-| `MYSQL_USER`                 | Y       | 数据库用户名                                  |
-| `MYSQL_PASSWORD`             | Y       | 数据库密码                              |
-| `MYSQL_REPLICATION_USER`     | Y       | 数据库复制用户            |
-| `MYSQL_REPLICATION_PASSWORD` | Y       | 数据库复制用户密码      |
-| `Nfs:server`                 | N      | NFS 服务端地址，如果使用本地部署不需要配置 |
-| `Nfs:path`                   | N     | NFS 共享目录，如果使用本地部署不需要配置 |
+| Name | Required | Description |
+| ---- | -------- | ----------- |
+| `MYSQL_ROOT_PASSWORD` | N | Root password. |
+| `MYSQL_DATABASE` | Y | Database name. |
+| `MYSQL_USER` | Y | Database username. |
+| `MYSQL_PASSWORD` | Y | Database password. |
+| `MYSQL_REPLICATION_USER` | Y | Database replication user. |
+| `MYSQL_REPLICATION_PASSWORD` | Y | Database replication user password. |
+| `Nfs:server` | N | NFS server address. It is not required for local deployment. |
+| `Nfs:path` | N | NFS shared directory. It is not required for local deployment. |

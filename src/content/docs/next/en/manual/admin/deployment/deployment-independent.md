@@ -1,55 +1,55 @@
 ---
 title: Independent Console
-keywords: [ Nacos,independent deployment,console ]
-description: The Manual fo Nacos independent deployment for Nacos Console and Nacos Engine.
+keywords: [ Nacos, independent deployment, console ]
+description: The manual for independent deployment of Nacos Console and Nacos Server.
 sidebar:
   order: 4
 ---
 
-# 控制台独立部署
+# Independent Console Deployment
 
-> Nacos定义为一个IDC内部应用组件，并非面向公网环境的产品，建议在内部隔离网络环境中部署，强烈不建议部署在公共网络环境。
+> Nacos is positioned as an internal IDC application component, not as a product for public network environments. Deploy it in an isolated internal network. Public network deployment is strongly discouraged.
 >
-> 以下文档中提及的VIP，网卡等所有网络相关概念均处于内部网络环境。
+> Network-related concepts mentioned in this documentation, such as VIPs and network interface cards, refer to internal network environments.
 
-## 1. Nacos 控制台独立部署概览
+## 1. Independent Nacos Console Deployment Overview
 
 ![nacos_console_deploy.png](/img/blog/3_0_0-release/3.0_deploy.svg)
 
-Nacos 3.0 版本开始，Nacos支持将控制台进行独立部署，通过进一步拆分高风险请求和高资源消耗的请求，从而提高Nacos的安全性和稳定性。
+Starting from Nacos 3.0, Nacos supports independent console deployment. By further separating high-risk requests from resource-intensive requests, independent console deployment improves Nacos security and stability.
 
-要将Nacos控制台独立部署，首先需要先部署一个`Nacos 无控制台的集群服务`或`Nacos 无控制台的单机服务`，然后再单独启动`Nacos控制台`，并确认两者的部分配置一致。
+To deploy the Nacos console independently, first deploy a `Nacos cluster service without console` or a `Nacos standalone service without console`, then start `Nacos Console` separately and make sure some configurations are consistent between the two.
 
-## 2. 部署Nacos 无控制台服务
+## 2. Deploy Nacos Service Without Console
 
-首先参考[Nacos集群模式部署](./deployment-cluster.md#1-发行版部署)或[Nacos单机模式部署](./deployment-standalone.mdx#1-发行版部署)，将`启动Nacos服务`步骤中的 `sh startup.sh`或`sh startup.sh -m standalone` 更换为`sh startup.sh -d server`或`sh startup.sh -m standalone -d server`.
+First, refer to [Nacos Cluster Deployment](./deployment-cluster.md#1-release-package-deployment) or [Nacos Standalone Deployment](./deployment-standalone.mdx#1-release-package-deployment). In the `Start Nacos Service` step, replace `sh startup.sh` or `sh startup.sh -m standalone` with `sh startup.sh -d server` or `sh startup.sh -m standalone -d server`.
 
-待Nacos服务启动成功后，复制`conf/cluster.conf`文件或记录Nacos服务的`ip:port`，以便后续使用。
+After the Nacos service starts successfully, copy the `conf/cluster.conf` file or record the `ip:port` of the Nacos service for later use.
 
-## 3. 部署Nacos 控制台
+## 3. Deploy Nacos Console
 
-### 3.1. 环境准备
+### 3.1. Environment Preparation
 
-Nacos 控制台 依赖 [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/) 环境来运行，请确保是在以下版本环境中安装使用:
+Nacos Console depends on [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/) to run. Make sure the following environment is available:
 
-1. 64 bit OS，支持 Linux/Unix/Mac/Windows，推荐选用 Linux/Unix/Mac。
-2. 64 bit JDK 17+；[下载](https://www.oracle.com/java/technologies/downloads/#java17) & [配置](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/)。
+1. 64-bit OS, including Linux, Unix, macOS, or Windows. Linux, Unix, or macOS is recommended.
+2. 64-bit JDK 17 or later. [Download](https://www.oracle.com/java/technologies/downloads/#java17) and [configure](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/) it.
 
-### 3.2. 解压缩Nacos 控制台发行包
+### 3.2. Decompress the Nacos Console Release Package
 
-Nacos独立控制台的发行包与Nacos服务的发行包相同， 只需要从上一步骤[部署Nacos 无控制台服务](#2-部署nacos-无控制台服务)中复制发布包到控制台部署环境中即可，随后执行以下命令进行解压：
+The release package for the independent Nacos console is the same as the Nacos service release package. Copy the release package from the previous [Deploy Nacos Service Without Console](#2-deploy-nacos-service-without-console) step to the console deployment environment, and then run the following commands to decompress it:
 
 ```bash
   unzip nacos-server-$version.zip 
-  # 或者 tar -xvf nacos-server-$version.tar.gz
+  # or tar -xvf nacos-server-$version.tar.gz
   cd nacos/bin
 ```
 
-### 3.3. 配置Nacos 无控制台服务地址配置文件
+### 3.3. Configure the Nacos Service Address File
 
-由于Nacos 独立控制台不进行数据的存储，因此需要访问实际的Nacos服务进度数据的获取，因此需要配置Nacos 无控制台服务地址在对应的配置文件中。
+Because the independent Nacos console does not store data, it must access the actual Nacos service to obtain data. Therefore, configure the Nacos service address in the corresponding configuration file.
 
-在nacos的解压目录nacos/的conf目录下，有配置文件`cluster.conf`，请每行配置成`ip:port`, 其内容为[部署Nacos 无控制台服务](#2-部署nacos-无控制台服务)中记录的`conf/cluster.conf`文件或记录Nacos服务的`ip:port`，示例如下：
+In the `conf` directory under the Nacos decompression directory `nacos/`, configure the `cluster.conf` file with one `ip:port` entry per line. Its content should be the `conf/cluster.conf` file or the recorded Nacos service `ip:port` from [Deploy Nacos Service Without Console](#2-deploy-nacos-service-without-console). Example:
 
 ```plain
 # ip:port
@@ -58,9 +58,9 @@ Nacos独立控制台的发行包与Nacos服务的发行包相同， 只需要从
 200.8.9.18:8848
 ```
 
-### 3.4. 修改配置文件（可选）
+### 3.4. Modify Configuration Files (Optional)
 
-修改nacos的解压目录nacos的`conf`目录下的配置文件`application.properties`，查找以 `nacos.console` 开头的配置项，修改为对应配置，示例如下：
+Modify `application.properties` in the `conf` directory under the Nacos decompression directory. Find the configuration items that start with `nacos.console` and modify them as needed. Example:
 
 ```properties
 ### Nacos Console Main port
@@ -71,7 +71,7 @@ nacos.console.contextPath=
 nacos.console.remote.server.context-path=/nacos
 ```
 
-同时需要配置鉴权相关配置，避免启动失败或无法访问Nacos 服务， 示例如下：
+You must also configure authentication-related settings to avoid startup failures or access failures to the Nacos service. Example:
 
 ```properties
 nacos.core.auth.server.identity.key=${your_custom_server_identity_key}
@@ -80,12 +80,12 @@ nacos.core.auth.plugin.nacos.token.secret.key=${your_custom_token_secret_key}
 ```
 
 :::note
-`nacos.core.auth.server.identity.key`和`nacos.core.auth.server.identity.value`需要设置的与Nacos 无控制台服务进行鉴权时设置的值一致，否则将无法访问Nacos 无控制台服务。
+`nacos.core.auth.server.identity.key` and `nacos.core.auth.server.identity.value` must be the same as the values configured for authentication with the Nacos service without console. Otherwise, the console cannot access that Nacos service.
 :::
 
-### 3.5. 启动Nacos 控制台
+### 3.5. Start Nacos Console
 
-通过如下命令，启动Nacos 控制台：
+Run the following commands to start Nacos Console:
 
 ```bash
 # Linux/Unix/Mac 
@@ -99,7 +99,7 @@ bash startup.sh -d console
 startup.cmd -d console
 ```
 
-随后启动程序会提示您输入`3个`鉴权相关配置
+The startup program then prompts you to enter the following `3` authentication-related configurations:
 
 ```
 `nacos.core.auth.plugin.nacos.token.secret.key` is missing, please set: ${your_input_token_secret_key}
@@ -114,13 +114,13 @@ nacos.core.auth.plugin.nacos.token.secret.key` Updated:
 ```
 
 :::note
-若您已经在[修改配置文件](#34-修改配置文件可选)步骤中设置过这3个配置，则不会提示您输入。
+If you have configured these `3` settings in [Modify Configuration Files](#34-modify-configuration-files-optional), you will not be prompted to enter them.
 
-同时`nacos.core.auth.server.identity.key`和`nacos.core.auth.server.identity.value`需要设置的与Nacos 无控制台服务进行鉴权时设置的值一致，否则将无法访问Nacos 无控制台服务。
+`nacos.core.auth.server.identity.key` and `nacos.core.auth.server.identity.value` must be the same as the values configured for authentication with the Nacos service without console. Otherwise, the console cannot access that Nacos service.
 :::
 
-### 3.6. 进入Nacos 控制台
+### 3.6. Access Nacos Console
 
-启动完成后，您可以在浏览器中访问`http://{ip}:{port}`，其中`{ip}`为Nacos 控制台的ip地址，`{port}`为Nacos 控制台的端口，默认为`8080`。
+After startup is complete, access `http://{ip}:{port}` in your browser. `{ip}` is the IP address of Nacos Console, and `{port}` is the Nacos Console port, which defaults to `8080`.
 
-Nacos控制台的使用，请参考文档[控制台手册](../console.md)
+For Nacos console usage, see [Console Guide](../console.md).

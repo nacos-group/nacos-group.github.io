@@ -1,31 +1,31 @@
 ---
 title: Standalone Deployment
-keywords: [Nacos,Deployment,Standalone]
-description: The Manual fo Nacos standalone deployment.
+keywords: [Nacos, Deployment, Standalone]
+description: The manual for Nacos standalone deployment.
 sidebar:
     order: 2
 ---
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-# Nacos单机模式
+# Nacos Standalone Mode
 
-## 1. 发行版部署
+## 1. Release Package Deployment
 
-### 1.1. 部署步骤
+### 1.1. Deployment Steps
 
 <Tabs>
-  <TabItem label="使用Derby数据库">
-    在[快速开始](../../../quickstart/quick-start.mdx)中，我们使用了内置的数据库Derby，快速部署了Nacos的单机模式，可参考该文档进行使用Derby数据库的Nacos单机模式部署。
+  <TabItem label="Use Derby Database">
+    In [Quick Start](../../../quickstart/quick-start.mdx), the built-in Derby database is used to quickly deploy Nacos in standalone mode. You can refer to that document to deploy Nacos standalone mode with Derby.
   </TabItem>
-  <TabItem label="使用MySQL数据库">
-    参考[快速开始](../../../quickstart/quick-start.mdx)中，进行Nacos的环境准备、发行版的下载等。
+  <TabItem label="Use MySQL Database">
+    Refer to [Quick Start](../../../quickstart/quick-start.mdx) to prepare the Nacos environment and download the release package.
 
-    同时在使用MySQL数据源部署Nacos单机模式时，需要自行准备MySQL数据库：
+    When deploying Nacos standalone mode with a MySQL data source, prepare the MySQL database yourself:
 
-    - 1.安装数据库，版本要求：5.6.5+
-    - 2.初始化mysql数据库，数据库初始化文件：[mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql)
+    - 1. Install the database. The required version is 5.6.5 or later.
+    - 2. Initialize the MySQL database. Database initialization file: [mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql).
 
-    然后修改`${nacos.home}/conf/application.properties`文件，增加支持MySQL数据源配置，添加MySQL数据源的url、用户名和密码。
+    Then modify `${nacos.home}/conf/application.properties`, add the MySQL data source configuration, and configure the MySQL data source URL, username, and password.
 
     ```
     spring.sql.init.platform=mysql
@@ -36,31 +36,31 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
     db.password=${mysql_password}
     ```
 
-    然后按照[快速开始-启动服务器](../../../quickstart/quick-start/#4修改鉴权配置)中的操作，修改Nacos的鉴权配置。
-    最后使用[快速开始-启动服务器](../../../quickstart/quick-start/#5启动服务器)中的操作，启动Nacos即可。
+    Then follow [Quick Start - Start Server](../../../quickstart/quick-start/#4-modify-authentication-configuration) to modify the Nacos authentication configuration.
+    Finally, follow [Quick Start - Start Server](../../../quickstart/quick-start/#5-start-server) to start Nacos.
   </TabItem>
 </Tabs>
 
-### 1.2. 高级配置
+### 1.2. Advanced Configuration
 
-Nacos提供了丰富的可配置项，帮助您调整Nacos的性能、控制Nacos提供的功能能力，例如鉴权、监控、数据库、连接、日志等；详情请参考[系统参数](../system-configurations.md)。
+Nacos provides rich configuration items that help you tune Nacos performance and control Nacos features, such as authentication, monitoring, databases, connections, and logs. For details, see [System Parameters](../system-configurations.md).
 
-## 2. Docker部署
+## 2. Docker Deployment
 
-### 2.1. 部署步骤
+### 2.1. Deployment Steps
 
 <Tabs>
-  <TabItem label="使用Derby数据库">
-    在[快速开始 Docker](../../../quickstart/quick-start-docker.mdx)中，我们通过`Docker`使用了内置的数据库Derby，快速部署了Nacos的单机模式，可参考该文档进行使用Derby数据库的Nacos单机模式部署。
+  <TabItem label="Use Derby Database">
+    In [Quick Start Docker](../../../quickstart/quick-start-docker.mdx), Docker is used with the built-in Derby database to quickly deploy Nacos in standalone mode. You can refer to that document to deploy Nacos standalone mode with Derby.
   </TabItem>
-  <TabItem label="使用MySQL数据库">
-    执行 docker-compose 命令启动Nacos
+  <TabItem label="Use MySQL Database">
+    Run the docker-compose command to start Nacos.
 
     ```powershell
     docker-compose -f example/standalone-mysql-8.yaml up
     ```
 
-    **如果希望使用MySQL5.7**
+    **To use MySQL 5.7**
 
     ```powershell
     docker-compose -f example/standalone-mysql-5.7.yaml up
@@ -68,22 +68,22 @@ Nacos提供了丰富的可配置项，帮助您调整Nacos的性能、控制Naco
   </TabItem>
 </Tabs>
 
-### 2.2. 高级配置
+### 2.2. Advanced Configuration
 
-如果你有很多自定义配置的需求，可以通过指定[系统参数-镜像环境变量](../system-configurations/#2-镜像环境变量)的方式进行配置，例如需要开启鉴权时：
+If you need many custom configurations, you can configure them by specifying [System Parameters - Image Environment Variables](../system-configurations/#2-image-environment-variables). For example, to enable authentication:
 
 ```powershell
 docker run --name nacos-standalone-auth -e MODE=standalone -e NACOS_AUTH_ENABLE=true -e NACOS_AUTH_TOKEN=${customToken} -e NACOS_AUTH_IDENTITY_KEY=${customKey} -e NACOS_AUTH_IDENTITY_VALUE=${customValue} -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest
 ```
 
-同时，可以通过对application.properties文件进行挂卷定义的方式，将更多复杂的自定义配置导入Nacos容器中，强烈建议在生产环境中使用方式，例如：
+You can also mount the `application.properties` file to import more complex custom configurations into the Nacos container. This method is strongly recommended for production environments. Example:
 
 ```powershell
 docker run --name nacos-standalone -e MODE=standalone -v /path/application.properties:/home/nacos/conf/application.properties -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest
 ```
 
-如果仍然无法满足自定义需求，可以基于nacos-docker项目中的`Dockerfile`自行构建镜像。
+If this still cannot meet your customization requirements, you can build an image based on the `Dockerfile` in the `nacos-docker` project.
 
-## 3. Kubernetes部署
+## 3. Kubernetes Deployment
 
-Kubernetes暂时不提供单例模式的部署，推荐使用集群模式部署。
+Kubernetes does not currently provide standalone-mode deployment. Cluster-mode deployment is recommended.
