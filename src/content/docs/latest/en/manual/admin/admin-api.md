@@ -50,13 +50,13 @@ To disable Admin API authentication, set `nacos.core.auth.admin.enabled=false` a
 
 Nacos 3.X Admin APIs also provide Swagger-style documentation. You can view it at [Nacos Swagger Admin API](/swagger/admin/).
 
-## 1. Nacos Core 运维 API
+## 1. Nacos Core Admin APIs
 
-### 1.1. 获取当前节点连接
+### 1.1. Get Current Node Connections
 
 #### Description
 
-通过该接口，可以获取连接到当前Nacos Server节点中的gRPC连接详情。
+Use this API to get details about gRPC connections to the current Nacos Server node.
 
 #### Since
 
@@ -76,15 +76,15 @@ Administrator permissions required.
 
 #### Request Parameters
 
-无
+None
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name                                     | Type         | Description                                                                                      |
 |-----------------------------------------|--------------|-----------------------------------------------------------------------------------------|
-| ${connectionId}                         | `object` | 每条 gRPC connection ID. |
+| ${connectionId}                         | `object` | Each gRPC connection ID. |
 | ${connectionId}.abilityTable            | `object` | Capability list supported by the gRPC connection, namely the client. |
 | ${connectionId}.metaInfo.clientIp       | `string` | Source IP of the gRPC connection. |
 | ${connectionId}.metaInfo.localPort      | `integer` | gRPC port of this Nacos Server. |
@@ -159,11 +159,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/current'
 }
 ```
 
-### 1.2. 均衡指定数量的连接
+### 1.2. Rebalance a Specified Number of Connections
 
 #### Description
 
-通过该接口，可以指定一定数量的连接到当前Nacos Server节点中的gRPC连接，将这部分连接断开后迁移到其他Nacos Server节点中。
+Use this API to select a specified number of gRPC connections on the current Nacos Server node, disconnect them, and migrate them to other Nacos Server nodes.
 
 #### Since
 
@@ -185,12 +185,12 @@ Administrator permissions required.
 
 | Name               | Type        | Required    | Description                           |
 |-------------------|-----------|-------|--------------------------------|
-| `count`           | `integer` | **Yes** | 需要均衡的连接个数                      |
-| `redirectAddress` | `string` | No     | 预期均衡的Nacos Server目标，仅提供给客户端参考。 |
+| `count`           | `integer` | **Yes** | Number of connections to rebalance. |
+| `redirectAddress` | `string` | No     | Expected target Nacos Server for rebalancing. This is provided only as a client reference. |
 
 #### Response Data
 
-成功则返回`success`，失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)
+Returns `success` if the operation succeeds. If it fails, the response follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format).
 
 #### Examples
 
@@ -206,11 +206,11 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/reloadCurrent' -d
 success
 ```
 
-### 1.3. 均衡指定的单个连接
+### 1.3. Rebalance a Specified Connection
 
 #### Description
 
-通过该接口，可以将指定的客户端连接(gRPC连接)迁移到其他Nacos Server节点中。
+Use this API to migrate a specified client connection (gRPC connection) to another Nacos Server node.
 
 #### Since
 
@@ -232,12 +232,12 @@ Administrator permissions required.
 
 | Name               | Type       | Required    | Description                 |
 |-------------------|----------|-------|----------------------|
-| `connectionId`    | `string` | **Yes** | 需要均衡的连接Id            |
-| `redirectAddress` | `string` | No     | 预期均衡的Nacos Server目标。 |
+| `connectionId`    | `string` | **Yes** | ID of the connection to rebalance. |
+| `redirectAddress` | `string` | No     | Expected target Nacos Server for rebalancing. |
 
 #### Response Data
 
-成功则返回`success`，失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)
+Returns `success` if the operation succeeds. If it fails, the response follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format).
 
 #### Examples
 
@@ -249,7 +249,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/reloadClient' -d 
 
 * Response example
 
-成功则返回:
+On success, returns:
 
 ```json
 {
@@ -259,7 +259,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/reloadClient' -d 
 }
 ```
 
-失败则返回：
+On failure, returns:
 
 ```json
 {
@@ -269,11 +269,11 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/reloadClient' -d 
 }
 ```
 
-### 1.4. 获取集群连接概览信息
+### 1.4. Get Cluster Connection Overview
 
 #### Description
 
-通过该接口，查看Nacos Server集群中各节点的连接数概览。
+Use this API to view the connection count overview of each node in the Nacos Server cluster.
 
 #### Since
 
@@ -293,26 +293,26 @@ Administrator permissions required.
 
 #### Request Parameters
 
-无
+None
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name                           | Type        | Description                        |
 |-------------------------------|-------------|---------------------------|
-| `total`                       | `integer` | 该集群中所有节点的连接数总和            |
-| `min`                         | `integer` | 该集群中所有节点的最小连接数            |
-| `avg`                         | `integer` | 该集群中所有节点的平均连接数            |
-| `max`                         | `integer` | 该集群中所有节点的最大连接数            |
-| `memberCount`                 | `integer` | 该集群中所有节点的个数               |
-| `metricsCount`                | `integer` | 该集群中已统计到概览信息的节点个数         |
+| `total`                       | `integer` | Total number of connections on all nodes in the cluster. |
+| `min`                         | `integer` | Minimum connection count among all nodes in the cluster. |
+| `avg`                         | `integer` | Average connection count across all nodes in the cluster. |
+| `max`                         | `integer` | Maximum connection count among all nodes in the cluster. |
+| `memberCount`                 | `integer` | Number of nodes in the cluster. |
+| `metricsCount`                | `integer` | Number of nodes whose overview metrics have been collected. |
 | `detail`                      | `array` | Overview information of all nodes in the cluster. See the following fields. |
-| `detail[].address`            | `string` | 节点地址                      |
-| `detail[].metric.load`        | `number` | 节点的负载率，主要对应节点的Load指标，参考值  |
-| `detail[].metric.sdkConCount` | `integer` | 连接到该节点的SDK连接数，主要对应客户端连接数  |
-| `detail[].metric.conCount`    | `integer` | 连接到该节点的总连接数，包含了SDK和集群间的连接 |
-| `detail[].metric.cpu`         | `number` | 节点的CPU使用率，参考值             |
+| `detail[].address`            | `string` | Node address. |
+| `detail[].metric.load`        | `number` | Node load rate, mainly corresponding to the node load metric. This is a reference value. |
+| `detail[].metric.sdkConCount` | `integer` | Number of SDK connections to this node, mainly corresponding to client connections. |
+| `detail[].metric.conCount`    | `integer` | Total number of connections to this node, including SDK and inter-cluster connections. |
+| `detail[].metric.cpu`         | `number` | Node CPU usage. This is a reference value. |
 
 #### Examples
 
@@ -350,11 +350,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/cluster'
 }
 ```
 
-### 1.5. 获取本节点信息
+### 1.5. Get Current Node Information
 
 #### Description
 
-通过该接口，可以获取Nacos Server集群当前节点的详细信息。
+Use this API to get detailed information about the current node in the Nacos Server cluster.
 
 #### Since
 
@@ -370,28 +370,28 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/cluster'
 
 #### Request Parameters
 
-无
+None
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name                           | Type         | Description                                             |
 |-------------------------------|--------------|------------------------------------------------|
-| `ip`                          | `string` | 节点IP                                           |
-| `port`                        | `integer` | 节点端口                                           |
+| `ip`                          | `string` | Node IP address. |
+| `port`                        | `integer` | Node port. |
 | `state`                       | `string` | Node state: UP/DOWN/SUSPICIOUS |
 | `extendInfo`                  | `object` | Extended node information. See the following fields. |
-| `extendInfo.lastRefreshTime`  | `integer` | 节点上一次更新时间戳，单位毫秒                                |
+| `extendInfo.lastRefreshTime`  | `integer` | Last update timestamp of the node, in milliseconds. |
 | `extendInfo.raftMetaData`     | `object` | Raft metadata of the node, including fields such as `leader` and `term` for each Raft Group. |
-| `extendInfo.raftPort`         | `integer` | 节点的Raft端口                                      |
-| `extendInfo.supportGrayModel` | `boolean` | 是否支持灰度模型                                       |
-| `extendInfo.version`          | `string` | 节点的版本                                          |
-| `address`                     | `string` | 节点地址，格式为`ip:port`                              |
-| `failAccessCnt`               | `integer` | 探测失败的次数，及report失败的次数，超过一定次数`state`会被改为`DOWN`   |
+| `extendInfo.raftPort`         | `integer` | Raft port of the node. |
+| `extendInfo.supportGrayModel` | `boolean` | Whether the gray model is supported. |
+| `extendInfo.version`          | `string` | Node version. |
+| `address`                     | `string` | Node address in the `ip:port` format. |
+| `failAccessCnt`               | `integer` | Number of probe failures and report failures. When the count exceeds a threshold, `state` changes to `DOWN`. |
 | `abilities`                   | `object` | Capabilities supported by the node. |
-| `grpcReportEnabled`           | `boolean` | 标记节点是否支持grpc上报心跳能力，用于适配老版本升级，后续将移除             |
-| ~~extendInfo.readyToUpgrade~~ | `boolean` | 是否ready升级到Nacos2.0，于2.2版本后废弃，即将移除              |
+| `grpcReportEnabled`           | `boolean` | Indicates whether the node supports reporting heartbeats through gRPC. This is used for compatibility during upgrades from earlier versions and will be removed later. |
+| ~~extendInfo.readyToUpgrade~~ | `boolean` | Whether the node is ready to upgrade to Nacos 2.0. Deprecated since 2.2 and will be removed. |
 
 #### Examples
 
@@ -476,11 +476,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/self'
 }
 ```
 
-### 1.6. 获取集群所有节点信息
+### 1.6. Get All Cluster Node Information
 
 #### Description
 
-通过该接口，可以获取Nacos Server集群中所有节点的详细信息。
+Use this API to get detailed information about all nodes in the Nacos Server cluster.
 
 #### Since
 
@@ -502,12 +502,12 @@ Administrator permissions required.
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `address` | `string` | No | 节点地址，支持按地址过滤。 |
+| `address` | `string` | No | Node address. Filtering by address is supported. |
 | `state` | `string` | No | Node state: UP/DOWN/SUSPICIOUS |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，`data`字段为[获取本节点信息](#返回数据-4)的返回数据的列表。
+The response body follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The `data` field is a list of the response data returned by [Get Current Node Information](#response-data-4).
 
 #### Examples
 
@@ -621,12 +621,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/list'
 }
 ```
 
-### 1.7. 动态修改Server集群地址发现方式
+### 1.7. Dynamically Change the Server Cluster Address Discovery Mode
 
 #### Description
 
-通过该接口，可以在不重启Nacos Server的情况下，动态切换Nacos Server集群地址发现的方式，目前支持两种方式：`file`
-和`address-server`。
+Use this API to dynamically switch the Nacos Server cluster address discovery mode without restarting Nacos Server. Currently supported modes include `file` and `address-server`.
 
 #### Since
 
@@ -652,11 +651,11 @@ Administrator permissions required.
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)。
+The response body follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format).
 
 | Name    | Type      | Description                          |
 |--------|-----------|-----------------------------|
-| `data` | `boolean` | `true`表示更新成功，`false`表示更新失败。 |
+| `data` | `boolean` | `true` indicates that the update succeeds, and `false` indicates that the update fails. |
 
 #### Examples
 
@@ -676,11 +675,11 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/lookup' -d "type=
 }
 ```
 
-### 1.8. Raft 相关操作
+### 1.8. Raft Operations
 
 #### Description
 
-通过该接口，可以对Nacos Server集群中的Raft协议进行部分运维操作，如执行快照，主动选主等。
+Use this API to perform maintenance operations on the Raft protocol in the Nacos Server cluster, such as taking snapshots and transferring leadership.
 
 #### Since
 
@@ -690,7 +689,7 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/lookup' -d "type=
 
 `POST`
 
-请求体类型：`application/json`，参数放在请求体中。
+The request body type is `application/json`, and parameters are placed in the request body.
 
 #### Authorization
 
@@ -704,11 +703,11 @@ Administrator permissions required.
 
 | Name       | Type       | Required    | Description                                 |
 |-----------|----------|-------|--------------------------------------|
-| `command` | `string` | **Yes** | Raft运维操作指令，具体的命令请参考下表。 |
-| `value` | `string` | **Yes** | 命令的参数，具体的命令内容请参考下表。 |
-| `groupId` | `string` | No | Raft集群的groupId，如果不输入则对所有Raft Group生效 |
+| `command` | `string` | **Yes** | Raft maintenance command. See the table below for supported commands. |
+| `value` | `string` | **Yes** | Command parameter. See the table below for the command content. |
+| `groupId` | `string` | No | Raft cluster `groupId`. If not specified, the command applies to all Raft Groups. |
 
-命令说明（Swagger 暂不支持该子参数结构，文档保留）：
+Command descriptions (Swagger does not yet support this sub-parameter structure, so it is retained in the document):
 
 - `doSnapshot`: `${nacos-server-address}:${raft-port}`
 - `transferLeader`: `${nacos-server-address}:${raft-port}`
@@ -719,11 +718,11 @@ Administrator permissions required.
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)。
+The response body follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format).
 
 | Name    | Type     | Description         |
 |--------|----------|------------|
-| `data` | `string` | 固定为`null`。 |
+| `data` | `string` | Fixed value: `null`. |
 
 #### Examples
 
@@ -743,11 +742,11 @@ curl -X POST -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/
 }
 ```
 
-### 1.9. 动态修改Nacos Core相关日志级别
+### 1.9. Dynamically Change Nacos Core Log Levels
 
 #### Description
 
-通过该接口，可以在不重启Nacos Server的情况下，动态修改Nacos Core相关日志级别的配置。
+Use this API to dynamically change Nacos Core log level configuration without restarting Nacos Server.
 
 #### Since
 
@@ -757,7 +756,7 @@ curl -X POST -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/
 
 `PUT`
 
-请求体类型：`application/json`，参数放在请求体中。
+The request body type is `application/json`, and parameters are placed in the request body.
 
 #### Authorization
 
@@ -771,10 +770,10 @@ Administrator permissions required.
 
 | Name        | Type       | Required    | Description                                                         |
 |------------|----------|-------|--------------------------------------------------------------|
-| `logName` | `string` | **Yes** | 具体的日志文件的Name，具体支持的日志Name见下表。 |
-| `logLevel` | `string` | **Yes** | 日志的级别，可选值为`ALL`、`TRACE`、`DEBUG`、`INFO`、`WARN`、`ERROR`、`OFF`。 |
+| `logName` | `string` | **Yes** | Name of the specific log file. See the table below for supported log names. |
+| `logLevel` | `string` | **Yes** | Log level. Optional values: `ALL`, `TRACE`, `DEBUG`, `INFO`, `WARN`, `ERROR`, and `OFF`. |
 
-| logName        | 对应的具体日志文件             |
+| logName        | Corresponding log file |
 |----------------|-----------------------|
 | `core-auth`    | `core-auth.log`       |
 | `core-raft`    | `protocol-raft.log`   |
@@ -783,11 +782,11 @@ Administrator permissions required.
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)。
+The response body follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format).
 
 | Name    | Type     | Description         |
 |--------|----------|------------|
-| `data` | `string` | 固定为`null`。 |
+| `data` | `string` | Fixed value: `null`. |
 
 #### Examples
 
@@ -807,17 +806,16 @@ curl -X PUT -H 'Content-Type:application/json' 'http://127.0.0.1:8848/nacos/v3/a
 }
 ```
 
-### 1.10. 自动均衡指定数量的连接
+### 1.10. Automatically Rebalance a Specified Number of Connections
 
 #### Description
 
-通过该接口，可以根据负载因子(loaderFactor)自动均衡整个集群的客户端连接。
+Use this API to automatically rebalance client connections across the cluster based on the load factor (`loaderFactor`).
 
-自动均衡逻辑：
+Automatic rebalancing logic:
 
-1. 根据整个集群的客户端连接数和Nacos Server节点数量计算平均连接数`avg`、节点连接数下限阈值`lowLimitCount`(=avg * (
-   1-loaderFactor))、节点连接数上限阈值`overLimitCount`(=avg * (1+loaderFactor))
-2. 将高负载节点的部分客户端连接重定向到低负载节点。
+1. Calculate the average connection count `avg`, the lower node connection threshold `lowLimitCount` (= avg * (1 - loaderFactor)), and the upper node connection threshold `overLimitCount` (= avg * (1 + loaderFactor)) based on the total number of client connections and the number of Nacos Server nodes in the cluster.
+2. Redirect some client connections from high-load nodes to low-load nodes.
 
 #### Since
 
@@ -843,7 +841,7 @@ Administrator permissions required.
 
 #### Response Data
 
-成功则返回:
+On success, returns:
 
 ```json
 {
@@ -853,7 +851,7 @@ Administrator permissions required.
 }
 ```
 
-失败则返回：
+On failure, returns:
 
 ```json
 {
@@ -877,11 +875,11 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/loader/smartReloadCluste
 success
 ```
 
-### 1.11. 获取ID生成器信息
+### 1.11. Get ID Generator Information
 
 #### Description
 
-通过该接口，获取ID生成器的当前ID,workerId. 只有使用内置数据库时该接口才会返回有效数据.
+Use this API to get the current ID and worker ID of the ID generator. This API returns valid data only when the embedded database is used.
 
 #### Since
 
@@ -901,20 +899,20 @@ Administrator permissions required.
 
 #### Request Parameters
 
-无
+None
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)。
+The response body follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format).
 
 | Name              | Type     | Description       |
 |------------------|----------|----------|
-| `resource`       | `string` | 生产器Name    |
-| `info`           | `object` | 生产器详情    |
-| `info.currentId` | `integer` | 当前ID     |
+| `resource`       | `string` | Generator name. |
+| `info`           | `object` | Generator details. |
+| `info.currentId` | `integer` | Current ID. |
 | `info.workerId`  | `integer` | workerID |
 
-成功则返回:
+On success, returns:
 
 ```json
 {
@@ -932,7 +930,7 @@ Administrator permissions required.
 }
 ```
 
-失败则返回：
+On failure, returns:
 
 ```json
 {
@@ -956,11 +954,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/ops/ids'
 success
 ```
 
-### 1.12. 更新集群节点信息
+### 1.12. Update Cluster Node Information
 
 #### Description
 
-通过该接口，可以更新当前节点中的Nacos节点列表的详细信息。**注意：** 该接口会覆盖当前节点中列表中的详细信息，仅更新传入的节点中存在于集群中的节点，并`不能`通过此接口添加和减少集群中的节点。同时，Nacos自身的健康探测`report`任务也会对当前节点中列表中的节点进行健康探测及更新详细信息，若调用此接口后，探测任务发现节点信息有变更，则任务也会覆盖当前节点中列表中的节点信息。
+Use this API to update detailed information in the Nacos node list of the current node. **Note:** This API overwrites the detailed information in the list on the current node. It only updates nodes that are both passed in and already exist in the cluster, and it `cannot` add or remove nodes from the cluster. In addition, the Nacos health probe `report` task also checks node health and updates node details in the list on the current node. If the probe task detects node information changes after this API is called, the task also overwrites the node information in the list on the current node.
 
 #### Since
 
@@ -980,15 +978,15 @@ Administrator permissions required.
 
 #### Request Parameters
 
-请求体为 JSON 数组，数组元素为节点信息（Member），包含 ip、port、state、extendInfo 等字段。
+The request body is a JSON array. Each array element is node information (Member), including fields such as `ip`, `port`, `state`, and `extendInfo`.
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data | `boolean` | 是否更新成功 |
+| data | `boolean` | Whether the update succeeds. |
 
 #### Examples
 
@@ -1010,11 +1008,11 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/cluster/node/list' \
 }
 ```
 
-### 1.13. 获取命名空间详情
+### 1.13. Get Namespace Details
 
 #### Description
 
-通过该接口，可以获取指定命名空间的详情。
+Use this API to get details of a specified namespace.
 
 #### Since
 
@@ -1036,19 +1034,19 @@ Administrator permissions required.
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `namespaceId` | `string` | **Yes** | 命名空间 ID |
+| `namespaceId` | `string` | **Yes** | Namespace ID. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name | Type | Description |
 |--------|----------|------|
-| namespace | `string` | 命名空间 ID |
-| namespaceShowName | `string` | 命名空间展示名 |
-| namespaceDesc | `string` | 命名空间描述 |
-| quota | `integer` | 配置数量配额 |
-| configCount | `integer` | 当前配置数量 |
+| namespace | `string` | Namespace ID. |
+| namespaceShowName | `string` | Namespace display name. |
+| namespaceDesc | `string` | Namespace description. |
+| quota | `integer` | Config quantity quota. |
+| configCount | `integer` | Current config count. |
 | type | `integer` | Type |
 
 #### Examples
@@ -1076,11 +1074,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace?namespaceId=pub
 }
 ```
 
-### 1.14. 更新命名空间
+### 1.14. Update Namespace
 
 #### Description
 
-通过该接口，可以更新命名空间的信息，无法更新命名空间ID，仅能更新命名空间的Name和Description。
+Use this API to update namespace information. The namespace ID cannot be updated; only the namespace name and description can be updated.
 
 #### Since
 
@@ -1102,13 +1100,13 @@ Administrator permissions required.
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `namespaceId` | `string` | **Yes** | 命名空间 ID |
-| `namespaceName` | `string` | **Yes** | 命名空间展示名 |
-| `namespaceDesc` | `string` | No | 命名空间描述 |
+| `namespaceId` | `string` | **Yes** | Namespace ID. |
+| `namespaceName` | `string` | **Yes** | Namespace display name. |
+| `namespaceDesc` | `string` | No | Namespace description. |
 
 #### Response Data
 
-成功则返回统一返回体，`data` 为 `true` 表示成功；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)。
+On success, a unified response body is returned and `data` is `true`. On failure, the response follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format).
 
 #### Examples
 
@@ -1129,11 +1127,11 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace' \
 }
 ```
 
-### 1.15. 创建新命名空间
+### 1.15. Create Namespace
 
 #### Description
 
-通过该接口，可以创建新的命名空间。
+Use this API to create a namespace.
 
 #### Since
 
@@ -1155,13 +1153,13 @@ Administrator permissions required.
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `namespaceId` | `string` | No | 命名空间 ID，不传则由服务端生成 |
-| `namespaceName` | `string` | **Yes** | 命名空间展示名 |
-| `namespaceDesc` | `string` | No | 命名空间描述 |
+| `namespaceId` | `string` | No | Namespace ID. If not specified, the server generates one. |
+| `namespaceName` | `string` | **Yes** | Namespace display name. |
+| `namespaceDesc` | `string` | No | Namespace description. |
 
 #### Response Data
 
-成功则返回统一返回体，`data` 为 `true` 表示成功；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)。
+On success, a unified response body is returned and `data` is `true`. On failure, the response follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format).
 
 #### Examples
 
@@ -1182,11 +1180,11 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace' \
 }
 ```
 
-### 1.16. 删除命名空间
+### 1.16. Delete Namespace
 
 #### Description
 
-通过该接口，可以删除命名空间。默认命名空间`public`无法被删除。
+Use this API to delete a namespace. The default namespace `public` cannot be deleted.
 
 #### Since
 
@@ -1208,11 +1206,11 @@ Administrator permissions required.
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `namespaceId` | `string` | **Yes** | 命名空间 ID |
+| `namespaceId` | `string` | **Yes** | Namespace ID. |
 
 #### Response Data
 
-成功则返回统一返回体，`data` 为 `true` 表示成功；失败则返回[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)。
+On success, a unified response body is returned and `data` is `true`. On failure, the response follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format).
 
 #### Examples
 
@@ -1232,11 +1230,11 @@ curl -X DELETE 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace?namespaceId=
 }
 ```
 
-### 1.17. 检查命名空间是否存在
+### 1.17. Check Whether a Namespace Exists
 
 #### Description
 
-通过该接口，可以检查命名空间ID是否存在。应该在创建命名空间前调用，确认自定义的命名空间ID是否已经存在，以防冲突。
+Use this API to check whether a namespace ID exists. Call this API before creating a namespace to confirm whether a custom namespace ID already exists and avoid conflicts.
 
 #### Since
 
@@ -1262,7 +1260,7 @@ Administrator permissions required.
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，`data` 为 `true` 表示已存在，`false` 表示不存在。
+The response body follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). `data` is `true` if the namespace exists and `false` if it does not.
 
 #### Examples
 
@@ -1282,11 +1280,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace/check?namespace
 }
 ```
 
-### 1.18. 获取Nacos命名空间列表
+### 1.18. Get Nacos Namespace List
 
 #### Description
 
-通过该接口，可以获取当前Nacos集群的命名空间列表。
+Use this API to get the namespace list of the current Nacos cluster.
 
 #### Since
 
@@ -1306,11 +1304,11 @@ Administrator permissions required.
 
 #### Request Parameters
 
-无
+None
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。`data` 为命名空间对象数组，每项包含 namespace、namespaceShowName、namespaceDesc、quota、configCount、type 等字段。
+The response body follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field. `data` is an array of namespace objects. Each item contains fields such as `namespace`, `namespaceShowName`, `namespaceDesc`, `quota`, `configCount`, and `type`.
 
 #### Examples
 
@@ -1339,11 +1337,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace/list'
 }
 ```
 
-### 1.19. 获取Nacos集群状态信息
+### 1.19. Get Nacos Cluster Status Information
 
 #### Description
 
-通过该接口，可以获取到Nacos 集群的基础状态和开关信息，例如：版本号，运行模式，鉴权是否开启等；该接口不会返回Nacos 集群的节点信息。
+Use this API to get basic status and switch information of the Nacos cluster, such as the version, running mode, and whether authentication is enabled. This API does not return node information of the Nacos cluster.
 
 #### Since
 
@@ -1355,7 +1353,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace/list'
 
 #### Authorization
 
-公开接口，无需身份信息。
+Public API. No identity information is required.
 
 #### Request URL
 
@@ -1363,11 +1361,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/namespace/list'
 
 #### Request Parameters
 
-无
+None
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，`data` 为键值对，包含版本号（version）、运行模式（startup_mode）、鉴权开关（auth_enabled）等集群状态与配置项。
+The response body follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). `data` is a key-value map containing cluster status and configuration items such as version (`version`), running mode (`startup_mode`), and authentication switch (`auth_enabled`).
 
 #### Examples
 
@@ -1390,11 +1388,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state'
 }
 ```
 
-### 1.20. 获取Nacos集群的存活状态
+### 1.20. Get Nacos Cluster Liveness Status
 
 #### Description
 
-通过该接口，可以获取Nacos集群的存活状态，Nacos集群是否可正常接受和响应请求。
+Use this API to get the liveness status of the Nacos cluster, indicating whether the Nacos cluster can normally accept and respond to requests.
 
 #### Since
 
@@ -1406,7 +1404,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state'
 
 #### Authorization
 
-公开接口，无需身份信息。
+Public API. No identity information is required.
 
 #### Request URL
 
@@ -1414,15 +1412,15 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state'
 
 #### Request Parameters
 
-无
+None
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data | `string` | 存活状态，如 "ok" |
+| data | `string` | Liveness status, such as "ok". |
 
 #### Examples
 
@@ -1442,11 +1440,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state/liveness'
 }
 ```
 
-### 1.21. 获取Nacos集群的可读状态
+### 1.21. Get Nacos Cluster Readiness Status
 
 #### Description
 
-通过该接口，可以获取Nacos集群的是否处于可读取状态，即Nacos集群是否可以读取到数据。
+Use this API to get whether the Nacos cluster is in a readable state, indicating whether the Nacos cluster can read data.
 
 #### Since
 
@@ -1458,7 +1456,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state/liveness'
 
 #### Authorization
 
-公开接口，无需身份信息。
+Public API. No identity information is required.
 
 #### Request URL
 
@@ -1466,15 +1464,15 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state/liveness'
 
 #### Request Parameters
 
-无
+None
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data | `string` | 可读状态，如 "ok" |
+| data | `string` | Readiness status, such as "ok". |
 
 #### Examples
 
@@ -1494,11 +1492,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state/readiness'
 }
 ```
 
-### 1.22. 更新插件配置
+### 1.22. Update Plugin Configuration
 
 #### Description
 
-通过该接口，可以更新插件的配置。需要提供插件类型、名称及配置内容。支持 localOnly 仅作用于当前节点。
+Use this API to update plugin configuration. Provide the plugin type, name, and configuration content. `localOnly` is supported to apply the change only to the current node.
 
 #### Since
 
@@ -1508,7 +1506,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state/readiness'
 
 `PUT`
 
-请求体类型：`application/json`。
+The request body type is `application/json`.
 
 #### Authorization
 
@@ -1520,18 +1518,18 @@ Administrator permissions required.
 
 #### Request Parameters
 
-请求体为 JSON，包含以下字段：
+The request body is JSON and contains the following fields:
 
 | Name         | Type       | Required | Description           |
 |-------------|----------|----|----------------|
-| `pluginType` | `string` | **Yes** | 插件类型，如 auth。 |
-| `pluginName` | `string` | **Yes** | 插件名称。 |
-| `config` | `string` | **Yes** | 插件配置项。 |
-| `localOnly` | `boolean` | No | 是否仅写本地，不持久化。 |
+| `pluginType` | `string` | **Yes** | Plugin type, such as auth. |
+| `pluginName` | `string` | **Yes** | Plugin name. |
+| `config` | `string` | **Yes** | Plugin configuration item. |
+| `localOnly` | `boolean` | No | Whether to write only locally without persistence. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，`data` 为字符串表示操作结果。
+The response body follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). `data` is a string indicating the operation result.
 
 #### Examples
 
@@ -1552,11 +1550,11 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/config' \
 }
 ```
 
-### 1.23. 获取插件详情
+### 1.23. Get Plugin Details
 
 #### Description
 
-通过该接口，可以按类型和名称获取指定插件的详情信息。
+Use this API to get details of a specified plugin by type and name.
 
 #### Since
 
@@ -1578,23 +1576,23 @@ Administrator permissions required.
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `pluginType` | `string` | **Yes** | 插件类型，如 auth |
-| `pluginName` | `string` | **Yes** | 插件名称 |
+| `pluginType` | `string` | **Yes** | Plugin type, such as auth. |
+| `pluginName` | `string` | **Yes** | Plugin name. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name | Type | Description |
 |--------|----------|------|
-| pluginId | `string` | 插件 ID |
-| pluginType | `string` | 插件类型 |
-| pluginName | `string` | 插件名称 |
-| enabled | `boolean` | 是否启用 |
-| critical | `boolean` | 是否关键插件 |
-| configurable | `boolean` | 是否可配置 |
-| config | `object` | 配置内容 |
-| configDefinitions | `array` | 配置定义列表 |
+| pluginId | `string` | Plugin ID. |
+| pluginType | `string` | Plugin type. |
+| pluginName | `string` | Plugin name. |
+| enabled | `boolean` | Whether the plugin is enabled. |
+| critical | `boolean` | Whether the plugin is critical. |
+| configurable | `boolean` | Whether the plugin is configurable. |
+| config | `object` | Configuration content. |
+| configDefinitions | `array` | Configuration definition list. |
 
 #### Examples
 
@@ -1623,11 +1621,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/detail?pluginType=
 }
 ```
 
-### 1.24. 获取插件列表
+### 1.24. Get Plugin List
 
 #### Description
 
-通过该接口，可以获取所有插件列表，可按插件类型筛选。
+Use this API to get all plugins. Filtering by plugin type is supported.
 
 #### Since
 
@@ -1649,11 +1647,11 @@ Administrator permissions required.
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `pluginType` | `string` | No | 插件类型，不传则返回全部 |
+| `pluginType` | `string` | No | Plugin type. If not specified, all plugins are returned. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，`data` 为插件对象数组。
+The response body follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). `data` is an array of plugin objects.
 
 #### Examples
 
@@ -1683,11 +1681,11 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/list?pluginType=au
 }
 ```
 
-### 1.25. 启用或禁用插件
+### 1.25. Enable or Disable a Plugin
 
 #### Description
 
-通过该接口，可以更新插件的启用状态（启用或禁用）。支持 localOnly 仅作用于当前节点。
+Use this API to update the plugin status (enabled or disabled). `localOnly` is supported to apply the change only to the current node.
 
 #### Since
 
@@ -1697,7 +1695,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/list?pluginType=au
 
 `PUT`
 
-请求体类型：`application/json`。
+The request body type is `application/json`.
 
 #### Authorization
 
@@ -1709,18 +1707,18 @@ Administrator permissions required.
 
 #### Request Parameters
 
-请求体为 JSON，包含以下字段：
+The request body is JSON and contains the following fields:
 
 | Name         | Type        | Required | Description       |
 |-------------|-----------|----|------------|
-| `pluginType` | `string` | **Yes** | 插件类型。 |
-| `pluginName` | `string` | **Yes** | 插件名称。 |
-| `enabled` | `boolean` | **Yes** | 是否启用。 |
-| `localOnly` | `boolean` | No | 是否仅写本地。 |
+| `pluginType` | `string` | **Yes** | Plugin type. |
+| `pluginName` | `string` | **Yes** | Plugin name. |
+| `enabled` | `boolean` | **Yes** | Whether to enable the plugin. |
+| `localOnly` | `boolean` | No | Whether to write only locally. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，`data` 为字符串表示操作结果。
+The response body follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). `data` is a string indicating the operation result.
 
 #### Examples
 
