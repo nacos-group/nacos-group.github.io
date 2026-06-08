@@ -48,15 +48,15 @@ To disable Console API authentication, set `nacos.core.auth.console.enabled=fals
 
 Nacos 3.X Console APIs also provide Swagger-style documentation. You can view it at [Nacos Swagger Console API](/swagger/console/).
 
-## 1. Nacos 基础控制台API
+## 1. Nacos Basic Console APIs
 
-基础控制台API提供了Nacos 集群的基础信息，例如集群信息、命名空间信息等。
+Basic Console APIs provide basic information about the Nacos cluster, such as cluster information and namespace information.
 
-### 1.1. 获取集群状态信息
+### 1.1. Get Cluster Status
 
 #### Description
 
-通过该接口，可以获取到Nacos 集群的基础状态和开关信息，例如：版本号，运行模式，鉴权是否开启等；该接口不会返回Nacos 集群的节点信息。
+You can use this API to obtain basic status and switch information for the Nacos cluster, such as the version, startup mode, and whether authentication is enabled. This API does not return Nacos cluster node information.
 
 #### Since
 
@@ -68,7 +68,7 @@ Nacos 3.X Console APIs also provide Swagger-style documentation. You can view it
 
 #### Authorization
 
-公开接口，无需身份信息。
+Public API. No identity information is required.
 
 #### Request URL
 
@@ -76,33 +76,33 @@ Nacos 3.X Console APIs also provide Swagger-style documentation. You can view it
 
 #### Request Parameters
 
-无
+None
 
 #### Response Data
 
 | Name                           | Type      | Description                                                                        |
 |-------------------------------|-----------|---------------------------------------------------------------------------|
-| version                       | `string` | Nacos集群的版本号，例如`3.0.0`                                                     |
-| startup_mode                  | `string` | Nacos集群的模式，例如`standalone`、`cluster`                                       |
-| server_port                   | `integer` | Nacos集群的主端口，例如`8848`                                                      |
-| function_mode                 | `string` | Nacos集群的功能模式，例如`config`、`naming`、`all`, 若为`null`时，相当于`all`                |
-| datasource_platform           | `string` | Nacos集群的数据源类型，例如`mysql`、`derby`等，若为``时，说明使用默认数据源类型                        |
-| console_ui_enabled            | `boolean` | Nacos控制台UI是否启用                                                            |
-| auth_enabled                  | `boolean` | Nacos是否启用鉴权                                                               |
-| auth_admin_request            | `boolean` | Nacos是否需要初始化admin用户`nacos`                                                |
-| auth_system_type              | `string` | Nacos鉴权的插件类型，例如`nacos`等，若为``时，说明使用默认鉴权系统类型                                |
-| login_page_enabled            | `boolean` | Nacos控制台是否启用登录页                                                           |
-| plugin_datasource_log_enabled | `boolean` | Nacos是否启用打印数据源访问Debug日志                                                   |
-| config_retention_days         | `integer` | Nacos集群的配置历史数据保留天数，单位为天                                                   |
-| isManageCapacity              | `boolean` | Nacos是否启用配置容量限制检查，默认为`true`，开启时仅会统计当前配置的使用量，在超过限额时不会拒绝请求。                 |
-| isCapacityLimitCheck          | `boolean` | Nacos是否启用配置容量限制检查，默认为`false`，开启后当配置容量超出限额时，会拒绝配置的变更请求。                    |
-| defaultMaxSize                | `integer` | Nacos集群的配置文件大小限制，单位为Byte，默认为`102400`，即100KB。                              |
-| defaultGroupQuota             | `integer` | Nacos集群的单个分组（GroupName）下的配置文件数量限额，默认为`200`。                               |
-| defaultClusterQuota           | `integer` | Nacos集群的整个集群配置文件数量限额，默认为`100000`。                                         |
-| isHealthCheck                 | `boolean` | Nacos是否启用naming模块健康检查，默认为`true`，开启后当注册到nacos上的服务实例出现异常时，Nacos会主动剔除该服务端节点。 |
-| ~~maxContent~~                | `integer` | 已废弃，请使用`defaultMaxSize`。                                                  |
-| ~~defaultMaxAggrSize~~        | `integer` | 未实际使用，已废弃                                                                 |
-| ~~defaultMaxAggrCount~~       | `integer` | 未实际使用，已废弃                                                                 |
+| version                       | `string` | Version number of the Nacos cluster, for example `3.0.0`                                                     |
+| startup_mode                  | `string` | Mode of the Nacos cluster, for example `standalone`, `cluster`                                       |
+| server_port                   | `integer` | Primary port of the Nacos cluster, for example `8848`                                                      |
+| function_mode                 | `string` | Function mode of the Nacos cluster, for example `config`, `naming`, or `all`. If it is `null`, it is equivalent to `all`                |
+| datasource_platform           | `string` | Data source type of the Nacos cluster, for example `mysql` or `derby`. If it is empty, the default data source type is used                        |
+| console_ui_enabled            | `boolean` | Whether the Nacos console UI is enabled                                                            |
+| auth_enabled                  | `boolean` | Whether Nacos authentication is enabled                                                               |
+| auth_admin_request            | `boolean` | Whether Nacos needs to initialize the `nacos` admin user                                                |
+| auth_system_type              | `string` | Authentication plugin type of Nacos, for example `nacos`. If it is empty, the default authentication system type is used                                |
+| login_page_enabled            | `boolean` | Whether the Nacos console login page is enabled                                                           |
+| plugin_datasource_log_enabled | `boolean` | Whether Nacos enables Debug logs for data source access                                                   |
+| config_retention_days         | `integer` | Configuration history retention days of the Nacos cluster                                                   |
+| isManageCapacity              | `boolean` | Whether Nacos enables configuration capacity limit management. The default is `true`. When enabled, it only counts current configuration usage and does not reject requests after the limit is exceeded.                 |
+| isCapacityLimitCheck          | `boolean` | Whether Nacos enables configuration capacity limit checking. The default is `false`. When enabled, configuration change requests are rejected if the configuration capacity exceeds the limit.                    |
+| defaultMaxSize                | `integer` | Configuration file size limit of the Nacos cluster, in bytes. The default is `102400`, which is 100 KB.                              |
+| defaultGroupQuota             | `integer` | Configuration file count quota under a single group (`GroupName`) in the Nacos cluster. The default is `200`.                               |
+| defaultClusterQuota           | `integer` | Cluster-wide configuration file count quota of the Nacos cluster. The default is `100000`.                                         |
+| isHealthCheck                 | `boolean` | Whether Nacos enables health checks in the naming module. The default is `true`. When enabled, Nacos actively removes abnormal service instances registered with Nacos. |
+| ~~maxContent~~                | `integer` | Deprecated. Use `defaultMaxSize`.                                                  |
+| ~~defaultMaxAggrSize~~        | `integer` | Not actually used. Deprecated.                                                                 |
+| ~~defaultMaxAggrCount~~       | `integer` | Not actually used. Deprecated.                                                                 |
 
 #### Examples
 
@@ -143,11 +143,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/state'
 }
 ```
 
-### 1.2. 获取控制台公告信息
+### 1.2. Get Console Announcement
 
 #### Description
 
-通过该接口，可以获取到Nacos 控制台希望在浏览器中显示的公告信息。Nacos默认控制台UI会在未开启鉴权时调用此接口，返回集群未开启鉴权的提示。
+You can use this API to obtain the announcement that the Nacos console wants to display in the browser. The default Nacos console UI calls this API when authentication is not enabled, and the API returns a reminder that authentication is disabled for the cluster.
 
 #### Since
 
@@ -159,7 +159,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/state'
 
 #### Authorization
 
-公开接口，无需身份信息。
+Public API. No identity information is required.
 
 #### Request URL
 
@@ -169,15 +169,15 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/state'
 
 | Name        | Type       | Required | Description                                        |
 |------------|----------|----|---------------------------------------------|
-| `language` | `string` | No  | 访问的语言i18n值，默认为`zh-CN`，目前仅支持`zh-CN`和`en-US`。 |
+| `language` | `string` | No  | Language i18n value for the request. The default is `zh-CN`; currently only `zh-CN` and `en-US` are supported. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type     | Description      |
 |--------|----------|---------|
-| `data` | `string` | 控制台公告内容 |
+| `data` | `string` | Console announcement content |
 
 #### Examples
 
@@ -193,15 +193,15 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/announcement?language=zh-CN
 {
   "code": 0,
   "message": "success",
-  "data": "当前集群没有开启鉴权，请参考<a href=\"https://nacos.io/zh-cn/docs/v2/guide/user/auth.html\">文档</a>开启鉴权~"
+  "data": "Authentication is not enabled for the current cluster. See the <a href=\"https://nacos.io/en/docs/v2/guide/user/auth.html\">documentation</a> to enable authentication."
 }
 ```
 
-### 1.3. 获取控制台引导内容
+### 1.3. Get Console Guide Content
 
 #### Description
 
-通过该接口，可以获取Nacos控制台的引导信息。Nacos默认控制台UI会在关闭Nacos控制台UI时调用，以获取引导信息，相关详情请参考[控制台手册-关闭默认控制台](./console/#33-关闭默认控制台)。
+You can use this API to obtain guide information for the Nacos console. The default Nacos console UI calls this API when the console UI is disabled to obtain guide information. For details, see [Console Manual](./console.md).
 
 #### Since
 
@@ -213,7 +213,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/announcement?language=zh-CN
 
 #### Authorization
 
-公开接口，无需身份信息。
+Public API. No identity information is required.
 
 #### Request URL
 
@@ -221,15 +221,15 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/announcement?language=zh-CN
 
 #### Request Parameters
 
-无
+None
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type     | Description      |
 |--------|----------|---------|
-| `data` | `string` | 控制台引导内容 |
+| `data` | `string` | Console guide content |
 
 #### Examples
 
@@ -245,15 +245,15 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/guide'
 {
   "code": 0,
   "message": "success",
-  "data": "当前节点已关闭Nacos开源控制台使用，请修改application.properties中的nacos.console.ui.enabled参数为true打开开源控制台使用，详情查看<a href=\"https://nacos.io/zh-cn/docs/v2/guide/admin/console-guide.html\">文档</a>中关于<code>关闭默认控制台部分</code>。"
+  "data": "The Nacos open-source console is disabled on the current node. Set `nacos.console.ui.enabled=true` in `application.properties` to enable it. For details, see the console documentation."
 }
 ```
 
-### 1.4. 获取Nacos控制台的存活状态
+### 1.4. Get Nacos Console Liveness Status
 
 #### Description
 
-通过该接口，可以获取Nacos控制台的存活状态，Nacos控制台是否可正常接受和响应请求。
+You can use this API to obtain the liveness status of the Nacos console, that is, whether the Nacos console can normally accept and respond to requests.
 
 #### Since
 
@@ -265,7 +265,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/guide'
 
 #### Authorization
 
-公开接口，无需身份信息。
+Public API. No identity information is required.
 
 #### Request URL
 
@@ -273,15 +273,15 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/guide'
 
 #### Request Parameters
 
-无
+None
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type     | Description      |
 |--------|----------|---------|
-| `data` | `string` | 固定为`ok` |
+| `data` | `string` | Fixed as `ok` |
 
 #### Examples
 
@@ -301,11 +301,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/health/liveness'
 }
 ```
 
-### 1.5. 获取Nacos控制台的可读状态
+### 1.5. Get Nacos Console Readiness Status
 
 #### Description
 
-通过该接口，可以获取Nacos控制台的是否处于可读取状态，即Nacos控制台是否可以读取到数据。
+You can use this API to obtain whether the Nacos console is in a readable state, that is, whether the Nacos console can read data.
 
 #### Since
 
@@ -317,7 +317,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/health/liveness'
 
 #### Authorization
 
-公开接口，无需身份信息。
+Public API. No identity information is required.
 
 #### Request URL
 
@@ -325,15 +325,15 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/health/liveness'
 
 #### Request Parameters
 
-无
+None
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type     | Description                               |
 |--------|----------|----------------------------------|
-| `data` | `string` | 若为可读状态时，固定为`ok`，否则为不可读的模块即对应原因信息 |
+| `data` | `string` | Fixed as `ok` when the console is readable; otherwise, the value is the unreadable module or corresponding reason information. |
 
 #### Examples
 
@@ -353,11 +353,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/health/readiness'
 }
 ```
 
-### 1.6. 获取Nacos节点运行信息
+### 1.6. Get Nacos Node Runtime Information
 
 #### Description
 
-通过该接口，可以获取Nacos节点运行信息，包括节点ip，节点运行状态，节点元数据等。
+You can use this API to obtain Nacos node runtime information, including node IP, node runtime status, and node metadata.
 
 #### Since
 
@@ -369,7 +369,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/health/readiness'
 
 #### Authorization
 
-需要Nacos 管理员用户权限。
+Nacos administrator permission is required.
 
 #### Request URL
 
@@ -377,11 +377,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/health/readiness'
 
 #### Request Parameters
 
-无。
+None.
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name | Type | Description |
 |-----|------|----|
@@ -464,11 +464,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/cluster/nodes'
 }
 ```
 
-### 1.7. 获取Nacos命名空间列表
+### 1.7. Get Nacos Namespace List
 
 #### Description
 
-通过该接口，可以获取当前Nacos集群的命名空间列表。
+You can use this API to obtain the namespace list of the current Nacos cluster.
 
 #### Since
 
@@ -480,9 +480,9 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/cluster/nodes'
 
 #### Authorization
 
-任意有效鉴权身份信息。
+Any valid authentication identity is required.
 
-> 由于命名空间是Nacos的基础隔离概念，因此大多数数据查询的接口都需要选择某个命名空间才能进行查询。因此，获取命名空间列表的能力应该是任意有效身份信息用户均可访问。
+> Because namespace is the basic isolation concept in Nacos, most data query APIs must select a namespace before querying data. Therefore, any user with a valid identity should be able to access the namespace list.
 
 #### Request URL
 
@@ -490,20 +490,20 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/cluster/nodes'
 
 #### Request Parameters
 
-无
+None
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name                 | Type      | Description                                           |
 |---------------------|-----------|----------------------------------------------|
-| `namespace`         | `string` | 命名空间id                                       |
-| `namespaceShowName` | `string` | 命名空间名称                                       |
-| `namespaceDesc`     | `string` | 命名空间描述                                       |
-| `configCount`       | `integer` | 命名空间下的配置个数                                   |
-| `quota`             | `integer` | 命名空间的配置个数配额，需开启配置配额功能才会实际生效，默认不开启，仅做预留字段。    |
-| `type`              | `integer` | 命名空间的类型，预留字段，目前为`0`时为默认命名空间、`2`时为自定义创建的命名空间。 |
+| `namespace`         | `string` | namespace ID                                       |
+| `namespaceShowName` | `string` | namespace name                                       |
+| `namespaceDesc`     | `string` | namespace description                                       |
+| `configCount`       | `integer` | number of configurations in the namespace                                   |
+| `quota`             | `integer` | configuration count quota of the namespace. It takes effect only after configuration quota is enabled. It is disabled by default and reserved only.    |
+| `type`              | `integer` | namespace type. Reserved field. Currently, `0` indicates the default namespace, and `2` indicates a custom namespace. |
 
 #### Examples
 
@@ -532,11 +532,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/list'
 }
 ```
 
-### 1.8. 获取命名空间详情
+### 1.8. Get Namespace Details
 
 #### Description
 
-通过该接口，可以获取指定命名空间的详情。
+You can use this API to obtain the details of a specified namespace.
 
 #### Since
 
@@ -548,7 +548,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/list'
 
 #### Authorization
 
-需要Nacos 管理员用户权限。
+Nacos administrator permission is required.
 
 #### Request URL
 
@@ -558,20 +558,20 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/list'
 
 | Name           | Type       | Required | Description    |
 |---------------|----------|----|---------|
-| `namespaceId` | `string` | Yes  | 命名空间id。 |
+| `namespaceId` | `string` | Yes  | namespace ID. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name                 | Type      | Description                                           |
 |---------------------|-----------|----------------------------------------------|
-| `namespace`         | `string` | 命名空间id                                       |
-| `namespaceShowName` | `string` | 命名空间名称                                       |
-| `namespaceDesc`     | `string` | 命名空间描述                                       |
-| `configCount`       | `integer` | 命名空间下的配置个数                                   |
-| `quota`             | `integer` | 命名空间的配置个数配额，需开启配置配额功能才会实际生效，默认不开启，仅做预留字段。    |
-| `type`              | `integer` | 命名空间的类型，预留字段，目前为`0`时为默认命名空间、`2`时为自定义创建的命名空间。 |
+| `namespace`         | `string` | namespace ID                                       |
+| `namespaceShowName` | `string` | namespace name                                       |
+| `namespaceDesc`     | `string` | namespace description                                       |
+| `configCount`       | `integer` | number of configurations in the namespace                                   |
+| `quota`             | `integer` | configuration count quota of the namespace. It takes effect only after configuration quota is enabled. It is disabled by default and reserved only.    |
+| `type`              | `integer` | namespace type. Reserved field. Currently, `0` indicates the default namespace, and `2` indicates a custom namespace. |
 
 #### Examples
 
@@ -598,11 +598,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace?namespaceId=public'
 }
 ```
 
-### 1.9. 创建新命名空间
+### 1.9. Create Namespace
 
 #### Description
 
-通过该接口，可以创建新的命名空间。
+You can use this API to create a namespace.
 
 #### Since
 
@@ -614,7 +614,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace?namespaceId=public'
 
 #### Authorization
 
-需要Nacos 管理员用户权限。
+Nacos administrator permission is required.
 
 #### Request URL
 
@@ -624,17 +624,17 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace?namespaceId=public'
 
 | Name                 | Type       | Required | Description                     |
 |---------------------|----------|----|--------------------------|
-| `customNamespaceId` | `string` | No  | 命名空间id，未填入时将会使用UUID生成ID。 |
-| `namespaceName`     | `string` | Yes  | 命名空间名称。                  |
-| `namespaceDesc`     | `string` | No  | 命名空间描述。                  |
+| `customNamespaceId` | `string` | No  | Namespace ID. If it is not specified, a UUID is used to generate the ID. |
+| `namespaceName`     | `string` | Yes  | namespace name.                  |
+| `namespaceDesc`     | `string` | No  | namespace description.                  |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type      | Description          |
 |--------|-----------|-------------|
-| `data` | `boolean` | 创建命名空间是否成功。 |
+| `data` | `boolean` | whether namespace creation succeeded. |
 
 #### Examples
 
@@ -654,11 +654,11 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/core/namespace' -d 'namespaceName
 }
 ```
 
-### 1.10. 更新命名空间
+### 1.10. Update Namespace
 
 #### Description
 
-通过该接口，可以更新命名空间的信息，无法更新命名空间ID，仅能更新命名空间的Name和Description。
+You can use this API to update namespace information. The namespace ID cannot be updated; only the name and description can be updated.
 
 #### Since
 
@@ -670,7 +670,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/core/namespace' -d 'namespaceName
 
 #### Authorization
 
-需要Nacos 管理员用户权限。
+Nacos administrator permission is required.
 
 #### Request URL
 
@@ -680,17 +680,17 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/core/namespace' -d 'namespaceName
 
 | Name             | Type       | Required | Description    |
 |-----------------|----------|----|---------|
-| `namespaceId`   | `string` | Yes  | 命名空间ID  |
-| `namespaceName` | `string` | Yes  | 命名空间名称。 |
-| `namespaceDesc` | `string` | No  | 命名空间描述。 |
+| `namespaceId`   | `string` | Yes  | namespace ID  |
+| `namespaceName` | `string` | Yes  | namespace name. |
+| `namespaceDesc` | `string` | No  | namespace description. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type      | Description          |
 |--------|-----------|-------------|
-| `data` | `boolean` | 更新命名空间是否成功。 |
+| `data` | `boolean` | whether namespace update succeeded. |
 
 #### Examples
 
@@ -710,11 +710,11 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/core/namespace' -d 'namespaceId=te
 }
 ```
 
-### 1.11. 删除命名空间
+### 1.11. Delete Namespace
 
 #### Description
 
-通过该接口，可以删除命名空间。默认命名空间`public`无法被删除。
+You can use this API to delete a namespace. The default `public` namespace cannot be deleted.
 
 #### Since
 
@@ -726,7 +726,7 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/core/namespace' -d 'namespaceId=te
 
 #### Authorization
 
-需要Nacos 管理员用户权限。
+Nacos administrator permission is required.
 
 #### Request URL
 
@@ -736,15 +736,15 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/core/namespace' -d 'namespaceId=te
 
 | Name           | Type       | Required | Description    |
 |---------------|----------|----|---------|
-| `namespaceId` | `string` | Yes  | 命名空间ID。 |
+| `namespaceId` | `string` | Yes  | namespace ID. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type      | Description          |
 |--------|-----------|-------------|
-| `data` | `boolean` | 删除命名空间是否成功。 |
+| `data` | `boolean` | whether namespace deletion succeeded. |
 
 #### Examples
 
@@ -764,11 +764,11 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/core/namespace?namespaceId=test
 }
 ```
 
-### 1.12. 检查命名空间是否存在
+### 1.12. Check Whether a Namespace Exists
 
 #### Description
 
-通过该接口，可以检查命名空间ID是否存在。默认控制台ID将在创建命名空间前调用，确认自定义的命名空间ID是否已经存在，以防冲突。
+You can use this API to check whether a namespace ID exists. The default console calls this API before creating a namespace to confirm whether the custom namespace ID already exists and avoid conflicts.
 
 #### Since
 
@@ -780,7 +780,7 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/core/namespace?namespaceId=test
 
 #### Authorization
 
-任意有效鉴权身份信息。
+Any valid authentication identity is required.
 
 #### Request URL
 
@@ -790,15 +790,15 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/core/namespace?namespaceId=test
 
 | Name                 | Type       | Required | Description                          |
 |---------------------|----------|----|-------------------------------|
-| `customNamespaceId` | `string` | Yes  | 命名空间ID，传入空字符串时认为是需要自动生成的UUID。 |
+| `customNamespaceId` | `string` | Yes  | Namespace ID. If an empty string is passed, a UUID is considered to need automatic generation. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type      | Description                             |
 |--------|-----------|--------------------------------|
-| `data` | `boolean` | 命名空间是否存在，存在是为`true`，否则为`false` |
+| `data` | `boolean` | Whether the namespace exists. The value is `true` if it exists; otherwise, it is `false`. |
 
 #### Examples
 
@@ -818,11 +818,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/exist?customNamespa
 }
 ```
 
-### 1.13. 获取插件详情
+### 1.13. Get Plugin Details
 
 #### Description
 
-通过该接口，可以按类型和名称获取指定插件的详情信息。
+You can use this API to obtain details about a specified plugin by type and name.
 
 #### Since
 
@@ -834,7 +834,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/exist?customNamespa
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -844,21 +844,21 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/exist?customNamespa
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `pluginType` | `string` | **Yes** | 插件类型，如 `auth`（鉴权）、`control`（控制）、`datasource`（数据源）等。 |
-| `pluginName` | `string` | **Yes** | 插件名称，如 `nacos-default-auth-plugin`。 |
+| `pluginType` | `string` | **Yes** | Plugin type, such as `auth` (authentication), `control`, or `datasource`. |
+| `pluginName` | `string` | **Yes** | Plugin name, such as `nacos-default-auth-plugin`. |
 
 #### Response Data
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.pluginId | `string` | 插件唯一标识。 |
-| data.pluginType | `string` | 插件类型。 |
-| data.pluginName | `string` | 插件名称。 |
-| data.enabled | `boolean` | 当前是否已启用。 |
-| data.critical | `boolean` | 是否为关键插件（关键插件不可被禁用）。 |
-| data.configurable | `boolean` | 是否支持控制台动态配置。 |
-| data.config | `object` | 插件当前配置项。 |
-| data.configDefinitions | `array` | 插件配置项定义列表，用于渲染配置表单。 |
+| data.pluginId | `string` | plugin unique identifier. |
+| data.pluginType | `string` | plugin type. |
+| data.pluginName | `string` | plugin name. |
+| data.enabled | `boolean` | whether it is currently enabled. |
+| data.critical | `boolean` | whether it is a critical plugin (critical plugins cannot be disabled). |
+| data.configurable | `boolean` | whether dynamic configuration in the console is supported. |
+| data.config | `object` | current plugin configuration items. |
+| data.configDefinitions | `array` | plugin configuration item definition list, used to render the configuration form. |
 
 #### Examples
 
@@ -883,11 +883,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin?pluginType=auth&pluginName=
 }
 ```
 
-### 1.14. 查询插件在集群节点上的可用性
+### 1.14. Query Plugin Availability on Cluster Nodes
 
 #### Description
 
-通过该接口，可以获取指定插件在各集群节点上的可用情况。
+You can use this API to obtain the availability of a specified plugin on each cluster node.
 
 #### Since
 
@@ -899,7 +899,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin?pluginType=auth&pluginName=
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -909,12 +909,12 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin?pluginType=auth&pluginName=
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `pluginType` | `string` | **Yes** | 插件类型，如 `auth`、`control`、`datasource` 等。 |
-| `pluginName` | `string` | **Yes** | 插件名称。 |
+| `pluginType` | `string` | **Yes** | Plugin type, such as `auth`, `control`, or `datasource`. |
+| `pluginName` | `string` | **Yes** | plugin name. |
 
 #### Response Data
 
-返回 data 为 Map&lt;节点地址, 是否可用&gt;，键为 Nacos 节点地址（如 `127.0.0.1:8848`），值为该节点上该插件是否可用。
+The returned `data` is a Map&lt;node address, availability&gt;. The key is the Nacos node address, such as `127.0.0.1:8848`, and the value indicates whether the plugin is available on that node.
 
 #### Examples
 
@@ -936,11 +936,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/availability?pluginType=aut
 }
 ```
 
-### 1.15. 更新插件配置
+### 1.15. Update Plugin Configuration
 
 #### Description
 
-通过该接口，可以更新插件的配置。需要提供插件类型、名称及配置内容。
+You can use this API to update plugin configuration. You must provide the plugin type, name, and configuration content.
 
 #### Since
 
@@ -952,7 +952,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/availability?pluginType=aut
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -962,15 +962,15 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/availability?pluginType=aut
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `pluginType` | `string` | **Yes** | 插件类型。 |
-| `pluginName` | `string` | **Yes** | 插件名称。 |
-| `config` | `string` | No | 插件配置内容，JSON 对象，具体字段由插件定义。 |
+| `pluginType` | `string` | **Yes** | plugin type. |
+| `pluginName` | `string` | **Yes** | plugin name. |
+| `config` | `string` | No | Plugin configuration content as a JSON object. Specific fields are defined by the plugin. |
 
 #### Response Data
 
 | Name | Type | Description |
 |--------|----------|------|
-| data | `string` | 操作结果描述信息。 |
+| data | `string` | Operation result description. |
 
 #### Examples
 
@@ -993,11 +993,11 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/config' \
 }
 ```
 
-### 1.16. 获取插件列表
+### 1.16. Get Plugin List
 
 #### Description
 
-通过该接口，可以获取插件列表，可按插件类型筛选。
+You can use this API to obtain the plugin list. You can filter the list by plugin type.
 
 #### Since
 
@@ -1009,7 +1009,7 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/config' \
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -1019,11 +1019,11 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/config' \
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `pluginType` | `string` | No | 插件类型；不传则返回所有类型的插件列表。 |
+| `pluginType` | `string` | No | Plugin type. If not specified, plugins of all types are returned. |
 
 #### Response Data
 
-返回 data 为插件信息数组，每项包含插件名称、Type、是否启用等。
+The returned `data` is an array of plugin information. Each item contains the plugin name, type, enabled status, and other fields.
 
 #### Examples
 
@@ -1049,11 +1049,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/list?pluginType=auth'
 }
 ```
 
-### 1.17. 启用或禁用插件
+### 1.17. Enable or Disable a Plugin
 
 #### Description
 
-通过该接口，可以更新插件的启用状态（启用或禁用）。
+You can use this API to update whether a plugin is enabled or disabled.
 
 #### Since
 
@@ -1065,7 +1065,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/list?pluginType=auth'
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -1075,16 +1075,16 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/list?pluginType=auth'
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `pluginType` | `string` | **Yes** | 插件类型。 |
-| `pluginName` | `string` | **Yes** | 插件名称。 |
-| `enabled` | `boolean` | **Yes** | 是否启用，`true` 启用、`false` 禁用。 |
-| `localOnly` | `boolean` | No | 是否仅更新本地节点插件状态。 |
+| `pluginType` | `string` | **Yes** | plugin type. |
+| `pluginName` | `string` | **Yes** | plugin name. |
+| `enabled` | `boolean` | **Yes** | Whether it is enabled. `true` means enabled, and `false` means disabled. |
+| `localOnly` | `boolean` | No | whether to update only the plugin status on the local node. |
 
 #### Response Data
 
 | Name | Type | Description |
 |--------|----------|------|
-| data | `string` | 操作结果描述信息。 |
+| data | `string` | Operation result description. |
 
 #### Examples
 
@@ -1107,13 +1107,13 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/status' \
 }
 ```
 
-## 2. 配置管理
+## 2. Configuration Management
 
-### 2.1. 获取配置详情
+### 2.1. Get Configuration Details
 
 #### Description
 
-通过该接口，可以获取指定配置的详情。
+You can use this API to obtain the details of a specified configuration.
 
 #### Since
 
@@ -1125,7 +1125,7 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/status' \
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -1135,31 +1135,31 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/status' \
 
 | Name           | Type       | Required | Description                |
 |---------------|----------|----|---------------------|
-| `dataId`      | `string` | Yes  | 配置ID。               |
-| `groupName`   | `string` | Yes  | 配置分组。               |
-| `namespaceId` | `string` | No  | 命名空间ID，默认为`public` |
+| `dataId`      | `string` | Yes  | configuration ID.               |
+| `groupName`   | `string` | Yes  | configuration group.               |
+| `namespaceId` | `string` | No  | Namespace ID. The default is `public` |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name                | Type     | Description                         |
 |--------------------|----------|----------------------------|
-| `id`               | `string` | 配置在存储系统中的ID，一般为Long 类型的字符串。 |
-| `dataId`           | `string` | 配置ID。                      |
-| `groupName`        | `string` | 配置分组。                      |
-| `namespaceId`      | `string` | 命名空间ID。                    |
-| `content`          | `string` | 配置内容。                      |
-| `desc`             | `string` | 配置描述。                      |
-| `md5`              | `string` | 配置内容的MD5值。                 |
-| `configTags`       | `string` | 配置的标签。                     |
-| `encryptedDataKey` | `string` | 加密配置内容的密钥，使用配置加密插件时存在。     |
-| `appName`          | `string` | 配置所属的应用名称。                 |
-| `type`             | `string` | 配置类型。                      |
-| `createTime`       | `integer` | 配置创建时间。                    |
-| `modifyTime`       | `integer` | 配置修改时间。                    |
-| `createUser`       | `string` | 配置创建人。                     |
-| `createIp`         | `string` | 配置创建IP。                    |
+| `id`               | `string` | Configuration ID in the storage system, usually a string of the Long type. |
+| `dataId`           | `string` | configuration ID.                      |
+| `groupName`        | `string` | configuration group.                      |
+| `namespaceId`      | `string` | namespace ID.                    |
+| `content`          | `string` | configuration content.                      |
+| `desc`             | `string` | configuration description.                      |
+| `md5`              | `string` | MD5 value of the configuration content.                 |
+| `configTags`       | `string` | configuration tags.                     |
+| `encryptedDataKey` | `string` | key used to encrypt configuration content. Exists when the configuration encryption plugin is used.     |
+| `appName`          | `string` | application name to which the configuration belongs.                 |
+| `type`             | `string` | configuration type.                      |
+| `createTime`       | `integer` | configuration creation time.                    |
+| `modifyTime`       | `integer` | configuration modification time.                    |
+| `createUser`       | `string` | configuration creator.                     |
+| `createIp`         | `string` | configuration creation IP.                    |
 
 #### Examples
 
@@ -1195,11 +1195,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName=te
 }
 ```
 
-### 2.2. 发布配置
+### 2.2. Publish Configuration
 
 #### Description
 
-通过该接口，可以创建新的配置或更新已有配置。
+You can use this API to create a new configuration or update an existing configuration.
 
 #### Since
 
@@ -1211,7 +1211,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName=te
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -1221,25 +1221,25 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName=te
 
 | Name           | Type       | Required | Description                     |
 |---------------|----------|----|--------------------------|
-| `dataId`      | `string` | Yes  | 配置ID。                    |
-| `groupName`   | `string` | Yes  | 配置分组。                    |
-| `namespaceId` | `string` | No  | 命名空间ID，默认为`public`      |
-| `content`     | `string` | Yes  | 配置内容。                    |
-| `desc`        | `string` | No  | 配置描述。                    |
-| `type`        | `string` | No  | 配置类型，默认为`text`。         |
-| `configTags`  | `string` | No  | 配置标签，多个标签之间用英文逗号分隔。      |
-| `appName`     | `string` | No  | 配置所属应用名称，主要用于标记配置所使用的应用。 |
+| `dataId`      | `string` | Yes  | configuration ID.                    |
+| `groupName`   | `string` | Yes  | configuration group.                    |
+| `namespaceId` | `string` | No  | Namespace ID. The default is `public`      |
+| `content`     | `string` | Yes  | configuration content.                    |
+| `desc`        | `string` | No  | configuration description.                    |
+| `type`        | `string` | No  | Configuration type. The default is `text`.         |
+| `configTags`  | `string` | No  | Configuration tags. Multiple tags are separated by English commas.      |
+| `appName`     | `string` | No  | Application name to which the configuration belongs. It is mainly used to mark the application that uses the configuration. |
 
-- 当配置已存在(`dataId`,`groupName`相同)时，再次调用此接口将会对此配置进行更新
-- 同时更新配置时，若请求`Header`中存在`betaIps`，则会将配置标记为BETA配置，在终止BETA或完全发布配置之前，控制台UI需要进行特殊处理。
+- When the configuration already exists with the same `dataId` and `groupName`, calling this API again updates the configuration.
+- When publishing a configuration, if the request `Header` contains `betaIps`, the configuration is marked as a BETA configuration. Before the BETA release is stopped or fully published, the console UI must handle it specially.
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type      | Description        |
 |--------|-----------|-----------|
-| `data` | `boolean` | 创建配置是否成功。 |
+| `data` | `boolean` | whether configuration creation succeeded. |
 
 #### Examples
 
@@ -1259,11 +1259,11 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/cs/config' -d 'dataId=test&groupN
 }
 ```
 
-### 2.3. 删除配置
+### 2.3. Delete Configuration
 
 #### Description
 
-通过该接口，可以删除指定配置。
+You can use this API to delete a specified configuration.
 
 #### Since
 
@@ -1275,7 +1275,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/cs/config' -d 'dataId=test&groupN
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -1285,17 +1285,17 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/cs/config' -d 'dataId=test&groupN
 
 | Name           | Type       | Required | Description                 |
 |---------------|----------|----|----------------------|
-| `dataId`      | `string` | Yes  | 配置ID。                |
-| `groupName`   | `string` | Yes  | 配置分组。                |
-| `namespaceId` | `string` | No  | 命名空间ID，默认为`public`。 |
+| `dataId`      | `string` | Yes  | configuration ID.                |
+| `groupName`   | `string` | Yes  | configuration group.                |
+| `namespaceId` | `string` | No  | Namespace ID. The default is `public`. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type      | Description        |
 |--------|-----------|-----------|
-| `data` | `boolean` | 删除配置是否成功。 |
+| `data` | `boolean` | whether configuration deletion succeeded. |
 
 #### Examples
 
@@ -1315,11 +1315,11 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName
 }
 ```
 
-### 2.4. 批量删除配置
+### 2.4. Batch Delete Configurations
 
 #### Description
 
-通过该接口，可以批量删除指定配置。
+You can use this API to batch delete specified configurations.
 
 #### Since
 
@@ -1331,7 +1331,7 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -1345,11 +1345,11 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type      | Description        |
 |--------|-----------|-----------|
-| `data` | `boolean` | 删除配置是否成功。 |
+| `data` | `boolean` | whether configuration deletion succeeded. |
 
 #### Examples
 
@@ -1369,11 +1369,11 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config/batchDelete?ids=83802
 }
 ```
 
-### 2.5. 查询配置列表
+### 2.5. Query Configuration List
 
 #### Description
 
-通过该接口，可以查询指定命名空间下的配置列表。
+You can use this API to query the configuration list in a specified namespace.
 
 #### Since
 
@@ -1385,7 +1385,7 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config/batchDelete?ids=83802
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -1395,35 +1395,35 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config/batchDelete?ids=83802
 
 | Name           | Type        | Required | Description                                                                            |
 |---------------|-----------|----|---------------------------------------------------------------------------------|
-| `pageNo`      | `integer` | Yes  | 当前页码，起始值为1。                                                                     |
-| `pageSize`    | `integer` | Yes  | 每页显示的配置数量。                                                                      |
-| `dataId`      | `string` | **Yes** | 配置ID，当`search`为`blur`时，可使用`*`进行模糊搜索，例如`test*`，当值为``或缺失时，查询全部符合`groupName`条件的配置。 |
-| `groupName`   | `string` | **Yes** | 配置分组，当`search`为`blur`时，可使用`*`进行模糊搜索，例如`test*`，当值为``或缺失时，查询全部符合`dataId`条件的配置。    |
+| `pageNo`      | `integer` | Yes  | current page number, starts from 1.                                                                     |
+| `pageSize`    | `integer` | Yes  | number of configurations displayed per page.                                                                      |
+| `dataId`      | `string` | **Yes** | Configuration ID. When `search` is `blur`, you can use `*` for fuzzy search, such as `test*`. When the value is empty or missing, all configurations that match the `groupName` condition are queried. |
+| `groupName`   | `string` | **Yes** | Configuration group. When `search` is `blur`, you can use `*` for fuzzy search, such as `test*`. When the value is empty or missing, all configurations that match the `dataId` condition are queried.    |
 | `search`      | `string` | No  | blur or accurate                            |
-| `namespaceId` | `string` | No  | 命名空间ID，默认为`public`。                                                            |
-| `appName`     | `string` | No  | 配置所属应用名称，默认为空，传入时过滤归属于此应用的配置，值为空时查询所有应用的配置。                                     |
-| `configTags`  | `string` | No  | 配置标签，多个标签之间用英文逗号分隔，默认为空，传入时过滤拥有此tag的配置，值为空时查询所有tag的配置。                          |
-| `type`        | `string` | No  | 配置的Type，默认为空，传入时过滤此Type的配置，值为空时查询所有类型的配置。                                          |
+| `namespaceId` | `string` | No  | Namespace ID. The default is `public`.                                                            |
+| `appName`     | `string` | No  | Application name to which the configuration belongs. The default is empty. When specified, configurations belonging to this application are filtered; when empty, configurations for all applications are queried.                                     |
+| `configTags`  | `string` | No  | Configuration tags separated by English commas. The default is empty. When specified, configurations with this tag are filtered; when empty, configurations for all tags are queried.                          |
+| `type`        | `string` | No  | Configuration type. The default is empty. When specified, configurations of this type are filtered; when empty, configurations of all types are queried.                                          |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name                          | Type     | Description                         |
 |------------------------------|----------|----------------------------|
-| `totalCount`                 | `integer` | 符合规则的配置总数。                 |
-| `pagesAvailable`             | `integer` | 可用页码总数。                    |
-| `pageNumber`                 | `integer` | 当前页码。                      |
-| `pageItems`                  | `List`   | 符合规则的配置列表。                 |
-| `pageItems`[i].`id`          | `string` | 配置在存储系统中的ID，一般为Long 类型的字符串。 |
-| `pageItems`[i].`dataId`      | `string` | 配置ID。                      |
-| `pageItems`[i].`groupName`   | `string` | 配置分组。                      |
-| `pageItems`[i].`namespaceId` | `string` | 命名空间ID。                    |
-| `pageItems`[i].`md5`         | `string` | 配置内容的MD5值。                 |
-| `pageItems`[i].`appName`     | `string` | 配置所属的应用名称。                 |
-| `pageItems`[i].`type`        | `string` | 配置类型。                      |
-| `pageItems`[i].`createTime`  | `integer` | 配置创建时间。                    |
-| `pageItems`[i].`modifyTime`  | `integer` | 配置修改时间。                    |
+| `totalCount`                 | `integer` | total number of configurations that match the rule.                 |
+| `pagesAvailable`             | `integer` | total number of available pages.                    |
+| `pageNumber`                 | `integer` | current page number.                      |
+| `pageItems`                  | `List`   | list of configurations that match the rule.                 |
+| `pageItems`[i].`id`          | `string` | Configuration ID in the storage system, usually a string of the Long type. |
+| `pageItems`[i].`dataId`      | `string` | configuration ID.                      |
+| `pageItems`[i].`groupName`   | `string` | configuration group.                      |
+| `pageItems`[i].`namespaceId` | `string` | namespace ID.                    |
+| `pageItems`[i].`md5`         | `string` | MD5 value of the configuration content.                 |
+| `pageItems`[i].`appName`     | `string` | application name to which the configuration belongs.                 |
+| `pageItems`[i].`type`        | `string` | configuration type.                      |
+| `pageItems`[i].`createTime`  | `integer` | configuration creation time.                    |
+| `pageItems`[i].`modifyTime`  | `integer` | configuration modification time.                    |
 
 #### Examples
 
@@ -1471,15 +1471,15 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/list?dataId=&groupName=&
 }
 ```
 
-### 2.6. 通过配置内容查询配置
+### 2.6. Query Configurations by Content
 
 :::note
-此接口性能较低，过多调用容易造成稳定性问题，请尽量使用其他接口。
+This API has relatively low performance. Too many calls may cause stability issues, so use other APIs whenever possible.
 :::
 
 #### Description
 
-通过该接口，可以通过配置内容查询对应配置的列表。
+You can use this API to query the list of configurations that match configuration content.
 
 #### Since
 
@@ -1491,7 +1491,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/list?dataId=&groupName=&
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -1501,36 +1501,36 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/list?dataId=&groupName=&
 
 | Name           | Type        | Required | Description                                                                            |
 |---------------|-----------|----|---------------------------------------------------------------------------------|
-| `pageNo`      | `integer` | Yes  | 当前页码，起始值为1。                                                                     |
-| `pageSize`    | `integer` | Yes  | 每页显示的配置数量。                                                                      |
+| `pageNo`      | `integer` | Yes  | current page number, starts from 1.                                                                     |
+| `pageSize`    | `integer` | Yes  | number of configurations displayed per page.                                                                      |
 | `search`      | `string` | No  | blur or accurate                            |
-| `namespaceId` | `string` | No  | 命名空间ID，默认为`public`。                                                            |
-| `dataId`      | `string` | No  | 配置ID，当`search`为`blur`时，可使用`*`进行模糊搜索，例如`test*`，当值为``或缺失时，查询全部符合`groupName`条件的配置。 |
-| `groupName`   | `string` | No  | 配置分组，当`search`为`blur`时，可使用`*`进行模糊搜索，例如`test*`，当值为``或缺失时，查询全部符合`dataId`条件的配置。    |
-| `appName`     | `string` | No  | 配置所属应用名称，默认为空，传入时过滤归属于此应用的配置，值为空时查询所有应用的配置。                                     |
-| `configTags`  | `string` | No  | 配置标签，多个标签之间用英文逗号分隔，默认为空，传入时过滤拥有此tag的配置，值为空时查询所有tag的配置。                          |
-| `type`         | `string` | No  | 配置的Type，默认为空，传入时过滤此Type的配置，值为空时查询所有类型的配置。                                          |
-| `configDetail` | `string` | Yes  | 配置内容检索条件，用于按配置内容过滤，支持模糊匹配（如 `*11*`）。                                         |
+| `namespaceId` | `string` | No  | Namespace ID. The default is `public`.                                                            |
+| `dataId`      | `string` | No  | Configuration ID. When `search` is `blur`, you can use `*` for fuzzy search, such as `test*`. When the value is empty or missing, all configurations that match the `groupName` condition are queried. |
+| `groupName`   | `string` | No  | Configuration group. When `search` is `blur`, you can use `*` for fuzzy search, such as `test*`. When the value is empty or missing, all configurations that match the `dataId` condition are queried.    |
+| `appName`     | `string` | No  | Application name to which the configuration belongs. The default is empty. When specified, configurations belonging to this application are filtered; when empty, configurations for all applications are queried.                                     |
+| `configTags`  | `string` | No  | Configuration tags separated by English commas. The default is empty. When specified, configurations with this tag are filtered; when empty, configurations for all tags are queried.                          |
+| `type`         | `string` | No  | Configuration type. The default is empty. When specified, configurations of this type are filtered; when empty, configurations of all types are queried.                                          |
+| `configDetail` | `string` | Yes  | Configuration content search condition, used to filter by configuration content. Fuzzy matching is supported, such as `*11*`.                                         |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name                          | Type     | Description                         |
 |------------------------------|----------|----------------------------|
-| `totalCount`                 | `integer` | 符合规则的配置总数。                 |
-| `pagesAvailable`             | `integer` | 可用页码总数。                    |
-| `pageNumber`                 | `integer` | 当前页码。                      |
-| `pageItems`                  | `List`   | 符合规则的配置列表。                 |
-| `pageItems`[i].`id`          | `string` | 配置在存储系统中的ID，一般为Long 类型的字符串。 |
-| `pageItems`[i].`dataId`      | `string` | 配置ID。                      |
-| `pageItems`[i].`groupName`   | `string` | 配置分组。                      |
-| `pageItems`[i].`namespaceId` | `string` | 命名空间ID。                    |
-| `pageItems`[i].`md5`         | `string` | 配置内容的MD5值。                 |
-| `pageItems`[i].`appName`     | `string` | 配置所属的应用名称。                 |
-| `pageItems`[i].`type`        | `string` | 配置类型。                      |
-| `pageItems`[i].`createTime`  | `integer` | 配置创建时间。                    |
-| `pageItems`[i].`modifyTime`  | `integer` | 配置修改时间。                    |
+| `totalCount`                 | `integer` | total number of configurations that match the rule.                 |
+| `pagesAvailable`             | `integer` | total number of available pages.                    |
+| `pageNumber`                 | `integer` | current page number.                      |
+| `pageItems`                  | `List`   | list of configurations that match the rule.                 |
+| `pageItems`[i].`id`          | `string` | Configuration ID in the storage system, usually a string of the Long type. |
+| `pageItems`[i].`dataId`      | `string` | configuration ID.                      |
+| `pageItems`[i].`groupName`   | `string` | configuration group.                      |
+| `pageItems`[i].`namespaceId` | `string` | namespace ID.                    |
+| `pageItems`[i].`md5`         | `string` | MD5 value of the configuration content.                 |
+| `pageItems`[i].`appName`     | `string` | application name to which the configuration belongs.                 |
+| `pageItems`[i].`type`        | `string` | configuration type.                      |
+| `pageItems`[i].`createTime`  | `integer` | configuration creation time.                    |
+| `pageItems`[i].`modifyTime`  | `integer` | configuration modification time.                    |
 
 #### Examples
 
@@ -1567,11 +1567,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/searchDetail?dataId=&gro
 }
 ```
 
-### 2.7. 查询配置的监听者列表
+### 2.7. Query Configuration Listener List
 
 #### Description
 
-通过该接口，可以查询指定配置的监听者列表。
+You can use this API to query the listener list of a specified configuration.
 
 #### Since
 
@@ -1583,7 +1583,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/searchDetail?dataId=&gro
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -1593,19 +1593,19 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/searchDetail?dataId=&gro
 
 | Name           | Type       | Required | Description                 |
 |---------------|----------|----|----------------------|
-| `dataId`      | `string` | Yes  | 配置ID。                |
-| `groupName`   | `string` | Yes  | 配置分组。                |
-| `namespaceId` | `string` | No  | 命名空间ID，默认为`public`。 |
-| `aggregation` | `boolean` | No  | 是否聚合查询。             |
+| `dataId`      | `string` | Yes  | configuration ID.                |
+| `groupName`   | `string` | Yes  | configuration group.                |
+| `namespaceId` | `string` | No  | Namespace ID. The default is `public`. |
+| `aggregation` | `boolean` | No  | Whether to query with aggregation.             |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name               | Type                  | Description                                    |
 |-------------------|-----------------------|---------------------------------------|
-| `queryType`       | `string` | 订阅者查询Type，该接口为`config`。                 |
-| `listenersStatus` | `map<string, string>` | 订阅者列表，key为订阅者IP，value为订阅者订阅当前配置的MD5值。 |
+| `queryType`       | `string` | Subscriber query type. This API is `config`.                 |
+| `listenersStatus` | `map<string, string>` | Subscriber list. The key is the subscriber IP, and the value is the MD5 value of the current configuration subscribed to by the subscriber. |
 
 #### Examples
 
@@ -1630,11 +1630,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener?dataId=test&gro
 }
 ```
 
-### 2.8. 查询某个订阅者IP订阅了哪些配置
+### 2.8. Query Configurations Subscribed by a Subscriber IP
 
 #### Description
 
-通过该接口，可以查询某个订阅者IP订阅了哪些配置。
+You can use this API to query which configurations are subscribed to by a specified subscriber IP.
 
 #### Since
 
@@ -1646,7 +1646,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener?dataId=test&gro
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -1656,19 +1656,19 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener?dataId=test&gro
 
 | Name           | Type       | Required | Description                 |
 |---------------|----------|----|----------------------|
-| `ip`          | `string` | Yes  | 订阅者IP。               |
-| `all`         | `boolean` | No  | 是否查询全部订阅数据。         |
-| `namespaceId` | `string` | No  | 命名空间ID，默认为`public`。 |
-| `aggregation` | `boolean` | No  | 是否聚合查询。             |
+| `ip`          | `string` | Yes  | subscriber IP.               |
+| `all`         | `boolean` | No  | Whether to query all subscription data.         |
+| `namespaceId` | `string` | No  | Namespace ID. The default is `public`. |
+| `aggregation` | `boolean` | No  | Whether to query with aggregation.             |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name               | Type                  | Description                                                                            |
 |-------------------|-----------------------|-------------------------------------------------------------------------------|
-| `queryType`       | `string` | 订阅者查询Type，该接口为`ip`。                                                             |
-| `listenersStatus` | `map<string, string>` | 订阅者列表，key为订阅的配置信息，格式为`dataId`+`groupName`+`namespaceId`，value为订阅者订阅当前配置的MD5值。 |
+| `queryType`       | `string` | Subscriber query type. This API is `ip`.                                                             |
+| `listenersStatus` | `map<string, string>` | Subscriber list. The key is the subscribed configuration information in the format `dataId` + `groupName` + `namespaceId`, and the value is the MD5 value of the current configuration subscribed to by the subscriber. |
 
 #### Examples
 
@@ -1693,11 +1693,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener/ip?ip=127.0.0.1
 }
 ```
 
-### 2.9. 导出配置
+### 2.9. Export Configurations
 
 #### Description
 
-通过该接口，可以将所选或所查询的配置，导出的配置为zip文件，进行备份或导入到其他Nacos集群。
+You can use this API to export selected or queried configurations as a ZIP file for backup or import into another Nacos cluster.
 
 #### Since
 
@@ -1709,7 +1709,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener/ip?ip=127.0.0.1
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -1719,18 +1719,18 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener/ip?ip=127.0.0.1
 
 | Name           | Type       | Required | Description                         |
 |---------------|----------|----|------------------------------|
-| `dataId`      | `string` | No  | 需要导出的配置ID的pattern，例如`test*`。 |
-| `groupName`   | `string` | No  | 需要导出的配置分组的pattern，例如`test*`。 |
+| `dataId`      | `string` | No  | Pattern of configuration IDs to export, for example `test*`. |
+| `groupName`   | `string` | No  | Pattern of configuration groups to export, for example `test*`. |
 | `ids`         | `array` | No  | Configuration storage ID list. Separate multiple IDs with commas.    |
-| `namespaceId` | `string` | No  | 命名空间ID，默认为`public`。         |
-| `appName`     | `string` | No  | 需要导出的配置所属的应用名称。              |
+| `namespaceId` | `string` | No  | Namespace ID. The default is `public`.         |
+| `appName`     | `string` | No  | application name to which the configurations to export belong.              |
 
-> 使用时建议分开使用 `ids` 和 `dataId` + `groupName` 的组合，只选择一种方式，另一类传入空字符串，否则可能导致导出文件为空内容。
+> It is recommended to use either `ids` or the `dataId` + `groupName` combination. Choose only one method and pass an empty string for the other type. Otherwise, the exported file may be empty.
 
 #### Response Data
 
-导出成功是为byte数组的file
-attachment模式，导出失败时返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)。
+When export succeeds, the response is a byte-array file.
+The file is returned in attachment mode. When export fails, the response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format).
 
 #### Examples
 
@@ -1750,16 +1750,16 @@ unzip ~/test.zip
 >   inflating: .metadata.yml
 ```
 
-### 2.10. 导入配置
+### 2.10. Import Configurations
 
 :::note
-目前导入配置接口能够同时支持旧版本导出的zip文件和新版本导出的zip文件，但后续版本可能会移除对旧版本格式导入导出配置的支持，建议使用新的[导出配置](#210-导出配置)
-接口进行配置文件的导出。
+The import configuration API currently supports ZIP files exported by both older and newer versions. Later versions may remove support for importing and exporting configurations in the older format. It is recommended to use the new [Export Configurations](#210-export-configurations)
+API to export configuration files.
 :::
 
 #### Description
 
-通过该接口，可以将从Nacos导出的zip文件导入到Nacos的指定命名空间中
+You can use this API to import a ZIP file exported from Nacos into a specified Nacos namespace.
 
 #### Since
 
@@ -1769,11 +1769,11 @@ unzip ~/test.zip
 
 `POST`
 
-请求体类型：`multipart/form-data`。
+Request body type: `multipart/form-data`.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -1783,19 +1783,19 @@ unzip ~/test.zip
 
 | Name           | Type                 | Required | Description                                                                                                               |
 |---------------|--------------------|----|--------------------------------------------------------------------------------------------------------------------|
-| `file`        | `MultipartFile`    | No  | 导入的zip文件。                                                                                                          |
-| `namespaceId` | `string` | No  | 导入的配置所属的命名空间ID，默认为`public`。                                                                                       |
-| `policy`      | `string` | No  | 导入策略，当导入的配置`dataId`和`groupName`相同，存在冲突时，所进行的导入策略。可选值有`ABORT(终止导入)`,`SKIP(跳过冲突配置)`,`OVERWRITE(覆盖冲突配置)`。默认为`ABORT`。 |
-| `src_user`    | `string` | No  | 导入操作来源用户标识。                                                                                                       |
+| `file`        | `MultipartFile`    | No  | imported ZIP file.                                                                                                          |
+| `namespaceId` | `string` | No  | Namespace ID to which the imported configurations belong. The default is `public`.                                                                                       |
+| `policy`      | `string` | No  | Import policy used when imported configurations have the same `dataId` and `groupName` and conflict. Valid values are `ABORT` (abort import), `SKIP` (skip conflicting configurations), and `OVERWRITE` (overwrite conflicting configurations). The default is `ABORT`. |
+| `src_user`    | `string` | No  | source user identifier for the import operation.                                                                                                       |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name         | Type  | Description         |
 |-------------|-------|------------|
-| `succCount` | `integer` | 导入成功的配置数量。 |
-| `skipCount` | `integer` | 导入跳过的配置数量。 |
+| `succCount` | `integer` | number of configurations imported successfully. |
+| `skipCount` | `integer` | number of configurations skipped during import. |
 
 #### Examples
 
@@ -1818,11 +1818,11 @@ curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import" -F "file=@/pat
 }
 ```
 
-### 2.11. 克隆配置
+### 2.11. Clone Configurations
 
 #### Description
 
-通过该接口，可以将所选或所查询的配置克隆到其他命名空间。
+You can use this API to clone selected or queried configurations to another namespace.
 
 #### Since
 
@@ -1832,11 +1832,11 @@ curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import" -F "file=@/pat
 
 `POST`
 
-请求体类型：`application/json`，为配置列表数组。
+Request body type: `application/json`, with a configuration list array.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -1846,18 +1846,18 @@ curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import" -F "file=@/pat
 
 | Name              | Type       | Required    | Description                                                                                                               |
 |------------------|----------|-------|--------------------------------------------------------------------------------------------------------------------|
-| `srcUser`        | `string` | No     | 克隆操作来源用户标识。                                                                                                        |
-| `targetNamespaceId` | `string` | **Yes** | 目标命名空间ID。                                                                                                           |
-| `policy`         | `string` | No     | 克隆策略，当导入的配置`dataId`和`groupName`相同，存在冲突时，所进行的克隆策略。可选值有`ABORT(终止克隆)`,`SKIP(跳过冲突配置)`,`OVERWRITE(覆盖冲突配置)`。默认为`ABORT`。 |
+| `srcUser`        | `string` | No     | source user identifier for the clone operation.                                                                                                        |
+| `targetNamespaceId` | `string` | **Yes** | target namespace ID.                                                                                                           |
+| `policy`         | `string` | No     | Clone policy used when configurations have the same `dataId` and `groupName` and conflict. Valid values are `ABORT` (abort cloning), `SKIP` (skip conflicting configurations), and `OVERWRITE` (overwrite conflicting configurations). The default is `ABORT`. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name         | Type  | Description         |
 |-------------|-------|------------|
-| `succCount` | `integer` | 成功克隆的配置数量。 |
-| `skipCount` | `integer` | 克隆跳过的配置数量。 |
+| `succCount` | `integer` | number of configurations cloned successfully. |
+| `skipCount` | `integer` | number of configurations skipped during cloning. |
 
 #### Examples
 
@@ -1880,15 +1880,15 @@ curl -H "Content-Type: application/json" -X POST "http://127.0.0.1:8080/v3/conso
 }
 ```
 
-### 2.12. 停止配置BETA发布
+### 2.12. Stop Configuration BETA Release
 
 :::note
-只有在[发布配置](#22-发布配置)时设置了`Header`的`betaIps`后，将配置变更为BETA发布中的状态，调用此接口才能停止BETA发布状态。
+Only after `betaIps` is set in the `Header` when [publishing a configuration](#22-publish-configuration), which changes the configuration to the BETA publishing state, can this API be called to stop the BETA publishing state.
 :::
 
 #### Description
 
-通过该接口，可以将配置从BETA发布状态停止，即回滚配置的Beta发布状态。
+You can use this API to stop a configuration from the BETA publishing state, that is, roll back the configuration BETA publishing state.
 
 #### Since
 
@@ -1900,7 +1900,7 @@ curl -H "Content-Type: application/json" -X POST "http://127.0.0.1:8080/v3/conso
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -1910,13 +1910,13 @@ curl -H "Content-Type: application/json" -X POST "http://127.0.0.1:8080/v3/conso
 
 | Name           | Type       | Required | Description                      |
 |---------------|----------|----|---------------------------|
-| `dataId`      | `string` | Yes  | 配置的`dataId`。              |
-| `groupName`   | `string` | Yes  | 配置的`groupName`。           |
-| `namespaceId` | `string` | No  | 配置所属的命名空间ID，默认为`public`。 |
+| `dataId`      | `string` | Yes  | Configuration `dataId`.              |
+| `groupName`   | `string` | Yes  | Configuration `groupName`.           |
+| `namespaceId` | `string` | No  | Namespace ID to which the configuration belongs. The default is `public`. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name | Type | Description |
 |-----|------|----|
@@ -1939,15 +1939,15 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=test&grou
 }
 ```
 
-### 2.13. 查询配置Beta发布状态
+### 2.13. Query Configuration BETA Release Status
 
 :::note
-只有在[发布配置](#22-发布配置)时设置了`Header`的`betaIps`后，将配置变更为BETA发布中的状态，调用此接口才能获取到配置详情。
+Only after `betaIps` is set in the `Header` when [publishing a configuration](#22-publish-configuration), which changes the configuration to the BETA publishing state, can this API be called to obtain configuration details.
 :::
 
 #### Description
 
-通过该接口，可以查询配置的BETA发布状态。
+You can use this API to query the BETA publishing status of a configuration.
 
 #### Since
 
@@ -1959,7 +1959,7 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=test&grou
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -1969,32 +1969,32 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=test&grou
 
 | Name           | Type       | Required | Description                      |
 |---------------|----------|----|---------------------------|
-| `dataId`      | `string` | Yes  | 配置的`dataId`。              |
-| `groupName`   | `string` | Yes  | 配置的`groupName`。           |
-| `namespaceId` | `string` | No  | 配置所属的命名空间ID，默认为`public`。 |
+| `dataId`      | `string` | Yes  | Configuration `dataId`.              |
+| `groupName`   | `string` | Yes  | Configuration `groupName`.           |
+| `namespaceId` | `string` | No  | Namespace ID to which the configuration belongs. The default is `public`. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name                | Type     | Description                                  |
 |--------------------|----------|-------------------------------------|
-| `id`               | `string` | beta配置的存储ID。                        |
-| `dataId`           | `string` | 配置的dataId。                          |
-| `groupName`        | `string` | 配置的groupName。                       |
-| `namespaceId`      | `string` | 配置所属的命名空间。                          |
-| `desc`             | `string` | 配置描述。                               |
-| `md5`              | `string` | 配置内容的MD5值。                          |
-| `configTags`       | `string` | 配置的标签。                              |
-| `encryptedDataKey` | `string` | 加密配置内容的密钥，使用配置加密插件时存在。              |
-| `appName`          | `string` | 配置所属的应用名称。                          |
-| `type`             | `string` | 配置类型。                               |
-| `createTime`       | `integer` | 配置创建时间。                             |
-| `modifyTime`       | `integer` | 配置修改时间。                             |
-| `createUser`       | `string` | 配置创建人。                              |
-| `createIp`         | `string` | 配置创建IP。                             |
-| `grayName`         | `string` | 灰度发布规则名称, 固定为`beta`。                |
-| `grayRule`         | `string` | 灰度发布规则，格式为JSON，其中的`expr`为beta的ip列表。 |
+| `id`               | `string` | betaconfiguration storage ID.                        |
+| `dataId`           | `string` | Configuration `dataId`.                          |
+| `groupName`        | `string` | Configuration `groupName`.                       |
+| `namespaceId`      | `string` | namespace to which the configuration belongs.                          |
+| `desc`             | `string` | configuration description.                               |
+| `md5`              | `string` | MD5 value of the configuration content.                          |
+| `configTags`       | `string` | configuration tags.                              |
+| `encryptedDataKey` | `string` | key used to encrypt configuration content. Exists when the configuration encryption plugin is used.              |
+| `appName`          | `string` | application name to which the configuration belongs.                          |
+| `type`             | `string` | configuration type.                               |
+| `createTime`       | `integer` | configuration creation time.                             |
+| `modifyTime`       | `integer` | configuration modification time.                             |
+| `createUser`       | `string` | configuration creator.                              |
+| `createIp`         | `string` | configuration creation IP.                             |
+| `grayName`         | `string` | Gray release rule name. Fixed as `beta`.                |
+| `grayRule`         | `string` | Gray release rule in JSON format. The `expr` field is the beta IP list. |
 
 #### Examples
 
@@ -2032,11 +2032,11 @@ curl "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=111&groupName=DEFAU
 }
 ```
 
-### 2.14. 查询配置发布历史
+### 2.14. Query Configuration Publishing History
 
 #### Description
 
-通过该接口，可以查询配置的发布历史。
+You can use this API to query the publishing history of a configuration.
 
 #### Since
 
@@ -2048,7 +2048,7 @@ curl "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=111&groupName=DEFAU
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -2058,33 +2058,33 @@ curl "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=111&groupName=DEFAU
 
 | Name           | Type       | Required | Description                      |
 |---------------|----------|----|---------------------------|
-| `pageNo`      | `integer` | Yes  | 当前页码，起始为`1`               |
-| `pageSize`    | `integer` | Yes  | 每页显示的记录数。                 |
-| `dataId`      | `string` | Yes  | 配置的`dataId`。              |
-| `groupName`   | `string` | Yes  | 配置的`groupName`。           |
-| `namespaceId` | `string` | No  | 配置所属的命名空间ID，默认为`public`。 |
+| `pageNo`      | `integer` | Yes  | current page number, starts from `1`               |
+| `pageSize`    | `integer` | Yes  | number of records displayed per page.                 |
+| `dataId`      | `string` | Yes  | Configuration `dataId`.              |
+| `groupName`   | `string` | Yes  | Configuration `groupName`.           |
+| `namespaceId` | `string` | No  | Namespace ID to which the configuration belongs. The default is `public`. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name                          | Type     | Description                                |
 |------------------------------|----------|-----------------------------------|
-| `totalCount`                 | `integer` | 历史记录的总数。                          |
-| `pageNumber`                 | `integer` | 当前页码，起始为`1`。                      |
-| `pagesAvailable`             | `integer` | 可用页码。                             |
-| `pageItems`                  | `List`   | 历史记录列表。                           |
-| `pageItems`[i].`id`          | `string` | 历史记录的ID。                          |
-| `pageItems`[i].`dataId`      | `string` | 配置的dataId。                        |
-| `pageItems`[i].`groupName`   | `string` | 配置的groupName。                     |
-| `pageItems`[i].`namespaceId` | `string` | 配置所属的命名空间。                        |
-| `pageItems`[i].`appName`     | `string` | 配置所属的appName。                     |
-| `pageItems`[i].`opType`      | `string` | 操作类型，`I`为插入、`U`为更新、`D`为删除。        |
-| `pageItems`[i].`publishType` | `string` | 发布类型，`formal`为普通发布，`gray`为beta发布。 |
-| `pageItems`[i].`srcIp`       | `string` | 发布的来源IP。                          |
-| `pageItems`[i].`srcUser`     | `string` | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。       |
-| `pageItems`[i].`createTime`  | `integer` | 配置创建时间。                           |
-| `pageItems`[i].`modifyTime`  | `integer` | 配置修改时间。                           |
+| `totalCount`                 | `integer` | total number of history records.                          |
+| `pageNumber`                 | `integer` | current page number, starts from `1`.                      |
+| `pagesAvailable`             | `integer` | available pages.                             |
+| `pageItems`                  | `List`   | history record list.                           |
+| `pageItems`[i].`id`          | `string` | history record ID.                          |
+| `pageItems`[i].`dataId`      | `string` | Configuration `dataId`.                        |
+| `pageItems`[i].`groupName`   | `string` | Configuration `groupName`.                     |
+| `pageItems`[i].`namespaceId` | `string` | namespace to which the configuration belongs.                        |
+| `pageItems`[i].`appName`     | `string` | appName to which the configuration belongs.                     |
+| `pageItems`[i].`opType`      | `string` | Operation type. `I` means insert, `U` means update, and `D` means delete.        |
+| `pageItems`[i].`publishType` | `string` | Publish type. `formal` means normal publish, and `gray` means beta publish. |
+| `pageItems`[i].`srcIp`       | `string` | source IP of the publish operation.                          |
+| `pageItems`[i].`srcUser`     | `string` | Publishing user. This field exists only when authentication is enabled and the configuration is published after a user logs in.       |
+| `pageItems`[i].`createTime`  | `integer` | configuration creation time.                           |
+| `pageItems`[i].`modifyTime`  | `integer` | configuration modification time.                           |
 
 #### Examples
 
@@ -2155,11 +2155,11 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/list?pageNo=1&pageSize=10&data
 }
 ```
 
-### 2.15. 查询配置的某次历史变更记录
+### 2.15. Query a Configuration History Change Record
 
 #### Description
 
-通过该接口，可以查询配置的某次历史变更记录。
+You can use this API to query a specific history change record of a configuration.
 
 #### Since
 
@@ -2171,7 +2171,7 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/list?pageNo=1&pageSize=10&data
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -2181,31 +2181,31 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/list?pageNo=1&pageSize=10&data
 
 | Name           | Type       | Required | Description                      |
 |---------------|----------|----|---------------------------|
-| `nid`         | `integer` | Yes  | 历史记录的ID。                  |
-| `dataId`      | `string` | Yes  | 配置的dataId。
-| `groupName`   | `string` | Yes  | 配置的groupName。             |
-| `namespaceId` | `string` | No  | 配置所属的命名空间ID，默认为`public`。 |
+| `nid`         | `integer` | Yes  | history record ID.                  |
+| `dataId`      | `string` | Yes  | Configuration `dataId`.
+| `groupName`   | `string` | Yes  | Configuration `groupName`.             |
+| `namespaceId` | `string` | No  | Namespace ID to which the configuration belongs. The default is `public`. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name           | Type         | Description                                                                          |
 |---------------|--------------|-----------------------------------------------------------------------------|
-| `id`          | `string` | 历史记录的ID。                                                                    |
-| `dataId`      | `string` | 配置的dataId。                                                                  |
-| `groupName`   | `string` | 配置的groupName。                                                               |
-| `namespaceId` | `string` | 配置所属的命名空间。                                                                  |
+| `id`          | `string` | history record ID.                                                                    |
+| `dataId`      | `string` | Configuration `dataId`.                                                                  |
+| `groupName`   | `string` | Configuration `groupName`.                                                               |
+| `namespaceId` | `string` | namespace to which the configuration belongs.                                                                  |
 | `content`     | `string`     |
-| `appName`     | `string` | 配置所属的appName。                                                               |
-| `opType`      | `string` | 操作类型，`I`为插入、`U`为更新、`D`为删除。                                                  |
-| `publishType` | `string` | 发布类型，`formal`为普通发布，`gray`为beta发布。                                           |
-| `srcIp`       | `string` | 发布的来源IP。                                                                    |
-| `srcUser`     | `string` | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。                                                 |
-| `createTime`  | `integer` | 配置创建时间。                                                                     |
-| `modifyTime`  | `integer` | 配置修改时间。                                                                     |
-| `grayName`    | `string` | 灰度发布规则名称, 固定为`beta`。                                                        |
-| `extInfo`     | `JsonString` | 扩展信息，目前包括`src_user`、`type`、`c_desc`，若`publishType`为`gray`, 其中还包括`grayRule`。 |
+| `appName`     | `string` | appName to which the configuration belongs.                                                               |
+| `opType`      | `string` | Operation type. `I` means insert, `U` means update, and `D` means delete.                                                  |
+| `publishType` | `string` | Publish type. `formal` means normal publish, and `gray` means beta publish.                                           |
+| `srcIp`       | `string` | source IP of the publish operation.                                                                    |
+| `srcUser`     | `string` | Publishing user. This field exists only when authentication is enabled and the configuration is published after a user logs in.                                                 |
+| `createTime`  | `integer` | configuration creation time.                                                                     |
+| `modifyTime`  | `integer` | configuration modification time.                                                                     |
+| `grayName`    | `string` | Gray release rule name. Fixed as `beta`.                                                        |
+| `extInfo`     | `JsonString` | Extended information. Currently includes `src_user`, `type`, and `c_desc`. If `publishType` is `gray`, it also includes `grayRule`. |
 
 #### Examples
 
@@ -2243,11 +2243,11 @@ curl "http://127.0.0.1:8080/v3/console/cs/history?dataId=111&groupName=DEFAULT_G
 }
 ```
 
-### 2.16. 查询配置最新状态的前一次变更历史
+### 2.16. Query Previous Change History Before the Latest Configuration State
 
 #### Description
 
-通过该接口，可以查询配置最新状态的前一次变更历史。
+You can use this API to query the previous change history before the latest state of a configuration.
 
 #### Since
 
@@ -2259,7 +2259,7 @@ curl "http://127.0.0.1:8080/v3/console/cs/history?dataId=111&groupName=DEFAULT_G
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -2269,31 +2269,31 @@ curl "http://127.0.0.1:8080/v3/console/cs/history?dataId=111&groupName=DEFAULT_G
 
 | Name           | Type       | Required | Description                      |
 |---------------|----------|----|---------------------------|
-| `id`          | `integer` | Yes  | 配置的存储ID。                  |
-| `dataId`      | `string` | Yes  | 配置的dataId。                |
-| `groupName`   | `string` | Yes  | 配置的groupName。             |
-| `namespaceId` | `string` | No  | 配置所属的命名空间ID，默认为`public`。 |
+| `id`          | `integer` | Yes  | configuration storage ID.                  |
+| `dataId`      | `string` | Yes  | Configuration `dataId`.                |
+| `groupName`   | `string` | Yes  | Configuration `groupName`.             |
+| `namespaceId` | `string` | No  | Namespace ID to which the configuration belongs. The default is `public`. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name           | Type         | Description                                                                          |
 |---------------|--------------|-----------------------------------------------------------------------------|
-| `id`          | `string` | 历史记录的ID。                                                                    |
-| `dataId`      | `string` | 配置的dataId。                                                                  |
-| `groupName`   | `string` | 配置的groupName。                                                               |
-| `namespaceId` | `string` | 配置所属的命名空间。                                                                  |
+| `id`          | `string` | history record ID.                                                                    |
+| `dataId`      | `string` | Configuration `dataId`.                                                                  |
+| `groupName`   | `string` | Configuration `groupName`.                                                               |
+| `namespaceId` | `string` | namespace to which the configuration belongs.                                                                  |
 | `content`     | `string`     |
-| `appName`     | `string` | 配置所属的appName。                                                               |
-| `opType`      | `string` | 操作类型，`I`为插入、`U`为更新、`D`为删除。                                                  |
-| `publishType` | `string` | 发布类型，`formal`为普通发布，`gray`为beta发布。                                           |
-| `srcIp`       | `string` | 发布的来源IP。                                                                    |
-| `srcUser`     | `string` | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。                                                 |
-| `createTime`  | `integer` | 配置创建时间。                                                                     |
-| `modifyTime`  | `integer` | 配置修改时间。                                                                     |
-| `grayName`    | `string` | 灰度发布规则名称, 固定为`beta`。                                                        |
-| `extInfo`     | `JsonString` | 扩展信息，目前包括`src_user`、`type`、`c_desc`，若`publishType`为`gray`, 其中还包括`grayRule`。 |
+| `appName`     | `string` | appName to which the configuration belongs.                                                               |
+| `opType`      | `string` | Operation type. `I` means insert, `U` means update, and `D` means delete.                                                  |
+| `publishType` | `string` | Publish type. `formal` means normal publish, and `gray` means beta publish.                                           |
+| `srcIp`       | `string` | source IP of the publish operation.                                                                    |
+| `srcUser`     | `string` | Publishing user. This field exists only when authentication is enabled and the configuration is published after a user logs in.                                                 |
+| `createTime`  | `integer` | configuration creation time.                                                                     |
+| `modifyTime`  | `integer` | configuration modification time.                                                                     |
+| `grayName`    | `string` | Gray release rule name. Fixed as `beta`.                                                        |
+| `extInfo`     | `JsonString` | Extended information. Currently includes `src_user`, `type`, and `c_desc`. If `publishType` is `gray`, it also includes `grayRule`. |
 
 #### Examples
 
@@ -2331,11 +2331,11 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/previous?id=838029534438625280
 }
 ```
 
-### 2.17. 查询命名空间下的配置列表
+### 2.17. Query Configuration List in a Namespace
 
 #### Description
 
-通过该接口，可以查询命名空间下的配置列表，仅查询dataId和groupName，用于配置历史UI的下拉选择。
+You can use this API to query the configuration list in a namespace. It returns only `dataId` and `groupName` for the drop-down selection in the configuration history UI.
 
 #### Since
 
@@ -2347,7 +2347,7 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/previous?id=838029534438625280
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -2357,18 +2357,18 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/previous?id=838029534438625280
 
 | Name           | Type       | Required | Description                      |
 |---------------|----------|----|---------------------------|
-| `namespaceId` | `string` | **Yes** | 配置所属的命名空间ID，默认为`public`。 |
+| `namespaceId` | `string` | **Yes** | Namespace ID to which the configuration belongs. The default is `public`. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name         | Type     | Description            |
 |-------------|----------|---------------|
-| `dataId`    | `string` | 配置的dataId。    |
-| `groupName` | `string` | 配置的groupName。 |
+| `dataId`    | `string` | Configuration `dataId`.    |
+| `groupName` | `string` | Configuration `groupName`. |
 
-> 其他字段均无用。
+> All other fields are unused.
 
 #### Examples
 
@@ -2411,13 +2411,13 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/configs?namespaceId=public"
 }
 ```
 
-## 3. 服务管理
+## 3. Service Management
 
-### 3.1. 创建服务
+### 3.1. Create Service
 
 #### Description
 
-通过该接口，可以创建一个空服务。
+You can use this API to create an empty service.
 
 #### Since
 
@@ -2429,7 +2429,7 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/configs?namespaceId=public"
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -2439,21 +2439,21 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/configs?namespaceId=public"
 
 | Name                | Type                    | Required | Description                                                   |
 |--------------------|-----------------------|----|--------------------------------------------------------|
-| `serviceName`      | `string` | Yes  | 服务名。                                                   |
-| `groupName`        | `string` | No  | 服务所属的groupName，默认为`DEFAULT_GROUP`。                    |
-| `namespaceId`      | `string` | No  | 服务所属的命名空间ID，默认为`public`。                              |
-| `protectThreshold` | `number` | No  | 服务的防护阈值，默认为`0.0`。                                     |
-| `selector`         | `string` | No  | 服务的路由选择器，默认为`{"type":"none"}`，无选择器，另外还支持通过label 进行路由。 |
-| `metadata`         | `string` | No  | 服务的元数据，默认为`{}`。                                       |
-| `ephemeral`        | `boolean` | No  | 服务是否临时，默认为`false`即持久化服务。                              |
+| `serviceName`      | `string` | Yes  | service name.                                                   |
+| `groupName`        | `string` | No  | Group name to which the service belongs. The default is `DEFAULT_GROUP`.                    |
+| `namespaceId`      | `string` | No  | Namespace ID to which the service belongs. The default is `public`.                              |
+| `protectThreshold` | `number` | No  | Service protection threshold. The default is `0.0`.                                     |
+| `selector`         | `string` | No  | Service selector. The default is `{"type":"none"}`, which means no selector. Routing by label is also supported. |
+| `metadata`         | `string` | No  | Service metadata. The default is `{}`.                                       |
+| `ephemeral`        | `boolean` | No  | Whether the service is ephemeral. The default is `false`, meaning a persistent service.                              |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type     | Description             |
 |--------|----------|----------------|
-| `data` | `string` | 创建成功时，固定为`ok`。 |
+| `data` | `string` | Fixed as `ok` when creation succeeds. |
 
 #### Examples
 
@@ -2473,15 +2473,15 @@ curl -X POST "http://127.0.0.1:8080/v3/console/ns/service" -d "serviceName=test&
 }
 ```
 
-### 3.2. 删除服务
+### 3.2. Delete Service
 
 :::note
-此接口为删除服务，而不是删除服务实例（服务提供者），且当服务下还有服务实例存在时，服务会无法删除。
+This API deletes a service, not service instances (service providers). If the service still has instances, it cannot be deleted.
 :::
 
 #### Description
 
-通过该接口，可以删除一个服务。
+You can use this API to delete a service.
 
 #### Since
 
@@ -2493,7 +2493,7 @@ curl -X POST "http://127.0.0.1:8080/v3/console/ns/service" -d "serviceName=test&
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -2503,17 +2503,17 @@ curl -X POST "http://127.0.0.1:8080/v3/console/ns/service" -d "serviceName=test&
 
 | Name           | Type       | Required | Description                                |
 |---------------|----------|----|-------------------------------------|
-| `serviceName` | `string` | Yes  | 服务名。                                |
-| `groupName`   | `string` | No  | 服务所属的groupName，默认为`DEFAULT_GROUP`。 |
-| `namespaceId` | `string` | No  | 服务所属的命名空间ID，默认为`public`。           |
+| `serviceName` | `string` | Yes  | service name.                                |
+| `groupName`   | `string` | No  | Group name to which the service belongs. The default is `DEFAULT_GROUP`. |
+| `namespaceId` | `string` | No  | Namespace ID to which the service belongs. The default is `public`.           |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type     | Description             |
 |--------|----------|----------------|
-| `data` | `string` | 删除成功时，固定为`ok`。 |
+| `data` | `string` | Fixed as `ok` when deletion succeeds. |
 
 #### Examples
 
@@ -2533,12 +2533,12 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test&gro
 }
 ```
 
-### 3.3. 更新服务元数据
+### 3.3. Update Service Metadata
 
 #### Description
 
-通过该接口，可以更新一个服务的元数据。仅能更新服务的元数据，如`metadata`、`selector`
-等。服务的serviceName、groupName、namespaceId等不能更新。
+You can use this API to update service metadata. Only service metadata, such as `metadata` and `selector`,
+can be updated. The service `serviceName`, `groupName`, and `namespaceId` cannot be updated.
 
 #### Since
 
@@ -2550,7 +2550,7 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test&gro
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -2560,21 +2560,21 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test&gro
 
 | Name                | Type                    | Required | Description                                                   |
 |--------------------|-----------------------|----|--------------------------------------------------------|
-| `serviceName`      | `string` | Yes  | 服务名。                                                   |
-| `groupName`        | `string` | No  | 服务所属的groupName，默认为`DEFAULT_GROUP`。                    |
-| `namespaceId`      | `string` | No  | 服务所属的命名空间ID，默认为`public`。                              |
-| `protectThreshold` | `number` | No  | 服务的防护阈值，默认为`0.0`。                                     |
-| `ephemeral`        | `boolean` | No  | 是否临时实例，如 `true`/`false`。                                  |
-| `selector`         | `string` | No  | 服务的路由选择器，默认为`{"type":"none"}`，无选择器，另外还支持通过label 进行路由。 |
-| `metadata`         | `string` | No  | 服务的元数据，默认为`{}`。                                       |
+| `serviceName`      | `string` | Yes  | service name.                                                   |
+| `groupName`        | `string` | No  | Group name to which the service belongs. The default is `DEFAULT_GROUP`.                    |
+| `namespaceId`      | `string` | No  | Namespace ID to which the service belongs. The default is `public`.                              |
+| `protectThreshold` | `number` | No  | Service protection threshold. The default is `0.0`.                                     |
+| `ephemeral`        | `boolean` | No  | Whether it is an ephemeral instance, such as `true` or `false`.                                  |
+| `selector`         | `string` | No  | Service selector. The default is `{"type":"none"}`, which means no selector. Routing by label is also supported. |
+| `metadata`         | `string` | No  | Service metadata. The default is `{}`.                                       |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type     | Description             |
 |--------|----------|----------------|
-| `data` | `string` | 更新成功时，固定为`ok`。 |
+| `data` | `string` | Fixed as `ok` when update succeeds. |
 
 #### Examples
 
@@ -2594,11 +2594,11 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service" -d "serviceName=test&g
 }
 ```
 
-### 3.4. 获取支持的服务路由选择器Type列表
+### 3.4. Get Supported Service Selector Type List
 
 #### Description
 
-通过该接口，可以获取支持的服务路由选择器Type列表，用于控制台UI在创建和更新服务时，选择对应的路由选择器Type的下拉选择框。
+You can use this API to obtain the list of supported service selector types. The console UI uses it to render the selector type drop-down when creating or updating services.
 
 #### Since
 
@@ -2610,7 +2610,7 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service" -d "serviceName=test&g
 
 #### Authorization
 
-任意有效鉴权身份信息。
+Any valid authentication identity is required.
 
 #### Request URL
 
@@ -2618,16 +2618,16 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service" -d "serviceName=test&g
 
 #### Request Parameters
 
-无
+None
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name     | Type     | Description                  |
 |---------|----------|---------------------|
-| `label` | `string` | 通过label表达式进行路由选择过滤。 |
-| `none`  | `string` | 无选择器。               |
+| `label` | `string` | Filter routing selection by label expression. |
+| `none`  | `string` | No selector.               |
 
 #### Examples
 
@@ -2650,11 +2650,11 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/selector/types"
 }
 ```
 
-### 3.5. 查询服务列表
+### 3.5. Query Service List
 
 #### Description
 
-通过该接口，可以查询指定命名空间下的服务列表。
+You can use this API to query the service list in a specified namespace.
 
 #### Since
 
@@ -2666,7 +2666,7 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/selector/types"
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -2678,28 +2678,28 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/selector/types"
 |----------------------|-----------|----|-----------------------------------|
 | `pageNo`             | `integer` | Yes  | Page number, starting from `1`. |
 | `pageSize`           | `integer` | Yes  | Page size. |
-| `serviceNameParam`   | `string` | No  | 服务名的pattern，为空时查询所有服务。            |
-| `groupNameParam`     | `string` | No  | 服务所属的groupName的pattern，为空时查询所有服务。 |
-| `namespaceId`        | `string` | No  | 服务所属的命名空间ID。                      |
+| `serviceNameParam`   | `string` | No  | Service name pattern. Queries all services when empty.            |
+| `groupNameParam`     | `string` | No  | Group name pattern of the service. Queries all services when empty. |
+| `namespaceId`        | `string` | No  | namespace ID to which the service belongs.                      |
 | `ignoreEmptyService` | `boolean` | No  | Whether to return only services with instances. Defaults to `false`, meaning empty services are included. |
 | `withInstances`      | `boolean` | No  | Whether to return service instance details. Defaults to `false`. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name                                   | Type     | Description           |
 |---------------------------------------|----------|--------------|
-| `totalCount`                          | `integer` | 符合条件的服务的总数。  |
-| `pageNumber`                          | `integer` | 当前页码，起始为`1`。 |
-| `pagesAvailable`                      | `integer` | 可用页码。        |
-| `pageItems`                           | `List`   | 服务列表。        |
-| `pageItems`[i].`name`                 | `string` | 服务名。         |
-| `pageItems`[i].`groupName`            | `string` | 服务的分组名。      |
-| `pageItems`[i].`clusterCount`         | `string` | 服务下的集群数量。    |
-| `pageItems`[i].`ipCount`              | `string` | 服务下的实例数量。    |
-| `pageItems`[i].`healthyInstanceCount` | `string` | 服务下的健康实例数量。  |
-| `pageItems`[i].`triggerFlag`          | `string` | 是否触发了服务的保护。  |
+| `totalCount`                          | `integer` | total number of services that match the condition.  |
+| `pageNumber`                          | `integer` | current page number, starts from `1`. |
+| `pagesAvailable`                      | `integer` | available pages.        |
+| `pageItems`                           | `List`   | service list.        |
+| `pageItems`[i].`name`                 | `string` | service name.         |
+| `pageItems`[i].`groupName`            | `string` | group name of the service.      |
+| `pageItems`[i].`clusterCount`         | `string` | number of clusters under the service.    |
+| `pageItems`[i].`ipCount`              | `string` | number of instances under the service.    |
+| `pageItems`[i].`healthyInstanceCount` | `string` | number of healthy instances under the service.  |
+| `pageItems`[i].`triggerFlag`          | `string` | whether service protection is triggered.  |
 
 #### Examples
 
@@ -2741,11 +2741,11 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/list?pageNo=1&pageSize=
 }
 ```
 
-### 3.6. 查询服务的订阅者列表
+### 3.6. Query Service Subscriber List
 
 #### Description
 
-通过该接口，可以查询指定服务下的订阅者列表。
+You can use this API to query the subscriber list of a specified service.
 
 #### Since
 
@@ -2757,7 +2757,7 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/list?pageNo=1&pageSize=
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -2769,29 +2769,29 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/list?pageNo=1&pageSize=
 |---------------|-----------|----|-------------------------------------|
 | `pageNo`      | `integer` | Yes  | Page number, starting from `1`. |
 | `pageSize`    | `integer` | Yes  | Page size. |
-| `serviceName`  | `string` | Yes  | 服务名。                                |
-| `groupName`    | `string` | No  | 服务所属的groupName，默认为`DEFAULT_GROUP`。 |
-| `namespaceId`  | `string` | No  | 服务所属的命名空间ID，默认为`public`。           |
+| `serviceName`  | `string` | Yes  | service name.                                |
+| `groupName`    | `string` | No  | Group name to which the service belongs. The default is `DEFAULT_GROUP`. |
+| `namespaceId`  | `string` | No  | Namespace ID to which the service belongs. The default is `public`.           |
 | `aggregation`  | `boolean` | No  | Whether to aggregate the query. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name                          | Type      | Description                   |
 |------------------------------|-----------|----------------------|
-| `totalCount`                 | `integer` | 符合条件的服务的总数。          |
-| `pageNumber`                 | `integer` | 当前页码，起始为`1`。         |
-| `pagesAvailable`             | `integer` | 可用页码。                |
-| `pageItems`                  | `List`    | 服务列表。                |
-| `pageItems`[i].`ip`          | `string` | 订阅者IP。               |
-| `pageItems`[i].`port`        | `integer` | 订阅者端口。               |
-| `pageItems`[i].`address`     | `string` | 订阅者地址, 一般为`ip:port`。 |
-| `pageItems`[i].`agent`       | `string` | 订阅者客户端版本。            |
-| `pageItems`[i].`appName`     | `string` | 订阅者所属应用。             |
-| `pageItems`[i].`namespaceId` | `string` | 订阅者所属命名空间。           |
-| `pageItems`[i].`groupName`   | `string` | 订阅的分组名。              |
-| `pageItems`[i].`serviceName` | `string` | 订阅的服务名。              |
+| `totalCount`                 | `integer` | total number of services that match the condition.          |
+| `pageNumber`                 | `integer` | current page number, starts from `1`.         |
+| `pagesAvailable`             | `integer` | available pages.                |
+| `pageItems`                  | `List`    | service list.                |
+| `pageItems`[i].`ip`          | `string` | subscriber IP.               |
+| `pageItems`[i].`port`        | `integer` | subscriber port.               |
+| `pageItems`[i].`address`     | `string` | Subscriber address, usually `ip:port`. |
+| `pageItems`[i].`agent`       | `string` | subscriber client version.            |
+| `pageItems`[i].`appName`     | `string` | application to which the subscriber belongs.             |
+| `pageItems`[i].`namespaceId` | `string` | namespace to which the subscriber belongs.           |
+| `pageItems`[i].`groupName`   | `string` | subscribed group name.              |
+| `pageItems`[i].`serviceName` | `string` | subscribed service name.              |
 
 #### Examples
 
@@ -2827,11 +2827,11 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/subscribers?pageNo=1&pa
 }
 ```
 
-### 3.7. 查询服务详情
+### 3.7. Query Service Details
 
 #### Description
 
-通过该接口，可以查询指定服务详情。
+You can use this API to query the details of a specified service.
 
 #### Since
 
@@ -2843,7 +2843,7 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/subscribers?pageNo=1&pa
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -2853,29 +2853,29 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/subscribers?pageNo=1&pa
 
 | Name           | Type       | Required | Description                                |
 |---------------|----------|----|-------------------------------------|
-| `serviceName` | `string` | Yes  | 服务名。                                |
-| `groupName`   | `string` | No  | 服务所属的groupName，默认为`DEFAULT_GROUP`。 |
-| `namespaceId` | `string` | No  | 服务所属的命名空间ID，默认为`public`。           |
+| `serviceName` | `string` | Yes  | service name.                                |
+| `groupName`   | `string` | No  | Group name to which the service belongs. The default is `DEFAULT_GROUP`. |
+| `namespaceId` | `string` | No  | Namespace ID to which the service belongs. The default is `public`.           |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name                                                 | Type         | Description                                   |
 |-----------------------------------------------------|--------------|--------------------------------------|
-| `namespaceId`                                       | `string` | 服务所属的namespaceId。                    |
-| `groupName`                                         | `string` | 服务所属的groupName。                      |
-| `serviceName`                                       | `string` | 服务名。                                 |
-| `ephemeral`                                         | `boolean` | 服务的持久化属性，`true`为临时服务，`false`为持久化服务。  |
-| `protectThreshold`                                  | `number` | 服务防护阈值。                              |
-| `selector`                                          | `jsonObject` | 服务选择器。                               |
-| `metadata`                                          | `jsonObject` | 服务元数据。                               |
-| `clusterMap`                                        | `jsonObject` | 服务集群列表, key为cluster的Name，value为集群详细信息。 |
-| `clusterMap`.$ClusterName.`clusterName`             | `string` | 集群名。                                 |
-| `clusterMap`.$ClusterName.`healthChecker`           | `jsonObject` | 健康检查器。                               |
-| `clusterMap`.$ClusterName.`healthyCheckPort`        | `integer` | 健康检查端口。                              |
-| `clusterMap`.$ClusterName.`useInstancePortForCheck` | `boolean` | 是否使用所注册的实例的`IP:Port`进行健康检查。          |
-| `clusterMap`.$ClusterName.`metadata`                | `jsonObject` | 集群元数据。                               |
+| `namespaceId`                                       | `string` | namespace ID to which the service belongs.                    |
+| `groupName`                                         | `string` | groupName to which the service belongs.                      |
+| `serviceName`                                       | `string` | service name.                                 |
+| `ephemeral`                                         | `boolean` | Service persistence attribute. `true` means an ephemeral service, and `false` means a persistent service.  |
+| `protectThreshold`                                  | `number` | service protection threshold.                              |
+| `selector`                                          | `jsonObject` | service selector.                               |
+| `metadata`                                          | `jsonObject` | service metadata.                               |
+| `clusterMap`                                        | `jsonObject` | Service cluster list. The key is the cluster name, and the value is the cluster details. |
+| `clusterMap`.$ClusterName.`clusterName`             | `string` | cluster name.                                 |
+| `clusterMap`.$ClusterName.`healthChecker`           | `jsonObject` | health checker.                               |
+| `clusterMap`.$ClusterName.`healthyCheckPort`        | `integer` | health check port.                              |
+| `clusterMap`.$ClusterName.`useInstancePortForCheck` | `boolean` | Whether to use the registered instance `IP:Port` for health checks.          |
+| `clusterMap`.$ClusterName.`metadata`                | `jsonObject` | cluster metadata.                               |
 
 #### Examples
 
@@ -2918,11 +2918,11 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test"
 }
 ```
 
-### 3.8. 更新服务集群元数据
+### 3.8. Update Service Cluster Metadata
 
 #### Description
 
-通过该接口，可以更新指定服务集群的元数据。
+You can use this API to update metadata for a specified service cluster.
 
 #### Since
 
@@ -2934,7 +2934,7 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test"
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -2944,28 +2944,28 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test"
 
 | Name                     | Type                    | Required | Description                                |
 |-------------------------|-----------------------|----|-------------------------------------|
-| `clusterName`           | `string` | Yes  | 集群名。                                |
-| `serviceName`           | `string` | Yes  | 服务名。                                |
+| `clusterName`           | `string` | Yes  | cluster name.                                |
+| `serviceName`           | `string` | Yes  | service name.                                |
 | `checkPort`             | `integer` | Yes  | Health check port. |
 | `useInstancePort4Check` | `boolean` | Yes  | Whether to use the registered instance `IP:Port` for health checks. |
-| `healthChecker`         | `string` | Yes  | 健康检查器。                              |
-| `groupName`             | `string` | No  | 服务所属的groupName，默认为`DEFAULT_GROUP`。 |
-| `namespaceId`           | `string` | No  | 服务所属的命名空间ID，默认为`public`。           |
-| `metadata`              | `string` | No  | 服务元数据。                              |
+| `healthChecker`         | `string` | Yes  | health checker.                              |
+| `groupName`             | `string` | No  | Group name to which the service belongs. The default is `DEFAULT_GROUP`. |
+| `namespaceId`           | `string` | No  | Namespace ID to which the service belongs. The default is `public`.           |
+| `metadata`              | `string` | No  | service metadata.                              |
 
-> `healthChecker`参数为健康检查器的JSON字符串，目前支持三种健康检查器：
-> 1. `None`: 无健康检查，`{"type":"NONE"}`
-> 2. `TCP`: TCP端口检查，`{"type":"TCP"}`
-> 3. `HTTP`: HTTP端口检查，`{"type":"HTTP","path":"/liveness","headers":"health"}`, 其中`path`为HTTP的uri，`headers`
-     为HTTP请求头。
+> The `healthChecker` parameter is a JSON string for the health checker. Three health checkers are currently supported:
+> 1. `None`: no health check, `{"type":"NONE"}`
+> 2. `TCP`: TCP port check, `{"type":"TCP"}`
+> 3. `HTTP`: HTTP port check, `{"type":"HTTP","path":"/liveness","headers":"health"}`. `path` is the HTTP URI, and `headers`
+     are HTTP request headers.
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type     | Description             |
 |--------|----------|----------------|
-| `data` | `string` | 更新成功时，固定为`ok`。 |
+| `data` | `string` | Fixed as `ok` when update succeeds. |
 
 #### Examples
 
@@ -2985,11 +2985,11 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service/cluster" -d "serviceNam
 }
 ```
 
-### 3.9. 查询服务的实例列表
+### 3.9. Query Service Instance List
 
 #### Description
 
-通过该接口，可以查询指定服务的实例列表。
+You can use this API to query the instance list of a specified service.
 
 #### Since
 
@@ -3001,7 +3001,7 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service/cluster" -d "serviceNam
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -3011,37 +3011,37 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service/cluster" -d "serviceNam
 
 | Name           | Type        | Required | Description                                |
 |---------------|-----------|----|-------------------------------------|
-| `pageNo`      | `integer` | Yes  | 页码，起始为1。                            |
-| `pageSize`    | `integer` | Yes  | 每页记录数。                              |
-| `serviceName` | `string` | Yes  | 服务名。                                |
-| `groupName`   | `string` | No  | 服务所属的groupName，默认为`DEFAULT_GROUP`。 |
-| `namespaceId`  | `string` | No  | 服务所属的命名空间ID，默认为`public`。           |
-| `clusterName`  | `string` | No  | 集群名，不传则查询所有集群的实例。                      |
+| `pageNo`      | `integer` | Yes  | Page number, starts from 1.                            |
+| `pageSize`    | `integer` | Yes  | number of records per page.                              |
+| `serviceName` | `string` | Yes  | service name.                                |
+| `groupName`   | `string` | No  | Group name to which the service belongs. The default is `DEFAULT_GROUP`. |
+| `namespaceId`  | `string` | No  | Namespace ID to which the service belongs. The default is `public`.           |
+| `clusterName`  | `string` | No  | Cluster name. If not specified, instances in all clusters are queried.                      |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name                          | Type                  | Description                                    |
 |------------------------------|-----------------------|---------------------------------------|
-| `totalCount`                 | `integer` | 符合条件的实例的总数。                           |
-| `pageNumber`                 | `integer` | 当前页码，起始为`1`。                          |
-| `pagesAvailable`             | `integer` | 可用页码。                                 |
-| `pageItems`                  | `List`                | 实例列表。                                 |
-| `pageItems`[i].`instanceId`  | `string` | 实例ID。                                 |
-| `pageItems`[i].`ip`          | `string` | 实例IP。                                 |
-| `pageItems`[i].`port`        | `integer` | 实例端口。                                 |
-| `pageItems`[i].`weight`      | `number` | 实例权重。                                 |
-| `pageItems`[i].`healthy`     | `boolean` | 实例是否健康。                               |
-| `pageItems`[i].`enabled`     | `boolean` | 实例是否已上线。                              |
-| `pageItems`[i].`ephemeral`   | `boolean` | 实例是否临时。                               |
-| `pageItems`[i].`clusterName` | `string` | 实例所属集群。                               |
-| `pageItems`[i].`serviceName` | `string` | 实例所属服务，格式为`groupName`@@`serviceName`。 |
-| `pageItems`[i].`metadata`    | `map<string, string>` | 实例元数据。                                |
+| `totalCount`                 | `integer` | total number of instances that match the condition.                           |
+| `pageNumber`                 | `integer` | current page number, starts from `1`.                          |
+| `pagesAvailable`             | `integer` | available pages.                                 |
+| `pageItems`                  | `List`                | instance list.                                 |
+| `pageItems`[i].`instanceId`  | `string` | instance ID.                                 |
+| `pageItems`[i].`ip`          | `string` | instance IP.                                 |
+| `pageItems`[i].`port`        | `integer` | instance port.                                 |
+| `pageItems`[i].`weight`      | `number` | instance weight.                                 |
+| `pageItems`[i].`healthy`     | `boolean` | whether the instance is healthy.                               |
+| `pageItems`[i].`enabled`     | `boolean` | whether the instance is online.                              |
+| `pageItems`[i].`ephemeral`   | `boolean` | whether the instance is ephemeral.                               |
+| `pageItems`[i].`clusterName` | `string` | cluster to which the instance belongs.                               |
+| `pageItems`[i].`serviceName` | `string` | Service to which the instance belongs, in the format `groupName`@@`serviceName`. |
+| `pageItems`[i].`metadata`    | `map<string, string>` | instance metadata.                                |
 
 :::note
-关于心跳的参数`instanceHeartBeatInterval`, `instanceHeartBeatTimeOut`和`ipDeleteTimeout`
-用于兼容1.X客户端的心跳模式数据，后续版本可能会移除对1.X客户端的支持，届时这3个参数将被废弃。
+The heartbeat-related parameters `instanceHeartBeatInterval`, `instanceHeartBeatTimeOut`, and `ipDeleteTimeout`
+are used to be compatible with heartbeat mode data from 1.x clients. Later versions may remove support for 1.x clients, and these three parameters will be deprecated at that time.
 :::
 
 #### Examples
@@ -3084,11 +3084,11 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/instance/list?&serviceName=test
 }
 ```
 
-### 3.10. 更新实例元数据
+### 3.10. Update Instance Metadata
 
 #### Description
 
-通过该接口，可以更新指定服务的实例元数据，包括权重和上下线状态；无法更新实例的服务名、分组名、命名空间、IP及端口。
+You can use this API to update metadata for instances of a specified service, including weight and online/offline status. You cannot update the service name, group name, namespace, IP address, or port of an instance.
 
 #### Since
 
@@ -3100,7 +3100,7 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/instance/list?&serviceName=test
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -3110,25 +3110,25 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/instance/list?&serviceName=test
 
 | Name           | Type                    | Required | Description                                |
 |---------------|-----------------------|----|-------------------------------------|
-| `serviceName` | `string` | Yes  | 服务名。                                |
-| `ip`          | `string` | Yes  | 实例IP。                               |
-| `port`        | `integer` | Yes  | 实例端口。                               |
-| `groupName`   | `string` | No  | 服务所属的groupName，默认为`DEFAULT_GROUP`。 |
-| `namespaceId` | `string` | No  | 服务所属的命名空间ID，默认为`public`。           |
-| `clusterName` | `string` | No  | 实例所属集群, 默认为`DEFAULT`。              |
-| `ephemeral`   | `boolean` | No  | 实例是否临时，默认为`true`。                  |
-| `weight`      | `number` | No  | 实例权重。                               |
-| `healthy`     | `boolean` | No  | 实例健康状态。                             |
-| `enabled`     | `boolean` | No  | 实例是否已上线。                            |
-| `metadata`    | `string` | No  | 实例元数据。                              |
+| `serviceName` | `string` | Yes  | service name.                                |
+| `ip`          | `string` | Yes  | instance IP.                               |
+| `port`        | `integer` | Yes  | instance port.                               |
+| `groupName`   | `string` | No  | Group name to which the service belongs. The default is `DEFAULT_GROUP`. |
+| `namespaceId` | `string` | No  | Namespace ID to which the service belongs. The default is `public`.           |
+| `clusterName` | `string` | No  | Cluster to which the instance belongs. The default is `DEFAULT`.              |
+| `ephemeral`   | `boolean` | No  | Whether the instance is ephemeral. The default is `true`.                  |
+| `weight`      | `number` | No  | instance weight.                               |
+| `healthy`     | `boolean` | No  | instance health status.                             |
+| `enabled`     | `boolean` | No  | whether the instance is online.                            |
+| `metadata`    | `string` | No  | instance metadata.                              |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type     | Description             |
 |--------|----------|----------------|
-| `data` | `string` | 更新成功时，固定为`ok`。 |
+| `data` | `string` | Fixed as `ok` when update succeeds. |
 
 #### Examples
 
@@ -3148,11 +3148,11 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/instance" -d 'serviceName=test&
 }
 ```
 
-### 3.11. 删除持久化实例
+### 3.11. Delete Persistent Instance
 
 #### Description
 
-通过该接口，可以删除指定服务下的**持久化实例**。该接口仅支持删除`ephemeral=false`的实例，不支持删除临时实例。
+You can use this API to delete a **persistent instance** under a specified service. This API supports deleting only instances with `ephemeral=false`; it does not support deleting ephemeral instances.
 
 #### Since
 
@@ -3164,7 +3164,7 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/instance" -d 'serviceName=test&
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -3174,13 +3174,13 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/instance" -d 'serviceName=test&
 
 | Name        | Type      | Required | Description                                       |
 | ------------- | --------- | ---- | ---------------------------------------------- |
-| `serviceName` | `string`  | Yes   | 服务名。                                       |
-| `ip`          | `string`  | Yes   | 实例IP。                                       |
-| `port`        | `integer` | Yes   | 实例端口。                                     |
-| `groupName`   | `string`  | No   | 服务所属的groupName，默认为`DEFAULT_GROUP`。 |
-| `namespaceId` | `string`  | No   | 服务所属的命名空间ID，默认为`public`。       |
-| `clusterName` | `string`  | No   | 实例所属集群, 默认为`DEFAULT`。              |
-| `ephemeral`   | `boolean` | No   | 实例是否临时，仅支持传入`false`，默认为`false`。 |
+| `serviceName` | `string`  | Yes   | service name.                                       |
+| `ip`          | `string`  | Yes   | instance IP.                                       |
+| `port`        | `integer` | Yes   | instance port.                                     |
+| `groupName`   | `string`  | No   | Group name to which the service belongs. The default is `DEFAULT_GROUP`. |
+| `namespaceId` | `string`  | No   | Namespace ID to which the service belongs. The default is `public`.       |
+| `clusterName` | `string`  | No   | Cluster to which the instance belongs. The default is `DEFAULT`.              |
+| `ephemeral`   | `boolean` | No   | Whether the instance is ephemeral. Only `false` is supported. The default is `false`. |
 | `healthy`     | `boolean` | No   | Whether the instance is healthy. |
 | `weight`      | `number`  | No   | Instance weight. |
 | `enabled`     | `boolean` | No   | Whether the instance is enabled. |
@@ -3188,11 +3188,11 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/instance" -d 'serviceName=test&
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name | Type | Description                     |
 | ------ | -------- | ------------------------ |
-| `data` | `string` | 删除成功时，固定为`ok`。 |
+| `data` | `string` | Fixed as `ok` when deletion succeeds. |
 
 #### Examples
 
@@ -3212,13 +3212,13 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/instance?serviceName=test&cl
 }
 ```
 
-## 4. MCP 管理
+## 4. MCP Management
 
-### 4.1. 查询MCP服务的详情
+### 4.1. Query MCP Service Details
 
 #### Description
 
-通过该接口，可以查询托管在Nacos上指定MCP服务的服务的详细信息。
+You can use this API to query the details of a specified MCP service hosted on Nacos.
 
 #### Since
 
@@ -3230,7 +3230,7 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/instance?serviceName=test&cl
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -3240,40 +3240,40 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/instance?serviceName=test&cl
 
 | Name           | Type     | Required  | Description                                       |
 |---------------|----------|-------|------------------------------------------|
-| `namespaceId` | `string` | No     | MCP服务的命名空间ID，默认为`public`                 |
+| `namespaceId` | `string` | No     | Namespace ID of the MCP service. The default is `public`                 |
 | `mcpId`       | `string` | One of two required | MCP service ID (usually UUID). One of `mcpId` and `mcpName` must be provided (OpenAPI cannot express this constraint; at least one is required in practice). Prefer `mcpId`. |
 | `mcpName`     | `string` | One of two required | MCP service name template. One of `mcpId` and `mcpName` must be provided; prefer `mcpId`.    |
-| `version`     | `string` | No     | MCP服务的版本，未传入是返回最新版本                      |
+| `version`     | `string` | No     | version of the MCP service. If not specified, the latest version is returned                      |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name                  | Type                  | Description                                                                                              |
 |----------------------|-----------------------|-------------------------------------------------------------------------------------------------|
-| `id`                 | `string` | MCP服务的ID，一般为UUID。                                                                               |
-| `name`               | `string` | MCP服务名。                                                                                         |
-| `namespaceId`        | `string` | MCP服务所属的命名空间ID。                                                                                 |
-| `protocol`           | `string` | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
-| `frontProtocol`      | `string` | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
-| `description`        | `string` | MCP服务的描述。                                                                                       |
-| `repository`         | `string` | MCP服务的存储仓库。                                                                                     |                                                                                          |
-| `versionDetail`      | `VersionDetail`       | MCP服务所查询的版本信息。                                                                                  |
-| `localServerConfig`  | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
-| `remoteServerConfig` | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
-| `enabled`            | `boolean` | MCP服务是否启用。                                                                                      |
-| `capabilities`       | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
-| `backendEndpoints`   | `List`                | MCP服务若类型为**非stdio**，存在此信息，记录访问远端服务的具体地址信息。                                                      |
-| `toolSpec`           | `Map<String, Object>` | MCP服务支持的能力类型包含`TOOL`时，存在此信息，记录工具的详细配置信息。                                                        |
-| `allVersions`        | `List<VersionDetail>` | MCP服务的所有版本详情的列表。                                                                                |
+| `id`                 | `string` | MCP service ID, usually a UUID.                                                                               |
+| `name`               | `string` | MCP service name.                                                                                         |
+| `namespaceId`        | `string` | namespace ID to which the MCP service belongs.                                                                                 |
+| `protocol`           | `string` | MCP protocol, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`.                                             |
+| `frontProtocol`      | `string` | Frontend exposure protocol of the MCP service. It is generally used by protocol converters, such as gateways. If there is no converter, it is the same as `protocol`, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`. |
+| `description`        | `string` | MCP service description.                                                                                       |
+| `repository`         | `string` | repository of the MCP service.                                                                                     |                                                                                          |
+| `versionDetail`      | `VersionDetail`       | queried version information of the MCP service.                                                                                  |
+| `localServerConfig`  | `Map<String, Object>` | When the MCP service type is **stdio**, this information exists and records startup information for the local MCP service.                                                        |
+| `remoteServerConfig` | `RemoteServerConfig`  | When the MCP service type is **non-stdio**, this information exists and records remote service information.                                                           |
+| `enabled`            | `boolean` | whether the MCP service is enabled.                                                                                      |
+| `capabilities`       | `List`                | Capability types supported by the MCP service, such as `TOOL`, `PROMPT`, or `RESOURCE`.                                                       |
+| `backendEndpoints`   | `List`                | When the MCP service type is **non-stdio**, this information exists and records specific address information for accessing the remote service.                                                      |
+| `toolSpec`           | `Map<String, Object>` | This information exists when the capability types supported by the MCP service include `TOOL`; it records detailed tool configuration information.                                                        |
+| `allVersions`        | `List<VersionDetail>` | list of all version details of the MCP service.                                                                                |
 
-其中`VersionDetail`结构如下：
+The `VersionDetail` structure is as follows:
 
 | Name            | Type      | Description               |
 |----------------|-----------|------------------|
-| `version`      | `string` | MCP服务的版本号。       |
-| `release_date` | `string` | MCP服务的版本发布时间。    |
-| `is_latest`    | `boolean` | MCP服务的版本是否为最新版本。 |
+| `version`      | `string` | version number of the MCP service.       |
+| `release_date` | `string` | release time of the MCP service version.    |
+| `is_latest`    | `boolean` | whether the MCP service version is the latest version. |
 
 #### Examples
 
@@ -3320,11 +3320,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=
 }
 ```
 
-### 4.2. 更新MCP服务
+### 4.2. Update MCP Service
 
 #### Description
 
-通过该接口，可以更新托管在Nacos上的MCP服务。
+You can use this API to update an MCP service hosted on Nacos.
 
 #### Since
 
@@ -3336,7 +3336,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -3346,89 +3346,89 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=
 
 | Name                     | Type         | Required  | Description                                                      |
 |-------------------------|--------------|-------|---------------------------------------------------------|
-| `namespaceId`           | `string` | No     | MCP服务的命名空间ID，默认为`public`                                |
-| `latest`                | `boolean` | No     | 是否按最新版本更新，如 `true`。                                      |
-| `serverSpecification`   | `string` | **Yes** | MCP服务的描述详情                                              |
-| `toolSpecification`     | `string` | No     | MCP服务的工具描述详情                                            |
-| `endpointSpecification` | `string` | No     | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效                          |
-| `overrideExisting`      | `boolean` | No     | MCP服务更新时是否覆盖原endpointSpecification，默认不覆盖，仅在非`stdio`协议时生效 |
+| `namespaceId`           | `string` | No     | Namespace ID of the MCP service. The default is `public`                                |
+| `latest`                | `boolean` | No     | Whether to update by the latest version, such as `true`.                                      |
+| `serverSpecification`   | `string` | **Yes** | MCP service description details                                              |
+| `toolSpecification`     | `string` | No     | MCP service tool description details                                            |
+| `endpointSpecification` | `string` | No     | Remote service address details of the MCP service. Takes effect only for non-`stdio` protocols                          |
+| `overrideExisting`      | `boolean` | No     | whether to overwrite the original `endpointSpecification` when updating the MCP service. It is not overwritten by default and takes effect only for non-`stdio` protocols |
 
-其中`serverSpecification`、`toolSpecification`、`endpointSpecification`参数的详细内容如下：
+The details of the `serverSpecification`, `toolSpecification`, and `endpointSpecification` parameters are as follows:
 
 > serverSpecification
 
 | Name                  | Type                  | Description                                                                                              |
 |----------------------|-----------------------|-------------------------------------------------------------------------------------------------|
-| `id`                 | `string` | MCP服务的ID，一般为UUID，必须传入，用于定位待更新的MCP服务。                                                            |
-| `name`               | `string` | MCP服务名。                                                                                         |
-| `protocol`           | `string` | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
-| `frontProtocol`      | `string` | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
-| `description`        | `string` | MCP服务的描述。                                                                                       |
-| `repository`         | `string` | MCP服务的存储仓库。                                                                                     |    |
-| `versionDetail`      | `VersionDetail`       | MCP服务的版本信息。                                                                                     |
-| `version`            | `string` | MCP服务的简易版本版本信息，主要用于兼容，若已设置`versionDetail`,则该字段无效。                                               |    |
-| `localServerConfig`  | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
-| `remoteServerConfig` | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
-| `enabled`            | `boolean` | MCP服务是否启用。                                                                                      |
-| `capabilities`       | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
+| `id`                 | `string` | MCP service ID, usually a UUID. It must be passed to locate the MCP service to update.                                                            |
+| `name`               | `string` | MCP service name.                                                                                         |
+| `protocol`           | `string` | MCP protocol, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`.                                             |
+| `frontProtocol`      | `string` | Frontend exposure protocol of the MCP service. It is generally used by protocol converters, such as gateways. If there is no converter, it is the same as `protocol`, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`. |
+| `description`        | `string` | MCP service description.                                                                                       |
+| `repository`         | `string` | repository of the MCP service.                                                                                     |    |
+| `versionDetail`      | `VersionDetail`       | version information of the MCP service.                                                                                     |
+| `version`            | `string` | Simple version information of the MCP service, mainly used for compatibility. If `versionDetail` is set, this field is invalid.                                               |    |
+| `localServerConfig`  | `Map<String, Object>` | When the MCP service type is **stdio**, this information exists and records startup information for the local MCP service.                                                        |
+| `remoteServerConfig` | `RemoteServerConfig`  | When the MCP service type is **non-stdio**, this information exists and records remote service information.                                                           |
+| `enabled`            | `boolean` | whether the MCP service is enabled.                                                                                      |
+| `capabilities`       | `List`                | Capability types supported by the MCP service, such as `TOOL`, `PROMPT`, or `RESOURCE`.                                                       |
 
-其中`VersionDetail`结构如下：
+The `VersionDetail` structure is as follows:
 
 | Name            | Type      | Description               |
 |----------------|-----------|------------------|
-| `version`      | `string` | MCP服务的版本号。       |
-| `release_date` | `string` | MCP服务的版本发布时间。    |
-| `is_latest`    | `boolean` | MCP服务的版本是否为最新版本。 |
+| `version`      | `string` | version number of the MCP service.       |
+| `release_date` | `string` | release time of the MCP service version.    |
+| `is_latest`    | `boolean` | whether the MCP service version is the latest version. |
 
 > toolSpecification
 
 | Name               | Type                       | Description                                                                                      |
 |-------------------|----------------------------|-----------------------------------------------------------------------------------------|
-| `tools`           | `List<McpTool>`            | 该MCP Server所提供的工具列表，参考标准MCP协议中对于MCP Tool的定义                                             |
-| `toolsMeta`       | `Map<String, McpToolMeta>` | 该MCP Server所提供的工具的额外元数据信息，可用于扩展标准MCP协议中未定义但又使用中需要的信息。key为`McpTool`的`name`, value为拓展元数据。 |
-| `securitySchemes` | `List<SecurityScheme>`     | MCP工具的安全方案，参考标准MCP协议。                                                                   |
+| `tools`           | `List<McpTool>`            | Tool list provided by this MCP Server. Refer to the standard MCP protocol definition of MCP Tool.                                             |
+| `toolsMeta`       | `Map<String, McpToolMeta>` | Additional metadata information of tools provided by this MCP Server. It can extend information that is not defined in the standard MCP protocol but is required during use. The key is the `name` of `McpTool`, and the value is extended metadata. |
+| `securitySchemes` | `List<SecurityScheme>`     | Security schemes of the MCP tool. Refer to the standard MCP protocol.                                                                   |
 
-其中`McpTool`结构如下：
+The `McpTool` structure is as follows:
 
 | Name           | Type                  | Description                                            |
 |---------------|-----------------------|-----------------------------------------------|
-| `name`        | `string` | MCP 工具的名称                                     |
-| `description` | `string` | MCP 工具的描述                                     |
-| `inputSchema` | `Map<String, Object>` | MCP工具的入参描述，参考标准MCP协议，主要包含，`Type`,`是否必须`,`Description` 等。 |
+| `name`        | `string` | MCP tool name                                     |
+| `description` | `string` | MCP tool description                                     |
+| `inputSchema` | `Map<String, Object>` | Input parameter description of the MCP tool. Refer to the standard MCP protocol. It mainly contains `Type`, whether the parameter is required, `Description`, and other fields. |
 
-其中`McpToolMeta` 结构如下：
+The `McpToolMeta` structure is as follows:
 
 | Name             | Type                  | Description                             |
 |-----------------|-----------------------|--------------------------------|
-| `invokeContext` | `map<string, string>` | MCP 工具调用时的上下文信息，如后端服务的`Path`等。 |
-| `enabled`       | `boolean` | MCP工具是否启用。                     |
-| `templates`     | `map<string, string>` | MCP工具的模板信息。用于进行协议转换时进行参数的映射。   |
+| `invokeContext` | `map<string, string>` | Context information when the MCP tool is called, such as the backend service `Path`. |
+| `enabled`       | `boolean` | whether the MCP tool is enabled.                     |
+| `templates`     | `map<string, string>` | Template information of the MCP tool. Used to map parameters during protocol conversion.   |
 
-其中`SecurityScheme` 结构如下：
+The `SecurityScheme` structure is as follows:
 
 | Name                 | Type     | Description                                                                                |
 |---------------------|----------|-----------------------------------------------------------------------------------|
-| `id`                | `string` | 安全方案的ID，将被MCP工具使用和引用。。                                                            |
-| `type`              | `string` | 安全方案的类型。可能的值包括：`http`、`apiKey`、`localEnv`或其他自定义扩展。                                |
-| `scheme`            | `string` | 安全方案的子方案类型。当 `type` 为 `http` 时使用。可能的值包括：`basic` 或 `bearer`。                       |
-| `in`                | `string` | 安全方案的位置。可能的值有：`query`、`header`。                                                   |
-| `name`              | `string` | 安全方案的名称。当 `type` 为 `apiKey` 或 `localEnv` 时使用。例如，`apiKey` 的密钥名称或 `localEnv` 的环境名称。 |
-| `defaultCredential` | `string` | 当配置参数中未输入身份时的默认凭证。可选。                                                             |
+| `id`                | `string` | Security scheme ID, which is used and referenced by MCP tools.                                                            |
+| `type`              | `string` | Security scheme type. Possible values include `http`, `apiKey`, `localEnv`, or other custom extensions.                                |
+| `scheme`            | `string` | Security scheme subtype. Used when `type` is `http`. Possible values include `basic` or `bearer`.                       |
+| `in`                | `string` | Security scheme location. Possible values include `query` and `header`.                                                   |
+| `name`              | `string` | Security scheme name. Used when `type` is `apiKey` or `localEnv`. For example, the key name of `apiKey` or the environment name of `localEnv`. |
+| `defaultCredential` | `string` | Default credential used when no identity is entered in the configuration parameters. Optional.                                                             |
 
 > endpointSpecification
 
 | Name    | Type                  | Description                                                                                                                               |
 |--------|-----------------------|----------------------------------------------------------------------------------------------------------------------------------|
-| `type` | `string` | MCP endpoint的后端服务类型，可选值`REF`和`DIRECT`.                                                                                           |
-| `data` | `map<string, string>` | MCP endpoint的后端服务的实际数据， 根据`type`的不同，传入的参数不同，如`REF`传入的为`namespaceId`, `groupName` 和 `serviceName`；`DIRECT`传入的为`address` 和 `port`。 |
+| `type` | `string` | Backend service type of the MCP endpoint. Valid values are `REF` and `DIRECT`.                                                                                           |
+| `data` | `map<string, string>` | Actual backend service data of the MCP endpoint. Different parameters are passed based on `type`. For example, `REF` passes `namespaceId`, `groupName`, and `serviceName`; `DIRECT` passes `address` and `port`. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type     | Description         |
 |--------|----------|------------|
-| `data` | `string` | MCP服务更新结果。 |
+| `data` | `string` | MCP service update result. |
 
 #### Examples
 
@@ -3450,11 +3450,11 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 }
 ```
 
-### 4.3. 创建MCP服务
+### 4.3. Create MCP Service
 
 #### Description
 
-通过该接口，可以创建托管在Nacos上的MCP服务，可以是存量API转换的MCP服务，也可以是MCP市场中的MCP服务。
+You can use this API to create an MCP service hosted on Nacos. It can be an MCP service converted from an existing API, or an MCP service from the MCP marketplace.
 
 #### Since
 
@@ -3466,7 +3466,7 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -3476,87 +3476,87 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 
 | Name                     | Type         | Required  | Description                             |
 |-------------------------|--------------|-------|--------------------------------|
-| `namespaceId`           | `string` | No     | MCP服务的命名空间ID，默认为`public`       |
-| `serverSpecification`   | `string` | **Yes** | MCP服务的描述详情                     |
-| `toolSpecification`     | `string` | No     | MCP服务的工具描述详情                   |
-| `endpointSpecification` | `string` | No     | MCP服务的远端服务地址详情，仅在非`stdio`协议时生效 |
+| `namespaceId`           | `string` | No     | Namespace ID of the MCP service. The default is `public`       |
+| `serverSpecification`   | `string` | **Yes** | MCP service description details                     |
+| `toolSpecification`     | `string` | No     | MCP service tool description details                   |
+| `endpointSpecification` | `string` | No     | Remote service address details of the MCP service. Takes effect only for non-`stdio` protocols |
 
-其中`serverSpecification`、`toolSpecification`、`endpointSpecification`参数的详细内容如下：
+The details of the `serverSpecification`, `toolSpecification`, and `endpointSpecification` parameters are as follows:
 
 > serverSpecification
 
 | Name                  | Type                  | Description                                                                                              |
 |----------------------|-----------------------|-------------------------------------------------------------------------------------------------|
-| `id`                 | `string` | MCP服务的ID，一般为UUID，无需传入，系统自动生成。                                                                   |
-| `name`               | `string` | MCP服务名。                                                                                         |
-| `protocol`           | `string` | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
-| `frontProtocol`      | `string` | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
-| `description`        | `string` | MCP服务的描述。                                                                                       |
-| `repository`         | `string` | MCP服务的存储仓库。                                                                                     |    |
-| `versionDetail`      | `VersionDetail`       | MCP服务的版本信息。                                                                                     |
-| `version`            | `string` | MCP服务的简易版本版本信息，主要用于兼容，若已设置`versionDetail`,则该字段无效。                                               |    |
-| `localServerConfig`  | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
-| `remoteServerConfig` | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
-| `enabled`            | `boolean` | MCP服务是否启用。                                                                                      |
-| `capabilities`       | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
+| `id`                 | `string` | MCP service ID, usually a UUID. It does not need to be passed; the system generates it automatically.                                                                   |
+| `name`               | `string` | MCP service name.                                                                                         |
+| `protocol`           | `string` | MCP protocol, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`.                                             |
+| `frontProtocol`      | `string` | Frontend exposure protocol of the MCP service. It is generally used by protocol converters, such as gateways. If there is no converter, it is the same as `protocol`, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`. |
+| `description`        | `string` | MCP service description.                                                                                       |
+| `repository`         | `string` | repository of the MCP service.                                                                                     |    |
+| `versionDetail`      | `VersionDetail`       | version information of the MCP service.                                                                                     |
+| `version`            | `string` | Simple version information of the MCP service, mainly used for compatibility. If `versionDetail` is set, this field is invalid.                                               |    |
+| `localServerConfig`  | `Map<String, Object>` | When the MCP service type is **stdio**, this information exists and records startup information for the local MCP service.                                                        |
+| `remoteServerConfig` | `RemoteServerConfig`  | When the MCP service type is **non-stdio**, this information exists and records remote service information.                                                           |
+| `enabled`            | `boolean` | whether the MCP service is enabled.                                                                                      |
+| `capabilities`       | `List`                | Capability types supported by the MCP service, such as `TOOL`, `PROMPT`, or `RESOURCE`.                                                       |
 
-其中`VersionDetail`结构如下：
+The `VersionDetail` structure is as follows:
 
 | Name            | Type      | Description               |
 |----------------|-----------|------------------|
-| `version`      | `string` | MCP服务的版本号。       |
-| `release_date` | `string` | MCP服务的版本发布时间。    |
-| `is_latest`    | `boolean` | MCP服务的版本是否为最新版本。 |
+| `version`      | `string` | version number of the MCP service.       |
+| `release_date` | `string` | release time of the MCP service version.    |
+| `is_latest`    | `boolean` | whether the MCP service version is the latest version. |
 
 > toolSpecification
 
 | Name               | Type                       | Description                                                                                      |
 |-------------------|----------------------------|-----------------------------------------------------------------------------------------|
-| `tools`           | `List<McpTool>`            | 该MCP Server所提供的工具列表，参考标准MCP协议中对于MCP Tool的定义                                             |
-| `toolsMeta`       | `Map<String, McpToolMeta>` | 该MCP Server所提供的工具的额外元数据信息，可用于扩展标准MCP协议中未定义但又使用中需要的信息。key为`McpTool`的`name`, value为拓展元数据。 |
-| `securitySchemes` | `List<SecurityScheme>`     | MCP工具的安全方案，参考标准MCP协议。                                                                   |
+| `tools`           | `List<McpTool>`            | Tool list provided by this MCP Server. Refer to the standard MCP protocol definition of MCP Tool.                                             |
+| `toolsMeta`       | `Map<String, McpToolMeta>` | Additional metadata information of tools provided by this MCP Server. It can extend information that is not defined in the standard MCP protocol but is required during use. The key is the `name` of `McpTool`, and the value is extended metadata. |
+| `securitySchemes` | `List<SecurityScheme>`     | Security schemes of the MCP tool. Refer to the standard MCP protocol.                                                                   |
 
-其中`McpTool`结构如下：
+The `McpTool` structure is as follows:
 
 | Name           | Type                  | Description                                            |
 |---------------|-----------------------|-----------------------------------------------|
-| `name`        | `string` | MCP 工具的名称                                     |
-| `description` | `string` | MCP 工具的描述                                     |
-| `inputSchema` | `Map<String, Object>` | MCP工具的入参描述，参考标准MCP协议，主要包含，`Type`,`是否必须`,`Description` 等。 |
+| `name`        | `string` | MCP tool name                                     |
+| `description` | `string` | MCP tool description                                     |
+| `inputSchema` | `Map<String, Object>` | Input parameter description of the MCP tool. Refer to the standard MCP protocol. It mainly contains `Type`, whether the parameter is required, `Description`, and other fields. |
 
-其中`McpToolMeta` 结构如下：
+The `McpToolMeta` structure is as follows:
 
 | Name             | Type                  | Description                             |
 |-----------------|-----------------------|--------------------------------|
-| `invokeContext` | `map<string, string>` | MCP 工具调用时的上下文信息，如后端服务的`Path`等。 |
-| `enabled`       | `boolean` | MCP工具是否启用。                     |
-| `templates`     | `map<string, string>` | MCP工具的模板信息。用于进行协议转换时进行参数的映射。   |
+| `invokeContext` | `map<string, string>` | Context information when the MCP tool is called, such as the backend service `Path`. |
+| `enabled`       | `boolean` | whether the MCP tool is enabled.                     |
+| `templates`     | `map<string, string>` | Template information of the MCP tool. Used to map parameters during protocol conversion.   |
 
-其中`SecurityScheme` 结构如下：
+The `SecurityScheme` structure is as follows:
 
 | Name                 | Type     | Description                                                                                |
 |---------------------|----------|-----------------------------------------------------------------------------------|
-| `id`                | `string` | 安全方案的ID，将被MCP工具使用和引用。。                                                            |
-| `type`              | `string` | 安全方案的类型。可能的值包括：`http`、`apiKey`、`localEnv`或其他自定义扩展。                                |
-| `scheme`            | `string` | 安全方案的子方案类型。当 `type` 为 `http` 时使用。可能的值包括：`basic` 或 `bearer`。                       |
-| `in`                | `string` | 安全方案的位置。可能的值有：`query`、`header`。                                                   |
-| `name`              | `string` | 安全方案的名称。当 `type` 为 `apiKey` 或 `localEnv` 时使用。例如，`apiKey` 的密钥名称或 `localEnv` 的环境名称。 |
-| `defaultCredential` | `string` | 当配置参数中未输入身份时的默认凭证。可选。                                                             |
+| `id`                | `string` | Security scheme ID, which is used and referenced by MCP tools.                                                            |
+| `type`              | `string` | Security scheme type. Possible values include `http`, `apiKey`, `localEnv`, or other custom extensions.                                |
+| `scheme`            | `string` | Security scheme subtype. Used when `type` is `http`. Possible values include `basic` or `bearer`.                       |
+| `in`                | `string` | Security scheme location. Possible values include `query` and `header`.                                                   |
+| `name`              | `string` | Security scheme name. Used when `type` is `apiKey` or `localEnv`. For example, the key name of `apiKey` or the environment name of `localEnv`. |
+| `defaultCredential` | `string` | Default credential used when no identity is entered in the configuration parameters. Optional.                                                             |
 
 > endpointSpecification
 
 | Name    | Type                  | Description                                                                                                                               |
 |--------|-----------------------|----------------------------------------------------------------------------------------------------------------------------------|
-| `type` | `string` | MCP endpoint的后端服务类型，可选值`REF`和`DIRECT`.                                                                                           |
-| `data` | `map<string, string>` | MCP endpoint的后端服务的实际数据， 根据`type`的不同，传入的参数不同，如`REF`传入的为`namespaceId`, `groupName` 和 `serviceName`；`DIRECT`传入的为`address` 和 `port`。 |
+| `type` | `string` | Backend service type of the MCP endpoint. Valid values are `REF` and `DIRECT`.                                                                                           |
+| `data` | `map<string, string>` | Actual backend service data of the MCP endpoint. Different parameters are passed based on `type`. For example, `REF` passes `namespaceId`, `groupName`, and `serviceName`; `DIRECT` passes `address` and `port`. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type     | Description         |
 |--------|----------|------------|
-| `data` | `string` | 新建MCP服务的id。 |
+| `data` | `string` | ID of the newly created MCP service. |
 
 #### Examples
 
@@ -3578,11 +3578,11 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 }
 ```
 
-### 4.4. 删除MCP服务
+### 4.4. Delete MCP Service
 
 #### Description
 
-通过该接口，可以删除托管在Nacos上的MCP服务。
+You can use this API to delete an MCP service hosted on Nacos.
 
 #### Since
 
@@ -3594,7 +3594,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -3604,19 +3604,19 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 
 | Name           | Type     | Required  | Description                                       |
 |---------------|----------|-------|------------------------------------------|
-| `namespaceId` | `string` | No     | MCP服务的命名空间ID，默认为`public`                 |
+| `namespaceId` | `string` | No     | Namespace ID of the MCP service. The default is `public`                 |
 | `mcpId`       | `string` | One of two required | MCP service ID (usually UUID). One of `mcpId` and `mcpName` must be provided (OpenAPI cannot express this constraint; at least one is required in practice). Prefer `mcpId`. |
 | `mcpName`     | `string` | One of two required | MCP service name template. One of `mcpId` and `mcpName` must be provided; prefer `mcpId`.    |
-| `version`     | `string` | No     | MCP服务的版本，未传入是为最新版本                       |
+| `version`     | `string` | No     | version of the MCP service. If not specified, the latest version is used                       |
 
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type     | Description         |
 |--------|----------|------------|
-| `data` | `string` | MCP服务删除结果。 |
+| `data` | `string` | MCP service deletion result. |
 
 #### Examples
 
@@ -3635,11 +3635,11 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpNa
 }
 ```
 
-### 4.5. 查询MCP服务的服务列表
+### 4.5. Query MCP Service List
 
 #### Description
 
-通过该接口，可以查询托管在Nacos上的MCP服务的服务列表。
+You can use this API to query the list of MCP services hosted on Nacos.
 
 #### Since
 
@@ -3651,7 +3651,7 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpNa
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -3661,42 +3661,42 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpNa
 
 | Name           | Type     | Required  | Description                                                     |
 |---------------|----------|-------|--------------------------------------------------------|
-| `pageNo`      | `integer` | **Yes** | 当前页，默认为`1`                                             |
-| `pageSize`    | `integer` | **Yes** | 页条目数，默认为`20`，最大为`500`                                  |
-| `namespaceId` | `string` | No     | MCP服务的命名空间ID，默认为`public`                               |
-| `mcpName`     | `string`   | No     | MCP服务的名字模版，为空时查询所有MCP服务，当`search`为`blur`时，可使用`*`进行模糊搜索 |
+| `pageNo`      | `integer` | **Yes** | current page. The default is `1`                                             |
+| `pageSize`    | `integer` | **Yes** | page item count. The default is `20`, and the maximum is `500`                                  |
+| `namespaceId` | `string` | No     | Namespace ID of the MCP service. The default is `public`                               |
+| `mcpName`     | `string`   | No     | MCP service name pattern. Queries all MCP services when empty. When `search` is `blur`, `*` can be used for fuzzy search |
 | `search`      | `string` | No     | blur or accurate                  |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-response-format)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name                                           | Type                  | Description                                                                                              |
 |-----------------------------------------------|-----------------------|-------------------------------------------------------------------------------------------------|
-| `totalCount`                                  | `integer` | 符合条件的服务的总数。                                                                                     |
-| `pageNumber`                                  | `integer` | 当前页码，起始为`1`。                                                                                    |
-| `pagesAvailable`                              | `integer` | 可用页码。                                                                                           |
-| `pageItems`                                   | `List`                | 服务列表。                                                                                           |
-| `pageItems`[i].`id`                           | `string` | MCP服务的ID，一般为UUID。                                                                               |
-| `pageItems`[i].`name`                         | `string` | MCP服务名。                                                                                         |
-| `pageItems`[i].`protocol`                     | `string` | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
-| `pageItems`[i].`frontProtocol`                | `string` | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
-| `pageItems`[i].`description`                  | `string` | MCP服务的描述。                                                                                       |
-| `pageItems`[i].`repository`                   | `string` | MCP服务的存储仓库。                                                                                     |                                                                                          |
-| `pageItems`[i].`versionDetail`                | `VersionDetail`       | MCP服务当前最新的版本信息。                                                                                 |
-| `pageItems`[i].`localServerConfig`            | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
-| `pageItems`[i].`remoteServerConfig`           | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
-| `pageItems`[i].`latestPublishedVersion`       | `string` | MCP服务最新版本的版本号。                                                                                  |
-| `pageItems`[i].`versionDetails`               | `List<VersionDetail>` | MCP服务版本详情的列表。                                                                                   |
-| `pageItems`[i].`capabilities`                 | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
+| `totalCount`                                  | `integer` | total number of services that match the condition.                                                                                     |
+| `pageNumber`                                  | `integer` | current page number, starts from `1`.                                                                                    |
+| `pagesAvailable`                              | `integer` | available pages.                                                                                           |
+| `pageItems`                                   | `List`                | service list.                                                                                           |
+| `pageItems`[i].`id`                           | `string` | MCP service ID, usually a UUID.                                                                               |
+| `pageItems`[i].`name`                         | `string` | MCP service name.                                                                                         |
+| `pageItems`[i].`protocol`                     | `string` | MCP protocol, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`.                                             |
+| `pageItems`[i].`frontProtocol`                | `string` | Frontend exposure protocol of the MCP service. It is generally used by protocol converters, such as gateways. If there is no converter, it is the same as `protocol`, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`. |
+| `pageItems`[i].`description`                  | `string` | MCP service description.                                                                                       |
+| `pageItems`[i].`repository`                   | `string` | repository of the MCP service.                                                                                     |                                                                                          |
+| `pageItems`[i].`versionDetail`                | `VersionDetail`       | current latest version information of the MCP service.                                                                                 |
+| `pageItems`[i].`localServerConfig`            | `Map<String, Object>` | When the MCP service type is **stdio**, this information exists and records startup information for the local MCP service.                                                        |
+| `pageItems`[i].`remoteServerConfig`           | `RemoteServerConfig`  | When the MCP service type is **non-stdio**, this information exists and records remote service information.                                                           |
+| `pageItems`[i].`latestPublishedVersion`       | `string` | version number of the latest MCP service version.                                                                                  |
+| `pageItems`[i].`versionDetails`               | `List<VersionDetail>` | list of MCP service version details.                                                                                   |
+| `pageItems`[i].`capabilities`                 | `List`                | Capability types supported by the MCP service, such as `TOOL`, `PROMPT`, or `RESOURCE`.                                                       |
 
-其中`VersionDetail`结构如下：
+The `VersionDetail` structure is as follows:
 
 | Name            | Type      | Description               |
 |----------------|-----------|------------------|
-| `version`      | `string` | MCP服务的版本号。       |
-| `release_date` | `string` | MCP服务的版本发布时间。    |
-| `is_latest`    | `boolean` | MCP服务的版本是否为最新版本。 |
+| `version`      | `string` | version number of the MCP service.       |
+| `release_date` | `string` | release time of the MCP service version.    |
+| `is_latest`    | `boolean` | whether the MCP service version is the latest version. |
 
 #### Examples
 
@@ -3746,11 +3746,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/list?pageNo=1&pageSize=100&
 }
 ```
 
-### 4.6. 导入MCP工具
+### 4.6. Import MCP Tools
 
 #### Description
 
-通过该接口，可以通过指定MCP`URL`的方式直接获取MCP工具并导入，避免逐个填写。
+You can use this API to directly obtain and import MCP tools by specifying an MCP `URL`, avoiding manual entry one by one.
 
 #### Since
 
@@ -3762,7 +3762,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/list?pageNo=1&pageSize=100&
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -3772,18 +3772,18 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/list?pageNo=1&pageSize=100&
 
 | Name             | Type     | Required  | Description                                      |
 |-----------------|----------|-------|-----------------------------------------|
-| `transportType` | `string` | **Yes** | MCP服务的传输协议类型，`mcp-sse`或`mcp-streamable` |
-| `baseUrl`       | `string` | **Yes** | MCP服务的baseURL                           |
-| `endpoint`      | `string` | **Yes** | MCP服务的可访问端点                             |
-| `authToken`     | `string` | No     | MCP服务访问的身份Token                         |
+| `transportType` | `string` | **Yes** | Transport protocol type of the MCP service, `mcp-sse` or `mcp-streamable` |
+| `baseUrl`       | `string` | **Yes** | baseURL of the MCP service                           |
+| `endpoint`      | `string` | **Yes** | accessible endpoint of the MCP service                             |
+| `authToken`     | `string` | No     | identity token used to access the MCP service                         |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type                   | Description                                                                                                       |
 |--------|------------------------|----------------------------------------------------------------------------------------------------------|
-| `data` | `List<McpSchema.Tool>` | MCP工具元数据信息,符合[MCP工具元数据标准定义](https://modelcontextprotocol.io/specification/2025-06-18/server/tools#tool)。 |
+| `data` | `List<McpSchema.Tool>` | MCP tool metadata information that complies with the [standard MCP tool metadata definition](https://modelcontextprotocol.io/specification/2025-06-18/server/tools#tool). |
 
 #### Examples
 
@@ -3816,11 +3816,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/importToolsFromMcp?transpor
 }
 ```
 
-### 4.7. 验证待导入的MCP服务
+### 4.7. Validate MCP Services to Import
 
 #### Description
 
-通过该接口，可以验证当前待导入的MCP服务内容是否符合规则，返回的内容中包含有效个数和无效个数，无效的服务在对应字段中有错误信息。
+You can use this API to validate whether the MCP service content to import complies with the rules. The response includes valid and invalid counts, and invalid services contain error information in the corresponding fields.
 
 #### Since
 
@@ -3832,7 +3832,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/importToolsFromMcp?transpor
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -3842,36 +3842,36 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/importToolsFromMcp?transpor
 
 | Name           | Type     | Required  | Description                                      |
 |---------------|----------|-------|-----------------------------------------|
-| `namespaceId` | `string` | No     | MCP服务的命名空间ID                            |
+| `namespaceId` | `string` | No     | namespace ID of the MCP service                            |
 | `importType`  | `string` | **Yes** | enum of `file`, `json`, `url`           |
-| `data`        | `string` | **Yes** | 导入数据的内容                                 |
+| `data`        | `string` | **Yes** | content of the import data                                 |
 | `cursor`      | `string` | No     | Optional start cursor for URL-based import pagination. |
-| `limit`       | `integer` | No     | 分页的页大小                                  |
+| `limit`       | `integer` | No     | page size for pagination                                  |
 | `search`      | `string`   | No     | Optional fuzzy search keyword for registry import listing. Only used when importType is 'url'. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name              | Type                            | Description        |
 |------------------|---------------------------------|-----------|
-| `valid`          | `boolean` | 导入服务是否合法。 |
-| `totalCount`     | `integer` | 导入服务总数。   |
-| `validCount`     | `integer` | 导入服务有效个数。 |
-| `invalidCount`   | `integer` | 导入服务无效个数。 |
-| `duplicateCount` | `integer` | 导入服务重复个数。 |
-| `servers`        | `List<McpServerValidationItem>` | 导入服务列表。   |
-| `errors`         | `List<String>`                  | 导入服务错误列表。 |
+| `valid`          | `boolean` | whether the imported services are valid. |
+| `totalCount`     | `integer` | total number of imported services.   |
+| `validCount`     | `integer` | number of valid imported services. |
+| `invalidCount`   | `integer` | number of invalid imported services. |
+| `duplicateCount` | `integer` | number of duplicate imported services. |
+| `servers`        | `List<McpServerValidationItem>` | imported service list.   |
+| `errors`         | `List<String>`                  | imported service error list. |
 
-其中 `McpServerValidationItem` 描述如下:
+The `McpServerValidationItem` description is as follows:
 
 | Name          | Type      | Description       |
 |--------------|-----------|----------|
-| `serverName` | `string` | 服务名称。    |
-| `serverId`   | `string` | 服务ID。    |
-| `status`     | `string` | 服务状态。    |
-| `selected`   | `boolean` | 服务是否被选中。 |
-| `exists`     | `boolean` | 服务是否已存在。 |
+| `serverName` | `string` | service name.    |
+| `serverId`   | `string` | service ID.    |
+| `status`     | `string` | service status.    |
+| `selected`   | `boolean` | whether the service is selected. |
+| `exists`     | `boolean` | whether the service already exists. |
 
 #### Examples
 
@@ -3914,11 +3914,11 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/validate' \
 }
 ```
 
-### 4.8. 导入的MCP服务
+### 4.8. Import MCP Services
 
 #### Description
 
-通过该接口，可以通过`文件`,`JSON`和指定MCP`URL`的方式直接导入MCP服务，避免逐个填写。
+You can use this API to directly import MCP services by using a `file`, `JSON`, or specified MCP `URL`, avoiding manual entry one by one.
 
 #### Since
 
@@ -3930,7 +3930,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/validate' \
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -3940,38 +3940,38 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/validate' \
 
 | Name                | Type      | Required  | Description                                      |
 |--------------------|-----------|-------|-----------------------------------------|
-| `namespaceId`      | `string` | No     | MCP服务的命名空间ID                            |
+| `namespaceId`      | `string` | No     | namespace ID of the MCP service                            |
 | `importType`       | `string` | **Yes** | enum of `file`, `json`, `url`           |
-| `data`             | `string` | **Yes** | 导入数据的内容                                 |
+| `data`             | `string` | **Yes** | content of the import data                                 |
 | `cursor`           | `string` | No     | Optional start cursor for URL-based import pagination. |
-| `limit`            | `integer` | No     | 分页的页大小                                  |
+| `limit`            | `integer` | No     | page size for pagination                                  |
 | `search`           | `string`    | No     | Optional fuzzy search keyword for registry import listing. Only used when importType is 'url'. |
-| `overrideExisting` | `boolean` | No     | 导入时若服务已存在时是否覆盖。默认为`false`。              |                                    |
-| `skipInvalid`      | `boolean` | No     | 导入时是否忽略错误无效的服务。默认为`false`。              |
+| `overrideExisting` | `boolean` | No     | Whether to overwrite the service if it already exists during import. The default is `false`.              |                                    |
+| `skipInvalid`      | `boolean` | No     | Whether to ignore invalid services with errors during import. The default is `false`.              |
 | `selectedServers`  | `array` | No     | Selected services to import. Empty means importing all services. |
 
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name            | Type                          | Description        |
 |----------------|-------------------------------|-----------|
-| `success`      | `boolean` | 导入服务是否成功。 |
-| `totalCount`   | `integer` | 导入服务总数。   |
-| `successCount` | `integer` | 导入服务成功个数。 |
-| `failedCount`  | `integer` | 导入服务失败个数。 |
-| `skippedCount` | `integer` | 导入服务跳过个数。 |
-| `results`      | `List<McpServerImportResult>` | 导入服务列表。   |
+| `success`      | `boolean` | whether service import succeeded. |
+| `totalCount`   | `integer` | total number of imported services.   |
+| `successCount` | `integer` | number of services imported successfully. |
+| `failedCount`  | `integer` | number of services that failed to import. |
+| `skippedCount` | `integer` | number of services skipped during import. |
+| `results`      | `List<McpServerImportResult>` | imported service list.   |
 
-其中 `McpServerImportResult` 描述如下:
+The `McpServerImportResult` description is as follows:
 
 | Name            | Type      | Description                     |
 |----------------|-----------|------------------------|
-| `serverName`   | `string` | 服务名称。                  |
-| `serverId`     | `string` | 服务ID。                  |
-| `status`       | `string` | 服务导入状态。                |
-| `errorMessage` | `boolean` | 服务导入失败的错误信息，仅在导入失败时存在。 |
+| `serverName`   | `string` | service name.                  |
+| `serverId`     | `string` | service ID.                  |
+| `status`       | `string` | service import status.                |
+| `errorMessage` | `boolean` | error information for service import failure. Exists only when import fails. |
 
 
 #### Examples
@@ -4013,13 +4013,13 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/execute' \
 }
 ```
 
-## 5. A2A 注册中心
+## 5. A2A Registry
 
-### 5.1. 查询AgentCard的列表
+### 5.1. Query AgentCard List
 
 #### Description
 
-通过该接口，可以查询托管在Nacos上的AgentCard的列表。
+You can use this API to query the list of AgentCards hosted on Nacos.
 
 #### Since
 
@@ -4031,7 +4031,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/execute' \
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -4041,41 +4041,41 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/execute' \
 
 | Name           | Type     | Required  | Description                                              |
 |---------------|----------|-------|-------------------------------------------------|
-| `pageNo`      | `integer` | **Yes** | 当前页，默认为`1`                                      |
-| `pageSize`    | `integer` | **Yes** | 页条目数，默认为`100`                                   |
-| `namespaceId` | `string` | No     | AgentCard的命名空间ID，默认为`public`                    |
-| `agentName`   | `string` | No     | AgentCard的名称，为空是查询所有AgentCard                   |
+| `pageNo`      | `integer` | **Yes** | current page. The default is `1`                                      |
+| `pageSize`    | `integer` | **Yes** | page item count. The default is `100`                                   |
+| `namespaceId` | `string` | No     | Namespace ID of the AgentCard. The default is `public`                    |
+| `agentName`   | `string` | No     | AgentCard name. Queries all AgentCards when empty                   |
 | `search`      | `string` | **Yes** | blur or accurate |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name                                     | Type                       | Description                                                                                                     |
 |-----------------------------------------|----------------------------|--------------------------------------------------------------------------------------------------------|
-| `totalCount`                            | `integer` | 符合条件的服务的总数。                                                                                            |
-| `pageNumber`                            | `integer` | 当前页码，起始为`1`。                                                                                           |
-| `pagesAvailable`                        | `integer` | 可用页码。                                                                                                  |
-| `pageItems`                             | `List`                     | 服务列表。                                                                                                  |
-| `pageItems`[i].`protocolVersion`        | `string` | AgentCard的A2A协议版本。                                                                                     |
-| `pageItems`[i].`name`                   | `string` | AgentCard的名称。                                                                                          |
-| `pageItems`[i].`description`            | `string` | AgentCard的描述。                                                                                          |
-| `pageItems`[i].`version`                | `string` | AgentCard的版本号。                                                                                         |
-| `pageItems`[i].`iconUrl`                | `string` | AgentCard的iconURL。                                                                                     |
-| `pageItems`[i].`capabilities`           | `AgentCapability`          | AgentCard的能力，匹配[A2A标准能力](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object)。 |
-| `pageItems`[i].`skills`                 | `List<AgentSkill>`         | AgentCard的技能列表,匹配[A2A标准技能](https://a2a-protocol.org/latest/specification/#554-agentskill-object)。      |
-| `pageItems`[i].`latestPublishedVersion` | `string` | AgentCard的最新发布版本。                                                                                      |
-| `pageItems`[i].`versionDetails`         | `List<AgentVersionDetail>` | AgentCard的所有版本详情。                                                                                      |
-| `pageItems`[i].`registrationType`       | `string` | AgentCard的默认注册类型，可选`URL`和`SERVICE`。                                                                    |
+| `totalCount`                            | `integer` | total number of services that match the condition.                                                                                            |
+| `pageNumber`                            | `integer` | current page number, starts from `1`.                                                                                           |
+| `pagesAvailable`                        | `integer` | available pages.                                                                                                  |
+| `pageItems`                             | `List`                     | service list.                                                                                                  |
+| `pageItems`[i].`protocolVersion`        | `string` | A2A protocol version of the AgentCard.                                                                                     |
+| `pageItems`[i].`name`                   | `string` | AgentCard name.                                                                                          |
+| `pageItems`[i].`description`            | `string` | AgentCard description.                                                                                          |
+| `pageItems`[i].`version`                | `string` | AgentCard version number.                                                                                         |
+| `pageItems`[i].`iconUrl`                | `string` | AgentCard icon URL.                                                                                     |
+| `pageItems`[i].`capabilities`           | `AgentCapability`          | AgentCard capabilities, matching [A2A standard capabilities](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object). |
+| `pageItems`[i].`skills`                 | `List<AgentSkill>`         | AgentCard skill list, matching [A2A standard skills](https://a2a-protocol.org/latest/specification/#554-agentskill-object).      |
+| `pageItems`[i].`latestPublishedVersion` | `string` | latest published version of the AgentCard.                                                                                      |
+| `pageItems`[i].`versionDetails`         | `List<AgentVersionDetail>` | all version details of the AgentCard.                                                                                      |
+| `pageItems`[i].`registrationType`       | `string` | Default registration type of the AgentCard. Valid values are `URL` and `SERVICE`.                                                                    |
 
-其中`AgentVersionDetail`包含内容如下：
+The `AgentVersionDetail` structure contains the following fields:
 
 | Name         | Type      | Description              |
 |-------------|-----------|-----------------|
-| `version`   | `string` | AgentCard的版本号。  |
-| `createdAt` | `string` | 该版本的创建时间。       |
-| `updatedAt` | `string` | 该版本的最后更新时间。     |
-| `latest`    | `boolean` | 该版本是否标记为最新发布版本。 |
+| `version`   | `string` | AgentCard version number.  |
+| `createdAt` | `string` | creation time of this version.       |
+| `updatedAt` | `string` | last update time of this version.     |
+| `latest`    | `boolean` | whether this version is marked as the latest published version. |
 
 #### Examples
 
@@ -4136,11 +4136,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a/list?pageNo=1&pageSize=100&
 }
 ```
 
-### 5.2. 查询指定AgentCard的版本列表
+### 5.2. Query Version List of a Specified AgentCard
 
 #### Description
 
-通过该接口，可以查询指定托管在Nacos上的AgentCard的版本列表。
+You can use this API to query the version list of a specified AgentCard hosted on Nacos.
 
 #### Since
 
@@ -4152,7 +4152,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a/list?pageNo=1&pageSize=100&
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -4162,19 +4162,19 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a/list?pageNo=1&pageSize=100&
 
 | Name           | Type     | Required  | Description                          |
 |---------------|----------|-------|-----------------------------|
-| `namespaceId` | `string` | No     | AgentCard所属的命名空间，默认`public` |
-| `agentName`   | `string` | **Yes** | AgentCard的名称                |
+| `namespaceId` | `string` | No     | Namespace to which the AgentCard belongs. The default is `public` |
+| `agentName`   | `string` | **Yes** | AgentCard name                |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name                   | Type      | Description              |
 |-----------------------|-----------|-----------------|
-| `data`[i].`version`   | `string` | AgentCard的版本号。  |
-| `data`[i].`createdAt` | `string` | 该版本的创建时间。       |
-| `data`[i].`updatedAt` | `string` | 该版本的最后更新时间。     |
-| `data`[i].`latest`    | `boolean` | 该版本是否标记为最新发布版本。 |
+| `data`[i].`version`   | `string` | AgentCard version number.  |
+| `data`[i].`createdAt` | `string` | creation time of this version.       |
+| `data`[i].`updatedAt` | `string` | last update time of this version.     |
+| `data`[i].`latest`    | `boolean` | whether this version is marked as the latest published version. |
 
 #### Examples
 
@@ -4198,11 +4198,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a/version/list?namespaceId=pu
 }
 ```
 
-### 5.3. 查询AgentCard的详情
+### 5.3. Query AgentCard Details
 
 #### Description
 
-通过该接口，可以查询托管在Nacos上指定AgentCard的详细信息。
+You can use this API to query details of a specified AgentCard hosted on Nacos.
 
 #### Since
 
@@ -4214,7 +4214,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a/version/list?namespaceId=pu
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -4224,36 +4224,36 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a/version/list?namespaceId=pu
 
 | Name                | Type     | Required  | Description                                                                                 |
 |--------------------|----------|-------|------------------------------------------------------------------------------------|
-| `namespaceId`      | `string` | No     | AgentCard所属的命名空间，默认`public`                                                        |
-| `agentName`        | `string` | **Yes** | AgentCard的名称                                                                       |
-| `version`          | `string` | No     | AgentCard的版本号，为空时返回最新版本详情                                                          |
-| `registrationType` | `string` | No     | AgentCard的默认注册类型，可选`URL`和`SERVICE`。未填写时根据此AgentCard的默认`registrationType`进行`url`的生成 |
+| `namespaceId`      | `string` | No     | Namespace to which the AgentCard belongs. The default is `public`                                                        |
+| `agentName`        | `string` | **Yes** | AgentCard name                                                                       |
+| `version`          | `string` | No     | AgentCard version number. Returns the latest version details when empty                                                          |
+| `registrationType` | `string` | No     | Default registration type of the AgentCard. Valid values are `URL` and `SERVICE`. If not specified, the `url` is generated based on the default `registrationType` of this AgentCard. |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name                                 | Type                              | Description                                                                                                       |
 |-------------------------------------|-----------------------------------|----------------------------------------------------------------------------------------------------------|
-| `protocolVersion`                   | `string` | AgentCard的A2A协议版本。                                                                                       |
-| `name`                              | `string` | AgentCard的名称。                                                                                            |
-| `description`                       | `string` | AgentCard的描述。                                                                                            |
-| `version`                           | `string` | AgentCard的版本号。                                                                                           |
-| `iconUrl`                           | `string` | AgentCard的iconURL。                                                                                       |
-| `capabilities`                      | `AgentCapability`                 | AgentCard的能力，匹配[A2A标准能力](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object)。   |
-| `skills`                            | `List<AgentSkill>`                | AgentCard的技能列表,匹配[A2A标准技能](https://a2a-protocol.org/latest/specification/#554-agentskill-object)。        |
-| `url`                               | `string` | AgentCard的默认访问的URL。                                                                                      |
-| `preferredTransport`                | `string` | AgentCard的默认访问URL的传输协议，应该为`JSONRPC`,`GRPC`,`HTTP+JSON`。                                                  |
-| `additionalInterfaces`              | `List<AgentInterface>`            | AgentCard的所有可访问接口列表,匹配[A2A标准](https://a2a-protocol.org/latest/specification/#555-agentinterface-object)。 |
-| `provider`                          | `AgentProvider`                   | AgentCard的提供商信息，匹配[A2A标准](https://a2a-protocol.org/latest/specification/#551-agentprovider-object)。      |
-| `documentationUrl`                  | `string` | AgentCard的文档 URL。                                                                                        |
-| `securitySchemes`                   | `Map<String, SecurityScheme>`     | AgentCard的安全配置定义。匹配[A2A标准](https://a2a-protocol.org/latest/specification/#553-securityscheme-object)     |
-| `security`                          | `List<Map<String, List<String>>>` | AgentCard的所有安全要求对象列表。                                                                                    |
-| `defaultInputModes`                 | `List<String>`                    | AgentCard的所有默认输入模式。                                                                                      |
-| `defaultOutputModes`                | `List<String>`                    | AgentCard的所有默认输出模式。                                                                                      |
-| `supportsAuthenticatedExtendedCard` | `string` | AgentCard是否支持认证的扩展卡。                                                                                     |
-| `registrationType`                  | `string` | AgentCard的默认注册类型，可选`URL`和`SERVICE`。                                                                      |
-| `latestVersion`                     | `string` | AgentCard当前版本时否为最新版本。                                                                                    |
+| `protocolVersion`                   | `string` | A2A protocol version of the AgentCard.                                                                                       |
+| `name`                              | `string` | AgentCard name.                                                                                            |
+| `description`                       | `string` | AgentCard description.                                                                                            |
+| `version`                           | `string` | AgentCard version number.                                                                                           |
+| `iconUrl`                           | `string` | AgentCard icon URL.                                                                                       |
+| `capabilities`                      | `AgentCapability`                 | AgentCard capabilities, matching [A2A standard capabilities](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object).   |
+| `skills`                            | `List<AgentSkill>`                | AgentCard skill list, matching [A2A standard skills](https://a2a-protocol.org/latest/specification/#554-agentskill-object).        |
+| `url`                               | `string` | default access URL of the AgentCard.                                                                                      |
+| `preferredTransport`                | `string` | transport protocol of the default access URL of the AgentCard. It should be `JSONRPC`, `GRPC`, or `HTTP+JSON`.                                                  |
+| `additionalInterfaces`              | `List<AgentInterface>`            | List of all accessible AgentCard interfaces, matching the [A2A standard](https://a2a-protocol.org/latest/specification/#555-agentinterface-object). |
+| `provider`                          | `AgentProvider`                   | AgentCard provider information, matching the [A2A standard](https://a2a-protocol.org/latest/specification/#551-agentprovider-object).      |
+| `documentationUrl`                  | `string` | AgentCard documentation URL.                                                                                        |
+| `securitySchemes`                   | `Map<String, SecurityScheme>`     | AgentCard security configuration definition, matching the [A2A standard](https://a2a-protocol.org/latest/specification/#553-securityscheme-object).     |
+| `security`                          | `List<Map<String, List<String>>>` | list of all security requirement objects of the AgentCard.                                                                                    |
+| `defaultInputModes`                 | `List<String>`                    | all default input modes of the AgentCard.                                                                                      |
+| `defaultOutputModes`                | `List<String>`                    | all default output modes of the AgentCard.                                                                                      |
+| `supportsAuthenticatedExtendedCard` | `string` | whether the AgentCard supports authenticated extended cards.                                                                                     |
+| `registrationType`                  | `string` | Default registration type of the AgentCard. Valid values are `URL` and `SERVICE`.                                                                      |
+| `latestVersion`                     | `string` | whether the current AgentCard version is the latest version.                                                                                    |
 
 
 #### Examples
@@ -4333,11 +4333,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a?namespaceId=public&agentNam
 }
 ```
 
-### 5.4. 更新AgentCard
+### 5.4. Update AgentCard
 
 #### Description
 
-通过该接口，可以更新托管在Nacos上的AgentCard。
+You can use this API to update an AgentCard hosted on Nacos.
 
 #### Since
 
@@ -4349,7 +4349,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a?namespaceId=public&agentNam
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -4359,18 +4359,18 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a?namespaceId=public&agentNam
 
 | Name                | Type        | Required  | Description                                                                                                              |
 |--------------------|-------------|-------|-----------------------------------------------------------------------------------------------------------------|
-| `namespaceId`      | `string` | No     | AgentCard所属的命名空间，默认`public`                                                                                     |
-| `agentCard`        | `string` | **Yes** | AgentCard的完整对象，详情请参考[标准AgentCard](https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure) |
-| `registrationType` | `string` | No     | AgentCard的默认注册类型，可选`URL`和`SERVICE`。未填写时根据此AgentCard的默认`registrationType`进行`url`的生成                              |
-| `setAsLatest`      | `boolean` | No     | 是否设置此版本为最新发布版本，默认为false                                                                                         |
+| `namespaceId`      | `string` | No     | Namespace to which the AgentCard belongs. The default is `public`                                                                                     |
+| `agentCard`        | `string` | **Yes** | Complete AgentCard object. For details, see the [standard AgentCard](https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure). |
+| `registrationType` | `string` | No     | Default registration type of the AgentCard. Valid values are `URL` and `SERVICE`. If not specified, the `url` is generated based on the default `registrationType` of this AgentCard.                              |
+| `setAsLatest`      | `boolean` | No     | Whether to set this version as the latest published version. The default is `false`.                                                                                         |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type     | Description               |
 |--------|----------|------------------|
-| `data` | `string` | AgentCard服务更新结果。 |
+| `data` | `string` | AgentCard service update result. |
 
 
 #### Examples
@@ -4394,11 +4394,11 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/a2a' \
 }
 ```
 
-### 5.5. 创建AgentCard
+### 5.5. Create AgentCard
 
 #### Description
 
-通过该接口，可以创建托管在Nacos上的AgentCard。
+You can use this API to create an AgentCard hosted on Nacos.
 
 #### Since
 
@@ -4410,7 +4410,7 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/a2a' \
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -4420,17 +4420,17 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/a2a' \
 
 | Name                | Type        | Required  | Description                                                                                                              |
 |--------------------|-------------|-------|-----------------------------------------------------------------------------------------------------------------|
-| `namespaceId`      | `string` | No     | AgentCard所属的命名空间，默认`public`                                                                                     |
-| `agentCard`        | `string` | **Yes** | AgentCard的完整对象，详情请参考[标准AgentCard](https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure) |
-| `registrationType` | `string` | No     | AgentCard的默认注册类型，可选`URL`和`SERVICE`。未填写时根据此AgentCard的默认`registrationType`进行`url`的生成, 默认为`URL`                   |
+| `namespaceId`      | `string` | No     | Namespace to which the AgentCard belongs. The default is `public`                                                                                     |
+| `agentCard`        | `string` | **Yes** | Complete AgentCard object. For details, see the [standard AgentCard](https://a2a-protocol.org/latest/specification/#55-agentcard-object-structure). |
+| `registrationType` | `string` | No     | Default registration type of the AgentCard. Valid values are `URL` and `SERVICE`. If not specified, the `url` is generated based on the default `registrationType` of this AgentCard. The default is `URL`.                   |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type     | Description             |
 |--------|----------|----------------|
-| `data` | `string` | AgentCard发布结果。 |
+| `data` | `string` | AgentCard publishing result. |
 
 #### Examples
 
@@ -4452,11 +4452,11 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/a2a' \
 }
 ```
 
-### 5.6. 删除AgentCard
+### 5.6. Delete AgentCard
 
 #### Description
 
-通过该接口，可以删除托管在Nacos上的AgentCard。
+You can use this API to delete an AgentCard hosted on Nacos.
 
 #### Since
 
@@ -4468,7 +4468,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/a2a' \
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -4478,17 +4478,17 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/a2a' \
 
 | Name           | Type     | Required  | Description                          |
 |---------------|----------|-------|-----------------------------|
-| `namespaceId` | `string` | No     | AgentCard所属的命名空间，默认`public` |
-| `agentName`   | `string` | **Yes** | AgentCard的名称                |
-| `version`     | `string` | No     | AgentCard的版本号，为空时返回最新版本详情   |
+| `namespaceId` | `string` | No     | Namespace to which the AgentCard belongs. The default is `public` |
+| `agentName`   | `string` | **Yes** | AgentCard name                |
+| `version`     | `string` | No     | AgentCard version number. Returns the latest version details when empty   |
 
 #### Response Data
 
-返回体遵循[Nacos open API 统一返回体格式](#01-统一返回体格式)，下表只阐述`data`字段中的返回参数。
+The response body follows the [Nacos Open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). The table below describes only the response parameters in the `data` field.
 
 | Name    | Type     | Description             |
 |--------|----------|----------------|
-| `data` | `string` | AgentCard删除结果。 |
+| `data` | `string` | AgentCard deletion result. |
 
 #### Examples
 
@@ -4509,7 +4509,7 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/a2a?namespaceId=public&agent
 
 ## 6. Prompt Management
 
-Prompt 管理 API 提供 Prompt 的草稿、发布、上下线、治理查询、版本查询与下载能力。
+Prompt Management APIs provide draft, publish, online/offline, governance query, version query, and download capabilities for Prompts.
 
 ### 6.1. Delete Prompt
 #### Description
@@ -4525,7 +4525,7 @@ This interface allows deleting a specific Prompt.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -4579,7 +4579,7 @@ This interface updates Prompt biz tags.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -4634,7 +4634,7 @@ This interface updates the Prompt description.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -4689,7 +4689,7 @@ This interface creates a Prompt draft version or forks a draft from an existing 
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -4750,7 +4750,7 @@ This interface updates the current Prompt draft content.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -4807,7 +4807,7 @@ This interface deletes the current Prompt draft version.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -4861,7 +4861,7 @@ This interface force-publishes a Prompt version by bypassing pipeline validation
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -4917,7 +4917,7 @@ This interface retrieves Prompt metadata, version governance information, and ve
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -4984,7 +4984,7 @@ This interface updates runtime routing labels of a Prompt.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -5039,7 +5039,7 @@ This interface allows listing Prompts with pagination.
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -5097,7 +5097,7 @@ This interface takes a specified Prompt version offline.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -5152,7 +5152,7 @@ This interface brings a specified Prompt version online.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -5207,7 +5207,7 @@ This interface publishes an approved Prompt version.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -5263,7 +5263,7 @@ This interface transitions a reviewed Prompt version back to draft.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -5318,7 +5318,7 @@ This interface submits a Prompt version for pipeline review.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -5373,7 +5373,7 @@ This interface retrieves details of a specified Prompt version.
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -5438,7 +5438,7 @@ This interface downloads a specified Prompt version as a Markdown file.
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -5485,7 +5485,7 @@ This interface allows listing versions of a specific Prompt with pagination.
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -5526,9 +5526,9 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/versions?namespaceId=pub
 }
 ```
 
-## 7. Skills 管理
+## 7. Skills Management
 
-Skills 管理 API 提供 Skill 的查询、草稿、发布、上下线、版本管理与 ZIP 上传能力。
+Skills Management APIs provide query, draft, publish, online/offline, version management, and ZIP upload capabilities for Skills.
 
 ### 7.1. Get Skill Details
 #### Description
@@ -5544,7 +5544,7 @@ This interface allows retrieving detailed information of a specific Skill hosted
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -5613,7 +5613,7 @@ This interface allows deleting a Skill hosted on Nacos.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -5668,7 +5668,7 @@ This interface allows updating the business tag list of a skill without changing
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -5723,7 +5723,7 @@ This interface allows creating a draft version based on an existing version or a
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -5780,7 +5780,7 @@ This interface allows updating the SkillCard content of the current draft versio
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -5835,7 +5835,7 @@ This interface allows deleting the current draft version of a specified skill.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -5889,7 +5889,7 @@ This interface force-publishes a Skill version by bypassing pipeline validation.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -5945,7 +5945,7 @@ This interface allows updating skill version routing labels (e.g. latest label) 
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -6000,7 +6000,7 @@ This interface allows querying the list of Skills hosted on Nacos.
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -6058,7 +6058,7 @@ This interface allows executing an offline operation on a specific version or th
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -6114,7 +6114,7 @@ This interface allows executing an online operation on a specific version or the
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -6170,7 +6170,7 @@ This interface allows publishing an approved skill version.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -6226,7 +6226,7 @@ This interface transitions a reviewed Skill version back to draft.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -6281,7 +6281,7 @@ This interface allows setting the visibility scope of a skill to PUBLIC or PRIVA
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -6336,7 +6336,7 @@ This interface allows submitting a skill draft version to the pipeline for revie
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -6389,11 +6389,11 @@ This interface allows uploading a Skill from a ZIP file.
 
 `POST`
 
-请求体类型：`multipart/form-data`（如文件上传），请求示例中需使用 `-F` 或 `-H 'Content-Type: multipart/form-data'`。
+Request body type: `multipart/form-data` (for example, file upload). Use `-F` or `-H 'Content-Type: multipart/form-data'` in request examples.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -6455,11 +6455,11 @@ This interface uploads multiple Skills from a ZIP file that contains one-level S
 
 `POST`
 
-请求体类型：`multipart/form-data`（如文件上传），请求示例中需使用 `-F` 或 `-H 'Content-Type: multipart/form-data'`。
+Request body type: `multipart/form-data` (for example, file upload). Use `-F` or `-H 'Content-Type: multipart/form-data'` in request examples.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -6520,7 +6520,7 @@ This interface allows querying the detail of a specific Skill version by namespa
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -6579,7 +6579,7 @@ This interface allows downloading the ZIP package of a specific Skill version.
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -6611,9 +6611,9 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/version/download?namespa
 }
 ```
 
-## 8. AgentSpec 管理
+## 8. AgentSpec Management
 
-AgentSpec 管理 API 提供 AgentSpec 的查询、草稿、发布、上下线、版本管理与 ZIP 上传能力。
+AgentSpec Management APIs provide query, draft, publish, online/offline, version management, and ZIP upload capabilities for AgentSpecs.
 
 ### 8.1. Get AgentSpec
 #### Description
@@ -6629,7 +6629,7 @@ This interface allows getting the latest published version of an AgentSpec by na
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -6697,7 +6697,7 @@ This interface allows deleting an AgentSpec and all its versions by namespace an
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -6751,7 +6751,7 @@ This interface allows updating the business tag list of an AgentSpec without cha
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -6806,7 +6806,7 @@ This interface allows creating an AgentSpec draft version based on an existing v
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -6861,7 +6861,7 @@ This interface allows updating the card content of the current AgentSpec draft v
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -6916,7 +6916,7 @@ This interface allows deleting the current draft version of a specified AgentSpe
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -6970,7 +6970,7 @@ This interface force-publishes an AgentSpec version by bypassing pipeline valida
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -7026,7 +7026,7 @@ This interface allows updating AgentSpec version routing labels (e.g. latest lab
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -7081,7 +7081,7 @@ This interface allows paginated listing of AgentSpecs by namespace and name.
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -7139,7 +7139,7 @@ This interface allows executing an offline operation on a specific version or th
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -7195,7 +7195,7 @@ This interface allows executing an online operation on a specific version or the
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -7251,7 +7251,7 @@ This interface allows publishing an approved AgentSpec version.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -7307,7 +7307,7 @@ This interface transitions a reviewed AgentSpec version back to draft.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -7362,7 +7362,7 @@ This interface allows setting the visibility scope of an AgentSpec to PUBLIC or 
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -7417,7 +7417,7 @@ This interface allows submitting an AgentSpec draft version to the pipeline for 
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -7470,11 +7470,11 @@ This interface allows uploading a ZIP-packaged AgentSpec; the package is parsed 
 
 `POST`
 
-请求体类型：`multipart/form-data`（如文件上传），请求示例中需使用 `-F` 或 `-H 'Content-Type: multipart/form-data'`。
+Request body type: `multipart/form-data` (for example, file upload). Use `-F` or `-H 'Content-Type: multipart/form-data'` in request examples.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -7534,7 +7534,7 @@ This interface allows getting a specific version of an AgentSpec by namespace, n
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -7579,9 +7579,9 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs/version?namespaceId=
 }
 ```
 
-## 9. Pipeline 管理
+## 9. Pipeline Management
 
-Pipeline 管理 API 提供 Pipeline 执行记录列表、详情与实例查询能力。
+Pipeline Management APIs provide capabilities to query Pipeline execution record lists, details, and instances.
 
 ### 9.1. List Pipeline Executions
 #### Description
@@ -7597,7 +7597,7 @@ This interface allows paginated listing of Pipeline execution records by resourc
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -7655,7 +7655,7 @@ This interface allows retrieving a Pipeline execution record by pipeline ID.
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -7716,7 +7716,7 @@ This interface allows paginated listing of Pipeline execution records by resourc
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -7774,7 +7774,7 @@ This interface allows retrieving a Pipeline execution record by pipeline ID.
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -7820,9 +7820,9 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines/{pipelineId}'
 }
 ```
 
-## 10. AI 资源导入
+## 10. AI Resource Import
 
-AI 资源导入 API 提供外部 AI 资源导入源查询、搜索、校验与执行能力。
+AI Resource Import APIs provide query, search, validation, and execution capabilities for external AI resource import sources.
 
 ### 10.1. Execute AI Resource Import
 #### Description
@@ -7838,7 +7838,7 @@ This interface imports selected external AI resources.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -7903,7 +7903,7 @@ This interface searches importable external AI resources from a specified source
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -7966,7 +7966,7 @@ This interface lists configured AI resource import sources.
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -8019,7 +8019,7 @@ This interface validates selected external AI resources before import.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -8067,13 +8067,13 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/import/validate' -d "namespace
 
 ## 11. Copilot
 
-Copilot 相关 API 提供配置获取/保存、Prompt 调试与优化、Skill 生成与优化等能力（部分接口为 SSE 流式返回）。
+Copilot-related APIs provide configuration retrieval and saving, Prompt debugging and optimization, Skill generation and optimization, and other capabilities. Some APIs return SSE streams.
 
-### 11.1. 获取Copilot配置
+### 11.1. Get Copilot Configuration
 
 #### Description
 
-获取当前Copilot配置，仅返回apiKey、model、studioUrl、studioProject。
+Get the current Copilot configuration. Only `apiKey`, `model`, `studioUrl`, and `studioProject` are returned.
 
 #### Since
 
@@ -8085,7 +8085,7 @@ Copilot 相关 API 提供配置获取/保存、Prompt 调试与优化、Skill �
 
 #### Authorization
 
-需要具有对应`命名空间读取`权限的用户身份。
+A user identity with the corresponding `namespace read` permission is required.
 
 #### Request URL
 
@@ -8093,18 +8093,18 @@ Copilot 相关 API 提供配置获取/保存、Prompt 调试与优化、Skill �
 
 #### Request Parameters
 
-无
+None
 
 #### Response Data
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.enabled | `boolean` | Copilot 功能是否启用。 |
-| data.defaultNamespace | `string` | 默认使用的命名空间 ID。 |
-| data.apiKey | `string` | 调用大模型等外部服务的 API Key（脱敏或原文由实现决定）。 |
-| data.model | `string` | 默认使用的模型标识。 |
-| data.studioUrl | `string` | 关联的 Studio 服务地址。 |
-| data.studioProject | `string` | 关联的 Studio 项目标识。 |
+| data.enabled | `boolean` | whether the Copilot feature is enabled. |
+| data.defaultNamespace | `string` | default namespace ID. |
+| data.apiKey | `string` | API key used to call external services such as large models. Whether it is masked or returned as raw text depends on the implementation. |
+| data.model | `string` | default model identifier. |
+| data.studioUrl | `string` | associated Studio service address. |
+| data.studioProject | `string` | associated Studio project identifier. |
 
 #### Examples
 
@@ -8129,11 +8129,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/copilot/config'
 }
 ```
 
-### 11.2. 保存Copilot配置
+### 11.2. Save Copilot Configuration
 
 #### Description
 
-创建或更新Copilot配置，仅接受apiKey、model、studioUrl、studioProject，其他字段使用Default。
+Create or update the Copilot configuration. Only `apiKey`, `model`, `studioUrl`, and `studioProject` are accepted. Other fields use `Default`.
 
 #### Since
 
@@ -8145,7 +8145,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/copilot/config'
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -8153,13 +8153,13 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/copilot/config'
 
 #### Request Parameters
 
-无（请求体可传 apiKey、model、studioUrl、studioProject 等字段，具体以实际接口为准）。
+None. The request body can contain fields such as `apiKey`, `model`, `studioUrl`, and `studioProject`; use the actual API behavior as the source of truth.
 
 #### Response Data
 
 | Name | Type | Description |
 |--------|----------|------|
-| data | `boolean` | 是否保存成功。 |
+| data | `boolean` | whether saving succeeded. |
 
 #### Examples
 
@@ -8179,11 +8179,11 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/config'
 }
 ```
 
-### 11.3. 流式调试Prompt
+### 11.3. Stream Prompt Debugging
 
 #### Description
 
-通过该接口，可使用用户输入流式调试Prompt并返回模型响应，返回SSE流。
+You can use this API to stream-debug a Prompt with user input and return model responses as an SSE stream.
 
 #### Since
 
@@ -8193,11 +8193,11 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/config'
 
 `POST`
 
-请求体类型：`application/json`。
+Request body type: `application/json`.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -8207,12 +8207,12 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/config'
 
 | Name       | Type     | Required | Description     |
 |-----------|--------|----|----------|
-| `userInput` | `string` | No | 用户输入内容。 |
-| `prompt`    | `string` | No | 待调试的 Prompt。 |
+| `userInput` | `string` | No | user input content. |
+| `prompt`    | `string` | No | Prompt to debug. |
 
 #### Response Data
 
-无（SSE 流式返回）
+None. The response is returned as an SSE stream.
 
 #### Examples
 
@@ -8228,11 +8228,11 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/debug' -H 'Content
 {}
 ```
 
-### 11.4. 流式优化Prompt
+### 11.4. Stream Prompt Optimization
 
 #### Description
 
-通过该接口，可流式优化Prompt，返回SSE流。
+You can use this API to stream-optimize a Prompt and return an SSE stream.
 
 #### Since
 
@@ -8242,11 +8242,11 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/debug' -H 'Content
 
 `POST`
 
-请求体类型：`application/json`。
+Request body type: `application/json`.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -8256,12 +8256,12 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/debug' -H 'Content
 
 | Name              | Type     | Required | Description        |
 |------------------|--------|----|-------------|
-| `optimizationGoal` | `string` | No | 优化目标。       |
-| `prompt`           | `string` | No | 待优化的 Prompt。 |
+| `optimizationGoal` | `string` | No | optimization goal.       |
+| `prompt`           | `string` | No | Prompt to optimize. |
 
 #### Response Data
 
-无（SSE 流式返回）
+None. The response is returned as an SSE stream.
 
 #### Examples
 
@@ -8277,11 +8277,11 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/optimize' -H 'Cont
 {}
 ```
 
-### 11.5. 流式生成Skill
+### 11.5. Stream Skill Generation
 
 #### Description
 
-通过该接口，可基于背景信息流式生成Skill，返回SSE流。
+You can use this API to stream-generate a Skill based on background information and return an SSE stream.
 
 #### Since
 
@@ -8291,11 +8291,11 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/optimize' -H 'Cont
 
 `POST`
 
-请求体类型：`application/json`。
+Request body type: `application/json`.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -8305,13 +8305,13 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/optimize' -H 'Cont
 
 | Name                | Type     | Required | Description           |
 |--------------------|--------|----|----------------|
-| `backgroundInfo`     | `string` | No | 背景信息。           |
-| `selectedMcpTools`   | `array` | No | 选中的 MCP 工具。      |
-| `conversationHistory` | `object` | No | 对话历史。           |
+| `backgroundInfo`     | `string` | No | background information.           |
+| `selectedMcpTools`   | `array` | No | selected MCP tools.      |
+| `conversationHistory` | `object` | No | conversation history.           |
 
 #### Response Data
 
-无（SSE 流式返回）
+None. The response is returned as an SSE stream.
 
 #### Examples
 
@@ -8327,11 +8327,11 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/generate' -H 'Conte
 {}
 ```
 
-### 11.6. 流式优化Skill
+### 11.6. Stream Skill Optimization
 
 #### Description
 
-通过该接口，可基于目标与对话历史流式优化Skill，返回SSE流。
+You can use this API to stream-optimize a Skill based on a target and conversation history, and return an SSE stream.
 
 #### Since
 
@@ -8341,11 +8341,11 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/generate' -H 'Conte
 
 `POST`
 
-请求体类型：`application/json`。
+Request body type: `application/json`.
 
 #### Authorization
 
-需要具有对应`命名空间写入`权限的用户身份。
+A user identity with the corresponding `namespace write` permission is required.
 
 #### Request URL
 
@@ -8355,15 +8355,15 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/generate' -H 'Conte
 
 | Name                | Type     | Required | Description           |
 |--------------------|--------|----|----------------|
-| `conversationHistory` | `object` | No | 对话历史。           |
-| `targetFileName`      | `string` | No | 目标文件名。          |
-| `optimizationGoal`    | `string` | No | 优化目标。           |
-| `skill`               | `string` | No | 待优化的 Skill 内容。   |
-| `selectedMcpTools`   | `array` | No | 选中的 MCP 工具。      |
+| `conversationHistory` | `object` | No | conversation history.           |
+| `targetFileName`      | `string` | No | target file name.          |
+| `optimizationGoal`    | `string` | No | optimization goal.           |
+| `skill`               | `string` | No | Skill content to optimize.   |
+| `selectedMcpTools`   | `array` | No | selected MCP tools.      |
 
 #### Response Data
 
-无（SSE 流式返回）
+None. The response is returned as an SSE stream.
 
 #### Examples
 
