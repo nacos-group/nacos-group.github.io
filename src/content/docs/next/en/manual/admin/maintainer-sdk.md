@@ -6,66 +6,63 @@ sidebar:
   order: 11
 ---
 
-# 运维SDK
+# Maintainer SDK
 
-Nacos 的 运维SDK（或称Nacos-Maintainer-SDK），是一个针对 Nacos 配置中心、服务注册中心、分布式锁等功能`运维`场景下的的 Java
-SDK。旨在为Nacos的运维人员或部分特殊应用场景（如`网关类应用`，`控制台类应用`
-）提供稳定易用的配置中心、服务注册中心、分布式锁等功能，方便运维人员或特殊应用访问Nacos进行配置、服务和分布式锁的操作。
+The Nacos Maintainer SDK, also known as Nacos-Maintainer-SDK, is a Java SDK for maintenance scenarios of Nacos features such as the config center, service registry, and distributed locks. It provides stable and easy-to-use config center, service registry, and distributed lock capabilities for Nacos maintainers and special application scenarios such as gateway applications and console applications, making it easier to operate configs, services, and distributed locks in Nacos.
 
-因为Nacos 的 运维SDK的定位，Nacos的运维SDK会提供大范围的数据获取API，因此Nacos的运维SDK需要使用较高权限的身份进行登录后才能使用，以防止存在数据泄漏的隐患。
+Because of its maintainer-oriented positioning, the Nacos Maintainer SDK provides broad data access APIs. Therefore, it must be used with an identity that has higher privileges to prevent potential data leakage.
 
-如果您的使用场景不是运维人员操作或特殊应用场景（如`网关类应用`，`控制台类应用`），请使用`Nacos Client`
-（如[Nacos Java Client](../user/java-sdk/usage.md), [Nacos Go Client](../user/go-sdk/usage.md)等)。
+If your scenario is not maintainer operations or a special application scenario such as a gateway application or console application, use `Nacos Client` instead, such as [Nacos Java Client](../user/java-sdk/usage.md) or [Nacos Go Client](../user/go-sdk/usage.md).
 
-> 目前 Nacos 的 运维SDK只支持Java SDK，后续会支持更多语言的SDK。
+> Currently, the Nacos Maintainer SDK only supports Java. More languages will be supported later.
 >
-> Nacos的运维SDK基于[Nacos Admin API](./admin-api.md)实现，相同的能力可以通过对应的[Nacos Admin API](./admin-api.md)进行操作。
+> The Nacos Maintainer SDK is implemented based on [Nacos Admin API](./admin-api.md). The same capabilities can also be operated through the corresponding [Nacos Admin API](./admin-api.md).
 
-## 1. 引用概述
+## 1. Dependency Overview
 
-### 1.1. Java 版本依赖
+### 1.1. Java Version Requirement
 
-Nacos 的 Java SDK需要 JDK 1.8 及以上版本的Java运行环境。
+The Nacos Java SDK requires JDK 1.8 or later.
 
-### 1.2. Maven 坐标
+### 1.2. Maven Coordinates
 
 ```
-<!-- 3.0.0 及以上 版本支持 -->
-<dependency>-->
-    <groupId>com.alibaba.nacos</groupId>-->
-    <artifactId>nacos-maintainer-client</artifactId>-->
-    <version>${nacos.client.version}</version>-->
-</dependency>-->
+<!-- Supported in version 3.0.0 and later -->
+<dependency>
+    <groupId>com.alibaba.nacos</groupId>
+    <artifactId>nacos-maintainer-client</artifactId>
+    <version>${nacos.client.version}</version>
+</dependency>
 ```
 
-## 2. 初始化SDK
+## 2. Initialize the SDK
 
-Nacos 初始化SDK时需要使用对应的工厂 `Factory` 类进行不同模块的创建：
+When initializing the Nacos SDK, use the corresponding `Factory` class to create services for different modules:
 
 ```java
 
 Properties properties = new Properties();
-# 指定Nacos-Server的地址
+// Specify the Nacos Server address
 properties.setProperty("serverAddr","localhost:8848");
 
-# 设置Nacos的管理员用户密码
+// Set the Nacos administrator username and password
 properties.setProperty("username","nacos");
 properties.setProperty("password","{your_admin_password}");
 
-# 初始化配置中心的Nacos Maintainer Service
+// Initialize the Nacos Maintainer Service for the config center
 ConfigMaintainerService configMaintainerService = ConfigMaintainerFactory.createConfigMaintainerService(properties);
 
-# 初始化注册中心的Nacos Maintainer Service
+// Initialize the Nacos Maintainer Service for the service registry
 NamingMaintainerService maintainService = NamingMaintainerFactory.createNamingMaintainerService(properties);
 ```
 
-## 3. 配置中心运维 API
+## 3. Config Center Maintainer APIs
 
-### 3.1. 获取配置
+### 3.1. Get Config
 
-#### 描述
+#### Description
 
-从 Nacos 获取配置。
+Gets a config from Nacos.
 
 ```java
 ConfigDetailInfo getConfig(String dataId) throws NacosException;
@@ -75,45 +72,45 @@ ConfigDetailInfo getConfig(String dataId, String groupName) throws NacosExceptio
 ConfigDetailInfo getConfig(String dataId, String groupName, String namespaceId) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                                                   |
+| Parameter Name         | Parameter Type   | Description                                                   |
 |:------------|:-------|:-----------------------------------------------------|
-| dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| groupName   | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。      |
-| namespaceId | long   | 配置所属的命名空间ID。                                         |
+| dataId      | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes. |
+| groupName   | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.      |
+| namespaceId | string | Namespace ID to which the config belongs.                                         |
 
-#### 返回值
+#### Return Value
 
-| 参数类型             | 描述      |
+| Parameter Type             | Description      |
 |:-----------------|:--------|
-| ConfigDetailInfo | 配置的具体信息 |
+| ConfigDetailInfo | Detailed config information. |
 
-具体ConfigDetailInfo的内容如下：
+The specific `ConfigDetailInfo` content is as follows:
 
-| 参数名              | 参数类型   | 描述                                                   |
+| Parameter Name              | Parameter Type   | Description                                                   |
 |:-----------------|:-------|:-----------------------------------------------------|
-| id               | long   | 配置在实际存储介质中的ID，没有业务含义，仅作为配置在存储介质中的唯一标识。一般为唯一自增ID。     |
-| namespaceId      | string | 配置所属的命名空间ID。                                         |
-| groupName        | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。      |
-| dataId           | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| md5              | string | 配置内容的md5值。                                           |
-| type             | string | 配置的类型，如properties、json、yaml等，主要用于标记和展示。              |
-| appName          | string | 配置所属的应用名称。                                           |
-| createTime       | long   | 配置的创建时间，为时间戳，单位为毫秒。                                  |
-| modifyTime       | long   | 配置的最新更新时间，为时间戳，单位为毫秒。                                |
-| content          | string | 配置内容。                                                |
-| desc             | string | 配置的描述信息。                                             |
-| encryptedDataKey | string | 配置的加密密钥，当使用配置的加密功能时，该字段才有值。                          |
-| createUser       | string | 创建此配置的用户名。                                           |
-| createIp         | string | 创建此配置的来源IP。                                          |
-| configTags       | string | 此配置的标签，多个标签用逗号`,`分隔。                                 |
+| id               | long   | ID of the config in the actual storage medium. It has no business meaning and is only a unique identifier in storage. It is usually an auto-increment ID.     |
+| namespaceId      | string | Namespace ID to which the config belongs.                                         |
+| groupName        | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.      |
+| dataId           | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes. |
+| md5              | string | MD5 value of the config content.                                           |
+| type             | string | Config type, such as properties, json, or yaml. It is mainly used for labeling and display.              |
+| appName          | string | Application name to which the config belongs.                                           |
+| createTime       | long   | Config creation time as a timestamp in milliseconds.                                  |
+| modifyTime       | long   | Latest config update time as a timestamp in milliseconds.                                |
+| content          | string | Config content.                                                |
+| desc             | string | Config description.                                             |
+| encryptedDataKey | string | Config encryption key. This field has a value only when config encryption is used.                          |
+| createUser       | string | Username that created this config.                                           |
+| createIp         | string | Source IP address that created this config.                                          |
+| configTags       | string | Tags of this config. Multiple tags are separated by commas `,`.                                 |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 以下3种调用均会获得 `public`命名空间下，groupName为`DEFAULT_GROUP`，dataId为`maintain.client.test`的配置信息。
+    // The following three calls all obtain config information for dataId `maintain.client.test` and groupName `DEFAULT_GROUP` under the `public` namespace.
     ConfigDetailInfo configDetailInfo = configMaintainerService.getConfig("maintain.client.test");
     configDetailInfo = configMaintainerService.getConfig("maintain.client.test", Constants.DEFAULT_GROUP);
     configDetailInfo = configMaintainerService.getConfig("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
@@ -122,24 +119,24 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 3.2. 发布配置
+### 3.2. Publish Config
 
-#### 描述
+#### Description
 
-用于发布 Nacos 配置，以便通过自动化手段降低运维成本。
+Publishes a Nacos config to reduce maintenance costs through automation.
 
 :::note
-创建和修改配置时使用的同一个发布接口，当配置不存在时会创建配置，当配置已存在时会更新配置。
+The same publish API is used to create and modify configs. If the config does not exist, it is created. If the config already exists, it is updated.
 :::
 
 ```java
 boolean publishConfig(String dataId, String content) throws NacosException;
 
-boolean publishConfig(String dataId, String groupName, String content) throws NacosExceptio;
+boolean publishConfig(String dataId, String groupName, String content) throws NacosException;
 
 boolean publishConfig(String dataId, String groupName, String namespaceId, String content) throws NacosException;
 
@@ -150,31 +147,31 @@ boolean publishConfig(String dataId, String groupName, String namespaceId, Strin
 boolean publishConfig(String dataId, String groupName, String namespaceId, String content, String appName, String srcUser, String configTags, String desc, String type) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                                                                             |
+| Parameter Name         | Parameter Type   | Description                                                                             |
 |:------------|:-------|:-------------------------------------------------------------------------------|
-| dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 256 字节。                           |
-| groupName   | string | 配置分组。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 128 字节。                            |
-| namespaceId | long   | 配置所属的命名空间ID。                                                                   |
-| content     | string | 配置内容，不超过 100K 字节。                                                              |
-| desc        | string | 配置的描述内容。                                                                       |
-| type        | string | 配置类型，见 `com.alibaba.nacos.api.config.ConfigType`，默认为TEXT                       |
-| appName     | string | 配置所属的应用名称。                                                                     |
-| srcUser     | string | 创建此配置的用户名，即代理此用户进行配置发布，此配置的`createUser`将为此用户，若传入空字串，则表示当前登录的用户名作为`createUser`。 |
-| configTags  | string | 此配置的标签，多个标签用逗号`,`分隔。                                                           |
+| dataId      | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes.                           |
+| groupName   | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.                            |
+| namespaceId | string | Namespace ID to which the config belongs.                                                                   |
+| content     | string | Config content. The length cannot exceed 100 KB.                                                              |
+| desc        | string | Config description.                                                                       |
+| type        | string | Config type. See `com.alibaba.nacos.api.config.ConfigType`. The default value is `TEXT`.                       |
+| appName     | string | Application name to which the config belongs.                                                                     |
+| srcUser     | string | Username used to publish this config. The config is published on behalf of this user, and the config `createUser` is set to this user. If an empty string is passed, the current logged-in username is used as `createUser`. |
+| configTags  | string | Tags of this config. Multiple tags are separated by commas `,`.                                                           |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述     |
+| Parameter Type    | Description     |
 |:--------|:-------|
-| boolean | 是否发布成功 |
+| boolean | Whether publishing succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-# 以下调用均会在 `public`命名空间下，创建groupName为`DEFAULT_GROUP`，dataId为`maintain.client.test`的配置, 配置内容为`testContent`。
+    // The following calls all create a config with groupName `DEFAULT_GROUP`, dataId `maintain.client.test`, and content `testContent` under the `public` namespace.
     boolean result = configMaintainerService.publishConfig("maintain.client.test", "testContent");
     result = configMaintainerService.publishConfig("maintain.client.test", Constants.DEFAULT_GROUP, "testContent");
     result = configMaintainerService.publishConfig("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, "testContent");
@@ -186,18 +183,18 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 3.3. 删除配置
+### 3.3. Delete Config
 
-#### 描述
+#### Description
 
-用于删除 Nacos 配置，以便通过自动化手段降低运维成本。
+Deletes a Nacos config to reduce maintenance costs through automation.
 
 :::note
-当配置已存在时会删除该配置，当配置不存在时会直接返回成功消息。
+If the config exists, it is deleted. If the config does not exist, a success message is returned directly.
 :::
 
 ```java
@@ -208,25 +205,25 @@ boolean deleteConfig(String dataId, String groupName) throws NacosException;
 boolean deleteConfig(String dataId, String groupName, String namespaceId) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                                                   |
+| Parameter Name         | Parameter Type   | Description                                                   |
 |:------------|:-------|:-----------------------------------------------------|
-| dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| groupName   | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。      |
-| namespaceId | long   | 配置所属的命名空间ID。                                         |
+| dataId      | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes. |
+| groupName   | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.      |
+| namespaceId | string | Namespace ID to which the config belongs.                                         |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述     |
+| Parameter Type    | Description     |
 |:--------|:-------|
-| boolean | 是否删除成功 |
+| boolean | Whether deletion succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 以下3种调用均会删除 `public`命名空间下，groupName为`DEFAULT_GROUP`，dataId为`maintain.client.test`的配置信息。
+    // The following three calls all delete the config with groupName `DEFAULT_GROUP` and dataId `maintain.client.test` under the `public` namespace.
     boolean result =  configMaintainerService.deleteConfig("maintain.client.test");
     result = configMaintainerService.deleteConfig("maintain.client.test", Constants.DEFAULT_GROUP);
     result = configMaintainerService.deleteConfig("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
@@ -235,33 +232,33 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 3.4. 批量删除配置
+### 3.4. Batch Delete Configs
 
-#### 描述
+#### Description
 
-用于批量删除 Nacos 配置，以便通过自动化手段降低运维成本。
+Deletes Nacos configs in batches to reduce maintenance costs through automation.
 
 ```java
 boolean deleteConfigs(List<Long> ids) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型        | 描述                                                                                  |
+| Parameter Name | Parameter Type        | Description                                                                                  |
 |:----|:------------|:------------------------------------------------------------------------------------|
-| ids | List\<Long> | 待删除配置的ID列表，此ID为配置在实际存储介质中的ID，需要从[获取配置](#31-获取配置)或[获取配置列表](#35-获取配置列表)API中的`id`字段获取。 |
+| ids | List\<Long> | List of config IDs to delete. This ID is the ID of the config in the actual storage medium. Obtain it from the `id` field returned by the [Get Config](#31-get-config) or [Get Config List](#35-get-config-list) API. |
 
-#### 返回值
+#### Return Value
 
-| 参数类型    | 描述     |
+| Parameter Type    | Description     |
 |:--------|:-------|
-| boolean | 是否删除成功 |
+| boolean | Whether deletion succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -272,15 +269,15 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 3.5. 获取配置列表
+### 3.5. Get Config List
 
-#### 描述
+#### Description
 
-可以通过此API，获取获取满足条件的配置列表，不支持模糊查询，若需要进行模糊查询，请使用[搜索配置列表](#36-搜索配置列表)API。
+Use this API to obtain a config list that matches the specified conditions. Fuzzy search is not supported. To perform fuzzy search, use the [Search Config List](#36-search-config-list) API.
 
 ```java
 Page<ConfigBasicInfo> listConfigs(String namespaceId) throws NacosException;
@@ -295,77 +292,77 @@ Page<ConfigBasicInfo> listConfigs(String dataId, String groupName, String namesp
 
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                                                                                |
+| Parameter Name         | Parameter Type   | Description                                                                                |
 |:------------|:-------|:----------------------------------------------------------------------------------|
-| namespaceId | long   | 配置所属的命名空间ID。                                                                      |                                                                                                 |
-| dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节, 默认为""，不为空时则只会匹配dataId为此值的配置。 |
-| groupName   | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节，默认为""，不为空时则只会匹配groupName为此值的配置。    |
-| type        | string | 配置类型，见 `com.alibaba.nacos.api.config.ConfigType`，默认为""，不为空时则只会匹配类型为此值的配置。         |
-| configTags  | string | 此配置的标签，多个标签用逗号`,`分隔，默认为""，不为空时则只会匹配标签为此值的配置。                                      |
-| appName     | string | 配置所属的应用名称，默认为""，不为空时则只会匹配应用名为此值的配置。                                               |
-| pageNo      | int    | 配置列表的分页页码，默认为1。                                                                   |
-| pageSize    | int    | 配置列表的分页大小，默认为100。                                                                 |
+| namespaceId | string | Namespace ID to which the config belongs. |
+| dataId      | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes. The default value is `""`. If it is not empty, only configs whose dataId equals this value are matched. |
+| groupName   | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes. The default value is `""`. If it is not empty, only configs whose groupName equals this value are matched.    |
+| type        | string | Config type. See `com.alibaba.nacos.api.config.ConfigType`. The default value is `""`, If it is not empty, only configs whose type equals this value are matched.         |
+| configTags  | string | Tags of this config. Multiple tags are separated by commas `,`. The default value is `""`. If it is not empty, only configs whose tag equals this value are matched.                                      |
+| appName     | string | Application name to which the config belongs. The default value is `""`. If it is not empty, only configs whose application name equals this value are matched.                                               |
+| pageNo      | int    | Page number of the config list. The default value is 1.                                                                   |
+| pageSize    | int    | Page size of the config list. The default value is 100.                                                                 |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                   | 描述        |
+| Parameter Type                   | Description        |
 |:-----------------------|:----------|
-| Page\<ConfigBasicInfo> | 配置列表的分页结果 |
+| Page\<ConfigBasicInfo> | Paginated config list result. |
 
-具体Page及ConfigBasicInfo的内容如下：
+The specific `Page` and `ConfigBasicInfo` content is as follows:
 
-| 参数名            | 参数类型                   | 描述           |
+| Parameter Name            | Parameter Type                   | Description           |
 |:---------------|:-----------------------|:-------------|
-| totalCount     | int                    | 符合该条件下的配置总数。 |
-| pageNumber     | int                    | 当前页码。        |
-| pagesAvailable | int                    | 分页的总页数。      |
-| pageItems      | List\<ConfigBasicInfo> | 当前页的配置列表。    |
+| totalCount     | int                    | Total number of configs that match the condition. |
+| pageNumber     | int                    | Current page number.        |
+| pagesAvailable | int                    | Total number of pages.      |
+| pageItems      | List\<ConfigBasicInfo> | Config list on the current page.    |
 
-| 参数名         | 参数类型   | 描述                                                   |
+| Parameter Name         | Parameter Type   | Description                                                   |
 |:------------|:-------|:-----------------------------------------------------|
-| id          | long   | 配置在实际存储介质中的ID，没有业务含义，仅作为配置在存储介质中的唯一标识。一般为唯一自增ID。     |
-| namespaceId | string | 配置所属的命名空间ID。                                         |
-| groupName   | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。      |
-| dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| md5         | string | 配置内容的md5值。                                           |
-| type        | string | 配置的类型，如properties、json、yaml等，主要用于标记和展示。              |
-| appName     | string | 配置所属的应用名称。                                           |
-| createTime  | long   | 配置的创建时间，为时间戳，单位为毫秒。                                  |
-| modifyTime  | long   | 配置的最新更新时间，为时间戳，单位为毫秒。                                |
+| id          | long   | ID of the config in the actual storage medium. It has no business meaning and is only a unique identifier in storage. It is usually an auto-increment ID.     |
+| namespaceId | string | Namespace ID to which the config belongs.                                         |
+| groupName   | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.      |
+| dataId      | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes. |
+| md5         | string | MD5 value of the config content.                                           |
+| type        | string | Config type, such as properties, json, or yaml. It is mainly used for labeling and display.              |
+| appName     | string | Application name to which the config belongs.                                           |
+| createTime  | long   | Config creation time as a timestamp in milliseconds.                                  |
+| modifyTime  | long   | Latest config update time as a timestamp in milliseconds.                                |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 获取`public`命名空间下所有配置的第一页（最大100个）。
+    // Gets the first page of all configs under the `public` namespace (up to 100 configs).
     Page<ConfigBasicInfo> result = configMaintainerService.listConfigs(Constants.DEFAULT_NAMESPACE_ID);
-    # 获取`public`命名空间下配置分组为`DEFAULT_GROUP`的所有配置的第一页（最大100个）。
+    // Gets the first page of all configs whose config group is `DEFAULT_GROUP` under the `public` namespace (up to 100 configs).
     result = configMaintainerService.listConfigs("", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
-    # 获取`public`命名空间下类型为`JSON`的所有配置的第一页（最大100个）。
+    // Gets the first page of all configs whose type is `JSON` under the `public` namespace (up to 100 configs).
     result = configMaintainerService.listConfigs("", "", Constants.DEFAULT_NAMESPACE_ID, "JSON");
-    # 获取`public`命名空间下带有标签为`testTag1`且配置所属应用为`testApp`的所有配置的第一页（最大100个）。
+    // Gets the first page of all configs under the `public` namespace whose tag is `testTag1` and application is `testApp` (up to 100 configs).
     result = configMaintainerService.listConfigs("", "", Constants.DEFAULT_NAMESPACE_ID, "", "testTag1", "testApp");
-    # 获取`public`命名空间下所有配置的第一页（最大10个）。
+    // Gets the first page of all configs under the `public` namespace (up to 10 configs).
     result = configMaintainerService.listConfigs("", "", Constants.DEFAULT_NAMESPACE_ID, "", "", "", 1, 10);
 } catch (NacosException e) {
     e.printStackTrace();
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 3.6. 搜索配置列表
+### 3.6. Search Config List
 
-#### 描述
+#### Description
 
-可以通过此API，获取获取满足条件的配置列表，支持模糊查询，若需要进行精确查询，请使用[查询配置列表](#35-获取配置列表)API。
+Use this API to obtain a config list that matches the specified conditions. Fuzzy search is supported. To perform exact search, use the [Query Config List](#35-get-config-list) API.
 
 :::note
-此接口较为消耗性能，建议谨慎使用，特别是通过`配置内容`进行搜索时，性能将严重下降。
+This API is performance-intensive. Use it with caution, especially when searching by `Config content`, because performance will degrade significantly.
 :::
 
 ```java
@@ -380,162 +377,162 @@ Page<ConfigBasicInfo> searchConfigs(String dataId, String groupName, String name
 Page<ConfigBasicInfo> searchConfigs(String dataId, String groupName, String namespaceId, String configDetail, String type, String configTags, String appName, int pageNo, int pageSize) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名          | 参数类型   | 描述                                                                                     |
+| Parameter Name          | Parameter Type   | Description                                                                                     |
 |:-------------|:-------|:---------------------------------------------------------------------------------------|
-| namespaceId  | long   | 配置所属的命名空间ID。                                                                           |                                                                                                 |
-| dataId       | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节, 默认为""，不为空时则只会匹配所有dataId`包含`此值的配置。 |
-| groupName    | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节，默认为""，不为空时则只会匹配groupName`包含`此值的配置。      |
-| type         | string | 配置类型，见 `com.alibaba.nacos.api.config.ConfigType`，默认为""，不为空时则只会匹配类型为此值的配置。              |
-| configDetail | string | 配置的内容，默认为""，不为空时则只会匹配配置内容包含此值的配置。                                                      |
-| configTags   | string | 此配置的标签，多个标签用逗号`,`分隔，默认为""，不为空时则只会匹配标签为此值的配置。                                           |
-| appName      | string | 配置所属的应用名称，默认为""，不为空时则只会匹配应用名为此值的配置。                                                    |
-| pageNo       | int    | 配置列表的分页页码，默认为1。                                                                        |
-| pageSize     | int    | 配置列表的分页大小，默认为100。                                                                      |
+| namespaceId  | string | Namespace ID to which the config belongs. |
+| dataId       | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes. The default value is `""`. If it is not empty, only configs whose dataId contains this value are matched. |
+| groupName    | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes. The default value is `""`. If it is not empty, only configs whose groupName contains this value are matched.      |
+| type         | string | Config type. See `com.alibaba.nacos.api.config.ConfigType`. The default value is `""`, If it is not empty, only configs whose type equals this value are matched.              |
+| configDetail | string | Config content. The default value is `""`. If it is not empty, only configs whose content contains this value are matched.                                                      |
+| configTags   | string | Tags of this config. Multiple tags are separated by commas `,`. The default value is `""`. If it is not empty, only configs whose tag equals this value are matched.                                           |
+| appName      | string | Application name to which the config belongs. The default value is `""`. If it is not empty, only configs whose application name equals this value are matched.                                                    |
+| pageNo       | int    | Page number of the config list. The default value is 1.                                                                        |
+| pageSize     | int    | Page size of the config list. The default value is 100.                                                                      |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                   | 描述        |
+| Parameter Type                   | Description        |
 |:-----------------------|:----------|
-| Page\<ConfigBasicInfo> | 配置列表的分页结果 |
+| Page\<ConfigBasicInfo> | Paginated config list result. |
 
-具体Page及ConfigBasicInfo的内容如下：
+The specific `Page` and `ConfigBasicInfo` content is as follows:
 
-| 参数名            | 参数类型                   | 描述           |
+| Parameter Name            | Parameter Type                   | Description           |
 |:---------------|:-----------------------|:-------------|
-| totalCount     | int                    | 符合该条件下的配置总数。 |
-| pageNumber     | int                    | 当前页码。        |
-| pagesAvailable | int                    | 分页的总页数。      |
-| pageItems      | List\<ConfigBasicInfo> | 当前页的配置列表。    |
+| totalCount     | int                    | Total number of configs that match the condition. |
+| pageNumber     | int                    | Current page number.        |
+| pagesAvailable | int                    | Total number of pages.      |
+| pageItems      | List\<ConfigBasicInfo> | Config list on the current page.    |
 
-| 参数名         | 参数类型   | 描述                                                   |
+| Parameter Name         | Parameter Type   | Description                                                   |
 |:------------|:-------|:-----------------------------------------------------|
-| id          | long   | 配置在实际存储介质中的ID，没有业务含义，仅作为配置在存储介质中的唯一标识。一般为唯一自增ID。     |
-| namespaceId | string | 配置所属的命名空间ID。                                         |
-| groupName   | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。      |
-| dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| md5         | string | 配置内容的md5值。                                           |
-| type        | string | 配置的类型，如properties、json、yaml等，主要用于标记和展示。              |
-| appName     | string | 配置所属的应用名称。                                           |
-| createTime  | long   | 配置的创建时间，为时间戳，单位为毫秒。                                  |
-| modifyTime  | long   | 配置的最新更新时间，为时间戳，单位为毫秒。                                |
+| id          | long   | ID of the config in the actual storage medium. It has no business meaning and is only a unique identifier in storage. It is usually an auto-increment ID.     |
+| namespaceId | string | Namespace ID to which the config belongs.                                         |
+| groupName   | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.      |
+| dataId      | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes. |
+| md5         | string | MD5 value of the config content.                                           |
+| type        | string | Config type, such as properties, json, or yaml. It is mainly used for labeling and display.              |
+| appName     | string | Application name to which the config belongs.                                           |
+| createTime  | long   | Config creation time as a timestamp in milliseconds.                                  |
+| modifyTime  | long   | Latest config update time as a timestamp in milliseconds.                                |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 获取`public`命名空间下配置分组包含`test`字符的所有配置的第一页（最大100个）。
+    // Gets the first page of all configs under the `public` namespace whose config group contains `test` (up to 100 configs).
     Page<ConfigBasicInfo> result = configMaintainerService.searchConfigs("", "test", Constants.DEFAULT_NAMESPACE_ID);
-    # 获取`public`命名空间下类型为`JSON`的所有配置的第一页（最大100个）。
+    // Gets the first page of all configs whose type is `JSON` under the `public` namespace (up to 100 configs).
     result = configMaintainerService.searchConfigs("", "", Constants.DEFAULT_NAMESPACE_ID, "JSON");
-    # 获取`public`命名空间下配置内容包含`test`字符的所有配置的第一页（最大100个）。
+    // Gets the first page of all configs under the `public` namespace whose content contains `test` (up to 100 configs).
     result = configMaintainerService.searchConfigs("", "", Constants.DEFAULT_NAMESPACE_ID, "test", "");
-    # 获取`public`命名空间下标签为`testTag1`且配置所属应用为`testApp`的所有配置的第一页（最大100个）。
+    // Gets the first page of all configs under the `public` namespace whose tag is `testTag1` and application is `testApp` (up to 100 configs).
     result = configMaintainerService.searchConfigs("", "", Constants.DEFAULT_NAMESPACE_ID, "", "", "testTag1", "testApp");
-    # 获取`public`命名空间下所有配置的第一页（最大10个）。
+    // Gets the first page of all configs under the `public` namespace (up to 10 configs).
     result = configMaintainerService.searchConfigs("", "", Constants.DEFAULT_NAMESPACE_ID, "", "", "", "", 1, 10);
 } catch (NacosException e) {
     e.printStackTrace();
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 3.7. 克隆配置
+### 3.7. Clone Config
 
-#### 描述
+#### Description
 
-通过此API，可以将所指定的配置克隆到另一个命名空间下，克隆时可以指定新的`groupName`及`dataId`.
+Use this API to clone the specified config to another namespace. You can specify a new `groupName` and `dataId` during cloning.
 
 ```java
 Map<String, Object> cloneConfig(String namespaceId, List<ConfigCloneInfo> cloneInfos, String srcUser, SameConfigPolicy policy) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型                   | 描述                                                                               |
+| Parameter Name         | Parameter Type                   | Description                                                                               |
 |:------------|:-----------------------|:---------------------------------------------------------------------------------|
-| namespaceId | string                 | 克隆的目标命名空间ID                                                                      |
-| cloneInfos  | List\<ConfigCloneInfo> | 需要克隆的配置列表                                                                        |
-| srcUser     | string                 | 克隆此配置的用户名，即代理此用户进行配置克隆，克隆的配置的`createUser`将为此用户，若传入空字串，则表示当前登录的用户名作为`createUser`。 |
-| policy      | SameConfigPolicy       | 克隆配置时出现冲突后的处理策略，默认为`ABORT`，可选值为`ABORT`(终止）,`SKIP`（跳过）,`OVERWRITE`（覆盖）。           |
+| namespaceId | string                 | Target namespace ID for cloning.                                                                      |
+| cloneInfos  | List\<ConfigCloneInfo> | List of configs to clone.                                                                        |
+| srcUser     | string                 | Username used to clone this config. The cloned config uses this user as `createUser`. If an empty string is passed, the current logged-in username is used as `createUser`. |
+| policy      | SameConfigPolicy       | Conflict handling policy used when cloning configs. The default value is `ABORT`. Optional values are `ABORT` (abort), `SKIP` (skip), and `OVERWRITE` (overwrite).           |
 
-其中ConfigCloneInfo中的参数详情为：
+The parameters in `ConfigCloneInfo` are as follows:
 
-| 参数名             | 参数类型   | 描述                                                                    |
+| Parameter Name             | Parameter Type   | Description                                                                    |
 |:----------------|:-------|:----------------------------------------------------------------------|
-| configId        | long   | 配置在实际存储介质中的ID，没有业务含义，仅作为配置在存储介质中的唯一标识。一般为唯一自增ID。                      |
-| targetGroupName | string | 目标配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节，为空时则使用配置当前的分组。       |
-| targetDataId    | string | 目标配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节，为空时则使用配置当前的 ID。 |
+| configId        | long   | ID of the config in the actual storage medium. It has no business meaning and is only a unique identifier in storage. It is usually an auto-increment ID.                      |
+| targetGroupName | string | Target config group. Only English characters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length must not exceed 128 bytes. If empty, the current group of the config is used.       |
+| targetDataId    | string | Target config ID. Only English characters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length must not exceed 256 bytes. If empty, the current ID of the config is used. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                | 描述                                                 |
+| Parameter Type                | Description                                                 |
 |:--------------------|:---------------------------------------------------|
-| Map<String, Object> | 克隆配置的结果，根据`policy`的不同，可能返回成功的数量，失败的数量，跳过的数量，或覆盖的数量 |
+| Map<String, Object> | Config clone result. Depending on `policy`, it may return the number of successful, failed, skipped, or overwritten configs. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 将配置ID为1的配置克隆到`cloue-test`命名空间下，克隆策略为`ABORT`，即如果目标命名空间下有同名配置，则克隆失败。
-    ConfigCloneInfo configCloneInfo = new ConfigCloneInfo();    
+    // Clones the config whose ID is 1 to the `clone-test` namespace with the clone policy `ABORT`. If a config with the same name exists in the target namespace, the clone fails.
+    ConfigCloneInfo configCloneInfo = new ConfigCloneInfo();
     configCloneInfo.setConfigId(1L);
-    Map<String, Object> result = configMaintainerService.cloneConfig("cloue-test", Collections.singletonList(configCloneInfo), "", SameConfigPolicy.ABORT);
+    Map<String, Object> result = configMaintainerService.cloneConfig("clone-test", Collections.singletonList(configCloneInfo), "", SameConfigPolicy.ABORT);
 } catch (NacosException e) {
     e.printStackTrace();
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 3.8. 获取命名空间下所有配置列表
+### 3.8. Get All Configs Under a Namespace
 
-#### 描述
+#### Description
 
-通过此接口，可以获取指定命名空间下所有的配置列表。
+Use this API to obtain all configs under the specified namespace.
 
 :::note
-此API不同于[查询配置列表](#35-获取配置列表)，不会进行分页，而是将命名空间下所有的配置一次性返回，需要确保使用此API时，命名空间下的配置数量不能太大，否则可能会导致内存溢出。
-尽量使用[查询配置列表](#35-获取配置列表)，进行分页查询。
+Unlike [Query Config List](#35-get-config-list), this API does not paginate results. It returns all configs under the namespace at once. Make sure the namespace does not contain too many configs when using this API, otherwise an out-of-memory error may occur.
+Prefer [Query Config List](#35-get-config-list) for paginated queries.
 :::
 
 ```java
 List<ConfigBasicInfo> getConfigListByNamespace(String namespaceId) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述          |
+| Parameter Name         | Parameter Type   | Description          |
 |:------------|:-------|:------------|
-| namespaceId | string | 配置所属的命名空间ID |
+| namespaceId | string | Namespace ID to which the config belongs. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                   | 描述        |
+| Parameter Type                   | Description        |
 |:-----------------------|:----------|
-| List\<ConfigBasicInfo> | 配置列表的分页结果 |
+| List\<ConfigBasicInfo> | Paginated config list result. |
 
-具体ConfigBasicInfo的内容如下：
+The specific `ConfigBasicInfo` content is as follows:
 
-| 参数名         | 参数类型   | 描述                                                   |
+| Parameter Name         | Parameter Type   | Description                                                   |
 |:------------|:-------|:-----------------------------------------------------|
-| id          | long   | 配置在实际存储介质中的ID，没有业务含义，仅作为配置在存储介质中的唯一标识。一般为唯一自增ID。     |
-| namespaceId | string | 配置所属的命名空间ID。                                         |
-| groupName   | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。      |
-| dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| md5         | string | 配置内容的md5值。                                           |
-| type        | string | 配置的类型，如properties、json、yaml等，主要用于标记和展示。              |
-| appName     | string | 配置所属的应用名称。                                           |
-| createTime  | long   | 配置的创建时间，为时间戳，单位为毫秒。                                  |
-| modifyTime  | long   | 配置的最新更新时间，为时间戳，单位为毫秒。                                |
+| id          | long   | ID of the config in the actual storage medium. It has no business meaning and is only a unique identifier in storage. It is usually an auto-increment ID.     |
+| namespaceId | string | Namespace ID to which the config belongs.                                         |
+| groupName   | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.      |
+| dataId      | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes. |
+| md5         | string | MD5 value of the config content.                                           |
+| type        | string | Config type, such as properties, json, or yaml. It is mainly used for labeling and display.              |
+| appName     | string | Application name to which the config belongs.                                           |
+| createTime  | long   | Config creation time as a timestamp in milliseconds.                                  |
+| modifyTime  | long   | Latest config update time as a timestamp in milliseconds.                                |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -545,15 +542,15 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 3.9. 获取配置订阅者列表
+### 3.9. Get Config Subscriber List
 
-#### 描述
+#### Description
 
-通过此接口，可以获取某个配置的订阅者列表。若希望获取某个配置订阅者订阅了哪些配置，请使用[获取某个订阅者订阅的所有配置列表](#310-获取某个订阅者订阅的所有配置列表)。
+Use this API to obtain the subscriber list of a config. To obtain the configs subscribed to by a config subscriber, use [Get All Configs Subscribed to by a Subscriber](#310-get-all-configs-subscribed-to-by-a-subscriber).
 
 ```java
 ConfigListenerInfo getListeners(String dataId, String groupName) throws NacosException;
@@ -561,33 +558,33 @@ ConfigListenerInfo getListeners(String dataId, String groupName) throws NacosExc
 ConfigListenerInfo getListeners(String dataId, String groupName, String namespaceId, boolean aggregation) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型    | 描述                                                            |
+| Parameter Name         | Parameter Type    | Description                                                            |
 |:------------|:--------|:--------------------------------------------------------------|
-| groupName   | string  | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。               |
-| dataId      | string  | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。          |
-| namespaceId | string  | 配置所属的命名空间ID。                                                  |
-| aggregation | boolean | 是否聚合查询，默认为true，为false时仅查询请求所在节点的订阅者列表，为true时查询整个集群中此配置的订阅者列表。 |
+| groupName   | string  | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.               |
+| dataId      | string  | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes.          |
+| namespaceId | string  | Namespace ID to which the config belongs.                                                  |
+| aggregation | boolean | Whether to perform an aggregated query. The default value is true. If false, only the subscriber list on the node that receives the request is queried. If true, the subscriber list of this config in the entire cluster is queried. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型               | 描述       |
+| Parameter Type               | Description       |
 |:-------------------|:---------|
-| ConfigListenerInfo | 配置的订阅者信息 |
+| ConfigListenerInfo | Config subscriber information. |
 
-其中ConfigListenerInfo的内容如下：
+The ConfigListenerInfo content is as follows:
 
-| 参数名             | 参数类型                        | 描述                                     |
+| Parameter Name             | Parameter Type                        | Description                                     |
 |:----------------|:----------------------------|:---------------------------------------|
-| queryType       | string                      | 此接口固定返回`config`                        |
-| listenersStatus | Map\<String, List\<String>> | 订阅者列表，key为订阅者的IP，value为此订阅者订阅到的配置的md5值 |
+| queryType       | string                      | This API always returns `config`.                        |
+| listenersStatus | Map\<String, List\<String>> | Subscriber list. The key is the subscriber IP, and the value is the MD5 value of the config subscribed to by this subscriber. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 以下两种调用，均获取`public`命名空间ID，`DEFAULT_GROUP`分组，`maintain.client.test`配置的全集群的订阅者列表。
+    // The following two calls both obtain the cluster-wide subscriber list of config `maintain.client.test` in group `DEFAULT_GROUP` under namespace `public`.
     ConfigListenerInfo result = configMaintainerService.getListeners("maintain.client.test", Constants.DEFAULT_GROUP);
     result = configMaintainerService.getListeners("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, true);
 } catch (NacosException e) {
@@ -595,43 +592,43 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 3.10. 获取某个订阅者订阅的所有配置列表
+### 3.10. Get All Configs Subscribed to by a Subscriber
 
-#### 描述
+#### Description
 
-通过此接口，可以获取某个配置订阅者所订阅的配置列表。若希望查询配置的订阅者列表，请使用[获取配置订阅者列表](#39-获取配置订阅者列表)。
+Use this API to obtain the config list subscribed to by a config subscriber. To query the subscriber list of a config, use [Get Config Subscriber List](#39-get-config-subscriber-list).
 
 ```java
 ConfigListenerInfo getAllSubClientConfigByIp(String ip, boolean all, String namespaceId, boolean aggregation) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型    | 描述                                                                                            |
+| Parameter Name         | Parameter Type    | Description                                                                                            |
 |:------------|:--------|:----------------------------------------------------------------------------------------------|
-| ip          | string  | 配置订阅者的IP                                                                                      |
-| all         | boolean | 是否查询所有相同IP的订阅者所订阅的配置列表，默认为false，为false时仅返回第一个匹配到`ip`的订阅者订阅的配置列表，为true时返回所有匹配到`ip`的订阅者订阅的配置列表。 |
-| namespaceId | string  | 配置所属的命名空间ID。                                                                                  |
-| aggregation | boolean | 是否聚合查询，默认为true，为false时仅查询请求所在节点的订阅者列表，为true时查询整个集群中此配置的订阅者列表。                                 |
+| ip          | string  | IP address of the config subscriber.                                                                                      |
+| all         | boolean | Whether to query the config lists subscribed to by all subscribers with the same IP. The default value is false. If false, only the config list subscribed to by the first subscriber that matches `ip` is returned. If true, the config lists subscribed to by all subscribers that match `ip` are returned. |
+| namespaceId | string  | Namespace ID to which the config belongs.                                                                                  |
+| aggregation | boolean | Whether to perform an aggregated query. The default value is true. If false, only the subscriber list on the node that receives the request is queried. If true, the subscriber list of this config in the entire cluster is queried.                                 |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型               | 描述       |
+| Parameter Type               | Description       |
 |:-------------------|:---------|
-| ConfigListenerInfo | 配置的订阅者信息 |
+| ConfigListenerInfo | Config subscriber information. |
 
-其中ConfigListenerInfo的内容如下：
+The ConfigListenerInfo content is as follows:
 
-| 参数名             | 参数类型                        | 描述                                                                   |
+| Parameter Name             | Parameter Type                        | Description                                                                   |
 |:----------------|:----------------------------|:---------------------------------------------------------------------|
-| queryType       | string                      | 此接口固定返回`ip`                                                          |
-| listenersStatus | Map\<String, List\<String>> | 订阅者列表，key为订阅的配置的`dataId+groupName+namespaceId`，value为此订阅者订阅到的配置的md5值 |
+| queryType       | string                      | This API always returns `ip`.                                                          |
+| listenersStatus | Map\<String, List\<String>> | Subscriber list. The key is `dataId+groupName+namespaceId` of the subscribed config, and the value is the MD5 value of the config subscribed to by this subscriber. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -641,68 +638,68 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 3.11. 发布Beta灰度配置
+### 3.11. Publish Beta Gray Config
 
-#### 描述
+#### Description
 
-用于灰度发布 Nacos 配置，方便修改配置时进行测试，降低因配置错误导致的应用故障范围。
+Publishes a Nacos config in gray mode so changes can be tested and the impact of config errors can be reduced.
 
 :::note
-灰度发布的配置不能重复灰度，若该配置已经存在一个Beta灰度配置存在，则该接口将发布失败，需要先[停止灰度](#312-停止配置Beta灰度)后，再重新发布。
+A config cannot have duplicate gray releases. If a beta gray config already exists for the config, this API fails. You must [stop the gray release](#312-stop-config-beta-gray-release) before publishing again.
 :::
 
 ```java
 boolean publishBetaConfig(String dataId, String groupName, String namespaceId, String content, String appName, String srcUser, String configTags, String desc, String type, String betaIps) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                                                                             |
+| Parameter Name         | Parameter Type   | Description                                                                             |
 |:------------|:-------|:-------------------------------------------------------------------------------|
-| dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 256 字节。                           |
-| groupName   | string | 配置分组。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 128 字节。                            |
-| namespaceId | long   | 配置所属的命名空间ID。                                                                   |
-| content     | string | 配置内容，不超过 100K 字节。                                                              |
-| desc        | string | 配置的描述内容。                                                                       |
-| type        | string | 配置类型，见 `com.alibaba.nacos.api.config.ConfigType`，默认为TEXT                       |
-| appName     | string | 配置所属的应用名称。                                                                     |
-| srcUser     | string | 创建此配置的用户名，即代理此用户进行配置发布，此配置的`createUser`将为此用户，若传入空字串，则表示当前登录的用户名作为`createUser`。 |
-| configTags  | string | 此配置的标签，多个标签用逗号`,`分隔。                                                           |
-| betaIps     | string | 配置的灰度IP列表，多个IP用逗号`,`分隔。                                                        |
+| dataId      | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes.                           |
+| groupName   | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.                            |
+| namespaceId | string | Namespace ID to which the config belongs.                                                                   |
+| content     | string | Config content. The length cannot exceed 100 KB.                                                              |
+| desc        | string | Config description.                                                                       |
+| type        | string | Config type. See `com.alibaba.nacos.api.config.ConfigType`. The default value is `TEXT`.                       |
+| appName     | string | Application name to which the config belongs.                                                                     |
+| srcUser     | string | Username used to publish this config. The config is published on behalf of this user, and the config `createUser` is set to this user. If an empty string is passed, the current logged-in username is used as `createUser`. |
+| configTags  | string | Tags of this config. Multiple tags are separated by commas `,`.                                                           |
+| betaIps     | string | Gray IP list of the config. Multiple IP addresses are separated by commas `,`.                                                        |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述     |
+| Parameter Type    | Description     |
 |:--------|:-------|
-| boolean | 是否发布成功 |
+| boolean | Whether publishing succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 对`127.0.0.1`这个ip进行`maintain.client.test`配置的Beta灰度。
+    // Performs beta gray release of config `maintain.client.test` for IP `127.0.0.1`.
     boolean result = configMaintainerService.publishBetaConfig("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, "testBeta", "testApp", "", "testTag1", "test", "TEXT", "127.0.0.1");
 } catch (NacosException e) {
     e.printStackTrace();
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 3.12. 停止配置Beta灰度
+### 3.12. Stop Config Beta Gray Release
 
-#### 描述
+#### Description
 
-停止指定配置的Beta配置
+Stops the beta config of the specified config.
 
 :::note
-只有通过[发布Beta灰度配置](#311-发布beta灰度配置)将配置变更为Beta发布中的状态，调用此接口才能停止Beta发布状态。
+This API can stop the beta publish state only after the config has been changed to beta publishing by [Publish Beta Gray Config](#311-publish-beta-gray-config).
 :::
 
 ```java
@@ -711,27 +708,27 @@ boolean stopBeta(String dataId, String groupName) throws NacosException;
 boolean stopBeta(String dataId, String groupName, String namespaceId) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                                                   |
+| Parameter Name         | Parameter Type   | Description                                                   |
 |:------------|:-------|:-----------------------------------------------------|
-| dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| groupName   | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。      |
-| namespaceId | string | 配置所属的命名空间ID。                                         |
+| dataId      | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes. |
+| groupName   | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.      |
+| namespaceId | string | Namespace ID to which the config belongs.                                         |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述           |
+| Parameter Type    | Description           |
 |:--------|:-------------|
-| boolean | 是否停止Beta灰度成功 |
+| boolean | Whether stopping beta gray release succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 对`127.0.0.1`这个ip进行`maintain.client.test`配置的Beta灰度。
+    // Performs beta gray release of config `maintain.client.test` for IP `127.0.0.1`.
     boolean result = configMaintainerService.publishBetaConfig("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, "testBeta", "testApp", "", "testTag1", "test", "TEXT", "127.0.0.1");
-    # 停止`maintain.client.test`配置的Beta灰度
+    // Stops the beta gray release of config `maintain.client.test`.
     result = configMaintainerService.stopBeta("maintain.client.test", Constants.DEFAULT_GROUP);
     result = configMaintainerService.stopBeta("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
 } catch (NacosException e) {
@@ -739,18 +736,18 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 3.13. 查询Beta灰度的配置
+### 3.13. Query Beta Gray Config
 
-#### 描述
+#### Description
 
-查询指定配置的Beta配置
+Queries the beta config of the specified config.
 
 :::note
-只有通过[发布Beta灰度配置](#311-发布beta灰度配置)将配置变更为Beta发布中的状态，调用此接口才能查询Beta发布状态。
+This API can query the beta publish state only after the config has been changed to beta publishing by [Publish Beta Gray Config](#311-publish-beta-gray-config).
 :::
 
 ```java
@@ -759,270 +756,270 @@ ConfigGrayInfo queryBeta(String dataId, String groupName) throws NacosException;
 ConfigGrayInfo queryBeta(String dataId, String groupName, String namespaceId) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                                                   |
+| Parameter Name         | Parameter Type   | Description                                                   |
 |:------------|:-------|:-----------------------------------------------------|
-| dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| groupName   | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。      |
-| namespaceId | string | 配置所属的命名空间ID。                                         |
+| dataId      | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes. |
+| groupName   | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.      |
+| namespaceId | string | Namespace ID to which the config belongs.                                         |
 
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型           | 描述      |
+| Parameter Type           | Description      |
 |:---------------|:--------|
-| ConfigGrayInfo | 灰度配置的信息 |
+| ConfigGrayInfo | Gray config information. |
 
-其中ConfigGrayInfo的内容如下：
+The ConfigGrayInfo content is as follows:
 
-| 参数名              | 参数类型   | 描述                                                   |
+| Parameter Name              | Parameter Type   | Description                                                   |
 |:-----------------|:-------|:-----------------------------------------------------|
-| id               | long   | 配置在实际存储介质中的ID，没有业务含义，仅作为配置在存储介质中的唯一标识。一般为唯一自增ID。     |
-| namespaceId      | string | 配置所属的命名空间ID。                                         |
-| groupName        | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。      |
-| dataId           | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| md5              | string | 配置内容的md5值。                                           |
-| type             | string | 配置的类型，如properties、json、yaml等，主要用于标记和展示。              |
-| appName          | string | 配置所属的应用名称。                                           |
-| createTime       | long   | 配置的创建时间，为时间戳，单位为毫秒。                                  |
-| modifyTime       | long   | 配置的最新更新时间，为时间戳，单位为毫秒。                                |
-| content          | string | 配置内容。                                                |
-| desc             | string | 配置的描述信息。                                             |
-| encryptedDataKey | string | 配置的加密密钥，当使用配置的加密功能时，该字段才有值。                          |
-| createUser       | string | 创建此配置的用户名。                                           |
-| createIp         | string | 创建此配置的来源IP。                                          |
-| configTags       | string | 此配置的标签，多个标签用逗号`,`分隔。                                 |
-| grayName         | string | 灰度名称，固定为`beta`                                       |
-| grayRule         | string | 灰度的规则，格式为`json`,其中的`expr`为灰度的ip列表                    |
+| id               | long   | ID of the config in the actual storage medium. It has no business meaning and is only a unique identifier in storage. It is usually an auto-increment ID.     |
+| namespaceId      | string | Namespace ID to which the config belongs.                                         |
+| groupName        | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.      |
+| dataId           | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes. |
+| md5              | string | MD5 value of the config content.                                           |
+| type             | string | Config type, such as properties, json, or yaml. It is mainly used for labeling and display.              |
+| appName          | string | Application name to which the config belongs.                                           |
+| createTime       | long   | Config creation time as a timestamp in milliseconds.                                  |
+| modifyTime       | long   | Latest config update time as a timestamp in milliseconds.                                |
+| content          | string | Config content.                                                |
+| desc             | string | Config description.                                             |
+| encryptedDataKey | string | Config encryption key. This field has a value only when config encryption is used.                          |
+| createUser       | string | Username that created this config.                                           |
+| createIp         | string | Source IP address that created this config.                                          |
+| configTags       | string | Tags of this config. Multiple tags are separated by commas `,`.                                 |
+| grayName         | string | Gray name. The value is fixed to `beta`.                                       |
+| grayRule         | string | Gray rule in `json` format. The `expr` field is the gray IP list.                    |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 对`127.0.0.1`这个ip进行`maintain.client.test`配置的Beta灰度。
+    // Performs beta gray release of config `maintain.client.test` for IP `127.0.0.1`.
     boolean publishResult = configMaintainerService.publishBetaConfig("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, "testBeta", "testApp", "", "testTag1", "test", "TEXT", "127.0.0.1");
-    # 查询`maintain.client.test`配置的Beta灰度
+    // Queries the beta gray release of config `maintain.client.test`.
     ConfigGrayInfo result = configMaintainerService.queryBeta("maintain.client.test", Constants.DEFAULT_GROUP);
-    result = configMaintainerService.queryBeta("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);} 
+    result = configMaintainerService.queryBeta("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);}
 catch (NacosException e) {
     e.printStackTrace();
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 3.14. 获取配置历史历史版本列表
+### 3.14. Get Config History Version List
 
-#### 描述
+#### Description
 
-获取指定配置的历史版本列表
+Gets the historical version list of the specified config.
 
 ```java
 Page<ConfigHistoryBasicInfo> listConfigHistory(String dataId, String group, String namespaceId, Integer pageNo, Integer pageSize) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                                                   |
+| Parameter Name         | Parameter Type   | Description                                                   |
 |:------------|:-------|:-----------------------------------------------------|
-| dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| groupName   | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。      |
-| namespaceId | string | 配置所属的命名空间ID。                                         |
-| pageNo      | int    | 配置历史版本列表的分页页码，默认为1。                                  |
-| pageSize    | int    | 配置历史版本列表的分页大小，默认为100。                                |
+| dataId      | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes. |
+| groupName   | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.      |
+| namespaceId | string | Namespace ID to which the config belongs.                                         |
+| pageNo      | int    | Page number of the config history list. The default value is 1.                                  |
+| pageSize    | int    | Page size of the config history list. The default value is 100.                                |
 
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                          | 描述            |
+| Parameter Type                          | Description            |
 |:------------------------------|:--------------|
-| Page\<ConfigHistoryBasicInfo> | 配置历史版本列表的分页结果 |
+| Page\<ConfigHistoryBasicInfo> | Paginated config history list result. |
 
-其中Page及ConfigHistoryBasicInfo的内容如下：
+The `Page` and `ConfigHistoryBasicInfo` content is as follows:
 
-| 参数名            | 参数类型                          | 描述               |
+| Parameter Name            | Parameter Type                          | Description               |
 |:---------------|:------------------------------|:-----------------|
-| totalCount     | int                           | 符合该条件下的配置历史版本总数。 |
-| pageNumber     | int                           | 当前页码。            |
-| pagesAvailable | int                           | 分页的总页数。          |
-| pageItems      | List\<ConfigHistoryBasicInfo> | 当前页的配置历史版本列表。    |
+| totalCount     | int                           | Total number of config history versions that match the condition. |
+| pageNumber     | int                           | Current page number.            |
+| pagesAvailable | int                           | Total number of pages.          |
+| pageItems      | List\<ConfigHistoryBasicInfo> | Config history version list on the current page.    |
 
-| 参数名         | 参数类型   | 描述                                                   |
+| Parameter Name         | Parameter Type   | Description                                                   |
 |:------------|:-------|:-----------------------------------------------------|
-| id          | long   | 配置历史版本的ID，没有业务含义，仅作为配置历史版本在存储介质中的唯一标识。一般为唯一自增ID。     |
-| namespaceId | string | 配置所属的命名空间ID。                                         |
-| groupName   | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。      |
-| dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| md5         | string | 配置内容的md5值。                                           |
-| type        | string | 配置的类型，如properties、json、yaml等，主要用于标记和展示。              |
-| appName     | string | 配置所属的应用名称。                                           |
-| createTime  | long   | 配置的创建时间，为时间戳，单位为毫秒。                                  |
-| modifyTime  | long   | 配置的最新更新时间，为时间戳，单位为毫秒。                                |
-| srcUser     | string | 操作此版本的用户名。                                           |
-| srcIp       | string | 操作此版本的来源IP。                                          |
-| opType      | string | 此历史版本的操作类型，`I`为创建，`U`为更新，`D`为删除                      |
-| publishType | string | 此历史版本的发布类型，`formal`为正式发布，`gray`为灰度发布                 |
+| id          | long   | ID of the config history version. It has no business meaning and is only a unique identifier in storage. It is usually an auto-increment ID.     |
+| namespaceId | string | Namespace ID to which the config belongs.                                         |
+| groupName   | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.      |
+| dataId      | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes. |
+| md5         | string | MD5 value of the config content.                                           |
+| type        | string | Config type, such as properties, json, or yaml. It is mainly used for labeling and display.              |
+| appName     | string | Application name to which the config belongs.                                           |
+| createTime  | long   | Config creation time as a timestamp in milliseconds.                                  |
+| modifyTime  | long   | Latest config update time as a timestamp in milliseconds.                                |
+| srcUser     | string | Username that operated this version.                                           |
+| srcIp       | string | Source IP address that operated this version.                                          |
+| opType      | string | Operation type of this historical version. `I` indicates creation, `U` indicates update, and `D` indicates deletion.                      |
+| publishType | string | Publish type of this historical version. `formal` indicates formal release, and `gray` indicates gray release.                 |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 查询`maintain.client.test`配置的历史版本列表。
+    // Queries the historical version list of config `maintain.client.test`.
     Page<ConfigHistoryBasicInfo> configHistoryBasicInfoPage = configMaintainerService.listConfigHistory("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, 1, 10);
 } catch (NacosException e) {
     e.printStackTrace();
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 3.15. 获取配置历史历史版本详情
+### 3.15. Get Config History Version Details
 
-#### 描述
+#### Description
 
-通过此API，可以查询某一配置的某一个历史版本详情。
+Use this API to query the details of a historical version of a config.
 
 ```java
 ConfigHistoryDetailInfo getConfigHistoryInfo(String dataId, String groupName, String namespaceId, Long nid) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                                                   |
+| Parameter Name         | Parameter Type   | Description                                                   |
 |:------------|:-------|:-----------------------------------------------------|
-| namespaceId | string | 配置所属的命名空间ID。                                         |
-| groupName   | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。      |
-| dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| nid         | long   | 目标历史版本在的Id， 通过[获取配置历史历史版本列表](#314-获取配置历史历史版本列表)接口获取。 |
+| namespaceId | string | Namespace ID to which the config belongs.                                         |
+| groupName   | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.      |
+| dataId      | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes. |
+| nid         | long   | ID of the target historical version. Obtain it through the [Get Config History Version List](#314-get-config-history-version-list) API. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                    | 描述          |
+| Parameter Type                    | Description          |
 |:------------------------|:------------|
-| ConfigHistoryDetailInfo | 配置历史版本的详细信息 |
+| ConfigHistoryDetailInfo | Detailed information about the config history version. |
 
-其中ConfigHistoryDetailInfo的内容如下：
+The ConfigHistoryDetailInfo content is as follows:
 
-| 参数名              | 参数类型   | 描述                                                   |
+| Parameter Name              | Parameter Type   | Description                                                   |
 |:-----------------|:-------|:-----------------------------------------------------|
-| id               | long   | 配置历史版本的ID，没有业务含义，仅作为配置历史版本在存储介质中的唯一标识。一般为唯一自增ID。     |
-| namespaceId      | string | 配置所属的命名空间ID。                                         |
-| groupName        | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。      |
-| dataId           | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| md5              | string | 配置内容的md5值。                                           |
-| type             | string | 配置的类型，如properties、json、yaml等，主要用于标记和展示。              |
-| appName          | string | 配置所属的应用名称。                                           |
-| createTime       | long   | 配置的创建时间，为时间戳，单位为毫秒。                                  |
-| modifyTime       | long   | 配置的最新更新时间，为时间戳，单位为毫秒。                                |
-| content          | string | 配置历史版本的内容。                                           |
-| encryptedDataKey | string | 配置解密的密钥，仅当配置为加密配置时返回。                                |
-| grayName         | string | 配置历史版本的灰度发布名称，当此次历史版本为灰度发布时存在，一般为`beta`              |
-| extInfo          | string | 历史版本的扩展信息，目前存储灰度发布时的发布规则，如灰度的ip地址列表，格式为`json`。       |
+| id               | long   | ID of the config history version. It has no business meaning and is only a unique identifier in storage. It is usually an auto-increment ID.     |
+| namespaceId      | string | Namespace ID to which the config belongs.                                         |
+| groupName        | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.      |
+| dataId           | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes. |
+| md5              | string | MD5 value of the config content.                                           |
+| type             | string | Config type, such as properties, json, or yaml. It is mainly used for labeling and display.              |
+| appName          | string | Application name to which the config belongs.                                           |
+| createTime       | long   | Config creation time as a timestamp in milliseconds.                                  |
+| modifyTime       | long   | Latest config update time as a timestamp in milliseconds.                                |
+| content          | string | Content of the config history version.                                           |
+| encryptedDataKey | string | Config decryption key. It is returned only when the config is encrypted.                                |
+| grayName         | string | Gray publish name of the config history version. It exists when this historical version is a gray release and is usually `beta`.              |
+| extInfo          | string | Extended information of the historical version. It currently stores gray publish rules, such as the gray IP address list, in `json` format.       |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 查询`maintain.client.test`配置的历史版本列表。
+    // Queries the historical version list of config `maintain.client.test`.
     Page<ConfigHistoryBasicInfo> configHistoryBasicInfoPage = configMaintainerService.listConfigHistory("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, 1, 10);
     int nid = configHistoryBasicInfoPage.getPageItems().get(0).getId();
-    # 查询`maintain.client.test`配置的历史版本列表中第一个历史版本的详细信息。
+    // Queries the details of the first historical version in the historical version list of config `maintain.client.test`.
     ConfigHistoryDetailInfo result = configMaintainerService.getConfigHistoryInfo("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, nid);
 } catch (NacosException e) {
     e.printStackTrace();
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 3.16. 查询配置上一版本信息详情
+### 3.16. Query Previous Config Version Details
 
-#### 描述
+#### Description
 
-获取指定配置的上一历史版本的信息详情
+Gets the details of the previous historical version of the specified config.
 
 ```java
 ConfigHistoryDetailInfo getPreviousConfigHistoryInfo(String dataId, String groupName, String namespaceId, Long id) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                                                   |
+| Parameter Name         | Parameter Type   | Description                                                   |
 |:------------|:-------|:-----------------------------------------------------|
-| namespaceId | string | 配置所属的命名空间ID。                                         |
-| groupName   | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。      |
-| dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| id          | long   | 配置在实际存储介质中的ID，通过[获取配置](#31-获取配置) 获取              |
+| namespaceId | string | Namespace ID to which the config belongs.                                         |
+| groupName   | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.      |
+| dataId      | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes. |
+| id          | long   | ID of the config in the actual storage medium. Obtain it through [Get Config](#31-get-config).              |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                    | 描述          |
+| Parameter Type                    | Description          |
 |:------------------------|:------------|
-| ConfigHistoryDetailInfo | 配置历史版本的详细信息 |
+| ConfigHistoryDetailInfo | Detailed information about the config history version. |
 
-其中ConfigHistoryDetailInfo的内容如下：
+The ConfigHistoryDetailInfo content is as follows:
 
-| 参数名              | 参数类型   | 描述                                                   |
+| Parameter Name              | Parameter Type   | Description                                                   |
 |:-----------------|:-------|:-----------------------------------------------------|
-| id               | long   | 配置历史版本的ID，没有业务含义，仅作为配置历史版本在存储介质中的唯一标识。一般为唯一自增ID。     |
-| namespaceId      | string | 配置所属的命名空间ID。                                         |
-| groupName        | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。      |
-| dataId           | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| md5              | string | 配置内容的md5值。                                           |
-| type             | string | 配置的类型，如properties、json、yaml等，主要用于标记和展示。              |
-| appName          | string | 配置所属的应用名称。                                           |
-| createTime       | long   | 配置的创建时间，为时间戳，单位为毫秒。                                  |
-| modifyTime       | long   | 配置的最新更新时间，为时间戳，单位为毫秒。                                |
-| content          | string | 配置历史版本的内容。                                           |
-| encryptedDataKey | string | 配置解密的密钥，仅当配置为加密配置时返回。                                |
-| grayName         | string | 配置历史版本的灰度发布名称，当此次历史版本为灰度发布时存在，一般为`beta`              |
-| extInfo          | string | 历史版本的扩展信息，目前存储灰度发布时的发布规则，如灰度的ip地址列表，格式为`json`。       |
+| id               | long   | ID of the config history version. It has no business meaning and is only a unique identifier in storage. It is usually an auto-increment ID.     |
+| namespaceId      | string | Namespace ID to which the config belongs.                                         |
+| groupName        | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.      |
+| dataId           | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes. |
+| md5              | string | MD5 value of the config content.                                           |
+| type             | string | Config type, such as properties, json, or yaml. It is mainly used for labeling and display.              |
+| appName          | string | Application name to which the config belongs.                                           |
+| createTime       | long   | Config creation time as a timestamp in milliseconds.                                  |
+| modifyTime       | long   | Latest config update time as a timestamp in milliseconds.                                |
+| content          | string | Content of the config history version.                                           |
+| encryptedDataKey | string | Config decryption key. It is returned only when the config is encrypted.                                |
+| grayName         | string | Gray publish name of the config history version. It exists when this historical version is a gray release and is usually `beta`.              |
+| extInfo          | string | Extended information of the historical version. It currently stores gray publish rules, such as the gray IP address list, in `json` format.       |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 获取`maintain.client.test`配置的ID。
+    // Gets the ID of config `maintain.client.test`.
     int id = configMaintainerService.getConfig("maintain.client.test").getId();
-    # 获取`maintain.client.test`配置的上一历史版本的详细信息。
+    // Gets the details of the previous historical version of config `maintain.client.test`.
     ConfigHistoryDetailInfo result = configMaintainerService.getPreviousConfigHistoryInfo("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, id);
 } catch (NacosException e) {
     e.printStackTrace();
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 3.17. 触发Nacos Server从存储介质中dump数据到磁盘缓存中
+### 3.17. Trigger Nacos Server to Dump Data from Storage to Disk Cache
 
-#### 描述
+#### Description
 
-手动触发从存储中加载所有配置数据到Nacos Server本地缓存。
+Manually triggers loading all config data from storage to the local cache of Nacos Server.
 
 ```java
 String updateLocalCacheFromStore() throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-无
+None
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述            |
+| Parameter Type   | Description            |
 |:-------|:--------------|
-| String | 触发dump操作的返回信息 |
+| String | Return information of the dump operation. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -1032,34 +1029,34 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 3.18. 设置配置中心日志级别
+### 3.18. Set Config Center Log Level
 
-#### 描述
+#### Description
 
-动态设置指定模块的日志级别
+Dynamically sets the log level of the specified module.
 
 ```java
 String setLogLevel(String logName, String logLevel) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名      | 参数类型   | 描述                                      |
+| Parameter Name      | Parameter Type   | Description                                      |
 |:---------|:-------|:----------------------------------------|
-| logName  | string | 日志模块名称，如`config-server`, `config-dump`等 |
-| logLevel |  string      | 日志级别（如`INFO`、`DEBUG`）                   |
+| logName  | string | Log module name, such as `config-server` or `config-dump`. |
+| logLevel |  string      | Log level, such as `INFO` or `DEBUG`.                   |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述          |
+| Parameter Type   | Description          |
 |:-------|:------------|
-| String | 设置日志级别的结果信息 |
+| String | Result information of setting the log level. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -1069,13 +1066,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
 ### 3.19. Update config metadata
 
-#### 描述
+#### Description
 
 Update config metadata such as description and config tags.
 
@@ -1083,23 +1080,23 @@ Update config metadata such as description and config tags.
 boolean updateConfigMetadata(String dataId, String groupName, String namespaceId, String description, String configTags) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                                                  |
+| Parameter Name         | Parameter Type   | Description                                                  |
 |:------------|:-------|:----------------------------------------------------|
-| dataId      | string | 配置 ID。只允许英字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
-| groupName   | string | 配置分组。只允许英字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 128 字节。  |
-| namespaceId | string | 配置所属的命名空间ID。                                        |
-| description | string | 配置的描述信息                                             |
-| configTags  | string | 此配置的标签，多个标签用逗号`,`分隔。                                |
+| dataId      | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes. |
+| groupName   | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.  |
+| namespaceId | string | Namespace ID to which the config belongs.                                        |
+| description | string | Config description.                                             |
+| configTags  | string | Tags of this config. Multiple tags are separated by commas `,`.                                |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述     |
+| Parameter Type    | Description     |
 |:--------|:-------|
-| boolean | 是否更新成功 |
+| boolean | Whether the update succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -1109,13 +1106,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
 ### 3.20. Search config list by details
 
-#### 描述
+#### Description
 
 Search config list by dataId, groupName, namespaceId, search mode, config detail, type, tags, app name with pagination.
 
@@ -1124,28 +1121,28 @@ Page<ConfigBasicInfo> searchConfigByDetails(String dataId, String groupName, Str
         String configDetail, String type, String configTags, String appName, int pageNo, int pageSize) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                                                         |
+| Parameter Name         | Parameter Type   | Description                                                         |
 |:------------|:-------|:-----------------------------------------------------------|
-| dataId      | string | 配置 ID，支持模糊或精确（由 search 决定）。                                   |
-| groupName   | string | 配置分组。                                                    |
-| namespaceId | string | 配置所属的命名空间ID。                                             |
-| search      | string | 搜索模式：`accurate` 精确 或 `blur` 模糊。                                |
-| configDetail| string | 配置详情过滤（可选）。                                             |
-| type        | string | 配置类型（可选）。                                               |
-| configTags  | string | 配置标签，多个用逗号分隔（可选）。                                        |
-| appName     | string | 配置所属应用名（可选）。                                             |
-| pageNo      | int    | 页码，从 1 开始。                                                |
-| pageSize    | int    | 每页条数。                                                     |
+| dataId      | string | Config ID. Fuzzy or exact matching is supported depending on `search`.                                   |
+| groupName   | string | Config group.                                                    |
+| namespaceId | string | Namespace ID to which the config belongs.                                             |
+| search      | string | Search mode: `accurate` for exact search or `blur` for fuzzy search.                                |
+| configDetail| string | Config detail filter (optional).                                             |
+| type        | string | Config type (optional).                                               |
+| configTags  | string | Config tags, separated by commas (optional).                                        |
+| appName     | string | Application name to which the config belongs (optional).                                             |
+| pageNo      | int    | Page number, starting from 1.                                                |
+| pageSize    | int    | Number of items per page.                                                     |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                 | 描述         |
+| Parameter Type                 | Description         |
 |:---------------------|:-----------|
-| Page\<ConfigBasicInfo> | 分页配置列表。 |
+| Page\<ConfigBasicInfo> | Paginated config list. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -1157,17 +1154,17 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-## 4. 服务发现运维API
+## 4. Service Discovery Maintainer APIs
 
-### 4.1. 创建服务
+### 4.1. Create Service
 
-#### 描述
+#### Description
 
-创建一个新的空服务，默认为持久化服务。
+Creates a new empty service. The default is a persistent service.
 
 ```java
 String createService(String serviceName) throws NacosException;
@@ -1183,29 +1180,29 @@ String createService(String namespaceId, String groupName, String serviceName, b
 String createService(Service service) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名                                        | 参数类型               | 描述                |
+| Parameter Name                                        | Parameter Type               | Description                |
 |:-------------------------------------------|:-------------------|:------------------|
-| serviceName(Service.serviceName)           | string             | 服务的名称             |
-| groupName(Service.groupName)               | string             | 服务的分组名称           |
-| namespaceId(Service.namespaceId)           | string             | 服务所属的命名空间ID       |
-| ephemeral(Service.ephemeral)               | boolean            | 是否临时服务，默认为`false` |
-| protectThreshold(Service.protectThreshold) | float              | 服务的防护阈值，默认为`0.0`  |
-| Service.metadata                           | Map<String,String> | 服务的元数据            |
-| Service.selector                           | Selector           | 服务的实例选择器，默认为None  |
+| serviceName(Service.serviceName)           | string             | Service name             |
+| groupName(Service.groupName)               | string             | Service group name           |
+| namespaceId(Service.namespaceId)           | string             | Namespace ID to which the service belongs       |
+| ephemeral(Service.ephemeral)               | boolean            | Whether the service is ephemeral. The default value is `false`. |
+| protectThreshold(Service.protectThreshold) | float              | Service protection threshold. The default value is `0.0`.  |
+| Service.metadata                           | Map<String,String> | Service metadata            |
+| Service.selector                           | Selector           | Service instance selector. The default value is none.  |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述        |
+| Parameter Type   | Description        |
 |:-------|:----------|
-| String | 创建服务的结果描述 |
+| String | Result description of service creation. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 以下请求均创建一个名为`maintain.client.test`的持久化服务。
+    // The following requests all create a persistent service named `maintain.client.test`.
     String result = namingMaintainerService.createService("maintain.client.test");
     result = namingMaintainerService.createService("maintain.client.test", Constants.DEFAULT_GROUP);
     result = namingMaintainerService.createService("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
@@ -1215,26 +1212,26 @@ try {
     service.setName("maintain.client.test");
     service.setGroupName(Constants.DEFAULT_GROUP);
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
-    result = namingMaintainerService.createService(service); 
+    result = namingMaintainerService.createService(service);
 } catch (NacosException e) {
     e.printStackTrace();
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.2. 更新服务
+### 4.2. Update Service
 
-#### 描述
+#### Description
 
-更新服务信息，包括`保护阈值`、`元数据`、`实例选择器`等，服务的`名称`，`分组`，`命名空间`及`持久化`信息无法修改。
+Updates service information, including `protection threshold`, `metadata`, and `instance selector`. The service `name`, `group`, `namespace`, and `persistence` information cannot be modified.
 
 :::note
-该接口更新时会覆盖掉服务原来的内容信息，因此更新时需要传入完整的服务信息，避免在更新部分数据时将其他信息丢失。
+This API overwrites the original service information during update. Therefore, pass complete service information to avoid losing other information when updating partial data.
 
-另外当服务不存在时，更新时将会失败，请使用[创建服务](#41-创建服务)。
+If the service does not exist, the update fails. Use [Create Service](#41-create-service) instead.
 :::
 
 ```java
@@ -1249,29 +1246,29 @@ String updateService(String namespaceId, String groupName, String serviceName, b
 String updateService(Service service) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名                                        | 参数类型               | 描述                |
+| Parameter Name                                        | Parameter Type               | Description                |
 |:-------------------------------------------|:-------------------|:------------------|
-| serviceName(Service.serviceName)           | string             | 服务的名称             |
-| groupName(Service.groupName)               | string             | 服务的分组名称           |
-| namespaceId(Service.namespaceId)           | string             | 服务所属的命名空间ID       |
-| ephemeral(Service.ephemeral)               | boolean            | 是否临时服务，默认为`false` |
-| protectThreshold(Service.protectThreshold) | float              | 服务的防护阈值，默认为`0.0`  |
-| Service.metadata                           | Map<String,String> | 服务的元数据            |
-| Service.selector                           | Selector           | 服务的实例选择器，默认为None  |
+| serviceName(Service.serviceName)           | string             | Service name             |
+| groupName(Service.groupName)               | string             | Service group name           |
+| namespaceId(Service.namespaceId)           | string             | Namespace ID to which the service belongs       |
+| ephemeral(Service.ephemeral)               | boolean            | Whether the service is ephemeral. The default value is `false`. |
+| protectThreshold(Service.protectThreshold) | float              | Service protection threshold. The default value is `0.0`.  |
+| Service.metadata                           | Map<String,String> | Service metadata            |
+| Service.selector                           | Selector           | Service instance selector. The default value is none.  |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述        |
+| Parameter Type   | Description        |
 |:-------|:----------|
-| String | 更新服务的结果描述 |
+| String | Result description of service update. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 以下请求均对名为`maintain.client.test`的持久化服务进行更新
+    // The following requests all update the persistent service named `maintain.client.test`.
     String result = namingMaintainerService.updateService("maintain.client.test", new HashMap<>(), 0.0f, new NoneSelector());
     result = namingMaintainerService.updateService("maintain.client.test", Constants.DEFAULT_GROUP, new HashMap<>(), 0.0f, new NoneSelector());
     result = namingMaintainerService.updateService("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, new HashMap<>(), 0.0f, new NoneSelector());
@@ -1280,21 +1277,21 @@ try {
     service.setName("maintain.client.test");
     service.setGroupName(Constants.DEFAULT_GROUP);
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
-    result = namingMaintainerService.updateService(service); 
+    result = namingMaintainerService.updateService(service);
 } catch (NacosException e) {
     e.printStackTrace();
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.3. 删除服务
+### 4.3. Delete Service
 
-#### 描述
+#### Description
 
-删除服务，仅在服务下不存在实例时可以进行删除。若删除的服务已经不存在，则也会返回删除成功。
+Deletes a service. A service can be deleted only when it has no instances. If the service to delete does not exist, deletion success is also returned.
 
 ```java
 String removeService(String serviceName) throws NacosException;
@@ -1306,25 +1303,25 @@ String removeService(String namespaceId, String groupName, String serviceName) t
 String removeService(Service service) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名                              | 参数类型   | 描述          |
+| Parameter Name                              | Parameter Type   | Description          |
 |:---------------------------------|:-------|:------------|
-| serviceName(Service.serviceName) | string | 服务的名称       |
-| groupName(Service.groupName)     | string | 服务的分组名称     |
-| namespaceId(Service.namespaceId) | string | 服务所属的命名空间ID |
+| serviceName(Service.serviceName) | string | Service name       |
+| groupName(Service.groupName)     | string | Service group name     |
+| namespaceId(Service.namespaceId) | string | Namespace ID to which the service belongs |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述        |
+| Parameter Type   | Description        |
 |:-------|:----------|
-| String | 删除服务的结果描述 |
+| String | Result description of service deletion. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 以下请求均删除一个名为`maintain.client.test`的服务。
+    // The following requests all delete a service named `maintain.client.test`.
     String result = namingMaintainerService.removeService("maintain.client.test");
     result = namingMaintainerService.removeService("maintain.client.test", Constants.DEFAULT_GROUP);
     result = namingMaintainerService.removeService("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
@@ -1332,24 +1329,24 @@ try {
     service.setName("maintain.client.test");
     service.setGroupName(Constants.DEFAULT_GROUP);
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
-    result = namingMaintainerService.removeService(service); 
+    result = namingMaintainerService.removeService(service);
 } catch (NacosException e) {
     e.printStackTrace();
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.4. 查询服务详情
+### 4.4. Query Service Details
 
-#### 描述
+#### Description
 
-查询服务详情，返回服务的元数据、保护阈值、实例选择器以及服务下的逻辑集群`Cluster`的元数据等。
+Queries service details, including service metadata, protection threshold, instance selector, and metadata of logical clusters `Cluster` under the service.
 
 :::note
-此接口返回的服务详情不包含服务下的实例列表数据，仅包含元数据等信息，若需要获取服务下的实例列表及实例信息，请使用[查询服务实例列表](#415-查询服务实例列表)
+The service details returned by this API do not include the instance list under the service. They only include metadata and related information. To obtain the instance list and instance information under the service, use [Query Service instance List](#415-query-service-instance-list).
 :::
 
 ```java
@@ -1362,44 +1359,44 @@ ServiceDetailInfo getServiceDetail(String namespaceId, String groupName, String 
 ServiceDetailInfo getServiceDetail(Service service) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名                              | 参数类型   | 描述          |
+| Parameter Name                              | Parameter Type   | Description          |
 |:---------------------------------|:-------|:------------|
-| serviceName(Service.serviceName) | string | 服务的名称       |
-| groupName(Service.groupName)     | string | 服务的分组名称     |
-| namespaceId(Service.namespaceId) | string | 服务所属的命名空间ID |
+| serviceName(Service.serviceName) | string | Service name       |
+| groupName(Service.groupName)     | string | Service group name     |
+| namespaceId(Service.namespaceId) | string | Namespace ID to which the service belongs |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型              | 描述      |
+| Parameter Type              | Description      |
 |:------------------|:--------|
-| ServiceDetailInfo | 服务的详细信息 |
+| ServiceDetailInfo | Service details. |
 
-其中ServiceDetailInfo中的详细内容有：
+The details in `ServiceDetailInfo` are as follows:
 
-| 参数名                                       | 参数类型                      | 描述                                    |
+| Parameter Name                                       | Parameter Type                      | Description                                    |
 |:------------------------------------------|:--------------------------|:--------------------------------------|
-| namespaceId                               | string                    | 服务的命名空间ID                             |
-| groupName                                 | string                    | 服务的分组名称                               |
-| serviceName                               | string                    | 服务的名称                                 |
-| ephemeral                                 | boolean                   | 服务的持久化属性                              |
-| protectThreshold                          | float                     | 服务的保护阈值                               |
-| selector                                  | Selector                  | 服务的实例选择器                              |
-| metadata                                  | Map\<String,String>       | 服务的元数据                                |
-| clusterMap                                | Map\<String, ClusterInfo> | 服务下的逻辑集群信息Map，其中key为逻辑集群名称，value为详细信息 |
-| clusterMap.${key}.clusterName             | string                    | 逻辑集群的名称                               |
-| clusterMap.${key}.healthyCheckPort        | int                       | 逻辑集群的健康检查断藕                           |
-| clusterMap.${key}.useInstancePortForCheck | boolean                   | 逻辑集群是否使用实例信息的端口进行健康检查                 |
-| clusterMap.${key}.healthChecker           | AbstractHealthChecker     | 逻辑集群的健康检查类型                           |
-| clusterMap.${key}.metadata                | Map\<String,String>       | 逻辑集群的元数据                              |
+| namespaceId                               | string                    | Service namespace ID                             |
+| groupName                                 | string                    | Service group name                               |
+| serviceName                               | string                    | Service name                                 |
+| ephemeral                                 | boolean                   | Service persistence attribute                              |
+| protectThreshold                          | float                     | Service protection threshold                               |
+| selector                                  | Selector                  | Service instance selector                              |
+| metadata                                  | Map\<String,String>       | Service metadata                                |
+| clusterMap                                | Map\<String, ClusterInfo> | Map of logical cluster information under the service. The key is the logical cluster name, and the value is detailed information. |
+| clusterMap.${key}.clusterName             | string                    | Logical cluster name                               |
+| clusterMap.${key}.healthyCheckPort        | int                       | Health check port of the logical cluster                           |
+| clusterMap.${key}.useInstancePortForCheck | boolean                   | Whether the logical cluster uses the instance port for health checks                 |
+| clusterMap.${key}.healthChecker           | AbstractHealthChecker     | Health check type of the logical cluster                           |
+| clusterMap.${key}.metadata                | Map\<String,String>       | Logical cluster metadata                              |
 
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 以下请求均获取一个名为`maintain.client.test`的服务详情信息。
+    // The following requests all obtain details of a service named `maintain.client.test`.
     ServiceDetailInfo result = namingMaintainService.getServiceDetail("maintain.client.test");
     result = namingMaintainService.getServiceDetail("maintain.client.test", Constants.DEFAULT_GROUP);
     result = namingMaintainService.getServiceDetail("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
@@ -1413,15 +1410,15 @@ result = namingMaintainService.getServiceDetail(service);
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.5. 查询服务列表
+### 4.5. Query Service List
 
-#### 描述
+#### Description
 
-获取满足条件的服务列表。通过该接口获得的服务列表不带有实例信息，若需要获取服务下的实例列表及实例信息，请使用[查询服务实例列表](#415-查询服务实例列表)
+Gets a service list that matches the conditions. The service list obtained through this API does not contain instance information. To obtain the instance list and instance information under services, use [Query Service instance List](#415-query-service-instance-list).
 
 ```java
 Page<ServiceView> listServices(String namespaceId) throws NacosException;
@@ -1431,46 +1428,46 @@ Page<ServiceView> listServices(String namespaceId, String groupNameParam, String
 Page<ServiceView> listServices(String namespaceId, String groupNameParam, String serviceNameParam, boolean ignoreEmptyService, int pageNo, int pageSize) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名                | 参数类型    | 描述                                      |
+| Parameter Name                | Parameter Type    | Description                                      |
 |:-------------------|:--------|:----------------------------------------|
-| namespaceId        | string  | 服务所属的命名空间ID                             |
-| groupNameParam     | string  | 服务的分组名称模版，支持使用`*`进行前缀后缀的模糊匹配，为空时获取所有分组。 |
-| serviceNameParam   | string  | 服务的名称模版，支持使用`*`进行前缀后缀的模糊匹配，为空时获取所有服务。   |
-| ignoreEmptyService | boolean | 是否忽略空服务，默认为`true`，为`true`将不返回空服务。       |
-| pageNo             | int     | 分页页码，默认为1。                              |
-| pageSize           | int     | 分页每页大小，默认为100。                          |
+| namespaceId        | string  | Namespace ID to which the service belongs                             |
+| groupNameParam     | string  | Service group name pattern. `*` can be used for prefix and suffix fuzzy matching. If empty, all groups are returned. |
+| serviceNameParam   | string  | Service name pattern. `*` can be used for prefix and suffix fuzzy matching. If empty, all services are returned.   |
+| ignoreEmptyService | boolean | Whether to ignore empty services. The default value is `true`. If true, empty services are not returned.       |
+| pageNo             | int     | Page number. The default value is 1.                              |
+| pageSize           | int     | Page size. The default value is 100.                          |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型               | 描述            |
+| Parameter Type               | Description            |
 |:-------------------|:--------------|
-| Page\<ServiceView> | 满足条件服务列表的分页结果 |
+| Page\<ServiceView> | Paginated result of services that match the conditions. |
 
-具体Page及ServiceView的内容如下：
+The specific `Page` and `ServiceView` content is as follows:
 
-| 参数名            | 参数类型                   | 描述           |
+| Parameter Name            | Parameter Type                   | Description           |
 |:---------------|:-----------------------|:-------------|
-| totalCount     | int                    | 符合该条件下的服务总数。 |
-| pageNumber     | int                    | 当前页码。        |
-| pagesAvailable | int                    | 分页的总页数。      |
-| pageItems      | List\<ConfigBasicInfo> | 当前页的服务列表。    |
+| totalCount     | int                    | Total number of services that match the condition. |
+| pageNumber     | int                    | Current page number.        |
+| pagesAvailable | int                    | Total number of pages.      |
+| pageItems      | List\<ConfigBasicInfo> | Service list on the current page.    |
 
-| 参数名                  | 参数类型    | 描述         |
+| Parameter Name                  | Parameter Type    | Description         |
 |:---------------------|:--------|:-----------|
-| name                 | string  | 服务的名称      |
-| groupName            | string  | 服务的分组名称    |
-| clusterCount         | int     | 服务下逻辑集群的个数 |
-| ipCount              | int     | 服务下的实例总数   |
-| healthyInstanceCount | int     | 服务下的健康实例总数 |
-| triggerFlag          | boolean | 是否触发了阈值保护  |
+| name                 | string  | Service name      |
+| groupName            | string  | Service group name    |
+| clusterCount         | int     | Number of logical clusters under the service |
+| ipCount              | int     | Total number of instances under the service   |
+| healthyInstanceCount | int     | Total number of healthy instances under the service |
+| triggerFlag          | boolean | Whether threshold protection is triggered  |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 以下请求均获取所有服务列表(最多前100个)。
+    // The following requests all obtain the service list (up to the first 100 services).
     Page<ServiceView> result = namingMaintainService.listServices(Constants.DEFAULT_NAMESPACE_ID);
     result = namingMaintainService.listServices(Constants.DEFAULT_NAMESPACE_ID, "", "");
     result = namingMaintainService.listServices(Constants.DEFAULT_NAMESPACE_ID, "", "", true, 1, 100);
@@ -1479,18 +1476,18 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.6. 查询服务列表（携带实例信息）
+### 4.6. Query Service List with instance Information
 
-#### 描述
+#### Description
 
-获取满足条件的服务列表。通过该接口获得的服务列表会带有实例信息。
+Gets a service list that matches the conditions. The service list obtained through this API includes instance information.
 
 :::note
-此接口性能较差，可能返回很大量的数据导致带宽，内存处于高负载状态，请谨慎使用；建议使用[获取服务列表](#45-获取服务列表)配合[查询服务实例列表](#415-查询服务实例列表)按需获取。
+This API has poor performance and may return a large amount of data, causing high bandwidth and memory load. Use it with caution. We recommend using [Get Service List](#45-query-service-list) together with [Query Service instance List](#415-query-service-instance-list) to retrieve data as needed.
 :::
 
 ```java
@@ -1501,52 +1498,52 @@ Page<ServiceDetailInfo> listServicesWithDetail(String namespaceId, String groupN
 Page<ServiceDetailInfo> listServicesWithDetail(String namespaceId, String groupNameParam, String serviceNameParam, int pageNo, int pageSize) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名          | 参数类型   | 描述                                                                                     |
+| Parameter Name          | Parameter Type   | Description                                                                                     |
 |:-------------|:-------|:---------------------------------------------------------------------------------------|
-| namespaceId        | string  | 服务所属的命名空间ID                             |
-| groupNameParam     | string  | 服务的分组名称模版，支持使用`*`进行前缀后缀的模糊匹配，为空时获取所有分组。 |
-| serviceNameParam   | string  | 服务的名称模版，支持使用`*`进行前缀后缀的模糊匹配，为空时获取所有服务。   |
-| pageNo             | int     | 分页页码，默认为1。                              |
-| pageSize           | int     | 分页每页大小，默认为100。                          |
+| namespaceId        | string  | Namespace ID to which the service belongs                             |
+| groupNameParam     | string  | Service group name pattern. `*` can be used for prefix and suffix fuzzy matching. If empty, all groups are returned. |
+| serviceNameParam   | string  | Service name pattern. `*` can be used for prefix and suffix fuzzy matching. If empty, all services are returned.   |
+| pageNo             | int     | Page number. The default value is 1.                              |
+| pageSize           | int     | Page size. The default value is 100.                          |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                     | 描述            |
+| Parameter Type                     | Description            |
 |:-------------------------|:--------------|
-| Page\<ServiceDetailInfo> | 满足条件服务列表的分页结果 |
+| Page\<ServiceDetailInfo> | Paginated result of services that match the conditions. |
 
-具体Page及ServiceDetailInfo的内容如下：
+The specific `Page` and `ServiceDetailInfo` content is as follows:
 
-| 参数名            | 参数类型                   | 描述           |
+| Parameter Name            | Parameter Type                   | Description           |
 |:---------------|:-----------------------|:-------------|
-| totalCount     | int                    | 符合该条件下的服务总数。 |
-| pageNumber     | int                    | 当前页码。        |
-| pagesAvailable | int                    | 分页的总页数。      |
-| pageItems      | List\<ConfigBasicInfo> | 当前页的服务列表。    |
+| totalCount     | int                    | Total number of services that match the condition. |
+| pageNumber     | int                    | Current page number.        |
+| pagesAvailable | int                    | Total number of pages.      |
+| pageItems      | List\<ConfigBasicInfo> | Service list on the current page.    |
 
-| 参数名                                       | 参数类型                      | 描述                                    |
+| Parameter Name                                       | Parameter Type                      | Description                                    |
 |:------------------------------------------|:--------------------------|:--------------------------------------|
-| namespaceId                               | string                    | 服务的命名空间ID                             |
-| groupName                                 | string                    | 服务的分组名称                               |
-| serviceName                               | string                    | 服务的名称                                 |
-| ephemeral                                 | boolean                   | 服务的持久化属性                              |
-| protectThreshold                          | float                     | 服务的保护阈值                               |
-| selector                                  | Selector                  | 服务的实例选择器                              |
-| metadata                                  | Map\<String,String>       | 服务的元数据                                |
-| clusterMap                                | Map\<String, ClusterInfo> | 服务下的逻辑集群信息Map，其中key为逻辑集群名称，value为详细信息 |
-| clusterMap.${key}.clusterName             | string                    | 逻辑集群的名称                               |
-| clusterMap.${key}.healthyCheckPort        | int                       | 逻辑集群的健康检查断藕                           |
-| clusterMap.${key}.useInstancePortForCheck | boolean                   | 逻辑集群是否使用实例信息的端口进行健康检查                 |
-| clusterMap.${key}.healthChecker           | AbstractHealthChecker     | 逻辑集群的健康检查类型                           |
-| clusterMap.${key}.metadata                | Map\<String,String>       | 逻辑集群的元数据                              |
+| namespaceId                               | string                    | Service namespace ID                             |
+| groupName                                 | string                    | Service group name                               |
+| serviceName                               | string                    | Service name                                 |
+| ephemeral                                 | boolean                   | Service persistence attribute                              |
+| protectThreshold                          | float                     | Service protection threshold                               |
+| selector                                  | Selector                  | Service instance selector                              |
+| metadata                                  | Map\<String,String>       | Service metadata                                |
+| clusterMap                                | Map\<String, ClusterInfo> | Map of logical cluster information under the service. The key is the logical cluster name, and the value is detailed information. |
+| clusterMap.${key}.clusterName             | string                    | Logical cluster name                               |
+| clusterMap.${key}.healthyCheckPort        | int                       | Health check port of the logical cluster                           |
+| clusterMap.${key}.useInstancePortForCheck | boolean                   | Whether the logical cluster uses the instance port for health checks                 |
+| clusterMap.${key}.healthChecker           | AbstractHealthChecker     | Health check type of the logical cluster                           |
+| clusterMap.${key}.metadata                | Map\<String,String>       | Logical cluster metadata                              |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 以下请求均获取所有服务列表(最多前100个)。
+    // The following requests all obtain the service list (up to the first 100 services).
     Page<ServiceDetailInfo> result = namingMaintainService.listServicesWithDetail(Constants.DEFAULT_NAMESPACE_ID);
     result = namingMaintainService.listServicesWithDetail(Constants.DEFAULT_NAMESPACE_ID, "", "");
     result = namingMaintainService.listServicesWithDetail(Constants.DEFAULT_NAMESPACE_ID, "", "", 1, 10);
@@ -1555,15 +1552,15 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.7. 查询服务的订阅者列表
+### 4.7. Query Service Subscriber List
 
-#### 描述
+#### Description
 
-查询指定服务的订阅者列表。
+Queries the subscriber list of the specified service.
 
 ```java
 Page<SubscriberInfo> getSubscribers(String serviceName) throws NacosException;
@@ -1579,28 +1576,28 @@ Page<SubscriberInfo> getSubscribers(String namespaceId, String groupName, String
 Page<SubscriberInfo> getSubscribers(Service service, int pageNo, int pageSize, boolean aggregation) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名                              | 参数类型    | 描述                                                             |
+| Parameter Name                              | Parameter Type    | Description                                                             |
 |:---------------------------------|:--------|:---------------------------------------------------------------|
-| serviceName(Service.serviceName) | string  | 服务的名称                                                          |
-| groupName(Service.groupName)     | string  | 服务的分组名称                                                        |
-| namespaceId(Service.namespaceId) | string  | 服务所属的命名空间ID                                                    |
-| pageNo                           | int     | 分页页码，默认为1。                                                     |
-| pageSize                         | int     | 分页每页大小，默认为100。                                                 |
-| aggregation                      | boolean | 是否聚合查询，默认为false，为false时仅查询请求所在节点的订阅者列表，为true时查询整个集群中此配置的订阅者列表。 |
+| serviceName(Service.serviceName) | string  | Service name                                                          |
+| groupName(Service.groupName)     | string  | Service group name                                                        |
+| namespaceId(Service.namespaceId) | string  | Namespace ID to which the service belongs                                                    |
+| pageNo                           | int     | Page number. The default value is 1.                                                     |
+| pageSize                         | int     | Page size. The default value is 100.                                                 |
+| aggregation                      | boolean | Whether to perform an aggregated query. The default value is false. If false, only the subscriber list on the node that receives the request is queried. If true, the subscriber list in the entire cluster is queried. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                  | 描述         |
+| Parameter Type                  | Description         |
 |:----------------------|:-----------|
-| Page\<SubscriberInfo> | 订阅者列表的分页结果 |
+| Page\<SubscriberInfo> | Paginated subscriber list result. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 以下请求均获取服务`maintain.client.test`的所有订阅者列表(最多前100个)。
+    // The following requests all obtain the subscriber list of service `maintain.client.test` (up to the first 100 subscribers).
     Page<SubscriberInfo> result = namingMaintainService.getSubscribers("maintain.client.test");
     result = namingMaintainService.getSubscribers(Constants.DEFAULT_GROUP, "maintain.client.test");
     result = namingMaintainService.getSubscribers(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test");
@@ -1611,31 +1608,31 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.8. 查询支持的服务实例选择器列表
+### 4.8. Query Supported Service instance Selectors
 
-#### 描述
+#### Description
 
-通过此接口获取支持的服务实例选择器列表，仅返回实例选择器的名称列表。
+Use this API to obtain the supported service instance selector list. Only selector names are returned.
 
 ```java
 List<String> listSelectorTypes() throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-无
+None
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型          | 描述         |
+| Parameter Type          | Description         |
 |:--------------|:-----------|
-| List\<String> | 实例选择器的名称列表 |
+| List\<String> | List of instance selector names. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -1645,20 +1642,20 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.9. 注册实例
+### 4.9. Register Instance
 
-#### 描述
+#### Description
 
-通过该接口注册一个服务的实例，默认注册为持久化实例。
+Registers an instance for a service through this API. The instance is registered as persistent by default.
 
 :::note
-若通过此接口注册临时实例（Instance对象的ephemeral属性为true），则实例会在一段时间后被自动移除，因为运维SDK被定位为 运维人员或控制台类应用进行数据管控时使用，因此不会进行心跳等实例续约。
+If an ephemeral instance is registered through this API (`ephemeral` of the `Instance` object is true), the instance is automatically removed after a period of time. Because the Maintainer SDK is intended for maintainers or console applications to manage data, it does not renew instances through heartbeats.
 
-若需要注册临时实例，建议使用`Nacos Client`（如[Nacos Java Client](../user/java-sdk/usage.md), [Nacos Go Client](../user/go-sdk/usage.md)等)的注册实例API。
+To register ephemeral instances, we recommend using the instance registration API of `Nacos Client`, such as [Nacos Java Client](../user/java-sdk/usage.md) or [Nacos Go Client](../user/go-sdk/usage.md).
 :::
 
 ```java
@@ -1674,43 +1671,43 @@ String registerInstance(String groupName, String serviceName, String ip, int por
 
 String registerInstance(String namespaceId, String groupName, String serviceName, String ip, int port, String clusterName) throws NacosException;
 
-String registerInstance(String serviceName, Instance instance) throws NacosException;
+String registerInstance(String serviceName, instance instance) throws NacosException;
 
-String registerInstance(String groupName, String serviceName, Instance instance) throws NacosException;
+String registerInstance(String groupName, String serviceName, instance instance) throws NacosException;
 
-String registerInstance(String namespaceId, String groupName, String serviceName, Instance instance);
+String registerInstance(String namespaceId, String groupName, String serviceName, instance instance);
 
-String registerInstance(Service service, Instance instance) throws NacosException;
+String registerInstance(Service service, instance instance) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名                               | 参数类型                | 描述                |
+| Parameter Name                               | Parameter Type                | Description                |
 |:----------------------------------|:--------------------|:------------------|
-| serviceName(Service.serviceName)  | string              | 服务的名称             |
-| groupName(Service.groupName)      | string              | 服务的分组名称           |
-| namespaceId(Service.namespaceId)  | string              | 服务所属的命名空间ID       |
-| clusterName(Instance.clusterName) | string              | 实例所属的逻辑集群名称       | 
-| ip(Instance.ip)                    | string              | 实例的IP地址，支持域名      |
-| port(Instance.port)               | int                 | 实例的端口信息，取值0~65535 |
-| Instance.ephemeral                | boolean             | 实例的持久化属性          |
-| Instance.weight                   | double              | 实例的权重             |
-| Instance.healthy                  | boolean             | 实例的健康状态           |
-| Instance.enabled                  | boolean             | 实例的上下线状态          |
-| Instance.instanceId               | string              | 实例的ID             |
-| Instance.metadata                 | Map\<String,String> | 实例的元数据信息          |
+| serviceName(Service.serviceName)  | string              | Service name             |
+| groupName(Service.groupName)      | string              | Service group name           |
+| namespaceId(Service.namespaceId)  | string              | Namespace ID to which the service belongs       |
+| clusterName(Instance.clusterName) | string              | Logical cluster name to which the instance belongs       |
+| ip(Instance.ip)                    | string              | instance IP address. Domain names are supported.      |
+| port(Instance.port)               | int                 | instance port. Valid values are 0 to 65535. |
+| Instance.ephemeral                | boolean             | instance persistence attribute          |
+| Instance.weight                   | double              | instance weight             |
+| Instance.healthy                  | boolean             | instance health status           |
+| Instance.enabled                  | boolean             | instance online/offline status          |
+| Instance.instanceId               | string              | instance ID             |
+| Instance.metadata                 | Map\<String,String> | instance metadata          |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述        |
+| Parameter Type   | Description        |
 |:-------|:----------|
-| String | 实例的注册结果描述 |
+| String | Result description of instance registration. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 以下请求均给服务`maintain.client.test`注册一个实例，实例的ip为`127.0.0.1`，端口为`8080`。
+    // The following requests all register an instance with IP `127.0.0.1` and port `8080` for service `maintain.client.test`.
     String result = namingMaintainService.registerInstance("maintain.client.test", "127.0.0.1", 8080);
     result = namingMaintainService.registerInstance(Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
     result = namingMaintainService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
@@ -1718,7 +1715,7 @@ try {
     result = namingMaintainService.registerInstance("maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
     result = namingMaintainService.registerInstance(Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
     result = namingMaintainService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
-    Instance instance = new Instance();
+    instance instance = new Instance();
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     instance.setEphemeral(false);
@@ -1735,20 +1732,20 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.10. 注销实例
+### 4.10. Deregister Instance
 
-#### 描述
+#### Description
 
-通过该接口注销一个服务的实例。
+Deregisters an instance of a service through this API.
 
 :::note
-若注销的是临时实例，则返回注销成功，但实例未被删除；这是因为临时实例如果是通过`Nacos Client`注册的，那么对应的`Nacos Client`会定时对此实例进行续约，即使实例被注销，该实例也立即由其注册的`Nacos Client`进行重新注册。
+If the deregistered instance is ephemeral, success is returned but the instance is not deleted. This is because if an ephemeral instance is registered through `Nacos Client`, the corresponding `Nacos Client` periodically renews the instance. Even if the instance is deregistered, it is immediately re-registered by the `Nacos Client` that registered it.
 
-若需要注销临时实例且临时实例是由`Nacos Client`注册的，建议使用`Nacos Client`（如[Nacos Java Client](../user/java-sdk/usage.md), [Nacos Go Client](../user/go-sdk/usage.md)等）的注销实例API。
+To deregister an ephemeral instance that was registered by `Nacos Client`, we recommend using the instance deregistration API of `Nacos Client`, such as [Nacos Java Client](../user/java-sdk/usage.md) or [Nacos Go Client](../user/go-sdk/usage.md).
 :::
 
 ```java
@@ -1764,38 +1761,38 @@ String deregisterInstance(String groupName, String serviceName, String ip, int p
 
 String deregisterInstance(String namespaceId, String groupName, String serviceName, String ip, int port, String clusterName) throws NacosException;
 
-String deregisterInstance(String serviceName, Instance instance) throws NacosException;
+String deregisterInstance(String serviceName, instance instance) throws NacosException;
 
-String deregisterInstance(String groupName, String serviceName, Instance instance) throws NacosException;
+String deregisterInstance(String groupName, String serviceName, instance instance) throws NacosException;
 
-String deregisterInstance(String namespaceId, String groupName, String serviceName, Instance instance) throws NacosException;
+String deregisterInstance(String namespaceId, String groupName, String serviceName, instance instance) throws NacosException;
 
-String deregisterInstance(Service service, Instance instance) throws NacosException;
+String deregisterInstance(Service service, instance instance) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名                               | 参数类型    | 描述                |
+| Parameter Name                               | Parameter Type    | Description                |
 |:----------------------------------|:--------|:------------------|
-| serviceName(Service.serviceName)  | string  | 服务的名称             |
-| groupName(Service.groupName)      | string  | 服务的分组名称           |
-| namespaceId(Service.namespaceId)  | string  | 服务所属的命名空间ID       |
-| clusterName(Instance.clusterName) | string  | 实例所属的逻辑集群名称       | 
-| ip(Instance.ip)                   | string  | 实例的IP地址，支持域名      |
-| port(Instance.port)               | int     | 实例的端口信息，取值0~65535 |
-| Instance.ephemeral                | boolean | 实例的持久化属性          |
+| serviceName(Service.serviceName)  | string  | Service name             |
+| groupName(Service.groupName)      | string  | Service group name           |
+| namespaceId(Service.namespaceId)  | string  | Namespace ID to which the service belongs       |
+| clusterName(Instance.clusterName) | string  | Logical cluster name to which the instance belongs       |
+| ip(Instance.ip)                   | string  | instance IP address. Domain names are supported.      |
+| port(Instance.port)               | int     | instance port. Valid values are 0 to 65535. |
+| Instance.ephemeral                | boolean | instance persistence attribute          |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述        |
+| Parameter Type   | Description        |
 |:-------|:----------|
-| String | 实例的注销结果描述 |
+| String | Result description of instance deregistration. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 以下请求均给服务`maintain.client.test`注销一个实例，实例的ip为`127.0.0.1`，端口为`8080`。
+    // The following requests all deregister an instance whose IP is `127.0.0.1` and port is `8080` from service `maintain.client.test`.
     String result = namingMaintainService.registerInstance("maintain.client.test", "127.0.0.1", 8080);
     result = namingMaintainService.deregisterInstance(Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
     result = namingMaintainService.deregisterInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
@@ -1803,7 +1800,7 @@ try {
     result = namingMaintainService.deregisterInstance("maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
     result = namingMaintainService.deregisterInstance(Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
     result = namingMaintainService.deregisterInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
-    Instance instance = new Instance();
+    instance instance = new Instance();
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     instance.setEphemeral(false);
@@ -1820,65 +1817,65 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.11. 更新实例
+### 4.11. Update Instance
 
-#### 描述
+#### Description
 
-通过该接口注销一个服务实例的元数据信息，但实例的`所属服务`，`IP地址`，`端口`，`逻辑集群`**无法修改**。
+Updates metadata of a service instance through this API, but the instance `service`, `IP address`, `port`, and `logical cluster` **cannot be modified**.
 
 :::note
-此接口更新的实例实例元数据信息（包括权重等），会覆盖之前更新的元数据信息。在使用时请尽量传递全量信息，避免因修改部分内容而导致丢失其他信息。
+The instance metadata updated by this API, including weight, overwrites previously updated metadata. Pass complete information when using it to avoid losing other information while modifying only part of the data.
 
-通过该接口更新的元数据拥有更高的优先级（相比注册实例时的元数据），且具有记忆能力；会在对应实例删除后，依旧存在一段时间，如果在此期间实例重新注册，该元数据依旧生效；您可以通过`nacos.naming.clean.expired-metadata.expired-time`及`nacos.naming.clean.expired-metadata.interval`对记忆时间进行修改。
+Metadata updated through this API has higher priority than metadata specified during instance registration and is remembered. It remains for a period of time after the corresponding instance is deleted. If the instance is re-registered during this period, the metadata still takes effect. You can modify the retention time through `nacos.naming.clean.expired-metadata.expired-time` and `nacos.naming.clean.expired-metadata.interval`.
 :::
 
 ```java
-String updateInstance(String serviceName, Instance instance) throws NacosException;
+String updateInstance(String serviceName, instance instance) throws NacosException;
 
-String updateInstance(String groupName, String serviceName, Instance instance) throws NacosException;
+String updateInstance(String groupName, String serviceName, instance instance) throws NacosException;
 
-String updateInstance(String namespaceId, String groupName, String serviceName, Instance instance) throws NacosException;
+String updateInstance(String namespaceId, String groupName, String serviceName, instance instance) throws NacosException;
 
-String updateInstance(Service service, Instance instance) throws NacosException;
+String updateInstance(Service service, instance instance) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名                              | 参数类型                | 描述                |
+| Parameter Name                              | Parameter Type                | Description                |
 |:---------------------------------|:--------------------|:------------------|
-| serviceName(Service.serviceName) | string              | 服务的名称             |
-| groupName(Service.groupName)     | string              | 服务的分组名称           |
-| namespaceId(Service.namespaceId) | string              | 服务所属的命名空间ID       |
-| Instance.clusterName             | string              | 实例所属的逻辑集群名称       | 
-| Instance.ip                      | string              | 实例的IP地址，支持域名      |
-| Instance.port                    | int                 | 实例的端口信息，取值0~65535 |
-| Instance.ephemeral               | boolean             | 实例的持久化属性          |
-| Instance.weight                  | double              | 实例的权重             |
-| Instance.healthy                 | boolean             | 实例的健康状态           |
-| Instance.enabled                 | boolean             | 实例的上下线状态          |
-| Instance.instanceId              | string              | 实例的ID             |
-| Instance.metadata                | Map\<String,String> | 实例的元数据信息          |
+| serviceName(Service.serviceName) | string              | Service name             |
+| groupName(Service.groupName)     | string              | Service group name           |
+| namespaceId(Service.namespaceId) | string              | Namespace ID to which the service belongs       |
+| Instance.clusterName             | string              | Logical cluster name to which the instance belongs       |
+| Instance.ip                      | string              | instance IP address. Domain names are supported.      |
+| Instance.port                    | int                 | instance port. Valid values are 0 to 65535. |
+| Instance.ephemeral               | boolean             | instance persistence attribute          |
+| Instance.weight                  | double              | instance weight             |
+| Instance.healthy                 | boolean             | instance health status           |
+| Instance.enabled                 | boolean             | instance online/offline status          |
+| Instance.instanceId              | string              | instance ID             |
+| Instance.metadata                | Map\<String,String> | instance metadata          |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述        |
+| Parameter Type   | Description        |
 |:-------|:----------|
-| String | 实例的更新结果描述 |
+| String | Result description of instance update. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    Instance instance = new Instance();
+    instance instance = new Instance();
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     instance.setEphemeral(false);
     instance.setEnabled(false);
-    # 以下请求均给更新服务`maintain.client.test`下的一个实例，实例的ip为`127.0.0.1`，端口为`8080`， 将实例的`enabled`修改为`false`。
+    // The following requests all update an instance whose IP is `127.0.0.1` and port is `8080` under service `maintain.client.test`, and change the instance `enabled` value to `false`.
     String result = namingMaintainService.registerInstance("maintain.client.test", instance);
     result = namingMaintainService.registerInstance(Constants.DEFAULT_GROUP,"maintain.client.test", instance);
     result = namingMaintainService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", instance);
@@ -1892,47 +1889,47 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.12. 批量更新实例元数据
+### 4.12. Batch Update instance Metadata
 
-#### 描述
+#### Description
 
-批量对指定服务下部分或全部实例更新元数据。
+Updates metadata for some or all instances under the specified service in batches.
 
 :::note
-此接口仅支持更新元数据`metadata`,不支持更新`权重`、`上下线状态`、`健康状态`等属性。
+This API only supports updating `metadata`. It does not support updating attributes such as `weight`, `online/offline status`, or `health status`.
 :::
 
 ```java
 InstanceMetadataBatchResult batchUpdateInstanceMetadata(Service service, List<Instance> instances, Map<String, String> newMetadata) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名                 | 参数类型                | 描述                                          |
+| Parameter Name                 | Parameter Type                | Description                                          |
 |:--------------------|:--------------------|:--------------------------------------------|
-| Service.serviceName | string              | 服务的名称                                       |
-| Service.groupName   | string              | 服务的分组名称                                     |
-| Service.namespaceId | string              | 服务所属的命名空间ID                                 |
-| instances           | List\<Instance>     | 需要更新元数据的实例列表，仅需要传入`ip`,`port`,`clusterName` |
-| newMetadata         | Map\<String,String> | 新的元数据信息                                     |
+| Service.serviceName | string              | Service name                                       |
+| Service.groupName   | string              | Service group name                                     |
+| Service.namespaceId | string              | Namespace ID to which the service belongs                                 |
+| instances           | List\<Instance>     | List of instances whose metadata needs to be updated. Only `ip`, `port`, and `clusterName` are required. |
+| newMetadata         | Map\<String,String> | New metadata.                                     |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                        | 描述         |
+| Parameter Type                        | Description         |
 |:----------------------------|:-----------|
-| InstanceMetadataBatchResult | 实例元数据更新的结果 |
+| InstanceMetadataBatchResult | instance metadata update result. |
 
-其中InstanceMetadataBatchResult中的内容为：
+The content of `InstanceMetadataBatchResult` is as follows:
 
-| 参数名     | 参数类型          | 描述        |
+| Parameter Name     | Parameter Type          | Description        |
 |:--------|:--------------|:----------|
-| updated | List\<String> | 更新成功的实例id |
+| updated | List\<String> | IDs of instances updated successfully. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -1940,7 +1937,7 @@ try {
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
     service.setName("maintain.client.test");
-    Instance instance = new Instance();
+    instance instance = new Instance();
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     Map<String, String> newMetadata = Collections.singletonMap("testK", "testV");
@@ -1950,47 +1947,47 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.13. 批量移除实例元数据
+### 4.13. Batch Remove instance Metadata
 
-#### 描述
+#### Description
 
-批量对指定服务下部分或全部实例移除元数据。
+Removes metadata from some or all instances under the specified service in batches.
 
 :::note
-此接口仅支持移除元数据`metadata`,不支持更新`权重`、`上下线状态`、`健康状态`等属性。
+This API only supports removing `metadata`. It does not support updating attributes such as `weight`, `online/offline status`, or `health status`.
 :::
 
 ```java
 InstanceMetadataBatchResult batchDeleteInstanceMetadata(Service service, List<Instance> instances, Map<String, String> newMetadata) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名                 | 参数类型                | 描述                                          |
+| Parameter Name                 | Parameter Type                | Description                                          |
 |:--------------------|:--------------------|:--------------------------------------------|
-| Service.serviceName | string              | 服务的名称                                       |
-| Service.groupName   | string              | 服务的分组名称                                     |
-| Service.namespaceId | string              | 服务所属的命名空间ID                                 |
-| instances           | List\<Instance>     | 需要更新元数据的实例列表，仅需要传入`ip`,`port`,`clusterName` |
-| newMetadata         | Map\<String,String> | 需要移除的元数据信息                                  |
+| Service.serviceName | string              | Service name                                       |
+| Service.groupName   | string              | Service group name                                     |
+| Service.namespaceId | string              | Namespace ID to which the service belongs                                 |
+| instances           | List\<Instance>     | List of instances whose metadata needs to be updated. Only `ip`, `port`, and `clusterName` are required. |
+| newMetadata         | Map\<String,String> | Metadata to remove.                                  |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                        | 描述         |
+| Parameter Type                        | Description         |
 |:----------------------------|:-----------|
-| InstanceMetadataBatchResult | 实例元数据更新的结果 |
+| InstanceMetadataBatchResult | instance metadata update result. |
 
-其中InstanceMetadataBatchResult中的内容为：
+The content of `InstanceMetadataBatchResult` is as follows:
 
-| 参数名     | 参数类型          | 描述        |
+| Parameter Name     | Parameter Type          | Description        |
 |:--------|:--------------|:----------|
-| updated | List\<String> | 移除成功的实例id |
+| updated | List\<String> | IDs of instances removed successfully. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -1998,7 +1995,7 @@ try {
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
     service.setName("maintain.client.test");
-    Instance instance = new Instance();
+    instance instance = new Instance();
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     Map<String, String> newMetadata = Collections.singletonMap("testK", "testV");
@@ -2008,47 +2005,47 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.14. 更新实例的部分元数据
+### 4.14. Update Partial instance Metadata
 
-#### 描述
+#### Description
 
-更新实例的部分元数据。相比[更新实例](#411-更新实例)API，仅会更新有传入内容的元数据，若实例元数据中的key不再接口传入的参数中时，则不进行更新。
+Updates part of instance metadata. Compared with the [Update Instance](#411-update-instance) API, only metadata passed in the request is updated. If a key in the instance metadata is not included in the request parameters, it is not updated.
 
->例如当前元数据为`k1=v1,k2=v2`，接口传入`k2=v3`，则元数据变为`k1=v1,k2=v3`,而不是`k2=v3`。
-> 
->但需要注意的是，`Instance`对象中部分内容存在默认值（如`权重`等），需要传入对应值，否则会默认值被覆盖。
+> For example, if the current metadata is `k1=v1,k2=v2` and the API receives `k2=v3`, the metadata becomes `k1=v1,k2=v3`, not `k2=v3`.
+>
+> Note that some fields in the `Instance` object have default values, such as `weight`. Pass the corresponding values, otherwise the defaults may overwrite existing values.
 
 ```java
-String partialUpdateInstance(Service service, Instance instance) throws NacosException;
+String partialUpdateInstance(Service service, instance instance) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名                  | 参数类型                | 描述                |
+| Parameter Name                  | Parameter Type                | Description                |
 |:---------------------|:--------------------|:------------------|
-| Service.serviceName  | string              | 服务的名称             |
-| Service.groupName    | string              | 服务的分组名称           |
-| Service.namespaceId  | string              | 服务所属的命名空间ID       |
-| Instance.clusterName | string              | 实例所属的逻辑集群名称       | 
-| Instance.ip          | string              | 实例的IP地址，支持域名      |
-| Instance.port        | int                 | 实例的端口信息，取值0~65535 |
-| Instance.ephemeral   | boolean             | 实例的持久化属性          |
-| Instance.weight      | double              | 实例的权重             |
-| Instance.healthy     | boolean             | 实例的健康状态           |
-| Instance.enabled     | boolean             | 实例的上下线状态          |
-| Instance.metadata    | Map\<String,String> | 实例的元数据信息          |
+| Service.serviceName  | string              | Service name             |
+| Service.groupName    | string              | Service group name           |
+| Service.namespaceId  | string              | Namespace ID to which the service belongs       |
+| Instance.clusterName | string              | Logical cluster name to which the instance belongs       |
+| Instance.ip          | string              | instance IP address. Domain names are supported.      |
+| Instance.port        | int                 | instance port. Valid values are 0 to 65535. |
+| Instance.ephemeral   | boolean             | instance persistence attribute          |
+| Instance.weight      | double              | instance weight             |
+| Instance.healthy     | boolean             | instance health status           |
+| Instance.enabled     | boolean             | instance online/offline status          |
+| Instance.metadata    | Map\<String,String> | instance metadata          |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述        |
+| Parameter Type   | Description        |
 |:-------|:----------|
-| String | 实例的更新结果描述 |
+| String | Result description of instance update. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2058,15 +2055,15 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.15. 查询服务实例列表
+### 4.15. Query Service instance List
 
-#### 描述
+#### Description
 
-查询指定服务下满足条件的所有实例列表。
+Queries all instances that match the conditions under the specified service.
 
 ```java
 List<Instance> listInstances(String serviceName, String clusterName, boolean healthyOnly) throws NacosException;
@@ -2078,23 +2075,23 @@ List<Instance> listInstances(String namespaceId, String groupName, String servic
 List<Instance> listInstances(Service service, String clusterName, boolean healthyOnly) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名                              | 参数类型    | 描述                                               |
+| Parameter Name                              | Parameter Type    | Description                                               |
 |:---------------------------------|:--------|:-------------------------------------------------|
-| serviceName(Service.serviceName) | string  | 服务的名称                                            |
-| groupName(Service.groupName)     | string  | 服务的分组名称                                          |
-| namespaceId(Service.namespaceId) | string  | 服务所属的命名空间ID                                      |
-| clusterName                      | string  | 实例所属的逻辑集群名称，为空时返回所有逻辑集群的实例，需要查询多个逻辑集群是，使用逗号`,`分割 | 
-| healthyOnly                      | boolean | 是否仅返回健康的实例                                       |
+| serviceName(Service.serviceName) | string  | Service name                                            |
+| groupName(Service.groupName)     | string  | Service group name                                          |
+| namespaceId(Service.namespaceId) | string  | Namespace ID to which the service belongs                                      |
+| clusterName                      | string  | Logical cluster name to which the instance belongs. If empty, instances in all logical clusters are returned. To query multiple logical clusters, separate them with commas `,`. |
+| healthyOnly                      | boolean | Whether to return only healthy instances.                                       |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型            | 描述     |
+| Parameter Type            | Description     |
 |:----------------|:-------|
-| List\<Instance> | 实例信息列表 |
+| List\<Instance> | instance information list. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2111,53 +2108,53 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.16. 查询指定服务实例的详情
+### 4.16. Query Details of a Specified Service Instance
 
-#### 描述
+#### Description
 
-查询指定服务实例的详情，主要用于查询该实例的元数据及其他附属信息（如权重等）。
+Queries details of the specified service instance, mainly including metadata and other additional information such as weight.
 
 ```java
-Instance getInstanceDetail(String serviceName, String ip, int port) throws NacosException;
+instance getInstanceDetail(String serviceName, String ip, int port) throws NacosException;
 
-Instance getInstanceDetail(String groupName, String serviceName, String ip, int port) throws NacosException;
+instance getInstanceDetail(String groupName, String serviceName, String ip, int port) throws NacosException;
 
-Instance getInstanceDetail(String namespaceId, String groupName, String serviceName, String ip, int port) throws NacosException;
+instance getInstanceDetail(String namespaceId, String groupName, String serviceName, String ip, int port) throws NacosException;
 
-Instance getInstanceDetail(String serviceName, String ip, int port, String clusterName) throws NacosException;
+instance getInstanceDetail(String serviceName, String ip, int port, String clusterName) throws NacosException;
 
-Instance getInstanceDetail(String groupName, String serviceName, String ip, int port, String clusterName) throws NacosException;
+instance getInstanceDetail(String groupName, String serviceName, String ip, int port, String clusterName) throws NacosException;
 
-Instance getInstanceDetail(String namespaceId, String groupName, String serviceName, String ip, int port, String clusterName) throws NacosException;
+instance getInstanceDetail(String namespaceId, String groupName, String serviceName, String ip, int port, String clusterName) throws NacosException;
 
-Instance getInstanceDetail(Service service, Instance instance) throws NacosException;
+instance getInstanceDetail(Service service, instance instance) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名                               | 参数类型   | 描述                |
+| Parameter Name                               | Parameter Type   | Description                |
 |:----------------------------------|:-------|:------------------|
-| serviceName(Service.serviceName)  | string | 服务的名称             |
-| groupName(Service.groupName)      | string | 服务的分组名称           |
-| namespaceId(Service.namespaceId)  | string | 服务所属的命名空间ID       |
-| clusterName(Instance.clusterName) | string | 实例所属的逻辑集群名称       | 
-| ip(Instance.ip)                   | string | 实例的IP地址，支持域名      |
-| port(Instance.port)               | int    | 实例的端口信息，取值0~65535 |
+| serviceName(Service.serviceName)  | string | Service name             |
+| groupName(Service.groupName)      | string | Service group name           |
+| namespaceId(Service.namespaceId)  | string | Namespace ID to which the service belongs       |
+| clusterName(Instance.clusterName) | string | Logical cluster name to which the instance belongs       |
+| ip(Instance.ip)                   | string | instance IP address. Domain names are supported.      |
+| port(Instance.port)               | int    | instance port. Valid values are 0 to 65535. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                   | 描述        |
+| Parameter Type                   | Description        |
 |:-----------------------|:----------|
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    Instance result = namingMaintainService.getInstanceDetail("maintain.client.test", "127.0.0.1", 8080);
+    instance result = namingMaintainService.getInstanceDetail("maintain.client.test", "127.0.0.1", 8080);
     result = namingMaintainService.getInstanceDetail(Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
     result = namingMaintainService.getInstanceDetail(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
     result = namingMaintainService.getInstanceDetail("maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
@@ -2167,7 +2164,7 @@ try {
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
     service.setName("maintain.client.test");
-    Instance instance = new Instance();
+    instance instance = new Instance();
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     instance.setClusterName(Constants.DEFAULT_CLUSTER_NAME);
@@ -2177,47 +2174,47 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.17. 查询注册中心相关的统计信息
+### 4.17. Query Service Registry Statistics
 
-#### 描述
+#### Description
 
-查询注册中心相关的统计信息，主要用于查询注册中心中可用状态，实例个数，服务个数等。
+Queries service registry statistics, mainly including availability status, instance count, service count, and other information.
 
 ```java
 MetricsInfo getMetrics(boolean onlyStatus) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名        | 参数类型    | 描述         |
+| Parameter Name        | Parameter Type    | Description         |
 |:-----------|:--------|:-----------|
-| onlyStatus | boolean | 是否仅查询可用状态。 |
+| onlyStatus | boolean | Whether to query only availability status. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型        | 描述        |
+| Parameter Type        | Description        |
 |:------------|:----------|
-| MetricsInfo | 注册中心的统计信息 |
+| MetricsInfo | Service registry statistics. |
 
-其中MetricsInfo中内容如下：
+The content of `MetricsInfo` is as follows:
 
-| 参数名                         | 参数类型   | 描述                                                                                                                                                    |
+| Parameter Name                         | Parameter Type   | Description                                                                                                                                                    |
 |:----------------------------|:-------|:------------------------------------------------------------------------------------------------------------------------------------------------------|
-| status                      | string | 注册中心的可用状态，如`UP`。                                                                                                                                      |
-| serviceCount                | int    | 服务总个数                                                                                                                                                 |
-| instanceCount               | int    | 服务实例总个数                                                                                                                                               |
-| subscribeCount              | int    | 服务订阅者总个数                                                                                                                                              |
-| clientCount                 | int    | 客户端连接总个数                                                                                                                                              |
-| connectionBasedClientCount  | int    | 基于长连接的客户端总个数，对应SDK版本大于2.0以上的客户端数量                                                                                                                     |
-| ephemeralIpPortClientCount  | int    | 基于IP端口的临时客户端总个数，对应SDK版本小于2.0的版本客户端数量，及包括通过http openAPI及运维API注册的临时客户端。                                                                                 |    
-| persistentIpPortClientCount | int    | 基于IP端口的持久化客户端总个数，对应持久化实例的客户端数量。                                                                                                                       |                                                                  |
-| responsibleClientCount      | int    | 由此Nacos Server节点负责维护的客户端总个数， 包括直接长连接在此节点的`connectionBasedClientCount`以及Distro协议认为应该由此节点负责的`ephemeralIpPortClientCount`和`persistentIpPortClientCount`。 |
+| status                      | string | Availability status of the service registry, such as `UP`.                                                                                                                                      |
+| serviceCount                | int    | Total number of services.                                                                                                                                                 |
+| instanceCount               | int    | Total number of service instances.                                                                                                                                               |
+| subscribeCount              | int    | Total number of service subscribers.                                                                                                                                              |
+| clientCount                 | int    | Total number of client connections.                                                                                                                                              |
+| connectionBasedClientCount  | int    | Total number of connection-based clients, corresponding to clients with SDK version later than 2.0.                                                                                                                     |
+| ephemeralIpPortClientCount  | int    | Total number of IP-port-based ephemeral clients, corresponding to clients with SDK versions earlier than 2.0, including ephemeral clients registered through HTTP OpenAPI and maintainer APIs.                                                                                 |
+| persistentIpPortClientCount | int    | Total number of IP-port-based persistent clients, corresponding to clients of persistent instances.                                                                                                                       |
+| responsibleClientCount      | int    | Total number of clients maintained by this Nacos Server node, including `connectionBasedClientCount` directly connected to this node and `ephemeralIpPortClientCount` and `persistentIpPortClientCount` that the Distro protocol considers this node responsible for. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2227,35 +2224,35 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.18. 设置注册中心的日志级别
+### 4.18. Set Service Registry Log Level
 
-#### 描述
+#### Description
 
-设置注册中心相关模块日志的日志级别。
+Sets log levels for service registry related modules.
 
 ```java
 String setLogLevel(String logName, String logLevel) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名        | 参数类型     | 描述                                        |
+| Parameter Name        | Parameter Type     | Description                                        |
 |:-----------|:---------|:------------------------------------------|
 | :--------- | :------- | :---------------------------------------- |
-| logName    | string   | 日志模块名称，如`naming-server`, `naming-event`等  |
-| logLevel   | string   | 日志级别（如`INFO`、`DEBUG`）                     |
+| logName    | string   | Log module name, such as `naming-server` or `naming-event`.  |
+| logLevel   | string   | Log level, such as `INFO` or `DEBUG`.                     |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述          |
+| Parameter Type   | Description          |
 |:-------|:------------|
-| String | 设置日志级别的结果信息 |
+| String | Result information of setting the log level. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2265,57 +2262,57 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.19. 更新持久化实例的健康状态。
+### 4.19. Update Persistent instance Health Status
 
-#### 描述
+#### Description
 
-更新持久化实例的健康状态。
+Updates persistent instance health status.
 
 :::note
-此API针对无需自动检测且需要由管理员手动修改健康状态的持久化实例。因此该API仅在满足以下条件时生效：
-1. 实例必须是持久化实例；
-2. 该实例所属集群的健康检查器必须配置为 `NONE`。
+This API is for persistent instances that do not need automatic detection and whose health status must be manually modified by an administrator. Therefore, this API takes effect only when the following conditions are met:
+1. The instance must be persistent;
+2. The health checker of the cluster to which the instance belongs must be configured as `NONE`.
 
-如需修改集群的健康检查器，请参考[更新逻辑集群的元数据](#420-更新逻辑集群的元数据)
+To modify the cluster health checker, see [Update Logical Cluster Metadata](#420-update-logical-cluster-metadata).
 :::
 
 ```java
-String updateInstanceHealthStatus(Service service, Instance instance) throws NacosException;
+String updateInstanceHealthStatus(Service service, instance instance) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名                               | 参数类型    | 描述                |
+| Parameter Name                               | Parameter Type    | Description                |
 |:----------------------------------|:--------|:------------------|
-| serviceName(Service.serviceName)  | string  | 服务的名称             |
-| groupName(Service.groupName)      | string  | 服务的分组名称           |
-| namespaceId(Service.namespaceId)  | string  | 服务所属的命名空间ID       |
-| clusterName(Instance.clusterName) | string  | 实例所属的逻辑集群名称       | 
-| ip(Instance.ip)                   | string  | 实例的IP地址，支持域名      |
-| port(Instance.port)               | int     | 实例的端口信息，取值0~65535 |
-| healthy(Instance.healthy)         | boolean | 实例的目标健康状态         |
+| serviceName(Service.serviceName)  | string  | Service name             |
+| groupName(Service.groupName)      | string  | Service group name           |
+| namespaceId(Service.namespaceId)  | string  | Namespace ID to which the service belongs       |
+| clusterName(Instance.clusterName) | string  | Logical cluster name to which the instance belongs       |
+| ip(Instance.ip)                   | string  | instance IP address. Domain names are supported.      |
+| port(Instance.port)               | int     | instance port. Valid values are 0 to 65535. |
+| healthy(Instance.healthy)         | boolean | Target health status of the instance.         |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述         |
+| Parameter Type   | Description         |
 |:-------|:-----------|
-| String | 更新健康状态结果描述 |
+| String | Result description of health status update. |
 
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
-    # 更新`maintain.client.test`下的实例`127.0.0.1:8080`的健康状态为false.
+    // Updates the health status of instance `127.0.0.1:8080` under `maintain.client.test` to false.
     Service service = new Service();
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
     service.setName("maintain.client.test");
-    Instance instance = new Instance();
+    instance instance = new Instance();
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     instance.setClusterName(Constants.DEFAULT_CLUSTER_NAME);
@@ -2327,31 +2324,31 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.20. 查询支持的健康检查类型
+### 4.20. Query Supported Health Check Types
 
-#### 描述
+#### Description
 
-通过此接口查询支持的健康检查类型。
+Queries supported health check types through this API.
 
 ```java
 Map<String, AbstractHealthChecker> getHealthCheckers() throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-无
+None
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                                | 描述                                         |
+| Parameter Type                                | Description                                         |
 |:------------------------------------|:-------------------------------------------|
-| Map\<String, AbstractHealthChecker> | 支持的健康检查方式的Map，key为类型，value为具体的健康检查器的对应配置内容 |
+| Map\<String, AbstractHealthChecker> | Map of supported health check methods. The key is the type, and the value is the corresponding config content of the specific health checker. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2361,39 +2358,39 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.21. 更新逻辑集群的元数据
+### 4.21. Update Logical Cluster Metadata
 
-#### 描述
+#### Description
 
-更新指定服务下指定逻辑集群的元数据。
+Updates metadata of the specified logical cluster under the specified service.
 
 ```java
 String updateCluster(Service service, ClusterInfo cluster) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名                                 | 参数类型               | 描述                                                  |
+| Parameter Name                                 | Parameter Type               | Description                                                  |
 |:------------------------------------|:-------------------|:----------------------------------------------------|
-| Service.serviceName                 | string             | 服务的名称                                               |
-| Service.groupName                   | string             | 服务的分组名称                                             |
-| Service.namespaceId                 | string             | 服务所属的命名空间ID                                         |
-| ClusterInfo.clusterName             | string             | 逻辑集群的名称                                             | 
-| ClusterInfo.healthChecker           | string             | 逻辑集群的健康检查类型，通过[查询支持的健康检查类型](#419-查询支持的健康检查类型)获取     | 
-| ClusterInfo.healthyCheckPort        | string             | 健康检查的端口                                             | 
-| ClusterInfo.useInstancePortForCheck | string             | 是否使用实例所注册的端口进行健康检查，为true时将忽略`healthyCheckPort`设置的端口 | 
-| ClusterInfo.metadata                | Map<String,String> | 实例所属的元数据信息                                          | 
+| Service.serviceName                 | string             | Service name                                               |
+| Service.groupName                   | string             | Service group name                                             |
+| Service.namespaceId                 | string             | Namespace ID to which the service belongs                                         |
+| ClusterInfo.clusterName             | string             | Logical cluster name                                             |
+| ClusterInfo.healthChecker           | string             | Health check type of the logical cluster, Obtain it through [Query Supported Health Check Types](#420-query-supported-health-check-types).     |
+| ClusterInfo.healthyCheckPort        | string             | Health check port.                                             |
+| ClusterInfo.useInstancePortForCheck | string             | Whether to use the port registered by the instance for health checks. If true, the port set by `healthyCheckPort` is ignored. |
+| ClusterInfo.metadata                | Map<String,String> | Metadata of the cluster to which the instance belongs.                                          |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                   | 描述        |
+| Parameter Type                   | Description        |
 |:-----------------------|:----------|
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2412,31 +2409,31 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.22. 查询服务客户端列表
+### 4.22. Query Service Client List
 
-#### 描述
+#### Description
 
-获取注册中心中所有注册或订阅服务的客户端的列表。
+Gets the list of all clients that register or subscribe to services in the service registry.
 
 ```java
 List<String> getClientList() throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-无
+None
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型          | 描述             |
+| Parameter Type          | Description             |
 |:--------------|:---------------|
-| List\<String> | 客户端的clientId列表 |
+| List\<String> | Client ID list. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2446,47 +2443,47 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.23. 查询服务客户端详情
+### 4.23. Query Service Client Details
 
-#### 描述
+#### Description
 
-查询服务客户端的详细信息。不同版本的客户端信息，返回的内容可能有所不同。
+Queries detailed information about a service client. The returned content may vary for clients of different versions.
 
 ```java
 ClientSummaryInfo getClientDetail(String clientId) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名      | 参数类型   | 描述                                               |
+| Parameter Name      | Parameter Type   | Description                                               |
 |:---------|:-------|:-------------------------------------------------|
-| clientId | string | 客户端的clientId，可通过日志或[查询服务客户端列表](#421-查询服务客户端列表)获得 |
+| clientId | string | Client ID. You can obtain it from logs or [Query Service Client List](#422-query-service-client-list). |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型              | 描述      |
+| Parameter Type              | Description      |
 |:------------------|:--------|
-| ClientSummaryInfo | 客户端总结信息 |
+| ClientSummaryInfo | Client summary information. |
 
-其中ClientSummaryInfo中的内容如下：
+The content of `ClientSummaryInfo` is as follows:
 
-| 参数名             | 参数类型    | 描述                                                                                  |
+| Parameter Name             | Parameter Type    | Description                                                                                  |
 |:----------------|:--------|:------------------------------------------------------------------------------------|
-| clientId        | string  | 客户端id                                                                               |
-| ephemeral       | boolean | 是否为持久化服务的客户端                                                                        |
-| lastUpdatedTime | long    | 客户端最后一次进行更新（注册或注销）的时间戳                                                              |
-| clientType      | string  | 客户端的类型，`ipPort`或`connection`，分别对应1.X客户端或HTTP openAPI访问 和 2.X及以上的客户端或GRPC openAPI访问。 |
-| connectType     | string  | 当`clientType`为`connection`时，该字段表示客户端的连接类型，当前为`grpc`。                                |
-| appName         | string  | 客户端的应用名称，需要在客户端连接时添加在连接元数据中，默认为`unknown`。                                           |
-| version         | string  | 客户端的版本，如`Nacos-Java-Client:v3.0.0`                                                  |
-| clientIp        | string  | 客户端的IP地址， 由于存在代理注册（如Nacos-Sync）的场景，此IP地址可能与此客户端所注册的服务实例的IP地址不同。                     |
-| clientPort      | int     | 客户端的Port地址， 表示此连接的remote port。                                                      |
+| clientId        | string  | Client ID.                                                                               |
+| ephemeral       | boolean | Whether this is a persistent service client.                                                                        |
+| lastUpdatedTime | long    | Timestamp when the client was last updated, such as registration or deregistration.                                                              |
+| clientType      | string  | Client type. `ipPort` corresponds to 1.x clients or HTTP OpenAPI access, and `connection` corresponds to 2.x or later clients or gRPC OpenAPI access. |
+| connectType     | string  | When `clientType` is `connection`, this field indicates the client connection type. The current value is `grpc`.                                |
+| appName         | string  | Client application name. It must be added to connection metadata when the client connects. The default value is `unknown`.                                           |
+| version         | string  | Client version, such as `Nacos-Java-Client:v3.0.0`.                                                  |
+| clientIp        | string  | Client IP address. In proxy registration scenarios such as Nacos-Sync, this IP address may differ from the IP address of the service instance registered by this client.                     |
+| clientPort      | int     | Client port address, indicating the remote port of this connection.                                                      |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2496,45 +2493,45 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.24. 查询指定服务客户端所注册的服务列表
+### 4.24. Query Services Registered by a Specified Service Client
 
-#### 描述
+#### Description
 
-查询指定服务客户端所注册的服务列表。
+Queries the list of services registered by the specified service client.
 
 ```java
 List<ClientServiceInfo> getPublishedServiceList(String clientId) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名      | 参数类型   | 描述                                               |
+| Parameter Name      | Parameter Type   | Description                                               |
 |:---------|:-------|:-------------------------------------------------|
-| clientId | string | 客户端的clientId，可通过日志或[查询服务客户端列表](#421-查询服务客户端列表)获得 |
+| clientId | string | Client ID. You can obtain it from logs or [Query Service Client List](#422-query-service-client-list). |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                     | 描述            |
+| Parameter Type                     | Description            |
 |:-------------------------|:--------------|
-| List\<ClientServiceInfo> | 客户端所注册的服务列表信息 |
+| List\<ClientServiceInfo> | Information about services registered by the client. |
 
-其中ClientServiceInfo的内容如下：
+The ClientServiceInfo content is as follows:
 
-| 参数名                       | 参数类型                | 描述               |
+| Parameter Name                       | Parameter Type                | Description               |
 |:--------------------------|:--------------------|:-----------------|
-| namespaceId               | string              | 服务所属的namespaceId |
-| groupName                 | string              | 服务的分组名称          |
-| serviceName               | string              | 服务的名称            |
-| publisherInfo             | ClientPublisherInfo | 客户端所注册的服务实例信息    |
-| publisherInfo.ip          | string              | 实例的IP            |
-| publisherInfo.port        | string              | 实例的端口            |
-| publisherInfo.clusterName | string              | 实例的逻辑集群名称        |
+| namespaceId               | string              | Namespace ID to which the service belongs. |
+| groupName                 | string              | Service group name          |
+| serviceName               | string              | Service name            |
+| publisherInfo             | ClientPublisherInfo | Information about service instances registered by the client.    |
+| publisherInfo.ip          | string              | instance IP address.            |
+| publisherInfo.port        | string              | instance port.            |
+| publisherInfo.clusterName | string              | instance logical cluster name.        |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2544,45 +2541,45 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.25. 查询指定服务客户端所订阅的服务列表
+### 4.25. Query Services Subscribed to by a Specified Service Client
 
-#### 描述
+#### Description
 
-查询指定服务客户端所订阅的服务列表。
+Queries the list of services subscribed to by the specified service client.
 
 ```java
 List<ClientServiceInfo> getSubscribeServiceList(String clientId) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名          | 参数类型   | 描述                                                                                     |
+| Parameter Name          | Parameter Type   | Description                                                                                     |
 |:-------------|:-------|:---------------------------------------------------------------------------------------|
-| clientId | string | 客户端的clientId，可通过日志或[查询服务客户端列表](#421-查询服务客户端列表)获得 |
+| clientId | string | Client ID. You can obtain it from logs or [Query Service Client List](#422-query-service-client-list). |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                     | 描述            |
+| Parameter Type                     | Description            |
 |:-------------------------|:--------------|
-| List\<ClientServiceInfo> | 客户端所订阅的服务列表信息 |
+| List\<ClientServiceInfo> | Information about services subscribed to by the client. |
 
-其中ClientServiceInfo的内容如下：
+The ClientServiceInfo content is as follows:
 
-| 参数名                    | 参数类型                 | 描述                     |
+| Parameter Name                    | Parameter Type                 | Description                     |
 |:-----------------------|:---------------------|:-----------------------|
-| namespaceId            | string               | 服务所属的namespaceId       |
-| groupName              | string               | 服务的分组名称                |
-| serviceName            | string               | 服务的名称                  |
-| subscriberInfo         | ClientSubscriberInfo | 客户端的订阅者信息              |
-| subscriberInfo.appName | string               | 订阅者所属的应用名称，默认`unknown` |
-| subscriberInfo.agent   | string               | 订阅者的客户端版本              |
-| subscriberInfo.address | string               | 订阅者的地址信息格式为`IP:PORT`   |
+| namespaceId            | string               | Namespace ID to which the service belongs.       |
+| groupName              | string               | Service group name                |
+| serviceName            | string               | Service name                  |
+| subscriberInfo         | ClientSubscriberInfo | Client subscriber information.              |
+| subscriberInfo.appName | string               | Application name to which the subscriber belongs. The default value is `unknown`. |
+| subscriberInfo.agent   | string               | Subscriber client version.              |
+| subscriberInfo.address | string               | Subscriber address in `IP:PORT` format.   |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2592,46 +2589,46 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.26. 查询注册了指定服务的服务客户端列表
+### 4.26. Query Service Clients That Registered a Specified Service
 
-#### 描述
+#### Description
 
-查询哪些客户端注册了指定的服务。
+Queries which clients registered the specified service.
 
 ```java
 List<ClientPublisherInfo> getPublishedClientList(String namespaceId, String groupName, String serviceName, String ip, Integer port) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                    |
+| Parameter Name         | Parameter Type   | Description                    |
 |:------------|:-------|:----------------------|
-| namespaceId | string | 服务所属的namespaceId      |
-| groupName   | string | 服务的分组名称               |
-| serviceName | string | 服务的名称                 |
-| ip          | string | 服务实例的ip，为空时表示匹配所有服务实例 |
-| port        | int    | 服务实例的端口，为空时表示匹配所有服务实例 |
+| namespaceId | string | Namespace ID to which the service belongs.      |
+| groupName   | string | Service group name               |
+| serviceName | string | Service name                 |
+| ip          | string | IP address of the service instance. If empty, all service instances are matched. |
+| port        | int    | Service instance port. If empty, all service instances are matched. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                       | 描述           |
+| Parameter Type                       | Description           |
 |:---------------------------|:-------------|
-| List\<ClientPublisherInfo> | 注册服务实例的客户端信息 |
+| List\<ClientPublisherInfo> | Information about clients that registered service instances. |
 
-其中ClientPublisherInfo的内容如下：
+The ClientPublisherInfo content is as follows:
 
-| 参数名         | 参数类型   | 描述           |
+| Parameter Name         | Parameter Type   | Description           |
 |:------------|:-------|:-------------|
-| clientId    | string | 注册服务的客户端ID   |
-| ip          | string | 注册的实例的IP     |
-| port        | string | 注册的实例的端口     |
-| clusterName | string | 注册的实例的逻辑集群名称 |
+| clientId    | string | ID of the client that registered the service.   |
+| ip          | string | Registered instance IP address.     |
+| port        | string | Registered instance port.     |
+| clusterName | string | Registered instance logical cluster name. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2641,46 +2638,46 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 4.27. 查询订阅了指定服务的服务客户端列表
+### 4.27. Query Service Clients That Subscribed to a Specified Service
 
-#### 描述
+#### Description
 
-查询哪些客户端订阅了指定的服务。
+Queries which clients subscribed to the specified service.
 
 ```java
 List<ClientSubscriberInfo> getSubscribeClientList(String namespaceId, String groupName, String serviceName, String ip, Integer port) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                    |
+| Parameter Name         | Parameter Type   | Description                    |
 |:------------|:-------|:----------------------|
-| namespaceId | string | 服务所属的namespaceId      |
-| groupName   | string | 服务的分组名称               |
-| serviceName | string | 服务的名称                 |
-| ip          | string | 服务订阅者的ip，为空时表示匹配所有订阅者 |
-| port        | int    | 服务订阅者的端口，为空时表示匹配所有订阅者 |
+| namespaceId | string | Namespace ID to which the service belongs.      |
+| groupName   | string | Service group name               |
+| serviceName | string | Service name                 |
+| ip          | string | IP address of the service subscriber. If empty, all subscribers are matched. |
+| port        | int    | Port of the service subscriber. If empty, all subscribers are matched. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                        | 描述         |
+| Parameter Type                        | Description         |
 |:----------------------------|:-----------|
-| List\<ClientSubscriberInfo> | 订阅服务的客户端信息 |
+| List\<ClientSubscriberInfo> | Information about clients that subscribed to the service. |
 
-其中ClientSubscriberInfo的内容如下：
+The ClientSubscriberInfo content is as follows:
 
-| 参数名      | 参数类型   | 描述                     |
+| Parameter Name      | Parameter Type   | Description                     |
 |:---------|:-------|:-----------------------|
-| clientId | string | 订阅服务的客户端ID             |
-| appName  | string | 订阅者所属的应用名称，默认`unknown` |
-| agent    | string | 订阅者的客户端版本              |
-| address  | string | 订阅者的地址信息格式为`IP:PORT`   |
+| clientId | string | ID of the client that subscribed to the service.             |
+| appName  | string | Application name to which the subscriber belongs. The default value is `unknown`. |
+| agent    | string | Subscriber client version.              |
+| address  | string | Subscriber address in `IP:PORT` format.   |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2690,35 +2687,35 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-## 5. 其他Nacos核心运维API
+## 5. Other Nacos Core Maintainer APIs
 
-Nacos核心的运维API可以通过`NacosNamingMaintainerService`或`NacosConfigMaintainerService`进行调用。
+Nacos core maintainer APIs can be called through `NacosNamingMaintainerService` or `NacosConfigMaintainerService`.
 
-### 5.1. 查询Nacos Server的状态信息
+### 5.1. Query Nacos Server Status Information
 
-#### 描述
+#### Description
 
-查询Nacos Server的状态信息，状态信息包括`版本号`, `运行模式`, `开启鉴权`, `运行的模块`等信息
+Queries Nacos Server status information, including `version`, `running mode`, `authentication enabled`, and `running modules`.
 
 ```java
 Map<String, String> getServerState() throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-无
+None
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                 | 描述                 |
+| Parameter Type                 | Description                 |
 |:---------------------|:-------------------|
-| Map\<String, String> | Nacos Server 的状态信息 |
+| Map\<String, String> | Nacos Server status information. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2728,31 +2725,31 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 5.2. 获取Nacos Server的存活状态
+### 5.2. Get Nacos Server Liveness Status
 
-#### 描述
+#### Description
 
-获取Nacos Server的存活状态
+Gets the liveness status of Nacos Server.
 
 ```java
 Boolean liveness() throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-无
+None
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述                       |
+| Parameter Type    | Description                       |
 |:--------|:-------------------------|
-| boolean | `true`代表存活，`false`代表存在问题 |
+| boolean | `true` means live, and `false` means there is a problem. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2762,31 +2759,31 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 5.3. 获取Nacos Server的就绪状态
+### 5.3. Get Nacos Server Readiness Status
 
-#### 描述
+#### Description
 
-获取Nacos Server的就绪状态
+Gets the readiness status of Nacos Server.
 
 ```java
 Boolean readiness() throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-无
+None
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述                      |
+| Parameter Type    | Description                      |
 |:--------|:------------------------|
-| boolean | `true`代表就绪，`false`代表未就绪 |
+| boolean | `true` means ready, and `false` means not ready. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2796,35 +2793,35 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 5.4. Nacos Raft操作
+### 5.4. Nacos Raft Operations
 
-#### 描述
+#### Description
 
-通过此接口， 可以对Nacos Server中的Raft协议进行一定的运维操作，如`重新选主`，`进行快照`等。
+Use this API to perform maintenance operations on the Raft protocol in Nacos Server, such as `re-elect leader` and `take snapshot`.
 
 ```java
 String raftOps(String command, String value, String groupId) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名     | 参数类型   | 描述                                                                  |
+| Parameter Name     | Parameter Type   | Description                                                                  |
 |:--------|:-------|:--------------------------------------------------------------------|
-| command | string | Raft 操作命令，见`com.alibaba.nacos.core.distributed.raft.utils.JRaftOps` |
-| value   | string | Raft 操作的目标值                                                         |
-| groupId | string | 操作的目标Raft Group, 为空时会对所有的Raft Group进行操作。                            |
+| command | string | Raft operation command. See `com.alibaba.nacos.core.distributed.raft.utils.JRaftOps`. |
+| value   | string | Target value of the Raft operation.                                                         |
+| groupId | string | Target Raft group of the operation. If empty, all Raft groups are operated on.                            |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述   |
+| Parameter Type   | Description   |
 |:-------|:-----|
-| String | 操作结果 |
+| String | Operation result. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2834,31 +2831,31 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 5.5. 查询Nacos Server支持的分布式ID生成器列表
+### 5.5. Query Distributed ID Generators Supported by Nacos Server
 
-#### 描述
+#### Description
 
-查询Nacos Server支持的分布式ID生成器列表。如雪花Id生成器
+Queries the list of distributed ID generators supported by Nacos Server, such as the Snowflake ID generator.
 
 ```java
 List<IdGeneratorInfo> getIdGenerators() throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-无
+None
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                   | 描述        |
+| Parameter Type                   | Description        |
 |:-----------------------|:----------|
-| List\<IdGeneratorInfo> | Id生成器信息列表 |
+| List\<IdGeneratorInfo> | ID generator information list. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2868,32 +2865,32 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 5.6. 更新核心模块日志级别
+### 5.6. Update Core Module Log Level
 
-#### 描述
+#### Description
 
-更新核心模块日志级别
+Updates the log level of core modules.
 
 ```java
 void updateLogLevel(String logName, String logLevel) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名      | 参数类型   | 描述                    |
+| Parameter Name      | Parameter Type   | Description                    |
 |:---------|:-------|:----------------------|
-| logName  | string | 日志模块名称，如`core-auth`等  |
-| logLevel | string | 日志级别（如`INFO`、`DEBUG`） |
+| logName  | string | Log module name, such as `core-auth`.  |
+| logLevel | string | Log level, such as `INFO` or `DEBUG`. |
 
-#### 返回参数
+#### Response Parameters
 
-无
+None
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2903,43 +2900,43 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 5.7. 查询Nacos Server节点列表
+### 5.7. Query Nacos Server Node List
 
-#### 描述
+#### Description
 
-查询Nacos Server节点列表。
+Queries the Nacos Server node list.
 
 ```java
 Collection<NacosMember> listClusterNodes(String address, String state) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名     | 参数类型   | 描述                                               |
+| Parameter Name     | Parameter Type   | Description                                               |
 |:--------|:-------|:-------------------------------------------------|
-| address | string | Server节点的地址，默认为""，为空时返回所有节点，不为空时返回满足前缀匹配的节点      |
-| state   | string | Server节点的状态，如`UP`，默认为""，为空时返回所有节点，不为空时返回满足此状态的节点 |
+| address | string | Server node address. The default value is `""`. If empty, all nodes are returned. If not empty, nodes that match the prefix are returned.      |
+| state   | string | Server node status, such as `UP`. The default value is `""`. If empty, all nodes are returned. If not empty, nodes that match this status are returned. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                     | 描述               |
+| Parameter Type                     | Description               |
 |:-------------------------|:-----------------|
-| Collection\<NacosMember> | Nacos Server节点列表 |
+| Collection\<NacosMember> | Nacos Server node list. |
 
-其中NacosMember的字段说明如下：
+The fields of `NacosMember` are described as follows:
 
-| 参数名        | 参数类型                | 描述                       |
+| Parameter Name        | Parameter Type                | Description                       |
 |:-----------|:--------------------|:-------------------------|
-| ip         | string              | Server节点的IP              |
-| port       | int                 | Server节点的主端口             |
-| state      | NodeState           | Server节点的运行状态            |
-| extendInfo | Map<String, Object> | Server节点的拓展数据，如Raft的相关信息 |
+| ip         | string              | Server node IP address.              |
+| port       | int                 | Server node main port.             |
+| state      | NodeState           | Server node running status.            |
+| extendInfo | Map<String, Object> | Server node extension data, such as Raft-related information. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2949,35 +2946,35 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 5.8. 更新Nacos Server的地址发现模式
+### 5.8. Update Nacos Server Address Discovery Mode
 
-#### 描述
+#### Description
 
-Nacos Server的地址发现模式是控制Nacos Server发现同集群的其他节点地址的方式，用于在Nacos Server启动和运行中组建Nacos集群。
+Nacos Server address discovery mode controls how Nacos Server discovers addresses of other nodes in the same cluster. It is used to form a Nacos cluster during server startup and runtime.
 
-通过此接口可以动态的修改Nacos Server的地址发现模式，实现使用不同的方式进行Nacos集群的组建。
+Use this API to dynamically modify the Nacos Server address discovery mode and form a Nacos cluster in different ways.
 
 ```java
 Boolean updateLookupMode(String type) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名  | 参数类型   | 描述                             |
+| Parameter Name  | Parameter Type   | Description                             |
 |:-----|:-------|:-------------------------------|
-| type | string | 地址发现模式的类型，默认支持`file`和`address` |
+| type | string | Address discovery mode type. `file` and `address` are supported by default. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述           |
+| Parameter Type    | Description           |
 |:--------|:-------------|
-| boolean | `true`代表更新成功 |
+| boolean | `true` means the update succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -2987,30 +2984,30 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 5.9. 查询当前Nacos Server节点的长连接列表
+### 5.9. Query Long Connection List of the Current Nacos Server Node
 
-#### 描述
+#### Description
 
-查询连接到当前Nacos Server节点的长连接列表。
+Queries the long connection list connected to the current Nacos Server node.
 
 ```java
 Map<String, ConnectionInfo> getCurrentClients() throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-无
-#### 返回参数
+None
+#### Response Parameters
 
-| 参数类型                         | 描述                           |
+| Parameter Type                         | Description                           |
 |:-----------------------------|:-----------------------------|
-| Map\<String, ConnectionInfo> | 长连接列表，key为连接ID，value为连接的详细信息 |
+| Map\<String, ConnectionInfo> | Long connection list. The key is the connection ID, and the value is the connection details. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3020,34 +3017,34 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 5.10. 均匀Nacos Server节点的长连接负载
+### 5.10. Balance Long Connection Load of Nacos Server Nodes
 
-#### 描述
+#### Description
 
-Nacos Server节点的长连接负载是控制Nacos Server节点的长连接负载的方式，用于在Nacos Server节点之间均匀的负载长连接。
+Nacos Server node long connection load balancing controls long connection load on Nacos Server nodes and evenly distributes long connections among nodes.
 
 ```java
 String reloadConnectionCount(Integer count, String redirectAddress) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名             | 参数类型   | 描述                     |
+| Parameter Name             | Parameter Type   | Description                     |
 |:----------------|:-------|:-----------------------|
-| count           | int    | 预期保留的长连接个数             |
-| redirectAddress | string | 预期重定向地址，默认为空，为空为随机进行负载 |
+| count           | int    | Expected number of long connections to retain.             |
+| redirectAddress | string | Expected redirect address. The default value is empty. If empty, load is randomly balanced. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述      |
+| Parameter Type   | Description      |
 |:-------|:--------|
-| String | 均匀连接的结果 |
+| String | Connection balancing result. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3057,33 +3054,33 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 5.11. 自动均匀Nacos Server节点的长连接负载
+### 5.11. Automatically Balance Long Connection Load of Nacos Server Nodes
 
-#### 描述
+#### Description
 
-让Nacos Server根据长连接数量自动进行Server见的均匀负载。
+Allows Nacos Server to automatically balance load among servers based on the number of long connections.
 
 ```java
 String smartReloadCluster(String loaderFactorStr) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名             | 参数类型   | 描述                                                       |
+| Parameter Name             | Parameter Type   | Description                                                       |
 |:----------------|:-------|:---------------------------------------------------------|
-| loaderFactorStr | string | 自动均匀负载时的方差比例，默认0.1f，代表自动均匀负载时，集群节点间最大的连接数和最小的连接数差异在10%以内 |
+| loaderFactorStr | string | Variance ratio for automatic load balancing. The default value is `0.1f`, which means the difference between the maximum and minimum number of connections among cluster nodes is within 10% during automatic load balancing. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述      |
+| Parameter Type   | Description      |
 |:-------|:--------|
-| String | 均匀连接的结果 |
+| String | Connection balancing result. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3093,34 +3090,34 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 5.12. 指定单个Nacos客户端连接进行重载
+### 5.12. Reload a Specified Nacos Client Connection
 
-#### 描述
+#### Description
 
-指定单个Nacos客户端连接进行重载。
+Reloads a specified Nacos client connection.
 
 ```java
 String reloadSingleClient(String connectionId, String redirectAddress) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名             | 参数类型   | 描述                     |
+| Parameter Name             | Parameter Type   | Description                     |
 |:----------------|:-------|:-----------------------|
-| connectionId    | string | 连接Id                   |
-| redirectAddress | string | 预期重定向地址，默认为空，为空为随机进行负载 |
+| connectionId    | string | Connection ID.                   |
+| redirectAddress | string | Expected redirect address. The default value is empty. If empty, load is randomly balanced. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述      |
+| Parameter Type   | Description      |
 |:-------|:--------|
-| String | 均匀连接的结果 |
+| String | Connection balancing result. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3130,31 +3127,31 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 5.13. 查询Nacos Server长连接负载统计信息
+### 5.13. Query Nacos Server Long Connection Load Statistics
 
-#### 描述
+#### Description
 
-查询Nacos Server长连接负载统计信息。
+Queries Nacos Server long connection load statistics.
 
 ```java
 ServerLoaderMetrics getClusterLoaderMetrics() throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-无
+None
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                | 描述        |
+| Parameter Type                | Description        |
 |:--------------------|:----------|
-| ServerLoaderMetrics | 长连接负载统计信息 |
+| ServerLoaderMetrics | Long connection load statistics. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3164,42 +3161,42 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 5.14. 查询命名空间列表
+### 5.14. Query Namespace List
 
-#### 描述
+#### Description
 
-查询命名空间列表。
+Queries the namespace list.
 
 ```java
 List<Namespace> getNamespaceList() throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-无
+None
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型             | 描述     |
+| Parameter Type             | Description     |
 |:-----------------|:-------|
-| List\<Namespace> | 命名空间列表 |
+| List\<Namespace> | Namespace list. |
 
-其中Namespace中的属性如下：
+The attributes of `Namespace` are as follows:
 
-| 参数名               | 参数类型   | 描述                                          |
+| Parameter Name               | Parameter Type   | Description                                          |
 |:------------------|:-------|:--------------------------------------------|
-| namespace         | string | 命名空间id                                      |
-| namespaceShowName | string | 命名空间的名字                                     |
-| namespaceDesc     | string | 命名空间的描述                                     |
-| quota             | int    | 命名空间下配置的个数配额（需要配合配置中心的容量管理使用，否则不实际生效），默认200 |
-| configCount       | int    | 命名空间下配置的个数                                  |
-| type              | int    | 命名空间的类型，预留字段，目前均为1                          |
+| namespace         | string | namespace ID                                      |
+| namespaceShowName | string | Namespace name.                                     |
+| namespaceDesc     | string | Namespace description.                                     |
+| quota             | int    | Config count quota under the namespace. It takes effect only when used with config center capacity management. The default value is 200. |
+| configCount       | int    | Number of configs under the namespace.                                  |
+| type              | int    | Namespace type. This is a reserved field and is currently always 1.                          |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3209,44 +3206,44 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 5.15. 查询指定命名空间
+### 5.15. Query Specified Namespace
 
-#### 描述
+#### Description
 
-查询指定命名空间。
+Queries the specified namespace.
 
 ```java
 Namespace getNamespace(String namespaceId) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述     |
+| Parameter Name         | Parameter Type   | Description     |
 |:------------|:-------|:-------|
-| namespaceId | string | 命名空间ID |
+| namespaceId | string | Namespace ID |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型      | 描述      |
+| Parameter Type      | Description      |
 |:----------|:--------|
-| Namespace | 命名空间的详情 |
+| Namespace | Namespace details. |
 
-其中Namespace中的属性如下：
+The attributes of `Namespace` are as follows:
 
-| 参数名               | 参数类型   | 描述                                          |
+| Parameter Name               | Parameter Type   | Description                                          |
 |:------------------|:-------|:--------------------------------------------|
-| namespace         | string | 命名空间id                                      |
-| namespaceShowName | string | 命名空间的名字                                     |
-| namespaceDesc     | string | 命名空间的描述                                     |
-| quota             | int    | 命名空间下配置的个数配额（需要配合配置中心的容量管理使用，否则不实际生效），默认200 |
-| configCount       | int    | 命名空间下配置的个数                                  |
-| type              | int    | 命名空间的类型，预留字段，目前均为1                          |
+| namespace         | string | namespace ID                                      |
+| namespaceShowName | string | Namespace name.                                     |
+| namespaceDesc     | string | Namespace description.                                     |
+| quota             | int    | Config count quota under the namespace. It takes effect only when used with config center capacity management. The default value is 200. |
+| configCount       | int    | Number of configs under the namespace.                                  |
+| type              | int    | Namespace type. This is a reserved field and is currently always 1.                          |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3256,15 +3253,15 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 5.16. 创建命名空间
+### 5.16. Create Namespace
 
-#### 描述
+#### Description
 
-创建命名空间。
+Creates a namespace.
 
 ```java
 Boolean createNamespace(String namespaceName, String namespaceDesc) throws NacosException;
@@ -3272,21 +3269,21 @@ Boolean createNamespace(String namespaceName, String namespaceDesc) throws Nacos
 Boolean createNamespace(String namespaceId, String namespaceName, String namespaceDesc) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名           | 参数类型   | 描述                                            |
+| Parameter Name           | Parameter Type   | Description                                            |
 |:--------------|:-------|:----------------------------------------------|
-| namespaceName | string | 命名空间的名字                                       |
-| namespaceDesc | string | 命名空间的描述                                       |
-| namespaceId   | string | 自定义的命名空间ID，默认为""，为空时将会由Nacos自动生成的UUID作为命名空间ID |
+| namespaceName | string | Namespace name.                                       |
+| namespaceDesc | string | Namespace description.                                       |
+| namespaceId   | string | Custom namespace ID. The default value is `""`. If empty, Nacos automatically generates a UUID as the namespace ID. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述        |
+| Parameter Type    | Description        |
 |:--------|:----------|
-| boolean | 创建命名空间的结果 |
+| boolean | Namespace creation result. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3297,35 +3294,35 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 5.17. 更新命名空间
+### 5.17. Update Namespace
 
-#### 描述
+#### Description
 
-更新指定命名空间的名字或描述。
+Updates the specified namespace name or description.
 
 ```java
 Boolean updateNamespace(String namespaceId, String namespaceName, String namespaceDesc) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名           | 参数类型   | 描述           |
+| Parameter Name           | Parameter Type   | Description           |
 |:--------------|:-------|:-------------|
-| namespaceId   | string | 需要更新的命名空间ID。 |
-| namespaceName | string | 修改后的命名空间名称。  |
-| namespaceDesc | string | 修改后的命名空间描述。  |
+| namespaceId   | string | Namespace ID to update. |
+| namespaceName | string | Updated namespace name.  |
+| namespaceDesc | string | Updated namespace description.  |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述        |
+| Parameter Type    | Description        |
 |:--------|:----------|
-| boolean | 更新命名空间的结果 |
+| boolean | Namespace update result. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3335,33 +3332,33 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 5.18. 删除命名空间
+### 5.18. Delete Namespace
 
-#### 描述
+#### Description
 
-删除指定命名空间。
+Deletes the specified namespace.
 
 ```java
 Boolean deleteNamespace(String namespaceId) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述         |
+| Parameter Name         | Parameter Type   | Description         |
 |:------------|:-------|:-----------|
-| namespaceId | string | 要删除的命名空间id |
+| namespaceId | string | Namespace ID to delete. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述        |
+| Parameter Type    | Description        |
 |:--------|:----------|
-| boolean | 删除命名空间的结果 |
+| boolean | Namespace deletion result. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3371,33 +3368,33 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 5.14. 检查命名空间是否存在
+### 5.19. Check Whether a Namespace Exists
 
-#### 描述
+#### Description
 
-检查命名空间是否存在。
+Checks whether a namespace exists.
 
 ```java
 Boolean checkNamespaceIdExist(String namespaceId) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述         |
+| Parameter Name         | Parameter Type   | Description         |
 |:------------|:-------|:-----------|
-| namespaceId | string | 待检查的命名空间id |
+| namespaceId | string | Namespace ID to check. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述                           |
+| Parameter Type    | Description                           |
 |:--------|:-----------------------------|
-| boolean | 命名空间的检查结果，`true`表示该命名空间id已存在 |
+| boolean | Namespace check result. `true` indicates that the namespace ID already exists. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3407,13 +3404,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 5.19. 查询插件列表
+### 5.20. Query Plugin List
 
-#### 描述
+#### Description
 
 List loaded plugins, optionally filtered by plugin type.
 
@@ -3421,19 +3418,19 @@ List loaded plugins, optionally filtered by plugin type.
 List<Map<String, Object>> listPlugins(String pluginType) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名        | 参数类型   | 描述                                       |
+| Parameter Name        | Parameter Type   | Description                                       |
 |:-----------|:-------|:-----------------------------------------|
-| pluginType | string | 插件类型过滤，如 `auth`、`control`；传 null 或空则返回全部。 |
+| pluginType | string | Plugin type filter, such as `auth` or `control`. Pass null or an empty value to return all plugins. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                      | 描述           |
+| Parameter Type                      | Description           |
 |:--------------------------|:-------------|
-| List\<Map\<String, Object>> | 插件信息列表。     |
+| List\<Map\<String, Object>> | Plugin information list.     |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3444,14 +3441,14 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
 
-### 5.20. 查询插件详情
+### 5.21. Query Plugin Details
 
-#### 描述
+#### Description
 
 Get plugin detail by type and name.
 
@@ -3459,20 +3456,20 @@ Get plugin detail by type and name.
 Map<String, Object> getPluginDetail(String pluginType, String pluginName) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名        | 参数类型   | 描述     |
+| Parameter Name        | Parameter Type   | Description     |
 |:-----------|:-------|:-------|
-| pluginType | string | 插件类型。  |
-| pluginName | string | 插件名称。  |
+| pluginType | string | Plugin type.  |
+| pluginName | string | Plugin name.  |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                   | 描述       |
+| Parameter Type                   | Description       |
 |:-----------------------|:---------|
-| Map\<String, Object>   | 插件详情信息。 |
+| Map\<String, Object>   | Plugin detail information. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3482,13 +3479,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
-### 5.21. 更新插件状态
+### 5.22. Update Plugin Status
 
-#### 描述
+#### Description
 
 Enable or disable a plugin.
 
@@ -3498,20 +3495,20 @@ void updatePluginStatus(String pluginType, String pluginName, boolean enabled) t
 void updatePluginStatus(String pluginType, String pluginName, boolean enabled, boolean localOnly) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名        | 参数类型    | 描述        |
+| Parameter Name        | Parameter Type    | Description        |
 |:-----------|:--------|:----------|
-| pluginType | string  | 插件类型。     |
-| pluginName | string  | 插件名称。     |
-| enabled    | boolean | 是否启用，true 启用，false 禁用。 |
-| localOnly  | boolean | 是否仅应用到当前节点。 |
+| pluginType | string  | Plugin type.     |
+| pluginName | string  | Plugin name.     |
+| enabled    | boolean | Whether to enable the plugin. `true` enables it, and `false` disables it. |
+| localOnly  | boolean | Whether to apply only to the current node. |
 
-#### 返回参数
+#### Response Parameters
 
-无（void）。
+None (void).
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3522,13 +3519,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
-### 5.22. 更新插件配置
+### 5.23. Update Plugin Config
 
-#### 描述
+#### Description
 
 Update plugin configuration.
 
@@ -3538,20 +3535,20 @@ void updatePluginConfig(String pluginType, String pluginName, Map<String, String
 void updatePluginConfig(String pluginType, String pluginName, Map<String, String> config, boolean localOnly) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名        | 参数类型                | 描述     |
+| Parameter Name        | Parameter Type                | Description     |
 |:-----------|:--------------------|:-------|
-| pluginType | string              | 插件类型。  |
-| pluginName | string              | 插件名称。  |
-| config     | Map\<String, String> | 配置键值对。 |
-| localOnly  | boolean             | 是否仅应用到当前节点。 |
+| pluginType | string              | Plugin type.  |
+| pluginName | string              | Plugin name.  |
+| config     | Map\<String, String> | Config key-value pairs. |
+| localOnly  | boolean             | Whether to apply only to the current node. |
 
-#### 返回参数
+#### Response Parameters
 
-无（void）。
+None (void).
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3564,13 +3561,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
-### 5.23. 查询插件可用性
+### 5.24. Query Plugin Availability
 
-#### 描述
+#### Description
 
 Get plugin availability across cluster nodes.
 
@@ -3578,20 +3575,20 @@ Get plugin availability across cluster nodes.
 Map<String, Boolean> getPluginAvailability(String pluginType, String pluginName) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名        | 参数类型   | 描述     |
+| Parameter Name        | Parameter Type   | Description     |
 |:-----------|:-------|:-------|
-| pluginType | string | 插件类型。  |
-| pluginName | string | 插件名称。  |
+| pluginType | string | Plugin type.  |
+| pluginName | string | Plugin name.  |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                   | 描述                     |
+| Parameter Type                   | Description                     |
 |:-----------------------|:-----------------------|
-| Map\<String, Boolean>  | 节点地址到是否可用的映射。           |
+| Map\<String, Boolean>  | Mapping from node address to availability.           |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3601,17 +3598,17 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
-## 6. MCP 服务
+## 6. MCP Services
 
-### 6.1. 获取MCP服务列表
+### 6.1. Get MCP Service List
 
-#### 描述
+#### Description
 
-通过mcpName，精确获取MCP服务列表，若传入的mcpName为空，则返回所有MCP服务列表。
+Gets the MCP service list by exact `mcpName`. If `mcpName` is empty, all MCP services are returned.
 
 ```java
 Page<McpServerBasicInfo> listMcpServer() throws NacosException;
@@ -3623,22 +3620,22 @@ Page<McpServerBasicInfo> listMcpServer(String mcpName, int pageNo, int pageSize)
 Page<McpServerBasicInfo> listMcpServer(String namespaceId, String mcpName, int pageNo, int pageSize) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                                     |
+| Parameter Name         | Parameter Type   | Description                                     |
 |:------------|:-------|:---------------------------------------|
-| pageNo      | int    | MCP服务列表的分页页码，默认为1。                     |
-| pageSize    | int    | MCP服务的分页大小，默认为100。                     |
-| mcpName     | String | MCP服务的准确名字，若传入的mcpName为空，则返回所有MCP服务列表。 |
-| namespaceId | String | MCP服务所属的命名空间id， 默认为`public`。           |
+| pageNo      | int    | Page number of the MCP service list. The default value is 1.                     |
+| pageSize    | int    | Page size of MCP services. The default value is 100.                     |
+| mcpName     | String | Exact MCP service name. If `mcpName` is empty, all MCP services are returned. |
+| namespaceId | String | Namespace ID to which the MCP service belongs. The default value is `public`.           |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                      | 描述           |
+| Parameter Type                      | Description           |
 |:--------------------------|:-------------|
-| Page\<McpServerBasicInfo> | MCP服务列表的分页结果 |
+| Page\<McpServerBasicInfo> | Paginated MCP service list result. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3651,15 +3648,15 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 6.2. 搜索MCP服务列表
+### 6.2. Search MCP Service List
 
-#### 描述
+#### Description
 
-通过mcpName，模糊搜索MCP服务列表，若传入的mcpName为空，则返回所有MCP服务列表。
+Searches the MCP service list by fuzzy `mcpName`. If `mcpName` is empty, all MCP services are returned.
 
 ```java
 Page<McpServerBasicInfo> searchMcpServer(String mcpName) throws NacosException;
@@ -3669,22 +3666,22 @@ Page<McpServerBasicInfo> searchMcpServer(String mcpName, int pageNo, int pageSiz
 Page<McpServerBasicInfo> searchMcpServer(String namespaceId, String mcpName, int pageNo, int pageSize) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                                     |
+| Parameter Name         | Parameter Type   | Description                                     |
 |:------------|:-------|:---------------------------------------|
-| pageNo      | int    | MCP服务列表的分页页码，默认为1。                     |
-| pageSize    | int    | MCP服务的分页大小，默认为100。                     |
-| mcpName     | String | MCP服务的准确名字，若传入的mcpName为空，则返回所有MCP服务列表。 |
-| namespaceId | String | MCP服务所属的命名空间id， 默认为`public`。           |
+| pageNo      | int    | Page number of the MCP service list. The default value is 1.                     |
+| pageSize    | int    | Page size of MCP services. The default value is 100.                     |
+| mcpName     | String | Exact MCP service name. If `mcpName` is empty, all MCP services are returned. |
+| namespaceId | String | Namespace ID to which the MCP service belongs. The default value is `public`.           |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                      | 描述           |
+| Parameter Type                      | Description           |
 |:--------------------------|:-------------|
-| Page\<McpServerBasicInfo> | MCP服务列表的分页结果 |
+| Page\<McpServerBasicInfo> | Paginated MCP service list result. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3696,15 +3693,15 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 6.3. 获取MCP服务详情
+### 6.3. Get MCP Service Details
 
-#### 描述
+#### Description
 
-通过mcpName，获取详细的MCP服务信息。
+Gets detailed MCP service information by `mcpName`.
 
 ```java
 McpServerDetailInfo getMcpServerDetail(String mcpName) throws NacosException;
@@ -3716,22 +3713,22 @@ McpServerDetailInfo getMcpServerDetail(String namespaceId, String mcpName, Strin
 McpServerDetailInfo getMcpServerDetail(String namespaceId, String mcpName, String mcpId, String version) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                           |
+| Parameter Name         | Parameter Type   | Description                           |
 |:------------|:-------|:-----------------------------|
-| mcpName     | String | MCP服务的准确名字                   |
-| version     | String | MCP服务的版本号，不指定时默认返回最新版本。      |
-| namespaceId | String | MCP服务所属的命名空间id， 默认为`public`。 |
-| mcpId       | String | MCP服务ID，不指定时可传 null。              |
+| mcpName     | String | Exact MCP service name.                   |
+| version     | String | MCP service version. If not specified, the latest version is returned by default.      |
+| namespaceId | String | Namespace ID to which the MCP service belongs. The default value is `public`. |
+| mcpId       | String | MCP service ID. If not specified, pass null.              |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型             | 描述            |
+| Parameter Type             | Description            |
 |:-----------------|:--------------|
-| McpServerDetailInfo | MCP服务详情对象。 |
+| McpServerDetailInfo | MCP service detail object. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3744,15 +3741,15 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 6.4. 创建Local(stdio)类型的MCP服务
+### 6.4. Create a Local (stdio) MCP Service
 
-#### 描述
+#### Description
 
-创建类型为Local(stdio)的MCP服务。
+Creates an MCP service of Local (stdio) type.
 
 ```java
 String createLocalMcpServer(String mcpName, String version) throws NacosException;
@@ -3766,24 +3763,24 @@ String createLocalMcpServer(String mcpName, String version, String description, 
 String createLocalMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名               | 参数类型                 | 描述                                                                                                   |
+| Parameter Name               | Parameter Type                 | Description                                                                                                   |
 |:------------------|:---------------------|:-----------------------------------------------------------------------------------------------------|
-| mcpName           | String               | 创建的MCP服务的名字                                                                                          | 
-| version           | String               | 创建的MCP服务的版本                                                                                          |
-| description       | String               | MCP服务的描述                                                                                             |
-| localServerConfig | Map<String, Object>  | stdio类型的MCP服务配置信息，可参考此MCP服务的启动配置进行配置                                                                 |
-| toolSpec          | McpToolSpecification | MCP服务所支持的工具定义内容                                                                                      |
-| serverSpec        | McpServerBasicInfo   | MCP服务的定义内容，可由`mcpName`, `version`,`description`,`localServerConfig`组成，也可以自行创建详细的`McpServerBasicInfo` |
+| mcpName           | String               | Name of the MCP service to create.                                                                                          |
+| version           | String               | Version of the MCP service to create.                                                                                          |
+| description       | String               | MCP service description.                                                                                             |
+| localServerConfig | Map<String, Object>  | Config information of the stdio MCP service. Configure it by referring to the startup config of this MCP service.                                                                 |
+| toolSpec          | McpToolSpecification | Tool definition content supported by the MCP service.                                                                                      |
+| serverSpec        | McpServerBasicInfo   | Definition content of the MCP service. It can be composed of `mcpName`, `version`, `description`, and `localServerConfig`, or you can create a detailed `McpServerBasicInfo` yourself. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述                     |
+| Parameter Type    | Description                     |
 |:--------|:-----------------------|
-| boolean | 创建成功为`true`，其他为`false` |
+| boolean | `true` if creation succeeds, otherwise `false`. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3805,15 +3802,15 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 6.5. 创建Remote(sse, streamable等)类型的MCP服务
+### 6.5. Create a Remote (SSE, Streamable, etc.) MCP Service
 
-#### 描述
+#### Description
 
-创建类型为Remote(sse, streamable等)的MCP服务。
+Creates an MCP service of Remote type, such as SSE or streamable.
 
 ```java
 String createRemoteMcpServer(String mcpName, String version, String protocol, McpEndpointSpec endpointSpec) throws NacosException;
@@ -3829,26 +3826,26 @@ String createRemoteMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpE
 String createRemoteMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名                 | 参数类型                         | 描述                                                                                                   |
+| Parameter Name                 | Parameter Type                         | Description                                                                                                   |
 |:--------------------|:-----------------------------|:-----------------------------------------------------------------------------------------------------|
-| mcpName             | String                       | 创建的MCP服务的名字                                                                                          | 
-| version             | String                       | 创建的MCP服务的版本                                                                                          |
-| description         | String                       | MCP服务的描述                                                                                             |
-| protocol            | String                       | MCP服务所支持的协议类型，目前支持sse, streamable等协议                                                                 |   
-| endpointSpec        | McpEndpointSpec              | MCP服务Remote Endpoint定义内容，可选`REF`或`DIRECT`类型进行配置。                                                     |
-| remoteServiceConfig | McpServerRemoteServiceConfig | sse或streamable类型的MCP服务配置信息，可参考此MCP服务的启动配置进行配置                                                        |
-| toolSpec            | McpToolSpecification         | MCP服务所支持的工具定义内容                                                                                      |
-| serverSpec          | McpServerBasicInfo           | MCP服务的定义内容，可由`mcpName`, `version`,`description`,`localServerConfig`组成，也可以自行创建详细的`McpServerBasicInfo` |
+| mcpName             | String                       | Name of the MCP service to create.                                                                                          |
+| version             | String                       | Version of the MCP service to create.                                                                                          |
+| description         | String                       | MCP service description.                                                                                             |
+| protocol            | String                       | Protocol types supported by the MCP service. Currently, protocols such as SSE and streamable are supported.                                                                 |
+| endpointSpec        | McpEndpointSpec              | Remote endpoint definition content of the MCP service. Configure it with optional `REF` or `DIRECT` type.                                                     |
+| remoteServiceConfig | McpServerRemoteServiceConfig | Config information of the SSE or streamable MCP service. Configure it by referring to the startup config of this MCP service.                                                        |
+| toolSpec            | McpToolSpecification         | Tool definition content supported by the MCP service.                                                                                      |
+| serverSpec          | McpServerBasicInfo           | Definition content of the MCP service. It can be composed of `mcpName`, `version`, `description`, and `localServerConfig`, or you can create a detailed `McpServerBasicInfo` yourself. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述                     |
+| Parameter Type    | Description                     |
 |:--------|:-----------------------|
-| boolean | 创建成功为`true`，其他为`false` |
+| boolean | `true` if creation succeeds, otherwise `false`. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3875,15 +3872,15 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 6.6. 更新MCP服务
+### 6.6. Update MCP Service
 
-#### 描述
+#### Description
 
-更新指定的MCP服务。
+Updates the specified MCP service.
 
 ```java
 boolean updateMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec) throws NacosException;
@@ -3895,25 +3892,25 @@ boolean updateMcpServer(String namespaceId, String mcpName, boolean isLatest, Mc
 boolean updateMcpServer(String namespaceId, String mcpName, boolean isLatest, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec, boolean overrideExisting) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名              | 参数类型                 | 描述                                              |
+| Parameter Name              | Parameter Type                 | Description                                              |
 |:-----------------|:---------------------|:------------------------------------------------|
-| mcpName          | String               | MCP服务的名称                                        |
-| namespaceId      | String               | MCP服务所属的命名空间ID，默认为`public`                      |
-| isLatest         | boolean              | 更新的MCP服务版本是否为最新版本，默认为`true`                     |
-| serverSpec       | McpServerBasicInfo   | 新版本的MCP服务的服务定义内容                                |
-| toolSpec         | McpToolSpecification | 新版本的MCP服务的工具定义内容                                |
-| endpointSpec     | McpEndpointSpec      | 新版本的MCP服务的Endpoint定义内容                          |
-| overrideExisting | boolean              | 是否覆盖已存在的同版本信息，默认为`false`，仅 7 参数重载有效。             | 
+| mcpName          | String               | MCP service name                                        |
+| namespaceId      | String               | Namespace ID to which the MCP service belongs. The default value is `public`.                      |
+| isLatest         | boolean              | Whether the updated MCP service version is the latest version. The default value is `true`.                     |
+| serverSpec       | McpServerBasicInfo   | Service definition content of the new MCP service version.                                |
+| toolSpec         | McpToolSpecification | Tool definition content of the new MCP service version.                                |
+| endpointSpec     | McpEndpointSpec      | Endpoint definition content of the new MCP service version.                          |
+| overrideExisting | boolean              | Whether to overwrite existing information of the same version. The default value is `false`. This is valid only for the seven-parameter overload.             |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述                     |
+| Parameter Type    | Description                     |
 |:--------|:-----------------------|
-| boolean | 更新成功为`true`，其他为`false` |
+| boolean | `true` if update succeeds, otherwise `false`. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3935,15 +3932,15 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 6.7. 删除MCP服务
+### 6.7. Delete MCP Service
 
-#### 描述
+#### Description
 
-删除指定的MCP服务。
+Deletes the specified MCP service.
 
 ```java
 boolean deleteMcpServer(String mcpName) throws NacosException;
@@ -3951,22 +3948,22 @@ boolean deleteMcpServer(String mcpName) throws NacosException;
 boolean deleteMcpServer(String namespaceId, String mcpName, String mcpId, String version) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                                         |
+| Parameter Name         | Parameter Type   | Description                                         |
 |:------------|:-------|:-------------------------------------------|
-| mcpName     | String | MCP服务的名称                                  |
-| namespaceId | String | MCP服务所属的命名空间ID，默认为`public`                   |
-| mcpId       | String | MCP服务ID，不指定时可传 null。                         |
-| version     | String | MCP服务版本，不指定时可传 null，传 null 时删除该服务下所有版本。        |
+| mcpName     | String | MCP service name                                  |
+| namespaceId | String | Namespace ID to which the MCP service belongs. The default value is `public`.                   |
+| mcpId       | String | MCP service ID. If not specified, pass null.                         |
+| version     | String | MCP service version. If not specified, pass null. When null is passed, all versions under this service are deleted.        |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述                     |
+| Parameter Type    | Description                     |
 |:--------|:-----------------------|
-| boolean | 删除成功为`true`，其他为`false` |
+| boolean | `true` if deletion succeeds, otherwise `false`. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -3978,13 +3975,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 6.8. 创建MCP服务（统一接口）
+### 6.8. Create MCP Service (Unified API)
 
-#### 描述
+#### Description
 
 Create MCP server in the given namespace (Local or Remote via McpServerBasicInfo and McpEndpointSpec). Omit namespaceId for default namespace; omit endpointSpec for Local(stdio).
 
@@ -3994,23 +3991,23 @@ String createMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpToolSpe
 String createMcpServer(String namespaceId, String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型                 | 描述                                                                 |
+| Parameter Name         | Parameter Type                 | Description                                                                 |
 |:------------|:---------------------|:-------------------------------------------------------------------|
-| namespaceId | string               | 命名空间ID，默认为 `public`。                                            |
-| mcpName     | string               | MCP 服务名称。                                                         |
-| serverSpec  | McpServerBasicInfo   | MCP 服务基础信息（名称、版本、描述、协议、localServerConfig 等）。                        |
-| toolSpec    | McpToolSpecification | 工具定义，Local 类型可传 null。                                            |
-| endpointSpec| McpEndpointSpec      | 端点规格；为 null 时表示 Local(stdio)，非 null 时表示 Remote(sse/streamable 等)。           |
+| namespaceId | string               | Namespace ID. The default value is `public`.                                            |
+| mcpName     | string               | MCP service name.                                                         |
+| serverSpec  | McpServerBasicInfo   | MCP service basic information, such as name, version, description, protocol, and localServerConfig.                        |
+| toolSpec    | McpToolSpecification | Tool definition. For Local type, null can be passed.                                            |
+| endpointSpec| McpEndpointSpec      | Endpoint specification. Null indicates Local (stdio), and non-null indicates Remote (SSE, streamable, etc.).           |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述       |
+| Parameter Type   | Description       |
 |:-------|:---------|
-| String | 创建结果描述。 |
+| String | Creation result description. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -4027,17 +4024,17 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-## 7. A2A 注册中心
+## 7. A2A Registry
 
-### 7.1. 发布AgentCard
+### 7.1. Publish AgentCard
 
-#### 描述
+#### Description
 
-发布AgentCard到指定的命名空间下。
+Publishes an AgentCard to the specified namespace.
 
 ```java
 boolean registerAgent(AgentCard agentCard) throws NacosException;
@@ -4047,21 +4044,21 @@ boolean registerAgent(AgentCard agentCard, String namespaceId) throws NacosExcep
 boolean registerAgent(AgentCard agentCard, String namespaceId, String registrationType) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名              | 参数类型      | 描述                                                                                                                     |
+| Parameter Name              | Parameter Type      | Description                                                                                                                     |
 |:-----------------|:----------|:-----------------------------------------------------------------------------------------------------------------------|
-| agentCard        | AgentCard | AgentCard对象                                                                                                            |
-| namespaceId      | String    | AgentCard所属的命名空间ID，默认为`public`                                                                                         |
-| registrationType | String    | 注册方式，可选值为`URL`和`SERVICE`，默认为`URL`，设置此AgentCard默认的`url`获取方式，`URL`代表直接读取注册时的`url`，`SERVICE`代表根据注册在Nacos中的endpoint生成`url` |
+| agentCard        | AgentCard | AgentCard object.                                                                                                            |
+| namespaceId      | String    | Namespace ID to which the AgentCard belongs. The default value is `public`.                                                                                         |
+| registrationType | String    | Registration type. Optional values are `URL` and `SERVICE`. The default value is `URL`. It sets the default way to obtain the `url` of this AgentCard. `URL` means directly reading the `url` from registration, and `SERVICE` means generating the `url` based on the endpoint registered in Nacos. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述                     |
+| Parameter Type    | Description                     |
 |:--------|:-----------------------|
-| boolean | 注册成功为`true`，其他为`false` |
+| boolean | `true` if registration succeeds, otherwise `false`. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -4079,15 +4076,15 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 7.2. 查询AgentCard
+### 7.2. Query AgentCard
 
-#### 描述
+#### Description
 
-查询指定命名空间下的AgentCard。
+Queries the AgentCard under the specified namespace.
 
 ```java
 AgentCardDetailInfo getAgentCard(String agentName) throws NacosException;
@@ -4099,22 +4096,22 @@ AgentCardDetailInfo getAgentCard(String agentName, String namespaceId, String re
 AgentCardDetailInfo getAgentCard(String agentName, String namespaceId, String registrationType, String version) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名              | 参数类型   | 描述                                                                                      |
+| Parameter Name              | Parameter Type   | Description                                                                                      |
 |:-----------------|:-------|:----------------------------------------------------------------------------------------|
-| agentName        | String | AgentCard的名称                                                                            |
-| namespaceId      | String | AgentCard所属的命名空间ID，默认为`public`                                                          |
-| registrationType | String | 注册方式，可选值为`URL`和`SERVICE`，默认为`URL`，可选，若为空，则根据注册此AgentCard时设置的`registrationType`自动选择`url` |
-| version          | String | AgentCard 的版本号，不指定时可传空字符串，则返回默认版本。                                                           |
+| agentName        | String | AgentCard name.                                                                            |
+| namespaceId      | String | Namespace ID to which the AgentCard belongs. The default value is `public`.                                                          |
+| registrationType | String | Registration type. Optional values are `URL` and `SERVICE`. The default value is `URL`. This field is optional. If empty, the `url` is automatically selected based on the `registrationType` set when this AgentCard was registered. |
+| version          | String | AgentCard version. If not specified, pass an empty string to return the default version.                                                           |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                | 描述            |
+| Parameter Type                | Description            |
 |:--------------------|:--------------|
-| AgentCardDetailInfo | AgentCard详情对象 |
+| AgentCardDetailInfo | AgentCard detail object. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -4127,15 +4124,15 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 7.3. 更新AgentCard
+### 7.3. Update AgentCard
 
-#### 描述
+#### Description
 
-更新指定命名空间下的AgentCard。
+Updates the AgentCard under the specified namespace.
 
 ```java
 boolean updateAgentCard(AgentCard agentCard) throws NacosException;
@@ -4147,22 +4144,22 @@ boolean updateAgentCard(AgentCard agentCard, String namespaceId, boolean setAsLa
 boolean updateAgentCard(AgentCard agentCard, String namespaceId, boolean setAsLatest, String registrationType) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名              | 参数类型      | 描述                                                                                                                     |
+| Parameter Name              | Parameter Type      | Description                                                                                                                     |
 |:-----------------|:----------|:-----------------------------------------------------------------------------------------------------------------------|
-| agentCard        | AgentCard | AgentCard对象                                                                                                            |
-| namespaceId      | String    | AgentCard所属的命名空间ID，默认为`public`                                                                                         |
-| setAsLatest      | boolean   | 是否将此AgentCard设置为最新版本                                                                                                   |
-| registrationType | String    | 注册方式，可选值为`URL`和`SERVICE`，默认为`URL`，设置此AgentCard默认的`url`获取方式，`URL`代表直接读取注册时的`url`，`SERVICE`代表根据注册在Nacos中的endpoint生成`url` |
+| agentCard        | AgentCard | AgentCard object.                                                                                                            |
+| namespaceId      | String    | Namespace ID to which the AgentCard belongs. The default value is `public`.                                                                                         |
+| setAsLatest      | boolean   | Whether to set this AgentCard as the latest version.                                                                                                   |
+| registrationType | String    | Registration type. Optional values are `URL` and `SERVICE`. The default value is `URL`. It sets the default way to obtain the `url` of this AgentCard. `URL` means directly reading the `url` from registration, and `SERVICE` means generating the `url` based on the endpoint registered in Nacos. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述                     |
+| Parameter Type    | Description                     |
 |:--------|:-----------------------|
-| boolean | 更新成功为`true`，其他为`false` |
+| boolean | `true` if update succeeds, otherwise `false`. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -4181,15 +4178,15 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 7.4. 删除AgentCard
+### 7.4. Delete AgentCard
 
-#### 描述
+#### Description
 
-删除指定命名空间下的AgentCard。
+Deletes the AgentCard under the specified namespace.
 
 ```java
 boolean deleteAgent(String agentName) throws NacosException;
@@ -4199,21 +4196,21 @@ boolean deleteAgent(String agentName, String namespaceId) throws NacosException;
 boolean deleteAgent(String agentName, String namespaceId, String version) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                             |
+| Parameter Name         | Parameter Type   | Description                             |
 |:------------|:-------|:-------------------------------|
-| agentName   | String | AgentCard的名称                   |
-| namespaceId | String | AgentCard所属的命名空间ID，默认为`public` |
-| version     | String | AgentCard的版本，若为空，则删除所有版本       |
+| agentName   | String | AgentCard name.                   |
+| namespaceId | String | Namespace ID to which the AgentCard belongs. The default value is `public`. |
+| version     | String | AgentCard version. If empty, all versions are deleted.       |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述                     |
+| Parameter Type    | Description                     |
 |:--------|:-----------------------|
-| boolean | 删除成功为`true`，其他为`false` |
+| boolean | `true` if deletion succeeds, otherwise `false`. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -4225,15 +4222,15 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 7.5. 查询指定AgentCard的所有版本
+### 7.5. Query All Versions of a Specified AgentCard
 
-#### 描述
+#### Description
 
-查询指定命名空间下的指定AgentCard的所有版本。
+Queries all versions of the specified AgentCard under the specified namespace.
 
 ```java
 List<AgentVersionDetail> listAllVersionOfAgent(String agentName) throws NacosException;
@@ -4241,20 +4238,20 @@ List<AgentVersionDetail> listAllVersionOfAgent(String agentName) throws NacosExc
 List<AgentVersionDetail> listAllVersionOfAgent(String agentName, String namespaceId) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                             |
+| Parameter Name         | Parameter Type   | Description                             |
 |:------------|:-------|:-------------------------------|
-| agentName   | String | AgentCard的名称                   |
-| namespaceId | String | AgentCard所属的命名空间ID，默认为`public` |
+| agentName   | String | AgentCard name.                   |
+| namespaceId | String | Namespace ID to which the AgentCard belongs. The default value is `public`. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                     | 描述               |
+| Parameter Type                     | Description               |
 |:-------------------------|:-----------------|
-| List<AgentVersionDetail> | AgentCard的所有版本列表 |
+| List<AgentVersionDetail> | List of all AgentCard versions. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -4265,15 +4262,15 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 7.6. 根据AgentCard名称搜索AgentCard
+### 7.6. Search AgentCard by AgentCard Name
 
-#### 描述
+#### Description
 
-根据AgentCard名称搜索AgentCard。每次仅能搜索单个命名空间下的AgentCard。
+Searches AgentCards by AgentCard name. Only AgentCards under one namespace can be searched at a time.
 
 ```java
 Page<AgentCardVersionInfo> searchAgentCardsByName(String agentNamePattern) throws NacosException;
@@ -4283,22 +4280,22 @@ default Page<AgentCardVersionInfo> searchAgentCardsByName(String agentNamePatter
 Page<AgentCardVersionInfo> searchAgentCardsByName(String namespaceId, String agentNamePattern, int pageNo, int pageSize) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名              | 参数类型   | 描述                             |
+| Parameter Name              | Parameter Type   | Description                             |
 |:-----------------|:-------|:-------------------------------|
-| agentNamePattern | String | AgentCard的名称的格式匹配字符串           |
-| namespaceId      | String | AgentCard所属的命名空间ID，默认为`public` |
-| pageNo           | int    | 页码，默认为1                        |
-| pageSize         | int    | 每页大小，默认为100                    |
+| agentNamePattern | String | Pattern matching string for the AgentCard name.           |
+| namespaceId      | String | Namespace ID to which the AgentCard belongs. The default value is `public`. |
+| pageNo           | int    | Page number. The default value is 1.                        |
+| pageSize         | int    | Page size. The default value is 100.                    |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                       | 描述      |
+| Parameter Type                       | Description      |
 |:---------------------------|:--------|
-| Page<AgentCardVersionInfo> | 搜索的分页结果 |
+| Page<AgentCardVersionInfo> | Paginated search result. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -4310,15 +4307,15 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-### 7.7. 分页查询AgentCard列表
+### 7.7. Query AgentCard List with Pagination
 
-#### 描述
+#### Description
 
-分页查询AgentCard列表。每次仅能查询单个命名空间下的AgentCard。
+Queries the AgentCard list with pagination. Only AgentCards under one namespace can be queried at a time.
 
 ```java
 Page<AgentCardVersionInfo> listAgentCards() throws NacosException;
@@ -4330,22 +4327,22 @@ Page<AgentCardVersionInfo> listAgentCards(String namespaceId, int pageNo, int pa
 Page<AgentCardVersionInfo> listAgentCards(String namespaceId, String agentName, int pageNo, int pageSize) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                                   |
+| Parameter Name         | Parameter Type   | Description                                   |
 |:------------|:-------|:-------------------------------------|
-| namespaceId | String | AgentCard所属的命名空间ID，默认为`public`       |
-| pageNo      | int    | 页码，默认为1                              |
-| pageSize    | int    | 每页大小，默认为100                          |
-| agentName   | String | AgentCard的名称，精确匹配，若为空，则查询所有AgentCard |
+| namespaceId | String | Namespace ID to which the AgentCard belongs. The default value is `public`.       |
+| pageNo      | int    | Page number. The default value is 1.                              |
+| pageSize    | int    | Page size. The default value is 100.                          |
+| agentName   | String | AgentCard name for exact matching. If empty, all AgentCards are queried. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                       | 描述      |
+| Parameter Type                       | Description      |
 |:---------------------------|:--------|
-| Page<AgentCardVersionInfo> | 查询的分页结果 |
+| Page<AgentCardVersionInfo> | Paginated query result. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -4358,15 +4355,15 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
-## 8. Prompt 能力
+## 8. Prompt Capabilities
 
-### 8.1. 分页查询 Prompt 列表
+### 8.1. Query Prompt List with Pagination
 
-#### 描述
+#### Description
 
 List prompts with pagination by namespace, promptKey pattern, search mode, and biz tags.
 
@@ -4376,24 +4373,24 @@ Page<PromptMetaSummary> listPrompts(String namespaceId, String promptKey, String
 Page<PromptMetaSummary> listPrompts(String promptKey, int pageNo, int pageSize) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                                           |
+| Parameter Name         | Parameter Type   | Description                                           |
 |:------------|:-------|:---------------------------------------------|
-| namespaceId | string | 命名空间ID，默认 `public`。                             |
-| promptKey   | string | prompt 键名模式过滤。                                 |
-| search      | string | 搜索模式：`accurate` 精确 或 `blur` 模糊。                 |
-| bizTags     | string | 业务标签过滤，逗号分隔（可选）。                             |
-| pageNo      | int    | 页码。                                          |
-| pageSize    | int    | 每页条数。                                        |
+| namespaceId | string | Namespace ID. The default value is `public`.                             |
+| promptKey   | string | Prompt key pattern filter.                                 |
+| search      | string | Search mode: `accurate` for exact search or `blur` for fuzzy search.                 |
+| bizTags     | string | Business tag filter, separated by commas (optional).                             |
+| pageNo      | int    | Page number.                                          |
+| pageSize    | int    | Number of items per page.                                        |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                       | 描述         |
+| Parameter Type                       | Description         |
 |:---------------------------|:-----------|
-| Page\<PromptMetaSummary>   | 分页 Prompt 列表。 |
+| Page\<PromptMetaSummary>   | Paginated Prompt list. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -4404,13 +4401,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
-### 8.2. 获取 Prompt 元信息
+### 8.2. Get Prompt Metadata
 
-#### 描述
+#### Description
 
 Get prompt meta by namespace and promptKey.
 
@@ -4420,20 +4417,20 @@ PromptMetaInfo getPromptMeta(String namespaceId, String promptKey) throws NacosE
 PromptMetaInfo getPromptMeta(String promptKey) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述           |
+| Parameter Name         | Parameter Type   | Description           |
 |:------------|:-------|:-------------|
-| namespaceId | string | 命名空间ID。      |
-| promptKey   | string | Prompt 的 key。 |
+| namespaceId | string | Namespace ID.      |
+| promptKey   | string | Prompt key. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型           | 描述          |
+| Parameter Type           | Description          |
 |:---------------|:------------|
-| PromptMetaInfo | Prompt 元信息。 |
+| PromptMetaInfo | Prompt metadata. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -4444,13 +4441,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
-### 8.3. 查询 Prompt 版本详情
+### 8.3. Query Prompt Version Details
 
-#### 描述
+#### Description
 
 Query prompt version detail by namespace, promptKey, version, and label.
 
@@ -4458,22 +4455,22 @@ Query prompt version detail by namespace, promptKey, version, and label.
 PromptVersionInfo queryPromptDetail(String namespaceId, String promptKey, String version, String label) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述        |
+| Parameter Name         | Parameter Type   | Description        |
 |:------------|:-------|:----------|
-| namespaceId | string | 命名空间ID。   |
-| promptKey   | string | Prompt key。 |
-| version     | string | 版本号。      |
-| label       | string | 标签（可选）。   |
+| namespaceId | string | Namespace ID.   |
+| promptKey   | string | Prompt key. |
+| version     | string | Version number.      |
+| label       | string | Label (optional).   |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型              | 描述             |
+| Parameter Type              | Description             |
 |:------------------|:---------------|
-| PromptVersionInfo | Prompt 版本详情。   |
+| PromptVersionInfo | Prompt version details.   |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -4483,13 +4480,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
-### 8.4. 绑定 Prompt 标签
+### 8.4. Bind Prompt Label
 
-#### 描述
+#### Description
 
 Bind a label to a prompt version.
 
@@ -4497,22 +4494,22 @@ Bind a label to a prompt version.
 boolean bindLabel(String namespaceId, String promptKey, String label, String version) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述       |
+| Parameter Name         | Parameter Type   | Description       |
 |:------------|:-------|:---------|
-| namespaceId | string | 命名空间ID。  |
-| promptKey   | string | Prompt key。 |
-| label       | string | 标签名。     |
-| version     | string | 版本号。     |
+| namespaceId | string | Namespace ID.  |
+| promptKey   | string | Prompt key. |
+| label       | string | Label name.     |
+| version     | string | Version number.     |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述           |
+| Parameter Type    | Description           |
 |:--------|:-------------|
-| boolean | 绑定是否成功。     |
+| boolean | Whether binding succeeds.     |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -4522,13 +4519,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
-### 8.5. 解绑 Prompt 标签
+### 8.5. Unbind Prompt Label
 
-#### 描述
+#### Description
 
 Unbind a label from a prompt.
 
@@ -4536,21 +4533,21 @@ Unbind a label from a prompt.
 boolean unbindLabel(String namespaceId, String promptKey, String label) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述       |
+| Parameter Name         | Parameter Type   | Description       |
 |:------------|:-------|:---------|
-| namespaceId | string | 命名空间ID。  |
-| promptKey   | string | Prompt key。 |
-| label       | string | 标签名。     |
+| namespaceId | string | Namespace ID.  |
+| promptKey   | string | Prompt key. |
+| label       | string | Label name.     |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述         |
+| Parameter Type    | Description         |
 |:--------|:-----------|
-| boolean | 解绑是否成功。   |
+| boolean | Whether unbinding succeeds.   |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -4560,13 +4557,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
-### 8.6. 发布 Prompt 版本
+### 8.6. Publish Prompt Version
 
-#### 描述
+#### Description
 
 Publish a new prompt version with optional description and biz tags.
 
@@ -4580,26 +4577,26 @@ boolean publishPrompt(String namespaceId, String promptKey, String version, Stri
 boolean publishPrompt(String promptKey, String version, String template, String commitMsg) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述               |
+| Parameter Name         | Parameter Type   | Description               |
 |:------------|:-------|:-----------------|
-| namespaceId | string | 命名空间ID。          |
-| promptKey   | string | Prompt key。       |
-| version     | string | 版本号（需大于当前版本）。   |
-| template    | string | 模板内容。            |
-| commitMsg   | string | 提交说明。            |
-| description | string | 描述（可选）。          |
-| bizTags     | string | 业务标签，逗号分隔（可选）。   |
-| variables   | string | 变量定义 JSON（可选）。    |
+| namespaceId | string | Namespace ID.          |
+| promptKey   | string | Prompt key.       |
+| version     | string | Version number, which must be greater than the current version.   |
+| template    | string | Template content.            |
+| commitMsg   | string | Commit message.            |
+| description | string | Description (optional).          |
+| bizTags     | string | Business tags, separated by commas (optional).   |
+| variables   | string | Variable definition JSON (optional).    |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述         |
+| Parameter Type    | Description         |
 |:--------|:-----------|
-| boolean | 发布是否成功。   |
+| boolean | Whether publishing succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -4611,13 +4608,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
-### 8.7. 删除 Prompt
+### 8.7. Delete Prompt
 
-#### 描述
+#### Description
 
 Delete a prompt in the given namespace.
 
@@ -4627,20 +4624,20 @@ boolean deletePrompt(String namespaceId, String promptKey) throws NacosException
 boolean deletePrompt(String promptKey) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述       |
+| Parameter Name         | Parameter Type   | Description       |
 |:------------|:-------|:---------|
-| namespaceId | string | 命名空间ID。  |
-| promptKey   | string | Prompt key。 |
+| namespaceId | string | Namespace ID.  |
+| promptKey   | string | Prompt key. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述         |
+| Parameter Type    | Description         |
 |:--------|:-----------|
-| boolean | 删除是否成功。   |
+| boolean | Whether deletion succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -4651,13 +4648,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
-### 8.8. 分页查询 Prompt 版本列表
+### 8.8. Query Prompt Version List with Pagination
 
-#### 描述
+#### Description
 
 List prompt versions with pagination.
 
@@ -4667,22 +4664,22 @@ Page<PromptVersionSummary> listPromptVersions(String namespaceId, String promptK
 Page<PromptVersionSummary> listPromptVersions(String promptKey, int pageNo, int pageSize) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述       |
+| Parameter Name         | Parameter Type   | Description       |
 |:------------|:-------|:---------|
-| namespaceId | string | 命名空间ID。  |
-| promptKey   | string | Prompt key。 |
-| pageNo      | int    | 页码。      |
-| pageSize    | int    | 每页条数。    |
+| namespaceId | string | Namespace ID.  |
+| promptKey   | string | Prompt key. |
+| pageNo      | int    | Page number.      |
+| pageSize    | int    | Number of items per page.    |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                       | 描述           |
+| Parameter Type                       | Description           |
 |:---------------------------|:-------------|
-| Page\<PromptVersionSummary> | 版本分页列表。     |
+| Page\<PromptVersionSummary> | Paginated version list.     |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -4693,13 +4690,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
-### 8.9. 更新 Prompt 元数据
+### 8.9. Update Prompt Metadata
 
-#### 描述
+#### Description
 
 Update prompt description and biz tags.
 
@@ -4709,22 +4706,22 @@ boolean updatePromptMetadata(String namespaceId, String promptKey, String descri
 boolean updatePromptMetadata(String namespaceId, String promptKey, String description) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述         |
+| Parameter Name         | Parameter Type   | Description         |
 |:------------|:-------|:-----------|
-| namespaceId | string | 命名空间ID。    |
-| promptKey   | string | Prompt key。 |
-| description | string | 新描述。       |
-| bizTags     | string | 新业务标签，逗号分隔（可选）。 |
+| namespaceId | string | Namespace ID.    |
+| promptKey   | string | Prompt key. |
+| description | string | New description.       |
+| bizTags     | string | New business tags, separated by commas (optional). |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述         |
+| Parameter Type    | Description         |
 |:--------|:-----------|
-| boolean | 更新是否成功。   |
+| boolean | Whether the update succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -4735,9 +4732,9 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
 ### 8.10. Get Prompt Governance Detail
 
@@ -5240,11 +5237,11 @@ try {
 
 Throws NacosException when the operation fails.
 
-## 9. Skill 能力
+## 9. Skill Capabilities
 
-### 9.1. 注册 Skill
+### 9.1. Register Skill
 
-#### 描述
+#### Description
 
 Register a skill in the given namespace.
 
@@ -5254,20 +5251,20 @@ String registerSkill(String namespaceId, Skill skill) throws NacosException;
 String registerSkill(Skill skill) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述        |
+| Parameter Name         | Parameter Type   | Description        |
 |:------------|:-------|:----------|
-| namespaceId | string | 命名空间ID。   |
-| skill       | Skill  | Skill 对象。 |
+| namespaceId | string | Namespace ID.   |
+| skill       | Skill  | Skill object. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述       |
+| Parameter Type   | Description       |
 |:-------|:---------|
-| String | Skill 名称。 |
+| String | Skill name. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -5280,13 +5277,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
-### 9.2. 获取 Skill 详情
+### 9.2. Get Skill Details
 
-#### 描述
+#### Description
 
 Get skill detail by namespace and skill name.
 
@@ -5296,20 +5293,20 @@ Skill getSkillDetail(String namespaceId, String skillName) throws NacosException
 Skill getSkillDetail(String skillName) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述        |
+| Parameter Name         | Parameter Type   | Description        |
 |:------------|:-------|:----------|
-| namespaceId | string | 命名空间ID。   |
-| skillName   | string | Skill 名称。  |
+| namespaceId | string | Namespace ID.   |
+| skillName   | string | Skill name.  |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型 | 描述        |
+| Parameter Type | Description        |
 |:-----|:----------|
-| Skill | Skill 详情对象。 |
+| Skill | Skill detail object. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -5320,13 +5317,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
-### 9.3. 更新 Skill
+### 9.3. Update Skill
 
-#### 描述
+#### Description
 
 Update an existing skill.
 
@@ -5336,20 +5333,20 @@ boolean updateSkill(String namespaceId, Skill skill) throws NacosException;
 boolean updateSkill(Skill skill) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述        |
+| Parameter Name         | Parameter Type   | Description        |
 |:------------|:-------|:----------|
-| namespaceId | string | 命名空间ID。   |
-| skill       | Skill  | Skill 对象。  |
+| namespaceId | string | Namespace ID.   |
+| skill       | Skill  | Skill object.  |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述         |
+| Parameter Type    | Description         |
 |:--------|:-----------|
-| boolean | 更新是否成功。   |
+| boolean | Whether the update succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -5362,13 +5359,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
-### 9.4. 删除 Skill
+### 9.4. Delete Skill
 
-#### 描述
+#### Description
 
 Delete a skill in the given namespace.
 
@@ -5378,20 +5375,20 @@ boolean deleteSkill(String namespaceId, String skillName) throws NacosException;
 boolean deleteSkill(String skillName) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述       |
+| Parameter Name         | Parameter Type   | Description       |
 |:------------|:-------|:---------|
-| namespaceId | string | 命名空间ID。  |
-| skillName   | string | Skill 名称。 |
+| namespaceId | string | Namespace ID.  |
+| skillName   | string | Skill name. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述         |
+| Parameter Type    | Description         |
 |:--------|:-----------|
-| boolean | 删除是否成功。   |
+| boolean | Whether deletion succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -5402,13 +5399,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
-### 9.5. 分页查询 Skill 列表
+### 9.5. Query Skill List with Pagination
 
-#### 描述
+#### Description
 
 List skills with pagination by namespace, name pattern, and search mode.
 
@@ -5422,27 +5419,27 @@ Page<SkillSummary> listSkills(String namespaceId, String skillName, String searc
 Page<SkillSummary> listSkills(String skillName, int pageNo, int pageSize) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                           |
+| Parameter Name         | Parameter Type   | Description                           |
 |:------------|:-------|:-----------------------------|
-| namespaceId | string | 命名空间ID。                      |
-| skillName   | string | Skill 名称模式过滤。                 |
-| search      | string | 搜索模式：`accurate` 精确 或 `blur` 模糊。 |
+| namespaceId | string | Namespace ID.                      |
+| skillName   | string | Skill name pattern filter.                 |
+| search      | string | Search mode: `accurate` for exact search or `blur` for fuzzy search. |
 | orderBy     | string | Optional sort field.               |
 | owner       | string | Optional resource owner filter.     |
 | scope       | string | Optional visibility scope filter.   |
 | bizTag      | string | Optional business tag filter.       |
-| pageNo      | int    | 页码。                          |
-| pageSize    | int    | 每页条数。                        |
+| pageNo      | int    | Page number.                          |
+| pageSize    | int    | Number of items per page.                        |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型                   | 描述         |
+| Parameter Type                   | Description         |
 |:-----------------------|:-----------|
 | Page\<SkillSummary>   | Skill page result. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -5456,13 +5453,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
-### 9.6. 从 ZIP 上传 Skill
+### 9.6. Upload Skill from ZIP
 
-#### 描述
+#### Description
 
 Upload and register a skill from ZIP bytes in the given namespace.
 
@@ -5478,23 +5475,23 @@ String uploadSkillFromZip(String namespaceId, byte[] zipBytes) throws NacosExcep
 String uploadSkillFromZip(byte[] zipBytes) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型    | 描述          |
+| Parameter Name         | Parameter Type    | Description          |
 |:------------|:--------|:------------|
-| namespaceId | string  | 命名空间ID。     |
-| zipBytes    | byte[]  | Skill 的 ZIP 包字节。 |
-| overwrite   | boolean | Skill 已存在时是否覆盖当前可编辑草稿。 |
+| namespaceId | string  | Namespace ID.     |
+| zipBytes    | byte[]  | Bytes of the Skill ZIP package. |
+| overwrite   | boolean | Whether to overwrite the current editable draft when the Skill already exists. |
 | targetVersion | string | Optional target version, used when the ZIP content has no version. |
 | commitMsg   | string  | Optional version commit message. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述       |
+| Parameter Type   | Description       |
 |:-------|:---------|
-| String | Skill 名称。 |
+| String | Skill name. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -5510,13 +5507,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
 ### 9.7. Get Skill metadata
 
-#### 描述
+#### Description
 
 Get skill metadata in default namespace or specified namespace.
 
@@ -5526,20 +5523,20 @@ SkillMeta getSkillMeta(String skillName) throws NacosException;
 SkillMeta getSkillMeta(String namespaceId, String skillName) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述       |
+| Parameter Name         | Parameter Type   | Description       |
 |:------------|:-------|:---------|
-| namespaceId | string | 命名空间ID。  |
-| skillName   | string | Skill 名称。 |
+| namespaceId | string | Namespace ID.  |
+| skillName   | string | Skill name. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述          |
+| Parameter Type   | Description          |
 |:-------|:------------|
-| SkillMeta | Skill 元信息。 |
+| SkillMeta | Skill metadata. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -5550,13 +5547,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
 ### 9.8. Get Skill version detail
 
-#### 描述
+#### Description
 
 Get detail for a specific skill version.
 
@@ -5566,21 +5563,21 @@ Skill getSkillVersionDetail(String skillName, String version) throws NacosExcept
 Skill getSkillVersionDetail(String namespaceId, String skillName, String version) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述       |
+| Parameter Name         | Parameter Type   | Description       |
 |:------------|:-------|:---------|
-| namespaceId | string | 命名空间ID。  |
-| skillName   | string | Skill 名称。 |
-| version     | string | Skill 版本。 |
+| namespaceId | string | Namespace ID.  |
+| skillName   | string | Skill name. |
+| version     | string | Skill version. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型 | 描述                  |
+| Parameter Type | Description                  |
 |:------|:--------------------|
-| Skill | 指定版本的 Skill 详情对象。 |
+| Skill | Skill detail object of the specified version. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -5591,13 +5588,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
 ### 9.9. Create Skill draft
 
-#### 描述
+#### Description
 
 Create a new skill draft, optionally forked from an existing version.
 
@@ -5613,24 +5610,24 @@ String createDraft(String namespaceId, String skillName, String basedOnVersion, 
 String createDraft(String namespaceId, String skillName, String basedOnVersion, String targetVersion, String skillCard, String commitMsg) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名          | 参数类型   | 描述                             |
+| Parameter Name          | Parameter Type   | Description                             |
 |:-------------|:-------|:-------------------------------|
-| namespaceId  | string | 命名空间ID。                        |
-| skillName    | string | Skill 名称（fork 时必填）。             |
-| basedOnVersion | string | fork 基于的版本（可选）。                |
-| targetVersion | string | 目标草稿版本（可选）。                    |
-| skillCard    | string | Skill 完整 JSON（非 fork 场景通常必填）。   |
+| namespaceId  | string | Namespace ID.                        |
+| skillName    | string | Skill name, required when forking.             |
+| basedOnVersion | string | Version on which the fork is based (optional).                |
+| targetVersion | string | Target draft version (optional).                    |
+| skillCard    | string | Complete Skill JSON, usually required in non-fork scenarios.   |
 | commitMsg    | string | Optional version commit message.        |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述         |
+| Parameter Type   | Description         |
 |:-------|:-----------|
-| String | 创建出的草稿版本号。 |
+| String | Created draft version number. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -5645,13 +5642,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
 ### 9.10. Update Skill draft
 
-#### 描述
+#### Description
 
 Update current draft content.
 
@@ -5661,22 +5658,22 @@ boolean updateDraft(String namespaceId, String skillCard, Boolean setAsLatest) t
 boolean updateDraft(String namespaceId, String skillCard, Boolean setAsLatest, String commitMsg) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型    | 描述                      |
+| Parameter Name         | Parameter Type    | Description                      |
 |:------------|:--------|:------------------------|
-| namespaceId | string  | 命名空间ID。                 |
-| skillCard   | string  | Skill 完整 JSON。          |
-| setAsLatest | boolean | 是否设为 latest 标签（可选）。     |
+| namespaceId | string  | Namespace ID.                 |
+| skillCard   | string  | Complete Skill JSON.          |
+| setAsLatest | boolean | Whether to set the latest label (optional).     |
 | commitMsg   | string  | Optional version commit message. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述         |
+| Parameter Type    | Description         |
 |:--------|:-----------|
-| boolean | 更新是否成功。   |
+| boolean | Whether the update succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -5688,13 +5685,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
 ### 9.11. Delete Skill draft
 
-#### 描述
+#### Description
 
 Delete current draft of a skill.
 
@@ -5702,20 +5699,20 @@ Delete current draft of a skill.
 boolean deleteDraft(String namespaceId, String skillName) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述       |
+| Parameter Name         | Parameter Type   | Description       |
 |:------------|:-------|:---------|
-| namespaceId | string | 命名空间ID。  |
-| skillName   | string | Skill 名称。 |
+| namespaceId | string | Namespace ID.  |
+| skillName   | string | Skill name. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述         |
+| Parameter Type    | Description         |
 |:--------|:-----------|
-| boolean | 删除是否成功。   |
+| boolean | Whether deletion succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -5725,13 +5722,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
 ### 9.12. Submit Skill version
 
-#### 描述
+#### Description
 
 Submit a skill version into review pipeline.
 
@@ -5739,21 +5736,21 @@ Submit a skill version into review pipeline.
 String submit(String namespaceId, String skillName, String version) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                     |
+| Parameter Name         | Parameter Type   | Description                     |
 |:------------|:-------|:-----------------------|
-| namespaceId | string | 命名空间ID。                |
-| skillName   | string | Skill 名称。              |
-| version     | string | 版本号（可选，服务端可自动选择当前草稿）。 |
+| namespaceId | string | Namespace ID.                |
+| skillName   | string | Skill name.              |
+| version     | string | Version number (optional). The server can automatically select the current draft. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型   | 描述                  |
+| Parameter Type   | Description                  |
 |:-------|:--------------------|
-| String | 提交结果（如 pipelineId）。 |
+| String | Submit result, such as `pipelineId`. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -5763,13 +5760,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
 ### 9.13. Publish Skill version
 
-#### 描述
+#### Description
 
 Publish reviewed skill version.
 
@@ -5777,22 +5774,22 @@ Publish reviewed skill version.
 boolean publish(String namespaceId, String skillName, String version, Boolean updateLatestLabel) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名            | 参数类型    | 描述                 |
+| Parameter Name            | Parameter Type    | Description                 |
 |:---------------|:--------|:-------------------|
-| namespaceId    | string  | 命名空间ID。            |
-| skillName      | string  | Skill 名称。          |
-| version        | string  | 待发布版本。             |
-| updateLatestLabel | boolean | 是否更新 latest 标签。 |
+| namespaceId    | string  | Namespace ID.            |
+| skillName      | string  | Skill name.          |
+| version        | string  | Version to publish.             |
+| updateLatestLabel | boolean | Whether to update the latest label. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述         |
+| Parameter Type    | Description         |
 |:--------|:-----------|
-| boolean | 发布是否成功。   |
+| boolean | Whether publishing succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -5802,13 +5799,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
 ### 9.14. Force publish Skill version
 
-#### 描述
+#### Description
 
 Force publish skill version without review check.
 
@@ -5816,22 +5813,22 @@ Force publish skill version without review check.
 boolean forcePublish(String namespaceId, String skillName, String version, Boolean updateLatestLabel) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名            | 参数类型    | 描述                 |
+| Parameter Name            | Parameter Type    | Description                 |
 |:---------------|:--------|:-------------------|
-| namespaceId    | string  | 命名空间ID。            |
-| skillName      | string  | Skill 名称。          |
-| version        | string  | 待发布版本。             |
-| updateLatestLabel | boolean | 是否更新 latest 标签。 |
+| namespaceId    | string  | Namespace ID.            |
+| skillName      | string  | Skill name.          |
+| version        | string  | Version to publish.             |
+| updateLatestLabel | boolean | Whether to update the latest label. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述           |
+| Parameter Type    | Description           |
 |:--------|:-------------|
-| boolean | 强制发布是否成功。   |
+| boolean | Whether force publish succeeds.   |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -5841,13 +5838,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
 ### 9.15. Update Skill labels
 
-#### 描述
+#### Description
 
 Update runtime label mapping JSON.
 
@@ -5855,21 +5852,21 @@ Update runtime label mapping JSON.
 boolean updateLabels(String namespaceId, String skillName, String labels) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述           |
+| Parameter Name         | Parameter Type   | Description           |
 |:------------|:-------|:-------------|
-| namespaceId | string | 命名空间ID。      |
-| skillName   | string | Skill 名称。    |
-| labels      | string | labels JSON。 |
+| namespaceId | string | Namespace ID.      |
+| skillName   | string | Skill name.    |
+| labels      | string | labels JSON. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述         |
+| Parameter Type    | Description         |
 |:--------|:-----------|
-| boolean | 更新是否成功。   |
+| boolean | Whether the update succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -5879,13 +5876,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
 ### 9.16. Update Skill biz tags
 
-#### 描述
+#### Description
 
 Update biz tags JSON of a skill.
 
@@ -5893,21 +5890,21 @@ Update biz tags JSON of a skill.
 boolean updateBizTags(String namespaceId, String skillName, String bizTags) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述            |
+| Parameter Name         | Parameter Type   | Description            |
 |:------------|:-------|:--------------|
-| namespaceId | string | 命名空间ID。       |
-| skillName   | string | Skill 名称。     |
-| bizTags     | string | bizTags JSON。 |
+| namespaceId | string | Namespace ID.       |
+| skillName   | string | Skill name.     |
+| bizTags     | string | bizTags JSON. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述         |
+| Parameter Type    | Description         |
 |:--------|:-----------|
-| boolean | 更新是否成功。   |
+| boolean | Whether the update succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -5917,13 +5914,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
 ### 9.17. Change Skill online status
 
-#### 描述
+#### Description
 
 Online/offline a skill or a specific version.
 
@@ -5931,23 +5928,23 @@ Online/offline a skill or a specific version.
 boolean changeOnlineStatus(String namespaceId, String skillName, String scope, String version, boolean online) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述                                  |
+| Parameter Name         | Parameter Type   | Description                                  |
 |:------------|:-------|:------------------------------------|
-| namespaceId | string | 命名空间ID。                             |
-| skillName   | string | Skill 名称。                           |
-| scope       | string | 作用域，`skill` 表示 Skill 级，其它值表示版本级。      |
-| version     | string | 版本号（版本级操作时使用）。                      |
-| online      | boolean | `true` 上线，`false` 下线。               |
+| namespaceId | string | Namespace ID.                             |
+| skillName   | string | Skill name.                           |
+| scope       | string | Scope. `skill` indicates Skill level, and other values indicate version level.      |
+| version     | string | Version number, used for version-level operations.                      |
+| online      | boolean | `true` means online, and `false` means offline.               |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述         |
+| Parameter Type    | Description         |
 |:--------|:-----------|
-| boolean | 操作是否成功。   |
+| boolean | Whether the operation succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -5958,13 +5955,13 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
 ### 9.18. Update Skill scope
 
-#### 描述
+#### Description
 
 Update visibility scope of a skill, e.g. `PUBLIC` / `PRIVATE`.
 
@@ -5972,21 +5969,21 @@ Update visibility scope of a skill, e.g. `PUBLIC` / `PRIVATE`.
 boolean updateScope(String namespaceId, String skillName, String scope) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名         | 参数类型   | 描述       |
+| Parameter Name         | Parameter Type   | Description       |
 |:------------|:-------|:---------|
-| namespaceId | string | 命名空间ID。  |
-| skillName   | string | Skill 名称。 |
-| scope       | string | 可见范围。    |
+| namespaceId | string | Namespace ID.  |
+| skillName   | string | Skill name. |
+| scope       | string | Visibility scope.    |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型    | 描述         |
+| Parameter Type    | Description         |
 |:--------|:-----------|
-| boolean | 更新是否成功。   |
+| boolean | Whether the update succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -5996,9 +5993,9 @@ try {
 }
 ```
 
-#### 异常说明
+#### Exception Description
 
-操作失败时抛出 NacosException 异常。
+A `NacosException` is thrown when the operation fails.
 
 ### 9.19. Batch Upload Skills from ZIP
 
@@ -6086,7 +6083,7 @@ Throws NacosException when the operation fails.
 
 ### 10.1. Get AgentSpec detail
 
-#### 描述
+#### Description
 
 Get current AgentSpec detail.
 
@@ -6095,20 +6092,20 @@ AgentSpec getAgentSpecDetail(String namespaceId, String agentSpecName) throws Na
 AgentSpec getAgentSpecDetail(String agentSpecName) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter Name | Parameter Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. |
 | agentSpecName | string | AgentSpec name. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型 | 描述 |
+| Parameter Type | Description |
 |:---|:---|
 | AgentSpec | AgentSpec detail object. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -6122,7 +6119,7 @@ try {
 
 ### 10.2. Get AgentSpec admin detail
 
-#### 描述
+#### Description
 
 Get AgentSpec admin metadata detail.
 
@@ -6130,20 +6127,20 @@ Get AgentSpec admin metadata detail.
 AgentSpecMeta getAgentSpecAdminDetail(String namespaceId, String agentSpecName) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter Name | Parameter Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. |
 | agentSpecName | string | AgentSpec name. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型 | 描述 |
+| Parameter Type | Description |
 |:---|:---|
 | AgentSpecMeta | AgentSpec admin metadata object. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -6156,7 +6153,7 @@ try {
 
 ### 10.3. Get AgentSpec version detail
 
-#### 描述
+#### Description
 
 Get specific version detail of AgentSpec.
 
@@ -6165,21 +6162,21 @@ AgentSpec getAgentSpecVersionDetail(String namespaceId, String agentSpecName, St
 AgentSpec getAgentSpecVersionDetail(String agentSpecName, String version) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter Name | Parameter Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. |
 | agentSpecName | string | AgentSpec name. |
 | version | string | AgentSpec version. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型 | 描述 |
+| Parameter Type | Description |
 |:---|:---|
 | AgentSpec | AgentSpec version detail object. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -6193,7 +6190,7 @@ try {
 
 ### 10.4. Delete AgentSpec
 
-#### 描述
+#### Description
 
 Delete target AgentSpec.
 
@@ -6202,20 +6199,20 @@ boolean deleteAgentSpec(String namespaceId, String agentSpecName) throws NacosEx
 boolean deleteAgentSpec(String agentSpecName) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter Name | Parameter Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. |
 | agentSpecName | string | AgentSpec name. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型 | 描述 |
+| Parameter Type | Description |
 |:---|:---|
 | boolean | Whether deletion succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -6229,7 +6226,7 @@ try {
 
 ### 10.5. List AgentSpecs with pagination
 
-#### 描述
+#### Description
 
 List AgentSpec basic items with pagination.
 
@@ -6238,9 +6235,9 @@ Page<AgentSpecBasicInfo> listAgentSpecs(String namespaceId, String agentSpecName
 Page<AgentSpecBasicInfo> listAgentSpecs(String agentSpecName, int pageNo, int pageSize) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter Name | Parameter Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. |
 | agentSpecName | string | AgentSpec name pattern. |
@@ -6248,13 +6245,13 @@ Page<AgentSpecBasicInfo> listAgentSpecs(String agentSpecName, int pageNo, int pa
 | pageNo | int | Page number. |
 | pageSize | int | Page size. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型 | 描述 |
+| Parameter Type | Description |
 |:---|:---|
 | Page\<AgentSpecBasicInfo> | Paged AgentSpec basic list. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -6268,7 +6265,7 @@ try {
 
 ### 10.6. List AgentSpec admin items with pagination
 
-#### 描述
+#### Description
 
 List AgentSpec admin items with pagination.
 
@@ -6278,9 +6275,9 @@ Page<AgentSpecSummary> listAgentSpecAdminItems(String namespaceId, String agentS
 Page<AgentSpecSummary> listAgentSpecAdminItems(String namespaceId, String agentSpecName, String search, String orderBy, String owner, String scope, int pageNo, int pageSize) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter Name | Parameter Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. |
 | agentSpecName | string | AgentSpec name pattern. |
@@ -6291,13 +6288,13 @@ Page<AgentSpecSummary> listAgentSpecAdminItems(String namespaceId, String agentS
 | pageNo | int | Page number. |
 | pageSize | int | Page size. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型 | 描述 |
+| Parameter Type | Description |
 |:---|:---|
 | Page\<AgentSpecSummary> | Paged AgentSpec admin list. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -6311,7 +6308,7 @@ try {
 
 ### 10.7. Upload AgentSpec from ZIP
 
-#### 描述
+#### Description
 
 Upload AgentSpec from ZIP bytes.
 
@@ -6321,21 +6318,21 @@ String uploadAgentSpecFromZip(String namespaceId, byte[] zipBytes) throws NacosE
 String uploadAgentSpecFromZip(byte[] zipBytes) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter Name | Parameter Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. |
 | zipBytes | byte[] | AgentSpec ZIP bytes. |
 | overwrite | boolean | Whether to overwrite current editable draft when AgentSpec exists. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型 | 描述 |
+| Parameter Type | Description |
 |:---|:---|
 | String | AgentSpec name. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -6351,7 +6348,7 @@ try {
 
 ### 10.8. Create AgentSpec draft
 
-#### 描述
+#### Description
 
 Create a new draft based on an existing version.
 
@@ -6361,22 +6358,22 @@ String createDraft(String namespaceId, String agentSpecName, String basedOnVersi
 String createDraft(String namespaceId, String agentSpecName, String basedOnVersion, String targetVersion) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter Name | Parameter Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. |
 | agentSpecName | string | AgentSpec name. |
 | basedOnVersion | string | Base version (optional). |
 | targetVersion | string | Target draft version, optional; auto-incremented when blank. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型 | 描述 |
+| Parameter Type | Description |
 |:---|:---|
 | String | Created draft version. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -6390,7 +6387,7 @@ try {
 
 ### 10.9. Update AgentSpec draft
 
-#### 描述
+#### Description
 
 Update current draft content.
 
@@ -6398,21 +6395,21 @@ Update current draft content.
 boolean updateDraft(String namespaceId, String agentSpecCard, Boolean setAsLatest) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter Name | Parameter Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. |
 | agentSpecCard | string | AgentSpec full JSON. |
 | setAsLatest | boolean | Whether to update latest label. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型 | 描述 |
+| Parameter Type | Description |
 |:---|:---|
 | boolean | Whether update succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -6425,7 +6422,7 @@ try {
 
 ### 10.10. Delete AgentSpec draft
 
-#### 描述
+#### Description
 
 Delete current draft version.
 
@@ -6433,20 +6430,20 @@ Delete current draft version.
 boolean deleteDraft(String namespaceId, String agentSpecName) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter Name | Parameter Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. |
 | agentSpecName | string | AgentSpec name. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型 | 描述 |
+| Parameter Type | Description |
 |:---|:---|
 | boolean | Whether deletion succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -6459,7 +6456,7 @@ try {
 
 ### 10.11. Submit AgentSpec version
 
-#### 描述
+#### Description
 
 Submit AgentSpec version for review workflow.
 
@@ -6467,21 +6464,21 @@ Submit AgentSpec version for review workflow.
 String submit(String namespaceId, String agentSpecName, String version) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter Name | Parameter Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. |
 | agentSpecName | string | AgentSpec name. |
 | version | string | Target version. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型 | 描述 |
+| Parameter Type | Description |
 |:---|:---|
 | String | Submit result (for example pipelineId). |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -6494,7 +6491,7 @@ try {
 
 ### 10.12. Publish AgentSpec version
 
-#### 描述
+#### Description
 
 Publish target AgentSpec version.
 
@@ -6502,22 +6499,22 @@ Publish target AgentSpec version.
 boolean publish(String namespaceId, String agentSpecName, String version, Boolean updateLatestLabel) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter Name | Parameter Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. |
 | agentSpecName | string | AgentSpec name. |
 | version | string | Target version. |
 | updateLatestLabel | boolean | Whether to update latest label. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型 | 描述 |
+| Parameter Type | Description |
 |:---|:---|
 | boolean | Whether publish succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -6530,7 +6527,7 @@ try {
 
 ### 10.13. Force-publish AgentSpec version
 
-#### 描述
+#### Description
 
 Force publish target AgentSpec version.
 
@@ -6538,22 +6535,22 @@ Force publish target AgentSpec version.
 boolean forcePublish(String namespaceId, String agentSpecName, String version, Boolean updateLatestLabel) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter Name | Parameter Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. |
 | agentSpecName | string | AgentSpec name. |
 | version | string | Target version. |
 | updateLatestLabel | boolean | Whether to update latest label. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型 | 描述 |
+| Parameter Type | Description |
 |:---|:---|
 | boolean | Whether force publish succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -6566,7 +6563,7 @@ try {
 
 ### 10.14. Update AgentSpec labels
 
-#### 描述
+#### Description
 
 Update labels JSON of AgentSpec.
 
@@ -6574,21 +6571,21 @@ Update labels JSON of AgentSpec.
 boolean updateLabels(String namespaceId, String agentSpecName, String labels) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter Name | Parameter Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. |
 | agentSpecName | string | AgentSpec name. |
 | labels | string | Labels JSON. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型 | 描述 |
+| Parameter Type | Description |
 |:---|:---|
 | boolean | Whether update succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -6601,7 +6598,7 @@ try {
 
 ### 10.15. Update AgentSpec biz tags
 
-#### 描述
+#### Description
 
 Update biz tags JSON of AgentSpec.
 
@@ -6609,21 +6606,21 @@ Update biz tags JSON of AgentSpec.
 boolean updateBizTags(String namespaceId, String agentSpecName, String bizTags) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter Name | Parameter Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. |
 | agentSpecName | string | AgentSpec name. |
 | bizTags | string | Biz tags JSON. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型 | 描述 |
+| Parameter Type | Description |
 |:---|:---|
 | boolean | Whether update succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -6636,7 +6633,7 @@ try {
 
 ### 10.16. Change AgentSpec online status
 
-#### 描述
+#### Description
 
 Online/offline operation at AgentSpec-level or version-level.
 
@@ -6644,9 +6641,9 @@ Online/offline operation at AgentSpec-level or version-level.
 boolean changeOnlineStatus(String namespaceId, String agentSpecName, String scope, String version, boolean online) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter Name | Parameter Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. |
 | agentSpecName | string | AgentSpec name. |
@@ -6654,13 +6651,13 @@ boolean changeOnlineStatus(String namespaceId, String agentSpecName, String scop
 | version | string | Version for version-level operation. |
 | online | boolean | `true` for online, `false` for offline. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型 | 描述 |
+| Parameter Type | Description |
 |:---|:---|
 | boolean | Whether operation succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
@@ -6674,7 +6671,7 @@ try {
 
 ### 10.17. Update AgentSpec scope
 
-#### 描述
+#### Description
 
 Update AgentSpec visibility scope, for example `PUBLIC` / `PRIVATE`.
 
@@ -6682,21 +6679,21 @@ Update AgentSpec visibility scope, for example `PUBLIC` / `PRIVATE`.
 boolean updateScope(String namespaceId, String agentSpecName, String scope) throws NacosException;
 ```
 
-#### 请求参数
+#### Request Parameters
 
-| 参数名 | 参数类型 | 描述 |
+| Parameter Name | Parameter Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. |
 | agentSpecName | string | AgentSpec name. |
 | scope | string | Visibility scope. |
 
-#### 返回参数
+#### Response Parameters
 
-| 参数类型 | 描述 |
+| Parameter Type | Description |
 |:---|:---|
 | boolean | Whether update succeeds. |
 
-#### 请求示例
+#### Request Example
 
 ```java
 try {
