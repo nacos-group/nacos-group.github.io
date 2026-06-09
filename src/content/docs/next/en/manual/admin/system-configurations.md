@@ -8,7 +8,7 @@ sidebar:
 
 # System Parameters
 
-This page summarizes common Nacos 3.2.x server-side parameters. The main source is `${nacos.home}/conf/application.properties` in the Nacos distribution, with extra notes from current configuration code.
+This page summarizes common Nacos 3.3.x server-side parameters. The main source is `${nacos.home}/conf/application.properties` in the Nacos distribution, with extra notes from current configuration code.
 
 For production deployments, read [Deployment Best Practices](./deployment/deployment-best-practices.md) first, then use this page to confirm specific properties.
 
@@ -344,14 +344,13 @@ These properties are used for upgrades, migration, or legacy compatibility. They
 | `nacos.core.api.compatibility.client.enabled` | Whether client API compatibility is enabled. | `true` |
 | `nacos.core.api.compatibility.admin.enabled` | Whether Admin API compatibility is enabled. | `false` |
 | `nacos.core.api.compatibility.console.enabled` | Whether Console API compatibility is enabled. | `false` |
-| `nacos.config.gray.compatible.model` | Whether Beta/Tag gray-release compatibility and migration to the new gray model is enabled. | `true` |
-| `nacos.gray.migrate.executor.multi` | Thread count for gray config migration. | `8` |
-| `nacos.config.namespace.compatible.mode` | Whether empty namespace IDs are migrated to `public`. | `true` |
-| `nacos.namespace.migrate.retry.times` | Retry count for namespace migration failures. | `3` |
-| `nacos.namespace.migrate.batch.size` | Namespace migration batch size. | `100` |
 
 :::note
 Auth switches and API compatibility switches are different. `nacos.core.auth.admin.enabled` controls whether Admin API authentication is enabled. `nacos.core.api.compatibility.admin.enabled` controls whether Admin API compatibility behavior accepts requests. Legacy v1/v2 HTTP APIs were removed from the main distribution starting from Nacos 3.2.0. Migrate to v3 APIs or temporarily use the legacy adapter.
+:::
+
+:::caution[Nacos 3.3 Config migration switches removed]
+`nacos.config.gray.compatible.model`, `nacos.gray.migrate.executor.multi`, `nacos.config.namespace.compatible.mode`, `nacos.namespace.migrate.retry.times`, and `nacos.namespace.migrate.batch.size` are no longer Nacos 3.3 server properties. Nacos 3.3 no longer automatically migrates pre-3.0 empty-tenant/default-namespace storage and no longer automatically migrates legacy beta/tag gray tables. Affected deployments must migrate the data before upgrading. See the [Upgrading Manual](./upgrading.mdx#217-config-compatibility-migration-removal-nacos-330).
 :::
 
 ## Startup Script and Image Variables

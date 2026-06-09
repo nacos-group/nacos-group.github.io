@@ -41,11 +41,10 @@ cipher-aes-application-prod.yaml
 配置加密依赖 `encrypted_data_key` 字段。当前默认 schema 已包含该字段，涉及表包括：
 
 - `config_info`
-- `config_info_beta`
 - `config_info_gray`
 - `his_config_info`
 
-如果从较早版本升级，请先对比当前版本对应数据库的 schema，并在升级前补齐字段。不同数据库的字段类型可能不同，请优先使用当前版本发布包或源码中的 schema。
+如果从较早版本升级，请先对比当前版本对应数据库的 schema，并在升级前补齐字段。不同数据库的字段类型可能不同，请优先使用当前版本发布包或源码中的 schema。Nacos 3.3 当前 schema 不再包含旧 `config_info_beta`、`config_info_tag` 表；如果旧部署仍有 beta/tag 灰度数据，请在升级前迁移到 `config_info_gray` 当前灰度模型。
 
 ## AES 插件
 
@@ -67,7 +66,6 @@ nacos-encryption-plugin-ext/nacos-aes-encryption-plugin
 
 ```sql
 ALTER TABLE config_info ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
-ALTER TABLE config_info_beta ADD COLUMN `encrypted_data_key` varchar(256) NOT NULL DEFAULT '' COMMENT 'encrypted_data_key';
 ALTER TABLE config_info_gray ADD COLUMN `encrypted_data_key` varchar(256) NOT NULL DEFAULT '' COMMENT 'encrypted_data_key';
 ALTER TABLE his_config_info ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT '密钥';
 ```

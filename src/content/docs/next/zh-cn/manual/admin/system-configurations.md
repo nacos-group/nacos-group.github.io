@@ -8,7 +8,7 @@ sidebar:
 
 # 系统参数
 
-本文整理 Nacos 3.2.x 常用服务端参数。主要来源是发行包中的 `${nacos.home}/conf/application.properties`，并结合当前代码中的配置读取逻辑补充说明。
+本文整理 Nacos 3.3.x 常用服务端参数。主要来源是发行包中的 `${nacos.home}/conf/application.properties`，并结合当前代码中的配置读取逻辑补充说明。
 
 如果你正在部署生产集群，建议先阅读[部署最佳实践](./deployment/deployment-best-practices.md)，再回到本文确认具体参数。
 
@@ -344,14 +344,13 @@ AI 管理中心的使用方式见[AI 管理中心概述](../user/ai/ai-registry-
 | `nacos.core.api.compatibility.client.enabled` | 是否开启客户端 API 兼容能力。 | `true` |
 | `nacos.core.api.compatibility.admin.enabled` | 是否开启 Admin API 兼容能力。 | `false` |
 | `nacos.core.api.compatibility.console.enabled` | 是否开启 Console API 兼容能力。 | `false` |
-| `nacos.config.gray.compatible.model` | 是否开启 Beta/Tag 灰度配置向新版灰度模型的兼容与迁移。 | `true` |
-| `nacos.gray.migrate.executor.multi` | 灰度配置迁移线程数。 | `8` |
-| `nacos.config.namespace.compatible.mode` | 是否开启空命名空间到 `public` 命名空间的兼容迁移。 | `true` |
-| `nacos.namespace.migrate.retry.times` | 命名空间迁移失败重试次数。 | `3` |
-| `nacos.namespace.migrate.batch.size` | 命名空间迁移批大小。 | `100` |
 
 :::note
 鉴权开关和 API 兼容开关不是同一类参数。`nacos.core.auth.admin.enabled` 控制 Admin API 是否鉴权；`nacos.core.api.compatibility.admin.enabled` 控制 Admin API 兼容行为是否接受请求。旧版 v1/v2 HTTP API 从 Nacos 3.2.0 起已从主发行包移除，需要迁移到 v3 API 或临时使用 legacy adapter。
+:::
+
+:::caution[Nacos 3.3 配置迁移开关移除]
+`nacos.config.gray.compatible.model`、`nacos.gray.migrate.executor.multi`、`nacos.config.namespace.compatible.mode`、`nacos.namespace.migrate.retry.times` 和 `nacos.namespace.migrate.batch.size` 已不再是 Nacos 3.3 服务端参数。3.3 不再自动迁移 3.0 之前的空 tenant/default namespace 存储，也不再自动迁移旧 beta/tag 灰度表。受影响部署需要在升级前自行完成数据迁移，详见[升级手册](./upgrading.mdx#217-配置中心兼容迁移移除-nacos-330)。
 :::
 
 ## 启动脚本和镜像变量
