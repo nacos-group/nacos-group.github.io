@@ -136,10 +136,11 @@ db.password.1=nacos_password_1
 
 当前 mapper 覆盖范围包括：
 
-- 配置表：`config_info`、`config_info_beta`、`config_info_gray`、`config_info_tag`、`config_tags_relation`、`his_config_info`；
+- 配置表：`config_info`、`config_info_gray`、`config_tags_relation`、`his_config_info`；
 - 容量和命名空间表：`tenant_info`、`tenant_capacity`、`group_capacity`；
-- 配置迁移查询；
 - AI 资源表：`ai_resource`、`ai_resource_version`。
+
+Nacos 3.3 起当前 mapper 不再包含 Config 3.0 之前兼容迁移查询，也不再包含旧 `config_info_beta`、`config_info_tag` 表 mapper。仍保留这类旧数据的部署，应在升级到 3.3 前将 beta/tag 灰度数据迁移到 `config_info_gray` 当前灰度模型。
 
 开发时可以参考官方默认实现中的 `derby`、`mysql`、`postgresql` 和 `oracle` 模块。插件需要在 `META-INF/services` 下注册：
 

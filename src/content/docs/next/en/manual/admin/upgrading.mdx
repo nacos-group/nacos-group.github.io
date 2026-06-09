@@ -12,12 +12,13 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## 1. Version Upgrade Compatibility
 
-This document corresponds to Nacos 3.2.x. Upgrade compatibility for Nacos 3.2.x is as follows:
+This document corresponds to Nacos 3.3.x. Upgrade compatibility for Nacos 3.3.x is as follows:
 
 | Nacos Version | Upgrade Supported | Remarks |
 |---------------|-------------------|---------|
 | 0.X ~ 1.X | No | 0.X ~ 1.X versions must first be upgraded to 2.0 or above. Please refer to the [Nacos 2.0 Upgrade Guide](https://nacos.io/docs/v2/upgrading/200-upgrading/) to upgrade to 2.0 or 2.1 before proceeding. |
-| 2.0.X ~ 3.2.X | Yes | Upgrading from 2.0.X or later to 3.2.X is supported, but the database schema has changed. Compare the schema file for your target database before upgrading and apply the required schema changes first. |
+| 2.0.X ~ 2.5.X | Conditional | Before upgrading from versions before 3.0 to 3.3.x, read [Config Compatibility Migration Removal](#217-config-compatibility-migration-removal-nacos-330) and complete the pre-upgrade checks. If the old deployment did not use the default namespace and did not use beta gray release, this compatibility removal does not affect smooth upgrade for this compatibility area. |
+| 3.0.X ~ 3.3.X | Yes | Upgrading from 3.0.X or later to 3.3.X is supported, but the database schema has changed. Compare the schema file for your target database before upgrading and apply the required schema changes first. |
 
 ### 1.1 Client Compatibility
 
@@ -44,14 +45,13 @@ If there are schema changes, apply the database alterations first. MySQL example
 -- When upgrading from 2.0.X, execute all SQL statements below. When upgrading from versions later than 2.1.X, execute only the last three lines.
 ALTER TABLE `config_info` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT 'secret key';
 ALTER TABLE `config_info_gray` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT 'secret key';
-ALTER TABLE `config_info_beta` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT 'secret key';
 ALTER TABLE `his_config_info` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT 'secret key';
 ALTER TABLE `his_config_info` ADD COLUMN `publish_type` varchar(50)  DEFAULT 'formal' COMMENT 'publish type gray or formal';
 ALTER TABLE `his_config_info` ADD COLUMN `gray_name` varchar(50)  DEFAULT NULL COMMENT 'gray name';
 ALTER TABLE `his_config_info` ADD COLUMN `ext_info`  longtext DEFAULT NULL COMMENT 'ext info';
 ```
 
-Version 3.2.0 introduces new AI-related tables. The following tables must be created when upgrading to 3.2.X from any previous version:
+Version 3.2.0 introduces new AI-related tables. The following tables must be created when upgrading to 3.3.X from any previous version:
 
 ```SQL
 CREATE TABLE IF NOT EXISTS `pipeline_execution` (
@@ -206,42 +206,28 @@ ${nacos.home}/bin/shutdown.cmd
 ${nacos.home}/bin/startup.cmd
 ```
 
-#### 2.1.7. Config Namespace Migration
+#### 2.1.7. Config Compatibility Migration Removal (Nacos 3.3.0+)
 
-In Nacos 3.0, the `empty namespace` and `public namespace` for the config center have been unified. The namespace with `namespaceId="public"` is now the default namespace, and all config data previously under `namespaceId=""` has been migrated to `namespaceId="public"`. Related [ISSUE](https://github.com/alibaba/nacos/issues/9846).
-
-To enable smooth upgrade and downgrade, Nacos 3.0 enables a config namespace compatibility mode that bidirectionally syncs config data between the `namespaceId="public"` and `namespaceId=""` namespaces, which may have some performance impact. Once the cluster upgrade is complete and running stably, you can disable the compatibility mode. Note that disabling it will remove the ability to smoothly downgrade.
-
-The namespace compatibility mode is `enabled` by default and can be disabled via the `nacos.config.namespace.compatible.mode` configuration.
-
-:::note
-After disabling namespace compatibility mode, smooth downgrade will no longer be possible. Please ensure the cluster is running correctly before disabling it.
+:::caution[Pre-upgrade check for 3.3]
+Starting from Nacos 3.3.0, the server no longer keeps Config migration compatibility logic from versions before 3.0. It no longer automatically migrates or double-writes storage between legacy empty tenant values (`tenant_id = ''`) and the default namespace `public`, and it no longer automatically migrates gray data from the legacy `config_info_beta` and `config_info_tag` tables into the current `config_info_gray` model.
 :::
 
-##### 2.1.7.1. How to Verify Config Namespace Migration is Complete
+This removal only affects historical storage migration compatibility. It does not change current Config semantics:
 
-First, check `logs/startup.log` or `logs/nacos.log` in the Nacos directory for a successful startup log message such as `Nacos started successfully in cluster mode. use xxx storage`.
+- Blank or omitted namespace requests are still normalized to the default namespace. The current default namespace ID is `public`.
+- Current beta/tag gray release APIs remain available and are backed by the `config_info_gray` and `GrayRule` model.
 
-If you see the log `[migrate] config_info namespace migrate insert failed`, it indicates a config data conflict between `namespaceId="public"` and `namespaceId=""` — there are configs with the same `dataId` and `group` but different namespaceIds (`empty` and `public`). Please delete one of the conflicting configs and restart the node.
-If you see `[migrate] config_info_gray namespace migrate insert failed`, it indicates a gray config data conflict — configs with the same `dataId`, `group`, and `grayName` but different namespaceIds. Please delete one of the conflicting gray configs and restart.
+When upgrading from versions before 3.0 to 3.3.x, if the old deployment did not use the default namespace and did not use beta gray release, this compatibility removal does not affect smooth upgrade for this compatibility area. If the old deployment used the default namespace or beta gray release, a fully smooth upgrade is no longer guaranteed. Operators must migrate and verify the affected data before upgrading to 3.3.x.
 
-If neither error appears and you instead see `[migrate] finish migrate config namespacetotal time taken: xxx ms`, it means the namespace migration is complete. After verifying your business configs are working correctly, you can disable the namespace compatibility mode.
+Affected deployments must complete at least these actions:
 
-:::note
-Due to historical reasons, config data with namespaceId `public` can only be published and deleted via Nacos 2.x clients — not through the console or 1.x clients. If you need to delete such config data, please use a 2.x client.
-:::
+1. Check whether the old database has default-namespace config data with `tenant_id = ''`.
+2. Before upgrading to 3.3.x, migrate default-namespace data from the empty tenant to `tenant_id = 'public'`. If rows with the same `data_id` and `group_id` exist under both the empty tenant and `public`, decide which business data to keep before migrating to avoid conflicts.
+3. Check whether the old database has gray data in `config_info_beta` or `config_info_tag`.
+4. Before upgrading to 3.3.x, migrate legacy beta/tag gray data into the current `config_info_gray` model and store the corresponding `grayName` and `GrayRule` metadata according to the current gray rule model.
+5. After migration, use current clients or APIs to verify default-namespace config reads, formal publish, beta gray query, tag gray query, and stopping gray release.
 
-##### 2.1.7.2. Slow First Startup Due to Namespace Migration
-
-During the upgrade, Nacos 3.0 performs a full migration of all configs under the `namespaceId=""` namespace. This may result in a longer startup time when first launching Nacos 3.0, depending on the volume of config data.
-
-During migration, you can observe the following log in `logs/nacos.log`: `[migrate] migrating config namespace from empty to public, finished:xxx`.
-
-Based on testing, with approximately 20,000 configs under `namespaceId=""`, the migration takes about `2 minutes`. This depends on the following configuration and your database's processing capacity:
-```properties
-# Number of configs to migrate per batch. Default is 100. Increasing this value speeds up migration but increases database load.
-nacos.namespace.migrate.batch.size=100
-```
+If you cannot directly confirm the migration format in your own tooling, you can first upgrade to a 3.0.x-3.2.x version that still contains this compatibility migration capability, complete the migration, run stably, verify the data, and then upgrade to 3.3.x.
 
 #### 2.1.8. Migrate MCP Services (Optional)
 

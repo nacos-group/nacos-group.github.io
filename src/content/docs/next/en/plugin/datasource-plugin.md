@@ -136,10 +136,11 @@ The dialect and mappers for the same database type must be packaged and loaded t
 
 Current mapper coverage includes:
 
-- Config tables: `config_info`, `config_info_beta`, `config_info_gray`, `config_info_tag`, `config_tags_relation`, `his_config_info`;
+- Config tables: `config_info`, `config_info_gray`, `config_tags_relation`, `his_config_info`;
 - Capacity and namespace tables: `tenant_info`, `tenant_capacity`, `group_capacity`;
-- Config migration queries;
 - AI resource tables: `ai_resource`, `ai_resource_version`.
+
+Starting with Nacos 3.3, current mappers no longer include Config migration queries for versions before 3.0 and no longer include legacy `config_info_beta` or `config_info_tag` table mappers. Deployments that still have this legacy data must migrate beta/tag gray data into the current `config_info_gray` gray model before upgrading to 3.3.
 
 Use the official `derby`, `mysql`, `postgresql`, and `oracle` modules as references. Register plugin implementations under `META-INF/services`:
 

@@ -41,11 +41,10 @@ If `dataId` starts with `cipher-` but the matching plugin is not loaded on the s
 Configuration encryption depends on the `encrypted_data_key` column. The current default schemas already include this column in:
 
 - `config_info`
-- `config_info_beta`
 - `config_info_gray`
 - `his_config_info`
 
-When upgrading from an older version, compare the schema of your current Nacos version first and add the missing columns before the upgrade. Column types differ across databases, so prefer the schema shipped with the target Nacos version.
+When upgrading from an older version, compare the schema of your current Nacos version first and add the missing columns before the upgrade. Column types differ across databases, so prefer the schema shipped with the target Nacos version. The current Nacos 3.3 schema no longer includes legacy `config_info_beta` or `config_info_tag` tables. If the old deployment still has beta/tag gray data, migrate it to the current `config_info_gray` gray model before upgrading.
 
 ## AES Plugin
 
@@ -67,7 +66,6 @@ For existing clusters, check whether `encrypted_data_key` exists. MySQL example:
 
 ```sql
 ALTER TABLE config_info ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT 'secret key';
-ALTER TABLE config_info_beta ADD COLUMN `encrypted_data_key` varchar(256) NOT NULL DEFAULT '' COMMENT 'encrypted_data_key';
 ALTER TABLE config_info_gray ADD COLUMN `encrypted_data_key` varchar(256) NOT NULL DEFAULT '' COMMENT 'encrypted_data_key';
 ALTER TABLE his_config_info ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT 'secret key';
 ```

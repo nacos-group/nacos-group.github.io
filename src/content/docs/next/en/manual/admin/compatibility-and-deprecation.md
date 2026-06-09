@@ -26,12 +26,20 @@ As Nacos evolves, some compatibility capabilities remain available to help users
 | --- | --- | --- |
 | v1/v2 HTTP APIs | Migrate to v3 OpenAPI or current SDKs. If a migration window is required, use the legacy adapter temporarily. | [Upgrading Manual](./upgrading.mdx), [OpenAPI Overview](../user/overview/api-overview.md) |
 | Compatibility switches | Enable them only during upgrade or migration windows. Disable them after the system becomes stable. | [System Configurations](./system-configurations.md) |
-| Beta/Tag gray release compatibility | Enable compatibility and migration configuration during upgrade, then use the new gray model after stabilization. | [Upgrading Manual](./upgrading.mdx), [System Configurations](./system-configurations.md) |
-| Default namespace migration | Pay attention to migration from empty namespace to `public`. | [Upgrading Manual](./upgrading.mdx), [Java SDK Usage](../user/java-sdk/usage.md#13-upgrade-compatibility) |
+| Beta/Tag gray release compatibility | Starting with Nacos 3.3, legacy `config_info_beta` and `config_info_tag` tables are no longer migrated automatically. Migrate them to the current `config_info_gray` gray model before upgrade. Current beta/tag APIs remain backed by `config_info_gray` and `GrayRule`. | [Upgrading Manual](./upgrading.mdx), [Configuration Gray Release](../user/config/gray-release.md) |
+| Default namespace migration | Starting with Nacos 3.3, storage migration or double-write between empty tenant values and `public` is no longer automatic. Blank or omitted namespace requests are still normalized to the default namespace `public`. | [Upgrading Manual](./upgrading.mdx), [Java SDK Usage](../user/java-sdk/usage.md#13-upgrade-compatibility) |
 | Legacy console | Use only for compatibility with existing habits. New deployments should use the new console. | [Console Manual](./console.md#legacy-console) |
 | Deprecated Java SDK properties | Do not use them in new systems. | [Java SDK Properties](../user/java-sdk/properties.md) |
 | Deprecated CLI commands | Use explicit lifecycle commands instead of shortcut publish commands. | [Nacos CLI User Guide](./nacos-cli.md) |
 | Experimental features | Use only when you accept the change risk. | [Experimental Features Overview](../../experimental/overview.md) |
+
+## Nacos 3.3 Config Compatibility Migration Removal
+
+Nacos 3.3 removes runtime compatibility migration logic for Config data from versions before 3.0, including default-namespace storage migration between legacy empty tenant values and `public`, migration from legacy `config_info_beta`/`config_info_tag` tables to `config_info_gray`, and the related double-write and mixed-version synchronization logic.
+
+When upgrading from versions before 3.0 to 3.3, if the old deployment did not use the default namespace and did not use beta gray release, this compatibility removal does not affect smooth upgrade for this compatibility area. If the old deployment used the default namespace or beta gray release, operators must complete data migration before upgrading to 3.3: migrate default-namespace data from the empty tenant to `public`, and migrate legacy beta/tag gray data to the current `config_info_gray` gray model.
+
+This does not remove current default namespace semantics or current beta/tag gray APIs. Blank or omitted namespace requests are still normalized to `public`; current beta/tag gray behavior remains backed by `config_info_gray` and `GrayRule`.
 
 ## What to confirm before using compatibility capabilities
 
