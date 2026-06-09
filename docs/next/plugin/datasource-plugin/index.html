@@ -204,11 +204,11 @@ starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astr
 <p>一个数据库类型的 dialect 和 mapper 必须一起打包和加载。只提供 dialect 或只提供 mapper 都会导致启动或运行时失败。</p>
 <p>当前 mapper 覆盖范围包括：</p>
 <ul>
-<li>配置表：<code dir="auto">config_info</code>、<code dir="auto">config_info_beta</code>、<code dir="auto">config_info_gray</code>、<code dir="auto">config_info_tag</code>、<code dir="auto">config_tags_relation</code>、<code dir="auto">his_config_info</code>；</li>
+<li>配置表：<code dir="auto">config_info</code>、<code dir="auto">config_info_gray</code>、<code dir="auto">config_tags_relation</code>、<code dir="auto">his_config_info</code>；</li>
 <li>容量和命名空间表：<code dir="auto">tenant_info</code>、<code dir="auto">tenant_capacity</code>、<code dir="auto">group_capacity</code>；</li>
-<li>配置迁移查询；</li>
 <li>AI 资源表：<code dir="auto">ai_resource</code>、<code dir="auto">ai_resource_version</code>。</li>
 </ul>
+<p>Nacos 3.3 起当前 mapper 不再包含 Config 3.0 之前兼容迁移查询，也不再包含旧 <code dir="auto">config_info_beta</code>、<code dir="auto">config_info_tag</code> 表 mapper。仍保留这类旧数据的部署，应在升级到 3.3 前将 beta/tag 灰度数据迁移到 <code dir="auto">config_info_gray</code> 当前灰度模型。</p>
 <p>开发时可以参考官方默认实现中的 <code dir="auto">derby</code>、<code dir="auto">mysql</code>、<code dir="auto">postgresql</code> 和 <code dir="auto">oracle</code> 模块。插件需要在 <code dir="auto">META-INF/services</code> 下注册：</p>
 <div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#e1e4e8">com.alibaba.nacos.plugin.datasource.dialect.DatabaseDialect</span></div><div class="ec-line"><span style="--0:#e1e4e8">com.alibaba.nacos.plugin.datasource.mapper.Mapper</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="com.alibaba.nacos.plugin.datasource.dialect.DatabaseDialectcom.alibaba.nacos.plugin.datasource.mapper.Mapper"><div></div></button></div></figure></div>
 <h2 id="排障建议">排障建议</h2>
