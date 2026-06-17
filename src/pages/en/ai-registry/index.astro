@@ -1,0 +1,22 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import AiRegistryIntro from '@components/ai-registry/AiRegistryIntro.astro';
+import HomeFooter from '@components/common/Footer.astro';
+---
+
+<BaseLayout
+  title="Nacos AI Registry - AI Resource Registry and Governance Center"
+  description="Nacos AI Registry manages MCP Servers, A2A Agents, Prompts, and Skills with unified registry, discovery, versioning, publishing, and governance capabilities."
+>
+  <AiRegistryIntro />
+  <HomeFooter />
+</BaseLayout>
+
+<style is:global>
+  html {
+    scroll-behavior: smooth;
+  }
+  footer-layout.home-footer {
+    background: linear-gradient(to bottom, #121316 0%, #121316 100%) !important;
+  }
+</style>

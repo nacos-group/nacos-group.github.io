@@ -2,10 +2,12 @@
 import { useTranslations, isChinese } from "@i18n/util";
 const t = useTranslations(Astro);
 const ifzh = isChinese(Astro);
+const aiRegistryHref = ifzh ? "/ai-registry/" : "/en/ai-registry/";
+const aiRegistryLinkText = ifzh ? "阅读 Nacos AI Registry 介绍" : "Read the Nacos AI Registry overview";
 
 ---
 
-<div class="choose-reason-wrapper">
+<div id="ai-registry" class="choose-reason-wrapper">
   <div
     class="choose-reason block py-10 flex flex-col justify-center items-center"
   >
@@ -13,6 +15,10 @@ const ifzh = isChinese(Astro);
       <b class="title text-gray-14 text-[2.5rem] leading-[3.5rem] font-medium">
         Nacos AI Registry
       </b>
+      <a class="registry-intro-link" href={aiRegistryHref}>
+        {aiRegistryLinkText}
+        <span aria-hidden="true">→</span>
+      </a>
     </div>
     <div class="registry-image-wrapper">
       <img 
@@ -77,6 +83,21 @@ const ifzh = isChinese(Astro);
         height: auto;
         object-fit: cover;
       }
+    }
+    .registry-intro-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      margin-top: 0.875rem;
+      color: #3d57da;
+      font-size: 0.9375rem;
+      line-height: 1.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0;
+    }
+    .registry-intro-link:hover {
+      color: #111827;
     }
 
     /* 小于50rem  小于 800px */
