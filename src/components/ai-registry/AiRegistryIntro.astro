@@ -172,15 +172,30 @@ const docsText = ifzh ? "查看使用文档" : "Read the docs";
           <h3>版本治理：迭代有退路</h3>
           <p>语义化版本号，版本间可对比差异。Agent 绑定时锁定具体版本，灰度发布逐步放量，指标劣化自动回滚。</p>
         </article>
-        <article class="ar-feat-card">
-          <div class="ar-feat-num">05</div>
-          <h3>Nacos Copilot：AI 辅助优化</h3>
-          <p>编辑 Prompt 或 Skill 时一键发起"优化建议"，Nacos Copilot 基于 AgentScope Java 流式输出结构化改进建议，在控制台内完成<b>编辑 → 优化 → 发布</b>全流程。</p>
+      </div>
+    </BaseContainer>
+  </section>
+
+  <!-- PLATFORM CAPABILITIES -->
+  <section class="ar-section ar-section-duo">
+    <BaseContainer class="ar-container">
+      <div class="ar-section-head">
+        <span class="ar-eyebrow">平台能力</span>
+        <h2 class="ar-h2">Copilot 与插件化架构</h2>
+        <p class="ar-section-desc">
+          这些能力服务于 AI Registry 的整体生产化流程，覆盖 Prompt、Skill 与企业系统集成，不只属于 Skill Registry。
+        </p>
+      </div>
+      <div class="ar-duo">
+        <article class="ar-duo-card ar-duo-card-copilot">
+          <span class="ar-duo-tag">Nacos Copilot</span>
+          <h3>在控制台内完成 AI 辅助优化</h3>
+          <p>编辑 Prompt 或 Skill 时发起优化建议，基于 AgentScope Java 流式输出结构化改进建议，把编辑、优化、发布放在同一条工作流里。</p>
         </article>
-        <article class="ar-feat-card">
-          <div class="ar-feat-num">06</div>
+        <article class="ar-duo-card ar-duo-card-plugin">
+          <span class="ar-duo-tag">企业扩展</span>
           <h3>插件化架构：为企业定制而生</h3>
-          <p>不修改 Nacos 主干代码即可深度定制——安全审核插件对接合规要求，鉴权插件接入 SSO/OAuth/LDAP，存储插件自定义后端。</p>
+          <p>通过安全审核、鉴权、存储等插件对接企业合规与身份系统，不修改 Nacos 主干代码即可完成深度定制。</p>
         </article>
       </div>
     </BaseContainer>
