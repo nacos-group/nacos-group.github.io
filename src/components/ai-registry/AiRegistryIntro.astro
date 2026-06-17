@@ -1,0 +1,1164 @@
+---
+import { isChinese } from "@i18n/util";
+import BaseContainer from "@components/common/BaseContainer.astro";
+
+const ifzh = isChinese(Astro);
+const docsHref = ifzh ? "/docs/latest/manual/user/ai/skill-registry/" : "/en/docs/latest/manual/user/ai/skill-registry/";
+const docsText = ifzh ? "查看使用文档" : "Read the docs";
+---
+
+<div class="ai-registry-page">
+  <!-- HERO -->
+  <ai-registry-hero class="ai-registry-hero block relative overflow-hidden">
+    <div class="ar-hero-grid"></div>
+    <div class="ar-hero-glow"></div>
+    <BaseContainer class="relative flex flex-col items-center text-center pt-28 pb-24 px-4">
+      <div class="ar-hero-eyebrow">
+        <span class="ar-hero-dot"></span>
+        <span>NACOS · AI REGISTRY</span>
+      </div>
+      <h1 class="ar-hero-title">
+        AI 应用从 Demo 到生产，<br/>
+        你的团队还差<b>一个治理平台</b>
+      </h1>
+      <p class="ar-hero-sub">
+        Prompt 散在代码里，Skill 靠私聊传文件，MCP 工具没地方注册，Agent 互相找不到——
+        Nacos AI Registry 用一套注册、版本、安全、分发体系，把 AI 资源真正管起来。
+      </p>
+      <div class="ar-hero-cta">
+        <a href="#quick-start" class="ar-btn ar-btn-primary ar-quickstart-btn">
+          <span>三分钟快速上手</span>
+          <svg class="ar-arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+        </a>
+        <a href={docsHref} class="ar-btn ar-btn-ghost ar-docs-btn">
+          <span>{docsText}</span>
+          <svg class="ar-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="ar-hero-meta">
+        <span><b>5</b> 类资源</span>
+        <span class="ar-hero-meta-divider"></span>
+        <span><b>1</b> 套治理体系</span>
+        <span class="ar-hero-meta-divider"></span>
+        <span><b>0</b> 部署成本</span>
+      </div>
+    </BaseContainer>
+  </ai-registry-hero>
+
+  <!-- PAIN POINTS · numbered list -->
+  <section class="ar-section ar-section-pain">
+    <BaseContainer class="ar-container">
+      <div class="ar-section-head">
+        <h2 class="ar-h2">AI 落地，团队是不是被这些问题困扰？</h2>
+        <p class="ar-section-desc">从 Demo 到生产，每个环节都在踩坑。</p>
+      </div>
+      <div class="ar-pain-list">
+        <article class="ar-pain-item">
+          <div class="ar-pain-num">01</div>
+          <div class="ar-pain-body">
+            <h3>资源散落，找不到、管不了</h3>
+            <p>同事写的 Skill 存本地，MCP 配置散在文档里，Prompt 模板塞进代码。A 写的 Skill，B 不知道、C 在用旧版、D 离职后能力就丢了。</p>
+          </div>
+        </article>
+        <article class="ar-pain-item">
+          <div class="ar-pain-num">02</div>
+          <div class="ar-pain-body">
+            <h3>多人协作，改完就上线</h3>
+            <p>Skill 放进 Git 谁都能改，实习生改了一个参数直接合并主线，业务受影响才发现。Git 能事后追责，却拦不住事前误操作。</p>
+          </div>
+        </article>
+        <article class="ar-pain-item">
+          <div class="ar-pain-num">03</div>
+          <div class="ar-pain-body">
+            <h3>外部资源不敢用</h3>
+            <p>Snyk 采样 3984 个 Skill，<b class="ar-stat">36.82%</b> 有安全缺陷，<b class="ar-stat">13.4%</b> 是 CRITICAL 级别——恶意代码、凭证泄露防不胜防。</p>
+          </div>
+        </article>
+        <article class="ar-pain-item">
+          <div class="ar-pain-num">04</div>
+          <div class="ar-pain-body">
+            <h3>版本更新像赌博</h3>
+            <p>Prompt 改了一行、Skill 优化了逻辑，直接替换上线。效果变差想回滚——旧版本早就被覆盖了。每次更新都提心吊胆。</p>
+          </div>
+        </article>
+      </div>
+    </BaseContainer>
+  </section>
+
+  <!-- OVERVIEW · 1 + 4 bento -->
+  <section class="ar-section ar-section-overview">
+    <div class="ar-section-glow ar-glow-tl"></div>
+    <BaseContainer class="ar-container">
+      <div class="ar-section-head">
+        <span class="ar-eyebrow">资源全景</span>
+        <h2 class="ar-h2">五类 AI 资源，一套治理体系</h2>
+        <p class="ar-section-desc">
+          Skill、MCP Server、Agent、Prompt、AgentSpec 纳入统一控制台，共享命名空间隔离、权限控制、版本管理与审计追溯——
+          这不是某个协议的代理，而是 AI 应用的<b>资源控制平面</b>。
+        </p>
+      </div>
+
+      <div class="ar-bento">
+        <article class="ar-bento-hero">
+          <div class="ar-bento-tag">Skill Registry</div>
+          <h3>企业级 Skill 管理中心</h3>
+          <p>Skill 是 Agent 的能力包——封装触发条件、执行步骤、工具调用与输出格式。Skill Registry 提供安全审核、版本锁定、灰度发布与团队分发，是 AI Registry 中关注度最高的模块。</p>
+          <ul class="ar-bento-feats">
+            <li><span></span>安全审核流水线</li>
+            <li><span></span>版本锁定 + 灰度发布</li>
+            <li><span></span>团队分发与审计追溯</li>
+          </ul>
+        </article>
+
+        <article class="ar-bento-card">
+          <div class="ar-bento-tag">MCP Registry</div>
+          <h3>AI 工具的"服务发现"</h3>
+          <p>将企业内部或第三方的 MCP Server 注册为可发现的服务端点，Agent 运行时动态获取可用工具列表，支持多版本管理与工具索引。</p>
+        </article>
+
+        <article class="ar-bento-card">
+          <div class="ar-bento-tag">Agent Registry</div>
+          <h3>让 Agent 互相发现</h3>
+          <p>基于 A2A 协议管理 Agent 的身份、能力规格与服务端点。多个 Agent 通过 Nacos 互相发现并协作。</p>
+        </article>
+
+        <article class="ar-bento-card">
+          <div class="ar-bento-tag">Prompt Registry</div>
+          <h3>Prompt 的工程化管理</h3>
+          <p>Prompt 不再是调试文本，而是可管理的 AI 资产。模板变量、语义化版本、变更订阅，热加载无需重启。</p>
+        </article>
+
+        <article class="ar-bento-card">
+          <div class="ar-bento-tag">AgentSpec</div>
+          <h3>Agent 能力规格与组装</h3>
+          <p>定义 Agent 需要哪些 Prompt、Skill、MCP 工具，为标准化组装与多 Agent 协作提供统一描述。</p>
+        </article>
+      </div>
+    </BaseContainer>
+  </section>
+
+  <!-- SKILL REGISTRY · numbered features -->
+  <section class="ar-section ar-section-skill">
+    <div class="ar-section-glow ar-glow-br"></div>
+    <BaseContainer class="ar-container">
+      <div class="ar-section-head">
+        <span class="ar-eyebrow">深入 Skill Registry</span>
+        <h2 class="ar-h2">不只是存储，更是治理</h2>
+        <p class="ar-section-desc">
+          公开市场像超市，商品丰富但需要自己把关。Skill Registry 是企业团队的<b>私有厨房</b>——
+          食材买回来要清洗、加工、调配，才能安全上桌。
+        </p>
+      </div>
+
+      <div class="ar-feat-grid">
+        <article class="ar-feat-card">
+          <div class="ar-feat-num">01</div>
+          <h3>零部署，开箱即用</h3>
+          <p>内置于 Nacos 3.2，无需额外部署。创建命名空间即可使用。支持公开市场导入、企业自研上传，<code>nacos-cli</code> 一条命令分发到团队。</p>
+        </article>
+        <article class="ar-feat-card">
+          <div class="ar-feat-num">02</div>
+          <h3>空间隔离 + 细粒度权限</h3>
+          <p>命名空间按团队隔离，互不干扰。公开 Skill 全团队可用但不可改，私有 Skill 仅授权可见，权限落到单个 Skill。</p>
+        </article>
+        <article class="ar-feat-card ar-feat-highlight">
+          <div class="ar-feat-num">03</div>
+          <div class="ar-feat-badge">核心能力</div>
+          <h3>安全护栏：进门前先过安检</h3>
+          <p>所有 Skill 发布前必须经过审核流水线——Prompt 注入、敏感数据泄露、数据外发、恶意代码、依赖漏洞五重扫描。扫描未通过无法发布，owner 决策全程留痕。</p>
+        </article>
+        <article class="ar-feat-card">
+          <div class="ar-feat-num">04</div>
+          <h3>版本治理：迭代有退路</h3>
+          <p>语义化版本号，版本间可对比差异。Agent 绑定时锁定具体版本，灰度发布逐步放量，指标劣化自动回滚。</p>
+        </article>
+      </div>
+    </BaseContainer>
+  </section>
+
+  <!-- PLATFORM CAPABILITIES -->
+  <section class="ar-section ar-section-duo">
+    <BaseContainer class="ar-container">
+      <div class="ar-section-head">
+        <span class="ar-eyebrow">平台能力</span>
+        <h2 class="ar-h2">Copilot 与插件化架构</h2>
+        <p class="ar-section-desc">
+          这些能力服务于 AI Registry 的整体生产化流程，覆盖 Prompt、Skill 与企业系统集成，不只属于 Skill Registry。
+        </p>
+      </div>
+      <div class="ar-duo">
+        <article class="ar-duo-card ar-duo-card-copilot">
+          <span class="ar-duo-tag">Nacos Copilot</span>
+          <h3>在控制台内完成 AI 辅助优化</h3>
+          <p>编辑 Prompt 或 Skill 时发起优化建议，基于 AgentScope Java 流式输出结构化改进建议，把编辑、优化、发布放在同一条工作流里。</p>
+        </article>
+        <article class="ar-duo-card ar-duo-card-plugin">
+          <span class="ar-duo-tag">企业扩展</span>
+          <h3>插件化架构：为企业定制而生</h3>
+          <p>通过安全审核、鉴权、存储等插件对接企业合规与身份系统，不修改 Nacos 主干代码即可完成深度定制。</p>
+        </article>
+      </div>
+    </BaseContainer>
+  </section>
+
+  <!-- ECOSYSTEM -->
+  <section class="ar-section ar-section-eco">
+    <div class="ar-section-glow ar-glow-tr"></div>
+    <BaseContainer class="ar-container">
+      <div class="ar-section-head">
+        <span class="ar-eyebrow">开放生态</span>
+        <h2 class="ar-h2">从个人工具到企业平台，无缝衔接</h2>
+      </div>
+      <div class="ar-eco-grid">
+        <article class="ar-eco-card">
+          <div class="ar-eco-mark">CLI</div>
+          <h3>nacos-cli</h3>
+          <p>官方命令行工具，一条命令完成 Skill 查询、下载、上传、同步。天然适合 CI/CD 流水线和 Agent 工作流集成。</p>
+        </article>
+        <article class="ar-eco-card">
+          <div class="ar-eco-mark">AI</div>
+          <h3>AI Coding Agent</h3>
+          <p>Cursor、Claude Code、Qoder、Gemini CLI 安装 <code>nacos-skill-registry</code> 后，即可用自然语言搜索、安装、发布 Skill。</p>
+        </article>
+        <article class="ar-eco-card">
+          <div class="ar-eco-mark">JVM</div>
+          <h3>AgentScope Java</h3>
+          <p>Java 生态 AI Agent 框架，通过 NacosPromptListener、NacosSkillRepository 直接拉取 Prompt 和 Skill，支持订阅与动态加载。</p>
+        </article>
+        <article class="ar-eco-card">
+          <div class="ar-eco-mark">SH</div>
+          <h3>skills.sh 互通</h3>
+          <p>与 skills.sh 开放生态双向互通：<code>npx skills add</code> 下载的 Skill 可上传 Nacos，团队 Skill 可通过 CLI 拉取本地。</p>
+        </article>
+      </div>
+    </BaseContainer>
+  </section>
+
+  <!-- QUICK START -->
+  <ai-registry-quickstart id="quick-start" class="ar-section ar-section-quickstart" style="scroll-margin-top: 4rem;">
+    <BaseContainer class="ar-container">
+      <div class="ar-section-head">
+        <span class="ar-eyebrow">三分钟上手</span>
+        <h2 class="ar-h2">从启动到第一个 Skill</h2>
+        <a href={docsHref} class="ar-section-link"><span>{docsText}</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+
+      <div class="ar-steps">
+        <div class="ar-step">
+          <div class="ar-step-num">1</div>
+          <div class="ar-step-content">
+            <h3>安装并启动 Nacos</h3>
+            <div class="ar-qs-code" data-code="curl -fsSL https://nacos.io/nacos-installer.sh | bash">
+              <pre><code><span class="ar-qs-prompt">$</span> curl -fsSL https://nacos.io/nacos-installer.sh | bash</code></pre>
+              <button class="ar-qs-copy" type="button" aria-label="Copy">
+                <svg class="copy-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                <svg class="check-icon" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ar-step">
+          <div class="ar-step-num">2</div>
+          <div class="ar-step-content">
+            <h3>访问控制台</h3>
+            <p>启动完成后，终端会输出控制台地址（默认 <code>http://localhost:8080</code>，端口被占用时会自动调整）。打开该地址，左侧导航找到 <b>AI Registry</b>，创建你的第一个 Skill。</p>
+          </div>
+        </div>
+
+        <div class="ar-step">
+          <div class="ar-step-num">3</div>
+          <div class="ar-step-content">
+            <h3>使用 Nacos CLI</h3>
+            <div class="ar-qs-card">
+              <div class="ar-qs-tab-buttons" role="tablist">
+                <button class="ar-qs-tab active" type="button" role="tab" aria-selected="true" data-artab="agent">
+                  <svg viewBox="0 0 24 24"><path d="M12 2.5l1.72 5.04 5.28.04-4.25 3.13 1.6 5.09L12 12.77 7.65 15.8l1.6-5.09L5 7.58l5.28-.04L12 2.5z"/></svg>
+                  <span>Agent</span>
+                </button>
+                <button class="ar-qs-tab" type="button" role="tab" aria-selected="false" data-artab="user">
+                  <svg viewBox="0 0 24 24"><path d="M4 4.75A2.75 2.75 0 016.75 2h11.5A1.75 1.75 0 0120 3.75v15.5A2.75 2.75 0 0117.25 22H6.75A2.75 2.75 0 014 19.25V4.75zm3 .75v12h10v-12H7zm1.5 3h7v1.5h-7V8.5zm0 3h7v1.5h-7v-1.5zm0 3h4.5V16H8.5v-1.5z"/></svg>
+                  <span>用户</span>
+                </button>
+              </div>
+              <div class="ar-qs-panels">
+                <div class="ar-qs-panel active" data-arpanel="agent">
+                  <div class="ar-qs-code" data-code="Read this Skill and use it when working with Nacos CLI:\nhttps://nacos.io/SKILL.md">
+                    <pre><code>Read this Skill and use it when working with Nacos CLI:
+https://nacos.io/SKILL.md</code></pre>
+                    <button class="ar-qs-copy" type="button" aria-label="Copy">
+                      <svg class="copy-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                      <svg class="check-icon" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+                    </button>
+                  </div>
+                </div>
+                <div class="ar-qs-panel" data-arpanel="user">
+                  <div class="ar-qs-code" data-code="# 安装 nacos-cli\ncurl -fsSL https://nacos.io/nacos-installer.sh | bash -s -- --cli\n\n# 查看可用 Skill\nnacos-cli skill-list\n\n# 安装 Skill 到本地\nnacos-cli skill-get my-skill -o ~/.skills\n\n# 上传本地 Skill 到 Nacos\nnacos-cli skill-upload ~/.skills/my-skill">
+                    <pre><code><span class="ar-qs-comment"># 安装 nacos-cli</span>
+<span class="ar-qs-prompt">$</span> curl -fsSL https://nacos.io/nacos-installer.sh | bash -s -- --cli
+
+<span class="ar-qs-comment"># 查看可用 Skill</span>
+<span class="ar-qs-prompt">$</span> nacos-cli skill-list
+
+<span class="ar-qs-comment"># 安装 Skill 到本地</span>
+<span class="ar-qs-prompt">$</span> nacos-cli skill-get my-skill -o ~/.skills
+
+<span class="ar-qs-comment"># 上传本地 Skill 到 Nacos</span>
+<span class="ar-qs-prompt">$</span> nacos-cli skill-upload ~/.skills/my-skill</code></pre>
+                    <button class="ar-qs-copy" type="button" aria-label="Copy">
+                      <svg class="copy-icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                      <svg class="check-icon" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </BaseContainer>
+  </ai-registry-quickstart>
+
+  <script>
+    class AiRegistryQuickstart extends HTMLElement {
+      constructor() {
+        super();
+        const tabBtns = this.querySelectorAll<HTMLButtonElement>('.ar-qs-tab');
+        const panels = this.querySelectorAll<HTMLElement>('.ar-qs-panel');
+        tabBtns.forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const id = btn.dataset.artab;
+            tabBtns.forEach((b) => { b.classList.toggle('active', b === btn); b.setAttribute('aria-selected', String(b === btn)); });
+            panels.forEach((p) => { p.classList.toggle('active', p.dataset.arpanel === id); });
+          });
+        });
+        this.querySelectorAll<HTMLButtonElement>('.ar-qs-copy').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const block = btn.closest('.ar-qs-code') as HTMLElement;
+            navigator.clipboard.writeText(block?.dataset.code || '').then(() => {
+              btn.classList.add('copied');
+              setTimeout(() => btn.classList.remove('copied'), 2000);
+            });
+          });
+        });
+      }
+    }
+    customElements.define('ai-registry-quickstart', AiRegistryQuickstart);
+  </script>
+
+  <!-- ROADMAP -->
+  <section class="ar-section ar-section-roadmap">
+    <BaseContainer class="ar-container">
+      <div class="ar-section-head">
+        <span class="ar-eyebrow">接下来</span>
+        <h2 class="ar-h2">迈向多 Agent 协作网络</h2>
+      </div>
+      <div class="ar-roadmap">
+        <article class="ar-road-card">
+          <div class="ar-road-tag">语义检索</div>
+          <h3>自然语言搜索 AI 资源</h3>
+          <p>向量数据库 + 大模型，用一句话找到团队里所有相关 Skill、Prompt、MCP 工具。</p>
+        </article>
+        <article class="ar-road-card">
+          <div class="ar-road-tag">智能组装</div>
+          <h3>AgentSpec 自动组装</h3>
+          <p>根据场景自动推荐并组合 Prompt、Skill、MCP，降低 Agent 构建门槛。</p>
+        </article>
+        <article class="ar-road-card">
+          <div class="ar-road-tag">协作网络</div>
+          <h3>Agent Team Spec</h3>
+          <p>多 Agent 团队协作编排，从单 Agent 走向 Agent 架构网络。</p>
+        </article>
+      </div>
+    </BaseContainer>
+  </section>
+
+  <!-- CTA -->
+  <section class="ar-section ar-section-cta">
+    <div class="ar-cta-glow"></div>
+    <BaseContainer class="ar-container ar-cta-inner">
+      <h2 class="ar-cta-title">准备好把你的 AI 资源管起来了吗？</h2>
+      <p class="ar-cta-sub">无论是个人开发者沉淀 Skill 资产，还是企业团队构建私有 AI 能力平台——Nacos AI Registry 都值得一试。</p>
+      <div class="ar-cta-actions">
+        <a href="https://github.com/alibaba/nacos" target="_blank" rel="noopener" class="ar-btn ar-btn-primary ar-quickstart-btn">
+          <span>GitHub</span>
+          <svg class="ar-arrow-down" style="transform: rotate(-90deg);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+        </a>
+        <a href={docsHref} class="ar-btn ar-btn-ghost ar-docs-btn">
+          <span>{docsText}</span>
+          <svg class="ar-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <p class="ar-cta-meta">钉钉群 <b>115205016856</b></p>
+    </BaseContainer>
+  </section>
+</div>
+
+<style is:global>
+  .ai-registry-page {
+    background-color: #0a0a0b;
+    color: #dddee4;
+    scroll-behavior: smooth;
+    font-feature-settings: "ss01", "cv11";
+  }
+  .ai-registry-page * { box-sizing: border-box; }
+
+  .ar-container {
+    width: min(100% - 2rem, 1200px);
+    margin: 0 auto;
+  }
+
+  /* ============ HERO ============ */
+  .ai-registry-hero {
+    position: relative;
+    background: #06070a;
+  }
+  .ar-hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(98, 122, 200, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(98, 122, 200, 0.06) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 30%, transparent 80%);
+    pointer-events: none;
+  }
+  .ar-hero-glow {
+    position: absolute;
+    top: -10%; left: 50%; transform: translateX(-50%);
+    width: 1100px; height: 700px;
+    background: radial-gradient(ellipse at center, rgba(61, 87, 218, 0.18) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .ar-hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.4rem 0.85rem;
+    background: rgba(61, 87, 218, 0.08);
+    border: 1px solid rgba(61, 87, 218, 0.25);
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: #a0b4e8;
+    margin-bottom: 2rem;
+  }
+  .ar-hero-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #7097e6;
+    box-shadow: 0 0 10px #7097e6;
+    animation: ar-pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes ar-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+  .ar-hero-title {
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #f4f5f7;
+    margin: 0 0 1.5rem;
+    max-width: 920px;
+  }
+  .ar-hero-title b {
+    font-weight: 700;
+    background: linear-gradient(120deg, #7097e6 20%, #a0b4e8 80%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .ar-hero-sub {
+    font-size: clamp(1rem, 1.4vw, 1.125rem);
+    line-height: 1.7;
+    color: #9295a5;
+    max-width: 680px;
+    margin: 0 0 2.5rem;
+  }
+  .ar-hero-cta {
+    display: flex; gap: 0.75rem; flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 4rem;
+  }
+  .ar-hero-meta {
+    display: flex; align-items: center; gap: 1.5rem;
+    font-size: 0.875rem;
+    color: #6e7587;
+    flex-wrap: wrap; justify-content: center;
+  }
+  .ar-hero-meta b {
+    color: #f4f5f7;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-right: 0.4rem;
+    font-feature-settings: "tnum";
+  }
+  .ar-hero-meta-divider {
+    width: 1px; height: 24px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  /* ============ BUTTONS ============ */
+  .ar-btn {
+    display: inline-flex; align-items: center;
+    padding: 0.7rem 1.6rem;
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+  .ar-btn-primary {
+    background: #3d57da;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(61, 87, 218, 0.25);
+  }
+  .ar-btn-primary:hover {
+    background: #2c46c9;
+    box-shadow: 0 6px 24px rgba(61, 87, 218, 0.4);
+    transform: translateY(-1px);
+  }
+  .ar-btn-ghost {
+    background: rgba(255,255,255,0.03);
+    color: #c7c9d1;
+    border-color: rgba(255,255,255,0.1);
+  }
+  .ar-btn-ghost:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.2);
+    color: #f4f5f7;
+  }
+  /* arrow animations preserved from before */
+  .ar-quickstart-btn .ar-arrow-down,
+  .ar-docs-btn .ar-arrow-right {
+    width: 0; height: 14px; opacity: 0; margin-left: 0; overflow: hidden;
+    display: inline-flex; align-items: center;
+    transition: width 0.3s ease, opacity 0.3s ease, margin-left 0.3s ease;
+  }
+  .ar-quickstart-btn:hover .ar-arrow-down,
+  .ar-docs-btn:hover .ar-arrow-right {
+    width: 14px; opacity: 1; margin-left: 0.5rem;
+  }
+
+  /* ============ SECTION COMMON ============ */
+  .ar-section {
+    position: relative;
+    padding: 5rem 0;
+    overflow: hidden;
+  }
+  /* 相邻 section 过渡不叠加 padding，保证节奏均匀 */
+  .ar-section + .ar-section { padding-top: 0; }
+  .ar-section-head {
+    text-align: center;
+    margin-bottom: 4rem;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .ar-eyebrow {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: #7097e6;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+  .ar-h2 {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    line-height: 1.25;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: #f4f5f7;
+    margin: 0;
+  }
+  .ar-section-desc {
+    margin-top: 1rem;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #9295a5;
+  }
+  .ar-section-desc b {
+    color: #c7c9d1;
+    font-weight: 600;
+  }
+  .ar-section-link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: #7097e6;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .ar-section-link:hover { color: #a0b4e8; }
+  .ar-section-link svg { width: 14px; height: 14px; }
+
+  .ar-section-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(61, 87, 218, 0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .ar-glow-tl { top: -200px; left: -200px; }
+  .ar-glow-tr { top: -200px; right: -200px; }
+  .ar-glow-br { bottom: -200px; right: -200px; }
+
+  /* ============ PAIN ============ */
+  .ar-section-pain { background: #0c0d10; padding-top: 5rem; }
+  .ar-pain-list {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .ar-pain-item {
+    display: flex; gap: 1.5rem;
+    padding: 2rem 1.5rem 2rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .ar-pain-item:nth-child(odd) { padding-right: 2rem; border-right: 1px solid rgba(255,255,255,0.08); }
+  .ar-pain-item:nth-child(even) { padding-left: 2rem; }
+  .ar-pain-num {
+    font-family: 'SF Mono', 'JetBrains Mono', Menlo, monospace;
+    font-size: 0.875rem;
+    color: #3d57da;
+    font-weight: 600;
+    flex-shrink: 0;
+    padding-top: 0.25rem;
+    letter-spacing: 0.05em;
+  }
+  .ar-pain-body h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #f4f5f7;
+    margin: 0 0 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  .ar-pain-body p {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: #9295a5;
+    margin: 0;
+  }
+  .ar-pain-body .ar-stat {
+    color: #a0b4e8;
+    font-weight: 600;
+    font-feature-settings: "tnum";
+  }
+
+  /* ============ OVERVIEW · BENTO ============ */
+  .ar-section-overview { background: #06070a; border-top: 1px solid rgba(255,255,255,0.04); }
+  .ar-bento {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+  .ar-bento-hero {
+    grid-column: span 4;
+    background: linear-gradient(135deg, rgba(61, 87, 218, 0.08) 0%, rgba(30, 31, 36, 0.6) 100%);
+    border: 1px solid rgba(61, 87, 218, 0.2);
+    border-radius: 16px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .ar-bento-hero::before {
+    content: ''; position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(61, 87, 218, 0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .ar-bento-hero h3 {
+    font-size: 1.625rem;
+    font-weight: 700;
+    color: #f4f5f7;
+    margin: 0.75rem 0 1rem;
+    letter-spacing: -0.015em;
+  }
+  .ar-bento-hero p {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: #c7c9d1;
+    margin: 0;
+    max-width: 640px;
+  }
+  .ar-bento-feats {
+    display: flex; gap: 2rem; flex-wrap: wrap;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .ar-bento-feats li {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #a0b4e8;
+    font-weight: 500;
+  }
+  .ar-bento-feats li span {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #7097e6;
+    flex-shrink: 0;
+  }
+  .ar-bento-card {
+    background: rgba(30, 31, 36, 0.4);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 1.75rem;
+    transition: all 0.25s ease;
+  }
+  .ar-bento-card:hover {
+    background: rgba(30, 31, 36, 0.7);
+    border-color: rgba(61, 87, 218, 0.3);
+    transform: translateY(-2px);
+  }
+  .ar-bento-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #f4f5f7;
+    margin: 0.5rem 0 0.75rem;
+  }
+  .ar-bento-card p {
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: #9295a5;
+    margin: 0;
+  }
+  .ar-bento-tag {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    background: rgba(61, 87, 218, 0.15);
+    color: #a0b4e8;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  /* ============ SKILL · numbered features ============ */
+  .ar-section-skill { background: #0e0f14; }
+  .ar-feat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .ar-feat-card {
+    position: relative;
+    padding: 2rem;
+    background: rgba(30, 31, 36, 0.4);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    transition: all 0.25s ease;
+  }
+  .ar-feat-card:hover {
+    background: rgba(30, 31, 36, 0.7);
+    border-color: rgba(61, 87, 218, 0.25);
+  }
+  .ar-feat-card.ar-feat-highlight {
+    background: linear-gradient(135deg, rgba(61, 87, 218, 0.1) 0%, rgba(30, 31, 36, 0.5) 100%);
+    border-color: rgba(61, 87, 218, 0.35);
+  }
+  .ar-feat-num {
+    font-family: 'SF Mono', 'JetBrains Mono', Menlo, monospace;
+    font-size: 0.875rem;
+    color: #3d57da;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+  }
+  .ar-feat-badge {
+    position: absolute;
+    top: 1.5rem; right: 1.5rem;
+    padding: 0.25rem 0.6rem;
+    background: rgba(61, 87, 218, 0.2);
+    color: #a0b4e8;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .ar-feat-card h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #f4f5f7;
+    margin: 0 0 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  .ar-feat-card p {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: #9295a5;
+    margin: 0;
+  }
+  .ar-feat-card code {
+    background: rgba(255,255,255,0.06);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: #c7c9d1;
+  }
+
+  /* ============ DUO · Copilot + Plugin ============ */
+  .ar-section-duo { background: #06070a; }
+  .ar-duo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  .ar-duo-card {
+    position: relative;
+    padding: 2.5rem;
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(30, 31, 36, 0.5);
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.3s ease;
+  }
+  .ar-duo-card:hover {
+    background: rgba(30, 31, 36, 0.8);
+    border-color: rgba(61, 87, 218, 0.3);
+  }
+  .ar-duo-card-copilot {
+    background: radial-gradient(ellipse at top right, rgba(61, 87, 218, 0.12) 0%, rgba(30, 31, 36, 0.5) 60%);
+  }
+  .ar-duo-card-plugin {
+    background: radial-gradient(ellipse at bottom left, rgba(61, 87, 218, 0.1) 0%, rgba(30, 31, 36, 0.5) 60%);
+  }
+  .ar-duo-icon {
+    width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(61, 87, 218, 0.15);
+    border: 1px solid rgba(61, 87, 218, 0.3);
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    color: #7097e6;
+  }
+  .ar-duo-icon svg { width: 24px; height: 24px; }
+  .ar-duo-tag {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    background: rgba(61, 87, 218, 0.15);
+    color: #a0b4e8;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+  }
+  .ar-duo-card h3 {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #f4f5f7;
+    margin: 0 0 1rem;
+    letter-spacing: -0.015em;
+  }
+  .ar-duo-card p {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: #9295a5;
+    margin: 0;
+  }
+  .ar-duo-card b { color: #c7c9d1; font-weight: 600; }
+
+  /* ============ ECO ============ */
+  .ar-section-eco { background: #06070a; border-top: 1px solid rgba(255,255,255,0.04); }
+  .ar-eco-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+  .ar-eco-card {
+    position: relative;
+    padding: 1.75rem;
+    background: rgba(30, 31, 36, 0.4);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    transition: all 0.25s ease;
+  }
+  .ar-eco-card:hover {
+    background: rgba(30, 31, 36, 0.7);
+    border-color: rgba(61, 87, 218, 0.3);
+    transform: translateY(-2px);
+  }
+  .ar-eco-mark {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px;
+    background: rgba(61, 87, 218, 0.12);
+    border: 1px solid rgba(61, 87, 218, 0.25);
+    border-radius: 8px;
+    font-family: 'SF Mono', 'JetBrains Mono', Menlo, monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #a0b4e8;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+  .ar-eco-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #f4f5f7;
+    margin: 0 0 0.6rem;
+  }
+  .ar-eco-card p {
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: #9295a5;
+    margin: 0;
+  }
+  .ar-eco-card code {
+    background: rgba(255,255,255,0.06);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.82em;
+    color: #c7c9d1;
+  }
+
+  /* ============ QUICK START ============ */
+  .ar-section-quickstart { background: #0e0f14; }
+  .ar-steps {
+    display: flex; flex-direction: column; gap: 2rem;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .ar-step {
+    display: flex; gap: 1.5rem;
+    align-items: flex-start;
+  }
+  .ar-step-num {
+    flex-shrink: 0;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3d57da, #2c46c9);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    box-shadow: 0 4px 12px rgba(61, 87, 218, 0.3);
+  }
+  .ar-step-content { flex: 1; min-width: 0; }
+  .ar-step-content h3 {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: #f4f5f7;
+    margin: 0 0 0.75rem;
+  }
+  .ar-step-content > p {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: #9295a5;
+    margin: 0;
+  }
+  .ar-step-content code {
+    background: rgba(255,255,255,0.06);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: #c7c9d1;
+  }
+
+  .ar-qs-card {
+    background: rgba(30, 31, 36, 0.6);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .ar-qs-tab-buttons {
+    display: flex;
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .ar-qs-tab {
+    flex: 1; min-height: 2.75rem;
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    color: #6e7587;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .ar-qs-tab:hover { color: #c7c9d1; background: rgba(255,255,255,0.02); }
+  .ar-qs-tab.active { color: #7097e6; background: rgba(61, 87, 218, 0.05); border-bottom-color: #7097e6; }
+  .ar-qs-tab svg { width: 1rem; height: 1rem; fill: currentColor; flex-shrink: 0; }
+
+  .ar-qs-panels { position: relative; }
+  .ar-qs-panel { display: none; padding: 1rem 1.5rem; animation: arQsFadeIn 0.3s ease; }
+  .ar-qs-panel.active { display: block; }
+
+  .ar-qs-code {
+    position: relative;
+    padding: 1rem 3.25rem 1rem 1.25rem;
+    background: #06070a;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 0.5rem 0;
+  }
+  .ar-qs-card > .ar-qs-panels .ar-qs-code { margin: 0.75rem 1.5rem 1.25rem; }
+  .ar-step-content > .ar-qs-code { margin: 0; }
+  .ar-qs-code pre { margin: 0; }
+  .ar-qs-code code {
+    color: #dddee4;
+    font-family: 'SF Mono', 'JetBrains Mono', Menlo, monospace;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  .ar-qs-prompt { color: #6a9955; user-select: none; margin-right: 0.5rem; }
+  .ar-qs-comment { color: #6a9955; font-style: italic; }
+
+  .ar-qs-copy {
+    position: absolute;
+    top: 0.625rem; right: 0.75rem;
+    width: 2rem; height: 2rem;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s, background 0.2s;
+  }
+  .ar-qs-code:hover .ar-qs-copy { opacity: 1; }
+  .ar-qs-copy:hover { background: rgba(255,255,255,0.1); }
+  .ar-qs-copy svg {
+    width: 1rem; height: 1rem;
+    fill: none; stroke: currentColor;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    color: #9295a5;
+  }
+  .ar-qs-copy .check-icon { display: none; color: #52c41a; }
+  .ar-qs-copy.copied { background: rgba(82, 196, 26, 0.1); border-color: rgba(82, 196, 26, 0.3); }
+  .ar-qs-copy.copied .copy-icon { display: none; }
+  .ar-qs-copy.copied .check-icon { display: block; }
+
+  @keyframes arQsFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============ ROADMAP ============ */
+  .ar-section-roadmap { background: #06070a; border-top: 1px solid rgba(255,255,255,0.04); }
+  .ar-roadmap {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  .ar-road-card {
+    position: relative;
+    padding: 2rem;
+    background: rgba(30, 31, 36, 0.4);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    transition: all 0.25s ease;
+  }
+  .ar-road-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 2rem; right: 2rem; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(61, 87, 218, 0.5), transparent);
+  }
+  .ar-road-card:hover {
+    background: rgba(30, 31, 36, 0.7);
+    border-color: rgba(61, 87, 218, 0.25);
+  }
+  .ar-road-tag {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    background: rgba(61, 87, 218, 0.12);
+    color: #a0b4e8;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+  .ar-road-card h3 {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: #f4f5f7;
+    margin: 0 0 0.75rem;
+  }
+  .ar-road-card p {
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: #9295a5;
+    margin: 0;
+  }
+
+  /* ============ CTA ============ */
+  .ar-section-cta {
+    background: linear-gradient(180deg, #06070a 0%, #121316 100%);
+    padding: 6rem 0 5rem;
+    position: relative;
+  }
+  .ar-cta-glow {
+    position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse at center, rgba(61, 87, 218, 0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .ar-cta-inner {
+    position: relative;
+    text-align: center;
+  }
+  .ar-cta-title {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    color: #f4f5f7;
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    margin: 0 0 1rem;
+  }
+  .ar-cta-sub {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #9295a5;
+    max-width: 560px;
+    margin: 0 auto 2rem;
+  }
+  .ar-cta-actions {
+    display: flex; gap: 0.75rem; justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+  .ar-cta-meta {
+    font-size: 0.85rem;
+    color: #6e7587;
+    margin: 0;
+  }
+  .ar-cta-meta b {
+    color: #a0b4e8;
+    font-feature-settings: "tnum";
+    font-weight: 600;
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 64rem) {
+    .ar-bento { grid-template-columns: repeat(2, 1fr); }
+    .ar-bento-hero { grid-column: span 2; }
+    .ar-eco-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 50rem) {
+    .ar-section { padding: 4rem 0; }
+    .ar-section-head { margin-bottom: 2.5rem; }
+    .ar-pain-list { grid-template-columns: 1fr; }
+    .ar-pain-item:nth-child(odd),
+    .ar-pain-item:nth-child(even) { padding: 1.75rem 0; border-right: none; }
+    .ar-bento { grid-template-columns: 1fr; }
+    .ar-bento-hero { grid-column: span 1; padding: 1.75rem; }
+    .ar-bento-hero h3 { font-size: 1.375rem; }
+    .ar-feat-grid { grid-template-columns: 1fr; }
+    .ar-duo { grid-template-columns: 1fr; }
+    .ar-eco-grid { grid-template-columns: 1fr; }
+    .ar-roadmap { grid-template-columns: 1fr; }
+    .ar-hero-meta { gap: 1rem; }
+    .ar-hero-meta b { font-size: 1.25rem; }
+    .ar-hero-cta { margin-bottom: 2.5rem; }
+  }
+</style>
