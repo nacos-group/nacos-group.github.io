@@ -94,7 +94,7 @@ nacos-setup -c prod
 nacos-setup -c prod -n 5
 
 # Specify version
-nacos-setup -c prod -v 3.2.0 -n 3
+nacos-setup -c prod -v 3.2.3 -n 3
 ```
 
 > Note: When using the built-in Derby database, nacos-setup automatically adopts an incremental startup strategy to ensure correct cluster initialization:
@@ -125,7 +125,7 @@ Manual node management:
 ls -la ~/ai-infra/nacos/cluster/CLUSTER_ID/
 
 # Manually start a node
-cd ~/ai-infra/nacos/cluster/CLUSTER_ID/0-v3.2.0
+cd ~/ai-infra/nacos/cluster/CLUSTER_ID/0-v3.2.3
 bash bin/startup.sh
 
 # Stop a node
@@ -153,7 +153,7 @@ After configuration, subsequent deployments will automatically use the external 
 
 ```bash
 # Standalone mode
-nacos-setup -v 3.2.0
+nacos-setup -v 3.2.3
 
 # Cluster mode
 nacos-setup -c prod -n 3
@@ -225,7 +225,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/cs/config?dataId=quickstart.t
 
 | Option | Description | Default |
 |------|------|--------|
-| `-v, --version VERSION` | Specify Nacos version | 3.2.0 |
+| `-v, --version VERSION` | Specify Nacos version | 3.2.3 |
 | `-p, --port PORT` | Service main port | 8848 |
 | `--no-start` | Do not start automatically after installation | - |
 | `--adv` | Advanced mode (interactive configuration) | - |
