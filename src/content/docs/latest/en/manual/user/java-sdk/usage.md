@@ -63,7 +63,7 @@ Nacos Java SDK requires JDK 1.8 or later.
 ```xml
     <properties>
         <!-- The pure client is supported since 2.1.2. -->
-        <nacos.version>3.2.0</nacos.version>
+        <nacos.version>3.2.3</nacos.version>
     </properties>
 
     <dependencies>
