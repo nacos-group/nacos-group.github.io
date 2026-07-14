@@ -187,7 +187,7 @@ Nacos 控制台提供了完整的 Skill 管理界面，位于 **AI 注册中心 
 
 - **搜索**：按 Skill 名称关键字搜索
 - **排序**：支持按默认排序或下载量排序
-- **卡片信息**：显示名称、描述、业务标签、在线版本数、是否有草稿、下载量、更新时间
+- **卡片信息**：显示名称、描述、业务标签、在线版本数、是否有草稿、下载量、更新时间；列表接口同时返回展示版本 `SKILL.md` 中解析出的 `frontMatter`，可用于展示 `alias` 等自定义元数据
 - **批量操作**：支持多选后批量删除
 - **快捷入口**：上传 ZIP、创建新 Skill
 
@@ -258,6 +258,8 @@ Skill 管理提供三层 REST API：
 | **Client API** | 客户端运行时查询/下载 Skill（支持匿名访问） | [客户端API - 下载 Skill](../open-api.md#34-下载-skill) |
 | **Console API** | 控制台管理操作（需登录认证） | [控制台API - Skills 管理](../../admin/console-api.md#7-skills-管理) |
 | **Admin API** | 集群内部管理接口 | [运维API - AI Skills 管理](../../admin/admin-api.md#7-ai-skills-管理) |
+
+其中，Skill 列表查询的返回项包含 `frontMatter` 字段，内容为展示版本 `SKILL.md` YAML front matter 解析后的键值对；当对应版本不存在、`SKILL.md` 无 front matter 或解析失败时，该字段可能为空。
 
 ### 4.3. Java SDK
 

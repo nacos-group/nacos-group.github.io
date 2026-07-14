@@ -187,7 +187,7 @@ The list page displays all Skills in card format with the following features:
 
 - **Search**: Search by Skill name keyword
 - **Sort**: Sort by default order or download count
-- **Card Info**: Displays name, description, business tags, online version count, draft status, download count, and update time
+- **Card Info**: Displays name, description, business tags, online version count, draft status, download count, and update time; the list API also returns `frontMatter` parsed from the display version's `SKILL.md`, which can be used to show custom metadata such as `alias`
 - **Batch Operations**: Multi-select for batch deletion
 - **Quick Actions**: Upload ZIP, create new Skill
 
@@ -258,6 +258,8 @@ Skill Registry provides three layers of REST APIs:
 | **Client API** | Client runtime query/download Skills (supports anonymous access) | [Client API - Download Skill](../open-api.md) |
 | **Console API** | Console operations (requires login authentication) | [Console API - Skills](../../admin/console-api.md) |
 | **Admin API** | Cluster internal management interface | [Admin API - AI Skills](../../admin/admin-api.md) |
+
+For Skill list queries, each response item contains a `frontMatter` field with key-value pairs parsed from the display version's `SKILL.md` YAML front matter. This field may be empty when the version is unavailable, `SKILL.md` has no front matter, or parsing fails.
 
 ### 4.3. Java SDK
 
