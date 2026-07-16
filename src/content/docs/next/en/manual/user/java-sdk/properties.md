@@ -180,8 +180,7 @@ When the Nacos Java SDK connects to Nacos Server, you can configure a set of par
 
 | Parameter                                                       | Meaning                                                                            | Optional Values | Default Value |
 |-----------------------------------------------------------------|------------------------------------------------------------------------------------|---------|---------------|
-| nacos.server.grpc.port.offset                                   | The offset of the Nacos Server gRPC port relative to the main port.                           | Any int value | 1000 |
-| grpc.port.offset                                                | The offset of the Nacos Server gRPC port relative to the main port when set through user-defined `Properties`. It has higher priority than `nacos.server.grpc.port.offset` and is suitable when different Java SDK instances need different offsets. | Any int value | 1000 |
+| nacos.server.grpc.port.offset                                   | The offset of the Nacos Server gRPC port relative to the main port. It can be set in each Java SDK client's `Properties` when different client instances need different offsets. | Any int value | 1000 |
 | nacos.remote.client.grpc.name                                   | The name of the gRPC connection for this Nacos Java SDK.                                      | Any string | null |
 | nacos.remote.client.grpc.connect.keep.alive                     | The keep-alive interval of the gRPC connection for this Nacos Java SDK.                       | Any long value | 5000 |
 | nacos.remote.client.grpc.retry.times                            | The maximum retry count when the gRPC connection of this Nacos Java SDK initiates a request.  | Any int value | 3 |
