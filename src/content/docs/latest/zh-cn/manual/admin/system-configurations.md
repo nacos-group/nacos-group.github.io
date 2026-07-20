@@ -32,7 +32,7 @@ Nacos 是内部微服务组件，不应暴露在公网。开启控制台、鉴�
 | --- | --- | --- |
 | `nacos.home(-D)` | Nacos 根目录。 | 安装目录 |
 | `nacos.standalone(-D)` | 是否以单机模式启动。`startup.sh -m standalone` 会设置该参数。 | `false` |
-| `nacos.functionMode(-D)` | 启动功能模式。`all` 表示全部模块；也可通过启动脚本设置为 `config`、`naming`、`microservice`、`ai`。 | `all` |
+| `nacos.functionMode(-D)` | 启动功能模式。`all` 表示启动全部可用模块；`config`、`naming` 分别只启动配置中心、服务发现；`microservice` 仅启动 Config 和 Naming，不加载 AI 模块；`ai` 启动 AI 及其依赖的 Config 和 Naming。 | `all` |
 | `nacos.deployment.type(-D)` | 部署形态。启动脚本默认设置为 `merged`；独立控制台部署时会使用控制台相关配置。 | `merged` |
 | `nacos.server.main.port` | Nacos Server 主端口。 | `8848` |
 | `nacos.server.contextPath` | Nacos Server HTTP 上下文路径。 | `/nacos` |
@@ -305,7 +305,7 @@ AI 管理中心的使用方式见[AI 管理中心概述](../user/ai/ai-registry-
 
 | 参数名 | 说明 | 默认值 |
 | --- | --- | --- |
-| `nacos.extension.ai.enabled` | 是否启用 AI 模块。AI 模块需要配置中心和服务发现模块同时启用。 | `true` |
+| `nacos.extension.ai.enabled` | 是否启用 AI 模块。设为 `false` 时不加载 AI 模块及其控制台入口，Config 和 Naming 不受影响；`microservice` 功能模式下无论该值为何都不会加载 AI 模块。 | `true` |
 | `nacos.ai.mcp.registry.enabled` | 是否启用官方 MCP Registry 协议适配。开启后会使用 `nacos.ai.registry.port` 暴露独立端口。 | `false` |
 | `nacos.ai.skill.registry.enabled` | 是否启用 Skill Registry 协议适配。开启后会使用 `nacos.ai.registry.port` 暴露独立端口。 | `false` |
 | `nacos.ai.registry.port` | AI Registry 协议适配端口。 | `9080` |
@@ -364,7 +364,7 @@ AI 管理中心的使用方式见[AI 管理中心概述](../user/ai/ai-registry-
 | `-m cluster` | 集群模式启动。 | `nacos.standalone=false` |
 | `-f config` | 只启动配置中心相关模块。 | `nacos.functionMode=config` |
 | `-f naming` | 只启动服务发现相关模块。 | `nacos.functionMode=naming` |
-| `-f microservice` | 启动微服务相关模块。 | `nacos.functionMode=microservice` |
+| `-f microservice` | 仅启动配置中心和服务发现模块，不加载 AI 模块（Nacos 3.2.2+）。 | `nacos.functionMode=microservice` |
 | `-f ai` | 启动 AI 相关模块。 | `nacos.functionMode=ai` |
 | `-c` | 设置集群成员列表。 | `nacos.member.list` |
 | `-p embedded` | 集群模式下使用嵌入式存储。 | `embeddedStorage=true` |

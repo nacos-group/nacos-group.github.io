@@ -32,7 +32,7 @@ Nacos is an internal microservice component and should not be exposed to the pub
 | --- | --- | --- |
 | `nacos.home(-D)` | Nacos home directory. | installation directory |
 | `nacos.standalone(-D)` | Whether to start in standalone mode. `startup.sh -m standalone` sets this property. | `false` |
-| `nacos.functionMode(-D)` | Function mode. `all` starts all modules. The startup script also supports `config`, `naming`, `microservice`, and `ai`. | `all` |
+| `nacos.functionMode(-D)` | Function mode. `all` starts all available modules; `config` and `naming` start only Config and Naming, respectively; `microservice` starts Config and Naming without the AI module; `ai` starts AI together with its Config and Naming dependencies. | `all` |
 | `nacos.deployment.type(-D)` | Deployment type. The startup script uses `merged` by default. | `merged` |
 | `nacos.server.main.port` | Main Nacos Server port. | `8848` |
 | `nacos.server.contextPath` | HTTP context path of Nacos Server. | `/nacos` |
@@ -305,7 +305,7 @@ For usage, see [AI Registry Overview](../user/ai/ai-registry-overview.md). The p
 
 | Property | Description | Default |
 | --- | --- | --- |
-| `nacos.extension.ai.enabled` | Whether the AI module is enabled. The AI module requires both config and naming modules. | `true` |
+| `nacos.extension.ai.enabled` | Whether the AI module is enabled. When set to `false`, the AI module and its console entries are not loaded, while Config and Naming remain available. The `microservice` function mode does not load the AI module regardless of this value. | `true` |
 | `nacos.ai.mcp.registry.enabled` | Whether the official MCP Registry protocol adapter is enabled. When enabled, it exposes an independent port through `nacos.ai.registry.port`. | `false` |
 | `nacos.ai.skill.registry.enabled` | Whether the Skill Registry protocol adapter is enabled. When enabled, it exposes an independent port through `nacos.ai.registry.port`. | `false` |
 | `nacos.ai.registry.port` | AI Registry protocol adapter port. | `9080` |
@@ -364,7 +364,7 @@ The distribution `startup.sh` supports these common options:
 | `-m cluster` | Start in cluster mode. | `nacos.standalone=false` |
 | `-f config` | Start config-related modules only. | `nacos.functionMode=config` |
 | `-f naming` | Start naming-related modules only. | `nacos.functionMode=naming` |
-| `-f microservice` | Start microservice-related modules. | `nacos.functionMode=microservice` |
+| `-f microservice` | Start only the Config and Naming modules without the AI module (Nacos 3.2.2+). | `nacos.functionMode=microservice` |
 | `-f ai` | Start AI-related modules. | `nacos.functionMode=ai` |
 | `-c` | Set the cluster member list. | `nacos.member.list` |
 | `-p embedded` | Use embedded storage in cluster mode. | `embeddedStorage=true` |

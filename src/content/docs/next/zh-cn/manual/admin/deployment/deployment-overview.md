@@ -66,7 +66,33 @@ Nacos自3.0版本在2.X版本的基础上，对Nacos控制台和Nacos本身进�
 
 Nacos支持NameServer路由请求模式，通过它您可以设计一个有用的映射规则来控制请求转发到相应的集群，在映射规则中您可以按命名空间或租户等分片请求...
 
-## 3. Nacos控制台独立部署
+## 3. 按功能模块启动
+
+部署模式决定 Nacos 节点的拓扑和高可用方式，功能模式决定节点运行时加载哪些业务模块，两者可以组合使用。
+
+从 Nacos 3.2.2 起，如果只需要配置管理和服务发现，可以使用 `microservice` 功能模式。该模式仅加载 Config 和 Naming 模块，不加载 AI 模块，因此 AI 管理中心以及 MCP Server、Skill、Prompt、Agent、AgentSpec 等 AI 资源管理能力和对应控制台入口不可用。
+
+单机模式启动命令：
+
+```shell
+sh startup.sh -m standalone -f microservice
+```
+
+集群模式下，需要在每个节点使用相同的功能模式：
+
+```shell
+sh startup.sh -f microservice
+```
+
+:::note
+功能模式只控制运行时加载的模块，仍然使用标准 Nacos 发行包，不会从发行包中移除 AI 相关 JAR。使用 `-f microservice` 后，无需再设置 `nacos.extension.ai.enabled=false`。
+
+Nacos 3.2.0、3.2.1，或无法传递 `-f` 参数的部署方式，可以在 `${nacos.home}/conf/application.properties` 中设置 `nacos.extension.ai.enabled=false`，关闭 AI 模块并保留 Config 和 Naming 模块。
+:::
+
+完整的功能模式和配置参数说明见[系统参数](../system-configurations.md#基础启动参数)。
+
+## 4. Nacos控制台独立部署
 
 ![nacos_console_deploy.png](/img/blog/3_0_0-release/3.0_deploy.svg)
 
@@ -80,7 +106,7 @@ Nacos控制台独立部署参考文档: [控制台独立部署](./deployment-ind
 
 生产环境正式上线前，建议继续阅读[部署最佳实践](./deployment-best-practices.md)，统一检查内网边界、控制台独立部署、外置数据库、鉴权、可见性、流量防护、配置加密和升级回滚方案。
 
-## 4. 多网卡IP选择
+## 5. 多网卡IP选择
 
 当本地环境比较复杂的时候，Nacos服务在启动的时候需要选择运行时使用的IP或者网卡。Nacos从多网卡获取IP参考Spring
 Cloud设计，通过nacos.inetutils参数，可以指定Nacos使用的网卡和IP地址。目前支持的配置参数有:

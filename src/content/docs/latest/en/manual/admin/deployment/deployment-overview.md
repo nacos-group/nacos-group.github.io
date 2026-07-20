@@ -66,7 +66,33 @@ For deployment details, see [Cluster Deployment](./deployment-cluster.md).
 
 Nacos supports NameServer-based request routing. With this mode, you can design mapping rules to forward requests to the corresponding cluster, such as routing requests by namespace or tenant.
 
-## 3. Independent Nacos Console Deployment
+## 3. Select Modules by Function Mode
+
+The deployment mode determines the Nacos node topology and high-availability model. The function mode determines which business modules a node loads at runtime. These two settings can be combined.
+
+Starting with Nacos 3.2.2, use the `microservice` function mode when you need only configuration management and service discovery. This mode loads only the Config and Naming modules and does not load the AI module. As a result, AI Registry capabilities for resources such as MCP Servers, Skills, Prompts, Agents, and AgentSpecs, together with their console entries, are unavailable.
+
+For standalone mode, run:
+
+```shell
+sh startup.sh -m standalone -f microservice
+```
+
+For cluster mode, use the same function mode on every node:
+
+```shell
+sh startup.sh -f microservice
+```
+
+:::note
+The function mode controls only which modules are loaded at runtime. It still uses the standard Nacos distribution and does not remove AI-related JARs from the package. When you use `-f microservice`, you do not also need to set `nacos.extension.ai.enabled=false`.
+
+For Nacos 3.2.0, Nacos 3.2.1, or a deployment method that cannot pass the `-f` option, set `nacos.extension.ai.enabled=false` in `${nacos.home}/conf/application.properties` to disable the AI module while keeping the Config and Naming modules enabled.
+:::
+
+For the complete function-mode and property reference, see [System Parameters](../system-configurations.md#basic-startup-parameters).
+
+## 4. Independent Nacos Console Deployment
 
 ![nacos_console_deploy.png](/img/blog/3_0_0-release/3.0_deploy.svg)
 
@@ -80,7 +106,7 @@ For independent console deployment details, see [Independent Console Deployment]
 
 Before going to production, continue with [Deployment Best Practices](./deployment-best-practices.md) to check internal network boundaries, independent console deployment, external database storage, authentication, visibility, traffic control, configuration encryption, and rollback plans.
 
-## 4. Multi-NIC IP Selection
+## 5. Multi-NIC IP Selection
 
 When the local environment is complex, Nacos needs to select the IP address or network interface card to use at startup. Nacos obtains IP addresses from multiple NICs by referring to the Spring Cloud design. You can use `nacos.inetutils` parameters to specify the NIC and IP address used by Nacos. The following configuration parameters are supported:
 
