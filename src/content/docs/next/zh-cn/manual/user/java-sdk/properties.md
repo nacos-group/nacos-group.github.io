@@ -187,7 +187,7 @@ Nacos Java SDK 连接Nacos Server时，可以设置一系列的参数，来提�
 
 | 参数名                                                             | 含义                                                                                 | 可选值     | 默认值           | 
 |-----------------------------------------------------------------|------------------------------------------------------------------------------------|---------|---------------|
-| nacos.server.grpc.port.offset                                   | Nacos Server GRPC端口相对主端口的偏移量                                                       | 任意int值  | 1000          |
+| nacos.server.grpc.port.offset                                   | Nacos Server GRPC端口相对主端口的偏移量。不同 Java SDK 实例需要使用不同偏移量时，可以在各自客户端的 `Properties` 中设置该参数 | 任意int值  | 1000          |
 | nacos.remote.client.grpc.name                                   | 该Nacos Java SDK的GRPC连接的名字                                                          | 任意字符串   | null          |
 | nacos.remote.client.grpc.connect.keep.alive                     | 该Nacos Java SDK的GRPC连接的Keep Alive                                                  | 任意Long值 | 5000          |
 | nacos.remote.client.grpc.retry.times                            | 该Nacos Java SDK的GRPC连接发起请求时的最大重试次数                                                 | 任意int值  | 3             |
