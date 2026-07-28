@@ -228,14 +228,14 @@ Raft 参数通过 `nacos.core.protocol.raft.data.*` 配置。`data` 是当前代
 | `nacos.core.auth.enabled` | 是否开启 SDK/gRPC 请求鉴权。 | `false` |
 | `nacos.core.auth.admin.enabled` | 是否开启 `/v3/admin/*` Admin API 鉴权。 | `true` |
 | `nacos.core.auth.console.enabled` | 是否开启 `/v3/console/*` Console API 和登录鉴权。 | `true` |
-| `nacos.core.auth.caching.enabled` | 是否缓存鉴权信息。开启后权限变更会有短暂延迟。 | `true` |
+| `nacos.plugin.auth.nacos.caching.enabled` | 是否缓存鉴权信息；`nacos.core.auth.caching.enabled` 是历史 alias。开启后权限变更会有短暂延迟。 | `true` |
 | `nacos.core.auth.server.identity.key` | Server 间请求身份标识 key。开启鉴权时必须设置。 | 空 |
 | `nacos.core.auth.server.identity.value` | Server 间请求身份标识 value。开启鉴权时必须设置。 | 空 |
 | `nacos.security.ignore.urls` | 鉴权忽略路径。该参数属于历史兼容项，未来可能废弃。 | 发行包默认值 |
 | `nacos.plugin.auth.nacos.token.cache.enable` | 默认鉴权插件 token 缓存；旧 `nacos.core.auth.plugin.nacos.token.cache.enable` 是 alias。 | `false` |
-| `nacos.plugin.auth.nacos.token.expire.seconds` | 默认鉴权插件 token 过期秒数；旧 core key 是 alias。 | `18000` |
-| `nacos.plugin.auth.nacos.token.secret.key` | JWT 签名密钥，敏感且 RESTART；旧 core key 是 alias。 | 空 |
-| `nacos.plugin.auth.nacos.anonymous.ai.enabled` | 是否允许 AI 资源匿名读取；旧 core key 是 alias。 | `false` |
+| `nacos.plugin.auth.nacos.token.expire.seconds` | 默认鉴权插件 token 过期秒数；`nacos.core.auth.plugin.nacos.token.expire.seconds` 是历史 alias。 | `18000` |
+| `nacos.plugin.auth.nacos.token.secret.key` | JWT 签名密钥，敏感且 RESTART；`nacos.core.auth.plugin.nacos.token.secret.key` 是历史 alias。 | 空 |
+| `nacos.plugin.auth.nacos.anonymous.ai.enabled` | 是否允许 AI 资源匿名读取；`nacos.core.auth.nacos.anonymous.ai.enabled` 是历史 alias。 | `false` |
 | `nacos.plugin.visibility.enabled` | 是否开启可见性插件。 | `true` |
 | `nacos.plugin.visibility.type` | 可见性插件类型。默认 `nacos` 实现会复用默认鉴权插件用户信息。 | `nacos` |
 
@@ -245,8 +245,8 @@ LDAP 与 OIDC/OAuth2 是可选插件。下表列出标准前缀，具体 definit
 
 | 参数名 | 说明 | 默认值 |
 | --- | --- | --- |
-| `nacos.plugin.auth.ldap.{itemKey}` | LDAP definitions：`url`、`base-dn`、`timeout`、`user-dn`、`password`、`filter-prefix`、`case-sensitive`、`ignore-partial-result-exception`。 | 见鉴权插件文档 |
-| `nacos.plugin.auth.oidc.{itemKey}` | OIDC definitions，包括 issuer/client、JWT/JWKS、claim、外部授权和严格校验选项。当前只实现 `jwt`/JWKS，不支持 introspection。 | 见鉴权插件文档 |
+| `nacos.plugin.auth.ldap.{itemKey}` | LDAP definitions：`url`、`base-dn`、`timeout`、`user-dn`、`password`、`filter-prefix`、`case-sensitive`、`ignore-partial-result-exception`。 | 见[鉴权插件文档](../../plugin/auth-plugin.md) |
+| `nacos.plugin.auth.oidc.{itemKey}` | OIDC definitions，包括 issuer/client、JWT/JWKS、claim、外部授权和严格校验选项。当前只实现 `jwt`/JWKS，不支持 introspection。 | 见[鉴权插件文档](../../plugin/auth-plugin.md) |
 
 ## 插件参数
 
@@ -291,12 +291,12 @@ AI 管理中心的使用方式见[AI 管理中心概述](../user/ai/ai-registry-
 | `nacos.ai.mcp.registry.port` | 旧参数名，已废弃。请改用 `nacos.ai.registry.port`。 | `9080` |
 | `nacos.plugin.ai-pipeline.enabled` | AI Pipeline 动态模块总开关；关闭时延迟加载类型。 | `false` |
 | `nacos.plugin.ai-pipeline.type` | 历史启动链，仅用于没有持久化状态时初始化节点状态。 | 空 |
-| `nacos.plugin.ai-pipeline.skill-scanner.{itemKey}` | `skill-scanner` definitions；只有 `order` 为 RUNTIME。 | 见 Pipeline 插件文档 |
-| `nacos.plugin.ai-pipeline.skill-spector.{itemKey}` | `skill-spector` definitions；只有 `order` 为 RUNTIME。 | 见 Pipeline 插件文档 |
+| `nacos.plugin.ai-pipeline.skill-scanner.{itemKey}` | `skill-scanner` definitions；只有 `order` 为 RUNTIME。 | 见 [AI Pipeline 插件文档](../../plugin/ai-pipeline-plugin.md) |
+| `nacos.plugin.ai-pipeline.skill-spector.{itemKey}` | `skill-spector` definitions；只有 `order` 为 RUNTIME。 | 见 [AI Pipeline 插件文档](../../plugin/ai-pipeline-plugin.md) |
 | `nacos.ai.skill.auto-publish-after-review.enabled` | Skill 审核通过后是否自动发布版本。 | `false` |
-| `nacos.plugin.ai-resource-import.enabled` | AI Resource Import 模块总开关；发行包 `application.properties` 显式设为开启。 | `true`（发行包） |
+| `nacos.plugin.ai-resource-import.enabled` | AI Resource Import 模块总开关；标准 key 和 alias 都未配置时仍默认开启，只有显式 `false` 才关闭。发行包也显式将标准 key 设为 `true`。 | `true` |
 | `nacos.plugin.ai-resource-import.{pluginName}.enabled` | 每个固定来源的启动初始状态。 | `mcp-official`/`skills-sh` 开启，其余关闭 |
-| `nacos.plugin.ai-resource-import.{pluginName}.{itemKey}` | 来源 definitions；endpoint/网络开关为 RESTART，其余展示和限制为 RUNTIME。 | 见导入插件文档 |
+| `nacos.plugin.ai-resource-import.{pluginName}.{itemKey}` | 来源 definitions；endpoint/网络开关为 RESTART，其余展示和限制为 RUNTIME。 | 见 [AI 资源导入插件文档](../../plugin/ai-resource-import-plugin.md) |
 | `nacos.ai.resource.import.legacy-mcp-api-enabled` | 是否临时重新开启已废弃的 MCP 导入 API。 | `false` |
 | `nacos.ai.resource.import.allow-user-url` | 重新开启旧 MCP 导入 API 时，是否允许抓取用户提供的 URL。 | `false` |
 

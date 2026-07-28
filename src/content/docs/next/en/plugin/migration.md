@@ -20,7 +20,7 @@ Unified plugin management separates four layers: module entry, implementation se
 6. Roll out the plugin and static config first, then inspect effective source in plugin detail.
 7. Restart nodes for `RESTART` fields; do not try to update them with PUT APIs.
 
-Canonical keys win when an alias is also present. API aliases are normalized, and `plugin-configs.json` and local-only maps store only canonical item keys.
+For STATIC `PluginConfigSpec` items, canonical full keys win by presence, not by a non-blank value. An empty canonical value still suppresses legacy aliases and may fail required-value validation; remove the canonical property entirely only when fallback to an alias is intended. If several aliases are present, the first one in the definition's declaration order wins. Selection keys continue to follow their plugin family's documented rules. API aliases are normalized, and `plugin-configs.json` and local-only maps store only canonical item keys.
 
 ## Implementation selection
 
@@ -39,6 +39,8 @@ All selections are snapshotted at startup. Do not use the status API to switch a
 - Move OIDC from `nacos.core.auth.plugin.oidc.*` to `nacos.plugin.auth.oidc.*`. All current fields are `RESTART`.
 - `nacos.plugin.visibility.enabled` remains the capability gate; `nacos.plugin.visibility.type` is only historical initial selection. Implementation state belongs to unified `visibility:{name}` state.
 - `nacos.plugin.ai-pipeline.enabled` remains the Pipeline gate. Historical `nacos.plugin.ai-pipeline.type` supplies only initial chain state at startup. Use unified state for later membership and per-node definitions for configuration.
+
+The target distribution already declares `nacos.plugin.auth.type=nacos` and the canonical defaults for `auth:nacos`. Copy retained auth selection and implementation values into those canonical keys instead of leaving legacy aliases beside the target defaults. Otherwise the canonical selector keeps `nacos`, and a canonical `PluginConfigSpec` key suppresses its alias even when the canonical value is empty. The startup script specially migrates only a valid legacy token secret found in `application.properties`; migrate all other auth values explicitly.
 
 ## Config Change
 
@@ -68,6 +70,8 @@ nacos.plugin.ai-resource-import.enabled=true
 nacos.plugin.ai-resource-import.{pluginName}.enabled=true
 nacos.plugin.ai-resource-import.{pluginName}.{itemKey}=value
 ```
+
+The family gate defaults to enabled even when neither the standard key nor its legacy alias is configured; only an explicit `false` disables it. A deployment that must keep import disabled during upgrade should set `nacos.plugin.ai-resource-import.enabled=false` before rollout.
 
 Remove or rewrite these legacy concepts:
 

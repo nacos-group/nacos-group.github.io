@@ -38,7 +38,7 @@ AI 模块和当前功能模式允许时，family switch 决定是否加载导入
 nacos.plugin.ai-resource-import.enabled=true
 ```
 
-`nacos.ai.resource.import.enabled` 是历史 alias，标准 key 优先。官方发行包的 `application.properties` 将标准 key 设置为 `true`，因此 AI Resource Import 默认开启；只有部署需要关闭该能力时才显式设置为 `false`。
+`nacos.ai.resource.import.enabled` 是历史 alias。标准 key 只要存在就具有优先级，即使值为空也不回退 alias。两个 key 都未配置时 family gate 仍默认开启；只有显式配置 `false` 才关闭 AI Resource Import。发行包也显式将标准 key 设为 `true`。
 
 每个来源的初始状态使用：
 
@@ -50,7 +50,7 @@ nacos.plugin.ai-resource-import.{pluginName}.enabled=true
 
 ## 四个内置来源
 
-| pluginId | API importer type | 资源 | endpoint | 发行配置初始状态 |
+| pluginId | API importer type | 资源 | endpoint | 默认实现状态 |
 | --- | --- | --- | --- | --- |
 | `ai-resource-import:mcp-official` | `mcp-registry` | `mcp` | 固定官方 MCP Registry | enabled |
 | `ai-resource-import:mcp-registry-protocol` | `mcp-registry` | `mcp` | 运维必须配置 | disabled |

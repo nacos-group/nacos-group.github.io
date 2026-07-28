@@ -30,9 +30,9 @@ sidebar:
 
 ## 稳定身份和冲突
 
-插件名称必须非空、稳定，并在同一 `pluginType` 内唯一。统一注册采用 first-wins：后发现的重复 `pluginId` 会被忽略并记录包含两边实现类的 WARN。领域 provider 从多个 SPI 实现构造 map 时也必须先检查重复，不能用 `put` 静默覆盖。
+插件名称必须非空、稳定，并在同一 `pluginType` 内唯一。同类型 Provider 按 `PluginProvider.getOrder()` 升序处理（默认值为 `0`）；order 相同时保持 SPI 发现顺序。随后统一注册执行 first-wins，因此 order 较小的 Provider 先获得注册机会，后来出现的重复 `pluginId` 会被忽略并记录包含两边实现类的 WARN。Provider order 不替代 EXCLUSIVE 选择或领域路由。领域 provider 从多个 SPI 实现构造 map 时也必须先检查重复，不能用 `put` 静默覆盖。
 
-不要把 SPI 扫描顺序当成选择机制。需要选择实现时使用对应类型的静态 `type` key或领域路由字段。
+不要把相同 order 下的 SPI 扫描顺序当成选择机制。只有确实需要 Provider 优先级时才使用不同 order；选择实现仍应使用对应类型的静态 `type` key 或领域路由字段。
 
 ## 声明统一配置
 
@@ -74,6 +74,7 @@ public final class ExamplePlugin implements PluginConfigSpec {
 - `applyConfig` 接收 canonical item-key 的完整有效快照，应先校验并构建新不可变状态，再一次性发布，避免调用方观察到半更新。
 - `getCurrentConfig` 返回插件最后接受的快照，不要重新读取 Spring environment。
 - definition key 和 alias 也采用 first-wins；不要发布内部互相冲突的 definition。
+- 对 STATIC 输入，normalized 标准完整 key 只要存在就优先，即使值为空也不回退 alias。只有标准 key 不存在时才读取 alias；同时存在多个 alias 时按该 definition 的 `aliases` 声明顺序取第一个。
 
 只有 definition 非空时，默认 `isConfigurable()` 才返回 `true`。实现必须同时提供可靠的 `applyConfig` 和当前快照。
 

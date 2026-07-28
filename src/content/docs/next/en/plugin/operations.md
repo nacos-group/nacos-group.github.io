@@ -55,6 +55,8 @@ nacos.plugin.{pluginType}.{pluginName}.{itemKey}
 | `sensitive` | Detail responses mask the value and logs must not expose it. |
 | `effectMode` | `RUNTIME` can be updated online; `RESTART` requires static configuration and restart. |
 
+During STATIC resolution for `PluginConfigSpec` items, the normalized standard full key is authoritative whenever it exists, including when its value is an empty string. Aliases are considered only when the standard key is absent. If multiple aliases are present, the first alias in the definition's declaration order is used and the remaining aliases are ignored with WARN logs.
+
 Definition normalization is first-wins. Blank keys, reserved `enabled`, duplicate keys, and later definitions or aliases that conflict with an earlier key or alias are ignored with WARN logs.
 
 ## Sources and precedence

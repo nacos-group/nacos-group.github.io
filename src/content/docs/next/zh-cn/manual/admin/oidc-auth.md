@@ -141,7 +141,7 @@ nacos.core.auth.server.identity.value=security
 nacos.plugin.auth.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
 ```
 
-> **重要**：如果不设置 `nacos.plugin.auth.nacos.token.secret.key`，启动脚本会进入交互模式要求手动输入密钥，导致服务无法正常启动。旧 core key 仅作为 alias。可使用 `openssl rand -base64 32` 生成密钥。
+> **重要**：标准值为空时，启动脚本会先迁移 `application.properties` 中有效的 `nacos.core.auth.plugin.nacos.token.secret.key`；只有标准 key 和历史 key 都没有有效值时才提示输入。可使用 `openssl rand -base64 32` 生成密钥。
 
 ### 3.3 OIDC 插件核心配置（必填）
 

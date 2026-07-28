@@ -26,7 +26,7 @@ pluginId = pluginType:pluginName
 - `pluginName` 是该类别下稳定且唯一的实现名。
 - `pluginId` 用于管理 API、插件状态、持久化配置和诊断日志。插件升级时不要随意修改它。
 
-发现插件时采用确定性的 **first-wins** 规则。空实现、空名称和后到达的重复 `pluginId` 会被忽略并记录 WARN，已经注册的实现不会被覆盖。配置 definition 的 key 或 alias 冲突也采用 first-wins，并忽略后来冲突项。
+同一插件类型的 Provider 按 `PluginProvider.getOrder()` 升序处理；order 相同时保持 SPI 服务发现顺序，随后再执行确定性的 **first-wins** 注册。空实现、空名称和后到达的重复 `pluginId` 会被忽略并记录 WARN，已经注册的实现不会被覆盖。配置 definition 的 key 或 alias 冲突也采用 first-wins，并忽略后来冲突项。
 
 ## 当前插件类型
 

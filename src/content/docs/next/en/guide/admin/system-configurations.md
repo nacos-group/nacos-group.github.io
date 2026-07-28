@@ -45,12 +45,12 @@ In addition to the above listed to in `application.properties`configuration prop
 
 |Parameter names	|Meaning	 |     Optional value	 |     Default value| Support version |
 |------|------|-----------|-----------------|-------|
-|nacos.plugin.datasource-dialect.type|Database dialect selector|derby/mysql/postgresql/oracle/custom|By running mode|next|
-|nacos.plugin.datasource.db.num|Number of external databases|positive integer|0|next|
-|nacos.plugin.datasource.db.url.{index}|Indexed database URL|string|empty|next|
-|nacos.plugin.datasource.db.user[.{index}]|Shared or indexed username|string|empty|next|
-|nacos.plugin.datasource.db.password[.{index}]|Shared or indexed password|string|empty|next|
-|nacos.plugin.datasource.db.pool.config.xxx|HikariCP setting; stable items use kebab-case|string|See plugin page|next|
+|nacos.plugin.datasource-dialect.type|Database dialect selector|derby/mysql/postgresql/oracle/custom|By running mode|3.3.0 ~ latest|
+|nacos.plugin.datasource.db.num|Number of external databases|positive integer|0|3.3.0 ~ latest|
+|nacos.plugin.datasource.db.url.{index}|Indexed database URL|string|empty|3.3.0 ~ latest|
+|nacos.plugin.datasource.db.user[.{index}]|Shared or indexed username|string|empty|3.3.0 ~ latest|
+|nacos.plugin.datasource.db.password[.{index}]|Shared or indexed password|string|empty|3.3.0 ~ latest|
+|nacos.plugin.datasource.db.pool.config.xxx|HikariCP setting; stable items use kebab-case|string|See plugin page|3.3.0 ~ latest|
 
 `spring.sql.init.platform` and `db.*` remain historical aliases, and canonical keys win. `spring.datasource.platform` is removed. See [Datasource Plugin](../../plugin/datasource-plugin.md) for stable keys, defaults, and migration rules.
 

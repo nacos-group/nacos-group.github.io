@@ -33,15 +33,15 @@ Nacos 的鉴权能力由鉴权插件提供。Nacos 3.2 内置了默认 Nacos 鉴
 | 配置项 | 默认配置 | 说明 |
 | --- | --- | --- |
 | `nacos.plugin.auth.type` | `nacos` | 启动时选择鉴权插件；`nacos.core.auth.system.type` 是历史 alias。 |
-| `nacos.core.auth.enabled` | `true` | 是否开启 Open API、SDK 和 gRPC 请求鉴权。 |
+| `nacos.core.auth.enabled` | `false` | 是否开启 Open API、SDK 和 gRPC 请求鉴权。 |
 | `nacos.core.auth.admin.enabled` | `true` | 是否开启 Admin API 鉴权。 |
 | `nacos.core.auth.console.enabled` | `true` | 是否开启 Console API 和默认控制台登录鉴权。 |
 | `nacos.core.auth.server.identity.key` | 空 | Nacos Server 节点间通信的身份 key。开启鉴权的集群部署必须配置。 |
 | `nacos.core.auth.server.identity.value` | 空 | Nacos Server 节点间通信的身份 value。开启鉴权的集群部署必须配置。 |
-| `nacos.core.auth.caching.enabled` | `true` | 是否缓存用户、角色、权限信息。权限变更可能存在约 15 秒延迟。 |
-| `nacos.plugin.auth.nacos.token.secret.key` | 空 | 默认 Nacos token 签名密钥，敏感且 RESTART；旧 core key 是 alias。 |
-| `nacos.plugin.auth.nacos.token.expire.seconds` | `18000` | token 有效期，RUNTIME；旧 core key 是 alias。 |
-| `nacos.plugin.auth.nacos.token.cache.enable` | `false` | token 缓存开关，RUNTIME；旧 core key 是 alias。 |
+| `nacos.plugin.auth.nacos.caching.enabled` | `true` | 是否缓存用户、角色、权限信息；`nacos.core.auth.caching.enabled` 是历史 alias。权限变更可能存在约 15 秒延迟。 |
+| `nacos.plugin.auth.nacos.token.secret.key` | 空 | 默认 Nacos token 签名密钥，敏感且 RESTART；`nacos.core.auth.plugin.nacos.token.secret.key` 是历史 alias。 |
+| `nacos.plugin.auth.nacos.token.expire.seconds` | `18000` | token 有效期，RUNTIME；`nacos.core.auth.plugin.nacos.token.expire.seconds` 是历史 alias。 |
+| `nacos.plugin.auth.nacos.token.cache.enable` | `false` | token 缓存开关，RUNTIME；`nacos.core.auth.plugin.nacos.token.cache.enable` 是历史 alias。 |
 
 :::note
 如果你从旧版本升级，实际配置可能保留旧值。请以当前集群的 `application.properties`、环境变量和启动参数为准。

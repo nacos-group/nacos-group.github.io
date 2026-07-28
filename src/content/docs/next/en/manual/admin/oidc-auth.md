@@ -141,7 +141,7 @@ nacos.core.auth.server.identity.value=security
 nacos.plugin.auth.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
 ```
 
-> **Important**: If `nacos.plugin.auth.nacos.token.secret.key` is not set, the startup script enters interactive mode. The old core key is only an alias. Generate a key with `openssl rand -base64 32`.
+> **Important**: If the canonical value is empty, the startup script first migrates a valid `nacos.core.auth.plugin.nacos.token.secret.key` value found in `application.properties`; it prompts only when neither a valid canonical nor legacy value is available. Generate a key with `openssl rand -base64 32`.
 
 ### 3.3 OIDC Plugin Configuration (Required)
 

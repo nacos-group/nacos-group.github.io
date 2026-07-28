@@ -38,7 +38,7 @@ When AI function mode and the AI module permit it, the family switch controls im
 nacos.plugin.ai-resource-import.enabled=true
 ```
 
-`nacos.ai.resource.import.enabled` is a historical alias, and the standard key wins. The official distribution `application.properties` sets the standard key to `true`, so AI Resource Import is enabled by default. Set it to `false` explicitly only when the deployment must disable this capability.
+`nacos.ai.resource.import.enabled` is a historical alias. The standard key is authoritative whenever it is present, including when its value is blank. The family gate defaults to enabled even when neither key is configured; only an explicit `false` disables AI Resource Import. The distribution also sets the standard key to `true`.
 
 Initial source state uses:
 
@@ -50,7 +50,7 @@ Persisted unified state takes precedence. Runtime routing also checks Builder st
 
 ## Four built-in sources
 
-| pluginId | API importer type | Resource | Endpoint | Distribution initial state |
+| pluginId | API importer type | Resource | Endpoint | Default implementation state |
 | --- | --- | --- | --- | --- |
 | `ai-resource-import:mcp-official` | `mcp-registry` | `mcp` | Fixed official MCP Registry | enabled |
 | `ai-resource-import:mcp-registry-protocol` | `mcp-registry` | `mcp` | Operator configuration required | disabled |

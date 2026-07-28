@@ -55,6 +55,8 @@ nacos.plugin.{pluginType}.{pluginName}.{itemKey}
 | `sensitive` | 详情响应脱敏，日志不得输出值。 |
 | `effectMode` | `RUNTIME` 可运行时更新；`RESTART` 只能通过静态配置并重启生效。 |
 
+解析 `PluginConfigSpec` 配置项的 STATIC 来源时，normalized 标准完整 key 只要存在就具有优先级，即使值为空字符串也不回退 alias。只有标准 key 不存在时才检查 alias；同时存在多个 alias 时，按 definition 中的声明顺序取第一个，其余 alias 被忽略并记录 WARN。
+
 definition 归一化采用 first-wins。空 key、保留 key `enabled`、重复 key，以及与先前 key/alias 冲突的后来 definition 或 alias 都会被忽略并记录 WARN。
 
 ## 配置来源和优先级

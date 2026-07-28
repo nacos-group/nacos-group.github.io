@@ -26,7 +26,7 @@ For example, the default auth plugin is `auth:nacos`, LDAP auth is `auth:ldap`, 
 - `pluginName` is a stable, unique implementation name within that category.
 - `pluginId` is used by management APIs, plugin state, persisted configuration, and diagnostics. Do not change it casually during an upgrade.
 
-Discovery uses a deterministic **first-wins** rule. Null implementations, blank names, and later duplicate `pluginId` values are ignored with WARN logs; an existing registration is never replaced. Configuration definition key and alias conflicts also use first-wins and ignore later conflicting entries.
+Providers of the same type are processed in ascending `PluginProvider.getOrder()` order; equal-order providers retain their SPI service-discovery order. The deterministic **first-wins** rule is applied after that ordering. Null implementations, blank names, and later duplicate `pluginId` values are ignored with WARN logs; an existing registration is never replaced. Configuration definition key and alias conflicts also use first-wins and ignore later conflicting entries.
 
 ## Current plugin types
 

@@ -20,7 +20,7 @@ sidebar:
 6. 先滚动部署新插件和静态配置，再通过插件详情检查 effective source。
 7. `RESTART` 字段必须随节点重启；不要用 PUT API 尝试修改。
 
-标准 key 与 alias 同时存在时，标准 key 优先。API 接受的 alias 会被归一化，`plugin-configs.json` 和 local-only map 只保存 canonical item key。
+对 STATIC `PluginConfigSpec` 配置项，标准完整 key 按“是否存在”取得优先级，而不是按值是否非空。空的标准值仍会屏蔽历史 alias，并可能触发 required 校验；只有彻底删除标准属性后才会回退 alias。同时存在多个 alias 时，按 definition 中的声明顺序取第一个。选择 key 仍遵循各插件族文档中的规则。API 接受的 alias 会被归一化，`plugin-configs.json` 和 local-only map 只保存 canonical item key。
 
 ## 实现选择 key
 
@@ -39,6 +39,8 @@ sidebar:
 - OIDC 从 `nacos.core.auth.plugin.oidc.*` 迁到 `nacos.plugin.auth.oidc.*`。当前全部字段为 `RESTART`。
 - `nacos.plugin.visibility.enabled` 仍是能力总开关；`nacos.plugin.visibility.type` 只用于历史初始选择。实现状态使用 `visibility:{name}` 的统一状态。
 - `nacos.plugin.ai-pipeline.enabled` 仍是 Pipeline 总开关；历史 `nacos.plugin.ai-pipeline.type` 只用于启动时初始 chain 状态。后续成员变更使用统一插件状态，节点参数使用各自 definition。
+
+目标发行包已经声明 `nacos.plugin.auth.type=nacos` 和 `auth:nacos` 的标准默认项。升级时应把保留的鉴权选择和实现配置复制到这些标准 key，不能让历史 alias 与目标默认值并存；否则标准 selector 会继续选择 `nacos`，标准 `PluginConfigSpec` key 即使为空也会屏蔽 alias。启动脚本只会特殊迁移 `application.properties` 中有效的旧 token secret，其他鉴权值都需要显式迁移。
 
 ## Config Change
 
@@ -68,6 +70,8 @@ nacos.plugin.ai-resource-import.enabled=true
 nacos.plugin.ai-resource-import.{pluginName}.enabled=true
 nacos.plugin.ai-resource-import.{pluginName}.{itemKey}=value
 ```
+
+标准 key 和历史 alias 都未配置时，family gate 仍默认开启；只有显式 `false` 才关闭。升级期间必须保持导入能力关闭的部署，应在发布前明确设置 `nacos.plugin.ai-resource-import.enabled=false`。
 
 需要删除或重写的旧模型：
 

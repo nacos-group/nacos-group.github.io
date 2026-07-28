@@ -20,14 +20,12 @@ sidebar:
 |参数名|默认值|启止版本|说明|
 |-----|------|------|----|
 |nacos.core.auth.enabled|false|1.2.0 ~ latest|是否开启鉴权功能|
-|nacos.plugin.auth.type|nacos|next|鉴权实现选择；旧 `nacos.core.auth.system.type` 是 alias|
-|nacos.plugin.auth.nacos.token.secret.key|无默认值|next|默认鉴权插件的 accessToken 签名密钥，敏感且 RESTART|
-|nacos.plugin.auth.nacos.token.expire.seconds|18000|next|用户登录 accessToken 过期时间，RUNTIME|
+|nacos.plugin.auth.type|nacos|3.3.0 ~ latest|鉴权实现选择；旧 `nacos.core.auth.system.type` 是 alias|
+|nacos.plugin.auth.nacos.token.secret.key|无默认值|3.3.0 ~ latest|默认鉴权插件的 accessToken 签名密钥，敏感且 RESTART|
+|nacos.plugin.auth.nacos.token.expire.seconds|18000|3.3.0 ~ latest|用户登录 accessToken 过期时间，RUNTIME|
 |nacos.core.auth.enable.userAgentAuthWhite|false|1.4.1 ~ latest|是否使用useragent白名单，主要用于适配老版本升级，**置为true时有安全风险**|
 |nacos.core.auth.server.identity.key|serverIdentity(2.2.1后无默认值)|1.4.1 ~ latest|用于替换useragent白名单的身份识别key，**使用默认值有安全风险**|
 |nacos.core.auth.server.identity.value|security(2.2.1后无默认值)|1.4.1 ~ latest|用于替换useragent白名单的身份识别value，**使用默认值有安全风险**|
-|~~nacos.core.auth.default.token.secret.key~~|SecretKey012345678901234567890123456789012345678901234567890123456789|1.2.0 ~ 2.0.4|同`nacos.core.auth.plugin.nacos.token.secret.key`|
-|~~nacos.core.auth.default.token.expire.seconds~~|18000|1.2.0 ~ 2.0.4|同`nacos.core.auth.plugin.nacos.token.expire.seconds`|
 
 ## 默认控制台登录页
 
@@ -58,28 +56,22 @@ nacos.core.auth.enabled=true
 
 > 注意：
 > 1. 文档中提供的密钥为公开密钥，在实际部署时请更换为其他密钥内容，防止密钥泄漏导致安全风险。
-> 2. 在2.2.0.1版本后，社区发布版本将移除以文档如下值作为默认值，需要自行填充，否则无法启动节点。
+> 2. 签名密钥没有默认值。标准值为空时，发行包启动脚本会先迁移 `application.properties` 中有效的 `nacos.core.auth.plugin.nacos.token.secret.key`；两个 key 都没有有效值时才提示输入。
 > 3. 密钥需要保持节点间一致，长时间不一致可能导致403 invalid token错误。
 
 ```properties
-### The default token(Base64 String):
-nacos.core.auth.default.token.secret.key=SecretKey012345678901234567890123456789012345678901234567890123456789
-
-### 2.1.0 版本后
 nacos.plugin.auth.nacos.token.secret.key=SecretKey012345678901234567890123456789012345678901234567890123456789
 ```
 
-自定义密钥时，推荐将配置项设置为**Base64编码**的字符串，且**原始密钥长度不得低于32字符**。例如下面的的例子：
+自定义密钥时，推荐将配置项设置为 **Base64 编码**的字符串，且**解码后的密钥不得少于 32 字节**。例如：
 
 ```properties
-### The default token(Base64 String):
-nacos.core.auth.default.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
-
-### 2.1.0 版本后
 nacos.plugin.auth.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
 ```
 
-> 注意：鉴权开关是修改之后立马生效的，不需要重启服务端。动态修改`token.secret.key`时，请确保token是有效的，如果修改成无效值，会导致后续无法登录，请求访问异常。
+历史 `nacos.core.auth.plugin.nacos.token.secret.key` 仍作为 alias；新配置请使用标准 key。
+
+> 注意：鉴权开关修改后立即生效。`token.secret.key` 是 `RESTART` 配置项，应修改静态配置、确保所有节点一致，再重启服务端。
 
 ### Docker环境
 

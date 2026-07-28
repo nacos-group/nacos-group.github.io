@@ -44,12 +44,12 @@ JAVA_OPT="${JAVA_OPT} -Dnacos.home=${BASE_DIR}"
 
 |参数名	|含义	 |     可选值	 |     默认值| 支持版本 |
 |------|------|-----------|-----------------|-------|
-|nacos.plugin.datasource-dialect.type|数据库方言选择|derby/mysql/postgresql/oracle/自定义|按运行模式|next|
-|nacos.plugin.datasource.db.num|外置数据库数目|正整数|0|next|
-|nacos.plugin.datasource.db.url.{index}|逐下标数据库 URL|字符串|空|next|
-|nacos.plugin.datasource.db.user[.{index}]|公共或逐下标用户名|字符串|空|next|
-|nacos.plugin.datasource.db.password[.{index}]|公共或逐下标密码|字符串|空|next|
-|nacos.plugin.datasource.db.pool.config.xxx|HikariCP 参数，稳定项使用 kebab-case|字符串|见插件文档|next|
+|nacos.plugin.datasource-dialect.type|数据库方言选择|derby/mysql/postgresql/oracle/自定义|按运行模式|3.3.0 ~ latest|
+|nacos.plugin.datasource.db.num|外置数据库数目|正整数|0|3.3.0 ~ latest|
+|nacos.plugin.datasource.db.url.{index}|逐下标数据库 URL|字符串|空|3.3.0 ~ latest|
+|nacos.plugin.datasource.db.user[.{index}]|公共或逐下标用户名|字符串|空|3.3.0 ~ latest|
+|nacos.plugin.datasource.db.password[.{index}]|公共或逐下标密码|字符串|空|3.3.0 ~ latest|
+|nacos.plugin.datasource.db.pool.config.xxx|HikariCP 参数，稳定项使用 kebab-case|字符串|见插件文档|3.3.0 ~ latest|
 
 `spring.sql.init.platform` 和 `db.*` 仍是历史 alias，标准键优先；`spring.datasource.platform` 已移除。完整稳定键、默认值和迁移规则见[多数据源插件](../../plugin/datasource-plugin.md)。
 

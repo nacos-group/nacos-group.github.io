@@ -228,14 +228,14 @@ For auth setup, read [Authorization](./auth.mdx) and [OIDC/OAuth2 Authentication
 | `nacos.core.auth.enabled` | Whether SDK/gRPC request authentication is enabled. | `false` |
 | `nacos.core.auth.admin.enabled` | Whether `/v3/admin/*` Admin API authentication is enabled. | `true` |
 | `nacos.core.auth.console.enabled` | Whether `/v3/console/*` Console API and login authentication are enabled. | `true` |
-| `nacos.core.auth.caching.enabled` | Whether auth information is cached. Permission updates may have a short delay when enabled. | `true` |
+| `nacos.plugin.auth.nacos.caching.enabled` | Whether auth information is cached; `nacos.core.auth.caching.enabled` is a historical alias. Permission updates may have a short delay when enabled. | `true` |
 | `nacos.core.auth.server.identity.key` | Server-to-server identity key. Required when auth is enabled. | empty |
 | `nacos.core.auth.server.identity.value` | Server-to-server identity value. Required when auth is enabled. | empty |
 | `nacos.security.ignore.urls` | Auth ignored URLs. This is a legacy compatibility property and may be deprecated in the future. | distribution default |
-| `nacos.plugin.auth.nacos.token.cache.enable` | Default auth token cache; the old core key is an alias. | `false` |
-| `nacos.plugin.auth.nacos.token.expire.seconds` | Default auth token expiration in seconds; the old core key is an alias. | `18000` |
-| `nacos.plugin.auth.nacos.token.secret.key` | JWT signing secret; sensitive and RESTART. The old core key is an alias. | empty |
-| `nacos.plugin.auth.nacos.anonymous.ai.enabled` | Whether anonymous AI resource reads are allowed; the old core key is an alias. | `false` |
+| `nacos.plugin.auth.nacos.token.cache.enable` | Default auth token cache; `nacos.core.auth.plugin.nacos.token.cache.enable` is a historical alias. | `false` |
+| `nacos.plugin.auth.nacos.token.expire.seconds` | Default auth token expiration in seconds; `nacos.core.auth.plugin.nacos.token.expire.seconds` is a historical alias. | `18000` |
+| `nacos.plugin.auth.nacos.token.secret.key` | JWT signing secret; sensitive and RESTART. `nacos.core.auth.plugin.nacos.token.secret.key` is a historical alias. | empty |
+| `nacos.plugin.auth.nacos.anonymous.ai.enabled` | Whether anonymous AI resource reads are allowed; `nacos.core.auth.nacos.anonymous.ai.enabled` is a historical alias. | `false` |
 | `nacos.plugin.visibility.enabled` | Whether the visibility plugin is enabled. | `true` |
 | `nacos.plugin.visibility.type` | Visibility plugin type. The default `nacos` implementation reuses default auth plugin user information. | `nacos` |
 
@@ -245,8 +245,8 @@ LDAP and OIDC/OAuth2 are optional plugins. The table lists canonical prefixes; s
 
 | Property | Description | Default |
 | --- | --- | --- |
-| `nacos.plugin.auth.ldap.{itemKey}` | LDAP definitions: `url`, `base-dn`, `timeout`, `user-dn`, `password`, `filter-prefix`, `case-sensitive`, and `ignore-partial-result-exception`. | See the auth plugin page |
-| `nacos.plugin.auth.oidc.{itemKey}` | OIDC definitions for issuer/client, JWT/JWKS, claims, external authorization, and strict validation. Only JWT/JWKS is currently implemented; introspection is not supported. | See the auth plugin page |
+| `nacos.plugin.auth.ldap.{itemKey}` | LDAP definitions: `url`, `base-dn`, `timeout`, `user-dn`, `password`, `filter-prefix`, `case-sensitive`, and `ignore-partial-result-exception`. | See the [Auth Plugin](../../plugin/auth-plugin.md) page |
+| `nacos.plugin.auth.oidc.{itemKey}` | OIDC definitions for issuer/client, JWT/JWKS, claims, external authorization, and strict validation. Only JWT/JWKS is currently implemented; introspection is not supported. | See the [Auth Plugin](../../plugin/auth-plugin.md) page |
 
 ## Plugin Parameters
 
@@ -291,12 +291,12 @@ For usage, see [AI Registry Overview](../user/ai/ai-registry-overview.md). The p
 | `nacos.ai.mcp.registry.port` | Legacy property name. Deprecated. Use `nacos.ai.registry.port` instead. | `9080` |
 | `nacos.plugin.ai-pipeline.enabled` | Dynamic AI Pipeline family gate; when false, type loading is deferred. | `false` |
 | `nacos.plugin.ai-pipeline.type` | Legacy startup chain used only to initialize node state when no persisted state exists. | empty |
-| `nacos.plugin.ai-pipeline.skill-scanner.{itemKey}` | `skill-scanner` definitions; only `order` is RUNTIME. | See the Pipeline plugin page |
-| `nacos.plugin.ai-pipeline.skill-spector.{itemKey}` | `skill-spector` definitions; only `order` is RUNTIME. | See the Pipeline plugin page |
+| `nacos.plugin.ai-pipeline.skill-scanner.{itemKey}` | `skill-scanner` definitions; only `order` is RUNTIME. | See the [AI Pipeline Plugin](../../plugin/ai-pipeline-plugin.md) page |
+| `nacos.plugin.ai-pipeline.skill-spector.{itemKey}` | `skill-spector` definitions; only `order` is RUNTIME. | See the [AI Pipeline Plugin](../../plugin/ai-pipeline-plugin.md) page |
 | `nacos.ai.skill.auto-publish-after-review.enabled` | Whether Skill versions are automatically published after approval. | `false` |
-| `nacos.plugin.ai-resource-import.enabled` | AI Resource Import family gate. The distribution `application.properties` explicitly enables it. | `true` in the distribution |
+| `nacos.plugin.ai-resource-import.enabled` | AI Resource Import family gate. It is enabled when neither the standard key nor its alias is configured; only an explicit `false` disables it. The distribution also sets the standard key to `true`. | `true` |
 | `nacos.plugin.ai-resource-import.{pluginName}.enabled` | Startup state for each fixed source. | `mcp-official`/`skills-sh` enabled; others disabled |
-| `nacos.plugin.ai-resource-import.{pluginName}.{itemKey}` | Source definitions. Endpoint/network items are RESTART; display and limit items are RUNTIME. | See the import plugin page |
+| `nacos.plugin.ai-resource-import.{pluginName}.{itemKey}` | Source definitions. Endpoint/network items are RESTART; display and limit items are RUNTIME. | See the [AI Resource Import Plugin](../../plugin/ai-resource-import-plugin.md) page |
 | `nacos.ai.resource.import.legacy-mcp-api-enabled` | Whether deprecated MCP import APIs are temporarily reopened. | `false` |
 | `nacos.ai.resource.import.allow-user-url` | Whether deprecated MCP import APIs can fetch user-provided URLs after being reopened. | `false` |
 

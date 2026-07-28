@@ -30,9 +30,9 @@ List the implementation class in `META-INF/services/{fully-qualified SPI name}`.
 
 ## Stable identity and conflicts
 
-The plugin name must be non-blank, stable, and unique within its `pluginType`. Unified registration is first-wins: a later duplicate `pluginId` is ignored with a WARN that names both classes. A domain provider that builds a map from multiple SPI implementations must also detect duplicates and must not silently overwrite with `put`.
+The plugin name must be non-blank, stable, and unique within its `pluginType`. Providers of the same type are processed in ascending `PluginProvider.getOrder()` order (default `0`); equal-order providers retain SPI discovery order. Unified registration then applies first-wins, so a lower-order provider gets the first registration opportunity and a later duplicate `pluginId` is ignored with a WARN that names both classes. Provider order does not replace EXCLUSIVE selection or domain routing. A domain provider that builds a map from multiple SPI implementations must also detect duplicates and must not silently overwrite with `put`.
 
-Never use SPI scan order as selection. Use the type's static `type` key or the documented domain route.
+Never use equal-order SPI scan order as selection. Use distinct provider orders only when provider precedence is intentional, and use the type's static `type` key or the documented domain route to select an implementation.
 
 ## Declare unified configuration
 
@@ -74,6 +74,7 @@ Requirements:
 - `applyConfig` receives a complete effective canonical item-key snapshot. Validate and build immutable state before atomically publishing it.
 - `getCurrentConfig` returns the last accepted snapshot instead of re-reading Spring environment.
 - Definition key and alias registration is first-wins. Do not publish internally conflicting definitions.
+- For STATIC input, a normalized standard full key wins whenever it exists, including with an empty value. Aliases are read only when it is absent; if several aliases are present, their declaration order determines which one wins.
 
 The default `isConfigurable()` returns true only when definitions are non-empty. Such an implementation must provide reliable apply and snapshot callbacks.
 
