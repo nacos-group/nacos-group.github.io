@@ -98,10 +98,10 @@ Nacos 3.0 起，控制台端口与服务端主端口解耦。默认端口如下�
 
 ```properties
 nacos.core.auth.enabled=true
-nacos.core.auth.system.type=nacos
+nacos.plugin.auth.type=nacos
 nacos.core.auth.server.identity.key=${your_identity_key}
 nacos.core.auth.server.identity.value=${your_identity_value}
-nacos.core.auth.plugin.nacos.token.secret.key=${your_token_secret}
+nacos.plugin.auth.nacos.token.secret.key=${your_token_secret}
 ```
 
 建议：
@@ -128,7 +128,7 @@ nacos.core.auth.plugin.nacos.token.secret.key=${your_token_secret}
 当集群承载较多客户端连接或核心接口存在突增流量时，可以启用流量防护插件。建议先使用 `monitor` 模式观察，再切换到 `intercept` 模式。
 
 ```properties
-nacos.plugin.control.manager.type=nacos
+nacos.plugin.control.type=nacos
 ```
 
 重点关注：

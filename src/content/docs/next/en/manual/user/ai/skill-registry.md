@@ -98,21 +98,25 @@ Submit a draft version for review. After submission, the version state changes t
 
 The Pipeline is a configurable review process that performs automated checks before Skill publication. **The Pipeline is disabled by default**; when disabled, submitting for review will directly publish to online state.
 
-The Pipeline uses a plugin-based architecture, loading check nodes via Java SPI. A built-in **skill-scanner** plugin is provided (based on [Cisco AI Defense skill-scanner](https://github.com/cisco-ai-defense/skill-scanner)). Users can also implement the `PublishPipelineServiceBuilder` interface to develop custom plugins and register them via SPI. Multiple plugins are executed serially in order of `getPreferOrder()`, with each plugin proceeding only after the previous one passes.
+The Pipeline loads nodes that directly implement `PublishPipelineService` through Java SPI. It bundles `ai-pipeline:skill-scanner` (based on [Cisco AI Defense skill-scanner](https://github.com/cisco-ai-defense/skill-scanner)) and `ai-pipeline:skill-spector`; both support Skill, AgentSpec, and Prompt. Enabled nodes run serially by `getPreferOrder()` in ascending order. The old `PublishPipelineServiceBuilder` SPI has been removed.
 
 To enable the Pipeline, configure in `application.properties`:
 
 ```properties
-# Enable Pipeline and specify check nodes
+# Enable Pipeline; type only initializes chain state during first migration
 nacos.plugin.ai-pipeline.enabled=true
-nacos.plugin.ai-pipeline.type=skill-scanner
+nacos.plugin.ai-pipeline.type=skill-scanner,skill-spector
 
-# Check node configuration (skill-scanner example)
+# Implementation startup state and configuration
 nacos.plugin.ai-pipeline.skill-scanner.enabled=true
 nacos.plugin.ai-pipeline.skill-scanner.command=/path/to/skill-scanner
+nacos.plugin.ai-pipeline.skill-spector.enabled=true
+nacos.plugin.ai-pipeline.skill-spector.command=/path/to/skill-spector
 ```
 
-The skill-scanner plugin detects the following risks:
+Persisted or runtime unified state is authoritative for current chain membership. Only each node's `order` definition can be changed at runtime; command, LLM, and scan settings are `RESTART`. See [AI Publish Pipeline Plugin](../../../plugin/ai-pipeline-plugin.md) for complete definitions.
+
+The scanner nodes can detect risks such as:
 
 - Prompt injection attacks
 - Data leakage risks

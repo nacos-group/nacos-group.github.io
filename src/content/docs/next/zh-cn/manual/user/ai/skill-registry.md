@@ -98,21 +98,25 @@ Skill 从创建到使用，经历以下完整流程：
 
 Pipeline 是可配置的审核流程，在 Skill 发布前进行自动化检查。**Pipeline 默认关闭**，关闭时提交审核会直接发布为 online 状态。
 
-Pipeline 采用插件化架构，通过 Java SPI 机制加载检查节点。内置提供 **skill-scanner** 插件（基于 [Cisco AI Defense skill-scanner](https://github.com/cisco-ai-defense/skill-scanner)），用户也可以实现 `PublishPipelineServiceBuilder` 接口开发自定义插件，并通过 SPI 注册到 Pipeline 中。多个插件按 `getPreferOrder()` 排序串行执行，前一个通过后才执行下一个。
+Pipeline 通过 Java SPI 加载直接实现 `PublishPipelineService` 的检查节点。内置 `ai-pipeline:skill-scanner`（基于 [Cisco AI Defense skill-scanner](https://github.com/cisco-ai-defense/skill-scanner)）和 `ai-pipeline:skill-spector`，两者都支持 Skill、AgentSpec 和 Prompt。多个启用节点按 `getPreferOrder()` 升序串行执行，前一个通过后才执行下一个。旧 `PublishPipelineServiceBuilder` SPI 已移除。
 
 开启 Pipeline 需要在 `application.properties` 中配置：
 
 ```properties
-# 启用 Pipeline 并指定检查节点
+# 启用 Pipeline；type 仅用于首次迁移时初始化链状态
 nacos.plugin.ai-pipeline.enabled=true
-nacos.plugin.ai-pipeline.type=skill-scanner
+nacos.plugin.ai-pipeline.type=skill-scanner,skill-spector
 
-# 检查节点配置（以 skill-scanner 为例）
+# 实现启动状态和配置
 nacos.plugin.ai-pipeline.skill-scanner.enabled=true
 nacos.plugin.ai-pipeline.skill-scanner.command=/path/to/skill-scanner
+nacos.plugin.ai-pipeline.skill-spector.enabled=true
+nacos.plugin.ai-pipeline.skill-spector.command=/path/to/skill-spector
 ```
 
-skill-scanner 插件检测以下风险：
+持久化或运行时统一状态是当前链成员的权威来源。只有两个节点的 `order` definition 可运行时修改；命令、LLM 和扫描参数均为 `RESTART`。完整 definitions 见 [AI 发布 Pipeline 插件](../../../plugin/ai-pipeline-plugin.md)。
+
+扫描节点可检测以下风险：
 
 - Prompt 注入攻击
 - 数据泄露风险

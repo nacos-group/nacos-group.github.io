@@ -21,9 +21,9 @@ sidebar:
 |Parameter|Default|Versions|Description|
 |-----|------|------|----|
 |nacos.core.auth.enabled|false|1.2.0 ~ latest|Whether to enable the authentication|
-|nacos.core.auth.system.type|nacos|1.2.0 ~ latest|Type of authentication|
-|nacos.core.auth.plugin.nacos.token.secret.key|SecretKey012345678901234567890123456789012345678901234567890123456789(No default since 2.2.0.1)|2.1.0 ~ latest|Used to generate the key used by the user to login to the temporary accessToken in the default authentication plugin. **Using the default value is a security risk**.|
-|nacos.core.auth.plugin.nacos.token.expire.seconds|18000|2.1.0 ~ latest|Expiration time of user login temporary accessToken|
+|nacos.plugin.auth.type|nacos|next|Auth implementation selector; old `nacos.core.auth.system.type` is an alias|
+|nacos.plugin.auth.nacos.token.secret.key|No default|next|Default auth access-token signing key; sensitive and RESTART|
+|nacos.plugin.auth.nacos.token.expire.seconds|18000|next|Login access-token lifetime; RUNTIME|
 |nacos.core.auth.enable.userAgentAuthWhite|false|1.4.1 ~ latest|Whether to use the useragent whitelist, mainly used to adapt to the upgrade of the old version, **Setting `true` is a security risk**|
 |nacos.core.auth.server.identity.key|serverIdentity(No default since 2.2.1)|1.4.1 ~ latest|Used to replace the identification key of the useragent whitelist, **Using the default value is a security risk**|
 |nacos.core.auth.server.identity.value|security(No default since 2.2.1)|1.4.1 ~ latest|It is used to replace the identification value of the useragent whitelist, **Using the default value is a security risk**|
@@ -45,7 +45,7 @@ nacos.core.auth.enabled=false
 After enabling authentication, the configuration in application.properties is as follow:
 ```java
 ### If turn on auth system:
-nacos.core.auth.system.type=nacos
+nacos.plugin.auth.type=nacos
 nacos.core.auth.enabled=true
 ```
 
@@ -63,7 +63,7 @@ After enabling authentication, you can customize the key used to generate JWT to
 nacos.core.auth.default.token.secret.key=SecretKey012345678901234567890123456789012345678901234567890123456789
 
 ### Since 2.1.0
-nacos.core.auth.plugin.nacos.token.secret.key=SecretKey012345678901234567890123456789012345678901234567890123456789
+nacos.plugin.auth.nacos.token.secret.key=SecretKey012345678901234567890123456789012345678901234567890123456789
 ```
 
 When customizing the key, it is recommended to set the configuration item to a **Base64 encoded** string,
@@ -74,7 +74,7 @@ and **the length of the original key must not be less than 32 characters**. For 
 nacos.core.auth.default.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
 
 ### Since 2.1.0
-nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
+nacos.plugin.auth.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
 ```
 
 > Attention: the authentication switch takes effect immediately after the modification, and there is no need to restart the server. When dynamic modifing `token.secret.key`, Please make sure the new value is valid, otherwise the login and request will fail.
@@ -121,7 +121,7 @@ nacos.core.auth.enabled=false
 ```
 into
 ```
-nacos.core.auth.system.type=nacos
+nacos.plugin.auth.type=nacos
 nacos.core.auth.enabled=true
 ```
 
@@ -190,13 +190,13 @@ Regardless of the client SDK or OpenAPI, after calling the `login` interface to 
 
 #### Way to open
 ```
-nacos.core.auth.plugin.nacos.token.cache.enable=true
+nacos.plugin.auth.nacos.token.cache.enable=true
 ```
 
 #### Attention
 Before enabling the feature of token cache, the server will generate a new token for each request carrying a username and password to access the `login` interface. The `tokenTtl` field in the return value of `login` interface is equal to the value set in the server configuration file. The configuration is as follows:
 ```
-nacos.core.auth.plugin.nacos.token.expire.seconds=18000
+nacos.plugin.auth.nacos.token.expire.seconds=18000
 ```
 After enabling the feature of token cache, the server will first check whether the token corresponding to the username exists in cache for each request to access the `login` interface with username and password. If it does not exist, generate a new token, insert it into the cache and return it to requester; if it exists, return the token to requester, and the value of the `tokenTtl` field is the value set in the configuration file minus the duration of the token stored in the cache. 
 If the token stays in the cache for more than 90% of the value set in the configuration file, when the `login` interface receives a request, although the token corresponding to the username exists in the cache, the server will regenerate the token and return it to the requester, and update cache. Therefore, in the worst case, the `tokenTtl` received by the requester is only 10% of the value set in the configuration file.

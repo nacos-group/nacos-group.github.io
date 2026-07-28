@@ -3415,7 +3415,7 @@ try {
 
 #### 描述
 
-查询 Nacos 已加载的插件列表，可按插件类型过滤。
+查询 Nacos 已加载的统一插件列表，可按插件类型过滤。返回身份使用 `pluginType:pluginName`，并包含状态、critical、executionMode 和 configurable 等元数据。
 
 ```java
 List<Map<String, Object>> listPlugins(String pluginType) throws NacosException;
@@ -3452,7 +3452,7 @@ try {
 
 #### 描述
 
-根据插件类型和插件名称查询单个插件的详情。
+根据插件类型和插件名称查询单个插件的详情，包括 definitions、脱敏后的有效配置，以及各项配置的 source/overridden 元数据。
 
 ```java
 Map<String, Object> getPluginDetail(String pluginType, String pluginName) throws NacosException;
@@ -3475,7 +3475,7 @@ Map<String, Object> getPluginDetail(String pluginType, String pluginName) throws
 
 ```java
 try {
-    Map<String, Object> detail = coreMaintainerService.getPluginDetail("auth", "nacos-ldap-auth");
+    Map<String, Object> detail = coreMaintainerService.getPluginDetail("auth", "ldap");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3489,7 +3489,7 @@ try {
 
 #### 描述
 
-启用或禁用指定插件。
+启用或禁用指定插件。EXCLUSIVE 选择、PRE_CONTEXT 实现和 active critical provider 不能被非法运行时修改；`localOnly=true` 只影响当前节点且优先于持久化状态。
 
 ```java
 void updatePluginStatus(String pluginType, String pluginName, boolean enabled) throws NacosException;
@@ -3514,8 +3514,8 @@ void updatePluginStatus(String pluginType, String pluginName, boolean enabled, b
 
 ```java
 try {
-    coreMaintainerService.updatePluginStatus("auth", "nacos-ldap-auth", false);
-    coreMaintainerService.updatePluginStatus("auth", "nacos-ldap-auth", false, true);
+    coreMaintainerService.updatePluginStatus("auth", "ldap", false);
+    coreMaintainerService.updatePluginStatus("auth", "ldap", false, true);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3529,7 +3529,7 @@ try {
 
 #### 描述
 
-更新指定插件的配置项。
+替换指定插件目标来源的完整配置 map。只能运行时更新 `effectMode=RUNTIME` 的 definition；`RESTART` 项的新增、变更或删除会被拒绝。`localOnly=true` 写当前节点的高优先级 `LOCAL_ONLY`，否则写 `RUNTIME_PERSISTED`。
 
 ```java
 void updatePluginConfig(String pluginType, String pluginName, Map<String, String> config) throws NacosException;
@@ -3543,7 +3543,7 @@ void updatePluginConfig(String pluginType, String pluginName, Map<String, String
 |:-----------|:--------------------|:-------|
 | pluginType | string              | 插件类型。  |
 | pluginName | string              | 插件名称。  |
-| config     | Map\<String, String> | 配置键值对。 |
+| config     | Map\<String, String> | 以 definition item key 为键的完整目标来源 map。 |
 | localOnly  | boolean             | 是否仅应用到当前节点。 |
 
 #### 返回参数
@@ -3555,9 +3555,9 @@ void updatePluginConfig(String pluginType, String pluginName, Map<String, String
 ```java
 try {
     Map<String, String> config = new HashMap<>();
-    config.put("serverAddr", "ldap://localhost:389");
-    coreMaintainerService.updatePluginConfig("auth", "nacos-ldap-auth", config);
-    coreMaintainerService.updatePluginConfig("auth", "nacos-ldap-auth", config, true);
+    config.put("connect-timeout", "6000");
+    coreMaintainerService.updatePluginConfig("auth", "ldap", config);
+    coreMaintainerService.updatePluginConfig("auth", "ldap", config, true);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3594,7 +3594,7 @@ Map<String, Boolean> getPluginAvailability(String pluginType, String pluginName)
 
 ```java
 try {
-    Map<String, Boolean> availability = coreMaintainerService.getPluginAvailability("auth", "nacos-ldap-auth");
+    Map<String, Boolean> availability = coreMaintainerService.getPluginAvailability("auth", "ldap");
 } catch (NacosException e) {
     e.printStackTrace();
 }

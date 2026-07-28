@@ -3,7 +3,7 @@ title: 配置加密
 keywords: [AES, encryption, 配置加密, 加密插件]
 description: 本文介绍 Nacos 配置加密插件的工作方式、使用步骤、数据表要求和自定义扩展方式。
 sidebar:
-    order: 5
+    order: 8
 ---
 
 # 配置加密插件
@@ -11,6 +11,10 @@ sidebar:
 配置加密用于保护存储在 Nacos 中的敏感配置内容。开启后，符合命名规则的配置会以密文写入数据库，并通过 `encrypted_data_key` 保存解密所需的数据密钥。
 
 配置加密不替代鉴权、网络隔离、TLS 或企业密钥管理系统。它解决的是“配置内容在 Nacos 存储层和部分传输链路中不直接暴露明文”的问题。
+
+在统一插件管理中，本插件类型为 `encryption`，执行模式为 `ROUTED`，加载阶段为 `STANDARD`，类型非 critical。`algorithmName()` 同时是路由键和插件名，因此插件身份为 `encryption:{algorithmName}`。Nacos Server 发布包目前不内置生产加密算法实现；下面的 AES 实现来自外部插件仓库。
+
+已发现的算法默认启用，统一插件状态是运行时路由门禁。禁用某个算法后，使用 `cipher-{algorithm}-` 的读写会明确失败，不会把密文当成明文返回。
 
 ## 工作方式
 
@@ -34,7 +38,7 @@ cipher-aes-application-prod.yaml
 4. 查询配置时，Nacos 使用 `encrypted_data_key` 和同一个算法插件解密内容。
 5. 如果 `dataId` 不以 `cipher-` 开头，配置按普通明文配置处理。
 
-如果 `dataId` 使用了 `cipher-` 前缀，但服务端或客户端没有加载对应算法插件，Nacos 会记录告警日志，并保留原内容处理。生产环境应在发布前验证插件已经正确加载。
+如果 `dataId` 使用了 `cipher-` 前缀，但对应算法未加载或被禁用，操作会明确失败。生产环境应在发布前验证服务端和需要客户端侧加解密的 Java SDK 都已经正确加载插件。
 
 ## 数据表要求
 
@@ -121,6 +125,14 @@ com.alibaba.nacos.plugin.encryption.spi.EncryptionPluginService
 | `decrypt(secretKey, content)` | 解密配置内容。 |
 | `encryptSecretKey(secretKey)` | 加密或封装数据密钥。 |
 | `decryptSecretKey(secretKey)` | 解密或解析数据密钥。 |
+
+`EncryptionPluginService` 继承统一的 `PluginConfigSpec`。新实现如果有 KMS 地址、凭据或算法参数，应通过 `ConfigItemDefinition` 声明 `key`、alias、类型、默认值、是否必填、是否敏感和生效模式，标准全键为：
+
+```properties
+nacos.plugin.encryption.{algorithmName}.{itemKey}
+```
+
+运行时可变项在 `applyConfig` 中原子应用，并由 `getCurrentConfig()` 返回已接受快照；密钥类字段必须声明 `sensitive=true`。未实现配置定义的旧二进制插件仍可加载，但管理端显示 `configurable=false`。
 
 插件需要通过 SPI 文件注册：
 

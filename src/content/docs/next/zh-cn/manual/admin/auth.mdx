@@ -32,16 +32,16 @@ Nacos 的鉴权能力由鉴权插件提供。Nacos 3.2 内置了默认 Nacos 鉴
 
 | 配置项 | 默认配置 | 说明 |
 | --- | --- | --- |
-| `nacos.core.auth.system.type` | `nacos` | 当前使用的鉴权插件类型。支持 `nacos`、`ldap`、`oidc` 或自定义类型。 |
+| `nacos.plugin.auth.type` | `nacos` | 启动时选择鉴权插件；`nacos.core.auth.system.type` 是历史 alias。 |
 | `nacos.core.auth.enabled` | `true` | 是否开启 Open API、SDK 和 gRPC 请求鉴权。 |
 | `nacos.core.auth.admin.enabled` | `true` | 是否开启 Admin API 鉴权。 |
 | `nacos.core.auth.console.enabled` | `true` | 是否开启 Console API 和默认控制台登录鉴权。 |
 | `nacos.core.auth.server.identity.key` | 空 | Nacos Server 节点间通信的身份 key。开启鉴权的集群部署必须配置。 |
 | `nacos.core.auth.server.identity.value` | 空 | Nacos Server 节点间通信的身份 value。开启鉴权的集群部署必须配置。 |
 | `nacos.core.auth.caching.enabled` | `true` | 是否缓存用户、角色、权限信息。权限变更可能存在约 15 秒延迟。 |
-| `nacos.core.auth.plugin.nacos.token.secret.key` | 空 | 默认 Nacos token 签名密钥。建议配置为 Base64 字符串，原始密钥长度不少于 32 字符。 |
-| `nacos.core.auth.plugin.nacos.token.expire.seconds` | `18000` | 默认 Nacos token 有效期，单位秒。 |
-| `nacos.core.auth.plugin.nacos.token.cache.enable` | `false` | 是否缓存已签发 token 的解析和校验结果。 |
+| `nacos.plugin.auth.nacos.token.secret.key` | 空 | 默认 Nacos token 签名密钥，敏感且 RESTART；旧 core key 是 alias。 |
+| `nacos.plugin.auth.nacos.token.expire.seconds` | `18000` | token 有效期，RUNTIME；旧 core key 是 alias。 |
+| `nacos.plugin.auth.nacos.token.cache.enable` | `false` | token 缓存开关，RUNTIME；旧 core key 是 alias。 |
 
 :::note
 如果你从旧版本升级，实际配置可能保留旧值。请以当前集群的 `application.properties`、环境变量和启动参数为准。
@@ -57,14 +57,14 @@ Nacos 的鉴权能力由鉴权插件提供。Nacos 3.2 内置了默认 Nacos 鉴
     修改 `${nacos.home}/conf/application.properties`：
 
     ```properties
-    nacos.core.auth.system.type=nacos
+    nacos.plugin.auth.type=nacos
     nacos.core.auth.enabled=true
     nacos.core.auth.admin.enabled=true
     nacos.core.auth.console.enabled=true
 
     nacos.core.auth.server.identity.key=${custom_server_identity_key}
     nacos.core.auth.server.identity.value=${custom_server_identity_value}
-    nacos.core.auth.plugin.nacos.token.secret.key=${custom_base64_token_secret_key}
+    nacos.plugin.auth.nacos.token.secret.key=${custom_base64_token_secret_key}
     ```
 
     集群模式下，各节点的 `server.identity` 和 `token.secret.key` 必须保持一致。
@@ -146,19 +146,18 @@ LDAP 的工作边界是：
 配置示例：
 
 ```properties
-nacos.core.auth.system.type=ldap
+nacos.plugin.auth.type=ldap
 nacos.core.auth.enabled=true
 nacos.core.auth.admin.enabled=true
 nacos.core.auth.console.enabled=true
 
-nacos.core.auth.ldap.url=ldap://localhost:389
-nacos.core.auth.ldap.basedc=dc=example,dc=org
-nacos.core.auth.ldap.userDn=cn=admin,${nacos.core.auth.ldap.basedc}
-nacos.core.auth.ldap.password=admin
-nacos.core.auth.ldap.userdn=cn={0},dc=example,dc=org
-nacos.core.auth.ldap.filter.prefix=uid
-nacos.core.auth.ldap.case.sensitive=true
-nacos.core.auth.ldap.ignore.partial.result.exception=false
+nacos.plugin.auth.ldap.url=ldap://localhost:389
+nacos.plugin.auth.ldap.base-dn=dc=example,dc=org
+nacos.plugin.auth.ldap.user-dn=cn=admin,dc=example,dc=org
+nacos.plugin.auth.ldap.password=${ldap_bind_password}
+nacos.plugin.auth.ldap.filter-prefix=uid
+nacos.plugin.auth.ldap.case-sensitive=true
+nacos.plugin.auth.ldap.ignore-partial-result-exception=false
 ```
 
 启用前请确认：
@@ -175,25 +174,25 @@ OIDC/OAuth2 插件类型是 `oidc`。它通过外部 IdP 完成身份认证，�
 基础配置示例：
 
 ```properties
-nacos.core.auth.system.type=oidc
+nacos.plugin.auth.type=oidc
 nacos.core.auth.enabled=true
 nacos.core.auth.admin.enabled=true
 nacos.core.auth.console.enabled=true
 
 nacos.core.auth.server.identity.key=${custom_server_identity_key}
 nacos.core.auth.server.identity.value=${custom_server_identity_value}
-nacos.core.auth.plugin.nacos.token.secret.key=${custom_base64_token_secret_key}
+nacos.plugin.auth.nacos.token.secret.key=${custom_base64_token_secret_key}
 
-nacos.core.auth.plugin.oidc.issuer-uri=https://idp.example.com/realms/nacos
-nacos.core.auth.plugin.oidc.client-id=nacos-server
-nacos.core.auth.plugin.oidc.client-secret=${client_secret}
-nacos.core.auth.plugin.oidc.scope=openid profile email
+nacos.plugin.auth.oidc.issuer-uri=https://idp.example.com/realms/nacos
+nacos.plugin.auth.oidc.client-id=nacos-server
+nacos.plugin.auth.oidc.client-secret=${client_secret}
+nacos.plugin.auth.oidc.scope=openid profile email
 ```
 
 OIDC/OAuth2 模式下，控制台登录走 `/v1/auth/oidc/*` 兼容接口。Java SDK 可通过 OAuth2 Client Credentials flow 获取 bearer token。
 
 :::caution
-如果生产环境需要按资源做权限隔离，请配置 OIDC 插件的外部授权端点。当前实现中 `nacos.core.auth.plugin.oidc.authorization-endpoint` 为空时，非管理员授权判断会默认放行。
+如果生产环境需要按资源做权限隔离，请配置 `nacos.plugin.auth.oidc.authorization-endpoint`。当前实现中该项为空时，非管理员授权判断会默认放行。
 :::
 
 详细配置、Keycloak 示例、外部授权接口和排查方式请参考 [OIDC/OAuth2 认证](./oidc-auth.md)。
@@ -241,7 +240,7 @@ curl -X POST 'http://127.0.0.1:8848/nacos/v3/auth/user/login' \
 默认 Nacos 鉴权支持 token 缓存。开启后，服务端会缓存 token 解析和校验结果，减少频繁解析 JWT 的开销。
 
 ```properties
-nacos.core.auth.plugin.nacos.token.cache.enable=true
+nacos.plugin.auth.nacos.token.cache.enable=true
 ```
 
 注意事项：

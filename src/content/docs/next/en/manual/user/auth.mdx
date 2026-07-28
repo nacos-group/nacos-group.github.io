@@ -135,7 +135,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/cs/config?accessToken=${accessToken}
 
 ### OIDC/OAuth2 Auth
 
-When the server uses `nacos.core.auth.system.type=oidc`, do not use `/v3/auth/user/login` to obtain a token. Obtain an OAuth2/OIDC token from the enterprise IdP, then call Nacos with it:
+When the server uses `nacos.plugin.auth.type=oidc`, do not use `/v3/auth/user/login` to obtain a token. Obtain an OAuth2/OIDC token from the enterprise IdP, then call Nacos with it:
 
 ```powershell
 curl -X GET 'http://127.0.0.1:8848/nacos/v2/cs/config?dataId=example.properties&group=DEFAULT_GROUP' \
@@ -155,7 +155,7 @@ For server-side OIDC/OAuth2 setup, see [Admin Manual - OIDC/OAuth2 Authenticatio
 Common causes:
 
 - The token expired.
-- `nacos.core.auth.plugin.nacos.token.secret.key` is inconsistent across cluster nodes.
+- `nacos.plugin.auth.nacos.token.secret.key` is inconsistent across cluster nodes.
 - The server switched to another auth plugin type.
 - Permissions changed while the client still uses an old token.
 

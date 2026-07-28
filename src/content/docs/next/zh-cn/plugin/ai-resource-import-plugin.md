@@ -1,184 +1,195 @@
 ---
 title: AI 资源导入
-keywords: [AI 资源导入, MCP Registry, Skill Registry, AI 管理中心]
-description: 本文介绍 Nacos AI 资源导入插件的来源配置、导入流程、内置来源、安全边界和扩展方式。
+keywords: [AI 资源导入, MCP Registry, Skill Registry, PluginConfigSpec]
+description: 介绍统一管理后的 AI Resource Import 插件、四个内置来源、配置 definitions、安全边界和旧 SPI 迁移。
 sidebar:
-    order: 12
+    order: 15
 ---
 
 # AI 资源导入插件
 
-AI 资源导入插件用于把外部 registry、市场或企业内部资源库中的 AI 资源导入 Nacos AI 管理中心。导入后，资源会进入 Nacos 的命名空间、版本、可见性和生命周期体系。
+AI Resource Import 插件把外部 registry、市场或企业资源库中的 MCP Server、Skill 等资源转换为 Nacos 可校验和写入的 artifact。它只负责外部协议和转换；命名空间、资源身份、鉴权、可见性、版本、发布 Pipeline 和存储仍由 AI Registry 领域负责。
 
-导入插件只负责“从哪里发现资源”和“如何把外部资源转换成可导入内容”。它不拥有 Nacos 资源身份、鉴权、可见性、发布生命周期和存储模型。
+## 统一来源模型
 
-## 适用场景
-
-常见场景包括：
-
-- 从官方 MCP registry 导入 MCP Server。
-- 从 Skill well-known 地址导入 Skill。
-- 从 skills.sh 或企业内部 Skill 市场导入 Skill。
-- 让企业内部工具市场、私有 Git 索引或模型平台成为 AI 管理中心的资源来源。
-
-导入适合做资源初始化和统一治理，不适合绕过 Nacos 的发布、审核和权限流程。
-
-## 导入流程
-
-统一导入流程如下：
+`ai-resource-import` 是 `ROUTED` 插件类型。一个 Builder 就是一个确定的外部来源：
 
 ```text
-查询来源 -> 搜索候选资源 -> 选择候选 -> 校验冲突和依赖 -> 执行导入
+pluginId = ai-resource-import:{pluginName}
+sourceId = managed pluginName
 ```
 
-每个导入来源由运维人员配置，并通过 `sourceId` 暴露给用户。用户在导入时选择 `sourceId`，不能在请求中提交任意 endpoint、IP、凭证或 registry 根路径。
+请求中的 `sourceId` 直接路由到一个 enabled Builder。原有 API 字段 `pluginName` 仍表示 importer/protocol 类型，以兼容 Console 数据模型；它不是 managed pluginName。
 
-| 阶段 | 说明 |
-| --- | --- |
-| 查询来源 | 返回当前可用于某类资源的导入来源。 |
-| 搜索候选 | 从指定来源搜索摘要信息，不下载完整资源内容。 |
-| 校验 | 拉取必要 artifact，检查类型、大小、冲突和依赖。 |
-| 执行 | 将有效 artifact 交给对应资源 Operator，写入 Nacos AI 资源。 |
+```text
+sourceId
+  -> AiResourceImportServiceBuilder(已接受配置快照)
+  -> 请求级 AiResourceImportService
+  -> AiResourceOperator(resourceType)
+```
 
-浏览器或控制台不应接收完整 artifact。MCP specification、Skill ZIP 等内容只应在服务端导入链路中流转。
+一个 `pluginName` 只能代表一个来源。不能再通过纯配置把同一个实现复制成多个 endpoint；如需另一个固定来源，必须提供不同 `pluginName` 的 Builder。
 
-## 来源配置
+## 开关、状态和默认行为
 
-一个来源通常包含以下信息：
-
-| 字段 | 说明 |
-| --- | --- |
-| `sourceId` | 稳定来源 ID，用户导入时选择它。 |
-| `pluginName` | `ai-resource-import` 类型下的 importer 实现名。 |
-| `resourceTypes` | 支持的资源类型，例如 `mcp` 或 `skill`。 |
-| `endpoint` | 运维配置的来源地址。 |
-| `enabled` | 来源是否启用。 |
-| `authRef` | 可选的服务端凭证引用。凭证不返回给用户。 |
-| `connectTimeout` / `readTimeout` | 访问外部来源的超时。 |
-| `maxPageCount` / `maxItemCount` | 分页和条目限制。 |
-| `maxArtifactSize` | 单个 artifact 最大大小。 |
-| `properties` | importer 专属非敏感配置。 |
-
-显式来源可以配置在 `nacos.ai.resource.import.sources[...]` 下，并通过 `nacos.ai.resource.import.enabled=true` 开启。内置 preset 来源使用 `nacos.plugin.ai.importer.*` 前缀独立启用或关闭。
-
-默认插件加载时，官方 MCP Registry 和 skills.sh 来源会启用。需要关闭时，可以把对应 preset 的 `enabled` 配置为 `false`。
-
-## 内置来源
-
-### MCP 官方 Registry
-
-启用官方 MCP 来源：
+AI 模块和当前功能模式允许时，family switch 决定是否加载导入插件：
 
 ```properties
-nacos.plugin.ai.importer.mcp.official.enabled=true
+nacos.plugin.ai-resource-import.enabled=true
 ```
 
-默认来源信息：
+`nacos.ai.resource.import.enabled` 是历史 alias，标准 key 优先。官方发行包的 `application.properties` 将标准 key 设置为 `true`，因此 AI Resource Import 默认开启；只有部署需要关闭该能力时才显式设置为 `false`。
 
-| 项目 | 默认值 |
-| --- | --- |
-| `sourceId` | `mcp-official` |
-| importer | `mcp-registry` |
-| 资源类型 | `mcp` |
-| endpoint | `https://registry.modelcontextprotocol.io/v0/servers` |
-
-可以通过 `nacos.plugin.ai.importer.mcp.official.*` 覆盖来源 ID、展示名、endpoint、认证引用、超时和大小限制。
-
-### Skill Well-known
-
-启用 Skill well-known 来源：
+每个来源的初始状态使用：
 
 ```properties
-nacos.plugin.ai.importer.skills.well-known.enabled=true
-nacos.plugin.ai.importer.skills.well-known.url=https://developers.cloudflare.com
+nacos.plugin.ai-resource-import.{pluginName}.enabled=true
 ```
 
-默认来源信息：
+有持久化统一插件状态时，持久化状态优先。运行时请求还会再次检查 Builder 状态，disabled 来源不会出现在来源列表，也不能执行 search、validate 或 execute。
 
-| 项目 | 默认值 |
-| --- | --- |
-| `sourceId` | `skills-well-known` |
-| importer | `skills-well-known` |
-| 资源类型 | `skill` |
-| endpoint | `nacos.plugin.ai.importer.skills.well-known.url` |
+## 四个内置来源
 
-该来源会尝试读取 `/.well-known/agent-skills`，并兼容旧的 `/.well-known/skills`。它支持 Skill discovery v0.1.0 和 v0.2.0。
+| pluginId | API importer type | 资源 | endpoint | 发行配置初始状态 |
+| --- | --- | --- | --- | --- |
+| `ai-resource-import:mcp-official` | `mcp-registry` | `mcp` | 固定官方 MCP Registry | enabled |
+| `ai-resource-import:mcp-registry-protocol` | `mcp-registry` | `mcp` | 运维必须配置 | disabled |
+| `ai-resource-import:skills-sh` | `skills-sh` | `skill` | 固定 `https://skills.sh` | enabled |
+| `ai-resource-import:skills-well-known` | `skills-well-known` | `skill` | 运维必须配置 | disabled |
 
-### skills.sh
+`mcp-official` 的 Console 展示名仍是 `Official MCP Registry`，`skills-sh` 仍显示 `skills.sh`。用户原有的来源选择、搜索、勾选候选、校验和执行体验保持不变。
 
-启用 skills.sh 来源：
+### 固定 endpoint 来源
+
+`mcp-official` 和 `skills-sh` 不声明 `endpoint`、`allow-http` 或 `allow-private-network`，也不接受旧 endpoint override。来源地址是实现身份的一部分。
 
 ```properties
-nacos.plugin.ai.importer.skills.skills-sh.enabled=true
+nacos.plugin.ai-resource-import.mcp-official.enabled=true
+nacos.plugin.ai-resource-import.skills-sh.enabled=true
 ```
 
-默认来源信息：
+### 运维配置 endpoint 来源
 
-| 项目 | 默认值 |
+启用任意 MCP Registry protocol endpoint：
+
+```properties
+nacos.plugin.ai-resource-import.mcp-registry-protocol.enabled=true
+nacos.plugin.ai-resource-import.mcp-registry-protocol.endpoint=https://registry.example.com/v0/servers
+```
+
+启用 Skill well-known registry：
+
+```properties
+nacos.plugin.ai-resource-import.skills-well-known.enabled=true
+nacos.plugin.ai-resource-import.skills-well-known.endpoint=https://skills.example.com
+```
+
+`skills-well-known` 支持 discovery schema v0.1.0 和 v0.2.0。endpoint 是 registry 根地址时，会依次尝试 `/.well-known/agent-skills/index.json` 和 `/.well-known/skills/index.json`。
+
+## 配置 definitions
+
+所有 canonical full key 使用：
+
+```text
+nacos.plugin.ai-resource-import.{pluginName}.{itemKey}
+```
+
+公共 item：
+
+| item key | type | default | effectMode | 适用实现 | 含义 |
+| --- | --- | --- | --- | --- | --- |
+| `endpoint` | `STRING` | 空 | `RESTART` | 两个可配置 endpoint 来源 | Registry/marketplace 根地址；启用后实际构建时不能为空。 |
+| `allow-http` | `BOOLEAN` | `false` | `RESTART` | 两个可配置 endpoint 来源 | 是否允许非 HTTPS。 |
+| `allow-private-network` | `BOOLEAN` | `false` | `RESTART` | 两个可配置 endpoint 来源 | 是否允许本机或私网目标。 |
+| `display-name` | `STRING` | 各实现展示名 | `RUNTIME` | 全部 | API 和 Console 展示名。 |
+| `description` | `STRING` | 各实现描述 | `RUNTIME` | 全部 | API 和 Console 描述。 |
+| `max-item-count` | `NUMBER` | `500` | `RUNTIME` | 全部 | 一次请求允许的最大结果/文件数。 |
+| `max-artifact-size` | `NUMBER` | `10485760` | `RUNTIME` | 全部 | HTTP 响应或 artifact 最大字节数。 |
+
+这些 definition 当前都是 `required=false`、`sensitive=false`。`mcp-official` 和 `skills-sh` 只声明四个 `RUNTIME` 展示/限制字段；另外两个实现声明全部七项。
+
+`endpoint`、`allow-http` 和 `allow-private-network` 不能用运行时 PUT 增加、修改或删除。修改静态配置并重启。其他四项可以通过 Console 或 PUT API 运行时更新，更新后的不可变 Builder 快照用于后续新请求。
+
+## 有效配置和 alias
+
+有效值遵循统一优先级：
+
+```text
+LOCAL_ONLY > RUNTIME_PERSISTED > STATIC > DEFAULT
+```
+
+旧 `nacos.plugin.ai.importer.*` key 只在一个迁移窗口作为 alias 读取：
+
+| 新 pluginName | 旧前缀/alias 范围 |
 | --- | --- |
-| `sourceId` | `skills-sh` |
-| importer | `skills-sh` |
-| 资源类型 | `skill` |
-| endpoint | `https://skills.sh` |
+| `mcp-official` | `nacos.plugin.ai.importer.mcp.official.` 下的展示、描述、限制和历史状态。 |
+| `skills-sh` | `nacos.plugin.ai.importer.skills.skills-sh.` 下的展示、描述、限制和历史状态。 |
+| `skills-well-known` | `nacos.plugin.ai.importer.skills.well-known.`；旧 `url`/`endpoint`、网络开关、展示、描述、限制和状态。 |
+| `mcp-registry-protocol` | 无旧 alias。 |
+
+固定来源的 endpoint override、`auth-ref`、来源/全局 timeout、`max-page-count`、`block-private-network`、全局默认值和任意 `properties.*` 已移除。
+
+## 导入流程和生命周期
+
+```text
+列出来源 -> 搜索候选 -> 用户明确选择 -> 校验 -> 执行
+```
+
+- search 为一个请求构建 service，只返回候选摘要，不返回 MCP tools、Skill 包或秘密。
+- validate 和 execute 分别构建一个 service，并在一次操作内复用它处理所有已选项，最后在 `finally` 中关闭。
+- fetch 返回 artifact，但不能直接写 Nacos；资源 Operator 负责领域校验和持久化。
+- 浏览器不能默认选择搜索结果；全选后也必须允许取消单项。
+
+统一 API：
+
+| 方法 | Admin | Console |
+| --- | --- | --- |
+| 来源 | `GET /v3/admin/ai/import/sources` | `GET /v3/console/ai/import/sources` |
+| 搜索 | `POST /v3/admin/ai/import/search` | `POST /v3/console/ai/import/search` |
+| 校验 | `POST /v3/admin/ai/import/validate` | `POST /v3/console/ai/import/validate` |
+| 执行 | `POST /v3/admin/ai/import/execute` | `POST /v3/console/ai/import/execute` |
 
 ## 安全边界
 
-内置来源默认要求 HTTPS，并默认禁止访问 localhost、loopback、link-local、multicast 和私网地址。只有运维人员明确确认环境安全时，才应打开下列配置：
+- 用户请求不能提交任意 URL、IP、registry 根地址或凭证。
+- 默认只允许 HTTPS，并阻止 loopback、link-local、multicast 和私网 DNS 结果。
+- 只有运维拥有的可配置来源可以显式开启 `allow-http` 或 `allow-private-network`。
+- 所有派生 URL 和重定向都必须重新校验相同网络策略。
+- HTTP 响应和 artifact 必须受 `max-artifact-size` 限制；结果/文件数受 `max-item-count` 限制。
+- Skill 包导入不得执行脚本，必须校验路径、摘要和压缩包总大小。
 
-| 配置后缀 | 含义 | 默认值 |
-| --- | --- | --- |
-| `allow-http` / `allowHttp` | 允许非 HTTPS endpoint。 | `false` |
-| `allow-private-network` / `allowPrivateNetwork` | 允许私网、localhost 等地址。 | `false` |
+## 开发自定义来源
 
-不要把外部 registry 当成可信输入。导入前仍需要校验文件路径、压缩包大小、摘要、内容类型和冲突策略。
+实现 `com.alibaba.nacos.plugin.ai.importer.spi.AiResourceImportServiceBuilder` 并通过 Java SPI 注册。Builder 本身是 managed plugin 和 `PluginConfigSpec`：
 
-## API 入口
-
-统一导入 API 包括 Admin API 和 Console API：
-
-| 接口面 | 路径 |
+| Builder 方法 | 要求 |
 | --- | --- |
-| Admin API | `/v3/admin/ai/import/sources`、`/search`、`/validate`、`/execute` |
-| Console API | `/v3/console/ai/import/sources`、`/search`、`/validate`、`/execute` |
+| `pluginName()` | 稳定 managed 名称和 API `sourceId`。 |
+| `importerType()` | API 兼容字段 `pluginName` 的 importer/protocol 元数据。 |
+| `displayName()` / `description()` | 来自已接受配置快照。 |
+| `supportedResourceTypes()` | 这个固定来源可产生的资源类型。 |
+| `getConfigDefinitions()` | 声明来源拥有的全部 item。 |
+| `applyConfig(config)` | 原子替换不可变有效配置快照。 |
+| `getCurrentConfig()` | 返回最后接受的 canonical item-key 快照。 |
+| `build()` | 从一个快照构建请求级 service，不再接受额外 properties。 |
 
-详细参数请参考 [运维 API](../manual/admin/admin-api.md) 和 [控制台 API](../manual/admin/console-api.md)。
-
-## 开发自定义 Importer
-
-自定义 importer 依赖：
-
-```xml
-<dependency>
-    <groupId>com.alibaba.nacos</groupId>
-    <artifactId>nacos-ai-plugin</artifactId>
-    <version>${project.version}</version>
-</dependency>
-```
-
-实现 `com.alibaba.nacos.plugin.ai.importer.spi.AiResourceImportServiceBuilder`，并通过 Java SPI 声明：
+SPI 文件：
 
 ```text
 META-INF/services/com.alibaba.nacos.plugin.ai.importer.spi.AiResourceImportServiceBuilder
 ```
 
-核心接口：
+插件名冲突采用 first-wins + WARN。
 
-| 方法 | 说明 |
-| --- | --- |
-| `importerType()` | 稳定 importer 名称。 |
-| `build(properties)` | 使用 importer 配置创建导入服务。 |
-| `supportedResourceTypes()` | 支持导入的资源类型。 |
-| `search(context)` | 返回候选摘要，不返回完整 payload。 |
-| `fetch(context, item)` | 拉取选中资源的 artifact，不写入 Nacos。 |
+## Breaking change 与迁移
 
-如果需要提供预置来源，可以实现 `AiResourceImportSourceProvider`，并通过对应 SPI 文件声明。
+旧的 Importer/Source 双 SPI 已移除，没有兼容 adapter。外部插件必须迁移并重新编译：
 
-## 排查
+- 删除 `AiResourceImportSource` 和 Source Provider SPI。
+- 删除 `nacos.ai.resource.import.sources[N].*`、preset 和复制 endpoint 的模型。
+- 把来源 ID 固定为 Builder `pluginName()`，实现 `PluginConfigSpec` 和无参 `build()`。
+- 把仍有效的属性迁到标准 full key。
 
-| 现象 | 排查方向 |
-| --- | --- |
-| 来源列表为空 | 检查 `nacos.ai.resource.import.enabled`、来源 `enabled` 和 importer 插件是否加载。 |
-| 搜索失败 | 检查 endpoint、网络连通性、超时、认证引用和 HTTPS/私网限制。 |
-| 校验出现冲突 | 查看资源名、版本和是否已有 editing/reviewing 版本。必要时重新编辑或使用覆盖策略。 |
-| 导入后不可见 | 检查资源命名空间、可见性、鉴权和资源状态。 |
-| 私网来源无法访问 | 只有确认风险后，才在对应来源上启用 `allow-private-network`。 |
+旧 MCP import compatibility API 默认关闭；如需短期迁移，可使用 `nacos.ai.resource.import.legacy-mcp-api-enabled=true`。允许旧 API 抓取用户 URL 还必须额外显式开启 `nacos.ai.resource.import.allow-user-url=true`，不应作为长期方案。
+
+参见[插件迁移指南](./migration.md)和[兼容与废弃](../manual/admin/compatibility-and-deprecation.md)。

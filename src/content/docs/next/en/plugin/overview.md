@@ -1,70 +1,113 @@
 ---
-title: Plugin Overview
-keywords: [Plugin, SPI, extension]
-description: Learn the common Nacos plugin model, loading rules, design principles, and plugin documentation entry points.
+title: Plugin System Overview
+keywords: [Plugin, PluginType, SPI, PluginConfigSpec, Plugin Management]
+description: Learn the unified Nacos plugin identity, execution modes, state, configuration, lifecycle, and all current server plugin types.
 sidebar:
     order: 1
 ---
 
-# Plugin Overview
+# Plugin System Overview
 
-Nacos uses plugins to keep replaceable and extensible capabilities outside the core logic. You can use the built-in implementations, optional official plugins, community plugins, or custom plugins for security, databases, audit, observability, and traffic governance.
+Nacos uses plugins to separate replaceable capabilities such as authentication, database dialects, visibility, auditing, traffic control, and AI extensions from core domain models. A server plugin supplies behavior through a domain SPI and participates in unified inventory, state, configuration, and diagnostics.
 
-The plugin system serves two groups of readers:
+This document covers server plugins managed by the unified system. Java client extensions such as `ClientAuthService`, `IConfigFilter`, and `ServerListProvider` run in client processes and do not appear in the server plugin APIs or Console.
 
-- Users and operators need to know which capability is pluggable, where to place plugin JARs, and which configurations must stay consistent across the cluster.
-- Developers and integrators need to understand the SPI boundary, how to declare implementations, and how to keep plugins from affecting the main Nacos request path.
+## Plugin identity
 
-## How Plugins Are Loaded
+Every server plugin is uniquely identified by a type and implementation name:
 
-Most Nacos plugins are loaded through Java SPI. A plugin JAR declares implementation classes under `META-INF/services`. During startup, Nacos discovers these implementations through `NacosServiceLoader`, then plugin-specific `PluginProvider` implementations collect them into unified plugin information.
+```text
+pluginId = pluginType:pluginName
+```
 
-There are usually two ways to load a plugin:
+For example, the default auth plugin is `auth:nacos`, LDAP auth is `auth:ldap`, and the official MCP import source is `ai-resource-import:mcp-official`.
 
-1. Put the plugin JAR under `${nacos.home}/plugins`.
-2. Add the plugin JAR and required dependencies to the Nacos Server startup classpath.
+- `pluginType` is an extension category in the Nacos `PluginType` registry.
+- `pluginName` is a stable, unique implementation name within that category.
+- `pluginId` is used by management APIs, plugin state, persisted configuration, and diagnostics. Do not change it casually during an upgrade.
 
-In production clusters, all Nacos Server nodes should use the same plugin JAR versions, dependency versions, and plugin configuration. This is especially important for auth, datasource, visibility, config change, and environment plugins because they can affect request results or data read/write behavior.
+Discovery uses a deterministic **first-wins** rule. Null implementations, blank names, and later duplicate `pluginId` values are ignored with WARN logs; an existing registration is never replaced. Configuration definition key and alias conflicts also use first-wins and ignore later conflicting entries.
 
-## Selection Rules
+## Current plugin types
 
-Different plugin types are enabled in different ways:
+| pluginType | Execution mode | Type critical | Initialization | Purpose |
+| --- | --- | --- | --- | --- |
+| `auth` | `EXCLUSIVE` | Yes | `STANDARD` | Select one authentication and authorization implementation. |
+| `datasource-dialect` | `EXCLUSIVE` | Yes | `STANDARD` | Select a database SQL dialect and mapper family. |
+| `config-change` | `CHAIN` | No | `STANDARD` | Run config change plugins by pointcut and order. |
+| `encryption` | `ROUTED` | No | `STANDARD` | Route by the algorithm in an encrypted dataId. |
+| `trace` | `BROADCAST` | No | `STANDARD` | Broadcast events to every matching enabled subscriber. |
+| `environment` | `CHAIN` | No | `PRE_CONTEXT` | Transform environment values in order before Spring context creation. |
+| `control` | `EXCLUSIVE` | No | `STANDARD` | Select one traffic-control manager implementation at startup. |
+| `visibility` | `ROUTED` | No | `STANDARD` | Route visibility decisions from domain requests. |
+| `ai-pipeline` | `CHAIN` | No | `STANDARD` | Run ordered AI resource publish-review nodes. |
+| `ai-storage` | `ROUTED` | Yes | `STANDARD` | Route content storage by `StorageKey.provider`. |
+| `ai-resource-import` | `ROUTED` | No | `STANDARD` | Route by `sourceId` to one fixed external source. |
 
-- **Exclusive plugins**: only one implementation is selected at a time. Auth plugins are selected by `nacos.core.auth.system.type`; datasource dialect plugins are selected by `spring.sql.init.platform`.
-- **Multiple-instance plugins**: multiple implementations may be loaded at the same time. Config change plugins and trace plugins are typical examples.
-- **Built-in and optional implementations**: some implementations are shipped with the Nacos distribution. LDAP, OIDC/OAuth, community datasource plugins, and encryption plugins may require separate plugin packages.
-- **Unified plugin state is not the same as feature configuration**: Nacos 3.2 includes unified plugin management, but each plugin may still require its own feature configuration. Follow the corresponding plugin document for the actual enabling steps.
+`critical` is a type capability; it does not make every implementation of that type permanently non-disableable. `PluginTypePolicy` validates the providers required by the domain only while the type is active. In detail responses, `critical=true` means that this particular implementation cannot currently be disabled by itself, while `typeCritical` identifies the type-level capability.
 
-## Development Principles
+Cluster addressing remains in the plugin documentation for continuity, but current addressing uses `MemberLookup`. It is not a `PluginType` and is not managed by the unified plugin APIs. See [Cluster Addressing](./address-plugin.md).
 
-When developing a plugin, follow these principles:
+## Four execution modes
 
-- **Stay within the documented SPI boundary**. Do not treat internal Nacos classes as stable contracts. When a reference implementation is needed, use the source code of your target Nacos version.
-- **Keep plugin names stable and unique**. Plugin names are used in configuration, logs, and plugin state management. Renaming a plugin affects upgrades and operations.
-- **Avoid blocking the main request path**. Plugins that call networks, disks, audit systems, KMS, or webhooks should use timeouts, fallback behavior, and dedicated executors when needed.
-- **Do not hard-code secrets**. Keys, tokens, and database passwords should come from secure configuration, environment variables, or your enterprise key management system.
-- **Match versions carefully**. Plugin APIs may evolve with Nacos versions. Before upgrading Nacos, validate the plugin version, dependency version, and configuration compatibility together.
-- **Validate before production**. At minimum, verify plugin loading logs, core read/write paths, failure fallback, node restart, rolling upgrade, and rollback.
+- `EXCLUSIVE`: select one implementation at startup. The selection key is `nacos.plugin.{pluginType}.type`; runtime state APIs cannot switch it.
+- `CHAIN`: run every domain-matching enabled implementation in stable order.
+- `ROUTED`: load multiple implementations and let the domain select an enabled implementation by algorithm, provider, `sourceId`, or request context.
+- `BROADCAST`: deliver an event to every enabled implementation that subscribes to it.
 
-## Plugin Documents
+Unified plugin management owns loaded/enabled/config state. Each domain SPI still defines selection, ordering, failure handling, and degradation.
 
-| Plugin | When to read it |
-|--------|-----------------|
-| [Auth Plugin](./auth-plugin.md) | Use default RBAC, LDAP, OIDC/OAuth2, or custom authentication and authorization. |
-| [Visibility Plugin](./visibility-plugin.md) | Control whether AI resources and similar objects are visible to the current caller. |
-| [Multiple Data Sources](./datasource-plugin.md) | Use MySQL, PostgreSQL, Oracle, Derby, or community datasource dialect plugins. |
-| [Configuration Encryption](./config-encryption-plugin.md) | Encrypt sensitive configuration content at storage and decrypt it when reading. |
-| [Config Change Plugin](./config-change-plugin.md) | Validate, audit, or send webhook notifications before or after config changes. |
-| [Tracing](./trace-plugin.md) | Subscribe to internal Nacos operation events for audit, troubleshooting, and operations. |
-| [Custom Environment Plugin](./custom-environment-plugin.md) | Transform server configuration values when Nacos reads them, such as decrypting database passwords. |
-| [Traffic Control](./control-plugin.md) | Limit connection count and TPS to protect Nacos Server stability. |
-| [Cluster Addressing](./address-plugin.md) | Configure how Nacos Server discovers cluster members, such as `file` and `address-server`. |
-| [AI Publish Pipeline](./ai-pipeline-plugin.md) | Run review, scanning, or blocking logic before publishing Skills, Prompts, MCP Servers, AgentSpecs, and other AI resources. |
-| [AI Resource Import](./ai-resource-import-plugin.md) | Import AI resources from MCP registries, Skill marketplaces, or internal catalogs. |
-| [AI Storage](./ai-storage-plugin.md) | Connect custom storage providers for AI resource version content. |
+## State, module switches, and selection
 
-## Reading Guidance
+Do not mix these layers:
 
-For deployment and operations, start with auth, visibility, datasource, configuration encryption, traffic control, cluster addressing, and AI resource import. These topics directly affect production security boundaries, storage, stability, and resource sources.
+| Layer | Responsibility | Example |
+| --- | --- | --- |
+| Module or capability gate | Decides whether the core path enters a capability and may defer loading an entire type. | `nacos.extension.ai.enabled`, `nacos.plugin.visibility.enabled`, `nacos.plugin.ai-pipeline.enabled` |
+| Type selection key | Selects an `EXCLUSIVE` implementation at startup; changes require restart. | `nacos.plugin.auth.type=nacos` |
+| Initial implementation state | Supplies a startup default when no persisted state override exists. | `nacos.plugin.trace.audit.enabled=true` |
+| Unified plugin state | Controls whether a loaded implementation may execute; it may be persisted cluster-wide or changed only on one node. | Plugin status PUT API |
+| Implementation config | Contains only definitions owned by one implementation, not module gates or selection. | `nacos.plugin.auth.nacos.token.expire.seconds` |
 
-For plugin development, start with this page, then read the SPI, loading, and failure fallback sections in the target plugin document. Each plugin has a different integration point, so do not copy configuration or lifecycle assumptions from another plugin type.
+Loaded does not mean enabled, and enabled implementations cannot bypass the module gate. Type-level deferred loading affects first discovery only. Enabling the gate of a deferred non-critical type triggers one-time discovery, state restoration, and config apply. Disabling the gate later stops domain execution but does not unload the instances.
+
+## Unified configuration
+
+An implementation declares `ConfigItemDefinition` entries through `PluginConfigSpec`. The standard static key is:
+
+```text
+nacos.plugin.{pluginType}.{pluginName}.{itemKey}
+```
+
+A definition can declare `key`, `aliases`, `type`, `defaultValue`, `required`, `sensitive`, and `effectMode`. `enabled` is reserved for plugin state and cannot be a normal definition key.
+
+For `STANDARD` plugins, effective value precedence is:
+
+```text
+LOCAL_ONLY > RUNTIME_PERSISTED > STATIC > DEFAULT
+```
+
+The `PRE_CONTEXT` `environment` type resolves only `STATIC > DEFAULT`. It must run before Spring context creation, so all state and configuration changes require restart and cannot use runtime APIs.
+
+For sources, sensitive values, `RUNTIME`/`RESTART`, and API workflows, see [Plugin Operations and Configuration](./operations.md).
+
+## Loading and lifecycle
+
+Regular `STANDARD` plugins are initialized by the unified manager after Spring context refresh. Runtime-persisted configuration is loaded first, and then every configurable plugin receives a complete resolved snapshot through `applyConfig`, even when it has no runtime override.
+
+An adapter that must create resources after configuration can implement `PluginStartupLifecycle`. The unified manager invokes idempotent `initialize()` only for enabled implementations. This callback does not imply that runtime resource replacement is supported; a type without replace-and-close semantics must still reject such switching.
+
+`environment` is discovered, resolved, and applied during `PRE_CONTEXT`. The later unified manager reuses the same instances and accepted snapshots and must not load them again.
+
+## Where to go next
+
+- Operators: read [Plugin Operations and Configuration](./operations.md), then the target plugin-family page.
+- Plugin developers: read [Plugin Development Guide](./development.md), then verify the target domain SPI.
+- Users upgrading old keys or SPIs: read [Plugin Migration Guide](./migration.md).
+
+| Family | Documentation |
+| --- | --- |
+| Auth and visibility | [Auth Plugin](./auth-plugin.md), [Visibility Plugin](./visibility-plugin.md) |
+| Data and config | [Datasource Plugin](./datasource-plugin.md), [Config Encryption](./config-encryption-plugin.md), [Config Change](./config-change-plugin.md) |
+| Stability and observability | [Trace Plugin](./trace-plugin.md), [Custom Environment](./custom-environment-plugin.md), [Control Plugin](./control-plugin.md) |
+| AI extensions | [AI Publish Pipeline](./ai-pipeline-plugin.md), [AI Resource Import](./ai-resource-import-plugin.md), [AI Storage](./ai-storage-plugin.md) |

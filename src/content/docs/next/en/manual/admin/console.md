@@ -104,12 +104,25 @@ Platform management usually serves administrators. Menus may differ under differ
 | --- | --- |
 | Namespace | Create, edit, and delete namespaces. |
 | Cluster Management | View cluster nodes and basic status. |
-| Plugin Management | View loaded plugins and plugin state. |
+| Plugin Management | View unified inventory, state, effective configuration and sources, and safely update runtime definitions. |
 | User List | Manage console users. |
 | Role Management | Manage roles and user relationships. |
 | Privilege Management | Manage resource permissions. |
 
 If a menu is missing, the common causes are that the current user is not an administrator, the function mode hides the module, or the related capability is not enabled.
+
+### Next Console Plugin Management
+
+The plugin list uses `pluginType:pluginName` identities and shows execution mode, critical, and configurable metadata. Detail shows:
+
+- enabled state and whether it comes from persisted cluster state or a current-node `localOnly` override;
+- definition type, default, aliases, required, sensitivity, and `effectMode`;
+- each effective value's `source` and `overridden` flag, with `LOCAL_ONLY > RUNTIME_PERSISTED > STATIC > DEFAULT`;
+- a masked marker instead of plaintext for sensitive values.
+
+Only `RUNTIME` definitions are editable online. `RESTART` items are read-only and direct operators to change static configuration and restart. A configuration submission replaces the complete map for the selected source; an empty map clears it. Clear current-node `localOnly` overrides before a cluster operation, or they continue to win over persisted values. Illegal runtime state changes to active critical providers, exclusive selection, and PRE_CONTEXT plugins are rejected.
+
+These capabilities apply only to Next Console. Legacy Console does not implement the unified plugin configuration workflow. See [Plugin Operations](../../plugin/operations.md) for the complete semantics.
 
 ## Legacy console
 

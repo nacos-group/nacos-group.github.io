@@ -32,16 +32,16 @@ For plugin boundaries and development details, see [Auth Plugin](../../plugin/au
 
 | Property | Default configuration | Description |
 | --- | --- | --- |
-| `nacos.core.auth.system.type` | `nacos` | Selected auth plugin type. Supports `nacos`, `ldap`, `oidc`, or a custom type. |
+| `nacos.plugin.auth.type` | `nacos` | Selects the auth plugin at startup; `nacos.core.auth.system.type` is a legacy alias. |
 | `nacos.core.auth.enabled` | `true` | Enables auth for Open API, SDK, and gRPC requests. |
 | `nacos.core.auth.admin.enabled` | `true` | Enables auth for Admin API requests. |
 | `nacos.core.auth.console.enabled` | `true` | Enables auth for Console API and default console login. |
 | `nacos.core.auth.server.identity.key` | Empty | Server-to-server identity key. Required for auth-enabled clusters. |
 | `nacos.core.auth.server.identity.value` | Empty | Server-to-server identity value. Required for auth-enabled clusters. |
 | `nacos.core.auth.caching.enabled` | `true` | Caches users, roles, and permissions. Permission changes may have about 15 seconds of delay. |
-| `nacos.core.auth.plugin.nacos.token.secret.key` | Empty | Signing key for default Nacos tokens. Use a Base64 string generated from at least 32 raw characters. |
-| `nacos.core.auth.plugin.nacos.token.expire.seconds` | `18000` | Default Nacos token lifetime, in seconds. |
-| `nacos.core.auth.plugin.nacos.token.cache.enable` | `false` | Caches issued token parsing and validation results. |
+| `nacos.plugin.auth.nacos.token.secret.key` | Empty | Default token signing key; sensitive and RESTART. The old core key is an alias. |
+| `nacos.plugin.auth.nacos.token.expire.seconds` | `18000` | Token lifetime; RUNTIME. The old core key is an alias. |
+| `nacos.plugin.auth.nacos.token.cache.enable` | `false` | Token cache switch; RUNTIME. The old core key is an alias. |
 
 :::note
 After an upgrade, your cluster may keep old values. Always check the actual `application.properties`, environment variables, and startup parameters of the running cluster.
@@ -57,14 +57,14 @@ Default Nacos auth uses local users, roles, permissions, and tokens. It provides
     Edit `${nacos.home}/conf/application.properties`:
 
     ```properties
-    nacos.core.auth.system.type=nacos
+    nacos.plugin.auth.type=nacos
     nacos.core.auth.enabled=true
     nacos.core.auth.admin.enabled=true
     nacos.core.auth.console.enabled=true
 
     nacos.core.auth.server.identity.key=${custom_server_identity_key}
     nacos.core.auth.server.identity.value=${custom_server_identity_value}
-    nacos.core.auth.plugin.nacos.token.secret.key=${custom_base64_token_secret_key}
+    nacos.plugin.auth.nacos.token.secret.key=${custom_base64_token_secret_key}
     ```
 
     In cluster mode, every node must use the same `server.identity` and `token.secret.key`.
@@ -146,19 +146,18 @@ LDAP boundaries:
 Example:
 
 ```properties
-nacos.core.auth.system.type=ldap
+nacos.plugin.auth.type=ldap
 nacos.core.auth.enabled=true
 nacos.core.auth.admin.enabled=true
 nacos.core.auth.console.enabled=true
 
-nacos.core.auth.ldap.url=ldap://localhost:389
-nacos.core.auth.ldap.basedc=dc=example,dc=org
-nacos.core.auth.ldap.userDn=cn=admin,${nacos.core.auth.ldap.basedc}
-nacos.core.auth.ldap.password=admin
-nacos.core.auth.ldap.userdn=cn={0},dc=example,dc=org
-nacos.core.auth.ldap.filter.prefix=uid
-nacos.core.auth.ldap.case.sensitive=true
-nacos.core.auth.ldap.ignore.partial.result.exception=false
+nacos.plugin.auth.ldap.url=ldap://localhost:389
+nacos.plugin.auth.ldap.base-dn=dc=example,dc=org
+nacos.plugin.auth.ldap.user-dn=cn=admin,dc=example,dc=org
+nacos.plugin.auth.ldap.password=${ldap_bind_password}
+nacos.plugin.auth.ldap.filter-prefix=uid
+nacos.plugin.auth.ldap.case-sensitive=true
+nacos.plugin.auth.ldap.ignore-partial-result-exception=false
 ```
 
 Before enabling LDAP, check that:
@@ -175,25 +174,25 @@ The OIDC/OAuth2 plugin type is `oidc`. It delegates authentication to an externa
 Basic example:
 
 ```properties
-nacos.core.auth.system.type=oidc
+nacos.plugin.auth.type=oidc
 nacos.core.auth.enabled=true
 nacos.core.auth.admin.enabled=true
 nacos.core.auth.console.enabled=true
 
 nacos.core.auth.server.identity.key=${custom_server_identity_key}
 nacos.core.auth.server.identity.value=${custom_server_identity_value}
-nacos.core.auth.plugin.nacos.token.secret.key=${custom_base64_token_secret_key}
+nacos.plugin.auth.nacos.token.secret.key=${custom_base64_token_secret_key}
 
-nacos.core.auth.plugin.oidc.issuer-uri=https://idp.example.com/realms/nacos
-nacos.core.auth.plugin.oidc.client-id=nacos-server
-nacos.core.auth.plugin.oidc.client-secret=${client_secret}
-nacos.core.auth.plugin.oidc.scope=openid profile email
+nacos.plugin.auth.oidc.issuer-uri=https://idp.example.com/realms/nacos
+nacos.plugin.auth.oidc.client-id=nacos-server
+nacos.plugin.auth.oidc.client-secret=${client_secret}
+nacos.plugin.auth.oidc.scope=openid profile email
 ```
 
 In OIDC/OAuth2 mode, console login uses compatibility endpoints under `/v1/auth/oidc/*`. The Java SDK can use the OAuth2 Client Credentials flow to obtain bearer tokens.
 
 :::caution
-If production needs resource-level permission isolation, configure the OIDC plugin external authorization endpoint. In the current implementation, when `nacos.core.auth.plugin.oidc.authorization-endpoint` is empty, non-admin authorization decisions are allowed by default.
+If production needs resource-level permission isolation, configure `nacos.plugin.auth.oidc.authorization-endpoint`. In the current implementation, an empty value allows non-admin authorization decisions by default.
 :::
 
 For detailed configuration, Keycloak examples, external authorization, and troubleshooting, see [OIDC/OAuth2 Authentication](./oidc-auth.md).
@@ -241,7 +240,7 @@ For SDK configuration, see [User Manual - Authorization](../user/auth.mdx).
 The default Nacos auth plugin supports token caching. When enabled, the server caches token parsing and validation results to reduce JWT parsing overhead.
 
 ```properties
-nacos.core.auth.plugin.nacos.token.cache.enable=true
+nacos.plugin.auth.nacos.token.cache.enable=true
 ```
 
 Notes:

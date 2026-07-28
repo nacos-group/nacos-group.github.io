@@ -28,12 +28,12 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
     然后修改`${nacos.home}/conf/application.properties`文件，增加支持MySQL数据源配置，添加MySQL数据源的url、用户名和密码。
 
     ```
-    spring.sql.init.platform=mysql
+    nacos.plugin.datasource-dialect.type=mysql
 
-    db.num=1
-    db.url.0=jdbc:mysql://${mysql_host}:${mysql_port}/${nacos_database}?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
-    db.user=${mysql_user}
-    db.password=${mysql_password}
+    nacos.plugin.datasource.db.num=1
+    nacos.plugin.datasource.db.url.0=jdbc:mysql://${mysql_host}:${mysql_port}/${nacos_database}?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
+    nacos.plugin.datasource.db.user=${mysql_user}
+    nacos.plugin.datasource.db.password=${mysql_password}
     ```
 
     然后按照[快速开始-启动服务器](../../../quickstart/quick-start/#4修改鉴权配置)中的操作，修改Nacos的鉴权配置。

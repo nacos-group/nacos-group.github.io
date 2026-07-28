@@ -844,8 +844,8 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `pluginType` | `string` | **Yes** | Plugin type, such as `auth` (authentication), `control`, or `datasource`. |
-| `pluginName` | `string` | **Yes** | Plugin name, such as `nacos-default-auth-plugin`. |
+| `pluginType` | `string` | **Yes** | Plugin type, such as `auth`, `control`, or `datasource-dialect`. |
+| `pluginName` | `string` | **Yes** | Plugin name, such as `nacos`; the full identity is `pluginType:pluginName`. |
 
 #### Response Data
 
@@ -856,16 +856,20 @@ A user identity with the corresponding `namespace read` permission is required.
 | data.pluginName | `string` | plugin name. |
 | data.enabled | `boolean` | whether it is currently enabled. |
 | data.critical | `boolean` | whether it is a critical plugin (critical plugins cannot be disabled). |
+| data.typeCritical | `boolean` | whether the plugin type is declared critical. |
+| data.executionMode | `string` | `EXCLUSIVE`, `CHAIN`, `ROUTED`, or `BROADCAST`. |
+| data.exclusive | `boolean` | whether the type uses exclusive selection. |
 | data.configurable | `boolean` | whether dynamic configuration in the console is supported. |
-| data.config | `object` | current plugin configuration items. |
-| data.configDefinitions | `array` | plugin configuration item definition list, used to render the configuration form. |
+| data.config | `object` | effective configuration with sensitive items masked. |
+| data.configDefinitions | `array` | definitions including aliases, type, default, required, sensitivity, and effectMode. |
+| data.configValueMetas | `object` | effective source and `overridden` metadata per item. |
 
 #### Examples
 
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/plugin?pluginType=auth&pluginName=nacos-default-auth-plugin'
+curl -X GET 'http://127.0.0.1:8080/v3/console/plugin?pluginType=auth&pluginName=nacos'
 ```
 
 * Response example
@@ -875,10 +879,12 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin?pluginType=auth&pluginName=
   "code": 0,
   "message": "success",
   "data": {
-    "name": "nacos-default-auth-plugin",
+    "name": "nacos",
     "type": "auth",
     "enabled": true,
-    "config": {}
+    "config": {},
+    "configDefinitions": [],
+    "configValueMetas": {}
   }
 }
 ```
@@ -909,7 +915,7 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `pluginType` | `string` | **Yes** | Plugin type, such as `auth`, `control`, or `datasource`. |
+| `pluginType` | `string` | **Yes** | Plugin type, such as `auth`, `control`, or `datasource-dialect`. |
 | `pluginName` | `string` | **Yes** | plugin name. |
 
 #### Response Data
@@ -921,7 +927,7 @@ The returned `data` is a Map&lt;node address, availability&gt;. The key is the N
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/availability?pluginType=auth&pluginName=nacos-default-auth-plugin'
+curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/availability?pluginType=auth&pluginName=nacos'
 ```
 
 * Response example
@@ -940,7 +946,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/availability?pluginType=aut
 
 #### Description
 
-You can use this API to update plugin configuration. You must provide the plugin type, name, and configuration content.
+Replace the complete configuration map for the target runtime source. Only `RUNTIME` definitions can be submitted. `RESTART` items are read-only in Next Console, and adding, changing, or removing them is rejected. For a sensitive item returned as a masked marker, submitting the marker unchanged preserves the value already present in the target source.
 
 #### Since
 
@@ -964,7 +970,8 @@ A user identity with the corresponding `namespace write` permission is required.
 |--------|------|------|----------|
 | `pluginType` | `string` | **Yes** | plugin type. |
 | `pluginName` | `string` | **Yes** | plugin name. |
-| `config` | `string` | No | Plugin configuration content as a JSON object. Specific fields are defined by the plugin. |
+| `config` | `string` | No | Complete JSON item map whose fields come from plugin definitions. |
+| `localOnly` | `boolean` | No | `true` writes this node's `LOCAL_ONLY`; otherwise writes `RUNTIME_PERSISTED`. |
 
 #### Response Data
 
@@ -979,8 +986,9 @@ A user identity with the corresponding `namespace write` permission is required.
 ```shell
 curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/config' \
   -d 'pluginType=auth' \
-  -d 'pluginName=nacos-default-auth-plugin' \
-  -d 'config={}'
+  -d 'pluginName=ldap' \
+  -d 'config={"connect-timeout":"6000"}' \
+  -d 'localOnly=false'
 ```
 
 * Response example
@@ -1023,7 +1031,7 @@ A user identity with the corresponding `namespace read` permission is required.
 
 #### Response Data
 
-The returned `data` is an array of plugin information. Each item contains the plugin name, type, enabled status, and other fields.
+The returned `data` is an array including name, type, state, critical, executionMode, configurable, and related metadata.
 
 #### Examples
 
@@ -1041,7 +1049,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/list?pluginType=auth'
   "message": "success",
   "data": [
     {
-      "name": "nacos-default-auth-plugin",
+      "name": "nacos",
       "type": "auth",
       "enabled": true
     }
@@ -1053,7 +1061,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/list?pluginType=auth'
 
 #### Description
 
-You can use this API to update whether a plugin is enabled or disabled.
+Update plugin state. Persisted cluster state overrides static initialization, and local state overrides persisted state. Illegal runtime changes to exclusive selection, PRE_CONTEXT implementations, or active critical providers are rejected.
 
 #### Since
 
@@ -1093,8 +1101,9 @@ A user identity with the corresponding `namespace write` permission is required.
 ```shell
 curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/status' \
   -d 'pluginType=auth' \
-  -d 'pluginName=nacos-default-auth-plugin' \
-  -d 'enabled=True'
+  -d 'pluginName=ldap' \
+  -d 'enabled=true' \
+  -d 'localOnly=false'
 ```
 
 * Response example
@@ -7823,6 +7832,8 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines/{pipelineId}'
 ## 10. AI Resource Import
 
 AI Resource Import APIs provide query, search, validation, and execution capabilities for external AI resource import sources.
+
+API `sourceId` equals the managed plugin name and is one of `mcp-official`, `mcp-registry-protocol`, `skills-sh`, or `skills-well-known`. The source descriptor field named `pluginName` continues to mean importerType, not sourceId. Next Console retains the existing display names and search-select-validate-import experience for `mcp-official` and `skills-sh`, but presets and cloned endpoints are no longer supported.
 
 ### 10.1. Execute AI Resource Import
 #### Description

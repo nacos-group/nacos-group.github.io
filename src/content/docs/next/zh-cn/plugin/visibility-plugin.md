@@ -3,7 +3,7 @@ title: 可见性插件
 keywords: [可见性, 插件, 鉴权, AI 管理中心]
 description: 本文介绍 Nacos 可见性插件的用途、默认实现、配置方式，以及它和鉴权插件的关系。
 sidebar:
-    order: 3
+    order: 6
 ---
 
 # 可见性插件
@@ -44,7 +44,7 @@ sidebar:
 
 ## 默认可见性实现
 
-Nacos 默认提供名为 `nacos` 的可见性实现。它由默认 Nacos 鉴权实现提供，当前主要服务于 AI 管理中心资源。
+Nacos 默认提供 `visibility:nacos`。`visibility` 是 `ROUTED`、非 critical、`STANDARD` 类型；默认实现没有私有 definitions，因此 `configurable=false`。
 
 默认行为如下：
 
@@ -64,33 +64,37 @@ Nacos 默认提供名为 `nacos` 的可见性实现。它由默认 Nacos 鉴权�
 
 ## 配置方式
 
-默认配置中已经包含可见性插件配置：
+需要区分能力总开关、历史选择和实现状态：
 
 ```properties
+# 能力总开关：关闭时不执行，并延迟首次加载
 nacos.plugin.visibility.enabled=true
+
+# 内置实现的初始统一状态
+nacos.plugin.visibility.nacos.enabled=true
+
+# 历史实现选择，只用于启动初始状态兼容
 nacos.plugin.visibility.type=nacos
 ```
 
-如果使用默认 `nacos` 可见性实现，请同时开启 Nacos 鉴权能力。默认实现会复用鉴权上下文中的用户信息。
+family gate 默认开启。关闭后即使实现仍显示 loaded/enabled 也不会执行；重新开启会在尚未加载时触发一次发现、状态恢复和配置 apply。持久化统一状态优先于 `type` 和静态 `{serviceName}.enabled`。
+
+如果使用默认实现，请同时开启 Nacos 鉴权。它复用鉴权上下文中的用户信息。
 
 ```properties
-nacos.core.auth.system.type=nacos
+nacos.plugin.auth.type=nacos
 nacos.core.auth.enabled=true
 nacos.core.auth.admin.enabled=true
 nacos.core.auth.console.enabled=true
 ```
 
-插件专属配置可以使用以下前缀：
+自定义实现只有声明 `PluginConfigSpec` definitions 后才可配置，canonical full key 为：
 
 ```properties
-nacos.plugin.visibility.{serviceName}.*
+nacos.plugin.visibility.{serviceName}.{itemKey}
 ```
 
-例如自定义插件名是 `example`，可以读取：
-
-```properties
-nacos.plugin.visibility.example.timeout=3000
-```
+不要把未声明的任意属性当作统一配置。旧二进制实现或零 definition 实现仍可加载，但显示 `configurable=false`。
 
 ## 可见性 SPI
 
@@ -98,11 +102,13 @@ nacos.plugin.visibility.example.timeout=3000
 
 | 方法 | 说明 |
 | --- | --- |
-| `getVisibilityServiceName()` | 返回插件名，需要和 `nacos.plugin.visibility.type` 对应。 |
-| `init(properties)` | 初始化插件专属配置。 |
+| `getVisibilityServiceName()` | 返回稳定 pluginName。 |
+| `init(properties)` | 已废弃的旧配置回调，只用于没有 definitions 的兼容实现。 |
 | `resolveDefaultScopeForCreate(identity, apiType, resourceType)` | 资源创建时，如果请求没有指定 `scope`，返回默认可见性。默认是 `PRIVATE`。 |
 | `validateVisibility(identity, action, apiType, resource)` | 判断单个资源是否对当前身份可见或可写。 |
 | `adviseQuery(identity, action, apiType, queryContext)` | 为列表和搜索生成可见性查询建议。 |
+
+`VisibilityService` 继承 `PluginConfigSpec`。新实现应声明 key/alias/type/default/required/sensitive/effectMode，实现原子 `applyConfig` 并返回当前快照。统一配置实现不会再调用旧 `init(Properties)`。运行时路由在调用前检查 `visibility:{serviceName}` 状态。
 
 ## 查询建议 QueryAdvisor
 

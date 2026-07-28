@@ -848,8 +848,8 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/exist?customNamespa
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `pluginType` | `string` | **是** | 插件类型，如 `auth`（鉴权）、`control`（控制）、`datasource`（数据源）等。 |
-| `pluginName` | `string` | **是** | 插件名称，如 `nacos-default-auth-plugin`。 |
+| `pluginType` | `string` | **是** | 插件类型，如 `auth`、`control`、`datasource-dialect`。 |
+| `pluginName` | `string` | **是** | 插件名称，如 `nacos`；完整身份为 `pluginType:pluginName`。 |
 
 #### 返回数据
 
@@ -860,16 +860,20 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/exist?customNamespa
 | data.pluginName | `string` | 插件名称。 |
 | data.enabled | `boolean` | 当前是否已启用。 |
 | data.critical | `boolean` | 是否为关键插件（关键插件不可被禁用）。 |
+| data.typeCritical | `boolean` | 插件类型是否声明为 critical。 |
+| data.executionMode | `string` | `EXCLUSIVE`、`CHAIN`、`ROUTED` 或 `BROADCAST`。 |
+| data.exclusive | `boolean` | 是否为排他选择类型。 |
 | data.configurable | `boolean` | 是否支持控制台动态配置。 |
-| data.config | `object` | 插件当前配置项。 |
-| data.configDefinitions | `array` | 插件配置项定义列表，用于渲染配置表单。 |
+| data.config | `object` | 有效配置，敏感项显示 masked marker。 |
+| data.configDefinitions | `array` | definition 列表，包含 alias、类型、默认值、必填、敏感和 effectMode。 |
+| data.configValueMetas | `object` | 每项的有效来源与 `overridden` 信息。 |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/plugin?pluginType=auth&pluginName=nacos-default-auth-plugin'
+curl -X GET 'http://127.0.0.1:8080/v3/console/plugin?pluginType=auth&pluginName=nacos'
 ```
 
 * 返回示例
@@ -879,10 +883,12 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin?pluginType=auth&pluginName=
   "code": 0,
   "message": "success",
   "data": {
-    "name": "nacos-default-auth-plugin",
+    "name": "nacos",
     "type": "auth",
     "enabled": true,
-    "config": {}
+    "config": {},
+    "configDefinitions": [],
+    "configValueMetas": {}
   }
 }
 ```
@@ -913,7 +919,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin?pluginType=auth&pluginName=
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `pluginType` | `string` | **是** | 插件类型，如 `auth`、`control`、`datasource` 等。 |
+| `pluginType` | `string` | **是** | 插件类型，如 `auth`、`control`、`datasource-dialect`。 |
 | `pluginName` | `string` | **是** | 插件名称。 |
 
 #### 返回数据
@@ -925,7 +931,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin?pluginType=auth&pluginName=
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/availability?pluginType=auth&pluginName=nacos-default-auth-plugin'
+curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/availability?pluginType=auth&pluginName=nacos'
 ```
 
 * 返回示例
@@ -944,7 +950,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/availability?pluginType=aut
 
 #### 接口描述
 
-通过该接口，可以更新插件的配置。需要提供插件类型、名称及配置内容。
+替换目标运行时来源的完整配置 map。只能提交 definitions 中 `RUNTIME` 项；`RESTART` 项在 Next Console 中只读，修改、删除或新增都会被拒绝。敏感字段返回 masked marker 时，原样提交 marker 表示保留目标来源中已有值。
 
 #### 起始版本
 
@@ -968,7 +974,8 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/availability?pluginType=aut
 |--------|------|------|----------|
 | `pluginType` | `string` | **是** | 插件类型。 |
 | `pluginName` | `string` | **是** | 插件名称。 |
-| `config` | `string` | 否 | 插件配置内容，JSON 对象，具体字段由插件定义。 |
+| `config` | `string` | 否 | 完整 JSON item map，具体字段由插件 definitions 定义。 |
+| `localOnly` | `boolean` | 否 | `true` 仅写当前节点的 `LOCAL_ONLY`；否则写 `RUNTIME_PERSISTED`。 |
 
 #### 返回数据
 
@@ -983,8 +990,9 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/availability?pluginType=aut
 ```shell
 curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/config' \
   -d 'pluginType=auth' \
-  -d 'pluginName=nacos-default-auth-plugin' \
-  -d 'config={}'
+  -d 'pluginName=ldap' \
+  -d 'config={"connect-timeout":"6000"}' \
+  -d 'localOnly=false'
 ```
 
 * 返回示例
@@ -1027,7 +1035,7 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/config' \
 
 #### 返回数据
 
-返回 data 为插件信息数组，每项包含插件名称、类型、是否启用等。
+返回 data 为插件信息数组，每项包含名称、类型、状态、critical、executionMode、configurable 等元数据。
 
 #### 示例
 
@@ -1045,7 +1053,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/list?pluginType=auth'
   "message": "success",
   "data": [
     {
-      "name": "nacos-default-auth-plugin",
+      "name": "nacos",
       "type": "auth",
       "enabled": true
     }
@@ -1057,7 +1065,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/list?pluginType=auth'
 
 #### 接口描述
 
-通过该接口，可以更新插件的启用状态（启用或禁用）。
+更新插件状态。集群持久化状态优先于静态初值，本地状态优先于持久化状态。EXCLUSIVE 选择、PRE_CONTEXT 实现和 active critical provider 的非法运行时修改会被拒绝。
 
 #### 起始版本
 
@@ -1097,8 +1105,9 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/list?pluginType=auth'
 ```shell
 curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/status' \
   -d 'pluginType=auth' \
-  -d 'pluginName=nacos-default-auth-plugin' \
-  -d 'enabled=True'
+  -d 'pluginName=ldap' \
+  -d 'enabled=true' \
+  -d 'localOnly=false'
 ```
 
 * 返回示例
@@ -7827,6 +7836,8 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines/{pipelineId}'
 ## 10. AI 资源导入
 
 AI 资源导入 API 提供外部 AI 资源导入源查询、搜索、校验与执行能力。
+
+API 的 `sourceId` 等于 managed `pluginName`，当前固定为 `mcp-official`、`mcp-registry-protocol`、`skills-sh` 或 `skills-well-known`。来源描述中的 `pluginName` 字段仍表示 importerType，不是 sourceId。Next Console 保持 `mcp-official` 与 `skills-sh` 原有展示名称和搜索—选择—校验—导入体验，但不再支持 preset 或复制 endpoint。
 
 ### 10.1. 执行 AI 资源导入
 #### 接口描述

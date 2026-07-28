@@ -78,8 +78,8 @@ Setting
 
 ```properties
 nacos.core.auth.enabled=true
-nacos.core.auth.system.type=nacos
-nacos.core.auth.plugin.nacos.token.secret.key=${custom, make sure same in all nodes}
+nacos.plugin.auth.type=nacos
+nacos.plugin.auth.nacos.token.secret.key=${custom, make sure same in all nodes}
 nacos.core.auth.server.identity.key=${custom, make sure same in all nodes}
 nacos.core.auth.server.identity.value=${custom, make sure same in all nodes}
 ```

@@ -1501,7 +1501,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state/readiness'
 
 #### 接口描述
 
-通过该接口，可以更新插件的配置。需要提供插件类型、名称及配置内容。支持 localOnly 仅作用于当前节点。
+更新插件的完整目标来源配置。`localOnly=false` 写入持久化运行时来源，`localOnly=true` 只写当前节点本地来源；后者优先级更高。提交 map 会替换该来源的旧 map，空 map 表示清空。只能更新 definitions 中 `effectMode=RUNTIME` 的项，新增、修改或删除 `RESTART` 项都会被拒绝。
 
 #### 起始版本
 
@@ -1529,8 +1529,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state/readiness'
 |-------------|----------|----|----------------|
 | `pluginType` | `string` | **是** | 插件类型，如 auth。 |
 | `pluginName` | `string` | **是** | 插件名称。 |
-| `config` | `string` | **是** | 插件配置项。 |
-| `localOnly` | `boolean` | 否 | 是否仅写本地，不持久化。 |
+| `config` | `object` | **是** | 以 definition item key 为键的完整配置 map。 |
+| `localOnly` | `boolean` | 否 | `true` 写 `LOCAL_ONLY`；否则写集群持久化的 `RUNTIME_PERSISTED`。 |
 
 #### 返回数据
 
@@ -1542,7 +1542,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state/readiness'
 
 ```shell
 curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/config' \
-  -H 'Content-Type: application/json' -d '{}'
+  -H 'Content-Type: application/json' \
+  -d '{"pluginType":"auth","pluginName":"ldap","config":{"connect-timeout":"6000"},"localOnly":false}'
 ```
 
 * 返回示例
@@ -1595,16 +1596,20 @@ curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/config' \
 | pluginName | `string` | 插件名称 |
 | enabled | `boolean` | 是否启用 |
 | critical | `boolean` | 是否关键插件 |
+| typeCritical | `boolean` | 插件类型是否声明为 critical |
+| executionMode | `string` | `EXCLUSIVE`、`CHAIN`、`ROUTED` 或 `BROADCAST` |
+| exclusive | `boolean` | 是否为排他选择类型 |
 | configurable | `boolean` | 是否可配置 |
-| config | `object` | 配置内容 |
-| configDefinitions | `array` | 配置定义列表 |
+| config | `object` | 当前有效 item map，敏感值已脱敏 |
+| configDefinitions | `array` | definitions，包含 key、aliases、type、defaultValue、required、sensitive 和 effectMode |
+| configValueMetas | `object` | 各 item 的有效值来源和 `overridden` 元数据 |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/detail?pluginType=auth&pluginName=nacos-default-auth-plugin'
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/detail?pluginType=auth&pluginName=nacos'
 ```
 
 * 返回示例
@@ -1614,14 +1619,18 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/detail?pluginType=
   "code": 0,
   "message": "success",
   "data": {
-    "pluginId": "auth:nacos-default-auth-plugin",
+    "pluginId": "auth:nacos",
     "pluginType": "auth",
-    "pluginName": "nacos-default-auth-plugin",
+    "pluginName": "nacos",
     "enabled": true,
     "critical": true,
-    "configurable": true,
+    "typeCritical": true,
+    "executionMode": "EXCLUSIVE",
+    "exclusive": true,
+    "configurable": false,
     "config": {},
-    "configDefinitions": []
+    "configDefinitions": [],
+    "configValueMetas": {}
   }
 }
 ```
@@ -1674,12 +1683,14 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/list?pluginType=au
   "message": "success",
   "data": [
     {
-      "pluginId": "auth:nacos-default-auth-plugin",
+      "pluginId": "auth:nacos",
       "pluginType": "auth",
-      "pluginName": "nacos-default-auth-plugin",
+      "pluginName": "nacos",
       "enabled": true,
       "critical": true,
-      "configurable": true,
+      "configurable": false,
+      "typeCritical": true,
+      "executionMode": "EXCLUSIVE",
       "exclusive": true
     }
   ]
@@ -1690,7 +1701,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/list?pluginType=au
 
 #### 接口描述
 
-通过该接口，可以更新插件的启用状态（启用或禁用）。支持 localOnly 仅作用于当前节点。
+更新实现状态。`localOnly=false` 写入 `${nacos.home}/data/plugin/plugin-states.json` 并用于集群操作；`localOnly=true` 只影响当前节点且优先。EXCLUSIVE 选择、PRE_CONTEXT 状态以及 active critical provider 不能通过运行时请求非法修改。
 
 #### 起始版本
 
@@ -1731,7 +1742,8 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/list?pluginType=au
 
 ```shell
 curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/status' \
-  -H 'Content-Type: application/json' -d '{}'
+  -H 'Content-Type: application/json' \
+  -d '{"pluginType":"trace","pluginName":"ai-resource-trace-log","enabled":false,"localOnly":false}'
 ```
 
 * 返回示例
@@ -9738,11 +9750,13 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/pipelines/detail?pipelineId
 
 ## 10. AI 资源导入
 
+这些 API 只使用统一插件管理中已启用的固定来源。请求和响应的 `sourceId` 等于 managed `pluginName`：`mcp-official`、`mcp-registry-protocol`、`skills-sh` 或 `skills-well-known`。来源描述中的历史字段 `pluginName` 仍表示 importerType（例如 `mcp-registry`），不能把它当作 `sourceId`。同一个实现不能再通过纯配置复制成多个 endpoint。
+
 ### 10.1. 查询 AI 资源导入源
 
 #### 接口描述
 
-通过该接口，可查询当前配置的 AI 资源导入源。
+查询当前已加载且启用的固定 AI 资源导入来源。来源详情与标准 definitions 由 `ai-resource-import:{sourceId}` 管理。
 
 #### 起始版本
 

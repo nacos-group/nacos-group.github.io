@@ -28,6 +28,7 @@ Nacos 会在版本演进中保留一部分兼容能力，帮助用户完成升�
 | 兼容开关 | 只在升级或迁移窗口期打开。稳定后关闭。 | [系统参数](./system-configurations.md) |
 | Beta/Tag 灰度配置兼容 | Nacos 3.3 起不再自动迁移旧 `config_info_beta`、`config_info_tag` 表，升级前需迁移到 `config_info_gray` 当前灰度模型。当前 beta/tag API 仍由 `config_info_gray` 和 `GrayRule` 支撑。 | [升级手册](./upgrading.mdx)、[配置灰度发布](../user/config/gray-release.md) |
 | 默认命名空间迁移 | Nacos 3.3 起不再自动在空 tenant 与 `public` 之间做存储迁移或双写。空或省略 namespace 请求仍会归一为默认 namespace `public`。 | [升级手册](./upgrading.mdx)、[Java SDK 使用手册](../user/java-sdk/usage.md#13-升级兼容性) |
+| 插件管理重构 | 迁移到 `pluginType:pluginName`、标准 definition key 和统一状态。AI Resource Import 的旧双层 SPI/Source/preset 模型已移除。 | [插件迁移](../../plugin/migration.md)、[AI 资源导入插件](../../plugin/ai-resource-import-plugin.md) |
 | 旧控制台 | 仅用于兼容存量使用习惯。新部署使用新控制台。 | [控制台手册](./console.md#旧控制台) |
 | Java SDK 已废弃配置项 | 不在新系统中继续使用。 | [Java SDK 属性配置](../user/java-sdk/properties.md) |
 | CLI 已废弃命令 | 使用显式生命周期命令替代快捷 publish 命令。 | [Nacos CLI 使用指南](./nacos-cli.md) |
@@ -40,6 +41,12 @@ Nacos 3.3 移除了 Config 3.0 之前的运行时兼容迁移逻辑，包括默�
 从 3.0 之前版本升级到 3.3 时，如果旧部署未使用默认 namespace，且未使用 beta 灰度发布，则本次兼容迁移移除不影响该兼容领域的平滑升级。若使用过默认 namespace 或 beta 灰度发布，则升级到 3.3 前需要自行完成数据迁移：将默认 namespace 数据从空 tenant 迁移到 `public`，并将旧 beta/tag 灰度数据迁移到 `config_info_gray` 当前灰度模型。
 
 这不是移除当前默认 namespace 语义，也不是移除当前 beta/tag 灰度 API。空或省略 namespace 请求仍归一为 `public`；当前 beta/tag 灰度行为仍由 `config_info_gray` 和 `GrayRule` 支撑。
+
+## 插件管理与 AI Resource Import breaking change
+
+next 版本插件使用统一身份、状态、配置来源和生命周期。历史实现如果未实现 `PluginConfigSpec` 仍可加载，但自动显示为 `configurable=false`。Config Change 的 `ConfigChangeConfigs` 已废弃但仍处于兼容周期。
+
+AI Resource Import 是不兼容迁移：`AiResourceImportSource`、Source Provider SPI、preset、`nacos.ai.resource.import.sources[N].*` 以及通过配置复制同一实现到多个 endpoint 的模型均已移除。一个 `pluginName` 现在对应一个确定来源，`sourceId` 等于 managed pluginName；旧 API 的 `pluginName` 字段继续表示 importerType。新部署使用 `nacos.plugin.ai-resource-import.*`，迁移清单见[插件迁移](../../plugin/migration.md)。
 
 ## 使用兼容能力时要确认什么
 
