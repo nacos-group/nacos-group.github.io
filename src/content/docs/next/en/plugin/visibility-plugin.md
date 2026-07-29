@@ -3,7 +3,7 @@ title: Visibility Plugin
 keywords: [Visibility, Plugin, Auth, AI Registry]
 description: Learn what the Nacos visibility plugin does, how the default implementation works, how to configure it, and how it relates to auth plugins.
 sidebar:
-    order: 3
+    order: 6
 ---
 
 # Visibility Plugin
@@ -44,7 +44,7 @@ Then it asks the current auth plugin to evaluate that resource. This keeps the r
 
 ## Default Visibility Implementation
 
-Nacos provides a default visibility implementation named `nacos`. It is provided by the default Nacos auth implementation and currently serves AI Registry resources.
+Nacos provides `visibility:nacos`. `visibility` is a non-critical, `ROUTED`, `STANDARD` type. The built-in implementation declares no private definitions and appears as `configurable=false`.
 
 Default behavior:
 
@@ -64,33 +64,37 @@ List and search APIs must not page first and then filter visibility in memory. T
 
 ## Configuration
 
-The default configuration includes visibility plugin settings:
+Distinguish the capability gate, historical selection, and implementation state:
 
 ```properties
+# Capability gate: disables execution and defers first loading
 nacos.plugin.visibility.enabled=true
+
+# Initial unified state of the built-in implementation
+nacos.plugin.visibility.nacos.enabled=true
+
+# Historical startup selection compatibility
 nacos.plugin.visibility.type=nacos
 ```
 
-When using the default `nacos` visibility implementation, enable Nacos auth as well. The default visibility service reuses user information from the auth context.
+The family gate defaults to enabled. When it is off, the implementation does not execute even if it remains loaded and enabled. Re-enabling triggers discovery, state restoration, and config apply if the type has not loaded yet. Persisted unified state takes precedence over `type` and static `{serviceName}.enabled`.
+
+When using the default implementation, enable Nacos auth as well. It reuses user information from the auth context.
 
 ```properties
-nacos.core.auth.system.type=nacos
+nacos.plugin.auth.type=nacos
 nacos.core.auth.enabled=true
 nacos.core.auth.admin.enabled=true
 nacos.core.auth.console.enabled=true
 ```
 
-Plugin-specific properties use this prefix:
+Custom implementations are configurable only when they declare `PluginConfigSpec` definitions. Canonical full keys use:
 
 ```properties
-nacos.plugin.visibility.{serviceName}.*
+nacos.plugin.visibility.{serviceName}.{itemKey}
 ```
 
-For example, a custom plugin named `example` can read:
-
-```properties
-nacos.plugin.visibility.example.timeout=3000
-```
+Do not treat undeclared arbitrary properties as unified config. Old binary and zero-definition implementations still load but appear as `configurable=false`.
 
 ## Visibility SPI
 
@@ -98,11 +102,13 @@ Custom visibility plugins implement `com.alibaba.nacos.plugin.visibility.spi.Vis
 
 | Method | Description |
 | --- | --- |
-| `getVisibilityServiceName()` | Return the plugin name selected by `nacos.plugin.visibility.type`. |
-| `init(properties)` | Initialize plugin-specific properties. |
+| `getVisibilityServiceName()` | Return the stable pluginName. |
+| `init(properties)` | Deprecated legacy callback used only for implementations without definitions. |
 | `resolveDefaultScopeForCreate(identity, apiType, resourceType)` | Return the default `scope` when a create request does not specify one. Default is `PRIVATE`. |
 | `validateVisibility(identity, action, apiType, resource)` | Decide whether one resource is visible or writable for the current identity. |
 | `adviseQuery(identity, action, apiType, queryContext)` | Return visibility advice for list and search queries. |
+
+`VisibilityService` inherits `PluginConfigSpec`. A new implementation declares key/alias/type/default/required/sensitive/effectMode, applies one snapshot atomically, and returns its current config. Unified implementations do not receive legacy `init(Properties)`. Routing checks `visibility:{serviceName}` state before invocation.
 
 ## QueryAdvisor
 

@@ -104,12 +104,25 @@ AI 管理中心用于管理 AI 应用依赖的资源。新控制台会在 AI 功
 | --- | --- |
 | 命名空间 | 创建、编辑和删除命名空间。 |
 | 集群管理 | 查看集群节点和基础状态。 |
-| 插件管理 | 查看已加载插件和插件状态。 |
+| 插件管理 | 查看统一插件清单、状态、有效配置和来源，并按 definitions 安全更新运行时项。 |
 | 用户列表 | 管理控制台用户。 |
 | 角色管理 | 管理角色和用户关系。 |
 | 权限管理 | 管理资源权限。 |
 
 如果看不到某些菜单，通常是当前用户不是管理员、功能模式限制了模块，或相关功能未启用。
+
+### Next Console 插件管理
+
+插件列表按 `pluginType:pluginName` 展示实现，并标明执行模式、critical 和 configurable。详情页会显示：
+
+- 当前启用状态，以及该状态是持久化集群状态还是当前节点 `localOnly` 覆盖；
+- `configDefinitions` 中的类型、默认值、alias、必填、敏感和 `effectMode`；
+- 每个有效配置值的 `source` 与 `overridden`，来源优先级为 `LOCAL_ONLY > RUNTIME_PERSISTED > STATIC > DEFAULT`；
+- 敏感值的 masked marker，而不是明文。
+
+只有 `RUNTIME` definition 可以在线编辑；`RESTART` 项只读并提示通过静态配置修改后重启。提交配置会替换选定来源的完整 map，空 map 表示清空。集群操作前应先清理当前节点的 `localOnly` 覆盖，否则它仍会压过持久化值。active critical provider、EXCLUSIVE 选择和 PRE_CONTEXT 插件的非法运行时状态修改会被拒绝。
+
+这些能力只适用于 Next Console；Legacy Console 不提供统一插件配置工作流。完整运维语义见[插件运维](../../plugin/operations.md)。
 
 ## 旧控制台
 

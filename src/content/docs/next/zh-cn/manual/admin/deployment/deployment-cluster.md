@@ -53,12 +53,12 @@ sidebar:
 然后修改`${nacos.home}/conf/application.properties`文件，增加支持MySQL数据源配置，添加MySQL数据源的url、用户名和密码。
 
 ```
-spring.sql.init.platform=mysql
+nacos.plugin.datasource-dialect.type=mysql
 
-db.num=1
-db.url.0=jdbc:mysql://${mysql_host}:${mysql_port}/${nacos_database}?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
-db.user=${mysql_user}
-db.password=${mysql_password}
+nacos.plugin.datasource.db.num=1
+nacos.plugin.datasource.db.url.0=jdbc:mysql://${mysql_host}:${mysql_port}/${nacos_database}?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
+nacos.plugin.datasource.db.user=${mysql_user}
+nacos.plugin.datasource.db.password=${mysql_password}
 ```
 
 ##### 1.1.3.1. 开启默认鉴权插件
@@ -74,8 +74,8 @@ db.password=${mysql_password}
 nacos.core.auth.enabled=true
 ## 开启控制台访问鉴权，默认为开启
 nacos.core.auth.console.enabled=true
-nacos.core.auth.system.type=nacos
-nacos.core.auth.plugin.nacos.token.secret.key=${自定义，保证所有节点一致}
+nacos.plugin.auth.type=nacos
+nacos.plugin.auth.nacos.token.secret.key=${自定义，保证所有节点一致}
 nacos.core.auth.server.identity.key=${自定义，保证所有节点一致}
 nacos.core.auth.server.identity.value=${自定义，保证所有节点一致}
 ```
@@ -103,8 +103,8 @@ startup.cmd
 随后启动程序会提示您输入`3个`鉴权相关配置
 
 ```
-`nacos.core.auth.plugin.nacos.token.secret.key` is missing, please set: ${your_input_token_secret_key}
-nacos.core.auth.plugin.nacos.token.secret.key` Updated:
+`nacos.plugin.auth.nacos.token.secret.key` is missing, please set: ${your_input_token_secret_key}
+nacos.plugin.auth.nacos.token.secret.key` Updated:
 ----------------------------------
 `nacos.core.auth.server.identity.key` is missing, please set: ${your_input_server_identity_key}
 `nacos.core.auth.server.identity.key` Updated:
@@ -150,8 +150,8 @@ nacos.core.auth.plugin.nacos.token.secret.key` Updated:
 nacos.core.auth.enabled=true
 ## 开启控制台访问鉴权，默认为开启
 nacos.core.auth.console.enabled=true
-nacos.core.auth.system.type=nacos
-nacos.core.auth.plugin.nacos.token.secret.key=${自定义，保证所有节点一致}
+nacos.plugin.auth.type=nacos
+nacos.plugin.auth.nacos.token.secret.key=${自定义，保证所有节点一致}
 nacos.core.auth.server.identity.key=${自定义，保证所有节点一致}
 nacos.core.auth.server.identity.value=${自定义，保证所有节点一致}
 ```

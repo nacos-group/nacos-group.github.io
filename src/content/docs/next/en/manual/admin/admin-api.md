@@ -1496,7 +1496,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/state/readiness'
 
 #### Description
 
-Use this API to update plugin configuration. Provide the plugin type, name, and configuration content. `localOnly` is supported to apply the change only to the current node.
+Replace the complete configuration map for the target source. `localOnly=false` writes the persisted runtime source; `localOnly=true` writes the higher-priority local source for this node only. An empty map clears the target source. Only definition items with `effectMode=RUNTIME` can be changed; adding, changing, or removing a `RESTART` item is rejected.
 
 #### Since
 
@@ -1524,8 +1524,8 @@ The request body is JSON and contains the following fields:
 |-------------|----------|----|----------------|
 | `pluginType` | `string` | **Yes** | Plugin type, such as auth. |
 | `pluginName` | `string` | **Yes** | Plugin name. |
-| `config` | `string` | **Yes** | Plugin configuration item. |
-| `localOnly` | `boolean` | No | Whether to write only locally without persistence. |
+| `config` | `object` | **Yes** | Complete configuration map keyed by definition item key. |
+| `localOnly` | `boolean` | No | `true` writes `LOCAL_ONLY`; otherwise writes cluster-persisted `RUNTIME_PERSISTED`. |
 
 #### Response Data
 
@@ -1537,7 +1537,8 @@ The response body follows the [Nacos open API unified response format](../user/o
 
 ```shell
 curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/config' \
-  -H 'Content-Type: application/json' -d '{}'
+  -H 'Content-Type: application/json' \
+  -d '{"pluginType":"auth","pluginName":"ldap","config":{"connect-timeout":"6000"},"localOnly":false}'
 ```
 
 * Response example
@@ -1590,16 +1591,20 @@ The response body follows the [Nacos open API unified response format](../user/o
 | pluginName | `string` | Plugin name. |
 | enabled | `boolean` | Whether the plugin is enabled. |
 | critical | `boolean` | Whether the plugin is critical. |
+| typeCritical | `boolean` | Whether the plugin type is declared critical. |
+| executionMode | `string` | `EXCLUSIVE`, `CHAIN`, `ROUTED`, or `BROADCAST`. |
+| exclusive | `boolean` | Whether the type uses exclusive selection. |
 | configurable | `boolean` | Whether the plugin is configurable. |
-| config | `object` | Configuration content. |
-| configDefinitions | `array` | Configuration definition list. |
+| config | `object` | Effective item map with sensitive values masked. |
+| configDefinitions | `array` | Definitions including key, aliases, type, defaultValue, required, sensitive, and effectMode. |
+| configValueMetas | `object` | Effective source and `overridden` metadata for each item. |
 
 #### Examples
 
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/detail?pluginType=auth&pluginName=nacos-default-auth-plugin'
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/detail?pluginType=auth&pluginName=nacos'
 ```
 
 * Response example
@@ -1609,14 +1614,18 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/detail?pluginType=
   "code": 0,
   "message": "success",
   "data": {
-    "pluginId": "auth:nacos-default-auth-plugin",
+    "pluginId": "auth:nacos",
     "pluginType": "auth",
-    "pluginName": "nacos-default-auth-plugin",
+    "pluginName": "nacos",
     "enabled": true,
     "critical": true,
-    "configurable": true,
+    "typeCritical": true,
+    "executionMode": "EXCLUSIVE",
+    "exclusive": true,
+    "configurable": false,
     "config": {},
-    "configDefinitions": []
+    "configDefinitions": [],
+    "configValueMetas": {}
   }
 }
 ```
@@ -1669,12 +1678,14 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/list?pluginType=au
   "message": "success",
   "data": [
     {
-      "pluginId": "auth:nacos-default-auth-plugin",
+      "pluginId": "auth:nacos",
       "pluginType": "auth",
-      "pluginName": "nacos-default-auth-plugin",
+      "pluginName": "nacos",
       "enabled": true,
       "critical": true,
-      "configurable": true,
+      "configurable": false,
+      "typeCritical": true,
+      "executionMode": "EXCLUSIVE",
       "exclusive": true
     }
   ]
@@ -1685,7 +1696,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/list?pluginType=au
 
 #### Description
 
-Use this API to update the plugin status (enabled or disabled). `localOnly` is supported to apply the change only to the current node.
+Update implementation state. `localOnly=false` persists to `${nacos.home}/data/plugin/plugin-states.json` for cluster operations; `localOnly=true` affects only this node and has higher priority. Exclusive selection, PRE_CONTEXT state, and active critical providers cannot be changed illegally at runtime.
 
 #### Since
 
@@ -1726,7 +1737,8 @@ The response body follows the [Nacos open API unified response format](../user/o
 
 ```shell
 curl -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/core/plugin/status' \
-  -H 'Content-Type: application/json' -d '{}'
+  -H 'Content-Type: application/json' \
+  -d '{"pluginType":"trace","pluginName":"ai-resource-trace-log","enabled":false,"localOnly":false}'
 ```
 
 * Response example
@@ -9727,11 +9739,13 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/admin/ai/pipelines/detail?pipelineId
 
 ## 10. AI Resource Import
 
+These APIs use only enabled fixed sources from unified plugin management. Request and response `sourceId` equals the managed plugin name: `mcp-official`, `mcp-registry-protocol`, `skills-sh`, or `skills-well-known`. The historical source descriptor field named `pluginName` still means importerType, such as `mcp-registry`; it is not the source ID. One implementation can no longer be cloned to multiple endpoints through configuration.
+
 ### 10.1. List AI Resource Import Sources
 
 #### Description
 
-This API lists the currently configured AI resource import sources.
+This API lists fixed AI resource import sources that are currently loaded and enabled. Source detail and canonical definitions are managed by `ai-resource-import:{sourceId}`.
 
 #### Since
 

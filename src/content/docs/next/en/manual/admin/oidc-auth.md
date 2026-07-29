@@ -122,7 +122,7 @@ Edit `<NACOS_HOME>/conf/application.properties`.
 
 ```properties
 ### Enable OIDC/OAuth2 auth
-nacos.core.auth.system.type=oidc
+nacos.plugin.auth.type=oidc
 
 ### Enable authentication
 nacos.core.auth.enabled=true
@@ -138,48 +138,48 @@ nacos.core.auth.server.identity.key=serverIdentity
 nacos.core.auth.server.identity.value=security
 
 ### Internal JWT signing key (Base64 encoded, original string >= 32 chars)
-nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
+nacos.plugin.auth.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
 ```
 
-> **Important**: If `nacos.core.auth.plugin.nacos.token.secret.key` is not set, the startup script will enter interactive mode prompting for input. Generate a key with `openssl rand -base64 32`.
+> **Important**: If the canonical value is empty, the startup script first migrates a valid `nacos.core.auth.plugin.nacos.token.secret.key` value found in `application.properties`; it prompts only when neither a valid canonical nor legacy value is available. Generate a key with `openssl rand -base64 32`.
 
 ### 3.3 OIDC Plugin Configuration (Required)
 
 ```properties
 ### IdP Issuer URI (for OIDC auto-discovery)
-nacos.core.auth.plugin.oidc.issuer-uri=http://localhost:8081/realms/nacos
+nacos.plugin.auth.oidc.issuer-uri=http://localhost:8081/realms/nacos
 
 ### OAuth2 Client credentials
-nacos.core.auth.plugin.oidc.client-id=nacos-server
-nacos.core.auth.plugin.oidc.client-secret=nacos-client-secret
+nacos.plugin.auth.oidc.client-id=nacos-server
+nacos.plugin.auth.oidc.client-secret=nacos-client-secret
 
 ### OAuth2 scopes
-nacos.core.auth.plugin.oidc.scope=openid profile email
+nacos.plugin.auth.oidc.scope=openid profile email
 
 ### Claim field for username extraction from ID Token
-nacos.core.auth.plugin.oidc.username-claim=preferred_username
+nacos.plugin.auth.oidc.username-claim=preferred_username
 ```
 
 ### 3.4 OIDC Optional Configuration
 
 | Property | Default | Description |
 |----------|---------|-------------|
-| `nacos.core.auth.plugin.oidc.token-validation-method` | `jwt` | Token validation method. The current implementation validates JWTs through JWKS. `introspection` is reserved and should not be documented as a supported runtime path yet |
-| `nacos.core.auth.plugin.oidc.jwks-cache-ttl-seconds` | `3600` | JWKS public key cache TTL (seconds) |
-| `nacos.core.auth.plugin.oidc.roles-claim` | `roles` | Claim name for roles in ID Token |
-| `nacos.core.auth.plugin.oidc.admin-role` | `nacos-admin` | Admin role name |
-| `nacos.core.auth.plugin.oidc.auto-create-user` | `true` | Auto-create user on first login |
-| `nacos.core.auth.plugin.oidc.authorization-endpoint` | (empty) | External authorization decision endpoint. When empty, the current implementation allows non-admin authorization decisions |
-| `nacos.core.auth.plugin.oidc.authorization-timeout-ms` | `5000` | Authorization request timeout (ms) |
-| `nacos.core.auth.plugin.oidc.strict-nonce-validation` | `true` | Enable strict nonce validation |
-| `nacos.core.auth.plugin.oidc.strict-audience-validation` | `true` | Enable strict audience validation |
+| `nacos.plugin.auth.oidc.token-validation-method` | `jwt` | Only JWT/JWKS is implemented; `introspection` is not supported |
+| `nacos.plugin.auth.oidc.jwks-cache-ttl-seconds` | `3600` | JWKS public key cache TTL (seconds) |
+| `nacos.plugin.auth.oidc.roles-claim` | `roles` | Claim name for roles in ID Token |
+| `nacos.plugin.auth.oidc.admin-role` | `nacos-admin` | Admin role name |
+| `nacos.plugin.auth.oidc.auto-create-user` | `true` | Reserved compatibility item; it does not change current runtime behavior |
+| `nacos.plugin.auth.oidc.authorization-endpoint` | (empty) | External authorization decision endpoint. When empty, the current implementation allows non-admin authorization decisions |
+| `nacos.plugin.auth.oidc.authorization-timeout-ms` | `5000` | Authorization request timeout (ms) |
+| `nacos.plugin.auth.oidc.strict-nonce-validation` | `true` | Enable strict nonce validation |
+| `nacos.plugin.auth.oidc.strict-audience-validation` | `true` | Enable strict audience validation |
 
 :::note
 `strict-nonce-validation` and `strict-audience-validation` are enabled by default when not explicitly configured. Disable them only temporarily during development or IdP integration debugging, and turn them back on before production.
 :::
 
 :::caution
-If production needs permission isolation by namespace, config, service, or AI resource, configure `nacos.core.auth.plugin.oidc.authorization-endpoint`, or provide a stricter authorization implementation. In the current implementation, an empty endpoint allows non-admin authorization decisions by default.
+If production needs permission isolation by namespace, config, service, or AI resource, configure `nacos.plugin.auth.oidc.authorization-endpoint`, or provide a stricter authorization implementation. In the current implementation, an empty endpoint allows non-admin authorization decisions by default.
 :::
 
 ### 3.5 Java SDK OAuth2 Client Credentials
@@ -293,12 +293,12 @@ Browser              Nacos                    IdP (Keycloak)
 
 ### 7.1 Startup hangs at "Please input the JWT token secret key"
 
-**Cause**: `nacos.core.auth.plugin.nacos.token.secret.key` is not set.
+**Cause**: `nacos.plugin.auth.nacos.token.secret.key` is not set.
 
 **Fix**: Set a Base64-encoded key in `application.properties`:
 
 ```properties
-nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
+nacos.plugin.auth.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
 ```
 
 ### 7.2 Startup fails: Empty identity
@@ -325,7 +325,7 @@ nacos.core.auth.server.identity.value=security
 **Steps**:
 1. Verify `issuer-uri` matches the IdP's actual issuer (no trailing slash)
 2. Check `logs/nacos.log` for detailed errors
-3. During development, temporarily disable strict audience validation: `nacos.core.auth.plugin.oidc.strict-audience-validation=false`
+3. During development, temporarily disable strict audience validation: `nacos.plugin.auth.oidc.strict-audience-validation=false`
 4. Verify the IdP's JWKS endpoint is accessible
 
 ### 7.5 Auto-login after logout

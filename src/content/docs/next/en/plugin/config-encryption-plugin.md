@@ -3,7 +3,7 @@ title: Configuration Encryption
 keywords: [AES, encryption, configuration encryption, encryption plugin]
 description: This guide explains how Nacos configuration encryption works, how to use encryption plugins, which schema changes are required, and how to develop a custom plugin.
 sidebar:
-    order: 5
+    order: 8
 ---
 
 # Configuration Encryption Plugin
@@ -11,6 +11,10 @@ sidebar:
 Configuration encryption protects sensitive configuration content stored in Nacos. When enabled for a config item, Nacos writes ciphertext to the database and stores the data key in `encrypted_data_key`.
 
 Configuration encryption does not replace authentication, network isolation, TLS, or an enterprise key management system. It only prevents sensitive configuration content from being stored and exposed as plain text in Nacos storage and selected transfer paths.
+
+In unified plugin management, the plugin type is `encryption`, its execution mode is `ROUTED`, its load phase is `STANDARD`, and the type is non-critical. `algorithmName()` is both the route key and plugin name, so the plugin identity is `encryption:{algorithmName}`. The Nacos Server distribution does not currently bundle a production encryption algorithm; the AES implementation below is supplied by the external plugin repository.
+
+Discovered algorithms are enabled by default, and unified plugin state is the runtime routing gate. After an algorithm is disabled, reads and writes for `cipher-{algorithm}-` fail explicitly instead of returning ciphertext as plaintext.
 
 ## How It Works
 
@@ -34,7 +38,7 @@ The flow is:
 4. When the config item is queried, Nacos uses `encrypted_data_key` and the same plugin to decrypt the content.
 5. If `dataId` does not start with `cipher-`, the config item is handled as a normal plain-text config.
 
-If `dataId` starts with `cipher-` but the matching plugin is not loaded on the server or client, Nacos logs a warning and keeps processing the original content. In production, verify plugin loading before publishing encrypted configs.
+If `dataId` starts with `cipher-` but the matching algorithm is missing or disabled, the operation fails explicitly. Before production use, verify that the server and every Java SDK expected to encrypt or decrypt on the client side load the plugin.
 
 ## Schema Requirements
 
@@ -121,6 +125,14 @@ Important methods:
 | `decrypt(secretKey, content)` | Decrypts config content. |
 | `encryptSecretKey(secretKey)` | Encrypts or wraps the data key. |
 | `decryptSecretKey(secretKey)` | Decrypts or unwraps the data key. |
+
+`EncryptionPluginService` inherits the unified `PluginConfigSpec`. If a new implementation owns KMS endpoints, credentials, or algorithm settings, declare each `key`, alias, type, default, required flag, sensitivity, and effect mode through `ConfigItemDefinition`. Canonical full keys are:
+
+```properties
+nacos.plugin.encryption.{algorithmName}.{itemKey}
+```
+
+Apply runtime-capable items atomically in `applyConfig`, and return the accepted snapshot from `getCurrentConfig()`. Key material must be declared with `sensitive=true`. An older binary plugin without configuration definitions still loads, but the management APIs report `configurable=false`.
 
 Register the implementation through SPI:
 

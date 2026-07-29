@@ -76,7 +76,7 @@ You must also configure authentication-related settings to avoid startup failure
 ```properties
 nacos.core.auth.server.identity.key=${your_custom_server_identity_key}
 nacos.core.auth.server.identity.value=${your_custom_server_identity_value}
-nacos.core.auth.plugin.nacos.token.secret.key=${your_custom_token_secret_key}
+nacos.plugin.auth.nacos.token.secret.key=${your_custom_token_secret_key}
 ```
 
 :::note
@@ -102,8 +102,8 @@ startup.cmd -d console
 The startup program then prompts you to enter the following `3` authentication-related configurations:
 
 ```
-`nacos.core.auth.plugin.nacos.token.secret.key` is missing, please set: ${your_input_token_secret_key}
-nacos.core.auth.plugin.nacos.token.secret.key` Updated:
+`nacos.plugin.auth.nacos.token.secret.key` is missing, please set: ${your_input_token_secret_key}
+nacos.plugin.auth.nacos.token.secret.key` Updated:
 ----------------------------------
 `nacos.core.auth.server.identity.key` is missing, please set: ${your_input_server_identity_key}
 `nacos.core.auth.server.identity.key` Updated:

@@ -3412,7 +3412,7 @@ A `NacosException` is thrown when reading the config times out or a network exce
 
 #### Description
 
-List loaded plugins, optionally filtered by plugin type.
+List unified plugins loaded by Nacos, optionally filtered by type. Returned identities use `pluginType:pluginName` and include state, critical, executionMode, configurable, and related metadata.
 
 ```java
 List<Map<String, Object>> listPlugins(String pluginType) throws NacosException;
@@ -3450,7 +3450,7 @@ A `NacosException` is thrown when the operation fails.
 
 #### Description
 
-Get plugin detail by type and name.
+Get plugin detail by type and name, including definitions, masked effective configuration, and per-item source/overridden metadata.
 
 ```java
 Map<String, Object> getPluginDetail(String pluginType, String pluginName) throws NacosException;
@@ -3473,7 +3473,7 @@ Map<String, Object> getPluginDetail(String pluginType, String pluginName) throws
 
 ```java
 try {
-    Map<String, Object> detail = coreMaintainerService.getPluginDetail("auth", "nacos-ldap-auth");
+    Map<String, Object> detail = coreMaintainerService.getPluginDetail("auth", "ldap");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3487,7 +3487,7 @@ A `NacosException` is thrown when the operation fails.
 
 #### Description
 
-Enable or disable a plugin.
+Enable or disable a plugin. Exclusive selection, PRE_CONTEXT implementations, and active critical providers cannot be changed illegally at runtime. `localOnly=true` affects this node only and overrides persisted state.
 
 ```java
 void updatePluginStatus(String pluginType, String pluginName, boolean enabled) throws NacosException;
@@ -3512,8 +3512,8 @@ None (void).
 
 ```java
 try {
-    coreMaintainerService.updatePluginStatus("auth", "nacos-ldap-auth", false);
-    coreMaintainerService.updatePluginStatus("auth", "nacos-ldap-auth", false, true);
+    coreMaintainerService.updatePluginStatus("auth", "ldap", false);
+    coreMaintainerService.updatePluginStatus("auth", "ldap", false, true);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3527,7 +3527,7 @@ A `NacosException` is thrown when the operation fails.
 
 #### Description
 
-Update plugin configuration.
+Replace the complete configuration map for the target source. Only definitions with `effectMode=RUNTIME` can be changed. Adding, changing, or removing a `RESTART` item is rejected. `localOnly=true` writes higher-priority `LOCAL_ONLY`; otherwise the method writes `RUNTIME_PERSISTED`.
 
 ```java
 void updatePluginConfig(String pluginType, String pluginName, Map<String, String> config) throws NacosException;
@@ -3541,7 +3541,7 @@ void updatePluginConfig(String pluginType, String pluginName, Map<String, String
 |:-----------|:--------------------|:-------|
 | pluginType | string              | Plugin type.  |
 | pluginName | string              | Plugin name.  |
-| config     | Map\<String, String> | Config key-value pairs. |
+| config     | Map\<String, String> | Complete target-source map keyed by definition item key. |
 | localOnly  | boolean             | Whether to apply only to the current node. |
 
 #### Response Parameters
@@ -3553,9 +3553,9 @@ None (void).
 ```java
 try {
     Map<String, String> config = new HashMap<>();
-    config.put("serverAddr", "ldap://localhost:389");
-    coreMaintainerService.updatePluginConfig("auth", "nacos-ldap-auth", config);
-    coreMaintainerService.updatePluginConfig("auth", "nacos-ldap-auth", config, true);
+    config.put("connect-timeout", "6000");
+    coreMaintainerService.updatePluginConfig("auth", "ldap", config);
+    coreMaintainerService.updatePluginConfig("auth", "ldap", config, true);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3592,7 +3592,7 @@ Map<String, Boolean> getPluginAvailability(String pluginType, String pluginName)
 
 ```java
 try {
-    Map<String, Boolean> availability = coreMaintainerService.getPluginAvailability("auth", "nacos-ldap-auth");
+    Map<String, Boolean> availability = coreMaintainerService.getPluginAvailability("auth", "ldap");
 } catch (NacosException e) {
     e.printStackTrace();
 }

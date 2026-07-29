@@ -135,7 +135,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v2/cs/config?accessToken=${accessToken}
 
 ### OIDC/OAuth2 鉴权
 
-当服务端使用 `nacos.core.auth.system.type=oidc` 时，不使用 `/v3/auth/user/login` 获取 token。请从企业 IdP 获取 OAuth2/OIDC token，然后请求 Nacos 时携带：
+当服务端使用 `nacos.plugin.auth.type=oidc` 时，不使用 `/v3/auth/user/login` 获取 token。请从企业 IdP 获取 OAuth2/OIDC token，然后请求 Nacos 时携带：
 
 ```powershell
 curl -X GET 'http://127.0.0.1:8848/nacos/v2/cs/config?dataId=example.properties&group=DEFAULT_GROUP' \
@@ -155,7 +155,7 @@ OIDC/OAuth2 的服务端配置请参考[运维手册 - OIDC/OAuth2 认证](../ad
 常见原因包括：
 
 - token 已过期。
-- 集群节点之间 `nacos.core.auth.plugin.nacos.token.secret.key` 不一致。
+- 集群节点之间 `nacos.plugin.auth.nacos.token.secret.key` 不一致。
 - 服务端切换了鉴权插件类型。
 - 权限被修改，但客户端仍在使用旧 token。
 

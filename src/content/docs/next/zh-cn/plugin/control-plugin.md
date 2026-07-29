@@ -3,14 +3,14 @@ title: 流量防护
 keywords: [流量防护, 限流, 连接数限制, TPS, Control Plugin]
 description: 本文介绍 Nacos 流量防护插件的能力、默认实现、规则配置和自定义扩展方式。
 sidebar:
-    order: 9
+    order: 12
 ---
 
 # 流量防护插件
 
 流量防护插件用于在高压或异常访问场景下保护 Nacos 服务端。它可以限制连接数量，也可以限制核心接口的 TPS，帮助服务端快速拒绝过量请求，避免局部流量问题扩大成集群不可用。
 
-Nacos 2.3.0 起支持通过 SPI 注入流量防护插件。当前默认实现的插件名是 `nacos`。如果没有配置 `nacos.plugin.control.manager.type`，Nacos 会使用 no limit 实现，不主动限制连接和 TPS。
+Nacos 2.3.0 起支持通过 SPI 注入流量防护插件。统一插件类型为 `control`，执行模式为 `EXCLUSIVE`，加载阶段为 `STANDARD`，类型非 critical。当前内置插件身份是 `control:nacos`，不声明配置 definitions，因此 `configurable=false`。如果没有选择实现，Nacos 使用轻量 no-limit facade，不加载规则、指标或限流后台资源。
 
 ## 核心概念
 
@@ -27,8 +27,10 @@ Nacos 2.3.0 起支持通过 SPI 注入流量防护插件。当前默认实现的
 在 `${nacos.home}/conf/application.properties` 中配置：
 
 ```properties
-nacos.plugin.control.manager.type=nacos
+nacos.plugin.control.type=nacos
 ```
+
+历史键 `nacos.plugin.control.manager.type` 仍是静态 alias；同时配置时标准键优先并记录迁移 WARN。选择是 `RESTART` 语义，运行时状态 API 不能切换实现。
 
 默认规则文件存储在 `${nacos.home}/data/connection` 和 `${nacos.home}/data/tps`。如果希望换到其他目录：
 
@@ -42,6 +44,8 @@ nacos.plugin.control.rule.local.basedir=/opt/nacos-control-rules
 /opt/nacos-control-rules/data/connection
 /opt/nacos-control-rules/data/tps
 ```
+
+规则目录和外部规则存储属于 control 模块配置，不是 `control:nacos` 的 definitions。选择的实现会在统一状态恢复和有效配置应用后执行一次启动初始化；未选择的实现仍可列出，但不会构建 manager 或启动后台资源。
 
 启动后可以查看 `${nacos.home}/logs/plugin-control.log`，确认插件是否加载成功。
 
@@ -139,7 +143,7 @@ nacos.plugin.control.rule.external.storage=${controlPluginName}
 
 | SPI / 抽象类 | 作用 |
 | --- | --- |
-| `ControlManagerBuilder` | 声明插件名，并创建连接数管理器和 TPS 管理器。 |
+| `ControlManagerBuilder` | 声明插件名，并根据启动时有效配置创建连接数管理器和 TPS 管理器。 |
 | `ConnectionControlManager` | 加载连接数规则，并判断新连接是否允许建立。 |
 | `TpsControlManager` | 注册 ControlPoint，加载 TPS 规则，并判断请求是否允许继续执行。 |
 | `ExternalRuleStorageBuilder` | 可选。用于接入外部规则存储。 |
@@ -165,6 +169,8 @@ META-INF/services/com.alibaba.nacos.plugin.control.spi.ControlManagerBuilder
 ```text
 META-INF/services/com.alibaba.nacos.plugin.control.spi.ExternalRuleStorageBuilder
 ```
+
+新 `ControlManagerBuilder` 可以通过 `PluginConfigDefinitionSpec` 声明私有配置，标准键为 `nacos.plugin.control.{pluginName}.{itemKey}`。在 control 定义安全的 manager 替换/关闭生命周期前，这些 definitions 必须使用 `RESTART`；旧 builder 的无参数构建方法仍保持二进制兼容。
 
 ## 运维建议
 

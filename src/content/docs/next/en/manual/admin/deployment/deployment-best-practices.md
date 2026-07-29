@@ -98,10 +98,10 @@ Basic configuration:
 
 ```properties
 nacos.core.auth.enabled=true
-nacos.core.auth.system.type=nacos
+nacos.plugin.auth.type=nacos
 nacos.core.auth.server.identity.key=${your_identity_key}
 nacos.core.auth.server.identity.value=${your_identity_value}
-nacos.core.auth.plugin.nacos.token.secret.key=${your_token_secret}
+nacos.plugin.auth.nacos.token.secret.key=${your_token_secret}
 ```
 
 Recommendations:
@@ -128,7 +128,7 @@ Related docs:
 When a cluster carries many client connections or sudden traffic spikes on core APIs, enable the traffic control plugin. Start with `monitor` mode, then switch to `intercept` after the threshold is validated.
 
 ```properties
-nacos.plugin.control.manager.type=nacos
+nacos.plugin.control.type=nacos
 ```
 
 Pay attention to:

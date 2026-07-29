@@ -3,7 +3,7 @@ title: Cluster Addressing
 keywords: [Addressing, cluster members, address-server, cluster.conf]
 description: Learn how Nacos Server discovers cluster members with file and address-server modes.
 sidebar:
-    order: 10
+    order: 13
 ---
 
 # Cluster Addressing

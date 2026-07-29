@@ -62,11 +62,11 @@ mvn clean install -Prelease-nacos
 在`Nacos/distribution/target/nacos-server-${version}/nacos/conf/application.properties`文件中添加如下配置：
 
 ```properties
-spring.sql.init.platform=mysql
-db.num=1
-db.url.0=jdbc:mysql://127.0.0.1:3306/nacos?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
-db.user=${MYSQL_USERNAME}
-db.password=${MYSQL_PASSWORD}
+nacos.plugin.datasource-dialect.type=mysql
+nacos.plugin.datasource.db.num=1
+nacos.plugin.datasource.db.url.0=jdbc:mysql://127.0.0.1:3306/nacos?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+nacos.plugin.datasource.db.user=${MYSQL_USERNAME}
+nacos.plugin.datasource.db.password=${MYSQL_PASSWORD}
 ```
 
 启动`Nacos-bootstrap`，并指定`nacos.deployment.type`参数为`merged`，启动命令如下：
@@ -75,7 +75,7 @@ db.password=${MYSQL_PASSWORD}
 distribution/target/nacos-server-${version}/nacos/bin/startup.sh -m standalone -d merged
 ```
 
-> 首次启动会引导填写鉴权相关的一些配置参数，`nacos.core.auth.plugin.nacos.token.secret.key`, `nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value`, 请按照引导进行填写.
+> 首次启动会引导填写鉴权相关的一些配置参数，`nacos.plugin.auth.nacos.token.secret.key`、`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value`，请按照引导填写。
 
 ### 步骤五：验证Nacos-bootstrap是否启动成功
 

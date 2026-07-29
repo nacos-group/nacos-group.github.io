@@ -88,8 +88,8 @@ cd nacos/distribution/target/nacos-server-1.3.0/nacos/bin
 
 ```properties
 nacos.core.auth.enabled=true
-nacos.core.auth.system.type=nacos
-nacos.core.auth.plugin.nacos.token.secret.key=${自定义，保证所有节点一致}
+nacos.plugin.auth.type=nacos
+nacos.plugin.auth.nacos.token.secret.key=${自定义，保证所有节点一致}
 nacos.core.auth.server.identity.key=${自定义，保证所有节点一致}
 nacos.core.auth.server.identity.value=${自定义，保证所有节点一致}
 ```

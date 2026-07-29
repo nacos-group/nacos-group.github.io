@@ -3,12 +3,12 @@ title: 鉴权插件
 keywords: [鉴权, 插件, RBAC, LDAP, OIDC, OAuth2]
 description: 本文介绍 Nacos 鉴权插件的工作模型、内置实现、默认鉴权实现提供的 v3 Auth API，以及自定义插件开发方式。
 sidebar:
-    order: 2
+    order: 5
 ---
 
 # 鉴权插件
 
-Nacos 从 2.1.0 开始支持通过 [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html) 扩展鉴权能力。服务端会根据 `application.properties` 中的 `nacos.core.auth.system.type` 选择一个鉴权插件，用它完成身份认证和权限校验。
+Nacos 从 2.1.0 开始支持通过 [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html) 扩展鉴权能力。服务端通过 `nacos.plugin.auth.type` 在启动时选择一个鉴权插件；`nacos.core.auth.system.type` 是历史 alias。
 
 鉴权插件回答的问题是：**当前请求是谁发起的，它是否可以对目标资源执行这个操作**。
 
@@ -17,6 +17,24 @@ IdentityContext + Resource + Action -> 允许或拒绝
 ```
 
 如果你只是想开启 Nacos 自带的鉴权能力，请先阅读[运维手册 - 权限校验](../manual/admin/auth.mdx)。如果你要接入企业身份系统，请阅读 [OIDC/OAuth2 认证](../manual/admin/oidc-auth.md)。本文更关注插件模型、内置插件边界和扩展开发。
+
+## 统一管理契约
+
+`auth` 是 `EXCLUSIVE`、`STANDARD` 插件类型，类型级 `critical=true`。当任一鉴权入口开关启用，或显式配置了鉴权类型时，选中的 provider 就是 active critical 实现；缺失或 disabled 会让启动失败，Nacos 不会选择另一个实现作为回退。
+
+| 实现 | pluginId | configurable | 选择与生命周期 |
+| --- | --- | --- | --- |
+| 默认 Nacos | `auth:nacos` | 是 | 默认选择；token secret 为 `RESTART`，其他私有字段可运行时 apply。 |
+| LDAP | `auth:ldap` | 是 | 全部私有字段为 `RESTART`。 |
+| OIDC | `auth:oidc` | 是 | 全部私有字段为 `RESTART`；被选中时额外校验有效配置。 |
+
+选择 key：
+
+```properties
+nacos.plugin.auth.type=nacos
+```
+
+选择在启动时快照，不能通过插件状态 API 运行时切换。`nacos.core.auth.enabled`、`nacos.core.auth.admin.enabled` 和 `nacos.core.auth.console.enabled` 是请求入口开关，不是 `auth:nacos` 的 definition，也不会被插件管理 API 修改。
 
 ## 鉴权插件中的概念
 
@@ -76,19 +94,31 @@ Nacos 3.2 提供以下内置鉴权实现。它们都通过同一套鉴权 SPI �
 
 ### 默认 Nacos 鉴权实现
 
-默认 Nacos 鉴权实现的插件类型是 `nacos`。它提供用户名密码登录、JWT token、用户管理、角色管理、权限管理，以及默认 AI 资源可见性实现。
+默认 Nacos 鉴权实现的 `pluginId` 是 `auth:nacos`。它提供用户名密码登录、JWT token、用户管理、角色管理、权限管理，以及默认 AI 资源可见性实现。
 
 开启时通常需要配置：
 
 ```properties
-nacos.core.auth.system.type=nacos
+nacos.plugin.auth.type=nacos
 nacos.core.auth.enabled=true
 nacos.core.auth.admin.enabled=true
 nacos.core.auth.console.enabled=true
 nacos.core.auth.server.identity.key=${custom_server_identity_key}
 nacos.core.auth.server.identity.value=${custom_server_identity_value}
-nacos.core.auth.plugin.nacos.token.secret.key=${custom_base64_token_secret_key}
+nacos.plugin.auth.nacos.token.secret.key=${custom_base64_token_secret_key}
 ```
+
+`auth:nacos` definitions：
+
+| item key | 历史 alias | type / default | sensitive | effectMode |
+| --- | --- | --- | --- | --- |
+| `token.secret.key` | `nacos.core.auth.plugin.nacos.token.secret.key` | `STRING` / 空 | 是 | `RESTART` |
+| `token.expire.seconds` | `nacos.core.auth.plugin.nacos.token.expire.seconds` | `NUMBER` / `18000` | 否 | `RUNTIME` |
+| `token.cache.enable` | `nacos.core.auth.plugin.nacos.token.cache.enable` | `BOOLEAN` / `false` | 否 | `RUNTIME` |
+| `caching.enabled` | `nacos.core.auth.caching.enabled` | `BOOLEAN` / `true` | 否 | `RUNTIME` |
+| `anonymous.ai.enabled` | `nacos.core.auth.nacos.anonymous.ai.enabled` | `BOOLEAN` / `false` | 否 | `RUNTIME` |
+
+以上 definition 都是 `required=false`。启用需要 token 的鉴权入口时，`token.secret.key` 实际必须是 Base64 编码且解码后不少于 32 字节。插件详情会脱敏展示它。
 
 默认实现使用 RBAC 模型：
 
@@ -145,7 +175,7 @@ OIDC/OAuth2 模式下，用户、角色、密码和权限通常由外部 IdP 或
 
 ### LDAP 鉴权插件
 
-LDAP 插件类型是 `ldap`。Nacos 3.2 起，LDAP 插件从默认鉴权实现中分离为独立可选插件。
+LDAP 插件的 `pluginId` 是 `auth:ldap`。Nacos 3.2 起，LDAP 插件从默认鉴权实现中分离为独立可选插件。
 
 LDAP 插件的边界是：
 
@@ -157,18 +187,32 @@ LDAP 插件的边界是：
 启用示例：
 
 ```properties
-nacos.core.auth.system.type=ldap
+nacos.plugin.auth.type=ldap
 nacos.core.auth.enabled=true
 nacos.core.auth.admin.enabled=true
 nacos.core.auth.console.enabled=true
 
-nacos.core.auth.ldap.url=ldap://localhost:389
-nacos.core.auth.ldap.basedc=dc=example,dc=org
-nacos.core.auth.ldap.userDn=cn=admin,${nacos.core.auth.ldap.basedc}
-nacos.core.auth.ldap.password=admin
-nacos.core.auth.ldap.userdn=cn={0},dc=example,dc=org
-nacos.core.auth.ldap.filter.prefix=uid
+nacos.plugin.auth.ldap.url=ldap://localhost:389
+nacos.plugin.auth.ldap.base-dn=dc=example,dc=org
+nacos.plugin.auth.ldap.user-dn=cn=admin,dc=example,dc=org
+nacos.plugin.auth.ldap.password=${ldap_bind_password}
+nacos.plugin.auth.ldap.filter-prefix=uid
 ```
+
+`auth:ldap` definitions 全部是 `RESTART` 且 `required=false`：
+
+| item key | 历史 alias | type / default | sensitive |
+| --- | --- | --- | --- |
+| `url` | `nacos.core.auth.ldap.url` | `STRING` / `ldap://localhost:389` | 否 |
+| `base-dn` | `nacos.core.auth.ldap.basedc` | `STRING` / `dc=example,dc=org` | 否 |
+| `timeout` | `nacos.core.auth.ldap.timeout` | `NUMBER` / `3000` | 否 |
+| `user-dn` | `nacos.core.auth.ldap.userDn` | `STRING` / `cn=admin,dc=example,dc=org` | 否 |
+| `password` | `nacos.core.auth.ldap.password` | `STRING` / `password` | 是 |
+| `filter-prefix` | `nacos.core.auth.ldap.filter.prefix` | `STRING` / `uid` | 否 |
+| `case-sensitive` | `nacos.core.auth.ldap.case.sensitive` | `BOOLEAN` / `true` | 否 |
+| `ignore-partial-result-exception` | `nacos.core.auth.ldap.ignore.partial.result.exception` | `BOOLEAN` / `false` | 否 |
+
+历史 `nacos.core.auth.ldap.userdn` 模板 key 没有被生产实现消费，不是受支持 alias。
 
 部署时请确认：
 
@@ -177,7 +221,7 @@ nacos.core.auth.ldap.filter.prefix=uid
 
 ### OIDC/OAuth2 鉴权插件
 
-OIDC/OAuth2 插件类型是 `oidc`。它面向企业 SSO 和外部身份提供方，支持通过 OIDC Discovery 接入 Keycloak、Okta、Auth0、Microsoft Entra ID 等 IdP。
+OIDC/OAuth2 插件的 `pluginId` 是 `auth:oidc`。它面向企业 SSO 和外部身份提供方，支持通过 OIDC Discovery 接入 Keycloak、Okta、Auth0、Microsoft Entra ID 等 IdP。
 
 它和默认 Nacos 鉴权的差异是：
 
@@ -191,16 +235,35 @@ OIDC/OAuth2 插件类型是 `oidc`。它面向企业 SSO 和外部身份提供�
 启用示例：
 
 ```properties
-nacos.core.auth.system.type=oidc
+nacos.plugin.auth.type=oidc
 nacos.core.auth.enabled=true
 nacos.core.auth.admin.enabled=true
 nacos.core.auth.console.enabled=true
 
-nacos.core.auth.plugin.oidc.issuer-uri=https://idp.example.com/realms/nacos
-nacos.core.auth.plugin.oidc.client-id=nacos-server
-nacos.core.auth.plugin.oidc.client-secret=${client_secret}
-nacos.core.auth.plugin.oidc.scope=openid profile email
+nacos.plugin.auth.oidc.issuer-uri=https://idp.example.com/realms/nacos
+nacos.plugin.auth.oidc.client-id=nacos-server
+nacos.plugin.auth.oidc.client-secret=${client_secret}
+nacos.plugin.auth.oidc.scope=openid profile email
 ```
+
+`auth:oidc` 全部字段为 `RESTART`、`required=false`，历史 alias 统一为 `nacos.core.auth.plugin.oidc.{itemKey}`：
+
+| item key | type / default | sensitive | 说明 |
+| --- | --- | --- | --- |
+| `issuer-uri` | `STRING` / 空 | 否 | 选中 OIDC 时条件必需。 |
+| `client-id` | `STRING` / 空 | 否 | 选中 OIDC 时条件必需。 |
+| `client-secret` | `STRING` / 空 | 是 | 浏览器登录还要求该值。 |
+| `scope` | `STRING` / `openid profile email` | 否 | 登录请求 scope。 |
+| `token-validation-method` | `STRING` / `jwt` | 否 | 当前只实现 JWT/JWKS。 |
+| `jwks-cache-ttl-seconds` | `NUMBER` / `3600` | 否 | 正数。 |
+| `username-claim` | `STRING` / `preferred_username` | 否 | 用户名 claim。 |
+| `roles-claim` | `STRING` / `roles` | 否 | 角色 claim。 |
+| `admin-role` | `STRING` / `nacos-admin` | 否 | 全局管理员映射。 |
+| `auto-create-user` | `BOOLEAN` / `true` | 否 | 保留兼容项，当前不改变运行行为。 |
+| `authorization-endpoint` | `STRING` / 空 | 否 | 非管理员外部授权端点。 |
+| `authorization-timeout-ms` | `NUMBER` / `5000` | 否 | 外部授权超时。 |
+| `strict-nonce-validation` | `BOOLEAN` / `true` | 否 | 严格校验 nonce。 |
+| `strict-audience-validation` | `BOOLEAN` / `true` | 否 | 严格校验 audience/azp。 |
 
 详细配置、Keycloak 示例和排查方法请参考[运维手册 - OIDC/OAuth2 认证](../manual/admin/oidc-auth.md)。
 
@@ -220,7 +283,7 @@ nacos.core.auth.plugin.oidc.scope=openid profile email
 
 | 方法 | 说明 |
 | --- | --- |
-| `getAuthServiceName()` | 返回插件名，需要和 `nacos.core.auth.system.type` 对应。 |
+| `getAuthServiceName()` | 返回稳定 pluginName，需要和 `nacos.plugin.auth.type` 对应。 |
 | `identityNames()` | 声明插件需要从请求中提取的身份字段。 |
 | `enableAuth(action, type)` | 判断指定操作和资源类型是否需要鉴权。 |
 | `validateIdentity(identityContext, resource)` | 校验身份，并把已认证用户等信息写入 `IdentityContext`。 |
@@ -231,11 +294,13 @@ nacos.core.auth.plugin.oidc.scope=openid profile email
 插件打包后放入 `${nacos-server.path}/plugins`，并配置：
 
 ```properties
-nacos.core.auth.system.type=${authServiceName}
+nacos.plugin.auth.type=${authServiceName}
 nacos.core.auth.enabled=true
 ```
 
 重启后，可以在 `${nacos-server.path}/logs/nacos.log` 中查看插件加载日志。
+
+`AuthPluginService` 继承 `PluginConfigSpec`。旧二进制实现没有 definitions 时仍可加载，但显示 `configurable=false`。新实现需要声明自己的 definitions，实现原子 `applyConfig` 并返回当前配置快照；不要把模块入口开关、`type` 选择或 `enabled` 声明为私有配置。
 
 ## 客户端鉴权插件
 

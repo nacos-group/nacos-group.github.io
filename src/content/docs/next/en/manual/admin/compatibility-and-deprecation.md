@@ -28,6 +28,7 @@ As Nacos evolves, some compatibility capabilities remain available to help users
 | Compatibility switches | Enable them only during upgrade or migration windows. Disable them after the system becomes stable. | [System Configurations](./system-configurations.md) |
 | Beta/Tag gray release compatibility | Starting with Nacos 3.3, legacy `config_info_beta` and `config_info_tag` tables are no longer migrated automatically. Migrate them to the current `config_info_gray` gray model before upgrade. Current beta/tag APIs remain backed by `config_info_gray` and `GrayRule`. | [Upgrading Manual](./upgrading.mdx), [Configuration Gray Release](../user/config/gray-release.md) |
 | Default namespace migration | Starting with Nacos 3.3, storage migration or double-write between empty tenant values and `public` is no longer automatic. Blank or omitted namespace requests are still normalized to the default namespace `public`. | [Upgrading Manual](./upgrading.mdx), [Java SDK Usage](../user/java-sdk/usage.md#13-upgrade-compatibility) |
+| Plugin management refactor | Migrate to `pluginType:pluginName`, canonical definition keys, and unified state. The old AI Resource Import two-level SPI/source/preset model is removed. | [Plugin Migration](../../plugin/migration.md), [AI Resource Import Plugin](../../plugin/ai-resource-import-plugin.md) |
 | Legacy console | Use only for compatibility with existing habits. New deployments should use the new console. | [Console Manual](./console.md#legacy-console) |
 | Deprecated Java SDK properties | Do not use them in new systems. | [Java SDK Properties](../user/java-sdk/properties.md) |
 | Deprecated CLI commands | Use explicit lifecycle commands instead of shortcut publish commands. | [Nacos CLI User Guide](./nacos-cli.md) |
@@ -40,6 +41,12 @@ Nacos 3.3 removes runtime compatibility migration logic for Config data from ver
 When upgrading from versions before 3.0 to 3.3, if the old deployment did not use the default namespace and did not use beta gray release, this compatibility removal does not affect smooth upgrade for this compatibility area. If the old deployment used the default namespace or beta gray release, operators must complete data migration before upgrading to 3.3: migrate default-namespace data from the empty tenant to `public`, and migrate legacy beta/tag gray data to the current `config_info_gray` gray model.
 
 This does not remove current default namespace semantics or current beta/tag gray APIs. Blank or omitted namespace requests are still normalized to `public`; current beta/tag gray behavior remains backed by `config_info_gray` and `GrayRule`.
+
+## Plugin Management and AI Resource Import Breaking Change
+
+The next line uses unified plugin identity, state, configuration sources, and lifecycle. A historical implementation without `PluginConfigSpec` still loads but is automatically reported as `configurable=false`. Config Change's `ConfigChangeConfigs` is deprecated but remains in its compatibility window.
+
+AI Resource Import requires an incompatible migration: `AiResourceImportSource`, the Source Provider SPI, presets, `nacos.ai.resource.import.sources[N].*`, and cloning one implementation to multiple endpoints through configuration are removed. One `pluginName` now identifies one fixed source, and `sourceId` equals the managed pluginName. The existing API field named `pluginName` continues to mean importerType. New deployments use `nacos.plugin.ai-resource-import.*`; see [Plugin Migration](../../plugin/migration.md).
 
 ## What to confirm before using compatibility capabilities
 

@@ -52,10 +52,10 @@ Ensure each Nacos node is configured for cluster mode:
 **application.properties** (database configuration):
 
 ```properties
-spring.datasource.platform=mysql
-db.url.0=jdbc:mysql://192.168.190.1:3306/config?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
-db.user.0=root
-db.password.0=your_password
+nacos.plugin.datasource-dialect.type=mysql
+nacos.plugin.datasource.db.url.0=jdbc:mysql://192.168.190.1:3306/config?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+nacos.plugin.datasource.db.user.0=root
+nacos.plugin.datasource.db.password.0=your_password
 ```
 
 ## Nginx Configuration
