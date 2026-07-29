@@ -21,12 +21,15 @@ sidebar:
 |Parameter|Default|Versions|Description|
 |-----|------|------|----|
 |nacos.core.auth.enabled|false|1.2.0 ~ latest|Whether to enable the authentication|
-|nacos.plugin.auth.type|nacos|3.3.0 ~ latest|Auth implementation selector; old `nacos.core.auth.system.type` is an alias|
+|nacos.plugin.auth.type|nacos|3.3.0 ~ latest|Auth implementation selector|
 |nacos.plugin.auth.nacos.token.secret.key|No default|3.3.0 ~ latest|Default auth access-token signing key; sensitive and RESTART|
 |nacos.plugin.auth.nacos.token.expire.seconds|18000|3.3.0 ~ latest|Login access-token lifetime; RUNTIME|
 |nacos.core.auth.enable.userAgentAuthWhite|false|1.4.1 ~ latest|Whether to use the useragent whitelist, mainly used to adapt to the upgrade of the old version, **Setting `true` is a security risk**|
 |nacos.core.auth.server.identity.key|serverIdentity(No default since 2.2.1)|1.4.1 ~ latest|Used to replace the identification key of the useragent whitelist, **Using the default value is a security risk**|
 |nacos.core.auth.server.identity.value|security(No default since 2.2.1)|1.4.1 ~ latest|It is used to replace the identification value of the useragent whitelist, **Using the default value is a security risk**|
+|~~nacos.core.auth.system.type~~|nacos|1.2.0 ~ latest|Deprecated legacy auth selector; it will be removed. Use `nacos.plugin.auth.type`|
+|~~nacos.core.auth.plugin.nacos.token.secret.key~~|No default|2.1.0 ~ latest|Deprecated signing-key alias; it will be removed. Use `nacos.plugin.auth.nacos.token.secret.key`|
+|~~nacos.core.auth.plugin.nacos.token.expire.seconds~~|18000|2.1.0 ~ latest|Deprecated token-expiration alias; it will be removed. Use `nacos.plugin.auth.nacos.token.expire.seconds`|
 
 
 ## Use Authentication in Servers

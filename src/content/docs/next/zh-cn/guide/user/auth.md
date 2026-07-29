@@ -20,12 +20,15 @@ sidebar:
 |参数名|默认值|启止版本|说明|
 |-----|------|------|----|
 |nacos.core.auth.enabled|false|1.2.0 ~ latest|是否开启鉴权功能|
-|nacos.plugin.auth.type|nacos|3.3.0 ~ latest|鉴权实现选择；旧 `nacos.core.auth.system.type` 是 alias|
+|nacos.plugin.auth.type|nacos|3.3.0 ~ latest|鉴权实现选择|
 |nacos.plugin.auth.nacos.token.secret.key|无默认值|3.3.0 ~ latest|默认鉴权插件的 accessToken 签名密钥，敏感且 RESTART|
 |nacos.plugin.auth.nacos.token.expire.seconds|18000|3.3.0 ~ latest|用户登录 accessToken 过期时间，RUNTIME|
 |nacos.core.auth.enable.userAgentAuthWhite|false|1.4.1 ~ latest|是否使用useragent白名单，主要用于适配老版本升级，**置为true时有安全风险**|
 |nacos.core.auth.server.identity.key|serverIdentity(2.2.1后无默认值)|1.4.1 ~ latest|用于替换useragent白名单的身份识别key，**使用默认值有安全风险**|
 |nacos.core.auth.server.identity.value|security(2.2.1后无默认值)|1.4.1 ~ latest|用于替换useragent白名单的身份识别value，**使用默认值有安全风险**|
+|~~nacos.core.auth.system.type~~|nacos|1.2.0 ~ latest|历史鉴权实现选择 key，已废弃并即将移除；请使用 `nacos.plugin.auth.type`|
+|~~nacos.core.auth.plugin.nacos.token.secret.key~~|无默认值|2.1.0 ~ latest|历史签名密钥 alias，已废弃并即将移除；请使用 `nacos.plugin.auth.nacos.token.secret.key`|
+|~~nacos.core.auth.plugin.nacos.token.expire.seconds~~|18000|2.1.0 ~ latest|历史 token 过期时间 alias，已废弃并即将移除；请使用 `nacos.plugin.auth.nacos.token.expire.seconds`|
 
 ## 默认控制台登录页
 
