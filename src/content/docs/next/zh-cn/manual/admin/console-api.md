@@ -381,7 +381,9 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/health/readiness'
 
 #### 请求参数
 
-无。
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `keyword` | `string` | 否 | 按节点地址或状态等信息筛选节点。 |
 
 #### 返回数据
 
@@ -395,7 +397,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/health/readiness'
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/core/cluster/nodes'
+curl -X GET 'http://127.0.0.1:8080/v3/console/core/cluster/nodes?keyword=127.0.0.1'
 ```
 
 * 返回示例
@@ -864,9 +866,11 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/exist?customNamespa
 | data.executionMode | `string` | `EXCLUSIVE`、`CHAIN`、`ROUTED` 或 `BROADCAST`。 |
 | data.exclusive | `boolean` | 是否为排他选择类型。 |
 | data.configurable | `boolean` | 是否支持控制台动态配置。 |
-| data.config | `object` | 有效配置，敏感项显示 masked marker。 |
-| data.configDefinitions | `array` | definition 列表，包含 alias、类型、默认值、必填、敏感和 effectMode。 |
-| data.configValueMetas | `object` | 每项的有效来源与 `overridden` 信息。 |
+| data.config | `map<string, string>` | 有效配置，敏感项显示 masked marker。 |
+| data.configDefinitions | `array<ConfigItemDefinition>` | 配置项定义列表。 |
+| data.configValueMetas | `map<string, PluginConfigValueMeta>` | 以配置键为索引的有效来源及覆盖信息。 |
+
+`ConfigItemDefinition` 包含 `key`、`name`、`description`、`defaultValue`、`type`、`required`、`enumValues: array<string>`、`aliases: array<string>`、`sensitive` 和 `effectMode`；`PluginConfigValueMeta` 包含 `key`、`source` 和 `overridden`。其中 `type` 可为 `STRING`、`NUMBER`、`BOOLEAN`、`ENUM`，`effectMode` 可为 `RUNTIME`、`RESTART`，`source` 可为 `DEFAULT`、`STATIC`、`RUNTIME_PERSISTED`、`LOCAL_ONLY`。
 
 #### 示例
 
@@ -883,8 +887,9 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin?pluginType=auth&pluginName=
   "code": 0,
   "message": "success",
   "data": {
-    "name": "nacos",
-    "type": "auth",
+    "pluginId": "auth:nacos",
+    "pluginType": "auth",
+    "pluginName": "nacos",
     "enabled": true,
     "config": {},
     "configDefinitions": [],
@@ -974,7 +979,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/availability?pluginType=aut
 |--------|------|------|----------|
 | `pluginType` | `string` | **是** | 插件类型。 |
 | `pluginName` | `string` | **是** | 插件名称。 |
-| `config` | `string` | 否 | 完整 JSON item map，具体字段由插件 definitions 定义。 |
+| `config` | `string` | **是** | 完整 JSON item map，具体字段由插件 definitions 定义。 |
 | `localOnly` | `boolean` | 否 | `true` 仅写当前节点的 `LOCAL_ONLY`；否则写 `RUNTIME_PERSISTED`。 |
 
 #### 返回数据
@@ -1242,6 +1247,12 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName=te
 | `type`        | `string` | 否  | 配置类型，默认值为`text`。         |
 | `configTags`  | `string` | 否  | 配置标签，多个标签之间用英文逗号分隔。      |
 | `appName`     | `string` | 否  | 配置所属应用名称，主要用于标记配置所使用的应用。 |
+| `use` | `string` | 否 | 配置使用场景。 |
+| `effect` | `string` | 否 | 配置生效范围。 |
+| `schema` | `string` | 否 | 配置内容对应的 Schema。 |
+| `tag` | `string` | 否 | 配置灰度标签。 |
+| `srcUser` | `string` | 否 | 发布操作的来源用户标识。 |
+| `encryptedDataKey` | `string` | 否 | 加密配置的数据密钥。 |
 
 - 当配置已存在(`dataId`,`groupName`相同)时，再次调用此接口将会对此配置进行更新
 - 同时更新配置时，若请求`Header`中存在`betaIps`，则会将配置标记为BETA配置，在终止BETA或完全发布配置之前，控制台UI需要进行特殊处理。
@@ -1301,6 +1312,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/cs/config' -d 'dataId=test&groupN
 | `dataId`      | `string` | 是  | 配置ID。                |
 | `groupName`   | `string` | 是  | 配置分组。                |
 | `namespaceId` | `string` | 否  | 命名空间ID，默认值为`public`。 |
+| `tag` | `string` | 否 | 配置灰度标签。 |
 
 #### 返回数据
 
@@ -1354,7 +1366,8 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName
 
 | 参数名   | 类型       | 必填 | 参数描述                                  |
 |-------|----------|----|---------------------------------------|
-| `ids` | `array` | 是  | 配置的存储ID列表，并非`dataId`列表，多个ID之间用英文逗号分隔。 |
+| `ids` | `array<integer>` | 是  | 配置的存储ID列表，并非`dataId`列表，多个ID之间用英文逗号分隔。 |
+| `namespaceId` | `string` | 否 | 配置所属命名空间 ID，默认值为 `public`。 |
 
 #### 返回数据
 
@@ -1427,7 +1440,7 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config/batchDelete?ids=83802
 | `totalCount`                 | `integer` | 符合规则的配置总数。                 |
 | `pagesAvailable`             | `integer` | 可用页码总数。                    |
 | `pageNumber`                 | `integer` | 当前页码。                      |
-| `pageItems`                  | `List`   | 符合规则的配置列表。                 |
+| `pageItems`                  | `array`   | 符合规则的配置列表。                 |
 | `pageItems`[i].`id`          | `string` | 配置在存储系统中的ID，一般为Long类型的字符串。 |
 | `pageItems`[i].`dataId`      | `string` | 配置ID。                      |
 | `pageItems`[i].`groupName`   | `string` | 配置分组。                      |
@@ -1534,7 +1547,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/list?dataId=&groupName=&
 | `totalCount`                 | `integer` | 符合规则的配置总数。                 |
 | `pagesAvailable`             | `integer` | 可用页码总数。                    |
 | `pageNumber`                 | `integer` | 当前页码。                      |
-| `pageItems`                  | `List`   | 符合规则的配置列表。                 |
+| `pageItems`                  | `array`   | 符合规则的配置列表。                 |
 | `pageItems`[i].`id`          | `string` | 配置在存储系统中的ID，一般为Long类型的字符串。 |
 | `pageItems`[i].`dataId`      | `string` | 配置ID。                      |
 | `pageItems`[i].`groupName`   | `string` | 配置分组。                      |
@@ -1734,7 +1747,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener/ip?ip=127.0.0.1
 |---------------|----------|----|------------------------------|
 | `dataId`      | `string` | 否  | 需要导出的配置ID的pattern，例如`test*`。 |
 | `groupName`   | `string` | 否  | 需要导出的配置分组的pattern，例如`test*`。 |
-| `ids`         | `array` | 否  | 需要导出的配置的存储ID，多个ID用英文逗号分隔。    |
+| `ids`         | `array<integer>` | 否  | 需要导出的配置的存储ID，多个ID用英文逗号分隔。    |
 | `namespaceId` | `string` | 否  | 命名空间ID，默认值为`public`。         |
 | `appName`     | `string` | 否  | 需要导出的配置所属的应用名称。              |
 
@@ -1796,10 +1809,10 @@ unzip ~/test.zip
 
 | 参数名           | 类型                 | 必填 | 参数描述                                                                                                               |
 |---------------|--------------------|----|--------------------------------------------------------------------------------------------------------------------|
-| `file`        | `MultipartFile`    | 否  | 导入的zip文件。                                                                                                          |
-| `namespaceId` | `string` | 否  | 导入的配置所属的命名空间ID，默认值为`public`。                                                                                       |
-| `policy`      | `string` | 否  | 导入策略，当导入的配置`dataId`和`groupName`相同，存在冲突时，所进行的导入策略。可选值有`ABORT(终止导入)`,`SKIP(跳过冲突配置)`,`OVERWRITE(覆盖冲突配置)`。默认值为`ABORT`。 |
-| `src_user`    | `string` | 否  | 导入操作来源用户标识。                                                                                                       |
+| `file`        | `file`    | **是**  | multipart 表单中的导入 ZIP 文件。                                                                                                          |
+| `namespaceId` | `string` | 否  | Query 参数或 multipart 表单字段；导入配置所属命名空间 ID，默认值为 `public`。                                                                                       |
+| `policy`      | `string` | 否  | Query 参数或 multipart 表单字段；冲突时可选 `ABORT`、`SKIP` 或 `OVERWRITE`，默认值为 `ABORT`。 |
+| `srcUser`    | `string` | 否  | Query 参数或 multipart 表单字段；导入操作来源用户标识。                                                                                                       |
 
 #### 返回数据
 
@@ -1815,7 +1828,7 @@ unzip ~/test.zip
 * 请求示例
 
 ```shell
-curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import" -F "file=@/path/to/test.zip" -F "namespaceId=test"
+curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import?namespaceId=test&policy=ABORT&srcUser=console" -F "file=@/path/to/test.zip" -F "namespaceId=test" -F "policy=ABORT" -F "srcUser=console"
 ```
 
 * 返回示例
@@ -1860,8 +1873,12 @@ curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import" -F "file=@/pat
 | 参数名              | 类型       | 必填    | 参数描述                                                                                                               |
 |------------------|----------|-------|--------------------------------------------------------------------------------------------------------------------|
 | `srcUser`        | `string` | 否     | 克隆操作来源用户标识。                                                                                                        |
+| `namespaceId`    | `string` | 否     | 源配置所属命名空间 ID，默认值为 `public`。 |
 | `targetNamespaceId` | `string` | **是** | 目标命名空间ID。                                                                                                           |
 | `policy`         | `string` | 否     | 克隆策略，当导入的配置`dataId`和`groupName`相同，存在冲突时，所进行的克隆策略。可选值有`ABORT(终止克隆)`,`SKIP(跳过冲突配置)`,`OVERWRITE(覆盖冲突配置)`。默认值为`ABORT`。 |
+| `body[].cfgId` | `integer` | **是** | JSON 请求体中待克隆配置的 ID；每个有效条目都需要提供。 |
+| `body[].dataId` | `string` | 否 | JSON 请求体中目标配置的 `dataId`；为空时沿用源配置值。 |
+| `body[].group` | `string` | 否 | JSON 请求体中目标配置的分组；为空时沿用源配置值。 |
 
 #### 返回数据
 
@@ -1877,7 +1894,7 @@ curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import" -F "file=@/pat
 * 请求示例
 
 ```shell
-curl -H "Content-Type: application/json" -X POST "http://127.0.0.1:8080/v3/console/cs/config/clone?targetNamespaceId=public&policy=ABORT" -d "[{\"cfgId\":838029534438625280,\"dataId\":\"111\",\"group\":\"DEFAULT_GROUP\"},{\"cfgId\":838033747294031872,\"dataId\":\"qtc-user.yaml\",\"group\":\"DEFAULT_GROUP\"}]"
+curl -H "Content-Type: application/json" -X POST "http://127.0.0.1:8080/v3/console/cs/config/clone?namespaceId=public&targetNamespaceId=target&policy=ABORT" -d "[{\"cfgId\":838029534438625280,\"dataId\":\"111\",\"group\":\"DEFAULT_GROUP\"},{\"cfgId\":838033747294031872,\"dataId\":\"qtc-user.yaml\",\"group\":\"DEFAULT_GROUP\"}]"
 ```
 
 * 返回示例
@@ -2086,7 +2103,7 @@ curl "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=111&groupName=DEFAU
 | `totalCount`                 | `integer` | 历史记录的总数。                          |
 | `pageNumber`                 | `integer` | 当前页码，起始为`1`。                      |
 | `pagesAvailable`             | `integer` | 可用页码。                             |
-| `pageItems`                  | `List`   | 历史记录列表。                           |
+| `pageItems`                  | `array`   | 历史记录列表。                           |
 | `pageItems`[i].`id`          | `string` | 历史记录的ID。                          |
 | `pageItems`[i].`dataId`      | `string` | 配置的dataId。                        |
 | `pageItems`[i].`groupName`   | `string` | 配置的groupName。                     |
@@ -2218,7 +2235,7 @@ curl "http://127.0.0.1:8080/v3/console/cs/history/list?pageNo=1&pageSize=10&data
 | `createTime`  | `integer` | 配置创建时间。                                                                     |
 | `modifyTime`  | `integer` | 配置修改时间。                                                                     |
 | `grayName`    | `string` | 灰度发布规则名称, 固定为`beta`。                                                        |
-| `extInfo`     | `JsonString` | 扩展信息，目前包括`src_user`、`type`、`c_desc`，若`publishType`为`gray`, 其中还包括`grayRule`。 |
+| `extInfo`     | `string` | JSON 编码的扩展信息字符串，目前包括`src_user`、`type`、`c_desc`，若`publishType`为`gray`, 其中还包括`grayRule`。 |
 
 #### 示例
 
@@ -2306,7 +2323,7 @@ curl "http://127.0.0.1:8080/v3/console/cs/history?dataId=111&groupName=DEFAULT_G
 | `createTime`  | `integer` | 配置创建时间。                                                                     |
 | `modifyTime`  | `integer` | 配置修改时间。                                                                     |
 | `grayName`    | `string` | 灰度发布规则名称, 固定为`beta`。                                                        |
-| `extInfo`     | `JsonString` | 扩展信息，目前包括`src_user`、`type`、`c_desc`，若`publishType`为`gray`, 其中还包括`grayRule`。 |
+| `extInfo`     | `string` | JSON 编码的扩展信息字符串，目前包括`src_user`、`type`、`c_desc`，若`publishType`为`gray`, 其中还包括`grayRule`。 |
 
 #### 示例
 
@@ -2706,7 +2723,7 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/selector/types"
 | `totalCount`                          | `integer` | 符合条件的服务的总数。  |
 | `pageNumber`                          | `integer` | 当前页码，起始为`1`。 |
 | `pagesAvailable`                      | `integer` | 可用页码。        |
-| `pageItems`                           | `List`   | 服务列表。        |
+| `pageItems`                           | `array`   | 服务列表。        |
 | `pageItems`[i].`name`                 | `string` | 服务名。         |
 | `pageItems`[i].`groupName`            | `string` | 服务的分组名。      |
 | `pageItems`[i].`clusterCount`         | `string` | 服务下的集群数量。    |
@@ -2796,7 +2813,7 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/list?pageNo=1&pageSize=
 | `totalCount`                 | `integer` | 符合条件的服务的总数。          |
 | `pageNumber`                 | `integer` | 当前页码，起始为`1`。         |
 | `pagesAvailable`             | `integer` | 可用页码。                |
-| `pageItems`                  | `List`    | 服务列表。                |
+| `pageItems`                  | `array`    | 服务列表。                |
 | `pageItems`[i].`ip`          | `string` | 订阅者IP。               |
 | `pageItems`[i].`port`        | `integer` | 订阅者端口。               |
 | `pageItems`[i].`address`     | `string` | 订阅者地址, 一般为`ip:port`。 | 
@@ -2881,14 +2898,14 @@ curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/subscribers?pageNo=1&pa
 | `serviceName`                                       | `string` | 服务名。                                 |
 | `ephemeral`                                         | `boolean` | 服务的持久化属性，`true`为临时服务，`false`为持久化服务。  |
 | `protectThreshold`                                  | `number` | 服务防护阈值。                              |
-| `selector`                                          | `jsonObject` | 服务选择器。                               |
-| `metadata`                                          | `jsonObject` | 服务元数据。                               |
-| `clusterMap`                                        | `jsonObject` | 服务集群列表, key为cluster的名称，value为集群详细信息。 |
+| `selector`                                          | `object` | 服务选择器。                               |
+| `metadata`                                          | `object` | 服务元数据。                               |
+| `clusterMap`                                        | `object` | 服务集群列表, key为cluster的名称，value为集群详细信息。 |
 | `clusterMap`.$ClusterName.`clusterName`             | `string` | 集群名。                                 |
-| `clusterMap`.$ClusterName.`healthChecker`           | `jsonObject` | 健康检查器。                               |
+| `clusterMap`.$ClusterName.`healthChecker`           | `object` | 健康检查器。                               |
 | `clusterMap`.$ClusterName.`healthyCheckPort`        | `integer` | 健康检查端口。                              |
 | `clusterMap`.$ClusterName.`useInstancePortForCheck` | `boolean` | 是否使用所注册的实例的`IP:Port`进行健康检查。          |
-| `clusterMap`.$ClusterName.`metadata`                | `jsonObject` | 集群元数据。                               |
+| `clusterMap`.$ClusterName.`metadata`                | `object` | 集群元数据。                               |
 
 #### 示例
 
@@ -3040,7 +3057,7 @@ curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service/cluster" -d "serviceNam
 | `totalCount`                 | `integer` | 符合条件的实例的总数。                           |
 | `pageNumber`                 | `integer` | 当前页码，起始为`1`。                          |
 | `pagesAvailable`             | `integer` | 可用页码。                                 |
-| `pageItems`                  | `List`                | 实例列表。                                 |
+| `pageItems`                  | `array`                | 实例列表。                                 |
 | `pageItems`[i].`instanceId`  | `string` | 实例ID。                                 |
 | `pageItems`[i].`ip`          | `string` | 实例IP。                                 |
 | `pageItems`[i].`port`        | `integer` | 实例端口。                                 |
@@ -3271,16 +3288,16 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/instance?serviceName=test&cl
 | `frontProtocol`      | `string` | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
 | `description`        | `string` | MCP服务的描述。                                                                                       |
 | `repository`         | `string` | MCP服务的存储仓库。                                                                                     |                                                                                          |
-| `versionDetail`      | `VersionDetail`       | MCP服务所查询的版本信息。                                                                                  |
-| `localServerConfig`  | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
-| `remoteServerConfig` | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
+| `versionDetail`      | `ServerVersionDetail`       | MCP服务所查询的版本信息。                                                                                  |
+| `localServerConfig`  | `map<string, object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
+| `remoteServerConfig` | `McpServerRemoteServiceConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
 | `enabled`            | `boolean` | MCP服务是否启用。                                                                                      |
-| `capabilities`       | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
-| `backendEndpoints`   | `List`                | MCP服务若类型为**非stdio**，存在此信息，记录访问远端服务的具体地址信息。                                                      |
-| `toolSpec`           | `Map<String, Object>` | MCP服务支持的能力类型包含`TOOL`时，存在此信息，记录工具的详细配置信息。                                                        |
-| `allVersions`        | `List<VersionDetail>` | MCP服务的所有版本详情的列表。                                                                                |
+| `capabilities`       | `array<string>`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
+| `backendEndpoints`   | `array<McpEndpointInfo>`                | MCP服务若类型为**非stdio**，存在此信息，记录访问远端服务的具体地址信息。                                                      |
+| `toolSpec`           | `McpToolSpecification` | MCP服务支持的能力类型包含`TOOL`时，存在此信息，记录工具的详细配置信息。                                                        |
+| `allVersions`        | `array<ServerVersionDetail>` | MCP服务的所有版本详情的列表。                                                                                |
 
-其中`VersionDetail`结构如下：
+其中`ServerVersionDetail`结构如下：
 
 | 参数名            | 参数类型      | 描述               |
 |----------------|-----------|------------------|
@@ -3378,14 +3395,14 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=
 | `frontProtocol`      | `string` | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
 | `description`        | `string` | MCP服务的描述。                                                                                       |
 | `repository`         | `string` | MCP服务的存储仓库。                                                                                     |    |
-| `versionDetail`      | `VersionDetail`       | MCP服务的版本信息。                                                                                     |
+| `versionDetail`      | `ServerVersionDetail`       | MCP服务的版本信息。                                                                                     |
 | `version`            | `string` | MCP服务的简易版本版本信息，主要用于兼容，若已设置`versionDetail`,则该字段无效。                                               |    |
-| `localServerConfig`  | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
-| `remoteServerConfig` | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
+| `localServerConfig`  | `map<string, object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
+| `remoteServerConfig` | `McpServerRemoteServiceConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
 | `enabled`            | `boolean` | MCP服务是否启用。                                                                                      |
-| `capabilities`       | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
+| `capabilities`       | `array<string>`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
 
-其中`VersionDetail`结构如下：
+其中`ServerVersionDetail`结构如下：
 
 | 参数名            | 参数类型      | 描述               |
 |----------------|-----------|------------------|
@@ -3397,9 +3414,9 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=
 
 | 参数名               | 参数类型                       | 描述                                                                                      |
 |-------------------|----------------------------|-----------------------------------------------------------------------------------------|
-| `tools`           | `List<McpTool>`            | 该MCP Server所提供的工具列表，参考标准MCP协议中对于MCP Tool的定义                                             |
-| `toolsMeta`       | `Map<String, McpToolMeta>` | 该MCP Server所提供的工具的额外元数据信息，可用于扩展标准MCP协议中未定义但又使用中需要的信息。key为`McpTool`的`name`, value为拓展元数据。 |
-| `securitySchemes` | `List<SecurityScheme>`     | MCP工具的安全方案，参考标准MCP协议。                                                                   |
+| `tools`           | `array<McpTool>`            | 该MCP Server所提供的工具列表，参考标准MCP协议中对于MCP Tool的定义                                             |
+| `toolsMeta`       | `map<string, McpToolMeta>` | 该MCP Server所提供的工具的额外元数据信息，可用于扩展标准MCP协议中未定义但又使用中需要的信息。key为`McpTool`的`name`, value为拓展元数据。 |
+| `securitySchemes` | `array<SecurityScheme>`     | MCP工具的安全方案，参考标准MCP协议。                                                                   |
 
 其中`McpTool`结构如下：
 
@@ -3407,7 +3424,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=
 |---------------|-----------------------|-----------------------------------------------|
 | `name`        | `string` | MCP 工具的名称                                     |
 | `description` | `string` | MCP 工具的描述                                     |
-| `inputSchema` | `Map<String, Object>` | MCP工具的入参描述，参考标准MCP协议，主要包含，`类型`,`是否必须`,`描述` 等。 |
+| `inputSchema` | `map<string, object>` | MCP工具的入参描述，参考标准MCP协议，主要包含，`类型`,`是否必须`,`描述` 等。 |
 
 其中`McpToolMeta` 结构如下：
 
@@ -3506,14 +3523,14 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 | `frontProtocol`      | `string` | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
 | `description`        | `string` | MCP服务的描述。                                                                                       |
 | `repository`         | `string` | MCP服务的存储仓库。                                                                                     |    |
-| `versionDetail`      | `VersionDetail`       | MCP服务的版本信息。                                                                                     |
+| `versionDetail`      | `ServerVersionDetail`       | MCP服务的版本信息。                                                                                     |
 | `version`            | `string` | MCP服务的简易版本版本信息，主要用于兼容，若已设置`versionDetail`,则该字段无效。                                               |    |
-| `localServerConfig`  | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
-| `remoteServerConfig` | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
+| `localServerConfig`  | `map<string, object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
+| `remoteServerConfig` | `McpServerRemoteServiceConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
 | `enabled`            | `boolean` | MCP服务是否启用。                                                                                      |
-| `capabilities`       | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
+| `capabilities`       | `array<string>`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
 
-其中`VersionDetail`结构如下：
+其中`ServerVersionDetail`结构如下：
 
 | 参数名            | 参数类型      | 描述               |
 |----------------|-----------|------------------|
@@ -3525,9 +3542,9 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 
 | 参数名               | 参数类型                       | 描述                                                                                      |
 |-------------------|----------------------------|-----------------------------------------------------------------------------------------|
-| `tools`           | `List<McpTool>`            | 该MCP Server所提供的工具列表，参考标准MCP协议中对于MCP Tool的定义                                             |
-| `toolsMeta`       | `Map<String, McpToolMeta>` | 该MCP Server所提供的工具的额外元数据信息，可用于扩展标准MCP协议中未定义但又使用中需要的信息。key为`McpTool`的`name`, value为拓展元数据。 |
-| `securitySchemes` | `List<SecurityScheme>`     | MCP工具的安全方案，参考标准MCP协议。                                                                   |
+| `tools`           | `array<McpTool>`            | 该MCP Server所提供的工具列表，参考标准MCP协议中对于MCP Tool的定义                                             |
+| `toolsMeta`       | `map<string, McpToolMeta>` | 该MCP Server所提供的工具的额外元数据信息，可用于扩展标准MCP协议中未定义但又使用中需要的信息。key为`McpTool`的`name`, value为拓展元数据。 |
+| `securitySchemes` | `array<SecurityScheme>`     | MCP工具的安全方案，参考标准MCP协议。                                                                   |
 
 其中`McpTool`结构如下：
 
@@ -3535,7 +3552,7 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 |---------------|-----------------------|-----------------------------------------------|
 | `name`        | `string` | MCP 工具的名称                                     |
 | `description` | `string` | MCP 工具的描述                                     |
-| `inputSchema` | `Map<String, Object>` | MCP工具的入参描述，参考标准MCP协议，主要包含，`类型`,`是否必须`,`描述` 等。 |
+| `inputSchema` | `map<string, object>` | MCP工具的入参描述，参考标准MCP协议，主要包含，`类型`,`是否必须`,`描述` 等。 |
 
 其中`McpToolMeta` 结构如下：
 
@@ -3689,21 +3706,21 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpNa
 | `totalCount`                                  | `integer` | 符合条件的服务的总数。                                                                                     |
 | `pageNumber`                                  | `integer` | 当前页码，起始为`1`。                                                                                    |
 | `pagesAvailable`                              | `integer` | 可用页码。                                                                                           |
-| `pageItems`                                   | `List`                | 服务列表。                                                                                           |
+| `pageItems`                                   | `array<McpServerBasicInfo>`                | 服务列表。                                                                                           |
 | `pageItems`[i].`id`                           | `string` | MCP服务的ID，一般为UUID。                                                                               |
 | `pageItems`[i].`name`                         | `string` | MCP服务名。                                                                                         |
 | `pageItems`[i].`protocol`                     | `string` | MCP的协议，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。                                             |
 | `pageItems`[i].`frontProtocol`                | `string` | MCP的前端暴露协议，一般是提供给协议转换器（如网关）使用，若无转换器，则与`protocol`相同，如`stdio`,`sse`,`streamable`,`http`,`dubbo`等。 |
 | `pageItems`[i].`description`                  | `string` | MCP服务的描述。                                                                                       |
 | `pageItems`[i].`repository`                   | `string` | MCP服务的存储仓库。                                                                                     |                                                                                          |
-| `pageItems`[i].`versionDetail`                | `VersionDetail`       | MCP服务当前最新的版本信息。                                                                                 |
-| `pageItems`[i].`localServerConfig`            | `Map<String, Object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
-| `pageItems`[i].`remoteServerConfig`           | `RemoteServerConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
+| `pageItems`[i].`versionDetail`                | `ServerVersionDetail`       | MCP服务当前最新的版本信息。                                                                                 |
+| `pageItems`[i].`localServerConfig`            | `map<string, object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
+| `pageItems`[i].`remoteServerConfig`           | `McpServerRemoteServiceConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
 | `pageItems`[i].`latestPublishedVersion`       | `string` | MCP服务最新版本的版本号。                                                                                  |
-| `pageItems`[i].`versionDetails`               | `List<VersionDetail>` | MCP服务版本详情的列表。                                                                                   |
-| `pageItems`[i].`capabilities`                 | `List`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
+| `pageItems`[i].`versionDetails`               | `array<ServerVersionDetail>` | MCP服务版本详情的列表。                                                                                   |
+| `pageItems`[i].`capabilities`                 | `array<string>`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
 
-其中`VersionDetail`结构如下：
+其中`ServerVersionDetail`结构如下：
 
 | 参数名            | 参数类型      | 描述               |
 |----------------|-----------|------------------|
@@ -3796,7 +3813,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/list?pageNo=1&pageSize=100&
 
 | 参数名    | 参数类型                   | 描述                                                                                                       |
 |--------|------------------------|----------------------------------------------------------------------------------------------------------|
-| `data` | `List<McpSchema.Tool>` | MCP工具元数据信息,符合[MCP工具元数据标准定义](https://modelcontextprotocol.io/specification/2025-06-18/server/tools#tool)。 |
+| `data` | `array<McpSchema.Tool>` | MCP工具元数据信息,符合[MCP工具元数据标准定义](https://modelcontextprotocol.io/specification/2025-06-18/server/tools#tool)。 |
 
 #### 示例
 
@@ -3858,6 +3875,10 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/importToolsFromMcp?transpor
 | `namespaceId` | `string` | 否     | MCP服务的命名空间ID                            |
 | `importType`  | `string` | **是** | enum of `file`, `json`, `url`           |
 | `data`        | `string` | **是** | 导入数据的内容                                 |
+| `overrideExisting` | `boolean` | 否 | 服务已存在时是否覆盖，默认值为 `false`。 |
+| `validateOnly` | `boolean` | 否 | 是否仅执行校验而不导入，默认值为 `false`。 |
+| `skipInvalid` | `boolean` | 否 | 是否跳过无效服务，默认值为 `false`。 |
+| `selectedServers` | `array<string>` | 否 | 选择需要校验的服务；为空时处理全部服务。 |
 | `cursor`      | `string` | 否     | Optional start cursor for URL-based import pagination. |
 | `limit`       | `integer` | 否     | 分页的页大小                                  |
 | `search`      | `string`   | 否     | Optional fuzzy search keyword for registry import listing. Only used when importType is 'url'. |
@@ -3873,8 +3894,8 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/importToolsFromMcp?transpor
 | `validCount`     | `integer` | 导入服务有效个数。 |
 | `invalidCount`   | `integer` | 导入服务无效个数。 |
 | `duplicateCount` | `integer` | 导入服务重复个数。 |
-| `servers`        | `List<McpServerValidationItem>` | 导入服务列表。   |
-| `errors`         | `List<String>`                  | 导入服务错误列表。 |
+| `servers`        | `array<McpServerValidationItem>` | 导入服务列表。   |
+| `errors`         | `array<string>`                  | 导入服务错误列表。 |
 
 其中`McpServerValidationItem`描述如下:
 
@@ -3895,6 +3916,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/validate' \
 -d 'namespaceId=public' \
 -d 'importType=url' \
 -d 'data=' \
+-d 'overrideExisting=false' \
+-d 'validateOnly=true' \
+-d 'skipInvalid=false' \
+-d 'selectedServers=[]' \
 -d 'limit=10'
 ```
 * 返回示例
@@ -3960,8 +3985,9 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/validate' \
 | `limit`            | `integer` | 否     | 分页的页大小                                  |
 | `search`           | `string`    | 否     | Optional fuzzy search keyword for registry import listing. Only used when importType is 'url'. |
 | `overrideExisting` | `boolean` | 否     | 导入时若服务已存在时是否覆盖。默认为`false`。              |                                    |
+| `validateOnly`     | `boolean` | 否     | 是否仅执行校验而不实际导入。默认为 `false`。 |
 | `skipInvalid`      | `boolean` | 否     | 导入时是否忽略错误无效的服务。默认为`false`。              |
-| `selectedServers`  | `array` | 否     | 选择部分服务进行导入,为空时导入所有                      |
+| `selectedServers`  | `array<string>` | 否     | 选择部分服务进行导入,为空时导入所有                      |
 
 
 #### 返回数据
@@ -3975,7 +4001,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/validate' \
 | `successCount` | `integer` | 导入服务成功个数。 |
 | `failedCount`  | `integer` | 导入服务失败个数。 |
 | `skippedCount` | `integer` | 导入服务跳过个数。 |
-| `results`      | `List<McpServerImportResult>` | 导入服务列表。   |
+| `results`      | `array<McpServerImportResult>` | 导入服务列表。   |
 
 其中`McpServerImportResult`描述如下:
 
@@ -3984,7 +4010,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/validate' \
 | `serverName`   | `string` | 服务名称。                  |
 | `serverId`     | `string` | 服务ID。                  |
 | `status`       | `string` | 服务导入状态。                |
-| `errorMessage` | `boolean` | 服务导入失败的错误信息，仅在导入失败时存在。 |
+| `errorMessage` | `string` | 服务导入失败的错误信息，仅在导入失败时存在。 |
 
 
 #### 示例
@@ -3997,6 +4023,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/execute' \
 -d 'importType=url' \
 -d 'data=' \
 -d 'overrideExisting=false' \
+-d 'validateOnly=false' \
 -d 'skipInvalid=false' \
 -d 'selectedServers=[]' \
 -d 'limit=10'
@@ -4069,16 +4096,16 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/execute' \
 | `totalCount`                            | `integer` | 符合条件的服务的总数。                                                                                            |
 | `pageNumber`                            | `integer` | 当前页码，起始为`1`。                                                                                           |
 | `pagesAvailable`                        | `integer` | 可用页码。                                                                                                  |
-| `pageItems`                             | `List`                     | 服务列表。                                                                                                  |
+| `pageItems`                             | `array<AgentCardVersionInfo>`                     | 服务列表。                                                                                                  |
 | `pageItems`[i].`protocolVersion`        | `string` | AgentCard的A2A协议版本。                                                                                     |
 | `pageItems`[i].`name`                   | `string` | AgentCard的名称。                                                                                          |
 | `pageItems`[i].`description`            | `string` | AgentCard的描述。                                                                                          |
 | `pageItems`[i].`version`                | `string` | AgentCard的版本号。                                                                                         |
 | `pageItems`[i].`iconUrl`                | `string` | AgentCard的iconURL。                                                                                     |
-| `pageItems`[i].`capabilities`           | `AgentCapability`          | AgentCard的能力，匹配[A2A标准能力](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object)。 |
-| `pageItems`[i].`skills`                 | `List<AgentSkill>`         | AgentCard的技能列表,匹配[A2A标准技能](https://a2a-protocol.org/latest/specification/#554-agentskill-object)。      |
+| `pageItems`[i].`capabilities`           | `AgentCapabilities`          | AgentCard的能力，匹配[A2A标准能力](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object)。 |
+| `pageItems`[i].`skills`                 | `array<AgentSkill>`         | AgentCard的技能列表,匹配[A2A标准技能](https://a2a-protocol.org/latest/specification/#554-agentskill-object)。      |
 | `pageItems`[i].`latestPublishedVersion` | `string` | AgentCard的最新发布版本。                                                                                      |
-| `pageItems`[i].`versionDetails`         | `List<AgentVersionDetail>` | AgentCard的所有版本详情。                                                                                      |
+| `pageItems`[i].`versionDetails`         | `array<AgentVersionDetail>` | AgentCard的所有版本详情。                                                                                      |
 | `pageItems`[i].`registrationType`       | `string` | AgentCard的默认注册类型，可选`URL`和`SERVICE`。                                                                    |
 
 其中`AgentVersionDetail`包含内容如下：
@@ -4253,20 +4280,20 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a/version/list?namespaceId=pu
 | `description`                       | `string` | AgentCard的描述。                                                                                            |
 | `version`                           | `string` | AgentCard的版本号。                                                                                           |
 | `iconUrl`                           | `string` | AgentCard的iconURL。                                                                                       |
-| `capabilities`                      | `AgentCapability`                 | AgentCard的能力，匹配[A2A标准能力](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object)。   |
-| `skills`                            | `List<AgentSkill>`                | AgentCard的技能列表,匹配[A2A标准技能](https://a2a-protocol.org/latest/specification/#554-agentskill-object)。        |
+| `capabilities`                      | `AgentCapabilities`                 | AgentCard的能力，匹配[A2A标准能力](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object)。   |
+| `skills`                            | `array<AgentSkill>`                | AgentCard的技能列表,匹配[A2A标准技能](https://a2a-protocol.org/latest/specification/#554-agentskill-object)。        |
 | `url`                               | `string` | AgentCard的默认访问的URL。                                                                                      |
 | `preferredTransport`                | `string` | AgentCard的默认访问URL的传输协议，应该为`JSONRPC`,`GRPC`,`HTTP+JSON`。                                                  |
-| `additionalInterfaces`              | `List<AgentInterface>`            | AgentCard的所有可访问接口列表,匹配[A2A标准](https://a2a-protocol.org/latest/specification/#555-agentinterface-object)。 |
+| `additionalInterfaces`              | `array<AgentInterface>`            | AgentCard的所有可访问接口列表,匹配[A2A标准](https://a2a-protocol.org/latest/specification/#555-agentinterface-object)。 |
 | `provider`                          | `AgentProvider`                   | AgentCard的提供商信息，匹配[A2A标准](https://a2a-protocol.org/latest/specification/#551-agentprovider-object)。      |
 | `documentationUrl`                  | `string` | AgentCard的文档 URL。                                                                                        |
-| `securitySchemes`                   | `Map<String, SecurityScheme>`     | AgentCard的安全配置定义。匹配[A2A标准](https://a2a-protocol.org/latest/specification/#553-securityscheme-object)     |
-| `security`                          | `List<Map<String, List<String>>>` | AgentCard的所有安全要求对象列表。                                                                                    |
-| `defaultInputModes`                 | `List<String>`                    | AgentCard的所有默认输入模式。                                                                                      |
-| `defaultOutputModes`                | `List<String>`                    | AgentCard的所有默认输出模式。                                                                                      |
-| `supportsAuthenticatedExtendedCard` | `string` | AgentCard是否支持认证的扩展卡。                                                                                     |
+| `securitySchemes`                   | `map<string, SecurityScheme>`     | AgentCard的安全配置定义。匹配[A2A标准](https://a2a-protocol.org/latest/specification/#553-securityscheme-object)     |
+| `security`                          | `array<map<string, array<string>>>` | AgentCard的所有安全要求对象列表。                                                                                    |
+| `defaultInputModes`                 | `array<string>`                    | AgentCard的所有默认输入模式。                                                                                      |
+| `defaultOutputModes`                | `array<string>`                    | AgentCard的所有默认输出模式。                                                                                      |
+| `supportsAuthenticatedExtendedCard` | `boolean` | AgentCard是否支持认证的扩展卡。                                                                                     |
 | `registrationType`                  | `string` | AgentCard的默认注册类型，可选`URL`和`SERVICE`。                                                                      |
-| `latestVersion`                     | `string` | AgentCard当前版本时否为最新版本。                                                                                    |
+| `latestVersion`                     | `boolean` | AgentCard当前版本是否为最新版本。                                                                                    |
 
 
 #### 示例
@@ -4887,7 +4914,6 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/prompt/draft?namespaceId=pub
 | `namespaceId` | `string` | 否 | - |
 | `promptKey` | `string` | **是** | - |
 | `version` | `string` | **是** | - |
-| `updateLatestLabel` | `boolean` | 否 | - |
 
 #### 返回数据
 
@@ -4902,7 +4928,7 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/prompt/draft?namespaceId=pub
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/force-publish' -d "namespaceId=namespaceId&promptKey=promptKey&version=version&updateLatestLabel=updateLatestLabel"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/force-publish' -d "namespaceId=public&promptKey=my-prompt&version=1.0.0"
 ```
 
 * 返回示例
@@ -4959,9 +4985,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/force-publish' -d "name
 | data.data.editingVersion | `string` | - |
 | data.data.reviewingVersion | `string` | - |
 | data.data.onlineCnt | `integer` | - |
-| data.data.labels | `object` | - |
+| data.data.labels | `map<string, string>` | Skill 的版本标签。 |
 | data.data.downloadCount | `integer` | - |
-| data.data.versions | `array` | - |
+| data.data.writable | `boolean` | 当前用户是否可写该 Skill。 |
+| data.data.versions | `array<SkillVersionSummary>` | Skill 版本摘要列表。 |
 | data.data.versionDetails | `array` | - |
 
 #### 示例
@@ -5017,7 +5044,25 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/governance?namespaceId=p
 |--------|----------|------|
 | data.code | `integer` | - |
 | data.message | `string` | - |
-| data.data | `string` | - |
+| data.data.totalCount | `integer` | 符合条件的 Skill 总数。 |
+| data.data.pageNumber | `integer` | 当前页码。 |
+| data.data.pagesAvailable | `integer` | 可用页数。 |
+| data.data.pageItems | `array<SkillSummary>` | 当前页的 Skill 摘要列表。 |
+| data.data.pageItems[i].namespaceId | `string` | Skill 所属命名空间 ID。 |
+| data.data.pageItems[i].name | `string` | Skill 名称。 |
+| data.data.pageItems[i].description | `string` | Skill 描述。 |
+| data.data.pageItems[i].updateTime | `integer` | 最后更新时间。 |
+| data.data.pageItems[i].owner | `string` | Skill 所有者。 |
+| data.data.pageItems[i].enable | `boolean` | Skill 是否启用。 |
+| data.data.pageItems[i].bizTags | `string` | 业务标签。 |
+| data.data.pageItems[i].from | `string` | Skill 来源。 |
+| data.data.pageItems[i].scope | `string` | 可见范围。 |
+| data.data.pageItems[i].labels | `map<string, string>` | 版本标签。 |
+| data.data.pageItems[i].editingVersion | `string` | 正在编辑的版本。 |
+| data.data.pageItems[i].reviewingVersion | `string` | 正在评审的版本。 |
+| data.data.pageItems[i].onlineCnt | `integer` | 已上线版本数量。 |
+| data.data.pageItems[i].downloadCount | `integer` | 下载次数。 |
+| data.data.pageItems[i].writable | `boolean` | 当前用户是否可写。 |
 
 #### 示例
 
@@ -5233,7 +5278,6 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/online' -d "namespaceId
 | `namespaceId` | `string` | 否 | - |
 | `promptKey` | `string` | **是** | - |
 | `version` | `string` | **是** | - |
-| `updateLatestLabel` | `boolean` | 否 | - |
 
 #### 返回数据
 
@@ -5248,7 +5292,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/online' -d "namespaceId
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/publish' -d "namespaceId=namespaceId&promptKey=promptKey&version=version&updateLatestLabel=updateLatestLabel"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/publish' -d "namespaceId=public&promptKey=my-prompt&version=1.0.0"
 ```
 
 * 返回示例
@@ -5751,6 +5795,7 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/biz-tags' -d "namespaceI
 | `basedOnVersion` | `string` | 否 | - |
 | `targetVersion` | `string` | 否 | - |
 | `skillCard` | `string` | 否 | Skill card JSON; required if basedOnVersion is not set |
+| `commitMsg` | `string` | 否 | 草稿版本的提交说明。 |
 
 #### 返回数据
 
@@ -5765,7 +5810,7 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/biz-tags' -d "namespaceI
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=public&skillName=my-skill&basedOnVersion=basedOnVersion&targetVersion=targetVersion&skillCard=skillCard"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=public&skillName=my-skill&targetVersion=1.0.0&skillCard={}&commitMsg=initial"
 ```
 
 * 返回示例
@@ -5804,8 +5849,9 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | - |
-| `skillName` | `string` | **是** | - |
 | `skillCard` | `string` | **是** | Skill card JSON string containing complete Skill information |
+| `setAsLatest` | `boolean` | 否 | 是否将更新后的草稿设为最新版本。 |
+| `commitMsg` | `string` | 否 | 草稿版本的提交说明。 |
 
 #### 返回数据
 
@@ -5820,7 +5866,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=public&skillName=my-skill&skillCard=skillCard"
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=public&skillCard={}&setAsLatest=true&commitMsg=update"
 ```
 
 * 返回示例
@@ -5915,7 +5961,6 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/skills/draft?namespaceId=pub
 | `namespaceId` | `string` | 否 | - |
 | `skillName` | `string` | **是** | - |
 | `version` | `string` | **是** | - |
-| `updateLatestLabel` | `boolean` | 否 | - |
 
 #### 返回数据
 
@@ -5930,7 +5975,7 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/skills/draft?namespaceId=pub
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/force-publish' -d "namespaceId=public&skillName=my-skill&version=version&updateLatestLabel=updateLatestLabel"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/force-publish' -d "namespaceId=public&skillName=my-skill&version=1.0.0"
 ```
 
 * 返回示例
@@ -6005,7 +6050,7 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/labels' -d "namespaceId=
 
 #### 起始版本
 
-`3.2.1`
+`3.2.0`
 
 #### 请求方式
 
@@ -6023,12 +6068,15 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/labels' -d "namespaceId=
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `filterableForm` | `string` | **是** | - |
 | `pageNo` | `integer` | **是** | - |
 | `pageSize` | `integer` | **是** | - |
 | `namespaceId` | `string` | 否 | - |
 | `skillName` | `string` | 否 | - |
 | `search` | `string` | 否 | blur or accurate |
+| `orderBy` | `string` | 否 | 排序字段及方向。 |
+| `owner` | `string` | 否 | 按资源所有者筛选。 |
+| `scope` | `string` | 否 | 按可见范围筛选。 |
+| `bizTag` | `string` | 否 | 按业务标签筛选。 |
 
 #### 返回数据
 
@@ -6043,7 +6091,7 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/labels' -d "namespaceId=
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/list?filterableForm=true&pageNo=1&pageSize=10&namespaceId=public&skillName=my-skill&search=blur'
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/list?pageNo=1&pageSize=10&namespaceId=public&skillName=my-skill&search=blur&orderBy=updateTime'
 ```
 
 * 返回示例
@@ -6196,7 +6244,6 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/online' -d "namespaceId
 | `namespaceId` | `string` | 否 | - |
 | `skillName` | `string` | **是** | - |
 | `version` | `string` | **是** | - |
-| `updateLatestLabel` | `boolean` | 否 | - |
 
 #### 返回数据
 
@@ -6211,7 +6258,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/online' -d "namespaceId
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/publish' -d "namespaceId=public&skillName=my-skill&version=version&updateLatestLabel=updateLatestLabel"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/publish' -d "namespaceId=public&skillName=my-skill&version=1.0.0"
 ```
 
 * 返回示例
@@ -6396,7 +6443,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/submit' -d "namespaceId
 
 #### 起始版本
 
-`3.2.2`
+`3.2.0`
 
 #### 请求方式
 
@@ -6416,18 +6463,12 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/submit' -d "namespaceId
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | - |
-| `overwrite` | `boolean` | 否 | - |
-| `targetVersion` | `string` | 否 | - |
-| `commitMsg` | `string` | 否 | - |
-
-| 参数名 | 类型 | 必填 | 参数描述 |
-|--------|------|------|----------|
-| `file` | `file` | 否 | ZIP file containing skill |
-| `overwrite` | `boolean` | 否 | - |
-| `namespaceId` | `string` | 否 | - |
-| `targetVersion` | `string` | 否 | - |
-| `commitMsg` | `string` | 否 | - |
+| `namespaceId` | `string` | 否 | 命名空间 ID；既可作为 Query 参数传递，也可作为 multipart 表单字段，默认值为 `public`。 |
+| `overwrite` | `boolean` | 否 | 是否覆盖已有草稿；既可作为 Query 参数传递，也可作为 multipart 表单字段，默认值为 `false`。 |
+| `targetVersion` | `string` | 否 | 上传后的目标版本；既可作为 Query 参数传递，也可作为 multipart 表单字段。 |
+| `commitMsg` | `string` | 否 | 版本提交说明；既可作为 Query 参数传递，也可作为 multipart 表单字段。 |
+| `uploadAction` | `string` | 否 | 上传动作；既可作为 Query 参数传递，也可作为 multipart 表单字段。 |
+| `file` | `file` | **是** | multipart 表单中的 Skill ZIP 文件。 |
 
 #### 返回数据
 
@@ -6442,7 +6483,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/submit' -d "namespaceId
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload?namespaceId=public&overwrite=false&targetVersion=1.0.0&commitMsg=init' -F "file=@/path/to/skill.zip" -F "overwrite=false" -F "namespaceId=public" -F "targetVersion=1.0.0" -F "commitMsg=init"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload?namespaceId=public&overwrite=false&targetVersion=1.0.0&commitMsg=init&uploadAction=CREATE' -F "file=@/path/to/skill.zip" -F "overwrite=false" -F "namespaceId=public" -F "targetVersion=1.0.0" -F "commitMsg=init" -F "uploadAction=CREATE"
 ```
 
 * 返回示例
@@ -6482,14 +6523,9 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload?namespaceId=publ
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | - |
-| `overwrite` | `boolean` | 否 | - |
-
-| 参数名 | 类型 | 必填 | 参数描述 |
-|--------|------|------|----------|
-| `namespaceId` | `string` | 否 | - |
-| `overwrite` | `boolean` | 否 | - |
-| `file` | `file` | 否 | ZIP file containing skill directories |
+| `namespaceId` | `string` | 否 | 命名空间 ID；既可作为 Query 参数传递，也可作为 multipart 表单字段，省略时使用默认命名空间。 |
+| `overwrite` | `boolean` | 否 | 是否覆盖已有草稿；既可作为 Query 参数传递，也可作为 multipart 表单字段，默认值为 `false`。 |
+| `file` | `file` | **是** | multipart 表单中包含多个 Skill 子目录的 ZIP 文件。 |
 
 #### 返回数据
 
@@ -6497,8 +6533,9 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload?namespaceId=publ
 |--------|----------|------|
 | data.code | `integer` | - |
 | data.message | `string` | - |
-| data.data.succeeded | `array` | - |
-| data.data.failed | `array` | - |
+| data.data.succeeded | `array<string>` | 上传成功的 Skill 名称。 |
+| data.data.failed | `array<FailedItem>` | 上传失败的条目。 |
+| data.data.results | `array<BatchUploadItemResult>` | 每个上传条目的处理结果。 |
 
 #### 示例
 
@@ -6557,7 +6594,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload/batch?namespaceI
 | data.data.name | `string` | - |
 | data.data.description | `string` | - |
 | data.data.skillMd | `string` | - |
-| data.data.resource | `object` | - |
+| data.data.resource | `map<string, SkillResource>` | 以资源标识为键的 Skill 资源映射。 |
 
 #### 示例
 
@@ -6624,6 +6661,87 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/version/download?namespa
 }
 ```
 
+### 7.20. 预检 Skill 上传
+
+#### 接口描述
+
+通过该接口，可校验 ZIP 文件中的一个或多个 Skill 包，并返回每个包所需的上传动作。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`POST`
+
+请求体类型：`multipart/form-data`。
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/skills/upload/precheck`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Query 参数或 multipart 表单字段；省略时使用默认命名空间。 |
+| `file` | `file` | **是** | 包含一个或多个 Skill 包的 ZIP 文件。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| `data` | `array<SkillUploadPrecheckResult>` | 每个 Skill 包的上传预检结果。 |
+
+`SkillUploadPrecheckResult` 结构如下：
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| `namespaceId` | `string` | 目标命名空间 ID。 |
+| `entryPath` | `string` | Skill 包在 ZIP 中的入口路径。 |
+| `skillName` | `string` | Skill 名称。 |
+| `reason` | `string` | 预检结论说明。 |
+| `owner` | `string` | 已有 Skill 的所有者。 |
+| `maxPublishedVersion` | `string` | 当前已发布的最高版本。 |
+| `parsedVersion` | `string` | 从包中解析出的版本。 |
+| `targetVersion` | `string` | 建议上传的目标版本。 |
+| `exists` | `boolean` | Skill 是否已存在。 |
+| `editingVersion` | `string` | 当前编辑中的版本。 |
+| `reviewingVersion` | `string` | 当前评审中的版本。 |
+| `precheckCode` | `string` | 预检结果代码。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload/precheck?namespaceId=public' -F 'file=@/path/to/skills.zip'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": [
+    {
+      "namespaceId": "public",
+      "entryPath": "my-skill",
+      "skillName": "my-skill",
+      "targetVersion": "1.0.0",
+      "exists": false,
+      "precheckCode": "READY"
+    }
+  ]
+}
+```
+
 ## 8. AgentSpec 管理
 
 AgentSpec 管理 API 提供 AgentSpec 的查询、草稿、发布、上下线、版本管理与 ZIP 上传能力。
@@ -6666,16 +6784,18 @@ AgentSpec 管理 API 提供 AgentSpec 的查询、草稿、发布、上下线、
 | data.data.name | `string` | - |
 | data.data.description | `string` | - |
 | data.data.updateTime | `integer` | - |
+| data.data.owner | `string` | AgentSpec 所有者。 |
 | data.data.enable | `boolean` | - |
 | data.data.bizTags | `string` | - |
 | data.data.from | `string` | - |
 | data.data.scope | `string` | - |
-| data.data.labels | `object` | - |
+| data.data.labels | `map<string, string>` | AgentSpec 的版本标签。 |
 | data.data.editingVersion | `string` | - |
 | data.data.reviewingVersion | `string` | - |
 | data.data.onlineCnt | `integer` | - |
 | data.data.downloadCount | `integer` | - |
-| data.data.versions | `array` | - |
+| data.data.writable | `boolean` | 当前用户是否可写该 AgentSpec。 |
+| data.data.versions | `array<AgentSpecVersionSummary>` | AgentSpec 版本摘要列表。 |
 
 #### 示例
 
@@ -6729,7 +6849,25 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs?namespaceId=public&a
 |--------|----------|------|
 | data.code | `integer` | - |
 | data.message | `string` | - |
-| data.data | `string` | - |
+| data.data.totalCount | `integer` | 符合条件的 AgentSpec 总数。 |
+| data.data.pageNumber | `integer` | 当前页码。 |
+| data.data.pagesAvailable | `integer` | 可用页数。 |
+| data.data.pageItems | `array<AgentSpecSummary>` | 当前页的 AgentSpec 摘要列表。 |
+| data.data.pageItems[i].namespaceId | `string` | AgentSpec 所属命名空间 ID。 |
+| data.data.pageItems[i].name | `string` | AgentSpec 名称。 |
+| data.data.pageItems[i].description | `string` | AgentSpec 描述。 |
+| data.data.pageItems[i].updateTime | `integer` | 最后更新时间。 |
+| data.data.pageItems[i].owner | `string` | AgentSpec 所有者。 |
+| data.data.pageItems[i].enable | `boolean` | AgentSpec 是否启用。 |
+| data.data.pageItems[i].bizTags | `string` | 业务标签。 |
+| data.data.pageItems[i].from | `string` | AgentSpec 来源。 |
+| data.data.pageItems[i].scope | `string` | 可见范围。 |
+| data.data.pageItems[i].labels | `map<string, string>` | 版本标签。 |
+| data.data.pageItems[i].editingVersion | `string` | 正在编辑的版本。 |
+| data.data.pageItems[i].reviewingVersion | `string` | 正在评审的版本。 |
+| data.data.pageItems[i].onlineCnt | `integer` | 已上线版本数量。 |
+| data.data.pageItems[i].downloadCount | `integer` | 下载次数。 |
+| data.data.pageItems[i].writable | `boolean` | 当前用户是否可写。 |
 
 #### 示例
 
@@ -6832,6 +6970,7 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/biz-tags' -d "namesp
 | `namespaceId` | `string` | 否 | - |
 | `agentSpecName` | `string` | **是** | - |
 | `basedOnVersion` | `string` | 否 | - |
+| `targetVersion` | `string` | 否 | 新草稿的目标版本。 |
 
 #### 返回数据
 
@@ -6846,7 +6985,7 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/biz-tags' -d "namesp
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespaceId=public&agentSpecName=my-agent&basedOnVersion=basedOnVersion"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespaceId=public&agentSpecName=my-agent&targetVersion=1.0.0"
 ```
 
 * 返回示例
@@ -6885,8 +7024,8 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespac
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | - |
-| `agentSpecName` | `string` | 否 | - |
 | `agentSpecCard` | `string` | **是** | AgentSpec card JSON string containing complete AgentSpec information |
+| `setAsLatest` | `boolean` | 否 | 是否将更新后的草稿设为最新版本。 |
 
 #### 返回数据
 
@@ -6901,7 +7040,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespac
 * 请求示例
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespaceId=public&agentSpecName=my-agent&agentSpecCard=agentSpecCard"
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespaceId=public&agentSpecCard={}&setAsLatest=true"
 ```
 
 * 返回示例
@@ -6996,7 +7135,6 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft?namespaceId
 | `namespaceId` | `string` | 否 | - |
 | `agentSpecName` | `string` | **是** | - |
 | `version` | `string` | **是** | - |
-| `updateLatestLabel` | `boolean` | 否 | - |
 
 #### 返回数据
 
@@ -7011,7 +7149,7 @@ curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft?namespaceId
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/force-publish' -d "namespaceId=public&agentSpecName=my-agent&version=version&updateLatestLabel=updateLatestLabel"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/force-publish' -d "namespaceId=public&agentSpecName=my-agent&version=1.0.0"
 ```
 
 * 返回示例
@@ -7086,7 +7224,7 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/labels' -d "namespac
 
 #### 起始版本
 
-`3.2.1`
+`3.2.0`
 
 #### 请求方式
 
@@ -7104,12 +7242,14 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/labels' -d "namespac
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `filterableForm` | `string` | **是** | - |
 | `pageNo` | `integer` | **是** | - |
 | `pageSize` | `integer` | **是** | - |
 | `namespaceId` | `string` | 否 | - |
 | `agentSpecName` | `string` | 否 | - |
 | `search` | `string` | 否 | Search mode: accurate or blur |
+| `orderBy` | `string` | 否 | 排序字段及方向。 |
+| `owner` | `string` | 否 | 按资源所有者筛选。 |
+| `scope` | `string` | 否 | 按可见范围筛选。 |
 
 #### 返回数据
 
@@ -7124,7 +7264,7 @@ curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/labels' -d "namespac
 * 请求示例
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs/list?filterableForm=true&pageNo=1&pageSize=10&namespaceId=public&agentSpecName=my-agent&search=blur'
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs/list?pageNo=1&pageSize=10&namespaceId=public&agentSpecName=my-agent&search=blur&orderBy=updateTime'
 ```
 
 * 返回示例
@@ -7277,7 +7417,6 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/online' -d "namespa
 | `namespaceId` | `string` | 否 | - |
 | `agentSpecName` | `string` | **是** | - |
 | `version` | `string` | **是** | - |
-| `updateLatestLabel` | `boolean` | 否 | - |
 
 #### 返回数据
 
@@ -7292,7 +7431,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/online' -d "namespa
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/publish' -d "namespaceId=public&agentSpecName=my-agent&version=version&updateLatestLabel=updateLatestLabel"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/publish' -d "namespaceId=public&agentSpecName=my-agent&version=1.0.0"
 ```
 
 * 返回示例
@@ -7497,14 +7636,9 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/submit' -d "namespa
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `namespaceId` | `string` | 否 | - |
-| `overwrite` | `boolean` | 否 | - |
-
-| 参数名 | 类型 | 必填 | 参数描述 |
-|--------|------|------|----------|
-| `namespaceId` | `string` | 否 | - |
-| `overwrite` | `boolean` | 否 | - |
-| `file` | `file` | 否 | ZIP file containing agentspec package |
+| `namespaceId` | `string` | 否 | 命名空间 ID；既可作为 Query 参数传递，也可作为 multipart 表单字段，默认值为 `public`。 |
+| `overwrite` | `boolean` | 否 | 是否覆盖已有草稿；既可作为 Query 参数传递，也可作为 multipart 表单字段，默认值为 `false`。 |
+| `file` | `file` | **是** | multipart 表单中的 AgentSpec ZIP 文件。 |
 
 #### 返回数据
 
@@ -7572,7 +7706,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/upload?namespaceId=
 | data.data.description | `string` | - |
 | data.data.bizTags | `string` | - |
 | data.data.content | `string` | - |
-| data.data.resource | `object` | - |
+| data.data.resource | `map<string, AgentSpecResource>` | 以资源标识为键的 AgentSpec 资源映射。 |
 
 #### 示例
 
@@ -8088,7 +8222,7 @@ Copilot 相关 API 提供配置获取/保存、Prompt 调试与优化、Skill �
 
 #### 接口描述
 
-获取当前Copilot配置，仅返回apiKey、model、studioUrl、studioProject。
+获取当前 Copilot 配置。当前实现从存储配置中复制 `apiKey`、`model`、`studioUrl`、`studioProject`；响应模型同时序列化默认的 `enabled=true` 和 `defaultNamespace=public`。后两项不能通过 11.2 的保存接口修改。
 
 #### 起始版本
 
@@ -8136,10 +8270,12 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/copilot/config'
   "code": 0,
   "message": "success",
   "data": {
+    "enabled": true,
+    "defaultNamespace": "public",
     "apiKey": "",
-    "model": "",
-    "studioUrl": "",
-    "studioProject": ""
+    "model": "qwen-turbo",
+    "studioUrl": null,
+    "studioProject": "NacosCopilot"
   }
 }
 ```
@@ -8148,7 +8284,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/copilot/config'
 
 #### 接口描述
 
-创建或更新Copilot配置，仅接受apiKey、model、studioUrl、studioProject，其他字段使用默认值。
+创建或更新 Copilot 配置，仅处理 `apiKey`、`model`、`studioUrl`、`studioProject`。请求模型虽然还暴露 `enabled`、`defaultNamespace`，但当前 Controller 会忽略这两个字段：已有配置保留原值，新配置使用默认值。
 
 #### 起始版本
 
@@ -8157,6 +8293,8 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/copilot/config'
 #### 请求方式
 
 `POST`
+
+请求体类型：`application/json`。请求示例中需使用 `-H 'Content-Type: application/json'`。
 
 #### 鉴权状态
 
@@ -8168,7 +8306,12 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/copilot/config'
 
 #### 请求参数
 
-无（请求体可传 apiKey、model、studioUrl、studioProject 等字段，具体以实际接口为准）。
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `apiKey` | `string` | 否 | Copilot 调用模型服务时使用的 API Key；省略时保留已有值或使用默认配置。 |
+| `model` | `string` | 否 | Copilot 使用的模型标识；省略时保留已有值或使用默认配置。 |
+| `studioUrl` | `string` | 否 | 关联的 AgentScope Studio 服务地址；省略时保留已有值或使用默认配置。 |
+| `studioProject` | `string` | 否 | 关联的 AgentScope Studio 项目标识；省略时保留已有值或使用默认配置。 |
 
 #### 返回数据
 
@@ -8181,7 +8324,9 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/copilot/config'
 * 请求示例
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/config'
+curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/config' \
+  -H 'Content-Type: application/json' \
+  -d '{"apiKey":"your-api-key","model":"qwen-turbo","studioUrl":"http://127.0.0.1:8080","studioProject":"NacosCopilot"}'
 ```
 
 * 返回示例
@@ -8321,8 +8466,8 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/optimize' -H 'Cont
 | 参数名                | 类型     | 必填 | 参数描述           |
 |--------------------|--------|----|----------------|
 | `backgroundInfo`     | `string` | 否 | 背景信息。           |
-| `selectedMcpTools`   | `array` | 否 | 选中的 MCP 工具。      |
-| `conversationHistory` | `object` | 否 | 对话历史。           |
+| `selectedMcpTools`   | `array<map<string, object>>` | 否 | 选中的 MCP 工具。      |
+| `conversationHistory` | `ConversationHistory` | 否 | 对话历史。           |
 
 #### 返回数据
 
@@ -8370,11 +8515,11 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/generate' -H 'Conte
 
 | 参数名                | 类型     | 必填 | 参数描述           |
 |--------------------|--------|----|----------------|
-| `conversationHistory` | `object` | 否 | 对话历史。           |
+| `conversationHistory` | `ConversationHistory` | 否 | 对话历史。           |
 | `targetFileName`      | `string` | 否 | 目标文件名。          |
 | `optimizationGoal`    | `string` | 否 | 优化目标。           |
-| `skill`               | `string` | 否 | 待优化的 Skill 内容。   |
-| `selectedMcpTools`   | `array` | 否 | 选中的 MCP 工具。      |
+| `skill`               | `Skill` | 否 | 待优化的 Skill 定义。   |
+| `selectedMcpTools`   | `array<map<string, object>>` | 否 | 选中的 MCP 工具。      |
 
 #### 返回数据
 
@@ -8392,4 +8537,943 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/optimize' -H 'Conte
 
 ```json
 {}
+```
+
+## 12. Agent 管理
+
+Agent 管理 API 提供 Agent 定义、草稿、版本流转、运行时端点和分页查询能力。Agent 名称和版本号均按原值区分大小写；版本号格式为 `MAJOR.MINOR.PATCH[-PRERELEASE]`，不接受 `+BUILD` 元数据。
+
+这套 Agent 管理 API 是后续推荐的统一集成方向，未来将逐步替代现有 A2A 管理 API。新接入的用户和 SDK 应优先对接并兼容 Agent 管理 API，避免为新集成继续依赖旧 A2A API；已有 A2A 集成可依据后续版本发布和迁移说明逐步切换。这里描述的是管理 API 的演进，不表示 A2A 协议本身已废弃。
+
+本节的 `AgentProvider` 和 `AgentVersionDetail` 属于 **Agent 管理模型**。它们与 A2A 注册中心中同名的 Swagger Schema 不是同一结构：这里的 `AgentProvider` 使用 `name`、`url`，这里的 `AgentVersionDetail` 包含完整版本元数据和调用接口。当前 Swagger 因 Java 类型同名会将这两个 Schema 错误地指向 A2A 模型，阅读本节时应以如下结构为准。
+
+常用命名类型关系如下：
+
+| 类型 | 结构或关键字段 |
+|------|----------------|
+| `AgentOverview` | `agent: Agent`、`versionPage: Page<AgentVersionSummary>` |
+| `Agent` | `namespaceId`、`agentName`、`displayName`、`description`、`iconUrl`、`provider: AgentProvider`、`tags: array<string>`、`extensions: map<string, object>`、`status`、`owner`、`scope`、`versionInfo: AgentVersionInfo`、`versionCatalog: AgentVersionCatalog`、`metaVersion`、`createTime`、`updateTime` |
+| `AgentSummary` | 与 `Agent` 的摘要字段相同，但不包含 `extensions` |
+| `AgentProvider` | `name: string`、`url: string` |
+| `AgentVersionInfo` | `editingVersion`、`reviewingVersion`、`onlineCnt`、`labels: map<string, string>` |
+| `AgentVersionCatalog` | `latestVersion`、`onlineVersions: array<AgentVersionCatalogEntry>` |
+| `AgentVersionCatalogEntry` | `version`、`labels: array<string>`、`protocols: array<string>` |
+| `AgentVersionSummary` | `version`、`status`、`author`、`changeDescription`、`contentDigest`、`createTime`、`updateTime` |
+| `AgentVersionDetail` | `namespaceId`、`agentName`、`version`、`status`、`callInterfaces: array<AgentCallInterface>`、`author`、`changeDescription`、`contentDigest`、`createTime`、`updateTime` |
+| `ConsoleRuntimeEndpointView` | `runtimeEndpointSnapshot: RuntimeEndpointSnapshot`、`namingServiceRef: NamingServiceRef` |
+
+`AgentCallInterface` 及声明端点结构如下：
+
+| 字段 | 类型 | 描述 |
+|------|------|------|
+| `protocol` | `string` | 协议标识；同一版本内唯一。 |
+| `protocolVersion` | `string` | 协议版本。 |
+| `descriptorMediaType` | `string` | `nativeDescriptor` 的媒体类型。 |
+| `nativeDescriptor` | `object` | 完整的协议原生描述符；仅该字段因内容由协议决定而保留为 `object`。 |
+| `endpointSourceOrder` | `array<EndpointSource>` | 端点来源优先级；元素为 `RUNTIME` 或 `DECLARED`，不可重复。 |
+| `declaredEndpoints` | `array<Endpoint>` | 从原生描述符派生的静态端点。 |
+
+`Endpoint` 包含 `uri: string`、`transport: string`、`priority: integer`、`weight: number`、`metadata: map<string, string>` 和 `healthy: boolean`。
+
+运行时端点命名类型关系如下：
+
+| 类型 | 结构或关键字段 |
+|------|----------------|
+| `RuntimeEndpointSnapshot` | `namespaceId`、`agentName`、`protocol`、可选 `version`、`items: array<RuntimeEndpointSnapshotItem>` |
+| `RuntimeEndpointSnapshotItem` | `endpoint: Endpoint`、`bindings: array<RuntimeVersionBinding>`、`state`、`enabled`、`healthy`、`lastUpdatedTime` |
+| `RuntimeVersionBinding` | `runtimeVersion`、`versionRange` |
+| `NamingServiceRef` | `namespaceId`、`groupName`、`serviceName` |
+
+Agent 资源状态仅支持 `enable`、`disable`；Agent 版本状态为 `draft`、`reviewing`、`reviewed`、`online`、`offline`。
+
+### 12.1. 查询 Agent 概览
+
+#### 接口描述
+
+通过该接口，可查询 Agent 定义及其有限数量的版本摘要。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agents`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Agent 所属命名空间 ID，省略时使用默认命名空间。 |
+| `agentName` | `string` | **是** | Agent 名称。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| `data` | `AgentOverview` | Agent 定义及版本摘要分页结果。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agents?namespaceId=public&agentName=my-agent'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "agent": {"namespaceId": "public", "agentName": "my-agent"},
+    "versionPage": {"totalCount": 0, "pageNumber": 1, "pagesAvailable": 0, "pageItems": []}
+  }
+}
+```
+
+### 12.2. 更新 Agent
+
+#### 接口描述
+
+通过该接口，可替换 Agent 定义中的所有可写字段。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agents`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Agent 所属命名空间 ID。 |
+| `agentName` | `string` | **是** | Agent 名称。 |
+| `displayName` | `string` | 否 | Agent 展示名称。 |
+| `description` | `string` | 否 | Agent 描述。 |
+| `iconUrl` | `string` | 否 | Agent 图标 URL。 |
+| `provider` | `string` | 否 | JSON 编码的 `AgentProvider`。 |
+| `tags` | `string` | 否 | JSON 编码的字符串标签数组。 |
+| `extensions` | `string` | 否 | JSON 编码的扩展属性对象。 |
+| `status` | `string` | **是** | Agent 资源状态，仅支持 `enable` 或 `disable`。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| `data` | `Agent` | 更新后的 Agent 定义。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agents' -d 'namespaceId=public&agentName=my-agent&displayName=My Agent&status=enable'
+```
+
+* 返回示例
+
+```json
+{"code":0,"message":"success","data":{"namespaceId":"public","agentName":"my-agent","displayName":"My Agent","status":"enable"}}
+```
+
+### 12.3. 删除 Agent
+
+#### 接口描述
+
+通过该接口，可删除 Agent 定义及其全部版本内容。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`DELETE`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agents`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Agent 所属命名空间 ID。 |
+| `agentName` | `string` | **是** | Agent 名称。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| `data` | `null` | 删除成功时无业务数据。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agents?namespaceId=public&agentName=my-agent'
+```
+
+* 返回示例
+
+```json
+{"code":0,"message":"success","data":null}
+```
+
+### 12.4. 创建 Agent 草稿
+
+#### 接口描述
+
+通过该接口，可创建 Agent 的初始草稿或后续草稿版本。请求必须且只能提供 `callInterfaces` 或 `basedOnVersion` 之一；首次创建 Agent 时不存在可复制的已有版本，因此必须直接提供非空 `callInterfaces`。仅首次创建时可通过同一请求初始化 Agent 元数据，后续草稿不接受这些元数据字段。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agents/draft`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Agent 所属命名空间 ID。 |
+| `agentName` | `string` | **是** | Agent 名称。 |
+| `version` | `string` | **是** | 新草稿版本号。 |
+| `displayName` | `string` | 否 | Agent 展示名称。 |
+| `description` | `string` | 否 | Agent 描述。 |
+| `iconUrl` | `string` | 否 | Agent 图标 URL。 |
+| `provider` | `string` | 否 | JSON 编码的 `AgentProvider`。 |
+| `tags` | `string` | 否 | JSON 编码的字符串标签数组。 |
+| `extensions` | `string` | 否 | JSON 编码的扩展属性对象。 |
+| `callInterfaces` | `string` | 否 | JSON 编码的非空 `array<AgentCallInterface>`；与 `basedOnVersion` 二选一，首次创建 Agent 时必须提供。 |
+| `author` | `string` | 否 | 草稿作者。 |
+| `changeDescription` | `string` | 否 | 版本变更说明。 |
+| `basedOnVersion` | `string` | 否 | 创建草稿所基于的已有精确版本；与 `callInterfaces` 二选一，首次创建 Agent 时不可使用。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| `data` | `AgentVersionDetail` | 创建后的 Agent 草稿版本详情。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/draft' \
+  -d 'namespaceId=public' \
+  -d 'agentName=my-agent' \
+  -d 'version=1.0.0' \
+  -d 'displayName=My Agent' \
+  -d 'author=nacos' \
+  --data-urlencode 'callInterfaces=[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"declaredEndpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC","priority":0,"weight":1.0}]}]'
+```
+
+* 返回示例
+
+```json
+{"code":0,"message":"success","data":{"namespaceId":"public","agentName":"my-agent","version":"1.0.0","status":"draft","callInterfaces":[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"declaredEndpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC","priority":0,"weight":1.0}]}],"author":"nacos"}}
+```
+
+### 12.5. 更新 Agent 草稿
+
+#### 接口描述
+
+通过该接口，可替换 Agent 草稿的调用接口及变更说明。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agents/draft`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Agent 所属命名空间 ID。 |
+| `agentName` | `string` | **是** | Agent 名称。 |
+| `version` | `string` | **是** | 待更新的草稿版本。 |
+| `callInterfaces` | `string` | **是** | JSON 编码的 `array<AgentCallInterface>`。 |
+| `changeDescription` | `string` | 否 | 版本变更说明。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| `data` | `AgentVersionDetail` | 更新后的 Agent 草稿版本详情。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agents/draft' \
+  -d 'namespaceId=public' \
+  -d 'agentName=my-agent' \
+  -d 'version=1.0.0' \
+  -d 'changeDescription=update endpoints' \
+  --data-urlencode 'callInterfaces=[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"declaredEndpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC"}]}]'
+```
+
+* 返回示例
+
+```json
+{"code":0,"message":"success","data":{"namespaceId":"public","agentName":"my-agent","version":"1.0.0","status":"draft","callInterfaces":[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"declaredEndpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC"}]}],"changeDescription":"update endpoints"}}
+```
+
+### 12.6. 删除 Agent 草稿
+
+#### 接口描述
+
+通过该接口，可删除指定的当前 Agent 草稿。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`DELETE`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agents/draft`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Agent 所属命名空间 ID。 |
+| `agentName` | `string` | **是** | Agent 名称。 |
+| `version` | `string` | **是** | 待删除的草稿版本。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| `data` | `null` | 删除成功时无业务数据。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agents/draft?namespaceId=public&agentName=my-agent&version=1.0.0'
+```
+
+* 返回示例
+
+```json
+{"code":0,"message":"success","data":null}
+```
+
+### 12.7. 强制发布 Agent 版本
+
+#### 接口描述
+
+通过该接口，可绕过常规评审要求强制发布工作中的 Agent 版本。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agents/force-publish`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Agent 所属命名空间 ID。 |
+| `agentName` | `string` | **是** | Agent 名称。 |
+| `version` | `string` | **是** | 待强制发布的版本。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| `data` | `AgentVersionSummary` | 发布后的版本摘要，成功时状态为 `online`。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/force-publish' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
+```
+
+* 返回示例
+
+```json
+{"code":0,"message":"success","data":{"version":"1.0.0","status":"online","author":"nacos"}}
+```
+
+### 12.8. 更新 Agent 标签
+
+#### 接口描述
+
+通过该接口，可替换 Agent 自定义标签，并保留由服务管理的 latest 标签。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`PUT`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agents/labels`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Agent 所属命名空间 ID。 |
+| `agentName` | `string` | **是** | Agent 名称。 |
+| `labels` | `string` | **是** | JSON 编码的 `map<string, string>`，键为自定义标签，值为精确版本号；不得写入保留标签 `latest`。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| `data` | `Agent` | 更新标签后的 Agent 定义。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agents/labels' -d 'namespaceId=public&agentName=my-agent&labels={"stable":"1.0.0"}'
+```
+
+* 返回示例
+
+```json
+{"code":0,"message":"success","data":{"namespaceId":"public","agentName":"my-agent","status":"enable","versionInfo":{"labels":{"latest":"1.0.0","stable":"1.0.0"}}}}
+```
+
+### 12.9. 查询 Agent 列表
+
+#### 接口描述
+
+通过该接口，可筛选并分页查询 Agent 摘要。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agents/list`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `pageNo` | `integer` | **是** | 页码，从 1 开始。 |
+| `pageSize` | `integer` | **是** | 每页数量。 |
+| `namespaceId` | `string` | 否 | Agent 所属命名空间 ID。 |
+| `agentName` | `string` | 否 | 按 Agent 名称筛选。 |
+| `orderBy` | `string` | 否 | 排序字段；当前仅支持 `download_count`。 |
+| `owner` | `string` | 否 | 按所有者筛选。 |
+| `scope` | `string` | 否 | 按可见范围筛选，支持 `PUBLIC` 或 `PRIVATE`，不区分大小写。 |
+| `bizTag` | `string` | 否 | 按业务标签模糊筛选。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| `data` | `Page<AgentSummary>` | Agent 摘要分页结果，`pageItems` 类型为 `array<AgentSummary>`。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agents/list?pageNo=1&pageSize=20&namespaceId=public&agentName=my-agent'
+```
+
+* 返回示例
+
+```json
+{"code":0,"message":"success","data":{"totalCount":0,"pageNumber":1,"pagesAvailable":0,"pageItems":[]}}
+```
+
+### 12.10. 下线 Agent 版本
+
+#### 接口描述
+
+通过该接口，可下线指定 Agent 版本。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agents/offline`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Agent 所属命名空间 ID。 |
+| `agentName` | `string` | **是** | Agent 名称。 |
+| `version` | `string` | **是** | 待下线的版本。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| `data` | `AgentVersionSummary` | 下线后的版本摘要，状态为 `offline`。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/offline' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
+```
+
+* 返回示例
+
+```json
+{"code":0,"message":"success","data":{"version":"1.0.0","status":"offline","author":"nacos"}}
+```
+
+### 12.11. 上线 Agent 版本
+
+#### 接口描述
+
+通过该接口，可上线指定 Agent 版本。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agents/online`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Agent 所属命名空间 ID。 |
+| `agentName` | `string` | **是** | Agent 名称。 |
+| `version` | `string` | **是** | 待上线的版本。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| `data` | `AgentVersionSummary` | 上线后的版本摘要，状态为 `online`。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/online' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
+```
+
+* 返回示例
+
+```json
+{"code":0,"message":"success","data":{"version":"1.0.0","status":"online","author":"nacos"}}
+```
+
+### 12.12. 发布 Agent 版本
+
+#### 接口描述
+
+通过该接口，可发布已评审的 Agent 版本。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agents/publish`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Agent 所属命名空间 ID。 |
+| `agentName` | `string` | **是** | Agent 名称。 |
+| `version` | `string` | **是** | 待发布的版本。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| `data` | `AgentVersionSummary` | 发布后的版本摘要，状态为 `online`。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/publish' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
+```
+
+* 返回示例
+
+```json
+{"code":0,"message":"success","data":{"version":"1.0.0","status":"online","author":"nacos"}}
+```
+
+### 12.13. 重新编辑 Agent 版本
+
+#### 接口描述
+
+通过该接口，可将已评审的 Agent 版本重新转为草稿。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agents/redraft`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Agent 所属命名空间 ID。 |
+| `agentName` | `string` | **是** | Agent 名称。 |
+| `version` | `string` | **是** | 待重新编辑的版本。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| `data` | `AgentVersionSummary` | 转为草稿后的版本摘要，状态为 `draft`。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/redraft' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
+```
+
+* 返回示例
+
+```json
+{"code":0,"message":"success","data":{"version":"1.0.0","status":"draft","author":"nacos"}}
+```
+
+### 12.14. 查询 Agent 运行时端点
+
+#### 接口描述
+
+通过该接口，可查询 Agent 指定协议的运行时端点快照及 Naming 服务引用。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agents/runtime-endpoints`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Agent 所属命名空间 ID。 |
+| `agentName` | `string` | **是** | Agent 名称。 |
+| `protocol` | `string` | **是** | 需要查询的 Agent 协议。 |
+| `version` | `string` | 否 | 精确 Agent 版本过滤条件；省略时返回该协议下每个自然端点的有效条目及其全部版本绑定。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| `data` | `ConsoleRuntimeEndpointView` | 运行时端点快照及 Naming 服务引用；没有实例时 `runtimeEndpointSnapshot.items` 为空数组。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agents/runtime-endpoints?namespaceId=public&agentName=my-agent&protocol=A2A&version=1.0.0'
+```
+
+* 返回示例
+
+```json
+{"code":0,"message":"success","data":{"runtimeEndpointSnapshot":{"namespaceId":"public","agentName":"my-agent","protocol":"A2A","version":"1.0.0","items":[]},"namingServiceRef":{"namespaceId":"public","groupName":"DEFAULT_GROUP","serviceName":"my-agent@@A2A"}}}
+```
+
+### 12.15. 提交 Agent 版本
+
+#### 接口描述
+
+通过该接口，可提交 Agent 草稿版本进入评审。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`POST`
+
+#### 鉴权状态
+
+需要具有对应`命名空间写入`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agents/submit`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Agent 所属命名空间 ID。 |
+| `agentName` | `string` | **是** | Agent 名称。 |
+| `version` | `string` | **是** | 待提交评审的草稿版本。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| `data` | `AgentVersionSummary` | 提交后的版本摘要，状态为 `reviewing`。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/submit' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
+```
+
+* 返回示例
+
+```json
+{"code":0,"message":"success","data":{"version":"1.0.0","status":"reviewing","author":"nacos"}}
+```
+
+### 12.16. 查询 Agent 版本
+
+#### 接口描述
+
+通过该接口，可查询指定 Agent 版本的完整定义。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agents/version`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `namespaceId` | `string` | 否 | Agent 所属命名空间 ID。 |
+| `agentName` | `string` | **是** | Agent 名称。 |
+| `version` | `string` | **是** | 需要查询的 Agent 版本。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| `data` | `AgentVersionDetail` | Agent 版本详情，包含完整的 `array<AgentCallInterface>`。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agents/version?namespaceId=public&agentName=my-agent&version=1.0.0'
+```
+
+* 返回示例
+
+```json
+{"code":0,"message":"success","data":{"namespaceId":"public","agentName":"my-agent","version":"1.0.0","status":"online","callInterfaces":[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"declaredEndpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC"}]}],"author":"nacos","contentDigest":"sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"}}
+```
+
+### 12.17. 查询 Agent 版本列表
+
+#### 接口描述
+
+通过该接口，可分页查询指定 Agent 的版本摘要。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有对应`命名空间读取`权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/agents/versions`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|--------|------|------|----------|
+| `pageNo` | `integer` | **是** | 页码，从 1 开始。 |
+| `pageSize` | `integer` | **是** | 每页数量。 |
+| `namespaceId` | `string` | 否 | Agent 所属命名空间 ID。 |
+| `agentName` | `string` | **是** | Agent 名称。 |
+| `status` | `string` | 否 | 按版本状态筛选，可选 `draft`、`reviewing`、`reviewed`、`online`、`offline`。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|--------|----------|------|
+| `data` | `Page<AgentVersionSummary>` | Agent 版本摘要分页结果，`pageItems` 类型为 `array<AgentVersionSummary>`。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agents/versions?pageNo=1&pageSize=20&namespaceId=public&agentName=my-agent&status=online'
+```
+
+* 返回示例
+
+```json
+{"code":0,"message":"success","data":{"totalCount":0,"pageNumber":1,"pagesAvailable":0,"pageItems":[]}}
 ```

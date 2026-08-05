@@ -377,7 +377,9 @@ Nacos administrator permission is required.
 
 #### Request Parameters
 
-None.
+| Name | Type | Required | Description |
+|--------|------|------|----------|
+| `keyword` | `string` | No | Filter nodes by address, status, or related information. |
 
 #### Response Data
 
@@ -391,7 +393,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/core/cluster/nodes'
+curl -X GET 'http://127.0.0.1:8080/v3/console/core/cluster/nodes?keyword=127.0.0.1'
 ```
 
 * Response example
@@ -860,9 +862,11 @@ A user identity with the corresponding `namespace read` permission is required.
 | data.executionMode | `string` | `EXCLUSIVE`, `CHAIN`, `ROUTED`, or `BROADCAST`. |
 | data.exclusive | `boolean` | whether the type uses exclusive selection. |
 | data.configurable | `boolean` | whether dynamic configuration in the console is supported. |
-| data.config | `object` | effective configuration with sensitive items masked. |
-| data.configDefinitions | `array` | definitions including aliases, type, default, required, sensitivity, and effectMode. |
-| data.configValueMetas | `object` | effective source and `overridden` metadata per item. |
+| data.config | `map<string, string>` | Effective configuration with sensitive items masked. |
+| data.configDefinitions | `array<ConfigItemDefinition>` | Configuration item definitions. |
+| data.configValueMetas | `map<string, PluginConfigValueMeta>` | Effective source and override metadata indexed by configuration key. |
+
+`ConfigItemDefinition` contains `key`, `name`, `description`, `defaultValue`, `type`, `required`, `enumValues: array<string>`, `aliases: array<string>`, `sensitive`, and `effectMode`. `PluginConfigValueMeta` contains `key`, `source`, and `overridden`. The allowed `type` values are `STRING`, `NUMBER`, `BOOLEAN`, and `ENUM`; `effectMode` is `RUNTIME` or `RESTART`; `source` is `DEFAULT`, `STATIC`, `RUNTIME_PERSISTED`, or `LOCAL_ONLY`.
 
 #### Examples
 
@@ -879,8 +883,9 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/plugin?pluginType=auth&pluginName=
   "code": 0,
   "message": "success",
   "data": {
-    "name": "nacos",
-    "type": "auth",
+    "pluginId": "auth:nacos",
+    "pluginType": "auth",
+    "pluginName": "nacos",
     "enabled": true,
     "config": {},
     "configDefinitions": [],
@@ -970,7 +975,7 @@ A user identity with the corresponding `namespace write` permission is required.
 |--------|------|------|----------|
 | `pluginType` | `string` | **Yes** | plugin type. |
 | `pluginName` | `string` | **Yes** | plugin name. |
-| `config` | `string` | No | Complete JSON item map whose fields come from plugin definitions. |
+| `config` | `string` | **Yes** | Complete JSON item map whose fields come from plugin definitions. |
 | `localOnly` | `boolean` | No | `true` writes this node's `LOCAL_ONLY`; otherwise writes `RUNTIME_PERSISTED`. |
 
 #### Response Data
@@ -1238,6 +1243,12 @@ A user identity with the corresponding `namespace write` permission is required.
 | `type`        | `string` | No  | Configuration type. The default is `text`.         |
 | `configTags`  | `string` | No  | Configuration tags. Multiple tags are separated by English commas.      |
 | `appName`     | `string` | No  | Application name to which the configuration belongs. It is mainly used to mark the application that uses the configuration. |
+| `use` | `string` | No | Configuration usage scenario. |
+| `effect` | `string` | No | Configuration effective scope. |
+| `schema` | `string` | No | Schema associated with the configuration content. |
+| `tag` | `string` | No | Configuration gray-release tag. |
+| `srcUser` | `string` | No | Source user identifier for the publish operation. |
+| `encryptedDataKey` | `string` | No | Data key for encrypted configuration content. |
 
 - When the configuration already exists with the same `dataId` and `groupName`, calling this API again updates the configuration.
 - When publishing a configuration, if the request `Header` contains `betaIps`, the configuration is marked as a BETA configuration. Before the BETA release is stopped or fully published, the console UI must handle it specially.
@@ -1297,6 +1308,7 @@ A user identity with the corresponding `namespace write` permission is required.
 | `dataId`      | `string` | Yes  | configuration ID.                |
 | `groupName`   | `string` | Yes  | configuration group.                |
 | `namespaceId` | `string` | No  | Namespace ID. The default is `public`. |
+| `tag` | `string` | No | Configuration gray-release tag. |
 
 #### Response Data
 
@@ -1350,7 +1362,8 @@ A user identity with the corresponding `namespace write` permission is required.
 
 | Name   | Type       | Required | Description                                  |
 |-------|----------|----|---------------------------------------|
-| `ids` | `array` | Yes  | Configuration storage ID list, not a `dataId` list. Separate multiple IDs with commas. |
+| `ids` | `array<integer>` | Yes  | Configuration storage ID list, not a `dataId` list. Separate multiple IDs with commas. |
+| `namespaceId` | `string` | No | Namespace ID of the configurations. The default is `public`. |
 
 #### Response Data
 
@@ -1423,7 +1436,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 | `totalCount`                 | `integer` | total number of configurations that match the rule.                 |
 | `pagesAvailable`             | `integer` | total number of available pages.                    |
 | `pageNumber`                 | `integer` | current page number.                      |
-| `pageItems`                  | `List`   | list of configurations that match the rule.                 |
+| `pageItems`                  | `array`   | list of configurations that match the rule.                 |
 | `pageItems`[i].`id`          | `string` | Configuration ID in the storage system, usually a string of the Long type. |
 | `pageItems`[i].`dataId`      | `string` | configuration ID.                      |
 | `pageItems`[i].`groupName`   | `string` | configuration group.                      |
@@ -1530,7 +1543,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 | `totalCount`                 | `integer` | total number of configurations that match the rule.                 |
 | `pagesAvailable`             | `integer` | total number of available pages.                    |
 | `pageNumber`                 | `integer` | current page number.                      |
-| `pageItems`                  | `List`   | list of configurations that match the rule.                 |
+| `pageItems`                  | `array`   | list of configurations that match the rule.                 |
 | `pageItems`[i].`id`          | `string` | Configuration ID in the storage system, usually a string of the Long type. |
 | `pageItems`[i].`dataId`      | `string` | configuration ID.                      |
 | `pageItems`[i].`groupName`   | `string` | configuration group.                      |
@@ -1730,7 +1743,7 @@ A user identity with the corresponding `namespace read` permission is required.
 |---------------|----------|----|------------------------------|
 | `dataId`      | `string` | No  | Pattern of configuration IDs to export, for example `test*`. |
 | `groupName`   | `string` | No  | Pattern of configuration groups to export, for example `test*`. |
-| `ids`         | `array` | No  | Configuration storage ID list. Separate multiple IDs with commas.    |
+| `ids`         | `array<integer>` | No  | Configuration storage ID list. Separate multiple IDs with commas.    |
 | `namespaceId` | `string` | No  | Namespace ID. The default is `public`.         |
 | `appName`     | `string` | No  | application name to which the configurations to export belong.              |
 
@@ -1792,10 +1805,10 @@ A user identity with the corresponding `namespace write` permission is required.
 
 | Name           | Type                 | Required | Description                                                                                                               |
 |---------------|--------------------|----|--------------------------------------------------------------------------------------------------------------------|
-| `file`        | `MultipartFile`    | No  | imported ZIP file.                                                                                                          |
-| `namespaceId` | `string` | No  | Namespace ID to which the imported configurations belong. The default is `public`.                                                                                       |
-| `policy`      | `string` | No  | Import policy used when imported configurations have the same `dataId` and `groupName` and conflict. Valid values are `ABORT` (abort import), `SKIP` (skip conflicting configurations), and `OVERWRITE` (overwrite conflicting configurations). The default is `ABORT`. |
-| `src_user`    | `string` | No  | source user identifier for the import operation.                                                                                                       |
+| `file`        | `file`    | **Yes**  | Import ZIP file supplied as a multipart form field.                                                                                                          |
+| `namespaceId` | `string` | No  | Query parameter or multipart field for the target namespace ID. The default is `public`.                                                                                       |
+| `policy`      | `string` | No  | Query parameter or multipart field. Valid conflict policies are `ABORT`, `SKIP`, and `OVERWRITE`; the default is `ABORT`. |
+| `srcUser`    | `string` | No  | Query parameter or multipart field identifying the source user for the import operation.                                                                                                       |
 
 #### Response Data
 
@@ -1811,7 +1824,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import" -F "file=@/path/to/test.zip" -F "namespaceId=test"
+curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import?namespaceId=test&policy=ABORT&srcUser=console" -F "file=@/path/to/test.zip" -F "namespaceId=test" -F "policy=ABORT" -F "srcUser=console"
 ```
 
 * Response example
@@ -1856,8 +1869,12 @@ A user identity with the corresponding `namespace write` permission is required.
 | Name              | Type       | Required    | Description                                                                                                               |
 |------------------|----------|-------|--------------------------------------------------------------------------------------------------------------------|
 | `srcUser`        | `string` | No     | source user identifier for the clone operation.                                                                                                        |
+| `namespaceId`    | `string` | No     | Source namespace ID. The default is `public`. |
 | `targetNamespaceId` | `string` | **Yes** | target namespace ID.                                                                                                           |
 | `policy`         | `string` | No     | Clone policy used when configurations have the same `dataId` and `groupName` and conflict. Valid values are `ABORT` (abort cloning), `SKIP` (skip conflicting configurations), and `OVERWRITE` (overwrite conflicting configurations). The default is `ABORT`. |
+| `body[].cfgId` | `integer` | **Yes** | ID of the source configuration in each JSON request-body item; every effective item needs this value. |
+| `body[].dataId` | `string` | No | Target `dataId` in the JSON request-body item; the source value is retained when omitted or blank. |
+| `body[].group` | `string` | No | Target group in the JSON request-body item; the source value is retained when omitted or blank. |
 
 #### Response Data
 
@@ -1873,7 +1890,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -H "Content-Type: application/json" -X POST "http://127.0.0.1:8080/v3/console/cs/config/clone?targetNamespaceId=public&policy=ABORT" -d "[{\"cfgId\":838029534438625280,\"dataId\":\"111\",\"group\":\"DEFAULT_GROUP\"},{\"cfgId\":838033747294031872,\"dataId\":\"qtc-user.yaml\",\"group\":\"DEFAULT_GROUP\"}]"
+curl -H "Content-Type: application/json" -X POST "http://127.0.0.1:8080/v3/console/cs/config/clone?namespaceId=public&targetNamespaceId=target&policy=ABORT" -d "[{\"cfgId\":838029534438625280,\"dataId\":\"111\",\"group\":\"DEFAULT_GROUP\"},{\"cfgId\":838033747294031872,\"dataId\":\"qtc-user.yaml\",\"group\":\"DEFAULT_GROUP\"}]"
 ```
 
 * Response example
@@ -2082,7 +2099,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 | `totalCount`                 | `integer` | total number of history records.                          |
 | `pageNumber`                 | `integer` | current page number, starts from `1`.                      |
 | `pagesAvailable`             | `integer` | available pages.                             |
-| `pageItems`                  | `List`   | history record list.                           |
+| `pageItems`                  | `array`   | history record list.                           |
 | `pageItems`[i].`id`          | `string` | history record ID.                          |
 | `pageItems`[i].`dataId`      | `string` | Configuration `dataId`.                        |
 | `pageItems`[i].`groupName`   | `string` | Configuration `groupName`.                     |
@@ -2214,7 +2231,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 | `createTime`  | `integer` | configuration creation time.                                                                     |
 | `modifyTime`  | `integer` | configuration modification time.                                                                     |
 | `grayName`    | `string` | Gray release rule name. Fixed as `beta`.                                                        |
-| `extInfo`     | `JsonString` | Extended information. Currently includes `src_user`, `type`, and `c_desc`. If `publishType` is `gray`, it also includes `grayRule`. |
+| `extInfo`     | `string` | JSON-encoded extended information string. It currently includes `src_user`, `type`, and `c_desc`. If `publishType` is `gray`, it also includes `grayRule`. |
 
 #### Examples
 
@@ -2302,7 +2319,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 | `createTime`  | `integer` | configuration creation time.                                                                     |
 | `modifyTime`  | `integer` | configuration modification time.                                                                     |
 | `grayName`    | `string` | Gray release rule name. Fixed as `beta`.                                                        |
-| `extInfo`     | `JsonString` | Extended information. Currently includes `src_user`, `type`, and `c_desc`. If `publishType` is `gray`, it also includes `grayRule`. |
+| `extInfo`     | `string` | JSON-encoded extended information string. It currently includes `src_user`, `type`, and `c_desc`. If `publishType` is `gray`, it also includes `grayRule`. |
 
 #### Examples
 
@@ -2702,7 +2719,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 | `totalCount`                          | `integer` | total number of services that match the condition.  |
 | `pageNumber`                          | `integer` | current page number, starts from `1`. |
 | `pagesAvailable`                      | `integer` | available pages.        |
-| `pageItems`                           | `List`   | service list.        |
+| `pageItems`                           | `array`   | service list.        |
 | `pageItems`[i].`name`                 | `string` | service name.         |
 | `pageItems`[i].`groupName`            | `string` | group name of the service.      |
 | `pageItems`[i].`clusterCount`         | `string` | number of clusters under the service.    |
@@ -2792,7 +2809,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 | `totalCount`                 | `integer` | total number of services that match the condition.          |
 | `pageNumber`                 | `integer` | current page number, starts from `1`.         |
 | `pagesAvailable`             | `integer` | available pages.                |
-| `pageItems`                  | `List`    | service list.                |
+| `pageItems`                  | `array`    | service list.                |
 | `pageItems`[i].`ip`          | `string` | subscriber IP.               |
 | `pageItems`[i].`port`        | `integer` | subscriber port.               |
 | `pageItems`[i].`address`     | `string` | Subscriber address, usually `ip:port`. |
@@ -2877,14 +2894,14 @@ The response body follows the [Nacos Open API unified response format](../user/o
 | `serviceName`                                       | `string` | service name.                                 |
 | `ephemeral`                                         | `boolean` | Service persistence attribute. `true` means an ephemeral service, and `false` means a persistent service.  |
 | `protectThreshold`                                  | `number` | service protection threshold.                              |
-| `selector`                                          | `jsonObject` | service selector.                               |
-| `metadata`                                          | `jsonObject` | service metadata.                               |
-| `clusterMap`                                        | `jsonObject` | Service cluster list. The key is the cluster name, and the value is the cluster details. |
+| `selector`                                          | `object` | service selector.                               |
+| `metadata`                                          | `object` | service metadata.                               |
+| `clusterMap`                                        | `object` | Service cluster list. The key is the cluster name, and the value is the cluster details. |
 | `clusterMap`.$ClusterName.`clusterName`             | `string` | cluster name.                                 |
-| `clusterMap`.$ClusterName.`healthChecker`           | `jsonObject` | health checker.                               |
+| `clusterMap`.$ClusterName.`healthChecker`           | `object` | health checker.                               |
 | `clusterMap`.$ClusterName.`healthyCheckPort`        | `integer` | health check port.                              |
 | `clusterMap`.$ClusterName.`useInstancePortForCheck` | `boolean` | Whether to use the registered instance `IP:Port` for health checks.          |
-| `clusterMap`.$ClusterName.`metadata`                | `jsonObject` | cluster metadata.                               |
+| `clusterMap`.$ClusterName.`metadata`                | `object` | cluster metadata.                               |
 
 #### Examples
 
@@ -3036,7 +3053,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 | `totalCount`                 | `integer` | total number of instances that match the condition.                           |
 | `pageNumber`                 | `integer` | current page number, starts from `1`.                          |
 | `pagesAvailable`             | `integer` | available pages.                                 |
-| `pageItems`                  | `List`                | instance list.                                 |
+| `pageItems`                  | `array`                | instance list.                                 |
 | `pageItems`[i].`instanceId`  | `string` | instance ID.                                 |
 | `pageItems`[i].`ip`          | `string` | instance IP.                                 |
 | `pageItems`[i].`port`        | `integer` | instance port.                                 |
@@ -3267,16 +3284,16 @@ The response body follows the [Nacos Open API unified response format](../user/o
 | `frontProtocol`      | `string` | Frontend exposure protocol of the MCP service. It is generally used by protocol converters, such as gateways. If there is no converter, it is the same as `protocol`, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`. |
 | `description`        | `string` | MCP service description.                                                                                       |
 | `repository`         | `string` | repository of the MCP service.                                                                                     |                                                                                          |
-| `versionDetail`      | `VersionDetail`       | queried version information of the MCP service.                                                                                  |
-| `localServerConfig`  | `Map<String, Object>` | When the MCP service type is **stdio**, this information exists and records startup information for the local MCP service.                                                        |
-| `remoteServerConfig` | `RemoteServerConfig`  | When the MCP service type is **non-stdio**, this information exists and records remote service information.                                                           |
+| `versionDetail`      | `ServerVersionDetail`       | queried version information of the MCP service.                                                                                  |
+| `localServerConfig`  | `map<string, object>` | When the MCP service type is **stdio**, this information exists and records startup information for the local MCP service.                                                        |
+| `remoteServerConfig` | `McpServerRemoteServiceConfig`  | When the MCP service type is **non-stdio**, this information exists and records remote service information.                                                           |
 | `enabled`            | `boolean` | whether the MCP service is enabled.                                                                                      |
-| `capabilities`       | `List`                | Capability types supported by the MCP service, such as `TOOL`, `PROMPT`, or `RESOURCE`.                                                       |
-| `backendEndpoints`   | `List`                | When the MCP service type is **non-stdio**, this information exists and records specific address information for accessing the remote service.                                                      |
-| `toolSpec`           | `Map<String, Object>` | This information exists when the capability types supported by the MCP service include `TOOL`; it records detailed tool configuration information.                                                        |
-| `allVersions`        | `List<VersionDetail>` | list of all version details of the MCP service.                                                                                |
+| `capabilities`       | `array<string>`                | Capability types supported by the MCP service, such as `TOOL`, `PROMPT`, or `RESOURCE`.                                                       |
+| `backendEndpoints`   | `array<McpEndpointInfo>`                | When the MCP service type is **non-stdio**, this information exists and records specific address information for accessing the remote service.                                                      |
+| `toolSpec`           | `McpToolSpecification` | This information exists when the capability types supported by the MCP service include `TOOL`; it records detailed tool configuration information.                                                        |
+| `allVersions`        | `array<ServerVersionDetail>` | list of all version details of the MCP service.                                                                                |
 
-The `VersionDetail` structure is as follows:
+The `ServerVersionDetail` structure is as follows:
 
 | Name            | Type      | Description               |
 |----------------|-----------|------------------|
@@ -3374,14 +3391,14 @@ The details of the `serverSpecification`, `toolSpecification`, and `endpointSpec
 | `frontProtocol`      | `string` | Frontend exposure protocol of the MCP service. It is generally used by protocol converters, such as gateways. If there is no converter, it is the same as `protocol`, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`. |
 | `description`        | `string` | MCP service description.                                                                                       |
 | `repository`         | `string` | repository of the MCP service.                                                                                     |    |
-| `versionDetail`      | `VersionDetail`       | version information of the MCP service.                                                                                     |
+| `versionDetail`      | `ServerVersionDetail`       | version information of the MCP service.                                                                                     |
 | `version`            | `string` | Simple version information of the MCP service, mainly used for compatibility. If `versionDetail` is set, this field is invalid.                                               |    |
-| `localServerConfig`  | `Map<String, Object>` | When the MCP service type is **stdio**, this information exists and records startup information for the local MCP service.                                                        |
-| `remoteServerConfig` | `RemoteServerConfig`  | When the MCP service type is **non-stdio**, this information exists and records remote service information.                                                           |
+| `localServerConfig`  | `map<string, object>` | When the MCP service type is **stdio**, this information exists and records startup information for the local MCP service.                                                        |
+| `remoteServerConfig` | `McpServerRemoteServiceConfig`  | When the MCP service type is **non-stdio**, this information exists and records remote service information.                                                           |
 | `enabled`            | `boolean` | whether the MCP service is enabled.                                                                                      |
-| `capabilities`       | `List`                | Capability types supported by the MCP service, such as `TOOL`, `PROMPT`, or `RESOURCE`.                                                       |
+| `capabilities`       | `array<string>`                | Capability types supported by the MCP service, such as `TOOL`, `PROMPT`, or `RESOURCE`.                                                       |
 
-The `VersionDetail` structure is as follows:
+The `ServerVersionDetail` structure is as follows:
 
 | Name            | Type      | Description               |
 |----------------|-----------|------------------|
@@ -3393,9 +3410,9 @@ The `VersionDetail` structure is as follows:
 
 | Name               | Type                       | Description                                                                                      |
 |-------------------|----------------------------|-----------------------------------------------------------------------------------------|
-| `tools`           | `List<McpTool>`            | Tool list provided by this MCP Server. Refer to the standard MCP protocol definition of MCP Tool.                                             |
-| `toolsMeta`       | `Map<String, McpToolMeta>` | Additional metadata information of tools provided by this MCP Server. It can extend information that is not defined in the standard MCP protocol but is required during use. The key is the `name` of `McpTool`, and the value is extended metadata. |
-| `securitySchemes` | `List<SecurityScheme>`     | Security schemes of the MCP tool. Refer to the standard MCP protocol.                                                                   |
+| `tools`           | `array<McpTool>`            | Tool list provided by this MCP Server. Refer to the standard MCP protocol definition of MCP Tool.                                             |
+| `toolsMeta`       | `map<string, McpToolMeta>` | Additional metadata information of tools provided by this MCP Server. It can extend information that is not defined in the standard MCP protocol but is required during use. The key is the `name` of `McpTool`, and the value is extended metadata. |
+| `securitySchemes` | `array<SecurityScheme>`     | Security schemes of the MCP tool. Refer to the standard MCP protocol.                                                                   |
 
 The `McpTool` structure is as follows:
 
@@ -3403,7 +3420,7 @@ The `McpTool` structure is as follows:
 |---------------|-----------------------|-----------------------------------------------|
 | `name`        | `string` | MCP tool name                                     |
 | `description` | `string` | MCP tool description                                     |
-| `inputSchema` | `Map<String, Object>` | Input parameter description of the MCP tool. Refer to the standard MCP protocol. It mainly contains `Type`, whether the parameter is required, `Description`, and other fields. |
+| `inputSchema` | `map<string, object>` | Input parameter description of the MCP tool. Refer to the standard MCP protocol. It mainly contains `Type`, whether the parameter is required, `Description`, and other fields. |
 
 The `McpToolMeta` structure is as follows:
 
@@ -3502,14 +3519,14 @@ The details of the `serverSpecification`, `toolSpecification`, and `endpointSpec
 | `frontProtocol`      | `string` | Frontend exposure protocol of the MCP service. It is generally used by protocol converters, such as gateways. If there is no converter, it is the same as `protocol`, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`. |
 | `description`        | `string` | MCP service description.                                                                                       |
 | `repository`         | `string` | repository of the MCP service.                                                                                     |    |
-| `versionDetail`      | `VersionDetail`       | version information of the MCP service.                                                                                     |
+| `versionDetail`      | `ServerVersionDetail`       | version information of the MCP service.                                                                                     |
 | `version`            | `string` | Simple version information of the MCP service, mainly used for compatibility. If `versionDetail` is set, this field is invalid.                                               |    |
-| `localServerConfig`  | `Map<String, Object>` | When the MCP service type is **stdio**, this information exists and records startup information for the local MCP service.                                                        |
-| `remoteServerConfig` | `RemoteServerConfig`  | When the MCP service type is **non-stdio**, this information exists and records remote service information.                                                           |
+| `localServerConfig`  | `map<string, object>` | When the MCP service type is **stdio**, this information exists and records startup information for the local MCP service.                                                        |
+| `remoteServerConfig` | `McpServerRemoteServiceConfig`  | When the MCP service type is **non-stdio**, this information exists and records remote service information.                                                           |
 | `enabled`            | `boolean` | whether the MCP service is enabled.                                                                                      |
-| `capabilities`       | `List`                | Capability types supported by the MCP service, such as `TOOL`, `PROMPT`, or `RESOURCE`.                                                       |
+| `capabilities`       | `array<string>`                | Capability types supported by the MCP service, such as `TOOL`, `PROMPT`, or `RESOURCE`.                                                       |
 
-The `VersionDetail` structure is as follows:
+The `ServerVersionDetail` structure is as follows:
 
 | Name            | Type      | Description               |
 |----------------|-----------|------------------|
@@ -3521,9 +3538,9 @@ The `VersionDetail` structure is as follows:
 
 | Name               | Type                       | Description                                                                                      |
 |-------------------|----------------------------|-----------------------------------------------------------------------------------------|
-| `tools`           | `List<McpTool>`            | Tool list provided by this MCP Server. Refer to the standard MCP protocol definition of MCP Tool.                                             |
-| `toolsMeta`       | `Map<String, McpToolMeta>` | Additional metadata information of tools provided by this MCP Server. It can extend information that is not defined in the standard MCP protocol but is required during use. The key is the `name` of `McpTool`, and the value is extended metadata. |
-| `securitySchemes` | `List<SecurityScheme>`     | Security schemes of the MCP tool. Refer to the standard MCP protocol.                                                                   |
+| `tools`           | `array<McpTool>`            | Tool list provided by this MCP Server. Refer to the standard MCP protocol definition of MCP Tool.                                             |
+| `toolsMeta`       | `map<string, McpToolMeta>` | Additional metadata information of tools provided by this MCP Server. It can extend information that is not defined in the standard MCP protocol but is required during use. The key is the `name` of `McpTool`, and the value is extended metadata. |
+| `securitySchemes` | `array<SecurityScheme>`     | Security schemes of the MCP tool. Refer to the standard MCP protocol.                                                                   |
 
 The `McpTool` structure is as follows:
 
@@ -3531,7 +3548,7 @@ The `McpTool` structure is as follows:
 |---------------|-----------------------|-----------------------------------------------|
 | `name`        | `string` | MCP tool name                                     |
 | `description` | `string` | MCP tool description                                     |
-| `inputSchema` | `Map<String, Object>` | Input parameter description of the MCP tool. Refer to the standard MCP protocol. It mainly contains `Type`, whether the parameter is required, `Description`, and other fields. |
+| `inputSchema` | `map<string, object>` | Input parameter description of the MCP tool. Refer to the standard MCP protocol. It mainly contains `Type`, whether the parameter is required, `Description`, and other fields. |
 
 The `McpToolMeta` structure is as follows:
 
@@ -3685,21 +3702,21 @@ The response body follows the [Nacos Open API unified response format](../user/o
 | `totalCount`                                  | `integer` | total number of services that match the condition.                                                                                     |
 | `pageNumber`                                  | `integer` | current page number, starts from `1`.                                                                                    |
 | `pagesAvailable`                              | `integer` | available pages.                                                                                           |
-| `pageItems`                                   | `List`                | service list.                                                                                           |
+| `pageItems`                                   | `array<McpServerBasicInfo>`                | service list.                                                                                           |
 | `pageItems`[i].`id`                           | `string` | MCP service ID, usually a UUID.                                                                               |
 | `pageItems`[i].`name`                         | `string` | MCP service name.                                                                                         |
 | `pageItems`[i].`protocol`                     | `string` | MCP protocol, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`.                                             |
 | `pageItems`[i].`frontProtocol`                | `string` | Frontend exposure protocol of the MCP service. It is generally used by protocol converters, such as gateways. If there is no converter, it is the same as `protocol`, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`. |
 | `pageItems`[i].`description`                  | `string` | MCP service description.                                                                                       |
 | `pageItems`[i].`repository`                   | `string` | repository of the MCP service.                                                                                     |                                                                                          |
-| `pageItems`[i].`versionDetail`                | `VersionDetail`       | current latest version information of the MCP service.                                                                                 |
-| `pageItems`[i].`localServerConfig`            | `Map<String, Object>` | When the MCP service type is **stdio**, this information exists and records startup information for the local MCP service.                                                        |
-| `pageItems`[i].`remoteServerConfig`           | `RemoteServerConfig`  | When the MCP service type is **non-stdio**, this information exists and records remote service information.                                                           |
+| `pageItems`[i].`versionDetail`                | `ServerVersionDetail`       | current latest version information of the MCP service.                                                                                 |
+| `pageItems`[i].`localServerConfig`            | `map<string, object>` | When the MCP service type is **stdio**, this information exists and records startup information for the local MCP service.                                                        |
+| `pageItems`[i].`remoteServerConfig`           | `McpServerRemoteServiceConfig`  | When the MCP service type is **non-stdio**, this information exists and records remote service information.                                                           |
 | `pageItems`[i].`latestPublishedVersion`       | `string` | version number of the latest MCP service version.                                                                                  |
-| `pageItems`[i].`versionDetails`               | `List<VersionDetail>` | list of MCP service version details.                                                                                   |
-| `pageItems`[i].`capabilities`                 | `List`                | Capability types supported by the MCP service, such as `TOOL`, `PROMPT`, or `RESOURCE`.                                                       |
+| `pageItems`[i].`versionDetails`               | `array<ServerVersionDetail>` | list of MCP service version details.                                                                                   |
+| `pageItems`[i].`capabilities`                 | `array<string>`                | Capability types supported by the MCP service, such as `TOOL`, `PROMPT`, or `RESOURCE`.                                                       |
 
-The `VersionDetail` structure is as follows:
+The `ServerVersionDetail` structure is as follows:
 
 | Name            | Type      | Description               |
 |----------------|-----------|------------------|
@@ -3792,7 +3809,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 
 | Name    | Type                   | Description                                                                                                       |
 |--------|------------------------|----------------------------------------------------------------------------------------------------------|
-| `data` | `List<McpSchema.Tool>` | MCP tool metadata information that complies with the [standard MCP tool metadata definition](https://modelcontextprotocol.io/specification/2025-06-18/server/tools#tool). |
+| `data` | `array<McpSchema.Tool>` | MCP tool metadata information that complies with the [standard MCP tool metadata definition](https://modelcontextprotocol.io/specification/2025-06-18/server/tools#tool). |
 
 #### Examples
 
@@ -3854,6 +3871,10 @@ A user identity with the corresponding `namespace write` permission is required.
 | `namespaceId` | `string` | No     | namespace ID of the MCP service                            |
 | `importType`  | `string` | **Yes** | enum of `file`, `json`, `url`           |
 | `data`        | `string` | **Yes** | content of the import data                                 |
+| `overrideExisting` | `boolean` | No | Whether to overwrite an existing service. The default is `false`. |
+| `validateOnly` | `boolean` | No | Whether to validate without importing. The default is `false`. |
+| `skipInvalid` | `boolean` | No | Whether to skip invalid services. The default is `false`. |
+| `selectedServers` | `array<string>` | No | Services selected for validation; an empty value selects all services. |
 | `cursor`      | `string` | No     | Optional start cursor for URL-based import pagination. |
 | `limit`       | `integer` | No     | page size for pagination                                  |
 | `search`      | `string`   | No     | Optional fuzzy search keyword for registry import listing. Only used when importType is 'url'. |
@@ -3869,8 +3890,8 @@ The response body follows the [Nacos Open API unified response format](../user/o
 | `validCount`     | `integer` | number of valid imported services. |
 | `invalidCount`   | `integer` | number of invalid imported services. |
 | `duplicateCount` | `integer` | number of duplicate imported services. |
-| `servers`        | `List<McpServerValidationItem>` | imported service list.   |
-| `errors`         | `List<String>`                  | imported service error list. |
+| `servers`        | `array<McpServerValidationItem>` | imported service list.   |
+| `errors`         | `array<string>`                  | imported service error list. |
 
 The `McpServerValidationItem` description is as follows:
 
@@ -3891,6 +3912,10 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/validate' \
 -d 'namespaceId=public' \
 -d 'importType=url' \
 -d 'data=' \
+-d 'overrideExisting=false' \
+-d 'validateOnly=true' \
+-d 'skipInvalid=false' \
+-d 'selectedServers=[]' \
 -d 'limit=10'
 ```
 * Response example
@@ -3956,8 +3981,9 @@ A user identity with the corresponding `namespace write` permission is required.
 | `limit`            | `integer` | No     | page size for pagination                                  |
 | `search`           | `string`    | No     | Optional fuzzy search keyword for registry import listing. Only used when importType is 'url'. |
 | `overrideExisting` | `boolean` | No     | Whether to overwrite the service if it already exists during import. The default is `false`.              |                                    |
+| `validateOnly`     | `boolean` | No     | Whether to validate without performing the import. The default is `false`. |
 | `skipInvalid`      | `boolean` | No     | Whether to ignore invalid services with errors during import. The default is `false`.              |
-| `selectedServers`  | `array` | No     | Selected services to import. Empty means importing all services. |
+| `selectedServers`  | `array<string>` | No     | Selected services to import. Empty means importing all services. |
 
 
 #### Response Data
@@ -3971,7 +3997,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 | `successCount` | `integer` | number of services imported successfully. |
 | `failedCount`  | `integer` | number of services that failed to import. |
 | `skippedCount` | `integer` | number of services skipped during import. |
-| `results`      | `List<McpServerImportResult>` | imported service list.   |
+| `results`      | `array<McpServerImportResult>` | imported service list.   |
 
 The `McpServerImportResult` description is as follows:
 
@@ -3980,7 +4006,7 @@ The `McpServerImportResult` description is as follows:
 | `serverName`   | `string` | service name.                  |
 | `serverId`     | `string` | service ID.                  |
 | `status`       | `string` | service import status.                |
-| `errorMessage` | `boolean` | error information for service import failure. Exists only when import fails. |
+| `errorMessage` | `string` | error information for service import failure. Exists only when import fails. |
 
 
 #### Examples
@@ -3993,6 +4019,7 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/execute' \
 -d 'importType=url' \
 -d 'data=' \
 -d 'overrideExisting=false' \
+-d 'validateOnly=false' \
 -d 'skipInvalid=false' \
 -d 'selectedServers=[]' \
 -d 'limit=10'
@@ -4065,16 +4092,16 @@ The response body follows the [Nacos Open API unified response format](../user/o
 | `totalCount`                            | `integer` | total number of services that match the condition.                                                                                            |
 | `pageNumber`                            | `integer` | current page number, starts from `1`.                                                                                           |
 | `pagesAvailable`                        | `integer` | available pages.                                                                                                  |
-| `pageItems`                             | `List`                     | service list.                                                                                                  |
+| `pageItems`                             | `array<AgentCardVersionInfo>`                     | service list.                                                                                                  |
 | `pageItems`[i].`protocolVersion`        | `string` | A2A protocol version of the AgentCard.                                                                                     |
 | `pageItems`[i].`name`                   | `string` | AgentCard name.                                                                                          |
 | `pageItems`[i].`description`            | `string` | AgentCard description.                                                                                          |
 | `pageItems`[i].`version`                | `string` | AgentCard version number.                                                                                         |
 | `pageItems`[i].`iconUrl`                | `string` | AgentCard icon URL.                                                                                     |
-| `pageItems`[i].`capabilities`           | `AgentCapability`          | AgentCard capabilities, matching [A2A standard capabilities](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object). |
-| `pageItems`[i].`skills`                 | `List<AgentSkill>`         | AgentCard skill list, matching [A2A standard skills](https://a2a-protocol.org/latest/specification/#554-agentskill-object).      |
+| `pageItems`[i].`capabilities`           | `AgentCapabilities`          | AgentCard capabilities, matching [A2A standard capabilities](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object). |
+| `pageItems`[i].`skills`                 | `array<AgentSkill>`         | AgentCard skill list, matching [A2A standard skills](https://a2a-protocol.org/latest/specification/#554-agentskill-object).      |
 | `pageItems`[i].`latestPublishedVersion` | `string` | latest published version of the AgentCard.                                                                                      |
-| `pageItems`[i].`versionDetails`         | `List<AgentVersionDetail>` | all version details of the AgentCard.                                                                                      |
+| `pageItems`[i].`versionDetails`         | `array<AgentVersionDetail>` | all version details of the AgentCard.                                                                                      |
 | `pageItems`[i].`registrationType`       | `string` | Default registration type of the AgentCard. Valid values are `URL` and `SERVICE`.                                                                    |
 
 The `AgentVersionDetail` structure contains the following fields:
@@ -4249,20 +4276,20 @@ The response body follows the [Nacos Open API unified response format](../user/o
 | `description`                       | `string` | AgentCard description.                                                                                            |
 | `version`                           | `string` | AgentCard version number.                                                                                           |
 | `iconUrl`                           | `string` | AgentCard icon URL.                                                                                       |
-| `capabilities`                      | `AgentCapability`                 | AgentCard capabilities, matching [A2A standard capabilities](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object).   |
-| `skills`                            | `List<AgentSkill>`                | AgentCard skill list, matching [A2A standard skills](https://a2a-protocol.org/latest/specification/#554-agentskill-object).        |
+| `capabilities`                      | `AgentCapabilities`                 | AgentCard capabilities, matching [A2A standard capabilities](https://a2a-protocol.org/latest/specification/#552-agentcapabilities-object).   |
+| `skills`                            | `array<AgentSkill>`                | AgentCard skill list, matching [A2A standard skills](https://a2a-protocol.org/latest/specification/#554-agentskill-object).        |
 | `url`                               | `string` | default access URL of the AgentCard.                                                                                      |
 | `preferredTransport`                | `string` | transport protocol of the default access URL of the AgentCard. It should be `JSONRPC`, `GRPC`, or `HTTP+JSON`.                                                  |
-| `additionalInterfaces`              | `List<AgentInterface>`            | List of all accessible AgentCard interfaces, matching the [A2A standard](https://a2a-protocol.org/latest/specification/#555-agentinterface-object). |
+| `additionalInterfaces`              | `array<AgentInterface>`            | List of all accessible AgentCard interfaces, matching the [A2A standard](https://a2a-protocol.org/latest/specification/#555-agentinterface-object). |
 | `provider`                          | `AgentProvider`                   | AgentCard provider information, matching the [A2A standard](https://a2a-protocol.org/latest/specification/#551-agentprovider-object).      |
 | `documentationUrl`                  | `string` | AgentCard documentation URL.                                                                                        |
-| `securitySchemes`                   | `Map<String, SecurityScheme>`     | AgentCard security configuration definition, matching the [A2A standard](https://a2a-protocol.org/latest/specification/#553-securityscheme-object).     |
-| `security`                          | `List<Map<String, List<String>>>` | list of all security requirement objects of the AgentCard.                                                                                    |
-| `defaultInputModes`                 | `List<String>`                    | all default input modes of the AgentCard.                                                                                      |
-| `defaultOutputModes`                | `List<String>`                    | all default output modes of the AgentCard.                                                                                      |
-| `supportsAuthenticatedExtendedCard` | `string` | whether the AgentCard supports authenticated extended cards.                                                                                     |
+| `securitySchemes`                   | `map<string, SecurityScheme>`     | AgentCard security configuration definition, matching the [A2A standard](https://a2a-protocol.org/latest/specification/#553-securityscheme-object).     |
+| `security`                          | `array<map<string, array<string>>>` | list of all security requirement objects of the AgentCard.                                                                                    |
+| `defaultInputModes`                 | `array<string>`                    | all default input modes of the AgentCard.                                                                                      |
+| `defaultOutputModes`                | `array<string>`                    | all default output modes of the AgentCard.                                                                                      |
+| `supportsAuthenticatedExtendedCard` | `boolean` | whether the AgentCard supports authenticated extended cards.                                                                                     |
 | `registrationType`                  | `string` | Default registration type of the AgentCard. Valid values are `URL` and `SERVICE`.                                                                      |
-| `latestVersion`                     | `string` | whether the current AgentCard version is the latest version.                                                                                    |
+| `latestVersion`                     | `boolean` | whether the current AgentCard version is the latest version.                                                                                    |
 
 
 #### Examples
@@ -4883,7 +4910,6 @@ A user identity with the corresponding `namespace write` permission is required.
 | `namespaceId` | `string` | No | - |
 | `promptKey` | `string` | **Yes** | - |
 | `version` | `string` | **Yes** | - |
-| `updateLatestLabel` | `boolean` | No | - |
 
 #### Response Data
 
@@ -4898,7 +4924,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/force-publish' -d "namespaceId=namespaceId&promptKey=promptKey&version=version&updateLatestLabel=updateLatestLabel"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/force-publish' -d "namespaceId=public&promptKey=my-prompt&version=1.0.0"
 ```
 
 * Response example
@@ -4955,9 +4981,10 @@ A user identity with the corresponding `namespace read` permission is required.
 | data.data.editingVersion | `string` | - |
 | data.data.reviewingVersion | `string` | - |
 | data.data.onlineCnt | `integer` | - |
-| data.data.labels | `object` | - |
+| data.data.labels | `map<string, string>` | Skill version labels. |
 | data.data.downloadCount | `integer` | - |
-| data.data.versions | `array` | - |
+| data.data.writable | `boolean` | Whether the current user can modify this Skill. |
+| data.data.versions | `array<SkillVersionSummary>` | Skill version summaries. |
 | data.data.versionDetails | `array` | - |
 
 #### Examples
@@ -5013,7 +5040,25 @@ A user identity with the corresponding `namespace write` permission is required.
 |--------|----------|------|
 | data.code | `integer` | - |
 | data.message | `string` | - |
-| data.data | `string` | - |
+| data.data.totalCount | `integer` | Total number of matching Skills. |
+| data.data.pageNumber | `integer` | Current page number. |
+| data.data.pagesAvailable | `integer` | Number of available pages. |
+| data.data.pageItems | `array<SkillSummary>` | Skill summaries on the current page. |
+| data.data.pageItems[i].namespaceId | `string` | Namespace ID of the Skill. |
+| data.data.pageItems[i].name | `string` | Skill name. |
+| data.data.pageItems[i].description | `string` | Skill description. |
+| data.data.pageItems[i].updateTime | `integer` | Last update time. |
+| data.data.pageItems[i].owner | `string` | Skill owner. |
+| data.data.pageItems[i].enable | `boolean` | Whether the Skill is enabled. |
+| data.data.pageItems[i].bizTags | `string` | Business tags. |
+| data.data.pageItems[i].from | `string` | Skill source. |
+| data.data.pageItems[i].scope | `string` | Visibility scope. |
+| data.data.pageItems[i].labels | `map<string, string>` | Version labels. |
+| data.data.pageItems[i].editingVersion | `string` | Version currently being edited. |
+| data.data.pageItems[i].reviewingVersion | `string` | Version currently under review. |
+| data.data.pageItems[i].onlineCnt | `integer` | Number of online versions. |
+| data.data.pageItems[i].downloadCount | `integer` | Download count. |
+| data.data.pageItems[i].writable | `boolean` | Whether the current user can modify the Skill. |
 
 #### Examples
 
@@ -5229,7 +5274,6 @@ A user identity with the corresponding `namespace write` permission is required.
 | `namespaceId` | `string` | No | - |
 | `promptKey` | `string` | **Yes** | - |
 | `version` | `string` | **Yes** | - |
-| `updateLatestLabel` | `boolean` | No | - |
 
 #### Response Data
 
@@ -5244,7 +5288,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/publish' -d "namespaceId=namespaceId&promptKey=promptKey&version=version&updateLatestLabel=updateLatestLabel"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/publish' -d "namespaceId=public&promptKey=my-prompt&version=1.0.0"
 ```
 
 * Response example
@@ -5747,6 +5791,7 @@ A user identity with the corresponding `namespace write` permission is required.
 | `basedOnVersion` | `string` | No | - |
 | `targetVersion` | `string` | No | - |
 | `skillCard` | `string` | No | Skill card JSON; required if basedOnVersion is not set |
+| `commitMsg` | `string` | No | Commit message for the draft version. |
 
 #### Response Data
 
@@ -5761,7 +5806,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=public&skillName=my-skill&basedOnVersion=basedOnVersion&targetVersion=targetVersion&skillCard=skillCard"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=public&skillName=my-skill&targetVersion=1.0.0&skillCard={}&commitMsg=initial"
 ```
 
 * Response example
@@ -5800,8 +5845,9 @@ A user identity with the corresponding `namespace write` permission is required.
 | Name | Type | Required | Description |
 |--------|------|------|----------|
 | `namespaceId` | `string` | No | - |
-| `skillName` | `string` | **Yes** | - |
 | `skillCard` | `string` | **Yes** | Skill card JSON string containing complete Skill information |
+| `setAsLatest` | `boolean` | No | Whether to mark the updated draft as the latest version. |
+| `commitMsg` | `string` | No | Commit message for the draft version. |
 
 #### Response Data
 
@@ -5816,7 +5862,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=public&skillName=my-skill&skillCard=skillCard"
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=public&skillCard={}&setAsLatest=true&commitMsg=update"
 ```
 
 * Response example
@@ -5911,7 +5957,6 @@ A user identity with the corresponding `namespace write` permission is required.
 | `namespaceId` | `string` | No | - |
 | `skillName` | `string` | **Yes** | - |
 | `version` | `string` | **Yes** | - |
-| `updateLatestLabel` | `boolean` | No | - |
 
 #### Response Data
 
@@ -5926,7 +5971,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/force-publish' -d "namespaceId=public&skillName=my-skill&version=version&updateLatestLabel=updateLatestLabel"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/force-publish' -d "namespaceId=public&skillName=my-skill&version=1.0.0"
 ```
 
 * Response example
@@ -6001,7 +6046,7 @@ This interface allows querying the list of Skills hosted on Nacos.
 
 #### Since
 
-`3.2.1`
+`3.2.0`
 
 #### Request Method
 
@@ -6019,12 +6064,15 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `filterableForm` | `string` | **Yes** | - |
 | `pageNo` | `integer` | **Yes** | - |
 | `pageSize` | `integer` | **Yes** | - |
 | `namespaceId` | `string` | No | - |
 | `skillName` | `string` | No | - |
 | `search` | `string` | No | blur or accurate |
+| `orderBy` | `string` | No | Sort field and direction. |
+| `owner` | `string` | No | Filter by resource owner. |
+| `scope` | `string` | No | Filter by visibility scope. |
+| `bizTag` | `string` | No | Filter by business tag. |
 
 #### Response Data
 
@@ -6039,7 +6087,7 @@ A user identity with the corresponding `namespace read` permission is required.
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/list?filterableForm=true&pageNo=1&pageSize=10&namespaceId=public&skillName=my-skill&search=blur'
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/list?pageNo=1&pageSize=10&namespaceId=public&skillName=my-skill&search=blur&orderBy=updateTime'
 ```
 
 * Response example
@@ -6192,7 +6240,6 @@ A user identity with the corresponding `namespace write` permission is required.
 | `namespaceId` | `string` | No | - |
 | `skillName` | `string` | **Yes** | - |
 | `version` | `string` | **Yes** | - |
-| `updateLatestLabel` | `boolean` | No | - |
 
 #### Response Data
 
@@ -6207,7 +6254,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/publish' -d "namespaceId=public&skillName=my-skill&version=version&updateLatestLabel=updateLatestLabel"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/publish' -d "namespaceId=public&skillName=my-skill&version=1.0.0"
 ```
 
 * Response example
@@ -6392,7 +6439,7 @@ This interface allows uploading a Skill from a ZIP file.
 
 #### Since
 
-`3.2.2`
+`3.2.0`
 
 #### Request Method
 
@@ -6412,18 +6459,12 @@ A user identity with the corresponding `namespace write` permission is required.
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `namespaceId` | `string` | No | - |
-| `overwrite` | `boolean` | No | - |
-| `targetVersion` | `string` | No | - |
-| `commitMsg` | `string` | No | - |
-
-| Name | Type | Required | Description |
-|--------|------|------|----------|
-| `file` | `file` | No | ZIP file containing skill |
-| `overwrite` | `boolean` | No | - |
-| `namespaceId` | `string` | No | - |
-| `targetVersion` | `string` | No | - |
-| `commitMsg` | `string` | No | - |
+| `namespaceId` | `string` | No | Namespace ID; accepted both as a query parameter and as a multipart form field. The default is `public`. |
+| `overwrite` | `boolean` | No | Whether to overwrite an existing draft; accepted both as a query parameter and as a multipart form field. The default is `false`. |
+| `targetVersion` | `string` | No | Target version after upload; accepted both as a query parameter and as a multipart form field. |
+| `commitMsg` | `string` | No | Version commit message; accepted both as a query parameter and as a multipart form field. |
+| `uploadAction` | `string` | No | Upload action; accepted both as a query parameter and as a multipart form field. |
+| `file` | `file` | **Yes** | Skill ZIP file supplied as a multipart form field. |
 
 #### Response Data
 
@@ -6438,7 +6479,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload?namespaceId=public&overwrite=false&targetVersion=1.0.0&commitMsg=init' -F "file=@/path/to/skill.zip" -F "overwrite=false" -F "namespaceId=public" -F "targetVersion=1.0.0" -F "commitMsg=init"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload?namespaceId=public&overwrite=false&targetVersion=1.0.0&commitMsg=init&uploadAction=CREATE' -F "file=@/path/to/skill.zip" -F "overwrite=false" -F "namespaceId=public" -F "targetVersion=1.0.0" -F "commitMsg=init" -F "uploadAction=CREATE"
 ```
 
 * Response example
@@ -6478,14 +6519,9 @@ A user identity with the corresponding `namespace write` permission is required.
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `namespaceId` | `string` | No | - |
-| `overwrite` | `boolean` | No | - |
-
-| Name | Type | Required | Description |
-|--------|------|------|----------|
-| `namespaceId` | `string` | No | - |
-| `overwrite` | `boolean` | No | - |
-| `file` | `file` | No | ZIP file containing skill directories |
+| `namespaceId` | `string` | No | Namespace ID; accepted both as a query parameter and as a multipart form field. The default namespace is used when omitted. |
+| `overwrite` | `boolean` | No | Whether to overwrite existing drafts; accepted both as a query parameter and as a multipart form field. The default is `false`. |
+| `file` | `file` | **Yes** | ZIP file containing multiple Skill subdirectories, supplied as a multipart form field. |
 
 #### Response Data
 
@@ -6493,8 +6529,9 @@ A user identity with the corresponding `namespace write` permission is required.
 |--------|----------|------|
 | data.code | `integer` | - |
 | data.message | `string` | - |
-| data.data.succeeded | `array` | - |
-| data.data.failed | `array` | - |
+| data.data.succeeded | `array<string>` | Names of successfully uploaded Skills. |
+| data.data.failed | `array<FailedItem>` | Items that failed to upload. |
+| data.data.results | `array<BatchUploadItemResult>` | Processing result for each upload item. |
 
 #### Examples
 
@@ -6553,7 +6590,7 @@ A user identity with the corresponding `namespace read` permission is required.
 | data.data.name | `string` | - |
 | data.data.description | `string` | - |
 | data.data.skillMd | `string` | - |
-| data.data.resource | `object` | - |
+| data.data.resource | `map<string, SkillResource>` | Skill resources keyed by resource identifier. |
 
 #### Examples
 
@@ -6620,6 +6657,87 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/version/download?namespa
 }
 ```
 
+### 7.20. Precheck Skill Upload
+
+#### Description
+
+This interface validates one or more Skill packages in a ZIP file and reports the upload action required for each package.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+Request body type: `multipart/form-data`.
+
+#### Authorization
+
+A user identity with the corresponding `namespace write` permission is required.
+
+#### Request URL
+
+`/v3/console/ai/skills/upload/precheck`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|--------|------|------|----------|
+| `namespaceId` | `string` | No | Query parameter or multipart field; the default namespace is used when omitted. |
+| `file` | `file` | **Yes** | ZIP file containing one or more Skill packages. |
+
+#### Response Data
+
+| Name | Type | Description |
+|--------|----------|------|
+| `data` | `array<SkillUploadPrecheckResult>` | Upload precheck result for each Skill package. |
+
+The `SkillUploadPrecheckResult` structure is as follows:
+
+| Name | Type | Description |
+|--------|----------|------|
+| `namespaceId` | `string` | Target namespace ID. |
+| `entryPath` | `string` | Entry path of the Skill package in the ZIP file. |
+| `skillName` | `string` | Skill name. |
+| `reason` | `string` | Explanation of the precheck decision. |
+| `owner` | `string` | Owner of an existing Skill. |
+| `maxPublishedVersion` | `string` | Highest currently published version. |
+| `parsedVersion` | `string` | Version parsed from the package. |
+| `targetVersion` | `string` | Suggested target version for upload. |
+| `exists` | `boolean` | Whether the Skill already exists. |
+| `editingVersion` | `string` | Version currently being edited. |
+| `reviewingVersion` | `string` | Version currently under review. |
+| `precheckCode` | `string` | Precheck result code. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload/precheck?namespaceId=public' -F 'file=@/path/to/skills.zip'
+```
+
+* Response example
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": [
+    {
+      "namespaceId": "public",
+      "entryPath": "my-skill",
+      "skillName": "my-skill",
+      "targetVersion": "1.0.0",
+      "exists": false,
+      "precheckCode": "READY"
+    }
+  ]
+}
+```
+
 ## 8. AgentSpec Management
 
 AgentSpec Management APIs provide query, draft, publish, online/offline, version management, and ZIP upload capabilities for AgentSpecs.
@@ -6662,16 +6780,18 @@ A user identity with the corresponding `namespace read` permission is required.
 | data.data.name | `string` | - |
 | data.data.description | `string` | - |
 | data.data.updateTime | `integer` | - |
+| data.data.owner | `string` | AgentSpec owner. |
 | data.data.enable | `boolean` | - |
 | data.data.bizTags | `string` | - |
 | data.data.from | `string` | - |
 | data.data.scope | `string` | - |
-| data.data.labels | `object` | - |
+| data.data.labels | `map<string, string>` | AgentSpec version labels. |
 | data.data.editingVersion | `string` | - |
 | data.data.reviewingVersion | `string` | - |
 | data.data.onlineCnt | `integer` | - |
 | data.data.downloadCount | `integer` | - |
-| data.data.versions | `array` | - |
+| data.data.writable | `boolean` | Whether the current user can modify this AgentSpec. |
+| data.data.versions | `array<AgentSpecVersionSummary>` | AgentSpec version summaries. |
 
 #### Examples
 
@@ -6725,7 +6845,25 @@ A user identity with the corresponding `namespace write` permission is required.
 |--------|----------|------|
 | data.code | `integer` | - |
 | data.message | `string` | - |
-| data.data | `string` | - |
+| data.data.totalCount | `integer` | Total number of matching AgentSpecs. |
+| data.data.pageNumber | `integer` | Current page number. |
+| data.data.pagesAvailable | `integer` | Number of available pages. |
+| data.data.pageItems | `array<AgentSpecSummary>` | AgentSpec summaries on the current page. |
+| data.data.pageItems[i].namespaceId | `string` | Namespace ID of the AgentSpec. |
+| data.data.pageItems[i].name | `string` | AgentSpec name. |
+| data.data.pageItems[i].description | `string` | AgentSpec description. |
+| data.data.pageItems[i].updateTime | `integer` | Last update time. |
+| data.data.pageItems[i].owner | `string` | AgentSpec owner. |
+| data.data.pageItems[i].enable | `boolean` | Whether the AgentSpec is enabled. |
+| data.data.pageItems[i].bizTags | `string` | Business tags. |
+| data.data.pageItems[i].from | `string` | AgentSpec source. |
+| data.data.pageItems[i].scope | `string` | Visibility scope. |
+| data.data.pageItems[i].labels | `map<string, string>` | Version labels. |
+| data.data.pageItems[i].editingVersion | `string` | Version currently being edited. |
+| data.data.pageItems[i].reviewingVersion | `string` | Version currently under review. |
+| data.data.pageItems[i].onlineCnt | `integer` | Number of online versions. |
+| data.data.pageItems[i].downloadCount | `integer` | Download count. |
+| data.data.pageItems[i].writable | `boolean` | Whether the current user can modify the AgentSpec. |
 
 #### Examples
 
@@ -6828,6 +6966,7 @@ A user identity with the corresponding `namespace write` permission is required.
 | `namespaceId` | `string` | No | - |
 | `agentSpecName` | `string` | **Yes** | - |
 | `basedOnVersion` | `string` | No | - |
+| `targetVersion` | `string` | No | Target version for the new draft. |
 
 #### Response Data
 
@@ -6842,7 +6981,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespaceId=public&agentSpecName=my-agent&basedOnVersion=basedOnVersion"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespaceId=public&agentSpecName=my-agent&targetVersion=1.0.0"
 ```
 
 * Response example
@@ -6881,8 +7020,8 @@ A user identity with the corresponding `namespace write` permission is required.
 | Name | Type | Required | Description |
 |--------|------|------|----------|
 | `namespaceId` | `string` | No | - |
-| `agentSpecName` | `string` | No | - |
 | `agentSpecCard` | `string` | **Yes** | AgentSpec card JSON string containing complete AgentSpec information |
+| `setAsLatest` | `boolean` | No | Whether to mark the updated draft as the latest version. |
 
 #### Response Data
 
@@ -6897,7 +7036,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespaceId=public&agentSpecName=my-agent&agentSpecCard=agentSpecCard"
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespaceId=public&agentSpecCard={}&setAsLatest=true"
 ```
 
 * Response example
@@ -6992,7 +7131,6 @@ A user identity with the corresponding `namespace write` permission is required.
 | `namespaceId` | `string` | No | - |
 | `agentSpecName` | `string` | **Yes** | - |
 | `version` | `string` | **Yes** | - |
-| `updateLatestLabel` | `boolean` | No | - |
 
 #### Response Data
 
@@ -7007,7 +7145,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/force-publish' -d "namespaceId=public&agentSpecName=my-agent&version=version&updateLatestLabel=updateLatestLabel"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/force-publish' -d "namespaceId=public&agentSpecName=my-agent&version=1.0.0"
 ```
 
 * Response example
@@ -7082,7 +7220,7 @@ This interface allows paginated listing of AgentSpecs by namespace and name.
 
 #### Since
 
-`3.2.1`
+`3.2.0`
 
 #### Request Method
 
@@ -7100,12 +7238,14 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `filterableForm` | `string` | **Yes** | - |
 | `pageNo` | `integer` | **Yes** | - |
 | `pageSize` | `integer` | **Yes** | - |
 | `namespaceId` | `string` | No | - |
 | `agentSpecName` | `string` | No | - |
 | `search` | `string` | No | Search mode: accurate or blur |
+| `orderBy` | `string` | No | Sort field and direction. |
+| `owner` | `string` | No | Filter by resource owner. |
+| `scope` | `string` | No | Filter by visibility scope. |
 
 #### Response Data
 
@@ -7120,7 +7260,7 @@ A user identity with the corresponding `namespace read` permission is required.
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs/list?filterableForm=true&pageNo=1&pageSize=10&namespaceId=public&agentSpecName=my-agent&search=blur'
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs/list?pageNo=1&pageSize=10&namespaceId=public&agentSpecName=my-agent&search=blur&orderBy=updateTime'
 ```
 
 * Response example
@@ -7273,7 +7413,6 @@ A user identity with the corresponding `namespace write` permission is required.
 | `namespaceId` | `string` | No | - |
 | `agentSpecName` | `string` | **Yes** | - |
 | `version` | `string` | **Yes** | - |
-| `updateLatestLabel` | `boolean` | No | - |
 
 #### Response Data
 
@@ -7288,7 +7427,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/publish' -d "namespaceId=public&agentSpecName=my-agent&version=version&updateLatestLabel=updateLatestLabel"
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/publish' -d "namespaceId=public&agentSpecName=my-agent&version=1.0.0"
 ```
 
 * Response example
@@ -7493,14 +7632,9 @@ A user identity with the corresponding `namespace write` permission is required.
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `namespaceId` | `string` | No | - |
-| `overwrite` | `boolean` | No | - |
-
-| Name | Type | Required | Description |
-|--------|------|------|----------|
-| `namespaceId` | `string` | No | - |
-| `overwrite` | `boolean` | No | - |
-| `file` | `file` | No | ZIP file containing agentspec package |
+| `namespaceId` | `string` | No | Namespace ID; accepted both as a query parameter and as a multipart form field. The default is `public`. |
+| `overwrite` | `boolean` | No | Whether to overwrite an existing draft; accepted both as a query parameter and as a multipart form field. The default is `false`. |
+| `file` | `file` | **Yes** | AgentSpec ZIP file supplied as a multipart form field. |
 
 #### Response Data
 
@@ -7568,7 +7702,7 @@ A user identity with the corresponding `namespace read` permission is required.
 | data.data.description | `string` | - |
 | data.data.bizTags | `string` | - |
 | data.data.content | `string` | - |
-| data.data.resource | `object` | - |
+| data.data.resource | `map<string, AgentSpecResource>` | AgentSpec resources keyed by resource identifier. |
 
 #### Examples
 
@@ -8084,7 +8218,7 @@ Copilot-related APIs provide configuration retrieval and saving, Prompt debuggin
 
 #### Description
 
-Get the current Copilot configuration. Only `apiKey`, `model`, `studioUrl`, and `studioProject` are returned.
+Get the current Copilot configuration. The current implementation copies `apiKey`, `model`, `studioUrl`, and `studioProject` from stored configuration. The response model also serializes the defaults `enabled=true` and `defaultNamespace=public`; these two fields cannot be changed through the save operation in 11.2.
 
 #### Since
 
@@ -8132,10 +8266,12 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/copilot/config'
   "code": 0,
   "message": "success",
   "data": {
+    "enabled": true,
+    "defaultNamespace": "public",
     "apiKey": "",
-    "model": "",
-    "studioUrl": "",
-    "studioProject": ""
+    "model": "qwen-turbo",
+    "studioUrl": null,
+    "studioProject": "NacosCopilot"
   }
 }
 ```
@@ -8144,7 +8280,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/copilot/config'
 
 #### Description
 
-Create or update the Copilot configuration. Only `apiKey`, `model`, `studioUrl`, and `studioProject` are accepted. Other fields use `Default`.
+Create or update the Copilot configuration. Only `apiKey`, `model`, `studioUrl`, and `studioProject` are processed. Although the request model also exposes `enabled` and `defaultNamespace`, the current controller ignores both fields: existing values are preserved and new configurations use their defaults.
 
 #### Since
 
@@ -8153,6 +8289,8 @@ Create or update the Copilot configuration. Only `apiKey`, `model`, `studioUrl`,
 #### Request Method
 
 `POST`
+
+Request body type: `application/json`. Use `-H 'Content-Type: application/json'` in request examples.
 
 #### Authorization
 
@@ -8164,7 +8302,12 @@ A user identity with the corresponding `namespace write` permission is required.
 
 #### Request Parameters
 
-None. The request body can contain fields such as `apiKey`, `model`, `studioUrl`, and `studioProject`; use the actual API behavior as the source of truth.
+| Name | Type | Required | Description |
+|--------|------|------|----------|
+| `apiKey` | `string` | No | API key used by Copilot to call the model service. If omitted, the existing value or default configuration is retained. |
+| `model` | `string` | No | Model identifier used by Copilot. If omitted, the existing value or default configuration is retained. |
+| `studioUrl` | `string` | No | Associated AgentScope Studio service URL. If omitted, the existing value or default configuration is retained. |
+| `studioProject` | `string` | No | Associated AgentScope Studio project identifier. If omitted, the existing value or default configuration is retained. |
 
 #### Response Data
 
@@ -8177,7 +8320,9 @@ None. The request body can contain fields such as `apiKey`, `model`, `studioUrl`
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/config'
+curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/config' \
+  -H 'Content-Type: application/json' \
+  -d '{"apiKey":"your-api-key","model":"qwen-turbo","studioUrl":"http://127.0.0.1:8080","studioProject":"NacosCopilot"}'
 ```
 
 * Response example
@@ -8317,8 +8462,8 @@ A user identity with the corresponding `namespace write` permission is required.
 | Name                | Type     | Required | Description           |
 |--------------------|--------|----|----------------|
 | `backgroundInfo`     | `string` | No | background information.           |
-| `selectedMcpTools`   | `array` | No | selected MCP tools.      |
-| `conversationHistory` | `object` | No | conversation history.           |
+| `selectedMcpTools`   | `array<map<string, object>>` | No | selected MCP tools.      |
+| `conversationHistory` | `ConversationHistory` | No | conversation history.           |
 
 #### Response Data
 
@@ -8366,11 +8511,11 @@ A user identity with the corresponding `namespace write` permission is required.
 
 | Name                | Type     | Required | Description           |
 |--------------------|--------|----|----------------|
-| `conversationHistory` | `object` | No | conversation history.           |
+| `conversationHistory` | `ConversationHistory` | No | conversation history.           |
 | `targetFileName`      | `string` | No | target file name.          |
 | `optimizationGoal`    | `string` | No | optimization goal.           |
-| `skill`               | `string` | No | Skill content to optimize.   |
-| `selectedMcpTools`   | `array` | No | selected MCP tools.      |
+| `skill`               | `Skill` | No | Skill definition to optimize.   |
+| `selectedMcpTools`   | `array<map<string, object>>` | No | selected MCP tools.      |
 
 #### Response Data
 
@@ -8388,4 +8533,943 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/optimize' -H 'Conte
 
 ```json
 {}
+```
+
+## 12. Agent Management
+
+Agent Management APIs provide Agent definition, draft, version lifecycle, runtime endpoint, and paginated query capabilities. Agent names and versions are case-sensitive and kept exactly as supplied. A version uses `MAJOR.MINOR.PATCH[-PRERELEASE]`; `+BUILD` metadata is not accepted.
+
+These Agent Management APIs are the recommended integration path going forward and are planned to gradually replace the existing A2A management APIs. New users and SDKs should prioritize compatibility with the Agent Management APIs instead of adding new dependencies on the legacy A2A APIs. Existing A2A integrations can migrate in line with future release and migration guidance. This describes the evolution of the management APIs and does not mean that the A2A protocol itself is deprecated.
+
+The `AgentProvider` and `AgentVersionDetail` names in this section refer to the **Agent management model**. They are not the same structures as the identically named Swagger schemas used by the A2A registry: this `AgentProvider` uses `name` and `url`, and this `AgentVersionDetail` contains the complete version metadata and call interfaces. The current Swagger output incorrectly resolves both names to the A2A models because the Java types share simple class names; use the structures below for these Agent Management APIs.
+
+Common named type relationships are as follows:
+
+| Type | Structure or key fields |
+|------|-------------------------|
+| `AgentOverview` | `agent: Agent`, `versionPage: Page<AgentVersionSummary>` |
+| `Agent` | `namespaceId`, `agentName`, `displayName`, `description`, `iconUrl`, `provider: AgentProvider`, `tags: array<string>`, `extensions: map<string, object>`, `status`, `owner`, `scope`, `versionInfo: AgentVersionInfo`, `versionCatalog: AgentVersionCatalog`, `metaVersion`, `createTime`, `updateTime` |
+| `AgentSummary` | The bounded `Agent` summary fields, excluding `extensions` |
+| `AgentProvider` | `name: string`, `url: string` |
+| `AgentVersionInfo` | `editingVersion`, `reviewingVersion`, `onlineCnt`, `labels: map<string, string>` |
+| `AgentVersionCatalog` | `latestVersion`, `onlineVersions: array<AgentVersionCatalogEntry>` |
+| `AgentVersionCatalogEntry` | `version`, `labels: array<string>`, `protocols: array<string>` |
+| `AgentVersionSummary` | `version`, `status`, `author`, `changeDescription`, `contentDigest`, `createTime`, `updateTime` |
+| `AgentVersionDetail` | `namespaceId`, `agentName`, `version`, `status`, `callInterfaces: array<AgentCallInterface>`, `author`, `changeDescription`, `contentDigest`, `createTime`, `updateTime` |
+| `ConsoleRuntimeEndpointView` | `runtimeEndpointSnapshot: RuntimeEndpointSnapshot`, `namingServiceRef: NamingServiceRef` |
+
+`AgentCallInterface` and its declared endpoint structure are:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `protocol` | `string` | Protocol token, unique within a version. |
+| `protocolVersion` | `string` | Protocol version. |
+| `descriptorMediaType` | `string` | Media type of `nativeDescriptor`. |
+| `nativeDescriptor` | `object` | Complete protocol-native descriptor. Only this field remains `object` because its shape is protocol-defined. |
+| `endpointSourceOrder` | `array<EndpointSource>` | Endpoint source priority. Elements are `RUNTIME` or `DECLARED` and cannot repeat. |
+| `declaredEndpoints` | `array<Endpoint>` | Static endpoints derived from the native descriptor. |
+
+`Endpoint` contains `uri: string`, `transport: string`, `priority: integer`, `weight: number`, `metadata: map<string, string>`, and `healthy: boolean`.
+
+Runtime endpoint named types are related as follows:
+
+| Type | Structure or key fields |
+|------|-------------------------|
+| `RuntimeEndpointSnapshot` | `namespaceId`, `agentName`, `protocol`, optional `version`, `items: array<RuntimeEndpointSnapshotItem>` |
+| `RuntimeEndpointSnapshotItem` | `endpoint: Endpoint`, `bindings: array<RuntimeVersionBinding>`, `state`, `enabled`, `healthy`, `lastUpdatedTime` |
+| `RuntimeVersionBinding` | `runtimeVersion`, `versionRange` |
+| `NamingServiceRef` | `namespaceId`, `groupName`, `serviceName` |
+
+Agent resource status is `enable` or `disable`. Agent version status is `draft`, `reviewing`, `reviewed`, `online`, or `offline`.
+
+### 12.1. Get Agent Overview
+
+#### Description
+
+This interface retrieves an Agent definition and a bounded page of its version summaries.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`GET`
+
+#### Authorization
+
+A user identity with the corresponding `namespace read` permission is required.
+
+#### Request URL
+
+`/v3/console/ai/agents`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID of the Agent; the default namespace is used when omitted. |
+| `agentName` | `string` | **Yes** | Agent name. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `AgentOverview` | Agent definition and page of version summaries. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agents?namespaceId=public&agentName=my-agent'
+```
+
+* Response example
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "agent": {"namespaceId": "public", "agentName": "my-agent"},
+    "versionPage": {"totalCount": 0, "pageNumber": 1, "pagesAvailable": 0, "pageItems": []}
+  }
+}
+```
+
+### 12.2. Update Agent
+
+#### Description
+
+This interface replaces the writable fields of an Agent definition.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`PUT`
+
+#### Authorization
+
+A user identity with the corresponding `namespace write` permission is required.
+
+#### Request URL
+
+`/v3/console/ai/agents`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID of the Agent. |
+| `agentName` | `string` | **Yes** | Agent name. |
+| `displayName` | `string` | No | Agent display name. |
+| `description` | `string` | No | Agent description. |
+| `iconUrl` | `string` | No | Agent icon URL. |
+| `provider` | `string` | No | JSON-encoded `AgentProvider`. |
+| `tags` | `string` | No | JSON-encoded array of string tags. |
+| `extensions` | `string` | No | JSON-encoded extension object. |
+| `status` | `string` | **Yes** | Agent resource status; only `enable` or `disable` is accepted. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `Agent` | Updated Agent definition. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agents' -d 'namespaceId=public&agentName=my-agent&displayName=My Agent&status=enable'
+```
+
+* Response example
+
+```json
+{"code":0,"message":"success","data":{"namespaceId":"public","agentName":"my-agent","displayName":"My Agent","status":"enable"}}
+```
+
+### 12.3. Delete Agent
+
+#### Description
+
+This interface deletes an Agent definition and all of its version content.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`DELETE`
+
+#### Authorization
+
+A user identity with the corresponding `namespace write` permission is required.
+
+#### Request URL
+
+`/v3/console/ai/agents`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID of the Agent. |
+| `agentName` | `string` | **Yes** | Agent name. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `null` | No business data is returned after deletion. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agents?namespaceId=public&agentName=my-agent'
+```
+
+* Response example
+
+```json
+{"code":0,"message":"success","data":null}
+```
+
+### 12.4. Create Agent Draft
+
+#### Description
+
+This interface creates an initial or subsequent Agent draft version. The request must contain exactly one of `callInterfaces` and `basedOnVersion`. Because no source version exists when the Agent is first created, the first draft must provide a non-empty `callInterfaces`. Agent metadata can be initialized in that first request only; subsequent draft requests do not accept the metadata fields.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+#### Authorization
+
+A user identity with the corresponding `namespace write` permission is required.
+
+#### Request URL
+
+`/v3/console/ai/agents/draft`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID of the Agent. |
+| `agentName` | `string` | **Yes** | Agent name. |
+| `version` | `string` | **Yes** | New draft version. |
+| `displayName` | `string` | No | Agent display name. |
+| `description` | `string` | No | Agent description. |
+| `iconUrl` | `string` | No | Agent icon URL. |
+| `provider` | `string` | No | JSON-encoded `AgentProvider`. |
+| `tags` | `string` | No | JSON-encoded array of string tags. |
+| `extensions` | `string` | No | JSON-encoded extension object. |
+| `callInterfaces` | `string` | No | JSON-encoded non-empty `array<AgentCallInterface>`; mutually exclusive with `basedOnVersion` and required for the first Agent draft. |
+| `author` | `string` | No | Draft author. |
+| `changeDescription` | `string` | No | Version change description. |
+| `basedOnVersion` | `string` | No | Exact existing version used as the draft base; mutually exclusive with `callInterfaces` and invalid for the first Agent draft. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `AgentVersionDetail` | Created Agent draft version details. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/draft' \
+  -d 'namespaceId=public' \
+  -d 'agentName=my-agent' \
+  -d 'version=1.0.0' \
+  -d 'displayName=My Agent' \
+  -d 'author=nacos' \
+  --data-urlencode 'callInterfaces=[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"declaredEndpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC","priority":0,"weight":1.0}]}]'
+```
+
+* Response example
+
+```json
+{"code":0,"message":"success","data":{"namespaceId":"public","agentName":"my-agent","version":"1.0.0","status":"draft","callInterfaces":[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"declaredEndpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC","priority":0,"weight":1.0}]}],"author":"nacos"}}
+```
+
+### 12.5. Update Agent Draft
+
+#### Description
+
+This interface replaces the call interfaces and change description of an Agent draft.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`PUT`
+
+#### Authorization
+
+A user identity with the corresponding `namespace write` permission is required.
+
+#### Request URL
+
+`/v3/console/ai/agents/draft`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID of the Agent. |
+| `agentName` | `string` | **Yes** | Agent name. |
+| `version` | `string` | **Yes** | Draft version to update. |
+| `callInterfaces` | `string` | **Yes** | JSON-encoded `array<AgentCallInterface>`. |
+| `changeDescription` | `string` | No | Version change description. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `AgentVersionDetail` | Updated Agent draft version details. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agents/draft' \
+  -d 'namespaceId=public' \
+  -d 'agentName=my-agent' \
+  -d 'version=1.0.0' \
+  -d 'changeDescription=update endpoints' \
+  --data-urlencode 'callInterfaces=[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"declaredEndpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC"}]}]'
+```
+
+* Response example
+
+```json
+{"code":0,"message":"success","data":{"namespaceId":"public","agentName":"my-agent","version":"1.0.0","status":"draft","callInterfaces":[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"declaredEndpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC"}]}],"changeDescription":"update endpoints"}}
+```
+
+### 12.6. Delete Agent Draft
+
+#### Description
+
+This interface deletes the specified current Agent draft.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`DELETE`
+
+#### Authorization
+
+A user identity with the corresponding `namespace write` permission is required.
+
+#### Request URL
+
+`/v3/console/ai/agents/draft`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID of the Agent. |
+| `agentName` | `string` | **Yes** | Agent name. |
+| `version` | `string` | **Yes** | Draft version to delete. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `null` | No business data is returned after deletion. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agents/draft?namespaceId=public&agentName=my-agent&version=1.0.0'
+```
+
+* Response example
+
+```json
+{"code":0,"message":"success","data":null}
+```
+
+### 12.7. Force Publish Agent Version
+
+#### Description
+
+This interface force-publishes a working Agent version by bypassing normal review requirements.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+#### Authorization
+
+A user identity with the corresponding `namespace write` permission is required.
+
+#### Request URL
+
+`/v3/console/ai/agents/force-publish`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID of the Agent. |
+| `agentName` | `string` | **Yes** | Agent name. |
+| `version` | `string` | **Yes** | Version to force publish. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `AgentVersionSummary` | Published version summary; its status is `online`. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/force-publish' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
+```
+
+* Response example
+
+```json
+{"code":0,"message":"success","data":{"version":"1.0.0","status":"online","author":"nacos"}}
+```
+
+### 12.8. Update Agent Labels
+
+#### Description
+
+This interface replaces custom Agent labels while preserving the service-managed latest label.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`PUT`
+
+#### Authorization
+
+A user identity with the corresponding `namespace write` permission is required.
+
+#### Request URL
+
+`/v3/console/ai/agents/labels`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID of the Agent. |
+| `agentName` | `string` | **Yes** | Agent name. |
+| `labels` | `string` | **Yes** | JSON-encoded `map<string, string>` from custom label to exact version. The reserved `latest` label cannot be written. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `Agent` | Agent definition after the label update. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agents/labels' -d 'namespaceId=public&agentName=my-agent&labels={"stable":"1.0.0"}'
+```
+
+* Response example
+
+```json
+{"code":0,"message":"success","data":{"namespaceId":"public","agentName":"my-agent","status":"enable","versionInfo":{"labels":{"latest":"1.0.0","stable":"1.0.0"}}}}
+```
+
+### 12.9. List Agents
+
+#### Description
+
+This interface filters and pages Agent summaries.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`GET`
+
+#### Authorization
+
+A user identity with the corresponding `namespace read` permission is required.
+
+#### Request URL
+
+`/v3/console/ai/agents/list`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `pageNo` | `integer` | **Yes** | Page number, starting from 1. |
+| `pageSize` | `integer` | **Yes** | Number of entries per page. |
+| `namespaceId` | `string` | No | Namespace ID of the Agent. |
+| `agentName` | `string` | No | Filter by Agent name. |
+| `orderBy` | `string` | No | Sort field; currently only `download_count` is supported. |
+| `owner` | `string` | No | Filter by owner. |
+| `scope` | `string` | No | Filter by visibility scope; `PUBLIC` or `PRIVATE`, case-insensitive. |
+| `bizTag` | `string` | No | Fuzzy filter by business tag. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `Page<AgentSummary>` | Page of Agent summaries whose `pageItems` has type `array<AgentSummary>`. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agents/list?pageNo=1&pageSize=20&namespaceId=public&agentName=my-agent'
+```
+
+* Response example
+
+```json
+{"code":0,"message":"success","data":{"totalCount":0,"pageNumber":1,"pagesAvailable":0,"pageItems":[]}}
+```
+
+### 12.10. Offline Agent Version
+
+#### Description
+
+This interface takes a specified Agent version offline.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+#### Authorization
+
+A user identity with the corresponding `namespace write` permission is required.
+
+#### Request URL
+
+`/v3/console/ai/agents/offline`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID of the Agent. |
+| `agentName` | `string` | **Yes** | Agent name. |
+| `version` | `string` | **Yes** | Version to take offline. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `AgentVersionSummary` | Version summary after the offline operation; its status is `offline`. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/offline' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
+```
+
+* Response example
+
+```json
+{"code":0,"message":"success","data":{"version":"1.0.0","status":"offline","author":"nacos"}}
+```
+
+### 12.11. Online Agent Version
+
+#### Description
+
+This interface brings a specified Agent version online.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+#### Authorization
+
+A user identity with the corresponding `namespace write` permission is required.
+
+#### Request URL
+
+`/v3/console/ai/agents/online`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID of the Agent. |
+| `agentName` | `string` | **Yes** | Agent name. |
+| `version` | `string` | **Yes** | Version to bring online. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `AgentVersionSummary` | Version summary after the online operation; its status is `online`. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/online' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
+```
+
+* Response example
+
+```json
+{"code":0,"message":"success","data":{"version":"1.0.0","status":"online","author":"nacos"}}
+```
+
+### 12.12. Publish Agent Version
+
+#### Description
+
+This interface publishes a reviewed Agent version.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+#### Authorization
+
+A user identity with the corresponding `namespace write` permission is required.
+
+#### Request URL
+
+`/v3/console/ai/agents/publish`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID of the Agent. |
+| `agentName` | `string` | **Yes** | Agent name. |
+| `version` | `string` | **Yes** | Version to publish. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `AgentVersionSummary` | Published version summary; its status is `online`. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/publish' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
+```
+
+* Response example
+
+```json
+{"code":0,"message":"success","data":{"version":"1.0.0","status":"online","author":"nacos"}}
+```
+
+### 12.13. Redraft Agent Version
+
+#### Description
+
+This interface transitions a reviewed Agent version back to draft.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+#### Authorization
+
+A user identity with the corresponding `namespace write` permission is required.
+
+#### Request URL
+
+`/v3/console/ai/agents/redraft`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID of the Agent. |
+| `agentName` | `string` | **Yes** | Agent name. |
+| `version` | `string` | **Yes** | Version to return to draft. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `AgentVersionSummary` | Version summary after redrafting; its status is `draft`. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/redraft' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
+```
+
+* Response example
+
+```json
+{"code":0,"message":"success","data":{"version":"1.0.0","status":"draft","author":"nacos"}}
+```
+
+### 12.14. Get Agent Runtime Endpoints
+
+#### Description
+
+This interface retrieves the runtime endpoint snapshot and Naming service reference for an Agent protocol.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`GET`
+
+#### Authorization
+
+A user identity with the corresponding `namespace read` permission is required.
+
+#### Request URL
+
+`/v3/console/ai/agents/runtime-endpoints`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID of the Agent. |
+| `agentName` | `string` | **Yes** | Agent name. |
+| `protocol` | `string` | **Yes** | Agent protocol to query. |
+| `version` | `string` | No | Exact Agent version filter. When omitted, one effective item per natural endpoint and all of its version bindings are returned for the protocol. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `ConsoleRuntimeEndpointView` | Runtime endpoint snapshot and Naming service reference. `runtimeEndpointSnapshot.items` is empty when there are no instances. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agents/runtime-endpoints?namespaceId=public&agentName=my-agent&protocol=A2A&version=1.0.0'
+```
+
+* Response example
+
+```json
+{"code":0,"message":"success","data":{"runtimeEndpointSnapshot":{"namespaceId":"public","agentName":"my-agent","protocol":"A2A","version":"1.0.0","items":[]},"namingServiceRef":{"namespaceId":"public","groupName":"DEFAULT_GROUP","serviceName":"my-agent@@A2A"}}}
+```
+
+### 12.15. Submit Agent Version
+
+#### Description
+
+This interface submits an Agent draft version for review.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+#### Authorization
+
+A user identity with the corresponding `namespace write` permission is required.
+
+#### Request URL
+
+`/v3/console/ai/agents/submit`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID of the Agent. |
+| `agentName` | `string` | **Yes** | Agent name. |
+| `version` | `string` | **Yes** | Draft version to submit for review. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `AgentVersionSummary` | Submitted version summary; its status is `reviewing`. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/submit' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
+```
+
+* Response example
+
+```json
+{"code":0,"message":"success","data":{"version":"1.0.0","status":"reviewing","author":"nacos"}}
+```
+
+### 12.16. Get Agent Version
+
+#### Description
+
+This interface retrieves the exact definition of a specified Agent version.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`GET`
+
+#### Authorization
+
+A user identity with the corresponding `namespace read` permission is required.
+
+#### Request URL
+
+`/v3/console/ai/agents/version`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID of the Agent. |
+| `agentName` | `string` | **Yes** | Agent name. |
+| `version` | `string` | **Yes** | Agent version to retrieve. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `AgentVersionDetail` | Agent version details, including the complete `array<AgentCallInterface>`. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agents/version?namespaceId=public&agentName=my-agent&version=1.0.0'
+```
+
+* Response example
+
+```json
+{"code":0,"message":"success","data":{"namespaceId":"public","agentName":"my-agent","version":"1.0.0","status":"online","callInterfaces":[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"declaredEndpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC"}]}],"author":"nacos","contentDigest":"sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"}}
+```
+
+### 12.17. List Agent Versions
+
+#### Description
+
+This interface pages version summaries for a specified Agent.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`GET`
+
+#### Authorization
+
+A user identity with the corresponding `namespace read` permission is required.
+
+#### Request URL
+
+`/v3/console/ai/agents/versions`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `pageNo` | `integer` | **Yes** | Page number, starting from 1. |
+| `pageSize` | `integer` | **Yes** | Number of entries per page. |
+| `namespaceId` | `string` | No | Namespace ID of the Agent. |
+| `agentName` | `string` | **Yes** | Agent name. |
+| `status` | `string` | No | Filter by version status: `draft`, `reviewing`, `reviewed`, `online`, or `offline`. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `Page<AgentVersionSummary>` | Page of Agent version summaries whose `pageItems` has type `array<AgentVersionSummary>`. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agents/versions?pageNo=1&pageSize=20&namespaceId=public&agentName=my-agent&status=online'
+```
+
+* Response example
+
+```json
+{"code":0,"message":"success","data":{"totalCount":0,"pageNumber":1,"pagesAvailable":0,"pageItems":[]}}
 ```
