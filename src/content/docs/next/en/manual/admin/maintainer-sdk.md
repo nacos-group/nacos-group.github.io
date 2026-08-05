@@ -54,6 +54,9 @@ ConfigMaintainerService configMaintainerService = ConfigMaintainerFactory.create
 
 // Initialize the Nacos Maintainer Service for the service registry
 NamingMaintainerService maintainService = NamingMaintainerFactory.createNamingMaintainerService(properties);
+
+// Initialize the Nacos Maintainer Service for the AI module
+AiMaintainerService aiMaintainerService = AiMaintainerFactory.createAiMaintainerService(properties);
 ```
 
 ## 3. Config Center Maintainer APIs
@@ -244,6 +247,8 @@ Deletes Nacos configs in batches to reduce maintenance costs through automation.
 
 ```java
 boolean deleteConfigs(List<Long> ids) throws NacosException;
+
+boolean deleteConfigs(List<Long> ids, String namespaceId) throws NacosException;
 ```
 
 #### Request Parameters
@@ -251,6 +256,7 @@ boolean deleteConfigs(List<Long> ids) throws NacosException;
 | Parameter Name | Parameter Type        | Description                                                                                  |
 |:----|:------------|:------------------------------------------------------------------------------------|
 | ids | List\<Long> | List of config IDs to delete. This ID is the ID of the config in the actual storage medium. Obtain it from the `id` field returned by the [Get Config](#31-get-config) or [Get Config List](#35-get-config-list) API. |
+| namespaceId | string | Namespace ID of the configs. The default is `public` when omitted. |
 
 #### Return Value
 
@@ -264,6 +270,8 @@ boolean deleteConfigs(List<Long> ids) throws NacosException;
 try {
     ConfigDetailInfo configDetailInfo = configMaintainerService.getConfig("maintain.client.test");
     boolean result = configMaintainerService.deleteConfigs(Collections.singletonList(configDetailInfo.getId()));
+    // To specify the namespace explicitly, use:
+    // boolean result = configMaintainerService.deleteConfigs(Collections.singletonList(configDetailInfo.getId()), Constants.DEFAULT_NAMESPACE_ID);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -449,13 +457,17 @@ Use this API to clone the specified config to another namespace. You can specify
 
 ```java
 Map<String, Object> cloneConfig(String namespaceId, List<ConfigCloneInfo> cloneInfos, String srcUser, SameConfigPolicy policy) throws NacosException;
+
+Map<String, Object> cloneConfig(String sourceNamespaceId, String targetNamespaceId, List<ConfigCloneInfo> cloneInfos, String srcUser, SameConfigPolicy policy) throws NacosException;
 ```
 
 #### Request Parameters
 
 | Parameter Name         | Parameter Type                   | Description                                                                               |
 |:------------|:-----------------------|:---------------------------------------------------------------------------------|
-| namespaceId | string                 | Target namespace ID for cloning.                                                                      |
+| namespaceId | string                 | Namespace ID used for both source lookup and clone target. The default is `public` when omitted. |
+| sourceNamespaceId | string           | Source namespace ID. The default is `public` when omitted. |
+| targetNamespaceId | string           | Target namespace ID. The default is `public` when omitted. |
 | cloneInfos  | List\<ConfigCloneInfo> | List of configs to clone.                                                                        |
 | srcUser     | string                 | Username used to clone this config. The cloned config uses this user as `createUser`. If an empty string is passed, the current logged-in username is used as `createUser`. |
 | policy      | SameConfigPolicy       | Conflict handling policy used when cloning configs. The default value is `ABORT`. Optional values are `ABORT` (abort), `SKIP` (skip), and `OVERWRITE` (overwrite).           |
@@ -482,6 +494,8 @@ try {
     ConfigCloneInfo configCloneInfo = new ConfigCloneInfo();
     configCloneInfo.setConfigId(1L);
     Map<String, Object> result = configMaintainerService.cloneConfig("clone-test", Collections.singletonList(configCloneInfo), "", SameConfigPolicy.ABORT);
+    // Clone the config from the public namespace to the clone-test namespace.
+    // result = configMaintainerService.cloneConfig(Constants.DEFAULT_NAMESPACE_ID, "clone-test", Collections.singletonList(configCloneInfo), "", SameConfigPolicy.ABORT);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -818,7 +832,7 @@ A `NacosException` is thrown when reading the config times out or a network exce
 Gets the historical version list of the specified config.
 
 ```java
-Page<ConfigHistoryBasicInfo> listConfigHistory(String dataId, String group, String namespaceId, Integer pageNo, Integer pageSize) throws NacosException;
+Page<ConfigHistoryBasicInfo> listConfigHistory(String dataId, String groupName, String namespaceId, int pageNo, int pageSize) throws NacosException;
 ```
 
 #### Request Parameters
@@ -1671,13 +1685,13 @@ String registerInstance(String groupName, String serviceName, String ip, int por
 
 String registerInstance(String namespaceId, String groupName, String serviceName, String ip, int port, String clusterName) throws NacosException;
 
-String registerInstance(String serviceName, instance instance) throws NacosException;
+String registerInstance(String serviceName, Instance instance) throws NacosException;
 
-String registerInstance(String groupName, String serviceName, instance instance) throws NacosException;
+String registerInstance(String groupName, String serviceName, Instance instance) throws NacosException;
 
-String registerInstance(String namespaceId, String groupName, String serviceName, instance instance);
+String registerInstance(String namespaceId, String groupName, String serviceName, Instance instance);
 
-String registerInstance(Service service, instance instance) throws NacosException;
+String registerInstance(Service service, Instance instance) throws NacosException;
 ```
 
 #### Request Parameters
@@ -1715,7 +1729,7 @@ try {
     result = namingMaintainService.registerInstance("maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
     result = namingMaintainService.registerInstance(Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
     result = namingMaintainService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
-    instance instance = new Instance();
+    Instance instance = new Instance();
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     instance.setEphemeral(false);
@@ -1761,13 +1775,13 @@ String deregisterInstance(String groupName, String serviceName, String ip, int p
 
 String deregisterInstance(String namespaceId, String groupName, String serviceName, String ip, int port, String clusterName) throws NacosException;
 
-String deregisterInstance(String serviceName, instance instance) throws NacosException;
+String deregisterInstance(String serviceName, Instance instance) throws NacosException;
 
-String deregisterInstance(String groupName, String serviceName, instance instance) throws NacosException;
+String deregisterInstance(String groupName, String serviceName, Instance instance) throws NacosException;
 
-String deregisterInstance(String namespaceId, String groupName, String serviceName, instance instance) throws NacosException;
+String deregisterInstance(String namespaceId, String groupName, String serviceName, Instance instance) throws NacosException;
 
-String deregisterInstance(Service service, instance instance) throws NacosException;
+String deregisterInstance(Service service, Instance instance) throws NacosException;
 ```
 
 #### Request Parameters
@@ -1800,7 +1814,7 @@ try {
     result = namingMaintainService.deregisterInstance("maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
     result = namingMaintainService.deregisterInstance(Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
     result = namingMaintainService.deregisterInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
-    instance instance = new Instance();
+    Instance instance = new Instance();
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     instance.setEphemeral(false);
@@ -1834,13 +1848,13 @@ Metadata updated through this API has higher priority than metadata specified du
 :::
 
 ```java
-String updateInstance(String serviceName, instance instance) throws NacosException;
+String updateInstance(String serviceName, Instance instance) throws NacosException;
 
-String updateInstance(String groupName, String serviceName, instance instance) throws NacosException;
+String updateInstance(String groupName, String serviceName, Instance instance) throws NacosException;
 
-String updateInstance(String namespaceId, String groupName, String serviceName, instance instance) throws NacosException;
+String updateInstance(String namespaceId, String groupName, String serviceName, Instance instance) throws NacosException;
 
-String updateInstance(Service service, instance instance) throws NacosException;
+String updateInstance(Service service, Instance instance) throws NacosException;
 ```
 
 #### Request Parameters
@@ -1870,7 +1884,7 @@ String updateInstance(Service service, instance instance) throws NacosException;
 
 ```java
 try {
-    instance instance = new Instance();
+    Instance instance = new Instance();
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     instance.setEphemeral(false);
@@ -1937,7 +1951,7 @@ try {
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
     service.setName("maintain.client.test");
-    instance instance = new Instance();
+    Instance instance = new Instance();
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     Map<String, String> newMetadata = Collections.singletonMap("testK", "testV");
@@ -1995,7 +2009,7 @@ try {
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
     service.setName("maintain.client.test");
-    instance instance = new Instance();
+    Instance instance = new Instance();
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     Map<String, String> newMetadata = Collections.singletonMap("testK", "testV");
@@ -2020,7 +2034,7 @@ Updates part of instance metadata. Compared with the [Update Instance](#411-upda
 > Note that some fields in the `Instance` object have default values, such as `weight`. Pass the corresponding values, otherwise the defaults may overwrite existing values.
 
 ```java
-String partialUpdateInstance(Service service, instance instance) throws NacosException;
+String partialUpdateInstance(Service service, Instance instance) throws NacosException;
 ```
 
 #### Request Parameters
@@ -2119,19 +2133,19 @@ A `NacosException` is thrown when reading the config times out or a network exce
 Queries details of the specified service instance, mainly including metadata and other additional information such as weight.
 
 ```java
-instance getInstanceDetail(String serviceName, String ip, int port) throws NacosException;
+Instance getInstanceDetail(String serviceName, String ip, int port) throws NacosException;
 
-instance getInstanceDetail(String groupName, String serviceName, String ip, int port) throws NacosException;
+Instance getInstanceDetail(String groupName, String serviceName, String ip, int port) throws NacosException;
 
-instance getInstanceDetail(String namespaceId, String groupName, String serviceName, String ip, int port) throws NacosException;
+Instance getInstanceDetail(String namespaceId, String groupName, String serviceName, String ip, int port) throws NacosException;
 
-instance getInstanceDetail(String serviceName, String ip, int port, String clusterName) throws NacosException;
+Instance getInstanceDetail(String serviceName, String ip, int port, String clusterName) throws NacosException;
 
-instance getInstanceDetail(String groupName, String serviceName, String ip, int port, String clusterName) throws NacosException;
+Instance getInstanceDetail(String groupName, String serviceName, String ip, int port, String clusterName) throws NacosException;
 
-instance getInstanceDetail(String namespaceId, String groupName, String serviceName, String ip, int port, String clusterName) throws NacosException;
+Instance getInstanceDetail(String namespaceId, String groupName, String serviceName, String ip, int port, String clusterName) throws NacosException;
 
-instance getInstanceDetail(Service service, instance instance) throws NacosException;
+Instance getInstanceDetail(Service service, Instance instance) throws NacosException;
 ```
 
 #### Request Parameters
@@ -2164,7 +2178,7 @@ try {
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
     service.setName("maintain.client.test");
-    instance instance = new Instance();
+    Instance instance = new Instance();
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     instance.setClusterName(Constants.DEFAULT_CLUSTER_NAME);
@@ -2281,7 +2295,7 @@ To modify the cluster health checker, see [Update Logical Cluster Metadata](#420
 :::
 
 ```java
-String updateInstanceHealthStatus(Service service, instance instance) throws NacosException;
+String updateInstanceHealthStatus(Service service, Instance instance) throws NacosException;
 ```
 
 #### Request Parameters
@@ -2312,7 +2326,7 @@ try {
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
     service.setName("maintain.client.test");
-    instance instance = new Instance();
+    Instance instance = new Instance();
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     instance.setClusterName(Constants.DEFAULT_CLUSTER_NAME);
@@ -3778,7 +3792,7 @@ String createLocalMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpTo
 
 | Parameter Type    | Description                     |
 |:--------|:-----------------------|
-| boolean | `true` if creation succeeds, otherwise `false`. |
+| String | MCP service ID returned after successful creation. |
 
 #### Request Example
 
@@ -3843,7 +3857,7 @@ String createRemoteMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpT
 
 | Parameter Type    | Description                     |
 |:--------|:-----------------------|
-| boolean | `true` if creation succeeds, otherwise `false`. |
+| String | MCP service ID returned after successful creation. |
 
 #### Request Example
 
@@ -4029,6 +4043,8 @@ try {
 A `NacosException` is thrown when reading the config times out or a network exception occurs.
 
 ## 7. A2A Registry
+
+> Compatibility and migration guidance: `A2aMaintainerService` in this chapter is the legacy A2A management interface and remains available during the compatibility window. The protocol-neutral `AgentMaintainerService`, obtained from `aiMaintainerService.agent()`, will replace these APIs over time. New users and SDK integrations should prefer the Agent Management APIs in Chapter 11 and avoid adding new dependencies on the legacy A2A management interface.
 
 ### 7.1. Publish AgentCard
 
@@ -4394,8 +4410,9 @@ Page<PromptMetaSummary> listPrompts(String promptKey, int pageNo, int pageSize) 
 
 ```java
 try {
-    Page<PromptMetaSummary> result = aiMaintainerService.listPrompts("public", "my-prompt", "blur", null, 1, 100);
-    result = aiMaintainerService.listPrompts("my-prompt", 1, 100);
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    Page<PromptMetaSummary> result = promptMaintainerService.listPrompts("public", "my-prompt", "blur", null, 1, 100);
+    result = promptMaintainerService.listPrompts("my-prompt", 1, 100);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -4434,8 +4451,9 @@ PromptMetaInfo getPromptMeta(String promptKey) throws NacosException;
 
 ```java
 try {
-    PromptMetaInfo meta = aiMaintainerService.getPromptMeta("public", "my-prompt");
-    meta = aiMaintainerService.getPromptMeta("my-prompt");
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    PromptMetaInfo meta = promptMaintainerService.getPromptMeta("public", "my-prompt");
+    meta = promptMaintainerService.getPromptMeta("my-prompt");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -4474,7 +4492,8 @@ PromptVersionInfo queryPromptDetail(String namespaceId, String promptKey, String
 
 ```java
 try {
-    PromptVersionInfo detail = aiMaintainerService.queryPromptDetail("public", "my-prompt", "1.0.0", null);
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    PromptVersionInfo detail = promptMaintainerService.queryPromptDetail("public", "my-prompt", "1.0.0", null);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -4513,7 +4532,8 @@ boolean bindLabel(String namespaceId, String promptKey, String label, String ver
 
 ```java
 try {
-    boolean ok = aiMaintainerService.bindLabel("public", "my-prompt", "stable", "1.0.0");
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    boolean ok = promptMaintainerService.bindLabel("public", "my-prompt", "stable", "1.0.0");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -4551,7 +4571,8 @@ boolean unbindLabel(String namespaceId, String promptKey, String label) throws N
 
 ```java
 try {
-    boolean ok = aiMaintainerService.unbindLabel("public", "my-prompt", "stable");
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    boolean ok = promptMaintainerService.unbindLabel("public", "my-prompt", "stable");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -4600,9 +4621,10 @@ boolean publishPrompt(String promptKey, String version, String template, String 
 
 ```java
 try {
-    boolean ok = aiMaintainerService.publishPrompt("public", "my-prompt", "1.0.1", "Hello {{name}}", "init", "desc", null, "{\"name\":\"string\"}");
-    boolean ok = aiMaintainerService.publishPrompt("public", "my-prompt", "1.0.1", "Hello {{name}}", "init", "desc", null);
-    ok = aiMaintainerService.publishPrompt("my-prompt", "1.0.1", "Hello {{name}}", "init");
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    boolean ok = promptMaintainerService.publishPrompt("public", "my-prompt", "1.0.1", "Hello {{name}}", "init", "desc", null, "{\"name\":\"string\"}");
+    ok = promptMaintainerService.publishPrompt("public", "my-prompt", "1.0.1", "Hello {{name}}", "init", "desc", null);
+    ok = promptMaintainerService.publishPrompt("my-prompt", "1.0.1", "Hello {{name}}", "init");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -4641,8 +4663,9 @@ boolean deletePrompt(String promptKey) throws NacosException;
 
 ```java
 try {
-    boolean ok = aiMaintainerService.deletePrompt("public", "my-prompt");
-    ok = aiMaintainerService.deletePrompt("my-prompt");
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    boolean ok = promptMaintainerService.deletePrompt("public", "my-prompt");
+    ok = promptMaintainerService.deletePrompt("my-prompt");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -4683,8 +4706,9 @@ Page<PromptVersionSummary> listPromptVersions(String promptKey, int pageNo, int 
 
 ```java
 try {
-    Page<PromptVersionSummary> result = aiMaintainerService.listPromptVersions("public", "my-prompt", 1, 100);
-    result = aiMaintainerService.listPromptVersions("my-prompt", 1, 100);
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    Page<PromptVersionSummary> result = promptMaintainerService.listPromptVersions("public", "my-prompt", 1, 100);
+    result = promptMaintainerService.listPromptVersions("my-prompt", 1, 100);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -4725,8 +4749,9 @@ boolean updatePromptMetadata(String namespaceId, String promptKey, String descri
 
 ```java
 try {
-    boolean ok = aiMaintainerService.updatePromptMetadata("public", "my-prompt", "new desc", "tag1,tag2");
-    ok = aiMaintainerService.updatePromptMetadata("public", "my-prompt", "new desc");
+    PromptMaintainerService promptMaintainerService = aiMaintainerService.prompt();
+    boolean ok = promptMaintainerService.updatePromptMetadata("public", "my-prompt", "new desc", "tag1,tag2");
+    ok = promptMaintainerService.updatePromptMetadata("public", "my-prompt", "new desc");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -4977,7 +5002,7 @@ Throws NacosException when the operation fails.
 
 #### Description
 
-Publish a reviewed Prompt version, optionally updating the latest label.
+Publish a reviewed Prompt Version. The latest label is server-managed.
 
 ```java
 void publish(String namespaceId, String promptKey, String version, Boolean updateLatestLabel) throws NacosException;
@@ -4990,7 +5015,7 @@ void publish(String namespaceId, String promptKey, String version, Boolean updat
 | namespaceId       | string  | Namespace ID. |
 | promptKey         | string  | Prompt key. |
 | version           | string  | Version to publish. |
-| updateLatestLabel | boolean | Whether to update the latest label. |
+| updateLatestLabel | boolean | Compatibility parameter retained and ignored by the server. |
 
 #### Response
 
@@ -5015,7 +5040,7 @@ Throws NacosException when the operation fails.
 
 #### Description
 
-Force-publish a Prompt version without release review, optionally updating the latest label.
+Force-publish a Prompt Version without release review. The latest label is server-managed.
 
 ```java
 void forcePublish(String namespaceId, String promptKey, String version, Boolean updateLatestLabel) throws NacosException;
@@ -5028,7 +5053,7 @@ void forcePublish(String namespaceId, String promptKey, String version, Boolean 
 | namespaceId       | string  | Namespace ID. |
 | promptKey         | string  | Prompt key. |
 | version           | string  | Version to publish. |
-| updateLatestLabel | boolean | Whether to update the latest label. |
+| updateLatestLabel | boolean | Compatibility parameter retained and ignored by the server. |
 
 #### Response
 
@@ -5239,131 +5264,7 @@ Throws NacosException when the operation fails.
 
 ## 9. Skill Capabilities
 
-### 9.1. Register Skill
-
-#### Description
-
-Register a skill in the given namespace.
-
-```java
-String registerSkill(String namespaceId, Skill skill) throws NacosException;
-
-String registerSkill(Skill skill) throws NacosException;
-```
-
-#### Request Parameters
-
-| Parameter Name         | Parameter Type   | Description        |
-|:------------|:-------|:----------|
-| namespaceId | string | Namespace ID.   |
-| skill       | Skill  | Skill object. |
-
-#### Response Parameters
-
-| Parameter Type   | Description       |
-|:-------|:---------|
-| String | Skill name. |
-
-#### Request Example
-
-```java
-try {
-    Skill skill = new Skill();
-    skill.setName("my-skill");
-    String name = aiMaintainerService.registerSkill("public", skill);
-    name = aiMaintainerService.registerSkill(skill);
-} catch (NacosException e) {
-    e.printStackTrace();
-}
-```
-
-#### Exception Description
-
-A `NacosException` is thrown when the operation fails.
-
-### 9.2. Get Skill Details
-
-#### Description
-
-Get skill detail by namespace and skill name.
-
-```java
-Skill getSkillDetail(String namespaceId, String skillName) throws NacosException;
-
-Skill getSkillDetail(String skillName) throws NacosException;
-```
-
-#### Request Parameters
-
-| Parameter Name         | Parameter Type   | Description        |
-|:------------|:-------|:----------|
-| namespaceId | string | Namespace ID.   |
-| skillName   | string | Skill name.  |
-
-#### Response Parameters
-
-| Parameter Type | Description        |
-|:-----|:----------|
-| Skill | Skill detail object. |
-
-#### Request Example
-
-```java
-try {
-    Skill skill = aiMaintainerService.getSkillDetail("public", "my-skill");
-    skill = aiMaintainerService.getSkillDetail("my-skill");
-} catch (NacosException e) {
-    e.printStackTrace();
-}
-```
-
-#### Exception Description
-
-A `NacosException` is thrown when the operation fails.
-
-### 9.3. Update Skill
-
-#### Description
-
-Update an existing skill.
-
-```java
-boolean updateSkill(String namespaceId, Skill skill) throws NacosException;
-
-boolean updateSkill(Skill skill) throws NacosException;
-```
-
-#### Request Parameters
-
-| Parameter Name         | Parameter Type   | Description        |
-|:------------|:-------|:----------|
-| namespaceId | string | Namespace ID.   |
-| skill       | Skill  | Skill object.  |
-
-#### Response Parameters
-
-| Parameter Type    | Description         |
-|:--------|:-----------|
-| boolean | Whether the update succeeds. |
-
-#### Request Example
-
-```java
-try {
-    Skill skill = new Skill();
-    skill.setName("my-skill");
-    boolean ok = aiMaintainerService.updateSkill("public", skill);
-    ok = aiMaintainerService.updateSkill(skill);
-} catch (NacosException e) {
-    e.printStackTrace();
-}
-```
-
-#### Exception Description
-
-A `NacosException` is thrown when the operation fails.
-
-### 9.4. Delete Skill
+### 9.1. Delete Skill
 
 #### Description
 
@@ -5392,8 +5293,9 @@ boolean deleteSkill(String skillName) throws NacosException;
 
 ```java
 try {
-    boolean ok = aiMaintainerService.deleteSkill("public", "my-skill");
-    ok = aiMaintainerService.deleteSkill("my-skill");
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    boolean ok = skillMaintainerService.deleteSkill("public", "my-skill");
+    ok = skillMaintainerService.deleteSkill("my-skill");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -5403,7 +5305,7 @@ try {
 
 A `NacosException` is thrown when the operation fails.
 
-### 9.5. Query Skill List with Pagination
+### 9.2. Query Skill List with Pagination
 
 #### Description
 
@@ -5439,6 +5341,8 @@ Page<SkillSummary> listSkills(String skillName, int pageNo, int pageSize) throws
 |:-----------------------|:-----------|
 | Page\<SkillSummary>   | Skill page result. |
 
+`SkillSummary.writable` indicates whether the current requester can modify the Skill.
+
 #### Request Example
 
 ```java
@@ -5457,7 +5361,7 @@ try {
 
 A `NacosException` is thrown when the operation fails.
 
-### 9.6. Upload Skill from ZIP
+### 9.3. Upload Skill from ZIP
 
 #### Description
 
@@ -5469,6 +5373,8 @@ String uploadSkillFromZip(String namespaceId, byte[] zipBytes, boolean overwrite
 String uploadSkillFromZip(String namespaceId, byte[] zipBytes, boolean overwrite, String targetVersion) throws NacosException;
 
 String uploadSkillFromZip(String namespaceId, byte[] zipBytes, boolean overwrite, String targetVersion, String commitMsg) throws NacosException;
+
+String uploadSkillFromZip(String namespaceId, byte[] zipBytes, boolean overwrite, String targetVersion, String commitMsg, String uploadAction) throws NacosException;
 
 String uploadSkillFromZip(String namespaceId, byte[] zipBytes) throws NacosException;
 
@@ -5484,6 +5390,7 @@ String uploadSkillFromZip(byte[] zipBytes) throws NacosException;
 | overwrite   | boolean | Whether to overwrite the current editable draft when the Skill already exists. |
 | targetVersion | string | Optional target version, used when the ZIP content has no version. |
 | commitMsg   | string  | Optional version commit message. |
+| uploadAction | string | Optional upload action selected after precheck: `CREATE_DRAFT`, `OVERWRITE_DRAFT`, or `DELETE_DRAFT_AND_CREATE`. |
 
 #### Response Parameters
 
@@ -5500,6 +5407,8 @@ try {
     String name = skillMaintainerService.uploadSkillFromZip("public", zipBytes, true);
     name = skillMaintainerService.uploadSkillFromZip("public", zipBytes, true, "1.0.1");
     name = skillMaintainerService.uploadSkillFromZip("public", zipBytes, true, "1.0.1", "upload skill");
+    // To resolve a draft conflict explicitly after precheck, use:
+    // String name = skillMaintainerService.uploadSkillFromZip("public", zipBytes, true, "1.0.1", "upload skill", "OVERWRITE_DRAFT");
     name = skillMaintainerService.uploadSkillFromZip("public", zipBytes);
     name = skillMaintainerService.uploadSkillFromZip(zipBytes);
 } catch (NacosException e) {
@@ -5511,7 +5420,7 @@ try {
 
 A `NacosException` is thrown when the operation fails.
 
-### 9.7. Get Skill metadata
+### 9.4. Get Skill metadata
 
 #### Description
 
@@ -5540,8 +5449,9 @@ SkillMeta getSkillMeta(String namespaceId, String skillName) throws NacosExcepti
 
 ```java
 try {
-    SkillMeta meta = aiMaintainerService.getSkillMeta("my-skill");
-    meta = aiMaintainerService.getSkillMeta("public", "my-skill");
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    SkillMeta meta = skillMaintainerService.getSkillMeta("my-skill");
+    meta = skillMaintainerService.getSkillMeta("public", "my-skill");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -5551,7 +5461,7 @@ try {
 
 A `NacosException` is thrown when the operation fails.
 
-### 9.8. Get Skill version detail
+### 9.5. Get Skill version detail
 
 #### Description
 
@@ -5581,8 +5491,9 @@ Skill getSkillVersionDetail(String namespaceId, String skillName, String version
 
 ```java
 try {
-    Skill detail = aiMaintainerService.getSkillVersionDetail("my-skill", "1.0.0");
-    detail = aiMaintainerService.getSkillVersionDetail("public", "my-skill", "1.0.0");
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    Skill detail = skillMaintainerService.getSkillVersionDetail("my-skill", "1.0.0");
+    detail = skillMaintainerService.getSkillVersionDetail("public", "my-skill", "1.0.0");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -5592,7 +5503,7 @@ try {
 
 A `NacosException` is thrown when the operation fails.
 
-### 9.9. Create Skill draft
+### 9.6. Create Skill draft
 
 #### Description
 
@@ -5646,7 +5557,7 @@ try {
 
 A `NacosException` is thrown when the operation fails.
 
-### 9.10. Update Skill draft
+### 9.7. Update Skill draft
 
 #### Description
 
@@ -5689,7 +5600,7 @@ try {
 
 A `NacosException` is thrown when the operation fails.
 
-### 9.11. Delete Skill draft
+### 9.8. Delete Skill draft
 
 #### Description
 
@@ -5716,7 +5627,8 @@ boolean deleteDraft(String namespaceId, String skillName) throws NacosException;
 
 ```java
 try {
-    boolean ok = aiMaintainerService.deleteDraft("public", "my-skill");
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    boolean ok = skillMaintainerService.deleteDraft("public", "my-skill");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -5726,7 +5638,7 @@ try {
 
 A `NacosException` is thrown when the operation fails.
 
-### 9.12. Submit Skill version
+### 9.9. Submit Skill version
 
 #### Description
 
@@ -5754,7 +5666,8 @@ String submit(String namespaceId, String skillName, String version) throws Nacos
 
 ```java
 try {
-    String result = aiMaintainerService.submit("public", "my-skill", "1.0.1");
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    String result = skillMaintainerService.submit("public", "my-skill", "1.0.1");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -5764,11 +5677,11 @@ try {
 
 A `NacosException` is thrown when the operation fails.
 
-### 9.13. Publish Skill version
+### 9.10. Publish Skill version
 
 #### Description
 
-Publish reviewed skill version.
+Publish a reviewed Skill Version. The latest label is server-managed.
 
 ```java
 boolean publish(String namespaceId, String skillName, String version, Boolean updateLatestLabel) throws NacosException;
@@ -5781,7 +5694,7 @@ boolean publish(String namespaceId, String skillName, String version, Boolean up
 | namespaceId    | string  | Namespace ID.            |
 | skillName      | string  | Skill name.          |
 | version        | string  | Version to publish.             |
-| updateLatestLabel | boolean | Whether to update the latest label. |
+| updateLatestLabel | boolean | Compatibility parameter retained and ignored by the server. |
 
 #### Response Parameters
 
@@ -5793,7 +5706,8 @@ boolean publish(String namespaceId, String skillName, String version, Boolean up
 
 ```java
 try {
-    boolean ok = aiMaintainerService.publish("public", "my-skill", "1.0.1", true);
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    boolean ok = skillMaintainerService.publish("public", "my-skill", "1.0.1", false);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -5803,7 +5717,7 @@ try {
 
 A `NacosException` is thrown when the operation fails.
 
-### 9.14. Force publish Skill version
+### 9.11. Force publish Skill version
 
 #### Description
 
@@ -5820,7 +5734,7 @@ boolean forcePublish(String namespaceId, String skillName, String version, Boole
 | namespaceId    | string  | Namespace ID.            |
 | skillName      | string  | Skill name.          |
 | version        | string  | Version to publish.             |
-| updateLatestLabel | boolean | Whether to update the latest label. |
+| updateLatestLabel | boolean | Compatibility parameter retained and ignored by the server. |
 
 #### Response Parameters
 
@@ -5832,7 +5746,8 @@ boolean forcePublish(String namespaceId, String skillName, String version, Boole
 
 ```java
 try {
-    boolean ok = aiMaintainerService.forcePublish("public", "my-skill", "1.0.1", true);
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    boolean ok = skillMaintainerService.forcePublish("public", "my-skill", "1.0.1", false);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -5842,7 +5757,7 @@ try {
 
 A `NacosException` is thrown when the operation fails.
 
-### 9.15. Update Skill labels
+### 9.12. Update Skill labels
 
 #### Description
 
@@ -5870,7 +5785,8 @@ boolean updateLabels(String namespaceId, String skillName, String labels) throws
 
 ```java
 try {
-    boolean ok = aiMaintainerService.updateLabels("public", "my-skill", "{\"latest\":\"1.0.1\"}");
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    boolean ok = skillMaintainerService.updateLabels("public", "my-skill", "{\"stable\":\"1.0.1\"}");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -5880,7 +5796,7 @@ try {
 
 A `NacosException` is thrown when the operation fails.
 
-### 9.16. Update Skill biz tags
+### 9.13. Update Skill biz tags
 
 #### Description
 
@@ -5908,7 +5824,8 @@ boolean updateBizTags(String namespaceId, String skillName, String bizTags) thro
 
 ```java
 try {
-    boolean ok = aiMaintainerService.updateBizTags("public", "my-skill", "[\"ai\",\"ops\"]");
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    boolean ok = skillMaintainerService.updateBizTags("public", "my-skill", "[\"ai\",\"ops\"]");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -5918,7 +5835,7 @@ try {
 
 A `NacosException` is thrown when the operation fails.
 
-### 9.17. Change Skill online status
+### 9.14. Change Skill online status
 
 #### Description
 
@@ -5948,8 +5865,9 @@ boolean changeOnlineStatus(String namespaceId, String skillName, String scope, S
 
 ```java
 try {
-    boolean ok = aiMaintainerService.changeOnlineStatus("public", "my-skill", "skill", null, true);
-    ok = aiMaintainerService.changeOnlineStatus("public", "my-skill", "version", "1.0.1", false);
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    boolean ok = skillMaintainerService.changeOnlineStatus("public", "my-skill", "skill", null, true);
+    ok = skillMaintainerService.changeOnlineStatus("public", "my-skill", "version", "1.0.1", false);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -5959,7 +5877,7 @@ try {
 
 A `NacosException` is thrown when the operation fails.
 
-### 9.18. Update Skill scope
+### 9.15. Update Skill scope
 
 #### Description
 
@@ -5987,7 +5905,8 @@ boolean updateScope(String namespaceId, String skillName, String scope) throws N
 
 ```java
 try {
-    boolean ok = aiMaintainerService.updateScope("public", "my-skill", "PUBLIC");
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    boolean ok = skillMaintainerService.updateScope("public", "my-skill", "PUBLIC");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -5997,7 +5916,7 @@ try {
 
 A `NacosException` is thrown when the operation fails.
 
-### 9.19. Batch Upload Skills from ZIP
+### 9.16. Batch Upload Skills from ZIP
 
 #### Description
 
@@ -6021,7 +5940,17 @@ BatchUploadResult batchUploadSkillsFromZip(String namespaceId, byte[] zipBytes, 
 
 | Type              | Description |
 |:------------------|:------------|
-| BatchUploadResult | Batch upload result, including succeeded and failed items. |
+| BatchUploadResult | Batch upload result containing per-item structured results and compatibility fields. |
+
+The main fields of `BatchUploadResult` are as follows:
+
+| Name | Type | Description |
+|:---|:---|:---|
+| results | List\<BatchUploadItemResult> | Structured result for each Skill or candidate directory. |
+| succeeded | List\<String> | Names of successfully uploaded Skills (compatibility field). |
+| failed | List\<FailedItem> | Failed Skill items (compatibility field). |
+
+`BatchUploadItemResult` contains `name`, `success`, `errorCode`, `errorMessage`, and `owner`.
 
 #### Example
 
@@ -6040,7 +5969,7 @@ try {
 
 Throws NacosException when the operation fails.
 
-### 9.20. Redraft Skill Version
+### 9.17. Redraft Skill Version
 
 #### Description
 
@@ -6078,6 +6007,65 @@ try {
 #### Exceptions
 
 Throws NacosException when the operation fails.
+
+### 9.18. Precheck Skill ZIP Upload
+
+#### Description
+
+Check one or more Skills in a ZIP before applying the upload. The result reports version conflicts, permission checks, and the available upload action for each item. A caller can use the result to select `uploadAction` for `uploadSkillFromZip`.
+
+```java
+List<SkillUploadPrecheckResult> precheckUploadSkillFromZip(byte[] zipBytes) throws NacosException;
+
+List<SkillUploadPrecheckResult> precheckUploadSkillFromZip(String namespaceId, byte[] zipBytes) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| namespaceId | string | Namespace ID. The default is `public` when omitted. |
+| zipBytes | byte[] | ZIP bytes containing one or more Skills. |
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| List\<SkillUploadPrecheckResult> | Precheck result for every Skill or candidate directory in the ZIP. |
+
+The main fields of `SkillUploadPrecheckResult` are as follows:
+
+| Name | Type | Description |
+|:---|:---|:---|
+| namespaceId | string | Namespace ID. |
+| entryPath | string | Candidate directory path in the ZIP. |
+| skillName | string | Detected Skill name. |
+| reason | string | Precheck result description. |
+| owner | string | Owner of an existing Skill. |
+| maxPublishedVersion | string | Current maximum published version. |
+| parsedVersion | string | Version parsed from the ZIP content. |
+| targetVersion | string | Target version selected by precheck. |
+| exists | boolean | Whether the Skill already exists. |
+| editingVersion | string | Current draft version. |
+| reviewingVersion | string | Current reviewing version. |
+| precheckCode | string | Result code, such as `READY`, `VERSION_ADJUSTED`, `DRAFT_EXISTS`, `REVIEWING_EXISTS`, `NO_PERMISSION`, `NOT_A_SKILL`, or `INVALID_SKILL`. |
+
+#### Request Example
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    byte[] zipBytes = Files.readAllBytes(Paths.get("skills.zip"));
+    List<SkillUploadPrecheckResult> results = skillMaintainerService.precheckUploadSkillFromZip(zipBytes);
+    results = skillMaintainerService.precheckUploadSkillFromZip("public", zipBytes);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when the precheck request fails unexpectedly. Business validation failures are returned as per-item results.
 
 ## 10. AgentSpec Capabilities
 
@@ -6294,6 +6282,8 @@ Page<AgentSpecSummary> listAgentSpecAdminItems(String namespaceId, String agentS
 |:---|:---|
 | Page\<AgentSpecSummary> | Paged AgentSpec admin list. |
 
+`AgentSpecSummary.owner` identifies the resource owner, and `AgentSpecSummary.writable` indicates whether the current requester can modify the AgentSpec.
+
 #### Request Example
 
 ```java
@@ -6493,7 +6483,7 @@ try {
 
 #### Description
 
-Publish target AgentSpec version.
+Publish the target AgentSpec Version. The latest label is server-managed.
 
 ```java
 boolean publish(String namespaceId, String agentSpecName, String version, Boolean updateLatestLabel) throws NacosException;
@@ -6506,7 +6496,7 @@ boolean publish(String namespaceId, String agentSpecName, String version, Boolea
 | namespaceId | string | Namespace ID. |
 | agentSpecName | string | AgentSpec name. |
 | version | string | Target version. |
-| updateLatestLabel | boolean | Whether to update latest label. |
+| updateLatestLabel | boolean | Compatibility parameter retained and ignored by the server. |
 
 #### Response Parameters
 
@@ -6519,7 +6509,7 @@ boolean publish(String namespaceId, String agentSpecName, String version, Boolea
 ```java
 try {
     AgentSpecMaintainerService agentSpecMaintainerService = aiMaintainerService.agentSpec();
-    boolean ok = agentSpecMaintainerService.publish("public", "test-agent-spec", "1.0.1", true);
+    boolean ok = agentSpecMaintainerService.publish("public", "test-agent-spec", "1.0.1", false);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -6529,7 +6519,7 @@ try {
 
 #### Description
 
-Force publish target AgentSpec version.
+Force-publish the target AgentSpec Version. The latest label is server-managed.
 
 ```java
 boolean forcePublish(String namespaceId, String agentSpecName, String version, Boolean updateLatestLabel) throws NacosException;
@@ -6542,7 +6532,7 @@ boolean forcePublish(String namespaceId, String agentSpecName, String version, B
 | namespaceId | string | Namespace ID. |
 | agentSpecName | string | AgentSpec name. |
 | version | string | Target version. |
-| updateLatestLabel | boolean | Whether to update latest label. |
+| updateLatestLabel | boolean | Compatibility parameter retained and ignored by the server. |
 
 #### Response Parameters
 
@@ -6555,7 +6545,7 @@ boolean forcePublish(String namespaceId, String agentSpecName, String version, B
 ```java
 try {
     AgentSpecMaintainerService agentSpecMaintainerService = aiMaintainerService.agentSpec();
-    boolean ok = agentSpecMaintainerService.forcePublish("public", "test-agent-spec", "1.0.1", true);
+    boolean ok = agentSpecMaintainerService.forcePublish("public", "test-agent-spec", "1.0.1", false);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -6775,3 +6765,1001 @@ try {
     e.printStackTrace();
 }
 ```
+
+## 11. Agent Management
+
+Agent Management is the new protocol-neutral primary entry point and will replace the legacy A2A management APIs in the future. During the compatibility window, `aiMaintainerService.a2a()` remains available. New users and SDK integrations should prioritize `AgentMaintainerService`, obtained from `aiMaintainerService.agent()`.
+
+`AgentMaintainerService` is not bound to a namespace. Every operation provides an explicit-`namespaceId` form and a convenience overload that uses the default namespace `public`. Request and Command objects do not contain `namespaceId`. There is no separate Agent creation method: the first `createDraft` call creates both Agent metadata and the initial draft Version.
+
+> Note: This chapter uses the new Agent Management models in `com.alibaba.nacos.api.ai.model.agent`. Chapter 7 uses legacy A2A models in `com.alibaba.nacos.api.ai.model.a2a`. The packages contain same-named types such as `AgentVersionDetail`, so verify imports when copying examples.
+
+### 11.1. Get Agent Overview
+
+#### Description
+
+Get Agent metadata together with the first bounded page of Version summaries.
+
+```java
+AgentOverview getAgent(String namespaceId, String agentName) throws NacosException;
+
+AgentOverview getAgent(String agentName) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| namespaceId | string | Namespace ID. The default is `public` when omitted. |
+| agentName | string | Exact Agent name. |
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| AgentOverview | Agent overview containing `agent` metadata and the `versionPage` summary page. |
+
+#### Request Example
+
+```java
+try {
+    AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
+    AgentOverview overview = agentMaintainerService.getAgent("public", "demo-agent");
+    overview = agentMaintainerService.getAgent("demo-agent");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when the request fails.
+
+### 11.2. Update Agent Metadata
+
+#### Description
+
+Completely replace the writable Agent metadata. Presentation fields, tags, extensions, and enabled status are writable; identity, owner, scope, Version content, labels, and the derived catalog are not.
+
+```java
+Agent updateAgent(String namespaceId, AgentUpdateRequest request) throws NacosException;
+
+Agent updateAgent(AgentUpdateRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| namespaceId | string | Namespace ID. The default is `public` when omitted. |
+| request | AgentUpdateRequest | Agent metadata update request. |
+
+`AgentUpdateRequest` has the following fields:
+
+| Name | Type | Description |
+|:---|:---|:---|
+| agentName | string | Agent name. Required. |
+| displayName | string | Display name. |
+| description | string | Description. |
+| iconUrl | string | Icon URL. |
+| provider | AgentProvider | Provider information with `name` and `url`. |
+| tags | List\<String> | Agent tags. |
+| extensions | Map\<String, Object> | Extension properties. |
+| status | string | Writable status. Required; only `enable` or `disable` is accepted. |
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| Agent | Updated Agent. |
+
+#### Request Example
+
+```java
+try {
+    AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
+    AgentUpdateRequest request = new AgentUpdateRequest();
+    request.setAgentName("demo-agent");
+    request.setDisplayName("Demo Agent");
+    request.setDescription("Agent for SDK examples");
+    request.setTags(Arrays.asList("demo", "java"));
+    request.setStatus("enable");
+    Agent agent = agentMaintainerService.updateAgent("public", request);
+    // Default-namespace alternative: Agent agent = agentMaintainerService.updateAgent(request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when parameters are invalid or the update fails.
+
+### 11.3. Delete Agent
+
+#### Description
+
+Delete an Agent definition and all of its Version content. This operation does not delete runtime publications owned by independent Publishers.
+
+```java
+void deleteAgent(String namespaceId, String agentName) throws NacosException;
+
+void deleteAgent(String agentName) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| namespaceId | string | Namespace ID. The default is `public` when omitted. |
+| agentName | string | Exact Agent name. |
+
+#### Response Parameters
+
+No return value.
+
+#### Request Example
+
+```java
+try {
+    AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
+    agentMaintainerService.deleteAgent("public", "demo-agent");
+    // Default-namespace alternative: agentMaintainerService.deleteAgent("demo-agent");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when deletion fails.
+
+### 11.4. List Agents with Pagination
+
+#### Description
+
+Filter Agent summaries by name, business tag, scope, and owner, then return stable pagination. The name and single business-tag filters use fuzzy matching.
+
+```java
+Page<AgentSummary> listAgents(String namespaceId, String agentName, String bizTag, String scope, String owner, String orderBy, int pageNo, int pageSize) throws NacosException;
+
+Page<AgentSummary> listAgents(String agentName, String bizTag, String scope, String owner, String orderBy, int pageNo, int pageSize) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| namespaceId | string | Namespace ID. The default is `public` when omitted. |
+| agentName | string | Optional fuzzy Agent-name filter. |
+| bizTag | string | Optional single fuzzy business-tag filter. |
+| scope | string | Optional visibility-scope filter. |
+| owner | string | Optional owner filter. |
+| orderBy | string | Optional order field. The initial contract accepts `download_count`. |
+| pageNo | int | Page number. |
+| pageSize | int | Number of items per page. |
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| Page\<AgentSummary> | Page of Agent summaries. |
+
+#### Request Example
+
+```java
+try {
+    AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
+    Page<AgentSummary> page = agentMaintainerService.listAgents(
+            "public", "demo", "java", "PUBLIC", null, "download_count", 1, 20);
+    page = agentMaintainerService.listAgents(
+            "demo", "java", "PUBLIC", null, "download_count", 1, 20);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when the query fails.
+
+### 11.5. List Agent Versions with Pagination
+
+#### Description
+
+List Version summaries for an Agent, optionally filtered by Version status.
+
+```java
+Page<AgentVersionSummary> listAgentVersions(String namespaceId, String agentName, String status, int pageNo, int pageSize) throws NacosException;
+
+Page<AgentVersionSummary> listAgentVersions(String agentName, String status, int pageNo, int pageSize) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| namespaceId | string | Namespace ID. The default is `public` when omitted. |
+| agentName | string | Exact Agent name. |
+| status | string | Optional Version-status filter. |
+| pageNo | int | Page number. |
+| pageSize | int | Number of items per page. |
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| Page\<AgentVersionSummary> | Page of Agent Version summaries. |
+
+#### Request Example
+
+```java
+try {
+    AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
+    Page<AgentVersionSummary> page =
+            agentMaintainerService.listAgentVersions("public", "demo-agent", "online", 1, 20);
+    page = agentMaintainerService.listAgentVersions("demo-agent", null, 1, 20);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when the query fails.
+
+### 11.6. Get an Agent Version
+
+#### Description
+
+Get one exact Agent Version definition.
+
+```java
+AgentVersionDetail getAgentVersion(String namespaceId, String agentName, String version) throws NacosException;
+
+AgentVersionDetail getAgentVersion(String agentName, String version) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| namespaceId | string | Namespace ID. The default is `public` when omitted. |
+| agentName | string | Exact Agent name. |
+| version | string | Exact Version. |
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| AgentVersionDetail | Version detail containing status, `callInterfaces`, author, change description, content digest, and timestamps. |
+
+#### Request Example
+
+```java
+try {
+    AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
+    AgentVersionDetail detail =
+            agentMaintainerService.getAgentVersion("public", "demo-agent", "1.0.0");
+    detail = agentMaintainerService.getAgentVersion("demo-agent", "1.0.0");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when the query fails.
+
+### 11.7. Get Agent Runtime Endpoints
+
+#### Description
+
+Get the complete runtime Endpoint snapshot for a protocol, optionally filtered by Agent Version. Omitting `version` returns all bindings for each natural Endpoint key; supplying it retains only matching bindings. The `items` list is empty when no runtime instance exists.
+
+```java
+RuntimeEndpointSnapshot getRuntimeEndpoints(String namespaceId, String agentName, String protocol, String version) throws NacosException;
+
+RuntimeEndpointSnapshot getRuntimeEndpoints(String agentName, String protocol, String version) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| namespaceId | string | Namespace ID. The default is `public` when omitted. |
+| agentName | string | Exact Agent name. |
+| protocol | string | Protocol token. Required. |
+| version | string | Optional Agent Version filter. |
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| RuntimeEndpointSnapshot | Runtime snapshot with `namespaceId`, `agentName`, `protocol`, `version`, and Endpoint `items`. |
+
+Each `RuntimeEndpointSnapshotItem` contains an Endpoint, Version bindings, runtime state, enabled and healthy flags, and the last update time.
+
+#### Request Example
+
+```java
+try {
+    AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
+    RuntimeEndpointSnapshot snapshot =
+            agentMaintainerService.getRuntimeEndpoints("public", "demo-agent", "a2a", "1.0.0");
+    snapshot = agentMaintainerService.getRuntimeEndpoints("demo-agent", "a2a", null);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when the query fails.
+
+### 11.8. Create Agent Draft
+
+#### Description
+
+Create an initial or subsequent Agent draft. When the Agent does not exist, this is the only creation entry and the request must contain direct `callInterfaces`, not `basedOnVersion`. For an existing Agent, provide either direct `callInterfaces` or one exact `basedOnVersion`, but never both.
+
+```java
+AgentVersionDetail createDraft(String namespaceId, AgentDraftCreateRequest request) throws NacosException;
+
+AgentVersionDetail createDraft(AgentDraftCreateRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| namespaceId | string | Namespace ID. The default is `public` when omitted. |
+| request | AgentDraftCreateRequest | Draft creation request. |
+
+`AgentDraftCreateRequest` has the following fields:
+
+| Name | Type | Description |
+|:---|:---|:---|
+| agentName | string | Agent name. Required. |
+| displayName | string | Optional display name for initial creation. |
+| description | string | Optional description for initial creation. |
+| iconUrl | string | Optional icon URL for initial creation. |
+| provider | AgentProvider | Optional provider for initial creation. |
+| tags | List\<String> | Optional tags for initial creation. |
+| extensions | Map\<String, Object> | Optional extensions for initial creation. |
+| version | string | Exact Version to create. Required. |
+| callInterfaces | List\<AgentCallInterface> | Direct Version content; mutually exclusive with `basedOnVersion`. |
+| author | string | Version author. |
+| changeDescription | string | Version change description. |
+| basedOnVersion | string | Exact existing Version to copy; mutually exclusive with `callInterfaces`. |
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| AgentVersionDetail | Created draft detail. |
+
+#### Request Example
+
+```java
+try {
+    AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
+    AgentCallInterface callInterface = new AgentCallInterface();
+    callInterface.setProtocol("a2a");
+    callInterface.setProtocolVersion("0.3.0");
+    callInterface.setDescriptorMediaType("application/json");
+    com.alibaba.nacos.api.ai.model.a2a.AgentCard a2aDescriptor =
+            new com.alibaba.nacos.api.ai.model.a2a.AgentCard();
+    a2aDescriptor.setName("demo-agent");
+    a2aDescriptor.setDescription("Agent for SDK examples");
+    a2aDescriptor.setUrl("https://example.com/a2a");
+    a2aDescriptor.setVersion("1.0.0");
+    a2aDescriptor.setProtocolVersion("0.3.0");
+    callInterface.setNativeDescriptor(a2aDescriptor);
+    callInterface.setEndpointSourceOrder(Collections.singletonList(EndpointSource.RUNTIME));
+
+    AgentDraftCreateRequest request = new AgentDraftCreateRequest();
+    request.setAgentName("demo-agent");
+    request.setDisplayName("Demo Agent");
+    request.setVersion("1.0.0");
+    request.setCallInterfaces(Collections.singletonList(callInterface));
+    request.setAuthor("nacos");
+    request.setChangeDescription("initial version");
+    AgentVersionDetail draft = agentMaintainerService.createDraft("public", request);
+    // Default-namespace alternative: AgentVersionDetail draft = agentMaintainerService.createDraft(request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when the content source is ambiguous, the Version is invalid, or creation fails.
+
+### 11.9. Update Agent Draft
+
+#### Description
+
+Completely replace the CallInterface content and change description of one exact draft. This operation never creates a missing Agent or Version and does not update Agent metadata.
+
+```java
+AgentVersionDetail updateDraft(String namespaceId, AgentDraftUpdateRequest request) throws NacosException;
+
+AgentVersionDetail updateDraft(AgentDraftUpdateRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| namespaceId | string | Namespace ID. The default is `public` when omitted. |
+| request | AgentDraftUpdateRequest | Draft update request. |
+
+`AgentDraftUpdateRequest` contains required `agentName`, exact `version`, and non-null `callInterfaces`, plus optional `changeDescription`.
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| AgentVersionDetail | Updated draft detail. |
+
+#### Request Example
+
+```java
+try {
+    AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
+    AgentCallInterface callInterface = new AgentCallInterface();
+    callInterface.setProtocol("a2a");
+    callInterface.setProtocolVersion("0.3.0");
+    callInterface.setDescriptorMediaType("application/json");
+    com.alibaba.nacos.api.ai.model.a2a.AgentCard a2aDescriptor =
+            new com.alibaba.nacos.api.ai.model.a2a.AgentCard();
+    a2aDescriptor.setName("demo-agent");
+    a2aDescriptor.setDescription("Updated Agent descriptor");
+    a2aDescriptor.setUrl("https://example.com/a2a");
+    a2aDescriptor.setVersion("1.0.0");
+    a2aDescriptor.setProtocolVersion("0.3.0");
+    callInterface.setNativeDescriptor(a2aDescriptor);
+    callInterface.setEndpointSourceOrder(Collections.singletonList(EndpointSource.RUNTIME));
+
+    AgentDraftUpdateRequest request = new AgentDraftUpdateRequest();
+    request.setAgentName("demo-agent");
+    request.setVersion("1.0.0");
+    request.setCallInterfaces(Collections.singletonList(callInterface));
+    request.setChangeDescription("update descriptor");
+    AgentVersionDetail draft = agentMaintainerService.updateDraft("public", request);
+    // Default-namespace alternative: AgentVersionDetail draft = agentMaintainerService.updateDraft(request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when the target is not a draft, the request is invalid, or the update fails.
+
+### 11.10. Delete Agent Draft
+
+#### Description
+
+Delete one exact Agent draft Version.
+
+```java
+void deleteDraft(String namespaceId, String agentName, String version) throws NacosException;
+
+void deleteDraft(String agentName, String version) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| namespaceId | string | Namespace ID. The default is `public` when omitted. |
+| agentName | string | Exact Agent name. |
+| version | string | Exact draft Version. |
+
+#### Response Parameters
+
+No return value.
+
+#### Request Example
+
+```java
+try {
+    AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
+    agentMaintainerService.deleteDraft("public", "demo-agent", "1.0.0");
+    // Default-namespace alternative: agentMaintainerService.deleteDraft("demo-agent", "1.0.0");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when deletion fails.
+
+### 11.11. Submit Agent Version
+
+#### Description
+
+Submit one exact Agent Version for the `draft -> reviewing` transition or the shared no-Pipeline transition.
+
+```java
+AgentVersionSummary submit(String namespaceId, AgentVersionCommand command) throws NacosException;
+
+AgentVersionSummary submit(AgentVersionCommand command) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| namespaceId | string | Namespace ID. The default is `public` when omitted. |
+| command | AgentVersionCommand | Version command containing required `agentName` and exact `version`. |
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| AgentVersionSummary | Resulting Version summary. |
+
+#### Request Example
+
+```java
+try {
+    AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
+    AgentVersionCommand command = new AgentVersionCommand();
+    command.setAgentName("demo-agent");
+    command.setVersion("1.0.0");
+    AgentVersionSummary summary = agentMaintainerService.submit("public", command);
+    // Default-namespace alternative: AgentVersionSummary summary = agentMaintainerService.submit(command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when the state transition is not allowed or submission fails.
+
+### 11.12. Publish Agent Version
+
+#### Description
+
+Move one exact reviewed Agent Version from `reviewed` to `online`.
+
+```java
+AgentVersionSummary publish(String namespaceId, AgentVersionCommand command) throws NacosException;
+
+AgentVersionSummary publish(AgentVersionCommand command) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| namespaceId | string | Namespace ID. The default is `public` when omitted. |
+| command | AgentVersionCommand | Version command containing required `agentName` and exact `version`. |
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| AgentVersionSummary | Online Version summary. |
+
+#### Request Example
+
+```java
+try {
+    AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
+    AgentVersionCommand command = new AgentVersionCommand();
+    command.setAgentName("demo-agent");
+    command.setVersion("1.0.0");
+    AgentVersionSummary summary = agentMaintainerService.publish("public", command);
+    // Default-namespace alternative: AgentVersionSummary summary = agentMaintainerService.publish(command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when the Version has not been reviewed or publication fails.
+
+### 11.13. Force-publish Agent Version
+
+#### Description
+
+Bypass the Pipeline with auditing and move one exact Agent Version to `online`.
+
+```java
+AgentVersionSummary forcePublish(String namespaceId, AgentVersionCommand command) throws NacosException;
+
+AgentVersionSummary forcePublish(AgentVersionCommand command) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| namespaceId | string | Namespace ID. The default is `public` when omitted. |
+| command | AgentVersionCommand | Version command containing required `agentName` and exact `version`. |
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| AgentVersionSummary | Online Version summary. |
+
+#### Request Example
+
+```java
+try {
+    AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
+    AgentVersionCommand command = new AgentVersionCommand();
+    command.setAgentName("demo-agent");
+    command.setVersion("1.0.0");
+    AgentVersionSummary summary = agentMaintainerService.forcePublish("public", command);
+    // Default-namespace alternative: AgentVersionSummary summary = agentMaintainerService.forcePublish(command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when force publication fails.
+
+### 11.14. Redraft Agent Version
+
+#### Description
+
+Move one exact reviewed Agent Version from `reviewed` back to `draft`.
+
+```java
+AgentVersionSummary redraft(String namespaceId, AgentVersionCommand command) throws NacosException;
+
+AgentVersionSummary redraft(AgentVersionCommand command) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| namespaceId | string | Namespace ID. The default is `public` when omitted. |
+| command | AgentVersionCommand | Version command containing required `agentName` and exact `version`. |
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| AgentVersionSummary | Draft Version summary. |
+
+#### Request Example
+
+```java
+try {
+    AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
+    AgentVersionCommand command = new AgentVersionCommand();
+    command.setAgentName("demo-agent");
+    command.setVersion("1.0.0");
+    AgentVersionSummary summary = agentMaintainerService.redraft("public", command);
+    // Default-namespace alternative: AgentVersionSummary summary = agentMaintainerService.redraft(command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when the state transition is not allowed or the operation fails.
+
+### 11.15. Bring Agent Version Online
+
+#### Description
+
+Move one exact Agent Version from `offline` to `online`.
+
+```java
+AgentVersionSummary online(String namespaceId, AgentVersionCommand command) throws NacosException;
+
+AgentVersionSummary online(AgentVersionCommand command) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| namespaceId | string | Namespace ID. The default is `public` when omitted. |
+| command | AgentVersionCommand | Version command containing required `agentName` and exact `version`. |
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| AgentVersionSummary | Online Version summary. |
+
+#### Request Example
+
+```java
+try {
+    AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
+    AgentVersionCommand command = new AgentVersionCommand();
+    command.setAgentName("demo-agent");
+    command.setVersion("1.0.0");
+    AgentVersionSummary summary = agentMaintainerService.online("public", command);
+    // Default-namespace alternative: AgentVersionSummary summary = agentMaintainerService.online(command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when the state transition is not allowed or the operation fails.
+
+### 11.16. Take Agent Version Offline
+
+#### Description
+
+Move one exact Agent Version from `online` to `offline`.
+
+```java
+AgentVersionSummary offline(String namespaceId, AgentVersionCommand command) throws NacosException;
+
+AgentVersionSummary offline(AgentVersionCommand command) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| namespaceId | string | Namespace ID. The default is `public` when omitted. |
+| command | AgentVersionCommand | Version command containing required `agentName` and exact `version`. |
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| AgentVersionSummary | Offline Version summary. |
+
+#### Request Example
+
+```java
+try {
+    AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
+    AgentVersionCommand command = new AgentVersionCommand();
+    command.setAgentName("demo-agent");
+    command.setVersion("1.0.0");
+    AgentVersionSummary summary = agentMaintainerService.offline("public", command);
+    // Default-namespace alternative: AgentVersionSummary summary = agentMaintainerService.offline(command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when the state transition is not allowed or the operation fails.
+
+### 11.17. Update Agent Custom Labels
+
+#### Description
+
+Completely replace custom Agent Version labels. Label values must target exact Versions. `latest` is server-managed and cannot be updated as a custom label.
+
+```java
+Agent updateLabels(String namespaceId, AgentLabelsUpdateRequest request) throws NacosException;
+
+Agent updateLabels(AgentLabelsUpdateRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| namespaceId | string | Namespace ID. The default is `public` when omitted. |
+| request | AgentLabelsUpdateRequest | Labels update request. |
+
+`AgentLabelsUpdateRequest` contains required `agentName` and non-null `labels` (`Map<String, String>`, mapping label names to exact Versions). Pass an empty map to clear all custom labels.
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| Agent | Agent after the label update. |
+
+#### Request Example
+
+```java
+try {
+    AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
+    AgentLabelsUpdateRequest request = new AgentLabelsUpdateRequest();
+    request.setAgentName("demo-agent");
+    request.setLabels(Collections.singletonMap("stable", "1.0.0"));
+    Agent agent = agentMaintainerService.updateLabels("public", request);
+    // Default-namespace alternative: Agent agent = agentMaintainerService.updateLabels(request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when labels are invalid, a target Version does not exist, or the update fails.
+
+## 12. Pipeline Management
+
+Obtain `PipelineMaintainerService` from `aiMaintainerService.pipeline()`. New code should prefer the typed methods that return `Result`, allowing callers to inspect the server business `code` and `message` explicitly. The legacy `JsonNode` methods remain only for compatibility.
+
+### 12.1. Get Pipeline Execution Detail
+
+#### Description
+
+Get typed Pipeline execution detail by execution ID.
+
+```java
+Result<PipelineExecution> getPipelineDetail(String pipelineId) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| pipelineId | string | Pipeline execution ID. |
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| Result<PipelineExecution> | Server result wrapper with `code`, `message`, and `data`. |
+
+`PipelineExecution` contains `executionId`, `resourceType`, `resourceName`, `namespaceId`, `version`, `status`, node results in `pipeline`, `createTime`, and `updateTime`.
+
+#### Request Example
+
+```java
+try {
+    PipelineMaintainerService pipelineMaintainerService = aiMaintainerService.pipeline();
+    Result<PipelineExecution> result =
+            pipelineMaintainerService.getPipelineDetail("pipeline-execution-id");
+    if (ErrorCode.SUCCESS.getCode().equals(result.getCode())) {
+        PipelineExecution execution = result.getData();
+    }
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown for transport or HTTP failures such as a connection error, an unparseable response, or an unavailable response body. A business failure in an HTTP 200 response is returned through `Result.code` and `Result.message`.
+
+### 12.2. List Pipeline Executions with Pagination
+
+#### Description
+
+List Pipeline execution records by resource type and optional resource identity filters.
+
+```java
+Result<Page<PipelineExecution>> listPipelineExecutions(String resourceType, String resourceName, String namespaceId, String version, int pageNo, int pageSize) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| resourceType | string | Resource type. Required. |
+| resourceName | string | Optional resource name. |
+| namespaceId | string | Optional namespace ID. |
+| version | string | Optional resource Version. |
+| pageNo | int | Page number. |
+| pageSize | int | Number of items per page. |
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| Result<Page<PipelineExecution>> | Server result wrapper whose `data` is a page of Pipeline executions. |
+
+#### Request Example
+
+```java
+try {
+    PipelineMaintainerService pipelineMaintainerService = aiMaintainerService.pipeline();
+    Result<Page<PipelineExecution>> result =
+            pipelineMaintainerService.listPipelineExecutions(
+                    "agent", "demo-agent", "public", "1.0.0", 1, 20);
+    if (ErrorCode.SUCCESS.getCode().equals(result.getCode())) {
+        Page<PipelineExecution> page = result.getData();
+    }
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown for transport or HTTP failures. Business failures are returned in `Result`.
+
+### 12.3. Get Pipeline Execution Detail (Compatibility Method)
+
+#### Description
+
+Legacy `JsonNode` accessor for Pipeline execution detail. This method has been deprecated since 3.2.1. New code should use `getPipelineDetail`.
+
+```java
+@Deprecated
+JsonNode getPipeline(String pipelineId) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| pipelineId | string | Pipeline execution ID. |
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| JsonNode | Pipeline execution `data` JSON from a successful result. |
+
+#### Request Example
+
+```java
+try {
+    PipelineMaintainerService pipelineMaintainerService = aiMaintainerService.pipeline();
+    JsonNode execution = pipelineMaintainerService.getPipeline("pipeline-execution-id");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when the request fails or the server returns a non-success business result.
+
+### 12.4. List Pipeline Executions (Compatibility Method)
+
+#### Description
+
+Legacy `JsonNode` accessor for Pipeline execution pagination. This method has been deprecated since 3.2.1. New code should use `listPipelineExecutions`.
+
+```java
+@Deprecated
+JsonNode listPipelines(String resourceType, String resourceName, String namespaceId, String version, int pageNo, int pageSize) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|:---|:---|:---|
+| resourceType | string | Resource type. Required. |
+| resourceName | string | Optional resource name. |
+| namespaceId | string | Optional namespace ID. |
+| version | string | Optional resource Version. |
+| pageNo | int | Page number. |
+| pageSize | int | Number of items per page. |
+
+#### Response Parameters
+
+| Type | Description |
+|:---|:---|
+| JsonNode | Pipeline execution page `data` JSON from a successful result. |
+
+#### Request Example
+
+```java
+try {
+    PipelineMaintainerService pipelineMaintainerService = aiMaintainerService.pipeline();
+    JsonNode page = pipelineMaintainerService.listPipelines(
+            "agent", "demo-agent", "public", "1.0.0", 1, 20);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown when the request fails or the server returns a non-success business result.

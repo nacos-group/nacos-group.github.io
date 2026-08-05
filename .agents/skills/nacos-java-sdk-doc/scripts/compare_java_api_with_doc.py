@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Compare Nacos Java Client API (ConfigService, NamingService, LockService, AiService, A2aService)
-with usage.md and output: new APIs, new overloads to add, and removed overloads to delete/annotate.
+Compare Nacos Java Client API (ConfigService, NamingService, LockService, AiService,
+AgentDiscoveryService, A2aService)
+with usage.md and output: new/removed APIs, exact new/removed overload signatures,
+and return-type mismatches.
 **Does NOT modify any file.** Use report to update docs per reference.md.
 
 Usage (nacos repo root for --nacos-api-dir; doc repo for --usage-md):
   python .agents/skills/nacos-java-sdk-doc/scripts/compare_java_api_with_doc.py \\
-    --nacos-api-dir /path/to/nacos/api/src/main/java \\
+    --nacos-api-dir /path/to/nacos \\
     --usage-md src/content/docs/next/zh-cn/manual/user/java-sdk/usage.md
 
 **Only next version**: --usage-md should point under docs/next/; do not use latest, v3.0, etc.
@@ -20,27 +22,41 @@ import re
 import sys
 from pathlib import Path
 
-# Interface -> doc chapter mapping (reference.md)
-# 已有模块保持原序：3 配置, 4 服务发现, 5 分布式锁, 6 MCP, 7 A2A, 8 Skill, 9 Prompt, 10 AgentSpec, 11 生命周期
-INTERFACE_CHAPTER = {
+# Interface -> default doc chapter mapping (reference.md).
+# AiService spans multiple chapters and is handled by method_chapter().
+DEFAULT_SOURCE_CHAPTER = {
     "ConfigService": 3,   # 配置管理 API
     "NamingService": 4,   # 服务发现API
     "LockService": 5,     # 分布式锁API
-    "AiService": 6,       # MCP 服务（Skill 第 8 章、Prompt 第 9 章，shutdown 在生命周期章不单独列）
+    "AiService": 6,       # MCP 服务；部分方法由 AI_METHOD_CHAPTER 覆盖
     "A2aService": 7,      # A2A 注册中心
+    "AgentDiscoveryService": 11,  # 协议无关 Agent 发现与 Endpoint 发布
 }
 
-# Doc section first digit -> interface name (for REMOVED OVERLOADS)
-CHAPTER_TO_SOURCE = {
-    "3": "ConfigService",
-    "4": "NamingService",
-    "5": "LockService",
-    "6": "AiService",
-    "7": "A2aService",
-    "8": "AiService",
-    "9": "AiService",
-    "10": "AiService",
+# AiService directly declares methods for several independent AI capabilities.
+AI_METHOD_CHAPTER = {
+    "downloadSkillZip": 8,
+    "downloadSkillZipByVersion": 8,
+    "downloadSkillZipByLabel": 8,
+    "subscribeSkill": 8,
+    "unsubscribeSkill": 8,
+    "getPrompt": 9,
+    "getPromptByVersion": 9,
+    "getPromptByLabel": 9,
+    "subscribePrompt": 9,
+    "unsubscribePrompt": 9,
+    "loadAgentSpec": 10,
+    "subscribeAgentSpec": 10,
+    "unsubscribeAgentSpec": 10,
+    "publishAgent": 11,
 }
+
+
+def method_chapter(method: dict) -> int:
+    """Return the usage.md chapter that owns one parsed method."""
+    if method["source"] == "AiService":
+        return AI_METHOD_CHAPTER.get(method["name"], DEFAULT_SOURCE_CHAPTER["AiService"])
+    return DEFAULT_SOURCE_CHAPTER[method["source"]]
 
 
 def _count_top_level_params(param_text: str) -> int:
@@ -146,32 +162,82 @@ def parse_usage_md(content: str) -> dict:
     return doc_methods
 
 
-def load_java_api(nacos_api_dir: str) -> list:
-    """Load parsed methods from ConfigService, NamingService, LockService, AiService, A2aService."""
+def _normalize_type(type_text: str) -> str:
+    """Normalize Java type spelling for source-to-doc signature comparison."""
+    value = re.sub(r"\b(?:public|protected|private|default|static|final)\b", "", type_text or "")
+    value = re.sub(r"\b(?:[a-z_]\w*\.)+([A-Z]\w*)", r"\1", value)
+    value = value.replace("...", "[]")
+    return re.sub(r"\s+", "", value)
+
+
+def parse_usage_signatures(content: str) -> list[dict]:
+    """Extract exact declaration signatures from the first Java block of each API section."""
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-    from parse_java_interface import parse_java_interface  # noqa: E402
+    from parse_java_interface import parse_method_signature  # noqa: E402
+
+    signatures = []
+    section_re = re.compile(r"^###\s+(\d+)\.(\d+)\.\s+.+$", re.MULTILINE)
+    sections = list(section_re.finditer(content))
+    declaration_re = re.compile(
+        r"(?m)^\s*(?:public\s+)?(?:default\s+|static\s+)?[\w<>,\s\[\].?]+\s+\w+\s*\((.*?)\)\s*(?:throws\s+[^;{]+)?\s*;?\s*$",
+        re.DOTALL,
+    )
+    for i, section in enumerate(sections):
+        start = section.end()
+        end = sections[i + 1].start() if i + 1 < len(sections) else len(content)
+        section_text = content[start:end]
+        section_id = f"{section.group(1)}.{section.group(2)}"
+        code_match = re.search(r"```java\s*\n(.*?)```", section_text, flags=re.DOTALL)
+        if not code_match:
+            continue
+        for declaration in declaration_re.finditer(code_match.group(1)):
+            raw = declaration.group(0).strip()
+            if raw.startswith("public "):
+                raw = raw[7:].strip()
+            parsed = parse_method_signature(raw)
+            if not parsed or parsed["name"] in ("if", "for", "while", "switch", "return", "new", "try", "catch"):
+                continue
+            signatures.append({
+                "section_id": section_id,
+                "chapter": int(section.group(1)),
+                "name": parsed["name"],
+                "param_types": tuple(_normalize_type(t) for t in parsed["param_types"]),
+                "param_count": parsed["param_count"],
+                "return_type": _normalize_type(parsed["return_type"]),
+            })
+    return signatures
+
+
+def load_java_api(nacos_api_dir: str) -> list:
+    """Load all Java Client interfaces that own documented usage APIs."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from parse_java_interface import parse_java_interface, resolve_api_root  # noqa: E402
 
     base = Path(nacos_api_dir)
-    if (base / "com/alibaba/nacos/api").exists():
-        api_root = base / "com/alibaba/nacos/api"
-    elif (base / "api").exists():
-        api_root = base / "api"
-    else:
-        api_root = base
+    api_root = resolve_api_root(base)
     interfaces = [
         ("ConfigService", api_root / "config/ConfigService.java"),
         ("NamingService", api_root / "naming/NamingService.java"),
         ("LockService", api_root / "lock/LockService.java"),
         ("AiService", api_root / "ai/AiService.java"),
+        ("AgentDiscoveryService", api_root / "ai/AgentDiscoveryService.java"),
         ("A2aService", api_root / "ai/A2aService.java"),
     ]
     all_methods = []
+    missing = []
     for name, p in interfaces:
         if p.exists():
             content = p.read_text(encoding="utf-8")
-            all_methods.extend(parse_java_interface(content, name))
+            methods = parse_java_interface(content, name)
+            for method in methods:
+                method["chapter"] = method_chapter(method)
+            all_methods.extend(methods)
         else:
-            print(f"Warning: not found {p}", file=sys.stderr)
+            missing.append(str(p))
+    if missing:
+        raise FileNotFoundError(
+            "Required Java SDK interfaces are missing:\n  - " + "\n  - ".join(missing)
+        )
     return all_methods
 
 
@@ -207,83 +273,173 @@ def main():
     if "/next/" not in usage_str or "latest" in usage_str or "v3.0" in usage_str:
         print("Warning: usage-md should be under docs/next/; do not use latest or v3.0 (this skill only edits next).", file=sys.stderr)
 
-    java_methods = load_java_api(str(api_dir))
+    try:
+        java_methods = load_java_api(str(api_dir))
+    except FileNotFoundError as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        sys.exit(1)
     usage_content = usage_path.read_text(encoding="utf-8")
     doc_methods = parse_usage_md(usage_content)
+    doc_signatures = parse_usage_signatures(usage_content)
 
-    # Build (methodName, param_count) set from doc (any overload documented = method documented)
-    doc_method_set = set()
+    # Scope method identity by chapter. The same method name can legitimately exist
+    # in more than one facade (for example legacy A2A and protocol-neutral Agent APIs).
+    doc_chapter_method_set = set()
     for name, entries in doc_methods.items():
-        for _ in entries:
-            doc_method_set.add(name)
+        for section_id, _ in entries:
+            chapter = section_id.split(".")[0]
+            if chapter.isdigit():
+                doc_chapter_method_set.add((int(chapter), name))
 
     # Methods documented in 生命周期 chapter, not as separate API sections
     SKIP_NEW_API = {"shutdown", "shutDown"}
 
-    # (source, method_name, param_count) design-deprecated, do not suggest adding to doc
+    # Source methods intentionally held back because the higher-priority spec
+    # has not accepted them as a stable public SDK contract yet. Remove the
+    # exemption once specs/{zh-cn,en}/lock/lock-spec.md defines renewal.
+    DEFERRED_API_REASONS = {
+        ("LockService", "renew"): (
+            "Source exposes renew, but specs/{zh-cn,en}/lock/lock-spec.md still "
+            "lists renewal as pending; document only after both specs accept the contract."
+        ),
+    }
+    SKIP_NEW_API_BY_SOURCE = set(DEFERRED_API_REASONS)
+    deferred_apis = [
+        {
+            "source": method["source"],
+            "name": method["name"],
+            "chapter": method["chapter"],
+            "param_types": method["param_types"],
+            "reason": DEFERRED_API_REASONS[(method["source"], method["name"])],
+        }
+        for method in java_methods
+        if (method["source"], method["name"]) in DEFERRED_API_REASONS
+    ]
+
+    # (source, method_name) families with design-deprecated typed overloads.
     SKIP_NEW_OVERLOAD = {
-        ("NamingService", "getServicesOfServer", 4),  # overload with AbstractSelector, deprecated by design
+        ("NamingService", "getServicesOfServer"),
     }
 
-    # New: in Java but method name not in doc
+    # New: in Java but method name not in its owning chapter.
     by_source = {}
     for m in java_methods:
         by_source.setdefault(m["source"], []).append(m)
     new_by_interface = {}
     for source, methods in by_source.items():
-        new = [m for m in methods if m["name"] not in doc_method_set and m["name"] not in SKIP_NEW_API]
+        new = [
+            m for m in methods
+            if (m["chapter"], m["name"]) not in doc_chapter_method_set
+            and m["name"] not in SKIP_NEW_API
+            and (m["source"], m["name"]) not in SKIP_NEW_API_BY_SOURCE
+        ]
         if new:
             new_by_interface[source] = new
 
-    # New overloads: method name is documented but this (name, param_count) is not
-    doc_name_param_set = set()
-    for name, entries in doc_methods.items():
-        for _, pc in entries:
-            if pc is not None:
-                doc_name_param_set.add((name, pc))
+    new_by_chapter = {}
+    for methods in new_by_interface.values():
+        for method in methods:
+            new_by_chapter.setdefault(method["chapter"], []).append(method)
+
+    # New overloads/signatures: use normalized parameter types, not only the
+    # parameter count. Several Nacos APIs have same-count overloads with
+    # different types.
+    doc_signature_set = {
+        (item["chapter"], item["name"], item["param_types"])
+        for item in doc_signatures
+    }
+
+    def is_skipped_new_overload(method: dict) -> bool:
+        if (method["source"], method["name"]) not in SKIP_NEW_OVERLOAD:
+            return False
+        return "AbstractSelector" in {_normalize_type(t) for t in method["param_types"]}
+
     new_overloads = [
         m for m in java_methods
-        if m["name"] in doc_method_set
-        and (m["name"], m["param_count"]) not in doc_name_param_set
-        and (m["source"], m["name"], m["param_count"]) not in SKIP_NEW_OVERLOAD
+        if (m["chapter"], m["name"]) in doc_chapter_method_set
+        and (m["chapter"], m["name"], tuple(_normalize_type(t) for t in m["param_types"])) not in doc_signature_set
+        and not is_skipped_new_overload(m)
     ]
 
-    # Removed overloads: (method_name, param_count) in doc but not in interface for that source
-    java_source_method_params = {}  # (source, method_name) -> set of param_count
+    # Removed overloads and return-type mismatches are also exact-signature
+    # comparisons. This catches same-count type substitutions.
+    java_chapter_method_params = {}
+    java_chapter_method_sources = {}
+    java_signature_returns = {}
     for m in java_methods:
-        key = (m["source"], m["name"])
-        java_source_method_params.setdefault(key, set()).add(m["param_count"])
-    removed_overloads = []
+        key = (m["chapter"], m["name"])
+        java_chapter_method_params.setdefault(key, set()).add(m["param_count"])
+        java_chapter_method_sources.setdefault(key, set()).add(m["source"])
+        signature_key = (m["chapter"], m["name"], tuple(_normalize_type(t) for t in m["param_types"]))
+        java_signature_returns[signature_key] = _normalize_type(m["return_type"])
+    documented_api_chapters = set(DEFAULT_SOURCE_CHAPTER.values()) | set(AI_METHOD_CHAPTER.values())
+    removed_apis = []
+    seen_removed_apis = set()
     for name, entries in doc_methods.items():
-        for section_id, pc in entries:
-            if pc is None:
+        for section_id, _ in entries:
+            chapter_text = section_id.split(".")[0]
+            if not chapter_text.isdigit():
                 continue
-            chapter = section_id.split(".")[0]
-            source = CHAPTER_TO_SOURCE.get(chapter)
-            if source is None:
+            chapter = int(chapter_text)
+            key = (chapter, name)
+            if chapter not in documented_api_chapters or key in java_chapter_method_params:
                 continue
-            key = (source, name)
-            if key not in java_source_method_params:
-                continue  # method not in interface (e.g. wrong chapter or obsolete API)
-            if pc not in java_source_method_params[key]:
-                removed_overloads.append({"source": source, "name": name, "param_count": pc, "section_id": section_id})
+            report_key = (section_id, name)
+            if report_key not in seen_removed_apis:
+                seen_removed_apis.add(report_key)
+                removed_apis.append({"name": name, "section_id": section_id, "chapter": chapter})
+
+    removed_overloads = []
+    return_type_mismatches = []
+    for item in doc_signatures:
+        method_key = (item["chapter"], item["name"])
+        if method_key not in java_chapter_method_params:
+            continue  # reported as a removed API above
+        signature_key = (item["chapter"], item["name"], item["param_types"])
+        if signature_key not in java_signature_returns:
+            removed_overloads.append({
+                "source": ",".join(sorted(java_chapter_method_sources[method_key])),
+                "name": item["name"],
+                "param_count": item["param_count"],
+                "param_types": list(item["param_types"]),
+                "section_id": item["section_id"],
+                "chapter": item["chapter"],
+            })
+            continue
+        source_return = java_signature_returns[signature_key]
+        if item["return_type"] and item["return_type"] != source_return:
+            return_type_mismatches.append({
+                "name": item["name"],
+                "param_types": list(item["param_types"]),
+                "section_id": item["section_id"],
+                "chapter": item["chapter"],
+                "documented_return_type": item["return_type"],
+                "source_return_type": source_return,
+            })
 
     if args.json:
         import json
         out = {
             "new_by_interface": {
-                k: [{"name": x["name"], "param_count": x["param_count"], "return_type": x["return_type"], "since": x.get("since")} for x in v
+                k: [{"name": x["name"], "chapter": x["chapter"], "param_count": x["param_count"], "return_type": x["return_type"], "since": x.get("since")} for x in v
                 ]
                 for k, v in new_by_interface.items()
             },
+            "new_by_chapter": {
+                str(k): [{"name": x["name"], "source": x["source"], "param_count": x["param_count"], "return_type": x["return_type"], "since": x.get("since")} for x in v]
+                for k, v in sorted(new_by_chapter.items())
+            },
+            "deferred_apis": deferred_apis,
             "new_overloads": [
-                {"name": m["name"], "source": m["source"], "param_count": m["param_count"], "return_type": m["return_type"]}
+                {"name": m["name"], "source": m["source"], "chapter": m["chapter"], "param_count": m["param_count"], "param_types": m["param_types"], "return_type": m["return_type"]}
                 for m in new_overloads
             ],
+            "removed_apis": removed_apis,
             "removed_overloads": [
-                {"name": r["name"], "source": r["source"], "param_count": r["param_count"], "section_id": r["section_id"]}
+                {"name": r["name"], "source": r["source"], "param_count": r["param_count"], "param_types": r["param_types"], "section_id": r["section_id"]}
                 for r in removed_overloads
             ],
+            "return_type_mismatches": return_type_mismatches,
         }
         print(json.dumps(out, indent=2, ensure_ascii=False))
         return
@@ -293,30 +449,59 @@ def main():
     if new_by_interface:
         print("--- NEW APIs (in interface, not in doc) ---")
         for source, methods in sorted(new_by_interface.items()):
-            chapter = INTERFACE_CHAPTER.get(source, "?")
-            print(f"\n  [{source}] -> Chapter {chapter}")
+            chapters = ", ".join(str(ch) for ch in sorted({m["chapter"] for m in methods}))
+            print(f"\n  [{source}] -> Chapter(s) {chapters}")
             for m in methods:
                 since = f"  @since {m.get('since')}" if m.get("since") else ""
-                print(f"    {m['return_type']} {m['name']}({m['param_count']} params){since}")
+                print(f"    Ch{m['chapter']} {m['return_type']} {m['name']}({m['param_count']} params){since}")
         print()
     else:
         print("--- No new APIs (all interface methods are documented). ---\n")
 
+    if deferred_apis:
+        print("--- DEFERRED APIs (source/spec conflict; do not document yet) ---")
+        for item in deferred_apis:
+            params = ", ".join(item["param_types"])
+            print(f"  Ch{item['chapter']} {item['source']}.{item['name']}({params}): {item['reason']}")
+        print()
+
     if new_overloads:
-        print("--- NEW OVERLOADS (same method name, param_count not in doc; add to section) ---")
+        print("--- NEW OVERLOADS (exact parameter-type signature not in doc; add to section) ---")
         for m in new_overloads:
-            print(f"  {m['source']}.{m['name']}({m['param_count']} params) -> {m['return_type']}")
+            params = ", ".join(m["param_types"])
+            print(f"  Ch{m['chapter']} {m['source']}.{m['name']}({params}) -> {m['return_type']}")
         print()
     else:
         print("--- No new overloads to add. ---\n")
 
+    if removed_apis:
+        print("--- REMOVED APIs (documented method no longer exists in its source chapter) ---")
+        for item in removed_apis:
+            print(f"  Ch{item['chapter']} {item['name']}  section {item['section_id']}")
+        print()
+    else:
+        print("--- No removed APIs. ---\n")
+
     if removed_overloads:
-        print("--- REMOVED OVERLOADS (param_count in doc but not in interface; delete or annotate deprecated) ---")
+        print("--- REMOVED OVERLOADS (documented parameter-type signature not in interface) ---")
         for r in removed_overloads:
-            print(f"  {r['source']}.{r['name']}({r['param_count']} params)  section {r['section_id']}")
+            params = ", ".join(r["param_types"])
+            print(f"  {r['source']}.{r['name']}({params})  section {r['section_id']}")
         print()
     else:
         print("--- No removed overloads. ---\n")
+
+    if return_type_mismatches:
+        print("--- RETURN TYPE MISMATCHES ---")
+        for item in return_type_mismatches:
+            params = ", ".join(item["param_types"])
+            print(
+                f"  Ch{item['chapter']} {item['name']}({params}) section {item['section_id']}: "
+                f"doc={item['documented_return_type']}, source={item['source_return_type']}"
+            )
+        print()
+    else:
+        print("--- No return type mismatches. ---\n")
 
     print("Update usage.md per .agents/skills/nacos-java-sdk-doc/reference.md (sections, tables, examples).")
 

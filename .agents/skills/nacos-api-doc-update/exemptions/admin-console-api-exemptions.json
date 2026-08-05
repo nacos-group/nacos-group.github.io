@@ -1,0 +1,159 @@
+{
+  "_meta": {
+    "scope": "Shared Admin and Console API exemptions; Client API has no exemptions.",
+    "last_verified": "2026-08-05",
+    "swagger_version": "3.3.0-SNAPSHOT",
+    "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+    "revalidation": "Run raw compare before applying exemptions; remove any rule that no longer matches after a Swagger refresh."
+  },
+  "doc_types": {
+    "admin": {
+      "POST /v3/admin/cs/config/import": {
+        "reason": "The controller rejects a missing import archive, while the multipart schema omits file from required.",
+        "issue_kind": "required-mismatch",
+        "parameter_path": "request.file",
+        "evidence": "Config import controller validation rejects an absent archive.",
+        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "expires_when": "Remove when Swagger marks request.file required or the controller accepts a missing archive.",
+        "ignore_issues": [
+          "  [必填不一致] request.file: api required=False, doc=True"
+        ]
+      },
+      "POST /v3/admin/cs/ops/derby/import": {
+        "reason": "@RequestParam(\"file\") and the requestBody description require the SQL file, but the multipart schema omits required.",
+        "issue_kind": "required-mismatch",
+        "parameter_path": "request.file",
+        "evidence": "Derby import controller declares the file request parameter and describes it as required input.",
+        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "expires_when": "Remove when Swagger marks request.file required or source no longer requires the SQL file.",
+        "ignore_issues": [
+          "  [必填不一致] request.file: api required=False, doc=True"
+        ]
+      },
+      "POST /v3/admin/ai/skills/upload": {
+        "reason": "@RequestParam(\"file\") and the requestBody description require the Skill ZIP, but the multipart schema omits required.",
+        "issue_kind": "required-mismatch",
+        "parameter_path": "request.file",
+        "evidence": "Skill upload controller and runtime validation require the ZIP file.",
+        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "expires_when": "Remove when Swagger marks request.file required or source permits an absent ZIP.",
+        "ignore_issues": [
+          "  [必填不一致] request.file: api required=False, doc=True"
+        ]
+      },
+      "POST /v3/admin/ai/skills/upload/batch": {
+        "reason": "@RequestParam(\"file\") and the requestBody description require the batch ZIP, but the multipart schema omits required.",
+        "issue_kind": "required-mismatch",
+        "parameter_path": "request.file",
+        "evidence": "Batch Skill upload controller and runtime validation require the ZIP file.",
+        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "expires_when": "Remove when Swagger marks request.file required or source permits an absent ZIP.",
+        "ignore_issues": [
+          "  [必填不一致] request.file: api required=False, doc=True"
+        ]
+      },
+      "POST /v3/admin/ai/skills/upload/precheck": {
+        "reason": "@RequestParam(\"file\") and the requestBody description require the precheck ZIP, but the multipart schema omits required.",
+        "issue_kind": "required-mismatch",
+        "parameter_path": "request.file",
+        "evidence": "Skill precheck controller and runtime validation require the ZIP file.",
+        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "expires_when": "Remove when Swagger marks request.file required or source permits an absent ZIP.",
+        "ignore_issues": [
+          "  [必填不一致] request.file: api required=False, doc=True"
+        ]
+      },
+      "POST /v3/admin/ai/agentspecs/upload": {
+        "reason": "@RequestParam(\"file\") and the requestBody description require the AgentSpec ZIP, but the multipart schema omits required.",
+        "issue_kind": "required-mismatch",
+        "parameter_path": "request.file",
+        "evidence": "AgentSpec upload controller and runtime validation require the ZIP file.",
+        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "expires_when": "Remove when Swagger marks request.file required or source permits an absent ZIP.",
+        "ignore_issues": [
+          "  [必填不一致] request.file: api required=False, doc=True"
+        ]
+      }
+    },
+    "console": {
+      "POST /v3/console/cs/config/import": {
+        "reason": "The import operation requires an archive in practice and in the requestBody description, while the multipart schema omits required.",
+        "issue_kind": "required-mismatch",
+        "parameter_path": "request.file",
+        "evidence": "Console config import validation requires an archive.",
+        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "expires_when": "Remove when Swagger marks request.file required or source accepts a missing archive.",
+        "ignore_issues": [
+          "  [必填不一致] request.file: api required=False, doc=True"
+        ]
+      },
+      "POST /v3/console/cs/config/clone": {
+        "reason": "cfgId is semantically required by the clone service to select each source configuration, while its generated array-item schema omits required.",
+        "issue_kind": "required-mismatch",
+        "parameter_path": "request.body[].cfgId",
+        "evidence": "Clone service uses cfgId to resolve every source configuration and cannot perform that item without it.",
+        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "expires_when": "Remove when Swagger marks body[].cfgId required or the clone service supports items without cfgId.",
+        "ignore_issues": [
+          "  [必填不一致] request.body[].cfgId: api required=False, doc=True"
+        ]
+      },
+      "POST /v3/console/ai/skills/upload": {
+        "reason": "@RequestParam(\"file\") and runtime validation require the Skill ZIP, but the multipart schema omits required.",
+        "issue_kind": "required-mismatch",
+        "parameter_path": "request.file",
+        "evidence": "Skill upload controller and runtime validation require the ZIP file.",
+        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "expires_when": "Remove when Swagger marks request.file required or source permits an absent ZIP.",
+        "ignore_issues": [
+          "  [必填不一致] request.file: api required=False, doc=True"
+        ]
+      },
+      "POST /v3/console/ai/skills/upload/batch": {
+        "reason": "@RequestParam(\"file\") and runtime validation require the batch ZIP, but the multipart schema omits required.",
+        "issue_kind": "required-mismatch",
+        "parameter_path": "request.file",
+        "evidence": "Batch Skill upload controller and runtime validation require the ZIP file.",
+        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "expires_when": "Remove when Swagger marks request.file required or source permits an absent ZIP.",
+        "ignore_issues": [
+          "  [必填不一致] request.file: api required=False, doc=True"
+        ]
+      },
+      "POST /v3/console/ai/skills/upload/precheck": {
+        "reason": "@RequestParam(\"file\") and runtime validation require the precheck ZIP, but the multipart schema omits required.",
+        "issue_kind": "required-mismatch",
+        "parameter_path": "request.file",
+        "evidence": "Skill precheck controller and runtime validation require the ZIP file.",
+        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "expires_when": "Remove when Swagger marks request.file required or source permits an absent ZIP.",
+        "ignore_issues": [
+          "  [必填不一致] request.file: api required=False, doc=True"
+        ]
+      },
+      "POST /v3/console/ai/agentspecs/upload": {
+        "reason": "@RequestParam(\"file\") and runtime validation require the AgentSpec ZIP, but the multipart schema omits required.",
+        "issue_kind": "required-mismatch",
+        "parameter_path": "request.file",
+        "evidence": "AgentSpec upload controller and runtime validation require the ZIP file.",
+        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "expires_when": "Remove when Swagger marks request.file required or source permits an absent ZIP.",
+        "ignore_issues": [
+          "  [必填不一致] request.file: api required=False, doc=True"
+        ]
+      },
+      "POST /v3/console/copilot/config": {
+        "reason": "Swagger reuses the full CopilotProperties schema, but the controller intentionally accepts only apiKey, model, studioUrl and studioProject.",
+        "issue_kind": "request-model-overexposure",
+        "parameter_path": "request.defaultNamespace,request.enabled",
+        "evidence": "Copilot config controller explicitly maps only apiKey, model, studioUrl and studioProject from the request.",
+        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "expires_when": "Remove when Swagger exposes a write-specific request model or the controller starts accepting these fields.",
+        "ignore_issues": [
+          "  [doc 缺少] request 参数: defaultNamespace",
+          "  [doc 缺少] request 参数: enabled"
+        ]
+      }
+    }
+  }
+}

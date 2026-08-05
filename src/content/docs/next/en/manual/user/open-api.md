@@ -194,6 +194,7 @@ Calling the registration request repeatedly can also renew the instance, but it 
 | `enabled`     | `boolean` | No     | Whether the instance is enabled. Defaults to `true`. |
 | `metadata`    | `string` | No     | Instance metadata as a JSON object string. |
 | `heartBeat`   | `boolean` | No     | Whether this is a renewal request. Defaults to `false`. |
+| `ephemeral`   | `boolean` | No     | Whether the instance is ephemeral. |
 
 #### Response Data
 
@@ -209,10 +210,10 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 
 ```shell
 # Register instance
-curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&ip=127.0.0.1&port=3306"
+curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&ip=127.0.0.1&port=3306&ephemeral=true"
 
 # Renew instance
-curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&ip=127.0.0.1&port=3306&heartBeat=true"
+curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&ip=127.0.0.1&port=3306&heartBeat=true&ephemeral=true"
 ```
 
 * Response example
@@ -260,6 +261,7 @@ Deregister the specified instance.
 | `ip`          | `string` | **Yes** | IP address. |
 | `port`        | `integer` | **Yes** | Port. |
 | `clusterName` | `string` | No     | Cluster name. Defaults to `DEFAULT`. |
+| `ephemeral`   | `boolean` | No     | Whether the instance is ephemeral. |
 
 #### Response Data
 
@@ -274,7 +276,7 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 * Request example
 
 ```shell
-curl -X DELETE "127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=test1&ip=127.0.0.1&port=3306"
+curl -X DELETE "127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=test1&ip=127.0.0.1&port=3306&ephemeral=true"
 ```
 
 * Response example
@@ -599,5 +601,592 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/skills?name=my-skill'
   "code": 0,
   "message": "success",
   "data": {}
+}
+```
+
+> **Agent Management API note:** The Agent APIs in sections 3.5–3.10 are the recommended integration path going forward and are planned to gradually replace the existing A2A management APIs. New users and SDKs should prioritize compatibility with these Agent Management APIs instead of adding new dependencies on the legacy A2A APIs. Existing A2A integrations can migrate in line with future release and migration guidance. This describes the evolution of the management APIs and does not mean that the A2A protocol itself is deprecated.
+
+### 3.5. Discover Agent
+
+#### Description
+
+Discovers one exact visible Agent version and its currently matching endpoint sets. Supplying `X-Nacos-Client-Id` renews only an already-existing HTTP Client and cannot replace Publisher heartbeat.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`GET`
+
+#### Request URL
+
+`/nacos/v3/client/ai/agents`
+
+#### Request Headers
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `X-Nacos-Client-Id` | `string` | No | Optional stable identifier of an existing logical HTTP client. When present, it must contain 1 to 256 characters matching `[A-Za-z0-9._:-]+` and use the same value as the client's endpoint publisher requests. Search and Discover renew only the existing Client lifecycle; they never create an empty Client or renew Publisher liveness, so they cannot replace Publisher heartbeat. |
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace of the Agent. Defaults to `public`. |
+| `agentName` | `string` | **Yes** | Name of the Agent to discover. |
+| `version` | `string` | No | Exact Agent version to discover; mutually exclusive with `label`. |
+| `label` | `string` | No | Label used to select an Agent version; mutually exclusive with `version`. |
+| `protocol` | `array<string>` | No | Repeatable protocol filter used to match call interfaces. |
+| `protocolVersion` | `string` | No | Protocol version used to match call interfaces. |
+| `transport` | `array<string>` | No | Repeatable transport filter used to match endpoints. |
+| `endpointSource` | `array<string>` | No | Repeatable endpoint-source filter whose values are `RUNTIME` or `DECLARED`. |
+| `metadataSelector` | `string` | No | URL-encoded JSON object used to select endpoint metadata. |
+
+When both `version` and `label` are omitted, the response contains the `latest` definition metadata and Runtime Endpoints compatible with any currently online version. Explicit `label=latest` keeps only Runtime Endpoints matching the `latest` version.
+
+#### Response Data
+
+The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-response-format). The following table describes `data` and its fields.
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `AgentDiscoveryResult` | Agent discovery result. |
+| `data.namespaceId` | `string` | Namespace of the Agent. |
+| `data.agentName` | `string` | Agent name. |
+| `data.version` | `string` | Agent version selected by this discovery request. |
+| `data.contentDigest` | `string` | Digest of the Agent definition content. |
+| `data.callInterfaces` | `array<AgentDiscoveryCallInterface>` | Agent call interfaces and their matching endpoint sets. |
+| `data.callInterfaces[i].protocol` | `string` | Call interface protocol. |
+| `data.callInterfaces[i].protocolVersion` | `string` | Call interface protocol version. |
+| `data.callInterfaces[i].descriptorMediaType` | `string` | Media type of the protocol-native descriptor. |
+| `data.callInterfaces[i].nativeDescriptor` | `object` | Protocol-native descriptor content. |
+| `data.callInterfaces[i].endpointSets` | `array<EndpointSet>` | Endpoint sets grouped by source. |
+| `data.callInterfaces[i].endpointSets[i].source` | `string` | Endpoint source: `RUNTIME` or `DECLARED`. |
+| `data.callInterfaces[i].endpointSets[i].sourceRevision` | `string` | Revision identifier of the endpoint source. |
+| `data.callInterfaces[i].endpointSets[i].endpoints` | `array<AgentDiscoveryEndpoint>` | Endpoints matched from this source. |
+| `data.callInterfaces[i].endpointSets[i].endpoints[i].uri` | `string` | Endpoint URI. |
+| `data.callInterfaces[i].endpointSets[i].endpoints[i].transport` | `string` | Endpoint transport. |
+| `data.callInterfaces[i].endpointSets[i].endpoints[i].priority` | `integer` | Endpoint priority. |
+| `data.callInterfaces[i].endpointSets[i].endpoints[i].weight` | `number` | Endpoint weight. |
+| `data.callInterfaces[i].endpointSets[i].endpoints[i].metadata` | `map<string, string>` | Endpoint metadata. |
+| `data.callInterfaces[i].endpointSets[i].endpoints[i].healthy` | `boolean` | Whether the endpoint is healthy. |
+| `data.callInterfaces[i].endpointSets[i].endpoints[i].bindings` | `array<RuntimeVersionBinding>` | Runtime version bindings of the endpoint. |
+| `data.callInterfaces[i].endpointSets[i].endpoints[i].bindings[i].runtimeVersion` | `string` | Publisher runtime version. |
+| `data.callInterfaces[i].endpointSets[i].endpoints[i].bindings[i].versionRange` | `string` | Agent version range supported by the runtime. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agents?namespaceId=public&agentName=my-agent&version=1.0.0&protocol=a2a' \
+  -H 'X-Nacos-Client-Id: 550e8400-e29b-41d4-a716-446655440000'
+```
+
+* Response example
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "namespaceId": "public",
+    "agentName": "my-agent",
+    "version": "1.0.0",
+    "contentDigest": "sha256:9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+    "callInterfaces": [
+      {
+        "protocol": "a2a",
+        "protocolVersion": "1.0",
+        "descriptorMediaType": "application/json",
+        "nativeDescriptor": {
+          "name": "my-agent",
+          "version": "1.0.0",
+          "description": "Example Agent",
+          "protocolVersion": "1.0",
+          "supportedInterfaces": [
+            {
+              "url": "https://example.com/my-agent/jsonrpc",
+              "protocolBinding": "JSONRPC",
+              "protocolVersion": "1.0",
+              "transport": "JSONRPC"
+            }
+          ],
+          "capabilities": {
+            "streaming": true,
+            "extendedAgentCard": true
+          }
+        },
+        "endpointSets": [
+          {
+            "source": "RUNTIME",
+            "sourceRevision": "1",
+            "endpoints": [
+              {
+                "uri": "http://127.0.0.1:8081/a2a",
+                "transport": "HTTP+JSON",
+                "priority": 0,
+                "weight": 1.0,
+                "metadata": {},
+                "healthy": true,
+                "bindings": [
+                  {
+                    "runtimeVersion": "1.0.0",
+                    "versionRange": "[1.0.0]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### 3.6. Publish Agent Definition
+
+#### Description
+
+Publishes one exact Agent version from application code, optionally submitting it for review.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+Request parameters are encoded as an `application/x-www-form-urlencoded` form.
+
+#### Request URL
+
+`/nacos/v3/client/ai/agents`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace of the Agent. Defaults to `public`. |
+| `agentName` | `string` | **Yes** | Name of the Agent to publish. |
+| `version` | `string` | **Yes** | Agent version to publish. |
+| `displayName` | `string` | No | Agent display name. |
+| `description` | `string` | No | Agent description. |
+| `iconUrl` | `string` | No | Agent icon URL. |
+| `provider` | `string` | No | Agent provider as a JSON object string. |
+| `tags` | `string` | No | Agent tags as a JSON array string. |
+| `extensions` | `string` | No | Agent extensions as a JSON object string. |
+| `callInterfaces` | `string` | No | Direct call-interface content as a JSON array string; use either this field or `basedOnVersion`. This field is required when creating an Agent. |
+| `author` | `string` | No | Author of the Agent version. |
+| `changeDescription` | `string` | No | Description of the changes in this version. |
+| `basedOnVersion` | `string` | No | Exact Agent version whose content is copied; use either this field or `callInterfaces`. It cannot be used when creating an Agent. |
+| `autoSubmit` | `boolean` | No | Whether to run the ordinary submit flow after creating the draft. Defaults to `false`; this is not force-publish. |
+
+#### Response Data
+
+The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-response-format). The following table describes `data` and its fields.
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `AgentVersionDetail` | Details of the published Agent version. |
+| `data.namespaceId` | `string` | Namespace of the Agent. |
+| `data.agentName` | `string` | Agent name. |
+| `data.version` | `string` | Agent version. |
+| `data.status` | `string` | Agent version status. |
+| `data.callInterfaces` | `array<AgentCallInterface>` | Agent call interface definitions. |
+| `data.callInterfaces[i].protocol` | `string` | Call interface protocol. |
+| `data.callInterfaces[i].protocolVersion` | `string` | Call interface protocol version. |
+| `data.callInterfaces[i].descriptorMediaType` | `string` | Media type of the protocol-native descriptor. |
+| `data.callInterfaces[i].nativeDescriptor` | `object` | Protocol-native descriptor content. |
+| `data.callInterfaces[i].endpointSourceOrder` | `array<string>` | Order in which endpoint sources are queried. |
+| `data.callInterfaces[i].declaredEndpoints` | `array<Endpoint>` | Endpoints declared in the Agent definition. |
+| `data.callInterfaces[i].declaredEndpoints[i].uri` | `string` | Endpoint URI. |
+| `data.callInterfaces[i].declaredEndpoints[i].transport` | `string` | Endpoint transport. |
+| `data.callInterfaces[i].declaredEndpoints[i].priority` | `integer` | Endpoint priority. |
+| `data.callInterfaces[i].declaredEndpoints[i].weight` | `number` | Endpoint weight. |
+| `data.callInterfaces[i].declaredEndpoints[i].metadata` | `map<string, string>` | Endpoint metadata. |
+| `data.callInterfaces[i].declaredEndpoints[i].healthy` | `boolean` | Whether the endpoint is healthy. |
+| `data.author` | `string` | Author of the Agent version. |
+| `data.changeDescription` | `string` | Description of the Agent version changes. |
+| `data.contentDigest` | `string` | Digest of the Agent definition content. |
+| `data.createTime` | `integer` | Creation time. |
+| `data.updateTime` | `integer` | Last update time. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X POST '127.0.0.1:8848/nacos/v3/client/ai/agents' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -d 'namespaceId=public' \
+  -d 'agentName=my-agent' \
+  -d 'version=1.0.0' \
+  --data-urlencode 'callInterfaces=[{"protocol":"a2a","protocolVersion":"1.0","descriptorMediaType":"application/json","nativeDescriptor":{"name":"my-agent","version":"1.0.0","description":"Example Agent","protocolVersion":"1.0","supportedInterfaces":[{"url":"https://example.com/my-agent/jsonrpc","protocolBinding":"JSONRPC","protocolVersion":"1.0","transport":"JSONRPC"}],"capabilities":{"streaming":true,"extendedAgentCard":true}},"endpointSourceOrder":["DECLARED","RUNTIME"],"declaredEndpoints":[{"uri":"https://example.com/my-agent/jsonrpc","transport":"JSONRPC"}]}]' \
+  -d 'author=demo' \
+  -d 'changeDescription=initial version' \
+  -d 'autoSubmit=true'
+```
+
+* Response example
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "namespaceId": "public",
+    "agentName": "my-agent",
+    "version": "1.0.0",
+    "status": "draft",
+    "callInterfaces": [
+      {
+        "protocol": "a2a",
+        "protocolVersion": "1.0",
+        "descriptorMediaType": "application/json",
+        "nativeDescriptor": {
+          "name": "my-agent",
+          "version": "1.0.0",
+          "description": "Example Agent",
+          "protocolVersion": "1.0",
+          "supportedInterfaces": [
+            {
+              "url": "https://example.com/my-agent/jsonrpc",
+              "protocolBinding": "JSONRPC",
+              "protocolVersion": "1.0",
+              "transport": "JSONRPC"
+            }
+          ],
+          "capabilities": {
+            "streaming": true,
+            "extendedAgentCard": true
+          }
+        },
+        "endpointSourceOrder": ["DECLARED", "RUNTIME"],
+        "declaredEndpoints": [
+          {
+            "uri": "https://example.com/my-agent/jsonrpc",
+            "transport": "JSONRPC"
+          }
+        ]
+      }
+    ],
+    "author": "demo",
+    "changeDescription": "initial version",
+    "contentDigest": "sha256:9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+    "createTime": 1785897600000,
+    "updateTime": 1785897600000
+  }
+}
+```
+
+### 3.7. Register Agent Endpoints
+
+#### Description
+
+Replaces one HTTP publisher's complete runtime endpoint batch for an Agent protocol. Reuse one stable `X-Nacos-Client-Id` for every batch owned by the same logical client in its bound namespace. The returned `ClientLivenessInfo` is the effective server policy: schedule one heartbeat task for this client id at `heartbeatIntervalMillis`, not one task per endpoint or batch.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+Request parameters are encoded as an `application/x-www-form-urlencoded` form; `endpoints` is a JSON array string.
+
+#### Request URL
+
+`/nacos/v3/client/ai/agents/endpoints`
+
+#### Request Headers
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `X-Nacos-Client-Id` | `string` | **Yes** | Required stable opaque identifier of the logical HTTP client. Generate one unique value per client or SDK instance, preferably with at least 96 bits of random entropy; a UUID is valid, and the value must contain 1 to 256 characters matching `[A-Za-z0-9._:-]+`. Reuse it for endpoint registration, deregistration, heartbeat, retries, server switches, and redo, and generate a new value after that client instance or process restarts. Do not share one id between unrelated clients or processes. The first endpoint write binds the id to the authenticated identity and namespace. The id owns all endpoint publications of that client and is a routing identifier, not a credential. |
+| `Request-Module` | `string` | **Yes** | Required for endpoint publisher lifecycle operations. Set `Request-Module` to `AI`. |
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace of the Agent. Defaults to `public`. |
+| `agentName` | `string` | **Yes** | Name of the Agent whose endpoints are being registered. |
+| `runtimeVersion` | `string` | **Yes** | Runtime version of the Publisher. |
+| `versionRange` | `string` | No | Agent version range supported by these endpoints. |
+| `protocol` | `string` | **Yes** | Agent protocol associated with this endpoint publication. |
+| `endpoints` | `string` | **Yes** | Complete Endpoint batch of the current Publisher as a JSON array string. |
+
+#### Response Data
+
+The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-response-format). The following table describes `data` and its fields.
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `ClientLivenessInfo` | Effective HTTP Client liveness policy returned by the server. |
+| `data.heartbeatIntervalMillis` | `integer` | Recommended client heartbeat interval in milliseconds. |
+| `data.unhealthyTimeoutMillis` | `integer` | Timeout in milliseconds before the client becomes unhealthy. |
+| `data.expireTimeoutMillis` | `integer` | Timeout in milliseconds before the client and its publications expire. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X POST '127.0.0.1:8848/nacos/v3/client/ai/agents/endpoints' \
+  -H 'X-Nacos-Client-Id: 550e8400-e29b-41d4-a716-446655440000' \
+  -H 'Request-Module: AI' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -d 'namespaceId=public' \
+  -d 'agentName=my-agent' \
+  -d 'runtimeVersion=1.0.0' \
+  --data-urlencode 'versionRange=[1.0.0]' \
+  -d 'protocol=a2a' \
+  --data-urlencode 'endpoints=[{"uri":"http://127.0.0.1:8081/a2a","transport":"HTTP+JSON","priority":0,"weight":1.0,"metadata":{}}]'
+```
+
+* Response example
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "heartbeatIntervalMillis": 5000,
+    "unhealthyTimeoutMillis": 15000,
+    "expireTimeoutMillis": 30000
+  }
+}
+```
+
+### 3.8. Deregister Agent Endpoints
+
+#### Description
+
+Removes one HTTP publisher's complete runtime endpoint publication for an Agent protocol owned by the supplied `X-Nacos-Client-Id`. Keep one client-level heartbeat while any publication owned by this client remains, and stop it after the last publication is removed.
+
+This endpoint binds the ordinary `namespaceId`, `agentName`, and `protocol` request parameters through a dedicated form. It does not accept Endpoint natural keys or a JSON request body.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`DELETE`
+
+#### Request URL
+
+`/nacos/v3/client/ai/agents/endpoints`
+
+#### Request Headers
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `X-Nacos-Client-Id` | `string` | **Yes** | Required stable opaque identifier of the logical HTTP client. Generate one unique value per client or SDK instance, preferably with at least 96 bits of random entropy; a UUID is valid, and the value must contain 1 to 256 characters matching `[A-Za-z0-9._:-]+`. Reuse it for endpoint registration, deregistration, heartbeat, retries, server switches, and redo, and generate a new value after that client instance or process restarts. Do not share one id between unrelated clients or processes. The first endpoint write binds the id to the authenticated identity and namespace. The id owns all endpoint publications of that client and is a routing identifier, not a credential. |
+| `Request-Module` | `string` | **Yes** | Required for endpoint publisher lifecycle operations. Set `Request-Module` to `AI`. |
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace of the Agent. Defaults to `public`. |
+| `agentName` | `string` | **Yes** | Name of the Agent whose endpoints are being deregistered. |
+| `protocol` | `string` | **Yes** | Agent protocol whose endpoints are being deregistered. |
+
+#### Response Data
+
+The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-response-format). The following table describes `data`.
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `Void` | No business data is returned on success; the value is `null`. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X DELETE '127.0.0.1:8848/nacos/v3/client/ai/agents/endpoints?namespaceId=public&agentName=my-agent&protocol=a2a' \
+  -H 'X-Nacos-Client-Id: 550e8400-e29b-41d4-a716-446655440000' \
+  -H 'Request-Module: AI'
+```
+
+* Response example
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": null
+}
+```
+
+### 3.9. Heartbeat Agent Endpoints
+
+#### Description
+
+Refreshes the HTTP Client and every Agent endpoint publication owned by its `X-Nacos-Client-Id`. Send one heartbeat task per client id regardless of endpoint, Agent, protocol, or batch count; never schedule heartbeats per endpoint. Use `heartbeatIntervalMillis` returned by registration or the latest heartbeat as the delay before the next heartbeat, and reschedule when a later response changes it instead of hard-coding the current defaults. `unhealthyTimeoutMillis` and `expireTimeoutMillis` are effective server thresholds and cannot be overridden by the request. Search and Discover do not renew Publisher liveness. On `HTTP_CLIENT_NOT_FOUND (50404)`, re-register every complete desired batch before continuing heartbeats.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`PUT`
+
+#### Request URL
+
+`/nacos/v3/client/ai/agents/endpoints/heartbeat`
+
+#### Request Headers
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `X-Nacos-Client-Id` | `string` | **Yes** | Required stable opaque identifier of the logical HTTP client. Generate one unique value per client or SDK instance, preferably with at least 96 bits of random entropy; a UUID is valid, and the value must contain 1 to 256 characters matching `[A-Za-z0-9._:-]+`. Reuse it for endpoint registration, deregistration, heartbeat, retries, server switches, and redo, and generate a new value after that client instance or process restarts. Do not share one id between unrelated clients or processes. The first endpoint write binds the id to the authenticated identity and namespace. The id owns all endpoint publications of that client and is a routing identifier, not a credential. |
+| `Request-Module` | `string` | **Yes** | Required for endpoint publisher lifecycle operations. Set `Request-Module` to `AI`. |
+
+#### Response Data
+
+The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-response-format). The following table describes `data` and its fields.
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `ClientLivenessInfo` | Effective HTTP Client liveness policy returned by the server. |
+| `data.heartbeatIntervalMillis` | `integer` | Recommended client heartbeat interval in milliseconds. |
+| `data.unhealthyTimeoutMillis` | `integer` | Timeout in milliseconds before the client becomes unhealthy. |
+| `data.expireTimeoutMillis` | `integer` | Timeout in milliseconds before the client and its publications expire. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X PUT '127.0.0.1:8848/nacos/v3/client/ai/agents/endpoints/heartbeat' \
+  -H 'X-Nacos-Client-Id: 550e8400-e29b-41d4-a716-446655440000' \
+  -H 'Request-Module: AI'
+```
+
+* Response example
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "heartbeatIntervalMillis": 5000,
+    "unhealthyTimeoutMillis": 15000,
+    "expireTimeoutMillis": 30000
+  }
+}
+```
+
+### 3.10. Search Agent Catalog
+
+#### Description
+
+Searches visible Agent catalog entries by name, tags, protocols, and pagination. Supplying `X-Nacos-Client-Id` renews only an already-existing HTTP Client and never its endpoint Publisher liveness.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`GET`
+
+#### Request URL
+
+`/nacos/v3/client/ai/agents/search`
+
+#### Request Headers
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `X-Nacos-Client-Id` | `string` | No | Optional stable identifier of an existing logical HTTP client. When present, it must contain 1 to 256 characters matching `[A-Za-z0-9._:-]+` and use the same value as the client's endpoint publisher requests. Search and Discover renew only the existing Client lifecycle; they never create an empty Client or renew Publisher liveness, so they cannot replace Publisher heartbeat. |
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace of the Agent. Defaults to `public`. |
+| `agentNameContains` | `string` | No | Literal, case-sensitive text that the Agent name must contain. |
+| `tagsAll` | `array<string>` | No | Repeatable parameter; a catalog entry must contain every supplied tag. |
+| `protocolsAny` | `array<string>` | No | Repeatable parameter; a catalog entry may match any supplied protocol. |
+| `pageNo` | `integer` | No | Requested page number. |
+| `pageSize` | `integer` | No | Number of catalog entries returned per page. |
+
+#### Response Data
+
+The response body follows the [Nacos OpenAPI common response format](overview/api-overview.md#32-http-api-response-format). The following table describes `data` and its fields.
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `Page<AgentCatalogEntry>` | Paginated Agent catalog result. |
+| `data.totalCount` | `integer` | Total number of matching catalog entries. |
+| `data.pageNumber` | `integer` | Current page number. |
+| `data.pagesAvailable` | `integer` | Total number of available pages. |
+| `data.pageItems` | `array<AgentCatalogEntry>` | Agent catalog entries on the current page. |
+| `data.pageItems[i].agentName` | `string` | Agent name. |
+| `data.pageItems[i].displayName` | `string` | Agent display name. |
+| `data.pageItems[i].description` | `string` | Agent description. |
+| `data.pageItems[i].iconUrl` | `string` | Agent icon URL. |
+| `data.pageItems[i].provider` | `AgentProvider` | Agent provider. |
+| `data.pageItems[i].provider.name` | `string` | Provider name. |
+| `data.pageItems[i].provider.url` | `string` | Provider URL. |
+| `data.pageItems[i].tags` | `array<string>` | Agent tags. |
+| `data.pageItems[i].latestVersion` | `string` | Latest Agent version. |
+| `data.pageItems[i].versions` | `array<AgentCatalogVersion>` | Available Agent versions with their labels and protocols. |
+| `data.pageItems[i].versions[i].version` | `string` | Agent version. |
+| `data.pageItems[i].versions[i].labels` | `array<string>` | Version labels. |
+| `data.pageItems[i].versions[i].protocols` | `array<string>` | Protocols supported by the version. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agents/search?namespaceId=public&agentNameContains=agent&tagsAll=assistant&protocolsAny=a2a&pageNo=1&pageSize=10' \
+  -H 'X-Nacos-Client-Id: 550e8400-e29b-41d4-a716-446655440000'
+```
+
+* Response example
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "totalCount": 1,
+    "pageNumber": 1,
+    "pagesAvailable": 1,
+    "pageItems": [
+      {
+        "agentName": "my-agent",
+        "displayName": "My Agent",
+        "description": "Example Agent",
+        "iconUrl": "https://example.com/icon.png",
+        "provider": {
+          "name": "example-provider",
+          "url": "https://example.com"
+        },
+        "tags": ["assistant"],
+        "latestVersion": "1.0.0",
+        "versions": [
+          {
+            "version": "1.0.0",
+            "labels": ["latest"],
+            "protocols": ["a2a"]
+          }
+        ]
+      }
+    ]
+  }
 }
 ```
