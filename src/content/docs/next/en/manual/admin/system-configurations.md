@@ -225,8 +225,8 @@ For auth setup, read [Authorization](./auth.mdx) and [OIDC/OAuth2 Authentication
 | Property | Description | Default |
 | --- | --- | --- |
 | `nacos.plugin.auth.type` | Select the auth implementation at startup; `nacos.core.auth.system.type` is a legacy alias. | `nacos` |
-| `nacos.core.auth.enabled` | Whether SDK/gRPC request authentication is enabled. | `false` |
-| `nacos.core.auth.admin.enabled` | Whether `/v3/admin/*` Admin API authentication is enabled. | `true` |
+| `nacos.core.auth.enabled` | Whether the general auth system and Open API authentication are enabled, including Client/Open HTTP APIs and SDK/gRPC requests. | `false` |
+| `nacos.core.auth.admin.enabled` | Whether Admin API scope authentication is enabled, including plugin-owned endpoints marked `ADMIN_API` as well as `/v3/admin/*`. | `true` |
 | `nacos.core.auth.console.enabled` | Whether `/v3/console/*` Console API and login authentication are enabled. | `true` |
 | `nacos.plugin.auth.nacos.caching.enabled` | Whether auth information is cached; `nacos.core.auth.caching.enabled` is a historical alias. Permission updates may have a short delay when enabled. | `true` |
 | `nacos.core.auth.server.identity.key` | Server-to-server identity key. Required when auth is enabled. | empty |
@@ -235,9 +235,10 @@ For auth setup, read [Authorization](./auth.mdx) and [OIDC/OAuth2 Authentication
 | `nacos.plugin.auth.nacos.token.cache.enable` | Default auth token cache; `nacos.core.auth.plugin.nacos.token.cache.enable` is a historical alias. | `false` |
 | `nacos.plugin.auth.nacos.token.expire.seconds` | Default auth token expiration in seconds; `nacos.core.auth.plugin.nacos.token.expire.seconds` is a historical alias. | `18000` |
 | `nacos.plugin.auth.nacos.token.secret.key` | JWT signing secret; sensitive and RESTART. `nacos.core.auth.plugin.nacos.token.secret.key` is a historical alias. | empty |
-| `nacos.plugin.auth.nacos.anonymous.ai.enabled` | Whether anonymous AI resource reads are allowed; `nacos.core.auth.nacos.anonymous.ai.enabled` is a historical alias. | `false` |
+| `nacos.plugin.auth.nacos.anonymous.ai.enabled` | Whether explicitly opted-in AI endpoints accept anonymous reads; `nacos.core.auth.nacos.anonymous.ai.enabled` is a historical alias. Explicit empty or invalid credentials never fall back to anonymous access. | `false` |
 | `nacos.plugin.visibility.enabled` | Whether the visibility plugin is enabled. | `true` |
-| `nacos.plugin.visibility.type` | Visibility plugin type. The default `nacos` implementation reuses default auth plugin user information. | `nacos` |
+| `nacos.plugin.visibility.type` | Deprecated `RESTART` selector that still chooses the implementation requested by the AI domain and contributes to initial state when no persisted state exists. | `nacos` |
+| `nacos.plugin.visibility.{pluginName}.enabled` | Static initial implementation state; persisted plugin state wins. The default `nacos` implementation reuses default auth plugin user information. | `true` for `nacos` |
 
 ### LDAP, OIDC, and OAuth2
 
@@ -258,7 +259,7 @@ For the plugin system, see [Plugin Overview](../../plugin/overview.md).
 | `nacos.plugin.control.type` | Select the control implementation at startup; `nacos.plugin.control.manager.type` is a legacy alias. | empty (no-limit) |
 | `nacos.plugin.control.rule.local.basedir` | Local directory for traffic control rules. | `${nacos.home}` |
 | `nacos.plugin.control.rule.external.storage` | External rule storage type. Requires a custom implementation. | empty |
-| `nacos.plugin.{pluginType}.{pluginName}.enabled` | Implementation startup state; persisted or local state can override it. | Defined by implementation and type policy |
+| `nacos.plugin.{pluginType}.{pluginName}.enabled` | Initial state for non-exclusive implementations; persisted or local state can override it. Exclusive types such as `auth`, `datasource-dialect`, and `control` use selectors instead. | Defined by implementation and type policy |
 | `nacos.plugin.{pluginType}.{pluginName}.{itemKey}` | Canonical key for an implementation definition. | Defined by the definition |
 
 Historical `nacos.core.config.plugin.{pluginName}.*` properties exist only for old config-change binaries. Nacos Server does not bundle webhook, whitelist, or fileformatcheck implementations. New implementations use `nacos.plugin.config-change.{pluginName}.{itemKey}`.
@@ -289,7 +290,7 @@ For usage, see [AI Registry Overview](../user/ai/ai-registry-overview.md). The p
 | `nacos.ai.skill.registry.enabled` | Whether the Skill Registry protocol adapter is enabled. When enabled, it exposes an independent port through `nacos.ai.registry.port`. | `false` |
 | `nacos.ai.registry.port` | AI Registry protocol adapter port. | `9080` |
 | `nacos.ai.mcp.registry.port` | Legacy property name. Deprecated. Use `nacos.ai.registry.port` instead. | `9080` |
-| `nacos.plugin.ai-pipeline.enabled` | Dynamic AI Pipeline family gate; when false, type loading is deferred. | `false` |
+| `nacos.plugin.ai-pipeline.enabled` | Dynamic AI Pipeline family gate; when false, type loading is deferred. | `true` |
 | `nacos.plugin.ai-pipeline.type` | Legacy startup chain used only to initialize node state when no persisted state exists. | empty |
 | `nacos.plugin.ai-pipeline.skill-scanner.{itemKey}` | `skill-scanner` definitions; only `order` is RUNTIME. | See the [AI Pipeline Plugin](../../plugin/ai-pipeline-plugin.md) page |
 | `nacos.plugin.ai-pipeline.skill-spector.{itemKey}` | `skill-spector` definitions; only `order` is RUNTIME. | See the [AI Pipeline Plugin](../../plugin/ai-pipeline-plugin.md) page |

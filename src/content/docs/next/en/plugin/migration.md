@@ -22,6 +22,18 @@ Unified plugin management separates four layers: module entry, implementation se
 
 For STATIC `PluginConfigSpec` items, canonical full keys win by presence, not by a non-blank value. An empty canonical value still suppresses legacy aliases and may fail required-value validation; remove the canonical property entirely only when fallback to an alias is intended. If several aliases are present, the first one in the definition's declaration order wins. Selection keys continue to follow their plugin family's documented rules. API aliases are normalized, and `plugin-configs.json` and local-only maps store only canonical item keys.
 
+Persisted implementation state overrides static `.enabled` initial values. Export existing plugin state and runtime configuration as well as static files before upgrading. Otherwise an implementation may remain enabled or disabled by persisted state even after `application.properties` is changed.
+
+## SPI and loading compatibility
+
+Default methods in the unified configuration contract let most older zero-configuration plugins remain binary-loadable, although they appear as `configurable=false`. Plugin authors must explicitly handle these changes before upgrading:
+
+- The legacy Importer/Source SPI for AI Resource Import has no adapter. Migrate to `AiResourceImportServiceBuilder` and update service registration, configuration, and callers together. See the detailed model below.
+- AI Pipeline no longer loads `PublishPipelineServiceBuilder`. Register `PublishPipelineService` directly with a public no-argument constructor and implement configuration definitions, a current snapshot, and apply callbacks.
+- A third-party datasource plugin that implements or registers the removed `ConfigInfoBetaMapper`, `ConfigInfoTagMapper`, or `ConfigMigrateMapper` must remove those SPI dependencies and be rebuilt. Complete pre-3.0 Config data migration before upgrading.
+- Duplicate implementations with the same `pluginType:pluginName` now resolve deterministically using first-wins. Remove duplicate IDs before upgrading instead of relying on an earlier undefined override order.
+- Critical plugin types such as `auth`, `datasource-dialect`, and `ai-storage` can block startup when the selected implementation is missing, disabled, or fails initialization. Validate selection, state, and initialization in staging before a rolling upgrade.
+
 ## Implementation selection
 
 | pluginType | Standard key | Historical alias | Default/behavior |
@@ -32,12 +44,14 @@ For STATIC `PluginConfigSpec` items, canonical full keys win by presence, not by
 
 All selections are snapshotted at startup. Do not use the status API to switch an exclusive implementation.
 
+Datasource connection properties also move to the unified namespace. Migrate `db.num`, `db.url.{index}`, `db.user[.{index}]`, `db.password[.{index}]`, `db.pool.config.*`, and the JVM property `QUERYTIMEOUT` to `nacos.plugin.datasource.db.*`. Pool items use canonical kebab-case. These settings remain restart-only and are not changed dynamically through the plugin configuration API.
+
 ## Auth, Visibility, and AI Pipeline
 
 - Move default auth settings from `nacos.core.auth.plugin.nacos.*` and `nacos.core.auth.caching.enabled` to `nacos.plugin.auth.nacos.*`.
 - Move LDAP from `nacos.core.auth.ldap.*` to `nacos.plugin.auth.ldap.*`. The unused `nacos.core.auth.ldap.userdn` template key is not a valid alias.
 - Move OIDC from `nacos.core.auth.plugin.oidc.*` to `nacos.plugin.auth.oidc.*`. All current fields are `RESTART`.
-- `nacos.plugin.visibility.enabled` remains the capability gate; `nacos.plugin.visibility.type` is only historical initial selection. Implementation state belongs to unified `visibility:{name}` state.
+- `nacos.plugin.visibility.enabled` remains the capability gate. The deprecated `nacos.plugin.visibility.type` is a `RESTART` selector that still chooses the implementation requested by the AI domain and contributes to initial state. `nacos.plugin.visibility.{name}.enabled` and persisted unified `visibility:{name}` state determine whether that implementation is available.
 - `nacos.plugin.ai-pipeline.enabled` remains the Pipeline gate. Historical `nacos.plugin.ai-pipeline.type` supplies only initial chain state at startup. Use unified state for later membership and per-node definitions for configuration.
 
 The target distribution already declares `nacos.plugin.auth.type=nacos` and the canonical defaults for `auth:nacos`. Copy retained auth selection and implementation values into those canonical keys instead of leaving legacy aliases beside the target defaults. Otherwise the canonical selector keeps `nacos`, and a canonical `PluginConfigSpec` key suppresses its alias even when the canonical value is empty. The startup script specially migrates only a valid legacy token secret found in `application.properties`; migrate all other auth values explicitly.
