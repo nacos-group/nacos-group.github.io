@@ -1790,7 +1790,7 @@ try {
 
 #### Description
 
-This API queries the details of a specified MCP service, including the metadata of the MCP service and callable endpoint information.
+This API queries the details of a specified MCP service, including its metadata and callable Endpoint information. When no version is specified, it queries the latest published version.
 
 ```java
 McpServerDetailInfo getMcpServer(String mcpName) throws NacosException;
@@ -1803,7 +1803,7 @@ McpServerDetailInfo getMcpServer(String mcpName, String version) throws NacosExc
 | Name    | Type | Description | Default Value |
 |:--------|:-------|---------|-----------------|
 | mcpName | String | MCP service name | None, required |
-| version | String | MCP service version | Empty. When empty, the latest version is queried. |
+| version | String | MCP service version | Empty. When empty, the latest published version is queried. |
 
 #### Return Parameters
 
@@ -1829,7 +1829,7 @@ try {
 
 This API releases a new MCP service version. If the MCP service is released for the first time, a new MCP service is created.
 
-If the MCP service and specified version already exist, an exception indicating that the MCP service version already exists is thrown.
+If the MCP service and specified version already exist, the request is idempotent and does not create or modify that version again.
 
 
 ```java
@@ -2918,7 +2918,457 @@ try {
 }
 ```
 
-## 11. Java SDK Lifecycle
+## 11. Agent Management and Discovery
+
+The Agent management and discovery APIs are the protocol-neutral primary entry point for Agent integrations. They cover catalog search, definition discovery, local polling subscriptions, definition publication, and Runtime Endpoint registration. The legacy A2A APIs in Chapter 7 remain available during the compatibility period, but this Agent API set is intended to replace them. New users and SDK implementations should integrate with the Agent management and discovery APIs first instead of the legacy A2A APIs.
+
+Agent APIs use the namespace configured when the `AiService` is created. The SDK copies each request and binds that namespace without mutating the caller-owned object. All APIs in this chapter are available since version 3.3.0.
+
+### 11.1. Search Agents
+
+#### Description
+
+Search for visible and enabled Agents that have at least one online version in the current namespace. `agentNameContains` performs a case-sensitive literal substring match. Values in `tagsAll` are ANDed, while values in `protocolsAny` are ORed.
+
+```java
+Page<AgentCatalogEntry> searchAgents(AgentSearchRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name    | Type               | Description             | Default Value |
+|:--------|:-------------------|-------------------------|---------------|
+| request | AgentSearchRequest | Agent search conditions | None, required |
+
+`AgentSearchRequest` contains the following fields:
+
+| Name              | Type           | Description                                                      | Default Value |
+|:------------------|:---------------|------------------------------------------------------------------|---------------|
+| namespaceId       | String         | Injected from `AiService` by the SDK; callers should leave it unset | SDK namespace |
+| agentNameContains | String         | Case-sensitive literal substring of the Agent name               | None |
+| tagsAll           | List\<String\> | Tags that the Agent must contain                                  | None |
+| protocolsAny      | List\<String\> | Calling protocols that any online version may expose             | None |
+| pageNo            | Integer        | One-based page number                                             | 1 |
+| pageSize          | Integer        | Number of entries per page, from 1 through 100                    | 20 |
+
+#### Return Parameters
+
+Returns `Page<AgentCatalogEntry>` with the total count, current page number, available page count, and Agent catalog entries. Each entry contains Agent presentation metadata, the latest version, and label and protocol summaries for every online version. It does not contain Endpoints.
+
+#### Request Example
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
+AiService aiService = AiFactory.createAiService(properties);
+
+AgentSearchRequest request = new AgentSearchRequest();
+request.setAgentNameContains("order");
+request.setTagsAll(Arrays.asList("production", "public"));
+request.setProtocolsAny(Collections.singletonList("a2a"));
+request.setPageNo(1);
+request.setPageSize(20);
+
+Page<AgentCatalogEntry> page = aiService.searchAgents(request);
+System.out.println(JacksonUtils.toJson(page));
+```
+
+#### Exceptions
+
+Throws `NacosException` when the request is null, page parameters are out of range, a request namespace differs from the SDK namespace, or the remote request fails.
+
+### 11.2. Discover an Agent
+
+#### Description
+
+Resolve a complete Agent discovery snapshot by Agent name and an optional exact version or label. An optional filter can prune calling protocols and Endpoint sets. The filter only prunes the current result: it neither selects another Agent version nor performs load balancing.
+
+```java
+AgentDiscoveryResult discoverAgent(AgentReference reference) throws NacosException;
+
+AgentDiscoveryResult discoverAgent(AgentReference reference, AgentDiscoveryFilter filter)
+        throws NacosException;
+```
+
+#### Request Parameters
+
+| Name      | Type                   | Description                                                   | Default Value |
+|:----------|:-----------------------|---------------------------------------------------------------|---------------|
+| reference | AgentReference         | Agent reference                                               | None, required |
+| filter    | AgentDiscoveryFilter   | Optional protocol, transport, Endpoint-source, and metadata filter | None |
+
+`AgentReference` contains the following fields:
+
+| Name      | Type   | Description                                                | Default Value |
+|:----------|:-------|------------------------------------------------------------|---------------|
+| agentName | String | Agent name                                                 | None, required |
+| version   | String | Exact online version; mutually exclusive with `label`     | None |
+| label     | String | Label resolved to an online version at request time; mutually exclusive with `version` | None |
+
+Every `AgentDiscoveryFilter` field is optional:
+
+| Name             | Type                   | Description                                                       |
+|:-----------------|:-----------------------|-------------------------------------------------------------------|
+| protocols        | List\<String\>         | Allowed calling protocols; values are ORed                         |
+| protocolVersion  | String                 | Exact protocol-version match against candidate interfaces          |
+| transports       | List\<String\>         | Allowed transports; values are ORed                                |
+| endpointSources  | List\<EndpointSource\> | Allowed `RUNTIME` or `DECLARED` sources                            |
+| metadataSelector | Map\<String, String\>  | Exact key/value pairs that Endpoint metadata must contain          |
+
+#### Return Parameters
+
+Returns `AgentDiscoveryResult`, containing the namespace, Agent name, resolved exact version, `contentDigest`, and calling interfaces with resolved Endpoint sets. The returned `endpointSets` are authoritative for this discovery snapshot.
+
+When both `version` and `label` are absent, definition metadata uses the current latest version while Runtime Endpoints may be compatible with any current online version. Explicit `label=latest` is stricter: both definition metadata and Runtime Endpoints are restricted to the current latest version.
+
+#### Request Example
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
+AiService aiService = AiFactory.createAiService(properties);
+
+AgentReference reference = new AgentReference();
+reference.setAgentName("{agentName}");
+
+AgentDiscoveryFilter filter = new AgentDiscoveryFilter();
+filter.setProtocols(Collections.singletonList("a2a"));
+filter.setEndpointSources(Arrays.asList(EndpointSource.RUNTIME, EndpointSource.DECLARED));
+
+AgentDiscoveryResult result = aiService.discoverAgent(reference, filter);
+System.out.println(JacksonUtils.toJson(result));
+```
+
+#### Exceptions
+
+Throws `NacosException` when the Agent reference is invalid, `version` and `label` are both set, the filter is invalid, the Agent or target version does not exist, or the remote request fails.
+
+### 11.3. Subscribe to an Agent
+
+#### Description
+
+Start an SDK-local polling subscription with the same Agent reference and optional filter used by Discover. This is not a server Watch or Push operation. If the target is initially absent, the method returns `null` but retains the polling task. When the target appears, or the resolved version, `contentDigest`, or any `sourceRevision` changes, the listener receives a new complete replacement snapshot.
+
+```java
+AgentDiscoveryResult subscribeAgent(AgentReference reference,
+        AbstractNacosAgentDiscoveryListener listener) throws NacosException;
+
+AgentDiscoveryResult subscribeAgent(AgentReference reference, AgentDiscoveryFilter filter,
+        AbstractNacosAgentDiscoveryListener listener) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name      | Type                                   | Description                                      | Default Value |
+|:----------|:---------------------------------------|--------------------------------------------------|---------------|
+| reference | AgentReference                         | Same Agent reference used by Discover            | None, required |
+| filter    | AgentDiscoveryFilter                   | Same optional filter used by Discover             | None |
+| listener  | AbstractNacosAgentDiscoveryListener    | Listener for complete replacement snapshots      | None, required |
+
+#### Return Parameters
+
+Returns the current `AgentDiscoveryResult`. Returns `null` while the target is absent without canceling the polling task.
+
+#### Request Example
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
+AiService aiService = AiFactory.createAiService(properties);
+
+AgentReference reference = new AgentReference();
+reference.setAgentName("{agentName}");
+
+AbstractNacosAgentDiscoveryListener listener = new AbstractNacosAgentDiscoveryListener() {
+    @Override
+    public void onEvent(NacosAgentDiscoveryEvent event) {
+        AgentDiscoveryResult snapshot = event.getAgentDiscoveryResult();
+        System.out.println("agent changed: " + JacksonUtils.toJson(snapshot));
+    }
+};
+
+AgentDiscoveryResult current = aiService.subscribeAgent(reference, listener);
+System.out.println(JacksonUtils.toJson(current));
+```
+
+#### Exceptions
+
+Throws `NacosException` when the reference, filter, or listener is invalid, or the initial Discover request fails.
+
+### 11.4. Unsubscribe from an Agent
+
+#### Description
+
+Cancel an SDK-local Agent polling subscription. Pass the same `AgentReference`, equivalent filter, and listener instance that were used to subscribe.
+
+```java
+void unsubscribeAgent(AgentReference reference,
+        AbstractNacosAgentDiscoveryListener listener) throws NacosException;
+
+void unsubscribeAgent(AgentReference reference, AgentDiscoveryFilter filter,
+        AbstractNacosAgentDiscoveryListener listener) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name      | Type                                   | Description                                      | Default Value |
+|:----------|:---------------------------------------|--------------------------------------------------|---------------|
+| reference | AgentReference                         | Agent reference used to subscribe                | None, required |
+| filter    | AgentDiscoveryFilter                   | Filter used to subscribe; use `null` for an unfiltered subscription | None |
+| listener  | AbstractNacosAgentDiscoveryListener    | Same listener instance used to subscribe         | None, required |
+
+#### Return Parameters
+
+None.
+
+#### Request Example
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
+AiService aiService = AiFactory.createAiService(properties);
+
+AgentReference reference = new AgentReference();
+reference.setAgentName("{agentName}");
+AbstractNacosAgentDiscoveryListener listener = new AbstractNacosAgentDiscoveryListener() {
+    @Override
+    public void onEvent(NacosAgentDiscoveryEvent event) {
+        System.out.println(JacksonUtils.toJson(event.getAgentDiscoveryResult()));
+    }
+};
+try {
+    aiService.subscribeAgent(reference, listener);
+    aiService.unsubscribeAgent(reference, listener);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exceptions
+
+Throws `NacosException` when the reference, filter, or listener is invalid.
+
+### 11.5. Register Agent Runtime Endpoints
+
+#### Description
+
+Register this SDK publisher's complete Runtime Endpoint batch for one Agent protocol. Registering the same `(agentName, protocol)` again for the same publisher completely replaces the previous batch, so omitted Endpoints are removed. The SDK retains the complete batch as redo intent after reconnecting. Endpoint registration does not implicitly create an Agent definition.
+
+```java
+void registerAgentEndpoints(AgentEndpointRegistrationBatch batch) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name  | Type                             | Description                          | Default Value |
+|:------|:---------------------------------|--------------------------------------|---------------|
+| batch | AgentEndpointRegistrationBatch   | Complete Endpoint registration batch | None, required |
+
+`AgentEndpointRegistrationBatch` contains the following fields:
+
+| Name           | Type             | Description                                                            | Default Value |
+|:---------------|:-----------------|------------------------------------------------------------------------|---------------|
+| namespaceId    | String           | Injected from `AiService` by the SDK; callers should leave it unset    | SDK namespace |
+| agentName      | String           | Agent name                                                             | None, required |
+| runtimeVersion | String           | Version of the deployed implementation                                 | None, required |
+| versionRange   | String           | Agent-version range served by this deployment; must contain `runtimeVersion` | `[runtimeVersion]` |
+| protocol       | String           | Canonical protocol token for the Endpoints                              | None, required |
+| endpoints      | List\<Endpoint\> | This publisher's complete Endpoint set, containing 1 through 1000 entries | None, required |
+
+`Endpoint` contains the following fields:
+
+| Name      | Type                 | Description                                      | Default Value |
+|:----------|:---------------------|--------------------------------------------------|---------------|
+| uri       | String               | Complete absolute calling URI                    | None, required |
+| transport | String               | Canonical transport, such as `HTTP+JSON`         | None, required |
+| priority  | Integer              | Priority; lower values are preferred             | 0 |
+| weight    | Double               | Weight among Endpoints with the same priority    | 1 |
+| metadata  | Map\<String, String\> | Flat Endpoint metadata                         | None |
+
+> Do not set `healthy` in a registration request. Health is supplied in discovery results.
+
+#### Return Parameters
+
+None.
+
+#### Request Example
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
+AiService aiService = AiFactory.createAiService(properties);
+
+Endpoint endpoint = new Endpoint();
+endpoint.setUri("https://agent.example.com:443/a2a");
+endpoint.setTransport("HTTP+JSON");
+endpoint.setPriority(0);
+endpoint.setWeight(1.0D);
+
+AgentEndpointRegistrationBatch batch = new AgentEndpointRegistrationBatch();
+batch.setAgentName("{agentName}");
+batch.setRuntimeVersion("1.1.0");
+batch.setVersionRange("[1.0.0,2.0.0)");
+batch.setProtocol("a2a");
+batch.setEndpoints(Collections.singletonList(endpoint));
+
+aiService.registerAgentEndpoints(batch);
+```
+
+#### Exceptions
+
+Throws `NacosException` when the batch or an Endpoint is invalid, `versionRange` does not contain `runtimeVersion`, the request carries a namespace different from the SDK namespace, or publication fails.
+
+### 11.6. Deregister Agent Runtime Endpoints
+
+#### Description
+
+Remove Endpoints by their `uri` and `transport` natural keys from the complete batch cached by this SDK publisher. The SDK registers the complete retained batch again. When no Endpoint remains, it deregisters this publisher's entire publication under `(agentName, protocol)`.
+
+```java
+void deregisterAgentEndpoints(AgentEndpointDeregistrationBatch batch) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name  | Type                               | Description                           | Default Value |
+|:------|:-----------------------------------|---------------------------------------|---------------|
+| batch | AgentEndpointDeregistrationBatch   | Endpoint deregistration intent batch  | None, required |
+
+`AgentEndpointDeregistrationBatch` contains the Agent name, protocol, and the Endpoints to remove. The SDK injects `namespaceId`. Each Endpoint in the list needs only the natural-key fields `uri` and `transport`.
+
+#### Return Parameters
+
+None.
+
+#### Request Example
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
+AiService aiService = AiFactory.createAiService(properties);
+
+Endpoint endpoint = new Endpoint();
+endpoint.setUri("https://agent.example.com:443/a2a");
+endpoint.setTransport("HTTP+JSON");
+
+AgentEndpointDeregistrationBatch batch = new AgentEndpointDeregistrationBatch();
+batch.setAgentName("{agentName}");
+batch.setProtocol("a2a");
+batch.setEndpoints(Collections.singletonList(endpoint));
+
+aiService.deregisterAgentEndpoints(batch);
+```
+
+#### Exceptions
+
+Throws `NacosException` when the batch or Endpoint natural key is invalid, the request carries a namespace different from the SDK namespace, or publication fails.
+
+### 11.7. Publish an Agent Definition from Code
+
+#### Description
+
+Publish one exact Agent version from application code. The request uses the `AiService` namespace. The SDK copies the request and never mutates the caller-owned object. With `autoSubmit=false`, it only creates or returns an equivalent draft. With `autoSubmit=true`, it runs the ordinary submit pipeline after creating the draft and returns the final observable `reviewing`, `reviewed`, or `online` version. This is not a force-publish operation.
+
+Equivalent retries for the same namespace, Agent, and exact version are idempotent and converge on the existing state. An existing draft can be resumed by changing only `autoSubmit` to `true` on the same request. Different content, author, change description, or explicitly supplied initial metadata is a conflict. `autoSubmit=false` cannot move an advanced version back to draft.
+
+> The `AgentProvider` and `AgentVersionDetail` types in this section are from `com.alibaba.nacos.api.ai.model.agent`, not the same-named legacy A2A types under `com.alibaba.nacos.api.ai.model.a2a`.
+
+```java
+AgentVersionDetail publishAgent(AgentPublishRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name    | Type                | Description                      | Default Value |
+|:--------|:--------------------|----------------------------------|---------------|
+| request | AgentPublishRequest | Agent definition publication request | None, required |
+
+`AgentPublishRequest` reuses the fields from `AgentDraftCreateRequest` and adds `autoSubmit`:
+
+| Name              | Type                       | Description                                                          | Default Value |
+|:------------------|:---------------------------|----------------------------------------------------------------------|---------------|
+| agentName         | String                     | Agent name                                                           | None, required |
+| displayName       | String                     | Optional presentation name when the Agent is first created           | None |
+| description       | String                     | Optional catalog description when the Agent is first created         | None |
+| iconUrl           | String                     | Optional icon URI when the Agent is first created                     | None |
+| provider          | AgentProvider              | Optional provider `name` and `url` when the Agent is first created    | None |
+| tags              | List\<String\>             | Optional public catalog tags when the Agent is first created          | None |
+| extensions        | Map\<String, Object\>      | Optional public extensions when the Agent is first created            | None |
+| version           | String                     | Exact SemVer version to create                                        | None, required |
+| callInterfaces    | List\<AgentCallInterface\> | Non-empty ordered protocol definitions; exactly one of this and `basedOnVersion` must be set | Conditionally required |
+| basedOnVersion    | String                     | Exact source version whose content is reused; mutually exclusive with `callInterfaces` | Conditionally required |
+| author            | String                     | Version author                                                        | None |
+| changeDescription | String                     | Version change description                                            | None |
+| autoSubmit        | boolean                    | Whether to run the ordinary submit pipeline after draft creation      | false |
+
+`AgentCallInterface` contains the protocol, optional protocol version, `descriptorMediaType`, native `nativeDescriptor`, a non-empty `endpointSourceOrder`, and optional declared Endpoints. Protocols cannot repeat within one version.
+
+The first version of an Agent must provide `callInterfaces` directly because no source version exists yet; `basedOnVersion` is invalid for that initial creation. A subsequent version must still choose exactly one of direct content and one exact source version.
+
+#### Return Parameters
+
+Returns the exact `AgentVersionDetail`, including the namespace, Agent name, version, current status, calling interfaces, author, change description, `contentDigest`, and audit timestamps.
+
+#### Request Example
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
+AiService aiService = AiFactory.createAiService(properties);
+
+AgentInterface binding = new AgentInterface();
+binding.setUrl("https://agent.example.com:443/a2a");
+binding.setProtocolBinding("HTTP+JSON");
+binding.setProtocolVersion("1.0");
+
+AgentCapabilities capabilities = new AgentCapabilities();
+capabilities.setStreaming(Boolean.TRUE);
+AgentCard card = new AgentCard();
+card.setName("{agentName}");
+card.setDescription("Order Agent");
+card.setVersion("1.0.0");
+card.setSupportedInterfaces(Collections.singletonList(binding));
+card.setCapabilities(capabilities);
+
+Endpoint declaredEndpoint = new Endpoint();
+declaredEndpoint.setUri(binding.getUrl());
+declaredEndpoint.setTransport(binding.getProtocolBinding());
+
+AgentCallInterface callInterface = new AgentCallInterface();
+callInterface.setProtocol("a2a");
+callInterface.setProtocolVersion("1.0");
+callInterface.setDescriptorMediaType("application/json");
+callInterface.setNativeDescriptor(
+        JacksonUtils.toObj(JacksonUtils.toJson(card), Map.class));
+callInterface.setEndpointSourceOrder(
+        Arrays.asList(EndpointSource.DECLARED, EndpointSource.RUNTIME));
+callInterface.setDeclaredEndpoints(Collections.singletonList(declaredEndpoint));
+
+AgentPublishRequest request = new AgentPublishRequest();
+request.setAgentName("{agentName}");
+request.setDisplayName("Order Agent");
+request.setVersion("1.0.0");
+request.setCallInterfaces(Collections.singletonList(callInterface));
+request.setAuthor("{author}");
+request.setChangeDescription("Initial version");
+request.setAutoSubmit(true);
+
+AgentVersionDetail detail = aiService.publishAgent(request);
+System.out.println(JacksonUtils.toJson(detail));
+```
+
+#### Exceptions
+
+Throws `NacosException` when the request is null, the version or definition is invalid, `callInterfaces` and `basedOnVersion` do not follow the exclusive-or rule, content or state conflicts, submit fails, or the current `AiService` implementation does not support this capability.
+
+## 12. Java SDK Lifecycle
 
 The lifecycle of the Nacos Java SDK starts when the SDK instance is created and ends when the `shutdown()` method is called. During this period, the corresponding thread pools, connections, and other resources remain reserved. Even if the connection is disconnected, the SDK keeps retrying to re-establish the connection.
 

@@ -66,6 +66,8 @@
 - 语言统一为 **`java`**。
 - 占位符：`{serverAddr}`、`{dataId}`、`{group}`、`{namespaceId}`、`Constants.DEFAULT_GROUP`、`Constants.DEFAULT_NAMESPACE_ID` 等，与现有 maintainer-sdk.md 一致。
 - 多 overload 时可在同一小节内连续多个 ` ```java ` 方法签名；示例中变量名与文档一致（如 `configMaintainerService`、`maintainService`、`aiMaintainerService`）。
+- AI 代理接口的示例必须先取得正确 delegate：`aiMaintainerService.prompt()`、`.skill()`、`.agentSpec()`、`.agent()`、`.pipeline()`，或先赋值为对应的 `XxxMaintainerService` 变量。除 Mcp/A2A 的继承兼容方法外，不得把代理接口的方法伪写成 `aiMaintainerService.xxx(...)` 直接调用。
+- 方法签名、返回值表和示例接收变量的类型必须一致；例如返回 `String` 的 MCP 创建方法不能在返回值表写成 `boolean`。
 
 ---
 
@@ -92,15 +94,20 @@
 | 6 | MCP 服务 | listMcpServer、searchMcpServer、getMcpServer、createLocalMcpServer、createRemoteMcpServer、updateMcpServer、deleteMcpServer 等 |
 | 7 | A2A 注册中心 | registerAgent、getAgentCard、updateAgentCard、deleteAgent、版本与搜索、分页等 |
 | 8 | （若已增加）Prompt 能力 | listPrompts、getPromptMeta、版本与标签、删除等 |
-| 9 | （若已增加）Skill 能力 | registerSkill、getSkillDetail、updateSkill、deleteSkill、列表与分页等 |
+| 9 | Skill 能力 | getSkillMeta、getSkillVersionDetail、deleteSkill、listSkills、ZIP 上传与预检查、草稿/提交流程、labels/bizTags/scope 等；已移除的 registerSkill/getSkillDetail/updateSkill 不再文档化 |
 | 10 | （若已增加）AgentSpec 能力 | getAgentSpecDetail、getAgentSpecAdminDetail、getAgentSpecVersionDetail、deleteAgentSpec、listAgentSpecs、listAgentSpecAdminItems、uploadAgentSpecFromZip、草稿/提交流程、labels/bizTags/scope 等 |
+| 11 | Agent 管理 | getAgent、updateAgent、deleteAgent、listAgents、listAgentVersions、getAgentVersion、getRuntimeEndpoints、Draft 与生命周期命令、updateLabels |
+| 12 | Pipeline 管理 | getPipelineDetail、listPipelineExecutions，以及已废弃但仍兼容的 getPipeline、listPipelines |
+
+- **Agent 定位**：第 11 章是协议无关的新主管理入口，未来用于替代第 7 章旧 A2A 管理 API。兼容期内两者同时存在；新接入用户和 SDK 优先使用 `AiMaintainerService.agent()`。该迁移提示必须同时写在第 7 章和第 11 章的入口说明中，不能只放在新接口章节。
+- **Pipeline 返回值**：新代码优先使用 `PipelineAdminClient` 提供的 `Result<PipelineExecution>` 与 `Result<Page<PipelineExecution>>`。`JsonNode` 返回方法需要保留废弃说明及对应替代方法。
 
 ---
 
 ## 8. 与 Java 接口的同步（本 skill 扩展）
 
-- 新增/变更内容应来自 Nacos Maintainer Client 接口（见 SKILL.md「Maintainer API 定义来源与章节」）。**存在多层继承**：ConfigMaintainerService 继承 CoreMaintainerService、BetaConfigMaintainerService、ConfigHistoryMaintainerService、ConfigOpsMaintainerService；NamingMaintainerService 继承 CoreMaintainerService、ServiceMaintainerService、InstanceMaintainerService、NamingClientMaintainerService；AiMaintainerService 继承 McpMaintainerService、A2aMaintainerService，并通过 `agentSpec()/prompt()/skill()` 代理到对应维护接口。解析时需展开继承链，并按「声明接口」归属到对应章节（第 3 章不包含 Core 方法，第 4 章不包含 Core 方法，第 5 章仅 Core 方法，第 10 章为 AgentSpec 接口能力）。
-- 使用脚本 `scripts/compare_maintainer_api_with_doc.py` 对比接口与 maintainer-sdk.md，可得到**新增 API**（需整条补全）、**新增重载**（在已有小节中补充签名/参数/示例）与**已删除重载**（在已有小节中删除或标注该重载）。**Nacos 项目路径由使用者提供**（`--nacos-maintainer-dir`），skill 中不写死路径。
+- 新增/变更内容应来自 Nacos Maintainer Client 接口（见 SKILL.md「Maintainer API 定义来源与章节」）。**存在多层继承和代理关系**：ConfigMaintainerService 继承 Core、Beta、History、Ops；NamingMaintainerService 继承 Core、Service、Instance、NamingClient；AiMaintainerService 继承 Mcp、A2a，并通过 `prompt()/skill()/agentSpec()/agent()/pipeline()` 返回对应维护接口；PipelineMaintainerService 又继承 PipelineAdminClient。解析时需展开继承链，并按「声明接口」归属到对应章节（第 3、4 章不包含 Core，第 5 章仅 Core，第 11 章为 Agent，第 12 章为 Pipeline）。
+- 使用脚本 `scripts/compare_maintainer_api_with_doc.py` 对比接口与 maintainer-sdk.md，可得到**新增 API**、**已删除 API**、按规范化参数类型序列识别的**新增/已删除重载**及**返回类型不一致**。不能只按方法名或参数个数判断；同参数数、不同类型的重载必须分别文档化。**Nacos 项目路径由使用者提供**（`--nacos-maintainer-dir`），skill 中不写死路径。
 - 补全或修改时仍按本文档第 3、4、5、6 节的格式执行，并保持中英文结构一致。
 - 修改过程中若有**不明确**之处，**暂不修改**，将该条列入修改报告的「待确认内容」，待确认后再改。修改完成后须生成修改报告；报告**不写入文档**，在对话中输出或由执行者自行保存。
 

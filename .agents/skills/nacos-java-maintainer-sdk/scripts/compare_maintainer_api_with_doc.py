@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Compare Nacos Maintainer Java API (Config, Naming, Core, Mcp, A2a, Prompt, Skill, AgentSpec)
-with maintainer-sdk.md and output: new APIs, new overloads to add, and removed overloads.
+Compare Nacos Maintainer Java API (Config, Naming, Core, MCP, A2A, Prompt, Skill,
+AgentSpec, protocol-neutral Agent, and Pipeline)
+with maintainer-sdk.md and output: new/removed APIs, exact new/removed overload signatures,
+return-type mismatches, and structure warnings.
 **Does NOT modify any file.** Use report to update docs per reference.md.
 
-Usage (doc repo root):
+Usage (doc repo root; Nacos repo root is accepted directly):
   python .agents/skills/nacos-java-maintainer-sdk/scripts/compare_maintainer_api_with_doc.py \\
-    --nacos-maintainer-dir /path/to/nacos/maintainer-client/src/main/java \\
+    --nacos-maintainer-dir /path/to/nacos \\
     --maintainer-md src/content/docs/next/zh-cn/manual/admin/maintainer-sdk.md
 
 **Only next version**: --maintainer-md should point under docs/next/; do not use latest, v3.0, etc.
@@ -126,6 +128,51 @@ def parse_maintainer_md(content: str) -> dict:
     return doc_methods
 
 
+def _normalize_type(type_text: str) -> str:
+    """Normalize Java type spelling for source-to-doc signature comparison."""
+    value = re.sub(r"\b(?:public|protected|private|default|static|final)\b", "", type_text or "")
+    value = re.sub(r"\b(?:[a-z_]\w*\.)+([A-Z]\w*)", r"\1", value)
+    value = value.replace("...", "[]")
+    return re.sub(r"\s+", "", value)
+
+
+def parse_maintainer_signatures(content: str) -> list[dict]:
+    """Extract exact declaration signatures from the first Java block of each API section."""
+    from parse_maintainer_interface import parse_method_signature
+
+    signatures = []
+    section_re = re.compile(r"^###\s+(\d+)\.(\d+)\.\s+.+$", re.MULTILINE)
+    sections = list(section_re.finditer(content))
+    declaration_re = re.compile(
+        r"(?m)^\s*(?:public\s+)?(?:default\s+|static\s+)?[\w<>,\s\[\].?]+\s+\w+\s*\((.*?)\)\s*(?:throws\s+[^;{]+)?\s*;?\s*$",
+        re.DOTALL,
+    )
+    for i, section in enumerate(sections):
+        start = section.end()
+        end = sections[i + 1].start() if i + 1 < len(sections) else len(content)
+        section_text = content[start:end]
+        section_id = f"{section.group(1)}.{section.group(2)}"
+        code_match = re.search(r"```java\s*\n(.*?)```", section_text, flags=re.DOTALL)
+        if not code_match:
+            continue
+        for declaration in declaration_re.finditer(code_match.group(1)):
+            raw = declaration.group(0).strip()
+            if raw.startswith("public "):
+                raw = raw[7:].strip()
+            parsed = parse_method_signature(raw)
+            if not parsed or parsed["name"] in ("if", "for", "while", "switch", "return", "new", "try", "catch"):
+                continue
+            signatures.append({
+                "section_id": section_id,
+                "chapter": int(section.group(1)),
+                "name": parsed["name"],
+                "param_types": tuple(_normalize_type(t) for t in parsed["param_types"]),
+                "param_count": parsed["param_count"],
+                "return_type": _normalize_type(parsed["return_type"]),
+            })
+    return signatures
+
+
 def detect_structure_warnings(content: str) -> list:
     """Detect obvious document structure issues."""
     warnings = []
@@ -134,6 +181,30 @@ def detect_structure_warnings(content: str) -> list:
         warnings.append(
             "Top-level chapter order is not strictly increasing. Check chapter insertion position."
         )
+    if len(chapter_nums) != len(set(chapter_nums)):
+        warnings.append("Duplicate top-level chapter number detected.")
+
+    # Detect duplicate or out-of-order section numbers inside each chapter. A
+    # duplicated heading can make locale parity look correct while anchors point
+    # to the wrong API, so treat it as a structural warning.
+    section_numbers = [
+        (int(chapter), int(section))
+        for chapter, section in re.findall(r"^###\s+(\d+)\.(\d+)\.", content, flags=re.MULTILINE)
+    ]
+    seen_sections = set()
+    last_section_by_chapter = {}
+    for chapter, section in section_numbers:
+        key = (chapter, section)
+        if key in seen_sections:
+            warnings.append(f"Duplicate section number detected: {chapter}.{section}.")
+        seen_sections.add(key)
+        previous = last_section_by_chapter.get(chapter)
+        if previous is not None and section <= previous:
+            warnings.append(
+                f"Section order is not strictly increasing in chapter {chapter}: "
+                f"{previous} is followed by {section}."
+            )
+        last_section_by_chapter[chapter] = section
 
     # Ensure each ### X.Y section is under matching latest ## X chapter.
     heading_re = re.compile(r"^(##|###)\s+(\d+)\.(\d+)?", flags=re.MULTILINE)
@@ -186,7 +257,7 @@ def main():
         "--nacos-maintainer-dir",
         type=str,
         required=True,
-        help="Path to maintainer-client src: maintainer-client/src/main/java",
+        help="Nacos repo root, maintainer-client module root, src/main/java, or client package root",
     )
     ap.add_argument(
         "--maintainer-md",
@@ -208,7 +279,11 @@ def main():
     if "/next/" not in str(usage_path) or "latest" in str(usage_path) or "v3.0" in str(usage_path):
         print("Warning: maintainer-md should be under docs/next/; do not use latest or v3.0.", file=sys.stderr)
 
-    by_chapter = get_all_methods_by_chapter(base_dir)
+    try:
+        by_chapter = get_all_methods_by_chapter(base_dir)
+    except FileNotFoundError as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        sys.exit(1)
     java_methods = []
     for ch, methods in by_chapter.items():
         for m in methods:
@@ -218,6 +293,7 @@ def main():
 
     usage_content = usage_path.read_text(encoding="utf-8")
     doc_methods = parse_maintainer_md(usage_content)
+    doc_signatures = parse_maintainer_signatures(usage_content)
     structure_warnings = detect_structure_warnings(usage_content)
 
     doc_chapter_method_set = set()
@@ -226,14 +302,6 @@ def main():
             chapter = section_id.split(".")[0]
             if chapter.isdigit():
                 doc_chapter_method_set.add((int(chapter), name))
-
-    doc_chapter_name_param_set = set()
-    for name, entries in doc_methods.items():
-        for section_id, pc in entries:
-            if pc is not None:
-                chapter = section_id.split(".")[0]
-                if chapter.isdigit():
-                    doc_chapter_name_param_set.add((int(chapter), name, pc))
 
     # Methods that exist in interface but should NOT be documented (design decision)
     SKIP_NEW_API = {"fillAllPattern"}  # ConfigMaintainerService: utility for * pattern, not a capability API
@@ -245,32 +313,69 @@ def main():
             ch = m["chapter"]
             new_by_chapter.setdefault(ch, []).append(m)
 
-    # New overloads: method name is documented but this (name, param_count) is not
+    # New overloads/signatures: compare normalized parameter types so
+    # same-count overloads are not collapsed.
+    doc_signature_set = {
+        (item["chapter"], item["name"], item["param_types"])
+        for item in doc_signatures
+    }
     new_overloads = [
         m for m in java_methods
         if (m["chapter"], m["name"]) in doc_chapter_method_set
-        and (m["chapter"], m["name"], m["param_count"]) not in doc_chapter_name_param_set
+        and (m["chapter"], m["name"], tuple(_normalize_type(t) for t in m["param_types"])) not in doc_signature_set
     ]
 
-    # Removed overloads: (method_name, param_count) in doc but not in interface for that chapter
+    # Removed overloads and return types are checked by exact normalized
+    # signature, not parameter count.
     java_chapter_method_params = {}
+    java_signature_returns = {}
     for m in java_methods:
         key = (m["chapter"], m["name"])
         java_chapter_method_params.setdefault(key, set()).add(m["param_count"])
-    removed_overloads = []
+        signature_key = (m["chapter"], m["name"], tuple(_normalize_type(t) for t in m["param_types"]))
+        java_signature_returns[signature_key] = _normalize_type(m["return_type"])
+    removed_apis = []
+    seen_removed_apis = set()
     for name, entries in doc_methods.items():
-        for section_id, pc in entries:
-            if pc is None:
+        for section_id, _ in entries:
+            chapter_text = section_id.split(".")[0]
+            if not chapter_text.isdigit():
                 continue
-            chapter = section_id.split(".")[0]
-            ch_int = int(chapter) if chapter.isdigit() else None
-            if ch_int is None or ch_int not in by_chapter:
+            chapter = int(chapter_text)
+            key = (chapter, name)
+            if chapter not in by_chapter or key in java_chapter_method_params:
                 continue
-            key = (ch_int, name)
-            if key not in java_chapter_method_params:
-                continue
-            if pc not in java_chapter_method_params[key]:
-                removed_overloads.append({"name": name, "param_count": pc, "section_id": section_id, "chapter": ch_int})
+            report_key = (section_id, name)
+            if report_key not in seen_removed_apis:
+                seen_removed_apis.add(report_key)
+                removed_apis.append({"name": name, "section_id": section_id, "chapter": chapter})
+
+    removed_overloads = []
+    return_type_mismatches = []
+    for item in doc_signatures:
+        method_key = (item["chapter"], item["name"])
+        if method_key not in java_chapter_method_params:
+            continue  # reported as a removed API above
+        signature_key = (item["chapter"], item["name"], item["param_types"])
+        if signature_key not in java_signature_returns:
+            removed_overloads.append({
+                "name": item["name"],
+                "param_count": item["param_count"],
+                "param_types": list(item["param_types"]),
+                "section_id": item["section_id"],
+                "chapter": item["chapter"],
+            })
+            continue
+        source_return = java_signature_returns[signature_key]
+        if item["return_type"] and item["return_type"] != source_return:
+            return_type_mismatches.append({
+                "name": item["name"],
+                "param_types": list(item["param_types"]),
+                "section_id": item["section_id"],
+                "chapter": item["chapter"],
+                "documented_return_type": item["return_type"],
+                "source_return_type": source_return,
+            })
 
     if args.json:
         import json
@@ -280,13 +385,15 @@ def main():
                 for k, v in sorted(new_by_chapter.items())
             },
             "new_overloads": [
-                {"name": m["name"], "chapter": m["chapter"], "param_count": m["param_count"], "return_type": m["return_type"], "source": m["source"]}
+                {"name": m["name"], "chapter": m["chapter"], "param_count": m["param_count"], "param_types": m["param_types"], "return_type": m["return_type"], "source": m["source"]}
                 for m in new_overloads
             ],
+            "removed_apis": removed_apis,
             "removed_overloads": [
-                {"name": r["name"], "param_count": r["param_count"], "section_id": r["section_id"], "chapter": r["chapter"]}
+                {"name": r["name"], "param_count": r["param_count"], "param_types": r["param_types"], "section_id": r["section_id"], "chapter": r["chapter"]}
                 for r in removed_overloads
             ],
+            "return_type_mismatches": return_type_mismatches,
             "structure_warnings": structure_warnings,
         }
         print(json.dumps(out, indent=2, ensure_ascii=False))
@@ -306,20 +413,42 @@ def main():
         print("--- No new APIs (all interface methods are documented). ---\n")
 
     if new_overloads:
-        print("--- NEW OVERLOADS (same method name, param_count not in doc; add to section) ---")
+        print("--- NEW OVERLOADS (exact parameter-type signature not in doc; add to section) ---")
         for m in new_overloads:
-            print(f"  Ch{m['chapter']} {m['source']}.{m['name']}({m['param_count']} params) -> {m['return_type']}")
+            params = ", ".join(m["param_types"])
+            print(f"  Ch{m['chapter']} {m['source']}.{m['name']}({params}) -> {m['return_type']}")
         print()
     else:
         print("--- No new overloads to add. ---\n")
 
+    if removed_apis:
+        print("--- REMOVED APIs (documented method no longer exists in its source chapter) ---")
+        for item in removed_apis:
+            print(f"  Ch{item['chapter']} {item['name']}  section {item['section_id']}")
+        print()
+    else:
+        print("--- No removed APIs. ---\n")
+
     if removed_overloads:
-        print("--- REMOVED OVERLOADS (param_count in doc but not in interface; delete or annotate deprecated) ---")
+        print("--- REMOVED OVERLOADS (documented parameter-type signature not in interface) ---")
         for r in removed_overloads:
-            print(f"  {r['name']}({r['param_count']} params)  section {r['section_id']}")
+            params = ", ".join(r["param_types"])
+            print(f"  {r['name']}({params})  section {r['section_id']}")
         print()
     else:
         print("--- No removed overloads. ---\n")
+
+    if return_type_mismatches:
+        print("--- RETURN TYPE MISMATCHES ---")
+        for item in return_type_mismatches:
+            params = ", ".join(item["param_types"])
+            print(
+                f"  Ch{item['chapter']} {item['name']}({params}) section {item['section_id']}: "
+                f"doc={item['documented_return_type']}, source={item['source_return_type']}"
+            )
+        print()
+    else:
+        print("--- No return type mismatches. ---\n")
 
     if structure_warnings:
         print("--- STRUCTURE WARNINGS ---")

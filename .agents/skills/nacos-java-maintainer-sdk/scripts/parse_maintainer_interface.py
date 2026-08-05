@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 """
 Parse Nacos Maintainer Java interface files with inheritance support.
-Output method signatures (name, param count, return type, @since, declaring interface).
+Output method signatures (name, param count, return type, @Since/@since, declaring interface).
 Used by compare_maintainer_api_with_doc.py. Can be run standalone.
 
 Usage:
+  python parse_maintainer_interface.py --dir YOUR_NACOS_REPO
   python parse_maintainer_interface.py --dir YOUR_NACOS_REPO/maintainer-client/src/main/java
   python parse_maintainer_interface.py --file path/to/ConfigMaintainerService.java
   python parse_maintainer_interface.py --dir ... --by-chapter   # group output by doc chapter
@@ -33,6 +34,9 @@ INTERFACE_TO_SUBDIR = {
     "PromptMaintainerService": "ai",
     "SkillMaintainerService": "ai",
     "AgentSpecMaintainerService": "ai",
+    "AgentMaintainerService": "ai",
+    "PipelineMaintainerService": "ai",
+    "PipelineAdminClient": "ai",
     "AiMaintainerService": "ai",
 }
 
@@ -46,7 +50,11 @@ CHAPTER_INTERFACES = {
     8: ["PromptMaintainerService"],
     9: ["SkillMaintainerService"],
     10: ["AgentSpecMaintainerService"],
+    11: ["AgentMaintainerService"],
+    12: ["PipelineMaintainerService", "PipelineAdminClient"],
 }
+
+CLIENT_PACKAGE_PATH = Path("com/alibaba/nacos/maintainer/client")
 
 
 def _tokenize_params(param_str: str):
@@ -118,6 +126,12 @@ def extract_since(javadoc: str) -> str:
     return m.group(1).strip() if m else ""
 
 
+def extract_since_annotation(line: str) -> str:
+    """Extract the public API version from a Nacos @Since annotation."""
+    m = re.search(r'@Since\s*\(\s*"([^"]+)"\s*\)', line)
+    return m.group(1).strip() if m else ""
+
+
 def extract_extends(content: str):
     """Extract interface names from 'extends A, B, C' or 'extends A, B, C, Closeable'."""
     # Match: public interface Foo extends Bar, Baz {
@@ -141,6 +155,12 @@ def extract_extends(content: str):
 def parse_java_interface_content(content: str, source_name: str):
     """Parse interface file content, return list of method dicts with source=source_name."""
     methods = []
+    interface_javadoc = re.search(
+        r"/\*\*(.*?)\*/\s*(?:@[\w().,\s\"-]+\s*)*public\s+interface\s+\w+",
+        content,
+        flags=re.DOTALL,
+    )
+    interface_since = extract_since(interface_javadoc.group(1)) if interface_javadoc else ""
     blocks = re.split(r"/\*\*", content)
     for block in blocks[1:]:
         end = block.find("*/")
@@ -149,18 +169,22 @@ def parse_java_interface_content(content: str, source_name: str):
         javadoc = block[:end].strip()
         rest = block[end + 2 :].strip()
         since = extract_since(javadoc)
+        annotation_since = ""
         lines = rest.split("\n")
         i = 0
         while i < len(lines):
             line = lines[i].strip()
             i += 1
-            if not line or line.startswith("//") or line.startswith("*") or line.startswith("@"):
+            if not line or line.startswith("//") or line.startswith("*"):
+                continue
+            if line.startswith("@"):
+                annotation_since = extract_since_annotation(line) or annotation_since
                 continue
             if line.startswith("return ") or line.startswith("throw "):
                 continue
             if " = " in line and "(" in line and not line.strip().startswith("default "):
                 continue
-            if not re.match(r"^(default\s+|static\s+)?[\w<>,\s\[\]]+\s+\w+\s*\(", line):
+            if not re.match(r"^(default\s+|static\s+)?[\w<>,\s\[\].?]+\s+\w+\s*\(", line):
                 continue
             acc = [line]
             if re.search(r"\)\s*;", line) or re.search(r"\)\s*throws\s+[^;]+;\s*$", line):
@@ -194,34 +218,50 @@ def parse_java_interface_content(content: str, source_name: str):
                 full = full.split(" {")[0].strip()
             sig = parse_method_signature(full)
             if sig:
-                sig["since"] = since
+                sig["since"] = annotation_since or since or interface_since
                 sig["source"] = source_name
                 methods.append(sig)
     return methods
 
 
+def resolve_client_root(base_dir: Path) -> Path:
+    """Resolve a repository/module/source/package path to the client package root."""
+    candidates = [
+        base_dir / CLIENT_PACKAGE_PATH,
+        base_dir / "maintainer-client/src/main/java" / CLIENT_PACKAGE_PATH,
+        base_dir / "src/main/java" / CLIENT_PACKAGE_PATH,
+        base_dir,
+    ]
+    seen = set()
+    for candidate in candidates:
+        key = str(candidate)
+        if key in seen:
+            continue
+        seen.add(key)
+        if (candidate / "config/ConfigMaintainerService.java").is_file():
+            return candidate
+    raise FileNotFoundError(
+        "Cannot locate com/alibaba/nacos/maintainer/client under "
+        f"{base_dir}. Pass the Nacos repository root, maintainer-client module root, "
+        "src/main/java directory, or client package directory."
+    )
+
+
 def resolve_interface_path(base_dir: Path, interface_name: str):
-    """Resolve interface simple name to .java file path under base_dir."""
+    """Resolve interface simple name to .java file path under a supported base path."""
     subdir = INTERFACE_TO_SUBDIR.get(interface_name)
     if not subdir:
         return None
-    # base_dir can be maintainer-client/src/main/java or .../com/alibaba/nacos/maintainer/client
-    client_root = base_dir
-    if (base_dir / "com/alibaba/nacos/maintainer/client").exists():
-        client_root = base_dir / "com/alibaba/nacos/maintainer/client"
+    client_root = resolve_client_root(base_dir)
     p = client_root / subdir / f"{interface_name}.java"
-    if p.exists():
-        return p
-    # try direct under base_dir
-    p = base_dir / "com/alibaba/nacos/maintainer/client" / subdir / f"{interface_name}.java"
-    return p if p.exists() else None
+    return p if p.is_file() else None
 
 
 def parse_interface_with_inheritance(base_dir: Path, interface_name: str, parsed: dict):
     """
     Parse an interface and all its parent interfaces (recursively).
     Each method is tagged with source = the interface where it is declared.
-    Returns list of all methods (no duplicate by name+param_count from same source).
+    Returns list of all methods (no duplicate by exact name+parameter-type signature).
     """
     path = resolve_interface_path(base_dir, interface_name)
     if not path:
@@ -230,14 +270,14 @@ def parse_interface_with_inheritance(base_dir: Path, interface_name: str, parsed
         return parsed[interface_name]
     content = path.read_text(encoding="utf-8")
     direct_methods = parse_java_interface_content(content, interface_name)
-    seen = {(m["name"], m["param_count"]) for m in direct_methods}
+    seen = {(m["name"], tuple(m["param_types"])) for m in direct_methods}
     result = list(direct_methods)
     for parent in extract_extends(content):
         if parent not in INTERFACE_TO_SUBDIR:
             continue
         parent_methods = parse_interface_with_inheritance(base_dir, parent, parsed)
         for m in parent_methods:
-            key = (m["name"], m["param_count"])
+            key = (m["name"], tuple(m["param_types"]))
             if key not in seen:
                 seen.add(key)
                 result.append(m)
@@ -252,14 +292,31 @@ def get_all_methods_by_chapter(base_dir: Path):
     So we parse ConfigMaintainerService (gets Config+Beta+History+Ops+Core), then filter source in ch3.
     For ch4 we parse NamingMaintainerService and filter source in ch4.
     For ch5 we parse CoreMaintainerService (all methods are Core).
-    For ch6,7,8,9,10 we parse Mcp, A2a, Prompt, Skill, AgentSpec and take all.
+    For ch6-12 we parse each AI facade (including Agent and Pipeline) and take all.
     """
+    client_root = resolve_client_root(base_dir)
+    required_interfaces = sorted({
+        interface
+        for interfaces in CHAPTER_INTERFACES.values()
+        for interface in interfaces
+    })
+    missing = [
+        interface
+        for interface in required_interfaces
+        if resolve_interface_path(client_root, interface) is None
+    ]
+    if missing:
+        raise FileNotFoundError(
+            f"Missing required Maintainer SDK interfaces under {client_root}: "
+            + ", ".join(missing)
+        )
+
     by_chapter = {}
     parsed_cache = {}
     for chapter, interfaces in CHAPTER_INTERFACES.items():
         # Entry point: first interface in the list that we can parse and that pulls in others
         entry = interfaces[0]
-        all_methods = parse_interface_with_inheritance(base_dir, entry, parsed_cache)
+        all_methods = parse_interface_with_inheritance(client_root, entry, parsed_cache)
         # Keep only methods declared in one of this chapter's interfaces
         chapter_methods = [m for m in all_methods if m["source"] in interfaces]
         by_chapter[chapter] = chapter_methods
@@ -269,7 +326,11 @@ def get_all_methods_by_chapter(base_dir: Path):
 def main():
     ap = argparse.ArgumentParser(description="Parse Nacos Maintainer Java interface(s) with inheritance")
     ap.add_argument("--file", type=str, help="Single .java interface file")
-    ap.add_argument("--dir", type=str, help="maintainer-client/src/main/java directory")
+    ap.add_argument(
+        "--dir",
+        type=str,
+        help="Nacos repo root, maintainer-client module root, src/main/java, or client package root",
+    )
     ap.add_argument("--by-chapter", action="store_true", help="Output grouped by doc chapter")
     ap.add_argument("--json", action="store_true", help="Output JSON")
     args = ap.parse_args()
@@ -298,7 +359,11 @@ def main():
             print(f"Directory not found: {base}", file=sys.stderr)
             sys.exit(1)
         if args.by_chapter:
-            by_chapter = get_all_methods_by_chapter(base)
+            try:
+                by_chapter = get_all_methods_by_chapter(base)
+            except FileNotFoundError as exc:
+                print(f"Error: {exc}", file=sys.stderr)
+                sys.exit(1)
             if args.json:
                 import json
                 print(json.dumps(by_chapter, indent=2, ensure_ascii=False, default=str))
@@ -310,7 +375,11 @@ def main():
                         print(f"  {m['return_type']} {m['name']}({m['param_count']} params)  [{m['source']}]{since}")
         else:
             # Dump all interfaces we know about, merged by chapter
-            by_chapter = get_all_methods_by_chapter(base)
+            try:
+                by_chapter = get_all_methods_by_chapter(base)
+            except FileNotFoundError as exc:
+                print(f"Error: {exc}", file=sys.stderr)
+                sys.exit(1)
             all_methods = []
             for ch in sorted(by_chapter.keys()):
                 for m in by_chapter[ch]:

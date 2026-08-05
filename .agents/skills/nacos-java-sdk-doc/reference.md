@@ -94,12 +94,14 @@
 | 5 | 分布式锁API | lock、unLock |
 | 6 | MCP 服务 | 查询、发布、注册/注销 Endpoint、订阅/取消订阅 |
 | 7 | A2A 注册中心 | AgentCard 查询/发布、Endpoint 注册/注销、订阅/取消订阅、批量注册 Endpoint |
-| 8 | Skill 能力 | loadSkill、subscribeSkill、unsubscribeSkill（新增能力，排在 A2A 后） |
+| 8 | Skill 能力 | downloadSkillZip、downloadSkillZipByVersion、downloadSkillZipByLabel、subscribeSkill、unsubscribeSkill |
 | 9 | Prompt 能力 | getPrompt、getPromptByVersion、getPromptByLabel、subscribePrompt、unsubscribePrompt（新增能力，排在 A2A 后） |
 | 10 | AgentSpec 能力 | loadAgentSpec、subscribeAgentSpec、unsubscribeAgentSpec（新增能力，排在 Prompt 后） |
-| 11 | Java SDK的生命周期 | 创建、shutdown（含 AiService.shutdown 等）、实例复用与资源释放；**shutdown 类 API 不单独成节** |
+| 11 | Agent 管理与发现 | publishAgent、searchAgents、discoverAgent、subscribeAgent、unsubscribeAgent、registerAgentEndpoints、deregisterAgentEndpoints |
+| 12 | Java SDK的生命周期 | 创建、shutdown（含 AiService.shutdown 等）、实例复用与资源释放；**shutdown 类 API 不单独成节** |
 
-- **说明**：已有模块（MCP、A2A）保持原有顺序；新增大模块（如 Skill、Prompt、AgentSpec）在 A2A 之后、生命周期之前依次追加，后续新增能力也向后添加。`shutdown` 在生命周期章统一说明，不再单独列为 API 小节。
+- **说明**：已有模块（MCP、A2A）保持原有顺序；Skill、Prompt、AgentSpec、Agent 管理与发现依次排在 A2A 之后。后续新增能力继续在生命周期之前向后添加。`shutdown` 在生命周期章统一说明，不再单独列为 API 小节。
+- **Agent 定位**：第 11 章是协议无关的新主入口，未来用于替代旧 A2A 管理 API；兼容期内第 7 章仍保留。新接入用户和 SDK 应优先兼容第 11 章，而不是新增对 A2A AgentCard API 的依赖。
 
 ---
 
@@ -120,7 +122,9 @@
 
 ## 9. 与 Java 接口的同步（本 skill 扩展）
 
-- 新增/变更内容应来自 Nacos Java Client 接口：`ConfigService`、`NamingService`、`LockService`、`AiService`、`A2aService`（见 SKILL.md 中的「Java Client API 定义来源」）。LockService 对应第 5 章分布式锁 API；AiService 的 Skill、Prompt、AgentSpec 为新增能力，排在 A2A 后，分别对应第 8、9、10 章；`shutdown` 在生命周期章说明，不单独成 API 小节。
-- 使用脚本 `scripts/compare_java_api_with_doc.py` 对比接口与 usage.md，可得到**新增 API**（需整条补全）、**新增重载**（在已有小节中补充签名/参数/示例）与**已删除重载**（在已有小节中删除或标注该重载）。**Nacos 项目路径由使用者提供**（`--nacos-api-dir`），skill 中不写死路径。
+- 新增/变更内容应来自 Nacos Java Client 接口：`ConfigService`、`NamingService`、`LockService`、`AiService`、`AgentDiscoveryService`、`A2aService`（见 SKILL.md 中的「Java Client API 定义来源」）。LockService 对应第 5 章；AiService 的 Skill、Prompt、AgentSpec 分别对应第 8、9、10 章；`AgentDiscoveryService` 与 `AiService.publishAgent` 对应第 11 章；`shutdown` 在第 12 章说明，不单独成 API 小节。
+- `AiService extends AgentDiscoveryService, A2aService`。比较和人工复核时必须展开 `AgentDiscoveryService`，并按章节而不是全局方法名判断是否已文档化，避免同名方法或父接口方法被其他章节误消除。
+- `LockService.renew` 当前与中英文 lock spec 冲突：源码存在，但 Spec 尚未把续约纳入稳定 SDK 边界。在 Spec 更新前不得写成用户契约；报告中保留待确认项，并在 Spec 接纳后移除脚本豁免。
+- 使用脚本 `scripts/compare_java_api_with_doc.py` 对比接口与 usage.md，可得到**新增 API**、**已删除 API**、按规范化参数类型序列识别的**新增/已删除重载**及**返回类型不一致**。不能只按方法名或参数个数判断；同参数数、不同类型的重载必须分别文档化。**Nacos 项目路径由使用者提供**（`--nacos-api-dir`），skill 中不写死路径。
 - 补全或修改时仍按本文档第 3、4、5、6 节的格式执行，并保持中英文结构一致。
 - 修改过程中若有**不明确**之处（含义歧义、与接口不一致原因不明等），**暂不修改**，将该条列入修改报告的「待确认内容」，待确认后再改。修改完成后须生成修改报告；报告**不写入文档**，在对话中输出或由执行者自行保存，格式与类型说明见 SKILL.md。

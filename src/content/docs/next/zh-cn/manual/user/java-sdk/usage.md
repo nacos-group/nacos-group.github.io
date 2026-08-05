@@ -1784,7 +1784,7 @@ try {
 
 #### 描述
 
-通过此接口可以查询指定的MCP服务详细信息，其中包含了MCP服务的元信息和可调用的Endpoint信息
+通过此接口可以查询指定的MCP服务详细信息，其中包含了MCP服务的元信息和可调用的Endpoint信息。未指定版本时，查询最新的已发布版本。
 
 ```java
 McpServerDetailInfo getMcpServer(String mcpName) throws NacosException;
@@ -1797,7 +1797,7 @@ McpServerDetailInfo getMcpServer(String mcpName, String version) throws NacosExc
 | 名称      | 类型     | 描述      | 默认值             |
 |:--------|:-------|---------|-----------------|
 | mcpName | String | MCP服务名称 | 无，必填            |
-| version | String | MCP服务版本 | 空，当填入为空时，查询最新版本 |
+| version | String | MCP服务版本 | 空，当填入为空时，查询最新的已发布版本 |
 
 #### 返回参数
 
@@ -1823,7 +1823,7 @@ try {
 
 通过此接口可以发布新的MCP服务版本，若MCP服务为首次发布，则会创建新的MCP服务。
 
-当MCP服务及指定版本已存在时，会抛出MCP服务版本已存在的异常。
+当MCP服务及指定版本已存在时，该请求保持幂等，不会重复创建或修改已有版本。
 
 
 ```java
@@ -2912,7 +2912,457 @@ try {
 }
 ```
 
-## 11. Java SDK的生命周期
+## 11. Agent 管理与发现
+
+Agent 管理与发现 API 是协议无关的 Agent 接入主入口，覆盖目录搜索、定义发现、本地轮询订阅、定义发布以及运行时 Endpoint 注册。在兼容期内，第 7 章的旧 A2A API 仍可使用，但未来将由本章的 Agent API 替代。新接入的用户和 SDK 应优先兼容 Agent 管理与发现 API，而不是旧 A2A API。
+
+Agent API 使用创建 `AiService` 时配置的 Namespace。SDK 会复制请求对象并绑定该 Namespace，不会修改调用方传入的对象。以下 API 均自 3.3.0 版本起提供。
+
+### 11.1. 搜索 Agent
+
+#### 描述
+
+搜索当前 Namespace 中可见、已启用且至少存在一个在线版本的 Agent。`agentNameContains` 执行大小写敏感的字面量子串匹配，`tagsAll` 中的值按 AND 匹配，`protocolsAny` 中的值按 OR 匹配。
+
+```java
+Page<AgentCatalogEntry> searchAgents(AgentSearchRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称    | 类型               | 描述             | 默认值  |
+|:------|:-----------------|----------------|------|
+| request | AgentSearchRequest | Agent 搜索条件 | 无，必填 |
+
+`AgentSearchRequest` 包含以下字段：
+
+| 名称                | 类型           | 描述                                           | 默认值 |
+|:------------------|:-------------|----------------------------------------------|-----|
+| namespaceId       | String       | 由 SDK 根据 `AiService` 注入，调用方应留空              | SDK Namespace |
+| agentNameContains | String       | Agent 名称中大小写敏感的字面量子串                   | 无 |
+| tagsAll           | List\<String\> | Agent 必须同时包含的全部标签                         | 无 |
+| protocolsAny      | List\<String\> | 任一在线版本需要暴露的任一调用协议                    | 无 |
+| pageNo            | Integer      | 从 1 开始的页码                                 | 1 |
+| pageSize          | Integer      | 每页数量，取值范围为 1～100                         | 20 |
+
+#### 返回参数
+
+返回 `Page<AgentCatalogEntry>`，包含总数、当前页码、总页数和 Agent 目录条目。每个条目包含 Agent 展示信息、最新版本以及所有在线版本的标签和协议摘要，不包含 Endpoint。
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
+AiService aiService = AiFactory.createAiService(properties);
+
+AgentSearchRequest request = new AgentSearchRequest();
+request.setAgentNameContains("order");
+request.setTagsAll(Arrays.asList("production", "public"));
+request.setProtocolsAny(Collections.singletonList("a2a"));
+request.setPageNo(1);
+request.setPageSize(20);
+
+Page<AgentCatalogEntry> page = aiService.searchAgents(request);
+System.out.println(JacksonUtils.toJson(page));
+```
+
+#### 异常说明
+
+请求为空、页码或每页数量越界、请求中携带与 SDK 不同的 Namespace，或远程请求失败时，抛出 `NacosException`。
+
+### 11.2. 发现 Agent
+
+#### 描述
+
+根据 Agent 名称以及可选的精确版本或标签，获取一个完整的 Agent 发现快照。可通过 Filter 裁剪调用协议和 Endpoint 集合。Filter 只裁剪当前结果，不会选择另一个 Agent 版本，也不执行负载均衡。
+
+```java
+AgentDiscoveryResult discoverAgent(AgentReference reference) throws NacosException;
+
+AgentDiscoveryResult discoverAgent(AgentReference reference, AgentDiscoveryFilter filter)
+        throws NacosException;
+```
+
+#### 请求参数
+
+| 名称      | 类型                     | 描述                                  | 默认值  |
+|:--------|:-----------------------|-------------------------------------|------|
+| reference | AgentReference         | Agent 引用                         | 无，必填 |
+| filter    | AgentDiscoveryFilter   | 可选的协议、传输、Endpoint 来源和元数据过滤条件 | 无    |
+
+`AgentReference` 包含以下字段：
+
+| 名称      | 类型     | 描述                                      | 默认值  |
+|:--------|:-------|-----------------------------------------|------|
+| agentName | String | Agent 名称                             | 无，必填 |
+| version   | String | 精确在线版本，与 `label` 互斥              | 无    |
+| label     | String | 请求时解析到在线版本的标签，与 `version` 互斥 | 无    |
+
+`AgentDiscoveryFilter` 的所有字段均为可选：
+
+| 名称              | 类型                    | 描述                                      |
+|:----------------|:----------------------|-----------------------------------------|
+| protocols       | List\<String\>          | 允许的调用协议，列表内按 OR 匹配                 |
+| protocolVersion | String                 | 与候选调用接口的协议版本精确匹配                   |
+| transports      | List\<String\>          | 允许的传输类型，列表内按 OR 匹配                 |
+| endpointSources | List\<EndpointSource\>  | 允许的 `RUNTIME` 或 `DECLARED` 来源           |
+| metadataSelector | Map\<String, String\> | Endpoint Metadata 必须同时包含的精确键值             |
+
+#### 返回参数
+
+返回 `AgentDiscoveryResult`，其中包含 Namespace、Agent 名称、解析后的精确版本、`contentDigest` 以及包含已解析 EndpointSet 的调用接口。结果中的 `endpointSets` 是本次发现的权威地址集。
+
+`version` 和 `label` 均留空时，定义元数据使用当前 latest，运行时 Endpoint 则可匹配任一当前在线版本。显式设置 `label=latest` 时，定义和运行时 Endpoint 都严格限定为当前 latest。
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
+AiService aiService = AiFactory.createAiService(properties);
+
+AgentReference reference = new AgentReference();
+reference.setAgentName("{agentName}");
+
+AgentDiscoveryFilter filter = new AgentDiscoveryFilter();
+filter.setProtocols(Collections.singletonList("a2a"));
+filter.setEndpointSources(Arrays.asList(EndpointSource.RUNTIME, EndpointSource.DECLARED));
+
+AgentDiscoveryResult result = aiService.discoverAgent(reference, filter);
+System.out.println(JacksonUtils.toJson(result));
+```
+
+#### 异常说明
+
+Agent 引用无效、`version` 与 `label` 同时设置、Filter 无效、Agent 或目标版本不存在，或远程请求失败时，抛出 `NacosException`。
+
+### 11.3. 订阅 Agent
+
+#### 描述
+
+使用与发现相同的 Agent 引用和可选 Filter 启动 SDK 本地轮询订阅。该能力不是服务端 Watch/Push。目标初始不存在时返回 `null`，但 SDK 会保留轮询任务；目标后续出现，或解析的版本、`contentDigest` 或任一 `sourceRevision` 发生变化时，监听器收到新的完整替换快照。
+
+```java
+AgentDiscoveryResult subscribeAgent(AgentReference reference,
+        AbstractNacosAgentDiscoveryListener listener) throws NacosException;
+
+AgentDiscoveryResult subscribeAgent(AgentReference reference, AgentDiscoveryFilter filter,
+        AbstractNacosAgentDiscoveryListener listener) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称      | 类型                                    | 描述                       | 默认值  |
+|:--------|:--------------------------------------|--------------------------|------|
+| reference | AgentReference                        | 与发现请求相同的 Agent 引用 | 无，必填 |
+| filter    | AgentDiscoveryFilter                  | 与发现请求相同的可选 Filter  | 无    |
+| listener  | AbstractNacosAgentDiscoveryListener   | 接收完整替换快照的监听器         | 无，必填 |
+
+#### 返回参数
+
+返回当前 `AgentDiscoveryResult`；目标尚不存在时返回 `null`，不会因此取消轮询。
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
+AiService aiService = AiFactory.createAiService(properties);
+
+AgentReference reference = new AgentReference();
+reference.setAgentName("{agentName}");
+
+AbstractNacosAgentDiscoveryListener listener = new AbstractNacosAgentDiscoveryListener() {
+    @Override
+    public void onEvent(NacosAgentDiscoveryEvent event) {
+        AgentDiscoveryResult snapshot = event.getAgentDiscoveryResult();
+        System.out.println("agent changed: " + JacksonUtils.toJson(snapshot));
+    }
+};
+
+AgentDiscoveryResult current = aiService.subscribeAgent(reference, listener);
+System.out.println(JacksonUtils.toJson(current));
+```
+
+#### 异常说明
+
+引用、Filter 或监听器无效，或首次发现请求失败时，抛出 `NacosException`。
+
+### 11.4. 取消订阅 Agent
+
+#### 描述
+
+取消 SDK 本地的 Agent 轮询订阅。必须传入订阅时相同的 `AgentReference`、Filter 语义和监听器实例。
+
+```java
+void unsubscribeAgent(AgentReference reference,
+        AbstractNacosAgentDiscoveryListener listener) throws NacosException;
+
+void unsubscribeAgent(AgentReference reference, AgentDiscoveryFilter filter,
+        AbstractNacosAgentDiscoveryListener listener) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称      | 类型                                    | 描述                              | 默认值  |
+|:--------|:--------------------------------------|---------------------------------|------|
+| reference | AgentReference                        | 订阅时使用的 Agent 引用           | 无，必填 |
+| filter    | AgentDiscoveryFilter                  | 订阅时使用的 Filter；未过滤订阅传 `null` | 无    |
+| listener  | AbstractNacosAgentDiscoveryListener   | 订阅时使用的同一监听器实例             | 无，必填 |
+
+#### 返回参数
+
+无。
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
+AiService aiService = AiFactory.createAiService(properties);
+
+AgentReference reference = new AgentReference();
+reference.setAgentName("{agentName}");
+AbstractNacosAgentDiscoveryListener listener = new AbstractNacosAgentDiscoveryListener() {
+    @Override
+    public void onEvent(NacosAgentDiscoveryEvent event) {
+        System.out.println(JacksonUtils.toJson(event.getAgentDiscoveryResult()));
+    }
+};
+try {
+    aiService.subscribeAgent(reference, listener);
+    aiService.unsubscribeAgent(reference, listener);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+引用、Filter 或监听器无效时，抛出 `NacosException`。
+
+### 11.5. 注册 Agent 运行时 Endpoint
+
+#### 描述
+
+为一个 Agent 协议注册当前 SDK Publisher 的完整运行时 Endpoint Batch。同一 Publisher 再次注册相同 `(agentName, protocol)` 时会完整替换上一个 Batch，未再提交的 Endpoint 会被删除。SDK 会保存该完整 Batch 作为重连后的 redo 意图。Endpoint 注册不会隐式创建 Agent 定义。
+
+```java
+void registerAgentEndpoints(AgentEndpointRegistrationBatch batch) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称  | 类型                               | 描述                  | 默认值  |
+|:----|:---------------------------------|---------------------|------|
+| batch | AgentEndpointRegistrationBatch | 完整的 Endpoint 注册 Batch | 无，必填 |
+
+`AgentEndpointRegistrationBatch` 包含以下字段：
+
+| 名称           | 类型             | 描述                                               | 默认值 |
+|:-------------|:---------------|--------------------------------------------------|-----|
+| namespaceId  | String         | 由 SDK 根据 `AiService` 注入，调用方应留空                  | SDK Namespace |
+| agentName    | String         | Agent 名称                                        | 无，必填 |
+| runtimeVersion | String       | 当前部署的实现版本                                     | 无，必填 |
+| versionRange | String         | 该部署能服务的 Agent 版本范围，必须包含 `runtimeVersion`      | `[runtimeVersion]` |
+| protocol     | String         | Endpoint 所属的规范协议 Token                          | 无，必填 |
+| endpoints    | List\<Endpoint\> | 当前 Publisher 的完整 Endpoint 集合，数量为 1～1000 | 无，必填 |
+
+`Endpoint` 包含以下字段：
+
+| 名称       | 类型                  | 描述                                   | 默认值 |
+|:---------|:--------------------|--------------------------------------|-----|
+| uri      | String              | 完整绝对调用 URI                       | 无，必填 |
+| transport | String             | 规范传输类型，如 `HTTP+JSON`             | 无，必填 |
+| priority | Integer             | 优先级，数值越小越优先                     | 0 |
+| weight   | Double              | 同一优先级内的权重                        | 1 |
+| metadata | Map\<String, String\> | 扁平 Endpoint 元数据                    | 无 |
+
+> 注册请求不应设置 `healthy`；健康状态由发现结果提供。
+
+#### 返回参数
+
+无。
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
+AiService aiService = AiFactory.createAiService(properties);
+
+Endpoint endpoint = new Endpoint();
+endpoint.setUri("https://agent.example.com:443/a2a");
+endpoint.setTransport("HTTP+JSON");
+endpoint.setPriority(0);
+endpoint.setWeight(1.0D);
+
+AgentEndpointRegistrationBatch batch = new AgentEndpointRegistrationBatch();
+batch.setAgentName("{agentName}");
+batch.setRuntimeVersion("1.1.0");
+batch.setVersionRange("[1.0.0,2.0.0)");
+batch.setProtocol("a2a");
+batch.setEndpoints(Collections.singletonList(endpoint));
+
+aiService.registerAgentEndpoints(batch);
+```
+
+#### 异常说明
+
+Batch 或 Endpoint 校验失败、`versionRange` 不包含 `runtimeVersion`、请求中携带与 SDK 不同的 Namespace，或发布失败时，抛出 `NacosException`。
+
+### 11.6. 注销 Agent 运行时 Endpoint
+
+#### 描述
+
+按 `uri` 和 `transport` 组成的自然键，从当前 SDK Publisher 缓存的完整 Batch 中移除 Endpoint。SDK 会重新注册保留后的完整 Batch；当没有 Endpoint 剩余时，注销该 Publisher 在 `(agentName, protocol)` 下的整份 Publication。
+
+```java
+void deregisterAgentEndpoints(AgentEndpointDeregistrationBatch batch) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称  | 类型                                 | 描述                    | 默认值  |
+|:----|:-----------------------------------|-----------------------|------|
+| batch | AgentEndpointDeregistrationBatch | Endpoint 注销意图 Batch | 无，必填 |
+
+`AgentEndpointDeregistrationBatch` 包含 Agent 名称、协议和要移除的 Endpoint 列表。`namespaceId` 由 SDK 注入；列表中的 Endpoint 只需要填写自然键字段 `uri` 和 `transport`。
+
+#### 返回参数
+
+无。
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
+AiService aiService = AiFactory.createAiService(properties);
+
+Endpoint endpoint = new Endpoint();
+endpoint.setUri("https://agent.example.com:443/a2a");
+endpoint.setTransport("HTTP+JSON");
+
+AgentEndpointDeregistrationBatch batch = new AgentEndpointDeregistrationBatch();
+batch.setAgentName("{agentName}");
+batch.setProtocol("a2a");
+batch.setEndpoints(Collections.singletonList(endpoint));
+
+aiService.deregisterAgentEndpoints(batch);
+```
+
+#### 异常说明
+
+Batch 或 Endpoint 自然键无效、请求中携带与 SDK 不同的 Namespace，或发布失败时，抛出 `NacosException`。
+
+### 11.7. 代码式发布 Agent 定义
+
+#### 描述
+
+从应用代码中发布一个精确 Agent 版本。请求使用 `AiService` 的 Namespace，SDK 会复制请求对象且不会修改调用方对象。`autoSubmit=false` 时只创建或返回等价 draft；`autoSubmit=true` 时在创建 draft 后执行普通 submit Pipeline，并返回最终可观察到的 `reviewing`、`reviewed` 或 `online` 版本。此操作不是 force-publish。
+
+同一 Namespace、Agent 和精确版本的等价重试具有幂等和状态收敛语义。已有 draft 可通过将同一请求的 `autoSubmit` 改为 `true` 继续提交。内容、作者、变更说明或显式首次元数据不等价时返回冲突；已进入后续状态的版本不能通过 `autoSubmit=false` 回退为 draft。
+
+> 本节使用的 `AgentProvider` 和 `AgentVersionDetail` 位于 `com.alibaba.nacos.api.ai.model.agent` 包，不是旧 A2A 的 `com.alibaba.nacos.api.ai.model.a2a` 同名类型。
+
+```java
+AgentVersionDetail publishAgent(AgentPublishRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 名称    | 类型                 | 描述             | 默认值  |
+|:------|:-------------------|----------------|------|
+| request | AgentPublishRequest | Agent 定义发布请求 | 无，必填 |
+
+`AgentPublishRequest` 复用 `AgentDraftCreateRequest` 的字段，并增加 `autoSubmit`：
+
+| 名称                | 类型                        | 描述                                                   | 默认值 |
+|:------------------|:--------------------------|------------------------------------------------------|-----|
+| agentName         | String                    | Agent 名称                                            | 无，必填 |
+| displayName       | String                    | 首次创建 Agent 时的可选展示名称                              | 无 |
+| description       | String                    | 首次创建 Agent 时的可选目录描述                              | 无 |
+| iconUrl           | String                    | 首次创建 Agent 时的可选图标 URI                           | 无 |
+| provider          | AgentProvider             | 首次创建 Agent 时的可选提供方 `name` 和 `url`                 | 无 |
+| tags              | List\<String\>             | 首次创建 Agent 时的可选公开目录标签                            | 无 |
+| extensions        | Map\<String, Object\>      | 首次创建 Agent 时的可选公开扩展                               | 无 |
+| version           | String                    | 要创建的精确 SemVer 版本                                 | 无，必填 |
+| callInterfaces    | List\<AgentCallInterface\> | 非空的有序协议定义；与 `basedOnVersion` 必须且只能填写其中一项 | 条件必填 |
+| basedOnVersion    | String                    | 复用内容的精确源版本；与 `callInterfaces` 二选一             | 条件必填 |
+| author            | String                    | Version 作者                                        | 无 |
+| changeDescription | String                    | Version 变更说明                                      | 无 |
+| autoSubmit        | boolean                   | 是否在创建 draft 后执行普通 submit Pipeline                | false |
+
+`AgentCallInterface` 包含协议、协议版本、`descriptorMediaType`、原生 `nativeDescriptor`、非空的 `endpointSourceOrder` 以及可选的声明式 Endpoint。同一 Version 中的 `protocol` 不能重复。
+
+首次创建 Agent 时必须直接提供 `callInterfaces`，因为尚不存在可复用的源版本，不能使用 `basedOnVersion`。创建后续版本时仍必须在直接内容和一个精确源版本之间二选一。
+
+#### 返回参数
+
+返回精确的 `AgentVersionDetail`，包含 Namespace、Agent 名称、版本、当前状态、调用接口、作者、变更说明、`contentDigest` 和审计时间。
+
+#### 请求示例
+
+```java
+Properties properties = new Properties();
+properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
+AiService aiService = AiFactory.createAiService(properties);
+
+AgentInterface binding = new AgentInterface();
+binding.setUrl("https://agent.example.com:443/a2a");
+binding.setProtocolBinding("HTTP+JSON");
+binding.setProtocolVersion("1.0");
+
+AgentCapabilities capabilities = new AgentCapabilities();
+capabilities.setStreaming(Boolean.TRUE);
+AgentCard card = new AgentCard();
+card.setName("{agentName}");
+card.setDescription("Order Agent");
+card.setVersion("1.0.0");
+card.setSupportedInterfaces(Collections.singletonList(binding));
+card.setCapabilities(capabilities);
+
+Endpoint declaredEndpoint = new Endpoint();
+declaredEndpoint.setUri(binding.getUrl());
+declaredEndpoint.setTransport(binding.getProtocolBinding());
+
+AgentCallInterface callInterface = new AgentCallInterface();
+callInterface.setProtocol("a2a");
+callInterface.setProtocolVersion("1.0");
+callInterface.setDescriptorMediaType("application/json");
+callInterface.setNativeDescriptor(
+        JacksonUtils.toObj(JacksonUtils.toJson(card), Map.class));
+callInterface.setEndpointSourceOrder(
+        Arrays.asList(EndpointSource.DECLARED, EndpointSource.RUNTIME));
+callInterface.setDeclaredEndpoints(Collections.singletonList(declaredEndpoint));
+
+AgentPublishRequest request = new AgentPublishRequest();
+request.setAgentName("{agentName}");
+request.setDisplayName("Order Agent");
+request.setVersion("1.0.0");
+request.setCallInterfaces(Collections.singletonList(callInterface));
+request.setAuthor("{author}");
+request.setChangeDescription("Initial version");
+request.setAutoSubmit(true);
+
+AgentVersionDetail detail = aiService.publishAgent(request);
+System.out.println(JacksonUtils.toJson(detail));
+```
+
+#### 异常说明
+
+请求为空、版本或定义校验失败、`callInterfaces` 和 `basedOnVersion` 未按二选一规则填写、等价性或状态冲突、提交失败，或当前 `AiService` 实现不支持此能力时，抛出 `NacosException`。
+
+## 12. Java SDK的生命周期
 
 Nacos的Java SDK 生命周期从创建时开始，到调用`shutdown()`方法时结束，期间对应创建的线程池、连接等均会始终保留，即使连接断开，也会不断重试重新建立连接。
 
