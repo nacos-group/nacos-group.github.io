@@ -33,387 +33,210 @@ Compatibility between Nacos 3.x server and client versions is as follows:
 
 ## 2. Upgrade Steps
 
-### 2.1. Distribution Upgrade
+:::caution[3.0.x and 3.1.x can upgrade directly to 3.3.x]
+This procedure supports direct upgrades from Nacos 3.0.x, 3.1.x, or 3.2.x to 3.3.x. It does not require an intermediate server upgrade to 3.2.x. For a 3.0.x or 3.1.x deployment, or any deployment that has not applied every 3.2.x database change, first follow the [Nacos 3.2.x Upgrade Guide](/en/docs/latest/manual/admin/upgrading/) to apply the schema prerequisites for the current database. Verify that the actual schema contains the structures required by 3.2.x, and then apply the 3.3.x delta in this guide.
 
-#### 2.1.1 Verify Database Schema
+Only the database schema prerequisites are required; do not add an intermediate 3.2.x server upgrade. Decide whether each SQL statement is needed from the actual table definitions, do not repeat DDL that has already been applied, and never run a complete initialization script against an existing database.
+:::
 
-Compare the schema file of your currently deployed Nacos version with the schema file for the target version and target database.
+### 2.1. Pre-upgrade Checks
 
-If there are schema changes, apply the database alterations first. MySQL example:
+Complete these preparations before upgrading a production cluster:
 
-```SQL
--- When upgrading from 2.0.X, execute all SQL statements below. When upgrading from versions later than 2.1.X, execute only the last three lines.
-ALTER TABLE `config_info` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT 'secret key';
-ALTER TABLE `config_info_gray` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT 'secret key';
-ALTER TABLE `his_config_info` ADD COLUMN `encrypted_data_key` varchar(1024) NOT NULL DEFAULT '' COMMENT 'secret key';
-ALTER TABLE `his_config_info` ADD COLUMN `publish_type` varchar(50)  DEFAULT 'formal' COMMENT 'publish type gray or formal';
-ALTER TABLE `his_config_info` ADD COLUMN `gray_name` varchar(50)  DEFAULT NULL COMMENT 'gray name';
-ALTER TABLE `his_config_info` ADD COLUMN `ext_info`  longtext DEFAULT NULL COMMENT 'ext info';
+1. Confirm that the source cluster runs a supported 3.0.x, 3.1.x, or 3.2.x release, and record the exact patch version, deployment mode, and database type. If the source version predates 3.2.x or its actual schema does not contain every 3.2.x change, list the database operations that must be applied from the 3.2.x upgrade guide.
+2. Back up the database and each node's `data`, `conf`, `cluster.conf`, custom plugins, and their configuration. Every deployment must retain plugin state and runtime configuration under `data/plugin`. With Derby or another embedded store, `data` also contains the primary database and must be preserved in full.
+3. Inventory plugin JARs, implementation names, states, selection properties, and private configuration. Distinguish built-in plugins from custom and third-party plugins.
+4. Rehearse database changes, authentication, plugin loading, rolling upgrade, and rollback in staging with a production-like data copy.
+5. Avoid plugin runtime configuration changes during the upgrade. Submit configuration that depends on 3.3 plugin definitions only after every node has been upgraded.
+
+<a id="217-config-compatibility-migration-removal-nacos-330"></a>
+
+#### 2.1.1. Verify Historical Config Migration Is Complete
+
+Nacos 3.3 removes the pre-3.0 Config storage migration compatibility. It no longer migrates or double-writes between the legacy empty tenant (`tenant_id = ''`) and the default namespace `public`, and it no longer migrates rows from `config_info_beta` or `config_info_tag` to `config_info_gray`.
+
+Before stopping the last source-version node:
+
+1. Check for default-namespace configuration rows with `tenant_id = ''`. If any exist, verify that they have been migrated to `tenant_id = 'public'`, resolving rows with the same `data_id` and `group_id` first.
+2. Check whether business data still depends on `config_info_beta` or `config_info_tag`. If so, complete its migration to `config_info_gray` and the current `GrayRule` model before upgrading to 3.3.x.
+3. Verify default-namespace reads, formal publishing, beta/tag gray queries, and stopping gray releases.
+
+No corresponding data migration is needed if the deployment never used the default namespace or beta/tag gray release. If the migration format is uncertain, keep the source cluster available while completing and verifying the migration; do not expect 3.3 startup to perform it.
+
+For PostgreSQL deployments upgrading directly from 3.0.x, 3.1.x, 3.2.0, or 3.2.1, or deployments that skipped the 3.2.2 schema normalization, first complete the `tenant_id` not-null migration documented in the [3.2.x Upgrade Guide](/en/docs/latest/manual/admin/upgrading/).
+
+:::caution[A2A upgrade limitation in 3.3.0-BETA]
+This guide currently applies to Nacos 3.3.0-BETA. This release introduces RAD (RemoteAgentDiscovery), a protocol-neutral capability for remote Agent registration and discovery, which will gradually replace the previous A2A capability in the GA release. However, the current BETA release does not yet support a lossless upgrade of A2A data. After a direct upgrade from 3.1.x or 3.2.x to 3.3.0-BETA, existing A2A content cannot be queried. Deployments with existing A2A content should assess this impact and retain a backup before upgrading.
+:::
+
+### 2.2. Apply Database Changes
+
+Before starting any 3.3.x node, first follow the [3.2.x Upgrade Guide](/en/docs/latest/manual/admin/upgrading/) to apply the database prerequisites needed to bring the current source schema up to the 3.2.x schema level; this does not require starting a 3.2.x server. Then compare the resulting actual schema with the complete matching schema in the target 3.3.x distribution and convert the remaining differences into reviewed incremental DDL. Never execute a complete initialization file containing `CREATE TABLE` or `DROP TABLE` statements directly against an existing database.
+
+The target distribution provides `mysql-schema.sql`, `pg-schema.sql`, `oracle-schema.sql`, and `derby-schema.sql` under `conf`. After applying the 3.2.x schema prerequisites, pay particular attention to these additional 3.3.x changes:
+
+| Change | Scope and action |
+| --- | --- |
+| `permissions.resource` expands to 512 characters | The default auth and visibility plugins need a longer column for canonical resource identifiers. If the current column is shorter than 512 and explicit visibility grants will be used, run the matching `*-upgrade-visibility-permission-resource.sql` from the target distribution. Before running the MySQL script, verify that the InnoDB page size, row format, and unique-index length support `VARCHAR(512) utf8mb4`. |
+| New AI resource search relational tables | Nacos 3.3 adds `ai_resource_search_document`, `ai_resource_search_chunk`, and `ai_resource_task`. Before enabling `nacos.ai.ard.enabled`, extract and review only the required `CREATE TABLE` and index statements for these tables from the target main-datasource schema; never copy adjacent `DROP` statements. If any table already exists, prepare an `ALTER` or data-migration plan instead of dropping and recreating it. ARD is disabled by default, so these tables and vector storage are not startup requirements while it remains disabled. Creating them proactively during a planned maintenance window is recommended. |
+| PostgreSQL pgvector storage (optional) | Only when enabling the default PostgreSQL vector plugin, initialize pgvector objects and `ai_resource_search_embedding_pg` in the PostgreSQL datasource that stores embeddings. `conf/pg-ai-vector-schema.sql` is separate from the main `pg-schema.sql`, contains `CREATE EXTENSION` and destructive initialization statements, and requires the pgvector extension and sufficient database privileges. Only a fresh vector store may run it unchanged after review; existing tables require a backup and an incremental migration instead of rerunning the file. |
+| AI resource description column expansion | In PostgreSQL, Oracle, and Derby, expand `ai_resource.c_desc` and `ai_resource_version.c_desc` to 2048 when their current length is smaller. Generate reviewed `ALTER` statements from the actual table definition and target schema instead of assuming the default length from a particular 3.2.x patch. |
+| MySQL collation for fresh schemas | Fresh 3.3 MySQL schemas use the case-sensitive `utf8mb4_bin` collation for existing core tables. No general in-place collation migration is currently provided for existing databases. Do not bulk-alter production tables from the full schema; review case-sensitive identity requirements and use a separately validated migration plan if alignment is required. |
+
+:::note
+The three ARD-related relational tables use protocol-neutral AI resource search names. Do not rename them to ARD-specific tables even though ARD is currently their only consumer. PostgreSQL deployments that do not enable the default vector plugin do not need pgvector or the vector schema.
+:::
+
+:::caution[Check case conflicts before enabling ARD on MySQL]
+In the current target schema, existing AI resource tables use the case-sensitive `utf8mb4_bin` collation, while the new search tables still use `utf8mb4_unicode_ci`. Resource names or versions that differ only by case within the same namespace may therefore collide on search-table unique keys. Detect and resolve such data before enabling ARD. If conflicts exist, keep ARD disabled until the target schema and migration plan are aligned.
+:::
+
+### 2.3. Migrate Configuration and Plugins
+
+Nacos 3.3 unifies server-plugin identity, state, implementation selection, and private configuration. Use the target distribution's `conf/application.properties` as the migration template instead of overwriting it with the source-version file. See [System Configurations](./system-configurations.md) for commonly used parameters and [Plugin Migration Guide](../../plugin/migration.md) for migration semantics. The target distribution template remains the final parameter baseline for that release.
+
+#### 2.3.1. Default Auth Plugin
+
+The default implementation remains `nacos`, but it is managed as `auth:nacos` in the unified plugin system. Its selector and private properties move to the canonical `nacos.plugin.auth.*` namespace.
+
+| 3.0.x–3.2.x legacy property | 3.3 canonical property |
+| --- | --- |
+| `nacos.core.auth.system.type` | `nacos.plugin.auth.type` |
+| `nacos.core.auth.caching.enabled` | `nacos.plugin.auth.nacos.caching.enabled` |
+| `nacos.core.auth.plugin.nacos.token.*` | `nacos.plugin.auth.nacos.token.*` |
+| `nacos.core.auth.nacos.anonymous.ai.enabled` | `nacos.plugin.auth.nacos.anonymous.ai.enabled` |
+| `nacos.core.auth.ldap.*` | `nacos.plugin.auth.ldap.*`, using canonical kebab-case item names from the plugin definitions |
+| `nacos.core.auth.plugin.oidc.*` | `nacos.plugin.auth.oidc.*` |
+
+`nacos.core.auth.enabled`, `nacos.core.auth.admin.enabled`, `nacos.core.auth.console.enabled`, and `nacos.core.auth.server.identity.*` remain core auth gates or server identity properties. Do not move them into a plugin-private namespace.
+
+When a canonical property and a legacy alias are both present, the canonical property wins. An empty canonical value still suppresses the alias. The target template already contains `nacos.plugin.auth.type=nacos` and canonical defaults for `auth:nacos`. Explicitly copy retained values to canonical properties instead of keeping old and new properties side by side. The startup script specially migrates only a valid legacy token secret in `application.properties`; migrate all other auth values explicitly. LDAP, OIDC, and custom auth deployments should also review the [Auth Plugin](../../plugin/auth-plugin.md) page item by item.
+
+If anonymous AI access is enabled, an explicit empty or invalid `Authorization`, `accessToken`, username, or password is rejected instead of falling back to anonymous access. Anonymous callers must omit credentials completely; authenticated callers must send valid credentials.
+
+#### 2.3.2. Other Plugin Configuration
+
+| Domain | 3.0.x–3.2.x legacy configuration | 3.3 canonical model |
+| --- | --- | --- |
+| Datasource dialect | `spring.sql.init.platform`; the older `spring.datasource.platform` has been removed | `nacos.plugin.datasource-dialect.type` |
+| Datasource connection | `db.*` and JVM property `QUERYTIMEOUT` | `nacos.plugin.datasource.db.*` |
+| Traffic control | `nacos.plugin.control.manager.type` | `nacos.plugin.control.type` |
+| Config Change | `nacos.core.config.plugin.{pluginName}.*` | `nacos.plugin.config-change.{pluginName}.{itemKey}` and unified implementation state |
+| Visibility | `nacos.plugin.visibility.type` | This deprecated `RESTART` selector still chooses the implementation requested by the AI domain and contributes to initial state; `nacos.plugin.visibility.{pluginName}.enabled` or persisted state determines availability, while `nacos.plugin.visibility.enabled` remains the capability gate |
+| AI Pipeline | Comma-separated `nacos.plugin.ai-pipeline.type` and legacy camel-case items | Per-implementation `nacos.plugin.ai-pipeline.{pluginName}.enabled`, canonical kebab-case items, and unified state |
+| AI Resource Import | `nacos.ai.resource.import.enabled`, `nacos.plugin.ai.importer.*`, and Source/preset/list models | `nacos.plugin.ai-resource-import.enabled`, `nacos.plugin.ai-resource-import.{pluginName}.*`, and fixed managed sources |
+
+Legacy properties may remain readable as aliases during the compatibility window and produce migration warnings, but a present canonical property has higher priority. Persisted implementation state also overrides static `.enabled` initial values. Dialect and exclusive implementation selectors, and every field marked `RESTART`, must be changed through static configuration followed by a restart, not through the plugin configuration API.
+
+AI Resource Import now defaults to enabled when neither its canonical gate nor the legacy alias is configured. To keep it disabled after the upgrade, set this before rollout:
+
+```properties
+nacos.plugin.ai-resource-import.enabled=false
 ```
 
-Version 3.2.0 introduces new AI-related tables. The following tables must be created when upgrading to 3.3.X from any previous version:
+The legacy Importer/Source SPI, clonable Source/preset model, and configuration-based cloning of one importer to multiple endpoints have been removed. External implementations must migrate to `AiResourceImportServiceBuilder`. See [AI Resource Import migration](../../plugin/migration.md#ai-resource-import-breaking-change) for the detailed mapping and built-in sources.
 
-```SQL
-CREATE TABLE IF NOT EXISTS `pipeline_execution` (
-    `execution_id`  varchar(64)  NOT NULL COMMENT 'execution ID',
-    `resource_type` varchar(32)  NOT NULL COMMENT 'resource type',
-    `resource_name` varchar(256) NOT NULL COMMENT 'resource name',
-    `namespace_id`  varchar(128) DEFAULT NULL COMMENT 'namespace ID',
-    `version`       varchar(64)  DEFAULT NULL COMMENT 'version',
-    `status`        varchar(32)  NOT NULL COMMENT 'execution status',
-    `pipeline`      longtext     NOT NULL COMMENT 'pipeline node result JSON',
-    `create_time`   bigint(20)   NOT NULL COMMENT 'creation time',
-    `update_time`   bigint(20)   NOT NULL COMMENT 'update time',
-    PRIMARY KEY (`execution_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI resource publish review pipeline execution record';
+#### 2.3.3. Custom and Third-party Plugins
 
-CREATE TABLE IF NOT EXISTS `ai_resource` (
-    `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'creation time',
-    `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'modification time',
-    `name` varchar(256) NOT NULL COMMENT 'resource name',
-    `type` varchar(32) NOT NULL COMMENT 'resource type',
-    `c_desc` varchar(2048) DEFAULT NULL COMMENT 'resource description',
-    `status` varchar(32) DEFAULT NULL COMMENT 'resource status',
-    `namespace_id` varchar(128) NOT NULL DEFAULT '' COMMENT 'namespace ID',
-    `biz_tags` varchar(1024) DEFAULT NULL COMMENT 'business tags',
-    `ext` longtext DEFAULT NULL COMMENT 'extension information (JSON)',
-    `c_from` varchar(256) NOT NULL DEFAULT 'local' COMMENT 'source identifier (import/sync source)',
-    `version_info` longtext DEFAULT NULL COMMENT 'version information (JSON)',
-    `meta_version` bigint(20) NOT NULL DEFAULT 1 COMMENT 'metadata version (optimistic lock)',
-    `scope` varchar(16) NOT NULL DEFAULT 'PRIVATE' COMMENT 'visibility: PUBLIC/PRIVATE',
-    `owner` varchar(128) NOT NULL DEFAULT '' COMMENT 'creator username',
-    `download_count` bigint(20) NOT NULL DEFAULT 0 COMMENT 'download count',
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `uk_ai_resource_ns_name_type` (`namespace_id`,`name`,`type`,`c_from`),
-    KEY `idx_ai_resource_name` (`name`),
-    KEY `idx_ai_resource_type` (`type`),
-    KEY `idx_ai_resource_gmt_modified` (`gmt_modified`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI resource metadata table';
+- Record each implementation by its stable `pluginType:pluginName`, remove duplicate identities, and confirm that the target release discovers the intended JAR. Duplicate identities now resolve deterministically with the first implementation winning.
+- Older zero-configuration plugins usually remain binary-loadable, but they appear configurable only after implementing `PluginConfigSpec` definitions, a current configuration snapshot, and apply callbacks.
+- Older Config Change binaries remain loadable during the compatibility window but show `configurable=false`; migrate them to definitions and callbacks.
+- AI Pipeline no longer loads `PublishPipelineServiceBuilder`. Recompile pipeline plugins, register `PublishPipelineService` directly with a public no-argument constructor, and implement the unified configuration contract.
+- Third-party datasource plugins that implement or register the removed `ConfigInfoBetaMapper`, `ConfigInfoTagMapper`, or `ConfigMigrateMapper` SPIs must be rebuilt without those interfaces. Complete pre-3.0 data migration before upgrading.
+- The legacy AI Resource Import SPI has no adapter. Recompile the plugin and update its configuration and callers together; do not mix the two models.
+- Critical plugin types such as auth, datasource dialect, and AI storage can block startup when their selected implementation is missing, disabled, or fails initialization. Validate selection, state, and initialization in staging.
+- On one node, verify plugin list/detail, effective sources, masking, and `RESTART` guidance. Do not submit runtime configuration understood only by 3.3 nodes during a rolling upgrade.
 
-CREATE TABLE IF NOT EXISTS `ai_resource_version` (
-    `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `gmt_create` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'creation time',
-    `gmt_modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'modification time',
-    `type` varchar(32) NOT NULL COMMENT 'resource type',
-    `author` varchar(128) DEFAULT NULL COMMENT 'author',
-    `name` varchar(256) NOT NULL COMMENT 'resource name',
-    `c_desc` varchar(2048) DEFAULT NULL COMMENT 'version description',
-    `status` varchar(32) NOT NULL COMMENT 'version status',
-    `version` varchar(64) NOT NULL COMMENT 'version number',
-    `namespace_id` varchar(128) NOT NULL DEFAULT '' COMMENT 'namespace ID',
-    `storage` longtext DEFAULT NULL COMMENT 'storage information (JSON)',
-    `publish_pipeline_info` longtext DEFAULT NULL COMMENT 'publish pipeline information (JSON)',
-    `download_count` bigint(20) NOT NULL DEFAULT 0 COMMENT 'download count',
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `uk_ai_resource_ver_ns_name_type_ver` (`namespace_id`,`name`,`type`,`version`),
-    KEY `idx_ai_resource_ver_name` (`name`),
-    KEY `idx_ai_resource_ver_status` (`status`),
-    KEY `idx_ai_resource_ver_gmt_modified` (`gmt_modified`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='AI resource version table';
-```
+### 2.4. Distribution Upgrade
 
-If you use PostgreSQL and upgrade from 3.2.1 or earlier to 3.2.2, check whether `tenant_id` in the config-related tables is already `NOT NULL DEFAULT ''` before the upgrade. Nacos 3.2.2 validates the PostgreSQL schema during startup. If older tables still allow `tenant_id` to be null, the server may fail to start. See [alibaba/nacos#15275](https://github.com/alibaba/nacos/issues/15275) for the related discussion.
-
-Before running the migration, check whether `config_info` contains duplicate logical config rows. If multiple rows with the same `data_id` and `group_id` have `tenant_id IS NULL`, clean the conflict first, then run the migration SQL.
-
-```SQL
-SELECT data_id, group_id, COUNT(*)
-FROM config_info
-WHERE tenant_id IS NULL
-GROUP BY data_id, group_id
-HAVING COUNT(*) > 1;
-```
-
-After confirming there is no conflict, run `pg-upgrade-null-tenant-id.sql` from the target Nacos source. The SQL is:
-
-```SQL
-ALTER TABLE config_info ALTER COLUMN tenant_id SET DEFAULT '';
-UPDATE config_info SET tenant_id = '' WHERE tenant_id IS NULL;
-ALTER TABLE config_info ALTER COLUMN tenant_id SET NOT NULL;
-
-ALTER TABLE config_info_gray ALTER COLUMN tenant_id SET DEFAULT '';
-UPDATE config_info_gray SET tenant_id = '' WHERE tenant_id IS NULL;
-ALTER TABLE config_info_gray ALTER COLUMN tenant_id SET NOT NULL;
-
-ALTER TABLE config_tags_relation ALTER COLUMN tenant_id SET DEFAULT '';
-UPDATE config_tags_relation SET tenant_id = '' WHERE tenant_id IS NULL;
-ALTER TABLE config_tags_relation ALTER COLUMN tenant_id SET NOT NULL;
-
-ALTER TABLE his_config_info ALTER COLUMN tenant_id SET DEFAULT '';
-UPDATE his_config_info SET tenant_id = '' WHERE tenant_id IS NULL;
-ALTER TABLE his_config_info ALTER COLUMN tenant_id SET NOT NULL;
-```
-
-#### 2.1.2. Download the New Version
+#### 2.4.1. Download the Target Version
 
 <Tabs>
   <TabItem label="Official Website">
-    Go to the Nacos official [download page](/download/nacos-server/), select the [stable version](/download/nacos-server/#stable-version), and click the `${nacos.version}.zip` link in the `Binary Package` column to download.
+    Go to the Nacos [download page](/en/download/nacos-server/), choose a [stable version](/en/download/nacos-server/#stable-versions), and click `${nacos.version}.zip` in the `Binary Package` column.
 
-    > Note: During peak download times, you may encounter rate limiting. If the download fails, please wait and retry, or use the `GitHub download` method instead.
+    > If the download is rate-limited, retry later or use GitHub instead.
   </TabItem>
-  <TabItem label="Github">
-    Go to the Nacos GitHub [latest stable release](https://github.com/alibaba/nacos/releases), select the desired Nacos version, and download the `nacos-server-$version.zip` package from the `Assets` section.
+  <TabItem label="GitHub">
+    Go to the Nacos GitHub [releases page](https://github.com/alibaba/nacos/releases), select the target release, and download `nacos-server-${target_version}.zip` or the corresponding tar.gz asset.
   </TabItem>
 </Tabs>
 
-#### 2.1.3. Replace the Binary JAR
+#### 2.4.2. Prepare a New Installation Directory
 
-Extract the newly downloaded distribution package:
-
-```bash
-  unzip nacos-server-$version.zip
-  # or tar -xvf nacos-server-$version.tar.gz
-```
-
-Then locate `nacos/target/nacos-server.jar` and replace the JAR in the old distribution. For example:
+Extract the target distribution into a new directory:
 
 ```bash
-cp nacos/target/nacos-server.jar ${old.nacos.home}/target/
+unzip nacos-server-${target_version}.zip -d ${INSTALL_PARENT}
+# or tar -xvf nacos-server-${target_version}.tar.gz -C ${INSTALL_PARENT}
 ```
 
-#### 2.1.4. Update Configuration Files
+The 3.3 distribution contains a coordinated server JAR, default plugins, schemas, startup scripts, and configuration templates. Do not replace only `target/nacos-server.jar`, and do not overwrite the new `bin`, `conf`, or complete `plugins` directory with files from the source version.
 
-Nacos 3.0.X has significant configuration changes compared to Nacos 2.X, including many new server and console related settings, as well as parameter reordering. Please carefully compare the configuration files between the new and old versions and reconfigure accordingly.
+Migrate deployment-specific data as follows:
 
-Key parameter changes:
+- Start from the new `application.properties` and move the properties verified in section 2.3 one by one.
+- Compare and recreate `cluster.conf`, JVM options, log paths, certificates, and other deployment-specific files.
+- Copy only custom or third-party plugin JARs that passed 3.3 compatibility verification.
+- Every deployment must migrate or restore that node's existing `data/plugin` so `plugin-states.json` and `plugin-configs.json` are retained. With Derby or embedded storage, migrate the complete `data` only after shutdown and a full backup. An external-database cluster must not blindly copy active Raft data between nodes; reuse that node's own persistent volume or follow the rehearsed node-recovery procedure. Never let old and new processes use the same data directory concurrently.
 
-`server.port` --> `nacos.server.main.port`
+#### 2.4.3. Restart or Roll Through the Cluster
 
-`server.servlet.contextPath` --> `nacos.server.contextPath`
-
-#### 2.1.5. Update Startup Parameters (Optional)
-
-Compare the startup scripts (`bin/startup.sh` or `bin/startup.cmd`) between the old and new versions to check for new or modified parameters, and apply them to the old startup scripts. For example:
+For a standalone deployment, stop the old instance and start with the new distribution scripts:
 
 ```bash
-diff nacos/bin/startup.sh ${old.nacos.home}/bin/startup.sh
+${OLD_NACOS_HOME}/bin/shutdown.sh
+${NEW_NACOS_HOME}/bin/startup.sh -m standalone
 ```
 
-#### 2.1.6. Restart Nacos Server
+For a cluster, upgrade one node at a time. Stop one source-version node, start it with its 3.3 configuration and the new distribution, and wait until it rejoins the cluster and core behavior is healthy before proceeding to the next node. Do not change unified plugin runtime state or configuration until all nodes run 3.3.
 
-After all replacements are complete, restart Nacos Server:
+On Windows, use `shutdown.cmd` and `startup.cmd` from the new distribution rather than reusing the old scripts.
 
-```
-# Cluster mode example
-## Linux
-${nacos.home}/bin/shutdown.sh
-${nacos.home}/bin/startup.sh
+### 2.5. Docker/Kubernetes Upgrade
 
-## Windows
-${nacos.home}/bin/shutdown.cmd
-${nacos.home}/bin/startup.cmd
-```
-
-#### 2.1.7. Config Compatibility Migration Removal (Nacos 3.3.0+)
-
-:::caution[Pre-upgrade check for 3.3]
-Starting from Nacos 3.3.0, the server no longer keeps Config migration compatibility logic from versions before 3.0. It no longer automatically migrates or double-writes storage between legacy empty tenant values (`tenant_id = ''`) and the default namespace `public`, and it no longer automatically migrates gray data from the legacy `config_info_beta` and `config_info_tag` tables into the current `config_info_gray` model.
-:::
-
-This removal only affects historical storage migration compatibility. It does not change current Config semantics:
-
-- Blank or omitted namespace requests are still normalized to the default namespace. The current default namespace ID is `public`.
-- Current beta/tag gray release APIs remain available and are backed by the `config_info_gray` and `GrayRule` model.
-
-When upgrading from versions before 3.0 to 3.3.x, if the old deployment did not use the default namespace and did not use beta gray release, this compatibility removal does not affect smooth upgrade for this compatibility area. If the old deployment used the default namespace or beta gray release, a fully smooth upgrade is no longer guaranteed. Operators must migrate and verify the affected data before upgrading to 3.3.x.
-
-Affected deployments must complete at least these actions:
-
-1. Check whether the old database has default-namespace config data with `tenant_id = ''`.
-2. Before upgrading to 3.3.x, migrate default-namespace data from the empty tenant to `tenant_id = 'public'`. If rows with the same `data_id` and `group_id` exist under both the empty tenant and `public`, decide which business data to keep before migrating to avoid conflicts.
-3. Check whether the old database has gray data in `config_info_beta` or `config_info_tag`.
-4. Before upgrading to 3.3.x, migrate legacy beta/tag gray data into the current `config_info_gray` model and store the corresponding `grayName` and `GrayRule` metadata according to the current gray rule model.
-5. After migration, use current clients or APIs to verify default-namespace config reads, formal publish, beta gray query, tag gray query, and stopping gray release.
-
-If you cannot directly confirm the migration format in your own tooling, you can first upgrade to a 3.0.x-3.2.x version that still contains this compatibility migration capability, complete the migration, run stably, verify the data, and then upgrade to 3.3.x.
-
-#### 2.1.8. Migrate MCP Services (Optional)
-
-If you are upgrading from version 3.0.0 and your cluster has MCP services, note that due to changes in the official MCP Registry API standard, the MCP Server metadata structure has changed. This incompatibility means that after upgrading from 3.0.0 to 3.0.1 or later, the console will be unable to read legacy MCP Server data. You need to use the [MCP Migration Tool](https://download.nacos.io/nacos-server/mcp-migration-tool.jar) to migrate the existing MCP service data from version 3.0.0.
-
-```shell
-# java -jar ./mcp-migration-tool.jar ${nacos-server-host}:${nacos-server-port} ${username} ${password}
-# Example
-java -jar ./mcp-migration-tool.jar localhost:8848 nacos ${your_password}
-```
-
-#### 2.1.9. Migrate Unified Plugin Configuration (Nacos 3.3.0+)
-
-If the deployment does not use custom server plugins, compare its current `application.properties` with the target distribution, then migrate retained legacy properties to the canonical keys documented in [System Configurations](./system-configurations.md). AI Resource Import now defaults to enabled when its gate is absent, so set `nacos.plugin.ai-resource-import.enabled=false` before rollout if it must remain disabled. A deployment that used the old Source/preset/list configuration must also follow the [AI Resource Import migration](../../plugin/migration.md#ai-resource-import-breaking-change).
-
-If the deployment uses self-developed or third-party server plugins, complete the same configuration comparison and review the plugin compatibility changes before rollout. In particular, the legacy Importer/Source SPI for AI Resource Import has been removed, while Config Change's `ConfigChangeConfigs` is deprecated and retained only for compatibility. Follow the [Plugin Migration Guide](../../plugin/migration.md), then check the relevant [AI Resource Import](../../plugin/ai-resource-import-plugin.md), [Config Change](../../plugin/config-change-plugin.md), and [Plugin Development](../../plugin/development.md) pages.
-
-### 2.2. Docker/Kubernetes Upgrade
-
-#### 2.2.1 Verify Database Schema
-
-Please refer to [2.1.1 Verify Database Schema](#211-verify-database-schema) to compare and apply database schema changes.
-
-#### 2.2.2. Verify Environment Variables
-
-Compare the environment variables of your current deployment with [System Parameters - Image Environment Variables](./system-configurations/#2-image-environment-variables) to check for changes. If there are any, update the Docker environment variable file or Kubernetes configmap/secret accordingly.
-
-For example, add the following environment variables:
-
-```
-NACOS_AUTH_TOKEN=${Base64-encoded token from a custom string of 32+ characters}
-NACOS_AUTH_IDENTITY_KEY=${any string}
-NACOS_AUTH_IDENTITY_VALUE=${any string}
-```
-
-#### 2.2.3. Update Image Version
+Container deployments must also complete the database, historical migration, and plugin checks in sections 2.1 through 2.3 before changing images. Compare the target image's environment-variable conversion rules and the mounted `application.properties`; do not assume that every old environment variable maps to a canonical plugin property. See [System Configurations - Startup Script and Image Variables](./system-configurations.md#startup-script-and-image-variables).
 
 <Tabs>
-  <TabItem label="Docker">
-    First, update the Nacos version in your docker compose file. For example, in the `standalone-mysql-8.yaml` from the [Nacos Docker](https://github.com/nacos-group/nacos-docker) project:
+  <TabItem label="Docker Compose">
+    Update the image version in the Compose file:
+
     ```yaml
     services:
-    nacos:
-    image:
-    nacos/nacos-server:${target_version}
+      nacos:
+        image: nacos/nacos-server:${target_version}
     ```
-    Then run the following commands to upgrade:
+
+    Pull the target image. For a standalone service named `nacos`, rebuild only that service:
+
     ```bash
-    docker-compose pull
-    docker-compose up -d --remove-orphans
+    docker compose pull
+    docker compose up -d --no-deps nacos
     ```
+
+    When Compose manages a multi-node cluster, do not run one `up` operation that recreates every Nacos service. Run `docker compose up -d --no-deps ${nacos_service_name}` for one service at a time, verify that the node has rejoined and is healthy, and then continue with the next service.
   </TabItem>
   <TabItem label="Kubernetes">
-    Update the version using the kubectl set image command:
+    Update the workload image, for example:
+
     ```bash
-    kubectl set image deployment/nacos-deployment ${container_name}=nacos/nacos-server:${target_version}
+    kubectl set image deployment/nacos-deployment \
+      ${container_name}=nacos/nacos-server:${target_version}
+    kubectl rollout status deployment/nacos-deployment
     ```
+
+    Set a rolling strategy appropriate for the cluster size. Wait for each Pod to become ready and rejoin the Nacos cluster before replacing more Pods.
   </TabItem>
 </Tabs>
 
-## 3. Legacy HTTP API Removal (Nacos 3.2.0+)
+### 2.6. Post-upgrade Verification and Rollback Preparation
 
-### 3.1 API Removal Notice
+At minimum, verify the following after the upgrade:
 
-:::caution[Breaking Change]
-Starting from **Nacos 3.2.0**, the legacy v1 and v2 HTTP APIs have been **removed** from the main Nacos repository.
-:::
+1. Node versions, cluster membership, and health are correct, with no schema, plugin-loading, or configuration-alias errors in the logs.
+2. Config publish/query, service register/discover, Console login, Client API, and Admin API authentication match the pre-upgrade settings.
+3. Deployments that used the default namespace or gray release recheck the paths listed in section 2.1.1.
+4. Plugin management reports the expected plugin IDs, states, configuration sources, and restart-required fields, with no implementation enabled unexpectedly.
+5. When ARD is enabled, all three relational tables exist and index tasks converge. When the PostgreSQL vector plugin is enabled, also verify the pgvector schema and datasource connectivity.
 
-The old v1 and v2 HTTP APIs are no longer included in the default Nacos server distribution. These APIs have been migrated to a separate legacy adapter module.
-
-**Affected APIs:**
-- All v1 REST APIs (e.g., `/nacos/v1/ns/instance`, `/nacos/v1/cs/configs`)
-- All v2 REST APIs
-
-### 3.2 Migration Options
-
-You have two options:
-
-#### Option 1: Migrate to New APIs and Clients (Recommended)
-- Use the new v3 APIs
-  - [v3 Admin API Documentation](./admin-api)
-  - [v3 Console API Documentation](./console-api)
-- Upgrade to the latest Nacos client SDK
-  - [Nacos Client Documentation](../user/overview/other-language)
-
-#### Option 2: Use Legacy API Adapter (Temporary Solution)
-If you need time to migrate, you can temporarily restore the old APIs using the legacy adapter.
-
-### 3.3 Installing the Legacy API Adapter
-
-:::danger[Important Warnings]
-- The legacy adapter is **NOT guaranteed** to be supported in future Nacos versions
-- This module is **NOT actively maintained** by the community
-- This is a **temporary solution** only for urgent migration scenarios
-- **We strongly recommend migrating to v3 APIs and new clients as soon as possible**
-:::
-
-#### Step 1: Build or Download the Adapter
-
-**Option A: Download from Release**
-```bash
-# Download from GitHub releases
-wget https://github.com/nacos-group/nacos-api-legacy-adapter/releases/download/v${version}/nacos-api-legacy-adapter-${version}.jar
-```
-
-**Option B: Build from Source**
-```bash
-git clone https://github.com/nacos-group/nacos-api-legacy-adapter.git
-cd nacos-api-legacy-adapter
-mvn clean install
-# Output: target/nacos-api-legacy-adapter-${version}.jar
-```
-
-**Requirements:**
-- JDK 17+
-- Maven 3.6+
-- The `nacos.version` in `pom.xml` must match the target Nacos server version
-
-#### Step 2: Install the Adapter
-
-**For Nacos Server Deployment:**
-
-1. Place the JAR file in the Nacos `plugins` directory:
-```bash
-cp nacos-api-legacy-adapter-${version}.jar ${NACOS_HOME}/plugins/
-```
-
-2. Restart Nacos server:
-```bash
-sh ${NACOS_HOME}/bin/shutdown.sh
-sh ${NACOS_HOME}/bin/startup.sh -m standalone  # Standalone mode
-# or
-sh ${NACOS_HOME}/bin/startup.sh                # Cluster mode
-```
-
-3. The adapter will automatically load when the JAR is in the classpath.
-
-**For Embedded/Custom Applications:**
-
-Add the Maven dependency:
-```xml
-<dependency>
-    <groupId>com.alibaba.nacos</groupId>
-    <artifactId>nacos-api-legacy-adapter</artifactId>
-    <version>${nacos.version}</version>
-</dependency>
-```
-
-#### Step 3: Verify Installation
-
-Check Nacos server logs for confirmation:
-```bash
-tail -f ${NACOS_HOME}/logs/nacos.log
-```
-
-Look for log messages indicating the legacy adapter has loaded.
-
-#### Step 4: Test Legacy APIs
-
-Test that your old v1/v2 API calls work again:
-```bash
-curl -X GET "http://localhost:8848/nacos/v1/ns/instance/list?serviceName=test"
-```
-
-### 3.4 Version Compatibility
-
-| Nacos Version | Legacy Adapter Version | Compatibility |
-|--------------|----------------------|---------------|
-| 3.2.0        | 3.2.0               | ✅ Compatible  |
-| 3.3.0+       | Match Nacos version | ⚠️ Check compatibility |
-
-**Important:** The adapter version must match your Nacos server version.
-
-### 3.5 Planning Your Migration
-
-While using the legacy adapter, plan your migration:
-
-1. **Audit your API usage** - Identify all v1/v2 API calls
-2. **Review new v3 APIs** - Understand the new API structure
-3. **Update clients** - Upgrade to latest Nacos client SDKs
-4. **Test thoroughly** - Test in staging environment
-5. **Migrate gradually** - Use feature flags or canary deployments
-6. **Remove adapter** - Once migration is complete, remove the adapter JAR
-
-### 3.6 Getting Help
-
-- Legacy Adapter Repository: https://github.com/nacos-group/nacos-api-legacy-adapter
-- Nacos Main Repository: https://github.com/alibaba/nacos
-- Community Support: [Nacos Community](https://nacos.io/community/)
+Keep the old distribution, configuration, plugin JARs, and database backup until the observation period ends. Before rollback, remove runtime plugin overrides understood only by 3.3. Roll back AI Resource Import plugin JARs, configuration, and callers together. Do not reverse new tables or widened columns during an emergency rollback; use the database rollback procedure validated before rollout.

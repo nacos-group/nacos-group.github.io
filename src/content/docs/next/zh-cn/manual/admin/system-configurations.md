@@ -225,8 +225,8 @@ Raft 参数通过 `nacos.core.protocol.raft.data.*` 配置。`data` 是当前代
 | 参数名 | 说明 | 默认值 |
 | --- | --- | --- |
 | `nacos.plugin.auth.type` | 启动时选择鉴权插件；`nacos.core.auth.system.type` 是历史 alias。 | `nacos` |
-| `nacos.core.auth.enabled` | 是否开启 SDK/gRPC 请求鉴权。 | `false` |
-| `nacos.core.auth.admin.enabled` | 是否开启 `/v3/admin/*` Admin API 鉴权。 | `true` |
+| `nacos.core.auth.enabled` | 是否开启通用鉴权系统和 Open API 鉴权，包括 Client/Open HTTP API 及 SDK/gRPC 请求。 | `false` |
+| `nacos.core.auth.admin.enabled` | 是否开启 Admin API scope 鉴权；除 `/v3/admin/*` 外，也包括标记为 `ADMIN_API` 的插件自有端点。 | `true` |
 | `nacos.core.auth.console.enabled` | 是否开启 `/v3/console/*` Console API 和登录鉴权。 | `true` |
 | `nacos.plugin.auth.nacos.caching.enabled` | 是否缓存鉴权信息；`nacos.core.auth.caching.enabled` 是历史 alias。开启后权限变更会有短暂延迟。 | `true` |
 | `nacos.core.auth.server.identity.key` | Server 间请求身份标识 key。开启鉴权时必须设置。 | 空 |
@@ -235,9 +235,10 @@ Raft 参数通过 `nacos.core.protocol.raft.data.*` 配置。`data` 是当前代
 | `nacos.plugin.auth.nacos.token.cache.enable` | 默认鉴权插件 token 缓存；旧 `nacos.core.auth.plugin.nacos.token.cache.enable` 是 alias。 | `false` |
 | `nacos.plugin.auth.nacos.token.expire.seconds` | 默认鉴权插件 token 过期秒数；`nacos.core.auth.plugin.nacos.token.expire.seconds` 是历史 alias。 | `18000` |
 | `nacos.plugin.auth.nacos.token.secret.key` | JWT 签名密钥，敏感且 RESTART；`nacos.core.auth.plugin.nacos.token.secret.key` 是历史 alias。 | 空 |
-| `nacos.plugin.auth.nacos.anonymous.ai.enabled` | 是否允许 AI 资源匿名读取；`nacos.core.auth.nacos.anonymous.ai.enabled` 是历史 alias。 | `false` |
+| `nacos.plugin.auth.nacos.anonymous.ai.enabled` | 是否允许显式 opt-in 的 AI 端点接受匿名读取；`nacos.core.auth.nacos.anonymous.ai.enabled` 是历史 alias。显式携带空或无效凭据不会回退为匿名。 | `false` |
 | `nacos.plugin.visibility.enabled` | 是否开启可见性插件。 | `true` |
-| `nacos.plugin.visibility.type` | 可见性插件类型。默认 `nacos` 实现会复用默认鉴权插件用户信息。 | `nacos` |
+| `nacos.plugin.visibility.type` | 废弃的 `RESTART` selector，仍决定 AI 领域请求的实现，并在没有持久化状态时参与初始化实现状态。 | `nacos` |
+| `nacos.plugin.visibility.{pluginName}.enabled` | 实现的静态初始状态；持久化插件状态优先。默认 `nacos` 实现会复用默认鉴权插件用户信息。 | `nacos` 为 `true` |
 
 ### LDAP、OIDC 与 OAuth2
 
@@ -258,7 +259,7 @@ LDAP 与 OIDC/OAuth2 是可选插件。下表列出标准前缀，具体 definit
 | `nacos.plugin.control.type` | 启动时选择流量防护实现；`nacos.plugin.control.manager.type` 是历史 alias。 | 空（no-limit） |
 | `nacos.plugin.control.rule.local.basedir` | 本地流量防护规则目录。 | `${nacos.home}` |
 | `nacos.plugin.control.rule.external.storage` | 外部规则存储类型，需要自行实现。 | 空 |
-| `nacos.plugin.{pluginType}.{pluginName}.enabled` | 实现级启动初始状态；持久化/本地 state 可覆盖。 | 由实现和类型策略决定 |
+| `nacos.plugin.{pluginType}.{pluginName}.enabled` | 非互斥实现的启动初始状态；持久化/本地 state 可覆盖。`auth`、`datasource-dialect`、`control` 等互斥类型应使用 selector 选择实现。 | 由实现和类型策略决定 |
 | `nacos.plugin.{pluginType}.{pluginName}.{itemKey}` | 实现 definitions 的标准配置键。 | 由 definition 决定 |
 
 配置变更插件的历史 `nacos.core.config.plugin.{pluginName}.*` 只用于旧二进制兼容；Nacos Server 不内置 webhook、whitelist 或 fileformatcheck 实现。新实现使用 `nacos.plugin.config-change.{pluginName}.{itemKey}`。
@@ -289,7 +290,7 @@ AI 管理中心的使用方式见[AI 管理中心概述](../user/ai/ai-registry-
 | `nacos.ai.skill.registry.enabled` | 是否启用 Skill Registry 协议适配。开启后会使用 `nacos.ai.registry.port` 暴露独立端口。 | `false` |
 | `nacos.ai.registry.port` | AI Registry 协议适配端口。 | `9080` |
 | `nacos.ai.mcp.registry.port` | 旧参数名，已废弃。请改用 `nacos.ai.registry.port`。 | `9080` |
-| `nacos.plugin.ai-pipeline.enabled` | AI Pipeline 动态模块总开关；关闭时延迟加载类型。 | `false` |
+| `nacos.plugin.ai-pipeline.enabled` | AI Pipeline 动态模块总开关；关闭时延迟加载类型。 | `true` |
 | `nacos.plugin.ai-pipeline.type` | 历史启动链，仅用于没有持久化状态时初始化节点状态。 | 空 |
 | `nacos.plugin.ai-pipeline.skill-scanner.{itemKey}` | `skill-scanner` definitions；只有 `order` 为 RUNTIME。 | 见 [AI Pipeline 插件文档](../../plugin/ai-pipeline-plugin.md) |
 | `nacos.plugin.ai-pipeline.skill-spector.{itemKey}` | `skill-spector` definitions；只有 `order` 为 RUNTIME。 | 见 [AI Pipeline 插件文档](../../plugin/ai-pipeline-plugin.md) |
