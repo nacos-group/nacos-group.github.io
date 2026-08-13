@@ -85,6 +85,16 @@ Nacos 能够通过和 [Higress](https://higress.ai) 等AI网关的结合，**0�
 | 描述     | MCP Tools的输入参数描述，自定义描述此MCP服务Tool参数描述信息                                                                                 |                                                                          |
 | 协议转化配置 | 提供给AI网关或协议转换代理的协议转化配置，用于提供给给AI网关或协议转化代理，此工具实际映射的存量服务的API信息，如`url`，`参数映射关系`等，具体配置细节，请参见[MCP模版配置手册](./mcp-template.md)。 |
 
+在 Tool 出参配置中，每个输出字段均提供 `Nullable` 勾选项。勾选后，该字段在 MCP Tool 的 `outputSchema` 中会保存为包含原类型和 `null` 的联合类型。例如，可空的字符串字段会保存为：
+
+```json
+{
+  "type": ["string", "null"]
+}
+```
+
+通过 OpenAPI 3 导入 API 时，响应字段中的 `nullable: true` 会自动转换为上述 `outputSchema` 联合类型。此转换仅适用于 MCP Tool 的 `outputSchema`，不适用于 `inputSchema`。
+
 所有Tool的输入参数编辑完成后， 点击`确定`进行保存，之后重复添加其他的Tool信息后，点击页面右上角`发布为最新版本`。
 
 > 页面右上角的`保存`仅会将内容进行保存，不会标记成最新版本，不进行发布最新版本，可能会导致AI网关或协议转换代理无法读取到新改动的工具信息。可用于编辑过程中保存记录以及灰度使用。
