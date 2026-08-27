@@ -228,8 +228,8 @@ For auth setup, read [Authorization](./auth.mdx) and [OIDC/OAuth2 Authentication
 | `nacos.core.auth.admin.enabled` | Whether `/v3/admin/*` Admin API authentication is enabled. | `true` |
 | `nacos.core.auth.console.enabled` | Whether `/v3/console/*` Console API and login authentication are enabled. | `true` |
 | `nacos.core.auth.caching.enabled` | Whether auth information is cached. Permission updates may have a short delay when enabled. | `true` |
-| `nacos.core.auth.server.identity.key` | Server-to-server identity key. Required when auth is enabled. | empty |
-| `nacos.core.auth.server.identity.value` | Server-to-server identity value. Required when auth is enabled. | empty |
+| `nacos.core.auth.server.identity.key` | Identity key for internal server-to-server requests. Starting with Nacos 3.2.4, it is also used by native JRaft gRPC. Configure the same non-empty value on every cluster member. | empty |
+| `nacos.core.auth.server.identity.value` | Identity value for internal server-to-server requests. Starting with Nacos 3.2.4, it is also used by native JRaft gRPC. Configure the same non-empty value on every cluster member. | empty |
 | `nacos.security.ignore.urls` | Auth ignored URLs. This is a legacy compatibility property and may be deprecated in the future. | distribution default |
 | `nacos.core.auth.plugin.nacos.token.cache.enable` | Whether the default auth plugin caches tokens. | `false` |
 | `nacos.core.auth.plugin.nacos.token.expire.seconds` | Token expiration time for the default auth plugin, in seconds. | `18000` |
@@ -237,6 +237,10 @@ For auth setup, read [Authorization](./auth.mdx) and [OIDC/OAuth2 Authentication
 | `nacos.core.auth.nacos.anonymous.ai.enabled` | Whether anonymous AI resource reads are allowed. Currently mainly applies to Skill and AgentSpec. | `false` |
 | `nacos.plugin.visibility.enabled` | Whether the visibility plugin is enabled. | `true` |
 | `nacos.plugin.visibility.type` | Visibility plugin type. The default `nacos` implementation reuses default auth plugin user information. | `nacos` |
+
+:::caution[Nacos 3.2.4 cluster upgrades]
+JRaft validates this server identity independently, even when `nacos.core.auth.enabled=false`. Before upgrading, configure the same non-empty key and value on every member. See the [Upgrade Manual](./upgrading.mdx) for rolling-upgrade and rollback constraints.
+:::
 
 ### LDAP, OIDC, and OAuth2
 
@@ -316,14 +320,20 @@ For usage, see [AI Registry Overview](../user/ai/ai-registry-overview.md). The p
 | `nacos.plugin.ai-pipeline.skill-scanner.command` | External Skill scanner command path. | empty |
 | `nacos.ai.skill.auto-publish-after-review.enabled` | Whether Skill versions are automatically published after approval. | `false` |
 | `nacos.ai.resource.import.enabled` | Whether explicitly configured AI resource import sources are enabled. | `false` |
-| `nacos.ai.resource.import.legacy-mcp-api-enabled` | Whether deprecated MCP import APIs are temporarily reopened. | `false` |
-| `nacos.ai.resource.import.allow-user-url` | Whether deprecated MCP import APIs can fetch user-provided URLs after being reopened. | `false` |
+| `nacos.ai.resource.import.legacy-mcp-api-enabled` | Former compatibility switch for legacy MCP import APIs. It is no longer recognized starting with Nacos 3.2.4; use `nacos.core.api.compatibility.enabled` instead. | not applicable |
+| `nacos.ai.resource.import.allow-user-url` | Whether legacy MCP direct URL imports may fetch user-provided URLs after the shared compatibility gate has reopened them. | `false` |
+| `nacos.console.ai.mcp.import.enabled` | Whether Console `GET /v3/console/ai/mcp/importToolsFromMcp` may open outbound MCP connections. Set it to `false` to disable all such tool imports. | `true` |
+| `nacos.console.ai.mcp.import.allowed-private-addresses` | Private or local IP/CIDR allowlist for Console MCP tool imports. Separate entries with commas. Public addresses do not need to be listed. | empty |
 | `nacos.plugin.ai.importer.mcp.official.enabled` | Whether the built-in official MCP Registry import source is enabled. | `true` |
 | `nacos.plugin.ai.importer.skills.well-known.enabled` | Whether the Skill well-known import source is enabled. | `false` |
 | `nacos.plugin.ai.importer.skills.well-known.url` | Skill well-known registry root URL. | empty |
 | `nacos.plugin.ai.importer.skills.skills-sh.enabled` | Whether the `skills.sh` import source is enabled. | `true` |
 | `nacos.plugin.ai.importer.<preset>.allow-http` | Whether non-HTTPS endpoints are allowed for a source. Enable only in controlled environments. | `false` |
 | `nacos.plugin.ai.importer.<preset>.allow-private-network` | Whether private-network or localhost endpoints are allowed for a source. Enable only in controlled environments. | `false` |
+
+:::note
+`nacos.console.ai.mcp.import.allowed-private-addresses` accepts only IPv4/IPv6 addresses or CIDR ranges, not hostnames, for example `192.168.0.0/16,10.0.0.8`. Every private or local address resolved from the target hostname must match the allowlist, and any invalid allowlist entry blocks the request. For a separately deployed Console, configure the property on every Console instance and restart each instance.
+:::
 
 ## Experimental Features
 
@@ -341,6 +351,7 @@ These properties are used for upgrades, migration, or legacy compatibility. They
 
 | Property | Description | Default |
 | --- | --- | --- |
+| `nacos.core.api.compatibility.enabled` | Whether deprecated v3 Pipeline and MCP import APIs that explicitly use the compatibility gate are temporarily reopened during migration. | `false` |
 | `nacos.core.api.compatibility.client.enabled` | Whether client API compatibility is enabled. | `true` |
 | `nacos.core.api.compatibility.admin.enabled` | Whether Admin API compatibility is enabled. | `false` |
 | `nacos.core.api.compatibility.console.enabled` | Whether Console API compatibility is enabled. | `false` |
@@ -351,7 +362,7 @@ These properties are used for upgrades, migration, or legacy compatibility. They
 | `nacos.namespace.migrate.batch.size` | Namespace migration batch size. | `100` |
 
 :::note
-Auth switches and API compatibility switches are different. `nacos.core.auth.admin.enabled` controls whether Admin API authentication is enabled. `nacos.core.api.compatibility.admin.enabled` controls whether Admin API compatibility behavior accepts requests. Legacy v1/v2 HTTP APIs were removed from the main distribution starting from Nacos 3.2.0. Migrate to v3 APIs or temporarily use the legacy adapter.
+Auth switches and API compatibility switches are different. `nacos.core.auth.admin.enabled` controls whether Admin API authentication is enabled. `nacos.core.api.compatibility.admin.enabled` controls whether Admin API compatibility behavior accepts requests. The shared `nacos.core.api.compatibility.enabled` switch reopens only a small set of deprecated v3 APIs that explicitly use the gate; it does not disable their existing authentication or replace `nacos-api-legacy-adapter`. Legacy v1/v2 HTTP APIs were removed from the main distribution starting with Nacos 3.2.0. Migrate to v3 APIs or temporarily use the legacy adapter.
 :::
 
 ## Startup Script and Image Variables
