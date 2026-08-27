@@ -296,6 +296,62 @@ NACOS_AUTH_IDENTITY_VALUE=${any string}
   </TabItem>
 </Tabs>
 
+### 2.3. Nacos 3.2.4 Upgrade Checklist
+
+Nacos 3.2.4 changes the default behavior of deprecated APIs, the outbound access policy for Console MCP tool imports, and server identity validation for native JRaft gRPC. The following items correspond to the Breaking Change Notice in the [Nacos 3.2.4 Release Notes](https://github.com/alibaba/nacos/releases/tag/3.2.4) and must be reviewed before upgrading.
+
+#### 2.3.1. Use One Server Identity Across the Cluster
+
+Before starting a rolling upgrade, configure the same non-empty server identity for **every member** in both the current cluster and the target deployment configuration:
+
+```properties
+nacos.core.auth.server.identity.key=${custom identity key}
+nacos.core.auth.server.identity.value=${custom identity value}
+```
+
+Nacos does not synchronize these values between members. Native JRaft gRPC in Nacos 3.2.4 uses them independently to authenticate server-to-server requests, so they are required even when `nacos.core.auth.enabled=false`.
+
+During a rolling upgrade, 3.2.4 members temporarily accept old members that cannot send JRaft credentials. After every member in the complete membership view supports JRaft authentication, each 3.2.4 process automatically enters an irreversible enforcement state and writes it to `${nacos.home}/data/jraft-auth-enforced.state`. The log message `All Nacos servers support JRaft authentication; enforcement is enabled` confirms the transition.
+
+:::danger[Rollback constraint]
+After enforcement starts, a mixed-version rolling downgrade to an older version that does not send JRaft credentials is not guaranteed to keep the cluster available. Prepare and test a rollback plan before upgrading. Do not treat the state file as an operator switch or manually delete it to try to restore compatibility mode.
+:::
+
+#### 2.3.2. Migrate Deprecated v3 APIs That Are Disabled by Default
+
+Starting with Nacos 3.2.4, the following deprecated APIs return HTTP `410 Gone` with `API_DEPRECATED` by default. Migrate callers to the canonical APIs:
+
+| Deprecated API | Canonical replacement |
+| --- | --- |
+| `GET /v3/admin/ai/pipelines` | `GET /v3/admin/ai/pipelines/list` |
+| `GET /v3/admin/ai/pipelines/{pipelineId}` | `GET /v3/admin/ai/pipelines/detail?pipelineId={pipelineId}` |
+| `GET /v3/console/ai/pipelines` | `GET /v3/console/ai/pipelines/list` |
+| `GET /v3/console/ai/pipelines/{pipelineId}` | `GET /v3/console/ai/pipelines/detail?pipelineId={pipelineId}` |
+| `POST /v3/console/ai/mcp/import/validate` | `POST /v3/console/ai/import/validate` |
+| `POST /v3/console/ai/mcp/import/execute` | `POST /v3/console/ai/import/execute` |
+
+If migration cannot be completed before the upgrade, temporarily set the following property for the migration window:
+
+```properties
+nacos.core.api.compatibility.enabled=true
+```
+
+This switch reopens only deprecated v3 APIs that explicitly use the compatibility gate. Their existing authentication and authorization still apply, and the switch does not restore v1/v2 APIs removed from the main distribution. The former `nacos.ai.resource.import.legacy-mcp-api-enabled` property is no longer recognized starting with 3.2.4. If a legacy MCP direct URL import must temporarily fetch a user-provided URL, also set `nacos.ai.resource.import.allow-user-url=true`. Disable the shared compatibility switch after migration.
+
+#### 2.3.3. Configure the Console MCP Tool Import Policy
+
+The Console-only `GET /v3/console/ai/mcp/importToolsFromMcp` endpoint allows public MCP targets by default but rejects private or local targets. To access a trusted private target, configure the allowlist on **every instance that serves Console APIs** and restart those instances:
+
+```properties
+# The default is true. Set to false to disable all outbound MCP tool imports.
+nacos.console.ai.mcp.import.enabled=true
+
+# Accepts comma-separated IPv4/IPv6 addresses or CIDR ranges only, not hostnames.
+nacos.console.ai.mcp.import.allowed-private-addresses=192.168.0.0/16,10.0.0.8
+```
+
+Every private or local address resolved from the target hostname must match the allowlist, and any invalid allowlist entry blocks the request. `baseUrl` must be an HTTP or HTTPS URL, `endpoint` must remain a relative URI, and redirects are not followed. If the deployment does not need this feature, set `nacos.console.ai.mcp.import.enabled=false` to disable outbound access from the Console.
+
 ## 3. Legacy HTTP API Removal (Nacos 3.2.0+)
 
 ### 3.1 API Removal Notice

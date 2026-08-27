@@ -228,8 +228,8 @@ Raft 参数通过 `nacos.core.protocol.raft.data.*` 配置。`data` 是当前代
 | `nacos.core.auth.admin.enabled` | 是否开启 `/v3/admin/*` Admin API 鉴权。 | `true` |
 | `nacos.core.auth.console.enabled` | 是否开启 `/v3/console/*` Console API 和登录鉴权。 | `true` |
 | `nacos.core.auth.caching.enabled` | 是否缓存鉴权信息。开启后权限变更会有短暂延迟。 | `true` |
-| `nacos.core.auth.server.identity.key` | Server 间请求身份标识 key。开启鉴权时必须设置。 | 空 |
-| `nacos.core.auth.server.identity.value` | Server 间请求身份标识 value。开启鉴权时必须设置。 | 空 |
+| `nacos.core.auth.server.identity.key` | Server 间内部请求的身份标识 key。Nacos 3.2.4 起也用于 JRaft 原生 gRPC；集群所有节点必须配置相同的非空值。 | 空 |
+| `nacos.core.auth.server.identity.value` | Server 间内部请求的身份标识 value。Nacos 3.2.4 起也用于 JRaft 原生 gRPC；集群所有节点必须配置相同的非空值。 | 空 |
 | `nacos.security.ignore.urls` | 鉴权忽略路径。该参数属于历史兼容项，未来可能废弃。 | 发行包默认值 |
 | `nacos.core.auth.plugin.nacos.token.cache.enable` | 默认鉴权插件是否缓存 token。 | `false` |
 | `nacos.core.auth.plugin.nacos.token.expire.seconds` | 默认鉴权插件 token 过期时间，单位秒。 | `18000` |
@@ -237,6 +237,10 @@ Raft 参数通过 `nacos.core.protocol.raft.data.*` 配置。`data` 是当前代
 | `nacos.core.auth.nacos.anonymous.ai.enabled` | 是否允许 AI 资源匿名读取。当前主要面向 Skill 和 AgentSpec。 | `false` |
 | `nacos.plugin.visibility.enabled` | 是否开启可见性插件。 | `true` |
 | `nacos.plugin.visibility.type` | 可见性插件类型。默认 `nacos` 实现会复用默认鉴权插件用户信息。 | `nacos` |
+
+:::caution[Nacos 3.2.4 集群升级]
+JRaft 会独立校验上述 Server identity，即使 `nacos.core.auth.enabled=false` 也不会跳过。升级前必须在所有节点配置一致的非空 key 和 value；详细的滚动升级与回退限制见[升级手册](./upgrading.mdx)。
+:::
 
 ### LDAP、OIDC 与 OAuth2
 
@@ -316,14 +320,20 @@ AI 管理中心的使用方式见[AI 管理中心概述](../user/ai/ai-registry-
 | `nacos.plugin.ai-pipeline.skill-scanner.command` | 外部 Skill 扫描工具命令路径。 | 空 |
 | `nacos.ai.skill.auto-publish-after-review.enabled` | Skill 审核通过后是否自动发布版本。 | `false` |
 | `nacos.ai.resource.import.enabled` | 是否启用显式配置的 AI 资源导入来源。 | `false` |
-| `nacos.ai.resource.import.legacy-mcp-api-enabled` | 是否临时重新开启已废弃的 MCP 导入 API。 | `false` |
-| `nacos.ai.resource.import.allow-user-url` | 重新开启旧 MCP 导入 API 时，是否允许抓取用户提供的 URL。 | `false` |
+| `nacos.ai.resource.import.legacy-mcp-api-enabled` | 旧 MCP 导入 API 兼容开关；Nacos 3.2.4 起不再识别，请改用 `nacos.core.api.compatibility.enabled`。 | 不适用 |
+| `nacos.ai.resource.import.allow-user-url` | 通过共享兼容开关重新开启旧 MCP 直接 URL 导入后，是否允许抓取用户提供的 URL。 | `false` |
+| `nacos.console.ai.mcp.import.enabled` | 是否允许 Console 的 `GET /v3/console/ai/mcp/importToolsFromMcp` 发起出站 MCP 连接。设为 `false` 会关闭全部此类 tools 导入。 | `true` |
+| `nacos.console.ai.mcp.import.allowed-private-addresses` | Console MCP tools 导入允许访问的私网或本地 IP/CIDR 白名单，多个条目用逗号分隔；公网地址不需要加入。 | 空 |
 | `nacos.plugin.ai.importer.mcp.official.enabled` | 是否启用内置官方 MCP Registry 导入来源。 | `true` |
 | `nacos.plugin.ai.importer.skills.well-known.enabled` | 是否启用 Skill well-known 导入来源。 | `false` |
 | `nacos.plugin.ai.importer.skills.well-known.url` | Skill well-known registry 根地址。 | 空 |
 | `nacos.plugin.ai.importer.skills.skills-sh.enabled` | 是否启用 `skills.sh` 导入来源。 | `true` |
 | `nacos.plugin.ai.importer.<preset>.allow-http` | 是否允许指定来源使用非 HTTPS endpoint。仅受控环境中开启。 | `false` |
 | `nacos.plugin.ai.importer.<preset>.allow-private-network` | 是否允许指定来源访问私网或 localhost endpoint。仅受控环境中开启。 | `false` |
+
+:::note
+`nacos.console.ai.mcp.import.allowed-private-addresses` 只接受 IPv4/IPv6 地址或 CIDR，不接受域名，例如 `192.168.0.0/16,10.0.0.8`。目标域名解析出的每一个私网或本地地址都必须命中白名单；任一非法白名单条目都会阻止请求。独立部署 Console 时，需要在每个 Console 实例上配置并重启。
+:::
 
 ## 实验性功能
 
@@ -341,6 +351,7 @@ AI 管理中心的使用方式见[AI 管理中心概述](../user/ai/ai-registry-
 
 | 参数名 | 说明 | 默认值 |
 | --- | --- | --- |
+| `nacos.core.api.compatibility.enabled` | 是否在迁移窗口内临时重新开启显式接入兼容门禁的废弃 v3 Pipeline 和 MCP 导入 API。 | `false` |
 | `nacos.core.api.compatibility.client.enabled` | 是否开启客户端 API 兼容能力。 | `true` |
 | `nacos.core.api.compatibility.admin.enabled` | 是否开启 Admin API 兼容能力。 | `false` |
 | `nacos.core.api.compatibility.console.enabled` | 是否开启 Console API 兼容能力。 | `false` |
@@ -351,7 +362,7 @@ AI 管理中心的使用方式见[AI 管理中心概述](../user/ai/ai-registry-
 | `nacos.namespace.migrate.batch.size` | 命名空间迁移批大小。 | `100` |
 
 :::note
-鉴权开关和 API 兼容开关不是同一类参数。`nacos.core.auth.admin.enabled` 控制 Admin API 是否鉴权；`nacos.core.api.compatibility.admin.enabled` 控制 Admin API 兼容行为是否接受请求。旧版 v1/v2 HTTP API 从 Nacos 3.2.0 起已从主发行包移除，需要迁移到 v3 API 或临时使用 legacy adapter。
+鉴权开关和 API 兼容开关不是同一类参数。`nacos.core.auth.admin.enabled` 控制 Admin API 是否鉴权；`nacos.core.api.compatibility.admin.enabled` 控制 Admin API 兼容行为是否接受请求。共享的 `nacos.core.api.compatibility.enabled` 只重新开启显式接入门禁的少量废弃 v3 API，且不会关闭其原有鉴权，也不替代 `nacos-api-legacy-adapter`。旧版 v1/v2 HTTP API 从 Nacos 3.2.0 起已从主发行包移除，需要迁移到 v3 API 或临时使用 legacy adapter。
 :::
 
 ## 启动脚本和镜像变量

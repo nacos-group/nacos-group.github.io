@@ -296,6 +296,62 @@ NACOS_AUTH_IDENTITY_VALUE=${任意字符串}
   </TabItem>
 </Tabs>
 
+### 2.3. Nacos 3.2.4 升级检查
+
+Nacos 3.2.4 调整了废弃 API 的默认行为、Console MCP tools 导入的出站访问策略，并为 JRaft 原生 gRPC 增加了 Server identity 校验。下面内容对应 [Nacos 3.2.4 Release Notes](https://github.com/alibaba/nacos/releases/tag/3.2.4) 中的 Breaking Change Notice，请在升级前完成检查。
+
+#### 2.3.1. 统一集群 Server identity
+
+在开始逐节点升级前，为当前集群和待升级配置中的**所有节点**设置相同的非空 Server identity：
+
+```properties
+nacos.core.auth.server.identity.key=${自定义身份标识Key}
+nacos.core.auth.server.identity.value=${自定义身份标识Value}
+```
+
+这两个值不会由 Nacos 在节点间同步。Nacos 3.2.4 的 JRaft 原生 gRPC 会独立使用它们校验服务端间请求，即使 `nacos.core.auth.enabled=false` 也不能省略。
+
+滚动升级期间，3.2.4 节点会暂时兼容无法携带凭据的旧节点。当完整成员列表中的所有节点都支持 JRaft 鉴权后，每个 3.2.4 进程会自动进入不可逆的强制校验状态，并将状态写入 `${nacos.home}/data/jraft-auth-enforced.state`。可以通过日志 `All Nacos servers support JRaft authentication; enforcement is enabled` 确认该状态。
+
+:::danger[回退限制]
+强制校验生效后，不保证向不携带 JRaft 凭据的旧版本执行混合版本滚动降级时集群仍然可用。请在升级前准备并验证回退方案，不要把状态文件当作运维开关或通过手工删除它尝试恢复兼容状态。
+:::
+
+#### 2.3.2. 迁移默认关闭的废弃 v3 API
+
+以下废弃 API 从 Nacos 3.2.4 起默认返回 HTTP `410 Gone` 和 `API_DEPRECATED`，请迁移到标准 API：
+
+| 废弃 API | 标准替代 API |
+| --- | --- |
+| `GET /v3/admin/ai/pipelines` | `GET /v3/admin/ai/pipelines/list` |
+| `GET /v3/admin/ai/pipelines/{pipelineId}` | `GET /v3/admin/ai/pipelines/detail?pipelineId={pipelineId}` |
+| `GET /v3/console/ai/pipelines` | `GET /v3/console/ai/pipelines/list` |
+| `GET /v3/console/ai/pipelines/{pipelineId}` | `GET /v3/console/ai/pipelines/detail?pipelineId={pipelineId}` |
+| `POST /v3/console/ai/mcp/import/validate` | `POST /v3/console/ai/import/validate` |
+| `POST /v3/console/ai/mcp/import/execute` | `POST /v3/console/ai/import/execute` |
+
+如果无法在升级前完成迁移，可以在迁移窗口内临时设置：
+
+```properties
+nacos.core.api.compatibility.enabled=true
+```
+
+该开关只重新开启显式接入兼容门禁的废弃 v3 API，原有认证和鉴权仍然生效；它不会恢复已从主发行包移除的 v1/v2 API。旧参数 `nacos.ai.resource.import.legacy-mcp-api-enabled` 从 3.2.4 起不再识别。若旧 MCP 直接 URL 导入仍需临时抓取用户提供的 URL，还必须同时设置 `nacos.ai.resource.import.allow-user-url=true`。迁移完成后应关闭共享兼容开关。
+
+#### 2.3.3. 配置 Console MCP tools 导入策略
+
+Console 专用接口 `GET /v3/console/ai/mcp/importToolsFromMcp` 默认允许访问公网 MCP 目标，但会拒绝私网或本地目标。需要访问受信任私网目标时，在**每个承载 Console API 的实例**上配置白名单并重启实例：
+
+```properties
+# 默认值为 true；设为 false 可关闭全部出站 MCP tools 导入
+nacos.console.ai.mcp.import.enabled=true
+
+# 只接受逗号分隔的 IPv4/IPv6 地址或 CIDR，不接受域名
+nacos.console.ai.mcp.import.allowed-private-addresses=192.168.0.0/16,10.0.0.8
+```
+
+目标域名解析出的每一个私网或本地地址都必须命中白名单；任一非法白名单条目都会阻止请求。`baseUrl` 必须是 HTTP 或 HTTPS URL，`endpoint` 必须保持为相对 URI，且请求不会跟随重定向。若部署不需要此功能，建议设置 `nacos.console.ai.mcp.import.enabled=false` 关闭 Console 出站访问。
+
 ## 3. 旧版HTTP API移除说明 (Nacos 3.2.0+)
 
 ### 3.1 API移除通知
