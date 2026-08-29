@@ -68,7 +68,7 @@ Nacos started successfully in xxxx mode. use xxxx storage
 ### 3.4. 发布配置
 
 ```shell
-# 登陆获取access token
+# 登录获取access token
 curl -X POST 'http://127.0.0.1:8848/nacos/v3/auth/user/login' -d 'username=nacos' -d 'password=${your_password}'
 # 使用access token，创建配置
 curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=quickstart.test.config&groupName=test&content=HelloWorld' -H "accessToken:${your_access_token}"
