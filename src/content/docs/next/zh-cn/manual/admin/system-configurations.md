@@ -290,6 +290,10 @@ AI 管理中心的使用方式见[AI 管理中心概述](../user/ai/ai-registry-
 | 参数名 | 说明 | 默认值 |
 | --- | --- | --- |
 | `nacos.extension.ai.enabled` | 是否启用 AI 模块。设为 `false` 时不加载 AI 模块及其控制台入口，Config 和 Naming 不受影响；`microservice` 功能模式下无论该值为何都不会加载 AI 模块。 | `true` |
+| `nacos.ai.resource.search.enabled` | 是否启用 AI 资源检索。关闭后检索功能不可用，依赖该功能的 ARD 也无法启用。升级时若已明确关闭检索，MCP 自动迁移不会等待检索索引初始化。 | `true` |
+| `nacos.ai.resource.search.index.backfill.enabled` | 启用 AI 资源检索后，是否为历史数据初始化索引并进行周期检查。通常保持开启；初次升级期间关闭它，可能使 MCP 自动迁移一直等待索引准备完成。 | `true` |
+| `nacos.ai.mcp.resource.reconciliation.enabled` | 是否在服务端就绪后自动迁移已有 MCP 数据并启用新版管理接口。通常保持开启；迁移完成前设为 `false` 会停止自动迁移，使新版 MCP 管理接口继续不可用。启动时读取，修改后需重启服务端。 | `true` |
+| `nacos.ai.mcp.resource.reconciliation.interval-seconds` | MCP 自动迁移的检查间隔，单位为秒，从上一轮结束后开始计时。只接受正整数；非法、非数字或小于等于 0 的值回退到 `300`。调小会增加配置中心和数据库扫描负载，只建议在测试或受控排障时谨慎调整。启动时读取，修改后需重启服务端。 | `300` |
 | `nacos.ai.mcp.registry.enabled` | 是否启用官方 MCP Registry 协议适配。开启后会使用 `nacos.ai.registry.port` 暴露独立端口。 | `false` |
 | `nacos.ai.skill.registry.enabled` | 是否启用 Skill Registry 协议适配。开启后会使用 `nacos.ai.registry.port` 暴露独立端口。 | `false` |
 | `nacos.ai.registry.port` | AI Registry 协议适配端口。 | `9080` |
@@ -306,6 +310,8 @@ AI 管理中心的使用方式见[AI 管理中心概述](../user/ai/ai-registry-
 | `nacos.ai.resource.import.allow-user-url` | 通过共享兼容开关重新开启旧 MCP 直接 URL 导入后，是否允许抓取用户提供的 URL。 | `false` |
 | `nacos.console.ai.mcp.import.enabled` | 是否允许 Console 的 `GET /v3/console/ai/mcp/importToolsFromMcp` 发起出站 MCP 连接。设为 `false` 会关闭全部此类 tools 导入。 | `true` |
 | `nacos.console.ai.mcp.import.allowed-private-addresses` | Console MCP tools 导入允许访问的私网或本地 IP/CIDR 白名单，多个条目用逗号分隔；公网地址不需要加入。 | 空 |
+
+上表中的 MCP 自动迁移项使用服务端实际参数名。当前发行包没有为它们定义专用启动参数；请优先在 `application.properties` 中使用完整参数名，或按部署规范使用 JVM `-D` 参数。容器部署不要自行推导未由镜像脚本声明的环境变量名。
 
 旧 `nacos.plugin.ai.importer.*`、`nacos.ai.resource.import.sources[N].*`、preset 和复制 endpoint 模型已移除或只保留明确列出的迁移 alias，不能用于新部署。详见 [AI 资源导入插件](../../plugin/ai-resource-import-plugin.md)。
 
