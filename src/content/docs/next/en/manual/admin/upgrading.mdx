@@ -17,7 +17,7 @@ This document corresponds to Nacos 3.3.x. Upgrade compatibility for Nacos 3.3.x 
 | Nacos Version | Upgrade Supported | Remarks |
 |---------------|-------------------|---------|
 | 0.X ~ 1.X | No | 0.X ~ 1.X versions must first be upgraded to 2.0 or above. Please refer to the [Nacos 2.0 Upgrade Guide](https://nacos.io/docs/v2/upgrading/200-upgrading/) to upgrade to 2.0 or 2.1 before proceeding. |
-| 2.0.X ~ 2.5.X | Conditional | Before upgrading from versions before 3.0 to 3.3.x, read [Config Compatibility Migration Removal](#217-config-compatibility-migration-removal-nacos-330) and complete the pre-upgrade checks. If the old deployment did not use the default namespace and did not use beta gray release, this compatibility removal does not affect smooth upgrade for this compatibility area. |
+| 2.0.X ~ 2.5.X | No direct smooth upgrade | Nacos 3.3 removes the Config compatibility migration used by 2.x. If the default namespace was used, first upgrade to 3.0.x–3.2.x and verify that its Config data remains queryable, then upgrade to 3.3.x. See [Upgrading from 2.x](#217-config-compatibility-migration-removal-nacos-330). |
 | 3.0.X ~ 3.3.X | Yes | Upgrading from 3.0.X or later to 3.3.X is supported, but the database schema has changed. Compare the schema file for your target database before upgrading and apply the required schema changes first. |
 
 ### 1.1 Client Compatibility
@@ -34,66 +34,48 @@ Compatibility between Nacos 3.x server and client versions is as follows:
 ## 2. Upgrade Steps
 
 :::caution[3.0.x and 3.1.x can upgrade directly to 3.3.x]
-This procedure supports direct upgrades from Nacos 3.0.x, 3.1.x, or 3.2.x to 3.3.x. It does not require an intermediate server upgrade to 3.2.x. For a 3.0.x or 3.1.x deployment, or any deployment that has not applied every 3.2.x database change, first follow the [Nacos 3.2.x Upgrade Guide](/en/docs/latest/manual/admin/upgrading/) to apply the schema prerequisites for the current database. Verify that the actual schema contains the structures required by 3.2.x, and then apply the 3.3.x delta in this guide.
-
-Only the database schema prerequisites are required; do not add an intermediate 3.2.x server upgrade. Decide whether each SQL statement is needed from the actual table definitions, do not repeat DDL that has already been applied, and never run a complete initialization script against an existing database.
+This procedure supports direct upgrades from Nacos 3.0.x, 3.1.x, or 3.2.x to 3.3.x without an intermediate server upgrade to 3.2.x. Before upgrading, confirm that the database schema meets the target release requirements. See section 2.2 for checks and changes.
 :::
 
 ### 2.1. Pre-upgrade Checks
 
 Complete these preparations before upgrading a production cluster:
 
-1. Confirm that the source cluster runs a supported 3.0.x, 3.1.x, or 3.2.x release, and record the exact patch version, deployment mode, and database type. If the source version predates 3.2.x or its actual schema does not contain every 3.2.x change, list the database operations that must be applied from the 3.2.x upgrade guide.
-2. Back up the database and each node's `data`, `conf`, `cluster.conf`, custom plugins, and their configuration. Every deployment must retain plugin state and runtime configuration under `data/plugin`. With Derby or another embedded store, `data` also contains the primary database and must be preserved in full.
-3. Inventory plugin JARs, implementation names, states, selection properties, and private configuration. Distinguish built-in plugins from custom and third-party plugins.
-4. Rehearse database changes, authentication, plugin loading, rolling upgrade, and rollback in staging with a production-like data copy.
-5. Avoid plugin runtime configuration changes during the upgrade. Submit configuration that depends on 3.3 plugin definitions only after every node has been upgraded.
+1. Confirm that the source cluster version is supported and that the database schema meets the requirements of the target 3.3.x release. See section 2.2 for database checks and changes.
+2. Back up the database, each node's `data`, `conf`, and `cluster.conf`, and any custom plugins and configuration.
+3. Rehearse the upgrade and rollback in staging with a copy of production data.
 
 <a id="217-config-compatibility-migration-removal-nacos-330"></a>
 
-#### 2.1.1. Verify Historical Config Migration Is Complete
+#### 2.1.1. Confirm the Upgrade Path from 2.x
 
-Nacos 3.3 removes the pre-3.0 Config storage migration compatibility. It no longer migrates or double-writes between the legacy empty tenant (`tenant_id = ''`) and the default namespace `public`, and it no longer migrates rows from `config_info_beta` or `config_info_tag` to `config_info_gray`.
+Nacos 3.3 removes the Config compatibility migration and no longer supports a direct smooth upgrade from 2.x. After a direct upgrade from 2.x to 3.3.x, Config data previously stored in the default namespace will no longer be queryable.
 
-Before stopping the last source-version node:
-
-1. Check for default-namespace configuration rows with `tenant_id = ''`. If any exist, verify that they have been migrated to `tenant_id = 'public'`, resolving rows with the same `data_id` and `group_id` first.
-2. Check whether business data still depends on `config_info_beta` or `config_info_tag`. If so, complete its migration to `config_info_gray` and the current `GrayRule` model before upgrading to 3.3.x.
-3. Verify default-namespace reads, formal publishing, beta/tag gray queries, and stopping gray releases.
-
-No corresponding data migration is needed if the deployment never used the default namespace or beta/tag gray release. If the migration format is uncertain, keep the source cluster available while completing and verifying the migration; do not expect 3.3 startup to perform it.
-
-For PostgreSQL deployments upgrading directly from 3.0.x, 3.1.x, 3.2.0, or 3.2.1, or deployments that skipped the 3.2.2 schema normalization, first complete the `tenant_id` not-null migration documented in the [3.2.x Upgrade Guide](/en/docs/latest/manual/admin/upgrading/).
+Before upgrading, confirm that the deployment has not used Config data in the default namespace. If it has, or if this cannot be confirmed, first upgrade to 3.0.x–3.2.x and verify that the default-namespace Config data remains queryable, then upgrade to 3.3.x.
 
 :::caution[A2A upgrade limitation in 3.3.0-BETA]
-This guide currently applies to Nacos 3.3.0-BETA. This release introduces RAD (RemoteAgentDiscovery), a protocol-neutral capability for remote Agent registration and discovery, which will gradually replace the previous A2A capability in the GA release. However, the current BETA release does not yet support a lossless upgrade of A2A data. After a direct upgrade from 3.1.x or 3.2.x to 3.3.0-BETA, existing A2A content cannot be queried. Deployments with existing A2A content should assess this impact and retain a backup before upgrading.
+This guide currently applies to Nacos 3.3.0-BETA. This release does not yet support a smooth upgrade of existing A2A data. After a direct upgrade from 3.1.x or 3.2.x, existing A2A content cannot be queried. Deployments that use A2A should assess the impact and retain a backup before upgrading.
 :::
 
 ### 2.2. Apply Database Changes
 
 Before starting any 3.3.x node, first follow the [3.2.x Upgrade Guide](/en/docs/latest/manual/admin/upgrading/) to apply the database prerequisites needed to bring the current source schema up to the 3.2.x schema level; this does not require starting a 3.2.x server. Then compare the resulting actual schema with the complete matching schema in the target 3.3.x distribution and convert the remaining differences into reviewed incremental DDL. Never execute a complete initialization file containing `CREATE TABLE` or `DROP TABLE` statements directly against an existing database.
 
+For PostgreSQL deployments upgrading directly from 3.0.x, 3.1.x, 3.2.0, or 3.2.1, or deployments that skipped the 3.2.2 schema normalization, first complete the `tenant_id` not-null migration documented in the [3.2.x Upgrade Guide](/en/docs/latest/manual/admin/upgrading/).
+
 The target distribution provides `mysql-schema.sql`, `pg-schema.sql`, `oracle-schema.sql`, and `derby-schema.sql` under `conf`. After applying the 3.2.x schema prerequisites, pay particular attention to these additional 3.3.x changes:
 
 | Change | Scope and action |
 | --- | --- |
 | `permissions.resource` expands to 512 characters | The default auth and visibility plugins need a longer column for canonical resource identifiers. If the current column is shorter than 512 and explicit visibility grants will be used, run the matching `*-upgrade-visibility-permission-resource.sql` from the target distribution. Before running the MySQL script, verify that the InnoDB page size, row format, and unique-index length support `VARCHAR(512) utf8mb4`. |
-| New AI resource search relational tables | Nacos 3.3 adds `ai_resource_search_document`, `ai_resource_search_chunk`, and `ai_resource_task`. Before enabling `nacos.ai.ard.enabled`, extract and review only the required `CREATE TABLE` and index statements for these tables from the target main-datasource schema; never copy adjacent `DROP` statements. If any table already exists, prepare an `ALTER` or data-migration plan instead of dropping and recreating it. ARD is disabled by default, so these tables and vector storage are not startup requirements while it remains disabled. Creating them proactively during a planned maintenance window is recommended. |
+| New AI resource search relational tables | Nacos 3.3 adds `ai_resource_search_document`, `ai_resource_search_chunk`, and `ai_resource_task`. AI Resource Search is controlled by `nacos.ai.resource.search.enabled` and is enabled by default. Before starting the target version against an existing external database, extract and review only the required `CREATE TABLE` and index statements for these tables from the target main-datasource schema; never copy adjacent `DROP` statements. If any table already exists, prepare an `ALTER` or data-migration plan instead of dropping and recreating it. These tables are not required only when AI Resource Search is explicitly disabled; Search is then unavailable, and ARD, which depends on Search, cannot be enabled. |
 | PostgreSQL pgvector storage (optional) | Only when enabling the default PostgreSQL vector plugin, initialize pgvector objects and `ai_resource_search_embedding_pg` in the PostgreSQL datasource that stores embeddings. `conf/pg-ai-vector-schema.sql` is separate from the main `pg-schema.sql`, contains `CREATE EXTENSION` and destructive initialization statements, and requires the pgvector extension and sufficient database privileges. Only a fresh vector store may run it unchanged after review; existing tables require a backup and an incremental migration instead of rerunning the file. |
 | AI resource description column expansion | In PostgreSQL, Oracle, and Derby, expand `ai_resource.c_desc` and `ai_resource_version.c_desc` to 2048 when their current length is smaller. Generate reviewed `ALTER` statements from the actual table definition and target schema instead of assuming the default length from a particular 3.2.x patch. |
 | MySQL collation for fresh schemas | Fresh 3.3 MySQL schemas use the case-sensitive `utf8mb4_bin` collation for existing core tables. No general in-place collation migration is currently provided for existing databases. Do not bulk-alter production tables from the full schema; review case-sensitive identity requirements and use a separately validated migration plan if alignment is required. |
 
-:::note
-The three ARD-related relational tables use protocol-neutral AI resource search names. Do not rename them to ARD-specific tables even though ARD is currently their only consumer. PostgreSQL deployments that do not enable the default vector plugin do not need pgvector or the vector schema.
-:::
-
-:::caution[Check case conflicts before enabling ARD on MySQL]
-In the current target schema, existing AI resource tables use the case-sensitive `utf8mb4_bin` collation, while the new search tables still use `utf8mb4_unicode_ci`. Resource names or versions that differ only by case within the same namespace may therefore collide on search-table unique keys. Detect and resolve such data before enabling ARD. If conflicts exist, keep ARD disabled until the target schema and migration plan are aligned.
-:::
-
 ### 2.3. Migrate Configuration and Plugins
 
-Nacos 3.3 unifies server-plugin identity, state, implementation selection, and private configuration. Use the target distribution's `conf/application.properties` as the migration template instead of overwriting it with the source-version file. See [System Configurations](./system-configurations.md) for commonly used parameters and [Plugin Migration Guide](../../plugin/migration.md) for migration semantics. The target distribution template remains the final parameter baseline for that release.
+Nacos 3.3 unifies server plugin configuration. Most legacy configuration keys remain supported in 3.3, but may be removed in a future release. They do not all need to be replaced during this upgrade. Compare the current configuration with the target distribution's `conf/application.properties` and migrate progressively to the new keys; avoid overwriting the target file with the source-version configuration file. See [System Configurations](./system-configurations.md) for commonly used parameters and [Plugin Migration Guide](../../plugin/migration.md) for migration guidance.
 
 #### 2.3.1. Default Auth Plugin
 
@@ -110,7 +92,7 @@ The default implementation remains `nacos`, but it is managed as `auth:nacos` in
 
 `nacos.core.auth.enabled`, `nacos.core.auth.admin.enabled`, `nacos.core.auth.console.enabled`, and `nacos.core.auth.server.identity.*` remain core auth gates or server identity properties. Do not move them into a plugin-private namespace.
 
-When a canonical property and a legacy alias are both present, the canonical property wins. An empty canonical value still suppresses the alias. The target template already contains `nacos.plugin.auth.type=nacos` and canonical defaults for `auth:nacos`. Explicitly copy retained values to canonical properties instead of keeping old and new properties side by side. The startup script specially migrates only a valid legacy token secret in `application.properties`; migrate all other auth values explicitly. LDAP, OIDC, and custom auth deployments should also review the [Auth Plugin](../../plugin/auth-plugin.md) page item by item.
+When a canonical property and a legacy property are both present, the canonical property wins. An empty canonical value still suppresses the legacy property. Most legacy properties remain readable in 3.3, but the target distribution may already provide defaults for their canonical replacements. When merging configuration, ensure that those defaults do not override the values in use. The startup script automatically handles only a valid legacy token secret in `application.properties`; other legacy keys are not rewritten automatically and can be migrated progressively by following log warnings. LDAP, OIDC, and custom auth deployments should also review the [Auth Plugin](../../plugin/auth-plugin.md) page item by item.
 
 If anonymous AI access is enabled, an explicit empty or invalid `Authorization`, `accessToken`, username, or password is rejected instead of falling back to anonymous access. Anonymous callers must omit credentials completely; authenticated callers must send valid credentials.
 
@@ -229,14 +211,52 @@ Container deployments must also complete the database, historical migration, and
   </TabItem>
 </Tabs>
 
-### 2.6. Post-upgrade Verification and Rollback Preparation
+### 2.6. Wait for Automatic MCP Data Migration
+
+When upgrading a deployment with existing MCP Server data from Nacos 3.0.x through 3.2.x, no manual data migration is required. After the target version starts, a background task scans the existing MCP data and adds the information needed by the new management features. The task retries automatically after a failure.
+
+The migration reuses the existing MCP service, Tools, and Resources configuration. It does not move or rewrite this content, and it does not change MCP service addresses, client calls, or gateway access. Existing MCP services can therefore continue serving traffic during the migration.
+
+#### 2.6.1. Expected Behavior During the Upgrade
+
+- During migration, Nacos marks its internal state as `SYNCING`. This means the background task is still running or waiting for nodes and search indexing to become ready. It is not an operating mode that users must select; normally, continue the upgrade and wait for automatic retries.
+- Existing MCP management APIs remain available until migration completes. New MCP management APIs may temporarily return `409 / RESOURCE_CONFLICT`. This normally means background migration is not finished, not that data has been lost. Continue using the existing APIs and inspect Server logs.
+- The migration task runs after the Server starts and retries about every five minutes by default. If the first scan adds or repairs data, another scan is required to confirm the result, so completion may take one or more cycles.
+- Migration completes only after every Server node has been upgraded, the historical-data scan succeeds, and any enabled AI resource search finishes index initialization. Waiting while old-version nodes remain during a rolling upgrade is expected. Finish upgrading all nodes; no manual data or traffic switch is required.
+- A cluster without historical MCP data also completes the check automatically and normally needs no additional action.
+
+See [System Parameters](./system-configurations.md#ai-registry) for migration settings. Normally keep `nacos.ai.mcp.resource.reconciliation.enabled=true`. A shorter interval increases Config and database scan load and should be used cautiously only in staging, testing, or controlled troubleshooting.
+
+#### 2.6.2. Do Not Operate on Internal Migration Data
+
+Nacos stores internal migration state in Namespace `_nacos_internal_` and group `nacos_internal`. These Config entries are used only by Nacos during the upgrade migration. Users do not need to inspect or maintain them and should not modify or otherwise operate on them. If an error occurs, inspect Server logs first. Perform a read-only query only when authorized for further troubleshooting, and do not change the content.
+
+#### 2.6.3. Troubleshoot an Incomplete Migration
+
+| Symptom | Recommendation |
+| --- | --- |
+| New MCP management APIs continue to return `409 / RESOURCE_CONFLICT` | Continue using the existing APIs, confirm that all Server nodes are upgraded and healthy, inspect migration-related logs, and wait for the next automatic retry. |
+| Logs report that the search index is not ready | If AI resource search is enabled, confirm that the search tables required by section 2.2 are available and inspect its startup and indexing logs. Do not disable search temporarily just to complete migration. |
+| Logs report a Namespace or historical MCP data scan failure | Check the Namespace, database, and Config services. Common causes include duplicate MCP names or IDs, missing versions, or missing, malformed, or conflicting Server, Tools, or Resources configuration. |
+| Logs report that another node is running the migration | This is normal cluster coordination. Do not take over manually or delete internal data; wait for the current node to finish or for an automatic retry. |
+
+After migration completes, the new MCP management APIs become available and Server logs record completion. Before repairing historical data, back up the database and related Config data and retain complete logs. Use supported management APIs instead of deleting database rows or internal migration data directly. If the correct repair is unclear, preserve the evidence and contact Nacos maintainers.
+
+#### 2.6.4. Rollback and Downgrade Boundary
+
+After MCP historical-data migration completes, the new management state is not automatically reversed when the service is downgraded. Do not allow old-version nodes to handle MCP management requests, and do not attempt rollback by deleting internal migration data or newly added database rows.
+
+Existing MCP service content and calling patterns remain compatible, but subsequent management operations should be handled by target-version nodes. For an emergency downgrade, retain backups and logs, isolate MCP management requests, and work with maintainers on a verified recovery plan.
+
+### 2.7. Post-upgrade Verification and Rollback Preparation
 
 At minimum, verify the following after the upgrade:
 
 1. Node versions, cluster membership, and health are correct, with no schema, plugin-loading, or configuration-alias errors in the logs.
 2. Config publish/query, service register/discover, Console login, Client API, and Admin API authentication match the pre-upgrade settings.
-3. Deployments that used the default namespace or gray release recheck the paths listed in section 2.1.1.
+3. Deployments upgraded from 2.x through an intermediate release can still query Config data in the default namespace.
 4. Plugin management reports the expected plugin IDs, states, configuration sources, and restart-required fields, with no implementation enabled unexpectedly.
-5. When ARD is enabled, all three relational tables exist and index tasks converge. When the PostgreSQL vector plugin is enabled, also verify the pgvector schema and datasource connectivity.
+5. When AI Resource Search is enabled, all three relational tables exist and index tasks converge. When the PostgreSQL vector plugin is enabled, also verify the pgvector schema and datasource connectivity.
+6. Follow section 2.6 to confirm that automatic MCP migration completes, the new MCP management APIs are available, and every Server node is upgraded and healthy.
 
 Keep the old distribution, configuration, plugin JARs, and database backup until the observation period ends. Before rollback, remove runtime plugin overrides understood only by 3.3. Roll back AI Resource Import plugin JARs, configuration, and callers together. Do not reverse new tables or widened columns during an emergency rollback; use the database rollback procedure validated before rollout.
