@@ -23,19 +23,27 @@ Nacos Server 自身有独立的指标暴露入口，请参考[监控手册](../.
 
 ### 1.1. `enableClientMetrics` 开关
 
-客户端属性 `enableClientMetrics`（`PropertyKeyConst.ENABLE_CLIENT_METRICS`）控制 SDK 内部所有记录点，对 `NamingService` 与 `ConfigService` 同时生效，默认值为 `true`。若应用有其他自有的指标采集方案，可以显式关闭：
+客户端属性 `enableClientMetrics`（`PropertyKeyConst.ENABLE_CLIENT_METRICS`）控制 `NamingService` 与 `ConfigService` 的记录点，包括 naming gRPC 请求 timer、naming 失败请求 counter、config 监听数 gauge 以及 naming 服务信息 gauge，默认值为 `true`。若应用有其他自有的指标采集方案，可以显式关闭以跳过这些记录调用：
 
 ```properties
 enableClientMetrics=false
 ```
 
+:::note
+AI Agent watch 相关的 gauge 与事件 counter（[第 3 节](#3-指标一览)中 `module="ai"` 的序列）目前**不受**该开关控制：`AgentWatchClientMetrics` 直接在 `MetricsMonitor` 上记录，不读取该属性。
+:::
+
 多数场景保持默认即可：未注册 registry 时，记录调用本身开销极低。
 
 ### 1.2. Spring Boot 应用
 
-Spring Boot 会为所有支持的后端自动装配 `MeterRegistry` bean，并在启动时把它加入 `Metrics.globalRegistry`。只需引入 Prometheus registry starter：
+Spring Boot 会为所有支持的后端自动装配 `MeterRegistry` bean，并在启动时把它加入 `Metrics.globalRegistry`。引入 actuator 与 Prometheus registry starter：
 
 ```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
 <dependency>
     <groupId>io.micrometer</groupId>
     <artifactId>micrometer-registry-prometheus</artifactId>
@@ -48,7 +56,11 @@ Spring Boot 会为所有支持的后端自动装配 `MeterRegistry` bean，并�
 management.endpoints.web.exposure.include=health,info,prometheus
 ```
 
-Nacos 客户端指标会与应用自身指标一起出现在 `/actuator/prometheus`，无需额外配置。
+Nacos 客户端指标会与应用自身指标一起出现在 `/actuator/prometheus`，无需 Nacos 侧的额外配置。
+
+:::caution
+`/actuator/prometheus` 端点本身来自 `spring-boot-starter-actuator`。如果应用尚未依赖 Actuator，上面的组合即最小依赖；缺少它就没有可暴露的 scrape 端点。另外注意，设置 `management.metrics.use-global-registry=false` 会阻止 Spring 管理的 registry 被加入 `Metrics.globalRegistry`，Nacos 客户端指标因此**不会**自动流入其中——此时请参考[1.3 节](#13-非-spring-应用)自行把选定的 registry 注册到 `Metrics.globalRegistry`。
+:::
 
 ### 1.3. 非 Spring 应用
 
@@ -110,12 +122,16 @@ Micrometer 提供两个 Prometheus registry，`nacos-client` 两者都支持：
 
 `nacos_client_request` 在 Prometheus 上以 `nacos_client_request_seconds_{bucket,count,sum,max}` 形式导出。
 
+:::note
+默认装配下，只有 **naming** HTTP 客户端记录该 timer（`module="naming"`，位于 `NamingHttpClientProxy`）。config 侧的包装类 `MetricsHttpAgent`（记录 `module="config"`）目前只在 SDK 自身的测试中被实例化；通过 `NacosFactory` 创建的常规 `ConfigService` 并不会用它包装 `HttpAgent`。要得到 `module="config"` 序列，请自行用 `new MetricsHttpAgent(agent)` 包装，或关注未来 SDK 默认装配它的变更。
+:::
+
 | 标签 | 取值 |
 | --- | --- |
-| `module` | `config`、`naming` |
+| `module` | `naming`（默认装配）、`config`（仅在手动装配 `MetricsHttpAgent` 时出现，见上方说明） |
 | `method` | `GET`、`POST`、`DELETE` |
-| `url` | 请求路径，例如 `/cs/configs`、`/ns/instance/list` |
-| `code` | HTTP 状态码字符串；未拿到响应时为 `NA` |
+| `url` | `naming`：完整构造出的请求 URL（服务器地址 + 路径，基数高，聚合时需谨慎）；`config`：请求路径，例如 `/cs/configs` |
+| `code` | HTTP 状态码字符串。naming 路径在拿到响应前抛出异常时**不会**产生 timer 序列（请求直接失败、无序列）；手动装配的 config 路径中 `MetricsHttpAgent` 会在 `finally` 块里记录 `code="NA"` |
 
 从 Nacos 3.3 开始，`method` 标签反映真实 HTTP 方法。此前 `httpPost` 与 `httpDelete` 都被记录为 `method="GET"`，按 method 分组的告警与 dashboard 在升级后会看到流量重新分布。
 
@@ -164,7 +180,12 @@ le="0.25" le="0.5" le="0.75" le="1.0" le="2.5" le="5.0" le="7.5" le="10.0" le="+
 
 ### 4.2. `_sum` 单位从毫秒变为秒
 
-Nacos 3.3 之前，客户端将 `System.currentTimeMillis() - start` 直接喂给一个以秒为 bucket 单位的 Prometheus histogram，所有观测都会落到 `le="+Inf"`，`_sum` 值实际以毫秒计。
+Nacos 3.3 之前，客户端将 `System.currentTimeMillis() - start` ——一个毫秒数——直接喂给一个 bucket 边界以秒定义的 Prometheus histogram。观测值与边界做的是数值比较，因此：
+
+- 大于 `10` 的观测（慢于 10 ms 的请求，长尾部分）只会落到 `le="+Inf"`；
+- 不大于 `10` 的观测（10 ms 及更快的请求，常见情形）会落进有限 bucket——但这些 bucket 的名义量纲是秒。一个 3 ms 的请求会被计入 `le="5.0"`，一个名义上代表 5 秒的 bucket。
+
+无论哪种情况，分布都是无意义的，而 `_sum` 值以毫秒计、序列名却暗示秒。
 
 从 Nacos 3.3 开始，耗时通过 Micrometer Timer 记录：
 
@@ -191,7 +212,7 @@ groups:
 `* 1000` 用来把新的秒制 `_sum` 换算回旧 dashboard 期望的毫秒制。Bucket 边界未变，`nacos_client_request_bucket` 可直接沿用。
 
 :::caution
-Recording rule 只能保留名字和单位，无法还原 3.3 之前 bucket 不可用的事实：旧版本所有观测都落在 `+Inf`，任何基于旧数据算出的分位数都无意义。升级后的分位数才是首次真正可用的数据，与升级前会有明显差异。
+Recording rule 只能保留名字和单位，无法还原 3.3 之前的 bucket 数据：观测值携带毫秒量级的数值，却被与秒量级的边界比较——10 ms 及更快的请求落进了以秒解读的有限 bucket，更慢的请求堆积在 `+Inf`。基于旧数据算出的分位数无意义。升级后的分位数才是首次真正可用的数据，与升级前会有明显差异。
 :::
 
 ### 4.4. PromQL 迁移示例
@@ -227,11 +248,11 @@ p99 结果单位为秒。若 dashboard 显示单位是毫秒，请在面板中�
 
 **只有部分客户端指标出现**
 
-Meter 是懒创建的：`nacos_client_request{module="config"}` 只有在第一次 HTTP 调用之后才会出现，`nacos_client_naming_request_failed_total` 只有在真的发生 naming 请求失败之后才会出现。在断定指标坏了之前，先触发一次相应代码路径。
+Meter 是懒创建的：`nacos_client_request{module="naming"}` 只有在第一次 naming HTTP 调用之后才会出现，`nacos_client_naming_request_failed_total` 只有在真的发生 naming 请求失败之后才会出现。`nacos_client_request{module="config"}` 在默认装配下根本不会出现——如何自行装配 `MetricsHttpAgent` 见 [3.2 节](#32-请求-timer)的说明。在断定指标坏了之前，先触发一次相应代码路径。
 
 **从 Nacos 3.2 升级后分位数看起来不对**
 
-参见 [4.2 节](#42-_sum-单位从毫秒变为秒)。3.3 之前 histogram 被喂入毫秒值但 bucket 以秒为单位，旧分位数本就不可用；新分位数才是首次有意义的数据。
+参见 [4.2 节](#42-_sum-单位从毫秒变为秒)。3.3 之前 histogram 用毫秒量级的观测值对比秒量级的 bucket 边界——10 ms 及更快的请求落进以秒解读的有限 bucket，更慢的堆积在 `+Inf`——旧分位数本就不可用；新分位数才是首次有意义的数据。
 
 **升级后 `method` 标签分布发生变化**
 

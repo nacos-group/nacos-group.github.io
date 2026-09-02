@@ -23,19 +23,27 @@ Nacos Server has its own metrics endpoint. See [Monitoring Manual](../../admin/m
 
 ### 1.1. The `enableClientMetrics` switch
 
-The client property `enableClientMetrics` (`PropertyKeyConst.ENABLE_CLIENT_METRICS`) gates every recording site inside the SDK. It defaults to `true` and applies to both `NamingService` and `ConfigService`. Set it to `false` to skip all recording calls, which is useful when the surrounding application manages metrics through another mechanism:
+The client property `enableClientMetrics` (`PropertyKeyConst.ENABLE_CLIENT_METRICS`) gates the recording sites of `NamingService` and `ConfigService`, including the naming gRPC request timer, the naming failed-request counter, the config listen-count gauge, and the naming service-info gauges. It defaults to `true`. Set it to `false` to skip those recording calls, which is useful when the surrounding application manages metrics through another mechanism:
 
 ```properties
 enableClientMetrics=false
 ```
 
+:::note
+The AI agent watch gauges and event counter (`module="ai"` in [section 3](#3-metric-reference)) are currently **not** gated by this switch: `AgentWatchClientMetrics` records on `MetricsMonitor` directly, without reading the property.
+:::
+
 Leaving the property at its default is the right choice in most cases: with no registry registered, the recording calls are already cheap.
 
 ### 1.2. Spring Boot applications
 
-Spring Boot auto-configures a `MeterRegistry` bean for every supported backend and adds it to `Metrics.globalRegistry` on startup. Adding the Prometheus registry starter is enough:
+Spring Boot auto-configures a `MeterRegistry` bean for every supported backend and adds it to `Metrics.globalRegistry` on startup. Add the actuator and the Prometheus registry starters:
 
 ```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
 <dependency>
     <groupId>io.micrometer</groupId>
     <artifactId>micrometer-registry-prometheus</artifactId>
@@ -48,7 +56,11 @@ Then expose the scrape endpoint:
 management.endpoints.web.exposure.include=health,info,prometheus
 ```
 
-Nacos client meters appear under `/actuator/prometheus` alongside the application's own meters. No extra wiring is required.
+Nacos client meters appear under `/actuator/prometheus` alongside the application's own meters — no Nacos-specific wiring is required.
+
+:::caution
+The `/actuator/prometheus` endpoint itself comes from `spring-boot-starter-actuator`. If your application does not already depend on Actuator, the example above is the minimal combination; without it there is no scrape endpoint to expose. Also note that setting `management.metrics.use-global-registry=false` keeps the Spring-managed registry out of `Metrics.globalRegistry`, which means Nacos client meters will **not** flow into it automatically — in that case register your chosen registry on `Metrics.globalRegistry` yourself as shown in [section 1.3](#13-non-spring-applications).
+:::
 
 ### 1.3. Non-Spring applications
 
@@ -110,12 +122,16 @@ The `nacos_monitor` gauge keeps the historical name and tag layout, so dashboard
 
 `nacos_client_request` is exported as `nacos_client_request_seconds_{bucket,count,sum,max}`.
 
+:::note
+In the default wiring only the **naming** HTTP client records this timer (`module="naming"`, in `NamingHttpClientProxy`). The config-side wrapper `MetricsHttpAgent` — which records `module="config"` — is currently instantiated only in the SDK's own tests; a normal `ConfigService` created through `NacosFactory` does not wrap its `HttpAgent` with it. To get the `module="config"` series, wrap your `HttpAgent` with `new MetricsHttpAgent(agent)` yourself, or watch for a future SDK change that wires it by default.
+:::
+
 | Tag | Values |
 | --- | --- |
-| `module` | `config`, `naming` |
+| `module` | `naming` (default wiring), `config` (only when `MetricsHttpAgent` is wired manually, see note above) |
 | `method` | `GET`, `POST`, `DELETE` |
-| `url` | Request path, for example `/cs/configs` or `/ns/instance/list` |
-| `code` | HTTP status code as a string, or `NA` when no response was received |
+| `url` | `naming`: the full constructed request URL (`server address + path`, high cardinality — aggregate carefully); `config`: the request path, for example `/cs/configs` |
+| `code` | HTTP status code as a string. An exception before a response is received does **not** produce a timer on the naming path (the request simply fails with no series); on the manually-wired config path `MetricsHttpAgent` records `code="NA"` in its `finally` block |
 
 Since Nacos 3.3, the `method` tag reflects the actual HTTP verb. In earlier versions `httpPost` and `httpDelete` were recorded under `method="GET"`; alerts and dashboards grouping by method may see the traffic redistributed after upgrading.
 
@@ -164,7 +180,12 @@ The rename comes from Micrometer, which appends the base unit to timer series. E
 
 ### 4.2. `_sum` unit changes from milliseconds to seconds
 
-Before Nacos 3.3 the client fed `System.currentTimeMillis() - start` into a Prometheus histogram whose buckets were defined in seconds. Every observation therefore landed in `le="+Inf"` and the `_sum` value was in milliseconds.
+Before Nacos 3.3 the client fed `System.currentTimeMillis() - start` — a millisecond count — into a Prometheus histogram whose bucket boundaries were defined in seconds. The values were compared numerically against those boundaries, so:
+
+- Observations greater than `10` (requests slower than 10 ms, the slow tail) landed exclusively in `le="+Inf"`.
+- Observations of `10` or fewer (requests of 10 ms or faster, the common case) landed in the finite buckets — but into buckets whose nominal scale was seconds. A 3 ms request was counted into `le="5.0"`, a bucket labelled as 5 seconds.
+
+Either way the distribution was meaningless, and the `_sum` value was in milliseconds while the series name implied seconds.
 
 Since Nacos 3.3 the elapsed time is recorded on a Micrometer timer:
 
@@ -191,7 +212,7 @@ groups:
 The `* 1000` factor converts the new seconds-based `_sum` back into the milliseconds the old dashboards expect. Bucket boundaries did not change, so `nacos_client_request_bucket` can be reused as-is.
 
 :::caution
-Recording rules only preserve names and units. They cannot restore the fact that pre-3.3 buckets were unusable: any percentile computed from an old scrape was based on observations that all landed in `+Inf`. After upgrading, percentiles become meaningful for the first time and will look very different from the pre-3.3 values.
+Recording rules only preserve names and units. They cannot restore the pre-3.3 buckets: observations were compared against second-scale boundaries while carrying millisecond values, so requests of 10 ms or faster fell into finite buckets with a seconds-scale interpretation and slower requests piled up in `+Inf`. Percentiles computed from an old scrape were meaningless. After upgrading, percentiles become meaningful for the first time and will look very different from the pre-3.3 values.
 :::
 
 ### 4.4. PromQL migration examples
@@ -227,11 +248,11 @@ The property only gates calls inside the SDK; it does not register a backend. Se
 
 **Only some client meters appear**
 
-Meters are created lazily on first use. `nacos_client_request{module="config"}` shows up only after the first HTTP call, and `nacos_client_naming_request_failed_total` only after a naming request actually fails. Trigger the relevant code path before concluding that a meter is broken.
+Meters are created lazily on first use. `nacos_client_request{module="naming"}` shows up only after the first naming HTTP call, and `nacos_client_naming_request_failed_total` only after a naming request actually fails. `nacos_client_request{module="config"}` does not appear with the default wiring at all — see the note in [section 3.2](#32-request-timer) for how to wire `MetricsHttpAgent` yourself. Trigger the relevant code path before concluding that a meter is broken.
 
 **Percentile values look wrong after upgrading from Nacos 3.2**
 
-See [section 4.2](#42-_sum-unit-changes-from-milliseconds-to-seconds). The pre-3.3 histogram was fed milliseconds into second-based buckets, so old percentiles were unusable. New percentiles are the first meaningful ones.
+See [section 4.2](#42-_sum-unit-changes-from-milliseconds-to-seconds). The pre-3.3 histogram compared millisecond values against second-scale bucket boundaries — requests of 10 ms or faster landed in finite buckets with a seconds-scale interpretation, slower ones piled up in `+Inf` — so old percentiles were unusable. New percentiles are the first meaningful ones.
 
 **`method` label distribution changed after upgrading**
 
