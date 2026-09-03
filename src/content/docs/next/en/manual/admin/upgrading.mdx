@@ -53,10 +53,6 @@ Nacos 3.3 removes the Config compatibility migration and no longer supports a di
 
 Before upgrading, confirm that the deployment has not used Config data in the default namespace. If it has, or if this cannot be confirmed, first upgrade to 3.0.x–3.2.x and verify that the default-namespace Config data remains queryable, then upgrade to 3.3.x.
 
-:::caution[A2A upgrade limitation in 3.3.0-BETA]
-This guide currently applies to Nacos 3.3.0-BETA. This release does not yet support a smooth upgrade of existing A2A data. After a direct upgrade from 3.1.x or 3.2.x, existing A2A content cannot be queried. Deployments that use A2A should assess the impact and retain a backup before upgrading.
-:::
-
 ### 2.2. Apply Database Changes
 
 Before starting any 3.3.x node, first follow the [3.2.x Upgrade Guide](/en/docs/latest/manual/admin/upgrading/) to apply the database prerequisites needed to bring the current source schema up to the 3.2.x schema level; this does not require starting a 3.2.x server. Then compare the resulting actual schema with the complete matching schema in the target 3.3.x distribution and convert the remaining differences into reviewed incremental DDL. Never execute a complete initialization file containing `CREATE TABLE` or `DROP TABLE` statements directly against an existing database.
@@ -248,7 +244,84 @@ After MCP historical-data migration completes, the new management state is not a
 
 Existing MCP service content and calling patterns remain compatible, but subsequent management operations should be handled by target-version nodes. For an emergency downgrade, retain backups and logs, isolate MCP management requests, and work with maintainers on a verified recovery plan.
 
-### 2.7. Post-upgrade Verification and Rollback Preparation
+<a id="27-a2a-historical-data-migration"></a>
+
+### 2.7. Automatic Historical A2A Data Migration
+
+This section applies when upgrading from Nacos 3.1.x through 3.2.x with historical A2A Config definitions, Version content, or old A2A SDKs still publishing Runtime Endpoints to `<legacyEncodedAgentName>::<exactVersion>` Naming services. The target release migrates those definitions to canonical Agent Resources, Versions, and Agent Storage, and converges live Runtime Endpoints into the canonical RAD Runtime.
+
+Migration does not start by default, and there is no separate migration enable switch. Before the rolling upgrade, every **target-version node** must explicitly use the same configuration:
+
+```properties
+nacos.ai.a2a.compatibility.mode=AUTO
+nacos.ai.a2a.migration.legacy-naming-shadow-enabled=false
+```
+
+The default `CANONICAL` mode uses only canonical Agent/RAD and does not scan historical A2A data. During the rolling upgrade, every new node must also use the same available Agent Storage provider and the same shadow policy. Once a migration plan is created, the effective Storage provider and shadow choice are frozen in its marker; inconsistent node policies prevent reconciliation and cutover.
+
+`legacy-naming-shadow-enabled=false` means that after cutover to `CANONICAL`, Nacos no longer promises to materialize the old exact-Version Naming service. Ordinary legacy A2A APIs and SDKs query, subscribe, and publish Endpoints through the compatibility layer, so they do not require the shadow. If an application bypasses the A2A/RAD APIs and consumes the `<legacyEncodedAgentName>::<exactVersion>` serviceName directly through the Naming Gateway, assess that dependency and select `true` before migration begins. Do not treat a local property change after marker creation as a dynamic switch.
+
+The migration-related properties and defaults are:
+
+| Property | Default | Operational guidance |
+| --- | ---: | --- |
+| `nacos.ai.a2a.compatibility.mode` | `CANONICAL` | Historical migration requires an explicit `AUTO`. |
+| `nacos.ai.a2a.migration.legacy-naming-shadow-enabled` | `false` | Whether to retain the old exact-Version Naming shadow after cutover; frozen when migration starts. |
+| `nacos.ai.a2a.migration.reconciliation.interval-seconds` | `300` | Full reconciliation interval. |
+| `nacos.ai.a2a.migration.reconciliation.page-size` | `100` | Number of historical definitions scanned per page. |
+| `nacos.ai.a2a.migration.lease-duration-seconds` | `600` | Renewable lease duration for the migration owner. |
+| `nacos.ai.a2a.migration.quiescing-timeout-seconds` | `120` | Time before one `QUIESCING` attempt returns to `SYNCING`. |
+
+Except for the `AUTO` and shadow decisions, normally retain these defaults. Consider lowering them only in staging or controlled troubleshooting. A shorter lease must still exceed one expected reconciliation unit, and a shorter reconciliation interval increases Config, Storage, and database load.
+
+Keep these three compatibility surfaces distinct:
+
+| Surface | Migration and cutover semantics |
+| --- | --- |
+| Legacy A2A APIs/SDKs | Read and write historical definitions during `SYNCING`; after `CANONICAL`, the canonical Agent/RAD compatibility facade serves them. Migration does not provide request-level dual reads, merged reads, or long-term definition dual writes. |
+| Canonical Agent/RAD | Holds the migrated definitions, Search, Discover, Watch, and Runtime state and becomes the terminal authority. |
+| Optional legacy Naming Gateway shadow | Serves only callers that directly read the old exact-Version serviceName. It is not a definition authority and does not produce duplicate RAD Endpoints or Watch events. |
+
+#### 2.7.1. Expected Behavior During the Upgrade
+
+| State | User-visible behavior |
+| --- | --- |
+| `SYNCING` | Historical A2A Config definitions remain authoritative. Legacy A2A API/SDK queries, subscriptions, and definition writes continue, as do Endpoint registration, heartbeats, and Redo. New nodes idempotently migrate definitions and Versions in the background and publish each still-live Runtime Endpoint to the old Naming layout as primary plus the canonical RAD layout as a required mirror. Background failures retry and do not turn a legacy definition write into dual authority. |
+| `QUIESCING` | Nacos briefly fences A2A **definition** mutations to complete a consistent, single-authority cutover. Definition reads, Search, RAD Discover/Watch, Endpoint registration, and existing traffic remain available. An HTTP definition mutation returns HTTP `409`; the standard `Result` has `code` `50105` (`AGENT_MIGRATION_IN_PROGRESS`) and the detail in `data`. Legacy SDK/gRPC responses preserve detail code `50105`. Callers should retry later. A timeout, member change, or final validation failure automatically returns the plan to `SYNCING`. |
+| `CANONICAL` | This is the permanent terminal state. Canonical Agent/RAD becomes the definition and Runtime authority, while legacy A2A APIs/SDKs use its compatibility facade. Do not try to roll back by deleting internal state or reintroducing a legacy-only binary. Direct legacy Naming Gateway visibility is determined only by the frozen shadow policy. |
+
+The system completes cutover only after every current Server node has been upgraded and reports consistent migration ability and policy; all historical definitions and Versions are complete, readable, and conflict-free in the target Agent Storage; enabled Search indexes are ready; and all live Runtime mirrors and required retries have converged. Remaining in `SYNCING` while any old node is present during a rolling upgrade, or while any gate is not satisfied, is expected.
+
+#### 2.7.2. Do Not Operate on Internal Migration Data
+
+Nacos stores migration markers, leases, and progress under Namespace `_nacos_internal_` and group `nacos_internal`. These Config entries are for Nacos cluster coordination only and are not user-maintained data. Do not edit, delete, or forge them, and do not try to roll back by deleting the marker.
+
+Inspect Server migration logs first when troubleshooting. Only when authorized and requested by maintainers should you inspect internal state read-only; never write content into this Namespace or group.
+
+#### 2.7.3. Troubleshoot an Incomplete Migration
+
+Failures are isolated per entry, so valid entries can continue migrating. However, any damaged entry, conflict, or unconverged gate prevents global cutover. Use Server logs to locate the cause:
+
+| Symptom | Recommendation |
+| --- | --- |
+| The plan remains in `SYNCING`, and logs report inconsistent member ability or policy | Confirm that every current Server node is on the target version and healthy. Verify that every new node uses `AUTO`, the same effective Agent Storage provider, and the same shadow setting. Correct and roll the inconsistent nodes. |
+| Search is enabled, but logs report that indexes are not ready | Confirm that the Search tables, plugins, and datasource required by section 2.2 are ready. Inspect Search startup and indexing-task logs and wait for convergence. Do not disable Search temporarily to force migration completion. |
+| Logs report a missing historical summary or Version, malformed JSON, an invalid Agent identity or Version, or a conflict with an existing canonical Agent | Back up the affected data, decide which side is the intended business fact, and repair the historical definition or explicitly resolve the name conflict through supported management APIs. Migration does not guess names, Versions, latest, or content and does not overwrite a different canonical Agent. |
+| Agent Storage saved content but it is temporarily invisible, or read-back validation fails | Check availability, connectivity, and configuration for the effective Storage provider on every node. Completion requires the target content to be readable and validated; wait for notification or a later reconciliation retry. |
+| Runtime mirror or shadow operations keep retrying, or an Endpoint owner has not converged after reconnect | Inspect the old SDK connection, Endpoint heartbeats, Redo, and Server Runtime retry logs. A required RAD mirror that has not converged during `SYNCING` blocks cutover. A terminal optional-shadow failure does not interrupt canonical RAD but affects the direct legacy Naming Gateway. |
+| Logs report that another node owns the lease, or the owner exited uncleanly | Another owner is normal single-writer coordination. Wait for it to finish. After an unclean exit, wait for the lease to expire and a healthy node to take over automatically; the default upper bound is about `600` seconds. Do not delete the lease. |
+
+Do not delete internal control entries, edit the database directly, or forge state to "force completion." If business data must be repaired, retain backups and complete logs and use supported management APIs. Preserve the evidence and contact Nacos maintainers when the correct repair is unclear.
+
+#### 2.7.4. Rollback and Downgrade Boundary
+
+**Before** the marker permanently reaches `CANONICAL`, you may configure every node uniformly as `LEGACY` and roll the cluster back. Historical A2A definitions and old Naming remain authoritative after the rollout. Canonical target data already produced may remain; you can later restore consistent `AUTO`, Storage-provider, and shadow settings and resume migration idempotently.
+
+**After** `CANONICAL`, rollback is supported only to a version that understands both the permanent marker and canonical Agent/RAD data. A legacy-only binary must not rejoin. Do not delete the marker, lease, progress, or target data to restore historical authority. Enabling the Naming shadow preserves only old Gateway Runtime visibility; it does not provide definition rollback.
+
+The initial migration does not automatically delete historical A2A Config or perform destructive source cleanup. Retain old data for backup and audit; any later cleanup requires a separately reviewed, recoverable plan.
+
+### 2.8. Post-upgrade Verification and Rollback Preparation
 
 At minimum, verify the following after the upgrade:
 
@@ -258,5 +331,8 @@ At minimum, verify the following after the upgrade:
 4. Plugin management reports the expected plugin IDs, states, configuration sources, and restart-required fields, with no implementation enabled unexpectedly.
 5. When AI Resource Search is enabled, all three relational tables exist and index tasks converge. When the PostgreSQL vector plugin is enabled, also verify the pgvector schema and datasource connectivity.
 6. Follow section 2.6 to confirm that automatic MCP migration completes, the new MCP management APIs are available, and every Server node is upgraded and healthy.
+7. For a deployment with historical A2A data, follow section 2.7 to confirm that Server logs record migration completion. Compare legacy A2A API/SDK and canonical Agent queries for the same names, Version sets, latest pointer, enabled state, and AgentCard content.
+8. Verify that Agent Search and RAD Discover/Watch return the expected definitions and Runtime Endpoints. Keep an old A2A SDK Endpoint running to verify heartbeats, then perform one controlled reconnect and confirm that Redo remains discoverable through canonical RAD.
+9. Only when the migration plan enabled the Naming shadow, verify through the Naming Gateway that the old `<legacyEncodedAgentName>::<exactVersion>` serviceName has the same exact-Version Endpoints as canonical RAD. When shadow is `false`, do not use old-serviceName visibility as an acceptance criterion.
 
 Keep the old distribution, configuration, plugin JARs, and database backup until the observation period ends. Before rollback, remove runtime plugin overrides understood only by 3.3. Roll back AI Resource Import plugin JARs, configuration, and callers together. Do not reverse new tables or widened columns during an emergency rollback; use the database rollback procedure validated before rollout.
