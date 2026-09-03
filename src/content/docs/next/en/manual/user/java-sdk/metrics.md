@@ -23,7 +23,7 @@ Nacos Server has its own metrics endpoint. See [Monitoring Manual](../../admin/m
 
 ### 1.1. The `enableClientMetrics` switch
 
-The client property `enableClientMetrics` (`PropertyKeyConst.ENABLE_CLIENT_METRICS`) gates the recording sites of `NamingService` and `ConfigService`, including the naming gRPC request timer, the naming failed-request counter, the config listen-count gauge, and the naming service-info gauges. It defaults to `true`. Set it to `false` to skip those recording calls, which is useful when the surrounding application manages metrics through another mechanism:
+The client property `enableClientMetrics` (`PropertyKeyConst.ENABLE_CLIENT_METRICS`) gates the recording sites of `NamingService` and `ConfigService`, including the naming HTTP request timer, the naming failed-request counter, the config listen-count gauge, and the naming service-info gauges. It defaults to `true`. Set it to `false` to skip those recording calls, which is useful when the surrounding application manages metrics through another mechanism:
 
 ```properties
 enableClientMetrics=false
@@ -77,6 +77,10 @@ Metrics.globalRegistry.add(registry);
 // Expose registry.scrape() through an HTTP endpoint of your choice.
 ```
 
+:::note
+The imports above match the `micrometer-registry-prometheus` artifact (the new Prometheus client, first row of the table in [section 1.4](#14-choosing-a-prometheus-registry-artifact)). If you pick the legacy `micrometer-registry-prometheus-simpleclient` artifact instead, the classes live in the `io.micrometer.prometheus` package — use `io.micrometer.prometheus.PrometheusMeterRegistry` and `io.micrometer.prometheus.PrometheusConfig`. Non-Spring applications get no dependency management from Boot, so align the Micrometer versions through the Micrometer BOM (`io.micrometer:micrometer-bom`) or another dependency-management mechanism.
+:::
+
 If the application already owns a `MeterRegistry` for other libraries, reuse it: adding the same registry instance to `Metrics.globalRegistry` is enough, and Nacos client meters are collected together with the rest.
 
 ### 1.4. Choosing a Prometheus registry artifact
@@ -88,7 +92,7 @@ Micrometer publishes two Prometheus registries. Both work with `nacos-client`:
 | `io.micrometer:micrometer-registry-prometheus` | `io.prometheus:prometheus-metrics-core` (new client) | New applications, or applications already on the new Prometheus client. |
 | `io.micrometer:micrometer-registry-prometheus-simpleclient` | `io.prometheus:simpleclient` (legacy client) | Applications that must stay on the legacy Prometheus client for compatibility with other libraries. |
 
-Pick one, not both. Registering two Prometheus registries on the same `CollectorRegistry` produces duplicated series.
+Pick one, not both. The two artifacts are built on different Prometheus registry types — `PrometheusRegistry` for the new client, `CollectorRegistry` for the legacy one — so they cannot even share a registry; pulling in both just adds a second Prometheus client to the classpath with no benefit.
 
 ## 2. `io.prometheus:simpleclient` alone is no longer sufficient
 
@@ -123,12 +127,12 @@ The `nacos_monitor` gauge keeps the historical name and tag layout, so dashboard
 `nacos_client_request` is exported as `nacos_client_request_seconds_{bucket,count,sum,max}`.
 
 :::note
-In the default wiring only the **naming** HTTP client records this timer (`module="naming"`, in `NamingHttpClientProxy`). The config-side wrapper `MetricsHttpAgent` — which records `module="config"` — is currently instantiated only in the SDK's own tests; a normal `ConfigService` created through `NacosFactory` does not wrap its `HttpAgent` with it. To get the `module="config"` series, wrap your `HttpAgent` with `new MetricsHttpAgent(agent)` yourself, or watch for a future SDK change that wires it by default.
+In the default wiring only the **naming** HTTP client records this timer (`module="naming"`, in `NamingHttpClientProxy`). The config-side wrapper `MetricsHttpAgent` — which records `module="config"` — is currently instantiated only in the SDK's own tests. There is no supported way to get the `module="config"` series out of a normal `ConfigService` created through `NacosFactory`: `ClientWorker` talks to the server through `ConfigRpcTransportClient` (gRPC), and the SDK provides no injection point for wrapping an `HttpAgent`. A manually constructed `MetricsHttpAgent` only instruments calls made directly through that wrapper. The series will appear for a normal `ConfigService` only if a future SDK release wires `MetricsHttpAgent` — or an equivalent gRPC-side recording site — by default.
 :::
 
 | Tag | Values |
 | --- | --- |
-| `module` | `naming` (default wiring), `config` (only when `MetricsHttpAgent` is wired manually, see note above) |
+| `module` | `naming` (default wiring), `config` (only for calls made directly through a manually constructed `MetricsHttpAgent`, see note above) |
 | `method` | `GET`, `POST`, `DELETE` |
 | `url` | `naming`: the full constructed request URL (`server address + path`, high cardinality — aggregate carefully); `config`: the request path, for example `/cs/configs` |
 | `code` | HTTP status code as a string. An exception before a response is received does **not** produce a timer on the naming path (the request simply fails with no series); on the manually-wired config path `MetricsHttpAgent` records `code="NA"` in its `finally` block |
@@ -165,7 +169,7 @@ le="0.25" le="0.5" le="0.75" le="1.0" le="2.5" le="5.0" le="7.5" le="10.0" le="+
 
 ## 4. Migration from Nacos 3.2 and earlier
 
-Only two things change on the wire. The gauge and the two counters keep their exact names and tags, so dashboards that read them continue to work.
+Among the meters that already existed in Nacos 3.2, only the request timer changes on the wire (sections 4.1 and 4.2). The existing `nacos_monitor` gauges for naming/config and the naming failed-request counter keep their exact names and tags, so dashboards that read them continue to work. The AI watch meters, `nacos_client_request_seconds_max`, and the corrected `method` labels are new in 3.3 and have no 3.2 counterpart.
 
 ### 4.1. `nacos_client_request` series are renamed
 
@@ -185,7 +189,7 @@ Before Nacos 3.3 the client fed `System.currentTimeMillis() - start` — a milli
 - Observations greater than `10` (requests slower than 10 ms, the slow tail) landed exclusively in `le="+Inf"`.
 - Observations of `10` or fewer (requests of 10 ms or faster, the common case) landed in the finite buckets — but into buckets whose nominal scale was seconds. A 3 ms request was counted into `le="5.0"`, a bucket labelled as 5 seconds.
 
-Either way the distribution was meaningless, and the `_sum` value was in milliseconds while the series name implied seconds.
+Either way the distribution was meaningless: millisecond observations were compared numerically against the Prometheus default latency bucket boundaries, which are laid out on a seconds scale. The old series name `nacos_client_request_sum` declared no unit at all — the mismatch lived in the recorded values, not in the name.
 
 Since Nacos 3.3 the elapsed time is recorded on a Micrometer timer:
 
@@ -248,7 +252,7 @@ The property only gates calls inside the SDK; it does not register a backend. Se
 
 **Only some client meters appear**
 
-Meters are created lazily on first use. `nacos_client_request{module="naming"}` shows up only after the first naming HTTP call, and `nacos_client_naming_request_failed_total` only after a naming request actually fails. `nacos_client_request{module="config"}` does not appear with the default wiring at all — see the note in [section 3.2](#32-request-timer) for how to wire `MetricsHttpAgent` yourself. Trigger the relevant code path before concluding that a meter is broken.
+Meters are created lazily on first use. `nacos_client_request_seconds_count{module="naming"}` shows up only after the first naming HTTP call, and `nacos_client_naming_request_failed_total` only after a naming request actually fails. `nacos_client_request_seconds_count{module="config"}` does not appear for a normal `ConfigService` at all — see the note in [section 3.2](#32-request-timer). Trigger the relevant code path before concluding that a meter is broken.
 
 **Percentile values look wrong after upgrading from Nacos 3.2**
 

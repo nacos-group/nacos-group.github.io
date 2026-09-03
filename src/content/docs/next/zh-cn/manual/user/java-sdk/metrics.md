@@ -23,7 +23,7 @@ Nacos Server 自身有独立的指标暴露入口，请参考[监控手册](../.
 
 ### 1.1. `enableClientMetrics` 开关
 
-客户端属性 `enableClientMetrics`（`PropertyKeyConst.ENABLE_CLIENT_METRICS`）控制 `NamingService` 与 `ConfigService` 的记录点，包括 naming gRPC 请求 timer、naming 失败请求 counter、config 监听数 gauge 以及 naming 服务信息 gauge，默认值为 `true`。若应用有其他自有的指标采集方案，可以显式关闭以跳过这些记录调用：
+客户端属性 `enableClientMetrics`（`PropertyKeyConst.ENABLE_CLIENT_METRICS`）控制 `NamingService` 与 `ConfigService` 的记录点，包括 naming HTTP 请求 timer、naming 失败请求 counter、config 监听数 gauge 以及 naming 服务信息 gauge，默认值为 `true`。若应用有其他自有的指标采集方案，可以显式关闭以跳过这些记录调用：
 
 ```properties
 enableClientMetrics=false
@@ -77,6 +77,10 @@ Metrics.globalRegistry.add(registry);
 // 通过任意 HTTP 端点暴露 registry.scrape() 的结果。
 ```
 
+:::note
+上面的 import 对应 `micrometer-registry-prometheus` 制品（新 Prometheus 客户端，[1.4 节](#14-选择合适的-prometheus-registry-制品)表格第一行）。若选择 legacy 的 `micrometer-registry-prometheus-simpleclient` 制品，类位于 `io.micrometer.prometheus` 包——请使用 `io.micrometer.prometheus.PrometheusMeterRegistry` 与 `io.micrometer.prometheus.PrometheusConfig`。非 Spring 应用没有 Boot 提供的依赖管理，建议通过 Micrometer BOM（`io.micrometer:micrometer-bom`）或其他依赖管理机制对齐 Micrometer 版本。
+:::
+
 如果应用已经为其他库维护了 `MeterRegistry`，直接复用即可：把同一个 registry 实例加入 `Metrics.globalRegistry`，Nacos 客户端指标会与应用其他指标一起被采集。
 
 ### 1.4. 选择合适的 Prometheus registry 制品
@@ -88,7 +92,7 @@ Micrometer 提供两个 Prometheus registry，`nacos-client` 两者都支持：
 | `io.micrometer:micrometer-registry-prometheus` | `io.prometheus:prometheus-metrics-core`（新客户端） | 新应用，或已经使用新 Prometheus 客户端的应用。 |
 | `io.micrometer:micrometer-registry-prometheus-simpleclient` | `io.prometheus:simpleclient`（旧客户端） | 因其他库兼容性要求，必须保留旧 Prometheus 客户端的应用。 |
 
-二者只选其一。同时向同一个 `CollectorRegistry` 注册两个 Prometheus registry 会导致序列重复。
+二者只选其一。两个制品基于不同的 Prometheus registry 类型——新客户端的 `PrometheusRegistry` 与旧客户端的 `CollectorRegistry`——本就无法共享同一个 registry；同时引入两者只会让 classpath 上多出第二套 Prometheus 客户端，没有任何收益。
 
 ## 2. 单独引入 `io.prometheus:simpleclient` 不再有效
 
@@ -123,12 +127,12 @@ Micrometer 提供两个 Prometheus registry，`nacos-client` 两者都支持：
 `nacos_client_request` 在 Prometheus 上以 `nacos_client_request_seconds_{bucket,count,sum,max}` 形式导出。
 
 :::note
-默认装配下，只有 **naming** HTTP 客户端记录该 timer（`module="naming"`，位于 `NamingHttpClientProxy`）。config 侧的包装类 `MetricsHttpAgent`（记录 `module="config"`）目前只在 SDK 自身的测试中被实例化；通过 `NacosFactory` 创建的常规 `ConfigService` 并不会用它包装 `HttpAgent`。要得到 `module="config"` 序列，请自行用 `new MetricsHttpAgent(agent)` 包装，或关注未来 SDK 默认装配它的变更。
+默认装配下，只有 **naming** HTTP 客户端记录该 timer（`module="naming"`，位于 `NamingHttpClientProxy`）。config 侧的包装类 `MetricsHttpAgent`（记录 `module="config"`）目前只在 SDK 自身的测试中被实例化。目前没有任何受支持的方式能让通过 `NacosFactory` 创建的常规 `ConfigService` 产生 `module="config"` 序列：`ClientWorker` 通过 `ConfigRpcTransportClient`（gRPC）与服务器通信，SDK 也没有提供包装 `HttpAgent` 的注入点。手动构造的 `MetricsHttpAgent` 只能插桩直接经由该包装器发起的调用。只有未来 SDK 默认装配 `MetricsHttpAgent`（或在 gRPC 侧增加等价的记录点）之后，常规 `ConfigService` 才会出现该系列。
 :::
 
 | 标签 | 取值 |
 | --- | --- |
-| `module` | `naming`（默认装配）、`config`（仅在手动装配 `MetricsHttpAgent` 时出现，见上方说明） |
+| `module` | `naming`（默认装配）、`config`（仅对直接经由手动构造的 `MetricsHttpAgent` 发起的调用出现；常规 `ConfigService` 无法产生，见上方说明） |
 | `method` | `GET`、`POST`、`DELETE` |
 | `url` | `naming`：完整构造出的请求 URL（服务器地址 + 路径，基数高，聚合时需谨慎）；`config`：请求路径，例如 `/cs/configs` |
 | `code` | HTTP 状态码字符串。naming 路径在拿到响应前抛出异常时**不会**产生 timer 序列（请求直接失败、无序列）；手动装配的 config 路径中 `MetricsHttpAgent` 会在 `finally` 块里记录 `code="NA"` |
@@ -165,7 +169,7 @@ le="0.25" le="0.5" le="0.75" le="1.0" le="2.5" le="5.0" le="7.5" le="10.0" le="+
 
 ## 4. 从 Nacos 3.2 及更早版本迁移
 
-线上格式只有两处变化。Gauge 与两个 Counter 的名称和标签完全保持，基于它们的 dashboard 无需修改。
+在 Nacos 3.2 已有的指标中，线上格式变化只涉及请求 timer（见 4.1、4.2 节）。既有的 naming/config gauge（`nacos_monitor`）与 naming 失败请求 counter 保持名称与标签不变，基于它们的 dashboard 无需修改。注意 AI watch 指标、`nacos_client_request_seconds_max` 以及修正后的 `method` 标签行为都是 3.3 新增，3.2 上没有对应序列。
 
 ### 4.1. `nacos_client_request` 系列被重命名
 
@@ -185,7 +189,7 @@ Nacos 3.3 之前，客户端将 `System.currentTimeMillis() - start` ——一�
 - 大于 `10` 的观测（慢于 10 ms 的请求，长尾部分）只会落到 `le="+Inf"`；
 - 不大于 `10` 的观测（10 ms 及更快的请求，常见情形）会落进有限 bucket——但这些 bucket 的名义量纲是秒。一个 3 ms 的请求会被计入 `le="5.0"`，一个名义上代表 5 秒的 bucket。
 
-无论哪种情况，分布都是无意义的，而 `_sum` 值以毫秒计、序列名却暗示秒。
+无论哪种情况，分布都是无意义的：毫秒量级的观测值被拿来与 Prometheus 默认 latency bucket 边界（按秒刻度排布）做数值比较。旧序列名 `nacos_client_request_sum` 本身并不声明任何单位——错位发生在记录的观测值里，不在名字上。
 
 从 Nacos 3.3 开始，耗时通过 Micrometer Timer 记录：
 
@@ -248,7 +252,7 @@ p99 结果单位为秒。若 dashboard 显示单位是毫秒，请在面板中�
 
 **只有部分客户端指标出现**
 
-Meter 是懒创建的：`nacos_client_request{module="naming"}` 只有在第一次 naming HTTP 调用之后才会出现，`nacos_client_naming_request_failed_total` 只有在真的发生 naming 请求失败之后才会出现。`nacos_client_request{module="config"}` 在默认装配下根本不会出现——如何自行装配 `MetricsHttpAgent` 见 [3.2 节](#32-请求-timer)的说明。在断定指标坏了之前，先触发一次相应代码路径。
+Meter 是懒创建的：`nacos_client_request_seconds_count{module="naming"}` 只有在第一次 naming HTTP 调用之后才会出现，`nacos_client_naming_request_failed_total` 只有在真的发生 naming 请求失败之后才会出现。`nacos_client_request_seconds_count{module="config"}` 对常规 `ConfigService` 根本不会出现——见 [3.2 节](#32-请求-timer)的说明。在断定指标坏了之前，先触发一次相应代码路径。
 
 **从 Nacos 3.2 升级后分位数看起来不对**
 
