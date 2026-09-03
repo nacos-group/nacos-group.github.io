@@ -53,8 +53,8 @@ Nacos 3.3 已移除配置中心兼容迁移逻辑，不再支持从 2.x 直接�
 
 升级前请确认业务未使用默认 namespace 中的配置数据。若使用过或无法确认，请先升级到 3.0.x～3.2.x，确认默认 namespace 配置可正常查询后，再升级到 3.3.x。
 
-:::caution[3.3.0-BETA 的 A2A 升级限制]
-当前文档适用于 Nacos 3.3.0-BETA。该版本暂不支持已有 A2A 数据的平滑升级；从 3.1.x 或 3.2.x 直接升级后，原有 A2A 内容将无法查询。已使用 A2A 的部署请在升级前评估影响并保留备份。
+:::caution[已有 A2A 历史数据的部署必须显式启用迁移]
+从 Nacos 3.0.x～3.2.x 升级且已有 A2A Config 定义、Version 或精确 Version Naming Endpoint 时，目标版本的默认 `CANONICAL` 模式不会扫描或迁移这些历史数据。请在启动首个目标版本节点前，按[第 2.7 节](#27-a2a-historical-data-migration)确定旧 Naming shadow 策略，并在所有目标版本节点上显式配置 `nacos.ai.a2a.compatibility.mode=AUTO`。没有历史 A2A 数据导入需求的部署可以保持默认 `CANONICAL`。
 :::
 
 ### 2.2. 应用数据库变更
@@ -248,7 +248,84 @@ MCP 历史数据迁移完成后，新的管理状态不会随服务降级自动�
 
 现有 MCP 服务内容和调用方式仍保持兼容，但后续管理操作应由目标版本节点处理。需要紧急降级时，应保留备份和日志，先隔离 MCP 管理请求，再联系维护者制定经过验证的恢复方案。
 
-### 2.7. 升级后验证与回滚准备
+<a id="27-a2a-historical-data-migration"></a>
+
+### 2.7. A2A 历史数据自动迁移
+
+本节适用于从 Nacos 3.0.x～3.2.x 升级，并且存在历史 A2A Config 定义、Version 内容，或仍有旧 A2A SDK 向 `<legacyEncodedAgentName>::<exactVersion>` Naming Service 发布 Runtime Endpoint 的部署。目标版本会把这些定义迁移到标准 Agent Resource、Version 和 Agent Storage，并让仍活跃的 Runtime Endpoint 收敛到标准 RAD Runtime。
+
+迁移不会默认启动，也没有独立的迁移 Enable 开关。开始滚动升级前，必须在**所有目标版本节点**上显式使用一致的配置：
+
+```properties
+nacos.ai.a2a.compatibility.mode=AUTO
+nacos.ai.a2a.migration.legacy-naming-shadow-enabled=false
+```
+
+默认 `CANONICAL` 只使用标准 Agent/RAD，不扫描历史 A2A 数据。滚动升级期间，所有新节点还必须使用同一个可用的 Agent Storage Provider 和相同的 shadow 策略；迁移计划创建后，实际 Storage Provider 和 shadow 选择会固化在 Marker 中，节点策略不一致会阻止对账和切流。
+
+`legacy-naming-shadow-enabled=false` 表示切流到 `CANONICAL` 后，不再承诺继续物化旧的精确 Version Naming Service。普通旧 A2A API/SDK 会通过兼容层查询、订阅和发布 Endpoint，并不因此要求开启 shadow。只有业务绕过 A2A/RAD API，直接通过 Naming Gateway 消费 `<legacyEncodedAgentName>::<exactVersion>` serviceName 时，才应在开始迁移前评估该依赖并选择 `true`。Marker 创建后不要把本地改值当作动态开关。
+
+与迁移直接相关的配置及默认值如下：
+
+| 配置 | 默认值 | 运维说明 |
+| --- | ---: | --- |
+| `nacos.ai.a2a.compatibility.mode` | `CANONICAL` | 历史迁移必须显式设为 `AUTO`。 |
+| `nacos.ai.a2a.migration.legacy-naming-shadow-enabled` | `false` | 是否在切流后保留旧精确 Version Naming shadow；迁移开始时固化。 |
+| `nacos.ai.a2a.migration.reconciliation.interval-seconds` | `300` | 全量对账间隔。 |
+| `nacos.ai.a2a.migration.reconciliation.page-size` | `100` | 每页扫描的历史定义数。 |
+| `nacos.ai.a2a.migration.lease-duration-seconds` | `600` | 迁移 Owner 的可续约 Lease 时长。 |
+| `nacos.ai.a2a.migration.quiescing-timeout-seconds` | `120` | 一轮 `QUIESCING` 超时后回到 `SYNCING` 的时间。 |
+
+除 `AUTO` 和 shadow 决策外，通常保持其他参数默认值。只有在预发验证或受控排障中才考虑调小；缩短 Lease 时必须仍长于一个预期对账单元的执行时间，缩短对账间隔也会增加 Config、Storage 和数据库负载。
+
+请区分以下三个兼容面：
+
+| 兼容面 | 迁移和切流语义 |
+| --- | --- |
+| 旧 A2A API/SDK | `SYNCING` 时仍读写历史定义；`CANONICAL` 后由标准 Agent/RAD 兼容 Facade 提供服务。迁移不进行请求级双读、合并读取或长期定义双写。 |
+| 标准 Agent/RAD | 承载迁移后的定义、Search、Discover、Watch 和 Runtime，是终态权威面。 |
+| 可选旧 Naming Gateway shadow | 只服务直接读取旧精确 Version serviceName 的调用方；不参与定义权威，也不产生 RAD 的重复 Endpoint 或 Watch 事件。 |
+
+#### 2.7.1. 升级期间的正常现象
+
+| 状态 | 用户可见行为 |
+| --- | --- |
+| `SYNCING` | 历史 A2A Config 定义仍是权威。旧 A2A API/SDK 的查询、订阅和定义写入可以继续，Endpoint 注册、心跳和 Redo 也继续工作。新节点在后台幂等迁移定义与 Version，并把仍活跃的 Runtime Endpoint 以旧 Naming 为主、同时镜像到标准 RAD；后台失败会重试，不会把一次旧定义写入改成双主。 |
+| `QUIESCING` | Nacos 短暂阻止 A2A **定义**增删改，以完成无双主的最终一致切流；定义读取、Search、RAD Discover/Watch、Endpoint 注册和已有流量继续可用。HTTP 定义写请求会返回 HTTP `409`，标准 `Result` 中的 `code` 为 `50105`（`AGENT_MIGRATION_IN_PROGRESS`），详细原因位于 `data`；旧 SDK/gRPC 响应会保留 detail code `50105`。调用方应稍后重试。超时、成员变化或最终校验失败时会自动回到 `SYNCING`。 |
+| `CANONICAL` | 这是永久终态，标准 Agent/RAD 成为定义和 Runtime 权威；旧 A2A API/SDK 改由兼容 Facade 投影结果。不要通过删除内部状态或让 legacy-only 二进制重新加入来尝试回退；直接旧 Naming Gateway 的可见性仅由已经固化的 shadow 策略决定。 |
+
+只有同时满足以下条件，系统才会自动完成切流：所有当前 Server 节点均已升级并上报一致的迁移能力与策略；历史定义和全部 Version 已在目标 Agent Storage 中完整、可读且无冲突；启用 Search 时相关索引已经 Ready；所有活跃 Runtime 镜像和必需重试均已收敛。滚动升级期间只要仍有旧节点，或任一门禁未满足，停留在 `SYNCING` 都属于正常现象。
+
+#### 2.7.2. 不要操作内部迁移数据
+
+Nacos 使用 Namespace `_nacos_internal_`、group `nacos_internal` 保存迁移的 Marker、Lease 和 Progress。这些 Config 仅用于 Nacos 集群协调，不是用户可维护的数据。不要编辑、删除或伪造这些记录，也不要靠删除 Marker 尝试回滚。
+
+排障时优先查看服务端迁移日志。确有权限且维护者要求进一步确认时，最多对内部状态做只读检查；不要向该 Namespace/Group 写入内容。
+
+#### 2.7.3. 迁移未完成时如何排查
+
+迁移按条目隔离失败，合法条目仍可继续迁移；但是任一损坏数据、冲突或未收敛门禁都会阻止全局切流。请根据服务端日志定位问题：
+
+| 现象 | 建议 |
+| --- | --- |
+| 长时间停留在 `SYNCING`，日志提示成员能力或策略不一致 | 确认所有当前 Server 节点均为目标版本且健康；核对每个新节点都使用 `AUTO`、相同的有效 Agent Storage Provider 和相同的 shadow 设置。修正配置并滚动重启不一致节点。 |
+| Search 已启用，但日志提示索引未 Ready | 确认第 2.2 节要求的 Search 表、插件和数据源已经就绪，检查 Search 启动与索引任务日志并等待索引收敛。不要为强制完成迁移而临时关闭 Search。 |
+| 日志提示历史 summary/Version 缺失、JSON 损坏、Agent 身份或 Version 非法，或者与现有 canonical Agent 冲突 | 先备份相关数据，确认哪一侧才是预期业务事实，再通过受支持的管理接口修复历史定义或显式解决同名冲突。迁移不会猜测名称、Version、latest 或内容，也不会覆盖不同的 canonical Agent。 |
+| Agent Storage 保存成功但暂时不可见，或读回校验失败 | 检查所有节点上有效 Storage Provider 的可用性、连接和配置。最终以目标内容能够读回并通过校验为准；等待通知或下一轮对账重试。 |
+| Runtime mirror/shadow 持续重试，或 Endpoint Owner 重连后尚未收敛 | 检查旧 SDK 连接、Endpoint 心跳、Redo 和服务端 Runtime 重试日志。`SYNCING` 中必需的 RAD mirror 未收敛会阻止切流；终态的可选 shadow 失败不会中断标准 RAD，但会影响直接旧 Naming Gateway。 |
+| 日志提示 Lease 由其他节点持有，或 Owner 非正常退出 | 其他节点持有 Lease 是正常的单 Writer 协调。等待当前 Owner 完成；非正常退出后等待 Lease 过期并由健康节点自动接管，默认最长约 `600` 秒，不要人工删除 Lease。 |
+
+不要删除内部控制记录、直接修改数据库，或伪造状态来“强制完成”。如果必须修复业务数据，请保留备份和完整日志，使用受支持的管理接口；无法确认正确修复方式时，请保留现场并联系 Nacos 维护者。
+
+#### 2.7.4. 回滚和降级边界
+
+在 Marker 永久进入 `CANONICAL` **之前**，可以把全部节点统一配置为 `LEGACY` 后滚动重启。完成后旧 A2A 定义和旧 Naming 继续作为权威，已生成的标准目标数据可以保留；后续仍可恢复一致的 `AUTO`、Storage Provider 和 shadow 策略，让迁移幂等继续。
+
+进入 `CANONICAL` **之后**，只允许回退到同时理解永久 Marker 和标准 Agent/RAD 数据的版本。禁止 legacy-only 二进制重新加入，也不要通过删除 Marker、Lease、Progress 或目标数据恢复旧事实源。启用 Naming shadow 只维持旧 Gateway 的 Runtime 可见性，不提供定义回滚能力。
+
+首版迁移不会自动删除历史 A2A Config，也不会执行破坏性的来源清理。旧数据应作为备份和审计材料保留，后续清理必须使用单独评审、可恢复的方案。
+
+### 2.8. 升级后验证与回滚准备
 
 升级完成后至少验证：
 
@@ -258,5 +335,8 @@ MCP 历史数据迁移完成后，新的管理状态不会随服务降级自动�
 4. 在插件管理页面或 API 中检查插件 ID、状态、配置来源及需要重启的字段；确认没有意外启用的实现。
 5. 开启 AI Resource Search 时，确认三张检索关系表已创建、索引任务能够收敛；启用 PostgreSQL 向量插件时还要确认 pgvector schema 和数据源连通性。
 6. 按第 2.6 节确认 MCP 自动迁移完成、新版 MCP 管理接口可用，且所有服务端节点均已升级并保持健康。
+7. 对存在历史 A2A 数据的部署，按第 2.7 节确认服务端日志记录迁移完成，并比较旧 A2A API/SDK 与标准 Agent 查询的名称、Version 集合、latest、启用状态和 AgentCard 内容一致。
+8. 验证 Agent Search、RAD Discover/Watch 均能返回预期定义和 Runtime Endpoint；保持旧 A2A SDK Endpoint 运行并验证心跳，执行一次可控重连以确认 Redo 后仍能从标准 RAD 发现。
+9. 仅当迁移计划启用了 Naming shadow 时，再通过 Naming Gateway 验证旧 `<legacyEncodedAgentName>::<exactVersion>` serviceName 与标准 RAD 的精确 Version Endpoint 一致；shadow 为 `false` 时不要把旧 serviceName 的可见性作为验收条件。
 
 保留旧发行包、旧配置、插件 JAR 和数据库备份直到观察期结束。回滚前先清理只有 3.3 能识别的插件运行时 override；AI Resource Import 需要将插件 JAR、配置和调用方一起回滚。数据库扩容和新增表不要在紧急回滚时直接反向删除，应使用预先验证的数据库回滚方案。
