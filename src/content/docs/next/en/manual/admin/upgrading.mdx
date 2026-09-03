@@ -53,10 +53,6 @@ Nacos 3.3 removes the Config compatibility migration and no longer supports a di
 
 Before upgrading, confirm that the deployment has not used Config data in the default namespace. If it has, or if this cannot be confirmed, first upgrade to 3.0.x–3.2.x and verify that the default-namespace Config data remains queryable, then upgrade to 3.3.x.
 
-:::caution[Deployments with historical A2A data must explicitly enable migration]
-When upgrading from Nacos 3.0.x through 3.2.x with existing A2A Config definitions, Versions, or exact-Version Naming Endpoints, the target release's default `CANONICAL` mode does not scan or migrate that historical data. Before starting the first target-version node, follow [section 2.7](#27-a2a-historical-data-migration) to choose the legacy Naming shadow policy and explicitly configure `nacos.ai.a2a.compatibility.mode=AUTO` on every target-version node. Deployments that do not need to import historical A2A data can remain on the default `CANONICAL` mode.
-:::
-
 ### 2.2. Apply Database Changes
 
 Before starting any 3.3.x node, first follow the [3.2.x Upgrade Guide](/en/docs/latest/manual/admin/upgrading/) to apply the database prerequisites needed to bring the current source schema up to the 3.2.x schema level; this does not require starting a 3.2.x server. Then compare the resulting actual schema with the complete matching schema in the target 3.3.x distribution and convert the remaining differences into reviewed incremental DDL. Never execute a complete initialization file containing `CREATE TABLE` or `DROP TABLE` statements directly against an existing database.
@@ -252,7 +248,7 @@ Existing MCP service content and calling patterns remain compatible, but subsequ
 
 ### 2.7. Automatic Historical A2A Data Migration
 
-This section applies when upgrading from Nacos 3.0.x through 3.2.x with historical A2A Config definitions, Version content, or old A2A SDKs still publishing Runtime Endpoints to `<legacyEncodedAgentName>::<exactVersion>` Naming services. The target release migrates those definitions to canonical Agent Resources, Versions, and Agent Storage, and converges live Runtime Endpoints into the canonical RAD Runtime.
+This section applies when upgrading from Nacos 3.1.x through 3.2.x with historical A2A Config definitions, Version content, or old A2A SDKs still publishing Runtime Endpoints to `<legacyEncodedAgentName>::<exactVersion>` Naming services. The target release migrates those definitions to canonical Agent Resources, Versions, and Agent Storage, and converges live Runtime Endpoints into the canonical RAD Runtime.
 
 Migration does not start by default, and there is no separate migration enable switch. Before the rolling upgrade, every **target-version node** must explicitly use the same configuration:
 

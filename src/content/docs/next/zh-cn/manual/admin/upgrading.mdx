@@ -53,10 +53,6 @@ Nacos 3.3 已移除配置中心兼容迁移逻辑，不再支持从 2.x 直接�
 
 升级前请确认业务未使用默认 namespace 中的配置数据。若使用过或无法确认，请先升级到 3.0.x～3.2.x，确认默认 namespace 配置可正常查询后，再升级到 3.3.x。
 
-:::caution[已有 A2A 历史数据的部署必须显式启用迁移]
-从 Nacos 3.0.x～3.2.x 升级且已有 A2A Config 定义、Version 或精确 Version Naming Endpoint 时，目标版本的默认 `CANONICAL` 模式不会扫描或迁移这些历史数据。请在启动首个目标版本节点前，按[第 2.7 节](#27-a2a-historical-data-migration)确定旧 Naming shadow 策略，并在所有目标版本节点上显式配置 `nacos.ai.a2a.compatibility.mode=AUTO`。没有历史 A2A 数据导入需求的部署可以保持默认 `CANONICAL`。
-:::
-
 ### 2.2. 应用数据库变更
 
 在启动任何 3.3.x 节点前，先按 [3.2.x 升级手册](/docs/latest/manual/admin/upgrading/) 完成从当前源版本到 3.2.x schema 所需的前置数据库操作；这一步不要求启动 3.2.x 服务端。然后比较完成前置操作后的实际 schema 与目标 3.3.x 发行包中对应数据库的完整 schema，并把剩余差异转换为经过评审的增量 DDL。不要在已有数据库上直接执行包含 `CREATE TABLE` 或 `DROP TABLE` 的完整初始化文件。
@@ -252,7 +248,7 @@ MCP 历史数据迁移完成后，新的管理状态不会随服务降级自动�
 
 ### 2.7. A2A 历史数据自动迁移
 
-本节适用于从 Nacos 3.0.x～3.2.x 升级，并且存在历史 A2A Config 定义、Version 内容，或仍有旧 A2A SDK 向 `<legacyEncodedAgentName>::<exactVersion>` Naming Service 发布 Runtime Endpoint 的部署。目标版本会把这些定义迁移到标准 Agent Resource、Version 和 Agent Storage，并让仍活跃的 Runtime Endpoint 收敛到标准 RAD Runtime。
+本节适用于从 Nacos 3.1.x～3.2.x 升级，并且存在历史 A2A Config 定义、Version 内容，或仍有旧 A2A SDK 向 `<legacyEncodedAgentName>::<exactVersion>` Naming Service 发布 Runtime Endpoint 的部署。目标版本会把这些定义迁移到标准 Agent Resource、Version 和 Agent Storage，并让仍活跃的 Runtime Endpoint 收敛到标准 RAD Runtime。
 
 迁移不会默认启动，也没有独立的迁移 Enable 开关。开始滚动升级前，必须在**所有目标版本节点**上显式使用一致的配置：
 
