@@ -779,6 +779,265 @@ configService.addConfigFilter(new AbstractConfigFilter() {
 ```
 
 
+### 3.12. Request/Result 模式 API（3.3.0+）
+
+#### 描述
+
+从 3.3.0 版本开始，Nacos Config Client 引入了全新的 Request/Result 模式 API，用于替代原有的大量重载方法。新 API 具有以下优势：
+
+- **可扩展性**：通过 Request 对象承载参数，未来新增参数无需新增重载方法
+- **详细结果**：Result 对象返回 success/errorCode/errorMessage，不再只是 boolean
+- **304 缓存**：`getConfig` 支持条件 GET，服务端比对 md5 后返回 304，减少网络传输
+- **加密配置 CAS**：通过 `ConfigQueryResult.getMd5()` 获取 casMd5，加密配置也能 CAS 发布
+
+> 注意：原有 API 完全保留，新旧 API 可混用，无需迁移。
+
+#### 3.12.1. 获取配置（Request 模式）
+
+```java
+public ConfigQueryResult getConfig(GetConfigRequest request) throws NacosException
+```
+
+**GetConfigRequest 参数**
+
+| 参数名 | 类型 | 描述 |
+| :--- | :--- | :--- |
+| dataId | string | 配置 ID |
+| group | string | 配置分组，为空时默认 `DEFAULT_GROUP` |
+| timeoutMs | long | 读取超时时间，单位 ms |
+| localMd5 | string | 可选，本地缓存的配置内容 MD5，用于 304 条件 GET。不填时客户端自动从本地缓存解析 |
+
+**返回值 ConfigQueryResult**
+
+| 字段 | 类型 | 描述 |
+| :--- | :--- | :--- |
+| content | string | 配置内容 |
+| md5 | string | 配置内容的 MD5，可用于 CAS 发布 |
+| configType | string | 配置类型 |
+| encryptedDataKey | string | 加密配置的数据密钥 |
+
+**请求示例**
+
+```java
+try {
+    ConfigService configService = NacosFactory.createConfigService(properties);
+
+    // 基本用法：自动 304 缓存
+    GetConfigRequest request = GetConfigRequest.builder()
+        .dataId("app-config.yaml")
+        .group("DEFAULT_GROUP")
+        .timeoutMs(3000)
+        .build();
+
+    ConfigQueryResult result = configService.getConfig(request);
+    String content = result.getContent();
+    String md5 = result.getMd5();  // 可用于后续 CAS 发布
+
+    // 手动指定 localMd5（高级用法）
+    GetConfigRequest request2 = GetConfigRequest.builder()
+        .dataId("app-config.yaml")
+        .group("DEFAULT_GROUP")
+        .timeoutMs(3000)
+        .localMd5("your-local-md5-hash")
+        .build();
+    ConfigQueryResult result2 = configService.getConfig(request2);
+
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 3.12.2. 发布配置（Request 模式）
+
+```java
+public PublishConfigResult publishConfig(PublishConfigRequest request) throws NacosException
+```
+
+**PublishConfigRequest 参数**
+
+| 参数名 | 类型 | 描述 |
+| :--- | :--- | :--- |
+| dataId | string | 配置 ID |
+| group | string | 配置分组，为空时默认 `DEFAULT_GROUP` |
+| content | string | 配置内容 |
+| type | string | 配置类型，见 `ConfigType`，为空时使用默认类型 |
+| casMd5 | string | 可选，CAS（Compare-And-Swap）发布的期望 MD5。设置后仅当服务端配置 MD5 匹配时才发布成功 |
+
+**返回值 PublishConfigResult**
+
+| 字段 | 类型 | 描述 |
+| :--- | :--- | :--- |
+| success | boolean | 是否发布成功 |
+| errorCode | int | 失败时的错误码，0 表示成功 |
+| errorMessage | string | 失败时的详细错误信息 |
+| md5 | string | 发布成功后配置内容的 MD5 |
+
+**请求示例**
+
+```java
+try {
+    ConfigService configService = NacosFactory.createConfigService(properties);
+
+    // 普通发布
+    PublishConfigRequest request = PublishConfigRequest.builder()
+        .dataId("app-config.yaml")
+        .group("DEFAULT_GROUP")
+        .content("key: value")
+        .type("yaml")
+        .build();
+
+    PublishConfigResult result = configService.publishConfig(request);
+    if (result.isSuccess()) {
+        System.out.println("发布成功, md5=" + result.getMd5());
+    } else {
+        System.out.println("发布失败: code=" + result.getErrorCode()
+            + ", msg=" + result.getErrorMessage());
+    }
+
+    // CAS 发布（防止并发覆盖）
+    PublishConfigRequest casRequest = PublishConfigRequest.builder()
+        .dataId("app-config.yaml")
+        .group("DEFAULT_GROUP")
+        .content("new content")
+        .type("yaml")
+        .casMd5("previous-md5-from-getConfig")  // 从 getConfig 结果中获取
+        .build();
+    PublishConfigResult casResult = configService.publishConfig(casRequest);
+
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 3.12.3. 删除配置（Request 模式）
+
+```java
+public RemoveConfigResult removeConfig(RemoveConfigRequest request) throws NacosException
+```
+
+**RemoveConfigRequest 参数**
+
+| 参数名 | 类型 | 描述 |
+| :--- | :--- | :--- |
+| dataId | string | 配置 ID |
+| group | string | 配置分组，为空时默认 `DEFAULT_GROUP` |
+
+**返回值 RemoveConfigResult**
+
+| 字段 | 类型 | 描述 |
+| :--- | :--- | :--- |
+| success | boolean | 是否删除成功 |
+| errorCode | int | 失败时的错误码 |
+| errorMessage | string | 失败时的详细错误信息 |
+
+**请求示例**
+
+```java
+try {
+    ConfigService configService = NacosFactory.createConfigService(properties);
+
+    RemoveConfigRequest request = RemoveConfigRequest.builder()
+        .dataId("app-config.yaml")
+        .group("DEFAULT_GROUP")
+        .build();
+
+    RemoveConfigResult result = configService.removeConfig(request);
+    if (result.isSuccess()) {
+        System.out.println("删除成功");
+    } else {
+        System.out.println("删除失败: " + result.getErrorMessage());
+    }
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 3.12.4. 304 条件 GET 缓存机制
+
+从 3.3.0 版本开始，`getConfig(GetConfigRequest)` 支持 304 条件 GET 缓存，可显著减少网络传输和服务端开销。
+
+**工作原理**
+
+1. 客户端调用 `getConfig(GetConfigRequest)` 时，自动从本地 `CacheData` 或快照文件中解析配置内容的 MD5
+2. 将 `localMd5` 随查询请求发送到服务端
+3. 服务端比对 `localMd5` 与当前配置的 MD5：
+   - **匹配**：返回 304 Not-Modified，响应中不含配置内容
+   - **不匹配**：返回 200 OK，响应中包含最新配置内容和 MD5
+4. 客户端收到 304 后，从本地快照读取内容返回；收到 200 则更新本地快照
+
+**适用场景**
+
+- 配置内容较大（如超过 10KB），重复读取时节省网络带宽
+- 高 QPS 配置读取场景，降低服务端序列化和响应构建开销
+- 客户端已有本地缓存时，避免重复拉取相同内容
+
+**使用方式**
+
+无需额外配置，直接使用 `getConfig(GetConfigRequest)` 即可自动启用 304 缓存。如需手动控制，可通过 `GetConfigRequest.setLocalMd5()` 指定。
+
+```java
+// 自动 304（推荐）
+ConfigQueryResult result = configService.getConfig(
+    GetConfigRequest.builder()
+        .dataId("large-config.yaml")
+        .group("DEFAULT_GROUP")
+        .timeoutMs(3000)
+        .build());
+
+// 手动指定 localMd5
+ConfigQueryResult result2 = configService.getConfig(
+    GetConfigRequest.builder()
+        .dataId("large-config.yaml")
+        .group("DEFAULT_GROUP")
+        .timeoutMs(3000)
+        .localMd5("cached-md5-hash")
+        .build());
+```
+
+#### 3.12.5. 加密配置的 CAS 发布
+
+**问题背景**：加密配置的明文内容无法通过 `getConfig()` 获取（返回的是加密后内容），导致无法计算 casMd5 进行 CAS 发布，存在并发覆盖风险。
+
+**解决方案**：使用 Request/Result 模式 API
+
+1. 调用 `getConfig(GetConfigRequest)` 获取 `ConfigQueryResult`
+2. 通过 `result.getMd5()` 直接获取服务端返回的配置 MD5（无需明文内容）
+3. 将此 MD5 作为 `casMd5` 传入 `PublishConfigRequest` 进行 CAS 发布
+
+```java
+try {
+    ConfigService configService = NacosFactory.createConfigService(properties);
+
+    // 1. 查询加密配置，获取 MD5
+    ConfigQueryResult queryResult = configService.getConfig(
+        GetConfigRequest.builder()
+            .dataId("encrypted-config")
+            .group("DEFAULT_GROUP")
+            .timeoutMs(3000)
+            .build());
+    String casMd5 = queryResult.getMd5();
+
+    // 2. 使用 MD5 进行 CAS 发布（加密配置也能安全发布）
+    PublishConfigResult publishResult = configService.publishConfig(
+        PublishConfigRequest.builder()
+            .dataId("encrypted-config")
+            .group("DEFAULT_GROUP")
+            .content("new encrypted content")
+            .type("text")
+            .casMd5(casMd5)  // 关键：从查询结果中获取
+            .build());
+
+    if (publishResult.isSuccess()) {
+        System.out.println("加密配置 CAS 发布成功");
+    } else {
+        System.out.println("CAS 失败（配置可能已被他人修改）: "
+            + publishResult.getErrorMessage());
+    }
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
 ## 4. 服务发现API
 
 > **学习提示**：使用服务发现 API 注册实例时，客户端进程退出后 Nacos 会将该实例摘除，控制台将看不到刚注册的实例。学习或调试时可在注册后使用 `Thread.sleep()` 等方式保持进程运行，以便在 Nacos 控制台确认注册是否成功。
