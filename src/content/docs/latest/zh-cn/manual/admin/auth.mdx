@@ -33,7 +33,7 @@ Nacos 的鉴权能力由鉴权插件提供。Nacos 3.2 内置了默认 Nacos 鉴
 | 配置项 | 默认配置 | 说明 |
 | --- | --- | --- |
 | `nacos.core.auth.system.type` | `nacos` | 当前使用的鉴权插件类型。支持 `nacos`、`ldap`、`oidc` 或自定义类型。 |
-| `nacos.core.auth.enabled` | `true` | 是否开启 Open API、SDK 和 gRPC 请求鉴权。 |
+| `nacos.core.auth.enabled` | `false` | 是否开启 Open API、SDK 和 gRPC 请求鉴权。 |
 | `nacos.core.auth.admin.enabled` | `true` | 是否开启 Admin API 鉴权。 |
 | `nacos.core.auth.console.enabled` | `true` | 是否开启 Console API 和默认控制台登录鉴权。 |
 | `nacos.core.auth.server.identity.key` | 空 | Nacos Server 节点间通信的身份 key。开启鉴权的集群部署必须配置。 |
