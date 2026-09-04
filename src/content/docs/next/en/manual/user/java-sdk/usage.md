@@ -781,6 +781,247 @@ configService.addConfigFilter(new AbstractConfigFilter() {
 ```
 
 
+### 3.12. Request/Result Pattern API (3.3.0+)
+
+#### Description
+
+Starting from version 3.3.0, Nacos Config Client introduces a new Request/Result pattern API to replace the existing numerous overloaded methods. The new API offers the following advantages:
+
+- **Extensibility**: Parameters are carried through Request objects, so new parameters don't require new overloaded methods
+- **Detailed results**: Result objects return success/errorCode/errorMessage instead of just boolean
+- **304 caching**: `getConfig` supports conditional GET, where the server compares md5 and returns 304 to reduce network transfer
+- **Encrypted config CAS**: Obtain casMd5 through `ConfigQueryResult.getMd5()`, enabling CAS publish for encrypted configs
+
+> Note: The original API is fully preserved. New and old APIs can be mixed, no migration required.
+
+#### 3.12.1. Get Config (Request Pattern)
+
+```java
+public ConfigQueryResult getConfig(GetConfigRequest request) throws NacosException
+```
+
+**GetConfigRequest Parameters**
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| dataId | string | Configuration ID |
+| group | string | Configuration group, defaults to `DEFAULT_GROUP` when empty |
+| timeoutMs | long | Read timeout in milliseconds |
+| localMd5 | string | Optional, locally cached config content MD5 for 304 conditional GET. When not set, the client automatically resolves from local cache |
+
+**Return Value ConfigQueryResult**
+
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| content | string | Configuration content |
+| md5 | string | MD5 of the config content, can be used for CAS publish |
+| configType | string | Configuration type |
+| encryptedDataKey | string | Data key for encrypted config |
+
+**Example**
+
+```java
+try {
+    ConfigService configService = NacosFactory.createConfigService(properties);
+
+    // Basic usage: automatic 304 caching
+    GetConfigRequest request = GetConfigRequest.builder()
+        .dataId("app-config.yaml")
+        .group("DEFAULT_GROUP")
+        .timeoutMs(3000)
+        .build();
+
+    ConfigQueryResult result = configService.getConfig(request);
+    String content = result.getContent();
+    String md5 = result.getMd5();  // Can be used for subsequent CAS publish
+
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 3.12.2. Publish Config (Request Pattern)
+
+```java
+public PublishConfigResult publishConfig(PublishConfigRequest request) throws NacosException
+```
+
+**PublishConfigRequest Parameters**
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| dataId | string | Configuration ID |
+| group | string | Configuration group, defaults to `DEFAULT_GROUP` when empty |
+| content | string | Configuration content |
+| type | string | Configuration type, see `ConfigType`, uses default type when empty |
+| casMd5 | string | Optional, expected MD5 for CAS (Compare-And-Swap) publish. When set, publish only succeeds if the server-side config MD5 matches |
+
+**Return Value PublishConfigResult**
+
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| success | boolean | Whether publish succeeded |
+| errorCode | int | Error code on failure, 0 indicates success |
+| errorMessage | string | Detailed error message on failure |
+| md5 | string | MD5 of the published config content |
+
+**Example**
+
+```java
+try {
+    ConfigService configService = NacosFactory.createConfigService(properties);
+
+    // Normal publish
+    PublishConfigRequest request = PublishConfigRequest.builder()
+        .dataId("app-config.yaml")
+        .group("DEFAULT_GROUP")
+        .content("key: value")
+        .type("yaml")
+        .build();
+
+    PublishConfigResult result = configService.publishConfig(request);
+    if (result.isSuccess()) {
+        System.out.println("Publish success, md5=" + result.getMd5());
+    } else {
+        System.out.println("Publish failed: code=" + result.getErrorCode()
+            + ", msg=" + result.getErrorMessage());
+    }
+
+    // CAS publish (prevent concurrent overwrite)
+    PublishConfigRequest casRequest = PublishConfigRequest.builder()
+        .dataId("app-config.yaml")
+        .group("DEFAULT_GROUP")
+        .content("new content")
+        .type("yaml")
+        .casMd5("previous-md5-from-getConfig")
+        .build();
+    PublishConfigResult casResult = configService.publishConfig(casRequest);
+
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 3.12.3. Delete Config (Request Pattern)
+
+```java
+public RemoveConfigResult removeConfig(RemoveConfigRequest request) throws NacosException
+```
+
+**RemoveConfigRequest Parameters**
+
+| Parameter | Type | Description |
+| :--- | :--- | :--- |
+| dataId | string | Configuration ID |
+| group | string | Configuration group, defaults to `DEFAULT_GROUP` when empty |
+
+**Return Value RemoveConfigResult**
+
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| success | boolean | Whether delete succeeded |
+| errorCode | int | Error code on failure |
+| errorMessage | string | Detailed error message on failure |
+
+**Example**
+
+```java
+try {
+    ConfigService configService = NacosFactory.createConfigService(properties);
+
+    RemoveConfigRequest request = RemoveConfigRequest.builder()
+        .dataId("app-config.yaml")
+        .group("DEFAULT_GROUP")
+        .build();
+
+    RemoveConfigResult result = configService.removeConfig(request);
+    if (result.isSuccess()) {
+        System.out.println("Delete success");
+    } else {
+        System.out.println("Delete failed: " + result.getErrorMessage());
+    }
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 3.12.4. 304 Conditional GET Cache Mechanism
+
+Starting from version 3.3.0, `getConfig(GetConfigRequest)` supports 304 conditional GET caching, which can significantly reduce network transfer and server overhead.
+
+**How It Works**
+
+1. When the client calls `getConfig(GetConfigRequest)`, it automatically resolves the config content MD5 from local `CacheData` or snapshot files
+2. Sends `localMd5` with the query request to the server
+3. The server compares `localMd5` with the current config MD5:
+   - **Match**: Returns 304 Not-Modified, response does not contain config content
+   - **No match**: Returns 200 OK, response contains the latest config content and MD5
+4. After receiving 304, the client reads content from the local snapshot; after receiving 200, it updates the local snapshot
+
+**Applicable Scenarios**
+
+- Large config content (e.g., over 10KB), saves network bandwidth on repeated reads
+- High QPS config read scenarios, reduces server serialization and response building overhead
+- When the client already has local cache, avoids repeatedly fetching the same content
+
+**Usage**
+
+No additional configuration required. Simply use `getConfig(GetConfigRequest)` to automatically enable 304 caching.
+
+```java
+// Automatic 304 (recommended)
+ConfigQueryResult result = configService.getConfig(
+    GetConfigRequest.builder()
+        .dataId("large-config.yaml")
+        .group("DEFAULT_GROUP")
+        .timeoutMs(3000)
+        .build());
+```
+
+#### 3.12.5. CAS Publish for Encrypted Configs
+
+**Background**: The plaintext content of encrypted configs cannot be obtained through `getConfig()` (returns encrypted content), making it impossible to calculate casMd5 for CAS publish, posing a concurrent overwrite risk.
+
+**Solution**: Use the Request/Result pattern API
+
+1. Call `getConfig(GetConfigRequest)` to obtain `ConfigQueryResult`
+2. Directly obtain the server-returned config MD5 via `result.getMd5()` (no plaintext content needed)
+3. Pass this MD5 as `casMd5` to `PublishConfigRequest` for CAS publish
+
+```java
+try {
+    ConfigService configService = NacosFactory.createConfigService(properties);
+
+    // 1. Query encrypted config, obtain MD5
+    ConfigQueryResult queryResult = configService.getConfig(
+        GetConfigRequest.builder()
+            .dataId("encrypted-config")
+            .group("DEFAULT_GROUP")
+            .timeoutMs(3000)
+            .build());
+    String casMd5 = queryResult.getMd5();
+
+    // 2. Use MD5 for CAS publish (encrypted configs can also be safely published)
+    PublishConfigResult publishResult = configService.publishConfig(
+        PublishConfigRequest.builder()
+            .dataId("encrypted-config")
+            .group("DEFAULT_GROUP")
+            .content("new encrypted content")
+            .type("text")
+            .casMd5(casMd5)
+            .build());
+
+    if (publishResult.isSuccess()) {
+        System.out.println("Encrypted config CAS publish success");
+    } else {
+        System.out.println("CAS failed (config may have been modified by others): "
+            + publishResult.getErrorMessage());
+    }
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
 ## 4. Service Discovery API
 
 > **Tip for learning**: When you register an instance using the Service Discovery API, the instance will be removed from Nacos once the client process exits, so you won't see it in the Nacos console. For learning or debugging, you can keep the process running after registration (e.g. with `Thread.sleep()`) so you can verify in the Nacos console that the instance was registered successfully.
