@@ -76,6 +76,16 @@ Then click an input parameter such as `NewArg1`, and edit its attributes in `Par
 | Description | Input parameter description for the MCP Tool. |
 | Protocol conversion configuration | Protocol conversion configuration for the AI gateway or protocol conversion proxy. It describes the existing service API that the Tool maps to, such as `url` and parameter mappings. For configuration details, see the [MCP Template Configuration Guide](./mcp-template.md). |
 
+In the Tool output configuration, each output field provides a `Nullable` option. When selected, the field is saved in the MCP Tool `outputSchema` as a union of its original type and `null`. For example, a nullable string field is saved as:
+
+```json
+{
+  "type": ["string", "null"]
+}
+```
+
+When importing an API from OpenAPI 3, `nullable: true` on a response field is automatically converted to the `outputSchema` union type shown above. This conversion applies only to the MCP Tool `outputSchema`, not to `inputSchema`.
+
 After all Tool input parameters are edited, click `OK` to save them. Add other Tools if needed, and then click `Publish as Latest Version` in the upper-right corner.
 
 > The `Save` button in the upper-right corner only saves the content. It does not mark the version as latest or publish the latest version, so AI gateways or protocol conversion proxies may not read the updated Tool information. Use it to save drafts during editing or for gray release scenarios.
