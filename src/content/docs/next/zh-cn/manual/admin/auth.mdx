@@ -15,7 +15,7 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 > - Nacos提供简单的鉴权实现，为防止业务错用的弱鉴权体系，不是防止恶意攻击的强鉴权体系。
 > - 如果运行在不可信的网络环境或者有强鉴权诉求，请参考官方简单实现做进行[自定义插件开发](../../plugin/auth-plugin.md)。
 
-Nacos 的鉴权能力由鉴权插件提供。Nacos 3.2 内置了默认 Nacos 鉴权、LDAP 鉴权和 OIDC/OAuth2 鉴权。不同插件使用同一套开关，但身份来源和权限模型不同。
+Nacos 的鉴权能力由鉴权插件提供。Nacos 3.2 内置了默认 Nacos 鉴权、LDAP 鉴权和 OIDC/OAuth2 鉴权。不同插件使用同一套开关，但身份来源和权限模型不同。Nacos 3.3 起，Client API 鉴权也默认开启；Client API、Admin API 和 Console API 三个范围仍由独立开关控制。
 
 ## 选择鉴权模式
 
@@ -30,26 +30,41 @@ Nacos 的鉴权能力由鉴权插件提供。Nacos 3.2 内置了默认 Nacos 鉴
 
 ## 核心配置
 
-| 配置项 | 默认配置 | 说明 |
-| --- | --- | --- |
-| `nacos.plugin.auth.type` | `nacos` | 启动时选择鉴权插件；`nacos.core.auth.system.type` 是历史 alias。 |
-| `nacos.core.auth.enabled` | `false` | 是否开启 Open API、SDK 和 gRPC 请求鉴权。 |
-| `nacos.core.auth.admin.enabled` | `true` | 是否开启 Admin API 鉴权。 |
-| `nacos.core.auth.console.enabled` | `true` | 是否开启 Console API 和默认控制台登录鉴权。 |
-| `nacos.core.auth.server.identity.key` | 空 | Nacos Server 节点间通信的身份 key。开启鉴权的集群部署必须配置。 |
-| `nacos.core.auth.server.identity.value` | 空 | Nacos Server 节点间通信的身份 value。开启鉴权的集群部署必须配置。 |
-| `nacos.plugin.auth.nacos.caching.enabled` | `true` | 是否缓存用户、角色、权限信息；`nacos.core.auth.caching.enabled` 是历史 alias。权限变更可能存在约 15 秒延迟。 |
-| `nacos.plugin.auth.nacos.token.secret.key` | 空 | 默认 Nacos token 签名密钥，敏感且 RESTART；`nacos.core.auth.plugin.nacos.token.secret.key` 是历史 alias。 |
-| `nacos.plugin.auth.nacos.token.expire.seconds` | `18000` | token 有效期，RUNTIME；`nacos.core.auth.plugin.nacos.token.expire.seconds` 是历史 alias。 |
-| `nacos.plugin.auth.nacos.token.cache.enable` | `false` | token 缓存开关，RUNTIME；`nacos.core.auth.plugin.nacos.token.cache.enable` 是历史 alias。 |
+| 配置项 | 官方 Docker 环境变量 | 3.3 服务端缺省值 | 说明 |
+| --- | --- | --- | --- |
+| `nacos.plugin.auth.type` | `NACOS_AUTH_SYSTEM_TYPE` | `nacos` | 启动时选择鉴权插件；`nacos.core.auth.system.type` 是历史 alias，当前镜像通过该 alias 映射环境变量。 |
+| `nacos.core.auth.enabled` | `NACOS_AUTH_ENABLE` | `true` | Client/Open API 鉴权开关，覆盖 SDK、Client HTTP API 和 gRPC 请求。 |
+| `nacos.core.auth.admin.enabled` | `NACOS_AUTH_ADMIN_ENABLE` | `true` | Admin API 鉴权开关，覆盖 `/v3/admin/*` 以及标记为 `ADMIN_API` 的插件端点。 |
+| `nacos.core.auth.console.enabled` | `NACOS_AUTH_CONSOLE_ENABLE` | `true` | Console API 和默认控制台登录鉴权开关，覆盖 `/v3/console/*`、控制台登录行为以及受 Console scope 鉴权资源保护的插件端点。 |
+| `nacos.core.auth.server.identity.key` | `NACOS_AUTH_IDENTITY_KEY` | 空 | Nacos Server 节点间通信的身份 key。开启 Client API 鉴权时必须为非空。 |
+| `nacos.core.auth.server.identity.value` | `NACOS_AUTH_IDENTITY_VALUE` | 空 | Nacos Server 节点间通信的身份 value。开启 Client API 鉴权时必须为非空。 |
+| `nacos.plugin.auth.nacos.caching.enabled` | `NACOS_AUTH_CACHE_ENABLE` | `true` | 是否缓存用户、角色、权限信息；`nacos.core.auth.caching.enabled` 是历史 alias，当前镜像通过该 alias 映射环境变量且变量未设置时使用 `false`。权限变更可能存在约 15 秒延迟。 |
+| `nacos.plugin.auth.nacos.token.secret.key` | `NACOS_AUTH_TOKEN` | 空 | 默认 Nacos token 签名密钥，敏感且 RESTART；`nacos.core.auth.plugin.nacos.token.secret.key` 是历史 alias，当前镜像通过该 alias 映射环境变量。 |
+| `nacos.plugin.auth.nacos.token.expire.seconds` | `NACOS_AUTH_TOKEN_EXPIRE_SECONDS` | `18000` | token 有效期，RUNTIME；`nacos.core.auth.plugin.nacos.token.expire.seconds` 是历史 alias，当前镜像通过该 alias 映射环境变量。 |
+| `nacos.plugin.auth.nacos.token.cache.enable` | - | `false` | token 缓存开关，RUNTIME；`nacos.core.auth.plugin.nacos.token.cache.enable` 是历史 alias。 |
+
+Client API、Admin API 和 Console API 的开关互不联动。`/v3/auth/*` 是鉴权插件提供的 API，不应仅根据 URL 将它归入某个范围：登录接口有意保持公开；首次管理员初始化只在尚无全局管理员时开放；用户、角色和权限管理接口受各自的 Console 鉴权资源保护。明确标记为公开、首次初始化或健康检查的端点也不因默认值变化而改为需要身份。
 
 :::note
 如果你从旧版本升级，实际配置可能保留旧值。请以当前集群的 `application.properties`、环境变量和启动参数为准。
 :::
 
-## 开启默认 Nacos 鉴权
+官方 Docker 镜像中，`NACOS_AUTH_ENABLE` 未设置时不会添加 JVM 覆盖值，因此使用镜像内的默认值；Nacos 3.3 及以上镜像会启用 Client API 鉴权。显式 `true` 或 `false` 始终覆盖默认值。不同镜像版本的环境变量映射可能不同，升级时应以目标镜像说明为准。
 
-默认 Nacos 鉴权使用本地用户、角色、权限和 token。它提供 `/v3/auth/user`、`/v3/auth/role`、`/v3/auth/permission` 等 v3 Auth API。这些 API 属于默认鉴权插件，不是所有鉴权插件都支持。
+### 默认 Nacos 鉴权的凭据前置条件
+
+- `nacos.plugin.auth.nacos.token.secret.key` 必须是有效 Base64，解码后不少于 32 字节。每个生产部署应使用独立的强随机值。
+- 开启 Client API 鉴权时，`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value` 必须非空；同一集群各节点使用相同值，不同集群不要复用。
+- 标准发行包的启动脚本会迁移有效的历史 token secret，并在必填值为空时交互提示输入。自动化部署应在首次启动前显式写入这些值，避免依赖交互输入。
+- 官方 Docker 启动脚本要求 `NACOS_AUTH_TOKEN`、`NACOS_AUTH_IDENTITY_KEY` 和 `NACOS_AUTH_IDENTITY_VALUE` 非空，即使临时显式关闭 Client API 鉴权也应保留这些凭据，以便后续安全地重新开启。
+
+:::caution
+不要把 token secret、节点身份值或用户密码写入镜像、公共 Compose/Helm 文件或代码仓库。生产环境应通过密钥管理系统或受控 Secret 注入，并限制配置文件和 Secret 的读取权限。
+:::
+
+## 配置默认 Nacos 鉴权
+
+默认 Nacos 鉴权使用本地用户、角色、权限和 token。它提供 `/v3/auth/user`、`/v3/auth/role`、`/v3/auth/permission` 等 v3 Auth API。这些 API 属于默认鉴权插件，不是所有鉴权插件都支持。Nacos 3.3 中三个 API 范围均默认开启，下面仍显式列出开关，便于核对完整部署配置。
 
 <Tabs>
   <TabItem label="非 Docker 部署">
@@ -94,7 +109,7 @@ Nacos 的鉴权能力由鉴权插件提供。Nacos 3.2 内置了默认 Nacos 鉴
       --env NACOS_AUTH_TOKEN=${custom_base64_token_secret_key} \
       --env NACOS_AUTH_IDENTITY_KEY=${custom_server_identity_key} \
       --env NACOS_AUTH_IDENTITY_VALUE=${custom_server_identity_value} \
-      -p 8848:8848 -p 9848:9848 nacos/nacos-server
+      -p 8848:8848 -p 9848:9848 nacos/nacos-server:${nacos_3_3_version}
     ```
 
   </TabItem>
@@ -249,20 +264,36 @@ nacos.plugin.auth.nacos.token.cache.enable=true
 - 当缓存中的 token 接近过期时，登录接口会重新签发 token。
 - Docker 镜像是否暴露对应环境变量，请以当前镜像版本说明为准。
 
-## 关闭控制台鉴权
+## 开启或临时关闭鉴权范围
 
-从 Nacos 3.0 起，控制台访问默认开启鉴权。如果只在本地开发或受控环境中临时关闭，可以设置：
+三个范围的开关相互独立。Nacos 3.3 中省略开关等同于启用；也可以显式设置 `true`。如果升级前尚未完成 Client 凭据改造，只能把显式关闭作为有明确期限的兼容措施：
 
 ```properties
+nacos.core.auth.enabled=false
+```
+
+Docker 部署使用：
+
+```shell
+NACOS_AUTH_ENABLE=false
+```
+
+`nacos.core.auth.enabled` 支持运行时刷新，但配置文件刷新只作用于当前节点。集群必须在每个节点应用并核对相同的有效值。环境变量变更通常需要滚动重建容器。客户端凭据和权限验证完成后，将该值改为 `true`，或在 3.3 部署中删除显式 `false` 以恢复默认开启状态。
+
+如需在本地开发或受控环境临时关闭 Admin API 或 Console API 鉴权，分别设置：
+
+```properties
+nacos.core.auth.admin.enabled=false
 nacos.core.auth.console.enabled=false
 ```
 
 :::caution
-关闭控制台鉴权后，访问控制台不再需要登录，存在数据泄露和误操作风险。生产环境不要关闭。
+关闭任一鉴权范围都会允许对应范围内原本受保护的请求绕过身份和权限校验，可能造成数据泄露、配置篡改或服务注册污染。生产环境不要关闭 Admin API 或 Console API 鉴权；临时关闭 Client API 鉴权时，应同时限制网络访问、记录责任人与恢复时间，并在客户端凭据就绪后尽快重新开启。
 :::
 
 ## 升级注意事项
 
+- 从 3.0.x～3.2.x 升级到 3.3.x 时，缺少 `nacos.core.auth.enabled` 的配置会从“Client API 鉴权关闭”变为“开启”。未携带用户名、密码或 token 的旧客户端和直接 OpenAPI 调用将被拒绝。升级前应完成用户、角色、权限和客户端凭据准备，详见[升级手册](./upgrading.mdx#212-准备-client-api-默认鉴权)。
 - 从旧版本升级时，如果已经存在管理员用户 `nacos`，Nacos 不会重新要求初始化管理员密码。
 - 如果旧集群仍使用默认或弱密码，升级后请尽快修改。
 - 如果从旧 LDAP 配置升级到 3.2，请确认 LDAP 插件 jar 和 `spring-ldap-core` 依赖都已放入 `plugins/`。

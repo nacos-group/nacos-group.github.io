@@ -6,7 +6,7 @@ sidebar:
     order: 5
 ---
 
-> 该文档即将废弃，若想查看服务端如何开启鉴权功能，推荐查看[运维手册-权限校验](../../manual/admin/auth.mdx)；若想查看客户端如何配置访问凭据，推荐查看[用户手册-配置访问凭据](../../manual/user/auth.mdx)。
+> 该文档即将废弃。Nacos 3.3 起 Client API 鉴权默认开启。若想查看当前服务端配置，推荐查看[运维手册-权限校验](../../manual/admin/auth.mdx)；若想查看客户端如何配置访问凭据，推荐查看[用户手册-配置访问凭据](../../manual/user/auth.mdx)。
 
 > 注意
 > - Nacos是一个内部微服务组件，需要在可信的内部网络中运行，不可暴露在公网环境，防止带来安全风险。
@@ -19,7 +19,7 @@ sidebar:
 
 |参数名|默认值|启止版本|说明|
 |-----|------|------|----|
-|nacos.core.auth.enabled|false|1.2.0 ~ latest|是否开启鉴权功能|
+|nacos.core.auth.enabled|3.3 起为 true；3.3 前为 false|1.2.0 ~ latest|是否开启 Client/Open API、SDK 和 gRPC 鉴权|
 |nacos.plugin.auth.type|nacos|3.3.0 ~ latest|鉴权实现选择|
 |nacos.plugin.auth.nacos.token.secret.key|无默认值|3.3.0 ~ latest|默认鉴权插件的 accessToken 签名密钥，敏感且 RESTART|
 |nacos.plugin.auth.nacos.token.expire.seconds|18000|3.3.0 ~ latest|用户登录 accessToken 过期时间，RUNTIME|
@@ -39,9 +39,9 @@ sidebar:
 
 ### 非Docker环境
 
-按照官方文档配置启动,默认是不需要登录的，这样会导致配置中心对外直接暴露。而启用鉴权之后，需要在使用用户名和密码登录之后，才能正常使用nacos。
+Nacos 3.3 起 Client API 鉴权默认开启，调用方必须提供所选鉴权插件支持的凭据。
 
-开启鉴权之前，application.properties中的配置信息为：
+升级期间如需临时维持早期版本的 Client API 无鉴权行为，可使用以下显式兼容配置：
 ```java
 ### If turn on auth system:
 nacos.core.auth.enabled=false
@@ -63,14 +63,10 @@ nacos.core.auth.enabled=true
 > 3. 密钥需要保持节点间一致，长时间不一致可能导致403 invalid token错误。
 
 ```properties
-nacos.plugin.auth.nacos.token.secret.key=SecretKey012345678901234567890123456789012345678901234567890123456789
+nacos.plugin.auth.nacos.token.secret.key=${custom_base64_token_secret_key}
 ```
 
-自定义密钥时，推荐将配置项设置为 **Base64 编码**的字符串，且**解码后的密钥不得少于 32 字节**。例如：
-
-```properties
-nacos.plugin.auth.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
-```
+请使用 **Base64 编码**且**解码后不少于 32 字节**的密钥。每个生产部署应生成独立值，不要提交到代码仓库。
 
 历史 `nacos.core.auth.plugin.nacos.token.secret.key` 仍作为 alias；新配置请使用标准 key。
 
@@ -80,7 +76,7 @@ nacos.plugin.auth.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU
 
 #### 官方镜像
 
-如果使用官方镜像，请在启动docker容器时，添加如下环境变量
+Nacos 3.3 及以上官方镜像在未设置 `NACOS_AUTH_ENABLE` 时默认开启 Client API 鉴权。也可以显式设置，方便审计部署配置：
 
 ```powershell
 NACOS_AUTH_ENABLE=true
@@ -92,19 +88,19 @@ NACOS_AUTH_ENABLE=true
 docker run --env PREFER_HOST_MODE=hostname \
   --env MODE=standalone \
   --env NACOS_AUTH_ENABLE=true \
-  -e NACOS_AUTH_TOKEN=SecretKeyM1Z2WDc4dnVyZkQ3NmZMZjZ3RHRwZnJjNFROdkJOemEK \
-  -e NACOS_AUTH_IDENTITY_KEY=mpYGXyu7 \
-  -e NACOS_AUTH_IDENTITY_VALUE=mpYGXyu7 \
-  -p 8848:8848 nacos/nacos-server
+  -e NACOS_AUTH_TOKEN=${custom_base64_token_secret_key} \
+  -e NACOS_AUTH_IDENTITY_KEY=${custom_server_identity_key} \
+  -e NACOS_AUTH_IDENTITY_VALUE=${custom_server_identity_value} \
+  -p 8848:8848 nacos/nacos-server:${nacos_3_3_version}
 ```
 
 除此之外，还可以添加其他鉴权相关的环境变量信息：
 
 | name                          | description                            | option                                 |
 | ----------------------------- | -------------------------------------- | -------------------------------------- |
-| NACOS_AUTH_ENABLE      |  是否开启权限系统        | 默认:false|
+| NACOS_AUTH_ENABLE      |  Client API 鉴权覆盖值        | 未设置时继承镜像默认值（Nacos 3.3+ 为 `true`）|
 | NACOS_AUTH_TOKEN_EXPIRE_SECONDS      |  token 失效时间 | 默认:18000                          |
-| NACOS_AUTH_TOKEN      |  token        | 默认:SecretKey012345678901234567890123456789012345678901234567890123456789      |
+| NACOS_AUTH_TOKEN      |  Base64 编码的 token secret        | 无默认值；生产环境应使用独立值      |
 | NACOS_AUTH_CACHE_ENABLE      |  权限缓存开关 ,开启后权限缓存的更新默认有15秒的延迟       | 默认 : false   |
 
 
@@ -115,7 +111,7 @@ docker-compose -f example/standalone-derby.yaml up
 
 #### 自定义镜像
 
-如果选择自定义镜像，请在构建镜像之前，修改nacos工程中的application.properties文件，
+如果自定义镜像仍保留显式兼容配置，在正式启用 Client API 鉴权前修改 application.properties：
 
 将下面这一行配置信息
 ```
@@ -146,8 +142,8 @@ try {
 	properties.put("serverAddr", serverAddr);
 
     // if need username and password to login
-        properties.put("username","nacos");
-        properties.put("password","nacos");
+        properties.put("username","${username}");
+        properties.put("password","${password}");
 
 	ConfigService configService = NacosFactory.createConfigService(properties);
 } catch (NacosException e) {
@@ -163,7 +159,7 @@ try {
 首先需要使用用户名和密码登陆nacos。
 
 ```plain
-curl -X POST '127.0.0.1:8848/nacos/v1/auth/login' -d 'username=nacos&password=nacos'
+curl -X POST '127.0.0.1:8848/nacos/v1/auth/login' -d 'username=${username}&password=${password}'
 ```
 
 若用户名和密码正确,返回信息如下:
