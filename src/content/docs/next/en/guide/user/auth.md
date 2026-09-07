@@ -6,7 +6,7 @@ sidebar:
     order: 5
 ---
 
-> This document is kept for compatibility and will be deprecated. For server-side auth setup, see [Admin Manual - Authorization](../../manual/admin/auth.mdx). For SDK and OpenAPI credentials, see [User Manual - Configure Access Credentials](../../manual/user/auth.mdx).
+> This document is kept for compatibility and will be deprecated. Starting with Nacos 3.3, Client API authentication is enabled by default. For current server-side setup, see [Admin Manual - Authorization](../../manual/admin/auth.mdx). For SDK and OpenAPI credentials, see [User Manual - Configure Access Credentials](../../manual/user/auth.mdx).
 
 > Attention
 > - Nacos is an internal micro service component, which needs to run in a trusted internal network. It can not be exposed to the public network environment to prevent security risks.
@@ -20,7 +20,7 @@ sidebar:
 
 |Parameter|Default|Versions|Description|
 |-----|------|------|----|
-|nacos.core.auth.enabled|false|1.2.0 ~ latest|Whether to enable the authentication|
+|nacos.core.auth.enabled|true since 3.3; false before 3.3|1.2.0 ~ latest|Whether to enable Client/Open API, SDK, and gRPC authentication|
 |nacos.plugin.auth.type|nacos|3.3.0 ~ latest|Auth implementation selector|
 |nacos.plugin.auth.nacos.token.secret.key|No default|3.3.0 ~ latest|Default auth access-token signing key; sensitive and RESTART|
 |nacos.plugin.auth.nacos.token.expire.seconds|18000|3.3.0 ~ latest|Login access-token lifetime; RUNTIME|
@@ -35,9 +35,9 @@ sidebar:
 ## Use Authentication in Servers
 
 ### Without Docker
-By default, no login is required to start following the official document configuration, which can expose the configuration center directly to the outside world. However, if the authentication is enabled, one can use nacos only after he configures the user name and password.
+Starting with Nacos 3.3, Client API authentication is enabled by default. Callers must provide credentials supported by the selected auth plugin.
 
-Before enabling authentication, the configuration in application.properties is as follow:
+To retain the earlier unauthenticated Client API behavior temporarily during an upgrade, use this explicit compatibility override:
 ```java
 ### If turn on auth system:
 nacos.core.auth.enabled=false
@@ -60,15 +60,10 @@ After enabling authentication, you can customize the key used to generate JWT to
 > 3. The secret key needs to be consistent between nodes, and if it is inconsistent for a long time, it may cause 403 invalid token error.
 
 ```properties
-nacos.plugin.auth.nacos.token.secret.key=SecretKey012345678901234567890123456789012345678901234567890123456789
+nacos.plugin.auth.nacos.token.secret.key=${custom_base64_token_secret_key}
 ```
 
-When customizing the key, it is recommended to set the configuration item to a **Base64 encoded** string,
-and **the decoded key must not be less than 32 bytes**. For example:
-
-```properties
-nacos.plugin.auth.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
-```
+Set the key to a **Base64 encoded** string whose decoded value is **at least 32 bytes**. Generate a deployment-specific secret and do not commit it to source control.
 
 The historical `nacos.core.auth.plugin.nacos.token.secret.key` remains an alias; use the standard key for new configuration.
 
@@ -78,7 +73,7 @@ The historical `nacos.core.auth.plugin.nacos.token.secret.key` remains an alias;
 
 #### Official images
 
-If you choose to use official images, please add the following environment parameter when you start a docker container.
+Nacos 3.3 and later official images enable Client API authentication when `NACOS_AUTH_ENABLE` is unset. You may set it explicitly for auditable deployment configuration:
 
 ```powershell
 NACOS_AUTH_ENABLE=true
@@ -90,26 +85,26 @@ For example, you can run this command to run a docker container with Authenticat
 docker run --env PREFER_HOST_MODE=hostname \
   --env MODE=standalone \
   --env NACOS_AUTH_ENABLE=true \
-  -e NACOS_AUTH_TOKEN=SecretKeyM1Z2WDc4dnVyZkQ3NmZMZjZ3RHRwZnJjNFROdkJOemEK \
-  -e NACOS_AUTH_IDENTITY_KEY=mpYGXyu7 \
-  -e NACOS_AUTH_IDENTITY_VALUE=mpYGXyu7 \
-  -p 8848:8848 nacos/nacos-server
+  -e NACOS_AUTH_TOKEN=${custom_base64_token_secret_key} \
+  -e NACOS_AUTH_IDENTITY_KEY=${custom_server_identity_key} \
+  -e NACOS_AUTH_IDENTITY_VALUE=${custom_server_identity_value} \
+  -p 8848:8848 nacos/nacos-server:${nacos_3_3_version}
 ```
 
 Besides, you can also add the other related enviroment parameters:
 
 | name                          | description                            | option                                 |
 | ----------------------------- | -------------------------------------- | -------------------------------------- |
-| NACOS_AUTH_ENABLE      |  If turn on auth system        | default :false                          |
+| NACOS_AUTH_ENABLE      |  Client API authentication override        | Unset inherits the image default (`true` for Nacos 3.3+)                          |
 | NACOS_AUTH_TOKEN_EXPIRE_SECONDS      |  The token expiration in seconds        | default :18000                          |
-| NACOS_AUTH_TOKEN      |  The default token        | default :SecretKey012345678901234567890123456789012345678901234567890123456789                          |
+| NACOS_AUTH_TOKEN      |  Base64-encoded token secret        | No default; use a unique production value                          |
 | NACOS_AUTH_CACHE_ENABLE      |  Turn on/off caching of auth information. By turning on this switch, the update of auth information would have a 15 seconds delay.        | default : false   |
 
 
 
 #### Custom images
 
-If you choose to use custom images, please modify the application.properties before you start nacos, change this line 
+If a custom image still carries an explicit compatibility override, change this line before enforcing Client API authentication:
 
 ```
 nacos.core.auth.enabled=false
@@ -138,8 +133,8 @@ try {
 	properties.put("serverAddr", serverAddr);
 
     // if need username and password to login
-        properties.put("username","nacos");
-        properties.put("password","nacos");
+        properties.put("username","${username}");
+        properties.put("password","${password}");
 
 	ConfigService configService = NacosFactory.createConfigService(properties);
 } catch (NacosException e) {
@@ -155,7 +150,7 @@ Pending...
 Firstly, the user name and password should be provided to login.
 
 ```plain
-curl -X POST '127.0.0.1:8848/nacos/v1/auth/login' -d 'username=nacos&password=nacos'
+curl -X POST '127.0.0.1:8848/nacos/v1/auth/login' -d 'username=${username}&password=${password}'
 ```
 
 If the user name and password are correct, the response will be:

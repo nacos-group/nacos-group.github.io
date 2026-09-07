@@ -15,7 +15,7 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 > - Nacos provides a simple auth implementation to prevent business misuse. It is a weak auth system, not a strong auth system designed to resist malicious attacks.
 > - If Nacos runs in an untrusted network or you require strong auth, use the official simple implementation as a reference to develop a [custom auth plugin](../../plugin/auth-plugin.md).
 
-Nacos auth is provided by auth plugins. Nacos 3.2 includes the default Nacos auth plugin, LDAP auth plugin, and OIDC/OAuth2 auth plugin. They share the same auth switches, but use different identity sources and permission models.
+Nacos auth is provided by auth plugins. Nacos 3.2 includes the default Nacos auth plugin, LDAP auth plugin, and OIDC/OAuth2 auth plugin. They share the same auth switches, but use different identity sources and permission models. Starting with Nacos 3.3, Client API authentication is also enabled by default; the Client, Admin, and Console API scopes still have independent switches.
 
 ## Choose An Auth Mode
 
@@ -30,26 +30,41 @@ For plugin boundaries and development details, see [Auth Plugin](../../plugin/au
 
 ## Core Configuration
 
-| Property | Default configuration | Description |
-| --- | --- | --- |
-| `nacos.plugin.auth.type` | `nacos` | Selects the auth plugin at startup; `nacos.core.auth.system.type` is a legacy alias. |
-| `nacos.core.auth.enabled` | `false` | Enables auth for Open API, SDK, and gRPC requests. |
-| `nacos.core.auth.admin.enabled` | `true` | Enables auth for Admin API requests. |
-| `nacos.core.auth.console.enabled` | `true` | Enables auth for Console API and default console login. |
-| `nacos.core.auth.server.identity.key` | Empty | Server-to-server identity key. Required for auth-enabled clusters. |
-| `nacos.core.auth.server.identity.value` | Empty | Server-to-server identity value. Required for auth-enabled clusters. |
-| `nacos.plugin.auth.nacos.caching.enabled` | `true` | Caches users, roles, and permissions; `nacos.core.auth.caching.enabled` is a historical alias. Permission changes may have about 15 seconds of delay. |
-| `nacos.plugin.auth.nacos.token.secret.key` | Empty | Default token signing key; sensitive and RESTART. `nacos.core.auth.plugin.nacos.token.secret.key` is a historical alias. |
-| `nacos.plugin.auth.nacos.token.expire.seconds` | `18000` | Token lifetime; RUNTIME. `nacos.core.auth.plugin.nacos.token.expire.seconds` is a historical alias. |
-| `nacos.plugin.auth.nacos.token.cache.enable` | `false` | Token cache switch; RUNTIME. `nacos.core.auth.plugin.nacos.token.cache.enable` is a historical alias. |
+| Property | Official Docker environment variable | Nacos 3.3 server default | Description |
+| --- | --- | --- | --- |
+| `nacos.plugin.auth.type` | `NACOS_AUTH_SYSTEM_TYPE` | `nacos` | Selects the auth plugin at startup. `nacos.core.auth.system.type` is a legacy alias, and the current image maps the environment variable through that alias. |
+| `nacos.core.auth.enabled` | `NACOS_AUTH_ENABLE` | `true` | Client/Open API auth switch. It covers SDK, Client HTTP API, and gRPC requests. |
+| `nacos.core.auth.admin.enabled` | `NACOS_AUTH_ADMIN_ENABLE` | `true` | Admin API auth switch. It covers `/v3/admin/*` and plugin-owned endpoints designated as `ADMIN_API`. |
+| `nacos.core.auth.console.enabled` | `NACOS_AUTH_CONSOLE_ENABLE` | `true` | Console API and default console login auth switch. It covers `/v3/console/*`, console login behavior, and plugin endpoints protected by Console-scoped auth resources. |
+| `nacos.core.auth.server.identity.key` | `NACOS_AUTH_IDENTITY_KEY` | Empty | Server-to-server identity key. It must be non-empty when Client API auth is enabled. |
+| `nacos.core.auth.server.identity.value` | `NACOS_AUTH_IDENTITY_VALUE` | Empty | Server-to-server identity value. It must be non-empty when Client API auth is enabled. |
+| `nacos.plugin.auth.nacos.caching.enabled` | `NACOS_AUTH_CACHE_ENABLE` | `true` | Caches users, roles, and permissions. `nacos.core.auth.caching.enabled` is a historical alias; the current image maps the environment variable through that alias and uses `false` when the variable is unset. Permission changes may have about 15 seconds of delay. |
+| `nacos.plugin.auth.nacos.token.secret.key` | `NACOS_AUTH_TOKEN` | Empty | Default Nacos token signing key; sensitive and RESTART. `nacos.core.auth.plugin.nacos.token.secret.key` is a historical alias, and the current image maps the environment variable through that alias. |
+| `nacos.plugin.auth.nacos.token.expire.seconds` | `NACOS_AUTH_TOKEN_EXPIRE_SECONDS` | `18000` | Token lifetime; RUNTIME. `nacos.core.auth.plugin.nacos.token.expire.seconds` is a historical alias, and the current image maps the environment variable through that alias. |
+| `nacos.plugin.auth.nacos.token.cache.enable` | - | `false` | Token cache switch; RUNTIME. `nacos.core.auth.plugin.nacos.token.cache.enable` is a historical alias. |
+
+The Client, Admin, and Console API switches do not change one another. `/v3/auth/*` consists of plugin-provided APIs and must not be assigned to a scope from the URL alone: login is intentionally public; initial administrator bootstrap is available only while no global administrator exists; and user, role, and permission management endpoints are protected by their Console-scoped auth resources. Endpoints explicitly designated as public, bootstrap-only, or health checks also remain identity-free despite the default change.
 
 :::note
 After an upgrade, your cluster may keep old values. Always check the actual `application.properties`, environment variables, and startup parameters of the running cluster.
 :::
 
-## Enable Default Nacos Auth
+In the official Docker image, leaving `NACOS_AUTH_ENABLE` unset adds no JVM override, so the image's built-in value applies. Nacos 3.3 and later images enable Client API auth by default. An explicit `true` or `false` always overrides that default. Environment-variable mappings may differ between image versions, so check the target image documentation during an upgrade.
 
-Default Nacos auth uses local users, roles, permissions, and tokens. It provides the `/v3/auth/user`, `/v3/auth/role`, and `/v3/auth/permission` APIs. These APIs belong to the default auth plugin. Other auth plugins do not necessarily support them.
+### Credential Prerequisites For Default Nacos Auth
+
+- `nacos.plugin.auth.nacos.token.secret.key` must be valid Base64 whose decoded value is at least 32 bytes. Generate a strong, deployment-specific value for production.
+- When Client API auth is enabled, `nacos.core.auth.server.identity.key` and `nacos.core.auth.server.identity.value` must be non-empty. Use the same values on every member of one cluster, and do not reuse them across clusters.
+- The standard distribution startup script migrates a valid legacy token secret and interactively requests missing required values. Automated deployments should write these values before first startup instead of depending on interactive input.
+- The official Docker startup script requires non-empty `NACOS_AUTH_TOKEN`, `NACOS_AUTH_IDENTITY_KEY`, and `NACOS_AUTH_IDENTITY_VALUE`. Keep these credentials configured even while Client API auth is temporarily disabled so it can be re-enabled safely.
+
+:::caution
+Do not put token secrets, server identity values, or user passwords in images, public Compose or Helm files, or source control. Inject them through a secret manager or a controlled Secret in production, and restrict access to the configuration files and Secrets.
+:::
+
+## Configure Default Nacos Auth
+
+Default Nacos auth uses local users, roles, permissions, and tokens. It provides the `/v3/auth/user`, `/v3/auth/role`, and `/v3/auth/permission` APIs. These APIs belong to the default auth plugin. Other auth plugins do not necessarily support them. All three API scopes default to enabled in Nacos 3.3; the examples still set each switch explicitly so the complete deployment configuration is easy to audit.
 
 <Tabs>
   <TabItem label="Non-Docker deployment">
@@ -94,7 +109,7 @@ Default Nacos auth uses local users, roles, permissions, and tokens. It provides
       --env NACOS_AUTH_TOKEN=${custom_base64_token_secret_key} \
       --env NACOS_AUTH_IDENTITY_KEY=${custom_server_identity_key} \
       --env NACOS_AUTH_IDENTITY_VALUE=${custom_server_identity_value} \
-      -p 8848:8848 -p 9848:9848 nacos/nacos-server
+      -p 8848:8848 -p 9848:9848 nacos/nacos-server:${nacos_3_3_version}
     ```
 
   </TabItem>
@@ -249,20 +264,36 @@ Notes:
 - When a cached token is close to expiration, the login API issues a new token.
 - Check your current image version for Docker environment variable support.
 
-## Disable Console Auth
+## Enable Or Temporarily Disable An Auth Scope
 
-Since Nacos 3.0, console auth is enabled by default. For local development or a controlled temporary environment, you can disable it:
+The three scope switches are independent. Omitting a switch in Nacos 3.3 enables that scope; you may also set `true` explicitly. If client credential rollout is incomplete before an upgrade, use an explicit Client-scope opt-out only as a time-bounded compatibility measure:
 
 ```properties
+nacos.core.auth.enabled=false
+```
+
+For Docker deployments, use:
+
+```shell
+NACOS_AUTH_ENABLE=false
+```
+
+`nacos.core.auth.enabled` is runtime-refreshable, but a configuration-file refresh applies only to the current node. Apply and verify the same effective value on every cluster member. Changing an environment variable normally requires a rolling container replacement. After client credentials and permissions have been verified, change the value to `true`, or remove the explicit `false` from a Nacos 3.3 deployment to restore the enabled default.
+
+To disable Admin API or Console API auth temporarily in local development or a controlled environment, set the corresponding independent switch:
+
+```properties
+nacos.core.auth.admin.enabled=false
 nacos.core.auth.console.enabled=false
 ```
 
 :::caution
-After console auth is disabled, the console can be accessed without login. This can leak data and cause accidental changes. Do not disable it in production.
+Disabling any auth scope lets requests that would normally be protected in that scope bypass identity and permission checks. This may expose data, allow configuration changes, or permit unauthorized service registrations. Never disable Admin or Console API auth in production. If Client API auth must be disabled temporarily, restrict network access, record an owner and restoration deadline, and re-enable it as soon as client credentials are ready.
 :::
 
 ## Upgrade Notes
 
+- When upgrading from 3.0.x–3.2.x to 3.3.x, an absent `nacos.core.auth.enabled` changes from "Client API auth disabled" to "enabled." Older clients and direct OpenAPI calls without a username, password, or token will be rejected. Prepare users, roles, permissions, and client credentials before upgrading; see the [Upgrade Manual](./upgrading.mdx#212-prepare-for-default-client-api-authentication).
 - If an administrator user `nacos` already exists before upgrade, Nacos does not ask for administrator initialization again.
 - If the old cluster still uses a default or weak password, change it after upgrade.
 - When upgrading old LDAP deployments to 3.2, make sure the LDAP plugin jar and `spring-ldap-core` dependency are both available in `plugins/`.

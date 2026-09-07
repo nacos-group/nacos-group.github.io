@@ -44,6 +44,7 @@ Complete these preparations before upgrading a production cluster:
 1. Confirm that the source cluster version is supported and that the database schema meets the requirements of the target 3.3.x release. See section 2.2 for database checks and changes.
 2. Back up the database, each node's `data`, `conf`, and `cluster.conf`, and any custom plugins and configuration.
 3. Rehearse the upgrade and rollback in staging with a copy of production data.
+4. Inventory Client API callers and complete the auth migration in section 2.1.2. Do not wait for the first 3.3 node to start before distributing client credentials.
 
 <a id="217-config-compatibility-migration-removal-nacos-330"></a>
 
@@ -52,6 +53,41 @@ Complete these preparations before upgrading a production cluster:
 Nacos 3.3 removes the Config compatibility migration and no longer supports a direct smooth upgrade from 2.x. After a direct upgrade from 2.x to 3.3.x, Config data previously stored in the default namespace will no longer be queryable.
 
 Before upgrading, confirm that the deployment has not used Config data in the default namespace. If it has, or if this cannot be confirmed, first upgrade to 3.0.x–3.2.x and verify that the default-namespace Config data remains queryable, then upgrade to 3.3.x.
+
+#### 2.1.2. Prepare For Default Client API Authentication
+
+Nacos 3.3 enables Client API authentication by default. Only the missing-value default for the Client scope changes; the three auth scopes remain independent:
+
+| Property | Request scope | 3.0.x–3.2.x missing-value default | 3.3.x missing-value default |
+| --- | --- | --- | --- |
+| `nacos.core.auth.enabled` | Client/Open APIs, Java SDK, and gRPC requests | `false` | `true` |
+| `nacos.core.auth.admin.enabled` | `/v3/admin/*` Admin APIs | `true` | `true` |
+| `nacos.core.auth.console.enabled` | `/v3/console/*` Console APIs and console login | `true` | `true` |
+
+After a cluster without an explicit `nacos.core.auth.enabled` value upgrades to 3.3, unauthenticated Config publish/query, service registration/discovery/subscription, and other protected Client HTTP, SDK, or gRPC requests are rejected. An older client is not necessarily incompatible by version; the risk is that the caller has no supported username, password, token, or other identity material required by the selected auth plugin. Admin and Console API defaults do not change. Endpoints explicitly designated as public, bootstrap-only, or health checks keep their own rules. `/v3/auth/*` consists of plugin APIs and must not be assigned to the Client scope from its URL alone.
+
+Complete these steps before a production upgrade:
+
+1. Inventory every direct OpenAPI caller, SDK, gateway, automation job, and side script, including the resources and read/write actions it needs.
+2. Confirm the auth plugin type. For the default `nacos` plugin, prepare a deployment-specific token secret and Server identity. The token secret must be valid Base64 whose decoded value is at least 32 bytes. Every member of one cluster must use the same token secret and identity.
+3. Use an existing protected management path to initialize or confirm the administrator, then create application-specific users, roles, and least-privilege permissions. Do not distribute global administrator credentials to business clients.
+4. Configure each caller with a username/password, token, or the identity material required by the selected plugin before the server upgrade. See [Client Authentication](../user/auth.mdx) for SDK examples.
+5. In staging, verify successful reads and writes plus anonymous, invalid-identity, no-permission, and resource-boundary cases. Confirm that every cluster member has the same effective value for all three switches.
+
+If all clients cannot be updated before the upgrade window, Client API auth may be disabled explicitly for a short compatibility period. Keep the token secret, Server identity, users, roles, and permissions configured so auth can be re-enabled later:
+
+| Deployment | Temporary explicit opt-out |
+| --- | --- |
+| Native distribution | Set `nacos.core.auth.enabled=false` in `conf/application.properties` on every member. The property is runtime-refreshable, but file refresh is node-local, so apply and verify it member by member. |
+| Docker | Set `NACOS_AUTH_ENABLE=false`. Leaving the variable unset in a 3.3 image inherits the enabled default; explicit `true` or `false` overrides the image default. |
+| Helm | Set `nacos.auth.enabled=false`, for example `helm upgrade ${release_name} ./ --reuse-values --set nacos.auth.enabled=false`. This field is tri-state `null`/`true`/`false`: `null` omits `NACOS_AUTH_ENABLE` and inherits the selected image's default. |
+| Operator | Set `spec.certification.enabled: false` in the Nacos custom resource. This field is also tri-state `null`/`true`/`false`: `null` or omission leaves out `NACOS_AUTH_ENABLE` and inherits the selected image's default. |
+
+The Helm and Operator fields control only Client API auth; neither changes Admin or Console API auth. With Helm, use `nacos.auth.existingSecret` for the token and Server identity in production. On the first upgrade from chart 1.0.0 or earlier, use `--reuse-values` if the release still depends on legacy inline credentials, or create an external Secret first. Do not put fixed production credentials in values, custom resources, Compose files, or source control.
+
+:::caution[Temporary opt-out expands unauthenticated access]
+Use explicit `false` only for a time-bounded upgrade compatibility window. Keep Nacos on a trusted network, restrict ingress and callers, and record an owner and restoration deadline. After client credentials and permissions are verified, set the value to `true` on every member. If the selected image is Nacos 3.3 or later, Docker, `nacos.auth.enabled`, or `spec.certification.enabled` may instead be restored to `null`/omitted so the deployment inherits the enabled default again.
+:::
 
 ### 2.2. Apply Database Changes
 
@@ -326,7 +362,7 @@ The initial migration does not automatically delete historical A2A Config or per
 At minimum, verify the following after the upgrade:
 
 1. Node versions, cluster membership, and health are correct, with no schema, plugin-loading, or configuration-alias errors in the logs.
-2. Config publish/query, service register/discover, Console login, Client API, and Admin API authentication match the pre-upgrade settings.
+2. Config publish/query, service register/discover, and Console login succeed, and the effective Client, Admin, and Console API auth switches match the rollout plan. When Client API auth is enabled, verify that valid clients succeed and anonymous, invalid-identity, and unauthorized requests fail. If it remains temporarily disabled, verify the network restriction and restoration deadline.
 3. Deployments upgraded from 2.x through an intermediate release can still query Config data in the default namespace.
 4. Plugin management reports the expected plugin IDs, states, configuration sources, and restart-required fields, with no implementation enabled unexpectedly.
 5. When AI Resource Search is enabled, all three relational tables exist and index tasks converge. When the PostgreSQL vector plugin is enabled, also verify the pgvector schema and datasource connectivity.
