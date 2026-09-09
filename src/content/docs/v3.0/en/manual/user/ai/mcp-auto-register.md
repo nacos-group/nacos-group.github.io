@@ -204,7 +204,7 @@ private List<LoadbalancedMcpAsyncClient> loadbalancedMcpAsyncClients;
 ```
 Or Use ToolCallbackProvider
 ```java
-@Qualifier("loadbalancedSyncMcpToolCallbacks") ToolCallbackProvider tools
+@Qualifier("loadbalancedMcpSyncToolCallbacks") ToolCallbackProvider tools
 ```
 or
 ```java
