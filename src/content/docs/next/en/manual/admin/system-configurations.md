@@ -225,7 +225,7 @@ For auth setup, read [Authorization](./auth.mdx) and [OIDC/OAuth2 Authentication
 | Property | Description | Default |
 | --- | --- | --- |
 | `nacos.plugin.auth.type` | Select the auth implementation at startup; `nacos.core.auth.system.type` is a legacy alias. | `nacos` |
-| `nacos.core.auth.enabled` | Whether the general auth system and Open API authentication are enabled, including Client/Open HTTP APIs and SDK/gRPC requests. | `false` |
+| `nacos.core.auth.enabled` | Whether the general auth system and Open API authentication are enabled, including Client/Open HTTP APIs and SDK/gRPC requests. Enabled by default since Nacos 3.3; an explicit `false` remains a temporary compatibility override. | `true` |
 | `nacos.core.auth.admin.enabled` | Whether Admin API scope authentication is enabled, including plugin-owned endpoints marked `ADMIN_API` as well as `/v3/admin/*`. | `true` |
 | `nacos.core.auth.console.enabled` | Whether `/v3/console/*` Console API and login authentication are enabled. | `true` |
 | `nacos.plugin.auth.nacos.caching.enabled` | Whether auth information is cached; `nacos.core.auth.caching.enabled` is a historical alias. Permission updates may have a short delay when enabled. | `true` |

@@ -225,7 +225,7 @@ Raft 参数通过 `nacos.core.protocol.raft.data.*` 配置。`data` 是当前代
 | 参数名 | 说明 | 默认值 |
 | --- | --- | --- |
 | `nacos.plugin.auth.type` | 启动时选择鉴权插件；`nacos.core.auth.system.type` 是历史 alias。 | `nacos` |
-| `nacos.core.auth.enabled` | 是否开启通用鉴权系统和 Open API 鉴权，包括 Client/Open HTTP API 及 SDK/gRPC 请求。 | `false` |
+| `nacos.core.auth.enabled` | 是否开启通用鉴权系统和 Open API 鉴权，包括 Client/Open HTTP API 及 SDK/gRPC 请求。Nacos 3.3 起默认开启；显式 `false` 仅作为临时兼容覆盖。 | `true` |
 | `nacos.core.auth.admin.enabled` | 是否开启 Admin API scope 鉴权；除 `/v3/admin/*` 外，也包括标记为 `ADMIN_API` 的插件自有端点。 | `true` |
 | `nacos.core.auth.console.enabled` | 是否开启 `/v3/console/*` Console API 和登录鉴权。 | `true` |
 | `nacos.plugin.auth.nacos.caching.enabled` | 是否缓存鉴权信息；`nacos.core.auth.caching.enabled` 是历史 alias。开启后权限变更会有短暂延迟。 | `true` |

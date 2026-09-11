@@ -44,6 +44,7 @@ Nacos 3.x 服务端与各版本客户端的兼容性如下：
 1. 确认源集群版本受支持，且数据库 schema 已满足目标 3.3.x 版本要求；具体数据库检查和变更见第 2.2 节。
 2. 备份数据库、各节点的 `data`、`conf`、`cluster.conf`，以及自定义插件和配置。
 3. 在预发环境使用生产数据副本演练升级和回滚。
+4. 按第 2.1.2 节盘点 Client API 调用方并完成鉴权迁移；不要等到首个 3.3 节点启动后才开始补客户端凭据。
 
 <a id="217-配置中心兼容迁移移除-nacos-330"></a>
 
@@ -52,6 +53,41 @@ Nacos 3.x 服务端与各版本客户端的兼容性如下：
 Nacos 3.3 已移除配置中心兼容迁移逻辑，不再支持从 2.x 直接平滑升级。若从 2.x 直接升级到 3.3.x，将无法查询之前保存在默认 namespace 中的配置。
 
 升级前请确认业务未使用默认 namespace 中的配置数据。若使用过或无法确认，请先升级到 3.0.x～3.2.x，确认默认 namespace 配置可正常查询后，再升级到 3.3.x。
+
+#### 2.1.2. 准备 Client API 默认鉴权
+
+Nacos 3.3 将 Client API 鉴权改为默认开启。只改变 Client 范围的缺省值，三个鉴权范围仍相互独立：
+
+| 配置项 | 请求范围 | 3.0.x～3.2.x 缺省值 | 3.3.x 缺省值 |
+| --- | --- | --- | --- |
+| `nacos.core.auth.enabled` | Client/Open API、Java SDK 和 gRPC 请求 | `false` | `true` |
+| `nacos.core.auth.admin.enabled` | `/v3/admin/*` Admin API | `true` | `true` |
+| `nacos.core.auth.console.enabled` | `/v3/console/*` Console API 和控制台登录 | `true` | `true` |
+
+因此，没有显式配置 `nacos.core.auth.enabled` 的集群升级到 3.3 后，原本未携带身份的配置发布/查询、服务注册/发现/订阅以及其他受保护的 Client HTTP、SDK 或 gRPC 请求会被拒绝。旧客户端本身不一定不兼容；风险来自调用方没有配置受支持的用户名、密码、token 或所选鉴权插件要求的其他身份材料。Admin API 和 Console API 的默认行为不因本次变更改变。明确标记为公开、首次初始化或健康检查的端点仍按各自规则处理；`/v3/auth/*` 是鉴权插件 API，也不能仅按 URL 归入 Client 范围。
+
+正式升级前应完成：
+
+1. 盘点所有直接 OpenAPI、SDK、网关、自动化任务和旁路脚本，确认它们访问的资源与所需读写动作。
+2. 确认鉴权插件类型。使用默认 `nacos` 插件时，准备部署独有的 token secret 和 Server identity；token secret 必须是有效 Base64，解码后不少于 32 字节，同一集群各节点的 token secret 与 identity 必须一致。
+3. 通过已有的受保护管理入口初始化或确认管理员，并为应用创建独立用户、角色和最小权限。不要把全局管理员凭据分发给业务客户端。
+4. 在升级前把用户名/密码、token 或所选插件要求的凭据配置到客户端。SDK 配置方式见[客户端鉴权](../user/auth.mdx)。
+5. 在预发环境同时验证正常读写、无身份、错误身份、无权限和资源边界场景，并确认每个集群节点的三个开关有效值一致。
+
+如果无法在升级窗口前完成全部客户端改造，可以临时显式关闭 Client API 鉴权，但必须保留 token secret、Server identity、用户、角色和权限，以便后续重新开启：
+
+| 部署方式 | 临时显式关闭方式 |
+| --- | --- |
+| 原生发行包 | 在每个节点的 `conf/application.properties` 设置 `nacos.core.auth.enabled=false`。该项支持运行时刷新，但文件刷新是节点本地行为，必须逐节点应用并核对。 |
+| Docker | 设置 `NACOS_AUTH_ENABLE=false`。未设置该变量时，3.3 镜像继承默认开启；显式 `true` 或 `false` 均会覆盖镜像默认值。 |
+| Helm | 设置 `nacos.auth.enabled=false`，例如 `helm upgrade ${release_name} ./ --reuse-values --set nacos.auth.enabled=false`。该字段为 `null`/`true`/`false` 三态：`null` 表示不写入 `NACOS_AUTH_ENABLE`，继承所选镜像默认值。 |
+| Operator | 在 Nacos CR 中设置 `spec.certification.enabled: false`。该字段同样为 `null`/`true`/`false` 三态：`null` 或省略表示不写入 `NACOS_AUTH_ENABLE`，继承所选镜像默认值。 |
+
+Helm 和 Operator 的该字段都只控制 Client API 鉴权，不改变 Admin API 或 Console API。使用 Helm 时，生产环境优先通过 `nacos.auth.existingSecret` 管理 token 和 Server identity；从 chart 1.0.0 或更早版本首次升级且仍使用旧内联凭据时，应使用 `--reuse-values` 保留凭据，或先创建外部 Secret。不要在 values、CR、Compose 文件或代码仓库中写入固定生产凭据。
+
+:::caution[临时关闭会扩大未授权访问面]
+显式 `false` 仅用于有明确期限的升级兼容窗口。期间应把 Nacos 限制在可信网络内，收紧入口和调用来源，并记录责任人与恢复时间。客户端凭据和权限验证完成后，在所有节点把值改为 `true`；也可以在确认使用 3.3 及以上镜像后，将 Docker 变量、`nacos.auth.enabled` 或 `spec.certification.enabled` 恢复为 `null`/省略，以重新继承默认开启行为。
+:::
 
 ### 2.2. 应用数据库变更
 
@@ -326,7 +362,7 @@ Nacos 使用 Namespace `_nacos_internal_`、group `nacos_internal` 保存迁移�
 升级完成后至少验证：
 
 1. 所有节点版本、集群成员列表和健康状态正确，日志中没有 schema、插件加载或配置 alias 错误。
-2. 配置发布/查询、服务注册/发现、控制台登录、Client API 和 Admin API 的鉴权行为符合升级前设置。
+2. 配置发布/查询、服务注册/发现和控制台登录正常；Client API、Admin API、Console API 的有效开关分别符合计划。若 Client API 已开启，验证合法客户端成功，无身份、错误身份和越权请求被拒绝；若仍临时关闭，确认网络限制和重新开启时间已落实。
 3. 从 2.x 经中间版本升级的部署，确认默认 namespace 配置仍可正常查询。
 4. 在插件管理页面或 API 中检查插件 ID、状态、配置来源及需要重启的字段；确认没有意外启用的实现。
 5. 开启 AI Resource Search 时，确认三张检索关系表已创建、索引任务能够收敛；启用 PostgreSQL 向量插件时还要确认 pgvector schema 和数据源连通性。
