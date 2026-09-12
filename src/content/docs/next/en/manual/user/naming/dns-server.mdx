@@ -1,0 +1,83 @@
+---
+title: DNS Service
+description: Nacos naming service built-in DNS server, supports resolving service instance addresses via standard DNS protocol
+---
+
+# DNS Service
+
+Since Nacos 3.3.0, the naming service module includes a built-in DNS server that allows resolving registered service instance addresses directly via standard DNS protocol.
+
+## Features
+
+- Standard A record query support
+- UDP and TCP transport protocols
+- Automatic filtering of unhealthy/offline instances
+- Configurable port, domain suffix, default group name
+- TTL configuration support
+
+## Quick Start
+
+### Enable DNS Server
+
+Add the following configuration in `application.properties`:
+
+```properties
+# Enable DNS server (disabled by default)
+nacos.naming.dns.enabled=true
+# DNS server listening port (default 5353, to avoid conflict with system port 53)
+nacos.naming.dns.port=5353
+```
+
+### Query Service
+
+After service registration, you can query using standard DNS tools:
+
+```bash
+# Query with dig
+dig @localhost -p 5353 order-service.DEFAULT_GROUP.nacos A
+
+# Query with nslookup
+nslookup -port=5353 order-service.DEFAULT_GROUP.nacos localhost
+```
+
+## Domain Format
+
+The DNS query domain format is as follows:
+
+```
+{serviceName}.{groupName}.{domainSuffix}
+```
+
+### Examples
+
+| Domain | Corresponding Service |
+|--------|----------------------|
+| `order-service.DEFAULT_GROUP.nacos` | group=DEFAULT_GROUP, service=order-service |
+| `order-service.nacos` | group=default group, service=order-service |
+
+## Configuration
+
+| Configuration | Type | Default | Description |
+|---------------|------|---------|-------------|
+| `nacos.naming.dns.enabled` | boolean | `false` | Whether to enable DNS server |
+| `nacos.naming.dns.port` | int | `5353` | DNS server listening port |
+| `nacos.naming.dns.domain-suffix` | string | `nacos` | DNS domain suffix |
+| `nacos.naming.dns.default-group` | string | `DEFAULT_GROUP` | Default group name (used when group not specified in domain) |
+| `nacos.naming.dns.namespace` | string | `` | Namespace ID |
+| `nacos.naming.dns.ttl` | long | `60` | DNS record TTL (seconds) |
+
+## How It Works
+
+1. Client sends DNS query request to Nacos DNS server
+2. Server parses domain name, extracts service name and group name
+3. Queries healthy service instances from Nacos naming service
+4. Returns instance IP addresses as A records
+
+## Limitations
+
+Current version is MVP implementation, the following features are not yet supported:
+
+- External DNS forwarding
+- Kubernetes backend
+- SRV record queries
+- AAAA record (IPv6) queries

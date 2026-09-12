@@ -1,0 +1,83 @@
+---
+title: DNS 服务
+description: Nacos 命名服务内置 DNS 服务器，支持通过标准 DNS 协议解析服务实例地址
+---
+
+# DNS 服务
+
+从 Nacos 3.3.0 开始，命名服务模块内置了 DNS 服务器，允许通过标准 DNS 协议直接解析 Nacos 中注册的服务实例地址。
+
+## 功能特性
+
+- 标准 A 记录查询支持
+- UDP 和 TCP 两种传输协议
+- 自动过滤不健康、已下线的实例
+- 可配置端口、域名后缀、默认组名
+- 支持 TTL 配置
+
+## 快速开始
+
+### 启用 DNS 服务器
+
+在 `application.properties` 中添加配置：
+
+```properties
+# 启用 DNS 服务器（默认关闭）
+nacos.naming.dns.enabled=true
+# DNS 服务器监听端口（默认 5353，避免与系统 53 端口冲突）
+nacos.naming.dns.port=5353
+```
+
+### 查询服务
+
+服务注册后，可以通过标准 DNS 工具查询：
+
+```bash
+# 使用 dig 查询
+dig @localhost -p 5353 order-service.DEFAULT_GROUP.nacos A
+
+# 使用 nslookup 查询
+nslookup -port=5353 order-service.DEFAULT_GROUP.nacos localhost
+```
+
+## 域名格式
+
+DNS 查询的域名格式如下：
+
+```
+{serviceName}.{groupName}.{domainSuffix}
+```
+
+### 示例
+
+| 域名 | 对应服务 |
+|------|----------|
+| `order-service.DEFAULT_GROUP.nacos` | group=DEFAULT_GROUP, service=order-service |
+| `order-service.nacos` | group=默认组, service=order-service |
+
+## 配置项
+
+| 配置项 | 类型 | 默认值 | 说明 |
+|--------|------|--------|------|
+| `nacos.naming.dns.enabled` | boolean | `false` | 是否启用 DNS 服务器 |
+| `nacos.naming.dns.port` | int | `5353` | DNS 服务器监听端口 |
+| `nacos.naming.dns.domain-suffix` | string | `nacos` | DNS 域名后缀 |
+| `nacos.naming.dns.default-group` | string | `DEFAULT_GROUP` | 默认组名（域名中未指定组时使用） |
+| `nacos.naming.dns.namespace` | string | `` | 命名空间 ID |
+| `nacos.naming.dns.ttl` | long | `60` | DNS 记录 TTL（秒） |
+
+## 工作原理
+
+1. 客户端发送 DNS 查询请求到 Nacos DNS 服务器
+2. 服务器解析域名，提取服务名和组名
+3. 从 Nacos 命名服务查询健康的服务实例
+4. 将实例 IP 地址作为 A 记录返回
+
+## 限制
+
+当前版本为 MVP 实现，以下功能暂未支持：
+
+- 外部 DNS 转发
+- Kubernetes 后端
+- SRV 记录查询
+- AAAA 记录（IPv6）查询
