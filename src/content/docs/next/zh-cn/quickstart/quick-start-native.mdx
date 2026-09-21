@@ -14,12 +14,12 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。
 
 :::note
-- 快速开始旨在帮助您快速上手安装、部署及入门使用Nacos，本快速开始所生产出的Nacos服务为**单机模式**及**未开启鉴权**，建议仅在测试中使用，若在实际生产环境中部署，请部署**集群模式**并**开启鉴权**，以避免存在**稳定性和安全性**的风险。
+- 快速开始旨在帮助您快速上手安装、部署及入门使用Nacos，本快速开始所生产出的Nacos服务为**单机模式**，建议仅在测试中使用，若在实际生产环境中部署，请部署**集群模式**并**开启鉴权**，以避免存在**稳定性和安全性**的风险。
 - Nacos定义为一个IDC内部应用组件，并非面向公网环境的产品，建议在内部隔离网络环境中部署，**强烈不建议**部署在公共网络环境。
 :::
 
 ## 环境需求
-Nacos Native 是 Nacos 源码基于 GraalVM 打包而成，其运行不再依赖系统中单独的 JDK 程序。Nacos Native 目前提供了 Linux(GNU)、MacOS 三类操作系统所对应的可执行程序，当前 Nacos Native 对应的 Java Nacos 版本为 2.4.0，可执行程序可以在对应的 release 页面下进行下载。推荐使用完备（包含完备的 libstdc++ 库）的 64bit 的操作系统来运行 Nacos Native。
+Nacos Native 是 Nacos 源码基于 GraalVM 打包而成，其运行不再依赖系统中单独的 JDK 程序。Nacos Native 目前提供了 Linux(GNU)、MacOS 三类操作系统所对应的可执行程序，本文说明对应的 Java Nacos 版本为 2.4.0，可执行程序可以在对应的 release 页面下进行下载。推荐使用完备（包含完备的 libstdc++ 库）的 64bit 的操作系统来运行 Nacos Native。
 
 ## 下载安装包
 在对应页面下载得到程序包后进行解压，解压后检视文件是否完备：

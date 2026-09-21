@@ -26,6 +26,8 @@ The Client SDK is not a broad management interface. Do not use it to list all na
 
 An SDK instance usually binds to one namespace. If an application needs to access multiple namespaces, create multiple SDK instances and close them when they are no longer needed.
 
+Nacos 3.3 enables Client authentication by default. Missing or incorrect credentials or permissions can cause configuration reads, service registration/discovery, and AI requests to fail. With the default plugin, configure username and password before creating the SDK so it can obtain and refresh tokens. Use the required credential mode for other plugins. See [Access Credentials](../auth.mdx).
+
 Confirm these fields during initialization:
 
 | Information | Description |
@@ -33,7 +35,7 @@ Confirm these fields during initialization:
 | `serverAddr` or `endpoint` | Use `serverAddr` for a fixed Nacos cluster address. Use `endpoint` when the client obtains the server list from an address service. |
 | `namespace` | The namespace bound to the current SDK instance. |
 | `group`, `dataId`, `serviceName` | Business identifiers used when accessing runtime resources. |
-| `username`, `password`, `accessKey`, `secretKey`, and other credentials | When auth is enabled, the SDK carries identity material according to the server-side auth mode. |
+| `username`, `password`, `accessKey`, `secretKey`, and other credentials | Nacos 3.3 enables Client authentication by default. Configure credentials for the selected plugin; logging in to the console does not configure SDK credentials. |
 | `contextPath` | The context path of Nacos HTTP APIs. The default is `nacos`. |
 | gRPC port offset | Nacos 3.x clients still use the same main-port-plus-offset rule. By default, `9848` is derived from `8848`. |
 

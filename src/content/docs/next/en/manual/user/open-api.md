@@ -13,7 +13,7 @@ Nacos 3.X is no longer compatible with the OpenAPI of Nacos 1.X or the HTTP Open
 
 The HTTP OpenAPI in Nacos 3.X is **mainly intended for clients written in programming languages that do not support gRPC**. It provides configuration retrieval, service registration, and service discovery capabilities for `regular applications`, `microservice applications`, and other `non-control-plane` or `non-gateway` applications.
 
-These APIs only provide data operations at the single-service or single-configuration level, such as reading or updating an individual service or configuration item. They do not support range-based aggregate operations, such as querying all services or all configurations.
+Configuration and naming APIs provide runtime access to individual configurations and services, without full configuration or service listings. AI APIs also support runtime resource search, content retrieval, Agent/MCP publishing, and endpoint management.
 
 For `control-plane` or `gateway` applications that require range-based data operations, use the [Admin API](../admin/admin-api.md).
 :::
@@ -30,6 +30,7 @@ Client APIs are intended for application runtime access and custom clients. Call
 | --- | --- |
 | Querying a single known configuration. | Publishing, deleting, importing, or exporting configurations. |
 | Registering, deregistering, querying, and discovering known services or instances. | Querying full configuration lists, full service lists, subscriber lists, or other range-based data. |
+| Searching visible AI resources, retrieving content, discovering Agent/MCP endpoints, and watching Agent changes. | Managing AI resource reviews, permissions, and the complete version lifecycle. |
 | Using HTTP for a small amount of runtime access when no suitable SDK is available. | Building release platforms, operations platforms, gateway control planes, or audit tools. |
 
 Business applications should prefer [SDKs](./overview/other-language.md). For range-based management capabilities, use [Admin API](../admin/admin-api.md) or [Maintainer SDK](../admin/maintainer-sdk.md).
@@ -49,6 +50,14 @@ The examples below also use the default Nacos Web Server port. If the deployment
 ### 0.3. Swagger Documentation
 
 Nacos 3.X client OpenAPI also provides Swagger-style documentation. You can view it at [Nacos Swagger HTTP Client API](/swagger/client/).
+
+### 0.4. Authentication And Example Setup
+
+Nacos 3.3 enables Client authentication by default. Configuration reads, service registration/discovery, and other protected requests fail without valid credentials and resource permissions.
+
+With the default auth plugin, follow [Access Credentials](./auth.mdx) to log in and save the returned `accessToken` in the `NACOS_ACCESS_TOKEN` environment variable. Run the examples below in the same terminal. They use Bash (Git Bash or WSL on Windows) and send the token in the `accessToken` header. This header requirement applies to every protected API and is not repeated in each parameter table.
+
+If authentication fails, check account credentials, token expiration, and resource permissions. Log in again and update the variable after expiration. Logging in to the console does not configure credentials for curl in a separate terminal.
 
 ## 1. Configuration Management
 
@@ -97,12 +106,13 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 
 | Name                | Type      | Description                       |
 |--------------------|-----------|--------------------------|
-| `content`          | `string` | Configuration content. |
-| `encryptedDataKey` | `string` | Encryption/decryption key of the configuration. This value exists only when a configuration encryption plugin is used. |
-| `contentType`      | `string` | Configuration type, such as `TEXT` or `JSON`. |
-| `md5`              | `string` | MD5 value of the configuration. |
-| `lastModified`     | `integer` | Last modification time of the configuration. |
-| `beta`             | `boolean` | Whether the configuration has a beta configuration. |
+| `data` | `ConfigQueryResponse` | Configuration query result. |
+| `data.content`          | `string` | Configuration content. |
+| `data.encryptedDataKey` | `string` | Encryption/decryption key of the configuration. This value exists only when a configuration encryption plugin is used. |
+| `data.contentType`      | `string` | Configuration type, such as `TEXT` or `JSON`. |
+| `data.md5`              | `string` | MD5 value of the configuration. |
+| `data.lastModified`     | `integer` | Last modification time of the configuration. |
+| `data.beta`             | `boolean` | Whether the configuration has a beta configuration. |
 
 Other fields are reserved and currently unused. You can ignore them.
 
@@ -111,7 +121,7 @@ Other fields are reserved and currently unused. You can ignore them.
 * Request example
 
 ```shell
-curl -X GET '127.0.0.1:8848/nacos/v3/client/cs/config?dataId=test&groupName=test' 
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET '127.0.0.1:8848/nacos/v3/client/cs/config?dataId=test&groupName=test'
 ```
 
 * Response example
@@ -210,10 +220,10 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 
 ```shell
 # Register instance
-curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&ip=127.0.0.1&port=3306&ephemeral=true"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&ip=127.0.0.1&port=3306&ephemeral=true"
 
 # Renew instance
-curl -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&ip=127.0.0.1&port=3306&heartBeat=true&ephemeral=true"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST "127.0.0.1:8848/nacos/v3/client/ns/instance" -d "serviceName=test1&ip=127.0.0.1&port=3306&heartBeat=true&ephemeral=true"
 ```
 
 * Response example
@@ -276,7 +286,7 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 * Request example
 
 ```shell
-curl -X DELETE "127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=test1&ip=127.0.0.1&port=3306&ephemeral=true"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE "127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=test1&ip=127.0.0.1&port=3306&ephemeral=true"
 ```
 
 * Response example
@@ -352,7 +362,7 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 * Request example
 
 ```shell
-curl -X GET '127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=test1'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET '127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=test1'
 ```
 
 * Response example
@@ -383,6 +393,8 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=test1'
 
 ## 3. AI
 
+This chapter covers AI APIs for application runtime access. See the [Unified Lifecycle](./ai/ai-resource-lifecycle.md) for version publishing and visibility, and the [RAD Integration Guide](./ai/rad-discovery.md) for Agent integration. Search returns currently visible, enabled resources; newly published resources may be temporarily absent while the index catches up.
+
 ### 3.1. Query Prompt
 
 #### Description
@@ -407,8 +419,8 @@ Query Prompt by version, label, or latest (priority: version > label > latest); 
 |---------------|----------|-------|--------------------------|
 | `namespaceId` | `string` | No     | Namespace ID. Defaults to `public`. |
 | `promptKey`   | `string` | **Yes** | Prompt key                  |
-| `version`     | `string` | No     | Version (one of version, label, latest)     |
-| `label`       | `string` | No     | Label (one of version, label, latest)    |
+| `version`     | `string` | No     | Exact version, taking precedence over `label`; defaults to `latest` when both are omitted. |
+| `label`       | `string` | No     | Version label, used when `version` is omitted. |
 | `md5`         | `string` | No     | If matches server, response is 304            |
 
 #### Response Data
@@ -417,18 +429,19 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 
 | Name                | Type      | Description           |
 |--------------------|-----------|--------------|
-| `promptKey`        | `string` | Prompt key    |
-| `version`          | `string` | Version       |
-| `template`         | `string` | Prompt template content   |
-| `md5`              | `string` | Content md5 for 304       |
-| `variables`        | `array` | Prompt variable list      |
+| `data` | `Prompt` | Prompt content and version. |
+| `data.promptKey`        | `string` | Prompt key    |
+| `data.version`          | `string` | Version       |
+| `data.template`         | `string` | Prompt template content   |
+| `data.md5`              | `string` | Content md5 for 304       |
+| `data.variables`        | `array<PromptVariable>` | Variables with `name`, `defaultValue`, and `description`. |
 
 #### Examples
 
 * Request example
 
 ```shell
-curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/prompt?promptKey=myPrompt'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET '127.0.0.1:8848/nacos/v3/client/ai/prompt?promptKey=myPrompt'
 ```
 
 * Response example
@@ -480,19 +493,20 @@ Return body follows [Nacos open API common response format](overview/api-overvie
 
 | Name          | Type      | Description                      |
 |--------------|-----------|---------------------------|
-| `namespaceId` | `string` | Namespace of the AgentSpec |
-| `name`        | `string` | AgentSpec name             |
-| `description` | `string` | AgentSpec description      |
-| `bizTags`     | `string` | AgentSpec business tags    |
-| `content`     | `string` | AgentSpec content          |
-| `resource`    | `object` | AgentSpec resource info    |
+| `data` | `AgentSpec` | AgentSpec details. |
+| `data.namespaceId` | `string` | Namespace of the AgentSpec |
+| `data.name`        | `string` | AgentSpec name             |
+| `data.description` | `string` | AgentSpec description      |
+| `data.bizTags`     | `string` | AgentSpec business tags    |
+| `data.content`     | `string` | AgentSpec content          |
+| `data.resource`    | `map<string, AgentSpecResource>` | Associated resources with name, type, content, and metadata. |
 
 #### Examples
 
 * Request example
 
 ```shell
-curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs?name=my-agent'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs?name=my-agent'
 ```
 
 * Response example
@@ -529,8 +543,10 @@ This interface allows paginated searching of AgentSpecs by namespace and keyword
 |---------------|----------|-------|-----------------------------------|
 | `namespaceId` | `string` | No     | Namespace ID, default is `public` |
 | `keyword`     | `string` | No     | Search keyword                    |
-| `pageNo`      | `integer` | **Yes** | Page number, typically starts from `1` |
-| `pageSize`    | `integer` | **Yes** | Number of records per page        |
+| `query` | `string` | No | Inherited compatibility field, validated only for length (up to 1024 characters); use `keyword` to filter names. |
+| `tagsAll` | `array<string>` | No | Repeatable tags that must all match; up to 32 non-empty values. |
+| `pageNo`      | `integer` | No | Positive page number; defaults to `1`. |
+| `pageSize`    | `integer` | No | Positive page size; defaults to `100`. |
 
 #### Response Data
 
@@ -538,14 +554,18 @@ Return body follows [Nacos open API common response format](overview/api-overvie
 
 | Name    | Type     | Description                                              |
 |--------|----------|---------------------------------------------------|
-| `data` | `string` | AgentSpec search result (paginated object, actual fields depend on runtime response) |
+| `data` | `Page<AgentSpecBasicInfo>` | AgentSpec search results. |
+| `data.totalCount` | `integer` | Total matching resources. |
+| `data.pageNumber` | `integer` | Current page number. |
+| `data.pagesAvailable` | `integer` | Total pages. |
+| `data.pageItems` | `array<AgentSpecBasicInfo>` | Resource summaries with `namespaceId`, `name`, `description`, `bizTags`, and `updateTime`. |
 
 #### Examples
 
 * Request example
 
 ```shell
-curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs/search?keyword=agent&pageNo=1&pageSize=10'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET '127.0.0.1:8848/nacos/v3/client/ai/agentspecs/search?keyword=agent&pageNo=1&pageSize=10'
 ```
 
 * Response example
@@ -591,20 +611,14 @@ This interface allows downloading a Skill ZIP file by namespace, name, version, 
 * Request example
 
 ```shell
-curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/skills?name=my-skill'
+curl -f -H "accessToken: ${NACOS_ACCESS_TOKEN}" '127.0.0.1:8848/nacos/v3/client/ai/skills?name=my-skill' -o my-skill.zip
 ```
 
-* Response example
+* Response description
 
-```json
-{
-  "code": 0,
-  "message": "success",
-  "data": {}
-}
-```
+A successful response is a Skill ZIP file, saved as `my-skill.zip` by this command. It is not wrapped in a JSON `Result`.
 
-> **Agent Management API note:** The Agent APIs in sections 3.5–3.10 are the recommended integration path going forward and are planned to gradually replace the existing A2A management APIs. New users and SDKs should prioritize compatibility with these Agent Management APIs instead of adding new dependencies on the legacy A2A APIs. Existing A2A integrations can migrate in line with future release and migration guidance. This describes the evolution of the management APIs and does not mean that the A2A protocol itself is deprecated.
+> **Agent Management API note:** The Agent APIs in sections 3.5–3.11 are the recommended integration path going forward and are planned to gradually replace the existing A2A management APIs. New users and SDKs should prioritize compatibility with these Agent Management APIs instead of adding new dependencies on the legacy A2A APIs. Existing A2A integrations can migrate in line with future release and migration guidance. This describes the evolution of the management APIs and does not mean that the A2A protocol itself is deprecated.
 
 ### 3.5. Discover Agent
 
@@ -657,7 +671,9 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 | `data.agentName` | `string` | Agent name. |
 | `data.version` | `string` | Agent version selected by this discovery request. |
 | `data.contentDigest` | `string` | Digest of the Agent definition content. |
-| `data.callInterfaces` | `array<AgentDiscoveryCallInterface>` | Agent call interfaces and their matching endpoint sets. |
+| `data.description` | `string` | Current public description of the Agent. |
+| `data.tags` | `array<string>` | Current public tags of the Agent. |
+| `data.callInterfaces` | `array<AgentCallInterface>` | Agent call interfaces and their matching endpoint sets. |
 | `data.callInterfaces[i].protocol` | `string` | Call interface protocol. |
 | `data.callInterfaces[i].protocolVersion` | `string` | Call interface protocol version. |
 | `data.callInterfaces[i].descriptorMediaType` | `string` | Media type of the protocol-native descriptor. |
@@ -665,13 +681,14 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 | `data.callInterfaces[i].endpointSets` | `array<EndpointSet>` | Endpoint sets grouped by source. |
 | `data.callInterfaces[i].endpointSets[i].source` | `string` | Endpoint source: `RUNTIME` or `DECLARED`. |
 | `data.callInterfaces[i].endpointSets[i].sourceRevision` | `string` | Revision identifier of the endpoint source. |
-| `data.callInterfaces[i].endpointSets[i].endpoints` | `array<AgentDiscoveryEndpoint>` | Endpoints matched from this source. |
+| `data.callInterfaces[i].endpointSets[i].endpoints` | `array<Endpoint>` | Endpoints matched from this source. |
 | `data.callInterfaces[i].endpointSets[i].endpoints[i].uri` | `string` | Endpoint URI. |
 | `data.callInterfaces[i].endpointSets[i].endpoints[i].transport` | `string` | Endpoint transport. |
 | `data.callInterfaces[i].endpointSets[i].endpoints[i].priority` | `integer` | Endpoint priority. |
 | `data.callInterfaces[i].endpointSets[i].endpoints[i].weight` | `number` | Endpoint weight. |
 | `data.callInterfaces[i].endpointSets[i].endpoints[i].metadata` | `map<string, string>` | Endpoint metadata. |
 | `data.callInterfaces[i].endpointSets[i].endpoints[i].healthy` | `boolean` | Whether the endpoint is healthy. |
+| `data.callInterfaces[i].endpointSets[i].endpoints[i].enabled` | `boolean` | Whether the endpoint is enabled. |
 | `data.callInterfaces[i].endpointSets[i].endpoints[i].bindings` | `array<RuntimeVersionBinding>` | Runtime version bindings of the endpoint. |
 | `data.callInterfaces[i].endpointSets[i].endpoints[i].bindings[i].runtimeVersion` | `string` | Publisher runtime version. |
 | `data.callInterfaces[i].endpointSets[i].endpoints[i].bindings[i].versionRange` | `string` | Agent version range supported by the runtime. |
@@ -681,7 +698,7 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 * Request example
 
 ```shell
-curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agents?namespaceId=public&agentName=my-agent&version=1.0.0&protocol=a2a' \
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET '127.0.0.1:8848/nacos/v3/client/ai/agents?namespaceId=public&agentName=my-agent&version=1.0.0&protocol=a2a' \
   -H 'X-Nacos-Client-Id: 550e8400-e29b-41d4-a716-446655440000'
 ```
 
@@ -777,14 +794,16 @@ Request parameters are encoded as an `application/x-www-form-urlencoded` form.
 | `displayName` | `string` | No | Agent display name. |
 | `description` | `string` | No | Agent description. |
 | `iconUrl` | `string` | No | Agent icon URL. |
-| `provider` | `string` | No | Agent provider as a JSON object string. |
+| `provider` | `string` | No | `AgentProvider` JSON object string with `name` and `url`. |
 | `tags` | `string` | No | Agent tags as a JSON array string. |
 | `extensions` | `string` | No | Agent extensions as a JSON object string. |
-| `callInterfaces` | `string` | No | Direct call-interface content as a JSON array string; use either this field or `basedOnVersion`. This field is required when creating an Agent. |
+| `callInterfaces` | `string` | No | JSON string containing `array<AgentCallInterface>`; use either this field or `basedOnVersion`. Required when creating an Agent. |
 | `author` | `string` | No | Author of the Agent version. |
 | `changeDescription` | `string` | No | Description of the changes in this version. |
 | `basedOnVersion` | `string` | No | Exact Agent version whose content is copied; use either this field or `callInterfaces`. It cannot be used when creating an Agent. |
-| `autoSubmit` | `boolean` | No | Whether to run the ordinary submit flow after creating the draft. Defaults to `false`; this is not force-publish. |
+| `autoSubmit` | `boolean` | No | Whether to run the ordinary submit flow; defaults to `false`. Creating the first version forces submission. |
+
+This API creates or fully replaces an editable Agent draft. Creating the first version submits it automatically; subsequent versions and existing drafts use `autoSubmit`. Submission may require review, so a successful response does not imply that the version is online. Existing non-draft versions are neither overwritten nor brought online again. See [Agent Management](./ai/agent-registry.md).
 
 #### Response Data
 
@@ -792,7 +811,7 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 
 | Name | Type | Description |
 |------|------|-------------|
-| `data` | `AgentVersionDetail` | Details of the published Agent version. |
+| `data` | `AgentVersionDetail` | Agent version details after the operation. |
 | `data.namespaceId` | `string` | Namespace of the Agent. |
 | `data.agentName` | `string` | Agent name. |
 | `data.version` | `string` | Agent version. |
@@ -803,13 +822,14 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 | `data.callInterfaces[i].descriptorMediaType` | `string` | Media type of the protocol-native descriptor. |
 | `data.callInterfaces[i].nativeDescriptor` | `object` | Protocol-native descriptor content. |
 | `data.callInterfaces[i].endpointSourceOrder` | `array<string>` | Order in which endpoint sources are queried. |
-| `data.callInterfaces[i].declaredEndpoints` | `array<Endpoint>` | Endpoints declared in the Agent definition. |
-| `data.callInterfaces[i].declaredEndpoints[i].uri` | `string` | Endpoint URI. |
-| `data.callInterfaces[i].declaredEndpoints[i].transport` | `string` | Endpoint transport. |
-| `data.callInterfaces[i].declaredEndpoints[i].priority` | `integer` | Endpoint priority. |
-| `data.callInterfaces[i].declaredEndpoints[i].weight` | `number` | Endpoint weight. |
-| `data.callInterfaces[i].declaredEndpoints[i].metadata` | `map<string, string>` | Endpoint metadata. |
-| `data.callInterfaces[i].declaredEndpoints[i].healthy` | `boolean` | Whether the endpoint is healthy. |
+| `data.callInterfaces[i].endpointSets` | `array<EndpointSet>` | Declared endpoint sets in the definition. |
+| `data.callInterfaces[i].endpointSets[i].source` | `string` | `DECLARED` in a definition. |
+| `data.callInterfaces[i].endpointSets[i].endpoints` | `array<Endpoint>` | Declared endpoints. |
+| `data.callInterfaces[i].endpointSets[i].endpoints[i].uri` | `string` | Endpoint URI. |
+| `data.callInterfaces[i].endpointSets[i].endpoints[i].transport` | `string` | Endpoint transport. |
+| `data.callInterfaces[i].endpointSets[i].endpoints[i].priority` | `integer` | Endpoint priority. |
+| `data.callInterfaces[i].endpointSets[i].endpoints[i].weight` | `number` | Endpoint weight. |
+| `data.callInterfaces[i].endpointSets[i].endpoints[i].metadata` | `map<string, string>` | Endpoint metadata. |
 | `data.author` | `string` | Author of the Agent version. |
 | `data.changeDescription` | `string` | Description of the Agent version changes. |
 | `data.contentDigest` | `string` | Digest of the Agent definition content. |
@@ -821,12 +841,12 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 * Request example
 
 ```shell
-curl -X POST '127.0.0.1:8848/nacos/v3/client/ai/agents' \
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST '127.0.0.1:8848/nacos/v3/client/ai/agents' \
   -H 'Content-Type: application/x-www-form-urlencoded' \
   -d 'namespaceId=public' \
   -d 'agentName=my-agent' \
   -d 'version=1.0.0' \
-  --data-urlencode 'callInterfaces=[{"protocol":"a2a","protocolVersion":"1.0","descriptorMediaType":"application/json","nativeDescriptor":{"name":"my-agent","version":"1.0.0","description":"Example Agent","protocolVersion":"1.0","supportedInterfaces":[{"url":"https://example.com/my-agent/jsonrpc","protocolBinding":"JSONRPC","protocolVersion":"1.0","transport":"JSONRPC"}],"capabilities":{"streaming":true,"extendedAgentCard":true}},"endpointSourceOrder":["DECLARED","RUNTIME"],"declaredEndpoints":[{"uri":"https://example.com/my-agent/jsonrpc","transport":"JSONRPC"}]}]' \
+  --data-urlencode 'callInterfaces=[{"protocol":"a2a","protocolVersion":"1.0","descriptorMediaType":"application/json","nativeDescriptor":{"name":"my-agent","version":"1.0.0","description":"Example Agent","protocolVersion":"1.0","supportedInterfaces":[{"url":"https://example.com/my-agent/jsonrpc","protocolBinding":"JSONRPC","protocolVersion":"1.0","transport":"JSONRPC"}],"capabilities":{"streaming":true,"extendedAgentCard":true}},"endpointSourceOrder":["DECLARED","RUNTIME"],"endpointSets":[{"source":"DECLARED","endpoints":[{"uri":"https://example.com/my-agent/jsonrpc","transport":"JSONRPC"}]}]}]' \
   -d 'author=demo' \
   -d 'changeDescription=initial version' \
   -d 'autoSubmit=true'
@@ -842,7 +862,7 @@ curl -X POST '127.0.0.1:8848/nacos/v3/client/ai/agents' \
     "namespaceId": "public",
     "agentName": "my-agent",
     "version": "1.0.0",
-    "status": "draft",
+    "status": "online",
     "callInterfaces": [
       {
         "protocol": "a2a",
@@ -867,10 +887,15 @@ curl -X POST '127.0.0.1:8848/nacos/v3/client/ai/agents' \
           }
         },
         "endpointSourceOrder": ["DECLARED", "RUNTIME"],
-        "declaredEndpoints": [
+        "endpointSets": [
           {
-            "uri": "https://example.com/my-agent/jsonrpc",
-            "transport": "JSONRPC"
+            "source": "DECLARED",
+            "endpoints": [
+              {
+                "uri": "https://example.com/my-agent/jsonrpc",
+                "transport": "JSONRPC"
+              }
+            ]
           }
         ]
       }
@@ -938,7 +963,7 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 * Request example
 
 ```shell
-curl -X POST '127.0.0.1:8848/nacos/v3/client/ai/agents/endpoints' \
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST '127.0.0.1:8848/nacos/v3/client/ai/agents/endpoints' \
   -H 'X-Nacos-Client-Id: 550e8400-e29b-41d4-a716-446655440000' \
   -H 'Request-Module: AI' \
   -H 'Content-Type: application/x-www-form-urlencoded' \
@@ -1012,7 +1037,7 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 * Request example
 
 ```shell
-curl -X DELETE '127.0.0.1:8848/nacos/v3/client/ai/agents/endpoints?namespaceId=public&agentName=my-agent&protocol=a2a' \
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE '127.0.0.1:8848/nacos/v3/client/ai/agents/endpoints?namespaceId=public&agentName=my-agent&protocol=a2a' \
   -H 'X-Nacos-Client-Id: 550e8400-e29b-41d4-a716-446655440000' \
   -H 'Request-Module: AI'
 ```
@@ -1068,7 +1093,7 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 * Request example
 
 ```shell
-curl -X PUT '127.0.0.1:8848/nacos/v3/client/ai/agents/endpoints/heartbeat' \
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT '127.0.0.1:8848/nacos/v3/client/ai/agents/endpoints/heartbeat' \
   -H 'X-Nacos-Client-Id: 550e8400-e29b-41d4-a716-446655440000' \
   -H 'Request-Module: AI'
 ```
@@ -1119,8 +1144,8 @@ Searches visible Agent catalog entries by name, tags, protocols, and pagination.
 | `agentNameContains` | `string` | No | Literal, case-sensitive text that the Agent name must contain. |
 | `tagsAll` | `array<string>` | No | Repeatable parameter; a catalog entry must contain every supplied tag. |
 | `protocolsAny` | `array<string>` | No | Repeatable parameter; a catalog entry may match any supplied protocol. |
-| `pageNo` | `integer` | No | Requested page number. |
-| `pageSize` | `integer` | No | Number of catalog entries returned per page. |
+| `pageNo` | `integer` | No | Page number starting at `1`; defaults to `1`. |
+| `pageSize` | `integer` | No | Page size from `1` to `100`; defaults to `20`. |
 
 #### Response Data
 
@@ -1128,11 +1153,11 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 
 | Name | Type | Description |
 |------|------|-------------|
-| `data` | `Page<AgentCatalogEntry>` | Paginated Agent catalog result. |
+| `data` | `Page<AgentSummary>` | Paginated Agent catalog result. |
 | `data.totalCount` | `integer` | Total number of matching catalog entries. |
 | `data.pageNumber` | `integer` | Current page number. |
 | `data.pagesAvailable` | `integer` | Total number of available pages. |
-| `data.pageItems` | `array<AgentCatalogEntry>` | Agent catalog entries on the current page. |
+| `data.pageItems` | `array<AgentSummary>` | Public metadata and online version information for the current page. |
 | `data.pageItems[i].agentName` | `string` | Agent name. |
 | `data.pageItems[i].displayName` | `string` | Agent display name. |
 | `data.pageItems[i].description` | `string` | Agent description. |
@@ -1141,18 +1166,19 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 | `data.pageItems[i].provider.name` | `string` | Provider name. |
 | `data.pageItems[i].provider.url` | `string` | Provider URL. |
 | `data.pageItems[i].tags` | `array<string>` | Agent tags. |
-| `data.pageItems[i].latestVersion` | `string` | Latest Agent version. |
-| `data.pageItems[i].versions` | `array<AgentCatalogVersion>` | Available Agent versions with their labels and protocols. |
-| `data.pageItems[i].versions[i].version` | `string` | Agent version. |
-| `data.pageItems[i].versions[i].labels` | `array<string>` | Version labels. |
-| `data.pageItems[i].versions[i].protocols` | `array<string>` | Protocols supported by the version. |
+| `data.pageItems[i].versionInfo` | `AgentVersionInfo` | Online versions and label mappings. |
+| `data.pageItems[i].versionInfo.labels` | `map<string, string>` | Labels mapped to online versions, including `latest`. |
+| `data.pageItems[i].versionInfo.onlineVersions` | `array<AgentVersionSummary>` | Online version summaries. |
+| `data.pageItems[i].versionInfo.onlineVersions[i].version` | `string` | Agent version. |
+| `data.pageItems[i].versionInfo.onlineVersions[i].labels` | `array<string>` | Custom version labels, excluding `latest`. |
+| `data.pageItems[i].versionInfo.onlineVersions[i].protocols` | `array<string>` | Protocols supported by the version. |
 
 #### Examples
 
 * Request example
 
 ```shell
-curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agents/search?namespaceId=public&agentNameContains=agent&tagsAll=assistant&protocolsAny=a2a&pageNo=1&pageSize=10' \
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET '127.0.0.1:8848/nacos/v3/client/ai/agents/search?namespaceId=public&agentNameContains=agent&tagsAll=assistant&protocolsAny=a2a&pageNo=1&pageSize=10' \
   -H 'X-Nacos-Client-Id: 550e8400-e29b-41d4-a716-446655440000'
 ```
 
@@ -1177,16 +1203,625 @@ curl -X GET '127.0.0.1:8848/nacos/v3/client/ai/agents/search?namespaceId=public&
           "url": "https://example.com"
         },
         "tags": ["assistant"],
-        "latestVersion": "1.0.0",
-        "versions": [
-          {
-            "version": "1.0.0",
-            "labels": ["latest"],
-            "protocols": ["a2a"]
-          }
-        ]
+        "versionInfo": {
+          "labels": {"latest": "1.0.0"},
+          "onlineVersions": [
+            {
+              "version": "1.0.0",
+              "labels": [],
+              "protocols": ["a2a"]
+            }
+          ]
+        }
       }
     ]
   }
 }
+```
+
+### 3.11. Watch Agent Discovery Changes
+
+#### Description
+
+Perform one batch long poll for the complete current watch set. The response only identifies changed watches; call Discover again to retrieve their complete results, then start the next poll. Prefer the [RAD SDK](./ai/rad-discovery.md) for continuous subscriptions.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`, with an `application/x-www-form-urlencoded` body.
+
+#### Request URL
+
+`/nacos/v3/client/ai/agents/watch`
+
+#### Request Headers
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `X-Nacos-Client-Id` | `string` | **Yes** | Stable client identifier, 1–256 characters matching `[A-Za-z0-9._:-]+`. |
+| `Request-Module` | `string` | **Yes** | Must be `AI`. |
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `generation` | `integer` | **Yes** | Non-negative, monotonically increasing watch-set generation maintained by the client to identify stale responses. |
+| `timeoutMillis` | `integer` | **Yes** | Long-poll timeout, 1000–60000 milliseconds. |
+| `watches` | `string` | **Yes** | JSON string containing `array<AgentWatchBatchItem>`, with 1–1000 items in the same effective namespace. |
+
+Each watch item contains these fields:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `clientWatchId` | `string` | Unique within the batch, 1–128 characters matching `[A-Za-z0-9._:-]+`. |
+| `discoveryRequest` | `AgentDiscoveryRequest` | Complete discovery request with `namespaceId`, `reference` (`agentName` and optional version/label), and optional `filter`; filters use model fields such as `protocols`, `transports`, and `endpointSources`. |
+| `materializedFingerprint` | `string` | Required canonical fingerprint of the last stored complete discovery snapshot: `sha256-canonical-json-v1:` followed by 64 lowercase hexadecimal characters. |
+
+Java clients can calculate the fingerprint with `AgentDiscoveryCanonicalizer.fingerprint(snapshot)`. It is neither the definition's `contentDigest` nor a SHA-256 hash of the raw HTTP JSON. Replace the previous poll when the watch set changes, and ignore responses for stale generations or cancelled items.
+
+#### Response Data
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `AgentWatchBatchResponse` | Result of this long poll. |
+| `data.generation` | `integer` | Same generation as the request. |
+| `data.changed` | `boolean` | Whether changes occurred; `false` on a normal timeout. |
+| `data.changedClientWatchIds` | `array<string>` | Watch IDs requiring another Discover, without discovery content or new fingerprints. |
+
+#### Examples
+
+Save the current snapshot fingerprint for this discovery request in `NACOS_AGENT_FINGERPRINT` before running:
+
+```bash
+curl -sS -X POST 'http://127.0.0.1:8848/nacos/v3/client/ai/agents/watch' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}" \
+  -H 'X-Nacos-Client-Id: agent-consumer-1' \
+  -H 'Request-Module: AI' \
+  -d 'generation=1' -d 'timeoutMillis=30000' \
+  --data-urlencode "watches=[{\"clientWatchId\":\"watch-1\",\"discoveryRequest\":{\"namespaceId\":\"public\",\"reference\":{\"agentName\":\"my-agent\",\"version\":\"1.0.0\"}},\"materializedFingerprint\":\"${NACOS_AGENT_FINGERPRINT}\"}]"
+```
+
+Normal timeout example:
+
+```json
+{"code":0,"message":"success","data":{"generation":1,"changed":false,"changedClientWatchIds":[]}}
+```
+
+### 3.12. Query an MCP Server Version
+
+#### Description
+
+Retrieve an online MCP server version and its endpoints. Omitting the version selects `latest`. The optional client identifier renews only an existing HTTP Client and cannot replace endpoint heartbeats.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`GET`
+
+#### Request URL
+
+`/nacos/v3/client/ai/mcp`
+
+#### Request Headers
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `X-Nacos-Client-Id` | `string` | No | Stable identifier of an existing HTTP Client, 1–256 characters matching `[A-Za-z0-9._:-]+`. |
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `namespaceId` | `string` | No | Namespace; defaults to `public`. |
+| `mcpName` | `string` | **Yes** | MCP server name. |
+| `version` | `string` | No | Exact version; selects `latest` when omitted. |
+
+#### Response Data
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `McpServerDetailInfo` | MCP server version details. |
+| `data.namespaceId` | `string` | Namespace. |
+| `data.id` | `string` | Server ID. |
+| `data.name` | `string` | Server name. |
+| `data.description` | `string` | Server description. |
+| `data.protocol` | `string` | Backend protocol. |
+| `data.frontProtocol` | `string` | Exposed protocol. |
+| `data.versionDetail` | `ServerVersionDetail` | Version information with `version`, `release_date`, and `is_latest`. |
+| `data.version` | `string` | Version number. |
+| `data.remoteServerConfig` | `McpServerRemoteServiceConfig` | Remote service reference, export path, and frontend endpoint configuration. |
+| `data.localServerConfig` | `map<string, object>` | Local process configuration. |
+| `data.enabled` | `boolean` | Whether the server is enabled. |
+| `data.status` | `string` | Version status. |
+| `data.capabilities` | `array<string>` | Server capabilities. |
+| `data.backendEndpoints` | `array<McpEndpointInfo>` | Backend endpoints with `protocol`, `address`, `port`, `path`, and `headers`. |
+| `data.frontendEndpoints` | `array<McpEndpointInfo>` | Exposed endpoints with the same fields as backend endpoints. |
+| `data.toolSpec` | `McpToolSpecification` | Tool definitions. |
+| `data.resourceSpec` | `McpResourceSpecification` | Resource definitions. |
+| `data.allVersions` | `array<ServerVersionDetail>` | Version list. |
+| `data.repository` | `Repository` | Source repository information. |
+| `data.packages` | `array<Package>` | Distribution packages. |
+| `data.icons` | `array<Icon>` | Icons. |
+| `data.websiteUrl` | `string` | Project website. |
+
+#### Examples
+
+```bash
+curl -sS -G 'http://127.0.0.1:8848/nacos/v3/client/ai/mcp' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}" \
+  --data-urlencode 'namespaceId=public' \
+  --data-urlencode 'mcpName=my-mcp' \
+  --data-urlencode 'version=1.0.0'
+```
+
+### 3.13. Publish an MCP Version
+
+#### Description
+
+Publish an MCP version from an application. By default, the version goes directly online. With `createDraft=true`, only a draft is created; the resource must already use lifecycle management. Then follow the [lifecycle workflow](./ai/mcp-registry.md) to submit and publish it.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`, with an `application/x-www-form-urlencoded` body.
+
+#### Request URL
+
+`/nacos/v3/client/ai/mcp`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `namespaceId` | `string` | No | Namespace; defaults to `public`. |
+| `mcpName` | `string` | No | Must equal `serverSpecification.name` when supplied. |
+| `serverSpecification` | `string` | **Yes** | `McpServerBasicInfo` JSON object string with server name, protocol, version, and configuration. |
+| `toolSpecification` | `string` | No | `McpToolSpecification` JSON object string. |
+| `resourceSpecification` | `string` | No | `McpResourceSpecification` JSON object string. |
+| `endpointSpecification` | `string` | No | `McpEndpointSpec` JSON object string: `data` contains `address/port` for `type=DIRECT`, or `namespaceId/groupName/serviceName` for `type=REF`. Supply it according to the remote server's endpoint binding. |
+| `createDraft` | `string` | No | `true` or `false`; defaults to `false`. |
+
+#### Response Data
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `string` | MCP server ID. |
+
+#### Examples
+
+This publishes a stdio server definition; it does not start the process on Nacos Server.
+
+```bash
+curl -sS -X POST 'http://127.0.0.1:8848/nacos/v3/client/ai/mcp' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}" \
+  -d 'namespaceId=public' \
+  --data-urlencode 'serverSpecification={"name":"my-mcp","protocol":"stdio","frontProtocol":"stdio","versionDetail":{"version":"1.0.0"},"localServerConfig":{"command":"python","args":["server.py"]}}' \
+  -d 'createDraft=false'
+```
+
+### 3.14. Register an MCP Endpoint
+
+#### Description
+
+Register a runtime endpoint for a published remote MCP server configured with a service reference (`REF`). Prepare the remote definition and version using [MCP Management](./ai/mcp-registry.md); this example uses version `1.0.0` of `my-remote-mcp`. After registration, send heartbeats at the returned interval.
+
+Within one identity and namespace, a logical client's Agent/MCP publications share a stable Client ID and one heartbeat task.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`, with an `application/x-www-form-urlencoded` body.
+
+#### Request URL
+
+`/nacos/v3/client/ai/mcp/endpoints`
+
+#### Request Headers
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `X-Nacos-Client-Id` | `string` | **Yes** | Stable client identifier, 1–256 characters matching `[A-Za-z0-9._:-]+`. |
+| `Request-Module` | `string` | **Yes** | Must be `AI`. |
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `namespaceId` | `string` | No | Namespace; defaults to `public`. |
+| `mcpName` | `string` | **Yes** | MCP server name. |
+| `address` | `string` | **Yes** | Valid IPv4 or IPv6 address. |
+| `port` | `integer` | **Yes** | Runtime endpoint port, from `1` to `65535`. |
+| `version` | `string` | No | Server version for the endpoint; specify it explicitly and use the same value when deregistering. |
+
+#### Response Data
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `ClientLivenessInfo` | Client liveness settings. |
+| `data.heartbeatIntervalMillis` | `integer` | Heartbeat interval in milliseconds. |
+| `data.unhealthyTimeoutMillis` | `integer` | Timeout before being marked unhealthy, in milliseconds. |
+| `data.expireTimeoutMillis` | `integer` | Expiration timeout in milliseconds. |
+
+#### Examples
+
+```bash
+curl -sS -X POST 'http://127.0.0.1:8848/nacos/v3/client/ai/mcp/endpoints' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}" \
+  -H 'X-Nacos-Client-Id: mcp-publisher-1' \
+  -H 'Request-Module: AI' \
+  -d 'namespaceId=public' -d 'mcpName=my-remote-mcp' \
+  -d 'address=127.0.0.1' -d 'port=9999' -d 'version=1.0.0'
+```
+
+Example response (use the interval from the actual response for subsequent heartbeats):
+
+```json
+{"code":0,"message":"success","data":{"heartbeatIntervalMillis":5000,"unhealthyTimeoutMillis":15000,"expireTimeoutMillis":30000}}
+```
+
+### 3.15. Deregister an MCP Endpoint
+
+#### Description
+
+Deregister an MCP runtime endpoint owned by this HTTP Client. Use the same Client ID, server, version, address, and port as registration. This does not delete the server definition.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`DELETE`, with an `application/x-www-form-urlencoded` body.
+
+#### Request URL
+
+`/nacos/v3/client/ai/mcp/endpoints`
+
+#### Request Headers
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `X-Nacos-Client-Id` | `string` | **Yes** | Same stable client identifier as registration. |
+| `Request-Module` | `string` | **Yes** | Must be `AI`. |
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `namespaceId` | `string` | No | Namespace; defaults to `public`. |
+| `mcpName` | `string` | **Yes** | MCP server name. |
+| `address` | `string` | **Yes** | Registered endpoint address. |
+| `port` | `integer` | **Yes** | Registered endpoint port. |
+| `version` | `string` | No | Same version as registration. |
+
+#### Response Data
+
+Returns the common `Result` with `data=null` on success.
+
+#### Examples
+
+```bash
+curl -sS -X DELETE 'http://127.0.0.1:8848/nacos/v3/client/ai/mcp/endpoints' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}" \
+  -H 'X-Nacos-Client-Id: mcp-publisher-1' \
+  -H 'Request-Module: AI' \
+  -d 'namespaceId=public' -d 'mcpName=my-remote-mcp' \
+  -d 'address=127.0.0.1' -d 'port=9999' -d 'version=1.0.0'
+```
+
+```json
+{"code":0,"message":"success","data":null}
+```
+
+### 3.16. MCP Endpoint Heartbeat
+
+#### Description
+
+Renew the shared HTTP Client and all Agent/MCP publications it owns. Schedule one heartbeat task using the latest `heartbeatIntervalMillis`. Re-register the desired endpoints on `HTTP_CLIENT_NOT_FOUND`. Queries and Watch cannot replace publisher heartbeats.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`PUT`
+
+#### Request URL
+
+`/nacos/v3/client/ai/mcp/endpoints/heartbeat`
+
+#### Request Headers
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `X-Nacos-Client-Id` | `string` | **Yes** | Same stable client identifier as registration. |
+| `Request-Module` | `string` | **Yes** | Must be `AI`. |
+
+#### Request Parameters
+
+None.
+
+#### Response Data
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `ClientLivenessInfo` | Client liveness settings. |
+| `data.heartbeatIntervalMillis` | `integer` | Next heartbeat interval in milliseconds. |
+| `data.unhealthyTimeoutMillis` | `integer` | Timeout before being marked unhealthy, in milliseconds. |
+| `data.expireTimeoutMillis` | `integer` | Expiration timeout in milliseconds. |
+
+#### Examples
+
+```bash
+curl -sS -X PUT 'http://127.0.0.1:8848/nacos/v3/client/ai/mcp/endpoints/heartbeat' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}" \
+  -H 'X-Nacos-Client-Id: mcp-publisher-1' \
+  -H 'Request-Module: AI'
+```
+
+### 3.17. Search MCP Resources
+
+#### Description
+
+Search currently visible, enabled MCP resources by text, tags, protocols, and capabilities. An empty query lists resources. All `tagsAll` values must match; `protocolsAny` and `capabilitiesAny` each require any matching value. Different conditions are combined with AND.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`GET`
+
+#### Request URL
+
+`/nacos/v3/client/ai/mcp/search`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `namespaceId` | `string` | No | Namespace; defaults to `public`. |
+| `query` | `string` | No | Search text, up to 1024 characters. |
+| `tagsAll` | `array<string>` | No | Repeatable tags that must all match; up to 32 non-empty values. |
+| `protocolsAny` | `array<string>` | No | Repeatable protocols, any of which may match; up to 32 non-empty values. |
+| `capabilitiesAny` | `array<string>` | No | Repeatable capabilities, any of which may match, such as `TOOL`, `PROMPT`, or `RESOURCE`; up to 32 non-empty values. |
+| `pageNo` | `integer` | No | Positive integer; defaults to `1`. |
+| `pageSize` | `integer` | No | Positive integer; defaults to `100`. |
+
+#### Response Data
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `Page<McpServerBasicInfo>` | Paginated MCP resource results. |
+| `data.totalCount` | `integer` | Total matching resources. |
+| `data.pageNumber` | `integer` | Current page number. |
+| `data.pagesAvailable` | `integer` | Total pages. |
+| `data.pageItems` | `array<McpServerBasicInfo>` | Server summaries on this page; use the MCP query API for endpoints and complete definitions. |
+
+#### Examples
+
+```bash
+curl -sS -G 'http://127.0.0.1:8848/nacos/v3/client/ai/mcp/search' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}" \
+  --data-urlencode 'namespaceId=public' --data-urlencode 'query=weather' \
+  --data-urlencode 'capabilitiesAny=TOOL' \
+  --data-urlencode 'pageNo=1' --data-urlencode 'pageSize=20'
+```
+
+### 3.18. Search Skill Resources
+
+#### Description
+
+Search currently visible, enabled Skills by text and tags. An empty query lists resources. Use the Skill download API to retrieve content.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`GET`
+
+#### Request URL
+
+`/nacos/v3/client/ai/skills/search`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `namespaceId` | `string` | No | Namespace; defaults to `public`. |
+| `query` | `string` | No | Search text, up to 1024 characters. |
+| `tagsAll` | `array<string>` | No | Repeatable tags that must all match; up to 32 non-empty values. |
+| `pageNo` | `integer` | No | Positive integer; defaults to `1`. |
+| `pageSize` | `integer` | No | Positive integer; defaults to `100`. |
+
+#### Response Data
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `Page<SkillBasicInfo>` | Paginated Skill results. |
+| `data.totalCount` | `integer` | Total matching resources. |
+| `data.pageNumber` | `integer` | Current page number. |
+| `data.pagesAvailable` | `integer` | Total pages. |
+| `data.pageItems` | `array<SkillBasicInfo>` | Summaries with `namespaceId`, `name`, `description`, and `updateTime`. |
+
+#### Examples
+
+```bash
+curl -sS -G 'http://127.0.0.1:8848/nacos/v3/client/ai/skills/search' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}" \
+  --data-urlencode 'namespaceId=public' --data-urlencode 'query=travel' \
+  --data-urlencode 'pageNo=1' --data-urlencode 'pageSize=20'
+```
+
+### 3.19. Search Prompt Resources
+
+#### Description
+
+Search currently visible, enabled Prompts by text and tags. An empty query lists resources. Use the Prompt query API to retrieve template content.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`GET`
+
+#### Request URL
+
+`/nacos/v3/client/ai/prompt/search`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `namespaceId` | `string` | No | Namespace; defaults to `public`. |
+| `query` | `string` | No | Search text, up to 1024 characters. |
+| `tagsAll` | `array<string>` | No | Repeatable tags that must all match; up to 32 non-empty values. |
+| `pageNo` | `integer` | No | Positive integer; defaults to `1`. |
+| `pageSize` | `integer` | No | Positive integer; defaults to `100`. |
+
+#### Response Data
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `Page<PromptMetaSummary>` | Paginated Prompt results. |
+| `data.totalCount` | `integer` | Total matching resources. |
+| `data.pageNumber` | `integer` | Current page number. |
+| `data.pagesAvailable` | `integer` | Total pages. |
+| `data.pageItems` | `array<PromptMetaSummary>` | Metadata summaries including `promptKey`, description, business tags, and version information. |
+
+#### Examples
+
+```bash
+curl -sS -G 'http://127.0.0.1:8848/nacos/v3/client/ai/prompt/search' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}" \
+  --data-urlencode 'namespaceId=public' --data-urlencode 'query=assistant' \
+  --data-urlencode 'pageNo=1' --data-urlencode 'pageSize=20'
+```
+
+### 3.20. Search Across AI Resource Types
+
+#### Description
+
+Search currently visible, enabled AI resources using cursor pagination. A blank `query` lists resources; a non-blank query searches by relevance. Newly published content may be temporarily absent while the index catches up. Results are summaries; use the corresponding resource APIs to invoke or download content.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`GET`
+
+#### Request URL
+
+`/nacos/v3/client/ai/resources/search`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `namespaceId` | `string` | No | Namespace; defaults to `public`. |
+| `query` | `string` | No | Search text, up to 1024 characters. |
+| `resourceTypes` | `array<string>` | No | Repeatable `agent`, `agentspec`, `skill`, `prompt`, or `mcp`; searches all supported types when omitted. |
+| `tagsAll` | `array<string>` | No | Repeatable tags that must all match. |
+| `capabilitiesAny` | `array<string>` | No | Repeatable capabilities, any of which may match. |
+| `cursor` | `string` | No | Previous page's `nextCursor`, passed unchanged; omit on the first request. Up to 2048 characters. |
+| `limit` | `integer` | No | Page size from `1` to `100`; defaults to `20`. |
+
+Each array filter allows up to 32 non-empty values. Different conditions are combined with AND. Keep search conditions unchanged when paging; an absent `nextCursor` means the last page.
+
+#### Response Data
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `AiResourceSearchResponse` | Cursor page without page numbers or totals. |
+| `data.items` | `array<AiResourceSearchItem>` | Resource summaries on this page. |
+| `data.nextCursor` | `string` | Next-page cursor; omitted on the last page. |
+| `data.items[i].namespaceId` | `string` | Namespace. |
+| `data.items[i].resourceType` | `string` | Resource type. |
+| `data.items[i].resourceName` | `string` | Resource name. |
+| `data.items[i].resourceVersion` | `string` | Current version. |
+| `data.items[i].displayName` | `string` | Display name. |
+| `data.items[i].description` | `string` | Description. |
+| `data.items[i].tags` | `array<string>` | Tags. |
+| `data.items[i].capabilities` | `array<string>` | Capabilities. |
+| `data.items[i].representativeQueries` | `array<string>` | Representative query text. |
+| `data.items[i].metadata` | `map<string, object>` | Extended resource metadata. |
+| `data.items[i].createTime` | `integer` | Creation time. |
+| `data.items[i].updateTime` | `integer` | Update time. |
+| `data.items[i].score` | `integer` | Relevance score. |
+
+#### Examples
+
+```bash
+curl -sS -G 'http://127.0.0.1:8848/nacos/v3/client/ai/resources/search' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}" \
+  --data-urlencode 'namespaceId=public' --data-urlencode 'query=travel' \
+  --data-urlencode 'resourceTypes=agent' --data-urlencode 'resourceTypes=skill' \
+  --data-urlencode 'limit=20'
+```
+
+Example with no matching resources:
+
+```json
+{"code":0,"message":"success","data":{"items":[]}}
+```
+
+### 3.21. Query AI HTTP Capabilities
+
+#### Description
+
+Query this node's Client HTTP capabilities to select a client binding. This follows Client authentication settings and checks identity without requiring permissions for specific AI resources. The result grants no resource access and does not imply support across all nodes or completed migration.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`GET`
+
+#### Request URL
+
+`/nacos/v3/client/ai/capabilities`
+
+#### Request Parameters
+
+None.
+
+#### Response Data
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `data` | `map<string, object>` | This node's capability declaration. |
+| `data.schemaVersion` | `integer` | Declaration format version, currently `1`. |
+| `data.capabilities` | `map<string, boolean>` | Capability flags: `radV1`, `mcp`, `skill`, `prompt`, and `agentSpec`. |
+
+#### Examples
+
+```bash
+curl -sS 'http://127.0.0.1:8848/nacos/v3/client/ai/capabilities' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}"
+```
+
+```json
+{"code":0,"message":"success","data":{"schemaVersion":1,"capabilities":{"radV1":true,"mcp":true,"skill":true,"prompt":true,"agentSpec":true}}}
 ```

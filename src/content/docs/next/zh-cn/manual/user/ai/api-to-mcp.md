@@ -12,7 +12,11 @@ Nacos 能够通过和 [Higress](https://higress.ai) 等AI网关的结合，**0�
 服务的能力。本文档将说明如何在Nacos上对已经注册在Nacos中的存量API声明为MCP服务，并通过[Higress](https://higress.ai)
 的协议转换能力进行MCP Tools的调用。
 
+本文的服务、工具和端点声明适用于存量 API 转换场景。3.3 新版控制台采用草稿和发布流程，创建或修改定义后需完成提交与发布，再验证网关调用；保存草稿不代表已经上线。步骤及版本治理见 [MCP 管理](./mcp-registry.md)。下文截图中的原有直接发布入口保留兼容行为。
+
 ![API转换MCP原理](/img/doc/manual/user/ai/ai-api-to-mcp.svg)
+
+Nacos 3.3 默认开启客户端鉴权。服务注册应用及网关的 Nacos 数据源均需配置对应账号与权限，参见[配置访问凭据](../auth.mdx)。下文 MCP 调用请求发送到 Higress，其鉴权应按网关配置处理。
 
 ## 0. 准备工作
 
@@ -32,7 +36,7 @@ Nacos 能够通过和 [Higress](https://higress.ai) 等AI网关的结合，**0�
 
 打开Nacos控制台`http://${nacos_console_host}:${nacos_console_port}` 如 `http://127.0.0.1:8080`.
 
-> 首次打开可能需要进行管理员密码的初始化工作，请参考[Nacos控制台手册](../../admin/console.md#3-登录管理)。
+> 首次打开可能需要进行管理员密码的初始化工作，请参考[Nacos控制台手册](../../admin/console.md#登录和权限)。
 
 点击左侧`MCP管理` -> `MCP列表`进入MCP管理页面
 

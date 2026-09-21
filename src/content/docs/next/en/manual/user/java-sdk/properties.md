@@ -116,6 +116,8 @@ String value = properties2.getProperty("global-key1");
 
 ## 2. Java SDK Configuration Parameter List
 
+Nacos 3.3 enables client authentication by default. For the default plugin, configure `username` and `password` from the table below; there is no shared default password. See [SDK initialization](./usage.md#2-initialize-the-sdk) and [Access Credentials](../auth.mdx) for other credential modes.
+
 ### 2.1. Common Parameters
 
 Common parameters take effect when initializing both the registry `NamingService` and the config center `ConfigServie`:
@@ -131,8 +133,8 @@ Common parameters take effect when initializing both the registry `NamingService
 | endpointQueryParams            | ENDPOINT_QUERY_PARAMS             | Request parameters for the endpoint used to obtain Nacos Server addresses. They are used to extend custom logic in the endpoint service and use the `key=value` format. | Any URL parameter in `key=value` format | None |
 | endpointRefreshIntervalSeconds | ENDPOINT_REFRESH_INTERVAL_SECONDS | The interval at which Nacos Server periodically obtains the address list again from the endpoint, in seconds. | Any positive integer | 30 |
 | namespace                      | NAMESPACE                         | The namespace ID to which this Java SDK belongs. After it is set, the SDK can access only resources (configuration or services) in this namespace. | Namespace ID | Empty string `` |
-| username                       | USERNAME                          | The username used to access Nacos Server after authentication is enabled.                                    | Any string | None |
-| password                       | PASSWORD                          | The password that corresponds to the username used to access Nacos Server after authentication is enabled.   | Any string | None |
+| username                       | USERNAME                          | The username for default Nacos or LDAP authentication. Required for the default Client authentication enabled in 3.3.                                    | Any string | None |
+| password                       | PASSWORD                          | The password for that account. Use the initialized or administrator-assigned password; there is no shared default password.   | Any string | None |
 | accessKey                      | ACCESS_KEY                        | The access key required when Alibaba Cloud RAM authentication is used.                                      | Any string | None |
 | secretKey                      | SECRET_KEY                        | The secret key required when Alibaba Cloud RAM authentication is used.                                      | Any string | None |
 | ramRoleName                    | RAM_ROLE_NAME                     | The RAM role name required when Alibaba Cloud RAM authentication is used.                                  | Any string | None |

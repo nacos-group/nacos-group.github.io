@@ -40,9 +40,11 @@ The examples below also use the default Nacos Console port. If the deployment ch
 
 ### 0.3. Authentication
 
-Nacos 3.X Console APIs enable authentication by default. Except for a small number of APIs marked as public, callers must provide valid identity information.
+Console API authentication is enabled by default. Except for APIs marked as public below, callers must provide valid credentials and have permission for the operation.
 
-To disable Console API authentication, set `nacos.core.auth.console.enabled=false` and restart Nacos Console.
+With the default auth plugin, follow [Access Credentials](../user/auth.mdx) to log in and save the returned `accessToken` in the `NACOS_ACCESS_TOKEN` environment variable. Run the examples below in the same terminal. They use Bash (Git Bash or WSL on Windows) and send the token in the `accessToken` header. This header requirement applies to every protected API and is not repeated in each parameter table.
+
+If authentication fails, check account credentials, token expiration, and resource permissions. Log in again and update the variable after expiration. Logging in to the console does not configure credentials for curl in a separate terminal.
 
 ### 0.4. Swagger Documentation
 
@@ -118,7 +120,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/state'
 {
   "defaultMaxSize": "102400",
   "auth_system_type": "nacos",
-  "auth_enabled": "false",
+  "auth_enabled": "true",
   "defaultMaxAggrSize": "1024",
   "maxHealthCheckFailCount": "12",
   "maxContent": "10485760",
@@ -393,7 +395,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/core/cluster/nodes?keyword=127.0.0.1'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/core/cluster/nodes?keyword=127.0.0.1'
 ```
 
 * Response example
@@ -512,7 +514,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/list'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/list'
 ```
 
 * Response example
@@ -580,7 +582,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace?namespaceId=public'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/core/namespace?namespaceId=public'
 ```
 
 * Response example
@@ -643,7 +645,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/core/namespace' -d 'namespaceName=test&namespaceDesc=test'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/core/namespace' -d 'namespaceName=test&namespaceDesc=test'
 ```
 
 * Response example
@@ -699,7 +701,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/core/namespace' -d 'namespaceId=test&namespaceName=test&namespaceDesc=test'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/core/namespace' -d 'namespaceId=test&namespaceName=test&namespaceDesc=test'
 ```
 
 * Response example
@@ -753,7 +755,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X DELETE 'http://127.0.0.1:8080/v3/console/core/namespace?namespaceId=test'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3/console/core/namespace?namespaceId=test'
 ```
 
 * Response example
@@ -807,7 +809,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/exist?customNamespaceId=test'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/core/namespace/exist?customNamespaceId=test'
 ```
 
 * Response example
@@ -873,7 +875,7 @@ A user identity with the corresponding `namespace read` permission is required.
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/plugin?pluginType=auth&pluginName=nacos'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/plugin?pluginType=auth&pluginName=nacos'
 ```
 
 * Response example
@@ -932,7 +934,7 @@ The returned `data` is a Map&lt;node address, availability&gt;. The key is the N
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/availability?pluginType=auth&pluginName=nacos'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/plugin/availability?pluginType=auth&pluginName=nacos'
 ```
 
 * Response example
@@ -989,7 +991,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/config' \
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/plugin/config' \
   -d 'pluginType=auth' \
   -d 'pluginName=ldap' \
   -d 'config={"connect-timeout":"6000"}' \
@@ -1043,7 +1045,7 @@ The returned `data` is an array including name, type, state, critical, execution
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/plugin/list?pluginType=auth'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/plugin/list?pluginType=auth'
 ```
 
 * Response example
@@ -1104,7 +1106,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/plugin/status' \
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/plugin/status' \
   -d 'pluginType=auth' \
   -d 'pluginName=ldap' \
   -d 'enabled=true' \
@@ -1159,7 +1161,9 @@ The response body follows the [Nacos Open API unified response format](../user/o
 
 | Name                | Type     | Description                         |
 |--------------------|----------|----------------------------|
-| `id`               | `string` | Configuration ID in the storage system, usually a string of the Long type. |
+| `data`             | `ConfigDetailInfo` | Configuration details. |
+| `id`               | `string` | Configuration ID in the storage system, serialized as a string to preserve large integer precision. |
+| `schema`           | `string` | Configuration schema content; empty when not set. |
 | `dataId`           | `string` | configuration ID.                      |
 | `groupName`        | `string` | configuration group.                      |
 | `namespaceId`      | `string` | namespace ID.                    |
@@ -1180,7 +1184,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName=test'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName=test'
 ```
 
 * Response example
@@ -1266,7 +1270,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/cs/config' -d 'dataId=test&groupName=test&namespaceId=public&content=test'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/cs/config' -d 'dataId=test&groupName=test&namespaceId=public&content=test'
 ```
 
 * Response example
@@ -1323,7 +1327,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName=test'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config?dataId=test&groupName=test'
 ```
 
 * Response example
@@ -1378,7 +1382,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config/batchDelete?ids=838025461287096320,838025489170829312'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3/console/cs/config/batchDelete?ids=838025461287096320,838025489170829312'
 ```
 
 * Response example
@@ -1417,8 +1421,8 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name           | Type        | Required | Description                                                                            |
 |---------------|-----------|----|---------------------------------------------------------------------------------|
-| `pageNo`      | `integer` | Yes  | current page number, starts from 1.                                                                     |
-| `pageSize`    | `integer` | Yes  | number of configurations displayed per page.                                                                      |
+| `pageNo` | `integer` | No | Page number; defaults to `1` and must be positive. |
+| `pageSize` | `integer` | No | Items per page; defaults to `100` and must be positive. |
 | `dataId`      | `string` | **Yes** | Configuration ID. When `search` is `blur`, you can use `*` for fuzzy search, such as `test*`. When the value is empty or missing, all configurations that match the `groupName` condition are queried. |
 | `groupName`   | `string` | **Yes** | Configuration group. When `search` is `blur`, you can use `*` for fuzzy search, such as `test*`. When the value is empty or missing, all configurations that match the `dataId` condition are queried.    |
 | `search`      | `string` | No  | blur or accurate                            |
@@ -1452,7 +1456,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/list?dataId=&groupName=&appName=&configTags=&pageNo=1&pageSize=10&namespaceId=&type=&search=blur'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/cs/config/list?dataId=&groupName=&appName=&configTags=&pageNo=1&pageSize=10&namespaceId=&type=&search=blur'
 ```
 
 * Response example
@@ -1523,8 +1527,8 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name           | Type        | Required | Description                                                                            |
 |---------------|-----------|----|---------------------------------------------------------------------------------|
-| `pageNo`      | `integer` | Yes  | current page number, starts from 1.                                                                     |
-| `pageSize`    | `integer` | Yes  | number of configurations displayed per page.                                                                      |
+| `pageNo` | `integer` | No | Page number; defaults to `1` and must be positive. |
+| `pageSize` | `integer` | No | Items per page; defaults to `100` and must be positive. |
 | `search`      | `string` | No  | blur or accurate                            |
 | `namespaceId` | `string` | No  | Namespace ID. The default is `public`.                                                            |
 | `dataId`      | `string` | No  | Configuration ID. When `search` is `blur`, you can use `*` for fuzzy search, such as `test*`. When the value is empty or missing, all configurations that match the `groupName` condition are queried. |
@@ -1559,7 +1563,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/searchDetail?dataId=&groupName=&appName=&configTags=&pageNo=1&pageSize=10&namespaceId=&type=&search=blur&configDetail=*11*'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/cs/config/searchDetail?dataId=&groupName=&appName=&configTags=&pageNo=1&pageSize=10&namespaceId=&type=&search=blur&configDetail=*11*'
 ```
 
 * Response example
@@ -1634,7 +1638,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener?dataId=test&groupName=test'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener?dataId=test&groupName=test'
 ```
 
 * Response example
@@ -1697,7 +1701,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener/ip?ip=127.0.0.1'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/cs/config/listener/ip?ip=127.0.0.1'
 ```
 
 * Response example
@@ -1759,7 +1763,7 @@ The file is returned in attachment mode. When export fails, the response body fo
 * Request example
 
 ```shell
-curl -X GET "http://127.0.0.1:8080/v3/console/cs/config/export2?dataId=&groupId=&ids=" --output ~/test.zip
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET "http://127.0.0.1:8080/v3/console/cs/config/export2?dataId=&groupId=&ids=" --output ~/test.zip
 ```
 
 * Response example
@@ -1775,7 +1779,7 @@ unzip ~/test.zip
 ### 2.10. Import Configurations
 
 :::note
-The import configuration API currently supports ZIP files exported by both older and newer versions. Later versions may remove support for importing and exporting configurations in the older format. It is recommended to use the new [Export Configurations](#210-export-configurations)
+The import configuration API currently supports ZIP files exported by both older and newer versions. Later versions may remove support for importing and exporting configurations in the older format. It is recommended to use the new [Export Configurations](#29-export-configurations)
 API to export configuration files.
 :::
 
@@ -1824,7 +1828,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import?namespaceId=test&policy=ABORT&srcUser=console" -F "file=@/path/to/test.zip" -F "namespaceId=test" -F "policy=ABORT" -F "srcUser=console"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -vX POST "http://127.0.0.1:8080/v3/console/cs/config/import?namespaceId=test&policy=ABORT&srcUser=console" -F "file=@/path/to/test.zip" -F "namespaceId=test" -F "policy=ABORT" -F "srcUser=console"
 ```
 
 * Response example
@@ -1890,7 +1894,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -H "Content-Type: application/json" -X POST "http://127.0.0.1:8080/v3/console/cs/config/clone?namespaceId=public&targetNamespaceId=target&policy=ABORT" -d "[{\"cfgId\":838029534438625280,\"dataId\":\"111\",\"group\":\"DEFAULT_GROUP\"},{\"cfgId\":838033747294031872,\"dataId\":\"qtc-user.yaml\",\"group\":\"DEFAULT_GROUP\"}]"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -H "Content-Type: application/json" -X POST "http://127.0.0.1:8080/v3/console/cs/config/clone?namespaceId=public&targetNamespaceId=target&policy=ABORT" -d "[{\"cfgId\":838029534438625280,\"dataId\":\"111\",\"group\":\"DEFAULT_GROUP\"},{\"cfgId\":838033747294031872,\"dataId\":\"qtc-user.yaml\",\"group\":\"DEFAULT_GROUP\"}]"
 ```
 
 * Response example
@@ -1952,7 +1956,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X DELETE "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=test&groupName=DEFAULT_GROUP"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=test&groupName=DEFAULT_GROUP"
 ```
 
 * Response example
@@ -2005,7 +2009,10 @@ The response body follows the [Nacos Open API unified response format](../user/o
 
 | Name                | Type     | Description                                  |
 |--------------------|----------|-------------------------------------|
-| `id`               | `string` | betaconfiguration storage ID.                        |
+| `data`             | `ConfigGrayInfo` | Gray configuration details. |
+| `id`               | `string` | Beta configuration storage ID, serialized as a string. |
+| `content`          | `string` | Gray configuration content. |
+| `schema`           | `string` | Configuration schema content; empty when not set. |
 | `dataId`           | `string` | Configuration `dataId`.                          |
 | `groupName`        | `string` | Configuration `groupName`.                       |
 | `namespaceId`      | `string` | namespace to which the configuration belongs.                          |
@@ -2027,7 +2034,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=111&groupName=DEFAULT_GROUP"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" "http://127.0.0.1:8080/v3/console/cs/config/beta?dataId=111&groupName=DEFAULT_GROUP"
 ```
 
 * Response example
@@ -2084,8 +2091,8 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name           | Type       | Required | Description                      |
 |---------------|----------|----|---------------------------|
-| `pageNo`      | `integer` | Yes  | current page number, starts from `1`               |
-| `pageSize`    | `integer` | Yes  | number of records displayed per page.                 |
+| `pageNo` | `integer` | No | Page number; defaults to `1` and must be positive. |
+| `pageSize` | `integer` | No | Items per page; defaults to `100` and must be positive. |
 | `dataId`      | `string` | Yes  | Configuration `dataId`.              |
 | `groupName`   | `string` | Yes  | Configuration `groupName`.           |
 | `namespaceId` | `string` | No  | Namespace ID to which the configuration belongs. The default is `public`. |
@@ -2117,7 +2124,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl "http://127.0.0.1:8080/v3/console/cs/history/list?pageNo=1&pageSize=10&dataId=111&groupName=DEFAULT_GROUP"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" "http://127.0.0.1:8080/v3/console/cs/history/list?pageNo=1&pageSize=10&dataId=111&groupName=DEFAULT_GROUP"
 ```
 
 * Response example
@@ -2218,11 +2225,13 @@ The response body follows the [Nacos Open API unified response format](../user/o
 
 | Name           | Type         | Description                                                                          |
 |---------------|--------------|-----------------------------------------------------------------------------|
-| `id`          | `string` | history record ID.                                                                    |
+| `data`        | `ConfigHistoryDetailInfo` | Configuration history details. |
+| `id`          | `string` | History record ID, serialized as a string. |
+| `schema`      | `string` | Configuration schema content for this historical version. |
 | `dataId`      | `string` | Configuration `dataId`.                                                                  |
 | `groupName`   | `string` | Configuration `groupName`.                                                               |
 | `namespaceId` | `string` | namespace to which the configuration belongs.                                                                  |
-| `content`     | `string`     |
+| `content`     | `string` | Configuration content for this historical version. |
 | `appName`     | `string` | appName to which the configuration belongs.                                                               |
 | `opType`      | `string` | Operation type. `I` means insert, `U` means update, and `D` means delete.                                                  |
 | `publishType` | `string` | Publish type. `formal` means normal publish, and `gray` means beta publish.                                           |
@@ -2238,7 +2247,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl "http://127.0.0.1:8080/v3/console/cs/history?dataId=111&groupName=DEFAULT_GROUP&nid=7"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" "http://127.0.0.1:8080/v3/console/cs/history?dataId=111&groupName=DEFAULT_GROUP&nid=7"
 ```
 
 * Response example
@@ -2306,11 +2315,13 @@ The response body follows the [Nacos Open API unified response format](../user/o
 
 | Name           | Type         | Description                                                                          |
 |---------------|--------------|-----------------------------------------------------------------------------|
-| `id`          | `string` | history record ID.                                                                    |
+| `data`        | `ConfigHistoryDetailInfo` | Configuration history details. |
+| `id`          | `string` | History record ID, serialized as a string. |
+| `schema`      | `string` | Configuration schema content for this historical version. |
 | `dataId`      | `string` | Configuration `dataId`.                                                                  |
 | `groupName`   | `string` | Configuration `groupName`.                                                               |
 | `namespaceId` | `string` | namespace to which the configuration belongs.                                                                  |
-| `content`     | `string`     |
+| `content`     | `string` | Configuration content for this historical version. |
 | `appName`     | `string` | appName to which the configuration belongs.                                                               |
 | `opType`      | `string` | Operation type. `I` means insert, `U` means update, and `D` means delete.                                                  |
 | `publishType` | `string` | Publish type. `formal` means normal publish, and `gray` means beta publish.                                           |
@@ -2326,7 +2337,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl "http://127.0.0.1:8080/v3/console/cs/history/previous?id=838029534438625280&dataId=111&groupName=DEFAULT_GROUP"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" "http://127.0.0.1:8080/v3/console/cs/history/previous?id=838029534438625280&dataId=111&groupName=DEFAULT_GROUP"
 ```
 
 * Response example
@@ -2401,7 +2412,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl "http://127.0.0.1:8080/v3/console/cs/history/configs?namespaceId=public"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" "http://127.0.0.1:8080/v3/console/cs/history/configs?namespaceId=public"
 ```
 
 * Response example
@@ -2486,7 +2497,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X POST "http://127.0.0.1:8080/v3/console/ns/service" -d "serviceName=test&groupName=DEFAULT_GROUP&namespaceId=public"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST "http://127.0.0.1:8080/v3/console/ns/service" -d "serviceName=test&groupName=DEFAULT_GROUP&namespaceId=public"
 ```
 
 * Response example
@@ -2546,7 +2557,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test&groupName=DEFAULT_GROUP&namespaceId=public"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test&groupName=DEFAULT_GROUP&namespaceId=public"
 ```
 
 * Response example
@@ -2607,7 +2618,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service" -d "serviceName=test&groupName=DEFAULT_GROUP&namespaceId=public&protectThreshold=0"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT "http://127.0.0.1:8080/v3/console/ns/service" -d "serviceName=test&groupName=DEFAULT_GROUP&namespaceId=public&protectThreshold=0"
 ```
 
 * Response example
@@ -2660,7 +2671,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/selector/types"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET "http://127.0.0.1:8080/v3/console/ns/service/selector/types"
 ```
 
 * Response example
@@ -2702,8 +2713,8 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name                  | Type        | Required | Description                              |
 |----------------------|-----------|----|-----------------------------------|
-| `pageNo`             | `integer` | Yes  | Page number, starting from `1`. |
-| `pageSize`           | `integer` | Yes  | Page size. |
+| `pageNo` | `integer` | No | Page number; defaults to `1` and must be positive. |
+| `pageSize` | `integer` | No | Items per page; defaults to `100` and must be positive. |
 | `serviceNameParam`   | `string` | No  | Service name pattern. Queries all services when empty.            |
 | `groupNameParam`     | `string` | No  | Group name pattern of the service. Queries all services when empty. |
 | `namespaceId`        | `string` | No  | namespace ID to which the service belongs.                      |
@@ -2732,7 +2743,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/list?pageNo=1&pageSize=10&namespaceId=public"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET "http://127.0.0.1:8080/v3/console/ns/service/list?pageNo=1&pageSize=10&namespaceId=public"
 ```
 
 * Response example
@@ -2793,8 +2804,8 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name           | Type        | Required | Description                                |
 |---------------|-----------|----|-------------------------------------|
-| `pageNo`      | `integer` | Yes  | Page number, starting from `1`. |
-| `pageSize`    | `integer` | Yes  | Page size. |
+| `pageNo` | `integer` | No | Page number; defaults to `1` and must be positive. |
+| `pageSize` | `integer` | No | Items per page; defaults to `100` and must be positive. |
 | `serviceName`  | `string` | Yes  | service name.                                |
 | `groupName`    | `string` | No  | Group name to which the service belongs. The default is `DEFAULT_GROUP`. |
 | `namespaceId`  | `string` | No  | Namespace ID to which the service belongs. The default is `public`.           |
@@ -2824,7 +2835,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X GET "http://127.0.0.1:8080/v3/console/ns/service/subscribers?pageNo=1&pageSize=10&serviceName=test&groupName=DEFAULT_GROUP"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET "http://127.0.0.1:8080/v3/console/ns/service/subscribers?pageNo=1&pageSize=10&serviceName=test&groupName=DEFAULT_GROUP"
 ```
 
 * Response example
@@ -2908,7 +2919,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X GET "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET "http://127.0.0.1:8080/v3/console/ns/service?serviceName=test"
 ```
 
 * Response example
@@ -2998,7 +3009,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X PUT "http://127.0.0.1:8080/v3/console/ns/service/cluster" -d "serviceName=test&clusterName=DEFAULT&checkPort=80&useInstancePort4Check=true&healthChecker={\"type\":\"none\"}"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT "http://127.0.0.1:8080/v3/console/ns/service/cluster" -d "serviceName=test&clusterName=DEFAULT&checkPort=80&useInstancePort4Check=true&healthChecker={\"type\":\"none\"}"
 ```
 
 * Response example
@@ -3037,8 +3048,8 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name           | Type        | Required | Description                                |
 |---------------|-----------|----|-------------------------------------|
-| `pageNo`      | `integer` | Yes  | Page number, starts from 1.                            |
-| `pageSize`    | `integer` | Yes  | number of records per page.                              |
+| `pageNo` | `integer` | No | Page number; defaults to `1` and must be positive. |
+| `pageSize` | `integer` | No | Items per page; defaults to `100` and must be positive. |
 | `serviceName` | `string` | Yes  | service name.                                |
 | `groupName`   | `string` | No  | Group name to which the service belongs. The default is `DEFAULT_GROUP`. |
 | `namespaceId`  | `string` | No  | Namespace ID to which the service belongs. The default is `public`.           |
@@ -3075,7 +3086,7 @@ are used to be compatible with heartbeat mode data from 1.x clients. Later versi
 * Request example
 
 ```shell
-curl -X GET "http://127.0.0.1:8080/v3/console/ns/instance/list?&serviceName=test&clusterName=DEFAULT&groupName=DEFAULT_GROUP&pageSize=10&pageNo=1"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET "http://127.0.0.1:8080/v3/console/ns/instance/list?&serviceName=test&clusterName=DEFAULT&groupName=DEFAULT_GROUP&pageSize=10&pageNo=1"
 ```
 
 * Response example
@@ -3161,7 +3172,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X PUT "http://127.0.0.1:8080/v3/console/ns/instance" -d 'serviceName=test&clusterName=DEFAULT&groupName=DEFAULT_GROUP&ip=1.1.1.1&port=3306&ephemeral=true&weight=100&enabled=false&metadata=%7B%22%E5%95%A6%E5%95%A6%E5%95%A6%26%E5%95%B5%E5%95%B5%E5%95%B5%22%3A%22xxx%22%7D'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT "http://127.0.0.1:8080/v3/console/ns/instance" -d 'serviceName=test&clusterName=DEFAULT&groupName=DEFAULT_GROUP&ip=1.1.1.1&port=3306&ephemeral=true&weight=100&enabled=false&metadata=%7B%22%E5%95%A6%E5%95%A6%E5%95%A6%26%E5%95%B5%E5%95%B5%E5%95%B5%22%3A%22xxx%22%7D'
 ```
 
 * Response example
@@ -3225,7 +3236,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/instance?serviceName=test&clusterName=DEFAULT&groupName=DEFAULT_GROUP&ip=1.1.1.1&port=3306&ephemeral=false"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE "http://127.0.0.1:8080/v3/console/ns/instance?serviceName=test&clusterName=DEFAULT&groupName=DEFAULT_GROUP&ip=1.1.1.1&port=3306&ephemeral=false"
 ```
 
 * Response example
@@ -3239,6 +3250,33 @@ curl -X DELETE "http://127.0.0.1:8080/v3/console/ns/instance?serviceName=test&cl
 ```
 
 ## 4. MCP Management
+
+Nacos 3.3 adds unified MCP lifecycle endpoints (4.9–4.22). They identify resources by `namespaceId + mcpName`, with an exact `version` for version operations. New management integrations should use draft, submit, and publish. Sections 4.1–4.5 retain their compatibility operations, including direct publishing on create and update. See [AI Resource Lifecycle](../user/ai/ai-resource-lifecycle.md) for transitions and review workflows.
+
+New resources default to `PUBLIC` under the built-in visibility policy. Use the scope endpoint for private visibility; subsequent publishing and updates preserve the stored scope. Lifecycle endpoints use the following response models, while compatibility endpoints retain their existing types.
+
+| Type | Fields |
+|------|--------|
+| `McpServerVersionSummary` | `version`, `status`, `publishPipelineInfo`, `author`, `description`, `latest`, `createTime`, `updateTime` |
+| `McpServerVersionDetail` | Summary fields plus the content and resource information listed below |
+
+`McpServerVersionSummary.status` is `draft`, `reviewing`, `reviewed`, `online`, or `offline`. `latest` indicates the default version. The optional `publishPipelineInfo` is a JSON string containing review results that distinguish approval from rejection. `createTime` and `updateTime` are timestamps in milliseconds.
+
+| Detail Field | Type | Description |
+|--------------|------|-------------|
+| `namespaceId` | `string` | Namespace ID. |
+| `mcpName` | `string` | MCP server name. |
+| `serverSpecification` | `McpServerBasicInfo` | Server definition; see the `serverSpecification` fields in section 4.2. |
+| `toolSpecification` | `McpToolSpecification` | Tool definitions and metadata. |
+| `resourceSpecification` | `McpResourceSpecification` | Resource and resource-template definitions. |
+| `resourceStatus` | `string` | Resource status: `enable` or `disable`. |
+| `owner` | `string` | Resource owner. |
+| `scope` | `string` | Visibility scope: `PUBLIC` or `PRIVATE`. |
+| `labels` | `map<string, string>` | Version labels, including the server-managed `latest`. |
+| `editingVersion` | `string` | Current editable working version. |
+| `reviewingVersion` | `string` | Version currently under review. |
+| `onlineCount` | `integer` | Number of online versions. |
+| `writable` | `boolean` | Whether the caller has write access to the resource. |
 
 ### 4.1. Query MCP Service Details
 
@@ -3267,8 +3305,8 @@ A user identity with the corresponding `namespace read` permission is required.
 | Name           | Type     | Required  | Description                                       |
 |---------------|----------|-------|------------------------------------------|
 | `namespaceId` | `string` | No     | Namespace ID of the MCP service. The default is `public`                 |
-| `mcpId`       | `string` | One of two required | MCP service ID (usually UUID). One of `mcpId` and `mcpName` must be provided (OpenAPI cannot express this constraint; at least one is required in practice). Prefer `mcpId`. |
-| `mcpName`     | `string` | One of two required | MCP service name template. One of `mcpId` and `mcpName` must be provided; prefer `mcpId`.    |
+| `mcpId`       | `string` | One of two required | Deprecated compatibility ID. Provide at least one of this field and `mcpName`; both must identify the same resource when supplied together. |
+| `mcpName`     | `string` | One of two required | MCP service name; recommended for new integrations. |
 | `version`     | `string` | No     | version of the MCP service. If not specified, the latest version is returned                      |
 
 #### Response Data
@@ -3277,13 +3315,14 @@ The response body follows the [Nacos Open API unified response format](../user/o
 
 | Name                  | Type                  | Description                                                                                              |
 |----------------------|-----------------------|-------------------------------------------------------------------------------------------------|
+| `data` | `McpServerDetailInfo` | MCP service details. |
 | `id`                 | `string` | MCP service ID, usually a UUID.                                                                               |
 | `name`               | `string` | MCP service name.                                                                                         |
 | `namespaceId`        | `string` | namespace ID to which the MCP service belongs.                                                                                 |
 | `protocol`           | `string` | MCP protocol, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`.                                             |
 | `frontProtocol`      | `string` | Frontend exposure protocol of the MCP service. It is generally used by protocol converters, such as gateways. If there is no converter, it is the same as `protocol`, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`. |
 | `description`        | `string` | MCP service description.                                                                                       |
-| `repository`         | `string` | repository of the MCP service.                                                                                     |                                                                                          |
+| `repository`         | `Repository` | MCP service code repository, with `url`, `source`, `id`, and `subfolder`. |
 | `versionDetail`      | `ServerVersionDetail`       | queried version information of the MCP service.                                                                                  |
 | `localServerConfig`  | `map<string, object>` | When the MCP service type is **stdio**, this information exists and records startup information for the local MCP service.                                                        |
 | `remoteServerConfig` | `McpServerRemoteServiceConfig`  | When the MCP service type is **non-stdio**, this information exists and records remote service information.                                                           |
@@ -3306,7 +3345,7 @@ The `ServerVersionDetail` structure is as follows:
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=test&mcpId=d7a64724-a556-4fe4-82fa-e806d43e00dc'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=test&mcpId=d7a64724-a556-4fe4-82fa-e806d43e00dc'
 ```
 * Response example
 
@@ -3373,10 +3412,12 @@ A user identity with the corresponding `namespace write` permission is required.
 | Name                     | Type         | Required  | Description                                                      |
 |-------------------------|--------------|-------|---------------------------------------------------------|
 | `namespaceId`           | `string` | No     | Namespace ID of the MCP service. The default is `public`                                |
-| `latest`                | `boolean` | No     | Whether to update by the latest version, such as `true`.                                      |
-| `serverSpecification`   | `string` | **Yes** | MCP service description details                                              |
+| `mcpName`               | `string` | No | Service name used when `serverSpecification.name` is empty. |
+| `mcpId`                 | `string` | No | Deprecated compatibility ID used when `serverSpecification.id` is empty. |
+| `latest`                | `boolean` | No | Whether to make this the latest version; defaults to `true`. |
+| `serverSpecification`   | `string` | **Yes** | JSON-encoded `McpServerBasicInfo`. |
 | `toolSpecification`     | `string` | No     | MCP service tool description details                                            |
-| `endpointSpecification` | `string` | No     | Remote service address details of the MCP service. Takes effect only for non-`stdio` protocols                          |
+| `endpointSpecification` | `string` | No | JSON-encoded remote service address details; required for non-`stdio` protocols. |
 | `overrideExisting`      | `boolean` | No     | whether to overwrite the original `endpointSpecification` when updating the MCP service. It is not overwritten by default and takes effect only for non-`stdio` protocols |
 
 The details of the `serverSpecification`, `toolSpecification`, and `endpointSpecification` parameters are as follows:
@@ -3385,12 +3426,12 @@ The details of the `serverSpecification`, `toolSpecification`, and `endpointSpec
 
 | Name                  | Type                  | Description                                                                                              |
 |----------------------|-----------------------|-------------------------------------------------------------------------------------------------|
-| `id`                 | `string` | MCP service ID, usually a UUID. It must be passed to locate the MCP service to update.                                                            |
+| `id`                 | `string` | Deprecated compatibility ID. Use the service name instead, or ensure both identify the same resource. |
 | `name`               | `string` | MCP service name.                                                                                         |
 | `protocol`           | `string` | MCP protocol, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`.                                             |
 | `frontProtocol`      | `string` | Frontend exposure protocol of the MCP service. It is generally used by protocol converters, such as gateways. If there is no converter, it is the same as `protocol`, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`. |
 | `description`        | `string` | MCP service description.                                                                                       |
-| `repository`         | `string` | repository of the MCP service.                                                                                     |    |
+| `repository`         | `Repository` | MCP service code repository, with `url`, `source`, `id`, and `subfolder`. |
 | `versionDetail`      | `ServerVersionDetail`       | version information of the MCP service.                                                                                     |
 | `version`            | `string` | Simple version information of the MCP service, mainly used for compatibility. If `versionDetail` is set, this field is invalid.                                               |    |
 | `localServerConfig`  | `map<string, object>` | When the MCP service type is **stdio**, this information exists and records startup information for the local MCP service.                                                        |
@@ -3461,7 +3502,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp' \
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 -d 'namespaceId=public' \
 -d 'mcpName=test' \
 -d 'serverSpecification={"protocol":"stdio","frontProtocol":"stdio","name":"test","id":"d7a64724-a556-4fe4-82fa-e806d43e00dc","description":"ceshi","versionDetail":{"version":"1.0.0"},"enabled":true,"localServerConfig":{"test":{}}}'
@@ -3503,9 +3544,11 @@ A user identity with the corresponding `namespace write` permission is required.
 | Name                     | Type         | Required  | Description                             |
 |-------------------------|--------------|-------|--------------------------------|
 | `namespaceId`           | `string` | No     | Namespace ID of the MCP service. The default is `public`       |
-| `serverSpecification`   | `string` | **Yes** | MCP service description details                     |
+| `mcpName`               | `string` | No | Service name used when `serverSpecification.name` is empty. At least one location must provide the name. |
+| `mcpId`                 | `string` | No | Deprecated compatibility ID used when `serverSpecification.id` is empty. Omit it for new services. |
+| `serverSpecification`   | `string` | **Yes** | JSON-encoded `McpServerBasicInfo`. |
 | `toolSpecification`     | `string` | No     | MCP service tool description details                   |
-| `endpointSpecification` | `string` | No     | Remote service address details of the MCP service. Takes effect only for non-`stdio` protocols |
+| `endpointSpecification` | `string` | No | JSON-encoded remote service address details; required for non-`stdio` protocols. |
 
 The details of the `serverSpecification`, `toolSpecification`, and `endpointSpecification` parameters are as follows:
 
@@ -3518,7 +3561,7 @@ The details of the `serverSpecification`, `toolSpecification`, and `endpointSpec
 | `protocol`           | `string` | MCP protocol, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`.                                             |
 | `frontProtocol`      | `string` | Frontend exposure protocol of the MCP service. It is generally used by protocol converters, such as gateways. If there is no converter, it is the same as `protocol`, such as `stdio`, `sse`, `streamable`, `http`, or `dubbo`. |
 | `description`        | `string` | MCP service description.                                                                                       |
-| `repository`         | `string` | repository of the MCP service.                                                                                     |    |
+| `repository`         | `Repository` | MCP service code repository, with `url`, `source`, `id`, and `subfolder`. |
 | `versionDetail`      | `ServerVersionDetail`       | version information of the MCP service.                                                                                     |
 | `version`            | `string` | Simple version information of the MCP service, mainly used for compatibility. If `versionDetail` is set, this field is invalid.                                               |    |
 | `localServerConfig`  | `map<string, object>` | When the MCP service type is **stdio**, this information exists and records startup information for the local MCP service.                                                        |
@@ -3589,7 +3632,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp' \
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp' \
 -d 'namespaceId=public' \
 -d 'mcpName=test' \
 -d 'serverSpecification={"protocol":"stdio","frontProtocol":"stdio","name":"test","id":"","description":"ceshi","versionDetail":{"version":"1.0.0"},"enabled":true,"localServerConfig":{"test":{}}}'
@@ -3631,8 +3674,8 @@ A user identity with the corresponding `namespace write` permission is required.
 | Name           | Type     | Required  | Description                                       |
 |---------------|----------|-------|------------------------------------------|
 | `namespaceId` | `string` | No     | Namespace ID of the MCP service. The default is `public`                 |
-| `mcpId`       | `string` | One of two required | MCP service ID (usually UUID). One of `mcpId` and `mcpName` must be provided (OpenAPI cannot express this constraint; at least one is required in practice). Prefer `mcpId`. |
-| `mcpName`     | `string` | One of two required | MCP service name template. One of `mcpId` and `mcpName` must be provided; prefer `mcpId`.    |
+| `mcpId`       | `string` | One of two required | Deprecated compatibility ID. Provide at least one of this field and `mcpName`; both must identify the same resource when supplied together. |
+| `mcpName`     | `string` | One of two required | MCP service name; recommended for new integrations. |
 | `version`     | `string` | No     | version of the MCP service. If not specified, the latest version is used                       |
 
 
@@ -3649,7 +3692,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=test&mcpId=d7a64724-a556-4fe4-82fa-e806d43e00dc'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3/console/ai/mcp?namespaceId=public&mcpName=test&mcpId=d7a64724-a556-4fe4-82fa-e806d43e00dc'
 ```
 * Response example
 
@@ -3687,8 +3730,8 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name           | Type     | Required  | Description                                                     |
 |---------------|----------|-------|--------------------------------------------------------|
-| `pageNo`      | `integer` | **Yes** | current page. The default is `1`                                             |
-| `pageSize`    | `integer` | **Yes** | page item count. The default is `20`, and the maximum is `500`                                  |
+| `pageNo` | `integer` | No | Page number; defaults to `1` and must be positive. |
+| `pageSize` | `integer` | No | Items per page; defaults to `100` and must be positive. |
 | `namespaceId` | `string` | No     | Namespace ID of the MCP service. The default is `public`                               |
 | `mcpName`     | `string`   | No     | MCP service name pattern. Queries all MCP services when empty. When `search` is `blur`, `*` can be used for fuzzy search |
 | `search`      | `string` | No     | blur or accurate                  |
@@ -3729,7 +3772,7 @@ The `ServerVersionDetail` structure is as follows:
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/list?pageNo=1&pageSize=100&namespaceId=public&search=blur'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/list?pageNo=1&pageSize=100&namespaceId=public&search=blur'
 ```
 * Response example
 
@@ -3816,7 +3859,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/importToolsFromMcp?transportType=mcp-sse&baseUrl=%2Fsse&endpoint=http%3A%2F%2Flocalhost'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/importToolsFromMcp?transportType=mcp-sse&baseUrl=%2Fsse&endpoint=http%3A%2F%2Flocalhost'
 ```
 * Response example
 
@@ -3885,6 +3928,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 
 | Name              | Type                            | Description        |
 |------------------|---------------------------------|-----------|
+| `data` | `McpServerImportValidationResult` | MCP import validation result. |
 | `valid`          | `boolean` | whether the imported services are valid. |
 | `totalCount`     | `integer` | total number of imported services.   |
 | `validCount`     | `integer` | number of valid imported services. |
@@ -3908,7 +3952,7 @@ The `McpServerValidationItem` description is as follows:
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/validate' \
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/validate' \
 -d 'namespaceId=public' \
 -d 'importType=url' \
 -d 'data=' \
@@ -3992,6 +4036,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 
 | Name            | Type                          | Description        |
 |----------------|-------------------------------|-----------|
+| `data` | `McpServerImportResponse` | MCP import execution result. |
 | `success`      | `boolean` | whether service import succeeded. |
 | `totalCount`   | `integer` | total number of imported services.   |
 | `successCount` | `integer` | number of services imported successfully. |
@@ -4014,7 +4059,7 @@ The `McpServerImportResult` description is as follows:
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/execute' \
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/execute' \
 -d 'namespaceId=public' \
 -d 'importType=url' \
 -d 'data=' \
@@ -4049,6 +4094,803 @@ curl -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/import/execute' \
 }
 ```
 
+### 4.9. List MCP Lifecycle Versions
+
+#### Description
+
+Lists version summaries by name, including drafts and versions under review.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`GET`
+
+#### Authorization
+
+Requires user identity with read permission for the corresponding namespace.
+
+#### Request URL
+
+`/v3/console/ai/mcp/versions`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID; defaults to `public`. |
+| `mcpName` | `string` | **Yes** | MCP server name. |
+| `status` | `string` | No | Version status: `draft`, `reviewing`, `reviewed`, `online`, or `offline`; omit to list all statuses. |
+| `pageNo` | `integer` | No | Page number; defaults to `1` and must be positive. |
+| `pageSize` | `integer` | No | Items per page; defaults to `100` and must be positive. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `Page<McpServerVersionSummary>` | Version summary page. |
+| `data.totalCount` | `integer` | Total matching versions. |
+| `data.pageNumber` | `integer` | Current page number. |
+| `data.pagesAvailable` | `integer` | Total available pages. |
+| `data.pageItems` | `array<McpServerVersionSummary>` | Version summaries on this page. |
+
+#### Examples
+
+```bash
+curl -sS -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/versions?namespaceId=public&mcpName=my-mcp&pageNo=1&pageSize=100'
+```
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "totalCount": 0,
+    "pageNumber": 1,
+    "pagesAvailable": 0,
+    "pageItems": []
+  }
+}
+```
+
+### 4.10. Get MCP Lifecycle Version Details
+
+#### Description
+
+Reads the content, lifecycle status, and resource information of an exact version. `writable` indicates the caller's write permission, not whether any version content can be edited.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`GET`
+
+#### Authorization
+
+Requires user identity with read permission for the corresponding namespace.
+
+#### Request URL
+
+`/v3/console/ai/mcp/version`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID; defaults to `public`. |
+| `mcpName` | `string` | **Yes** | MCP server name. |
+| `version` | `string` | **Yes** | Exact version number, not a label. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `McpServerVersionDetail` | Version metadata; see the model descriptions at the start of this chapter. |
+
+#### Examples
+
+```bash
+curl -sS -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/mcp/version?namespaceId=public&mcpName=my-mcp&version=1.0.0'
+```
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "namespaceId": "public",
+    "mcpName": "my-mcp",
+    "version": "1.0.0",
+    "status": "draft",
+    "writable": true
+  }
+}
+```
+
+### 4.11. Create an MCP Draft
+
+#### Description
+
+Creates a resource and its draft, or a subsequent draft for an existing resource. Creating a draft does not expose that version to clients. This example uses `stdio`, so no remote endpoint is required.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+Request body type: `application/x-www-form-urlencoded`.
+
+#### Authorization
+
+Requires user identity with write permission for the corresponding namespace.
+
+#### Request URL
+
+`/v3/console/ai/mcp/draft`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID; defaults to `public`. |
+| `mcpName` | `string` | **Yes** | MCP server name. |
+| `version` | `string` | **Yes** | Exact version number, not a label. |
+| `serverSpecification` | `string` | **Yes** | `McpServerBasicInfo` JSON object string. Repeated name or version values must match the form; `id` is not accepted. |
+| `toolSpecification` | `string` | No | `McpToolSpecification` JSON object string describing tools and their metadata. |
+| `resourceSpecification` | `string` | No | `McpResourceSpecification` JSON object string describing resources and resource templates. |
+| `endpointSpecification` | `string` | No | `McpEndpointSpec` JSON object string; conditionally required for non-`stdio` servers. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `McpServerVersionDetail` | Version metadata; see the model descriptions at the start of this chapter. |
+
+#### Examples
+
+```bash
+curl -sS -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/draft' \
+  -d 'namespaceId=public' -d 'mcpName=my-mcp' -d 'version=1.0.0' \
+  --data-urlencode 'serverSpecification={"protocol":"stdio","frontProtocol":"stdio","description":"Example MCP server","localServerConfig":{"my-mcp":{"command":"npx","args":["-y","@modelcontextprotocol/server-everything"]}}}'
+```
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "namespaceId": "public",
+    "mcpName": "my-mcp",
+    "version": "1.0.0",
+    "status": "draft"
+  }
+}
+```
+
+### 4.12. Update an MCP Draft
+
+#### Description
+
+Replaces the content of the exact current draft. Only a `draft` version can be edited. Submit the complete Server, Tools, Resources, and endpoint configuration that must be retained.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`PUT`
+
+Request body type: `application/x-www-form-urlencoded`.
+
+#### Authorization
+
+Requires user identity with write permission for the corresponding namespace.
+
+#### Request URL
+
+`/v3/console/ai/mcp/draft`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID; defaults to `public`. |
+| `mcpName` | `string` | **Yes** | MCP server name. |
+| `version` | `string` | **Yes** | Exact version number, not a label. |
+| `serverSpecification` | `string` | **Yes** | `McpServerBasicInfo` JSON object string. Repeated name or version values must match the form; `id` is not accepted. |
+| `toolSpecification` | `string` | No | `McpToolSpecification` JSON object string describing tools and their metadata. |
+| `resourceSpecification` | `string` | No | `McpResourceSpecification` JSON object string describing resources and resource templates. |
+| `endpointSpecification` | `string` | No | `McpEndpointSpec` JSON object string; conditionally required for non-`stdio` servers. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `McpServerVersionDetail` | Version metadata; see the model descriptions at the start of this chapter. |
+
+#### Examples
+
+```bash
+curl -sS -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp/draft' \
+  -d 'namespaceId=public' -d 'mcpName=my-mcp' -d 'version=1.0.0' \
+  --data-urlencode 'serverSpecification={"protocol":"stdio","frontProtocol":"stdio","description":"Example MCP server","localServerConfig":{"my-mcp":{"command":"npx","args":["-y","@modelcontextprotocol/server-everything"]}}}'
+```
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "namespaceId": "public",
+    "mcpName": "my-mcp",
+    "version": "1.0.0",
+    "status": "draft"
+  }
+}
+```
+
+### 4.13. Delete an MCP Draft
+
+#### Description
+
+Deletes the exact current draft. This endpoint cannot delete a published version.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`DELETE`
+
+Request body type: `application/x-www-form-urlencoded`.
+
+#### Authorization
+
+Requires user identity with write permission for the corresponding namespace.
+
+#### Request URL
+
+`/v3/console/ai/mcp/draft`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID; defaults to `public`. |
+| `mcpName` | `string` | **Yes** | MCP server name. |
+| `version` | `string` | **Yes** | Exact version number, not a label. |
+
+#### Response Data
+
+The unified response has `code=0` and `data=null` on success.
+
+#### Examples
+
+```bash
+curl -sS -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3/console/ai/mcp/draft' \
+  -d 'namespaceId=public' -d 'mcpName=my-mcp' -d 'version=1.0.0'
+```
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": null
+}
+```
+
+### 4.14. Submit an MCP Version
+
+#### Description
+
+Submits a draft to the publishing workflow. An applicable review pipeline moves it to `reviewing`; without one, it is published directly as `online`. The response example shows submission for review.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+Request body type: `application/x-www-form-urlencoded`.
+
+#### Authorization
+
+Requires user identity with write permission for the corresponding namespace.
+
+#### Request URL
+
+`/v3/console/ai/mcp/submit`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID; defaults to `public`. |
+| `mcpName` | `string` | **Yes** | MCP server name. |
+| `version` | `string` | **Yes** | Exact version number, not a label. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `McpServerVersionSummary` | Version metadata; see the model descriptions at the start of this chapter. |
+
+#### Examples
+
+```bash
+curl -sS -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/submit' \
+  -d 'namespaceId=public' -d 'mcpName=my-mcp' -d 'version=1.0.0'
+```
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "version": "1.0.0",
+    "status": "reviewing"
+  }
+}
+```
+
+### 4.15. Publish an MCP Version
+
+#### Description
+
+Publishes an approved `reviewed` version as `online` and moves `latest` to it. Rejected versions may also be `reviewed`; status alone does not establish approval.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+Request body type: `application/x-www-form-urlencoded`.
+
+#### Authorization
+
+Requires user identity with write permission for the corresponding namespace.
+
+#### Request URL
+
+`/v3/console/ai/mcp/publish`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID; defaults to `public`. |
+| `mcpName` | `string` | **Yes** | MCP server name. |
+| `version` | `string` | **Yes** | Exact version number, not a label. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `McpServerVersionSummary` | Version metadata; see the model descriptions at the start of this chapter. |
+
+#### Examples
+
+```bash
+curl -sS -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/publish' \
+  -d 'namespaceId=public' -d 'mcpName=my-mcp' -d 'version=1.0.0'
+```
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "version": "1.0.0",
+    "status": "online",
+    "latest": true
+  }
+}
+```
+
+### 4.16. Force-publish an MCP Version
+
+#### Description
+
+Bypasses the review pipeline to publish a `draft`, `reviewing`, or `reviewed` version as `online` and update `latest`. This administrative operation requires additional authorization and auditing; use submit and publish for the normal workflow.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+Request body type: `application/x-www-form-urlencoded`.
+
+#### Authorization
+
+Requires user identity with write permission for the corresponding namespace.
+
+#### Request URL
+
+`/v3/console/ai/mcp/force-publish`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID; defaults to `public`. |
+| `mcpName` | `string` | **Yes** | MCP server name. |
+| `version` | `string` | **Yes** | Exact version number, not a label. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `McpServerVersionSummary` | Version metadata; see the model descriptions at the start of this chapter. |
+
+#### Examples
+
+```bash
+curl -sS -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/force-publish' \
+  -d 'namespaceId=public' -d 'mcpName=my-mcp' -d 'version=1.0.0'
+```
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "version": "1.0.0",
+    "status": "online",
+    "latest": true
+  }
+}
+```
+
+### 4.17. Redraft an MCP Version
+
+#### Description
+
+Returns the current `reviewed` working version to `draft` for further editing and resubmission.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+Request body type: `application/x-www-form-urlencoded`.
+
+#### Authorization
+
+Requires user identity with write permission for the corresponding namespace.
+
+#### Request URL
+
+`/v3/console/ai/mcp/redraft`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID; defaults to `public`. |
+| `mcpName` | `string` | **Yes** | MCP server name. |
+| `version` | `string` | **Yes** | Exact version number, not a label. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `McpServerVersionSummary` | Version metadata; see the model descriptions at the start of this chapter. |
+
+#### Examples
+
+```bash
+curl -sS -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/redraft' \
+  -d 'namespaceId=public' -d 'mcpName=my-mcp' -d 'version=1.0.0'
+```
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "version": "1.0.0",
+    "status": "draft"
+  }
+}
+```
+
+### 4.18. Bring an MCP Version Online
+
+#### Description
+
+Restores an `offline` version to `online` and moves `latest` to it.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+Request body type: `application/x-www-form-urlencoded`.
+
+#### Authorization
+
+Requires user identity with write permission for the corresponding namespace.
+
+#### Request URL
+
+`/v3/console/ai/mcp/online`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID; defaults to `public`. |
+| `mcpName` | `string` | **Yes** | MCP server name. |
+| `version` | `string` | **Yes** | Exact version number, not a label. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `McpServerVersionSummary` | Version metadata; see the model descriptions at the start of this chapter. |
+
+#### Examples
+
+```bash
+curl -sS -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/online' \
+  -d 'namespaceId=public' -d 'mcpName=my-mcp' -d 'version=1.0.0'
+```
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "version": "1.0.0",
+    "status": "online",
+    "latest": true
+  }
+}
+```
+
+### 4.19. Take an MCP Version Offline
+
+#### Description
+
+Changes an `online` version to `offline`, removing it from client discovery. If it was `latest`, the server selects another online version or removes `latest` when none remains. This does not stop an independently deployed MCP process.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+Request body type: `application/x-www-form-urlencoded`.
+
+#### Authorization
+
+Requires user identity with write permission for the corresponding namespace.
+
+#### Request URL
+
+`/v3/console/ai/mcp/offline`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID; defaults to `public`. |
+| `mcpName` | `string` | **Yes** | MCP server name. |
+| `version` | `string` | **Yes** | Exact version number, not a label. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `McpServerVersionSummary` | Version metadata; see the model descriptions at the start of this chapter. |
+
+#### Examples
+
+```bash
+curl -sS -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/mcp/offline' \
+  -d 'namespaceId=public' -d 'mcpName=my-mcp' -d 'version=1.0.0'
+```
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "version": "1.0.0",
+    "status": "offline",
+    "latest": false
+  }
+}
+```
+
+### 4.20. Update MCP Version Labels
+
+#### Description
+
+Replaces the complete custom version-label map. Labels must target online versions. The server maintains `latest`; this endpoint cannot change it.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`PUT`
+
+Request body type: `application/x-www-form-urlencoded`.
+
+#### Authorization
+
+Requires user identity with write permission for the corresponding namespace.
+
+#### Request URL
+
+`/v3/console/ai/mcp/labels`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID; defaults to `public`. |
+| `mcpName` | `string` | **Yes** | MCP server name. |
+| `labels` | `string` | No | `map<string, string>` JSON object string mapping custom labels to online versions. Omit or send `{}` to clear custom labels while preserving `latest`. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `map<string, string>` | Updated version-label map. |
+
+#### Examples
+
+```bash
+curl -sS -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp/labels' \
+  -d 'namespaceId=public' -d 'mcpName=my-mcp' \
+  --data-urlencode 'labels={"stable":"1.0.0"}'
+```
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "latest": "1.0.0",
+    "stable": "1.0.0"
+  }
+}
+```
+
+### 4.21. Update MCP Resource Status
+
+#### Description
+
+Enables or disables the MCP resource without changing version states. Disabling removes it from client discovery; re-enabling restores its existing online versions.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`PUT`
+
+Request body type: `application/x-www-form-urlencoded`.
+
+#### Authorization
+
+Requires user identity with write permission for the corresponding namespace.
+
+#### Request URL
+
+`/v3/console/ai/mcp/status`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID; defaults to `public`. |
+| `mcpName` | `string` | **Yes** | MCP server name. |
+| `enabled` | `boolean` | **Yes** | `true` enables the resource; `false` disables it. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `string` | `ok` on success. |
+
+#### Examples
+
+```bash
+curl -sS -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp/status' \
+  -d 'namespaceId=public' -d 'mcpName=my-mcp' -d 'enabled=true'
+```
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": "ok"
+}
+```
+
+### 4.22. Update MCP Visibility Scope
+
+#### Description
+
+Sets resource visibility to `PUBLIC` or `PRIVATE` without changing version states. `PUBLIC` does not disable API authentication.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`PUT`
+
+Request body type: `application/x-www-form-urlencoded`.
+
+#### Authorization
+
+Requires user identity with write permission for the corresponding namespace.
+
+#### Request URL
+
+`/v3/console/ai/mcp/scope`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID; defaults to `public`. |
+| `mcpName` | `string` | **Yes** | MCP server name. |
+| `scope` | `string` | **Yes** | Visibility scope: `PUBLIC` or `PRIVATE`. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `string` | `ok` on success. |
+
+#### Examples
+
+```bash
+curl -sS -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/mcp/scope' \
+  -d 'namespaceId=public' -d 'mcpName=my-mcp' -d 'scope=PRIVATE'
+```
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": "ok"
+}
+```
+
 ## 5. A2A Registry
 
 ### 5.1. Query AgentCard List
@@ -4077,8 +4919,8 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name           | Type     | Required  | Description                                              |
 |---------------|----------|-------|-------------------------------------------------|
-| `pageNo`      | `integer` | **Yes** | current page. The default is `1`                                      |
-| `pageSize`    | `integer` | **Yes** | page item count. The default is `100`                                   |
+| `pageNo` | `integer` | No | Page number; defaults to `1` and must be positive. |
+| `pageSize` | `integer` | No | Items per page; defaults to `100` and must be positive. |
 | `namespaceId` | `string` | No     | Namespace ID of the AgentCard. The default is `public`                    |
 | `agentName`   | `string` | No     | AgentCard name. Queries all AgentCards when empty                   |
 | `search`      | `string` | **Yes** | blur or accurate |
@@ -4118,7 +4960,7 @@ The `AgentVersionDetail` structure contains the following fields:
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a/list?pageNo=1&pageSize=100&namespaceId=public&search=blur'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a/list?pageNo=1&pageSize=100&namespaceId=public&search=blur'
 ```
 * Response example
 
@@ -4217,7 +5059,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a/version/list?namespaceId=public&agentName=GeoSpatial+Route+Planner+Agent'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a/version/list?namespaceId=public&agentName=GeoSpatial+Route+Planner+Agent'
 ```
 * Response example
 
@@ -4271,6 +5113,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 
 | Name                                 | Type                              | Description                                                                                                       |
 |-------------------------------------|-----------------------------------|----------------------------------------------------------------------------------------------------------|
+| `data` | `AgentCardDetailInfo` | A2A AgentCard details. |
 | `protocolVersion`                   | `string` | A2A protocol version of the AgentCard.                                                                                       |
 | `name`                              | `string` | AgentCard name.                                                                                            |
 | `description`                       | `string` | AgentCard description.                                                                                            |
@@ -4297,7 +5140,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a?namespaceId=public&agentName=GeoSpatial+Route+Planner+Agent&version=1.0.0&registrationType=SERVICE'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/a2a?namespaceId=public&agentName=GeoSpatial+Route+Planner+Agent&version=1.0.0&registrationType=SERVICE'
 ```
 * Response example
 
@@ -4414,9 +5257,9 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/a2a' \
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/a2a' \
 -d 'namespaceId=public' \
--d 'agentCard={"protocolVersion":"0.2.9","name":"GeoSpatial Route Planner Agent","description":"Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.","url":"https://georoute-agent.example.com/a2a/v1","preferredTransport":"JSONRPC","additionalInterfaces":[{"url":"https://georoute-agent.example.com/a2a/v1","transport":"JSONRPC"},{"url":"https://georoute-agent.example.com/a2a/grpc","transport":"GRPC"},{"url":"https://georoute-agent.example.com/a2a/json","transport":"HTTP+JSON"}],"provider":{"organization":"Example Geo Services Inc.","url":"https://www.examplegeoservices.com"},"iconUrl":"https://georoute-agent.example.com/icon.png","version":"1.2.0","documentationUrl":"https://docs.examplegeoservices.com/georoute-agent/api","capabilities":{"streaming":true,"pushNotifications":true,"stateTransitionHistory":false},"securitySchemes":{"google":{"type":"openIdConnect","openIdConnectUrl":"https://accounts.google.com/.well-known/openid-configuration"}},"security":[{"google":["openid","profile","email"]}],"defaultInputModes":["application/json","text/plain"],"defaultOutputModes":["application/json","image/png"],"skills":[{"id":"route-optimizer-traffic","name":"Traffic-Aware Route Optimizer","description":"Calculates the optimal driving route between two or more locations, taking into account real-time traffic conditions, road closures, and user preferences (e.g., avoid tolls, prefer highways).","tags":["maps","routing","navigation","directions","traffic"],"examples":["Plan a route from '1600 Amphitheatre Parkway, Mountain View, CA' to 'San Francisco International Airport' avoiding tolls.","{\"origin\": {\"lat\": 37.422, \"lng\": -122.084}, \"destination\": {\"lat\": 37.7749, \"lng\": -122.4194}, \"preferences\": [\"avoid_ferries\"]}"],"inputModes":["application/json","text/plain"],"outputModes":["application/json","application/vnd.geo+json","text/html"]},{"id":"custom-map-generator","name":"Personalized Map Generator","description":"Creates custom map images or interactive map views based on user-defined points of interest, routes, and style preferences. Can overlay data layers.","tags":["maps","customization","visualization","cartography"],"examples":["Generate a map of my upcoming road trip with all planned stops highlighted.","Show me a map visualizing all coffee shops within a 1-mile radius of my current location."],"inputModes":["application/json"],"outputModes":["image/png","image/jpeg","application/json","text/html"]}],"supportsAuthenticatedExtendedCard":true,"signatures":[{"protected":"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJrZXktMSIsImprdSI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYWdlbnQvandrcy5qc29uIn0","signature":"QFdkNLNszlGj3z3u0YQGt_T9LixY3qtdQpZmsTdDHDe3fXV9y9-B3m2-XgCpzuhiLt8E0tV6HXoZKHv4GtHgKQ"}]}' \
+--data-urlencode 'agentCard={"protocolVersion":"0.2.9","name":"GeoSpatial Route Planner Agent","description":"Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.","url":"https://georoute-agent.example.com/a2a/v1","preferredTransport":"JSONRPC","additionalInterfaces":[{"url":"https://georoute-agent.example.com/a2a/v1","transport":"JSONRPC"},{"url":"https://georoute-agent.example.com/a2a/grpc","transport":"GRPC"},{"url":"https://georoute-agent.example.com/a2a/json","transport":"HTTP+JSON"}],"provider":{"organization":"Example Geo Services Inc.","url":"https://www.examplegeoservices.com"},"iconUrl":"https://georoute-agent.example.com/icon.png","version":"1.2.0","documentationUrl":"https://docs.examplegeoservices.com/georoute-agent/api","capabilities":{"streaming":true,"pushNotifications":true,"stateTransitionHistory":false},"securitySchemes":{"google":{"type":"openIdConnect","openIdConnectUrl":"https://accounts.google.com/.well-known/openid-configuration"}},"security":[{"google":["openid","profile","email"]}],"defaultInputModes":["application/json","text/plain"],"defaultOutputModes":["application/json","image/png"],"skills":[{"id":"route-optimizer-traffic","name":"Traffic-Aware Route Optimizer","description":"Calculates the optimal driving route between two or more locations, taking into account real-time traffic conditions, road closures, and user preferences (e.g., avoid tolls, prefer highways).","tags":["maps","routing","navigation","directions","traffic"],"examples":["Plan a route from \u00271600 Amphitheatre Parkway, Mountain View, CA\u0027 to \u0027San Francisco International Airport\u0027 avoiding tolls.","{\"origin\": {\"lat\": 37.422, \"lng\": -122.084}, \"destination\": {\"lat\": 37.7749, \"lng\": -122.4194}, \"preferences\": [\"avoid_ferries\"]}"],"inputModes":["application/json","text/plain"],"outputModes":["application/json","application/vnd.geo+json","text/html"]},{"id":"custom-map-generator","name":"Personalized Map Generator","description":"Creates custom map images or interactive map views based on user-defined points of interest, routes, and style preferences. Can overlay data layers.","tags":["maps","customization","visualization","cartography"],"examples":["Generate a map of my upcoming road trip with all planned stops highlighted.","Show me a map visualizing all coffee shops within a 1-mile radius of my current location."],"inputModes":["application/json"],"outputModes":["image/png","image/jpeg","application/json","text/html"]}],"supportsAuthenticatedExtendedCard":true,"signatures":[{"protected":"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJrZXktMSIsImprdSI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYWdlbnQvandrcy5qc29uIn0","signature":"QFdkNLNszlGj3z3u0YQGt_T9LixY3qtdQpZmsTdDHDe3fXV9y9-B3m2-XgCpzuhiLt8E0tV6HXoZKHv4GtHgKQ"}]}' \
 -d 'registrationType=SERVICE' \
 -d 'setAsLatest=true'
 ```
@@ -4473,9 +5316,9 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/a2a' \
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/a2a' \
 -d 'namespaceId=public' \
--d 'agentCard={"protocolVersion":"0.2.9","name":"GeoSpatial Route Planner Agent","description":"Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.","url":"https://georoute-agent.example.com/a2a/v1","preferredTransport":"JSONRPC","additionalInterfaces":[{"url":"https://georoute-agent.example.com/a2a/v1","transport":"JSONRPC"},{"url":"https://georoute-agent.example.com/a2a/grpc","transport":"GRPC"},{"url":"https://georoute-agent.example.com/a2a/json","transport":"HTTP+JSON"}],"provider":{"organization":"Example Geo Services Inc.","url":"https://www.examplegeoservices.com"},"iconUrl":"https://georoute-agent.example.com/icon.png","version":"1.2.0","documentationUrl":"https://docs.examplegeoservices.com/georoute-agent/api","capabilities":{"streaming":true,"pushNotifications":true,"stateTransitionHistory":false},"securitySchemes":{"google":{"type":"openIdConnect","openIdConnectUrl":"https://accounts.google.com/.well-known/openid-configuration"}},"security":[{"google":["openid","profile","email"]}],"defaultInputModes":["application/json","text/plain"],"defaultOutputModes":["application/json","image/png"],"skills":[{"id":"route-optimizer-traffic","name":"Traffic-Aware Route Optimizer","description":"Calculates the optimal driving route between two or more locations, taking into account real-time traffic conditions, road closures, and user preferences (e.g., avoid tolls, prefer highways).","tags":["maps","routing","navigation","directions","traffic"],"examples":["Plan a route from '1600 Amphitheatre Parkway, Mountain View, CA' to 'San Francisco International Airport' avoiding tolls.","{\"origin\": {\"lat\": 37.422, \"lng\": -122.084}, \"destination\": {\"lat\": 37.7749, \"lng\": -122.4194}, \"preferences\": [\"avoid_ferries\"]}"],"inputModes":["application/json","text/plain"],"outputModes":["application/json","application/vnd.geo+json","text/html"]},{"id":"custom-map-generator","name":"Personalized Map Generator","description":"Creates custom map images or interactive map views based on user-defined points of interest, routes, and style preferences. Can overlay data layers.","tags":["maps","customization","visualization","cartography"],"examples":["Generate a map of my upcoming road trip with all planned stops highlighted.","Show me a map visualizing all coffee shops within a 1-mile radius of my current location."],"inputModes":["application/json"],"outputModes":["image/png","image/jpeg","application/json","text/html"]}],"supportsAuthenticatedExtendedCard":true,"signatures":[{"protected":"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJrZXktMSIsImprdSI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYWdlbnQvandrcy5qc29uIn0","signature":"QFdkNLNszlGj3z3u0YQGt_T9LixY3qtdQpZmsTdDHDe3fXV9y9-B3m2-XgCpzuhiLt8E0tV6HXoZKHv4GtHgKQ"}]}' \
+--data-urlencode 'agentCard={"protocolVersion":"0.2.9","name":"GeoSpatial Route Planner Agent","description":"Provides advanced route planning, traffic analysis, and custom map generation services. This agent can calculate optimal routes, estimate travel times considering real-time traffic, and create personalized maps with points of interest.","url":"https://georoute-agent.example.com/a2a/v1","preferredTransport":"JSONRPC","additionalInterfaces":[{"url":"https://georoute-agent.example.com/a2a/v1","transport":"JSONRPC"},{"url":"https://georoute-agent.example.com/a2a/grpc","transport":"GRPC"},{"url":"https://georoute-agent.example.com/a2a/json","transport":"HTTP+JSON"}],"provider":{"organization":"Example Geo Services Inc.","url":"https://www.examplegeoservices.com"},"iconUrl":"https://georoute-agent.example.com/icon.png","version":"1.2.0","documentationUrl":"https://docs.examplegeoservices.com/georoute-agent/api","capabilities":{"streaming":true,"pushNotifications":true,"stateTransitionHistory":false},"securitySchemes":{"google":{"type":"openIdConnect","openIdConnectUrl":"https://accounts.google.com/.well-known/openid-configuration"}},"security":[{"google":["openid","profile","email"]}],"defaultInputModes":["application/json","text/plain"],"defaultOutputModes":["application/json","image/png"],"skills":[{"id":"route-optimizer-traffic","name":"Traffic-Aware Route Optimizer","description":"Calculates the optimal driving route between two or more locations, taking into account real-time traffic conditions, road closures, and user preferences (e.g., avoid tolls, prefer highways).","tags":["maps","routing","navigation","directions","traffic"],"examples":["Plan a route from \u00271600 Amphitheatre Parkway, Mountain View, CA\u0027 to \u0027San Francisco International Airport\u0027 avoiding tolls.","{\"origin\": {\"lat\": 37.422, \"lng\": -122.084}, \"destination\": {\"lat\": 37.7749, \"lng\": -122.4194}, \"preferences\": [\"avoid_ferries\"]}"],"inputModes":["application/json","text/plain"],"outputModes":["application/json","application/vnd.geo+json","text/html"]},{"id":"custom-map-generator","name":"Personalized Map Generator","description":"Creates custom map images or interactive map views based on user-defined points of interest, routes, and style preferences. Can overlay data layers.","tags":["maps","customization","visualization","cartography"],"examples":["Generate a map of my upcoming road trip with all planned stops highlighted.","Show me a map visualizing all coffee shops within a 1-mile radius of my current location."],"inputModes":["application/json"],"outputModes":["image/png","image/jpeg","application/json","text/html"]}],"supportsAuthenticatedExtendedCard":true,"signatures":[{"protected":"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJrZXktMSIsImprdSI6Imh0dHBzOi8vZXhhbXBsZS5jb20vYWdlbnQvandrcy5qc29uIn0","signature":"QFdkNLNszlGj3z3u0YQGt_T9LixY3qtdQpZmsTdDHDe3fXV9y9-B3m2-XgCpzuhiLt8E0tV6HXoZKHv4GtHgKQ"}]}' \
 -d 'registrationType=SERVICE'
 ```
 * Response example
@@ -4531,7 +5374,7 @@ The response body follows the [Nacos Open API unified response format](../user/o
 * Request example
 
 ```shell
-curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/a2a?namespaceId=public&agentName=GeoSpatial+Route+Planner+Agent&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3/console/ai/a2a?namespaceId=public&agentName=GeoSpatial+Route+Planner+Agent&version=1.0.0'
 ```
 * Response example
 
@@ -4587,7 +5430,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/prompt?namespaceId=public&promptKey=my-prompt'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3/console/ai/prompt?namespaceId=public&promptKey=my-prompt'
 ```
 
 * Response example
@@ -4642,7 +5485,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/biz-tags' -d "namespaceId=namespaceId&promptKey=promptKey&bizTags=bizTags"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/biz-tags' -d "namespaceId=namespaceId&promptKey=promptKey&bizTags=bizTags"
 ```
 
 * Response example
@@ -4697,7 +5540,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/description' -d "namespaceId=namespaceId&promptKey=promptKey&description=description"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/description' -d "namespaceId=namespaceId&promptKey=promptKey&description=description"
 ```
 
 * Response example
@@ -4758,7 +5601,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/draft' -d "namespaceId=namespaceId&promptKey=promptKey&basedOnVersion=basedOnVersion&targetVersion=targetVersion&template=template&variables=variables&commitMsg=commitMsg&description=description&bizTags=bizTags"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/draft' -d "namespaceId=namespaceId&promptKey=promptKey&basedOnVersion=basedOnVersion&targetVersion=targetVersion&template=template&variables=variables&commitMsg=commitMsg&description=description&bizTags=bizTags"
 ```
 
 * Response example
@@ -4815,7 +5658,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/draft' -d "namespaceId=namespaceId&promptKey=promptKey&template=template&variables=variables&commitMsg=commitMsg"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/draft' -d "namespaceId=namespaceId&promptKey=promptKey&template=template&variables=variables&commitMsg=commitMsg"
 ```
 
 * Response example
@@ -4869,7 +5712,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/prompt/draft?namespaceId=public&promptKey=my-prompt'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3/console/ai/prompt/draft?namespaceId=public&promptKey=my-prompt'
 ```
 
 * Response example
@@ -4924,7 +5767,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/force-publish' -d "namespaceId=public&promptKey=my-prompt&version=1.0.0"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/force-publish' -d "namespaceId=public&promptKey=my-prompt&version=1.0.0"
 ```
 
 * Response example
@@ -4992,7 +5835,7 @@ A user identity with the corresponding `namespace read` permission is required.
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/governance?namespaceId=public&promptKey=my-prompt'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/governance?namespaceId=public&promptKey=my-prompt'
 ```
 
 * Response example
@@ -5065,7 +5908,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/labels' -d "namespaceId=namespaceId&promptKey=promptKey&labels=labels"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/prompt/labels' -d "namespaceId=namespaceId&promptKey=promptKey&labels=labels"
 ```
 
 * Response example
@@ -5123,7 +5966,7 @@ A user identity with the corresponding `namespace read` permission is required.
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/list?pageNo=1&pageSize=10&namespaceId=public&promptKey=my-prompt&search=blur&bizTags=tag-a'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/list?pageNo=1&pageSize=10&namespaceId=public&promptKey=my-prompt&search=blur&bizTags=tag-a'
 ```
 
 * Response example
@@ -5178,7 +6021,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/offline' -d "namespaceId=namespaceId&promptKey=promptKey&version=version"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/offline' -d "namespaceId=namespaceId&promptKey=promptKey&version=version"
 ```
 
 * Response example
@@ -5233,7 +6076,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/online' -d "namespaceId=namespaceId&promptKey=promptKey&version=version"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/online' -d "namespaceId=namespaceId&promptKey=promptKey&version=version"
 ```
 
 * Response example
@@ -5288,7 +6131,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/publish' -d "namespaceId=public&promptKey=my-prompt&version=1.0.0"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/publish' -d "namespaceId=public&promptKey=my-prompt&version=1.0.0"
 ```
 
 * Response example
@@ -5343,7 +6186,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/redraft' -d "namespaceId=namespaceId&promptKey=promptKey&version=version"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/redraft' -d "namespaceId=namespaceId&promptKey=promptKey&version=version"
 ```
 
 * Response example
@@ -5398,7 +6241,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/submit' -d "namespaceId=namespaceId&promptKey=promptKey&version=version"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/prompt/submit' -d "namespaceId=namespaceId&promptKey=promptKey&version=version"
 ```
 
 * Response example
@@ -5463,7 +6306,7 @@ A user identity with the corresponding `namespace read` permission is required.
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/version?namespaceId=public&promptKey=my-prompt&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/version?namespaceId=public&promptKey=my-prompt&version=1.0.0'
 ```
 
 * Response example
@@ -5510,7 +6353,7 @@ A user identity with the corresponding `namespace read` permission is required.
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/version/download?namespaceId=public&promptKey=my-prompt&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/version/download?namespaceId=public&promptKey=my-prompt&version=1.0.0'
 ```
 
 * Response example
@@ -5566,7 +6409,7 @@ A user identity with the corresponding `namespace read` permission is required.
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/versions?namespaceId=public&promptKey=my-prompt&pageNo=1&pageSize=10'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/versions?namespaceId=public&promptKey=my-prompt&pageNo=1&pageSize=10'
 ```
 
 * Response example
@@ -5638,7 +6481,7 @@ A user identity with the corresponding `namespace read` permission is required.
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills?namespaceId=public&skillName=my-skill&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/skills?namespaceId=public&skillName=my-skill&version=1.0.0'
 ```
 
 * Response example
@@ -5693,7 +6536,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/skills?namespaceId=public&skillName=my-skill&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3/console/ai/skills?namespaceId=public&skillName=my-skill&version=1.0.0'
 ```
 
 * Response example
@@ -5748,7 +6591,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/biz-tags' -d "namespaceId=public&skillName=my-skill&bizTags=bizTags"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/biz-tags' -d "namespaceId=public&skillName=my-skill&bizTags=bizTags"
 ```
 
 * Response example
@@ -5806,7 +6649,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=public&skillName=my-skill&targetVersion=1.0.0&skillCard={}&commitMsg=initial"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=public&skillName=my-skill&targetVersion=1.0.0&skillCard={}&commitMsg=initial"
 ```
 
 * Response example
@@ -5862,7 +6705,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=public&skillCard={}&setAsLatest=true&commitMsg=update"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=public&skillCard={}&setAsLatest=true&commitMsg=update"
 ```
 
 * Response example
@@ -5916,7 +6759,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/skills/draft?namespaceId=public&skillName=my-skill'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3/console/ai/skills/draft?namespaceId=public&skillName=my-skill'
 ```
 
 * Response example
@@ -5971,7 +6814,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/force-publish' -d "namespaceId=public&skillName=my-skill&version=1.0.0"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/force-publish' -d "namespaceId=public&skillName=my-skill&version=1.0.0"
 ```
 
 * Response example
@@ -6026,7 +6869,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/labels' -d "namespaceId=public&skillName=my-skill&labels=labels"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/labels' -d "namespaceId=public&skillName=my-skill&labels=labels"
 ```
 
 * Response example
@@ -6064,8 +6907,8 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `pageNo` | `integer` | **Yes** | - |
-| `pageSize` | `integer` | **Yes** | - |
+| `pageNo` | `integer` | No | Page number; defaults to `1` and must be positive. |
+| `pageSize` | `integer` | No | Items per page; defaults to `100` and must be positive. |
 | `namespaceId` | `string` | No | - |
 | `skillName` | `string` | No | - |
 | `search` | `string` | No | blur or accurate |
@@ -6078,16 +6921,18 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| `data` | `Page<SkillSummary>` | Paginated Skill results. |
+| `data.totalCount` | `integer` | Total number of matching records. |
+| `data.pageNumber` | `integer` | Current page number. |
+| `data.pagesAvailable` | `integer` | Number of available pages. |
+| `data.pageItems` | `array<SkillSummary>` | Skill summaries on this page, including name, description, owner, visibility, enablement, version labels, and download count. |
 
 #### Examples
 
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/list?pageNo=1&pageSize=10&namespaceId=public&skillName=my-skill&search=blur&orderBy=updateTime'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/list?pageNo=1&pageSize=10&namespaceId=public&skillName=my-skill&search=blur&orderBy=updateTime'
 ```
 
 * Response example
@@ -6143,7 +6988,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/offline' -d "namespaceId=public&skillName=my-skill&scope=scope&version=version"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/offline' -d "namespaceId=public&skillName=my-skill&scope=scope&version=version"
 ```
 
 * Response example
@@ -6199,7 +7044,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/online' -d "namespaceId=public&skillName=my-skill&scope=scope&version=version"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/online' -d "namespaceId=public&skillName=my-skill&scope=scope&version=version"
 ```
 
 * Response example
@@ -6254,7 +7099,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/publish' -d "namespaceId=public&skillName=my-skill&version=1.0.0"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/publish' -d "namespaceId=public&skillName=my-skill&version=1.0.0"
 ```
 
 * Response example
@@ -6309,7 +7154,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/redraft' -d "namespaceId=public&skillName=my-skill&version=version"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/redraft' -d "namespaceId=public&skillName=my-skill&version=version"
 ```
 
 * Response example
@@ -6364,7 +7209,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/scope' -d "namespaceId=public&skillName=my-skill&scope=scope"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/scope' -d "namespaceId=public&skillName=my-skill&scope=scope"
 ```
 
 * Response example
@@ -6419,7 +7264,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/submit' -d "namespaceId=public&skillName=my-skill&version=version"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/submit' -d "namespaceId=public&skillName=my-skill&version=version"
 ```
 
 * Response example
@@ -6479,7 +7324,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload?namespaceId=public&overwrite=false&targetVersion=1.0.0&commitMsg=init&uploadAction=CREATE' -F "file=@/path/to/skill.zip" -F "overwrite=false" -F "namespaceId=public" -F "targetVersion=1.0.0" -F "commitMsg=init" -F "uploadAction=CREATE"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload?namespaceId=public&overwrite=false&targetVersion=1.0.0&commitMsg=init&uploadAction=CREATE' -F "file=@/path/to/skill.zip" -F "overwrite=false" -F "namespaceId=public" -F "targetVersion=1.0.0" -F "commitMsg=init" -F "uploadAction=CREATE"
 ```
 
 * Response example
@@ -6538,7 +7383,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload/batch?namespaceId=public&overwrite=false' -F "namespaceId=public" -F "overwrite=false" -F "file=@/path/to/skills.zip"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload/batch?namespaceId=public&overwrite=false' -F "namespaceId=public" -F "overwrite=false" -F "file=@/path/to/skills.zip"
 ```
 
 * Response example
@@ -6597,7 +7442,7 @@ A user identity with the corresponding `namespace read` permission is required.
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/version?namespaceId=public&skillName=my-skill&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/version?namespaceId=public&skillName=my-skill&version=1.0.0'
 ```
 
 * Response example
@@ -6644,7 +7489,7 @@ A user identity with the corresponding `namespace read` permission is required.
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/version/download?namespaceId=public&skillName=my-skill&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/version/download?namespaceId=public&skillName=my-skill&version=1.0.0'
 ```
 
 * Response example
@@ -6716,7 +7561,7 @@ The `SkillUploadPrecheckResult` structure is as follows:
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload/precheck?namespaceId=public' -F 'file=@/path/to/skills.zip'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/skills/upload/precheck?namespaceId=public' -F 'file=@/path/to/skills.zip'
 ```
 
 * Response example
@@ -6798,7 +7643,7 @@ A user identity with the corresponding `namespace read` permission is required.
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs?namespaceId=public&agentSpecName=my-agent&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs?namespaceId=public&agentSpecName=my-agent&version=1.0.0'
 ```
 
 * Response example
@@ -6870,7 +7715,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agentspecs?namespaceId=public&agentSpecName=my-agent'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agentspecs?namespaceId=public&agentSpecName=my-agent'
 ```
 
 * Response example
@@ -6925,7 +7770,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/biz-tags' -d "namespaceId=public&agentSpecName=my-agent&bizTags=bizTags"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/biz-tags' -d "namespaceId=public&agentSpecName=my-agent&bizTags=bizTags"
 ```
 
 * Response example
@@ -6981,7 +7826,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespaceId=public&agentSpecName=my-agent&targetVersion=1.0.0"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespaceId=public&agentSpecName=my-agent&targetVersion=1.0.0"
 ```
 
 * Response example
@@ -7036,7 +7881,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespaceId=public&agentSpecCard={}&setAsLatest=true"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespaceId=public&agentSpecCard={}&setAsLatest=true"
 ```
 
 * Response example
@@ -7090,7 +7935,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft?namespaceId=public&agentSpecName=my-agent'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft?namespaceId=public&agentSpecName=my-agent'
 ```
 
 * Response example
@@ -7145,7 +7990,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/force-publish' -d "namespaceId=public&agentSpecName=my-agent&version=1.0.0"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/force-publish' -d "namespaceId=public&agentSpecName=my-agent&version=1.0.0"
 ```
 
 * Response example
@@ -7200,7 +8045,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/labels' -d "namespaceId=public&agentSpecName=my-agent&labels=labels"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/labels' -d "namespaceId=public&agentSpecName=my-agent&labels=labels"
 ```
 
 * Response example
@@ -7238,8 +8083,8 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `pageNo` | `integer` | **Yes** | - |
-| `pageSize` | `integer` | **Yes** | - |
+| `pageNo` | `integer` | No | Page number; defaults to `1` and must be positive. |
+| `pageSize` | `integer` | No | Items per page; defaults to `100` and must be positive. |
 | `namespaceId` | `string` | No | - |
 | `agentSpecName` | `string` | No | - |
 | `search` | `string` | No | Search mode: accurate or blur |
@@ -7251,16 +8096,18 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| `data` | `Page<AgentSpecSummary>` | Paginated AgentSpec results. |
+| `data.totalCount` | `integer` | Total number of matching records. |
+| `data.pageNumber` | `integer` | Current page number. |
+| `data.pagesAvailable` | `integer` | Number of available pages. |
+| `data.pageItems` | `array<AgentSpecSummary>` | AgentSpec summaries on this page, including name, description, owner, visibility, enablement, version labels, and download count. |
 
 #### Examples
 
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs/list?pageNo=1&pageSize=10&namespaceId=public&agentSpecName=my-agent&search=blur&orderBy=updateTime'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs/list?pageNo=1&pageSize=10&namespaceId=public&agentSpecName=my-agent&search=blur&orderBy=updateTime'
 ```
 
 * Response example
@@ -7316,7 +8163,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/offline' -d "namespaceId=public&agentSpecName=my-agent&scope=scope&version=version"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/offline' -d "namespaceId=public&agentSpecName=my-agent&scope=scope&version=version"
 ```
 
 * Response example
@@ -7372,7 +8219,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/online' -d "namespaceId=public&agentSpecName=my-agent&scope=scope&version=version"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/online' -d "namespaceId=public&agentSpecName=my-agent&scope=scope&version=version"
 ```
 
 * Response example
@@ -7427,7 +8274,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/publish' -d "namespaceId=public&agentSpecName=my-agent&version=1.0.0"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/publish' -d "namespaceId=public&agentSpecName=my-agent&version=1.0.0"
 ```
 
 * Response example
@@ -7482,7 +8329,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/redraft' -d "namespaceId=public&agentSpecName=my-agent&version=version"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/redraft' -d "namespaceId=public&agentSpecName=my-agent&version=version"
 ```
 
 * Response example
@@ -7537,7 +8384,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/scope' -d "namespaceId=public&agentSpecName=my-agent&scope=scope"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/scope' -d "namespaceId=public&agentSpecName=my-agent&scope=scope"
 ```
 
 * Response example
@@ -7592,7 +8439,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/submit' -d "namespaceId=public&agentSpecName=my-agent&version=version"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/submit' -d "namespaceId=public&agentSpecName=my-agent&version=version"
 ```
 
 * Response example
@@ -7649,7 +8496,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/upload?namespaceId=public&overwrite=false' -F "namespaceId=public" -F "overwrite=false" -F "file=@/path/to/skills.zip"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/agentspecs/upload?namespaceId=public&overwrite=false' -F "namespaceId=public" -F "overwrite=false" -F "file=@/path/to/skills.zip"
 ```
 
 * Response example
@@ -7709,7 +8556,7 @@ A user identity with the corresponding `namespace read` permission is required.
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs/version?namespaceId=public&agentSpecName=my-agent&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/agentspecs/version?namespaceId=public&agentSpecName=my-agent&version=1.0.0'
 ```
 
 * Response example
@@ -7754,23 +8601,25 @@ A user identity with the corresponding `namespace read` permission is required.
 | `resourceName` | `string` | No | - |
 | `namespaceId` | `string` | No | - |
 | `version` | `string` | No | - |
-| `pageNo` | `integer` | **Yes** | - |
-| `pageSize` | `integer` | **Yes** | - |
+| `pageNo` | `integer` | No | Page number; defaults to `1` and must be positive. |
+| `pageSize` | `integer` | No | Items per page; defaults to `100` and must be positive. |
 
 #### Response Data
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| `data` | `Page<PipelineExecution>` | Paginated publication pipeline executions. |
+| `data.totalCount` | `integer` | Total number of matching records. |
+| `data.pageNumber` | `integer` | Current page number. |
+| `data.pagesAvailable` | `integer` | Number of available pages. |
+| `data.pageItems` | `array<PipelineExecution>` | Executions on this page; see the execution detail API below for fields. |
 
 #### Examples
 
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines?resourceType=skill&resourceName=my-skill&namespaceId=public&version=1.0.0&pageNo=1&pageSize=10'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines?resourceType=skill&resourceName=my-skill&namespaceId=public&version=1.0.0&pageNo=1&pageSize=10'
 ```
 
 * Response example
@@ -7814,24 +8663,23 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data.executionId | `string` | - |
-| data.data.resourceType | `string` | - |
-| data.data.resourceName | `string` | - |
-| data.data.namespaceId | `string` | - |
-| data.data.version | `string` | - |
-| data.data.status | `string` | - |
-| data.data.pipeline | `array` | - |
-| data.data.createTime | `integer` | - |
-| data.data.updateTime | `integer` | - |
+| `data` | `PipelineExecution` | Publication pipeline execution details. |
+| `data.executionId` | `string` | Execution ID. |
+| `data.resourceType` | `string` | AI resource type. |
+| `data.resourceName` | `string` | AI resource name. |
+| `data.namespaceId` | `string` | Resource namespace. |
+| `data.version` | `string` | Submitted resource version. |
+| `data.status` | `string` | Execution status: `IN_PROGRESS`, `APPROVED`, or `REJECTED`. |
+| `data.pipeline` | `array<PipelineNodeResult>` | Results from each pipeline node. |
+| `data.createTime` | `integer` | Creation time. |
+| `data.updateTime` | `integer` | Update time. |
 
 #### Examples
 
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines/detail?pipelineId=pipeline-001'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines/detail?pipelineId=pipeline-001'
 ```
 
 * Response example
@@ -7873,23 +8721,25 @@ A user identity with the corresponding `namespace read` permission is required.
 | `resourceName` | `string` | No | - |
 | `namespaceId` | `string` | No | - |
 | `version` | `string` | No | - |
-| `pageNo` | `integer` | **Yes** | - |
-| `pageSize` | `integer` | **Yes** | - |
+| `pageNo` | `integer` | No | Page number; defaults to `1` and must be positive. |
+| `pageSize` | `integer` | No | Items per page; defaults to `100` and must be positive. |
 
 #### Response Data
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| `data` | `Page<PipelineExecution>` | Paginated publication pipeline executions. |
+| `data.totalCount` | `integer` | Total number of matching records. |
+| `data.pageNumber` | `integer` | Current page number. |
+| `data.pagesAvailable` | `integer` | Number of available pages. |
+| `data.pageItems` | `array<PipelineExecution>` | Executions on this page; see the execution detail API below for fields. |
 
 #### Examples
 
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines/list?resourceType=skill&resourceName=my-skill&namespaceId=public&version=1.0.0&pageNo=1&pageSize=10'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines/list?resourceType=skill&resourceName=my-skill&namespaceId=public&version=1.0.0&pageNo=1&pageSize=10'
 ```
 
 * Response example
@@ -7933,24 +8783,23 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data.executionId | `string` | - |
-| data.data.resourceType | `string` | - |
-| data.data.resourceName | `string` | - |
-| data.data.namespaceId | `string` | - |
-| data.data.version | `string` | - |
-| data.data.status | `string` | - |
-| data.data.pipeline | `array` | - |
-| data.data.createTime | `integer` | - |
-| data.data.updateTime | `integer` | - |
+| `data` | `PipelineExecution` | Publication pipeline execution details. |
+| `data.executionId` | `string` | Execution ID. |
+| `data.resourceType` | `string` | AI resource type. |
+| `data.resourceName` | `string` | AI resource name. |
+| `data.namespaceId` | `string` | Resource namespace. |
+| `data.version` | `string` | Submitted resource version. |
+| `data.status` | `string` | Execution status: `IN_PROGRESS`, `APPROVED`, or `REJECTED`. |
+| `data.pipeline` | `array<PipelineNodeResult>` | Results from each pipeline node. |
+| `data.createTime` | `integer` | Creation time. |
+| `data.updateTime` | `integer` | Update time. |
 
 #### Examples
 
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines/{pipelineId}'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/pipelines/{pipelineId}'
 ```
 
 * Response example
@@ -8020,7 +8869,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/import/execute' -d "namespaceId=namespaceId&resourceType=resourceType&sourceId=sourceId&selectedItems=selectedItems&overwriteExisting=overwriteExisting&skipInvalid=skipInvalid&validationToken=validationToken&options=options"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/import/execute' -d "namespaceId=namespaceId&resourceType=resourceType&sourceId=sourceId&selectedItems=selectedItems&overwriteExisting=overwriteExisting&skipInvalid=skipInvalid&validationToken=validationToken&options=options"
 ```
 
 * Response example
@@ -8083,7 +8932,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/import/search' -d "namespaceId=namespaceId&resourceType=resourceType&sourceId=sourceId&query=query&cursor=cursor&limit=limit&options=options"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/import/search' -d "namespaceId=namespaceId&resourceType=resourceType&sourceId=sourceId&query=query&cursor=cursor&limit=limit&options=options"
 ```
 
 * Response example
@@ -8136,7 +8985,7 @@ A user identity with the corresponding `namespace read` permission is required.
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/import/sources?resourceType=skill'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/import/sources?resourceType=skill'
 ```
 
 * Response example
@@ -8197,7 +9046,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/import/validate' -d "namespaceId=namespaceId&resourceType=resourceType&sourceId=sourceId&selectedItems=selectedItems&overwriteExisting=overwriteExisting&options=options"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/import/validate' -d "namespaceId=namespaceId&resourceType=resourceType&sourceId=sourceId&selectedItems=selectedItems&overwriteExisting=overwriteExisting&options=options"
 ```
 
 * Response example
@@ -8256,7 +9105,7 @@ None
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/copilot/config'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/copilot/config'
 ```
 
 * Response example
@@ -8320,7 +9169,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/config' \
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/copilot/config' \
   -H 'Content-Type: application/json' \
   -d '{"apiKey":"your-api-key","model":"qwen-turbo","studioUrl":"http://127.0.0.1:8080","studioProject":"NacosCopilot"}'
 ```
@@ -8375,7 +9224,7 @@ None. The response is returned as an SSE stream.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/debug' -H 'Content-Type: application/json' -d '{"userInput":"","prompt":""}'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/debug' -H 'Content-Type: application/json' -d '{"userInput":"","prompt":""}'
 ```
 
 * Response example
@@ -8424,7 +9273,7 @@ None. The response is returned as an SSE stream.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/optimize' -H 'Content-Type: application/json' -d '{"optimizationGoal":"","prompt":""}'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/copilot/prompt/optimize' -H 'Content-Type: application/json' -d '{"optimizationGoal":"","prompt":""}'
 ```
 
 * Response example
@@ -8474,7 +9323,7 @@ None. The response is returned as an SSE stream.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/generate' -H 'Content-Type: application/json' -d '{"backgroundInfo":"","selectedMcpTools":"","conversationHistory":""}'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/generate' -H 'Content-Type: application/json' -d '{"backgroundInfo":"","selectedMcpTools":"","conversationHistory":""}'
 ```
 
 * Response example
@@ -8526,7 +9375,7 @@ None. The response is returned as an SSE stream.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/optimize' -H 'Content-Type: application/json' -d '{"conversationHistory":"","targetFileName":"","optimizationGoal":"","skill":"","selectedMcpTools":""}'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/copilot/skill/optimize' -H 'Content-Type: application/json' -d '{"conversationHistory":"","targetFileName":"","optimizationGoal":"","skill":"","selectedMcpTools":""}'
 ```
 
 * Response example
@@ -8547,18 +9396,15 @@ Common named type relationships are as follows:
 
 | Type | Structure or key fields |
 |------|-------------------------|
-| `AgentOverview` | `agent: Agent`, `versionPage: Page<AgentVersionSummary>` |
-| `Agent` | `namespaceId`, `agentName`, `displayName`, `description`, `iconUrl`, `provider: AgentProvider`, `tags: array<string>`, `extensions: map<string, object>`, `status`, `owner`, `scope`, `versionInfo: AgentVersionInfo`, `versionCatalog: AgentVersionCatalog`, `metaVersion`, `createTime`, `updateTime` |
-| `AgentSummary` | The bounded `Agent` summary fields, excluding `extensions` |
+| `AgentOverview` | `agent: AgentSummary`, `versionPage: Page<AgentVersionSummary>` |
+| `AgentSummary` | `namespaceId`, `agentName`, `displayName`, `description`, `iconUrl`, `provider: AgentProvider`, `tags: array<string>`, `extensions: map<string, object>`, `status`, `owner`, `scope`, `versionInfo: AgentVersionInfo`, `metaVersion`, `createTime`, `updateTime` |
 | `AgentProvider` | `name: string`, `url: string` |
-| `AgentVersionInfo` | `editingVersion`, `reviewingVersion`, `onlineCnt`, `labels: map<string, string>` |
-| `AgentVersionCatalog` | `latestVersion`, `onlineVersions: array<AgentVersionCatalogEntry>` |
-| `AgentVersionCatalogEntry` | `version`, `labels: array<string>`, `protocols: array<string>` |
-| `AgentVersionSummary` | `version`, `status`, `author`, `changeDescription`, `contentDigest`, `createTime`, `updateTime` |
-| `AgentVersionDetail` | `namespaceId`, `agentName`, `version`, `status`, `callInterfaces: array<AgentCallInterface>`, `author`, `changeDescription`, `contentDigest`, `createTime`, `updateTime` |
+| `AgentVersionInfo` | `editingVersion`, `reviewingVersion`, `onlineVersions: array<AgentVersionSummary>`, `labels: map<string, string>`; read the default version from `labels.latest` |
+| `AgentVersionSummary` | `version`, `status`, `publishPipelineInfo`, `author`, `changeDescription`, `contentDigest`, `labels: array<string>`, `protocols: array<string>`, `createTime`, `updateTime` |
+| `AgentVersionDetail` | Fields from `AgentVersionSummary`, plus `namespaceId`, `agentName`, and `callInterfaces: array<AgentCallInterface>` |
 | `ConsoleRuntimeEndpointView` | `runtimeEndpointSnapshot: RuntimeEndpointSnapshot`, `namingServiceRef: NamingServiceRef` |
 
-`AgentCallInterface` and its declared endpoint structure are:
+`AgentCallInterface` and its endpoint sets are:
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -8566,21 +9412,20 @@ Common named type relationships are as follows:
 | `protocolVersion` | `string` | Protocol version. |
 | `descriptorMediaType` | `string` | Media type of `nativeDescriptor`. |
 | `nativeDescriptor` | `object` | Complete protocol-native descriptor. Only this field remains `object` because its shape is protocol-defined. |
-| `endpointSourceOrder` | `array<EndpointSource>` | Endpoint source priority. Elements are `RUNTIME` or `DECLARED` and cannot repeat. |
-| `declaredEndpoints` | `array<Endpoint>` | Static endpoints derived from the native descriptor. |
+| `endpointSourceOrder` | `array<string>` | Endpoint source priority. Elements are `RUNTIME` or `DECLARED` and cannot repeat. |
+| `endpointSets` | `array<EndpointSet>` | Endpoint collections grouped by source. |
 
-`Endpoint` contains `uri: string`, `transport: string`, `priority: integer`, `weight: number`, `metadata: map<string, string>`, and `healthy: boolean`.
+`EndpointSet` contains `source` (`DECLARED` or `RUNTIME`), `sourceRevision`, `lastUpdatedTime`, and `endpoints: array<Endpoint>`. `Endpoint` contains `uri: string`, `transport: string`, `priority: integer`, `weight: number`, `metadata: map<string, string>`, `enabled: boolean`, `healthy: boolean`, and `bindings: array<RuntimeVersionBinding>`.
 
 Runtime endpoint named types are related as follows:
 
 | Type | Structure or key fields |
 |------|-------------------------|
-| `RuntimeEndpointSnapshot` | `namespaceId`, `agentName`, `protocol`, optional `version`, `items: array<RuntimeEndpointSnapshotItem>` |
-| `RuntimeEndpointSnapshotItem` | `endpoint: Endpoint`, `bindings: array<RuntimeVersionBinding>`, `state`, `enabled`, `healthy`, `lastUpdatedTime` |
+| `RuntimeEndpointSnapshot` | `namespaceId`, `agentName`, optional `version`, `callInterface: AgentCallInterface`; runtime endpoints are in `callInterface.endpointSets[].endpoints[]` |
 | `RuntimeVersionBinding` | `runtimeVersion`, `versionRange` |
 | `NamingServiceRef` | `namespaceId`, `groupName`, `serviceName` |
 
-Agent resource status is `enable` or `disable`. Agent version status is `draft`, `reviewing`, `reviewed`, `online`, or `offline`.
+Agent resource status is `enable` or `disable`. Agent version status is `draft`, `reviewing`, `reviewed`, `online`, or `offline`. See [AI resource lifecycle](../user/ai/ai-resource-lifecycle.md) for transitions. New resources default to `PUBLIC` under the built-in visibility policy. Updating metadata or versions preserves the current visibility; use the scope API in this chapter to change it.
 
 ### 12.1. Get Agent Overview
 
@@ -8622,7 +9467,7 @@ A user identity with the corresponding `namespace read` permission is required.
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agents?namespaceId=public&agentName=my-agent'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/agents?namespaceId=public&agentName=my-agent'
 ```
 
 * Response example
@@ -8678,14 +9523,14 @@ A user identity with the corresponding `namespace write` permission is required.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `data` | `Agent` | Updated Agent definition. |
+| `data` | `AgentSummary` | Updated Agent definition summary. |
 
 #### Examples
 
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agents' -d 'namespaceId=public&agentName=my-agent&displayName=My Agent&status=enable'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/agents' -d 'namespaceId=public&agentName=my-agent&displayName=My Agent&status=enable'
 ```
 
 * Response example
@@ -8734,7 +9579,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agents?namespaceId=public&agentName=my-agent'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agents?namespaceId=public&agentName=my-agent'
 ```
 
 * Response example
@@ -8794,19 +9639,19 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/draft' \
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/draft' \
   -d 'namespaceId=public' \
   -d 'agentName=my-agent' \
   -d 'version=1.0.0' \
   -d 'displayName=My Agent' \
   -d 'author=nacos' \
-  --data-urlencode 'callInterfaces=[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"declaredEndpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC","priority":0,"weight":1.0}]}]'
+  --data-urlencode 'callInterfaces=[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"endpointSets":[{"source":"DECLARED","endpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC","priority":0,"weight":1.0}]}]}]'
 ```
 
 * Response example
 
 ```json
-{"code":0,"message":"success","data":{"namespaceId":"public","agentName":"my-agent","version":"1.0.0","status":"draft","callInterfaces":[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"declaredEndpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC","priority":0,"weight":1.0}]}],"author":"nacos"}}
+{"code":0,"message":"success","data":{"namespaceId":"public","agentName":"my-agent","version":"1.0.0","status":"draft","callInterfaces":[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"endpointSets":[{"source":"DECLARED","endpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC","priority":0,"weight":1.0}]}]}],"author":"nacos"}}
 ```
 
 ### 12.5. Update Agent Draft
@@ -8852,18 +9697,18 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agents/draft' \
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/agents/draft' \
   -d 'namespaceId=public' \
   -d 'agentName=my-agent' \
   -d 'version=1.0.0' \
   -d 'changeDescription=update endpoints' \
-  --data-urlencode 'callInterfaces=[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"declaredEndpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC"}]}]'
+  --data-urlencode 'callInterfaces=[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"endpointSets":[{"source":"DECLARED","endpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC"}]}]}]'
 ```
 
 * Response example
 
 ```json
-{"code":0,"message":"success","data":{"namespaceId":"public","agentName":"my-agent","version":"1.0.0","status":"draft","callInterfaces":[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"declaredEndpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC"}]}],"changeDescription":"update endpoints"}}
+{"code":0,"message":"success","data":{"namespaceId":"public","agentName":"my-agent","version":"1.0.0","status":"draft","callInterfaces":[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"endpointSets":[{"source":"DECLARED","endpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC"}]}]}],"changeDescription":"update endpoints"}}
 ```
 
 ### 12.6. Delete Agent Draft
@@ -8907,7 +9752,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agents/draft?namespaceId=public&agentName=my-agent&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3/console/ai/agents/draft?namespaceId=public&agentName=my-agent&version=1.0.0'
 ```
 
 * Response example
@@ -8957,7 +9802,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/force-publish' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/force-publish' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
 ```
 
 * Response example
@@ -9000,14 +9845,14 @@ A user identity with the corresponding `namespace write` permission is required.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `data` | `Agent` | Agent definition after the label update. |
+| `data` | `AgentSummary` | Agent definition summary after the label update. |
 
 #### Examples
 
 * Request example
 
 ```shell
-curl -X PUT 'http://127.0.0.1:8080/v3/console/ai/agents/labels' -d 'namespaceId=public&agentName=my-agent&labels={"stable":"1.0.0"}'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/agents/labels' -d 'namespaceId=public&agentName=my-agent&labels={"stable":"1.0.0"}'
 ```
 
 * Response example
@@ -9042,8 +9887,8 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
-| `pageNo` | `integer` | **Yes** | Page number, starting from 1. |
-| `pageSize` | `integer` | **Yes** | Number of entries per page. |
+| `pageNo` | `integer` | No | Page number; defaults to `1` and must be positive. |
+| `pageSize` | `integer` | No | Items per page; defaults to `100` and must be positive. |
 | `namespaceId` | `string` | No | Namespace ID of the Agent. |
 | `agentName` | `string` | No | Filter by Agent name. |
 | `orderBy` | `string` | No | Sort field; currently only `download_count` is supported. |
@@ -9062,7 +9907,7 @@ A user identity with the corresponding `namespace read` permission is required.
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agents/list?pageNo=1&pageSize=20&namespaceId=public&agentName=my-agent'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/agents/list?pageNo=1&pageSize=20&namespaceId=public&agentName=my-agent'
 ```
 
 * Response example
@@ -9112,7 +9957,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/offline' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/offline' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
 ```
 
 * Response example
@@ -9162,7 +10007,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/online' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/online' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
 ```
 
 * Response example
@@ -9212,7 +10057,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/publish' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/publish' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
 ```
 
 * Response example
@@ -9262,7 +10107,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/redraft' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/redraft' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
 ```
 
 * Response example
@@ -9306,20 +10151,20 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `data` | `ConsoleRuntimeEndpointView` | Runtime endpoint snapshot and Naming service reference. `runtimeEndpointSnapshot.items` is empty when there are no instances. |
+| `data` | `ConsoleRuntimeEndpointView` | Runtime endpoint snapshot and Naming service reference. `runtimeEndpointSnapshot.callInterface.endpointSets[].endpoints` is empty when there are no instances. |
 
 #### Examples
 
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agents/runtime-endpoints?namespaceId=public&agentName=my-agent&protocol=A2A&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/agents/runtime-endpoints?namespaceId=public&agentName=my-agent&protocol=A2A&version=1.0.0'
 ```
 
 * Response example
 
 ```json
-{"code":0,"message":"success","data":{"runtimeEndpointSnapshot":{"namespaceId":"public","agentName":"my-agent","protocol":"A2A","version":"1.0.0","items":[]},"namingServiceRef":{"namespaceId":"public","groupName":"DEFAULT_GROUP","serviceName":"my-agent@@A2A"}}}
+{"code":0,"message":"success","data":{"runtimeEndpointSnapshot":{"namespaceId":"public","agentName":"my-agent","version":"1.0.0","callInterface":{"protocol":"A2A","endpointSets":[{"source":"RUNTIME","endpoints":[]}]}},"namingServiceRef":{"namespaceId":"public","groupName":"agent-endpoints","serviceName":"rad-my-agent-A2A"}}}
 ```
 
 ### 12.15. Submit Agent Version
@@ -9363,7 +10208,7 @@ A user identity with the corresponding `namespace write` permission is required.
 * Request example
 
 ```shell
-curl -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/submit' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/agents/submit' -d 'namespaceId=public&agentName=my-agent&version=1.0.0'
 ```
 
 * Response example
@@ -9413,13 +10258,13 @@ A user identity with the corresponding `namespace read` permission is required.
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agents/version?namespaceId=public&agentName=my-agent&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/agents/version?namespaceId=public&agentName=my-agent&version=1.0.0'
 ```
 
 * Response example
 
 ```json
-{"code":0,"message":"success","data":{"namespaceId":"public","agentName":"my-agent","version":"1.0.0","status":"online","callInterfaces":[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"declaredEndpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC"}]}],"author":"nacos","contentDigest":"sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"}}
+{"code":0,"message":"success","data":{"namespaceId":"public","agentName":"my-agent","version":"1.0.0","status":"online","callInterfaces":[{"protocol":"A2A","protocolVersion":"0.3.0","descriptorMediaType":"application/json","nativeDescriptor":{"protocolVersion":"0.3.0","name":"my-agent","description":"Customer support agent","url":"https://agent.example.com/a2a","version":"1.0.0","capabilities":{},"defaultInputModes":["text"],"defaultOutputModes":["text"],"skills":[]},"endpointSourceOrder":["DECLARED"],"endpointSets":[{"source":"DECLARED","endpoints":[{"uri":"https://agent.example.com/a2a","transport":"JSONRPC"}]}]}],"author":"nacos","contentDigest":"sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"}}
 ```
 
 ### 12.17. List Agent Versions
@@ -9448,8 +10293,8 @@ A user identity with the corresponding `namespace read` permission is required.
 
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
-| `pageNo` | `integer` | **Yes** | Page number, starting from 1. |
-| `pageSize` | `integer` | **Yes** | Number of entries per page. |
+| `pageNo` | `integer` | No | Page number; defaults to `1` and must be positive. |
+| `pageSize` | `integer` | No | Items per page; defaults to `100` and must be positive. |
 | `namespaceId` | `string` | No | Namespace ID of the Agent. |
 | `agentName` | `string` | **Yes** | Agent name. |
 | `status` | `string` | No | Filter by version status: `draft`, `reviewing`, `reviewed`, `online`, or `offline`. |
@@ -9465,11 +10310,64 @@ A user identity with the corresponding `namespace read` permission is required.
 * Request example
 
 ```shell
-curl -X GET 'http://127.0.0.1:8080/v3/console/ai/agents/versions?pageNo=1&pageSize=20&namespaceId=public&agentName=my-agent&status=online'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/agents/versions?pageNo=1&pageSize=20&namespaceId=public&agentName=my-agent&status=online'
 ```
 
 * Response example
 
 ```json
 {"code":0,"message":"success","data":{"totalCount":0,"pageNumber":1,"pagesAvailable":0,"pageItems":[]}}
+```
+
+### 12.18. Update Agent Visibility Scope
+
+#### Description
+
+Sets Agent visibility to `PUBLIC` or `PRIVATE` without changing versions, labels, owner, or runtime endpoints. `PUBLIC` does not disable API authentication.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`PUT`
+
+Request body type: `application/x-www-form-urlencoded`.
+
+#### Authorization
+
+Requires user identity with write permission for the corresponding namespace.
+
+#### Request URL
+
+`/v3/console/ai/agents/scope`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| `namespaceId` | `string` | No | Namespace ID; defaults to `public`. |
+| `agentName` | `string` | **Yes** | Agent name. |
+| `scope` | `string` | **Yes** | Visibility scope: `PUBLIC` or `PRIVATE`. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `string` | `ok` on success. |
+
+#### Examples
+
+```bash
+curl -sS -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/agents/scope' \
+  -d 'namespaceId=public' -d 'agentName=my-agent' -d 'scope=PRIVATE'
+```
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": "ok"
+}
 ```

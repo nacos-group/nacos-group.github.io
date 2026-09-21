@@ -13,13 +13,13 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。
 
 :::note
-- 快速开始旨在帮助您快速上手安装、部署及入门使用Nacos，本快速开始所生产出的Nacos服务为**单机模式**及**未开启客户端访问鉴权**，建议仅在测试中使用，若在实际生产环境中部署，请部署**集群模式**并**开启鉴权**，以避免存在**稳定性和安全性**的风险。
+- 快速开始旨在帮助您快速上手安装、部署及入门使用Nacos，本快速开始所生产出的Nacos服务为**单机模式**，建议仅在测试中使用，若在实际生产环境中部署，请部署**集群模式**并**开启鉴权**，以避免存在**稳定性和安全性**的风险。
 - Nacos定义为一个IDC内部应用组件，并非面向公网环境的产品，建议在内部隔离网络环境中部署，**强烈不建议**部署在公共网络环境。
 :::
 
 ## 0. 版本选择
 
-您可以通过Nacos的[版本下载页面](/download/nacos-server/)、[release notes](https://github.com/alibaba/nacos/releases) 及 [发布声明](/news/release/)中找到每个版本支持的功能的介绍，生产环境当前推荐的稳定版本为`3.2.2`.
+本页说明 Nacos 3.3 的接入方式。请从[版本下载页面](/download/nacos-server/)选择实际已发布的目标版本，并阅读对应 [release notes](https://github.com/alibaba/nacos/releases)。验证 RC 时请使用对应的 RC 制品；生产环境选择稳定版本。
 
 ## 1. 预备环境准备
 
@@ -47,12 +47,14 @@ Nacos 依赖 [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_j
 
 启动 Nacos 服务：
 
+验证指定版本时，先将环境变量 `NACOS_VERSION` 设置为实际已发布的目标版本号。
+
 ```bash
 # 本地一键部署一个最新版本的单机 Nacos
 nacos-setup
 
 # 本地一键部署指定版本的单机 Nacos
-nacos-setup -v 3.2.0
+nacos-setup -v "${NACOS_VERSION}"
 
 # 本地一键部署一个最新版本的集群 Nacos
 nacos-setup -c cluster
@@ -107,7 +109,7 @@ nacos-setup --datasource-conf
   </TabItem>
 </Tabs>
 
-随后启动程序会提示您输入`3个`鉴权相关配置（Nacos从3.0.0版本开始默认启用控制台鉴权功能，因此如下3个鉴权相关配置必须填写）如下所示：
+Nacos 3.3 默认开启 Client、Admin 和 Console 鉴权。启动脚本会在以下三项配置缺失时提示输入：token 签名密钥（有效 Base64，解码后不少于 32 字节）及节点间身份 key/value。这些服务端配置不是后续登录使用的用户名和密码。提示示例如下：
 
 ```
 `nacos.plugin.auth.nacos.token.secret.key` is missing, please set with Base64 string: ${your_input_token_secret_key}
@@ -116,7 +118,7 @@ nacos.plugin.auth.nacos.token.secret.key` Updated:
 `nacos.core.auth.server.identity.key` is missing, please set: ${your_input_server_identity_key}
 `nacos.core.auth.server.identity.key` Updated:
 ----------------------------------
-`nacos.core.auth.server.identity.value` is missing, please set: ${your_input_server_identity_key}
+`nacos.core.auth.server.identity.value` is missing, please set: ${your_input_server_identity_value}
 `nacos.core.auth.server.identity.value` Updated:
 ----------------------------------
 ```
@@ -141,30 +143,51 @@ Nacos started successfully in stand alone mode. use embedded storage
 
 > 注意：首次打开会要求初始化管理员用户`nacos`的密码。
 
+#### 3.1.1. 获取访问 token
+
+以下命令使用 Bash（Windows 可使用 Git Bash 或 WSL）。将密码替换为刚初始化的管理员密码，登录后将响应中的 `accessToken` 复制到 `NACOS_ACCESS_TOKEN`：
+
+```bash
+export NACOS_USERNAME='nacos'
+export NACOS_PASSWORD='<your-initialized-password>'
+curl -sS -X POST 'http://127.0.0.1:8848/nacos/v3/auth/user/login' \
+  --data-urlencode "username=${NACOS_USERNAME}" \
+  --data-urlencode "password=${NACOS_PASSWORD}"
+
+export NACOS_ACCESS_TOKEN='<accessToken-from-login-response>'
+```
+
+下面的 Client API 和 Admin API 都需要该 token。token 过期后重新登录获取；应用接入时请使用具有所需权限的业务账号，参见[配置访问凭据](../manual/user/auth.mdx)。
+
 ### 3.2. 服务注册
 
-`curl -X POST 'http://127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=quickstart.test.service&ip=127.0.0.1&port=8080'`
+```bash
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=quickstart.test.service&ip=127.0.0.1&port=8080' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}"
+```
 
 ### 3.3. 服务发现
 
-`curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=quickstart.test.service'`
+```bash
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=quickstart.test.service' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}"
+```
 
 ### 3.4. 发布配置
 
-```shell
-# 登陆获取access token
-curl -X POST 'http://127.0.0.1:8848/nacos/v3/auth/user/login' -d 'username=nacos' -d 'password=${your_password}'
-# 使用access token，创建配置
-curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=quickstart.test.config&groupName=test&content=HelloWorld' -H "accessToken:${your_access_token}"
+```bash
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=quickstart.test.config&groupName=test&content=HelloWorld' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}"
 ```
-
-:::note
-访问Admin API，默认需要使用access token, access token可通过`POST /nacos/v3/auth/user/login`接口获得
-:::
 
 ### 3.5. 获取配置
 
-`curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/cs/config?dataId=quickstart.test.config&groupName=test'`
+```bash
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/cs/config?dataId=quickstart.test.config&groupName=test' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}"
+```
+
+若返回鉴权失败，先检查用户名、密码、token 有效期及账号权限。仅在已有无凭据客户端的临时迁移场景中考虑显式关闭 Client 鉴权，处理方式见[升级手册](../manual/admin/upgrading.mdx#212-准备-client-api-默认鉴权)。
 
 ## 4.关闭服务器
 

@@ -13,13 +13,13 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 This Quick Start Guide helps you quickly download, install, and use Nacos on your computer.
 
 :::note
-- The Quick Start is designed to help you quickly get started with installing, deploying, and using Nacos. The Nacos service produced by this Quick Start runs in **standalone mode** without **client access authentication** enabled. It is recommended for testing purposes only. For production environments, please deploy in **cluster mode** with **authentication enabled** to avoid **stability and security** risks.
+- The Quick Start is designed to help you quickly get started with installing, deploying, and using Nacos. The Nacos service produced by this Quick Start runs in **standalone mode**. It is recommended for testing purposes only. For production environments, please deploy in **cluster mode** with **authentication enabled** to avoid **stability and security** risks.
 - Nacos is designed as an internal IDC application component, not a product for public network environments. It is recommended to deploy in an isolated internal network environment. It is **strongly discouraged** to deploy in public network environments.
 :::
 
-## 0. Version Selection
+## 0. Choose A Version
 
-You can find the features supported by each version through Nacos's [version download page](/download/nacos-server/), [release notes](https://github.com/alibaba/nacos/releases), and [release announcements](/news/release/). The currently recommended stable version for production environments is `3.2.2`.
+This page describes Nacos 3.3. Select an available release from the [download page](/en/download/nacos-server/) and read its [release notes](https://github.com/alibaba/nacos/releases). Use the matching RC artifacts for RC validation and a stable release for production.
 
 ## 1. Prerequisites
 
@@ -45,14 +45,14 @@ Install nacos-setup:
   </TabItem>
 </Tabs>
 
-Start Nacos:
+Start Nacos. For a specific 3.3 release, set `NACOS_VERSION` to an available version from the download page first; the default command selects the latest release and may not select the RC you want to validate.
 
 ```bash
 # One-click deploy the latest standalone Nacos
 nacos-setup
 
 # One-click deploy a specific version of standalone Nacos
-nacos-setup -v 3.2.0
+nacos-setup -v "${NACOS_VERSION}"
 
 # One-click deploy the latest Nacos cluster
 nacos-setup -c cluster
@@ -107,7 +107,7 @@ You can obtain the **Nacos distribution package** through the Nacos official web
   </TabItem>
 </Tabs>
 
-The startup program will then prompt you to enter `3` authentication-related configurations (since Nacos 3.0.0, console authentication is enabled by default, so the following 3 authentication configurations must be filled in):
+Nacos 3.3 enables Client, Admin, and Console authentication by default. The startup script prompts for three missing settings: a token signing secret (valid Base64 decoding to at least 32 bytes) and the server identity key/value. These server settings are separate from the username and password used to log in. Example prompts:
 
 ```
 `nacos.plugin.auth.nacos.token.secret.key` is missing, please set with Base64 string: ${your_input_token_secret_key}
@@ -116,7 +116,7 @@ nacos.plugin.auth.nacos.token.secret.key` Updated:
 `nacos.core.auth.server.identity.key` is missing, please set: ${your_input_server_identity_key}
 `nacos.core.auth.server.identity.key` Updated:
 ----------------------------------
-`nacos.core.auth.server.identity.value` is missing, please set: ${your_input_server_identity_key}
+`nacos.core.auth.server.identity.value` is missing, please set: ${your_input_server_identity_value}
 `nacos.core.auth.server.identity.value` Updated:
 ----------------------------------
 ```
@@ -141,30 +141,51 @@ Open any browser and enter the address: `http://127.0.0.1:8080` to access the Na
 
 > Note: The first time you open it, you will be asked to initialize the password for the admin user `nacos`.
 
+#### 3.1.1. Obtain An Access Token
+
+Run the following commands in Bash (Git Bash or WSL on Windows). Replace the password with the administrator password you initialized, then copy `accessToken` from the login response into `NACOS_ACCESS_TOKEN`:
+
+```bash
+export NACOS_USERNAME='nacos'
+export NACOS_PASSWORD='<your-initialized-password>'
+curl -sS -X POST 'http://127.0.0.1:8848/nacos/v3/auth/user/login' \
+  --data-urlencode "username=${NACOS_USERNAME}" \
+  --data-urlencode "password=${NACOS_PASSWORD}"
+
+export NACOS_ACCESS_TOKEN='<accessToken-from-login-response>'
+```
+
+Both Client and Admin API calls below use this token. Log in again after it expires. Applications should use an account with the required resource permissions; see [Access Credentials](../manual/user/auth.mdx).
+
 ### 3.2. Service Registration
 
-`curl -X POST 'http://127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=quickstart.test.service&ip=127.0.0.1&port=8080'`
+```bash
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=quickstart.test.service&ip=127.0.0.1&port=8080' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}"
+```
 
 ### 3.3. Service Discovery
 
-`curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=quickstart.test.service'`
+```bash
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=quickstart.test.service' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}"
+```
 
 ### 3.4. Publish Configuration
 
-```shell
-# Login to obtain access token
-curl -X POST 'http://127.0.0.1:8848/nacos/v3/auth/user/login' -d 'username=nacos' -d 'password=${your_password}'
-# Use access token to create configuration
-curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=quickstart.test.config&groupName=test&content=HelloWorld' -H "accessToken:${your_access_token}"
+```bash
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=quickstart.test.config&groupName=test&content=HelloWorld' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}"
 ```
-
-:::note
-Accessing Admin API requires an access token by default. The access token can be obtained through the `POST /nacos/v3/auth/user/login` endpoint.
-:::
 
 ### 3.5. Get Configuration
 
-`curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/cs/config?dataId=quickstart.test.config&groupName=test'`
+```bash
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/cs/config?dataId=quickstart.test.config&groupName=test' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}"
+```
+
+If authentication fails, check the username, password, token validity, and account permissions. Explicitly disabling Client authentication is a temporary migration option for existing clients without credentials; see the [Upgrade Guide](../manual/admin/upgrading.mdx#212-prepare-for-default-client-api-authentication).
 
 ## 4. Shutdown Server
 

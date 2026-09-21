@@ -123,6 +123,8 @@ String value = properties2.getProperty("global-key1");
 
 ## 2. Java SDK 配置参数列表
 
+Nacos 3.3 默认开启客户端鉴权。默认插件需要配置下表中的 `username` 和 `password`；没有通用默认密码。完整初始化示例见[Java SDK 使用手册](./usage.md#2-初始化sdk)，其他身份模式见[配置访问凭据](../auth.mdx)。
+
 ### 2.1. 通用参数
 
 通用参数为初始化注册中心`NamingService`和配置中心`ConfigServie`时均生效的参数：
@@ -138,8 +140,8 @@ String value = properties2.getProperty("global-key1");
 | endpointQueryParams            | ENDPOINT_QUERY_PARAMS             | Nacos Server的地址获取接入点的请求参数，用于接入点服务扩展自定义逻辑，格式key=value                                                         | 任意URL参数，key=value                                 | 无                        |
 | endpointRefreshIntervalSeconds | ENDPOINT_REFRESH_INTERVAL_SECONDS | Nacos Server定期从地址获取接入点重新获取地址列表的间隔时间，单位为秒                                                                     | 任意正整数                                             | 30                       |
 | namespace                      | NAMESPACE                         | 该 JAVA SDK 所归属的命名空间Id， 设置后该SDK只能访问该命名空间的资源（配置或服务）                                                            | 命名空间Id                                            | 空字符串``                   |
-| username                       | USERNAME                          | 开启鉴权功能后，访问Nacos Server所使用的用户名                                                                                | 任意字符串                                             | 无                        |
-| password                       | PASSWORD                          | 开启鉴权功能后，访问Nacos Server所使用的用户名对应的密码                                                                           | 任意字符串                                             | 无                        |
+| username                       | USERNAME                          | 默认鉴权插件的用户名；3.3 默认鉴权开启，需要预先创建并授权                                                                                | 任意字符串                                             | 无                        |
+| password                       | PASSWORD                          | 默认鉴权插件的用户密码；3.3 默认鉴权开启，无默认密码                                                                           | 任意字符串                                             | 无                        |
 | accessKey                      | ACCESS_KEY                        | 使用阿里云RAM鉴权时需要使用的accessKey                                                                                    | 任意字符串                                             | 无                        |
 | secretKey                      | SECRET_KEY                        | 使用阿里云RAM鉴权时需要使用的secretKey                                                                                    | 任意字符串                                             | 无                        | |
 | ramRoleName                    | RAM_ROLE_NAME                     | 使用阿里云RAM鉴权时需要使用的ramRoleName                                                                                  | 任意字符串                                             | 无                        |

@@ -17,7 +17,7 @@ This document corresponds to Nacos 3.3.x. Upgrade compatibility for Nacos 3.3.x 
 | Nacos Version | Upgrade Supported | Remarks |
 |---------------|-------------------|---------|
 | 0.X ~ 1.X | No | 0.X ~ 1.X versions must first be upgraded to 2.0 or above. Please refer to the [Nacos 2.0 Upgrade Guide](https://nacos.io/docs/v2/upgrading/200-upgrading/) to upgrade to 2.0 or 2.1 before proceeding. |
-| 2.0.X ~ 2.5.X | No direct smooth upgrade | Nacos 3.3 removes the Config compatibility migration used by 2.x. If the default namespace was used, first upgrade to 3.0.x–3.2.x and verify that its Config data remains queryable, then upgrade to 3.3.x. See [Upgrading from 2.x](#217-config-compatibility-migration-removal-nacos-330). |
+| 2.0.X ~ 2.5.X | No direct smooth upgrade | Nacos 3.3 removes the Config compatibility migration used by 2.x. If the default namespace or legacy beta/tag gray tables were used, complete and verify data migration on 3.0.x–3.2.x before upgrading to 3.3.x. See [Upgrading from 2.x](#217-config-compatibility-migration-removal-nacos-330). |
 | 3.0.X ~ 3.3.X | Yes | Upgrading from 3.0.X or later to 3.3.X is supported, but the database schema has changed. Compare the schema file for your target database before upgrading and apply the required schema changes first. |
 
 ### 1.1 Client Compatibility
@@ -30,6 +30,8 @@ Compatibility between Nacos 3.x server and client versions is as follows:
 | 1.x | No | To continue using 1.x clients, please integrate [nacos-api-legacy-adapter](https://github.com/nacos-group/nacos-api-legacy-adapter) yourself. |
 | 2.x | Yes | - |
 | 3.x | Yes | - |
+
+Before upgrading the server, confirm that clients have valid identity credentials. Deployments using A2A must also complete the migration preparations in section 2.7.
 
 ## 2. Upgrade Steps
 
@@ -45,49 +47,50 @@ Complete these preparations before upgrading a production cluster:
 2. Back up the database, each node's `data`, `conf`, and `cluster.conf`, and any custom plugins and configuration.
 3. Rehearse the upgrade and rollback in staging with a copy of production data.
 4. Inventory Client API callers and complete the auth migration in section 2.1.2. Do not wait for the first 3.3 node to start before distributing client credentials.
+5. Verify every node's Server identity as described in section 2.1.3 and review the rollback limitations in section 2.8.1.
 
 <a id="217-config-compatibility-migration-removal-nacos-330"></a>
 
 #### 2.1.1. Confirm the Upgrade Path from 2.x
 
-Nacos 3.3 removes the Config compatibility migration and no longer supports a direct smooth upgrade from 2.x. After a direct upgrade from 2.x to 3.3.x, Config data previously stored in the default namespace will no longer be queryable.
+Nacos 3.3 removes the Config compatibility migration and no longer supports a direct smooth upgrade from 2.x. Inventory two kinds of historical data before upgrading:
 
-Before upgrading, confirm that the deployment has not used Config data in the default namespace. If it has, or if this cannot be confirmed, first upgrade to 3.0.x–3.2.x and verify that the default-namespace Config data remains queryable, then upgrade to 3.3.x.
+- Default-namespace Config data still stored with an empty tenant must be migrated to `public`.
+- Gray Config data in legacy `config_info_beta` and `config_info_tag` tables must be migrated to the current `config_info_gray` model.
 
-#### 2.1.2. Prepare For Default Client API Authentication
+If either kind was used, or this cannot be confirmed, first upgrade to a 3.0.x–3.2.x release that supports the required migration. Complete it and verify default-namespace queries, gray rules, and the results received by gray clients before upgrading to 3.3.x. Skipping migration can make historical Config data unavailable or produce unexpected gray behavior. Even if the deployment already runs 3.x, confirm that any required migration actually completed; the running version alone is insufficient evidence.
 
-Nacos 3.3 enables Client API authentication by default. Only the missing-value default for the Client scope changes; the three auth scopes remain independent:
+This removal does not change current default namespace or beta/tag gray API semantics. Blank or omitted namespace requests still normalize to `public`. See [Compatibility and Deprecation](./compatibility-and-deprecation.md).
 
-| Property | Request scope | 3.0.x–3.2.x missing-value default | 3.3.x missing-value default |
-| --- | --- | --- | --- |
-| `nacos.core.auth.enabled` | Client/Open APIs, Java SDK, and gRPC requests | `false` | `true` |
-| `nacos.core.auth.admin.enabled` | `/v3/admin/*` Admin APIs | `true` | `true` |
-| `nacos.core.auth.console.enabled` | `/v3/console/*` Console APIs and console login | `true` | `true` |
+<a id="212-prepare-for-default-client-api-authentication"></a>
 
-After a cluster without an explicit `nacos.core.auth.enabled` value upgrades to 3.3, unauthenticated Config publish/query, service registration/discovery/subscription, and other protected Client HTTP, SDK, or gRPC requests are rejected. An older client is not necessarily incompatible by version; the risk is that the caller has no supported username, password, token, or other identity material required by the selected auth plugin. Admin and Console API defaults do not change. Endpoints explicitly designated as public, bootstrap-only, or health checks keep their own rules. `/v3/auth/*` consists of plugin APIs and must not be assigned to the Client scope from its URL alone.
+#### 2.1.2. Prepare Client Authentication
 
-Complete these steps before a production upgrade:
+Nacos 3.3 enables client authentication by default (`nacos.core.auth.enabled=true`). If clients lack valid identity credentials or permissions, Config queries, service registration, discovery, and other requests may be rejected after the upgrade, disrupting applications.
 
-1. Inventory every direct OpenAPI caller, SDK, gateway, automation job, and side script, including the resources and read/write actions it needs.
-2. Confirm the auth plugin type. For the default `nacos` plugin, prepare a deployment-specific token secret and Server identity. The token secret must be valid Base64 whose decoded value is at least 32 bytes. Every member of one cluster must use the same token secret and identity.
-3. Use an existing protected management path to initialize or confirm the administrator, then create application-specific users, roles, and least-privilege permissions. Do not distribute global administrator credentials to business clients.
-4. Configure each caller with a username/password, token, or the identity material required by the selected plugin before the server upgrade. See [Client Authentication](../user/auth.mdx) for SDK examples.
-5. In staging, verify successful reads and writes plus anonymous, invalid-identity, no-permission, and resource-boundary cases. Confirm that every cluster member has the same effective value for all three switches.
+Choose an approach before upgrading:
 
-If all clients cannot be updated before the upgrade window, Client API auth may be disabled explicitly for a short compatibility period. Keep the token secret, Server identity, users, roles, and permissions configured so auth can be re-enabled later:
+- **Clients are ready for authentication**: confirm the [server auth configuration](./auth.mdx) and [client credentials](../user/auth.mdx), then verify business operations such as Config queries, service registration, and discovery before upgrading.
+- **Clients cannot be updated yet**: explicitly disable client authentication on every node to retain existing access. Enable it across the cluster after client credentials and permissions are ready.
 
-| Deployment | Temporary explicit opt-out |
+| Deployment | Temporarily disable client authentication |
 | --- | --- |
-| Native distribution | Set `nacos.core.auth.enabled=false` in `conf/application.properties` on every member. The property is runtime-refreshable, but file refresh is node-local, so apply and verify it member by member. |
-| Docker | Set `NACOS_AUTH_ENABLE=false`. Leaving the variable unset in a 3.3 image inherits the enabled default; explicit `true` or `false` overrides the image default. |
-| Helm | Set `nacos.auth.enabled=false`, for example `helm upgrade ${release_name} ./ --reuse-values --set nacos.auth.enabled=false`. This field is tri-state `null`/`true`/`false`: `null` omits `NACOS_AUTH_ENABLE` and inherits the selected image's default. |
-| Operator | Set `spec.certification.enabled: false` in the Nacos custom resource. This field is also tri-state `null`/`true`/`false`: `null` or omission leaves out `NACOS_AUTH_ENABLE` and inherits the selected image's default. |
+| Native distribution | Set `nacos.core.auth.enabled=false` in each node's `conf/application.properties`. |
+| Docker | Set `NACOS_AUTH_ENABLE=false`. |
+| Helm | Set `nacos.auth.enabled=false`. |
+| Operator | Set `spec.certification.enabled: false` in the Nacos custom resource. |
 
-The Helm and Operator fields control only Client API auth; neither changes Admin or Console API auth. With Helm, use `nacos.auth.existingSecret` for the token and Server identity in production. On the first upgrade from chart 1.0.0 or earlier, use `--reuse-values` if the release still depends on legacy inline credentials, or create an external Secret first. Do not put fixed production credentials in values, custom resources, Compose files, or source control.
+During the temporary opt-out, restrict Nacos access to trusted networks and restore authentication after updating clients. These switches affect only client authentication; Admin and Console API authentication remains unchanged.
 
-:::caution[Temporary opt-out expands unauthenticated access]
-Use explicit `false` only for a time-bounded upgrade compatibility window. Keep Nacos on a trusted network, restrict ingress and callers, and record an owner and restoration deadline. After client credentials and permissions are verified, set the value to `true` on every member. If the selected image is Nacos 3.3 or later, Docker, `nacos.auth.enabled`, or `spec.certification.enabled` may instead be restored to `null`/omitted so the deployment inherits the enabled default again.
-:::
+<a id="jraft-auth-upgrade"></a>
+
+#### 2.1.3. Check JRaft Authentication Between Nodes
+
+Nacos 3.3 adds JRaft authentication between nodes. Old nodes remain compatible during the rolling upgrade. Authentication is enabled automatically once all nodes have upgraded and their support is confirmed; no manual activation is required.
+
+Before upgrading, ensure that `nacos.core.auth.server.identity.key` and `nacos.core.auth.server.identity.value` are nonempty and identical on every node. Incorrect values can cause communication failures after the upgrade and disrupt cluster reads and writes; correct them before proceeding. These properties must remain valid even if client authentication is temporarily disabled.
+
+See [section 2.8.1](#jraft-auth-rollback) for rollback limitations after the upgrade.
 
 ### 2.2. Apply Database Changes
 
@@ -160,6 +163,25 @@ The legacy Importer/Source SPI, clonable Source/preset model, and configuration-
 - The legacy AI Resource Import SPI has no adapter. Recompile the plugin and update its configuration and callers together; do not mix the two models.
 - Critical plugin types such as auth, datasource dialect, and AI storage can block startup when their selected implementation is missing, disabled, or fails initialization. Validate selection, state, and initialization in staging.
 - On one node, verify plugin list/detail, effective sources, masking, and `RESTART` guidance. Do not submit runtime configuration understood only by 3.3 nodes during a rolling upgrade.
+
+<a id="deprecated-ai-api-migration"></a>
+
+#### 2.3.4. Migrate Deprecated AI APIs That Are Disabled by Default
+
+The following deprecated v3 APIs are disabled by default. Migrate callers to their canonical replacements:
+
+| Deprecated API | Replacement API |
+| --- | --- |
+| `GET /v3/admin/ai/pipelines` | `GET /v3/admin/ai/pipelines/list` |
+| `GET /v3/admin/ai/pipelines/{pipelineId}` | `GET /v3/admin/ai/pipelines/detail?pipelineId={pipelineId}` |
+| `GET /v3/console/ai/pipelines` | `GET /v3/console/ai/pipelines/list` |
+| `GET /v3/console/ai/pipelines/{pipelineId}` | `GET /v3/console/ai/pipelines/detail?pipelineId={pipelineId}` |
+| `POST /v3/console/ai/mcp/import/validate` | `POST /v3/console/ai/import/validate` |
+| `POST /v3/console/ai/mcp/import/execute` | `POST /v3/console/ai/import/execute` |
+
+When disabled, they return HTTP `410 Gone` with the `API_DEPRECATED` result code and identify the replacement API. If a migration window is required, temporarily set `nacos.core.api.compatibility.enabled=true` on nodes serving these endpoints, then restore the default `false` after migrating callers. This shared switch enables all endpoints in the table, with their existing authentication and authorization still enforced. It neither restores v1/v2 HTTP APIs nor controls the old A2A compatibility path in section 2.7.
+
+The old `nacos.ai.resource.import.legacy-mcp-api-enabled` property is no longer recognized. Legacy MCP direct-URL import additionally requires explicit `nacos.ai.resource.import.allow-user-url=true`. Prefer managed sources and the new request model; changing only the URL while retaining all old parameters is insufficient. See [AI Resource Import Migration](../../plugin/migration.md#ai-resource-import-breaking-change).
 
 ### 2.4. Distribution Upgrade
 
@@ -245,130 +267,96 @@ Container deployments must also complete the database, historical migration, and
 
 ### 2.6. Wait for Automatic MCP Data Migration
 
-When upgrading a deployment with existing MCP Server data from Nacos 3.0.x through 3.2.x, no manual data migration is required. After the target version starts, a background task scans the existing MCP data and adds the information needed by the new management features. The task retries automatically after a failure.
-
-The migration reuses the existing MCP service, Tools, and Resources configuration. It does not move or rewrite this content, and it does not change MCP service addresses, client calls, or gateway access. Existing MCP services can therefore continue serving traffic during the migration.
+When upgrading a deployment with existing MCP Server data from Nacos 3.0.x–3.2.x, no manual data migration is required. Complete the server rollout and wait for background migration to finish. Existing MCP service addresses and client calling patterns remain unchanged.
 
 #### 2.6.1. Expected Behavior During the Upgrade
 
-- During migration, Nacos marks its internal state as `SYNCING`. This means the background task is still running or waiting for nodes and search indexing to become ready. It is not an operating mode that users must select; normally, continue the upgrade and wait for automatic retries.
-- Existing MCP management APIs remain available until migration completes. New MCP management APIs may temporarily return `409 / RESOURCE_CONFLICT`. This normally means background migration is not finished, not that data has been lost. Continue using the existing APIs and inspect Server logs.
-- The migration task runs after the Server starts and retries about every five minutes by default. If the first scan adds or repairs data, another scan is required to confirm the result, so completion may take one or more cycles.
-- Migration completes only after every Server node has been upgraded, the historical-data scan succeeds, and any enabled AI resource search finishes index initialization. Waiting while old-version nodes remain during a rolling upgrade is expected. Finish upgrading all nodes; no manual data or traffic switch is required.
-- A cluster without historical MCP data also completes the check automatically and normally needs no additional action.
+- Existing MCP management APIs remain available. New management APIs may temporarily return `409 / RESOURCE_CONFLICT`; use the existing APIs while waiting for migration to finish.
+- Migration completes after all nodes upgrade, historical data passes validation, and enabled search indexes are ready. Tasks retry approximately every 5 minutes by default, so several cycles may be needed.
+- Normally keep `nacos.ai.mcp.resource.reconciliation.enabled=true` and retain the other migration defaults. See [System Configurations](./system-configurations.md#ai-registry).
 
-See [System Parameters](./system-configurations.md#ai-registry) for migration settings. Normally keep `nacos.ai.mcp.resource.reconciliation.enabled=true`. A shorter interval increases Config and database scan load and should be used cautiously only in staging, testing, or controlled troubleshooting.
+#### 2.6.2. Post-upgrade Checks
 
-#### 2.6.2. Do Not Operate on Internal Migration Data
-
-Nacos stores internal migration state in Namespace `_nacos_internal_` and group `nacos_internal`. These Config entries are used only by Nacos during the upgrade migration. Users do not need to inspect or maintain them and should not modify or otherwise operate on them. If an error occurs, inspect Server logs first. Perform a read-only query only when authorized for further troubleshooting, and do not change the content.
+Confirm that all nodes are healthy and Server logs report migration completion. Verify MCP list/detail queries and the new management APIs.
 
 #### 2.6.3. Troubleshoot an Incomplete Migration
 
-| Symptom | Recommendation |
+| Symptom | Action |
 | --- | --- |
-| New MCP management APIs continue to return `409 / RESOURCE_CONFLICT` | Continue using the existing APIs, confirm that all Server nodes are upgraded and healthy, inspect migration-related logs, and wait for the next automatic retry. |
-| Logs report that the search index is not ready | If AI resource search is enabled, confirm that the search tables required by section 2.2 are available and inspect its startup and indexing logs. Do not disable search temporarily just to complete migration. |
-| Logs report a Namespace or historical MCP data scan failure | Check the Namespace, database, and Config services. Common causes include duplicate MCP names or IDs, missing versions, or missing, malformed, or conflicting Server, Tools, or Resources configuration. |
-| Logs report that another node is running the migration | This is normal cluster coordination. Do not take over manually or delete internal data; wait for the current node to finish or for an automatic retry. |
+| New management APIs keep returning `409 / RESOURCE_CONFLICT` | Confirm that all nodes are upgraded and healthy, inspect migration logs, and wait for automatic retries. |
+| Logs report that search indexes are not ready | Check the tables and datasources required in section 2.2 and wait for index initialization. |
+| Logs report missing, malformed, or conflicting historical data | Back up the data and repair it through management APIs. If the correct action is unclear, retain the logs and contact maintainers. |
 
-After migration completes, the new MCP management APIs become available and Server logs record completion. Before repairing historical data, back up the database and related Config data and retain complete logs. Use supported management APIs instead of deleting database rows or internal migration data directly. If the correct repair is unclear, preserve the evidence and contact Nacos maintainers.
+#### 2.6.4. Rollback Considerations
 
-#### 2.6.4. Rollback and Downgrade Boundary
-
-After MCP historical-data migration completes, the new management state is not automatically reversed when the service is downgraded. Do not allow old-version nodes to handle MCP management requests, and do not attempt rollback by deleting internal migration data or newly added database rows.
-
-Existing MCP service content and calling patterns remain compatible, but subsequent management operations should be handled by target-version nodes. For an emergency downgrade, retain backups and logs, isolate MCP management requests, and work with maintainers on a verified recovery plan.
+After MCP migration completes, downgrading does not automatically reverse the new management data. Deployments using MCP must verify that the target version can handle that data before rollback.
 
 <a id="27-a2a-historical-data-migration"></a>
 
 ### 2.7. Automatic Historical A2A Data Migration
 
-This section applies when upgrading from Nacos 3.1.x through 3.2.x with historical A2A Config definitions, Version content, or old A2A SDKs still publishing Runtime Endpoints to `<legacyEncodedAgentName>::<exactVersion>` Naming services. The target release migrates those definitions to canonical Agent Resources, Versions, and Agent Storage, and converges live Runtime Endpoints into the canonical RAD Runtime.
-
-Migration does not start by default, and there is no separate migration enable switch. Before the rolling upgrade, every **target-version node** must explicitly use the same configuration:
+This section applies to upgrades from Nacos 3.1.x–3.2.x that already use A2A Agent management or service registration through an old A2A SDK. Before upgrading, configure **every target-version node** as follows:
 
 ```properties
 nacos.ai.a2a.compatibility.mode=AUTO
 nacos.ai.a2a.migration.legacy-naming-shadow-enabled=false
 ```
 
-The default `CANONICAL` mode uses only canonical Agent/RAD and does not scan historical A2A data. During the rolling upgrade, every new node must also use the same available Agent Storage provider and the same shadow policy. Once a migration plan is created, the effective Storage provider and shadow choice are frozen in its marker; inconsistent node policies prevent reconciliation and cutover.
+The default `CANONICAL` mode does not migrate historical A2A data. Existing A2A deployments must explicitly use `AUTO`. Keep Agent Storage and migration configuration consistent across nodes, and do not change these settings after migration starts.
 
-`legacy-naming-shadow-enabled=false` means that after cutover to `CANONICAL`, Nacos no longer promises to materialize the old exact-Version Naming service. Ordinary legacy A2A APIs and SDKs query, subscribe, and publish Endpoints through the compatibility layer, so they do not require the shadow. If an application bypasses the A2A/RAD APIs and consumes the `<legacyEncodedAgentName>::<exactVersion>` serviceName directly through the Naming Gateway, assess that dependency and select `true` before migration begins. Do not treat a local property change after marker creation as a dynamic switch.
-
-The migration-related properties and defaults are:
-
-| Property | Default | Operational guidance |
-| --- | ---: | --- |
-| `nacos.ai.a2a.compatibility.mode` | `CANONICAL` | Historical migration requires an explicit `AUTO`. |
-| `nacos.ai.a2a.migration.legacy-naming-shadow-enabled` | `false` | Whether to retain the old exact-Version Naming shadow after cutover; frozen when migration starts. |
-| `nacos.ai.a2a.migration.reconciliation.interval-seconds` | `300` | Full reconciliation interval. |
-| `nacos.ai.a2a.migration.reconciliation.page-size` | `100` | Number of historical definitions scanned per page. |
-| `nacos.ai.a2a.migration.lease-duration-seconds` | `600` | Renewable lease duration for the migration owner. |
-| `nacos.ai.a2a.migration.quiescing-timeout-seconds` | `120` | Time before one `QUIESCING` attempt returns to `SYNCING`. |
-
-Except for the `AUTO` and shadow decisions, normally retain these defaults. Consider lowering them only in staging or controlled troubleshooting. A shorter lease must still exceed one expected reconciliation unit, and a shorter reconciliation interval increases Config, Storage, and database load.
-
-Keep these three compatibility surfaces distinct:
-
-| Surface | Migration and cutover semantics |
-| --- | --- |
-| Legacy A2A APIs/SDKs | Read and write historical definitions during `SYNCING`; after `CANONICAL`, the canonical Agent/RAD compatibility facade serves them. Migration does not provide request-level dual reads, merged reads, or long-term definition dual writes. |
-| Canonical Agent/RAD | Holds the migrated definitions, Search, Discover, Watch, and Runtime state and becomes the terminal authority. |
-| Optional legacy Naming Gateway shadow | Serves only callers that directly read the old exact-Version serviceName. It is not a definition authority and does not produce duplicate RAD Endpoints or Watch events. |
+Ordinary A2A API/SDK callers can keep `legacy-naming-shadow-enabled=false`. Only applications that read old `<legacyEncodedAgentName>::<exactVersion>` service names directly through the Naming Gateway need to set it to `true` before migration; otherwise, discovery through those names may stop working after migration. Normally retain other migration defaults. See [System Configurations](./system-configurations.md#ai-registry).
 
 #### 2.7.1. Expected Behavior During the Upgrade
 
-| State | User-visible behavior |
+| Migration state in logs | Business impact |
 | --- | --- |
-| `SYNCING` | Historical A2A Config definitions remain authoritative. Legacy A2A API/SDK queries, subscriptions, and definition writes continue, as do Endpoint registration, heartbeats, and Redo. New nodes idempotently migrate definitions and Versions in the background and publish each still-live Runtime Endpoint to the old Naming layout as primary plus the canonical RAD layout as a required mirror. Background failures retry and do not turn a legacy definition write into dual authority. |
-| `QUIESCING` | Nacos briefly fences A2A **definition** mutations to complete a consistent, single-authority cutover. Definition reads, Search, RAD Discover/Watch, Endpoint registration, and existing traffic remain available. An HTTP definition mutation returns HTTP `409`; the standard `Result` has `code` `50105` (`AGENT_MIGRATION_IN_PROGRESS`) and the detail in `data`. Legacy SDK/gRPC responses preserve detail code `50105`. Callers should retry later. A timeout, member change, or final validation failure automatically returns the plan to `SYNCING`. |
-| `CANONICAL` | This is the permanent terminal state. Canonical Agent/RAD becomes the definition and Runtime authority, while legacy A2A APIs/SDKs use its compatibility facade. Do not try to roll back by deleting internal state or reintroducing a legacy-only binary. Direct legacy Naming Gateway visibility is determined only by the frozen shadow policy. |
+| `SYNCING` | Background migration is running. Queries, subscriptions, definition writes, and service registration through the old A2A protocol remain available. |
+| `QUIESCING` | A2A definition changes are briefly blocked with `409 / AGENT_MIGRATION_IN_PROGRESS (50105)`; retry later. Old-protocol reads, registration, heartbeats, and existing service calls continue. |
+| `CANONICAL` | Migration is complete. Old A2A APIs/SDKs remain compatible, and canonical Agent/RAD features are available. |
 
-The system completes cutover only after every current Server node has been upgraded and reports consistent migration ability and policy; all historical definitions and Versions are complete, readable, and conflict-free in the target Agent Storage; enabled Search indexes are ready; and all live Runtime mirrors and required retries have converged. Remaining in `SYNCING` while any old node is present during a rolling upgrade, or while any gate is not satisfied, is expected.
+Until historical migration completes, external RAD search, discovery, publish, Endpoint registration, and subscription requests return `409 / AGENT_MIGRATION_IN_PROGRESS (50105)`; gRPC returns the same business error code. Retry requests or subscriptions after migration completes. Heartbeats for existing valid Endpoints, complete deregistration, and local subscription cancellation remain available.
 
-#### 2.7.2. Do Not Operate on Internal Migration Data
+**Complete the server rollout and migration before upgrading clients that depend on RAD.** A new SDK may use RAD even when calling A2A methods, so the same restrictions apply without automatic fallback to the old protocol.
 
-Nacos stores migration markers, leases, and progress under Namespace `_nacos_internal_` and group `nacos_internal`. These Config entries are for Nacos cluster coordination only and are not user-maintained data. Do not edit, delete, or forge them, and do not try to roll back by deleting the marker.
+#### 2.7.2. Post-upgrade Checks
 
-Inspect Server migration logs first when troubleshooting. Only when authorized and requested by maintainers should you inspect internal state read-only; never write content into this Namespace or group.
+Confirm that every node is upgraded and healthy and that Server logs report migration completion. Check existing Agent names, versions, content, and service addresses, and verify both old A2A calls and RAD discovery.
 
 #### 2.7.3. Troubleshoot an Incomplete Migration
 
-Failures are isolated per entry, so valid entries can continue migrating. However, any damaged entry, conflict, or unconverged gate prevents global cutover. Use Server logs to locate the cause:
-
-| Symptom | Recommendation |
+| Symptom | Action |
 | --- | --- |
-| The plan remains in `SYNCING`, and logs report inconsistent member ability or policy | Confirm that every current Server node is on the target version and healthy. Verify that every new node uses `AUTO`, the same effective Agent Storage provider, and the same shadow setting. Correct and roll the inconsistent nodes. |
-| Search is enabled, but logs report that indexes are not ready | Confirm that the Search tables, plugins, and datasource required by section 2.2 are ready. Inspect Search startup and indexing-task logs and wait for convergence. Do not disable Search temporarily to force migration completion. |
-| Logs report a missing historical summary or Version, malformed JSON, an invalid Agent identity or Version, or a conflict with an existing canonical Agent | Back up the affected data, decide which side is the intended business fact, and repair the historical definition or explicitly resolve the name conflict through supported management APIs. Migration does not guess names, Versions, latest, or content and does not overwrite a different canonical Agent. |
-| Agent Storage saved content but it is temporarily invisible, or read-back validation fails | Check availability, connectivity, and configuration for the effective Storage provider on every node. Completion requires the target content to be readable and validated; wait for notification or a later reconciliation retry. |
-| Runtime mirror or shadow operations keep retrying, or an Endpoint owner has not converged after reconnect | Inspect the old SDK connection, Endpoint heartbeats, Redo, and Server Runtime retry logs. A required RAD mirror that has not converged during `SYNCING` blocks cutover. A terminal optional-shadow failure does not interrupt canonical RAD but affects the direct legacy Naming Gateway. |
-| Logs report that another node owns the lease, or the owner exited uncleanly | Another owner is normal single-writer coordination. Wait for it to finish. After an unclean exit, wait for the lease to expire and a healthy node to take over automatically; the default upper bound is about `600` seconds. Do not delete the lease. |
+| Migration stays in `SYNCING` | Confirm that every node is upgraded and uses consistent `AUTO` and migration settings. Inspect migration logs. |
+| Logs report that search indexes are not ready | Check the tables and datasources required in section 2.2 and wait for index initialization. |
+| Logs report missing historical data or name conflicts | Back up the data, then repair it or resolve conflicts through management APIs. Contact maintainers if the correct action is unclear. |
+| Logs report Endpoint synchronization failures | Check old A2A client connections and heartbeats, restore them, and wait for automatic retries. |
 
-Do not delete internal control entries, edit the database directly, or forge state to "force completion." If business data must be repaired, retain backups and complete logs and use supported management APIs. Preserve the evidence and contact Nacos maintainers when the correct repair is unclear.
+#### 2.7.4. Rollback Considerations
 
-#### 2.7.4. Rollback and Downgrade Boundary
+Before migration completes, you can stop automatic migration by setting every node to `LEGACY` on the current version and performing a rolling restart. This does not roll back the server version.
 
-**Before** the marker permanently reaches `CANONICAL`, you may configure every node uniformly as `LEGACY` and roll the cluster back. Historical A2A definitions and old Naming remain authoritative after the rollout. Canonical target data already produced may remain; you can later restore consistent `AUTO`, Storage-provider, and shadow settings and resume migration idempotently.
-
-**After** `CANONICAL`, rollback is supported only to a version that understands both the permanent marker and canonical Agent/RAD data. A legacy-only binary must not rejoin. Do not delete the marker, lease, progress, or target data to restore historical authority. Enabling the Naming shadow preserves only old Gateway Runtime visibility; it does not provide definition rollback.
-
-The initial migration does not automatically delete historical A2A Config or perform destructive source cleanup. Retain old data for backup and audit; any later cleanup requires a separately reviewed, recoverable plan.
+After migration completes, returning to a version that understands only old A2A data is unsupported. If rollback is required, verify target-version compatibility and also follow the limitations in [section 2.8.1](#jraft-auth-rollback).
 
 ### 2.8. Post-upgrade Verification and Rollback Preparation
 
-At minimum, verify the following after the upgrade:
+Verify at least the following after upgrading:
 
-1. Node versions, cluster membership, and health are correct, with no schema, plugin-loading, or configuration-alias errors in the logs.
-2. Config publish/query, service register/discover, and Console login succeed, and the effective Client, Admin, and Console API auth switches match the rollout plan. When Client API auth is enabled, verify that valid clients succeed and anonymous, invalid-identity, and unauthorized requests fail. If it remains temporarily disabled, verify the network restriction and restoration deadline.
-3. Deployments upgraded from 2.x through an intermediate release can still query Config data in the default namespace.
-4. Plugin management reports the expected plugin IDs, states, configuration sources, and restart-required fields, with no implementation enabled unexpectedly.
-5. When AI Resource Search is enabled, all three relational tables exist and index tasks converge. When the PostgreSQL vector plugin is enabled, also verify the pgvector schema and datasource connectivity.
-6. Follow section 2.6 to confirm that automatic MCP migration completes, the new MCP management APIs are available, and every Server node is upgraded and healthy.
-7. For a deployment with historical A2A data, follow section 2.7 to confirm that Server logs record migration completion. Compare legacy A2A API/SDK and canonical Agent queries for the same names, Version sets, latest pointer, enabled state, and AgentCard content.
-8. Verify that Agent Search and RAD Discover/Watch return the expected definitions and Runtime Endpoints. Keep an old A2A SDK Endpoint running to verify heartbeats, then perform one controlled reconnect and confirm that Redo remains discoverable through canonical RAD.
-9. Only when the migration plan enabled the Naming shadow, verify through the Naming Gateway that the old `<legacyEncodedAgentName>::<exactVersion>` serviceName has the same exact-Version Endpoints as canonical RAD. When shadow is `false`, do not use old-serviceName visibility as an acceptance criterion.
+1. Every node is upgraded and healthy, with no persistent communication, authentication, database, or plugin-loading errors in the logs.
+2. Config publish/query, service registration/discovery, and Console login work. Clients with authentication enabled can access their resources. If authentication is temporarily disabled, confirm when it will be enabled.
+3. Deployments upgraded from 2.x have working default-namespace Config data and existing gray rules.
+4. Custom plugins load correctly, with the expected configuration and enabled state.
+5. If AI resource search or vector search is used, indexes finish initializing and queries work.
+6. If MCP or A2A is used, follow sections 2.6 and 2.7 to confirm migration completion, existing business calls, and new management features. Applications using old Naming Gateway service names must also verify discovery.
+7. Callers of the old AI APIs in section 2.3.4 have migrated, or the temporary compatibility switch is configured.
 
-Keep the old distribution, configuration, plugin JARs, and database backup until the observation period ends. Before rollback, remove runtime plugin overrides understood only by 3.3. Roll back AI Resource Import plugin JARs, configuration, and callers together. Do not reverse new tables or widened columns during an emergency rollback; use the database rollback procedure validated before rollout.
+Retain the pre-upgrade distribution, configuration, plugins, and data backups until the observation period ends.
+
+<a id="jraft-auth-rollback"></a>
+
+#### 2.8.1. Rollback Considerations
+
+If a problem occurs during the upgrade, pause the remaining node upgrades and check node identity, database changes, and plugin configuration. Prefer correcting configuration and verifying recovery when that resolves the problem.
+
+**Once the upgrade completes and JRaft authentication activates, do not directly perform a rolling downgrade to an older version without that authentication support.** Doing so can break communication between nodes and make the cluster unavailable. Disabling client authentication does not remove this limitation.
+
+If rollback may be needed, verify the target version's compatibility and rehearse it before upgrading. For an unverified rollback, preserve the current state and logs and contact maintainers to confirm the recovery approach.

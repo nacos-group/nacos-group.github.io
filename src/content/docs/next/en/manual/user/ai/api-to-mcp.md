@@ -10,7 +10,11 @@ sidebar:
 
 Nacos can work with AI gateways such as [Higress](https://higress.ai) to convert existing APIs into MCP services with **zero code changes**. This guide explains how to declare APIs that are already registered in Nacos as MCP services, and how to call MCP tools through the protocol conversion capability of [Higress](https://higress.ai).
 
+The server, tool, and endpoint declarations below apply to existing API conversion. The new 3.3 console uses drafts and publishing: submit and publish definitions before verifying gateway calls. Saving a draft does not bring it online. See [MCP Registry](./mcp-registry.md) for the flow and version management. The original direct publishing entry shown below retains compatibility behavior.
+
 ![API to MCP architecture](/img/doc/manual/user/ai/ai-api-to-mcp.svg)
+
+Nacos 3.3 enables client authentication by default. Configure credentials and permissions for both service registration applications and the gateway's Nacos data source; see [Access Credentials](../auth.mdx). The MCP calls below target Higress and use the gateway's authentication settings.
 
 ## 0. Prerequisites
 
@@ -24,7 +28,7 @@ Prepare the following components before converting existing APIs into MCP servic
 
 Open the Nacos console at `http://${nacos_console_host}:${nacos_console_port}`, for example `http://127.0.0.1:8080`.
 
-> When you open the console for the first time, you may need to initialize the administrator password. For details, see the [Nacos Console Guide](../../admin/console.md#3-login-management).
+> When you open the console for the first time, you may need to initialize the administrator password. For details, see the [Nacos Console Guide](../../admin/console.md#login-and-permissions).
 
 In the left navigation, click `MCP Registry` -> `MCP List` to open the MCP Registry page.
 

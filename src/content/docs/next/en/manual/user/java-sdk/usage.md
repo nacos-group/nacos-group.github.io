@@ -96,39 +96,21 @@ Before upgrading, ensure that **the server is already 3.0 or above**, or **you a
 
 ## 2. Initialize the SDK
 
-To initialize the Nacos SDK, use the `NacosFactory` class to create clients for different modules:
+Nacos 3.3 enables client authentication by default. With the default plugin, create a user with the required resource permissions, then configure the address, username, and password through `Properties`. The SDK logs in, attaches the token, and refreshes it automatically. An address-only initializer does not supply the full identity for default authentication.
+
+This and subsequent examples explicitly read `NACOS_USERNAME` and `NACOS_PASSWORD` environment variables. Set them to an existing account before running the examples. See [Access Credentials](../auth.mdx) for other auth plugins.
 
 ```java
-
-String serverAddr = "localhost:8848";
-
-// Initialize the Nacos Java SDK for the config center.
-ConfigService configService = NacosFactory.createConfigService(serverAddr);
-
-// Initialize the Nacos Java SDK for the registry.
-NamingService namingService = NacosFactory.createNamingService(serverAddr);
-
-// The Nacos Java SDK for distributed lock does not support initialization with only serverAddr. Use Properties instead.
-```
-
-If you need to configure additional parameters during SDK initialization, use the `Properties` class:
-
-```java
-
 Properties properties = new Properties();
-// Specify the Nacos Server address.
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "localhost:8848");
-// Specify the namespace of the Nacos SDK.
-properties.setProperty(PropertyKeyConst.NAMESPACE, "${namespaceId}");
+properties.setProperty(PropertyKeyConst.NAMESPACE, "public");
+properties.setProperty(PropertyKeyConst.USERNAME, System.getenv("NACOS_USERNAME"));
+properties.setProperty(PropertyKeyConst.PASSWORD, System.getenv("NACOS_PASSWORD"));
 
-// Initialize the Nacos Java SDK for the config center.
 ConfigService configService = NacosFactory.createConfigService(properties);
-
-// Initialize the Nacos Java SDK for the registry.
 NamingService namingService = NacosFactory.createNamingService(properties);
-
-// Initialize the Nacos Java SDK for distributed lock.
 LockService lockService = NacosLockFactory.createLockService(properties);
+AiService aiService = AiFactory.createAiService(properties);
 ```
 
 For more parameters involved in initialization, see [Java SDK Properties](./properties.md).
@@ -168,6 +150,8 @@ try {
     String dataId = "{dataId}";
     String group = "{group}";
     Properties properties = new Properties();
+    properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+    properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
     properties.put("serverAddr", serverAddr);
     ConfigService configService = NacosFactory.createConfigService(properties);
     String content = configService.getConfig(dataId, group, 5000);
@@ -212,6 +196,8 @@ String serverAddr = "{serverAddr}";
 String dataId = "{dataId}";
 String group = "{group}";
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.put("serverAddr", serverAddr);
 ConfigService configService = NacosFactory.createConfigService(properties);
 String content = configService.getConfig(dataId, group, 5000);
@@ -263,6 +249,8 @@ String serverAddr = "{serverAddr}";
 String dataId = "{dataId}";
 String group = "{group}";
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.put("serverAddr", serverAddr);
 ConfigService configService = NacosFactory.createConfigService(properties);
 configService.removeListener(dataId, group, yourListener);
@@ -308,6 +296,8 @@ try {
     String dataId = "{dataId}";
     String group = "{group}";
     Properties properties = new Properties();
+    properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+    properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
     properties.put("serverAddr", serverAddr);
     ConfigService configService = NacosFactory.createConfigService(properties);
     boolean isPublishOk = configService.publishConfig(dataId, group, "content");
@@ -358,6 +348,8 @@ try {
     String dataId = "{dataId}";
     String group = "{group}";
     Properties properties = new Properties();
+    properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+    properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
     properties.put("serverAddr", serverAddr);
 
     ConfigService configService = NacosFactory.createConfigService(properties);
@@ -408,6 +400,8 @@ try {
     String dataId = "{dataId}";
     String group = "{group}";
     Properties properties = new Properties();
+    properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+    properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
     properties.put("serverAddr", serverAddr);
     ConfigService configService = NacosFactory.createConfigService(properties);
     String content = configService.getConfigAndSignListener(dataId, group, 5000, new Listener() {
@@ -472,6 +466,8 @@ try {
     String oldContent = "oldContent";
     String oldContentMd5 = "63fb636909f1ebad67110e49117e6de4";
     Properties properties = new Properties();
+    properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+    properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
     properties.put("serverAddr", serverAddr);
     ConfigService configService = NacosFactory.createConfigService(properties);
     // For the first publish, pass null as casMd5.
@@ -630,6 +626,8 @@ try {
     String dataIdPattern = "testDataId*";
     String groupPattern = "group*";
     Properties properties = new Properties();
+    properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+    properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
     properties.put("serverAddr", serverAddr);
     properties.put("namespace", "mynamespaceId");
 
@@ -698,6 +696,8 @@ try {
     String dataId = "{dataId}";
     String group = "{group}";
     Properties properties = new Properties();
+    properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+    properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
     properties.put("serverAddr", serverAddr);
     ConfigService configService = NacosFactory.createConfigService(properties);
     ConfigQueryResult result = configService.getConfigWithResult(dataId, group, 5000);
@@ -1547,6 +1547,8 @@ try {
 		String serviceNamePattern = "service*";
 		String groupPattern = "group*";
 		Properties properties = new Properties();
+		properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+		properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 		properties.put("serverAddr", serverAddr);
 		properties.put("namespace", "mynamespaceId");
 
@@ -1643,6 +1645,8 @@ Lock acquisition result `Boolean`. Returns `true` if the lock is acquired; other
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 LockService lockService = NacosLockFactory.createLockService(properties);
 NLock nLock = new NLock("testLock", 5000L);
@@ -1694,6 +1698,8 @@ Lock release result `Boolean`. Returns `true` if the lock is released; otherwise
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 LockService lockService = NacosLockFactory.createLockService(properties);
 NLock nLock = new NLock("testLock", 5000L);
@@ -1734,6 +1740,8 @@ Remote lock result `Boolean`: returns `true` if lock is acquired, otherwise `fal
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 LockService lockService = NacosLockFactory.createLockService(properties);
 NLock nLock = new NLock("testLock", 5000L);
@@ -1769,6 +1777,8 @@ Remote unlock result `Boolean`: returns `true` if lock is released, otherwise `f
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 LockService lockService = NacosLockFactory.createLockService(properties);
 NLock nLock = new NLock("testLock", 5000L);
@@ -1813,6 +1823,8 @@ MCP service details: `McpServerDetailInfo`.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -1859,6 +1871,8 @@ MCP service ID: `String`.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -1904,6 +1918,8 @@ None.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -1939,6 +1955,8 @@ None.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -1978,6 +1996,8 @@ When subscription succeeds, the current MCP service details `McpServerDetailInfo
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -2040,6 +2060,8 @@ None.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -2083,6 +2105,8 @@ When the query succeeds, the current AgentCard details `AgentCardDetailInfo` are
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -2125,6 +2149,8 @@ None.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -2181,6 +2207,8 @@ None.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -2231,6 +2259,8 @@ None.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -2275,6 +2305,8 @@ When subscription succeeds, the current AgentCard details `AgentCardDetailInfo` 
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -2327,6 +2359,8 @@ None.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 AbstractNacosAgentCardListener listener = new AbstractNacosAgentCardListener() {};
@@ -2371,6 +2405,8 @@ None.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -2424,6 +2460,8 @@ Skill ZIP bytes `byte[]` containing SKILL.md and all resource files.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -2463,6 +2501,8 @@ Skill ZIP bytes `byte[]`.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -2502,6 +2542,8 @@ Skill ZIP bytes `byte[]`.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -2543,6 +2585,8 @@ Returns current Skill ZIP bytes `byte[]` when subscribed successfully; may be nu
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -2591,6 +2635,8 @@ None.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 AbstractNacosSkillListener listener = new AbstractNacosSkillListener() {};
@@ -2634,6 +2680,8 @@ Prompt getPrompt(String promptKey) throws NacosException;
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -2675,6 +2723,8 @@ Prompt getPromptByVersion(String promptKey, String version) throws NacosExceptio
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -2712,6 +2762,8 @@ Prompt getPromptByLabel(String promptKey, String label) throws NacosException;
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -2751,6 +2803,8 @@ Prompt subscribePrompt(String promptKey, String version, String label, AbstractN
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -2793,6 +2847,8 @@ None.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 AbstractNacosPromptListener listener = new AbstractNacosPromptListener() {};
@@ -2830,6 +2886,8 @@ Returns AgentSpec object `AgentSpec` on success.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -2866,6 +2924,8 @@ Returns current AgentSpec `AgentSpec` when subscribed successfully; may be null 
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
@@ -2907,6 +2967,8 @@ None.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 AbstractNacosAgentSpecListener listener = new AbstractNacosAgentSpecListener() {};
@@ -2959,6 +3021,8 @@ Returns `Page<AgentCatalogEntry>` with the total count, current page number, ava
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
 AiService aiService = AiFactory.createAiService(properties);
@@ -3026,6 +3090,8 @@ When both `version` and `label` are absent, definition metadata uses the current
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
 AiService aiService = AiFactory.createAiService(properties);
@@ -3075,6 +3141,8 @@ Returns the current `AgentDiscoveryResult`. Returns `null` while the target is a
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
 AiService aiService = AiFactory.createAiService(properties);
@@ -3128,6 +3196,8 @@ None.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
 AiService aiService = AiFactory.createAiService(properties);
@@ -3199,6 +3269,8 @@ None.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
 AiService aiService = AiFactory.createAiService(properties);
@@ -3249,6 +3321,8 @@ None.
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
 AiService aiService = AiFactory.createAiService(properties);
@@ -3319,6 +3393,8 @@ Returns the exact `AgentVersionDetail`, including the namespace, Agent name, ver
 
 ```java
 Properties properties = new Properties();
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
 AiService aiService = AiFactory.createAiService(properties);
