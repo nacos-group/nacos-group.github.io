@@ -6,6 +6,8 @@ sidebar:
   order: 8
 ---
 
+Nacos 3.3 enables client authentication by default. The plugin needs an existing account, its actual password, and permissions for the required resources. Logging in to the console does not configure the plugin credentials. See [Access Credentials](../auth.mdx).
+
 ## Dify Discovers Nacos MCP Server
 [Nacos MCP](https://marketplace.dify.ai/plugins/nacos/nacos_mcp) plugin supports converting SSE/Streamable HTTP-type MCP Server services registered in Nacos into Dify-compatible tool calls.
 Through the Nacos MCP plugin, Dify applications can dynamically discover SSE/Streamable HTTP-type MCP Server services registered in Nacos. The plugin assists models in dynamically selecting and routing MCP services based on demand, effectively reducing token consumption during model invocations.

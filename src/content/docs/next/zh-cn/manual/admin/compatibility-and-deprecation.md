@@ -26,6 +26,9 @@ Nacos 会在版本演进中保留一部分兼容能力，帮助用户完成升�
 | --- | --- | --- |
 | v1/v2 HTTP API | 迁移到 v3 OpenAPI 或当前 SDK。确有迁移窗口需求时，临时使用 legacy adapter。 | [升级手册](./upgrading.mdx)、[OpenAPI 概览](../user/overview/api-overview.md) |
 | 兼容开关 | 只在升级或迁移窗口期打开。稳定后关闭。 | [系统参数](./system-configurations.md) |
+| 废弃 v3 AI API | 旧 Pipeline 查询与 MCP 导入端点默认返回 `410 Gone` / `API_DEPRECATED`；迁移到标准入口，共享兼容开关只用于临时恢复。 | [受影响 API 与替代入口](./upgrading.mdx#deprecated-ai-api-migration) |
+| JRaft 节点间鉴权 | 配置一致的 Server identity，升级完成后自动启用；启用后不要直接滚动降级到不支持该鉴权的旧版本。 | [鉴权准备](./upgrading.mdx#jraft-auth-upgrade)、[回滚注意事项](./upgrading.mdx#jraft-auth-rollback) |
+| A2A 到 Agent/RAD | 保留旧 A2A 协议兼容；外部 RAD 在历史迁移完成前拒绝业务请求。先完成服务端迁移，再升级依赖 RAD 的客户端。 | [升级手册](./upgrading.mdx#27-a2a-历史数据自动迁移) |
 | Beta/Tag 灰度配置兼容 | Nacos 3.3 起不再自动迁移旧 `config_info_beta`、`config_info_tag` 表，升级前需迁移到 `config_info_gray` 当前灰度模型。当前 beta/tag API 仍由 `config_info_gray` 和 `GrayRule` 支撑。 | [升级手册](./upgrading.mdx)、[配置灰度发布](../user/config/gray-release.md) |
 | 默认命名空间迁移 | Nacos 3.3 起不再自动在空 tenant 与 `public` 之间做存储迁移或双写。空或省略 namespace 请求仍会归一为默认 namespace `public`。 | [升级手册](./upgrading.mdx)、[Java SDK 使用手册](../user/java-sdk/usage.md#13-升级兼容性) |
 | 插件管理重构 | 迁移到 `pluginType:pluginName`、标准 definition key 和统一状态。AI Resource Import 的旧双层 SPI/Source/preset 模型已移除。 | [插件迁移](../../plugin/migration.md)、[AI 资源导入插件](../../plugin/ai-resource-import-plugin.md) |
@@ -38,7 +41,7 @@ Nacos 会在版本演进中保留一部分兼容能力，帮助用户完成升�
 
 Nacos 3.3 移除了 Config 3.0 之前的运行时兼容迁移逻辑，包括默认 namespace 在 legacy 空 tenant 与 `public` 之间的存储迁移、旧 `config_info_beta`/`config_info_tag` 到 `config_info_gray` 的迁移，以及相关双写和混部同步逻辑。
 
-从 3.0 之前版本升级到 3.3 时，如果旧部署未使用默认 namespace，且未使用 beta 灰度发布，则本次兼容迁移移除不影响该兼容领域的平滑升级。若使用过默认 namespace 或 beta 灰度发布，则升级到 3.3 前需要自行完成数据迁移：将默认 namespace 数据从空 tenant 迁移到 `public`，并将旧 beta/tag 灰度数据迁移到 `config_info_gray` 当前灰度模型。
+从 2.x 升级仍属于有限支持，不应仅根据当前版本号判断历史数据已经迁移。若使用过默认 namespace 或旧 beta/tag 灰度表，应先在支持迁移的 3.0.x～3.2.x 完成空 tenant 到 `public`、旧灰度表到 `config_info_gray` 的迁移，并验证查询与灰度行为。若未使用这些数据，则不受这一项移除影响，但仍需满足其他升级条件。具体路径见[升级手册](./upgrading.mdx#217-配置中心兼容迁移移除-nacos-330)。
 
 这不是移除当前默认 namespace 语义，也不是移除当前 beta/tag 灰度 API。空或省略 namespace 请求仍归一为 `public`；当前 beta/tag 灰度行为仍由 `config_info_gray` 和 `GrayRule` 支撑。
 

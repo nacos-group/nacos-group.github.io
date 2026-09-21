@@ -45,26 +45,26 @@ skill-sample/
 
 ### 2.1. 生命周期
 
-每个 Skill 版本有以下四种状态，构成完整的生命周期流转：
+Skill 使用统一的 [AI 资源生命周期](./ai-resource-lifecycle.md)，版本有五种状态：
 
-```
-draft ──> reviewing ──> online ──> offline
-  ^           │                       │
-  └───────────┘                       │
-  (Pipeline 拒绝时回退)                 │
-                                      └──> online (可重新上线)
+```text
+draft -> reviewing -> reviewed -> online -> offline
+                         |                    |
+                         +-> draft            +-> online
+                           重新编辑              重新上线
 ```
 
 | 状态 | 说明 |
 |------|------|
-| `draft` | 草稿，可自由编辑内容 |
-| `reviewing` | 已提交审核，Pipeline 执行中 |
+| `draft` | 草稿，可编辑内容 |
+| `reviewing` | Pipeline 审核中，不可编辑 |
+| `reviewed` | 审核已完成，需查看通过或拒绝结果 |
 | `online` | 已发布上线，对外可用 |
-| `offline` | 已下线，不再对外提供 |
+| `offline` | 已下线，内容保留 |
 
 > **约束**：
-> - 同一个 Skill 同时只能有一个 draft 或 reviewing 状态的版本。
-> - 版本一旦发布（online）后内容不可修改，如需变更请基于该版本新建草稿，修改后重新提交审核并发布。
+> - 同一个 Skill 同时只能有一个工作版本，包括 `draft`、`reviewing` 或 `reviewed`。
+> - 发布后内容不可修改。如需变更，请创建新版本草稿；审核完成但未发布的版本则先执行“重新编辑”。
 
 Skill 从创建到使用，经历以下完整流程：
 
@@ -75,7 +75,7 @@ Skill 从创建到使用，经历以下完整流程：
 | 方式 | 说明 |
 |------|------|
 | **手动创建** | 在控制台填写名称、描述和 SKILL.md 内容，创建一个 draft 版本 |
-| **ZIP 上传** | 上传包含 SKILL.md 的 ZIP 包，系统自动解析并创建 Skill |
+| **ZIP 上传** | 上传包含 SKILL.md 的 ZIP 包，系统自动解析并创建草稿 |
 | **AI 生成** | 提供背景描述，由 Copilot 自动生成完整的 Skill 内容 |
 
 #### 2.1.2. 草稿（Draft）
@@ -85,14 +85,16 @@ Skill 从创建到使用，经历以下完整流程：
 - **编辑草稿**：修改 SKILL.md 内容、描述和资源文件
 - **删除草稿**：放弃当前草稿，释放工作位
 
-> 同一 Skill 同时只允许存在一个 draft 或 reviewing 版本，需等当前工作版本处理完毕后才能创建新草稿。
+> 已有 `reviewing` 或 `reviewed` 版本时，先发布或放弃该工作版本，再创建新草稿。需要修改审核完成的内容时，重新编辑该版本即可。
 
 #### 2.1.3. 提交审核（Submit）
 
-将 draft 版本提交审核。提交后版本状态变为 `reviewing`：
+提交 `draft` 版本，或重新提交 `reviewed` 版本：
 
-- **有 Pipeline 配置**：触发发布流水线执行安全扫描等检查
-- **无 Pipeline 配置**：直接发布为 online 状态
+- **有已启用且支持 Skill 的 Pipeline 节点**：进入 `reviewing`，执行安全扫描等检查
+- **无适用 Pipeline 节点**：直接发布为 `online`
+
+审核中的版本重复提交不会启动新的审核；重新提交 `reviewed` 版本会重新执行当前适用的检查。
 
 #### 2.1.4. 发布流水线（Pipeline）
 
@@ -126,12 +128,12 @@ Pipeline 执行结果：
 
 | 结果 | 处理 |
 |------|------|
-| **APPROVED** | 版本保持 `reviewing` 状态，等待手动点击发布 |
-| **REJECTED** | 版本回退为 `draft`，可修改后重新提交 |
+| **APPROVED** | 版本进入 `reviewed`，默认等待手动发布 |
+| **REJECTED** | 版本进入 `reviewed`；需先重新编辑回到 `draft`，再修改并提交 |
 
 #### 2.1.5. 发布（Publish）
 
-- **正常发布**：Pipeline 审核通过后，将 `reviewing` 版本发布为 `online`，可选择是否更新 `latest` 标签
+- **正常发布**：Pipeline 审核通过后，将 `reviewed` 版本发布为 `online`，服务端自动更新 `latest` 标签
 - **强制发布**：管理员特权操作，绕过 Pipeline 校验直接发布。当 Pipeline 拒绝发布但实际情况需要紧急上线时，全局管理员可在控制台执行强制发布，该操作会记录审计日志
 
 #### 2.1.6. 上下线
@@ -159,7 +161,8 @@ Skill 使用**语义化版本号**（SemVer），如 `1.0.0`、`1.1.2`。创建�
 
 标签管理操作：
 
-- 发布时可选择自动更新 `latest` 标签指向新版本
+- `latest` 由服务端维护；发布或重新上线时自动指向该版本，不能通过自定义标签操作手动覆盖
+- 下线或删除 latest 版本后，服务端从剩余在线版本中选择；没有在线版本时移除 latest
 - 在版本时间线中可手动绑定/解绑自定义标签（如 `stable`、`canary`）
 
 ### 2.3. 可见性
@@ -205,11 +208,12 @@ Nacos 控制台提供了完整的 Skill 管理界面，位于 **AI 注册中心 
 
 | 操作 | 说明 |
 |------|------|
-| **创建草稿** | 基于已有版本创建新草稿，同一时刻只允许存在一个 draft 或 reviewing 版本 |
+| **创建草稿** | 基于已有版本创建新草稿；先处理已有 draft、reviewing 或 reviewed 工作版本 |
 | **编辑草稿** | 在线编辑 SKILL.md 内容、描述信息和资源文件，实时保存 |
 | **删除草稿** | 放弃当前草稿，释放工作位 |
-| **提交审核** | 将 draft 提交为 reviewing，提交前需确保描述和 SKILL.md 内容不为空 |
-| **发布** | Pipeline 通过后发布为 online，可选择自动更新 `latest` 标签 |
+| **提交审核** | 提交 draft 或重新提交 reviewed；无适用 Pipeline 时直接上线，提交前需确保描述和 SKILL.md 内容不为空 |
+| **重新编辑** | 将 reviewed 版本恢复为 draft，修改后重新提交 |
+| **发布** | 审核通过后从 reviewed 发布为 online，自动更新 `latest` 标签 |
 | **强制发布** | 仅管理员可见，Pipeline 拒绝时可绕过校验直接发布 |
 
 #### 3.2.2. 上下线管理
@@ -232,7 +236,7 @@ Nacos 控制台提供了完整的 Skill 管理界面，位于 **AI 注册中心 
 
 - **手动创建**：通过创建对话框填写 Skill 名称、描述和 SKILL.md 内容
 - **AI 生成**：输入背景描述，可关联 MCP 工具和对话历史，由 Copilot 流式生成完整 Skill
-- **上传 ZIP**：直接上传 Skill ZIP 包，系统自动解析其中的 SKILL.md 和资源文件，创建为新版本
+- **上传 ZIP**：直接上传 Skill ZIP 包，系统自动解析其中的 SKILL.md 和资源文件，创建版本草稿
 
 ### 3.4. Skill 优化
 
@@ -251,7 +255,7 @@ Skill 管理提供多种接入方式，详细用法请参考各自的专项文�
 
 ### 4.1. nacos-cli
 
-[nacos-cli](../../admin/nacos-cli.md) 是 Skill 管理的命令行工具，提供 Skill 的搜索、安装、上传和同步功能。详细的安装配置和 Skill 管理命令请参考 [Nacos CLI 使用指南 - AI 技能管理](../../admin/nacos-cli.md#51-ai-技能管理-)。
+[nacos-cli](../../admin/nacos-cli.md) 是 Skill 管理的命令行工具，提供 Skill 的搜索、安装、上传和同步功能。详细的安装配置和 Skill 管理命令请参考 [Nacos CLI 使用指南 - AI 技能管理](../../admin/nacos-cli.md)。
 
 ### 4.2. REST API
 
@@ -259,7 +263,7 @@ Skill 管理提供三层 REST API：
 
 | API 层 | 说明 | 文档链接 |
 |--------|------|----------|
-| **Client API** | 客户端运行时查询/下载 Skill（支持匿名访问） | [客户端API - 下载 Skill](../open-api.md#34-下载-skill) |
+| **Client API** | 客户端运行时查询/下载 Skill（默认需要身份；匿名读取需[显式启用并满足授权条件](../auth.mdx)） | [客户端API - 下载 Skill](../open-api.md#34-下载-skill) |
 | **Console API** | 控制台管理操作（需登录认证） | [控制台API - Skills 管理](../../admin/console-api.md#7-skills-管理) |
 | **Admin API** | 集群内部管理接口 | [运维API - AI Skills 管理](../../admin/admin-api.md#7-ai-skills-管理) |
 

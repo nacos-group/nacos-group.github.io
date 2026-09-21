@@ -17,7 +17,7 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 | Nacos版本 | 是否支持升级到当前版本 | 备注 |
 |----------|--------------------|------|
 | 0.X ～ 1.X | 不支持 | 0.X ~ 1.X 版本需要先升级到2.0以上的版本，请参考[Nacos2.0升级文档](https://nacos.io/docs/v2/upgrading/200-upgrading/) 先升级到2.0或2.1版本后再进行升级 |
-| 2.0.X ~ 2.5.X | 不支持直接平滑升级 | Nacos 3.3 已移除 2.x 使用的配置兼容迁移逻辑。若使用过默认 namespace，请先升级到 3.0.x～3.2.x 并确认配置可正常查询，再升级到 3.3.x。详见[从 2.x 升级说明](#217-配置中心兼容迁移移除-nacos-330)。 |
+| 2.0.X ~ 2.5.X | 不支持直接平滑升级 | Nacos 3.3 已移除 2.x 使用的配置兼容迁移逻辑。若使用过默认 namespace 或旧 beta/tag 灰度表，请先在 3.0.x～3.2.x 完成数据迁移与验证，再升级到 3.3.x。详见[从 2.x 升级说明](#217-配置中心兼容迁移移除-nacos-330)。 |
 | 3.0.X ~ 3.3.X | 支持 | 3.3.X 版本支持从 3.0.X 及以上版本升级到 3.3.X，但数据库表结构有发生变化，请升级前对比目标版本对应数据库的 schema 文件，并应用新的表结构后进行升级 |
 
 ### 1.1 客户端兼容性
@@ -30,6 +30,8 @@ Nacos 3.x 服务端与各版本客户端的兼容性如下：
 | 1.x | 不兼容 | 若需继续使用 1.x 客户端，请自行集成 [nacos-api-legacy-adapter](https://github.com/nacos-group/nacos-api-legacy-adapter) |
 | 2.x | 兼容 | - |
 | 3.x | 兼容 | - |
+
+升级服务端前，请确认客户端已配置正确的身份信息；使用 A2A 的部署还需完成第 2.7 节的迁移准备。
 
 ## 2. 升级步骤
 
@@ -45,49 +47,50 @@ Nacos 3.x 服务端与各版本客户端的兼容性如下：
 2. 备份数据库、各节点的 `data`、`conf`、`cluster.conf`，以及自定义插件和配置。
 3. 在预发环境使用生产数据副本演练升级和回滚。
 4. 按第 2.1.2 节盘点 Client API 调用方并完成鉴权迁移；不要等到首个 3.3 节点启动后才开始补客户端凭据。
+5. 按第 2.1.3 节核对全部节点的 Server identity，并确认第 2.8.1 节的回滚限制。
 
 <a id="217-配置中心兼容迁移移除-nacos-330"></a>
 
 #### 2.1.1. 确认从 2.x 升级的路径
 
-Nacos 3.3 已移除配置中心兼容迁移逻辑，不再支持从 2.x 直接平滑升级。若从 2.x 直接升级到 3.3.x，将无法查询之前保存在默认 namespace 中的配置。
+Nacos 3.3 已移除配置中心兼容迁移逻辑，不再支持从 2.x 直接平滑升级。升级前应盘点两类历史数据：
 
-升级前请确认业务未使用默认 namespace 中的配置数据。若使用过或无法确认，请先升级到 3.0.x～3.2.x，确认默认 namespace 配置可正常查询后，再升级到 3.3.x。
+- 默认 namespace 中仍以空 tenant 保存的配置，需要完成到 `public` 的存储迁移。
+- 旧 `config_info_beta`、`config_info_tag` 表中的灰度配置，需要迁移到 `config_info_gray` 当前灰度模型。
 
-#### 2.1.2. 准备 Client API 默认鉴权
+若使用过以上任一类数据或无法确认，请先升级到支持相应迁移的 3.0.x～3.2.x 版本，完成迁移并验证默认 namespace 的配置查询、灰度规则和灰度客户端获取结果，再升级到 3.3.x。直接跳过迁移会导致历史配置无法查询或灰度行为不符合预期。即使当前已运行 3.x，也应确认曾经需要的迁移已完成；不要只以版本号作为完成依据。
 
-Nacos 3.3 将 Client API 鉴权改为默认开启。只改变 Client 范围的缺省值，三个鉴权范围仍相互独立：
+本次移除不改变当前默认 namespace 或 beta/tag 灰度 API 的语义；空或省略 namespace 的请求仍归一为 `public`。更多说明见[兼容与废弃](./compatibility-and-deprecation.md)。
 
-| 配置项 | 请求范围 | 3.0.x～3.2.x 缺省值 | 3.3.x 缺省值 |
-| --- | --- | --- | --- |
-| `nacos.core.auth.enabled` | Client/Open API、Java SDK 和 gRPC 请求 | `false` | `true` |
-| `nacos.core.auth.admin.enabled` | `/v3/admin/*` Admin API | `true` | `true` |
-| `nacos.core.auth.console.enabled` | `/v3/console/*` Console API 和控制台登录 | `true` | `true` |
+<a id="212-准备-client-api-默认鉴权"></a>
 
-因此，没有显式配置 `nacos.core.auth.enabled` 的集群升级到 3.3 后，原本未携带身份的配置发布/查询、服务注册/发现/订阅以及其他受保护的 Client HTTP、SDK 或 gRPC 请求会被拒绝。旧客户端本身不一定不兼容；风险来自调用方没有配置受支持的用户名、密码、token 或所选鉴权插件要求的其他身份材料。Admin API 和 Console API 的默认行为不因本次变更改变。明确标记为公开、首次初始化或健康检查的端点仍按各自规则处理；`/v3/auth/*` 是鉴权插件 API，也不能仅按 URL 归入 Client 范围。
+#### 2.1.2. 准备客户端鉴权
 
-正式升级前应完成：
+Nacos 3.3 默认开启客户端鉴权（`nacos.core.auth.enabled=true`）。如果客户端没有配置正确的身份信息或访问权限，升级后配置读取、服务注册与发现等请求可能被拒绝，影响业务运行。
 
-1. 盘点所有直接 OpenAPI、SDK、网关、自动化任务和旁路脚本，确认它们访问的资源与所需读写动作。
-2. 确认鉴权插件类型。使用默认 `nacos` 插件时，准备部署独有的 token secret 和 Server identity；token secret 必须是有效 Base64，解码后不少于 32 字节，同一集群各节点的 token secret 与 identity 必须一致。
-3. 通过已有的受保护管理入口初始化或确认管理员，并为应用创建独立用户、角色和最小权限。不要把全局管理员凭据分发给业务客户端。
-4. 在升级前把用户名/密码、token 或所选插件要求的凭据配置到客户端。SDK 配置方式见[客户端鉴权](../user/auth.mdx)。
-5. 在预发环境同时验证正常读写、无身份、错误身份、无权限和资源边界场景，并确认每个集群节点的三个开关有效值一致。
+升级前请根据客户端准备情况选择：
 
-如果无法在升级窗口前完成全部客户端改造，可以临时显式关闭 Client API 鉴权，但必须保留 token secret、Server identity、用户、角色和权限，以便后续重新开启：
+- **已具备鉴权条件**：确认[服务端鉴权配置](./auth.mdx)和[客户端身份配置](../user/auth.mdx)正确，并验证配置读取、服务注册与发现等业务操作后再升级。
+- **暂时无法完成客户端改造**：在所有节点显式关闭客户端鉴权，保持原有访问方式；完成客户端身份和权限配置后再统一开启。
 
-| 部署方式 | 临时显式关闭方式 |
+| 部署方式 | 临时关闭客户端鉴权 |
 | --- | --- |
-| 原生发行包 | 在每个节点的 `conf/application.properties` 设置 `nacos.core.auth.enabled=false`。该项支持运行时刷新，但文件刷新是节点本地行为，必须逐节点应用并核对。 |
-| Docker | 设置 `NACOS_AUTH_ENABLE=false`。未设置该变量时，3.3 镜像继承默认开启；显式 `true` 或 `false` 均会覆盖镜像默认值。 |
-| Helm | 设置 `nacos.auth.enabled=false`，例如 `helm upgrade ${release_name} ./ --reuse-values --set nacos.auth.enabled=false`。该字段为 `null`/`true`/`false` 三态：`null` 表示不写入 `NACOS_AUTH_ENABLE`，继承所选镜像默认值。 |
-| Operator | 在 Nacos CR 中设置 `spec.certification.enabled: false`。该字段同样为 `null`/`true`/`false` 三态：`null` 或省略表示不写入 `NACOS_AUTH_ENABLE`，继承所选镜像默认值。 |
+| 原生发行包 | 在每个节点的 `conf/application.properties` 设置 `nacos.core.auth.enabled=false`。 |
+| Docker | 设置 `NACOS_AUTH_ENABLE=false`。 |
+| Helm | 设置 `nacos.auth.enabled=false`。 |
+| Operator | 在 Nacos CR 中设置 `spec.certification.enabled: false`。 |
 
-Helm 和 Operator 的该字段都只控制 Client API 鉴权，不改变 Admin API 或 Console API。使用 Helm 时，生产环境优先通过 `nacos.auth.existingSecret` 管理 token 和 Server identity；从 chart 1.0.0 或更早版本首次升级且仍使用旧内联凭据时，应使用 `--reuse-values` 保留凭据，或先创建外部 Secret。不要在 values、CR、Compose 文件或代码仓库中写入固定生产凭据。
+临时关闭期间，应限制 Nacos 只能从可信网络访问，并在客户端改造完成后恢复鉴权。以上开关只影响客户端鉴权，Admin API 和 Console API 的鉴权行为不变。
 
-:::caution[临时关闭会扩大未授权访问面]
-显式 `false` 仅用于有明确期限的升级兼容窗口。期间应把 Nacos 限制在可信网络内，收紧入口和调用来源，并记录责任人与恢复时间。客户端凭据和权限验证完成后，在所有节点把值改为 `true`；也可以在确认使用 3.3 及以上镜像后，将 Docker 变量、`nacos.auth.enabled` 或 `spec.certification.enabled` 恢复为 `null`/省略，以重新继承默认开启行为。
-:::
+<a id="jraft-auth-upgrade"></a>
+
+#### 2.1.3. 确认 JRaft 节点间鉴权配置
+
+Nacos 3.3 新增 JRaft 节点间鉴权。滚动升级期间会兼容旧节点，所有节点升级完成并确认支持后自动启用，无需手动开启。
+
+升级前，请确认所有节点的 `nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value` 均非空且一致。配置错误可能在升级完成后导致节点间通信失败，影响集群读写；应在继续升级前修正。即使临时关闭客户端鉴权，也必须保持这两项配置正确。
+
+升级完成后的回滚限制见[第 2.8.1 节](#jraft-auth-rollback)。
 
 ### 2.2. 应用数据库变更
 
@@ -160,6 +163,25 @@ nacos.plugin.ai-resource-import.enabled=false
 - 旧 AI Resource Import SPI 没有兼容适配器，必须重新编译并同步修改配置与调用方，不能与新模型混跑。
 - `auth`、`datasource-dialect`、`ai-storage` 等关键插件在选中的实现缺失、被禁用或初始化失败时可能阻止服务启动，应在预发环境验证选择、状态和初始化过程。
 - 先在单节点核对插件列表、详情、effective source、脱敏结果和 `RESTART` 提示；滚动升级期间不要下发只有 3.3 节点才能理解的运行时配置。
+
+<a id="deprecated-ai-api-migration"></a>
+
+#### 2.3.4. 迁移默认关闭的旧 AI API
+
+以下废弃的 v3 API 默认关闭，迁移调用方时应使用对应的标准入口：
+
+| 废弃 API | 替代 API |
+| --- | --- |
+| `GET /v3/admin/ai/pipelines` | `GET /v3/admin/ai/pipelines/list` |
+| `GET /v3/admin/ai/pipelines/{pipelineId}` | `GET /v3/admin/ai/pipelines/detail?pipelineId={pipelineId}` |
+| `GET /v3/console/ai/pipelines` | `GET /v3/console/ai/pipelines/list` |
+| `GET /v3/console/ai/pipelines/{pipelineId}` | `GET /v3/console/ai/pipelines/detail?pipelineId={pipelineId}` |
+| `POST /v3/console/ai/mcp/import/validate` | `POST /v3/console/ai/import/validate` |
+| `POST /v3/console/ai/mcp/import/execute` | `POST /v3/console/ai/import/execute` |
+
+关闭时返回 HTTP `410 Gone` 和 `API_DEPRECATED` 结果码，并提示替代 API。确需保留迁移窗口时，可在提供这些端点的节点临时设置 `nacos.core.api.compatibility.enabled=true`，完成调用方迁移后恢复为默认 `false`。该共享开关会同时开放表中端点，原有鉴权仍然生效；它不恢复 v1/v2 HTTP API，也不控制第 2.7 节的旧 A2A 兼容链路。
+
+旧 `nacos.ai.resource.import.legacy-mcp-api-enabled` 已不再识别。旧 MCP 直接 URL 导入还要求显式设置 `nacos.ai.resource.import.allow-user-url=true`；优先迁移到受管来源及新请求模型，不能只替换 URL 而沿用全部旧参数。详见 [AI Resource Import 迁移说明](../../plugin/migration.md#ai-resource-import-breaking-change)。
 
 ### 2.4. 发行版升级
 
@@ -245,130 +267,96 @@ Windows 部署使用新发行包中的 `shutdown.cmd` 和 `startup.cmd`，不要
 
 ### 2.6. 等待 MCP 历史数据自动迁移完成
 
-从 Nacos 3.0.x～3.2.x 升级且已有 MCP Server 数据时，无需手工迁移。目标版本启动后会在后台扫描已有 MCP 数据，并补充新版管理功能所需的信息；任务失败后可以自动重试。
-
-迁移会复用原有的 MCP 服务、工具和资源配置，不会移动或重写这些内容，也不会改变 MCP 服务地址、客户端调用或网关访问。因此迁移期间，已有 MCP 服务可以继续对外提供服务。
+从 Nacos 3.0.x～3.2.x 升级且已有 MCP Server 数据时，无需手工迁移。完成服务端升级后，等待后台迁移完成即可；已有 MCP 服务地址和客户端调用方式不变。
 
 #### 2.6.1. 升级期间的正常现象
 
-- 迁移期间，Nacos 会将内部状态标记为 `SYNCING`，表示后台任务仍在执行，或正在等待节点和检索索引准备完成。这不是需要用户选择的运行模式，通常只需继续完成升级并等待自动重试。
-- 迁移完成前，原有 MCP 管理接口继续可用；新版 MCP 管理接口可能暂时返回 `409 / RESOURCE_CONFLICT`。这通常表示后台迁移尚未完成，并不表示数据丢失。此时继续使用原有接口，并查看服务端日志。
-- 迁移任务会在服务端启动后执行，默认每隔约 5 分钟重试。首次扫描如果补充或修复了数据，还需要再次扫描确认，因此可能需要等待一个或多个周期。
-- 只有所有服务端节点都完成升级、历史数据扫描正常，并且已启用的 AI 资源检索完成索引初始化后，迁移才会完成。滚动升级期间存在旧版本节点时，等待属于正常现象；请先完成全部节点升级，不需要人工切换数据或流量。
-- 没有历史 MCP 数据的集群也会自动完成检查，通常无需额外操作。
+- 原有 MCP 管理接口继续可用；新版管理接口可能暂时返回 `409 / RESOURCE_CONFLICT`，此时先使用原有接口，并等待迁移完成。
+- 全部节点完成升级、历史数据检查通过且已启用的检索索引准备好后，迁移才会完成。任务默认约每 5 分钟重试，可能需要等待多个周期。
+- 通常保持 `nacos.ai.mcp.resource.reconciliation.enabled=true`，无需调整其他迁移参数，详见[系统参数](./system-configurations.md#ai-管理中心)。
 
-迁移参数见[系统参数](./system-configurations.md#ai-管理中心)。通常应保持 `nacos.ai.mcp.resource.reconciliation.enabled=true`。缩短默认间隔会增加配置中心和数据库扫描负载，只建议在预发、测试或受控排障时谨慎使用。
+#### 2.6.2. 升级后检查
 
-#### 2.6.2. 不要操作内部迁移数据
-
-Nacos 使用 Namespace `_nacos_internal_`、group `nacos_internal` 保存内部迁移状态。这些 Config 仅供 Nacos 在升级迁移期间使用，无需用户查看或维护，也不应进行修改或其他操作。出现异常时请先查看服务端日志；如需进一步排查，仅在确认授权后进行只读查询，不要更改其中的内容。
+确认所有节点健康、服务端日志记录迁移完成，并验证 MCP 列表、详情和新版管理接口可用。
 
 #### 2.6.3. 迁移未完成时如何排查
 
 | 现象 | 建议 |
 | --- | --- |
-| 新版 MCP 管理接口持续返回 `409 / RESOURCE_CONFLICT` | 继续使用原有接口，确认所有服务端节点均已升级并处于健康状态，然后查看迁移相关日志并等待下一次自动重试。 |
-| 日志提示检索索引尚未准备完成 | 如果启用了 AI 资源检索，请确认第 2.2 节要求的检索表已经准备好，并检查检索功能的启动和索引日志。不要仅为完成迁移而临时关闭检索功能。 |
-| 日志提示 Namespace 或历史 MCP 数据扫描失败 | 检查 Namespace、数据库和配置中心是否正常。常见原因包括 MCP 名称或 ID 重复、版本缺失，以及 MCP 服务、工具或资源配置缺失、格式错误或与已有数据冲突。 |
-| 日志提示迁移任务正在其他节点执行 | 这是正常的集群协调行为，无需人工接管或删除内部数据；等待当前节点完成或系统自动重试。 |
+| 新版管理接口持续返回 `409 / RESOURCE_CONFLICT` | 确认所有节点已升级且健康，查看迁移日志并等待自动重试。 |
+| 日志提示检索索引未就绪 | 检查第 2.2 节要求的表和数据源，等待索引初始化完成。 |
+| 日志提示历史数据缺失、格式错误或冲突 | 先备份，通过管理接口修复；无法确认处理方式时，保留日志并联系维护者。 |
 
-迁移完成后，新版 MCP 管理接口会恢复可用，服务端日志也会记录迁移完成。如果需要修复历史数据，应先备份数据库和相关配置，保留完整日志，并通过受支持的管理接口处理；不要直接删除数据库记录或内部迁移数据。无法确认如何修复时，请保留现场并联系 Nacos 维护者。
+#### 2.6.4. 回滚注意事项
 
-#### 2.6.4. 回滚和降级边界
-
-MCP 历史数据迁移完成后，新的管理状态不会随服务降级自动撤销。不要让旧版本节点重新处理 MCP 管理请求，也不要通过删除内部迁移数据或新增数据库记录来尝试回滚。
-
-现有 MCP 服务内容和调用方式仍保持兼容，但后续管理操作应由目标版本节点处理。需要紧急降级时，应保留备份和日志，先隔离 MCP 管理请求，再联系维护者制定经过验证的恢复方案。
+MCP 迁移完成后，降级不会自动撤销新版管理数据。使用 MCP 的部署应在回滚前确认目标版本能否正确处理这些数据。
 
 <a id="27-a2a-historical-data-migration"></a>
 
 ### 2.7. A2A 历史数据自动迁移
 
-本节适用于从 Nacos 3.1.x～3.2.x 升级，并且存在历史 A2A Config 定义、Version 内容，或仍有旧 A2A SDK 向 `<legacyEncodedAgentName>::<exactVersion>` Naming Service 发布 Runtime Endpoint 的部署。目标版本会把这些定义迁移到标准 Agent Resource、Version 和 Agent Storage，并让仍活跃的 Runtime Endpoint 收敛到标准 RAD Runtime。
-
-迁移不会默认启动，也没有独立的迁移 Enable 开关。开始滚动升级前，必须在**所有目标版本节点**上显式使用一致的配置：
+本节适用于从 Nacos 3.1.x～3.2.x 升级，且已使用 A2A Agent 管理或旧 A2A SDK 注册服务的部署。升级前，在**所有目标版本节点**配置：
 
 ```properties
 nacos.ai.a2a.compatibility.mode=AUTO
 nacos.ai.a2a.migration.legacy-naming-shadow-enabled=false
 ```
 
-默认 `CANONICAL` 只使用标准 Agent/RAD，不扫描历史 A2A 数据。滚动升级期间，所有新节点还必须使用同一个可用的 Agent Storage Provider 和相同的 shadow 策略；迁移计划创建后，实际 Storage Provider 和 shadow 选择会固化在 Marker 中，节点策略不一致会阻止对账和切流。
+默认 `CANONICAL` 不会迁移历史 A2A 数据，已有 A2A 业务必须显式使用 `AUTO`。各节点应使用一致的 Agent Storage 和迁移配置，迁移开始后不要改变这些设置。
 
-`legacy-naming-shadow-enabled=false` 表示切流到 `CANONICAL` 后，不再承诺继续物化旧的精确 Version Naming Service。普通旧 A2A API/SDK 会通过兼容层查询、订阅和发布 Endpoint，并不因此要求开启 shadow。只有业务绕过 A2A/RAD API，直接通过 Naming Gateway 消费 `<legacyEncodedAgentName>::<exactVersion>` serviceName 时，才应在开始迁移前评估该依赖并选择 `true`。Marker 创建后不要把本地改值当作动态开关。
-
-与迁移直接相关的配置及默认值如下：
-
-| 配置 | 默认值 | 运维说明 |
-| --- | ---: | --- |
-| `nacos.ai.a2a.compatibility.mode` | `CANONICAL` | 历史迁移必须显式设为 `AUTO`。 |
-| `nacos.ai.a2a.migration.legacy-naming-shadow-enabled` | `false` | 是否在切流后保留旧精确 Version Naming shadow；迁移开始时固化。 |
-| `nacos.ai.a2a.migration.reconciliation.interval-seconds` | `300` | 全量对账间隔。 |
-| `nacos.ai.a2a.migration.reconciliation.page-size` | `100` | 每页扫描的历史定义数。 |
-| `nacos.ai.a2a.migration.lease-duration-seconds` | `600` | 迁移 Owner 的可续约 Lease 时长。 |
-| `nacos.ai.a2a.migration.quiescing-timeout-seconds` | `120` | 一轮 `QUIESCING` 超时后回到 `SYNCING` 的时间。 |
-
-除 `AUTO` 和 shadow 决策外，通常保持其他参数默认值。只有在预发验证或受控排障中才考虑调小；缩短 Lease 时必须仍长于一个预期对账单元的执行时间，缩短对账间隔也会增加 Config、Storage 和数据库负载。
-
-请区分以下三个兼容面：
-
-| 兼容面 | 迁移和切流语义 |
-| --- | --- |
-| 旧 A2A API/SDK | `SYNCING` 时仍读写历史定义；`CANONICAL` 后由标准 Agent/RAD 兼容 Facade 提供服务。迁移不进行请求级双读、合并读取或长期定义双写。 |
-| 标准 Agent/RAD | 承载迁移后的定义、Search、Discover、Watch 和 Runtime，是终态权威面。 |
-| 可选旧 Naming Gateway shadow | 只服务直接读取旧精确 Version serviceName 的调用方；不参与定义权威，也不产生 RAD 的重复 Endpoint 或 Watch 事件。 |
+普通 A2A API/SDK 调用方保持 `legacy-naming-shadow-enabled=false` 即可。只有直接通过 Naming Gateway 读取旧 `<legacyEncodedAgentName>::<exactVersion>` 服务名的业务，才需要在迁移前设为 `true`，否则迁移完成后可能无法再通过这些旧服务名发现实例。其他迁移参数通常保持默认值，详见[系统参数](./system-configurations.md#ai-管理中心)。
 
 #### 2.7.1. 升级期间的正常现象
 
-| 状态 | 用户可见行为 |
+| 日志中的迁移状态 | 业务影响 |
 | --- | --- |
-| `SYNCING` | 历史 A2A Config 定义仍是权威。旧 A2A API/SDK 的查询、订阅和定义写入可以继续，Endpoint 注册、心跳和 Redo 也继续工作。新节点在后台幂等迁移定义与 Version，并把仍活跃的 Runtime Endpoint 以旧 Naming 为主、同时镜像到标准 RAD；后台失败会重试，不会把一次旧定义写入改成双主。 |
-| `QUIESCING` | Nacos 短暂阻止 A2A **定义**增删改，以完成无双主的最终一致切流；定义读取、Search、RAD Discover/Watch、Endpoint 注册和已有流量继续可用。HTTP 定义写请求会返回 HTTP `409`，标准 `Result` 中的 `code` 为 `50105`（`AGENT_MIGRATION_IN_PROGRESS`），详细原因位于 `data`；旧 SDK/gRPC 响应会保留 detail code `50105`。调用方应稍后重试。超时、成员变化或最终校验失败时会自动回到 `SYNCING`。 |
-| `CANONICAL` | 这是永久终态，标准 Agent/RAD 成为定义和 Runtime 权威；旧 A2A API/SDK 改由兼容 Facade 投影结果。不要通过删除内部状态或让 legacy-only 二进制重新加入来尝试回退；直接旧 Naming Gateway 的可见性仅由已经固化的 shadow 策略决定。 |
+| `SYNCING` | 后台迁移中，旧 A2A 协议的查询、订阅、定义写入和服务注册继续可用。 |
+| `QUIESCING` | 暂时阻止 A2A 定义增删改，返回 `409 / AGENT_MIGRATION_IN_PROGRESS (50105)`，稍后重试即可；旧协议的读取、注册、心跳和已有服务调用继续可用。 |
+| `CANONICAL` | 迁移完成，旧 A2A API/SDK 继续兼容，可以使用标准 Agent/RAD 功能。 |
 
-只有同时满足以下条件，系统才会自动完成切流：所有当前 Server 节点均已升级并上报一致的迁移能力与策略；历史定义和全部 Version 已在目标 Agent Storage 中完整、可读且无冲突；启用 Search 时相关索引已经 Ready；所有活跃 Runtime 镜像和必需重试均已收敛。滚动升级期间只要仍有旧节点，或任一门禁未满足，停留在 `SYNCING` 都属于正常现象。
+历史迁移完成前，外部 RAD 的搜索、发现、发布、Endpoint 注册和订阅请求会返回 `409 / AGENT_MIGRATION_IN_PROGRESS (50105)`；gRPC 返回相同业务错误码。应等待迁移完成后重新发起请求或订阅。已有合法 Endpoint 的心跳、完整注销和本地取消订阅仍可执行。
 
-#### 2.7.2. 不要操作内部迁移数据
+**先完成服务端升级和迁移，再升级依赖 RAD 的客户端。** 新版 SDK 即使调用 A2A 方法，也可能使用 RAD 并受到上述限制，不会自动退回旧协议。
 
-Nacos 使用 Namespace `_nacos_internal_`、group `nacos_internal` 保存迁移的 Marker、Lease 和 Progress。这些 Config 仅用于 Nacos 集群协调，不是用户可维护的数据。不要编辑、删除或伪造这些记录，也不要靠删除 Marker 尝试回滚。
+#### 2.7.2. 升级后检查
 
-排障时优先查看服务端迁移日志。确有权限且维护者要求进一步确认时，最多对内部状态做只读检查；不要向该 Namespace/Group 写入内容。
+确认全部节点已升级且健康，服务端日志记录迁移完成；检查已有 Agent 的名称、版本、内容和服务地址，并验证旧 A2A 调用和 RAD 发现均正常。
 
 #### 2.7.3. 迁移未完成时如何排查
 
-迁移按条目隔离失败，合法条目仍可继续迁移；但是任一损坏数据、冲突或未收敛门禁都会阻止全局切流。请根据服务端日志定位问题：
-
 | 现象 | 建议 |
 | --- | --- |
-| 长时间停留在 `SYNCING`，日志提示成员能力或策略不一致 | 确认所有当前 Server 节点均为目标版本且健康；核对每个新节点都使用 `AUTO`、相同的有效 Agent Storage Provider 和相同的 shadow 设置。修正配置并滚动重启不一致节点。 |
-| Search 已启用，但日志提示索引未 Ready | 确认第 2.2 节要求的 Search 表、插件和数据源已经就绪，检查 Search 启动与索引任务日志并等待索引收敛。不要为强制完成迁移而临时关闭 Search。 |
-| 日志提示历史 summary/Version 缺失、JSON 损坏、Agent 身份或 Version 非法，或者与现有 canonical Agent 冲突 | 先备份相关数据，确认哪一侧才是预期业务事实，再通过受支持的管理接口修复历史定义或显式解决同名冲突。迁移不会猜测名称、Version、latest 或内容，也不会覆盖不同的 canonical Agent。 |
-| Agent Storage 保存成功但暂时不可见，或读回校验失败 | 检查所有节点上有效 Storage Provider 的可用性、连接和配置。最终以目标内容能够读回并通过校验为准；等待通知或下一轮对账重试。 |
-| Runtime mirror/shadow 持续重试，或 Endpoint Owner 重连后尚未收敛 | 检查旧 SDK 连接、Endpoint 心跳、Redo 和服务端 Runtime 重试日志。`SYNCING` 中必需的 RAD mirror 未收敛会阻止切流；终态的可选 shadow 失败不会中断标准 RAD，但会影响直接旧 Naming Gateway。 |
-| 日志提示 Lease 由其他节点持有，或 Owner 非正常退出 | 其他节点持有 Lease 是正常的单 Writer 协调。等待当前 Owner 完成；非正常退出后等待 Lease 过期并由健康节点自动接管，默认最长约 `600` 秒，不要人工删除 Lease。 |
+| 长时间停留在 `SYNCING` | 确认全部节点已升级、使用一致的 `AUTO` 和迁移配置，检查迁移日志。 |
+| 日志提示检索索引未就绪 | 检查第 2.2 节要求的表和数据源，等待索引初始化完成。 |
+| 日志提示历史数据缺失或同名冲突 | 先备份，再通过管理接口修复数据或解决冲突；无法确认时联系维护者。 |
+| 日志提示服务端点同步失败 | 检查旧 A2A 客户端连接和心跳是否正常，恢复后等待自动重试。 |
 
-不要删除内部控制记录、直接修改数据库，或伪造状态来“强制完成”。如果必须修复业务数据，请保留备份和完整日志，使用受支持的管理接口；无法确认正确修复方式时，请保留现场并联系 Nacos 维护者。
+#### 2.7.4. 回滚注意事项
 
-#### 2.7.4. 回滚和降级边界
+迁移完成前，可在当前版本将全部节点统一配置为 `LEGACY` 并滚动重启，以停止自动迁移。这不会回退服务端版本。
 
-在 Marker 永久进入 `CANONICAL` **之前**，可以把全部节点统一配置为 `LEGACY` 后滚动重启。完成后旧 A2A 定义和旧 Naming 继续作为权威，已生成的标准目标数据可以保留；后续仍可恢复一致的 `AUTO`、Storage Provider 和 shadow 策略，让迁移幂等继续。
-
-进入 `CANONICAL` **之后**，只允许回退到同时理解永久 Marker 和标准 Agent/RAD 数据的版本。禁止 legacy-only 二进制重新加入，也不要通过删除 Marker、Lease、Progress 或目标数据恢复旧事实源。启用 Naming shadow 只维持旧 Gateway 的 Runtime 可见性，不提供定义回滚能力。
-
-首版迁移不会自动删除历史 A2A Config，也不会执行破坏性的来源清理。旧数据应作为备份和审计材料保留，后续清理必须使用单独评审、可恢复的方案。
+迁移完成后，不支持回到只能识别旧 A2A 数据的版本。确需回滚时，应先确认目标版本兼容性，并同时遵循[第 2.8.1 节](#jraft-auth-rollback)的限制。
 
 ### 2.8. 升级后验证与回滚准备
 
 升级完成后至少验证：
 
-1. 所有节点版本、集群成员列表和健康状态正确，日志中没有 schema、插件加载或配置 alias 错误。
-2. 配置发布/查询、服务注册/发现和控制台登录正常；Client API、Admin API、Console API 的有效开关分别符合计划。若 Client API 已开启，验证合法客户端成功，无身份、错误身份和越权请求被拒绝；若仍临时关闭，确认网络限制和重新开启时间已落实。
-3. 从 2.x 经中间版本升级的部署，确认默认 namespace 配置仍可正常查询。
-4. 在插件管理页面或 API 中检查插件 ID、状态、配置来源及需要重启的字段；确认没有意外启用的实现。
-5. 开启 AI Resource Search 时，确认三张检索关系表已创建、索引任务能够收敛；启用 PostgreSQL 向量插件时还要确认 pgvector schema 和数据源连通性。
-6. 按第 2.6 节确认 MCP 自动迁移完成、新版 MCP 管理接口可用，且所有服务端节点均已升级并保持健康。
-7. 对存在历史 A2A 数据的部署，按第 2.7 节确认服务端日志记录迁移完成，并比较旧 A2A API/SDK 与标准 Agent 查询的名称、Version 集合、latest、启用状态和 AgentCard 内容一致。
-8. 验证 Agent Search、RAD Discover/Watch 均能返回预期定义和 Runtime Endpoint；保持旧 A2A SDK Endpoint 运行并验证心跳，执行一次可控重连以确认 Redo 后仍能从标准 RAD 发现。
-9. 仅当迁移计划启用了 Naming shadow 时，再通过 Naming Gateway 验证旧 `<legacyEncodedAgentName>::<exactVersion>` serviceName 与标准 RAD 的精确 Version Endpoint 一致；shadow 为 `false` 时不要把旧 serviceName 的可见性作为验收条件。
+1. 所有节点已升级并保持健康，日志中没有持续的节点通信、鉴权、数据库或插件加载错误。
+2. 配置发布/查询、服务注册/发现和控制台登录正常；已开启鉴权的客户端能够正常访问。临时关闭鉴权的，确认后续开启时间。
+3. 从 2.x 升级的部署，确认默认 namespace 配置和原有灰度规则生效。
+4. 自定义插件已正确加载，配置和启用状态符合预期。
+5. 使用 AI 资源检索或向量检索的，确认索引初始化完成且查询正常。
+6. 使用 MCP 或 A2A 的，按第 2.6、2.7 节确认迁移完成，已有业务调用及新管理功能正常；直接使用旧 Naming Gateway 服务名的，还需验证服务发现。
+7. 确认第 2.3.4 节中的旧 AI API 调用方已迁移，或已配置临时兼容开关。
 
-保留旧发行包、旧配置、插件 JAR 和数据库备份直到观察期结束。回滚前先清理只有 3.3 能识别的插件运行时 override；AI Resource Import 需要将插件 JAR、配置和调用方一起回滚。数据库扩容和新增表不要在紧急回滚时直接反向删除，应使用预先验证的数据库回滚方案。
+保留升级前的发行包、配置、插件和数据备份直到观察期结束。
+
+<a id="jraft-auth-rollback"></a>
+
+#### 2.8.1. 回滚注意事项
+
+升级过程中出现异常时，先暂停后续节点升级，检查节点身份、数据库变更和插件配置；能够通过修正配置恢复的，优先修复并验证。
+
+**升级完成、JRaft 鉴权自动启用后，不应直接滚动降级到不支持该鉴权的旧版本**，否则可能导致节点间通信失败、集群不可用。关闭客户端鉴权不能解除这一限制。
+
+如需回滚，应在升级前确认目标版本的兼容性并完成演练。尚未验证的回滚操作，请保留现场与日志，联系维护者确认处理方案。

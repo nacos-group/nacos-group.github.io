@@ -11,7 +11,7 @@ sidebar:
 This quick start guide helps you quickly deploy and use Nacos in a Docker container through the Nacos Docker image.
 
 :::note
-- This quick start is intended to help you quickly install, deploy, and get started with Nacos. The Nacos service created by this quick start runs in **standalone mode** and **does not enable client access authentication**. We recommend using it only for testing. For production deployment, deploy **cluster mode** and **enable authentication** to avoid **stability and security** risks.
+- This quick start is intended to help you quickly install, deploy, and get started with Nacos. The Nacos service created by this quick start runs in **standalone mode**. We recommend using it only for testing. For production deployment, deploy **cluster mode** and **enable authentication** to avoid **stability and security** risks.
 - Nacos is positioned as an internal IDC application component, not a product for public network environments. We recommend deploying it in an isolated internal network environment and **strongly discourage** deployment in public network environments.
 :::
 
@@ -23,20 +23,23 @@ To install and deploy Nacos using this quick start method, install [Docker](http
 
 > When this command is executed for the first time, the required Docker images are automatically downloaded. The waiting time depends on your network speed. You can also download the images in advance to reduce the waiting time when running the deployment command.
 
-```powershell
+In Bash, set `NACOS_VERSION` to an available target image tag, `NACOS_AUTH_TOKEN` to a deployment-specific Base64 secret decoding to at least 32 bytes, and `NACOS_AUTH_IDENTITY_KEY` / `NACOS_AUTH_IDENTITY_VALUE` to nonempty server identity values. Use the matching image tag for 3.3 RC validation; do not assume `latest` points to the RC.
+
+```bash
 docker run --name nacos-standalone-derby \
     -e MODE=standalone \
-    -e NACOS_AUTH_TOKEN=${your_nacos_auth_secret_token} \
-    -e NACOS_AUTH_IDENTITY_KEY=${your_nacos_server_identity_key} \
-    -e NACOS_AUTH_IDENTITY_VALUE=${your_nacos_server_identity_value} \
+    -e NACOS_AUTH_ENABLE=true \
+    -e NACOS_AUTH_TOKEN="${NACOS_AUTH_TOKEN}" \
+    -e NACOS_AUTH_IDENTITY_KEY="${NACOS_AUTH_IDENTITY_KEY}" \
+    -e NACOS_AUTH_IDENTITY_VALUE="${NACOS_AUTH_IDENTITY_VALUE}" \
     -p 8080:8080 \
     -p 8848:8848 \
     -p 9848:9848 \
-    -d nacos/nacos-server:latest
+    -d "nacos/nacos-server:${NACOS_VERSION}"
 ```
 
 :::note
-- NACOS_AUTH_TOKEN: The secret key used by Nacos to generate JWT tokens. Use a string longer than 32 characters and encode it with Base64.
+- NACOS_AUTH_TOKEN: The secret key used by Nacos to generate JWT tokens. Use valid Base64 that decodes to at least 32 bytes. This is not the accessToken returned by login.
 - NACOS_AUTH_IDENTITY_KEY: The identity key for Inner APIs between Nacos Servers. Required.
 - NACOS_AUTH_IDENTITY_VALUE: The identity value for Inner APIs between Nacos Servers. Required.
 :::
@@ -57,30 +60,51 @@ Open any browser and enter `http://127.0.0.1:8080` to access the Nacos console p
 
 > Note: The first time you open the console, you are asked to initialize the password for the administrator user `nacos`.
 
+#### 3.1.1. Obtain An Access Token
+
+Run the following commands in Bash (Git Bash or WSL on Windows). Replace the password with the administrator password you initialized, then copy `accessToken` from the login response into `NACOS_ACCESS_TOKEN`:
+
+```bash
+export NACOS_USERNAME='nacos'
+export NACOS_PASSWORD='<your-initialized-password>'
+curl -sS -X POST 'http://127.0.0.1:8848/nacos/v3/auth/user/login' \
+  --data-urlencode "username=${NACOS_USERNAME}" \
+  --data-urlencode "password=${NACOS_PASSWORD}"
+
+export NACOS_ACCESS_TOKEN='<accessToken-from-login-response>'
+```
+
+Both Client and Admin API calls below use this token. Log in again after it expires. Applications should use an account with the required resource permissions; see [Access Credentials](../manual/user/auth.mdx).
+
 ### 3.2. Service Registration
 
-`curl -X POST 'http://127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=quickstart.test.service&ip=127.0.0.1&port=8080'`
+```bash
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=quickstart.test.service&ip=127.0.0.1&port=8080' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}"
+```
 
 ### 3.3. Service Discovery
 
-`curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=quickstart.test.service'`
+```bash
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=quickstart.test.service' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}"
+```
 
 ### 3.4. Publish Configuration
 
-```shell
-# Log in to obtain an access token.
-curl -X POST 'http://127.0.0.1:8848/nacos/v3/auth/user/login' -d 'username=nacos' -d 'password=${your_password}'
-# Use the access token to create a configuration.
-curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=quickstart.test.config&groupName=test&content=HelloWorld' -H "accessToken:${your_access_token}"
+```bash
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=quickstart.test.config&groupName=test&content=HelloWorld' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}"
 ```
-
-:::note
-Accessing Admin APIs requires an access token by default. You can obtain an access token through the `POST /nacos/v3/auth/user/login` API.
-:::
 
 ### 3.5. Get Configuration
 
-`curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/cs/config?dataId=quickstart.test.config&groupName=test'`
+```bash
+curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/cs/config?dataId=quickstart.test.config&groupName=test' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}"
+```
+
+If authentication fails, check the username, password, token validity, and account permissions. Explicitly disabling Client authentication is a temporary migration option for existing clients without credentials; see the [Upgrade Guide](../manual/admin/upgrading.mdx#212-prepare-for-default-client-api-authentication).
 
 ## 4. More Nacos Docker Use Cases
 

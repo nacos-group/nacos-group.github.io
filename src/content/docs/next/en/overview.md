@@ -27,7 +27,7 @@ The goal is simple: applications should safely and quickly find the services, co
 Nacos 3.x keeps the service discovery and configuration management capabilities, and adds stronger API, security, and AI features.
 
 - **Unified v3 APIs**: Client API, Admin API, and Console API serve different callers with clearer boundaries.
-- **Stronger default security**: Console and management APIs pay more attention to authentication and authorization.
+- **Authentication by default**: Since 3.3, Client API, SDK, and gRPC requests require credentials by default. Admin and Console API authentication is also enabled. [Configure access credentials](./manual/user/auth.mdx) before connecting applications.
 - **AI Registry as a first-class capability**: Nacos can manage MCP Servers, A2A Agents, Prompts, Skills, AgentSpecs, and related versions.
 - **Richer plugin model**: Auth, visibility, publish Pipeline, resource import, data source, and tracing can be extended when needed.
 - **Clearer operations model**: Deployment, monitoring, upgrade, system parameters, Admin API, and Maintainer SDK are easier to use in platform operations.

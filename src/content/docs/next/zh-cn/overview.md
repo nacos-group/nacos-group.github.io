@@ -27,7 +27,7 @@ Nacos 的目标很直接：让应用在运行时安全、及时地找到它需�
 Nacos 3.x 继续保留服务发现和配置管理能力，同时强化了 API、安全和 AI 场景。
 
 - **统一的 v3 API**：Client API、Admin API、Console API 面向不同调用者，边界更清晰。
-- **默认鉴权更严格**：控制台和管理接口默认更重视身份认证和权限控制。
+- **默认鉴权**：3.3 起 Client API、SDK 和 gRPC 请求默认需要身份信息；Admin API 和 Console API 也默认开启鉴权。应用接入前请[配置访问凭据](./manual/user/auth.mdx)。
 - **AI 管理中心成为一等能力**：可以管理 MCP Server、A2A Agent、Prompt、Skill、AgentSpec 等 AI 资源。
 - **插件能力更完整**：鉴权、可见性、发布 Pipeline、资源导入、数据源和追踪等能力可以按需扩展。
 - **运维能力更明确**：部署、监控、升级、系统参数、Admin API 和 Maintainer SDK 更适合平台化运维。

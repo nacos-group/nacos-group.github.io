@@ -70,7 +70,7 @@ nacos.plugin.datasource.db.password=${mysql_password}
 设置其中
 
 ```properties
-## 开启客户端访问鉴权，默认为关闭，可选
+## 客户端访问鉴权，3.3 起默认开启
 nacos.core.auth.enabled=true
 ## 开启控制台访问鉴权，默认为开启
 nacos.core.auth.console.enabled=true
@@ -146,7 +146,7 @@ nacos.plugin.auth.nacos.token.secret.key` Updated:
 设置其中
 
 ```properties
-## 开启客户端访问鉴权，默认为关闭，可选
+## 客户端访问鉴权，3.3 起默认开启
 nacos.core.auth.enabled=true
 ## 开启控制台访问鉴权，默认为开启
 nacos.core.auth.console.enabled=true

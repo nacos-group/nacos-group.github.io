@@ -26,6 +26,8 @@ Client SDK 不适合做大范围管理。不要用它来列举全部命名空间
 
 一个 SDK 实例通常绑定一个命名空间。应用需要访问多个命名空间时，建议创建多个 SDK 实例，并在应用退出时关闭这些实例。
 
+Nacos 3.3 默认开启 Client 鉴权。未配置正确身份或权限时，配置读取、服务注册/发现和 AI 请求可能失败。默认插件请在创建 SDK 前设置用户名和密码，由 SDK 获取并刷新 token；其他插件按对应身份模式配置。详见[配置访问凭据](../auth.mdx)。
+
 初始化时重点确认这些信息：
 
 | 信息 | 说明 |
@@ -33,7 +35,7 @@ Client SDK 不适合做大范围管理。不要用它来列举全部命名空间
 | `serverAddr` 或 `endpoint` | `serverAddr` 适合固定 Nacos 集群地址；`endpoint` 适合通过地址服务动态获取服务端列表。 |
 | `namespace` | 当前 SDK 实例访问的命名空间。 |
 | `group`、`dataId`、`serviceName` | 运行时访问资源时使用的业务标识。 |
-| `username`、`password`、`accessKey`、`secretKey` 等凭据 | 开启鉴权后，SDK 会按服务端鉴权模式携带身份材料。 |
+| `username`、`password`、`accessKey`、`secretKey` 等凭据 | 3.3 默认需要按服务端鉴权模式配置；SDK 不会使用控制台浏览器的登录状态。 |
 | `contextPath` | Nacos HTTP API 的 context path，默认是 `nacos`。 |
 | gRPC 端口偏移 | Nacos 3.x 客户端仍沿用主端口加偏移量的计算方式，默认从 `8848` 推导出 `9848`。 |
 

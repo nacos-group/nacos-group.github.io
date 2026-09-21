@@ -70,7 +70,7 @@ Modify `application.properties` in the `conf` directory.
 Set the following items:
 
 ```properties
-## Enable client access authentication. Disabled by default and optional.
+## Client access authentication is enabled by default starting in 3.3.
 nacos.core.auth.enabled=true
 ## Enable console access authentication. Enabled by default.
 nacos.core.auth.console.enabled=true
@@ -146,7 +146,7 @@ Modify `application.properties` in the `conf` directory.
 Set the following items:
 
 ```properties
-## Enable client access authentication. Disabled by default and optional.
+## Client access authentication is enabled by default starting in 3.3.
 nacos.core.auth.enabled=true
 ## Enable console access authentication. Enabled by default.
 nacos.core.auth.console.enabled=true

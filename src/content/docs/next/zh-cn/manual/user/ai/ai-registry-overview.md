@@ -19,7 +19,7 @@ AI 管理中心（AI Registry）是 Nacos 3.x 面向 AI 应用提供的注册、
 | 场景 | Nacos 管理的资源 | 运行时如何使用 | 平台治理重点 |
 | --- | --- | --- | --- |
 | Skill | Skill 包、SkillCard、版本和标签 | Agent 或工具链按名称、版本或标签下载 | 包来源、审核、可见性和分发范围 |
-| Agent | AgentCard、Agent 端点和版本 | Multi-agent 应用发现 Agent 并发起调用 | 端点、版本、外部提供商和可见性 |
+| Agent | 目录信息、版本化调用定义（含 A2A AgentCard）和运行端点 | 应用通过 RAD 搜索、发现和订阅 Agent，再按其协议调用 | 生命周期、端点、版本、外部提供商和可见性 |
 | MCP Server | MCP 服务描述、工具、资源、端点和版本 | MCP Client、MCP Router、网关或 Agent 发现并调用工具 | 协议、端点、工具开关、导入和代理 |
 | Prompt | Prompt 模板、变量、版本和标签 | 应用按 Prompt Key、版本或标签读取模板 | 评审、回滚、latest 标签和灰度使用 |
 | AgentSpec | Agent 规范包、manifest、内容和资源 | Agent 平台、开发工具或 AI 应用获取规范包 | 包完整性、版本、标签和公开范围 |
@@ -41,13 +41,13 @@ Skill 管理（Skill Registry）用来管理可复用的 AI 能力包。一个 S
 
 ## Agent 管理
 
-Agent 管理（A2A Registry）用来管理可被发现和调用的 Agent。Nacos 记录 AgentCard、端点和版本信息，让 Multi-agent 应用可以在运行时发现合适的 Agent。
+Nacos 3.3 的 Agent 管理统一管理 Agent 的目录信息、版本化调用定义和运行端点，通过 RAD（Remote Agent Discovery）提供搜索、发现和订阅。A2A 继续作为兼容接入方式，AgentCard 保留在 A2A 调用接口的原生描述中。
 
 Agent 可以来自不同来源：Spring AI Alibaba 应用可以自动注册 Agent；自定义 Agent 可以通过 SDK 或 API 发布；外部提供商的 Agent 也可以导入后统一治理。平台侧可以围绕 Agent 的版本、端点和可见性做统一管理。
 
 Agent 管理关注“可调用的 Agent 入口”。AgentSpecs 管理关注“Agent 规范包”。两者可以配合使用，但不是同一种资源。
 
-详细说明见 [Agent 管理](./agent-registry.md)。
+管理与发布流程见 [Agent 管理](./agent-registry.md)，应用侧完整示例见 [RAD 接入指南](./rad-discovery.md)。
 
 ## MCP 管理
 
@@ -64,7 +64,7 @@ Nacos 可以管理 MCP Server 的服务描述、工具、资源、端点、版�
 - Nacos MCP Router 统一发现 Nacos 中的 MCP Server，并向客户端提供路由或代理能力。
 - Dify、Higress、Spring AI Alibaba 等生态组件通过 Nacos 获取 MCP Server 信息。
 
-详细说明见 [MCP Server 自动注册与发现手册](./mcp-auto-register.md)、[存量 API 转换 MCP 手册](./api-to-mcp.md)、[Nacos MCP Router 手册](./nacos-mcp-router.md) 和 [Dify 发现 Nacos MCP 服务](./dify-nacos-mcp.md)。
+MCP 版本发布和治理先看 [MCP 管理](./mcp-registry.md)。接入说明见 [MCP Server 自动注册与发现手册](./mcp-auto-register.md)、[存量 API 转换 MCP 手册](./api-to-mcp.md)、[Nacos MCP Router 手册](./nacos-mcp-router.md) 和 [Dify 发现 Nacos MCP 服务](./dify-nacos-mcp.md)。
 
 ## Prompt 管理
 
@@ -93,14 +93,14 @@ AI 管理中心不是把 AI 资源简单地当成配置或服务。
 
 配置管理关注配置内容的发布、查询、监听和历史。服务发现关注服务、实例、健康状态和订阅推送。AI 管理中心关注 AI 资源本身的模型、版本、发布状态、可见性和运行时发现。
 
-有些资源会复用配置管理或服务发现作为底层能力。例如 MCP Server 的元数据当前可能存储在配置记录中，端点可能使用服务发现表达。但从用户角度看，它仍然是 MCP Server 资源，而不是普通配置或普通服务。
+管理 AI 资源时，应使用对应的 AI 管理入口完成版本变更、发布和发现；运行实例及端点的可用性仍需单独验证。
 
 ## 常见使用路径
 
 如果你是 AI 应用开发者：
 
 - 想下载和使用可复用能力包，先看 [Skill 管理](./skill-registry.md) 和 [客户端 API](../open-api.md#3-ai-相关)。
-- 想注册、发现或调用 A2A Agent，先看 [Agent 管理](./agent-registry.md)。
+- 想管理或发布 Agent，先看 [Agent 管理](./agent-registry.md)；应用侧注册端点、发现和订阅见 [RAD 接入指南](./rad-discovery.md)。
 - 想发现和调用 MCP Server，先看 [MCP Server 自动注册与发现手册](./mcp-auto-register.md) 和 [Nacos MCP Router 手册](./nacos-mcp-router.md)。
 - 想把现有 HTTP 或 RPC API 暴露成 MCP 工具，先看 [存量 API 转换 MCP 手册](./api-to-mcp.md)。
 - 想在应用中查询 Prompt，先看 [Prompt 管理](./prompt-registry.md) 和 [客户端 API](../open-api.md#3-ai-相关)。
@@ -108,21 +108,23 @@ AI 管理中心不是把 AI 资源简单地当成配置或服务。
 
 如果你是平台或运维人员：
 
-- 想治理 Prompt、Skill、AgentSpec 的版本，先看 [AI 资源生命周期](./ai-resource-lifecycle.md)。
-- 想管理 MCP、Prompt、Skill、AgentSpec 或导入外部 AI 资源，参考 [运维 API](../../admin/admin-api.md) 和 [控制台 API](../../admin/console-api.md)。
+- 想治理 Agent、MCP Server、Prompt、Skill、AgentSpec 的版本，先看 [AI 资源生命周期](./ai-resource-lifecycle.md)。
+- 想管理 Agent、MCP、Prompt、Skill、AgentSpec 或导入外部 AI 资源，参考 [运维 API](../../admin/admin-api.md) 和 [控制台 API](../../admin/console-api.md)。
 - 想接入发布审核、安全扫描或外部资源导入，优先关注 [AI 发布 Pipeline 插件](../../../plugin/ai-pipeline-plugin.md)、[AI 资源导入插件](../../../plugin/ai-resource-import-plugin.md) 和 [可见性插件](../../../plugin/visibility-plugin.md)。
 
 ## 资源生命周期
 
-Prompt、Skill、AgentSpec 等版本化资源通常会经历以下过程：
+Nacos 从 3.2 开始支持 AI 资源生命周期管理，3.3 已统一覆盖 Agent、MCP Server、Prompt、Skill 和 AgentSpec。
 
 ```text
-创建草稿 -> 修改草稿 -> 提交审核 -> 发布 -> 上线 -> 下线或重新上线
+创建草稿 -> 编辑 -> 提交 -> 审核完成 reviewed -> 审核通过后发布为 online
 ```
 
-没有启用发布审核时，提交可能直接发布。启用 Pipeline 后，资源需要先通过检查。管理员可以在紧急场景下强制发布，但这会跳过 Pipeline 校验，应当谨慎使用。
+有已启用且支持该资源类型的 Pipeline 节点时才进入审核，否则提交直接发布上线。审核通过和拒绝都会进入 `reviewed`；拒绝后需要修改时，先重新编辑回到草稿。发布成功即为上线，服务端自动维护 `latest`。
 
-更多状态和操作说明见 [AI 资源生命周期](./ai-resource-lifecycle.md)。
+资源启用/禁用与版本上线/下线分开管理。MCP Server 和 Agent 还需要有可用的实际服务地址或运行端点，定义上线不代表运行实例已经就绪。
+
+更多状态、强制发布和兼容规则见 [AI 资源生命周期](./ai-resource-lifecycle.md)。
 
 ## 阅读建议
 

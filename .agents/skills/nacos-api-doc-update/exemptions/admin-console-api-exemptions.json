@@ -1,9 +1,15 @@
 {
   "_meta": {
     "scope": "Shared Admin and Console API exemptions; Client API has no exemptions.",
-    "last_verified": "2026-08-05",
+    "last_verified": "2026-09-21",
+    "admin_last_verified": "2026-09-21",
+    "admin_source_commit": "d74b69fa71de104c3ed15310ef8e32d1cded8a95",
+    "admin_snapshot_sha256": "dc05f3c2f970c25cb5b13f5efcc5b913915ab3d8f3512e2754d1732e948ce2a4",
+    "console_last_verified": "2026-09-21",
+    "console_source_commit": "d74b69fa71de104c3ed15310ef8e32d1cded8a95",
+    "console_snapshot_sha256": "d317abd5aedf5008488d82f3b73409c7f8a5c9cc3210e6a054b13f963605c57a",
     "swagger_version": "3.3.0-SNAPSHOT",
-    "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+    "source_commit": "d74b69fa71de104c3ed15310ef8e32d1cded8a95",
     "revalidation": "Run raw compare before applying exemptions; remove any rule that no longer matches after a Swagger refresh."
   },
   "doc_types": {
@@ -12,8 +18,8 @@
         "reason": "The controller rejects a missing import archive, while the multipart schema omits file from required.",
         "issue_kind": "required-mismatch",
         "parameter_path": "request.file",
-        "evidence": "Config import controller validation rejects an absent archive.",
-        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "evidence": "config/src/main/java/com/alibaba/nacos/config/server/controller/v3/ConfigControllerV3.java#importAndPublishConfig returns DATA_EMPTY when file is null.",
+        "source_commit": "d74b69fa71de104c3ed15310ef8e32d1cded8a95",
         "expires_when": "Remove when Swagger marks request.file required or the controller accepts a missing archive.",
         "ignore_issues": [
           "  [必填不一致] request.file: api required=False, doc=True"
@@ -23,8 +29,8 @@
         "reason": "@RequestParam(\"file\") and the requestBody description require the SQL file, but the multipart schema omits required.",
         "issue_kind": "required-mismatch",
         "parameter_path": "request.file",
-        "evidence": "Derby import controller declares the file request parameter and describes it as required input.",
-        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "evidence": "config/src/main/java/com/alibaba/nacos/config/server/controller/v3/ConfigOpsControllerV3.java#importDerby declares @RequestParam(value = file) without required=false.",
+        "source_commit": "d74b69fa71de104c3ed15310ef8e32d1cded8a95",
         "expires_when": "Remove when Swagger marks request.file required or source no longer requires the SQL file.",
         "ignore_issues": [
           "  [必填不一致] request.file: api required=False, doc=True"
@@ -34,8 +40,8 @@
         "reason": "@RequestParam(\"file\") and the requestBody description require the Skill ZIP, but the multipart schema omits required.",
         "issue_kind": "required-mismatch",
         "parameter_path": "request.file",
-        "evidence": "Skill upload controller and runtime validation require the ZIP file.",
-        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "evidence": "ai/src/main/java/com/alibaba/nacos/ai/controller/SkillAdminController.java uploadSkill declares @RequestParam(file) without required=false.",
+        "source_commit": "d74b69fa71de104c3ed15310ef8e32d1cded8a95",
         "expires_when": "Remove when Swagger marks request.file required or source permits an absent ZIP.",
         "ignore_issues": [
           "  [必填不一致] request.file: api required=False, doc=True"
@@ -45,8 +51,8 @@
         "reason": "@RequestParam(\"file\") and the requestBody description require the batch ZIP, but the multipart schema omits required.",
         "issue_kind": "required-mismatch",
         "parameter_path": "request.file",
-        "evidence": "Batch Skill upload controller and runtime validation require the ZIP file.",
-        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "evidence": "ai/src/main/java/com/alibaba/nacos/ai/controller/SkillAdminController.java batch upload declares @RequestParam(file) without required=false.",
+        "source_commit": "d74b69fa71de104c3ed15310ef8e32d1cded8a95",
         "expires_when": "Remove when Swagger marks request.file required or source permits an absent ZIP.",
         "ignore_issues": [
           "  [必填不一致] request.file: api required=False, doc=True"
@@ -56,8 +62,8 @@
         "reason": "@RequestParam(\"file\") and the requestBody description require the precheck ZIP, but the multipart schema omits required.",
         "issue_kind": "required-mismatch",
         "parameter_path": "request.file",
-        "evidence": "Skill precheck controller and runtime validation require the ZIP file.",
-        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "evidence": "ai/src/main/java/com/alibaba/nacos/ai/controller/SkillAdminController.java upload precheck declares @RequestParam(file) without required=false.",
+        "source_commit": "d74b69fa71de104c3ed15310ef8e32d1cded8a95",
         "expires_when": "Remove when Swagger marks request.file required or source permits an absent ZIP.",
         "ignore_issues": [
           "  [必填不一致] request.file: api required=False, doc=True"
@@ -67,8 +73,8 @@
         "reason": "@RequestParam(\"file\") and the requestBody description require the AgentSpec ZIP, but the multipart schema omits required.",
         "issue_kind": "required-mismatch",
         "parameter_path": "request.file",
-        "evidence": "AgentSpec upload controller and runtime validation require the ZIP file.",
-        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "evidence": "ai/src/main/java/com/alibaba/nacos/ai/controller/AgentSpecAdminController.java upload declares @RequestParam(file) without required=false.",
+        "source_commit": "d74b69fa71de104c3ed15310ef8e32d1cded8a95",
         "expires_when": "Remove when Swagger marks request.file required or source permits an absent ZIP.",
         "ignore_issues": [
           "  [必填不一致] request.file: api required=False, doc=True"
@@ -80,8 +86,8 @@
         "reason": "The import operation requires an archive in practice and in the requestBody description, while the multipart schema omits required.",
         "issue_kind": "required-mismatch",
         "parameter_path": "request.file",
-        "evidence": "Console config import validation requires an archive.",
-        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "evidence": "console/src/main/java/com/alibaba/nacos/console/controller/v3/config/ConsoleConfigController.java#importAndPublishConfig delegates to ConfigProxy; console/src/main/java/com/alibaba/nacos/console/handler/impl/inner/config/ConfigInnerHandler.java#importAndPublishConfig returns DATA_EMPTY for a null file.",
+        "source_commit": "d74b69fa71de104c3ed15310ef8e32d1cded8a95",
         "expires_when": "Remove when Swagger marks request.file required or source accepts a missing archive.",
         "ignore_issues": [
           "  [必填不一致] request.file: api required=False, doc=True"
@@ -91,8 +97,8 @@
         "reason": "cfgId is semantically required by the clone service to select each source configuration, while its generated array-item schema omits required.",
         "issue_kind": "required-mismatch",
         "parameter_path": "request.body[].cfgId",
-        "evidence": "Clone service uses cfgId to resolve every source configuration and cannot perform that item without it.",
-        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "evidence": "console/src/main/java/com/alibaba/nacos/console/handler/impl/inner/config/ConfigInnerHandler.java#cloneConfig maps SameNamespaceCloneConfigBean.cfgId to ConfigCloneItem.configId; config/src/main/java/com/alibaba/nacos/config/server/service/ConfigCloneService.java#cloneConfig uses these IDs to select source configurations.",
+        "source_commit": "d74b69fa71de104c3ed15310ef8e32d1cded8a95",
         "expires_when": "Remove when Swagger marks body[].cfgId required or the clone service supports items without cfgId.",
         "ignore_issues": [
           "  [必填不一致] request.body[].cfgId: api required=False, doc=True"
@@ -102,8 +108,8 @@
         "reason": "@RequestParam(\"file\") and runtime validation require the Skill ZIP, but the multipart schema omits required.",
         "issue_kind": "required-mismatch",
         "parameter_path": "request.file",
-        "evidence": "Skill upload controller and runtime validation require the ZIP file.",
-        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "evidence": "console/src/main/java/com/alibaba/nacos/console/controller/v3/ai/ConsoleSkillController.java upload declares @RequestParam(file) without required=false.",
+        "source_commit": "d74b69fa71de104c3ed15310ef8e32d1cded8a95",
         "expires_when": "Remove when Swagger marks request.file required or source permits an absent ZIP.",
         "ignore_issues": [
           "  [必填不一致] request.file: api required=False, doc=True"
@@ -113,8 +119,8 @@
         "reason": "@RequestParam(\"file\") and runtime validation require the batch ZIP, but the multipart schema omits required.",
         "issue_kind": "required-mismatch",
         "parameter_path": "request.file",
-        "evidence": "Batch Skill upload controller and runtime validation require the ZIP file.",
-        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "evidence": "console/src/main/java/com/alibaba/nacos/console/controller/v3/ai/ConsoleSkillController.java batch upload declares @RequestParam(file) without required=false.",
+        "source_commit": "d74b69fa71de104c3ed15310ef8e32d1cded8a95",
         "expires_when": "Remove when Swagger marks request.file required or source permits an absent ZIP.",
         "ignore_issues": [
           "  [必填不一致] request.file: api required=False, doc=True"
@@ -124,8 +130,8 @@
         "reason": "@RequestParam(\"file\") and runtime validation require the precheck ZIP, but the multipart schema omits required.",
         "issue_kind": "required-mismatch",
         "parameter_path": "request.file",
-        "evidence": "Skill precheck controller and runtime validation require the ZIP file.",
-        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "evidence": "console/src/main/java/com/alibaba/nacos/console/controller/v3/ai/ConsoleSkillController.java upload precheck declares @RequestParam(file) without required=false.",
+        "source_commit": "d74b69fa71de104c3ed15310ef8e32d1cded8a95",
         "expires_when": "Remove when Swagger marks request.file required or source permits an absent ZIP.",
         "ignore_issues": [
           "  [必填不一致] request.file: api required=False, doc=True"
@@ -135,8 +141,8 @@
         "reason": "@RequestParam(\"file\") and runtime validation require the AgentSpec ZIP, but the multipart schema omits required.",
         "issue_kind": "required-mismatch",
         "parameter_path": "request.file",
-        "evidence": "AgentSpec upload controller and runtime validation require the ZIP file.",
-        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "evidence": "console/src/main/java/com/alibaba/nacos/console/controller/v3/ai/ConsoleAgentSpecController.java upload declares @RequestParam(file) without required=false.",
+        "source_commit": "d74b69fa71de104c3ed15310ef8e32d1cded8a95",
         "expires_when": "Remove when Swagger marks request.file required or source permits an absent ZIP.",
         "ignore_issues": [
           "  [必填不一致] request.file: api required=False, doc=True"
@@ -146,8 +152,8 @@
         "reason": "Swagger reuses the full CopilotProperties schema, but the controller intentionally accepts only apiKey, model, studioUrl and studioProject.",
         "issue_kind": "request-model-overexposure",
         "parameter_path": "request.defaultNamespace,request.enabled",
-        "evidence": "Copilot config controller explicitly maps only apiKey, model, studioUrl and studioProject from the request.",
-        "source_commit": "62575c381e104b0d81519e5e2b020f6d06e337cf",
+        "evidence": "console/src/main/java/com/alibaba/nacos/console/controller/v3/ai/ConsoleCopilotConfigController.java#saveConfig binds a JSON @RequestBody but copies only non-null apiKey, model, studioUrl and studioProject; existing enabled and defaultNamespace values are preserved.",
+        "source_commit": "d74b69fa71de104c3ed15310ef8e32d1cded8a95",
         "expires_when": "Remove when Swagger exposes a write-specific request model or the controller starts accepting these fields.",
         "ignore_issues": [
           "  [doc 缺少] request 参数: defaultNamespace",

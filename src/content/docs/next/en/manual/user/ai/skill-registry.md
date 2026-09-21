@@ -45,26 +45,26 @@ skill-sample/
 
 ### 2.1. Lifecycle
 
-Each Skill version has four states that form a complete lifecycle:
+Skills follow the shared [AI Resource Lifecycle](./ai-resource-lifecycle.md), with five version states:
 
-```
-draft ──> reviewing ──> online ──> offline
-  ^           │                       │
-  └───────────┘                       │
-  (Reverts when Pipeline rejects)     │
-                                      └──> online (can go back online)
+```text
+draft -> reviewing -> reviewed -> online -> offline
+                         |                    |
+                         +-> draft            +-> online
+                             redraft              restore
 ```
 
 | State | Description |
 |-------|-------------|
-| `draft` | Draft, content can be freely edited |
-| `reviewing` | Submitted for review, Pipeline is running |
+| `draft` | Editable draft |
+| `reviewing` | Pipeline review is running; content cannot be edited |
+| `reviewed` | Review completed; check whether it was approved or rejected |
 | `online` | Published and available |
-| `offline` | Taken offline, no longer available |
+| `offline` | Offline, with content retained |
 
 > **Constraints**:
-> - Only one draft or reviewing version can exist for the same Skill at any time.
-> - Once a version is published (online), its content cannot be modified. To make changes, create a new draft based on that version, then submit it for review and publish.
+> - A Skill can have only one working version at a time: `draft`, `reviewing`, or `reviewed`.
+> - Published content cannot be changed. Create a draft with a new version for changes; use redraft to edit a version whose review has completed but which has not been published.
 
 A Skill goes through the following complete workflow from creation to use:
 
@@ -75,7 +75,7 @@ Three creation methods are supported:
 | Method | Description |
 |--------|-------------|
 | **Manual Creation** | Fill in the name, description, and SKILL.md content in the console to create a draft version |
-| **ZIP Upload** | Upload a ZIP package containing SKILL.md; the system automatically parses and creates the Skill |
+| **ZIP Upload** | Upload a ZIP package containing SKILL.md; the system automatically parses it and creates a draft |
 | **AI Generation** | Provide a background description and let Copilot automatically generate the complete Skill content |
 
 #### 2.1.2. Draft
@@ -85,14 +85,16 @@ Three creation methods are supported:
 - **Edit Draft**: Modify SKILL.md content, description, and resource files
 - **Delete Draft**: Discard the current draft and release the working slot
 
-> Only one draft or reviewing version is allowed per Skill at a time. You must wait for the current working version to be processed before creating a new draft.
+> If a `reviewing` or `reviewed` version exists, publish or discard that working version before creating a new draft. To change content after review, redraft that version instead.
 
 #### 2.1.3. Submit for Review
 
-Submit a draft version for review. After submission, the version state changes to `reviewing`:
+Submit a `draft` version or resubmit a `reviewed` version:
 
-- **With Pipeline configured**: Triggers the publishing pipeline for security scanning and other checks
-- **Without Pipeline configured**: Directly publishes to online state
+- **An enabled Pipeline node supports Skill**: Enters `reviewing` and runs security scans or other checks
+- **No applicable Pipeline node**: Publishes directly as `online`
+
+Submitting a version already under review does not start another review. Resubmitting a `reviewed` version reruns the currently applicable checks.
 
 #### 2.1.4. Publishing Pipeline
 
@@ -126,12 +128,12 @@ Pipeline execution results:
 
 | Result | Action |
 |--------|--------|
-| **APPROVED** | Version remains in `reviewing` state, awaiting manual publish |
-| **REJECTED** | Version reverts to `draft`, can be modified and resubmitted |
+| **APPROVED** | Version enters `reviewed` and, by default, waits for manual publishing |
+| **REJECTED** | Version enters `reviewed`; use redraft to return to `draft` before editing and resubmitting |
 
 #### 2.1.5. Publish
 
-- **Normal Publish**: After Pipeline approval, publish the `reviewing` version as `online`, with the option to update the `latest` label
+- **Normal Publish**: After Pipeline approval, publish the `reviewed` version as `online`; the server automatically updates the `latest` label
 - **Force Publish**: Administrator privilege operation that bypasses Pipeline validation for direct publishing. When the Pipeline rejects a publish but the situation requires an emergency release, global administrators can force publish from the console. This operation is recorded in the audit log
 
 #### 2.1.6. Online / Offline
@@ -159,7 +161,8 @@ When querying a Skill, clients can retrieve a specific version by label name, de
 
 Label management operations:
 
-- Optionally auto-update the `latest` label to point to the new version when publishing
+- The server manages `latest`: publishing or bringing a version online automatically makes it latest. Custom label operations cannot override it
+- Taking the latest version offline or deleting it selects another remaining online version; if none remain, latest is removed
 - Manually bind/unbind custom labels (e.g. `stable`, `canary`) in the version timeline
 
 ### 2.3. Visibility
@@ -205,11 +208,12 @@ The right side of the detail page displays all versions in a timeline, supportin
 
 | Operation | Description |
 |-----------|-------------|
-| **Create Draft** | Create a new draft based on an existing version; only one draft or reviewing version is allowed at a time |
+| **Create Draft** | Create a draft based on an existing version; resolve any existing draft, reviewing, or reviewed working version first |
 | **Edit Draft** | Edit SKILL.md content, description, and resource files online with auto-save |
 | **Delete Draft** | Discard the current draft and release the working slot |
-| **Submit for Review** | Submit the draft as reviewing; description and SKILL.md content must not be empty |
-| **Publish** | Publish as online after Pipeline approval, with the option to auto-update the `latest` label |
+| **Submit for Review** | Submit draft or resubmit reviewed; publishes directly if no Pipeline applies. Description and SKILL.md content must not be empty |
+| **Redraft** | Return a reviewed version to draft for editing and resubmission |
+| **Publish** | Publish an approved reviewed version as online and automatically update `latest` |
 | **Force Publish** | Visible to administrators only; bypasses Pipeline validation when it rejects |
 
 #### 3.2.2. Online / Offline
@@ -232,7 +236,7 @@ Three methods are available to create a new Skill:
 
 - **Manual Creation**: Fill in the Skill name, description, and SKILL.md content through the creation dialog
 - **AI Generation**: Enter a background description, optionally associate MCP tools and conversation history, and let Copilot generate the complete Skill via streaming
-- **ZIP Upload**: Upload a Skill ZIP package directly; the system automatically parses the SKILL.md and resource files and creates a new version
+- **ZIP Upload**: Upload a Skill ZIP package directly; the system automatically parses the SKILL.md and resource files and creates a version draft
 
 ### 3.4. Skill Optimization
 
@@ -259,7 +263,7 @@ Skill Registry provides three layers of REST APIs:
 
 | API Layer | Description | Documentation |
 |-----------|-------------|---------------|
-| **Client API** | Client runtime query/download Skills (supports anonymous access) | [Client API - Download Skill](../open-api.md) |
+| **Client API** | Client runtime query/download Skills (credentials required by default; anonymous reads require [explicit setup and authorization](../auth.mdx)) | [Client API - Download Skill](../open-api.md) |
 | **Console API** | Console operations (requires login authentication) | [Console API - Skills](../../admin/console-api.md) |
 | **Admin API** | Cluster internal management interface | [Admin API - AI Skills](../../admin/admin-api.md) |
 

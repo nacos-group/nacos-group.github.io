@@ -8,7 +8,11 @@ sidebar:
 
 Nacos MCP Router is a standard MCP Server built on the official MCP SDK. It provides MCP Clients with MCP Server `intelligent search`, `installation`, and `proxy` capabilities, which **greatly simplifies** MCP service usage. When used together with Nacos MCP Registry, Nacos MCP Router can also support MCP Server governance, such as MCP Server and tool visibility and version management.
 
+Before integration, confirm that the MCP resource in Nacos is enabled, the target version is online, and the identity used by the Router has access. For 3.3 drafts, publishing, and version online/offline operations, see [MCP Registry](./mcp-registry.md).
+
 ![MCP Router architecture](/img/doc/overview/ai-mcp-router-struncture.svg)
+
+Nacos 3.3 enables client authentication by default. Configure the Router with an existing Nacos account, its actual password, and read permissions for the required resources. Use the password set during initialization for the administrator account. See [Access Credentials](../auth.mdx).
 
 ## Features
 
@@ -92,7 +96,7 @@ In proxy mode, Nacos MCP Router only provides proxy capability. It can convert e
     ```shell
     export NACOS_ADDR=127.0.0.1:8848
     export NACOS_USERNAME=nacos
-    export NACOS_PASSWORD=$PASSWORD
+    export NACOS_PASSWORD='<your-nacos-password>'
     export TRANSPORT_TYPE=sse
     uvx nacos-mcp-router@latest
     ```
@@ -110,7 +114,7 @@ In proxy mode, Nacos MCP Router only provides proxy capability. It can convert e
     ```shell
     export NACOS_ADDR=127.0.0.1:8848
     export NACOS_USERNAME=nacos
-    export NACOS_PASSWORD=$PASSWORD
+    export NACOS_PASSWORD='<your-nacos-password>'
     export TRANSPORT_TYPE=streamable_http
     uvx nacos-mcp-router@latest
     ```
@@ -194,7 +198,7 @@ In proxy mode, set the `MODE=proxy` and `PROXIED_MCP_NAME=<MCP Server Name>` env
 | --- | --- | --- | --- | --- |
 | NACOS_ADDR | Nacos server address | 127.0.0.1:8848 | No | Nacos server address, such as 192.168.1.1:8848. Include the port. |
 | NACOS_USERNAME | Nacos username | nacos | No | Nacos username, such as nacos. |
-| NACOS_PASSWORD | Nacos password | password | Yes | Nacos password, such as nacos. |
+| NACOS_PASSWORD | Nacos password | None | Yes | Use the password set when this account was initialized or created. |
 | NACOS_NAMESPACE | Nacos namespace | public | No | Nacos namespace, such as public. |
 | TRANSPORT_TYPE | Transport protocol type | stdio | No | Supported values: stdio, sse, streamable_http. |
 | PROXIED_MCP_NAME | Proxied MCP Server name | - | No | Name of the MCP Server to convert in proxy mode. It must already be registered in Nacos. |
