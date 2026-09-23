@@ -8,7 +8,7 @@ sidebar:
 
 # Maintainer SDK
 
-The Nacos Maintainer SDK, also known as Nacos-Maintainer-SDK, is a Java SDK for maintenance scenarios of Nacos features such as the config center, service registry, and distributed locks. It provides stable and easy-to-use config center, service registry, and distributed lock capabilities for Nacos maintainers and special application scenarios such as gateway applications and console applications, making it easier to operate configs, services, and distributed locks in Nacos.
+The Nacos Maintainer SDK, also known as Nacos-Maintainer-SDK, is a Java SDK for maintenance scenarios involving the config center, service registry, AI management center, and other Nacos features. It provides stable, easy-to-use maintenance capabilities for Nacos operators and special application scenarios such as gateways and consoles, making it easier for operators and these applications to access Nacos and manage configs, services, and AI resources.
 
 Because of its maintainer-oriented positioning, the Nacos Maintainer SDK provides broad data access APIs. Therefore, it must be used with an identity that has higher privileges to prevent potential data leakage.
 
@@ -26,7 +26,7 @@ The Nacos Java SDK requires JDK 1.8 or later.
 
 ### 1.2. Maven Coordinates
 
-```
+```xml
 <!-- Supported in version 3.0.0 and later -->
 <dependency>
     <groupId>com.alibaba.nacos</groupId>
@@ -34,6 +34,8 @@ The Nacos Java SDK requires JDK 1.8 or later.
     <version>${nacos.client.version}</version>
 </dependency>
 ```
+
+Set `${nacos.client.version}` to `3.3.0-RC` or a later 3.3 release to use the MCP and Agent management APIs added in this guide.
 
 ## 2. Initialize the SDK
 
@@ -58,6 +60,22 @@ NamingMaintainerService maintainService = NamingMaintainerFactory.createNamingMa
 // Initialize the Nacos Maintainer Service for the AI module
 AiMaintainerService aiMaintainerService = AiMaintainerFactory.createAiMaintainerService(properties);
 ```
+
+Replace the example username and password with your credentials. The account must have permission for the requested operations; see [Configure Access Credentials](../user/auth.mdx).
+
+AI management interfaces are in `com.alibaba.nacos.maintainer.client.ai` and are available through these accessors:
+
+| Accessor | Interface | Purpose |
+|:---|:---|:---|
+| `aiMaintainerService.mcp()` | `McpMaintainerService` | MCP definitions and version lifecycle. |
+| `aiMaintainerService.agent()` | `AgentMaintainerService` | Agent definitions, versions, and runtime endpoints. |
+| `aiMaintainerService.a2a()` | `A2aMaintainerService` | Legacy A2A management compatibility APIs. |
+| `aiMaintainerService.prompt()` | `PromptMaintainerService` | Prompt management. |
+| `aiMaintainerService.skill()` | `SkillMaintainerService` | Skill management. |
+| `aiMaintainerService.agentSpec()` | `AgentSpecMaintainerService` | AgentSpec management. |
+| `aiMaintainerService.pipeline()` | `PipelineMaintainerService` | Publication pipeline execution queries. |
+
+MCP and A2A methods can also be called directly on `aiMaintainerService`. AI management overloads that omit `namespaceId` use the default namespace `public`. For version states and publication workflows, see [AI Resource Lifecycle Management](../user/ai/ai-resource-lifecycle.md).
 
 ## 3. Config Center Maintainer APIs
 
@@ -103,6 +121,7 @@ The specific `ConfigDetailInfo` content is as follows:
 | createTime       | long   | Config creation time as a timestamp in milliseconds.                                  |
 | modifyTime       | long   | Latest config update time as a timestamp in milliseconds.                                |
 | content          | string | Config content.                                                |
+| schema | string | Config schema text; null if not set. |
 | desc             | string | Config description.                                             |
 | encryptedDataKey | string | Config encryption key. This field has a value only when config encryption is used.                          |
 | createUser       | string | Username that created this config.                                           |
@@ -799,6 +818,7 @@ The ConfigGrayInfo content is as follows:
 | createTime       | long   | Config creation time as a timestamp in milliseconds.                                  |
 | modifyTime       | long   | Latest config update time as a timestamp in milliseconds.                                |
 | content          | string | Config content.                                                |
+| schema | string | This field is null for gray configs. |
 | desc             | string | Config description.                                             |
 | encryptedDataKey | string | Config encryption key. This field has a value only when config encryption is used.                          |
 | createUser       | string | Username that created this config.                                           |
@@ -931,6 +951,7 @@ The ConfigHistoryDetailInfo content is as follows:
 | createTime       | long   | Config creation time as a timestamp in milliseconds.                                  |
 | modifyTime       | long   | Latest config update time as a timestamp in milliseconds.                                |
 | content          | string | Content of the config history version.                                           |
+| schema | string | Schema text for this historical version; null if not set. |
 | encryptedDataKey | string | Config decryption key. It is returned only when the config is encrypted.                                |
 | grayName         | string | Gray publish name of the config history version. It exists when this historical version is a gray release and is usually `beta`.              |
 | extInfo          | string | Extended information of the historical version. It currently stores gray publish rules, such as the gray IP address list, in `json` format.       |
@@ -941,7 +962,7 @@ The ConfigHistoryDetailInfo content is as follows:
 try {
     // Queries the historical version list of config `maintain.client.test`.
     Page<ConfigHistoryBasicInfo> configHistoryBasicInfoPage = configMaintainerService.listConfigHistory("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, 1, 10);
-    int nid = configHistoryBasicInfoPage.getPageItems().get(0).getId();
+    Long nid = configHistoryBasicInfoPage.getPageItems().get(0).getId();
     // Queries the details of the first historical version in the historical version list of config `maintain.client.test`.
     ConfigHistoryDetailInfo result = configMaintainerService.getConfigHistoryInfo("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, nid);
 } catch (NacosException e) {
@@ -992,6 +1013,7 @@ The ConfigHistoryDetailInfo content is as follows:
 | createTime       | long   | Config creation time as a timestamp in milliseconds.                                  |
 | modifyTime       | long   | Latest config update time as a timestamp in milliseconds.                                |
 | content          | string | Content of the config history version.                                           |
+| schema | string | Schema text for this historical version; null if not set. |
 | encryptedDataKey | string | Config decryption key. It is returned only when the config is encrypted.                                |
 | grayName         | string | Gray publish name of the config history version. It exists when this historical version is a gray release and is usually `beta`.              |
 | extInfo          | string | Extended information of the historical version. It currently stores gray publish rules, such as the gray IP address list, in `json` format.       |
@@ -1001,7 +1023,7 @@ The ConfigHistoryDetailInfo content is as follows:
 ```java
 try {
     // Gets the ID of config `maintain.client.test`.
-    int id = configMaintainerService.getConfig("maintain.client.test").getId();
+    Long id = configMaintainerService.getConfig("maintain.client.test").getId();
     // Gets the details of the previous historical version of config `maintain.client.test`.
     ConfigHistoryDetailInfo result = configMaintainerService.getPreviousConfigHistoryInfo("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, id);
 } catch (NacosException e) {
@@ -2168,7 +2190,7 @@ Instance getInstanceDetail(Service service, Instance instance) throws NacosExcep
 
 ```java
 try {
-    instance result = namingMaintainService.getInstanceDetail("maintain.client.test", "127.0.0.1", 8080);
+    Instance result = namingMaintainService.getInstanceDetail("maintain.client.test", "127.0.0.1", 8080);
     result = namingMaintainService.getInstanceDetail(Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
     result = namingMaintainService.getInstanceDetail(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
     result = namingMaintainService.getInstanceDetail("maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
@@ -3618,6 +3640,12 @@ A `NacosException` is thrown when the operation fails.
 
 ## 6. MCP Services
 
+Obtain `McpMaintainerService` from `aiMaintainerService.mcp()`. Starting with 3.3, use `McpServerDraftRequest` to create or update a draft, then submit it for review and publication. See [AI Resource Lifecycle Management](../user/ai/ai-resource-lifecycle.md) for the workflow. Clusters upgrading from an earlier version must complete the [server upgrade](./upgrading.mdx) before using these APIs.
+
+Models in this chapter are in `com.alibaba.nacos.api.ai.model.mcp`; `ServerVersionDetail` is in its `registry` subpackage. The new APIs select an MCP service by namespace and name, without requiring `mcpId`.
+
+The legacy `getMcpServerDetail`, `createLocalMcpServer`, `createRemoteMcpServer`, and create/update overloads accepting separate `serverSpec` arguments are deprecated since 3.3 and planned for removal in 4.0. Legacy create and update calls still publish versions directly. New integrations should use section 6.10 to query versions and the `McpServerDraftRequest` overloads in sections 6.8 and 6.6 to create and update drafts.
+
 ### 6.1. Get MCP Service List
 
 #### Description
@@ -3896,7 +3924,13 @@ A `NacosException` is thrown when reading the config times out or a network exce
 
 Updates the specified MCP service.
 
+The `McpServerDraftRequest` overloads added in 3.3 update an existing draft. The supplied service, tool, resource, and endpoint definitions replace all draft content; its status remains `draft`. To create a new version, use section 6.8.
+
 ```java
+McpServerVersionDetail updateMcpServer(String namespaceId, McpServerDraftRequest request) throws NacosException;
+
+McpServerVersionDetail updateMcpServer(McpServerDraftRequest request) throws NacosException;
+
 boolean updateMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec) throws NacosException;
 
 boolean updateMcpServer(String mcpName, boolean isLatest, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec) throws NacosException;
@@ -3917,14 +3951,36 @@ boolean updateMcpServer(String namespaceId, String mcpName, boolean isLatest, Mc
 | toolSpec         | McpToolSpecification | Tool definition content of the new MCP service version.                                |
 | endpointSpec     | McpEndpointSpec      | Endpoint definition content of the new MCP service version.                          |
 | overrideExisting | boolean              | Whether to overwrite existing information of the same version. The default value is `false`. This is valid only for the seven-parameter overload.             |
+| request | McpServerDraftRequest | Complete draft content for the new overloads; see section 6.8. Omitted optional content is not retained. |
 
 #### Response Parameters
 
 | Parameter Type    | Description                     |
 |:--------|:-----------------------|
-| boolean | `true` if update succeeds, otherwise `false`. |
+| boolean | Result of a legacy overload; `true` on success. |
+| McpServerVersionDetail | Updated draft details returned by the new overloads; see section 6.10. |
 
 #### Request Example
+
+Update the stdio draft created in section 6.8, retaining its tool and resource definitions. A Remote draft also requires the complete `endpointSpecification`.
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerVersionDetail current = mcp.getMcpServerVersion("public", "demo-mcp", "1.0.0");
+    McpServerBasicInfo server = current.getServerSpecification();
+    server.setDescription("Updated MCP description");
+    McpServerDraftRequest request = new McpServerDraftRequest();
+    request.setServerSpecification(server);
+    request.setToolSpecification(current.getToolSpecification());
+    request.setResourceSpecification(current.getResourceSpecification());
+    McpServerVersionDetail draft = mcp.updateMcpServer("public", request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+Legacy overload examples (choose one call for actual use):
 
 ```java
 try {
@@ -3938,9 +3994,9 @@ try {
     versionDetail.setVersion("1.0.1");
     mcpSpec.setVersionDetail(versionDetail);
     boolean result = aiMaintainerService.updateMcpServer("test", mcpSpec, null, null);
-    result = aiMaintainerService.updateMcpServer("test", true, null, null, null);
-    result = aiMaintainerService.updateMcpServer("public", "test", true, null, null, null);
-    result = aiMaintainerService.updateMcpServer("public", "test", true, null, null, null, false);
+    result = aiMaintainerService.updateMcpServer("test", true, mcpSpec, null, null);
+    result = aiMaintainerService.updateMcpServer("public", "test", true, mcpSpec, null, null);
+    result = aiMaintainerService.updateMcpServer("public", "test", true, mcpSpec, null, null, false);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3997,9 +4053,15 @@ A `NacosException` is thrown when reading the config times out or a network exce
 
 #### Description
 
-Create MCP server in the given namespace (Local or Remote via McpServerBasicInfo and McpEndpointSpec). Omit namespaceId for default namespace; omit endpointSpec for Local(stdio).
+Creates an MCP service version in the selected namespace. The `McpServerDraftRequest` overloads added in 3.3 create a draft and, if needed, the MCP service itself. Creation fails if a `draft`, `reviewing`, or `reviewed` version already exists, or if the requested version number exists. To update an existing draft, use section 6.6.
+
+The legacy overloads are deprecated and still publish versions directly. `serverSpec.protocol` selects Local or Remote mode: `stdio` does not require an endpoint definition; Remote mode does.
 
 ```java
+McpServerVersionDetail createMcpServer(String namespaceId, McpServerDraftRequest request) throws NacosException;
+
+McpServerVersionDetail createMcpServer(McpServerDraftRequest request) throws NacosException;
+
 String createMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec) throws NacosException;
 
 String createMcpServer(String namespaceId, String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec) throws NacosException;
@@ -4013,15 +4075,49 @@ String createMcpServer(String namespaceId, String mcpName, McpServerBasicInfo se
 | mcpName     | string               | MCP service name.                                                         |
 | serverSpec  | McpServerBasicInfo   | MCP service basic information, such as name, version, description, protocol, and localServerConfig.                        |
 | toolSpec    | McpToolSpecification | Tool definition. For Local type, null can be passed.                                            |
-| endpointSpec| McpEndpointSpec      | Endpoint specification. Null indicates Local (stdio), and non-null indicates Remote (SSE, streamable, etc.).           |
+| endpointSpec | McpEndpointSpec | Required endpoint definition for Remote mode; may be null for stdio. |
+| request | McpServerDraftRequest | Complete draft request for the new overloads; see below. |
+
+`McpServerDraftRequest` contains:
+
+| Parameter Name | Parameter Type | Description |
+|:---|:---|:---|
+| serverSpecification | McpServerBasicInfo | Required. Includes `name`, `protocol`, `versionDetail.version`, and the startup or connection config for the protocol. |
+| toolSpecification | McpToolSpecification | Optional tool definitions. |
+| resourceSpecification | McpResourceSpecification | Optional MCP resource definitions. |
+| endpointSpecification | McpEndpointSpec | Remote endpoint definition of type `DIRECT` or `REF`; not required for stdio. |
 
 #### Response Parameters
 
 | Parameter Type   | Description       |
 |:-------|:---------|
-| String | Creation result description. |
+| McpServerVersionDetail | Created draft details returned by the new overloads; see section 6.10. |
+| String | MCP service ID returned by legacy overloads. |
 
 #### Request Example
+
+This example saves a stdio startup definition; it does not start an MCP process. After creation, submit as shown in section 6.12. If review is enabled, publish after approval as shown in section 6.13.
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerBasicInfo server = new McpServerBasicInfo();
+    server.setName("demo-mcp");
+    server.setProtocol("stdio");
+    server.setLocalServerConfig(Collections.<String, Object>singletonMap("command", "my-mcp-server"));
+    ServerVersionDetail version = new ServerVersionDetail();
+    version.setVersion("1.0.0");
+    server.setVersionDetail(version);
+
+    McpServerDraftRequest request = new McpServerDraftRequest();
+    request.setServerSpecification(server);
+    McpServerVersionDetail draft = mcp.createMcpServer("public", request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+Legacy overload examples (choose one call for actual use):
 
 ```java
 try {
@@ -4041,6 +4137,528 @@ try {
 #### Exception Description
 
 A `NacosException` is thrown when reading the config times out or a network exception occurs.
+
+### 6.9. List MCP Versions
+
+#### Description
+
+Lists version summaries for an MCP service, optionally filtered by lifecycle state.
+
+```java
+Page<McpServerVersionSummary> listMcpServerVersions(String namespaceId, String mcpName, String status, int pageNo, int pageSize) throws NacosException;
+
+Page<McpServerVersionSummary> listMcpServerVersions(String mcpName, String status, int pageNo, int pageSize) throws NacosException;
+```
+
+#### Request Parameters
+
+| Parameter Name | Parameter Type | Description |
+|:---|:---|:---|
+| namespaceId | String | Namespace ID. Defaults to `public` when omitted. |
+| mcpName | String | Exact MCP service name. |
+| status | String | Optional: `draft`, `reviewing`, `reviewed`, `online`, or `offline`; null means no state filter. |
+| pageNo | int | Page number, starting at 1. |
+| pageSize | int | Number of items per page. |
+
+#### Return Value
+
+| Parameter Type | Description |
+|:---|:---|
+| Page\<McpServerVersionSummary> | Version summary page. Each item contains `version`, `status`, `publishPipelineInfo`, `author`, `description`, `latest`, `createTime`, and `updateTime`. |
+
+#### Request Example
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    Page<McpServerVersionSummary> page =
+            mcp.listMcpServerVersions("public", "demo-mcp", "online", 1, 20);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown if the query fails.
+
+### 6.10. Get an Exact MCP Version
+
+#### Description
+
+Gets the complete MCP service definition and version status by version number, including drafts and offline versions.
+
+```java
+McpServerVersionDetail getMcpServerVersion(String namespaceId, String mcpName, String version) throws NacosException;
+
+McpServerVersionDetail getMcpServerVersion(String mcpName, String version) throws NacosException;
+```
+
+#### Request Parameters
+
+| Parameter Name | Parameter Type | Description |
+|:---|:---|:---|
+| namespaceId | String | Namespace ID. Defaults to `public` when omitted. |
+| mcpName | String | Exact MCP service name. |
+| version | String | Required exact version, not a label. |
+
+#### Return Value
+
+| Parameter Type | Description |
+|:---|:---|
+| McpServerVersionDetail | Version details, adding the fields below to the summary in section 6.9. |
+
+| Field | Type | Description |
+|:---|:---|:---|
+| namespaceId, mcpName | String | Resource identity. |
+| serverSpecification | McpServerBasicInfo | Service definition and protocol config. |
+| toolSpecification | McpToolSpecification | Tool definitions. |
+| resourceSpecification | McpResourceSpecification | MCP resource definitions. |
+| resourceStatus | String | Resource enable/disable state, separate from version `status`. |
+| owner, scope | String | Owner and visibility scope. |
+| labels | Map\<String, String> | Version labels; the server manages `latest`. |
+| editingVersion, reviewingVersion | String | Current editing and review versions. |
+| onlineCount | Integer | Number of online versions. |
+| writable | boolean | Whether the current user can modify this MCP service. |
+
+#### Request Example
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerVersionDetail detail = mcp.getMcpServerVersion("public", "demo-mcp", "1.0.0");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown if the query fails.
+
+### 6.11. Delete an MCP Draft
+
+#### Description
+
+Deletes the selected `draft` version. This method cannot delete a published version.
+
+```java
+void deleteMcpServerDraft(String namespaceId, McpServerVersionCommand command) throws NacosException;
+
+void deleteMcpServerDraft(McpServerVersionCommand command) throws NacosException;
+```
+
+#### Request Parameters
+
+| Parameter Name | Parameter Type | Description |
+|:---|:---|:---|
+| namespaceId | String | Namespace ID. Defaults to `public` when omitted. |
+| command | McpServerVersionCommand | Contains the required MCP service name `mcpName` and version number `version`. |
+
+#### Return Value
+
+No return value.
+
+#### Request Example
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerVersionCommand command = new McpServerVersionCommand();
+    command.setMcpName("demo-mcp");
+    command.setVersion("1.0.0");
+    mcp.deleteMcpServerDraft("public", command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown if the target version is not a draft or deletion fails.
+
+### 6.12. Submit an MCP Version
+
+#### Description
+
+Submits the specified version for review. If an enabled publication pipeline applies to MCP, the version enters review; otherwise it is published directly. Check the returned `status` for the result. Resubmitting a version that is already under review does not start another review.
+
+```java
+McpServerVersionSummary submitMcpServerVersion(String namespaceId, McpServerVersionCommand command) throws NacosException;
+
+McpServerVersionSummary submitMcpServerVersion(McpServerVersionCommand command) throws NacosException;
+```
+
+#### Request Parameters
+
+| Parameter Name | Parameter Type | Description |
+|:---|:---|:---|
+| namespaceId | String | Namespace ID. Defaults to `public` when omitted. |
+| command | McpServerVersionCommand | Contains the required MCP service name `mcpName` and version number `version`. |
+
+#### Return Value
+
+| Parameter Type | Description |
+|:---|:---|
+| McpServerVersionSummary | Version summary after submission. |
+
+#### Request Example
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerVersionCommand command = new McpServerVersionCommand();
+    command.setMcpName("demo-mcp");
+    command.setVersion("1.0.0");
+    McpServerVersionSummary summary = mcp.submitMcpServerVersion("public", command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown if the version cannot be submitted in its current state or the request fails.
+
+### 6.13. Publish an MCP Version
+
+#### Description
+
+Publishes an approved `reviewed` version. Its status becomes `online`, and the `latest` label points to it. If review fails, return the version to draft, edit it, and submit again.
+
+```java
+McpServerVersionSummary publishMcpServerVersion(String namespaceId, McpServerVersionCommand command) throws NacosException;
+
+McpServerVersionSummary publishMcpServerVersion(McpServerVersionCommand command) throws NacosException;
+```
+
+#### Request Parameters
+
+| Parameter Name | Parameter Type | Description |
+|:---|:---|:---|
+| namespaceId | String | Namespace ID. Defaults to `public` when omitted. |
+| command | McpServerVersionCommand | Contains the required MCP service name `mcpName` and version number `version`. |
+
+#### Return Value
+
+| Parameter Type | Description |
+|:---|:---|
+| McpServerVersionSummary | Published online version summary. |
+
+#### Request Example
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerVersionCommand command = new McpServerVersionCommand();
+    command.setMcpName("demo-mcp");
+    command.setVersion("1.0.0");
+    McpServerVersionSummary summary = mcp.publishMcpServerVersion("public", command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown if the version has not passed review or publication fails.
+
+### 6.14. Force Publish an MCP Version
+
+#### Description
+
+Publishes the specified version without review. The version must be `draft`, `reviewing`, or `reviewed`; after publication it becomes `online`, and the `latest` label points to it. Use submit and publish for the normal workflow.
+
+```java
+McpServerVersionSummary forcePublishMcpServerVersion(String namespaceId, McpServerVersionCommand command) throws NacosException;
+
+McpServerVersionSummary forcePublishMcpServerVersion(McpServerVersionCommand command) throws NacosException;
+```
+
+#### Request Parameters
+
+| Parameter Name | Parameter Type | Description |
+|:---|:---|:---|
+| namespaceId | String | Namespace ID. Defaults to `public` when omitted. |
+| command | McpServerVersionCommand | Contains the required MCP service name `mcpName` and version number `version`. |
+
+#### Return Value
+
+| Parameter Type | Description |
+|:---|:---|
+| McpServerVersionSummary | Online version summary after forced publication. |
+
+#### Request Example
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerVersionCommand command = new McpServerVersionCommand();
+    command.setMcpName("demo-mcp");
+    command.setVersion("1.0.0");
+    McpServerVersionSummary summary = mcp.forcePublishMcpServerVersion("public", command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown if the version cannot be force-published in its current state or the request fails.
+
+### 6.15. Return an MCP Version to Draft
+
+#### Description
+
+Returns a `reviewed` version to `draft` without changing its version number. Update its content using section 6.6.
+
+```java
+McpServerVersionSummary redraftMcpServerVersion(String namespaceId, McpServerVersionCommand command) throws NacosException;
+
+McpServerVersionSummary redraftMcpServerVersion(McpServerVersionCommand command) throws NacosException;
+```
+
+#### Request Parameters
+
+| Parameter Name | Parameter Type | Description |
+|:---|:---|:---|
+| namespaceId | String | Namespace ID. Defaults to `public` when omitted. |
+| command | McpServerVersionCommand | Contains the required MCP service name `mcpName` and version number `version`. |
+
+#### Return Value
+
+| Parameter Type | Description |
+|:---|:---|
+| McpServerVersionSummary | Draft version summary after the transition. |
+
+#### Request Example
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerVersionCommand command = new McpServerVersionCommand();
+    command.setMcpName("demo-mcp");
+    command.setVersion("1.0.0");
+    McpServerVersionSummary summary = mcp.redraftMcpServerVersion("public", command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown if the version cannot be returned to draft in its current state or the request fails.
+
+### 6.16. Bring an MCP Version Online
+
+#### Description
+
+Brings an `offline` MCP version online again and points the `latest` label to it.
+
+```java
+McpServerVersionSummary onlineMcpServerVersion(String namespaceId, McpServerVersionCommand command) throws NacosException;
+
+McpServerVersionSummary onlineMcpServerVersion(McpServerVersionCommand command) throws NacosException;
+```
+
+#### Request Parameters
+
+| Parameter Name | Parameter Type | Description |
+|:---|:---|:---|
+| namespaceId | String | Namespace ID. Defaults to `public` when omitted. |
+| command | McpServerVersionCommand | Contains the required MCP service name `mcpName` and version number `version`. |
+
+#### Return Value
+
+| Parameter Type | Description |
+|:---|:---|
+| McpServerVersionSummary | Version summary after bringing it online. |
+
+#### Request Example
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerVersionCommand command = new McpServerVersionCommand();
+    command.setMcpName("demo-mcp");
+    command.setVersion("1.0.0");
+    McpServerVersionSummary summary = mcp.onlineMcpServerVersion("public", command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown if the version cannot be brought online in its current state or the request fails.
+
+### 6.17. Take an MCP Version Offline
+
+#### Description
+
+Takes an `online` version offline so clients can no longer discover it. Its content is retained, and the MCP service process keeps running. If `latest` pointed to this version, the server points it to another online version or removes the label when none remain.
+
+```java
+McpServerVersionSummary offlineMcpServerVersion(String namespaceId, McpServerVersionCommand command) throws NacosException;
+
+McpServerVersionSummary offlineMcpServerVersion(McpServerVersionCommand command) throws NacosException;
+```
+
+#### Request Parameters
+
+| Parameter Name | Parameter Type | Description |
+|:---|:---|:---|
+| namespaceId | String | Namespace ID. Defaults to `public` when omitted. |
+| command | McpServerVersionCommand | Contains the required MCP service name `mcpName` and version number `version`. |
+
+#### Return Value
+
+| Parameter Type | Description |
+|:---|:---|
+| McpServerVersionSummary | Version summary after taking it offline. |
+
+#### Request Example
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerVersionCommand command = new McpServerVersionCommand();
+    command.setMcpName("demo-mcp");
+    command.setVersion("1.0.0");
+    McpServerVersionSummary summary = mcp.offlineMcpServerVersion("public", command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown if the version cannot be taken offline in its current state or the request fails.
+
+### 6.18. Update MCP Custom Version Labels
+
+#### Description
+
+Replaces all custom version labels. Target versions must exist and must not be `draft` or `reviewing`. An empty map clears custom labels. The server manages `latest` and ignores changes to it in this request.
+
+```java
+Map<String, String> updateMcpServerLabels(String namespaceId, McpServerLabelsUpdateRequest request) throws NacosException;
+
+Map<String, String> updateMcpServerLabels(McpServerLabelsUpdateRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Parameter Name | Parameter Type | Description |
+|:---|:---|:---|
+| namespaceId | String | Namespace ID. Defaults to `public` when omitted. |
+| request | McpServerLabelsUpdateRequest | Required `mcpName` and non-null `labels` (`Map<String, String>`). |
+
+#### Return Value
+
+| Parameter Type | Description |
+|:---|:---|
+| Map\<String, String> | Complete updated label map, including the server-managed `latest` when present. |
+
+#### Request Example
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerLabelsUpdateRequest request = new McpServerLabelsUpdateRequest();
+    request.setMcpName("demo-mcp");
+    request.setLabels(Collections.singletonMap("stable", "1.0.0"));
+    Map<String, String> labels = mcp.updateMcpServerLabels("public", request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown if labels are invalid or the update fails.
+
+### 6.19. Enable or Disable an MCP Service
+
+#### Description
+
+Enables or disables the MCP service by changing the enabled state in its definition. This does not change version content or publication status, or start or stop the MCP service process.
+
+```java
+boolean updateMcpServerStatus(String namespaceId, String mcpName, boolean enabled) throws NacosException;
+
+boolean updateMcpServerStatus(String mcpName, boolean enabled) throws NacosException;
+```
+
+#### Request Parameters
+
+| Parameter Name | Parameter Type | Description |
+|:---|:---|:---|
+| namespaceId | String | Namespace ID. Defaults to `public` when omitted. |
+| mcpName | String | Exact MCP service name. |
+| enabled | boolean | `true` enables; `false` disables. |
+
+#### Return Value
+
+| Parameter Type | Description |
+|:---|:---|
+| boolean | Whether the operation succeeded. |
+
+#### Request Example
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    boolean updated = mcp.updateMcpServerStatus("public", "demo-mcp", true);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown if parameters are invalid or the update fails.
+
+### 6.20. Update MCP Visibility Scope
+
+#### Description
+
+Changes the MCP service visibility scope. The built-in policy supports `PUBLIC` and `PRIVATE`. Access to public resources still requires authentication and resource permissions.
+
+```java
+boolean updateMcpServerScope(String namespaceId, String mcpName, String scope) throws NacosException;
+
+boolean updateMcpServerScope(String mcpName, String scope) throws NacosException;
+```
+
+#### Request Parameters
+
+| Parameter Name | Parameter Type | Description |
+|:---|:---|:---|
+| namespaceId | String | Namespace ID. Defaults to `public` when omitted. |
+| mcpName | String | Exact MCP service name. |
+| scope | String | Target scope: `PUBLIC` or `PRIVATE`. |
+
+#### Return Value
+
+| Parameter Type | Description |
+|:---|:---|
+| boolean | Whether the operation succeeded. |
+
+#### Request Example
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    boolean updated = mcp.updateMcpServerScope("public", "demo-mcp", "PRIVATE");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown if parameters are invalid or the update fails.
 
 ## 7. A2A Registry
 
@@ -6772,7 +7390,9 @@ Agent Management is the new protocol-neutral primary entry point and will replac
 
 `AgentMaintainerService` is not bound to a namespace. Every operation provides an explicit-`namespaceId` form and a convenience overload that uses the default namespace `public`. Request and Command objects do not contain `namespaceId`. There is no separate Agent creation method: the first `createDraft` call creates both Agent metadata and the initial draft Version.
 
-> Note: This chapter uses the new Agent Management models in `com.alibaba.nacos.api.ai.model.agent`. Chapter 7 uses legacy A2A models in `com.alibaba.nacos.api.ai.model.a2a`. The packages contain same-named types such as `AgentVersionDetail`, so verify imports when copying examples.
+Request models in this chapter are in `com.alibaba.nacos.api.ai.model.agent.admin`; return and endpoint models are in `com.alibaba.nacos.api.ai.model.agent`. Examples use the JSON utility class `com.alibaba.nacos.api.utils.json.JsonUtils`.
+
+> Note: This chapter and the `com.alibaba.nacos.api.ai.model.a2a` package in Chapter 7 contain same-named types such as `AgentVersionDetail`. Verify the package when importing them.
 
 ### 11.1. Get Agent Overview
 
@@ -6799,6 +7419,8 @@ AgentOverview getAgent(String agentName) throws NacosException;
 |:---|:---|
 | AgentOverview | Agent overview containing `agent` metadata and the `versionPage` summary page. |
 
+`agent` is an `AgentSummary` containing resource metadata, `status`, `owner`, `scope`, and `versionInfo`. Read online versions from `versionInfo.onlineVersions` and the default version from `versionInfo.labels.latest`.
+
 #### Request Example
 
 ```java
@@ -6822,9 +7444,9 @@ A `NacosException` is thrown when the request fails.
 Completely replace the writable Agent metadata. Presentation fields, tags, extensions, and enabled status are writable; identity, owner, scope, Version content, labels, and the derived catalog are not.
 
 ```java
-Agent updateAgent(String namespaceId, AgentUpdateRequest request) throws NacosException;
+AgentSummary updateAgent(String namespaceId, AgentUpdateRequest request) throws NacosException;
 
-Agent updateAgent(AgentUpdateRequest request) throws NacosException;
+AgentSummary updateAgent(AgentUpdateRequest request) throws NacosException;
 ```
 
 #### Request Parameters
@@ -6851,7 +7473,7 @@ Agent updateAgent(AgentUpdateRequest request) throws NacosException;
 
 | Type | Description |
 |:---|:---|
-| Agent | Updated Agent. |
+| AgentSummary | Updated Agent summary. |
 
 #### Request Example
 
@@ -6864,8 +7486,8 @@ try {
     request.setDescription("Agent for SDK examples");
     request.setTags(Arrays.asList("demo", "java"));
     request.setStatus("enable");
-    Agent agent = agentMaintainerService.updateAgent("public", request);
-    // Default-namespace alternative: Agent agent = agentMaintainerService.updateAgent(request);
+    AgentSummary agent = agentMaintainerService.updateAgent("public", request);
+    // Default-namespace alternative: AgentSummary agent = agentMaintainerService.updateAgent(request);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -7055,7 +7677,7 @@ A `NacosException` is thrown when the query fails.
 
 #### Description
 
-Get the complete runtime Endpoint snapshot for a protocol, optionally filtered by Agent Version. Omitting `version` returns all bindings for each natural Endpoint key; supplying it retains only matching bindings. The `items` list is empty when no runtime instance exists.
+Queries the runtime endpoints registered for an Agent and protocol. When `version` is supplied, only endpoints and bindings that support that definition version are returned; otherwise all endpoints and bindings are returned. Registered endpoints can be queried even before an Agent definition is created.
 
 ```java
 RuntimeEndpointSnapshot getRuntimeEndpoints(String namespaceId, String agentName, String protocol, String version) throws NacosException;
@@ -7076,9 +7698,19 @@ RuntimeEndpointSnapshot getRuntimeEndpoints(String agentName, String protocol, S
 
 | Type | Description |
 |:---|:---|
-| RuntimeEndpointSnapshot | Runtime snapshot with `namespaceId`, `agentName`, `protocol`, `version`, and Endpoint `items`. |
+| RuntimeEndpointSnapshot | Contains `namespaceId`, `agentName`, optional `version`, and `callInterface`. |
 
-Each `RuntimeEndpointSnapshotItem` contains an Endpoint, Version bindings, runtime state, enabled and healthy flags, and the last update time.
+`callInterface` contains the protocol name in `protocol` and one endpoint set with `source=RUNTIME`. Read runtime endpoints from `callInterface.endpointSets[0].endpoints`; the list is empty when no instances exist. Each endpoint contains these main fields:
+
+| Field | Description |
+|:---|:---|
+| uri, transport | Endpoint address and transport. |
+| priority, weight | Endpoint priority and weight. |
+| metadata | Endpoint metadata. |
+| bindings | Version bindings, each containing `runtimeVersion` and the compatible definition version range `versionRange`. |
+| enabled, healthy | Whether the endpoint is enabled and healthy. |
+
+Read the endpoint set's update time from `EndpointSet.lastUpdatedTime`.
 
 #### Request Example
 
@@ -7102,6 +7734,8 @@ A `NacosException` is thrown when the query fails.
 #### Description
 
 Create an initial or subsequent Agent draft. When the Agent does not exist, this is the only creation entry and the request must contain direct `callInterfaces`, not `basedOnVersion`. For an existing Agent, provide either direct `callInterfaces` or one exact `basedOnVersion`, but never both.
+
+`createDraft` creates a draft, including for an Agent's first version. Then submit, review, and publish it following [AI Resource Lifecycle Management](../user/ai/ai-resource-lifecycle.md). Supply resource metadata such as the display name and description only on initial creation; use `updateAgent` for later metadata changes.
 
 ```java
 AgentVersionDetail createDraft(String namespaceId, AgentDraftCreateRequest request) throws NacosException;
@@ -7155,8 +7789,16 @@ try {
     a2aDescriptor.setUrl("https://example.com/a2a");
     a2aDescriptor.setVersion("1.0.0");
     a2aDescriptor.setProtocolVersion("0.3.0");
-    callInterface.setNativeDescriptor(a2aDescriptor);
-    callInterface.setEndpointSourceOrder(Collections.singletonList(EndpointSource.RUNTIME));
+    a2aDescriptor.setPreferredTransport("JSONRPC");
+    callInterface.setNativeDescriptor(JsonUtils.toObj(JsonUtils.toJson(a2aDescriptor), Map.class));
+    callInterface.setEndpointSourceOrder(Arrays.asList(EndpointSource.RUNTIME, EndpointSource.DECLARED));
+    Endpoint endpoint = new Endpoint();
+    endpoint.setUri("https://example.com/a2a");
+    endpoint.setTransport("JSONRPC");
+    EndpointSet declared = new EndpointSet();
+    declared.setSource(EndpointSource.DECLARED);
+    declared.setEndpoints(Collections.singletonList(endpoint));
+    callInterface.setEndpointSets(Collections.singletonList(declared));
 
     AgentDraftCreateRequest request = new AgentDraftCreateRequest();
     request.setAgentName("demo-agent");
@@ -7181,6 +7823,8 @@ A `NacosException` is thrown when the content source is ambiguous, the Version i
 #### Description
 
 Completely replace the CallInterface content and change description of one exact draft. This operation never creates a missing Agent or Version and does not update Agent metadata.
+
+Submit the complete interface collection to retain; omitted interfaces are removed. Definition `endpointSets` may contain only `DECLARED` addresses. `endpointSourceOrder` must include both `RUNTIME` and `DECLARED` exactly once, in preference order.
 
 ```java
 AgentVersionDetail updateDraft(String namespaceId, AgentDraftUpdateRequest request) throws NacosException;
@@ -7219,8 +7863,16 @@ try {
     a2aDescriptor.setUrl("https://example.com/a2a");
     a2aDescriptor.setVersion("1.0.0");
     a2aDescriptor.setProtocolVersion("0.3.0");
-    callInterface.setNativeDescriptor(a2aDescriptor);
-    callInterface.setEndpointSourceOrder(Collections.singletonList(EndpointSource.RUNTIME));
+    a2aDescriptor.setPreferredTransport("JSONRPC");
+    callInterface.setNativeDescriptor(JsonUtils.toObj(JsonUtils.toJson(a2aDescriptor), Map.class));
+    callInterface.setEndpointSourceOrder(Arrays.asList(EndpointSource.RUNTIME, EndpointSource.DECLARED));
+    Endpoint endpoint = new Endpoint();
+    endpoint.setUri("https://example.com/a2a");
+    endpoint.setTransport("JSONRPC");
+    EndpointSet declared = new EndpointSet();
+    declared.setSource(EndpointSource.DECLARED);
+    declared.setEndpoints(Collections.singletonList(endpoint));
+    callInterface.setEndpointSets(Collections.singletonList(declared));
 
     AgentDraftUpdateRequest request = new AgentDraftUpdateRequest();
     request.setAgentName("demo-agent");
@@ -7282,12 +7934,12 @@ A `NacosException` is thrown when deletion fails.
 
 #### Description
 
-Submit one exact Agent Version for the `draft -> reviewing` transition or the shared no-Pipeline transition.
+Submits the specified version for review. If an enabled publication pipeline applies to Agent, the version enters review; otherwise it is published directly. Check the returned `status` for the result.
 
 ```java
-AgentVersionSummary submit(String namespaceId, AgentVersionCommand command) throws NacosException;
+AgentVersionSummary submit(String namespaceId, AgentVersionRequest command) throws NacosException;
 
-AgentVersionSummary submit(AgentVersionCommand command) throws NacosException;
+AgentVersionSummary submit(AgentVersionRequest command) throws NacosException;
 ```
 
 #### Request Parameters
@@ -7295,7 +7947,7 @@ AgentVersionSummary submit(AgentVersionCommand command) throws NacosException;
 | Name | Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. The default is `public` when omitted. |
-| command | AgentVersionCommand | Version command containing required `agentName` and exact `version`. |
+| command | AgentVersionRequest | Version command containing required `agentName` and exact `version`. |
 
 #### Response Parameters
 
@@ -7308,7 +7960,7 @@ AgentVersionSummary submit(AgentVersionCommand command) throws NacosException;
 ```java
 try {
     AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
-    AgentVersionCommand command = new AgentVersionCommand();
+    AgentVersionRequest command = new AgentVersionRequest();
     command.setAgentName("demo-agent");
     command.setVersion("1.0.0");
     AgentVersionSummary summary = agentMaintainerService.submit("public", command);
@@ -7326,12 +7978,12 @@ A `NacosException` is thrown when the state transition is not allowed or submiss
 
 #### Description
 
-Move one exact reviewed Agent Version from `reviewed` to `online`.
+Publishes an approved `reviewed` version. Its status becomes `online`, and the `latest` label points to it. If review fails, return the version to draft, edit it, and submit again.
 
 ```java
-AgentVersionSummary publish(String namespaceId, AgentVersionCommand command) throws NacosException;
+AgentVersionSummary publish(String namespaceId, AgentVersionRequest command) throws NacosException;
 
-AgentVersionSummary publish(AgentVersionCommand command) throws NacosException;
+AgentVersionSummary publish(AgentVersionRequest command) throws NacosException;
 ```
 
 #### Request Parameters
@@ -7339,7 +7991,7 @@ AgentVersionSummary publish(AgentVersionCommand command) throws NacosException;
 | Name | Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. The default is `public` when omitted. |
-| command | AgentVersionCommand | Version command containing required `agentName` and exact `version`. |
+| command | AgentVersionRequest | Version command containing required `agentName` and exact `version`. |
 
 #### Response Parameters
 
@@ -7352,7 +8004,7 @@ AgentVersionSummary publish(AgentVersionCommand command) throws NacosException;
 ```java
 try {
     AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
-    AgentVersionCommand command = new AgentVersionCommand();
+    AgentVersionRequest command = new AgentVersionRequest();
     command.setAgentName("demo-agent");
     command.setVersion("1.0.0");
     AgentVersionSummary summary = agentMaintainerService.publish("public", command);
@@ -7370,12 +8022,12 @@ A `NacosException` is thrown when the Version has not been reviewed or publicati
 
 #### Description
 
-Bypass the Pipeline with auditing and move one exact Agent Version to `online`.
+Publishes the specified version without review. The version must be `draft`, `reviewing`, or `reviewed`; after publication it becomes `online`, and the `latest` label points to it.
 
 ```java
-AgentVersionSummary forcePublish(String namespaceId, AgentVersionCommand command) throws NacosException;
+AgentVersionSummary forcePublish(String namespaceId, AgentVersionRequest command) throws NacosException;
 
-AgentVersionSummary forcePublish(AgentVersionCommand command) throws NacosException;
+AgentVersionSummary forcePublish(AgentVersionRequest command) throws NacosException;
 ```
 
 #### Request Parameters
@@ -7383,7 +8035,7 @@ AgentVersionSummary forcePublish(AgentVersionCommand command) throws NacosExcept
 | Name | Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. The default is `public` when omitted. |
-| command | AgentVersionCommand | Version command containing required `agentName` and exact `version`. |
+| command | AgentVersionRequest | Version command containing required `agentName` and exact `version`. |
 
 #### Response Parameters
 
@@ -7396,7 +8048,7 @@ AgentVersionSummary forcePublish(AgentVersionCommand command) throws NacosExcept
 ```java
 try {
     AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
-    AgentVersionCommand command = new AgentVersionCommand();
+    AgentVersionRequest command = new AgentVersionRequest();
     command.setAgentName("demo-agent");
     command.setVersion("1.0.0");
     AgentVersionSummary summary = agentMaintainerService.forcePublish("public", command);
@@ -7417,9 +8069,9 @@ A `NacosException` is thrown when force publication fails.
 Move one exact reviewed Agent Version from `reviewed` back to `draft`.
 
 ```java
-AgentVersionSummary redraft(String namespaceId, AgentVersionCommand command) throws NacosException;
+AgentVersionSummary redraft(String namespaceId, AgentVersionRequest command) throws NacosException;
 
-AgentVersionSummary redraft(AgentVersionCommand command) throws NacosException;
+AgentVersionSummary redraft(AgentVersionRequest command) throws NacosException;
 ```
 
 #### Request Parameters
@@ -7427,7 +8079,7 @@ AgentVersionSummary redraft(AgentVersionCommand command) throws NacosException;
 | Name | Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. The default is `public` when omitted. |
-| command | AgentVersionCommand | Version command containing required `agentName` and exact `version`. |
+| command | AgentVersionRequest | Version command containing required `agentName` and exact `version`. |
 
 #### Response Parameters
 
@@ -7440,7 +8092,7 @@ AgentVersionSummary redraft(AgentVersionCommand command) throws NacosException;
 ```java
 try {
     AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
-    AgentVersionCommand command = new AgentVersionCommand();
+    AgentVersionRequest command = new AgentVersionRequest();
     command.setAgentName("demo-agent");
     command.setVersion("1.0.0");
     AgentVersionSummary summary = agentMaintainerService.redraft("public", command);
@@ -7458,12 +8110,12 @@ A `NacosException` is thrown when the state transition is not allowed or the ope
 
 #### Description
 
-Move one exact Agent Version from `offline` to `online`.
+Brings an `offline` Agent version online again and points the `latest` label to it.
 
 ```java
-AgentVersionSummary online(String namespaceId, AgentVersionCommand command) throws NacosException;
+AgentVersionSummary online(String namespaceId, AgentVersionRequest command) throws NacosException;
 
-AgentVersionSummary online(AgentVersionCommand command) throws NacosException;
+AgentVersionSummary online(AgentVersionRequest command) throws NacosException;
 ```
 
 #### Request Parameters
@@ -7471,7 +8123,7 @@ AgentVersionSummary online(AgentVersionCommand command) throws NacosException;
 | Name | Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. The default is `public` when omitted. |
-| command | AgentVersionCommand | Version command containing required `agentName` and exact `version`. |
+| command | AgentVersionRequest | Version command containing required `agentName` and exact `version`. |
 
 #### Response Parameters
 
@@ -7484,7 +8136,7 @@ AgentVersionSummary online(AgentVersionCommand command) throws NacosException;
 ```java
 try {
     AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
-    AgentVersionCommand command = new AgentVersionCommand();
+    AgentVersionRequest command = new AgentVersionRequest();
     command.setAgentName("demo-agent");
     command.setVersion("1.0.0");
     AgentVersionSummary summary = agentMaintainerService.online("public", command);
@@ -7502,12 +8154,12 @@ A `NacosException` is thrown when the state transition is not allowed or the ope
 
 #### Description
 
-Move one exact Agent Version from `online` to `offline`.
+Takes an `online` version offline so clients can no longer discover it. Its content is retained, and the Agent instances keep running. If `latest` pointed to this version, the server points it to another online version or removes the label when none remain.
 
 ```java
-AgentVersionSummary offline(String namespaceId, AgentVersionCommand command) throws NacosException;
+AgentVersionSummary offline(String namespaceId, AgentVersionRequest command) throws NacosException;
 
-AgentVersionSummary offline(AgentVersionCommand command) throws NacosException;
+AgentVersionSummary offline(AgentVersionRequest command) throws NacosException;
 ```
 
 #### Request Parameters
@@ -7515,7 +8167,7 @@ AgentVersionSummary offline(AgentVersionCommand command) throws NacosException;
 | Name | Type | Description |
 |:---|:---|:---|
 | namespaceId | string | Namespace ID. The default is `public` when omitted. |
-| command | AgentVersionCommand | Version command containing required `agentName` and exact `version`. |
+| command | AgentVersionRequest | Version command containing required `agentName` and exact `version`. |
 
 #### Response Parameters
 
@@ -7528,7 +8180,7 @@ AgentVersionSummary offline(AgentVersionCommand command) throws NacosException;
 ```java
 try {
     AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
-    AgentVersionCommand command = new AgentVersionCommand();
+    AgentVersionRequest command = new AgentVersionRequest();
     command.setAgentName("demo-agent");
     command.setVersion("1.0.0");
     AgentVersionSummary summary = agentMaintainerService.offline("public", command);
@@ -7546,12 +8198,12 @@ A `NacosException` is thrown when the state transition is not allowed or the ope
 
 #### Description
 
-Completely replace custom Agent Version labels. Label values must target exact Versions. `latest` is server-managed and cannot be updated as a custom label.
+Replaces all custom Agent version labels. Target versions must exist and must not be `draft` or `reviewing`. An empty map clears custom labels. The server manages `latest` and ignores changes to it in this request.
 
 ```java
-Agent updateLabels(String namespaceId, AgentLabelsUpdateRequest request) throws NacosException;
+AgentSummary updateLabels(String namespaceId, AgentLabelsUpdateRequest request) throws NacosException;
 
-Agent updateLabels(AgentLabelsUpdateRequest request) throws NacosException;
+AgentSummary updateLabels(AgentLabelsUpdateRequest request) throws NacosException;
 ```
 
 #### Request Parameters
@@ -7567,7 +8219,7 @@ Agent updateLabels(AgentLabelsUpdateRequest request) throws NacosException;
 
 | Type | Description |
 |:---|:---|
-| Agent | Agent after the label update. |
+| AgentSummary | Agent summary after the label update. |
 
 #### Request Example
 
@@ -7577,8 +8229,8 @@ try {
     AgentLabelsUpdateRequest request = new AgentLabelsUpdateRequest();
     request.setAgentName("demo-agent");
     request.setLabels(Collections.singletonMap("stable", "1.0.0"));
-    Agent agent = agentMaintainerService.updateLabels("public", request);
-    // Default-namespace alternative: Agent agent = agentMaintainerService.updateLabels(request);
+    AgentSummary agent = agentMaintainerService.updateLabels("public", request);
+    // Default-namespace alternative: AgentSummary agent = agentMaintainerService.updateLabels(request);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -7587,6 +8239,47 @@ try {
 #### Exception Description
 
 A `NacosException` is thrown when labels are invalid, a target Version does not exist, or the update fails.
+
+### 11.18. Update Agent Visibility Scope
+
+#### Description
+
+Changes the Agent visibility scope. The built-in policy supports `PUBLIC` and `PRIVATE`. Access to public resources still requires authentication and resource permissions.
+
+```java
+boolean updateScope(String namespaceId, String agentName, String scope) throws NacosException;
+
+boolean updateScope(String agentName, String scope) throws NacosException;
+```
+
+#### Request Parameters
+
+| Parameter Name | Parameter Type | Description |
+|:---|:---|:---|
+| namespaceId | String | Namespace ID. Defaults to `public` when omitted. |
+| agentName | String | Exact Agent name. |
+| scope | String | Target visibility scope: `PUBLIC` or `PRIVATE`. |
+
+#### Return Value
+
+| Parameter Type | Description |
+|:---|:---|
+| boolean | Whether the operation succeeded. |
+
+#### Request Example
+
+```java
+try {
+    AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
+    boolean updated = agentMaintainerService.updateScope("public", "demo-agent", "PRIVATE");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown for invalid parameters, insufficient permissions, or update failure.
 
 ## 12. Pipeline Management
 

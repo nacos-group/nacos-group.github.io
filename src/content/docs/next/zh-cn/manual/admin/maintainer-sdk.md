@@ -8,9 +8,7 @@ sidebar:
 
 # 运维SDK
 
-Nacos 的 运维SDK（或称Nacos-Maintainer-SDK），是一个针对 Nacos 配置中心、服务注册中心、分布式锁等功能`运维`场景下的的 Java
-SDK。旨在为Nacos的运维人员或部分特殊应用场景（如`网关类应用`，`控制台类应用`
-）提供稳定易用的配置中心、服务注册中心、分布式锁等功能，方便运维人员或特殊应用访问Nacos进行配置、服务和分布式锁的操作。
+Nacos 的运维 SDK（或称 Nacos Maintainer SDK）是一个针对 Nacos 配置中心、服务注册中心、AI 管理中心等功能 `运维` 场景的 Java SDK。旨在为 Nacos 的运维人员或部分特殊应用场景（如 `网关类应用`、`控制台类应用`）提供稳定易用的运维能力，方便运维人员或特殊应用访问 Nacos，进行配置、服务和 AI 资源的管理操作。
 
 因为Nacos 的 运维SDK的定位，Nacos的运维SDK会提供大范围的数据获取API，因此Nacos的运维SDK需要使用较高权限的身份进行登录后才能使用，以防止存在数据泄漏的隐患。
 
@@ -29,14 +27,16 @@ Nacos 的 Java SDK需要 JDK 1.8 及以上版本的Java运行环境。
 
 ### 1.2. Maven 坐标
 
+```xml
+<!-- 3.0.0 及以上版本支持 -->
+<dependency>
+    <groupId>com.alibaba.nacos</groupId>
+    <artifactId>nacos-maintainer-client</artifactId>
+    <version>${nacos.client.version}</version>
+</dependency>
 ```
-<!-- 3.0.0 及以上 版本支持 -->
-<dependency>-->
-    <groupId>com.alibaba.nacos</groupId>-->
-    <artifactId>nacos-maintainer-client</artifactId>-->
-    <version>${nacos.client.version}</version>-->
-</dependency>-->
-```
+
+将 `${nacos.client.version}` 设置为 `3.3.0-RC` 或后续 3.3 版本，以使用本文新增的 MCP 和 Agent 管理接口。
 
 ## 2. 初始化SDK
 
@@ -45,22 +45,38 @@ Nacos 初始化SDK时需要使用对应的工厂 `Factory` 类进行不同模块
 ```java
 
 Properties properties = new Properties();
-# 指定Nacos-Server的地址
+// 指定Nacos-Server的地址
 properties.setProperty("serverAddr","localhost:8848");
 
-# 设置Nacos的管理员用户密码
+// 设置Nacos的管理员用户密码
 properties.setProperty("username","nacos");
 properties.setProperty("password","{your_admin_password}");
 
-# 初始化配置中心的Nacos Maintainer Service
+// 初始化配置中心的Nacos Maintainer Service
 ConfigMaintainerService configMaintainerService = ConfigMaintainerFactory.createConfigMaintainerService(properties);
 
-# 初始化注册中心的Nacos Maintainer Service
+// 初始化注册中心的Nacos Maintainer Service
 NamingMaintainerService maintainService = NamingMaintainerFactory.createNamingMaintainerService(properties);
 
 // 初始化 AI 模块的 Nacos Maintainer Service
 AiMaintainerService aiMaintainerService = AiMaintainerFactory.createAiMaintainerService(properties);
 ```
+
+请将示例中的账号和密码替换为实际值，账号需具备对应操作的权限，参见[配置访问凭据](../user/auth.mdx)。
+
+AI 管理接口位于 `com.alibaba.nacos.maintainer.client.ai` 包，通过以下入口获取：
+
+| 入口 | 接口 | 用途 |
+|:---|:---|:---|
+| `aiMaintainerService.mcp()` | `McpMaintainerService` | MCP 定义与版本生命周期。 |
+| `aiMaintainerService.agent()` | `AgentMaintainerService` | Agent 定义、版本及运行端点管理。 |
+| `aiMaintainerService.a2a()` | `A2aMaintainerService` | 旧 A2A 管理兼容接口。 |
+| `aiMaintainerService.prompt()` | `PromptMaintainerService` | Prompt 管理。 |
+| `aiMaintainerService.skill()` | `SkillMaintainerService` | Skill 管理。 |
+| `aiMaintainerService.agentSpec()` | `AgentSpecMaintainerService` | AgentSpec 管理。 |
+| `aiMaintainerService.pipeline()` | `PipelineMaintainerService` | 发布流水线执行查询。 |
+
+MCP 和 A2A 方法也可以直接通过 `aiMaintainerService` 调用。调用 AI 管理接口时，不传 `namespaceId` 的重载使用默认命名空间 `public`。版本状态和发布流程见 [AI 资源生命周期管理](../user/ai/ai-resource-lifecycle.md)。
 
 ## 3. 配置中心运维 API
 
@@ -84,7 +100,7 @@ ConfigDetailInfo getConfig(String dataId, String groupName, String namespaceId) 
 |:------------|:-------|:-----------------------------------------------------|
 | dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
 | groupName   | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。      |
-| namespaceId | long   | 配置所属的命名空间ID。                                         |
+| namespaceId | string   | 配置所属的命名空间ID。                                         |
 
 #### 返回值
 
@@ -106,6 +122,7 @@ ConfigDetailInfo getConfig(String dataId, String groupName, String namespaceId) 
 | createTime       | long   | 配置的创建时间，为时间戳，单位为毫秒。                                  |
 | modifyTime       | long   | 配置的最新更新时间，为时间戳，单位为毫秒。                                |
 | content          | string | 配置内容。                                                |
+| schema | string | 配置的 schema 文本，未设置时为 null。 |
 | desc             | string | 配置的描述信息。                                             |
 | encryptedDataKey | string | 配置的加密密钥，当使用配置的加密功能时，该字段才有值。                          |
 | createUser       | string | 创建此配置的用户名。                                           |
@@ -116,7 +133,7 @@ ConfigDetailInfo getConfig(String dataId, String groupName, String namespaceId) 
 
 ```java
 try {
-    # 以下3种调用均会获得 `public`命名空间下，groupName为`DEFAULT_GROUP`，dataId为`maintain.client.test`的配置信息。
+    // 以下3种调用均会获得 `public`命名空间下，groupName为`DEFAULT_GROUP`，dataId为`maintain.client.test`的配置信息。
     ConfigDetailInfo configDetailInfo = configMaintainerService.getConfig("maintain.client.test");
     configDetailInfo = configMaintainerService.getConfig("maintain.client.test", Constants.DEFAULT_GROUP);
     configDetailInfo = configMaintainerService.getConfig("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
@@ -142,7 +159,7 @@ try {
 ```java
 boolean publishConfig(String dataId, String content) throws NacosException;
 
-boolean publishConfig(String dataId, String groupName, String content) throws NacosExceptio;
+boolean publishConfig(String dataId, String groupName, String content) throws NacosException;
 
 boolean publishConfig(String dataId, String groupName, String namespaceId, String content) throws NacosException;
 
@@ -159,7 +176,7 @@ boolean publishConfig(String dataId, String groupName, String namespaceId, Strin
 |:------------|:-------|:-------------------------------------------------------------------------------|
 | dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 256 字节。                           |
 | groupName   | string | 配置分组。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 128 字节。                            |
-| namespaceId | long   | 配置所属的命名空间ID。                                                                   |
+| namespaceId | string   | 配置所属的命名空间ID。                                                                   |
 | content     | string | 配置内容，不超过 100K 字节。                                                              |
 | desc        | string | 配置的描述内容。                                                                       |
 | type        | string | 配置类型，见 `com.alibaba.nacos.api.config.ConfigType`，默认为TEXT                       |
@@ -177,7 +194,7 @@ boolean publishConfig(String dataId, String groupName, String namespaceId, Strin
 
 ```java
 try {
-# 以下调用均会在 `public`命名空间下，创建groupName为`DEFAULT_GROUP`，dataId为`maintain.client.test`的配置, 配置内容为`testContent`。
+// 以下调用均会在 `public`命名空间下，创建groupName为`DEFAULT_GROUP`，dataId为`maintain.client.test`的配置, 配置内容为`testContent`。
     boolean result = configMaintainerService.publishConfig("maintain.client.test", "testContent");
     result = configMaintainerService.publishConfig("maintain.client.test", Constants.DEFAULT_GROUP, "testContent");
     result = configMaintainerService.publishConfig("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, "testContent");
@@ -217,7 +234,7 @@ boolean deleteConfig(String dataId, String groupName, String namespaceId) throws
 |:------------|:-------|:-----------------------------------------------------|
 | dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
 | groupName   | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。      |
-| namespaceId | long   | 配置所属的命名空间ID。                                         |
+| namespaceId | string   | 配置所属的命名空间ID。                                         |
 
 #### 返回参数
 
@@ -229,7 +246,7 @@ boolean deleteConfig(String dataId, String groupName, String namespaceId) throws
 
 ```java
 try {
-    # 以下3种调用均会删除 `public`命名空间下，groupName为`DEFAULT_GROUP`，dataId为`maintain.client.test`的配置信息。
+    // 以下3种调用均会删除 `public`命名空间下，groupName为`DEFAULT_GROUP`，dataId为`maintain.client.test`的配置信息。
     boolean result =  configMaintainerService.deleteConfig("maintain.client.test");
     result = configMaintainerService.deleteConfig("maintain.client.test", Constants.DEFAULT_GROUP);
     result = configMaintainerService.deleteConfig("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
@@ -307,7 +324,7 @@ Page<ConfigBasicInfo> listConfigs(String dataId, String groupName, String namesp
 
 | 参数名         | 参数类型   | 描述                                                                                |
 |:------------|:-------|:----------------------------------------------------------------------------------|
-| namespaceId | long   | 配置所属的命名空间ID。                                                                      |                                                                                                 |
+| namespaceId | string   | 配置所属的命名空间ID。                                                                      |                                                                                                 |
 | dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节, 默认为""，不为空时则只会匹配dataId为此值的配置。 |
 | groupName   | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节，默认为""，不为空时则只会匹配groupName为此值的配置。    |
 | type        | string | 配置类型，见 `com.alibaba.nacos.api.config.ConfigType`，默认为""，不为空时则只会匹配类型为此值的配置。         |
@@ -347,15 +364,15 @@ Page<ConfigBasicInfo> listConfigs(String dataId, String groupName, String namesp
 
 ```java
 try {
-    # 获取`public`命名空间下所有配置的第一页（最大100个）。
+    // 获取`public`命名空间下所有配置的第一页（最大100个）。
     Page<ConfigBasicInfo> result = configMaintainerService.listConfigs(Constants.DEFAULT_NAMESPACE_ID);
-    # 获取`public`命名空间下配置分组为`DEFAULT_GROUP`的所有配置的第一页（最大100个）。
+    // 获取`public`命名空间下配置分组为`DEFAULT_GROUP`的所有配置的第一页（最大100个）。
     result = configMaintainerService.listConfigs("", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
-    # 获取`public`命名空间下类型为`JSON`的所有配置的第一页（最大100个）。
+    // 获取`public`命名空间下类型为`JSON`的所有配置的第一页（最大100个）。
     result = configMaintainerService.listConfigs("", "", Constants.DEFAULT_NAMESPACE_ID, "JSON");
-    # 获取`public`命名空间下带有标签为`testTag1`且配置所属应用为`testApp`的所有配置的第一页（最大100个）。
+    // 获取`public`命名空间下带有标签为`testTag1`且配置所属应用为`testApp`的所有配置的第一页（最大100个）。
     result = configMaintainerService.listConfigs("", "", Constants.DEFAULT_NAMESPACE_ID, "", "testTag1", "testApp");
-    # 获取`public`命名空间下所有配置的第一页（最大10个）。
+    // 获取`public`命名空间下所有配置的第一页（最大10个）。
     result = configMaintainerService.listConfigs("", "", Constants.DEFAULT_NAMESPACE_ID, "", "", "", 1, 10);
 } catch (NacosException e) {
     e.printStackTrace();
@@ -392,7 +409,7 @@ Page<ConfigBasicInfo> searchConfigs(String dataId, String groupName, String name
 
 | 参数名          | 参数类型   | 描述                                                                                     |
 |:-------------|:-------|:---------------------------------------------------------------------------------------|
-| namespaceId  | long   | 配置所属的命名空间ID。                                                                           |                                                                                                 |
+| namespaceId  | string   | 配置所属的命名空间ID。                                                                           |                                                                                                 |
 | dataId       | string | 配置 ID。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节, 默认为""，不为空时则只会匹配所有dataId`包含`此值的配置。 |
 | groupName    | string | 配置分组。只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节，默认为""，不为空时则只会匹配groupName`包含`此值的配置。      |
 | type         | string | 配置类型，见 `com.alibaba.nacos.api.config.ConfigType`，默认为""，不为空时则只会匹配类型为此值的配置。              |
@@ -433,15 +450,15 @@ Page<ConfigBasicInfo> searchConfigs(String dataId, String groupName, String name
 
 ```java
 try {
-    # 获取`public`命名空间下配置分组包含`test`字符的所有配置的第一页（最大100个）。
+    // 获取`public`命名空间下配置分组包含`test`字符的所有配置的第一页（最大100个）。
     Page<ConfigBasicInfo> result = configMaintainerService.searchConfigs("", "test", Constants.DEFAULT_NAMESPACE_ID);
-    # 获取`public`命名空间下类型为`JSON`的所有配置的第一页（最大100个）。
+    // 获取`public`命名空间下类型为`JSON`的所有配置的第一页（最大100个）。
     result = configMaintainerService.searchConfigs("", "", Constants.DEFAULT_NAMESPACE_ID, "JSON");
-    # 获取`public`命名空间下配置内容包含`test`字符的所有配置的第一页（最大100个）。
+    // 获取`public`命名空间下配置内容包含`test`字符的所有配置的第一页（最大100个）。
     result = configMaintainerService.searchConfigs("", "", Constants.DEFAULT_NAMESPACE_ID, "test", "");
-    # 获取`public`命名空间下标签为`testTag1`且配置所属应用为`testApp`的所有配置的第一页（最大100个）。
+    // 获取`public`命名空间下标签为`testTag1`且配置所属应用为`testApp`的所有配置的第一页（最大100个）。
     result = configMaintainerService.searchConfigs("", "", Constants.DEFAULT_NAMESPACE_ID, "", "", "testTag1", "testApp");
-    # 获取`public`命名空间下所有配置的第一页（最大10个）。
+    // 获取`public`命名空间下所有配置的第一页（最大10个）。
     result = configMaintainerService.searchConfigs("", "", Constants.DEFAULT_NAMESPACE_ID, "", "", "", "", 1, 10);
 } catch (NacosException e) {
     e.printStackTrace();
@@ -601,7 +618,7 @@ ConfigListenerInfo getListeners(String dataId, String groupName, String namespac
 
 ```java
 try {
-    # 以下两种调用，均获取`public`命名空间ID，`DEFAULT_GROUP`分组，`maintain.client.test`配置的全集群的订阅者列表。
+    // 以下两种调用，均获取`public`命名空间ID，`DEFAULT_GROUP`分组，`maintain.client.test`配置的全集群的订阅者列表。
     ConfigListenerInfo result = configMaintainerService.getListeners("maintain.client.test", Constants.DEFAULT_GROUP);
     result = configMaintainerService.getListeners("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, true);
 } catch (NacosException e) {
@@ -679,7 +696,7 @@ boolean publishBetaConfig(String dataId, String groupName, String namespaceId, S
 |:------------|:-------|:-------------------------------------------------------------------------------|
 | dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 256 字节。                           |
 | groupName   | string | 配置分组。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 128 字节。                            |
-| namespaceId | long   | 配置所属的命名空间ID。                                                                   |
+| namespaceId | string   | 配置所属的命名空间ID。                                                                   |
 | content     | string | 配置内容，不超过 100K 字节。                                                              |
 | desc        | string | 配置的描述内容。                                                                       |
 | type        | string | 配置类型，见 `com.alibaba.nacos.api.config.ConfigType`，默认为TEXT                       |
@@ -698,7 +715,7 @@ boolean publishBetaConfig(String dataId, String groupName, String namespaceId, S
 
 ```java
 try {
-    # 对`127.0.0.1`这个ip进行`maintain.client.test`配置的Beta灰度。
+    // 对`127.0.0.1`这个ip进行`maintain.client.test`配置的Beta灰度。
     boolean result = configMaintainerService.publishBetaConfig("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, "testBeta", "testApp", "", "testTag1", "test", "TEXT", "127.0.0.1");
 } catch (NacosException e) {
     e.printStackTrace();
@@ -743,9 +760,9 @@ boolean stopBeta(String dataId, String groupName, String namespaceId) throws Nac
 
 ```java
 try {
-    # 对`127.0.0.1`这个ip进行`maintain.client.test`配置的Beta灰度。
+    // 对`127.0.0.1`这个ip进行`maintain.client.test`配置的Beta灰度。
     boolean result = configMaintainerService.publishBetaConfig("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, "testBeta", "testApp", "", "testTag1", "test", "TEXT", "127.0.0.1");
-    # 停止`maintain.client.test`配置的Beta灰度
+    // 停止`maintain.client.test`配置的Beta灰度
     result = configMaintainerService.stopBeta("maintain.client.test", Constants.DEFAULT_GROUP);
     result = configMaintainerService.stopBeta("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
 } catch (NacosException e) {
@@ -802,6 +819,7 @@ ConfigGrayInfo queryBeta(String dataId, String groupName, String namespaceId) th
 | createTime       | long   | 配置的创建时间，为时间戳，单位为毫秒。                                  |
 | modifyTime       | long   | 配置的最新更新时间，为时间戳，单位为毫秒。                                |
 | content          | string | 配置内容。                                                |
+| schema | string | 灰度配置的此字段为 null。 |
 | desc             | string | 配置的描述信息。                                             |
 | encryptedDataKey | string | 配置的加密密钥，当使用配置的加密功能时，该字段才有值。                          |
 | createUser       | string | 创建此配置的用户名。                                           |
@@ -814,9 +832,9 @@ ConfigGrayInfo queryBeta(String dataId, String groupName, String namespaceId) th
 
 ```java
 try {
-    # 对`127.0.0.1`这个ip进行`maintain.client.test`配置的Beta灰度。
+    // 对`127.0.0.1`这个ip进行`maintain.client.test`配置的Beta灰度。
     boolean publishResult = configMaintainerService.publishBetaConfig("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, "testBeta", "testApp", "", "testTag1", "test", "TEXT", "127.0.0.1");
-    # 查询`maintain.client.test`配置的Beta灰度
+    // 查询`maintain.client.test`配置的Beta灰度
     ConfigGrayInfo result = configMaintainerService.queryBeta("maintain.client.test", Constants.DEFAULT_GROUP);
     result = configMaintainerService.queryBeta("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);} 
 catch (NacosException e) {
@@ -884,7 +902,7 @@ Page<ConfigHistoryBasicInfo> listConfigHistory(String dataId, String groupName, 
 
 ```java
 try {
-    # 查询`maintain.client.test`配置的历史版本列表。
+    // 查询`maintain.client.test`配置的历史版本列表。
     Page<ConfigHistoryBasicInfo> configHistoryBasicInfoPage = configMaintainerService.listConfigHistory("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, 1, 10);
 } catch (NacosException e) {
     e.printStackTrace();
@@ -934,6 +952,7 @@ ConfigHistoryDetailInfo getConfigHistoryInfo(String dataId, String groupName, St
 | createTime       | long   | 配置的创建时间，为时间戳，单位为毫秒。                                  |
 | modifyTime       | long   | 配置的最新更新时间，为时间戳，单位为毫秒。                                |
 | content          | string | 配置历史版本的内容。                                           |
+| schema | string | 该历史版本的 schema 文本，未设置时为 null。 |
 | encryptedDataKey | string | 配置解密的密钥，仅当配置为加密配置时返回。                                |
 | grayName         | string | 配置历史版本的灰度发布名称，当此次历史版本为灰度发布时存在，一般为`beta`              |
 | extInfo          | string | 历史版本的扩展信息，目前存储灰度发布时的发布规则，如灰度的ip地址列表，格式为`json`。       |
@@ -942,10 +961,10 @@ ConfigHistoryDetailInfo getConfigHistoryInfo(String dataId, String groupName, St
 
 ```java
 try {
-    # 查询`maintain.client.test`配置的历史版本列表。
+    // 查询`maintain.client.test`配置的历史版本列表。
     Page<ConfigHistoryBasicInfo> configHistoryBasicInfoPage = configMaintainerService.listConfigHistory("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, 1, 10);
-    int nid = configHistoryBasicInfoPage.getPageItems().get(0).getId();
-    # 查询`maintain.client.test`配置的历史版本列表中第一个历史版本的详细信息。
+    Long nid = configHistoryBasicInfoPage.getPageItems().get(0).getId();
+    // 查询`maintain.client.test`配置的历史版本列表中第一个历史版本的详细信息。
     ConfigHistoryDetailInfo result = configMaintainerService.getConfigHistoryInfo("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, nid);
 } catch (NacosException e) {
     e.printStackTrace();
@@ -995,6 +1014,7 @@ ConfigHistoryDetailInfo getPreviousConfigHistoryInfo(String dataId, String group
 | createTime       | long   | 配置的创建时间，为时间戳，单位为毫秒。                                  |
 | modifyTime       | long   | 配置的最新更新时间，为时间戳，单位为毫秒。                                |
 | content          | string | 配置历史版本的内容。                                           |
+| schema | string | 该历史版本的 schema 文本，未设置时为 null。 |
 | encryptedDataKey | string | 配置解密的密钥，仅当配置为加密配置时返回。                                |
 | grayName         | string | 配置历史版本的灰度发布名称，当此次历史版本为灰度发布时存在，一般为`beta`              |
 | extInfo          | string | 历史版本的扩展信息，目前存储灰度发布时的发布规则，如灰度的ip地址列表，格式为`json`。       |
@@ -1003,9 +1023,9 @@ ConfigHistoryDetailInfo getPreviousConfigHistoryInfo(String dataId, String group
 
 ```java
 try {
-    # 获取`maintain.client.test`配置的ID。
-    int id = configMaintainerService.getConfig("maintain.client.test").getId();
-    # 获取`maintain.client.test`配置的上一历史版本的详细信息。
+    // 获取`maintain.client.test`配置的ID。
+    Long id = configMaintainerService.getConfig("maintain.client.test").getId();
+    // 获取`maintain.client.test`配置的上一历史版本的详细信息。
     ConfigHistoryDetailInfo result = configMaintainerService.getPreviousConfigHistoryInfo("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, id);
 } catch (NacosException e) {
     e.printStackTrace();
@@ -1219,7 +1239,7 @@ String createService(Service service) throws NacosException;
 
 ```java
 try {
-    # 以下请求均创建一个名为`maintain.client.test`的持久化服务。
+    // 以下请求均创建一个名为`maintain.client.test`的持久化服务。
     String result = namingMaintainerService.createService("maintain.client.test");
     result = namingMaintainerService.createService("maintain.client.test", Constants.DEFAULT_GROUP);
     result = namingMaintainerService.createService("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
@@ -1285,7 +1305,7 @@ String updateService(Service service) throws NacosException;
 
 ```java
 try {
-    # 以下请求均对名为`maintain.client.test`的持久化服务进行更新
+    // 以下请求均对名为`maintain.client.test`的持久化服务进行更新
     String result = namingMaintainerService.updateService("maintain.client.test", new HashMap<>(), 0.0f, new NoneSelector());
     result = namingMaintainerService.updateService("maintain.client.test", Constants.DEFAULT_GROUP, new HashMap<>(), 0.0f, new NoneSelector());
     result = namingMaintainerService.updateService("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, new HashMap<>(), 0.0f, new NoneSelector());
@@ -1338,7 +1358,7 @@ String removeService(Service service) throws NacosException;
 
 ```java
 try {
-    # 以下请求均删除一个名为`maintain.client.test`的服务。
+    // 以下请求均删除一个名为`maintain.client.test`的服务。
     String result = namingMaintainerService.removeService("maintain.client.test");
     result = namingMaintainerService.removeService("maintain.client.test", Constants.DEFAULT_GROUP);
     result = namingMaintainerService.removeService("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
@@ -1413,7 +1433,7 @@ ServiceDetailInfo getServiceDetail(Service service) throws NacosException;
 
 ```java
 try {
-    # 以下请求均获取一个名为`maintain.client.test`的服务详情信息。
+    // 以下请求均获取一个名为`maintain.client.test`的服务详情信息。
     ServiceDetailInfo result = namingMaintainService.getServiceDetail("maintain.client.test");
     result = namingMaintainService.getServiceDetail("maintain.client.test", Constants.DEFAULT_GROUP);
     result = namingMaintainService.getServiceDetail("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
@@ -1484,7 +1504,7 @@ Page<ServiceView> listServices(String namespaceId, String groupNameParam, String
 
 ```java
 try {
-    # 以下请求均获取所有服务列表(最多前100个)。
+    // 以下请求均获取所有服务列表(最多前100个)。
     Page<ServiceView> result = namingMaintainService.listServices(Constants.DEFAULT_NAMESPACE_ID);
     result = namingMaintainService.listServices(Constants.DEFAULT_NAMESPACE_ID, "", "");
     result = namingMaintainService.listServices(Constants.DEFAULT_NAMESPACE_ID, "", "", true, 1, 100);
@@ -1560,7 +1580,7 @@ Page<ServiceDetailInfo> listServicesWithDetail(String namespaceId, String groupN
 
 ```java
 try {
-    # 以下请求均获取所有服务列表(最多前100个)。
+    // 以下请求均获取所有服务列表(最多前100个)。
     Page<ServiceDetailInfo> result = namingMaintainService.listServicesWithDetail(Constants.DEFAULT_NAMESPACE_ID);
     result = namingMaintainService.listServicesWithDetail(Constants.DEFAULT_NAMESPACE_ID, "", "");
     result = namingMaintainService.listServicesWithDetail(Constants.DEFAULT_NAMESPACE_ID, "", "", 1, 10);
@@ -1614,7 +1634,7 @@ Page<SubscriberInfo> getSubscribers(Service service, int pageNo, int pageSize, b
 
 ```java
 try {
-    # 以下请求均获取服务`maintain.client.test`的所有订阅者列表(最多前100个)。
+    // 以下请求均获取服务`maintain.client.test`的所有订阅者列表(最多前100个)。
     Page<SubscriberInfo> result = namingMaintainService.getSubscribers("maintain.client.test");
     result = namingMaintainService.getSubscribers(Constants.DEFAULT_GROUP, "maintain.client.test");
     result = namingMaintainService.getSubscribers(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test");
@@ -1724,7 +1744,7 @@ String registerInstance(Service service, Instance instance) throws NacosExceptio
 
 ```java
 try {
-    # 以下请求均给服务`maintain.client.test`注册一个实例，实例的ip为`127.0.0.1`，端口为`8080`。
+    // 以下请求均给服务`maintain.client.test`注册一个实例，实例的ip为`127.0.0.1`，端口为`8080`。
     String result = namingMaintainService.registerInstance("maintain.client.test", "127.0.0.1", 8080);
     result = namingMaintainService.registerInstance(Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
     result = namingMaintainService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
@@ -1809,7 +1829,7 @@ String deregisterInstance(Service service, Instance instance) throws NacosExcept
 
 ```java
 try {
-    # 以下请求均给服务`maintain.client.test`注销一个实例，实例的ip为`127.0.0.1`，端口为`8080`。
+    // 以下请求均给服务`maintain.client.test`注销一个实例，实例的ip为`127.0.0.1`，端口为`8080`。
     String result = namingMaintainService.registerInstance("maintain.client.test", "127.0.0.1", 8080);
     result = namingMaintainService.deregisterInstance(Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
     result = namingMaintainService.deregisterInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
@@ -1892,7 +1912,7 @@ try {
     instance.setPort(8080);
     instance.setEphemeral(false);
     instance.setEnabled(false);
-    # 以下请求均给更新服务`maintain.client.test`下的一个实例，实例的ip为`127.0.0.1`，端口为`8080`， 将实例的`enabled`修改为`false`。
+    // 以下请求均给更新服务`maintain.client.test`下的一个实例，实例的ip为`127.0.0.1`，端口为`8080`， 将实例的`enabled`修改为`false`。
     String result = namingMaintainService.registerInstance("maintain.client.test", instance);
     result = namingMaintainService.registerInstance(Constants.DEFAULT_GROUP,"maintain.client.test", instance);
     result = namingMaintainService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", instance);
@@ -2324,7 +2344,7 @@ String updateInstanceHealthStatus(Service service, Instance instance) throws Nac
 
 ```java
 try {
-    # 更新`maintain.client.test`下的实例`127.0.0.1:8080`的健康状态为false.
+    // 更新`maintain.client.test`下的实例`127.0.0.1:8080`的健康状态为false.
     Service service = new Service();
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
@@ -3620,6 +3640,12 @@ try {
 
 ## 6. MCP 服务
 
+通过 `aiMaintainerService.mcp()` 获取 `McpMaintainerService`。从 3.3 开始，可以使用 `McpServerDraftRequest` 创建或更新草稿，再提交审核、发布，具体流程见 [AI 资源生命周期管理](../user/ai/ai-resource-lifecycle.md)。从旧版本升级的集群需先完成[服务端升级](./upgrading.mdx)，才能使用这些接口。
+
+本章模型位于 `com.alibaba.nacos.api.ai.model.mcp` 包，`ServerVersionDetail` 位于其 `registry` 子包。新增接口通过命名空间和 MCP 服务名称指定资源，无需传入 `mcpId`。
+
+旧 `getMcpServerDetail`、`createLocalMcpServer`、`createRemoteMcpServer` 及接受 `serverSpec` 等独立参数的创建、更新重载自 3.3 起已废弃，计划在 4.0 移除。旧创建、更新接口仍会直接发布版本。新接入请使用第 6.10 节查询版本，使用第 6.8、6.6 节的 `McpServerDraftRequest` 重载创建和更新草稿。
+
 ### 6.1. 获取MCP服务列表
 
 #### 描述
@@ -3898,7 +3924,13 @@ try {
 
 更新指定的MCP服务。
 
+3.3 新增的 `McpServerDraftRequest` 重载用于修改已有草稿。请求中的服务、工具、资源及端点定义会替换草稿的全部内容，更新后仍为 `draft` 状态。要创建新版本，请使用第 6.8 节的草稿创建接口。
+
 ```java
+McpServerVersionDetail updateMcpServer(String namespaceId, McpServerDraftRequest request) throws NacosException;
+
+McpServerVersionDetail updateMcpServer(McpServerDraftRequest request) throws NacosException;
+
 boolean updateMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec) throws NacosException;
 
 boolean updateMcpServer(String mcpName, boolean isLatest, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec) throws NacosException;
@@ -3918,15 +3950,37 @@ boolean updateMcpServer(String namespaceId, String mcpName, boolean isLatest, Mc
 | serverSpec       | McpServerBasicInfo   | 新版本的MCP服务的服务定义内容                                |
 | toolSpec         | McpToolSpecification | 新版本的MCP服务的工具定义内容                                |
 | endpointSpec     | McpEndpointSpec      | 新版本的MCP服务的Endpoint定义内容                          |
-| overrideExisting | boolean              | 是否覆盖已存在的同版本信息，默认为`false`，仅 7 参数重载有效。             | 
+| overrideExisting | boolean | 是否覆盖已存在的同版本信息，默认为 `false`，仅 7 参数重载有效。 |
+| request | McpServerDraftRequest | 新增重载的完整草稿内容，字段见第 6.8 节。未提供的可选内容不会保留。 |
 
 #### 返回参数
 
 | 参数类型    | 描述                     |
 |:--------|:-----------------------|
-| boolean | 更新成功为`true`，其他为`false` |
+| boolean | 兼容重载的更新结果，成功为 `true`。 |
+| McpServerVersionDetail | 新增重载返回更新后的草稿详情，字段见第 6.10 节。 |
 
 #### 请求示例
+
+更新第 6.8 节创建的 stdio 草稿并保留工具、资源定义。Remote 草稿还需提供完整的 `endpointSpecification`。
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerVersionDetail current = mcp.getMcpServerVersion("public", "demo-mcp", "1.0.0");
+    McpServerBasicInfo server = current.getServerSpecification();
+    server.setDescription("Updated MCP description");
+    McpServerDraftRequest request = new McpServerDraftRequest();
+    request.setServerSpecification(server);
+    request.setToolSpecification(current.getToolSpecification());
+    request.setResourceSpecification(current.getResourceSpecification());
+    McpServerVersionDetail draft = mcp.updateMcpServer("public", request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+旧重载示例（以下调用用于展示不同重载，实际使用时选择其中一个）：
 
 ```java
 try {
@@ -3940,9 +3994,9 @@ try {
     versionDetail.setVersion("1.0.1");
     mcpSpec.setVersionDetail(versionDetail);
     boolean result = aiMaintainerService.updateMcpServer("test", mcpSpec, null, null);
-    result = aiMaintainerService.updateMcpServer("test", true, null, null, null);
-    result = aiMaintainerService.updateMcpServer("public", "test", true, null, null, null);
-    result = aiMaintainerService.updateMcpServer("public", "test", true, null, null, null, false);
+    result = aiMaintainerService.updateMcpServer("test", true, mcpSpec, null, null);
+    result = aiMaintainerService.updateMcpServer("public", "test", true, mcpSpec, null, null);
+    result = aiMaintainerService.updateMcpServer("public", "test", true, mcpSpec, null, null, false);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3999,9 +4053,15 @@ try {
 
 #### 描述
 
-在指定命名空间下创建 MCP 服务（Local 或 Remote 均通过此接口，由 `McpServerBasicInfo` 与 `McpEndpointSpec` 区分）。不传 `namespaceId` 时使用默认命名空间；不传 `endpointSpec` 时表示 Local(stdio) 类型。
+在指定命名空间下创建 MCP 服务版本。3.3 新增的 `McpServerDraftRequest` 重载会创建草稿；MCP 服务不存在时，也会一并创建。已有 `draft`、`reviewing` 或 `reviewed` 版本时不能再创建草稿，也不能创建已存在的版本号。更新已有草稿请使用第 6.6 节。
+
+旧重载已废弃，调用后仍会直接发布版本。Local/Remote 类型由 `serverSpec.protocol` 决定；`stdio` 不需要端点定义，Remote 类型需要提供端点定义。
 
 ```java
+McpServerVersionDetail createMcpServer(String namespaceId, McpServerDraftRequest request) throws NacosException;
+
+McpServerVersionDetail createMcpServer(McpServerDraftRequest request) throws NacosException;
+
 String createMcpServer(String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec) throws NacosException;
 
 String createMcpServer(String namespaceId, String mcpName, McpServerBasicInfo serverSpec, McpToolSpecification toolSpec, McpEndpointSpec endpointSpec) throws NacosException;
@@ -4015,15 +4075,49 @@ String createMcpServer(String namespaceId, String mcpName, McpServerBasicInfo se
 | mcpName     | string               | MCP 服务名称。                                                         |
 | serverSpec  | McpServerBasicInfo   | MCP 服务基础信息（名称、版本、描述、协议、localServerConfig 等）。                        |
 | toolSpec    | McpToolSpecification | 工具定义，Local 类型可传 null。                                            |
-| endpointSpec| McpEndpointSpec      | 端点规格；为 null 时表示 Local(stdio)，非 null 时表示 Remote(sse/streamable 等)。           |
+| endpointSpec | McpEndpointSpec | Remote 类型所需的端点定义；stdio 可传 null。 |
+| request | McpServerDraftRequest | 新增重载的完整草稿请求，见下表。 |
+
+`McpServerDraftRequest` 的字段如下：
+
+| 参数名 | 参数类型 | 描述 |
+|:---|:---|:---|
+| serverSpecification | McpServerBasicInfo | 必填。包含 `name`、`protocol`、`versionDetail.version`，以及对应协议的启动或连接配置。 |
+| toolSpecification | McpToolSpecification | 工具定义，可选。 |
+| resourceSpecification | McpResourceSpecification | MCP 资源定义，可选。 |
+| endpointSpecification | McpEndpointSpec | Remote 类型的端点定义，支持 `DIRECT` 或 `REF`；stdio 不需要。 |
 
 #### 返回参数
 
 | 参数类型   | 描述       |
 |:-------|:---------|
-| String | 创建结果描述。 |
+| McpServerVersionDetail | 新增重载返回创建后的草稿详情，字段见第 6.10 节。 |
+| String | 兼容重载返回创建的 MCP 服务 ID。 |
 
 #### 请求示例
+
+以下示例只保存 stdio 启动定义，不会启动 MCP 进程。创建成功后按第 6.12 节提交；启用审核时，审核通过后再按第 6.13 节发布。
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerBasicInfo server = new McpServerBasicInfo();
+    server.setName("demo-mcp");
+    server.setProtocol("stdio");
+    server.setLocalServerConfig(Collections.<String, Object>singletonMap("command", "my-mcp-server"));
+    ServerVersionDetail version = new ServerVersionDetail();
+    version.setVersion("1.0.0");
+    server.setVersionDetail(version);
+
+    McpServerDraftRequest request = new McpServerDraftRequest();
+    request.setServerSpecification(server);
+    McpServerVersionDetail draft = mcp.createMcpServer("public", request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+旧重载示例（以下调用用于展示不同重载，实际使用时选择其中一个）：
 
 ```java
 try {
@@ -4043,6 +4137,528 @@ try {
 #### 异常说明
 
 读取配置超时或网络异常，抛出 NacosException 异常。
+
+### 6.9. 分页查询 MCP 版本
+
+#### 描述
+
+查询指定 MCP 服务的版本摘要，可按生命周期状态过滤。
+
+```java
+Page<McpServerVersionSummary> listMcpServerVersions(String namespaceId, String mcpName, String status, int pageNo, int pageSize) throws NacosException;
+
+Page<McpServerVersionSummary> listMcpServerVersions(String mcpName, String status, int pageNo, int pageSize) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|:---|:---|:---|
+| namespaceId | String | 命名空间 ID；省略时使用 `public`。 |
+| mcpName | String | 精确的 MCP 服务名称。 |
+| status | String | 可选：`draft`、`reviewing`、`reviewed`、`online`、`offline`；传 null 不过滤。 |
+| pageNo | int | 页码，从 1 开始。 |
+| pageSize | int | 每页数量。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|:---|:---|
+| Page\<McpServerVersionSummary> | 版本摘要分页；每项包含 `version`、`status`、`publishPipelineInfo`、`author`、`description`、`latest`、`createTime`、`updateTime`。 |
+
+#### 请求示例
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    Page<McpServerVersionSummary> page =
+            mcp.listMcpServerVersions("public", "demo-mcp", "online", 1, 20);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+查询失败时抛出 `NacosException`。
+
+### 6.10. 获取 MCP 指定版本
+
+#### 描述
+
+根据版本号查询 MCP 服务的完整定义及版本状态，支持查询草稿和已下线版本。
+
+```java
+McpServerVersionDetail getMcpServerVersion(String namespaceId, String mcpName, String version) throws NacosException;
+
+McpServerVersionDetail getMcpServerVersion(String mcpName, String version) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|:---|:---|:---|
+| namespaceId | String | 命名空间 ID；省略时使用 `public`。 |
+| mcpName | String | 精确的 MCP 服务名称。 |
+| version | String | 精确版本，必填；不能传标签。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|:---|:---|
+| McpServerVersionDetail | 版本详情，在第 6.9 节摘要字段基础上增加下列信息。 |
+
+| 字段 | 类型 | 描述 |
+|:---|:---|:---|
+| namespaceId、mcpName | String | 资源标识。 |
+| serverSpecification | McpServerBasicInfo | 服务定义与协议配置。 |
+| toolSpecification | McpToolSpecification | 工具定义。 |
+| resourceSpecification | McpResourceSpecification | MCP 资源定义。 |
+| resourceStatus | String | 资源启停状态，与版本 `status` 区分。 |
+| owner、scope | String | 所有者与可见范围。 |
+| labels | Map\<String, String> | 版本标签，`latest` 由服务端维护。 |
+| editingVersion、reviewingVersion | String | 当前编辑、审核版本。 |
+| onlineCount | Integer | 在线版本数量。 |
+| writable | boolean | 是否允许当前用户修改此 MCP 服务。 |
+
+#### 请求示例
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerVersionDetail detail = mcp.getMcpServerVersion("public", "demo-mcp", "1.0.0");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+查询失败时抛出 `NacosException`。
+
+### 6.11. 删除 MCP 草稿
+
+#### 描述
+
+删除指定的 `draft` 版本；不能用此方法删除已发布版本。
+
+```java
+void deleteMcpServerDraft(String namespaceId, McpServerVersionCommand command) throws NacosException;
+
+void deleteMcpServerDraft(McpServerVersionCommand command) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|:---|:---|:---|
+| namespaceId | String | 命名空间 ID；省略时使用 `public`。 |
+| command | McpServerVersionCommand | 包含 MCP 服务名称 `mcpName` 和版本号 `version`，均为必填。 |
+
+#### 返回参数
+
+无返回值。
+
+#### 请求示例
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerVersionCommand command = new McpServerVersionCommand();
+    command.setMcpName("demo-mcp");
+    command.setVersion("1.0.0");
+    mcp.deleteMcpServerDraft("public", command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+目标版本不是草稿或删除失败时抛出 `NacosException`。
+
+### 6.12. 提交 MCP 版本
+
+#### 描述
+
+提交指定版本进行审核。配置了适用于 MCP 的发布流水线时，版本进入审核；否则直接发布。可通过返回值中的 `status` 查看提交后的状态。重复提交正在审核的版本不会启动新的审核。
+
+```java
+McpServerVersionSummary submitMcpServerVersion(String namespaceId, McpServerVersionCommand command) throws NacosException;
+
+McpServerVersionSummary submitMcpServerVersion(McpServerVersionCommand command) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|:---|:---|:---|
+| namespaceId | String | 命名空间 ID；省略时使用 `public`。 |
+| command | McpServerVersionCommand | 包含 MCP 服务名称 `mcpName` 和版本号 `version`，均为必填。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|:---|:---|
+| McpServerVersionSummary | 提交后的版本摘要。 |
+
+#### 请求示例
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerVersionCommand command = new McpServerVersionCommand();
+    command.setMcpName("demo-mcp");
+    command.setVersion("1.0.0");
+    McpServerVersionSummary summary = mcp.submitMcpServerVersion("public", command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+版本状态不允许提交或请求失败时抛出 `NacosException`。
+
+### 6.13. 发布 MCP 版本
+
+#### 描述
+
+发布审核通过的 `reviewed` 版本。成功后状态为 `online`，`latest` 标签指向该版本。审核未通过时，可退回草稿修改后重新提交。
+
+```java
+McpServerVersionSummary publishMcpServerVersion(String namespaceId, McpServerVersionCommand command) throws NacosException;
+
+McpServerVersionSummary publishMcpServerVersion(McpServerVersionCommand command) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|:---|:---|:---|
+| namespaceId | String | 命名空间 ID；省略时使用 `public`。 |
+| command | McpServerVersionCommand | 包含 MCP 服务名称 `mcpName` 和版本号 `version`，均为必填。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|:---|:---|
+| McpServerVersionSummary | 发布后的在线版本摘要。 |
+
+#### 请求示例
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerVersionCommand command = new McpServerVersionCommand();
+    command.setMcpName("demo-mcp");
+    command.setVersion("1.0.0");
+    McpServerVersionSummary summary = mcp.publishMcpServerVersion("public", command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+版本未通过审核或发布失败时抛出 `NacosException`。
+
+### 6.14. 强制发布 MCP 版本
+
+#### 描述
+
+跳过审核，直接发布指定版本。版本必须处于 `draft`、`reviewing` 或 `reviewed` 状态；成功后变为 `online`，`latest` 标签指向该版本。常规发布请使用提交和发布接口。
+
+```java
+McpServerVersionSummary forcePublishMcpServerVersion(String namespaceId, McpServerVersionCommand command) throws NacosException;
+
+McpServerVersionSummary forcePublishMcpServerVersion(McpServerVersionCommand command) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|:---|:---|:---|
+| namespaceId | String | 命名空间 ID；省略时使用 `public`。 |
+| command | McpServerVersionCommand | 包含 MCP 服务名称 `mcpName` 和版本号 `version`，均为必填。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|:---|:---|
+| McpServerVersionSummary | 强制发布后的在线版本摘要。 |
+
+#### 请求示例
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerVersionCommand command = new McpServerVersionCommand();
+    command.setMcpName("demo-mcp");
+    command.setVersion("1.0.0");
+    McpServerVersionSummary summary = mcp.forcePublishMcpServerVersion("public", command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+版本状态不允许强制发布或请求失败时抛出 `NacosException`。
+
+### 6.15. 将 MCP 版本退回草稿
+
+#### 描述
+
+将 `reviewed` 版本退回 `draft`，保持版本号不变。退回后可使用第 6.6 节修改内容。
+
+```java
+McpServerVersionSummary redraftMcpServerVersion(String namespaceId, McpServerVersionCommand command) throws NacosException;
+
+McpServerVersionSummary redraftMcpServerVersion(McpServerVersionCommand command) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|:---|:---|:---|
+| namespaceId | String | 命名空间 ID；省略时使用 `public`。 |
+| command | McpServerVersionCommand | 包含 MCP 服务名称 `mcpName` 和版本号 `version`，均为必填。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|:---|:---|
+| McpServerVersionSummary | 退回后的草稿版本摘要。 |
+
+#### 请求示例
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerVersionCommand command = new McpServerVersionCommand();
+    command.setMcpName("demo-mcp");
+    command.setVersion("1.0.0");
+    McpServerVersionSummary summary = mcp.redraftMcpServerVersion("public", command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+版本状态不允许退回草稿或请求失败时抛出 `NacosException`。
+
+### 6.16. 上线 MCP 版本
+
+#### 描述
+
+将已下线（`offline`）的 MCP 版本重新上线，`latest` 标签指向该版本。
+
+```java
+McpServerVersionSummary onlineMcpServerVersion(String namespaceId, McpServerVersionCommand command) throws NacosException;
+
+McpServerVersionSummary onlineMcpServerVersion(McpServerVersionCommand command) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|:---|:---|:---|
+| namespaceId | String | 命名空间 ID；省略时使用 `public`。 |
+| command | McpServerVersionCommand | 包含 MCP 服务名称 `mcpName` 和版本号 `version`，均为必填。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|:---|:---|
+| McpServerVersionSummary | 上线后的版本摘要。 |
+
+#### 请求示例
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerVersionCommand command = new McpServerVersionCommand();
+    command.setMcpName("demo-mcp");
+    command.setVersion("1.0.0");
+    McpServerVersionSummary summary = mcp.onlineMcpServerVersion("public", command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+版本状态不允许上线或请求失败时抛出 `NacosException`。
+
+### 6.17. 下线 MCP 版本
+
+#### 描述
+
+将 `online` 版本下线，客户端将无法再发现该版本。版本内容仍保留，下线操作不会停止 MCP 服务进程。如果下线的是 `latest` 指向的版本，服务端会将该标签改为指向其他在线版本；没有在线版本时移除标签。
+
+```java
+McpServerVersionSummary offlineMcpServerVersion(String namespaceId, McpServerVersionCommand command) throws NacosException;
+
+McpServerVersionSummary offlineMcpServerVersion(McpServerVersionCommand command) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|:---|:---|:---|
+| namespaceId | String | 命名空间 ID；省略时使用 `public`。 |
+| command | McpServerVersionCommand | 包含 MCP 服务名称 `mcpName` 和版本号 `version`，均为必填。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|:---|:---|
+| McpServerVersionSummary | 下线后的版本摘要。 |
+
+#### 请求示例
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerVersionCommand command = new McpServerVersionCommand();
+    command.setMcpName("demo-mcp");
+    command.setVersion("1.0.0");
+    McpServerVersionSummary summary = mcp.offlineMcpServerVersion("public", command);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+版本状态不允许下线或请求失败时抛出 `NacosException`。
+
+### 6.18. 更新 MCP 自定义版本标签
+
+#### 描述
+
+替换全部自定义版本标签。标签指向的版本必须存在，且不能处于 `draft` 或 `reviewing` 状态；传入空 Map 可清空自定义标签。`latest` 由服务端维护，请求中对它的修改会被忽略。
+
+```java
+Map<String, String> updateMcpServerLabels(String namespaceId, McpServerLabelsUpdateRequest request) throws NacosException;
+
+Map<String, String> updateMcpServerLabels(McpServerLabelsUpdateRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|:---|:---|:---|
+| namespaceId | String | 命名空间 ID；省略时使用 `public`。 |
+| request | McpServerLabelsUpdateRequest | 必填 `mcpName` 和非 null 的 `labels`（`Map<String, String>`）。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|:---|:---|
+| Map\<String, String> | 更新后的完整标签映射，包括服务端维护的 `latest`（存在时）。 |
+
+#### 请求示例
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    McpServerLabelsUpdateRequest request = new McpServerLabelsUpdateRequest();
+    request.setMcpName("demo-mcp");
+    request.setLabels(Collections.singletonMap("stable", "1.0.0"));
+    Map<String, String> labels = mcp.updateMcpServerLabels("public", request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+标签无效或更新失败时抛出 `NacosException`。
+
+### 6.19. 启用或禁用 MCP 服务
+
+#### 描述
+
+启用或禁用 MCP 服务。此操作修改 MCP 定义中的启用状态，不影响各版本的内容、发布状态，也不会启停 MCP 服务进程。
+
+```java
+boolean updateMcpServerStatus(String namespaceId, String mcpName, boolean enabled) throws NacosException;
+
+boolean updateMcpServerStatus(String mcpName, boolean enabled) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|:---|:---|:---|
+| namespaceId | String | 命名空间 ID；省略时使用 `public`。 |
+| mcpName | String | 精确的 MCP 服务名称。 |
+| enabled | boolean | `true` 启用，`false` 禁用。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|:---|:---|
+| boolean | 操作是否成功。 |
+
+#### 请求示例
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    boolean updated = mcp.updateMcpServerStatus("public", "demo-mcp", true);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+参数无效或更新失败时抛出 `NacosException`。
+
+### 6.20. 更新 MCP 可见范围
+
+#### 描述
+
+修改 MCP 服务的可见范围，内置策略支持 `PUBLIC`（公开）和 `PRIVATE`（私有）。公开资源的访问仍受鉴权和资源权限控制。
+
+```java
+boolean updateMcpServerScope(String namespaceId, String mcpName, String scope) throws NacosException;
+
+boolean updateMcpServerScope(String mcpName, String scope) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|:---|:---|:---|
+| namespaceId | String | 命名空间 ID；省略时使用 `public`。 |
+| mcpName | String | 精确的 MCP 服务名称。 |
+| scope | String | 目标可见范围：`PUBLIC` 或 `PRIVATE`。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|:---|:---|
+| boolean | 操作是否成功。 |
+
+#### 请求示例
+
+```java
+try {
+    McpMaintainerService mcp = aiMaintainerService.mcp();
+    boolean updated = mcp.updateMcpServerScope("public", "demo-mcp", "PRIVATE");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+参数无效或更新失败时抛出 `NacosException`。
 
 ## 7. A2A 注册中心
 
@@ -6774,7 +7390,9 @@ Agent 管理是协议无关的新主入口，未来将替代旧的 A2A 管理 AP
 
 `AgentMaintainerService` 不绑定命名空间。每个操作均提供显式 `namespaceId` 的形式和使用默认命名空间 `public` 的便利重载；Request 和 Command 对象自身不包含 `namespaceId`。Agent 定义没有独立的创建方法，首次调用 `createDraft` 会同时创建 Agent 元数据和第一个草稿版本。
 
-> 注意：本章使用 `com.alibaba.nacos.api.ai.model.agent` 包中的新 Agent 管理模型。第 7 章旧 A2A API 使用 `com.alibaba.nacos.api.ai.model.a2a` 包；两者存在 `AgentVersionDetail` 等同名类型，导入时请确认包名。
+本章请求模型位于 `com.alibaba.nacos.api.ai.model.agent.admin` 包，返回值和端点模型位于 `com.alibaba.nacos.api.ai.model.agent` 包。示例中的 JSON 工具类为 `com.alibaba.nacos.api.utils.json.JsonUtils`。
+
+> 注意：本章与第 7 章的 `com.alibaba.nacos.api.ai.model.a2a` 包中有 `AgentVersionDetail` 等同名类型，导入时请确认包名。
 
 ### 11.1. 获取 Agent 概览
 
@@ -6801,6 +7419,8 @@ AgentOverview getAgent(String agentName) throws NacosException;
 |:---|:---|
 | AgentOverview | Agent 概览，包含 `agent` 元数据和 `versionPage` 版本摘要分页。 |
 
+`agent` 的类型为 `AgentSummary`，包含资源元数据、`status`、`owner`、`scope` 和 `versionInfo`。在线版本从 `versionInfo.onlineVersions` 读取，默认版本从 `versionInfo.labels.latest` 读取。
+
 #### 请求示例
 
 ```java
@@ -6824,9 +7444,9 @@ try {
 完整替换 Agent 的可写元数据。可修改展示字段、标签、扩展信息和启停状态，但不能修改身份、所有者、可见范围、版本内容、版本标签或派生版本目录。
 
 ```java
-Agent updateAgent(String namespaceId, AgentUpdateRequest request) throws NacosException;
+AgentSummary updateAgent(String namespaceId, AgentUpdateRequest request) throws NacosException;
 
-Agent updateAgent(AgentUpdateRequest request) throws NacosException;
+AgentSummary updateAgent(AgentUpdateRequest request) throws NacosException;
 ```
 
 #### 请求参数
@@ -6853,7 +7473,7 @@ Agent updateAgent(AgentUpdateRequest request) throws NacosException;
 
 | 参数类型 | 描述 |
 |:---|:---|
-| Agent | 更新后的 Agent。 |
+| AgentSummary | 更新后的 Agent 摘要。 |
 
 #### 请求示例
 
@@ -6866,8 +7486,8 @@ try {
     request.setDescription("Agent for SDK examples");
     request.setTags(Arrays.asList("demo", "java"));
     request.setStatus("enable");
-    Agent agent = agentMaintainerService.updateAgent("public", request);
-    // 使用默认命名空间时，可改用：Agent agent = agentMaintainerService.updateAgent(request);
+    AgentSummary agent = agentMaintainerService.updateAgent("public", request);
+    // 使用默认命名空间时，可改用：AgentSummary agent = agentMaintainerService.updateAgent(request);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -7057,7 +7677,7 @@ try {
 
 #### 描述
 
-获取指定协议的完整运行时端点快照，可按 Agent 版本过滤。省略版本时返回该协议下每个端点自然键及其全部 Binding；指定版本时仅保留匹配的 Binding。没有运行实例时返回空的 `items`。
+查询 Agent 在指定协议下注册的运行端点。传入 `version` 时，只返回支持该定义版本的端点及其版本绑定；省略时返回全部端点及版本绑定。即使尚未创建 Agent 定义，也可以查询已注册的端点。
 
 ```java
 RuntimeEndpointSnapshot getRuntimeEndpoints(String namespaceId, String agentName, String protocol, String version) throws NacosException;
@@ -7078,9 +7698,19 @@ RuntimeEndpointSnapshot getRuntimeEndpoints(String agentName, String protocol, S
 
 | 参数类型 | 描述 |
 |:---|:---|
-| RuntimeEndpointSnapshot | 运行时快照，包含 `namespaceId`、`agentName`、`protocol`、`version` 和端点 `items`。 |
+| RuntimeEndpointSnapshot | 包含 `namespaceId`、`agentName`、可选 `version` 和 `callInterface`。 |
 
-每个 `RuntimeEndpointSnapshotItem` 包含端点、版本绑定、运行状态、启用状态、健康状态和最后更新时间。
+`callInterface` 包含协议名称 `protocol` 和一个 `source=RUNTIME` 的端点集合。运行端点从 `callInterface.endpointSets[0].endpoints` 读取，没有实例时列表为空。每个端点的主要字段如下：
+
+| 字段 | 描述 |
+|:---|:---|
+| uri、transport | 端点地址和传输方式。 |
+| priority、weight | 端点优先级和权重。 |
+| metadata | 端点元数据。 |
+| bindings | 版本绑定列表，每项包含运行版本 `runtimeVersion` 和兼容的定义版本范围 `versionRange`。 |
+| enabled、healthy | 端点的启用状态和健康状态。 |
+
+端点集合的更新时间通过 `EndpointSet.lastUpdatedTime` 读取。
 
 #### 请求示例
 
@@ -7104,6 +7734,8 @@ try {
 #### 描述
 
 创建首个或后续 Agent 草稿。Agent 不存在时，此方法是唯一创建入口，请求必须直接提供 `callInterfaces`，不能使用 `basedOnVersion`；Agent 已存在时，可以直接提供 `callInterfaces` 或从一个精确的 `basedOnVersion` 复制，两者必须且只能选择一个。
+
+`createDraft` 只创建草稿，包括 Agent 的第一个版本；创建后还需提交、审核和发布，流程见 [AI 资源生命周期管理](../user/ai/ai-resource-lifecycle.md)。展示名称、描述等元数据只在首次创建时填写，后续修改请使用 `updateAgent`。
 
 ```java
 AgentVersionDetail createDraft(String namespaceId, AgentDraftCreateRequest request) throws NacosException;
@@ -7157,8 +7789,16 @@ try {
     a2aDescriptor.setUrl("https://example.com/a2a");
     a2aDescriptor.setVersion("1.0.0");
     a2aDescriptor.setProtocolVersion("0.3.0");
-    callInterface.setNativeDescriptor(a2aDescriptor);
-    callInterface.setEndpointSourceOrder(Collections.singletonList(EndpointSource.RUNTIME));
+    a2aDescriptor.setPreferredTransport("JSONRPC");
+    callInterface.setNativeDescriptor(JsonUtils.toObj(JsonUtils.toJson(a2aDescriptor), Map.class));
+    callInterface.setEndpointSourceOrder(Arrays.asList(EndpointSource.RUNTIME, EndpointSource.DECLARED));
+    Endpoint endpoint = new Endpoint();
+    endpoint.setUri("https://example.com/a2a");
+    endpoint.setTransport("JSONRPC");
+    EndpointSet declared = new EndpointSet();
+    declared.setSource(EndpointSource.DECLARED);
+    declared.setEndpoints(Collections.singletonList(endpoint));
+    callInterface.setEndpointSets(Collections.singletonList(declared));
 
     AgentDraftCreateRequest request = new AgentDraftCreateRequest();
     request.setAgentName("demo-agent");
@@ -7183,6 +7823,8 @@ try {
 #### 描述
 
 完整替换一个精确草稿的 CallInterface 内容和变更说明；不会创建缺失的 Agent 或版本，也不会修改 Agent 元数据。
+
+需提交要保留的完整接口集合，遗漏的接口会被移除。定义中的 `endpointSets` 只能包含 `DECLARED` 地址；`endpointSourceOrder` 必须按偏好顺序各包含一次 `RUNTIME` 和 `DECLARED`。
 
 ```java
 AgentVersionDetail updateDraft(String namespaceId, AgentDraftUpdateRequest request) throws NacosException;
@@ -7221,8 +7863,16 @@ try {
     a2aDescriptor.setUrl("https://example.com/a2a");
     a2aDescriptor.setVersion("1.0.0");
     a2aDescriptor.setProtocolVersion("0.3.0");
-    callInterface.setNativeDescriptor(a2aDescriptor);
-    callInterface.setEndpointSourceOrder(Collections.singletonList(EndpointSource.RUNTIME));
+    a2aDescriptor.setPreferredTransport("JSONRPC");
+    callInterface.setNativeDescriptor(JsonUtils.toObj(JsonUtils.toJson(a2aDescriptor), Map.class));
+    callInterface.setEndpointSourceOrder(Arrays.asList(EndpointSource.RUNTIME, EndpointSource.DECLARED));
+    Endpoint endpoint = new Endpoint();
+    endpoint.setUri("https://example.com/a2a");
+    endpoint.setTransport("JSONRPC");
+    EndpointSet declared = new EndpointSet();
+    declared.setSource(EndpointSource.DECLARED);
+    declared.setEndpoints(Collections.singletonList(endpoint));
+    callInterface.setEndpointSets(Collections.singletonList(declared));
 
     AgentDraftUpdateRequest request = new AgentDraftUpdateRequest();
     request.setAgentName("demo-agent");
@@ -7284,12 +7934,12 @@ try {
 
 #### 描述
 
-提交一个精确 Agent 版本，执行 `draft -> reviewing` 或统一的无 Pipeline 转换。
+提交指定版本进行审核。配置了适用于 Agent 的发布流水线时，版本进入审核；否则直接发布。可通过返回值中的 `status` 查看提交后的状态。
 
 ```java
-AgentVersionSummary submit(String namespaceId, AgentVersionCommand command) throws NacosException;
+AgentVersionSummary submit(String namespaceId, AgentVersionRequest command) throws NacosException;
 
-AgentVersionSummary submit(AgentVersionCommand command) throws NacosException;
+AgentVersionSummary submit(AgentVersionRequest command) throws NacosException;
 ```
 
 #### 请求参数
@@ -7297,7 +7947,7 @@ AgentVersionSummary submit(AgentVersionCommand command) throws NacosException;
 | 参数名 | 参数类型 | 描述 |
 |:---|:---|:---|
 | namespaceId | string | 命名空间 ID；省略时使用默认命名空间 `public`。 |
-| command | AgentVersionCommand | 版本命令，包含必填的 `agentName` 和精确 `version`。 |
+| command | AgentVersionRequest | 版本命令，包含必填的 `agentName` 和精确 `version`。 |
 
 #### 返回参数
 
@@ -7310,7 +7960,7 @@ AgentVersionSummary submit(AgentVersionCommand command) throws NacosException;
 ```java
 try {
     AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
-    AgentVersionCommand command = new AgentVersionCommand();
+    AgentVersionRequest command = new AgentVersionRequest();
     command.setAgentName("demo-agent");
     command.setVersion("1.0.0");
     AgentVersionSummary summary = agentMaintainerService.submit("public", command);
@@ -7328,12 +7978,12 @@ try {
 
 #### 描述
 
-将一个精确且已审核的 Agent 版本从 `reviewed` 转换为 `online`。
+发布审核通过的 `reviewed` 版本。成功后状态为 `online`，`latest` 标签指向该版本。审核未通过时，可退回草稿修改后重新提交。
 
 ```java
-AgentVersionSummary publish(String namespaceId, AgentVersionCommand command) throws NacosException;
+AgentVersionSummary publish(String namespaceId, AgentVersionRequest command) throws NacosException;
 
-AgentVersionSummary publish(AgentVersionCommand command) throws NacosException;
+AgentVersionSummary publish(AgentVersionRequest command) throws NacosException;
 ```
 
 #### 请求参数
@@ -7341,7 +7991,7 @@ AgentVersionSummary publish(AgentVersionCommand command) throws NacosException;
 | 参数名 | 参数类型 | 描述 |
 |:---|:---|:---|
 | namespaceId | string | 命名空间 ID；省略时使用默认命名空间 `public`。 |
-| command | AgentVersionCommand | 版本命令，包含必填的 `agentName` 和精确 `version`。 |
+| command | AgentVersionRequest | 版本命令，包含必填的 `agentName` 和精确 `version`。 |
 
 #### 返回参数
 
@@ -7354,7 +8004,7 @@ AgentVersionSummary publish(AgentVersionCommand command) throws NacosException;
 ```java
 try {
     AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
-    AgentVersionCommand command = new AgentVersionCommand();
+    AgentVersionRequest command = new AgentVersionRequest();
     command.setAgentName("demo-agent");
     command.setVersion("1.0.0");
     AgentVersionSummary summary = agentMaintainerService.publish("public", command);
@@ -7372,12 +8022,12 @@ try {
 
 #### 描述
 
-经审计地绕过 Pipeline，将一个精确 Agent 版本转换为 `online`。
+跳过审核，直接发布指定版本。版本必须处于 `draft`、`reviewing` 或 `reviewed` 状态；成功后变为 `online`，`latest` 标签指向该版本。
 
 ```java
-AgentVersionSummary forcePublish(String namespaceId, AgentVersionCommand command) throws NacosException;
+AgentVersionSummary forcePublish(String namespaceId, AgentVersionRequest command) throws NacosException;
 
-AgentVersionSummary forcePublish(AgentVersionCommand command) throws NacosException;
+AgentVersionSummary forcePublish(AgentVersionRequest command) throws NacosException;
 ```
 
 #### 请求参数
@@ -7385,7 +8035,7 @@ AgentVersionSummary forcePublish(AgentVersionCommand command) throws NacosExcept
 | 参数名 | 参数类型 | 描述 |
 |:---|:---|:---|
 | namespaceId | string | 命名空间 ID；省略时使用默认命名空间 `public`。 |
-| command | AgentVersionCommand | 版本命令，包含必填的 `agentName` 和精确 `version`。 |
+| command | AgentVersionRequest | 版本命令，包含必填的 `agentName` 和精确 `version`。 |
 
 #### 返回参数
 
@@ -7398,7 +8048,7 @@ AgentVersionSummary forcePublish(AgentVersionCommand command) throws NacosExcept
 ```java
 try {
     AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
-    AgentVersionCommand command = new AgentVersionCommand();
+    AgentVersionRequest command = new AgentVersionRequest();
     command.setAgentName("demo-agent");
     command.setVersion("1.0.0");
     AgentVersionSummary summary = agentMaintainerService.forcePublish("public", command);
@@ -7419,9 +8069,9 @@ try {
 将一个精确且已审核的 Agent 版本从 `reviewed` 转回 `draft`。
 
 ```java
-AgentVersionSummary redraft(String namespaceId, AgentVersionCommand command) throws NacosException;
+AgentVersionSummary redraft(String namespaceId, AgentVersionRequest command) throws NacosException;
 
-AgentVersionSummary redraft(AgentVersionCommand command) throws NacosException;
+AgentVersionSummary redraft(AgentVersionRequest command) throws NacosException;
 ```
 
 #### 请求参数
@@ -7429,7 +8079,7 @@ AgentVersionSummary redraft(AgentVersionCommand command) throws NacosException;
 | 参数名 | 参数类型 | 描述 |
 |:---|:---|:---|
 | namespaceId | string | 命名空间 ID；省略时使用默认命名空间 `public`。 |
-| command | AgentVersionCommand | 版本命令，包含必填的 `agentName` 和精确 `version`。 |
+| command | AgentVersionRequest | 版本命令，包含必填的 `agentName` 和精确 `version`。 |
 
 #### 返回参数
 
@@ -7442,7 +8092,7 @@ AgentVersionSummary redraft(AgentVersionCommand command) throws NacosException;
 ```java
 try {
     AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
-    AgentVersionCommand command = new AgentVersionCommand();
+    AgentVersionRequest command = new AgentVersionRequest();
     command.setAgentName("demo-agent");
     command.setVersion("1.0.0");
     AgentVersionSummary summary = agentMaintainerService.redraft("public", command);
@@ -7460,12 +8110,12 @@ try {
 
 #### 描述
 
-将一个精确 Agent 版本从 `offline` 转换为 `online`。
+将已下线（`offline`）的 Agent 版本重新上线，`latest` 标签指向该版本。
 
 ```java
-AgentVersionSummary online(String namespaceId, AgentVersionCommand command) throws NacosException;
+AgentVersionSummary online(String namespaceId, AgentVersionRequest command) throws NacosException;
 
-AgentVersionSummary online(AgentVersionCommand command) throws NacosException;
+AgentVersionSummary online(AgentVersionRequest command) throws NacosException;
 ```
 
 #### 请求参数
@@ -7473,7 +8123,7 @@ AgentVersionSummary online(AgentVersionCommand command) throws NacosException;
 | 参数名 | 参数类型 | 描述 |
 |:---|:---|:---|
 | namespaceId | string | 命名空间 ID；省略时使用默认命名空间 `public`。 |
-| command | AgentVersionCommand | 版本命令，包含必填的 `agentName` 和精确 `version`。 |
+| command | AgentVersionRequest | 版本命令，包含必填的 `agentName` 和精确 `version`。 |
 
 #### 返回参数
 
@@ -7486,7 +8136,7 @@ AgentVersionSummary online(AgentVersionCommand command) throws NacosException;
 ```java
 try {
     AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
-    AgentVersionCommand command = new AgentVersionCommand();
+    AgentVersionRequest command = new AgentVersionRequest();
     command.setAgentName("demo-agent");
     command.setVersion("1.0.0");
     AgentVersionSummary summary = agentMaintainerService.online("public", command);
@@ -7504,12 +8154,12 @@ try {
 
 #### 描述
 
-将一个精确 Agent 版本从 `online` 转换为 `offline`。
+将 `online` 版本下线，客户端将无法再发现该版本。版本内容仍保留，下线操作不会停止 Agent 实例。如果下线的是 `latest` 指向的版本，服务端会将该标签改为指向其他在线版本；没有在线版本时移除标签。
 
 ```java
-AgentVersionSummary offline(String namespaceId, AgentVersionCommand command) throws NacosException;
+AgentVersionSummary offline(String namespaceId, AgentVersionRequest command) throws NacosException;
 
-AgentVersionSummary offline(AgentVersionCommand command) throws NacosException;
+AgentVersionSummary offline(AgentVersionRequest command) throws NacosException;
 ```
 
 #### 请求参数
@@ -7517,7 +8167,7 @@ AgentVersionSummary offline(AgentVersionCommand command) throws NacosException;
 | 参数名 | 参数类型 | 描述 |
 |:---|:---|:---|
 | namespaceId | string | 命名空间 ID；省略时使用默认命名空间 `public`。 |
-| command | AgentVersionCommand | 版本命令，包含必填的 `agentName` 和精确 `version`。 |
+| command | AgentVersionRequest | 版本命令，包含必填的 `agentName` 和精确 `version`。 |
 
 #### 返回参数
 
@@ -7530,7 +8180,7 @@ AgentVersionSummary offline(AgentVersionCommand command) throws NacosException;
 ```java
 try {
     AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
-    AgentVersionCommand command = new AgentVersionCommand();
+    AgentVersionRequest command = new AgentVersionRequest();
     command.setAgentName("demo-agent");
     command.setVersion("1.0.0");
     AgentVersionSummary summary = agentMaintainerService.offline("public", command);
@@ -7548,12 +8198,12 @@ try {
 
 #### 描述
 
-完整替换 Agent 的自定义版本标签。标签值必须指向精确版本；`latest` 由服务端管理，不能作为自定义标签更新。
+替换 Agent 的全部自定义版本标签。标签指向的版本必须存在，且不能处于 `draft` 或 `reviewing` 状态；传入空 Map 可清空自定义标签。`latest` 由服务端维护，请求中对它的修改会被忽略。
 
 ```java
-Agent updateLabels(String namespaceId, AgentLabelsUpdateRequest request) throws NacosException;
+AgentSummary updateLabels(String namespaceId, AgentLabelsUpdateRequest request) throws NacosException;
 
-Agent updateLabels(AgentLabelsUpdateRequest request) throws NacosException;
+AgentSummary updateLabels(AgentLabelsUpdateRequest request) throws NacosException;
 ```
 
 #### 请求参数
@@ -7569,7 +8219,7 @@ Agent updateLabels(AgentLabelsUpdateRequest request) throws NacosException;
 
 | 参数类型 | 描述 |
 |:---|:---|
-| Agent | 更新标签后的 Agent。 |
+| AgentSummary | 更新标签后的 Agent 摘要。 |
 
 #### 请求示例
 
@@ -7579,8 +8229,8 @@ try {
     AgentLabelsUpdateRequest request = new AgentLabelsUpdateRequest();
     request.setAgentName("demo-agent");
     request.setLabels(Collections.singletonMap("stable", "1.0.0"));
-    Agent agent = agentMaintainerService.updateLabels("public", request);
-    // 使用默认命名空间时，可改用：Agent agent = agentMaintainerService.updateLabels(request);
+    AgentSummary agent = agentMaintainerService.updateLabels("public", request);
+    // 使用默认命名空间时，可改用：AgentSummary agent = agentMaintainerService.updateLabels(request);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -7589,6 +8239,47 @@ try {
 #### 异常说明
 
 标签无效、目标版本不存在或更新失败时抛出 NacosException 异常。
+
+### 11.18. 更新 Agent 可见范围
+
+#### 描述
+
+修改 Agent 的可见范围，内置策略支持 `PUBLIC`（公开）和 `PRIVATE`（私有）。公开资源的访问仍受鉴权和资源权限控制。
+
+```java
+boolean updateScope(String namespaceId, String agentName, String scope) throws NacosException;
+
+boolean updateScope(String agentName, String scope) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|:---|:---|:---|
+| namespaceId | String | 命名空间 ID；省略时使用 `public`。 |
+| agentName | String | 精确的 Agent 名称。 |
+| scope | String | 目标可见范围：`PUBLIC` 或 `PRIVATE`。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|:---|:---|
+| boolean | 操作是否成功。 |
+
+#### 请求示例
+
+```java
+try {
+    AgentMaintainerService agentMaintainerService = aiMaintainerService.agent();
+    boolean updated = agentMaintainerService.updateScope("public", "demo-agent", "PRIVATE");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+参数无效、权限不足或更新失败时抛出 `NacosException`。
 
 ## 12. Pipeline 管理
 
