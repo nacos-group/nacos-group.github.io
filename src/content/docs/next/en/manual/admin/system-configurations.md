@@ -61,6 +61,7 @@ Nacos supports Derby, MySQL, PostgreSQL, Oracle, and custom database types throu
 | `nacos.plugin.datasource.db.user[.{index}]` | Shared or per-connection username. | empty |
 | `nacos.plugin.datasource.db.password[.{index}]` | Shared or per-connection password. | empty |
 | `nacos.plugin.datasource.db.pool.config.*` | HikariCP settings; stable keys use kebab-case, such as `maximum-pool-size`. | See the datasource plugin page |
+| `nacos.plugin.datasource.db.pool.config.driver-class-name` | Explicit JDBC driver class, taking precedence over legacy `db.pool.config.driverClassName`; when unset, uses the selected dialect's default. | Dialect default, or `com.mysql.cj.jdbc.Driver` if none is provided |
 | `nacos.plugin.datasource.db.query-timeout` | JDBC query timeout in seconds. | `3` |
 | `nacos.plugin.datasource.log.enabled` | Whether to print datasource plugin logs. | `true` |
 

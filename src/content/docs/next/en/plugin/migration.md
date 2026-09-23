@@ -46,6 +46,8 @@ All selections are snapshotted at startup. Do not use the status API to switch a
 
 Datasource connection properties also move to the unified namespace. Migrate `db.num`, `db.url.{index}`, `db.user[.{index}]`, `db.password[.{index}]`, `db.pool.config.*`, and the JVM property `QUERYTIMEOUT` to `nacos.plugin.datasource.db.*`. Pool items use canonical kebab-case. These settings remain restart-only and are not changed dynamically through the plugin configuration API.
 
+When no JDBC driver is explicitly configured, Nacos 3.3 first uses the selected dialect's default and falls back to the MySQL driver only if the dialect provides none. Retain or add an explicit driver setting for older non-MySQL plugins without `getDefaultDriverClassName()`. After migration, confirm that the driver matches the database and its JAR is deployed. See [JDBC driver selection](./datasource-plugin.md#jdbc-driver-selection) for precedence and defaults.
+
 ## Auth, Visibility, and AI Pipeline
 
 - Move default auth settings from `nacos.core.auth.plugin.nacos.*` and `nacos.core.auth.caching.enabled` to `nacos.plugin.auth.nacos.*`.

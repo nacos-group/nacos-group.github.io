@@ -91,11 +91,32 @@ nacos.plugin.datasource.db.pool.config.connection-test-query=SELECT 1 FROM dual
 | `nacos.plugin.datasource.db.pool.config.idle-timeout` | `db.pool.config.idleTimeout` 或 kebab-case 形式 | `600000` 毫秒 |
 | `nacos.plugin.datasource.db.pool.config.maximum-pool-size` | `db.pool.config.maximumPoolSize` 或 kebab-case 形式 | `20` |
 | `nacos.plugin.datasource.db.pool.config.minimum-idle` | `db.pool.config.minimumIdle` 或 kebab-case 形式 | `2` |
-| `nacos.plugin.datasource.db.pool.config.driver-class-name` | `db.pool.config.driverClassName` 或 kebab-case 形式 | 空值使用兼容默认驱动 |
+| `nacos.plugin.datasource.db.pool.config.driver-class-name` | `db.pool.config.driverClassName` 或 kebab-case 形式 | 未配置时使用所选方言的默认驱动；方言未提供时使用 MySQL 兼容默认值 |
 | `nacos.plugin.datasource.db.pool.config.connection-test-query` | `db.pool.config.connectionTestQuery` 或 kebab-case 形式 | 空值使用 `SELECT 1` |
 | `nacos.plugin.datasource.db.query-timeout` | JVM 属性 `QUERYTIMEOUT` | `3` 秒 |
 
 同一配置同时出现标准键和 alias 时，标准键优先；索引项逐项解析，迁移期间允许标准 `url.0` 与历史 `url.1` 并存。`nacos.plugin.datasource.db.pool.config.{hikari-property}` 仍可向 HikariCP 传递其他 JavaBean 属性，但只有上表列出的稳定子集属于长期配置契约。
+
+### JDBC 驱动的选择
+
+Nacos 3.3 按以下顺序选择外置数据源的驱动：
+
+1. 使用显式配置的驱动类。标准键 `nacos.plugin.datasource.db.pool.config.driver-class-name` 优先于历史 `db.pool.config.driverClassName`；已有有效配置不会被方言默认值覆盖。
+2. 未配置驱动时，使用所选 `DatabaseDialect` 的 `getDefaultDriverClassName()`。
+3. 方言没有提供默认值时，保留 `com.mysql.cj.jdbc.Driver` 作为兼容回退。使用其他数据库的旧插件时，应显式配置对应驱动。
+
+内置方言提供以下默认值：
+
+| 方言 | 默认 JDBC 驱动类 |
+| --- | --- |
+| `mysql` | `com.mysql.cj.jdbc.Driver` |
+| `postgresql` | `org.postgresql.Driver` |
+| `oracle` | `oracle.jdbc.OracleDriver` |
+| `derby` | `org.apache.derby.jdbc.EmbeddedDriver` |
+
+上面的 PostgreSQL 和 Oracle 示例保留了显式驱动配置；使用内置方言默认驱动时可省略该项。驱动类名不会自动下载驱动 JAR，仍需确保它在服务端 classpath 或 `${nacos.home}/plugins` 中。
+
+驱动回退不会将数据库方言改成 MySQL。所选方言缺失或被禁用时，仍会因方言校验失败而无法启动；改动方言或连接池配置后需重启。
 
 ### 配置多个数据库连接
 
@@ -148,10 +169,12 @@ nacos.plugin.datasource.db.password.1=nacos_password_1
 
 | SPI | 作用 |
 | --- | --- |
-| `com.alibaba.nacos.plugin.datasource.dialect.DatabaseDialect` | 定义数据库级 SQL 行为，例如分页、函数和主键返回方式。 |
+| `com.alibaba.nacos.plugin.datasource.dialect.DatabaseDialect` | 定义数据库级 SQL 行为，例如分页、函数和主键返回方式；可通过 `getDefaultDriverClassName()` 提供默认 JDBC 驱动。 |
 | `com.alibaba.nacos.plugin.datasource.mapper.Mapper` | 定义 Nacos 逻辑表在该数据库下的 SQL provider。 |
 
 一个数据库类型的 dialect 和 mapper 必须一起打包和加载。只提供 dialect 或只提供 mapper 都会导致启动或运行时失败。
+
+`getDefaultDriverClassName()` 是默认返回 `null` 的 SPI 方法，已有方言实现无需仅为此方法重新编译。若旧插件没有提供默认驱动，部署时应显式配置；这不免除 Nacos 3.3 对其他已移除 Mapper SPI 的迁移要求，详见[插件迁移指南](./migration.md)。
 
 当前 mapper 覆盖范围包括：
 

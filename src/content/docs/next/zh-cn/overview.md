@@ -8,7 +8,7 @@ description: 了解 Nacos 的命名来源、核心能力、产品优势、设计
 
 Nacos 读作 `/nɑ:kəʊs/`，名称来自 **Dynamic Naming and Configuration Service**。
 
-Nacos 是一个面向云原生和 AI 应用的动态服务发现、配置管理和 AI 管理中心（AI Registry）平台。它最早围绕两个核心问题构建：应用如何找到服务，应用如何安全地读取和更新配置。进入 3.x 后，Nacos 在这些能力之上扩展了 AI 管理中心，用来管理 Skill、A2A Agent、MCP Server、Prompt、AgentSpec 等 AI 资源。
+Nacos 是一个面向云原生和 AI 应用的动态服务发现、配置管理和 AI 管理中心（AI Registry）平台。它最早围绕两个核心问题构建：应用如何找到服务，应用如何安全地读取和更新配置。进入 3.x 后，Nacos 在这些能力之上扩展了 AI 管理中心，用来管理 Skill、Agent（含 A2A）、MCP Server、Prompt、AgentSpec 等 AI 资源。
 
 Nacos 的目标很直接：让应用在运行时安全、及时地找到它需要的服务、配置和 AI 能力。
 
@@ -20,7 +20,7 @@ Nacos 的目标很直接：让应用在运行时安全、及时地找到它需�
 | 配置管理 | 配置如何集中管理、动态更新、回滚和审计 | [快速开始](./quickstart/quick-start.mdx)、[Java SDK](./manual/user/java-sdk/usage.md) |
 | AI 管理中心 | Skill、Agent、MCP Server、Prompt、AgentSpec 如何注册、治理和发现 | [AI 管理中心概述](./manual/user/ai/ai-registry-overview.md) |
 | 运维治理 | 集群如何部署、监控、升级和管理权限 | [部署手册](./manual/admin/deployment/deployment-overview.md)、[监控手册](./manual/admin/monitor.md)、[权限校验](./manual/admin/auth.mdx) |
-| 插件扩展 | 如何扩展鉴权、数据源、加密、限流、环境和链路追踪能力 | [插件](./plugin/auth-plugin.md) |
+| 插件扩展 | 如何扩展鉴权、数据源、加密、限流、环境和链路追踪能力 | [插件概览](./plugin/overview.md) |
 
 ## Nacos 3.x 重点变化
 
@@ -28,14 +28,14 @@ Nacos 3.x 继续保留服务发现和配置管理能力，同时强化了 API、
 
 - **统一的 v3 API**：Client API、Admin API、Console API 面向不同调用者，边界更清晰。
 - **默认鉴权**：3.3 起 Client API、SDK 和 gRPC 请求默认需要身份信息；Admin API 和 Console API 也默认开启鉴权。应用接入前请[配置访问凭据](./manual/user/auth.mdx)。
-- **AI 管理中心成为一等能力**：可以管理 MCP Server、A2A Agent、Prompt、Skill、AgentSpec 等 AI 资源。
+- **AI 管理中心成为一等能力**：可以管理 MCP Server、Agent、Prompt、Skill、AgentSpec 等 AI 资源。3.3 为五类资源提供统一生命周期，保留 A2A 接入，并通过 RAD 发现 Agent 的调用定义和运行端点。
 - **插件能力更完整**：鉴权、可见性、发布 Pipeline、资源导入、数据源和追踪等能力可以按需扩展。
 - **运维能力更明确**：部署、监控、升级、系统参数、Admin API 和 Maintainer SDK 更适合平台化运维。
 
 ## 产品优势
 
 - **易于使用**：Nacos 提供控制台、SDK、OpenAPI 和运维 SDK。开发者可以快速接入服务发现和配置管理，运维人员也可以通过可视化页面和 API 管理集群。
-- **能力完整**：Nacos 覆盖服务发现、配置管理、健康检查、配置历史、灰度发布、权限控制、监控、插件扩展等能力。Nacos 3.x 还增加了 AI 管理中心，用来管理 Skill、A2A、MCP、Prompt、AgentSpec 等 AI 应用资源。
+- **能力完整**：Nacos 覆盖服务发现、配置管理、健康检查、配置历史、灰度发布、权限控制、监控、插件扩展等能力。Nacos 3.x 还增加了 AI 管理中心，用来管理 Skill、Agent、MCP、Prompt、AgentSpec 等 AI 应用资源。
 - **面向生产**：Nacos 支持集群模式、外部数据库、监控指标、鉴权、运维 API 和升级流程。它适合从本地开发逐步走向生产环境。
 - **生态开放**：Nacos 可以和 Spring Cloud、Dubbo、Kubernetes、Higress、Dify、Spring AI Alibaba 等生态协同使用。插件机制也允许团队按自己的安全、存储和治理要求扩展 Nacos。
 
@@ -63,7 +63,7 @@ Nacos 3.x 将 AI 管理中心放在与服务发现、配置管理同等重要的
 AI 管理中心关注 AI 应用运行时会依赖的资源：Skill、Agent、MCP Server、Prompt 和 AgentSpec。这些资源不只是静态描述，还涉及版本、标签、可见性、发布状态和运行时发现。
 
 - Skill 让团队沉淀可复用的 AI 能力包，并按版本分发。
-- Agent 让 Multi-agent 应用发现可调用的 Agent 入口和 AgentCard。
+- Agent 让 Multi-agent 应用发现调用定义和运行端点，A2A AgentCard 是其中一种协议描述。
 - MCP Server 让模型、Agent 和工具客户端发现可用工具、资源和服务端点。
 - Prompt 让应用按版本和标签读取稳定的提示词模板。
 - AgentSpec 让 Agent 平台和开发工具分发标准化的 Agent 规范包。
@@ -100,6 +100,8 @@ Nacos 的生态能力覆盖微服务、云原生和 AI 应用场景。常见集�
 
 生态组件通常承担两类职责：一类把应用接入 Nacos，例如 Spring Cloud、Dubbo 和 SDK；另一类把 Nacos 的注册、配置或 AI 管理中心能力带到更大的平台中，例如 Kubernetes、Higress、Dify 和 MCP Router。
 
+3.3 还提供[内置 DNS 服务发现](./ecology/use-nacos-with-native-dns.md)和 [ARD 资源发现](./ecology/use-nacos-with-ard.md)。其他接入方式见[生态融合概览](./ecology/overview.md)。
+
 ## 路线规划
 
 ![Nacos Roadmap](/img/doc/overview/roadmap.svg)
@@ -125,6 +127,7 @@ Nacos 会继续围绕三条主线演进：稳定的服务发现和配置管理�
 1. 阅读 [AI 管理中心概述](./manual/user/ai/ai-registry-overview.md)。
 2. 按场景选择 Skill、Agent、MCP、Prompt 或 AgentSpecs 文档。
 3. 需要治理版本时，阅读 [AI 资源生命周期](./manual/user/ai/ai-resource-lifecycle.md)。
+4. 通过 [RAD](./manual/user/ai/rad-discovery.md)发现和订阅 Agent，或通过 [ARD](./manual/user/ai/ard-discovery.md)搜索、下载多类资源；需要可选向量检索时，阅读 [AI 向量插件](./plugin/ai-vector-plugin.md)。
 
 ## 下一步行动
 

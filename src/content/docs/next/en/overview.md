@@ -8,7 +8,7 @@ description: Learn the Nacos name, pronunciation, core capabilities, product adv
 
 Nacos is pronounced `/nɑ:kəʊs/`. The name comes from **Dynamic Naming and Configuration Service**.
 
-Nacos is a dynamic service discovery, configuration management, and AI Registry platform for cloud-native and AI applications. The project started from two core problems: how applications find services, and how applications safely read and update configuration. In Nacos 3.x, these capabilities are extended with AI Registry, which manages AI resources such as Skills, A2A Agents, MCP Servers, Prompts, and AgentSpecs.
+Nacos is a dynamic service discovery, configuration management, and AI Registry platform for cloud-native and AI applications. The project started from two core problems: how applications find services, and how applications safely read and update configuration. In Nacos 3.x, these capabilities are extended with AI Registry, which manages AI resources such as Skills, Agents (including A2A), MCP Servers, Prompts, and AgentSpecs.
 
 The goal is simple: applications should safely and quickly find the services, configuration, and AI capabilities they need at runtime.
 
@@ -20,7 +20,7 @@ The goal is simple: applications should safely and quickly find the services, co
 | Configuration management | Manage, update, roll back, and audit configuration | [Quick Start](./quickstart/quick-start.mdx), [Java SDK](./manual/user/java-sdk/usage.md) |
 | AI Registry | Register, govern, and discover Skills, Agents, MCP Servers, Prompts, and AgentSpecs | [AI Registry Overview](./manual/user/ai/ai-registry-overview.md) |
 | Operations | Deploy, monitor, upgrade, and secure Nacos clusters | [Deployment](./manual/admin/deployment/deployment-overview.md), [Monitoring](./manual/admin/monitor.md), [Authorization](./manual/admin/auth.mdx) |
-| Plugins | Extend auth, data source, encryption, control, environment, and tracing behavior | [Plugins](./plugin/auth-plugin.md) |
+| Plugins | Extend auth, data source, encryption, control, environment, and tracing behavior | [Plugin Overview](./plugin/overview.md) |
 
 ## What Is New In Nacos 3.x
 
@@ -28,14 +28,14 @@ Nacos 3.x keeps the service discovery and configuration management capabilities,
 
 - **Unified v3 APIs**: Client API, Admin API, and Console API serve different callers with clearer boundaries.
 - **Authentication by default**: Since 3.3, Client API, SDK, and gRPC requests require credentials by default. Admin and Console API authentication is also enabled. [Configure access credentials](./manual/user/auth.mdx) before connecting applications.
-- **AI Registry as a first-class capability**: Nacos can manage MCP Servers, A2A Agents, Prompts, Skills, AgentSpecs, and related versions.
+- **AI Registry as a first-class capability**: Nacos manages MCP Servers, Agents, Prompts, Skills, AgentSpecs, and related versions. Version 3.3 provides a shared lifecycle for all five resource types, retains A2A integration, and uses RAD to discover Agent call definitions and runtime endpoints.
 - **Richer plugin model**: Auth, visibility, publish Pipeline, resource import, data source, and tracing can be extended when needed.
 - **Clearer operations model**: Deployment, monitoring, upgrade, system parameters, Admin API, and Maintainer SDK are easier to use in platform operations.
 
 ## Product Advantages
 
 - **Easy to use**: Nacos provides a console, SDKs, OpenAPI, and Maintainer SDK. Developers can quickly connect applications to service discovery and configuration management. Operators can manage clusters through UI pages and APIs.
-- **Complete capability set**: Nacos covers service discovery, configuration management, health checks, configuration history, gray release, authorization, monitoring, and plugin extension. Nacos 3.x also adds AI Registry for Skill, A2A, MCP, Prompt, AgentSpec, and other AI application resources.
+- **Complete capability set**: Nacos covers service discovery, configuration management, health checks, configuration history, gray release, authorization, monitoring, and plugin extension. Nacos 3.x also adds AI Registry for Skill, Agent, MCP, Prompt, AgentSpec, and other AI application resources.
 - **Production-oriented**: Nacos supports cluster mode, external databases, metrics, authentication, Admin API, and upgrade workflows. It can grow from local development to production operations.
 - **Open ecosystem**: Nacos works with Spring Cloud, Dubbo, Kubernetes, Higress, Dify, Spring AI Alibaba, and other ecosystems. The plugin model also lets teams extend Nacos for their own security, storage, and governance requirements.
 
@@ -65,7 +65,7 @@ Nacos 3.x treats AI Registry as a core capability beside service discovery and c
 AI Registry focuses on the resources that AI applications need at runtime: Skills, Agents, MCP Servers, Prompts, and AgentSpecs. These resources are not just static descriptions. They also need versions, labels, visibility, lifecycle states, and runtime discovery.
 
 - Skills package reusable AI capabilities and distribute them by version.
-- Agents expose AgentCards and callable endpoints for multi-agent applications.
+- Agents expose call definitions and runtime endpoints for multi-agent applications; A2A AgentCards are one protocol representation.
 - MCP Servers expose tools, resources, and endpoints to models, Agents, and MCP clients.
 - Prompts provide stable templates that applications can read by version or label.
 - AgentSpecs distribute standardized Agent specification packages for Agent platforms and developer tools.
@@ -102,6 +102,8 @@ Nacos ecosystem integrations cover microservice, cloud-native, and AI applicatio
 
 Ecosystem components usually serve two purposes. Some connect applications to Nacos, such as Spring Cloud, Dubbo, and SDKs. Others bring Nacos registration, configuration, or AI Registry capabilities into larger platforms, such as Kubernetes, Higress, Dify, and MCP Router.
 
+Version 3.3 also provides [built-in DNS service discovery](./ecology/use-nacos-with-native-dns.md) and [ARD resource discovery](./ecology/use-nacos-with-ard.md). See [Ecosystem Overview](./ecology/overview.md) for other integrations.
+
 ## Roadmap
 
 ![Nacos roadmap](/img/doc/overview/roadmap.svg)
@@ -127,6 +129,7 @@ If you build AI applications:
 1. Read [AI Registry Overview](./manual/user/ai/ai-registry-overview.md).
 2. Choose the Skill, Agent, MCP, Prompt, or AgentSpecs document for your scenario.
 3. If you need version governance, read [AI Resource Lifecycle](./manual/user/ai/ai-resource-lifecycle.md).
+4. Use [RAD](./manual/user/ai/rad-discovery.md) to discover and subscribe to Agents, or [ARD](./manual/user/ai/ard-discovery.md) to search and download multiple resource types. For optional vector retrieval, read [AI Vector Plugin](./plugin/ai-vector-plugin.md).
 
 ## Next Actions
 

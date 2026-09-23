@@ -61,6 +61,7 @@ Nacos 通过数据源方言插件支持 Derby、MySQL、PostgreSQL、Oracle 和�
 | `nacos.plugin.datasource.db.user[.{index}]` | 公共或逐连接用户名。 | 空 |
 | `nacos.plugin.datasource.db.password[.{index}]` | 公共或逐连接密码。 | 空 |
 | `nacos.plugin.datasource.db.pool.config.*` | HikariCP 参数；稳定键使用 kebab-case，例如 `maximum-pool-size`。 | 各项默认值见数据源插件文档 |
+| `nacos.plugin.datasource.db.pool.config.driver-class-name` | 显式 JDBC 驱动类，优先于历史 `db.pool.config.driverClassName`；未配置时读取所选方言的默认驱动。 | 方言默认值；未提供时为 `com.mysql.cj.jdbc.Driver` |
 | `nacos.plugin.datasource.db.query-timeout` | JDBC query timeout，单位秒。 | `3` |
 | `nacos.plugin.datasource.log.enabled` | 是否输出数据源插件相关日志。 | `true` |
 

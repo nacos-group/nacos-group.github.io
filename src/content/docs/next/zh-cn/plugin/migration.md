@@ -46,6 +46,8 @@ sidebar:
 
 数据源连接参数也已迁移到统一命名空间：`db.num`、`db.url.{index}`、`db.user[.{index}]`、`db.password[.{index}]`、`db.pool.config.*` 和 JVM 参数 `QUERYTIMEOUT` 应迁移到 `nacos.plugin.datasource.db.*`。连接池 item 使用 canonical kebab-case。这些参数仍只在重启后生效，不通过插件配置 API 动态修改。
 
+Nacos 3.3 未显式配置 JDBC 驱动时，会先读取所选方言提供的默认驱动，方言未提供时才回退到 MySQL 驱动。旧版非 MySQL 插件如果没有实现 `getDefaultDriverClassName()`，应保留或补充显式驱动配置。迁移后检查驱动与数据库类型匹配，并确认驱动 JAR 已部署；优先级和默认值见[数据源插件的 JDBC 驱动说明](./datasource-plugin.md#jdbc-驱动的选择)。
+
 ## Auth、Visibility 和 AI Pipeline
 
 - 默认鉴权实现配置从 `nacos.core.auth.plugin.nacos.*` 和 `nacos.core.auth.caching.enabled` 迁到 `nacos.plugin.auth.nacos.*`。

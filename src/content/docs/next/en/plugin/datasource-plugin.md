@@ -91,11 +91,32 @@ The stable datasource module settings are listed below. They are static, require
 | `nacos.plugin.datasource.db.pool.config.idle-timeout` | `db.pool.config.idleTimeout` or kebab-case form | `600000` ms |
 | `nacos.plugin.datasource.db.pool.config.maximum-pool-size` | `db.pool.config.maximumPoolSize` or kebab-case form | `20` |
 | `nacos.plugin.datasource.db.pool.config.minimum-idle` | `db.pool.config.minimumIdle` or kebab-case form | `2` |
-| `nacos.plugin.datasource.db.pool.config.driver-class-name` | `db.pool.config.driverClassName` or kebab-case form | Blank uses the compatibility default driver |
+| `nacos.plugin.datasource.db.pool.config.driver-class-name` | `db.pool.config.driverClassName` or kebab-case form | When unset, uses the selected dialect's default driver, or the MySQL compatibility default if none is provided |
 | `nacos.plugin.datasource.db.pool.config.connection-test-query` | `db.pool.config.connectionTestQuery` or kebab-case form | Blank uses `SELECT 1` |
 | `nacos.plugin.datasource.db.query-timeout` | JVM property `QUERYTIMEOUT` | `3` seconds |
 
 For the same item, the canonical key wins over its alias. Indexed items are resolved independently, so canonical `url.0` and legacy `url.1` can coexist during migration. `nacos.plugin.datasource.db.pool.config.{hikari-property}` can still pass additional JavaBean properties to HikariCP, but only the stable subset above is a long-term Nacos configuration contract.
+
+### JDBC driver selection
+
+Nacos 3.3 selects the external data source driver in this order:
+
+1. Use an explicitly configured driver class. The canonical key `nacos.plugin.datasource.db.pool.config.driver-class-name` takes precedence over the legacy `db.pool.config.driverClassName`; a valid existing setting is not overridden by the dialect default.
+2. When no driver is configured, use the selected `DatabaseDialect`'s `getDefaultDriverClassName()`.
+3. If the dialect provides no default, retain `com.mysql.cj.jdbc.Driver` as the compatibility fallback. Configure the driver explicitly when using an older plugin for another database.
+
+Built-in dialects provide these defaults:
+
+| Dialect | Default JDBC driver class |
+| --- | --- |
+| `mysql` | `com.mysql.cj.jdbc.Driver` |
+| `postgresql` | `org.postgresql.Driver` |
+| `oracle` | `oracle.jdbc.OracleDriver` |
+| `derby` | `org.apache.derby.jdbc.EmbeddedDriver` |
+
+The PostgreSQL and Oracle examples above retain explicit driver settings; omit that setting when using the built-in dialect's default driver. A driver class name does not download its JAR. Ensure the driver is on the server classpath or in `${nacos.home}/plugins`.
+
+Driver fallback does not change the database dialect to MySQL. A missing or disabled selected dialect still fails startup validation. Restart after changing the dialect or connection pool settings.
 
 ### Configure Multiple Database Connections
 
@@ -148,10 +169,12 @@ A custom datasource plugin must implement at least two SPI types:
 
 | SPI | Purpose |
 | --- | --- |
-| `com.alibaba.nacos.plugin.datasource.dialect.DatabaseDialect` | Database-level behavior such as pagination, functions, and generated keys. |
+| `com.alibaba.nacos.plugin.datasource.dialect.DatabaseDialect` | Database-level behavior such as pagination, functions, and generated keys; optionally provides a default JDBC driver through `getDefaultDriverClassName()`. |
 | `com.alibaba.nacos.plugin.datasource.mapper.Mapper` | Table-level SQL providers for the Nacos logical schema. |
 
 The dialect and mappers for the same database type must be packaged and loaded together. Providing only one side causes startup or runtime failures.
+
+`getDefaultDriverClassName()` is a default SPI method that returns `null`, so existing dialect implementations do not need recompilation solely for this method. Configure the driver explicitly if an older plugin does not provide a default. Other Nacos 3.3 changes, including removed Mapper SPIs, still require migration; see [Plugin Migration](./migration.md).
 
 Current mapper coverage includes:
 
