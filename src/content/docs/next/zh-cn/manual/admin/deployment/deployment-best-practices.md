@@ -50,8 +50,11 @@ Nacos 3.0 起，控制台端口与服务端主端口解耦。默认端口如下�
 | `9849` | 服务端 gRPC 通信端口 | 只允许 Nacos Server 节点互通 |
 | `7848` | Raft 通信端口 | 只允许 Nacos Server 节点互通 |
 | `8080` | Nacos Console 端口 | 只向管理网络开放 |
+| `5353` | 内置 DNS 端口，仅显式开启时监听 UDP/TCP | 只向可信的内部 DNS 或应用开放；不经过 HTTP API 鉴权 |
 
 使用 VIP、SLB 或 Nginx 时，`9848` 必须按 TCP 转发，不要按 HTTP 或 HTTP/2 代理。更多端口说明请参考[部署手册概览](./deployment-overview.md)。
+
+启用内置 DNS 时，需要同时允许其端口的 UDP 和 TCP，端口号由 `nacos.naming.dns.port` 独立配置。域名转发和验证方式见[内置 DNS 服务发现](../../../ecology/use-nacos-with-native-dns.md)。
 
 ## 控制台独立部署
 

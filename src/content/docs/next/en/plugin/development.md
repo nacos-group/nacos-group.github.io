@@ -24,6 +24,7 @@ When developing a Nacos server plugin, first implement the matching domain SPI, 
 | `visibility` | `getVisibilityServiceName()` | `VisibilityService` |
 | `ai-pipeline` | `pipelineId()` | `PublishPipelineService` |
 | `ai-storage` | `type()` | `AiResourceStorage` / `AiResourceStorageBuilder` |
+| `ai-vector` | `type()` | `AiResourceVectorIndex` / `AiResourceVectorIndexBuilder` |
 | `ai-resource-import` | `pluginName()` | `AiResourceImportServiceBuilder` |
 
 List the implementation class in `META-INF/services/{fully-qualified SPI name}`. Put the plugin JAR under `${nacos.home}/plugins` or on the Nacos Server startup classpath. Every node must also have its dependencies.

@@ -140,35 +140,21 @@ def parse_java_interface(content: str, source_name: str = "") -> list[dict]:
             if not re.match(r"^(default\s+|static\s+)?[\w<>,\s\[\].?]+\s+\w+\s*\(", line):
                 continue
             acc = [line]
-            # One-line default method: declaration ends with " {"
-            if ")" in line and " {" in line and re.search(r"\)\s+.*\{\s*$", line):
-                acc = [re.sub(r"\s*\{.*", "", line).strip()]
-                depth = 1
+            while not re.search(r"[;{]", acc[-1]) and i < len(lines):
+                acc.append(lines[i].strip())
+                i += 1
+            declaration = " ".join(acc)
+            terminator = re.search(r"[;{]", declaration)
+            if not terminator:
+                raise ValueError(f"Unterminated method declaration in {source_name}: {line}")
+            full = declaration[:terminator.start()].strip()
+            if terminator.group() == "{":
+                body = declaration[terminator.start():]
+                depth = body.count("{") - body.count("}")
                 while i < len(lines) and depth > 0:
-                    l = lines[i]
-                    depth += l.count("{") - l.count("}")
+                    body = lines[i]
+                    depth += body.count("{") - body.count("}")
                     i += 1
-            else:
-                while i < len(lines):
-                    next_line = lines[i]
-                    i += 1
-                    if re.search(r"\)\s*\{", next_line):
-                        sig_part = re.sub(r"\s*\{\s*$", "", next_line.strip()).strip()
-                        if sig_part:
-                            acc.append(sig_part)
-                        depth = 1
-                        while i < len(lines) and depth > 0:
-                            l = lines[i]
-                            depth += l.count("{") - l.count("}")
-                            i += 1
-                        break
-                    acc.append(next_line.strip())
-                    if re.search(r"\)\s*;", next_line) or re.search(r"\)\s*throws\s+[^;]+;\s*$", next_line):
-                        break
-            full = " ".join(acc)
-            # Strip any trailing " { ..." (body) that might have been included
-            if " {" in full:
-                full = full.split(" {")[0].strip()
             sig = parse_method_signature(full)
             if sig:
                 sig["since"] = annotation_since or since or interface_since
@@ -194,6 +180,47 @@ def resolve_api_root(base: Path) -> Path:
     )
 
 
+def load_interface_hierarchy(base: Path) -> dict[str, list[dict]]:
+    """Load facade and resource interfaces, retaining each method's declaring owner."""
+    api_root = resolve_api_root(base)
+    roots = ["config/ConfigService.java", "naming/NamingService.java",
+             "lock/LockService.java", "ai/AiService.java", "ai/AgentService.java"]
+    loaded = {}
+    visiting = set()
+
+    def visit(path: Path):
+        name = path.stem
+        if name in loaded:
+            return
+        if name in visiting:
+            raise ValueError(f"Cyclic interface inheritance: {path}")
+        content = path.read_text(encoding="utf-8")
+        declaration = re.search(r"public\s+interface\s+" + re.escape(name)
+                                + r"\s*(?:extends\s+([^\{]+))?\{", content)
+        if not declaration:
+            raise ValueError(f"Cannot parse interface declaration: {path}")
+        visiting.add(name)
+        for parent in (declaration.group(1) or "").split(","):
+            parent = parent.strip()
+            if not parent:
+                continue
+            imported = re.search(r"import\s+(com\.alibaba\.nacos\.api\.(?:\w+\.)*"
+                                 + re.escape(parent) + r");", content)
+            parent_path = path.parent / (parent + ".java")
+            if imported:
+                parent_path = api_root / (imported.group(1).removeprefix(
+                    "com.alibaba.nacos.api.").replace(".", "/") + ".java")
+            visit(parent_path)
+        loaded[name] = parse_java_interface(content, name)
+        if not loaded[name] and name not in {"AiService", "AgentService"}:
+            raise ValueError(f"No API methods parsed from required interface: {path}")
+        visiting.remove(name)
+
+    for relative in roots:
+        visit(api_root / relative)
+    return loaded
+
+
 def main():
     ap = argparse.ArgumentParser(description="Parse Nacos Java API interface(s)")
     ap.add_argument("--file", type=str, help="Single .java interface file")
@@ -215,31 +242,11 @@ def main():
     elif args.dir:
         base = Path(args.dir)
         try:
-            api_root = resolve_api_root(base)
-        except FileNotFoundError as exc:
+            interfaces = load_interface_hierarchy(base)
+        except (FileNotFoundError, ValueError) as exc:
             print(f"Error: {exc}", file=sys.stderr)
             sys.exit(1)
-        interfaces = [
-            ("ConfigService", api_root / "config/ConfigService.java"),
-            ("NamingService", api_root / "naming/NamingService.java"),
-            ("LockService", api_root / "lock/LockService.java"),
-            ("AiService", api_root / "ai/AiService.java"),
-            ("AgentDiscoveryService", api_root / "ai/AgentDiscoveryService.java"),
-            ("A2aService", api_root / "ai/A2aService.java"),
-        ]
-        methods = []
-        missing = []
-        for name, p in interfaces:
-            if p.exists():
-                content = p.read_text(encoding="utf-8")
-                methods.extend(parse_java_interface(content, name))
-            else:
-                missing.append(str(p))
-        if missing:
-            print("Error: required Java SDK interfaces are missing:", file=sys.stderr)
-            for path in missing:
-                print(f"  - {path}", file=sys.stderr)
-            sys.exit(1)
+        methods = [method for declared in interfaces.values() for method in declared]
     else:
         ap.print_help()
         sys.exit(1)

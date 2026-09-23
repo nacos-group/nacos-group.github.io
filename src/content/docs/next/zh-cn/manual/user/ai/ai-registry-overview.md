@@ -87,6 +87,14 @@ Nacos 为 AgentSpec 提供上传 ZIP、创建草稿、更新草稿、提交审�
 
 详细说明见 [AgentSpecs 管理](./agentspec-registry.md)。
 
+## ARD 资源发现
+
+Nacos 3.3 支持通过 ARD（Agentic Resource Discovery）统一搜索 Agent、Skill、Prompt 和 MCP Server，并获取资源目录及版本内容。它适合接入支持 ARD 的 AI 应用和工具链，资源仍通过各自的管理入口发布。
+
+资源范围、发布条件和结果使用方式见 [ARD 资源发现](./ard-discovery.md)，服务端启用与 HTTP 示例见[生态融合中的 ARD 接入指南](../../../ecology/use-nacos-with-ard.md)。
+
+需要为 ARD 搜索补充向量召回时，可以按 [AI 向量插件](../../../plugin/ai-vector-plugin.md)配置可选的向量索引。
+
 ## 它和配置管理、服务发现的关系
 
 AI 管理中心不是把 AI 资源简单地当成配置或服务。
@@ -109,7 +117,7 @@ AI 管理中心不是把 AI 资源简单地当成配置或服务。
 如果你是平台或运维人员：
 
 - 想治理 Agent、MCP Server、Prompt、Skill、AgentSpec 的版本，先看 [AI 资源生命周期](./ai-resource-lifecycle.md)。
-- 想管理 Agent、MCP、Prompt、Skill、AgentSpec 或导入外部 AI 资源，参考 [运维 API](../../admin/admin-api.md) 和 [控制台 API](../../admin/console-api.md)。
+- 想在页面中创建、审核和发布资源，参考[控制台手册](../../admin/console.md#ai-管理中心)；自动化管理或导入外部 AI 资源，参考 [运维 API](../../admin/admin-api.md) 和 [Maintainer SDK](../../admin/maintainer-sdk.md)。
 - 想接入发布审核、安全扫描或外部资源导入，优先关注 [AI 发布 Pipeline 插件](../../../plugin/ai-pipeline-plugin.md)、[AI 资源导入插件](../../../plugin/ai-resource-import-plugin.md) 和 [可见性插件](../../../plugin/visibility-plugin.md)。
 
 ## 资源生命周期

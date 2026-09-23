@@ -87,6 +87,14 @@ Nacos supports AgentSpec ZIP upload, draft creation, draft update, submit, publi
 
 See [AgentSpecs Registry](./agentspec-registry.md) for details.
 
+## ARD Resource Discovery
+
+Nacos 3.3 supports searching Agents, Skills, Prompts, and MCP Servers through ARD (Agentic Resource Discovery), with catalogs and versioned artifacts. AI applications and toolchains that support ARD can use this interface while resources continue to be published through their existing management entry points.
+
+See [ARD Resource Discovery](./ard-discovery.md) for resource coverage, publishing requirements, and result usage. For server setup and HTTP examples, see the [ARD Integration Guide in Ecology](../../../ecology/use-nacos-with-ard.md).
+
+To add vector retrieval to ARD search, configure an optional vector index as described in [AI Vector Plugin](../../../plugin/ai-vector-plugin.md).
+
 ## Relationship With Config And Naming
 
 AI Registry is not just configuration management with another name. It is also not ordinary service discovery.
@@ -109,7 +117,7 @@ If you build AI applications:
 If you operate a platform:
 
 - To govern Agent, MCP Server, Prompt, Skill, and AgentSpec versions, start with [AI Resource Lifecycle](./ai-resource-lifecycle.md).
-- To manage Agent, MCP, Prompt, Skill, AgentSpec, or external AI resource import, see [Admin API](../../admin/admin-api.md) and [Console API](../../admin/console-api.md).
+- To create, review, and publish resources in the UI, see the [Console Manual](../../admin/console.md#ai-registry). For automated management or external resource import, use [Admin API](../../admin/admin-api.md) and [Maintainer SDK](../../admin/maintainer-sdk.md).
 - To add release checks, security scans, or external resource import, start with [AI Publish Pipeline Plugin](../../../plugin/ai-pipeline-plugin.md), [AI Resource Import Plugin](../../../plugin/ai-resource-import-plugin.md), and [Visibility Plugin](../../../plugin/visibility-plugin.md).
 
 ## Resource Lifecycle

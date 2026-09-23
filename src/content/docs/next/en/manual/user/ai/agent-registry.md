@@ -53,7 +53,9 @@ Publishing a definition does not start the Agent application. Registering runtim
 - Use the same intended namespace for publishers and consumers. The examples use `public`.
 - Prepare a running Agent application. `http://127.0.0.1:9999/a2a` is a local example address; replace it with an address reachable by consumers in your deployment.
 
-The built-in visibility policy defaults new Agents to `PUBLIC`. For private resources, change the scope to `PRIVATE` while the version is still a draft, before submission. Public visibility does not bypass authentication or grant write permission; see the [Visibility Plugin](../../../plugin/visibility-plugin.md). Nacos login credentials also do not replace credentials required by the Agent service itself.
+The built-in visibility policy defaults new Agents to `PUBLIC`. For a private release, create a draft, set it to `PRIVATE` through the separate scope endpoint, then submit it for publication. Scope applies to the whole Agent; new versions and retries do not reset an existing private setting, and create requests do not accept scope directly. See [Change a resource's scope](../../../plugin/visibility-plugin.md#change-a-resources-scope) for examples.
+
+Public visibility does not bypass authentication or grant write permission. See the [Visibility Plugin](../../../plugin/visibility-plugin.md) for defaults and explicit grants. Nacos login credentials do not replace credentials required by the Agent service itself.
 
 ## 3. Creating and Publishing an Agent
 

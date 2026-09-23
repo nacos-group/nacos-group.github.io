@@ -42,6 +42,7 @@ pluginId = pluginType:pluginName
 | `visibility` | `ROUTED` | 否 | `STANDARD` | 根据领域请求路由可见性实现。 |
 | `ai-pipeline` | `CHAIN` | 否 | `STANDARD` | 按顺序执行 AI 资源发布审核节点。 |
 | `ai-storage` | `ROUTED` | 是 | `STANDARD` | 按 `StorageKey.provider` 路由内容存储。 |
+| `ai-vector` | `ROUTED` | 否 | `STANDARD` | 使用所选 Provider 为资源发现提供可选向量索引和召回。 |
 | `ai-resource-import` | `ROUTED` | 否 | `STANDARD` | 按 `sourceId` 路由一个确定的外部来源。 |
 
 `critical` 是类型能力，不表示该类型的每个实现永远都不能禁用。只有类型当前处于 active 状态时，`PluginTypePolicy` 才会校验领域实际要求的 provider。详情中的 `critical=true` 表示这个具体实现当前不能单独禁用；`typeCritical` 表示该类型具备 critical 能力。
@@ -110,4 +111,4 @@ LOCAL_ONLY > RUNTIME_PERSISTED > STATIC > DEFAULT
 | 鉴权与可见性 | [鉴权插件](./auth-plugin.md)、[可见性插件](./visibility-plugin.md) |
 | 数据与配置 | [多数据源](./datasource-plugin.md)、[配置加密](./config-encryption-plugin.md)、[配置变更](./config-change-plugin.md) |
 | 稳定性与观测 | [轨迹追踪](./trace-plugin.md)、[自定义环境变量](./custom-environment-plugin.md)、[流量防护](./control-plugin.md) |
-| AI 扩展 | [AI 发布 Pipeline](./ai-pipeline-plugin.md)、[AI 资源导入](./ai-resource-import-plugin.md)、[AI 存储](./ai-storage-plugin.md) |
+| AI 扩展 | [AI 发布 Pipeline](./ai-pipeline-plugin.md)、[AI 资源导入](./ai-resource-import-plugin.md)、[AI 存储](./ai-storage-plugin.md)、[AI 向量](./ai-vector-plugin.md) |

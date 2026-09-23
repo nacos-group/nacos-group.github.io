@@ -10,6 +10,8 @@ sidebar:
 
 > This page preserves historical console instructions. Nacos 3.3 enables Client, Admin, and Console authentication by default, with separate switches. Use the [current Console Manual](../../manual/admin/console.md) and [Authentication Manual](../../manual/admin/auth.mdx) instead of the legacy login-disabling settings below.
 
+For Agent/MCP drafts, review, versions, and runtime endpoints in Nacos 3.3, see [AI Registry in the current console](../../manual/admin/console.md#ai-registry). The screenshots and login instructions below are historical references and do not apply to the new console.
+
 [Nacos console](http://console.nacos.io/) aims to enhance the console for service list, health management, service management, a distributed configuration management control ability, in order to help users reduce the cost of micro management service application architecture, will provide basic functions include the following:
 
 * Service management

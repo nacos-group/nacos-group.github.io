@@ -7,6 +7,8 @@ sidebar:
 ---
 
 # Nacos DNS user guide
+This page describes the separately deployed Nacos CoreDNS plugin. Nacos 3.3 also provides [built-in DNS service discovery](./use-nacos-with-native-dns.md), which starts with the server and answers A/AAAA queries directly. The two integrations use different deployment settings and domain naming rules; follow the guide for the one you choose.
+
 This plugin provides a DNS-F client based on CoreDNS, which can help export those registed services on Nacos as DNS domain. DNS-F client is a dedicated agent process(side car) beside the application's process to foward the service discovery DNS domain query request to Nacos.
 ## Quick Start
 To build and run nacos coredns plugin, the OS must be Linux or Mac. And also, make sure your nacos version is 2.2 or higher and golang version is 1.17 or higher. And golang environments(GOPATH,GOROOT,GOHOME) must be configured correctly. Because it needs to support the gRPC connection feature of the nacos2.x version and the go mod function.

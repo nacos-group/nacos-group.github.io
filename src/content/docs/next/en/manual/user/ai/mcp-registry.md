@@ -32,6 +32,14 @@ Use the new 3.3 console or lifecycle management APIs to change MCP definitions:
 
 The standard lifecycle only permits editing drafts. Published and offline content cannot be overwritten directly. For emergency force publish, redraft, and online or offline rules, see [AI Resource Lifecycle](./ai-resource-lifecycle.md).
 
+## Visibility scope
+
+With the built-in Nacos 3.3 visibility policy, new MCP Servers default to `PUBLIC`. This default applies only at first creation: publishing another version, registering runtime endpoints, or retrying does not make an existing `PRIVATE` resource public. See [Visibility Plugin](../../../plugin/visibility-plugin.md) for custom-plugin and disabled-plugin behavior.
+
+For a private resource, create a draft, then use `PUT /v3/admin/ai/mcp/scope` or the Maintainer SDK's `updateMcpServerScope` to set `PRIVATE` before submitting it for publication. Create and publish requests do not accept scope directly. Scope applies to the entire MCP Server, rather than one version. See [Change a resource's scope](../../../plugin/visibility-plugin.md#change-a-resources-scope) for commands.
+
+`PUBLIC` does not bypass API authentication or grant other callers write permission. `PRIVATE` resources can be shared through explicit grants. MCP Client discovery also depends on the resource being enabled and the selected version being online; configure network access and credentials for the actual MCP Server separately.
+
 ## Versions And Availability
 
 - **Default version**: Standard publish and online actions automatically point `latest` to that version; no manual update is needed.

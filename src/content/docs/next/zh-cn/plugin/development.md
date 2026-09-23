@@ -24,6 +24,7 @@ sidebar:
 | `visibility` | `getVisibilityServiceName()` | `VisibilityService` |
 | `ai-pipeline` | `pipelineId()` | `PublishPipelineService` |
 | `ai-storage` | `type()` | `AiResourceStorage` / `AiResourceStorageBuilder` |
+| `ai-vector` | `type()` | `AiResourceVectorIndex` / `AiResourceVectorIndexBuilder` |
 | `ai-resource-import` | `pluginName()` | `AiResourceImportServiceBuilder` |
 
 把实现类写入对应的 `META-INF/services/{SPI 接口全限定名}`。插件 JAR 可以放到 `${nacos.home}/plugins` 或 Nacos Server 启动 classpath。外部依赖也必须在每个节点可用。
