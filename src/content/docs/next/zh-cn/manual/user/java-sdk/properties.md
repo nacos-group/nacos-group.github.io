@@ -223,3 +223,24 @@ Nacos Java SDK 中有部分参数对运行时期的影响较小，且需要全�
 | project.name              | 该SDK所归属的应用名，可在服务订阅者列表和配置订阅者列表中使用，仅作为参考字段使用                                                                         | 任意字符串              | unknown           |
 | ~~NACOS.CONNECT.TIMEOUT~~ | 连接服务时的连接超时时间，旧版本Http使用，已废弃                                                                                         | 任意int              | 1000              |
 | NACOS.READ.TIMEOUT | 连接服务时的读取超时时间，旧版本Http使用                                                                                         | 任意int              | 3000              |
+| nacos.client.json.adapter | JSON 适配器选择，仅通过 JVM `-D` 设置，在首次使用 JSON 层之前配置；显式选择不可用的适配器会初始化失败。详见 [JSON 依赖与适配](./usage.md#14-json-依赖与适配)。 | auto / jackson2 / jackson3 | auto |
+
+### 2.6. AI 资源参数
+
+下列名称定义在 `com.alibaba.nacos.api.ai.constant.AiConstants`，通过创建 `AiService` 时的 `Properties` 配置。传输选项自 3.3 起支持，在创建时确定；修改原 Properties 不会改变现有实例的模式。
+
+| 参数 | 作用 | 默认值 |
+| --- | --- | --- |
+| nacosAiTransportMode | AI 资源的总传输模式，可选 `grpc`、`http`、`auto`。 | grpc |
+| nacosAiMcpTransportMode | MCP 子服务的传输覆盖值。 | 继承总模式 |
+| nacosAiAgentTransportMode | Agent/RAD 子服务的传输覆盖值；旧 A2A 路由另有兼容规则。 | 继承总模式 |
+| nacosAiSkillTransportMode | Skill 的模式配置；当前可用路径为 HTTP。 | 继承总模式 |
+| nacosAiAgentSpecTransportMode | AgentSpec 的模式配置；当前可用路径为 HTTP。 | 继承总模式 |
+| nacosAiPromptTransportMode | Prompt 查询和订阅轮询的传输覆盖值。 | 继承总模式 |
+| nacosAiMcpServerCacheUpdateInterval | MCP 订阅轮询间隔，毫秒。 | 10000 |
+| nacosAiAgentCardCacheUpdateInterval | 旧 A2A AgentCard 订阅轮询间隔，毫秒。 | 10000 |
+| nacosAiSkillCacheUpdateInterval | Skill 订阅轮询间隔，毫秒。 | 10000 |
+| nacosAiAgentSpecCacheUpdateInterval | AgentSpec 订阅轮询间隔，毫秒。 | 10000 |
+| nacosAiPromptCacheUpdateInterval | Prompt 订阅轮询间隔，毫秒。 | 10000 |
+
+五个资源覆盖值同样只接受 `grpc`、`http`、`auto`；非法值会在初始化时失败，包括当前仅使用 HTTP 的资源。`auto` 按能力和连接状态选择可用路径，不会把鉴权、参数、迁移等业务失败当作切换传输的理由。完整规则和网络要求见 [AI 资源运行时](../sdk/runtime-guide.md#6-ai-资源运行时)。

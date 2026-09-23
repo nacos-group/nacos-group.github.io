@@ -33,23 +33,23 @@ description: Updates Nacos Java SDK usage documentation by comparing Java Client
 
 ## Java Client API 定义来源
 
-以下接口为文档的 API 来源，解析与对比均基于其源码。**Skill、Prompt、AgentSpec 与协议无关 Agent 能力都在 usage 中单独成章**；**shutdown 已在「Java SDK 的生命周期」章节说明，不单独列为 API 小节**。解析 `AiService` 时必须同时纳入它继承的 `AgentDiscoveryService`，不能只扫描 `AiService.java` 本身。
+以下接口为文档的 API 来源，解析与对比均基于其源码。**Skill、Prompt、AgentSpec 与协议无关 Agent 能力都在 usage 中单独成章**；**shutdown 已在「Java SDK 的生命周期」章节说明，不单独列为 API 小节**。从 `AiService`、`AgentService` 展开父接口，按方法声明所在的资源接口分章；不能只扫描兼容 facade，或把其所有方法归入 MCP。
 
 | 接口 (interface) | 文档章节 | 说明 |
 |------------------|----------|------|
 | `com.alibaba.nacos.api.config.ConfigService` | 第 3 章 配置管理 API | 配置中心 |
 | `com.alibaba.nacos.api.naming.NamingService` | 第 4 章 服务发现API | 注册中心 |
 | `com.alibaba.nacos.api.lock.LockService` | 第 5 章 分布式锁API | lock、unLock 等 |
-| `com.alibaba.nacos.api.ai.AiService`（MCP 相关方法） | 第 6 章 MCP 服务 | 查询/发布/注册/订阅 MCP 等 |
-| `com.alibaba.nacos.api.ai.A2aService` | 第 7 章 A2A 注册中心 | AgentCard 等，AiService 继承此接口 |
-| `com.alibaba.nacos.api.ai.AiService`（Skill 相关方法） | 第 8 章 Skill 能力 | downloadSkillZip、downloadSkillZipByVersion、downloadSkillZipByLabel、subscribeSkill、unsubscribeSkill |
-| `com.alibaba.nacos.api.ai.AiService`（Prompt 相关方法） | 第 9 章 Prompt 能力 | getPrompt、subscribePrompt 等（新增能力，排在 A2A 后） |
-| `com.alibaba.nacos.api.ai.AiService`（AgentSpec 相关方法） | 第 10 章 AgentSpec 能力 | loadAgentSpec、subscribeAgentSpec、unsubscribeAgentSpec（新增能力，排在 Prompt 后） |
-| `com.alibaba.nacos.api.ai.AgentDiscoveryService`，以及 `AiService.publishAgent` | 第 11 章 Agent 管理与发现 | Search、Discover、轮询订阅、Endpoint 注册/注销，以及代码式 Agent 定义发布 |
+| `com.alibaba.nacos.api.ai.McpService` | 第 6 章 MCP 服务 | 经 `aiService.mcp()` 查询、发布、注册和订阅 |
+| `com.alibaba.nacos.api.ai.A2aService` | 第 7 章 A2A 注册中心 | AgentCard 等，由 `AgentService` 和兼容 `AiService` 继承 |
+| `com.alibaba.nacos.api.ai.SkillService` | 第 8 章 Skill 能力 | 经 `aiService.skill()` 下载、订阅 |
+| `com.alibaba.nacos.api.ai.PromptService` | 第 9 章 Prompt 能力 | 经 `aiService.prompt()` 查询、订阅 |
+| `com.alibaba.nacos.api.ai.AgentSpecService` | 第 10 章 AgentSpec 能力 | 经 `aiService.agentSpec()` 查询、订阅 |
+| `com.alibaba.nacos.api.ai.AgentDiscoveryService`、`AgentService.publishAgent` | 第 11 章 Agent 管理与发现 | 经 `aiService.agent()` Search、Discover、Watch、Endpoint 注册/注销和发布定义 |
 
 **章节顺序约定**：已有模块（如 MCP、A2A）保持原有章号；Skill、Prompt、AgentSpec、Agent 管理与发现依次排在 A2A 之后，第 12 章为生命周期。后续新增能力继续在生命周期之前向后添加。
 
-**Agent 接入建议**：Agent 管理/发现是协议无关的新主入口，未来用于替代旧 A2A 管理接口。兼容窗口内 `A2aService` 仍然保留，但新接入用户和 SDK 应优先兼容 `AgentDiscoveryService` 与 `AiService.publishAgent`，不要把 A2A AgentCard 作为新能力的事实源。
+**Agent 接入建议**：新接入优先使用 `aiService.agent()` 的通用能力，旧 `A2aService` 保留兼容。`AiService` 不继承 `AgentDiscoveryService` 或 `AgentService`，不能在 facade 上调用新 Agent 业务方法。五个 getter 在初始化章节说明，不单独作为业务 API 小节；兼容 delegate 与资源方法的签名应一致，对比时只计资源声明一次。
 
 接口在 nacos 仓库中的路径：`api/src/main/java/com/alibaba/nacos/api/` 下对应包名。`--nacos-api-dir` 可直接传 **Nacos 仓库根目录**，也可传 `api` 模块根目录、`api/src/main/java` 或 `com/alibaba/nacos/api` 包根目录。
 
@@ -127,8 +127,8 @@ description: Updates Nacos Java SDK usage documentation by comparing Java Client
 
 | 脚本 | 作用 |
 |------|------|
-| [scripts/compare_java_api_with_doc.py](./scripts/compare_java_api_with_doc.py) | 解析 ConfigService、NamingService、LockService、AiService、AgentDiscoveryService、A2aService，并按能力章节和精确参数类型对比 usage.md，输出新增/删除 API、新增/删除重载及返回类型不一致；**不修改任何文件**。 |
-| [scripts/parse_java_interface.py](./scripts/parse_java_interface.py) | 解析 Java 接口源码，提取方法名、参数类型、参数个数、返回类型、`@Since`/`@since` 等，供对比脚本或人工查阅。 |
+| [scripts/compare_java_api_with_doc.py](./scripts/compare_java_api_with_doc.py) | 展开 Client 根接口和 AI 资源继承关系，按声明接口分章，对比精确参数类型和返回类型；校验 facade delegate，避免重复和误报删除。**不修改任何文件**。 |
+| [scripts/parse_java_interface.py](./scripts/parse_java_interface.py) | 解析 Java 接口源码及父接口，保留声明接口、方法名、参数类型、返回类型、`@Since`/`@since`。必需文件缺失、继承异常或无法解析时失败。 |
 
 ## 禁止行为
 

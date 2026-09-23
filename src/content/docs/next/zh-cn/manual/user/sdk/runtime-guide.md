@@ -39,7 +39,7 @@ Nacos 3.3 默认开启 Client 鉴权。未配置正确身份或权限时，配�
 | `contextPath` | Nacos HTTP API 的 context path，默认是 `nacos`。 |
 | gRPC 端口偏移 | Nacos 3.x 客户端仍沿用主端口加偏移量的计算方式，默认从 `8848` 推导出 `9848`。 |
 
-部署侧需要同时保证 HTTP 端口和 gRPC 端口可达。HTTP 端口用于 OpenAPI、登录和部分兼容请求；gRPC 端口用于大多数客户端长连接请求。
+配置和服务发现 SDK 通常需要 HTTP 与 gRPC 端口均可达：HTTP 用于登录等请求，gRPC 用于运行时长连接。仅使用 AI 子服务时，按第 6 节的传输模式及兼容路径准备网络；选择 HTTP 不会把同一应用中的 ConfigService、NamingService 也改为 HTTP。
 
 ## 3. 连接不是一次性动作
 
@@ -90,6 +90,47 @@ AI 运行时和配置、服务发现一样，也需要区分“资源管理”�
 - 应用运行时查询、下载、订阅和注册 endpoint 属于 Client SDK 或 Client API 场景。
 
 更多资源模型请阅读 [AI 管理中心](../ai/ai-registry-overview.md)。
+
+### 6.1. Java SDK 的资源入口与传输
+
+3.3 Java SDK 通过 `AiService.mcp()`、`agent()`、`skill()`、`prompt()`、`agentSpec()` 取得子服务，共享一个命名空间、认证和关闭流程。子入口本身不会为应用创建独立 SDK。
+
+| 模式 | 使用方式 |
+| --- | --- |
+| `grpc`（默认） | 具有 gRPC 实现的资源使用 gRPC；显式 gRPC 的网络失败不会自动变成 HTTP 请求。 |
+| `http` | 使用服务端支持的 AI HTTP 能力，需要 HTTP 主端口可达。SDK 负责认证、客户端标识和端点活性维护。 |
+| `auto` | 按资源能力和连接状态选择；符合条件的连接失败可以转用 HTTP，业务错误不触发切换。 |
+
+Skill、AgentSpec 当前使用 HTTP 路径，即使总模式为 `grpc` 也需要 HTTP 可达。旧 A2A 路由使用 gRPC；选择 RAD 路由后，A2A 兼容操作才按 Agent 模式执行。不存在相应能力的旧服务端不会因为设置 `auto` 就获得新 API。
+
+在创建 SDK 前设置模式，例如只让 Agent 使用 HTTP：
+
+```java
+Properties properties = new Properties();
+properties.setProperty("serverAddr", "{serverAddr}");
+properties.setProperty("namespace", "public");
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
+properties.setProperty("nacosAiTransportMode", "grpc");
+properties.setProperty("nacosAiAgentTransportMode", "http");
+AiService aiService = AiFactory.createAiService(properties);
+AgentService agents = aiService.agent();
+```
+
+资源覆盖值和总值都在初始化时校验并固定，修改 Properties 不会热切换已有实例。完整参数见 [AI 资源参数](../java-sdk/properties.md#26-ai-资源参数)。
+
+### 6.2. 订阅、端点活性与错误处理
+
+- Agent 订阅优先使用服务端 Watch 通知，不支持时回退为有界 Discover 轮询；SDK 向应用交付完整快照。收到不可用事件时撤销旧视图，终止性错误修复后重新订阅。
+- MCP、Skill、Prompt、AgentSpec 保留各自的订阅轮询。SDK 已获取的内容通过对应监听器传递，应用无需把所有回调都处理成一次额外查询。
+- HTTP 注册的 Agent/MCP 运行端点由 SDK 维护客户端标识及心跳。保留注册使用的实例；正常退出时通过同一实例注销，再关闭 `AiService`。取消订阅或下线资源定义不会停止业务进程。
+- 权限、参数、版本冲突、容量或迁移限制应按业务错误处理。发布超时后结果可能未知，先查询状态，不应盲目换一种传输重发；端点重连恢复不等于定义发布可以自动重试。
+
+### 6.3. 旧 A2A 与 RAD 的兼容
+
+3.3 SDK 在首次可靠协商后固定当前实例使用旧 A2A 或 RAD 路由。选定旧 A2A 的实例在服务端升级后不会自动改走 RAD；需要重新创建 SDK 才重新判断。选定 RAD 后，业务或迁移错误不会使其静默退回旧 A2A。
+
+旧 A2A 与通用 Agent 注册同一资源时应避免混用发布来源。需要新 Agent 能力时，先完成服务端升级及迁移，再接入 SDK；参见 [Agent 管理](../ai/agent-registry.md)、[RAD 接入指南](../ai/rad-discovery.md)和[升级手册](../../admin/upgrading.mdx)。
 
 ## 7. 本地缓存、failover 和 redo
 

@@ -216,3 +216,24 @@ Some parameters in the Nacos Java SDK have little impact at runtime and must rem
 | project.name              | The application name to which this SDK belongs. It can be used in the service subscriber list and configuration subscriber list as a reference field only. | Any string | unknown |
 | ~~NACOS.CONNECT.TIMEOUT~~ | Deprecated. The connection timeout used by the old HTTP implementation when connecting to a service. | Any int | 1000 |
 | NACOS.READ.TIMEOUT        | The read timeout used by the old HTTP implementation when connecting to a service. | Any int | 3000 |
+| nacos.client.json.adapter | JSON adapter selection, configured only through JVM `-D` before first use of the JSON layer. An explicitly selected but unavailable adapter causes initialization to fail. See [JSON Dependencies and Adapters](./usage.md#14-json-dependencies-and-adapters). | auto / jackson2 / jackson3 | auto |
+
+### 2.6. AI Resource Parameters
+
+These names are defined in `com.alibaba.nacos.api.ai.constant.AiConstants` and configured through the `Properties` used to create `AiService`. Transport options are available since 3.3 and are fixed at creation; editing the original Properties does not change an existing instance's mode.
+
+| Parameter | Purpose | Default |
+| --- | --- | --- |
+| nacosAiTransportMode | Overall AI transport mode: `grpc`, `http` or `auto`. | grpc |
+| nacosAiMcpTransportMode | Transport override for the MCP service. | Inherits overall mode |
+| nacosAiAgentTransportMode | Transport override for Agent/RAD; the legacy A2A route has separate compatibility rules. | Inherits overall mode |
+| nacosAiSkillTransportMode | Skill mode setting; the currently available path is HTTP. | Inherits overall mode |
+| nacosAiAgentSpecTransportMode | AgentSpec mode setting; the currently available path is HTTP. | Inherits overall mode |
+| nacosAiPromptTransportMode | Transport override for Prompt queries and subscription polling. | Inherits overall mode |
+| nacosAiMcpServerCacheUpdateInterval | MCP subscription polling interval, in milliseconds. | 10000 |
+| nacosAiAgentCardCacheUpdateInterval | Legacy A2A AgentCard subscription polling interval, in milliseconds. | 10000 |
+| nacosAiSkillCacheUpdateInterval | Skill subscription polling interval, in milliseconds. | 10000 |
+| nacosAiAgentSpecCacheUpdateInterval | AgentSpec subscription polling interval, in milliseconds. | 10000 |
+| nacosAiPromptCacheUpdateInterval | Prompt subscription polling interval, in milliseconds. | 10000 |
+
+All five overrides also accept only `grpc`, `http` or `auto`. Invalid values fail initialization, including for resources currently using only HTTP. `auto` selects an available path according to capabilities and connection state; authentication, parameter and migration failures do not trigger transport fallback. See [AI Resource Runtime](../sdk/runtime-guide.md#6-ai-resource-runtime) for behavior and network requirements.

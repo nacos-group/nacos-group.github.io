@@ -39,7 +39,7 @@ Confirm these fields during initialization:
 | `contextPath` | The context path of Nacos HTTP APIs. The default is `nacos`. |
 | gRPC port offset | Nacos 3.x clients still use the same main-port-plus-offset rule. By default, `9848` is derived from `8848`. |
 
-The deployment must make both the HTTP port and the gRPC port reachable. The HTTP port is used for OpenAPI, login, and some compatibility requests. The gRPC port is used for most long-lived client runtime requests.
+Configuration and naming SDKs normally need both HTTP and gRPC reachable: HTTP handles login and related requests, while gRPC handles runtime connections. For AI-only applications, prepare networking for the selected transport and compatibility route in section 6. Selecting HTTP for AI does not switch ConfigService or NamingService to HTTP.
 
 ## 3. Connection Is Not A One-Time Action
 
@@ -90,6 +90,47 @@ As with configuration and service discovery, AI runtime needs a clear split betw
 - Querying, downloading, subscribing to resources, and registering endpoints at application runtime are Client SDK or Client API scenarios.
 
 For more resource models, read [AI Registry](../ai/ai-registry-overview.md).
+
+### 6.1. Java SDK Resource Services and Transports
+
+The 3.3 Java SDK provides `AiService.mcp()`, `agent()`, `skill()`, `prompt()` and `agentSpec()`. These services share one namespace, authentication and shutdown lifecycle; obtaining a resource service does not create a separate SDK instance.
+
+| Mode | Behavior |
+| --- | --- |
+| `grpc` (default) | Resources with gRPC implementations use gRPC. A network failure in explicit gRPC mode does not automatically become an HTTP request. |
+| `http` | Uses supported AI HTTP capabilities and requires the HTTP main port. The SDK manages authentication, client identity and endpoint liveness. |
+| `auto` | Selects by resource capability and connection state. Eligible connection failures can use HTTP; business errors do not trigger fallback. |
+
+Skill and AgentSpec currently use HTTP, even when the overall mode is `grpc`. The legacy A2A route uses gRPC; after choosing RAD, compatible A2A operations follow the Agent transport setting. Setting `auto` does not add missing API capabilities to an older server.
+
+Configure modes before creating the SDK. For example, use HTTP only for Agent:
+
+```java
+Properties properties = new Properties();
+properties.setProperty("serverAddr", "{serverAddr}");
+properties.setProperty("namespace", "public");
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
+properties.setProperty("nacosAiTransportMode", "grpc");
+properties.setProperty("nacosAiAgentTransportMode", "http");
+AiService aiService = AiFactory.createAiService(properties);
+AgentService agents = aiService.agent();
+```
+
+The overall mode and every override are validated and fixed at initialization. Editing Properties does not switch an existing instance. See [AI Resource Parameters](../java-sdk/properties.md#26-ai-resource-parameters).
+
+### 6.2. Subscriptions, Endpoint Liveness and Errors
+
+- Agent subscriptions prefer server Watch notifications and fall back to bounded Discover polling when unsupported. Applications receive complete snapshots. Discard the old view on unavailable events; subscribe again after resolving terminal errors.
+- MCP, Skill, Prompt and AgentSpec retain their subscription polling. Their listeners carry content already fetched by the SDK, so applications need not turn every callback into another query.
+- The SDK maintains client identity and heartbeats for Agent/MCP endpoints registered over HTTP. Retain the registering instance; on normal exit, deregister through that same instance and close `AiService`. Unsubscribing or taking a definition offline does not stop the business process.
+- Treat permissions, parameters, version conflicts, capacity and migration restrictions as business errors. Publication timeouts may have an unknown outcome: query the state before retrying, rather than blindly switching transports. Endpoint reconnection recovery does not imply automatic definition-publication retries.
+
+### 6.3. Legacy A2A and RAD Compatibility
+
+After the first reliable negotiation, the 3.3 SDK fixes an instance's route to legacy A2A or RAD. An instance that selected legacy A2A does not switch to RAD when the server is upgraded; recreate the SDK to negotiate again. Once RAD is selected, business or migration errors do not silently fall back to legacy A2A.
+
+Avoid mixing legacy A2A and generic Agent publication sources for the same resource. Complete server upgrade and migration before adopting new Agent capabilities. See [Agent Management](../ai/agent-registry.md), [RAD Integration](../ai/rad-discovery.md) and [Upgrading](../../admin/upgrading.mdx).
 
 ## 7. Local Cache, Failover, And Redo
 

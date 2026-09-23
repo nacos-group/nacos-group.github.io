@@ -34,10 +34,10 @@ The Java SDK maintains connections, listeners, subscriptions, local cache, and r
 - One SDK instance belongs to one namespace. Create separate instances when accessing multiple namespaces.
 - Reuse SDK instances inside an application. Frequent client creation wastes connections and thread resources.
 - Call `shutdown()` when the application exits, reloads, or replaces a client instance.
-- A configuration listener receives a change notification. The application should read the configuration content again and refresh its own state.
+- A configuration listener receives configuration content through `Listener.receiveConfigInfo`; the application refreshes its own state from that content.
 - A service subscription returns a runtime discovery view. It may be affected by health state, weight, protection threshold, cluster, selector, and other factors.
 - AI resources are affected by namespace, version, label, publish state, and visibility. In production, when using MCP, Agent, Skill, Prompt, or other resources that support versions or labels, specify the expected version or label when possible, and handle missing, invisible, or changed resources.
-- An AI resource subscription receives a change notification. The application should read the MCP, Agent, Skill, Prompt, or AgentSpec content again and refresh or degrade according to its own runtime model.
+- AI listeners return resource content or discovery snapshots according to their contracts. Replace the previous view and handle unavailable events; not every callback requires another query.
 - Distributed lock is experimental. Before production use, read [Distributed Lock](../../../experimental/distributed-lock.md) and validate the behavior carefully.
 
 ## 1. Dependency Overview
@@ -63,7 +63,7 @@ Nacos Java SDK requires JDK 1.8 or later.
 ```xml
     <properties>
         <!-- The pure client is supported since 2.1.2. -->
-        <nacos.version>3.2.0</nacos.version>
+        <nacos.version>3.3.0-RC</nacos.version>
     </properties>
 
     <dependencies>
@@ -76,12 +76,12 @@ Nacos Java SDK requires JDK 1.8 or later.
         </dependency>
         <!-- When using the pure client, introduce nacos-api and nacos-common of the same version. Otherwise, runtime class-not-found errors may occur. -->
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-common</artifactId>
             <version>${nacos.version}</version>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-api</artifactId>
             <version>${nacos.version}</version>
         </dependency>
@@ -93,6 +93,26 @@ Nacos Java SDK requires JDK 1.8 or later.
 In 3.x the default namespace ID was changed from empty string to `public` (see [issue #9846](https://github.com/alibaba/nacos/issues/9846)). The 3.0 client uses `public` by default, so it is incompatible with older servers when using the default namespace.
 
 Before upgrading, ensure that **the server is already 3.0 or above**, or **you are not using the config center in the default namespace**.
+
+When upgrading to the 3.3 Java SDK, also check the following:
+
+- Use the resource services in section 2 for new AI integrations. Previously released flat MCP, A2A, Skill, Prompt and AgentSpec methods remain compatible and are deprecated; generic Agent operations use `aiService.agent()`.
+- Client metrics now use Micrometer. Register a `MeterRegistry` and update metric names, units and alerts as described in [Client Metrics Migration](./metrics.md). Keeping only the old `simpleclient` dependency does not automatically export metrics.
+- Use the same version of `nacos-client`, `nacos-api` and `nacos-common` with the pure classifier, and verify dependencies against the application's runtime.
+
+### 1.4. JSON Dependencies and Adapters
+
+3.3 supports Jackson 2 and Jackson 3. The default `auto` mode selects an available runtime adapter, preferring Jackson 3 when both are available. Jackson 2 is a regular dependency; applications using Jackson 3 must provide its dependencies and meet that Jackson version's Java requirements. The SDK's Java 8 minimum does not mean Jackson 3 also runs on Java 8.
+
+To select Jackson 2 explicitly, set this JVM startup option:
+
+```bash
+-Dnacos.client.json.adapter=jackson2
+```
+
+Supported values are `auto`, `jackson2` and `jackson3`. Initialization fails if the selected adapter is unavailable or no adapter is available. This is a JVM system property, not a per-client `Properties` option.
+
+Serialization examples below use `com.alibaba.nacos.api.utils.json.JsonUtils`. Prefer this neutral entry point for new code. Legacy `JacksonUtils` signatures that expose Jackson 2 types remain compatibility APIs; changing the adapter cannot turn those signatures into Jackson 3 types.
 
 ## 2. Initialize the SDK
 
@@ -113,6 +133,18 @@ LockService lockService = NacosLockFactory.createLockService(properties);
 AiService aiService = AiFactory.createAiService(properties);
 ```
 
+In 3.3, obtain AI services by resource:
+
+| Entry point | Return type | Section |
+| --- | --- | --- |
+| `aiService.mcp()` | `McpService` | Chapter 6 |
+| `aiService.agent()` | `AgentService` | Legacy A2A in chapter 7; generic Agent in chapter 11 |
+| `aiService.skill()` | `SkillService` | Chapter 8 |
+| `aiService.prompt()` | `PromptService` | Chapter 9 |
+| `aiService.agentSpec()` | `AgentSpecService` | Chapter 10 |
+
+These interfaces are in `com.alibaba.nacos.api.ai` and share the parent `AiService` namespace, connections and authentication. Release them through `aiService.shutdown()`. The following examples use resource services; existing flat compatibility calls can migrate gradually. Generic Agent search, discovery, subscriptions, endpoint registration and definition publication cannot be called directly on `AiService`.
+
 For more parameters involved in initialization, see [Java SDK Properties](./properties.md).
 
 > Note: A Nacos Java SDK instance can access only configurations and services in the same namespace. To access configurations or services in different namespaces, create different Nacos Java SDK instances.
@@ -123,7 +155,9 @@ For more parameters involved in initialization, see [Java SDK Properties](./prop
 
 Gets configuration from Nacos when a service starts.
 ```java
-public String getConfig(String dataId, String group, long timeoutMs) throws NacosException
+public String getConfig(String dataId, String group, long timeoutMs) throws NacosException;
+
+ConfigQueryResult getConfig(GetConfigRequest request) throws NacosException;
 ```
 
 #### Request Parameters
@@ -134,6 +168,14 @@ public String getConfig(String dataId, String group, long timeoutMs) throws Naco
 | group | string | Configuration group. We recommend using `product:module`, such as `Nacos:Test`, to ensure uniqueness. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 128 bytes. |
 | timeout | long | Timeout for reading the configuration, in milliseconds. The recommended value is 3000. |
 
+3.3 adds `getConfig(GetConfigRequest)`. Request and result models are in `com.alibaba.nacos.api.config`; the namespace comes from SDK initialization.
+
+| Request field | Type | Description |
+| --- | --- | --- |
+| dataId | String | Required configuration ID. |
+| group | String | Configuration group; an empty value uses `DEFAULT_GROUP`. |
+| timeoutMs | long | Query timeout in milliseconds. Set it explicitly, for example to 5000. |
+| localMd5 | String | Optional MD5 of content already held locally. Usually omit it and let the SDK manage conditional queries and matching content. |
 
 #### Return Value
 
@@ -141,6 +183,9 @@ public String getConfig(String dataId, String group, long timeoutMs) throws Naco
 | :--- | :--- |
 | string | Configuration value |
 
+The request-object overload returns `ConfigQueryResult`, with `content`, `md5`, `configType` and `encryptedDataKey`. `content` can be null when the configuration does not exist. Use the returned `md5` for CAS updates; do not compute it from decrypted content.
+
+The SDK handles gRPC Not-Modified responses and restores content. Applications still consume the result object rather than handling HTTP 304. This does not imply that all HTTP Config APIs support conditional queries.
 
 #### Request Example
 
@@ -161,9 +206,19 @@ try {
 }
 ```
 
+The request-object example reuses `configService` from section 2:
+
+```java
+GetConfigRequest request = GetConfigRequest.builder()
+        .dataId("{dataId}").group("{group}").timeoutMs(5000).build();
+ConfigQueryResult result = configService.getConfig(request);
+System.out.println(result.getContent());
+System.out.println(result.getMd5());
+```
+
 #### Exceptions
 
-If reading the configuration times out or a network error occurs, a `NacosException` is thrown.
+Invalid parameters, query timeouts or network failures can raise `NacosException`.
 
 ### 3.2. Listen to Config
 #### Description
@@ -268,6 +323,8 @@ public boolean publishConfig(String dataId, String group, String content) throws
 
 public boolean publishConfig(String dataId, String group, String content, String type) throws NacosException;
 
+PublishConfigResult publishConfig(PublishConfigRequest request) throws NacosException;
+
 ```
 
 #### Request Parameters
@@ -279,6 +336,7 @@ public boolean publishConfig(String dataId, String group, String content, String
 | content | string | Configuration content. The maximum size is 100 KB. |
 | type | string | @Since 1.4.1. Configuration type. See `com.alibaba.nacos.api.config.ConfigType`. The default value is `TEXT`. |
 
+3.3 adds `publishConfig(PublishConfigRequest)`. This model is in `com.alibaba.nacos.api.config` and contains `dataId`, `group`, `content`, `type` and optional `casMd5`. Setting `casMd5` enables CAS; a mismatch fails the publish without overwriting existing content. The SDK supplies the namespace.
 
 #### Return Parameters
 
@@ -286,6 +344,7 @@ public boolean publishConfig(String dataId, String group, String content, String
 | :--- | :--- |
 | boolean | Whether the publish operation succeeded |
 
+The request-object overload returns `PublishConfigResult`. Check `isSuccess()` first; on failure, inspect `getErrorCode()` and `getErrorMessage()`. On success, `getMd5()` is available. Remote request failures may be returned as failed results, while local validation and filters can still throw exceptions. A `catch` block alone is insufficient to detect publication failure.
 
 #### Request Example
 
@@ -307,9 +366,25 @@ try {
 }
 ```
 
+This example reuses `configService` from section 2, reads an existing configuration and publishes with CAS:
+
+```java
+ConfigQueryResult current = configService.getConfig(GetConfigRequest.builder()
+        .dataId("{dataId}").group("{group}").timeoutMs(5000).build());
+if (current.getContent() == null || current.getMd5() == null) {
+    throw new IllegalStateException("Read an existing configuration before CAS publishing");
+}
+PublishConfigResult result = configService.publishConfig(PublishConfigRequest.builder()
+        .dataId("{dataId}").group("{group}").content("new-content")
+        .type("text").casMd5(current.getMd5()).build());
+if (!result.isSuccess()) {
+    System.err.println(result.getErrorCode() + ": " + result.getErrorMessage());
+}
+```
+
 #### Exceptions
 
-If reading the configuration times out or a network error occurs, a `NacosException` is thrown.
+Check the boolean or result object for a failed publication, and handle `NacosException` from validation, filters or other processing.
 
 ### 3.5. Delete Config
 #### Description
@@ -320,7 +395,9 @@ Deletes Nacos configurations automatically from a program to reduce operations c
 
 
 ```java
-public boolean removeConfig(String dataId, String group) throws NacosException
+public boolean removeConfig(String dataId, String group) throws NacosException;
+
+RemoveConfigResult removeConfig(RemoveConfigRequest request) throws NacosException;
 
 ```
 
@@ -338,6 +415,7 @@ public boolean removeConfig(String dataId, String group) throws NacosException
 | :--- | :--- |
 | boolean | Whether the deletion succeeded |
 
+3.3 adds `RemoveConfigRequest` in `com.alibaba.nacos.api.config`, with `dataId` and `group`; the SDK supplies the namespace. It returns `RemoveConfigResult`: check `isSuccess()`, then `getErrorCode()` and `getErrorMessage()` on failure. Parameter or remote invocation errors can still throw `NacosException`.
 
 #### Request Example
 
@@ -360,9 +438,19 @@ try {
 }
 ```
 
+The request-object example reuses `configService` from section 2:
+
+```java
+RemoveConfigResult result = configService.removeConfig(RemoveConfigRequest.builder()
+        .dataId("{dataId}").group("{group}").build());
+if (!result.isSuccess()) {
+    System.err.println(result.getErrorCode() + ": " + result.getErrorMessage());
+}
+```
+
 #### Exceptions
 
-If reading the configuration times out or a network error occurs, a `NacosException` is thrown.
+Check the boolean or result object for a failed deletion, and handle `NacosException` from validation or remote calls.
 
 ### 3.6. Get Config with Listener
 
@@ -1828,8 +1916,8 @@ properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
-    McpServerDetailInfo detailInfo = aiService.getMcpServer(mcpName, null);
-    System.out.println(JacksonUtils.toJson(detailInfo));
+    McpServerDetailInfo detailInfo = aiService.mcp().getMcpServer(mcpName, null);
+    System.out.println(JsonUtils.toJson(detailInfo));
 } catch (Exception e) {
     e.printStackTrace();
 }
@@ -1841,7 +1929,9 @@ try {
 
 This API releases a new MCP service version. If the MCP service is released for the first time, a new MCP service is created.
 
-If the MCP service and specified version already exist, the request is idempotent and does not create or modify that version again.
+In direct-online mode, a request for an existing MCP service and version is idempotent and does not recreate or modify it. Draft mode requires a version that does not yet exist and no other pending version for the resource. If a conflict occurs, inspect and handle the existing draft through management entry points first.
+
+3.3 adds `createDraft` overloads. Omitting it or setting it to `false` preserves direct-online publication. Setting it to `true` only creates a draft, without submitting, reviewing or publishing it. Complete the server upgrade to 3.3 and MCP lifecycle migration first. If the server does not support draft release, the call fails instead of publishing directly. See [AI Resource Lifecycle](../ai/ai-resource-lifecycle.md) for subsequent draft operations.
 
 
 ```java
@@ -1852,6 +1942,10 @@ String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecifica
 String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecification toolSpecification, McpEndpointSpec endpointSpecification) throws NacosException;
 
 String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecification toolSpecification, McpResourceSpecification resourceSpecification, McpEndpointSpec endpointSpecification) throws NacosException;
+
+String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecification toolSpecification, boolean createDraft) throws NacosException;
+
+String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecification toolSpecification, McpResourceSpecification resourceSpecification, McpEndpointSpec endpointSpecification, boolean createDraft) throws NacosException;
 ```
 
 #### Request Parameters
@@ -1859,13 +1953,14 @@ String releaseMcpServer(McpServerBasicInfo serverSpecification, McpToolSpecifica
 | Name                  | Type | Description | Default Value |
 |:----------------------|:-------------------------|---------------------|------|
 | serverSpecification   | McpServerBasicInfo | MCP service basic information | None, required |
-| toolSpecification     | McpToolSpecification | MCP service tool information | None, required |
+| toolSpecification     | McpToolSpecification | MCP service tool information | None, optional |
 | resourceSpecification | McpResourceSpecification | MCP service resource and resource template information | None, optional |
 | endpointSpecification | McpEndpointSpec | MCP service endpoint information | None, optional |
+| createDraft | boolean | Whether to create only a lifecycle draft | false |
 
 #### Return Parameters
 
-MCP service ID: `String`.
+MCP service ID: `String`. Receiving an ID does not mean that a draft is online.
 
 #### Request Example
 
@@ -1876,16 +1971,23 @@ properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
-    McpServerBasicInfo serverSpecification = buildMcpSeverSpec(mcpName, version, isLatest);
-    McpToolSpecification toolSpecification = buildTools();
-    System.out.println(aiService.releaseMcpServer(serverSpecification, toolSpecification));
-
-    McpResourceSpecification resourceSpecification = buildResources();
-    System.out.println(aiService.releaseMcpServer(serverSpecification, toolSpecification, resourceSpecification, null));
+    McpServerBasicInfo serverSpecification = new McpServerBasicInfo();
+    serverSpecification.setName("example-mcp");
+    serverSpecification.setProtocol("stdio");
+    serverSpecification.setLocalServerConfig(
+            Collections.<String, Object>singletonMap("command", "my-mcp-server"));
+    com.alibaba.nacos.api.ai.model.mcp.registry.ServerVersionDetail versionDetail =
+            new com.alibaba.nacos.api.ai.model.mcp.registry.ServerVersionDetail();
+    versionDetail.setVersion("1.0.0");
+    serverSpecification.setVersionDetail(versionDetail);
+    String mcpId = aiService.mcp().releaseMcpServer(serverSpecification, null, true);
+    System.out.println(mcpId);
 } catch (Exception e) {
     e.printStackTrace();
 }
 ```
+
+The example creates a draft for a stdio service. Replace `my-mcp-server` with its actual command. Registering the definition does not start an MCP service; a consuming client starts the process according to its own configuration.
 
 ### 6.3. Register MCP Service Endpoint
 
@@ -1923,7 +2025,7 @@ properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
-    aiService.registerMcpServerEndpoint(mcpName, "127.0.0.1", 8848, version);
+    aiService.mcp().registerMcpServerEndpoint(mcpName, "127.0.0.1", 8848, version);
 } catch (Exception e) {
     e.printStackTrace();
 }
@@ -1953,14 +2055,11 @@ None.
 
 #### Request Example
 
+Reuse the `aiService` that registered endpoints in section 6.3:
+
 ```java
-Properties properties = new Properties();
-properties.setProperty("username", System.getenv("NACOS_USERNAME"));
-properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
-properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
-AiService aiService = AiFactory.createAiService(properties);
 try {
-    aiService.deregisterMcpServerEndpoint(mcpName, "127.0.0.1", 8848);
+    aiService.mcp().deregisterMcpServerEndpoint(mcpName, "127.0.0.1", 8848);
 } catch (Exception e) {
     e.printStackTrace();
 }
@@ -2002,7 +2101,7 @@ properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
     ExampleListener listener = new ExampleListener(i);
-    aiService.subscribeMcpServer(mcpName, listener);
+    aiService.mcp().subscribeMcpServer(mcpName, listener);
 } catch (Exception e) {
     e.printStackTrace();
 }
@@ -2022,7 +2121,7 @@ private static class ExampleListener extends AbstractNacosMcpServerListener {
         System.out.printf("---------------mcp server listener %s called start---------------%n", id);
         System.out.printf("mcp server namespaceId: %s, mcpId: %s, mcpName: %s%n", event.getNamespaceId(),
                 event.getMcpId(), event.getMcpName());
-        System.out.println("mcp server endpoint: " + JacksonUtils.toJson(
+        System.out.println("mcp server endpoint: " + JsonUtils.toJson(
                 event.getMcpServerDetailInfo().getBackendEndpoints()));
         System.out.println(
                 "mcp server tools size: " + event.getMcpServerDetailInfo().getToolSpec().getTools().size());
@@ -2066,14 +2165,18 @@ properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
     ExampleListener listener = new ExampleListener(i);
-    aiService.subscribeMcpServer(mcpName, listener);
-    aiService.unsubscribeMcpServer(mcpName, listener);
+    aiService.mcp().subscribeMcpServer(mcpName, listener);
+    aiService.mcp().unsubscribeMcpServer(mcpName, listener);
 } catch (Exception e) {
     e.printStackTrace();
 }
 ```
 
 ## 7. A2A Registry
+
+3.3 preserves published A2A APIs through `aiService.agent()`. New applications can use the generic Agent APIs in section 11 and the [RAD Integration Guide](../ai/rad-discovery.md).
+
+After the first successful server capability negotiation, the SDK fixes either the legacy A2A or RAD compatibility route for that instance. Recreate the SDK instance after upgrading an older server to enable RAD. RAD business failures do not fall back to the legacy route. See the [SDK Runtime Guide](../sdk/runtime-guide.md#6-ai-resource-runtime) for connection requirements.
 
 ### 7.1. Query AgentCard
 
@@ -2110,9 +2213,9 @@ properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
-    AgentCardDetailInfo result = aiService.getAgentCard(agentName);
-    result = aiService.getAgentCard(agentName, "1.0.0");
-    result = aiService.getAgentCard(agentName, "1.0.0", "url");
+    AgentCardDetailInfo result = aiService.agent().getAgentCard(agentName);
+    result = aiService.agent().getAgentCard(agentName, "1.0.0");
+    result = aiService.agent().getAgentCard(agentName, "1.0.0", "url");
 } catch (Exception e) {
     e.printStackTrace();
 }
@@ -2123,6 +2226,8 @@ try {
 #### Description
 
 Releases a new AgentCard version. If release fails, an exception is thrown.
+
+On the 3.3 RAD compatibility route, this method follows the publication rules in section 11.7: `setAsLatest` maps to `autoSubmit`. A new resource's first version is always submitted; later versions or existing drafts follow this flag. The method does not force a version online or bypass review, and existing non-draft versions remain unchanged. The legacy A2A route retains its direct-publication behavior.
 
 ```java
 void releaseAgentCard(AgentCard agentCard) throws NacosException;
@@ -2137,8 +2242,8 @@ void releaseAgentCard(AgentCard agentCard, String registrationType, boolean setA
 | Name             | Type | Description | Default Value |
 |:-----------------|:----------|------------------------------------------------------------------------------------------------------------------------|-----------|
 | agentCard        | AgentCard | AgentCard information | None, required |
-| registrationType | String | Registration type. Optional values are `URL` and `SERVICE`. The default value is `URL`. It sets the default way to obtain the `url` of this AgentCard. `URL` means reading the `url` directly from registration, and `SERVICE` means generating the `url` based on the endpoint registered in Nacos. | `SERVICE` |
-| setAsLatest      | boolean | Whether to set this AgentCard as the latest version | `false` |
+| registrationType | String | `URL` or `SERVICE`. `URL` prefers declared addresses from the definition; `SERVICE` prefers runtime endpoints. | `SERVICE` |
+| setAsLatest | boolean | Set the latest version on the legacy A2A route; automatically submit the draft on the RAD route. | `false` |
 
 
 #### Return Parameters
@@ -2160,9 +2265,10 @@ try {
     agentCard.setUrl("http://localhost:8848");
     agentCard.setVersion("1.0.0");
     agentCard.setProtocolVersion("0.3.0");
-    aiService.releaseAgentCard(agentCard);
-    aiService.releaseAgentCard(agentCard, "SERVICE");
-    aiService.releaseAgentCard(agentCard, "SERVICE", false);
+    agentCard.setPreferredTransport("JSONRPC");
+    aiService.agent().releaseAgentCard(agentCard);
+    aiService.agent().releaseAgentCard(agentCard, "SERVICE");
+    aiService.agent().releaseAgentCard(agentCard, "SERVICE", false);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2212,10 +2318,10 @@ properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
-    aiService.registerAgentEndpoint("test", "1.0.0", "127.0.0.1", 8848);
-    aiService.registerAgentEndpoint("test", "1.0.0", "127.0.0.1", 8848, "JSONRPC");
-    aiService.registerAgentEndpoint("test", "1.0.0", "127.0.0.1", 8848, "JSONRPC", "");
-    aiService.registerAgentEndpoint("test", "1.0.0", "127.0.0.1", 8848, "JSONRPC", "", false);
+    aiService.agent().registerAgentEndpoint("test", "1.0.0", "127.0.0.1", 8848);
+    aiService.agent().registerAgentEndpoint("test", "1.0.0", "127.0.0.1", 8848, "JSONRPC");
+    aiService.agent().registerAgentEndpoint("test", "1.0.0", "127.0.0.1", 8848, "JSONRPC", "");
+    aiService.agent().registerAgentEndpoint("test", "1.0.0", "127.0.0.1", 8848, "JSONRPC", "", false);
     AgentEndpoint endpoint = new AgentEndpoint();
     endpoint.setAddress("127.0.0.1");
     endpoint.setPort(8848);
@@ -2223,7 +2329,7 @@ try {
     endpoint.setPath("");
     endpoint.setSupportTls(false);
     endpoint.setVersion("1.0.0");
-    aiService.registerAgentEndpoint("test", endpoint);
+    aiService.agent().registerAgentEndpoint("test", endpoint);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2234,6 +2340,8 @@ try {
 #### Description
 
 Deregisters an endpoint from an AgentCard.
+
+On the RAD compatibility route, passing even one address removes this SDK instance's entire registration intent for the exact version, while preserving registrations for other versions. For partial endpoint removal, use the generic Agent API in section 11.6 and use the same generic API family from registration onward.
 
 ```java
 void deregisterAgentEndpoint(String agentName, String version, String address, int port) throws NacosException;
@@ -2257,19 +2365,16 @@ None.
 
 #### Request Example
 
+Reuse the `aiService` that registered endpoints in section 7.3:
+
 ```java
-Properties properties = new Properties();
-properties.setProperty("username", System.getenv("NACOS_USERNAME"));
-properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
-properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
-AiService aiService = AiFactory.createAiService(properties);
 try {
-    aiService.deregisterAgentEndpoint("test", "1.0.0", "127.0.0.1", 8848);
+    aiService.agent().deregisterAgentEndpoint("test", "1.0.0", "127.0.0.1", 8848);
     AgentEndpoint endpoint = new AgentEndpoint();
     endpoint.setAddress("127.0.0.1");
     endpoint.setPort(8848);
     endpoint.setVersion("1.0.0");
-    aiService.deregisterAgentEndpoint("test", endpoint);
+    aiService.agent().deregisterAgentEndpoint("test", endpoint);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2281,7 +2386,7 @@ try {
 
 Subscribes to an AgentCard. When the AgentCard releases a new version, a notification is received.
 
-> In the current version, subscription is implemented through polling queries, so notifications may have some delay. You can configure the `nacosAiAgentCardCacheUpdateInterval` parameter to adjust the query interval. The default value is 10000 ms.
+> The legacy A2A route polls at the interval set by `nacosAiAgentCardCacheUpdateInterval`, which defaults to 10000 ms. The 3.3 RAD compatibility route uses Watch, with bounded polling when the capability is unavailable. The legacy parameter does not control every Agent subscription's notification interval.
 
 ```java
 AgentCardDetailInfo subscribeAgentCard(String agentName, AbstractNacosAgentCardListener agentCardListener) throws NacosException;
@@ -2310,19 +2415,19 @@ properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
-    aiService.subscribeAgentCard("test", new AbstractNacosAgentCardListener() {
+    aiService.agent().subscribeAgentCard("test", new AbstractNacosAgentCardListener() {
         @Override
         public void onEvent(NacosAgentCardEvent event) {
             System.out.println("---------------agent card listener called start---------------");
-            System.out.println(JacksonUtils.toJson(event.getAgentCard()));
+            System.out.println(JsonUtils.toJson(event.getAgentCard()));
             System.out.println("---------------agent card listener called end---------------");
         }
     });
-    aiService.subscribeAgentCard("test", "", new AbstractNacosAgentCardListener() {
+    aiService.agent().subscribeAgentCard("test", "", new AbstractNacosAgentCardListener() {
         @Override
         public void onEvent(NacosAgentCardEvent event) {
             System.out.println("---------------agent card listener called start---------------");
-            System.out.println(JacksonUtils.toJson(event.getAgentCard()));
+            System.out.println(JsonUtils.toJson(event.getAgentCard()));
             System.out.println("---------------agent card listener called end---------------");
         }
     });
@@ -2365,9 +2470,9 @@ properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 AbstractNacosAgentCardListener listener = new AbstractNacosAgentCardListener() {};
 try {
-    aiService.subscribeAgentCard("test", listener);
-    aiService.unsubscribeAgentCard("test", listener);
-    aiService.unsubscribeAgentCard("test", "", listener);
+    aiService.agent().subscribeAgentCard("test", listener);
+    aiService.agent().unsubscribeAgentCard("test", listener);
+    aiService.agent().unsubscribeAgentCard("test", "", listener);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2426,7 +2531,7 @@ try {
     endpoint2.setSupportTls(false);
     endpoint2.setVersion("1.0.0");
     
-    aiService.registerAgentEndpoint("test", List.of(endpoint1, endpoint2));
+    aiService.agent().registerAgentEndpoint("test", Arrays.asList(endpoint1, endpoint2));
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2465,7 +2570,7 @@ properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
-    byte[] skillZip = aiService.downloadSkillZip("{skillName}");
+    byte[] skillZip = aiService.skill().downloadSkillZip("{skillName}");
     System.out.println("skill zip bytes: " + skillZip.length);
 } catch (NacosException e) {
     e.printStackTrace();
@@ -2506,7 +2611,7 @@ properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
-    byte[] skillZip = aiService.downloadSkillZipByVersion("{skillName}", "1.0.0");
+    byte[] skillZip = aiService.skill().downloadSkillZipByVersion("{skillName}", "1.0.0");
     System.out.println("skill zip bytes: " + skillZip.length);
 } catch (NacosException e) {
     e.printStackTrace();
@@ -2547,7 +2652,7 @@ properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
-    byte[] skillZip = aiService.downloadSkillZipByLabel("{skillName}", "{label}");
+    byte[] skillZip = aiService.skill().downloadSkillZipByLabel("{skillName}", "{label}");
     System.out.println("skill zip bytes: " + skillZip.length);
 } catch (NacosException e) {
     e.printStackTrace();
@@ -2590,7 +2695,7 @@ properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
-    byte[] skillZip = aiService.subscribeSkill("{skillName}", null, "{label}", new AbstractNacosSkillListener() {
+    byte[] skillZip = aiService.skill().subscribeSkill("{skillName}", null, "{label}", new AbstractNacosSkillListener() {
         @Override
         public void onEvent(NacosSkillEvent event) {
             System.out.println("skill changed: " + event.getSkillName());
@@ -2641,8 +2746,8 @@ properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 AbstractNacosSkillListener listener = new AbstractNacosSkillListener() {};
 try {
-    aiService.subscribeSkill("{skillName}", null, "{label}", listener);
-    aiService.unsubscribeSkill("{skillName}", null, "{label}", listener);
+    aiService.skill().subscribeSkill("{skillName}", null, "{label}", listener);
+    aiService.skill().unsubscribeSkill("{skillName}", null, "{label}", listener);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2685,8 +2790,8 @@ properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
-    Prompt prompt = aiService.getPrompt("{promptKey}");
-    System.out.println(JacksonUtils.toJson(prompt));
+    Prompt prompt = aiService.prompt().getPrompt("{promptKey}");
+    System.out.println(JsonUtils.toJson(prompt));
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2728,8 +2833,8 @@ properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
-    Prompt prompt = aiService.getPromptByVersion("{promptKey}", "1.0.0");
-    System.out.println(JacksonUtils.toJson(prompt));
+    Prompt prompt = aiService.prompt().getPromptByVersion("{promptKey}", "1.0.0");
+    System.out.println(JsonUtils.toJson(prompt));
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2767,8 +2872,8 @@ properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
-    Prompt prompt = aiService.getPromptByLabel("{promptKey}", "{label}");
-    System.out.println(JacksonUtils.toJson(prompt));
+    Prompt prompt = aiService.prompt().getPromptByLabel("{promptKey}", "{label}");
+    System.out.println(JsonUtils.toJson(prompt));
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2808,13 +2913,13 @@ properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
-    Prompt prompt = aiService.subscribePrompt("{promptKey}", null, null, new AbstractNacosPromptListener() {
+    Prompt prompt = aiService.prompt().subscribePrompt("{promptKey}", null, null, new AbstractNacosPromptListener() {
         @Override
         public void onEvent(NacosPromptEvent event) {
             System.out.println("prompt changed: " + event.getPromptKey());
         }
     });
-    System.out.println(JacksonUtils.toJson(prompt));
+    System.out.println(JsonUtils.toJson(prompt));
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2853,8 +2958,8 @@ properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 AbstractNacosPromptListener listener = new AbstractNacosPromptListener() {};
 try {
-    aiService.subscribePrompt("{promptKey}", null, null, listener);
-    aiService.unsubscribePrompt("{promptKey}", null, null, listener);
+    aiService.prompt().subscribePrompt("{promptKey}", null, null, listener);
+    aiService.prompt().unsubscribePrompt("{promptKey}", null, null, listener);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2891,8 +2996,8 @@ properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
-    AgentSpec agentSpec = aiService.loadAgentSpec("{agentSpecName}");
-    System.out.println(JacksonUtils.toJson(agentSpec));
+    AgentSpec agentSpec = aiService.agentSpec().loadAgentSpec("{agentSpecName}");
+    System.out.println(JsonUtils.toJson(agentSpec));
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2929,13 +3034,13 @@ properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 try {
-    AgentSpec agentSpec = aiService.subscribeAgentSpec("{agentSpecName}", new AbstractNacosAgentSpecListener() {
+    AgentSpec agentSpec = aiService.agentSpec().subscribeAgentSpec("{agentSpecName}", new AbstractNacosAgentSpecListener() {
         @Override
         public void onEvent(NacosAgentSpecEvent event) {
             System.out.println("agent spec changed: " + event.getAgentSpecName());
         }
     });
-    System.out.println(JacksonUtils.toJson(agentSpec));
+    System.out.println(JsonUtils.toJson(agentSpec));
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2973,8 +3078,8 @@ properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
 AbstractNacosAgentSpecListener listener = new AbstractNacosAgentSpecListener() {};
 try {
-    aiService.subscribeAgentSpec("{agentSpecName}", listener);
-    aiService.unsubscribeAgentSpec("{agentSpecName}", listener);
+    aiService.agentSpec().subscribeAgentSpec("{agentSpecName}", listener);
+    aiService.agentSpec().unsubscribeAgentSpec("{agentSpecName}", listener);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2982,9 +3087,9 @@ try {
 
 ## 11. Agent Management and Discovery
 
-The Agent management and discovery APIs are the protocol-neutral primary entry point for Agent integrations. They cover catalog search, definition discovery, local polling subscriptions, definition publication, and Runtime Endpoint registration. The legacy A2A APIs in Chapter 7 remain available during the compatibility period, but this Agent API set is intended to replace them. New users and SDK implementations should integrate with the Agent management and discovery APIs first instead of the legacy A2A APIs.
+Obtain Agent management and discovery APIs through `aiService.agent()`. They cover catalog search, definition discovery, subscriptions, definition publication and Runtime Endpoint registration. The legacy A2A APIs in chapter 7 remain compatible; prefer the generic APIs for new integrations. See [RAD Integration](../ai/rad-discovery.md) for a complete example.
 
-Agent APIs use the namespace configured when the `AiService` is created. The SDK copies each request and binds that namespace without mutating the caller-owned object. All APIs in this chapter are available since version 3.3.0.
+Agent APIs use the namespace configured when `AiService` is created. Search, RegistrationBatch, Reference and publication requests do not have a namespace field; the SDK defensively copies caller-owned data. Shared models are in `com.alibaba.nacos.api.ai.model.agent`, and the publication request is in its `client` subpackage. These APIs are available since 3.3.0.
 
 ### 11.1. Search Agents
 
@@ -2993,7 +3098,7 @@ Agent APIs use the namespace configured when the `AiService` is created. The SDK
 Search for visible and enabled Agents that have at least one online version in the current namespace. `agentNameContains` performs a case-sensitive literal substring match. Values in `tagsAll` are ANDed, while values in `protocolsAny` are ORed.
 
 ```java
-Page<AgentCatalogEntry> searchAgents(AgentSearchRequest request) throws NacosException;
+Page<AgentSummary> searchAgents(AgentSearchRequest request) throws NacosException;
 ```
 
 #### Request Parameters
@@ -3006,7 +3111,6 @@ Page<AgentCatalogEntry> searchAgents(AgentSearchRequest request) throws NacosExc
 
 | Name              | Type           | Description                                                      | Default Value |
 |:------------------|:---------------|------------------------------------------------------------------|---------------|
-| namespaceId       | String         | Injected from `AiService` by the SDK; callers should leave it unset | SDK namespace |
 | agentNameContains | String         | Case-sensitive literal substring of the Agent name               | None |
 | tagsAll           | List\<String\> | Tags that the Agent must contain                                  | None |
 | protocolsAny      | List\<String\> | Calling protocols that any online version may expose             | None |
@@ -3015,7 +3119,7 @@ Page<AgentCatalogEntry> searchAgents(AgentSearchRequest request) throws NacosExc
 
 #### Return Parameters
 
-Returns `Page<AgentCatalogEntry>` with the total count, current page number, available page count, and Agent catalog entries. Each entry contains Agent presentation metadata, the latest version, and label and protocol summaries for every online version. It does not contain Endpoints.
+Returns `Page<AgentSummary>` with total count, current page, available pages and catalog entries. Online versions are in `versionInfo.onlineVersions`; the default version is `versionInfo.labels.latest`. Entries do not contain full protocol definitions or Endpoints. Search can briefly lag behind publication, and a matching entry does not guarantee healthy endpoints.
 
 #### Request Example
 
@@ -3034,13 +3138,13 @@ request.setProtocolsAny(Collections.singletonList("a2a"));
 request.setPageNo(1);
 request.setPageSize(20);
 
-Page<AgentCatalogEntry> page = aiService.searchAgents(request);
-System.out.println(JacksonUtils.toJson(page));
+Page<AgentSummary> page = aiService.agent().searchAgents(request);
+System.out.println(JsonUtils.toJson(page));
 ```
 
 #### Exceptions
 
-Throws `NacosException` when the request is null, page parameters are out of range, a request namespace differs from the SDK namespace, or the remote request fails.
+Throws `NacosException` when the request is null, page parameters are out of range, or the remote request fails.
 
 ### 11.2. Discover an Agent
 
@@ -3082,7 +3186,7 @@ Every `AgentDiscoveryFilter` field is optional:
 
 #### Return Parameters
 
-Returns `AgentDiscoveryResult`, containing the namespace, Agent name, resolved exact version, `contentDigest`, and calling interfaces with resolved Endpoint sets. The returned `endpointSets` are authoritative for this discovery snapshot.
+Returns `AgentDiscoveryResult` with Agent name, resolved version, `contentDigest` and `callInterfaces`. Addresses are in each interface's `endpointSets[].endpoints[]`. Interfaces or address sets may be empty, and Runtime Endpoints may have `healthy=false`. Select addresses by protocol, source, health, priority and weight before invoking the Agent service.
 
 When both `version` and `label` are absent, definition metadata uses the current latest version while Runtime Endpoints may be compatible with any current online version. Explicit `label=latest` is stricter: both definition metadata and Runtime Endpoints are restricted to the current latest version.
 
@@ -3103,8 +3207,8 @@ AgentDiscoveryFilter filter = new AgentDiscoveryFilter();
 filter.setProtocols(Collections.singletonList("a2a"));
 filter.setEndpointSources(Arrays.asList(EndpointSource.RUNTIME, EndpointSource.DECLARED));
 
-AgentDiscoveryResult result = aiService.discoverAgent(reference, filter);
-System.out.println(JacksonUtils.toJson(result));
+AgentDiscoveryResult result = aiService.agent().discoverAgent(reference, filter);
+System.out.println(JsonUtils.toJson(result));
 ```
 
 #### Exceptions
@@ -3115,7 +3219,9 @@ Throws `NacosException` when the Agent reference is invalid, `version` and `labe
 
 #### Description
 
-Start an SDK-local polling subscription with the same Agent reference and optional filter used by Discover. This is not a server Watch or Push operation. If the target is initially absent, the method returns `null` but retains the polling task. When the target appears, or the resolved version, `contentDigest`, or any `sourceRevision` changes, the listener receives a new complete replacement snapshot.
+Subscribe using the same Agent reference and optional filter as Discover. 3.3 supports HTTP long-poll Watch or gRPC notifications; without the corresponding server capability, the SDK falls back to bounded Discover polling. Listeners receive complete replacement snapshots, not field deltas. Delivery of every intermediate change is not guaranteed.
+
+Replace the previous result on `SNAPSHOT`; stop using it on `UNAVAILABLE`. A temporarily missing target can remain subscribed until it returns. After terminal errors such as authentication or capacity failures, resolve the cause and subscribe again. The SDK handles transient connection failures through reconnection.
 
 ```java
 AgentDiscoveryResult subscribeAgent(AgentReference reference,
@@ -3135,7 +3241,7 @@ AgentDiscoveryResult subscribeAgent(AgentReference reference, AgentDiscoveryFilt
 
 #### Return Parameters
 
-Returns the current `AgentDiscoveryResult`. Returns `null` while the target is absent without canceling the polling task.
+Returns the current `AgentDiscoveryResult`, or possibly `null` while the target is absent, retaining the subscription.
 
 #### Request Example
 
@@ -3153,13 +3259,17 @@ reference.setAgentName("{agentName}");
 AbstractNacosAgentDiscoveryListener listener = new AbstractNacosAgentDiscoveryListener() {
     @Override
     public void onEvent(NacosAgentDiscoveryEvent event) {
-        AgentDiscoveryResult snapshot = event.getAgentDiscoveryResult();
-        System.out.println("agent changed: " + JacksonUtils.toJson(snapshot));
+        if (event.getType() == NacosAgentDiscoveryEventType.SNAPSHOT) {
+            AgentDiscoveryResult snapshot = event.getAgentDiscoveryResult();
+            System.out.println("agent changed: " + JsonUtils.toJson(snapshot));
+        } else {
+            System.err.println(event.getErrorCode() + ": " + event.getErrorMessage());
+        }
     }
 };
 
-AgentDiscoveryResult current = aiService.subscribeAgent(reference, listener);
-System.out.println(JacksonUtils.toJson(current));
+AgentDiscoveryResult current = aiService.agent().subscribeAgent(reference, listener);
+System.out.println(JsonUtils.toJson(current));
 ```
 
 #### Exceptions
@@ -3170,7 +3280,7 @@ Throws `NacosException` when the reference, filter, or listener is invalid, or t
 
 #### Description
 
-Cancel an SDK-local Agent polling subscription. Pass the same `AgentReference`, equivalent filter, and listener instance that were used to subscribe.
+Cancel this SDK's Agent subscription. Pass the same `AgentReference`, equivalent filter and listener instance used to subscribe. Unsubscribing does not deregister endpoints or stop the Agent service.
 
 ```java
 void unsubscribeAgent(AgentReference reference,
@@ -3207,12 +3317,16 @@ reference.setAgentName("{agentName}");
 AbstractNacosAgentDiscoveryListener listener = new AbstractNacosAgentDiscoveryListener() {
     @Override
     public void onEvent(NacosAgentDiscoveryEvent event) {
-        System.out.println(JacksonUtils.toJson(event.getAgentDiscoveryResult()));
+        if (event.getType() == NacosAgentDiscoveryEventType.SNAPSHOT) {
+            System.out.println(JsonUtils.toJson(event.getAgentDiscoveryResult()));
+        } else {
+            System.err.println(event.getErrorCode() + ": " + event.getErrorMessage());
+        }
     }
 };
 try {
-    aiService.subscribeAgent(reference, listener);
-    aiService.unsubscribeAgent(reference, listener);
+    aiService.agent().subscribeAgent(reference, listener);
+    aiService.agent().unsubscribeAgent(reference, listener);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3242,10 +3356,9 @@ void registerAgentEndpoints(AgentEndpointRegistrationBatch batch) throws NacosEx
 
 | Name           | Type             | Description                                                            | Default Value |
 |:---------------|:-----------------|------------------------------------------------------------------------|---------------|
-| namespaceId    | String           | Injected from `AiService` by the SDK; callers should leave it unset    | SDK namespace |
 | agentName      | String           | Agent name                                                             | None, required |
-| runtimeVersion | String           | Version of the deployed implementation                                 | None, required |
-| versionRange   | String           | Agent-version range served by this deployment; must contain `runtimeVersion` | `[runtimeVersion]` |
+| runtimeVersion | String           | Default runtime version unless overridden by an Endpoint; every Endpoint must resolve a version | None |
+| versionRange   | String           | Default compatible range unless overridden; must contain the effective runtime version | Exact runtime version if omitted at both levels |
 | protocol       | String           | Canonical protocol token for the Endpoints                              | None, required |
 | endpoints      | List\<Endpoint\> | This publisher's complete Endpoint set, containing 1 through 1000 entries | None, required |
 
@@ -3259,7 +3372,9 @@ void registerAgentEndpoints(AgentEndpointRegistrationBatch batch) throws NacosEx
 | weight    | Double               | Weight among Endpoints with the same priority    | 1 |
 | metadata  | Map\<String, String\> | Flat Endpoint metadata                         | None |
 
-> Do not set `healthy` in a registration request. Health is supplied in discovery results.
+Endpoints also accept `healthy` and `enabled` (both default to `true` and cannot be null), plus `bindings`. When omitted, `bindings` inherits the batch values; when supplied, it must contain exactly one `RuntimeVersionBinding`. Its `runtimeVersion` and `versionRange` override the batch defaults independently. The effective range must contain the runtime version. Discovery excludes disabled contributions but can still return unhealthy endpoints.
+
+Endpoints are identified by URI host, effective port and `transport`. Different paths or queries alone cannot identify two endpoints from the same publisher. Deregister endpoints and close `AiService` on normal exit; see [RAD Integration](../ai/rad-discovery.md) for a complete lifecycle.
 
 #### Return Parameters
 
@@ -3288,30 +3403,32 @@ batch.setVersionRange("[1.0.0,2.0.0)");
 batch.setProtocol("a2a");
 batch.setEndpoints(Collections.singletonList(endpoint));
 
-aiService.registerAgentEndpoints(batch);
+aiService.agent().registerAgentEndpoints(batch);
 ```
 
 #### Exceptions
 
-Throws `NacosException` when the batch or an Endpoint is invalid, `versionRange` does not contain `runtimeVersion`, the request carries a namespace different from the SDK namespace, or publication fails.
+Throws `NacosException` when the batch or an Endpoint is invalid, the effective range excludes the runtime version, or publication fails.
 
 ### 11.6. Deregister Agent Runtime Endpoints
 
 #### Description
 
-Remove Endpoints by their `uri` and `transport` natural keys from the complete batch cached by this SDK publisher. The SDK registers the complete retained batch again. When no Endpoint remains, it deregisters this publisher's entire publication under `(agentName, protocol)`.
+Remove endpoints identified by URI host, effective port and `transport` from this SDK publisher's set. The SDK re-registers the complete remaining set; when empty, it deregisters the publisher's entire set under `(agentName, protocol)`.
 
 ```java
-void deregisterAgentEndpoints(AgentEndpointDeregistrationBatch batch) throws NacosException;
+void deregisterAgentEndpoints(String agentName, String protocol, List<Endpoint> endpoints) throws NacosException;
 ```
 
 #### Request Parameters
 
 | Name  | Type                               | Description                           | Default Value |
 |:------|:-----------------------------------|---------------------------------------|---------------|
-| batch | AgentEndpointDeregistrationBatch   | Endpoint deregistration intent batch  | None, required |
+| agentName | String | Agent name | Required |
+| protocol | String | Calling protocol | Required |
+| endpoints | List\<Endpoint\> | Endpoints to remove | Non-empty list |
 
-`AgentEndpointDeregistrationBatch` contains the Agent name, protocol, and the Endpoints to remove. The SDK injects `namespaceId`. Each Endpoint in the list needs only the natural-key fields `uri` and `transport`.
+The SDK supplies the namespace. Each Endpoint only needs `uri` and `transport`; use addresses that were actually registered, and reuse the same `aiService` instance that registered them.
 
 #### Return Parameters
 
@@ -3319,37 +3436,34 @@ None.
 
 #### Request Example
 
-```java
-Properties properties = new Properties();
-properties.setProperty("username", System.getenv("NACOS_USERNAME"));
-properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
-properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
-properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
-AiService aiService = AiFactory.createAiService(properties);
+Reuse the `aiService` that registered endpoints in section 11.5:
 
+```java
 Endpoint endpoint = new Endpoint();
 endpoint.setUri("https://agent.example.com:443/a2a");
 endpoint.setTransport("HTTP+JSON");
 
-AgentEndpointDeregistrationBatch batch = new AgentEndpointDeregistrationBatch();
-batch.setAgentName("{agentName}");
-batch.setProtocol("a2a");
-batch.setEndpoints(Collections.singletonList(endpoint));
-
-aiService.deregisterAgentEndpoints(batch);
+aiService.agent().deregisterAgentEndpoints("{agentName}", "a2a",
+        Collections.singletonList(endpoint));
 ```
 
 #### Exceptions
 
-Throws `NacosException` when the batch or Endpoint natural key is invalid, the request carries a namespace different from the SDK namespace, or publication fails.
+Throws `NacosException` when the Agent name, protocol or endpoint identity is invalid, or deregistration fails.
 
 ### 11.7. Publish an Agent Definition from Code
 
 #### Description
 
-Publish one exact Agent version from application code. The request uses the `AiService` namespace. The SDK copies the request and never mutates the caller-owned object. With `autoSubmit=false`, it only creates or returns an equivalent draft. With `autoSubmit=true`, it runs the ordinary submit pipeline after creating the draft and returns the final observable `reviewing`, `reviewed`, or `online` version. This is not a force-publish operation.
+Publish one exact Agent version from application code, using the `AiService` namespace.
 
-Equivalent retries for the same namespace, Agent, and exact version are idempotent and converge on the existing state. An existing draft can be resumed by changing only `autoSubmit` to `true` on the same request. Different content, author, change description, or explicitly supplied initial metadata is a conflict. `autoSubmit=false` cannot move an advanced version back to draft.
+| Target version state | Behavior |
+| --- | --- |
+| Newly created first version of a resource | Automatically submits through the ordinary pipeline, even with `autoSubmit=false`. |
+| A later new version or an existing editable draft | Creates or fully replaces the draft definition, then follows `autoSubmit`. |
+| Already reviewing, reviewed, online or offline | Returns the existing version successfully without overwriting, resubmitting or bringing it online. |
+
+Submission can require review, so the returned version is not necessarily online. This operation never force-publishes. Updating a draft replaces its entire calling-interface list, removing omitted protocols. Failure does not guarantee that no draft was saved: inspect the current version before deciding to publish again. The SDK does not replay an unknown publication outcome across transports.
 
 > The `AgentProvider` and `AgentVersionDetail` types in this section are from `com.alibaba.nacos.api.ai.model.agent`, not the same-named legacy A2A types under `com.alibaba.nacos.api.ai.model.a2a`.
 
@@ -3363,7 +3477,7 @@ AgentVersionDetail publishAgent(AgentPublishRequest request) throws NacosExcepti
 |:--------|:--------------------|----------------------------------|---------------|
 | request | AgentPublishRequest | Agent definition publication request | None, required |
 
-`AgentPublishRequest` reuses the fields from `AgentDraftCreateRequest` and adds `autoSubmit`:
+`com.alibaba.nacos.api.ai.model.agent.client.AgentPublishRequest` shares definition fields with management draft requests and adds `autoSubmit`:
 
 | Name              | Type                       | Description                                                          | Default Value |
 |:------------------|:---------------------------|----------------------------------------------------------------------|---------------|
@@ -3379,9 +3493,9 @@ AgentVersionDetail publishAgent(AgentPublishRequest request) throws NacosExcepti
 | basedOnVersion    | String                     | Exact source version whose content is reused; mutually exclusive with `callInterfaces` | Conditionally required |
 | author            | String                     | Version author                                                        | None |
 | changeDescription | String                     | Version change description                                            | None |
-| autoSubmit        | boolean                    | Whether to run the ordinary submit pipeline after draft creation      | false |
+| autoSubmit        | boolean                    | Whether to submit a later version or editable draft; a newly created first version always submits | false |
 
-`AgentCallInterface` contains the protocol, optional protocol version, `descriptorMediaType`, native `nativeDescriptor`, a non-empty `endpointSourceOrder`, and optional declared Endpoints. Protocols cannot repeat within one version.
+`AgentCallInterface` contains the protocol, protocol version, `descriptorMediaType`, native `nativeDescriptor`, `endpointSourceOrder` and `endpointSets`. Source order must contain `RUNTIME` and `DECLARED` exactly once each. Definition addresses belong in an EndpointSet with `source=DECLARED`; do not include runtime endpoints. Protocols cannot repeat within a version.
 
 The first version of an Agent must provide `callInterfaces` directly because no source version exists yet; `basedOnVersion` is invalid for that initial creation. A subsequent version must still choose exactly one of direct content and one exact source version.
 
@@ -3422,10 +3536,13 @@ callInterface.setProtocol("a2a");
 callInterface.setProtocolVersion("1.0");
 callInterface.setDescriptorMediaType("application/json");
 callInterface.setNativeDescriptor(
-        JacksonUtils.toObj(JacksonUtils.toJson(card), Map.class));
+        JsonUtils.toObj(JsonUtils.toJson(card), Map.class));
 callInterface.setEndpointSourceOrder(
         Arrays.asList(EndpointSource.DECLARED, EndpointSource.RUNTIME));
-callInterface.setDeclaredEndpoints(Collections.singletonList(declaredEndpoint));
+EndpointSet declaredSet = new EndpointSet();
+declaredSet.setSource(EndpointSource.DECLARED);
+declaredSet.setEndpoints(Collections.singletonList(declaredEndpoint));
+callInterface.setEndpointSets(Collections.singletonList(declaredSet));
 
 AgentPublishRequest request = new AgentPublishRequest();
 request.setAgentName("{agentName}");
@@ -3436,16 +3553,16 @@ request.setAuthor("{author}");
 request.setChangeDescription("Initial version");
 request.setAutoSubmit(true);
 
-AgentVersionDetail detail = aiService.publishAgent(request);
-System.out.println(JacksonUtils.toJson(detail));
+AgentVersionDetail detail = aiService.agent().publishAgent(request);
+System.out.println(JsonUtils.toJson(detail));
 ```
 
 #### Exceptions
 
-Throws `NacosException` when the request is null, the version or definition is invalid, `callInterfaces` and `basedOnVersion` do not follow the exclusive-or rule, content or state conflicts, submit fails, or the current `AiService` implementation does not support this capability.
+Throws `NacosException` when the request is null, the version or definition is invalid, the exclusive-or rule for `callInterfaces` and `basedOnVersion` is violated, concurrent updates conflict, submission fails, or the server does not support the capability.
 
 ## 12. Java SDK Lifecycle
 
-The lifecycle of the Nacos Java SDK starts when the SDK instance is created and ends when the `shutdown()` method is called. During this period, the corresponding thread pools, connections, and other resources remain reserved. Even if the connection is disconnected, the SDK keeps retrying to re-establish the connection.
+A Nacos Java SDK instance owns thread pools, connections, subscriptions and other resources from construction until `shutdown()`. Reuse instances while the application runs and close them when replacing an instance or exiting to avoid resource leaks.
 
-Therefore, pay attention to the number of Nacos Java SDK instances created in your application to avoid thread pool and connection leaks. When replacing a Nacos Java SDK instance, remember to call the `shutdown()` method. In an application, reuse the same Nacos Java SDK instance as much as possible and avoid frequent initialization.
+`aiService.mcp()`, `agent()`, `skill()`, `agentSpec()` and `prompt()` share the parent `AiService` namespace and lifecycle; close them together with `aiService.shutdown()`. Deregister Agent/MCP runtime endpoints through the instance that registered them. Unsubscribing does not deregister endpoints. Automatic reconnection and heartbeat recovery do not replace handling authentication, permission and terminal subscription errors. See the [SDK Runtime Guide](../sdk/runtime-guide.md).

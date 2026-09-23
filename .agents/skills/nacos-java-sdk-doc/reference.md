@@ -122,8 +122,8 @@
 
 ## 9. 与 Java 接口的同步（本 skill 扩展）
 
-- 新增/变更内容应来自 Nacos Java Client 接口：`ConfigService`、`NamingService`、`LockService`、`AiService`、`AgentDiscoveryService`、`A2aService`（见 SKILL.md 中的「Java Client API 定义来源」）。LockService 对应第 5 章；AiService 的 Skill、Prompt、AgentSpec 分别对应第 8、9、10 章；`AgentDiscoveryService` 与 `AiService.publishAgent` 对应第 11 章；`shutdown` 在第 12 章说明，不单独成 API 小节。
-- `AiService extends AgentDiscoveryService, A2aService`。比较和人工复核时必须展开 `AgentDiscoveryService`，并按章节而不是全局方法名判断是否已文档化，避免同名方法或父接口方法被其他章节误消除。
+- 新增/变更内容来自 `ConfigService`、`NamingService`、`LockService`、`McpService`、`A2aService`、`SkillService`、`PromptService`、`AgentSpecService`、`AgentService`、`AgentDiscoveryService`。按资源声明接口归入第 3～11 章；`AiService` 的五个 getter 在第 2 章说明，`shutdown` 在第 12 章说明，不单独成业务 API 小节。
+- `AiService` 继承 MCP、A2A、Skill、AgentSpec、Prompt 资源接口，提供已发布方法的兼容 delegate。`AgentService extends A2aService, AgentDiscoveryService`，并声明 `publishAgent`。按章节及精确参数类型对比，不把兼容 delegate 计为新增 API，不因发布方法移入 `AgentService` 而误报删除。通用 Agent 示例必须经 `aiService.agent()` 调用。
 - `LockService.renew` 当前与中英文 lock spec 冲突：源码存在，但 Spec 尚未把续约纳入稳定 SDK 边界。在 Spec 更新前不得写成用户契约；报告中保留待确认项，并在 Spec 接纳后移除脚本豁免。
 - 使用脚本 `scripts/compare_java_api_with_doc.py` 对比接口与 usage.md，可得到**新增 API**、**已删除 API**、按规范化参数类型序列识别的**新增/已删除重载**及**返回类型不一致**。不能只按方法名或参数个数判断；同参数数、不同类型的重载必须分别文档化。**Nacos 项目路径由使用者提供**（`--nacos-api-dir`），skill 中不写死路径。
 - 补全或修改时仍按本文档第 3、4、5、6 节的格式执行，并保持中英文结构一致。

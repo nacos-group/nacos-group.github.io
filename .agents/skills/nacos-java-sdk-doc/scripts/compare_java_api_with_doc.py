@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Compare Nacos Java Client API (ConfigService, NamingService, LockService, AiService,
-AgentDiscoveryService, A2aService)
+Compare Nacos Java Client API (ConfigService, NamingService, LockService,
+AiService and its resource interfaces, plus AgentService and its parents)
 with usage.md and output: new/removed APIs, exact new/removed overload signatures,
 and return-type mismatches.
 **Does NOT modify any file.** Use report to update docs per reference.md.
@@ -23,39 +23,28 @@ import sys
 from pathlib import Path
 
 # Interface -> default doc chapter mapping (reference.md).
-# AiService spans multiple chapters and is handled by method_chapter().
+# Resource declarations own API chapters; facade getters belong to initialization.
 DEFAULT_SOURCE_CHAPTER = {
     "ConfigService": 3,   # 配置管理 API
     "NamingService": 4,   # 服务发现API
     "LockService": 5,     # 分布式锁API
-    "AiService": 6,       # MCP 服务；部分方法由 AI_METHOD_CHAPTER 覆盖
+    "AiService": 2,       # 初始化时取得资源子服务
+    "McpService": 6,
     "A2aService": 7,      # A2A 注册中心
+    "SkillService": 8,
+    "PromptService": 9,
+    "AgentSpecService": 10,
+    "AgentService": 11,
     "AgentDiscoveryService": 11,  # 协议无关 Agent 发现与 Endpoint 发布
 }
 
-# AiService directly declares methods for several independent AI capabilities.
-AI_METHOD_CHAPTER = {
-    "downloadSkillZip": 8,
-    "downloadSkillZipByVersion": 8,
-    "downloadSkillZipByLabel": 8,
-    "subscribeSkill": 8,
-    "unsubscribeSkill": 8,
-    "getPrompt": 9,
-    "getPromptByVersion": 9,
-    "getPromptByLabel": 9,
-    "subscribePrompt": 9,
-    "unsubscribePrompt": 9,
-    "loadAgentSpec": 10,
-    "subscribeAgentSpec": 10,
-    "unsubscribeAgentSpec": 10,
-    "publishAgent": 11,
-}
+AI_SERVICE_GETTERS = {"mcp", "agent", "skill", "agentSpec", "prompt"}
 
 
 def method_chapter(method: dict) -> int:
     """Return the usage.md chapter that owns one parsed method."""
-    if method["source"] == "AiService":
-        return AI_METHOD_CHAPTER.get(method["name"], DEFAULT_SOURCE_CHAPTER["AiService"])
+    if method["source"] not in DEFAULT_SOURCE_CHAPTER:
+        raise ValueError(f"No documentation chapter mapping for {method['source']}")
     return DEFAULT_SOURCE_CHAPTER[method["source"]]
 
 
@@ -211,33 +200,25 @@ def parse_usage_signatures(content: str) -> list[dict]:
 def load_java_api(nacos_api_dir: str) -> list:
     """Load all Java Client interfaces that own documented usage APIs."""
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-    from parse_java_interface import parse_java_interface, resolve_api_root  # noqa: E402
+    from parse_java_interface import load_interface_hierarchy  # noqa: E402
 
-    base = Path(nacos_api_dir)
-    api_root = resolve_api_root(base)
-    interfaces = [
-        ("ConfigService", api_root / "config/ConfigService.java"),
-        ("NamingService", api_root / "naming/NamingService.java"),
-        ("LockService", api_root / "lock/LockService.java"),
-        ("AiService", api_root / "ai/AiService.java"),
-        ("AgentDiscoveryService", api_root / "ai/AgentDiscoveryService.java"),
-        ("A2aService", api_root / "ai/A2aService.java"),
-    ]
+    interfaces = load_interface_hierarchy(Path(nacos_api_dir))
     all_methods = []
-    missing = []
-    for name, p in interfaces:
-        if p.exists():
-            content = p.read_text(encoding="utf-8")
-            methods = parse_java_interface(content, name)
-            for method in methods:
-                method["chapter"] = method_chapter(method)
-            all_methods.extend(methods)
-        else:
-            missing.append(str(p))
-    if missing:
-        raise FileNotFoundError(
-            "Required Java SDK interfaces are missing:\n  - " + "\n  - ".join(missing)
-        )
+    def signature(method):
+        return (method["name"], tuple(_normalize_type(t) for t in method["param_types"]))
+
+    resource_methods = {signature(method): method
+                        for name, declared in interfaces.items() if name != "AiService"
+                        for method in declared}
+    for name, declared in interfaces.items():
+        for method in declared:
+            if name == "AiService" and method["name"] not in AI_SERVICE_GETTERS | {"shutdown", "shutDown"}:
+                original = resource_methods.get(signature(method))
+                if original is None or _normalize_type(original["return_type"]) != _normalize_type(method["return_type"]):
+                    raise ValueError(f"AiService delegate has no matching resource signature: {method}")
+                continue  # Compare the owning resource declaration once, not its compatibility delegate.
+            method["chapter"] = method_chapter(method)
+            all_methods.append(method)
     return all_methods
 
 
@@ -275,7 +256,7 @@ def main():
 
     try:
         java_methods = load_java_api(str(api_dir))
-    except FileNotFoundError as exc:
+    except (FileNotFoundError, ValueError) as exc:
         print(f"Error: {exc}", file=sys.stderr)
         sys.exit(1)
     usage_content = usage_path.read_text(encoding="utf-8")
@@ -303,7 +284,9 @@ def main():
             "lists renewal as pending; document only after both specs accept the contract."
         ),
     }
-    SKIP_NEW_API_BY_SOURCE = set(DEFERRED_API_REASONS)
+    SKIP_NEW_API_BY_SOURCE = set(DEFERRED_API_REASONS) | {
+        ("AiService", name) for name in AI_SERVICE_GETTERS
+    }
     deferred_apis = [
         {
             "source": method["source"],
@@ -372,7 +355,7 @@ def main():
         java_chapter_method_sources.setdefault(key, set()).add(m["source"])
         signature_key = (m["chapter"], m["name"], tuple(_normalize_type(t) for t in m["param_types"]))
         java_signature_returns[signature_key] = _normalize_type(m["return_type"])
-    documented_api_chapters = set(DEFAULT_SOURCE_CHAPTER.values()) | set(AI_METHOD_CHAPTER.values())
+    documented_api_chapters = set(DEFAULT_SOURCE_CHAPTER.values()) - {2}
     removed_apis = []
     seen_removed_apis = set()
     for name, entries in doc_methods.items():
