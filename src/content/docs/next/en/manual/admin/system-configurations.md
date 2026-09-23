@@ -307,6 +307,12 @@ For usage, see [AI Registry Overview](../user/ai/ai-registry-overview.md). The p
 | `nacos.extension.ai.enabled` | Whether the AI module is enabled. When set to `false`, the AI module and its console entries are not loaded, while Config and Naming remain available. The `microservice` function mode does not load the AI module regardless of this value. | `true` |
 | `nacos.ai.resource.search.enabled` | Whether AI resource search is enabled. When disabled, search is unavailable and ARD, which depends on search, cannot be enabled. If search is explicitly disabled during an upgrade, automatic MCP migration does not wait for search-index initialization. | `true` |
 | `nacos.ai.resource.search.index.backfill.enabled` | Whether historical data indexes are initialized and checked periodically after AI resource search starts. Normally keep this enabled. Disabling it during an initial upgrade can leave automatic MCP migration waiting for the indexes to become ready. | `true` |
+| `nacos.ai.resource.search.vector.provider` | Vector index Provider for resource discovery; restart after changes. See [AI Vector Plugin](../../plugin/ai-vector-plugin.md). | `postgresql` |
+| `nacos.plugin.ai-vector.postgresql.enabled` | Initial state of the PostgreSQL vector implementation. Follows Provider selection by default; persisted plugin state takes precedence. | Determined by Provider selection |
+| `nacos.ai.resource.search.vector.postgresql.url` | JDBC URL of a separate vector database; when unset, tries the PostgreSQL main data source. | Empty |
+| `nacos.ai.resource.search.vector.postgresql.user` | Username for the separate vector database. | Empty |
+| `nacos.ai.resource.search.vector.postgresql.password` | Password for the separate vector database. | Empty |
+| `nacos.ai.resource.search.vector.postgresql.driver-class-name` | JDBC driver class for the separate vector database. | `org.postgresql.Driver` |
 | `nacos.ai.mcp.resource.reconciliation.enabled` | Whether existing MCP data is migrated automatically and the new management APIs are enabled after the Server becomes ready. Normally keep this enabled. Setting it to `false` before migration completes stops automatic migration and leaves the new MCP management APIs unavailable. Read at startup; restart the Server after changing it. | `true` |
 | `nacos.ai.mcp.resource.reconciliation.interval-seconds` | Interval in seconds between automatic MCP migration checks, measured from the end of the previous run. Only positive integers are accepted; invalid, nonnumeric, or nonpositive values fall back to `300`. A shorter value increases Config and database scan load and should be used cautiously only for testing or controlled troubleshooting. Read at startup; restart the Server after changing it. | `300` |
 | `nacos.ai.mcp.registry.enabled` | Whether the official MCP Registry protocol adapter is enabled. When enabled, it exposes an independent port through `nacos.ai.registry.port`. | `false` |
@@ -325,6 +331,8 @@ For usage, see [AI Registry Overview](../user/ai/ai-registry-overview.md). The p
 | `nacos.ai.resource.import.allow-user-url` | Whether legacy MCP direct URL imports may fetch user-provided URLs after the shared compatibility gate has reopened them. | `false` |
 | `nacos.console.ai.mcp.import.enabled` | Whether Console `GET /v3/console/ai/mcp/importToolsFromMcp` may open outbound MCP connections. Set it to `false` to disable all such tool imports. | `true` |
 | `nacos.console.ai.mcp.import.allowed-private-addresses` | Private or local IP/CIDR allowlist for Console MCP tool imports. Separate entries with commas. Public addresses do not need to be listed. | empty |
+
+Restart the server after changing vector database connection settings. The pgvector extension and its table are required only for PostgreSQL vector retrieval, not basic ARD integration. See [AI Vector Plugin](../../plugin/ai-vector-plugin.md) for initialization steps and precautions.
 
 The automatic MCP migration entries above use the exact Server property names. The current distribution does not define dedicated startup options for them. Prefer their complete names in `application.properties`, or use JVM `-D` options according to your deployment standard. For containers, do not infer environment-variable names that the image scripts do not declare.
 

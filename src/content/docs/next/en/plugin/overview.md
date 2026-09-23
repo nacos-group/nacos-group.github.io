@@ -42,6 +42,7 @@ Providers of the same type are processed in ascending `PluginProvider.getOrder()
 | `visibility` | `ROUTED` | No | `STANDARD` | Route visibility decisions from domain requests. |
 | `ai-pipeline` | `CHAIN` | No | `STANDARD` | Run ordered AI resource publish-review nodes. |
 | `ai-storage` | `ROUTED` | Yes | `STANDARD` | Route content storage by `StorageKey.provider`. |
+| `ai-vector` | `ROUTED` | No | `STANDARD` | Use the selected Provider for optional vector indexing and retrieval in resource discovery. |
 | `ai-resource-import` | `ROUTED` | No | `STANDARD` | Route by `sourceId` to one fixed external source. |
 
 `critical` is a type capability; it does not make every implementation of that type permanently non-disableable. `PluginTypePolicy` validates the providers required by the domain only while the type is active. In detail responses, `critical=true` means that this particular implementation cannot currently be disabled by itself, while `typeCritical` identifies the type-level capability.
@@ -110,4 +111,4 @@ An adapter that must create resources after configuration can implement `PluginS
 | Auth and visibility | [Auth Plugin](./auth-plugin.md), [Visibility Plugin](./visibility-plugin.md) |
 | Data and config | [Datasource Plugin](./datasource-plugin.md), [Config Encryption](./config-encryption-plugin.md), [Config Change](./config-change-plugin.md) |
 | Stability and observability | [Trace Plugin](./trace-plugin.md), [Custom Environment](./custom-environment-plugin.md), [Control Plugin](./control-plugin.md) |
-| AI extensions | [AI Publish Pipeline](./ai-pipeline-plugin.md), [AI Resource Import](./ai-resource-import-plugin.md), [AI Storage](./ai-storage-plugin.md) |
+| AI extensions | [AI Publish Pipeline](./ai-pipeline-plugin.md), [AI Resource Import](./ai-resource-import-plugin.md), [AI Storage](./ai-storage-plugin.md), [AI Vector](./ai-vector-plugin.md) |

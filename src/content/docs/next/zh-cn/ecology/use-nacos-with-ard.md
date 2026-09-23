@@ -49,6 +49,12 @@ nacos.ai.ard.catalog.base-url=https://nacos.example.com/ard
 
 若客户端通过主机根路径 `/.well-known/ai-catalog.json` 发现 Registry，还需将该路径转发到适配器的同名路径。默认直接访问 9080 端口时，接口路径不带 `/nacos`。
 
+### 1.2. 使用向量插件增强资源发现
+
+需要补充相似内容召回时，可以接入 [AI 向量插件](../plugin/ai-vector-plugin.md)。配置完成并建立向量索引后，ARD 搜索会结合关键词与向量结果，客户端继续使用本文的搜索请求。
+
+向量插件是可选能力，安装 pgvector 不会自动接入外部 embedding 模型。默认向量生成方式、数据库准备、效果验证和排障见插件指南；资源的发布状态、可见性和鉴权要求保持不变。
+
 ## 2. 准备资源和访问凭据
 
 1. 在 Nacos 中发布至少一个资源用于验证。例如，按 [Agent 管理](../manual/user/ai/agent-registry.md)创建 `public` 命名空间中的 `route-planner`，发布版本 `1.0.0`。
@@ -64,7 +70,7 @@ export NACOS_ACCESS_TOKEN='<accessToken-from-login-response>'
 
 默认鉴权插件的登录接口位于主服务，例如 `http://127.0.0.1:8848/nacos/v3/auth/user/login`；ARD 请求使用 9080 端口，并通过 `accessToken` 请求头携带该 token。token 过期后需重新登录。
 
-Nacos 3.3 默认开启客户端鉴权，ARD 也需要有效凭据。使用默认鉴权插件时，只有显式设置 `nacos.plugin.auth.nacos.anonymous.ai.enabled=true` 才允许匿名读取，且匿名调用只能发现公开资源。携带错误或过期 token 的请求仍返回 `401 UNAUTHENTICATED`，不会转为匿名访问。资源可见性说明见 [ARD 资源发现](../manual/user/ai/ard-discovery.md)。
+Nacos 3.3 默认开启客户端鉴权，ARD 也需要有效凭据。使用默认鉴权插件时，只有显式设置 `nacos.plugin.auth.nacos.anonymous.ai.enabled=true` 才允许匿名读取，且匿名调用只能发现公开资源。携带错误或过期 token 的请求仍返回 `401 UNAUTHENTICATED`，不会转为匿名访问。`PUBLIC` 仅表示可见范围，不代替匿名开关或接口权限。各类资源的默认 scope 及修改方式见[可见性插件](../plugin/visibility-plugin.md)，发布条件见 [ARD 资源发现](../manual/user/ai/ard-discovery.md)。
 
 ## 3. 搜索资源
 

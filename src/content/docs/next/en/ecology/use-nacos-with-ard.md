@@ -49,6 +49,12 @@ Returned resource URLs then start with `https://nacos.example.com/ard/v3/ai/ard/
 
 If clients discover the Registry through the host-root path `/.well-known/ai-catalog.json`, also forward that path to the same path on the adaptor. With the default configuration, direct requests to port 9080 do not include `/nacos`.
 
+### 1.2. Enhance resource discovery with a vector plugin
+
+To add retrieval of similar content, configure the [AI Vector Plugin](../plugin/ai-vector-plugin.md). Once configured and indexed, ARD search combines keyword and vector results. Clients continue using the search requests shown in this guide.
+
+The plugin is optional. Installing pgvector does not automatically integrate an external embedding model. See the plugin guide for the default embedding method, database preparation, relevance evaluation, and troubleshooting. Publishing, visibility, and authentication requirements remain unchanged.
+
 ## 2. Prepare resources and credentials
 
 1. Publish at least one resource in Nacos for verification. For example, follow [Agent Management](../manual/user/ai/agent-registry.md) to create `route-planner` in the `public` namespace and publish version `1.0.0`.
@@ -64,7 +70,7 @@ export NACOS_ACCESS_TOKEN='<accessToken-from-login-response>'
 
 The default authentication plugin's login endpoint is on the main server, for example `http://127.0.0.1:8848/nacos/v3/auth/user/login`. ARD requests use port 9080 and carry that token in the `accessToken` header. Sign in again when the token expires.
 
-Nacos 3.3 enables client authentication by default, and ARD also requires valid credentials. With the default authentication plugin, anonymous reads are allowed only when `nacos.plugin.auth.nacos.anonymous.ai.enabled=true` is explicitly configured, and anonymous callers can discover only public resources. Requests carrying an invalid or expired token still return `401 UNAUTHENTICATED`; they do not fall back to anonymous access. See [ARD Resource Discovery](../manual/user/ai/ard-discovery.md) for visibility rules.
+Nacos 3.3 enables client authentication by default, and ARD also requires valid credentials. With the default authentication plugin, anonymous reads are allowed only when `nacos.plugin.auth.nacos.anonymous.ai.enabled=true` is explicitly configured, and anonymous callers can discover only public resources. Requests carrying an invalid or expired token still return `401 UNAUTHENTICATED`; they do not fall back to anonymous access. `PUBLIC` is a visibility scope, not a replacement for anonymous-access settings or API permissions. See [Visibility Plugin](../plugin/visibility-plugin.md) for resource-specific defaults and scope changes, and [ARD Resource Discovery](../manual/user/ai/ard-discovery.md) for publishing requirements.
 
 ## 3. Search resources
 

@@ -13,7 +13,7 @@ sidebar:
 - **鉴权** 判断“这个身份能不能对这个资源执行读或写操作”。
 - **可见性** 判断“这个资源是否应该被这个身份看到，是否应该进入详情、列表或搜索结果”。
 
-这个区别在 AI 管理中心中尤其重要。Skill、Prompt、AgentSpec 等资源可以是 `PUBLIC` 或 `PRIVATE`。一个资源即使已经上线，也可能因为调用者不是 Owner、不是管理员、也没有显式授权而不可见。
+这个区别在 AI 管理中心中尤其重要。Agent、MCP Server、Skill、Prompt、AgentSpec 都可以设置为 `PUBLIC` 或 `PRIVATE`。一个资源即使已经上线，也可能因为调用者不是 Owner、不是管理员、也没有显式授权而不可见。
 
 ## 适用场景
 
@@ -46,11 +46,28 @@ sidebar:
 
 Nacos 默认提供 `visibility:nacos`。`visibility` 是 `ROUTED`、非 critical、`STANDARD` 类型；默认实现没有私有 definitions，因此 `configurable=false`。
 
-默认行为如下：
+### 新建资源的默认 scope
+
+Nacos 3.3 使用内置 `visibility:nacos` 且该插件可用时，未显式指定 scope 的新资源采用以下默认值：
+
+| 资源类型 | 默认 scope |
+| --- | --- |
+| Agent | `PUBLIC` |
+| MCP Server | `PUBLIC` |
+| Skill | `PRIVATE` |
+| Prompt | `PRIVATE` |
+| AgentSpec | `PRIVATE` |
+
+这些规则只用于首次创建资源。创建新版本、发布、运行端点注册及重试不会把已有 `PRIVATE` 资源改成 `PUBLIC`。自定义可见性插件可以按资源类型提供不同默认值，不能将上表推广为所有插件的规则。
+
+插件关闭、所选实现不可用或返回空默认值时，新建资源的 scope 回退为 `PRIVATE`。但插件关闭或不可用时，当前 AI 资源访问会跳过可见性检查，不能把这个回退值当作访问保护。使用内置实现时，对应 API 的鉴权若被关闭，可见性检查也会放行。需要保护私有资源时，应同时保留鉴权和可见性插件。
+
+### 读取和写入
+
+以下为内置插件的可见性判断，调用方还需满足相应接口的鉴权要求：
 
 | 场景 | 行为 |
 | --- | --- |
-| 新建资源未指定 `scope` | 默认使用 `PRIVATE`。 |
 | 全局管理员访问 | 可以读取和写入所有可见性资源。 |
 | Owner 访问自己的资源 | 可以读取和写入。 |
 | 非 Owner 读取 `PUBLIC` 资源 | 允许读取。 |
@@ -61,6 +78,34 @@ Nacos 默认提供 `visibility:nacos`。`visibility` 是 `ROUTED`、非 critical
 | 写入被拒绝 | 返回权限不足。 |
 
 列表和搜索接口不能先分页再在内存中过滤可见性。这样会导致 `totalCount` 不准、页面为空或延迟不可控。正确做法是在查询条件中提前加入可见性条件。
+
+## 修改资源的 scope
+
+`scope` 是整个资源的可见范围，适用于该资源的各个版本；它与名为 `public` 的命名空间无关。修改 scope 不会自动发布版本、启用资源，也不会修改实际 Agent 或 MCP Server 的业务鉴权。
+
+Agent、MCP 的创建和发布请求不接受 scope 参数。需要私有发布时，先创建草稿，通过独立 scope 接口设为 `PRIVATE`，再提交发布。MCP SDK 的直接发布方式可能直接上线，需要预先确认可见范围，或改用[草稿发布流程](../manual/user/ai/mcp-registry.md)。
+
+按[配置访问凭据](../manual/user/auth.mdx)登录并保存 `NACOS_ACCESS_TOKEN`。下面分别以已创建的 Agent `route-planner` 和 MCP Server `weather-service` 为例，按需选择命令并替换资源名；调用账号需具备接口写权限，且通过该资源的写可见性检查。
+
+```bash
+curl -sS -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/agents/scope' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}" \
+  --data-urlencode 'namespaceId=public' \
+  --data-urlencode 'agentName=route-planner' \
+  --data-urlencode 'scope=PRIVATE'
+```
+
+```bash
+curl -sS -X PUT 'http://127.0.0.1:8848/nacos/v3/admin/ai/mcp/scope' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}" \
+  --data-urlencode 'namespaceId=public' \
+  --data-urlencode 'mcpName=weather-service' \
+  --data-urlencode 'scope=PRIVATE'
+```
+
+改为公开时使用 `scope=PUBLIC`。这些接口不传 version；完整参数与其他资源的 scope 操作见[运维 API](../manual/admin/admin-api.md)，Java 管理应用也可使用[运维 SDK](../manual/admin/maintainer-sdk.md)。
+
+修改后先查询资源确认 scope，再用实际业务账号验证详情、列表和发现结果。不要只用管理员账号验证私有可见性。向指定身份共享私有资源时，应使用显式可见性授权，而不是为了单个调用方把资源改为公开；可见性授权与接口权限的关系见[鉴权插件](./auth-plugin.md)。
 
 ## 配置方式
 
@@ -73,7 +118,7 @@ nacos.plugin.visibility.enabled=true
 # 内置实现的初始统一状态
 nacos.plugin.visibility.nacos.enabled=true
 
-# 历史实现选择，只用于启动初始状态兼容
+# 启动时选择 AI 资源使用的实现，修改后需重启
 nacos.plugin.visibility.type=nacos
 ```
 
@@ -104,7 +149,7 @@ nacos.plugin.visibility.{serviceName}.{itemKey}
 | --- | --- |
 | `getVisibilityServiceName()` | 返回稳定 pluginName。 |
 | `init(properties)` | 已废弃的旧配置回调，只用于没有 definitions 的兼容实现。 |
-| `resolveDefaultScopeForCreate(identity, apiType, resourceType)` | 资源创建时，如果请求没有指定 `scope`，返回默认可见性。默认是 `PRIVATE`。 |
+| `resolveDefaultScopeForCreate(identity, apiType, resourceType)` | 资源首次创建时决定默认 scope。SPI 默认方法返回 `PRIVATE`；内置实现对 Agent、MCP 返回 `PUBLIC`，自定义实现可覆盖。 |
 | `validateVisibility(identity, action, apiType, resource)` | 判断单个资源是否对当前身份可见或可写。 |
 | `adviseQuery(identity, action, apiType, queryContext)` | 为列表和搜索生成可见性查询建议。 |
 
@@ -129,7 +174,7 @@ nacos.plugin.visibility.{serviceName}.{itemKey}
 AI 管理中心资源会同时受到生命周期、可见性和鉴权影响：
 
 - `scope=PUBLIC` 表示资源可以被非 Owner 读取。
-- `scope=PRIVATE` 表示资源默认只对 Owner 和管理员可见。
+- `scope=PRIVATE` 表示资源默认只对 Owner 和管理员可见，也可以通过显式授权共享给其他身份。
 - 资源上线只表示它可被运行时查询，不代表所有人都能看到它。
 - 写操作仍然需要 Owner 身份、管理员身份或显式写权限。
 

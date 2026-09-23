@@ -53,7 +53,9 @@ Agent 管理面向可调用的 Agent；[AgentSpecs 管理](./agentspec-registry.
 - 明确发布者与使用者采用的命名空间。以下示例使用 `public`。
 - 准备实际运行的 Agent 应用。下文 `http://127.0.0.1:9999/a2a` 是本地示例地址，部署时应改为使用方能访问的地址。
 
-新建 Agent 在内置可见性策略下默认是 `PUBLIC`。私有资源应在草稿阶段调整为 `PRIVATE`，再提交发布。公开可见不等于免鉴权，也不会赋予调用者写权限，详见[可见性插件](../../../plugin/visibility-plugin.md)。Nacos 的登录凭据也不能代替调用 Agent 服务本身所需的凭据。
+新建 Agent 在内置可见性策略下默认是 `PUBLIC`。需要私有发布时，先创建草稿，再通过独立 scope 接口设为 `PRIVATE`，最后提交发布。scope 作用于整个 Agent；新版本和重试不会重置已有私有设置，创建请求也不直接接受 scope 参数。操作示例见[修改资源的 scope](../../../plugin/visibility-plugin.md#修改资源的-scope)。
+
+公开可见不等于免鉴权，也不会赋予调用者写权限，默认值及显式授权规则见[可见性插件](../../../plugin/visibility-plugin.md)。Nacos 的登录凭据也不能代替调用 Agent 服务本身所需的凭据。
 
 ## 3. 创建与发布 Agent
 

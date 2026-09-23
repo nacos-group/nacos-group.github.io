@@ -20,7 +20,7 @@ Nacos 3.3 通过 ARD 协议兼容接口，将已发布的 Agent、Skill、Prompt
 | --- | --- |
 | 工具链需要通过 ARD 协议搜索多种 AI 资源、浏览目录并下载内容 | [ARD 接入指南](../../../ecology/use-nacos-with-ard.md) |
 | 应用需要发现 Agent 的调用定义、运行端点并订阅变化 | [RAD 接入指南](./rad-discovery.md)，RAD 全称为 Remote Agent Discovery |
-| 应用直接使用 Nacos API 搜索资源，或需要搜索 AgentSpec | [客户端 API](../open-api.md)中的 AI 资源搜索及各资源专用接口 |
+| 应用直接使用 Nacos 资源接口，或需要访问 AgentSpec | 按资源类型查阅[客户端 API](../open-api.md) |
 
 ARD 当前覆盖 Agent、Skill、Prompt、MCP 四类资源。AgentSpec 通过 Nacos 原生 API 获取，不包含在 ARD 结果中。
 
@@ -30,10 +30,12 @@ ARD 当前覆盖 Agent、Skill、Prompt、MCP 四类资源。AgentSpec 通过 Na
 
 1. 按 [Agent](./agent-registry.md)、[Skill](./skill-registry.md)、[Prompt](./prompt-registry.md)或 [MCP](./mcp-registry.md) 指南创建资源，补充名称、描述及业务标签，便于使用者搜索和筛选。
 2. 按 [AI 资源生命周期](./ai-resource-lifecycle.md)完成提交和发布，确认资源已启用，`latest` 指向 `online` 版本。仅保存草稿或审核完成，尚未发布的版本不会进入发现结果。
-3. 确认资源可见范围和调用账号的权限。`PUBLIC` 资源可公开发现；`PRIVATE` 资源只对具备相应读取权限的身份可见。匿名调用只能发现公开资源，且服务端需先开启匿名访问。
+3. 确认资源可见范围和调用账号的权限。内置可见性插件允许非 Owner 读取 `PUBLIC` 资源；`PRIVATE` 资源对 Owner、管理员或获得显式可见性授权的身份可见。调用方仍需通过接口鉴权；匿名调用需先开启匿名访问并具备相应接口权限，且只能发现公开资源。
 4. 使用接入账号查询目录或搜索资源，检查名称、版本和资源地址。
 
-`public` 命名空间与 `PUBLIC` 可见范围是两个不同设置。在 `public` 命名空间创建资源，并不等于将其公开。
+内置策略下，新建 Agent、MCP Server 默认 `PUBLIC`，Skill、Prompt 默认 `PRIVATE`。私有发布应先设置 scope 再提交发布；已有私有设置不会被新版本重置。默认值、自定义插件边界和修改方法见[可见性插件](../../../plugin/visibility-plugin.md)。
+
+`public` 命名空间与 `PUBLIC` 可见范围是两个不同设置，不能仅凭命名空间判断资源是否公开。
 
 搜索返回 `latest` 指向的当前上线版本，不会把各个历史版本都作为独立结果列出。发布、下线或修改资源后，搜索同步可能需要一些时间；刚启动或升级时，结果也可能暂不完整。排查缺失资源时，先确认发布状态和权限，再重试查询。
 
@@ -58,6 +60,12 @@ ARD 的 `type` 表示可下载内容的媒体类型，不是 Nacos 的资源类�
 是否能返回 A2A 表示取决于当前 `latest` 版本。即使旧版本支持 A2A，也不会因此在当前版本的 ARD 结果中返回旧 AgentCard。
 
 Agent 下载内容属于指定版本的定义，不包含运行端点或实时健康状态。声明地址中的默认健康标记也不代表实际探活结果。需要按健康状态选择运行实例时，使用 [RAD](./rad-discovery.md) 发现端点，再由相应协议客户端调用。
+
+### 3.2. 向量插件与资源发现
+
+ARD 可以通过 [AI 向量插件](../../../plugin/ai-vector-plugin.md)补充相似内容召回，再与关键词结果一起排序。使用方无需改变 ARD 请求格式；服务端的配置、索引验证和自定义 Provider 接入见插件指南。
+
+没有可用向量插件时仍可使用关键词搜索。默认插件使用本地 hashing 向量，实际相关性应结合资源描述和业务查询验证；启用向量不会扩大资源的可见范围，也不会绕过上线条件。
 
 ## 4. 验证接入
 

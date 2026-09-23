@@ -32,6 +32,14 @@ Nacos 管理 MCP Server 的服务描述、工具、资源、协议、版本和�
 
 标准生命周期只允许编辑草稿，已发布或已下线的版本内容不能直接覆盖。管理员应急强制发布、重新编辑和上下线规则见 [AI 资源生命周期](./ai-resource-lifecycle.md)。
 
+## 可见范围
+
+Nacos 3.3 内置可见性策略下，新建 MCP Server 默认是 `PUBLIC`。默认值只在首次创建时使用，已有 `PRIVATE` 资源不会因为发布新版本、注册运行端点或重试而变为公开。自定义插件和关闭插件时的行为见[可见性插件](../../../plugin/visibility-plugin.md)。
+
+需要私有资源时，先创建草稿，再通过 `PUT /v3/admin/ai/mcp/scope` 或 Maintainer SDK 的 `updateMcpServerScope` 设为 `PRIVATE`，确认后提交发布。创建和发布请求不直接接受 scope 参数；scope 修改作用于整个 MCP Server，不是单个版本。完整命令见[修改资源的 scope](../../../plugin/visibility-plugin.md#修改资源的-scope)。
+
+`PUBLIC` 不会免除接口鉴权，也不会授予其他调用方写权限；`PRIVATE` 可以通过显式授权共享。MCP Client 是否能发现资源，还取决于资源启用状态和所选版本是否上线；实际调用 MCP Server 所需的网络和凭据仍需单独配置。
+
 ## 版本与可用性
 
 - **默认版本**：标准发布和重新上线操作会自动将 `latest` 指向该版本，无需手动修改。
