@@ -10,7 +10,7 @@ sidebar:
 
 RAD (Remote Agent Discovery) is the general Agent discovery capability in Nacos 3.3. It provides Search, Discover, Watch, and runtime endpoint registration and deregistration. See [Agent Management](./agent-registry.md) for definition creation, version publishing and A2A compatibility.
 
-RAD and ARD (Agentic Resource Discovery) are different capabilities. This page covers application discovery of Agent call interfaces and runtime endpoints; ARD integration across AI resources is configured separately.
+RAD and ARD (Agentic Resource Discovery) are different capabilities. This page covers application discovery of Agent call interfaces and runtime endpoints. See [ARD Resource Discovery](./ard-discovery.md) for search and artifact retrieval across AI resources, and the [ARD Integration Guide](../../../ecology/use-nacos-with-ard.md) for server setup.
 
 HTTP/gRPC for RAD requests describes how applications connect to Nacos. Values such as `protocol=a2a` and `transport=JSONRPC` in discovery results describe how applications call the Agent. Configure these separately.
 

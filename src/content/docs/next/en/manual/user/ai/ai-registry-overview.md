@@ -87,6 +87,12 @@ Nacos supports AgentSpec ZIP upload, draft creation, draft update, submit, publi
 
 See [AgentSpecs Registry](./agentspec-registry.md) for details.
 
+## ARD Resource Discovery
+
+Nacos 3.3 supports searching Agents, Skills, Prompts, and MCP Servers through ARD (Agentic Resource Discovery), with catalogs and versioned artifacts. AI applications and toolchains that support ARD can use this interface while resources continue to be published through their existing management entry points.
+
+See [ARD Resource Discovery](./ard-discovery.md) for resource coverage, publishing requirements, and result usage. For server setup and HTTP examples, see the [ARD Integration Guide in Ecology](../../../ecology/use-nacos-with-ard.md).
+
 ## Relationship With Config And Naming
 
 AI Registry is not just configuration management with another name. It is also not ordinary service discovery.

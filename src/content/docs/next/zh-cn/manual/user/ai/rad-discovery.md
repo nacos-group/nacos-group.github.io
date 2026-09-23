@@ -10,7 +10,7 @@ sidebar:
 
 RAD（Remote Agent Discovery）是 Nacos 3.3 的通用 Agent 发现能力，提供 Search、Discover、Watch 以及运行端点注册和注销。Agent 定义的创建、版本发布和 A2A 兼容说明见 [Agent 管理](./agent-registry.md)。
 
-RAD 与 ARD（Agentic Resource Discovery）是不同的能力。本文介绍应用如何发现 Agent 的调用接口与运行端点；跨 AI 资源的 ARD 生态接入另行配置。
+RAD 与 ARD（Agentic Resource Discovery）是不同的能力。本文介绍应用如何发现 Agent 的调用接口与运行端点；跨 AI 资源的搜索和内容获取见 [ARD 资源发现](./ard-discovery.md)，服务端接入见 [ARD 接入指南](../../../ecology/use-nacos-with-ard.md)。
 
 RAD 请求使用的 HTTP/gRPC 是应用访问 Nacos 的传输方式。发现结果中的 `protocol=a2a`、`transport=JSONRPC` 等描述应用如何调用 Agent，两者分别配置。
 

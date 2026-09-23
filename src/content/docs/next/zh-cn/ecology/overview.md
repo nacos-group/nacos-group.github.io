@@ -21,7 +21,7 @@ Nacos 生态融合文档介绍 Nacos 如何与应用框架、云原生基础设�
 | Kubernetes 服务同步 | [Kubernetes 服务发现同步](./use-nacos-with-k8s-sync.md)、[Nacos Controller 同步服务](./use-nacos-controller-to-sync-service.md) |
 | 注册中心迁移与同步 | [NacosSync 用户手册](./use-nacos-sync.md) |
 | Prometheus 业务实例发现 | [使用 Nacos 提供 Prometheus 服务发现](./use-nacos-prometheus-sd.md) |
-| AI 工具链接入 | [Nacos MCP Router 使用手册](./use-nacos-mcp-router.md) |
+| AI 工具链接入 | [Nacos MCP Router 使用手册](./use-nacos-mcp-router.md)、[ARD 接入指南](./use-nacos-with-ard.md) |
 
 ## 生态能力和核心能力的关系
 
@@ -32,6 +32,7 @@ Nacos 生态融合文档介绍 Nacos 如何与应用框架、云原生基础设�
 - NacosSync 面向注册中心迁移和多注册中心同步。
 - Prometheus 服务发现让 Prometheus 从 Nacos 获取业务应用实例 target。
 - MCP Router 等 AI 生态组件围绕 AI 应用的工具调用和服务发现展开。
+- ARD 让工具链通过统一协议搜索 Nacos 中的 Agent、Skill、Prompt 和 MCP Server，并获取资源内容。
 
 这些文档会涉及外部项目、框架版本和部署环境。使用前请同时阅读对应外部项目的官方文档，并在测试环境验证版本兼容性。
 

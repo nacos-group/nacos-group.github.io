@@ -87,6 +87,12 @@ Nacos 为 AgentSpec 提供上传 ZIP、创建草稿、更新草稿、提交审�
 
 详细说明见 [AgentSpecs 管理](./agentspec-registry.md)。
 
+## ARD 资源发现
+
+Nacos 3.3 支持通过 ARD（Agentic Resource Discovery）统一搜索 Agent、Skill、Prompt 和 MCP Server，并获取资源目录及版本内容。它适合接入支持 ARD 的 AI 应用和工具链，资源仍通过各自的管理入口发布。
+
+资源范围、发布条件和结果使用方式见 [ARD 资源发现](./ard-discovery.md)，服务端启用与 HTTP 示例见[生态融合中的 ARD 接入指南](../../../ecology/use-nacos-with-ard.md)。
+
 ## 它和配置管理、服务发现的关系
 
 AI 管理中心不是把 AI 资源简单地当成配置或服务。
