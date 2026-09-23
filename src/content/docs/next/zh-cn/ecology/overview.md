@@ -17,7 +17,7 @@ Nacos 生态融合文档介绍 Nacos 如何与应用框架、云原生基础设�
 | 场景 | 适合阅读 |
 | --- | --- |
 | Java 微服务接入 | [Dubbo 融合 Nacos](./use-nacos-with-dubbo.md)、[Spring](./use-nacos-with-spring.md)、[Spring Boot](./use-nacos-with-spring-boot.md)、[Spring Boot 3](./use-nacos-with-spring-boot3.md)、[Spring Cloud](./use-nacos-with-spring-cloud.md) |
-| 云原生基础设施 | [CoreDNS](./use-nacos-with-coredns.md)、[Istio](./use-nacos-with-istio.md) |
+| 云原生基础设施 | [内置 DNS 服务发现](./use-nacos-with-native-dns.md)、[CoreDNS 插件](./use-nacos-with-coredns.md)、[Istio](./use-nacos-with-istio.md) |
 | Kubernetes 服务同步 | [Kubernetes 服务发现同步](./use-nacos-with-k8s-sync.md)、[Nacos Controller 同步服务](./use-nacos-controller-to-sync-service.md) |
 | 注册中心迁移与同步 | [NacosSync 用户手册](./use-nacos-sync.md) |
 | Prometheus 业务实例发现 | [使用 Nacos 提供 Prometheus 服务发现](./use-nacos-prometheus-sd.md) |

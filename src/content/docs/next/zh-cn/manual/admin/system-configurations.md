@@ -211,6 +211,21 @@ Raft 参数通过 `nacos.core.protocol.raft.data.*` 配置。`data` 是当前代
 | `nacos.naming.push.pushTaskRetryDelay` | 服务推送失败重试延迟，单位毫秒。 | `1000` |
 | `nacos.naming.service.metadata.length` | 服务元数据总长度限制。 | `1024` |
 
+### 内置 DNS
+
+Nacos 3.3 支持通过内置 DNS 查询服务实例的 A/AAAA 记录，默认关闭。修改以下配置后重启 Nacos Server 生效，接入和验证步骤见[内置 DNS 服务发现](../../ecology/use-nacos-with-native-dns.md)。
+
+| 参数名 | 说明 | 默认值 |
+| --- | --- | --- |
+| `nacos.naming.dns.enabled` | 是否启用内置 DNS。 | `false` |
+| `nacos.naming.dns.port` | DNS 监听端口，同时使用 UDP 和 TCP，独立于 HTTP/gRPC 端口。 | `5353` |
+| `nacos.naming.dns.domain-suffix` | 查询域名后缀，不带开头和末尾的点号。 | `nacos` |
+| `nacos.naming.dns.default-group` | 查询域名未指定分组时使用的 Nacos 分组。 | `DEFAULT_GROUP` |
+| `nacos.naming.dns.namespace` | 查询的命名空间 ID。查询 `public` 时应显式设置为 `public`。 | 空字符串 |
+| `nacos.naming.dns.ttl` | A/AAAA 记录的 TTL，单位秒。 | `60` |
+
+DNS 查询不经过 HTTP API 鉴权，需单独通过网络访问控制限制调用来源。
+
 ## 参数校验
 
 | 参数名 | 说明 | 默认值 |

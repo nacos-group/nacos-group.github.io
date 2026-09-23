@@ -17,7 +17,7 @@ If you only want to understand Nacos core capabilities, start with [Overview](..
 | Scenario | Read |
 | --- | --- |
 | Java microservice integration | [Nacos With Dubbo](./use-nacos-with-dubbo.md), [Spring](./use-nacos-with-spring.md), [Spring Boot](./use-nacos-with-spring-boot.md), [Spring Cloud](./use-nacos-with-spring-cloud.md) |
-| Cloud-native infrastructure | [CoreDNS](./use-nacos-with-coredns.md), [Istio](./use-nacos-with-istio.md) |
+| Cloud-native infrastructure | [Built-in DNS service discovery](./use-nacos-with-native-dns.md), [CoreDNS plugin](./use-nacos-with-coredns.md), [Istio](./use-nacos-with-istio.md) |
 | Kubernetes service sync | [Kubernetes service discovery sync](./use-nacos-with-k8s-sync.md), [Nacos Controller service sync](./use-nacos-controller-to-sync-service.md) |
 | Registry migration and sync | [NacosSync User Manual](./use-nacos-sync.md) |
 | Prometheus application target discovery | [Use Nacos For Prometheus Service Discovery](./use-nacos-prometheus-sd.md) |
