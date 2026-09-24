@@ -214,18 +214,22 @@ For daily usage, see [Naming Manual](../user/naming/overview.md).
 
 ### Built-in DNS
 
-Nacos 3.3 supports A/AAAA queries for service instances through built-in DNS, which is disabled by default. Restart Nacos Server after changing these settings. See [Built-in DNS Service Discovery](../../ecology/use-nacos-with-native-dns.md) for setup and verification.
+Nacos 3.3 supports A/AAAA/SRV queries for service instances through built-in DNS, which is disabled by default. Restart Nacos Server after changing these settings. See [Built-in DNS Service Discovery](../../ecology/use-nacos-with-native-dns.md) for setup and verification.
 
 | Parameter | Description | Default |
 | --- | --- | --- |
 | `nacos.naming.dns.enabled` | Enables built-in DNS. | `false` |
+| `nacos.naming.dns.bind-address` | Address to bind DNS listeners. Defaults to loopback to prevent open resolver abuse. Set to `0.0.0.0` only on trusted internal networks. | `127.0.0.1` |
 | `nacos.naming.dns.port` | DNS listening port for both UDP and TCP, independent of HTTP/gRPC ports. | `5353` |
 | `nacos.naming.dns.domain-suffix` | Query domain suffix, without a leading or trailing dot. | `nacos` |
 | `nacos.naming.dns.default-group` | Nacos group used when the query name does not specify one. | `DEFAULT_GROUP` |
 | `nacos.naming.dns.namespace` | Namespace ID to query. Set explicitly to `public` when querying that namespace. | Empty string |
-| `nacos.naming.dns.ttl` | TTL for A/AAAA records, in seconds. | `60` |
+| `nacos.naming.dns.ttl` | TTL for A/AAAA/SRV records, in seconds. | `60` |
+| `nacos.naming.dns.forward-enabled` | Enables forwarding of non-suffix domains to upstream DNS servers. | `false` |
+| `nacos.naming.dns.forward-servers` | Comma-separated upstream DNS servers. Supports `host`, `host:port`, `[ipv6]:port`. | Empty |
+| `nacos.naming.dns.forward-timeout-ms` | Per-upstream timeout in milliseconds (minimum 100). Total budget is twice this value. | `3000` |
 
-DNS queries do not pass through HTTP API authentication. Restrict callers separately through network access controls.
+DNS queries do not pass through HTTP API authentication. Restrict callers separately through network access controls. With forwarding enabled, keep `bind-address` on loopback or a trusted interface to avoid DNS reflection abuse.
 
 ## Parameter Validation
 
