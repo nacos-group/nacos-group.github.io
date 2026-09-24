@@ -6,9 +6,9 @@ export const SITE_DESCRIPTION = 'Welcome to my website!';
 
 // 吊顶提示文案
 export const TOPBAR = {
-    "text": "OpenClaw 不踩坑恶意 Skills ，企业需 Skills Registry：Nacos 3.2 发布",
-    "mobileText": "OpenClaw 不踩坑恶意 Skills ，企业需 Skills Registry：Nacos 3.2 发布",
-    "link": "https://nacos.io/blog/nacos-gvr7dx_awbbpb_eerxlks19kgclceq/",
+    "text": "Alibaba Cloud AI Agent Handbook 已开源，汇集50+工程师的一手实践经验",
+    "mobileText": "Alibaba Cloud AI Agent Handbook 已开源，汇集50+工程师的一手实践经验",
+    "link": "https://github.com/aliyun/ai-agent-handbook",
     "target": "_blank",
     "display": true
 }
