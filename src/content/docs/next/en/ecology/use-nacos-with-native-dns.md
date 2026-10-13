@@ -81,7 +81,7 @@ Query SRV records to obtain service port, weight, and target address in one resp
 dig @127.0.0.1 -p 5353 dns-demo.nacos. SRV
 ```
 
-Each healthy instance produces an SRV record with `priority=0`, `weight=instance.weight`, `port=instance.port`, and a target hostname derived from the instance IP (e.g. `10-0-0-1.nacos` for `10.0.0.1`). The additional section contains glue A/AAAA records for the targets, so a single SRV query provides both port and address without a follow-up lookup. SRV target hostnames are also independently resolvable: an A or AAAA query for `10-0-0-1.nacos` returns `10.0.0.1` directly, supporting clients that resolve targets separately rather than consuming the additional section.
+Each healthy instance produces an SRV record with `priority=0`, `weight=instance.weight`, `port=instance.port`, and a target hostname derived from the instance IP with the reserved `_nacos-ip-` prefix (e.g. `_nacos-ip-10-0-0-1.nacos` for `10.0.0.1`). The additional section contains glue A/AAAA records for the targets, so a single SRV query provides both port and address without a follow-up lookup. SRV target hostnames are also independently resolvable: an A or AAAA query for `_nacos-ip-10-0-0-1.nacos` returns `10.0.0.1` directly, supporting clients that resolve targets separately rather than consuming the additional section. The reserved prefix prevents collisions between generated targets and ordinary service names.
 
 Include the group in the domain name to query another group. The following command requires the service to be in the `prod` group:
 

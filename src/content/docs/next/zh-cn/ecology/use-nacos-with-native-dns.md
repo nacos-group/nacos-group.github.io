@@ -81,7 +81,7 @@ dig @127.0.0.1 -p 5353 dns-demo.nacos. AAAA
 dig @127.0.0.1 -p 5353 dns-demo.nacos. SRV
 ```
 
-每个健康实例生成一条 SRV 记录，`priority=0`、`weight=instance.weight`、`port=instance.port`，目标名为实例 IP 派生的主机名（如 `10.0.0.1` 对应 `10-0-0-1.nacos`）。附加区域（additional section）包含目标的 glue A/AAAA 记录，因此一次 SRV 查询即可同时获得端口和地址，无需二次查询。SRV 目标主机名也支持独立解析：直接查询 `10-0-0-1.nacos` 的 A 或 AAAA 记录会返回 `10.0.0.1`，以兼容不使用附加区域、单独解析目标的客户端。
+每个健康实例生成一条 SRV 记录，`priority=0`、`weight=instance.weight`、`port=instance.port`，目标名为实例 IP 派生的主机名，使用保留前缀 `_nacos-ip-`（如 `10.0.0.1` 对应 `_nacos-ip-10-0-0-1.nacos`）。附加区域（additional section）包含目标的 glue A/AAAA 记录，因此一次 SRV 查询即可同时获得端口和地址，无需二次查询。SRV 目标主机名也支持独立解析：直接查询 `_nacos-ip-10-0-0-1.nacos` 的 A 或 AAAA 记录会返回 `10.0.0.1`，以兼容不使用附加区域、单独解析目标的客户端。保留前缀可避免生成的目标名与普通服务名冲突。
 
 查询其他分组时，将分组写入域名。以下命令要求服务位于 `prod` 分组：
 
