@@ -156,7 +156,7 @@ iwr -UseBasicParsing https://nacos.io/nacos-installer.ps1 | iex
 ## 七、nacos-cli：命令行里的 Nacos 能力
 Agent 与自动化流水线更依赖“执行命令、解析输出”的交互方式，而非在控制台中逐项操作。**nacos-cli** 将配置、Skill、Prompt 等能力以命令行方式暴露：支持通过单条命令完成配置查询、Skill 上传、Prompt 拉取等操作，便于脚本与 CI/CD 复用，Agent 也可通过执行命令与 Nacos 交互，无需依赖控制台或特定语言 SDK，接入方式统一，利于自动化集成。
 
-**如何使用**：nacos-cli 可以通过一下这两种方式集成：
+**如何使用**：nacos-cli 可以通过以下这两种方式集成：
 
 1. 通过官方安装脚本单独安装 nacos-cli，安装后在终端配置 Nacos 地址即可使用。
 Linux / macOS：	

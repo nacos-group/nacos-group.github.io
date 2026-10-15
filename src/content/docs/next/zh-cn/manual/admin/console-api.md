@@ -50,6 +50,8 @@ Console API 默认开启鉴权。除文中标记为公开的接口外，调用�
 
 鉴权失败时检查账号密码、token 是否过期以及资源权限；token 过期后重新登录并更新变量。登录控制台不会自动为终端中的 curl 配置身份。
 
+排障时建议携带可选的 `Nacos-Request-Id` 请求头，公共约定和示例见 [HTTP 请求关联 ID](../user/overview/api-overview.md#34-http-请求关联-id)。
+
 ### 0.4. Swagger 类型文档
 
 Nacos 3.X 的控制台 API 也提供了Swagger风格的文档，您可以通过访问[Nacos Swagger控制台 API](/swagger/console/)查看。

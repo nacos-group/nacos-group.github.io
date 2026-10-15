@@ -49,7 +49,17 @@ Config publish, delete, gray publish, and gray delete are recorded in history. H
 - When the change happened.
 - What content and publish type were involved.
 
-For rollback, review the history content first and then publish it again as formal config. Do not use local dump files as the rollback source.
+The Nacos 3.3 console performs rollback according to the operation type of the selected history record:
+
+| History operation | Rollback result |
+| --- | --- |
+| Insert (`I`) | Deletes the current configuration, restoring the state before it existed. |
+| Update (`U`) | Publishes the content saved in that history record as the formal configuration. |
+| Delete (`D`) | Publishes the content saved in that history record as the formal configuration, restoring the deleted configuration. |
+
+Before proceeding, confirm the namespace, `Data ID`, `Group`, operation type, and history content, and compare them with the current configuration. **Rolling back an insert deletes the current configuration even if it was modified later.** Rolling back an update or delete also overwrites the current formal configuration, so check for newer changes that must be retained.
+
+Open the target history record in the console and review the rollback page and confirmation message before proceeding. Afterwards, check the current content or deletion state, then verify application listener results and behavior. Do not use local dump files as the rollback source.
 
 ## Dump And Local Cache
 

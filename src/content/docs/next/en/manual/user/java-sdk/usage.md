@@ -114,6 +114,8 @@ Supported values are `auto`, `jackson2` and `jackson3`. Initialization fails if 
 
 Serialization examples below use `com.alibaba.nacos.api.utils.json.JsonUtils`. Prefer this neutral entry point for new code. Legacy `JacksonUtils` signatures that expose Jackson 2 types remain compatibility APIs; changing the adapter cannot turn those signatures into Jackson 3 types.
 
+For dependency configuration, Jackson 3-only integration, troubleshooting, and design rationale, see [JSON Adapters and Jackson 2/3 Integration](./json-adapter.md).
+
 ## 2. Initialize the SDK
 
 Nacos 3.3 enables client authentication by default. With the default plugin, create a user with the required resource permissions, then configure the address, username, and password through `Properties`. The SDK logs in, attaches the token, and refreshes it automatically. An address-only initializer does not supply the full identity for default authentication.

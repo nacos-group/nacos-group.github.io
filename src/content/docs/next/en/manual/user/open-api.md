@@ -59,6 +59,10 @@ With the default auth plugin, follow [Access Credentials](./auth.mdx) to log in 
 
 If authentication fails, check account credentials, token expiration, and resource permissions. Log in again and update the variable after expiration. Logging in to the console does not configure credentials for curl in a separate terminal.
 
+### 0.5. Request Correlation ID
+
+Direct HTTP callers should provide a unique `Nacos-Request-Id` for each request to help correlate requests during troubleshooting. This header is optional; see [HTTP Request Correlation ID](./overview/api-overview.md#34-http-request-correlation-id). Configure `X-Nacos-Client-Id` separately where required by an API.
+
 ## 1. Configuration Management
 
 :::note

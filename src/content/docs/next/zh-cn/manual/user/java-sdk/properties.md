@@ -223,7 +223,7 @@ Nacos Java SDK 中有部分参数对运行时期的影响较小，且需要全�
 | project.name              | 该SDK所归属的应用名，可在服务订阅者列表和配置订阅者列表中使用，仅作为参考字段使用                                                                         | 任意字符串              | unknown           |
 | ~~NACOS.CONNECT.TIMEOUT~~ | 连接服务时的连接超时时间，旧版本Http使用，已废弃                                                                                         | 任意int              | 1000              |
 | NACOS.READ.TIMEOUT | 连接服务时的读取超时时间，旧版本Http使用                                                                                         | 任意int              | 3000              |
-| nacos.client.json.adapter | JSON 适配器选择，仅通过 JVM `-D` 设置，在首次使用 JSON 层之前配置；显式选择不可用的适配器会初始化失败。详见 [JSON 依赖与适配](./usage.md#14-json-依赖与适配)。 | auto / jackson2 / jackson3 | auto |
+| nacos.client.json.adapter | JSON 适配器选择，仅通过 JVM `-D` 设置，在首次使用 JSON 层之前配置；显式选择不可用的适配器会初始化失败。详见 [JSON 适配与 Jackson 2/3 接入](./json-adapter.md)。 | auto / jackson2 / jackson3 | auto |
 | configSnapshotEnabled | Nacos Java SDK 是否读写本地配置快照。该开关在 JVM 内全局生效，且只作用于配置快照，无法通过每个客户端自己的 `Properties` 配置。 | true / false | true |
 
 **关于 `configSnapshotEnabled`。** 该开关在 JVM 内全局生效，同一个 JVM 中创建的所有 `ConfigService` 共用同一个值，并在快照开关首次初始化时读取一次。请在 SDK 首次使用前，通过 JVM 参数 `-DconfigSnapshotEnabled=false` 或环境变量 `CONFIGSNAPSHOTENABLED=false` 进行设置。通过 `NacosFactory.createConfigService` 传入的 `Properties` 无法配置该开关，初始化后修改参数也不会重新加载该开关。
