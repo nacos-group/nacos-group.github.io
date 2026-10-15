@@ -114,6 +114,8 @@ Nacos 的 Java SDK需要 JDK 1.8 及以上版本的Java运行环境。
 
 下文序列化示例使用 `com.alibaba.nacos.api.utils.json.JsonUtils`。新代码优先使用这个中立入口；旧 `JacksonUtils` 的 Jackson 2 专属类型签名仍属于兼容接口，不能通过切换适配器把它们变成 Jackson 3 类型。
 
+依赖配置、仅保留 Jackson 3 的接入方式、常见错误及设计说明，见 [JSON 适配与 Jackson 2/3 接入](./json-adapter.md)。
+
 ## 2. 初始化SDK
 
 Nacos 3.3 默认开启客户端鉴权。使用默认鉴权插件时，先创建用户并授予目标资源权限，再通过 `Properties` 配置地址、用户名和密码。SDK 会自动登录、携带并刷新 token。只有地址的初始化方式不能为默认鉴权提供完整身份。

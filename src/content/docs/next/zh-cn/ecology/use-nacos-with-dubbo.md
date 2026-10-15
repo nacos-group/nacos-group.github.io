@@ -14,6 +14,10 @@ Nacos 作为 Dubbo 生态系统中重要的注册中心实现，本文将会介�
 
 请确保后台已经启动 Nacos 服务，可先行参考 [Nacos 快速入门](../quickstart/quick-start.mdx)。 
 
+Nacos 3.3 默认开启客户端鉴权。使用默认鉴权插件时，请按[配置访问凭据](../manual/user/auth.mdx)准备业务账号及服务注册、订阅所需权限，并在启动应用前设置 `NACOS_USERNAME`、`NACOS_PASSWORD` 环境变量。下文通过 Spring 占位符读取凭据，服务提供方和消费方都需要配置；缺少有效身份时，注册或订阅可能失败。
+
+以下凭据配置用于 Dubbo 的 Nacos 注册中心。如果还将 Nacos 用作 Dubbo 配置中心或元数据中心，也需在对应组件中配置凭据。
+
 ## 快速上手
 
 Dubbo 融合 Nacos 成为注册中心的操作步骤非常简单，大致步骤可分为“增加 Maven 依赖”以及“配置注册中心“。
@@ -67,6 +71,8 @@ dubbo.application.name = your-dubbo-application
 
 ## Nacos registry address
 dubbo.registry.address = nacos://10.20.153.10:8848
+dubbo.registry.parameters.username = ${NACOS_USERNAME}
+dubbo.registry.parameters.password = ${NACOS_PASSWORD}
 ##如果要使用自己创建的命名空间可以使用下面2种方式
 #dubbo.registry.address = nacos://10.20.153.10:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932
 #dubbo.registry.parameters.namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932
@@ -97,9 +103,12 @@ dubbo.registry.address = nacos://10.20.153.10:8848
     <dubbo:application name="dubbo-provider-xml-demo"  />
  
     <!-- 使用 Nacos 注册中心 -->
-    <dubbo:registry address="nacos://10.20.153.10:8848" />
+    <dubbo:registry address="nacos://10.20.153.10:8848">
+        <dubbo:parameter key="username" value="${NACOS_USERNAME}" />
+        <dubbo:parameter key="password" value="${NACOS_PASSWORD}" />
+    </dubbo:registry>
     <!-- 如果要使用自己创建的命名空间可以使用下面配置 -->
-    <!-- <dubbo:registry address="nacos://10.20.153.10:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932" /> -->
+    <!-- 将上面的 address 改为 nacos://10.20.153.10:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932，保留凭据参数 -->
  	...
 </beans>
 ```
@@ -177,6 +186,8 @@ dubbo.application.name = dubbo-provider-demo
 
 ## Nacos registry address
 dubbo.registry.address = nacos://127.0.0.1:8848
+dubbo.registry.parameters.username = ${NACOS_USERNAME}
+dubbo.registry.parameters.password = ${NACOS_PASSWORD}
 ##如果要使用自己创建的命名空间可以使用下面2种方式
 #dubbo.registry.address = nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932
 #dubbo.registry.parameters.namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932
@@ -239,6 +250,8 @@ dubbo.application.name = dubbo-consumer-demo
 
 ## Nacos registry address
 dubbo.registry.address = nacos://127.0.0.1:8848
+dubbo.registry.parameters.username = ${NACOS_USERNAME}
+dubbo.registry.parameters.password = ${NACOS_PASSWORD}
 ##如果要使用自己创建的命名空间可以使用下面2种方式
 #dubbo.registry.address = nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932
 #dubbo.registry.parameters.namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932
@@ -349,9 +362,12 @@ Spring XML 配置驱动是传统 Spring 装配组件的编程模型。
     <dubbo:application name="dubbo-provider-xml-demo"/>
 
     <!-- 使用 Nacos 注册中心 -->
-    <dubbo:registry address="nacos://127.0.0.1:8848"/>
+    <dubbo:registry address="nacos://127.0.0.1:8848">
+        <dubbo:parameter key="username" value="${NACOS_USERNAME}" />
+        <dubbo:parameter key="password" value="${NACOS_PASSWORD}" />
+    </dubbo:registry>
     <!-- 如果要使用自己创建的命名空间可以使用下面配置 -->
-    <!-- <dubbo:registry address="nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932" /> -->
+    <!-- 将上面的 address 改为 nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932，保留凭据参数 -->
 
     <!-- 用dubbo协议在随机端口暴露服务 -->
     <dubbo:protocol name="dubbo" port="-1"/>
@@ -408,9 +424,12 @@ public class DemoServiceProviderXmlBootstrap {
     <dubbo:application name="dubbo-consumer-xml-demo"/>
 
     <!-- 使用 Nacos 注册中心 -->
-    <dubbo:registry address="nacos://127.0.0.1:8848"/>
+    <dubbo:registry address="nacos://127.0.0.1:8848">
+        <dubbo:parameter key="username" value="${NACOS_USERNAME}" />
+        <dubbo:parameter key="password" value="${NACOS_PASSWORD}" />
+    </dubbo:registry>
     <!-- 如果要使用自己创建的命名空间可以使用下面配置 -->
-    <!-- <dubbo:registry address="nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932" /> -->
+    <!-- 将上面的 address 改为 nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932，保留凭据参数 -->
 
     <!-- 引用服务接口 -->
     <dubbo:reference id="demoService" interface="com.alibaba.nacos.example.dubbo.service.DemoService" version="2.0.0"/>

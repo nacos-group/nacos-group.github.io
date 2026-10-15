@@ -216,7 +216,7 @@ Some parameters in the Nacos Java SDK have little impact at runtime and must rem
 | project.name              | The application name to which this SDK belongs. It can be used in the service subscriber list and configuration subscriber list as a reference field only. | Any string | unknown |
 | ~~NACOS.CONNECT.TIMEOUT~~ | Deprecated. The connection timeout used by the old HTTP implementation when connecting to a service. | Any int | 1000 |
 | NACOS.READ.TIMEOUT        | The read timeout used by the old HTTP implementation when connecting to a service. | Any int | 3000 |
-| nacos.client.json.adapter | JSON adapter selection, configured only through JVM `-D` before first use of the JSON layer. An explicitly selected but unavailable adapter causes initialization to fail. See [JSON Dependencies and Adapters](./usage.md#14-json-dependencies-and-adapters). | auto / jackson2 / jackson3 | auto |
+| nacos.client.json.adapter | JSON adapter selection, configured only through JVM `-D` before first use of the JSON layer. An explicitly selected but unavailable adapter causes initialization to fail. See [JSON Adapters and Jackson 2/3 Integration](./json-adapter.md). | auto / jackson2 / jackson3 | auto |
 
 ### 2.6. AI Resource Parameters
 

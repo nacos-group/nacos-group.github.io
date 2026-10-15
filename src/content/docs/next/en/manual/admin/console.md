@@ -97,6 +97,8 @@ Common operations:
 - Query listeners to confirm whether clients have received config changes.
 - When importing, exporting, or cloning configurations, pay attention to file size and target namespace.
 
+Before rolling back, check the history operation type: rolling back an insert deletes the current configuration, while rolling back an update or delete republishes the content saved in that record. Confirm the target and content in the confirmation message before proceeding. See [History and Rollback](../user/config/ops-and-troubleshooting.md#history-and-rollback).
+
 To understand the configuration model, gray release, import and export, and troubleshooting, read [Configuration Overview](../user/config/overview.md).
 
 ## Service Registry

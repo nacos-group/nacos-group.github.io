@@ -48,6 +48,8 @@ With the default auth plugin, follow [Access Credentials](../user/auth.mdx) to l
 
 If authentication fails, check account credentials, token expiration, and resource permissions. Log in again and update the variable after expiration. Logging in to the console does not configure credentials for curl in a separate terminal.
 
+For troubleshooting, provide the optional `Nacos-Request-Id` header. See [HTTP Request Correlation ID](../user/overview/api-overview.md#34-http-request-correlation-id) for the shared convention and example.
+
 ### 0.4. Swagger Documentation
 
 Nacos 3.X Admin APIs also provide Swagger-style documentation. You can view it at [Nacos Swagger Admin API](/swagger/admin/).
