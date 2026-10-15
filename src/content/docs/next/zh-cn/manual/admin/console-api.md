@@ -1250,6 +1250,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 | `namespaceId` | `string` | 否  | 命名空间ID，默认值为`public`      |
 | `content`     | `string` | 是  | 配置内容。                    |
 | `desc`        | `string` | 否  | 配置描述。                    |
+| `changeMessage` | `string` | 否 | 本次发布的可选说明，最多 512 个 Unicode 码点；不是配置描述。 |
 | `type`        | `string` | 否  | 配置类型，默认值为`text`。         |
 | `configTags`  | `string` | 否  | 配置标签，多个标签之间用英文逗号分隔。      |
 | `appName`     | `string` | 否  | 配置所属应用名称，主要用于标记配置所使用的应用。 |
@@ -1262,6 +1263,8 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 
 - 当配置已存在(`dataId`,`groupName`相同)时，再次调用此接口将会对此配置进行更新
 - 同时更新配置时，若请求`Header`中存在`betaIps`，则会将配置标记为BETA配置，在终止BETA或完全发布配置之前，控制台UI需要进行特殊处理。
+
+提交说明的空白处理、历史操作语义及版本适用条件见[发布操作的提交说明](../user/config/publish-query-listen.md#发布操作的提交说明)。
 
 #### 返回数据
 
@@ -1276,7 +1279,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 * 请求示例
 
 ```shell
-curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/cs/config' -d 'dataId=test&groupName=test&namespaceId=public&content=test'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/cs/config' -d 'dataId=test&groupName=test&namespaceId=public&content=test' --data-urlencode 'changeMessage=Update release settings'
 ```
 
 * 返回示例
@@ -2120,10 +2123,13 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" "http://127.0.0.1:8080/v3/console/c
 | `pageItems`[i].`appName`     | `string` | 配置所属的appName。                     |
 | `pageItems`[i].`opType`      | `string` | 操作类型，`I`为插入、`U`为更新、`D`为删除。        |
 | `pageItems`[i].`publishType` | `string` | 发布类型，`formal`为普通发布，`gray`为beta发布。 |
+| `pageItems`[i].`changeMessage` | `string` | 所选历史记录对应操作的提交说明，可为空；不是生成历史内容快照时的说明。 |
 | `pageItems`[i].`srcIp`       | `string` | 发布的来源IP。                          |
 | `pageItems`[i].`srcUser`     | `string` | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。       |
 | `pageItems`[i].`createTime`  | `integer` | 配置创建时间。                           |
 | `pageItems`[i].`modifyTime`  | `integer` | 配置修改时间。                           |
+
+提交说明的空白处理、历史操作语义及版本适用条件见[发布操作的提交说明](../user/config/publish-query-listen.md#发布操作的提交说明)。
 
 #### 示例
 
@@ -2241,12 +2247,15 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" "http://127.0.0.1:8080/v3/console/c
 | `appName`     | `string` | 配置所属的appName。                                                               |
 | `opType`      | `string` | 操作类型，`I`为插入、`U`为更新、`D`为删除。                                                  |
 | `publishType` | `string` | 发布类型，`formal`为普通发布，`gray`为beta发布。                                           |
+| `changeMessage` | `string` | 所选历史记录对应操作的提交说明，可为空；不是生成历史内容快照时的说明。 |
 | `srcIp`       | `string` | 发布的来源IP。                                                                    |
 | `srcUser`     | `string` | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。                                                 |
 | `createTime`  | `integer` | 配置创建时间。                                                                     |
 | `modifyTime`  | `integer` | 配置修改时间。                                                                     |
 | `grayName`    | `string` | 灰度发布规则名称, 固定为`beta`。                                                        |
 | `extInfo`     | `string` | JSON 编码的扩展信息字符串，目前包括`src_user`、`type`、`c_desc`，若`publishType`为`gray`, 其中还包括`grayRule`。 |
+
+提交说明的空白处理、历史操作语义及版本适用条件见[发布操作的提交说明](../user/config/publish-query-listen.md#发布操作的提交说明)。
 
 #### 示例
 
@@ -2331,12 +2340,15 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" "http://127.0.0.1:8080/v3/console/c
 | `appName`     | `string` | 配置所属的appName。                                                               |
 | `opType`      | `string` | 操作类型，`I`为插入、`U`为更新、`D`为删除。                                                  |
 | `publishType` | `string` | 发布类型，`formal`为普通发布，`gray`为beta发布。                                           |
+| `changeMessage` | `string` | 所选历史记录对应操作的提交说明，可为空；不是生成历史内容快照时的说明。 |
 | `srcIp`       | `string` | 发布的来源IP。                                                                    |
 | `srcUser`     | `string` | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。                                                 |
 | `createTime`  | `integer` | 配置创建时间。                                                                     |
 | `modifyTime`  | `integer` | 配置修改时间。                                                                     |
 | `grayName`    | `string` | 灰度发布规则名称, 固定为`beta`。                                                        |
 | `extInfo`     | `string` | JSON 编码的扩展信息字符串，目前包括`src_user`、`type`、`c_desc`，若`publishType`为`gray`, 其中还包括`grayRule`。 |
+
+提交说明的空白处理、历史操作语义及版本适用条件见[发布操作的提交说明](../user/config/publish-query-listen.md#发布操作的提交说明)。
 
 #### 示例
 
