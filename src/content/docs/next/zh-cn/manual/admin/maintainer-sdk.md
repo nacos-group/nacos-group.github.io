@@ -170,7 +170,11 @@ boolean publishConfig(String dataId, String groupName, String namespaceId, Strin
 boolean publishConfig(String dataId, String groupName, String namespaceId, String content, String desc, String type) throws NacosException;
 
 boolean publishConfig(String dataId, String groupName, String namespaceId, String content, String appName, String srcUser, String configTags, String desc, String type) throws NacosException;
+
+boolean publishConfig(String dataId, String groupName, String namespaceId, String content, String appName, String srcUser, String configTags, String desc, String type, String changeMessage) throws NacosException;
 ```
+
+提交说明的空白处理、历史操作语义及版本适用条件见[发布操作的提交说明](../user/config/publish-query-listen.md#发布操作的提交说明)。 原有重载继续可用。第三方 Maintainer 实现若只实现旧方法，默认重载会拒绝非空说明并抛出 `NacosException`，不会静默丢弃。
 
 #### 请求参数
 
@@ -181,6 +185,7 @@ boolean publishConfig(String dataId, String groupName, String namespaceId, Strin
 | namespaceId | string   | 配置所属的命名空间ID。                                                                   |
 | content     | string | 配置内容，不超过 100K 字节。                                                              |
 | desc        | string | 配置的描述内容。                                                                       |
+| changeMessage | string | 本次发布的可选说明，最多 512 个 Unicode 码点；不是配置描述。 |
 | type        | string | 配置类型，见 `com.alibaba.nacos.api.config.ConfigType`，默认为TEXT                       |
 | appName     | string | 配置所属的应用名称。                                                                     |
 | srcUser     | string | 创建此配置的用户名，即代理此用户进行配置发布，此配置的`createUser`将为此用户，若传入空字串，则表示当前登录的用户名作为`createUser`。 |
@@ -205,6 +210,16 @@ try {
     result = configMaintainerService.publishConfig("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, "testContent", "testApp", null, "testTag", "test", "TEXT");
 } catch (NacosException e) {
     e.printStackTrace();
+}
+```
+
+
+```java
+boolean published = configMaintainerService.publishConfig(
+        "example", "DEFAULT_GROUP", "public", "timeout=5000",
+        null, null, null, "Service settings", "properties", "Increase timeout for release");
+if (!published) {
+    throw new IllegalStateException("Configuration publication failed");
 }
 ```
 
@@ -690,7 +705,11 @@ try {
 
 ```java
 boolean publishBetaConfig(String dataId, String groupName, String namespaceId, String content, String appName, String srcUser, String configTags, String desc, String type, String betaIps) throws NacosException;
+
+boolean publishBetaConfig(String dataId, String groupName, String namespaceId, String content, String appName, String srcUser, String configTags, String desc, String type, String betaIps, String changeMessage) throws NacosException;
 ```
+
+提交说明的空白处理、历史操作语义及版本适用条件见[发布操作的提交说明](../user/config/publish-query-listen.md#发布操作的提交说明)。 原有重载继续可用。第三方 Maintainer 实现若只实现旧方法，默认重载会拒绝非空说明并抛出 `NacosException`，不会静默丢弃。
 
 #### 请求参数
 
@@ -701,6 +720,7 @@ boolean publishBetaConfig(String dataId, String groupName, String namespaceId, S
 | namespaceId | string   | 配置所属的命名空间ID。                                                                   |
 | content     | string | 配置内容，不超过 100K 字节。                                                              |
 | desc        | string | 配置的描述内容。                                                                       |
+| changeMessage | string | 本次发布的可选说明，最多 512 个 Unicode 码点；不是配置描述。 |
 | type        | string | 配置类型，见 `com.alibaba.nacos.api.config.ConfigType`，默认为TEXT                       |
 | appName     | string | 配置所属的应用名称。                                                                     |
 | srcUser     | string | 创建此配置的用户名，即代理此用户进行配置发布，此配置的`createUser`将为此用户，若传入空字串，则表示当前登录的用户名作为`createUser`。 |
@@ -721,6 +741,16 @@ try {
     boolean result = configMaintainerService.publishBetaConfig("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, "testBeta", "testApp", "", "testTag1", "test", "TEXT", "127.0.0.1");
 } catch (NacosException e) {
     e.printStackTrace();
+}
+```
+
+
+```java
+boolean published = configMaintainerService.publishBetaConfig(
+        "example", "DEFAULT_GROUP", "public", "timeout=5000",
+        null, null, null, "Service settings", "properties", "127.0.0.1", "Increase timeout for release");
+if (!published) {
+    throw new IllegalStateException("Configuration publication failed");
 }
 ```
 
@@ -899,6 +929,7 @@ Page<ConfigHistoryBasicInfo> listConfigHistory(String dataId, String groupName, 
 | srcIp       | string | 操作此版本的来源IP。                                          |
 | opType      | string | 此历史版本的操作类型，`I`为创建，`U`为更新，`D`为删除                      |
 | publishType | string | 此历史版本的发布类型，`formal`为正式发布，`gray`为灰度发布                 |
+| changeMessage | string | 所选历史记录对应操作的提交说明，可为空；不是生成历史内容快照时的说明。 |
 
 #### 请求示例
 
@@ -958,6 +989,7 @@ ConfigHistoryDetailInfo getConfigHistoryInfo(String dataId, String groupName, St
 | encryptedDataKey | string | 配置解密的密钥，仅当配置为加密配置时返回。                                |
 | grayName         | string | 配置历史版本的灰度发布名称，当此次历史版本为灰度发布时存在，一般为`beta`              |
 | extInfo          | string | 历史版本的扩展信息，目前存储灰度发布时的发布规则，如灰度的ip地址列表，格式为`json`。       |
+| changeMessage | string | 所选历史记录对应操作的提交说明，可为空；不是生成历史内容快照时的说明。 |
 
 #### 请求示例
 
@@ -1020,6 +1052,7 @@ ConfigHistoryDetailInfo getPreviousConfigHistoryInfo(String dataId, String group
 | encryptedDataKey | string | 配置解密的密钥，仅当配置为加密配置时返回。                                |
 | grayName         | string | 配置历史版本的灰度发布名称，当此次历史版本为灰度发布时存在，一般为`beta`              |
 | extInfo          | string | 历史版本的扩展信息，目前存储灰度发布时的发布规则，如灰度的ip地址列表，格式为`json`。       |
+| changeMessage | string | 所选历史记录对应操作的提交说明，可为空；不是生成历史内容快照时的说明。 |
 
 #### 请求示例
 
