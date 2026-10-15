@@ -221,7 +221,7 @@ Some parameters in the Nacos Java SDK have little impact at runtime and must rem
 
 **About `configSnapshotEnabled`.** This switch is global to the JVM: all `ConfigService` instances created in the same JVM share the same value, which is read once when the snapshot switch is first initialized. Configure it before the first use of the SDK, with the JVM parameter `-DconfigSnapshotEnabled=false` or the environment variable `CONFIGSNAPSHOTENABLED=false`. Per-client `Properties` passed to `NacosFactory.createConfigService` do not configure this switch. Changing the property after initialization does not reload the switch.
 
-When the switch is `false`, the SDK neither reads nor writes local config snapshots, and the local config cache directory is cleared at initialization, which also removes the config failover files stored in it. The `naming` cache is not affected.
+When the switch is `false`, the SDK neither reads nor writes local config snapshots and attempts to clear the local config cache directory at initialization. This cleanup also removes the config failover files stored in that directory. A recoverable cleanup failure is logged and leaves snapshots disabled; it does not prevent the switch from initializing. The `naming` cache is not affected.
 
 ```
 -DconfigSnapshotEnabled=false

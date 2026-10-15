@@ -228,7 +228,7 @@ Nacos Java SDK 中有部分参数对运行时期的影响较小，且需要全�
 
 **关于 `configSnapshotEnabled`。** 该开关在 JVM 内全局生效，同一个 JVM 中创建的所有 `ConfigService` 共用同一个值，并在快照开关首次初始化时读取一次。请在 SDK 首次使用前，通过 JVM 参数 `-DconfigSnapshotEnabled=false` 或环境变量 `CONFIGSNAPSHOTENABLED=false` 进行设置。通过 `NacosFactory.createConfigService` 传入的 `Properties` 无法配置该开关，初始化后修改参数也不会重新加载该开关。
 
-设置为 `false` 时，SDK 不再读写本地配置快照，并在初始化时清理本地配置缓存目录，其中的配置 failover 文件也会一并删除。该开关不影响 `naming` 缓存。
+设置为 `false` 时，SDK 不再读写本地配置快照，并在初始化时尝试清理本地配置缓存目录，其中的配置 failover 文件也会一并删除。可恢复的清理失败会记录日志，快照仍保持禁用，不会导致开关初始化失败。该开关不影响 `naming` 缓存。
 
 ```
 -DconfigSnapshotEnabled=false
