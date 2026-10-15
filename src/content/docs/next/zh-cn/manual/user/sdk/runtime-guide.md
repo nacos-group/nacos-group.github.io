@@ -159,6 +159,10 @@ SDK 运行时会使用几类本地或内存数据：
 | 网络抖动后实例消失 | 检查临时实例 redo 是否恢复，确认客户端是否已重新连接。 |
 | 本地缓存数据不符合预期 | 检查 `JM.SNAPSHOT.PATH`、failover 开关和缓存文件是否被人工修改。 |
 
+3.3 Java Client SDK 访问 Nacos 的 HTTP 请求会自动携带 `Nacos-Request-Id`，用于关联客户端与服务端请求。直接调用 HTTP API 时也可以提供此请求头，详见 [HTTP 请求关联 ID](../overview/api-overview.md#34-http-请求关联-id)。它与 HTTP 端点注册使用的逻辑客户端标识不同。
+
+遇到 JSON 适配器不可用、Jackson 类缺失或版本冲突时，请按 [JSON 适配与 Jackson 2/3 接入](../java-sdk/json-adapter.md)检查运行时依赖和启动参数。
+
 Java SDK 的常用本地路径包括：
 
 - `JM.LOG.PATH`：客户端日志根目录，默认在用户目录下的 `logs` 目录。

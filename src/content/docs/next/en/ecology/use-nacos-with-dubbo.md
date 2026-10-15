@@ -14,13 +14,17 @@ Nacos as Dubbo ecosystems important registry implementation, including [`dubbo-r
 
 When you put [`dubbo-registry-nacos`](https://github.com/apache/dubbo/tree/master/dubbo-registry/dubbo-registry-nacos) integrated into your dubbo project before, please make sure the background nacos service has started. If you are still not familiar with the basic use of Nacos, reference [Quick Start for Nacos](../quickstart/quick-start.mdx).
 
+Nacos 3.3 enables client authentication by default. With the default auth plugin, prepare an application account with the required service registration and subscription permissions as described in [Access Credentials](../manual/user/auth.mdx). Set the `NACOS_USERNAME` and `NACOS_PASSWORD` environment variables before starting the application. The examples use Spring placeholders to read credentials. Both providers and consumers need them; registration or subscription may fail without valid credentials.
+
+These settings apply to the Dubbo Nacos registry. If you also use Nacos as Dubbo's configuration center or metadata center, configure credentials for those components as well.
+
 ## Quick Start
 
 Nacos Dubbo fusion become registry procedure is very simple, general steps can be divided into "increasing Maven dependency" and "the registry".
 
 ### Increasing Maven dependency
 
-First, you need to `dubbo-registry-nacos`Maven dependent on added to your project `pom.xml` file, and strongly recommend that you use the dubbo `2.6.5`:
+Add the Dubbo client dependencies to your project's `pom.xml`. For recommended versions, refer to the Dubbo documentation or consult the Dubbo maintainers:
 
 ```xml
 <dependencies>
@@ -71,6 +75,8 @@ dubbo.application.name = your-dubbo-application
 
 ## Nacos registry address
 dubbo.registry.address = nacos://10.20.153.10:8848
+dubbo.registry.parameters.username = ${NACOS_USERNAME}
+dubbo.registry.parameters.password = ${NACOS_PASSWORD}
 ##If you want to use your own namespace, you can use the following two methods:
 #dubbo.registry.address = nacos://10.20.153.10:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932
 #dubbo.registry.parameters.namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932
@@ -102,9 +108,12 @@ Similarly, suppose you Dubbo applications using Nacos as registry, and the serve
     <dubbo:application name="dubbo-provider-xml-demo"  />
  
     <!-- Use the Nacos registry -->
-    <dubbo:registry address="nacos://10.20.153.10:8848" />
+    <dubbo:registry address="nacos://10.20.153.10:8848">
+        <dubbo:parameter key="username" value="${NACOS_USERNAME}" />
+        <dubbo:parameter key="password" value="${NACOS_PASSWORD}" />
+    </dubbo:registry>
      <!-- If you want to use your own namespace, you can use the following configuration -->
-    <!-- <dubbo:registry address="nacos://10.20.153.10:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932" /> -->
+    <!-- Change the address above to nacos://10.20.153.10:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932 and retain the credential parameters -->
  	...
 </beans>
 ```
@@ -182,6 +191,8 @@ dubbo.application.name = dubbo-provider-demo
 
 ## Nacos registry address
 dubbo.registry.address = nacos://127.0.0.1:8848
+dubbo.registry.parameters.username = ${NACOS_USERNAME}
+dubbo.registry.parameters.password = ${NACOS_PASSWORD}
 ##If you want to use your own namespace, you can use the following two methods:
 #dubbo.registry.address = nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932
 #dubbo.registry.parameters.namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932
@@ -244,6 +255,8 @@ dubbo.application.name = dubbo-consumer-demo
 
 ## Nacos registry address
 dubbo.registry.address = nacos://127.0.0.1:8848
+dubbo.registry.parameters.username = ${NACOS_USERNAME}
+dubbo.registry.parameters.password = ${NACOS_PASSWORD}
 ##If you want to use your own namespace, you can use the following two methods:
 #dubbo.registry.address = nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932
 #dubbo.registry.parameters.namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932
@@ -347,9 +360,12 @@ The Spring XML configuration driven programming model is a traditional Spring as
     <dubbo:application name="dubbo-provider-xml-demo"/>
 
     <!-- Use the Nacos registry -->
-    <dubbo:registry address="nacos://127.0.0.1:8848"/>
+    <dubbo:registry address="nacos://127.0.0.1:8848">
+        <dubbo:parameter key="username" value="${NACOS_USERNAME}" />
+        <dubbo:parameter key="password" value="${NACOS_PASSWORD}" />
+    </dubbo:registry>
     <!-- If you want to use your own namespace, you can use the following configuration -->
-    <!-- <dubbo:registry address="nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932" /> -->
+    <!-- Change the address above to nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932 and retain the credential parameters -->
 
     <!-- Expose the service on a random port through the Dubbo protocol -->
     <dubbo:protocol name="dubbo" port="-1"/>
@@ -402,9 +418,12 @@ public class DemoServiceProviderXmlBootstrap {
     <dubbo:application name="dubbo-consumer-xml-demo"/>
 
     <!-- Use the Nacos registry -->
-    <dubbo:registry address="nacos://127.0.0.1:8848"/>
+    <dubbo:registry address="nacos://127.0.0.1:8848">
+        <dubbo:parameter key="username" value="${NACOS_USERNAME}" />
+        <dubbo:parameter key="password" value="${NACOS_PASSWORD}" />
+    </dubbo:registry>
     <!-- If you want to use your own namespace, you can use the following configuration -->
-    <!-- <dubbo:registry address="nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932" /> -->
+    <!-- Change the address above to nacos://127.0.0.1:8848?namespace=5cbb70a5-xxx-xxx-xxx-d43479ae0932 and retain the credential parameters -->
 
     <!-- Reference the service interface -->
     <dubbo:reference id="demoService" interface="com.alibaba.nacos.example.dubbo.service.DemoService" version="2.0.0"/>

@@ -63,6 +63,10 @@ Nacos 3.3 默认开启 Client 鉴权。未携带有效身份或缺少资源权�
 
 鉴权失败时检查账号密码、token 是否过期以及资源权限；token 过期后重新登录并更新变量。登录控制台不会自动为终端中的 curl 配置身份。
 
+### 0.5. 请求关联 ID
+
+建议直接 HTTP 调用方通过 `Nacos-Request-Id` 为每次请求提供唯一标识，便于排障关联。该请求头可选，详见 [HTTP 请求关联 ID](./overview/api-overview.md#34-http-请求关联-id)；具体接口要求的 `X-Nacos-Client-Id` 仍需单独配置。
+
 ## 1. 配置管理
 
 :::note

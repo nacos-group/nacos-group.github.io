@@ -159,6 +159,10 @@ When a client issue occurs, start with this checklist:
 | Instance disappears after network jitter | Check whether ephemeral instance redo has recovered and whether the client has reconnected. |
 | Local cache data is unexpected | Check `JM.SNAPSHOT.PATH`, the failover switch, and whether cache files were changed manually. |
 
+The 3.3 Java Client SDK automatically adds `Nacos-Request-Id` to HTTP requests to Nacos to correlate client and server requests. Direct HTTP callers can also provide this header; see [HTTP Request Correlation ID](../overview/api-overview.md#34-http-request-correlation-id). It differs from the logical client identifier used for HTTP endpoint registration.
+
+For unavailable JSON adapters, missing Jackson classes, or version conflicts, check runtime dependencies and startup options using [JSON Adapters and Jackson 2/3 Integration](../java-sdk/json-adapter.md).
+
 Common Java SDK local paths include:
 
 - `JM.LOG.PATH`: client log root directory. By default, it is under the user's `logs` directory.
