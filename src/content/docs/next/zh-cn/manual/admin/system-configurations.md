@@ -306,6 +306,7 @@ AI 管理中心的使用方式见[AI 管理中心概述](../user/ai/ai-registry-
 | 参数名 | 说明 | 默认值 |
 | --- | --- | --- |
 | `nacos.extension.ai.enabled` | 是否启用 AI 模块。设为 `false` 时不加载 AI 模块及其控制台入口，Config 和 Naming 不受影响；`microservice` 功能模式下无论该值为何都不会加载 AI 模块。 | `true` |
+| `nacos.ai.hub.enabled` | 是否启用 Agentic Resource Hub。关闭后隐藏控制台 Hub 入口和共享按钮，Hub 列表返回空分页，其他 Hub 操作返回功能关闭错误；直接跨 Namespace 复制不受影响。详见 [Agentic Resource Hub](../user/ai/resource-hub.md)。 | `true` |
 | `nacos.ai.resource.search.enabled` | 是否启用 AI 资源检索。关闭后检索功能不可用，依赖该功能的 ARD 也无法启用。升级时若已明确关闭检索，MCP 自动迁移不会等待检索索引初始化。 | `true` |
 | `nacos.ai.resource.search.index.backfill.enabled` | 启用 AI 资源检索后，是否为历史数据初始化索引并进行周期检查。通常保持开启；初次升级期间关闭它，可能使 MCP 自动迁移一直等待索引准备完成。 | `true` |
 | `nacos.ai.resource.search.vector.provider` | 资源发现使用的向量索引 Provider；修改后重启。接入见 [AI 向量插件](../../plugin/ai-vector-plugin.md)。 | `postgresql` |

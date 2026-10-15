@@ -12,6 +12,8 @@ Skill Registry is the private Skill repository capability provided by Nacos. It 
 
 Starting from version `3.2.0`, Nacos provides Skill Registry, supporting Skill creation, version management, security review, publishing, and distribution.
 
+Starting with Nacos `3.3.0`, [Agentic Resource Hub](./resource-hub.md) supports sharing and reusing Skills across Namespaces.
+
 ## 1. Skill in Nacos
 
 ### 1.1. Skill Definition and Structure

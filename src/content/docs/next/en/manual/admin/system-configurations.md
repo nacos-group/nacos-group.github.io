@@ -306,6 +306,7 @@ For usage, see [AI Registry Overview](../user/ai/ai-registry-overview.md). The p
 | Property | Description | Default |
 | --- | --- | --- |
 | `nacos.extension.ai.enabled` | Whether the AI module is enabled. When set to `false`, the AI module and its console entries are not loaded, while Config and Naming remain available. The `microservice` function mode does not load the AI module regardless of this value. | `true` |
+| `nacos.ai.hub.enabled` | Whether Agentic Resource Hub is enabled. When disabled, Console hides Hub and sharing controls, Hub lists return empty pages, and other Hub operations return a feature-disabled error. Direct cross-Namespace copy remains available. See [Agentic Resource Hub](../user/ai/resource-hub.md). | `true` |
 | `nacos.ai.resource.search.enabled` | Whether AI resource search is enabled. When disabled, search is unavailable and ARD, which depends on search, cannot be enabled. If search is explicitly disabled during an upgrade, automatic MCP migration does not wait for search-index initialization. | `true` |
 | `nacos.ai.resource.search.index.backfill.enabled` | Whether historical data indexes are initialized and checked periodically after AI resource search starts. Normally keep this enabled. Disabling it during an initial upgrade can leave automatic MCP migration waiting for the indexes to become ready. | `true` |
 | `nacos.ai.resource.search.vector.provider` | Vector index Provider for resource discovery; restart after changes. See [AI Vector Plugin](../../plugin/ai-vector-plugin.md). | `postgresql` |

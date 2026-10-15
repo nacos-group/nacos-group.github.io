@@ -8458,3 +8458,505 @@ try {
 #### Exception Description
 
 A `NacosException` is thrown when the request fails or the server returns a non-success business result.
+
+## 13. Agentic Resource Hub
+
+Obtain `SkillMaintainerService` from `aiMaintainerService.skill()`. The following methods are available from `3.3.0`. Request and response types are in `com.alibaba.nacos.api.ai.model.hub`.
+
+### 13.1. Share a Skill
+
+#### Description
+
+Share a specified source Skill version in Hub. The source Skill must be enabled and PUBLIC, and the specified version must be online. The shared version does not follow changes to the `latest` label.
+
+```java
+HubShareResult shareHubSkill(HubShareSkillRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request.sourceNamespaceId` | `String` | Namespace ID of the source Skill. Required. |
+| `request.sourceName` | `String` | Source Skill name. Required. |
+| `request.sourceVersion` | `String` | Online source Skill version; `latest` is not supported. Required. |
+| `request.expectedSourceResourceId` | `Long` | Expected source resource ID; must be positive. Used to verify the source identity. |
+
+#### Response Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | See [Hub Admin API](./admin-api.md#12-agentic-resource-hub) for response fields. |
+
+#### Request Example
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubShareSkillRequest request = new HubShareSkillRequest();
+    request.setSourceNamespaceId("public");
+    request.setSourceName("find-skills");
+    request.setSourceVersion("1.0.0");
+    HubShareResult result = skillMaintainerService.shareHubSkill(request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown for invalid parameters, insufficient permissions, unavailable resources, or request failure.
+
+### 13.2. Adjust a Shared Version
+
+#### Description
+
+Change the shared version of an existing Hub entry. The target version must belong to the same source Skill and meet the sharing requirements.
+
+```java
+HubShareResult adjustHubShare(HubAdjustShareRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request.hubEntryId` | `Long` | Hub entry ID; must be positive. Required. |
+| `request.expectedMetaVersion` | `Long` | Current metadata version of the share; must be positive. Required. |
+| `request.targetVersion` | `String` | Online version to share; `latest` is not supported. Required. |
+
+#### Response Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | See [Hub Admin API](./admin-api.md#12-agentic-resource-hub) for response fields. |
+
+#### Request Example
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubAdjustShareRequest request = new HubAdjustShareRequest();
+    request.setHubEntryId(101L);
+    request.setExpectedMetaVersion(2L);
+    request.setTargetVersion("1.1.0");
+    HubShareResult result = skillMaintainerService.adjustHubShare(request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown for invalid parameters, insufficient permissions, unavailable resources, or request failure.
+
+### 13.3. Unshare a Skill
+
+#### Description
+
+Revoke a Hub share while retaining the source Skill. A share can still be revoked after the source is disabled, made private, or taken offline.
+
+```java
+HubShareResult unshareHubSkill(HubUnshareRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request.hubEntryId` | `Long` | Hub entry ID; must be positive. Required. |
+| `request.expectedMetaVersion` | `Long` | Current metadata version of the share; must be positive. Required. |
+
+#### Response Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | See [Hub Admin API](./admin-api.md#12-agentic-resource-hub) for response fields. |
+
+#### Request Example
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubUnshareRequest request = new HubUnshareRequest();
+    request.setHubEntryId(101L);
+    request.setExpectedMetaVersion(2L);
+    HubShareResult result = skillMaintainerService.unshareHubSkill(request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown for invalid parameters, insufficient permissions, unavailable resources, or request failure.
+
+### 13.4. Force Unshare a Skill
+
+#### Description
+
+Allow an administrator to take down a Hub entry and record the reason.
+
+```java
+HubShareResult forceUnshareHubSkill(HubForceUnshareRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request.hubEntryId` | `Long` | Hub entry ID; must be positive. Required. |
+| `request.expectedMetaVersion` | `Long` | Current metadata version of the share; must be positive. Required. |
+| `request.reason` | `String` | Reason for takedown; must not be blank and must not exceed 512 characters. Required. |
+
+#### Response Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | See [Hub Admin API](./admin-api.md#12-agentic-resource-hub) for response fields. |
+
+#### Request Example
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubForceUnshareRequest request = new HubForceUnshareRequest();
+    request.setHubEntryId(101L);
+    request.setExpectedMetaVersion(2L);
+    request.setReason("Withdraw this shared version");
+    HubShareResult result = skillMaintainerService.forceUnshareHubSkill(request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown for invalid parameters, insufficient permissions, unavailable resources, or request failure.
+
+### 13.5. Get Source Skill Share State
+
+#### Description
+
+Get share state by source Namespace and Skill name, including the entry ID and metadata version required for subsequent operations.
+
+```java
+HubSkillShareState getHubSkillSourceShare(String namespaceId, String name) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `namespaceId` | `String` | Namespace ID of the source Skill. |
+| `name` | `String` | Source Skill name. |
+
+#### Response Parameters
+
+| Type | Description |
+|---|---|
+| `HubSkillShareState` | See [Hub Admin API](./admin-api.md#12-agentic-resource-hub) for response fields. |
+
+#### Request Example
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubSkillShareState result = skillMaintainerService.getHubSkillSourceShare("public", "find-skills");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown for invalid parameters, insufficient permissions, unavailable resources, or request failure.
+
+### 13.6. Get Share Governance State
+
+#### Description
+
+Allow an administrator to get share state by Hub entry ID.
+
+```java
+HubSkillShareState getHubSkillGovernanceState(Long entryId) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `entryId` | `Long` | Hub entry ID; must be positive. |
+
+#### Response Parameters
+
+| Type | Description |
+|---|---|
+| `HubSkillShareState` | See [Hub Admin API](./admin-api.md#12-agentic-resource-hub) for response fields. |
+
+#### Request Example
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubSkillShareState result = skillMaintainerService.getHubSkillGovernanceState(101L);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown for invalid parameters, insufficient permissions, unavailable resources, or request failure.
+
+### 13.7. List Shared Skills
+
+#### Description
+
+List effective shared Skills with pagination, keyword filtering on names and descriptions, and tag filtering.
+
+```java
+Page<HubSkillSummary> listHubSkills(HubSkillListRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request.pageNo` | `int` | Page number; defaults to `1` and must be positive. |
+| `request.pageSize` | `int` | Items per page; defaults to `20`. Range: `1` to `100`. |
+| `request.query` | `String` | Case-insensitive keyword in the name or description; up to 1024 characters. |
+| `request.tagsAll` | `List<String>` | Tags that must all match, case-insensitively; up to 32 tags of 128 characters each. Pass as `tagsAll[0]`, `tagsAll[1]`, and so on. |
+
+#### Response Parameters
+
+| Type | Description |
+|---|---|
+| `Page<HubSkillSummary>` | See [Hub Admin API](./admin-api.md#12-agentic-resource-hub) for response fields. |
+
+#### Request Example
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubSkillListRequest request = new HubSkillListRequest();
+    request.setPageNo(1);
+    request.setPageSize(20);
+    request.setQuery("find");
+    request.setTagsAll(java.util.Collections.singletonList("assistant"));
+    Page<HubSkillSummary> result = skillMaintainerService.listHubSkills(request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown for invalid parameters, insufficient permissions, unavailable resources, or request failure.
+
+### 13.8. Get Shared Skill Detail
+
+#### Description
+
+Get details of the current shared version by Hub entry ID.
+
+```java
+HubSkillDetail getHubSkillDetail(Long hubEntryId) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `hubEntryId` | `Long` | Hub entry ID; must be positive. |
+
+#### Response Parameters
+
+| Type | Description |
+|---|---|
+| `HubSkillDetail` | See [Hub Admin API](./admin-api.md#12-agentic-resource-hub) for response fields. |
+
+#### Request Example
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubSkillDetail result = skillMaintainerService.getHubSkillDetail(101L);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown for invalid parameters, insufficient permissions, unavailable resources, or request failure.
+
+### 13.9. Get Shared Skill Content
+
+#### Description
+
+Get the shared version’s `SKILL.md` and resource file content by Hub entry ID.
+
+```java
+HubSkillContent getHubSkillContent(Long hubEntryId) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `hubEntryId` | `Long` | Hub entry ID; must be positive. |
+
+#### Response Parameters
+
+| Type | Description |
+|---|---|
+| `HubSkillContent` | See [Hub Admin API](./admin-api.md#12-agentic-resource-hub) for response fields. |
+
+#### Request Example
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubSkillContent result = skillMaintainerService.getHubSkillContent(101L);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown for invalid parameters, insufficient permissions, unavailable resources, or request failure.
+
+### 13.10. Download a Shared Skill
+
+#### Description
+
+Download the shared version as a ZIP package by Hub entry ID.
+
+```java
+HubSkillDownload getHubSkillDownload(Long hubEntryId) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `hubEntryId` | `Long` | Hub entry ID; must be positive. |
+
+#### Response Parameters
+
+| Type | Description |
+|---|---|
+| `HubSkillDownload` | See [Hub Admin API](./admin-api.md#12-agentic-resource-hub) for response fields. |
+
+`HubSkillDownload.getZipBytes()` returns ZIP bytes.
+
+#### Request Example
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubSkillDownload result = skillMaintainerService.getHubSkillDownload(101L);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown for invalid parameters, insufficient permissions, unavailable resources, or request failure.
+
+### 13.11. Import a Shared Skill
+
+#### Description
+
+Import an effective Hub version into the target Namespace as an independent Skill draft with provenance. Source Namespace, name and version parameters must be omitted.
+
+```java
+HubSkillTransferResult importHubSkill(HubSkillTransferRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request.hubEntryId` | `Long` | Hub entry ID; must be positive. Required. |
+| `request.targetNamespaceId` | `String` | Target Namespace ID. Required. |
+| `request.targetName` | `String` | Target Skill name; must not already exist in the target Namespace. Required. |
+| `request.targetVersion` | `String` | Target draft version; defaults to `0.0.1`. `latest` is not supported. |
+
+#### Response Parameters
+
+| Type | Description |
+|---|---|
+| `HubSkillTransferResult` | See [Hub Admin API](./admin-api.md#12-agentic-resource-hub) for response fields. |
+
+#### Request Example
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubSkillTransferRequest request = new HubSkillTransferRequest();
+    request.setHubEntryId(101L);
+    request.setTargetNamespaceId("team-b");
+    request.setTargetName("find-skills-copy");
+    request.setTargetVersion("0.0.1");
+    HubSkillTransferResult result = skillMaintainerService.importHubSkill(request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown for invalid parameters, insufficient permissions, unavailable resources, or request failure.
+
+### 13.12. Copy a Skill across Namespaces
+
+#### Description
+
+Copy a specified source version into the target Namespace as an independent Skill draft with provenance. The source Skill must be enabled and the version online. This operation remains available when Hub is disabled. `hubEntryId` must be omitted.
+
+```java
+HubSkillTransferResult copyHubSkill(HubSkillTransferRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request.sourceNamespaceId` | `String` | Namespace ID of the source Skill. Required. |
+| `request.sourceName` | `String` | Source Skill name. Required. |
+| `request.sourceVersion` | `String` | Online source Skill version; `latest` is not supported. Required. |
+| `request.targetNamespaceId` | `String` | Target Namespace ID. Required. |
+| `request.targetName` | `String` | Target Skill name; must not already exist in the target Namespace. Required. |
+| `request.targetVersion` | `String` | Target draft version; defaults to `0.0.1`. `latest` is not supported. |
+
+#### Response Parameters
+
+| Type | Description |
+|---|---|
+| `HubSkillTransferResult` | See [Hub Admin API](./admin-api.md#12-agentic-resource-hub) for response fields. |
+
+#### Request Example
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubSkillTransferRequest request = new HubSkillTransferRequest();
+    request.setSourceNamespaceId("public");
+    request.setSourceName("find-skills");
+    request.setSourceVersion("1.0.0");
+    request.setTargetNamespaceId("team-b");
+    request.setTargetName("find-skills-copy");
+    request.setTargetVersion("0.0.1");
+    HubSkillTransferResult result = skillMaintainerService.copyHubSkill(request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### Exception Description
+
+A `NacosException` is thrown for invalid parameters, insufficient permissions, unavailable resources, or request failure.

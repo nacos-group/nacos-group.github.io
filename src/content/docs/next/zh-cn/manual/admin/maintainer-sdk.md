@@ -8458,3 +8458,505 @@ try {
 #### 异常说明
 
 请求失败或服务端返回非成功业务结果时抛出 NacosException 异常。
+
+## 13. Agentic Resource Hub
+
+通过 `aiMaintainerService.skill()` 获取 `SkillMaintainerService`。以下方法从 `3.3.0` 开始提供，请求和响应类型位于 `com.alibaba.nacos.api.ai.model.hub`。
+
+### 13.1. 共享 Skill
+
+#### 描述
+
+将源 Skill 的指定版本共享到 Hub。源 Skill 必须已启用、可见范围为 `PUBLIC`，且指定版本已上线。共享版本不会随 `latest` 标签自动变化。
+
+```java
+HubShareResult shareHubSkill(HubShareSkillRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request.sourceNamespaceId` | `String` | 源 Skill 所属命名空间 ID。 必填。 |
+| `request.sourceName` | `String` | 源 Skill 名称。 必填。 |
+| `request.sourceVersion` | `String` | 源 Skill 的已上线版本，不支持 `latest`。 必填。 |
+| `request.expectedSourceResourceId` | `Long` | 预期的源资源 ID，必须为正整数，用于校验源资源身份。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | 字段说明见 [Hub 运维 API](./admin-api.md#12-agentic-resource-hub)。 |
+
+#### 请求示例
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubShareSkillRequest request = new HubShareSkillRequest();
+    request.setSourceNamespaceId("public");
+    request.setSourceName("find-skills");
+    request.setSourceVersion("1.0.0");
+    HubShareResult result = skillMaintainerService.shareHubSkill(request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+参数无效、权限不足、资源不可用或请求失败时抛出 `NacosException`。
+
+### 13.2. 调整共享版本
+
+#### 描述
+
+调整现有 Hub 条目的共享版本。目标版本必须属于同一源 Skill，并满足共享条件。
+
+```java
+HubShareResult adjustHubShare(HubAdjustShareRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request.hubEntryId` | `Long` | Hub 条目 ID，必须为正整数。 必填。 |
+| `request.expectedMetaVersion` | `Long` | 当前共享记录的元数据版本，必须为正整数。 必填。 |
+| `request.targetVersion` | `String` | 调整后的已上线版本，不支持 `latest`。 必填。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | 字段说明见 [Hub 运维 API](./admin-api.md#12-agentic-resource-hub)。 |
+
+#### 请求示例
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubAdjustShareRequest request = new HubAdjustShareRequest();
+    request.setHubEntryId(101L);
+    request.setExpectedMetaVersion(2L);
+    request.setTargetVersion("1.1.0");
+    HubShareResult result = skillMaintainerService.adjustHubShare(request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+参数无效、权限不足、资源不可用或请求失败时抛出 `NacosException`。
+
+### 13.3. 取消共享
+
+#### 描述
+
+取消 Hub 共享，保留源 Skill。源 Skill 停用、转为私有或版本下线后仍可取消共享。
+
+```java
+HubShareResult unshareHubSkill(HubUnshareRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request.hubEntryId` | `Long` | Hub 条目 ID，必须为正整数。 必填。 |
+| `request.expectedMetaVersion` | `Long` | 当前共享记录的元数据版本，必须为正整数。 必填。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | 字段说明见 [Hub 运维 API](./admin-api.md#12-agentic-resource-hub)。 |
+
+#### 请求示例
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubUnshareRequest request = new HubUnshareRequest();
+    request.setHubEntryId(101L);
+    request.setExpectedMetaVersion(2L);
+    HubShareResult result = skillMaintainerService.unshareHubSkill(request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+参数无效、权限不足、资源不可用或请求失败时抛出 `NacosException`。
+
+### 13.4. 强制下架共享
+
+#### 描述
+
+由管理员强制下架 Hub 条目，并记录下架原因。
+
+```java
+HubShareResult forceUnshareHubSkill(HubForceUnshareRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request.hubEntryId` | `Long` | Hub 条目 ID，必须为正整数。 必填。 |
+| `request.expectedMetaVersion` | `Long` | 当前共享记录的元数据版本，必须为正整数。 必填。 |
+| `request.reason` | `String` | 下架原因，不能为空，最多 512 个字符。 必填。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | 字段说明见 [Hub 运维 API](./admin-api.md#12-agentic-resource-hub)。 |
+
+#### 请求示例
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubForceUnshareRequest request = new HubForceUnshareRequest();
+    request.setHubEntryId(101L);
+    request.setExpectedMetaVersion(2L);
+    request.setReason("Withdraw this shared version");
+    HubShareResult result = skillMaintainerService.forceUnshareHubSkill(request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+参数无效、权限不足、资源不可用或请求失败时抛出 `NacosException`。
+
+### 13.5. 查询源 Skill 共享状态
+
+#### 描述
+
+根据源命名空间和 Skill 名称查询共享状态，返回后续操作所需的条目 ID 和元数据版本。
+
+```java
+HubSkillShareState getHubSkillSourceShare(String namespaceId, String name) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `namespaceId` | `String` | 源 Skill 所属命名空间 ID。 |
+| `name` | `String` | 源 Skill 名称。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubSkillShareState` | 字段说明见 [Hub 运维 API](./admin-api.md#12-agentic-resource-hub)。 |
+
+#### 请求示例
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubSkillShareState result = skillMaintainerService.getHubSkillSourceShare("public", "find-skills");
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+参数无效、权限不足、资源不可用或请求失败时抛出 `NacosException`。
+
+### 13.6. 查询共享治理状态
+
+#### 描述
+
+由管理员根据 Hub 条目 ID 查询共享状态。
+
+```java
+HubSkillShareState getHubSkillGovernanceState(Long entryId) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `entryId` | `Long` | Hub 条目 ID，必须为正整数。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubSkillShareState` | 字段说明见 [Hub 运维 API](./admin-api.md#12-agentic-resource-hub)。 |
+
+#### 请求示例
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubSkillShareState result = skillMaintainerService.getHubSkillGovernanceState(101L);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+参数无效、权限不足、资源不可用或请求失败时抛出 `NacosException`。
+
+### 13.7. 查询共享 Skill 列表
+
+#### 描述
+
+分页查询当前有效的共享 Skill，支持按名称、描述关键词和标签筛选。
+
+```java
+Page<HubSkillSummary> listHubSkills(HubSkillListRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request.pageNo` | `int` | 页码，默认为 `1`，必须为正整数。 |
+| `request.pageSize` | `int` | 每页条数，默认为 `20`，范围为 `1` 至 `100`。 |
+| `request.query` | `String` | 名称或描述关键词，不区分大小写，最多 1024 个字符。 |
+| `request.tagsAll` | `List<String>` | 需全部匹配的标签，不区分大小写，最多 32 项，每项最多 128 个字符。通过 `tagsAll[0]`、`tagsAll[1]` 等传递。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `Page<HubSkillSummary>` | 字段说明见 [Hub 运维 API](./admin-api.md#12-agentic-resource-hub)。 |
+
+#### 请求示例
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubSkillListRequest request = new HubSkillListRequest();
+    request.setPageNo(1);
+    request.setPageSize(20);
+    request.setQuery("find");
+    request.setTagsAll(java.util.Collections.singletonList("assistant"));
+    Page<HubSkillSummary> result = skillMaintainerService.listHubSkills(request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+参数无效、权限不足、资源不可用或请求失败时抛出 `NacosException`。
+
+### 13.8. 查询共享 Skill 详情
+
+#### 描述
+
+根据 Hub 条目 ID 查询当前共享版本的详情。
+
+```java
+HubSkillDetail getHubSkillDetail(Long hubEntryId) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `hubEntryId` | `Long` | Hub 条目 ID，必须为正整数。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubSkillDetail` | 字段说明见 [Hub 运维 API](./admin-api.md#12-agentic-resource-hub)。 |
+
+#### 请求示例
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubSkillDetail result = skillMaintainerService.getHubSkillDetail(101L);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+参数无效、权限不足、资源不可用或请求失败时抛出 `NacosException`。
+
+### 13.9. 查询共享 Skill 内容
+
+#### 描述
+
+根据 Hub 条目 ID 获取共享版本的 `SKILL.md` 和资源文件内容。
+
+```java
+HubSkillContent getHubSkillContent(Long hubEntryId) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `hubEntryId` | `Long` | Hub 条目 ID，必须为正整数。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubSkillContent` | 字段说明见 [Hub 运维 API](./admin-api.md#12-agentic-resource-hub)。 |
+
+#### 请求示例
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubSkillContent result = skillMaintainerService.getHubSkillContent(101L);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+参数无效、权限不足、资源不可用或请求失败时抛出 `NacosException`。
+
+### 13.10. 下载共享 Skill
+
+#### 描述
+
+根据 Hub 条目 ID 下载共享版本的 ZIP 包。
+
+```java
+HubSkillDownload getHubSkillDownload(Long hubEntryId) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `hubEntryId` | `Long` | Hub 条目 ID，必须为正整数。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubSkillDownload` | 字段说明见 [Hub 运维 API](./admin-api.md#12-agentic-resource-hub)。 |
+
+`HubSkillDownload.getZipBytes()` 返回 ZIP 字节。
+
+#### 请求示例
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubSkillDownload result = skillMaintainerService.getHubSkillDownload(101L);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+参数无效、权限不足、资源不可用或请求失败时抛出 `NacosException`。
+
+### 13.11. 导入共享 Skill
+
+#### 描述
+
+将有效的 Hub 共享版本导入目标命名空间，创建独立的 Skill 草稿并保留来源信息。不能同时传入源命名空间、名称和版本参数。
+
+```java
+HubSkillTransferResult importHubSkill(HubSkillTransferRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request.hubEntryId` | `Long` | Hub 条目 ID，必须为正整数。 必填。 |
+| `request.targetNamespaceId` | `String` | 目标命名空间 ID。 必填。 |
+| `request.targetName` | `String` | 目标 Skill 名称，不能与目标命名空间中已有的 Skill 重名。 必填。 |
+| `request.targetVersion` | `String` | 目标草稿版本，默认为 `0.0.1`，不支持 `latest`。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubSkillTransferResult` | 字段说明见 [Hub 运维 API](./admin-api.md#12-agentic-resource-hub)。 |
+
+#### 请求示例
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubSkillTransferRequest request = new HubSkillTransferRequest();
+    request.setHubEntryId(101L);
+    request.setTargetNamespaceId("team-b");
+    request.setTargetName("find-skills-copy");
+    request.setTargetVersion("0.0.1");
+    HubSkillTransferResult result = skillMaintainerService.importHubSkill(request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+参数无效、权限不足、资源不可用或请求失败时抛出 `NacosException`。
+
+### 13.12. 跨命名空间复制 Skill
+
+#### 描述
+
+将指定源版本复制到目标命名空间，创建独立的 Skill 草稿并保留来源信息。源 Skill 必须已启用、指定版本已上线。此操作不受 Hub 开关影响，不能传入 `hubEntryId`。
+
+```java
+HubSkillTransferResult copyHubSkill(HubSkillTransferRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request.sourceNamespaceId` | `String` | 源 Skill 所属命名空间 ID。 必填。 |
+| `request.sourceName` | `String` | 源 Skill 名称。 必填。 |
+| `request.sourceVersion` | `String` | 源 Skill 的已上线版本，不支持 `latest`。 必填。 |
+| `request.targetNamespaceId` | `String` | 目标命名空间 ID。 必填。 |
+| `request.targetName` | `String` | 目标 Skill 名称，不能与目标命名空间中已有的 Skill 重名。 必填。 |
+| `request.targetVersion` | `String` | 目标草稿版本，默认为 `0.0.1`，不支持 `latest`。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubSkillTransferResult` | 字段说明见 [Hub 运维 API](./admin-api.md#12-agentic-resource-hub)。 |
+
+#### 请求示例
+
+```java
+try {
+    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
+    HubSkillTransferRequest request = new HubSkillTransferRequest();
+    request.setSourceNamespaceId("public");
+    request.setSourceName("find-skills");
+    request.setSourceVersion("1.0.0");
+    request.setTargetNamespaceId("team-b");
+    request.setTargetName("find-skills-copy");
+    request.setTargetVersion("0.0.1");
+    HubSkillTransferResult result = skillMaintainerService.copyHubSkill(request);
+} catch (NacosException e) {
+    e.printStackTrace();
+}
+```
+
+#### 异常说明
+
+参数无效、权限不足、资源不可用或请求失败时抛出 `NacosException`。
