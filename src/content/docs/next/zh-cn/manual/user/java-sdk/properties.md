@@ -224,6 +224,19 @@ Nacos Java SDK 中有部分参数对运行时期的影响较小，且需要全�
 | ~~NACOS.CONNECT.TIMEOUT~~ | 连接服务时的连接超时时间，旧版本Http使用，已废弃                                                                                         | 任意int              | 1000              |
 | NACOS.READ.TIMEOUT | 连接服务时的读取超时时间，旧版本Http使用                                                                                         | 任意int              | 3000              |
 | nacos.client.json.adapter | JSON 适配器选择，仅通过 JVM `-D` 设置，在首次使用 JSON 层之前配置；显式选择不可用的适配器会初始化失败。详见 [JSON 适配与 Jackson 2/3 接入](./json-adapter.md)。 | auto / jackson2 / jackson3 | auto |
+| configSnapshotEnabled | Nacos Java SDK 是否读写本地配置快照。该开关在 JVM 内全局生效，且只作用于配置快照，无法通过每个客户端自己的 `Properties` 配置。 | true / false | true |
+
+**关于 `configSnapshotEnabled`。** 该开关在 JVM 内全局生效，同一个 JVM 中创建的所有 `ConfigService` 共用同一个值，并在快照开关首次初始化时读取一次。请在 SDK 首次使用前，通过 JVM 参数 `-DconfigSnapshotEnabled=false` 或环境变量 `CONFIGSNAPSHOTENABLED=false` 进行设置。通过 `NacosFactory.createConfigService` 传入的 `Properties` 无法配置该开关，初始化后修改参数也不会重新加载该开关。
+
+设置为 `false` 时，SDK 不再读写本地配置快照，并在初始化时尝试清理本地配置缓存目录，其中的配置 failover 文件也会一并删除。可恢复的清理失败会记录日志，快照仍保持禁用，不会导致开关初始化失败。该开关不影响 `naming` 缓存。
+
+```
+-DconfigSnapshotEnabled=false
+```
+
+```
+CONFIGSNAPSHOTENABLED=false
+```
 
 ### 2.6. AI 资源参数
 
