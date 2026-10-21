@@ -2214,10 +2214,11 @@ properties.setProperty("username", System.getenv("NACOS_USERNAME"));
 properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
+String agentName = "test";
 try {
     AgentCardDetailInfo result = aiService.agent().getAgentCard(agentName);
     result = aiService.agent().getAgentCard(agentName, "1.0.0");
-    result = aiService.agent().getAgentCard(agentName, "1.0.0", "url");
+    result = aiService.agent().getAgentCard(agentName, "1.0.0", "URL");
 } catch (Exception e) {
     e.printStackTrace();
 }
@@ -2229,7 +2230,7 @@ try {
 
 Releases a new AgentCard version. If release fails, an exception is thrown.
 
-On the 3.3 RAD compatibility route, this method follows the publication rules in section 11.7: `setAsLatest` maps to `autoSubmit`. A new resource's first version is always submitted; later versions or existing drafts follow this flag. The method does not force a version online or bypass review, and existing non-draft versions remain unchanged. The legacy A2A route retains its direct-publication behavior.
+Legacy A2A wire directly publishes new versions: the first becomes latest even with `setAsLatest=false`. For later new versions, true moves latest and false preserves the current valid latest; existing versions are unchanged. Once a 3.3 SDK selects RAD, it maps the original `setAsLatest` value to `autoSubmit`, without changing false to true. The server ordinarily submits a newly created first version under section 11.7. First means no versions existed before creation, not the client's first call or first online version; an existing draft excludes this exception. Without a Pipeline it can become online/latest; with one it follows the workflow, without immediate-publication guarantees. Later new versions and existing editable drafts follow the flag; existing non-drafts are unchanged.
 
 ```java
 void releaseAgentCard(AgentCard agentCard) throws NacosException;
@@ -2245,7 +2246,7 @@ void releaseAgentCard(AgentCard agentCard, String registrationType, boolean setA
 |:-----------------|:----------|------------------------------------------------------------------------------------------------------------------------|-----------|
 | agentCard        | AgentCard | AgentCard information | None, required |
 | registrationType | String | `URL` or `SERVICE`. `URL` prefers declared addresses from the definition; `SERVICE` prefers runtime endpoints. | `SERVICE` |
-| setAsLatest | boolean | Set the latest version on the legacy A2A route; automatically submit the draft on the RAD route. | `false` |
+| setAsLatest | boolean | Set latest on legacy A2A; submit the draft on RAD. False does not suppress the first-version behavior above. | `false` |
 
 
 #### Return Parameters
@@ -2280,7 +2281,7 @@ try {
 
 #### Description
 
-Registers an endpoint under an AgentCard.
+Submit this client's complete registration intent for the same Agent and exact version. A single-address overload is a one-element set and replaces the previous set. To keep A and add B, submit A+B through the batch overload; to replace A with B, submit B without subsequently deregistering A. Other clients are unaffected; this does not imply that other versions' contributions are cleared.
 
 ```java
 void registerAgentEndpoint(String agentName, String version, String address, int port) throws NacosException;
@@ -2390,6 +2391,8 @@ Subscribes to an AgentCard. When the AgentCard releases a new version, a notific
 
 > The legacy A2A route polls at the interval set by `nacosAiAgentCardCacheUpdateInterval`, which defaults to 10000 ms. The 3.3 RAD compatibility route uses Watch, with bounded polling when the capability is unavailable. The legacy parameter does not control every Agent subscription's notification interval.
 
+Legacy `subscribeAgentCard` retains its `AgentCardDetailInfo` return type and complete Card callback signature. Its default empty-push protection suppresses null Cards, empty Cards and lifecycle events when the target is deleted or no valid Card can be obtained. It does not clear the application's saved Card or guarantee that old addresses remain reachable. Recovery follows existing change rules; an identical Card is not guaranteed to trigger another callback. Use RAD Watch when explicit target-absence handling is needed; do not expect `UNAVAILABLE` in a legacy A2A listener.
+
 ```java
 AgentCardDetailInfo subscribeAgentCard(String agentName, AbstractNacosAgentCardListener agentCardListener) throws NacosException;
 
@@ -2411,30 +2414,35 @@ When subscription succeeds, the current AgentCard details `AgentCardDetailInfo` 
 #### Request Example
 
 ```java
+import com.alibaba.nacos.api.ai.AiFactory;
+import com.alibaba.nacos.api.ai.AiService;
+import com.alibaba.nacos.api.ai.listener.AbstractNacosAgentCardListener;
+import com.alibaba.nacos.api.ai.listener.NacosAgentCardEvent;
+import com.alibaba.nacos.api.ai.model.a2a.AgentCardDetailInfo;
+import java.util.Properties;
+
 Properties properties = new Properties();
+properties.setProperty("serverAddr", "{serverAddr}");
+properties.setProperty("namespace", "{namespaceId}");
 properties.setProperty("username", System.getenv("NACOS_USERNAME"));
 properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
-properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AbstractNacosAgentCardListener listener = new AbstractNacosAgentCardListener() {
+    @Override
+    public void onEvent(NacosAgentCardEvent event) {
+        System.out.println("Card changed: " + event.getAgentCard().getVersion());
+    }
+};
 AiService aiService = AiFactory.createAiService(properties);
 try {
-    aiService.agent().subscribeAgentCard("test", new AbstractNacosAgentCardListener() {
-        @Override
-        public void onEvent(NacosAgentCardEvent event) {
-            System.out.println("---------------agent card listener called start---------------");
-            System.out.println(JsonUtils.toJson(event.getAgentCard()));
-            System.out.println("---------------agent card listener called end---------------");
-        }
-    });
-    aiService.agent().subscribeAgentCard("test", "", new AbstractNacosAgentCardListener() {
-        @Override
-        public void onEvent(NacosAgentCardEvent event) {
-            System.out.println("---------------agent card listener called start---------------");
-            System.out.println(JsonUtils.toJson(event.getAgentCard()));
-            System.out.println("---------------agent card listener called end---------------");
-        }
-    });
-} catch (NacosException e) {
-    e.printStackTrace();
+    AgentCardDetailInfo initial = aiService.agent().subscribeAgentCard("test", "1.0.0", listener);
+    try {
+        System.out.println("Press Enter to unsubscribe.");
+        System.in.read();
+    } finally {
+        aiService.agent().unsubscribeAgentCard("test", "1.0.0", listener);
+    }
+} finally {
+    aiService.shutdown();
 }
 ```
 
@@ -2465,29 +2473,15 @@ None.
 #### Request Example
 
 ```java
-Properties properties = new Properties();
-properties.setProperty("username", System.getenv("NACOS_USERNAME"));
-properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
-properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
-AiService aiService = AiFactory.createAiService(properties);
-AbstractNacosAgentCardListener listener = new AbstractNacosAgentCardListener() {};
-try {
-    aiService.agent().subscribeAgentCard("test", listener);
-    aiService.agent().unsubscribeAgentCard("test", listener);
-    aiService.agent().unsubscribeAgentCard("test", "", listener);
-} catch (NacosException e) {
-    e.printStackTrace();
-}
+// Use the same live aiService and listener as the subscription in section 7.5.
+aiService.agent().unsubscribeAgentCard("test", "1.0.0", listener);
 ```
 
 ### 7.7. Batch Register Agent Endpoints
 
-Batch-registers multiple endpoints under an AgentCard.
+The batch and single-address overloads share replacement semantics: replace this client's complete set for the same Agent and exact version. To change A+B to B+C, submit B+C. Include every address to retain. This does not overwrite other clients' or protocols' contributions or promise to clear other versions' contributions.
 
-> The same client can register only one set of endpoints to one AgentCard. Therefore, this API conflicts with [Register Agent Endpoint](#73-register-agent-endpoint): endpoints batch-registered by this API overwrite the previously registered endpoints for the same Agent.
-> If the same client registers endpoints for multiple different AgentCards, they do not overwrite each other.
-
-> This API is available since version 3.1.1.
+This API is available since 3.1.1.
 
 #### Description
 
@@ -2527,7 +2521,7 @@ try {
 
     AgentEndpoint endpoint2 = new AgentEndpoint();
     endpoint2.setAddress("127.0.0.1");
-    endpoint2.setPort(8848);
+    endpoint2.setPort(8849);
     endpoint2.setTransport("JSONRPC");
     endpoint2.setPath("");
     endpoint2.setSupportTls(false);
@@ -3093,6 +3087,10 @@ Obtain Agent management and discovery APIs through `aiService.agent()`. They cov
 
 Agent APIs use the namespace configured when `AiService` is created. Search, RegistrationBatch, Reference and publication requests do not have a namespace field; the SDK defensively copies caller-owned data. Shared models are in `com.alibaba.nacos.api.ai.model.agent`, and the publication request is in its `client` subpackage. These APIs are available since 3.3.0.
 
+`AiService.getAgentDiscoveryCapability()` returns `com.alibaba.nacos.api.ability.constant.AbilityStatus` (`SUPPORTED`, `NOT_SUPPORTED`, `UNKNOWN`) and can throw `NacosException`. Neither UNKNOWN nor probe failure means unsupported. It does not switch the legacy A2A instance route. See [capability selection](../ai/rad-discovery.md#25-choose-a-consumption-api-by-configuration-and-capability).
+
+To convert discovery results to A2A Cards, explicitly use `AgentConverter<AgentCard>` from `AgentService.a2aConverter()` or `AgentConverters.a2a()`. The result is Nacos `model.a2a.AgentCard`; failure throws `IllegalArgumentException`, not an UNAVAILABLE event. See [explicit A2A conversion](../ai/rad-discovery.md#23-one-shot-discovery-and-explicit-a2a-conversion) for one-shot and listener examples and address selection rules.
+
 ### 11.1. Search Agents
 
 #### Description
@@ -3221,15 +3219,17 @@ Throws `NacosException` when the Agent reference is invalid, `version` and `labe
 
 #### Description
 
-Subscribe using the same Agent reference and optional filter as Discover. 3.3 supports HTTP long-poll Watch or gRPC notifications; without the corresponding server capability, the SDK falls back to bounded Discover polling. Listeners receive complete replacement snapshots, not field deltas. Delivery of every intermediate change is not guaranteed.
+RAD subscriptions are new in 3.3.0. Both overloads return void; initial state and subsequent changes are delivered through the listener's `onEvent(NacosAgentDiscoveryEvent)`. Callbacks can run before or after the method returns, so prepare local state first. Do not Discover first and overwrite the same view afterward. Repeating the same reference/filter/listener does not repeat initialization; a new listener on an existing Watch still receives current state.
 
-Replace the previous result on `SNAPSHOT`; stop using it on `UNAVAILABLE`. A temporarily missing target can remain subscribed until it returns. After terminal errors such as authentication or capacity failures, resolve the cause and subscribe again. The SDK handles transient connection failures through reconnection.
+`SNAPSHOT` is a complete replacement result. Empty endpoints, no interfaces after filtering and all-unhealthy endpoints remain snapshots. Only a valid, authorized Discover confirming an absent Agent reference (including version or label) produces `UNAVAILABLE` with no result; the subscription remains for recovery. Network, server, authentication, quota, migration and background execution errors are not data events; accepted subscriptions recover with backoff without resubscription.
+
+Callbacks run serially for each listener. Only the latest pending state is retained; intermediate snapshots and brief absence can coalesce. Executor rejection or `getExecutor()` failure retains state for local retry. A callback that has started and throws is logged without automatic replay. Unsubscribe/shutdown discards notifications that have not started. See the [RAD Integration Guide](../ai/rad-discovery.md#21-initial-state-and-subsequent-callbacks) for initialization checks, HTTP asynchronous admission and callback practices.
 
 ```java
-AgentDiscoveryResult subscribeAgent(AgentReference reference,
+void subscribeAgent(AgentReference reference,
         AbstractNacosAgentDiscoveryListener listener) throws NacosException;
 
-AgentDiscoveryResult subscribeAgent(AgentReference reference, AgentDiscoveryFilter filter,
+void subscribeAgent(AgentReference reference, AgentDiscoveryFilter filter,
         AbstractNacosAgentDiscoveryListener listener) throws NacosException;
 ```
 
@@ -3243,40 +3243,41 @@ AgentDiscoveryResult subscribeAgent(AgentReference reference, AgentDiscoveryFilt
 
 #### Return Parameters
 
-Returns the current `AgentDiscoveryResult`, or possibly `null` while the target is absent, retaining the subscription.
+None. The listener receives the initial complete state.
 
 #### Request Example
 
 ```java
-Properties properties = new Properties();
-properties.setProperty("username", System.getenv("NACOS_USERNAME"));
-properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
-properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
-properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
-AiService aiService = AiFactory.createAiService(properties);
+import com.alibaba.nacos.api.ai.listener.AbstractNacosAgentDiscoveryListener;
+import com.alibaba.nacos.api.ai.listener.NacosAgentDiscoveryEvent;
+import com.alibaba.nacos.api.ai.model.agent.AgentReference;
+import java.util.concurrent.atomic.AtomicReference;
 
+// Reuse an AiService created with the connection and authentication properties above.
 AgentReference reference = new AgentReference();
 reference.setAgentName("{agentName}");
-
+AtomicReference<NacosAgentDiscoveryEvent> current = new AtomicReference<>();
 AbstractNacosAgentDiscoveryListener listener = new AbstractNacosAgentDiscoveryListener() {
     @Override
     public void onEvent(NacosAgentDiscoveryEvent event) {
-        if (event.getType() == NacosAgentDiscoveryEventType.SNAPSHOT) {
-            AgentDiscoveryResult snapshot = event.getAgentDiscoveryResult();
-            System.out.println("agent changed: " + JsonUtils.toJson(snapshot));
-        } else {
-            System.err.println(event.getErrorCode() + ": " + event.getErrorMessage());
-        }
+        current.set(event);
     }
 };
-
-AgentDiscoveryResult current = aiService.agent().subscribeAgent(reference, listener);
-System.out.println(JsonUtils.toJson(current));
+try {
+    aiService.agent().subscribeAgent(reference, listener);
+    try {
+        System.in.read();
+    } finally {
+        aiService.agent().unsubscribeAgent(reference, listener);
+    }
+} finally {
+    aiService.shutdown();
+}
 ```
 
 #### Exceptions
 
-Throws `NacosException` when the reference, filter, or listener is invalid, or the initial Discover request fails.
+Parameter validation, initial Discover or synchronous admission failures throw `NacosException`; the new subscription was not accepted, so resolve the cause before calling again. Initial remote HTTP Watch admission is asynchronous; returning does not guarantee that the server has acknowledged every Watch.
 
 ### 11.4. Unsubscribe from an Agent
 
@@ -3329,8 +3330,8 @@ AbstractNacosAgentDiscoveryListener listener = new AbstractNacosAgentDiscoveryLi
 try {
     aiService.agent().subscribeAgent(reference, listener);
     aiService.agent().unsubscribeAgent(reference, listener);
-} catch (NacosException e) {
-    e.printStackTrace();
+} finally {
+    aiService.shutdown();
 }
 ```
 
@@ -3342,7 +3343,7 @@ Throws `NacosException` when the reference, filter, or listener is invalid.
 
 #### Description
 
-Register this SDK publisher's complete Runtime Endpoint batch for one Agent protocol. Registering the same `(agentName, protocol)` again for the same publisher completely replaces the previous batch, so omitted Endpoints are removed. The SDK retains the complete batch as redo intent after reconnecting. Endpoint registration does not implicitly create an Agent definition.
+Submit this client's complete runtime endpoint Batch for the same Agent and protocol; versions do not form separate Batches. Registering again replaces the previous complete set: submit B+C to change A+B to B+C, A+B to keep A and add B, or B to replace A without a later deregistration of A. Other clients' and protocols' contributions are unaffected. Registration does not implicitly create an Agent definition.
 
 ```java
 void registerAgentEndpoints(AgentEndpointRegistrationBatch batch) throws NacosException;
@@ -3461,11 +3462,13 @@ Publish one exact Agent version from application code, using the `AiService` nam
 
 | Target version state | Behavior |
 | --- | --- |
-| Newly created first version of a resource | Automatically submits through the ordinary pipeline, even with `autoSubmit=false`. |
+| Newly created first version when the Agent had no versions before creation | Automatically submits through the ordinary pipeline, even with `autoSubmit=false`. |
 | A later new version or an existing editable draft | Creates or fully replaces the draft definition, then follows `autoSubmit`. |
 | Already reviewing, reviewed, online or offline | Returns the existing version successfully without overwriting, resubmitting or bringing it online. |
 
 Submission can require review, so the returned version is not necessarily online. This operation never force-publishes. Updating a draft replaces its entire calling-interface list, removing omitted protocols. Failure does not guarantee that no draft was saved: inspect the current version before deciding to publish again. The SDK does not replay an unknown publication outcome across transports.
+
+First version is not the client's first call or the first online version. An existing draft is already a version and excludes the exception. The server ordinarily submits a newly created first version even with `autoSubmit=false`; the client does not rewrite the flag. Without a Pipeline it can become online/latest; with one it follows the workflow and may be reviewing/reviewed. Immediate online/latest is not guaranteed. False does not turn an existing non-draft into a draft either.
 
 > The `AgentProvider` and `AgentVersionDetail` types in this section are from `com.alibaba.nacos.api.ai.model.agent`, not the same-named legacy A2A types under `com.alibaba.nacos.api.ai.model.a2a`.
 
@@ -3495,7 +3498,7 @@ AgentVersionDetail publishAgent(AgentPublishRequest request) throws NacosExcepti
 | basedOnVersion    | String                     | Exact source version whose content is reused; mutually exclusive with `callInterfaces` | Conditionally required |
 | author            | String                     | Version author                                                        | None |
 | changeDescription | String                     | Version change description                                            | None |
-| autoSubmit        | boolean                    | Whether to submit a later version or editable draft; a newly created first version always submits | false |
+| autoSubmit        | boolean                    | Submit a later version or current editable draft; a newly created first version submits even with false when no versions existed before creation | false |
 
 `AgentCallInterface` contains the protocol, protocol version, `descriptorMediaType`, native `nativeDescriptor`, `endpointSourceOrder` and `endpointSets`. Source order must contain `RUNTIME` and `DECLARED` exactly once each. Definition addresses belong in an EndpointSet with `source=DECLARED`; do not include runtime endpoints. Protocols cannot repeat within a version.
 
@@ -3508,12 +3511,29 @@ Returns the exact `AgentVersionDetail`, including the namespace, Agent name, ver
 #### Request Example
 
 ```java
+import com.alibaba.nacos.api.PropertyKeyConst;
+import com.alibaba.nacos.api.ai.AiFactory;
+import com.alibaba.nacos.api.ai.AiService;
+import com.alibaba.nacos.api.ai.model.a2a.AgentCapabilities;
+import com.alibaba.nacos.api.ai.model.a2a.AgentCard;
+import com.alibaba.nacos.api.ai.model.a2a.AgentInterface;
+import com.alibaba.nacos.api.ai.model.agent.AgentCallInterface;
+import com.alibaba.nacos.api.ai.model.agent.AgentVersionDetail;
+import com.alibaba.nacos.api.ai.model.agent.Endpoint;
+import com.alibaba.nacos.api.ai.model.agent.EndpointSet;
+import com.alibaba.nacos.api.ai.model.agent.EndpointSource;
+import com.alibaba.nacos.api.ai.model.agent.client.AgentPublishRequest;
+import com.alibaba.nacos.api.utils.json.JsonUtils;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Properties;
+
 Properties properties = new Properties();
 properties.setProperty("username", System.getenv("NACOS_USERNAME"));
 properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
-AiService aiService = AiFactory.createAiService(properties);
 
 AgentInterface binding = new AgentInterface();
 binding.setUrl("https://agent.example.com:443/a2a");
@@ -3553,10 +3573,19 @@ request.setVersion("1.0.0");
 request.setCallInterfaces(Collections.singletonList(callInterface));
 request.setAuthor("{author}");
 request.setChangeDescription("Initial version");
-request.setAutoSubmit(true);
+request.setAutoSubmit(false); // A newly created first version still submits.
 
-AgentVersionDetail detail = aiService.agent().publishAgent(request);
-System.out.println(JsonUtils.toJson(detail));
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    AgentVersionDetail detail = aiService.agent().publishAgent(request);
+    if ("online".equals(detail.getStatus())) {
+        System.out.println("Version is online: " + detail.getVersion());
+    } else {
+        System.out.println("Follow the publication workflow; current status: " + detail.getStatus());
+    }
+} finally {
+    aiService.shutdown();
+}
 ```
 
 #### Exceptions
@@ -3567,4 +3596,4 @@ Throws `NacosException` when the request is null, the version or definition is i
 
 A Nacos Java SDK instance owns thread pools, connections, subscriptions and other resources from construction until `shutdown()`. Reuse instances while the application runs and close them when replacing an instance or exiting to avoid resource leaks.
 
-`aiService.mcp()`, `agent()`, `skill()`, `agentSpec()` and `prompt()` share the parent `AiService` namespace and lifecycle; close them together with `aiService.shutdown()`. Deregister Agent/MCP runtime endpoints through the instance that registered them. Unsubscribing does not deregister endpoints. Automatic reconnection and heartbeat recovery do not replace handling authentication, permission and terminal subscription errors. See the [SDK Runtime Guide](../sdk/runtime-guide.md).
+`aiService.mcp()`, `agent()`, `skill()`, `agentSpec()` and `prompt()` share the parent `AiService` namespace and lifecycle; close them together with `aiService.shutdown()`. Deregister Agent/MCP runtime endpoints through the instance that registered them. Unsubscribing does not deregister endpoints. Handle synchronous errors from initial calls; accepted RAD subscriptions remain and recover after background failures. See the [SDK Runtime Guide](../sdk/runtime-guide.md).

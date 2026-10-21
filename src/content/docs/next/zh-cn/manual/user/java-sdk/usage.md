@@ -2208,10 +2208,11 @@ properties.setProperty("username", System.getenv("NACOS_USERNAME"));
 properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 AiService aiService = AiFactory.createAiService(properties);
+String agentName = "test";
 try {
     AgentCardDetailInfo result = aiService.agent().getAgentCard(agentName);
     result = aiService.agent().getAgentCard(agentName, "1.0.0");
-    result = aiService.agent().getAgentCard(agentName, "1.0.0", "url");
+    result = aiService.agent().getAgentCard(agentName, "1.0.0", "URL");
 } catch (Exception e) {
     e.printStackTrace();
 }
@@ -2223,7 +2224,7 @@ try {
 
 发布新版本AgentCard。发布失败时抛出异常。
 
-在 3.3 的 RAD 兼容路径中，此方法按第 11.7 节的定义发布规则处理：`setAsLatest` 映射为 `autoSubmit`，新建资源的首版始终自动提交；后续新版本或已有草稿按该参数决定是否提交。它不会强制上线或跳过审核，已有非草稿版本保持不变。旧 A2A 路径仍保留直接发布的兼容行为。
+旧 A2A wire 直接发布新版本：首版成为 latest，即使 `setAsLatest=false`；后续新版本仅在 true 时更新 latest，false 保留当前有效 latest，已有版本不覆盖。3.3 SDK 选择 RAD 后，`setAsLatest` 原值映射为 `autoSubmit`，客户端不把 false 改为 true；服务端按第 11.7 节对新建首版执行普通 submit。首版指创建前该 Agent 没有任何版本，不是客户端首次调用或首个 online 版本；已有 draft 不属于首版例外。无 Pipeline 时可 online/latest；有 Pipeline 时遵循流程，不保证立即上线。后续新版本、已有可编辑 draft 按参数决定提交，已有非 draft 不变。
 
 ```java
 void releaseAgentCard(AgentCard agentCard) throws NacosException;
@@ -2239,7 +2240,7 @@ void releaseAgentCard(AgentCard agentCard, String registrationType, boolean setA
 |:-----------------|:----------|------------------------------------------------------------------------------------------------------------------------|-----------|
 | agentCard        | AgentCard | AgentCard信息                                                                                                            | 无，必填      |
 | registrationType | String | 可选 `URL` 或 `SERVICE`。`URL` 优先使用定义中的声明地址；`SERVICE` 优先使用运行端点。 | `SERVICE` |
-| setAsLatest | boolean | 旧 A2A 路径是否设为最新版本；RAD 路径是否自动提交草稿。 | `false` |
+| setAsLatest | boolean | 旧 A2A 路径是否设为最新版本；RAD 路径是否自动提交草稿；false 不阻止上述首版行为。 | `false` |
 
 
 #### 返回参数
@@ -2274,7 +2275,7 @@ try {
 
 #### 描述
 
-注册Endpoint到AgentCard下。
+提交本客户端对同一 Agent、同一精确版本的完整注册意图；单地址重载相当于一个元素的集合，会覆盖此前集合。要保留 A 并新增 B，应批量提交 A+B；用 B 替换 A 则直接提交 B，不要注册 B 后再注销 A。其他客户端的注册不受影响，不能据此推断其他版本的贡献会被清除。
 
 ```java
 void registerAgentEndpoint(String agentName, String version, String address, int port) throws NacosException;
@@ -2384,6 +2385,8 @@ try {
 
 > 旧 A2A 路径通过轮询查询实现订阅，`nacosAiAgentCardCacheUpdateInterval` 控制查询间隔，默认 10000ms。3.3 的 RAD 兼容路径使用 Watch，并在能力不可用时回退为有界轮询；不要把该旧参数当作所有 Agent 订阅的通知间隔。
 
+旧 `subscribeAgentCard` 保持返回 `AgentCardDetailInfo` 及完整 Card 回调的签名。默认推空保护下，目标删除或无法取得有效 Card 时，不推送 null、空 Card 或生命周期事件；不会自动清空应用保存的 Card，也不保证旧地址仍可访问。恢复遵循既有变化规则，不保证相同 Card 一定再次回调。需要显式处理目标缺失时，使用 RAD Watch；不要在旧 A2A listener 中等待 `UNAVAILABLE`。
+
 ```java
 AgentCardDetailInfo subscribeAgentCard(String agentName, AbstractNacosAgentCardListener agentCardListener) throws NacosException;
 
@@ -2405,30 +2408,35 @@ AgentCardDetailInfo subscribeAgentCard(String agentName, String version, Abstrac
 #### 请求示例
 
 ```java
+import com.alibaba.nacos.api.ai.AiFactory;
+import com.alibaba.nacos.api.ai.AiService;
+import com.alibaba.nacos.api.ai.listener.AbstractNacosAgentCardListener;
+import com.alibaba.nacos.api.ai.listener.NacosAgentCardEvent;
+import com.alibaba.nacos.api.ai.model.a2a.AgentCardDetailInfo;
+import java.util.Properties;
+
 Properties properties = new Properties();
+properties.setProperty("serverAddr", "{serverAddr}");
+properties.setProperty("namespace", "{namespaceId}");
 properties.setProperty("username", System.getenv("NACOS_USERNAME"));
 properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
-properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
+AbstractNacosAgentCardListener listener = new AbstractNacosAgentCardListener() {
+    @Override
+    public void onEvent(NacosAgentCardEvent event) {
+        System.out.println("Card changed: " + event.getAgentCard().getVersion());
+    }
+};
 AiService aiService = AiFactory.createAiService(properties);
 try {
-    aiService.agent().subscribeAgentCard("test", new AbstractNacosAgentCardListener() {
-        @Override
-        public void onEvent(NacosAgentCardEvent event) {
-            System.out.println("---------------agent card listener called start---------------");
-            System.out.println(JsonUtils.toJson(event.getAgentCard()));
-            System.out.println("---------------agent card listener called end---------------");
-        }
-    });
-    aiService.agent().subscribeAgentCard("test", "", new AbstractNacosAgentCardListener() {
-        @Override
-        public void onEvent(NacosAgentCardEvent event) {
-            System.out.println("---------------agent card listener called start---------------");
-            System.out.println(JsonUtils.toJson(event.getAgentCard()));
-            System.out.println("---------------agent card listener called end---------------");
-        }
-    });
-} catch (NacosException e) {
-    e.printStackTrace();
+    AgentCardDetailInfo initial = aiService.agent().subscribeAgentCard("test", "1.0.0", listener);
+    try {
+        System.out.println("Press Enter to unsubscribe.");
+        System.in.read();
+    } finally {
+        aiService.agent().unsubscribeAgentCard("test", "1.0.0", listener);
+    }
+} finally {
+    aiService.shutdown();
 }
 ```
 
@@ -2459,29 +2467,15 @@ void unsubscribeAgentCard(String agentName, String version, AbstractNacosAgentCa
 #### 请求示例
 
 ```java
-Properties properties = new Properties();
-properties.setProperty("username", System.getenv("NACOS_USERNAME"));
-properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
-properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
-AiService aiService = AiFactory.createAiService(properties);
-AbstractNacosAgentCardListener listener = new AbstractNacosAgentCardListener() {};
-try {
-    aiService.agent().subscribeAgentCard("test", listener);
-    aiService.agent().unsubscribeAgentCard("test", listener);
-    aiService.agent().unsubscribeAgentCard("test", "", listener);
-} catch (NacosException e) {
-    e.printStackTrace();
-}
+// Use the same live aiService and listener as the subscription in section 7.5.
+aiService.agent().unsubscribeAgentCard("test", "1.0.0", listener);
 ```
 
 ### 7.7. 批量注册Agent的Endpoint
 
-批量注册多个Endpoint到AgentCard下。
+批量重载与单地址重载使用相同覆盖规则：替换本客户端对同 Agent、同精确版本的完整集合。当前 A+B 改为 B+C 时，直接提交 B+C；需要保留的地址必须一起提交。不覆盖其他客户端、其他协议的贡献，也不承诺清除其他版本的贡献。
 
-> 同一个Client只能向一个AgentCard注册一份Endpoints， 因此此API和[注册Agent的Endpoint](#73-注册agent的endpoint)API存在冲突，即此接口批量注册的Endpoint会覆盖之前注册的Endpoint（针对同一个Agent）。
-> 若同个Client注册多个不同AgentCard的Endpoints，则不会互相覆盖。
-
-> 该API的起始版本为3.1.1。
+该 API 从 3.1.1 开始提供。
 
 #### 描述
 
@@ -2521,7 +2515,7 @@ try {
 
     AgentEndpoint endpoint2 = new AgentEndpoint();
     endpoint2.setAddress("127.0.0.1");
-    endpoint2.setPort(8848);
+    endpoint2.setPort(8849);
     endpoint2.setTransport("JSONRPC");
     endpoint2.setPath("");
     endpoint2.setSupportTls(false);
@@ -3087,6 +3081,10 @@ Agent 管理与发现 API 通过 `aiService.agent()` 获取，覆盖目录搜索
 
 Agent API 使用创建 `AiService` 时配置的命名空间。Search、RegistrationBatch、Reference 和发布请求不设置 namespace 字段，SDK 会防御性复制调用方内容。通用模型位于 `com.alibaba.nacos.api.ai.model.agent`，发布请求位于其 `client` 子包；以下 API 均自 3.3.0 起提供。
 
+`AiService.getAgentDiscoveryCapability()` 返回 `com.alibaba.nacos.api.ability.constant.AbilityStatus`（`SUPPORTED`、`NOT_SUPPORTED`、`UNKNOWN`），可能抛 `NacosException`；UNKNOWN 和探测失败不能当作不支持。它不切换旧 A2A 实例路由。能力选择示例见 [RAD 接入指南](../ai/rad-discovery.md#25-按配置与能力选择消费方式)。
+
+发现结果如需转为 A2A Card，显式使用 `AgentService.a2aConverter()` 或 `AgentConverters.a2a()` 返回的 `AgentConverter<AgentCard>`；结果是 Nacos `model.a2a.AgentCard`，失败抛 `IllegalArgumentException`，不产生 UNAVAILABLE。独立查询和 listener 转换示例及地址选择规则见 [显式 A2A 转换](../ai/rad-discovery.md#23-单次发现与显式-a2a-转换)。
+
 ### 11.1. 搜索 Agent
 
 #### 描述
@@ -3215,15 +3213,17 @@ Agent 引用无效、`version` 与 `label` 同时设置、Filter 无效、Agent 
 
 #### 描述
 
-使用与发现相同的 Agent 引用和可选 Filter 订阅。3.3 支持 HTTP 长轮询 Watch 或 gRPC 通知；服务端不支持对应能力时，SDK 回退为有界的 Discover 轮询。监听器接收完整替换快照，无需拼接字段增量，也不保证逐次交付每个中间变化。
+RAD 订阅从 3.3.0 开始提供。两个重载均返回 void，初始状态和后续变化统一由 listener 的 `onEvent(NacosAgentDiscoveryEvent)` 交付。回调可能在方法返回前或后发生，先准备好本地状态；无需先 Discover 再覆盖同一视图。同 reference/filter/listener 重复订阅不重复初始化，已有 Watch 上的新 listener 仍获得当前状态。
 
-收到 `SNAPSHOT` 时替换旧结果；收到 `UNAVAILABLE` 时停止使用旧结果。目标暂时不存在时可以继续等待恢复；鉴权、容量等终止性错误解决后，需要重新订阅。瞬时连接故障由 SDK 重连处理。
+`SNAPSHOT` 是完整替换结果；空端点、过滤后无接口或全 unhealthy 仍是快照。只有合法、已授权的 Discover 确认 Agent reference（含版本或标签）不存在时才交付无结果的 `UNAVAILABLE`，并保留订阅等待恢复。网络、服务端、鉴权、配额、迁移与后台执行异常不进入数据 listener；已接受订阅退避恢复，无需重复 subscribe。
+
+同 listener 回调串行，SDK 只保留最新待交付状态，中间快照和短暂缺失可以合并。执行器拒绝或 `getExecutor()` 失败会保留状态供本地重试；已开始的 callback 抛错只记录，不自动重放。取消/关闭丢弃未执行通知。初始化补查、HTTP 异步准入和回调实践见 [RAD 接入指南](../ai/rad-discovery.md#21-初始状态与后续回调)。
 
 ```java
-AgentDiscoveryResult subscribeAgent(AgentReference reference,
+void subscribeAgent(AgentReference reference,
         AbstractNacosAgentDiscoveryListener listener) throws NacosException;
 
-AgentDiscoveryResult subscribeAgent(AgentReference reference, AgentDiscoveryFilter filter,
+void subscribeAgent(AgentReference reference, AgentDiscoveryFilter filter,
         AbstractNacosAgentDiscoveryListener listener) throws NacosException;
 ```
 
@@ -3237,40 +3237,41 @@ AgentDiscoveryResult subscribeAgent(AgentReference reference, AgentDiscoveryFilt
 
 #### 返回参数
 
-返回当前 `AgentDiscoveryResult`；目标尚不存在时可返回 `null` 并保留订阅。
+无。初始完整状态由 listener 接收。
 
 #### 请求示例
 
 ```java
-Properties properties = new Properties();
-properties.setProperty("username", System.getenv("NACOS_USERNAME"));
-properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
-properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
-properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
-AiService aiService = AiFactory.createAiService(properties);
+import com.alibaba.nacos.api.ai.listener.AbstractNacosAgentDiscoveryListener;
+import com.alibaba.nacos.api.ai.listener.NacosAgentDiscoveryEvent;
+import com.alibaba.nacos.api.ai.model.agent.AgentReference;
+import java.util.concurrent.atomic.AtomicReference;
 
+// Reuse an AiService created with the connection and authentication properties above.
 AgentReference reference = new AgentReference();
 reference.setAgentName("{agentName}");
-
+AtomicReference<NacosAgentDiscoveryEvent> current = new AtomicReference<>();
 AbstractNacosAgentDiscoveryListener listener = new AbstractNacosAgentDiscoveryListener() {
     @Override
     public void onEvent(NacosAgentDiscoveryEvent event) {
-        if (event.getType() == NacosAgentDiscoveryEventType.SNAPSHOT) {
-            AgentDiscoveryResult snapshot = event.getAgentDiscoveryResult();
-            System.out.println("agent changed: " + JsonUtils.toJson(snapshot));
-        } else {
-            System.err.println(event.getErrorCode() + ": " + event.getErrorMessage());
-        }
+        current.set(event);
     }
 };
-
-AgentDiscoveryResult current = aiService.agent().subscribeAgent(reference, listener);
-System.out.println(JsonUtils.toJson(current));
+try {
+    aiService.agent().subscribeAgent(reference, listener);
+    try {
+        System.in.read();
+    } finally {
+        aiService.agent().unsubscribeAgent(reference, listener);
+    }
+} finally {
+    aiService.shutdown();
+}
 ```
 
 #### 异常说明
 
-引用、Filter 或监听器无效，或首次发现请求失败时，抛出 `NacosException`。
+参数校验、首次 Discover 或同步准入失败时抛出 `NacosException`，本次新增订阅未被接受，应解决原因后重新调用。HTTP Watch 首次远端准入异步；方法返回不保证服务端已确认全部 Watch。
 
 ### 11.4. 取消订阅 Agent
 
@@ -3323,8 +3324,8 @@ AbstractNacosAgentDiscoveryListener listener = new AbstractNacosAgentDiscoveryLi
 try {
     aiService.agent().subscribeAgent(reference, listener);
     aiService.agent().unsubscribeAgent(reference, listener);
-} catch (NacosException e) {
-    e.printStackTrace();
+} finally {
+    aiService.shutdown();
 }
 ```
 
@@ -3336,7 +3337,7 @@ try {
 
 #### 描述
 
-为一个 Agent 协议注册当前 SDK Publisher 的完整运行时 Endpoint Batch。同一 Publisher 再次注册相同 `(agentName, protocol)` 时会完整替换上一个 Batch，未再提交的 Endpoint 会被删除。SDK 会保存该完整 Batch 作为重连后的 redo 意图。Endpoint 注册不会隐式创建 Agent 定义。
+为同 Agent、同 protocol 提交本客户端的完整运行端点 Batch，版本不构成独立 Batch。再次注册会覆盖此前完整集合：A+B → B+C 应提交 B+C；保留 A 新增 B 应提交 A+B；以 B 替换 A 直接提交 B，无需随后注销 A。不覆盖其他客户端或其他 protocol 的贡献。端点注册不会隐式创建 Agent 定义。
 
 ```java
 void registerAgentEndpoints(AgentEndpointRegistrationBatch batch) throws NacosException;
@@ -3455,11 +3456,13 @@ Agent 名称、协议或端点标识无效，或注销请求失败时，抛出 `
 
 | 目标版本状态 | 行为 |
 | --- | --- |
-| 新建资源的首个版本 | 自动提交普通 Pipeline，不受 `autoSubmit=false` 限制。 |
+| 创建前该 Agent 没有任何版本的新建首版 | 自动提交普通 Pipeline，不受 `autoSubmit=false` 限制。 |
 | 后续新版本或已有可编辑草稿 | 创建或完整替换草稿定义，再按 `autoSubmit` 决定是否提交。 |
 | 已处于 reviewing、reviewed、online 或 offline | 成功返回已有版本，不覆盖定义、不重新提交或上线。 |
 
 提交可能等待审核，返回版本不一定已上线；此操作不会强制发布。更新草稿会完整替换调用接口列表，遗漏的协议会被移除。调用失败不保证服务端未保存草稿；先检查当前版本状态，再决定是否重新发布。SDK 不会把结果未知的发布跨传输方式重放。
+
+首版不是客户端首次调用，也不是首个 online 版本；已有 draft 已是一个版本，不适用首版例外。`autoSubmit=false` 的新建首版仍由服务端执行普通 submit，客户端不改写参数。无 Pipeline 时可 online/latest；有 Pipeline 时按流程执行，可能是 reviewing/reviewed，不能承诺立即 online/latest。已有非 draft 也不会因 false 而变成草稿。
 
 > 本节使用的 `AgentProvider` 和 `AgentVersionDetail` 位于 `com.alibaba.nacos.api.ai.model.agent` 包，不是旧 A2A 的 `com.alibaba.nacos.api.ai.model.a2a` 同名类型。
 
@@ -3489,7 +3492,7 @@ AgentVersionDetail publishAgent(AgentPublishRequest request) throws NacosExcepti
 | basedOnVersion    | String                    | 复用内容的精确源版本；与 `callInterfaces` 二选一             | 条件必填 |
 | author            | String                    | Version 作者                                        | 无 |
 | changeDescription | String                    | Version 变更说明                                      | 无 |
-| autoSubmit        | boolean                   | 后续新版本或可编辑草稿是否提交；新建首版始终自动提交 | false |
+| autoSubmit        | boolean                   | 后续新版本或当前可编辑草稿是否提交；创建前无任何版本的首版即使 false 也普通提交 | false |
 
 `AgentCallInterface` 包含协议、协议版本、`descriptorMediaType`、原生 `nativeDescriptor`、`endpointSourceOrder` 及 `endpointSets`。来源顺序必须恰好包含 `RUNTIME` 和 `DECLARED` 各一次；定义中的声明地址放入 `source=DECLARED` 的 EndpointSet，不写入运行端点。同一版本中 `protocol` 不能重复。
 
@@ -3502,12 +3505,29 @@ AgentVersionDetail publishAgent(AgentPublishRequest request) throws NacosExcepti
 #### 请求示例
 
 ```java
+import com.alibaba.nacos.api.PropertyKeyConst;
+import com.alibaba.nacos.api.ai.AiFactory;
+import com.alibaba.nacos.api.ai.AiService;
+import com.alibaba.nacos.api.ai.model.a2a.AgentCapabilities;
+import com.alibaba.nacos.api.ai.model.a2a.AgentCard;
+import com.alibaba.nacos.api.ai.model.a2a.AgentInterface;
+import com.alibaba.nacos.api.ai.model.agent.AgentCallInterface;
+import com.alibaba.nacos.api.ai.model.agent.AgentVersionDetail;
+import com.alibaba.nacos.api.ai.model.agent.Endpoint;
+import com.alibaba.nacos.api.ai.model.agent.EndpointSet;
+import com.alibaba.nacos.api.ai.model.agent.EndpointSource;
+import com.alibaba.nacos.api.ai.model.agent.client.AgentPublishRequest;
+import com.alibaba.nacos.api.utils.json.JsonUtils;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Properties;
+
 Properties properties = new Properties();
 properties.setProperty("username", System.getenv("NACOS_USERNAME"));
 properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 properties.setProperty(PropertyKeyConst.SERVER_ADDR, "{serverAddr}");
 properties.setProperty(PropertyKeyConst.NAMESPACE, "{namespaceId}");
-AiService aiService = AiFactory.createAiService(properties);
 
 AgentInterface binding = new AgentInterface();
 binding.setUrl("https://agent.example.com:443/a2a");
@@ -3547,10 +3567,19 @@ request.setVersion("1.0.0");
 request.setCallInterfaces(Collections.singletonList(callInterface));
 request.setAuthor("{author}");
 request.setChangeDescription("Initial version");
-request.setAutoSubmit(true);
+request.setAutoSubmit(false); // A newly created first version still submits.
 
-AgentVersionDetail detail = aiService.agent().publishAgent(request);
-System.out.println(JsonUtils.toJson(detail));
+AiService aiService = AiFactory.createAiService(properties);
+try {
+    AgentVersionDetail detail = aiService.agent().publishAgent(request);
+    if ("online".equals(detail.getStatus())) {
+        System.out.println("Version is online: " + detail.getVersion());
+    } else {
+        System.out.println("Follow the publication workflow; current status: " + detail.getStatus());
+    }
+} finally {
+    aiService.shutdown();
+}
 ```
 
 #### 异常说明
@@ -3561,4 +3590,4 @@ System.out.println(JsonUtils.toJson(detail));
 
 Nacos Java SDK 实例从创建时开始持有线程池、连接、订阅等资源，调用 `shutdown()` 后释放。应用运行期间应复用实例，更换实例或退出时及时关闭，避免反复创建导致资源泄漏。
 
-`aiService.mcp()`、`agent()`、`skill()`、`agentSpec()`、`prompt()` 共用父 `AiService` 的命名空间和生命周期，通过 `aiService.shutdown()` 统一关闭。Agent/MCP 运行端点应由注册它们的实例注销；取消订阅不会注销端点。自动重连或心跳恢复不能替代对鉴权、权限和终止性订阅错误的处理，参见 [SDK 运行指南](../sdk/runtime-guide.md)。
+`aiService.mcp()`、`agent()`、`skill()`、`agentSpec()`、`prompt()` 共用父 `AiService` 的命名空间和生命周期，通过 `aiService.shutdown()` 统一关闭。Agent/MCP 运行端点应由注册它们的实例注销；取消订阅不会注销端点。应处理初次调用的同步错误；已接受的 RAD 订阅会在后台故障后保留并恢复，参见 [SDK 运行指南](../sdk/runtime-guide.md)。

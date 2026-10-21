@@ -121,7 +121,7 @@ The overall mode and every override are validated and fixed at initialization. E
 
 ### 6.2. Subscriptions, Endpoint Liveness and Errors
 
-- Agent subscriptions prefer server Watch notifications and fall back to bounded Discover polling when unsupported. Applications receive complete snapshots. Discard the old view on unavailable events; subscribe again after resolving terminal errors.
+- RAD `subscribeAgent` returns `void`; initial state and later complete snapshots use the same listener. Only valid Discover confirmation that a reference is absent produces `UNAVAILABLE`; empty endpoints remain snapshots. Accepted subscriptions survive background authentication, quota, network or migration failures and recover with backoff without resubscription. Resolve an initial synchronous failure before retrying. See the [RAD Integration Guide](../ai/rad-discovery.md#21-initial-state-and-subsequent-callbacks) for callback coalescing, executor failures and asynchronous HTTP admission.
 - MCP, Skill, Prompt and AgentSpec retain their subscription polling. Their listeners carry content already fetched by the SDK, so applications need not turn every callback into another query.
 - The SDK maintains client identity and heartbeats for Agent/MCP endpoints registered over HTTP. Retain the registering instance; on normal exit, deregister through that same instance and close `AiService`. Unsubscribing or taking a definition offline does not stop the business process.
 - Treat permissions, parameters, version conflicts, capacity and migration restrictions as business errors. Publication timeouts may have an unknown outcome: query the state before retrying, rather than blindly switching transports. Endpoint reconnection recovery does not imply automatic definition-publication retries.
@@ -129,6 +129,8 @@ The overall mode and every override are validated and fixed at initialization. E
 ### 6.3. Legacy A2A and RAD Compatibility
 
 After the first reliable negotiation, the 3.3 SDK fixes an instance's route to legacy A2A or RAD. An instance that selected legacy A2A does not switch to RAD when the server is upgraded; recreate the SDK to negotiate again. Once RAD is selected, business or migration errors do not silently fall back to legacy A2A.
+
+`AiService.getAgentDiscoveryCapability()` queries current evidence without fixing or switching the legacy A2A route. `UNKNOWN` does not mean unsupported; probes can throw, and `SUPPORTED` does not confirm migration readiness. See the [RAD Integration Guide](../ai/rad-discovery.md#25-choose-a-consumption-api-by-configuration-and-capability) for framework selection. Legacy A2A subscriptions retain complete Card callbacks and default empty-push protection, without RAD `UNAVAILABLE` events.
 
 Avoid mixing legacy A2A and generic Agent publication sources for the same resource. Complete server upgrade and migration before adopting new Agent capabilities. See [Agent Management](../ai/agent-registry.md), [RAD Integration](../ai/rad-discovery.md) and [Upgrading](../../admin/upgrading.mdx).
 

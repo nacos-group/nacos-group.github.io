@@ -164,7 +164,17 @@ curl -sS -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agents/publish' \
 
 An Agent can have at most one editing version and one reviewing version. For a subsequent draft, either supply new `callInterfaces` or copy an existing exact version with `basedOnVersion`; do not provide both. After copying, update protocol descriptor versions, addresses and other content in the draft before submission.
 
-The 3.3 Java SDK provides `AiService.agent().publishAgent(AgentPublishRequest)` for application-managed definitions. It uses ordinary submission and Pipeline processing: the first newly created version is submitted automatically; subsequent versions use `autoSubmit`, which defaults to `false`. An existing draft with the same version can be updated; a version already in review or another non-draft state is not overwritten. Check the returned status rather than assuming the method has made the version online. After a write timeout, check the version's current state before deciding whether to retry.
+The 3.3 Java SDK provides `AiService.agent().publishAgent(AgentPublishRequest)`, with `autoSubmit` controlling ordinary submission and defaulting to `false`. **First version** means the Agent had no versions before creation. It does not mean the client's first call or the first online version; an existing draft already excludes this exception.
+
+| Entry point | Newly created first version, even with `false` | Later versions |
+| --- | --- | --- |
+| `releaseAgentCard(setAsLatest)` over the legacy A2A wire | Publishes directly; the first version becomes `latest` | New versions publish directly; true moves latest and false preserves the current valid latest; existing versions are unchanged |
+| Legacy A2A API in a 3.3 SDK instance that selected RAD | Maps the original `setAsLatest` value to `autoSubmit`; the server ordinarily submits the first version without the client changing false to true | New versions or the current editable draft follow the flag; existing non-drafts are unchanged |
+| Native `publishAgent(autoSubmit)` | The server performs ordinary submission | New versions or the current editable draft follow `autoSubmit`; existing non-drafts are unchanged |
+
+Ordinary submission is not force-publishing. Without a Pipeline it can publish online and set latest; with a Pipeline it follows review and may remain `reviewing` or `reviewed`. Immediate online/latest is not guaranteed. Inspect `AgentVersionDetail.getStatus()` returned by `publishAgent`; see the [Java SDK guide](../java-sdk/usage.md#117-publish-an-agent-definition-from-code) for definition construction and status-checking code. Since `releaseAgentCard` returns `void`, confirm its result through management APIs or the console.
+
+Updating the current editable draft replaces its complete definition; `autoSubmit=false` keeps it in draft. A target already `reviewing`, `reviewed`, `online` or `offline` returns unchanged after required validation and authorization, without overwriting, resubmitting or changing latest. Thus false does not always mean “create only a draft.” After a write timeout, inspect the actual version state before deciding whether to retry.
 
 See [AI Resource Lifecycle](./ai-resource-lifecycle.md) for state and operation rules. Standard publishing or bringing a version online sets `latest` to that version. Taking the current `latest` offline selects the greatest remaining online version. The server manages `latest`; custom labels cannot overwrite it.
 
@@ -201,10 +211,10 @@ An A2A AgentCard is stored as the `nativeDescriptor` of a `protocol=a2a` call in
 | Integration | Guidance |
 | --- | --- |
 | Existing 3.1 / 3.2 Java SDK or legacy A2A HTTP/gRPC APIs | Keep the compatible integration; follow the upgrading guide for existing server data |
-| A2A methods in the 3.3 Java SDK | Use `AiService.agent()`; when the server supports RAD, Card, endpoint and subscription operations are adapted through RAD |
+| A2A methods in the 3.3 Java SDK | Use `AiService.agent()`; when the instance selects RAD, Card, endpoint and subscription operations are adapted through RAD |
 | New general Agent applications | Use Search, Discover, Watch and endpoint batch registration in the [RAD Integration Guide](./rad-discovery.md) |
 
-Legacy A2A HTTP/gRPC publishing retains direct-online and `setAsLatest` compatibility behavior. When the 3.3 SDK's A2A methods use RAD, definition publishing follows Client publish's ordinary submission and Pipeline flow. Legacy behavior does not imply that every integration publishes directly online.
+See section 3.4 for `setAsLatest` / `autoSubmit` behavior by entry point. See the [RAD Integration Guide](./rad-discovery.md) for capability queries, instance routing and explicit Card conversion.
 
 Within one SDK instance, choose either native RAD or compatible A2A registration for the same Agent's A2A endpoints; do not mix both. Configure Nacos registry authentication separately from the business authentication declared by the AgentCard.
 
@@ -213,6 +223,12 @@ Within one SDK instance, choose either native RAD or compatible A2A registration
 The 3.3 Java SDK retains AgentCard operations through the following entry point. `agentCard` must be the complete Card supplied by the application:
 
 ```java
+import com.alibaba.nacos.api.ai.AiFactory;
+import com.alibaba.nacos.api.ai.AiService;
+import com.alibaba.nacos.api.ai.AgentService;
+import com.alibaba.nacos.api.ai.model.a2a.AgentCard;
+import java.util.Properties;
+
 Properties properties = new Properties();
 properties.setProperty("serverAddr", "127.0.0.1:8848");
 properties.setProperty("namespace", "public");
@@ -221,15 +237,17 @@ properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 AiService aiService = AiFactory.createAiService(properties);
 AgentService agentService = aiService.agent();
 
-// Publish the application's complete AgentCard.
-agentService.releaseAgentCard(agentCard);
-// Register after the definition has become online and the application is ready.
-agentService.registerAgentEndpoint("route-planner", "1.0.0", "127.0.0.1", 9999, "JSONRPC");
-// Pass the discovered Card to the A2A client used by the application.
-AgentCard discoveredCard = agentService.getAgentCard("route-planner");
+try {
+    // Publish the application's complete AgentCard; false retains the first-version exception.
+    agentService.releaseAgentCard(agentCard, "SERVICE", false);
+} finally {
+    aiService.shutdown();
+}
 ```
 
-This fragment illustrates the API entry points. Publishing and runtime consumption usually happen in different applications. Publishers must confirm that the version is online, keep the SDK instance alive while running, deregister endpoints on exit and call `aiService.shutdown()`. A2A subscriptions still use `subscribeAgentCard` / `unsubscribeAgentCard`; new applications that need explicit unavailable events can use RAD Watch.
+This fragment publishes the application's complete Card. Confirm online status through management first, then register runtime endpoints and query or subscribe from consumers; see the [Java SDK guide](../java-sdk/usage.md#7-a2a-registry). Keep runtime clients alive, deregister endpoints through the same instance and close it on exit.
+
+Legacy `subscribeAgentCard` retains its `AgentCardDetailInfo` return type and complete Card callback signature. Its default empty-push protection suppresses null Cards, empty Cards and lifecycle events when the target is deleted or no valid Card can be obtained. It does not clear the application's saved Card or guarantee that old addresses remain reachable. Recovery follows existing change rules; an identical Card is not guaranteed to trigger another callback. Use RAD Watch when explicit target-absence handling is needed; do not expect `UNAVAILABLE` in a legacy A2A listener.
 
 To integrate with the legacy A2A management HTTP endpoint, save a complete AgentCard as `agent-card.json` and import it:
 
