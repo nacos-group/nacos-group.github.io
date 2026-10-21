@@ -2172,7 +2172,7 @@ try {
 
 3.3 保留已发布的 A2A API，通过 `aiService.agent()` 调用。新应用可使用第 11 章的通用 Agent 能力，并参考 [RAD 接入指南](../ai/rad-discovery.md)。
 
-SDK 首次完成服务端能力协商后，会为当前实例固定使用旧 A2A 或 RAD 兼容路径。服务端从旧版升级到支持 RAD 后，重新创建 SDK 实例才会切换；RAD 业务失败不会回退到旧路径。具体接入要求见 [SDK 运行指南](../sdk/runtime-guide.md#6-ai-资源运行时)。
+3.3 SDK 会根据服务端是否支持 RAD 自动适配这些旧接口，无需手动选择。服务端从旧版升级后，如需使用新的行为，请重启应用或重新创建 SDK 实例。连接要求见 [SDK 运行指南](../sdk/runtime-guide.md#6-ai-资源运行时)。
 
 ### 7.1. 查询AgentCard
 
@@ -2224,7 +2224,15 @@ try {
 
 发布新版本AgentCard。发布失败时抛出异常。
 
-旧 A2A wire 直接发布新版本：首版成为 latest，即使 `setAsLatest=false`；后续新版本仅在 true 时更新 latest，false 保留当前有效 latest，已有版本不覆盖。3.3 SDK 选择 RAD 后，`setAsLatest` 原值映射为 `autoSubmit`，客户端不把 false 改为 true；服务端按第 11.7 节对新建首版执行普通 submit。首版指创建前该 Agent 没有任何版本，不是客户端首次调用或首个 online 版本；已有 draft 不属于首版例外。无 Pipeline 时可 online/latest；有 Pipeline 时遵循流程，不保证立即上线。后续新版本、已有可编辑 draft 按参数决定提交，已有非 draft 不变。
+使用旧 A2A SDK 发布接口时，首个版本直接上线并成为最新版本（`latest`），即使 `setAsLatest=false`。后续新版本也会直接上线：`setAsLatest=true` 时设为最新版本，`false` 时保留原来的最新版本。重复发布已有版本不会覆盖其内容。
+
+使用 3.3 SDK 连接支持 RAD 的服务端时，SDK 会自动按新的发布流程处理，`setAsLatest` 的作用与 [`publishAgent` 的 `autoSubmit`](#117-代码式发布-agent-定义) 相同：
+
+- Agent 还没有任何版本时，首个版本自动尝试发布，不受参数值影响。
+- 后续新版本或已有草稿，`false` 保存为草稿，`true` 提交发布。
+- 已提交审核、已上线或已下线的版本保持不变。
+
+自动发布会遵循已配置的审核流程，可能需要等待审核。此方法没有返回值，可通过控制台确认版本是否已上线。
 
 ```java
 void releaseAgentCard(AgentCard agentCard) throws NacosException;
@@ -2240,7 +2248,7 @@ void releaseAgentCard(AgentCard agentCard, String registrationType, boolean setA
 |:-----------------|:----------|------------------------------------------------------------------------------------------------------------------------|-----------|
 | agentCard        | AgentCard | AgentCard信息                                                                                                            | 无，必填      |
 | registrationType | String | 可选 `URL` 或 `SERVICE`。`URL` 优先使用定义中的声明地址；`SERVICE` 优先使用运行端点。 | `SERVICE` |
-| setAsLatest | boolean | 旧 A2A 路径是否设为最新版本；RAD 路径是否自动提交草稿；false 不阻止上述首版行为。 | `false` |
+| setAsLatest | boolean | 是否设为最新版本；3.3 SDK 连接支持 RAD 的服务端时表示是否自动提交发布。首个版本的特殊行为见上文。 | `false` |
 
 
 #### 返回参数
@@ -2275,7 +2283,7 @@ try {
 
 #### 描述
 
-提交本客户端对同一 Agent、同一精确版本的完整注册意图；单地址重载相当于一个元素的集合，会覆盖此前集合。要保留 A 并新增 B，应批量提交 A+B；用 B 替换 A 则直接提交 B，不要注册 B 后再注销 A。其他客户端的注册不受影响，不能据此推断其他版本的贡献会被清除。
+注册 Agent 的运行地址。对同一个 Agent 和版本，再次调用会替换本客户端此前注册的地址。单地址接口只保留本次传入的地址；如需同时保留 A、B 两个地址，请使用批量接口一起提交。其他客户端注册的地址不受影响。
 
 ```java
 void registerAgentEndpoint(String agentName, String version, String address, int port) throws NacosException;
@@ -2338,7 +2346,7 @@ try {
 
 从AgentCard中注销Endpoint。
 
-在 RAD 兼容路径中，即使只传入一个地址，也会注销当前 SDK 实例对该精确版本的全部注册意图，其他版本的注册保留。若要按端点局部注销，请使用第 11.6 节的通用 Agent API，并从注册开始使用同一组通用 API。
+使用 3.3 SDK 连接支持 RAD 的服务端时，即使只传入一个地址，也会注销本客户端为该版本注册的全部地址，其他版本的地址保留。如果需要只移除指定地址，请配套使用第 11.5、11.6 节的新注册和注销接口。
 
 ```java
 void deregisterAgentEndpoint(String agentName, String version, String address, int port) throws NacosException;
@@ -2383,9 +2391,9 @@ try {
 
 订阅AgentCard，当AgentCard发布新版本时，会收到通知。
 
-> 旧 A2A 路径通过轮询查询实现订阅，`nacosAiAgentCardCacheUpdateInterval` 控制查询间隔，默认 10000ms。3.3 的 RAD 兼容路径使用 Watch，并在能力不可用时回退为有界轮询；不要把该旧参数当作所有 Agent 订阅的通知间隔。
+> 连接旧版服务端时，SDK 定期查询 AgentCard，间隔由 `nacosAiAgentCardCacheUpdateInterval` 设置，默认 10000ms。3.3 SDK 连接支持 RAD 的服务端时，会自动使用新的订阅方式，该参数不再控制通知间隔。
 
-旧 `subscribeAgentCard` 保持返回 `AgentCardDetailInfo` 及完整 Card 回调的签名。默认推空保护下，目标删除或无法取得有效 Card 时，不推送 null、空 Card 或生命周期事件；不会自动清空应用保存的 Card，也不保证旧地址仍可访问。恢复遵循既有变化规则，不保证相同 Card 一定再次回调。需要显式处理目标缺失时，使用 RAD Watch；不要在旧 A2A listener 中等待 `UNAVAILABLE`。
+使用旧 `subscribeAgentCard` 接口订阅时，如果 AgentCard 被删除或暂时查不到，SDK 默认会触发保护：不会向监听器传入 `null` 或空 Card，也不会发送删除通知。
 
 ```java
 AgentCardDetailInfo subscribeAgentCard(String agentName, AbstractNacosAgentCardListener agentCardListener) throws NacosException;
@@ -2442,7 +2450,7 @@ try {
 
 ### 7.6. 取消订阅AgentCard
 
-取消订阅MCP服务。取消订阅时传入的监听器`agentCardListener`必须和订阅时一致，否则会导致取消订阅失败。
+取消订阅 AgentCard。取消订阅时传入的监听器`agentCardListener`必须和订阅时一致，否则会导致取消订阅失败。
 
 #### 描述
 
@@ -2473,7 +2481,7 @@ aiService.agent().unsubscribeAgentCard("test", "1.0.0", listener);
 
 ### 7.7. 批量注册Agent的Endpoint
 
-批量重载与单地址重载使用相同覆盖规则：替换本客户端对同 Agent、同精确版本的完整集合。当前 A+B 改为 B+C 时，直接提交 B+C；需要保留的地址必须一起提交。不覆盖其他客户端、其他协议的贡献，也不承诺清除其他版本的贡献。
+批量注册本客户端为同一 Agent、同一版本保留的全部地址。例如，原来注册了 A、B，现在需要 B、C，直接提交 B、C 即可；需要保留的地址必须一起提交。其他客户端或其他协议注册的地址不受影响。
 
 该 API 从 3.1.1 开始提供。
 
@@ -3079,11 +3087,11 @@ try {
 
 Agent 管理与发现 API 通过 `aiService.agent()` 获取，覆盖目录搜索、定义发现、订阅、定义发布以及运行时 Endpoint 注册。第 7 章的旧 A2A API 保留兼容；新接入优先使用本章的通用能力，完整示例见 [RAD 接入指南](../ai/rad-discovery.md)。
 
-Agent API 使用创建 `AiService` 时配置的命名空间。Search、RegistrationBatch、Reference 和发布请求不设置 namespace 字段，SDK 会防御性复制调用方内容。通用模型位于 `com.alibaba.nacos.api.ai.model.agent`，发布请求位于其 `client` 子包；以下 API 均自 3.3.0 起提供。
+以下接口从 3.3.0 开始提供，使用创建 `AiService` 时配置的命名空间，无需在每个请求中重复设置。模型类位于 `com.alibaba.nacos.api.ai.model.agent` 包，发布请求位于其 `client` 子包。
 
-`AiService.getAgentDiscoveryCapability()` 返回 `com.alibaba.nacos.api.ability.constant.AbilityStatus`（`SUPPORTED`、`NOT_SUPPORTED`、`UNKNOWN`），可能抛 `NacosException`；UNKNOWN 和探测失败不能当作不支持。它不切换旧 A2A 实例路由。能力选择示例见 [RAD 接入指南](../ai/rad-discovery.md#25-按配置与能力选择消费方式)。
+需要兼容旧版服务端时，可以用 `AiService.getAgentDiscoveryCapability()` 查询是否支持 RAD。返回 `UNKNOWN` 表示暂时无法判断，查询失败也可能抛出 `NacosException`。普通应用可直接使用本章接口；框架适配示例见 [RAD 接入指南](../ai/rad-discovery.md#25-兼容旧版服务端)。
 
-发现结果如需转为 A2A Card，显式使用 `AgentService.a2aConverter()` 或 `AgentConverters.a2a()` 返回的 `AgentConverter<AgentCard>`；结果是 Nacos `model.a2a.AgentCard`，失败抛 `IllegalArgumentException`，不产生 UNAVAILABLE。独立查询和 listener 转换示例及地址选择规则见 [显式 A2A 转换](../ai/rad-discovery.md#23-单次发现与显式-a2a-转换)。
+需要将发现结果转为 A2A AgentCard 时，可使用 `AgentService.a2aConverter()` 或 `AgentConverters.a2a()`。用法及错误处理见 [查询结果转为 A2A AgentCard](../ai/rad-discovery.md#23-查询结果转为-a2a-agentcard)。
 
 ### 11.1. 搜索 Agent
 
@@ -3213,11 +3221,12 @@ Agent 引用无效、`version` 与 `label` 同时设置、Filter 无效、Agent 
 
 #### 描述
 
-RAD 订阅从 3.3.0 开始提供。两个重载均返回 void，初始状态和后续变化统一由 listener 的 `onEvent(NacosAgentDiscoveryEvent)` 交付。回调可能在方法返回前或后发生，先准备好本地状态；无需先 Discover 再覆盖同一视图。同 reference/filter/listener 重复订阅不重复初始化，已有 Watch 上的新 listener 仍获得当前状态。
+订阅 Agent 定义和地址的变化。此方法没有返回值，首次查询结果和后续变化都通过监听器的 `onEvent` 接收；请在调用前准备好监听器使用的数据。
 
-`SNAPSHOT` 是完整替换结果；空端点、过滤后无接口或全 unhealthy 仍是快照。只有合法、已授权的 Discover 确认 Agent reference（含版本或标签）不存在时才交付无结果的 `UNAVAILABLE`，并保留订阅等待恢复。网络、服务端、鉴权、配额、迁移与后台执行异常不进入数据 listener；已接受订阅退避恢复，无需重复 subscribe。
+- `SNAPSHOT`：包含完整查询结果，用它替换本地保存的结果。地址列表可能为空，也可能包含不健康地址，需要检查后再使用。
+- `UNAVAILABLE`：SDK 查询确认 Agent、指定版本或标签不存在。此时停止使用旧结果；目标恢复后会继续通知。
 
-同 listener 回调串行，SDK 只保留最新待交付状态，中间快照和短暂缺失可以合并。执行器拒绝或 `getExecutor()` 失败会保留状态供本地重试；已开始的 callback 抛错只记录，不自动重放。取消/关闭丢弃未执行通知。初始化补查、HTTP 异步准入和回调实践见 [RAD 接入指南](../ai/rad-discovery.md#21-初始状态与后续回调)。
+订阅期间遇到网络、权限或订阅数量限制等错误时，SDK 会保留订阅并自动重试，无需重复订阅。查看客户端日志可了解错误原因。回调较慢时可能跳过中间状态，优先通知最新结果；用法见 [RAD 接入指南](../ai/rad-discovery.md#21-初始状态与后续回调)。
 
 ```java
 void subscribeAgent(AgentReference reference,
@@ -3271,13 +3280,13 @@ try {
 
 #### 异常说明
 
-参数校验、首次 Discover 或同步准入失败时抛出 `NacosException`，本次新增订阅未被接受，应解决原因后重新调用。HTTP Watch 首次远端准入异步；方法返回不保证服务端已确认全部 Watch。
+调用时如果参数无效、首次查询失败或订阅数量超限，可能抛出 `NacosException`。这表示本次订阅未成功，需要处理原因后重新调用。
 
 ### 11.4. 取消订阅 Agent
 
 #### 描述
 
-取消当前 SDK 的 Agent 订阅。必须传入订阅时相同的 `AgentReference`、Filter 语义和监听器实例；取消订阅不会注销端点或停止 Agent 服务。
+取消当前客户端的 Agent 订阅。传入与订阅时相同的查询条件和同一个监听器实例。取消订阅不会注销运行地址或停止 Agent 服务。
 
 ```java
 void unsubscribeAgent(AgentReference reference,
@@ -3337,7 +3346,7 @@ try {
 
 #### 描述
 
-为同 Agent、同 protocol 提交本客户端的完整运行端点 Batch，版本不构成独立 Batch。再次注册会覆盖此前完整集合：A+B → B+C 应提交 B+C；保留 A 新增 B 应提交 A+B；以 B 替换 A 直接提交 B，无需随后注销 A。不覆盖其他客户端或其他 protocol 的贡献。端点注册不会隐式创建 Agent 定义。
+注册本客户端为同一 Agent、同一种协议保留的全部运行地址。再次调用会替换此前的地址列表，即使本次版本号不同。例如，原来注册了 A、B，现在需要 B、C，应提交 B、C。其他客户端和其他协议注册的地址不受影响。注册地址不会创建 Agent 定义。
 
 ```java
 void registerAgentEndpoints(AgentEndpointRegistrationBatch batch) throws NacosException;
@@ -3347,7 +3356,7 @@ void registerAgentEndpoints(AgentEndpointRegistrationBatch batch) throws NacosEx
 
 | 名称  | 类型                               | 描述                  | 默认值  |
 |:----|:---------------------------------|---------------------|------|
-| batch | AgentEndpointRegistrationBatch | 完整的 Endpoint 注册 Batch | 无，必填 |
+| batch | AgentEndpointRegistrationBatch | 本次要保留的全部运行地址及版本信息 | 无，必填 |
 
 `AgentEndpointRegistrationBatch` 包含以下字段：
 
@@ -3356,8 +3365,8 @@ void registerAgentEndpoints(AgentEndpointRegistrationBatch batch) throws NacosEx
 | agentName    | String         | Agent 名称                                        | 无，必填 |
 | runtimeVersion | String       | Endpoint 未覆盖时使用的运行版本；每个 Endpoint 必须能取得生效版本 | 无 |
 | versionRange | String         | Endpoint 未覆盖时使用的兼容范围，必须包含生效运行版本 | 两层均未提供时为精确运行版本范围 |
-| protocol     | String         | Endpoint 所属的规范协议 Token                          | 无，必填 |
-| endpoints    | List\<Endpoint\> | 当前 Publisher 的完整 Endpoint 集合，数量为 1～1000 | 无，必填 |
+| protocol     | String         | 调用协议，如 `a2a`                          | 无，必填 |
+| endpoints    | List\<Endpoint\> | 本客户端要保留的全部运行地址，数量为 1～1000 | 无，必填 |
 
 `Endpoint` 包含以下字段：
 
@@ -3369,7 +3378,7 @@ void registerAgentEndpoints(AgentEndpointRegistrationBatch batch) throws NacosEx
 | weight   | Double              | 同一优先级内的权重                        | 1 |
 | metadata | Map\<String, String\> | 扁平 Endpoint 元数据                    | 无 |
 
-还可设置 `healthy`、`enabled`（默认均为 `true`，不能为 null），以及 `bindings`。注册时 `bindings` 未设置则继承 Batch，设置时只能有一条 `RuntimeVersionBinding`；其中 `runtimeVersion`、`versionRange` 分别覆盖 Batch 默认值。最终范围必须包含生效运行版本。发现时会排除禁用贡献，仍可能返回不健康端点。
+每个地址还可设置 `healthy` 和 `enabled`（默认均为 `true`，不能为 `null`）。未设置 `bindings` 时，使用本次注册请求中的版本和兼容范围；需要单独指定时，在 `bindings` 中填写一条 `RuntimeVersionBinding`。兼容范围必须包含运行版本。查询结果不包含已禁用的地址，但可能包含不健康地址。
 
 端点按 URI 主机、有效端口和 `transport` 区分，仅 path 或 query 不同不能作为同一发布者的两个独立端点。正常退出时注销端点并关闭 `AiService`；完整运行流程见 [RAD 接入指南](../ai/rad-discovery.md)。
 
@@ -3405,13 +3414,13 @@ aiService.agent().registerAgentEndpoints(batch);
 
 #### 异常说明
 
-Batch 或 Endpoint 校验失败、生效版本范围不包含运行版本，或发布失败时，抛出 `NacosException`。
+注册参数无效、兼容范围不包含运行版本，或注册失败时，抛出 `NacosException`。
 
 ### 11.6. 注销 Agent 运行时 Endpoint
 
 #### 描述
 
-按 URI 主机、有效端口和 `transport` 标识，从当前 SDK 发布者的端点集合中移除指定端点。SDK 会重新注册完整的剩余集合；没有端点剩余时，注销该发布者在 `(agentName, protocol)` 下的整组端点。
+移除本客户端注册的指定运行地址，其余地址保留。匹配地址时，使用 URI 的主机、有效端口和 `transport`。
 
 ```java
 void deregisterAgentEndpoints(String agentName, String protocol, List<Endpoint> endpoints) throws NacosException;
@@ -3452,17 +3461,17 @@ Agent 名称、协议或端点标识无效，或注销请求失败时，抛出 `
 
 #### 描述
 
-从应用代码中发布一个精确 Agent 版本，命名空间使用 `AiService` 上下文。
+从应用代码中发布指定版本的 Agent 定义，使用 `AiService` 配置的命名空间。
 
-| 目标版本状态 | 行为 |
-| --- | --- |
-| 创建前该 Agent 没有任何版本的新建首版 | 自动提交普通 Pipeline，不受 `autoSubmit=false` 限制。 |
-| 后续新版本或已有可编辑草稿 | 创建或完整替换草稿定义，再按 `autoSubmit` 决定是否提交。 |
-| 已处于 reviewing、reviewed、online 或 offline | 成功返回已有版本，不覆盖定义、不重新提交或上线。 |
+| 情况 | `autoSubmit=false` | `autoSubmit=true` |
+| --- | --- | --- |
+| Agent 还没有任何版本，创建首个版本 | 自动尝试发布 | 自动尝试发布 |
+| 创建后续版本，或更新已有草稿 | 保存为草稿 | 提交发布 |
+| 该版本已提交审核、已上线或已下线 | 返回已有版本，不修改 | 返回已有版本，不修改 |
 
-提交可能等待审核，返回版本不一定已上线；此操作不会强制发布。更新草稿会完整替换调用接口列表，遗漏的协议会被移除。调用失败不保证服务端未保存草稿；先检查当前版本状态，再决定是否重新发布。SDK 不会把结果未知的发布跨传输方式重放。
+已有草稿也算已有版本。更新草稿会替换整个定义，包括全部调用接口，需要保留的内容应一起提交。
 
-首版不是客户端首次调用，也不是首个 online 版本；已有 draft 已是一个版本，不适用首版例外。`autoSubmit=false` 的新建首版仍由服务端执行普通 submit，客户端不改写参数。无 Pipeline 时可 online/latest；有 Pipeline 时按流程执行，可能是 reviewing/reviewed，不能承诺立即 online/latest。已有非 draft 也不会因 false 而变成草稿。
+自动发布会遵循已配置的审核流程，可能需要等待审核。检查返回的 `AgentVersionDetail.getStatus()` 是否为 `online`，确认版本已上线。若调用失败或超时，先检查版本是否已保存，再决定是否重试。
 
 > 本节使用的 `AgentProvider` 和 `AgentVersionDetail` 位于 `com.alibaba.nacos.api.ai.model.agent` 包，不是旧 A2A 的 `com.alibaba.nacos.api.ai.model.a2a` 同名类型。
 
@@ -3492,7 +3501,7 @@ AgentVersionDetail publishAgent(AgentPublishRequest request) throws NacosExcepti
 | basedOnVersion    | String                    | 复用内容的精确源版本；与 `callInterfaces` 二选一             | 条件必填 |
 | author            | String                    | Version 作者                                        | 无 |
 | changeDescription | String                    | Version 变更说明                                      | 无 |
-| autoSubmit        | boolean                   | 后续新版本或当前可编辑草稿是否提交；创建前无任何版本的首版即使 false 也普通提交 | false |
+| autoSubmit        | boolean                   | 是否自动提交发布；首个版本总会尝试发布，详见上表 | false |
 
 `AgentCallInterface` 包含协议、协议版本、`descriptorMediaType`、原生 `nativeDescriptor`、`endpointSourceOrder` 及 `endpointSets`。来源顺序必须恰好包含 `RUNTIME` 和 `DECLARED` 各一次；定义中的声明地址放入 `source=DECLARED` 的 EndpointSet，不写入运行端点。同一版本中 `protocol` 不能重复。
 

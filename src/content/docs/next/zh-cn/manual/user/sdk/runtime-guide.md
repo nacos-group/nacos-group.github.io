@@ -121,18 +121,18 @@ AgentService agents = aiService.agent();
 
 ### 6.2. 订阅、端点活性与错误处理
 
-- RAD `subscribeAgent` 返回 `void`，初始状态和后续完整快照统一交给 listener。只有合法 Discover 确认 reference 不存在才产生 `UNAVAILABLE`；空端点仍是快照。已接受订阅遇到后台鉴权、配额、网络或迁移异常时保留并退避恢复，无需重新订阅；初次同步失败则需解决原因后重试。回调积压、执行器异常和 HTTP 异步准入规则见 [RAD 接入指南](../ai/rad-discovery.md#21-初始状态与后续回调)。
+- RAD `subscribeAgent` 没有返回值，首次查询结果和后续变化都通过监听器接收。订阅期间断线后 SDK 会自动恢复，无需重复订阅；如果首次调用直接抛出异常，则需要处理原因后重试。事件类型和回调用法见 [RAD 接入指南](../ai/rad-discovery.md#21-初始状态与后续回调)。
 - MCP、Skill、Prompt、AgentSpec 保留各自的订阅轮询。SDK 已获取的内容通过对应监听器传递，应用无需把所有回调都处理成一次额外查询。
 - HTTP 注册的 Agent/MCP 运行端点由 SDK 维护客户端标识及心跳。保留注册使用的实例；正常退出时通过同一实例注销，再关闭 `AiService`。取消订阅或下线资源定义不会停止业务进程。
 - 权限、参数、版本冲突、容量或迁移限制应按业务错误处理。发布超时后结果可能未知，先查询状态，不应盲目换一种传输重发；端点重连恢复不等于定义发布可以自动重试。
 
 ### 6.3. 旧 A2A 与 RAD 的兼容
 
-3.3 SDK 在首次可靠协商后固定当前实例使用旧 A2A 或 RAD 路由。选定旧 A2A 的实例在服务端升级后不会自动改走 RAD；需要重新创建 SDK 才重新判断。选定 RAD 后，业务或迁移错误不会使其静默退回旧 A2A。
+已有 A2A 应用可以继续使用原来的接口，3.3 SDK 会自动适配服务端。服务端从旧版升级后，如需使用新的行为，请重启应用或重新创建 SDK 实例。新应用直接使用 RAD 接口即可，无需手动切换模式。
 
-`AiService.getAgentDiscoveryCapability()` 查询当前能力证据，不固定或切换旧 A2A 路由；`UNKNOWN` 不等于不支持，探测失败可抛异常，`SUPPORTED` 也不代表迁移已完成。框架选择示例见 [RAD 接入指南](../ai/rad-discovery.md#25-按配置与能力选择消费方式)。旧 A2A 订阅保留完整 Card 回调与默认推空保护，不提供 RAD 的 `UNAVAILABLE` 事件。
+需要同时兼容新旧服务端的框架，可通过 `AiService.getAgentDiscoveryCapability()` 查询是否支持 RAD，示例见 [RAD 接入指南](../ai/rad-discovery.md#25-兼容旧版服务端)。
 
-旧 A2A 与通用 Agent 注册同一资源时应避免混用发布来源。需要新 Agent 能力时，先完成服务端升级及迁移，再接入 SDK；参见 [Agent 管理](../ai/agent-registry.md)、[RAD 接入指南](../ai/rad-discovery.md)和[升级手册](../../admin/upgrading.mdx)。
+同一个 SDK 实例为同一 Agent 注册 A2A 地址时，使用旧 A2A 或新 RAD 的一组注册、注销接口，避免混用。使用新 RAD 接口前，确认服务端已支持 RAD 并完成相应的数据迁移，参见 [Agent 管理](../ai/agent-registry.md)和[升级手册](../../admin/upgrading.mdx)。
 
 ## 7. 本地缓存、failover 和 redo
 

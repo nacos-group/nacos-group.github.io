@@ -43,7 +43,7 @@ The subscriber needs read permission for this Agent; the endpoint registration e
 
 Access general Agent operations through `AiService.agent()`. RAD Discover/Watch are new in 3.3.0. An SDK instance binds to one namespace; business objects do not set it again.
 
-This minimal complete example subscribes to `route-planner` version `1.0.0`. Only the listener updates the local view, for both initial state and later changes. There is no need to Discover first and then overwrite that view with a synchronous result. Press Enter to inspect the current state, unsubscribe and close the client.
+The following complete example subscribes to version `1.0.0` of `route-planner` and saves results in the listener. Press Enter to inspect the current result, then unsubscribe and close the client.
 
 ```java
 import com.alibaba.nacos.api.ai.AiFactory;
@@ -111,36 +111,30 @@ public class AgentWatchExample {
 }
 ```
 
-The example selects `http`; the SDK manages HTTP Watch. `nacosAiTransportMode` also supports `grpc` and `auto`, with `grpc` as the default. See the [SDK Runtime Guide](../sdk/runtime-guide.md) for network requirements and configuration. Here, `current == null` only means that the application has not received a callback yet; it does not confirm that the target is missing.
+The example connects to Nacos over HTTP. `nacosAiTransportMode` also supports `grpc` and `auto`, and defaults to `grpc`; see the [SDK Runtime Guide](../sdk/runtime-guide.md). An empty `current` means that no callback has arrived yet.
 
 ### 2.1. Initial State and Subsequent Callbacks
 
-Both `subscribeAgent` overloads return `void`. A callback may run before or after the method returns, so prepare the listener's state first. Repeating the same reference, filter and listener instance is idempotent and does not repeat initialization. A new listener joining an existing Watch still receives the current complete state. Unsubscribe with the corresponding reference, filter and the same listener instance.
+`subscribeAgent` has no return value. The listener's `onEvent` receives both the initial query result and later changes. A callback may run before the method returns, so prepare the data it needs first. Reusing the same listener with the same query conditions does not create another subscription. A newly added listener also receives the current result.
 
-| Scenario | What the listener receives | Application action |
+| Situation | Notification | Application action |
 | --- | --- | --- |
-| Successful initial discovery, or a later content change | `SNAPSHOT` containing a complete `AgentDiscoveryResult` | Replace the whole local snapshot; do not merge field-level deltas |
-| A valid, authorized Discover confirms that the reference cannot be found, such as a missing Agent, version or label | `UNAVAILABLE`, with no result and with an error code and message | Invalidate the old result; the subscription remains and resumes snapshots when the target returns |
-| No endpoints, no interfaces after filtering, or only unhealthy endpoints | A valid `SNAPSHOT` | Decide whether any address is usable; this does not mean the target is missing |
-| Network, server, authentication, quota, migration or background execution failures after acceptance | No data event | The SDK retains the subscription and last confirmed state and recovers with backoff; resolve the actual fault without repeatedly subscribing |
+| The initial query succeeds, or the Agent definition or addresses change | `SNAPSHOT` with a complete `AgentDiscoveryResult` | Replace the locally saved result |
+| An SDK query confirms that the Agent, requested version or label does not exist | `UNAVAILABLE` with an error code and message | Stop using the old result; notifications continue when the target returns |
+| No addresses match, or all addresses are unhealthy | Still `SNAPSHOT` | Check the address list and health; this does not mean the Agent was deleted |
+| Network, permission or subscription-limit errors occur during a subscription | No notification of the above types | Check client logs and resolve the cause; the SDK keeps the subscription and retries automatically |
 
-An initial call can still throw `NacosException` for parameter validation, initial Discover or synchronous admission failures. The new subscription was not accepted in this case; resolve the cause before calling again. This differs from **background recovery after acceptance**. A raw HTTP 404 or Watch rejection alone is not an `UNAVAILABLE` event either.
+If `subscribeAgent` itself throws `NacosException`, the subscription was not created successfully; resolve the cause and call it again. Once the method returns, wait for the listener to receive data. There is no need for another query.
 
-The SDK handles the initialization window through fingerprint checks, follow-up discovery and a shared delivery path. If Discover reads A but the state becomes B before Watch is established, the SDK checks the latest state; it does not deliver B and then send stale initialization A. Applications normally need no manual recheck or initialization-race workaround. This provides eventual delivery of the latest complete state, not cross-node linearizability or every intermediate version. HTTP/gRPC wire APIs are unchanged by this SDK behavior.
+### 2.2. Writing Callbacks
 
-### 2.2. Slow Callbacks, Failures and HTTP Quotas
+Callbacks for the same listener run one at a time. If processing cannot keep up with changes, the SDK prioritizes the latest result and may skip intermediate states. Use subscriptions to keep current data up to date, rather than to record every change.
 
-Callbacks for each listener run serially. The SDK retains only the latest pending state instead of accumulating all historical changes. Intermediate snapshots and brief `UNAVAILABLE` states may coalesce. The latest complete state is delivered when execution becomes available; per-event delivery and exactly-once processing are not guaranteed.
+Keep callbacks short, preferably just updating local data. Set timeouts for business calls and handle exceptions inside the callback; if `onEvent` throws, the SDK does not automatically retry that callback. If needed, provide a separate thread pool through the listener's `getExecutor()` and close it when the application exits.
 
-If an Executor rejects a task or `getExecutor()` throws, the SDK retains the latest state for local retry without waiting for another server change. If `onEvent` has already started and throws, the error is logged and that callback is not automatically replayed, avoiding duplicate business side effects. Unsubscribe or shutdown discards notifications that have not started.
+To unsubscribe, use the original query conditions and the same listener instance. Unsubscribing or closing the client discards notifications that have not started.
 
-Blocking I/O in a callback does not block transport, polling or Discover processing. However, other listeners can be delayed if the shared callback pool is blocked. Update local state quickly, give business I/O timeouts and handle your own exceptions. If needed, supply an appropriately sized executor through the listener's `getExecutor()` and close that application-owned executor on exit.
-
-Initial remote HTTP Watch admission is asynchronous: returning from `subscribeAgent` does not mean the server has acknowledged every Watch. If an expanded set hits a quota, the SDK retains accepted additions, prioritizes the previously successful set and retries at a limited rate. Further growth during known exhaustion can fail synchronously. Adding a listener to an existing Watch is not remote growth. Observe client logs, address the quota cause and cancel unnecessary subscriptions; the SDK continues recovery. Applications need not track the successful set or resubscribe in batches.
-
-Watch uses gRPC notifications or HTTP batch long polling. When the configured Watch channel is unavailable, or a binding failure permits fallback, the SDK can use internal Discover polling, which still requires RAD Discover support. Polling is not a third protocol applications must select. A Watch does not keep both gRPC push and periodic Discover polling running in steady state; brief overlap is possible during a switch. Applications need not manage Transport objects.
-
-### 2.3. One-Shot Discovery and Explicit A2A Conversion
+### 2.3. Convert Discovery Results to A2A AgentCard
 
 For a one-shot query, call `agents.discoverAgent(reference, filter)` and close the client when finished. Search the catalog with `agents.searchAgents(AgentSearchRequest)`; see the [Java SDK guide](../java-sdk/usage.md#111-search-agents) for parameters. The following snippets reuse the client setup and reference/filter above and run before the client is closed.
 
@@ -164,9 +158,9 @@ try {
 }
 ```
 
-The result is Nacos's `com.alibaba.nacos.api.ai.model.a2a.AgentCard`, not an external `io.a2a.spec` type. `AgentService.a2aConverter()` and the standalone `AgentConverters.a2a()` factory are equivalent. Conversion is local, stateless and reusable, returning an independent object each time. It performs no network requests, node selection or load balancing. Discover and Watch do not invoke it automatically.
+The return type is `com.alibaba.nacos.api.ai.model.a2a.AgentCard` from the Nacos SDK. You can also create the converter with `AgentConverters.a2a()`. Conversion is local and does not query Nacos again. For subscriptions, call the converter inside the callback.
 
-To consume subscription results, replace the minimal example's listener with the following approach and install only this subscription. This example clears the application's saved Card on conversion failure; choose an error policy appropriate to your application.
+To subscribe and convert results to AgentCards, replace the listener in the section 2 example with the one below. This example clears the saved Card on conversion failure; adjust this behavior to suit your application.
 
 ```java
 import com.alibaba.nacos.api.ai.converter.AgentConverter;
@@ -206,11 +200,11 @@ try {
 }
 ```
 
-The converter selects the A2A interface's first non-empty `EndpointSet` in discovery-result order. That order already reflects the configured `RUNTIME` / `DECLARED` preference and current filters. It uses only one set, does not merge sources and does not restore filtered addresses from the descriptor. It preserves the selected set's order and unhealthy addresses. The first entry determines the preferred `supportedInterfaces` entry and legacy `url`, `preferredTransport` and `protocolVersion` fields; the descriptor's old `preferredTransport` does not reselect it. Applications still assess address health and business reachability.
+The converter uses the first non-empty address set for the A2A interface in the discovery result and preserves its order. It does not merge address sets or automatically remove unhealthy addresses; the application still needs to check whether an address is usable.
 
-A missing convertible A2A interface or address, an invalid descriptor, or a name/version mismatch throws `IllegalArgumentException`; its message identifies the cause. The converter does not return null or an empty Card. Conversion failure neither becomes `UNAVAILABLE` nor cancels the subscription. These public converter rules do not define the legacy A2A facade's historical projection or fallback behavior.
+Conversion throws `IllegalArgumentException` if there is no suitable A2A interface or address, the Card content is invalid, or the name or version does not match. Check the exception message for the cause. Conversion failure does not cancel the subscription.
 
-### 2.4. Register the Complete Runtime Endpoint Set
+### 2.4. Register Runtime Addresses
 
 A publisher can create its own `AiService`, obtain `AgentService agents = aiService.agent()` and run this snippet. Keep the instance alive while the application runs, then deregister and close it on exit. Registration does not start the Agent service.
 
@@ -245,7 +239,7 @@ try {
 }
 ```
 
-`registerAgentEndpoints` replaces this client's **complete Batch** for the same Agent and protocol. Versions do not create separate Batches. Other clients' and other protocols' contributions are unaffected:
+Each call to `registerAgentEndpoints` must include **all runtime addresses** this client wants to keep for the same Agent and protocol. It replaces the previous address list even if the version changes. Addresses registered by other clients or for other protocols are unaffected:
 
 | Current set | Desired set | Submit now |
 | --- | --- | --- |
@@ -256,14 +250,20 @@ try {
 - `runtimeVersion` identifies the running version; `versionRange` describes compatible definition versions. `[1.0.0]` matches one version. Use a range such as `[1.0.0,2.0.0)` only when actually compatible, and include the runtime version.
 - Within a protocol, endpoint identity uses URI host, effective port and `transport`. Addresses differing only by path or query cannot be two independent endpoints from the same publisher.
 - Endpoints can precede definition publication. Ordinary discovery still requires an enabled Agent, an online target version, a matching protocol and a compatible version range.
-- `deregisterAgentEndpoints` removes this client's contributions by address identity; the SDK submits the complete remaining set, or deregisters the whole contribution when empty. This differs from legacy A2A whole-version deregistration; see the [Java SDK guide](../java-sdk/usage.md#74-deregister-agent-endpoint).
+- `deregisterAgentEndpoints` removes only the specified addresses registered by this client, keeping the rest. When using the older A2A API, note its [whole-version deregistration behavior](../java-sdk/usage.md#74-deregister-agent-endpoint).
 - Unsubscribing does not deregister endpoints, and taking a definition offline does not stop application instances.
 
-### 2.5. Choose a Consumption API by Configuration and Capability
+### 2.5. Supporting Older Servers
 
-Frameworks supporting both A2A and RAD can query the effective Agent transport with `AiService.getAgentDiscoveryCapability()`. `SUPPORTED` means support is established, `NOT_SUPPORTED` means reliable negative evidence, and `UNKNOWN` means insufficient evidence. Connection, timeout, authentication or probe failures can throw `NacosException`; do not classify them as `NOT_SUPPORTED`. A cold query may perform bounded network probes, so it is not necessarily local or instantaneous; probing multiple addresses can add to the duration.
+If the server supports RAD, use the new APIs above directly; no mode selection is needed. Frameworks that must support both older and newer servers can query RAD support with `AiService.getAgentDiscoveryCapability()`:
 
-This example honors explicit application configuration and queries capability only for AUTO. Its Mode is a framework consumption policy, separate from the HTTP/gRPC transport choice in `nacosAiTransportMode`.
+- `SUPPORTED`: RAD APIs are supported.
+- `NOT_SUPPORTED`: use the older A2A APIs.
+- `UNKNOWN`: support cannot be determined yet. Check the connection or use explicit application configuration; do not treat it as unsupported.
+
+The query may contact the server and throw `NacosException` on connection or authentication failure. Call it during initialization, rather than for every business request.
+
+The following example shows how a framework can choose an API. `Mode` is defined by the example, not a Nacos SDK setting. It selects the API to use, independently of the HTTP/gRPC connection setting.
 
 ```java
 import com.alibaba.nacos.api.ability.constant.AbilityStatus;
@@ -290,11 +290,7 @@ public class AgentConsumptionMode {
 }
 ```
 
-Call `select` once, then install only `subscribeAgent` (RAD) or `subscribeAgentCard` (A2A) for that consumption view. Do not probe protocols through business failures or install duplicate subscriptions through both APIs. For `UNKNOWN`, wait for evidence or require explicit configuration; it does not mean unsupported.
-
-`SUPPORTED` describes protocol capability only. It does not guarantee permissions, resource existence, migration readiness or business success. An operation can still encounter `AGENT_MIGRATION_IN_PROGRESS`; address migration admission rather than falling back to the old protocol. Explicit A2A selects the Card facade, not necessarily the legacy wire path.
-
-The capability query neither fixes nor switches the legacy A2A facade's instance route. Once an instance selects legacy A2A, a server upgrade does not switch that live instance to RAD. Recreate the client to select according to current capabilities. The capability result is also not a query of the facade's current route.
+Use the result of `select` to choose either `subscribeAgent` (RAD) or `subscribeAgentCard` (older A2A), avoiding duplicate subscriptions. RAD support only confirms API availability. Calls can still fail because of permissions or a missing Agent; handle the specific error.
 
 ## 3. Search and Discover Through HTTP
 
