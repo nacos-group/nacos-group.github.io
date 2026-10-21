@@ -64,7 +64,7 @@ Agent 管理面向可调用的 Agent；[AgentSpecs 管理](./agentspec-registry.
 1. 在 AI 管理中心进入 **Agent 管理**，选择目标命名空间，点击 **创建 Agent**。
 2. 已有 AgentCard 时，选择 **从已知协议导入**，粘贴完整的 A2A AgentCard，检查导入预览中的名称、版本和接口地址。也可以选择 **全新创建**，填写目录信息、首个版本和调用协议。
 3. 保存后得到草稿。检查版本内容、端点来源顺序和可见范围，再执行 **提交审核**。
-4. 没有适用的 Pipeline 时，提交后直接上线；有适用 Pipeline 时，等待审核完成，检查结果，通过后执行 **发布**。
+4. 未配置审核流程时，提交后直接上线；已配置审核流程时，等待审核完成，通过后执行 **发布**。
 5. 在版本详情和运行时端点区域检查定义及地址，再从使用方验证发现和实际调用。
 
 更新时，**编辑元数据**用于调整 Agent 的目录信息；**编辑草稿**用于修改未发布的调用定义。修改已发布内容，应使用 **基于此版本创建草稿**并指定新版本号。
@@ -164,7 +164,16 @@ curl -sS -X POST 'http://127.0.0.1:8848/nacos/v3/admin/ai/agents/publish' \
 
 一个 Agent 最多有一个编辑中版本和一个审核中版本。后续版本可直接提供新的 `callInterfaces`，也可用 `basedOnVersion` 复制已有精确版本，两者不能同时提供。复制后，先在草稿中调整协议描述的版本、地址等内容，再提交。
 
-3.3 Java SDK 提供 `AiService.agent().publishAgent(AgentPublishRequest)`，供应用以代码管理定义。它遵循普通提交与 Pipeline 流程：首个新建版本自动提交；后续版本由 `autoSubmit` 决定是否提交，默认 `false`。同版本当前为草稿时可更新；已进入审核或发布等非草稿状态时不会覆盖内容。应检查返回状态，不能把方法名中的 publish 理解为必然已经上线。写入超时后先检查该版本状态，再决定是否重试。
+通过 SDK 发布时，注意两类接口的区别：
+
+- **旧 A2A 发布接口 [`releaseAgentCard`](../java-sdk/usage.md#72-发布新版本agentcard)**：首个版本直接上线并成为最新版本（`latest`），即使 `setAsLatest=false`。后续新版本也会直接上线；`setAsLatest=true` 时设为最新版本，`false` 时保留原来的最新版本。
+- **新 RAD 发布接口 [`publishAgent`](../java-sdk/usage.md#117-代码式发布-agent-定义)**：首个版本自动尝试发布，不受 `autoSubmit` 的值影响。后续新版本或已有草稿，`autoSubmit=false` 时保存为草稿，`true` 时自动提交发布。
+
+这里的“首个版本”指该 Agent 还没有任何版本；已有草稿也算已有版本。新接口的自动发布会遵循已配置的审核流程，可能需要等待审核。调用后检查返回的 `AgentVersionDetail.getStatus()`，确认是否已为 `online`。
+
+**3.3 SDK 兼容说明：**使用 3.3 SDK 的 `releaseAgentCard` 连接支持 RAD 的服务端时，SDK 会自动使用新的发布流程，无需手动选择。此时 `setAsLatest` 的作用与 `autoSubmit` 相同：后续版本设为 `false` 时保存草稿，设为 `true` 时提交发布。该方法没有返回值，可通过控制台确认发布状态。
+
+新接口可以更新草稿；已提交审核、已上线或已下线的版本保持不变。如需修改这些版本，请创建新版本。发布超时后，先检查版本是否已经保存或上线，再决定是否重试。
 
 详细状态及操作规则见 [AI 资源生命周期](./ai-resource-lifecycle.md)。标准发布或重新上线会把 `latest` 指向本次版本；下线当前 `latest` 后会选择其余在线版本中版本号最大的一个。`latest` 由服务端维护，不能通过自定义标签覆盖。
 
@@ -198,21 +207,22 @@ Search 的 `agentNameContains` 区分大小写；`tagsAll` 要求全部精确匹
 
 A2A AgentCard 保存为 `protocol=a2a` 调用接口的 `nativeDescriptor`。Card 的 `name` 和 `version` 对应 Agent 名称和版本，接口 URL 对应声明地址。既有 A2A API 仍用于发布、查询和订阅 Card；通用 RAD API 返回包含原生 Card 和端点集合的发现结果。
 
-| 接入方式 | 使用建议 |
-| --- | --- |
-| 已有 3.1 / 3.2 Java SDK 或旧 A2A HTTP/gRPC 接口 | 保留兼容接入；已有数据的服务端升级按升级手册处理 |
-| 3.3 Java SDK 的 A2A 方法 | 使用 `AiService.agent()`；服务端支持 RAD 时，通过 RAD 适配 Card、端点与订阅 |
-| 新的通用 Agent 应用 | 使用 [RAD 接入指南](./rad-discovery.md)中的 Search、Discover、Watch 与端点批量注册 |
+- **已有 A2A 应用**：可以继续使用 `releaseAgentCard`、`getAgentCard` 和 `subscribeAgentCard` 等接口。3.3 SDK 会自动适配服务端，无需手动选择 RAD。发布行为的变化见第 3.4 节。
+- **新应用**：直接使用 `searchAgents`、`discoverAgent`、`subscribeAgent` 和 `registerAgentEndpoints` 等 RAD 接口，服务端需支持 RAD。完整示例见 [RAD 接入指南](./rad-discovery.md)。
 
-旧 A2A HTTP/gRPC 发布保留直接上线及 `setAsLatest` 兼容行为。3.3 SDK 的 A2A 方法使用 RAD 时，定义发布遵循 Client publish 的普通提交与 Pipeline 流程。不要用旧接口的行为推断所有接入方式都会直接上线。
-
-同一 SDK 实例、同一 Agent 的 A2A 协议端点，应选择原生 RAD 注册或兼容 A2A 注册中的一种，避免两套注册方式混用。Nacos 注册中心鉴权与 AgentCard 声明的业务调用鉴权分别配置。
+同一个 SDK 实例为同一 Agent 注册 A2A 地址时，选择旧 A2A 或新 RAD 的一组注册、注销接口配套使用，避免混用。Nacos 的访问账号与 Agent 服务自身的调用凭据分别配置。
 
 ### 5.2. 自定义 A2A 应用
 
 3.3 Java SDK 可通过以下入口保留 AgentCard 的使用方式；`agentCard` 应是应用提供的完整 Card：
 
 ```java
+import com.alibaba.nacos.api.ai.AiFactory;
+import com.alibaba.nacos.api.ai.AiService;
+import com.alibaba.nacos.api.ai.AgentService;
+import com.alibaba.nacos.api.ai.model.a2a.AgentCard;
+import java.util.Properties;
+
 Properties properties = new Properties();
 properties.setProperty("serverAddr", "127.0.0.1:8848");
 properties.setProperty("namespace", "public");
@@ -221,15 +231,17 @@ properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
 AiService aiService = AiFactory.createAiService(properties);
 AgentService agentService = aiService.agent();
 
-// Publish the application's complete AgentCard.
-agentService.releaseAgentCard(agentCard);
-// Register after the definition has become online and the application is ready.
-agentService.registerAgentEndpoint("route-planner", "1.0.0", "127.0.0.1", 9999, "JSONRPC");
-// Pass the discovered Card to the A2A client used by the application.
-AgentCard discoveredCard = agentService.getAgentCard("route-planner");
+try {
+    // Publish the application's complete AgentCard. See section 3.4 for version behavior.
+    agentService.releaseAgentCard(agentCard, "SERVICE", false);
+} finally {
+    aiService.shutdown();
+}
 ```
 
-上述片段用于说明接口入口。发布与运行时调用通常在不同应用中完成；发布端需要确认版本上线，运行期间保留 SDK 实例，退出时注销端点并调用 `aiService.shutdown()`。A2A 订阅仍可使用 `subscribeAgentCard` / `unsubscribeAgentCard`；新应用若需要显式处理不可用事件，可使用 RAD Watch。
+上述片段仅发布应用提供的完整 Card。通过管理端确认版本已 online 后，再由运行端注册端点、消费端查询或订阅；示例见 [Java SDK 使用手册](../java-sdk/usage.md#7-a2a-注册中心)。运行端保留 SDK 实例，退出时用同一实例注销端点并关闭。
+
+使用旧 `subscribeAgentCard` 接口订阅时，如果 AgentCard 被删除或暂时查不到，SDK 默认会触发保护：不会向监听器传入 `null` 或空 Card，也不会发送删除通知。
 
 通过 HTTP 集成旧 A2A 管理接口时，可将完整 AgentCard 保存为 `agent-card.json` 后导入：
 

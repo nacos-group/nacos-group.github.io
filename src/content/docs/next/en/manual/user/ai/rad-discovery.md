@@ -37,13 +37,13 @@ export NACOS_PASSWORD='<your-password>'
 export AGENT_ENDPOINT_URI='http://127.0.0.1:9999/a2a'
 ```
 
-The example puts publisher and consumer operations in one process, so the account needs read and endpoint write permissions for this Agent. Real applications should configure only their required permissions. Start the Agent service yourself: registering its address neither starts the business service nor verifies that actual calls succeed.
+The subscriber needs read permission for this Agent; the endpoint registration example also requires endpoint write permission. Configure each application with its required permissions. Start the Agent service yourself: registering its address neither starts the business service nor verifies that actual calls succeed.
 
-## 2. Java SDK: Register, Discover, Subscribe and Clean Up
+## 2. Java SDK: Subscribe and Clean Up
 
-Access general Agent operations through `AiService.agent()`. An SDK instance binds to one namespace; business objects such as `AgentSearchRequest` and `AgentEndpointRegistrationBatch` do not set it again.
+Access general Agent operations through `AiService.agent()`. RAD Discover/Watch are new in 3.3.0. An SDK instance binds to one namespace; business objects do not set it again.
 
-This complete example registers a runtime endpoint, searches the catalog, discovers exactly `1.0.0` and subscribes to that version. Pressing Enter cancels the subscription, deregisters the endpoint and closes the SDK.
+The following complete example subscribes to version `1.0.0` of `route-planner` and saves results in the listener. Press Enter to inspect the current result, then unsubscribe and close the client.
 
 ```java
 import com.alibaba.nacos.api.ai.AiFactory;
@@ -53,19 +53,14 @@ import com.alibaba.nacos.api.ai.listener.AbstractNacosAgentDiscoveryListener;
 import com.alibaba.nacos.api.ai.listener.NacosAgentDiscoveryEvent;
 import com.alibaba.nacos.api.ai.listener.NacosAgentDiscoveryEventType;
 import com.alibaba.nacos.api.ai.model.agent.AgentDiscoveryFilter;
-import com.alibaba.nacos.api.ai.model.agent.AgentDiscoveryResult;
-import com.alibaba.nacos.api.ai.model.agent.AgentEndpointRegistrationBatch;
 import com.alibaba.nacos.api.ai.model.agent.AgentReference;
-import com.alibaba.nacos.api.ai.model.agent.AgentSearchRequest;
-import com.alibaba.nacos.api.ai.model.agent.AgentSummary;
-import com.alibaba.nacos.api.ai.model.agent.Endpoint;
 import com.alibaba.nacos.api.ai.model.agent.EndpointSource;
-import com.alibaba.nacos.api.model.Page;
 
 import java.util.Collections;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicReference;
 
-public class AgentDiscoveryExample {
+public class AgentWatchExample {
     public static void main(String[] args) throws Exception {
         Properties properties = new Properties();
         properties.setProperty("serverAddr", System.getenv("NACOS_SERVER_ADDR"));
@@ -73,20 +68,6 @@ public class AgentDiscoveryExample {
         properties.setProperty("username", System.getenv("NACOS_USERNAME"));
         properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
         properties.setProperty("nacosAiTransportMode", "http");
-        AiService aiService = AiFactory.createAiService(properties);
-        AgentService agents = aiService.agent();
-
-        Endpoint endpoint = new Endpoint();
-        endpoint.setUri(System.getenv("AGENT_ENDPOINT_URI"));
-        endpoint.setTransport("JSONRPC");
-        endpoint.setMetadata(Collections.singletonMap("zone", "local"));
-
-        AgentEndpointRegistrationBatch batch = new AgentEndpointRegistrationBatch();
-        batch.setAgentName("route-planner");
-        batch.setProtocol("a2a");
-        batch.setRuntimeVersion("1.0.0");
-        batch.setVersionRange("[1.0.0]");
-        batch.setEndpoints(Collections.singletonList(endpoint));
 
         AgentReference reference = new AgentReference();
         reference.setAgentName("route-planner");
@@ -95,82 +76,221 @@ public class AgentDiscoveryExample {
         filter.setProtocols(Collections.singletonList("a2a"));
         filter.setEndpointSources(Collections.singletonList(EndpointSource.RUNTIME));
 
+        // Prepare state before subscribing; only the listener writes this view.
+        AtomicReference<NacosAgentDiscoveryEvent> current = new AtomicReference<>();
         AbstractNacosAgentDiscoveryListener listener = new AbstractNacosAgentDiscoveryListener() {
             @Override
             public void onEvent(NacosAgentDiscoveryEvent event) {
-                if (event.getType() == NacosAgentDiscoveryEventType.SNAPSHOT) {
-                    printSnapshot(event.getAgentDiscoveryResult());
-                } else {
-                    // Invalidate the old snapshot when discovery becomes unavailable.
-                    System.err.println(event.getErrorCode() + ": " + event.getErrorMessage());
-                }
+                current.set(event);
             }
         };
 
+        AiService aiService = AiFactory.createAiService(properties);
         try {
-            agents.registerAgentEndpoints(batch);
+            AgentService agents = aiService.agent();
+            agents.subscribeAgent(reference, filter, listener);
             try {
-                AgentSearchRequest search = new AgentSearchRequest();
-                search.setAgentNameContains("route");
-                search.setTagsAll(Collections.singletonList("routing"));
-                search.setProtocolsAny(Collections.singletonList("a2a"));
-                search.setPageNo(1);
-                search.setPageSize(20);
-                Page<AgentSummary> catalog = agents.searchAgents(search);
-                System.out.println("Catalog matches: " + catalog.getTotalCount());
-
-                printSnapshot(agents.discoverAgent(reference, filter));
-                AgentDiscoveryResult initial = agents.subscribeAgent(reference, filter, listener);
-                try {
-                    printSnapshot(initial);
-                    System.out.println("Press Enter to unsubscribe and deregister.");
-                    System.in.read();
-                } finally {
-                    agents.unsubscribeAgent(reference, filter, listener);
+                System.out.println("Press Enter to inspect the current state and unsubscribe.");
+                System.in.read();
+                NacosAgentDiscoveryEvent event = current.get();
+                if (event == null) {
+                    System.out.println("Waiting for the first callback.");
+                } else if (event.getType() == NacosAgentDiscoveryEventType.SNAPSHOT) {
+                    System.out.println("Definition version: "
+                            + event.getAgentDiscoveryResult().getVersion());
+                } else {
+                    System.out.println(event.getErrorCode() + ": " + event.getErrorMessage());
                 }
             } finally {
-                agents.deregisterAgentEndpoints("route-planner", "a2a",
-                        Collections.singletonList(endpoint));
+                agents.unsubscribeAgent(reference, filter, listener);
             }
         } finally {
             aiService.shutdown();
         }
     }
+}
+```
 
-    private static void printSnapshot(AgentDiscoveryResult snapshot) {
-        if (snapshot == null) {
-            System.out.println("Agent is not available yet.");
+The example connects to Nacos over HTTP. `nacosAiTransportMode` also supports `grpc` and `auto`, and defaults to `grpc`; see the [SDK Runtime Guide](../sdk/runtime-guide.md). An empty `current` means that no callback has arrived yet.
+
+### 2.1. Initial State and Subsequent Callbacks
+
+`subscribeAgent` has no return value. The listener's `onEvent` receives both the initial query result and later changes. A callback may run before the method returns, so prepare the data it needs first. Reusing the same listener with the same query conditions does not create another subscription. A newly added listener also receives the current result.
+
+| Situation | Notification | Application action |
+| --- | --- | --- |
+| The initial query succeeds, or the Agent definition or addresses change | `SNAPSHOT` with a complete `AgentDiscoveryResult` | Replace the locally saved result |
+| An SDK query confirms that the Agent, requested version or label does not exist | `UNAVAILABLE` with an error code and message | Stop using the old result; notifications continue when the target returns |
+| No addresses match, or all addresses are unhealthy | Still `SNAPSHOT` | Check the address list and health; this does not mean the Agent was deleted |
+| Network, permission or subscription-limit errors occur during a subscription | No notification of the above types | Check client logs and resolve the cause; the SDK keeps the subscription and retries automatically |
+
+If `subscribeAgent` itself throws `NacosException`, the subscription was not created successfully; resolve the cause and call it again. Once the method returns, wait for the listener to receive data. There is no need for another query.
+
+### 2.2. Writing Callbacks
+
+Callbacks for the same listener run one at a time. If processing cannot keep up with changes, the SDK prioritizes the latest result and may skip intermediate states. Use subscriptions to keep current data up to date, rather than to record every change.
+
+Keep callbacks short, preferably just updating local data. Set timeouts for business calls and handle exceptions inside the callback; if `onEvent` throws, the SDK does not automatically retry that callback. If needed, provide a separate thread pool through the listener's `getExecutor()` and close it when the application exits.
+
+To unsubscribe, use the original query conditions and the same listener instance. Unsubscribing or closing the client discards notifications that have not started.
+
+### 2.3. Convert Discovery Results to A2A AgentCard
+
+For a one-shot query, call `agents.discoverAgent(reference, filter)` and close the client when finished. Search the catalog with `agents.searchAgents(AgentSearchRequest)`; see the [Java SDK guide](../java-sdk/usage.md#111-search-agents) for parameters. The following snippets reuse the client setup and reference/filter above and run before the client is closed.
+
+For an A2A Card, explicitly call `AgentConverter<AgentCard>.convert(AgentDiscoveryResult)`:
+
+```java
+import com.alibaba.nacos.api.ai.converter.AgentConverter;
+import com.alibaba.nacos.api.ai.converter.AgentConverters;
+import com.alibaba.nacos.api.ai.model.a2a.AgentCard;
+import com.alibaba.nacos.api.ai.model.agent.AgentDiscoveryResult;
+
+AgentConverter<AgentCard> converter = agents.a2aConverter();
+// Equivalent standalone factory: AgentConverters.a2a()
+AgentDiscoveryResult snapshot = agents.discoverAgent(reference, filter);
+try {
+    AgentCard card = converter.convert(snapshot);
+    System.out.println(card.getName() + ": " + card.getUrl());
+} catch (IllegalArgumentException e) {
+    // Handle invalid or non-convertible snapshots according to application policy.
+    System.err.println(e.getMessage());
+}
+```
+
+The return type is `com.alibaba.nacos.api.ai.model.a2a.AgentCard` from the Nacos SDK. You can also create the converter with `AgentConverters.a2a()`. Conversion is local and does not query Nacos again. For subscriptions, call the converter inside the callback.
+
+To subscribe and convert results to AgentCards, replace the listener in the section 2 example with the one below. This example clears the saved Card on conversion failure; adjust this behavior to suit your application.
+
+```java
+import com.alibaba.nacos.api.ai.converter.AgentConverter;
+import com.alibaba.nacos.api.ai.model.a2a.AgentCard;
+import com.alibaba.nacos.api.ai.listener.AbstractNacosAgentDiscoveryListener;
+import com.alibaba.nacos.api.ai.listener.NacosAgentDiscoveryEvent;
+import com.alibaba.nacos.api.ai.listener.NacosAgentDiscoveryEventType;
+import java.util.concurrent.atomic.AtomicReference;
+
+AgentConverter<AgentCard> converter = agents.a2aConverter();
+AtomicReference<AgentCard> currentCard = new AtomicReference<>();
+AbstractNacosAgentDiscoveryListener listener = new AbstractNacosAgentDiscoveryListener() {
+    @Override
+    public void onEvent(NacosAgentDiscoveryEvent event) {
+        if (event.getType() == NacosAgentDiscoveryEventType.UNAVAILABLE) {
+            currentCard.set(null);
             return;
         }
-        System.out.println("Definition version: " + snapshot.getVersion());
-        snapshot.getCallInterfaces().forEach(callInterface ->
-                callInterface.getEndpointSets().forEach(endpointSet ->
-                        endpointSet.getEndpoints().forEach(endpoint ->
-                                System.out.println(endpointSet.getSource() + " "
-                                        + endpoint.getUri() + " healthy=" + endpoint.getHealthy()))));
+        try {
+            currentCard.set(converter.convert(event.getAgentDiscoveryResult()));
+        } catch (IllegalArgumentException e) {
+            // This application invalidates its old Card on conversion failure.
+            currentCard.set(null);
+            System.err.println(e.getMessage());
+        }
+    }
+};
+try {
+    agents.subscribeAgent(reference, filter, listener);
+    try {
+        System.in.read();
+    } finally {
+        agents.unsubscribeAgent(reference, filter, listener);
+    }
+} finally {
+    aiService.shutdown();
+}
+```
+
+The converter uses the first non-empty address set for the A2A interface in the discovery result and preserves its order. It does not merge address sets or automatically remove unhealthy addresses; the application still needs to check whether an address is usable.
+
+Conversion throws `IllegalArgumentException` if there is no suitable A2A interface or address, the Card content is invalid, or the name or version does not match. Check the exception message for the cause. Conversion failure does not cancel the subscription.
+
+### 2.4. Register Runtime Addresses
+
+A publisher can create its own `AiService`, obtain `AgentService agents = aiService.agent()` and run this snippet. Keep the instance alive while the application runs, then deregister and close it on exit. Registration does not start the Agent service.
+
+```java
+import com.alibaba.nacos.api.ai.model.agent.AgentEndpointRegistrationBatch;
+import com.alibaba.nacos.api.ai.model.agent.Endpoint;
+import java.util.Collections;
+
+Endpoint endpoint = new Endpoint();
+endpoint.setUri(System.getenv("AGENT_ENDPOINT_URI"));
+endpoint.setTransport("JSONRPC");
+endpoint.setMetadata(Collections.singletonMap("zone", "local"));
+
+AgentEndpointRegistrationBatch batch = new AgentEndpointRegistrationBatch();
+batch.setAgentName("route-planner");
+batch.setProtocol("a2a");
+batch.setRuntimeVersion("1.0.0");
+batch.setVersionRange("[1.0.0]");
+batch.setEndpoints(Collections.singletonList(endpoint));
+
+try {
+    agents.registerAgentEndpoints(batch);
+    try {
+        System.out.println("Press Enter when the application is ready to stop.");
+        System.in.read();
+    } finally {
+        agents.deregisterAgentEndpoints("route-planner", "a2a",
+                Collections.singletonList(endpoint));
+    }
+} finally {
+    aiService.shutdown();
+}
+```
+
+Each call to `registerAgentEndpoints` must include **all runtime addresses** this client wants to keep for the same Agent and protocol. It replaces the previous address list even if the version changes. Addresses registered by other clients or for other protocols are unaffected:
+
+| Current set | Desired set | Submit now |
+| --- | --- | --- |
+| A, B | B, C | B, C |
+| A | Keep A and add B | A, B |
+| A | Replace A with B | B; no subsequent deregistration of A is needed |
+
+- `runtimeVersion` identifies the running version; `versionRange` describes compatible definition versions. `[1.0.0]` matches one version. Use a range such as `[1.0.0,2.0.0)` only when actually compatible, and include the runtime version.
+- Within a protocol, endpoint identity uses URI host, effective port and `transport`. Addresses differing only by path or query cannot be two independent endpoints from the same publisher.
+- Endpoints can precede definition publication. Ordinary discovery still requires an enabled Agent, an online target version, a matching protocol and a compatible version range.
+- `deregisterAgentEndpoints` removes only the specified addresses registered by this client, keeping the rest. When using the older A2A API, note its [whole-version deregistration behavior](../java-sdk/usage.md#74-deregister-agent-endpoint).
+- Unsubscribing does not deregister endpoints, and taking a definition offline does not stop application instances.
+
+### 2.5. Supporting Older Servers
+
+If the server supports RAD, use the new APIs above directly; no mode selection is needed. Frameworks that must support both older and newer servers can query RAD support with `AiService.getAgentDiscoveryCapability()`:
+
+- `SUPPORTED`: RAD APIs are supported.
+- `NOT_SUPPORTED`: use the older A2A APIs.
+- `UNKNOWN`: support cannot be determined yet. Check the connection or use explicit application configuration; do not treat it as unsupported.
+
+The query may contact the server and throw `NacosException` on connection or authentication failure. Call it during initialization, rather than for every business request.
+
+The following example shows how a framework can choose an API. `Mode` is defined by the example, not a Nacos SDK setting. It selects the API to use, independently of the HTTP/gRPC connection setting.
+
+```java
+import com.alibaba.nacos.api.ability.constant.AbilityStatus;
+import com.alibaba.nacos.api.ai.AiService;
+import com.alibaba.nacos.api.exception.NacosException;
+
+public class AgentConsumptionMode {
+    // Application/framework policy, not a Nacos SDK property.
+    public enum Mode { AUTO, RAD, A2A }
+
+    public static Mode select(AiService aiService, Mode configured) throws NacosException {
+        if (configured != Mode.AUTO) {
+            return configured;
+        }
+        AbilityStatus status = aiService.getAgentDiscoveryCapability();
+        if (status == AbilityStatus.SUPPORTED) {
+            return Mode.RAD;
+        }
+        if (status == AbilityStatus.NOT_SUPPORTED) {
+            return Mode.A2A;
+        }
+        throw new IllegalStateException("RAD capability is unknown; check connectivity or configure a mode.");
     }
 }
 ```
 
-The example explicitly selects `http`; the SDK manages HTTP client identity, heartbeats and Watch. `nacosAiTransportMode` also supports `grpc` and `auto`, with `grpc` as the default. `auto` selects a transport according to available capabilities. See the [SDK Runtime Guide](../sdk/runtime-guide.md) for configuration and network requirements.
-
-The example only prints discovery results; it does not make A2A calls. Business applications should select endpoints by protocol, source order, health and priority/weight, then call them through the appropriate protocol client. Lower `priority` values are preferred; `weight` can distribute traffic among endpoints at the same priority.
-
-### 2.1. Runtime Registration Rules
-
-- `registerAgentEndpoints` replaces the current SDK publisher's **complete endpoint set** for a namespace, Agent and protocol. When updating one endpoint, include all other endpoints to retain; this is not an append operation.
-- `runtimeVersion` identifies the running application version, while `versionRange` describes compatible definition versions. `[1.0.0]` matches one version. Declare a range such as `[1.0.0,2.0.0)` only when the application actually supports it, and ensure that the range includes the runtime version.
-- Within a protocol, endpoint identity uses the URI host, effective port and `transport`. Addresses differing only by path or query cannot be registered as two independent endpoints from the same publisher.
-- Endpoints may be registered before the definition is published. Ordinary discovery still requires an enabled Agent, an online target version, a matching protocol and a compatible version range.
-- Keep the SDK instance alive while the application runs. Deregister and close it on normal exit. Cancelling a subscription does not deregister endpoints, and taking a definition offline does not stop application instances.
-
-### 2.2. Subscriptions and Unavailable Events
-
-`subscribeAgent` returns the current complete snapshot. If the target does not yet exist, it can return `null` and retain the subscription so that notification resumes when the target appears. Subsequent events also carry complete replacement snapshots; applications do not merge field-level deltas.
-
-`UNAVAILABLE` means the current result is unavailable and the application should invalidate its old result. A subscription can wait for a temporarily missing target to return. Terminal authentication or capacity errors end observation; explicitly resubscribe after resolving the problem. The SDK reconnects after transient connection failures.
-
-Watch in 3.3 can use server notifications. When the relevant capability is unavailable, the SDK falls back to bounded Discover polling. Subscriptions do not guarantee delivery of every intermediate change. Unsubscribe using the original Reference, Filter and the same Listener instance.
+Use the result of `select` to choose either `subscribeAgent` (RAD) or `subscribeAgentCard` (older A2A), avoiding duplicate subscriptions. RAD support only confirms API availability. Calls can still fail because of permissions or a missing Agent; handle the specific error.
 
 ## 3. Search and Discover Through HTTP
 
@@ -207,7 +327,7 @@ curl -sS -G 'http://127.0.0.1:8848/nacos/v3/client/ai/agents' \
   --data-urlencode 'metadataSelector={"zone":"local"}'
 ```
 
-This request returns only runtime endpoints compatible with the current `latest`, filtered to `zone=local`. Keep the section 2 example running; after it deregisters, the endpoint set may be empty. To use declared addresses, remove the `endpointSource` and runtime metadata conditions, or explicitly select `DECLARED`.
+This request returns only runtime endpoints compatible with the current `latest`, filtered to `zone=local`. Keep the publisher example in section 2.4 running; after it deregisters, the endpoint set may be empty. To use declared addresses, remove the `endpointSource` and runtime metadata conditions, or explicitly select `DECLARED`.
 
 HTTP filter parameters are named `protocol`, `transport` and `endpointSource`, unlike the plural Java model fields. Values within one array match by OR; different conditions match by AND. Every key/value in `metadataSelector` must match.
 
