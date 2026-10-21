@@ -169,14 +169,15 @@ starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astr
 <p>资源覆盖值和总值都在初始化时校验并固定，修改 Properties 不会热切换已有实例。完整参数见 <a href="../../java-sdk/properties/#26-ai-%E8%B5%84%E6%BA%90%E5%8F%82%E6%95%B0" referrerpolicy="unsafe-url">AI 资源参数</a>。</p>
 <h3 id="62-订阅端点活性与错误处理">6.2. 订阅、端点活性与错误处理</h3>
 <ul>
-<li>Agent 订阅优先使用服务端 Watch 通知，不支持时回退为有界 Discover 轮询；SDK 向应用交付完整快照。收到不可用事件时撤销旧视图，终止性错误修复后重新订阅。</li>
+<li>RAD <code dir="auto">subscribeAgent</code> 没有返回值，首次查询结果和后续变化都通过监听器接收。订阅期间断线后 SDK 会自动恢复，无需重复订阅；如果首次调用直接抛出异常，则需要处理原因后重试。事件类型和回调用法见 <a href="../../ai/rad-discovery/#21-%E5%88%9D%E5%A7%8B%E7%8A%B6%E6%80%81%E4%B8%8E%E5%90%8E%E7%BB%AD%E5%9B%9E%E8%B0%83" referrerpolicy="unsafe-url">RAD 接入指南</a>。</li>
 <li>MCP、Skill、Prompt、AgentSpec 保留各自的订阅轮询。SDK 已获取的内容通过对应监听器传递，应用无需把所有回调都处理成一次额外查询。</li>
 <li>HTTP 注册的 Agent/MCP 运行端点由 SDK 维护客户端标识及心跳。保留注册使用的实例；正常退出时通过同一实例注销，再关闭 <code dir="auto">AiService</code>。取消订阅或下线资源定义不会停止业务进程。</li>
 <li>权限、参数、版本冲突、容量或迁移限制应按业务错误处理。发布超时后结果可能未知，先查询状态，不应盲目换一种传输重发；端点重连恢复不等于定义发布可以自动重试。</li>
 </ul>
 <h3 id="63-旧-a2a-与-rad-的兼容">6.3. 旧 A2A 与 RAD 的兼容</h3>
-<p>3.3 SDK 在首次可靠协商后固定当前实例使用旧 A2A 或 RAD 路由。选定旧 A2A 的实例在服务端升级后不会自动改走 RAD；需要重新创建 SDK 才重新判断。选定 RAD 后，业务或迁移错误不会使其静默退回旧 A2A。</p>
-<p>旧 A2A 与通用 Agent 注册同一资源时应避免混用发布来源。需要新 Agent 能力时，先完成服务端升级及迁移，再接入 SDK；参见 <a href="../../ai/agent-registry/" referrerpolicy="unsafe-url">Agent 管理</a>、<a href="../../ai/rad-discovery/" referrerpolicy="unsafe-url">RAD 接入指南</a>和<a href="../../../admin/upgrading/" referrerpolicy="unsafe-url">升级手册</a>。</p>
+<p>已有 A2A 应用可以继续使用原来的接口，3.3 SDK 会自动适配服务端。服务端从旧版升级后，如需使用新的行为，请重启应用或重新创建 SDK 实例。新应用直接使用 RAD 接口即可，无需手动切换模式。</p>
+<p>需要同时兼容新旧服务端的框架，可通过 <code dir="auto">AiService.getAgentDiscoveryCapability()</code> 查询是否支持 RAD，示例见 <a href="../../ai/rad-discovery/#25-%E5%85%BC%E5%AE%B9%E6%97%A7%E7%89%88%E6%9C%8D%E5%8A%A1%E7%AB%AF" referrerpolicy="unsafe-url">RAD 接入指南</a>。</p>
+<p>同一个 SDK 实例为同一 Agent 注册 A2A 地址时，使用旧 A2A 或新 RAD 的一组注册、注销接口，避免混用。使用新 RAD 接口前，确认服务端已支持 RAD 并完成相应的数据迁移，参见 <a href="../../ai/agent-registry/" referrerpolicy="unsafe-url">Agent 管理</a>和<a href="../../../admin/upgrading/" referrerpolicy="unsafe-url">升级手册</a>。</p>
 <h2 id="7-本地缓存failover-和-redo">7. 本地缓存、failover 和 redo</h2>
 <p>SDK 运行时会使用几类本地或内存数据：</p>
 
