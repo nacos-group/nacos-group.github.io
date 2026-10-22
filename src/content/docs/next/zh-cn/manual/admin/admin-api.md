@@ -3882,6 +3882,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8848/nacos
 | `appName` | `string` | 否 | 无 |
 | `configTags` | `string` | 否 | 无 |
 | `desc` | `string` | 否 | 无 |
+| `changeMessage` | `string` | 否 | 无 | 本次发布的可选说明，最多 512 个 Unicode 码点；不是配置描述。 |
 | `use` | `string` | 否 | 无 | 配置用途。 |
 | `effect` | `string` | 否 | 无 | 配置生效范围。 |
 | `schema` | `string` | 否 | 无 | 配置模式。 |
@@ -3889,6 +3890,8 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8848/nacos
 | `encryptedDataKey` | `string` | 否 | - |
 | `srcUser` | `string` | 否 | - |
 | `tag` | `string` | 否 | - |
+
+提交说明的空白处理、历史操作语义及版本适用条件见[发布操作的提交说明](../user/config/publish-query-listen.md#发布操作的提交说明)。
 
 #### 返回数据
 
@@ -3905,6 +3908,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -d 'dataId=nacos.example' \
  -d 'groupName=DEFAULT_GROUP' \
  -d 'namespaceId=public' \
  -d 'content=contentTest' \
+ --data-urlencode 'changeMessage=Update release settings' \
  -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config'
 ```
 
@@ -4567,10 +4571,13 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8848/naco
 | `pageItems`[i].`appName`     | `string` | 配置所属的appName。                     |
 | `pageItems`[i].`opType`      | `string` | 操作类型，`I`为插入、`U`为更新、`D`为删除。        |
 | `pageItems`[i].`publishType` | `string` | 发布类型，`formal`为普通发布，`gray`为beta发布。 |
+| `pageItems`[i].`changeMessage` | `string` | 所选历史记录对应操作的提交说明，可为空；不是生成历史内容快照时的说明。 |
 | `pageItems`[i].`srcIp`       | `string` | 发布的来源IP。                          |
 | `pageItems`[i].`srcUser`     | `string` | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。       |
 | `pageItems`[i].`createTime`  | `integer` | 配置创建时间。                           |
 | `pageItems`[i].`modifyTime`  | `integer` | 配置修改时间。                           |
+
+提交说明的空白处理、历史操作语义及版本适用条件见[发布操作的提交说明](../user/config/publish-query-listen.md#发布操作的提交说明)。
 
 #### 示例
 
@@ -4673,12 +4680,15 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8848/nacos
 | `appName`     | `string` | 配置所属的appName。                                                               |
 | `opType`      | `string` | 操作类型，`I`为插入、`U`为更新、`D`为删除。                                                  |
 | `publishType` | `string` | 发布类型，`formal`为普通发布，`gray`为beta发布。                                           |
+| `changeMessage` | `string` | 所选历史记录对应操作的提交说明，可为空；不是生成历史内容快照时的说明。 |
 | `srcIp`       | `string` | 发布的来源IP。                                                                    |
 | `srcUser`     | `string` | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。                                                 |
 | `createTime`  | `integer` | 配置创建时间。                                                                     |
 | `modifyTime`  | `integer` | 配置修改时间。                                                                     |
 | `grayName`    | `string` | 灰度发布规则名称, 固定为`beta`。                                                        |
 | `extInfo`     | `string` | 扩展信息，目前包括`src_user`、`type`、`c_desc`，若`publishType`为`gray`, 其中还包括`grayRule`。 |
+
+提交说明的空白处理、历史操作语义及版本适用条件见[发布操作的提交说明](../user/config/publish-query-listen.md#发布操作的提交说明)。
 
 #### 示例
 
@@ -4763,12 +4773,15 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8848/nacos
 | `appName`     | `string` | 配置所属的appName。                                                               |
 | `opType`      | `string` | 操作类型，`I`为插入、`U`为更新、`D`为删除。                                                  |
 | `publishType` | `string` | 发布类型，`formal`为普通发布，`gray`为beta发布。                                           |
+| `changeMessage` | `string` | 所选历史记录对应操作的提交说明，可为空；不是生成历史内容快照时的说明。 |
 | `srcIp`       | `string` | 发布的来源IP。                                                                    |
 | `srcUser`     | `string` | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。                                                 |
 | `createTime`  | `integer` | 配置创建时间。                                                                     |
 | `modifyTime`  | `integer` | 配置修改时间。                                                                     |
 | `grayName`    | `string` | 灰度发布规则名称, 固定为`beta`。                                                        |
 | `extInfo`     | `string` | 扩展信息，目前包括`src_user`、`type`、`c_desc`，若`publishType`为`gray`, 其中还包括`grayRule`。 |
+
+提交说明的空白处理、历史操作语义及版本适用条件见[发布操作的提交说明](../user/config/publish-query-listen.md#发布操作的提交说明)。
 
 #### 示例
 
@@ -5641,12 +5654,15 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8848/nacos
 | `appName` | `string` | 否 | 应用名称。 |
 | `configTags` | `string` | 否 | 配置标签。 |
 | `desc` | `string` | 否 | 配置描述。 |
+| `changeMessage` | `string` | 否 | 本次发布的可选说明，最多 512 个 Unicode 码点；不是配置描述。 |
 | `use` | `string` | 否 | 配置用途。 |
 | `effect` | `string` | 否 | 配置生效范围。 |
 | `schema` | `string` | 否 | 配置模式。 |
 | `type` | `string` | 否 | 配置类型。 |
 | `srcUser` | `string` | 否 | 操作用户。 |
 | `encryptedDataKey` | `string` | 否 | 加密配置的数据密钥。 |
+
+提交说明的空白处理、历史操作语义及版本适用条件见[发布操作的提交说明](../user/config/publish-query-listen.md#发布操作的提交说明)。
 
 #### 返回数据
 
@@ -5664,6 +5680,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8848/naco
   -d 'groupName=DEFAULT_GROUP' \
   -d 'dataId=example' \
   -d 'content=gray-content' \
+  --data-urlencode 'changeMessage=Validate gray release' \
   -d 'grayName=gray' \
   -d 'grayType=tagv2' \
   -d 'grayMatchRuleExp=tag=gray' \

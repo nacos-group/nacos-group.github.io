@@ -3871,6 +3871,7 @@ Requires `write` permission for the corresponding namespace.
 | `appName` | `string` | No | None | Application name. |
 | `configTags` | `string` | No | None | Config tags. |
 | `desc` | `string` | No | None | Config description. |
+| `changeMessage` | `string` | No | None | Optional message for this publish operation, up to 512 Unicode code points; separate from the configuration description. |
 | `use` | `string` | No | None | Configuration usage. |
 | `effect` | `string` | No | None | Configuration effect scope. |
 | `schema` | `string` | No | None | Configuration schema. |
@@ -3878,6 +3879,8 @@ Requires `write` permission for the corresponding namespace.
 | `encryptedDataKey` | `string` | No | - | Data key for encrypted config content. |
 | `srcUser` | `string` | No | - | Publishing user. |
 | `tag` | `string` | No | - | Config tag. |
+
+See [Publish Operation Messages](../user/config/publish-query-listen.md#publish-operation-messages) for blank handling, history semantics, and version availability.
 
 #### Response Data
 
@@ -3894,6 +3897,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -d 'dataId=nacos.example' \
  -d 'groupName=DEFAULT_GROUP' \
  -d 'namespaceId=public' \
  -d 'content=contentTest' \
+ --data-urlencode 'changeMessage=Update release settings' \
  -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config'
 ```
 
@@ -4556,10 +4560,13 @@ The response body follows the [Nacos open API unified response format](../user/o
 | `pageItems`[i].`appName`     | `string` | Application name to which the config belongs.                     |
 | `pageItems`[i].`opType`      | `string` | Operation type. `I` means insert, `U` means update, and `D` means delete.        |
 | `pageItems`[i].`publishType` | `string` | Publish type. `formal` means normal publishing, and `gray` means beta publishing. |
+| `pageItems`[i].`changeMessage` | `string` | Nullable message for the operation represented by the selected history record, not the operation that originally produced its content snapshot. |
 | `pageItems`[i].`srcIp`       | `string` | Source IP of the publishing operation.                          |
 | `pageItems`[i].`srcUser`     | `string` | Publishing user. This exists only when authentication is enabled and the user publishes the config after logging in.       |
 | `pageItems`[i].`createTime`  | `integer` | Config creation time.                           |
 | `pageItems`[i].`modifyTime`  | `integer` | Config modification time.                           |
+
+See [Publish Operation Messages](../user/config/publish-query-listen.md#publish-operation-messages) for blank handling, history semantics, and version availability.
 
 #### Examples
 
@@ -4662,12 +4669,15 @@ The response body follows the [Nacos open API unified response format](../user/o
 | `appName`     | `string` | Application name to which the config belongs.                                                               |
 | `opType`      | `string` | Operation type. `I` means insert, `U` means update, and `D` means delete.                                                  |
 | `publishType` | `string` | Publish type. `formal` means normal publishing, and `gray` means beta publishing.                                           |
+| `changeMessage` | `string` | Nullable message for the operation represented by the selected history record, not the operation that originally produced its content snapshot. |
 | `srcIp`       | `string` | Source IP of the publishing operation.                                                                    |
 | `srcUser`     | `string` | Publishing user. This exists only when authentication is enabled and the user publishes the config after logging in.                                                 |
 | `createTime`  | `integer` | Config creation time.                                                                     |
 | `modifyTime`  | `integer` | Config modification time.                                                                     |
 | `grayName`    | `string` | Gray release rule name. Fixed value: `beta`.                                                        |
 | `extInfo`     | `string` | Extended information. It currently includes `src_user`, `type`, and `c_desc`; when `publishType` is `gray`, it also includes `grayRule`. |
+
+See [Publish Operation Messages](../user/config/publish-query-listen.md#publish-operation-messages) for blank handling, history semantics, and version availability.
 
 #### Examples
 
@@ -4752,12 +4762,15 @@ The response body follows the [Nacos open API unified response format](../user/o
 | `appName`     | `string` | Application name to which the config belongs.                                                               |
 | `opType`      | `string` | Operation type. `I` means insert, `U` means update, and `D` means delete.                                                  |
 | `publishType` | `string` | Publish type. `formal` means normal publishing, and `gray` means beta publishing.                                           |
+| `changeMessage` | `string` | Nullable message for the operation represented by the selected history record, not the operation that originally produced its content snapshot. |
 | `srcIp`       | `string` | Source IP of the publishing operation.                                                                    |
 | `srcUser`     | `string` | Publishing user. This exists only when authentication is enabled and the user publishes the config after logging in.                                                 |
 | `createTime`  | `integer` | Config creation time.                                                                     |
 | `modifyTime`  | `integer` | Config modification time.                                                                     |
 | `grayName`    | `string` | Gray release rule name. Fixed value: `beta`.                                                        |
 | `extInfo`     | `string` | Extended information. It currently includes `src_user`, `type`, and `c_desc`; when `publishType` is `gray`, it also includes `grayRule`. |
+
+See [Publish Operation Messages](../user/config/publish-query-listen.md#publish-operation-messages) for blank handling, history semantics, and version availability.
 
 #### Examples
 
@@ -5630,12 +5643,15 @@ Administrator permissions required.
 | `appName` | `string` | No | Application name. |
 | `configTags` | `string` | No | Configuration tags. |
 | `desc` | `string` | No | Configuration description. |
+| `changeMessage` | `string` | No | Optional message for this publish operation, up to 512 Unicode code points; separate from the configuration description. |
 | `use` | `string` | No | Configuration usage. |
 | `effect` | `string` | No | Configuration effect scope. |
 | `schema` | `string` | No | Configuration schema. |
 | `type` | `string` | No | Configuration type. |
 | `srcUser` | `string` | No | Operator username. |
 | `encryptedDataKey` | `string` | No | Data key for encrypted configuration content. |
+
+See [Publish Operation Messages](../user/config/publish-query-listen.md#publish-operation-messages) for blank handling, history semantics, and version availability.
 
 #### Response Data
 
@@ -5653,6 +5669,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8848/naco
   -d 'groupName=DEFAULT_GROUP' \
   -d 'dataId=example' \
   -d 'content=gray-content' \
+  --data-urlencode 'changeMessage=Validate gray release' \
   -d 'grayName=gray' \
   -d 'grayType=tagv2' \
   -d 'grayMatchRuleExp=tag=gray' \

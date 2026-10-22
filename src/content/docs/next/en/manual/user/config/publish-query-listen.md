@@ -24,6 +24,24 @@ Choose the entry point by role:
 
 Business applications should not usually be responsible for publishing config. This reduces the risk of accidental publish, permission misuse, and batch operation mistakes.
 
+### Publish Operation Messages
+
+:::note[Pending feature]
+The operation-message feature described below is proposed in [Nacos PR #15914](https://github.com/alibaba/nacos/pull/15914). Before using it, confirm that your server, console, and Maintainer SDK versions include the change. This page does not imply support in existing releases.
+:::
+
+Formal, CAS, and gray/Beta publication can accept an optional `changeMessage` to explain the current operation. It is independent of the configuration description `desc` and is neither configuration content nor a persistent configuration property.
+
+- The limit is 512 Unicode code points, not bytes or Java `String.length()` units.
+- Omitted, empty, or whitespace-only input is treated as absent. Other text is preserved, including surrounding whitespace and line breaks.
+- Oversized input rejects the publish request. A CAS conflict does not create a history record carrying the attempted message.
+- History list, detail, and previous-version queries return the selected record's `changeMessage`. Old records and operations without a message return an absent value.
+- An update history record stores the content snapshot from before the change, while its message belongs to the operation that replaced that snapshot. Do not interpret it as the message that originally produced the stored content.
+- Rollback publication takes a fresh message rather than copying the target record's message. Rolling back an insert deletes the configuration and has no publish-message input.
+- Messages are not sent to configuration listeners or copied by import, export, clone, or metadata-only updates.
+
+No database schema upgrade is needed. Existing callers may omit the field. Upgrade all serving nodes before relying on persistence, because older servers may ignore it. The ordinary Client `ConfigService` has no new message parameter; use [Admin API](../../admin/admin-api.md), [Maintainer SDK](../../admin/maintainer-sdk.md), or the console.
+
 ## Query Config
 
 Runtime query needs config identity fields:
