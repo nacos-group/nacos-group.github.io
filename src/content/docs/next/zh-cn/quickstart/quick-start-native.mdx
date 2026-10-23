@@ -1,15 +1,13 @@
 ---
 title: Nacos Native 快速开始
-keywords: [Nacos,快速开始]
-description: 这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。
+keywords: [Nacos, Native Image, GraalVM, 快速开始]
+description: 从 Nacos 3.3.0 源码构建和运行 Native Image，配置插件、数据库及运行环境。
 sidebar:
     order: 4
     hidden: true
 ---
 
-import { Tabs, TabItem } from '@astrojs/starlight/components';
-
-# Nacos 快速开始
+# Nacos Native 快速开始
 
 这个快速开始手册是帮忙您快速在您的电脑上，下载、安装并使用 Nacos。
 
@@ -18,53 +16,217 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 - Nacos定义为一个IDC内部应用组件，并非面向公网环境的产品，建议在内部隔离网络环境中部署，**强烈不建议**部署在公共网络环境。
 :::
 
-## 环境需求
-Nacos Native 是 Nacos 源码基于 GraalVM 打包而成，其运行不再依赖系统中单独的 JDK 程序。Nacos Native 目前提供了 Linux(GNU)、MacOS 三类操作系统所对应的可执行程序，本文说明对应的 Java Nacos 版本为 2.4.0，可执行程序可以在对应的 release 页面下进行下载。推荐使用完备（包含完备的 libstdc++ 库）的 64bit 的操作系统来运行 Nacos Native。
+Nacos 从 **3.3.0** 开始支持本文介绍的 Native 构建与运行方式。本文以 Linux/macOS 上的**单机、Server 与 Console 合并部署、外置 MySQL**为例，从源码生成适用于目标平台的可执行程序。
 
-## 下载安装包
-在对应页面下载得到程序包后进行解压，解压后检视文件是否完备：
+普通 JDK 部署请参考[标准快速开始](./quick-start.mdx)。
 
-1. 在 Linux 操作系统中应当包含 nacos-server 二进制程序、libinstrument.so 链接文件与相关其他配置。
-2. 在 MacOS 操作系统中应当包含 nacos-server 二进制程序与相关其他配置。
+## 1. 准备构建环境
 
-对于其他操作系统未发布的 Nacos Native 版本，您可以选择在该操作系统上手动进行源码编译得到 Nacos Native 二进制程序包。
+- 使用 Nacos 3.3.0 源码，在源码根目录执行下文命令。
+- 安装 Maven；将 `JAVA_HOME` 指向包含 `native-image` 的 **GraalVM 25+**，以满足 Spring Boot 4 Native 工具链要求。
+- 安装本机 C/C++ 编译工具及系统库。Ubuntu 可安装 `build-essential`、`zlib1g-dev`；macOS 使用 Xcode Command Line Tools。其他平台依赖见 [GraalVM Native Image 环境要求](https://www.graalvm.org/latest/reference-manual/native-image/#prerequisites)。
+- Native 编译进程的堆上限默认为 `8g`，可通过 `nacos.native.build.heap` 调整。
 
-## 启动服务器
-Nacos Native 的运行建议至少在 1C2G 60G 的机器配置下运行。对于 Linux/Unix/Mac 操作系统，启动命令为：
-
-```shell
-# standalone 代表着单机模式运行，非集群模式
-sh startup.sh -m standalone
+```bash
+export JAVA_HOME='/path/to/graalvm-25'
+export PATH="$JAVA_HOME/bin:$PATH"
+java -version
+native-image --version
+mvn -version
 ```
 
-若要启动 Nacos Native 集群，则需要在相应的 `conf` 文件夹位置下包含对应的 `cluster.conf` 文件，该步骤与 Java Nacos 保持一致，在启动 Nacos Native 集群后会自动扫描并获取集群 IP。
+请在与运行环境匹配的操作系统、CPU 架构和系统库环境中构建。本文使用 Linux/macOS 启动脚本。
 
-## 关闭服务器
-对于 Linux/Unix/Mac 操作系统，关闭命令为：
+## 2. 构建 Native 发行包
 
-```shell
-sh shutdown.sh
+### 2.1. 选择构建参数和插件
+
+构建时需要选定数据库类型，以纳入对应组件；数据库连接、账号密码及鉴权配置在第 3 节部署时填写。
+
+在源码目录旁创建工作目录，保存构建参数、额外插件和 reachability metadata，避免被 Maven `clean` 删除：
+
+```bash
+export NACOS_VERSION='3.3.0'
+export NACOS_NATIVE_WORK="$(cd .. && pwd)/nacos-native-work"
+mkdir -p "$NACOS_NATIVE_WORK/plugins" "$NACOS_NATIVE_WORK/metadata"
+printf '%s\n' 'nacos.plugin.datasource-dialect.type=mysql' > "$NACOS_NATIVE_WORK/build.properties"
 ```
 
-## 日志检视
-以 Linux/Unix 操作系统为例，Nacos Native 的运行日志会被记录在 `/root/nacos/logs` 目录中，其日志结构与 Java Nacos 保持一致。
+`native` profile 会引入默认插件。需要自定义 SPI 插件、额外 JDBC 驱动时，将其 JAR **及全部依赖**放到 `$NACOS_NATIVE_WORK/plugins`；Maven runtime 依赖也可以提供这些实现。使用外置 MySQL、PostgreSQL 或自定义插件时，还需准备对应的 Native 元数据。
 
-## 构建原生Nacos
-Nacos Native 提供了不同操作系统对应的构建配置，通过 Maven 可以快速构建对应操作系统下的原生 Nacos 程序。参考构建指令进行构建：
+插件自带的 `META-INF/native-image` 元数据会参与编译；额外准备的元数据放入 `$NACOS_NATIVE_WORK/metadata`。构建前确认元数据覆盖所选插件和驱动。若需要补充反射、JNI 或资源等元数据，先按[附录](#附录补充-native-元数据)采集，再执行下面的构建命令。
 
-```shell
-# 在 win x64 环境下构建 Native Nacos
-mvn clean install -DskipTests=true -Pnative -Pnative-win64
-# 在 macos x86_64 环境下构建 Native Nacos
-mvn clean install -DskipTests=true -Pnative -Pnative-osx-x86_64
-# 在 linux x64 环境下构建 Native Nacos
-mvn clean install -DskipTests=true -Pnative -Pnative-linux64
+### 2.2. 执行构建
+
+在源码根目录执行：
+
+```bash
+mvn -B '-Pnative,release-native,!dev' -pl distribution -am clean package \
+  -DskipTests \
+  -Dnacos.native.config="$NACOS_NATIVE_WORK/build.properties" \
+  -Dnacos.native.metadata="$NACOS_NATIVE_WORK/metadata" \
+  -Dnacos.native.plugins="$NACOS_NATIVE_WORK/plugins" \
+  -Dnacos.native.deployment=merged \
+  -Dnacos.native.standalone=true
 ```
 
-其中 `-Pnative` 配置为基本 native 构建配置，`-Pnative-<os type>` 为操作系统类型，改配置主要引导 rocksdb 库能够正确地被 Nacos Native 打包。值得注意的是，虽然 Nacos Native 提供了 musl 类型的打包配置，但 GraalVM 本身仍然需要在支持 GNU 的操作系统下进行编译，因此与 musl 相关的编译不推荐使用。
+同时启用 `native` 和 `release-native`，完成 Native 编译和发行包打包。示例中的 `-DskipTests` 用于跳过单元测试。
 
-编译成功后，相关文件会发布在 `/console/target` 目录下，根据“下载安装包”中对应的文件完备性检视引导取用编译文件即可。
+| 构建参数 | 默认值 | 用途 |
+| --- | --- | --- |
+| `nacos.native.config` | `distribution/conf/application.properties` | AOT 构建配置文件。 |
+| `nacos.native.deployment` | `merged` | `merged`、`server` 或 `console`。 |
+| `nacos.native.standalone` | `false` | 是否采用单机模式。 |
+| `nacos.native.embedded-storage` | `false` | 显式选择嵌入式存储；Derby 配置见第 6 节。 |
+| `nacos.native.plugins` | `bootstrap/target/native-plugins` | 额外插件、驱动及依赖目录。 |
+| `nacos.native.metadata` | `bootstrap/target/native-metadata` | 额外 Native 元数据目录。 |
+| `nacos.native.derby.experimental` | `false` | 启用 Derby 实验参数，工具链要求见第 6 节。 |
+| `nacos.native.build.heap` | `8g` | Native 编译进程的堆上限。 |
+| `nacos.native.build.parallelism` | `2` | Native 编译并行度。 |
 
-## 相关项目
+构建完成后可以找到：
 
-* [Nacos](https://github.com/alibaba/nacos)
+- 可执行程序：`bootstrap/target/native/nacos-server`（Windows 为 `.exe`）。
+- 发行包：`distribution/target/nacos-server-<version>-native-<os>-<arch>.tar.gz`，同时生成 ZIP 包。例如 macOS ARM64 的后缀为 `native-macos-aarch64`。
+
+发行包包含程序、配套本机库、配置模板、启动脚本和 AOT 结构配置记录。
+
+## 3. 准备数据库和运行配置
+
+解压实际生成的发行包。例如，在 macOS ARM64 上：
+
+```bash
+mkdir -p "$NACOS_NATIVE_WORK/run"
+tar -xzf "distribution/target/nacos-server-${NACOS_VERSION}-native-macos-aarch64.tar.gz" \
+  -C "$NACOS_NATIVE_WORK/run"
+cd "$NACOS_NATIVE_WORK/run/nacos"
+```
+
+Linux 用户将文件名后缀换为实际构建的 `native-linux-<arch>`。以下配置均修改解压目录中的 `conf/application.properties`。
+
+### 3.1. 准备 MySQL
+
+按[数据源插件指南](../plugin/datasource-plugin.md)创建 MySQL 数据库并导入对应版本的 schema。填写数据库连接信息，将示例中的地址、账号和密码替换为实际值：
+
+```properties
+nacos.plugin.datasource-dialect.type=mysql
+nacos.plugin.datasource.db.num=1
+nacos.plugin.datasource.db.url.0=jdbc:mysql://127.0.0.1:3306/nacos_native_test?characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+nacos.plugin.datasource.db.user=nacos_native_test
+nacos.plugin.datasource.db.password=<test-database-password>
+```
+
+数据库类型应与构建时选择的 MySQL 一致；其他需要保持一致的配置见第 5 节。
+
+### 3.2. 配置鉴权
+
+```properties
+nacos.core.auth.server.identity.key=native-test
+nacos.core.auth.server.identity.value=<test-server-identity>
+nacos.plugin.auth.nacos.token.secret.key=<base64-token-secret>
+```
+
+Nacos 3.3 默认开启鉴权，使用默认鉴权插件时，请填写上面的节点身份和 token 签名密钥：
+
+- token 签名密钥用于签发和校验登录 token，必须是有效的 Base64 字符串，解码后不少于 **32 字节**。可用 `openssl rand -base64 32` 随机生成，也可自行生成符合要求的密钥，填入 `<base64-token-secret>`。
+- 节点身份用于服务端之间的通信，`nacos.core.auth.server.identity.key` 和 `nacos.core.auth.server.identity.value` 均需为自定义的非空字符串。示例 key 为 `native-test`；`<test-server-identity>` 可自行设置，也可用 `openssl rand -hex 16` 随机生成。
+
+同一集群各节点使用相同的密钥和节点身份，不同部署独立生成。
+
+更多配置说明见[鉴权手册](../manual/admin/auth.mdx)。
+
+## 4. 启动、验证和停止
+
+### 4.1. 启动 Native
+
+在解压后的 Nacos 目录执行：
+
+```bash
+NACOS_NATIVE_OPTS='-Xmx1g' bash bin/startup-native.sh
+tail -f logs/startup.log
+```
+
+`startup-native.sh` 直接运行 Native 程序，无需 `JAVA_HOME`；启动前请完成第 3.2 节的鉴权配置。`NACOS_NATIVE_OPTS` 用于传入以空格分隔的 Native VM 参数。脚本默认采用构建时的部署和功能模式。
+
+启动输出位于安装目录的 `logs/startup.log`，其他日志也位于该目录的 `logs/` 下。
+
+### 4.2. 初始化管理员并验证
+
+确认 Native 启动成功后，访问 `http://127.0.0.1:8080`，首次使用时按页面提示初始化管理员密码。随后按[标准快速开始的验证步骤](./quick-start.mdx#3验证nacos服务是否启动成功)登录获取 `accessToken`，验证配置发布与读取、服务注册与发现。若数据库中已有管理员账号，直接使用该账号登录。
+
+### 4.3. 停止 Native
+
+在本机只运行一个 Nacos 测试进程时，可使用发行包的停止脚本：
+
+```bash
+bash bin/shutdown.sh
+```
+
+该脚本按 Nacos 进程标记查找进程；同一主机运行多个实例时，应由进程管理工具向目标实例发送 `SIGTERM`，避免停止其他实例。
+
+## 5. 哪些配置需要重新构建
+
+更改配置时，按下表决定是否需要重新构建：
+
+| 配置变化 | 处理方式 |
+| --- | --- |
+| `merged` / `server` / `console`，单机 / 集群，嵌入式 / 外置存储，数据库方言 | 按新配置重新生成 AOT 并构建 Native。集群还需准备相应的 `conf/cluster.conf`。 |
+| 功能模式、Spring profiles、MCP/Skill/ARD 等协议开关、资源搜索开关 | 构建时按需开启，运行时保持一致；变更后重新构建。 |
+| SPI 插件、JDBC 驱动、依赖或其他影响 Spring 组件选择的配置 | 重新准备依赖和元数据，再构建。 |
+| 服务地址、端口、数据库连接地址、账号密码、鉴权密钥、日志目录 | 可在运行环境配置，无需仅因这些值变化而重新构建。 |
+
+## 6. 使用嵌入式 Derby
+
+在 Native Server 中使用 Derby，需要 GraalVM 的实验性 `RuntimeClassLoading` 能力。使用支持该能力的 GraalVM，在第 2.2 节构建命令中增加 `-Dnacos.native.derby.experimental=true`，并将构建和运行配置中的 `nacos.plugin.datasource-dialect.type` 设为 `derby`。
+
+已在 **macOS ARM64、GraalVM CE `25.4.4.1.1`、单机合并部署**的环境中验证可用。
+
+## 7. 自行构建 Docker 镜像
+
+Nacos 暂不提供官方 Native Docker 镜像。Native 的插件组合在构建时确定，新增或升级插件需要重新构建 Native 程序和镜像。
+
+可将所需默认插件、自定义插件、JDBC 驱动及依赖纳入上述构建，再用生成的可执行程序和配套文件制作适合目标平台的 Docker 镜像。
+
+制作镜像时保留配套本机库、配置和 AOT 结构配置记录，基础镜像需提供匹配的系统库；配置及凭据在部署时注入。`startup-native.sh` 会后台启动进程，在容器中应使用能保持前台进程并正确转发终止信号的入口。
+
+## 8. 常见问题
+
+| 现象 | 检查方式 |
+| --- | --- |
+| 提示 Native 程序或 AOT 记录缺失 | 按第 2.2 节完成 Native 编译和打包，使用完整的 `release-native` 发行包。 |
+| 启动报告结构配置不匹配 | 对照第 5 节检查配置；需要改变部署、数据库或协议时重新构建。 |
+| 缺少反射、JNI 或资源注册 | 检查插件依赖和元数据；采集失败路径及持久化重启路径后重建。 |
+| Derby SQL 执行失败或提示运行时类加载不支持 | 按第 6 节检查 GraalVM 的 `RuntimeClassLoading` 能力及 `nacos.native.derby.experimental` 构建参数。 |
+| 程序无法执行或缺少动态库 | 核对操作系统、CPU 架构、系统库及发行包中的配套本机库。 |
+| 登录或业务接口鉴权失败 | 检查运行配置、管理员初始化、账号权限及 token 有效期，见[鉴权手册](../manual/admin/auth.mdx)。 |
+
+## 附录：补充 Native 元数据
+
+所选插件或驱动需要补充元数据时，使用 GraalVM tracing agent 临时运行 JVM 程序，记录 Native 编译所需的反射、JNI 和资源访问。采集完成后停止 JVM，再返回第 2.2 节构建 Native。
+
+完成第 1、2.1 节的构建环境、工作目录和插件准备后，在源码根目录生成用于采集的 JVM 包：
+
+```bash
+mvn -B '-Prelease-nacos,!dev' clean install -DskipTests
+mkdir -p "$NACOS_NATIVE_WORK/jvm"
+tar -xzf "distribution/target/nacos-server-${NACOS_VERSION}.tar.gz" -C "$NACOS_NATIVE_WORK/jvm"
+```
+
+采集过程需要实际运行 Nacos。按第 3.1、3.2 节准备独立的测试数据库和鉴权凭据，填写到 `$NACOS_NATIVE_WORK/jvm/nacos/conf/application.properties`，并保持数据库类型、插件和功能开关与目标 Native 构建一致。随后启动采集：
+
+```bash
+"$JAVA_HOME/bin/java" \
+  "-agentlib:native-image-agent=config-output-dir=$NACOS_NATIVE_WORK/metadata" \
+  -Dnacos.standalone=true -Dnacos.deployment.type=merged \
+  "-Dnacos.home=$NACOS_NATIVE_WORK/jvm/nacos" \
+  "-Dloader.path=$NACOS_NATIVE_WORK/jvm/nacos/plugins,$NACOS_NATIVE_WORK/plugins" \
+  -jar "$NACOS_NATIVE_WORK/jvm/nacos/target/nacos-server.jar" \
+  "--spring.config.additional-location=file:$NACOS_NATIVE_WORK/jvm/nacos/conf/" \
+  "--logging.config=$NACOS_NATIVE_WORK/jvm/nacos/conf/nacos-logback.xml"
+```
+
+测试 JVM 启动后，在另一个终端按[标准快速开始的验证步骤](./quick-start.mdx#3验证nacos服务是否启动成功)初始化测试账号并执行登录、配置和服务操作，通过 SDK 执行所需的 gRPC 调用；启用 AI 或自定义插件时也要执行对应功能。这些操作用于让采集覆盖实际使用路径。
+
+完成后用 `Ctrl+C` 正常停止采集进程。将命令中的 `config-output-dir` 改为 `config-merge-dir`，保留测试数据再次启动并验证读取，合并重启后的路径；再次停止进程后，检查生成的元数据，再返回第 2.2 节。
+
+工具用法见 [GraalVM tracing agent 文档](https://www.graalvm.org/latest/reference-manual/native-image/metadata/AutomaticMetadataCollection/)；JVM AOT 采集步骤见源码中的 `bootstrap/README-AOT.md`。
