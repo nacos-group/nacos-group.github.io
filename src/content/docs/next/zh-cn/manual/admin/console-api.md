@@ -56,6 +56,8 @@ Console API 默认开启鉴权。除文中标记为公开的接口外，调用�
 
 Nacos 3.X 的控制台 API 也提供了Swagger风格的文档，您可以通过访问[Nacos Swagger控制台 API](/swagger/console/)查看。
 
+类型 `map<string, any>` 表示键为字符串、值可以是任意 JSON 类型（字符串、数字、布尔值、对象、数组或 `null`）。明确标注值类型的映射，例如 `map<string, string>`，仍须遵守其值类型约束。
+
 ## 1. Nacos 基础控制台API
 
 基础控制台API提供了Nacos 集群的基础信息，例如集群信息、命名空间信息等。
@@ -88,29 +90,31 @@ Nacos 3.X 的控制台 API 也提供了Swagger风格的文档，您可以通过�
 
 #### 返回数据
 
+直接返回 JSON 对象 `map<string, string>`，不使用 `Result` 包装。开关和数字也以字符串返回；未配置的 `function_mode` 可以为 `null`。
+
 | 参数名                           | 参数类型      | 描述                                                                        |
 |-------------------------------|-----------|---------------------------------------------------------------------------|
 | version                       | `string` | Nacos集群的版本号，例如`3.0.0`                                                     |
 | startup_mode                  | `string` | Nacos集群的模式，例如`standalone`、`cluster`                                       |
-| server_port                   | `integer` | Nacos集群的主端口，例如`8848`                                                      |
+| server_port                   | `string` | Nacos集群的主端口，例如`"8848"`。 |
 | function_mode                 | `string` | Nacos集群的功能模式，例如`config`、`naming`、`all`, 若为`null`时，相当于`all`                |
 | datasource_platform           | `string` | Nacos集群的数据源类型，例如`mysql`、`derby`等，若为``时，说明使用默认数据源类型                        |
-| console_ui_enabled            | `boolean` | Nacos控制台UI是否启用                                                            |
-| auth_enabled                  | `boolean` | Nacos是否启用鉴权                                                               |
-| auth_admin_request            | `boolean` | Nacos是否需要初始化admin用户`nacos`                                                |
+| console_ui_enabled            | `string` | Nacos控制台UI是否启用，值为 `"true"` 或 `"false"`。 |
+| auth_enabled                  | `string` | Nacos是否启用鉴权，值为 `"true"` 或 `"false"`。 |
+| auth_admin_request            | `string` | Nacos是否需要初始化admin用户`nacos`，值为 `"true"` 或 `"false"`。 |
 | auth_system_type              | `string` | Nacos鉴权的插件类型，例如`nacos`等，若为``时，说明使用默认鉴权系统类型                                |
-| login_page_enabled            | `boolean` | Nacos控制台是否启用登录页                                                           |
-| plugin_datasource_log_enabled | `boolean` | Nacos是否启用打印数据源访问Debug日志                                                   |
-| config_retention_days         | `integer` | Nacos集群的配置历史数据保留天数，单位为天                                                   | 
-| isManageCapacity              | `boolean` | Nacos是否启用配置容量限制检查，默认为`true`，开启时仅会统计当前配置的使用量，在超过限额时不会拒绝请求。                 |
-| isCapacityLimitCheck          | `boolean` | Nacos是否启用配置容量限制检查，默认为`false`，开启后当配置容量超出限额时，会拒绝配置的变更请求。                    |
-| defaultMaxSize                | `integer` | Nacos集群的配置文件大小限制，单位为Byte，默认为`102400`，即100KB。                              |
-| defaultGroupQuota             | `integer` | Nacos集群的单个分组（GroupName）下的配置文件数量限额，默认为`200`。                               |
-| defaultClusterQuota           | `integer` | Nacos集群的整个集群配置文件数量限额，默认为`100000`。                                         |
-| isHealthCheck                 | `boolean` | Nacos是否启用naming模块健康检查，默认为`true`，开启后当注册到nacos上的服务实例出现异常时，Nacos会主动剔除该服务端节点。 |
-| ~~maxContent~~                | `integer` | 已废弃，请使用`defaultMaxSize`。                                                  |
-| ~~defaultMaxAggrSize~~        | `integer` | 未实际使用，已废弃                                                                 |
-| ~~defaultMaxAggrCount~~       | `integer` | 未实际使用，已废弃                                                                 |
+| login_page_enabled            | `string` | Nacos控制台是否启用登录页，值为 `"true"` 或 `"false"`。 |
+| plugin_datasource_log_enabled | `string` | Nacos是否启用打印数据源访问Debug日志，值为 `"true"` 或 `"false"`。 |
+| config_retention_days         | `string` | Nacos集群的配置历史数据保留天数，单位为天。 |
+| isManageCapacity              | `string` | Nacos是否启用配置容量限制检查，默认为`"true"`，开启时仅会统计当前配置的使用量，在超过限额时不会拒绝请求。 |
+| isCapacityLimitCheck          | `string` | Nacos是否启用配置容量限制检查，默认为`"false"`，开启后当配置容量超出限额时，会拒绝配置的变更请求。 |
+| defaultMaxSize                | `string` | Nacos集群的配置文件大小限制，单位为Byte，默认为`"102400"`，即100KB。 |
+| defaultGroupQuota             | `string` | Nacos集群的单个分组（GroupName）下的配置文件数量限额，默认为`"200"`。 |
+| defaultClusterQuota           | `string` | Nacos集群的整个集群配置文件数量限额，默认为`"100000"`。 |
+| isHealthCheck                 | `string` | Nacos是否启用naming模块健康检查，默认为`"true"`，开启后当注册到nacos上的服务实例出现异常时，Nacos会主动剔除该服务端节点。 |
+| ~~maxContent~~                | `string` | 已废弃，请使用`defaultMaxSize`。 |
+| ~~defaultMaxAggrSize~~        | `string` | 未实际使用，已废弃。 |
+| ~~defaultMaxAggrCount~~       | `string` | 未实际使用，已废弃。 |
 
 #### 示例
 
@@ -395,6 +399,13 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/health/readiness'
 
 | 参数名 | 参数类型 | 描述 |
 |-----|------|----|
+| `data` | `array<NacosMember>` | 集群节点列表。 |
+| `data[].ip` | `string` | 节点 IP。 |
+| `data[].port` | `integer` | 节点主端口。 |
+| `data[].state` | `string` | 节点状态：`STARTING`、`UP`、`SUSPICIOUS`、`DOWN` 或 `ISOLATION`。 |
+| `data[].address` | `string` | 节点地址。 |
+| `data[].extendInfo` | `map<string, any>` | 节点扩展信息；值可以是任意 JSON 类型，例如版本字符串、端口数字、布尔开关或嵌套对象。 |
+| `data[].abilities` | `ServerAbilities` | 节点支持的功能能力。 |
 
 #### 示例
 
@@ -576,6 +587,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 
 | 参数名                 | 参数类型      | 描述                                           |
 |---------------------|-----------|----------------------------------------------|
+| `data` | `Namespace` | 命名空间详情。 |
 | `namespace`         | `string` | 命名空间id                                       |
 | `namespaceShowName` | `string` | 命名空间名称                                       |
 | `namespaceDesc`     | `string` | 命名空间描述                                       |
@@ -861,6 +873,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
+| data | `PluginDetailVO` | 插件详情。 |
 | data.pluginId | `string` | 插件唯一标识。 |
 | data.pluginType | `string` | 插件类型。 |
 | data.pluginName | `string` | 插件名称。 |
@@ -1099,7 +1112,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 | `pluginType` | `string` | **是** | 插件类型。 |
 | `pluginName` | `string` | **是** | 插件名称。 |
 | `enabled` | `boolean` | **是** | 是否启用，`true` 启用、`false` 禁用。 |
-| `localOnly` | `boolean` | 否 | 是否仅更新本地节点插件状态。 |
+| `localOnly` | `boolean` | 否 | 是否仅更新本地节点插件状态，默认为 `false`。 |
 
 #### 返回数据
 
@@ -1431,7 +1444,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3
 | `pageSize` | `integer` | 否 | 每页条数，默认为 `100`，必须为正整数。 |
 | `dataId`      | `string` | **是** | 配置ID，当`search`为`blur`时，可使用`*`进行模糊搜索，例如`test*`，当值为``或缺失时，查询全部符合`groupName`条件的配置。 |
 | `groupName`   | `string` | **是** | 配置分组，当`search`为`blur`时，可使用`*`进行模糊搜索，例如`test*`，当值为``或缺失时，查询全部符合`dataId`条件的配置。    |
-| `search`      | `string` | 否  | blur or accurate                            |
+| `search`      | `string` | 否  | 搜索模式：`blur`（模糊）或 `accurate`（精确）。 |
 | `namespaceId` | `string` | 否  | 命名空间ID，默认值为`public`。                                                            |
 | `appName`     | `string` | 否  | 配置所属应用名称，默认为空，传入时过滤归属于此应用的配置，值为空时查询所有应用的配置。                                     |
 | `configTags`  | `string` | 否  | 配置标签，多个标签之间用英文逗号分隔，默认为空，传入时过滤拥有此tag的配置，值为空时查询所有tag的配置。                          |
@@ -1446,7 +1459,8 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3
 | `totalCount`                 | `integer` | 符合规则的配置总数。                 |
 | `pagesAvailable`             | `integer` | 可用页码总数。                    |
 | `pageNumber`                 | `integer` | 当前页码。                      |
-| `pageItems`                  | `array`   | 符合规则的配置列表。                 |
+| `data`                       | `Page<ConfigBasicInfo>` | 配置分页结果。 |
+| `pageItems`                  | `array<ConfigBasicInfo>` | 符合规则的配置列表。 |
 | `pageItems`[i].`id`          | `string` | 配置在存储系统中的ID，一般为Long类型的字符串。 |
 | `pageItems`[i].`dataId`      | `string` | 配置ID。                      |
 | `pageItems`[i].`groupName`   | `string` | 配置分组。                      |
@@ -1535,7 +1549,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 |---------------|-----------|----|---------------------------------------------------------------------------------|
 | `pageNo` | `integer` | 否 | 页码，默认为 `1`，必须为正整数。 |
 | `pageSize` | `integer` | 否 | 每页条数，默认为 `100`，必须为正整数。 |
-| `search`      | `string` | 否  | blur or accurate                            |
+| `search`      | `string` | 否  | 搜索模式：`blur`（模糊）或 `accurate`（精确），默认为 `blur`。 |
 | `namespaceId` | `string` | 否  | 命名空间ID，默认值为`public`。                                                            |
 | `dataId`      | `string` | 否  | 配置ID，当`search`为`blur`时，可使用`*`进行模糊搜索，例如`test*`，当值为``或缺失时，查询全部符合`groupName`条件的配置。 |
 | `groupName`   | `string` | 否  | 配置分组，当`search`为`blur`时，可使用`*`进行模糊搜索，例如`test*`，当值为``或缺失时，查询全部符合`dataId`条件的配置。    |
@@ -1553,7 +1567,8 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 | `totalCount`                 | `integer` | 符合规则的配置总数。                 |
 | `pagesAvailable`             | `integer` | 可用页码总数。                    |
 | `pageNumber`                 | `integer` | 当前页码。                      |
-| `pageItems`                  | `array`   | 符合规则的配置列表。                 |
+| `data`                       | `Page<ConfigBasicInfo>` | 配置分页结果。 |
+| `pageItems`                  | `array<ConfigBasicInfo>` | 符合规则的配置列表。 |
 | `pageItems`[i].`id`          | `string` | 配置在存储系统中的ID，一般为Long类型的字符串。 |
 | `pageItems`[i].`dataId`      | `string` | 配置ID。                      |
 | `pageItems`[i].`groupName`   | `string` | 配置分组。                      |
@@ -1636,6 +1651,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 
 | 参数名               | 参数类型                  | 描述                                    |
 |-------------------|-----------------------|---------------------------------------|
+| `data` | `ConfigListenerInfo` | 配置订阅信息。 |
 | `queryType`       | `string` | 订阅者查询类型，该接口为`config`。                 |
 | `listenersStatus` | `map<string, string>` | 订阅者列表，key为订阅者IP，value为订阅者订阅当前配置的MD5值。 |
 
@@ -1699,6 +1715,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 
 | 参数名               | 参数类型                  | 描述                                                                            |
 |-------------------|-----------------------|-------------------------------------------------------------------------------|
+| `data` | `ConfigListenerInfo` | 配置订阅信息。 |
 | `queryType`       | `string` | 订阅者查询类型，该接口为`ip`。                                                             |
 | `listenersStatus` | `map<string, string>` | 订阅者列表，key为订阅的配置信息，格式为`dataId`+`groupName`+`namespaceId`，value为订阅者订阅当前配置的MD5值。 |
 
@@ -1761,15 +1778,14 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 
 #### 返回数据
 
-导出成功是为byte数组的file
-attachment模式，导出失败时返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
+导出成功返回 ZIP 文件的二进制内容（`string`，`format: binary`），以附件形式下载，不使用 `Result` JSON 包装。导出失败时返回体遵循[Nacos open API 统一返回体格式](../user/overview/api-overview.md#32-http-api-统一返回体格式)。
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET "http://127.0.0.1:8080/v3/console/cs/config/export2?dataId=&groupId=&ids=" --output ~/test.zip
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET "http://127.0.0.1:8080/v3/console/cs/config/export2?dataId=&groupName=&ids=" --output ~/test.zip
 ```
 
 * 返回示例
@@ -1801,7 +1817,7 @@ unzip ~/test.zip
 
 `POST`
 
-请求体类型：`multipart/form-data`。
+请求体类型：`multipart/form-data`，请求体及其中的 `file` 字段均必填。
 
 #### 鉴权状态
 
@@ -1864,7 +1880,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -vX POST "http://127.0.0.1:8080/v3/
 
 `POST`
 
-请求体类型：`application/json`，为配置列表数组。
+请求体类型：`application/json`，请求体必填，为配置列表数组。每项使用 `cfgId`、`dataId`、`group`，与 Admin API 的克隆条目字段不同。
 
 #### 鉴权状态
 
@@ -1892,6 +1908,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -vX POST "http://127.0.0.1:8080/v3/
 
 | 参数名         | 参数类型  | 描述         |
 |-------------|-------|------------|
+| `data` | `map<string, any>` | 克隆结果映射，以下字段说明当前返回的计数。 |
 | `succCount` | `integer` | 成功克隆的配置数量。 |
 | `skipCount` | `integer` | 克隆跳过的配置数量。 |
 
@@ -2112,7 +2129,8 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" "http://127.0.0.1:8080/v3/console/c
 | `totalCount`                 | `integer` | 历史记录的总数。                          |
 | `pageNumber`                 | `integer` | 当前页码，起始为`1`。                      |
 | `pagesAvailable`             | `integer` | 可用页码。                             |
-| `pageItems`                  | `array`   | 历史记录列表。                           |
+| `data`                       | `Page<ConfigHistoryBasicInfo>` | 配置历史分页结果。 |
+| `pageItems`                  | `array<ConfigHistoryBasicInfo>` | 历史记录列表。 |
 | `pageItems`[i].`id`          | `string` | 历史记录的ID。                          |
 | `pageItems`[i].`dataId`      | `string` | 配置的dataId。                        |
 | `pageItems`[i].`groupName`   | `string` | 配置的groupName。                     |
@@ -2906,19 +2924,20 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET "http://127.0.0.1:8080/v3/co
 
 | 参数名                                                 | 参数类型         | 描述                                   |
 |-----------------------------------------------------|--------------|--------------------------------------|
+| `data` | `ServiceDetailInfo` | 服务详情。 |
 | `namespaceId`                                       | `string` | 服务所属的namespaceId。                    |
 | `groupName`                                         | `string` | 服务所属的groupName。                      |
 | `serviceName`                                       | `string` | 服务名。                                 |
 | `ephemeral`                                         | `boolean` | 服务的持久化属性，`true`为临时服务，`false`为持久化服务。  |
 | `protectThreshold`                                  | `number` | 服务防护阈值。                              |
-| `selector`                                          | `object` | 服务选择器。                               |
-| `metadata`                                          | `object` | 服务元数据。                               |
-| `clusterMap`                                        | `object` | 服务集群列表, key为cluster的名称，value为集群详细信息。 |
+| `selector`                                          | `Selector` | 服务选择器。                               |
+| `metadata`                                          | `map<string, string>` | 服务元数据。                               |
+| `clusterMap`                                        | `map<string, ClusterInfo>` | 服务集群列表, key为cluster的名称，value为集群详细信息。 |
 | `clusterMap`.$ClusterName.`clusterName`             | `string` | 集群名。                                 |
-| `clusterMap`.$ClusterName.`healthChecker`           | `object` | 健康检查器。                               |
+| `clusterMap`.$ClusterName.`healthChecker`           | `AbstractHealthChecker` | 健康检查器。                               |
 | `clusterMap`.$ClusterName.`healthyCheckPort`        | `integer` | 健康检查端口。                              |
 | `clusterMap`.$ClusterName.`useInstancePortForCheck` | `boolean` | 是否使用所注册的实例的`IP:Port`进行健康检查。          |
-| `clusterMap`.$ClusterName.`metadata`                | `object` | 集群元数据。                               |
+| `clusterMap`.$ClusterName.`metadata`                | `map<string, string>` | 集群元数据。                               |
 
 #### 示例
 
@@ -3330,7 +3349,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE "http://127.0.0.1:8080/v3
 | `description`        | `string` | MCP服务的描述。                                                                                       |
 | `repository`         | `Repository` | MCP 服务的代码仓库，包含 `url`、`source`、`id` 和 `subfolder`。 |
 | `versionDetail`      | `ServerVersionDetail`       | MCP服务所查询的版本信息。                                                                                  |
-| `localServerConfig`  | `map<string, object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
+| `localServerConfig`  | `map<string, any>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息；值可以是任意 JSON 类型。 |
 | `remoteServerConfig` | `McpServerRemoteServiceConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
 | `enabled`            | `boolean` | MCP服务是否启用。                                                                                      |
 | `capabilities`       | `array<string>`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
@@ -3440,7 +3459,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 | `repository`         | `Repository` | MCP 服务的代码仓库，包含 `url`、`source`、`id` 和 `subfolder`。 |
 | `versionDetail`      | `ServerVersionDetail`       | MCP服务的版本信息。                                                                                     |
 | `version`            | `string` | MCP服务的简易版本版本信息，主要用于兼容，若已设置`versionDetail`,则该字段无效。                                               |    |
-| `localServerConfig`  | `map<string, object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
+| `localServerConfig`  | `map<string, any>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息；值可以是任意 JSON 类型。 |
 | `remoteServerConfig` | `McpServerRemoteServiceConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
 | `enabled`            | `boolean` | MCP服务是否启用。                                                                                      |
 | `capabilities`       | `array<string>`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
@@ -3467,7 +3486,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 |---------------|-----------------------|-----------------------------------------------|
 | `name`        | `string` | MCP 工具的名称                                     |
 | `description` | `string` | MCP 工具的描述                                     |
-| `inputSchema` | `map<string, object>` | MCP工具的入参描述，参考标准MCP协议，主要包含，`类型`,`是否必须`,`描述` 等。 |
+| `inputSchema` | `map<string, any>` | MCP工具的入参 JSON Schema，参考标准MCP协议，包含类型、必填项和描述等；各 Schema 关键字的值可以是任意 JSON 类型。 |
 
 其中`McpToolMeta` 结构如下：
 
@@ -3475,7 +3494,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 |-----------------|-----------------------|--------------------------------|
 | `invokeContext` | `map<string, string>` | MCP 工具调用时的上下文信息，如后端服务的`Path`等。 |
 | `enabled`       | `boolean` | MCP工具是否启用。                     |
-| `templates`     | `map<string, string>` | MCP工具的模板信息。用于进行协议转换时进行参数的映射。   |
+| `templates`     | `map<string, any>` | MCP工具的模板信息，用于协议转换时的参数映射；模板值可以是任意 JSON 类型。 |
 
 其中`SecurityScheme` 结构如下：
 
@@ -3570,7 +3589,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 | `repository`         | `Repository` | MCP 服务的代码仓库，包含 `url`、`source`、`id` 和 `subfolder`。 |
 | `versionDetail`      | `ServerVersionDetail`       | MCP服务的版本信息。                                                                                     |
 | `version`            | `string` | MCP服务的简易版本版本信息，主要用于兼容，若已设置`versionDetail`,则该字段无效。                                               |    |
-| `localServerConfig`  | `map<string, object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
+| `localServerConfig`  | `map<string, any>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息；值可以是任意 JSON 类型。 |
 | `remoteServerConfig` | `McpServerRemoteServiceConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
 | `enabled`            | `boolean` | MCP服务是否启用。                                                                                      |
 | `capabilities`       | `array<string>`                | MCP服务支持的能力类型，如`TOOL`,`PROMPT`,`RESOURCE`。                                                       |
@@ -3597,7 +3616,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 |---------------|-----------------------|-----------------------------------------------|
 | `name`        | `string` | MCP 工具的名称                                     |
 | `description` | `string` | MCP 工具的描述                                     |
-| `inputSchema` | `map<string, object>` | MCP工具的入参描述，参考标准MCP协议，主要包含，`类型`,`是否必须`,`描述` 等。 |
+| `inputSchema` | `map<string, any>` | MCP工具的入参 JSON Schema，参考标准MCP协议，包含类型、必填项和描述等；各 Schema 关键字的值可以是任意 JSON 类型。 |
 
 其中`McpToolMeta` 结构如下：
 
@@ -3605,7 +3624,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 |-----------------|-----------------------|--------------------------------|
 | `invokeContext` | `map<string, string>` | MCP 工具调用时的上下文信息，如后端服务的`Path`等。 |
 | `enabled`       | `boolean` | MCP工具是否启用。                     |
-| `templates`     | `map<string, string>` | MCP工具的模板信息。用于进行协议转换时进行参数的映射。   |
+| `templates`     | `map<string, any>` | MCP工具的模板信息，用于协议转换时的参数映射；模板值可以是任意 JSON 类型。 |
 
 其中`SecurityScheme` 结构如下：
 
@@ -3740,7 +3759,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3
 | `pageSize` | `integer` | 否 | 每页条数，默认为 `100`，必须为正整数。 |
 | `namespaceId` | `string` | 否     | MCP服务的命名空间ID，默认为`public`                               |
 | `mcpName`     | `string`   | 否     | MCP服务的名字模版，为空时查询所有MCP服务，当`search`为`blur`时，可使用`*`进行模糊搜索 |
-| `search`      | `string` | 否     | blur or accurate                  |
+| `search`      | `string` | 否     | 搜索模式：`blur`（模糊）或 `accurate`（精确）。 |
 
 #### 返回数据
 
@@ -3759,7 +3778,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3
 | `pageItems`[i].`description`                  | `string` | MCP服务的描述。                                                                                       |
 | `pageItems`[i].`repository`                   | `string` | MCP服务的存储仓库。                                                                                     |                                                                                          |
 | `pageItems`[i].`versionDetail`                | `ServerVersionDetail`       | MCP服务当前最新的版本信息。                                                                                 |
-| `pageItems`[i].`localServerConfig`            | `map<string, object>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息。                                                        |
+| `pageItems`[i].`localServerConfig`            | `map<string, any>` | MCP服务若类型为**stdio**，存在此信息，记录本地MCP服务的启动信息；值可以是任意 JSON 类型。 |
 | `pageItems`[i].`remoteServerConfig`           | `McpServerRemoteServiceConfig`  | MCP服务若类型为**非stdio**，存在此信息，记录远端服务的信息 。                                                           |
 | `pageItems`[i].`latestPublishedVersion`       | `string` | MCP服务最新版本的版本号。                                                                                  |
 | `pageItems`[i].`versionDetails`               | `array<ServerVersionDetail>` | MCP服务版本详情的列表。                                                                                   |
@@ -3859,6 +3878,12 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 | 参数名    | 参数类型                   | 描述                                                                                                       |
 |--------|------------------------|----------------------------------------------------------------------------------------------------------|
 | `data` | `array<McpSchema.Tool>` | MCP工具元数据信息,符合[MCP工具元数据标准定义](https://modelcontextprotocol.io/specification/2025-06-18/server/tools#tool)。 |
+| `data[].inputSchema` | `JsonSchema` | 工具输入的 JSON Schema 对象，保留 `type`、`required` 和 `additionalProperties` 等约束。 |
+| `data[].inputSchema.properties` | `map<string, any>` | 输入属性名到 Schema 定义的映射。 |
+| `data[].inputSchema.$defs` | `map<string, any>` | 可复用的 Schema 定义。 |
+| `data[].inputSchema.definitions` | `map<string, any>` | 兼容旧版 JSON Schema 的可复用定义。 |
+| `data[].outputSchema` | `map<string, any>` | 工具输出的 JSON Schema。 |
+| `data[]._meta` | `map<string, any>` | 工具附加元数据，值可以是任意 JSON 类型。 |
 
 #### 示例
 
@@ -3918,15 +3943,15 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 | 参数名           | 参数类型     | 是否必填  | 描述                                      |
 |---------------|----------|-------|-----------------------------------------|
 | `namespaceId` | `string` | 否     | MCP服务的命名空间ID                            |
-| `importType`  | `string` | **是** | enum of `file`, `json`, `url`           |
+| `importType`  | `string` | **是** | 导入类型：`file`、`json` 或 `url`。 |
 | `data`        | `string` | **是** | 导入数据的内容                                 |
 | `overrideExisting` | `boolean` | 否 | 服务已存在时是否覆盖，默认值为 `false`。 |
 | `validateOnly` | `boolean` | 否 | 是否仅执行校验而不导入，默认值为 `false`。 |
 | `skipInvalid` | `boolean` | 否 | 是否跳过无效服务，默认值为 `false`。 |
 | `selectedServers` | `array<string>` | 否 | 选择需要校验的服务；为空时处理全部服务。 |
-| `cursor`      | `string` | 否     | Optional start cursor for URL-based import pagination. |
+| `cursor`      | `string` | 否     | 基于 URL 的导入分页查询起始游标。 |
 | `limit`       | `integer` | 否     | 分页的页大小                                  |
-| `search`      | `string`   | 否     | Optional fuzzy search keyword for registry import listing. Only used when importType is 'url'. |
+| `search`      | `string`   | 否     | 注册中心导入列表的模糊搜索关键字，仅在 `importType=url` 时使用。 |
 
 #### 返回数据
 
@@ -4025,11 +4050,11 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 | 参数名                | 参数类型      | 是否必填  | 描述                                      |
 |--------------------|-----------|-------|-----------------------------------------|
 | `namespaceId`      | `string` | 否     | MCP服务的命名空间ID                            |
-| `importType`       | `string` | **是** | enum of `file`, `json`, `url`           |
+| `importType`       | `string` | **是** | 导入类型：`file`、`json` 或 `url`。 |
 | `data`             | `string` | **是** | 导入数据的内容                                 |
-| `cursor`           | `string` | 否     | Optional start cursor for URL-based import pagination. |
+| `cursor`           | `string` | 否     | 基于 URL 的导入分页查询起始游标。 |
 | `limit`            | `integer` | 否     | 分页的页大小                                  |
-| `search`           | `string`    | 否     | Optional fuzzy search keyword for registry import listing. Only used when importType is 'url'. |
+| `search`           | `string`    | 否     | 注册中心导入列表的模糊搜索关键字，仅在 `importType=url` 时使用。 |
 | `overrideExisting` | `boolean` | 否     | 导入时若服务已存在时是否覆盖。默认为`false`。              |                                    |
 | `validateOnly`     | `boolean` | 否     | 是否仅执行校验而不实际导入。默认为 `false`。 |
 | `skipInvalid`      | `boolean` | 否     | 导入时是否忽略错误无效的服务。默认为`false`。              |
@@ -4929,7 +4954,7 @@ curl -sS -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v
 | `pageSize` | `integer` | 否 | 每页条数，默认为 `100`，必须为正整数。 |
 | `namespaceId` | `string` | 否     | AgentCard的命名空间ID，默认为`public`                    |
 | `agentName`   | `string` | 否     | AgentCard的名称，为空是查询所有AgentCard                   |
-| `search`      | `string` | **是** | blur or accurate |
+| `search`      | `string` | **是** | 搜索模式：`blur`（模糊）或 `accurate`（精确）。 |
 
 #### 返回数据
 
@@ -5427,9 +5452,7 @@ Prompt 管理 API 提供 Prompt 的草稿、发布、上下线、治理查询、
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `boolean` | - |
+| data | `boolean` | 是否删除成功。 |
 
 #### 示例
 
@@ -5445,7 +5468,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": true
 }
 ```
 
@@ -5476,15 +5499,13 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | - |
 | `promptKey` | `string` | **是** | - |
-| `bizTags` | `string` | 否 | - |
+| `bizTags` | `string` | 否 | 业务标签的 JSON 数组字符串，例如 `["tag1","tag2"]`。 |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -5500,7 +5521,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -5537,9 +5558,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -5555,7 +5574,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -5589,7 +5608,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 | `basedOnVersion` | `string` | 否 | - |
 | `targetVersion` | `string` | 否 | - |
 | `template` | `string` | 否 | - |
-| `variables` | `string` | 否 | - |
+| `variables` | `string` | 否 | Prompt 变量的 JSON 数组字符串，例如 `[{"name":"name"}]`。 |
 | `commitMsg` | `string` | 否 | - |
 | `description` | `string` | 否 | - |
 | `bizTags` | `string` | 否 | - |
@@ -5598,9 +5617,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 新草稿版本号。 |
 
 #### 示例
 
@@ -5616,7 +5633,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "1.0.0"
 }
 ```
 
@@ -5648,16 +5665,14 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 | `namespaceId` | `string` | 否 | - |
 | `promptKey` | `string` | **是** | - |
 | `template` | `string` | **是** | - |
-| `variables` | `string` | 否 | - |
+| `variables` | `string` | 否 | Prompt 变量的 JSON 数组字符串，例如 `[{"name":"name"}]`。 |
 | `commitMsg` | `string` | 否 | - |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -5673,7 +5688,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -5709,9 +5724,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -5727,7 +5740,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -5764,9 +5777,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -5782,7 +5793,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -5818,23 +5829,21 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data.schemaVersion | `integer` | - |
-| data.data.promptKey | `string` | - |
-| data.data.description | `string` | - |
-| data.data.bizTags | `array` | - |
-| data.data.bizTagsStr | `string` | - |
-| data.data.latestVersion | `string` | - |
-| data.data.gmtModified | `integer` | - |
-| data.data.editingVersion | `string` | - |
-| data.data.reviewingVersion | `string` | - |
-| data.data.onlineCnt | `integer` | - |
-| data.data.labels | `map<string, string>` | Skill 的版本标签。 |
-| data.data.downloadCount | `integer` | - |
-| data.data.writable | `boolean` | 当前用户是否可写该 Skill。 |
-| data.data.versions | `array<SkillVersionSummary>` | Skill 版本摘要列表。 |
-| data.data.versionDetails | `array` | - |
+| data | `PromptMetaInfo` | Prompt 元数据和版本治理信息。 |
+| data.schemaVersion | `integer` | 元数据结构版本。 |
+| data.promptKey | `string` | Prompt 标识。 |
+| data.description | `string` | Prompt 描述。 |
+| data.bizTags | `array<string>` | 业务标签列表。 |
+| data.bizTagsStr | `string` | 业务标签的字符串表示。 |
+| data.latestVersion | `string` | 最新版本。 |
+| data.gmtModified | `integer` | 最后更新时间。 |
+| data.editingVersion | `string` | 正在编辑的版本。 |
+| data.reviewingVersion | `string` | 正在评审的版本。 |
+| data.onlineCnt | `integer` | 已上线版本数量。 |
+| data.labels | `map<string, string>` | Prompt 的版本标签。 |
+| data.downloadCount | `integer` | 下载次数。 |
+| data.versions | `array<string>` | Prompt 版本号列表。 |
+| data.versionDetails | `array<PromptVersionSummary>` | Prompt 版本摘要列表。 |
 
 #### 示例
 
@@ -5881,33 +5890,13 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | - |
 | `promptKey` | `string` | **是** | - |
-| `labels` | `string` | **是** | - |
+| `labels` | `string` | **是** | 运行时标签到版本的 JSON 对象字符串，例如 `{"stable":"1.0.0"}`。 |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data.totalCount | `integer` | 符合条件的 Skill 总数。 |
-| data.data.pageNumber | `integer` | 当前页码。 |
-| data.data.pagesAvailable | `integer` | 可用页数。 |
-| data.data.pageItems | `array<SkillSummary>` | 当前页的 Skill 摘要列表。 |
-| data.data.pageItems[i].namespaceId | `string` | Skill 所属命名空间 ID。 |
-| data.data.pageItems[i].name | `string` | Skill 名称。 |
-| data.data.pageItems[i].description | `string` | Skill 描述。 |
-| data.data.pageItems[i].updateTime | `integer` | 最后更新时间。 |
-| data.data.pageItems[i].owner | `string` | Skill 所有者。 |
-| data.data.pageItems[i].enable | `boolean` | Skill 是否启用。 |
-| data.data.pageItems[i].bizTags | `string` | 业务标签。 |
-| data.data.pageItems[i].from | `string` | Skill 来源。 |
-| data.data.pageItems[i].scope | `string` | 可见范围。 |
-| data.data.pageItems[i].labels | `map<string, string>` | 版本标签。 |
-| data.data.pageItems[i].editingVersion | `string` | 正在编辑的版本。 |
-| data.data.pageItems[i].reviewingVersion | `string` | 正在评审的版本。 |
-| data.data.pageItems[i].onlineCnt | `integer` | 已上线版本数量。 |
-| data.data.pageItems[i].downloadCount | `integer` | 下载次数。 |
-| data.data.pageItems[i].writable | `boolean` | 当前用户是否可写。 |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -5923,7 +5912,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -5956,16 +5945,18 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 | `pageSize` | `integer` | **是** | - |
 | `namespaceId` | `string` | 否 | - |
 | `promptKey` | `string` | 否 | - |
-| `search` | `string` | 否 | blur or accurate |
+| `search` | `string` | 否 | 搜索模式：`blur`（模糊）或 `accurate`（精确）。 |
 | `bizTags` | `string` | 否 | - |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `Page<PromptMetaSummary>` | Prompt 分页结果。 |
+| data.totalCount | `integer` | 匹配的记录总数。 |
+| data.pageNumber | `integer` | 当前页码。 |
+| data.pagesAvailable | `integer` | 可用页数。 |
+| data.pageItems | `array<PromptMetaSummary>` | 当前页的 Prompt 摘要。 |
 
 #### 示例
 
@@ -6018,9 +6009,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -6036,7 +6025,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -6073,9 +6062,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -6091,7 +6078,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -6128,9 +6115,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -6146,7 +6131,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -6183,9 +6168,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -6201,7 +6184,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -6238,9 +6221,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 已提交的版本号。 |
 
 #### 示例
 
@@ -6256,7 +6237,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "1.0.0"
 }
 ```
 
@@ -6293,19 +6274,18 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data.promptKey | `string` | - |
-| data.data.version | `string` | - |
-| data.data.status | `string` | - |
-| data.data.commitMsg | `string` | - |
-| data.data.srcUser | `string` | - |
-| data.data.gmtModified | `integer` | - |
-| data.data.publishPipelineInfo | `string` | - |
-| data.data.downloadCount | `integer` | - |
-| data.data.template | `string` | - |
-| data.data.md5 | `string` | - |
-| data.data.variables | `array` | - |
+| data | `PromptVersionInfo` | Prompt 版本详情。 |
+| data.promptKey | `string` | Prompt 标识。 |
+| data.version | `string` | 版本号。 |
+| data.status | `string` | 版本状态。 |
+| data.commitMsg | `string` | 版本提交说明。 |
+| data.srcUser | `string` | 操作用户。 |
+| data.gmtModified | `integer` | 最后更新时间。 |
+| data.publishPipelineInfo | `string` | 发布流水线信息。 |
+| data.downloadCount | `integer` | 下载次数。 |
+| data.template | `string` | Prompt 模板。 |
+| data.md5 | `string` | 模板的 MD5。 |
+| data.variables | `array<PromptVariable>` | 模板变量列表。 |
 
 #### 示例
 
@@ -6354,23 +6334,19 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 | `promptKey` | `string` | **是** | - |
 | `version` | `string` | 否 | - |
 
+#### 返回数据
+
+成功时以附件形式返回 Markdown 文件字节，Content-Type 为 `text/markdown;charset=UTF-8`，不使用 `Result` JSON 包装。
+
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/version/download?namespaceId=public&promptKey=my-prompt&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/prompt/version/download?namespaceId=public&promptKey=my-prompt&version=1.0.0' --output my-prompt_1.0.0.md
 ```
 
-* 返回示例
-
-```json
-{
-  "code": 0,
-  "message": "success",
-  "data": {}
-}
-```
+下载文件包含 Prompt 身份与治理字段的 Front Matter、变量说明和模板内容。
 
 
 ### 6.18. 查询Prompt版本列表
@@ -6406,9 +6382,19 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `Page<PromptVersionSummary>` | Prompt 版本分页结果。 |
+| data.totalCount | `integer` | 符合条件的版本总数。 |
+| data.pageNumber | `integer` | 当前页码。 |
+| data.pagesAvailable | `integer` | 可用页数。 |
+| data.pageItems | `array<PromptVersionSummary>` | 当前页的 Prompt 版本摘要。 |
+| data.pageItems[].promptKey | `string` | Prompt 标识。 |
+| data.pageItems[].version | `string` | 版本号。 |
+| data.pageItems[].status | `string` | 版本状态。 |
+| data.pageItems[].commitMsg | `string` | 版本提交说明。 |
+| data.pageItems[].srcUser | `string` | 操作用户。 |
+| data.pageItems[].gmtModified | `integer` | 最后更新时间。 |
+| data.pageItems[].publishPipelineInfo | `string` | 发布流水线信息。 |
+| data.pageItems[].downloadCount | `integer` | 下载次数。 |
 
 #### 示例
 
@@ -6424,7 +6410,12 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": {
+    "totalCount": 0,
+    "pageNumber": 1,
+    "pagesAvailable": 0,
+    "pageItems": []
+  }
 }
 ```
 
@@ -6464,23 +6455,24 @@ Skills 管理 API 提供 Skill 的查询、草稿、发布、上下线、版本�
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data.namespaceId | `string` | - |
-| data.data.name | `string` | - |
-| data.data.description | `string` | - |
-| data.data.updateTime | `integer` | - |
-| data.data.owner | `string` | - |
-| data.data.enable | `boolean` | - |
-| data.data.bizTags | `string` | - |
-| data.data.from | `string` | - |
-| data.data.scope | `string` | - |
-| data.data.labels | `object` | - |
-| data.data.editingVersion | `string` | - |
-| data.data.reviewingVersion | `string` | - |
-| data.data.onlineCnt | `integer` | - |
-| data.data.downloadCount | `integer` | - |
-| data.data.versions | `array` | - |
+| data | `SkillMeta` | Skill 元数据。 |
+| data.namespaceId | `string` | 命名空间 ID。 |
+| data.name | `string` | Skill 名称。 |
+| data.description | `string` | Skill 描述。 |
+| data.updateTime | `integer` | 更新时间。 |
+| data.owner | `string` | 所有者。 |
+| data.enable | `boolean` | 是否启用。 |
+| data.bizTags | `string` | 业务标签。 |
+| data.from | `string` | 来源。 |
+| data.scope | `string` | 可见范围。 |
+| data.labels | `map<string, string>` | 运行时标签到版本的映射。 |
+| data.frontMatter | `map<string, string>` | 展示版本 SKILL.md 的 Front Matter；值使用解析器的字符串表示，不可用时为 `null`。 |
+| data.frontMatterTruncated | `boolean` | Front Matter 自定义字段是否被省略或截短；Front Matter 不可用时为 `null`。 |
+| data.editingVersion | `string` | 当前编辑版本。 |
+| data.reviewingVersion | `string` | 当前评审版本。 |
+| data.onlineCnt | `integer` | 在线版本数。 |
+| data.downloadCount | `integer` | 下载次数。 |
+| data.versions | `array<SkillVersionSummary>` | 版本摘要列表。 |
 
 #### 示例
 
@@ -6533,9 +6525,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -6551,7 +6541,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -6582,15 +6572,13 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | - |
 | `skillName` | `string` | **是** | - |
-| `bizTags` | `string` | **是** | - |
+| `bizTags` | `string` | **是** | 业务标签的 JSON 数组字符串，例如 `["tag1","tag2"]`。 |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -6606,7 +6594,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -6639,16 +6627,14 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 | `skillName` | `string` | 否 | - |
 | `basedOnVersion` | `string` | 否 | - |
 | `targetVersion` | `string` | 否 | - |
-| `skillCard` | `string` | 否 | Skill card JSON; required if basedOnVersion is not set |
+| `skillCard` | `string` | 否 | Skill 卡片 JSON 字符串；未设置 `basedOnVersion` 时必填。 |
 | `commitMsg` | `string` | 否 | 草稿版本的提交说明。 |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 新草稿版本号。 |
 
 #### 示例
 
@@ -6664,7 +6650,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "1.0.0"
 }
 ```
 
@@ -6694,24 +6680,22 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | - |
-| `skillCard` | `string` | **是** | Skill card JSON string containing complete Skill information |
-| `setAsLatest` | `boolean` | 否 | 是否将更新后的草稿设为最新版本。 |
+| `skillCard` | `string` | **是** | 包含完整 Skill 信息的 Skill 卡片 JSON 字符串。 |
+| `setAsLatest` | `boolean` | 否 | 已废弃的兼容参数，服务端忽略此值；`latest` 标签由服务端维护。 |
 | `commitMsg` | `string` | 否 | 草稿版本的提交说明。 |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=public&skillCard={}&setAsLatest=true&commitMsg=update"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/skills/draft' -d "namespaceId=public&skillCard={}&commitMsg=update"
 ```
 
 * 返回示例
@@ -6720,7 +6704,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -6756,9 +6740,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -6774,7 +6756,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -6811,9 +6793,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -6829,7 +6809,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -6860,15 +6840,13 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | - |
 | `skillName` | `string` | **是** | - |
-| `labels` | `string` | **是** | - |
+| `labels` | `string` | **是** | 运行时标签到版本的 JSON 对象字符串，例如 `{"stable":"1.0.0"}`。 |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -6884,7 +6862,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -6917,7 +6895,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 | `pageSize` | `integer` | 否 | 每页条数，默认为 `100`，必须为正整数。 |
 | `namespaceId` | `string` | 否 | - |
 | `skillName` | `string` | 否 | - |
-| `search` | `string` | 否 | blur or accurate |
+| `search` | `string` | 否 | 搜索模式：`blur`（模糊）或 `accurate`（精确）。 |
 | `orderBy` | `string` | 否 | 排序字段及方向。 |
 | `owner` | `string` | 否 | 按资源所有者筛选。 |
 | `scope` | `string` | 否 | 按可见范围筛选。 |
@@ -6932,6 +6910,8 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 | `data.pageNumber` | `integer` | 当前页码。 |
 | `data.pagesAvailable` | `integer` | 可用页数。 |
 | `data.pageItems` | `array<SkillSummary>` | 当前页的 Skill 摘要，包含名称、描述、所有者、可见范围、启用状态、版本标签及下载次数等。 |
+| `data.pageItems[].frontMatter` | `map<string, string>` | 展示版本 SKILL.md 的 Front Matter；值为字符串，不可用时为 `null`。 |
+| `data.pageItems[].frontMatterTruncated` | `boolean` | Front Matter 自定义字段是否被省略或截短；不可用时为 `null`。 |
 
 #### 示例
 
@@ -6978,16 +6958,14 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | - |
 | `skillName` | `string` | **是** | - |
-| `scope` | `string` | 否 | Use 'skill' for skill-level offline; otherwise version-level |
+| `scope` | `string` | 否 | 使用 `skill` 表示下线整个 Skill，否则表示下线指定版本。 |
 | `version` | `string` | 否 | - |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -7003,7 +6981,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -7034,16 +7012,14 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | - |
 | `skillName` | `string` | **是** | - |
-| `scope` | `string` | 否 | Use 'skill' for skill-level online; otherwise version-level |
+| `scope` | `string` | 否 | 使用 `skill` 表示上线整个 Skill，否则表示上线指定版本。 |
 | `version` | `string` | 否 | - |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -7059,7 +7035,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -7096,9 +7072,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -7114,7 +7088,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -7151,9 +7125,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -7169,7 +7141,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -7200,15 +7172,13 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | - |
 | `skillName` | `string` | **是** | - |
-| `scope` | `string` | **是** | PUBLIC or PRIVATE |
+| `scope` | `string` | **是** | 资源可见范围：`PUBLIC` 或 `PRIVATE`。 |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -7224,7 +7194,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -7261,9 +7231,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 已提交的版本号。 |
 
 #### 示例
 
@@ -7279,7 +7247,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "1.0.0"
 }
 ```
 
@@ -7296,7 +7264,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 
 `POST`
 
-请求体类型：`multipart/form-data`（如文件上传），请求示例中需使用 `-F` 或 `-H 'Content-Type: multipart/form-data'`。
+请求体类型：`multipart/form-data`，请求体及其中的 `file` 字段均必填。示例使用 `-F`，由 curl 自动生成带 boundary 的 Content-Type。
 
 #### 鉴权状态
 
@@ -7321,9 +7289,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 上传成功的 Skill 名称。 |
 
 #### 示例
 
@@ -7339,7 +7305,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "my-skill"
 }
 ```
 
@@ -7356,7 +7322,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 
 `POST`
 
-请求体类型：`multipart/form-data`（如文件上传），请求示例中需使用 `-F` 或 `-H 'Content-Type: multipart/form-data'`。
+请求体类型：`multipart/form-data`，请求体及其中的 `file` 字段均必填。示例使用 `-F`，由 curl 自动生成带 boundary 的 Content-Type。
 
 #### 鉴权状态
 
@@ -7378,11 +7344,10 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data.succeeded | `array<string>` | 上传成功的 Skill 名称。 |
-| data.data.failed | `array<FailedItem>` | 上传失败的条目。 |
-| data.data.results | `array<BatchUploadItemResult>` | 每个上传条目的处理结果。 |
+| data | `BatchUploadResult` | 批量上传结果。 |
+| data.succeeded | `array<string>` | 上传成功的 Skill 名称。 |
+| data.failed | `array<FailedItem>` | 上传失败的条目。 |
+| data.results | `array<BatchUploadItemResult>` | 每个上传条目的处理结果。 |
 
 #### 示例
 
@@ -7435,13 +7400,14 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data.namespaceId | `string` | - |
-| data.data.name | `string` | - |
-| data.data.description | `string` | - |
-| data.data.skillMd | `string` | - |
-| data.data.resource | `map<string, SkillResource>` | 以资源标识为键的 Skill 资源映射。 |
+| data | `Skill` | Skill 版本内容。 |
+| data.namespaceId | `string` | 命名空间 ID。 |
+| data.name | `string` | Skill 名称。 |
+| data.description | `string` | Skill 描述。 |
+| data.skillMd | `string` | SKILL.md 内容。 |
+| data.resource | `map<string, SkillResource>` | 以资源标识为键的 Skill 资源映射。 |
+
+`SkillResource.metadata` 为 `map<string, any>`，其值可以是任意 JSON 类型；`resource` 映射本身的值仍是具名类型 `SkillResource`。
 
 #### 示例
 
@@ -7490,22 +7456,22 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 | `skillName` | `string` | **是** | - |
 | `version` | `string` | 否 | - |
 
+#### 返回数据
+
+成功时返回 `application/zip` 二进制 ZIP 文件（`string`，`format: binary`），不使用 `Result` JSON 包装。
+
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/version/download?namespaceId=public&skillName=my-skill&version=1.0.0'
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/console/ai/skills/version/download?namespaceId=public&skillName=my-skill&version=1.0.0' --output my-skill.zip
 ```
 
 * 返回示例
 
-```json
-{
-  "code": 0,
-  "message": "success",
-  "data": {}
-}
+```shell
+unzip -l my-skill.zip
 ```
 
 ### 7.20. 预检 Skill 上传
@@ -7522,7 +7488,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 
 `POST`
 
-请求体类型：`multipart/form-data`。
+请求体类型：`multipart/form-data`，请求体及其中的 `file` 字段均必填。
 
 #### 鉴权状态
 
@@ -7625,24 +7591,23 @@ AgentSpec 管理 API 提供 AgentSpec 的查询、草稿、发布、上下线、
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data.namespaceId | `string` | - |
-| data.data.name | `string` | - |
-| data.data.description | `string` | - |
-| data.data.updateTime | `integer` | - |
-| data.data.owner | `string` | AgentSpec 所有者。 |
-| data.data.enable | `boolean` | - |
-| data.data.bizTags | `string` | - |
-| data.data.from | `string` | - |
-| data.data.scope | `string` | - |
-| data.data.labels | `map<string, string>` | AgentSpec 的版本标签。 |
-| data.data.editingVersion | `string` | - |
-| data.data.reviewingVersion | `string` | - |
-| data.data.onlineCnt | `integer` | - |
-| data.data.downloadCount | `integer` | - |
-| data.data.writable | `boolean` | 当前用户是否可写该 AgentSpec。 |
-| data.data.versions | `array<AgentSpecVersionSummary>` | AgentSpec 版本摘要列表。 |
+| data | `AgentSpecMeta` | AgentSpec 元数据。 |
+| data.namespaceId | `string` | 命名空间 ID。 |
+| data.name | `string` | AgentSpec 名称。 |
+| data.description | `string` | AgentSpec 描述。 |
+| data.updateTime | `integer` | 最后更新时间。 |
+| data.owner | `string` | AgentSpec 所有者。 |
+| data.enable | `boolean` | AgentSpec 是否启用。 |
+| data.bizTags | `string` | 业务标签。 |
+| data.from | `string` | AgentSpec 来源。 |
+| data.scope | `string` | 可见范围。 |
+| data.labels | `map<string, string>` | AgentSpec 的版本标签。 |
+| data.editingVersion | `string` | 正在编辑的版本。 |
+| data.reviewingVersion | `string` | 正在评审的版本。 |
+| data.onlineCnt | `integer` | 已上线版本数量。 |
+| data.downloadCount | `integer` | 下载次数。 |
+| data.writable | `boolean` | 当前用户是否可写该 AgentSpec。 |
+| data.versions | `array<AgentSpecVersionSummary>` | AgentSpec 版本摘要列表。 |
 
 #### 示例
 
@@ -7694,27 +7659,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data.totalCount | `integer` | 符合条件的 AgentSpec 总数。 |
-| data.data.pageNumber | `integer` | 当前页码。 |
-| data.data.pagesAvailable | `integer` | 可用页数。 |
-| data.data.pageItems | `array<AgentSpecSummary>` | 当前页的 AgentSpec 摘要列表。 |
-| data.data.pageItems[i].namespaceId | `string` | AgentSpec 所属命名空间 ID。 |
-| data.data.pageItems[i].name | `string` | AgentSpec 名称。 |
-| data.data.pageItems[i].description | `string` | AgentSpec 描述。 |
-| data.data.pageItems[i].updateTime | `integer` | 最后更新时间。 |
-| data.data.pageItems[i].owner | `string` | AgentSpec 所有者。 |
-| data.data.pageItems[i].enable | `boolean` | AgentSpec 是否启用。 |
-| data.data.pageItems[i].bizTags | `string` | 业务标签。 |
-| data.data.pageItems[i].from | `string` | AgentSpec 来源。 |
-| data.data.pageItems[i].scope | `string` | 可见范围。 |
-| data.data.pageItems[i].labels | `map<string, string>` | 版本标签。 |
-| data.data.pageItems[i].editingVersion | `string` | 正在编辑的版本。 |
-| data.data.pageItems[i].reviewingVersion | `string` | 正在评审的版本。 |
-| data.data.pageItems[i].onlineCnt | `integer` | 已上线版本数量。 |
-| data.data.pageItems[i].downloadCount | `integer` | 下载次数。 |
-| data.data.pageItems[i].writable | `boolean` | 当前用户是否可写。 |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -7730,7 +7675,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -7761,15 +7706,13 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | - |
 | `agentSpecName` | `string` | **是** | - |
-| `bizTags` | `string` | **是** | - |
+| `bizTags` | `string` | **是** | 业务标签的 JSON 数组字符串，例如 `["tag1","tag2"]`。 |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -7785,7 +7728,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -7823,9 +7766,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 新草稿版本号。 |
 
 #### 示例
 
@@ -7841,7 +7782,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "1.0.0"
 }
 ```
 
@@ -7871,23 +7812,21 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | - |
-| `agentSpecCard` | `string` | **是** | AgentSpec card JSON string containing complete AgentSpec information |
-| `setAsLatest` | `boolean` | 否 | 是否将更新后的草稿设为最新版本。 |
+| `agentSpecCard` | `string` | **是** | 包含完整 AgentSpec 信息的 AgentSpec 卡片 JSON 字符串。 |
+| `setAsLatest` | `boolean` | 否 | 已废弃的兼容参数，服务端忽略此值；`latest` 标签由服务端维护。 |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
 * 请求示例
 
 ```shell
-curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespaceId=public&agentSpecCard={}&setAsLatest=true"
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/console/ai/agentspecs/draft' -d "namespaceId=public&agentSpecCard={}"
 ```
 
 * 返回示例
@@ -7896,7 +7835,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -7932,9 +7871,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -7950,7 +7887,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -7987,9 +7924,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8080/v3
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -8005,7 +7940,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -8036,15 +7971,13 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | - |
 | `agentSpecName` | `string` | **是** | - |
-| `labels` | `string` | **是** | - |
+| `labels` | `string` | **是** | 运行时标签到版本的 JSON 对象字符串，例如 `{"stable":"1.0.0"}`。 |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -8060,7 +7993,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -8093,7 +8026,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 | `pageSize` | `integer` | 否 | 每页条数，默认为 `100`，必须为正整数。 |
 | `namespaceId` | `string` | 否 | - |
 | `agentSpecName` | `string` | 否 | - |
-| `search` | `string` | 否 | Search mode: accurate or blur |
+| `search` | `string` | 否 | 搜索模式：`accurate`（精确）或 `blur`（模糊）。 |
 | `orderBy` | `string` | 否 | 排序字段及方向。 |
 | `owner` | `string` | 否 | 按资源所有者筛选。 |
 | `scope` | `string` | 否 | 按可见范围筛选。 |
@@ -8107,6 +8040,21 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 | `data.pageNumber` | `integer` | 当前页码。 |
 | `data.pagesAvailable` | `integer` | 可用页数。 |
 | `data.pageItems` | `array<AgentSpecSummary>` | 当前页的 AgentSpec 摘要，包含名称、描述、所有者、可见范围、启用状态、版本标签及下载次数等。 |
+| `data.pageItems[].namespaceId` | `string` | AgentSpec 所属命名空间 ID。 |
+| `data.pageItems[].name` | `string` | AgentSpec 名称。 |
+| `data.pageItems[].description` | `string` | AgentSpec 描述。 |
+| `data.pageItems[].updateTime` | `integer` | 最后更新时间。 |
+| `data.pageItems[].owner` | `string` | AgentSpec 所有者。 |
+| `data.pageItems[].enable` | `boolean` | AgentSpec 是否启用。 |
+| `data.pageItems[].bizTags` | `string` | 业务标签。 |
+| `data.pageItems[].from` | `string` | AgentSpec 来源。 |
+| `data.pageItems[].scope` | `string` | 可见范围。 |
+| `data.pageItems[].labels` | `map<string, string>` | 版本标签。 |
+| `data.pageItems[].editingVersion` | `string` | 正在编辑的版本。 |
+| `data.pageItems[].reviewingVersion` | `string` | 正在评审的版本。 |
+| `data.pageItems[].onlineCnt` | `integer` | 已上线版本数量。 |
+| `data.pageItems[].downloadCount` | `integer` | 下载次数。 |
+| `data.pageItems[].writable` | `boolean` | 当前用户是否可写。 |
 
 #### 示例
 
@@ -8153,16 +8101,14 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | - |
 | `agentSpecName` | `string` | **是** | - |
-| `scope` | `string` | 否 | Use 'agentspec' for agentspec-level offline; otherwise version-level |
+| `scope` | `string` | 否 | 使用 `agentspec` 表示下线整个 AgentSpec，否则表示下线指定版本。 |
 | `version` | `string` | 否 | - |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -8178,7 +8124,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -8209,16 +8155,14 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | - |
 | `agentSpecName` | `string` | **是** | - |
-| `scope` | `string` | 否 | Use 'agentspec' for agentspec-level online; otherwise version-level |
+| `scope` | `string` | 否 | 使用 `agentspec` 表示上线整个 AgentSpec，否则表示上线指定版本。 |
 | `version` | `string` | 否 | - |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -8234,7 +8178,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -8271,9 +8215,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -8289,7 +8231,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -8326,9 +8268,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -8344,7 +8284,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -8375,15 +8315,13 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 |--------|------|------|----------|
 | `namespaceId` | `string` | 否 | - |
 | `agentSpecName` | `string` | **是** | - |
-| `scope` | `string` | **是** | PUBLIC or PRIVATE |
+| `scope` | `string` | **是** | 资源可见范围：`PUBLIC` 或 `PRIVATE`。 |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 操作结果。 |
 
 #### 示例
 
@@ -8399,7 +8337,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -8436,9 +8374,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v3/co
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 已提交的版本号。 |
 
 #### 示例
 
@@ -8454,7 +8390,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "1.0.0"
 }
 ```
 
@@ -8471,7 +8407,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 
 `POST`
 
-请求体类型：`multipart/form-data`（如文件上传），请求示例中需使用 `-F` 或 `-H 'Content-Type: multipart/form-data'`。
+请求体类型：`multipart/form-data`，请求体及其中的 `file` 字段均必填。示例使用 `-F`，由 curl 自动生成带 boundary 的 Content-Type。
 
 #### 鉴权状态
 
@@ -8493,9 +8429,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| data | `string` | 上传成功的 AgentSpec 名称。 |
 
 #### 示例
 
@@ -8511,7 +8445,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "my-agentspec"
 }
 ```
 
@@ -8548,14 +8482,15 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data.namespaceId | `string` | - |
-| data.data.name | `string` | - |
-| data.data.description | `string` | - |
-| data.data.bizTags | `string` | - |
-| data.data.content | `string` | - |
-| data.data.resource | `map<string, AgentSpecResource>` | 以资源标识为键的 AgentSpec 资源映射。 |
+| data | `AgentSpec` | AgentSpec 版本内容。 |
+| data.namespaceId | `string` | 命名空间 ID。 |
+| data.name | `string` | AgentSpec 名称。 |
+| data.description | `string` | AgentSpec 描述。 |
+| data.bizTags | `string` | 业务标签。 |
+| data.content | `string` | AgentSpec 内容。 |
+| data.resource | `map<string, AgentSpecResource>` | 以资源标识为键的 AgentSpec 资源映射。 |
+
+`AgentSpecResource.metadata` 为 `map<string, any>`，其值可以是任意 JSON 类型；`resource` 映射本身的值仍是具名类型 `AgentSpecResource`。
 
 #### 示例
 
@@ -8851,24 +8786,23 @@ API 的 `sourceId` 等于 managed `pluginName`，当前固定为 `mcp-official`�
 | `namespaceId` | `string` | 否 | - |
 | `resourceType` | `string` | **是** | - |
 | `sourceId` | `string` | **是** | - |
-| `selectedItems` | `string` | **是** | - |
+| `selectedItems` | `string` | **是** | 选中导入项的 JSON 数组字符串，例如 `[{"id":"demo"}]`。 |
 | `overwriteExisting` | `boolean` | 否 | - |
 | `skipInvalid` | `boolean` | 否 | - |
 | `validationToken` | `string` | 否 | - |
-| `options` | `string` | 否 | - |
+| `options` | `string` | 否 | 导入选项的 JSON 对象字符串，例如 `{"owner":"alibaba"}`。 |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data.success | `boolean` | - |
-| data.data.totalCount | `integer` | - |
-| data.data.successCount | `integer` | - |
-| data.data.failedCount | `integer` | - |
-| data.data.skippedCount | `integer` | - |
-| data.data.results | `array` | - |
+| data | `AiResourceImportExecuteResponse` | 导入执行结果。 |
+| data.success | `boolean` | 是否执行成功。 |
+| data.totalCount | `integer` | 导入条目总数。 |
+| data.successCount | `integer` | 成功条目数。 |
+| data.failedCount | `integer` | 失败条目数。 |
+| data.skippedCount | `integer` | 跳过条目数。 |
+| data.results | `array<AiResourceImportResultItem>` | 每个条目的执行结果。 |
 
 #### 示例
 
@@ -8919,19 +8853,18 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 | `query` | `string` | 否 | - |
 | `cursor` | `string` | 否 | - |
 | `limit` | `integer` | 否 | - |
-| `options` | `string` | 否 | - |
+| `options` | `string` | 否 | 导入选项的 JSON 对象字符串，例如 `{"owner":"alibaba"}`。 |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data.sourceId | `string` | - |
-| data.data.resourceType | `string` | - |
-| data.data.nextCursor | `string` | - |
-| data.data.hasMore | `boolean` | - |
-| data.data.items | `array` | - |
+| data | `AiResourceImportSearchResponse` | 外部资源搜索结果。 |
+| data.sourceId | `string` | 导入源标识。 |
+| data.resourceType | `string` | 资源类型。 |
+| data.nextCursor | `string` | 下一页查询游标。 |
+| data.hasMore | `boolean` | 是否还有更多结果。 |
+| data.items | `array<AiResourceImportCandidateItem>` | 候选资源条目。 |
 
 #### 示例
 
@@ -8982,9 +8915,14 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `array` | - |
+| data | `array<AiResourceImportSourceInfo>` | 可用的 AI 资源导入源列表。 |
+| data[].sourceId | `string` | 导入源标识。 |
+| data[].displayName | `string` | 展示名称。 |
+| data[].description | `string` | 导入源描述。 |
+| data[].pluginName | `string` | 提供导入源的插件名称。 |
+| data[].resourceTypes | `array<string>` | 支持的资源类型。 |
+| data[].enabled | `boolean` | 是否启用。 |
+| data[].capabilities | `array<string>` | 支持的能力。 |
 
 #### 示例
 
@@ -9000,7 +8938,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": []
 }
 ```
 
@@ -9032,20 +8970,19 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 | `namespaceId` | `string` | 否 | - |
 | `resourceType` | `string` | **是** | - |
 | `sourceId` | `string` | **是** | - |
-| `selectedItems` | `string` | **是** | - |
+| `selectedItems` | `string` | **是** | 选中导入项的 JSON 数组字符串，例如 `[{"id":"demo"}]`。 |
 | `overwriteExisting` | `boolean` | 否 | - |
-| `options` | `string` | 否 | - |
+| `options` | `string` | 否 | 导入选项的 JSON 对象字符串，例如 `{"owner":"alibaba"}`。 |
 
 #### 返回数据
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data.sourceId | `string` | - |
-| data.data.resourceType | `string` | - |
-| data.data.validationToken | `string` | - |
-| data.data.items | `array` | - |
+| data | `AiResourceImportValidateResponse` | 导入校验结果。 |
+| data.sourceId | `string` | 导入源标识。 |
+| data.resourceType | `string` | 资源类型。 |
+| data.validationToken | `string` | 执行导入时使用的校验令牌。 |
+| data.items | `array<AiResourceImportValidationItem>` | 各条目的校验结果。 |
 
 #### 示例
 
@@ -9099,6 +9036,7 @@ Copilot 相关 API 提供配置获取/保存、Prompt 调试与优化、Skill �
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
+| data | `CopilotProperties` | Copilot 配置。 |
 | data.enabled | `boolean` | Copilot 功能是否启用。 |
 | data.defaultNamespace | `string` | 默认使用的命名空间 ID。 |
 | data.apiKey | `string` | 调用大模型等外部服务的 API Key（脱敏或原文由实现决定）。 |
@@ -9145,7 +9083,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 
 `POST`
 
-请求体类型：`application/json`。请求示例中需使用 `-H 'Content-Type: application/json'`。
+请求体类型：`application/json`，请求体必填。请求示例中需使用 `-H 'Content-Type: application/json'`。
 
 #### 鉴权状态
 
@@ -9403,7 +9341,7 @@ Agent 管理 API 提供 Agent 定义、草稿、版本流转、运行时端点�
 | 类型 | 结构或关键字段 |
 |------|----------------|
 | `AgentOverview` | `agent: AgentSummary`、`versionPage: Page<AgentVersionSummary>` |
-| `AgentSummary` | `namespaceId`、`agentName`、`displayName`、`description`、`iconUrl`、`provider: AgentProvider`、`tags: array<string>`、`extensions: map<string, object>`、`status`、`owner`、`scope`、`versionInfo: AgentVersionInfo`、`metaVersion`、`createTime`、`updateTime` |
+| `AgentSummary` | `namespaceId`、`agentName`、`displayName`、`description`、`iconUrl`、`provider: AgentProvider`、`tags: array<string>`、`extensions: map<string, any>`、`status`、`owner`、`scope`、`versionInfo: AgentVersionInfo`、`metaVersion`、`createTime`、`updateTime` |
 | `AgentProvider` | `name: string`、`url: string` |
 | `AgentVersionInfo` | `editingVersion`、`reviewingVersion`、`onlineVersions: array<AgentVersionSummary>`、`labels: map<string, string>`；默认版本读取 `labels.latest` |
 | `AgentVersionSummary` | `version`、`status`、`publishPipelineInfo`、`author`、`changeDescription`、`contentDigest`、`labels: array<string>`、`protocols: array<string>`、`createTime`、`updateTime` |
