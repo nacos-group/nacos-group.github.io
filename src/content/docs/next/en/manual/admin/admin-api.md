@@ -54,6 +54,8 @@ For troubleshooting, provide the optional `Nacos-Request-Id` header. See [HTTP R
 
 Nacos 3.X Admin APIs also provide Swagger-style documentation. You can view it at [Nacos Swagger Admin API](/swagger/admin/).
 
+In the tables below, `map<string, any>` means a map with string keys and arbitrary JSON values: strings, numbers, booleans, objects, arrays, or `null`. Maps with an explicit value type, such as `map<string, string>`, retain that type constraint.
+
 ## 1. Nacos Core Admin APIs
 
 ### 1.1. Get Current Node Connections
@@ -88,7 +90,8 @@ The response body follows the [Nacos open API unified response format](../user/o
 
 | Name                                     | Type         | Description                                                                                      |
 |-----------------------------------------|--------------|-----------------------------------------------------------------------------------------|
-| ${connectionId}                         | `object` | Each gRPC connection ID. |
+| `data` | `map<string, Connection>` | Mapping of connection IDs to connection details. |
+| ${connectionId}                         | `Connection` | Details of the gRPC connection identified by the key. |
 | ${connectionId}.abilityTable            | `object` | Capability list supported by the gRPC connection, namely the client. |
 | ${connectionId}.metaInfo.clientIp       | `string` | Source IP of the gRPC connection. |
 | ${connectionId}.metaInfo.localPort      | `integer` | gRPC port of this Nacos Server. |
@@ -305,6 +308,7 @@ The response body follows the [Nacos open API unified response format](../user/o
 
 | Name                           | Type        | Description                        |
 |-------------------------------|-------------|---------------------------|
+| `data` | `ServerLoaderMetrics` | Cluster connection overview; the following fields belong to this object. |
 | `total`                       | `integer` | Total number of connections on all nodes in the cluster. |
 | `min`                         | `integer` | Minimum connection count among all nodes in the cluster. |
 | `avg`                         | `integer` | Average connection count across all nodes in the cluster. |
@@ -382,10 +386,11 @@ The response body follows the [Nacos open API unified response format](../user/o
 
 | Name                           | Type         | Description                                             |
 |-------------------------------|--------------|------------------------------------------------|
+| `data` | `Member` | Current node information; its fields follow. |
 | `ip`                          | `string` | Node IP address. |
 | `port`                        | `integer` | Node port. |
 | `state`                       | `string` | Node state: UP/DOWN/SUSPICIOUS |
-| `extendInfo`                  | `object` | Extended node information. See the following fields. |
+| `extendInfo`                  | `map<string, any>` | Extended node information. See the following fields; values may use different JSON types. |
 | `extendInfo.lastRefreshTime`  | `integer` | Last update timestamp of the node, in milliseconds. |
 | `extendInfo.raftMetaData`     | `object` | Raft metadata of the node, including fields such as `leader` and `term` for each Raft Group. |
 | `extendInfo.raftPort`         | `integer` | Raft port of the node. |
@@ -667,7 +672,7 @@ Use this API to perform maintenance operations on the Raft protocol in the Nacos
 
 `POST`
 
-The request body type is `application/json`, and parameters are placed in the request body.
+Request body type: `application/json`. The body is required; send the parameters in it.
 
 #### Authorization
 
@@ -734,7 +739,7 @@ Use this API to dynamically change Nacos Core log level configuration without re
 
 `PUT`
 
-The request body type is `application/json`, and parameters are placed in the request body.
+Request body type: `application/json`. The body is required; send the parameters in it.
 
 #### Authorization
 
@@ -815,7 +820,7 @@ Administrator permissions required.
 
 | Name                | Type       | Required    | Description           |
 |--------------------|----------|-------|----------------|
-| `loaderFactor` | `number` | No | - |
+| `loaderFactor` | `number` | No | Connection load-balancing factor. Defaults to `0.1`. |
 
 #### Response Data
 
@@ -946,7 +951,7 @@ Use this API to update detailed information in the Nacos node list of the curren
 
 `PUT`
 
-The request body type is `application/json`.
+Request body type: `application/json`. The body is a required array of node information.
 
 #### Authorization
 
@@ -965,7 +970,7 @@ The required request body is an `array<Member>`; each array item is a `Member` n
 | `body[].ip` | `string` | No | Node IP address. |
 | `body[].port` | `integer` | No | Node port. |
 | `body[].state` | `string` | No | Node state: `STARTING`, `UP`, `SUSPICIOUS`, `DOWN`, or `ISOLATION`. |
-| `body[].extendInfo` | `map<string, object>` | No | Node extension information. |
+| `body[].extendInfo` | `map<string, any>` | No | Node extension information with arbitrary JSON values. |
 | `body[].address` | `string` | No | Node address. |
 | `body[].abilities` | `ServerAbilities` | No | Node capability information. |
 | `body[].grpcReportEnabled` | `boolean` | No | Whether gRPC status reporting is enabled. |
@@ -1033,6 +1038,7 @@ The response body follows the [Nacos open API unified response format](../user/o
 
 | Name | Type | Description |
 |--------|----------|------|
+| `data` | `Namespace` | Namespace details; the following fields belong to this object. |
 | namespace | `string` | Namespace ID. |
 | namespaceShowName | `string` | Namespace display name. |
 | namespaceDesc | `string` | Namespace description. |
@@ -1512,7 +1518,7 @@ Administrator permissions required.
 | `pluginType` | `string` | **Yes** | Plugin type, such as auth. |
 | `pluginName` | `string` | **Yes** | Plugin name. |
 | `config` | `string` | **Yes** | JSON object string parsed as the complete configuration map keyed by definition item key. |
-| `localOnly` | `boolean` | No | `true` writes `LOCAL_ONLY`; otherwise writes cluster-persisted `RUNTIME_PERSISTED`. |
+| `localOnly` | `boolean` | No | Defaults to `false`. `true` writes `LOCAL_ONLY`; otherwise writes cluster-persisted `RUNTIME_PERSISTED`. |
 
 #### Response Data
 
@@ -1575,6 +1581,7 @@ The response body follows the [Nacos open API unified response format](../user/o
 
 | Name | Type | Description |
 |--------|----------|------|
+| data | `PluginDetailVO` | Plugin details; its fields follow. |
 | pluginId | `string` | Plugin ID. |
 | pluginType | `string` | Plugin type. |
 | pluginName | `string` | Plugin name. |
@@ -1584,9 +1591,9 @@ The response body follows the [Nacos open API unified response format](../user/o
 | executionMode | `string` | `EXCLUSIVE`, `CHAIN`, `ROUTED`, or `BROADCAST`. |
 | exclusive | `boolean` | Whether the type uses exclusive selection. |
 | configurable | `boolean` | Whether the plugin is configurable. |
-| config | `object` | Effective item map with sensitive values masked. |
-| configDefinitions | `array` | Definitions including key, aliases, type, defaultValue, required, sensitive, and effectMode. |
-| configValueMetas | `object` | Effective source and `overridden` metadata for each item. |
+| config | `map<string, string>` | Effective item map with sensitive values masked; keys and values are strings. |
+| configDefinitions | `array<ConfigItemDefinition>` | Definitions including key, aliases, type, defaultValue, required, sensitive, and effectMode. |
+| configValueMetas | `map<string, PluginConfigValueMeta>` | Effective source and `overridden` metadata for each item. |
 
 #### Examples
 
@@ -1710,7 +1717,7 @@ Administrator permissions required.
 | `pluginType` | `string` | **Yes** | Plugin type. |
 | `pluginName` | `string` | **Yes** | Plugin name. |
 | `enabled` | `boolean` | **Yes** | Whether to enable the plugin. |
-| `localOnly` | `boolean` | No | Whether to write only locally. |
+| `localOnly` | `boolean` | No | Whether to write only locally. Defaults to `false`. |
 
 #### Response Data
 
@@ -1769,6 +1776,7 @@ The response body follows the [Nacos open API unified response format](../user/o
 
 | Name                      | Type      | Description                                                                                                      |
 |--------------------------|-----------|---------------------------------------------------------------------------------------------------------|
+| `data` | `SwitchDomain` | Naming module switches; the following fields belong to this object. |
 | `clientBeatInterval`     | `integer` | Default heartbeat interval of Nacos 1.x clients                                                                                      |
 | `defaultCacheMillis`     | `integer` | Default cache time of service lists subscribed by clients                                                                                       |
 | `pushCacheMillis`        | `integer` | Default cache time of pushed service lists. This has higher priority than `defaultCacheMillis`.                                                                |
@@ -1936,6 +1944,7 @@ The response body follows the [Nacos open API unified response format](../user/o
 
 | Name                           | Type     | Description    |
 |-------------------------------|----------|---------|
+| `data` | `MetricsInfo` | Naming metrics; the following fields belong to this object. |
 | `status`                      | `string` | System status    |
 | `serviceCount`                | `integer` | Number of services    |
 | `instanceCount`               | `integer` | Number of instances    |
@@ -2057,7 +2066,7 @@ None
 
 | Name    | Type           | Description      |
 |--------|----------------|---------|
-| `data` | `array` | Client ID list. |
+| `data` | `array<string>` | Client ID list. |
 
 #### Examples
 
@@ -2113,6 +2122,7 @@ The response body follows the [Nacos open API unified response format](../user/o
 
 | Name               | Type      | Description                 |
 |-------------------|-----------|--------------------|
+| `data` | `ClientSummaryInfo` | Client information; its fields follow. |
 | `clientId`        | `string` | Unique client ID.         |
 | `ephemeral`       | `boolean` | Whether the client is ephemeral        |
 | `lastUpdatedTime` | `integer` | Last client update time as a timestamp    |
@@ -2121,7 +2131,7 @@ The response body follows the [Nacos open API unified response format](../user/o
 | `appName`         | `string` | Application name to which the client belongs         |
 | `version`         | `string` | Client version            |
 | `clientIp`        | `string` | Client IP address         |
-| `clientPort`      | `string` | Client port            |
+| `clientPort`      | `integer` | Client port            |
 
 #### Examples
 
@@ -3200,6 +3210,7 @@ The response body follows the [Nacos open API unified response format](../user/o
 
 | Name           | Type      | Description                              |
 |---------------|-----------|-----------------------------------|
+| `data` | `Instance` | Instance details; the following fields belong to this object. |
 | `serviceName` | `string` | Service name in the `groupName`@@`serviceName` format |
 | `clusterName` | `string` | Cluster name of the instance                         |
 | `ip`          | `string` | Instance IP                            |
@@ -3287,7 +3298,7 @@ Requires `write` permission for the corresponding namespace.
 
 | Name    | Type      | Description     |
 |--------|-----------|--------|
-| `data` | `boolean` | Whether execution succeeds |
+| `data` | `string` | Returns `ok` on success. |
 
 #### Examples
 
@@ -3306,7 +3317,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -d 'serviceName=nacos.test.1' \
 {
   "code": 0,
   "message": "success",
-  "data": true
+  "data": "ok"
 }
 ```
 
@@ -3344,7 +3355,7 @@ Requires `write` permission for the corresponding namespace.
 
 | Name    | Type      | Description     |
 |--------|-----------|--------|
-| `data` | `boolean` | Whether execution succeeds |
+| `data` | `string` | Returns `ok` on success. |
 
 #### Examples
 
@@ -3360,7 +3371,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8848/na
 {
   "code": 0,
   "message": "success",
-  "data": true
+  "data": "ok"
 }
 ```
 
@@ -3400,14 +3411,15 @@ The response body follows the [Nacos open API unified response format](../user/o
 
 | Name                                                 | Type         | Description                                   |
 |-----------------------------------------------------|--------------|--------------------------------------|
+| `data` | `ServiceDetailInfo` | Service details; its fields follow. |
 | `namespaceId`                                       | `string` | Namespace ID to which the service belongs.                    |
 | `groupName`                                         | `string` | Group name to which the service belongs.                      |
 | `serviceName`                                       | `string` | Service name.                                 |
 | `ephemeral`                                         | `boolean` | Persistence attribute of the service. `true` means ephemeral service, and `false` means persistent service.  |
 | `protectThreshold`                                  | `number` | Service protection threshold.                              |
-| `selector`                                          | `object` | Service selector. |
-| `metadata`                                          | `object` | Service metadata. |
-| `clusterMap`                                        | `object` | Service cluster map. The key is the cluster name and the value is the cluster details. |
+| `selector`                                          | `Selector` | Service selector. |
+| `metadata`                                          | `map<string, string>` | Service metadata with string keys and values. |
+| `clusterMap`                                        | `map<string, ClusterInfo>` | Service cluster map. The key is the cluster name and the value is the cluster details. |
 | `clusterMap`.$ClusterName.`clusterName`             | `string` | Cluster name.                                 |
 | `clusterMap`.$ClusterName.`healthChecker`           | `object` | Health checker. |
 | `clusterMap`.$ClusterName.`healthyCheckPort`        | `integer` | Health check port.                              |
@@ -3585,7 +3597,7 @@ Requires `write` permission for the corresponding namespace.
 
 | Name    | Type      | Description     |
 |--------|-----------|--------|
-| `data` | `boolean` | Whether execution succeeds |
+| `data` | `string` | Returns `ok` on success. |
 
 #### Examples
 
@@ -3603,7 +3615,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -d 'serviceName=nacos.test.1' \
 {
   "code": 0,
   "message": "success",
-  "data": true
+  "data": "ok"
 }
 ```
 
@@ -3723,7 +3735,7 @@ None
 
 | Name    | Type           | Description      |
 |--------|----------------|---------|
-| `data` | `array` | Selector type list. |
+| `data` | `array<string>` | Selector type list. |
 
 #### Examples
 
@@ -4052,6 +4064,7 @@ The response body follows the [Nacos open API unified response format](../user/o
 
 | Name               | Type                  | Description                                    |
 |-------------------|-----------------------|---------------------------------------|
+| `data` | `ConfigListenerInfo` | Config listener information; the following fields belong to this object. |
 | `queryType`       | `string` | Subscriber query type. This API uses `config`.                 |
 | `listenersStatus` | `map<string, string>` | Subscriber list. The key is the subscriber IP, and the value is the MD5 value of the current config subscribed by the subscriber. |
 
@@ -4344,7 +4357,7 @@ Import configs and publish them to a specified namespace.
 
 `POST`
 
-Request body type: `multipart/form-data`. Parameters are sent in the request body.
+Request body type: `multipart/form-data`. Both the body and the `file` part are required.
 
 #### Authorization
 
@@ -4367,7 +4380,7 @@ Requires `write` permission for the corresponding namespace.
 
 | Name              | Type                  | Description     |
 |------------------|-----------------------|--------|
-| `data`           | `map<string, object>` | Import result. |
+| `data`           | `map<string, any>` | Import result with arbitrary JSON values. |
 | `data.succCount` | `integer` | Number of successfully imported items |
 | `data.skipCount` | `integer` | Number of skipped items |
 
@@ -4429,7 +4442,7 @@ Requires `read` permission for the corresponding namespace.
 
 #### Response Data
 
-The response body is a ZIP file that contains config content and metadata.
+The successful response is an `application/octet-stream` binary ZIP file containing config content and metadata, without a JSON `Result` wrapper.
 
 #### Examples
 
@@ -4453,7 +4466,7 @@ Clone configs to a specified namespace.
 
 `POST`
 
-The request body type is `application/json`, and the body is an array of configurations.
+Request body type: `application/json`. The body is a required array of configurations.
 
 #### Authorization
 
@@ -4912,7 +4925,8 @@ The response body follows the [Nacos open API unified response format](../user/o
 
 | Name                | Type      | Description         |
 |--------------------|-----------|------------|
-| `id`               | `integer` | Unique ID of the capacity information  |
+| `data` | `Capacity` | Capacity information; the fields below include group or namespace capacity subtype fields. |
+| `id`               | `string` | Unique capacity record ID, serialized as a string to preserve large integer precision. |
 | `groupName`        | `string` | Group name       |
 | `namespaceId`      | `string` | Namespace ID     |
 | `quota`            | `integer` | Quota         |
@@ -5145,7 +5159,7 @@ Administrator permissions required.
 
 | Name    | Type                        | Description   |
 |--------|-----------------------------|------|
-| `data` | `array` | Query result. |
+| `data` | `array<map<string, any>>` | Query results. Each item is a row whose column values may be strings, numbers, booleans, `null`, or other JSON values. |
 
 #### Examples
 
@@ -5211,7 +5225,7 @@ Import data from an external data source into the Derby database.
 
 `POST`
 
-The request body type is `multipart/form-data`, and parameters are placed in the request body.
+Request body type: `multipart/form-data`. Both the body and the `file` part are required.
 
 #### Authorization
 
@@ -5290,6 +5304,7 @@ The response body follows the [Nacos open API unified response format](../user/o
 
 | Name               | Type                  | Description                                                                            |
 |-------------------|-----------------------|-------------------------------------------------------------------------------|
+| `data` | `ConfigListenerInfo` | Client subscription information; the following fields belong to this object. |
 | `queryType`       | `string` | Subscriber query type. This API uses `ip`.                                                             |
 | `listenersStatus` | `map<string, string>` | Subscriber list. The key is subscribed config information in the format `dataId` + `groupName` + `namespaceId`, and the value is the MD5 value of the current config subscribed by the subscriber. |
 
@@ -5566,6 +5581,7 @@ Administrator permissions required.
 | Name | Type | Description |
 |--------|----------|------|
 | `data` | `ConfigGrayInfo` | Gray configuration details. |
+| `data.id` | `string` | Storage record ID, serialized as a string to preserve large integer precision. |
 | `data.schema` | `string` | Configuration schema. |
 | data.dataId | `string` | Configuration ID. |
 | data.groupName | `string` | Configuration group name. |
@@ -5623,10 +5639,11 @@ Administrator permissions required.
 | `dataId` | `string` | **Yes** | Configuration ID. |
 | `content` | `string` | **Yes** | Gray configuration content. |
 | `grayName` | `string` | **Yes** | Gray configuration name. |
-| `grayType` | `string` | No | Gray rule type. |
-| `grayMatchRuleExp` | `string` | **Yes** | Gray matching rule expression. |
+| `grayType` | `string` | No | Gray rule type. Defaults to `tagv2`. |
+| `grayMatchRuleExp` | `string` | Conditional | Compatibility alias for `grayRuleExp`; a nonblank value takes precedence over `grayRuleExp`. At least one must provide a valid expression. |
+| `grayRuleExp` | `string` | Conditional | Gray rule expression. Required when `grayMatchRuleExp` is absent or blank. |
 | `grayVersion` | `string` | **Yes** | Gray version. |
-| `grayPriority` | `integer` | No | Gray rule priority. |
+| `grayPriority` | `integer` | No | Gray rule priority. Defaults to `0`. |
 | `appName` | `string` | No | Application name. |
 | `configTags` | `string` | No | Configuration tags. |
 | `desc` | `string` | No | Configuration description. |
@@ -5754,6 +5771,8 @@ New resources default to `PUBLIC` under the built-in visibility policy. Use the 
 | `onlineCount` | `integer` | Number of online versions. |
 | `writable` | `boolean` | Whether the caller has write access to the resource. |
 
+`McpResourceSpecification.resources` and `resourceTemplates` are `array<map<string, any>>`; `extensions` is `map<string, any>`. `McpToolSpecification.extensions` also accepts arbitrary JSON values. Tool `toolsMeta` remains `map<string, McpToolMeta>`, where `invokeContext` is a string-valued map and `templates` is a map of arbitrary JSON values.
+
 ### 4.1. Query MCP Service List
 
 #### Description
@@ -5803,7 +5822,7 @@ The response body follows the [Nacos open API unified response format](../user/o
 | `pageItems`[i].`description`                  | `string` | MCP service description.                                                                             |
 | `pageItems`[i].`repository` | `Repository` | Repository metadata: `url`, `source`, `id`, and `subfolder`. |
 | `pageItems`[i].`versionDetail`                | `ServerVersionDetail` | Latest version information of the MCP service.                                                        |
-| `pageItems`[i].`localServerConfig`            | `map<string, object>` | Startup information for a local MCP service when the MCP service type is **stdio**.                    |
+| `pageItems`[i].`localServerConfig`            | `map<string, any>` | Startup information for a local MCP service when the MCP service type is **stdio**; values may use any JSON type. |
 | `pageItems`[i].`remoteServerConfig`           | `McpServerRemoteServiceConfig` | Remote service information when the MCP service type is **not stdio**.                                |
 | `pageItems`[i].`latestPublishedVersion`       | `string` | Latest published version of the MCP service.                                                          |
 | `pageItems`[i].`versionDetails`               | `array<ServerVersionDetail>` | MCP service version details.                                                                          |
@@ -5911,7 +5930,7 @@ The response body follows the [Nacos open API unified response format](../user/o
 | `description`        | `string` | MCP service description.                                                                                       |
 | `repository` | `Repository` | Repository metadata: `url`, `source`, `id`, and `subfolder`. |
 | `versionDetail`      | `ServerVersionDetail` | Queried version information of the MCP service.                                                        |
-| `localServerConfig`  | `map<string, object>` | Startup information for a local MCP service when the MCP service type is **stdio**.                    |
+| `localServerConfig`  | `map<string, any>` | Startup information for a local MCP service when the MCP service type is **stdio**; values may use any JSON type. |
 | `remoteServerConfig` | `McpServerRemoteServiceConfig` | Remote service information when the MCP service type is **not stdio**.                                |
 | `enabled`            | `boolean` | Whether the MCP service is enabled.                                                                                      |
 | `capabilities`       | `array<string>`       | Capability types supported by the MCP service, such as `TOOL`, `PROMPT`, and `RESOURCE`.              |
@@ -6022,7 +6041,7 @@ The details of the `serverSpecification`, `toolSpecification`, and `endpointSpec
 | `repository` | `Repository` | Repository metadata: `url`, `source`, `id`, and `subfolder`. |
 | `versionDetail`      | `ServerVersionDetail` | MCP service version information.                                                                      |
 | `version`            | `string` | Simple version information of the MCP service, mainly used for compatibility. If `versionDetail` is set, this field is invalid.                                               |
-| `localServerConfig`  | `map<string, object>` | Startup information for a local MCP service when the MCP service type is **stdio**.                    |
+| `localServerConfig`  | `map<string, any>` | Startup information for a local MCP service when the MCP service type is **stdio**; values may use any JSON type. |
 | `remoteServerConfig` | `McpServerRemoteServiceConfig` | Remote service information when the MCP service type is **not stdio**.                                |
 | `enabled`            | `boolean` | Whether the MCP service is enabled.                                                                                      |
 | `capabilities`       | `array<string>`       | Capability types supported by the MCP service, such as `TOOL`, `PROMPT`, and `RESOURCE`.              |
@@ -6049,7 +6068,9 @@ The `McpTool` structure is as follows:
 |---------------|-----------------------|-----------------------------------------------|
 | `name`        | `string` | MCP tool name                                     |
 | `description` | `string` | MCP tool description                                     |
-| `inputSchema` | `map<string, object>` | MCP tool input schema. See the standard MCP protocol; it mainly includes type, required flag, and description. |
+| `inputSchema` | `map<string, any>` | MCP tool input schema. See the standard MCP protocol; it mainly includes type, required flag, and description. Values may use any JSON type. |
+| `outputSchema` | `map<string, any>` | MCP tool output JSON Schema with arbitrary JSON values. |
+| `_meta` | `map<string, any>` | MCP tool extension metadata with arbitrary JSON values. |
 
 The `McpToolMeta` structure is as follows:
 
@@ -6057,7 +6078,7 @@ The `McpToolMeta` structure is as follows:
 |-----------------|-----------------------|--------------------------------|
 | `invokeContext` | `map<string, string>` | Context information used when invoking the MCP tool, such as the backend service `Path`. |
 | `enabled`       | `boolean` | Whether the MCP tool is enabled.                     |
-| `templates`     | `map<string, string>` | Template information of the MCP tool. It is used to map parameters during protocol conversion.   |
+| `templates`     | `map<string, any>` | Template information of the MCP tool, used to map parameters during protocol conversion. Values may use any JSON type. |
 
 The `SecurityScheme` structure is as follows:
 
@@ -6153,7 +6174,7 @@ The details of the `serverSpecification`, `toolSpecification`, and `endpointSpec
 | `repository` | `Repository` | Repository metadata: `url`, `source`, `id`, and `subfolder`. |
 | `versionDetail`      | `ServerVersionDetail` | MCP service version information.                                                                      |
 | `version`            | `string` | Simple version information of the MCP service, mainly used for compatibility. If `versionDetail` is set, this field is invalid.                                               |
-| `localServerConfig`  | `map<string, object>` | Startup information for a local MCP service when the MCP service type is **stdio**.                    |
+| `localServerConfig`  | `map<string, any>` | Startup information for a local MCP service when the MCP service type is **stdio**; values may use any JSON type. |
 | `remoteServerConfig` | `McpServerRemoteServiceConfig` | Remote service information when the MCP service type is **not stdio**.                                |
 | `enabled`            | `boolean` | Whether the MCP service is enabled.                                                                                      |
 | `capabilities`       | `array<string>`       | Capability types supported by the MCP service, such as `TOOL`, `PROMPT`, and `RESOURCE`.              |
@@ -6180,7 +6201,9 @@ The `McpTool` structure is as follows:
 |---------------|-----------------------|-----------------------------------------------|
 | `name`        | `string` | MCP tool name                                     |
 | `description` | `string` | MCP tool description                                     |
-| `inputSchema` | `map<string, object>` | MCP tool input schema. See the standard MCP protocol; it mainly includes type, required flag, and description. |
+| `inputSchema` | `map<string, any>` | MCP tool input schema. See the standard MCP protocol; it mainly includes type, required flag, and description. Values may use any JSON type. |
+| `outputSchema` | `map<string, any>` | MCP tool output JSON Schema with arbitrary JSON values. |
+| `_meta` | `map<string, any>` | MCP tool extension metadata with arbitrary JSON values. |
 
 The `McpToolMeta` structure is as follows:
 
@@ -6188,7 +6211,7 @@ The `McpToolMeta` structure is as follows:
 |-----------------|-----------------------|--------------------------------|
 | `invokeContext` | `map<string, string>` | Context information used when invoking the MCP tool, such as the backend service `Path`. |
 | `enabled`       | `boolean` | Whether the MCP tool is enabled.                     |
-| `templates`     | `map<string, string>` | Template information of the MCP tool. It is used to map parameters during protocol conversion.   |
+| `templates`     | `map<string, any>` | Template information of the MCP tool, used to map parameters during protocol conversion. Values may use any JSON type. |
 
 The `SecurityScheme` structure is as follows:
 
@@ -7091,6 +7114,8 @@ curl -sS -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8848/n
 
 ## 5. A2A Registry
 
+AgentCard `signatures` is `array<map<string, any>>`. `AgentCapabilities.extensions` is `array<AgentExtension>`, and each extension's `params` is `map<string, any>`. These dynamic values may use any JSON type; other explicitly typed fields retain their constraints.
+
 ### 5.1. Query Versions of a Specified AgentCard
 
 #### Description
@@ -7311,6 +7336,7 @@ The response body follows the [Nacos open API unified response format](../user/o
 
 | Name                                 | Type                              | Description                                                                                                       |
 |-------------------------------------|-----------------------------------|----------------------------------------------------------------------------------------------------------|
+| `data` | `AgentCardDetailInfo` | AgentCard details; the following fields belong to this object. |
 | `protocolVersion`                   | `string` | A2A protocol version of the AgentCard.                                                                                       |
 | `name`                              | `string` | AgentCard name.                                                                                            |
 | `description`                       | `string` | AgentCard description.                                                                                            |
@@ -7727,6 +7753,11 @@ Administrator permissions required.
 
 The response body follows the [Nacos OpenAPI common response format](../user/overview/api-overview.md#32-http-api-response-format). `data` contains fields such as `promptKey`, `version`, `template`, `commitMsg`, and `md5`.
 
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `PromptVersionInfo` | Prompt version details. |
+| `data.variables` | `array<PromptVariable>` | Template variable definitions. |
+
 #### Examples
 
 * Request example
@@ -7953,6 +7984,13 @@ Administrator permissions required.
 
 The response body follows the [Nacos OpenAPI common response format](../user/overview/api-overview.md#32-http-api-response-format). `data` contains fields such as `promptKey`, `description`, `bizTags`, `latestVersion`, `versions`, and `labels`.
 
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `PromptMetaInfo` | Prompt metadata. |
+| `data.bizTags` | `array<string>` | Business tags. |
+| `data.labels` | `map<string, string>` | Mapping of labels to versions. |
+| `data.versionDetails` | `array<PromptVersionSummary>` | Version summaries. |
+
 #### Examples
 
 * Request example
@@ -7970,7 +8008,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8848/nacos
   "data": {
     "promptKey": "my-prompt",
     "description": "",
-    "bizTags": ""
+    "bizTags": []
   }
 }
 ```
@@ -8308,6 +8346,14 @@ Administrator permissions required.
 | `namespaceId` | `string` | No | Namespace. |
 | `promptKey` | `string` | **Yes** | Prompt key. |
 
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `PromptMetaInfo` | Prompt metadata and governance details. |
+| `data.labels` | `map<string, string>` | Mapping of labels to versions. |
+| `data.versionDetails` | `array<PromptVersionSummary>` | Version summaries and governance states. |
+
 ### 6.17. Update Prompt Labels
 
 #### Description
@@ -8518,6 +8564,13 @@ Administrator permissions required.
 | `promptKey` | `string` | **Yes** | Prompt key. |
 | `version` | `string` | No | Version number. |
 
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `PromptVersionInfo` | Content, state, and publication information for the specified version. |
+| `data.variables` | `array<PromptVariable>` | Template variable definitions. |
+
 ### 6.24. Download Prompt Version
 
 #### Description
@@ -8547,6 +8600,10 @@ Administrator permissions required.
 | `namespaceId` | `string` | No | Namespace. |
 | `promptKey` | `string` | **Yes** | Prompt key. |
 | `version` | `string` | No | Version number. |
+
+#### Response Data
+
+The successful response is an `application/octet-stream` binary file containing the requested Prompt version as Markdown, without a JSON `Result` wrapper.
 
 ## 7. AI Skills Management
 
@@ -8581,7 +8638,14 @@ Administrator permissions required.
 
 #### Response Data
 
-The response follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). `data` contains fields such as name, description, instruction, resource, version, inputModes, and outputModes.
+The response follows the [Nacos open API unified response format](../user/overview/api-overview.md#32-http-api-response-format). `data` contains skill metadata and version summaries. Use Get Skill Version Details to retrieve version content.
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `SkillMeta` | Skill metadata, including name, description, owner, and scope. |
+| `data.labels` | `map<string, string>` | Mapping of labels to versions. |
+| `data.frontMatter` | `map<string, string>` | Skill front-matter metadata. |
+| `data.versions` | `array<SkillVersionSummary>` | Version summaries and governance states. |
 
 #### Examples
 
@@ -8600,9 +8664,8 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8848/nacos
   "data": {
     "name": "my-skill",
     "description": "",
-    "version": "1.0.0",
-    "inputModes": [],
-    "outputModes": []
+    "labels": {},
+    "versions": []
   }
 }
 ```
@@ -8850,7 +8913,7 @@ This API uploads a ZIP package in multipart/form-data format and registers the s
 
 `POST`
 
-The request body type is `multipart/form-data`, and parameters are placed in the request body.
+Request body type: `multipart/form-data`. Both the body and the `file` part are required.
 
 #### Authorization
 
@@ -8865,7 +8928,7 @@ Administrator permissions required.
 | Name | Type | Required | Description |
 |--------|------|------|----------|
 | `namespaceId` | `string` | No | Namespace ID. Defaults to `public`. |
-| `overwrite` | `boolean` | No | Whether to overwrite an existing skill with the same name. |
+| `overwrite` | `boolean` | No | Whether to overwrite an existing draft of a skill with the same name. Defaults to `false`. |
 | `targetVersion` | `string` | No | Target version after upload. |
 | `commitMsg` | `string` | No | Commit message. |
 | `uploadAction` | `string` | No | Upload action selected after precheck. |
@@ -9022,6 +9085,13 @@ The following APIs are used to control the skill version publishing workflow.
 | `skillName` | `string` | **Yes** | Skill name. |
 | `version` | `string` | No | Version number. |
 
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| data | `Skill` | Content of the requested skill version. |
+| data.resource | `map<string, SkillResource>` | Skill resource mapping. Each resource has `metadata: map<string, any>` with arbitrary JSON values. |
+
 ### 7.12. Download Skill Version ZIP Package
 
 #### Since
@@ -9043,6 +9113,16 @@ The following APIs are used to control the skill version publishing workflow.
 | `namespaceId` | `string` | No | Namespace. |
 | `skillName` | `string` | **Yes** | Skill name. |
 | `version` | `string` | No | Version number. |
+
+#### Response Data
+
+The successful response is an `application/zip` binary ZIP file containing the requested Skill package, without a JSON `Result` wrapper.
+
+#### Examples
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" 'http://127.0.0.1:8848/nacos/v3/admin/ai/skills/version/download?namespaceId=public&skillName=my-skill&version=1.0.0' --output skill.zip
+```
 
 ### 7.13. Offline Skill
 #### Description
@@ -9076,9 +9156,9 @@ Administrator permissions required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| code | `integer` | Response code; 0 indicates success. |
+| message | `string` | Response message. |
+| data | `string` | Returns `ok` on success. |
 
 #### Examples
 
@@ -9094,7 +9174,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8848/naco
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -9131,9 +9211,9 @@ Administrator permissions required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| code | `integer` | Response code; 0 indicates success. |
+| message | `string` | Response message. |
+| data | `string` | Returns `ok` on success. |
 
 #### Examples
 
@@ -9149,7 +9229,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8848/naco
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -9184,9 +9264,9 @@ Administrator permissions required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| code | `integer` | Response code; 0 indicates success. |
+| message | `string` | Response message. |
+| data | `string` | Returns `ok` on success. |
 
 #### Examples
 
@@ -9202,7 +9282,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8848/naco
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -9237,9 +9317,9 @@ Administrator permissions required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| code | `integer` | Response code; 0 indicates success. |
+| message | `string` | Response message. |
+| data | `string` | Returns `ok` on success. |
 
 #### Examples
 
@@ -9255,7 +9335,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8848/nacos
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -9290,9 +9370,9 @@ Administrator permissions required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| code | `integer` | Response code; 0 indicates success. |
+| message | `string` | Response message. |
+| data | `string` | Review submission result. |
 
 #### Examples
 
@@ -9308,7 +9388,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8848/naco
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "pipeline-id"
 }
 ```
 
@@ -9386,7 +9466,7 @@ This API batch uploads Skills from a ZIP file that contains multiple Skill subdi
 
 `POST`
 
-Request body type: `multipart/form-data`. Parameters are sent in the request body.
+Request body type: `multipart/form-data`. Both the body and the `file` part are required.
 
 #### Authorization
 
@@ -9401,7 +9481,7 @@ Administrator permissions required.
 | Name | Type | Required | Description |
 |--------|------|------|----------|
 | `namespaceId` | `string` | No | Namespace. |
-| `overwrite` | `boolean` | No | Whether to overwrite existing skills with the same names. |
+| `overwrite` | `boolean` | No | Whether to overwrite existing drafts of skills with the same names. Defaults to `false`. |
 | `file` | `file` | **Yes** | ZIP package containing multiple Skill subdirectories. |
 
 #### Response Data
@@ -9436,7 +9516,7 @@ Parses one or more Skill packages from a ZIP file and reports upload actions and
 
 `POST`
 
-The request body type is `multipart/form-data`.
+Request body type: `multipart/form-data`. Both the body and the `file` part are required.
 
 #### Authorization
 
@@ -9500,22 +9580,21 @@ Administrator permissions required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data.namespaceId | `string` | - |
-| data.data.name | `string` | - |
-| data.data.description | `string` | - |
-| data.data.updateTime | `integer` | - |
-| data.data.enable | `boolean` | - |
-| data.data.bizTags | `string` | - |
-| data.data.from | `string` | - |
-| data.data.scope | `string` | - |
-| data.data.labels | `map<string, string>` | Version label mapping. |
-| data.data.editingVersion | `string` | - |
-| data.data.reviewingVersion | `string` | - |
-| data.data.onlineCnt | `integer` | - |
-| data.data.downloadCount | `integer` | - |
-| data.data.versions | `array<AgentSpecVersionSummary>` | Version summaries. |
+| data | `AgentSpecMeta` | AgentSpec metadata and version summaries. |
+| data.namespaceId | `string` | Namespace ID. |
+| data.name | `string` | AgentSpec name. |
+| data.description | `string` | Resource description. |
+| data.updateTime | `integer` | Update time as a millisecond timestamp. |
+| data.enable | `boolean` | Whether the resource is enabled. |
+| data.bizTags | `string` | Business tags. |
+| data.from | `string` | Resource source. |
+| data.scope | `string` | Visibility scope. |
+| data.labels | `map<string, string>` | Version label mapping. |
+| data.editingVersion | `string` | Version currently being edited. |
+| data.reviewingVersion | `string` | Version currently under review. |
+| data.onlineCnt | `integer` | Number of online versions. |
+| data.downloadCount | `integer` | Download count. |
+| data.versions | `array<AgentSpecVersionSummary>` | Version summaries. |
 
 #### Examples
 
@@ -9565,9 +9644,9 @@ Administrator permissions required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| code | `integer` | Response code; 0 indicates success. |
+| message | `string` | Response message. |
+| data | `string` | Returns `ok` on success. |
 
 #### Examples
 
@@ -9583,7 +9662,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8848/na
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -9618,9 +9697,9 @@ Administrator permissions required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| code | `integer` | Response code; 0 indicates success. |
+| message | `string` | Response message. |
+| data | `string` | Returns `ok` on success. |
 
 #### Examples
 
@@ -9636,7 +9715,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8848/nacos
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -9672,9 +9751,9 @@ Administrator permissions required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| code | `integer` | Response code; 0 indicates success. |
+| message | `string` | Response message. |
+| data | `string` | Created draft version. |
 
 #### Examples
 
@@ -9690,7 +9769,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8848/naco
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "1.1.0-SNAPSHOT"
 }
 ```
 
@@ -9724,9 +9803,9 @@ Administrator permissions required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| code | `integer` | Response code; 0 indicates success. |
+| message | `string` | Response message. |
+| data | `string` | Returns `ok` on success. |
 
 #### Examples
 
@@ -9742,7 +9821,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8848/nacos
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -9776,9 +9855,9 @@ Administrator permissions required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| code | `integer` | Response code; 0 indicates success. |
+| message | `string` | Response message. |
+| data | `string` | Returns `ok` on success. |
 
 #### Examples
 
@@ -9794,7 +9873,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE 'http://127.0.0.1:8848/na
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -9829,9 +9908,9 @@ Administrator permissions required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| code | `integer` | Response code; 0 indicates success. |
+| message | `string` | Response message. |
+| data | `string` | Returns `ok` on success. |
 
 #### Examples
 
@@ -9847,7 +9926,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8848/nacos
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -9943,9 +10022,9 @@ Administrator permissions required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| code | `integer` | Response code; 0 indicates success. |
+| message | `string` | Response message. |
+| data | `string` | Returns `ok` on success. |
 
 #### Examples
 
@@ -9961,7 +10040,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8848/naco
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -9997,9 +10076,9 @@ Administrator permissions required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| code | `integer` | Response code; 0 indicates success. |
+| message | `string` | Response message. |
+| data | `string` | Returns `ok` on success. |
 
 #### Examples
 
@@ -10015,7 +10094,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8848/naco
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -10050,9 +10129,9 @@ Administrator permissions required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| code | `integer` | Response code; 0 indicates success. |
+| message | `string` | Response message. |
+| data | `string` | Returns `ok` on success. |
 
 #### Examples
 
@@ -10068,7 +10147,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8848/naco
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -10103,9 +10182,9 @@ Administrator permissions required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| code | `integer` | Response code; 0 indicates success. |
+| message | `string` | Response message. |
+| data | `string` | Returns `ok` on success. |
 
 #### Examples
 
@@ -10121,7 +10200,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8848/nacos
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "ok"
 }
 ```
 
@@ -10156,9 +10235,9 @@ Administrator permissions required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| code | `integer` | Response code; 0 indicates success. |
+| message | `string` | Response message. |
+| data | `string` | Review submission result. |
 
 #### Examples
 
@@ -10174,7 +10253,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8848/naco
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "pipeline-id"
 }
 ```
 
@@ -10190,7 +10269,7 @@ This interface allows uploading a ZIP-packaged AgentSpec; the package is parsed 
 
 `POST`
 
-Request body type: `multipart/form-data`. Parameters are sent in the request body.
+Request body type: `multipart/form-data`. Both the body and the `file` part are required.
 
 #### Authorization
 
@@ -10205,16 +10284,16 @@ Administrator permissions required.
 | Name | Type | Required | Description |
 |--------|------|------|----------|
 | `namespaceId` | `string` | No | Namespace ID, default is `public`. |
-| `overwrite` | `boolean` | No | Whether to overwrite an existing resource with the same name. |
+| `overwrite` | `boolean` | No | Whether to overwrite an existing draft of a resource with the same name. Defaults to `false`. |
 | `file` | `file` | **Yes** | ZIP file containing AgentSpec package. |
 
 #### Response Data
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data | `string` | - |
+| code | `integer` | Response code; 0 indicates success. |
+| message | `string` | Response message. |
+| data | `string` | Name of the uploaded AgentSpec. |
 
 #### Examples
 
@@ -10230,7 +10309,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8848/naco
 {
   "code": 0,
   "message": "success",
-  "data": {}
+  "data": "uploaded-agentspec-name"
 }
 ```
 
@@ -10265,14 +10344,13 @@ Administrator permissions required.
 
 | Name | Type | Description |
 |--------|----------|------|
-| data.code | `integer` | - |
-| data.message | `string` | - |
-| data.data.namespaceId | `string` | - |
-| data.data.name | `string` | - |
-| data.data.description | `string` | - |
-| data.data.bizTags | `string` | - |
-| data.data.content | `string` | - |
-| data.data.resource | `map<string, AgentSpecResource>` | AgentSpec resource mapping. |
+| data | `AgentSpec` | Content of the requested AgentSpec version. |
+| data.namespaceId | `string` | Namespace ID. |
+| data.name | `string` | AgentSpec name. |
+| data.description | `string` | Resource description. |
+| data.bizTags | `string` | Business tags. |
+| data.content | `string` | AgentSpec content. |
+| data.resource | `map<string, AgentSpecResource>` | AgentSpec resource mapping. Each resource has `metadata: map<string, any>` with arbitrary JSON values. |
 
 #### Examples
 
@@ -10381,6 +10459,13 @@ Administrator permissions required.
 | `namespaceId` | `string` | No | Namespace ID, default is `public`. |
 | `agentSpecName` | `string` | **Yes** | AgentSpec name. |
 | `version` | `string` | No | Version number. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `AgentSpec` | AgentSpec version metadata without loading resource file content. |
+| `data.resource` | `map<string, AgentSpecResource>` | Mapping of resource names to resource metadata. |
 
 ## 9. Pipeline Execution Records
 
@@ -10694,6 +10779,17 @@ Administrator permissions required.
 | `limit` | `integer` | No | Result limit. |
 | `options` | `string` | No | Extension options as a JSON string. |
 
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `AiResourceImportSearchResponse` | External resource search results. |
+| `data.sourceId` | `string` | Import source ID. |
+| `data.resourceType` | `string` | Resource type. |
+| `data.nextCursor` | `string` | Cursor for the next page. |
+| `data.hasMore` | `boolean` | Whether more results are available. |
+| `data.items` | `array<AiResourceImportCandidateItem>` | Candidate resources available for import. |
+
 ### 10.3. Validate AI Resource Import Items
 
 #### Description
@@ -10726,6 +10822,16 @@ Administrator permissions required.
 | `selectedItems` | `string` | **Yes** | Resource items to validate as a JSON string. |
 | `overwriteExisting` | `boolean` | No | Whether to overwrite existing resources. |
 | `options` | `string` | No | Extension options as a JSON string. |
+
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| `data` | `AiResourceImportValidateResponse` | Import validation results for the selected resources. |
+| `data.sourceId` | `string` | Import source ID. |
+| `data.resourceType` | `string` | Resource type. |
+| `data.validationToken` | `string` | Validation token used when executing the import. |
+| `data.items` | `array<AiResourceImportValidationItem>` | Validation details for each resource. |
 
 ### 10.4. Execute AI Resource Import
 
@@ -10762,6 +10868,18 @@ Administrator permissions required.
 | `validationToken` | `string` | No | Validation token. |
 | `options` | `string` | No | Extension options as a JSON string. |
 
+#### Response Data
+
+| Name | Type | Description |
+|------|------|-------------|
+| data | `AiResourceImportExecuteResponse` | Import execution result. |
+| data.success | `boolean` | Whether the import succeeded. |
+| data.totalCount | `integer` | Total resource count. |
+| data.successCount | `integer` | Successful resource count. |
+| data.failedCount | `integer` | Failed resource count. |
+| data.skippedCount | `integer` | Skipped resource count. |
+| data.results | `array<AiResourceImportResultItem>` | Import result for each resource. |
+
 ## 11. Agent Management
 
 These APIs manage protocol-neutral Agent definitions, version lifecycles, and runtime endpoints in the Nacos AI Registry. Composite values retain the named types from the Agent management model. In this chapter, `AgentVersionDetail` is the protocol-neutral Agent version model, not the identically named model used by the legacy A2A APIs.
@@ -10771,7 +10889,7 @@ These Agent Management APIs are the recommended integration path going forward a
 | Type | Key Structure |
 |------|---------------|
 | `AgentOverview` | `agent: AgentSummary`, `versionPage: Page<AgentVersionSummary>` |
-| `AgentSummary` | Agent name, display metadata, `namespaceId`, `status`, `owner`, `scope`, `provider: AgentProvider`, `tags: array<string>`, `extensions: map<string, object>`, `versionInfo: AgentVersionInfo`, `metaVersion`, `createTime`, and `updateTime` |
+| `AgentSummary` | Agent name, display metadata, `namespaceId`, `status`, `owner`, `scope`, `provider: AgentProvider`, `tags: array<string>`, `extensions: map<string, any>`, `versionInfo: AgentVersionInfo`, `metaVersion`, `createTime`, and `updateTime` |
 | `AgentProvider` | `name`, `url` |
 | `AgentVersionInfo` | `editingVersion`, `reviewingVersion`, `onlineVersions: array<AgentVersionSummary>`, `labels: map<string, string>`; read the default version from `labels.latest` |
 | `AgentCallInterface` | `protocol`, `protocolVersion`, `descriptorMediaType`, `nativeDescriptor: object`, `endpointSourceOrder: array<string>`, `endpointSets: array<EndpointSet>` |
