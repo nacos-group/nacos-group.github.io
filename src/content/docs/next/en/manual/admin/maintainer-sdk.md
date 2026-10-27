@@ -57,7 +57,7 @@ properties.setProperty("password","{your_admin_password}");
 ConfigMaintainerService configMaintainerService = ConfigMaintainerFactory.createConfigMaintainerService(properties);
 
 // Initialize the Nacos Maintainer Service for the service registry
-NamingMaintainerService maintainService = NamingMaintainerFactory.createNamingMaintainerService(properties);
+NamingMaintainerService namingMaintainerService = NamingMaintainerFactory.createNamingMaintainerService(properties);
 
 // Initialize the Nacos Maintainer Service for the AI module
 AiMaintainerService aiMaintainerService = AiMaintainerFactory.createAiMaintainerService(properties);
@@ -178,7 +178,7 @@ boolean publishConfig(String dataId, String groupName, String namespaceId, Strin
 | dataId      | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes.                           |
 | groupName   | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.                            |
 | namespaceId | string | Namespace ID to which the config belongs.                                                                   |
-| content     | string | Config content. The length cannot exceed 100 KB.                                                              |
+| content     | string | Configuration content, subject to the server `maxContent` limit and any configuration size limits enforced by capacity checks.                                                              |
 | desc        | string | Config description.                                                                       |
 | type        | string | Config type. See `com.alibaba.nacos.api.config.ConfigType`. The default value is `TEXT`.                       |
 | appName     | string | Application name to which the config belongs.                                                                     |
@@ -698,7 +698,7 @@ boolean publishBetaConfig(String dataId, String groupName, String namespaceId, S
 | dataId      | string | Config ID. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 256 bytes.                           |
 | groupName   | string | Config group. Only English letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The length cannot exceed 128 bytes.                            |
 | namespaceId | string | Namespace ID to which the config belongs.                                                                   |
-| content     | string | Config content. The length cannot exceed 100 KB.                                                              |
+| content     | string | Configuration content, subject to the server `maxContent` limit and any configuration size limits enforced by capacity checks.                                                              |
 | desc        | string | Config description.                                                                       |
 | type        | string | Config type. See `com.alibaba.nacos.api.config.ConfigType`. The default value is `TEXT`.                       |
 | appName     | string | Application name to which the config belongs.                                                                     |
@@ -1222,7 +1222,7 @@ String createService(Service service) throws NacosException;
 
 | Parameter Name                                        | Parameter Type               | Description                |
 |:-------------------------------------------|:-------------------|:------------------|
-| serviceName(Service.serviceName)           | string             | Service name             |
+| serviceName(Service.name)           | string             | Service name             |
 | groupName(Service.groupName)               | string             | Service group name           |
 | namespaceId(Service.namespaceId)           | string             | Namespace ID to which the service belongs       |
 | ephemeral(Service.ephemeral)               | boolean            | Whether the service is ephemeral. The default value is `false`. |
@@ -1242,10 +1242,10 @@ String createService(Service service) throws NacosException;
 try {
     // The following requests all create a persistent service named `maintain.client.test`.
     String result = namingMaintainerService.createService("maintain.client.test");
-    result = namingMaintainerService.createService("maintain.client.test", Constants.DEFAULT_GROUP);
-    result = namingMaintainerService.createService("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
-    result = namingMaintainerService.createService("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, false);
-    result = namingMaintainerService.createService("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, false, 0.0f);
+    result = namingMaintainerService.createService(Constants.DEFAULT_GROUP, "maintain.client.test");
+    result = namingMaintainerService.createService(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test");
+    result = namingMaintainerService.createService(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", false);
+    result = namingMaintainerService.createService(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", false, 0.0f);
     Service service = new Service();
     service.setName("maintain.client.test");
     service.setGroupName(Constants.DEFAULT_GROUP);
@@ -1258,7 +1258,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.2. Update Service
 
@@ -1288,13 +1288,13 @@ String updateService(Service service) throws NacosException;
 
 | Parameter Name                                        | Parameter Type               | Description                |
 |:-------------------------------------------|:-------------------|:------------------|
-| serviceName(Service.serviceName)           | string             | Service name             |
+| serviceName(Service.name)           | string             | Service name             |
 | groupName(Service.groupName)               | string             | Service group name           |
 | namespaceId(Service.namespaceId)           | string             | Namespace ID to which the service belongs       |
 | ephemeral(Service.ephemeral)               | boolean            | Whether the service is ephemeral. The default value is `false`. |
-| protectThreshold(Service.protectThreshold) | float              | Service protection threshold. The default value is `0.0`.  |
-| Service.metadata                           | Map<String,String> | Service metadata            |
-| Service.selector                           | Selector           | Service instance selector. The default value is none.  |
+| newProtectThreshold(Service.protectThreshold) | float              | Service protection threshold. The default value is `0.0`.  |
+| newMetadata(Service.metadata)                           | Map<String,String> | Service metadata            |
+| newSelector(Service.selector)                           | Selector           | Service instance selector. The default value is none.  |
 
 #### Response Parameters
 
@@ -1308,9 +1308,9 @@ String updateService(Service service) throws NacosException;
 try {
     // The following requests all update the persistent service named `maintain.client.test`.
     String result = namingMaintainerService.updateService("maintain.client.test", new HashMap<>(), 0.0f, new NoneSelector());
-    result = namingMaintainerService.updateService("maintain.client.test", Constants.DEFAULT_GROUP, new HashMap<>(), 0.0f, new NoneSelector());
-    result = namingMaintainerService.updateService("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, new HashMap<>(), 0.0f, new NoneSelector());
-    result = namingMaintainerService.updateService("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, false, new HashMap<>(), 0.0f, new NoneSelector());
+    result = namingMaintainerService.updateService(Constants.DEFAULT_GROUP, "maintain.client.test", new HashMap<>(), 0.0f, new NoneSelector());
+    result = namingMaintainerService.updateService(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", new HashMap<>(), 0.0f, new NoneSelector());
+    result = namingMaintainerService.updateService(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", false, new HashMap<>(), 0.0f, new NoneSelector());
     Service service = new Service();
     service.setName("maintain.client.test");
     service.setGroupName(Constants.DEFAULT_GROUP);
@@ -1323,7 +1323,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.3. Delete Service
 
@@ -1345,7 +1345,7 @@ String removeService(Service service) throws NacosException;
 
 | Parameter Name                              | Parameter Type   | Description          |
 |:---------------------------------|:-------|:------------|
-| serviceName(Service.serviceName) | string | Service name       |
+| serviceName(Service.name) | string | Service name       |
 | groupName(Service.groupName)     | string | Service group name     |
 | namespaceId(Service.namespaceId) | string | Namespace ID to which the service belongs |
 
@@ -1361,8 +1361,8 @@ String removeService(Service service) throws NacosException;
 try {
     // The following requests all delete a service named `maintain.client.test`.
     String result = namingMaintainerService.removeService("maintain.client.test");
-    result = namingMaintainerService.removeService("maintain.client.test", Constants.DEFAULT_GROUP);
-    result = namingMaintainerService.removeService("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
+    result = namingMaintainerService.removeService(Constants.DEFAULT_GROUP, "maintain.client.test");
+    result = namingMaintainerService.removeService(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test");
     Service service = new Service();
     service.setName("maintain.client.test");
     service.setGroupName(Constants.DEFAULT_GROUP);
@@ -1375,7 +1375,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.4. Query Service Details
 
@@ -1401,7 +1401,7 @@ ServiceDetailInfo getServiceDetail(Service service) throws NacosException;
 
 | Parameter Name                              | Parameter Type   | Description          |
 |:---------------------------------|:-------|:------------|
-| serviceName(Service.serviceName) | string | Service name       |
+| serviceName(Service.name) | string | Service name       |
 | groupName(Service.groupName)     | string | Service group name     |
 | namespaceId(Service.namespaceId) | string | Namespace ID to which the service belongs |
 
@@ -1435,14 +1435,14 @@ The details in `ServiceDetailInfo` are as follows:
 ```java
 try {
     // The following requests all obtain details of a service named `maintain.client.test`.
-    ServiceDetailInfo result = namingMaintainService.getServiceDetail("maintain.client.test");
-    result = namingMaintainService.getServiceDetail("maintain.client.test", Constants.DEFAULT_GROUP);
-    result = namingMaintainService.getServiceDetail("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
+    ServiceDetailInfo result = namingMaintainerService.getServiceDetail("maintain.client.test");
+    result = namingMaintainerService.getServiceDetail(Constants.DEFAULT_GROUP, "maintain.client.test");
+    result = namingMaintainerService.getServiceDetail(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test");
     Service service = new Service();
     service.setName("maintain.client.test");
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
-result = namingMaintainService.getServiceDetail(service);
+result = namingMaintainerService.getServiceDetail(service);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -1450,7 +1450,7 @@ result = namingMaintainService.getServiceDetail(service);
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.5. Query Service List
 
@@ -1490,7 +1490,7 @@ The specific `Page` and `ServiceView` content is as follows:
 | totalCount     | int                    | Total number of services that match the condition. |
 | pageNumber     | int                    | Current page number.        |
 | pagesAvailable | int                    | Total number of pages.      |
-| pageItems      | List\<ConfigBasicInfo> | Service list on the current page.    |
+| pageItems      | List\<ServiceView> | Service list on the current page.    |
 
 | Parameter Name                  | Parameter Type    | Description         |
 |:---------------------|:--------|:-----------|
@@ -1506,9 +1506,9 @@ The specific `Page` and `ServiceView` content is as follows:
 ```java
 try {
     // The following requests all obtain the service list (up to the first 100 services).
-    Page<ServiceView> result = namingMaintainService.listServices(Constants.DEFAULT_NAMESPACE_ID);
-    result = namingMaintainService.listServices(Constants.DEFAULT_NAMESPACE_ID, "", "");
-    result = namingMaintainService.listServices(Constants.DEFAULT_NAMESPACE_ID, "", "", true, 1, 100);
+    Page<ServiceView> result = namingMaintainerService.listServices(Constants.DEFAULT_NAMESPACE_ID);
+    result = namingMaintainerService.listServices(Constants.DEFAULT_NAMESPACE_ID, "", "");
+    result = namingMaintainerService.listServices(Constants.DEFAULT_NAMESPACE_ID, "", "", true, 1, 100);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -1516,7 +1516,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.6. Query Service List with instance Information
 
@@ -1559,7 +1559,7 @@ The specific `Page` and `ServiceDetailInfo` content is as follows:
 | totalCount     | int                    | Total number of services that match the condition. |
 | pageNumber     | int                    | Current page number.        |
 | pagesAvailable | int                    | Total number of pages.      |
-| pageItems      | List\<ConfigBasicInfo> | Service list on the current page.    |
+| pageItems      | List\<ServiceDetailInfo> | Service list on the current page.    |
 
 | Parameter Name                                       | Parameter Type                      | Description                                    |
 |:------------------------------------------|:--------------------------|:--------------------------------------|
@@ -1582,9 +1582,9 @@ The specific `Page` and `ServiceDetailInfo` content is as follows:
 ```java
 try {
     // The following requests all obtain the service list (up to the first 100 services).
-    Page<ServiceDetailInfo> result = namingMaintainService.listServicesWithDetail(Constants.DEFAULT_NAMESPACE_ID);
-    result = namingMaintainService.listServicesWithDetail(Constants.DEFAULT_NAMESPACE_ID, "", "");
-    result = namingMaintainService.listServicesWithDetail(Constants.DEFAULT_NAMESPACE_ID, "", "", 1, 10);
+    Page<ServiceDetailInfo> result = namingMaintainerService.listServicesWithDetail(Constants.DEFAULT_NAMESPACE_ID);
+    result = namingMaintainerService.listServicesWithDetail(Constants.DEFAULT_NAMESPACE_ID, "", "");
+    result = namingMaintainerService.listServicesWithDetail(Constants.DEFAULT_NAMESPACE_ID, "", "", 1, 10);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -1592,7 +1592,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.7. Query Service Subscriber List
 
@@ -1618,7 +1618,7 @@ Page<SubscriberInfo> getSubscribers(Service service, int pageNo, int pageSize, b
 
 | Parameter Name                              | Parameter Type    | Description                                                             |
 |:---------------------------------|:--------|:---------------------------------------------------------------|
-| serviceName(Service.serviceName) | string  | Service name                                                          |
+| serviceName(Service.name) | string  | Service name                                                          |
 | groupName(Service.groupName)     | string  | Service group name                                                        |
 | namespaceId(Service.namespaceId) | string  | Namespace ID to which the service belongs                                                    |
 | pageNo                           | int     | Page number. The default value is 1.                                                     |
@@ -1636,11 +1636,11 @@ Page<SubscriberInfo> getSubscribers(Service service, int pageNo, int pageSize, b
 ```java
 try {
     // The following requests all obtain the subscriber list of service `maintain.client.test` (up to the first 100 subscribers).
-    Page<SubscriberInfo> result = namingMaintainService.getSubscribers("maintain.client.test");
-    result = namingMaintainService.getSubscribers(Constants.DEFAULT_GROUP, "maintain.client.test");
-    result = namingMaintainService.getSubscribers(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test");
-    result = namingMaintainService.getSubscribers(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", 1, 100);
-    result = namingMaintainService.getSubscribers(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", 1, 100, false);
+    Page<SubscriberInfo> result = namingMaintainerService.getSubscribers("maintain.client.test");
+    result = namingMaintainerService.getSubscribers(Constants.DEFAULT_GROUP, "maintain.client.test");
+    result = namingMaintainerService.getSubscribers(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test");
+    result = namingMaintainerService.getSubscribers(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", 1, 100);
+    result = namingMaintainerService.getSubscribers(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", 1, 100, false);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -1648,7 +1648,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.8. Query Supported Service instance Selectors
 
@@ -1674,7 +1674,7 @@ None
 
 ```java
 try {
-    List<String> result = namingMaintainService.listSelectorTypes();
+    List<String> result = namingMaintainerService.listSelectorTypes();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -1682,7 +1682,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.9. Register Instance
 
@@ -1722,7 +1722,7 @@ String registerInstance(Service service, Instance instance) throws NacosExceptio
 
 | Parameter Name                               | Parameter Type                | Description                |
 |:----------------------------------|:--------------------|:------------------|
-| serviceName(Service.serviceName)  | string              | Service name             |
+| serviceName(Service.name)  | string              | Service name             |
 | groupName(Service.groupName)      | string              | Service group name           |
 | namespaceId(Service.namespaceId)  | string              | Namespace ID to which the service belongs       |
 | clusterName(Instance.clusterName) | string              | Logical cluster name to which the instance belongs       |
@@ -1746,25 +1746,25 @@ String registerInstance(Service service, Instance instance) throws NacosExceptio
 ```java
 try {
     // The following requests all register an instance with IP `127.0.0.1` and port `8080` for service `maintain.client.test`.
-    String result = namingMaintainService.registerInstance("maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.registerInstance(Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.registerInstance("maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
-    result = namingMaintainService.registerInstance(Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
-    result = namingMaintainService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
+    String result = namingMaintainerService.registerInstance("maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.registerInstance(Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.registerInstance("maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
+    result = namingMaintainerService.registerInstance(Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
+    result = namingMaintainerService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
     Instance instance = new Instance();
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     instance.setEphemeral(false);
-    result = namingMaintainService.registerInstance("maintain.client.test", instance);
-    result = namingMaintainService.registerInstance(Constants.DEFAULT_GROUP,"maintain.client.test", instance);
-    result = namingMaintainService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", instance);
+    result = namingMaintainerService.registerInstance("maintain.client.test", instance);
+    result = namingMaintainerService.registerInstance(Constants.DEFAULT_GROUP,"maintain.client.test", instance);
+    result = namingMaintainerService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", instance);
     Service service = new Service();
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
     service.setName("maintain.client.test");
-    result = namingMaintainService.registerInstance(service, instance);
+    result = namingMaintainerService.registerInstance(service, instance);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -1772,7 +1772,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.10. Deregister Instance
 
@@ -1812,7 +1812,7 @@ String deregisterInstance(Service service, Instance instance) throws NacosExcept
 
 | Parameter Name                               | Parameter Type    | Description                |
 |:----------------------------------|:--------|:------------------|
-| serviceName(Service.serviceName)  | string  | Service name             |
+| serviceName(Service.name)  | string  | Service name             |
 | groupName(Service.groupName)      | string  | Service group name           |
 | namespaceId(Service.namespaceId)  | string  | Namespace ID to which the service belongs       |
 | clusterName(Instance.clusterName) | string  | Logical cluster name to which the instance belongs       |
@@ -1831,25 +1831,24 @@ String deregisterInstance(Service service, Instance instance) throws NacosExcept
 ```java
 try {
     // The following requests all deregister an instance whose IP is `127.0.0.1` and port is `8080` from service `maintain.client.test`.
-    String result = namingMaintainService.registerInstance("maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.deregisterInstance(Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.deregisterInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.deregisterInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.deregisterInstance("maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
-    result = namingMaintainService.deregisterInstance(Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
-    result = namingMaintainService.deregisterInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
+    String result = namingMaintainerService.deregisterInstance("maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.deregisterInstance(Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.deregisterInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.deregisterInstance("maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
+    result = namingMaintainerService.deregisterInstance(Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
+    result = namingMaintainerService.deregisterInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
     Instance instance = new Instance();
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     instance.setEphemeral(false);
-    result = namingMaintainService.deregisterInstance("maintain.client.test", instance);
-    result = namingMaintainService.deregisterInstance(Constants.DEFAULT_GROUP,"maintain.client.test", instance);
-    result = namingMaintainService.deregisterInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", instance);
+    result = namingMaintainerService.deregisterInstance("maintain.client.test", instance);
+    result = namingMaintainerService.deregisterInstance(Constants.DEFAULT_GROUP,"maintain.client.test", instance);
+    result = namingMaintainerService.deregisterInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", instance);
     Service service = new Service();
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
     service.setName("maintain.client.test");
-    result = namingMaintainService.deregisterInstance(service, instance);
+    result = namingMaintainerService.deregisterInstance(service, instance);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -1857,7 +1856,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.11. Update Instance
 
@@ -1885,7 +1884,7 @@ String updateInstance(Service service, Instance instance) throws NacosException;
 
 | Parameter Name                              | Parameter Type                | Description                |
 |:---------------------------------|:--------------------|:------------------|
-| serviceName(Service.serviceName) | string              | Service name             |
+| serviceName(Service.name) | string              | Service name             |
 | groupName(Service.groupName)     | string              | Service group name           |
 | namespaceId(Service.namespaceId) | string              | Namespace ID to which the service belongs       |
 | Instance.clusterName             | string              | Logical cluster name to which the instance belongs       |
@@ -1914,14 +1913,14 @@ try {
     instance.setEphemeral(false);
     instance.setEnabled(false);
     // The following requests all update an instance whose IP is `127.0.0.1` and port is `8080` under service `maintain.client.test`, and change the instance `enabled` value to `false`.
-    String result = namingMaintainService.registerInstance("maintain.client.test", instance);
-    result = namingMaintainService.registerInstance(Constants.DEFAULT_GROUP,"maintain.client.test", instance);
-    result = namingMaintainService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", instance);
+    String result = namingMaintainerService.updateInstance("maintain.client.test", instance);
+    result = namingMaintainerService.updateInstance(Constants.DEFAULT_GROUP,"maintain.client.test", instance);
+    result = namingMaintainerService.updateInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", instance);
     Service service = new Service();
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
     service.setName("maintain.client.test");
-    result = namingMaintainService.registerInstance(service, instance);
+    result = namingMaintainerService.updateInstance(service, instance);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -1929,7 +1928,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.12. Batch Update instance Metadata
 
@@ -1949,7 +1948,7 @@ InstanceMetadataBatchResult batchUpdateInstanceMetadata(Service service, List<In
 
 | Parameter Name                 | Parameter Type                | Description                                          |
 |:--------------------|:--------------------|:--------------------------------------------|
-| Service.serviceName | string              | Service name                                       |
+| Service.name | string              | Service name                                       |
 | Service.groupName   | string              | Service group name                                     |
 | Service.namespaceId | string              | Namespace ID to which the service belongs                                 |
 | instances           | List\<Instance>     | List of instances whose metadata needs to be updated. Only `ip`, `port`, and `clusterName` are required. |
@@ -1979,7 +1978,7 @@ try {
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     Map<String, String> newMetadata = Collections.singletonMap("testK", "testV");
-    InstanceMetadataBatchResult result = namingMaintainService.batchUpdateInstanceMetadata(service, Collections.singletonList(instance), newMetadata);
+    InstanceMetadataBatchResult result = namingMaintainerService.batchUpdateInstanceMetadata(service, Collections.singletonList(instance), newMetadata);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -1987,7 +1986,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.13. Batch Remove instance Metadata
 
@@ -2007,7 +2006,7 @@ InstanceMetadataBatchResult batchDeleteInstanceMetadata(Service service, List<In
 
 | Parameter Name                 | Parameter Type                | Description                                          |
 |:--------------------|:--------------------|:--------------------------------------------|
-| Service.serviceName | string              | Service name                                       |
+| Service.name | string              | Service name                                       |
 | Service.groupName   | string              | Service group name                                     |
 | Service.namespaceId | string              | Namespace ID to which the service belongs                                 |
 | instances           | List\<Instance>     | List of instances whose metadata needs to be updated. Only `ip`, `port`, and `clusterName` are required. |
@@ -2037,7 +2036,7 @@ try {
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     Map<String, String> newMetadata = Collections.singletonMap("testK", "testV");
-    InstanceMetadataBatchResult result = namingMaintainService.batchDeleteInstanceMetadata(service, Collections.singletonList(instance), newMetadata);
+    InstanceMetadataBatchResult result = namingMaintainerService.batchDeleteInstanceMetadata(service, Collections.singletonList(instance), newMetadata);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2045,7 +2044,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.14. Update Partial instance Metadata
 
@@ -2055,7 +2054,7 @@ Updates part of instance metadata. Compared with the [Update Instance](#411-upda
 
 > For example, if the current metadata is `k1=v1,k2=v2` and the API receives `k2=v3`, the metadata becomes `k1=v1,k2=v3`, not `k2=v3`.
 >
-> Note that some fields in the `Instance` object have default values, such as `weight`. Pass the corresponding values, otherwise the defaults may overwrite existing values.
+> The SDK also sends `weight` and `enabled` from the `Instance`, and these fields are updated too. To change only metadata, query the current instance and preserve these properties before setting the metadata to merge. This avoids overwriting existing values with defaults from a new `Instance`.
 
 ```java
 String partialUpdateInstance(Service service, Instance instance) throws NacosException;
@@ -2065,7 +2064,7 @@ String partialUpdateInstance(Service service, Instance instance) throws NacosExc
 
 | Parameter Name                  | Parameter Type                | Description                |
 |:---------------------|:--------------------|:------------------|
-| Service.serviceName  | string              | Service name             |
+| Service.name  | string              | Service name             |
 | Service.groupName    | string              | Service group name           |
 | Service.namespaceId  | string              | Namespace ID to which the service belongs       |
 | Instance.clusterName | string              | Logical cluster name to which the instance belongs       |
@@ -2073,7 +2072,6 @@ String partialUpdateInstance(Service service, Instance instance) throws NacosExc
 | Instance.port        | int                 | instance port. Valid values are 0 to 65535. |
 | Instance.ephemeral   | boolean             | instance persistence attribute          |
 | Instance.weight      | double              | instance weight             |
-| Instance.healthy     | boolean             | instance health status           |
 | Instance.enabled     | boolean             | instance online/offline status          |
 | Instance.metadata    | Map\<String,String> | instance metadata          |
 
@@ -2087,7 +2085,19 @@ String partialUpdateInstance(Service service, Instance instance) throws NacosExc
 
 ```java
 try {
-
+    Service service = new Service();
+    service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
+    service.setGroupName(Constants.DEFAULT_GROUP);
+    service.setName("maintain.client.test");
+    Instance identity = new Instance();
+    identity.setIp("127.0.0.1");
+    identity.setPort(8080);
+    identity.setClusterName(Constants.DEFAULT_CLUSTER_NAME);
+    // Preserve the current weight and enabled state.
+    Instance instance = namingMaintainerService.getInstanceDetail(service, identity);
+    instance.setMetadata(Collections.singletonMap("k2", "v3"));
+    String result = namingMaintainerService.partialUpdateInstance(service, instance);
+    System.out.println(result);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2095,7 +2105,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.15. Query Service instance List
 
@@ -2117,7 +2127,7 @@ List<Instance> listInstances(Service service, String clusterName, boolean health
 
 | Parameter Name                              | Parameter Type    | Description                                               |
 |:---------------------------------|:--------|:-------------------------------------------------|
-| serviceName(Service.serviceName) | string  | Service name                                            |
+| serviceName(Service.name) | string  | Service name                                            |
 | groupName(Service.groupName)     | string  | Service group name                                          |
 | namespaceId(Service.namespaceId) | string  | Namespace ID to which the service belongs                                      |
 | clusterName                      | string  | Logical cluster name to which the instance belongs. If empty, instances in all logical clusters are returned. To query multiple logical clusters, separate them with commas `,`. |
@@ -2133,14 +2143,14 @@ List<Instance> listInstances(Service service, String clusterName, boolean health
 
 ```java
 try {
-    List<Instance> result = namingMaintainService.listInstances("maintain.client.test", "", false);
-    result = namingMaintainService.listInstances(Constants.DEFAULT_GROUP, "maintain.client.test", "", false);
-    result = namingMaintainService.listInstances(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "", false);
+    List<Instance> result = namingMaintainerService.listInstances("maintain.client.test", "", false);
+    result = namingMaintainerService.listInstances(Constants.DEFAULT_GROUP, "maintain.client.test", "", false);
+    result = namingMaintainerService.listInstances(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "", false);
     Service service = new Service();
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
     service.setName("maintain.client.test");
-    result = namingMaintainService.listInstances(service, "", false);
+    result = namingMaintainerService.listInstances(service, "", false);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2148,7 +2158,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.16. Query Details of a Specified Service Instance
 
@@ -2176,7 +2186,7 @@ Instance getInstanceDetail(Service service, Instance instance) throws NacosExcep
 
 | Parameter Name                               | Parameter Type   | Description                |
 |:----------------------------------|:-------|:------------------|
-| serviceName(Service.serviceName)  | string | Service name             |
+| serviceName(Service.name)  | string | Service name             |
 | groupName(Service.groupName)      | string | Service group name           |
 | namespaceId(Service.namespaceId)  | string | Namespace ID to which the service belongs       |
 | clusterName(Instance.clusterName) | string | Logical cluster name to which the instance belongs       |
@@ -2187,17 +2197,18 @@ Instance getInstanceDetail(Service service, Instance instance) throws NacosExcep
 
 | Parameter Type                   | Description        |
 |:-----------------------|:----------|
+| Instance | Instance details, including IP, port, cluster, weight, health, enabled state, and metadata. |
 
 #### Request Example
 
 ```java
 try {
-    Instance result = namingMaintainService.getInstanceDetail("maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.getInstanceDetail(Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.getInstanceDetail(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.getInstanceDetail("maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
-    result = namingMaintainService.getInstanceDetail(Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
-    result = namingMaintainService.getInstanceDetail(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
+    Instance result = namingMaintainerService.getInstanceDetail("maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.getInstanceDetail(Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.getInstanceDetail(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.getInstanceDetail("maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
+    result = namingMaintainerService.getInstanceDetail(Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
+    result = namingMaintainerService.getInstanceDetail(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
     Service service = new Service();
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
@@ -2206,7 +2217,7 @@ try {
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     instance.setClusterName(Constants.DEFAULT_CLUSTER_NAME);
-    result = namingMaintainService.getInstanceDetail(service, instance);
+    result = namingMaintainerService.getInstanceDetail(service, instance);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2214,7 +2225,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.17. Query Service Registry Statistics
 
@@ -2256,7 +2267,7 @@ The content of `MetricsInfo` is as follows:
 
 ```java
 try {
-    MetricsInfo metricsInfo = namingMaintainService.getMetrics(false);
+    MetricsInfo metricsInfo = namingMaintainerService.getMetrics(false);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2264,7 +2275,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.18. Set Service Registry Log Level
 
@@ -2294,7 +2305,7 @@ String setLogLevel(String logName, String logLevel) throws NacosException;
 
 ```java
 try {
-    String result = namingMaintainService.setLogLevel("naming-server", "DEBUG");
+    String result = namingMaintainerService.setLogLevel("naming-server", "DEBUG");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2302,7 +2313,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.19. Update Persistent instance Health Status
 
@@ -2326,7 +2337,7 @@ String updateInstanceHealthStatus(Service service, Instance instance) throws Nac
 
 | Parameter Name                               | Parameter Type    | Description                |
 |:----------------------------------|:--------|:------------------|
-| serviceName(Service.serviceName)  | string  | Service name             |
+| serviceName(Service.name)  | string  | Service name             |
 | groupName(Service.groupName)      | string  | Service group name           |
 | namespaceId(Service.namespaceId)  | string  | Namespace ID to which the service belongs       |
 | clusterName(Instance.clusterName) | string  | Logical cluster name to which the instance belongs       |
@@ -2354,9 +2365,9 @@ try {
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     instance.setClusterName(Constants.DEFAULT_CLUSTER_NAME);
-    instance.setEphemeral(false)
+    instance.setEphemeral(false);
     instance.setHealthy(false);
-    String result = namingMaintainService.updateInstanceHealthStatus(service, instance);
+    String result = namingMaintainerService.updateInstanceHealthStatus(service, instance);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2364,7 +2375,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.20. Query Supported Health Check Types
 
@@ -2390,7 +2401,7 @@ None
 
 ```java
 try {
-    Map<String, AbstractHealthChecker> result = namingMaintainService.getHealthCheckers();
+    Map<String, AbstractHealthChecker> result = namingMaintainerService.getHealthCheckers();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2398,7 +2409,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.21. Update Logical Cluster Metadata
 
@@ -2414,19 +2425,20 @@ String updateCluster(Service service, ClusterInfo cluster) throws NacosException
 
 | Parameter Name                                 | Parameter Type               | Description                                                  |
 |:------------------------------------|:-------------------|:----------------------------------------------------|
-| Service.serviceName                 | string             | Service name                                               |
+| Service.name                 | string             | Service name                                               |
 | Service.groupName                   | string             | Service group name                                             |
 | Service.namespaceId                 | string             | Namespace ID to which the service belongs                                         |
 | ClusterInfo.clusterName             | string             | Logical cluster name                                             |
-| ClusterInfo.healthChecker           | string             | Health check type of the logical cluster, Obtain it through [Query Supported Health Check Types](#420-query-supported-health-check-types).     |
-| ClusterInfo.healthyCheckPort        | string             | Health check port.                                             |
-| ClusterInfo.useInstancePortForCheck | string             | Whether to use the port registered by the instance for health checks. If true, the port set by `healthyCheckPort` is ignored. |
+| ClusterInfo.healthChecker           | AbstractHealthChecker | Health checker object, such as `new AbstractHealthChecker.None()`; see supported types in [Query Supported Health Check Types](#420-query-supported-health-check-types).     |
+| ClusterInfo.healthyCheckPort        | int | Health check port.                                             |
+| ClusterInfo.useInstancePortForCheck | boolean | Whether to use the port registered by the instance for health checks. If true, the port set by `healthyCheckPort` is ignored. |
 | ClusterInfo.metadata                | Map<String,String> | Metadata of the cluster to which the instance belongs.                                          |
 
 #### Response Parameters
 
 | Parameter Type                   | Description        |
 |:-----------------------|:----------|
+| String | Result description of the logical cluster update. |
 
 #### Request Example
 
@@ -2441,7 +2453,7 @@ try {
     clusterInfo.setHealthChecker(new AbstractHealthChecker.None());
     clusterInfo.setUseInstancePortForCheck(true);
     clusterInfo.setMetadata(Collections.singletonMap("testK", "testV"));
-    String result = namingMaintainService.updateCluster(service, clusterInfo);
+    String result = namingMaintainerService.updateCluster(service, clusterInfo);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2449,7 +2461,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.22. Query Service Client List
 
@@ -2475,7 +2487,7 @@ None
 
 ```java
 try {
-    List<String> result = namingMaintainService.getClientList();
+    List<String> result = namingMaintainerService.getClientList();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2483,7 +2495,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.23. Query Service Client Details
 
@@ -2525,7 +2537,7 @@ The content of `ClientSummaryInfo` is as follows:
 
 ```java
 try {
-    ClientSummaryInfo result = namingMaintainService.getClientDetail("127.0.0.1:8080#true");
+    ClientSummaryInfo result = namingMaintainerService.getClientDetail("127.0.0.1:8080#true");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2533,7 +2545,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.24. Query Services Registered by a Specified Service Client
 
@@ -2573,7 +2585,7 @@ The ClientServiceInfo content is as follows:
 
 ```java
 try {
-    List<ClientServiceInfo> result = namingMaintainService.getPublishedServiceList("127.0.0.1:8080#true");
+    List<ClientServiceInfo> result = namingMaintainerService.getPublishedServiceList("127.0.0.1:8080#true");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2581,7 +2593,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.25. Query Services Subscribed to by a Specified Service Client
 
@@ -2621,7 +2633,7 @@ The ClientServiceInfo content is as follows:
 
 ```java
 try {
-    List<ClientServiceInfo> result = namingMaintainService.getSubscribeServiceList("127.0.0.1:8080#true");
+    List<ClientServiceInfo> result = namingMaintainerService.getSubscribeServiceList("127.0.0.1:8080#true");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2629,7 +2641,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.26. Query Service Clients That Registered a Specified Service
 
@@ -2670,7 +2682,7 @@ The ClientPublisherInfo content is as follows:
 
 ```java
 try {
-    List<ClientPublisherInfo> result = namingMaintainService.getPublishedClientList(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "", "");
+    List<ClientPublisherInfo> result = namingMaintainerService.getPublishedClientList(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "", "");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2678,7 +2690,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 4.27. Query Service Clients That Subscribed to a Specified Service
 
@@ -2719,7 +2731,7 @@ The ClientSubscriberInfo content is as follows:
 
 ```java
 try {
-    List<ClientSubscriberInfo> result = namingMaintainService.getSubscribeClientList(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "", "");
+    List<ClientSubscriberInfo> result = namingMaintainerService.getSubscribeClientList(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "", "");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2727,7 +2739,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ## 5. Other Nacos Core Maintainer APIs
 
@@ -2757,7 +2769,7 @@ None
 
 ```java
 try {
-    Map<String,String> result = namingMaintainService.getServerState();
+    Map<String,String> result = namingMaintainerService.getServerState();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2765,7 +2777,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 5.2. Get Nacos Server Liveness Status
 
@@ -2791,7 +2803,7 @@ None
 
 ```java
 try {
-    boolean result = namingMaintainService.liveness();
+    boolean result = namingMaintainerService.liveness();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2799,7 +2811,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 5.3. Get Nacos Server Readiness Status
 
@@ -2825,7 +2837,7 @@ None
 
 ```java
 try {
-    boolean result = namingMaintainService.readiness();
+    boolean result = namingMaintainerService.readiness();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2833,7 +2845,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 5.4. Nacos Raft Operations
 
@@ -2863,7 +2875,7 @@ String raftOps(String command, String value, String groupId) throws NacosExcepti
 
 ```java
 try {
-    String result = namingMaintainService.raftOps("doSnapshot", "172.0.0.1:7848", "");
+    String result = namingMaintainerService.raftOps("doSnapshot", "172.0.0.1:7848", "");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2871,7 +2883,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 5.5. Query Distributed ID Generators Supported by Nacos Server
 
@@ -2897,7 +2909,7 @@ None
 
 ```java
 try {
-    List<IdGeneratorInfo> result = namingMaintainService.getIdGenerators();
+    List<IdGeneratorInfo> result = namingMaintainerService.getIdGenerators();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2905,7 +2917,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 5.6. Update Core Module Log Level
 
@@ -2932,7 +2944,7 @@ None
 
 ```java
 try {
-    namingMaintainService.updateLogLevel("core-auth", "INFO");
+    namingMaintainerService.updateLogLevel("core-auth", "INFO");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2940,7 +2952,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 5.7. Query Nacos Server Node List
 
@@ -2978,7 +2990,7 @@ The fields of `NacosMember` are described as follows:
 
 ```java
 try {
-    Collection<NacosMember> result = namingMaintainService.namingMaintainService("", "");
+    Collection<NacosMember> result = namingMaintainerService.listClusterNodes("", "");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2986,7 +2998,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 5.8. Update Nacos Server Address Discovery Mode
 
@@ -3004,19 +3016,21 @@ Boolean updateLookupMode(String type) throws NacosException;
 
 | Parameter Name  | Parameter Type   | Description                             |
 |:-----|:-------|:-------------------------------|
-| type | string | Address discovery mode type. `file` and `address` are supported by default. |
+| type | string | Address discovery mode type. `file` and `address-server` are supported by default. |
 
 #### Response Parameters
 
 | Parameter Type    | Description           |
 |:--------|:-------------|
-| boolean | `true` means the update succeeds. |
+| Boolean | `true` means the update succeeds. |
 
 #### Request Example
 
 ```java
 try {
-
+    // The server must already have the member addresses configured for file mode.
+    Boolean result = namingMaintainerService.updateLookupMode("file");
+    System.out.println(result);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3024,7 +3038,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 5.9. Query Long Connection List of the Current Nacos Server Node
 
@@ -3049,7 +3063,7 @@ None
 
 ```java
 try {
-    Map<String, ConnectionInfo> result = namingMaintainService.getCurrentClients();
+    Map<String, ConnectionInfo> result = namingMaintainerService.getCurrentClients();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3057,7 +3071,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 5.10. Balance Long Connection Load of Nacos Server Nodes
 
@@ -3086,7 +3100,7 @@ String reloadConnectionCount(Integer count, String redirectAddress) throws Nacos
 
 ```java
 try {
-    String result = namingMaintainService.reloadConnectionCount(10, "");
+    String result = namingMaintainerService.reloadConnectionCount(10, "");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3094,7 +3108,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 5.11. Automatically Balance Long Connection Load of Nacos Server Nodes
 
@@ -3122,7 +3136,7 @@ String smartReloadCluster(String loaderFactorStr) throws NacosException;
 
 ```java
 try {
-    String result = namingMaintainService.smartReloadCluster("0.1f");
+    String result = namingMaintainerService.smartReloadCluster("0.1f");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3130,7 +3144,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 5.12. Reload a Specified Nacos Client Connection
 
@@ -3159,7 +3173,7 @@ String reloadSingleClient(String connectionId, String redirectAddress) throws Na
 
 ```java
 try {
-    String result = namingMaintainService.reloadSingleClient("111111111_127.0.0.1_10000");
+    String result = namingMaintainerService.reloadSingleClient("111111111_127.0.0.1_10000", "");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3167,7 +3181,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 5.13. Query Nacos Server Long Connection Load Statistics
 
@@ -3193,7 +3207,7 @@ None
 
 ```java
 try {
-    ServerLoaderMetrics result = namingMaintainService.getClusterLoaderMetrics();
+    ServerLoaderMetrics result = namingMaintainerService.getClusterLoaderMetrics();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3201,7 +3215,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 5.14. Query Namespace List
 
@@ -3238,7 +3252,7 @@ The attributes of `Namespace` are as follows:
 
 ```java
 try {
-    List<Namespace> result = namingMaintainService.getNamespaceList();
+    List<Namespace> result = namingMaintainerService.getNamespaceList();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3246,7 +3260,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 5.15. Query Specified Namespace
 
@@ -3285,7 +3299,7 @@ The attributes of `Namespace` are as follows:
 
 ```java
 try {
-    Namespace result = namingMaintainService.getNamespace("public");
+    Namespace result = namingMaintainerService.getNamespace("public");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3293,7 +3307,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 5.16. Create Namespace
 
@@ -3325,8 +3339,8 @@ Boolean createNamespace(String namespaceId, String namespaceName, String namespa
 
 ```java
 try {
-    boolean result = namingMaintainService.createNamespace("test", "test");
-    result = namingMaintainService.createNamespace("test", "test", "test");
+    boolean result = namingMaintainerService.createNamespace("test", "test");
+    result = namingMaintainerService.createNamespace("test", "test", "test");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3334,7 +3348,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 5.17. Update Namespace
 
@@ -3364,7 +3378,7 @@ Boolean updateNamespace(String namespaceId, String namespaceName, String namespa
 
 ```java
 try {
-    boolean result = namingMaintainService.updateNamespace("test", "testNamespaceName", "testNamespaceDesc");
+    boolean result = namingMaintainerService.updateNamespace("test", "testNamespaceName", "testNamespaceDesc");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3372,7 +3386,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 5.18. Delete Namespace
 
@@ -3400,7 +3414,7 @@ Boolean deleteNamespace(String namespaceId) throws NacosException;
 
 ```java
 try {
-    boolean result = namingMaintainService.deleteNamespace("test");
+    boolean result = namingMaintainerService.deleteNamespace("test");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3408,7 +3422,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 5.19. Check Whether a Namespace Exists
 
@@ -3436,7 +3450,7 @@ Boolean checkNamespaceIdExist(String namespaceId) throws NacosException;
 
 ```java
 try {
-    boolean result = namingMaintainService.checkNamespaceIdExist("test");
+    boolean result = namingMaintainerService.checkNamespaceIdExist("test");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3444,7 +3458,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 5.20. Query Plugin List
 
@@ -3694,7 +3708,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 6.2. Search MCP Service List
 
@@ -3739,7 +3753,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 6.3. Get MCP Service Details
 
@@ -3787,7 +3801,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 6.4. Create a Local (stdio) MCP Service
 
@@ -3848,7 +3862,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 6.5. Create a Remote (SSE, Streamable, etc.) MCP Service
 
@@ -3918,7 +3932,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 6.6. Update MCP Service
 
@@ -4006,7 +4020,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 6.7. Delete MCP Service
 
@@ -4049,7 +4063,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 6.8. Create MCP Service (Unified API)
 
@@ -4138,7 +4152,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 6.9. List MCP Versions
 
@@ -4714,7 +4728,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 7.2. Query AgentCard
 
@@ -4762,7 +4776,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 7.3. Update AgentCard
 
@@ -4816,7 +4830,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 7.4. Delete AgentCard
 
@@ -4860,7 +4874,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 7.5. Query All Versions of a Specified AgentCard
 
@@ -4900,7 +4914,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 7.6. Search AgentCard by AgentCard Name
 
@@ -4945,7 +4959,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ### 7.7. Query AgentCard List with Pagination
 
@@ -4993,7 +5007,7 @@ try {
 
 #### Exception Description
 
-A `NacosException` is thrown when reading the config times out or a network exception occurs.
+A `NacosException` is thrown if the request fails, for example because of a timeout or network error.
 
 ## 8. Prompt Capabilities
 

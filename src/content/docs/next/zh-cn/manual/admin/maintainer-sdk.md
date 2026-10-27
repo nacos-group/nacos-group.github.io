@@ -58,7 +58,7 @@ properties.setProperty("password","{your_admin_password}");
 ConfigMaintainerService configMaintainerService = ConfigMaintainerFactory.createConfigMaintainerService(properties);
 
 // 初始化注册中心的Nacos Maintainer Service
-NamingMaintainerService maintainService = NamingMaintainerFactory.createNamingMaintainerService(properties);
+NamingMaintainerService namingMaintainerService = NamingMaintainerFactory.createNamingMaintainerService(properties);
 
 // 初始化 AI 模块的 Nacos Maintainer Service
 AiMaintainerService aiMaintainerService = AiMaintainerFactory.createAiMaintainerService(properties);
@@ -179,7 +179,7 @@ boolean publishConfig(String dataId, String groupName, String namespaceId, Strin
 | dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 256 字节。                           |
 | groupName   | string | 配置分组。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 128 字节。                            |
 | namespaceId | string   | 配置所属的命名空间ID。                                                                   |
-| content     | string | 配置内容，不超过 100K 字节。                                                              |
+| content     | string | 配置内容，受服务端 `maxContent` 及容量检查中的配置大小限制约束。                                                              |
 | desc        | string | 配置的描述内容。                                                                       |
 | type        | string | 配置类型，见 `com.alibaba.nacos.api.config.ConfigType`，默认为TEXT                       |
 | appName     | string | 配置所属的应用名称。                                                                     |
@@ -699,7 +699,7 @@ boolean publishBetaConfig(String dataId, String groupName, String namespaceId, S
 | dataId      | string | 配置 ID。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 256 字节。                           |
 | groupName   | string | 配置分组。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 128 字节。                            |
 | namespaceId | string   | 配置所属的命名空间ID。                                                                   |
-| content     | string | 配置内容，不超过 100K 字节。                                                              |
+| content     | string | 配置内容，受服务端 `maxContent` 及容量检查中的配置大小限制约束。                                                              |
 | desc        | string | 配置的描述内容。                                                                       |
 | type        | string | 配置类型，见 `com.alibaba.nacos.api.config.ConfigType`，默认为TEXT                       |
 | appName     | string | 配置所属的应用名称。                                                                     |
@@ -1223,7 +1223,7 @@ String createService(Service service) throws NacosException;
 
 | 参数名                                        | 参数类型               | 描述                |
 |:-------------------------------------------|:-------------------|:------------------|
-| serviceName(Service.serviceName)           | string             | 服务的名称             |
+| serviceName(Service.name)           | string             | 服务的名称             |
 | groupName(Service.groupName)               | string             | 服务的分组名称           |
 | namespaceId(Service.namespaceId)           | string             | 服务所属的命名空间ID       |
 | ephemeral(Service.ephemeral)               | boolean            | 是否临时服务，默认为`false` |
@@ -1243,10 +1243,10 @@ String createService(Service service) throws NacosException;
 try {
     // 以下请求均创建一个名为`maintain.client.test`的持久化服务。
     String result = namingMaintainerService.createService("maintain.client.test");
-    result = namingMaintainerService.createService("maintain.client.test", Constants.DEFAULT_GROUP);
-    result = namingMaintainerService.createService("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
-    result = namingMaintainerService.createService("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, false);
-    result = namingMaintainerService.createService("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, false, 0.0f);
+    result = namingMaintainerService.createService(Constants.DEFAULT_GROUP, "maintain.client.test");
+    result = namingMaintainerService.createService(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test");
+    result = namingMaintainerService.createService(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", false);
+    result = namingMaintainerService.createService(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", false, 0.0f);
     Service service = new Service();
     service.setName("maintain.client.test");
     service.setGroupName(Constants.DEFAULT_GROUP);
@@ -1259,7 +1259,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.2. 更新服务
 
@@ -1289,13 +1289,13 @@ String updateService(Service service) throws NacosException;
 
 | 参数名                                        | 参数类型               | 描述                |
 |:-------------------------------------------|:-------------------|:------------------|
-| serviceName(Service.serviceName)           | string             | 服务的名称             |
+| serviceName(Service.name)           | string             | 服务的名称             |
 | groupName(Service.groupName)               | string             | 服务的分组名称           |
 | namespaceId(Service.namespaceId)           | string             | 服务所属的命名空间ID       |
 | ephemeral(Service.ephemeral)               | boolean            | 是否临时服务，默认为`false` |
-| protectThreshold(Service.protectThreshold) | float              | 服务的防护阈值，默认为`0.0`  |
-| Service.metadata                           | Map<String,String> | 服务的元数据            |
-| Service.selector                           | Selector           | 服务的实例选择器，默认为None  |
+| newProtectThreshold(Service.protectThreshold) | float              | 服务的防护阈值，默认为`0.0`  |
+| newMetadata(Service.metadata)                           | Map<String,String> | 服务的元数据            |
+| newSelector(Service.selector)                           | Selector           | 服务的实例选择器，默认为None  |
 
 #### 返回参数
 
@@ -1309,9 +1309,9 @@ String updateService(Service service) throws NacosException;
 try {
     // 以下请求均对名为`maintain.client.test`的持久化服务进行更新
     String result = namingMaintainerService.updateService("maintain.client.test", new HashMap<>(), 0.0f, new NoneSelector());
-    result = namingMaintainerService.updateService("maintain.client.test", Constants.DEFAULT_GROUP, new HashMap<>(), 0.0f, new NoneSelector());
-    result = namingMaintainerService.updateService("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, new HashMap<>(), 0.0f, new NoneSelector());
-    result = namingMaintainerService.updateService("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, false, new HashMap<>(), 0.0f, new NoneSelector());
+    result = namingMaintainerService.updateService(Constants.DEFAULT_GROUP, "maintain.client.test", new HashMap<>(), 0.0f, new NoneSelector());
+    result = namingMaintainerService.updateService(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", new HashMap<>(), 0.0f, new NoneSelector());
+    result = namingMaintainerService.updateService(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", false, new HashMap<>(), 0.0f, new NoneSelector());
     Service service = new Service();
     service.setName("maintain.client.test");
     service.setGroupName(Constants.DEFAULT_GROUP);
@@ -1324,7 +1324,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.3. 删除服务
 
@@ -1346,7 +1346,7 @@ String removeService(Service service) throws NacosException;
 
 | 参数名                              | 参数类型   | 描述          |
 |:---------------------------------|:-------|:------------|
-| serviceName(Service.serviceName) | string | 服务的名称       |
+| serviceName(Service.name) | string | 服务的名称       |
 | groupName(Service.groupName)     | string | 服务的分组名称     |
 | namespaceId(Service.namespaceId) | string | 服务所属的命名空间ID |
 
@@ -1362,8 +1362,8 @@ String removeService(Service service) throws NacosException;
 try {
     // 以下请求均删除一个名为`maintain.client.test`的服务。
     String result = namingMaintainerService.removeService("maintain.client.test");
-    result = namingMaintainerService.removeService("maintain.client.test", Constants.DEFAULT_GROUP);
-    result = namingMaintainerService.removeService("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
+    result = namingMaintainerService.removeService(Constants.DEFAULT_GROUP, "maintain.client.test");
+    result = namingMaintainerService.removeService(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test");
     Service service = new Service();
     service.setName("maintain.client.test");
     service.setGroupName(Constants.DEFAULT_GROUP);
@@ -1376,7 +1376,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.4. 查询服务详情
 
@@ -1402,7 +1402,7 @@ ServiceDetailInfo getServiceDetail(Service service) throws NacosException;
 
 | 参数名                              | 参数类型   | 描述          |
 |:---------------------------------|:-------|:------------|
-| serviceName(Service.serviceName) | string | 服务的名称       |
+| serviceName(Service.name) | string | 服务的名称       |
 | groupName(Service.groupName)     | string | 服务的分组名称     |
 | namespaceId(Service.namespaceId) | string | 服务所属的命名空间ID |
 
@@ -1436,14 +1436,14 @@ ServiceDetailInfo getServiceDetail(Service service) throws NacosException;
 ```java
 try {
     // 以下请求均获取一个名为`maintain.client.test`的服务详情信息。
-    ServiceDetailInfo result = namingMaintainService.getServiceDetail("maintain.client.test");
-    result = namingMaintainService.getServiceDetail("maintain.client.test", Constants.DEFAULT_GROUP);
-    result = namingMaintainService.getServiceDetail("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID);
+    ServiceDetailInfo result = namingMaintainerService.getServiceDetail("maintain.client.test");
+    result = namingMaintainerService.getServiceDetail(Constants.DEFAULT_GROUP, "maintain.client.test");
+    result = namingMaintainerService.getServiceDetail(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test");
     Service service = new Service();
     service.setName("maintain.client.test");
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
-result = namingMaintainService.getServiceDetail(service);
+result = namingMaintainerService.getServiceDetail(service);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -1451,7 +1451,7 @@ result = namingMaintainService.getServiceDetail(service);
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.5. 查询服务列表
 
@@ -1491,7 +1491,7 @@ Page<ServiceView> listServices(String namespaceId, String groupNameParam, String
 | totalCount     | int                    | 符合该条件下的服务总数。 |
 | pageNumber     | int                    | 当前页码。        |
 | pagesAvailable | int                    | 分页的总页数。      |
-| pageItems      | List\<ConfigBasicInfo> | 当前页的服务列表。    |
+| pageItems      | List\<ServiceView> | 当前页的服务列表。    |
 
 | 参数名                  | 参数类型    | 描述         |
 |:---------------------|:--------|:-----------|
@@ -1507,9 +1507,9 @@ Page<ServiceView> listServices(String namespaceId, String groupNameParam, String
 ```java
 try {
     // 以下请求均获取所有服务列表(最多前100个)。
-    Page<ServiceView> result = namingMaintainService.listServices(Constants.DEFAULT_NAMESPACE_ID);
-    result = namingMaintainService.listServices(Constants.DEFAULT_NAMESPACE_ID, "", "");
-    result = namingMaintainService.listServices(Constants.DEFAULT_NAMESPACE_ID, "", "", true, 1, 100);
+    Page<ServiceView> result = namingMaintainerService.listServices(Constants.DEFAULT_NAMESPACE_ID);
+    result = namingMaintainerService.listServices(Constants.DEFAULT_NAMESPACE_ID, "", "");
+    result = namingMaintainerService.listServices(Constants.DEFAULT_NAMESPACE_ID, "", "", true, 1, 100);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -1517,7 +1517,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.6. 查询服务列表（携带实例信息）
 
@@ -1560,7 +1560,7 @@ Page<ServiceDetailInfo> listServicesWithDetail(String namespaceId, String groupN
 | totalCount     | int                    | 符合该条件下的服务总数。 |
 | pageNumber     | int                    | 当前页码。        |
 | pagesAvailable | int                    | 分页的总页数。      |
-| pageItems      | List\<ConfigBasicInfo> | 当前页的服务列表。    |
+| pageItems      | List\<ServiceDetailInfo> | 当前页的服务列表。    |
 
 | 参数名                                       | 参数类型                      | 描述                                    |
 |:------------------------------------------|:--------------------------|:--------------------------------------|
@@ -1583,9 +1583,9 @@ Page<ServiceDetailInfo> listServicesWithDetail(String namespaceId, String groupN
 ```java
 try {
     // 以下请求均获取所有服务列表(最多前100个)。
-    Page<ServiceDetailInfo> result = namingMaintainService.listServicesWithDetail(Constants.DEFAULT_NAMESPACE_ID);
-    result = namingMaintainService.listServicesWithDetail(Constants.DEFAULT_NAMESPACE_ID, "", "");
-    result = namingMaintainService.listServicesWithDetail(Constants.DEFAULT_NAMESPACE_ID, "", "", 1, 10);
+    Page<ServiceDetailInfo> result = namingMaintainerService.listServicesWithDetail(Constants.DEFAULT_NAMESPACE_ID);
+    result = namingMaintainerService.listServicesWithDetail(Constants.DEFAULT_NAMESPACE_ID, "", "");
+    result = namingMaintainerService.listServicesWithDetail(Constants.DEFAULT_NAMESPACE_ID, "", "", 1, 10);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -1593,7 +1593,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.7. 查询服务的订阅者列表
 
@@ -1619,7 +1619,7 @@ Page<SubscriberInfo> getSubscribers(Service service, int pageNo, int pageSize, b
 
 | 参数名                              | 参数类型    | 描述                                                             |
 |:---------------------------------|:--------|:---------------------------------------------------------------|
-| serviceName(Service.serviceName) | string  | 服务的名称                                                          |
+| serviceName(Service.name) | string  | 服务的名称                                                          |
 | groupName(Service.groupName)     | string  | 服务的分组名称                                                        |
 | namespaceId(Service.namespaceId) | string  | 服务所属的命名空间ID                                                    |
 | pageNo                           | int     | 分页页码，默认为1。                                                     |
@@ -1637,11 +1637,11 @@ Page<SubscriberInfo> getSubscribers(Service service, int pageNo, int pageSize, b
 ```java
 try {
     // 以下请求均获取服务`maintain.client.test`的所有订阅者列表(最多前100个)。
-    Page<SubscriberInfo> result = namingMaintainService.getSubscribers("maintain.client.test");
-    result = namingMaintainService.getSubscribers(Constants.DEFAULT_GROUP, "maintain.client.test");
-    result = namingMaintainService.getSubscribers(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test");
-    result = namingMaintainService.getSubscribers(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", 1, 100);
-    result = namingMaintainService.getSubscribers(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", 1, 100, false);
+    Page<SubscriberInfo> result = namingMaintainerService.getSubscribers("maintain.client.test");
+    result = namingMaintainerService.getSubscribers(Constants.DEFAULT_GROUP, "maintain.client.test");
+    result = namingMaintainerService.getSubscribers(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test");
+    result = namingMaintainerService.getSubscribers(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", 1, 100);
+    result = namingMaintainerService.getSubscribers(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", 1, 100, false);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -1649,7 +1649,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.8. 查询支持的服务实例选择器列表
 
@@ -1675,7 +1675,7 @@ List<String> listSelectorTypes() throws NacosException;
 
 ```java
 try {
-    List<String> result = namingMaintainService.listSelectorTypes();
+    List<String> result = namingMaintainerService.listSelectorTypes();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -1683,7 +1683,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.9. 注册实例
 
@@ -1723,7 +1723,7 @@ String registerInstance(Service service, Instance instance) throws NacosExceptio
 
 | 参数名                               | 参数类型                | 描述                |
 |:----------------------------------|:--------------------|:------------------|
-| serviceName(Service.serviceName)  | string              | 服务的名称             |
+| serviceName(Service.name)  | string              | 服务的名称             |
 | groupName(Service.groupName)      | string              | 服务的分组名称           |
 | namespaceId(Service.namespaceId)  | string              | 服务所属的命名空间ID       |
 | clusterName(Instance.clusterName) | string              | 实例所属的逻辑集群名称       | 
@@ -1747,25 +1747,25 @@ String registerInstance(Service service, Instance instance) throws NacosExceptio
 ```java
 try {
     // 以下请求均给服务`maintain.client.test`注册一个实例，实例的ip为`127.0.0.1`，端口为`8080`。
-    String result = namingMaintainService.registerInstance("maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.registerInstance(Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.registerInstance("maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
-    result = namingMaintainService.registerInstance(Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
-    result = namingMaintainService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
+    String result = namingMaintainerService.registerInstance("maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.registerInstance(Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.registerInstance("maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
+    result = namingMaintainerService.registerInstance(Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
+    result = namingMaintainerService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
     Instance instance = new Instance();
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     instance.setEphemeral(false);
-    result = namingMaintainService.registerInstance("maintain.client.test", instance);
-    result = namingMaintainService.registerInstance(Constants.DEFAULT_GROUP,"maintain.client.test", instance);
-    result = namingMaintainService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", instance);
+    result = namingMaintainerService.registerInstance("maintain.client.test", instance);
+    result = namingMaintainerService.registerInstance(Constants.DEFAULT_GROUP,"maintain.client.test", instance);
+    result = namingMaintainerService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", instance);
     Service service = new Service();
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
     service.setName("maintain.client.test");
-    result = namingMaintainService.registerInstance(service, instance);
+    result = namingMaintainerService.registerInstance(service, instance);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -1773,7 +1773,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.10. 注销实例
 
@@ -1813,7 +1813,7 @@ String deregisterInstance(Service service, Instance instance) throws NacosExcept
 
 | 参数名                               | 参数类型    | 描述                |
 |:----------------------------------|:--------|:------------------|
-| serviceName(Service.serviceName)  | string  | 服务的名称             |
+| serviceName(Service.name)  | string  | 服务的名称             |
 | groupName(Service.groupName)      | string  | 服务的分组名称           |
 | namespaceId(Service.namespaceId)  | string  | 服务所属的命名空间ID       |
 | clusterName(Instance.clusterName) | string  | 实例所属的逻辑集群名称       | 
@@ -1832,25 +1832,24 @@ String deregisterInstance(Service service, Instance instance) throws NacosExcept
 ```java
 try {
     // 以下请求均给服务`maintain.client.test`注销一个实例，实例的ip为`127.0.0.1`，端口为`8080`。
-    String result = namingMaintainService.registerInstance("maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.deregisterInstance(Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.deregisterInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.deregisterInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.deregisterInstance("maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
-    result = namingMaintainService.deregisterInstance(Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
-    result = namingMaintainService.deregisterInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
+    String result = namingMaintainerService.deregisterInstance("maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.deregisterInstance(Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.deregisterInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.deregisterInstance("maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
+    result = namingMaintainerService.deregisterInstance(Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
+    result = namingMaintainerService.deregisterInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
     Instance instance = new Instance();
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     instance.setEphemeral(false);
-    result = namingMaintainService.deregisterInstance("maintain.client.test", instance);
-    result = namingMaintainService.deregisterInstance(Constants.DEFAULT_GROUP,"maintain.client.test", instance);
-    result = namingMaintainService.deregisterInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", instance);
+    result = namingMaintainerService.deregisterInstance("maintain.client.test", instance);
+    result = namingMaintainerService.deregisterInstance(Constants.DEFAULT_GROUP,"maintain.client.test", instance);
+    result = namingMaintainerService.deregisterInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", instance);
     Service service = new Service();
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
     service.setName("maintain.client.test");
-    result = namingMaintainService.deregisterInstance(service, instance);
+    result = namingMaintainerService.deregisterInstance(service, instance);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -1858,7 +1857,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.11. 更新实例
 
@@ -1886,7 +1885,7 @@ String updateInstance(Service service, Instance instance) throws NacosException;
 
 | 参数名                              | 参数类型                | 描述                |
 |:---------------------------------|:--------------------|:------------------|
-| serviceName(Service.serviceName) | string              | 服务的名称             |
+| serviceName(Service.name) | string              | 服务的名称             |
 | groupName(Service.groupName)     | string              | 服务的分组名称           |
 | namespaceId(Service.namespaceId) | string              | 服务所属的命名空间ID       |
 | Instance.clusterName             | string              | 实例所属的逻辑集群名称       | 
@@ -1915,14 +1914,14 @@ try {
     instance.setEphemeral(false);
     instance.setEnabled(false);
     // 以下请求均给更新服务`maintain.client.test`下的一个实例，实例的ip为`127.0.0.1`，端口为`8080`， 将实例的`enabled`修改为`false`。
-    String result = namingMaintainService.registerInstance("maintain.client.test", instance);
-    result = namingMaintainService.registerInstance(Constants.DEFAULT_GROUP,"maintain.client.test", instance);
-    result = namingMaintainService.registerInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", instance);
+    String result = namingMaintainerService.updateInstance("maintain.client.test", instance);
+    result = namingMaintainerService.updateInstance(Constants.DEFAULT_GROUP,"maintain.client.test", instance);
+    result = namingMaintainerService.updateInstance(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", instance);
     Service service = new Service();
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
     service.setName("maintain.client.test");
-    result = namingMaintainService.registerInstance(service, instance);
+    result = namingMaintainerService.updateInstance(service, instance);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -1930,7 +1929,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.12. 批量更新实例元数据
 
@@ -1950,7 +1949,7 @@ InstanceMetadataBatchResult batchUpdateInstanceMetadata(Service service, List<In
 
 | 参数名                 | 参数类型                | 描述                                          |
 |:--------------------|:--------------------|:--------------------------------------------|
-| Service.serviceName | string              | 服务的名称                                       |
+| Service.name | string              | 服务的名称                                       |
 | Service.groupName   | string              | 服务的分组名称                                     |
 | Service.namespaceId | string              | 服务所属的命名空间ID                                 |
 | instances           | List\<Instance>     | 需要更新元数据的实例列表，仅需要传入`ip`,`port`,`clusterName` |
@@ -1980,7 +1979,7 @@ try {
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     Map<String, String> newMetadata = Collections.singletonMap("testK", "testV");
-    InstanceMetadataBatchResult result = namingMaintainService.batchUpdateInstanceMetadata(service, Collections.singletonList(instance), newMetadata);
+    InstanceMetadataBatchResult result = namingMaintainerService.batchUpdateInstanceMetadata(service, Collections.singletonList(instance), newMetadata);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -1988,7 +1987,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.13. 批量移除实例元数据
 
@@ -2008,7 +2007,7 @@ InstanceMetadataBatchResult batchDeleteInstanceMetadata(Service service, List<In
 
 | 参数名                 | 参数类型                | 描述                                          |
 |:--------------------|:--------------------|:--------------------------------------------|
-| Service.serviceName | string              | 服务的名称                                       |
+| Service.name | string              | 服务的名称                                       |
 | Service.groupName   | string              | 服务的分组名称                                     |
 | Service.namespaceId | string              | 服务所属的命名空间ID                                 |
 | instances           | List\<Instance>     | 需要更新元数据的实例列表，仅需要传入`ip`,`port`,`clusterName` |
@@ -2038,7 +2037,7 @@ try {
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     Map<String, String> newMetadata = Collections.singletonMap("testK", "testV");
-    InstanceMetadataBatchResult result = namingMaintainService.batchDeleteInstanceMetadata(service, Collections.singletonList(instance), newMetadata);
+    InstanceMetadataBatchResult result = namingMaintainerService.batchDeleteInstanceMetadata(service, Collections.singletonList(instance), newMetadata);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2046,7 +2045,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.14. 更新实例的部分元数据
 
@@ -2056,7 +2055,7 @@ try {
 
 >例如当前元数据为`k1=v1,k2=v2`，接口传入`k2=v3`，则元数据变为`k1=v1,k2=v3`,而不是`k2=v3`。
 > 
->但需要注意的是，`Instance`对象中部分内容存在默认值（如`权重`等），需要传入对应值，否则会默认值被覆盖。
+> SDK 同时发送 `Instance` 中的 `weight` 和 `enabled`，这两个字段也会被更新。仅修改元数据时，先查询当前实例并保留这些属性，再设置需要合并的元数据，避免新建 `Instance` 的默认值覆盖现有值。
 
 ```java
 String partialUpdateInstance(Service service, Instance instance) throws NacosException;
@@ -2066,7 +2065,7 @@ String partialUpdateInstance(Service service, Instance instance) throws NacosExc
 
 | 参数名                  | 参数类型                | 描述                |
 |:---------------------|:--------------------|:------------------|
-| Service.serviceName  | string              | 服务的名称             |
+| Service.name  | string              | 服务的名称             |
 | Service.groupName    | string              | 服务的分组名称           |
 | Service.namespaceId  | string              | 服务所属的命名空间ID       |
 | Instance.clusterName | string              | 实例所属的逻辑集群名称       | 
@@ -2074,7 +2073,6 @@ String partialUpdateInstance(Service service, Instance instance) throws NacosExc
 | Instance.port        | int                 | 实例的端口信息，取值0~65535 |
 | Instance.ephemeral   | boolean             | 实例的持久化属性          |
 | Instance.weight      | double              | 实例的权重             |
-| Instance.healthy     | boolean             | 实例的健康状态           |
 | Instance.enabled     | boolean             | 实例的上下线状态          |
 | Instance.metadata    | Map\<String,String> | 实例的元数据信息          |
 
@@ -2088,7 +2086,19 @@ String partialUpdateInstance(Service service, Instance instance) throws NacosExc
 
 ```java
 try {
-
+    Service service = new Service();
+    service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
+    service.setGroupName(Constants.DEFAULT_GROUP);
+    service.setName("maintain.client.test");
+    Instance identity = new Instance();
+    identity.setIp("127.0.0.1");
+    identity.setPort(8080);
+    identity.setClusterName(Constants.DEFAULT_CLUSTER_NAME);
+    // Preserve the current weight and enabled state.
+    Instance instance = namingMaintainerService.getInstanceDetail(service, identity);
+    instance.setMetadata(Collections.singletonMap("k2", "v3"));
+    String result = namingMaintainerService.partialUpdateInstance(service, instance);
+    System.out.println(result);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2096,7 +2106,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.15. 查询服务实例列表
 
@@ -2118,7 +2128,7 @@ List<Instance> listInstances(Service service, String clusterName, boolean health
 
 | 参数名                              | 参数类型    | 描述                                               |
 |:---------------------------------|:--------|:-------------------------------------------------|
-| serviceName(Service.serviceName) | string  | 服务的名称                                            |
+| serviceName(Service.name) | string  | 服务的名称                                            |
 | groupName(Service.groupName)     | string  | 服务的分组名称                                          |
 | namespaceId(Service.namespaceId) | string  | 服务所属的命名空间ID                                      |
 | clusterName                      | string  | 实例所属的逻辑集群名称，为空时返回所有逻辑集群的实例，需要查询多个逻辑集群是，使用逗号`,`分割 | 
@@ -2134,14 +2144,14 @@ List<Instance> listInstances(Service service, String clusterName, boolean health
 
 ```java
 try {
-    List<Instance> result = namingMaintainService.listInstances("maintain.client.test", "", false);
-    result = namingMaintainService.listInstances(Constants.DEFAULT_GROUP, "maintain.client.test", "", false);
-    result = namingMaintainService.listInstances(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "", false);
+    List<Instance> result = namingMaintainerService.listInstances("maintain.client.test", "", false);
+    result = namingMaintainerService.listInstances(Constants.DEFAULT_GROUP, "maintain.client.test", "", false);
+    result = namingMaintainerService.listInstances(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "", false);
     Service service = new Service();
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
     service.setName("maintain.client.test");
-    result = namingMaintainService.listInstances(service, "", false);
+    result = namingMaintainerService.listInstances(service, "", false);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2149,7 +2159,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.16. 查询指定服务实例的详情
 
@@ -2177,7 +2187,7 @@ Instance getInstanceDetail(Service service, Instance instance) throws NacosExcep
 
 | 参数名                               | 参数类型   | 描述                |
 |:----------------------------------|:-------|:------------------|
-| serviceName(Service.serviceName)  | string | 服务的名称             |
+| serviceName(Service.name)  | string | 服务的名称             |
 | groupName(Service.groupName)      | string | 服务的分组名称           |
 | namespaceId(Service.namespaceId)  | string | 服务所属的命名空间ID       |
 | clusterName(Instance.clusterName) | string | 实例所属的逻辑集群名称       | 
@@ -2188,17 +2198,18 @@ Instance getInstanceDetail(Service service, Instance instance) throws NacosExcep
 
 | 参数类型                   | 描述        |
 |:-----------------------|:----------|
+| Instance | 实例详情，包含 IP、端口、集群、权重、健康状态、启用状态和元数据。 |
 
 #### 请求示例
 
 ```java
 try {
-    Instance result = namingMaintainService.getInstanceDetail("maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.getInstanceDetail(Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.getInstanceDetail(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
-    result = namingMaintainService.getInstanceDetail("maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
-    result = namingMaintainService.getInstanceDetail(Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
-    result = namingMaintainService.getInstanceDetail(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
+    Instance result = namingMaintainerService.getInstanceDetail("maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.getInstanceDetail(Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.getInstanceDetail(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "127.0.0.1", 8080);
+    result = namingMaintainerService.getInstanceDetail("maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
+    result = namingMaintainerService.getInstanceDetail(Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
+    result = namingMaintainerService.getInstanceDetail(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP,"maintain.client.test", "127.0.0.1", 8080, Constants.DEFAULT_CLUSTER_NAME);
     Service service = new Service();
     service.setNamespaceId(Constants.DEFAULT_NAMESPACE_ID);
     service.setGroupName(Constants.DEFAULT_GROUP);
@@ -2207,7 +2218,7 @@ try {
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     instance.setClusterName(Constants.DEFAULT_CLUSTER_NAME);
-    result = namingMaintainService.getInstanceDetail(service, instance);
+    result = namingMaintainerService.getInstanceDetail(service, instance);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2215,7 +2226,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.17. 查询注册中心相关的统计信息
 
@@ -2257,7 +2268,7 @@ MetricsInfo getMetrics(boolean onlyStatus) throws NacosException;
 
 ```java
 try {
-    MetricsInfo metricsInfo = namingMaintainService.getMetrics(false);
+    MetricsInfo metricsInfo = namingMaintainerService.getMetrics(false);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2265,7 +2276,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.18. 设置注册中心的日志级别
 
@@ -2295,7 +2306,7 @@ String setLogLevel(String logName, String logLevel) throws NacosException;
 
 ```java
 try {
-    String result = namingMaintainService.setLogLevel("naming-server", "DEBUG");
+    String result = namingMaintainerService.setLogLevel("naming-server", "DEBUG");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2303,7 +2314,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.19. 更新持久化实例的健康状态。
 
@@ -2327,7 +2338,7 @@ String updateInstanceHealthStatus(Service service, Instance instance) throws Nac
 
 | 参数名                               | 参数类型    | 描述                |
 |:----------------------------------|:--------|:------------------|
-| serviceName(Service.serviceName)  | string  | 服务的名称             |
+| serviceName(Service.name)  | string  | 服务的名称             |
 | groupName(Service.groupName)      | string  | 服务的分组名称           |
 | namespaceId(Service.namespaceId)  | string  | 服务所属的命名空间ID       |
 | clusterName(Instance.clusterName) | string  | 实例所属的逻辑集群名称       | 
@@ -2355,9 +2366,9 @@ try {
     instance.setIp("127.0.0.1");
     instance.setPort(8080);
     instance.setClusterName(Constants.DEFAULT_CLUSTER_NAME);
-    instance.setEphemeral(false)
+    instance.setEphemeral(false);
     instance.setHealthy(false);
-    String result = namingMaintainService.updateInstanceHealthStatus(service, instance);
+    String result = namingMaintainerService.updateInstanceHealthStatus(service, instance);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2365,7 +2376,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.20. 查询支持的健康检查类型
 
@@ -2391,7 +2402,7 @@ Map<String, AbstractHealthChecker> getHealthCheckers() throws NacosException;
 
 ```java
 try {
-    Map<String, AbstractHealthChecker> result = namingMaintainService.getHealthCheckers();
+    Map<String, AbstractHealthChecker> result = namingMaintainerService.getHealthCheckers();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2399,7 +2410,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.21. 更新逻辑集群的元数据
 
@@ -2415,19 +2426,20 @@ String updateCluster(Service service, ClusterInfo cluster) throws NacosException
 
 | 参数名                                 | 参数类型               | 描述                                                  |
 |:------------------------------------|:-------------------|:----------------------------------------------------|
-| Service.serviceName                 | string             | 服务的名称                                               |
+| Service.name                 | string             | 服务的名称                                               |
 | Service.groupName                   | string             | 服务的分组名称                                             |
 | Service.namespaceId                 | string             | 服务所属的命名空间ID                                         |
 | ClusterInfo.clusterName             | string             | 逻辑集群的名称                                             | 
-| ClusterInfo.healthChecker           | string             | 逻辑集群的健康检查类型，通过[查询支持的健康检查类型](#419-查询支持的健康检查类型)获取     | 
-| ClusterInfo.healthyCheckPort        | string             | 健康检查的端口                                             | 
-| ClusterInfo.useInstancePortForCheck | string             | 是否使用实例所注册的端口进行健康检查，为true时将忽略`healthyCheckPort`设置的端口 | 
+| ClusterInfo.healthChecker           | AbstractHealthChecker | 逻辑集群的健康检查器对象，例如 `new AbstractHealthChecker.None()`；可选类型参见[查询支持的健康检查类型](#420-查询支持的健康检查类型)。 |
+| ClusterInfo.healthyCheckPort        | int | 健康检查的端口。 |
+| ClusterInfo.useInstancePortForCheck | boolean | 是否使用实例所注册的端口进行健康检查，为 `true` 时忽略 `healthyCheckPort` 设置的端口。 |
 | ClusterInfo.metadata                | Map<String,String> | 实例所属的元数据信息                                          | 
 
 #### 返回参数
 
 | 参数类型                   | 描述        |
 |:-----------------------|:----------|
+| String | 逻辑集群更新的结果描述。 |
 
 #### 请求示例
 
@@ -2442,7 +2454,7 @@ try {
     clusterInfo.setHealthChecker(new AbstractHealthChecker.None());
     clusterInfo.setUseInstancePortForCheck(true);
     clusterInfo.setMetadata(Collections.singletonMap("testK", "testV"));
-    String result = namingMaintainService.updateCluster(service, clusterInfo);
+    String result = namingMaintainerService.updateCluster(service, clusterInfo);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2450,7 +2462,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.22. 查询服务客户端列表
 
@@ -2476,7 +2488,7 @@ List<String> getClientList() throws NacosException;
 
 ```java
 try {
-    List<String> result = namingMaintainService.getClientList();
+    List<String> result = namingMaintainerService.getClientList();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2484,7 +2496,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.23. 查询服务客户端详情
 
@@ -2526,7 +2538,7 @@ ClientSummaryInfo getClientDetail(String clientId) throws NacosException;
 
 ```java
 try {
-    ClientSummaryInfo result = namingMaintainService.getClientDetail("127.0.0.1:8080#true");
+    ClientSummaryInfo result = namingMaintainerService.getClientDetail("127.0.0.1:8080#true");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2534,7 +2546,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.24. 查询指定服务客户端所注册的服务列表
 
@@ -2574,7 +2586,7 @@ List<ClientServiceInfo> getPublishedServiceList(String clientId) throws NacosExc
 
 ```java
 try {
-    List<ClientServiceInfo> result = namingMaintainService.getPublishedServiceList("127.0.0.1:8080#true");
+    List<ClientServiceInfo> result = namingMaintainerService.getPublishedServiceList("127.0.0.1:8080#true");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2582,7 +2594,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.25. 查询指定服务客户端所订阅的服务列表
 
@@ -2622,7 +2634,7 @@ List<ClientServiceInfo> getSubscribeServiceList(String clientId) throws NacosExc
 
 ```java
 try {
-    List<ClientServiceInfo> result = namingMaintainService.getSubscribeServiceList("127.0.0.1:8080#true");
+    List<ClientServiceInfo> result = namingMaintainerService.getSubscribeServiceList("127.0.0.1:8080#true");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2630,7 +2642,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.26. 查询注册了指定服务的服务客户端列表
 
@@ -2671,7 +2683,7 @@ List<ClientPublisherInfo> getPublishedClientList(String namespaceId, String grou
 
 ```java
 try {
-    List<ClientPublisherInfo> result = namingMaintainService.getPublishedClientList(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "", "");
+    List<ClientPublisherInfo> result = namingMaintainerService.getPublishedClientList(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "", "");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2679,7 +2691,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 4.27. 查询订阅了指定服务的服务客户端列表
 
@@ -2720,7 +2732,7 @@ List<ClientSubscriberInfo> getSubscribeClientList(String namespaceId, String gro
 
 ```java
 try {
-    List<ClientSubscriberInfo> result = namingMaintainService.getSubscribeClientList(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "", "");
+    List<ClientSubscriberInfo> result = namingMaintainerService.getSubscribeClientList(Constants.DEFAULT_NAMESPACE_ID, Constants.DEFAULT_GROUP, "maintain.client.test", "", "");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2728,7 +2740,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ## 5. 其他Nacos核心运维API
 
@@ -2758,7 +2770,7 @@ Map<String, String> getServerState() throws NacosException;
 
 ```java
 try {
-    Map<String,String> result = namingMaintainService.getServerState();
+    Map<String,String> result = namingMaintainerService.getServerState();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2766,7 +2778,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 5.2. 获取Nacos Server的存活状态
 
@@ -2792,7 +2804,7 @@ Boolean liveness() throws NacosException;
 
 ```java
 try {
-    boolean result = namingMaintainService.liveness();
+    boolean result = namingMaintainerService.liveness();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2800,7 +2812,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 5.3. 获取Nacos Server的就绪状态
 
@@ -2826,7 +2838,7 @@ Boolean readiness() throws NacosException;
 
 ```java
 try {
-    boolean result = namingMaintainService.readiness();
+    boolean result = namingMaintainerService.readiness();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2834,7 +2846,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 5.4. Nacos Raft操作
 
@@ -2864,7 +2876,7 @@ String raftOps(String command, String value, String groupId) throws NacosExcepti
 
 ```java
 try {
-    String result = namingMaintainService.raftOps("doSnapshot", "172.0.0.1:7848", "");
+    String result = namingMaintainerService.raftOps("doSnapshot", "172.0.0.1:7848", "");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2872,7 +2884,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 5.5. 查询Nacos Server支持的分布式ID生成器列表
 
@@ -2898,7 +2910,7 @@ List<IdGeneratorInfo> getIdGenerators() throws NacosException;
 
 ```java
 try {
-    List<IdGeneratorInfo> result = namingMaintainService.getIdGenerators();
+    List<IdGeneratorInfo> result = namingMaintainerService.getIdGenerators();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2906,7 +2918,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 5.6. 更新核心模块日志级别
 
@@ -2933,7 +2945,7 @@ void updateLogLevel(String logName, String logLevel) throws NacosException;
 
 ```java
 try {
-    namingMaintainService.updateLogLevel("core-auth", "INFO");
+    namingMaintainerService.updateLogLevel("core-auth", "INFO");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2941,7 +2953,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 5.7. 查询Nacos Server节点列表
 
@@ -2979,7 +2991,7 @@ Collection<NacosMember> listClusterNodes(String address, String state) throws Na
 
 ```java
 try {
-    Collection<NacosMember> result = namingMaintainService.namingMaintainService("", "");
+    Collection<NacosMember> result = namingMaintainerService.listClusterNodes("", "");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -2987,7 +2999,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 5.8. 更新Nacos Server的地址发现模式
 
@@ -3005,19 +3017,21 @@ Boolean updateLookupMode(String type) throws NacosException;
 
 | 参数名  | 参数类型   | 描述                             |
 |:-----|:-------|:-------------------------------|
-| type | string | 地址发现模式的类型，默认支持`file`和`address` |
+| type | string | 地址发现模式的类型，默认支持`file`和`address-server` |
 
 #### 返回参数
 
 | 参数类型    | 描述           |
 |:--------|:-------------|
-| boolean | `true`代表更新成功 |
+| Boolean | `true`代表更新成功 |
 
 #### 请求示例
 
 ```java
 try {
-
+    // The server must already have the member addresses configured for file mode.
+    Boolean result = namingMaintainerService.updateLookupMode("file");
+    System.out.println(result);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3025,7 +3039,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 5.9. 查询当前Nacos Server节点的长连接列表
 
@@ -3050,7 +3064,7 @@ Map<String, ConnectionInfo> getCurrentClients() throws NacosException;
 
 ```java
 try {
-    Map<String, ConnectionInfo> result = namingMaintainService.getCurrentClients();
+    Map<String, ConnectionInfo> result = namingMaintainerService.getCurrentClients();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3058,7 +3072,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 5.10. 均匀Nacos Server节点的长连接负载
 
@@ -3087,7 +3101,7 @@ String reloadConnectionCount(Integer count, String redirectAddress) throws Nacos
 
 ```java
 try {
-    String result = namingMaintainService.reloadConnectionCount(10, "");
+    String result = namingMaintainerService.reloadConnectionCount(10, "");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3095,7 +3109,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 5.11. 自动均匀Nacos Server节点的长连接负载
 
@@ -3123,7 +3137,7 @@ String smartReloadCluster(String loaderFactorStr) throws NacosException;
 
 ```java
 try {
-    String result = namingMaintainService.smartReloadCluster("0.1f");
+    String result = namingMaintainerService.smartReloadCluster("0.1f");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3131,7 +3145,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 5.12. 指定单个Nacos客户端连接进行重载
 
@@ -3160,7 +3174,7 @@ String reloadSingleClient(String connectionId, String redirectAddress) throws Na
 
 ```java
 try {
-    String result = namingMaintainService.reloadSingleClient("111111111_127.0.0.1_10000");
+    String result = namingMaintainerService.reloadSingleClient("111111111_127.0.0.1_10000", "");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3168,7 +3182,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 5.13. 查询Nacos Server长连接负载统计信息
 
@@ -3194,7 +3208,7 @@ ServerLoaderMetrics getClusterLoaderMetrics() throws NacosException;
 
 ```java
 try {
-    ServerLoaderMetrics result = namingMaintainService.getClusterLoaderMetrics();
+    ServerLoaderMetrics result = namingMaintainerService.getClusterLoaderMetrics();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3202,7 +3216,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 5.14. 查询命名空间列表
 
@@ -3239,7 +3253,7 @@ List<Namespace> getNamespaceList() throws NacosException;
 
 ```java
 try {
-    List<Namespace> result = namingMaintainService.getNamespaceList();
+    List<Namespace> result = namingMaintainerService.getNamespaceList();
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3247,7 +3261,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 5.15. 查询指定命名空间
 
@@ -3286,7 +3300,7 @@ Namespace getNamespace(String namespaceId) throws NacosException;
 
 ```java
 try {
-    Namespace result = namingMaintainService.getNamespace("public");
+    Namespace result = namingMaintainerService.getNamespace("public");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3294,7 +3308,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 5.16. 创建命名空间
 
@@ -3326,8 +3340,8 @@ Boolean createNamespace(String namespaceId, String namespaceName, String namespa
 
 ```java
 try {
-    boolean result = namingMaintainService.createNamespace("test", "test");
-    result = namingMaintainService.createNamespace("test", "test", "test");
+    boolean result = namingMaintainerService.createNamespace("test", "test");
+    result = namingMaintainerService.createNamespace("test", "test", "test");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3335,7 +3349,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 5.17. 更新命名空间
 
@@ -3365,7 +3379,7 @@ Boolean updateNamespace(String namespaceId, String namespaceName, String namespa
 
 ```java
 try {
-    boolean result = namingMaintainService.updateNamespace("test", "testNamespaceName", "testNamespaceDesc");
+    boolean result = namingMaintainerService.updateNamespace("test", "testNamespaceName", "testNamespaceDesc");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3373,7 +3387,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 5.18. 删除命名空间
 
@@ -3401,7 +3415,7 @@ Boolean deleteNamespace(String namespaceId) throws NacosException;
 
 ```java
 try {
-    boolean result = namingMaintainService.deleteNamespace("test");
+    boolean result = namingMaintainerService.deleteNamespace("test");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3409,7 +3423,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 5.19. 检查命名空间是否存在
 
@@ -3437,7 +3451,7 @@ Boolean checkNamespaceIdExist(String namespaceId) throws NacosException;
 
 ```java
 try {
-    boolean result = namingMaintainService.checkNamespaceIdExist("test");
+    boolean result = namingMaintainerService.checkNamespaceIdExist("test");
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -3445,7 +3459,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 5.20. 查询插件列表
 
@@ -3694,7 +3708,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 6.2. 搜索MCP服务列表
 
@@ -3739,7 +3753,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 6.3. 获取MCP服务详情
 
@@ -3787,7 +3801,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 6.4. 创建Local(stdio)类型的MCP服务
 
@@ -3848,7 +3862,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 6.5. 创建Remote(sse, streamable等)类型的MCP服务
 
@@ -3918,7 +3932,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 6.6. 更新MCP服务
 
@@ -4006,7 +4020,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 6.7. 删除MCP服务
 
@@ -4049,7 +4063,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 6.8. 创建MCP服务（统一接口）
 
@@ -4138,7 +4152,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 6.9. 分页查询 MCP 版本
 
@@ -4714,7 +4728,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 7.2. 查询AgentCard
 
@@ -4762,7 +4776,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 7.3. 更新AgentCard
 
@@ -4816,7 +4830,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 7.4. 删除AgentCard
 
@@ -4860,7 +4874,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 7.5. 查询指定AgentCard的所有版本
 
@@ -4900,7 +4914,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 7.6. 根据AgentCard名称搜索AgentCard
 
@@ -4945,7 +4959,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ### 7.7. 分页查询AgentCard列表
 
@@ -4993,7 +5007,7 @@ try {
 
 #### 异常说明
 
-读取配置超时或网络异常，抛出 NacosException 异常。
+请求执行失败（例如请求超时或网络异常）时，抛出 `NacosException`。
 
 ## 8. Prompt 能力
 
