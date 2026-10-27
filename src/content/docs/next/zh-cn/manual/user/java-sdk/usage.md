@@ -168,7 +168,7 @@ ConfigQueryResult getConfig(GetConfigRequest request) throws NacosException;
 | :--- | :--- | :--- |
 | dataId | string | 配置 ID，采用类似 package.class（如com.taobao.tc.refund.log.level）的命名规则保证全局唯一性，class 部分建议是配置的业务含义。全部字符小写。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
 | group | string | 配置分组，建议填写产品名:模块名（Nacos:Test）保证唯一性，只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。 |
-| timeout | long | 读取配置超时时间，单位 ms，推荐值 3000。 |
+| timeoutMs | long | 读取配置超时时间，单位 ms，推荐值 3000。 |
 
 3.3 新增 `getConfig(GetConfigRequest)`。请求和结果模型位于 `com.alibaba.nacos.api.config`，命名空间沿用创建 SDK 时的配置。
 
@@ -228,7 +228,7 @@ System.out.println(result.getMd5());
 如果希望 Nacos 推送配置变更，可以使用 Nacos 动态监听配置接口来实现。
 
 ```java
-public void addListener(String dataId, String group, Listener listener) 
+void addListener(String dataId, String group, Listener listener) throws NacosException;
 ```
 
 #### 请求参数
@@ -241,9 +241,7 @@ public void addListener(String dataId, String group, Listener listener)
 
 #### 返回值
 
-| 参数类型 | 描述 |
-| :--- | :--- |
-| string | 配置值，初始化或者配置变更的时候通过回调函数返回该值。 |
+无直接返回值。配置内容通过 `Listener.receiveConfigInfo(String configInfo)` 回调接收。需要同步获取当前配置并注册监听器时，可使用 `getConfigAndSignListener`。
 
 
 #### 请求示例
@@ -259,7 +257,7 @@ properties.put("serverAddr", serverAddr);
 ConfigService configService = NacosFactory.createConfigService(properties);
 String content = configService.getConfig(dataId, group, 5000);
 System.out.println(content);
-configService.addListener(dataId, group, new Listener() {
+Listener listener = new Listener() {
     @Override
     public void receiveConfigInfo(String configInfo) {
         System.out.println("recieve1:" + configInfo);
@@ -268,7 +266,8 @@ configService.addListener(dataId, group, new Listener() {
     public Executor getExecutor() {
         return null;
     }
-});
+};
+configService.addListener(dataId, group, listener);
 
 // 测试让主线程不退出，因为订阅配置是守护线程，主线程退出守护线程就会退出。 正式代码中无需下面代码
 while (true) {
@@ -286,7 +285,7 @@ while (true) {
 取消监听配置，取消监听后配置不会再推送。
 
 ```java
-public void removeListener(String dataId, String group, Listener listener)
+void removeListener(String dataId, String group, Listener listener);
 ```
 
 #### 请求参数
@@ -295,21 +294,18 @@ public void removeListener(String dataId, String group, Listener listener)
 | :--- | :--- | :--- |
 | dataId | string | 配置 ID，采用类似 package.class（如com.taobao.tc.refund.log.level）的命名规则保证全局唯一性，class 部分建议是配置的业务含义。全部字符小写。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
 | group | string | 配置分组 |
-| listener | ConfigChangeListenerAdapter | 监听器，配置变更进入监听器的回调函数。 |
+| listener | Listener | 注册监听时使用的同一个监听器实例。 |
 
+
+#### 返回值
+
+无。
 
 #### 使用示例
 
 ```java
-String serverAddr = "{serverAddr}";
-String dataId = "{dataId}";
-String group = "{group}";
-Properties properties = new Properties();
-properties.setProperty("username", System.getenv("NACOS_USERNAME"));
-properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
-properties.put("serverAddr", serverAddr);
-ConfigService configService = NacosFactory.createConfigService(properties);
-configService.removeListener(dataId, group, yourListener);
+// Reuse the live configService and listener registered in section 3.2.
+configService.removeListener(dataId, group, listener);
 ```
 
 ### 3.4. 发布配置
@@ -334,7 +330,7 @@ PublishConfigResult publishConfig(PublishConfigRequest request) throws NacosExce
 | :--- | :--- | :--- |
 | dataId | string | 配置 ID，采用类似 `package.class`（如 `com.taobao.tc.refund.log.level`）的命名规则保证全局唯一性。建议根据配置的业务含义来定义 class 部分。全部字符均为小写。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 256 字节。 |
 | group | string | 配置分组，建议填写`产品名:模块名`（如 Nacos`:Test`）来保证唯一性。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 128 字节。 |
-| content | string | 配置内容，不超过 100K 字节。 |
+| content | string | 配置内容，受服务端 `maxContent` 及容量检查中的配置大小限制约束。 |
 | type | string | @Since 1.4.1. 配置类型，见 `com.alibaba.nacos.api.config.ConfigType`，默认为TEXT |
 
 3.3 新增 `publishConfig(PublishConfigRequest)`，请求模型位于 `com.alibaba.nacos.api.config`，包含上述 `dataId`、`group`、`content`、`type`，以及可选的 `casMd5`。设置 `casMd5` 时执行 CAS；不匹配时发布失败，不覆盖已有内容。命名空间使用 SDK 上下文。
@@ -471,7 +467,7 @@ String getConfigAndSignListener(String dataId, String group, long timeoutMs, Lis
 | :--- | :--- | :--- |
 | dataId | string | 配置 ID，采用类似 package.class（如com.taobao.tc.refund.log.level）的命名规则保证全局唯一性，class 部分建议是配置的业务含义。全部字符小写。只允许英文字符和 4 种特殊字符（"."、":"、"-"、"\_"），不超过 256 字节。 |
 | group | string | 配置分组，建议填写产品名:模块名（Nacos:Test）保证唯一性，只允许英文字符和4种特殊字符（"."、":"、"-"、"\_"），不超过128字节。 |
-| timeout | long | 读取配置超时时间，单位 ms，推荐值 3000。 |
+| timeoutMs | long | 读取配置超时时间，单位 ms，推荐值 3000。 |
 | listener | Listener | 监听器，配置变更进入监听器的回调函数。                                                                                                                            |
 
 #### 返回值
@@ -533,7 +529,7 @@ boolean publishConfigCas(String dataId, String group, String content, String cas
 | :--- | :--- |:-----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | dataId | string | 配置 ID，采用类似 `package.class`（如 `com.taobao.tc.refund.log.level`）的命名规则保证全局唯一性。建议根据配置的业务含义来定义 class 部分。全部字符均为小写。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 256 字节。 |
 | group | string | 配置分组，建议填写`产品名:模块名`（如 Nacos`:Test`）来保证唯一性。只允许英文字符和 4 种特殊字符（“.”、“:”、“-”、“\_”），不超过 128 字节。                                                                    |
-| content | string | 配置内容，不超过 100K 字节。                                                                                                                                          |
+| content | string | 配置内容，受服务端 `maxContent` 及容量检查中的配置大小限制约束。                                                                                                                                          |
 | casMd5 | string | 前配置内容的md5                                                                                                                                                  |
 | type | string | 配置类型，见 `com.alibaba.nacos.api.config.ConfigType`，默认为TEXT                                                                                                   |
 
@@ -2081,7 +2077,7 @@ McpServerDetailInfo subscribeMcpServer(String mcpName, String version, AbstractN
 |:---------|:-------------------------------|----------|-----------------|
 | mcpName  | String                         | MCP服务名称  | 无，必填            |
 | version  | String                         | MCP服务版本  | 空，当填入为空时，订阅最新版本 |
-| listener | AbstractNacosMcpServerListener | MCP服务监听器 | 无，必填            |
+| mcpServerListener | AbstractNacosMcpServerListener | MCP服务监听器 | 无，必填            |
 
 #### 返回参数
 
@@ -2145,7 +2141,7 @@ void unsubscribeMcpServer(String mcpName, String version, AbstractNacosMcpServer
 |:---------|:-------------------------------|----------|-------------------|
 | mcpName  | String                         | MCP服务名称  | 无，必填              |
 | version  | String                         | MCP服务版本  | 空，当填入为空时，取消订阅最新版本 |
-| listener | AbstractNacosMcpServerListener | MCP服务监听器 | 无，必填              |
+| mcpServerListener | AbstractNacosMcpServerListener | MCP服务监听器 | 无，必填              |
 
 #### 返回参数
 
@@ -2407,7 +2403,7 @@ AgentCardDetailInfo subscribeAgentCard(String agentName, String version, Abstrac
 |:----------|:-------------------------------|---------|-------------|
 | agentName | String                         | Agent名称 | 无，必填        |
 | version   | String                         | Agent版本 | 当为空时，订阅最新版本 |
-| listener  | AbstractNacosAgentCardListener | 监听器     | 无，必填        |
+| agentCardListener | AbstractNacosAgentCardListener | 监听器     | 无，必填        |
 
 #### 返回参数
 
@@ -2466,7 +2462,7 @@ void unsubscribeAgentCard(String agentName, String version, AbstractNacosAgentCa
 |:----------|:-------------------------------|---------|---------------|
 | agentName | String                         | Agent名称 | 无，必填          |
 | version   | String                         | Agent版本 | 当为空时，取消订阅最新版本 |
-| listener  | AbstractNacosAgentCardListener | 监听器     | 无，必填          |
+| agentCardListener | AbstractNacosAgentCardListener | 监听器     | 无，必填          |
 
 #### 返回参数
 
@@ -3221,18 +3217,20 @@ Agent 引用无效、`version` 与 `label` 同时设置、Filter 无效、Agent 
 
 #### 描述
 
-订阅 Agent 定义和地址的变化。此方法没有返回值，首次查询结果和后续变化都通过监听器的 `onEvent` 接收；请在调用前准备好监听器使用的数据。
+订阅 Agent 定义和地址的变化，返回当前完整的 `AgentDiscoveryResult`；目标尚不存在时返回 `null`，SDK 保留订阅并等待目标可用。初始快照应从返回值读取，后续变化通过监听器的 `onEvent` 接收。请在调用前准备好监听器使用的数据，保存返回值时避免覆盖已经收到的较新事件。
 
 - `SNAPSHOT`：包含完整查询结果，用它替换本地保存的结果。地址列表可能为空，也可能包含不健康地址，需要检查后再使用。
 - `UNAVAILABLE`：SDK 查询确认 Agent、指定版本或标签不存在。此时停止使用旧结果；目标恢复后会继续通知。
 
-订阅期间遇到网络、权限或订阅数量限制等错误时，SDK 会保留订阅并自动重试，无需重复订阅。查看客户端日志可了解错误原因。回调较慢时可能跳过中间状态，优先通知最新结果；用法见 [RAD 接入指南](../ai/rad-discovery.md#21-初始状态与后续回调)。
+订阅期间遇到网络、权限或订阅数量限制等错误时，SDK 会保留订阅并自动重试，无需重复订阅。查看客户端日志可了解错误原因。回调较慢时可能跳过中间状态，优先通知最新结果。
+
+#### 方法签名
 
 ```java
-void subscribeAgent(AgentReference reference,
+AgentDiscoveryResult subscribeAgent(AgentReference reference,
         AbstractNacosAgentDiscoveryListener listener) throws NacosException;
 
-void subscribeAgent(AgentReference reference, AgentDiscoveryFilter filter,
+AgentDiscoveryResult subscribeAgent(AgentReference reference, AgentDiscoveryFilter filter,
         AbstractNacosAgentDiscoveryListener listener) throws NacosException;
 ```
 
@@ -3246,13 +3244,16 @@ void subscribeAgent(AgentReference reference, AgentDiscoveryFilter filter,
 
 #### 返回参数
 
-无。初始完整状态由 listener 接收。
+| 参数类型 | 描述 |
+|:---|:---|
+| AgentDiscoveryResult | 当前完整快照；目标尚不存在时为 `null`，订阅仍然保留。 |
 
 #### 请求示例
 
 ```java
 import com.alibaba.nacos.api.ai.listener.AbstractNacosAgentDiscoveryListener;
 import com.alibaba.nacos.api.ai.listener.NacosAgentDiscoveryEvent;
+import com.alibaba.nacos.api.ai.model.agent.AgentDiscoveryResult;
 import com.alibaba.nacos.api.ai.model.agent.AgentReference;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -3267,8 +3268,12 @@ AbstractNacosAgentDiscoveryListener listener = new AbstractNacosAgentDiscoveryLi
     }
 };
 try {
-    aiService.agent().subscribeAgent(reference, listener);
+    AgentDiscoveryResult initial = aiService.agent().subscribeAgent(reference, listener);
     try {
+        if (initial != null) {
+            // Preserve a newer event if the listener has already received one.
+            current.compareAndSet(null, new NacosAgentDiscoveryEvent(initial));
+        }
         System.in.read();
     } finally {
         aiService.agent().unsubscribeAgent(reference, listener);
@@ -3280,7 +3285,7 @@ try {
 
 #### 异常说明
 
-调用时如果参数无效、首次查询失败或订阅数量超限，可能抛出 `NacosException`。这表示本次订阅未成功，需要处理原因后重新调用。
+调用时如果参数无效、首次查询发生非目标不存在类错误或订阅数量超限，可能抛出 `NacosException`。这表示本次订阅未成功，需要处理原因后重新调用。目标尚不存在时返回 `null`，无需重复订阅。
 
 ### 11.4. 取消订阅 Agent
 

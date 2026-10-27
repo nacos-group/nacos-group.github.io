@@ -168,7 +168,7 @@ ConfigQueryResult getConfig(GetConfigRequest request) throws NacosException;
 | :--- | :--- | :--- |
 | dataId | string | Configuration ID. Use a naming rule similar to `package.class`, such as `com.taobao.tc.refund.log.level`, to ensure global uniqueness. The `class` part should describe the business meaning of the configuration. Use lowercase characters only. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 256 bytes. |
 | group | string | Configuration group. We recommend using `product:module`, such as `Nacos:Test`, to ensure uniqueness. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 128 bytes. |
-| timeout | long | Timeout for reading the configuration, in milliseconds. The recommended value is 3000. |
+| timeoutMs | long | Timeout for reading the configuration, in milliseconds. The recommended value is 3000. |
 
 3.3 adds `getConfig(GetConfigRequest)`. Request and result models are in `com.alibaba.nacos.api.config`; the namespace comes from SDK initialization.
 
@@ -228,7 +228,7 @@ Invalid parameters, query timeouts or network failures can raise `NacosException
 If you want Nacos to push configuration changes, use the Nacos dynamic configuration listener API.
 
 ```java
-public void addListener(String dataId, String group, Listener listener) 
+void addListener(String dataId, String group, Listener listener) throws NacosException;
 ```
 
 #### Request Parameters
@@ -241,9 +241,7 @@ public void addListener(String dataId, String group, Listener listener)
 
 #### Return Value
 
-| Type | Description |
-| :--- | :--- |
-| string | Configuration value, returned through the callback during initialization or configuration changes. |
+No direct return value. Configuration content is delivered through `Listener.receiveConfigInfo(String configInfo)`. Use `getConfigAndSignListener` to synchronously retrieve the current configuration and register a listener.
 
 
 #### Request Example
@@ -259,7 +257,7 @@ properties.put("serverAddr", serverAddr);
 ConfigService configService = NacosFactory.createConfigService(properties);
 String content = configService.getConfig(dataId, group, 5000);
 System.out.println(content);
-configService.addListener(dataId, group, new Listener() {
+Listener listener = new Listener() {
     @Override
     public void receiveConfigInfo(String configInfo) {
         System.out.println("recieve1:" + configInfo);
@@ -268,7 +266,8 @@ configService.addListener(dataId, group, new Listener() {
     public Executor getExecutor() {
         return null;
     }
-});
+};
+configService.addListener(dataId, group, listener);
 
 // Keep the main thread alive for testing because configuration subscription uses daemon threads.
 // This code is not required in production.
@@ -287,7 +286,7 @@ while (true) {
 Cancels the configuration listener. After the listener is removed, configuration changes are no longer pushed.
 
 ```java
-public void removeListener(String dataId, String group, Listener listener)
+void removeListener(String dataId, String group, Listener listener);
 ```
 
 #### Request Parameters
@@ -296,21 +295,18 @@ public void removeListener(String dataId, String group, Listener listener)
 | :--- | :--- | :--- |
 | dataId | string | Configuration ID. Use a naming rule similar to `package.class`, such as `com.taobao.tc.refund.log.level`, to ensure global uniqueness. The `class` part should describe the business meaning of the configuration. Use lowercase characters only. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 256 bytes. |
 | group | string | Configuration group |
-| listener | ConfigChangeListenerAdapter | Listener callback invoked when the configuration changes. |
+| listener | Listener | The same listener instance used when registering the subscription. |
 
+
+#### Return Value
+
+None.
 
 #### Usage Example
 
 ```java
-String serverAddr = "{serverAddr}";
-String dataId = "{dataId}";
-String group = "{group}";
-Properties properties = new Properties();
-properties.setProperty("username", System.getenv("NACOS_USERNAME"));
-properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
-properties.put("serverAddr", serverAddr);
-ConfigService configService = NacosFactory.createConfigService(properties);
-configService.removeListener(dataId, group, yourListener);
+// Reuse the live configService and listener registered in section 3.2.
+configService.removeListener(dataId, group, listener);
 ```
 
 ### 3.4. Publish Config
@@ -335,7 +331,7 @@ PublishConfigResult publishConfig(PublishConfigRequest request) throws NacosExce
 | :--- | :--- | :--- |
 | dataId | string | Configuration ID. Use a naming rule similar to `package.class`, such as `com.taobao.tc.refund.log.level`, to ensure global uniqueness. We recommend defining the `class` part according to the business meaning of the configuration. Use lowercase characters only. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 256 bytes. |
 | group | string | Configuration group. We recommend using `product:module`, such as `Nacos:Test`, to ensure uniqueness. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 128 bytes. |
-| content | string | Configuration content. The maximum size is 100 KB. |
+| content | string | Configuration content, subject to the server `maxContent` limit and any configuration size limits enforced by capacity checks. |
 | type | string | @Since 1.4.1. Configuration type. See `com.alibaba.nacos.api.config.ConfigType`. The default value is `TEXT`. |
 
 3.3 adds `publishConfig(PublishConfigRequest)`. This model is in `com.alibaba.nacos.api.config` and contains `dataId`, `group`, `content`, `type` and optional `casMd5`. Setting `casMd5` enables CAS; a mismatch fails the publish without overwriting existing content. The SDK supplies the namespace.
@@ -472,7 +468,7 @@ String getConfigAndSignListener(String dataId, String group, long timeoutMs, Lis
 | :--- | :--- | :--- |
 | dataId | string | Configuration ID. Use a naming rule similar to `package.class`, such as `com.taobao.tc.refund.log.level`, to ensure global uniqueness. The `class` part should describe the business meaning of the configuration. Use lowercase characters only. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 256 bytes. |
 | group | string | Configuration group. We recommend using `product:module`, such as `Nacos:Test`, to ensure uniqueness. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 128 bytes. |
-| timeout | long | Timeout for reading the configuration, in milliseconds. The recommended value is 3000. |
+| timeoutMs | long | Timeout for reading the configuration, in milliseconds. The recommended value is 3000. |
 | listener | Listener | Listener callback invoked when the configuration changes. |
 
 #### Return Value
@@ -534,7 +530,7 @@ boolean publishConfigCas(String dataId, String group, String content, String cas
 | :--- | :--- |:-----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | dataId | string | Configuration ID. Use a naming rule similar to `package.class`, such as `com.taobao.tc.refund.log.level`, to ensure global uniqueness. We recommend defining the `class` part according to the business meaning of the configuration. Use lowercase characters only. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 256 bytes. |
 | group | string | Configuration group. We recommend using `product:module`, such as `Nacos:Test`, to ensure uniqueness. Only letters and four special characters (`.`, `:`, `-`, `_`) are allowed. The maximum length is 128 bytes. |
-| content | string | Configuration content. The maximum size is 100 KB. |
+| content | string | Configuration content, subject to the server `maxContent` limit and any configuration size limits enforced by capacity checks. |
 | casMd5 | string | MD5 of the previous configuration content |
 | type | string | Configuration type. See `com.alibaba.nacos.api.config.ConfigType`. The default value is `TEXT`. |
 
@@ -2087,7 +2083,7 @@ McpServerDetailInfo subscribeMcpServer(String mcpName, String version, AbstractN
 |:---------|:-------------------------------|----------|-----------------|
 | mcpName  | String | MCP service name | None, required |
 | version  | String | MCP service version | Empty. When empty, the latest version is subscribed to. |
-| listener | AbstractNacosMcpServerListener | MCP service listener | None, required |
+| mcpServerListener | AbstractNacosMcpServerListener | MCP service listener | None, required |
 
 #### Return Parameters
 
@@ -2151,7 +2147,7 @@ void unsubscribeMcpServer(String mcpName, String version, AbstractNacosMcpServer
 |:---------|:-------------------------------|----------|-------------------|
 | mcpName  | String | MCP service name | None, required |
 | version  | String | MCP service version | Empty. When empty, the latest version is unsubscribed from. |
-| listener | AbstractNacosMcpServerListener | MCP service listener | None, required |
+| mcpServerListener | AbstractNacosMcpServerListener | MCP service listener | None, required |
 
 #### Return Parameters
 
@@ -2413,7 +2409,7 @@ AgentCardDetailInfo subscribeAgentCard(String agentName, String version, Abstrac
 |:----------|:-------------------------------|---------|-------------|
 | agentName | String | Agent name | None, required |
 | version   | String | Agent version | When empty, the latest version is subscribed to. |
-| listener  | AbstractNacosAgentCardListener | Listener | None, required |
+| agentCardListener | AbstractNacosAgentCardListener | Listener | None, required |
 
 #### Return Parameters
 
@@ -2472,7 +2468,7 @@ void unsubscribeAgentCard(String agentName, String version, AbstractNacosAgentCa
 |:----------|:-------------------------------|---------|---------------|
 | agentName | String | Agent name | None, required |
 | version   | String | Agent version | When empty, the latest version is unsubscribed from. |
-| listener  | AbstractNacosAgentCardListener | Listener | None, required |
+| agentCardListener | AbstractNacosAgentCardListener | Listener | None, required |
 
 #### Return Parameters
 
@@ -3227,18 +3223,20 @@ Throws `NacosException` when the Agent reference is invalid, `version` and `labe
 
 #### Description
 
-Subscribe to changes in an Agent's definition and addresses. This method has no return value; the listener's `onEvent` receives both the initial query result and later changes. Prepare the data used by the listener before calling it.
+Subscribe to changes in an Agent's definition and addresses and return the current complete `AgentDiscoveryResult`. If the target does not exist yet, the method returns `null` and the SDK retains the subscription until the target becomes available. Read the initial snapshot from the return value and receive later changes through the listener's `onEvent`. Prepare the listener's data before calling the method, and avoid overwriting a newer event when saving the returned snapshot.
 
 - `SNAPSHOT`: a complete query result. Replace the locally saved result with it. Check addresses before use: the list can be empty or include unhealthy addresses.
 - `UNAVAILABLE`: an SDK query confirmed that the Agent, requested version or label does not exist. Stop using the old result; notifications continue when the target returns.
 
-If network, permission or subscription-limit errors occur during a subscription, the SDK keeps it and retries automatically; there is no need to subscribe again. Check client logs for the cause. Slow callbacks may skip intermediate states in favor of the latest result. See the [RAD Integration Guide](../ai/rad-discovery.md#21-initial-state-and-subsequent-callbacks).
+If network, permission or subscription-limit errors occur during a subscription, the SDK keeps it and retries automatically; there is no need to subscribe again. Check client logs for the cause. Slow callbacks may skip intermediate states in favor of the latest result.
+
+#### Method Signature
 
 ```java
-void subscribeAgent(AgentReference reference,
+AgentDiscoveryResult subscribeAgent(AgentReference reference,
         AbstractNacosAgentDiscoveryListener listener) throws NacosException;
 
-void subscribeAgent(AgentReference reference, AgentDiscoveryFilter filter,
+AgentDiscoveryResult subscribeAgent(AgentReference reference, AgentDiscoveryFilter filter,
         AbstractNacosAgentDiscoveryListener listener) throws NacosException;
 ```
 
@@ -3252,13 +3250,16 @@ void subscribeAgent(AgentReference reference, AgentDiscoveryFilter filter,
 
 #### Return Parameters
 
-None. The listener receives the initial complete state.
+| Type | Description |
+|:---|:---|
+| AgentDiscoveryResult | Current complete snapshot; `null` if the target does not exist yet, while the subscription remains active. |
 
 #### Request Example
 
 ```java
 import com.alibaba.nacos.api.ai.listener.AbstractNacosAgentDiscoveryListener;
 import com.alibaba.nacos.api.ai.listener.NacosAgentDiscoveryEvent;
+import com.alibaba.nacos.api.ai.model.agent.AgentDiscoveryResult;
 import com.alibaba.nacos.api.ai.model.agent.AgentReference;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -3273,8 +3274,12 @@ AbstractNacosAgentDiscoveryListener listener = new AbstractNacosAgentDiscoveryLi
     }
 };
 try {
-    aiService.agent().subscribeAgent(reference, listener);
+    AgentDiscoveryResult initial = aiService.agent().subscribeAgent(reference, listener);
     try {
+        if (initial != null) {
+            // Preserve a newer event if the listener has already received one.
+            current.compareAndSet(null, new NacosAgentDiscoveryEvent(initial));
+        }
         System.in.read();
     } finally {
         aiService.agent().unsubscribeAgent(reference, listener);
@@ -3286,7 +3291,7 @@ try {
 
 #### Exceptions
 
-The call can throw `NacosException` for invalid parameters, an initial query failure or a subscription limit. In this case, the subscription was not created successfully; resolve the cause and call again.
+The call can throw `NacosException` for invalid parameters, an initial query failure other than a missing target, or a subscription limit. In this case, the subscription was not created successfully; resolve the cause and call again. A missing target returns `null` and does not require resubscribing.
 
 ### 11.4. Unsubscribe from an Agent
 
