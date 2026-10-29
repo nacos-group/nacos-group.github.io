@@ -66,7 +66,7 @@ starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astr
 <h3 id="31-edit-the-deployment-configuration-file-and-add-authentication-configuration">3.1. Edit the Deployment Configuration File and Add Authentication Configuration</h3>
 <p>Find the <code dir="auto">nacos</code> container in the <code dir="auto">nacos</code> StatefulSet in <code dir="auto">deploy/nacos/nacos-quick-start.yaml</code>:</p>
 <ol>
-<li>Change <code dir="auto">image</code> to an available target 3.3 image, such as <code dir="auto">nacos/nacos-server:&lt;target-version-tag&gt;</code>. The repository’s default image may still use an older release.</li>
+<li>Set <code dir="auto">image</code> to the released image <code dir="auto">nacos/nacos-server:v3.3.0</code>. The repository’s default image may still use an older release.</li>
 <li>Keep the database, <code dir="auto">NACOS_SERVERS</code>, and other settings. Replace the authentication variables below with your own values. Edit existing entries with the same names instead of adding duplicates.</li>
 </ol>
 <p><code dir="auto">NACOS_AUTH_TOKEN</code> is the server secret used to sign tokens. It must be valid Base64 decoding to at least 32 bytes, and is different from the login response’s <code dir="auto">accessToken</code>. The server identity key/value must be nonempty. All replicas must use the same secret and server identity; replace the repository’s demo values.</p>

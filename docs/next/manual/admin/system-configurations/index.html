@@ -740,7 +740,7 @@ starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astr
 
 <table><thead><tr><th>参数名</th><th>说明</th><th>默认值</th></tr></thead><tbody><tr><td><code dir="auto">nacos.naming.data.warmup</code></td><td>是否在启动时等待服务发现数据预热。开启后 readiness 可能在预热完成前失败。</td><td><code dir="auto">false</code></td></tr><tr><td><code dir="auto">nacos.naming.expireInstance</code></td><td>是否自动摘除过期临时实例。</td><td><code dir="auto">true</code></td></tr><tr><td><code dir="auto">nacos.naming.empty-service.auto-clean</code></td><td>是否自动清理空服务。</td><td><code dir="auto">true</code></td></tr><tr><td><code dir="auto">nacos.naming.empty-service.clean.initial-delay-ms</code></td><td>空服务清理首次延迟，单位毫秒。</td><td><code dir="auto">50000</code></td></tr><tr><td><code dir="auto">nacos.naming.empty-service.clean.period-time-ms</code></td><td>空服务清理周期，单位毫秒。</td><td><code dir="auto">30000</code></td></tr><tr><td><code dir="auto">nacos.naming.clean.empty-service.interval</code></td><td>空服务清理间隔，单位毫秒。</td><td><code dir="auto">60000</code></td></tr><tr><td><code dir="auto">nacos.naming.clean.empty-service.expired-time</code></td><td>空服务过期时间，单位毫秒。</td><td><code dir="auto">60000</code></td></tr><tr><td><code dir="auto">nacos.naming.clean.expired-metadata.interval</code></td><td>过期元数据清理间隔，单位毫秒。</td><td><code dir="auto">5000</code></td></tr><tr><td><code dir="auto">nacos.naming.clean.expired-metadata.expired-time</code></td><td>过期元数据保留时间，单位毫秒。</td><td><code dir="auto">60000</code></td></tr><tr><td><code dir="auto">nacos.naming.client.expired.time</code></td><td>临时 Client 数据过期时间，单位毫秒。</td><td><code dir="auto">180000</code></td></tr><tr><td><code dir="auto">nacos.naming.push.pushTaskDelay</code></td><td>服务推送延迟，单位毫秒。</td><td><code dir="auto">500</code></td></tr><tr><td><code dir="auto">nacos.naming.push.pushTaskTimeout</code></td><td>服务推送执行超时，单位毫秒。</td><td><code dir="auto">5000</code></td></tr><tr><td><code dir="auto">nacos.naming.push.pushTaskRetryDelay</code></td><td>服务推送失败重试延迟，单位毫秒。</td><td><code dir="auto">1000</code></td></tr><tr><td><code dir="auto">nacos.naming.service.metadata.length</code></td><td>服务元数据总长度限制。</td><td><code dir="auto">1024</code></td></tr></tbody></table>
 <h3 id="内置-dns">内置 DNS</h3>
-<p>Nacos 3.3 支持通过内置 DNS 查询服务实例的 A/AAAA 记录，默认关闭。修改以下配置后重启 Nacos Server 生效，接入和验证步骤见<a href="../../../ecology/use-nacos-with-native-dns/" referrerpolicy="unsafe-url">内置 DNS 服务发现</a>。</p>
+<p>Nacos 3.3.0 支持通过内置 DNS 查询服务实例的 A/AAAA/SRV 记录，默认关闭。修改以下配置后重启 Nacos Server 生效，接入和验证步骤见<a href="../../../ecology/use-nacos-with-native-dns/" referrerpolicy="unsafe-url">内置 DNS 服务发现</a>。</p>
 
 
 
@@ -781,7 +781,32 @@ starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astr
 
 
 
-<table><thead><tr><th>参数名</th><th>说明</th><th>默认值</th></tr></thead><tbody><tr><td><code dir="auto">nacos.naming.dns.enabled</code></td><td>是否启用内置 DNS。</td><td><code dir="auto">false</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.port</code></td><td>DNS 监听端口，同时使用 UDP 和 TCP，独立于 HTTP/gRPC 端口。</td><td><code dir="auto">5353</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.domain-suffix</code></td><td>查询域名后缀，不带开头和末尾的点号。</td><td><code dir="auto">nacos</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.default-group</code></td><td>查询域名未指定分组时使用的 Nacos 分组。</td><td><code dir="auto">DEFAULT_GROUP</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.namespace</code></td><td>查询的命名空间 ID。查询 <code dir="auto">public</code> 时应显式设置为 <code dir="auto">public</code>。</td><td>空字符串</td></tr><tr><td><code dir="auto">nacos.naming.dns.ttl</code></td><td>A/AAAA 记录的 TTL，单位秒。</td><td><code dir="auto">60</code></td></tr></tbody></table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>参数名</th><th>说明</th><th>默认值</th></tr></thead><tbody><tr><td><code dir="auto">nacos.naming.dns.enabled</code></td><td>是否启用内置 DNS。</td><td><code dir="auto">false</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.bind-address</code></td><td>UDP/TCP 监听地址。远程或容器网络访问需显式配置，并限制网络来源。</td><td><code dir="auto">127.0.0.1</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.port</code></td><td>DNS 监听端口，同时使用 UDP 和 TCP，独立于 HTTP/gRPC 端口。</td><td><code dir="auto">5353</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.domain-suffix</code></td><td>查询域名后缀，不带开头和末尾的点号。</td><td><code dir="auto">nacos</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.default-group</code></td><td>查询域名未指定分组时使用的 Nacos 分组。</td><td><code dir="auto">DEFAULT_GROUP</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.namespace</code></td><td>查询的命名空间 ID。查询 <code dir="auto">public</code> 时应显式设置为 <code dir="auto">public</code>。</td><td>空字符串</td></tr><tr><td><code dir="auto">nacos.naming.dns.ttl</code></td><td>A/AAAA/SRV 记录的 TTL，单位秒。</td><td><code dir="auto">60</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.forward-enabled</code></td><td>是否将非 Nacos 后缀查询转发到上游 DNS。</td><td><code dir="auto">false</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.forward-servers</code></td><td>上游 DNS 地址列表。启用转发时配置可达的上游地址。</td><td>空列表</td></tr><tr><td><code dir="auto">nacos.naming.dns.forward-timeout-ms</code></td><td>上游转发超时，单位毫秒。</td><td><code dir="auto">3000</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.forward-refresh-interval-seconds</code></td><td>上游主机名重新解析间隔，单位秒，至少为 <code dir="auto">10</code>。</td><td><code dir="auto">300</code></td></tr></tbody></table>
 <p>DNS 查询不经过 HTTP API 鉴权，需单独通过网络访问控制限制调用来源。</p>
 <h2 id="参数校验">参数校验</h2>
 

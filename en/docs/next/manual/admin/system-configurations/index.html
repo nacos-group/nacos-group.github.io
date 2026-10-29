@@ -740,7 +740,7 @@ starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astr
 
 <table><thead><tr><th>Property</th><th>Description</th><th>Default</th></tr></thead><tbody><tr><td><code dir="auto">nacos.naming.data.warmup</code></td><td>Whether to wait for naming data warmup during startup. Readiness may fail until warmup is complete.</td><td><code dir="auto">false</code></td></tr><tr><td><code dir="auto">nacos.naming.expireInstance</code></td><td>Whether expired ephemeral instances are removed automatically.</td><td><code dir="auto">true</code></td></tr><tr><td><code dir="auto">nacos.naming.empty-service.auto-clean</code></td><td>Whether empty services are cleaned automatically.</td><td><code dir="auto">true</code></td></tr><tr><td><code dir="auto">nacos.naming.empty-service.clean.initial-delay-ms</code></td><td>Initial delay for empty service cleanup in milliseconds.</td><td><code dir="auto">50000</code></td></tr><tr><td><code dir="auto">nacos.naming.empty-service.clean.period-time-ms</code></td><td>Empty service cleanup period in milliseconds.</td><td><code dir="auto">30000</code></td></tr><tr><td><code dir="auto">nacos.naming.clean.empty-service.interval</code></td><td>Empty service cleanup interval in milliseconds.</td><td><code dir="auto">60000</code></td></tr><tr><td><code dir="auto">nacos.naming.clean.empty-service.expired-time</code></td><td>Empty service expiration time in milliseconds.</td><td><code dir="auto">60000</code></td></tr><tr><td><code dir="auto">nacos.naming.clean.expired-metadata.interval</code></td><td>Expired metadata cleanup interval in milliseconds.</td><td><code dir="auto">5000</code></td></tr><tr><td><code dir="auto">nacos.naming.clean.expired-metadata.expired-time</code></td><td>Expired metadata retention time in milliseconds.</td><td><code dir="auto">60000</code></td></tr><tr><td><code dir="auto">nacos.naming.client.expired.time</code></td><td>Ephemeral client data expiration time in milliseconds.</td><td><code dir="auto">180000</code></td></tr><tr><td><code dir="auto">nacos.naming.push.pushTaskDelay</code></td><td>Naming push delay in milliseconds.</td><td><code dir="auto">500</code></td></tr><tr><td><code dir="auto">nacos.naming.push.pushTaskTimeout</code></td><td>Naming push execution timeout in milliseconds.</td><td><code dir="auto">5000</code></td></tr><tr><td><code dir="auto">nacos.naming.push.pushTaskRetryDelay</code></td><td>Retry delay after naming push failure in milliseconds.</td><td><code dir="auto">1000</code></td></tr><tr><td><code dir="auto">nacos.naming.service.metadata.length</code></td><td>Total service metadata length limit.</td><td><code dir="auto">1024</code></td></tr></tbody></table>
 <h3 id="built-in-dns">Built-in DNS</h3>
-<p>Nacos 3.3 supports A/AAAA queries for service instances through built-in DNS, which is disabled by default. Restart Nacos Server after changing these settings. See <a href="../../../ecology/use-nacos-with-native-dns/" referrerpolicy="unsafe-url">Built-in DNS Service Discovery</a> for setup and verification.</p>
+<p>Nacos 3.3.0 supports A/AAAA/SRV queries for service instances through built-in DNS, which is disabled by default. Restart Nacos Server after changing these settings. See <a href="../../../ecology/use-nacos-with-native-dns/" referrerpolicy="unsafe-url">Built-in DNS Service Discovery</a> for setup and verification.</p>
 
 
 
@@ -781,7 +781,32 @@ starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astr
 
 
 
-<table><thead><tr><th>Parameter</th><th>Description</th><th>Default</th></tr></thead><tbody><tr><td><code dir="auto">nacos.naming.dns.enabled</code></td><td>Enables built-in DNS.</td><td><code dir="auto">false</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.port</code></td><td>DNS listening port for both UDP and TCP, independent of HTTP/gRPC ports.</td><td><code dir="auto">5353</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.domain-suffix</code></td><td>Query domain suffix, without a leading or trailing dot.</td><td><code dir="auto">nacos</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.default-group</code></td><td>Nacos group used when the query name does not specify one.</td><td><code dir="auto">DEFAULT_GROUP</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.namespace</code></td><td>Namespace ID to query. Set explicitly to <code dir="auto">public</code> when querying that namespace.</td><td>Empty string</td></tr><tr><td><code dir="auto">nacos.naming.dns.ttl</code></td><td>TTL for A/AAAA records, in seconds.</td><td><code dir="auto">60</code></td></tr></tbody></table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Parameter</th><th>Description</th><th>Default</th></tr></thead><tbody><tr><td><code dir="auto">nacos.naming.dns.enabled</code></td><td>Enables built-in DNS.</td><td><code dir="auto">false</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.bind-address</code></td><td>UDP/TCP listening address. Configure explicitly for remote or container access and restrict network sources.</td><td><code dir="auto">127.0.0.1</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.port</code></td><td>DNS listening port for both UDP and TCP, independent of HTTP/gRPC ports.</td><td><code dir="auto">5353</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.domain-suffix</code></td><td>Query domain suffix, without a leading or trailing dot.</td><td><code dir="auto">nacos</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.default-group</code></td><td>Nacos group used when the query name does not specify one.</td><td><code dir="auto">DEFAULT_GROUP</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.namespace</code></td><td>Namespace ID to query. Set explicitly to <code dir="auto">public</code> when querying that namespace.</td><td>Empty string</td></tr><tr><td><code dir="auto">nacos.naming.dns.ttl</code></td><td>TTL for A/AAAA/SRV records, in seconds.</td><td><code dir="auto">60</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.forward-enabled</code></td><td>Forwards queries outside the Nacos suffix to upstream DNS servers.</td><td><code dir="auto">false</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.forward-servers</code></td><td>Upstream DNS address list. Configure reachable addresses when enabling forwarding.</td><td>Empty list</td></tr><tr><td><code dir="auto">nacos.naming.dns.forward-timeout-ms</code></td><td>Upstream forwarding timeout, in milliseconds.</td><td><code dir="auto">3000</code></td></tr><tr><td><code dir="auto">nacos.naming.dns.forward-refresh-interval-seconds</code></td><td>Upstream hostname re-resolution interval, in seconds; at least <code dir="auto">10</code>.</td><td><code dir="auto">300</code></td></tr></tbody></table>
 <p>DNS queries do not pass through HTTP API authentication. Restrict callers separately through network access controls.</p>
 <h2 id="parameter-validation">Parameter Validation</h2>
 
