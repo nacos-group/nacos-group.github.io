@@ -18,7 +18,7 @@ RAD 请求使用的 HTTP/gRPC 是应用访问 Nacos 的传输方式。发现结�
 
 先按 [Agent 管理](./agent-registry.md)创建并发布 `public` 命名空间中的 `route-planner`、版本 `1.0.0`，确认版本已为 `online`。定义包含 `a2a` 调用接口，示例运行地址为 `http://127.0.0.1:9999/a2a`。
 
-本例使用 3.3 Java SDK；Maven 坐标为 `com.alibaba.nacos:nacos-client`。将 `${nacos.client.version}` 设置为所使用的 3.3 版本号。
+本例使用 3.3.0 正式版 Java SDK；Maven 坐标为 `com.alibaba.nacos:nacos-client`。将 `${nacos.client.version}` 设置为 `3.3.0`。
 
 ```xml
 <dependency>

@@ -92,6 +92,10 @@ Before upgrading, ensure that `nacos.core.auth.server.identity.key` and `nacos.c
 
 See [section 2.8.1](#jraft-auth-rollback) for rollback limitations after the upgrade.
 
+#### 2.1.4. Upgrade from a 3.3 Prerelease Client
+
+Applications that used the new Agent SDK in 3.3.0-BETA or 3.3.0-RC must recompile and update RAD subscription code. Both `subscribeAgent` overloads now return `void`; initial state and subsequent updates arrive through the Listener. Initialize listener state before subscribing and stop reading an initial snapshot from the return value. Legacy A2A signatures and HTTP/gRPC wire contracts are unchanged. See [Agent subscriptions](../user/java-sdk/usage.md#113-subscribe-to-an-agent) and [RAD discovery](../user/ai/rad-discovery.md).
+
 ### 2.2. Apply Database Changes
 
 Before starting any 3.3.x node, first follow the [3.2.x Upgrade Guide](/en/docs/latest/manual/admin/upgrading/) to apply the database prerequisites needed to bring the current source schema up to the 3.2.x schema level; this does not require starting a 3.2.x server. Then compare the resulting actual schema with the complete matching schema in the target 3.3.x distribution and convert the remaining differences into reviewed incremental DDL. Never execute a complete initialization file containing `CREATE TABLE` or `DROP TABLE` statements directly against an existing database.
@@ -187,6 +191,8 @@ The old `nacos.ai.resource.import.legacy-mcp-api-enabled` property is no longer 
 
 #### 2.4.1. Download the Target Version
 
+The distribution and container examples below use the **3.3.0 stable release**. Complete the preceding upgrade checks before deploying it.
+
 <Tabs>
   <TabItem label="Official Website">
     Go to the Nacos [download page](/en/download/nacos-server/), choose a [stable version](/en/download/nacos-server/#stable-versions), and click `${nacos.version}.zip` in the `Binary Package` column.
@@ -194,7 +200,7 @@ The old `nacos.ai.resource.import.legacy-mcp-api-enabled` property is no longer 
     > If the download is rate-limited, retry later or use GitHub instead.
   </TabItem>
   <TabItem label="GitHub">
-    Go to the Nacos GitHub [releases page](https://github.com/alibaba/nacos/releases), select the target release, and download `nacos-server-${target_version}.zip` or the corresponding tar.gz asset.
+    Go to the Nacos GitHub [releases page](https://github.com/alibaba/nacos/releases), select the target release, and download `nacos-server-3.3.0.zip` or the corresponding tar.gz asset.
   </TabItem>
 </Tabs>
 
@@ -203,8 +209,8 @@ The old `nacos.ai.resource.import.legacy-mcp-api-enabled` property is no longer 
 Extract the target distribution into a new directory:
 
 ```bash
-unzip nacos-server-${target_version}.zip -d ${INSTALL_PARENT}
-# or tar -xvf nacos-server-${target_version}.tar.gz -C ${INSTALL_PARENT}
+unzip nacos-server-3.3.0.zip -d ${INSTALL_PARENT}
+# or tar -xvf nacos-server-3.3.0.tar.gz -C ${INSTALL_PARENT}
 ```
 
 The 3.3 distribution contains a coordinated server JAR, default plugins, schemas, startup scripts, and configuration templates. Do not replace only `target/nacos-server.jar`, and do not overwrite the new `bin`, `conf`, or complete `plugins` directory with files from the source version.
@@ -240,7 +246,7 @@ Container deployments must also complete the database, historical migration, and
     ```yaml
     services:
       nacos:
-        image: nacos/nacos-server:${target_version}
+        image: nacos/nacos-server:v3.3.0
     ```
 
     Pull the target image. For a standalone service named `nacos`, rebuild only that service:
@@ -257,7 +263,7 @@ Container deployments must also complete the database, historical migration, and
 
     ```bash
     kubectl set image deployment/nacos-deployment \
-      ${container_name}=nacos/nacos-server:${target_version}
+      ${container_name}=nacos/nacos-server:v3.3.0
     kubectl rollout status deployment/nacos-deployment
     ```
 

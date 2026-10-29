@@ -40,8 +40,8 @@ Nacos Console depends on [Java](https://docs.oracle.com/cd/E19182-01/820-7851/in
 The release package for the independent Nacos console is the same as the Nacos service release package. Copy the release package from the previous [Deploy Nacos Service Without Console](#2-deploy-nacos-service-without-console) step to the console deployment environment, and then run the following commands to decompress it:
 
 ```bash
-  unzip nacos-server-$version.zip 
-  # or tar -xvf nacos-server-$version.tar.gz
+  unzip nacos-server-3.3.0.zip
+  # or tar -xvf nacos-server-3.3.0.tar.gz
   cd nacos/bin
 ```
 

@@ -35,7 +35,7 @@ The Nacos Java SDK requires JDK 1.8 or later.
 </dependency>
 ```
 
-Set `${nacos.client.version}` to `3.3.0-RC` or a later 3.3 release to use the MCP and Agent management APIs added in this guide.
+Use the recommended stable release `3.3.0` and set `${nacos.client.version}` to `3.3.0` for the MCP and Agent management APIs in this guide.
 
 Maintainer SDK shares the JSON adapter layer with Client SDK. For Jackson 2/3 dependencies and automatic or explicit selection, see [JSON Adapters and Jackson 2/3 Integration](../user/java-sdk/json-adapter.md).
 

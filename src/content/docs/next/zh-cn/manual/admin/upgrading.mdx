@@ -92,6 +92,10 @@ Nacos 3.3 新增 JRaft 节点间鉴权。滚动升级期间会兼容旧节点，
 
 升级完成后的回滚限制见[第 2.8.1 节](#jraft-auth-rollback)。
 
+#### 2.1.4. 从 3.3 预发布客户端升级
+
+如果应用使用过 3.3.0-BETA 或 3.3.0-RC 的新 Agent SDK，请重新编译并调整 RAD 订阅代码。正式版的两个 `subscribeAgent` 重载返回 `void`，初始状态和后续更新都通过 Listener 接收。调用前先初始化监听器状态，不再从返回值获取初始快照。旧 A2A 方法签名及 HTTP/gRPC 协议不受此变更影响。参见 [Agent 订阅](../user/java-sdk/usage.md#113-订阅-agent)和 [RAD 发现](../user/ai/rad-discovery.md)。
+
 ### 2.2. 应用数据库变更
 
 在启动任何 3.3.x 节点前，先按 [3.2.x 升级手册](/docs/latest/manual/admin/upgrading/) 完成从当前源版本到 3.2.x schema 所需的前置数据库操作；这一步不要求启动 3.2.x 服务端。然后比较完成前置操作后的实际 schema 与目标 3.3.x 发行包中对应数据库的完整 schema，并把剩余差异转换为经过评审的增量 DDL。不要在已有数据库上直接执行包含 `CREATE TABLE` 或 `DROP TABLE` 的完整初始化文件。
@@ -187,6 +191,8 @@ nacos.plugin.ai-resource-import.enabled=false
 
 #### 2.4.1. 下载目标版本
 
+以下发行包和容器示例使用 **3.3.0 正式版**。先完成前述升级检查，再部署目标版本。
+
 <Tabs>
   <TabItem label="官网">
     进入 Nacos 官网[版本下载页面](/download/nacos-server/)，选择[稳定版本](/download/nacos-server/#稳定版本)，然后点击`二进制包下载`列中的`${nacos.version}.zip`。
@@ -194,7 +200,7 @@ nacos.plugin.ai-resource-import.enabled=false
     > 若下载受到限流，请稍后重试，或改用 GitHub 下载。
   </TabItem>
   <TabItem label="GitHub">
-    进入 Nacos GitHub 的[版本发布页面](https://github.com/alibaba/nacos/releases)，选择目标版本，在 `Assets` 中下载 `nacos-server-${target_version}.zip` 或对应的 tar.gz 包。
+    进入 Nacos GitHub 的[版本发布页面](https://github.com/alibaba/nacos/releases)，选择目标版本，在 `Assets` 中下载 `nacos-server-3.3.0.zip` 或对应的 tar.gz 包。
   </TabItem>
 </Tabs>
 
@@ -203,8 +209,8 @@ nacos.plugin.ai-resource-import.enabled=false
 解压目标发行包到新的目录：
 
 ```bash
-unzip nacos-server-${target_version}.zip -d ${INSTALL_PARENT}
-# 或 tar -xvf nacos-server-${target_version}.tar.gz -C ${INSTALL_PARENT}
+unzip nacos-server-3.3.0.zip -d ${INSTALL_PARENT}
+# 或 tar -xvf nacos-server-3.3.0.tar.gz -C ${INSTALL_PARENT}
 ```
 
 3.3 的发行包同时包含新的服务端 JAR、默认插件、schema、启动脚本和配置模板。不要只替换 `target/nacos-server.jar`，也不要用源版本的 `bin`、`conf` 或整个 `plugins` 目录覆盖新发行包。
@@ -240,7 +246,7 @@ Windows 部署使用新发行包中的 `shutdown.cmd` 和 `startup.cmd`，不要
     ```yaml
     services:
       nacos:
-        image: nacos/nacos-server:${target_version}
+        image: nacos/nacos-server:v3.3.0
     ```
 
     先拉取目标镜像。单节点且服务名为 `nacos` 时，可以只重建该服务：
@@ -257,7 +263,7 @@ Windows 部署使用新发行包中的 `shutdown.cmd` 和 `startup.cmd`，不要
 
     ```bash
     kubectl set image deployment/nacos-deployment \
-      ${container_name}=nacos/nacos-server:${target_version}
+      ${container_name}=nacos/nacos-server:v3.3.0
     kubectl rollout status deployment/nacos-deployment
     ```
 
