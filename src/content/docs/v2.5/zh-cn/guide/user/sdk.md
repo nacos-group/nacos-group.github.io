@@ -17,7 +17,7 @@ Maven 坐标
 <dependency>
     <groupId>com.alibaba.nacos</groupId>
     <artifactId>nacos-client</artifactId>
-    <version>${version}</version>
+    <version>2.5.5</version>
 </dependency>
 ```
 
@@ -27,7 +27,7 @@ Maven 坐标
 ```xml
     <properties>
         <!-- 2.1.2版本以上支持纯净版客户端 -->
-        <nacos.version>2.1.2</nacos.version>
+        <nacos.version>2.5.5</nacos.version>
     </properties>
 
     <dependencies>

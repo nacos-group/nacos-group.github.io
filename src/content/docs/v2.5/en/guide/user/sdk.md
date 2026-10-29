@@ -15,7 +15,7 @@ Maven coordinates
 <dependency>
     <groupId>com.alibaba.nacos</groupId>
     <artifactId>nacos-client</artifactId>
-    <version>${version}</version>
+    <version>2.5.5</version>
 </dependency>
 ```
 
@@ -25,7 +25,7 @@ Maven coordinates
 ```xml
     <properties>
         <!-- Upper 2.1.2 support pure client -->
-        <nacos.version>2.1.2</nacos.version>
+        <nacos.version>2.5.5</nacos.version>
     </properties>
 
     <dependencies>

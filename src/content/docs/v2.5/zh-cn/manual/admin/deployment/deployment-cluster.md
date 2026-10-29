@@ -179,13 +179,13 @@ docker-compose -f example/cluster-embedded.yaml up
 如果你有很多自定义配置的需求，可以通过指定[系统参数-镜像环境变量](../system-configurations/#2-镜像环境变量)的方式进行配置，例如需要开启鉴权时：
 
 ```powershell
-docker run --name nacos-cluster-auth -e MODE=cluster -e NACOS_AUTH_ENABLE=true -e NACOS_AUTH_TOKEN=${customToken} -e NACOS_AUTH_IDENTITY_KEY=${customKey} NACOS_AUTH_IDENTITY_VALUE=${customValue} -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest
+docker run --name nacos-cluster-auth -e MODE=cluster -e NACOS_AUTH_ENABLE=true -e NACOS_AUTH_TOKEN=${customToken} -e NACOS_AUTH_IDENTITY_KEY=${customKey} -e NACOS_AUTH_IDENTITY_VALUE=${customValue} -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:v2.5.5
 ```
 
 同时，可以通过对application.properties文件进行挂卷定义的方式，将更多复杂的自定义配置导入Nacos容器中，强烈建议在生产环境中使用方式，例如：
 
 ```powershell
-docker run --name nacos-cluster -e MODE=cluster -v /path/application.properties:/home/nacos/conf/application.properties -v /path/cluster.conf:/home/nacos/conf/cluster.conf -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest
+docker run --name nacos-cluster -e MODE=cluster -v /path/application.properties:/home/nacos/conf/application.properties -v /path/cluster.conf:/home/nacos/conf/cluster.conf -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:v2.5.5
 ```
 
 如果仍然无法满足自定义需求，可以基于nacos-docker项目中的`Dockerfile`自行构建镜像。

@@ -19,7 +19,7 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## 0. 版本选择
 
-您可以通过Nacos的[版本下载页面](/download/nacos-server/)、[release notes](https://github.com/alibaba/nacos/releases) 及 [发布声明](/news/release/)中找到每个版本支持的功能的介绍，当前推荐的稳定版本为`2.5.3`.
+您可以通过Nacos的[版本下载页面](/download/nacos-server/)、[release notes](https://github.com/alibaba/nacos/releases) 及 [发布声明](/news/release/)中找到每个版本支持的功能介绍，2.x 系列当前推荐的稳定版本为 `2.5.5`。
 
 ## 1. 预备环境准备
 
@@ -34,20 +34,20 @@ Nacos 依赖 [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_j
 
 <Tabs>
   <TabItem label="官网">
-    进入Nacos官网[版本下载页面](/download/nacos-server/)，选择 [稳定版本](/download/nacos-server/#稳定版本)， 然后点击`二进制包下载`列中的`${nacos.version}.zip`进行下载。
+    进入Nacos官网[版本下载页面](/download/nacos-server/)，在 [稳定版本](/download/nacos-server/#稳定版本) 的 `2.x` 表格中，点击`二进制包下载`列中的 [2.5.5.zip](https://download.nacos.io/nacos-server/nacos-server-2.5.5.zip) 进行下载。
 
     > 注意：有时大量用户同时进行下载时，可能会遇到下载限流失败的情况，若出现下载限流失败，请稍等后重试，或采用`从 Github 下载方式`。
   </TabItem>
   <TabItem label="Github">
-    进入Nacos Github 的 [最新稳定版本](https://github.com/alibaba/nacos/releases) ，选择需要下载的Nacos版本，在`Assets`中点击下载 `nacos-server-$version.zip` 包。
+    进入Nacos GitHub 的 [2.5.5 发布页面](https://github.com/alibaba/nacos/releases/tag/2.5.5)，在 `Assets` 中下载 `nacos-server-2.5.5.zip` 或 `nacos-server-2.5.5.tar.gz` 包。
   </TabItem>
 </Tabs>
 
 ## 3. 解压缩Nacos 发行包
 
 ```bash
-  unzip nacos-server-$version.zip 
-  # 或者 tar -xvf nacos-server-$version.tar.gz
+  unzip nacos-server-2.5.5.zip
+  # 或者 tar -xvf nacos-server-2.5.5.tar.gz
   cd nacos/bin
 ```
 
