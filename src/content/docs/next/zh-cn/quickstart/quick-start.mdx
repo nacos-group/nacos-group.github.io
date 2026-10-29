@@ -19,7 +19,7 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## 0. 版本选择
 
-本页说明 Nacos 3.3 的接入方式。请从[版本下载页面](/download/nacos-server/)选择实际已发布的目标版本，并阅读对应 [release notes](https://github.com/alibaba/nacos/releases)。验证 RC 时请使用对应的 RC 制品；生产环境选择稳定版本。
+本页使用 Nacos **3.3.0 正式版**。请从[版本下载页面](/download/nacos-server/)下载安装包，并阅读 [3.3.0 发布说明](https://github.com/alibaba/nacos/releases/tag/3.3.0)。已有环境升级前请先阅读[升级手册](../manual/admin/upgrading.mdx)。
 
 ## 1. 预备环境准备
 
@@ -49,17 +49,14 @@ Nacos 依赖 [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_j
 
 启动 Nacos 服务：
 
-验证指定版本时，先将环境变量 `NACOS_VERSION` 设置为实际已发布的目标版本号。
+以下命令明确选择 3.3.0：
 
 ```bash
-# 本地一键部署一个最新版本的单机 Nacos
-nacos-setup
+# 本地一键部署 3.3.0 单机 Nacos
+nacos-setup -v 3.3.0
 
-# 本地一键部署指定版本的单机 Nacos
-nacos-setup -v "${NACOS_VERSION}"
-
-# 本地一键部署一个最新版本的集群 Nacos
-nacos-setup -c cluster
+# 本地一键部署 3.3.0 集群 Nacos
+nacos-setup -c cluster -v 3.3.0
 
 # 全局配置使用外置存储，输入数据库地址端口账号密码，配置完成后重新运行 nacos-setup
 nacos-setup --datasource-conf
@@ -75,20 +72,20 @@ nacos-setup --datasource-conf
 
 <Tabs>
   <TabItem label="官网">
-    进入Nacos官网[版本下载页面](/download/nacos-server/)，选择 [稳定版本](/download/nacos-server/#稳定版本)， 然后点击`二进制包下载`列中的`${nacos.version}.zip`进行下载。
+    进入Nacos官网[版本下载页面](/download/nacos-server/)，选择 [稳定版本](/download/nacos-server/#稳定版本)，然后下载 [3.3.0.zip](https://download.nacos.io/nacos-server/nacos-server-3.3.0.zip)。
 
     > 注意：有时大量用户同时进行下载时，可能会遇到下载限流失败的情况，若出现下载限流失败，请稍等后重试，或采用`从 Github 下载方式`。
   </TabItem>
   <TabItem label="Github">
-    进入Nacos Github 的 [最新稳定版本](https://github.com/alibaba/nacos/releases) ，选择需要下载的Nacos版本，在`Assets`中点击下载 `nacos-server-$version.zip` 包。
+    进入 Nacos GitHub 的 [3.3.0 发布页面](https://github.com/alibaba/nacos/releases/tag/3.3.0)，在 `Assets` 中下载 `nacos-server-3.3.0.zip` 包。
   </TabItem>
 </Tabs>
 
 #### 2.2.2. 解压缩Nacos 发行包
 
 ```bash
-  unzip nacos-server-$version.zip 
-  # 或者 tar -xvf nacos-server-$version.tar.gz
+  unzip nacos-server-3.3.0.zip
+  # 或者 tar -xvf nacos-server-3.3.0.tar.gz
   cd nacos/bin
 ```
 

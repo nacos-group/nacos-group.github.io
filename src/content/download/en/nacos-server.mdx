@@ -7,13 +7,9 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 # Nacos Server Download
 :::tip
-Nacos Server **3.2.4** and **2.5.5** have been released. 3.2.4 strengthens JRaft, HTTP/gRPC authorization, embedded database, login, active health checks, and MCP import security, and fixes Console, Prompt, Config, listener state, and MCP tool authentication issues; 2.5.5 hardens disk path and active HTTP health-check validation, fixes instance loss during cluster restarts, gRPC communication, HTTP HEAD handling, and cluster member consistency, and retains Java 8 compatibility.
+Nacos Server **3.3.0** is now available, with protocol-neutral Agent management and RAD discovery, ARD resource search, MCP lifecycle management, optional DNS discovery, dynamic plugin management, and client authentication enabled by default. **2.5.5** remains the recommended 2.x release with Java 8 compatibility.
 
 Feel free to [download and try it out](#stable-versions).
-
-The Nacos Server **3.3.0-RC** release candidate is now available, expanding protocol-neutral Agent management and RAD discovery, cross-resource AI search, and unified MCP lifecycle management. It also adds DNS service discovery and enables client authentication by default.
-
-Feel free to also [download and try the snapshot](#snapshot-versions).
 
 :::
 ## System Requirements
@@ -52,7 +48,7 @@ Nacos will be automatically deployed after installation. For more usage, refer t
 ### 3.x
 | Version | Binary Package Download                                                  | Docker Image                                                 | MD5                         | Release Notes                                    | Reference Documentation                                  |
 | ------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------------------- | ------------------------------------------------ | ------------------------------------------------ |
-| 3.2.4   | [3.2.4.zip](https://download.nacos.io/nacos-server/nacos-server-3.2.4.zip) | [nacos/nacos-server\:v3.2.4](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=3.2.4) | 65557f446a4f2e2ae2cd99453bce91b5 | [Release Notes](https://github.com/alibaba/nacos/releases/tag/3.2.4)      | [Quick Start](/docs/latest/quickstart/quick-start/)      |
+| 3.3.0   | [3.3.0.zip](https://download.nacos.io/nacos-server/nacos-server-3.3.0.zip) | [nacos/nacos-server\:v3.3.0](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=3.3.0) | 600aef83627d8fbe64316f582523444d | [Release Notes](https://github.com/alibaba/nacos/releases/tag/3.3.0)      | [Quick Start](/en/docs/next/quickstart/quick-start/)      |
 
 ### 2.x
 | Version | Binary Package Download                                                  | Docker Image                                                 | MD5                         | Release Notes                                    | Reference Documentation                                  |
@@ -64,7 +60,4 @@ Nacos will be automatically deployed after installation. For more usage, refer t
  - Distributed under the [Apache License v2.0](https://www.apache.org/licenses/).
 
 ## Snapshot Versions
-Snapshot versions are still in development. We encourage you to try them out and provide feedback, but it is not recommended for production use.
-| Version | Binary Package Download                                                | Docker Image                                                 | MD5                         | Release Notes                                     | Reference Documentation                                  |
-| ---- | ---- | ---- | ---- | ---- | ---- |
-| 3.3.0-RC | [3.3.0-RC.zip](https://github.com/alibaba/nacos/releases/download/3.3.0-RC/nacos-server-3.3.0-RC.zip) | Snapshots do not provide images. Use [nacos/nacos-server\:latest](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=latest) | c5e4127108ba3f77c7230735b4f07a4d | [Release Notes](https://github.com/alibaba/nacos/releases/tag/3.3.0-RC) | [Quick Start](/docs/next/quickstart/quick-start/) |
+There is currently no snapshot newer than the stable release. Use **3.3.0** above.

@@ -51,7 +51,7 @@ Nacos 的 Java SDK需要 JDK 1.8 及以上版本的Java运行环境。
 <dependency>
     <groupId>com.alibaba.nacos</groupId>
     <artifactId>nacos-client</artifactId>
-    <version>${version}</version>
+    <version>3.3.0</version>
 </dependency>
 ```
 
@@ -63,7 +63,7 @@ Nacos 的 Java SDK需要 JDK 1.8 及以上版本的Java运行环境。
 ```xml
     <properties>
         <!-- 2.1.2版本以上支持纯净版客户端 -->
-        <nacos.version>3.3.0-RC</nacos.version>
+        <nacos.version>3.3.0</nacos.version>
     </properties>
 
     <dependencies>
@@ -3217,7 +3217,7 @@ Agent 引用无效、`version` 与 `label` 同时设置、Filter 无效、Agent 
 
 #### 描述
 
-订阅 Agent 定义和地址的变化，返回当前完整的 `AgentDiscoveryResult`；目标尚不存在时返回 `null`，SDK 保留订阅并等待目标可用。初始快照应从返回值读取，后续变化通过监听器的 `onEvent` 接收。请在调用前准备好监听器使用的数据，保存返回值时避免覆盖已经收到的较新事件。
+订阅 Agent 定义和地址的变化，方法没有返回值。初始状态和后续变化都通过监听器的 `onEvent` 接收；目标尚不存在时收到 `UNAVAILABLE` 事件，SDK 保留订阅并等待目标可用。首次回调可能在方法返回前或返回后发生，请在调用前准备好监听器使用的数据，并仅通过回调更新本地状态。相同查询条件下重复添加同一个监听器不会重复初始化；新监听器会收到当前状态。
 
 - `SNAPSHOT`：包含完整查询结果，用它替换本地保存的结果。地址列表可能为空，也可能包含不健康地址，需要检查后再使用。
 - `UNAVAILABLE`：SDK 查询确认 Agent、指定版本或标签不存在。此时停止使用旧结果；目标恢复后会继续通知。
@@ -3227,10 +3227,10 @@ Agent 引用无效、`version` 与 `label` 同时设置、Filter 无效、Agent 
 #### 方法签名
 
 ```java
-AgentDiscoveryResult subscribeAgent(AgentReference reference,
+void subscribeAgent(AgentReference reference,
         AbstractNacosAgentDiscoveryListener listener) throws NacosException;
 
-AgentDiscoveryResult subscribeAgent(AgentReference reference, AgentDiscoveryFilter filter,
+void subscribeAgent(AgentReference reference, AgentDiscoveryFilter filter,
         AbstractNacosAgentDiscoveryListener listener) throws NacosException;
 ```
 
@@ -3246,7 +3246,7 @@ AgentDiscoveryResult subscribeAgent(AgentReference reference, AgentDiscoveryFilt
 
 | 参数类型 | 描述 |
 |:---|:---|
-| AgentDiscoveryResult | 当前完整快照；目标尚不存在时为 `null`，订阅仍然保留。 |
+| void | 初始状态和后续变化通过监听器接收。 |
 
 #### 请求示例
 
@@ -3268,12 +3268,8 @@ AbstractNacosAgentDiscoveryListener listener = new AbstractNacosAgentDiscoveryLi
     }
 };
 try {
-    AgentDiscoveryResult initial = aiService.agent().subscribeAgent(reference, listener);
+    aiService.agent().subscribeAgent(reference, listener);
     try {
-        if (initial != null) {
-            // Preserve a newer event if the listener has already received one.
-            current.compareAndSet(null, new NacosAgentDiscoveryEvent(initial));
-        }
         System.in.read();
     } finally {
         aiService.agent().unsubscribeAgent(reference, listener);
@@ -3285,7 +3281,7 @@ try {
 
 #### 异常说明
 
-调用时如果参数无效、首次查询发生非目标不存在类错误或订阅数量超限，可能抛出 `NacosException`。这表示本次订阅未成功，需要处理原因后重新调用。目标尚不存在时返回 `null`，无需重复订阅。
+调用时如果参数无效、首次查询发生非目标不存在类错误或订阅数量超限，可能抛出 `NacosException`。这表示本次订阅未成功，需要处理原因后重新调用。目标尚不存在时通过监听器通知 `UNAVAILABLE`，无需重复订阅。
 
 ### 11.4. 取消订阅 Agent
 
@@ -3599,6 +3595,46 @@ try {
 #### 异常说明
 
 请求为空、版本或定义校验失败、`callInterfaces` 和 `basedOnVersion` 未按二选一规则填写、并发冲突、提交失败，或服务端不支持此能力时，抛出 `NacosException`。
+
+### 11.8. 获取 A2A 发现结果转换器
+
+#### 描述
+
+从 3.3.0 开始，可以通过 `a2aConverter()` 获取本地转换器，将 RAD 的 `AgentDiscoveryResult` 显式转换为 Nacos SDK 的 `AgentCard`。获取和执行转换器不会查询 Nacos，客户端关闭后转换器仍可使用。发现和订阅不会自动执行转换。
+
+#### 方法签名
+
+```java
+AgentConverter<AgentCard> a2aConverter();
+```
+
+#### 请求参数
+
+无。
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|:---|:---|
+| AgentConverter&lt;AgentCard&gt; | 可复用的无状态转换器，每次转换返回独立的 AgentCard，不修改输入快照。 |
+
+#### 请求示例
+
+```java
+import com.alibaba.nacos.api.ai.converter.AgentConverter;
+import com.alibaba.nacos.api.ai.model.a2a.AgentCard;
+
+// Reuse aiService, reference and filter from the discovery example.
+AgentConverter<AgentCard> converter = aiService.agent().a2aConverter();
+AgentDiscoveryResult snapshot = aiService.agent().discoverAgent(reference, filter);
+AgentCard card = converter.convert(snapshot);
+```
+
+转换器按发现结果中的顺序选择第一个非空地址集合，不补回被 Filter 排除的地址，也不负责健康筛选。完整的回调转换示例见 [RAD 发现](../ai/rad-discovery.md#23-查询结果转为-a2a-agentcard)。
+
+#### 异常说明
+
+`convert` 在输入无效、没有 A2A 接口或地址、原生描述无效、名称或版本不一致时抛出 `IllegalArgumentException`。应用应处理转换失败；它不会变成订阅的 `UNAVAILABLE` 事件。
 
 ## 12. Java SDK的生命周期
 

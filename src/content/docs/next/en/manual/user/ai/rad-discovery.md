@@ -18,7 +18,7 @@ HTTP/gRPC for RAD requests describes how applications connect to Nacos. Values s
 
 Follow [Agent Management](./agent-registry.md) to create and publish `route-planner`, version `1.0.0`, in the `public` namespace. Confirm that the version is `online`. Its definition contains an `a2a` call interface; the example runtime address is `http://127.0.0.1:9999/a2a`.
 
-This example requires the 3.3 Java SDK, with Maven coordinates `com.alibaba.nacos:nacos-client`. Set `${nacos.client.version}` to the 3.3 version you use.
+This example uses the stable 3.3.0 Java SDK, with Maven coordinates `com.alibaba.nacos:nacos-client`. Set `${nacos.client.version}` to `3.3.0`.
 
 ```xml
 <dependency>

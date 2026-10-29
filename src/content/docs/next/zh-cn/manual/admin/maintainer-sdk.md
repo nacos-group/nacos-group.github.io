@@ -36,7 +36,7 @@ Nacos 的 Java SDK需要 JDK 1.8 及以上版本的Java运行环境。
 </dependency>
 ```
 
-将 `${nacos.client.version}` 设置为 `3.3.0-RC` 或后续 3.3 版本，以使用本文新增的 MCP 和 Agent 管理接口。
+本文推荐使用 `3.3.0` 正式版，将 `${nacos.client.version}` 设置为 `3.3.0`，以使用本文的 MCP 和 Agent 管理接口。
 
 Maintainer SDK 与 Client SDK 使用相同的 JSON 适配层。Jackson 2/3 依赖、自动选择与手动指定方式见 [JSON 适配与 Jackson 2/3 接入](../user/java-sdk/json-adapter.md)。
 

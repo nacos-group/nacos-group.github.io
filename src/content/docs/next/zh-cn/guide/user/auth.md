@@ -91,7 +91,7 @@ docker run --env PREFER_HOST_MODE=hostname \
   -e NACOS_AUTH_TOKEN=${custom_base64_token_secret_key} \
   -e NACOS_AUTH_IDENTITY_KEY=${custom_server_identity_key} \
   -e NACOS_AUTH_IDENTITY_VALUE=${custom_server_identity_value} \
-  -p 8848:8848 nacos/nacos-server:${nacos_3_3_version}
+  -p 8848:8848 nacos/nacos-server:v3.3.0
 ```
 
 除此之外，还可以添加其他鉴权相关的环境变量信息：

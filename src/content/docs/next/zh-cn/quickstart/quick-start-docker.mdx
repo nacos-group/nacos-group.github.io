@@ -23,7 +23,7 @@ sidebar:
 
 > 首次执行命令时，会自动下载所需的相关Docker镜像，需要等待的时长取决于网络速度。您也可以提前下载好相关镜像，以缩短执行部署命令的等待时间。
 
-在 Bash 中准备以下环境变量：`NACOS_VERSION` 填写实际可用的目标镜像标签；`NACOS_AUTH_TOKEN` 为有效 Base64 且解码后不少于 32 字节的独立密钥；`NACOS_AUTH_IDENTITY_KEY` 和 `NACOS_AUTH_IDENTITY_VALUE` 为非空节点身份。验证 3.3 RC 时使用对应镜像标签，不能假定 `latest` 已指向 RC。
+本例使用正式镜像 `nacos/nacos-server:v3.3.0`。在 Bash 中准备以下环境变量：`NACOS_AUTH_TOKEN` 为有效 Base64 且解码后不少于 32 字节的独立密钥；`NACOS_AUTH_IDENTITY_KEY` 和 `NACOS_AUTH_IDENTITY_VALUE` 为非空节点身份。
 
 ```bash
 docker run --name nacos-standalone-derby \
@@ -35,7 +35,7 @@ docker run --name nacos-standalone-derby \
     -p 8080:8080 \
     -p 8848:8848 \
     -p 9848:9848 \
-    -d "nacos/nacos-server:${NACOS_VERSION}"
+    -d nacos/nacos-server:v3.3.0
 ```
 
 :::note

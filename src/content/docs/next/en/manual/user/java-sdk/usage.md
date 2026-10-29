@@ -51,7 +51,7 @@ Nacos Java SDK requires JDK 1.8 or later.
 <dependency>
     <groupId>com.alibaba.nacos</groupId>
     <artifactId>nacos-client</artifactId>
-    <version>${version}</version>
+    <version>3.3.0</version>
 </dependency>
 ```
 
@@ -63,7 +63,7 @@ Nacos Java SDK requires JDK 1.8 or later.
 ```xml
     <properties>
         <!-- The pure client is supported since 2.1.2. -->
-        <nacos.version>3.3.0-RC</nacos.version>
+        <nacos.version>3.3.0</nacos.version>
     </properties>
 
     <dependencies>
@@ -3223,7 +3223,7 @@ Throws `NacosException` when the Agent reference is invalid, `version` and `labe
 
 #### Description
 
-Subscribe to changes in an Agent's definition and addresses and return the current complete `AgentDiscoveryResult`. If the target does not exist yet, the method returns `null` and the SDK retains the subscription until the target becomes available. Read the initial snapshot from the return value and receive later changes through the listener's `onEvent`. Prepare the listener's data before calling the method, and avoid overwriting a newer event when saving the returned snapshot.
+Subscribe to changes in an Agent's definition and addresses. The method returns `void`; both initial state and subsequent changes arrive through the listener's `onEvent`. An absent target produces an `UNAVAILABLE` event, and the SDK retains the subscription until the target becomes available. The first callback may run before or after the method returns. Prepare listener state before subscribing and update it only through callbacks. Adding the same listener with the same query conditions does not repeat initialization; a new listener receives the current state.
 
 - `SNAPSHOT`: a complete query result. Replace the locally saved result with it. Check addresses before use: the list can be empty or include unhealthy addresses.
 - `UNAVAILABLE`: an SDK query confirmed that the Agent, requested version or label does not exist. Stop using the old result; notifications continue when the target returns.
@@ -3233,10 +3233,10 @@ If network, permission or subscription-limit errors occur during a subscription,
 #### Method Signature
 
 ```java
-AgentDiscoveryResult subscribeAgent(AgentReference reference,
+void subscribeAgent(AgentReference reference,
         AbstractNacosAgentDiscoveryListener listener) throws NacosException;
 
-AgentDiscoveryResult subscribeAgent(AgentReference reference, AgentDiscoveryFilter filter,
+void subscribeAgent(AgentReference reference, AgentDiscoveryFilter filter,
         AbstractNacosAgentDiscoveryListener listener) throws NacosException;
 ```
 
@@ -3252,7 +3252,7 @@ AgentDiscoveryResult subscribeAgent(AgentReference reference, AgentDiscoveryFilt
 
 | Type | Description |
 |:---|:---|
-| AgentDiscoveryResult | Current complete snapshot; `null` if the target does not exist yet, while the subscription remains active. |
+| void | Initial state and subsequent changes arrive through the listener. |
 
 #### Request Example
 
@@ -3274,12 +3274,8 @@ AbstractNacosAgentDiscoveryListener listener = new AbstractNacosAgentDiscoveryLi
     }
 };
 try {
-    AgentDiscoveryResult initial = aiService.agent().subscribeAgent(reference, listener);
+    aiService.agent().subscribeAgent(reference, listener);
     try {
-        if (initial != null) {
-            // Preserve a newer event if the listener has already received one.
-            current.compareAndSet(null, new NacosAgentDiscoveryEvent(initial));
-        }
         System.in.read();
     } finally {
         aiService.agent().unsubscribeAgent(reference, listener);
@@ -3291,7 +3287,7 @@ try {
 
 #### Exceptions
 
-The call can throw `NacosException` for invalid parameters, an initial query failure other than a missing target, or a subscription limit. In this case, the subscription was not created successfully; resolve the cause and call again. A missing target returns `null` and does not require resubscribing.
+The call can throw `NacosException` for invalid parameters, an initial query failure other than a missing target, or a subscription limit. In this case, the subscription was not created successfully; resolve the cause and call again. A missing target produces an `UNAVAILABLE` listener event and does not require resubscribing.
 
 ### 11.4. Unsubscribe from an Agent
 
@@ -3605,6 +3601,46 @@ try {
 #### Exceptions
 
 Throws `NacosException` when the request is null, the version or definition is invalid, the exclusive-or rule for `callInterfaces` and `basedOnVersion` is violated, concurrent updates conflict, submission fails, or the server does not support the capability.
+
+### 11.8. Get an A2A Discovery Result Converter
+
+#### Description
+
+Since 3.3.0, `a2aConverter()` provides a local converter for explicitly converting a RAD `AgentDiscoveryResult` to the Nacos SDK's `AgentCard`. Obtaining and invoking the converter does not query Nacos, and it remains usable after client shutdown. Discovery and subscriptions do not invoke it automatically.
+
+#### Method Signature
+
+```java
+AgentConverter<AgentCard> a2aConverter();
+```
+
+#### Request Parameters
+
+None.
+
+#### Return Parameters
+
+| Type | Description |
+|:---|:---|
+| AgentConverter&lt;AgentCard&gt; | Reusable stateless converter. Each conversion returns an independent AgentCard without modifying the input snapshot. |
+
+#### Request Example
+
+```java
+import com.alibaba.nacos.api.ai.converter.AgentConverter;
+import com.alibaba.nacos.api.ai.model.a2a.AgentCard;
+
+// Reuse aiService, reference and filter from the discovery example.
+AgentConverter<AgentCard> converter = aiService.agent().a2aConverter();
+AgentDiscoveryResult snapshot = aiService.agent().discoverAgent(reference, filter);
+AgentCard card = converter.convert(snapshot);
+```
+
+The converter selects the first nonempty endpoint set in discovery-result order. It neither restores addresses removed by the filter nor filters unhealthy addresses. See [RAD discovery](../ai/rad-discovery.md#23-convert-discovery-results-to-a2a-agentcard) for a complete callback conversion example.
+
+#### Exceptions
+
+`convert` throws `IllegalArgumentException` for invalid input, missing A2A interfaces or addresses, invalid native descriptors, or name/version mismatches. Applications handle conversion failures; they do not become subscription `UNAVAILABLE` events.
 
 ## 12. Java SDK Lifecycle
 

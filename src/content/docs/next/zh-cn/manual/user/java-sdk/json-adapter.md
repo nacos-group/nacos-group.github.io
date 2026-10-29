@@ -75,7 +75,7 @@ Jackson 3 依赖由应用提供，Nacos SDK 不会自动将应用升级到 Jacks
 <dependency>
     <groupId>com.alibaba.nacos</groupId>
     <artifactId>nacos-client</artifactId>
-    <version>${nacos.client.version}</version>
+    <version>3.3.0</version>
     <exclusions>
         <exclusion>
             <groupId>com.fasterxml.jackson.core</groupId>

@@ -9,13 +9,9 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 :::tip
 
-Nacos Server **3.2.4** 和 **2.5.5** 已发布。3.2.4 聚焦 JRaft、HTTP/gRPC 鉴权、内置数据库、登录、主动健康检查和 MCP 导入安全加固，并修复控制台、Prompt、Config、监听器状态及 MCP 工具鉴权问题；2.5.5 加固磁盘路径和主动 HTTP 健康检查校验，修复集群重启实例丢失、gRPC 通信、HTTP HEAD 请求及集群成员一致性问题，并保持 Java 8 兼容。
+Nacos Server **3.3.0** 已正式发布，带来通用 Agent 管理与 RAD 发现、ARD 资源搜索、MCP 生命周期管理和可选 DNS 服务发现，并完善动态插件管理与默认客户端鉴权。2.x 系列继续推荐 **2.5.5**，保持 Java 8 兼容。
 
 欢迎[下载和试用](#稳定版本)。
-
-Nacos Server **3.3.0-RC** 预发布版本也已发布，完善通用 Agent 管理与 RAD 发现、跨 AI 资源搜索和 MCP 统一生命周期。新增 DNS 服务发现，并默认开启客户端鉴权。
-
-同时欢迎[下载和试用快照版本](#快照版本)。
 
 :::
 
@@ -61,7 +57,7 @@ Nacos Server **3.3.0-RC** 预发布版本也已发布，完善通用 Agent 管�
 
 | 版本 | 二进制包下载                                                  | Docker 镜像                                                 | MD5                         | 发布说明                                    | 参考文档                                   |
 | ------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------------------- | ------------------------------------------------ | ------------------------------------------------ |
-| 3.2.4   | [3.2.4.zip](https://download.nacos.io/nacos-server/nacos-server-3.2.4.zip) | [nacos/nacos-server\:v3.2.4](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=3.2.4) | 65557f446a4f2e2ae2cd99453bce91b5 | [发布说明](https://github.com/alibaba/nacos/releases/tag/3.2.4)      | [快速开始](/docs/latest/quickstart/quick-start/)      |
+| 3.3.0   | [3.3.0.zip](https://download.nacos.io/nacos-server/nacos-server-3.3.0.zip) | [nacos/nacos-server\:v3.3.0](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=3.3.0) | 600aef83627d8fbe64316f582523444d | [发布说明](https://github.com/alibaba/nacos/releases/tag/3.3.0)      | [快速开始](/docs/next/quickstart/quick-start/)      |
 
 ### 2.x
 
@@ -74,8 +70,4 @@ Nacos Server **3.3.0-RC** 预发布版本也已发布，完善通用 Agent 管�
 
 ## 快照版本
 
-快照版本仍在开发中，我们鼓励您试用和反馈问题，但不建议生产使用。
-
-| 版本 | 二进制包下载                                                | Docker 镜像                                                 | MD5                         | 发布说明                                     | 参考文档                                  |
-| ---- | ---- | ---- | ---- | ---- | ---- |
-| 3.3.0-RC | [3.3.0-RC.zip](https://github.com/alibaba/nacos/releases/download/3.3.0-RC/nacos-server-3.3.0-RC.zip) | 快照版本不提供镜像，请使用 [nacos/nacos-server\:latest](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=latest) | c5e4127108ba3f77c7230735b4f07a4d | [发布说明](https://github.com/alibaba/nacos/releases/tag/3.3.0-RC) | [快速开始](/docs/next/quickstart/quick-start/) |
+当前没有比稳定版本更新的快照版本，请使用上方的 **3.3.0 正式版**。

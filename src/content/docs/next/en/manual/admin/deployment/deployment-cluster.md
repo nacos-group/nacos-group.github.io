@@ -207,13 +207,13 @@ docker-compose -f example/cluster-embedded.yaml up
 If you need many custom configurations, you can configure them by specifying [System Parameters - Image Environment Variables](../system-configurations/#2-image-environment-variables). For example, to enable authentication:
 
 ```powershell
-docker run --name nacos-cluster-auth -e MODE=cluster -e NACOS_AUTH_ENABLE=true -e NACOS_AUTH_TOKEN=${customToken} -e NACOS_AUTH_IDENTITY_KEY=${customKey} NACOS_AUTH_IDENTITY_VALUE=${customValue} -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest
+docker run --name nacos-cluster-auth -e MODE=cluster -e NACOS_AUTH_ENABLE=true -e NACOS_AUTH_TOKEN=${customToken} -e NACOS_AUTH_IDENTITY_KEY=${customKey} -e NACOS_AUTH_IDENTITY_VALUE=${customValue} -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:v3.3.0
 ```
 
 You can also mount the `application.properties` file to import more complex custom configurations into the Nacos container. This method is strongly recommended for production environments. Example:
 
 ```powershell
-docker run --name nacos-cluster -e MODE=cluster -v /path/application.properties:/home/nacos/conf/application.properties -v /path/cluster.conf:/home/nacos/conf/cluster.conf -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest
+docker run --name nacos-cluster -e MODE=cluster -v /path/application.properties:/home/nacos/conf/application.properties -v /path/cluster.conf:/home/nacos/conf/cluster.conf -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:v3.3.0
 ```
 
 If this still cannot meet your customization requirements, you can build an image based on the `Dockerfile` in the `nacos-docker` project.
