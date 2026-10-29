@@ -9,7 +9,7 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 :::tip
 
-Nacos Server **3.2.4** 和 **2.5.4** 已发布。3.2.4 聚焦 JRaft、HTTP/gRPC 鉴权、内置数据库、登录、主动健康检查和 MCP 导入安全加固，并修复控制台、Prompt、Config、监听器状态及 MCP 工具鉴权问题；2.5.4 加固分布式数据库查询结果解析，并修复主动健康检查目标地址校验。
+Nacos Server **3.2.4** 和 **2.5.5** 已发布。3.2.4 聚焦 JRaft、HTTP/gRPC 鉴权、内置数据库、登录、主动健康检查和 MCP 导入安全加固，并修复控制台、Prompt、Config、监听器状态及 MCP 工具鉴权问题；2.5.5 加固磁盘路径和主动 HTTP 健康检查校验，修复集群重启实例丢失、gRPC 通信、HTTP HEAD 请求及集群成员一致性问题，并保持 Java 8 兼容。
 
 欢迎[下载和试用](#稳定版本)。
 
@@ -30,7 +30,7 @@ Nacos Server **3.3.0-RC** 预发布版本也已发布，完善通用 Agent 管�
 
 |             |                                                                                                                         |
 |-------------|------------------------------------------------------------------------------------------------------------------------------------|
-| **JDK/JRE** | 17及以上  |
+| **JDK/JRE** | 3.x：17及以上；2.x：8及以上  |
 | **CPU**  | 1核及以上，支持64位CPU    |
 | **内存** | 2G及以上 |
 | **硬盘** | 无最小要求，根据保留日志自行调整|
@@ -67,7 +67,7 @@ Nacos Server **3.3.0-RC** 预发布版本也已发布，完善通用 Agent 管�
 
 | 版本 | 二进制包下载                                                  | Docker 镜像                                                 | MD5                         | 发布说明                                    | 参考文档                                   |
 | ------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------------------- | ------------------------------------------------ | ------------------------------------------------ |
-| 2.5.4   | [2.5.4.zip](https://download.nacos.io/nacos-server/nacos-server-2.5.4.zip) | [nacos/nacos-server\:v2.5.4](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=2.5.4) | 26bdd2b712f60aa5dee94b32cc08819d | [发布说明](https://github.com/alibaba/nacos/releases/tag/2.5.4)      | [快速开始](/docs/v2.5/quickstart/quick-start/)      |
+| 2.5.5   | [2.5.5.zip](https://download.nacos.io/nacos-server/nacos-server-2.5.5.zip) | [nacos/nacos-server\:v2.5.5](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=2.5.5) | 597cce0276ec20977bf3e970843f9b48 | [发布说明](https://github.com/alibaba/nacos/releases/tag/2.5.5)      | [快速开始](/docs/v2.5/quickstart/quick-start/)      |
 
  - 更多历史版本下载，请参考 [发布历史](/download/release-history/)
  - 基于 [Apache License v2.0](https://www.apache.org/licenses/) 分发版本。

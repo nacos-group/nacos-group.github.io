@@ -7,7 +7,7 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 # Nacos Server Download
 :::tip
-Nacos Server **3.2.4** and **2.5.4** have been released. 3.2.4 strengthens JRaft, HTTP/gRPC authorization, embedded database, login, active health checks, and MCP import security, and fixes Console, Prompt, Config, listener state, and MCP tool authentication issues; 2.5.4 hardens distributed database query result resolution and fixes active health-check target validation.
+Nacos Server **3.2.4** and **2.5.5** have been released. 3.2.4 strengthens JRaft, HTTP/gRPC authorization, embedded database, login, active health checks, and MCP import security, and fixes Console, Prompt, Config, listener state, and MCP tool authentication issues; 2.5.5 hardens disk path and active HTTP health-check validation, fixes instance loss during cluster restarts, gRPC communication, HTTP HEAD handling, and cluster member consistency, and retains Java 8 compatibility.
 
 Feel free to [download and try it out](#stable-versions).
 
@@ -22,7 +22,7 @@ The following are the minimum system requirements for deploying Nacos Server. If
 :::
 |             |                                                                                                                         |
 |-------------|------------------------------------------------------------------------------------------------------------------------------------|
-| **JDK/JRE** | 17 and above  |
+| **JDK/JRE** | 3.x: 17 and above; 2.x: 8 and above  |
 | **CPU**  | 1 core or higher, 64-bit CPU support    |
 | **Memory** | 2G or more |
 | **Hard disk** | No minimum requirement, adjust according to log retention |
@@ -57,7 +57,7 @@ Nacos will be automatically deployed after installation. For more usage, refer t
 ### 2.x
 | Version | Binary Package Download                                                  | Docker Image                                                 | MD5                         | Release Notes                                    | Reference Documentation                                  |
 | ------- | ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------------------- | ------------------------------------------------ | ------------------------------------------------ |
-| 2.5.4   | [2.5.4.zip](https://download.nacos.io/nacos-server/nacos-server-2.5.4.zip) | [nacos/nacos-server\:v2.5.4](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=2.5.4) | 26bdd2b712f60aa5dee94b32cc08819d | [Release Notes](https://github.com/alibaba/nacos/releases/tag/2.5.4)      | [Quick Start](/docs/v2.5/quickstart/quick-start/)      |
+| 2.5.5   | [2.5.5.zip](https://download.nacos.io/nacos-server/nacos-server-2.5.5.zip) | [nacos/nacos-server\:v2.5.5](https://hub.docker.com/r/nacos/nacos-server/tags?page=1&name=2.5.5) | 597cce0276ec20977bf3e970843f9b48 | [Release Notes](https://github.com/alibaba/nacos/releases/tag/2.5.5)      | [Quick Start](/docs/v2.5/quickstart/quick-start/)      |
 
 
  - For more historical version downloads, refer to the [release history](/download/release-history/)
