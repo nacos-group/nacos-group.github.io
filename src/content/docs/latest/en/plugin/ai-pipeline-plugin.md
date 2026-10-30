@@ -1,74 +1,86 @@
 ---
 title: AI Publish Pipeline
-keywords: [AI Pipeline, AI Registry, Skill, Prompt, MCP, AgentSpec]
-description: Learn how the Nacos AI publish pipeline plugin works, how to enable it, and how to develop custom release checks.
+keywords: [AI Pipeline, AI Registry, Skill, Prompt, AgentSpec]
+description: Learn the execution model, built-in implementations, configuration, and development contract of Nacos AI publish pipeline plugins.
 sidebar:
-    order: 11
+    order: 14
 ---
 
 # AI Publish Pipeline Plugin
 
-The AI publish pipeline plugin runs review, scanning, or blocking logic before an AI resource is published. It is useful for production release governance of Skills, Prompts, MCP Servers, AgentSpecs, and future AI resource types.
+The AI publish pipeline runs review, scanning, or interception before an AI resource is published. It may approve or reject publication, but it cannot change the resource's canonical identity, version, or visibility.
 
-Pipeline belongs to AI resource governance. It can approve or reject a publish operation, but it does not change the namespace, resource name, version, or visibility model of the AI resource.
+Its unified type is `ai-pipeline`, execution mode is `CHAIN`, load phase is `STANDARD`, and the type is non-critical. For each publication, Nacos selects enabled nodes supporting the resource type and runs them serially by `getPreferOrder()` in ascending order. A rejection stops the remaining nodes and persists the result.
 
-## When To Use It
+## Gate, State, and Loading
 
-Enable a pipeline when:
+These controls have separate owners:
 
-- Skill packages need security scanning before production use.
-- Prompts, AgentSpecs, or MCP Servers need format, compliance, or custom checks.
-- Production release should be separated from draft editing.
-- Administrators need a visible result and reason for every publish review.
+| Configuration or state | Responsibility |
+| --- | --- |
+| `nacos.plugin.ai-pipeline.enabled` | Dynamic family gate owned by the AI module. When false, type loading is deferred; enabling discovers services, restores state, and applies configuration. |
+| `nacos.plugin.ai-pipeline.type` | Legacy startup chain composition, used only to initialize implementation state when no persisted state exists. |
+| `ai-pipeline:{pipelineId}` state | Authoritative current chain membership. A disabled node remains in inventory but does not run. |
+| `nacos.plugin.ai-pipeline.{pipelineId}.{itemKey}` | Private configuration declared and consumed by the node through `PluginConfigSpec`. |
 
-If no pipeline is enabled, submitting a resource may publish it directly or move it to a publishable state. The exact behavior depends on the resource type and console flow.
+When the family gate is off or no node matches, publication proceeds without interception. Service instances must remain lightweight and defer CLI, connection, or thread initialization until their first `applyConfig`.
 
-## Execution Model
+## Built-in Nodes
 
-Pipeline is an ordered chain of plugins. For each publish operation, Nacos selects nodes that support the target resource type and runs them by `getPreferOrder()` in ascending order.
+Nacos bundles two nodes. Both support `SKILL`, `AGENTSPEC`, and `PROMPT`:
 
-```text
-submit publish
-  -> create pipeline execution record
-  -> run selected nodes in order
-  -> all passed: continue publish
-  -> any rejected: stop publish and keep the version unpublished
-```
+| pluginId | Default state | Purpose |
+| --- | --- | --- |
+| `ai-pipeline:skill-scanner` | Enabled | Invokes the `skill-scanner` CLI. |
+| `ai-pipeline:skill-spector` | Enabled | Invokes the `skill-spector` CLI for static and optional LLM risk analysis. |
 
-Notes:
+### skill-scanner definitions
 
-- Only configured nodes that support the target resource type are selected.
-- When one node rejects the publish, later nodes do not run.
-- If pipeline is disabled or no node matches, the publish flow is not blocked by pipeline.
-- Force publish bypasses pipeline validation. Use it for emergencies, not as the normal release path.
+The canonical prefix is `nacos.plugin.ai-pipeline.skill-scanner.`:
 
-Unified plugin management can list loaded `ai-pipeline` plugins. Until the execution chain is fully wired to unified plugin enablement, the pipeline feature is controlled by its own configuration.
+| key | aliases | type | default | sensitive | effectMode |
+| --- | --- | --- | --- | --- | --- |
+| `order` | None | NUMBER | `100` | No | RUNTIME |
+| `command` | `executable`, `path` | STRING | `skill-scanner` | No | RESTART |
+| `use-llm` | `useLlm` | BOOLEAN | `false` | No | RESTART |
+| `llm-api-key` | `llmApiKey` | STRING | empty | Yes | RESTART |
+| `llm-model` | `llmModel` | STRING | empty | No | RESTART |
+| `llm-provider` | `llmProvider` | STRING | empty | No | RESTART |
+| `enable-meta` | `enableMeta` | BOOLEAN | `false` | No | RESTART |
 
-## Enable the Built-in skill-scanner
-
-The default Nacos plugin set provides a `skill-scanner` pipeline node. It can process scannable content in Skills, Prompts, and AgentSpecs. A common use case is calling an external Skill scanning tool.
-
-Enable it in `${nacos.home}/conf/application.properties`:
+Example:
 
 ```properties
 nacos.plugin.ai-pipeline.enabled=true
-nacos.plugin.ai-pipeline.type=skill-scanner
-nacos.plugin.ai-pipeline.skill-scanner.enabled=true
-nacos.plugin.ai-pipeline.skill-scanner.command=/path/to/skill-scanner
+nacos.plugin.ai-pipeline.skill-scanner.command=/opt/scanners/skill-scanner
+nacos.plugin.ai-pipeline.skill-scanner.use-llm=true
+nacos.plugin.ai-pipeline.skill-scanner.llm-api-key=${SKILL_SCANNER_API_KEY}
 ```
 
-| Property | Description |
-| --- | --- |
-| `nacos.plugin.ai-pipeline.enabled` | Enables AI Pipeline. |
-| `nacos.plugin.ai-pipeline.type` | Pipeline node type to run. |
-| `nacos.plugin.ai-pipeline.skill-scanner.enabled` | Enables the `skill-scanner` node. |
-| `nacos.plugin.ai-pipeline.skill-scanner.command` | Path of the external Skill scanner command. |
+### skill-spector definitions
 
-In production, keep the same plugin versions and configuration on all Nacos Server nodes. If the scanner depends on an external executable, make sure every node can access it.
+The canonical prefix is `nacos.plugin.ai-pipeline.skill-spector.`:
+
+| key | aliases | type | default | sensitive | effectMode |
+| --- | --- | --- | --- | --- | --- |
+| `order` | None | NUMBER | `90` | No | RUNTIME |
+| `command` | `executable`, `path` | STRING | `skill-spector` | No | RESTART |
+| `use-llm` | `useLlm` | BOOLEAN | `false` | No | RESTART |
+| `provider` | None | STRING | empty | No | RESTART |
+| `model` | None | STRING | empty | No | RESTART |
+| `api-key` | `apiKey` | STRING | empty | Yes | RESTART |
+| `base-url` | `baseUrl` | STRING | empty | No | RESTART |
+| `log-level` | `logLevel` | STRING | `WARNING` | No | RESTART |
+| `risk-score-threshold` | `riskScoreThreshold` | NUMBER | `50` | No | RESTART |
+| `max-findings` | `maxFindings` | NUMBER | `20` | No | RESTART |
+
+`risk-score-threshold` is clamped to `0..100`. `max-findings` is capped at `100`, and zero, negative, or invalid values use the default. Existing process environment variables take precedence over values copied from SkillSpector plugin configuration.
+
+Except for `order`, both built-in nodes resolve their command and create immutable scan options on first configuration application, so these fields require restart. Sensitive API keys are masked in detail responses. If the command cannot be found, the node remains queryable, but an attempted scan rejects publication with an installation hint.
 
 ## Develop a Custom Pipeline
 
-Add the dependency:
+Dependency:
 
 ```xml
 <dependency>
@@ -78,43 +90,29 @@ Add the dependency:
 </dependency>
 ```
 
-Implement `com.alibaba.nacos.plugin.ai.pipeline.spi.PublishPipelineServiceBuilder` and declare it with Java SPI:
+Directly implement `com.alibaba.nacos.plugin.ai.pipeline.spi.PublishPipelineService`, provide a public no-argument constructor, and register it through:
 
 ```text
-META-INF/services/com.alibaba.nacos.plugin.ai.pipeline.spi.PublishPipelineServiceBuilder
+META-INF/services/com.alibaba.nacos.plugin.ai.pipeline.spi.PublishPipelineService
 ```
 
-Builder methods:
-
-| Method | Description |
+| Method | Requirement |
 | --- | --- |
-| `pipelineId()` | Stable node ID used by configuration, logs, and execution records. |
-| `build(properties)` | Builds a `PublishPipelineService` from configuration. |
+| `pipelineId()` | Stable node name used in `ai-pipeline:{pipelineId}`. |
+| `execute(context)` | Run review and return approval or rejection. |
+| `getPreferOrder()` | Chain order; lower values run first. |
+| `pipelineResourceTypes()` | Supported resource types. |
+| `getConfigDefinitions()` | Declare definitions. |
+| `applyConfig(config)` | Atomically accept the complete effective item map. |
+| `getCurrentConfig()` | Return the accepted snapshot. |
 
-Service methods:
+The former `PublishPipelineServiceBuilder` SPI and arbitrary `Properties` construction path have been removed. Existing plugins must migrate so the service itself implements `PluginConfigSpec`; replacing only the SPI registration while retaining a builder is insufficient.
 
-| Method | Description |
-| --- | --- |
-| `pipelineId()` | Runtime node ID. |
-| `execute(context)` | Runs the check and returns pass or reject. |
-| `getPreferOrder()` | Execution order. Lower values run earlier. |
-| `pipelineResourceTypes()` | Supported resource types, such as Skill, Prompt, MCP, or AgentSpec. |
+## Operations Guidance
 
-## Development Advice
+- Keep plugin JARs, CLIs, and RESTART configuration identical on all nodes. `order` can be changed through the unified PUT configuration API at runtime.
+- Set timeouts for external commands and return readable rejection reasons. Do not log full resources or credentials.
+- Use plugin detail to verify `effectiveConfig`, sources, and the accepted snapshot. Restart every node after changing RESTART fields.
+- Pipeline results are publication governance records; they do not replace authorization, visibility, or content storage.
 
-- Return deterministic results for the same resource version and input.
-- Set timeouts when calling external systems.
-- Return clear rejection reasons so resource authors can fix the problem.
-- Do not modify resource content in pipeline. Use the draft editing flow for content changes.
-- Do not write full Skill packages, Prompt content, keys, or credentials to logs.
-
-## Troubleshooting
-
-| Symptom | What to check |
-| --- | --- |
-| Submit does not enter review | Check `nacos.plugin.ai-pipeline.enabled` and `nacos.plugin.ai-pipeline.type`. |
-| `skill-scanner` does not run | Check `skill-scanner.enabled`, the scanner command path, and whether the plugin JAR is on the classpath. |
-| Publish keeps failing | Check the pipeline execution record and the node rejection reason. |
-| Unified plugin management shows disabled but the node still runs | Follow the pipeline configuration in the current version. Unified enablement is not fully wired into the execution chain yet. |
-
-Related reading: [AI Resource Lifecycle](../manual/user/ai/ai-resource-lifecycle.md) and [AI Resource Import Plugin](./ai-resource-import-plugin.md).
+Related reading: [Plugin Operations](./operations.md), [Plugin Development](./development.md), and [AI Resource Lifecycle](../manual/user/ai/ai-resource-lifecycle.md).

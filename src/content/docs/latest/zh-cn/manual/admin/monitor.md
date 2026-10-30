@@ -13,6 +13,10 @@ Nacos 监控主要关注两类信息：
 - Nacos Server 自身指标，例如 JVM、HTTP、gRPC、配置管理和服务发现指标。
 - 健康检查入口，例如 liveness 和 readiness。
 
+:::note
+本页只覆盖服务端。`nacos-client` 内部记录的指标（请求 timer、gauge、失败 counter）通过 Micrometer 导出，详见 [Java SDK 客户端指标](../user/java-sdk/metrics.md)。
+:::
+
 ## 暴露 Nacos Server 指标
 
 Nacos 通过 Spring Boot Actuator 暴露 Prometheus 指标。默认配置文件中该能力是注释状态。需要在每个 Nacos Server 节点上开启：

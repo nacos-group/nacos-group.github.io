@@ -45,10 +45,10 @@ spring.cloud.nacos.discovery.server-addr=192.168.190.128:8848,192.168.190.129:88
 **application.properties**（数据库配置）：
 
 ```properties
-spring.datasource.platform=mysql
-db.url.0=jdbc:mysql://192.168.190.1:3306/config?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
-db.user.0=root
-db.password.0=your_password
+nacos.plugin.datasource-dialect.type=mysql
+nacos.plugin.datasource.db.url.0=jdbc:mysql://192.168.190.1:3306/config?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+nacos.plugin.datasource.db.user.0=root
+nacos.plugin.datasource.db.password.0=your_password
 ```
 
 ## Nginx 配置

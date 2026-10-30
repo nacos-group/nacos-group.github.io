@@ -44,15 +44,17 @@ If a Prompt is temporary, used by only one application, and does not need versio
 
 ## Recommended Publish Flow
 
-For daily changes, use this flow:
+Prompts follow the shared [AI Resource Lifecycle](./ai-resource-lifecycle.md). Start changes from a draft; published templates and variables cannot be overwritten directly.
 
 ```text
-create draft -> update template and variables -> submit -> publish -> update latest label -> application reads it
+create draft -> edit template and variables -> submit -> publish as online after approval -> application reads it
 ```
 
-If no Pipeline is enabled, the flow is shorter. If a Pipeline is enabled, Nacos can run format checks, security scans, or custom team checks before publish.
+- If an enabled Pipeline node supports Prompt, submission enters `reviewing`. Completion moves the version to `reviewed`; publish after approval. After rejection, redraft before editing, or resubmit to rerun checks.
+- If no applicable Pipeline node is available, submission publishes the version directly.
+- Publishing or bringing a version online automatically updates `latest`; no manual update is needed.
 
-Administrators can force publish a Prompt version. Force publish skips Pipeline validation and should be used only for urgent fixes.
+Administrators can force publish a `draft`, `reviewing`, or `reviewed` version in emergencies to skip Pipeline validation. Offline versions use the online action instead.
 
 ## Runtime Query
 
@@ -67,15 +69,14 @@ Client API reference: [Query Prompt](../open-api.md#31-query-prompt).
 
 ## Label Suggestions
 
-`latest` is the most common label. It usually points to the recommended version.
-
-Treat labels as version pointers. Updating a label does not change Prompt content. It only changes which version the label points to.
+The server manages `latest`. Publishing or bringing a version online makes it latest. Taking that version offline or deleting it selects another remaining online version; latest is removed if none remain. Custom label operations cannot override it.
 
 For production:
 
-- Let applications read `latest` or a clearly named business label.
-- Create a new version first, then move the label.
-- Do not point labels to drafts or versions under review.
+- Use `latest` when applications should follow each publication.
+- Pin an explicit version for fixed behavior. Use custom labels such as `stable` or `canary` for controlled rollouts.
+- Publish and verify the target before moving custom labels. Moving a label does not change content or bring a version online.
+- Before taking a version offline, check applications using that version or a custom label that points to it.
 
 ## Suggestions For Developers
 

@@ -3,12 +3,14 @@ title: Config Change Plugin
 keywords: [Config Change, config audit, config format check, webhook]
 description: Learn how the Nacos config change plugin works, how to enable it, and how to develop custom config governance logic.
 sidebar:
-    order: 6
+    order: 9
 ---
 
 # Config Change Plugin
 
 The config change plugin inserts custom logic before or after configuration publish, update, delete, import, and related operations. It is designed for config governance. It does not redefine the Nacos config storage model.
+
+In unified plugin management, the type is `config-change`, its execution mode is `CHAIN`, its load phase is `STANDARD`, and the type is non-critical. A plugin identity is `config-change:{getServiceType()}`. The Nacos Server repository defines the SPI and execution aspect, but does not bundle production `webhook`, `whitelist`, or `fileformatcheck` implementations; those examples exist only when an external plugin JAR is on the classpath.
 
 Typical use cases:
 
@@ -45,39 +47,27 @@ The current SPI defines these pointcuts:
 Before plugins affect the main config change path. Avoid slow calls or uncontrolled external systems in Before plugins. After plugin failures do not roll back already committed config changes.
 :::
 
-## Enable a Plugin
+## Enable and Configure a Plugin
 
 Put the plugin JAR under `${nacos.home}/plugins`, or add it to the Nacos Server startup classpath. The plugin must declare its implementation in `META-INF/services/com.alibaba.nacos.plugin.config.spi.ConfigChangePluginService`.
 
-Then enable the plugin in `${nacos.home}/conf/application.properties`:
+Participation in the candidate chain is controlled only by unified state for `config-change:{pluginName}`. The historical property only initializes state when no persisted state exists; its historical default remains `false`:
 
 ```properties
 nacos.core.config.plugin.${configChangePluginName}.enabled=true
 ```
 
-`${configChangePluginName}` must match the value returned by `getServiceType()`. Nacos 3.2 also has unified plugin state management, but the config change execution path still reads the `enabled` property above. For production use, follow the plugin document and configure both loading and feature enabling correctly.
+`${configChangePluginName}` must match `getServiceType()`. Persisted state wins. After startup, use the plugin status API or Next Console instead of maintaining a second execution gate.
 
-Plugin-specific configuration uses this prefix:
-
-```properties
-nacos.core.config.plugin.${configChangePluginName}.${propertyKey}=${propertyValue}
-```
-
-Example settings for webhook, whitelist, and file format check plugins:
+New plugins declare configuration through `PluginConfigSpec` with this canonical prefix:
 
 ```properties
-# webhook
-nacos.core.config.plugin.webhook.enabled=true
-nacos.core.config.plugin.webhook.url=http://localhost:8080/webhook/send?token=***
-nacos.core.config.plugin.webhook.contentMaxCapacity=102400
-
-# whitelist
-nacos.core.config.plugin.whitelist.enabled=true
-nacos.core.config.plugin.whitelist.suffixs=xml,text,properties,yaml,html
-
-# file format check
-nacos.core.config.plugin.fileformatcheck.enabled=true
+nacos.plugin.config-change.${configChangePluginName}.${itemKey}=${propertyValue}
 ```
+
+The implementation declares each definition's key, legacy aliases, type, default, required flag, sensitivity, and effect mode, then accepts effective values through `applyConfig`. Nacos also places the current effective item map in `ConfigChangeConstants.PLUGIN_PROPERTIES` to preserve the existing request contract.
+
+An older binary plugin without definitions continues through the deprecated compatibility adapter and reads `nacos.core.config.plugin.{pluginName}.{propertyKey}`. It still loads and receives static properties, but the management APIs report `configurable=false` and log a migration warning on first use. `ConfigChangeConfigs` is deprecated but remains in its compatibility window; new code must not depend on it.
 
 ## Develop a Plugin
 
@@ -117,6 +107,8 @@ Implement `com.alibaba.nacos.plugin.config.spi.ConfigChangePluginService`:
 | `args` | Replacement arguments provided by a Before plugin. The order and types must match the original arguments. |
 | `retVal` | Reserved return value. |
 
+A new implementation should also implement the definition, apply, and current-snapshot methods inherited from `PluginConfigSpec`. Validate the complete runtime map before switching it atomically. Older binaries can continue using the compatibility defaults.
+
 ## Production Advice
 
 - Keep Before plugins lightweight and define a clear failure policy.
@@ -129,7 +121,8 @@ Implement `com.alibaba.nacos.plugin.config.spi.ConfigChangePluginService`:
 
 | Symptom | What to check |
 |---------|---------------|
-| Plugin does not run | Check whether the JAR is on the classpath, `META-INF/services` is correct, and `enabled` is `true`. |
+| Plugin does not run | Check the JAR, `META-INF/services`, and unified plugin state; for first migration, also check the historical `enabled` initializer. |
 | Before plugin does not reject a change | Check `executeType()`, `pointcutMethodNames()`, and whether the plugin sets `response.setSuccess(false)`. |
-| Plugin properties are empty | Check whether the prefix is `nacos.core.config.plugin.${serviceType}.`, and whether `serviceType` matches `getServiceType()`. |
+| New plugin properties are empty | Check `nacos.plugin.config-change.${serviceType}.`, definitions, and `applyConfig`. |
+| Legacy plugin properties are empty | Check the deprecated `nacos.core.config.plugin.${serviceType}.` compatibility prefix and plan migration. |
 | Post-change notification is unstable | Check timeout, retry, and exception handling for the external system used by the After plugin. |

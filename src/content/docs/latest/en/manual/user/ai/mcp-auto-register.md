@@ -12,7 +12,11 @@ By developing an MCP Server using the **Spring AI Alibaba framework** or the **N
 + **Dynamic On/Off for MCP Server Tools**: Enable or disable tools at runtime without restarting the service
 + **Full-Stack Integration**: Service registration information is automatically synchronized to the Nacos configuration center and service discovery module, adapting to AI Agent invocation requirements
 
+For MCP drafts, review, and publishing in 3.3, see [MCP Registry](./mcp-registry.md). Whether automatic registration creates a draft depends on the framework and parameters. Existing direct registration retains compatibility behavior; enabling Pipeline does not automatically add review. Changes through the new lifecycle APIs require a new version draft and publication; runtime propagation depends on the integration component.
+
 ![Auto-register](/img/doc/manual/user/ai/ai-mcp-auto-register.svg)
+
+Nacos 3.3 enables client authentication by default. Automatic registration and discovery require a Nacos account with the appropriate permissions. Do not leave the credentials empty or assume the password is `nacos`. The Spring configuration and Python code below read credentials from `NACOS_USERNAME` and `NACOS_PASSWORD`; set them before starting the application. See [Access Credentials](../auth.mdx) for account and permission setup.
 
 ## Developing an MCP Server Using Spring AI Alibaba Nacos MCP Framework
 
@@ -60,8 +64,8 @@ spring:
         nacos:
           server-addr:          # Replace with your Nacos address
           namespace: public    # Nacos namespace ID (default is 'public')
-          username:           # Open-source console username 
-          password:           # Open-source console password
+          username: ${NACOS_USERNAME}
+          password: ${NACOS_PASSWORD}
           registry:
             enabled: true     # Whether to enable service registration
 ```
@@ -94,23 +98,27 @@ pip install nacos-mcp-wrapper-python
 
 ### 2. Auto-registration Configuration
 ```python
+import os
+from nacos_mcp_wrapper.server.nacos_settings import NacosSettings
+
 nacos_settings = NacosSettings()
 nacos_settings.SERVER_ADDR = "127.0.0.1:8848" # <nacos_server_addr> e.g. 127.0.0.1:8848
 nacos_settings.NAMESPACE= "public" # Nacos namespace ID
-nacos_settings.USERNAME="" # Open-source console username
-nacos_settings.PASSWORD="" # Open-source console password
+nacos_settings.USERNAME = os.environ["NACOS_USERNAME"]
+nacos_settings.PASSWORD = os.environ["NACOS_PASSWORD"]
 ```
 
 ### 3. Code Implementation
 ```python
+import os
 from nacos_mcp_wrapper.server.nacos_mcp import NacosMCP
 from nacos_mcp_wrapper.server.nacos_settings import NacosSettings
 
 # Create an MCP server instance
 nacos_settings = NacosSettings()
 nacos_settings.SERVER_ADDR = "127.0.0.1:8848" # <nacos_server_addr> e.g. 127.0.0.1:8848
-nacos_settings.USERNAME=""
-nacos_settings.PASSWORD=""
+nacos_settings.USERNAME = os.environ["NACOS_USERNAME"]
+nacos_settings.PASSWORD = os.environ["NACOS_PASSWORD"]
 mcp = NacosMCP("nacos-mcp-python", nacos_settings=nacos_settings, port=18001)
 
 # Register an addition tool

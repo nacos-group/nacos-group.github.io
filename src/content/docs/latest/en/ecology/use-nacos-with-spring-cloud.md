@@ -21,6 +21,10 @@ The quick start includes two samples:
 
 Follow instructions in [Nacos Quick Start](../quickstart/quick-start.mdx) to download Nacos and start the Nacos server.
 
+Nacos 3.3 enables client authentication by default. With the default auth plugin, prepare an application account and the required permissions as described in [Access Credentials](../manual/user/auth.mdx), then set the `NACOS_USERNAME` and `NACOS_PASSWORD` environment variables before starting the application. The examples read them through Spring placeholders. Configure credentials separately for configuration management and service discovery, and on both service providers and consumers.
+
+Keep credentials in local application configuration or inject them through the deployment environment. Do not store them only in remote configuration that requires Nacos login to read. Without valid credentials, configuration loading, service registration, or discovery may fail. Logging in to the Nacos console does not authenticate the application.
+
 ## Enable Configuration Service
 
 Once you start the Nacos server, you can follow the steps below to enable the Nacos configuration management service for your Spring Cloud project. 
@@ -39,10 +43,12 @@ Sample project: [nacos-spring-cloud-config-example](https://github.com/nacos-gro
 
 **Note**: Version [2.1.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-config) is compatible with the Spring Boot 2.1.x line. Version [2.0.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-config) is compatible with the Spring Boot 2.0.x line. Version [1.5.x.RELEASE](https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-starter-alibaba-nacos-config) is compatible with the Spring Boot 1.5.x line.
 
-2. Configure the Nacos Server address and Specify the application name in `bootstrap.properties` :
+2. Configure the Nacos Server address, credentials, and application name in `bootstrap.properties`:
 
 ```
 spring.cloud.nacos.config.server-addr=127.0.0.1:8848
+spring.cloud.nacos.config.username=${NACOS_USERNAME}
+spring.cloud.nacos.config.password=${NACOS_PASSWORD}
 
 spring.application.name=example
 ```
@@ -122,6 +128,8 @@ server.port=8070
 spring.application.name=service-provider
 
 spring.cloud.nacos.discovery.server-addr=127.0.0.1:8848
+spring.cloud.nacos.discovery.username=${NACOS_USERNAME}
+spring.cloud.nacos.discovery.password=${NACOS_PASSWORD}
 ```
 
 ii. Enable service discovery by adding the Spring Cloud native annotation of `@EnableDiscoveryClient`:
@@ -155,6 +163,8 @@ server.port=8080
 spring.application.name=service-consumer
 
 spring.cloud.nacos.discovery.server-addr=127.0.0.1:8848
+spring.cloud.nacos.discovery.username=${NACOS_USERNAME}
+spring.cloud.nacos.discovery.password=${NACOS_PASSWORD}
 ```
 
 ii. Add the Spring Cloud native annotation of `@EnableDiscoveryClient`  to enable service discovery. Add the `@LoadBalanced` annotation for the [RestTemplate](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-resttemplate.html) instance,  and enable the integration of `@LoadBalanced` and [Ribbon](https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-ribbon.html):

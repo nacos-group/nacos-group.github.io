@@ -6,7 +6,7 @@ sidebar:
     order: 5
 ---
 
-> 该文档即将废弃，若想查看服务端如何开启鉴权功能，推荐查看[运维手册-权限校验](../../manual/admin/auth.mdx)；若想查看客户端如何配置访问凭据，推荐查看[用户手册-配置访问凭据](../../manual/user/auth.mdx)。
+> 该文档即将废弃。Nacos 3.3 起 Client API 鉴权默认开启。若想查看当前服务端配置，推荐查看[运维手册-权限校验](../../manual/admin/auth.mdx)；若想查看客户端如何配置访问凭据，推荐查看[用户手册-配置访问凭据](../../manual/user/auth.mdx)。
 
 > 注意
 > - Nacos是一个内部微服务组件，需要在可信的内部网络中运行，不可暴露在公网环境，防止带来安全风险。
@@ -19,15 +19,16 @@ sidebar:
 
 |参数名|默认值|启止版本|说明|
 |-----|------|------|----|
-|nacos.core.auth.enabled|false|1.2.0 ~ latest|是否开启鉴权功能|
-|nacos.core.auth.system.type|nacos|1.2.0 ~ latest|鉴权类型|
-|nacos.core.auth.plugin.nacos.token.secret.key|SecretKey012345678901234567890123456789012345678901234567890123456789(2.2.0.1后无默认值)|2.1.0 ~ latest|默认鉴权插件用于生成用户登陆临时accessToken所使用的密钥，**使用默认值有安全风险**|
-|nacos.core.auth.plugin.nacos.token.expire.seconds|18000|2.1.0 ~ latest|用户登陆临时accessToken的过期时间|
+|nacos.core.auth.enabled|3.3 起为 true；3.3 前为 false|1.2.0 ~ latest|是否开启 Client/Open API、SDK 和 gRPC 鉴权|
+|nacos.plugin.auth.type|nacos|3.3.0 ~ latest|鉴权实现选择|
+|nacos.plugin.auth.nacos.token.secret.key|无默认值|3.3.0 ~ latest|默认鉴权插件的 accessToken 签名密钥，敏感且 RESTART|
+|nacos.plugin.auth.nacos.token.expire.seconds|18000|3.3.0 ~ latest|用户登录 accessToken 过期时间，RUNTIME|
 |nacos.core.auth.enable.userAgentAuthWhite|false|1.4.1 ~ latest|是否使用useragent白名单，主要用于适配老版本升级，**置为true时有安全风险**|
 |nacos.core.auth.server.identity.key|serverIdentity(2.2.1后无默认值)|1.4.1 ~ latest|用于替换useragent白名单的身份识别key，**使用默认值有安全风险**|
 |nacos.core.auth.server.identity.value|security(2.2.1后无默认值)|1.4.1 ~ latest|用于替换useragent白名单的身份识别value，**使用默认值有安全风险**|
-|~~nacos.core.auth.default.token.secret.key~~|SecretKey012345678901234567890123456789012345678901234567890123456789|1.2.0 ~ 2.0.4|同`nacos.core.auth.plugin.nacos.token.secret.key`|
-|~~nacos.core.auth.default.token.expire.seconds~~|18000|1.2.0 ~ 2.0.4|同`nacos.core.auth.plugin.nacos.token.expire.seconds`|
+|~~nacos.core.auth.system.type~~|nacos|1.2.0 ~ latest|历史鉴权实现选择 key，已废弃并即将移除；请使用 `nacos.plugin.auth.type`|
+|~~nacos.core.auth.plugin.nacos.token.secret.key~~|无默认值|2.1.0 ~ latest|历史签名密钥 alias，已废弃并即将移除；请使用 `nacos.plugin.auth.nacos.token.secret.key`|
+|~~nacos.core.auth.plugin.nacos.token.expire.seconds~~|18000|2.1.0 ~ latest|历史 token 过期时间 alias，已废弃并即将移除；请使用 `nacos.plugin.auth.nacos.token.expire.seconds`|
 
 ## 默认控制台登录页
 
@@ -38,9 +39,9 @@ sidebar:
 
 ### 非Docker环境
 
-按照官方文档配置启动,默认是不需要登录的，这样会导致配置中心对外直接暴露。而启用鉴权之后，需要在使用用户名和密码登录之后，才能正常使用nacos。
+Nacos 3.3 起 Client API 鉴权默认开启，调用方必须提供所选鉴权插件支持的凭据。
 
-开启鉴权之前，application.properties中的配置信息为：
+升级期间如需临时维持早期版本的 Client API 无鉴权行为，可使用以下显式兼容配置：
 ```java
 ### If turn on auth system:
 nacos.core.auth.enabled=false
@@ -48,7 +49,7 @@ nacos.core.auth.enabled=false
 开启鉴权之后，application.properties中的配置信息为：
 ```java
 ### If turn on auth system:
-nacos.core.auth.system.type=nacos
+nacos.plugin.auth.type=nacos
 nacos.core.auth.enabled=true
 ```
 
@@ -58,34 +59,24 @@ nacos.core.auth.enabled=true
 
 > 注意：
 > 1. 文档中提供的密钥为公开密钥，在实际部署时请更换为其他密钥内容，防止密钥泄漏导致安全风险。
-> 2. 在2.2.0.1版本后，社区发布版本将移除以文档如下值作为默认值，需要自行填充，否则无法启动节点。
+> 2. 签名密钥没有默认值。标准值为空时，发行包启动脚本会先迁移 `application.properties` 中有效的 `nacos.core.auth.plugin.nacos.token.secret.key`；两个 key 都没有有效值时才提示输入。
 > 3. 密钥需要保持节点间一致，长时间不一致可能导致403 invalid token错误。
 
 ```properties
-### The default token(Base64 String):
-nacos.core.auth.default.token.secret.key=SecretKey012345678901234567890123456789012345678901234567890123456789
-
-### 2.1.0 版本后
-nacos.core.auth.plugin.nacos.token.secret.key=SecretKey012345678901234567890123456789012345678901234567890123456789
+nacos.plugin.auth.nacos.token.secret.key=${custom_base64_token_secret_key}
 ```
 
-自定义密钥时，推荐将配置项设置为**Base64编码**的字符串，且**原始密钥长度不得低于32字符**。例如下面的的例子：
+请使用 **Base64 编码**且**解码后不少于 32 字节**的密钥。每个生产部署应生成独立值，不要提交到代码仓库。
 
-```properties
-### The default token(Base64 String):
-nacos.core.auth.default.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
+历史 `nacos.core.auth.plugin.nacos.token.secret.key` 仍作为 alias；新配置请使用标准 key。
 
-### 2.1.0 版本后
-nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
-```
-
-> 注意：鉴权开关是修改之后立马生效的，不需要重启服务端。动态修改`token.secret.key`时，请确保token是有效的，如果修改成无效值，会导致后续无法登录，请求访问异常。
+> 注意：鉴权开关修改后立即生效。`token.secret.key` 是 `RESTART` 配置项，应修改静态配置、确保所有节点一致，再重启服务端。
 
 ### Docker环境
 
 #### 官方镜像
 
-如果使用官方镜像，请在启动docker容器时，添加如下环境变量
+Nacos 3.3 及以上官方镜像在未设置 `NACOS_AUTH_ENABLE` 时默认开启 Client API 鉴权。也可以显式设置，方便审计部署配置：
 
 ```powershell
 NACOS_AUTH_ENABLE=true
@@ -97,19 +88,19 @@ NACOS_AUTH_ENABLE=true
 docker run --env PREFER_HOST_MODE=hostname \
   --env MODE=standalone \
   --env NACOS_AUTH_ENABLE=true \
-  -e NACOS_AUTH_TOKEN=SecretKeyM1Z2WDc4dnVyZkQ3NmZMZjZ3RHRwZnJjNFROdkJOemEK \
-  -e NACOS_AUTH_IDENTITY_KEY=mpYGXyu7 \
-  -e NACOS_AUTH_IDENTITY_VALUE=mpYGXyu7 \
-  -p 8848:8848 nacos/nacos-server
+  -e NACOS_AUTH_TOKEN=${custom_base64_token_secret_key} \
+  -e NACOS_AUTH_IDENTITY_KEY=${custom_server_identity_key} \
+  -e NACOS_AUTH_IDENTITY_VALUE=${custom_server_identity_value} \
+  -p 8848:8848 nacos/nacos-server:v3.3.0
 ```
 
 除此之外，还可以添加其他鉴权相关的环境变量信息：
 
 | name                          | description                            | option                                 |
 | ----------------------------- | -------------------------------------- | -------------------------------------- |
-| NACOS_AUTH_ENABLE      |  是否开启权限系统        | 默认:false|
+| NACOS_AUTH_ENABLE      |  Client API 鉴权覆盖值        | 未设置时继承镜像默认值（Nacos 3.3+ 为 `true`）|
 | NACOS_AUTH_TOKEN_EXPIRE_SECONDS      |  token 失效时间 | 默认:18000                          |
-| NACOS_AUTH_TOKEN      |  token        | 默认:SecretKey012345678901234567890123456789012345678901234567890123456789      |
+| NACOS_AUTH_TOKEN      |  Base64 编码的 token secret        | 无默认值；生产环境应使用独立值      |
 | NACOS_AUTH_CACHE_ENABLE      |  权限缓存开关 ,开启后权限缓存的更新默认有15秒的延迟       | 默认 : false   |
 
 
@@ -120,7 +111,7 @@ docker-compose -f example/standalone-derby.yaml up
 
 #### 自定义镜像
 
-如果选择自定义镜像，请在构建镜像之前，修改nacos工程中的application.properties文件，
+如果自定义镜像仍保留显式兼容配置，在正式启用 Client API 鉴权前修改 application.properties：
 
 将下面这一行配置信息
 ```
@@ -128,7 +119,7 @@ nacos.core.auth.enabled=false
 ```
 修改为
 ```
-nacos.core.auth.system.type=nacos
+nacos.plugin.auth.type=nacos
 nacos.core.auth.enabled=true
 ```
 然后再配置nacos启动命令。
@@ -151,8 +142,8 @@ try {
 	properties.put("serverAddr", serverAddr);
 
     // if need username and password to login
-        properties.put("username","nacos");
-        properties.put("password","nacos");
+        properties.put("username","${username}");
+        properties.put("password","${password}");
 
 	ConfigService configService = NacosFactory.createConfigService(properties);
 } catch (NacosException e) {
@@ -168,7 +159,7 @@ try {
 首先需要使用用户名和密码登陆nacos。
 
 ```plain
-curl -X POST '127.0.0.1:8848/nacos/v1/auth/login' -d 'username=nacos&password=nacos'
+curl -X POST '127.0.0.1:8848/nacos/v1/auth/login' -d 'username=${username}&password=${password}'
 ```
 
 若用户名和密码正确,返回信息如下:
@@ -198,13 +189,13 @@ https://github.com/alibaba/nacos/issues/9906
 
 #### 开启方式
 ```
-nacos.core.auth.plugin.nacos.token.cache.enable=true
+nacos.plugin.auth.nacos.token.cache.enable=true
 ```
 
 #### 注意事项
 在开启Token缓存功能之前，服务端对每一个携带用户名密码访问login接口的请求都会生成新的token，接口的返回值中的tokenTtl字段跟服务端配置文件中设置的值相等，配置如下：
 ```
-nacos.core.auth.plugin.nacos.token.expire.seconds=18000
+nacos.plugin.auth.nacos.token.expire.seconds=18000
 ```
 在开启Token缓存功能之后，服务端对每一个携带用户名密码访问login接口的请求，会先检查缓存中是否存在该用户名对应的token。若不存在，生成新的Token，插入缓存再返回；若存在，返回该token，此时tokenTtl字段的值为配置文件中设置的值减去该Token在缓存中存留的时长。
 如果Token在缓存中存留的时长超过配置文件设置的值的90%，当login接口收到请求时，尽管缓存中存在该用户名对应的Token，服务端会重新生成Token返回给请求方，并更新缓存。因此，最差情况下，请求方收到的tokenTtl只有配置文件设置的值的10%。

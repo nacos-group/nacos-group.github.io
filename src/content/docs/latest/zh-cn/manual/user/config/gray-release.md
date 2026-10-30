@@ -31,6 +31,14 @@ Nacos 当前内置两类常用规则：
 
 默认最多允许 `10` 个灰度版本，可通过 `nacos.config.gray.version.max.count` 调整。
 
+## 升级兼容说明
+
+当前 beta 和 tag 灰度发布行为由 `config_info_gray` 与 `GrayRule` 支撑。Nacos 3.3 起不再自动将 3.0 之前的旧 `config_info_beta`、`config_info_tag` 表迁移到 `config_info_gray`。
+
+如果从 3.0 之前版本升级到 3.3，且旧部署使用过 beta 灰度发布，需要在升级前自行将旧 beta/tag 灰度数据迁移到当前 `config_info_gray` 灰度模型。若旧部署未使用 beta 灰度发布，则本次兼容迁移移除不影响该灰度兼容领域的平滑升级。
+
+这项变化不是移除当前 beta/tag 灰度 API。携带 `betaIps` 或 `tag` 的发布、查询与停止灰度流程仍按当前灰度模型工作。
+
 ## 查询行为
 
 灰度查询遵循以下原则：

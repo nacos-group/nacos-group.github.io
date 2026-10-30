@@ -59,10 +59,10 @@ nacos-setup --help
 启动命令：
 
 ```bash
-nacos-setup
+nacos-setup -v 3.3.0
 ```
 
-> 注意：默认安装 Nacos 3.2.3 版本，使用内置 Derby 数据库。
+> 本文显式指定 Nacos 3.3.0，使用内置 Derby 数据库；不指定版本时，安装版本取决于所用 nacos-setup 的默认设置。
 
 指定版本和端口：
 
@@ -71,13 +71,13 @@ nacos-setup
 nacos-setup -v 2.5.2
 
 # 指定端口
-nacos-setup -p 18848
+nacos-setup -p 18848 -v 3.3.0
 
 # 后台运行
-nacos-setup --detach
+nacos-setup --detach -v 3.3.0
 
 # 指定安装目录
-nacos-setup -d /opt/nacos
+nacos-setup -d /opt/nacos -v 3.3.0
 ```
 
 ### 3.2. 集群模式
@@ -88,13 +88,13 @@ nacos-setup -d /opt/nacos
 
 ```bash
 # 创建 3 节点集群（prod 为集群 ID）
-nacos-setup -c prod
+nacos-setup -c prod -v 3.3.0
 
 # 创建 5 节点集群
-nacos-setup -c prod -n 5
+nacos-setup -c prod -n 5 -v 3.3.0
 
 # 指定版本
-nacos-setup -c prod -v 3.2.3 -n 3
+nacos-setup -c prod -v 3.3.0 -n 3
 ```
 
 > 注意：使用内置 Derby 数据库时，nacos-setup 会自动采用增量启动策略以确保集群正确初始化：
@@ -125,7 +125,7 @@ nacos-setup -c prod --clean
 ls -la ~/ai-infra/nacos/cluster/CLUSTER_ID/
 
 # 手动启动节点
-cd ~/ai-infra/nacos/cluster/CLUSTER_ID/0-v3.2.3
+cd ~/ai-infra/nacos/cluster/CLUSTER_ID/0-v3.3.0
 bash bin/startup.sh
 
 # 停止节点
@@ -153,10 +153,10 @@ nacos-setup --datasource-conf
 
 ```bash
 # 单机模式
-nacos-setup -v 3.2.3
+nacos-setup -v 3.3.0
 
 # 集群模式
-nacos-setup -c prod -n 3
+nacos-setup -c prod -n 3 -v 3.3.0
 ```
 
 > 注意：配置保存在 `~/ai-infra/nacos/default.properties`。
@@ -177,7 +177,7 @@ nacos-setup -c prod -n 3
 nacos-setup --kill
 
 # 指定新端口
-nacos-setup -p 18848
+nacos-setup -p 18848 -v 3.3.0
 ```
 
 ## 4. 验证 Nacos 服务是否启动成功
@@ -225,7 +225,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/cs/config?dataId=quickstart.t
 
 | 选项 | 说明 | 默认值 |
 |------|------|--------|
-| `-v, --version VERSION` | 指定 Nacos 版本 | 3.2.3 |
+| `-v, --version VERSION` | 指定 Nacos 版本 | 以 nacos-setup 的默认设置为准；本文使用 3.3.0 |
 | `-p, --port PORT` | 服务主端口 | 8848 |
 | `--no-start` | 安装后不自动启动 | - |
 | `--adv` | 高级模式（交互式配置） | - |
@@ -336,7 +336,7 @@ export PATH=$JAVA_HOME/bin:$PATH
 nacos-setup --kill
 
 # 方式 2：指定新端口
-nacos-setup -p 18848
+nacos-setup -p 18848 -v 3.3.0
 ```
 
 ### Q: 如何查看 Nacos 日志？

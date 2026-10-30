@@ -25,10 +25,13 @@ At the network layer, Nacos 3.0 adds a separate network access port for the Naco
 | 9849 | 1001 | Server gRPC port on the server, used for inter-server synchronization |
 | 7848 | -1000 | JRaft port on the server, used to process Raft requests between servers |
 | 8080 | Independently configured | Nacos console port, used to access the Nacos console and Nacos console APIs |
+| 5353 | Independently configured | Built-in DNS over UDP/TCP; listens only when `nacos.naming.dns.enabled=true` |
 
 > **When using VIP or nginx requests, configure the Nacos gRPC port (default `9848`) for TCP forwarding. Do not configure HTTP or HTTP/2 forwarding, otherwise nginx will disconnect the connection.**
 >
-> **When exposing ports externally, expose only the console port (default `8080`) and the gRPC port (default `9848`). Expose the main port (default `8848`) only when needed. Other ports are used for inter-server communication. Do not expose them, and do not expose any port to the public network.**
+> **Allow access to the console port (default `8080`), client gRPC port (default `9848`), and main port (default `8848`) according to caller needs. When built-in DNS is enabled, allow its UDP/TCP port (default `5353`) only from trusted internal DNS servers or applications. Ports `9849` and `7848` are for communication between server nodes only. Do not expose any port to the public network.**
+
+The built-in DNS port is configured separately with `nacos.naming.dns.port`; changing the main port does not change it. DNS queries do not pass through HTTP API authentication. See [Built-in DNS Service Discovery](../../../ecology/use-nacos-with-native-dns.md) for integration details.
 
 ![nacos_port_exposure.png](/img/doc/manual/admin/deployment/deploy-port-export-3.0.svg)
 

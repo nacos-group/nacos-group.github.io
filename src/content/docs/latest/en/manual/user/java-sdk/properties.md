@@ -116,6 +116,8 @@ String value = properties2.getProperty("global-key1");
 
 ## 2. Java SDK Configuration Parameter List
 
+Nacos 3.3 enables client authentication by default. For the default plugin, configure `username` and `password` from the table below; there is no shared default password. See [SDK initialization](./usage.md#2-initialize-the-sdk) and [Access Credentials](../auth.mdx) for other credential modes.
+
 ### 2.1. Common Parameters
 
 Common parameters take effect when initializing both the registry `NamingService` and the config center `ConfigServie`:
@@ -131,13 +133,14 @@ Common parameters take effect when initializing both the registry `NamingService
 | endpointQueryParams            | ENDPOINT_QUERY_PARAMS             | Request parameters for the endpoint used to obtain Nacos Server addresses. They are used to extend custom logic in the endpoint service and use the `key=value` format. | Any URL parameter in `key=value` format | None |
 | endpointRefreshIntervalSeconds | ENDPOINT_REFRESH_INTERVAL_SECONDS | The interval at which Nacos Server periodically obtains the address list again from the endpoint, in seconds. | Any positive integer | 30 |
 | namespace                      | NAMESPACE                         | The namespace ID to which this Java SDK belongs. After it is set, the SDK can access only resources (configuration or services) in this namespace. | Namespace ID | Empty string `` |
-| username                       | USERNAME                          | The username used to access Nacos Server after authentication is enabled.                                    | Any string | None |
-| password                       | PASSWORD                          | The password that corresponds to the username used to access Nacos Server after authentication is enabled.   | Any string | None |
+| username                       | USERNAME                          | The username for default Nacos or LDAP authentication. Required for the default Client authentication enabled in 3.3.                                    | Any string | None |
+| password                       | PASSWORD                          | The password for that account. Use the initialized or administrator-assigned password; there is no shared default password.   | Any string | None |
 | accessKey                      | ACCESS_KEY                        | The access key required when Alibaba Cloud RAM authentication is used.                                      | Any string | None |
 | secretKey                      | SECRET_KEY                        | The secret key required when Alibaba Cloud RAM authentication is used.                                      | Any string | None |
 | ramRoleName                    | RAM_ROLE_NAME                     | The RAM role name required when Alibaba Cloud RAM authentication is used.                                  | Any string | None |
 | signatureRegionId              | SIGNATURE_REGION_ID               | The signature region ID required when Alibaba Cloud RAM authentication is used.                            | Any string | None |
 | logAllProperties               | LOG_ALL_PROPERTIES                | Whether to print all parameters when the Java SDK starts, including custom properties, JVM parameters, and environment variables. It is mainly used for debugging and troubleshooting. | boolean | false |
+| enableClientMetrics            | ENABLE_CLIENT_METRICS             | Whether the Java SDK records client-side metrics (gauges, request timer, failure counters) on the Micrometer global registry. Takes effect for both `NamingService` and `ConfigService`. See [Java SDK Metrics](./metrics.md) for how to plug in a `MeterRegistry`. | boolean | true |
 | ~~clusterName~~                | ~~CLUSTER_NAME~~                  | Deprecated because it can be confused with the service instance `ClusterName`. Use `endPointClusterName` instead. | Any URL-supported path | serverlist |
 | ~~isAdaptClusterNameUsage~~    | ~~IS_ADAPT_CLUSTER_NAME_USAGE~~   | Whether to support setting `endPointClusterName` through `clusterName` for better upgrade compatibility.    | boolean | false |
 | ~~serverName~~                 | ~~SERVER_NAME~~                   | The name of this Java SDK. It is currently used only when accessing the endpoint. This parameter will be deprecated because it is rarely used and the name is unreasonable. | Any string | Automatically concatenated from `serverAddr` or `endpoint` |
@@ -180,7 +183,7 @@ When the Nacos Java SDK connects to Nacos Server, you can configure a set of par
 
 | Parameter                                                       | Meaning                                                                            | Optional Values | Default Value |
 |-----------------------------------------------------------------|------------------------------------------------------------------------------------|---------|---------------|
-| nacos.server.grpc.port.offset                                   | The offset of the Nacos Server gRPC port relative to the main port.                           | Any int value | 1000 |
+| nacos.server.grpc.port.offset                                   | The offset of the Nacos Server gRPC port relative to the main port. It can be set in each Java SDK client's `Properties` when different client instances need different offsets. | Any int value | 1000 |
 | nacos.remote.client.grpc.name                                   | The name of the gRPC connection for this Nacos Java SDK.                                      | Any string | null |
 | nacos.remote.client.grpc.connect.keep.alive                     | The keep-alive interval of the gRPC connection for this Nacos Java SDK.                       | Any long value | 5000 |
 | nacos.remote.client.grpc.retry.times                            | The maximum retry count when the gRPC connection of this Nacos Java SDK initiates a request.  | Any int value | 3 |
@@ -213,3 +216,37 @@ Some parameters in the Nacos Java SDK have little impact at runtime and must rem
 | project.name              | The application name to which this SDK belongs. It can be used in the service subscriber list and configuration subscriber list as a reference field only. | Any string | unknown |
 | ~~NACOS.CONNECT.TIMEOUT~~ | Deprecated. The connection timeout used by the old HTTP implementation when connecting to a service. | Any int | 1000 |
 | NACOS.READ.TIMEOUT        | The read timeout used by the old HTTP implementation when connecting to a service. | Any int | 3000 |
+| nacos.client.json.adapter | JSON adapter selection, configured only through JVM `-D` before first use of the JSON layer. An explicitly selected but unavailable adapter causes initialization to fail. See [JSON Adapters and Jackson 2/3 Integration](./json-adapter.md). | auto / jackson2 / jackson3 | auto |
+| configSnapshotEnabled     | Whether the Nacos Java SDK reads and writes local config snapshots. This switch is global to the JVM and applies to config snapshots only; it cannot be set through the per-client `Properties`. | true / false | true |
+
+**About `configSnapshotEnabled`.** This switch is global to the JVM: all `ConfigService` instances created in the same JVM share the same value, which is read once when the snapshot switch is first initialized. Configure it before the first use of the SDK, with the JVM parameter `-DconfigSnapshotEnabled=false` or the environment variable `CONFIGSNAPSHOTENABLED=false`. Per-client `Properties` passed to `NacosFactory.createConfigService` do not configure this switch. Changing the property after initialization does not reload the switch.
+
+When the switch is `false`, the SDK neither reads nor writes local config snapshots and attempts to clear the local config cache directory at initialization. This cleanup also removes the config failover files stored in that directory. A recoverable cleanup failure is logged and leaves snapshots disabled; it does not prevent the switch from initializing. The `naming` cache is not affected.
+
+```
+-DconfigSnapshotEnabled=false
+```
+
+```
+CONFIGSNAPSHOTENABLED=false
+```
+
+### 2.6. AI Resource Parameters
+
+These names are defined in `com.alibaba.nacos.api.ai.constant.AiConstants` and configured through the `Properties` used to create `AiService`. Transport options are available since 3.3 and are fixed at creation; editing the original Properties does not change an existing instance's mode.
+
+| Parameter | Purpose | Default |
+| --- | --- | --- |
+| nacosAiTransportMode | Overall AI transport mode: `grpc`, `http` or `auto`. | grpc |
+| nacosAiMcpTransportMode | Transport override for the MCP service. | Inherits overall mode |
+| nacosAiAgentTransportMode | Transport override for Agent/RAD; the legacy A2A route has separate compatibility rules. | Inherits overall mode |
+| nacosAiSkillTransportMode | Skill mode setting; the currently available path is HTTP. | Inherits overall mode |
+| nacosAiAgentSpecTransportMode | AgentSpec mode setting; the currently available path is HTTP. | Inherits overall mode |
+| nacosAiPromptTransportMode | Transport override for Prompt queries and subscription polling. | Inherits overall mode |
+| nacosAiMcpServerCacheUpdateInterval | MCP subscription polling interval, in milliseconds. | 10000 |
+| nacosAiAgentCardCacheUpdateInterval | Legacy A2A AgentCard subscription polling interval, in milliseconds. | 10000 |
+| nacosAiSkillCacheUpdateInterval | Skill subscription polling interval, in milliseconds. | 10000 |
+| nacosAiAgentSpecCacheUpdateInterval | AgentSpec subscription polling interval, in milliseconds. | 10000 |
+| nacosAiPromptCacheUpdateInterval | Prompt subscription polling interval, in milliseconds. | 10000 |
+
+All five overrides also accept only `grpc`, `http` or `auto`. Invalid values fail initialization, including for resources currently using only HTTP. `auto` selects an available path according to capabilities and connection state; authentication, parameter and migration failures do not trigger transport fallback. See [AI Resource Runtime](../sdk/runtime-guide.md#6-ai-resource-runtime) for behavior and network requirements.

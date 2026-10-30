@@ -24,6 +24,19 @@ The entry domain name of a service in each region.
 
 For configuration isolation by tenants. Different namespaces may have configurations with the same Group or Data ID. One of the common scenarios for namespace is to differentiate and isolate the configurations in different environments, as in development and test environment and production environment.
 
+## AI Resources
+
+Nacos AI Registry manages Agents, MCP Servers, Skills, Prompts, and AgentSpecs. Each resource belongs to a namespace and can have multiple versions. Publishing a resource definition and starting an application process are separate operations.
+
+| Concept | Meaning |
+| --- | --- |
+| Resource versions and lifecycle | Edit content in a draft, then submit and publish after any applicable review. All five AI resource types share the [lifecycle rules](./manual/user/ai/ai-resource-lifecycle.md) in 3.3. |
+| Version labels | A label points to a version. The server maintains `latest` during publishing and online/offline operations to select the current default version. |
+| Visibility scope | `PUBLIC` and `PRIVATE` control visibility to callers across the whole resource. Scope is separate from a namespace named `public`. See [Visibility Plugin](./plugin/visibility-plugin.md) for defaults and permission rules. |
+| Agent call definitions and endpoints | A call definition describes protocols and versioned content. Declared endpoints are saved with the definition; runtime endpoints are registered by running applications. See [Agent Management](./manual/user/ai/agent-registry.md). |
+| RAD | Remote Agent Discovery discovers and subscribes to Agent call definitions and endpoints. See [RAD Integration Guide](./manual/user/ai/rad-discovery.md). |
+| ARD | Agentic Resource Discovery provides AI toolchains with a protocol for searching resources, browsing catalogs, and retrieving content. See [ARD Resource Discovery](./manual/user/ai/ard-discovery.md). |
+
 ## Configuration
 
 During system development, developers usually extract some parameters or variables that need to be changed from the code and manage them in a separate configuration file. This enables the static system artifacts or deliverables (such as WAR and JAR packages) to fit with the physical operating environment in a better way. Configuration management is usually a part of system deployment, which is executed by the administrator or operation and maintenance personnel. Configuration modification is an effective way to adjust the behavior of a running system.

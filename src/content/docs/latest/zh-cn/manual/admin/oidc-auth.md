@@ -122,7 +122,7 @@ curl http://localhost:8081/realms/nacos/.well-known/openid-configuration
 
 ```properties
 ### 启用 OIDC/OAuth2 鉴权系统
-nacos.core.auth.system.type=oidc
+nacos.plugin.auth.type=oidc
 
 ### 启用认证
 nacos.core.auth.enabled=true
@@ -138,48 +138,48 @@ nacos.core.auth.server.identity.key=serverIdentity
 nacos.core.auth.server.identity.value=security
 
 ### Nacos 内部 JWT 签名密钥（Base64 编码，原串至少 32 字符）
-nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
+nacos.plugin.auth.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
 ```
 
-> **重要**：如果不设置 `nacos.core.auth.plugin.nacos.token.secret.key`，启动脚本会进入交互模式要求手动输入密钥，导致服务无法正常启动。可使用 `openssl rand -base64 32` 生成密钥。
+> **重要**：标准值为空时，启动脚本会先迁移 `application.properties` 中有效的 `nacos.core.auth.plugin.nacos.token.secret.key`；只有标准 key 和历史 key 都没有有效值时才提示输入。可使用 `openssl rand -base64 32` 生成密钥。
 
 ### 3.3 OIDC 插件核心配置（必填）
 
 ```properties
 ### IdP 的 Issuer URI（用于自动发现 OIDC 端点）
-nacos.core.auth.plugin.oidc.issuer-uri=http://localhost:8081/realms/nacos
+nacos.plugin.auth.oidc.issuer-uri=http://localhost:8081/realms/nacos
 
 ### OAuth2 Client 凭证
-nacos.core.auth.plugin.oidc.client-id=nacos-server
-nacos.core.auth.plugin.oidc.client-secret=nacos-client-secret
+nacos.plugin.auth.oidc.client-id=nacos-server
+nacos.plugin.auth.oidc.client-secret=nacos-client-secret
 
 ### 请求的 OAuth2 scope
-nacos.core.auth.plugin.oidc.scope=openid profile email
+nacos.plugin.auth.oidc.scope=openid profile email
 
 ### 从 ID Token 中读取用户名的 claim 字段
-nacos.core.auth.plugin.oidc.username-claim=preferred_username
+nacos.plugin.auth.oidc.username-claim=preferred_username
 ```
 
 ### 3.4 OIDC 插件可选配置
 
 | 配置项 | 默认值 | 说明 |
 |--------|-------|------|
-| `nacos.core.auth.plugin.oidc.token-validation-method` | `jwt` | Token 校验方式。当前实现按 `jwt` / JWKS 校验；`introspection` 仅是预留配置，不应作为已支持能力使用 |
-| `nacos.core.auth.plugin.oidc.jwks-cache-ttl-seconds` | `3600` | JWKS 公钥缓存 TTL（秒） |
-| `nacos.core.auth.plugin.oidc.roles-claim` | `roles` | ID Token 中读取角色的 claim 名 |
-| `nacos.core.auth.plugin.oidc.admin-role` | `nacos-admin` | 管理员角色名 |
-| `nacos.core.auth.plugin.oidc.auto-create-user` | `true` | 首次登录时是否自动创建用户 |
-| `nacos.core.auth.plugin.oidc.authorization-endpoint` | （空） | 外部授权决策端点。为空时，当前实现会放行非管理员授权判断 |
-| `nacos.core.auth.plugin.oidc.authorization-timeout-ms` | `5000` | 授权请求超时时间（毫秒） |
-| `nacos.core.auth.plugin.oidc.strict-nonce-validation` | `true` | 是否启用严格 nonce 校验 |
-| `nacos.core.auth.plugin.oidc.strict-audience-validation` | `true` | 是否启用严格 audience 校验 |
+| `nacos.plugin.auth.oidc.token-validation-method` | `jwt` | 当前只实现 `jwt` / JWKS；`introspection` 不受支持 |
+| `nacos.plugin.auth.oidc.jwks-cache-ttl-seconds` | `3600` | JWKS 公钥缓存 TTL（秒） |
+| `nacos.plugin.auth.oidc.roles-claim` | `roles` | ID Token 中读取角色的 claim 名 |
+| `nacos.plugin.auth.oidc.admin-role` | `nacos-admin` | 管理员角色名 |
+| `nacos.plugin.auth.oidc.auto-create-user` | `true` | 兼容保留项，当前不改变运行行为 |
+| `nacos.plugin.auth.oidc.authorization-endpoint` | （空） | 外部授权决策端点。为空时，当前实现会放行非管理员授权判断 |
+| `nacos.plugin.auth.oidc.authorization-timeout-ms` | `5000` | 授权请求超时时间（毫秒） |
+| `nacos.plugin.auth.oidc.strict-nonce-validation` | `true` | 是否启用严格 nonce 校验 |
+| `nacos.plugin.auth.oidc.strict-audience-validation` | `true` | 是否启用严格 audience 校验 |
 
 :::note
 `strict-nonce-validation` 和 `strict-audience-validation` 未显式配置时默认开启。仅在开发联调或 IdP 暂时不满足校验要求时，才建议临时关闭，并在生产前恢复。
 :::
 
 :::caution
-如果生产环境需要按命名空间、配置、服务或 AI 资源做权限隔离，请配置 `nacos.core.auth.plugin.oidc.authorization-endpoint`，或提供更严格的授权实现。当前实现中该配置为空时，非管理员授权判断会默认放行。
+如果生产环境需要按命名空间、配置、服务或 AI 资源做权限隔离，请配置 `nacos.plugin.auth.oidc.authorization-endpoint`，或提供更严格的授权实现。当前实现中该配置为空时，非管理员授权判断会默认放行。
 :::
 
 ### 3.5 Java SDK OAuth2 Client Credentials 配置
@@ -293,12 +293,12 @@ tail -f logs/start.out
 
 ### 7.1 启动卡在 "Please input the JWT token secret key"
 
-**原因**：`nacos.core.auth.plugin.nacos.token.secret.key` 未设置。
+**原因**：`nacos.plugin.auth.nacos.token.secret.key` 未设置。
 
 **解决**：在 `application.properties` 中配置密钥：
 
 ```properties
-nacos.core.auth.plugin.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
+nacos.plugin.auth.nacos.token.secret.key=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
 ```
 
 ### 7.2 启动失败：Empty identity
@@ -325,7 +325,7 @@ nacos.core.auth.server.identity.value=security
 **排查**：
 1. 检查 `issuer-uri` 是否正确（注意末尾不要带斜杠）
 2. 查看 `logs/nacos.log` 中的错误详情
-3. 开发联调时可临时关闭严格 audience 校验：`nacos.core.auth.plugin.oidc.strict-audience-validation=false`
+3. 开发联调时可临时关闭严格 audience 校验：`nacos.plugin.auth.oidc.strict-audience-validation=false`
 4. 确认 IdP 的 JWKS 端点可访问
 
 ### 7.5 登出后立即被自动登入

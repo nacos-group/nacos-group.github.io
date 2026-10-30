@@ -6,6 +6,8 @@ description: An entry point for the Nacos user manual, helping users choose docu
 
 # User Manual Overview
 
+Nacos 3.3 enables client authentication by default. [Configure access credentials](./auth.mdx) before integration: use an existing username and password with the default plugin, or log in to obtain a token for direct HTTP calls. The account also needs permission to access the target resources.
+
 The user manual is for developers, application owners, and operators who integrate applications with Nacos. It focuses on how applications use Nacos, not on server deployment or plugin development details.
 
 If you are new to Nacos, start from your scenario:

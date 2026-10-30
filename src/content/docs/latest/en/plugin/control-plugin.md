@@ -3,14 +3,14 @@ title: Traffic Control
 keywords: [traffic control, rate limit, connection limit, TPS, Control Plugin]
 description: This guide explains how the Nacos control plugin protects the server with connection and TPS limits, and how to configure or extend it.
 sidebar:
-    order: 9
+    order: 12
 ---
 
 # Traffic Control Plugin
 
 The traffic control plugin protects Nacos Server under high load or abnormal access patterns. It can limit connection count and TPS for core APIs, so the server can reject excessive requests early instead of letting a local traffic problem grow into a cluster-wide outage.
 
-Since Nacos 2.3.0, traffic control can be extended through SPI. The default implementation name is `nacos`. If `nacos.plugin.control.manager.type` is not configured, Nacos uses no-limit managers and does not actively limit connections or TPS.
+Since Nacos 2.3.0, traffic control can be extended through SPI. Its unified type is `control`, execution mode is `EXCLUSIVE`, load phase is `STANDARD`, and the type is non-critical. The built-in identity is `control:nacos`; it declares no configuration definitions and is reported as `configurable=false`. If no implementation is selected, Nacos uses lightweight no-limit facades without starting rule, metric, or limiter resources.
 
 ## Concepts
 
@@ -27,8 +27,10 @@ Since Nacos 2.3.0, traffic control can be extended through SPI. The default impl
 Configure `${nacos.home}/conf/application.properties`:
 
 ```properties
-nacos.plugin.control.manager.type=nacos
+nacos.plugin.control.type=nacos
 ```
+
+The historical `nacos.plugin.control.manager.type` key remains a static alias. The canonical key wins and a migration WARN is logged when both exist. Selection has `RESTART` semantics; the runtime status API cannot switch implementations.
 
 By default, rule files are stored in `${nacos.home}/data/connection` and `${nacos.home}/data/tps`. To use another base directory:
 
@@ -42,6 +44,8 @@ Rules will then be stored in:
 /opt/nacos-control-rules/data/connection
 /opt/nacos-control-rules/data/tps
 ```
+
+The rule directory and external rule storage settings belong to the control module, not to `control:nacos` definitions. The selected implementation is initialized once after unified state restoration and effective configuration application. Unselected implementations remain visible in inventory but do not build managers or start background resources.
 
 After startup, check `${nacos.home}/logs/plugin-control.log` to confirm that the plugin is loaded.
 
@@ -139,7 +143,7 @@ A custom traffic control plugin implements:
 
 | SPI / abstract class | Purpose |
 | --- | --- |
-| `ControlManagerBuilder` | Declares the plugin name and creates connection and TPS managers. |
+| `ControlManagerBuilder` | Declares the plugin name and creates connection and TPS managers from the accepted startup configuration. |
 | `ConnectionControlManager` | Loads connection rules and decides whether new connections are allowed. |
 | `TpsControlManager` | Registers ControlPoints, loads TPS rules, and decides whether requests can continue. |
 | `ExternalRuleStorageBuilder` | Optional. Integrates external rule storage. |
@@ -165,6 +169,8 @@ If external rule storage is implemented, also register:
 ```text
 META-INF/services/com.alibaba.nacos.plugin.control.spi.ExternalRuleStorageBuilder
 ```
+
+A new `ControlManagerBuilder` can declare private settings through `PluginConfigDefinitionSpec`, using canonical keys under `nacos.plugin.control.{pluginName}.{itemKey}`. Until Control defines a safe manager replacement and close lifecycle, every definition must use `RESTART`. The older no-argument builder methods remain binary compatible.
 
 ## Operations Advice
 

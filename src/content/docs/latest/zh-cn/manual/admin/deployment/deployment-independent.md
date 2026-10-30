@@ -40,8 +40,8 @@ Nacos 控制台 依赖 [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst
 Nacos独立控制台的发行包与Nacos服务的发行包相同， 只需要从上一步骤[部署Nacos 无控制台服务](#2-部署nacos-无控制台服务)中复制发布包到控制台部署环境中即可，随后执行以下命令进行解压：
 
 ```bash
-  unzip nacos-server-$version.zip 
-  # 或者 tar -xvf nacos-server-$version.tar.gz
+  unzip nacos-server-3.3.0.zip
+  # 或者 tar -xvf nacos-server-3.3.0.tar.gz
   cd nacos/bin
 ```
 
@@ -76,7 +76,7 @@ nacos.console.remote.server.context-path=/nacos
 ```properties
 nacos.core.auth.server.identity.key=${your_custom_server_identity_key}
 nacos.core.auth.server.identity.value=${your_custom_server_identity_value}
-nacos.core.auth.plugin.nacos.token.secret.key=${your_custom_token_secret_key}
+nacos.plugin.auth.nacos.token.secret.key=${your_custom_token_secret_key}
 ```
 
 :::note
@@ -102,8 +102,8 @@ startup.cmd -d console
 随后启动程序会提示您输入`3个`鉴权相关配置
 
 ```
-`nacos.core.auth.plugin.nacos.token.secret.key` is missing, please set: ${your_input_token_secret_key}
-nacos.core.auth.plugin.nacos.token.secret.key` Updated:
+`nacos.plugin.auth.nacos.token.secret.key` is missing, please set: ${your_input_token_secret_key}
+nacos.plugin.auth.nacos.token.secret.key` Updated:
 ----------------------------------
 `nacos.core.auth.server.identity.key` is missing, please set: ${your_input_server_identity_key}
 `nacos.core.auth.server.identity.key` Updated:
