@@ -8,7 +8,11 @@ sidebar:
 
 # 控制台手册
 
+> 本页保留旧版本控制台说明。Nacos 3.3 默认开启 Client、Admin 和 Console 鉴权，三类开关分别生效；请按[当前控制台手册](../../manual/admin/console.md)及[鉴权手册](../../manual/admin/auth.mdx)配置，不要沿用下文旧版关闭登录的配置。
+
 > 该文档即将废弃，推荐查看[运维手册-控制台手册](../../manual/admin/console.md)。
+
+Nacos 3.3 的 Agent/MCP 草稿、审核、版本和运行端点操作见[当前控制台的 AI 管理中心](../../manual/admin/console.md#ai-管理中心)。下文截图和登录说明保留为历史参考，不适用于新控制台。
 
 [Nacos 控制台](http://console.nacos.io/)主要旨在于增强对于服务列表，健康状态管理，服务治理，分布式配置管理等方面的管控能力，以便进一步帮助用户降低管理微服务应用架构的成本，将提供包括下列基本功能:
 

@@ -8,7 +8,7 @@ sidebar:
 
 # System Parameters
 
-This page summarizes common Nacos 3.2.x server-side parameters. The main source is `${nacos.home}/conf/application.properties` in the Nacos distribution, with extra notes from current configuration code.
+This page summarizes common Nacos 3.3.x server-side parameters. The main source is `${nacos.home}/conf/application.properties` in the Nacos distribution, with extra notes from current configuration code.
 
 For production deployments, read [Deployment Best Practices](./deployment/deployment-best-practices.md) first, then use this page to confirm specific properties.
 
@@ -55,16 +55,18 @@ Nacos supports Derby, MySQL, PostgreSQL, Oracle, and custom database types throu
 
 | Property | Description | Default |
 | --- | --- | --- |
-| `spring.sql.init.platform` | Database type. Supported values include `derby`, `mysql`, `postgresql`, `oracle`, or a custom dialect plugin type. `oracle` requires Oracle 12c or later. | empty |
-| `db.num` | Number of database URLs. | `0` |
-| `db.url.0`, `db.url.1` | JDBC URLs. Use indexes for multiple URLs. | empty |
-| `db.user`, `db.password` | Shared database credentials for all URLs. | empty |
-| `db.user.0`, `db.password.0` | Credentials for a specific indexed URL. Use them when different URLs need different credentials. | empty |
-| `db.pool.config.*` | HikariCP properties, such as `db.pool.config.connectionTimeout`. | HikariCP defaults |
+| `nacos.plugin.datasource-dialect.type` | Select `derby`, `mysql`, `postgresql`, `oracle`, or a custom dialect at startup. | `derby` for standalone/embedded; `mysql` for ordinary cluster |
+| `nacos.plugin.datasource.db.num` | Number of external database URLs. | `0` |
+| `nacos.plugin.datasource.db.url.{index}` | JDBC URL for each index. | empty |
+| `nacos.plugin.datasource.db.user[.{index}]` | Shared or per-connection username. | empty |
+| `nacos.plugin.datasource.db.password[.{index}]` | Shared or per-connection password. | empty |
+| `nacos.plugin.datasource.db.pool.config.*` | HikariCP settings; stable keys use kebab-case, such as `maximum-pool-size`. | See the datasource plugin page |
+| `nacos.plugin.datasource.db.pool.config.driver-class-name` | Explicit JDBC driver class, taking precedence over legacy `db.pool.config.driverClassName`; when unset, uses the selected dialect's default. | Dialect default, or `com.mysql.cj.jdbc.Driver` if none is provided |
+| `nacos.plugin.datasource.db.query-timeout` | JDBC query timeout in seconds. | `3` |
 | `nacos.plugin.datasource.log.enabled` | Whether to print datasource plugin logs. | `true` |
 
 :::note
-`spring.datasource.platform` is a legacy compatibility property. New deployments should use `spring.sql.init.platform`.
+`spring.sql.init.platform` is the historical dialect selector alias, and `db.*` contains connection aliases. Canonical keys win. `spring.datasource.platform` has been removed.
 :::
 
 ## Web and Console
@@ -210,6 +212,26 @@ For daily usage, see [Naming Manual](../user/naming/overview.md).
 | `nacos.naming.push.pushTaskRetryDelay` | Retry delay after naming push failure in milliseconds. | `1000` |
 | `nacos.naming.service.metadata.length` | Total service metadata length limit. | `1024` |
 
+### Built-in DNS
+
+Nacos 3.3.0 supports A/AAAA/SRV queries for service instances through built-in DNS, which is disabled by default. Restart Nacos Server after changing these settings. See [Built-in DNS Service Discovery](../../ecology/use-nacos-with-native-dns.md) for setup and verification.
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| `nacos.naming.dns.enabled` | Enables built-in DNS. | `false` |
+| `nacos.naming.dns.bind-address` | UDP/TCP listening address. Configure explicitly for remote or container access and restrict network sources. | `127.0.0.1` |
+| `nacos.naming.dns.port` | DNS listening port for both UDP and TCP, independent of HTTP/gRPC ports. | `5353` |
+| `nacos.naming.dns.domain-suffix` | Query domain suffix, without a leading or trailing dot. | `nacos` |
+| `nacos.naming.dns.default-group` | Nacos group used when the query name does not specify one. | `DEFAULT_GROUP` |
+| `nacos.naming.dns.namespace` | Namespace ID to query. Set explicitly to `public` when querying that namespace. | Empty string |
+| `nacos.naming.dns.ttl` | TTL for A/AAAA/SRV records, in seconds. | `60` |
+| `nacos.naming.dns.forward-enabled` | Forwards queries outside the Nacos suffix to upstream DNS servers. | `false` |
+| `nacos.naming.dns.forward-servers` | Upstream DNS address list. Configure reachable addresses when enabling forwarding. | Empty list |
+| `nacos.naming.dns.forward-timeout-ms` | Upstream forwarding timeout, in milliseconds. | `3000` |
+| `nacos.naming.dns.forward-refresh-interval-seconds` | Upstream hostname re-resolution interval, in seconds; at least `10`. | `300` |
+
+DNS queries do not pass through HTTP API authentication. Restrict callers separately through network access controls.
+
 ## Parameter Validation
 
 | Property | Description | Default |
@@ -223,53 +245,34 @@ For auth setup, read [Authorization](./auth.mdx) and [OIDC/OAuth2 Authentication
 
 | Property | Description | Default |
 | --- | --- | --- |
-| `nacos.core.auth.system.type` | Auth plugin type. The default implementation is `nacos`. LDAP, OIDC/OAuth2, and custom plugins can also be used. | `nacos` |
-| `nacos.core.auth.enabled` | Whether SDK/gRPC request authentication is enabled. | `false` |
-| `nacos.core.auth.admin.enabled` | Whether `/v3/admin/*` Admin API authentication is enabled. | `true` |
+| `nacos.plugin.auth.type` | Select the auth implementation at startup; `nacos.core.auth.system.type` is a legacy alias. | `nacos` |
+| `nacos.core.auth.enabled` | Whether the general auth system and Open API authentication are enabled, including Client/Open HTTP APIs and SDK/gRPC requests. Enabled by default since Nacos 3.3; an explicit `false` remains a temporary compatibility override. | `true` |
+| `nacos.core.auth.admin.enabled` | Whether Admin API scope authentication is enabled, including plugin-owned endpoints marked `ADMIN_API` as well as `/v3/admin/*`. | `true` |
 | `nacos.core.auth.console.enabled` | Whether `/v3/console/*` Console API and login authentication are enabled. | `true` |
-| `nacos.core.auth.caching.enabled` | Whether auth information is cached. Permission updates may have a short delay when enabled. | `true` |
+| `nacos.plugin.auth.nacos.caching.enabled` | Whether auth information is cached; `nacos.core.auth.caching.enabled` is a historical alias. Permission updates may have a short delay when enabled. | `true` |
 | `nacos.core.auth.server.identity.key` | Identity key for internal server-to-server requests. Starting with Nacos 3.2.4, it is also used by native JRaft gRPC. Configure the same non-empty value on every cluster member. | empty |
 | `nacos.core.auth.server.identity.value` | Identity value for internal server-to-server requests. Starting with Nacos 3.2.4, it is also used by native JRaft gRPC. Configure the same non-empty value on every cluster member. | empty |
 | `nacos.security.ignore.urls` | Auth ignored URLs. This is a legacy compatibility property and may be deprecated in the future. | distribution default |
-| `nacos.core.auth.plugin.nacos.token.cache.enable` | Whether the default auth plugin caches tokens. | `false` |
-| `nacos.core.auth.plugin.nacos.token.expire.seconds` | Token expiration time for the default auth plugin, in seconds. | `18000` |
-| `nacos.core.auth.plugin.nacos.token.secret.key` | JWT signing secret for the default auth plugin. Use a Base64 string from an original secret of at least 32 characters. | empty |
-| `nacos.core.auth.nacos.anonymous.ai.enabled` | Whether anonymous AI resource reads are allowed. Currently mainly applies to Skill and AgentSpec. | `false` |
+| `nacos.plugin.auth.nacos.token.cache.enable` | Default auth token cache; `nacos.core.auth.plugin.nacos.token.cache.enable` is a historical alias. | `false` |
+| `nacos.plugin.auth.nacos.token.expire.seconds` | Default auth token expiration in seconds; `nacos.core.auth.plugin.nacos.token.expire.seconds` is a historical alias. | `18000` |
+| `nacos.plugin.auth.nacos.token.secret.key` | JWT signing secret; sensitive and RESTART. `nacos.core.auth.plugin.nacos.token.secret.key` is a historical alias. | empty |
+| `nacos.plugin.auth.nacos.anonymous.ai.enabled` | Whether explicitly opted-in AI endpoints accept anonymous reads; `nacos.core.auth.nacos.anonymous.ai.enabled` is a historical alias. Explicit empty or invalid credentials never fall back to anonymous access. | `false` |
 | `nacos.plugin.visibility.enabled` | Whether the visibility plugin is enabled. | `true` |
-| `nacos.plugin.visibility.type` | Visibility plugin type. The default `nacos` implementation reuses default auth plugin user information. | `nacos` |
+| `nacos.plugin.visibility.type` | Deprecated `RESTART` selector that still chooses the implementation requested by the AI domain and contributes to initial state when no persisted state exists. | `nacos` |
+| `nacos.plugin.visibility.{pluginName}.enabled` | Static initial implementation state; persisted plugin state wins. The default `nacos` implementation reuses default auth plugin user information. | `true` for `nacos` |
 
-:::caution[Nacos 3.2.4 cluster upgrades]
-JRaft validates this server identity independently, even when `nacos.core.auth.enabled=false`. Before upgrading, configure the same non-empty key and value on every member. See the [Upgrade Manual](./upgrading.mdx) for rolling-upgrade and rollback constraints.
+:::caution[JRaft server identity]
+Starting with Nacos 3.2.4, JRaft validates this server identity independently, even when `nacos.core.auth.enabled=false`. Before upgrading or deploying a cluster, configure the same non-empty key and value on every member.
 :::
 
 ### LDAP, OIDC, and OAuth2
 
-LDAP is maintained as an optional plugin starting from Nacos 3.2. OIDC/OAuth2 is also plugin based. Before using these properties, confirm that the corresponding plugin is included in the distribution or placed in the plugin directory.
+LDAP and OIDC/OAuth2 are optional plugins. The table lists canonical prefixes; see [Auth Plugin](../../plugin/auth-plugin.md) for exact definitions, aliases, defaults, and effect modes.
 
 | Property | Description | Default |
 | --- | --- | --- |
-| `nacos.core.auth.ldap.url` | LDAP server URL. | empty |
-| `nacos.core.auth.ldap.basedc` | LDAP base DN. | empty |
-| `nacos.core.auth.ldap.userDn` | LDAP admin user DN. | empty |
-| `nacos.core.auth.ldap.password` | LDAP admin password. | empty |
-| `nacos.core.auth.ldap.userdn` | Login user DN template. `{0}` is replaced with the username. | empty |
-| `nacos.core.auth.ldap.filter.prefix` | User filter prefix. | `uid` |
-| `nacos.core.auth.ldap.case.sensitive` | Whether usernames are case-sensitive. | `true` |
-| `nacos.core.auth.ldap.ignore.partial.result.exception` | Whether LDAP partial result exceptions are ignored. | `false` |
-| `nacos.core.auth.plugin.oidc.issuer-uri` | OIDC issuer URI for auto-discovery. | empty |
-| `nacos.core.auth.plugin.oidc.client-id` | OIDC client id. | empty |
-| `nacos.core.auth.plugin.oidc.client-secret` | OIDC client secret. | empty |
-| `nacos.core.auth.plugin.oidc.scope` | OIDC scopes. | `openid` |
-| `nacos.core.auth.plugin.oidc.token-validation-method` | Token validation method. Valid values include `jwt` and `introspection`. | empty |
-| `nacos.core.auth.plugin.oidc.jwks-cache-ttl-seconds` | JWKS cache TTL in seconds. | empty |
-| `nacos.core.auth.plugin.oidc.username-claim` | Username claim. | `sub` |
-| `nacos.core.auth.plugin.oidc.roles-claim` | Roles claim. | empty |
-| `nacos.core.auth.plugin.oidc.admin-role` | Admin role name. | empty |
-| `nacos.core.auth.plugin.oidc.auto-create-user` | Whether to auto-create users on first login. | `true` |
-| `nacos.core.auth.plugin.oidc.authorization-endpoint` | External authorization endpoint. | empty |
-| `nacos.core.auth.plugin.authorization-timeout-ms` | External authorization request timeout in milliseconds. | empty |
-| `nacos.core.auth.plugin.oidc.strict-nonce-validation` | Whether strict nonce validation is enforced. | `false` |
-| `nacos.core.auth.plugin.oidc.strict-audience-validation` | Whether strict audience validation is enforced. | `false` |
+| `nacos.plugin.auth.ldap.{itemKey}` | LDAP definitions: `url`, `base-dn`, `timeout`, `user-dn`, `password`, `filter-prefix`, `case-sensitive`, and `ignore-partial-result-exception`. | See the [Auth Plugin](../../plugin/auth-plugin.md) page |
+| `nacos.plugin.auth.oidc.{itemKey}` | OIDC definitions for issuer/client, JWT/JWKS, claims, external authorization, and strict validation. Only JWT/JWKS is currently implemented; introspection is not supported. | See the [Auth Plugin](../../plugin/auth-plugin.md) page |
 
 ## Plugin Parameters
 
@@ -278,15 +281,13 @@ For the plugin system, see [Plugin Overview](../../plugin/overview.md).
 | Property | Description | Default |
 | --- | --- | --- |
 | `nacos.custom.environment.enabled` | Whether the custom environment plugin is enabled. | `false` |
-| `nacos.plugin.control.manager.type` | Traffic control plugin type. Set to `nacos` to use the default implementation. | empty |
+| `nacos.plugin.control.type` | Select the control implementation at startup; `nacos.plugin.control.manager.type` is a legacy alias. | empty (no-limit) |
 | `nacos.plugin.control.rule.local.basedir` | Local directory for traffic control rules. | `${nacos.home}` |
 | `nacos.plugin.control.rule.external.storage` | External rule storage type. Requires a custom implementation. | empty |
-| `nacos.core.config.plugin.webhook.enabled` | Whether the config change webhook plugin is enabled. | `false` |
-| `nacos.core.config.plugin.webhook.url` | Webhook URL. | empty |
-| `nacos.core.config.plugin.webhook.contentMaxCapacity` | Maximum webhook payload size in bytes. | `102400` |
-| `nacos.core.config.plugin.whitelist.enabled` | Whether the config import suffix whitelist plugin is enabled. | `false` |
-| `nacos.core.config.plugin.whitelist.suffixs` | Allowed config import file suffixes. | `xml,text,properties,yaml,html` |
-| `nacos.core.config.plugin.fileformatcheck.enabled` | Whether the imported file format check plugin is enabled. | `false` |
+| `nacos.plugin.{pluginType}.{pluginName}.enabled` | Initial state for non-exclusive implementations; persisted or local state can override it. Exclusive types such as `auth`, `datasource-dialect`, and `control` use selectors instead. | Defined by implementation and type policy |
+| `nacos.plugin.{pluginType}.{pluginName}.{itemKey}` | Canonical key for an implementation definition. | Defined by the definition |
+
+Historical `nacos.core.config.plugin.{pluginName}.*` properties exist only for old config-change binaries. Nacos Server does not bundle webhook, whitelist, or fileformatcheck implementations. New implementations use `nacos.plugin.config-change.{pluginName}.{itemKey}`.
 
 ## Istio and Prometheus Service Discovery
 
@@ -310,26 +311,38 @@ For usage, see [AI Registry Overview](../user/ai/ai-registry-overview.md). The p
 | Property | Description | Default |
 | --- | --- | --- |
 | `nacos.extension.ai.enabled` | Whether the AI module is enabled. When set to `false`, the AI module and its console entries are not loaded, while Config and Naming remain available. The `microservice` function mode does not load the AI module regardless of this value. | `true` |
+| `nacos.ai.resource.search.enabled` | Whether AI resource search is enabled. When disabled, search is unavailable and ARD, which depends on search, cannot be enabled. If search is explicitly disabled during an upgrade, automatic MCP migration does not wait for search-index initialization. | `true` |
+| `nacos.ai.resource.search.index.backfill.enabled` | Whether historical data indexes are initialized and checked periodically after AI resource search starts. Normally keep this enabled. Disabling it during an initial upgrade can leave automatic MCP migration waiting for the indexes to become ready. | `true` |
+| `nacos.ai.resource.search.vector.provider` | Vector index Provider for resource discovery; restart after changes. See [AI Vector Plugin](../../plugin/ai-vector-plugin.md). | `postgresql` |
+| `nacos.plugin.ai-vector.postgresql.enabled` | Initial state of the PostgreSQL vector implementation. Follows Provider selection by default; persisted plugin state takes precedence. | Determined by Provider selection |
+| `nacos.ai.resource.search.vector.postgresql.url` | JDBC URL of a separate vector database; when unset, tries the PostgreSQL main data source. | Empty |
+| `nacos.ai.resource.search.vector.postgresql.user` | Username for the separate vector database. | Empty |
+| `nacos.ai.resource.search.vector.postgresql.password` | Password for the separate vector database. | Empty |
+| `nacos.ai.resource.search.vector.postgresql.driver-class-name` | JDBC driver class for the separate vector database. | `org.postgresql.Driver` |
+| `nacos.ai.mcp.resource.reconciliation.enabled` | Whether existing MCP data is migrated automatically and the new management APIs are enabled after the Server becomes ready. Normally keep this enabled. Setting it to `false` before migration completes stops automatic migration and leaves the new MCP management APIs unavailable. Read at startup; restart the Server after changing it. | `true` |
+| `nacos.ai.mcp.resource.reconciliation.interval-seconds` | Interval in seconds between automatic MCP migration checks, measured from the end of the previous run. Only positive integers are accepted; invalid, nonnumeric, or nonpositive values fall back to `300`. A shorter value increases Config and database scan load and should be used cautiously only for testing or controlled troubleshooting. Read at startup; restart the Server after changing it. | `300` |
 | `nacos.ai.mcp.registry.enabled` | Whether the official MCP Registry protocol adapter is enabled. When enabled, it exposes an independent port through `nacos.ai.registry.port`. | `false` |
 | `nacos.ai.skill.registry.enabled` | Whether the Skill Registry protocol adapter is enabled. When enabled, it exposes an independent port through `nacos.ai.registry.port`. | `false` |
 | `nacos.ai.registry.port` | AI Registry protocol adapter port. | `9080` |
 | `nacos.ai.mcp.registry.port` | Legacy property name. Deprecated. Use `nacos.ai.registry.port` instead. | `9080` |
-| `nacos.plugin.ai-pipeline.enabled` | Whether AI publish pipeline is enabled. If unset, it does not actively disable the pipeline, but no pipeline runs when `type` is empty. | empty |
-| `nacos.plugin.ai-pipeline.type` | Pipeline node type, such as `skill-scanner`. Separate multiple types with commas. | empty |
-| `nacos.plugin.ai-pipeline.skill-scanner.enabled` | Enablement property passed to the built-in `skill-scanner` node. | empty |
-| `nacos.plugin.ai-pipeline.skill-scanner.command` | External Skill scanner command path. | empty |
+| `nacos.plugin.ai-pipeline.enabled` | Dynamic AI Pipeline family gate; when false, type loading is deferred. | `true` |
+| `nacos.plugin.ai-pipeline.type` | Legacy startup chain used only to initialize node state when no persisted state exists. | empty |
+| `nacos.plugin.ai-pipeline.skill-scanner.{itemKey}` | `skill-scanner` definitions; only `order` is RUNTIME. | See the [AI Pipeline Plugin](../../plugin/ai-pipeline-plugin.md) page |
+| `nacos.plugin.ai-pipeline.skill-spector.{itemKey}` | `skill-spector` definitions; only `order` is RUNTIME. | See the [AI Pipeline Plugin](../../plugin/ai-pipeline-plugin.md) page |
 | `nacos.ai.skill.auto-publish-after-review.enabled` | Whether Skill versions are automatically published after approval. | `false` |
-| `nacos.ai.resource.import.enabled` | Whether explicitly configured AI resource import sources are enabled. | `false` |
+| `nacos.plugin.ai-resource-import.enabled` | AI Resource Import family gate. It is enabled when neither the standard key nor its alias is configured; only an explicit `false` disables it. The distribution also sets the standard key to `true`. | `true` |
+| `nacos.plugin.ai-resource-import.{pluginName}.enabled` | Startup state for each fixed source. | `mcp-official`/`skills-sh` enabled; others disabled |
+| `nacos.plugin.ai-resource-import.{pluginName}.{itemKey}` | Source definitions. Endpoint/network items are RESTART; display and limit items are RUNTIME. | See the [AI Resource Import Plugin](../../plugin/ai-resource-import-plugin.md) page |
 | `nacos.ai.resource.import.legacy-mcp-api-enabled` | Former compatibility switch for legacy MCP import APIs. It is no longer recognized starting with Nacos 3.2.4; use `nacos.core.api.compatibility.enabled` instead. | not applicable |
 | `nacos.ai.resource.import.allow-user-url` | Whether legacy MCP direct URL imports may fetch user-provided URLs after the shared compatibility gate has reopened them. | `false` |
 | `nacos.console.ai.mcp.import.enabled` | Whether Console `GET /v3/console/ai/mcp/importToolsFromMcp` may open outbound MCP connections. Set it to `false` to disable all such tool imports. | `true` |
 | `nacos.console.ai.mcp.import.allowed-private-addresses` | Private or local IP/CIDR allowlist for Console MCP tool imports. Separate entries with commas. Public addresses do not need to be listed. | empty |
-| `nacos.plugin.ai.importer.mcp.official.enabled` | Whether the built-in official MCP Registry import source is enabled. | `true` |
-| `nacos.plugin.ai.importer.skills.well-known.enabled` | Whether the Skill well-known import source is enabled. | `false` |
-| `nacos.plugin.ai.importer.skills.well-known.url` | Skill well-known registry root URL. | empty |
-| `nacos.plugin.ai.importer.skills.skills-sh.enabled` | Whether the `skills.sh` import source is enabled. | `true` |
-| `nacos.plugin.ai.importer.<preset>.allow-http` | Whether non-HTTPS endpoints are allowed for a source. Enable only in controlled environments. | `false` |
-| `nacos.plugin.ai.importer.<preset>.allow-private-network` | Whether private-network or localhost endpoints are allowed for a source. Enable only in controlled environments. | `false` |
+
+Restart the server after changing vector database connection settings. The pgvector extension and its table are required only for PostgreSQL vector retrieval, not basic ARD integration. See [AI Vector Plugin](../../plugin/ai-vector-plugin.md) for initialization steps and precautions.
+
+The automatic MCP migration entries above use the exact Server property names. The current distribution does not define dedicated startup options for them. Prefer their complete names in `application.properties`, or use JVM `-D` options according to your deployment standard. For containers, do not infer environment-variable names that the image scripts do not declare.
+
+Old `nacos.plugin.ai.importer.*`, `nacos.ai.resource.import.sources[N].*`, presets, and cloned-endpoint models are removed or retained only as explicitly documented migration aliases. Do not use them for new deployments. See [AI Resource Import Plugin](../../plugin/ai-resource-import-plugin.md).
 
 :::note
 `nacos.console.ai.mcp.import.allowed-private-addresses` accepts only IPv4/IPv6 addresses or CIDR ranges, not hostnames, for example `192.168.0.0/16,10.0.0.8`. Every private or local address resolved from the target hostname must match the allowlist, and any invalid allowlist entry blocks the request. For a separately deployed Console, configure the property on every Console instance and restart each instance.
@@ -355,14 +368,13 @@ These properties are used for upgrades, migration, or legacy compatibility. They
 | `nacos.core.api.compatibility.client.enabled` | Whether client API compatibility is enabled. | `true` |
 | `nacos.core.api.compatibility.admin.enabled` | Whether Admin API compatibility is enabled. | `false` |
 | `nacos.core.api.compatibility.console.enabled` | Whether Console API compatibility is enabled. | `false` |
-| `nacos.config.gray.compatible.model` | Whether Beta/Tag gray-release compatibility and migration to the new gray model is enabled. | `true` |
-| `nacos.gray.migrate.executor.multi` | Thread count for gray config migration. | `8` |
-| `nacos.config.namespace.compatible.mode` | Whether empty namespace IDs are migrated to `public`. | `true` |
-| `nacos.namespace.migrate.retry.times` | Retry count for namespace migration failures. | `3` |
-| `nacos.namespace.migrate.batch.size` | Namespace migration batch size. | `100` |
 
 :::note
 Auth switches and API compatibility switches are different. `nacos.core.auth.admin.enabled` controls whether Admin API authentication is enabled. `nacos.core.api.compatibility.admin.enabled` controls whether Admin API compatibility behavior accepts requests. The shared `nacos.core.api.compatibility.enabled` switch reopens only a small set of deprecated v3 APIs that explicitly use the gate; it does not disable their existing authentication or replace `nacos-api-legacy-adapter`. Legacy v1/v2 HTTP APIs were removed from the main distribution starting with Nacos 3.2.0. Migrate to v3 APIs or temporarily use the legacy adapter.
+:::
+
+:::caution[Nacos 3.3 Config migration switches removed]
+`nacos.config.gray.compatible.model`, `nacos.gray.migrate.executor.multi`, `nacos.config.namespace.compatible.mode`, `nacos.namespace.migrate.retry.times`, and `nacos.namespace.migrate.batch.size` are no longer Nacos 3.3 server properties. Nacos 3.3 no longer automatically migrates pre-3.0 empty-tenant/default-namespace storage and no longer automatically migrates legacy beta/tag gray tables. Affected deployments must migrate the data before upgrading. See the [Upgrading Manual](./upgrading.mdx#217-config-compatibility-migration-removal-nacos-330).
 :::
 
 ## Startup Script and Image Variables

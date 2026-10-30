@@ -25,10 +25,13 @@ Nacos自3.0版本在2.X版本的基础上，对Nacos控制台和Nacos本身进�
 | 9849 | 1001     | 服务端gRPC请求服务端端口，用于服务间同步等                            |
 | 7848 | -1000    | Jraft请求服务端端口，用于处理服务端间的Raft相关请求                     |
 | 8080 | 独立配置     | Nacos控制台端口，访问Nacos控制台及Nacos控制台的API                 |
+| 5353 | 独立配置 | 内置 DNS 端口，同时使用 UDP/TCP，仅在 `nacos.naming.dns.enabled=true` 时监听 |
 
 > **使用VIP/nginx请求时，对于Nacos的gRPC端口（默认9848）需要配置成TCP转发，不能配置http/http2转发，否则连接会被nginx断开。**
 >
-> **对外暴露端口时，建议仅暴露控制台端口（默认8080）和gRPC端口（默认9848）；同时按需暴露主端口（默认8848），其他端口为服务端之间的通信端口，请勿暴露其他端口，同时建议所有端口均不暴露在公网下。**
+> **按调用方需要开放控制台端口（默认8080）、客户端gRPC端口（默认9848）和主端口（默认8848）。启用内置 DNS 时，将其 UDP/TCP 端口（默认5353）仅开放给可信的内部 DNS 或应用；9849 和 7848 只允许服务端节点互通。所有端口均不应暴露在公网下。**
+
+内置 DNS 的端口由 `nacos.naming.dns.port` 单独配置，修改主端口不会自动改变 DNS 端口。DNS 查询不经过 HTTP API 鉴权，接入方式见[内置 DNS 服务发现](../../../ecology/use-nacos-with-native-dns.md)。
 
 ![nacos_port_exposure.png](/img/doc/manual/admin/deployment/deploy-port-export-3.0.svg)
 

@@ -3,6 +3,9 @@ import MobileNavbarSublist from "./MobileNavbarSublist.astro";
 import dataSource from "@components/common/Header/navbar.ts";
 import { docsItems } from "@components/common/Header/DocsMenu.astro";
 import { communityItems } from "@components/common/Header/CommunityMenu.astro";
+import { isChinese } from "@i18n/util";
+
+const ifzh = isChinese(Astro);
 
 interface Props {
   top?: "4rem" | "3.5rem";
@@ -31,13 +34,16 @@ for (let i = 0; i < dataSource.length; i++) {
   const [docs, , community] = sublist;
   const docsEntries = [];
   const communityEntries = [];
+  const currentVersion = Astro.url.pathname.match(/\/docs\/([^/]+)(?:\/|$)/)?.[1];
+  docs.label = ifzh ? dataSource[0].label : dataSource[0].translations?.en;
   for (let i = 0; i < docsItems.length; i++) {
     const item = docsItems[i];
     docsEntries.push({
       type: "link",
-      label: item.label,
-      href: item.link,
-      isCurrent: false,
+      label: ifzh ? item.label : item.translations.en,
+      href: ifzh ? item.link : item.translations.link,
+      badge: item.badge,
+      isCurrent: currentVersion === item.link.split('/')[2],
     });
   }
 

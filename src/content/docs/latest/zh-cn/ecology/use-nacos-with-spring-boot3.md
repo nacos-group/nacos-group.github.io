@@ -21,6 +21,10 @@ SpringBoot2及以下的应用请参考旧版本 [Nacos 融合 Spring Boot(Deprat
 
 您需要先下载 Nacos 并启动 Nacos server。操作步骤参见 [Nacos 快速入门](../quickstart/quick-start.mdx)。
 
+Nacos 3.3 默认开启客户端鉴权。使用默认鉴权插件时，请按[配置访问凭据](../manual/user/auth.mdx)准备有目标配置读取权限的业务账号，并在启动应用前设置 `NACOS_USERNAME`、`NACOS_PASSWORD` 环境变量。下文通过 Spring 占位符读取凭据；地址和凭据应在本地配置或部署环境中提供，不能只放在需要先登录 Nacos 才能读取的远程配置中。
+
+未提供有效凭据或缺少读取权限时，远程配置加载可能失败。请先检查账号密码、命名空间和资源权限，再启动应用。
+
 ## 启动配置管理
 
 启动了 Nacos server 后，您就可以参考以下示例代码，为您的 Spring Boot3 应用启动 Nacos 配置管理服务了。
@@ -36,12 +40,14 @@ SpringBoot2及以下的应用请参考旧版本 [Nacos 融合 Spring Boot(Deprat
 ```
 spring-alibaba-nacos-config组件从Spring Cloud Alibaba内部孵化而来，可以在SpringBoot3应用中独立使用(包括Spring AI及Spring AI Alibaba应用)，当前被托管在Spring Cloud Alibaba项目中。
 
-2. 在 `application.properties` 中配置 Nacos server 的地址：
+2. 在 `application.properties` 中配置 Nacos server 的地址和访问凭据：
 
 ```
 spring.application.name=springboot3x
 spring.config.import[0]=nacos:springboot3x.properties?group=DEFAULT_GROUP
 spring.nacos.config.server-addr=127.0.0.1:8848
+spring.nacos.config.username=${NACOS_USERNAME}
+spring.nacos.config.password=${NACOS_PASSWORD}
 ```
 通过spring.config.import将  `dataId` 为 `springboot3x.properties` ，`group`=`DEFAULT_GROUP`的配置作为配置源。
 如果需要指定多个nacos配置作为属性源，可以通过以下形式添加多个属性源
@@ -52,6 +58,8 @@ spring.config.import[2]=nacos:{dataId2}?group={group2}
 ```
 
 通过spring.nacos.config.server-addr指定nacos的地址
+
+本文使用独立的 `spring-alibaba-nacos-config` 组件，属性前缀为 `spring.nacos.config`；使用 Spring Cloud starter 时请参考 [Spring Cloud 接入](./use-nacos-with-spring-cloud.md)，不要混用两组属性名。
 
 3. 通过 Spring 的 `@Value` 以及 `@NacosConfig` 注解设置属性值。
 

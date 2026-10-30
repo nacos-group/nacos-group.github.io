@@ -53,12 +53,12 @@ sidebar:
 然后修改`${nacos.home}/conf/application.properties`文件，增加支持MySQL数据源配置，添加MySQL数据源的url、用户名和密码。
 
 ```
-spring.sql.init.platform=mysql
+nacos.plugin.datasource-dialect.type=mysql
 
-db.num=1
-db.url.0=jdbc:mysql://${mysql_host}:${mysql_port}/${nacos_database}?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
-db.user=${mysql_user}
-db.password=${mysql_password}
+nacos.plugin.datasource.db.num=1
+nacos.plugin.datasource.db.url.0=jdbc:mysql://${mysql_host}:${mysql_port}/${nacos_database}?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
+nacos.plugin.datasource.db.user=${mysql_user}
+nacos.plugin.datasource.db.password=${mysql_password}
 ```
 
 ##### 1.1.3.1. 开启默认鉴权插件
@@ -70,12 +70,12 @@ db.password=${mysql_password}
 设置其中
 
 ```properties
-## 开启客户端访问鉴权，默认为关闭，可选
+## 客户端访问鉴权，3.3 起默认开启
 nacos.core.auth.enabled=true
 ## 开启控制台访问鉴权，默认为开启
 nacos.core.auth.console.enabled=true
-nacos.core.auth.system.type=nacos
-nacos.core.auth.plugin.nacos.token.secret.key=${自定义，保证所有节点一致}
+nacos.plugin.auth.type=nacos
+nacos.plugin.auth.nacos.token.secret.key=${自定义，保证所有节点一致}
 nacos.core.auth.server.identity.key=${自定义，保证所有节点一致}
 nacos.core.auth.server.identity.value=${自定义，保证所有节点一致}
 ```
@@ -103,8 +103,8 @@ startup.cmd
 随后启动程序会提示您输入`3个`鉴权相关配置
 
 ```
-`nacos.core.auth.plugin.nacos.token.secret.key` is missing, please set: ${your_input_token_secret_key}
-nacos.core.auth.plugin.nacos.token.secret.key` Updated:
+`nacos.plugin.auth.nacos.token.secret.key` is missing, please set: ${your_input_token_secret_key}
+nacos.plugin.auth.nacos.token.secret.key` Updated:
 ----------------------------------
 `nacos.core.auth.server.identity.key` is missing, please set: ${your_input_server_identity_key}
 `nacos.core.auth.server.identity.key` Updated:
@@ -146,12 +146,12 @@ nacos.core.auth.plugin.nacos.token.secret.key` Updated:
 设置其中
 
 ```properties
-## 开启客户端访问鉴权，默认为关闭，可选
+## 客户端访问鉴权，3.3 起默认开启
 nacos.core.auth.enabled=true
 ## 开启控制台访问鉴权，默认为开启
 nacos.core.auth.console.enabled=true
-nacos.core.auth.system.type=nacos
-nacos.core.auth.plugin.nacos.token.secret.key=${自定义，保证所有节点一致}
+nacos.plugin.auth.type=nacos
+nacos.plugin.auth.nacos.token.secret.key=${自定义，保证所有节点一致}
 nacos.core.auth.server.identity.key=${自定义，保证所有节点一致}
 nacos.core.auth.server.identity.value=${自定义，保证所有节点一致}
 ```
@@ -207,13 +207,13 @@ docker-compose -f example/cluster-embedded.yaml up
 如果你有很多自定义配置的需求，可以通过指定[系统参数-镜像环境变量](../system-configurations/#2-镜像环境变量)的方式进行配置，例如需要开启鉴权时：
 
 ```powershell
-docker run --name nacos-cluster-auth -e MODE=cluster -e NACOS_AUTH_ENABLE=true -e NACOS_AUTH_TOKEN=${customToken} -e NACOS_AUTH_IDENTITY_KEY=${customKey} NACOS_AUTH_IDENTITY_VALUE=${customValue} -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest
+docker run --name nacos-cluster-auth -e MODE=cluster -e NACOS_AUTH_ENABLE=true -e NACOS_AUTH_TOKEN=${customToken} -e NACOS_AUTH_IDENTITY_KEY=${customKey} -e NACOS_AUTH_IDENTITY_VALUE=${customValue} -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:v3.3.0
 ```
 
 同时，可以通过对application.properties文件进行挂卷定义的方式，将更多复杂的自定义配置导入Nacos容器中，强烈建议在生产环境中使用方式，例如：
 
 ```powershell
-docker run --name nacos-cluster -e MODE=cluster -v /path/application.properties:/home/nacos/conf/application.properties -v /path/cluster.conf:/home/nacos/conf/cluster.conf -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest
+docker run --name nacos-cluster -e MODE=cluster -v /path/application.properties:/home/nacos/conf/application.properties -v /path/cluster.conf:/home/nacos/conf/cluster.conf -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:v3.3.0
 ```
 
 如果仍然无法满足自定义需求，可以基于nacos-docker项目中的`Dockerfile`自行构建镜像。

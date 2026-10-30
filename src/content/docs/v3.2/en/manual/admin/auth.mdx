@@ -1,0 +1,270 @@
+---
+title: Authorization
+keywords: [Authorization, Authentication, RBAC, LDAP, OIDC, OAuth2]
+description: Learn how to enable Nacos auth, choose a built-in auth plugin, initialize the default administrator, configure LDAP and OIDC/OAuth2, and understand the visibility plugin relationship.
+sidebar:
+    order: 7
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+# Authorization
+
+> Attention
+> - Nacos is an internal microservice component and must run in a trusted internal network. Do not expose it to the public Internet, or it may bring security risks.
+> - Nacos provides a simple auth implementation to prevent business misuse. It is a weak auth system, not a strong auth system designed to resist malicious attacks.
+> - If Nacos runs in an untrusted network or you require strong auth, use the official simple implementation as a reference to develop a [custom auth plugin](../../plugin/auth-plugin.md).
+
+Nacos auth is provided by auth plugins. Nacos 3.2 includes the default Nacos auth plugin, LDAP auth plugin, and OIDC/OAuth2 auth plugin. They share the same auth switches, but use different identity sources and permission models.
+
+## Choose An Auth Mode
+
+| Mode | Value | Best fit | Notes |
+| --- | --- | --- | --- |
+| Default Nacos auth | `nacos` | Small deployments and internal RBAC | Local Nacos users, roles, permissions, and tokens. |
+| LDAP auth | `ldap` | Existing LDAP directory | LDAP authenticates users. Nacos still manages roles and permissions. Since 3.2, LDAP is a standalone optional plugin. |
+| OIDC/OAuth2 auth | `oidc` | Enterprise SSO, centralized identity, MFA | Delegates authentication to an external IdP and can use an external authorization service. |
+| Custom auth | Custom value | Enterprise-specific security system | Implement the auth plugin SPI. |
+
+For plugin boundaries and development details, see [Auth Plugin](../../plugin/auth-plugin.md).
+
+## Core Configuration
+
+| Property | Default configuration | Description |
+| --- | --- | --- |
+| `nacos.core.auth.system.type` | `nacos` | Selected auth plugin type. Supports `nacos`, `ldap`, `oidc`, or a custom type. |
+| `nacos.core.auth.enabled` | `true` | Enables auth for Open API, SDK, and gRPC requests. |
+| `nacos.core.auth.admin.enabled` | `true` | Enables auth for Admin API requests. |
+| `nacos.core.auth.console.enabled` | `true` | Enables auth for Console API and default console login. |
+| `nacos.core.auth.server.identity.key` | Empty | Server-to-server identity key. Required for auth-enabled clusters. |
+| `nacos.core.auth.server.identity.value` | Empty | Server-to-server identity value. Required for auth-enabled clusters. |
+| `nacos.core.auth.caching.enabled` | `true` | Caches users, roles, and permissions. Permission changes may have about 15 seconds of delay. |
+| `nacos.core.auth.plugin.nacos.token.secret.key` | Empty | Signing key for default Nacos tokens. Use a Base64 string generated from at least 32 raw characters. |
+| `nacos.core.auth.plugin.nacos.token.expire.seconds` | `18000` | Default Nacos token lifetime, in seconds. |
+| `nacos.core.auth.plugin.nacos.token.cache.enable` | `false` | Caches issued token parsing and validation results. |
+
+:::note
+After an upgrade, your cluster may keep old values. Always check the actual `application.properties`, environment variables, and startup parameters of the running cluster.
+:::
+
+## Enable Default Nacos Auth
+
+Default Nacos auth uses local users, roles, permissions, and tokens. It provides the `/v3/auth/user`, `/v3/auth/role`, and `/v3/auth/permission` APIs. These APIs belong to the default auth plugin. Other auth plugins do not necessarily support them.
+
+<Tabs>
+  <TabItem label="Non-Docker deployment">
+
+    Edit `${nacos.home}/conf/application.properties`:
+
+    ```properties
+    nacos.core.auth.system.type=nacos
+    nacos.core.auth.enabled=true
+    nacos.core.auth.admin.enabled=true
+    nacos.core.auth.console.enabled=true
+
+    nacos.core.auth.server.identity.key=${custom_server_identity_key}
+    nacos.core.auth.server.identity.value=${custom_server_identity_value}
+    nacos.core.auth.plugin.nacos.token.secret.key=${custom_base64_token_secret_key}
+    ```
+
+    In cluster mode, every node must use the same `server.identity` and `token.secret.key`.
+
+  </TabItem>
+  <TabItem label="Docker deployment">
+
+    Pass environment variables when starting the container:
+
+    ```powershell
+    NACOS_AUTH_ENABLE=true
+    NACOS_AUTH_ADMIN_ENABLE=true
+    NACOS_AUTH_CONSOLE_ENABLE=true
+    NACOS_AUTH_SYSTEM_TYPE=nacos
+    NACOS_AUTH_TOKEN=${custom_base64_token_secret_key}
+    NACOS_AUTH_IDENTITY_KEY=${custom_server_identity_key}
+    NACOS_AUTH_IDENTITY_VALUE=${custom_server_identity_value}
+    ```
+
+    Example:
+
+    ```powershell
+    docker run --env PREFER_HOST_MODE=hostname \
+      --env MODE=standalone \
+      --env NACOS_AUTH_ENABLE=true \
+      --env NACOS_AUTH_SYSTEM_TYPE=nacos \
+      --env NACOS_AUTH_TOKEN=${custom_base64_token_secret_key} \
+      --env NACOS_AUTH_IDENTITY_KEY=${custom_server_identity_key} \
+      --env NACOS_AUTH_IDENTITY_VALUE=${custom_server_identity_value} \
+      -p 8848:8848 -p 9848:9848 nacos/nacos-server
+    ```
+
+  </TabItem>
+</Tabs>
+
+### Initialize The Administrator Password
+
+Since 2.4.0, Nacos no longer ships a default password for the administrator user `nacos`. After enabling default Nacos auth for the first time, initialize the administrator password.
+
+<Tabs>
+  <TabItem label="API">
+
+    ```powershell
+    curl -X POST 'http://$nacos_server_host:$nacos_server_port/nacos/v3/auth/user/admin' \
+      -d 'password=$your_password'
+    ```
+
+    If `password` is missing or empty, Nacos generates a random password. Save the returned result:
+
+    ```json
+    {"username":"nacos","password":"$your_password"}
+    ```
+
+  </TabItem>
+  <TabItem label="Nacos Console">
+
+    When auth is enabled and no administrator exists, the console enters the administrator initialization page.
+
+    Enter a custom password and submit. If the password is empty, Nacos generates a random password. Save the password shown by the page after initialization.
+
+  </TabItem>
+</Tabs>
+
+:::caution
+Nacos does not enforce administrator password complexity. Use a strong password in production and store it safely.
+:::
+
+## Enable LDAP Auth
+
+The LDAP plugin type is `ldap`. Since Nacos 3.2, LDAP is separated from the default auth implementation and provided as a standalone optional plugin.
+
+LDAP boundaries:
+
+- LDAP validates usernames and passwords.
+- Nacos issues access tokens.
+- Local Nacos roles and permissions still authorize requests.
+- `/v3/auth/user/login` is still used for login.
+
+Example:
+
+```properties
+nacos.core.auth.system.type=ldap
+nacos.core.auth.enabled=true
+nacos.core.auth.admin.enabled=true
+nacos.core.auth.console.enabled=true
+
+nacos.core.auth.ldap.url=ldap://localhost:389
+nacos.core.auth.ldap.basedc=dc=example,dc=org
+nacos.core.auth.ldap.userDn=cn=admin,${nacos.core.auth.ldap.basedc}
+nacos.core.auth.ldap.password=admin
+nacos.core.auth.ldap.userdn=cn={0},dc=example,dc=org
+nacos.core.auth.ldap.filter.prefix=uid
+nacos.core.auth.ldap.case.sensitive=true
+nacos.core.auth.ldap.ignore.partial.result.exception=false
+```
+
+Before enabling LDAP, check that:
+
+- `nacos-ldap-auth-plugin-<version>.jar` is available in `plugins/` or the server classpath.
+- `org.springframework.ldap:spring-ldap-core` related jars are available in `plugins/`.
+
+If `spring-ldap-core` is missing, the LDAP plugin cannot work fully. Add the dependency and restart Nacos.
+
+## Enable OIDC/OAuth2 Auth
+
+The OIDC/OAuth2 plugin type is `oidc`. It delegates authentication to an external IdP and is suitable for enterprise SSO, MFA, and centralized account governance.
+
+Basic example:
+
+```properties
+nacos.core.auth.system.type=oidc
+nacos.core.auth.enabled=true
+nacos.core.auth.admin.enabled=true
+nacos.core.auth.console.enabled=true
+
+nacos.core.auth.server.identity.key=${custom_server_identity_key}
+nacos.core.auth.server.identity.value=${custom_server_identity_value}
+nacos.core.auth.plugin.nacos.token.secret.key=${custom_base64_token_secret_key}
+
+nacos.core.auth.plugin.oidc.issuer-uri=https://idp.example.com/realms/nacos
+nacos.core.auth.plugin.oidc.client-id=nacos-server
+nacos.core.auth.plugin.oidc.client-secret=${client_secret}
+nacos.core.auth.plugin.oidc.scope=openid profile email
+```
+
+In OIDC/OAuth2 mode, console login uses compatibility endpoints under `/v1/auth/oidc/*`. The Java SDK can use the OAuth2 Client Credentials flow to obtain bearer tokens.
+
+:::caution
+If production needs resource-level permission isolation, configure the OIDC plugin external authorization endpoint. In the current implementation, when `nacos.core.auth.plugin.oidc.authorization-endpoint` is empty, non-admin authorization decisions are allowed by default.
+:::
+
+For detailed configuration, Keycloak examples, external authorization, and troubleshooting, see [OIDC/OAuth2 Authentication](./oidc-auth.md).
+
+## Configure Resource Visibility
+
+The visibility plugin controls whether a resource should appear in detail, list, or search results. It is related to auth, but has a different responsibility:
+
+- Auth decides whether an identity has read or write permission on a target resource.
+- Visibility decides whether the target resource should be visible to the current identity.
+
+Default settings:
+
+```properties
+nacos.plugin.visibility.enabled=true
+nacos.plugin.visibility.type=nacos
+```
+
+The default `nacos` visibility implementation reuses user information from the default auth context and currently serves AI Registry resources. For details, see [Visibility Plugin](../../plugin/visibility-plugin.md).
+
+## Client And OpenAPI Credentials
+
+Default Nacos auth and LDAP auth can log in with username and password. Use the returned `accessToken` for OpenAPI calls.
+
+```powershell
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/auth/user/login' \
+  -d 'username=nacos&password=${password}'
+```
+
+Example response:
+
+```json
+{
+  "accessToken": "eyJhbGciOiJIUzI1NiJ9...",
+  "tokenTtl": 18000,
+  "globalAdmin": true,
+  "username": "nacos"
+}
+```
+
+For SDK configuration, see [User Manual - Authorization](../user/auth.mdx).
+
+## Enable Token Cache
+
+The default Nacos auth plugin supports token caching. When enabled, the server caches token parsing and validation results to reduce JWT parsing overhead.
+
+```properties
+nacos.core.auth.plugin.nacos.token.cache.enable=true
+```
+
+Notes:
+
+- Permission updates may take a short time to take effect because of cache delay.
+- When a cached token is close to expiration, the login API issues a new token.
+- Check your current image version for Docker environment variable support.
+
+## Disable Console Auth
+
+Since Nacos 3.0, console auth is enabled by default. For local development or a controlled temporary environment, you can disable it:
+
+```properties
+nacos.core.auth.console.enabled=false
+```
+
+:::caution
+After console auth is disabled, the console can be accessed without login. This can leak data and cause accidental changes. Do not disable it in production.
+:::
+
+## Upgrade Notes
+
+- If an administrator user `nacos` already exists before upgrade, Nacos does not ask for administrator initialization again.
+- If the old cluster still uses a default or weak password, change it after upgrade.
+- When upgrading old LDAP deployments to 3.2, make sure the LDAP plugin jar and `spring-ldap-core` dependency are both available in `plugins/`.
+- When switching to `oidc`, adjust console operations accordingly. Users, roles, passwords, and permissions are usually maintained by the external IdP or an external authorization service.

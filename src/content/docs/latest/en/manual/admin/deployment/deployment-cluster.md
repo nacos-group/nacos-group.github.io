@@ -53,12 +53,12 @@ In the `conf` directory under the Nacos decompression directory `nacos/`, config
 Then modify `${nacos.home}/conf/application.properties`, add the MySQL data source configuration, and configure the MySQL data source URL, username, and password.
 
 ```
-spring.sql.init.platform=mysql
+nacos.plugin.datasource-dialect.type=mysql
 
-db.num=1
-db.url.0=jdbc:mysql://${mysql_host}:${mysql_port}/${nacos_database}?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
-db.user=${mysql_user}
-db.password=${mysql_password}
+nacos.plugin.datasource.db.num=1
+nacos.plugin.datasource.db.url.0=jdbc:mysql://${mysql_host}:${mysql_port}/${nacos_database}?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
+nacos.plugin.datasource.db.user=${mysql_user}
+nacos.plugin.datasource.db.password=${mysql_password}
 ```
 
 ##### 1.1.3.1. Enable the Default Authentication Plugin
@@ -70,12 +70,12 @@ Modify `application.properties` in the `conf` directory.
 Set the following items:
 
 ```properties
-## Enable client access authentication. Disabled by default and optional.
+## Client access authentication is enabled by default starting in 3.3.
 nacos.core.auth.enabled=true
 ## Enable console access authentication. Enabled by default.
 nacos.core.auth.console.enabled=true
-nacos.core.auth.system.type=nacos
-nacos.core.auth.plugin.nacos.token.secret.key=${custom_value_same_on_all_nodes}
+nacos.plugin.auth.type=nacos
+nacos.plugin.auth.nacos.token.secret.key=${custom_value_same_on_all_nodes}
 nacos.core.auth.server.identity.key=${custom_value_same_on_all_nodes}
 nacos.core.auth.server.identity.value=${custom_value_same_on_all_nodes}
 ```
@@ -103,8 +103,8 @@ startup.cmd
 The startup program then prompts you to enter the following `3` authentication-related configurations:
 
 ```
-`nacos.core.auth.plugin.nacos.token.secret.key` is missing, please set: ${your_input_token_secret_key}
-nacos.core.auth.plugin.nacos.token.secret.key` Updated:
+`nacos.plugin.auth.nacos.token.secret.key` is missing, please set: ${your_input_token_secret_key}
+nacos.plugin.auth.nacos.token.secret.key` Updated:
 ----------------------------------
 `nacos.core.auth.server.identity.key` is missing, please set: ${your_input_server_identity_key}
 `nacos.core.auth.server.identity.key` Updated:
@@ -146,12 +146,12 @@ Modify `application.properties` in the `conf` directory.
 Set the following items:
 
 ```properties
-## Enable client access authentication. Disabled by default and optional.
+## Client access authentication is enabled by default starting in 3.3.
 nacos.core.auth.enabled=true
 ## Enable console access authentication. Enabled by default.
 nacos.core.auth.console.enabled=true
-nacos.core.auth.system.type=nacos
-nacos.core.auth.plugin.nacos.token.secret.key=${custom_value_same_on_all_nodes}
+nacos.plugin.auth.type=nacos
+nacos.plugin.auth.nacos.token.secret.key=${custom_value_same_on_all_nodes}
 nacos.core.auth.server.identity.key=${custom_value_same_on_all_nodes}
 nacos.core.auth.server.identity.value=${custom_value_same_on_all_nodes}
 ```
@@ -207,13 +207,13 @@ docker-compose -f example/cluster-embedded.yaml up
 If you need many custom configurations, you can configure them by specifying [System Parameters - Image Environment Variables](../system-configurations/#2-image-environment-variables). For example, to enable authentication:
 
 ```powershell
-docker run --name nacos-cluster-auth -e MODE=cluster -e NACOS_AUTH_ENABLE=true -e NACOS_AUTH_TOKEN=${customToken} -e NACOS_AUTH_IDENTITY_KEY=${customKey} NACOS_AUTH_IDENTITY_VALUE=${customValue} -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest
+docker run --name nacos-cluster-auth -e MODE=cluster -e NACOS_AUTH_ENABLE=true -e NACOS_AUTH_TOKEN=${customToken} -e NACOS_AUTH_IDENTITY_KEY=${customKey} -e NACOS_AUTH_IDENTITY_VALUE=${customValue} -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:v3.3.0
 ```
 
 You can also mount the `application.properties` file to import more complex custom configurations into the Nacos container. This method is strongly recommended for production environments. Example:
 
 ```powershell
-docker run --name nacos-cluster -e MODE=cluster -v /path/application.properties:/home/nacos/conf/application.properties -v /path/cluster.conf:/home/nacos/conf/cluster.conf -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest
+docker run --name nacos-cluster -e MODE=cluster -v /path/application.properties:/home/nacos/conf/application.properties -v /path/cluster.conf:/home/nacos/conf/cluster.conf -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:v3.3.0
 ```
 
 If this still cannot meet your customization requirements, you can build an image based on the `Dockerfile` in the `nacos-docker` project.

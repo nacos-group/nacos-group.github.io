@@ -6,6 +6,8 @@ sidebar:
   order: 8
 ---
 
+Nacos 3.3 默认开启客户端鉴权。插件访问 Nacos 时需要已有账号、实际密码及所需资源权限；登录控制台不会自动为插件配置身份。参见[配置访问凭据](../auth.mdx)。
+
 ## Dify 发现 Nacos MCP 服务
 [Nacos MCP](https://marketplace.dify.ai/plugins/nacos/nacos_mcp) 插件支持将 Nacos 中注册的 SSE/Streamable Http 类型 MCP Server 服务并转化为 Dify 中的工具调用。
 通过 Nacos MCP 插件， Dify 应用可以实现动态发现 Nacos 中SSE/Streamable Http 类型 MCP Server 服务。Nacos MCP 插件支持帮助模型按需挑选并路由 MCP 服务，有效降低模型调用的 Token 消耗。

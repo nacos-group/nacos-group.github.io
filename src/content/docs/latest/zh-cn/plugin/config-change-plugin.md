@@ -3,12 +3,14 @@ title: 配置变更
 keywords: [配置变更, 配置审计, 配置格式校验, webhook]
 description: 本文介绍 Nacos 配置变更插件的用途、执行模型、启用方式和自定义开发方式。
 sidebar:
-    order: 6
+    order: 9
 ---
 
 # 配置变更插件
 
 配置变更插件用于在配置发布、修改、删除、导入等操作前后织入自定义逻辑。它适合做配置治理，而不是替代 Nacos 的配置存储模型。
+
+在统一插件管理中，本插件类型为 `config-change`，执行模式为 `CHAIN`，加载阶段为 `STANDARD`，类型非 critical。插件身份是 `config-change:{getServiceType()}`。Nacos Server 仓库只定义 SPI 和执行切面，不内置 `webhook`、`whitelist` 或 `fileformatcheck` 等生产实现；这些示例只有在外部插件 JAR 加入 classpath 后才存在。
 
 常见场景包括：
 
@@ -45,39 +47,27 @@ sidebar:
 Before 插件会影响配置变更主链路。请避免在 Before 插件中调用慢接口或不可控外部系统。After 插件失败不会回滚已经完成的配置变更。
 :::
 
-## 启用插件
+## 启用与配置插件
 
 先将插件 JAR 放入 `${nacos.home}/plugins`，或加入 Nacos Server 启动 classpath。插件实现需要通过 `META-INF/services/com.alibaba.nacos.plugin.config.spi.ConfigChangePluginService` 声明。
 
-然后在 `${nacos.home}/conf/application.properties` 中启用目标插件：
+插件是否参与候选链只由统一状态 `config-change:{pluginName}` 决定。历史启用键只在不存在持久化状态时初始化该状态，缺省仍为 `false`：
 
 ```properties
 nacos.core.config.plugin.${configChangePluginName}.enabled=true
 ```
 
-`${configChangePluginName}` 必须和插件实现的 `getServiceType()` 返回值一致。Nacos 3.2 起还有统一插件状态管理能力，但配置变更执行链路仍会读取上述 `enabled` 配置，因此生产使用时请同时按插件文档完成启用配置。
+`${configChangePluginName}` 必须和 `getServiceType()` 一致。持久化状态优先；启动后请通过插件状态 API 或 Next Console 管理，不需要维护第二个执行门禁。
 
-插件可以读取自己的自定义配置：
-
-```properties
-nacos.core.config.plugin.${configChangePluginName}.${propertyKey}=${propertyValue}
-```
-
-例如 Webhook、白名单、文件格式校验类插件可以使用如下配置：
+新插件通过 `PluginConfigSpec` 声明配置，标准全键为：
 
 ```properties
-# webhook
-nacos.core.config.plugin.webhook.enabled=true
-nacos.core.config.plugin.webhook.url=http://localhost:8080/webhook/send?token=***
-nacos.core.config.plugin.webhook.contentMaxCapacity=102400
-
-# whitelist
-nacos.core.config.plugin.whitelist.enabled=true
-nacos.core.config.plugin.whitelist.suffixs=xml,text,properties,yaml,html
-
-# file format check
-nacos.core.config.plugin.fileformatcheck.enabled=true
+nacos.plugin.config-change.${configChangePluginName}.${itemKey}=${propertyValue}
 ```
+
+实现应声明 definition 的 key、历史 alias、类型、默认值、必填、敏感和生效模式，并通过 `applyConfig` 接收有效配置。Nacos 会把当前有效 item map 同时放入 `ConfigChangeConstants.PLUGIN_PROPERTIES`，保持现有请求契约。
+
+未实现 definition 的旧二进制插件继续使用已废弃的兼容适配器读取 `nacos.core.config.plugin.{pluginName}.{propertyKey}`；它仍可加载并收到静态属性，但管理端显示 `configurable=false`，首次使用会记录迁移告警。`ConfigChangeConfigs` 已废弃但仍处于兼容周期，新代码不要继续依赖它。
 
 ## 开发插件
 
@@ -117,6 +107,8 @@ nacos.core.config.plugin.fileformatcheck.enabled=true
 | `args` | Before 插件提供的替换参数。替换时必须保持原参数顺序和类型。 |
 | `retVal` | 预留返回值。 |
 
+新实现还应实现 `PluginConfigSpec` 的定义、应用和当前快照方法。运行时配置必须先完成整组校验再原子切换；旧二进制实现可以继续沿用默认方法。
+
 ## 生产建议
 
 - Before 插件要保持轻量，必须设置清晰的失败策略。
@@ -129,7 +121,8 @@ nacos.core.config.plugin.fileformatcheck.enabled=true
 
 | 现象 | 排查方向 |
 |-----|---------|
-| 插件未执行 | 检查 JAR 是否在 classpath 中，`META-INF/services` 是否声明正确，`enabled` 是否为 `true`。 |
+| 插件未执行 | 检查 JAR、`META-INF/services` 和统一插件状态；首次迁移时再检查历史 `enabled` 初始化值。 |
 | Before 插件没有拦截 | 检查 `executeType()`、`pointcutMethodNames()` 和 `response.setSuccess(false)` 是否正确。 |
-| 插件配置为空 | 检查配置前缀是否为 `nacos.core.config.plugin.${serviceType}.`，其中 `serviceType` 和 `getServiceType()` 保持一致。 |
+| 新插件配置为空 | 检查标准前缀 `nacos.plugin.config-change.${serviceType}.`、definitions 和 `applyConfig`。 |
+| 旧插件配置为空 | 检查兼容前缀 `nacos.core.config.plugin.${serviceType}.`；该路径已废弃，应安排迁移。 |
 | 变更后通知不稳定 | 检查 After 插件外部系统超时、重试和异常处理。 |

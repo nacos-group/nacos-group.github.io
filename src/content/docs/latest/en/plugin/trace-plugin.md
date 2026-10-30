@@ -3,7 +3,7 @@ title: Tracing
 keywords: [Tracing, audit, diagnostics, Trace Plugin]
 description: Learn the Nacos Trace plugin event model, use cases, development interface, and stability guidance.
 sidebar:
-    order: 7
+    order: 10
 ---
 
 # Tracing Plugin
@@ -11,6 +11,8 @@ sidebar:
 The Nacos Trace plugin subscribes to internal Nacos resource operation events for audit, troubleshooting, and diagnostics. It records Nacos domain events such as service registration, service push, instance health changes, and AI resource operations.
 
 It is not distributed tracing between application services. If you need request spans across business services, use OpenTelemetry, SkyWalking, Zipkin, or another distributed tracing system.
+
+In unified plugin management, the type is `trace`, its execution mode is `BROADCAST`, its load phase is `STANDARD`, and the type is non-critical. A plugin identity is `trace:{getName()}`. The same event can be broadcast to multiple enabled subscribers; state is checked before every dispatch without rebuilding subscriptions.
 
 ## Use Cases
 
@@ -60,7 +62,7 @@ AI resource events:
 
 `DeregisterInstanceTraceEvent` carries a deregistration reason. Common values include `REQUEST`, `NATIVE_DISCONNECTED`, `SYNCED_DISCONNECTED`, and `HEARTBEAT_EXPIRE`.
 
-Nacos provides a default AI resource Trace log subscriber. It writes `AiResourceTraceEvent` records to `ai-resource-trace.log` for AI resource audit compatibility.
+Nacos provides `trace:ai-resource-trace-log`. It writes `AiResourceTraceEvent` records to `ai-resource-trace.log` for AI resource audit compatibility. The implementation is enabled by default, declares no configuration definitions, and is reported as `configurable=false`.
 
 ## Enable a Plugin
 
@@ -90,10 +92,12 @@ Implement `com.alibaba.nacos.plugin.trace.spi.NacosTraceSubscriber`:
 
 | Method | Description |
 |--------|-------------|
-| `getName()` | Stable subscriber name. A later subscriber with the same name replaces an earlier one. |
+| `getName()` | Stable subscriber name. Duplicate identities use first-wins; later discoveries are ignored with a WARN. |
 | `subscribeTypes()` | Event classes this subscriber wants to receive. |
 | `onEvent(event)` | Handle the event. |
 | `executor()` | Optional executor. Return a dedicated executor for slow IO. |
+
+`NacosTraceSubscriber` inherits `PluginConfigSpec`. A new implementation with private settings declares their metadata through definitions, uses canonical keys under `nacos.plugin.trace.{pluginName}.{itemKey}`, and implements `applyConfig` plus a current snapshot. An older binary subscriber without definitions still loads but is reported as not configurable.
 
 Minimal example:
 
@@ -140,4 +144,4 @@ Production advice:
 | Plugin receives no events | Check the JAR, `META-INF/services`, `getName()`, and `subscribeTypes()`. |
 | Event handling blocks | Check whether `onEvent()` performs slow IO. Implement `executor()` if needed. |
 | Logs contain Trace Event Publish failed | Trace queue pressure is high. Check subscriber processing speed and external sinks. |
-| Same-name plugins behave unexpectedly | Check whether multiple subscribers return the same `getName()`. |
+| Same-name plugins behave unexpectedly | Check the WARN log; first-wins keeps the first discovered subscriber and ignores later ones. |

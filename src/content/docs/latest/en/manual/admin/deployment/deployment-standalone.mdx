@@ -28,12 +28,12 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
     Then modify `${nacos.home}/conf/application.properties`, add the MySQL data source configuration, and configure the MySQL data source URL, username, and password.
 
     ```
-    spring.sql.init.platform=mysql
+    nacos.plugin.datasource-dialect.type=mysql
 
-    db.num=1
-    db.url.0=jdbc:mysql://${mysql_host}:${mysql_port}/${nacos_database}?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
-    db.user=${mysql_user}
-    db.password=${mysql_password}
+    nacos.plugin.datasource.db.num=1
+    nacos.plugin.datasource.db.url.0=jdbc:mysql://${mysql_host}:${mysql_port}/${nacos_database}?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
+    nacos.plugin.datasource.db.user=${mysql_user}
+    nacos.plugin.datasource.db.password=${mysql_password}
     ```
 
     Then follow [Quick Start - Start Server](../../../quickstart/quick-start/#4-modify-authentication-configuration) to modify the Nacos authentication configuration.
@@ -73,13 +73,13 @@ Nacos provides rich configuration items that help you tune Nacos performance and
 If you need many custom configurations, you can configure them by specifying [System Parameters - Image Environment Variables](../system-configurations/#2-image-environment-variables). For example, to enable authentication:
 
 ```powershell
-docker run --name nacos-standalone-auth -e MODE=standalone -e NACOS_AUTH_ENABLE=true -e NACOS_AUTH_TOKEN=${customToken} -e NACOS_AUTH_IDENTITY_KEY=${customKey} -e NACOS_AUTH_IDENTITY_VALUE=${customValue} -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest
+docker run --name nacos-standalone-auth -e MODE=standalone -e NACOS_AUTH_ENABLE=true -e NACOS_AUTH_TOKEN=${customToken} -e NACOS_AUTH_IDENTITY_KEY=${customKey} -e NACOS_AUTH_IDENTITY_VALUE=${customValue} -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:v3.3.0
 ```
 
 You can also mount the `application.properties` file to import more complex custom configurations into the Nacos container. This method is strongly recommended for production environments. Example:
 
 ```powershell
-docker run --name nacos-standalone -e MODE=standalone -v /path/application.properties:/home/nacos/conf/application.properties -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest
+docker run --name nacos-standalone -e MODE=standalone -v /path/application.properties:/home/nacos/conf/application.properties -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:v3.3.0
 ```
 
 If this still cannot meet your customization requirements, you can build an image based on the `Dockerfile` in the `nacos-docker` project.

@@ -20,6 +20,19 @@ description: Nacos 概念
 ## 命名空间
 用于进行租户粒度的配置隔离。不同的命名空间下，可以存在相同的 Group 或 Data ID 的配置。Namespace 的常用场景之一是不同环境的配置的区分隔离，例如开发测试环境和生产环境的资源（如配置、服务）隔离等。
 
+## AI 资源
+
+Nacos AI 管理中心管理 Agent、MCP Server、Skill、Prompt 和 AgentSpec。每个资源属于一个命名空间，可以有多个版本。资源定义的发布与应用进程的启动是两个独立操作。
+
+| 概念 | 含义 |
+| --- | --- |
+| 资源版本与生命周期 | 内容在草稿中编辑，经过提交及适用的审核后发布上线；3.3 的五类 AI 资源共用[生命周期规则](./manual/user/ai/ai-resource-lifecycle.md)。 |
+| 版本标签 | 标签指向某个版本；`latest` 由服务端随发布和上下线操作维护，用于选择当前默认版本。 |
+| 可见范围（scope） | `PUBLIC`、`PRIVATE` 控制资源对调用方的可见性，作用于整个资源，与名为 `public` 的命名空间不同。默认值和权限规则见[可见性插件](./plugin/visibility-plugin.md)。 |
+| Agent 调用定义与端点 | 调用定义描述协议和版本内容；声明端点随定义保存，运行端点由运行中的应用注册。两者的关系见 [Agent 管理](./manual/user/ai/agent-registry.md)。 |
+| RAD | Remote Agent Discovery，用于发现和订阅 Agent 的调用定义及端点，见 [RAD 接入指南](./manual/user/ai/rad-discovery.md)。 |
+| ARD | Agentic Resource Discovery，为 AI 工具链提供跨资源的搜索、目录和内容获取协议，见 [ARD 资源发现](./manual/user/ai/ard-discovery.md)。 |
+
 ## 配置
 在系统开发过程中，开发者通常会将一些需要变更的参数、变量等从代码中分离出来独立管理，以独立的配置文件的形式存在。目的是让静态的系统工件或者交付物（如 WAR，JAR 包等）更好地和实际的物理运行环境进行适配。配置管理一般包含在系统部署的过程中，由系统管理员或者运维人员完成。配置变更是调整系统运行时的行为的有效手段。
 

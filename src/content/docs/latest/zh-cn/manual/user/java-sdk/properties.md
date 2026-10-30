@@ -123,6 +123,8 @@ String value = properties2.getProperty("global-key1");
 
 ## 2. Java SDK 配置参数列表
 
+Nacos 3.3 默认开启客户端鉴权。默认插件需要配置下表中的 `username` 和 `password`；没有通用默认密码。完整初始化示例见[Java SDK 使用手册](./usage.md#2-初始化sdk)，其他身份模式见[配置访问凭据](../auth.mdx)。
+
 ### 2.1. 通用参数
 
 通用参数为初始化注册中心`NamingService`和配置中心`ConfigServie`时均生效的参数：
@@ -138,13 +140,14 @@ String value = properties2.getProperty("global-key1");
 | endpointQueryParams            | ENDPOINT_QUERY_PARAMS             | Nacos Server的地址获取接入点的请求参数，用于接入点服务扩展自定义逻辑，格式key=value                                                         | 任意URL参数，key=value                                 | 无                        |
 | endpointRefreshIntervalSeconds | ENDPOINT_REFRESH_INTERVAL_SECONDS | Nacos Server定期从地址获取接入点重新获取地址列表的间隔时间，单位为秒                                                                     | 任意正整数                                             | 30                       |
 | namespace                      | NAMESPACE                         | 该 JAVA SDK 所归属的命名空间Id， 设置后该SDK只能访问该命名空间的资源（配置或服务）                                                            | 命名空间Id                                            | 空字符串``                   |
-| username                       | USERNAME                          | 开启鉴权功能后，访问Nacos Server所使用的用户名                                                                                | 任意字符串                                             | 无                        |
-| password                       | PASSWORD                          | 开启鉴权功能后，访问Nacos Server所使用的用户名对应的密码                                                                           | 任意字符串                                             | 无                        |
+| username                       | USERNAME                          | 默认鉴权插件的用户名；3.3 默认鉴权开启，需要预先创建并授权                                                                                | 任意字符串                                             | 无                        |
+| password                       | PASSWORD                          | 默认鉴权插件的用户密码；3.3 默认鉴权开启，无默认密码                                                                           | 任意字符串                                             | 无                        |
 | accessKey                      | ACCESS_KEY                        | 使用阿里云RAM鉴权时需要使用的accessKey                                                                                    | 任意字符串                                             | 无                        |
 | secretKey                      | SECRET_KEY                        | 使用阿里云RAM鉴权时需要使用的secretKey                                                                                    | 任意字符串                                             | 无                        | |
 | ramRoleName                    | RAM_ROLE_NAME                     | 使用阿里云RAM鉴权时需要使用的ramRoleName                                                                                  | 任意字符串                                             | 无                        |
 | signatureRegionId              | SIGNATURE_REGION_ID               | 使用阿里云RAM鉴权时，需要使用的signatureRegionId                                                                           | 任意字符串                                             | 无                        |
 | logAllProperties               | LOG_ALL_PROPERTIES                | 启动Java SDK时，是否打印全量参数，包含自定义properties、JVM和环境变量，主要用户调试和问题排查。                                                   | boolean                                           | false                    |
+| enableClientMetrics            | ENABLE_CLIENT_METRICS             | Java SDK 是否将客户端指标（gauge、请求 timer、失败 counter）记录到 Micrometer 全局 registry，对 `NamingService` 与 `ConfigService` 同时生效。如何接入 `MeterRegistry` 见 [Java SDK 客户端指标](./metrics.md)。 | boolean                                           | true                     |
 | ~~clusterName~~                | ~~CLUSTER_NAME~~                  | 由于和服务实例的ClusterName名称相同，容易造成混淆，该参数已废弃，请使用`endPointClusterName`                                               | 任意URL支持的path                                      | serverlist               |
 | ~~isAdaptClusterNameUsage~~    | ~~IS_ADAPT_CLUSTER_NAME_USAGE~~   | 是否兼容通过`clusterName`的方式设置`endPointClusterName`，让升级兼容性更好                                                       | boolean                                           | false                    |
 | ~~serverName~~                 | ~~SERVER_NAME~~                   | 该 JAVA SDK 的名称，目前仅在访问endpoint时使用，由于使用率低且命名不合理，将废弃                                                            | 任意字符串                                             | 由serverAddr/endpoint自动拼接 |
@@ -187,7 +190,7 @@ Nacos Java SDK 连接Nacos Server时，可以设置一系列的参数，来提�
 
 | 参数名                                                             | 含义                                                                                 | 可选值     | 默认值           | 
 |-----------------------------------------------------------------|------------------------------------------------------------------------------------|---------|---------------|
-| nacos.server.grpc.port.offset                                   | Nacos Server GRPC端口相对主端口的偏移量                                                       | 任意int值  | 1000          |
+| nacos.server.grpc.port.offset                                   | Nacos Server GRPC端口相对主端口的偏移量。不同 Java SDK 实例需要使用不同偏移量时，可以在各自客户端的 `Properties` 中设置该参数 | 任意int值  | 1000          |
 | nacos.remote.client.grpc.name                                   | 该Nacos Java SDK的GRPC连接的名字                                                          | 任意字符串   | null          |
 | nacos.remote.client.grpc.connect.keep.alive                     | 该Nacos Java SDK的GRPC连接的Keep Alive                                                  | 任意Long值 | 5000          |
 | nacos.remote.client.grpc.retry.times                            | 该Nacos Java SDK的GRPC连接发起请求时的最大重试次数                                                 | 任意int值  | 3             |
@@ -220,3 +223,37 @@ Nacos Java SDK 中有部分参数对运行时期的影响较小，且需要全�
 | project.name              | 该SDK所归属的应用名，可在服务订阅者列表和配置订阅者列表中使用，仅作为参考字段使用                                                                         | 任意字符串              | unknown           |
 | ~~NACOS.CONNECT.TIMEOUT~~ | 连接服务时的连接超时时间，旧版本Http使用，已废弃                                                                                         | 任意int              | 1000              |
 | NACOS.READ.TIMEOUT | 连接服务时的读取超时时间，旧版本Http使用                                                                                         | 任意int              | 3000              |
+| nacos.client.json.adapter | JSON 适配器选择，仅通过 JVM `-D` 设置，在首次使用 JSON 层之前配置；显式选择不可用的适配器会初始化失败。详见 [JSON 适配与 Jackson 2/3 接入](./json-adapter.md)。 | auto / jackson2 / jackson3 | auto |
+| configSnapshotEnabled | Nacos Java SDK 是否读写本地配置快照。该开关在 JVM 内全局生效，且只作用于配置快照，无法通过每个客户端自己的 `Properties` 配置。 | true / false | true |
+
+**关于 `configSnapshotEnabled`。** 该开关在 JVM 内全局生效，同一个 JVM 中创建的所有 `ConfigService` 共用同一个值，并在快照开关首次初始化时读取一次。请在 SDK 首次使用前，通过 JVM 参数 `-DconfigSnapshotEnabled=false` 或环境变量 `CONFIGSNAPSHOTENABLED=false` 进行设置。通过 `NacosFactory.createConfigService` 传入的 `Properties` 无法配置该开关，初始化后修改参数也不会重新加载该开关。
+
+设置为 `false` 时，SDK 不再读写本地配置快照，并在初始化时尝试清理本地配置缓存目录，其中的配置 failover 文件也会一并删除。可恢复的清理失败会记录日志，快照仍保持禁用，不会导致开关初始化失败。该开关不影响 `naming` 缓存。
+
+```
+-DconfigSnapshotEnabled=false
+```
+
+```
+CONFIGSNAPSHOTENABLED=false
+```
+
+### 2.6. AI 资源参数
+
+下列名称定义在 `com.alibaba.nacos.api.ai.constant.AiConstants`，通过创建 `AiService` 时的 `Properties` 配置。传输选项自 3.3 起支持，在创建时确定；修改原 Properties 不会改变现有实例的模式。
+
+| 参数 | 作用 | 默认值 |
+| --- | --- | --- |
+| nacosAiTransportMode | AI 资源的总传输模式，可选 `grpc`、`http`、`auto`。 | grpc |
+| nacosAiMcpTransportMode | MCP 子服务的传输覆盖值。 | 继承总模式 |
+| nacosAiAgentTransportMode | Agent/RAD 子服务的传输覆盖值；旧 A2A 路由另有兼容规则。 | 继承总模式 |
+| nacosAiSkillTransportMode | Skill 的模式配置；当前可用路径为 HTTP。 | 继承总模式 |
+| nacosAiAgentSpecTransportMode | AgentSpec 的模式配置；当前可用路径为 HTTP。 | 继承总模式 |
+| nacosAiPromptTransportMode | Prompt 查询和订阅轮询的传输覆盖值。 | 继承总模式 |
+| nacosAiMcpServerCacheUpdateInterval | MCP 订阅轮询间隔，毫秒。 | 10000 |
+| nacosAiAgentCardCacheUpdateInterval | 旧 A2A AgentCard 订阅轮询间隔，毫秒。 | 10000 |
+| nacosAiSkillCacheUpdateInterval | Skill 订阅轮询间隔，毫秒。 | 10000 |
+| nacosAiAgentSpecCacheUpdateInterval | AgentSpec 订阅轮询间隔，毫秒。 | 10000 |
+| nacosAiPromptCacheUpdateInterval | Prompt 订阅轮询间隔，毫秒。 | 10000 |
+
+五个资源覆盖值同样只接受 `grpc`、`http`、`auto`；非法值会在初始化时失败，包括当前仅使用 HTTP 的资源。`auto` 按能力和连接状态选择可用路径，不会把鉴权、参数、迁移等业务失败当作切换传输的理由。完整规则和网络要求见 [AI 资源运行时](../sdk/runtime-guide.md#6-ai-资源运行时)。

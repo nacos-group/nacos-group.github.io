@@ -20,6 +20,10 @@ sidebar:
 
 您需要先下载 Nacos 并启动 Nacos server。操作步骤参见 [Nacos 快速入门](../quickstart/quick-start.mdx)
 
+Nacos 3.3 默认开启客户端鉴权。使用默认鉴权插件时，请按[配置访问凭据](../manual/user/auth.mdx)准备业务账号及所需权限，并在启动应用前设置 `NACOS_USERNAME`、`NACOS_PASSWORD` 环境变量。下文通过 Spring 占位符读取凭据；配置中心和服务发现需要分别配置，服务提供方和消费方也都需要配置。
+
+凭据应放在应用本地配置或由部署环境注入，不能只放在需要先登录 Nacos 才能读取的远程配置中。未提供有效身份时，配置加载、服务注册或服务发现可能失败；仅登录 Nacos 控制台不能为应用提供身份。
+
 ## 启动配置管理
 
 启动了 Nacos server 后，您就可以参考以下示例代码，为您的 Spring Cloud 应用启动 Nacos 配置管理服务了。
@@ -36,12 +40,14 @@ sidebar:
 您可以在Spring Cloud Alibaba官网查看版本关系说明，建议您使用最新的2023.x版本。
 ：[版本说明 ](https://sca.aliyun.com/docs/2023/overview/version-explain/)
 
-2. 在 `application.properties` 中配置 Nacos server 的地址：
+2. 在 `application.properties` 中配置 Nacos server 的地址和访问凭据：
 
 ```
 spring.application.name=springclouddemo2023x
 spring.config.import[0]=nacos:springclouddemo2023x.properties?group=DEFAULT_GROUP
 spring.cloud.nacos.config.server-addr=127.0.0.1:8848
+spring.cloud.nacos.config.username=${NACOS_USERNAME}
+spring.cloud.nacos.config.password=${NACOS_PASSWORD}
 ```
 通过spring.config.import将  `dataId` 为 `springclouddemo2023x.properties` ，`group`=`DEFAULT_GROUP`的配置作为配置源。
 如果需要指定多个nacos配置作为属性源，可以通过以下形式添加多个属性源
@@ -145,6 +151,8 @@ server.port=8070
 spring.application.name=service-provider
 
 spring.cloud.nacos.discovery.server-addr=127.0.0.1:8848
+spring.cloud.nacos.discovery.username=${NACOS_USERNAME}
+spring.cloud.nacos.discovery.password=${NACOS_PASSWORD}
 ```
 
 ii. 通过 Spring Cloud 原生注解 `@EnableDiscoveryClient` 开启服务注册发现功能：
@@ -178,6 +186,8 @@ server.port=8080
 spring.application.name=service-consumer
 
 spring.cloud.nacos.discovery.server-addr=127.0.0.1:8848
+spring.cloud.nacos.discovery.username=${NACOS_USERNAME}
+spring.cloud.nacos.discovery.password=${NACOS_PASSWORD}
 ```
 
 ii. 通过 Spring Cloud 原生注解 `@EnableDiscoveryClient`  开启服务注册发现功能。给 [RestTemplate](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-resttemplate.html) 实例添加  `@LoadBalanced` 注解，开启 `@LoadBalanced` 与 [Ribbon](https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-ribbon.html) 的集成：

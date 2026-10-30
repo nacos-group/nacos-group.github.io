@@ -1,76 +1,86 @@
 ---
 title: AI 发布 Pipeline
-keywords: [AI Pipeline, AI 管理中心, Skill, Prompt, MCP, AgentSpec]
-description: 本文介绍 Nacos AI 发布 Pipeline 插件的使用场景、启用方式、执行模型和开发边界。
+keywords: [AI Pipeline, AI 管理中心, Skill, Prompt, AgentSpec]
+description: 本文介绍 Nacos AI 发布 Pipeline 插件的执行模型、内置实现、配置和开发方式。
 sidebar:
-    order: 11
+    order: 14
 ---
 
 # AI 发布 Pipeline 插件
 
-AI 发布 Pipeline 插件用于在 AI 资源发布前做审核、扫描或拦截。它适合放在生产发布链路上，帮助平台团队检查 Skill、Prompt、MCP Server、AgentSpec 等资源是否满足安全、格式或合规要求。
+AI 发布 Pipeline 在 AI 资源发布前执行审核、扫描或拦截。它可以批准或拒绝发布，但不能改变资源的规范身份、版本或可见性。
 
-Pipeline 属于 AI 资源治理。它可以批准或拒绝一次发布操作，但不改变 AI 资源的命名空间、资源名、版本和可见性模型。
+统一插件类型为 `ai-pipeline`，执行模式为 `CHAIN`，加载阶段为 `STANDARD`，类型非 critical。一次发布会筛选支持目标资源类型且状态启用的节点，再按 `getPreferOrder()` 升序串行执行；任一节点拒绝后停止剩余节点并保存结果。
 
-## 什么时候使用
+## 开关、状态和加载
 
-建议在以下场景启用 Pipeline：
+三类控制项职责不同：
 
-- Skill 包需要安全扫描，避免引入危险脚本、越权访问或不符合企业规范的内容。
-- Prompt、AgentSpec 或 MCP Server 需要经过格式校验、合规检查或人工流程。
-- 生产环境希望把“创建草稿”和“正式发布”隔离开。
-- 管理员需要看到每次发布审核的结果和失败原因。
+| 配置或状态 | 职责 |
+| --- | --- |
+| `nacos.plugin.ai-pipeline.enabled` | AI 模块拥有的动态总开关。为 `false` 时延迟加载该类型；切换为 `true` 后才发现服务、恢复状态并应用配置。 |
+| `nacos.plugin.ai-pipeline.type` | 历史启动链组成，只在没有持久化状态时初始化实现状态。 |
+| `ai-pipeline:{pipelineId}` 状态 | 当前链成员的权威来源。禁用节点仍保留在清单中，但不参与发布。 |
+| `nacos.plugin.ai-pipeline.{pipelineId}.{itemKey}` | 节点通过 `PluginConfigSpec` 声明和消费的私有配置。 |
 
-如果没有启用 Pipeline，资源提交后可能直接进入可发布或上线状态。是否直接发布由具体资源类型和当前控制台流程决定。
+总开关关闭或没有匹配节点时，发布不被 Pipeline 拦截。服务实例必须保持轻量，在第一次 `applyConfig` 前不要初始化 CLI、连接或线程等运行资源。
 
-## 执行模型
+## 内置节点
 
-Pipeline 是有序链式插件。一次发布会按资源类型选择匹配的 Pipeline 节点，并按 `getPreferOrder()` 升序执行。
+Nacos 内置以下两个节点，均支持 `SKILL`、`AGENTSPEC` 和 `PROMPT`：
 
-```text
-提交发布
-  -> 创建 Pipeline 执行记录
-  -> 按顺序执行节点
-  -> 全部通过：发布继续
-  -> 任一拒绝：发布停止，版本保持未发布状态
-```
+| pluginId | 默认状态 | 作用 |
+| --- | --- | --- |
+| `ai-pipeline:skill-scanner` | 启用 | 调用 `skill-scanner` CLI 扫描资源。 |
+| `ai-pipeline:skill-spector` | 启用 | 调用 `skill-spector` CLI 进行静态和可选 LLM 风险分析。 |
 
-执行时需要注意：
+### skill-scanner definitions
 
-- Pipeline 只处理被配置且支持目标资源类型的节点。
-- 某个节点拒绝后，后续节点不会继续执行。
-- Pipeline 关闭或没有匹配节点时，发布流程不会被 Pipeline 拦截。
-- 管理员的强制发布会跳过 Pipeline 校验。它适合应急，不适合日常发布。
+标准前缀为 `nacos.plugin.ai-pipeline.skill-scanner.`：
 
-当前统一插件管理可以列出已加载的 `ai-pipeline` 插件。但在执行链路完全接入统一启停状态前，Pipeline 是否参与发布主要由 Pipeline 自身配置控制。
+| key | aliases | 类型 | 默认值 | sensitive | effectMode |
+| --- | --- | --- | --- | --- | --- |
+| `order` | 无 | NUMBER | `100` | 否 | RUNTIME |
+| `command` | `executable`, `path` | STRING | `skill-scanner` | 否 | RESTART |
+| `use-llm` | `useLlm` | BOOLEAN | `false` | 否 | RESTART |
+| `llm-api-key` | `llmApiKey` | STRING | 空 | 是 | RESTART |
+| `llm-model` | `llmModel` | STRING | 空 | 否 | RESTART |
+| `llm-provider` | `llmProvider` | STRING | 空 | 否 | RESTART |
+| `enable-meta` | `enableMeta` | BOOLEAN | `false` | 否 | RESTART |
 
-## 启用内置 skill-scanner
-
-Nacos 默认插件集合中提供了 `skill-scanner` Pipeline 节点。它可以处理 Skill、Prompt、AgentSpec 中可扫描的内容，常见场景是接入外部 Skill 扫描工具。
-
-在 `${nacos.home}/conf/application.properties` 中启用：
+示例：
 
 ```properties
 nacos.plugin.ai-pipeline.enabled=true
-nacos.plugin.ai-pipeline.type=skill-scanner
-nacos.plugin.ai-pipeline.skill-scanner.enabled=true
-nacos.plugin.ai-pipeline.skill-scanner.command=/path/to/skill-scanner
+nacos.plugin.ai-pipeline.skill-scanner.command=/opt/scanners/skill-scanner
+nacos.plugin.ai-pipeline.skill-scanner.use-llm=true
+nacos.plugin.ai-pipeline.skill-scanner.llm-api-key=${SKILL_SCANNER_API_KEY}
 ```
 
-配置含义：
+### skill-spector definitions
 
-| 配置项 | 说明 |
-| --- | --- |
-| `nacos.plugin.ai-pipeline.enabled` | 是否启用 AI Pipeline。 |
-| `nacos.plugin.ai-pipeline.type` | 参与执行的 Pipeline 节点类型。 |
-| `nacos.plugin.ai-pipeline.skill-scanner.enabled` | 是否启用 `skill-scanner` 节点。 |
-| `nacos.plugin.ai-pipeline.skill-scanner.command` | Skill 扫描工具命令路径。 |
+标准前缀为 `nacos.plugin.ai-pipeline.skill-spector.`：
 
-生产环境应在所有 Nacos Server 节点上使用相同插件版本和相同配置。扫描命令依赖外部可执行文件时，也要保证每个节点都能访问该命令。
+| key | aliases | 类型 | 默认值 | sensitive | effectMode |
+| --- | --- | --- | --- | --- | --- |
+| `order` | 无 | NUMBER | `90` | 否 | RUNTIME |
+| `command` | `executable`, `path` | STRING | `skill-spector` | 否 | RESTART |
+| `use-llm` | `useLlm` | BOOLEAN | `false` | 否 | RESTART |
+| `provider` | 无 | STRING | 空 | 否 | RESTART |
+| `model` | 无 | STRING | 空 | 否 | RESTART |
+| `api-key` | `apiKey` | STRING | 空 | 是 | RESTART |
+| `base-url` | `baseUrl` | STRING | 空 | 否 | RESTART |
+| `log-level` | `logLevel` | STRING | `WARNING` | 否 | RESTART |
+| `risk-score-threshold` | `riskScoreThreshold` | NUMBER | `50` | 否 | RESTART |
+| `max-findings` | `maxFindings` | NUMBER | `20` | 否 | RESTART |
+
+`risk-score-threshold` 限制为 `0..100`；`max-findings` 最大为 `100`，零、负数或无效值使用默认值。现有进程环境变量优先于从 SkillSpector 插件配置复制的值。
+
+除 `order` 外，两个内置节点都会在首次应用配置时解析命令并创建不可变扫描选项，因此这些字段需要重启。敏感 API key 在详情响应中脱敏。找不到命令时节点仍可查询，但实际扫描会拒绝发布并提示安装。
 
 ## 开发自定义 Pipeline
 
-自定义 Pipeline 节点依赖：
+依赖：
 
 ```xml
 <dependency>
@@ -80,43 +90,29 @@ nacos.plugin.ai-pipeline.skill-scanner.command=/path/to/skill-scanner
 </dependency>
 ```
 
-实现 `com.alibaba.nacos.plugin.ai.pipeline.spi.PublishPipelineServiceBuilder`，并通过 Java SPI 声明：
+直接实现 `com.alibaba.nacos.plugin.ai.pipeline.spi.PublishPipelineService`，提供 public 无参构造方法，并通过以下 Java SPI 注册：
 
 ```text
-META-INF/services/com.alibaba.nacos.plugin.ai.pipeline.spi.PublishPipelineServiceBuilder
+META-INF/services/com.alibaba.nacos.plugin.ai.pipeline.spi.PublishPipelineService
 ```
 
-核心方法：
-
 | 方法 | 说明 |
 | --- | --- |
-| `pipelineId()` | 稳定节点 ID，用于配置、日志和执行记录。 |
-| `build(properties)` | 根据配置创建 `PublishPipelineService`。 |
+| `pipelineId()` | 稳定节点名，组成 `ai-pipeline:{pipelineId}`。 |
+| `execute(context)` | 执行审核并返回通过或拒绝。 |
+| `getPreferOrder()` | 链顺序，值越小越早。 |
+| `pipelineResourceTypes()` | 支持的资源类型。 |
+| `getConfigDefinitions()` | 声明 definitions。 |
+| `applyConfig(config)` | 原子应用完整有效 item map。 |
+| `getCurrentConfig()` | 返回已接受配置快照。 |
 
-`PublishPipelineService` 需要提供：
+旧 `PublishPipelineServiceBuilder` SPI 和任意 `Properties` 构建路径已经移除。旧插件必须迁移为服务本身实现 `PluginConfigSpec`；不能只替换 SPI 注册文件而保留 builder。
 
-| 方法 | 说明 |
-| --- | --- |
-| `pipelineId()` | 运行时节点 ID。 |
-| `execute(context)` | 执行审核逻辑，返回通过或拒绝。 |
-| `getPreferOrder()` | 节点执行顺序，值越小越早执行。 |
-| `pipelineResourceTypes()` | 支持的资源类型，如 Skill、Prompt、MCP 或 AgentSpec。 |
+## 运维建议
 
-## 开发建议
+- 所有节点保持相同的插件 JAR、CLI 和 RESTART 配置；`order` 可通过统一 PUT 配置在运行时调整。
+- 外部命令设置超时并返回可读拒绝原因，不要在日志中输出资源全文或凭据。
+- 用详情页确认 `effectiveConfig`、来源和当前快照；修改 RESTART 字段后重启所有节点。
+- Pipeline 结果是发布治理记录，不替代资源鉴权、可见性或内容存储。
 
-- 让同一资源版本和同一输入得到确定结果，避免审核结果随机变化。
-- 调用外部系统时必须设置超时。不要让发布链路无限等待。
-- 拒绝发布时返回可读的原因，方便资源作者修复。
-- 不要在 Pipeline 中修改资源内容。需要修改内容时，应回到草稿编辑流程。
-- 不要在日志中输出完整 Skill 包、Prompt 内容、密钥或凭证。
-
-## 排查
-
-| 现象 | 排查方向 |
-| --- | --- |
-| 提交后没有进入审核 | 检查 `nacos.plugin.ai-pipeline.enabled` 和 `nacos.plugin.ai-pipeline.type` 是否配置。 |
-| `skill-scanner` 未执行 | 检查 `skill-scanner.enabled`、扫描命令路径和插件 JAR 是否在 classpath 中。 |
-| 发布一直失败 | 查看 Pipeline 执行记录，确认是哪一个节点拒绝，并检查返回原因。 |
-| 统一插件管理显示已禁用但仍执行 | 以当前版本的 Pipeline 配置为准。统一启停状态尚未完全接入执行链路。 |
-
-相关内容可继续阅读 [AI 资源生命周期](../manual/user/ai/ai-resource-lifecycle.md) 和 [AI 资源导入插件](./ai-resource-import-plugin.md)。
+相关内容：[插件运维](./operations.md)、[插件开发](./development.md)、[AI 资源生命周期](../manual/user/ai/ai-resource-lifecycle.md)。

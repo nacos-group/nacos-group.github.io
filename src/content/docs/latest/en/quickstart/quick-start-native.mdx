@@ -1,70 +1,232 @@
 ---
 title: Nacos Native Quick Start
-keywords: [Nacos,Quick Start]
-description: This quick start guide is designed to help you quickly download, install, and use Nacos on your computer.
+keywords: [Nacos, Native Image, GraalVM, Quick Start]
+description: Build and run Native Image from Nacos 3.3.0 sources, with plugin, database, and runtime configuration.
 sidebar:
     order: 4
     hidden: true
 ---
 
-import { Tabs, TabItem } from '@astrojs/starlight/components';
-
-# Nacos Quick Start
+# Nacos Native Quick Start
 
 This quick start guide is designed to help you quickly download, install, and use Nacos on your computer.
 
 :::note
-- The quick start guide is intended to assist you in quickly setting up, deploying, and getting started with Nacos. The Nacos service set up via this guide operates in **standalone mode** without **authentication enabled**, and is recommended for testing purposes only. For production environments, it's advised to deploy Nacos in **cluster mode** with **authentication enabled** to mitigate **stability and security risks**.
+- The quick start guide is intended to assist you in quickly setting up, deploying, and getting started with Nacos. The Nacos service set up via this guide operates in **standalone mode**, and is recommended for testing purposes only. For production environments, it's advised to deploy Nacos in **cluster mode** with **authentication enabled** to mitigate **stability and security risks**.
 - Nacos is intended to be used as an internal data center (IDC) application component, not a publicly facing product. It is highly recommended to deploy Nacos within an isolated internal network. **It is strongly discouraged** to deploy Nacos in public network environments.
 :::
 
-## System Requirements
-Nacos Native is a version of Nacos built using the GraalVM, and it no longer depends on a separate JDK installation. Nacos Native currently provides executable files for Linux (GNU) and macOS. The current version of Nacos Native corresponds to Java Nacos version 2.4.0. Executable binaries can be downloaded from the corresponding release page. It is recommended to run Nacos Native on a complete 64-bit operating system that includes the `libstdc++` library.
+Starting with **Nacos 3.3.0**, Nacos supports the Native build and runtime workflow described here. This guide builds a platform-specific executable from source for **standalone, merged Server and Console deployment with external MySQL** on Linux/macOS.
 
-## Download and Extract the Package
-After downloading the program package from the appropriate page, extract it and verify the files:
+For ordinary JDK deployment, see the [standard quick start](./quick-start.mdx).
 
-1. On Linux operating systems, the extracted files should include the `nacos-server` binary, the `libinstrument.so` symlink, and other related configurations.
-2. On macOS, the extracted files should include the `nacos-server` binary and other related configurations.
+## 1. Prepare the Build Environment
 
-If a Nacos Native version for other operating systems is not available, you can manually compile the source code on that operating system to obtain the Nacos Native binary package.
+- Use Nacos 3.3.0 sources and run the following commands from the source root.
+- Install Maven and set `JAVA_HOME` to **GraalVM 25+** with `native-image`, as required by the Spring Boot 4 Native toolchain.
+- Install the platform C/C++ toolchain and system libraries. Ubuntu uses `build-essential` and `zlib1g-dev`; macOS uses Xcode Command Line Tools. See the [GraalVM Native Image prerequisites](https://www.graalvm.org/latest/reference-manual/native-image/#prerequisites) for other platforms.
+- The Native builder heap limit defaults to `8g`. Adjust it with `nacos.native.build.heap`.
 
-## Starting the Server
-It is recommended to run Nacos Native on a machine with at least 1 CPU core, 2 GB of RAM, and 60 GB of storage. On Linux/Unix/macOS, you can start Nacos Native using the following command:
-
-```shell
-# standalone means running in single-node mode, not cluster mode
-sh startup.sh -m standalone
+```bash
+export JAVA_HOME='/path/to/graalvm-25'
+export PATH="$JAVA_HOME/bin:$PATH"
+java -version
+native-image --version
+mvn -version
 ```
 
-If you want to start Nacos Native in cluster mode, make sure to have a `cluster.conf` file in the `conf` directory. This process is the same as with Java Nacos. After starting Nacos Native in cluster mode, it will automatically scan and retrieve the cluster IP addresses.
+Build with an operating system, CPU architecture, and system libraries matching the runtime environment. This guide uses Linux/macOS startup scripts.
 
-## Stopping the Server
-To stop the Nacos Native server on Linux/Unix/macOS, use the following command:
+## 2. Build the Native Distribution
 
-```shell
-sh shutdown.sh
+### 2.1. Select Build Settings and Plugins
+
+Select the database type at build time to include its components. Configure database connections, credentials, and authentication when deploying in section 3.
+
+Create a work directory beside the source directory to hold build settings, additional plugins, and reachability metadata so Maven `clean` does not remove them:
+
+```bash
+export NACOS_VERSION='3.3.0'
+export NACOS_NATIVE_WORK="$(cd .. && pwd)/nacos-native-work"
+mkdir -p "$NACOS_NATIVE_WORK/plugins" "$NACOS_NATIVE_WORK/metadata"
+printf '%s\n' 'nacos.plugin.datasource-dialect.type=mysql' > "$NACOS_NATIVE_WORK/build.properties"
 ```
 
-## Viewing Logs
-For Linux/Unix operating systems, Nacos Native's runtime logs are recorded in the `/root/nacos/logs` directory. The log structure is consistent with that of Java Nacos.
+The `native` profile includes the default plugins. For custom SPI plugins or additional JDBC drivers, place their JARs **and all dependencies** in `$NACOS_NATIVE_WORK/plugins`. Maven runtime dependencies can also provide these implementations. Prepare the corresponding Native metadata when using external MySQL, PostgreSQL, or custom plugins.
 
-## Building Native Nacos
-Nacos Native provides build configurations for different operating systems. You can quickly build the Nacos Native executable for a specific OS using Maven. Follow the instructions below to build Nacos Native:
+Metadata shipped in a plugin's `META-INF/native-image` directory participates in compilation. Place additional metadata in `$NACOS_NATIVE_WORK/metadata`. Before building, confirm that it covers the selected plugins and drivers. If reflection, JNI, or resource metadata needs to be collected, follow the [appendix](#appendix-collect-missing-native-metadata) before running the build command below.
 
-```shell
-# Build Native Nacos for Windows x64
-mvn clean install -DskipTests=true -Pnative -Pnative-win64
-# Build Native Nacos for macOS x86_64
-mvn clean install -DskipTests=true -Pnative -Pnative-osx-x86_64
-# Build Native Nacos for Linux x64
-mvn clean install -DskipTests=true -Pnative -Pnative-linux64
+### 2.2. Run the Build
+
+Run this command from the source root:
+
+```bash
+mvn -B '-Pnative,release-native,!dev' -pl distribution -am clean package \
+  -DskipTests \
+  -Dnacos.native.config="$NACOS_NATIVE_WORK/build.properties" \
+  -Dnacos.native.metadata="$NACOS_NATIVE_WORK/metadata" \
+  -Dnacos.native.plugins="$NACOS_NATIVE_WORK/plugins" \
+  -Dnacos.native.deployment=merged \
+  -Dnacos.native.standalone=true
 ```
 
-The `-Pnative` configuration provides the basic native build settings, while `-Pnative-<os type>` specifies the operating system type. This configuration ensures that the RocksDB library is correctly packaged into Nacos Native. It's important to note that while Nacos Native offers a `musl`-based build configuration, GraalVM itself still requires compilation on a GNU-supported operating system, so using `musl` for compilation is not recommended.
+Enable both `native` and `release-native` to compile Native Image and package the distribution. The example uses `-DskipTests` to skip unit tests.
 
-After a successful build, the relevant files will be published in the `/console/target` directory. You can refer to the "Download and Extract the Package" section to verify the completeness of the build and retrieve the compiled files.
+| Build property | Default | Purpose |
+| --- | --- | --- |
+| `nacos.native.config` | `distribution/conf/application.properties` | Configuration file for AOT generation. |
+| `nacos.native.deployment` | `merged` | `merged`, `server`, or `console`. |
+| `nacos.native.standalone` | `false` | Whether to use standalone mode. |
+| `nacos.native.embedded-storage` | `false` | Explicit embedded storage selection; see section 6 for Derby configuration. |
+| `nacos.native.plugins` | `bootstrap/target/native-plugins` | Additional plugins, drivers, and dependencies. |
+| `nacos.native.metadata` | `bootstrap/target/native-metadata` | Additional Native metadata directory. |
+| `nacos.native.derby.experimental` | `false` | Enable Derby experimental arguments; see section 6 for toolchain requirements. |
+| `nacos.native.build.heap` | `8g` | Native builder heap limit. |
+| `nacos.native.build.parallelism` | `2` | Native compiler parallelism. |
 
-## Related Projects
+The build produces:
 
-* [Nacos](https://github.com/alibaba/nacos)
+- Executable: `bootstrap/target/native/nacos-server` (`.exe` on Windows).
+- Distribution: `distribution/target/nacos-server-<version>-native-<os>-<arch>.tar.gz`, plus a ZIP package. For example, macOS ARM64 uses the suffix `native-macos-aarch64`.
+
+The package contains the executable, companion native libraries, configuration templates, scripts, and the AOT structural manifest.
+
+## 3. Prepare the Database and Runtime Configuration
+
+Extract the package produced by your build. For example, on macOS ARM64:
+
+```bash
+mkdir -p "$NACOS_NATIVE_WORK/run"
+tar -xzf "distribution/target/nacos-server-${NACOS_VERSION}-native-macos-aarch64.tar.gz" \
+  -C "$NACOS_NATIVE_WORK/run"
+cd "$NACOS_NATIVE_WORK/run/nacos"
+```
+
+On Linux, replace the suffix with the actual `native-linux-<arch>` from your build. Apply the following settings to `conf/application.properties` in the extracted directory.
+
+### 3.1. Prepare MySQL
+
+Follow the [datasource plugin guide](../plugin/datasource-plugin.md) to create a MySQL database and import the schema for the selected version. Configure the database connection, replacing the example address and credentials with your own:
+
+```properties
+nacos.plugin.datasource-dialect.type=mysql
+nacos.plugin.datasource.db.num=1
+nacos.plugin.datasource.db.url.0=jdbc:mysql://127.0.0.1:3306/nacos_native_test?characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+nacos.plugin.datasource.db.user=nacos_native_test
+nacos.plugin.datasource.db.password=<test-database-password>
+```
+
+Keep the database type set to MySQL to match the build. See section 5 for other settings that must remain consistent.
+
+### 3.2. Configure Authentication
+
+```properties
+nacos.core.auth.server.identity.key=native-test
+nacos.core.auth.server.identity.value=<test-server-identity>
+nacos.plugin.auth.nacos.token.secret.key=<base64-token-secret>
+```
+
+Nacos 3.3 enables authentication by default. When using the default authentication plugin, fill in the server identity and token signing secret above:
+
+- The token signing secret signs and verifies login tokens. It must be a valid Base64 string that decodes to at least **32 bytes**. Use `openssl rand -base64 32` to generate a random secret, or generate one yourself that meets these requirements, and replace `<base64-token-secret>` with it.
+- The server identity is used for server-to-server communication. Both `nacos.core.auth.server.identity.key` and `nacos.core.auth.server.identity.value` must be custom, non-empty strings. The example key is `native-test`; set `<test-server-identity>` yourself or generate a random value with `openssl rand -hex 16`.
+
+Use the same secret and server identity on all nodes in a cluster. Generate them independently for each deployment.
+
+See the [authentication guide](../manual/admin/auth.mdx) for more configuration details.
+
+## 4. Start, Verify, and Stop
+
+### 4.1. Start Native
+
+Run from the extracted Nacos directory:
+
+```bash
+NACOS_NATIVE_OPTS='-Xmx1g' bash bin/startup-native.sh
+tail -f logs/startup.log
+```
+
+`startup-native.sh` runs the executable directly without `JAVA_HOME`. Complete the authentication settings in section 3.2 before starting. `NACOS_NATIVE_OPTS` accepts whitespace-separated Native VM flags. The script defaults to the deployment and function modes selected at build time.
+
+Startup output is written to `logs/startup.log` under the installation directory, with other logs under `logs/` as well.
+
+### 4.2. Initialize the Administrator and Verify
+
+After Native starts successfully, visit `http://127.0.0.1:8080` and follow the prompt to initialize the administrator password on first use. Then follow the [verification steps in the standard quick start](./quick-start.mdx#3-verify-nacos-service-started-successfully) to log in, obtain an `accessToken`, and verify configuration publishing and retrieval, and service registration and discovery. If the database already has an administrator account, log in with that account.
+
+### 4.3. Stop Native
+
+When only one Nacos test process is running on the host, use the distribution's stop script:
+
+```bash
+bash bin/shutdown.sh
+```
+
+This script finds processes by the Nacos process marker. When multiple instances share a host, use your process manager to send `SIGTERM` to the intended instance so that other instances are not stopped.
+
+## 5. Configuration Changes That Require Rebuilding
+
+When changing configuration, use the following table to determine whether a rebuild is needed:
+
+| Configuration change | Action |
+| --- | --- |
+| `merged` / `server` / `console`, standalone / cluster, embedded / external storage, database dialect | Regenerate AOT output and rebuild Native. Cluster deployments also need the corresponding `conf/cluster.conf`. |
+| Function mode, Spring profiles, MCP/Skill/ARD protocol switches, resource search switch | Select these at build time and keep runtime settings consistent; rebuild after changing them. |
+| SPI plugins, JDBC drivers, dependencies, or other settings that change Spring component selection | Prepare dependencies and metadata again, then rebuild. |
+| Service addresses, ports, database URLs, credentials, authentication secrets, log directories | Configure in the runtime environment; changing only these values does not require rebuilding. |
+
+## 6. Use Embedded Derby
+
+Derby inside a Native Server requires GraalVM's experimental `RuntimeClassLoading` capability. Use a GraalVM distribution that supports this capability, add `-Dnacos.native.derby.experimental=true` to the build command in section 2.2, and set `nacos.plugin.datasource-dialect.type=derby` in both the build and runtime configuration.
+
+This setup has been verified with **macOS ARM64, GraalVM CE `25.4.4.1.1`, and standalone merged deployment**.
+
+## 7. Build Your Own Docker Image
+
+Nacos does not currently provide an official Native Docker image. Native plugin selection is determined at build time. Adding or upgrading plugins requires rebuilding the Native executable and the image.
+
+Include the default plugins, custom plugins, JDBC drivers, and dependencies you need in the build above, then package the executable and companion files into a Docker image for your target platform.
+
+Retain companion native libraries, configuration, and the AOT structural manifest. Use a base image with compatible system libraries and supply configuration and credentials at deployment time. `startup-native.sh` starts a background process; a container needs an entrypoint that keeps the application in the foreground and forwards termination signals correctly.
+
+## 8. Troubleshooting
+
+| Symptom | What to check |
+| --- | --- |
+| Native executable or AOT manifest is missing | Complete Native compilation and packaging in section 2.2, and use the complete `release-native` package. |
+| Startup reports a structural configuration mismatch | Compare settings against section 5; rebuild when deployment, database, or protocol choices change. |
+| Missing reflection, JNI, or resource registration | Check plugin dependencies and metadata; trace the failing path and persistence restarts, then rebuild. |
+| Derby SQL fails or runtime class loading is unsupported | Follow section 6 to check GraalVM's `RuntimeClassLoading` capability and the `nacos.native.derby.experimental` build property. |
+| Executable fails to run or a dynamic library is missing | Check the OS, CPU architecture, system libraries, and companion native libraries in the package. |
+| Login or business API authentication fails | Check runtime configuration, administrator initialization, permissions, and token expiry. See the [authentication guide](../manual/admin/auth.mdx). |
+
+## Appendix: Collect Missing Native Metadata
+
+When the selected plugins or drivers need additional metadata, use the GraalVM tracing agent to run a JVM application temporarily and record reflection, JNI, and resource access required for Native compilation. Stop the JVM when collection finishes, then return to section 2.2 to build Native.
+
+Complete the build environment, work directory, and plugin preparation in sections 1 and 2.1. From the source root, create a JVM package for tracing:
+
+```bash
+mvn -B '-Prelease-nacos,!dev' clean install -DskipTests
+mkdir -p "$NACOS_NATIVE_WORK/jvm"
+tar -xzf "distribution/target/nacos-server-${NACOS_VERSION}.tar.gz" -C "$NACOS_NATIVE_WORK/jvm"
+```
+
+Tracing requires a running Nacos instance. Follow sections 3.1 and 3.2 to prepare a separate test database and authentication credentials, and set them in `$NACOS_NATIVE_WORK/jvm/nacos/conf/application.properties`. Keep the database type, plugins, and feature switches consistent with the intended Native build. Then start tracing:
+
+```bash
+"$JAVA_HOME/bin/java" \
+  "-agentlib:native-image-agent=config-output-dir=$NACOS_NATIVE_WORK/metadata" \
+  -Dnacos.standalone=true -Dnacos.deployment.type=merged \
+  "-Dnacos.home=$NACOS_NATIVE_WORK/jvm/nacos" \
+  "-Dloader.path=$NACOS_NATIVE_WORK/jvm/nacos/plugins,$NACOS_NATIVE_WORK/plugins" \
+  -jar "$NACOS_NATIVE_WORK/jvm/nacos/target/nacos-server.jar" \
+  "--spring.config.additional-location=file:$NACOS_NATIVE_WORK/jvm/nacos/conf/" \
+  "--logging.config=$NACOS_NATIVE_WORK/jvm/nacos/conf/nacos-logback.xml"
+```
+
+Once the test JVM starts, use another terminal to follow the [verification steps in the standard quick start](./quick-start.mdx#3-verify-nacos-service-started-successfully): initialize a test account and exercise login, configuration, and service operations. Use an SDK for the gRPC calls you need, and exercise any enabled AI or custom plugin features. These operations let the agent record the paths used by the application.
+
+Stop the tracing process gracefully with `Ctrl+C`. Replace `config-output-dir` with `config-merge-dir` in the command, retain the test data, and restart to exercise reads and merge the additional paths. Stop the process again, review the generated metadata, then return to section 2.2.
+
+See the [GraalVM tracing agent documentation](https://www.graalvm.org/latest/reference-manual/native-image/metadata/AutomaticMetadataCollection/) for tool usage, and `bootstrap/README-AOT.md` in the source tree for JVM AOT tracing instructions.
