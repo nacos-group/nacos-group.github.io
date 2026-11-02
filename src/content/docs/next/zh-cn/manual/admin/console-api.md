@@ -2123,7 +2123,6 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" "http://127.0.0.1:8080/v3/console/c
 | `pageItems`[i].`appName`     | `string` | 配置所属的appName。                     |
 | `pageItems`[i].`opType`      | `string` | 操作类型，`I`为插入、`U`为更新、`D`为删除。        |
 | `pageItems`[i].`publishType` | `string` | 发布类型，`formal`为普通发布，`gray`为beta发布。 |
-| `pageItems`[i].`changeMessage` | `string` | 所选历史记录对应操作的提交说明，可为空；不是生成历史内容快照时的说明。 |
 | `pageItems`[i].`srcIp`       | `string` | 发布的来源IP。                          |
 | `pageItems`[i].`srcUser`     | `string` | 发布的用户，仅在开启鉴权并登录用户后才发布配置才存在。       |
 | `pageItems`[i].`createTime`  | `integer` | 配置创建时间。                           |

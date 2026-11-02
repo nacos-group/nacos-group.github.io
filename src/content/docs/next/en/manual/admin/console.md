@@ -99,7 +99,7 @@ Common operations:
 
 Before rolling back, check the history operation type: rolling back an insert deletes the current configuration, while rolling back an update or delete republishes the content saved in that record. Confirm the target and content in the confirmation message before proceeding. See [History and Rollback](../user/config/ops-and-troubleshooting.md#history-and-rollback).
 
-When creating, editing, publishing Beta configurations, or republishing a rollback target, both next and legacy consoles accept an optional operation message. It is separate from the configuration description, limited to 512 Unicode code points, and displayed as plain text in history list and detail. Success clears the input; failure retains it. Rollback takes a fresh message, while deletion rollback has no message input. See [Publish Operation Messages](../user/config/publish-query-listen.md#publish-operation-messages) for field rules and version availability.
+When editing an existing formal configuration in the new console, you can enter an optional publish message, up to 512 Unicode code points. It is independent of the configuration description and appears as plain text in history details. Clear it after success and retain it after failure. Console creation, deletion, Beta/gray publication, rollback, history-list display, and the legacy console gain no message input or display in this phase. See [Publish Operation Messages](../user/config/publish-query-listen.md#publish-operation-messages).
 
 To understand the configuration model, gray release, import and export, and troubleshooting, read [Configuration Overview](../user/config/overview.md).
 

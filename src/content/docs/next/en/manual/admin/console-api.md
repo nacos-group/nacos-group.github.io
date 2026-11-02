@@ -2119,7 +2119,6 @@ The response body follows the [Nacos Open API unified response format](../user/o
 | `pageItems`[i].`appName`     | `string` | appName to which the configuration belongs.                     |
 | `pageItems`[i].`opType`      | `string` | Operation type. `I` means insert, `U` means update, and `D` means delete.        |
 | `pageItems`[i].`publishType` | `string` | Publish type. `formal` means normal publish, and `gray` means beta publish. |
-| `pageItems`[i].`changeMessage` | `string` | Nullable message for the operation represented by the selected history record, not the operation that originally produced its content snapshot. |
 | `pageItems`[i].`srcIp`       | `string` | source IP of the publish operation.                          |
 | `pageItems`[i].`srcUser`     | `string` | Publishing user. This field exists only when authentication is enabled and the configuration is published after a user logs in.       |
 | `pageItems`[i].`createTime`  | `integer` | configuration creation time.                           |

@@ -704,11 +704,7 @@ A config cannot have duplicate gray releases. If a beta gray config already exis
 
 ```java
 boolean publishBetaConfig(String dataId, String groupName, String namespaceId, String content, String appName, String srcUser, String configTags, String desc, String type, String betaIps) throws NacosException;
-
-boolean publishBetaConfig(String dataId, String groupName, String namespaceId, String content, String appName, String srcUser, String configTags, String desc, String type, String betaIps, String changeMessage) throws NacosException;
 ```
-
-See [Publish Operation Messages](../user/config/publish-query-listen.md#publish-operation-messages) for blank handling, history semantics, and version availability. Existing overloads remain available. For third-party Maintainer implementations that only implement the old method, the default overload rejects a nonempty message with `NacosException` rather than silently discarding it.
 
 #### Request Parameters
 
@@ -719,7 +715,6 @@ See [Publish Operation Messages](../user/config/publish-query-listen.md#publish-
 | namespaceId | string | Namespace ID to which the config belongs.                                                                   |
 | content     | string | Config content. The length cannot exceed 100 KB.                                                              |
 | desc        | string | Config description.                                                                       |
-| changeMessage | string | Optional message for this publish operation, up to 512 Unicode code points; separate from the configuration description. |
 | type        | string | Config type. See `com.alibaba.nacos.api.config.ConfigType`. The default value is `TEXT`.                       |
 | appName     | string | Application name to which the config belongs.                                                                     |
 | srcUser     | string | Username used to publish this config. The config is published on behalf of this user, and the config `createUser` is set to this user. If an empty string is passed, the current logged-in username is used as `createUser`. |
@@ -740,16 +735,6 @@ try {
     boolean result = configMaintainerService.publishBetaConfig("maintain.client.test", Constants.DEFAULT_GROUP, Constants.DEFAULT_NAMESPACE_ID, "testBeta", "testApp", "", "testTag1", "test", "TEXT", "127.0.0.1");
 } catch (NacosException e) {
     e.printStackTrace();
-}
-```
-
-
-```java
-boolean published = configMaintainerService.publishBetaConfig(
-        "example", "DEFAULT_GROUP", "public", "timeout=5000",
-        null, null, null, "Service settings", "properties", "127.0.0.1", "Increase timeout for release");
-if (!published) {
-    throw new IllegalStateException("Configuration publication failed");
 }
 ```
 
@@ -928,7 +913,6 @@ The `Page` and `ConfigHistoryBasicInfo` content is as follows:
 | srcIp       | string | Source IP address that operated this version.                                          |
 | opType      | string | Operation type of this historical version. `I` indicates creation, `U` indicates update, and `D` indicates deletion.                      |
 | publishType | string | Publish type of this historical version. `formal` indicates formal release, and `gray` indicates gray release.                 |
-| changeMessage | string | Nullable message for the operation represented by the selected history record, not the operation that originally produced its content snapshot. |
 
 #### Request Example
 
