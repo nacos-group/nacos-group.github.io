@@ -162,6 +162,9 @@ Raft 参数通过 `nacos.core.protocol.raft.data.*` 配置。`data` 是当前代
 
 | 参数名 | 说明 | 默认值 |
 | --- | --- | --- |
+| `nacos.core.protocol.raft.data.log_storage_type` | Raft 日志存储后端，可选 `rocksdb` 或 `file`。去除首尾空白并忽略大小写；空串、纯空白和其他值会导致初始化失败。启动时选择，对当前节点所有 Raft Group 生效，不支持热切换。 | `rocksdb` |
+| `nacos.core.protocol.raft.data.sync` | 是否同步写入 Raft 日志。`file` 后端必须为 `true`，否则初始化失败。 | `true` |
+| `nacos.core.protocol.raft.data.sync_meta` | 传递给默认 Raft 元数据存储的同步选项，不改变 `file` 后端对 `sync=true` 的要求。 | `false` |
 | `nacos.core.protocol.raft.data.election_timeout_ms` | 选举超时时间，单位毫秒。 | `5000` |
 | `nacos.core.protocol.raft.data.snapshot_interval_secs` | 快照执行周期，单位秒。 | `1800` |
 | `nacos.core.protocol.raft.data.core_thread_num` | Raft 内部工作线程数。 | `8` |
@@ -174,6 +177,8 @@ Raft 参数通过 `nacos.core.protocol.raft.data.*` 配置。`data` 是当前代
 | `nacos.core.protocol.raft.data.max_append_buffer_size` | 日志写入缓冲区大小。 | `262144` |
 | `nacos.core.protocol.raft.data.max_election_delay_ms` | 选举随机延迟最大值，单位毫秒。 | `1000` |
 | `nacos.core.protocol.raft.strict-mode` | Raft 启动校验严格模式。开启后，Raft 无法选举时 readiness 会返回失败。 | `false` |
+
+文件日志后端的启用示例、文件系统要求和恢复说明见 [Raft 日志存储](./raft-log-storage.md)。后端选择不会转换已有数据，不能通过修改配置在已有节点上原地迁移日志。
 
 ## 配置中心
 
