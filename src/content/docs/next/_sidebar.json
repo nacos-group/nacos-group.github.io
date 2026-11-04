@@ -191,6 +191,13 @@
         "link": "docs/manual/admin/system-configurations"
       },
       {
+        "label": "Raft 日志存储",
+        "translations": {
+          "en": "Raft Log Storage"
+        },
+        "link": "docs/manual/admin/raft-log-storage"
+      },
+      {
         "label": "鉴权手册",
         "translations": {
           "en": "Authorization Manual"
