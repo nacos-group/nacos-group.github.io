@@ -28,6 +28,24 @@ Naming push carries the current discovery view of a subscribed service. After re
 
 Push is best-effort within the current connection lifecycle. When push fails, the server can add delayed retry for the target client. Clients should also recover from missed pushes through re-query, reconnect redo, and local cache.
 
+## Notification Callback Origin
+
+`NamingEvent.isFromPush()` returns a read-only `boolean` flag that identifies the processing path of the notification:
+
+```java
+EventListener listener = event -> {
+    if (event instanceof NamingEvent) {
+        NamingEvent namingEvent = (NamingEvent) event;
+        System.out.println(namingEvent.isFromPush());
+    }
+};
+```
+
+- `true`: Server pushes (including pushes after reconnect), background polling or query refreshes, and Failover notifications (including Failover data changes and switching back to the normal cached view).
+- `false`: Synchronous subscription responses processed by the client, or existing cache replayed directly to a newly registered local listener.
+
+During the initial subscription, the subscription response and server pushes may arrive concurrently. The first callback is therefore not guaranteed to carry `false`, and subsequent callbacks are not guaranteed to always carry `true`. Read the flag on each callback instead of inferring the notification origin from callback order.
+
 ## Local Cache And Failover
 
 Clients usually keep a service-info cache. It is used to:
