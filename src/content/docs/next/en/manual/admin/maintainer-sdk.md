@@ -8475,7 +8475,9 @@ A `NacosException` is thrown when the request fails or the server returns a non-
 
 ## 13. Agentic Resource Hub
 
-Obtain `SkillMaintainerService` from `aiMaintainerService.skill()`. The following methods are available from `3.3.0`. Request and response types are in `com.alibaba.nacos.api.ai.model.hub`.
+Use the `skill()`, `mcp()`, `agent()`, `prompt()` and `agentSpec()` facades. The existing Skill reference is followed by all seven management methods for each additional type. Models are in `com.alibaba.nacos.api.ai.model.hub`; SDK ID/CAS fields are `Long`, while HTTP JSON serializes them as strings. See the [Hub extension API reference](./resource-hub-api.md) for field constraints and response models. All new methods may throw `NacosException` for invalid parameters, permissions, CAS/name conflicts, invalid shares or disabled Hub. Example IDs/revisions are placeholders; fetch current state in real use. The four additional types have no direct clone methods.
+
+Obtain `SkillMaintainerService` from `aiMaintainerService.skill()`. Special management request/response types are in `com.alibaba.nacos.api.ai.model.hub`; ordinary shared-read models are in `com.alibaba.nacos.api.ai.model.skills`. Reads reuse the namespace-aware Skill SDK methods with `__nacos_ai_hub__`. The special management methods and general ZIP download method are available from `3.3.0`.
 
 ### 13.1. Share a Skill
 
@@ -8723,163 +8725,70 @@ try {
 
 A `NacosException` is thrown for invalid parameters, insufficient permissions, unavailable resources, or request failure.
 
-### 13.7. List Shared Skills
+### 13.7. List Shared Skills with the Existing SDK
 
-#### Description
-
-List effective shared Skills with pagination, keyword filtering on names and descriptions, and tag filtering.
+Use the ordinary namespace-aware Skill methods and response models. There are no dedicated Hub list, detail, content or download read methods. Management lists default to shared update time descending; `orderBy=download_count` sorts independent Hub downloads descending. ID ascending breaks ties; filtering and sorting precede pagination. Client search retains popularity ordering.
 
 ```java
-Page<HubSkillSummary> listHubSkills(HubSkillListRequest request) throws NacosException;
+Page<SkillSummary> listSkills(String namespaceId, String skillName, String search,
+        int pageNo, int pageSize) throws NacosException;
+
+Page<SkillSummary> listSkills(String namespaceId, String skillName, String search,
+        String orderBy, String owner, String scope, String bizTag,
+        int pageNo, int pageSize) throws NacosException;
 ```
 
-#### Request Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| `request.pageNo` | `int` | Page number; defaults to `1` and must be positive. |
-| `request.pageSize` | `int` | Items per page; defaults to `20`. Range: `1` to `100`. |
-| `request.query` | `String` | Case-insensitive keyword in the name or description; up to 1024 characters. |
-| `request.tagsAll` | `List<String>` | Tags that must all match, case-insensitively; up to 32 tags of 128 characters each. Pass as `tagsAll[0]`, `tagsAll[1]`, and so on. |
-
-#### Response Parameters
-
-| Type | Description |
-|---|---|
-| `Page<HubSkillSummary>` | See [Hub Admin API](./admin-api.md#12-agentic-resource-hub) for response fields. |
-
-#### Request Example
+Pass `namespaceId="__nacos_ai_hub__"`, an optional display-name filter in `skillName`, and `search="blur"` or `"accurate"`. `pageNo` is positive and `pageSize` is 1–100. `bizTag` is the existing single substring filter. `Page<SkillSummary>` returns opaque string `name`, string-serialized `hubEntryId`, `discoverySource="HUB"`, `displayName`, `sourceDisplayName`, pinned `version`, `owner`, `bizTags`, share-time `updateTime`, and the shared entry's independent `downloadCount`. Preserve namespace plus opaque name; do not collapse duplicate display names.
 
 ```java
-try {
-    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
-    HubSkillListRequest request = new HubSkillListRequest();
-    request.setPageNo(1);
-    request.setPageSize(20);
-    request.setQuery("find");
-    request.setTagsAll(java.util.Collections.singletonList("assistant"));
-    Page<HubSkillSummary> result = skillMaintainerService.listHubSkills(request);
-} catch (NacosException e) {
-    e.printStackTrace();
-}
+SkillMaintainerService skills = aiMaintainerService.skill();
+String sharedNamespace = "__nacos_ai_hub__";
+Page<SkillSummary> page = skills.listSkills(sharedNamespace, "find", "blur", 1, 20);
 ```
 
-#### Exception Description
-
-A `NacosException` is thrown for invalid parameters, insufficient permissions, unavailable resources, or request failure.
-
-### 13.8. Get Shared Skill Detail
-
-#### Description
-
-Get details of the current shared version by Hub entry ID.
+### 13.8. Get Shared Detail with the Existing SDK
 
 ```java
-HubSkillDetail getHubSkillDetail(Long hubEntryId) throws NacosException;
+SkillMeta getSkillMeta(String namespaceId, String skillName) throws NacosException;
 ```
 
-#### Request Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| `hubEntryId` | `Long` | Hub entry ID; must be positive. |
-
-#### Response Parameters
-
-| Type | Description |
-|---|---|
-| `HubSkillDetail` | See [Hub Admin API](./admin-api.md#12-agentic-resource-hub) for response fields. |
-
-#### Request Example
+Pass the opaque `name` returned by the shared list, not its display name. `SkillMeta.versions` contains exactly the pinned shared version and its shared per-version download count. `labels` maps labels to that version. Source IDs are exposed only when `sourceReadable=true` after an independent source READ check. The discovery marker is `discoverySource`; `origin` remains the existing import/copy provenance object.
 
 ```java
-try {
-    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
-    HubSkillDetail result = skillMaintainerService.getHubSkillDetail(101L);
-} catch (NacosException e) {
-    e.printStackTrace();
-}
+SkillMeta selected = skills.getSkillMeta(sharedNamespace, "101");
+String pinnedVersion = selected.getVersion();
 ```
 
-#### Exception Description
-
-A `NacosException` is thrown for invalid parameters, insufficient permissions, unavailable resources, or request failure.
-
-### 13.9. Get Shared Skill Content
-
-#### Description
-
-Get the shared version’s `SKILL.md` and resource file content by Hub entry ID.
+### 13.9. Get Shared Content with the Existing SDK
 
 ```java
-HubSkillContent getHubSkillContent(Long hubEntryId) throws NacosException;
+Skill getSkillVersionDetail(String namespaceId, String skillName, String version)
+        throws NacosException;
 ```
 
-#### Request Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| `hubEntryId` | `Long` | Hub entry ID; must be positive. |
-
-#### Response Parameters
-
-| Type | Description |
-|---|---|
-| `HubSkillContent` | See [Hub Admin API](./admin-api.md#12-agentic-resource-hub) for response fields. |
-
-#### Request Example
+Reuse the ordinary Skill version API with the selected detail's pinned version. The returned `Skill` retains the shared namespace and opaque name; `skillMd` and `resource` contain the original pinned content. A mismatching explicit version fails without fallback to latest; content reads do not count as downloads.
 
 ```java
-try {
-    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
-    HubSkillContent result = skillMaintainerService.getHubSkillContent(101L);
-} catch (NacosException e) {
-    e.printStackTrace();
-}
+Skill content = skills.getSkillVersionDetail(sharedNamespace, selected.getName(), pinnedVersion);
 ```
 
-#### Exception Description
-
-A `NacosException` is thrown for invalid parameters, insufficient permissions, unavailable resources, or request failure.
-
-### 13.10. Download a Shared Skill
-
-#### Description
-
-Download the shared version as a ZIP package by Hub entry ID.
+### 13.10. Download with the General Skill SDK Method
 
 ```java
-HubSkillDownload getHubSkillDownload(Long hubEntryId) throws NacosException;
+// Since 3.3.0
+SkillDownload downloadSkillVersion(String namespaceId, String skillName, String version)
+        throws NacosException;
 ```
 
-#### Request Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| `hubEntryId` | `Long` | Hub entry ID; must be positive. |
-
-#### Response Parameters
-
-| Type | Description |
-|---|---|
-| `HubSkillDownload` | See [Hub Admin API](./admin-api.md#12-agentic-resource-hub) for response fields. |
-
-`HubSkillDownload.getZipBytes()` returns ZIP bytes.
-
-#### Request Example
+This namespace-aware method supports ordinary and shared Skills through the existing `/v3/admin/ai/skills/version/download` endpoint. `SkillDownload` is in `com.alibaba.nacos.api.ai.model.skills`; `getZipBytes()` returns the raw ZIP, `getDisplayName()` the real Skill name, `getResolvedVersion()` the resolved version, and `getHubEntryId()` the shared ID (nullable for ordinary resources). Shared identity/version response headers are validated. The ZIP keeps its original directory name. A successful shared download increments only Hub counters, independently of source counters.
 
 ```java
-try {
-    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
-    HubSkillDownload result = skillMaintainerService.getHubSkillDownload(101L);
-} catch (NacosException e) {
-    e.printStackTrace();
-}
+SkillDownload download = skills.downloadSkillVersion(
+        sharedNamespace, selected.getName(), pinnedVersion);
+byte[] zip = download.getZipBytes();
 ```
 
-#### Exception Description
-
-A `NacosException` is thrown for invalid parameters, insufficient permissions, unavailable resources, or request failure.
+All methods throw `NacosException` for validation, authorization, unavailable publication, disabled capability, or transport failures. Sharing, adjustment, unsharing, takedown, source/governance state, import, and direct copy retain their eight special management methods. The runtime discovery option `nacosAiAccessHub` defaults to `false`, querying only the bound namespace; setting it to `true` enables combined discovery. This does not change an HTTP request with omitted namespace, which still selects `public` only.
 
 ### 13.11. Import a Shared Skill
 
@@ -8926,14 +8835,14 @@ try {
 
 A `NacosException` is thrown for invalid parameters, insufficient permissions, unavailable resources, or request failure.
 
-### 13.12. Copy a Skill across Namespaces
+### 13.12. Clone a Skill across Namespaces
 
 #### Description
 
 Copy a specified source version into the target Namespace as an independent Skill draft with provenance. The source Skill must be enabled and the version online. This operation remains available when Hub is disabled. `hubEntryId` must be omitted.
 
 ```java
-HubSkillTransferResult copyHubSkill(HubSkillTransferRequest request) throws NacosException;
+HubSkillTransferResult cloneHubSkill(HubSkillTransferRequest request) throws NacosException;
 ```
 
 #### Request Parameters
@@ -8965,7 +8874,7 @@ try {
     request.setTargetNamespaceId("team-b");
     request.setTargetName("find-skills-copy");
     request.setTargetVersion("0.0.1");
-    HubSkillTransferResult result = skillMaintainerService.copyHubSkill(request);
+    HubSkillTransferResult result = skillMaintainerService.cloneHubSkill(request);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -8974,3 +8883,927 @@ try {
 #### Exception Description
 
 A `NacosException` is thrown for invalid parameters, insufficient permissions, unavailable resources, or request failure.
+
+### 13.13. Share MCP
+
+#### Description
+
+Requires source READ/WRITE and an enabled, PUBLIC source with a concrete online version.
+
+#### Method Signature
+
+```java
+HubShareResult shareHubMcp(HubShareMcpRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubShareMcpRequest` | Required `sourceNamespaceId`, `sourceName`, `sourceVersion`; optional `expectedSourceResourceId` is `Long`. See [constraints](./resource-hub-api.md#21-share). |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | Shared entry and current CAS revision. |
+
+#### Request Example
+
+```java
+HubShareMcpRequest request = new HubShareMcpRequest();
+request.setSourceNamespaceId("public");
+request.setSourceName("weather-mcp");
+request.setSourceVersion("1.0.0");
+HubShareResult result = aiMaintainerService.mcp().shareHubMcp(request);
+```
+
+### 13.14. Adjust MCP Sharing
+
+#### Description
+
+Requires source READ/WRITE and a current CAS revision to pin another online version.
+
+#### Method Signature
+
+```java
+HubShareResult adjustHubMcpShare(HubAdjustShareRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubAdjustShareRequest` | Required `hubEntryId`, `targetVersion`, `expectedMetaVersion`; ID/CAS fields are `Long`. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | Updated sharing state. |
+
+#### Request Example
+
+```java
+HubAdjustShareRequest request = new HubAdjustShareRequest();
+request.setHubEntryId(101L);
+request.setTargetVersion("2.0.0");
+request.setExpectedMetaVersion(1L);
+HubShareResult result = aiMaintainerService.mcp().adjustHubMcpShare(request);
+```
+
+### 13.15. Unshare MCP
+
+#### Description
+
+Requires source WRITE; retains the source and previously imported targets.
+
+#### Method Signature
+
+```java
+HubShareResult unshareHubMcp(HubUnshareRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubUnshareRequest` | Required `hubEntryId` and `expectedMetaVersion`, both `Long`. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | State with `active=false`. |
+
+#### Request Example
+
+```java
+HubUnshareRequest request = new HubUnshareRequest();
+request.setHubEntryId(101L);
+request.setExpectedMetaVersion(1L);
+HubShareResult result = aiMaintainerService.mcp().unshareHubMcp(request);
+```
+
+### 13.16. Force Unshare MCP
+
+#### Description
+
+Requires global-administrator governance authority and records the reason.
+
+#### Method Signature
+
+```java
+HubShareResult forceUnshareHubMcp(HubForceUnshareRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubForceUnshareRequest` | Required `hubEntryId`, `expectedMetaVersion`, `reason`; reason length is at most 512. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | Governance takedown state. |
+
+#### Request Example
+
+```java
+HubForceUnshareRequest request = new HubForceUnshareRequest();
+request.setHubEntryId(101L);
+request.setExpectedMetaVersion(1L);
+request.setReason("Retired by administrator");
+HubShareResult result = aiMaintainerService.mcp().forceUnshareHubMcp(request);
+```
+
+### 13.17. Get MCP Source State
+
+#### Description
+
+Requires source WRITE; may return `null` when never shared.
+
+#### Method Signature
+
+```java
+HubResourceShareState getHubMcpSourceState(String namespaceId, String name) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `namespaceId` | `String` | Required source Namespace. |
+| `name` | `String` | Required source MCP name. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubResourceShareState` | Entry, pinned version, CAS and active state; nullable. |
+
+#### Request Example
+
+```java
+HubResourceShareState state = aiMaintainerService.mcp()
+        .getHubMcpSourceState("public", "weather-mcp");
+```
+
+### 13.18. Get MCP Governance State
+
+#### Description
+
+Requires global-administrator governance authority.
+
+#### Method Signature
+
+```java
+HubResourceShareState getHubMcpGovernanceState(Long entryId) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `entryId` | `Long` | Required shared entry ID. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubResourceShareState` | State for administrator CAS operations. |
+
+#### Request Example
+
+```java
+HubResourceShareState state = aiMaintainerService.mcp().getHubMcpGovernanceState(101L);
+```
+
+### 13.19. Import Shared MCP
+
+#### Description
+
+Requires Hub READ and target WRITE; creates an independent PRIVATE draft. STDIO, REF and Direct follow the [MCP ownership rules](./resource-hub-api.md#27-import-from-hub).
+
+#### Method Signature
+
+```java
+HubResourceTransferResult importHubMcp(HubMcpImportRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubMcpImportRequest` | Required `hubEntryId`, `targetNamespaceId`, `targetName`; `targetVersion` defaults to `0.0.1`. Optional `mcpRemoteServerConfig` is `McpServerRemoteServiceConfig` and must equal the pinned source configuration, not override connections. Source selectors are forbidden. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubResourceTransferResult` | Independent target draft with `origin=HUB`. |
+
+#### Request Example
+
+```java
+HubMcpImportRequest request = new HubMcpImportRequest();
+request.setHubEntryId(101L);
+request.setTargetNamespaceId("team-b");
+request.setTargetName("weather-imported");
+HubResourceTransferResult result = aiMaintainerService.mcp().importHubMcp(request);
+```
+
+### 13.20. Share Agent
+
+#### Description
+
+Requires source READ/WRITE and an enabled, PUBLIC source with a concrete online version.
+
+#### Method Signature
+
+```java
+HubShareResult shareHubAgent(HubShareAgentRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubShareAgentRequest` | Required `sourceNamespaceId`, `sourceName`, `sourceVersion`; optional `expectedSourceResourceId` is `Long`. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | Shared entry and CAS revision. |
+
+#### Request Example
+
+```java
+HubShareAgentRequest request = new HubShareAgentRequest();
+request.setSourceNamespaceId("public");
+request.setSourceName("assistant");
+request.setSourceVersion("1.0.0");
+HubShareResult result = aiMaintainerService.agent().shareHubAgent(request);
+```
+
+### 13.21. Adjust Agent Sharing
+
+#### Description
+
+Requires source READ/WRITE and the current CAS revision.
+
+#### Method Signature
+
+```java
+HubShareResult adjustHubAgentShare(HubAdjustShareRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubAdjustShareRequest` | Required `hubEntryId`, `targetVersion`, `expectedMetaVersion`. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | Updated pinned version and state. |
+
+#### Request Example
+
+```java
+HubAdjustShareRequest request = new HubAdjustShareRequest();
+request.setHubEntryId(101L);
+request.setTargetVersion("2.0.0");
+request.setExpectedMetaVersion(1L);
+HubShareResult result = aiMaintainerService.agent().adjustHubAgentShare(request);
+```
+
+### 13.22. Unshare Agent
+
+#### Description
+
+Requires source WRITE; retains imported resources.
+
+#### Method Signature
+
+```java
+HubShareResult unshareHubAgent(HubUnshareRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubUnshareRequest` | Required `hubEntryId`, `expectedMetaVersion`. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | Revocation state. |
+
+#### Request Example
+
+```java
+HubUnshareRequest request = new HubUnshareRequest();
+request.setHubEntryId(101L);
+request.setExpectedMetaVersion(1L);
+HubShareResult result = aiMaintainerService.agent().unshareHubAgent(request);
+```
+
+### 13.23. Force Unshare Agent
+
+#### Description
+
+Requires global-administrator governance authority.
+
+#### Method Signature
+
+```java
+HubShareResult forceUnshareHubAgent(HubForceUnshareRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubForceUnshareRequest` | Required `hubEntryId`, `expectedMetaVersion`, `reason`; reason length is at most 512. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | Governance takedown state. |
+
+#### Request Example
+
+```java
+HubForceUnshareRequest request = new HubForceUnshareRequest();
+request.setHubEntryId(101L);
+request.setExpectedMetaVersion(1L);
+request.setReason("Retired by administrator");
+HubShareResult result = aiMaintainerService.agent().forceUnshareHubAgent(request);
+```
+
+### 13.24. Get Agent Source State
+
+#### Description
+
+Requires source WRITE; nullable when never shared.
+
+#### Method Signature
+
+```java
+HubResourceShareState getHubAgentSourceState(String namespaceId, String name) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `namespaceId` | `String` | Required source Namespace. |
+| `name` | `String` | Required source Agent name. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubResourceShareState` | Minimal sharing state, or `null`. |
+
+#### Request Example
+
+```java
+HubResourceShareState state = aiMaintainerService.agent()
+        .getHubAgentSourceState("public", "assistant");
+```
+
+### 13.25. Get Agent Governance State
+
+#### Description
+
+Requires global-administrator governance authority.
+
+#### Method Signature
+
+```java
+HubResourceShareState getHubAgentGovernanceState(Long entryId) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `entryId` | `Long` | Required Agent shared entry ID. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubResourceShareState` | State for administrator CAS operations. |
+
+#### Request Example
+
+```java
+HubResourceShareState state = aiMaintainerService.agent().getHubAgentGovernanceState(101L);
+```
+
+### 13.26. Import Shared Agent
+
+#### Description
+
+Requires Hub READ and target WRITE; creates a PRIVATE independent draft without copying dynamic endpoints, clients or heartbeats.
+
+#### Method Signature
+
+```java
+HubResourceTransferResult importHubAgent(HubAgentImportRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubAgentImportRequest` | Required `hubEntryId`, `targetNamespaceId`, `targetName`; optional `targetVersion` defaults to `0.0.1`. Source selectors are forbidden. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubResourceTransferResult` | Independent target draft and provenance. |
+
+#### Request Example
+
+```java
+HubAgentImportRequest request = new HubAgentImportRequest();
+request.setHubEntryId(101L);
+request.setTargetNamespaceId("team-b");
+request.setTargetName("assistant-imported");
+HubResourceTransferResult result = aiMaintainerService.agent().importHubAgent(request);
+```
+
+### 13.27. Share Prompt
+
+#### Description
+
+Requires source READ/WRITE, an enabled source and a concrete online version; adds no PUBLIC/scope requirement.
+
+#### Method Signature
+
+```java
+HubShareResult shareHubPrompt(HubSharePromptRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubSharePromptRequest` | Required `sourceNamespaceId`, `sourceName` (promptKey), `sourceVersion`; optional `expectedSourceResourceId`. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | Sharing result. |
+
+#### Request Example
+
+```java
+HubSharePromptRequest request = new HubSharePromptRequest();
+request.setSourceNamespaceId("public");
+request.setSourceName("greeting");
+request.setSourceVersion("1.0.0");
+HubShareResult result = aiMaintainerService.prompt().shareHubPrompt(request);
+```
+
+### 13.28. Adjust Prompt Sharing
+
+#### Description
+
+Requires source READ/WRITE; CAS pins another concrete online version.
+
+#### Method Signature
+
+```java
+HubShareResult adjustHubPromptShare(HubAdjustShareRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubAdjustShareRequest` | Required `hubEntryId`, `targetVersion`, `expectedMetaVersion`. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | Adjustment result and latest revision. |
+
+#### Request Example
+
+```java
+HubAdjustShareRequest request = new HubAdjustShareRequest();
+request.setHubEntryId(101L);
+request.setTargetVersion("2.0.0");
+request.setExpectedMetaVersion(1L);
+HubShareResult result = aiMaintainerService.prompt().adjustHubPromptShare(request);
+```
+
+### 13.29. Unshare Prompt
+
+#### Description
+
+Requires source WRITE; cleanup remains possible after the version goes offline.
+
+#### Method Signature
+
+```java
+HubShareResult unshareHubPrompt(HubUnshareRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubUnshareRequest` | Required `hubEntryId`, `expectedMetaVersion`. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | Revocation state. |
+
+#### Request Example
+
+```java
+HubUnshareRequest request = new HubUnshareRequest();
+request.setHubEntryId(101L);
+request.setExpectedMetaVersion(1L);
+HubShareResult result = aiMaintainerService.prompt().unshareHubPrompt(request);
+```
+
+### 13.30. Force Unshare Prompt
+
+#### Description
+
+Requires global-administrator governance authority.
+
+#### Method Signature
+
+```java
+HubShareResult forceUnshareHubPrompt(HubForceUnshareRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubForceUnshareRequest` | Required `hubEntryId`, `expectedMetaVersion`, `reason`; reason length is at most 512. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | Governance result. |
+
+#### Request Example
+
+```java
+HubForceUnshareRequest request = new HubForceUnshareRequest();
+request.setHubEntryId(101L);
+request.setExpectedMetaVersion(1L);
+request.setReason("Retired by administrator");
+HubShareResult result = aiMaintainerService.prompt().forceUnshareHubPrompt(request);
+```
+
+### 13.31. Get Prompt Source State
+
+#### Description
+
+Requires source WRITE; nullable when never shared.
+
+#### Method Signature
+
+```java
+HubResourceShareState getHubPromptSourceState(String namespaceId, String name) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `namespaceId` | `String` | Required source Namespace. |
+| `name` | `String` | Required source promptKey. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubResourceShareState` | Minimal sharing state, or `null`. |
+
+#### Request Example
+
+```java
+HubResourceShareState state = aiMaintainerService.prompt()
+        .getHubPromptSourceState("public", "greeting");
+```
+
+### 13.32. Get Prompt Governance State
+
+#### Description
+
+Requires global-administrator governance authority.
+
+#### Method Signature
+
+```java
+HubResourceShareState getHubPromptGovernanceState(Long entryId) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `entryId` | `Long` | Required shared entry ID. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubResourceShareState` | Governance CAS state. |
+
+#### Request Example
+
+```java
+HubResourceShareState state = aiMaintainerService.prompt().getHubPromptGovernanceState(101L);
+```
+
+### 13.33. Import Shared Prompt
+
+#### Description
+
+Requires Hub READ and target WRITE; copies the pinned template to a PRIVATE independent draft without publishing it.
+
+#### Method Signature
+
+```java
+HubResourceTransferResult importHubPrompt(HubPromptImportRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubPromptImportRequest` | Required `hubEntryId`, `targetNamespaceId`, `targetName`; optional `targetVersion` defaults to `0.0.1`. Source selectors are forbidden. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubResourceTransferResult` | Independent target draft and provenance. |
+
+#### Request Example
+
+```java
+HubPromptImportRequest request = new HubPromptImportRequest();
+request.setHubEntryId(101L);
+request.setTargetNamespaceId("team-b");
+request.setTargetName("greeting-imported");
+HubResourceTransferResult result = aiMaintainerService.prompt().importHubPrompt(request);
+```
+
+### 13.34. Share AgentSpec
+
+#### Description
+
+Requires source READ/WRITE, an enabled PUBLIC source and an online version.
+
+#### Method Signature
+
+```java
+HubShareResult shareHubAgentSpec(HubShareAgentSpecRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubShareAgentSpecRequest` | Required `sourceNamespaceId`, `sourceName`, `sourceVersion`; optional `expectedSourceResourceId`. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | Shared entry and revision. |
+
+#### Request Example
+
+```java
+HubShareAgentSpecRequest request = new HubShareAgentSpecRequest();
+request.setSourceNamespaceId("public");
+request.setSourceName("workspace-guide");
+request.setSourceVersion("1.0.0");
+HubShareResult result = aiMaintainerService.agentSpec().shareHubAgentSpec(request);
+```
+
+### 13.35. Adjust AgentSpec Sharing
+
+#### Description
+
+Requires source READ/WRITE; CAS selects a concrete online version.
+
+#### Method Signature
+
+```java
+HubShareResult adjustHubAgentSpecShare(HubAdjustShareRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubAdjustShareRequest` | Required `hubEntryId`, `targetVersion`, `expectedMetaVersion`. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | Updated sharing state. |
+
+#### Request Example
+
+```java
+HubAdjustShareRequest request = new HubAdjustShareRequest();
+request.setHubEntryId(101L);
+request.setTargetVersion("2.0.0");
+request.setExpectedMetaVersion(1L);
+HubShareResult result = aiMaintainerService.agentSpec().adjustHubAgentSpecShare(request);
+```
+
+### 13.36. Unshare AgentSpec
+
+#### Description
+
+Requires source WRITE; retains source and imported resources.
+
+#### Method Signature
+
+```java
+HubShareResult unshareHubAgentSpec(HubUnshareRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubUnshareRequest` | Required `hubEntryId`, `expectedMetaVersion`. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | Revocation result. |
+
+#### Request Example
+
+```java
+HubUnshareRequest request = new HubUnshareRequest();
+request.setHubEntryId(101L);
+request.setExpectedMetaVersion(1L);
+HubShareResult result = aiMaintainerService.agentSpec().unshareHubAgentSpec(request);
+```
+
+### 13.37. Force Unshare AgentSpec
+
+#### Description
+
+Requires global-administrator governance authority.
+
+#### Method Signature
+
+```java
+HubShareResult forceUnshareHubAgentSpec(HubForceUnshareRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubForceUnshareRequest` | Required `hubEntryId`, `expectedMetaVersion`, `reason`; reason length is at most 512. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubShareResult` | Governance takedown state. |
+
+#### Request Example
+
+```java
+HubForceUnshareRequest request = new HubForceUnshareRequest();
+request.setHubEntryId(101L);
+request.setExpectedMetaVersion(1L);
+request.setReason("Retired by administrator");
+HubShareResult result = aiMaintainerService.agentSpec().forceUnshareHubAgentSpec(request);
+```
+
+### 13.38. Get AgentSpec Source State
+
+#### Description
+
+Requires source WRITE; nullable when never shared.
+
+#### Method Signature
+
+```java
+HubResourceShareState getHubAgentSpecSourceState(String namespaceId, String name) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `namespaceId` | `String` | Required source Namespace. |
+| `name` | `String` | Required source AgentSpec name. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubResourceShareState` | Minimal sharing state, or `null`. |
+
+#### Request Example
+
+```java
+HubResourceShareState state = aiMaintainerService.agentSpec()
+        .getHubAgentSpecSourceState("public", "workspace-guide");
+```
+
+### 13.39. Get AgentSpec Governance State
+
+#### Description
+
+Requires global-administrator governance authority.
+
+#### Method Signature
+
+```java
+HubResourceShareState getHubAgentSpecGovernanceState(Long entryId) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `entryId` | `Long` | Required shared entry ID. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubResourceShareState` | Governance CAS state. |
+
+#### Request Example
+
+```java
+HubResourceShareState state = aiMaintainerService.agentSpec().getHubAgentSpecGovernanceState(101L);
+```
+
+### 13.40. Import Shared AgentSpec
+
+#### Description
+
+Requires Hub READ and target WRITE; creates an independent PRIVATE draft retaining AGENTS.md, files and provenance.
+
+#### Method Signature
+
+```java
+HubResourceTransferResult importHubAgentSpec(HubAgentSpecImportRequest request) throws NacosException;
+```
+
+#### Request Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| `request` | `HubAgentSpecImportRequest` | Required `hubEntryId`, `targetNamespaceId`, `targetName`; optional `targetVersion` defaults to `0.0.1`. Source selectors are forbidden. |
+
+#### Return Parameters
+
+| Type | Description |
+|---|---|
+| `HubResourceTransferResult` | Independent target draft and provenance. |
+
+#### Request Example
+
+```java
+HubAgentSpecImportRequest request = new HubAgentSpecImportRequest();
+request.setHubEntryId(101L);
+request.setTargetNamespaceId("team-b");
+request.setTargetName("workspace-imported");
+HubResourceTransferResult result = aiMaintainerService.agentSpec().importHubAgentSpec(request);
+```

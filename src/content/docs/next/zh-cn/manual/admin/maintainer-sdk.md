@@ -8475,7 +8475,9 @@ try {
 
 ## 13. Agentic Resource Hub
 
-通过 `aiMaintainerService.skill()` 获取 `SkillMaintainerService`。以下方法从 `3.3.0` 开始提供，请求和响应类型位于 `com.alibaba.nacos.api.ai.model.hub`。
+五类分别使用 `skill()`、`mcp()`、`agent()`、`prompt()`、`agentSpec()` facade。下文先保留 Skill，再逐项列出四类扩展的七个管理方法。模型均来自 `com.alibaba.nacos.api.ai.model.hub`；SDK 的 ID/CAS 字段为 `Long`，HTTP JSON 才按字符串序列化。字段约束与响应展开见 [Hub 扩展接口参考](./resource-hub-api.md)。所有新方法均可能抛出 `NacosException`，包括参数、权限、CAS/名称冲突、共享失效或关闭；示例 ID 和修订仅为占位，实际应读取最新状态。四类扩展没有直接克隆方法。
+
+通过 `aiMaintainerService.skill()` 获取 `SkillMaintainerService`。特殊管理请求和响应模型位于 `com.alibaba.nacos.api.ai.model.hub`，普通共享读取模型位于 `com.alibaba.nacos.api.ai.model.skills`。读取传入 `__nacos_ai_hub__` 复用按命名空间查询的 Skill SDK 方法；特殊管理方法和通用 ZIP 下载方法从 `3.3.0` 开始提供。
 
 ### 13.1. 共享 Skill
 
@@ -8723,163 +8725,70 @@ try {
 
 参数无效、权限不足、资源不可用或请求失败时抛出 `NacosException`。
 
-### 13.7. 查询共享 Skill 列表
+### 13.7. 通过现有 SDK 查询共享列表
 
-#### 描述
-
-分页查询当前有效的共享 Skill，支持按名称、描述关键词和标签筛选。
+沿用现有按命名空间查询的 Skill 方法及响应模型，不提供专用 Hub 列表、详情、正文或下载读取方法。管理列表默认按共享更新时间降序，`orderBy=download_count` 按独立 Hub 下载量降序；同值按条目 ID 升序，筛选排序先于分页。Client 搜索仍按热度排序。
 
 ```java
-Page<HubSkillSummary> listHubSkills(HubSkillListRequest request) throws NacosException;
+Page<SkillSummary> listSkills(String namespaceId, String skillName, String search,
+        int pageNo, int pageSize) throws NacosException;
+
+Page<SkillSummary> listSkills(String namespaceId, String skillName, String search,
+        String orderBy, String owner, String scope, String bizTag,
+        int pageNo, int pageSize) throws NacosException;
 ```
 
-#### 请求参数
-
-| 参数名 | 参数类型 | 描述 |
-|---|---|---|
-| `request.pageNo` | `int` | 页码，默认为 `1`，必须为正整数。 |
-| `request.pageSize` | `int` | 每页条数，默认为 `20`，范围为 `1` 至 `100`。 |
-| `request.query` | `String` | 名称或描述关键词，不区分大小写，最多 1024 个字符。 |
-| `request.tagsAll` | `List<String>` | 需全部匹配的标签，不区分大小写，最多 32 项，每项最多 128 个字符。通过 `tagsAll[0]`、`tagsAll[1]` 等传递。 |
-
-#### 返回参数
-
-| 参数类型 | 描述 |
-|---|---|
-| `Page<HubSkillSummary>` | 字段说明见 [Hub 运维 API](./admin-api.md#12-agentic-resource-hub)。 |
-
-#### 请求示例
+传入 `namespaceId="__nacos_ai_hub__"`，`skillName` 为可选的展示名筛选条件，`search` 为 `blur` 或 `accurate`。`pageNo` 为正整数，`pageSize` 为 1–100，`bizTag` 沿用单个子串筛选。返回 `Page<SkillSummary>`，其中 `name` 为不透明 ID 字符串，`hubEntryId` 在 JSON 中按字符串序列化，`discoverySource="HUB"`，并提供 `displayName`、`sourceDisplayName`、固定版本 `version`、`owner`、`bizTags`、表示分享时间的 `updateTime` 和独立共享 `downloadCount`。保留命名空间与不透明名称，不按展示名合并同名条目。
 
 ```java
-try {
-    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
-    HubSkillListRequest request = new HubSkillListRequest();
-    request.setPageNo(1);
-    request.setPageSize(20);
-    request.setQuery("find");
-    request.setTagsAll(java.util.Collections.singletonList("assistant"));
-    Page<HubSkillSummary> result = skillMaintainerService.listHubSkills(request);
-} catch (NacosException e) {
-    e.printStackTrace();
-}
+SkillMaintainerService skills = aiMaintainerService.skill();
+String sharedNamespace = "__nacos_ai_hub__";
+Page<SkillSummary> page = skills.listSkills(sharedNamespace, "find", "blur", 1, 20);
 ```
 
-#### 异常说明
-
-参数无效、权限不足、资源不可用或请求失败时抛出 `NacosException`。
-
-### 13.8. 查询共享 Skill 详情
-
-#### 描述
-
-根据 Hub 条目 ID 查询当前共享版本的详情。
+### 13.8. 通过现有 SDK 查询共享详情
 
 ```java
-HubSkillDetail getHubSkillDetail(Long hubEntryId) throws NacosException;
+SkillMeta getSkillMeta(String namespaceId, String skillName) throws NacosException;
 ```
 
-#### 请求参数
-
-| 参数名 | 参数类型 | 描述 |
-|---|---|---|
-| `hubEntryId` | `Long` | Hub 条目 ID，必须为正整数。 |
-
-#### 返回参数
-
-| 参数类型 | 描述 |
-|---|---|
-| `HubSkillDetail` | 字段说明见 [Hub 运维 API](./admin-api.md#12-agentic-resource-hub)。 |
-
-#### 请求示例
+传入共享列表返回的不透明 `name`，不要使用展示名。`SkillMeta.versions` 仅包含固定共享版本及其共享版本下载量，`labels` 将标签映射到该版本。仅通过独立源 READ 检查且 `sourceReadable=true` 时才返回源标识。发现来源使用 `discoverySource`，`origin` 仍用于现有导入和复制溯源。
 
 ```java
-try {
-    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
-    HubSkillDetail result = skillMaintainerService.getHubSkillDetail(101L);
-} catch (NacosException e) {
-    e.printStackTrace();
-}
+SkillMeta selected = skills.getSkillMeta(sharedNamespace, "101");
+String pinnedVersion = selected.getVersion();
 ```
 
-#### 异常说明
-
-参数无效、权限不足、资源不可用或请求失败时抛出 `NacosException`。
-
-### 13.9. 查询共享 Skill 内容
-
-#### 描述
-
-根据 Hub 条目 ID 获取共享版本的 `SKILL.md` 和资源文件内容。
+### 13.9. 通过现有 SDK 查询共享内容
 
 ```java
-HubSkillContent getHubSkillContent(Long hubEntryId) throws NacosException;
+Skill getSkillVersionDetail(String namespaceId, String skillName, String version)
+        throws NacosException;
 ```
 
-#### 请求参数
-
-| 参数名 | 参数类型 | 描述 |
-|---|---|---|
-| `hubEntryId` | `Long` | Hub 条目 ID，必须为正整数。 |
-
-#### 返回参数
-
-| 参数类型 | 描述 |
-|---|---|
-| `HubSkillContent` | 字段说明见 [Hub 运维 API](./admin-api.md#12-agentic-resource-hub)。 |
-
-#### 请求示例
+通过普通 Skill 版本接口传入所选详情的固定版本。返回的 `Skill` 保留共享命名空间和不透明名称，`skillMd` 与 `resource` 包含固定版本原始内容。显式版本不匹配时失败，不回退 latest；正文读取不计为下载。
 
 ```java
-try {
-    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
-    HubSkillContent result = skillMaintainerService.getHubSkillContent(101L);
-} catch (NacosException e) {
-    e.printStackTrace();
-}
+Skill content = skills.getSkillVersionDetail(sharedNamespace, selected.getName(), pinnedVersion);
 ```
 
-#### 异常说明
-
-参数无效、权限不足、资源不可用或请求失败时抛出 `NacosException`。
-
-### 13.10. 下载共享 Skill
-
-#### 描述
-
-根据 Hub 条目 ID 下载共享版本的 ZIP 包。
+### 13.10. 通过通用 Skill SDK 方法下载
 
 ```java
-HubSkillDownload getHubSkillDownload(Long hubEntryId) throws NacosException;
+// Since 3.3.0
+SkillDownload downloadSkillVersion(String namespaceId, String skillName, String version)
+        throws NacosException;
 ```
 
-#### 请求参数
-
-| 参数名 | 参数类型 | 描述 |
-|---|---|---|
-| `hubEntryId` | `Long` | Hub 条目 ID，必须为正整数。 |
-
-#### 返回参数
-
-| 参数类型 | 描述 |
-|---|---|
-| `HubSkillDownload` | 字段说明见 [Hub 运维 API](./admin-api.md#12-agentic-resource-hub)。 |
-
-`HubSkillDownload.getZipBytes()` 返回 ZIP 字节。
-
-#### 请求示例
+此通用命名空间方法通过现有 `/v3/admin/ai/skills/version/download` 接口同时支持普通与共享 Skill。`SkillDownload` 位于 `com.alibaba.nacos.api.ai.model.skills`，`getZipBytes()` 返回原始 ZIP 字节，`getDisplayName()` 返回真实 Skill 名称，`getResolvedVersion()` 返回解析版本，`getHubEntryId()` 返回共享 ID（普通资源可为空）。SDK 校验共享身份和版本响应头。ZIP 保留原始目录名称，成功的共享下载仅增加 Hub 计数，与源资源计数独立。
 
 ```java
-try {
-    SkillMaintainerService skillMaintainerService = aiMaintainerService.skill();
-    HubSkillDownload result = skillMaintainerService.getHubSkillDownload(101L);
-} catch (NacosException e) {
-    e.printStackTrace();
-}
+SkillDownload download = skills.downloadSkillVersion(
+        sharedNamespace, selected.getName(), pinnedVersion);
+byte[] zip = download.getZipBytes();
 ```
 
-#### 异常说明
-
-参数无效、权限不足、资源不可用或请求失败时抛出 `NacosException`。
+参数校验、鉴权、共享失效、能力关闭或传输失败时抛出 `NacosException`。分享、调整、撤销、下架、源共享状态、治理状态、导入及直接复制仍保留八个特殊管理方法。运行时发现选项 `nacosAiAccessHub` 默认为 `false`，只查询绑定命名空间，设为 `true` 开启组合发现；这不改变 HTTP 请求未传命名空间时仅查询 `public` 的行为。
 
 ### 13.11. 导入共享 Skill
 
@@ -8926,14 +8835,14 @@ try {
 
 参数无效、权限不足、资源不可用或请求失败时抛出 `NacosException`。
 
-### 13.12. 跨命名空间复制 Skill
+### 13.12. 跨命名空间克隆 Skill
 
 #### 描述
 
 将指定源版本复制到目标命名空间，创建独立的 Skill 草稿并保留来源信息。源 Skill 必须已启用、指定版本已上线。此操作不受 Hub 开关影响，不能传入 `hubEntryId`。
 
 ```java
-HubSkillTransferResult copyHubSkill(HubSkillTransferRequest request) throws NacosException;
+HubSkillTransferResult cloneHubSkill(HubSkillTransferRequest request) throws NacosException;
 ```
 
 #### 请求参数
@@ -8965,7 +8874,7 @@ try {
     request.setTargetNamespaceId("team-b");
     request.setTargetName("find-skills-copy");
     request.setTargetVersion("0.0.1");
-    HubSkillTransferResult result = skillMaintainerService.copyHubSkill(request);
+    HubSkillTransferResult result = skillMaintainerService.cloneHubSkill(request);
 } catch (NacosException e) {
     e.printStackTrace();
 }
@@ -8974,3 +8883,927 @@ try {
 #### 异常说明
 
 参数无效、权限不足、资源不可用或请求失败时抛出 `NacosException`。
+
+### 13.13. 共享 MCP
+
+#### 描述
+
+源 READ、WRITE；共享已启用、PUBLIC 的明确上线版本。
+
+#### 方法签名
+
+```java
+HubShareResult shareHubMcp(HubShareMcpRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubShareMcpRequest` | 必填 `sourceNamespaceId`、`sourceName`、`sourceVersion`；可选 `expectedSourceResourceId` 为 `Long`。[字段约束](./resource-hub-api.md#21-共享)。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | 共享条目及最新 CAS 修订号。 |
+
+#### 请求示例
+
+```java
+HubShareMcpRequest request = new HubShareMcpRequest();
+request.setSourceNamespaceId("public");
+request.setSourceName("weather-mcp");
+request.setSourceVersion("1.0.0");
+HubShareResult result = aiMaintainerService.mcp().shareHubMcp(request);
+```
+
+### 13.14. 调整 MCP 共享版本
+
+#### 描述
+
+源 READ、WRITE；使用最近的 CAS 修订切换明确上线版本。
+
+#### 方法签名
+
+```java
+HubShareResult adjustHubMcpShare(HubAdjustShareRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubAdjustShareRequest` | 必填 `hubEntryId`、`targetVersion`、`expectedMetaVersion`；ID/CAS 为 `Long`。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | 调整后的共享状态。 |
+
+#### 请求示例
+
+```java
+HubAdjustShareRequest request = new HubAdjustShareRequest();
+request.setHubEntryId(101L);
+request.setTargetVersion("2.0.0");
+request.setExpectedMetaVersion(1L);
+HubShareResult result = aiMaintainerService.mcp().adjustHubMcpShare(request);
+```
+
+### 13.15. 取消 MCP 共享
+
+#### 描述
+
+需源 WRITE，不删除源或已导入目标。
+
+#### 方法签名
+
+```java
+HubShareResult unshareHubMcp(HubUnshareRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubUnshareRequest` | 必填 `hubEntryId`、`expectedMetaVersion`，均为 `Long`。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | `active=false` 的共享状态。 |
+
+#### 请求示例
+
+```java
+HubUnshareRequest request = new HubUnshareRequest();
+request.setHubEntryId(101L);
+request.setExpectedMetaVersion(1L);
+HubShareResult result = aiMaintainerService.mcp().unshareHubMcp(request);
+```
+
+### 13.16. 强制下架 MCP 共享
+
+#### 描述
+
+需全局管理员治理权限并记录下架原因。
+
+#### 方法签名
+
+```java
+HubShareResult forceUnshareHubMcp(HubForceUnshareRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubForceUnshareRequest` | 必填 `hubEntryId`、`expectedMetaVersion`、`reason`；原因不超过 512 字符。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | 治理下架状态。 |
+
+#### 请求示例
+
+```java
+HubForceUnshareRequest request = new HubForceUnshareRequest();
+request.setHubEntryId(101L);
+request.setExpectedMetaVersion(1L);
+request.setReason("Retired by administrator");
+HubShareResult result = aiMaintainerService.mcp().forceUnshareHubMcp(request);
+```
+
+### 13.17. 查询 MCP 源共享状态
+
+#### 描述
+
+需源 WRITE；未共享时可返回 `null`。
+
+#### 方法签名
+
+```java
+HubResourceShareState getHubMcpSourceState(String namespaceId, String name) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `namespaceId` | `String` | 必填，源 Namespace。 |
+| `name` | `String` | 必填，源 MCP 名称。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubResourceShareState` | 条目、固定版本、CAS 和启用状态；可为 `null`。 |
+
+#### 请求示例
+
+```java
+HubResourceShareState state = aiMaintainerService.mcp()
+        .getHubMcpSourceState("public", "weather-mcp");
+```
+
+### 13.18. 查询 MCP 治理状态
+
+#### 描述
+
+需全局管理员治理权限。
+
+#### 方法签名
+
+```java
+HubResourceShareState getHubMcpGovernanceState(Long entryId) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `entryId` | `Long` | 必填，共享条目 ID。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubResourceShareState` | 用于管理员 CAS 操作的状态。 |
+
+#### 请求示例
+
+```java
+HubResourceShareState state = aiMaintainerService.mcp().getHubMcpGovernanceState(101L);
+```
+
+### 13.19. 导入共享 MCP
+
+#### 描述
+
+需 Hub READ 与目标 WRITE，生成独立 PRIVATE 草稿。STDIO、REF、Direct 按 [MCP 所有权规则](./resource-hub-api.md#27-从-hub-导入)处理。
+
+#### 方法签名
+
+```java
+HubResourceTransferResult importHubMcp(HubMcpImportRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubMcpImportRequest` | 必填 `hubEntryId`、`targetNamespaceId`、`targetName`；`targetVersion` 默认 `0.0.1`。可选 `mcpRemoteServerConfig` 为 `McpServerRemoteServiceConfig`，必须等于固定源配置，不能覆盖连接。禁止传源选择字段。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubResourceTransferResult` | 独立目标草稿及 `origin=HUB`。 |
+
+#### 请求示例
+
+```java
+HubMcpImportRequest request = new HubMcpImportRequest();
+request.setHubEntryId(101L);
+request.setTargetNamespaceId("team-b");
+request.setTargetName("weather-imported");
+HubResourceTransferResult result = aiMaintainerService.mcp().importHubMcp(request);
+```
+
+### 13.20. 共享 Agent
+
+#### 描述
+
+源 READ、WRITE；共享已启用、PUBLIC 的明确上线版本。
+
+#### 方法签名
+
+```java
+HubShareResult shareHubAgent(HubShareAgentRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubShareAgentRequest` | 必填 `sourceNamespaceId`、`sourceName`、`sourceVersion`；可选 `expectedSourceResourceId` 为 `Long`。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | 共享条目及 CAS 修订号。 |
+
+#### 请求示例
+
+```java
+HubShareAgentRequest request = new HubShareAgentRequest();
+request.setSourceNamespaceId("public");
+request.setSourceName("assistant");
+request.setSourceVersion("1.0.0");
+HubShareResult result = aiMaintainerService.agent().shareHubAgent(request);
+```
+
+### 13.21. 调整 Agent 共享版本
+
+#### 描述
+
+需源 READ、WRITE 与最新 CAS 修订。
+
+#### 方法签名
+
+```java
+HubShareResult adjustHubAgentShare(HubAdjustShareRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubAdjustShareRequest` | 必填 `hubEntryId`、`targetVersion`、`expectedMetaVersion`。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | 更新后的固定版本与状态。 |
+
+#### 请求示例
+
+```java
+HubAdjustShareRequest request = new HubAdjustShareRequest();
+request.setHubEntryId(101L);
+request.setTargetVersion("2.0.0");
+request.setExpectedMetaVersion(1L);
+HubShareResult result = aiMaintainerService.agent().adjustHubAgentShare(request);
+```
+
+### 13.22. 取消 Agent 共享
+
+#### 描述
+
+需源 WRITE，不删除已导入资源。
+
+#### 方法签名
+
+```java
+HubShareResult unshareHubAgent(HubUnshareRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubUnshareRequest` | 必填 `hubEntryId`、`expectedMetaVersion`。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | 撤销状态。 |
+
+#### 请求示例
+
+```java
+HubUnshareRequest request = new HubUnshareRequest();
+request.setHubEntryId(101L);
+request.setExpectedMetaVersion(1L);
+HubShareResult result = aiMaintainerService.agent().unshareHubAgent(request);
+```
+
+### 13.23. 强制下架 Agent 共享
+
+#### 描述
+
+需全局管理员治理权限。
+
+#### 方法签名
+
+```java
+HubShareResult forceUnshareHubAgent(HubForceUnshareRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubForceUnshareRequest` | 必填 `hubEntryId`、`expectedMetaVersion`、`reason`；原因最多 512 字符。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | 治理下架状态。 |
+
+#### 请求示例
+
+```java
+HubForceUnshareRequest request = new HubForceUnshareRequest();
+request.setHubEntryId(101L);
+request.setExpectedMetaVersion(1L);
+request.setReason("Retired by administrator");
+HubShareResult result = aiMaintainerService.agent().forceUnshareHubAgent(request);
+```
+
+### 13.24. 查询 Agent 源共享状态
+
+#### 描述
+
+需源 WRITE，未共享时可为 `null`。
+
+#### 方法签名
+
+```java
+HubResourceShareState getHubAgentSourceState(String namespaceId, String name) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `namespaceId` | `String` | 必填，源 Namespace。 |
+| `name` | `String` | 必填，源 Agent 名称。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubResourceShareState` | 精简共享状态或 `null`。 |
+
+#### 请求示例
+
+```java
+HubResourceShareState state = aiMaintainerService.agent()
+        .getHubAgentSourceState("public", "assistant");
+```
+
+### 13.25. 查询 Agent 治理状态
+
+#### 描述
+
+需全局管理员治理权限。
+
+#### 方法签名
+
+```java
+HubResourceShareState getHubAgentGovernanceState(Long entryId) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `entryId` | `Long` | 必填，Agent 共享条目 ID。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubResourceShareState` | 管理员 CAS 操作所需状态。 |
+
+#### 请求示例
+
+```java
+HubResourceShareState state = aiMaintainerService.agent().getHubAgentGovernanceState(101L);
+```
+
+### 13.26. 导入共享 Agent
+
+#### 描述
+
+需 Hub READ 与目标 WRITE，创建独立 PRIVATE 草稿，不复制动态端点、客户端或心跳。
+
+#### 方法签名
+
+```java
+HubResourceTransferResult importHubAgent(HubAgentImportRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubAgentImportRequest` | 必填 `hubEntryId`、`targetNamespaceId`、`targetName`；可选 `targetVersion` 默认 `0.0.1`。禁止源选择字段。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubResourceTransferResult` | 独立目标草稿及来源。 |
+
+#### 请求示例
+
+```java
+HubAgentImportRequest request = new HubAgentImportRequest();
+request.setHubEntryId(101L);
+request.setTargetNamespaceId("team-b");
+request.setTargetName("assistant-imported");
+HubResourceTransferResult result = aiMaintainerService.agent().importHubAgent(request);
+```
+
+### 13.27. 共享 Prompt
+
+#### 描述
+
+需源 READ、WRITE、已启用且明确上线版本；不新增 PUBLIC 或 scope 要求。
+
+#### 方法签名
+
+```java
+HubShareResult shareHubPrompt(HubSharePromptRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubSharePromptRequest` | 必填 `sourceNamespaceId`、`sourceName`（promptKey）、`sourceVersion`；可选 `expectedSourceResourceId`。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | 共享结果。 |
+
+#### 请求示例
+
+```java
+HubSharePromptRequest request = new HubSharePromptRequest();
+request.setSourceNamespaceId("public");
+request.setSourceName("greeting");
+request.setSourceVersion("1.0.0");
+HubShareResult result = aiMaintainerService.prompt().shareHubPrompt(request);
+```
+
+### 13.28. 调整 Prompt 共享版本
+
+#### 描述
+
+需源 READ、WRITE，以 CAS 固定新的已上线版本。
+
+#### 方法签名
+
+```java
+HubShareResult adjustHubPromptShare(HubAdjustShareRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubAdjustShareRequest` | 必填 `hubEntryId`、`targetVersion`、`expectedMetaVersion`。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | 调整结果与最新修订。 |
+
+#### 请求示例
+
+```java
+HubAdjustShareRequest request = new HubAdjustShareRequest();
+request.setHubEntryId(101L);
+request.setTargetVersion("2.0.0");
+request.setExpectedMetaVersion(1L);
+HubShareResult result = aiMaintainerService.prompt().adjustHubPromptShare(request);
+```
+
+### 13.29. 取消 Prompt 共享
+
+#### 描述
+
+需源 WRITE，源版本已下线也可清理。
+
+#### 方法签名
+
+```java
+HubShareResult unshareHubPrompt(HubUnshareRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubUnshareRequest` | 必填 `hubEntryId`、`expectedMetaVersion`。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | 撤销状态。 |
+
+#### 请求示例
+
+```java
+HubUnshareRequest request = new HubUnshareRequest();
+request.setHubEntryId(101L);
+request.setExpectedMetaVersion(1L);
+HubShareResult result = aiMaintainerService.prompt().unshareHubPrompt(request);
+```
+
+### 13.30. 强制下架 Prompt 共享
+
+#### 描述
+
+需全局管理员治理权限。
+
+#### 方法签名
+
+```java
+HubShareResult forceUnshareHubPrompt(HubForceUnshareRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubForceUnshareRequest` | 必填 `hubEntryId`、`expectedMetaVersion`、`reason`；原因最多 512 字符。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | 治理结果。 |
+
+#### 请求示例
+
+```java
+HubForceUnshareRequest request = new HubForceUnshareRequest();
+request.setHubEntryId(101L);
+request.setExpectedMetaVersion(1L);
+request.setReason("Retired by administrator");
+HubShareResult result = aiMaintainerService.prompt().forceUnshareHubPrompt(request);
+```
+
+### 13.31. 查询 Prompt 源共享状态
+
+#### 描述
+
+需源 WRITE，未共享时可为 `null`。
+
+#### 方法签名
+
+```java
+HubResourceShareState getHubPromptSourceState(String namespaceId, String name) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `namespaceId` | `String` | 必填，源 Namespace。 |
+| `name` | `String` | 必填，源 promptKey。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubResourceShareState` | 精简共享状态或 `null`。 |
+
+#### 请求示例
+
+```java
+HubResourceShareState state = aiMaintainerService.prompt()
+        .getHubPromptSourceState("public", "greeting");
+```
+
+### 13.32. 查询 Prompt 治理状态
+
+#### 描述
+
+需全局管理员治理权限。
+
+#### 方法签名
+
+```java
+HubResourceShareState getHubPromptGovernanceState(Long entryId) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `entryId` | `Long` | 必填，共享条目 ID。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubResourceShareState` | 治理 CAS 状态。 |
+
+#### 请求示例
+
+```java
+HubResourceShareState state = aiMaintainerService.prompt().getHubPromptGovernanceState(101L);
+```
+
+### 13.33. 导入共享 Prompt
+
+#### 描述
+
+需 Hub READ 与目标 WRITE，复制固定模板到独立 PRIVATE 草稿，不自动发布。
+
+#### 方法签名
+
+```java
+HubResourceTransferResult importHubPrompt(HubPromptImportRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubPromptImportRequest` | 必填 `hubEntryId`、`targetNamespaceId`、`targetName`；可选 `targetVersion` 默认 `0.0.1`。禁止源选择字段。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubResourceTransferResult` | 独立目标草稿及来源。 |
+
+#### 请求示例
+
+```java
+HubPromptImportRequest request = new HubPromptImportRequest();
+request.setHubEntryId(101L);
+request.setTargetNamespaceId("team-b");
+request.setTargetName("greeting-imported");
+HubResourceTransferResult result = aiMaintainerService.prompt().importHubPrompt(request);
+```
+
+### 13.34. 共享 AgentSpec
+
+#### 描述
+
+需源 READ、WRITE；源启用、PUBLIC，指定版本已上线。
+
+#### 方法签名
+
+```java
+HubShareResult shareHubAgentSpec(HubShareAgentSpecRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubShareAgentSpecRequest` | 必填 `sourceNamespaceId`、`sourceName`、`sourceVersion`；可选 `expectedSourceResourceId`。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | 共享条目及修订。 |
+
+#### 请求示例
+
+```java
+HubShareAgentSpecRequest request = new HubShareAgentSpecRequest();
+request.setSourceNamespaceId("public");
+request.setSourceName("workspace-guide");
+request.setSourceVersion("1.0.0");
+HubShareResult result = aiMaintainerService.agentSpec().shareHubAgentSpec(request);
+```
+
+### 13.35. 调整 AgentSpec 共享版本
+
+#### 描述
+
+需源 READ、WRITE，以 CAS 切换明确上线版本。
+
+#### 方法签名
+
+```java
+HubShareResult adjustHubAgentSpecShare(HubAdjustShareRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubAdjustShareRequest` | 必填 `hubEntryId`、`targetVersion`、`expectedMetaVersion`。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | 更新后的共享状态。 |
+
+#### 请求示例
+
+```java
+HubAdjustShareRequest request = new HubAdjustShareRequest();
+request.setHubEntryId(101L);
+request.setTargetVersion("2.0.0");
+request.setExpectedMetaVersion(1L);
+HubShareResult result = aiMaintainerService.agentSpec().adjustHubAgentSpecShare(request);
+```
+
+### 13.36. 取消 AgentSpec 共享
+
+#### 描述
+
+需源 WRITE，不删除源或已导入资源。
+
+#### 方法签名
+
+```java
+HubShareResult unshareHubAgentSpec(HubUnshareRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubUnshareRequest` | 必填 `hubEntryId`、`expectedMetaVersion`。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | 撤销结果。 |
+
+#### 请求示例
+
+```java
+HubUnshareRequest request = new HubUnshareRequest();
+request.setHubEntryId(101L);
+request.setExpectedMetaVersion(1L);
+HubShareResult result = aiMaintainerService.agentSpec().unshareHubAgentSpec(request);
+```
+
+### 13.37. 强制下架 AgentSpec 共享
+
+#### 描述
+
+需全局管理员治理权限。
+
+#### 方法签名
+
+```java
+HubShareResult forceUnshareHubAgentSpec(HubForceUnshareRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubForceUnshareRequest` | 必填 `hubEntryId`、`expectedMetaVersion`、`reason`；原因最多 512 字符。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubShareResult` | 治理下架状态。 |
+
+#### 请求示例
+
+```java
+HubForceUnshareRequest request = new HubForceUnshareRequest();
+request.setHubEntryId(101L);
+request.setExpectedMetaVersion(1L);
+request.setReason("Retired by administrator");
+HubShareResult result = aiMaintainerService.agentSpec().forceUnshareHubAgentSpec(request);
+```
+
+### 13.38. 查询 AgentSpec 源共享状态
+
+#### 描述
+
+需源 WRITE，未共享时可为 `null`。
+
+#### 方法签名
+
+```java
+HubResourceShareState getHubAgentSpecSourceState(String namespaceId, String name) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `namespaceId` | `String` | 必填，源 Namespace。 |
+| `name` | `String` | 必填，源 AgentSpec 名称。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubResourceShareState` | 精简共享状态或 `null`。 |
+
+#### 请求示例
+
+```java
+HubResourceShareState state = aiMaintainerService.agentSpec()
+        .getHubAgentSpecSourceState("public", "workspace-guide");
+```
+
+### 13.39. 查询 AgentSpec 治理状态
+
+#### 描述
+
+需全局管理员治理权限。
+
+#### 方法签名
+
+```java
+HubResourceShareState getHubAgentSpecGovernanceState(Long entryId) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `entryId` | `Long` | 必填，共享条目 ID。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubResourceShareState` | 治理 CAS 状态。 |
+
+#### 请求示例
+
+```java
+HubResourceShareState state = aiMaintainerService.agentSpec().getHubAgentSpecGovernanceState(101L);
+```
+
+### 13.40. 导入共享 AgentSpec
+
+#### 描述
+
+需 Hub READ 与目标 WRITE，创建独立 PRIVATE 草稿，保留 AGENTS.md、资源文件与来源。
+
+#### 方法签名
+
+```java
+HubResourceTransferResult importHubAgentSpec(HubAgentSpecImportRequest request) throws NacosException;
+```
+
+#### 请求参数
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `request` | `HubAgentSpecImportRequest` | 必填 `hubEntryId`、`targetNamespaceId`、`targetName`；可选 `targetVersion` 默认 `0.0.1`。禁止源选择字段。 |
+
+#### 返回参数
+
+| 参数类型 | 描述 |
+|---|---|
+| `HubResourceTransferResult` | 独立目标草稿及来源。 |
+
+#### 请求示例
+
+```java
+HubAgentSpecImportRequest request = new HubAgentSpecImportRequest();
+request.setHubEntryId(101L);
+request.setTargetNamespaceId("team-b");
+request.setTargetName("workspace-imported");
+HubResourceTransferResult result = aiMaintainerService.agentSpec().importHubAgentSpec(request);
+```
