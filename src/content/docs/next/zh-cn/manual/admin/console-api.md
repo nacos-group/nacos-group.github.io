@@ -9053,6 +9053,7 @@ Copilot 相关 API 提供配置获取/保存、Prompt 调试与优化、Skill �
 | data.connections[].available | `boolean` | 连接是否通过加载期校验。 |
 | data.connections[].unavailableReason | `string` | 连接不可用时的诊断原因。 |
 | data.connections[].apiKeyConfigured | `boolean` | 连接是否配置了凭据；凭据本身不会返回。 |
+| data.connections[].actualSource | `string` | 凭据实际生效来源：legacy 连接使用 `COPILOT_API_KEY` 时为 `ENVIRONMENT`，使用生效配置值时为 `CONFIGURATION`，没有凭据时为 `null`。只暴露来源，不暴露值。 |
 
 #### 示例
 
@@ -9084,7 +9085,8 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
         "source": "DEPLOYMENT",
         "enabled": true,
         "available": true,
-        "apiKeyConfigured": true
+        "apiKeyConfigured": true,
+        "actualSource": "CONFIGURATION"
       }
     ]
   }
@@ -9123,7 +9125,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 | `model` | `string` | 否 | 已废弃的 legacy 连接使用的模型标识；省略时保留已有值。 |
 | `studioUrl` | `string` | 否 | 关联的 AgentScope Studio 服务地址；省略时保留已有值或使用默认配置。 |
 | `studioProject` | `string` | 否 | 关联的 AgentScope Studio 项目标识；省略时保留已有值或使用默认配置。 |
-| `selectedConnection` | `string` | 否 | 路由使用的连接名。写入前会去除首尾空白；空字符串清除已存选择，回到默认选择顺序；省略时保留已存选择。 |
+| `selectedConnection` | `string` | 否 | 路由使用的连接名。写入前会去除首尾空白；空字符串清除已存选择，回到默认选择顺序。非空值必须指向存在、已启用且可用的连接：保存连接的声明名；连接不存在、被禁用或不可用时返回 HTTP 400。省略时保留已存选择。 |
 
 #### 返回数据
 

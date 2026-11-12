@@ -72,9 +72,9 @@ In a merged deployment, Copilot re-binds `nacos.copilot.*` when the configuratio
 
 ## 5. Console behavior
 
-The console Settings page lists every connection with its source (`Deployment config` or `Environment variable`), model, and availability, shows the connection currently in use, and stores the selection you submit. `Automatic` clears the stored selection so the default order applies.
+The console Settings page lists every connection with its source (`Deployment config` or `Legacy config`), model, availability, and — when the key comes from the process environment — a `Key from environment` badge, shows the connection currently in use, and stores the selection you submit. Only an existing, enabled, and available connection can be selected; the save request is rejected otherwise. `Automatic` clears the stored selection so the default order applies, and a stored selection that can no longer serve requests falls back to `Automatic` in the form.
 
-The stored api key is never returned in plain text: the Console API returns a mask, and connection metadata only reports whether a credential is configured. A saved selection that no longer exists is still listed so it can be changed.
+The stored api key is never returned in plain text: the Console API returns a mask, and connection metadata only reports whether a credential is configured and where it comes from (`ENVIRONMENT` or `CONFIGURATION`), never the value itself. A saved selection that no longer exists is still listed as a warning so it can be changed.
 
 ## 6. Migrate from the deprecated apiKey and model
 
@@ -90,3 +90,4 @@ Notes:
 - The legacy connection prefers `COPILOT_API_KEY` over the stored or deployment `apiKey`. Clearing the stored key from the console marks the credential as cleared, so the legacy connection stops falling back to the environment and becomes unavailable instead of silently reusing the process credential.
 - An explicit deployment `nacos.copilot.apiKey` still applies through the regular precedence, even after the stored key is cleared.
 - The console shows the legacy key and model section — marked as deprecated — only when the legacy connection exists.
+- Loading the legacy connection logs a deprecation warning with the migration hint on every configuration refresh; the connection keeps serving during the deprecation window.

@@ -9051,6 +9051,7 @@ None
 | data.connections[].available | `boolean` | Whether the connection passed load-time validation. |
 | data.connections[].unavailableReason | `string` | Diagnostic reason when the connection is unavailable. |
 | data.connections[].apiKeyConfigured | `boolean` | Whether the connection carries a credential; the credential itself is never returned. |
+| data.connections[].actualSource | `string` | Where the effective credential comes from: `ENVIRONMENT` for the legacy connection using `COPILOT_API_KEY`, `CONFIGURATION` for the effective configuration value, or `null` when the connection has no credential. Only the source is exposed, never the value. |
 
 #### Examples
 
@@ -9082,7 +9083,8 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
         "source": "DEPLOYMENT",
         "enabled": true,
         "available": true,
-        "apiKeyConfigured": true
+        "apiKeyConfigured": true,
+        "actualSource": "CONFIGURATION"
       }
     ]
   }
@@ -9121,7 +9123,7 @@ A user identity with the corresponding `namespace write` permission is required.
 | `model` | `string` | No | Model identifier used by the deprecated legacy connection. If omitted, the existing value is retained. |
 | `studioUrl` | `string` | No | Associated AgentScope Studio service URL. If omitted, the existing value or default configuration is retained. |
 | `studioProject` | `string` | No | Associated AgentScope Studio project identifier. If omitted, the existing value or default configuration is retained. |
-| `selectedConnection` | `string` | No | Connection name used by routing. Leading and trailing whitespace is trimmed; an empty string clears the stored selection so the default selection order applies. If omitted, the stored selection is retained. |
+| `selectedConnection` | `string` | No | Connection name used by routing. Leading and trailing whitespace is trimmed; an empty string clears the stored selection so the default selection order applies. A non-empty value must name an existing, enabled, and available connection; the declared connection name is stored, and an unknown, disabled, or unavailable connection is rejected with HTTP 400. If omitted, the stored selection is retained. |
 
 #### Response Data
 
