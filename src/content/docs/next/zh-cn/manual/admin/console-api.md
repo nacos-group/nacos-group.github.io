@@ -101,6 +101,7 @@ Nacos 3.X 的控制台 API 也提供了Swagger风格的文档，您可以通过�
 | datasource_platform           | `string` | Nacos集群的数据源类型，例如`mysql`、`derby`等，若为``时，说明使用默认数据源类型                        |
 | console_ui_enabled            | `string` | Nacos控制台UI是否启用，值为 `"true"` 或 `"false"`。 |
 | auth_enabled                  | `string` | Nacos是否启用鉴权，值为 `"true"` 或 `"false"`。 |
+| ai_hub_enabled                | `string` | Nacos是否启用 Hub，值为 `"true"` 或 `"false"`。 |
 | auth_admin_request            | `string` | Nacos是否需要初始化admin用户`nacos`，值为 `"true"` 或 `"false"`。 |
 | auth_system_type              | `string` | Nacos鉴权的插件类型，例如`nacos`等，若为``时，说明使用默认鉴权系统类型                                |
 | login_page_enabled            | `string` | Nacos控制台是否启用登录页，值为 `"true"` 或 `"false"`。 |
@@ -131,6 +132,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/state'
   "defaultMaxSize": "102400",
   "auth_system_type": "nacos",
   "auth_enabled": "true",
+  "ai_hub_enabled": "true",
   "defaultMaxAggrSize": "1024",
   "maxHealthCheckFailCount": "12",
   "maxContent": "10485760",
@@ -10313,5 +10315,686 @@ curl -sS -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v
   "code": 0,
   "message": "success",
   "data": "ok"
+}
+```
+
+## 13. Agentic Resource Hub
+
+Agentic Resource Hub 支持 Skill、MCP、Agent、Prompt、AgentSpec 的跨命名空间共享与导入，只有 Skill 支持直接克隆。本章详述 Skill；其余四类资源的 Console 固定管理路由、参数、返回值和读取方式见 [Hub 扩展接口参考](./resource-hub-api.md)。使用方式及开关配置见 [Agentic Resource Hub](../user/ai/resource-hub.md)。
+
+仅分享、调整、撤销、下架、状态查询、导入及直接复制使用特殊管理路由；列表、详情、正文和 ZIP 下载通过 `namespaceId=__nacos_ai_hub__` 复用现有 Skill 路径。不增加跨类型 list Hub 接口或 Client Hub 专用读取接口；客户端传入所选命名空间复用 `/v3/client/ai/skills/search` 和 `/v3/client/ai/skills`，组合结果时分别请求两个命名空间。不传命名空间仍默认 `public`。
+
+### 13.1. 共享 Skill
+
+#### 接口描述
+
+将源 Skill 的指定版本共享到 Hub。源 Skill 必须已启用、可见范围为 `PUBLIC`，且指定版本已上线。共享版本不会随 `latest` 标签自动变化。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`POST`
+
+请求体类型：`application/x-www-form-urlencoded`。
+
+#### 鉴权状态
+
+需要具有源 Skill 读取和写入权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/hub/skills/share`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|---|---|---|---|
+| `sourceNamespaceId` | `string` | **是** | 源 Skill 所属命名空间 ID。 |
+| `sourceName` | `string` | **是** | 源 Skill 名称。 |
+| `sourceVersion` | `string` | **是** | 源 Skill 的已上线版本，不支持 `latest`。 |
+| `expectedSourceResourceId` | `integer(int64)` | 否 | 预期的源资源 ID，必须为正整数，用于校验源资源身份。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `data` | `HubShareResult` | 操作结果。 |
+| `data.hubEntryId` | `string` | Hub 条目 ID。 |
+| `data.displayName` | `string` | 展示名称。 |
+| `data.sourceNamespaceId` | `string` | 源命名空间 ID。 |
+| `data.sourceResourceId` | `string` | 源 Skill 资源 ID。 |
+| `data.sourceName` | `string` | 源 Skill 名称。 |
+| `data.sourceVersionId` | `string` | 源版本 ID。 |
+| `data.sourceVersion` | `string` | 源版本号。 |
+| `data.metaVersion` | `string` | 共享记录的元数据版本。 |
+| `data.outcome` | `string` | 操作结果：`CREATED`、`ALREADY_SHARED` 或 `REACTIVATED`。 |
+| `data.active` | `boolean` | 共享是否有效。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/hub/skills/share' \
+  --data-urlencode 'sourceNamespaceId=public' \
+  --data-urlencode 'sourceName=find-skills' \
+  --data-urlencode 'sourceVersion=1.0.0'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "hubEntryId": "101",
+    "displayName": "find-skills",
+    "sourceNamespaceId": "public",
+    "sourceResourceId": "42",
+    "sourceName": "find-skills",
+    "sourceVersionId": "73",
+    "sourceVersion": "1.0.0",
+    "metaVersion": "2",
+    "outcome": "CREATED",
+    "active": true
+  }
+}
+```
+
+### 13.2. 调整共享版本
+
+#### 接口描述
+
+调整现有 Hub 条目的共享版本。目标版本必须属于同一源 Skill，并满足共享条件。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`POST`
+
+请求体类型：`application/x-www-form-urlencoded`。
+
+#### 鉴权状态
+
+需要具有源 Skill 写入权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/hub/skills/adjust`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|---|---|---|---|
+| `hubEntryId` | `integer(int64)` | **是** | Hub 条目 ID，必须为正整数。 |
+| `expectedMetaVersion` | `integer(int64)` | **是** | 当前共享记录的元数据版本，必须为正整数。 |
+| `targetVersion` | `string` | **是** | 调整后的已上线版本，不支持 `latest`。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `data` | `HubShareResult` | 字段与共享 Skill 接口相同。 |
+| `data.outcome` | `string` | `ADJUSTED`、`UNCHANGED`。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/hub/skills/adjust' \
+  --data-urlencode 'hubEntryId=101' \
+  --data-urlencode 'expectedMetaVersion=2' \
+  --data-urlencode 'targetVersion=1.1.0'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "hubEntryId": "101",
+    "displayName": "find-skills",
+    "sourceNamespaceId": "public",
+    "sourceResourceId": "42",
+    "sourceName": "find-skills",
+    "sourceVersionId": "74",
+    "sourceVersion": "1.1.0",
+    "metaVersion": "3",
+    "outcome": "ADJUSTED",
+    "active": true
+  }
+}
+```
+
+### 13.3. 取消共享
+
+#### 接口描述
+
+取消 Hub 共享，保留源 Skill。源 Skill 停用、转为私有或版本下线后仍可取消共享。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`POST`
+
+请求体类型：`application/x-www-form-urlencoded`。
+
+#### 鉴权状态
+
+需要具有源 Skill 写入权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/hub/skills/unshare`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|---|---|---|---|
+| `hubEntryId` | `integer(int64)` | **是** | Hub 条目 ID，必须为正整数。 |
+| `expectedMetaVersion` | `integer(int64)` | **是** | 当前共享记录的元数据版本，必须为正整数。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `data` | `HubShareResult` | 字段与共享 Skill 接口相同。 |
+| `data.outcome` | `string` | `UNSHARED`、`ALREADY_UNSHARED`。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/hub/skills/unshare' \
+  --data-urlencode 'hubEntryId=101' \
+  --data-urlencode 'expectedMetaVersion=2'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "hubEntryId": "101",
+    "displayName": "find-skills",
+    "sourceNamespaceId": "public",
+    "sourceResourceId": "42",
+    "sourceName": "find-skills",
+    "sourceVersionId": "73",
+    "sourceVersion": "1.0.0",
+    "metaVersion": "3",
+    "outcome": "UNSHARED",
+    "active": false
+  }
+}
+```
+
+### 13.4. 强制下架共享
+
+#### 接口描述
+
+由管理员强制下架 Hub 条目，并记录下架原因。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`POST`
+
+请求体类型：`application/x-www-form-urlencoded`。
+
+#### 鉴权状态
+
+需要具有控制台管理员权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/hub/skills/force-unshare`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|---|---|---|---|
+| `hubEntryId` | `integer(int64)` | **是** | Hub 条目 ID，必须为正整数。 |
+| `expectedMetaVersion` | `integer(int64)` | **是** | 当前共享记录的元数据版本，必须为正整数。 |
+| `reason` | `string` | **是** | 下架原因，不能为空，最多 512 个字符。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `data` | `HubShareResult` | 字段与共享 Skill 接口相同。 |
+| `data.outcome` | `string` | `FORCE_UNSHARED`、`ALREADY_UNSHARED`。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/hub/skills/force-unshare' \
+  --data-urlencode 'hubEntryId=101' \
+  --data-urlencode 'expectedMetaVersion=2' \
+  --data-urlencode 'reason=Withdraw this shared version'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "hubEntryId": "101",
+    "displayName": "find-skills",
+    "sourceNamespaceId": "public",
+    "sourceResourceId": "42",
+    "sourceName": "find-skills",
+    "sourceVersionId": "73",
+    "sourceVersion": "1.0.0",
+    "metaVersion": "3",
+    "outcome": "FORCE_UNSHARED",
+    "active": false
+  }
+}
+```
+
+### 13.5. 查询源 Skill 共享状态
+
+#### 接口描述
+
+根据源命名空间和 Skill 名称查询共享状态，返回后续操作所需的条目 ID 和元数据版本。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有源 Skill 写入权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/hub/skills/source-share`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|---|---|---|---|
+| `sourceNamespaceId` | `string` | **是** | 源 Skill 所属命名空间 ID。 |
+| `sourceName` | `string` | **是** | 源 Skill 名称。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `data` | `HubSkillShareState` | 共享状态；无共享记录时为 `null`。 |
+| `data.hubEntryId` | `string` | Hub 条目 ID。 |
+| `data.metaVersion` | `string` | 共享记录的元数据版本。 |
+| `data.sharedVersion` | `string` | 当前共享版本。 |
+| `data.active` | `boolean` | 共享是否有效。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" --get 'http://127.0.0.1:8080/v3/console/ai/hub/skills/source-share' \
+  --data-urlencode 'sourceNamespaceId=public' \
+  --data-urlencode 'sourceName=find-skills'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "hubEntryId": "101",
+    "metaVersion": "2",
+    "sharedVersion": "1.0.0",
+    "active": true
+  }
+}
+```
+
+### 13.6. 查询共享治理状态
+
+#### 接口描述
+
+由管理员根据 Hub 条目 ID 查询共享状态。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`GET`
+
+#### 鉴权状态
+
+需要具有控制台管理员权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/hub/skills/governance-state`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|---|---|---|---|
+| `hubEntryId` | `integer(int64)` | **是** | Hub 条目 ID，必须为正整数。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `data` | `HubSkillShareState` | 操作结果。 |
+| `data.hubEntryId` | `string` | Hub 条目 ID。 |
+| `data.metaVersion` | `string` | 共享记录的元数据版本。 |
+| `data.sharedVersion` | `string` | 当前共享版本。 |
+| `data.active` | `boolean` | 共享是否有效。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" --get 'http://127.0.0.1:8080/v3/console/ai/hub/skills/governance-state' \
+  --data-urlencode 'hubEntryId=101'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "hubEntryId": "101",
+    "metaVersion": "2",
+    "sharedVersion": "1.0.0",
+    "active": true
+  }
+}
+```
+
+### 13.7. 通过 Skill 接口查询共享列表
+
+通过保留命名空间复用现有 Skill 列表接口。不传命名空间仍查询 `public`，HTTP 接口不会自动合并两个空间。管理列表默认按共享更新时间降序；`orderBy=download_count` 按 Hub 独立下载量降序；相同值按 Hub 条目 ID 升序，先筛选排序再分页。Client 搜索仍按共享热度排序。
+
+共享读取需通过 Hub 访问检查。只有所选鉴权插件明确开启匿名 AI 访问并允许此操作时，才可匿名读取；公开可见不代表绕过鉴权。
+
+`GET /v3/console/ai/skills/list`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 描述 |
+|---|---|---|---|
+| `namespaceId` | `string` | **是** | `__nacos_ai_hub__`。 |
+| `skillName` | `string` | 否 | 展示名称筛选条件。 |
+| `search` | `string` | 否 | `accurate` 按完整名称匹配，`blur` 按名称子串匹配。 |
+| `owner` | `string` | 否 | 沿用拥有者筛选条件。 |
+| `scope` | `string` | 否 | 共享条目均为 `PUBLIC`，`PRIVATE` 不返回共享条目。 |
+| `bizTag` | `string` | 否 | 沿用单个业务标签子串筛选条件。 |
+| `orderBy` | `string` | 否 | 省略时按共享更新时间；`download_count` 按 Hub 独立下载量。 |
+| `pageNo` | `integer` | 否 | 正整数页码，默认 `1`。 |
+| `pageSize` | `integer` | 否 | 沿用 `PageForm` 默认 `100`，共享列表范围 `1` 到 `100`。 |
+
+#### 返回数据
+
+返回模型仍为 `Result<Page<SkillSummary>>`，包含 `totalCount`、`pageNumber`、`pagesAvailable` 和 `pageItems`。共享项的 `namespaceId="__nacos_ai_hub__"`，`name` 为不透明的十进制 Hub ID，`hubEntryId` 按字符串序列化，`discoverySource="HUB"`。其余字段为 `displayName`、`sourceDisplayName`、固定共享版本 `version`、`owner`、`description`、JSON 数组字符串 `bizTags`、表示分享时间的 `updateTime` 及独立的共享 `downloadCount`；同时 `enable=true`、`scope="PUBLIC"`、`writable=false`。使用命名空间和不透明名称保留身份，不按展示名去重。列表不暴露原始源命名空间 ID。
+
+#### 示例
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" --get 'http://127.0.0.1:8080/v3/console/ai/skills/list' \
+  --data-urlencode 'namespaceId=__nacos_ai_hub__' \
+  --data-urlencode 'skillName=find' --data-urlencode 'search=blur' \
+  --data-urlencode 'bizTag=assistant' --data-urlencode 'pageNo=1' --data-urlencode 'pageSize=20'
+```
+
+### 13.8. 通过 Skill 接口查询共享详情
+
+复用普通详情接口，将共享列表返回的 `name` 传入 `skillName`，不要传展示名或源资源名称。
+
+`GET /v3/console/ai/skills?namespaceId=__nacos_ai_hub__&skillName=101`
+
+返回 `Result<SkillMeta>`，包含上述共享摘要字段。`versions` 仅包含固定的共享版本：`version`、`status`、`author`、`commitMsg`、分享时间及共享条目该版本的 `downloadCount`。`labels` 将标签名映射到此固定版本。`sourceReadable` 表示是否另行具备源资源 READ 权限，仅在有该权限时返回 `sourceNamespaceId` 和 `sourceName`。发现来源使用 `discoverySource`，已有 `origin` 对象仍用于复制和导入溯源。
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "namespaceId": "__nacos_ai_hub__",
+    "name": "101",
+    "hubEntryId": "101",
+    "discoverySource": "HUB",
+    "displayName": "find-skills",
+    "sourceDisplayName": "Team A",
+    "owner": "nacos",
+    "description": "Find available skills",
+    "version": "1.0.0",
+    "bizTags": "[\"assistant\"]",
+    "updateTime": 1792022400000,
+    "downloadCount": 10,
+    "enable": true,
+    "scope": "PUBLIC",
+    "writable": false,
+    "labels": {
+      "latest": "1.0.0"
+    },
+    "versions": [
+      {
+        "version": "1.0.0",
+        "status": "online",
+        "author": "nacos",
+        "commitMsg": "Initial version",
+        "downloadCount": 3
+      }
+    ],
+    "sourceReadable": false
+  }
+}
+```
+
+### 13.9. 通过 Skill 版本接口查询共享内容
+
+使用共享详情返回的固定 `version`。显式传入不匹配版本会在读取正文前返回资源不存在，不回退到源资源的 latest 版本。不传 `version` 时解析当前固定的共享版本。
+
+`GET /v3/console/ai/skills/version?namespaceId=__nacos_ai_hub__&skillName=101&version=1.0.0`
+
+返回 `Result<Skill>`：`namespaceId` 为共享命名空间，`name` 为不透明条目 ID，`skillMd` 为固定版本的 `SKILL.md`，`resource` 将文件路径映射到普通 Skill 资源对象（`name`、`type`、`content`）。读取正文不增加下载量。
+
+### 13.10. 通过 Skill 版本接口下载共享资源
+
+`GET /v3/console/ai/skills/version/download?namespaceId=__nacos_ai_hub__&skillName=101&version=1.0.0`
+
+沿用正文读取的不透明 ID 和固定版本。成功响应为原始 `application/zip` 字节，带有 `Content-Disposition`、`X-Nacos-Hub-Entry-Id` 和 `X-Nacos-Skill-Resolved-Version` 响应头，不使用 JSON `Result` 或 Base64 字段。ZIP 保留真实 Skill 目录名称，保存前应核对响应头中的 ID 和版本与选中详情一致。每次成功下载仅增加共享条目的总下载量和固定版本下载量，不复用或增加源命名空间下的计数。
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" --get 'http://127.0.0.1:8080/v3/console/ai/skills/version/download' \
+  --data-urlencode 'namespaceId=__nacos_ai_hub__' \
+  --data-urlencode 'skillName=101' --data-urlencode 'version=1.0.0' \
+  -o find-skills-1.0.0.zip
+```
+
+### 13.11. 导入共享 Skill
+
+#### 接口描述
+
+将有效的 Hub 共享版本导入目标命名空间，创建独立的 Skill 草稿并保留来源信息。不能同时传入源命名空间、名称和版本参数。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`POST`
+
+请求体类型：`application/x-www-form-urlencoded`。
+
+#### 鉴权状态
+
+需通过 Hub 访问检查，并具有目标命名空间写入权限的用户身份。
+
+#### 请求URL
+
+`/v3/console/ai/hub/skills/import`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|---|---|---|---|
+| `hubEntryId` | `integer(int64)` | **是** | Hub 条目 ID，必须为正整数。 |
+| `targetNamespaceId` | `string` | **是** | 目标命名空间 ID。 |
+| `targetName` | `string` | **是** | 目标 Skill 名称，不能与目标命名空间中已有的 Skill 重名。 |
+| `targetVersion` | `string` | 否 | 目标草稿版本，默认为 `0.0.1`，不支持 `latest`。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `data` | `HubSkillTransferResult` | 操作结果。 |
+| `data.targetNamespaceId` | `string` | 目标命名空间 ID。 |
+| `data.targetName` | `string` | 目标 Skill 名称。 |
+| `data.draftVersion` | `string` | 新建的草稿版本。 |
+| `data.status` | `string` | 版本状态，固定为 `draft`。 |
+| `data.origin` | `string` | 来源类型：`HUB` 或 `DIRECT_COPY`。 |
+| `data.targetResourceId` | `string` | 目标 Skill 资源 ID。 |
+| `data.hubEntryId` | `string` | 导入来源的 Hub 条目 ID；直接复制时为空。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/hub/skills/import' \
+  --data-urlencode 'hubEntryId=101' \
+  --data-urlencode 'targetNamespaceId=team-b' \
+  --data-urlencode 'targetName=find-skills-copy' \
+  --data-urlencode 'targetVersion=0.0.1'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "targetNamespaceId": "team-b",
+    "targetName": "find-skills-copy",
+    "draftVersion": "0.0.1",
+    "status": "draft",
+    "origin": "HUB",
+    "targetResourceId": "104",
+    "hubEntryId": "101"
+  }
+}
+```
+
+### 13.12. 跨命名空间克隆 Skill
+
+#### 接口描述
+
+将指定源版本复制到目标命名空间，创建独立的 Skill 草稿并保留来源信息。源 Skill 必须已启用、指定版本已上线。此操作不受 Hub 开关影响，不能传入 `hubEntryId`。
+
+#### 起始版本
+
+`3.3.0`
+
+#### 请求方式
+
+`POST`
+
+请求体类型：`application/x-www-form-urlencoded`。
+
+#### 鉴权状态
+
+需要具有源 Skill 读取权限和目标命名空间写入权限的用户身份，并通过源资源可见性检查。
+
+#### 请求URL
+
+`/v3/console/ai/hub/skills/clone`
+
+#### 请求参数
+
+| 参数名 | 类型 | 必填 | 参数描述 |
+|---|---|---|---|
+| `sourceNamespaceId` | `string` | **是** | 源 Skill 所属命名空间 ID。 |
+| `sourceName` | `string` | **是** | 源 Skill 名称。 |
+| `sourceVersion` | `string` | **是** | 源 Skill 的已上线版本，不支持 `latest`。 |
+| `targetNamespaceId` | `string` | **是** | 目标命名空间 ID。 |
+| `targetName` | `string` | **是** | 目标 Skill 名称，不能与目标命名空间中已有的 Skill 重名。 |
+| `targetVersion` | `string` | 否 | 目标草稿版本，默认为 `0.0.1`，不支持 `latest`。 |
+
+#### 返回数据
+
+| 参数名 | 参数类型 | 描述 |
+|---|---|---|
+| `data` | `HubSkillTransferResult` | 操作结果。 |
+| `data.targetNamespaceId` | `string` | 目标命名空间 ID。 |
+| `data.targetName` | `string` | 目标 Skill 名称。 |
+| `data.draftVersion` | `string` | 新建的草稿版本。 |
+| `data.status` | `string` | 版本状态，固定为 `draft`。 |
+| `data.origin` | `string` | 来源类型：`HUB` 或 `DIRECT_COPY`。 |
+| `data.targetResourceId` | `string` | 目标 Skill 资源 ID。 |
+| `data.hubEntryId` | `string` | 导入来源的 Hub 条目 ID；直接复制时为空。 |
+
+#### 示例
+
+* 请求示例
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/hub/skills/clone' \
+  --data-urlencode 'sourceNamespaceId=public' \
+  --data-urlencode 'sourceName=find-skills' \
+  --data-urlencode 'sourceVersion=1.0.0' \
+  --data-urlencode 'targetNamespaceId=team-b' \
+  --data-urlencode 'targetName=find-skills-copy' \
+  --data-urlencode 'targetVersion=0.0.1'
+```
+
+* 返回示例
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "targetNamespaceId": "team-b",
+    "targetName": "find-skills-copy",
+    "draftVersion": "0.0.1",
+    "status": "draft",
+    "origin": "DIRECT_COPY",
+    "targetResourceId": "104",
+    "hubEntryId": null
+  }
 }
 ```
