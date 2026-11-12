@@ -9010,7 +9010,7 @@ Copilot 相关 API 提供配置获取/保存、Prompt 调试与优化、Skill �
 
 #### 接口描述
 
-获取当前 Copilot 配置。当前实现从存储配置中复制 `apiKey`、`model`、`studioUrl`、`studioProject`；响应模型同时序列化默认的 `enabled=true` 和 `defaultNamespace=public`。后两项不能通过 11.2 的保存接口修改。
+获取当前 Copilot 配置。返回值包含已保存的可编辑字段、脱敏后的模型连接列表，以及当前实际路由到的连接。已保存的 apiKey 始终以掩码返回，连接列表中不包含任何凭据。
 
 #### 起始版本
 
@@ -9036,13 +9036,23 @@ Copilot 相关 API 提供配置获取/保存、Prompt 调试与优化、Skill �
 
 | 参数名 | 参数类型 | 描述 |
 |--------|----------|------|
-| data | `CopilotProperties` | Copilot 配置。 |
-| data.enabled | `boolean` | Copilot 功能是否启用。 |
-| data.defaultNamespace | `string` | 默认使用的命名空间 ID。 |
-| data.apiKey | `string` | 调用大模型等外部服务的 API Key（脱敏或原文由实现决定）。 |
-| data.model | `string` | 默认使用的模型标识。 |
+| data | `ConsoleCopilotConfig` | Copilot 配置视图。 |
+| data.apiKey | `string` | 已保存 apiKey 的掩码；未保存密钥时为 `null`。保存时原样提交表示保留已存密钥。 |
+| data.model | `string` | 已保存的模型标识，用于已废弃的 legacy 连接。 |
 | data.studioUrl | `string` | 关联的 Studio 服务地址。 |
 | data.studioProject | `string` | 关联的 Studio 项目标识。 |
+| data.selectedConnection | `string` | 控制台保存的连接名；为 `null` 表示使用默认选择顺序。 |
+| data.activeConnection | `string` | 当前实际路由到的连接名；没有可用连接时为 `null`。 |
+| data.connections | `Array<CopilotConnectionInfo>` | 当前节点已知的模型连接。 |
+| data.connections[].name | `string` | 规范化后的连接名。 |
+| data.connections[].providerId | `string` | 模型提供方标识。 |
+| data.connections[].displayName | `string` | 连接展示名。 |
+| data.connections[].model | `string` | 连接使用的模型标识。 |
+| data.connections[].source | `string` | `DEPLOYMENT` 表示来自 `nacos.copilot.connections.*`，`LEGACY` 表示已废弃的 apiKey/model 连接。 |
+| data.connections[].enabled | `boolean` | 连接是否启用。 |
+| data.connections[].available | `boolean` | 连接是否通过加载期校验。 |
+| data.connections[].unavailableReason | `string` | 连接不可用时的诊断原因。 |
+| data.connections[].apiKeyConfigured | `boolean` | 连接是否配置了凭据；凭据本身不会返回。 |
 
 #### 示例
 
@@ -9059,12 +9069,24 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
   "code": 0,
   "message": "success",
   "data": {
-    "enabled": true,
-    "defaultNamespace": "public",
-    "apiKey": "",
-    "model": "qwen-turbo",
-    "studioUrl": null,
-    "studioProject": "NacosCopilot"
+    "apiKey": "qw******ey",
+    "model": "qwen-max",
+    "studioUrl": "http://127.0.0.1:8080",
+    "studioProject": "NacosCopilot",
+    "selectedConnection": "prod-qwen",
+    "activeConnection": "prod-qwen",
+    "connections": [
+      {
+        "name": "prod-qwen",
+        "providerId": "dashscope",
+        "displayName": "Production Qwen",
+        "model": "qwen-max",
+        "source": "DEPLOYMENT",
+        "enabled": true,
+        "available": true,
+        "apiKeyConfigured": true
+      }
+    ]
   }
 }
 ```
@@ -9073,7 +9095,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 
 #### 接口描述
 
-创建或更新 Copilot 配置，仅处理 `apiKey`、`model`、`studioUrl`、`studioProject`。请求模型虽然还暴露 `enabled`、`defaultNamespace`，但当前 Controller 会忽略这两个字段：已有配置保留原值，新配置使用默认值。
+创建或更新 Copilot 配置，仅处理 `apiKey`、`model`、`studioUrl`、`studioProject`、`selectedConnection`；其他字段（包括 `enabled`、`defaultNamespace`）会被忽略。请求中缺失的字段保留已存值。已保存的 `apiKey` 与 `model` 属于已废弃的 legacy 连接，建议改用 `nacos.copilot.connections.*` 配置模型连接。
 
 #### 起始版本
 
@@ -9097,10 +9119,11 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
-| `apiKey` | `string` | 否 | Copilot 调用模型服务时使用的 API Key；省略时保留已有值或使用默认配置。 |
-| `model` | `string` | 否 | Copilot 使用的模型标识；省略时保留已有值或使用默认配置。 |
+| `apiKey` | `string` | 否 | 已存密钥的三态操作：省略或提交掩码值表示保留已存密钥；提交新值表示替换；提交空字符串表示清除已存密钥，并让 legacy 连接不再回退到 `COPILOT_API_KEY`。没有已存密钥时提交空值是无操作。 |
+| `model` | `string` | 否 | 已废弃的 legacy 连接使用的模型标识；省略时保留已有值。 |
 | `studioUrl` | `string` | 否 | 关联的 AgentScope Studio 服务地址；省略时保留已有值或使用默认配置。 |
 | `studioProject` | `string` | 否 | 关联的 AgentScope Studio 项目标识；省略时保留已有值或使用默认配置。 |
+| `selectedConnection` | `string` | 否 | 路由使用的连接名。写入前会去除首尾空白；空字符串清除已存选择，回到默认选择顺序；省略时保留已存选择。 |
 
 #### 返回数据
 
@@ -9115,7 +9138,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 ```shell
 curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/copilot/config' \
   -H 'Content-Type: application/json' \
-  -d '{"apiKey":"your-api-key","model":"qwen-turbo","studioUrl":"http://127.0.0.1:8080","studioProject":"NacosCopilot"}'
+  -d '{"selectedConnection":"prod-qwen","apiKey":"your-api-key","model":"qwen-max","studioUrl":"http://127.0.0.1:8080","studioProject":"NacosCopilot"}'
 ```
 
 * 返回示例

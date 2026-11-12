@@ -9008,7 +9008,7 @@ Copilot-related APIs provide configuration retrieval and saving, Prompt debuggin
 
 #### Description
 
-Get the current Copilot configuration. The current implementation copies `apiKey`, `model`, `studioUrl`, and `studioProject` from stored configuration. The response model also serializes the defaults `enabled=true` and `defaultNamespace=public`; these two fields cannot be changed through the save operation in 11.2.
+Get the current Copilot configuration. The response contains the stored editable fields, the sanitized model connection list, and the connection currently routed for Copilot. The stored api key is always masked, and no connection entry contains a credential.
 
 #### Since
 
@@ -9034,13 +9034,23 @@ None
 
 | Name | Type | Description |
 |--------|----------|------|
-| data | `CopilotProperties` | Copilot configuration. |
-| data.enabled | `boolean` | whether the Copilot feature is enabled. |
-| data.defaultNamespace | `string` | default namespace ID. |
-| data.apiKey | `string` | API key used to call external services such as large models. Whether it is masked or returned as raw text depends on the implementation. |
-| data.model | `string` | default model identifier. |
+| data | `ConsoleCopilotConfig` | Copilot configuration view. |
+| data.apiKey | `string` | Masked stored api key; `null` when no key is stored. Save it unchanged to keep the stored key. |
+| data.model | `string` | Stored model identifier used by the deprecated legacy connection. |
 | data.studioUrl | `string` | associated Studio service address. |
 | data.studioProject | `string` | associated Studio project identifier. |
+| data.selectedConnection | `string` | Connection name stored by the console; `null` when the default selection order applies. |
+| data.activeConnection | `string` | Connection name currently routed for Copilot; `null` when no connection is usable. |
+| data.connections | `Array<CopilotConnectionInfo>` | Model connections known to this node. |
+| data.connections[].name | `string` | Normalized connection name. |
+| data.connections[].providerId | `string` | Model provider identifier. |
+| data.connections[].displayName | `string` | Display name of the connection. |
+| data.connections[].model | `string` | Model identifier used by the connection. |
+| data.connections[].source | `string` | `DEPLOYMENT` for `nacos.copilot.connections.*`, `LEGACY` for the deprecated api key/model connection. |
+| data.connections[].enabled | `boolean` | Whether the connection is enabled. |
+| data.connections[].available | `boolean` | Whether the connection passed load-time validation. |
+| data.connections[].unavailableReason | `string` | Diagnostic reason when the connection is unavailable. |
+| data.connections[].apiKeyConfigured | `boolean` | Whether the connection carries a credential; the credential itself is never returned. |
 
 #### Examples
 
@@ -9057,12 +9067,24 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
   "code": 0,
   "message": "success",
   "data": {
-    "enabled": true,
-    "defaultNamespace": "public",
-    "apiKey": "",
-    "model": "qwen-turbo",
-    "studioUrl": null,
-    "studioProject": "NacosCopilot"
+    "apiKey": "qw******ey",
+    "model": "qwen-max",
+    "studioUrl": "http://127.0.0.1:8080",
+    "studioProject": "NacosCopilot",
+    "selectedConnection": "prod-qwen",
+    "activeConnection": "prod-qwen",
+    "connections": [
+      {
+        "name": "prod-qwen",
+        "providerId": "dashscope",
+        "displayName": "Production Qwen",
+        "model": "qwen-max",
+        "source": "DEPLOYMENT",
+        "enabled": true,
+        "available": true,
+        "apiKeyConfigured": true
+      }
+    ]
   }
 }
 ```
@@ -9071,7 +9093,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 
 #### Description
 
-Create or update the Copilot configuration. Only `apiKey`, `model`, `studioUrl`, and `studioProject` are processed. Although the request model also exposes `enabled` and `defaultNamespace`, the current controller ignores both fields: existing values are preserved and new configurations use their defaults.
+Create or update the Copilot configuration. Only `apiKey`, `model`, `studioUrl`, `studioProject`, and `selectedConnection` are processed; other fields, including `enabled` and `defaultNamespace`, are ignored. A field absent from the request keeps its stored value. The stored `apiKey` and `model` belong to the deprecated legacy connection; prefer the model connections configured under `nacos.copilot.connections.*`.
 
 #### Since
 
@@ -9095,10 +9117,11 @@ A user identity with the corresponding `namespace write` permission is required.
 
 | Name | Type | Required | Description |
 |--------|------|------|----------|
-| `apiKey` | `string` | No | API key used by Copilot to call the model service. If omitted, the existing value or default configuration is retained. |
-| `model` | `string` | No | Model identifier used by Copilot. If omitted, the existing value or default configuration is retained. |
+| `apiKey` | `string` | No | Three-state stored key: omit it or send the masked value to keep the stored key, send a new value to replace it, or send an empty string to clear a stored key and stop the legacy connection from falling back to `COPILOT_API_KEY`. An empty value without a stored key is a no-op. |
+| `model` | `string` | No | Model identifier used by the deprecated legacy connection. If omitted, the existing value is retained. |
 | `studioUrl` | `string` | No | Associated AgentScope Studio service URL. If omitted, the existing value or default configuration is retained. |
 | `studioProject` | `string` | No | Associated AgentScope Studio project identifier. If omitted, the existing value or default configuration is retained. |
+| `selectedConnection` | `string` | No | Connection name used by routing. Leading and trailing whitespace is trimmed; an empty string clears the stored selection so the default selection order applies. If omitted, the stored selection is retained. |
 
 #### Response Data
 
@@ -9113,7 +9136,7 @@ A user identity with the corresponding `namespace write` permission is required.
 ```shell
 curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/copilot/config' \
   -H 'Content-Type: application/json' \
-  -d '{"apiKey":"your-api-key","model":"qwen-turbo","studioUrl":"http://127.0.0.1:8080","studioProject":"NacosCopilot"}'
+  -d '{"selectedConnection":"prod-qwen","apiKey":"your-api-key","model":"qwen-max","studioUrl":"http://127.0.0.1:8080","studioProject":"NacosCopilot"}'
 ```
 
 * Response example
