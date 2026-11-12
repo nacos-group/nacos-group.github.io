@@ -14,7 +14,11 @@ sidebar:
 
 注册到 Nacos MCP 管理中的服务，可以通过 Spring AI Alibaba 框架或者 Nacos MCP Router 进行发现和调用，也可以对接 Higress 网关，实现全链路集成。
 
+3.3 的 MCP 草稿、审核和发布流程见 [MCP 管理](./mcp-registry.md)。本文中的自动注册是否创建草稿取决于所用框架及参数；原有直接注册方式保留兼容行为，启用 Pipeline 不会自动把它改为审核发布。采用新生命周期接口修改定义时，应创建新版本草稿并发布，运行中的服务如何感知变更取决于接入组件。
+
 ![Auto-register](/img/doc/manual/user/ai/ai-mcp-auto-register.svg)
+
+Nacos 3.3 默认开启客户端鉴权。自动注册和发现均需配置有相应权限的 Nacos 账号，不能将用户名、密码留空或假定密码为 `nacos`。下文 Spring 配置和 Python 代码从 `NACOS_USERNAME`、`NACOS_PASSWORD` 环境变量读取凭据，请在启动应用前设置。账号与权限准备见[配置访问凭据](../auth.mdx)。
 
 ## MCP Server 自动注册
 
@@ -64,8 +68,8 @@ spring:
         nacos:
           server-addr:          # 替换为你的 Nacos 地址
           namespace: public    # Nacos 命名空间 ID（默认为public）
-          username:           # 开源控制台用户名 
-          password:           # 开源控制台密码
+          username: ${NACOS_USERNAME}
+          password: ${NACOS_PASSWORD}
           register:
             enabled: true   # 是否开启服务注册
 ```
@@ -97,23 +101,27 @@ pip install nacos-mcp-wrapper-python
 
 #### 2.自动注册参数配置
 ```python
+import os
+from nacos_mcp_wrapper.server.nacos_settings import NacosSettings
+
 nacos_settings = NacosSettings()
 nacos_settings.SERVER_ADDR = "127.0.0.1:8848" # <nacos_server_addr> e.g. 127.0.0.1:8848
 nacos_settings.NAMESPACE= "public" # Nacos 命名空间ID
-nacos_settings.USERNAME="" #开源控制台用户名
-nacos_settings.PASSWORD="" #开源控制台密码
+nacos_settings.USERNAME = os.environ["NACOS_USERNAME"]
+nacos_settings.PASSWORD = os.environ["NACOS_PASSWORD"]
 ```
 
 #### 3.代码编写
 ```python
+import os
 from nacos_mcp_wrapper.server.nacos_mcp import NacosMCP
 from nacos_mcp_wrapper.server.nacos_settings import NacosSettings
 
 # Create an MCP server instance
 nacos_settings = NacosSettings()
 nacos_settings.SERVER_ADDR = "127.0.0.1:8848" # <nacos_server_addr> e.g. 127.0.0.1:8848
-nacos_settings.USERNAME=""
-nacos_settings.PASSWORD=""
+nacos_settings.USERNAME = os.environ["NACOS_USERNAME"]
+nacos_settings.PASSWORD = os.environ["NACOS_PASSWORD"]
 mcp = NacosMCP("nacos-mcp-python", nacos_settings=nacos_settings, version="1.0.1", port=18001)
 
 # Register an addition tool
@@ -222,8 +230,8 @@ spring:
         nacos:
           namespace: 4ad3108b-4d44-43d0-9634-3c1ac4850c8c
           server-addr: 127.0.0.1:8848
-          username: nacos
-          password: nacos
+          username: ${NACOS_USERNAME}
+          password: ${NACOS_PASSWORD}
           client:
             enabled: true
             sse:

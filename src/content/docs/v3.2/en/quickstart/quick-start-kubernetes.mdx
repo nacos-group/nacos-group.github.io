@@ -1,0 +1,117 @@
+---
+title: Nacos Kubernetes Quick Start
+keywords: [nacos,kubernetes,Quick Start]
+description: This document includes a buildable Nacos Docker image designed to leverage StatefulSets for deploying Nacos on Kubernetes.
+sidebar:
+    order: 3
+---
+
+# Nacos Kubernetes Quick Start
+
+This quick start guide helps you quickly deploy and use Nacos in Kubernetes through the Nacos Docker image.
+
+:::note
+- This quick start is intended to help you quickly install, deploy, and get started with Nacos. The Nacos service created by this quick start **does not enable client access authentication**. We recommend using it only for testing. For production deployment, **enable authentication** to avoid **security** risks.
+- This quick start is intended to help you quickly install, deploy, and get started with Nacos. To make it convenient to quickly deploy Nacos in a Kubernetes environment, this quick start uses **default database configuration** when connecting to the database. We recommend using it only for testing. For production deployment, **be sure to modify the deployed database configuration** to avoid **security** risks.
+- Nacos is positioned as an internal IDC application component, not a product for public network environments. We recommend deploying it in an isolated internal network environment and **strongly discourage** deployment in public network environments.
+:::
+
+## 1. Prepare the Environment
+
+To install and deploy Nacos using this quick start method, install [Kubernetes](https://kubernetes.io/).
+
+## 2. Download the nacos-k8s Project
+
+```shell
+git clone https://github.com/nacos-group/nacos-k8s.git
+cd nacos-k8s
+```
+
+## 3. Quick Start
+
+> When using this method to start quickly, note that persistent volumes are not used, so there may be a risk of data loss.
+
+### 3.1. Edit the Deployment Configuration File and Add Authentication Configuration
+
+Edit the `/deploy/nacos/nacos-quick-start.yaml` file and add the following three environment variables:
+
+- NACOS_AUTH_TOKEN: The secret key used by Nacos to generate JWT tokens. Use a string longer than 32 characters and encode it with Base64.
+- NACOS_AUTH_IDENTITY_KEY: The identity key for Inner APIs between Nacos Servers. Required.
+- NACOS_AUTH_IDENTITY_VALUE: The identity value for Inner APIs between Nacos Servers. Required.
+
+Example:
+
+```yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nacos-headless
+  ....
+
+            - name: NACOS_SERVERS
+              value: "nacos-0.nacos-headless.default.svc.cluster.local:8848 nacos-1.nacos-headless.default.svc.cluster.local:8848 nacos-2.nacos-headless.default.svc.cluster.local:8848"
+            - name: NACOS_AUTH_TOKEN
+              value: ${your_nacos_auth_secret_token}
+            - name: NACOS_AUTH_IDENTITY_KEY
+              value: ${your_nacos_server_identity_key}
+            - name: NACOS_AUTH_IDENTITY_VALUE
+              value: ${your_nacos_server_identity_value}
+  selector:
+    matchLabels:
+      app: nacos
+```
+
+### 3.2. Run the Quick Start Script to Start Nacos
+
+```shell
+cd nacos-k8s
+chmod +x quick-startup.sh
+./quick-startup.sh
+```
+
+## 4. Verify Whether Nacos Started Successfully
+
+Run `kubectl logs -f $pod_name` to view the Nacos startup logs. If you see the following log, the service has started successfully.
+
+```
+Nacos started successfully in xxxx mode. use xxxx storage
+```
+
+You can quickly verify Nacos features with the following services.
+
+### 4.1. Nacos Console Page
+
+Open any browser and enter `http://127.0.0.1:8080` to access the Nacos console page.
+
+> Note: The first time you open the console, you are asked to initialize the password for the administrator user `nacos`.
+
+### 4.2. Service Registration
+
+`curl -X POST 'http://127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=quickstart.test.service&ip=127.0.0.1&port=8080'`
+
+### 4.3. Service Discovery
+
+`curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=quickstart.test.service'`
+
+### 4.4. Publish Configuration
+
+```shell
+# Log in to obtain an access token.
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/auth/user/login' -d 'username=nacos' -d 'password=${your_password}'
+# Use the access token to create a configuration.
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=quickstart.test.config&groupName=test&content=HelloWorld' -H "accessToken:${your_access_token}"
+```
+
+:::note
+Accessing Admin APIs requires an access token by default. You can obtain an access token through the `POST /nacos/v3/auth/user/login` API.
+:::
+
+### 4.5. Get Configuration
+
+`curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/cs/config?dataId=quickstart.test.config&groupName=test'`
+
+## Related Projects
+
+* [Nacos](https://github.com/alibaba/nacos)
+* [Nacos Docker](https://github.com/nacos-group/nacos-k8s)

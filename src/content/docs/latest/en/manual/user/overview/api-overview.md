@@ -105,3 +105,22 @@ The following table summarizes common error codes and messages:
 | `23002`    | `node down failure`          | The node offline operation failed.           |
 | ...     | ...                          | ...                |
 | `30000`    | `server error`               | Other internal server errors.                |
+
+### 3.4. HTTP Request Correlation ID
+
+Nacos 3.3 supports the `Nacos-Request-Id` header to correlate an HTTP request between the caller and the server. This convention applies to Client, Admin, and Console Open APIs.
+
+Applications calling HTTP APIs directly should generate a unique ID, such as a UUID, for each request and retain it in caller logs for troubleshooting. The header is **optional**; the server generates a UUID when it is missing or blank. The 3.3 Java Client SDK automatically sends this header with HTTP requests to Nacos.
+
+This example uses a [token saved after login](../auth.mdx) and generates a request ID with `uuidgen`:
+
+```bash
+NACOS_REQUEST_ID=$(uuidgen)
+curl -sS -G 'http://127.0.0.1:8848/nacos/v3/client/cs/config' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}" \
+  -H "Nacos-Request-Id: ${NACOS_REQUEST_ID}" \
+  --data-urlencode 'dataId=example.properties' \
+  --data-urlencode 'groupName=DEFAULT_GROUP'
+```
+
+`Nacos-Request-Id` is only for request correlation. It is not a credential or an idempotency key: reusing an ID does not prevent duplicate writes, and the response is not guaranteed to echo it. It differs from `X-Nacos-Client-Id`, which identifies a logical client and must follow the requirements and reuse rules of each API.

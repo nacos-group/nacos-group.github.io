@@ -31,7 +31,7 @@ Http://nacos.com:port/openAPI Domain name + SLB mode(Intranet, do not expose int
 Make sure that it is installed and used in the environment:
 
 1. 64 bit OS Linux/Unix/Mac, recommended Linux system.
-2. 64 bit JDK 1.8+; [Download](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html). [Configuration](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javome_t/).
+2. 64-bit JDK 17+ (required by Nacos Server 3.3.0); [Download](https://www.oracle.com/java/technologies/downloads/#java17). [Configuration](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/).
 3. Maven 3.2.x+; [Download](https://maven.apache.org/download.cgi). [Configuration](https://maven.apache.org/settings.html).
 4. 3 or more Nacos Nodes;
 
@@ -42,20 +42,21 @@ You can get Nacos in two ways.
 ### Download source code from Github
 
 ```bash
-unzip nacos-source.zip
+git clone --branch 3.3.0 --depth 1 https://github.com/alibaba/nacos.git
 cd nacos/
 mvn -Prelease-nacos clean install -U  
-cd nacos/distribution/target/nacos-server-1.3.0/nacos/bin
+cd distribution/target/nacos-server-3.3.0/nacos/bin
 ```
 
 ### Download Compressed Packet after Compilation
 
 Download address
 
-Select the latest stable version from [releases](https://github.com/alibaba/nacos/releases) and download `nacos-server-$version.zip` or `nacos-server-$version.tar.gz`
+Download `nacos-server-3.3.0.zip` or `nacos-server-3.3.0.tar.gz` from the [3.3.0 stable release](https://github.com/alibaba/nacos/releases/tag/3.3.0).
 
 ```bash
-  unzip nacos-server-$version.zip  OR tar -xvf nacos-server-$version.tar.gz
+  unzip nacos-server-3.3.0.zip
+  # or tar -xvf nacos-server-3.3.0.tar.gz
   cd nacos/bin
 ```  
 
@@ -78,8 +79,8 @@ Setting
 
 ```properties
 nacos.core.auth.enabled=true
-nacos.core.auth.system.type=nacos
-nacos.core.auth.plugin.nacos.token.secret.key=${custom, make sure same in all nodes}
+nacos.plugin.auth.type=nacos
+nacos.plugin.auth.nacos.token.secret.key=${custom, make sure same in all nodes}
 nacos.core.auth.server.identity.key=${custom, make sure same in all nodes}
 nacos.core.auth.server.identity.value=${custom, make sure same in all nodes}
 ```

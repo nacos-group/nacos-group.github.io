@@ -35,7 +35,7 @@ cd nacos-k8s
 
 Find the `nacos` container in the `nacos` StatefulSet in `deploy/nacos/nacos-quick-start.yaml`:
 
-1. Change `image` to an available target 3.3 image, such as `nacos/nacos-server:<target-version-tag>`. The repository's default image may still use an older release.
+1. Set `image` to the released image `nacos/nacos-server:v3.3.0`. The repository's default image may still use an older release.
 2. Keep the database, `NACOS_SERVERS`, and other settings. Replace the authentication variables below with your own values. Edit existing entries with the same names instead of adding duplicates.
 
 `NACOS_AUTH_TOKEN` is the server secret used to sign tokens. It must be valid Base64 decoding to at least 32 bytes, and is different from the login response's `accessToken`. The server identity key/value must be nonempty. All replicas must use the same secret and server identity; replace the repository's demo values.

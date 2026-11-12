@@ -207,6 +207,9 @@ def compare_command(item: dict, strict_agent: bool = False) -> list[str]:
         item["family"],
         "--doc-file",
         item["doc"],
+        "--strict-response-paths",
+        "--strict-response-types",
+        "--require-named-response-root",
         "--fail-on-diff",
     ]
     if strict_agent:

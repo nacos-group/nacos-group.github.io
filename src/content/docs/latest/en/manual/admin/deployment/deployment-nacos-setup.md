@@ -59,10 +59,10 @@ nacos-setup --help
 Start command:
 
 ```bash
-nacos-setup
+nacos-setup -v 3.3.0
 ```
 
-> Note: By default, Nacos 3.1.1 is installed using the built-in Derby database.
+> This guide explicitly selects Nacos 3.3.0 with the built-in Derby database. Without a version option, the installed version depends on your nacos-setup defaults.
 
 Specify version and port:
 
@@ -71,13 +71,13 @@ Specify version and port:
 nacos-setup -v 2.5.2
 
 # Specify port
-nacos-setup -p 18848
+nacos-setup -p 18848 -v 3.3.0
 
 # Run in background
-nacos-setup --detach
+nacos-setup --detach -v 3.3.0
 
 # Specify installation directory
-nacos-setup -d /opt/nacos
+nacos-setup -d /opt/nacos -v 3.3.0
 ```
 
 ### 3.2. Cluster Mode
@@ -88,13 +88,13 @@ Create a cluster:
 
 ```bash
 # Create a 3-node cluster (prod is the cluster ID)
-nacos-setup -c prod
+nacos-setup -c prod -v 3.3.0
 
 # Create a 5-node cluster
-nacos-setup -c prod -n 5
+nacos-setup -c prod -n 5 -v 3.3.0
 
 # Specify version
-nacos-setup -c prod -v 3.2.3 -n 3
+nacos-setup -c prod -v 3.3.0 -n 3
 ```
 
 > Note: When using the built-in Derby database, nacos-setup automatically adopts an incremental startup strategy to ensure correct cluster initialization:
@@ -125,7 +125,7 @@ Manual node management:
 ls -la ~/ai-infra/nacos/cluster/CLUSTER_ID/
 
 # Manually start a node
-cd ~/ai-infra/nacos/cluster/CLUSTER_ID/0-v3.2.3
+cd ~/ai-infra/nacos/cluster/CLUSTER_ID/0-v3.3.0
 bash bin/startup.sh
 
 # Stop a node
@@ -153,10 +153,10 @@ After configuration, subsequent deployments will automatically use the external 
 
 ```bash
 # Standalone mode
-nacos-setup -v 3.2.3
+nacos-setup -v 3.3.0
 
 # Cluster mode
-nacos-setup -c prod -n 3
+nacos-setup -c prod -n 3 -v 3.3.0
 ```
 
 > Note: Configuration is saved in `~/ai-infra/nacos/default.properties`.
@@ -177,7 +177,7 @@ The script automatically detects port conflicts:
 nacos-setup --kill
 
 # Specify a new port
-nacos-setup -p 18848
+nacos-setup -p 18848 -v 3.3.0
 ```
 
 ## 4. Verify Nacos Service Started Successfully
@@ -225,7 +225,7 @@ curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/cs/config?dataId=quickstart.t
 
 | Option | Description | Default |
 |------|------|--------|
-| `-v, --version VERSION` | Specify Nacos version | 3.2.3 |
+| `-v, --version VERSION` | Specify Nacos version | Depends on nacos-setup defaults; this guide uses 3.3.0 |
 | `-p, --port PORT` | Service main port | 8848 |
 | `--no-start` | Do not start automatically after installation | - |
 | `--adv` | Advanced mode (interactive configuration) | - |
@@ -336,7 +336,7 @@ export PATH=$JAVA_HOME/bin:$PATH
 nacos-setup --kill
 
 # Method 2: Specify a new port
-nacos-setup -p 18848
+nacos-setup -p 18848 -v 3.3.0
 ```
 
 ### Q: How to view Nacos logs?

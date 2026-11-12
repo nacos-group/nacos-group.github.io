@@ -7,6 +7,8 @@ sidebar:
 ---
 
 # Nacos DNS 使用手册
+本文介绍独立部署的 Nacos CoreDNS 插件。Nacos 3.3 也提供随 Server 启动的[内置 DNS 服务发现](./use-nacos-with-native-dns.md)，可直接查询 A/AAAA 记录；两种方式的部署配置和域名规则不同，请按所选方式接入。
+
 本插件提供了一个基于CoreDNS的DNS-F客户端，可以将Nacos上注册的服务导出为DNS域名。 本DNS-F客户端是应用程序进程旁边的一个专用代理进程（side car），可以将服务名作为DNS域名查询请求转发到本客户端，提供服务发现的功能。
 
 ## 快速开始

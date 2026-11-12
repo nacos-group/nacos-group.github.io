@@ -35,23 +35,22 @@ An AgentSpec can be uploaded as a ZIP package, or created and updated through dr
 
 ## Lifecycle
 
-AgentSpec follows the common Nacos AI resource lifecycle.
+AgentSpec follows the shared [AI Resource Lifecycle](./ai-resource-lifecycle.md).
 
 ```text
-upload or create draft -> update draft -> submit -> publish -> online -> offline or online again
+upload or create draft -> update draft -> submit -> publish as online after approval -> offline or online again
 ```
 
 Common management actions include:
 
-- Upload a ZIP package to create or update an AgentSpec.
-- Create a draft version and keep updating its content.
-- Submit the draft so Pipeline checks can run.
-- Publish a version and update `latest` or other labels when needed.
-- Set the visibility scope to public or private.
-- Bring a single version or the whole AgentSpec online or offline.
-- Query version details or version metadata.
+- Upload a ZIP package or use APIs to create and update a draft. Published packages cannot be overwritten directly; create a draft with a new version for changes.
+- Submit the draft. An enabled Pipeline node that supports AgentSpec starts `reviewing`; otherwise submission publishes directly.
+- Check the review result. Both approval and rejection move the version to `reviewed`. Publish after approval; after rejection, redraft before editing, or resubmit to rerun checks.
+- Publish or bring a version online; the server automatically updates `latest`. Use custom labels such as `stable` for controlled application rollouts.
+- Take one version offline, or enable/disable the whole AgentSpec. Enabling the resource does not automatically bring drafts or offline versions online.
+- Set visibility scope and query version details or metadata.
 
-For more state details, see [AI Resource Lifecycle](./ai-resource-lifecycle.md).
+For emergency force publish, labels, and state rules, see [AI Resource Lifecycle](./ai-resource-lifecycle.md).
 
 ## Runtime Query
 
@@ -67,7 +66,7 @@ If a client already caches content locally, it can use the `md5` parameter in th
 ## Suggestions For Platform Operators
 
 - Use namespaces to separate environments, tenants, or business domains.
-- Keep clear labels for production-ready versions, such as `latest`, `stable`, or business-specific labels.
+- Use custom labels such as `stable` for controlled production rollouts; the server manages `latest` automatically.
 - Apply consistent rules for visibility scope, business tags, and publish permissions.
 - Enable Pipeline checks for high-risk AgentSpecs before they enter production.
 - Before taking an AgentSpec offline, confirm whether Agent platforms, developer tools, or AI applications still depend on that version.

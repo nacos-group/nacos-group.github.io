@@ -3,7 +3,7 @@ title: 轨迹追踪
 keywords: [轨迹追踪, 操作审计, 诊断, Trace Plugin]
 description: 本文介绍 Nacos Trace 插件的事件模型、适用场景、开发方式和稳定性建议。
 sidebar:
-    order: 7
+    order: 10
 ---
 
 # 轨迹追踪插件
@@ -11,6 +11,8 @@ sidebar:
 Nacos Trace 插件用于订阅 Nacos 内部资源操作事件，帮助运维人员做审计、排障和诊断。它记录的是 Nacos 领域事件，例如服务注册、服务推送、实例健康状态变化、AI 资源操作等。
 
 它不是应用服务之间的分布式链路追踪。如果需要观察业务服务之间的调用链，请使用 OpenTelemetry、SkyWalking、Zipkin 等链路追踪体系。
+
+在统一插件管理中，本插件类型为 `trace`，执行模式为 `BROADCAST`，加载阶段为 `STANDARD`，类型非 critical。插件身份是 `trace:{getName()}`。同一事件可以广播给多个启用的订阅者；禁用状态会在每次分发前检查，无需重建订阅关系。
 
 ## 适用场景
 
@@ -60,7 +62,7 @@ AI 资源相关事件：
 
 `DeregisterInstanceTraceEvent` 会携带注销原因。常见值包括 `REQUEST`、`NATIVE_DISCONNECTED`、`SYNCED_DISCONNECTED` 和 `HEARTBEAT_EXPIRE`。
 
-Nacos 默认提供了 AI 资源 Trace 日志订阅者，会将 `AiResourceTraceEvent` 写入 `ai-resource-trace.log`，用于兼容 AI 资源审计日志。
+Nacos 默认提供 `trace:ai-resource-trace-log`，将 `AiResourceTraceEvent` 写入 `ai-resource-trace.log`，用于兼容 AI 资源审计日志。该实现默认启用、不声明配置 definitions，因此 `configurable=false`。
 
 ## 启用插件
 
@@ -90,10 +92,12 @@ Nacos 3.2 起，Trace 插件也会暴露给统一插件管理，插件类型为 
 
 | 方法 | 说明 |
 |-----|------|
-| `getName()` | 稳定订阅者名称。重复名称会被后加载的实现覆盖。 |
+| `getName()` | 稳定订阅者名称。重复身份按 first-wins 处理，后发现的实现被忽略并记录 WARN。 |
 | `subscribeTypes()` | 返回希望订阅的事件类列表。 |
 | `onEvent(event)` | 处理事件。 |
 | `executor()` | 可选执行器。涉及慢 IO 时建议返回独立线程池。 |
+
+`NacosTraceSubscriber` 继承 `PluginConfigSpec`。有私有配置的新实现应通过 definitions 声明元数据，使用 `nacos.plugin.trace.{pluginName}.{itemKey}` 标准键，并实现 `applyConfig` 与当前快照；未实现 definitions 的旧二进制订阅者仍可加载，但显示为不可配置。
 
 最小示例：
 
@@ -140,4 +144,4 @@ Trace Event Publish failed, event : ..., publish queue size : ...
 | 插件没有收到事件 | 检查 JAR、`META-INF/services`、`getName()` 和 `subscribeTypes()`。 |
 | 事件处理阻塞 | 检查是否在 `onEvent()` 中执行慢 IO，必要时实现 `executor()`。 |
 | 日志出现 Trace Event Publish failed | 说明 Trace 队列压力过大，检查订阅者处理速度和外部 sink。 |
-| 同名插件行为异常 | 检查是否有多个订阅者返回相同 `getName()`。 |
+| 同名插件行为异常 | 检查 WARN；first-wins 会保留先发现的订阅者并忽略后来项。 |

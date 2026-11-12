@@ -1,6 +1,6 @@
 ---
 title: Built-in DNS Service Discovery
-keywords: [Nacos, DNS, Service discovery, A, AAAA, CoreDNS]
+keywords: [Nacos, DNS, Service discovery, A, AAAA, SRV, CoreDNS]
 description: Query service instances with Nacos 3.3 built-in DNS, including configuration, domain names, UDP/TCP access, and troubleshooting.
 sidebar:
     order: 6.1
@@ -8,7 +8,7 @@ sidebar:
 
 # Built-in DNS Service Discovery
 
-Nacos 3.3 includes a DNS server that returns registered service instance addresses as DNS records, allowing applications to discover services through name resolution. It supports A records for IPv4 and AAAA records for IPv6 and is disabled by default.
+Nacos 3.3 includes a DNS server that returns registered service instance addresses as DNS records, allowing applications to discover services through name resolution. The stable 3.3.0 release supports A records for IPv4, AAAA records for IPv6, and SRV records with service ports. DNS is disabled by default.
 
 Built-in DNS starts with Nacos Server and requires no additional Nacos DNS plugin. For an existing deployment of the separate CoreDNS plugin, see [Nacos with CoreDNS](./use-nacos-with-coredns.md). Follow the corresponding guide for each integration's configuration and domain naming rules.
 
@@ -18,6 +18,7 @@ Add the following to `conf/application.properties` on a Nacos Server that provid
 
 ```properties
 nacos.naming.dns.enabled=true
+nacos.naming.dns.bind-address=127.0.0.1
 nacos.naming.dns.port=5353
 nacos.naming.dns.domain-suffix=nacos
 nacos.naming.dns.default-group=DEFAULT_GROUP
@@ -27,7 +28,7 @@ nacos.naming.dns.ttl=60
 
 This configuration exposes services from the `public` namespace under `.nacos`, with `DEFAULT_GROUP` as the default group and a record TTL of 60 seconds. Set `namespace` to the namespace ID. Its configuration default is empty; explicitly set it to `public` as shown when querying that namespace. See [System Parameters](../manual/admin/system-configurations.md#built-in-dns) for all settings.
 
-DNS listens on both UDP and TCP on the same port. The default port, `5353`, is independent of the Nacos HTTP/gRPC ports. Before enabling it, confirm that the port is available for both protocols. Cluster nodes serving DNS queries should use the same namespace, suffix, and group settings.
+DNS binds only to `127.0.0.1` by default. Use the configuration above for local validation. For remote clients or CoreDNS, explicitly set `nacos.naming.dns.bind-address` to the intended trusted internal listening address. DNS listens on both UDP and TCP on the same port. The default port, `5353`, is independent of the Nacos HTTP/gRPC ports. Before enabling it, confirm that the port is available for both protocols. Cluster nodes serving DNS queries should use the same namespace, suffix, and group settings.
 
 :::caution[DNS access control]
 DNS queries do not carry an `accessToken` or pass through Nacos HTTP API authentication. Callers that can reach the DNS port can query service addresses in the configured namespace. Restrict access through a trusted internal network, firewall, or network policy. Enabling client authentication does not automatically protect DNS queries.
@@ -80,17 +81,25 @@ Include the group in the domain name to query another group. The following comma
 dig @127.0.0.1 -p 5353 dns-demo.prod.nacos. A
 ```
 
+To query service ports and targets, request SRV records for the same name:
+
+```bash
+dig @127.0.0.1 -p 5353 dns-demo.nacos. SRV
+```
+
+SRV answers include the instance port, weight, and target hostname with priority `0`. The ADDITIONAL section supplies the target's A/AAAA address. Do not add an extra `_service._tcp` prefix.
+
 Resolution follows these rules:
 
 - Only healthy, enabled instances are returned, filtered to the IP address family requested by A or AAAA.
-- Each response contains at most 20 address records, and their order can vary. For larger services, one query does not return the complete instance list.
-- Responses contain IP addresses only, without service ports, weights, or instance metadata. Applications must obtain the connection port separately. Use the [Java SDK](../manual/user/java-sdk/usage.md) when these details or change subscriptions are needed.
-- SRV, TXT, MX, and other record types are not currently provided. Clients must retry over TCP when a UDP response is truncated. TCP responses are also limited to 20 records per query.
+- Each response's ANSWER section contains at most 20 records, and their order can vary. For larger services, one query does not return the complete instance list.
+- A/AAAA responses contain IP addresses only; use SRV for service ports and weights. Use the [Java SDK](../manual/user/java-sdk/usage.md) for instance metadata or change subscriptions.
+- Nacos service queries support A, AAAA, and SRV; TXT and MX service records are not provided. Clients must retry over TCP when a UDP response is truncated. TCP responses also have a 20-record ANSWER limit.
 - DNS caching affects how quickly instance changes reach applications. During troubleshooting, compare a direct query to Nacos DNS with the application's resolution result.
 
 ## 4. Connect applications and container networks
 
-Use `dig -p 5353` to verify Nacos DNS directly. Applications typically resolve names through system DNS. Configure suffix-based forwarding in your existing DNS service so that `.nacos` queries go to Nacos DNS while other domains keep using their existing resolvers. Built-in DNS does not provide upstream recursion or forwarding configuration.
+Use `dig -p 5353` to verify Nacos DNS directly. Applications typically resolve names through system DNS. Configure suffix-based forwarding in your existing DNS service so that `.nacos` queries go to Nacos DNS while other domains keep using their existing resolvers. Built-in DNS also supports optional upstream forwarding, disabled by default. Enable `nacos.naming.dns.forward-enabled=true` and configure reachable upstream DNS addresses with `nacos.naming.dns.forward-servers` only when Nacos DNS should handle queries outside its own suffix. It is a conditional forwarder, not an open recursive resolver. See [System Parameters](../manual/admin/system-configurations.md#built-in-dns) for defaults.
 
 ### 4.1. Forward from CoreDNS
 
@@ -106,9 +115,9 @@ This uses CoreDNS's built-in [forward plugin](https://coredns.io/plugins/forward
 
 ### 4.2. Docker and Kubernetes
 
-For Docker, add `-p 5353:5353/udp -p 5353:5353/tcp` to your existing `docker run` command and ensure DNS is configured and enabled inside the container. Publishing only HTTP/gRPC ports does not expose DNS.
+For Docker, add `-p 5353:5353/udp -p 5353:5353/tcp` to your existing `docker run` command and enable DNS inside the container. On a trusted internal network with access controls, explicitly set `nacos.naming.dns.bind-address` to `0.0.0.0` or a reachable container listening address; the default loopback binding cannot be reached through port publishing. Publishing only HTTP/gRPC ports does not expose DNS.
 
-For Kubernetes, create a separate ClusterIP Service for Nacos Pods with DNS enabled. Replace the example `selector` with the actual Pod labels. The Service and Pods must be in the same Kubernetes namespace:
+For Kubernetes, enable DNS on a listening address reachable through the Pod network, then create a separate ClusterIP Service. Replace the example `selector` with the actual Pod labels. The Service and Pods must be in the same Kubernetes namespace:
 
 ```yaml
 apiVersion: v1
@@ -135,9 +144,9 @@ Expose both UDP and TCP as described in [Kubernetes Service protocol support](ht
 
 | Symptom | What to check |
 | --- | --- |
-| Query times out or the connection is refused | Confirm DNS was enabled and the server restarted. Check UDP/TCP listeners on port 5353, port conflicts, container mappings, and firewalls. The startup log message `Nacos DNS server started on port` helps confirm successful binding. |
+| Query times out or the connection is refused | Confirm DNS was enabled and the server restarted. Check `bind-address` (loopback by default), UDP/TCP listeners on port 5353, port conflicts, container mappings, and firewalls. The startup log message `Nacos DNS server started on port` helps confirm successful binding. |
 | `NXDOMAIN` | Check the suffix, service name, group, and configured namespace ID. Confirm there are healthy, enabled instances. If those are correct, inspect server logs for query errors. |
 | `NOERROR` with an empty ANSWER section | Check the requested address family. For example, a service with only IPv4 instances has no addresses to return for AAAA. |
-| `NOTIMP` | Use A or AAAA. SRV, TXT, and other record types are not currently supported. |
+| `NOTIMP` | Use A, AAAA, or SRV for Nacos services. TXT and MX service records are not supported. |
 | UDP works but TCP or larger responses fail | Check TCP port mappings and network policies; allowing only UDP is insufficient. |
 | Direct queries work but applications fail to resolve or use stale addresses | Check the application's DNS resolver, suffix forwarding, and cache TTL. Confirm the returned instance IP is reachable and the application uses the correct service port. |

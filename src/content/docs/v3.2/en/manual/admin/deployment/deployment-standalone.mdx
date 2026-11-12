@@ -1,0 +1,89 @@
+---
+title: Standalone Deployment
+keywords: [Nacos, Deployment, Standalone]
+description: The manual for Nacos standalone deployment.
+sidebar:
+    order: 2
+---
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+# Nacos Standalone Mode
+
+## 1. Release Package Deployment
+
+### 1.1. Deployment Steps
+
+<Tabs>
+  <TabItem label="Use Derby Database">
+    In [Quick Start](../../../quickstart/quick-start.mdx), the built-in Derby database is used to quickly deploy Nacos in standalone mode. You can refer to that document to deploy Nacos standalone mode with Derby.
+  </TabItem>
+  <TabItem label="Use MySQL Database">
+    Refer to [Quick Start](../../../quickstart/quick-start.mdx) to prepare the Nacos environment and download the release package.
+
+    When deploying Nacos standalone mode with a MySQL data source, prepare the MySQL database yourself:
+
+    - 1. Install the database. The required version is 5.6.5 or later.
+    - 2. Initialize the MySQL database. Database initialization file: [mysql-schema.sql](https://github.com/alibaba/nacos/blob/master/distribution/conf/mysql-schema.sql).
+
+    Then modify `${nacos.home}/conf/application.properties`, add the MySQL data source configuration, and configure the MySQL data source URL, username, and password.
+
+    ```
+    spring.sql.init.platform=mysql
+
+    db.num=1
+    db.url.0=jdbc:mysql://${mysql_host}:${mysql_port}/${nacos_database}?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
+    db.user=${mysql_user}
+    db.password=${mysql_password}
+    ```
+
+    Then follow [Quick Start - Start Server](../../../quickstart/quick-start/#4-modify-authentication-configuration) to modify the Nacos authentication configuration.
+    Finally, follow [Quick Start - Start Server](../../../quickstart/quick-start/#5-start-server) to start Nacos.
+  </TabItem>
+</Tabs>
+
+### 1.2. Advanced Configuration
+
+Nacos provides rich configuration items that help you tune Nacos performance and control Nacos features, such as authentication, monitoring, databases, connections, and logs. For details, see [System Parameters](../system-configurations.md).
+
+## 2. Docker Deployment
+
+### 2.1. Deployment Steps
+
+<Tabs>
+  <TabItem label="Use Derby Database">
+    In [Quick Start Docker](../../../quickstart/quick-start-docker.mdx), Docker is used with the built-in Derby database to quickly deploy Nacos in standalone mode. You can refer to that document to deploy Nacos standalone mode with Derby.
+  </TabItem>
+  <TabItem label="Use MySQL Database">
+    Run the docker-compose command to start Nacos.
+
+    ```powershell
+    docker-compose -f example/standalone-mysql-8.yaml up
+    ```
+
+    **To use MySQL 5.7**
+
+    ```powershell
+    docker-compose -f example/standalone-mysql-5.7.yaml up
+    ```
+  </TabItem>
+</Tabs>
+
+### 2.2. Advanced Configuration
+
+If you need many custom configurations, you can configure them by specifying [System Parameters - Image Environment Variables](../system-configurations/#2-image-environment-variables). For example, to enable authentication:
+
+```powershell
+docker run --name nacos-standalone-auth -e MODE=standalone -e NACOS_AUTH_ENABLE=true -e NACOS_AUTH_TOKEN=${customToken} -e NACOS_AUTH_IDENTITY_KEY=${customKey} -e NACOS_AUTH_IDENTITY_VALUE=${customValue} -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest
+```
+
+You can also mount the `application.properties` file to import more complex custom configurations into the Nacos container. This method is strongly recommended for production environments. Example:
+
+```powershell
+docker run --name nacos-standalone -e MODE=standalone -v /path/application.properties:/home/nacos/conf/application.properties -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest
+```
+
+If this still cannot meet your customization requirements, you can build an image based on the `Dockerfile` in the `nacos-docker` project.
+
+## 3. Kubernetes Deployment
+
+Kubernetes does not currently provide standalone-mode deployment. Cluster-mode deployment is recommended.

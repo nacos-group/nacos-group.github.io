@@ -55,6 +55,8 @@ Nacos的客户端API，使用统一的Path格式进行的规范。格式为`[/$n
 
 Nacos 3.X 的客户端 Open API 也提供了Swagger风格的文档，您可以通过访问[Nacos Swagger HTTP 客户端 API](/swagger/client/)查看。
 
+下文的 `map<string, any>` 表示键为字符串、值可为任意 JSON 类型（字符串、数字、布尔值、对象、数组或 `null`）的映射。`map<string, string>`、`map<string, boolean>` 和命名模型映射仍遵循各自的值类型约束。
+
 ### 0.4. 鉴权与示例准备
 
 Nacos 3.3 默认开启 Client 鉴权。未携带有效身份或缺少资源权限时，配置读取、服务注册与发现等请求会被拒绝。
@@ -200,8 +202,8 @@ OpenAPI中，续约此实例的API和注册实例的API进行了合并，通过�
 
 | 参数名              | 参数类型     | 是否必填 | 描述说明                                                        |
 |------------------|----------|------|-------------------------------------------------------------|
-| `User-Agent`     | `string` | 否    | 用户代理，默认为空，通常为`Nacos-${program-language}-Client:v${version}  |
-| `Client-Version` | `string` | 否    | 客户端版本，默认为空，通常为`Nacos-${program-language}-Client:v${version} |
+| `User-Agent`     | `string` | 否    | 用户代理，默认为空，通常为 `Nacos-${program-language}-Client:v${version}`。 |
+| `Client-Version` | `string` | 否    | 客户端版本，默认为空，通常为 `Nacos-${program-language}-Client:v${version}`。 |
 
 #### 请求参数
 
@@ -272,8 +274,8 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST "127.0.0.1:8848/nacos/v3/cl
 
 | 参数名              | 参数类型     | 是否必填 | 描述说明                                                        |
 |------------------|----------|------|-------------------------------------------------------------|
-| `User-Agent`     | `string` | 否    | 用户代理，默认为空，通常为`Nacos-${program-language}-Client:v${version}  |
-| `Client-Version` | `string` | 否    | 客户端版本，默认为空，通常为`Nacos-${program-language}-Client:v${version} |
+| `User-Agent`     | `string` | 否    | 用户代理，默认为空，通常为 `Nacos-${program-language}-Client:v${version}`。 |
+| `Client-Version` | `string` | 否    | 客户端版本，默认为空，通常为 `Nacos-${program-language}-Client:v${version}`。 |
 
 #### 请求参数
 
@@ -339,8 +341,8 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE "127.0.0.1:8848/nacos/v3/
 
 | 参数名              | 参数类型     | 是否必填 | 描述说明                                                        |
 |------------------|----------|------|-------------------------------------------------------------|
-| `User-Agent`     | `string` | 否    | 用户代理，默认为空，通常为`Nacos-${program-language}-Client:v${version}  |
-| `Client-Version` | `string` | 否    | 客户端版本，默认为空，通常为`Nacos-${program-language}-Client:v${version} |
+| `User-Agent`     | `string` | 否    | 用户代理，默认为空，通常为 `Nacos-${program-language}-Client:v${version}`。 |
+| `Client-Version` | `string` | 否    | 客户端版本，默认为空，通常为 `Nacos-${program-language}-Client:v${version}`。 |
 
 #### 请求参数
 
@@ -357,7 +359,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X DELETE "127.0.0.1:8848/nacos/v3/
 
 | 参数名                                  | 参数类型       | 描述说明      |
 |--------------------------------------|------------|-----------|
-| `data`                               | `array` | 实例列表      |
+| `data`                               | `array<Instance>` | 实例列表      |
 | `data.[i].ip`                        | `string` | 实例`IP`    |
 | `data.[i].port`                      | `integer` | 实例端口号     |
 | `data.[i].weight`                    | `number` | 实例权重      |
@@ -435,7 +437,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET '127.0.0.1:8848/nacos/v3/cli
 | `promptKey`   | `string` | **是** | Prompt 键名                  |
 | `version`     | `string` | 否     | 精确版本号，优先于 `label`；均省略时使用 `latest`。 |
 | `label`       | `string` | 否     | 版本标签，未指定 `version` 时生效。 |
-| `md5`         | `string` | 否     | 若与服务端一致则返回 304            |
+| `md5`         | `string` | 否     | 本地缓存的内容 MD5；与当前 Prompt 内容一致时返回 `304 Not Modified`，无响应体。 |
 
 #### 返回数据
 
@@ -477,7 +479,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET '127.0.0.1:8848/nacos/v3/cli
 
 #### 接口描述
 
-通过该接口，可按命名空间、名称、版本号或 label 获取指定 AgentSpec 详情。
+通过该接口，可按命名空间、名称、版本号或 label 获取指定 AgentSpec 详情；支持通过 `md5` 进行缓存条件查询。
 
 #### 起始版本
 
@@ -499,7 +501,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET '127.0.0.1:8848/nacos/v3/cli
 | `name`        | `string` | **是** | AgentSpec 名称            |
 | `version`     | `string` | 否     | AgentSpec 版本号           |
 | `label`       | `string` | 否     | AgentSpec 标签            |
-| `md5`         | `string` | 否     | AgentSpec 内容 MD5，用于精确匹配指定版本 |
+| `md5`         | `string` | 否     | 本地缓存的 AgentSpec 内容 MD5；与所选在线版本内容一致时返回 `304 Not Modified`。 |
 
 #### 返回数据
 
@@ -514,6 +516,8 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET '127.0.0.1:8848/nacos/v3/cli
 | `data.bizTags`     | `string` | AgentSpec 业务标签      |
 | `data.content`     | `string` | AgentSpec 内容        |
 | `data.resource`    | `map<string, AgentSpecResource>` | 关联资源，值包含名称、类型、内容及元数据。 |
+
+`AgentSpecResource.metadata` 为 `map<string, any>`，允许任意 JSON 值。`200` 响应通过 `ETag`、`X-Nacos-AgentSpec-Md5` 和 `X-Nacos-AgentSpec-Resolved-Version` 返回非空的内容 MD5 和解析后版本；`304` 无响应体，返回 MD5 相关的前两个响应头，客户端继续使用缓存。
 
 #### 示例
 
@@ -572,7 +576,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET '127.0.0.1:8848/nacos/v3/cli
 | `data.totalCount` | `integer` | 匹配资源总数。 |
 | `data.pageNumber` | `integer` | 当前页码。 |
 | `data.pagesAvailable` | `integer` | 总页数。 |
-| `data.pageItems` | `array<AgentSpecBasicInfo>` | 当前页资源摘要，包含 `namespaceId`、`name`、`description`、`bizTags`、`updateTime`。 |
+| `data.pageItems` | `array<AgentSpecBasicInfo>` | 当前页资源摘要，包含 `namespaceId`、`name`、`description`、`updateTime`。 |
 
 #### 示例
 
@@ -596,7 +600,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET '127.0.0.1:8848/nacos/v3/cli
 
 #### 接口描述
 
-通过该接口，可按命名空间、名称、版本号或 label 下载 Skill ZIP 文件。
+通过该接口，可按命名空间、名称、版本号或 label 下载 Skill ZIP 文件；支持通过 `md5` 进行缓存条件查询。
 
 #### 起始版本
 
@@ -618,7 +622,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET '127.0.0.1:8848/nacos/v3/cli
 | `name`        | `string` | **是** | Skill 名称                |
 | `version`     | `string` | 否     | Skill 版本号               |
 | `label`       | `string` | 否     | Skill 标签                |
-| `md5`         | `string` | 否     | Skill 内容 MD5，用于精确匹配指定版本 |
+| `md5`         | `string` | 否     | 本地缓存的 Skill 内容 MD5；与所选在线版本内容一致时返回 `304 Not Modified`。 |
 
 #### 示例
 
@@ -630,7 +634,7 @@ curl -f -H "accessToken: ${NACOS_ACCESS_TOKEN}" '127.0.0.1:8848/nacos/v3/client/
 
 * 返回说明
 
-成功时返回 Skill ZIP 文件，以上命令保存为 `my-skill.zip`，不使用 JSON `Result` 包装。
+`200` 返回 Skill ZIP 文件（`Content-Type: application/zip`），以上命令保存为 `my-skill.zip`，不使用 JSON `Result` 包装。`304` 无响应体，客户端继续使用已有 ZIP 缓存，不应以空响应覆盖缓存文件。两种响应均会在值非空时返回 `ETag`、`X-Nacos-Skill-Md5` 和 `X-Nacos-Skill-Resolved-Version`，分别用于内容校验及确认解析后的版本。
 
 > **Agent 管理 API 说明：** 以下 Agent API（3.5～3.11）是后续推荐的统一集成方向，未来将逐步替代现有 A2A 管理 API。新接入的用户和 SDK 应优先对接并兼容这些 Agent 管理 API，避免为新集成继续依赖旧 A2A API；已有 A2A 集成可依据后续版本发布和迁移说明逐步切换。这里描述的是管理 API 的演进，不表示 A2A 协议本身已废弃。
 
@@ -657,6 +661,9 @@ curl -f -H "accessToken: ${NACOS_ACCESS_TOKEN}" '127.0.0.1:8848/nacos/v3/client/
 | 参数名 | 类型 | 必填 | 参数描述 |
 |--------|------|------|----------|
 | `X-Nacos-Client-Id` | `string` | 否 | 已有逻辑 HTTP Client 的可选稳定标识；携带时长度必须为 1～256、匹配 [A-Za-z0-9._:-]+，并与该客户端发布 Endpoint 时使用的值保持一致。Search 和 Discover 只续约已存在的 Client 生命周期，不会创建空 Client，也不会续约 Publisher 活性，因此不能替代 Publisher heartbeat。 |
+| `X-Nacos-Agent-Discovery-Trigger` | `string` | 否 | 可选诊断标记，`watch-notify` 表示本次 Discover 由 Watch 通知触发。缺失、空值和未知值均兼容接受；不影响发现结果、鉴权或缓存，也不表示内容一定发生变化。 |
+
+收到 Watch changed-ID 通知后重新 Discover 时，可携带 `X-Nacos-Agent-Discovery-Trigger: watch-notify`；主动查询、初始化和轮询回退不设置该标记。
 
 #### 请求参数
 
@@ -1178,6 +1185,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT '127.0.0.1:8848/nacos/v3/cli
 | `data.pageItems[i].provider.name` | `string` | 提供方名称。 |
 | `data.pageItems[i].provider.url` | `string` | 提供方 URL。 |
 | `data.pageItems[i].tags` | `array<string>` | Agent 标签。 |
+| `data.pageItems[i].extensions` | `map<string, any>` | Agent 扩展属性，值可为任意 JSON 类型。 |
 | `data.pageItems[i].versionInfo` | `AgentVersionInfo` | 在线版本集合和标签映射。 |
 | `data.pageItems[i].versionInfo.labels` | `map<string, string>` | 标签到在线版本的映射，含 `latest`。 |
 | `data.pageItems[i].versionInfo.onlineVersions` | `array<AgentVersionSummary>` | 在线版本摘要。 |
@@ -1348,14 +1356,20 @@ curl -sS -X POST 'http://127.0.0.1:8848/nacos/v3/client/ai/agents/watch' \
 | `data.versionDetail` | `ServerVersionDetail` | 版本信息，包含 `version`、`release_date` 和 `is_latest`。 |
 | `data.version` | `string` | 版本号。 |
 | `data.remoteServerConfig` | `McpServerRemoteServiceConfig` | 远程服务引用、导出路径和前端端点配置。 |
-| `data.localServerConfig` | `map<string, object>` | 本地进程启动配置。 |
+| `data.localServerConfig` | `map<string, any>` | 本地进程启动配置，例如字符串 `command` 和数组 `args`。 |
 | `data.enabled` | `boolean` | 是否启用。 |
 | `data.status` | `string` | 版本状态。 |
 | `data.capabilities` | `array<string>` | 服务能力。 |
 | `data.backendEndpoints` | `array<McpEndpointInfo>` | 后端端点，包含 `protocol`、`address`、`port`、`path`、`headers`。 |
 | `data.frontendEndpoints` | `array<McpEndpointInfo>` | 对外端点，字段同后端端点。 |
 | `data.toolSpec` | `McpToolSpecification` | 工具定义。 |
+| `data.toolSpec.tools` | `array<McpTool>` | 工具列表；每个工具的 `inputSchema`、`outputSchema` 和 `_meta` 均为 `map<string, any>`，保留其 JSON Schema 或协议定义的内容。 |
+| `data.toolSpec.toolsMeta` | `map<string, McpToolMeta>` | 按工具名称组织的元数据；`invokeContext` 为 `map<string, string>`，`templates` 为 `map<string, any>`。 |
+| `data.toolSpec.extensions` | `map<string, any>` | 工具扩展信息。 |
 | `data.resourceSpec` | `McpResourceSpecification` | 资源定义。 |
+| `data.resourceSpec.resources` | `array<map<string, any>>` | 资源定义列表，各资源字段值可为任意 JSON 类型。 |
+| `data.resourceSpec.resourceTemplates` | `array<map<string, any>>` | 资源模板列表。 |
+| `data.resourceSpec.extensions` | `map<string, any>` | 资源扩展信息。 |
 | `data.allVersions` | `array<ServerVersionDetail>` | 版本列表。 |
 | `data.repository` | `Repository` | 源码仓库信息。 |
 | `data.packages` | `array<Package>` | 分发包信息。 |
@@ -1623,6 +1637,7 @@ curl -sS -X PUT 'http://127.0.0.1:8848/nacos/v3/client/ai/mcp/endpoints/heartbea
 | `data.pageNumber` | `integer` | 当前页码。 |
 | `data.pagesAvailable` | `integer` | 总页数。 |
 | `data.pageItems` | `array<McpServerBasicInfo>` | 当前页服务摘要；获取调用端点和完整定义请使用 MCP 查询接口。 |
+| `data.pageItems[i].localServerConfig` | `map<string, any>` | 本地进程启动配置，值可为任意 JSON 类型。 |
 
 #### 示例
 
@@ -1776,7 +1791,7 @@ curl -sS -G 'http://127.0.0.1:8848/nacos/v3/client/ai/prompt/search' \
 | `data.items[i].tags` | `array<string>` | 标签。 |
 | `data.items[i].capabilities` | `array<string>` | 能力。 |
 | `data.items[i].representativeQueries` | `array<string>` | 代表性查询文本。 |
-| `data.items[i].metadata` | `map<string, object>` | 资源扩展元数据。 |
+| `data.items[i].metadata` | `map<string, any>` | 资源扩展元数据，值可为任意 JSON 类型。 |
 | `data.items[i].createTime` | `integer` | 创建时间。 |
 | `data.items[i].updateTime` | `integer` | 更新时间。 |
 | `data.items[i].score` | `integer` | 相关度分数。 |
@@ -1823,7 +1838,7 @@ curl -sS -G 'http://127.0.0.1:8848/nacos/v3/client/ai/resources/search' \
 
 | 参数名 | 参数类型 | 描述 |
 | --- | --- | --- |
-| `data` | `map<string, object>` | 当前节点的能力声明。 |
+| `data` | `map<string, any>` | 当前节点的能力声明；已定义字段的值类型如下。 |
 | `data.schemaVersion` | `integer` | 声明格式版本，当前为 `1`。 |
 | `data.capabilities` | `map<string, boolean>` | 能力开关：`radV1`、`mcp`、`skill`、`prompt`、`agentSpec`。 |
 

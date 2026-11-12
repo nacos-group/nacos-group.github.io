@@ -28,12 +28,12 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
     然后修改`${nacos.home}/conf/application.properties`文件，增加支持MySQL数据源配置，添加MySQL数据源的url、用户名和密码。
 
     ```
-    spring.sql.init.platform=mysql
+    nacos.plugin.datasource-dialect.type=mysql
 
-    db.num=1
-    db.url.0=jdbc:mysql://${mysql_host}:${mysql_port}/${nacos_database}?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
-    db.user=${mysql_user}
-    db.password=${mysql_password}
+    nacos.plugin.datasource.db.num=1
+    nacos.plugin.datasource.db.url.0=jdbc:mysql://${mysql_host}:${mysql_port}/${nacos_database}?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true
+    nacos.plugin.datasource.db.user=${mysql_user}
+    nacos.plugin.datasource.db.password=${mysql_password}
     ```
 
     然后按照[快速开始-启动服务器](../../../quickstart/quick-start/#4修改鉴权配置)中的操作，修改Nacos的鉴权配置。
@@ -73,13 +73,13 @@ Nacos提供了丰富的可配置项，帮助您调整Nacos的性能、控制Naco
 如果你有很多自定义配置的需求，可以通过指定[系统参数-镜像环境变量](../system-configurations/#2-镜像环境变量)的方式进行配置，例如需要开启鉴权时：
 
 ```powershell
-docker run --name nacos-standalone-auth -e MODE=standalone -e NACOS_AUTH_ENABLE=true -e NACOS_AUTH_TOKEN=${customToken} -e NACOS_AUTH_IDENTITY_KEY=${customKey} -e NACOS_AUTH_IDENTITY_VALUE=${customValue} -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest
+docker run --name nacos-standalone-auth -e MODE=standalone -e NACOS_AUTH_ENABLE=true -e NACOS_AUTH_TOKEN=${customToken} -e NACOS_AUTH_IDENTITY_KEY=${customKey} -e NACOS_AUTH_IDENTITY_VALUE=${customValue} -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:v3.3.0
 ```
 
 同时，可以通过对application.properties文件进行挂卷定义的方式，将更多复杂的自定义配置导入Nacos容器中，强烈建议在生产环境中使用方式，例如：
 
 ```powershell
-docker run --name nacos-standalone -e MODE=standalone -v /path/application.properties:/home/nacos/conf/application.properties -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:latest
+docker run --name nacos-standalone -e MODE=standalone -v /path/application.properties:/home/nacos/conf/application.properties -p 8848:8848 -d -p 9848:9848  nacos/nacos-server:v3.3.0
 ```
 
 如果仍然无法满足自定义需求，可以基于nacos-docker项目中的`Dockerfile`自行构建镜像。

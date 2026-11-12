@@ -23,7 +23,7 @@ To install and deploy Nacos using this quick start method, install [Docker](http
 
 > When this command is executed for the first time, the required Docker images are automatically downloaded. The waiting time depends on your network speed. You can also download the images in advance to reduce the waiting time when running the deployment command.
 
-In Bash, set `NACOS_VERSION` to an available target image tag, `NACOS_AUTH_TOKEN` to a deployment-specific Base64 secret decoding to at least 32 bytes, and `NACOS_AUTH_IDENTITY_KEY` / `NACOS_AUTH_IDENTITY_VALUE` to nonempty server identity values. Use the matching image tag for 3.3 RC validation; do not assume `latest` points to the RC.
+This example uses the released image `nacos/nacos-server:v3.3.0`. In Bash, set `NACOS_AUTH_TOKEN` to a deployment-specific Base64 secret decoding to at least 32 bytes, and `NACOS_AUTH_IDENTITY_KEY` / `NACOS_AUTH_IDENTITY_VALUE` to nonempty server identity values.
 
 ```bash
 docker run --name nacos-standalone-derby \
@@ -35,7 +35,7 @@ docker run --name nacos-standalone-derby \
     -p 8080:8080 \
     -p 8848:8848 \
     -p 9848:9848 \
-    -d "nacos/nacos-server:${NACOS_VERSION}"
+    -d nacos/nacos-server:v3.3.0
 ```
 
 :::note

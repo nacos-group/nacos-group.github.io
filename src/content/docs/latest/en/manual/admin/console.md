@@ -35,7 +35,7 @@ If you deploy the console independently, it is enough to know here that the cons
 
 ## Login and permissions
 
-After authentication is enabled, the console enters the login flow. When the default authentication implementation is used, the administrator password must be initialized the first time authentication is enabled.
+Nacos 3.3 enables console authentication by default and prompts you to sign in. With the default authentication implementation, initialize the administrator password on first use. Signing in authenticates browser operations only; applications and API requests from a terminal still need their own credentials.
 
 If authentication is not enabled, the console does not pretend that a login page is a security boundary. Always run Nacos in a trusted internal network, and do not expose it to the public Internet.
 
@@ -61,11 +61,29 @@ Common entries:
 | --- | --- |
 | Skill Registry | Manage Skill metadata, versions, packages, and publish state. |
 | Prompt Registry | Manage Prompt templates, versions, and variables. |
-| Agent Registry | Manage A2A Agent registration and discovery information. |
+| Agent Registry | Manage the Agent catalog, versioned call definitions (including A2A AgentCards), and runtime endpoints. |
 | AgentSpecs Registry | Manage AgentSpec resources and versions. |
 | MCP Registry | Manage MCP Servers, tools, endpoints, and API conversion. |
 
 For complete guidance, read [AI Registry Overview](../user/ai/ai-registry-overview.md).
+
+### Create and publish Agents and MCP Servers
+
+1. Select the target namespace and open Agent Registry or MCP Registry. Import an existing A2A AgentCard or create an Agent; for an MCP Server, enter its description, tools, and connection settings for the selected protocol. Saving creates the first draft version.
+2. Open the resource details and check the version content and visibility scope. The built-in policy defaults new Agents and MCP Servers to public. For a private release, change the scope to private before submitting. See [Visibility Plugin](../../plugin/visibility-plugin.md) for permission rules.
+3. Select the draft's submit-for-review action. Without applicable enabled review nodes, submission publishes the version immediately. Otherwise, check the version's review results and publish after approval. If review fails and changes are needed, return the version to draft, edit it, and submit again.
+4. Confirm that the target version is `online` and the resource is enabled. Successful publication updates `latest` automatically. Verify discovery and actual calls using the application's identity.
+
+Version content can only be edited in draft state. For later changes, select an existing version in version history and create a draft from it; for MCP Servers, use an online version. Resolve any existing version being edited or reviewed first. See [AI Resource Lifecycle](../user/ai/ai-resource-lifecycle.md) for state rules and administrator force-publish scenarios.
+
+### Inspect versions and runtime endpoints
+
+Select a version in the resource details to check its definition, state, and labels. Enabling or disabling a resource is separate from taking a version online or offline; taking a version online does not enable a disabled resource.
+
+- **Agent**: Select the version and call protocol, then inspect declared endpoints and runtime endpoints separately. The runtime endpoint section is read-only and can be refreshed to show health and runtime version bindings. To enable or disable an instance, follow the service link to its Naming service details. See [RAD Integration Guide](../user/ai/rad-discovery.md) for application examples of endpoint registration, deregistration, and subscription.
+- **MCP Server**: Check the selected version's tools and connection settings. Remote services with available addresses show frontend or backend endpoints; for `stdio` services, inspect the package and launch arguments. Publishing a definition does not start an MCP process. See [MCP Management](../user/ai/mcp-registry.md) for integration options.
+
+If the MCP page reports lifecycle migration in progress or temporary service unavailability, keep operations read-only until migration completes or service recovers; see the [Upgrade Guide](./upgrading.mdx). Toolchains can search and download published resources through [ARD Resource Discovery](../user/ai/ard-discovery.md).
 
 ## Configuration Center
 
@@ -78,6 +96,8 @@ Common operations:
 - View history versions and roll back when needed.
 - Query listeners to confirm whether clients have received config changes.
 - When importing, exporting, or cloning configurations, pay attention to file size and target namespace.
+
+Before rolling back, check the history operation type: rolling back an insert deletes the current configuration, while rolling back an update or delete republishes the content saved in that record. Confirm the target and content in the confirmation message before proceeding. See [History and Rollback](../user/config/ops-and-troubleshooting.md#history-and-rollback).
 
 To understand the configuration model, gray release, import and export, and troubleshooting, read [Configuration Overview](../user/config/overview.md).
 
@@ -104,12 +124,25 @@ Platform management usually serves administrators. Menus may differ under differ
 | --- | --- |
 | Namespace | Create, edit, and delete namespaces. |
 | Cluster Management | View cluster nodes and basic status. |
-| Plugin Management | View loaded plugins and plugin state. |
+| Plugin Management | View unified inventory, state, effective configuration and sources, and safely update runtime definitions. |
 | User List | Manage console users. |
 | Role Management | Manage roles and user relationships. |
 | Privilege Management | Manage resource permissions. |
 
 If a menu is missing, the common causes are that the current user is not an administrator, the function mode hides the module, or the related capability is not enabled.
+
+### Next Console Plugin Management
+
+The plugin list uses `pluginType:pluginName` identities and shows execution mode, critical, and configurable metadata. Detail shows:
+
+- enabled state and whether it comes from persisted cluster state or a current-node `localOnly` override;
+- definition type, default, aliases, required, sensitivity, and `effectMode`;
+- each effective value's `source` and `overridden` flag, with `LOCAL_ONLY > RUNTIME_PERSISTED > STATIC > DEFAULT`;
+- a masked marker instead of plaintext for sensitive values.
+
+Only `RUNTIME` definitions are editable online. `RESTART` items are read-only and direct operators to change static configuration and restart. A configuration submission replaces the complete map for the selected source; an empty map clears it. Clear current-node `localOnly` overrides before a cluster operation, or they continue to win over persisted values. Illegal runtime state changes to active critical providers, exclusive selection, and PRE_CONTEXT plugins are rejected.
+
+These capabilities apply only to Next Console. Legacy Console does not implement the unified plugin configuration workflow. See [Plugin Operations](../../plugin/operations.md) for the complete semantics.
 
 ## Legacy console
 

@@ -105,3 +105,22 @@ API接口返回体中的错误码及对应提示信息汇总见下表
 | `23002` | `node down failure`          | 节点离线操作出错           |
 | ...     | ...                          | ...                |
 | `30000` | `server error`               | 其他内部错误             |
+
+### 3.4. HTTP 请求关联 ID
+
+Nacos 3.3 支持通过 `Nacos-Request-Id` 请求头关联调用方与服务端的一次 HTTP 请求。该公共约定适用于 Client、Admin 和 Console Open API。
+
+建议直接调用 HTTP API 的应用为每次请求生成唯一 ID（例如 UUID），并在调用方日志中保留，便于排障时关联请求。该请求头**非必填**；缺失或为空白时，服务端会生成 UUID。3.3 Java Client SDK 访问 Nacos 的 HTTP 请求会自动携带该请求头。
+
+以下示例使用[登录后保存的 token](../auth.mdx)，`uuidgen` 为本次请求生成 ID：
+
+```bash
+NACOS_REQUEST_ID=$(uuidgen)
+curl -sS -G 'http://127.0.0.1:8848/nacos/v3/client/cs/config' \
+  -H "accessToken: ${NACOS_ACCESS_TOKEN}" \
+  -H "Nacos-Request-Id: ${NACOS_REQUEST_ID}" \
+  --data-urlencode 'dataId=example.properties' \
+  --data-urlencode 'groupName=DEFAULT_GROUP'
+```
+
+`Nacos-Request-Id` 只用于请求关联，不是身份凭据或幂等键；重复使用相同 ID 不会阻止重复写入，也不保证响应会回显该 ID。它与标识逻辑客户端的 `X-Nacos-Client-Id` 不同，后者的必填性及复用方式仍按具体接口说明执行。

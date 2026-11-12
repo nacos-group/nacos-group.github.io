@@ -50,8 +50,11 @@ Nacos 3.0 起，控制台端口与服务端主端口解耦。默认端口如下�
 | `9849` | 服务端 gRPC 通信端口 | 只允许 Nacos Server 节点互通 |
 | `7848` | Raft 通信端口 | 只允许 Nacos Server 节点互通 |
 | `8080` | Nacos Console 端口 | 只向管理网络开放 |
+| `5353` | 内置 DNS 端口，仅显式开启时监听 UDP/TCP | 只向可信的内部 DNS 或应用开放；不经过 HTTP API 鉴权 |
 
 使用 VIP、SLB 或 Nginx 时，`9848` 必须按 TCP 转发，不要按 HTTP 或 HTTP/2 代理。更多端口说明请参考[部署手册概览](./deployment-overview.md)。
+
+启用内置 DNS 时，需要同时允许其端口的 UDP 和 TCP，端口号由 `nacos.naming.dns.port` 独立配置。域名转发和验证方式见[内置 DNS 服务发现](../../../ecology/use-nacos-with-native-dns.md)。
 
 ## 控制台独立部署
 
@@ -98,10 +101,10 @@ Nacos 3.0 起，控制台端口与服务端主端口解耦。默认端口如下�
 
 ```properties
 nacos.core.auth.enabled=true
-nacos.core.auth.system.type=nacos
+nacos.plugin.auth.type=nacos
 nacos.core.auth.server.identity.key=${your_identity_key}
 nacos.core.auth.server.identity.value=${your_identity_value}
-nacos.core.auth.plugin.nacos.token.secret.key=${your_token_secret}
+nacos.plugin.auth.nacos.token.secret.key=${your_token_secret}
 ```
 
 建议：
@@ -128,7 +131,7 @@ nacos.core.auth.plugin.nacos.token.secret.key=${your_token_secret}
 当集群承载较多客户端连接或核心接口存在突增流量时，可以启用流量防护插件。建议先使用 `monitor` 模式观察，再切换到 `intercept` 模式。
 
 ```properties
-nacos.plugin.control.manager.type=nacos
+nacos.plugin.control.type=nacos
 ```
 
 重点关注：

@@ -75,7 +75,7 @@ If neither the application nor its other dependencies need Jackson 2, provide Ja
 <dependency>
     <groupId>com.alibaba.nacos</groupId>
     <artifactId>nacos-client</artifactId>
-    <version>${nacos.client.version}</version>
+    <version>3.3.0</version>
     <exclusions>
         <exclusion>
             <groupId>com.fasterxml.jackson.core</groupId>

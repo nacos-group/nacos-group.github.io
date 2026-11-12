@@ -214,16 +214,21 @@ For daily usage, see [Naming Manual](../user/naming/overview.md).
 
 ### Built-in DNS
 
-Nacos 3.3 supports A/AAAA queries for service instances through built-in DNS, which is disabled by default. Restart Nacos Server after changing these settings. See [Built-in DNS Service Discovery](../../ecology/use-nacos-with-native-dns.md) for setup and verification.
+Nacos 3.3.0 supports A/AAAA/SRV queries for service instances through built-in DNS, which is disabled by default. Restart Nacos Server after changing these settings. See [Built-in DNS Service Discovery](../../ecology/use-nacos-with-native-dns.md) for setup and verification.
 
 | Parameter | Description | Default |
 | --- | --- | --- |
 | `nacos.naming.dns.enabled` | Enables built-in DNS. | `false` |
+| `nacos.naming.dns.bind-address` | UDP/TCP listening address. Configure explicitly for remote or container access and restrict network sources. | `127.0.0.1` |
 | `nacos.naming.dns.port` | DNS listening port for both UDP and TCP, independent of HTTP/gRPC ports. | `5353` |
 | `nacos.naming.dns.domain-suffix` | Query domain suffix, without a leading or trailing dot. | `nacos` |
 | `nacos.naming.dns.default-group` | Nacos group used when the query name does not specify one. | `DEFAULT_GROUP` |
 | `nacos.naming.dns.namespace` | Namespace ID to query. Set explicitly to `public` when querying that namespace. | Empty string |
-| `nacos.naming.dns.ttl` | TTL for A/AAAA records, in seconds. | `60` |
+| `nacos.naming.dns.ttl` | TTL for A/AAAA/SRV records, in seconds. | `60` |
+| `nacos.naming.dns.forward-enabled` | Forwards queries outside the Nacos suffix to upstream DNS servers. | `false` |
+| `nacos.naming.dns.forward-servers` | Upstream DNS address list. Configure reachable addresses when enabling forwarding. | Empty list |
+| `nacos.naming.dns.forward-timeout-ms` | Upstream forwarding timeout, in milliseconds. | `3000` |
+| `nacos.naming.dns.forward-refresh-interval-seconds` | Upstream hostname re-resolution interval, in seconds; at least `10`. | `300` |
 
 DNS queries do not pass through HTTP API authentication. Restrict callers separately through network access controls.
 

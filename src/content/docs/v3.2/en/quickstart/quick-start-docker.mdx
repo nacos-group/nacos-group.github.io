@@ -1,0 +1,122 @@
+---
+title: Nacos Docker Quick Start
+keywords: [Nacos,Docker,Quick Start]
+description: Nacos Docker Quick Start
+sidebar:
+    order: 2
+---
+
+# Nacos Docker Quick Start
+
+This quick start guide helps you quickly deploy and use Nacos in a Docker container through the Nacos Docker image.
+
+:::note
+- This quick start is intended to help you quickly install, deploy, and get started with Nacos. The Nacos service created by this quick start runs in **standalone mode** and **does not enable client access authentication**. We recommend using it only for testing. For production deployment, deploy **cluster mode** and **enable authentication** to avoid **stability and security** risks.
+- Nacos is positioned as an internal IDC application component, not a product for public network environments. We recommend deploying it in an isolated internal network environment and **strongly discourage** deployment in public network environments.
+:::
+
+## 1. Prepare the Environment
+
+To install and deploy Nacos using this quick start method, install [Docker](https://www.docker.com/).
+
+## 2. Start Nacos
+
+> When this command is executed for the first time, the required Docker images are automatically downloaded. The waiting time depends on your network speed. You can also download the images in advance to reduce the waiting time when running the deployment command.
+
+```powershell
+docker run --name nacos-standalone-derby \
+    -e MODE=standalone \
+    -e NACOS_AUTH_TOKEN=${your_nacos_auth_secret_token} \
+    -e NACOS_AUTH_IDENTITY_KEY=${your_nacos_server_identity_key} \
+    -e NACOS_AUTH_IDENTITY_VALUE=${your_nacos_server_identity_value} \
+    -p 8080:8080 \
+    -p 8848:8848 \
+    -p 9848:9848 \
+    -d nacos/nacos-server:latest
+```
+
+:::note
+- NACOS_AUTH_TOKEN: The secret key used by Nacos to generate JWT tokens. Use a string longer than 32 characters and encode it with Base64.
+- NACOS_AUTH_IDENTITY_KEY: The identity key for Inner APIs between Nacos Servers. Required.
+- NACOS_AUTH_IDENTITY_VALUE: The identity value for Inner APIs between Nacos Servers. Required.
+:::
+
+## 3. Verify Whether Nacos Started Successfully
+
+Run `docker logs -f $container_id` to view the Nacos startup logs. If you see the following log, the service has started successfully.
+
+```
+Nacos started successfully in xxxx mode. use xxxx storage
+```
+
+You can quickly verify Nacos features with the following services.
+
+### 3.1. Nacos Console Page
+
+Open any browser and enter `http://127.0.0.1:8080` to access the Nacos console page.
+
+> Note: The first time you open the console, you are asked to initialize the password for the administrator user `nacos`.
+
+### 3.2. Service Registration
+
+`curl -X POST 'http://127.0.0.1:8848/nacos/v3/client/ns/instance?serviceName=quickstart.test.service&ip=127.0.0.1&port=8080'`
+
+### 3.3. Service Discovery
+
+`curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/ns/instance/list?serviceName=quickstart.test.service'`
+
+### 3.4. Publish Configuration
+
+```shell
+# Log in to obtain an access token.
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/auth/user/login' -d 'username=nacos' -d 'password=${your_password}'
+# Use the access token to create a configuration.
+curl -X POST 'http://127.0.0.1:8848/nacos/v3/admin/cs/config?dataId=quickstart.test.config&groupName=test&content=HelloWorld' -H "accessToken:${your_access_token}"
+```
+
+:::note
+Accessing Admin APIs requires an access token by default. You can obtain an access token through the `POST /nacos/v3/auth/user/login` API.
+:::
+
+### 3.5. Get Configuration
+
+`curl -X GET 'http://127.0.0.1:8848/nacos/v3/client/cs/config?dataId=quickstart.test.config&groupName=test'`
+
+## 4. More Nacos Docker Use Cases
+
+The Nacos community provides a series of Docker Compose files. You can refer to these files to deploy Nacos in more scenarios.
+
+To install and deploy Nacos using this quick start method, use [Docker Compose](https://docs.docker.com/compose/).
+
+### 4.1. Download the nacos-docker Project
+
+```powershell
+git clone https://github.com/nacos-group/nacos-docker.git
+cd nacos-docker
+```
+### 4.2. Use docker-compose to Start Nacos
+
+> When this command is executed for the first time, the required Docker images are automatically downloaded. The waiting time depends on your network speed. You can also download the images in advance to reduce the waiting time when running the deployment command.
+
+```powershell
+docker-compose -f example/standalone-derby.yaml up
+```
+
+Or
+
+```powershell
+cd example
+./mysql-init.sh && docker-compose -f standalone-mysql.yaml up
+```
+
+For other files in the `example` directory, see [Nacos Docker](https://github.com/nacos-group/nacos-docker/tree/master/example).
+
+## Nacos + Grafana + Prometheus
+Reference: [Nacos Monitoring Guide](../guide/admin/monitor-guide.md)
+
+**Note**: When Grafana creates a new data source, the data source address must be **http://prometheus:9090**.
+
+## Related Projects
+
+* [Nacos](https://github.com/alibaba/nacos)
+* [Nacos Docker](https://github.com/nacos-group/nacos-docker)

@@ -51,6 +51,8 @@ The examples below also use the default Nacos Web Server port. If the deployment
 
 Nacos 3.X client OpenAPI also provides Swagger-style documentation. You can view it at [Nacos Swagger HTTP Client API](/swagger/client/).
 
+In the tables below, `map<string, any>` has string keys and accepts any JSON value: a string, number, boolean, object, array, or `null`. Maps such as `map<string, string>`, `map<string, boolean>`, and maps of named models retain their declared value types.
+
 ### 0.4. Authentication And Example Setup
 
 Nacos 3.3 enables Client authentication by default. Configuration reads, service registration/discovery, and other protected requests fail without valid credentials and resource permissions.
@@ -347,7 +349,7 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 
 | Name                                  | Type       | Description      |
 |--------------------------------------|------------|-----------|
-| `data`                               | `array` | Instance list. |
+| `data`                               | `array<Instance>` | Instance list. |
 | `data.[i].ip`                        | `string` | Instance IP. |
 | `data.[i].port`                      | `integer` | Instance port. |
 | `data.[i].weight`                    | `number` | Instance weight. |
@@ -425,7 +427,7 @@ Query Prompt by version, label, or latest (priority: version > label > latest); 
 | `promptKey`   | `string` | **Yes** | Prompt key                  |
 | `version`     | `string` | No     | Exact version, taking precedence over `label`; defaults to `latest` when both are omitted. |
 | `label`       | `string` | No     | Version label, used when `version` is omitted. |
-| `md5`         | `string` | No     | If matches server, response is 304            |
+| `md5`         | `string` | No     | MD5 of the locally cached content. A match with the current Prompt content returns `304 Not Modified` with no response body. |
 
 #### Response Data
 
@@ -467,7 +469,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET '127.0.0.1:8848/nacos/v3/cli
 
 #### Description
 
-This interface allows getting an AgentSpec detail by namespace, name, version, or label.
+This interface allows getting AgentSpec details by namespace, name, version, or label, with `md5` for conditional cache queries.
 
 #### Since
 
@@ -489,7 +491,7 @@ This interface allows getting an AgentSpec detail by namespace, name, version, o
 | `name`        | `string` | **Yes** | AgentSpec name                    |
 | `version`     | `string` | No     | AgentSpec version                 |
 | `label`       | `string` | No     | AgentSpec label                   |
-| `md5`         | `string` | No     | AgentSpec content MD5 for exact version matching |
+| `md5`         | `string` | No     | MD5 of the locally cached AgentSpec content. A match with the selected online version returns `304 Not Modified`. |
 
 #### Response Data
 
@@ -504,6 +506,8 @@ Return body follows [Nacos open API common response format](overview/api-overvie
 | `data.bizTags`     | `string` | AgentSpec business tags    |
 | `data.content`     | `string` | AgentSpec content          |
 | `data.resource`    | `map<string, AgentSpecResource>` | Associated resources with name, type, content, and metadata. |
+
+`AgentSpecResource.metadata` is a `map<string, any>` and accepts any JSON value. A `200` response includes non-empty content MD5 and resolved version values in `ETag`, `X-Nacos-AgentSpec-Md5`, and `X-Nacos-AgentSpec-Resolved-Version`. A `304` response has no body and returns the first two MD5-related headers; the client keeps using its cache.
 
 #### Examples
 
@@ -562,7 +566,7 @@ Return body follows [Nacos open API common response format](overview/api-overvie
 | `data.totalCount` | `integer` | Total matching resources. |
 | `data.pageNumber` | `integer` | Current page number. |
 | `data.pagesAvailable` | `integer` | Total pages. |
-| `data.pageItems` | `array<AgentSpecBasicInfo>` | Resource summaries with `namespaceId`, `name`, `description`, `bizTags`, and `updateTime`. |
+| `data.pageItems` | `array<AgentSpecBasicInfo>` | Resource summaries with `namespaceId`, `name`, `description`, and `updateTime`. |
 
 #### Examples
 
@@ -586,7 +590,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET '127.0.0.1:8848/nacos/v3/cli
 
 #### Description
 
-This interface allows downloading a Skill ZIP file by namespace, name, version, or label.
+This interface allows downloading a Skill ZIP file by namespace, name, version, or label, with `md5` for conditional cache queries.
 
 #### Since
 
@@ -608,7 +612,7 @@ This interface allows downloading a Skill ZIP file by namespace, name, version, 
 | `name`        | `string` | **Yes** | Skill name                        |
 | `version`     | `string` | No     | Skill version                     |
 | `label`       | `string` | No     | Skill label                       |
-| `md5`         | `string` | No     | Skill content MD5 for exact version matching |
+| `md5`         | `string` | No     | MD5 of the locally cached Skill content. A match with the selected online version returns `304 Not Modified`. |
 
 #### Examples
 
@@ -620,7 +624,7 @@ curl -f -H "accessToken: ${NACOS_ACCESS_TOKEN}" '127.0.0.1:8848/nacos/v3/client/
 
 * Response description
 
-A successful response is a Skill ZIP file, saved as `my-skill.zip` by this command. It is not wrapped in a JSON `Result`.
+A `200` response is a Skill ZIP file (`Content-Type: application/zip`), saved as `my-skill.zip` by this command, without a JSON `Result` wrapper. A `304` response has no body: keep the cached ZIP and do not overwrite it with an empty response. Both responses include `ETag`, `X-Nacos-Skill-Md5`, and `X-Nacos-Skill-Resolved-Version` when the corresponding values are non-empty, for content validation and the resolved version.
 
 > **Agent Management API note:** The Agent APIs in sections 3.5–3.11 are the recommended integration path going forward and are planned to gradually replace the existing A2A management APIs. New users and SDKs should prioritize compatibility with these Agent Management APIs instead of adding new dependencies on the legacy A2A APIs. Existing A2A integrations can migrate in line with future release and migration guidance. This describes the evolution of the management APIs and does not mean that the A2A protocol itself is deprecated.
 
@@ -647,6 +651,9 @@ Discovers one exact visible Agent version and its currently matching endpoint se
 | Name | Type | Required | Description |
 |------|------|----------|-------------|
 | `X-Nacos-Client-Id` | `string` | No | Optional stable identifier of an existing logical HTTP client. When present, it must contain 1 to 256 characters matching `[A-Za-z0-9._:-]+` and use the same value as the client's endpoint publisher requests. Search and Discover renew only the existing Client lifecycle; they never create an empty Client or renew Publisher liveness, so they cannot replace Publisher heartbeat. |
+| `X-Nacos-Agent-Discovery-Trigger` | `string` | No | Optional diagnostic marker: `watch-notify` means that Watch notification triggered this Discover request. Missing, empty, and unknown values are accepted. It does not affect discovery results, authentication, or caching, and does not prove that content changed. |
+
+When repeating Discover after a Watch changed-ID notification, send `X-Nacos-Agent-Discovery-Trigger: watch-notify` if appropriate. Omit this marker for proactive queries, initialization, and polling fallback.
 
 #### Request Parameters
 
@@ -1170,6 +1177,7 @@ The response body follows the [Nacos OpenAPI common response format](overview/ap
 | `data.pageItems[i].provider.name` | `string` | Provider name. |
 | `data.pageItems[i].provider.url` | `string` | Provider URL. |
 | `data.pageItems[i].tags` | `array<string>` | Agent tags. |
+| `data.pageItems[i].extensions` | `map<string, any>` | Agent extension properties; values may be any JSON type. |
 | `data.pageItems[i].versionInfo` | `AgentVersionInfo` | Online versions and label mappings. |
 | `data.pageItems[i].versionInfo.labels` | `map<string, string>` | Labels mapped to online versions, including `latest`. |
 | `data.pageItems[i].versionInfo.onlineVersions` | `array<AgentVersionSummary>` | Online version summaries. |
@@ -1340,14 +1348,20 @@ Retrieve an online MCP server version and its endpoints. Omitting the version se
 | `data.versionDetail` | `ServerVersionDetail` | Version information with `version`, `release_date`, and `is_latest`. |
 | `data.version` | `string` | Version number. |
 | `data.remoteServerConfig` | `McpServerRemoteServiceConfig` | Remote service reference, export path, and frontend endpoint configuration. |
-| `data.localServerConfig` | `map<string, object>` | Local process configuration. |
+| `data.localServerConfig` | `map<string, any>` | Local process configuration, such as a string `command` and an `args` array. |
 | `data.enabled` | `boolean` | Whether the server is enabled. |
 | `data.status` | `string` | Version status. |
 | `data.capabilities` | `array<string>` | Server capabilities. |
 | `data.backendEndpoints` | `array<McpEndpointInfo>` | Backend endpoints with `protocol`, `address`, `port`, `path`, and `headers`. |
 | `data.frontendEndpoints` | `array<McpEndpointInfo>` | Exposed endpoints with the same fields as backend endpoints. |
 | `data.toolSpec` | `McpToolSpecification` | Tool definitions. |
+| `data.toolSpec.tools` | `array<McpTool>` | Tools whose `inputSchema`, `outputSchema`, and `_meta` fields are each `map<string, any>`, preserving their JSON Schema or protocol-defined content. |
+| `data.toolSpec.toolsMeta` | `map<string, McpToolMeta>` | Metadata by tool name; `invokeContext` is `map<string, string>` and `templates` is `map<string, any>`. |
+| `data.toolSpec.extensions` | `map<string, any>` | Tool extension information. |
 | `data.resourceSpec` | `McpResourceSpecification` | Resource definitions. |
+| `data.resourceSpec.resources` | `array<map<string, any>>` | Resource definitions whose field values may be any JSON type. |
+| `data.resourceSpec.resourceTemplates` | `array<map<string, any>>` | Resource templates. |
+| `data.resourceSpec.extensions` | `map<string, any>` | Resource extension information. |
 | `data.allVersions` | `array<ServerVersionDetail>` | Version list. |
 | `data.repository` | `Repository` | Source repository information. |
 | `data.packages` | `array<Package>` | Distribution packages. |
@@ -1615,6 +1629,7 @@ Search currently visible, enabled MCP resources by text, tags, protocols, and ca
 | `data.pageNumber` | `integer` | Current page number. |
 | `data.pagesAvailable` | `integer` | Total pages. |
 | `data.pageItems` | `array<McpServerBasicInfo>` | Server summaries on this page; use the MCP query API for endpoints and complete definitions. |
+| `data.pageItems[i].localServerConfig` | `map<string, any>` | Local process configuration whose values may be any JSON type. |
 
 #### Examples
 
@@ -1768,7 +1783,7 @@ Each array filter allows up to 32 non-empty values. Different conditions are com
 | `data.items[i].tags` | `array<string>` | Tags. |
 | `data.items[i].capabilities` | `array<string>` | Capabilities. |
 | `data.items[i].representativeQueries` | `array<string>` | Representative query text. |
-| `data.items[i].metadata` | `map<string, object>` | Extended resource metadata. |
+| `data.items[i].metadata` | `map<string, any>` | Extended resource metadata whose values may be any JSON type. |
 | `data.items[i].createTime` | `integer` | Creation time. |
 | `data.items[i].updateTime` | `integer` | Update time. |
 | `data.items[i].score` | `integer` | Relevance score. |
@@ -1815,7 +1830,7 @@ None.
 
 | Name | Type | Description |
 | --- | --- | --- |
-| `data` | `map<string, object>` | This node's capability declaration. |
+| `data` | `map<string, any>` | This node's capability declaration; defined fields retain the value types below. |
 | `data.schemaVersion` | `integer` | Declaration format version, currently `1`. |
 | `data.capabilities` | `map<string, boolean>` | Capability flags: `radV1`, `mcp`, `skill`, `prompt`, and `agentSpec`. |
 

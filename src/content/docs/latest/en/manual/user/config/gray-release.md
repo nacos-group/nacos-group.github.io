@@ -31,6 +31,14 @@ One config can have multiple gray versions. Runtime query evaluates gray rules f
 
 By default, a config can have up to `10` gray versions. You can adjust this with `nacos.config.gray.version.max.count`.
 
+## Upgrade Compatibility
+
+Current beta and tag gray release behavior is backed by `config_info_gray` and `GrayRule`. Starting with Nacos 3.3, Nacos no longer automatically migrates legacy `config_info_beta` and `config_info_tag` tables from versions before 3.0 into `config_info_gray`.
+
+If you upgrade from a version before 3.0 to 3.3 and the old deployment used beta gray release, migrate the legacy beta/tag gray data to the current `config_info_gray` gray model before upgrading. If the old deployment did not use beta gray release, this compatibility removal does not affect smooth upgrade for this gray compatibility area.
+
+This change does not remove current beta/tag gray APIs. Publishing, querying, and stopping gray release with `betaIps` or `tag` still work through the current gray model.
+
 ## Query Behavior
 
 Gray query follows these rules:

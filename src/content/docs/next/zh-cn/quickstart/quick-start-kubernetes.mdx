@@ -35,7 +35,7 @@ cd nacos-k8s
 
 在 `deploy/nacos/nacos-quick-start.yaml` 中找到 `nacos` StatefulSet 的 `nacos` 容器：
 
-1. 将 `image` 改为实际已发布的目标 3.3 镜像，例如 `nacos/nacos-server:<目标版本标签>`。仓库中的默认镜像可能仍是旧版本。
+1. 将 `image` 改为正式镜像 `nacos/nacos-server:v3.3.0`。仓库中的默认镜像可能仍是旧版本。
 2. 保留已有的数据库、`NACOS_SERVERS` 等配置，用自己的值替换下列鉴权环境变量。已有同名项时直接修改，不要重复添加。
 
 `NACOS_AUTH_TOKEN` 是签发 token 的服务端密钥，须为合法 Base64，解码后至少 32 字节；它不是登录得到的 `accessToken`。身份标识 key/value 必须非空。所有副本使用相同的密钥及身份标识，不要沿用仓库中的演示值。

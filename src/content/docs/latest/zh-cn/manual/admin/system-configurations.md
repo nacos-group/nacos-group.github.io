@@ -8,7 +8,7 @@ sidebar:
 
 # 系统参数
 
-本文整理 Nacos 3.2.x 常用服务端参数。主要来源是发行包中的 `${nacos.home}/conf/application.properties`，并结合当前代码中的配置读取逻辑补充说明。
+本文整理 Nacos 3.3.x 常用服务端参数。主要来源是发行包中的 `${nacos.home}/conf/application.properties`，并结合当前代码中的配置读取逻辑补充说明。
 
 如果你正在部署生产集群，建议先阅读[部署最佳实践](./deployment/deployment-best-practices.md)，再回到本文确认具体参数。
 
@@ -55,16 +55,18 @@ Nacos 通过数据源方言插件支持 Derby、MySQL、PostgreSQL、Oracle 和�
 
 | 参数名 | 说明 | 默认值 |
 | --- | --- | --- |
-| `spring.sql.init.platform` | 数据库类型。可设置为 `derby`、`mysql`、`postgresql`、`oracle` 或自定义方言插件类型。`oracle` 要求 Oracle 12c 及以上版本。 | 空 |
-| `db.num` | 数据库连接地址数量。 | `0` |
-| `db.url.0`、`db.url.1` | JDBC URL。通过下标配置多个连接地址。 | 空 |
-| `db.user`、`db.password` | 所有连接共用的数据库账号密码。 | 空 |
-| `db.user.0`、`db.password.0` | 指定下标连接的账号密码。需要每个连接不同账号时使用。 | 空 |
-| `db.pool.config.*` | HikariCP 连接池参数，例如 `db.pool.config.connectionTimeout`。 | HikariCP 默认值 |
+| `nacos.plugin.datasource-dialect.type` | 启动时选择 `derby`、`mysql`、`postgresql`、`oracle` 或自定义方言。 | 单机/embedded 为 `derby`，普通集群为 `mysql` |
+| `nacos.plugin.datasource.db.num` | 外置数据库连接地址数量。 | `0` |
+| `nacos.plugin.datasource.db.url.{index}` | 逐下标 JDBC URL。 | 空 |
+| `nacos.plugin.datasource.db.user[.{index}]` | 公共或逐连接用户名。 | 空 |
+| `nacos.plugin.datasource.db.password[.{index}]` | 公共或逐连接密码。 | 空 |
+| `nacos.plugin.datasource.db.pool.config.*` | HikariCP 参数；稳定键使用 kebab-case，例如 `maximum-pool-size`。 | 各项默认值见数据源插件文档 |
+| `nacos.plugin.datasource.db.pool.config.driver-class-name` | 显式 JDBC 驱动类，优先于历史 `db.pool.config.driverClassName`；未配置时读取所选方言的默认驱动。 | 方言默认值；未提供时为 `com.mysql.cj.jdbc.Driver` |
+| `nacos.plugin.datasource.db.query-timeout` | JDBC query timeout，单位秒。 | `3` |
 | `nacos.plugin.datasource.log.enabled` | 是否输出数据源插件相关日志。 | `true` |
 
 :::note
-`spring.datasource.platform` 是旧版本兼容参数。新部署请使用 `spring.sql.init.platform`。
+`spring.sql.init.platform` 是方言选择的历史 alias；`db.*` 是连接配置 alias。标准键优先。`spring.datasource.platform` 已移除。
 :::
 
 ## Web 与控制台
@@ -210,6 +212,26 @@ Raft 参数通过 `nacos.core.protocol.raft.data.*` 配置。`data` 是当前代
 | `nacos.naming.push.pushTaskRetryDelay` | 服务推送失败重试延迟，单位毫秒。 | `1000` |
 | `nacos.naming.service.metadata.length` | 服务元数据总长度限制。 | `1024` |
 
+### 内置 DNS
+
+Nacos 3.3.0 支持通过内置 DNS 查询服务实例的 A/AAAA/SRV 记录，默认关闭。修改以下配置后重启 Nacos Server 生效，接入和验证步骤见[内置 DNS 服务发现](../../ecology/use-nacos-with-native-dns.md)。
+
+| 参数名 | 说明 | 默认值 |
+| --- | --- | --- |
+| `nacos.naming.dns.enabled` | 是否启用内置 DNS。 | `false` |
+| `nacos.naming.dns.bind-address` | UDP/TCP 监听地址。远程或容器网络访问需显式配置，并限制网络来源。 | `127.0.0.1` |
+| `nacos.naming.dns.port` | DNS 监听端口，同时使用 UDP 和 TCP，独立于 HTTP/gRPC 端口。 | `5353` |
+| `nacos.naming.dns.domain-suffix` | 查询域名后缀，不带开头和末尾的点号。 | `nacos` |
+| `nacos.naming.dns.default-group` | 查询域名未指定分组时使用的 Nacos 分组。 | `DEFAULT_GROUP` |
+| `nacos.naming.dns.namespace` | 查询的命名空间 ID。查询 `public` 时应显式设置为 `public`。 | 空字符串 |
+| `nacos.naming.dns.ttl` | A/AAAA/SRV 记录的 TTL，单位秒。 | `60` |
+| `nacos.naming.dns.forward-enabled` | 是否将非 Nacos 后缀查询转发到上游 DNS。 | `false` |
+| `nacos.naming.dns.forward-servers` | 上游 DNS 地址列表。启用转发时配置可达的上游地址。 | 空列表 |
+| `nacos.naming.dns.forward-timeout-ms` | 上游转发超时，单位毫秒。 | `3000` |
+| `nacos.naming.dns.forward-refresh-interval-seconds` | 上游主机名重新解析间隔，单位秒，至少为 `10`。 | `300` |
+
+DNS 查询不经过 HTTP API 鉴权，需单独通过网络访问控制限制调用来源。
+
 ## 参数校验
 
 | 参数名 | 说明 | 默认值 |
@@ -223,53 +245,34 @@ Raft 参数通过 `nacos.core.protocol.raft.data.*` 配置。`data` 是当前代
 
 | 参数名 | 说明 | 默认值 |
 | --- | --- | --- |
-| `nacos.core.auth.system.type` | 鉴权插件类型。默认实现为 `nacos`；也可接入 LDAP、OIDC/OAuth2 或自定义插件。 | `nacos` |
-| `nacos.core.auth.enabled` | 是否开启 SDK/gRPC 请求鉴权。 | `false` |
-| `nacos.core.auth.admin.enabled` | 是否开启 `/v3/admin/*` Admin API 鉴权。 | `true` |
+| `nacos.plugin.auth.type` | 启动时选择鉴权插件；`nacos.core.auth.system.type` 是历史 alias。 | `nacos` |
+| `nacos.core.auth.enabled` | 是否开启通用鉴权系统和 Open API 鉴权，包括 Client/Open HTTP API 及 SDK/gRPC 请求。Nacos 3.3 起默认开启；显式 `false` 仅作为临时兼容覆盖。 | `true` |
+| `nacos.core.auth.admin.enabled` | 是否开启 Admin API scope 鉴权；除 `/v3/admin/*` 外，也包括标记为 `ADMIN_API` 的插件自有端点。 | `true` |
 | `nacos.core.auth.console.enabled` | 是否开启 `/v3/console/*` Console API 和登录鉴权。 | `true` |
-| `nacos.core.auth.caching.enabled` | 是否缓存鉴权信息。开启后权限变更会有短暂延迟。 | `true` |
+| `nacos.plugin.auth.nacos.caching.enabled` | 是否缓存鉴权信息；`nacos.core.auth.caching.enabled` 是历史 alias。开启后权限变更会有短暂延迟。 | `true` |
 | `nacos.core.auth.server.identity.key` | Server 间内部请求的身份标识 key。Nacos 3.2.4 起也用于 JRaft 原生 gRPC；集群所有节点必须配置相同的非空值。 | 空 |
 | `nacos.core.auth.server.identity.value` | Server 间内部请求的身份标识 value。Nacos 3.2.4 起也用于 JRaft 原生 gRPC；集群所有节点必须配置相同的非空值。 | 空 |
 | `nacos.security.ignore.urls` | 鉴权忽略路径。该参数属于历史兼容项，未来可能废弃。 | 发行包默认值 |
-| `nacos.core.auth.plugin.nacos.token.cache.enable` | 默认鉴权插件是否缓存 token。 | `false` |
-| `nacos.core.auth.plugin.nacos.token.expire.seconds` | 默认鉴权插件 token 过期时间，单位秒。 | `18000` |
-| `nacos.core.auth.plugin.nacos.token.secret.key` | 默认鉴权插件 JWT 签名密钥。需要使用 Base64 字符串，原始密钥长度不少于 32 字符。 | 空 |
-| `nacos.core.auth.nacos.anonymous.ai.enabled` | 是否允许 AI 资源匿名读取。当前主要面向 Skill 和 AgentSpec。 | `false` |
+| `nacos.plugin.auth.nacos.token.cache.enable` | 默认鉴权插件 token 缓存；旧 `nacos.core.auth.plugin.nacos.token.cache.enable` 是 alias。 | `false` |
+| `nacos.plugin.auth.nacos.token.expire.seconds` | 默认鉴权插件 token 过期秒数；`nacos.core.auth.plugin.nacos.token.expire.seconds` 是历史 alias。 | `18000` |
+| `nacos.plugin.auth.nacos.token.secret.key` | JWT 签名密钥，敏感且 RESTART；`nacos.core.auth.plugin.nacos.token.secret.key` 是历史 alias。 | 空 |
+| `nacos.plugin.auth.nacos.anonymous.ai.enabled` | 是否允许显式 opt-in 的 AI 端点接受匿名读取；`nacos.core.auth.nacos.anonymous.ai.enabled` 是历史 alias。显式携带空或无效凭据不会回退为匿名。 | `false` |
 | `nacos.plugin.visibility.enabled` | 是否开启可见性插件。 | `true` |
-| `nacos.plugin.visibility.type` | 可见性插件类型。默认 `nacos` 实现会复用默认鉴权插件用户信息。 | `nacos` |
+| `nacos.plugin.visibility.type` | 废弃的 `RESTART` selector，仍决定 AI 领域请求的实现，并在没有持久化状态时参与初始化实现状态。 | `nacos` |
+| `nacos.plugin.visibility.{pluginName}.enabled` | 实现的静态初始状态；持久化插件状态优先。默认 `nacos` 实现会复用默认鉴权插件用户信息。 | `nacos` 为 `true` |
 
-:::caution[Nacos 3.2.4 集群升级]
-JRaft 会独立校验上述 Server identity，即使 `nacos.core.auth.enabled=false` 也不会跳过。升级前必须在所有节点配置一致的非空 key 和 value；详细的滚动升级与回退限制见[升级手册](./upgrading.mdx)。
+:::caution[JRaft Server identity]
+从 Nacos 3.2.4 起，JRaft 会独立校验上述 Server identity，即使 `nacos.core.auth.enabled=false` 也不会跳过。升级或部署集群前，必须在所有节点配置一致的非空 key 和 value。
 :::
 
 ### LDAP、OIDC 与 OAuth2
 
-LDAP 从 Nacos 3.2 起作为可选插件独立维护。OIDC/OAuth2 也是插件能力。使用前请确认对应插件已经随发行包提供或已放入插件目录。
+LDAP 与 OIDC/OAuth2 是可选插件。下表列出标准前缀，具体 definitions、alias、默认值和 effectMode 见[鉴权插件](../../plugin/auth-plugin.md)。
 
 | 参数名 | 说明 | 默认值 |
 | --- | --- | --- |
-| `nacos.core.auth.ldap.url` | LDAP server 地址。 | 空 |
-| `nacos.core.auth.ldap.basedc` | LDAP base DN。 | 空 |
-| `nacos.core.auth.ldap.userDn` | LDAP 管理用户 DN。 | 空 |
-| `nacos.core.auth.ldap.password` | LDAP 管理用户密码。 | 空 |
-| `nacos.core.auth.ldap.userdn` | 登录用户 DN 模板，`{0}` 表示用户名。 | 空 |
-| `nacos.core.auth.ldap.filter.prefix` | 用户过滤字段前缀。 | `uid` |
-| `nacos.core.auth.ldap.case.sensitive` | 用户名是否大小写敏感。 | `true` |
-| `nacos.core.auth.ldap.ignore.partial.result.exception` | 是否忽略 LDAP partial result 异常。 | `false` |
-| `nacos.core.auth.plugin.oidc.issuer-uri` | OIDC issuer URI，用于自动发现。 | 空 |
-| `nacos.core.auth.plugin.oidc.client-id` | OIDC client id。 | 空 |
-| `nacos.core.auth.plugin.oidc.client-secret` | OIDC client secret。 | 空 |
-| `nacos.core.auth.plugin.oidc.scope` | OIDC scope。 | `openid` |
-| `nacos.core.auth.plugin.oidc.token-validation-method` | token 校验方式，可选 `jwt` 或 `introspection`。 | 空 |
-| `nacos.core.auth.plugin.oidc.jwks-cache-ttl-seconds` | JWKS 缓存时间，单位秒。 | 空 |
-| `nacos.core.auth.plugin.oidc.username-claim` | 用户名 claim。 | `sub` |
-| `nacos.core.auth.plugin.oidc.roles-claim` | 角色 claim。 | 空 |
-| `nacos.core.auth.plugin.oidc.admin-role` | 管理员角色名。 | 空 |
-| `nacos.core.auth.plugin.oidc.auto-create-user` | 首次登录时是否自动创建用户。 | `true` |
-| `nacos.core.auth.plugin.oidc.authorization-endpoint` | 外部授权端点。 | 空 |
-| `nacos.core.auth.plugin.authorization-timeout-ms` | 外部授权请求超时，单位毫秒。 | 空 |
-| `nacos.core.auth.plugin.oidc.strict-nonce-validation` | 是否严格校验 nonce。 | `false` |
-| `nacos.core.auth.plugin.oidc.strict-audience-validation` | 是否严格校验 audience。 | `false` |
+| `nacos.plugin.auth.ldap.{itemKey}` | LDAP definitions：`url`、`base-dn`、`timeout`、`user-dn`、`password`、`filter-prefix`、`case-sensitive`、`ignore-partial-result-exception`。 | 见[鉴权插件文档](../../plugin/auth-plugin.md) |
+| `nacos.plugin.auth.oidc.{itemKey}` | OIDC definitions，包括 issuer/client、JWT/JWKS、claim、外部授权和严格校验选项。当前只实现 `jwt`/JWKS，不支持 introspection。 | 见[鉴权插件文档](../../plugin/auth-plugin.md) |
 
 ## 插件参数
 
@@ -278,15 +281,13 @@ LDAP 从 Nacos 3.2 起作为可选插件独立维护。OIDC/OAuth2 也是插件�
 | 参数名 | 说明 | 默认值 |
 | --- | --- | --- |
 | `nacos.custom.environment.enabled` | 是否启用自定义环境变量插件。 | `false` |
-| `nacos.plugin.control.manager.type` | 流量防护插件类型。配置为 `nacos` 时使用默认实现。 | 空 |
+| `nacos.plugin.control.type` | 启动时选择流量防护实现；`nacos.plugin.control.manager.type` 是历史 alias。 | 空（no-limit） |
 | `nacos.plugin.control.rule.local.basedir` | 本地流量防护规则目录。 | `${nacos.home}` |
 | `nacos.plugin.control.rule.external.storage` | 外部规则存储类型，需要自行实现。 | 空 |
-| `nacos.core.config.plugin.webhook.enabled` | 是否启用配置变更 Webhook 插件。 | `false` |
-| `nacos.core.config.plugin.webhook.url` | Webhook 地址。 | 空 |
-| `nacos.core.config.plugin.webhook.contentMaxCapacity` | Webhook 推送内容最大大小，单位 byte。 | `102400` |
-| `nacos.core.config.plugin.whitelist.enabled` | 是否启用配置导入后缀白名单插件。 | `false` |
-| `nacos.core.config.plugin.whitelist.suffixs` | 允许导入的配置文件后缀。 | `xml,text,properties,yaml,html` |
-| `nacos.core.config.plugin.fileformatcheck.enabled` | 是否启用导入文件格式检查插件。 | `false` |
+| `nacos.plugin.{pluginType}.{pluginName}.enabled` | 非互斥实现的启动初始状态；持久化/本地 state 可覆盖。`auth`、`datasource-dialect`、`control` 等互斥类型应使用 selector 选择实现。 | 由实现和类型策略决定 |
+| `nacos.plugin.{pluginType}.{pluginName}.{itemKey}` | 实现 definitions 的标准配置键。 | 由 definition 决定 |
+
+配置变更插件的历史 `nacos.core.config.plugin.{pluginName}.*` 只用于旧二进制兼容；Nacos Server 不内置 webhook、whitelist 或 fileformatcheck 实现。新实现使用 `nacos.plugin.config-change.{pluginName}.{itemKey}`。
 
 ## Istio 与 Prometheus 服务发现
 
@@ -310,26 +311,38 @@ AI 管理中心的使用方式见[AI 管理中心概述](../user/ai/ai-registry-
 | 参数名 | 说明 | 默认值 |
 | --- | --- | --- |
 | `nacos.extension.ai.enabled` | 是否启用 AI 模块。设为 `false` 时不加载 AI 模块及其控制台入口，Config 和 Naming 不受影响；`microservice` 功能模式下无论该值为何都不会加载 AI 模块。 | `true` |
+| `nacos.ai.resource.search.enabled` | 是否启用 AI 资源检索。关闭后检索功能不可用，依赖该功能的 ARD 也无法启用。升级时若已明确关闭检索，MCP 自动迁移不会等待检索索引初始化。 | `true` |
+| `nacos.ai.resource.search.index.backfill.enabled` | 启用 AI 资源检索后，是否为历史数据初始化索引并进行周期检查。通常保持开启；初次升级期间关闭它，可能使 MCP 自动迁移一直等待索引准备完成。 | `true` |
+| `nacos.ai.resource.search.vector.provider` | 资源发现使用的向量索引 Provider；修改后重启。接入见 [AI 向量插件](../../plugin/ai-vector-plugin.md)。 | `postgresql` |
+| `nacos.plugin.ai-vector.postgresql.enabled` | PostgreSQL 向量实现的初始状态；默认随 Provider 选择，持久化插件状态优先。 | 由 Provider 选择决定 |
+| `nacos.ai.resource.search.vector.postgresql.url` | 独立向量库的 JDBC URL；未配置时尝试使用 PostgreSQL 主数据源。 | 空 |
+| `nacos.ai.resource.search.vector.postgresql.user` | 独立向量库的用户名。 | 空 |
+| `nacos.ai.resource.search.vector.postgresql.password` | 独立向量库的密码。 | 空 |
+| `nacos.ai.resource.search.vector.postgresql.driver-class-name` | 独立向量库的 JDBC 驱动类。 | `org.postgresql.Driver` |
+| `nacos.ai.mcp.resource.reconciliation.enabled` | 是否在服务端就绪后自动迁移已有 MCP 数据并启用新版管理接口。通常保持开启；迁移完成前设为 `false` 会停止自动迁移，使新版 MCP 管理接口继续不可用。启动时读取，修改后需重启服务端。 | `true` |
+| `nacos.ai.mcp.resource.reconciliation.interval-seconds` | MCP 自动迁移的检查间隔，单位为秒，从上一轮结束后开始计时。只接受正整数；非法、非数字或小于等于 0 的值回退到 `300`。调小会增加配置中心和数据库扫描负载，只建议在测试或受控排障时谨慎调整。启动时读取，修改后需重启服务端。 | `300` |
 | `nacos.ai.mcp.registry.enabled` | 是否启用官方 MCP Registry 协议适配。开启后会使用 `nacos.ai.registry.port` 暴露独立端口。 | `false` |
 | `nacos.ai.skill.registry.enabled` | 是否启用 Skill Registry 协议适配。开启后会使用 `nacos.ai.registry.port` 暴露独立端口。 | `false` |
 | `nacos.ai.registry.port` | AI Registry 协议适配端口。 | `9080` |
 | `nacos.ai.mcp.registry.port` | 旧参数名，已废弃。请改用 `nacos.ai.registry.port`。 | `9080` |
-| `nacos.plugin.ai-pipeline.enabled` | 是否启用 AI 发布 Pipeline。未配置时不会主动禁用，但如果 `type` 为空，Pipeline 不会执行。 | 空 |
-| `nacos.plugin.ai-pipeline.type` | Pipeline 节点类型，例如 `skill-scanner`。多个类型用逗号分隔。 | 空 |
-| `nacos.plugin.ai-pipeline.skill-scanner.enabled` | 传给内置 `skill-scanner` 节点的启用配置。 | 空 |
-| `nacos.plugin.ai-pipeline.skill-scanner.command` | 外部 Skill 扫描工具命令路径。 | 空 |
+| `nacos.plugin.ai-pipeline.enabled` | AI Pipeline 动态模块总开关；关闭时延迟加载类型。 | `true` |
+| `nacos.plugin.ai-pipeline.type` | 历史启动链，仅用于没有持久化状态时初始化节点状态。 | 空 |
+| `nacos.plugin.ai-pipeline.skill-scanner.{itemKey}` | `skill-scanner` definitions；只有 `order` 为 RUNTIME。 | 见 [AI Pipeline 插件文档](../../plugin/ai-pipeline-plugin.md) |
+| `nacos.plugin.ai-pipeline.skill-spector.{itemKey}` | `skill-spector` definitions；只有 `order` 为 RUNTIME。 | 见 [AI Pipeline 插件文档](../../plugin/ai-pipeline-plugin.md) |
 | `nacos.ai.skill.auto-publish-after-review.enabled` | Skill 审核通过后是否自动发布版本。 | `false` |
-| `nacos.ai.resource.import.enabled` | 是否启用显式配置的 AI 资源导入来源。 | `false` |
+| `nacos.plugin.ai-resource-import.enabled` | AI Resource Import 模块总开关；标准 key 和 alias 都未配置时仍默认开启，只有显式 `false` 才关闭。发行包也显式将标准 key 设为 `true`。 | `true` |
+| `nacos.plugin.ai-resource-import.{pluginName}.enabled` | 每个固定来源的启动初始状态。 | `mcp-official`/`skills-sh` 开启，其余关闭 |
+| `nacos.plugin.ai-resource-import.{pluginName}.{itemKey}` | 来源 definitions；endpoint/网络开关为 RESTART，其余展示和限制为 RUNTIME。 | 见 [AI 资源导入插件文档](../../plugin/ai-resource-import-plugin.md) |
 | `nacos.ai.resource.import.legacy-mcp-api-enabled` | 旧 MCP 导入 API 兼容开关；Nacos 3.2.4 起不再识别，请改用 `nacos.core.api.compatibility.enabled`。 | 不适用 |
 | `nacos.ai.resource.import.allow-user-url` | 通过共享兼容开关重新开启旧 MCP 直接 URL 导入后，是否允许抓取用户提供的 URL。 | `false` |
 | `nacos.console.ai.mcp.import.enabled` | 是否允许 Console 的 `GET /v3/console/ai/mcp/importToolsFromMcp` 发起出站 MCP 连接。设为 `false` 会关闭全部此类 tools 导入。 | `true` |
 | `nacos.console.ai.mcp.import.allowed-private-addresses` | Console MCP tools 导入允许访问的私网或本地 IP/CIDR 白名单，多个条目用逗号分隔；公网地址不需要加入。 | 空 |
-| `nacos.plugin.ai.importer.mcp.official.enabled` | 是否启用内置官方 MCP Registry 导入来源。 | `true` |
-| `nacos.plugin.ai.importer.skills.well-known.enabled` | 是否启用 Skill well-known 导入来源。 | `false` |
-| `nacos.plugin.ai.importer.skills.well-known.url` | Skill well-known registry 根地址。 | 空 |
-| `nacos.plugin.ai.importer.skills.skills-sh.enabled` | 是否启用 `skills.sh` 导入来源。 | `true` |
-| `nacos.plugin.ai.importer.<preset>.allow-http` | 是否允许指定来源使用非 HTTPS endpoint。仅受控环境中开启。 | `false` |
-| `nacos.plugin.ai.importer.<preset>.allow-private-network` | 是否允许指定来源访问私网或 localhost endpoint。仅受控环境中开启。 | `false` |
+
+向量库连接配置修改后需重启服务端。pgvector 及其表仅在使用 PostgreSQL 向量能力时需要，初始化方法和注意事项见 [AI 向量插件](../../plugin/ai-vector-plugin.md)，不属于普通 ARD 接入的前置条件。
+
+上表中的 MCP 自动迁移项使用服务端实际参数名。当前发行包没有为它们定义专用启动参数；请优先在 `application.properties` 中使用完整参数名，或按部署规范使用 JVM `-D` 参数。容器部署不要自行推导未由镜像脚本声明的环境变量名。
+
+旧 `nacos.plugin.ai.importer.*`、`nacos.ai.resource.import.sources[N].*`、preset 和复制 endpoint 模型已移除或只保留明确列出的迁移 alias，不能用于新部署。详见 [AI 资源导入插件](../../plugin/ai-resource-import-plugin.md)。
 
 :::note
 `nacos.console.ai.mcp.import.allowed-private-addresses` 只接受 IPv4/IPv6 地址或 CIDR，不接受域名，例如 `192.168.0.0/16,10.0.0.8`。目标域名解析出的每一个私网或本地地址都必须命中白名单；任一非法白名单条目都会阻止请求。独立部署 Console 时，需要在每个 Console 实例上配置并重启。
@@ -355,14 +368,13 @@ AI 管理中心的使用方式见[AI 管理中心概述](../user/ai/ai-registry-
 | `nacos.core.api.compatibility.client.enabled` | 是否开启客户端 API 兼容能力。 | `true` |
 | `nacos.core.api.compatibility.admin.enabled` | 是否开启 Admin API 兼容能力。 | `false` |
 | `nacos.core.api.compatibility.console.enabled` | 是否开启 Console API 兼容能力。 | `false` |
-| `nacos.config.gray.compatible.model` | 是否开启 Beta/Tag 灰度配置向新版灰度模型的兼容与迁移。 | `true` |
-| `nacos.gray.migrate.executor.multi` | 灰度配置迁移线程数。 | `8` |
-| `nacos.config.namespace.compatible.mode` | 是否开启空命名空间到 `public` 命名空间的兼容迁移。 | `true` |
-| `nacos.namespace.migrate.retry.times` | 命名空间迁移失败重试次数。 | `3` |
-| `nacos.namespace.migrate.batch.size` | 命名空间迁移批大小。 | `100` |
 
 :::note
 鉴权开关和 API 兼容开关不是同一类参数。`nacos.core.auth.admin.enabled` 控制 Admin API 是否鉴权；`nacos.core.api.compatibility.admin.enabled` 控制 Admin API 兼容行为是否接受请求。共享的 `nacos.core.api.compatibility.enabled` 只重新开启显式接入门禁的少量废弃 v3 API，且不会关闭其原有鉴权，也不替代 `nacos-api-legacy-adapter`。旧版 v1/v2 HTTP API 从 Nacos 3.2.0 起已从主发行包移除，需要迁移到 v3 API 或临时使用 legacy adapter。
+:::
+
+:::caution[Nacos 3.3 配置迁移开关移除]
+`nacos.config.gray.compatible.model`、`nacos.gray.migrate.executor.multi`、`nacos.config.namespace.compatible.mode`、`nacos.namespace.migrate.retry.times` 和 `nacos.namespace.migrate.batch.size` 已不再是 Nacos 3.3 服务端参数。3.3 不再自动迁移 3.0 之前的空 tenant/default namespace 存储，也不再自动迁移旧 beta/tag 灰度表。受影响部署需要在升级前自行完成数据迁移，详见[升级手册](./upgrading.mdx#217-配置中心兼容迁移移除-nacos-330)。
 :::
 
 ## 启动脚本和镜像变量

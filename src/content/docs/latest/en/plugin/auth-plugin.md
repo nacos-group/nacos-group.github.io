@@ -3,12 +3,12 @@ title: Auth Plugin
 keywords: [Auth, Plugin, RBAC, LDAP, OIDC, OAuth2]
 description: Learn how Nacos auth plugins work, what built-in implementations are available, which v3 Auth APIs belong to the default auth plugin, and how to build custom plugins.
 sidebar:
-    order: 2
+    order: 5
 ---
 
 # Auth Plugin
 
-Since 2.1.0, Nacos can load auth implementations through [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html). The server selects one auth plugin through `nacos.core.auth.system.type` in `application.properties`.
+Since 2.1.0, Nacos can load auth implementations through [SPI](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html). The server selects one auth plugin at startup through `nacos.plugin.auth.type`; `nacos.core.auth.system.type` is a historical alias.
 
 An auth plugin answers one question: **who is calling, and can that caller perform this action on this resource**.
 
@@ -17,6 +17,22 @@ IdentityContext + Resource + Action -> allow or reject
 ```
 
 If you only need to enable the built-in auth capability, start with [Admin Manual - Authorization](../manual/admin/auth.mdx). If you need enterprise SSO or an external identity provider, see [OIDC/OAuth2 Authentication](../manual/admin/oidc-auth.md). This page focuses on the plugin model, built-in implementation boundaries, and custom extension.
+
+## Unified Management Contract
+
+`auth` is an `EXCLUSIVE`, `STANDARD` type with type-level `critical=true`. When any auth entry gate is enabled, or an auth type is explicitly configured, the selected provider becomes the active critical implementation. A missing or disabled provider fails startup; Nacos does not fall back to another implementation.
+
+| Implementation | pluginId | Configurable | Selection and lifecycle |
+| --- | --- | --- | --- |
+| Default Nacos | `auth:nacos` | Yes | Default selection. Token secret is `RESTART`; other private fields support runtime apply. |
+| LDAP | `auth:ldap` | Yes | All private fields are `RESTART`. |
+| OIDC | `auth:oidc` | Yes | All private fields are `RESTART`; active selection performs additional config validation. |
+
+```properties
+nacos.plugin.auth.type=nacos
+```
+
+Selection is snapshotted at startup and cannot be changed through runtime plugin state. `nacos.core.auth.enabled`, `nacos.core.auth.admin.enabled`, and `nacos.core.auth.console.enabled` are request-entry gates, not `auth:nacos` definitions.
 
 ## Concepts
 
@@ -74,19 +90,31 @@ The default `nacos` auth implementation is designed for trusted internal network
 
 ### Default Nacos Auth Implementation
 
-The default Nacos auth implementation uses plugin type `nacos`. It provides username/password login, JWT tokens, user management, role management, permission management, and the default AI resource visibility integration.
+The default Nacos auth implementation has plugin ID `auth:nacos`. It provides username/password login, JWT tokens, user management, role management, permission management, and the default AI resource visibility integration.
 
 Typical configuration:
 
 ```properties
-nacos.core.auth.system.type=nacos
+nacos.plugin.auth.type=nacos
 nacos.core.auth.enabled=true
 nacos.core.auth.admin.enabled=true
 nacos.core.auth.console.enabled=true
 nacos.core.auth.server.identity.key=${custom_server_identity_key}
 nacos.core.auth.server.identity.value=${custom_server_identity_value}
-nacos.core.auth.plugin.nacos.token.secret.key=${custom_base64_token_secret_key}
+nacos.plugin.auth.nacos.token.secret.key=${custom_base64_token_secret_key}
 ```
+
+`auth:nacos` definitions:
+
+| Item key | Historical alias | Type / default | Sensitive | effectMode |
+| --- | --- | --- | --- | --- |
+| `token.secret.key` | `nacos.core.auth.plugin.nacos.token.secret.key` | `STRING` / empty | Yes | `RESTART` |
+| `token.expire.seconds` | `nacos.core.auth.plugin.nacos.token.expire.seconds` | `NUMBER` / `18000` | No | `RUNTIME` |
+| `token.cache.enable` | `nacos.core.auth.plugin.nacos.token.cache.enable` | `BOOLEAN` / `false` | No | `RUNTIME` |
+| `caching.enabled` | `nacos.core.auth.caching.enabled` | `BOOLEAN` / `true` | No | `RUNTIME` |
+| `anonymous.ai.enabled` | `nacos.core.auth.nacos.anonymous.ai.enabled` | `BOOLEAN` / `false` | No | `RUNTIME` |
+
+All definitions are `required=false`. When an auth entry needs tokens, `token.secret.key` must in practice be valid Base64 that decodes to at least 32 bytes. Plugin detail masks it.
 
 The default implementation uses an RBAC model:
 
@@ -143,7 +171,7 @@ In OIDC/OAuth2 mode, users, roles, passwords, and permissions are usually manage
 
 ### LDAP Auth Plugin
 
-The LDAP plugin type is `ldap`. Since Nacos 3.2, LDAP is separated from the default auth implementation and provided as a standalone optional plugin.
+The LDAP plugin ID is `auth:ldap`. Since Nacos 3.2, LDAP is separated from the default auth implementation and provided as a standalone optional plugin.
 
 LDAP plugin boundaries:
 
@@ -155,18 +183,32 @@ LDAP plugin boundaries:
 Example:
 
 ```properties
-nacos.core.auth.system.type=ldap
+nacos.plugin.auth.type=ldap
 nacos.core.auth.enabled=true
 nacos.core.auth.admin.enabled=true
 nacos.core.auth.console.enabled=true
 
-nacos.core.auth.ldap.url=ldap://localhost:389
-nacos.core.auth.ldap.basedc=dc=example,dc=org
-nacos.core.auth.ldap.userDn=cn=admin,${nacos.core.auth.ldap.basedc}
-nacos.core.auth.ldap.password=admin
-nacos.core.auth.ldap.userdn=cn={0},dc=example,dc=org
-nacos.core.auth.ldap.filter.prefix=uid
+nacos.plugin.auth.ldap.url=ldap://localhost:389
+nacos.plugin.auth.ldap.base-dn=dc=example,dc=org
+nacos.plugin.auth.ldap.user-dn=cn=admin,dc=example,dc=org
+nacos.plugin.auth.ldap.password=${ldap_bind_password}
+nacos.plugin.auth.ldap.filter-prefix=uid
 ```
+
+All `auth:ldap` definitions are `RESTART` and `required=false`:
+
+| Item key | Historical alias | Type / default | Sensitive |
+| --- | --- | --- | --- |
+| `url` | `nacos.core.auth.ldap.url` | `STRING` / `ldap://localhost:389` | No |
+| `base-dn` | `nacos.core.auth.ldap.basedc` | `STRING` / `dc=example,dc=org` | No |
+| `timeout` | `nacos.core.auth.ldap.timeout` | `NUMBER` / `3000` | No |
+| `user-dn` | `nacos.core.auth.ldap.userDn` | `STRING` / `cn=admin,dc=example,dc=org` | No |
+| `password` | `nacos.core.auth.ldap.password` | `STRING` / `password` | Yes |
+| `filter-prefix` | `nacos.core.auth.ldap.filter.prefix` | `STRING` / `uid` | No |
+| `case-sensitive` | `nacos.core.auth.ldap.case.sensitive` | `BOOLEAN` / `true` | No |
+| `ignore-partial-result-exception` | `nacos.core.auth.ldap.ignore.partial.result.exception` | `BOOLEAN` / `false` | No |
+
+The historical `nacos.core.auth.ldap.userdn` template was not consumed by production code and is not a supported alias.
 
 Before enabling LDAP, check that:
 
@@ -175,7 +217,7 @@ Before enabling LDAP, check that:
 
 ### OIDC/OAuth2 Auth Plugin
 
-The OIDC/OAuth2 plugin type is `oidc`. It is designed for enterprise SSO and external identity providers. It supports Keycloak, Okta, Auth0, Microsoft Entra ID, and similar providers through OIDC Discovery.
+The OIDC/OAuth2 plugin ID is `auth:oidc`. It is designed for enterprise SSO and external identity providers. It supports Keycloak, Okta, Auth0, Microsoft Entra ID, and similar providers through OIDC Discovery.
 
 Differences from the default Nacos auth implementation:
 
@@ -189,16 +231,35 @@ Differences from the default Nacos auth implementation:
 Example:
 
 ```properties
-nacos.core.auth.system.type=oidc
+nacos.plugin.auth.type=oidc
 nacos.core.auth.enabled=true
 nacos.core.auth.admin.enabled=true
 nacos.core.auth.console.enabled=true
 
-nacos.core.auth.plugin.oidc.issuer-uri=https://idp.example.com/realms/nacos
-nacos.core.auth.plugin.oidc.client-id=nacos-server
-nacos.core.auth.plugin.oidc.client-secret=${client_secret}
-nacos.core.auth.plugin.oidc.scope=openid profile email
+nacos.plugin.auth.oidc.issuer-uri=https://idp.example.com/realms/nacos
+nacos.plugin.auth.oidc.client-id=nacos-server
+nacos.plugin.auth.oidc.client-secret=${client_secret}
+nacos.plugin.auth.oidc.scope=openid profile email
 ```
+
+All `auth:oidc` fields are `RESTART` and `required=false`; historical aliases use `nacos.core.auth.plugin.oidc.{itemKey}`:
+
+| Item key | Type / default | Sensitive | Notes |
+| --- | --- | --- | --- |
+| `issuer-uri` | `STRING` / empty | No | Conditionally required when OIDC is selected. |
+| `client-id` | `STRING` / empty | No | Conditionally required when OIDC is selected. |
+| `client-secret` | `STRING` / empty | Yes | Browser login also requires it. |
+| `scope` | `STRING` / `openid profile email` | No | Login scopes. |
+| `token-validation-method` | `STRING` / `jwt` | No | Current code implements JWT/JWKS only. |
+| `jwks-cache-ttl-seconds` | `NUMBER` / `3600` | No | Must be positive. |
+| `username-claim` | `STRING` / `preferred_username` | No | Username claim. |
+| `roles-claim` | `STRING` / `roles` | No | Role claim. |
+| `admin-role` | `STRING` / `nacos-admin` | No | Global admin mapping. |
+| `auto-create-user` | `BOOLEAN` / `true` | No | Reserved compatibility field with no current runtime effect. |
+| `authorization-endpoint` | `STRING` / empty | No | External non-admin authorization endpoint. |
+| `authorization-timeout-ms` | `NUMBER` / `5000` | No | External authorization timeout. |
+| `strict-nonce-validation` | `BOOLEAN` / `true` | No | Strict nonce validation. |
+| `strict-audience-validation` | `BOOLEAN` / `true` | No | Strict audience/azp validation. |
 
 For detailed setup, Keycloak examples, and troubleshooting, see [Admin Manual - OIDC/OAuth2 Authentication](../manual/admin/oidc-auth.md).
 
@@ -218,7 +279,7 @@ Then implement `com.alibaba.nacos.plugin.auth.spi.server.AuthPluginService` and 
 
 | Method | Description |
 | --- | --- |
-| `getAuthServiceName()` | Return the plugin name selected by `nacos.core.auth.system.type`. |
+| `getAuthServiceName()` | Return the stable pluginName selected by `nacos.plugin.auth.type`. |
 | `identityNames()` | Declare identity fields that should be extracted from requests. |
 | `enableAuth(action, type)` | Decide whether the action and resource type require auth. |
 | `validateIdentity(identityContext, resource)` | Authenticate the caller and enrich `IdentityContext`. |
@@ -229,11 +290,13 @@ Then implement `com.alibaba.nacos.plugin.auth.spi.server.AuthPluginService` and 
 Package the plugin and place it under `${nacos-server.path}/plugins`, then configure:
 
 ```properties
-nacos.core.auth.system.type=${authServiceName}
+nacos.plugin.auth.type=${authServiceName}
 nacos.core.auth.enabled=true
 ```
 
 After restart, check `${nacos-server.path}/logs/nacos.log` for plugin loading logs.
+
+`AuthPluginService` inherits `PluginConfigSpec`. An old binary implementation with no definitions still loads but appears as `configurable=false`. A new implementation should declare definitions, implement atomic `applyConfig`, and return its accepted snapshot. Do not declare module gates, `type` selection, or `enabled` as private config.
 
 ## Client Auth Plugins
 

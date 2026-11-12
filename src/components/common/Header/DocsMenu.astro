@@ -11,6 +11,7 @@ interface Props {
 export const docsItems = [
     {
         label: "最新版",
+        badge: "3.3",
         target: "_self",
         link: "/docs/latest/overview/",
         translations: {
@@ -26,6 +27,15 @@ export const docsItems = [
             en: "Next",
             link: "/en/docs/next/overview/",
         }
+    },
+    {
+      label: "3.2",
+      target: "_self",
+      link: "/docs/v3.2/overview/",
+      translations: {
+          en: "3.2",
+          link: "/en/docs/v3.2/overview/",
+      }
     },
     {
       label: "3.1",
@@ -99,9 +109,9 @@ const getVersion = (pathname) => {
   if (!ifzh && pathname.startsWith('/en/docs/ebook')) return;
   const regex = ifzh ? /\/docs\/([^\/]*)/ : /\/en\/docs\/([^\/]*)/;
   const match = pathname.match(regex);
-  // next v1 v2
   const result = match?.[1] || '';
-  return ['next', 'v1', 'v2'].includes(result) ? result : 'latest';
+  const versions = docsItems.map((item) => item.link.split('/')[2]);
+  return versions.includes(result) ? result : 'latest';
 }
 
 const ifactive = (link) => {
@@ -122,10 +132,11 @@ const ifactive = (link) => {
           <li class={`no-underline cursor-pointer my-1 rounded-lg ${active ? 'bg-gray-12' : ''} hover:bg-gray-12`}>
             <a 
               href={ifzh ? link : translations.link}
+              aria-current={active ? "page" : undefined}
               class="inline-block w-full p-2 no-underline text-inherit text-gray-02" 
             >
               {ifzh ? label : item.translations?.en}
-              { label === "最新版" || label === "Latest" ? <span class="inline-block  px-2 py-1 rounded-full h-[18px] leading-3 bg-gradient-to-r from-[#262CF4] via-[#262CF4] to-[#7140FF] opacity-100 text-white text-sm">3.2</span> :null}
+              {item.badge ? <span class="inline-block  px-2 py-1 rounded-full h-[18px] leading-3 bg-gradient-to-r from-[#262CF4] via-[#262CF4] to-[#7140FF] opacity-100 text-white text-sm">{item.badge}</span> : null}
             </a>
           </li>
         )

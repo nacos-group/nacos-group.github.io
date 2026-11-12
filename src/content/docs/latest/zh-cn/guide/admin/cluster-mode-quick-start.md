@@ -41,7 +41,7 @@ sidebar:
 请确保是在环境中安装使用:
 
 1. 64 bit OS  Linux/Unix/Mac，推荐使用Linux系统。
-2. 64 bit JDK 1.8+；[下载](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html). [配置](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/)。
+2. 64 bit JDK 17+（Nacos 3.3.0 服务端要求）；[下载](https://www.oracle.com/java/technologies/downloads/#java17)。[配置](https://docs.oracle.com/cd/E19182-01/820-7851/inst_cli_jdk_javahome_t/)。
 3. Maven 3.2.x+；[下载](https://maven.apache.org/download.cgi). [配置](https://maven.apache.org/settings.html)。
 4. 3个或3个以上Nacos节点才能构成集群。
 
@@ -52,20 +52,21 @@ sidebar:
 ### 从 Github 上下载源码方式
 
 ```bash
-unzip nacos-source.zip
+git clone --branch 3.3.0 --depth 1 https://github.com/alibaba/nacos.git
 cd nacos/
 mvn -Prelease-nacos clean install -U  
-cd nacos/distribution/target/nacos-server-1.3.0/nacos/bin
+cd distribution/target/nacos-server-3.3.0/nacos/bin
 ```
 
 ### 下载编译后压缩包方式
 
 下载地址
 
-您可以从 [最新稳定版本](https://github.com/alibaba/nacos/releases) 下载 `nacos-server-$version.zip` 包 或 `nacos-server-$version.tar.gz`。
+您可以从 [3.3.0 正式版](https://github.com/alibaba/nacos/releases/tag/3.3.0) 下载 `nacos-server-3.3.0.zip` 包或 `nacos-server-3.3.0.tar.gz`。
 
 ```bash
-  unzip nacos-server-$version.zip 或者 tar -xvf nacos-server-$version.tar.gz
+  unzip nacos-server-3.3.0.zip
+  # 或者 tar -xvf nacos-server-3.3.0.tar.gz
   cd nacos/bin
 ```
 
@@ -88,8 +89,8 @@ cd nacos/distribution/target/nacos-server-1.3.0/nacos/bin
 
 ```properties
 nacos.core.auth.enabled=true
-nacos.core.auth.system.type=nacos
-nacos.core.auth.plugin.nacos.token.secret.key=${自定义，保证所有节点一致}
+nacos.plugin.auth.type=nacos
+nacos.plugin.auth.nacos.token.secret.key=${自定义，保证所有节点一致}
 nacos.core.auth.server.identity.key=${自定义，保证所有节点一致}
 nacos.core.auth.server.identity.value=${自定义，保证所有节点一致}
 ```

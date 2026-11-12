@@ -137,7 +137,7 @@ def schema_type(schema_obj: dict, media_type: str = "") -> str:
             return schema_type(variants[0], media_type)
         if variants:
             return "object"
-    ptype = (schema_obj.get("type") or ("object" if "properties" in schema_obj else "string")).lower()
+    ptype = (schema_obj.get("type") or ("object" if "properties" in schema_obj or "additionalProperties" in schema_obj else "string")).lower()
     fmt = (schema_obj.get("format") or "").lower()
     if fmt == "binary" or ptype == "file":
         return "file"
@@ -150,11 +150,27 @@ def schema_type(schema_obj: dict, media_type: str = "") -> str:
             return f"array<{item_ref}>"
         item_type = schema_type(items, media_type) if items else ""
         return f"array<{item_type}>" if item_type else "array"
-    if ptype == "object" and "additionalProperties" in schema_obj:
+    if ptype == "object" and "additionalProperties" in schema_obj and not schema_obj.get("properties"):
         value_schema = schema_obj.get("additionalProperties")
-        value_type = schema_type(value_schema, media_type) if isinstance(value_schema, dict) else "object"
+        if value_schema is False:
+            return "object"
+        if value_schema is True or value_schema == {}:
+            value_type = "any"
+        else:
+            value_type = schema_type(value_schema, media_type) if isinstance(value_schema, dict) else "object"
         return f"map<string, {value_type}>"
     return ptype
+
+
+def result_payload_type(result_name: str, payload: dict, schemas: dict) -> str:
+    """Recover a Map value name only when its inline schema exactly matches it."""
+    match = re.fullmatch(r"Result<Map<String,\s*([^<>]+)>>", result_name)
+    if match and isinstance(payload, dict):
+        model_name = match.group(1).strip()
+        model = schemas.get(model_name)
+        if model and payload.get("additionalProperties") == model:
+            return f"map<string, {model_name}>"
+    return schema_type(payload)
 
 
 def parse_parameters(op: dict, components: dict) -> list[dict]:
@@ -284,7 +300,7 @@ def flatten_response_schema(schemas: dict, ref: str, prefix: str = "data") -> li
         if payload:
             rows.append({
                 "name": prefix,
-                "type": schema_type(payload),
+                "type": result_payload_type(ref, payload, schemas),
                 "description": description(payload),
             })
             payload_ref = ref_name(payload)

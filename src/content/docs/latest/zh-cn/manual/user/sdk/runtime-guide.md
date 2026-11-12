@@ -26,6 +26,8 @@ Client SDK 不适合做大范围管理。不要用它来列举全部命名空间
 
 一个 SDK 实例通常绑定一个命名空间。应用需要访问多个命名空间时，建议创建多个 SDK 实例，并在应用退出时关闭这些实例。
 
+Nacos 3.3 默认开启 Client 鉴权。未配置正确身份或权限时，配置读取、服务注册/发现和 AI 请求可能失败。默认插件请在创建 SDK 前设置用户名和密码，由 SDK 获取并刷新 token；其他插件按对应身份模式配置。详见[配置访问凭据](../auth.mdx)。
+
 初始化时重点确认这些信息：
 
 | 信息 | 说明 |
@@ -33,11 +35,11 @@ Client SDK 不适合做大范围管理。不要用它来列举全部命名空间
 | `serverAddr` 或 `endpoint` | `serverAddr` 适合固定 Nacos 集群地址；`endpoint` 适合通过地址服务动态获取服务端列表。 |
 | `namespace` | 当前 SDK 实例访问的命名空间。 |
 | `group`、`dataId`、`serviceName` | 运行时访问资源时使用的业务标识。 |
-| `username`、`password`、`accessKey`、`secretKey` 等凭据 | 开启鉴权后，SDK 会按服务端鉴权模式携带身份材料。 |
+| `username`、`password`、`accessKey`、`secretKey` 等凭据 | 3.3 默认需要按服务端鉴权模式配置；SDK 不会使用控制台浏览器的登录状态。 |
 | `contextPath` | Nacos HTTP API 的 context path，默认是 `nacos`。 |
 | gRPC 端口偏移 | Nacos 3.x 客户端仍沿用主端口加偏移量的计算方式，默认从 `8848` 推导出 `9848`。 |
 
-部署侧需要同时保证 HTTP 端口和 gRPC 端口可达。HTTP 端口用于 OpenAPI、登录和部分兼容请求；gRPC 端口用于大多数客户端长连接请求。
+配置和服务发现 SDK 通常需要 HTTP 与 gRPC 端口均可达：HTTP 用于登录等请求，gRPC 用于运行时长连接。仅使用 AI 子服务时，按第 6 节的传输模式及兼容路径准备网络；选择 HTTP 不会把同一应用中的 ConfigService、NamingService 也改为 HTTP。
 
 ## 3. 连接不是一次性动作
 
@@ -89,6 +91,49 @@ AI 运行时和配置、服务发现一样，也需要区分“资源管理”�
 
 更多资源模型请阅读 [AI 管理中心](../ai/ai-registry-overview.md)。
 
+### 6.1. Java SDK 的资源入口与传输
+
+3.3 Java SDK 通过 `AiService.mcp()`、`agent()`、`skill()`、`prompt()`、`agentSpec()` 取得子服务，共享一个命名空间、认证和关闭流程。子入口本身不会为应用创建独立 SDK。
+
+| 模式 | 使用方式 |
+| --- | --- |
+| `grpc`（默认） | 具有 gRPC 实现的资源使用 gRPC；显式 gRPC 的网络失败不会自动变成 HTTP 请求。 |
+| `http` | 使用服务端支持的 AI HTTP 能力，需要 HTTP 主端口可达。SDK 负责认证、客户端标识和端点活性维护。 |
+| `auto` | 按资源能力和连接状态选择；符合条件的连接失败可以转用 HTTP，业务错误不触发切换。 |
+
+Skill、AgentSpec 当前使用 HTTP 路径，即使总模式为 `grpc` 也需要 HTTP 可达。旧 A2A 路由使用 gRPC；选择 RAD 路由后，A2A 兼容操作才按 Agent 模式执行。不存在相应能力的旧服务端不会因为设置 `auto` 就获得新 API。
+
+在创建 SDK 前设置模式，例如只让 Agent 使用 HTTP：
+
+```java
+Properties properties = new Properties();
+properties.setProperty("serverAddr", "{serverAddr}");
+properties.setProperty("namespace", "public");
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
+properties.setProperty("nacosAiTransportMode", "grpc");
+properties.setProperty("nacosAiAgentTransportMode", "http");
+AiService aiService = AiFactory.createAiService(properties);
+AgentService agents = aiService.agent();
+```
+
+资源覆盖值和总值都在初始化时校验并固定，修改 Properties 不会热切换已有实例。完整参数见 [AI 资源参数](../java-sdk/properties.md#26-ai-资源参数)。
+
+### 6.2. 订阅、端点活性与错误处理
+
+- RAD `subscribeAgent` 没有返回值，首次查询结果和后续变化都通过监听器接收。订阅期间断线后 SDK 会自动恢复，无需重复订阅；如果首次调用直接抛出异常，则需要处理原因后重试。事件类型和回调用法见 [RAD 接入指南](../ai/rad-discovery.md#21-初始状态与后续回调)。
+- MCP、Skill、Prompt、AgentSpec 保留各自的订阅轮询。SDK 已获取的内容通过对应监听器传递，应用无需把所有回调都处理成一次额外查询。
+- HTTP 注册的 Agent/MCP 运行端点由 SDK 维护客户端标识及心跳。保留注册使用的实例；正常退出时通过同一实例注销，再关闭 `AiService`。取消订阅或下线资源定义不会停止业务进程。
+- 权限、参数、版本冲突、容量或迁移限制应按业务错误处理。发布超时后结果可能未知，先查询状态，不应盲目换一种传输重发；端点重连恢复不等于定义发布可以自动重试。
+
+### 6.3. 旧 A2A 与 RAD 的兼容
+
+已有 A2A 应用可以继续使用原来的接口，3.3 SDK 会自动适配服务端。服务端从旧版升级后，如需使用新的行为，请重启应用或重新创建 SDK 实例。新应用直接使用 RAD 接口即可，无需手动切换模式。
+
+需要同时兼容新旧服务端的框架，可通过 `AiService.getAgentDiscoveryCapability()` 查询是否支持 RAD，示例见 [RAD 接入指南](../ai/rad-discovery.md#25-兼容旧版服务端)。
+
+同一个 SDK 实例为同一 Agent 注册 A2A 地址时，使用旧 A2A 或新 RAD 的一组注册、注销接口，避免混用。使用新 RAD 接口前，确认服务端已支持 RAD 并完成相应的数据迁移，参见 [Agent 管理](../ai/agent-registry.md)和[升级手册](../../admin/upgrading.mdx)。
+
 ## 7. 本地缓存、failover 和 redo
 
 SDK 运行时会使用几类本地或内存数据：
@@ -115,6 +160,10 @@ SDK 运行时会使用几类本地或内存数据：
 | 服务订阅结果为空 | 检查服务名、group、cluster、实例健康状态和推空保护配置。 |
 | 网络抖动后实例消失 | 检查临时实例 redo 是否恢复，确认客户端是否已重新连接。 |
 | 本地缓存数据不符合预期 | 检查 `JM.SNAPSHOT.PATH`、failover 开关和缓存文件是否被人工修改。 |
+
+3.3 Java Client SDK 访问 Nacos 的 HTTP 请求会自动携带 `Nacos-Request-Id`，用于关联客户端与服务端请求。直接调用 HTTP API 时也可以提供此请求头，详见 [HTTP 请求关联 ID](../overview/api-overview.md#34-http-请求关联-id)。它与 HTTP 端点注册使用的逻辑客户端标识不同。
+
+遇到 JSON 适配器不可用、Jackson 类缺失或版本冲突时，请按 [JSON 适配与 Jackson 2/3 接入](../java-sdk/json-adapter.md)检查运行时依赖和启动参数。
 
 Java SDK 的常用本地路径包括：
 

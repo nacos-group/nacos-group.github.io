@@ -28,6 +28,7 @@ const flattenSidebar = (sidebar) => {
               {...entry.attrs}
             >
               <span>{entry.label}</span>
+              {entry.badge && <span class="rounded-full px-2 bg-gradient-to-r from-[#262CF4] to-[#7140FF] text-white text-xs">{entry.badge}</span>}
             </a>
           ) : (
             <details

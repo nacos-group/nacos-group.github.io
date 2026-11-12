@@ -34,26 +34,32 @@ Runtime query needs config identity fields:
 | `groupName` | Yes | Config group. |
 | `namespaceId` | No | Namespace. Defaults to `public`. |
 
-The response usually contains:
+Parameter and result models vary by entry point. The Java SDK takes the namespace from its instance, and names the group parameter `group`. In 3.3, `getConfig(GetConfigRequest)` returns `ConfigQueryResult`:
 
 | Field | Description |
 | --- | --- |
 | `content` | Config content. |
-| `contentType` | Config type. |
+| `configType` | Config type. |
 | `md5` | Content md5 for change detection. |
 | `encryptedDataKey` | May exist when the configuration encryption plugin is used. |
-| `lastModified` | Last modified time. |
+
+The existing `getConfig(dataId, group, timeoutMs)` still returns the content string. See [Client OpenAPI](../open-api.md) for HTTP parameters and response formats.
 
 If configuration encryption is enabled, applications should still read through normal SDKs or APIs. Do not bypass Nacos and read the database directly.
 
+### Java SDK 3.3 Request Objects
+
+- Query: set `dataId`, `group` and `timeoutMs` in `GetConfigRequest`, then read content and `md5` from the result. Content can be null when the configuration does not exist. Usually omit `localMd5` and let the SDK handle conditional queries and content recovery.
+- Publish: `PublishConfigRequest` supports `content`, `type` and optional `casMd5`. To prevent concurrent overwrites, query an existing configuration and publish with its returned `md5`. Do not compute MD5 from decrypted content.
+- Delete: set `dataId` and `group` in `RemoveConfigRequest`.
+
+For publication and deletion, check `isSuccess()` and read the error code and message on failure. Also handle possible `NacosException` errors; the absence of an exception does not prove success. See the [Java SDK Usage Guide](../java-sdk/usage.md#3-configuration-management-api) for examples.
+
+Configuration `schema` is management metadata, not runtime configuration content, and is not returned in `ConfigQueryResult`. Maintain it through management entry points.
+
 ## Listen For Changes
 
-Listening is for long-running applications. A client registers a listener, and the server pushes a change notification when the config changes. The client then queries the content again.
-
-This design has two benefits:
-
-- Push messages are lightweight and only carry the changed identity.
-- The final content still comes from the normal query path.
+Listening is for long-running applications. After registration, the SDK receives server change notifications and fetches configuration content. Java `Listener.receiveConfigInfo` already receives the content: parse and apply it without querying again on every callback.
 
 Nacos 3.x Client OpenAPI does not provide HTTP long-polling config listen. Use the long connection support in official SDKs when listening is required.
 
@@ -79,6 +85,6 @@ When a failover file exists, the client may read local override content first. W
 
 - Review production config before publishing it through the console or release platform.
 - Client listener callbacks should handle callback failure, duplicate notifications, and parse errors.
-- Do not treat change push as config content. Query again after receiving a notification.
+- Distinguish ordinary config listeners from fuzzy watch: Listener callbacks carry content, while fuzzy watch reports configuration additions and deletions.
 - Use gray release for high-risk config changes.
 - Do not run wide list, export, capacity changes, or local cache repair from normal applications.

@@ -8,7 +8,11 @@ sidebar:
 
 Nacos MCP Router 是一个基于 MCP 官方 SDK 开发的标准 MCP Server，为 MCP Client 提供 MCP Server 的`智能搜索`、`安装`、`代理`等功能，**极大地简化了** MCP 服务的使用流程。同时，Nacos MCP Router 跟 Nacos MCP 管理结合，可以实现 MCP Server 治理，如 MCP Server 及工具可见性、版本管理等。
 
+接入前请确认 Nacos 中的 MCP 资源已启用、目标版本已上线，且 Router 使用的身份有访问权限。3.3 草稿、发布和版本上下线的操作见 [MCP 管理](./mcp-registry.md)。
+
 ![MCP Router架构图](/img/doc/overview/ai-mcp-router-struncture.svg)
+
+Nacos 3.3 默认开启客户端鉴权。请为 Router 配置已有 Nacos 账号及实际密码，并授予所需资源的读取权限；管理员密码以首次初始化时设置的值为准。参见[配置访问凭据](../auth.mdx)。
 
 ## 功能介绍
 Nacos MCP Router 有两种工作模式：
@@ -83,7 +87,7 @@ Nacos MCP Router 有两种工作模式：
     ```shell
     export NACOS_ADDR=127.0.0.1:8848
     export NACOS_USERNAME=nacos
-    export NACOS_PASSWORD=$PASSWORD
+    export NACOS_PASSWORD='<your-nacos-password>'
     export TRANSPORT_TYPE=sse
     uvx nacos-mcp-router@latest
     ```
@@ -97,7 +101,7 @@ Nacos MCP Router 有两种工作模式：
     ```shell
     export NACOS_ADDR=127.0.0.1:8848
     export NACOS_USERNAME=nacos
-    export NACOS_PASSWORD=$PASSWORD
+    export NACOS_PASSWORD='<your-nacos-password>'
     export TRANSPORT_TYPE=streamable_http
     uvx nacos-mcp-router@latest
     ```
@@ -170,7 +174,7 @@ proxy模式下，需设置环境变量MODE=proxy和PROXIED_MCP_NAME=<MCP Server 
 |  参数 | 描述            | 默认值            | 是否必填 | 备注                                        |
 | NACOS_ADDR | Nacos 服务器地址   | 127.0.0.1:8848 | 否    | 填写 Nacos 服务器的地址，如 192.168.1.1:8848，注意要写端口 |
 | NACOS_USERNAME | Nacos 用户名     | nacos          | 否    | 填写 Nacos 用户名，如 nacos                      |
-| NACOS_PASSWORD | Nacos 密码      | 密码             | 是    | 填写 Nacos 密码，如 nacos                       |
+| NACOS_PASSWORD | Nacos 密码 | 无 | 是 | 填写该账号初始化或创建时设置的密码。 |
 |NACOS_NAMESPACE| Nacos命名空间     | public         | 否    | Nacos命名空间，如 public                        |
 | TRANSPORT_TYPE | 传输协议类型        | stdio          | 否    | 填写传输协议类型，可选值：stdio、sse、streamable_http    |
 | PROXIED_MCP_NAME | 代理的 MCP 服务器名称 | -              | 否    | proxy模式下需要被转换的 MCP 服务器名称，需要先注册到Nacos      |

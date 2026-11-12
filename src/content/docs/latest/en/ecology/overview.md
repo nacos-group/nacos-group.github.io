@@ -17,11 +17,11 @@ If you only want to understand Nacos core capabilities, start with [Overview](..
 | Scenario | Read |
 | --- | --- |
 | Java microservice integration | [Nacos With Dubbo](./use-nacos-with-dubbo.md), [Spring](./use-nacos-with-spring.md), [Spring Boot](./use-nacos-with-spring-boot.md), [Spring Cloud](./use-nacos-with-spring-cloud.md) |
-| Cloud-native infrastructure | [CoreDNS](./use-nacos-with-coredns.md), [Istio](./use-nacos-with-istio.md) |
+| Cloud-native infrastructure | [Built-in DNS service discovery](./use-nacos-with-native-dns.md), [CoreDNS plugin](./use-nacos-with-coredns.md), [Istio](./use-nacos-with-istio.md) |
 | Kubernetes service sync | [Kubernetes service discovery sync](./use-nacos-with-k8s-sync.md), [Nacos Controller service sync](./use-nacos-controller-to-sync-service.md) |
 | Registry migration and sync | [NacosSync User Manual](./use-nacos-sync.md) |
 | Prometheus application target discovery | [Use Nacos For Prometheus Service Discovery](./use-nacos-prometheus-sd.md) |
-| AI toolchain integration | [Nacos MCP Router](./use-nacos-mcp-router.md) |
+| AI toolchain integration | [Nacos MCP Router](./use-nacos-mcp-router.md), [ARD Integration Guide](./use-nacos-with-ard.md) |
 
 ## Relationship with core capabilities
 
@@ -32,6 +32,7 @@ Ecology capabilities usually build around Nacos core capabilities:
 - NacosSync is used for registry migration and multi-registry sync.
 - Prometheus service discovery lets Prometheus obtain business application targets from Nacos.
 - AI ecosystem components such as MCP Router focus on tool invocation and service discovery for AI applications.
+- ARD lets toolchains search Agents, Skills, Prompts, and MCP Servers in Nacos through a common protocol and retrieve their artifacts.
 
 These documents involve external projects, framework versions, and deployment environments. Before using them, also read the official documents of the external projects and verify version compatibility in a test environment.
 

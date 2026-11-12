@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Optional
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from swagger_to_md import get_api_since, parse_parameters, schema_type  # noqa: E402
+from swagger_to_md import get_api_since, parse_parameters, result_payload_type, schema_type  # noqa: E402
 
 
 def load_exemptions(exemptions_file: Optional[str], doc_type: str) -> dict:
@@ -151,7 +151,10 @@ def collect_response_fields(op: dict, components: dict) -> dict:
         named = ref_name(schema)
         resolved = schemas.get(named, {}) if named else schema
         if path:
-            fields[path] = {"type": schema_type(schema), "named": bool(named)}
+            has_type = any(key in schema for key in (
+                "$ref", "type", "properties", "additionalProperties", "items", "oneOf", "anyOf", "allOf", "enum",
+            ))
+            fields[path] = {"type": schema_type(schema) if has_type else "any", "named": bool(named)}
         if named:
             if named in seen:
                 return
@@ -169,7 +172,7 @@ def collect_response_fields(op: dict, components: dict) -> dict:
             visit(items, f"{path}[i]" if path else "[i]", seen, depth + 1)
             return
         additional = resolved.get("additionalProperties")
-        if additional is not None:
+        if additional is not None and additional is not False and not resolved.get("properties"):
             value_named = ref_name(additional) if isinstance(additional, dict) else ""
             if path:
                 fields[path] = {
@@ -192,6 +195,11 @@ def collect_response_fields(op: dict, components: dict) -> dict:
             visit(child if isinstance(child, dict) else {}, child_path, seen, depth + 1)
 
     visit(root, "", (), 0)
+    root_name = ref_name(root)
+    payload = (schemas.get(root_name, {}).get("properties") or {}).get("data") or {}
+    contextual_type = result_payload_type(root_name, payload, schemas)
+    if "data" in fields and contextual_type != schema_type(payload):
+        fields["data"] = {"type": contextual_type, "named": True}
     return fields
 
 
@@ -296,13 +304,19 @@ def compare_named_response_types(
     doc_rows: list[dict],
     strict_paths: bool = False,
     require_named_root: bool = False,
+    strict_types: bool = False,
 ) -> list[str]:
     """Report named-schema loss and, optionally, duplicated Result wrapper paths."""
     def normalize_path(path: str) -> str:
-        return re.sub(r"\[(?:i|\d*)\]", "[]", (path or "").strip().strip("`"))
+        value = (path or "").strip().strip("`").replace(".[", "[")
+        return re.sub(r"\[(?:i|\d*)\]", "[]", value)
 
     def normalize_type(value: str) -> str:
-        return re.sub(r"\s+", "", (value or "").strip().strip("`"))
+        value = re.sub(r"\s+", "", (value or "").strip().strip("`"))
+        aliases = {"int": "integer", "long": "integer", "double": "number", "float": "number", "bool": "boolean"}
+        if value.lower() in {"string", "integer", "number", "boolean", "object", "array", "any"}:
+            return value.lower()
+        return aliases.get(value.lower(), value)
 
     generic_types = {
         "object", "array", "array<object>", "map", "map<string,object>",
@@ -332,12 +346,24 @@ def compare_named_response_types(
                 )
                 continue
         api_field = expected.get(key)
-        if not api_field or not api_field.get("named"):
+        if not api_field or (not strict_types and not api_field.get("named")):
             continue
         api_type = normalize_type(api_field.get("type") or "")
         doc_type = normalize_type(row.get("type") or "")
         if not api_type or not doc_type or api_type == doc_type:
             continue
+        # Generic Result schemas can inline a domain model without retaining its
+        # name. Preserve source-verified names in the document; an untyped schema
+        # (including Void) cannot establish a conflicting wire type.
+        if not api_field.get("named"):
+            if api_type == "any":
+                continue
+            if api_type in {"array", "array<any>"} and (doc_type == "array" or doc_type.startswith("array<")):
+                continue
+            if api_type == "object" and re.match(r"^[A-Z]", doc_type):
+                continue
+            if api_type == "array<object>" and re.match(r"^array<[A-Z]", doc_type):
+                continue
         label = "命名类型丢失" if doc_type.lower() in generic_types else "响应类型不一致"
         issues.append(
             f"  [{label}] response.{row.get('name')}: api type={api_field.get('type')}, "
@@ -478,6 +504,11 @@ def main() -> None:
         help="Report data.code/data.message/data.data paths caused by a duplicated Result wrapper",
     )
     parser.add_argument(
+        "--strict-response-types",
+        action="store_true",
+        help="Compare all documented response paths, including scalar IDs and Map value types",
+    )
+    parser.add_argument(
         "--strict-headers",
         action="store_true",
         help="Report headers documented for an operation but absent from its Swagger definition",
@@ -576,6 +607,7 @@ def main() -> None:
                 doc_response,
                 args.strict_response_paths,
                 args.require_named_response_root,
+                args.strict_response_types,
             )
         )
         issues.extend(compare_curl_headers(h_api, curl, args.strict_headers))

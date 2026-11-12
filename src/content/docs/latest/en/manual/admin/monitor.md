@@ -13,6 +13,10 @@ Nacos monitoring focuses on two kinds of information:
 - Nacos Server metrics, such as JVM, HTTP, gRPC, configuration management, and service discovery metrics.
 - Health check endpoints, such as liveness and readiness.
 
+:::note
+This page covers the server side. Metrics recorded inside `nacos-client` (request timer, gauges, failure counters) are exported through Micrometer and are documented in [Java SDK Metrics](../user/java-sdk/metrics.md).
+:::
+
 ## Expose Nacos Server metrics
 
 Nacos exposes Prometheus metrics through Spring Boot Actuator. In the default configuration file, this capability is commented out. Enable it on every Nacos Server node:

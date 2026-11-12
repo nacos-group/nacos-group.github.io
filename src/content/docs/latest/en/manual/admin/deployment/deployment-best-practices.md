@@ -50,8 +50,11 @@ Since Nacos 3.0, the console port is separated from the server main port. Defaul
 | `9849` | Server-to-server gRPC port | Allow only between Nacos Server nodes |
 | `7848` | Raft communication port | Allow only between Nacos Server nodes |
 | `8080` | Nacos Console port | Expose only to the management network |
+| `5353` | Built-in DNS over UDP/TCP, listening only when explicitly enabled | Allow only trusted internal DNS servers or applications; HTTP API authentication does not apply |
 
 When using VIP, SLB, or Nginx, forward `9848` as TCP traffic. Do not proxy it as HTTP or HTTP/2. For details, see [Deployment Overview](./deployment-overview.md).
+
+When built-in DNS is enabled, allow both UDP and TCP on its port, configured separately with `nacos.naming.dns.port`. See [Built-in DNS Service Discovery](../../../ecology/use-nacos-with-native-dns.md) for domain forwarding and verification.
 
 ## Independent Console Deployment
 
@@ -98,10 +101,10 @@ Basic configuration:
 
 ```properties
 nacos.core.auth.enabled=true
-nacos.core.auth.system.type=nacos
+nacos.plugin.auth.type=nacos
 nacos.core.auth.server.identity.key=${your_identity_key}
 nacos.core.auth.server.identity.value=${your_identity_value}
-nacos.core.auth.plugin.nacos.token.secret.key=${your_token_secret}
+nacos.plugin.auth.nacos.token.secret.key=${your_token_secret}
 ```
 
 Recommendations:
@@ -128,7 +131,7 @@ Related docs:
 When a cluster carries many client connections or sudden traffic spikes on core APIs, enable the traffic control plugin. Start with `monitor` mode, then switch to `intercept` after the threshold is validated.
 
 ```properties
-nacos.plugin.control.manager.type=nacos
+nacos.plugin.control.type=nacos
 ```
 
 Pay attention to:

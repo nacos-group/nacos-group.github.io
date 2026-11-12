@@ -3,7 +3,7 @@ title: 集群寻址
 keywords: [寻址, 集群成员, address-server, cluster.conf]
 description: 本文介绍 Nacos Server 集群成员寻址机制，以及 file 和 address-server 两种常用寻址方式。
 sidebar:
-    order: 10
+    order: 13
 ---
 
 # 集群寻址

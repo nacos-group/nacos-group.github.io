@@ -26,6 +26,8 @@ The Client SDK is not a broad management interface. Do not use it to list all na
 
 An SDK instance usually binds to one namespace. If an application needs to access multiple namespaces, create multiple SDK instances and close them when they are no longer needed.
 
+Nacos 3.3 enables Client authentication by default. Missing or incorrect credentials or permissions can cause configuration reads, service registration/discovery, and AI requests to fail. With the default plugin, configure username and password before creating the SDK so it can obtain and refresh tokens. Use the required credential mode for other plugins. See [Access Credentials](../auth.mdx).
+
 Confirm these fields during initialization:
 
 | Information | Description |
@@ -33,11 +35,11 @@ Confirm these fields during initialization:
 | `serverAddr` or `endpoint` | Use `serverAddr` for a fixed Nacos cluster address. Use `endpoint` when the client obtains the server list from an address service. |
 | `namespace` | The namespace bound to the current SDK instance. |
 | `group`, `dataId`, `serviceName` | Business identifiers used when accessing runtime resources. |
-| `username`, `password`, `accessKey`, `secretKey`, and other credentials | When auth is enabled, the SDK carries identity material according to the server-side auth mode. |
+| `username`, `password`, `accessKey`, `secretKey`, and other credentials | Nacos 3.3 enables Client authentication by default. Configure credentials for the selected plugin; logging in to the console does not configure SDK credentials. |
 | `contextPath` | The context path of Nacos HTTP APIs. The default is `nacos`. |
 | gRPC port offset | Nacos 3.x clients still use the same main-port-plus-offset rule. By default, `9848` is derived from `8848`. |
 
-The deployment must make both the HTTP port and the gRPC port reachable. The HTTP port is used for OpenAPI, login, and some compatibility requests. The gRPC port is used for most long-lived client runtime requests.
+Configuration and naming SDKs normally need both HTTP and gRPC reachable: HTTP handles login and related requests, while gRPC handles runtime connections. For AI-only applications, prepare networking for the selected transport and compatibility route in section 6. Selecting HTTP for AI does not switch ConfigService or NamingService to HTTP.
 
 ## 3. Connection Is Not A One-Time Action
 
@@ -89,6 +91,49 @@ As with configuration and service discovery, AI runtime needs a clear split betw
 
 For more resource models, read [AI Registry](../ai/ai-registry-overview.md).
 
+### 6.1. Java SDK Resource Services and Transports
+
+The 3.3 Java SDK provides `AiService.mcp()`, `agent()`, `skill()`, `prompt()` and `agentSpec()`. These services share one namespace, authentication and shutdown lifecycle; obtaining a resource service does not create a separate SDK instance.
+
+| Mode | Behavior |
+| --- | --- |
+| `grpc` (default) | Resources with gRPC implementations use gRPC. A network failure in explicit gRPC mode does not automatically become an HTTP request. |
+| `http` | Uses supported AI HTTP capabilities and requires the HTTP main port. The SDK manages authentication, client identity and endpoint liveness. |
+| `auto` | Selects by resource capability and connection state. Eligible connection failures can use HTTP; business errors do not trigger fallback. |
+
+Skill and AgentSpec currently use HTTP, even when the overall mode is `grpc`. The legacy A2A route uses gRPC; after choosing RAD, compatible A2A operations follow the Agent transport setting. Setting `auto` does not add missing API capabilities to an older server.
+
+Configure modes before creating the SDK. For example, use HTTP only for Agent:
+
+```java
+Properties properties = new Properties();
+properties.setProperty("serverAddr", "{serverAddr}");
+properties.setProperty("namespace", "public");
+properties.setProperty("username", System.getenv("NACOS_USERNAME"));
+properties.setProperty("password", System.getenv("NACOS_PASSWORD"));
+properties.setProperty("nacosAiTransportMode", "grpc");
+properties.setProperty("nacosAiAgentTransportMode", "http");
+AiService aiService = AiFactory.createAiService(properties);
+AgentService agents = aiService.agent();
+```
+
+The overall mode and every override are validated and fixed at initialization. Editing Properties does not switch an existing instance. See [AI Resource Parameters](../java-sdk/properties.md#26-ai-resource-parameters).
+
+### 6.2. Subscriptions, Endpoint Liveness and Errors
+
+- RAD `subscribeAgent` has no return value; the listener receives the initial query result and later changes. The SDK automatically restores subscriptions after disconnection. If the initial call itself throws, resolve the cause before retrying. See the [RAD Integration Guide](../ai/rad-discovery.md#21-initial-state-and-subsequent-callbacks) for event types and callback usage.
+- MCP, Skill, Prompt and AgentSpec retain their subscription polling. Their listeners carry content already fetched by the SDK, so applications need not turn every callback into another query.
+- The SDK maintains client identity and heartbeats for Agent/MCP endpoints registered over HTTP. Retain the registering instance; on normal exit, deregister through that same instance and close `AiService`. Unsubscribing or taking a definition offline does not stop the business process.
+- Treat permissions, parameters, version conflicts, capacity and migration restrictions as business errors. Publication timeouts may have an unknown outcome: query the state before retrying, rather than blindly switching transports. Endpoint reconnection recovery does not imply automatic definition-publication retries.
+
+### 6.3. Legacy A2A and RAD Compatibility
+
+Existing A2A applications can keep using their APIs; the 3.3 SDK adapts to the server automatically. After upgrading an older server, restart the application or recreate the SDK instance to use the new behavior. New applications can use RAD APIs directly without manually switching modes.
+
+Frameworks supporting both older and newer servers can query RAD support with `AiService.getAgentDiscoveryCapability()`. See the [RAD Integration Guide](../ai/rad-discovery.md#25-supporting-older-servers) for an example.
+
+When one SDK instance registers A2A addresses for the same Agent, use the registration and deregistration methods from either the older A2A API or the new RAD API consistently. Before using new RAD APIs, confirm server support and complete the relevant data migration. See [Agent Management](../ai/agent-registry.md) and [Upgrading](../../admin/upgrading.mdx).
+
 ## 7. Local Cache, Failover, And Redo
 
 The SDK runtime uses several kinds of local or in-memory data:
@@ -115,6 +160,10 @@ When a client issue occurs, start with this checklist:
 | Service subscription result is empty | Check service name, group, cluster, instance health status, and push-empty protection settings. |
 | Instance disappears after network jitter | Check whether ephemeral instance redo has recovered and whether the client has reconnected. |
 | Local cache data is unexpected | Check `JM.SNAPSHOT.PATH`, the failover switch, and whether cache files were changed manually. |
+
+The 3.3 Java Client SDK automatically adds `Nacos-Request-Id` to HTTP requests to Nacos to correlate client and server requests. Direct HTTP callers can also provide this header; see [HTTP Request Correlation ID](../overview/api-overview.md#34-http-request-correlation-id). It differs from the logical client identifier used for HTTP endpoint registration.
+
+For unavailable JSON adapters, missing Jackson classes, or version conflicts, check runtime dependencies and startup options using [JSON Adapters and Jackson 2/3 Integration](../java-sdk/json-adapter.md).
 
 Common Java SDK local paths include:
 

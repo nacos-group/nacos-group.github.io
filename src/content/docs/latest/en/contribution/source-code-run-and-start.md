@@ -62,11 +62,11 @@ After packaging, the `distribution/target` directory will contain the nacos-serv
 Add the following configuration to the `Nacos/distribution/target/nacos-server-${version}/nacos/conf/application.properties` file:
 
 ```properties
-spring.sql.init.platform=mysql
-db.num=1
-db.url.0=jdbc:mysql://127.0.0.1:3306/nacos?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
-db.user=${MYSQL_USERNAME}
-db.password=${MYSQL_PASSWORD}
+nacos.plugin.datasource-dialect.type=mysql
+nacos.plugin.datasource.db.num=1
+nacos.plugin.datasource.db.url.0=jdbc:mysql://127.0.0.1:3306/nacos?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+nacos.plugin.datasource.db.user=${MYSQL_USERNAME}
+nacos.plugin.datasource.db.password=${MYSQL_PASSWORD}
 ```
 
 Start `Nacos-bootstrap` and specify the `nacos.deployment.type` parameter as `merged`. The startup command is as follows:
@@ -75,7 +75,7 @@ Start `Nacos-bootstrap` and specify the `nacos.deployment.type` parameter as `me
 distribution/target/nacos-server-${version}/nacos/bin/startup.sh -m standalone -d merged
 ```
 
-> On first launch, the system will prompt you to configure authentication parameters such as `nacos.core.auth.plugin.nacos.token.secret.key`, `nacos.core.auth.server.identity.key`, and `nacos.core.auth.server.identity.value`. Follow the instructions to complete them.
+> On first launch, the system prompts for authentication settings such as `nacos.plugin.auth.nacos.token.secret.key`, `nacos.core.auth.server.identity.key`, and `nacos.core.auth.server.identity.value`. Follow the prompt to complete them.
 
 ### Step 5: Verify Whether Nacos-Bootstrap Has Started Successfully
 

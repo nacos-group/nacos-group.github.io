@@ -40,8 +40,8 @@ Nacos 控制台 依赖 [Java](https://docs.oracle.com/cd/E19182-01/820-7851/inst
 Nacos独立控制台的发行包与Nacos服务的发行包相同， 只需要从上一步骤[部署Nacos 无控制台服务](#2-部署nacos-无控制台服务)中复制发布包到控制台部署环境中即可，随后执行以下命令进行解压：
 
 ```bash
-  unzip nacos-server-$version.zip 
-  # 或者 tar -xvf nacos-server-$version.tar.gz
+  unzip nacos-server-3.3.0.zip
+  # 或者 tar -xvf nacos-server-3.3.0.tar.gz
   cd nacos/bin
 ```
 
