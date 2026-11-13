@@ -9041,8 +9041,8 @@ None
 | data.studioProject | `string` | associated Studio project identifier. |
 | data.selectedConnection | `string` | Connection name stored by the console; `null` when the default selection order applies. |
 | data.effectiveSelectedConnection | `string` | Connection name selected after deployment configuration is applied; may differ from `selectedConnection` when the deployment declares its own selection. |
-| data.selectedConnectionSource | `string` | Where the effective selection comes from: `DEPLOYMENT` when `nacos.copilot.selectedConnection` is declared in the deployment configuration, `STORED` when the stored console value is effective, `NONE` when no selection is configured. |
-| data.activeConnection | `string` | Connection name currently routed for Copilot; `null` when no connection is usable. |
+| data.selectedConnectionSource | `string` | Where the effective selection comes from: `DEPLOYMENT` when `nacos.copilot.selectedConnection` is declared in the deployment configuration, `STORED` when the stored console value is effective, `NONE` when no selection is configured. A blank deployment value counts as not declared, so the stored value, if any, stays `STORED`. |
+| data.activeConnection | `string` | Connection name currently routed for Copilot; `null` when no connection is usable or when Copilot is disabled by `nacos.copilot.enabled=false`. The connection list is still returned while Copilot is disabled. |
 | data.connections | `Array<CopilotConnectionInfo>` | Model connections known to this node. |
 | data.connections[].name | `string` | Normalized connection name. |
 | data.connections[].providerId | `string` | Model provider identifier. |
@@ -9100,6 +9100,8 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 #### Description
 
 Create or update the Copilot configuration. Only `apiKey`, `model`, `studioUrl`, `studioProject`, and `selectedConnection` are processed; other fields, including `enabled` and `defaultNamespace`, are ignored. A field absent from the request keeps its stored value. The stored `apiKey` and `model` belong to the deprecated legacy connection; prefer the model connections configured under `nacos.copilot.connections.*`.
+
+`selectedConnection` is validated against the connection table from the most recent configuration refresh; the save request does not contact the provider. Adding a stored key for the legacy connection and selecting that connection therefore takes two requests: save the key first, then the selection once the refreshed table reports the connection as available. Clearing a stored key while keeping the same selection is accepted, and a successful save does not leave the connection in a pending state; it is simply re-evaluated by the refresh that follows.
 
 #### Since
 
