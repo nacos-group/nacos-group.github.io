@@ -9042,6 +9042,8 @@ Copilot 相关 API 提供配置获取/保存、Prompt 调试与优化、Skill �
 | data.studioUrl | `string` | 关联的 Studio 服务地址。 |
 | data.studioProject | `string` | 关联的 Studio 项目标识。 |
 | data.selectedConnection | `string` | 控制台保存的连接名；为 `null` 表示使用默认选择顺序。 |
+| data.effectiveSelectedConnection | `string` | 应用部署配置后实际选中的连接名；当部署配置自行声明选择时，可能与 `selectedConnection` 不同。 |
+| data.selectedConnectionSource | `string` | 生效选择的来源：部署配置声明了 `nacos.copilot.selectedConnection` 时为 `DEPLOYMENT`，控制台保存值生效时为 `STORED`，未配置选择时为 `NONE`。 |
 | data.activeConnection | `string` | 当前实际路由到的连接名；没有可用连接时为 `null`。 |
 | data.connections | `Array<CopilotConnectionInfo>` | 当前节点已知的模型连接。 |
 | data.connections[].name | `string` | 规范化后的连接名。 |
@@ -9053,7 +9055,7 @@ Copilot 相关 API 提供配置获取/保存、Prompt 调试与优化、Skill �
 | data.connections[].available | `boolean` | 连接是否通过加载期校验。 |
 | data.connections[].unavailableReason | `string` | 连接不可用时的诊断原因。 |
 | data.connections[].apiKeyConfigured | `boolean` | 连接是否配置了凭据；凭据本身不会返回。 |
-| data.connections[].actualSource | `string` | 凭据实际生效来源：legacy 连接使用 `COPILOT_API_KEY` 时为 `ENVIRONMENT`，使用生效配置值时为 `CONFIGURATION`，没有凭据时为 `null`。只暴露来源，不暴露值。 |
+| data.connections[].actualSource | `string` | 凭据实际生效来源：legacy 连接使用 `COPILOT_API_KEY` 时为 `ENVIRONMENT`，密钥来自部署配置时为 `DEPLOYMENT`，来自控制台保存值时为 `CONSOLE`，没有凭据时为 `null`。只暴露来源，不暴露值。 |
 
 #### 示例
 
@@ -9075,6 +9077,8 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
     "studioUrl": "http://127.0.0.1:8080",
     "studioProject": "NacosCopilot",
     "selectedConnection": "prod-qwen",
+    "effectiveSelectedConnection": "prod-qwen",
+    "selectedConnectionSource": "STORED",
     "activeConnection": "prod-qwen",
     "connections": [
       {
@@ -9086,7 +9090,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
         "enabled": true,
         "available": true,
         "apiKeyConfigured": true,
-        "actualSource": "CONFIGURATION"
+        "actualSource": "DEPLOYMENT"
       }
     ]
   }

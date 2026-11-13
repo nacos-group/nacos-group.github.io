@@ -9040,6 +9040,8 @@ None
 | data.studioUrl | `string` | associated Studio service address. |
 | data.studioProject | `string` | associated Studio project identifier. |
 | data.selectedConnection | `string` | Connection name stored by the console; `null` when the default selection order applies. |
+| data.effectiveSelectedConnection | `string` | Connection name selected after deployment configuration is applied; may differ from `selectedConnection` when the deployment declares its own selection. |
+| data.selectedConnectionSource | `string` | Where the effective selection comes from: `DEPLOYMENT` when `nacos.copilot.selectedConnection` is declared in the deployment configuration, `STORED` when the stored console value is effective, `NONE` when no selection is configured. |
 | data.activeConnection | `string` | Connection name currently routed for Copilot; `null` when no connection is usable. |
 | data.connections | `Array<CopilotConnectionInfo>` | Model connections known to this node. |
 | data.connections[].name | `string` | Normalized connection name. |
@@ -9051,7 +9053,7 @@ None
 | data.connections[].available | `boolean` | Whether the connection passed load-time validation. |
 | data.connections[].unavailableReason | `string` | Diagnostic reason when the connection is unavailable. |
 | data.connections[].apiKeyConfigured | `boolean` | Whether the connection carries a credential; the credential itself is never returned. |
-| data.connections[].actualSource | `string` | Where the effective credential comes from: `ENVIRONMENT` for the legacy connection using `COPILOT_API_KEY`, `CONFIGURATION` for the effective configuration value, or `null` when the connection has no credential. Only the source is exposed, never the value. |
+| data.connections[].actualSource | `string` | Where the effective credential comes from: `ENVIRONMENT` for the legacy connection using `COPILOT_API_KEY`, `DEPLOYMENT` when the key is declared in the deployment configuration, `CONSOLE` when it comes from the stored console value, or `null` when the connection has no credential. Only the source is exposed, never the value. |
 
 #### Examples
 
@@ -9073,6 +9075,8 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
     "studioUrl": "http://127.0.0.1:8080",
     "studioProject": "NacosCopilot",
     "selectedConnection": "prod-qwen",
+    "effectiveSelectedConnection": "prod-qwen",
+    "selectedConnectionSource": "STORED",
     "activeConnection": "prod-qwen",
     "connections": [
       {
@@ -9084,7 +9088,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
         "enabled": true,
         "available": true,
         "apiKeyConfigured": true,
-        "actualSource": "CONFIGURATION"
+        "actualSource": "DEPLOYMENT"
       }
     ]
   }
