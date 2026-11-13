@@ -254,6 +254,13 @@
         "link": "docs/manual/admin/console-api"
       },
       {
+        "label": "Copilot 助手",
+        "translations": {
+          "en": "Copilot Assistant"
+        },
+        "link": "docs/manual/admin/copilot"
+      },
+      {
         "label": "Nacos CLI 使用指南",
         "translations": {
           "en": "Nacos CLI User Guide"
