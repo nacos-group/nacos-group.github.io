@@ -9103,7 +9103,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 
 创建或更新 Copilot 配置，仅处理 `apiKey`、`model`、`studioUrl`、`studioProject`、`selectedConnection`；其他字段（包括 `enabled`、`defaultNamespace`）会被忽略。请求中缺失的字段保留已存值。已保存的 `apiKey` 与 `model` 属于已废弃的 legacy 连接，建议改用 `nacos.copilot.connections.*` 配置模型连接。
 
-`selectedConnection` 依据最近一次配置刷新得到的连接表校验，保存请求不会访问模型提供方。因此为 legacy 连接保存密钥并选中它需要分两次请求：先保存密钥，待刷新后的连接表显示该连接可用，再提交选择。清除已存密钥同时保留同一选择是允许的；保存成功后连接不会进入待校验状态，而是由随后的刷新重新评估。
+`selectedConnection` 依据最近一次配置刷新得到的连接表校验，校验本身不会访问模型提供方。保存成功后会在返回响应前同步重新绑定配置，该次刷新中的连接校验可能解析显式设置的 `baseUrl`，因此整个保存请求并非不含可用性检查 I/O。为 legacy 连接保存密钥并选中它因此需要分两次请求：先保存密钥，待刷新后的连接表显示该连接可用，再提交选择。清除已存密钥同时保留同一选择是允许的；保存成功后连接不会进入待校验状态，而是由随后的刷新重新评估。
 
 #### 起始版本
 
