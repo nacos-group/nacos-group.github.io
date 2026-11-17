@@ -162,6 +162,9 @@ Raft properties use `nacos.core.protocol.raft.data.*`. The `data` segment is the
 
 | Property | Description | Default |
 | --- | --- | --- |
+| `nacos.core.protocol.raft.data.log_storage_type` | Raft log backend: `rocksdb` or `file`. Leading and trailing whitespace is trimmed and case is ignored; empty, whitespace-only, or other values fail initialization. Selected at startup for all Raft groups on the current node; hot switching is not supported. | `rocksdb` |
+| `nacos.core.protocol.raft.data.sync` | Whether to write Raft logs synchronously. Must be `true` for the `file` backend, or initialization fails. | `true` |
+| `nacos.core.protocol.raft.data.sync_meta` | Synchronization option passed to the default Raft metadata storage. Does not change the `file` backend requirement for `sync=true`. | `false` |
 | `nacos.core.protocol.raft.data.election_timeout_ms` | Election timeout in milliseconds. | `5000` |
 | `nacos.core.protocol.raft.data.snapshot_interval_secs` | Snapshot interval in seconds. | `1800` |
 | `nacos.core.protocol.raft.data.core_thread_num` | Internal Raft worker thread count. | `8` |
@@ -174,6 +177,8 @@ Raft properties use `nacos.core.protocol.raft.data.*`. The `data` segment is the
 | `nacos.core.protocol.raft.data.max_append_buffer_size` | Append buffer size for logs. | `262144` |
 | `nacos.core.protocol.raft.data.max_election_delay_ms` | Maximum random election delay in milliseconds. | `1000` |
 | `nacos.core.protocol.raft.strict-mode` | Strict startup validation. If enabled, readiness fails when Raft cannot elect a leader. | `false` |
+
+See [Raft Log Storage](./raft-log-storage.md) for file backend configuration, filesystem requirements, and recovery. Backend selection does not convert existing data; changing this property cannot migrate logs in place on an existing node.
 
 ## Config
 
