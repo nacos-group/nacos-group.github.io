@@ -28,6 +28,24 @@ Naming 推送携带订阅服务的当前发现视图。客户端收到推送后�
 
 推送是当前连接生命周期内的尽力投递。推送失败时，服务端可以为目标 client 加入延迟重试。客户端也应能通过重新查询、重连 redo 和本地缓存恢复，从错过的推送中恢复。
 
+## 通知回调来源
+
+`NamingEvent.isFromPush()` 返回只读的 `boolean` 标志，用于识别本次通知的处理路径：
+
+```java
+EventListener listener = event -> {
+    if (event instanceof NamingEvent) {
+        NamingEvent namingEvent = (NamingEvent) event;
+        System.out.println(namingEvent.isFromPush());
+    }
+};
+```
+
+- `true`：服务端主动推送（包括重连后的推送）、后台轮询或查询刷新，以及 Failover 通知（包括 Failover 数据变化及切回正常缓存视图）。
+- `false`：客户端处理订阅请求的同步响应，或向新注册的本地 listener 直接回放已有缓存。
+
+首次订阅时，订阅响应与服务端推送可能并发到达，因此首次回调不保证为 `false`，后续回调也不保证始终为 `true`。请读取每次回调的标志，不要根据回调顺序推断通知来源。
+
 ## 本地缓存和 Failover
 
 客户端通常会保存 service-info 缓存。它用于：
