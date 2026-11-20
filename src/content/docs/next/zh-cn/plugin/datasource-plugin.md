@@ -52,6 +52,23 @@ nacos.plugin.datasource-dialect.type=mysql
 
 选中的方言是 active critical provider。插件缺失或被禁用时，Nacos 会明确报错并终止启动，不会回退到另一个已发现的方言。生产环境建议使用外置数据库，并在启动 Nacos 前导入对应数据库的 schema。
 
+## 可选的 H2 嵌入式存储
+
+H2 2.2.224 是纯 Java 实现的嵌入式数据库，是单机模式下嵌入式 Derby 的可选替代。默认插件包不包含 H2，Derby 仍是默认的嵌入式存储。
+
+在单机模式下启用 H2：
+
+1. 把 H2 驱动（`com.h2database:h2`，版本 2.2.224）和 `nacos-datasource-plugin-h2` jar 放入服务端的 `plugins/` 目录。该 jar 由 Nacos 源码树中的 `plugin-default-impl/nacos-default-datasource-plugin/nacos-datasource-plugin-h2` 模块构建。
+2. 在 `conf/application.properties` 中选择 H2 方言：
+
+```properties
+nacos.plugin.datasource-dialect.type=h2
+```
+
+数据库文件位于 `${nacos.home}/data/h2-data`。H2 只支持单机模式。集群模式下使用 `h2` 会导致启动失败，集群请使用 MySQL、PostgreSQL 或 Oracle。缺少 H2 驱动时启动失败，报错信息会列出需要添加的 jar。
+
+从 Derby 切换到 H2 不会迁移数据，H2 数据库从空库开始。Derby 专用的运维接口（如 Derby ops 查询和导入）对 `h2` 返回受控错误。Native Image 的构建方式见 [Native 快速开始](../quickstart/quick-start-native.mdx)。
+
 ## 外置数据库配置
 
 以 PostgreSQL 为例：
