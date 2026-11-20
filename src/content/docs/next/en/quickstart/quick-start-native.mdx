@@ -181,6 +181,16 @@ Derby inside a Native Server requires GraalVM's experimental `RuntimeClassLoadin
 
 This setup has been verified with **macOS ARM64, GraalVM CE `25.4.4.1.1`, and standalone merged deployment**.
 
+### Use Embedded H2
+
+H2 needs no experimental build property, because `nacos.native.derby.experimental` applies to Derby only. It is opt-in: the default plugin bundle does not include it, so enable it at build time and select it at runtime:
+
+1. Set `nacos.plugin.datasource-dialect.type=h2` in `$NACOS_NATIVE_WORK/build.properties`. The build selects the H2 engine from this file.
+2. Add `native-h2` to the profile list in the command in section 2.2, so it reads `-Pnative,release-native,native-h2,!dev`.
+3. Set the same `nacos.plugin.datasource-dialect.type=h2` in `conf/application.properties` of the extracted server, `$NACOS_NATIVE_WORK/run/nacos/conf/application.properties`.
+
+H2 is available in standalone mode only. The data directory is `${nacos.home}/data/h2-data`. Switching from Derby to H2 does not migrate data; the H2 database starts empty.
+
 ## 7. Build Your Own Docker Image
 
 Nacos does not currently provide an official Native Docker image. Native plugin selection is determined at build time. Adding or upgrading plugins requires rebuilding the Native executable and the image.
