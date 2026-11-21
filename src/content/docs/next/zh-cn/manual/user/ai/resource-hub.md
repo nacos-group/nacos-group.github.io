@@ -10,7 +10,7 @@ sidebar:
 
 Agentic Resource Hub 为 Skill、MCP、Agent、Prompt、AgentSpec 提供跨 Namespace 的共享、发现和复用能力。五类资源均可共享已上线的明确版本并导入目标 Namespace；只有 Skill 支持不经 Hub 的直接跨 Namespace 克隆。
 
-本页描述包含 Hub 功能的开发构建，请确认部署的 Server、Console 和 SDK 包含对应实现；不能仅凭版本号判断已发布发行包具备这些功能。本页位于 `next`，已发布版本文档不受影响。
+使用前，请确认 Server、Console 和 Maintainer SDK 支持所需的 Hub 资源类型。较早仅支持 Skill 的版本使用 `/copy` 和 `copyHubSkill`，扩展至五类资源的版本使用 `/clone` 和 `cloneHubSkill`。CLI 需支持 Hub 查询与下载，目前覆盖 Skill 和 AgentSpec，并要求服务端支持相应类型。
 
 在各类资源的管理页面进入对应共享目录。Skill 使用 **Skill 管理 → 共享 Skill** 页签；其余类型提供各自的共享列表和详情。共享在同一 Nacos 集群内生效，不代表发布到外部资源市场。
 
@@ -38,7 +38,7 @@ nacos.ai.hub.enabled=true
 
 共享读取沿用所选 API 范围的鉴权及资源可见性配置。匿名浏览要求所选鉴权插件明确开启匿名 AI 访问并允许此操作，公开可见本身不代表绕过鉴权。共享、导入、复制和治理操作需要用户身份及对应权限。
 
-服务端 `nacos.ai.hub.enabled` 能力和 `ai_hub_enabled` 状态，与 Java 运行时 SDK 的 `nacosAiAccessHub` 发现选项相互独立。SDK 选项默认为 `false`，只查询绑定命名空间。显式设置 `nacosAiAccessHub=true` 后，分别查询绑定命名空间和共享命名空间，再按当前命名空间在前、共享空间按热度顺序在后的规则组合分页。同名展示资源保留独立身份，以命名空间和不透明名称区分。`nacos-cli skill-search` 同样默认只查当前空间，`--hub` 开启组合发现，`--no-hub` 显式关闭共享发现。
+服务端 `nacos.ai.hub.enabled` 能力和 `ai_hub_enabled` 状态，与 Java 运行时 SDK 的 `nacosAiAccessHub` 发现选项相互独立。SDK 选项默认为 `false`，只查询绑定命名空间。显式设置 `nacosAiAccessHub=true` 后，分别查询绑定命名空间和共享命名空间，再按当前命名空间在前、共享空间按热度顺序在后的规则组合分页。同名展示资源保留独立身份，以命名空间和不透明名称区分。
 
 配置说明见[系统参数](../../admin/system-configurations.md)。
 
@@ -72,7 +72,7 @@ API 和 SDK 调用方式见[运维 API](../../admin/admin-api.md#12-agentic-reso
 
 通过 API 或 Maintainer SDK 指定源 Namespace、Skill 名称和已上线版本，以及目标 Namespace、名称和版本。源 Skill 必须已启用，调用方需具备源 READ 和目标 WRITE 权限，并通过源资源可见性检查。
 
-使用 `POST /v3/admin/ai/hub/skills/clone` 或对应 Console 路由；Maintainer SDK 使用 `cloneHubSkill`。旧 `/copy` 路由和 `copyHubSkill` 方法已移除。目标为独立草稿，按普通生命周期审核和发布。兼容来源标记仍为 `DIRECT_COPY`。其余四类资源仅支持从 Hub 导入，没有直接克隆入口。
+使用 `POST /v3/admin/ai/hub/skills/clone` 或对应 Console 路由；Maintainer SDK 使用 `cloneHubSkill`。较早版本的 Skill 复制接口使用 `/copy` 和 `copyHubSkill`，请按部署版本选择对应接口。目标为独立草稿，按普通生命周期审核和发布。兼容来源标记仍为 `DIRECT_COPY`。其余四类资源仅支持从 Hub 导入，没有直接克隆入口。
 
 ## 6. 关闭 Hub
 
@@ -80,7 +80,7 @@ API 和 SDK 调用方式见[运维 API](../../admin/admin-api.md#12-agentic-reso
 nacos.ai.hub.enabled=false
 ```
 
-修改配置后重启服务端，集群内各 Server 实例应保持一致。
+保持集群各节点的配置一致。服务端重载 `application.properties` 后，检查各节点的 `ai_hub_enabled` 为 `false`，再刷新控制台。
 
 关闭后：
 
@@ -111,7 +111,17 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" --get \
   --data-urlencode 'query=find' --data-urlencode 'pageNo=1' --data-urlencode 'pageSize=20'
 ```
 
-共享发现结果包含 `discoverySource="HUB"`、不透明 `name`、按字符串序列化的 `hubEntryId`、`displayName`、`sourceDisplayName`、固定 `version` 和独立 `downloadCount`。普通结果使用 `discoverySource="NAMESPACE"`。获取共享资源时，将所选共享结果的 `name` 作为 `skillName`，并携带返回的 `version`，不要以展示名定位，也不要在版本不匹配时回退 latest。Admin/Console 沿用 `SkillSummary`、`SkillMeta` 和 `Skill` 模型；`SkillMeta.origin` 仍用于复制和导入溯源，与 `discoverySource` 分离。
+共享发现结果包含 `discoverySource="HUB"`、不透明 `name`、按字符串序列化的 `hubEntryId`、`displayName`、`sourceDisplayName`、固定 `version` 和独立 `downloadCount`。普通结果使用 `discoverySource="NAMESPACE"`。获取共享资源时，Client 下载使用所选结果的 `name` 作为查询参数 `name`，Admin/Console 的版本下载接口则使用 `skillName`，并携带返回的 `version`，不要以展示名定位，也不要在版本不匹配时回退 latest。Admin/Console 沿用 `SkillSummary`、`SkillMeta` 和 `Skill` 模型；`SkillMeta.origin` 仍用于复制和导入溯源，与 `discoverySource` 分离。
+
+例如，若所选搜索结果返回 `name="101"`、`version="1.0.0"`，可下载对应的 ZIP：
+
+```shell
+curl --fail --get -H "accessToken: ${NACOS_ACCESS_TOKEN}" \
+  'http://127.0.0.1:8848/nacos/v3/client/ai/skills' \
+  --data-urlencode 'namespaceId=__nacos_ai_hub__' \
+  --data-urlencode 'name=101' --data-urlencode 'version=1.0.0' \
+  --output skill.zip
+```
 
 成功 ZIP 响应为原始 `application/zip` 字节，共享下载带有 `X-Nacos-Hub-Entry-Id` 和 `X-Nacos-Skill-Resolved-Version` 响应头，保留真实 Skill 目录名称，仅增加共享条目计数。Maintainer SDK 在 `listSkills`、`getSkillMeta`、`getSkillVersionDetail` 和通用 `downloadSkillVersion` 方法中传入保留命名空间即可。
 
@@ -124,7 +134,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" --get \
 | Prompt | 已启用、明确上线版本；不新增 PUBLIC/scope 要求；保留模板、变量、审核和标签 | PRIVATE 草稿，之后按普通 Prompt 流程发布 |
 | AgentSpec | 已启用、PUBLIC、明确上线版本；保留 AGENTS.md、资源文件和审核信息 | PRIVATE 草稿，内容与来源独立保存 |
 
-读取复用各资源原有路径，传入 `namespaceId=__nacos_ai_hub__`；以返回的不透明名称定位，不用展示名。错误版本不得回退 `latest`。Client 保持原生内容 DTO，不能要求 Agent 或 AgentSpec 内容响应一定包含顶层 `hub`。
+读取复用各资源原有路径，传入 `namespaceId=__nacos_ai_hub__`；同名共享条目的 `hub.resourceName` 可以相同，该字段展示源资源名称。读取时将所选条目的 `hub.hubEntryId` 或列表返回的对应不透明标识传给该类型的名称参数，指定版本时传 `hub.version`。错误版本不得回退 `latest`。Client 保持原生内容 DTO，不能要求 Agent 或 AgentSpec 内容响应一定包含顶层 `hub`。
 
 “查看固定源版本”需独立通过源 READ 与可见性检查。`sourceReadable=false` 时不返回源 Namespace ID 和名称，但不影响合法 Hub 内容读取。
 
@@ -137,6 +147,17 @@ MCP Direct 导入要求无歧义的持久固定地址，并检查目标服务冲
 Maintainer SDK 分别通过 `skill()`、`mcp()`、`agent()`、`prompt()`、`agentSpec()` 获取对应 facade，使用类型化共享与导入请求。共享读取使用原有资源方法及保留 Namespace；导入不会自动发布。
 
 当前 CLI 的 Skill、AgentSpec 搜索与下载可使用 Hub。下载到本地不等于导入 Nacos Namespace；CLI 尚无五类完整的共享、调整、取消和导入命令。请检查安装版本的 `--help`，共享管理自动化使用 HTTP API 或 Maintainer SDK。
+
+Profile 的 `source` 支持 `namespace`、`hub` 和 `all`，未设置时默认为 `all`。`--hub` 只查 Hub，`--no-hub` 只查当前命名空间，两个选项互斥且覆盖 Profile 设置。 同名时，从列表中选定一行，用其展示名、`hubEntryId` 和固定 `version` 下载到本地。下例中的 ID 和版本需替换为所选行的值。
+
+```shell
+nacos-cli skill-list --hub --name demo --output json
+nacos-cli skill-get demo 101 1.0.0
+nacos-cli agentspec-list --hub --name demo --output json
+nacos-cli agentspec-get demo 205 2.0.0
+```
+
+`all` 模式把同一组 `--page` 和 `--size` 分别用于两个来源。JSON 的 `namespace` 和 `hub` 各有自己的总数、页码和条目。 完整 JSON 示例见 [CLI 手册](../../admin/nacos-cli.md)。
 
 ## 10. 继续阅读
 

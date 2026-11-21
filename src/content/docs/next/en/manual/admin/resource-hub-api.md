@@ -257,7 +257,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST \
   --data-urlencode 'targetName=weather-imported' --data-urlencode 'targetVersion=0.0.1'
 ```
 
-MCP STDIO creates no Naming service; ordinary REF retains its original reference; source-owned Direct creates a target-owned service from one valid, unambiguous persistent fixed address. Existing target services conflict. Failure cleanup affects only state owned by this import. Target deletion preserves source/REF services; source revocation preserves imported targets. Agent import does not copy dynamic runtime registrations.
+MCP STDIO creates no Naming service; ordinary REF retains its original reference; source-owned Direct creates a target-owned service from one valid, unambiguous persistent fixed address. Existing target services conflict. Rollback is intended to remove resources created by the failed import. After a failed import, check the target draft and dependent resources and confirm the cleanup result before retrying. Target deletion preserves source/REF services; source revocation preserves imported targets. Agent import does not copy dynamic runtime registrations.
 
 ## 3. Response Models
 
@@ -340,7 +340,9 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" --get \
 
 Reads require Hub READ and publication validity, without additional source READ. Anonymous admission depends on the auth plugin and anonymous AI configuration; PUBLIC alone does not bypass auth. Identity and version must match the current pinned reference, without `latest` fallback. Conflicting repeated Namespace parameters are rejected. Revocation, pinned-version offline, source deletion or disabling makes content unreadable; becoming PRIVATE also invalidates non-Prompt sources.
 
-Management/search `hub` metadata uses `HubResourceDiscoveryInfo`: `hubEntryId`, `resourceType`, opaque `resourceName`, pinned `version`, `sourceDisplayName`, `author`, `downloadCount`, `updateTime` and `sourceReadable`. `sourceNamespaceId` and `sourceName` are returned only after independent source READ and visibility checks. Do not require source permission for an otherwise valid Hub content read.
+Management/search `hub` metadata uses `HubResourceDiscoveryInfo`: `hubEntryId`, `resourceType`, display field `resourceName`, pinned `version`, `sourceDisplayName`, `author`, `downloadCount`, `updateTime` and `sourceReadable`. `sourceNamespaceId` and `sourceName` are returned only after independent source READ and visibility checks. Do not require source permission for an otherwise valid Hub content read.
+
+Several shares can have the same `hub.resourceName`, which displays the source resource name. Pass the selected row’s `hub.hubEntryId` or equivalent opaque identifier in the type-specific name parameter. For a versioned read, pass its pinned `hub.version`.
 
 Client Agent retains `AgentDiscoveryResult`; AgentSpec retains `AgentSpec`. Neither requires top-level `hub` content metadata. MCP retains its detail structure and Prompt its native template DTO. A missing `hub` field alone cannot indicate failure across all Client reads. Ordinary Namespace behavior is unchanged.
 

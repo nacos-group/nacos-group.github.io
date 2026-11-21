@@ -10,7 +10,7 @@ sidebar:
 
 Agentic Resource Hub provides cross-Namespace sharing, discovery and reuse for Skill, MCP, Agent, Prompt and AgentSpec. All five types can share a concrete online version and import it into a target Namespace. Only Skill supports direct cross-Namespace cloning without a Hub publication.
 
-This page describes development builds containing Hub. Verify that your Server, Console and SDK include the implementation; a release version number alone does not guarantee availability. This page remains in `next`; released-version documentation is unchanged.
+Use Server, Console and Maintainer SDK versions that support the required Hub resource types. Earlier Skill-only versions use `/copy` and `copyHubSkill`; versions with the five-type extension use `/clone` and `cloneHubSkill`. The CLI must support Hub discovery and download, currently available for Skill and AgentSpec, with corresponding server support.
 
 Open the shared catalog from each resource's management page. Skill uses **Skill Registry → Shared Skills**; the other types have their own shared lists and details. Sharing is within one Nacos cluster and does not publish to an external resource marketplace.
 
@@ -38,7 +38,7 @@ The default is `true`. Hub requires the AI module. Setting `nacos.extension.ai.e
 
 Shared reads use the selected API audience's authentication and resource visibility settings. Anonymous browsing requires the selected auth plugin to explicitly enable anonymous AI access and permit this operation. Public visibility alone does not bypass authentication. Sharing, import, copy and governance require a user identity with the corresponding permissions.
 
-The server's `nacos.ai.hub.enabled` capability and `ai_hub_enabled` state are distinct from the Java runtime SDK's `nacosAiAccessHub` discovery option. The SDK option defaults to `false`, querying only the bound namespace. Set `nacosAiAccessHub=true` to query both namespaces separately and combine pages with namespace results first and shared results in Hub popularity order. Same display names remain separate, identified by namespace and opaque name. `nacos-cli skill-search` likewise defaults to local discovery; `--hub` enables combined discovery and `--no-hub` explicitly disables it.
+The server's `nacos.ai.hub.enabled` capability and `ai_hub_enabled` state are distinct from the Java runtime SDK's `nacosAiAccessHub` discovery option. The SDK option defaults to `false`, querying only the bound namespace. Set `nacosAiAccessHub=true` to query both namespaces separately and combine pages with namespace results first and shared results in Hub popularity order. Same display names remain separate, identified by namespace and opaque name.
 
 See [System Parameters](../../admin/system-configurations.md).
 
@@ -72,7 +72,7 @@ For API and SDK usage, see [Admin API](../../admin/admin-api.md#12-agentic-resou
 
 Use the API or Maintainer SDK to specify the source Namespace, Skill name and online version, together with the target Namespace, name and version. The source Skill must be enabled. The caller needs source READ and target WRITE permissions and must pass source visibility checks.
 
-Use `POST /v3/admin/ai/hub/skills/clone` or the corresponding Console route; the Maintainer SDK method is `cloneHubSkill`. The old `/copy` route and `copyHubSkill` method are removed. The target is an independent draft reviewed and published through the ordinary lifecycle. The compatible provenance marker remains `DIRECT_COPY`. The other four types support Hub import only, without direct clone entry points.
+Use `POST /v3/admin/ai/hub/skills/clone` or the corresponding Console route; the Maintainer SDK method is `cloneHubSkill`. Earlier versions use `/copy` and `copyHubSkill` for Skill copies. Choose the interface supported by your deployed version. The target is an independent draft reviewed and published through the ordinary lifecycle. The compatible provenance marker remains `DIRECT_COPY`. The other four types support Hub import only, without direct clone entry points.
 
 ## 6. Disable Hub
 
@@ -80,7 +80,7 @@ Use `POST /v3/admin/ai/hub/skills/clone` or the corresponding Console route; the
 nacos.ai.hub.enabled=false
 ```
 
-Restart the server after changing the configuration. Keep the value consistent across Server instances in a cluster.
+Keep the configuration consistent across the cluster. After each server reloads `application.properties`, verify that its `ai_hub_enabled` state is `false`, then refresh the Console.
 
 When disabled:
 
@@ -111,7 +111,17 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" --get \
   --data-urlencode 'query=find' --data-urlencode 'pageNo=1' --data-urlencode 'pageSize=20'
 ```
 
-Shared discovery returns `discoverySource="HUB"`, opaque `name`, string-serialized `hubEntryId`, `displayName`, `sourceDisplayName`, pinned `version`, and independent `downloadCount`. Ordinary results use `discoverySource="NAMESPACE"`. Pass the selected shared `name` as `skillName` and the returned `version` to retrieve that publication. Never use the display name as identity or fall back to latest after a version mismatch. For Admin/Console, the models remain `SkillSummary`, `SkillMeta` and `Skill`; `SkillMeta.origin` remains copy/import provenance, separate from `discoverySource`.
+Shared discovery returns `discoverySource="HUB"`, opaque `name`, string-serialized `hubEntryId`, `displayName`, `sourceDisplayName`, pinned `version`, and independent `downloadCount`. Ordinary results use `discoverySource="NAMESPACE"`. For a Client download, pass the selected result’s `name` as the query parameter `name`, together with its `version`. Admin and Console version downloads take `skillName` instead. Never use the display name as identity or fall back to latest after a version mismatch. For Admin/Console, the models remain `SkillSummary`, `SkillMeta` and `Skill`; `SkillMeta.origin` remains copy/import provenance, separate from `discoverySource`.
+
+For a selected search result with `name="101"` and `version="1.0.0"`, download its ZIP with the following request.
+
+```shell
+curl --fail --get -H "accessToken: ${NACOS_ACCESS_TOKEN}" \
+  'http://127.0.0.1:8848/nacos/v3/client/ai/skills' \
+  --data-urlencode 'namespaceId=__nacos_ai_hub__' \
+  --data-urlencode 'name=101' --data-urlencode 'version=1.0.0' \
+  --output skill.zip
+```
 
 Successful ZIP responses are raw `application/zip` bytes. Shared downloads include `X-Nacos-Hub-Entry-Id` and `X-Nacos-Skill-Resolved-Version` headers, retain the original Skill directory name, and count only against the shared entry. The Maintainer SDK reuses `listSkills`, `getSkillMeta`, `getSkillVersionDetail`, and the general `downloadSkillVersion` method with the reserved namespace.
 
@@ -124,7 +134,7 @@ Successful ZIP responses are raw `application/zip` bytes. Shared downloads inclu
 | Prompt | Enabled, concrete online version; no new PUBLIC/scope requirement; retains template, variables, review and labels | PRIVATE draft, subsequently published through the ordinary Prompt lifecycle |
 | AgentSpec | Enabled, PUBLIC, concrete online version; retains AGENTS.md, files and review data | PRIVATE draft with independent content and provenance |
 
-Reads reuse each resource's existing paths with `namespaceId=__nacos_ai_hub__`. Identify resources by the returned opaque name, never the display name. An incorrect version must not fall back to `latest`. Client content keeps its native DTO; do not require a top-level `hub` on Agent or AgentSpec content.
+Reads reuse each resource's existing paths with `namespaceId=__nacos_ai_hub__`. Several shares can have the same `hub.resourceName`, which displays the source resource name. Pass the selected row’s `hub.hubEntryId` or equivalent opaque identifier in the type-specific name parameter. For a versioned read, pass its pinned `hub.version`. An incorrect version must not fall back to `latest`. Client content keeps its native DTO; do not require a top-level `hub` on Agent or AgentSpec content.
 
 Viewing the pinned source version requires independent source READ and visibility checks. When `sourceReadable=false`, source Namespace ID and name are withheld without preventing valid Hub reads.
 
@@ -137,6 +147,17 @@ See the [Hub extension API reference](../../admin/resource-hub-api.md) for compl
 Obtain the Maintainer facades through `skill()`, `mcp()`, `agent()`, `prompt()` and `agentSpec()`, using typed sharing and import requests. Shared reads retain existing resource methods with the reserved Namespace. Import does not publish automatically.
 
 The CLI supports Hub search and download for Skill and AgentSpec. A local download is not a Nacos Namespace import. The CLI does not yet provide complete sharing, adjustment, revocation and import commands for all five types. Check the installed version's `--help`; use HTTP APIs or the Maintainer SDK for sharing automation.
+
+The Profile accepts `namespace`, `hub` or `all` for `source` and defaults to `all` when unset. Override it with `--hub` for Hub only or `--no-hub` for the current Namespace only. The flags are mutually exclusive. For duplicate names, select a list entry and download it locally using its display name, `hubEntryId` and pinned `version`. Replace the sample IDs and versions with values from the selected rows.
+
+```shell
+nacos-cli skill-list --hub --name demo --output json
+nacos-cli skill-get demo 101 1.0.0
+nacos-cli agentspec-list --hub --name demo --output json
+nacos-cli agentspec-get demo 205 2.0.0
+```
+
+In `all` mode, the CLI applies the same `--page` and `--size` to each source. The `namespace` and `hub` objects in JSON each carry their own total, page number and items. See the [CLI manual](../../admin/nacos-cli.md) for a JSON example.
 
 ## 10. Related Pages
 

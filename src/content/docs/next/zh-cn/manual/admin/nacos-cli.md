@@ -301,6 +301,27 @@ nacos> skill-list --name <skill-name> --page 2
 nacos> skill-list --output json
 ```
 
+以下来源选项适用于 Skill 和 AgentSpec 的列表查询与下载。Profile 的 `source` 支持 `namespace`、`hub` 和 `all`，未设置时默认为 `all`。`--hub` 只查 Hub，`--no-hub` 只查当前命名空间，两个选项互斥且覆盖 Profile 设置。
+
+同名时，从列表中选定一行，用其展示名、`hubEntryId` 和固定 `version` 下载到本地。下例中的 ID 和版本需替换为所选行的值。
+
+```shell
+nacos-cli skill-list --hub --name demo --output json
+nacos-cli skill-get demo 101 1.0.0
+nacos-cli agentspec-list --hub --name demo --output json
+nacos-cli agentspec-get demo 205 2.0.0
+```
+
+`all` 模式把同一组 `--page` 和 `--size` 分别用于两个来源。JSON 的 `namespace` 和 `hub` 各有自己的总数、页码和条目。 例如，两个来源都没有匹配项时，`skill-list --output json` 的结构如下。
+
+```json
+{
+  "source": "all",
+  "namespace": {"totalCount": 0, "pageNumber": 1, "pagesAvailable": 0, "pageItems": []},
+  "hub": {"totalCount": 0, "pageNumber": 1, "pagesAvailable": 0, "pageItems": []}
+}
+```
+
 #### 5.1.2. 查看技能详情（describe）
 查看指定 Skill 的详情和版本历史（latest / editing / reviewing / online，以及每个版本的状态）。
 
@@ -324,7 +345,7 @@ nacos> skill-describe <skill-name>
 
 **命令格式**
 ```bash
-nacos-cli skill-get <skill-name> [flags]
+nacos-cli skill-get <skill-name> [hubEntryId] [version] [flags]
 ```
 
 **参数说明**
@@ -512,7 +533,7 @@ nacos-cli agentspec-get <agentspec-name> -o /custom/path
 nacos-cli agentspec-get <agentspec-name> --version v1
 
 # 按路由标签下载
-nacos-cli agentspec-get <agentspec-name> --label latest
+nacos-cli agentspec-get <agentspec-name> --no-hub --label latest
 
 # 批量下载多个 AgentSpec
 nacos-cli agentspec-get spec1 spec2 spec3

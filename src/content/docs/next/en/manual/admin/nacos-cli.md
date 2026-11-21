@@ -301,6 +301,27 @@ nacos> skill-list --name <skill-name> --page 2
 nacos> skill-list --output json
 ```
 
+The following source options apply to Skill and AgentSpec lists and downloads. The Profile accepts `namespace`, `hub` or `all` for `source` and defaults to `all` when unset. Override it with `--hub` for Hub only or `--no-hub` for the current Namespace only. The flags are mutually exclusive.
+
+For duplicate names, select a list entry and download it locally using its display name, `hubEntryId` and pinned `version`. Replace the sample IDs and versions with values from the selected rows.
+
+```shell
+nacos-cli skill-list --hub --name demo --output json
+nacos-cli skill-get demo 101 1.0.0
+nacos-cli agentspec-list --hub --name demo --output json
+nacos-cli agentspec-get demo 205 2.0.0
+```
+
+In `all` mode, the CLI applies the same `--page` and `--size` to each source. The `namespace` and `hub` objects in JSON each carry their own total, page number and items. For example, when neither source has a match, `skill-list --output json` has the following structure.
+
+```json
+{
+  "source": "all",
+  "namespace": {"totalCount": 0, "pageNumber": 1, "pagesAvailable": 0, "pageItems": []},
+  "hub": {"totalCount": 0, "pageNumber": 1, "pagesAvailable": 0, "pageItems": []}
+}
+```
+
 #### 5.1.2. Describe Skill
 Show detail and version history of the specified skill (latest / editing / reviewing / online, plus per-version status).
 
@@ -324,7 +345,7 @@ Download a skill from Nacos to a local directory, including skill metadata (SKIL
 
 **Command Format**
 ```bash
-nacos-cli skill-get <skill-name> [flags]
+nacos-cli skill-get <skill-name> [hubEntryId] [version] [flags]
 ```
 
 **Parameters**
@@ -512,7 +533,7 @@ nacos-cli agentspec-get <agentspec-name> -o /custom/path
 nacos-cli agentspec-get <agentspec-name> --version v1
 
 # Download by route label
-nacos-cli agentspec-get <agentspec-name> --label latest
+nacos-cli agentspec-get <agentspec-name> --no-hub --label latest
 
 # Download multiple AgentSpecs
 nacos-cli agentspec-get spec1 spec2 spec3

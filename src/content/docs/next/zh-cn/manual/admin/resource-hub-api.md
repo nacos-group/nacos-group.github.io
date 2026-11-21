@@ -257,7 +257,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST \
   --data-urlencode 'targetName=weather-imported' --data-urlencode 'targetVersion=0.0.1'
 ```
 
-MCP STDIO 不创建 Naming 服务；普通 REF 保留源引用；源自有 Direct 从唯一、合法的持久固定地址创建目标自有服务。目标服务已存在时冲突，导入失败仅清理本次拥有的状态。删除目标不删除源或 REF 服务；源撤销不删除已导入目标。Agent 导入不复制动态运行时注册。
+MCP STDIO 不创建 Naming 服务；普通 REF 保留源引用；源自有 Direct 从唯一、合法的持久固定地址创建目标自有服务。目标服务已存在时冲突，失败回滚的目标是清理本次导入创建的资源。导入失败后，应检查目标草稿及依赖资源的状态，确认清理结果后再重试。删除目标不删除源或 REF 服务；源撤销不删除已导入目标。Agent 导入不复制动态运行时注册。
 
 ## 3. 响应模型
 
@@ -340,7 +340,9 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" --get \
 
 读取须通过 Hub READ 和共享有效性检查，不额外要求源 READ。匿名访问取决于所选鉴权插件与匿名 AI 配置；PUBLIC 本身不绕过鉴权。资源身份和版本必须匹配当前共享引用，不得回退 `latest`。重复冲突的 Namespace 参数会被拒绝。共享被撤销、固定源版本下线、源被删除或停用后，内容不可读；除 Prompt 外，源改为 PRIVATE 也会撤销共享有效性。
 
-四类管理/搜索模型中的 `hub` 元信息使用 `HubResourceDiscoveryInfo`，包含 `hubEntryId`、`resourceType`、不透明 `resourceName`、固定 `version`、`sourceDisplayName`、`author`、`downloadCount`、`updateTime` 和 `sourceReadable`。`sourceNamespaceId`、`sourceName` 仅在独立的源 READ 与可见性检查通过后返回；不能要求调用者先有源权限才能读 Hub。
+四类管理/搜索模型中的 `hub` 元信息使用 `HubResourceDiscoveryInfo`，包含 `hubEntryId`、`resourceType`、展示字段 `resourceName`、固定 `version`、`sourceDisplayName`、`author`、`downloadCount`、`updateTime` 和 `sourceReadable`。`sourceNamespaceId`、`sourceName` 仅在独立的源 READ 与可见性检查通过后返回；不能要求调用者先有源权限才能读 Hub。
+
+同名共享条目的 `hub.resourceName` 可以相同，该字段展示源资源名称。读取时将所选条目的 `hub.hubEntryId` 或列表返回的对应不透明标识传给该类型的名称参数，指定版本时传 `hub.version`。
 
 Client Agent 保持 `AgentDiscoveryResult`，AgentSpec 保持 `AgentSpec`，不要求内容响应具有顶层 `hub`。MCP 保持原详情结构，Prompt 保持原模板 DTO。不能用响应缺少 `hub` 判断所有 Client 读取失败。普通 Namespace 的读取语义不变。
 
