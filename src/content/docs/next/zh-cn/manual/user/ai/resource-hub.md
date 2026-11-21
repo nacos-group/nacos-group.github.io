@@ -148,16 +148,18 @@ Maintainer SDK 分别通过 `skill()`、`mcp()`、`agent()`、`prompt()`、`agen
 
 当前 CLI 的 Skill、AgentSpec 搜索与下载可使用 Hub。下载到本地不等于导入 Nacos Namespace；CLI 尚无五类完整的共享、调整、取消和导入命令。请检查安装版本的 `--help`，共享管理自动化使用 HTTP API 或 Maintainer SDK。
 
-Profile 的 `source` 支持 `namespace`、`hub` 和 `all`，未设置时默认为 `all`。`--hub` 只查 Hub，`--no-hub` 只查当前命名空间，两个选项互斥且覆盖 Profile 设置。 同名时，从列表中选定一行，用其展示名、`hubEntryId` 和固定 `version` 下载到本地。下例中的 ID 和版本需替换为所选行的值。
+Profile 的 `source` 支持 `namespace`、`hub` 和 `all`。未设置时，CLI 默认使用当前命名空间（`namespace`）。`--hub` 只查 Hub，`--no-hub` 只查当前命名空间。两个选项互斥，均可覆盖 Profile 设置。
+
+下载指定共享条目时，传入展示名，并用 `--hub-entry-id` 指定列表中该条目的 `hubEntryId`。省略 `--version` 时下载共享版本，显式指定时须与所选条目的版本一致。
 
 ```shell
 nacos-cli skill-list --hub --name demo --output json
-nacos-cli skill-get demo 101 1.0.0
+nacos-cli skill-get demo --hub-entry-id 101
 nacos-cli agentspec-list --hub --name demo --output json
-nacos-cli agentspec-get demo 205 2.0.0
+nacos-cli agentspec-get demo --hub-entry-id 205 --version 2.0.0
 ```
 
-`all` 模式把同一组 `--page` 和 `--size` 分别用于两个来源。JSON 的 `namespace` 和 `hub` 各有自己的总数、页码和条目。 完整 JSON 示例见 [CLI 手册](../../admin/nacos-cli.md)。
+Profile 显式设置 `source=all` 且命令未指定来源选项时，`--page` 和 `--size` 分别对两个来源生效。JSON 的 `namespace` 和 `hub` 各有自己的总数、页码和条目。完整 JSON 示例见 [CLI 手册](../../admin/nacos-cli.md)。
 
 ## 10. 继续阅读
 

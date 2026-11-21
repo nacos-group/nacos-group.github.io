@@ -232,7 +232,7 @@ nacos-cli --port 8849
 直接在命令行执行命令：
 
 ```bash
-# 列出所有技能
+# 按 Profile 中的来源设置列出技能
 nacos-cli skill-list
 
 # 获取技能
@@ -268,7 +268,7 @@ Skill 遵循三阶段生命周期，与服务端保持一致：
 Nacos CLI 提供 Skill 的完整生命周期管理：列出、查看详情、下载、上传、提交评审、发布上线，以及实时同步。
 
 #### 5.1.1. 列出技能
-获取 Nacos 中存储的 AI 技能列表，默认显示技能描述（截断为 50 字符），支持脚本友好的 JSON 输出。
+列出所选来源的 AI 技能。默认输出中，每条技能描述最多显示 200 个字符。脚本可使用 `--output json`。
 
 **命令格式**
 ```bash
@@ -281,12 +281,12 @@ nacos-cli skill-list [flags]
 | --- | --- | --- | --- |
 | --name |  |  | 按技能名称过滤 |
 | --page |  | 1 | 页码 |
-| --size |  | 10 | 每页数量 |
+| --size |  | 20 | 每个来源的每页数量（1–100） |
 | --output |  | pretty | 输出格式：`pretty`(默认) 或 `json`(便于脚本解析) |
 
 **使用示例**
 ```bash
-# 列出所有技能（默认显示描述）
+# 列出技能及其描述
 nacos-cli skill-list
 
 # 按名称过滤
@@ -301,18 +301,18 @@ nacos> skill-list --name <skill-name> --page 2
 nacos> skill-list --output json
 ```
 
-以下来源选项适用于 Skill 和 AgentSpec 的列表查询与下载。Profile 的 `source` 支持 `namespace`、`hub` 和 `all`，未设置时默认为 `all`。`--hub` 只查 Hub，`--no-hub` 只查当前命名空间，两个选项互斥且覆盖 Profile 设置。
+以下来源选项适用于 Skill 和 AgentSpec 的列表查询与下载。Profile 的 `source` 支持 `namespace`、`hub` 和 `all`。未设置时，CLI 默认使用当前命名空间（`namespace`）。`--hub` 只查 Hub，`--no-hub` 只查当前命名空间。两个选项互斥，均可覆盖 Profile 设置。
 
-同名时，从列表中选定一行，用其展示名、`hubEntryId` 和固定 `version` 下载到本地。下例中的 ID 和版本需替换为所选行的值。
+下载指定 Hub 条目时，传入展示名和 `--hub-entry-id <id>`，其中 ID 取自列表中该条目的 `hubEntryId`，为十进制正整数。即使 Profile 设为 `namespace`，该选项也会选择 Hub。它只接受一个资源名，且与 `--no-hub` 互斥。省略 `--version` 时下载条目的共享版本；显式指定时，版本必须与所选条目一致。 位置参数均为资源名，批量下载时纯数字名称也按资源名处理。
 
 ```shell
 nacos-cli skill-list --hub --name demo --output json
-nacos-cli skill-get demo 101 1.0.0
+nacos-cli skill-get demo --hub-entry-id 101
 nacos-cli agentspec-list --hub --name demo --output json
-nacos-cli agentspec-get demo 205 2.0.0
+nacos-cli agentspec-get demo --hub-entry-id 205 --version 2.0.0
 ```
 
-`all` 模式把同一组 `--page` 和 `--size` 分别用于两个来源。JSON 的 `namespace` 和 `hub` 各有自己的总数、页码和条目。 例如，两个来源都没有匹配项时，`skill-list --output json` 的结构如下。
+查询单一来源时，JSON 的 `pageItems` 位于顶层。要同时查询两个来源，可执行 `nacos-cli profile set source=all` 设置当前 Profile，再运行不带来源选项的列表命令。`--page` 和 `--size` 分别对两个来源生效。例如，两个来源都没有匹配项时，`skill-list --output json` 返回如下结果。
 
 ```json
 {
@@ -345,7 +345,7 @@ nacos> skill-describe <skill-name>
 
 **命令格式**
 ```bash
-nacos-cli skill-get <skill-name> [hubEntryId] [version] [flags]
+nacos-cli skill-get <skill-name> [<skill-name>...] [flags]
 ```
 
 **参数说明**
@@ -353,6 +353,8 @@ nacos-cli skill-get <skill-name> [hubEntryId] [version] [flags]
 | 参数 | 简写 | 默认值 | 描述 |
 | --- | --- | --- | --- |
 | -o, --output | -o | ~/.skills | 输出目录 |
+| `--hub-entry-id <id>` | | | 按 `skill-list --hub` 返回的条目 ID 下载单个 Skill。 |
+| `--version <version>` | | | 指定下载版本。Hub 条目仅接受其共享版本。 |
 
 **使用示例**
 ```bash
@@ -534,6 +536,9 @@ nacos-cli agentspec-get <agentspec-name> --version v1
 
 # 按路由标签下载
 nacos-cli agentspec-get <agentspec-name> --no-hub --label latest
+
+# 下载指定 Hub 条目的共享版本
+nacos-cli agentspec-get demo --hub-entry-id 205
 
 # 批量下载多个 AgentSpec
 nacos-cli agentspec-get spec1 spec2 spec3

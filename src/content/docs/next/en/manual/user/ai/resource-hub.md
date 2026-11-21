@@ -148,16 +148,18 @@ Obtain the Maintainer facades through `skill()`, `mcp()`, `agent()`, `prompt()` 
 
 The CLI supports Hub search and download for Skill and AgentSpec. A local download is not a Nacos Namespace import. The CLI does not yet provide complete sharing, adjustment, revocation and import commands for all five types. Check the installed version's `--help`; use HTTP APIs or the Maintainer SDK for sharing automation.
 
-The Profile accepts `namespace`, `hub` or `all` for `source` and defaults to `all` when unset. Override it with `--hub` for Hub only or `--no-hub` for the current Namespace only. The flags are mutually exclusive. For duplicate names, select a list entry and download it locally using its display name, `hubEntryId` and pinned `version`. Replace the sample IDs and versions with values from the selected rows.
+The Profile accepts `namespace`, `hub` or `all` for `source`. When `source` is unset, the CLI uses the current Namespace (`namespace`). Use `--hub` to select only Hub or `--no-hub` to select only the current Namespace. These flags override the Profile and are mutually exclusive.
+
+To download a specific share, pass its display name and the `hubEntryId` from the list with `--hub-entry-id`. Omitting `--version` downloads the shared version. An explicit version must match the selected row.
 
 ```shell
 nacos-cli skill-list --hub --name demo --output json
-nacos-cli skill-get demo 101 1.0.0
+nacos-cli skill-get demo --hub-entry-id 101
 nacos-cli agentspec-list --hub --name demo --output json
-nacos-cli agentspec-get demo 205 2.0.0
+nacos-cli agentspec-get demo --hub-entry-id 205 --version 2.0.0
 ```
 
-In `all` mode, the CLI applies the same `--page` and `--size` to each source. The `namespace` and `hub` objects in JSON each carry their own total, page number and items. See the [CLI manual](../../admin/nacos-cli.md) for a JSON example.
+With `source=all` in the Profile and no source flag, the CLI applies the same `--page` and `--size` to each source. The `namespace` and `hub` objects in JSON each carry their own total, page number and items. See the [CLI manual](../../admin/nacos-cli.md) for a JSON example.
 
 ## 10. Related Pages
 

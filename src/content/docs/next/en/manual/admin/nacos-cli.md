@@ -232,7 +232,7 @@ nacos-cli --port 8849
 Execute commands directly from the command line:
 
 ```bash
-# List all skills
+# List skills from the source selected in the profile
 nacos-cli skill-list
 
 # Get a skill
@@ -268,7 +268,7 @@ Skills follow a three-stage lifecycle aligned with the server:
 Nacos CLI provides complete Skill lifecycle management: list, describe, get, upload, review, release, plus real-time synchronization.
 
 #### 5.1.1. List Skills
-Get the list of AI skills stored in Nacos. By default, skill descriptions are displayed (truncated to 50 characters). Supports script-friendly JSON output.
+List AI skills from the selected source. The default output shows up to 200 characters of each description. Use `--output json` for scripts.
 
 **Command Format**
 ```bash
@@ -281,12 +281,12 @@ nacos-cli skill-list [flags]
 | --- | --- | --- | --- |
 | --name |  |  | Filter by skill name |
 | --page |  | 1 | Page number |
-| --size |  | 10 | Page size |
+| --size |  | 20 | Page size per source (1–100) |
 | --output |  | pretty | Output format: `pretty` (default) or `json` (machine-readable for scripting) |
 
 **Usage Examples**
 ```bash
-# List all skills (with descriptions by default)
+# List skills with descriptions
 nacos-cli skill-list
 
 # Filter by name
@@ -301,18 +301,18 @@ nacos> skill-list --name <skill-name> --page 2
 nacos> skill-list --output json
 ```
 
-The following source options apply to Skill and AgentSpec lists and downloads. The Profile accepts `namespace`, `hub` or `all` for `source` and defaults to `all` when unset. Override it with `--hub` for Hub only or `--no-hub` for the current Namespace only. The flags are mutually exclusive.
+The following source options apply to Skill and AgentSpec lists and downloads. The Profile accepts `namespace`, `hub` or `all` for `source`. When `source` is unset, the CLI uses the current Namespace (`namespace`). Use `--hub` to select only Hub or `--no-hub` to select only the current Namespace. These flags override the Profile and are mutually exclusive.
 
-For duplicate names, select a list entry and download it locally using its display name, `hubEntryId` and pinned `version`. Replace the sample IDs and versions with values from the selected rows.
+To download a specific Hub entry, pass its display name and `--hub-entry-id <id>`, using the positive decimal `hubEntryId` from the list. This selects Hub even when the Profile uses `namespace`. The flag accepts exactly one resource name and conflicts with `--no-hub`. The download uses the shared version by default. If you pass `--version`, it must match the version in the selected row. Positional arguments are resource names, including numeric names in batch downloads.
 
 ```shell
 nacos-cli skill-list --hub --name demo --output json
-nacos-cli skill-get demo 101 1.0.0
+nacos-cli skill-get demo --hub-entry-id 101
 nacos-cli agentspec-list --hub --name demo --output json
-nacos-cli agentspec-get demo 205 2.0.0
+nacos-cli agentspec-get demo --hub-entry-id 205 --version 2.0.0
 ```
 
-In `all` mode, the CLI applies the same `--page` and `--size` to each source. The `namespace` and `hub` objects in JSON each carry their own total, page number and items. For example, when neither source has a match, `skill-list --output json` has the following structure.
+Single-source JSON has a top-level `pageItems` array. To list both sources, set `source=all` in the current Profile (`nacos-cli profile set source=all`) and run the list command without a source flag. `--page` and `--size` apply independently to each source. For example, `skill-list --output json` returns the following when neither source has a match.
 
 ```json
 {
@@ -345,7 +345,7 @@ Download a skill from Nacos to a local directory, including skill metadata (SKIL
 
 **Command Format**
 ```bash
-nacos-cli skill-get <skill-name> [hubEntryId] [version] [flags]
+nacos-cli skill-get <skill-name> [<skill-name>...] [flags]
 ```
 
 **Parameters**
@@ -353,6 +353,8 @@ nacos-cli skill-get <skill-name> [hubEntryId] [version] [flags]
 | Parameter | Short | Default | Description |
 | --- | --- | --- | --- |
 | -o, --output | -o | ~/.skills | Output directory |
+| `--hub-entry-id <id>` | | | Select a Hub entry for one skill by its ID from `skill-list --hub`. |
+| `--version <version>` | | | Request a version. A Hub entry accepts only its shared version. |
 
 **Usage Examples**
 ```bash
@@ -534,6 +536,9 @@ nacos-cli agentspec-get <agentspec-name> --version v1
 
 # Download by route label
 nacos-cli agentspec-get <agentspec-name> --no-hub --label latest
+
+# Download the shared version of a Hub entry
+nacos-cli agentspec-get demo --hub-entry-id 205
 
 # Download multiple AgentSpecs
 nacos-cli agentspec-get spec1 spec2 spec3
