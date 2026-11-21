@@ -97,6 +97,7 @@ Returns a JSON object of type `map<string, string>` directly, without a `Result`
 | datasource_platform           | `string` | Data source type of the Nacos cluster, for example `mysql` or `derby`. If it is empty, the default data source type is used                        |
 | console_ui_enabled            | `string` | Whether the Nacos console UI is enabled: `"true"` or `"false"`. |
 | auth_enabled                  | `string` | Whether Nacos authentication is enabled: `"true"` or `"false"`. |
+| ai_hub_enabled                | `string` | Whether Nacos Hub is enabled: `"true"` or `"false"`. |
 | auth_admin_request            | `string` | Whether Nacos needs to initialize the `nacos` admin user: `"true"` or `"false"`. |
 | auth_system_type              | `string` | Authentication plugin type of Nacos, for example `nacos`. If it is empty, the default authentication system type is used                                |
 | login_page_enabled            | `string` | Whether the Nacos console login page is enabled: `"true"` or `"false"`. |
@@ -127,6 +128,7 @@ curl -X GET 'http://127.0.0.1:8080/v3/console/server/state'
   "defaultMaxSize": "102400",
   "auth_system_type": "nacos",
   "auth_enabled": "true",
+  "ai_hub_enabled": "true",
   "defaultMaxAggrSize": "1024",
   "maxHealthCheckFailCount": "12",
   "maxContent": "10485760",
@@ -10311,5 +10313,686 @@ curl -sS -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X PUT 'http://127.0.0.1:8080/v
   "code": 0,
   "message": "success",
   "data": "ok"
+}
+```
+
+## 13. Agentic Resource Hub
+
+Agentic Resource Hub supports cross-Namespace sharing and import for Skill, MCP, Agent, Prompt and AgentSpec. Only Skill supports direct cloning. This chapter details Skill; see the [Hub extension API reference](./resource-hub-api.md) for the fixed Console management routes, parameters, responses and reads for the other four types. See [Agentic Resource Hub](../user/ai/resource-hub.md) for usage and configuration.
+
+Only sharing, adjustment, unsharing, takedown, state lookup, import, and direct copy use special management routes. Lists, details, content, and ZIP downloads reuse existing Skill paths with `namespaceId=__nacos_ai_hub__`. There is no separate cross-type list-Hub API or dedicated Client Hub read API; clients call `/v3/client/ai/skills/search` and `/v3/client/ai/skills` with the selected namespace. Query both namespaces separately when combining results. The namespace omission default remains `public`.
+
+### 13.1. Share a Skill
+
+#### Description
+
+Share a specified source Skill version in Hub. The source Skill must be enabled and PUBLIC, and the specified version must be online. The shared version does not follow changes to the `latest` label.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+Request body type: `application/x-www-form-urlencoded`.
+
+#### Authorization
+
+A user identity with read and write permissions on the source Skill is required.
+
+#### Request URL
+
+`/v3/console/ai/hub/skills/share`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|---|---|---|---|
+| `sourceNamespaceId` | `string` | **Yes** | Namespace ID of the source Skill. |
+| `sourceName` | `string` | **Yes** | Source Skill name. |
+| `sourceVersion` | `string` | **Yes** | Online source Skill version; `latest` is not supported. |
+| `expectedSourceResourceId` | `integer(int64)` | No | Expected source resource ID; must be positive. Used to verify the source identity. |
+
+#### Response Data
+
+| Name | Type | Description |
+|---|---|---|
+| `data` | `HubShareResult` | Operation result. |
+| `data.hubEntryId` | `string` | Hub entry ID. |
+| `data.displayName` | `string` | Display name. |
+| `data.sourceNamespaceId` | `string` | Source Namespace ID. |
+| `data.sourceResourceId` | `string` | Source Skill resource ID. |
+| `data.sourceName` | `string` | Source Skill name. |
+| `data.sourceVersionId` | `string` | Source version ID. |
+| `data.sourceVersion` | `string` | Source version. |
+| `data.metaVersion` | `string` | Metadata version of the share. |
+| `data.outcome` | `string` | Outcome: `CREATED`, `ALREADY_SHARED`, or `REACTIVATED`. |
+| `data.active` | `boolean` | Whether the share is active. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/hub/skills/share' \
+  --data-urlencode 'sourceNamespaceId=public' \
+  --data-urlencode 'sourceName=find-skills' \
+  --data-urlencode 'sourceVersion=1.0.0'
+```
+
+* Response example
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "hubEntryId": "101",
+    "displayName": "find-skills",
+    "sourceNamespaceId": "public",
+    "sourceResourceId": "42",
+    "sourceName": "find-skills",
+    "sourceVersionId": "73",
+    "sourceVersion": "1.0.0",
+    "metaVersion": "2",
+    "outcome": "CREATED",
+    "active": true
+  }
+}
+```
+
+### 13.2. Adjust a Shared Version
+
+#### Description
+
+Change the shared version of an existing Hub entry. The target version must belong to the same source Skill and meet the sharing requirements.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+Request body type: `application/x-www-form-urlencoded`.
+
+#### Authorization
+
+A user identity with write permission on the source Skill is required.
+
+#### Request URL
+
+`/v3/console/ai/hub/skills/adjust`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|---|---|---|---|
+| `hubEntryId` | `integer(int64)` | **Yes** | Hub entry ID; must be positive. |
+| `expectedMetaVersion` | `integer(int64)` | **Yes** | Current metadata version of the share; must be positive. |
+| `targetVersion` | `string` | **Yes** | Online version to share; `latest` is not supported. |
+
+#### Response Data
+
+| Name | Type | Description |
+|---|---|---|
+| `data` | `HubShareResult` | Same fields as the Share a Skill response. |
+| `data.outcome` | `string` | `ADJUSTED` or `UNCHANGED`. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/hub/skills/adjust' \
+  --data-urlencode 'hubEntryId=101' \
+  --data-urlencode 'expectedMetaVersion=2' \
+  --data-urlencode 'targetVersion=1.1.0'
+```
+
+* Response example
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "hubEntryId": "101",
+    "displayName": "find-skills",
+    "sourceNamespaceId": "public",
+    "sourceResourceId": "42",
+    "sourceName": "find-skills",
+    "sourceVersionId": "74",
+    "sourceVersion": "1.1.0",
+    "metaVersion": "3",
+    "outcome": "ADJUSTED",
+    "active": true
+  }
+}
+```
+
+### 13.3. Unshare a Skill
+
+#### Description
+
+Revoke a Hub share while retaining the source Skill. A share can still be revoked after the source is disabled, made private, or taken offline.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+Request body type: `application/x-www-form-urlencoded`.
+
+#### Authorization
+
+A user identity with write permission on the source Skill is required.
+
+#### Request URL
+
+`/v3/console/ai/hub/skills/unshare`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|---|---|---|---|
+| `hubEntryId` | `integer(int64)` | **Yes** | Hub entry ID; must be positive. |
+| `expectedMetaVersion` | `integer(int64)` | **Yes** | Current metadata version of the share; must be positive. |
+
+#### Response Data
+
+| Name | Type | Description |
+|---|---|---|
+| `data` | `HubShareResult` | Same fields as the Share a Skill response. |
+| `data.outcome` | `string` | `UNSHARED` or `ALREADY_UNSHARED`. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/hub/skills/unshare' \
+  --data-urlencode 'hubEntryId=101' \
+  --data-urlencode 'expectedMetaVersion=2'
+```
+
+* Response example
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "hubEntryId": "101",
+    "displayName": "find-skills",
+    "sourceNamespaceId": "public",
+    "sourceResourceId": "42",
+    "sourceName": "find-skills",
+    "sourceVersionId": "73",
+    "sourceVersion": "1.0.0",
+    "metaVersion": "3",
+    "outcome": "UNSHARED",
+    "active": false
+  }
+}
+```
+
+### 13.4. Force Unshare a Skill
+
+#### Description
+
+Allow an administrator to take down a Hub entry and record the reason.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+Request body type: `application/x-www-form-urlencoded`.
+
+#### Authorization
+
+A user identity with Console administrator permissions is required.
+
+#### Request URL
+
+`/v3/console/ai/hub/skills/force-unshare`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|---|---|---|---|
+| `hubEntryId` | `integer(int64)` | **Yes** | Hub entry ID; must be positive. |
+| `expectedMetaVersion` | `integer(int64)` | **Yes** | Current metadata version of the share; must be positive. |
+| `reason` | `string` | **Yes** | Reason for takedown; must not be blank and must not exceed 512 characters. |
+
+#### Response Data
+
+| Name | Type | Description |
+|---|---|---|
+| `data` | `HubShareResult` | Same fields as the Share a Skill response. |
+| `data.outcome` | `string` | `FORCE_UNSHARED` or `ALREADY_UNSHARED`. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/hub/skills/force-unshare' \
+  --data-urlencode 'hubEntryId=101' \
+  --data-urlencode 'expectedMetaVersion=2' \
+  --data-urlencode 'reason=Withdraw this shared version'
+```
+
+* Response example
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "hubEntryId": "101",
+    "displayName": "find-skills",
+    "sourceNamespaceId": "public",
+    "sourceResourceId": "42",
+    "sourceName": "find-skills",
+    "sourceVersionId": "73",
+    "sourceVersion": "1.0.0",
+    "metaVersion": "3",
+    "outcome": "FORCE_UNSHARED",
+    "active": false
+  }
+}
+```
+
+### 13.5. Get Source Skill Share State
+
+#### Description
+
+Get share state by source Namespace and Skill name, including the entry ID and metadata version required for subsequent operations.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`GET`
+
+#### Authorization
+
+A user identity with write permission on the source Skill is required.
+
+#### Request URL
+
+`/v3/console/ai/hub/skills/source-share`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|---|---|---|---|
+| `sourceNamespaceId` | `string` | **Yes** | Namespace ID of the source Skill. |
+| `sourceName` | `string` | **Yes** | Source Skill name. |
+
+#### Response Data
+
+| Name | Type | Description |
+|---|---|---|
+| `data` | `HubSkillShareState` | Share state, or `null` when no share record exists. |
+| `data.hubEntryId` | `string` | Hub entry ID. |
+| `data.metaVersion` | `string` | Metadata version of the share. |
+| `data.sharedVersion` | `string` | Current shared version. |
+| `data.active` | `boolean` | Whether the share is active. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" --get 'http://127.0.0.1:8080/v3/console/ai/hub/skills/source-share' \
+  --data-urlencode 'sourceNamespaceId=public' \
+  --data-urlencode 'sourceName=find-skills'
+```
+
+* Response example
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "hubEntryId": "101",
+    "metaVersion": "2",
+    "sharedVersion": "1.0.0",
+    "active": true
+  }
+}
+```
+
+### 13.6. Get Share Governance State
+
+#### Description
+
+Allow an administrator to get share state by Hub entry ID.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`GET`
+
+#### Authorization
+
+A user identity with Console administrator permissions is required.
+
+#### Request URL
+
+`/v3/console/ai/hub/skills/governance-state`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|---|---|---|---|
+| `hubEntryId` | `integer(int64)` | **Yes** | Hub entry ID; must be positive. |
+
+#### Response Data
+
+| Name | Type | Description |
+|---|---|---|
+| `data` | `HubSkillShareState` | Operation result. |
+| `data.hubEntryId` | `string` | Hub entry ID. |
+| `data.metaVersion` | `string` | Metadata version of the share. |
+| `data.sharedVersion` | `string` | Current shared version. |
+| `data.active` | `boolean` | Whether the share is active. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" --get 'http://127.0.0.1:8080/v3/console/ai/hub/skills/governance-state' \
+  --data-urlencode 'hubEntryId=101'
+```
+
+* Response example
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "hubEntryId": "101",
+    "metaVersion": "2",
+    "sharedVersion": "1.0.0",
+    "active": true
+  }
+}
+```
+
+### 13.7. List Shared Skills through the Skill API
+
+Reuse the existing Skill list API with the reserved namespace. Omitted namespace still means `public`; HTTP never combines spaces. Management lists default to shared update time descending; `orderBy=download_count` uses independent Hub downloads descending. Hub ID ascending breaks ties. Filtering and sorting precede pagination. Client search retains popularity ordering.
+
+These shared reads require Hub admission checks. Anonymous access is possible only when the selected auth plugin explicitly enables anonymous AI access and permits this operation; public visibility alone does not bypass authentication.
+
+`GET /v3/console/ai/skills/list`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|---|---|---|---|
+| `namespaceId` | `string` | **Yes** | `__nacos_ai_hub__`. |
+| `skillName` | `string` | No | Display-name filter. |
+| `search` | `string` | No | `accurate` for exact name, `blur` for substring matching. |
+| `owner` | `string` | No | Existing owner filter. |
+| `scope` | `string` | No | Shared entries are `PUBLIC`; `PRIVATE` returns no shared entries. |
+| `bizTag` | `string` | No | Existing single substring filter on business tags. |
+| `orderBy` | `string` | No | Omit for shared update time; `download_count` for independent Hub downloads. |
+| `pageNo` | `integer` | No | Positive page number, default `1`. |
+| `pageSize` | `integer` | No | Existing `PageForm` default `100`; shared-list range `1` to `100`. |
+
+#### Response Data
+
+The response remains `Result<Page<SkillSummary>>`: `totalCount`, `pageNumber`, `pagesAvailable`, and `pageItems`. Each shared item has `namespaceId="__nacos_ai_hub__"`, `name` equal to its opaque decimal Hub ID, `hubEntryId` serialized as a string, `discoverySource="HUB"`, `displayName`, `sourceDisplayName`, pinned `version`, `owner`, `description`, `bizTags` as a JSON array string, `updateTime` as share time, and the independent shared `downloadCount`. `enable=true`, `scope="PUBLIC"`, and `writable=false`. Keep identity as namespace plus opaque name; identical display names can belong to different entries. No raw source namespace ID is exposed by the list.
+
+#### Example
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" --get 'http://127.0.0.1:8080/v3/console/ai/skills/list' \
+  --data-urlencode 'namespaceId=__nacos_ai_hub__' \
+  --data-urlencode 'skillName=find' --data-urlencode 'search=blur' \
+  --data-urlencode 'bizTag=assistant' --data-urlencode 'pageNo=1' --data-urlencode 'pageSize=20'
+```
+
+### 13.8. Get Shared Detail through the Skill API
+
+Reuse the ordinary detail API. Pass the `name` from the shared list as `skillName`; do not use the display name or source name.
+
+`GET /v3/console/ai/skills?namespaceId=__nacos_ai_hub__&skillName=101`
+
+The response is `Result<SkillMeta>` with the shared summary fields above. `versions` contains exactly the pinned shared version: `version`, `status`, `author`, `commitMsg`, share timestamps, and the shared entry's per-version `downloadCount`. `labels` maps label names to that pinned version. `sourceReadable` reports independent source READ permission; `sourceNamespaceId` and `sourceName` are returned only when that permission is granted. `discoverySource` is the discovery marker; the existing `origin` object remains reserved for copy/import provenance.
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "namespaceId": "__nacos_ai_hub__",
+    "name": "101",
+    "hubEntryId": "101",
+    "discoverySource": "HUB",
+    "displayName": "find-skills",
+    "sourceDisplayName": "Team A",
+    "owner": "nacos",
+    "description": "Find available skills",
+    "version": "1.0.0",
+    "bizTags": "[\"assistant\"]",
+    "updateTime": 1792022400000,
+    "downloadCount": 10,
+    "enable": true,
+    "scope": "PUBLIC",
+    "writable": false,
+    "labels": {
+      "latest": "1.0.0"
+    },
+    "versions": [
+      {
+        "version": "1.0.0",
+        "status": "online",
+        "author": "nacos",
+        "commitMsg": "Initial version",
+        "downloadCount": 3
+      }
+    ],
+    "sourceReadable": false
+  }
+}
+```
+
+### 13.9. Get Shared Content through the Skill Version API
+
+Use the pinned `version` returned by the shared detail. An explicit mismatching version returns resource-not-found before content is read; there is no fallback to a source latest version. Omitting `version` resolves the currently pinned publication.
+
+`GET /v3/console/ai/skills/version?namespaceId=__nacos_ai_hub__&skillName=101&version=1.0.0`
+
+The response is `Result<Skill>`: `namespaceId` is the shared namespace, `name` is the opaque entry ID, `skillMd` contains the pinned `SKILL.md`, and `resource` maps file paths to ordinary Skill resources (`name`, `type`, `content`). Reading content does not increment download counts.
+
+### 13.10. Download through the Skill Version API
+
+`GET /v3/console/ai/skills/version/download?namespaceId=__nacos_ai_hub__&skillName=101&version=1.0.0`
+
+Use the same opaque ID and pinned version as content reads. The successful HTTP response is raw `application/zip` bytes with `Content-Disposition`, `X-Nacos-Hub-Entry-Id`, and `X-Nacos-Skill-Resolved-Version` headers. It is not a JSON `Result` or Base64 field. The ZIP retains the real Skill directory name. Verify the returned ID and version against the selected detail before saving. One successful transfer increments only the shared entry's aggregate and pinned-version counters; it never reuses or increments the source namespace's counters.
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" --get 'http://127.0.0.1:8080/v3/console/ai/skills/version/download' \
+  --data-urlencode 'namespaceId=__nacos_ai_hub__' \
+  --data-urlencode 'skillName=101' --data-urlencode 'version=1.0.0' \
+  -o find-skills-1.0.0.zip
+```
+
+### 13.11. Import a Shared Skill
+
+#### Description
+
+Import an effective Hub version into the target Namespace as an independent Skill draft with provenance. Source Namespace, name and version parameters must be omitted.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+Request body type: `application/x-www-form-urlencoded`.
+
+#### Authorization
+
+A user identity that passes Hub access checks and has write permission on the target Namespace is required.
+
+#### Request URL
+
+`/v3/console/ai/hub/skills/import`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|---|---|---|---|
+| `hubEntryId` | `integer(int64)` | **Yes** | Hub entry ID; must be positive. |
+| `targetNamespaceId` | `string` | **Yes** | Target Namespace ID. |
+| `targetName` | `string` | **Yes** | Target Skill name; must not already exist in the target Namespace. |
+| `targetVersion` | `string` | No | Target draft version; defaults to `0.0.1`. `latest` is not supported. |
+
+#### Response Data
+
+| Name | Type | Description |
+|---|---|---|
+| `data` | `HubSkillTransferResult` | Operation result. |
+| `data.targetNamespaceId` | `string` | Target Namespace ID. |
+| `data.targetName` | `string` | Target Skill name. |
+| `data.draftVersion` | `string` | Created draft version. |
+| `data.status` | `string` | Version status; always `draft`. |
+| `data.origin` | `string` | Origin: `HUB` or `DIRECT_COPY`. |
+| `data.targetResourceId` | `string` | Target Skill resource ID. |
+| `data.hubEntryId` | `string` | Source Hub entry ID; null for direct copy. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/hub/skills/import' \
+  --data-urlencode 'hubEntryId=101' \
+  --data-urlencode 'targetNamespaceId=team-b' \
+  --data-urlencode 'targetName=find-skills-copy' \
+  --data-urlencode 'targetVersion=0.0.1'
+```
+
+* Response example
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "targetNamespaceId": "team-b",
+    "targetName": "find-skills-copy",
+    "draftVersion": "0.0.1",
+    "status": "draft",
+    "origin": "HUB",
+    "targetResourceId": "104",
+    "hubEntryId": "101"
+  }
+}
+```
+
+### 13.12. Clone a Skill across Namespaces
+
+#### Description
+
+Copy a specified source version into the target Namespace as an independent Skill draft with provenance. The source Skill must be enabled and the version online. This operation remains available when Hub is disabled. `hubEntryId` must be omitted.
+
+#### Since
+
+`3.3.0`
+
+#### Request Method
+
+`POST`
+
+Request body type: `application/x-www-form-urlencoded`.
+
+#### Authorization
+
+A user identity with source Skill read and target Namespace write permissions is required, along with source visibility checks.
+
+#### Request URL
+
+`/v3/console/ai/hub/skills/clone`
+
+#### Request Parameters
+
+| Name | Type | Required | Description |
+|---|---|---|---|
+| `sourceNamespaceId` | `string` | **Yes** | Namespace ID of the source Skill. |
+| `sourceName` | `string` | **Yes** | Source Skill name. |
+| `sourceVersion` | `string` | **Yes** | Online source Skill version; `latest` is not supported. |
+| `targetNamespaceId` | `string` | **Yes** | Target Namespace ID. |
+| `targetName` | `string` | **Yes** | Target Skill name; must not already exist in the target Namespace. |
+| `targetVersion` | `string` | No | Target draft version; defaults to `0.0.1`. `latest` is not supported. |
+
+#### Response Data
+
+| Name | Type | Description |
+|---|---|---|
+| `data` | `HubSkillTransferResult` | Operation result. |
+| `data.targetNamespaceId` | `string` | Target Namespace ID. |
+| `data.targetName` | `string` | Target Skill name. |
+| `data.draftVersion` | `string` | Created draft version. |
+| `data.status` | `string` | Version status; always `draft`. |
+| `data.origin` | `string` | Origin: `HUB` or `DIRECT_COPY`. |
+| `data.targetResourceId` | `string` | Target Skill resource ID. |
+| `data.hubEntryId` | `string` | Source Hub entry ID; null for direct copy. |
+
+#### Examples
+
+* Request example
+
+```shell
+curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/console/ai/hub/skills/clone' \
+  --data-urlencode 'sourceNamespaceId=public' \
+  --data-urlencode 'sourceName=find-skills' \
+  --data-urlencode 'sourceVersion=1.0.0' \
+  --data-urlencode 'targetNamespaceId=team-b' \
+  --data-urlencode 'targetName=find-skills-copy' \
+  --data-urlencode 'targetVersion=0.0.1'
+```
+
+* Response example
+
+```json
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "targetNamespaceId": "team-b",
+    "targetName": "find-skills-copy",
+    "draftVersion": "0.0.1",
+    "status": "draft",
+    "origin": "DIRECT_COPY",
+    "targetResourceId": "104",
+    "hubEntryId": null
+  }
 }
 ```
